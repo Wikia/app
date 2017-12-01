@@ -43,7 +43,7 @@ CKEDITOR.plugins.add( 'format', {
 			allowedContent: allowedContent,
 
 			panel: {
-				css: [ CKEDITOR.skin.getPath( 'editor' ) ].concat( config.contentsCss ),
+				css: [ config.editorCss ].concat( config.contentsCss ),
 				multiSelect: false,
 				attributes: { 'aria-label': lang.panelTitle }
 			},
