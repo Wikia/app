@@ -269,10 +269,9 @@ class WikiService extends WikiaModel {
 	 *
 	 * @return array topEditors [ array( user_id => edits ) ]
 	 */
-	public function getTopEditors( $wikiId = 0, $limit = 30 ) {
+	public function getTopEditors( int $wikiId , int $limit ) {
 		wfProfileIn( __METHOD__ );
 
-		$wikiId = ( empty($wikiId) ) ? $this->wg->CityId : $wikiId ;
 		$fname = __METHOD__;
 
 		$topEditors = WikiaDataAccess::cache(
