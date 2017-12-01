@@ -275,7 +275,7 @@ class WikiService extends WikiaModel {
 		$fname = __METHOD__;
 
 		$topEditors = WikiaDataAccess::cache(
-			wfSharedMemcKey( 'wiki_top_editors:v2', $wikiId ),
+			wfSharedMemcKey( 'wiki_top_editors:v1', $wikiId ),
 			static::TOPUSER_CACHE_VALID,
 			function() use ( $wikiId, $fname ) {
 				global $wgDWStatsDB;
@@ -295,6 +295,7 @@ class WikiService extends WikiaModel {
 					$fname,
 					array(
 						'ORDER BY' => 'edits DESC',
+						'GROUP BY' => 'user_id',
 						'LIMIT' => static::TOPUSER_LIMIT,
 					)
 				);
