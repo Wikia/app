@@ -159,7 +159,7 @@
 				}
 			}
 		}
-		return $.getSassCommonURL('extensions/wikia/RTE/ckeditor/skins/wikia/' + part + '.scss');//CKEDITOR.getUrl( getConfigPath() + part + '.css' );
+		return $.getSassCommonURL('extensions/wikia/RTE/ckeditor/skins/wikia/' + part + '.scss');
 	}
 
 	function loadCss( part, callback ) {
@@ -167,6 +167,8 @@
 		if ( !cssLoaded[ part ] ) {
 			CKEDITOR.document.appendStyleSheet( getCssPath( part ) );
 			cssLoaded[ part ] = 1;
+			//dialog scss already loaded in editor.scss
+			if ( part === 'editor' ) cssLoaded[ 'dialog' ] = 1;
 		}
 
 		// CSS loading should not be blocking.
