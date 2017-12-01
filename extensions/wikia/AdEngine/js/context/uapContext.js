@@ -11,8 +11,12 @@ define('ext.wikia.adEngine.context.uapContext', [
 		mainSlotName = 'TOP_LEADERBOARD',
 		uapTypes = ['uap', 'vuap'];
 
+	adEngineBridge.Context.onChange('slots.TOP_LEADERBOARD.targeting.uap', function () {
+		setUapId(adEngineBridge.UniversalAdPackage.getUapId());
+		setType(adEngineBridge.UniversalAdPackage.getType());
+	});
+
 	function setUapId(uap) {
-		adEngineBridge.setUapId(uap);
 		context.uapId = uap;
 	}
 
@@ -21,7 +25,6 @@ define('ext.wikia.adEngine.context.uapContext', [
 	}
 
 	function setType(type) {
-		adEngineBridge.setType(type);
 		context.type = type;
 	}
 
