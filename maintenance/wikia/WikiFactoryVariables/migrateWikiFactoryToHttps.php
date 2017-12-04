@@ -42,8 +42,8 @@ class MigrateWikiFactoryToHttps extends Maintenance {
 			return false;
 		}
 
-		$varData = (array) WikiFactory::getVarByName( $this->varName, $wgCityId, true );
-		if ( empty( $varData['cv_id'] ) ) {
+		$varData = WikiFactory::getVarValueByName( $this->varName, $wgCityId, true );
+		if ( !$varData ) {
 			$this->error( "Error: " . $this->varName . " not found." . PHP_EOL );
 			return false;
 		}
@@ -57,7 +57,7 @@ class MigrateWikiFactoryToHttps extends Maintenance {
 			}
 		}
 
-		$oldValue = $keyValue = $varData['cv_value'];
+		$oldValue = $keyValue = $varData;
 
 		if ( empty( $keyValue ) ) {
 			$this->output( "Variable is empty for $wgCityId - skipping" . PHP_EOL );
@@ -82,7 +82,7 @@ class MigrateWikiFactoryToHttps extends Maintenance {
 			return false;
 		}
 
-		$this->debug("Setting " . $this->varName . " to " . var_export( $keyValue, true ) . "for:". $wgCityId .PHP_EOL );
+		$this->output("Setting " . $this->varName . " to " . var_export( $keyValue, true ) . "for:". $wgCityId .PHP_EOL );
 		if ( $fh ) {
 			fwrite( $fh, sprintf("%d, \"%s\", \"%s\"\n", $wgCityId, $oldValue, $keyValue));
 		}
@@ -101,17 +101,6 @@ class MigrateWikiFactoryToHttps extends Maintenance {
 
 		$this->output(" ... DONE." . PHP_EOL );
 	}
-
-	/**
-	 * Print the message if verbose is enabled
-	 * @param $msg
-	 */
-	protected function debug( $msg ) {
-		if ( $this->verbose ) {
-			$this->output( $msg );
-		}
-	}
-
 }
 
 $maintClass = "MigrateWikiFactoryToHttps";
