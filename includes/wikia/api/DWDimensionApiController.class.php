@@ -1,6 +1,10 @@
 <?php
 
+use Wikia\Service\User\Permissions\PermissionsServiceAccessor;
+
 class DWDimensionApiController extends WikiaApiController {
+	use PermissionsServiceAccessor;
+
 	const LIMIT = 100;
 	const LIMIT_MAX = 20000;
 
@@ -11,6 +15,10 @@ class DWDimensionApiController extends WikiaApiController {
 	const DEFAULT_AFTER_USER_ID = -1;
 
 	const DART_TAG_VARIABLE_NAME = 'wgDartCustomKeyValues';
+
+	const BOT_USER_GROUP = 'bot';
+
+	const BOT_GLOBAL_USER_GROUP = 'bot-global';
 
 	private $connections = [];
 
@@ -130,6 +138,8 @@ class DWDimensionApiController extends WikiaApiController {
 
 		$dbResult = $db->query( $query,__METHOD__);
 		$result = [];
+		$botUsers = $this->permissionsService()->getUsersInGroups( [ static::BOT_USER_GROUP ] );
+		$botGlobalUsers = $this->permissionsService()->getUsersInGroups( [ static::BOT_GLOBAL_USER_GROUP ] );
 		while ( $row = $db->fetchObject( $dbResult ) ) {
 			$result[] = [
 				'user_id' => $row->user_id,
@@ -138,11 +148,8 @@ class DWDimensionApiController extends WikiaApiController {
 				'user_email_authenticated' => $row->user_email_authenticated,
 				'user_editcount' => $row->user_editcount,
 				'user_registration' => $row->user_registration,
-				'is_bot' => $row->is_bot,
-				'is_bot_global' => $row->is_bot_global,
-				'user_marketingallowed' => $row->user_marketingallowed,
-				'user_skin' => $row->user_skin,
-				'user_editor' => $row->user_editor
+				'is_bot' => isset( $botUsers[ $row->user_id ] ),
+				'is_bot_global' => isset( $botGlobalUsers[ $row->user_id ] )
 			];
 		}
 		$db->freeResult( $dbResult );

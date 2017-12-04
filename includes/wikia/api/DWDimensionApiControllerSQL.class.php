@@ -39,17 +39,8 @@ class DWDimensionApiControllerSQL {
 			user_real_name,
 			user_email_authenticated,
 			user_editcount,
-			STR_TO_DATE(user_registration, \'%Y%m%d%H%i%s\') AS user_registration,
-			CASE WHEN b.ug_user  IS NULL THEN false ELSE true END AS is_bot,
-			CASE WHEN bg.ug_user IS NULL THEN false ELSE true END AS is_bot_global,
-			CASE WHEN IFNULL(up.up_value,0) = 0 THEN false ELSE true END AS user_marketingallowed,
-			CASE WHEN up_skin.up_value IS NULL OR up_skin.up_value = \'\' THEN \'oasis\'    ELSE up_skin.up_value END AS user_skin,
-			CASE WHEN up_rte.up_value = 0 THEN \'source\' ELSE \'richtext\' END AS user_editor
-		FROM user u LEFT JOIN user_groups b ON b.ug_user  = u.user_id AND b.ug_group = \'bot\'
-		LEFT JOIN user_groups bg ON bg.ug_user  = u.user_id AND bg.ug_group = \'bot-global\'
-		LEFT JOIN user_properties up ON up.up_user = u.user_id AND up.up_property = \'marketingallowed\'
-		LEFT JOIN user_properties up_skin ON up_skin.up_user = u.user_id AND up_skin.up_property = \'skin\'
-		LEFT JOIN user_properties up_rte ON up_rte.up_user = u.user_id AND up_rte.up_property = \'enablerichtext\'
+			STR_TO_DATE(user_registration, \'%Y%m%d%H%i%s\') AS user_registration
+		FROM user u
 		WHERE user_id > $user_id
 		ORDER BY user_id      
 		LIMIT $limit';
