@@ -14,6 +14,10 @@ class DWDimensionApiController extends WikiaApiController {
 
 	const DEFAULT_AFTER_USER_ID = -1;
 
+	const ARTICLES_AFTER_ARTICLE_ID = -1;
+
+	const ARTICLE_LAST_EDITED = '1970-01-01';
+
 	const DART_TAG_VARIABLE_NAME = 'wgDartCustomKeyValues';
 
 	const BOT_USER_GROUP = 'bot';
@@ -39,14 +43,15 @@ class DWDimensionApiController extends WikiaApiController {
 		$afterWikiId = $db->strencode( $this->getRequest()->getInt(
 			'after_wiki_id', static::DEFAULT_AFTER_WIKI_ID ) );
 
-		$variables = WikiFactory::getVariableForAllWikis( static::DART_TAG_VARIABLE_NAME, $limit, $afterWikiId );
+		$variables = WikiFactory::getVariableForAllWikis( static::DART_TAG_VARIABLE_NAME, $limit,
+            $afterWikiId );
 
 		$result = [];
-		foreach ($variables as $variable) {
+		foreach ( $variables as $variable ) {
 			#extract from list like "s:199:\"sex=m;sex=f;age=under18;age=13-17;age=18-24;age=25-34;age=18-34;\";"
-			preg_match_all("/([^;= ]+)=([^;= ]+)/", $variable[ 'value' ], $r);
+			preg_match_all("/([^;= ]+)=([^;= ]+)/", $variable[ 'value' ], $r );
 
-			for ($i = 0; $i < count( $r[1] ); $i++) {
+			for ( $i = 0; $i < count( $r[1] ); $i++ ) {
 				$result[] = [
 					'wiki_id' => $variable[ 'city_id' ],
 					'tag' => $r[ 1 ][ $i ],
@@ -84,21 +89,22 @@ class DWDimensionApiController extends WikiaApiController {
 		$afterWikiId = $db->strencode( $this->getRequest()->getVal(
 			'after_wiki_id', static::DEFAULT_AFTER_WIKI_ID ) );
 
-		$query = str_replace( '$city_id', $afterWikiId, DWDimensionApiControllerSQL::DIMENSION_WIKIS_QUERY );
+		$query = str_replace( '$city_id', $afterWikiId,
+            DWDimensionApiControllerSQL::DIMENSION_WIKIS_QUERY );
 		$query = str_replace( '$limit', $limit, $query);
 
 		$allVerticals = WikiFactoryHub::getInstance()->getAllVerticals();
 		$allCategories = WikiFactoryHub::getInstance()->getAllCategories();
 
-		$dbResult = $db->query( $query,__METHOD__);
+		$dbResult = $db->query( $query,__METHOD__ );
 		$result = [];
 		while ( $row = $db->fetchObject( $dbResult ) ) {
 			$result[] = [
 				'wiki_id' => $row->wiki_id,
 				'dbname' => $row->dbname,
 				'sitename' => $row->sitename,
-				'url' => parse_url($row->url, PHP_URL_HOST),
-				'domain' => parse_url($row->url, PHP_URL_HOST),
+				'url' => parse_url( $row->url, PHP_URL_HOST ),
+				'domain' => parse_url( $row->url, PHP_URL_HOST ),
 				'title' => $row->title,
 				'founding_user_id' => $row->founding_user_id,
 				'public' => $row->public,
@@ -124,6 +130,49 @@ class DWDimensionApiController extends WikiaApiController {
 			WikiaResponse::CACHE_DISABLED
 		);
 	}
+
+    private function getDataWareDbSlave() {
+        global $wgExternalDatawareDB;
+        return wfGetDB( DB_SLAVE, array(), $wgExternalDatawareDB );
+    }
+
+    public function getAllArticles() {
+
+        $db = $this->getDataWareDbSlave();
+
+        $limit = min($db->strencode( $this->getRequest()->getInt( 'limit', static::LIMIT ) ),
+            static::LIMIT_MAX);
+        $afterWikiId = $db->strencode( $this->getRequest()->getInt( 'after_wiki_id',
+            static::WIKIS_AFTER_WIKI_ID ) );
+        $afterArticleId = $db->strencode( $this->getRequest()->getInt( 'after_article_id',
+            static::ARTICLES_AFTER_ARTICLE_ID ) );
+        $last_edited = $db->strencode( $this->getRequest()->getVal( 'last_edited',
+            static::ARTICLE_LAST_EDITED ) );
+
+        $query = str_replace( '$wiki_id', $afterWikiId,
+            DWDimensionApiControllerSQL::DIMENSION_WIKI_ARTICLES_QUERY );
+        $query = str_replace( '$article_id', $afterArticleId, $query );
+        $query = str_replace( '$last_edited', $last_edited, $query );
+        $query = str_replace( '$limit', $limit, $query );
+
+        $dbResult = $db->query( $query,__METHOD__ );
+        $result = [];
+        while ( $row = $db->fetchObject( $dbResult ) ) {
+            $result[] = [
+                'wiki_id' => $row->wiki_id,
+                'namespace_id' => $row->namespace_id,
+                'article_id' => $row->article_id,
+                'title' => $row->title,
+                'is_redirect' => $row->is_redirect,
+            ];
+        }
+        $db->freeResult( $dbResult );
+        $this->setResponseData(
+            $result,
+            null,
+            WikiaResponse::CACHE_DISABLED
+        );
+    }
 
 	public function getUsers() {
 		$db = $this->getSharedDbSlave();
@@ -252,11 +301,11 @@ class DWDimensionApiController extends WikiaApiController {
 
 	private function getWikiConnection( $cluster, $dbname ) {
 		if ( !isset( $connections[ $cluster ] ) ) {
-			$connections[ $cluster ] = $db = wfGetDB( DB_SLAVE, array(), 'wikicities_'.$cluster);
+			$connections[ $cluster ] = $db = wfGetDB( DB_SLAVE, array(), 'wikicities_'.$cluster );
 		}
 		$connection = $connections[ $cluster ];
 		$dbname = $db->strencode( $dbname );
-		$connection->query("USE `".$dbname."`",__METHOD__);
+		$connection->query( "USE `".$dbname."`", __METHOD__ );
 
 		return $connection;
 	}
@@ -264,8 +313,10 @@ class DWDimensionApiController extends WikiaApiController {
 	private function getWikiDbNames() {
 		$db = $this->getSharedDbSlave();
 
-		$limit = min( $db->strencode( $this->getRequest()->getVal( 'wiki_limit', static::LIMIT ) ), static::LIMIT_MAX );
-		$afterWikiId = $db->strencode( $this->getRequest()->getVal( 'after_wiki_id', static::WIKIS_AFTER_WIKI_ID ) );
+		$limit = min( $db->strencode( $this->getRequest()->getVal( 'wiki_limit', static::LIMIT ) ),
+            static::LIMIT_MAX );
+		$afterWikiId = $db->strencode( $this->getRequest()->getVal( 'after_wiki_id',
+            static::WIKIS_AFTER_WIKI_ID ) );
 
 		$rows = $db->select(
 			[ "city_list" ],
@@ -296,7 +347,7 @@ class DWDimensionApiController extends WikiaApiController {
 		$wikis = $this->getWikiDbNames();
 
 		$result = [];
-		foreach( $wikis as $wiki) {
+		foreach( $wikis as $wiki ) {
 			$db = $this->getWikiConnection( $wiki[ 'cluster' ], $wiki[ 'dbname' ] );
 			$sub_result = call_user_func( $dataGatherer, $db );
 			$result[] = [
@@ -315,3 +366,4 @@ class DWDimensionApiController extends WikiaApiController {
 		);
 	}
 }
+
