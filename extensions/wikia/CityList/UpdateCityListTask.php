@@ -34,7 +34,7 @@ class UpdateCityListTask extends BaseTask {
 
 		$user = User::newFromId( $userId );
 
-		if ( in_array( 'sysop', $user->getGroups() ) || $this->getTotalEditsOnWiki() >= 1000 ) {
+		if ( in_array( 'sysop', $user->getGroups() ) || SiteStats::edits() >= 1000 ) {
 			$dbw = $this->getSharedDatabaseMaster();
 			$flags = $wiki->city_flags &~ WikiFactory::FLAG_ADOPTABLE;
 
@@ -45,12 +45,6 @@ class UpdateCityListTask extends BaseTask {
 				__METHOD__
 			);
 		}
-	}
-
-	private function getTotalEditsOnWiki() {
-		$dbr = wfGetDB( DB_SLAVE );
-
-		return $dbr->selectField( 'site_stats', 'ss_total_edits', [], __METHOD__ );
 	}
 
 	private function getSharedDatabaseMaster() {
