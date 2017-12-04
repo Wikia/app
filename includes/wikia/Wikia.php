@@ -1254,7 +1254,7 @@ class Wikia {
 	 */
 	static public function outputHTTPSHeaders( WebRequest $request ) {
 		if ( WebRequest::detectProtocol() === 'https' ) {
-			$request->response()->header( "Content-Security-Policy: default-src https:; script-src https: 'unsafe-inline' 'unsafe-eval'; style-src https: 'unsafe-inline'; img-src https: data:; report-uri " . self::CSP_ENDPOINT );
+			$request->response()->header( "Content-Security-Policy-Report-Only: default-src https:; script-src https: 'unsafe-inline' 'unsafe-eval'; style-src https: 'unsafe-inline'; img-src https: data:; report-uri " . self::CSP_ENDPOINT );
 		}
 		return true;
 	}
