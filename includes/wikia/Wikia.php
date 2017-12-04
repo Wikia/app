@@ -64,6 +64,7 @@ $wgHooks['WikiaSkinTopScripts'][] = 'Wikia::onWikiaSkinTopScripts';
 
 # handle internal requests - PLATFORM-1473
 $wgHooks['WebRequestInitialized'][] = 'Wikia::onWebRequestInitialized';
+$wgHooks['WebRequestInitialized'][] = 'Wikia::outputHTTPSHeaders';
 
 # Log user email changes
 $wgHooks['BeforeUserSetEmail'][] = 'Wikia::logEmailChanges';
@@ -95,6 +96,9 @@ class Wikia {
 
 	const DEFAULT_FAVICON_FILE = '/skins/common/images/favicon.ico';
 	const DEFAULT_WIKI_LOGO_FILE = '/skins/common/images/wiki.png';
+
+	// Todo: Testing endpoint, change to VCL/service when rolling out!
+	const CSP_ENDPOINT = 'https://4bf228718fe576fb7a6ea338e42715c0.report-uri.com/r/d/csp/enforce';
 
 	private static $vars = [];
 	private static $cachedLinker;
@@ -1239,6 +1243,19 @@ class Wikia {
 			$request->response()->header( 'X-Wikia-Is-Internal-Request: ' . $requestSource );
 		}
 
+		return true;
+	}
+
+	/**
+	 * Output HTTPS-specific headers like CSP or Strict-Transport-Security.
+	 *
+	 * @param WebRequest $request
+	 * @return bool true, it's a hook
+	 */
+	static public function outputHTTPSHeaders( WebRequest $request ) {
+		if ( WebRequest::detectProtocol() === 'https' ) {
+			$request->response()->header( "Content-Security-Policy: default-src https:; script-src https: 'unsafe-inline' 'unsafe-eval'; style-src https: 'unsafe-inline'; img-src https: data:; report-uri " . self::CSP_ENDPOINT );
+		}
 		return true;
 	}
 
