@@ -4,7 +4,7 @@
 * Maintenance script to manage WikiFactory variable to https
 * @usage
 * 	# this will migrate wgUploadPath for wiki with ID 119:
-*   /usr/wikia/backend/bin/run_maintenance '--script=wikia/WikiFactoryVariables/migrateWikiFactoryToHttps.php --dry-run --varName wgUploadPath' --id=119
+*   /usr/wikia/backend/bin/run_maintenance '--script=wikia/WikiFactoryVariables/migrateWikiFactoryToHttps.php --dryRun --varName wgUploadPath' --id=119
 */
 
 ini_set( 'display_errors', 'stderr' );
@@ -26,14 +26,14 @@ class MigrateWikiFactoryToHttps extends Maintenance {
 	public function __construct() {
 		parent::__construct();
 		$this->mDescription = "Migrates Wiki Factory variable to HTTPS";
-		$this->addOption( 'dry-run', 'Dry run mode', false, false, 'd' );
+		$this->addOption( 'dryRun', 'Dry run mode', false, false, 'd' );
 		$this->addOption( 'varName', 'Name of the Wiki Factory variable', true, true, 'k' );
 		$this->addOption( 'file', 'File where to save values that are going to be altered', false, true, 'f' );
 	}
 
 	public function execute() {
 		global $wgCityId, $wgMedusaHostPrefix;
-		$this->dryRun  = $this->hasOption( 'dry-run' );
+		$this->dryRun  = $this->hasOption( 'dryRun' );
 		$this->varName = $this->getOption( 'varName', '' );
 		$fileName = $this->getOption( 'file', false );
 
