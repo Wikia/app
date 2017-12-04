@@ -1,0 +1,31 @@
+city_variables:
+  -
+    cv_city_id: 1
+    cv_variable_id: 1
+    cv_value: 's:165:"sex=m;age=18-24;age=25-34;age=18-34;age=34-44;age=yadult;media=tv;gnre=action;gnre=adventure;gnre=drama;gnre=scifi;theme=alien;theme=heroes;theme=robots;theme=space;";'
+  -
+    cv_city_id: 1
+    cv_variable_id: 2
+    cv_value: test1
+  -
+    cv_city_id: 2
+    cv_variable_id: 1
+    cv_value: 's:105:"sex=m;age=18-24;age=25-34;age=18-34;age=yadult;pform=pc;gnre=action;gnre=mmorpg;esrb=mature;gnre=esports;";'
+  -
+    cv_city_id: 3
+    cv_variable_id: 1
+    cv_value: 's:67:"sex=m;age=13-17;age=18-34;eth=asian;eth=hisp;hhi=0-30;edu=nocollege";'
+
+city_variables_pool:
+  -
+    cv_id: 1
+    cv_name: wgDartCustomKeyValues
+    cv_variable_group:
+    cv_access_level:
+    cv_is_unique:
+  -
+    cv_id: 2
+    cv_name: wgSitename
+    cv_variable_group:
+    cv_access_level:
+    cv_is_unique:
