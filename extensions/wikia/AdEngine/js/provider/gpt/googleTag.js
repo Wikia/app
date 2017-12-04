@@ -176,15 +176,19 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 			slotsToDestroy = [],
 			success;
 
+		console.log('destroySlots isInitialized', isInitialized());
 		if (!isInitialized()) {
 			return;
 		}
 
+		console.log('destroySlots win.googletag.pubads', win.googletag.pubads);
+		win.googletag.pubads = undefined;
 		allSlots = win.googletag.pubads().getSlots();
 		// when nothing passed - destroy all slots
 		if (!slotsNames) {
 			slotsToDestroy = allSlots;
 		} else {
+			console.log('destroySlots allSlots', allSlots);
 			allSlots.forEach(function (slot) {
 				var slotsPositionTargeting = slot.getTargeting('pos');
 
@@ -198,10 +202,13 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 					}
 				}
 			});
+			console.log('destroySlots allSlots end');
 		}
 
 		if (slotsToDestroy.length) {
+			console.log('destroySlots slotsToDestroy.length', slotsToDestroy.length);
 			push(function () {
+				console.log('destroySlots push start');
 				log(['destroySlots', slotsNames, slotsToDestroy], log.levels.debug, logGroup);
 				success = win.googletag.destroySlots(slotsToDestroy);
 
@@ -210,6 +217,7 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 				}
 
 				googleSlots.removeSlots(slotsToDestroy);
+				console.log('destroySlots push end');
 			});
 		} else {
 			log(['destroySlots', 'no slots returned to destroy', allSlots, slotsNames], log.levels.debug, logGroup);
