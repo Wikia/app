@@ -423,11 +423,11 @@ $wgUpdateCompatibleMetadata = false;
  */
 $wgUseSharedUploads = false;
 /** Full path on the web server where shared uploads can be found */
-$wgSharedUploadPath = "http://commons.wikimedia.org/shared/images";
+$wgSharedUploadPath = null;
 /** Fetch commons image description pages and display them on the local wiki? */
 $wgFetchCommonsDescriptions = false;
 /** Path on the file system where shared uploads can be found. */
-$wgSharedUploadDirectory = "/var/www/wiki3/images";
+$wgSharedUploadDirectory = null;
 /** DB name with metadata about shared directory. Set this to false if the uploads do not come from a wiki. */
 $wgSharedUploadDBname = false;
 /** Optional table prefix used in database. */
