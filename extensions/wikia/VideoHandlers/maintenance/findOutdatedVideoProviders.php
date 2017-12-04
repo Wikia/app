@@ -81,7 +81,7 @@ TEXT;
 		$result = $solr->select( $select );
 		$videosCount = $result->getNumFound();
 
-		if ($videosCount > 0) {
+		if ( $videosCount > 0 ) {
 			return [ $videosCount, $result->getDocuments()[0] ];
 		}
 		else {
@@ -99,14 +99,14 @@ TEXT;
 					'video-' . $provider,
 					'sunset',
 				],
-				'body' => trim(strtr(
+				'body' => trim( strtr(
 					self::REPORT_TENPLATE,
 					[
 						'$provider' => $provider,
 						'$last_upload' => $stats['last_upload'] ?: 'n/a',
 						'$url' => $stats['last_upload_url'] ?: 'n/a',
 						'$videos' => $stats['videos'] ?: 0,
-						'$context' => json_encode($stats, JSON_PRETTY_PRINT)
+						'$context' => json_encode( $stats, JSON_PRETTY_PRINT )
 					]
 				))
 			]
@@ -127,9 +127,9 @@ TEXT;
 			$this->output( "Checking '{$provider}' video provider...");
 
 			// query Solr for videos from a given provider
-			list($videos, $firstVideo) = self::queryForVideos( $solr, $provider );
+			list( $videos, $firstVideo ) = self::queryForVideos( $solr, $provider );
 
-			if ($videos > 0) {
+			if ( $videos > 0 ) {
 				/* @var Solarium_Document_ReadOnly $firstVideo */
 				$data = $firstVideo->getFields(); #var_dump($data);
 
@@ -137,7 +137,7 @@ TEXT;
 					'videos' => $videos,
 					'last_upload' => $data['touched'],
 					'last_upload_days_ago' =>
-						floor( (time() - strtotime($data['touched'])) / 86400),
+						floor( ( time() - strtotime($data['touched'] ) ) / 86400 ),
 					'last_upload_url' => $data['url'],
 				];
 
@@ -147,7 +147,7 @@ TEXT;
 					$stats['last_upload_days_ago'], $stats['last_upload_url']
 				) );
 
-				if ($stats['last_upload_days_ago'] > self::UPLOADED_X_DAYS_AGO_THRESHOLD) {
+				if ( $stats['last_upload_days_ago'] > self::UPLOADED_X_DAYS_AGO_THRESHOLD ) {
 					self::reportProvider( $provider, $stats );
 				}
 			}
