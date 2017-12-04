@@ -63,7 +63,6 @@ class DWDimensionApiControllerSQL {
 		ORDER BY user_id      
 		LIMIT $limit';
 
-
 	const DIMENSION_WIKI_EMBEDS = '
 		SELECT
 			il.il_from AS article_id,
