@@ -21,6 +21,11 @@ class Revision implements IDBAccessObject {
 	protected $mTitle;
 	protected $mCurrent;
 
+	/**
+	 * SUS-3466: Maximum possible length of revision summary in bytes.
+	 */
+	const REVISION_SUMMARY_MAX_LENGTH = 255;
+
 	// Revision deletion constants
 	const DELETED_TEXT = 1;
 	const DELETED_COMMENT = 2;
@@ -664,7 +669,7 @@ class Revision implements IDBAccessObject {
 	 * @return String
 	 */
 	public function getRawUserText() {
-		if ( $this->mUserText === null ) {
+		if ( $this->mUserText === null || $this->mUserText === '' /* SUS-3459 */ ) {
 			$this->mUserText = User::whoIs( $this->mUser ); // load on demand
 			if ( $this->mUserText === false ) {
 				# This shouldn't happen, but it can if the wiki was recovered
@@ -1006,7 +1011,8 @@ class Revision implements IDBAccessObject {
 			$this->mTextId = $dbw->insertId();
 		}
 
-		if ( $this->mComment === null ) $this->mComment = "";
+		// SUS-3466: Truncate edit summaries before insert to prevent database error
+		$this->mComment = substr( $this->mComment ?? '', 0, static::REVISION_SUMMARY_MAX_LENGTH );
 
 		# Record the edit in revisions
 		$rev_id = isset( $this->mId )

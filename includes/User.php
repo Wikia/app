@@ -4528,6 +4528,16 @@ class User implements JsonSerializable {
 	}
 
 	/**
+	 * Whether this user is a bot (either globally or on this wiki) or not
+	 * @return bool
+	 */
+	public function isBot() {
+		return self::permissionsService()->isInGroup( $this, 'bot' )
+			||
+			self::permissionsService()->isInGroup( $this, 'bot-global' );
+	}
+
+	/**
 	 * Get the localized descriptive name for a group, if it exists
 	 *
 	 * @param $group String Internal group name

@@ -1,18 +1,28 @@
 <?php
 
+use Wikia\Service\User\Permissions\PermissionsServiceAccessor;
+
 class DWDimensionApiController extends WikiaApiController {
+	use PermissionsServiceAccessor;
+
 	const LIMIT = 100;
 	const LIMIT_MAX = 20000;
 
 	const WIKI_DOMAINS_AFTER_DOMAIN = null;
 
-	const WIKIS_AFTER_WIKI_ID = -1;
+	const DEFAULT_AFTER_WIKI_ID = -1;
+
+	const DEFAULT_AFTER_USER_ID = -1;
 
 	const ARTICLES_AFTER_ARTICLE_ID = -1;
 
 	const ARTICLE_LAST_EDITED = '1970-01-01';
 
 	const DART_TAG_VARIABLE_NAME = 'wgDartCustomKeyValues';
+
+	const BOT_USER_GROUP = 'bot';
+
+	const BOT_GLOBAL_USER_GROUP = 'bot-global';
 
 	private $connections = [];
 
@@ -28,10 +38,10 @@ class DWDimensionApiController extends WikiaApiController {
 	public function getWikiDartTags() {
 		$db = $this->getSharedDbSlave();
 
-		$limit = min( $db->strencode( $this->getRequest()->getInt( 'wiki_limit', static::LIMIT ) ),
-            static::LIMIT_MAX );
-		$afterWikiId = $db->strencode( $this->getRequest()->getInt( 'after_wiki_id',
-            static::WIKIS_AFTER_WIKI_ID ) );
+		$limit = min($db->strencode( $this->getRequest()->getInt(
+			'wiki_limit', static::LIMIT ) ), static::LIMIT_MAX);
+		$afterWikiId = $db->strencode( $this->getRequest()->getInt(
+			'after_wiki_id', static::DEFAULT_AFTER_WIKI_ID ) );
 
 		$variables = WikiFactory::getVariableForAllWikis( static::DART_TAG_VARIABLE_NAME, $limit,
             $afterWikiId );
@@ -74,10 +84,10 @@ class DWDimensionApiController extends WikiaApiController {
 	public function getWikis() {
 		$db = $this->getSharedDbSlave();
 
-		$limit = min( $db->strencode( $this->getRequest()->getVal( 'limit', static::LIMIT ) ),
-            static::LIMIT_MAX );
-		$afterWikiId = $db->strencode( $this->getRequest()->getVal( 'after_wiki_id',
-            static::WIKIS_AFTER_WIKI_ID ) );
+		$limit = min( $db->strencode( $this->getRequest()->getVal(
+			'limit', static::LIMIT ) ), static::LIMIT_MAX );
+		$afterWikiId = $db->strencode( $this->getRequest()->getVal(
+			'after_wiki_id', static::DEFAULT_AFTER_WIKI_ID ) );
 
 		$query = str_replace( '$city_id', $afterWikiId,
             DWDimensionApiControllerSQL::DIMENSION_WIKIS_QUERY );
@@ -163,6 +173,42 @@ class DWDimensionApiController extends WikiaApiController {
             WikiaResponse::CACHE_DISABLED
         );
     }
+
+	public function getUsers() {
+		$db = $this->getSharedDbSlave();
+
+		$limit = min( $db->strencode( $this->getRequest()->getVal(
+			'limit', static::LIMIT ) ), static::LIMIT_MAX );
+		$afterUserId = $db->strencode( $this->getRequest()->getVal(
+			'after_user_id', static::DEFAULT_AFTER_USER_ID ) );
+
+		$query = str_replace( '$user_id', $afterUserId, DWDimensionApiControllerSQL::DIMENSION_USERS );
+		$query = str_replace( '$limit', $limit, $query);
+
+		$dbResult = $db->query( $query,__METHOD__);
+		$result = [];
+		$botUsers = $this->permissionsService()->getUsersInGroups( [ static::BOT_USER_GROUP ] );
+		$botGlobalUsers = $this->permissionsService()->getUsersInGroups( [ static::BOT_GLOBAL_USER_GROUP ] );
+		while ( $row = $db->fetchObject( $dbResult ) ) {
+			$result[] = [
+				'user_id' => $row->user_id,
+				'user_name' => $row->user_name,
+				'user_real_name' => $row->user_real_name,
+				'user_email_authenticated' => $row->user_email_authenticated,
+				'user_editcount' => $row->user_editcount,
+				'user_registration' => $row->user_registration,
+				'is_bot' => isset( $botUsers[ $row->user_id ] ),
+				'is_bot_global' => isset( $botGlobalUsers[ $row->user_id ] )
+			];
+		}
+		$db->freeResult( $dbResult );
+
+		$this->setResponseData(
+			$result,
+			null,
+			WikiaResponse::CACHE_DISABLED
+		);
+	}
 
 	public function getWikiEmbeds() {
 		$this->getDataPerWiki( array( $this, 'getWikiEmbedsData' ) );
