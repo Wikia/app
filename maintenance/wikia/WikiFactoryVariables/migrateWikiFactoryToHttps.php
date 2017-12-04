@@ -92,7 +92,9 @@ class MigrateWikiFactoryToHttps extends Maintenance {
 				'wgUser' => User::newFromName( Wikia::BOT_USER, false )
 			] );
 
-			WikiFactory::setVarByName( $this->varName, $wgCityId, $keyValue, "migrating Wiki Factory links to https" );
+			$globalStateWrapper->wrap( function () use ( $wgCityId, $keyValue ) {
+				WikiFactory::setVarByName( $this->varName, $wgCityId, $keyValue, "migrating Wiki Factory links to https" );
+			} );
 		}
 
 		if ( $fh ) {
