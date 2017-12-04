@@ -141,7 +141,7 @@ class MysqlUpdater extends DatabaseUpdater {
 			#array( 'addTable', 'valid_tag',                         'patch-change_tag.sql' ), # SUS-3066
 
 			// 1.16
-			array( 'addTable', 'user_properties',                   'patch-user_properties.sql' ),
+			# array( 'addTable', 'user_properties',                   'patch-user_properties.sql' ),
 			array( 'addTable', 'log_search',                        'patch-log_search.sql' ),
 			array( 'addField', 'logging',       'log_user_text',    'patch-log_user_text.sql' ),
 			array( 'doLogSearchPopulation' ),
@@ -172,7 +172,7 @@ class MysqlUpdater extends DatabaseUpdater {
 			// 1.18
 			array( 'doUserNewTalkTimestampNotNull' ),
 			#array( 'addIndex', 'user',          'user_email',       'patch-user_email_index.sql' ),
-			array( 'modifyField', 'user_properties', 'up_property', 'patch-up_property.sql' ),
+			#array( 'modifyField', 'user_properties', 'up_property', 'patch-up_property.sql' ),
 			array( 'addTable', 'uploadstash',                       'patch-uploadstash.sql' ),
 			array( 'addTable', 'user_former_groups',                'patch-user_former_groups.sql'),
 
