@@ -32,6 +32,19 @@ class DWDimensionApiControllerSQL {
       ORDER BY city.city_id      
       LIMIT $limit';
 
+	const DIMENSION_USERS = '
+		SELECT 
+			user_id,
+			user_name,
+			user_real_name,
+			user_email_authenticated,
+			user_editcount,
+			STR_TO_DATE(user_registration, \'%Y%m%d%H%i%s\') AS user_registration
+		FROM user u
+		WHERE user_id > $user_id
+		ORDER BY user_id      
+		LIMIT $limit';
+
 	const DIMENSION_WIKI_EMBEDS = '
 		SELECT
 			il.il_from AS article_id,
