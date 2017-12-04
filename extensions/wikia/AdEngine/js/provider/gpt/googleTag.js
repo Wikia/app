@@ -182,6 +182,7 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 		}
 
 		console.log('destroySlots win.googletag.pubads', win.googletag.pubads);
+		win.googletag.pubads = undefined;
 		allSlots = win.googletag.pubads().getSlots();
 		// when nothing passed - destroy all slots
 		if (!slotsNames) {
