@@ -39,6 +39,11 @@ abstract class WikiaDatabaseTest extends TestCase {
 		// init core MW schema
 		$schemaFile = self::$db->getSchemaPath();
 		self::$db->sourceFile( $schemaFile );
+
+		// SUS-3071: add shared db tables
+		global $IP;
+		self::$db->sourceFile( "$IP/tests/fixtures/user.sql" );
+		self::$db->sourceFile( "$IP/tests/fixtures/user_properties.sql" );
 	}
 
 	protected function setUp() {
