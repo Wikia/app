@@ -282,7 +282,7 @@ class SpecialNewpages extends IncludableSpecialPage {
 	 * @param $result Result row
 	 * @return Boolean
 	 */
-	protected function patrollable( $result ) {
+	public function patrollable( $result ) {
 		return ( $this->getUser()->useNPPatrol() && !$result->rc_patrolled );
 	}
 
@@ -375,9 +375,12 @@ class NewPagesPager extends ReverseChronologicalPager {
 	/** @var FormOptions $opts Stored opts */
 	protected $opts;
 
-	function __construct( IContextSource $context, FormOptions $opts ) {
-		parent::__construct( $context );
+	protected $special;
+
+	function __construct( SpecialNewpages $special, FormOptions $opts ) {
+		parent::__construct( $special->getContext() );
 		$this->opts = $opts;
+		$this->special = $special;
 	}
 
 	function getQueryInfo() {
@@ -520,7 +523,7 @@ class NewPagesPager extends ReverseChronologicalPager {
 
 		$query = array( 'redirect' => 'no' );
 
-		if( $this->patrollable( $result ) ) {
+		if( $this->special->patrollable( $result ) ) {
 			$query['rcid'] = $result->rc_id;
 		}
 
@@ -546,7 +549,7 @@ class NewPagesPager extends ReverseChronologicalPager {
 		$ulink = Linker::revUserTools( $rev );
 		$comment = Linker::revComment( $rev );
 
-		if ( $this->patrollable( $result ) ) {
+		if ( $this->special->patrollable( $result ) ) {
 			$classes[] = 'not-patrolled';
 		}
 
@@ -556,7 +559,7 @@ class NewPagesPager extends ReverseChronologicalPager {
 		}
 
 		# Tags, if any. check for including due to bug 23293
-		if ( !$this->including() ) {
+		if ( !$this->special->including() ) {
 			list( $tagDisplay, $newClasses ) = ChangeTags::formatSummaryRow( $result->ts_tags, 'newpages' );
 			$classes = array_merge( $classes, $newClasses );
 		} else {
