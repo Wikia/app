@@ -70,15 +70,21 @@ abstract class ImageServingDriverBase {
 		return array_keys( $this->articles );
 	}
 
-	static private function getRevId( $articleId ) {
-		return Article::newFromID( $articleId )->getRevIdFetched();
+	protected function getRevId( $articleId ): int {
+		$article = Article::newFromID( $articleId );
+
+		if ( $article instanceof Article ) {
+			return $article->getRevIdFetched();
+		} else {
+			return 0;
+		}
 	}
 
 	protected function loadFromCache( $articleIds = [] ) {
 		$cached = [];
 		$cacheMissArticleIds = [];
 		foreach ( $articleIds as $articleId ) {
-			$articleCache = $this->memc->get( $this->makeKey( $articleId, self::getRevId( $articleId ) ) );
+			$articleCache = $this->memc->get( $this->makeKey( $articleId, $this->getRevId( $articleId ) ) );
 			if ( !empty( $articleCache ) ) {
 				$cached[$articleId] = $articleCache;
 			} else {
@@ -164,7 +170,7 @@ abstract class ImageServingDriverBase {
 	protected function storeInCache( $articleImageIndex ) {
 		// store images for each article separately
 		foreach ( $articleImageIndex as $articleId => $imageIndex ) {
-			$this->memc->set( $this->makeKey( $articleId, self::getRevId( $articleId ) ), $imageIndex, 3600 );
+			$this->memc->set( $this->makeKey( $articleId, $this->getRevId( $articleId ) ), $imageIndex, 3600 );
 		}
 	}
 
