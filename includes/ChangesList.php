@@ -805,10 +805,16 @@ class EnhancedChangesList extends ChangesList {
 
 		$memcKey = wfMemcKey( __METHOD__, $rc->mAttribs['rc_id'], $unpatrolled, $this->getLanguage()->getCode(), $counter, 'v2');
 		$out = $wgMemc->get($memcKey);
+
+		# Wikia change - SUS-3241
+		# use either rc_user or rc_ip_bin for handling logged-in / anon entries in recentchanges table
+		$userId = (int) $rc->getAttribute('rc_user');
+		$userName = (string) User::getUsername( $userId, $rc->getUserIp() );
+
 		if(!empty($out)) {
 			// wikia change start (BAC-492)
 			$out['usertalklink'] = $this->isDeleted( $rc, Revision::DELETED_USER ) ?
-				null : Linker::userToolLinks( $rc->mAttribs['rc_user'], $rc->getUserIp() );
+				null : Linker::userToolLinks( $userId, $userName );
 			// wikia change end
 			wfProfileOut( __METHOD__ );
 			return $out;
@@ -820,11 +826,7 @@ class EnhancedChangesList extends ChangesList {
 			$out['userlink'] = ' <span class="history-deleted">' . wfMsgHtml( 'rev-deleted-user' ) . '</span>';
 			$out['usertalklink'] = null;
 		} else {
-			# Wikia change - SUS-3241
-			# use either rc_user or rc_ip_bin for handling logged-in / anon entries in recentchanges table
-			$userId = (int) $rc->getAttribute('rc_user');
-			$userName = (string) User::getUsername( $userId, $rc->getUserIp() );
-
+			# Wikia change
 			$out['userlink'] = Linker::userLink( $userId, $userName );
 			$out['usertalklink'] = Linker::userToolLinks( $userId, $userName );
 			# Wikia change - end
