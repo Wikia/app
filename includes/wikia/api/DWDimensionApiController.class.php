@@ -14,7 +14,7 @@ class DWDimensionApiController extends WikiaApiController {
 
 	const DEFAULT_AFTER_USER_ID = -1;
 
-	const ARTICLES_AFTER_ARTICLE_ID = -1;
+	const DEFAULT_AFTER_ARTICLE_ID = -1;
 
 	const ARTICLE_LAST_EDITED = '1970-01-01';
 
@@ -143,9 +143,9 @@ class DWDimensionApiController extends WikiaApiController {
         $limit = min($db->strencode( $this->getRequest()->getInt( 'limit', static::LIMIT ) ),
             static::LIMIT_MAX);
         $afterWikiId = $db->strencode( $this->getRequest()->getInt( 'after_wiki_id',
-            static::WIKIS_AFTER_WIKI_ID ) );
+            static::DEFAULT_AFTER_WIKI_ID ) );
         $afterArticleId = $db->strencode( $this->getRequest()->getInt( 'after_article_id',
-            static::ARTICLES_AFTER_ARTICLE_ID ) );
+            static::DEFAULT_AFTER_ARTICLE_ID ) );
         $last_edited = $db->strencode( $this->getRequest()->getVal( 'last_edited',
             static::ARTICLE_LAST_EDITED ) );
 
