@@ -48,7 +48,7 @@ class SEOTweaksHooksHelper {
 	}
 
 	static protected function makeOpenGraphKey( Title $title ): string {
-		return wfMemcKey( 'OpenGraphTitleImage', md5( $title->getDBKey() ), $title->getLatestRevID()  );
+		return wfMemcKey( 'OpenGraphTitleImage', md5( $title->getDBKey() ), $title->getLatestRevID() );
 	}
 
 	/**
@@ -142,8 +142,7 @@ class SEOTweaksHooksHelper {
 					// Even if there is no og:image, we store the info in memcahe so we don't do the
 					// processing again
 					return '';
-				},
-				WikiaDataAccess::REFRESH_CACHE
+				}
 			);
 
 			// only when there is a thumbnail url add it to metatags
