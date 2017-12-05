@@ -47,8 +47,8 @@ class SEOTweaksHooksHelper {
 		return $fileUrl;
 	}
 
-	static protected function makeOpenGraphKey( Title $title ): String {
-		return wfMemcKey( 'OpenGraphTitleImage', md5( $title->getDBKey() ) );
+	static protected function makeOpenGraphKey( Title $title ): string {
+		return wfMemcKey( 'OpenGraphTitleImage', md5( $title->getDBKey() ), $title->getLatestRevID()  );
 	}
 
 	/**
@@ -82,7 +82,7 @@ class SEOTweaksHooksHelper {
 	 * @param null $driverName
 	 * @return null|\Title
 	 */
-	static protected function getFirstArticleImageLargerThan( Title $title, Int $width, Int $height, $driverName = null ) {
+	static protected function getFirstArticleImageLargerThan( Title $title, int $width, int $height, $driverName = null ) {
 		$imageServing = new ImageServing( [ $title->getArticleID() ], $width, $height );
 		$out = $imageServing->getImages( 1, $driverName );
 
@@ -106,24 +106,12 @@ class SEOTweaksHooksHelper {
 		return null;
 	}
 
-	public static function onArticleSaveComplete( &$article ) {
-		if ( !empty( $article ) && $article instanceof Article ) {
-			$title = $article->getTitle();
-
-			if ( !empty( $title ) && $title instanceof Title && !$title->isMainPage() ) {
-				WikiaDataAccess::cachePurge( self::makeOpenGraphKey( $title ) );
-			}
-		}
-
-		return true;
-	}
-
 	/**
 	 * @param $meta
 	 * @param $title Title
 	 * @return bool
 	 */
-	static public function onOpenGraphMetaHeaders( &$meta, $title ): Boolean {
+	static public function onOpenGraphMetaHeaders( &$meta, $title ): bool {
 		if ( !empty( $title ) && $title instanceof Title && !$title->isMainPage() ) {
 			$namespace = $title->getNamespace();
 
@@ -142,19 +130,19 @@ class SEOTweaksHooksHelper {
 
 					if ( !empty( $title ) ) {
 						$file = wfFindFile( $title );
+
 						if ( !empty( $file ) ) {
 							$thumb = self::getResizeImageUrlIfLargerThanMax( $file );
-							if ( !empty( $thumb ) ) $meta["og:image"] = $thumb;
+
+							if ( !empty( $thumb ) ) {
+								return $thumb;
+							}
 						}
 					}
 
-					if ( isset( $meta["og:image"] ) && ( !empty( $meta["og:image"] ) ) ) {
-						return $meta["og:image"];
-					} else {
-						// Even if there is no og:image, we store the info in memcahe so we don't do the
-						// processing again
-						return '';
-					}
+					// Even if there is no og:image, we store the info in memcahe so we don't do the
+					// processing again
+					return '';
 				}
 			);
 
