@@ -172,6 +172,7 @@ class NewWikisPage extends AlphabeticPager {
 	function reallyDoQuery( $offset, $limit, $descending ) {
 		$fname = __METHOD__ . ' (' . get_class( $this ) . ')';
 		$info = $this->getQueryInfo();
+
 		$tables = $info['tables'];
 		$fields = $info['fields'];
 		$conds = isset( $info['conds'] ) ? $info['conds'] : array();

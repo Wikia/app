@@ -101,7 +101,7 @@ class HAWelcomeTaskHookDispatcher {
 	}
 
 	protected function currentUserHasLocalEdits() {
-		return $this->currentUser->getEditCountLocal() > 1;
+		return $this->currentUser->getEditCount() > 1;
 	}
 
 	public function updateAdminActivity() {

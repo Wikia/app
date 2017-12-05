@@ -79,10 +79,6 @@
 					<?= $app->renderView( 'ArticleVideo', 'featured' ) ?>
 				<? endif; ?>
 
-				<? if ( $wg->enableArticleRelatedVideo ) : ?>
-					<?= $app->renderView( 'ArticleVideo', 'related' ) ?>
-				<? endif; ?>
-
 				<? if ( $subtitle != '' && $headerModuleName === 'UserPagesHeader' ) : ?>
 					<div id="contentSub"><?= $subtitle ?></div>
 				<? endif; ?>
@@ -139,16 +135,6 @@
 						<?= $afterContentHookText ?>
 					</div>
 				<? endif; ?>
-
-				<div id="WikiaArticleBottomAd" class="noprint">
-					<?= $app->renderView( 'Ad', 'Index', ['slotName' => 'PREFOOTER_LEFT_BOXAD', 'onLoad' => true] ) ?>
-
-					<? if ( WikiaPageType::isMainPage() ) : ?>
-						<?= $app->renderView( 'Ad', 'Index', ['slotName' => 'PREFOOTER_MIDDLE_BOXAD', 'onLoad' => true] ) ?>
-					<? endif; ?>
-
-					<?= $app->renderView( 'Ad', 'Index', ['slotName' => 'PREFOOTER_RIGHT_BOXAD', 'onLoad' => true] ) ?>
-				</div>
 			</div>
 		</article><!-- WikiaMainContent -->
 

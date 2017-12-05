@@ -1,4 +1,4 @@
-<?php declare(strict_types=1);
+<?php
 /*
  * This file is part of PHPUnit.
  *
@@ -55,6 +55,7 @@ class StandardTestSuiteLoader implements TestSuiteLoader
                 if (\substr($loadedClass, $offset) === $suiteClassName &&
                     $class->getFileName() == $filename) {
                     $suiteClassName = $loadedClass;
+
                     break;
                 }
             }

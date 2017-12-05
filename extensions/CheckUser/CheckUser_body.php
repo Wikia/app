@@ -625,7 +625,7 @@ class CheckUser extends SpecialPage {
 		$ret = $dbr->select(
 			'cu_changes',
 			[
-				'cuc_namespace', 'cuc_title', 'cuc_user', 'cuc_user_text', 'cuc_comment', 'cuc_actiontext',
+				'cuc_namespace', 'cuc_title', 'cuc_user', 'cuc_comment', 'cuc_actiontext',
 				'cuc_timestamp', 'cuc_minor', 'cuc_page_id', 'cuc_type', 'cuc_this_oldid',
 				'cuc_last_oldid', 'cuc_ip', 'cuc_xff', 'cuc_agent'
 			],
@@ -646,7 +646,7 @@ class CheckUser extends SpecialPage {
 			# Try to optimize this query
 			$lb = new LinkBatch;
 			foreach ( $ret as $row ) {
-				$userText = str_replace( ' ', '_', $row->cuc_user_text );
+				$userText = User::getUsername( $row->cuc_user, $row->cuc_ip ); // SUS-3080
 				$lb->add( $row->cuc_namespace, $row->cuc_title );
 				$lb->add( NS_USER, $userText );
 				$lb->add( NS_USER_TALK, $userText );
@@ -917,7 +917,7 @@ class CheckUser extends SpecialPage {
 		$ret = $dbr->select(
 			'cu_changes',
 			[
-				'cuc_user_text', 'cuc_timestamp', 'cuc_user', 'cuc_ip', 'cuc_agent', 'cuc_xff'
+				'cuc_timestamp', 'cuc_user', 'cuc_ip', 'cuc_agent', 'cuc_xff'
 			],
 			[ $ip_conds, $time_conds ],
 			__METHOD__,
@@ -934,6 +934,8 @@ class CheckUser extends SpecialPage {
 		} else {
 			global $wgAuth;
 			foreach ( $ret as $row ) {
+				$row->cuc_user_text = User::getUsername( $row->cuc_user, $row->cuc_ip ); // SUS-3080
+
 				if ( !array_key_exists( $row->cuc_user_text, $users_edits ) ) {
 					$users_last[$row->cuc_user_text] = $row->cuc_timestamp;
 					$users_edits[$row->cuc_user_text] = 0;
@@ -1144,6 +1146,9 @@ class CheckUser extends SpecialPage {
 		$line .= $this->getLinksFromRow( $row );
 		# Show date
 		$line .= ' . . ' . $wgLang->time( wfTimestamp( TS_MW, $row->cuc_timestamp ), true, true ) . ' . . ';
+
+		$row->cuc_user_text = User::getUsername( $row->cuc_user, $row->cuc_ip ); // SUS-3080
+
 		# Userlinks
 		$line .= $this->sk->userLink( $row->cuc_user, $row->cuc_user_text );
 		$line .= $this->sk->userToolLinks( $row->cuc_user, $row->cuc_user_text );
@@ -1330,7 +1335,7 @@ class CheckUser extends SpecialPage {
 				'cul_id' => $cul_id,
 				'cul_timestamp' => $dbw->timestamp(),
 				'cul_user' => $wgUser->getID(),
-				'cul_user_text' => $wgUser->getName(),
+				'cul_user_text' => $wgUser->isAnon() ? $wgUser->getName() : '', // SUS-3083
 				'cul_reason' => $reason,
 				'cul_type' => $logType,
 				'cul_target_id' => $targetID,
@@ -1342,4 +1347,3 @@ class CheckUser extends SpecialPage {
 		return true;
 	}
 }
-

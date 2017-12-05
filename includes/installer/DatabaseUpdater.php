@@ -500,7 +500,11 @@ abstract class DatabaseUpdater {
 	 * @param $fullpath Boolean: Whether to treat $patch path as a relative or not
 	 */
 	protected function dropIndex( $table, $index, $patch, $fullpath = false ) {
-		if ( $this->db->indexExists( $table, $index, __METHOD__ ) ) {
+		# Wikia - prevent "SHOW INDEX FROM" from reporting DB error when a table does not exist
+		if ( !$this->db->tableExists( $table, __METHOD__ ) ) {
+			$this->output( "...$table table doesn't exist.\n" );
+		}
+		elseif ( $this->db->indexExists( $table, $index, __METHOD__ ) ) {
 			$this->output( "Dropping $index index from table $table... " );
 			$this->applyPatch( $patch, $fullpath );
 			$this->output( "done.\n" );
@@ -597,7 +601,7 @@ abstract class DatabaseUpdater {
 		$activeUsers = $this->db->selectField( 'site_stats', 'ss_active_users', false, __METHOD__ );
 		if ( $activeUsers == -1 ) {
 			$activeUsers = $this->db->selectField( 'recentchanges',
-				'COUNT( DISTINCT rc_user_text )',
+				'COUNT( DISTINCT rc_user )',
 				array( 'rc_user != 0', 'rc_bot' => 0, "rc_log_type != 'newusers'" ), __METHOD__
 			);
 			$this->db->update( 'site_stats',
@@ -606,22 +610,6 @@ abstract class DatabaseUpdater {
 			);
 		}
 		$this->output( "...ss_active_users user count set...\n" );
-	}
-
-	/**
-	 * Populates the log_user_text field in the logging table
-	 */
-	protected function doLogUsertextPopulation() {
-		if ( !$this->updateRowExists( 'populate log_usertext' ) ) {
-			$this->output(
-			"Populating log_user_text field, printing progress markers. For large\n" .
-			"databases, you may want to hit Ctrl-C and do this manually with\n" .
-			"maintenance/populateLogUsertext.php.\n" );
-
-			$task = $this->maintenance->runChild( 'PopulateLogUsertext' );
-			$task->execute();
-			$this->output( "done.\n" );
-		}
 	}
 
 	/**

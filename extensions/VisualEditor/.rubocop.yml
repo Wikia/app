@@ -1,7 +1,0 @@
-inherit_from: .rubocop_todo.yml
-
-Metrics/ClassLength:
-  Enabled: false
-
-Metrics/MethodLength:
-  Enabled: false

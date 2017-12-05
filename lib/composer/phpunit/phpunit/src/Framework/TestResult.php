@@ -1,4 +1,4 @@
-<?php declare(strict_types=1);
+<?php
 /*
  * This file is part of PHPUnit.
  *
@@ -678,14 +678,17 @@ class TestResult implements Countable
                 switch ($test->getSize()) {
                     case \PHPUnit\Util\Test::SMALL:
                         $_timeout = $this->timeoutForSmallTests;
+
                         break;
 
                     case \PHPUnit\Util\Test::MEDIUM:
                         $_timeout = $this->timeoutForMediumTests;
+
                         break;
 
                     case \PHPUnit\Util\Test::LARGE:
                         $_timeout = $this->timeoutForLargeTests;
+
                         break;
                 }
 

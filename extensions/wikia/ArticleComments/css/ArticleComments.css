@@ -1,7 +1,7 @@
 /* This stylesheet is only used in Monobook. You're probably looking for: /skins/oasis/css/core/ArticleComments.scss */
 
 .skin-monobook .WikiaArticleComments.loading {
-	background: url(/skins/common/images/ajax.gif) no-repeat 50% 50%; /* $wgCdnStylePath */
+	background: url(/skins/common/images/ajax.gif) no-repeat 50% 50%; /* $wgResourceBasePath */
 	border-top: 1px solid #CCC;
 	height: 48px;
 	margin: 10px;

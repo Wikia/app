@@ -2,7 +2,7 @@
 --
 -- Host: geo-db-specials-slave.query.consul    Database: specials
 -- ------------------------------------------------------
--- Server version	5.6.24-72.2-log
+-- Server version	5.7.18-15-log
 
 
 --
@@ -54,15 +54,12 @@ CREATE TABLE `events_local_users` (
   `editdate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `last_revision` int(11) NOT NULL DEFAULT '0',
   `cnt_groups` smallint(4) NOT NULL DEFAULT '0',
-  `single_group` char(25) NOT NULL DEFAULT '',
+  `single_group` varchar(255) NOT NULL DEFAULT '',
   `all_groups` mediumtext NOT NULL,
   `user_is_blocked` tinyint(1) DEFAULT '0',
   `user_is_closed` tinyint(1) DEFAULT '0',
   PRIMARY KEY (`wiki_id`,`user_id`,`user_name`),
-  KEY `user_edits` (`user_id`,`edits`,`wiki_id`),
-  KEY `user_id` (`user_id`),
-  KEY `edits` (`edits`),
-  KEY `wiki_id` (`wiki_id`)
+  KEY `user_edits` (`user_id`,`edits`,`wiki_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=DYNAMIC;
 
 --
@@ -98,13 +95,10 @@ DROP TABLE IF EXISTS `multilookup`;
 CREATE TABLE `multilookup` (
   `ml_city_id` int(9) unsigned NOT NULL,
   `ml_ip_bin` varbinary(16) NOT NULL DEFAULT '',
-  `ml_count` int(6) unsigned NOT NULL DEFAULT '0',
   `ml_ts` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`ml_city_id`,`ml_ip_bin`),
   KEY `multilookup_ts_inx` (`ml_ts`),
-  KEY `multilookup_cnt_ts_inx` (`ml_count`,`ml_ts`),
-  KEY `multilookup_ip_bin_ts_inx` (`ml_ip_bin`,`ml_ts`),
-  KEY `multilookup_ip_bin_cnt_ts_inx` (`ml_ip_bin`,`ml_count`,`ml_ts`)
+  KEY `multilookup_ip_bin_ts_inx` (`ml_ip_bin`,`ml_ts`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=DYNAMIC;
 
 --
@@ -117,15 +111,14 @@ CREATE TABLE `phalanx_stats` (
   `ps_blocker_id` int(8) unsigned NOT NULL,
   `ps_blocker_type` smallint(1) unsigned NOT NULL,
   `ps_timestamp` binary(14) NOT NULL DEFAULT '\0\0\0\0\0\0\0\0\0\0\0\0\0\0',
+  `ps_blocked_user_id` int(11) DEFAULT NULL,
   `ps_blocked_user` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '',
   `ps_wiki_id` int(9) NOT NULL,
   `ps_blocker_hit` smallint(1) unsigned NOT NULL,
   `ps_referrer` varchar(150) DEFAULT NULL,
   PRIMARY KEY (`ps_id`),
   KEY `wiki_id` (`ps_wiki_id`,`ps_timestamp`),
-  KEY `blocker_id` (`ps_blocker_id`,`ps_timestamp`),
-  KEY `ps_timestamp` (`ps_timestamp`),
-  KEY `ps_blocker_id` (`ps_blocker_id`)
+  KEY `blocker_id` (`ps_blocker_id`,`ps_timestamp`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -140,4 +133,4 @@ CREATE TABLE `script_log` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
--- Dump completed on 2017-10-06 12:23:06
+-- Dump completed on 2017-12-04 11:45:53

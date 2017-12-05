@@ -11,10 +11,6 @@
 -- superior resiliency against crashes and ability to read
 -- during writes (and write during reads!)
 --
--- Only the 'searchindex' table requires MyISAM due to the
--- requirement for fulltext index support, which is missing
--- from InnoDB.
---
 --
 -- The MySQL table backend for MediaWiki currently uses
 -- 14-character BINARY or VARBINARY fields to store timestamps.
@@ -36,84 +32,6 @@
 -- updates manually, you will need to manually insert the
 -- table prefix if any when running these scripts.
 --
-
-
---
--- The user table contains basic account information,
--- authentication keys, etc.
---
--- Some multi-wiki sites may share a single central user table
--- between separate wikis using the $wgSharedDB setting.
---
--- Note that when a external authentication plugin is used,
--- user table entries still need to be created to store
--- preferences and to key tracking information in the other
--- tables.
---
-CREATE TABLE /*_*/user (
-  user_id int unsigned NOT NULL PRIMARY KEY AUTO_INCREMENT,
-
-  -- Usernames must be unique, must not be in the form of
-  -- an IP address. _Shouldn't_ allow slashes or case
-  -- conflicts. Spaces are allowed, and are _not_ converted
-  -- to underscores like titles. See the User::newFromName() for
-  -- the specific tests that usernames have to pass.
-  user_name varchar(255) binary NOT NULL default '',
-
-  -- Optional 'real name' to be displayed in credit listings
-  user_real_name varchar(255) binary NOT NULL default '',
-
-  -- Note: email should be restricted, not public info.
-  -- Same with passwords.
-  user_email tinytext NOT NULL,
-
-  -- This is a timestamp which is updated when a user
-  -- logs in, logs out, changes preferences, or performs
-  -- some other action requiring HTML cache invalidation
-  -- to ensure that the UI is updated.
-  user_touched binary(14) NOT NULL default '',
-
-  -- A pseudorandomly generated value that is stored in
-  -- a cookie when the "remember password" feature is
-  -- used (previously, a hash of the password was used, but
-  -- this was vulnerable to cookie-stealing attacks)
-  user_token binary(32) NOT NULL default '',
-
-  -- Initially NULL; when a user's e-mail address has been
-  -- validated by returning with a mailed token, this is
-  -- set to the current timestamp.
-  user_email_authenticated binary(14),
-
-  -- Randomly generated token created when the e-mail address
-  -- is set and a confirmation test mail sent.
-  user_email_token binary(32),
-
-  -- Expiration date for the user_email_token
-  user_email_token_expires binary(14),
-
-  -- Timestamp of account registration.
-  -- Accounts predating this schema addition may contain NULL.
-  user_registration binary(14),
-
-  -- Count of edits and edit-like actions.
-  --
-  -- *NOT* intended to be an accurate copy of COUNT(*) WHERE rev_user=user_id
-  -- May contain NULL for old accounts if batch-update scripts haven't been
-  -- run, as well as listing deleted edits and other myriad ways it could be
-  -- out of sync.
-  --
-  -- Meant primarily for heuristic checks to give an impression of whether
-  -- the account has been used much.
-  --
-  user_editcount int,
-
-  user_birthdate date default NULL
-) /*$wgDBTableOptions*/;
-
-CREATE UNIQUE INDEX /*i*/user_name ON /*_*/user (user_name);
-CREATE INDEX /*i*/user_email_token ON /*_*/user (user_email_token);
-CREATE INDEX /*i*/user_email ON /*_*/user (user_email(50));
-
 
 --
 -- User permissions have been broken out to a separate table;
@@ -169,30 +87,6 @@ CREATE TABLE /*_*/user_newtalk (
 -- Indexes renamed for SQLite in 1.14
 CREATE INDEX /*i*/un_user_id ON /*_*/user_newtalk (user_id);
 CREATE INDEX /*i*/un_user_ip ON /*_*/user_newtalk (user_ip);
-
-
---
--- User preferences and perhaps other fun stuff. :)
--- Replaces the old user.user_options blob, with a couple nice properties:
---
--- 1) We only store non-default settings, so changes to the defauls
---    are now reflected for everybody, not just new accounts.
--- 2) We can more easily do bulk lookups, statistics, or modifications of
---    saved options since it's a sane table structure.
---
-CREATE TABLE /*_*/user_properties (
-  -- Foreign key to user.user_id
-  up_user int NOT NULL,
-
-  -- Name of the option being saved. This is indexed for bulk lookup.
-  up_property varbinary(255) NOT NULL,
-
-  -- Property value as a string.
-  up_value blob
-) /*$wgDBTableOptions*/;
-
-CREATE UNIQUE INDEX /*i*/user_properties_user_property ON /*_*/user_properties (up_user,up_property);
-CREATE INDEX /*i*/user_properties_property ON /*_*/user_properties (up_property);
 
 --
 -- Core of the wiki: each page has an entry here which identifies
@@ -697,9 +591,6 @@ CREATE TABLE /*_*/ipblocks (
   -- User ID who made the block.
   ipb_by int unsigned NOT NULL default 0,
 
-  -- User name of blocker
-  ipb_by_text varchar(255) binary NOT NULL default '',
-
   -- Text comment made by blocker.
   ipb_reason tinyblob NOT NULL,
 
@@ -974,7 +865,8 @@ CREATE TABLE /*_*/recentchanges (
 
   -- As in revision
   rc_user int unsigned NOT NULL default 0,
-  rc_user_text varchar(255) binary NOT NULL,
+  -- SUS-3079: Placeholder empty value until migration
+  rc_user_text VARCHAR(255) BINARY NOT NULL DEFAULT '',
 
   -- When pages are renamed, their RC entries do _not_ change.
   rc_namespace int NOT NULL default 0,
@@ -1016,9 +908,8 @@ CREATE TABLE /*_*/recentchanges (
   -- A value of 1 indicates the page has been reviewed.
   rc_patrolled tinyint unsigned NOT NULL default 0,
 
-  -- Recorded IP address the edit was made from, if the
-  -- $wgPutIPinRC option is enabled.
-  rc_ip varbinary(40) NOT NULL default '',
+  -- SUS-3079: IP address the edit was made from, in binary format
+  rc_ip_bin VARBINARY(16) NOT NULL DEFAULT '',
 
   -- Text length in characters before
   -- and after the edit
@@ -1042,9 +933,7 @@ CREATE INDEX /*i*/rc_timestamp ON /*_*/recentchanges (rc_timestamp);
 CREATE INDEX /*i*/rc_namespace_title ON /*_*/recentchanges (rc_namespace, rc_title);
 CREATE INDEX /*i*/rc_cur_id ON /*_*/recentchanges (rc_cur_id);
 CREATE INDEX /*i*/new_name_timestamp ON /*_*/recentchanges (rc_new,rc_namespace,rc_timestamp);
-CREATE INDEX /*i*/rc_ip ON /*_*/recentchanges (rc_ip);
-CREATE INDEX /*i*/rc_ns_usertext ON /*_*/recentchanges (rc_namespace, rc_user_text);
-CREATE INDEX /*i*/rc_user_text ON /*_*/recentchanges (rc_user_text, rc_timestamp);
+CREATE INDEX /*i*/rc_ip_bin ON /*_*/recentchanges (rc_ip_bin, rc_timestamp);
 
 
 CREATE TABLE /*_*/watchlist (
@@ -1147,9 +1036,6 @@ CREATE TABLE /*_*/logging (
 
   -- The user who performed this action; key to user_id
   log_user int unsigned NOT NULL default 0,
-
-  -- Name of the user who performed this action
-  log_user_text varchar(255) binary NOT NULL default '',
 
   -- Key to the page affected. Where a user is the target,
   -- this will point to the user page.
@@ -1343,25 +1229,6 @@ CREATE UNIQUE INDEX /*i*/change_tag_log_tag ON /*_*/change_tag (ct_log_id,ct_tag
 CREATE UNIQUE INDEX /*i*/change_tag_rev_tag ON /*_*/change_tag (ct_rev_id,ct_tag);
 -- Covering index, so we can pull all the info only out of the index.
 CREATE INDEX /*i*/change_tag_tag_id ON /*_*/change_tag (ct_tag,ct_rc_id,ct_rev_id,ct_log_id);
-
-
--- Rollup table to pull a LIST of tags simply without ugly GROUP_CONCAT
--- that only works on MySQL 4.1+
-CREATE TABLE /*_*/tag_summary (
-  ts_id int unsigned NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  -- RCID for the change
-  ts_rc_id int NULL,
-  -- LOGID for the change
-  ts_log_id int NULL,
-  -- REVID for the change
-  ts_rev_id int NULL,
-  -- Comma-separated list of tags
-  ts_tags blob NOT NULL
-) /*$wgDBTableOptions*/;
-
-CREATE UNIQUE INDEX /*i*/tag_summary_rc_id ON /*_*/tag_summary (ts_rc_id);
-CREATE UNIQUE INDEX /*i*/tag_summary_log_id ON /*_*/tag_summary (ts_log_id);
-CREATE UNIQUE INDEX /*i*/tag_summary_rev_id ON /*_*/tag_summary (ts_rev_id);
 
 
 CREATE TABLE /*_*/valid_tag (

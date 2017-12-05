@@ -4,18 +4,22 @@
  * A helper class that uses sensiolabs/consul-php-sdk for getting the list of service nodes
  *
  * @see PLATFORM-1489
+ * @see SUS-3249 - added support for Consul queries
  * @see https://www.consul.io/docs/agent/http/health.html#health_service
+ * @see https://www.consul.io/api/query.html
  */
 
 namespace Wikia\Consul;
 
+use SensioLabs\Consul\Client as ConsulClient;
 use SensioLabs\Consul\ServiceFactory;
+use Wikia\Logger\Loggable;
 use Wikia\Logger\WikiaLogger;
 use Wikia\Util\Assert;
 
 class Client {
 
-	use \Wikia\Logger\Loggable;
+	use Loggable;
 
 	protected $logger;
 
@@ -41,7 +45,7 @@ class Client {
 	 * @param string $tag
 	 * @return array list of IP addresses with ports ie. 127.0.0.1:1234
 	 */
-	function getNodes( $service, $tag ) {
+	function getNodes( string $service, string $tag ) : array {
 		$resp = $this->api->service( $service, [ 'tag' => $tag, 'passing' => true ] )->json();
 
 		$nodes = array_map(
@@ -56,28 +60,124 @@ class Client {
 	}
 
 	/**
-	 * Helper method for getting IP addresses of all nodes hidden behind consul
+	 * Returns IP addresses (with ports) of given service healthy nodes
 	 *
-	 * $catalog->getNodesFromHostname( 'slave.db-smw.service.consul' )
+	 * $catalog->getNodesFromConsulQuery( 'geo-db-dev-db-slave' )
 	 *
-	 * @param string $hostname
-	 * @return array list of IP addresses
+	 * $ curl 'http://127.0.0.1:8500/v1/query/geo-db-a-slave/execute?pretty=&passing='
+	 *
+	 * @param string $query
+	 * @return array list of IP addresses with ports ie. 127.0.0.1:1234
 	 */
-	function getNodesFromHostname( $hostname ) {
-		Assert::true( self::isConsulAddress( $hostname ), __METHOD__ . ' should get a Consul address', $this->getLoggerContext() );
+	private function getNodesFromConsulQuery( string $query ) : array {
+		$consulClient = new ConsulClient();
+		$resp = $consulClient->get(
+			sprintf( '/v1/query/%s/execute?passing=', $query )
+		)->json();
 
-		list( $tag, $service ) = explode( '.', $hostname );
-		return $this->getNodes( $service, $tag );
+		$nodes = array_map(
+			function( $item ) {
+				return $item[ 'Node' ][ 'Address' ] . ':' . $item[ 'Service' ][ 'Port' ];
+			},
+			$resp['Nodes']
+		);
+
+		wfDebug( __METHOD__ .sprintf( ": got nodes for '%s' query: %s\n", $query, join(', ', $nodes) ) );
+		return $nodes;
 	}
 
 	/**
-	 * Example: Wikia\Consul\Catalog::isConsulAddress( 'slave.db-smw.service.consul' )
+	 * Helper method for getting IP addresses of all nodes hidden behind consul
 	 *
-	 * @param $address
-	 * @preturn bool true if the given address is a consul one
+	 * $consul->getNodesFromHostname( 'slave.db-smw.service.consul' )
+	 * $consul->getNodesFromHostname( 'geo-db-g-slave.query.consul' )
+	 *
+	 * @param string $hostname
+	 * @return array list of IP addresses
+	 * @throws \Exception
 	 */
-	static function isConsulAddress( $address ) {
+	function getNodesFromHostname( string $hostname ) {
+		Assert::true( self::isConsulAddress( $hostname ), __METHOD__ . ' should get a Consul address', $this->getLoggerContext() );
+
+		if ( self::isConsulQuery($hostname) ) {
+			// e.g. geo-db-g-slave.query.consul
+			$query = self::parseConsulQuery( $hostname );
+			return $this->getNodesFromConsulQuery( $query );
+		}
+		elseif ( self::isConsulServiceAddress( $hostname ) ) {
+			// e.g. slave.db-g.service.consul
+			list( $tag, $service ) = self::parseConsulServiceAddress( $hostname);
+			return $this->getNodes( $service, $tag );
+		}
+		else {
+			throw new \Exception( __METHOD__ . " - {$hostname} is neither consul query nor consul service address" );
+		}
+	}
+
+	/**
+	 * Example: Wikia\Consul\Client::isConsulAddress( 'slave.db-smw.service.consul' )
+	 *
+	 * @param string $address
+	 * @return bool true if the given address is a consul one
+	 */
+	static function isConsulAddress( string $address ) : bool {
+		return endsWith( $address, '.consul' );
+	}
+
+	/**
+	 * Example: Wikia\Consul\Client::isConsulServiceAddress( 'slave.db-smw.service.consul' )
+	 *
+	 * @param string $address
+	 * @return bool true if the given address is a consul service one
+	 */
+	static function isConsulServiceAddress( string $address ) : bool {
 		return endsWith( $address, '.service.consul' );
+	}
+
+	/**
+	 * Returns a service and tag part from consul address.
+	 *
+	 * Example: 'slave.db-smw.service.consul' => ['slave', 'db-smw']
+	 *
+	 * @param string $address
+	 * @return string[]|false
+	 */
+	static function parseConsulServiceAddress( string $address ) {
+		if ( self::isConsulServiceAddress( $address ) ) {
+			list( $tag, $service ) = explode( '.', $address, 3 );
+			return [ $tag, $service ];
+		}
+		else {
+			return false;
+		}
+	}
+
+	/**
+	 * Example: Wikia\Consul\Client::isConsulQuery( 'geo-db-g-slave.query.consul' )
+	 *
+	 * @see https://www.consul.io/api/query.html
+	 *
+	 * @param string $address
+	 * @return bool true if the given address is a consul query
+	 */
+	static function isConsulQuery( string $address ) : bool {
+		return endsWith( $address, '.query.consul' );
+	}
+
+	/**
+	 * Returns a query from consul address.
+	 *
+	 * It basically returns the first part of the dot-separated domain
+	 *
+	 * Example: 'geo-db-g-slave.query.consul' => 'geo-db-g-slave'
+	 *
+	 * @param string $address
+	 * @return string|false
+	 */
+	static function parseConsulQuery( string $address ) {
+		return self::isConsulQuery( $address )
+			? strtok( $address, '.' )
+			: false;
 	}
 
 	/**

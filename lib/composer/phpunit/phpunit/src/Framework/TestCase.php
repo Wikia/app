@@ -184,14 +184,14 @@ abstract class TestCase extends Assert implements Test, SelfDescribing
      *
      * @var string
      */
-    private $expectedExceptionMessage = '';
+    private $expectedExceptionMessage;
 
     /**
      * The regex pattern to validate the expected Exception message.
      *
      * @var string
      */
-    private $expectedExceptionMessageRegExp = '';
+    private $expectedExceptionMessageRegExp;
 
     /**
      * The code of the expected Exception.
@@ -589,10 +589,6 @@ abstract class TestCase extends Assert implements Test, SelfDescribing
      */
     public function expectExceptionCode($code)
     {
-        if (!$this->expectedException) {
-            $this->expectedException = \Exception::class;
-        }
-
         if (!\is_int($code) && !\is_string($code)) {
             throw InvalidArgumentHelper::factory(1, 'integer or string');
         }
@@ -607,10 +603,6 @@ abstract class TestCase extends Assert implements Test, SelfDescribing
      */
     public function expectExceptionMessage($message)
     {
-        if (!$this->expectedException) {
-            $this->expectedException = \Exception::class;
-        }
-
         if (!\is_string($message)) {
             throw InvalidArgumentHelper::factory(1, 'string');
         }
@@ -637,9 +629,9 @@ abstract class TestCase extends Assert implements Test, SelfDescribing
      * Information for expected exception class, expected exception message, and
      * expected exception code are retrieved from a given Exception object.
      */
-    public function expectExceptionObject(Exception $exception)
+    public function expectExceptionObject(\Exception $exception)
     {
-        $this->expectException(get_class($exception));
+        $this->expectException(\get_class($exception));
         $this->expectExceptionMessage($exception->getMessage());
         $this->expectExceptionCode($exception->getCode());
     }
@@ -1077,49 +1069,33 @@ abstract class TestCase extends Assert implements Test, SelfDescribing
 
         try {
             $testResult = $method->invokeArgs($this, $testArguments);
-        } catch (Throwable $_e) {
-            $e = $_e;
+        } catch (Throwable $t) {
+            $exception = $t;
         }
 
-        if (isset($e)) {
-            $checkException = false;
-
-            if (!($e instanceof SkippedTestError) && \is_string($this->expectedException)) {
-                $checkException = true;
-
-                if ($e instanceof Exception) {
-                    $checkException = false;
-                }
-
-                $reflector = new ReflectionClass($this->expectedException);
-
-                if ($this->expectedException === 'PHPUnit\Framework\Exception' ||
-                    $this->expectedException === '\PHPUnit\Framework\Exception' ||
-                    $reflector->isSubclassOf('PHPUnit\Framework\Exception')) {
-                    $checkException = true;
-                }
-            }
-
-            if ($checkException) {
-                $this->assertThat(
-                    $e,
-                    new ExceptionConstraint(
-                        $this->expectedException
-                    )
-                );
-
-                if (!empty($this->expectedExceptionMessage)) {
+        if (isset($exception)) {
+            if ($this->checkExceptionExpectations($exception)) {
+                if ($this->expectedException !== null) {
                     $this->assertThat(
-                        $e,
+                        $exception,
+                        new ExceptionConstraint(
+                            $this->expectedException
+                        )
+                    );
+                }
+
+                if ($this->expectedExceptionMessage !== null) {
+                    $this->assertThat(
+                        $exception,
                         new ExceptionMessage(
                             $this->expectedExceptionMessage
                         )
                     );
                 }
 
-                if (!empty($this->expectedExceptionMessageRegExp)) {
+                if ($this->expectedExceptionMessageRegExp !== null) {
                     $this->assertThat(
-                        $e,
+                        $exception,
                         new ExceptionMessageRegularExpression(
                             $this->expectedExceptionMessageRegExp
                         )
@@ -1128,7 +1104,7 @@ abstract class TestCase extends Assert implements Test, SelfDescribing
 
                 if ($this->expectedExceptionCode !== null) {
                     $this->assertThat(
-                        $e,
+                        $exception,
                         new ExceptionCode(
                             $this->expectedExceptionCode
                         )
@@ -1138,7 +1114,7 @@ abstract class TestCase extends Assert implements Test, SelfDescribing
                 return;
             }
 
-            throw $e;
+            throw $exception;
         }
 
         if ($this->expectedException !== null) {
@@ -1146,6 +1122,33 @@ abstract class TestCase extends Assert implements Test, SelfDescribing
                 null,
                 new ExceptionConstraint(
                     $this->expectedException
+                )
+            );
+        } elseif ($this->expectedExceptionMessage !== null) {
+            $this->numAssertions++;
+
+            throw new AssertionFailedError(
+                \sprintf(
+                    'Failed asserting that exception with message "%s" is thrown',
+                    $this->expectedExceptionMessage
+                )
+            );
+        } elseif ($this->expectedExceptionMessageRegExp !== null) {
+            $this->numAssertions++;
+
+            throw new AssertionFailedError(
+                \sprintf(
+                    'Failed asserting that exception with message matching "%s" is thrown',
+                    $this->expectedExceptionMessageRegExp
+                )
+            );
+        } elseif ($this->expectedExceptionCode !== null) {
+            $this->numAssertions++;
+
+            throw new AssertionFailedError(
+                \sprintf(
+                    'Failed asserting that exception with code "%s" is thrown',
+                    $this->expectedExceptionCode
                 )
             );
         }
@@ -2114,7 +2117,7 @@ abstract class TestCase extends Assert implements Test, SelfDescribing
     /**
      * Performs assertions shared by all tests of a test case.
      *
-     * This method is called before the execution of a test ends
+     * This method is called after the execution of a test ends
      * and before tearDown() is called.
      */
     protected function assertPostConditions()
@@ -2487,5 +2490,30 @@ abstract class TestCase extends Assert implements Test, SelfDescribing
         }
 
         $this->locale = [];
+    }
+
+    private function checkExceptionExpectations(Throwable $throwable): bool
+    {
+        $result = false;
+
+        if ($this->expectedException !== null || $this->expectedExceptionCode !== null || $this->expectedExceptionMessage !== null || $this->expectedExceptionMessageRegExp !== null) {
+            $result = true;
+        }
+
+        if ($throwable instanceof Exception) {
+            $result = false;
+        }
+
+        if (\is_string($this->expectedException)) {
+            $reflector = new ReflectionClass($this->expectedException);
+
+            if ($this->expectedException === 'PHPUnit\Framework\Exception' ||
+                $this->expectedException === '\PHPUnit\Framework\Exception' ||
+                $reflector->isSubclassOf('PHPUnit\Framework\Exception')) {
+                $result = true;
+            }
+        }
+
+        return $result;
     }
 }

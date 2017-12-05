@@ -87,7 +87,7 @@ require([
 				firstPostId: thread.firstPostId,
 				index: i,
 				link: '/d/p/' + thread.id,
-				shareUrl: 'http://' + window.location.hostname + '/d/p/' + thread.id,
+				shareUrl: window.location.protocol + '//' + window.location.hostname + '/d/p/' + thread.id,
 				upvoteUrl: upvoteUrl + thread.firstPostId,
 				title: thread.title,
 				upvoteCount: thread.upvoteCount,
@@ -246,12 +246,6 @@ require([
 	}
 
 	$(function () {
-		// Track impression
-		track({
-			action: tracker.ACTIONS.IMPRESSION,
-			label: 'embeddable-discussions-loaded',
-		});
-
 		$('.embeddable-discussions-module').on('click', '.upvote', function (event) {
 			var upvoteUrl = getBaseUrl() + event.currentTarget.getAttribute('href'),
 				hasUpvoted = event.currentTarget.getAttribute('data-hasUpvoted') === '1',
@@ -262,8 +256,7 @@ require([
 				if (hasUpvoted) {
 					$svg.attr('class', 'embeddable-discussions-upvote-icon');
 					event.currentTarget.setAttribute('data-hasUpvoted', '0');
-				}
-				else {
+				} else {
 					$svg.attr('class', 'embeddable-discussions-upvote-icon-active');
 					event.currentTarget.setAttribute('data-hasUpvoted', '1');
 				}

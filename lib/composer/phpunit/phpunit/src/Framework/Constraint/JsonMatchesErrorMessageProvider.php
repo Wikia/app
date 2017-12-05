@@ -1,4 +1,4 @@
-<?php declare(strict_types=1);
+<?php
 /*
  * This file is part of PHPUnit.
  *
@@ -55,12 +55,15 @@ class JsonMatchesErrorMessageProvider
         switch (\strtolower($type)) {
             case 'expected':
                 $prefix = 'Expected value JSON decode error - ';
+
                 break;
             case 'actual':
                 $prefix = 'Actual value JSON decode error - ';
+
                 break;
             default:
                 $prefix = '';
+
                 break;
         }
 

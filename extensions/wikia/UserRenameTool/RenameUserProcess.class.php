@@ -53,8 +53,6 @@ class RenameUserProcess {
 		array( 'table' => 'revision', 'userid_column' => 'rev_user', 'username_column' => 'rev_user_text' ),
 		# disable in 1.19 array( 'table' => 'text', 'userid_column' => 'old_user', 'username_column' => 'old_user_text' ),
 		array( 'table' => 'user_newtalk', 'userid_column' => null, 'username_column' => 'user_ip' ),
-		# Core 1.16 tables
-		array( 'table' => 'logging', 'userid_column' => 'log_user', 'username_column' => 'log_user_text' ),
 
 		# Template entry
 //		array( 'table' => '...', 'userid_column' => '...', 'username_column' => '...' ),
@@ -330,24 +328,21 @@ class RenameUserProcess {
 		if ( $oldTitle->getText() !== $wgContLang->ucfirst( $oldTitle->getText() ) ) {
 			// oldusername was entered as lowercase -> check for existence in table 'user'
 			$dbr = WikiFactory::db( DB_SLAVE );
-			$uid = $dbr->selectField( '`user`', 'user_id',
+			$uid = (int) $dbr->selectField( '`user`', 'user_id',
 				array( 'user_name' => $oldTitle->getText() ),
 				__METHOD__ );
 
 			$this->addLog( 'Running query: ' . $dbr->lastQuery() . " resulted in " . $dbr->affectedRows() . " row(s) being affected." );
 
-			if ( $uid === false ) {
-				if ( !$wgCapitalLinks ) {
-					$uid = 0; // We are on a lowercase wiki but lowercase username does not exists
-				} else {
-					// We are on a standard uppercase wiki, use normal
-					$uid = $oldUser->idForName();
-					$oldTitle = Title::makeTitleSafe( NS_USER, $oldUser->getName() );
-				}
+			if ( empty( $uid ) && $wgCapitalLinks ) {
+				// We are on a standard uppercase wiki, use normal
+				$uid = User::idFromName( $oldTitle->getText() );
+				$oldTitle = Title::makeTitleSafe( NS_USER, $oldUser->getName() );
 			}
+
 		} else {
 			// oldusername was entered as upperase -> standard procedure
-			$uid = $oldUser->idForName();
+			$uid = User::idFromName( $oldTitle->getText() );
 		}
 
 		$this->addInternalLog( "id: uid={$uid} old={$oldUser->getName()}:{$oldUser->getId()} new={$newUser->getName()}:{$newUser->getId()}" );
@@ -368,7 +363,7 @@ class RenameUserProcess {
 		$fakeUid = 0;
 
 		// If new user name does exist (we have a special case - repeating rename process)
-		if ( $newUser->idForName() != 0 ) {
+		if ( User::idFromName( $newTitle->getText() ) ) {
 			$repeating = false;
 
 			// invalidate properties cache and reload to get updated data
@@ -414,7 +409,7 @@ class RenameUserProcess {
 				$this->addWarning( wfMessage( 'userrenametool-warn-repeat', $this->mRequestData->oldUsername, $this->mRequestData->newUsername )->inContentLanguage()->text() );
 				// Swap the uids because the real user ID is the new user ID in this special case
 				$fakeUid = $uid;
-				$uid = $newUser->idForName();
+				$uid = User::idFromName( $newTitle->getText() );
 			} else {
 				// In the case other than repeating the process drop an error
 				$this->addError( wfMessage( 'userrenametool-errorexists', $newUser->getName() )->inContentLanguage()->text() );
@@ -467,7 +462,9 @@ class RenameUserProcess {
 		try {
 			$status = $this->doRun();
 		} catch ( Exception $e ) {
-			$this->addLog( $e->getMessage() . ' in ' . $e->getFile() . ' at line ' . $e->getLine() );
+			\Wikia\Logger\WikiaLogger::instance()->error( "Rename process failed", [
+				'exception' => $e
+			] );
 			$this->addError( wfMessage( 'userrenametool-error-cannot-rename-unexpected' )->inContentLanguage()->text() );
 		}
 
@@ -514,11 +511,6 @@ class RenameUserProcess {
 		$this->addLog( "Broadcasting hook: {$hookName}" );
 		Hooks::run( $hookName, array( $this->mUserId, $this->mOldUsername, $this->mNewUsername ) );
 
-		// delete the record from all the secondary clusters
-		if ( class_exists( 'ExternalUser_Wikia' ) ) {
-			ExternalUser_Wikia::removeFromSecondaryClusters( $this->mUserId );
-		}
-
 		// rename the user on the shared cluster
 		if ( !$this->renameAccount() ) {
 			$this->addLog( "Failed to rename the user on the primary cluster. Report the problem to the engineers." );
@@ -536,8 +528,6 @@ class RenameUserProcess {
 		$fakeUser = null;
 
 		if ( empty( $this->mFakeUserId ) ) {
-			global $wgExternalAuthType;
-
 			$fakeUser = User::newFromName( $this->mOldUsername, 'creatable' );
 
 			if ( !is_object( $fakeUser ) ) {
@@ -545,15 +535,10 @@ class RenameUserProcess {
 				return false;
 			}
 
-			$fakeUser->setEmail( null );
+			$fakeUser->setEmail( '' );
 			$fakeUser->setRealName( '' );
 			$fakeUser->setName( $this->mOldUsername );
-
-			if ( $wgExternalAuthType ) {
-				ExternalUser_Wikia::addUser( $fakeUser, '', '', '' );
-			} else {
-				$fakeUser->addToDatabase();
-			}
+			$fakeUser->addToDatabase();
 
 			$fakeUser->setGlobalAttribute( 'renameData', self::RENAME_TAG . '=' . $this->mNewUsername . ';' . self::PROCESS_TAG . '=' . '1' );
 			$fakeUser->setGlobalFlag( 'disabled', 1 );
@@ -607,10 +592,6 @@ class RenameUserProcess {
 		$dbw->begin();
 		$tasks = self::$mGlobalDefaults;
 
-		$hookName = 'UserRename::Global';
-		$this->addLog( "Broadcasting hook: {$hookName}" );
-		Hooks::run( $hookName, array( $dbw, $this->mUserId, $this->mOldUsername, $this->mNewUsername, $this, &$tasks ) );
-
 		foreach ( $tasks as $task ) {
 			$this->addLog( "Updating {$task['table']}.{$task['username_column']}." );
 			$this->renameInTable( $dbw, $task['table'], $this->mUserId, $this->mOldUsername, $this->mNewUsername, $task );
@@ -643,10 +624,6 @@ class RenameUserProcess {
 		$dbw = wfGetDB( DB_MASTER );
 		$dbw->begin();
 		$tasks = self::$mLocalDefaults;
-
-		$hookName = 'UserRename::Local';
-		$this->addLog( "Broadcasting hook: {$hookName}" );
-		Hooks::run( $hookName, array( $dbw, $this->mUserId, $this->mOldUsername, $this->mNewUsername, $this, $wgCityId, &$tasks ) );
 
 		/* Move user pages */
 		$this->addLog( "Moving user pages." );
@@ -777,16 +754,12 @@ class RenameUserProcess {
 
 		$hookName = 'UserRename::LocalIP';
 		$this->addLog( "Broadcasting hook: {$hookName}" );
-		Hooks::run( $hookName, [ $dbw, $this->mUserId, $this->mOldUsername, $this->mNewUsername, $this, $wgCityId, &$tasks ] );
+		Hooks::run( $hookName, [ &$tasks ] );
 
 		foreach ( $tasks as $task ) {
 			$this->addLog( "Updating wiki \"{$cityDb}\": {$task['table']}:{$task['username_column']}" );
 			$this->renameInTable( $dbw, $task['table'], $this->mUserId, $this->mOldUsername, $this->mNewUsername, $task );
 		}
-
-		$hookName = 'UserRename::AfterLocalIP';
-		$this->addLog( "Broadcasting hook: {$hookName}" );
-		Hooks::run( $hookName, [ $dbw, $this->mUserId, $this->mOldUsername, $this->mNewUsername, $this, $wgCityId, &$tasks ] );
 
 		$dbw->commit();
 

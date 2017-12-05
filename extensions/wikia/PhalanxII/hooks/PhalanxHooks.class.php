@@ -1,12 +1,10 @@
 <?php
 
-use Wikia\DependencyInjection\Injector;
 use \Wikia\Logger\WikiaLogger;
+use Wikia\Rabbit\ConnectionBase;
 
-class PhalanxHooks extends WikiaObject {
-	function __construct() {
-		parent::__construct();
-	}
+class PhalanxHooks {
+	const ROUTING_KEY = 'onUpdate';
 
 	/**
 	 * Add a link to central:Special:Phalanx from Special:Contributions/USERNAME
@@ -43,8 +41,9 @@ class PhalanxHooks extends WikiaObject {
 	 * @param $text string content to check for spam
 	 * @param $typeId int block type (see Phalanx::TYPE_* constants)
 	 * @param $blockData array array to be provided with matching block details (pass as a reference)
-	 * @return boolean spam check result
+	 * @return bool spam check result
 	 *
+	 * @throws WikiaException
 	 * @author macbre
 	 */
 	static public function onSpamFilterCheck( $text, $typeId, &$blockData ) {
@@ -69,12 +68,6 @@ class PhalanxHooks extends WikiaObject {
 		$types = Phalanx::getSupportedTypeNames();
 		$ret = $model->match( $types[$typeId] );
 
-		// pass matching block details
-		if ( $ret === false ) {
-			$blockData = (array) $model->getBlock();
-			wfDebug( __METHOD__ . ": spam check blocked '{$text}'\n" );
-		}
-
 		wfProfileOut( __METHOD__ );
 		return $ret;
 	}
@@ -88,49 +81,35 @@ class PhalanxHooks extends WikiaObject {
 	 *
 	 * @author moli
 	 */
-	static public function onEditPhalanxBlock( &$data ) {
-		wfProfileIn( __METHOD__ );
-
-		if ( !isset( $data['id'] ) ) {
-			wfProfileOut( __METHOD__ );
-			return false;
-		}
-
+	static public function onEditPhalanxBlock( array &$data ) {
 		$phalanx = Phalanx::newFromId( $data['id'] );
 
 		foreach ( $data as $key => $val ) {
-			if ( $key == 'id' ) continue;
-
-			$phalanx[ $key ] = $val;
-		}
-
-		$typemask = $phalanx['type'];
-		if ( is_array( $phalanx['type'] ) ) {
-			$typemask = 0;
-			foreach ( $phalanx['type'] as $type ) {
-				$typemask |= $type;
+			if ( $key !== 'id' ) {
+				$phalanx[$key] = $val;
 			}
 		}
 
+		$phalanx['type'] = array_reduce( $phalanx['type'], function ( $typeMask, $type ) {
+			return $typeMask | $type;
+		}, 0 );
+
+
 		// VSTF should not be allowed to block emails in Phalanx
-		if ( ( $typemask & Phalanx::TYPE_EMAIL ) && !F::app()->wg->User->isAllowed( 'phalanxemailblock' ) ) {
-			wfProfileOut( __METHOD__ );
+		if ( ( $phalanx['type'] & Phalanx::TYPE_EMAIL ) && !F::app()->wg->User->isAllowed( 'phalanxemailblock' ) ) {
 			return false;
 		}
 
 		$multitext = '';
-		if ( isset( $phalanx['multitext'] ) && !empty( $phalanx['multitext'] ) ) {
+		if ( !empty( $phalanx['multitext'] ) ) {
 			$multitext = $phalanx['multitext'];
 		}
 
 		unset( $phalanx['multitext'] );
 
-		if ( ( empty( $phalanx['text'] ) && empty( $multitext ) ) || empty( $typemask ) ) {
-			wfProfileOut( __METHOD__ );
+		if ( ( empty( $phalanx['text'] ) && empty( $multitext ) ) || empty( $phalanx['type'] ) ) {
 			return false;
 		}
-
-		$phalanx['type'] = $typemask;
 
 		// SUS-2759: If a filter is meant to apply to all languages, the p_lang field must be NULL
 		if ( $phalanx['lang'] === 'all' ) {
@@ -140,10 +119,9 @@ class PhalanxHooks extends WikiaObject {
 		if ( $phalanx['expire'] === '' || is_null( $phalanx['expire'] ) ) {
 			// don't change expire
 			unset( $phalanx['expire'] );
-		} else if ( $phalanx['expire'] != 'infinite' ) {
+		} elseif ( $phalanx['expire'] != 'infinite' ) {
 			$expire = strtotime( $phalanx['expire'] );
 			if ( $expire < 0 || $expire === false ) {
-				wfProfileOut( __METHOD__ );
 				return false;
 			}
 			$phalanx['expire'] = wfTimestamp( TS_MW, $expire );
@@ -154,37 +132,28 @@ class PhalanxHooks extends WikiaObject {
 		if ( empty( $multitext ) ) {
 			/* single mode - insert/update record */
 			$data['id'] = $phalanx->save();
-			$result = $data['id'] ? array( "success" => array( $data['id'] ), "failed" => 0 ) : false;
-		}
-		else {
-			/* non-empty bulk field */
-			$bulkdata = explode( "\n", $multitext );
-			if ( count( $bulkdata ) > 0 ) {
-				$result = array( 'success' => array(), 'failed' => 0 );
-				$targets = [];
-				foreach ( $bulkdata as $bulkrow ) {
-					$bulkrow = trim( $bulkrow );
-					if ( $bulkrow !== '' ) {
-						$targets[] = $bulkrow;
-					}
-				}
-
-				// SUS-1207: Insert Phalanx bulk filters in single write operation
-				$result['success'] = $phalanx->insertBulkFilter( $targets );
-			} else {
-				$result = false;
-			}
-		}
-
-		if ( $result !== false ) {
-			$service = Injector::getInjector()->get( PhalanxService::class );
-			$ret = $service->reload( $result["success"] );
+			$blockIds = $data['id'] ? [ $data['id'] ] : false;
 		} else {
-			$ret = $result;
+			$bulkdata = explode( "\n", $multitext );
+			$targets = [];
+
+			foreach ( $bulkdata as $bulkrow ) {
+				$bulkrow = trim( $bulkrow );
+				if ( $bulkrow !== '' ) {
+					$targets[] = $bulkrow;
+				}
+			}
+
+			// SUS-1207: Insert Phalanx bulk filters in single write operation
+			$blockIds = $phalanx->insertBulkFilter( $targets );
 		}
 
-		wfProfileOut( __METHOD__ );
-		return $ret;
+		if ( !empty( $blockIds ) ) {
+			static::notifyPhalanxService( $blockIds );
+			return true;
+		}
+
+		return false;
 	}
 
 	/**
@@ -201,22 +170,26 @@ class PhalanxHooks extends WikiaObject {
 		$phalanx = Phalanx::newFromId( $id );
 
 		// VSTF should not be allowed to delete email blocks in Phalanx
-		if ( ( $phalanx->offsetGet( 'type' ) & Phalanx::TYPE_EMAIL ) && !F::app()->wg->User->isAllowed( 'phalanxemailblock' ) ) {
+		if ( ( $phalanx['type'] & Phalanx::TYPE_EMAIL ) && !F::app()->wg->User->isAllowed( 'phalanxemailblock' ) ) {
 			wfProfileOut( __METHOD__ );
 			return false;
 		}
 
 		$id = $phalanx->delete();
 		if ( $id ) {
-			$service = Injector::getInjector()->get( PhalanxService::class );
-			$ids = array( $id );
-			$ret = $service->reload( $ids );
-		} else {
-			$ret = false;
+			static::notifyPhalanxService( [ $id ] );
+			return true;
 		}
 
 		wfProfileOut( __METHOD__ );
-		return $ret;
+		return false;
+	}
+
+	public static function notifyPhalanxService( array $changedBlockIds ) {
+		global $wgPhalanxQueue;
+
+		$rabbitConnection = new ConnectionBase( $wgPhalanxQueue );
+		$rabbitConnection->publish( self::ROUTING_KEY, implode( ",", $changedBlockIds ) );
 	}
 
 	/**

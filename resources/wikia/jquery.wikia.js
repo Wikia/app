@@ -42,7 +42,7 @@
 	};
 
 	$.getSassLocalURL = function (scssFilePath, params) {
-		return $.getSassURL(wgServer, scssFilePath, params);
+		return $.getSassURL('', scssFilePath, params);
 	};
 
 	/**

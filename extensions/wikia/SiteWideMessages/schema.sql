@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS `messages_text`
 	`msg_removed`         tinyint             NOT NULL    default 0,
 	`msg_expire`          datetime,
 	`msg_date`            timestamp           NOT NULL    default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
-	`msg_recipient_name`  varchar (255), -- only for displaying in the history
+	`msg_recipient_user_id` int(5) unsigned DEFAULT NULL,
 	`msg_group_name`      varchar (255), -- only for displaying in the history
 	`msg_wiki_name`       varchar (255), -- only for displaying in the history
 	`msg_hub_id`          int (9),

@@ -834,58 +834,6 @@ class WikiPage extends Page implements IDBAccessObject {
 	}
 
 	/**
-	 * Get the last N authors
-	 * @param $num Integer: number of revisions to get
-	 * @param $revLatest String: the latest rev_id, selected from the master (optional)
-	 * @return array Array of authors, duplicates not removed
-	 */
-	public function getLastNAuthors( $num, $revLatest = 0 ) {
-		wfProfileIn( __METHOD__ );
-		// First try the slave
-		// If that doesn't have the latest revision, try the master
-		$continue = 2;
-		$db = wfGetDB( DB_SLAVE );
-
-		do {
-			$res = $db->select( array( 'page', 'revision' ),
-				array( 'rev_id', 'rev_user_text' ),
-				array(
-					'page_namespace' => $this->mTitle->getNamespace(),
-					'page_title' => $this->mTitle->getDBkey(),
-					'rev_page = page_id'
-				), __METHOD__,
-				array(
-					'ORDER BY' => 'rev_timestamp DESC',
-					'LIMIT' => $num
-				)
-			);
-
-			if ( !$res ) {
-				wfProfileOut( __METHOD__ );
-				return array();
-			}
-
-			$row = $db->fetchObject( $res );
-
-			if ( $continue == 2 && $revLatest && $row->rev_id != $revLatest ) {
-				$db = wfGetDB( DB_MASTER );
-				$continue--;
-			} else {
-				$continue = 0;
-			}
-		} while ( $continue );
-
-		$authors = array( $row->rev_user_text );
-
-		foreach ( $res as $row ) {
-			$authors[] = $row->rev_user_text;
-		}
-
-		wfProfileOut( __METHOD__ );
-		return $authors;
-	}
-
-	/**
 	 * Should the parser cache be used?
 	 *
 	 * @param $parserOptions ParserOptions to check
@@ -2389,6 +2337,7 @@ class WikiPage extends Page implements IDBAccessObject {
 	 *
 	 * @param $resultDetails Array: contains result-specific array of additional values
 	 * @param $guser User The user performing the rollback
+	 * @return array
 	 */
 	public function commitRollback( $fromP, $summary, $bot, &$resultDetails, User $guser ) {
 		global $wgUseRCPatrol, $wgContLang;
@@ -2425,10 +2374,9 @@ class WikiPage extends Page implements IDBAccessObject {
 		$s = $dbw->selectRow( 'revision',
 			array( 'rev_id', 'rev_timestamp', 'rev_deleted' ),
 			array( 'rev_page' => $current->getPage(),
-				"rev_user != {$user} OR rev_user_text != {$user_text}"
+				"rev_user != {$user} OR (rev_user = 0 AND rev_user_text != {$user_text})"
 			), __METHOD__,
-			array( 'USE INDEX' => 'page_timestamp',
-				'ORDER BY' => 'rev_timestamp DESC' )
+			array( 'ORDER BY' => 'rev_timestamp DESC' )
 			);
 		if ( $s === false ) {
 			# No one else ever edited this page
@@ -2449,14 +2397,21 @@ class WikiPage extends Page implements IDBAccessObject {
 			$set['rc_patrolled'] = 1;
 		}
 
-		if ( count( $set ) ) {
-			$dbw->update( 'recentchanges', $set,
-				array( /* WHERE */
-					'rc_cur_id' => $current->getPage(),
-					'rc_user_text' => $current->getUserText(),
-					"rc_timestamp > '{$s->rev_timestamp}'",
-				), __METHOD__
-			);
+		if ( !empty( $set ) ) {
+			$revTimestamp = $dbw->addQuotes( $s->rev_timestamp );
+			$whereCondition = [
+				'rc_cur_id' => $current->getPage(),
+				"rc_timestamp > $revTimestamp",
+			];
+
+			// SUS-3079: query based on user ID for registered users and IP address for anons
+			if ( $current->getUser() ) {
+				$whereCondition['rc_user'] = $current->getUser();
+			} else {
+				$whereCondition['rc_ip_bin'] = inet_pton( $current->getUserText() );
+			}
+
+			$dbw->update( 'recentchanges', $set, $whereCondition, __METHOD__ );
 		}
 
 		# Generate the edit summary if necessary
@@ -2781,10 +2736,12 @@ class WikiPage extends Page implements IDBAccessObject {
 
 		// Find out if there was only one contributor
 		// Only scan the last 20 revisions
-		$res = $dbw->select( 'revision', 'rev_user_text',
-			array( 'rev_page' => $this->getID(), $dbw->bitAnd( 'rev_deleted', Revision::DELETED_USER ) . ' = 0' ),
+		// SUS-807
+		$res = $dbw->select( 'revision', [ 'rev_user', 'rev_user_text' ],
+			[ 'rev_page' => $this->getID(), $dbw->bitAnd( 'rev_deleted', Revision::DELETED_USER
+			  ) . ' = 0' ],
 			__METHOD__,
-			array( 'LIMIT' => 20 )
+			[ 'LIMIT' => 20 ]
 		);
 
 		if ( $res === false ) {
@@ -2796,7 +2753,8 @@ class WikiPage extends Page implements IDBAccessObject {
 		$row = $dbw->fetchObject( $res );
 
 		if ( $row ) { // $row is false if the only contributor is hidden
-			$onlyAuthor = $row->rev_user_text;
+			// SUS-807
+			$onlyAuthor = User::getUsername( $row->rev_user, $row->rev_user_text );
 			// Try to find a second contributor
 			foreach ( $res as $row ) {
 				if ( $row->rev_user_text != $onlyAuthor ) { // Bug 22999

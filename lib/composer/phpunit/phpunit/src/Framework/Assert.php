@@ -1,4 +1,4 @@
-<?php declare(strict_types=1);
+<?php
 /*
  * This file is part of PHPUnit.
  *
@@ -2849,6 +2849,7 @@ abstract class Assert
             while ($reflector = $reflector->getParentClass()) {
                 try {
                     $attribute = $reflector->getProperty($attributeName);
+
                     break;
                 } catch (ReflectionException $e) {
                 }

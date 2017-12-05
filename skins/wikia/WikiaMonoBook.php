@@ -239,29 +239,4 @@ HTML;
 
 		return $html;
 	}
-
-	function wideSkyscraper() {
-		global $wgDBname;
-		$wideSkyscraperWikis = [ 'yugioh', 'transformers', 'swg', 'paragon' ];
-		if ( in_array( $wgDBname, $wideSkyscraperWikis ) ) {
-			echo ' style="margin-right: 165px;"';
-		}
-	}
-
-	function isSkyscraper() {
-		global $wgDBname, $wgEnableAdsInContent;
-		$noSkyscraperWikis = [ 'espokemon' ];
-		if ( in_array( $wgDBname, $noSkyscraperWikis ) && $wgEnableAdsInContent ) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-
-	function noSkyscraper() {
-		if ( $this->isSkyscraper() ) {
-			echo ' style="margin-right: 0px;"';
-		}
-	}
-
 } // end of class

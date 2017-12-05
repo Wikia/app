@@ -2,7 +2,7 @@
 --
 -- Host: geo-db-sharedb-slave.query.consul    Database: wikicities
 -- ------------------------------------------------------
--- Server version	5.6.24-72.2-log
+-- Server version	5.7.18-15-log
 
 
 --
@@ -291,7 +291,7 @@ CREATE TABLE `dumps` (
   `dump_wiki_id` int(9) NOT NULL,
   `dump_wiki_dbname` varchar(64) NOT NULL,
   `dump_wiki_url` varchar(255) NOT NULL,
-  `dump_user_name` varchar(255) NOT NULL,
+  `dump_user_id` int(9) DEFAULT '0',
   `dump_hidden` enum('N','Y') DEFAULT 'N',
   `dump_closed` enum('N','Y') DEFAULT 'N',
   `dump_requested` datetime NOT NULL,
@@ -380,7 +380,7 @@ CREATE TABLE `messages_text` (
   `msg_removed` tinyint(4) NOT NULL DEFAULT '0',
   `msg_expire` datetime DEFAULT NULL,
   `msg_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `msg_recipient_name` varchar(255) DEFAULT NULL,
+  `msg_recipient_user_id` int(5) unsigned DEFAULT NULL,
   `msg_group_name` varchar(255) DEFAULT NULL,
   `msg_wiki_name` varchar(255) DEFAULT NULL,
   `msg_hub_id` int(9) DEFAULT NULL,
@@ -485,11 +485,13 @@ DROP TABLE IF EXISTS `shared_newtalks`;
 CREATE TABLE `shared_newtalks` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `sn_user_id` int(5) unsigned DEFAULT NULL,
-  `sn_user_ip` varchar(255) DEFAULT '',
+  `sn_anon_ip` varbinary(16) DEFAULT NULL,
   `sn_wiki` varchar(31) DEFAULT NULL,
   `sn_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
-  KEY `sn_user_id_sn_user_ip_sn_wiki_idx` (`sn_user_id`,`sn_user_ip`,`sn_wiki`)
+  KEY `idx_user_ip_wiki` (`sn_wiki`),
+  KEY `idx_user_id_wiki` (`sn_user_id`,`sn_wiki`),
+  KEY `idx_anon_ip_wiki` (`sn_anon_ip`,`sn_wiki`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -674,4 +676,4 @@ CREATE TABLE `wikia_tasks_log` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
--- Dump completed on 2017-10-06 12:23:07
+-- Dump completed on 2017-10-26 13:34:32

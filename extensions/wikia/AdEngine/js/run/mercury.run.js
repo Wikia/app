@@ -1,29 +1,35 @@
 /*global require*/
 require([
+	'ad-engine.bridge',
 	'ext.wikia.adEngine.adContext',
-	'ext.wikia.adEngine.adInfoTracker',
+	'ext.wikia.adEngine.adLogicPageParams',
 	'ext.wikia.adEngine.slot.service.stateMonitor',
-	'ext.wikia.adEngine.lookup.amazonMatch',
 	'ext.wikia.adEngine.lookup.a9',
 	'ext.wikia.adEngine.lookup.prebid',
 	'ext.wikia.adEngine.customAdsLoader',
 	'ext.wikia.adEngine.messageListener',
 	'ext.wikia.adEngine.mobile.mercuryListener',
+	'ext.wikia.adEngine.provider.btfBlocker',
 	'ext.wikia.adEngine.slot.service.actionHandler',
+	'ext.wikia.adEngine.slot.service.slotRegistry',
+	'ext.wikia.adEngine.tracking.adInfoListener',
 	'wikia.geo',
 	'wikia.instantGlobals',
 	'wikia.window'
 ], function (
+	adEngineBridge,
 	adContext,
-	adInfoTracker,
+	pageLevelParams,
 	slotStateMonitor,
-	amazon,
 	a9,
 	prebid,
 	customAdsLoader,
 	messageListener,
 	mercuryListener,
+	btfBlocker,
 	actionHandler,
+	slotRegistry,
+	adInfoListener,
 	geo,
 	instantGlobals,
 	win
@@ -32,7 +38,14 @@ require([
 	messageListener.init();
 
 	// Custom ads (skins, footer, etc)
-	win.loadCustomAd = customAdsLoader.loadCustomAd;
+	if (geo.isProperGeo(instantGlobals.wgAdDriverAdProductsBridgeMobileCountries)) {
+		adContext.addCallback(function () {
+			adEngineBridge.init(slotRegistry, pageLevelParams.getPageLevelParams(), adContext, btfBlocker, 'mercury');
+		});
+		win.loadCustomAd = adEngineBridge.loadCustomAd(customAdsLoader.loadCustomAd);
+	} else {
+		win.loadCustomAd = customAdsLoader.loadCustomAd;
+	}
 
 	function callBiddersOnConsecutivePageView() {
 		if (geo.isProperGeo(instantGlobals.wgAdDriverPrebidBidderCountries)) {
@@ -49,17 +62,11 @@ require([
 			a9.call();
 		}
 
-		// TODO ADEN-5756 remove 'if' after A9 full roll out
-		if (geo.isProperGeo(instantGlobals.wgAmazonMatchCountriesMobile) &&
-			!geo.isProperGeo(instantGlobals.wgAdDriverA9BidderCountries)) {
-			amazon.call();
-		}
-
 		if (geo.isProperGeo(instantGlobals.wgAdDriverPrebidBidderCountries)) {
 			prebid.call();
 		}
 
-		adInfoTracker.run();
+		adInfoListener.run();
 		slotStateMonitor.run();
 		actionHandler.registerMessageListener();
 	});

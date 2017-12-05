@@ -1,5 +1,7 @@
 <?php
 class CheckUserHooks {
+	const ACTION_TEXT_MAX_LENGTH = 255;
+
 	/**
 	 * Hook function for RecentChange_save
 	 * Saves user data into the cu_changes table
@@ -31,6 +33,9 @@ class CheckUserHooks {
 			$actionText = '';
 		}
 
+		// SUS-3257: Make sure the text fits into the database
+		$actionTextTrim = mb_substr( $actionText, 0, static::ACTION_TEXT_MAX_LENGTH );
+
 		$dbw = wfGetDB( DB_MASTER );
 		$cuc_id = $dbw->nextSequenceValue( 'cu_changes_cu_id_seq' );
 		$rcRow = array(
@@ -39,8 +44,8 @@ class CheckUserHooks {
 			'cuc_title'      => $rc_title,
 			'cuc_minor'      => $rc_minor,
 			'cuc_user'       => $rc_user,
-			'cuc_user_text'  => $rc_user_text,
-			'cuc_actiontext' => $actionText,
+			// 'cuc_user_text'  => $user->isAnon() ? $rc_user_text : '', // SUS-3080 - this column is redundant
+			'cuc_actiontext' => $actionTextTrim,
 			'cuc_comment'    => $rc_comment,
 			'cuc_this_oldid' => $rc_this_oldid,
 			'cuc_last_oldid' => $rc_last_oldid,
@@ -81,7 +86,7 @@ class CheckUserHooks {
 			'cuc_title'      => '',
 			'cuc_minor'      => 0,
 			'cuc_user'       => $user->getId(),
-			'cuc_user_text'  => $user->getName(),
+			// 'cuc_user_text'  => $user->getName(),// SUS-3080 - this column is redundant
 			'cuc_actiontext' => wfMsgForContent( 'checkuser-reset-action', $account->getName() ),
 			'cuc_comment'    => '',
 			'cuc_this_oldid' => 0,
@@ -126,7 +131,7 @@ class CheckUserHooks {
 			'cuc_title'      => '',
 			'cuc_minor'      => 0,
 			'cuc_user'       => $userFrom->getId(),
-			'cuc_user_text'  => $userFrom->getName(),
+			// 'cuc_user_text'  => $userFrom->getName(), // SUS-3080 - this column is redundant
 			'cuc_actiontext' => wfMsgForContent( 'checkuser-email-action', $hash ),
 			'cuc_comment'    => '',
 			'cuc_this_oldid' => 0,
@@ -189,7 +194,7 @@ class CheckUserHooks {
 			'cuc_title'      => '',
 			'cuc_minor'      => 0,
 			'cuc_user'       => $user->getId(),
-			'cuc_user_text'  => $user->getName(),
+			// 'cuc_user_text'  => $user->getName(), // SUS-3080 - this column is redundant
 			'cuc_actiontext' => wfMsgForContent( $actiontext ),
 			'cuc_comment'    => '',
 			'cuc_this_oldid' => 0,
@@ -235,7 +240,7 @@ class CheckUserHooks {
 			'cuc_title'      => $data['title'], // may be ''
 			'cuc_minor'      => 0,
 			'cuc_user'       => $user->getId(),
-			'cuc_user_text'  => $user->getName(),
+			// 'cuc_user_text'  => $user->getName(), // SUS-3080 - this column is redundant
 			'cuc_actiontext' => $data['action'],
 			'cuc_comment'    => $data['comment'],
 			'cuc_this_oldid' => 0,
@@ -336,7 +341,8 @@ class CheckUserHooks {
 	 * blocked by this Block.
 	 *
 	 * @param Block $block
-	 * @param Array &$blockIds
+	 * @param int[] &$blockIds
+	 * @return array|bool
 	 */
 	public static function doRetroactiveAutoblock( Block $block, array &$blockIds ) {
 		$dbr = wfGetDB( DB_SLAVE );
@@ -365,35 +371,5 @@ class CheckUserHooks {
 		}
 
 		return false; // autoblock handled
-	}
-
-	/**
-	 * Register tables that need to be updated when a user is renamed
-	 *
-	 * @param DatabaseBase $dbw
-	 * @param int $userId
-	 * @param string $oldUsername
-	 * @param string $newUsername
-	 * @param UserRenameProcess $process
-	 * @param int $wgCityId
-	 * @param array $tasks
-	 * @return bool
-	 */
-	public static function onUserRenameLocal( $dbw, $userId, $oldUsername, $newUsername, $process, $wgCityId, array &$tasks ) {
-		$tasks[] = array(
-			'table' => 'cu_log',
-			'userid_column' => 'cul_user',
-			'username_column' => 'cul_user_text',
-		);
-		$tasks[] = array(
-			'table' => 'cu_log',
-			'userid_column' => 'cul_target_id',
-			'username_column' => 'cul_target_text',
-			'conds' => array(
-				'cul_type' => array( 'useredits', 'userips' ),
-			),
-		);
-
-		return true;
 	}
 }

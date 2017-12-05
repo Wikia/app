@@ -149,7 +149,6 @@ $wgLoadScript = false;
  * The URL path of the skins directory. Will default to "{$wgScriptPath}/skins" in Setup.php
  */
 $wgStylePath = false;
-$wgStyleSheetPath = &$wgStylePath;
 
 /**
  * The URL path of the skins directory. Should not point to an external domain.
@@ -5513,6 +5512,11 @@ $wgSeleniumTestConfigs = array();
 $wgSeleniumConfigFile = null;
 $wgDBtestuser = ''; //db user that has permission to create and drop the test databases only
 $wgDBtestpassword = '';
+
+/**
+ * When enabled, RL will output links without the server part.
+ */
+$wgEnableLocalResourceLoaderLinks = true;
 
 /**
  * For really cool vim folding this needs to be at the end:

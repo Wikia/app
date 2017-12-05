@@ -752,13 +752,14 @@ class WallExternalController extends WikiaController {
 
 		// after successfully posting a reply
 		// remove notification for this thread (if user is following it)
-		/** @var $wn WallNotifications */
-		$wn = new WallNotifications();
-		$wn->markRead(
-			$this->wg->User->getId(),
-			$this->wg->CityId,
-			$this->request->getVal( 'parent' )
-		);
+
+		if ( $this->wg->User->isLoggedIn() ) {
+			$wn = new WallNotifications();
+			$wn->markRead(
+				$this->wg->User->getId(),
+				$this->wg->CityId,
+				$this->request->getVal( 'parent' ) );
+		}
 	}
 
 	public function preview() {

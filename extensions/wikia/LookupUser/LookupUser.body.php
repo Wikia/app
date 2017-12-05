@@ -26,12 +26,11 @@ class LookupUserPage extends SpecialPage {
 	 * @param $subpage Mixed: parameter passed to the page or null
 	 */
 	public function execute( $subpage ) {
-		global $wgRequest, $wgUser, $wgExternalAuthType;
-
 		$this->setHeaders();
+		$request = $this->getRequest();
 
 		# If the user doesn't have the required 'lookupuser' permission, display an error
-		if ( !$wgUser->isAllowed( 'lookupuser' ) ) {
+		if ( !$this->getUser()->isAllowed( 'lookupuser' ) ) {
 			$this->displayRestrictionError();
 			return;
 		}
@@ -39,37 +38,26 @@ class LookupUserPage extends SpecialPage {
 		if ( $subpage ) {
 			$target = $subpage;
 		} else {
-			$target = $wgRequest->getText( 'target' );
+			$target = $request->getText( 'target' );
 		}
 
 		$id = '';
 		$byIdInvalidUser = false;
-		if ( $wgRequest->getText( 'mode' ) == 'by_id' ) {
+		if ( $request->getText( 'mode' ) == 'by_id' ) {
 			$id = (int)$target;
-			if ( $wgExternalAuthType == 'ExternalUser_Wikia' ) {
-				$u = ExternalUser::newFromId( $id );
-				if ( is_object( $u ) && ( $u->getId() != 0 ) ) {
-					# overwrite text
-					$target = $u->getName();
-				} else {
-					// User with that ID doesn't exist, notify user
-					// Stops trying to display form with a user by that name which is confusing
-					$byIdInvalidUser = true;
-				}
+
+			$u = User::newFromId( $id );
+			if ( $u->loadFromId() ) {
+				# overwrite text
+				$target = $u->getName();
 			} else {
-				$u = User::newFromId( $id ); # create
-				if ( $u->loadFromId() ) {
-					# overwrite text
-					$target = $u->getName();
-				} else {
-					// User with that ID doesn't exist, notify user
-					// Stops trying to display form with a user by that name which is confusing
-					$byIdInvalidUser = true;
-				}
+				// User with that ID doesn't exist, notify user
+				// Stops trying to display form with a user by that name which is confusing
+				$byIdInvalidUser = true;
 			}
 		}
 
-		$emailUser = $wgRequest->getText( 'email_user' );
+		$emailUser = $request->getText( 'email_user' );
 		if ( $emailUser ) {
 			$this->showForm( $emailUser, $id, $byIdInvalidUser );
 		} else {
@@ -145,7 +133,7 @@ EOT
 	 * @param string $emailUser
 	 */
 	function showInfo( $target, $emailUser = "" ) {
-		global $wgOut, $wgScript, $wgEnableWallExt, $wgExternalSharedDB, $wgExternalAuthType;
+		global $wgOut, $wgScript, $wgEnableWallExt, $wgExternalSharedDB;
 		// Small Stuff Week - adding table from Special:LookupContribs --nAndy
 		global $wgExtensionsPath, $wgJsMimeType, $wgResourceBasePath, $wgEnableLookupContribsExt;
 
@@ -177,26 +165,27 @@ EOT
 			}
 
 			// Check for disabled accounts where we kept the email
-			$dRows = $dbr->select(
-				[ '`user`', 'user_properties' ],
-				[ 'user_name' ],
+			$userIds = $dbr->selectFieldValues(
+				'user_properties',
+				'up_user',
 				[
-					'user_id = up_user',
 					'up_property' => 'disabled-user-email',
 					'up_value' => $target,
 				],
 				__METHOD__
 			);
 
-			/** @var stdClass $row */
-			foreach ( $dRows as $row ) {
+			foreach ( User::whoAre( $userIds ) as $user_id => $user_name ) {
+				// User::whoAre return an entry for anons (under '0' key), skip it here
+				if ( $user_id === 0 ) continue;
+
 				if ( $loop === 0 ) {
-					$userTarget = $oRow->user_name;
+					$userTarget = $user_name;
 				}
-				if ( !empty( $emailUser ) && ( $emailUser == $row->user_name ) ) {
+				if ( !empty( $emailUser ) && ( $emailUser == $user_name ) ) {
 					$userTarget = $emailUser;
 				}
-				$aUsers[] = $row->user_name;
+				$aUsers[] = $user_name;
 				$loop++;
 			}
 
@@ -204,16 +193,8 @@ EOT
 		}
 
 		$targetUserName = ( !empty( $userTarget ) ? $userTarget : $target );
-		$extUser = null;
-		$user = null;
-		if ( $wgExternalAuthType == 'ExternalUser_Wikia' ) {
-			$extUser = ExternalUser::newFromName( $targetUserName );
-		} else {
-			$user = User::newFromName( $targetUserName );
-		}
-		if ( is_object( $extUser ) && ( $extUser->getId() != 0 ) ) {
-			$user = $extUser->mapToUser();
-		} elseif ( $user == null || $user->getId() == 0 ) {
+		$user = User::newFromName( $targetUserName );
+		if ( $user == null || $user->getId() == 0 ) {
 			$wgOut->addWikiText( '<span class="error">' . wfMessage( 'lookupuser-nonexistent', $target )->text() . '</span>' );
 			return;
 		}

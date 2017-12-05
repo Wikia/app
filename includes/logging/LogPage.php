@@ -85,27 +85,38 @@ class LogPage {
 
 	/**
 	 * @return bool|int|null
+	 * @throws MWException if this log entry would be attributed to anon user
 	 */
 	protected function saveContent() {
 		global $wgLogRestrictions;
+
+		// SUS-3222: All log entries should be attributed to registered users
+		if ( $this->doer->isAnon() ) {
+			$mwException = new MWException( 'Log entries must be attributed to registered users' );
+
+			\Wikia\Logger\WikiaLogger::instance()
+				->warning( 'SUS-3222 - Anon user log entry', [ 'exception' => $mwException ] );
+
+			throw $mwException;
+		}
 
 		$dbw = wfGetDB( DB_MASTER );
 		$log_id = $dbw->nextSequenceValue( 'logging_log_id_seq' );
 
 		$this->timestamp = $now = wfTimestampNow();
-		$data = array(
+		$data = [
 			'log_id' => $log_id,
 			'log_type' => $this->type,
 			'log_action' => $this->action,
 			'log_timestamp' => $dbw->timestamp( $now ),
 			'log_user' => $this->doer->getId(),
-			'log_user_text' => $this->doer->getName(),
 			'log_namespace' => $this->target->getNamespace(),
 			'log_title' => $this->target->getDBkey(),
 			'log_page' => $this->target->getArticleId(),
 			'log_comment' => $this->comment,
 			'log_params' => $this->params
-		);
+		];
+
 		$dbw->insert( 'logging', $data, __METHOD__ );
 		$newId = !is_null( $log_id ) ? $log_id : $dbw->insertId();
 

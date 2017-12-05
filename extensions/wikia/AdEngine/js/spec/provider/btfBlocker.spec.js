@@ -7,8 +7,10 @@ describe('ext.wikia.adEngine.provider.btfBlocker', function () {
 	var mocks = {
 		log: noop,
 		context: {
-			opts: {}
+			opts: {},
+			slots: {}
 		},
+		fillInSlot: noop,
 		adContext: {
 			addCallback: noop,
 			getContext: function () {
@@ -24,17 +26,12 @@ describe('ext.wikia.adEngine.provider.btfBlocker', function () {
 				return false;
 			}
 		},
-		adBlockDetection: {
-			isBlocking: function () {
-				return false;
-			}
-		},
 		win: {
 			addEventListener: noop,
 			setTimeout: function (callback) {
 				callback();
 			}
-		},
+		}
 	};
 
 	mocks.log.levels = {info: 'info', debug: 'debug'};
@@ -47,7 +44,6 @@ describe('ext.wikia.adEngine.provider.btfBlocker', function () {
 		return modules['ext.wikia.adEngine.provider.btfBlocker'](
 			mocks.adContext,
 			mocks.uapContext,
-			mocks.adBlockDetection,
 			modules['wikia.lazyqueue'](),
 			mocks.log,
 			mocks.win

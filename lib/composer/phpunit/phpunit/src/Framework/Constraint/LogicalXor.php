@@ -1,4 +1,4 @@
-<?php declare(strict_types=1);
+<?php
 /*
  * This file is part of PHPUnit.
  *
@@ -68,6 +68,7 @@ class LogicalXor extends Constraint
 
             if ($result === $lastResult) {
                 $success = false;
+
                 break;
             }
 

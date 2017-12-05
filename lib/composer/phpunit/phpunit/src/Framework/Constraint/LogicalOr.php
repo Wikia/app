@@ -1,4 +1,4 @@
-<?php declare(strict_types=1);
+<?php
 /*
  * This file is part of PHPUnit.
  *
@@ -65,6 +65,7 @@ class LogicalOr extends Constraint
         foreach ($this->constraints as $constraint) {
             if ($constraint->evaluate($other, $description, true)) {
                 $success = true;
+
                 break;
             }
         }

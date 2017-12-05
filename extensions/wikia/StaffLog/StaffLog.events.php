@@ -1,6 +1,6 @@
 <?php
 class StaffLogger {
-	static public function log($type, $action, $userId, $userName, $userdstId, $userNamedst, $comment = "") {
+	static public function log(string $type, string $action, int $userId, string $userName, int $userdstId, string $userNamedst, $comment = "") {
 		global $wgSitename,$wgCityId,$wgExternalDatawareDB;
 		$dbw =  wfGetDB( DB_MASTER, array(), $wgExternalDatawareDB );
 		$now = wfTimestampNow();
@@ -60,17 +60,40 @@ class StaffLogger {
 		return true;
 	}
 
+	static private function getCommunityUser( string $name, $noRedirect = false ) :string {
+		$title = GlobalTitle::newFromText( $name, NS_USER, COMMUNITY_CENTRAL_CITY_ID );
+		return Xml::element( 'a', [ 'href' => $title->getFullURL(
+			$noRedirect ? 'redirect=no' : ''
+		) ], $name, false );
+	}
+
+	static private function getCityLink( int $cityId ) :string {
+		global $wgCityId, $wgSitename;
+		$domains = WikiFactory::getDomains( $cityId );
+		if ( $wgCityId == $cityId ) {
+			// Hack based on the fact we should only ask for current wiki's sitename
+			$text = $wgSitename;
+		} else {
+			// The fallback to return anything
+			$text = "[" . WikiFactory::IDtoDB( $cityId ) . ":{$cityId}]";
+		}
+		if ( !empty( $domains ) ) {
+			$text = Xml::tags( 'a', [ "href" => "http://" . $domains[0] ], $text );
+		}
+		return $text;
+	}
+
 	static public function eventlogWFPublicStatusChange( $cityStatus, $cityId, $reason ) {
 		global $wgUser;
 		$comment = wfMessage(
 			'stafflog-wiki-status-change',
-			RenameUserLogFormatter::getCommunityUser( $wgUser->getName() ),
-			RenameUserLogFormatter::getCityLink( $cityId ),
+			self::getCommunityUser( $wgUser->getName() ),
+			self::getCityLink( $cityId ),
 			$cityStatus,
 			$reason
 		)->inLanguage( 'en' )->text();
 		// sadly, $type and $action have 10-character limit, hence 'wikifactor' and 'pubstatus'.
-		self::log( 'wikifactor', 'pubstatus', $wgUser->getID(), $wgUser->getName(), '', '',  $comment );
+		self::log( 'wikifactor', 'pubstatus', $wgUser->getID(), $wgUser->getName(), 0, '',  $comment );
 		return true;
 	}
 }

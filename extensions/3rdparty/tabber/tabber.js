@@ -6,8 +6,11 @@
 				tabContent = $this.children('.tabbertab'),
 				nav = $('<ul>').addClass('tabbernav');
 			tabContent.each(function() {
-				var anchor = $('<a>').text(this.title).attr('title', this.title).attr('href', 'javascript:void(0);');
+				var anchor = $('<a>').text(this.title).attr('title', this.title).attr('href', '#');
 				$('<li>').append(anchor).appendTo(nav);
+
+				// SUS-2997: Manually insert word break point after each tab
+				nav.append($('<wbr>'));
 			});
 			$this.prepend(nav);
 
@@ -25,8 +28,7 @@
 				nav.find('a[title="' + title + '"]').parent().addClass('tabberactive');
 
 				// Wikia change begin - trigger scroll event to lazy load any new images
-				var scrollEvent = new CustomEvent('scroll');
-				window.dispatchEvent(scrollEvent);
+				$(window).trigger('scroll');
 				// Wikia change end
 
 				return true;

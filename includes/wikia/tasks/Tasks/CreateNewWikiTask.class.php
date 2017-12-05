@@ -55,16 +55,6 @@ class CreateNewWikiTask extends BaseTask {
 			}
 		}
 
-		if ( !$this->founder || $this->founder->isAnon() ) {
-			global $wgExternalAuthType;
-			if ( $wgExternalAuthType ) {
-				$extUser = \ExternalUser::newFromName( $params['founderName'] );
-				if ( is_object( $extUser ) ) {
-					$extUser->linkToLocal( $extUser->getId() );
-				}
-			}
-		}
-
 		$this->wikiName = isset( $params['sitename'] ) ? $params['sitename'] : \WikiFactory::getVarValueByName( 'wgSitename', $params['city_id'], true );
 		$this->wikiLang = isset( $params['language'] ) ? $params['language'] : \WikiFactory::getVarValueByName( 'wgLanguageCode', $params['city_id'] );
 
@@ -108,11 +98,9 @@ class CreateNewWikiTask extends BaseTask {
 			\WikiFactory::clearCache( $wgCityId );
 		}
 
-		$dbname = \WikiFactory::IDtoDB( $wgCityId );
-		$founder = $this->founder->getId();
-		$cmd = sprintf( "perl /usr/wikia/backend/bin/scribe/events_local_users.pl --usedb={$dbname} --user={$founder} " );
-		$output = wfShellExec( $cmd, $exitStatus );
-		$this->info( 'run events_local_users.pl', ['exitStatus' => $exitStatus, 'output' => $output] );
+		// SUS-3264 | set up events_local_users entries directly, instead of calling backend script
+		$this->info( "Setting up events_local_users table entries" );
+		\ListusersData::populateEventsLocalUsers( $wgCityId );
 
 		$wgMemc = wfGetMainCache();
 		$wgMemc->delete( \WikiFactory::getVarsKey( $wgCityId ) );

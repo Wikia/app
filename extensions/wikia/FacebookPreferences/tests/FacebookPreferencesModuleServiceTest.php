@@ -3,6 +3,7 @@
 use PHPUnit\Framework\TestCase;
 use Swagger\Client\ApiException;
 use Swagger\Client\ExternalAuth\Models\LinkedFacebookAccount;
+use Wikia\Service\User\ExternalAuth\FacebookService;
 
 class FacebookPreferencesModuleServiceTest extends TestCase {
 	/** @var User|PHPUnit_Framework_MockObject_MockObject $userMock */

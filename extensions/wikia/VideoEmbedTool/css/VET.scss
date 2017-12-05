@@ -300,24 +300,6 @@ $color-related-videos-background: darken($color-page, 20%);
 		}
 	}
 }
-.VET-search-filter {
-	padding-top: 4px;
-	width:320px;
-	float:right;
-	.VET-search-dropdown {
-	    margin-right:39px;
-	    float:right;
-	    width:180px;
-	    .dropdown {
-    		width: 215px;
-    	}
-    }
-    label.dropdown-label {
-    	float:right;
-    	margin-right:10px;
-    	font-weight: bold;
-    }
-}
 
 
 // Second screen - embed details
@@ -417,7 +399,7 @@ $color-related-videos-background: darken($color-page, 20%);
 				width: 0px;
 			}
 			.vet-style-label {
-				background: url("/extensions/wikia/VideoEmbedTool/images/MediatoolsSprite.png") 0px -10px no-repeat; /* $wgCdnStylePath */
+				background: url("/extensions/wikia/VideoEmbedTool/images/MediatoolsSprite.png") 0px -10px no-repeat; /* $wgResourceBasePath */
 				cursor: pointer;
 				float: none;
 				height: 34px;
@@ -429,7 +411,7 @@ $color-related-videos-background: darken($color-page, 20%);
 				white-space: nowrap;
 			}
 			.vet-layout-label {
-				background: url("/extensions/wikia/VideoEmbedTool/images/MediatoolsSprite.png") 0px -89px no-repeat; /* $wgCdnStylePath */
+				background: url("/extensions/wikia/VideoEmbedTool/images/MediatoolsSprite.png") 0px -89px no-repeat; /* $wgResourceBasePath */
 				cursor: pointer;
 				float: none;
 				height: 33px;

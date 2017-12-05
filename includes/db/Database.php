@@ -202,8 +202,8 @@ interface DatabaseType {
  */
 abstract class DatabaseBase implements DatabaseType {
 
-	// @const log 1% of queries
-	const QUERY_SAMPLE_RATE = 0.01;
+	// @const log 5% of queries (increased from 1% in SUS-2974)
+	const QUERY_SAMPLE_RATE = 0.05;
 
 	// @const log queries that took more than 15 seconds
 	const SLOW_QUERY_LOG_THRESHOLD = 15;
@@ -839,6 +839,9 @@ abstract class DatabaseBase implements DatabaseType {
 	 * @return bool Whether $sql is SQL for TEMPORARY table operation
 	 */
 	protected function registerTempTableOperation( $sql ) {
+		// SUS-3246: Trim the SQL query to avoid manually crafted queries not matching
+		$sql = ltrim( $sql );
+
 		if ( preg_match(
 			'/^CREATE\s+TEMPORARY\s+TABLE\s+(?:IF\s+NOT\s+EXISTS\s+)?[`"\']?(\w+)[`"\']?/i',
 			$sql,
@@ -2201,6 +2204,12 @@ abstract class DatabaseBase implements DatabaseType {
 		 && in_array( $table, $wgSharedTables ) ) { # A shared table is selected
 			$database = $wgSharedDB;
 			$prefix   = isset( $wgSharedPrefix ) ? $wgSharedPrefix : $prefix;
+
+			// SUS-3063 | Log all cases where Database::tableName returns wikicities_cX.user
+			WikiaLogger::instance()->warning( __METHOD__ . '::addSharedPrefix', [
+				'table_name' => $table,
+				'caller' => wfGetCallerClassMethod( [ __CLASS__, DatabaseMysqlBase::class, DatabaseMysqli::class ]  ),
+			] );
 		}
 
 		# Quote the $database and $table and apply the prefix if not quoted.
@@ -3598,6 +3607,18 @@ abstract class DatabaseBase implements DatabaseType {
 	}
 
 	/**
+	 * Check to see if a named lock is available. This is non-blocking.
+	 *
+	 * @param string $lockName name of lock to poll
+	 * @param string $method name of method calling us
+	 * @return Boolean
+	 * @since 1.20
+	 */
+	public function lockIsFree( $lockName, $method ) {
+		return true;
+	}
+
+	/**
 	 * Acquire a named lock
 	 *
 	 * Abstracted from Filestore::lock() so child classes can implement for
@@ -3753,6 +3774,7 @@ abstract class DatabaseBase implements DatabaseType {
 	 * @param string $sql the query
 	 * @param ResultWrapper|mysqli_result|bool $ret database results
 	 * @param string $fname the name of the function that made this query
+	 * @param float $elapsedTime time (in seconds) it took the query to complete
 	 * @param bool $isMaster is this against the master
 	 * @return void
 	 */
@@ -3797,12 +3819,14 @@ abstract class DatabaseBase implements DatabaseType {
 			'exception'   => new Exception(), // log the backtrace
 		];
 
+		/* @var WebRequest $wgRequest */
 		if ( $wgRequest && $wgRequest->getVal( 'action' ) == 'delete' ) {
 			$this->getWikiaLogger()->info( "SQL (action=delete) {$sql}", $context );
 		}
 
+		// SUS-2974 | send SQL logs to a separate ES index 'mediawiki-sql'
 		if ( $this->getSampler()->shouldSample() ) {
-			$this->getWikiaLogger()->info( "SQL {$sql}", $context );
+			$this->getWikiaLogger()->defaultLogger( 'mediawiki-sql' )->info( $sql, $context );
 		}
 
 		if ( $this->isWriteQuery($sql) &&

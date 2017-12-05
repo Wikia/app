@@ -21,6 +21,11 @@ class Revision implements IDBAccessObject {
 	protected $mTitle;
 	protected $mCurrent;
 
+	/**
+	 * SUS-3466: Maximum possible length of revision summary in bytes.
+	 */
+	const REVISION_SUMMARY_MAX_LENGTH = 255;
+
 	// Revision deletion constants
 	const DELETED_TEXT = 1;
 	const DELETED_COMMENT = 2;
@@ -286,7 +291,7 @@ class Revision implements IDBAccessObject {
 		if( $res ) {
 			$row = $res->fetchObject();
 			if( $row ) {
-				$ret = new Revision( $row );
+				$ret = new Revision( self::replaceUsernameFieldsWithVariables( $row ) ); // SUS-2779
 				return $ret;
 			}
 		}
@@ -295,20 +300,14 @@ class Revision implements IDBAccessObject {
 	}
 
 	/**
-	 * Return a wrapper for a series of database rows to
-	 * fetch all of a given page's revisions in turn.
-	 * Each row can be fed to the constructor to get objects.
-	 *
-	 * @param $title Title
-	 * @return ResultWrapper
+	 * @param $row
 	 */
-	public static function fetchRevision( $title ) {
-		return self::fetchFromConds(
-			wfGetDB( DB_SLAVE ),
-			array( 'rev_id=page_latest',
-				   'page_namespace' => $title->getNamespace(),
-				   'page_title'     => $title->getDBkey() )
-		);
+	private static function replaceUsernameFieldsWithVariables( $row ) {
+		$userName = User::getUsername( $row->rev_user, $row->rev_user_text );
+		$row->user_name = $userName;
+		$row->rev_user_text = $userName;
+
+		return $row;
 	}
 
 	/**
@@ -322,22 +321,22 @@ class Revision implements IDBAccessObject {
 	 * @return ResultWrapper
 	 */
 	private static function fetchFromConds( $db, $conditions, $flags = 0 ) {
+		// SUS-2779
 		$fields = array_merge(
 			self::selectFields(),
-			self::selectPageFields(),
-			self::selectUserFields()
+			self::selectPageFields()
 		);
 		$options = array( 'LIMIT' => 1 );
 		if ( ( $flags & self::READ_LOCKING ) == self::READ_LOCKING ) {
 			$options[] = 'LOCK IN SHARE MODE';
 		}
 		return $db->select(
-			array( 'revision', 'page', 'user' ),
+			array( 'revision', 'page' ),
 			$fields,
 			$conditions,
 			__METHOD__,
 			$options,
-			array( 'page' => self::pageJoinCond(), 'user' => self::userJoinCond() )
+			array( 'page' => self::pageJoinCond() )
 		);
 	}
 
@@ -670,7 +669,7 @@ class Revision implements IDBAccessObject {
 	 * @return String
 	 */
 	public function getRawUserText() {
-		if ( $this->mUserText === null ) {
+		if ( $this->mUserText === null || $this->mUserText === '' /* SUS-3459 */ ) {
 			$this->mUserText = User::whoIs( $this->mUser ); // load on demand
 			if ( $this->mUserText === false ) {
 				# This shouldn't happen, but it can if the wiki was recovered
@@ -1012,7 +1011,8 @@ class Revision implements IDBAccessObject {
 			$this->mTextId = $dbw->insertId();
 		}
 
-		if ( $this->mComment === null ) $this->mComment = "";
+		// SUS-3466: Truncate edit summaries before insert to prevent database error
+		$this->mComment = substr( $this->mComment ?? '', 0, static::REVISION_SUMMARY_MAX_LENGTH );
 
 		# Record the edit in revisions
 		$rev_id = isset( $this->mId )
@@ -1026,7 +1026,7 @@ class Revision implements IDBAccessObject {
 				'rev_comment'    => $this->mComment,
 				'rev_minor_edit' => $this->mMinorEdit ? 1 : 0,
 				'rev_user'       => $this->mUser,
-				'rev_user_text'  => $this->mUserText,
+				'rev_user_text'  => $this->getRawUser() === 0 ? $this->mUserText : '', // SUS-3078
 				'rev_timestamp'  => $dbw->timestamp( $this->mTimestamp ),
 				'rev_deleted'    => $this->mDeleted,
 				'rev_len'        => $this->mSize,

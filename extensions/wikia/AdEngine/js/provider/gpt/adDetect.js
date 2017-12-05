@@ -129,9 +129,14 @@ define('ext.wikia.adEngine.provider.gpt.adDetect', [
 			return 'always_success';
 		}
 
-		if (gptEmpty || height <= 1) {
+		if (gptEmpty) {
 			log(['getAdType', slotName, 'ad is empty (GPT event)', 'empty'], 'info', logGroup);
 			return 'empty';
+		}
+
+		if (height <= 1) {
+			log(['getAdType', slotName, 'ad has no size', 'no_height'], 'info', logGroup);
+			return 'no_height';
 		}
 
 		if (!isMobile()) {
@@ -285,11 +290,6 @@ define('ext.wikia.adEngine.provider.gpt.adDetect', [
 			expectAsyncSuccess = true;
 		}
 
-		if (adType === 'gumgum') {
-			expectAsyncHopWithSlotName = true;
-			shouldPollForSuccess = true; // TODO: there's no way to detect the GumGum success :-(
-		}
-
 		if (adType === 'highimpact') {
 			expectAsyncHopWithSlotName = true;
 			expectAsyncSuccessWithSlotName = true;
@@ -301,11 +301,11 @@ define('ext.wikia.adEngine.provider.gpt.adDetect', [
 			return callAdCallback();
 		}
 
-		if (adType === 'collapse') {
+		if (adType === 'collapse' || adType === 'empty') {
 			return callCollapseAdCallback();
 		}
 
-		if (adType === 'empty') {
+		if (adType === 'no_height') {
 			return callNoAdCallback();
 		}
 

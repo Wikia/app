@@ -230,7 +230,7 @@ class WikiExporter {
 		foreach ( $res as $row ) {
 			$this->author_list .= "<contributor>" .
 				"<username>" .
-				htmlentities( $row->rev_user_text ) .
+				htmlentities( User::getUsername( $row->rev_user, $row->rev_user_text ) ) .
 				"</username>" .
 				"<id>" .
 				$row->rev_user .
@@ -474,11 +474,14 @@ class WikiExporter {
 	 * separate database connection not managed by LoadBalancer; some
 	 * blob storage types will make queries to pull source data.
 	 *
-	 * @param ResultWrapper $resultset
+	 * @param ResultWrapper|Generator $resultSet
 	 */
-	protected function outputPageStream( $resultset ) {
+	protected function outputPageStream( $resultSet ) {
 		$last = null;
-		foreach ( $resultset as $row ) {
+		foreach ( $resultSet as $row ) {
+			// SUS-807: use user name lookup here
+			$row->rev_user_text = User::getUsername( $row->rev_user, $row->rev_user_text );
+			
 			if ( $last === null ||
 				$last->page_namespace != $row->page_namespace ||
 				$last->page_title != $row->page_title ) {

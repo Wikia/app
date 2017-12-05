@@ -154,7 +154,7 @@
 		}
 
 		.throbber {
-			background: url(/skins/common/images/ajax.gif) 50% 50% no-repeat; /* $wgCdnStylePath */
+			background: url(/skins/common/images/ajax.gif) 50% 50% no-repeat; /* $wgResourceBasePath */
 			display: none;
 			height: 100%;
 			left: 0;

@@ -1,5 +1,7 @@
 <?php
 
+use Wikia\Service\Gateway\KubernetesUrlProvider;
+
 class WikiDetailsService extends WikiService {
 
 	const CACHE_1_DAY = 86400;//1 day
@@ -10,7 +12,7 @@ class WikiDetailsService extends WikiService {
 	const DEFAULT_SNIPPET_LENGTH = null;
 	const CACHE_VERSION = 3;
 	const WORDMARK_URL_SETTING = 'wordmark-image-url';
-	private static $flagsBlacklist = array( 'blocked', 'promoted' );
+	private static $flagsBlacklist = [ 'blocked', 'promoted' ];
 
 	protected $keys;
 	protected $themeSettings;
@@ -46,8 +48,8 @@ class WikiDetailsService extends WikiService {
 			$this->cacheWikiData( $wikiInfo );
 		}
 		//return empty result if wiki does not exist
-		if ( isset( $wikiInfo[ 'exists' ] ) ) {
-			return [ ];
+		if ( isset( $wikiInfo['exists'] ) ) {
+			return [];
 		}
 		//post process thumbnails
 		$wikiInfo = array_merge(
@@ -55,11 +57,11 @@ class WikiDetailsService extends WikiService {
 			$this->getImageData( $wikiInfo, $width, $height )
 		);
 		//set snippet
-		if ( isset( $wikiInfo[ 'desc' ] ) ) {
+		if ( isset( $wikiInfo['desc'] ) ) {
 			$length = ( $snippet !== null ) ? $snippet : static::DEFAULT_SNIPPET_LENGTH;
-			$wikiInfo[ 'desc' ] = $this->getSnippet( $wikiInfo[ 'desc' ], $length );
+			$wikiInfo['desc'] = $this->getSnippet( $wikiInfo['desc'], $length );
 		} else {
-			$wikiInfo[ 'desc' ] = '';
+			$wikiInfo['desc'] = '';
 		}
 		return $wikiInfo;
 	}
@@ -72,16 +74,16 @@ class WikiDetailsService extends WikiService {
 	 */
 	protected function getImageData( $wikiInfo, $width = null, $height = null ) {
 		// check community data image first
-		if ( isset( $wikiInfo[ 'image' ][ 'community' ] ) && $wikiInfo[ 'image' ][ 'community' ] ) {
+		if ( isset( $wikiInfo['image']['community'] ) && $wikiInfo['image']['community'] ) {
 			return $this->getImage(
-				GlobalFile::newFromText( $wikiInfo[ 'image' ][ 'title' ], $wikiInfo[ 'id' ] ), $width, $height );
+				GlobalFile::newFromText( $wikiInfo['image']['title'], $wikiInfo['id'] ), $width, $height );
 		}
-		$imageName = $wikiInfo[ 'image' ];
+		$imageName = $wikiInfo['image'];
 		$img = wfFindFile( $imageName );
 		if ( $img ) {
 			return $this->getImage( $img, $width, $height );
 		}
-		$f = $this->findGlobalFileImage( $imageName, $wikiInfo[ 'lang' ], $wikiInfo[ 'id' ] );
+		$f = $this->findGlobalFileImage( $imageName, $wikiInfo['lang'], $wikiInfo['id'] );
 		return $this->getImage( $f, $width, $height );
 	}
 
@@ -137,7 +139,7 @@ class WikiDetailsService extends WikiService {
 	protected function getWikiWordmarkImage( $id ) {
 		$settings = WikiFactory::getVarByName( ThemeSettings::WikiFactorySettings, $id );
 		$values = unserialize( $settings->cv_value );
-		return ( isset( $values[ self::WORDMARK_URL_SETTING ] ) ) ? $values[ self::WORDMARK_URL_SETTING ] : '';
+		return ( isset( $values[self::WORDMARK_URL_SETTING] ) ) ? $values[self::WORDMARK_URL_SETTING] : '';
 	}
 
 	/**
@@ -166,7 +168,7 @@ class WikiDetailsService extends WikiService {
 				'url' => $wikiObj->city_url,
 			];
 		}
-		return [ ];
+		return [];
 	}
 
 	/**
@@ -175,13 +177,13 @@ class WikiDetailsService extends WikiService {
 	 */
 	protected function getFromService( $id ) {
 		$wikiStats = $this->getSiteStats( $id );
-		$topUsers = $this->getTopEditors( $id, static::DEFAULT_TOP_EDITORS_NUMBER, true );
+		$topUsers = $this->getTopEditors( $id, static::DEFAULT_TOP_EDITORS_NUMBER );
 		$modelData = $this->getDetails( [ $id ] );
 
 		//filter out flags
-		$flags = [ ];
-		if ( isset( $modelData[ $id ] ) ) {
-			foreach ( $modelData[ $id ][ 'flags' ] as $name => $val ) {
+		$flags = [];
+		if ( isset( $modelData[$id] ) ) {
+			foreach ( $modelData[$id]['flags'] as $name => $val ) {
 				if ( $val == true && !in_array( $name, static::$flagsBlacklist ) ) {
 					$flags[] = $name;
 				}
@@ -190,26 +192,26 @@ class WikiDetailsService extends WikiService {
 
 		$wikiDetails = [
 			'stats' => [
-				'edits' => (int)$wikiStats[ 'edits' ],
-				'articles' => (int)$wikiStats[ 'articles' ],
-				'pages' => (int)$wikiStats[ 'pages' ],
-				'users' => (int)$wikiStats[ 'users' ],
-				'activeUsers' => (int)$wikiStats[ 'activeUsers' ],
-				'images' => (int)$wikiStats[ 'images' ],
+				'edits' => (int)$wikiStats['edits'],
+				'articles' => (int)$wikiStats['articles'],
+				'pages' => (int)$wikiStats['pages'],
+				'users' => (int)$wikiStats['users'],
+				'activeUsers' => (int)$wikiStats['activeUsers'],
+				'images' => (int)$wikiStats['images'],
 				'videos' => (int)$this->getTotalVideos( $id ),
 				'admins' => count( $this->getWikiAdminIds( $id ) )
 			],
 			'topUsers' => array_keys( $topUsers ),
-			'headline' => isset( $modelData[ $id ] ) ? $modelData[ $id ][ 'headline' ] : '',
-			'title' => isset( $modelData [ $id ] ) ? $modelData[ $id ][ 'title' ] : '',
-			'name' => isset( $modelData [ $id ] ) ? $modelData[ $id ][ 'name' ] : '',
-			'domain' => isset( $modelData [ $id ] ) ? $modelData[ $id ][ 'domain' ] : '',
-			'hub' => isset( $modelData [ $id ] ) ? $modelData[ $id ][ 'hub' ] : '',
-			'lang' => isset( $modelData[ $id ] ) ? $modelData[ $id ][ 'lang' ] : '',
-			'topic' => isset( $modelData[ $id ] ) ? $modelData[ $id ][ 'topic' ] : '',
+			'headline' => isset( $modelData[$id] ) ? $modelData[$id]['headline'] : '',
+			'title' => isset( $modelData [$id] ) ? $modelData[$id]['title'] : '',
+			'name' => isset( $modelData [$id] ) ? $modelData[$id]['name'] : '',
+			'domain' => isset( $modelData [$id] ) ? $modelData[$id]['domain'] : '',
+			'hub' => isset( $modelData [$id] ) ? $modelData[$id]['hub'] : '',
+			'lang' => isset( $modelData[$id] ) ? $modelData[$id]['lang'] : '',
+			'topic' => isset( $modelData[$id] ) ? $modelData[$id]['topic'] : '',
 			'flags' => $flags,
-			'desc' => isset( $modelData[ $id ] ) ? $modelData[ $id ][ 'desc' ] : '',
-			'image' => isset( $modelData[ $id ] ) ? $modelData[ $id ][ 'image' ] : '',
+			'desc' => isset( $modelData[$id] ) ? $modelData[$id]['desc'] : '',
+			'image' => isset( $modelData[$id] ) ? $modelData[$id]['image'] : '',
 		];
 
 		/*
@@ -217,14 +219,14 @@ class WikiDetailsService extends WikiService {
 		 * We need to get value from WikiFactory to make sure the value is correct
 		 */
 		if ( WikiFactory::getVarValueByName( 'wgEnableDiscussions', $id ) ) {
-			$wikiDetails[ 'stats' ][ 'discussions' ] = (int)$this->getDiscussionStats( $id );
+			$wikiDetails['stats']['discussions'] = (int)$this->getDiscussionStats( $id );
 		}
 
 		return $wikiDetails;
 	}
 
 	protected function getFromCommunityData( $wikiId ) {
-		$result = [ ];
+		$result = [];
 		if ( !empty( $wikiId ) ) {
 			$provider = new CommunityDataService( $wikiId );
 			$desc = $provider->getCommunityDescription();
@@ -233,7 +235,7 @@ class WikiDetailsService extends WikiService {
 			}
 			$image = GlobalTitle::newFromId( $provider->getCommunityImageId(), $wikiId );
 			if ( $image && $image->exists() ) {
-				$result[ 'image' ] = [ 'community' => true, 'title' => $image->getText() ];
+				$result['image'] = [ 'community' => true, 'title' => $image->getText() ];
 			}
 		}
 		return $result;
@@ -257,10 +259,10 @@ class WikiDetailsService extends WikiService {
 	 * @return mixed
 	 */
 	protected function getMemCacheKey( $seed ) {
-		if ( !isset( $this->keys[ $seed ] ) ) {
-			$this->keys[ $seed ] = wfsharedMemcKey( static::MEMC_NAME . static::CACHE_VERSION . ':' . $seed );
+		if ( !isset( $this->keys[$seed] ) ) {
+			$this->keys[$seed] = wfsharedMemcKey( static::MEMC_NAME . static::CACHE_VERSION . ':' . $seed );
 		}
-		return $this->keys[ $seed ];
+		return $this->keys[$seed];
 	}
 
 	/**
@@ -269,7 +271,7 @@ class WikiDetailsService extends WikiService {
 	 */
 	protected function cacheWikiData( $wikiInfo, $method = null ) {
 		global $wgMemc;
-		$seed = $method !== null ? $wikiInfo[ 'id' ] . ':' . $method : $wikiInfo[ 'id' ];
+		$seed = $method !== null ? $wikiInfo['id'] . ':' . $method : $wikiInfo['id'];
 		$key = $this->getMemCacheKey( $seed );
 		$wgMemc->set( $key, $wikiInfo, static::CACHE_1_DAY );
 	}
@@ -279,14 +281,15 @@ class WikiDetailsService extends WikiService {
 	 * @return mixed
 	 */
 	private function getDiscussionStats( $id ) {
-		global $wgConsulServiceTag, $wgConsulUrl;
+		global $wgWikiaEnvironment, $wgWikiaDatacenter;
 
-		$consulUrl = ( new Wikia\Service\Gateway\ConsulUrlProvider( $wgConsulUrl, $wgConsulServiceTag ))->getUrl( 'discussion' );
-		$response = Http::get( "http://$consulUrl/$id/forums/$id?limit=1", 'default', array( 'noProxy' => true ));
+		$discussionsServiceUrl = ( new KubernetesUrlProvider( $wgWikiaEnvironment, $wgWikiaDatacenter ) )
+			->getUrl( 'discussion' );
+		$response = Http::get( "http://$discussionsServiceUrl/$id/forums/$id?limit=1", 'default', [ 'noProxy' => true ] );
 		if ( $response !== false ) {
 			$decodedResponse = json_decode( $response, true );
-			if ( isset( $decodedResponse[ 'threadCount' ] ) && json_last_error() === JSON_ERROR_NONE ) {
-				return $decodedResponse[ 'threadCount' ];
+			if ( isset( $decodedResponse['threadCount'] ) && json_last_error() === JSON_ERROR_NONE ) {
+				return $decodedResponse['threadCount'];
 			}
 		}
 		return null;

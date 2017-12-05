@@ -6,14 +6,6 @@ describe('ext.wikia.adEngine.provider.factory.wikiaGpt', function () {
 
 	var mocks = {
 		log: noop,
-		context: {
-			opts: {}
-		},
-		adContext: {
-			getContext: function () {
-				return mocks.context;
-			}
-		},
 		adUnitBuilder: {
 			build: function(slotName, src) {
 				return '/5441/wka.ent/_muppet//home/' + src + '/' + slotName;
@@ -40,10 +32,10 @@ describe('ext.wikia.adEngine.provider.factory.wikiaGpt', function () {
 			},
 			storeScrollY: noop
 		},
-		beforeSuccess: noop,
-		beforeCollapse: noop,
+		afterSuccess: noop,
+		afterCollapse: noop,
 		window: {},
-		beforeHop: noop,
+		afterHop: noop,
 		btfBlocker: {
 			decorate: noop
 		}
@@ -54,7 +46,7 @@ describe('ext.wikia.adEngine.provider.factory.wikiaGpt', function () {
 			name: slotName,
 			success: noop,
 			hop: noop,
-			pre: function (name, callback) {
+			post: function (name, callback) {
 				callback();
 			}
 		};
@@ -62,7 +54,6 @@ describe('ext.wikia.adEngine.provider.factory.wikiaGpt', function () {
 
 	function getModule() {
 		return modules['ext.wikia.adEngine.provider.factory.wikiaGpt'](
-			mocks.adContext,
 			mocks.btfBlocker,
 			mocks.gptHelper,
 			mocks.adUnitBuilder,
@@ -80,7 +71,6 @@ describe('ext.wikia.adEngine.provider.factory.wikiaGpt', function () {
 			{
 				TOP_LEADERBOARD:         {size: '728x90,970x250,970x90', pos: 'top'},
 				TOP_RIGHT_BOXAD:         {size: '300x250,300x600', pos: 'top'},
-				LEFT_SKYSCRAPER_2:       {size: '160x600', pos: 'middle'},
 				GPT_FLUSH:               {skipCall: true}
 			},
 			extra
@@ -141,34 +131,34 @@ describe('ext.wikia.adEngine.provider.factory.wikiaGpt', function () {
 		);
 	});
 
-	it('Call beforeSuccess on pushAd if is defined', function () {
-		spyOn(mocks, 'beforeSuccess');
+	it('Call afterSuccess on pushAd if is defined', function () {
+		spyOn(mocks, 'afterSuccess');
 
 		getProvider({
-			beforeSuccess: mocks.beforeSuccess
+			afterSuccess: mocks.afterSuccess
 		}).fillInSlot(createSlot('TOP_LEADERBOARD'));
 
-		expect(mocks.beforeSuccess).toHaveBeenCalled();
+		expect(mocks.afterSuccess).toHaveBeenCalled();
 	});
 
-	it('Call beforeCollapse on pushAd if is defined', function () {
-		spyOn(mocks, 'beforeCollapse');
+	it('Call afterCollapse on pushAd if is defined', function () {
+		spyOn(mocks, 'afterCollapse');
 
 		getProvider({
-			beforeCollapse: mocks.beforeCollapse
+			afterCollapse: mocks.afterCollapse
 		}).fillInSlot(createSlot('TOP_LEADERBOARD'));
 
-		expect(mocks.beforeCollapse).toHaveBeenCalled();
+		expect(mocks.afterCollapse).toHaveBeenCalled();
 	});
 
-	it('Call beforeHop on pushAd if is defined', function () {
-		spyOn(mocks, 'beforeHop');
+	it('Call afterHop on pushAd if is defined', function () {
+		spyOn(mocks, 'afterHop');
 
 		getProvider({
-			beforeHop: mocks.beforeHop
+			afterHop: mocks.afterHop
 		}).fillInSlot(createSlot('TOP_LEADERBOARD'));
 
-		expect(mocks.beforeHop).toHaveBeenCalled();
+		expect(mocks.afterHop).toHaveBeenCalled();
 	});
 
 	it('Push slot with refresh count key val', function () {
@@ -177,5 +167,21 @@ describe('ext.wikia.adEngine.provider.factory.wikiaGpt', function () {
 		getProvider().fillInSlot(createSlot('TOP_LEADERBOARD'));
 
 		expect(mocks.gptHelper.pushAd.calls.mostRecent().args[2].rv).toEqual('2');
+	});
+
+	it('Pass correct testSrc as a param', function () {
+		spyOn(mocks.gptHelper, 'pushAd');
+
+		getProvider({testSrc: 'abc'}).fillInSlot(createSlot('TOP_LEADERBOARD'));
+
+		expect(mocks.gptHelper.pushAd.calls.mostRecent().args[3].testSrc).toEqual('abc');
+	});
+
+	it('Pass empty testSrc value for undefined', function () {
+		spyOn(mocks.gptHelper, 'pushAd');
+
+		getProvider().fillInSlot(createSlot('TOP_LEADERBOARD'));
+
+		expect(mocks.gptHelper.pushAd.calls.mostRecent().args[3].testSrc).toBeUndefined();
 	});
 });

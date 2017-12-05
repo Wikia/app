@@ -34,6 +34,10 @@ function import_cu_log_line( $line ) {
 	}
 }
 
+/**
+ * @param DatabaseBase $db
+ * @param $log
+ */
 function import_cu_log( $db, $log ) {
 	global $wgDBname;
 
@@ -71,7 +75,7 @@ function import_cu_log( $db, $log ) {
 					'cul_id' => $db->nextSequenceValue( 'cu_log_cul_id_seq' ),
 					'cul_timestamp' => $db->timestamp( $data['timestamp'] ),
 					'cul_user' => $user->getID(),
-					'cul_user_text' => $user->getName(),
+					'cul_user_text' => $user->isAnon() ? $user->getName() : '', // SUS-3083
 					'cul_reason' => $data['reason'],
 					'cul_type' => $data['type'],
 					'cul_target_id' => $targetID,

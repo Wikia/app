@@ -1,0 +1,23 @@
+@import '~ad-products/src/styles/styles.scss';
+
+.has-bfaa {
+  &.body {
+    padding-top: 25.7732%;
+  }
+
+  #WikiaTopAds {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.gpt-ad.bfab-template {
+  // TODO: remove me, I'm quick fix for default max-width in ad-products repository
+  max-width: none !important;
+}
+
+.gpt-ad.slot-responsive > div.replay-overlay {
+  position: absolute !important;
+}

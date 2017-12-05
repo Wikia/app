@@ -1,4 +1,4 @@
-<?php declare(strict_types=1);
+<?php
 /*
  * This file is part of PHPUnit.
  *
@@ -71,6 +71,7 @@ class TraversableContainsOnly extends Constraint
         foreach ($other as $item) {
             if (!$this->constraint->evaluate($item, '', true)) {
                 $success = false;
+
                 break;
             }
         }

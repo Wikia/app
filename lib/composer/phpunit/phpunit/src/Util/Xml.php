@@ -1,4 +1,4 @@
-<?php declare(strict_types=1);
+<?php
 /*
  * This file is part of PHPUnit.
  *
@@ -216,13 +216,14 @@ class Xml
                         $variable[] = $value;
                     }
                 }
+
                 break;
 
             case 'object':
                 $className = $element->getAttribute('class');
 
                 if ($element->hasChildNodes()) {
-                    $arguments       = $element->childNodes->item(1)->childNodes;
+                    $arguments       = $element->childNodes->item(0)->childNodes;
                     $constructorArgs = [];
 
                     foreach ($arguments as $argument) {
@@ -236,10 +237,12 @@ class Xml
                 } else {
                     $variable = new $className;
                 }
+
                 break;
 
             case 'boolean':
                 $variable = $element->textContent == 'true';
+
                 break;
 
             case 'integer':
@@ -248,6 +251,7 @@ class Xml
                 $variable = $element->textContent;
 
                 \settype($variable, $element->tagName);
+
                 break;
         }
 

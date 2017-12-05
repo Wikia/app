@@ -384,58 +384,29 @@ class DataProvider {
 	 * Called by NavigationModel::handleExtraWords
 	 *
 	 * Author: Inez Korczynski (inez at wikia.com)
+	 *
+	 * @param int $limit
 	 * @return array
 	 */
 	final public static function GetTopFiveUsers( $limit = 7 ) {
 		wfProfileIn( __METHOD__ );
-
-		$fname = __METHOD__;
 		$limit = min( $limit, self::TOP_USERS_MAX_LIMIT );
 
-		$results = WikiaDataAccess::cacheWithLock( wfMemcKey( __METHOD__ ), WikiaResponse::CACHE_STANDARD, function() use ( $fname ) {
-			global $wgCityId, $wgSpecialsDB;
+		$results = WikiaDataAccess::cacheWithLock( wfMemcKey( __METHOD__ ), WikiaResponse::CACHE_STANDARD, function() {
+			global $wgCityId;
 
-			$dbr = wfGetDB( DB_SLAVE );
-			$users_list = $dbr->selectFieldValues(
-				"user_groups",
-				"ug_user",
-				[ 'ug_group' => [ 'staff', 'bot' ] ],
-				$fname
-			);
-
-			// add more blacklisted user IDs
-			$users_list[] = '0';
-			$users_list[] = '22439'; // Wikia
-			$users_list[] = '929702'; // CreateWiki script
-
-			$users_list = array_unique( $users_list );
-
-			$dbs = wfGetDB( DB_SLAVE, [], $wgSpecialsDB );
-			$res = $dbs->select(
-				'events_local_users',
-				'user_id',
-				[
-					'wiki_id' => $wgCityId,
-					sprintf( 'user_id NOT IN (%s)', $dbs->makeList( $users_list ) )
-				],
-				$fname,
-				[
-					'LIMIT' => self::TOP_USERS_MAX_LIMIT * 4,
-					'ORDER BY' => 'edits DESC',
-					'USE INDEX' => 'PRIMARY', # mysql in Reston wants to use a different key (PLATFORM-1648)
-				]
-			);
+			// SUS-3248 | use WikiService::getTopEditors
+			$usersAndEdits = (new WikiService)->getTopEditors( $wgCityId, self::TOP_USERS_MAX_LIMIT );
 
 			$results = [];
-			while ( $row = $dbs->fetchObject( $res ) ) {
-				$user = User::newFromID( $row->user_id );
+			foreach ( $usersAndEdits as $userId => $editsCount ) {
+				$user = User::newFromID( $userId );
 
-				if ( !$user->isBlocked( true, false ) && !$user->isAllowed( 'bot' )
-					&& $user->getUserPage()->exists()
-				) {
-					$article['url'] = $user->getUserPage()->getLocalUrl();
-					$article['text'] = $user->getName();
-					$results[] = $article;
+				if ( !$user->isBlocked( true, false ) && $user->getUserPage()->exists() ) {
+					$results[] = [
+						'url' => $user->getUserPage()->getLocalUrl(),
+						'text' => $user->getName(),
+					];
 				}
 
 				// no need to check more users here
@@ -443,7 +414,6 @@ class DataProvider {
 					break;
 				}
 			}
-			$dbs->freeResult( $res );
 			return $results;
 		} );
 
@@ -453,46 +423,6 @@ class DataProvider {
 
 		wfProfileOut( __METHOD__ );
 		return $results;
-	}
-
-	/**
-	 * Return array of top content
-	 * Author: Inez Korczynski (inez at wikia.com)
-	 * @return array
-	 */
-	final private static function
-	GetTopContentQuery( &$results, $query, $limit, $exists_table = "" ) {
-		wfProfileIn( __METHOD__ );
-
-		$dbr = &wfGetDB( DB_SLAVE );
-
-		/* check if table exists */
-		if ( !empty( $exists_table ) ) {
-			if ( $dbr->tableExists( $exists_table ) === false ) {
-				wfProfileOut( __METHOD__ );
-				return false;
-			}
-		}
-		/* check query */
-		if ( !empty( $query ) ) {
-			$res = $dbr->query( $dbr->limitResult( $query, $limit * 2, 0 ) );
-
-			while ( $row = $dbr->fetchObject( $res ) ) {
-				$title = Title::makeTitleSafe( $row->page_namespace, $row->page_title );
-
-				if ( is_object( $title ) ) {
-					if ( wfMsg( "mainpage" ) != $title->getText() ) {
-						$article['url'] = $title->getLocalUrl();
-						$article['text'] = $title->getPrefixedText();
-						$results[] = $article;
-					}
-				}
-			}
-			$dbr->freeResult( $res );
-		}
-
-		wfProfileOut( __METHOD__ );
-		return true;
 	}
 
 	/*

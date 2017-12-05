@@ -8,19 +8,9 @@ describe('ext.wikia.adEngine.video.vastUrlBuilder', function () {
 	var AD_UNIT_QUERY_PARAM = '&iu=',
 		REGULAR_AD_UNIT_QUERY_PARAM = AD_UNIT_QUERY_PARAM + 'my\/ad\/unit&',
 		mocks = {
-			adContext: {
-				get: function () {
-					return false;
-				}
-			},
 			adUnitBuilder: {
 				build: function () {
 					return 'my/ad/unit';
-				}
-			},
-			megaAdUnitBuilder: {
-				build: function () {
-					return 'mega/ad/unit';
 				}
 			},
 			slotTargeting: {
@@ -53,11 +43,9 @@ describe('ext.wikia.adEngine.video.vastUrlBuilder', function () {
 
 	function getModule() {
 		return modules['ext.wikia.adEngine.video.vastUrlBuilder'](
-			mocks.adContext,
 			mocks.page,
 			mocks.adUnitBuilder,
 			mocks.slotTargeting,
-			mocks.megaAdUnitBuilder,
 			mocks.loc,
 			mocks.log
 		);
@@ -138,12 +126,6 @@ describe('ext.wikia.adEngine.video.vastUrlBuilder', function () {
 	});
 
 	it('Build VAST URL with regular ad unit', function () {
-		var vastUrl = getModule().build(1, mocks.slotParams);
-
-		expect(vastUrl).toMatch(REGULAR_AD_UNIT_QUERY_PARAM);
-	});
-
-	it('Build VAST URL with regular ad unit for premium ad layout and without correct video pos name', function () {
 		var vastUrl = getModule().build(1, mocks.slotParams);
 
 		expect(vastUrl).toMatch(REGULAR_AD_UNIT_QUERY_PARAM);

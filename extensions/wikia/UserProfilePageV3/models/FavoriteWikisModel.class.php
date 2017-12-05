@@ -13,7 +13,7 @@ class FavoriteWikisModel extends WikiaModel {
 	 */
 	const MAX_FAV_WIKIS = 4;
 
-	const CACHE_VERSION = '1.00';
+	const CACHE_VERSION = '3';
 
 	// 3600 == 60 * 60 == 1 hr
 	const SAVED_WIKIS_TTL = 3600;
@@ -46,60 +46,75 @@ class FavoriteWikisModel extends WikiaModel {
 	 * @return array
 	 */
 	private function getTopWikisFromDb( $limit = self::MAX_FAV_WIKIS ) {
-		global $wgCityId, $wgSpecialsDB;
+		global $wgDWStatsDB;
 
-		if ( empty( $wgCityId ) ) {
-			// staff/internal does not have stats db
-			$wikis = [];
-		} else {
-			$query = $this->getTopWikisQuery( $limit );
+		$dbr = wfGetDB(DB_SLAVE, [], $wgDWStatsDB );
+		$where = [
+			'period_id' => DataMartService::PERIOD_ID_MONTHLY,
+			'time_id >= NOW() - INTERVAL 90 DAY', // process only recent 90 days
+			'user_id' => $this->user->getId(),
+		];
 
-			$dbr = wfGetDB( DB_SLAVE, [], $wgSpecialsDB );
-			$wikis = $query->runLoop( $dbr, function( &$data, $row ) {
-				$this->getTopWikiDataFromRow( $data, $row );
-			} );
+		$hiddenTopWikis = $this->getHiddenTopWikis();
+		if ( count( $hiddenTopWikis ) ) {
+			$hiddenTopWikis = array_map(
+				function( $city_id ) { return intval( $city_id); },
+				$hiddenTopWikis
+			);
+
+			$where[] = sprintf( 'wiki_id NOT IN (%s)', join(',', $hiddenTopWikis) );
+		}
+
+		$res = $dbr->select(
+			'rollup_wiki_user_events',
+			[
+				'wiki_id',
+				'SUM(creates + edits) AS edits',
+			],
+			$where,
+			__METHOD__,
+			[
+				'LIMIT' => $limit,
+				'ORDER BY' => 'edits DESC',
+				'GROUP BY' => 'wiki_id'
+			]
+		);
+
+		$wikis = [];
+
+		foreach($res as $row) {
+			$entry = $this->getTopWikiDataFromRow( $row );
+
+			if ($entry !== false) {
+				$wikis[] = $entry;
+			}
 		}
 
 		return $wikis;
 	}
 
-	private function getTopWikiDataFromRow( &$wikis, $row ) {
-		$wikiId = $row->wiki_id;
+	/**
+	 * @param object $row
+	 * @return array|false
+	 */
+	private function getTopWikiDataFromRow( $row ) {
+		$wikiId = (int) $row->wiki_id;
 		$wikiTitle = GlobalTitle::newFromText( $this->user->getName(), NS_USER_TALK, $wikiId );
+		$wikiName = WikiFactory::getVarValueByName( 'wgSitename', $wikiId );
 
-		if ( empty( $wikiTitle ) ) {
-			return;
+		if ( empty( $wikiTitle ) || empty ($wikiName ) ) {
+			return false;
 		}
 
-		$editCount = $row->edits;
-		$wikiName = WikiFactory::getVarValueByName( 'wgSitename', $wikiId );
+		$editCount = (int) $row->edits;
 		$wikiUrl = $wikiTitle->getFullUrl();
 
-		$wikis[$wikiId] = [
+		return [
 			'id' => $wikiId,
 			'wikiName' => $wikiName,
 			'wikiUrl' => $wikiUrl,
 			'edits' => $editCount
 		];
-	}
-
-	private function getTopWikisQuery( $limit ) {
-		$query = (new WikiaSQL())
-			->SELECT()
-				->FIELD( 'wiki_id' )
-				->FIELD( 'edits' )
-			->FROM( 'events_local_users' )
-			->WHERE( 'user_id' )->EQUAL_TO( $this->user->getId() )
-				->AND_( 'edits' )->GREATER_THAN( 0 )
-			->ORDER_BY( 'edits' )->DESC()
-			->LIMIT( $limit );
-
-		$hiddenTopWikis = $this->getHiddenTopWikis();
-		if ( count( $hiddenTopWikis ) ) {
-			$query->AND_( 'wiki_id' )->NOT_IN( $hiddenTopWikis );
-		}
-
-		return $query;
 	}
 
 	/**
@@ -223,19 +238,20 @@ class FavoriteWikisModel extends WikiaModel {
 		return $mastheadEditsWikis;
 	}
 
+	/**
+	 * @return array
+	 */
 	private function getEditsWikis() {
 		global $wgMemc;
 
 		$mastheadEditsWikis = $wgMemc->get( $this->getMemcMastheadEditsWikisKey() );
-		$mastheadEditsWikis = is_array( $mastheadEditsWikis ) ? $mastheadEditsWikis : [];
-
-		return $mastheadEditsWikis;
+		return is_array( $mastheadEditsWikis ) ? $mastheadEditsWikis : [];
 	}
 
 	/**
 	 * Gets memcache id for hidden wikis
 	 *
-	 * @return array
+	 * @return string
 	 */
 	private function getMemcHiddenWikisId() {
 		return wfSharedMemcKey( 'user-identity-box-data-top-hidden-wikis', $this->user->getId(), self::CACHE_VERSION );
@@ -276,7 +292,7 @@ class FavoriteWikisModel extends WikiaModel {
 	 *
 	 * @param Integer $wikiId
 	 *
-	 * @return array
+	 * @return bool
 	 */
 	public function hideWiki( $wikiId ) {
 		global $wgExternalSharedDB, $wgMemc;

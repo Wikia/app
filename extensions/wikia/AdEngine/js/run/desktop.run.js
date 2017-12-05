@@ -1,9 +1,9 @@
 /*global require*/
 /*jshint camelcase:false*/
 require([
+	'ad-engine.bridge',
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adEngineRunner',
-	'ext.wikia.adEngine.adInfoTracker',
 	'ext.wikia.adEngine.adLogicPageParams',
 	'ext.wikia.adEngine.slot.service.stateMonitor',
 	'ext.wikia.adEngine.config.desktop',
@@ -11,16 +11,19 @@ require([
 	'ext.wikia.adEngine.dartHelper',
 	'ext.wikia.adEngine.messageListener',
 	'ext.wikia.adEngine.pageFairDetection',
+	'ext.wikia.adEngine.provider.btfBlocker',
 	'ext.wikia.adEngine.slot.service.actionHandler',
+	'ext.wikia.adEngine.slot.service.slotRegistry',
 	'ext.wikia.adEngine.slotTracker',
 	'ext.wikia.adEngine.slotTweaker',
 	'ext.wikia.adEngine.sourcePointDetection',
+	'ext.wikia.adEngine.tracking.adInfoListener',
 	'ext.wikia.aRecoveryEngine.adBlockDetection',
 	'wikia.window'
 ], function (
+	adEngineBridge,
 	adContext,
 	adEngineRunner,
-	adInfoTracker,
 	pageLevelParams,
 	slotStateMonitor,
 	adConfigDesktop,
@@ -28,10 +31,13 @@ require([
 	dartHelper,
 	messageListener,
 	pageFairDetection,
+	btfBlocker,
 	actionHandler,
+	slotRegistry,
 	slotTracker,
 	slotTweaker,
 	sourcePointDetection,
+	adInfoListener,
 	adBlockDetection,
 	win
 ) {
@@ -51,11 +57,16 @@ require([
 	win.adSlotTweaker = slotTweaker;
 
 	// Custom ads (skins, footer, etc)
-	win.loadCustomAd = customAdsLoader.loadCustomAd;
+	if (adContext.get('opts.isAdProductsBridgeEnabled')) {
+		adEngineBridge.init(slotRegistry, pageLevelParams.getPageLevelParams(), adContext, btfBlocker, 'oasis');
+		win.loadCustomAd = adEngineBridge.loadCustomAd(customAdsLoader.loadCustomAd);
+	} else {
+		win.loadCustomAd = customAdsLoader.loadCustomAd;
+	}
 
 	// Everything starts after content and JS
 	win.wgAfterContentAndJS.push(function () {
-		adInfoTracker.run();
+		adInfoListener.run();
 		slotStateMonitor.run();
 
 		// Ads
@@ -82,7 +93,6 @@ require([
 	'ext.wikia.adEngine.slot.bottomLeaderboard',
 	'ext.wikia.adEngine.slot.highImpact',
 	'ext.wikia.adEngine.slot.inContent',
-	'ext.wikia.adEngine.slot.skyScraper3',
 	'wikia.document',
 	'wikia.window'
 ], function (
@@ -91,24 +101,15 @@ require([
 	bottomLeaderboard,
 	highImpact,
 	inContent,
-	skyScraper3,
 	doc,
 	win
 ) {
 	'use strict';
-	var context = adContext.getContext(),
-		premiumSlots = context.slots.premiumAdLayoutSlotsToUnblock;
 
 	function initDesktopSlots() {
 		highImpact.init();
-		skyScraper3.init();
 		inContent.init('INCONTENT_PLAYER');
-	}
-
-	win.addEventListener('wikia.uap', bottomLeaderboard.init);
-
-	if (context.opts.premiumAdLayoutEnabled && premiumSlots.indexOf('BOTTOM_LEADERBOARD') >= 0) {
-		win.addEventListener('wikia.not_uap', bottomLeaderboard.init);
+		bottomLeaderboard.init();
 	}
 
 	if (doc.readyState === 'complete') {

@@ -1,12 +1,11 @@
-/*global define, require*/
+/*global define*/
 define('ext.wikia.adEngine.provider.btfBlocker', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.context.uapContext',
-	'ext.wikia.aRecoveryEngine.adBlockDetection',
 	'wikia.lazyqueue',
 	'wikia.log',
 	'wikia.window'
-], function (adContext, uapContext, adBlockDetection, lazyQueue, log, win) {
+], function (adContext, uapContext, lazyQueue, log, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.btfBlocker',
@@ -22,13 +21,17 @@ define('ext.wikia.adEngine.provider.btfBlocker', [
 		unblockedSlots.push(slotName);
 	}
 
+	function isBTFDisabledByCreative() {
+		return win.ads.runtime.disableBtf;
+	}
+
 	function decorate(fillInSlot, config) {
 		var btfQueue = [],
 			btfQueueStarted = false,
 			pendingAtfSlots = []; // ATF slots pending for response
 
 		// Update state on each pv on Mercury
-		adContext.addCallback(function() {
+		adContext.addCallback(function () {
 			btfQueue = [];
 			btfQueueStarted = false;
 			pendingAtfSlots = [];
@@ -41,48 +44,30 @@ define('ext.wikia.adEngine.provider.btfBlocker', [
 		win.addEventListener('wikia.blocking', startBtfQueue);
 
 		function processBtfSlot(slot) {
-			var context = adContext.getContext();
-
 			if (uapContext.isUapLoaded() && slot.name === 'INVISIBLE_HIGH_IMPACT_2') {
 				log(['IHI2 disabled when UAP on page'], log.levels.info, logGroup);
 				return;
 			}
 
-			if (context.opts.premiumAdLayoutEnabled && !uapContext.isUapLoaded()) {
-				if (unblockedSlots.indexOf(slot.name) > -1) {
-					log(['PAL enabled, filling slot', slot.name], log.levels.info, logGroup);
-					fillInSlot(slot);
-					return;
-				}
-			} else {
-				if (win.ads.runtime.unblockHighlyViewableSlots && config.highlyViewableSlots) {
-					log(['Unblocking HiVi slots', slot.name], log.levels.info, logGroup);
-					config.highlyViewableSlots.map(unblock);
-				}
+			if (win.ads.runtime.unblockHighlyViewableSlots && config.highlyViewableSlots) {
+				log(['Unblocking HiVi slots', slot.name], log.levels.info, logGroup);
+				config.highlyViewableSlots.map(unblock);
+			}
 
-				if (unblockedSlots.indexOf(slot.name) > -1 || !win.ads.runtime.disableBtf) {
-					log(['Filling slot', slot.name], log.levels.info, logGroup);
-					fillInSlot(slot);
-					return;
-				}
+			if (unblockedSlots.indexOf(slot.name) > -1 || !isBTFDisabledByCreative()) {
+				log(['Filling slot', slot.name], log.levels.info, logGroup);
+				fillInSlot(slot);
+				return;
 			}
 
 			slot.collapse({adType: 'blocked'});
 		}
 
 		function startBtfQueue() {
-			var context = adContext.getContext(),
-				roadblockBlocksBtf = uapContext.isRoadblockLoaded() && win.ads.runtime.disableBtf;
-
 			log('startBtfQueue', log.levels.info.debug, logGroup);
 
 			if (btfQueueStarted) {
 				return;
-			}
-
-			if (context.opts.premiumAdLayoutEnabled && !roadblockBlocksBtf) {
-				win.ads.runtime.disableBtf = true;
-				context.slots.premiumAdLayoutSlotsToUnblock.map(unblock);
 			}
 
 			lazyQueue.makeQueue(btfQueue, processBtfSlot);

@@ -3,8 +3,8 @@
 class MakerstudiosVideoHandler extends VideoHandler {
 
 	protected $apiName = 'MakerstudiosWrapper';
-	protected static $urlTemplate = 'http://www.maker.tv/player/$1';
-	protected static $providerHomeUrl = 'http://www.makerstudios.com/';
+	protected static $urlTemplate = 'https://www.maker.tv/player/$1';
+	protected static $providerHomeUrl = 'https://www.makerstudios.com/';
 
 	public function getEmbed( $width, array $options = [] ) {
 		$height =  $this->getHeight( $width );

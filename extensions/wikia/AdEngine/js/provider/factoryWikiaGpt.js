@@ -1,6 +1,5 @@
 /*global define, require*/
 define('ext.wikia.adEngine.provider.factory.wikiaGpt', [
-	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.provider.btfBlocker',
 	'ext.wikia.adEngine.provider.gpt.helper',
 	'ext.wikia.adEngine.slot.adUnitBuilder',
@@ -8,7 +7,6 @@ define('ext.wikia.adEngine.provider.factory.wikiaGpt', [
 	'wikia.log',
 	require.optional('ext.wikia.adEngine.lookup.services')
 ], function (
-	adContext,
 	btfBlocker,
 	gptHelper,
 	defaultAdUnitBuilder,
@@ -18,13 +16,14 @@ define('ext.wikia.adEngine.provider.factory.wikiaGpt', [
 ) {
 	'use strict';
 
-	function overrideSizes(slotMap) {
-		var context = adContext.getContext();
-
-		if (context.opts.overridePrefootersSizes) {
-			slotMap.PREFOOTER_LEFT_BOXAD.size = '300x250,468x60,728x90';
-			delete slotMap.PREFOOTER_RIGHT_BOXAD;
-		}
+	function rewriteExtras(slotName, extra) {
+		return {
+			testSrc: extra.testSrc,
+			sraEnabled: extra.sraEnabled,
+			isInstartLogicRecoverable: extra.isInstartLogicRecoverable ? extra.isInstartLogicRecoverable(slotName) : false,
+			isPageFairRecoverable: extra.isPageFairRecoverable ? extra.isPageFairRecoverable(slotName) : false,
+			isSourcePointRecoverable: extra.isSourcePointRecoverable ? extra.isSourcePointRecoverable(slotName) : false
+		};
 	}
 
 	/**
@@ -36,9 +35,9 @@ define('ext.wikia.adEngine.provider.factory.wikiaGpt', [
 	 * @param {Object} slotMap      - slot map (slot name => targeting)
 	 * @param {Object} [extra]      - optional extra params
 	 * @param {function} [extra.getAdUnitBuilder]  - provider's ad unit builder function
-	 * @param {function} [extra.beforeSuccess]  - function to call before calling success
-	 * @param {function} [extra.beforeCollapse] - function to call before calling collapse
-	 * @param {function} [extra.beforeHop]      - function to call before calling hop
+	 * @param {function} [extra.afterSuccess]  - function to call before calling success
+	 * @param {function} [extra.afterCollapse] - function to call before calling collapse
+	 * @param {function} [extra.afterHop]      - function to call before calling hop
 	 * @param {function} [extra.onSlotRendered] - function to call before calling renderEnded
 	 * @param {boolean}  [extra.sraEnabled]     - whether to use Single Request Architecture
 	 * @see extensions/wikia/AdEngine/js/providers/directGpt.js
@@ -46,8 +45,6 @@ define('ext.wikia.adEngine.provider.factory.wikiaGpt', [
 	 */
 	function createProvider(logGroup, providerName, src, slotMap, extra) {
 		extra = extra || {};
-
-		overrideSizes(slotMap);
 
 		function canHandleSlot(slotName) {
 			log(['canHandleSlot', slotName], 'debug', logGroup);
@@ -60,7 +57,7 @@ define('ext.wikia.adEngine.provider.factory.wikiaGpt', [
 		function addHook(slot, hookName, callback) {
 			log([hookName, slot.name], 'debug', logGroup);
 
-			slot.pre(hookName, function (adInfo) {
+			slot.post(hookName, function (adInfo) {
 				if (typeof callback === 'function') {
 					callback(slot.name, adInfo);
 				}
@@ -81,9 +78,9 @@ define('ext.wikia.adEngine.provider.factory.wikiaGpt', [
 			var slotPath = getAdUnit(slot),
 				slotTargeting = JSON.parse(JSON.stringify(slotMap[slot.name])); // copy value
 
-			addHook(slot, 'success', extra.beforeSuccess);
-			addHook(slot, 'collapse', extra.beforeCollapse);
-			addHook(slot, 'hop', extra.beforeHop);
+			addHook(slot, 'success', extra.afterSuccess);
+			addHook(slot, 'collapse', extra.afterCollapse);
+			addHook(slot, 'hop', extra.afterHop);
 			addHook(slot, 'renderEnded', extra.onSlotRendered);
 
 			slotTargeting.pos = slotTargeting.pos || slot.name;
@@ -96,12 +93,7 @@ define('ext.wikia.adEngine.provider.factory.wikiaGpt', [
 				slotRegistry.storeScrollY(slot.name);
 			}
 
-			gptHelper.pushAd(slot, slotPath, slotTargeting, {
-				sraEnabled: extra.sraEnabled,
-				isInstartLogicRecoverable: extra.isInstartLogicRecoverable ? extra.isInstartLogicRecoverable(slot.name) : false,
-				isPageFairRecoverable: extra.isPageFairRecoverable ? extra.isPageFairRecoverable(slot.name) : false,
-				isSourcePointRecoverable: extra.isSourcePointRecoverable ? extra.isSourcePointRecoverable(slot.name) : false
-			});
+			gptHelper.pushAd(slot, slotPath, slotTargeting, rewriteExtras(slot.name, extra));
 			log(['fillInSlot', slot.name, providerName, 'done'], 'debug', logGroup);
 		}
 

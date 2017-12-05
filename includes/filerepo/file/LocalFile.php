@@ -537,15 +537,18 @@ class LocalFile extends File {
 	 * Returns ID or name of user who uploaded the file
 	 *
 	 * @param $type string 'text' or 'id'
+	 * @return string|null
 	 */
 	function getUser( $type = 'text' ) {
 		$this->load();
 
 		if ( $type == 'text' ) {
-			return $this->user_text;
+			return User::getUsername((int) $this->user, (string) $this->user_text); // SUS-808
 		} elseif ( $type == 'id' ) {
 			return $this->user;
 		}
+
+		return null;
 	}
 
 	/**
@@ -1047,7 +1050,7 @@ class LocalFile extends File {
 				'img_timestamp'   => $timestamp,
 				'img_description' => $comment,
 				'img_user'        => $user->getId(),
-				'img_user_text'   => $user->getName(),
+				'img_user_text'   => $user->isAnon() ? $user->getName() : '', // SUS-3086
 				'img_metadata'    => $this->metadata,
 				'img_sha1'        => $this->sha1
 			),
@@ -1102,7 +1105,7 @@ class LocalFile extends File {
 					'img_timestamp'   => $timestamp,
 					'img_description' => $comment,
 					'img_user'        => $user->getId(),
-					'img_user_text'   => $user->getName(),
+					'img_user_text'   => $user->isAnon() ? $user->getName() : '', // SUS-3086
 					'img_metadata'    => $this->metadata,
 					'img_sha1'        => $this->sha1
 				),

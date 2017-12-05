@@ -5,7 +5,7 @@ define('ext.wikia.adEngine.template.ooyala', [
 	'wikia.videoBootstrap'
 ], function (vastUrlBuilder, log, VideoBootstrap) {
 	'use strict';
-	var libraryUrl = 'http://player.ooyala.com/v3/52bc289bedc847e3aa8eb2b347644f68?platform=html5-priority',
+	var libraryUrl = 'https://player.ooyala.com/v3/52bc289bedc847e3aa8eb2b347644f68?platform=html5-priority',
 		logGroup = 'ext.wikia.adEngine.template.ooyala';
 
 	function show(params) {

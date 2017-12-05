@@ -1,44 +1,45 @@
 <?php
 
 class ArticleVideoController extends WikiaController {
+
+	private function fallbackLanguage( $lang ) {
+		switch ( $lang ) {
+			case 'zh-hans':
+				return 'zh';
+			case 'zh-tw':
+				return 'zh-hant';
+			case 'pt-br':
+				return 'pt';
+			default:
+				return $lang;
+		}
+	}
+
 	public function featured() {
-		$requestContext = RequestContext::getMain();
+		$requestContext = $this->getContext();
 		$title = $requestContext->getTitle()->getPrefixedDBkey();
+		$lang = $requestContext->getLanguage()->getCode();
 
 		$featuredVideoData = ArticleVideoContext::getFeaturedVideoData( $title );
 
 		if ( !empty( $featuredVideoData ) ) {
 			$requestContext->getOutput()->addModules( 'ext.ArticleVideo' );
 
-			// TODO: replace it with DS icon when it's ready (XW-2824)
-			$this->setVal( 'closeIconUrl', $this->getApp()->wg->extensionsPath . '/wikia/ArticleVideo/images/close.svg' );
+			$featuredVideoData['lang'] = $this->fallbackLanguage( $lang );
+
 			$this->setVal( 'videoDetails', $featuredVideoData );
+
+			$jwPlayerScript =
+				$requestContext->getOutput()->getResourceLoader()->getModule( 'ext.ArticleVideo.jw' )->getScript(
+					new \ResourceLoaderContext( new \ResourceLoader(), $requestContext->getRequest() )
+				);
+
+			$this->setVal(
+				'jwPlayerScript',
+				\JavaScriptMinifier::minify( $jwPlayerScript )
+			);
 		} else {
 			$this->skipRendering();
 		}
-	}
-
-	public function related() {
-		$title = RequestContext::getMain()->getTitle()->getPrefixedDBkey();
-
-		$relatedVideo = ArticleVideoContext::getRelatedVideoData( $title );
-
-		if ( !empty( $relatedVideo ) ) {
-			$this->setVal( 'relatedVideo', $relatedVideo );
-		} else {
-			$this->skipRendering();
-		}
-	}
-
-	public function labels() {
-		$videoId = $this->getVal( 'videoId', null );
-
-		if ( empty( $videoId ) ) {
-			throw new MissingParameterApiException( 'videoId' );
-		}
-
-		$api = OoyalaBacklotApiService::getInstance();
-		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
-		$this->response->setVal( 'labels', $api->getLabels( $videoId ) );
 	}
 }

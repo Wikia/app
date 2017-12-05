@@ -4,6 +4,7 @@ class UstreamVideoHandler extends VideoHandler {
 
 	protected $apiName = 'UstreamApiWrapper';
 	protected static $urlTemplate = 'http://www.ustream.tv/embed/recorded/$1?v=3&wmode=direct';
+	// HTTPS-note - https://www.ustream.tv/recorded/44762993 redirects to http.
 	protected static $providerDetailUrlTemplate = 'http://www.ustream.tv/recorded/$1';
 	protected static $providerHomeUrl = 'http://www.ustream.tv/';
 

@@ -180,10 +180,12 @@ class Linker {
 		// method call for the rest of this request
 		static $linkCache = array();
 		$key = serialize( array( $target->getDBkey(), $target->getNamespace(), $target->getFragment(), $target->getInterwiki(), $html, $customAttribs, $query, $options ) );
+		// SUS-3114: Support GlobalTitle links, else they are incorrectly cached
+		$wikiId = $target instanceof GlobalTitle ? $target->getCityId() : $GLOBALS['wgCityId'];
 
-		if ( array_key_exists($key, $linkCache) ) {
+		if ( isset( $linkCache[$wikiId][$key] ) ) {
 			wfProfileOut( __METHOD__ );
-			return $linkCache[$key];
+			return $linkCache[$wikiId][$key];
 		}
 		/* Wikia change - end */
 
@@ -248,7 +250,7 @@ class Linker {
 		}
 
 		/* Wikia change begin - @author: garth */
-		$linkCache[$key] = $ret;
+		$linkCache[$wikiId][$key] = $ret;
 		/* Wikia change - end */
 
 		wfProfileOut( __METHOD__ );
@@ -1072,7 +1074,7 @@ class Linker {
 	 * Make user link (or user contributions for unregistered users)
 	 * @param $userId   Integer: user id in database.
 	 * @param $userName String: user name in database.
-	 * @param $altUserName String: text to display instead of the user name (optional)
+	 * @param $altUserName string|bool text to display instead of the user name (optional)
 	 * @return String: HTML fragment
 	 * @since 1.19 Method exists for a long time. $displayText was added in 1.19.
 	 */
@@ -1117,7 +1119,8 @@ class Linker {
 			// check if the user has an edit
 			$attribs = array();
 			if ( $redContribsWhenNoEdits ) {
-				$count = !is_null( $edits ) ? $edits : User::edits( $userId );
+				$user = User::newFromId( $userId );
+				$count = !is_null( $edits ) || !$user ? $edits : $user->getEditCount();
 				if ( $count == 0 ) {
 					$attribs['class'] = 'new';
 				}
@@ -1718,30 +1721,32 @@ class Linker {
 	/**
 	 * Create a headline for content
 	 *
-	 * @param $level Integer: the level of the headline (1-6)
-	 * @param $attribs String: any attributes for the headline, starting with
+	 * @param integer $level the level of the headline (1-6)
+	 * @param string $attribs any attributes for the headline, starting with
 	 *                 a space and ending with '>'
 	 *                 This *must* be at least '>' for no attribs
-	 * @param $anchor String: the anchor to give the headline (the bit after the #)
-	 * @param $html String: html for the text of the header
-	 * @param $link String: HTML to add for the section edit link
-	 * @param $legacyAnchor Mixed: a second, optional anchor to give for
+	 * @param string $anchor The anchor to give the headline (the bit after the #)
+	 * @param string $html HTML for the text of the header
+	 * @param string $link HTML to add for the section edit link
+	 * @param string|bool $fallbackAnchor A second, optional anchor to give for
 	 *   backward compatibility (false to omit)
 	 *
 	 * @return String: HTML headline
 	 */
-	public static function makeHeadline( $level, $attribs, $anchor, $html, $link, $legacyAnchor = false ) {
+	public static function makeHeadline( $level, $attribs, $anchor, $html, $link, $fallbackAnchor = false ) {
+		$anchorEscaped = htmlspecialchars( $anchor );
 		$ret = "<h$level$attribs"
 			. $link
-			. " <span class=\"mw-headline\" id=\"$anchor\">$html</span>"
+			. " <span class=\"mw-headline\" id=\"$anchorEscaped\">$html</span>"
 			. "</h$level>";
-		if ( $legacyAnchor !== false ) {
-			$ret = "<div id=\"$legacyAnchor\"></div>$ret";
+		if ( $fallbackAnchor !== false && $fallbackAnchor !== $anchor ) {
+			$fallbackAnchor = htmlspecialchars( $fallbackAnchor );
+			$ret = "<div id=\"$fallbackAnchor\"></div>$ret";
 		}
 
 		/* Wikia change begin - @author: Macbre */
 		$skin = RequestContext::getMain()->getSkin();
-		Hooks::run( 'MakeHeadline', array( $skin, $level, $attribs, $anchor, $html, $link, $legacyAnchor, &$ret ) );
+		Hooks::run( 'MakeHeadline', array( $skin, $level, $attribs, $anchor, $html, $link, $fallbackAnchor, &$ret ) );
 		/* Wikia change end */
 
 		return $ret;
@@ -1793,11 +1798,15 @@ class Linker {
 	public static function buildRollbackLink( $rev ) {
 		global $wgRequest, $wgUser;
 		$title = $rev->getTitle();
-		$query = array(
+		// SUS-812: use user name lookup to determine link target
+		$userName = User::getUsername( $rev->getUser(), $rev->getUserText() );
+
+		$query = [
 			'action' => 'rollback',
-			'from' => $rev->getUserText(),
-			'token' => $wgUser->getEditToken( [ $title->getPrefixedText(), $rev->getUserText() ] ),
-		);
+			'from' => $userName,
+			'token' => $wgUser->getEditToken( [ $title->getPrefixedText(), $userName ] ),
+		];
+
 		if ( $wgRequest->getBool( 'bot' ) ) {
 			$query['bot'] = '1';
 			$query['hidediff'] = '1'; // bug 15999

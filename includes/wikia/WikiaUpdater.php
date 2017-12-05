@@ -36,9 +36,19 @@ class WikiaUpdater {
 			# fields
 			array( 'addField', 'watchlist', 'wl_wikia_addedtimestamp', $dir . 'patch-watchlist-improvements.sql', true ),
 			array( 'modifyField', 'recentchanges', 'rc_ip', $dir . 'patch-rc_ip-varbinary.sql', true ),
+			array( 'addField', 'recentchanges', 'rc_ip_bin',$dir . 'patch-rc_ip_bin.sql', true ), // SUS-3079
+			// SUS-805
+			array( 'dropField', 'ipblocks', 'ipb_by_text', $dir . 'patch-drop-ipb_by_text.sql', true ),
 
 			# indexes
 			array( 'addIndex', 'archive', 'page_revision', $dir. 'patch-index-archive-page_revision.sql', true ),
+
+			# indexes drop
+			array( 'dropIndex', 'ach_user_badges', 'id',  $dir . 'patch-ach-user-badges-drop-id.sql', true ), // SUS-3097
+			array( 'dropIndex', 'ach_user_badges', 'notified_id',  $dir . 'patch-ach-user-badges-drop-notified_id.sql', true ), // SUS-3097
+			array( 'dropIndex', 'ach_custom_badges', 'id',  $dir . 'patch-ach_custom_badges-drop-id.sql', true ), // SUS-3098
+			array( 'dropIndex', 'wall_related_pages', 'comment_id_idx',  $dir . 'patch-wall_related_pages-drop-comment_id_idx.sql', true ), // SUS-3096
+			array( 'dropIndex', 'wall_related_pages', 'page_id_idx_2',  $dir . 'patch-wall_related_pages-drop-page_id_idx_2.sql', true ), // SUS-3096
 
 			# functions
 			array( 'WikiaUpdater::do_page_vote_unique_update' ),
@@ -62,8 +72,13 @@ class WikiaUpdater {
 			array( 'WikiaUpdater::do_drop_table', 'hidden' ), // SUS-2401
 			array( 'WikiaUpdater::do_clean_math_table' ),
 			array( 'WikiaUpdater::do_transcache_update' ),
+			array( 'WikiaUpdater::do_wall_history_ipv6_update' ), // SUS-2257
+			array( 'WikiaUpdater::doLoggingTableUserCleanup' ), // SUS-3222
+			array( 'WikiaUpdater::migrateRecentChangesIpData' ), // SUS-3079
 			array( 'dropField', 'interwiki', 'iw_api', $dir . 'patch-drop-iw_api.sql', true ),
 			array( 'dropField', 'interwiki', 'iw_wikiid', $dir . 'patch-drop-wikiid.sql', true ),
+			array( 'dropField', 'cu_changes', 'cuc_user_text', $ext_dir . '/CheckUser/patch-cu_changes.sql', true ), // SUS-3080
+			array( 'WikiaUpdater::do_drop_table', 'tag_summary' ), // SUS-3066
 		);
 
 		if ( $wgDBname === $wgExternalSharedDB ) {
@@ -172,6 +187,120 @@ class WikiaUpdater {
 		else {
 			$updater->output( "... transcache table is up-to-date.\n" );
 		}
+	}
+
+	/**
+	 * @author Mix <mix@fandom.com>
+	 */
+	public static function do_wall_history_ipv6_update( DatabaseUpdater $updater ) {
+		$db = $updater->getDB();
+		$table = 'wall_history';
+		$old_column = 'post_user_ip';
+		$new_column = 'post_user_ip_bin';
+
+		$updater->output( sprintf( "starting %s...\n", __METHOD__ ) );
+
+		if ( ! $db->tableExists( $table ) ) {
+			$updater->output( "$table does not exist, skipping $table update.\n" );
+			return false;
+		}
+
+		if ( ! $db->fieldInfo( $table, $old_column ) ) {
+			$updater->output( "$table has already been migrated, skipping the update.\n" );
+			return false;
+		}
+
+		if ( ! $db->fieldInfo( $table, $new_column ) ) {
+			$updater->output( "adding $new_column in $table...\n" );
+			$db->query( sprintf( 'ALTER TABLE %s ADD COLUMN %s VARBINARY(16) DEFAULT NULL AFTER %s', $table, $new_column, $old_column), __METHOD__ );
+		} else {
+			$updater->output( "$new_column already exists in $table but it is OK...\n" );
+		}
+
+		$updater->output( "migrating data from $old_column to $new_column...\n" );
+		$db->query(
+			sprintf( 'UPDATE %s SET %s = INET6_ATON(INET_NTOA(%s)) WHERE %s IS NULL AND %s IS NOT NULL;',
+				$table, $new_column, $old_column, $new_column, $old_column),
+			__METHOD__
+		);
+
+		$updater->output( "dropping $old_column in $table...\n" );
+		$db->query( sprintf( 'ALTER TABLE %s DROP COLUMN %s', $table, $old_column ), __METHOD__ );
+
+		$updater->output( "done.\n" );
+	}
+
+	public static function doLoggingTableUserCleanup( DatabaseUpdater $databaseUpdater ) {
+		$databaseConnection = $databaseUpdater->getDB();
+
+		if ( !$databaseConnection->fieldExists( 'logging', 'log_user_text', __METHOD__ ) ) {
+			$databaseUpdater->output( "logging.log_user_text column does not exist.\n" );
+			return;
+		}
+
+		$databaseUpdater->output( 'Migrating legacy chat ban log entries... ' );
+
+		// Attribute old chat ban log entries to FANDOMbot
+		$databaseConnection->update(
+			'logging',
+			[ 'log_user' => 32794352 ],
+			[
+				'log_user' => 0,
+				'log_type' => 'chatban'
+			],
+			__METHOD__
+		);
+
+		$databaseUpdater->output( "done.\n" );
+		$databaseUpdater->output( 'Deleting log entries attributed to anons... ' );
+
+		$databaseConnection->delete( 'logging', [ 'log_user' => 0 ], __METHOD__ );
+
+		$databaseUpdater->output( "done.\n" );
+		$databaseUpdater->output( 'Dropping logging.log_user_text column... ' );
+
+		$databaseConnection->query( 'ALTER TABLE logging DROP COLUMN log_user_text', __METHOD__ );
+
+		$databaseUpdater->output( "done.\n" );
+
+		wfWaitForSlaves();
+	}
+
+	public static function migrateRecentChangesIpData( DatabaseUpdater $databaseUpdater ) {
+		$databaseConnection = $databaseUpdater->getDB();
+
+		if ( !$databaseConnection->fieldExists( 'recentchanges', 'rc_ip', __METHOD__ ) ) {
+			$databaseUpdater->output( "recentchanges.rc_ip column already migrated.\n" );
+			return;
+		}
+
+		$patchDir = static::get_patch_dir();
+
+		$databaseUpdater->output( 'Migrating rc_ip column to VARBINARY(16) rc_ip_bin... ' );
+		$databaseConnection->sourceFile( $patchDir . 'patch-populate-rc_ip_bin.sql' );
+		$databaseUpdater->output( "done.\n" );
+
+		$databaseUpdater->output( 'Dropping rc_ip index... ' );
+		$databaseConnection->query( 'ALTER TABLE recentchanges DROP INDEX rc_ip' );
+		$databaseUpdater->output( "done.\n" );
+
+		$databaseUpdater->output( 'Dropping rc_user_text index... ' );
+		$databaseConnection->query( 'ALTER TABLE recentchanges DROP INDEX rc_user_text' );
+		$databaseUpdater->output( "done.\n" );
+
+		$databaseUpdater->output( 'Dropping rc_ns_usertext index... ' );
+		$databaseConnection->query( 'ALTER TABLE recentchanges DROP INDEX rc_ns_usertext' );
+		$databaseUpdater->output( "done.\n" );
+
+		$databaseUpdater->output( 'Dropping rc_ip column... ' );
+		$databaseConnection->query( 'ALTER TABLE recentchanges DROP COLUMN rc_ip' );
+		$databaseUpdater->output( "done.\n" );
+
+		$databaseUpdater->output( 'Adding default empty value to rc_user_text column... ' );
+		$databaseConnection->sourceFile( $patchDir . 'patch-rc_user_text-default.sql' );
+		$databaseUpdater->output( "done.\n" );
+		
+		wfWaitForSlaves();
 	}
 
 	/**

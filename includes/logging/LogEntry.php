@@ -118,27 +118,22 @@ class DatabaseLogEntry extends LogEntryBase {
 	 * @return array
 	 */
 	public static function getSelectQueryData() {
-		$tables = array( 'logging', 'user' );
-		$fields = array(
+		// SUS-2779
+		$tables = [ 'logging' ];
+		$fields = [
 			'log_id', 'log_type', 'log_action', 'log_timestamp',
-			'log_user', 'log_user_text',
+			'log_user',
 			'log_namespace', 'log_title', // unused log_page
-			'log_comment', 'log_params', 'log_deleted',
-			'user_id', 'user_name', 'user_editcount',
-		);
+			'log_comment', 'log_params', 'log_deleted'
+		];
 
-		$joins = array(
-			// IP's don't have an entry in user table
-			'user' => array( 'LEFT JOIN', 'log_user=user_id' ),
-		);
-
-		return array(
+		return [
 			'tables' => $tables,
 			'fields' => $fields,
-			'conds'  => array(),
-			'options' => array(),
-			'join_conds' => $joins,
-		);
+			'conds'  => [],
+			'options' => [],
+			'join_conds' => []
+		];
 	}
 
 	/**
@@ -216,17 +211,8 @@ class DatabaseLogEntry extends LogEntryBase {
 	}
 
 	public function getPerformer() {
-		$userId = (int) $this->row->log_user;
-		if ( $userId !== 0 ) { // logged-in users
-			if ( isset( $this->row->user_name ) ) {
-				return User::newFromRow( $this->row );
-			} else {
-				return User::newFromId( $userId );
-			}
-		} else { // IP users
-			$userText = $this->row->log_user_text;
-			return User::newFromName( $userText, false );
-		}
+		// SUS-3222: All log entries are attributed to registered users
+		return User::newFromId( $this->row->log_user );
 	}
 
 	public function getTarget() {
@@ -271,14 +257,13 @@ class RCDatabaseLogEntry extends DatabaseLogEntry {
 	}
 
 	public function getPerformer() {
-		$userId = (int) $this->row->rc_user;
-		if ( $userId !== 0 ) {
-			return User::newFromId( $userId );
-		} else {
-			$userText = $this->row->rc_user_text;
-			// Might be an IP, don't validate the username
-			return User::newFromName( $userText, false );
+		if ( $this->row->rc_user ) {
+			return User::newFromId( $this->row->rc_user );
 		}
+
+		$userText = RecentChange::extractUserIpFromRow( $this->row );
+		// SUS-3079: this is an IP, don't validate the username
+		return User::newFromName( $userText, false );
 	}
 
 	public function getTarget() {
@@ -408,12 +393,10 @@ class ManualLogEntry extends LogEntryBase {
 	/**
 	 * Inserts the entry into the logging table.
 	 * @return int If of the log entry
+	 * @throws MWException if the log entry would be attributed to anonymous user
 	 */
 	public function insert() {
 		global $wgContLang;
-
-		$dbw = wfGetDB( DB_MASTER );
-		$id = $dbw->nextSequenceValue( 'logging_log_id_seq' );
 
 		if ( $this->timestamp === null ) {
 			$this->timestamp = wfTimestampNow();
@@ -422,19 +405,32 @@ class ManualLogEntry extends LogEntryBase {
 		# Truncate for whole multibyte characters.
 		$comment = $wgContLang->truncate( $this->getComment(), 255 );
 
-		$data = array(
+		// SUS-3222: All log entries should be attributed to registered users
+		if ( $this->getPerformer()->isAnon() ) {
+			$mwException = new MWException( 'Log entries must be attributed to registered users' );
+
+			\Wikia\Logger\WikiaLogger::instance()
+				->warning( 'SUS-3222 - Anon user log entry', [ 'exception' => $mwException ] );
+
+			throw $mwException;
+		}
+
+		$dbw = wfGetDB( DB_MASTER );
+		$id = $dbw->nextSequenceValue( 'logging_log_id_seq' );
+
+		$data = [
 			'log_id' => $id,
 			'log_type' => $this->getType(),
 			'log_action' => $this->getSubtype(),
 			'log_timestamp' => $dbw->timestamp( $this->getTimestamp() ),
 			'log_user' => $this->getPerformer()->getId(),
-			'log_user_text' => $this->getPerformer()->getName(),
 			'log_namespace' => $this->getTarget()->getNamespace(),
 			'log_title' => $this->getTarget()->getDBkey(),
 			'log_page' => $this->getTarget()->getArticleId(),
 			'log_comment' => $comment,
-			'log_params' => serialize( (array) $this->getParameters() ),
-		);
+			'log_params' => serialize( (array)$this->getParameters() ),
+		];
+
 		$dbw->insert( 'logging', $data, __METHOD__ );
 		$this->id = !is_null( $id ) ? $id : $dbw->insertId();
 		return $this->id;
