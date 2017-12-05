@@ -16,157 +16,180 @@ class SEOTweaksHooksHelper {
 	const SHARING_HOSTS_REGEX = '/\.(facebook|twitter|google)\./is';
 
 
-    /**
-     * Size of preferred article image.
-     */
-    const MIN_WIDTH = 200;
-    const MIN_HEIGHT = 200;
-    const MAX_WIDTH = 2000;
-    const PREF_WIDTH = 600;
-    const PREF_HEIGHT = 315;
+	/**
+	 * Size of preferred article image.
+	 */
+	const MIN_WIDTH = 200;
+	const MIN_HEIGHT = 200;
+	const MAX_WIDTH = 2000;
+	const PREF_WIDTH = 600;
+	const PREF_HEIGHT = 315;
 
-    /**
-     * Given a file, return url to file, or thumbnail url if size larger than MAX_WIDTH
-     * @param $file File
-     * @return string|false
-     */
-    static protected function getResizeImageUrlIfLargerThanMax( $file ) {
-        $fileUrl = false;
-        $width = $file->getWidth();
-        if ( $width > self::MAX_WIDTH ) {
-            $thumbObj = $file->transform( [ 'width' => self::MAX_WIDTH ], 0 );
-            if ( $thumbObj ) $fileUrl = $thumbObj->getUrl();
-        } else {
-            $fileUrl = $file->getUrl();
-        }
-        return $fileUrl;
-    }
+	/**
+	 * Given a file, return url to file, or thumbnail url if size larger than MAX_WIDTH
+	 * @param $file File
+	 * @return string|false
+	 */
+	static protected function getResizeImageUrlIfLargerThanMax( File $file ) {
+		$fileUrl = false;
+		$width = $file->getWidth();
 
-    static protected function makeOpenGraphKey( $title ) {
-        return wfMemcKey( 'OpenGraphTitleImage', md5( $title->getDBKey() ) );
-    }
+		if ( $width > self::MAX_WIDTH ) {
+			$thumbObj = $file->transform( [ 'width' => self::MAX_WIDTH ], 0 );
 
-    /**
-     * Return first image from an article, first check for infobox images,
-     * If not found, take the biggest as possible:
-     * first minimal recommended image size from facebook, and if not found, take minimal requirement
-     * @param $title
-     * @return null|Title
-     */
-    static protected function getFirstArticleImage( $title ) {
-        $retTitle = self::getFirstArticleImageLargerThan( $title, self::MIN_WIDTH, self::MIN_HEIGHT, "ImageServingDriverInfoboxImageNS" );
+			if ( $thumbObj ) {
+				$fileUrl = $thumbObj->getUrl();
+			}
+		} else {
+			$fileUrl = $file->getUrl();
+		}
 
-        if ( !empty( $retTitle ) ) {
-            return $retTitle;
-        }
-        $retTitle = self::getFirstArticleImageLargerThan( $title, self::PREF_WIDTH, self::PREF_HEIGHT );
+		return $fileUrl;
+	}
 
-        if ( !empty( $retTitle ) ) {
-            return $retTitle;
-        }
+	static protected function makeOpenGraphKey( Title $title ): String {
+		return wfMemcKey( 'OpenGraphTitleImage', md5( $title->getDBKey() ) );
+	}
 
-        return self::getFirstArticleImageLargerThan( $title, self::MIN_WIDTH, self::MIN_HEIGHT );
-    }
+	/**
+	 * Return first image from an article, first check for infobox images,
+	 * If not found, take the biggest as possible:
+	 * first minimal recommended image size from facebook, and if not found, take minimal requirement
+	 * @param $title
+	 * @return null|Title
+	 */
+	static protected function getFirstArticleImage( Title $title ) {
+		$retTitle = self::getFirstArticleImageLargerThan( $title, self::MIN_WIDTH, self::MIN_HEIGHT, "ImageServingDriverInfoboxImageNS" );
 
-    /**
-     * Return first image from an article, matched criteria
-     * @param $title
-     * @param $width
-     * @param $height
-     * @param null $driverName
-     * @return null|\Title
-     */
-    static protected function getFirstArticleImageLargerThan( $title, $width, $height, $driverName = null ) {
-        $imageServing = new ImageServing( [ $title->getArticleID() ], $width, $height );
-        $out = $imageServing->getImages( 1, $driverName);
-        return self::createTitleFromResultArray( $out );
-    }
+		if ( !empty( $retTitle ) ) {
+			return $retTitle;
+		}
 
-    /**
-     * @desc Creates a Title object from array of file names
-     * @param $out array of file names
-     * @return null|\Title
-     */
-    static protected function createTitleFromResultArray( $out ) {
-        if ( !empty( $out ) ) {
-            ///used reset instead direct call because we can get hashmap from ImageServing driver.
-            $first = reset( $out );
-            $name = $first[ 0 ][ 'name' ];
-            return Title::newFromText( $name, NS_FILE );
-        }
-        return null;
-    }
+		$retTitle = self::getFirstArticleImageLargerThan( $title, self::PREF_WIDTH, self::PREF_HEIGHT );
 
-    /**
-     * @param $meta
-     * @param $title Title
-     * @return bool
-     */
-    static public function onOpenGraphMetaHeaders( &$meta, $title ) {
-        global $wgMemc;
-        if ( !empty( $title ) && $title instanceof Title && !$title->isMainPage() ) {
-            $namespace = $title->getNamespace();
-            if ( $namespace == NS_USER ) {
-                return true;
-            }
-            $cacheKey = self::makeOpenGraphKey( $title );
-            $imageUrl = $wgMemc->get( $cacheKey );
+		if ( !empty( $retTitle ) ) {
+			return $retTitle;
+		}
 
-            //if no image in memcache
-            if ( empty( $imageUrl ) ) {
-                if ( $namespace != NS_FILE ) {
-                    $title = self::getFirstArticleImage( $title );
-                }
-                if ( !empty( $title ) ) {
-                    $file = wfFindFile( $title );
-                    if ( !empty( $file ) ) {
-                        $thumb = self::getResizeImageUrlIfLargerThanMax( $file );
-                        if ( !empty( $thumb ) ) $meta[ "og:image" ] = $thumb;
-                    }
-                }
-                if ( isset( $meta[ "og:image" ] ) && ( !empty( $meta[ "og:image" ] ) ) ) {
-                    $imageUrl = $meta[ "og:image" ];
-                } else {
-                    // Even if there is no og:image, we store the info in memcahe so we don't do the
-                    // processing again
-                    $imageUrl = '';
-                }
-                $wgMemc->set( $cacheKey, $imageUrl );
-            }
+		return self::getFirstArticleImageLargerThan( $title, self::MIN_WIDTH, self::MIN_HEIGHT );
+	}
 
-            // only when there is a thumbnail url add it to metatags
-            if ( !empty( $imageUrl ) ) {
-                $meta[ 'og:image' ] = $imageUrl;
-            }
-        }
+	/**
+	 * Return first image from an article, matched criteria
+	 * @param $title
+	 * @param $width
+	 * @param $height
+	 * @param null $driverName
+	 * @return null|\Title
+	 */
+	static protected function getFirstArticleImageLargerThan( Title $title, Int $width, Int $height, $driverName = null ) {
+		$imageServing = new ImageServing( [ $title->getArticleID() ], $width, $height );
+		$out = $imageServing->getImages( 1, $driverName );
 
-        return true;
-    }
+		return self::createTitleFromResultArray( $out );
+	}
 
-    static public function onArticleRobotPolicy( &$policy, Title $title ) {
+	/**
+	 * @desc Creates a Title object from array of file names
+	 * @param $out array of file names
+	 * @return null|\Title
+	 */
+	static protected function createTitleFromResultArray( $out ) {
+		if ( !empty( $out ) ) {
+			///used reset instead direct call because we can get hashmap from ImageServing driver.
+			$first = reset( $out );
+			$name = $first[0]['name'];
 
-        $ns = MWNamespace::getSubject( $title->getNamespace() );
+			return Title::newFromText( $name, NS_FILE );
+		}
 
-        if ( in_array( $ns, [ NS_MEDIAWIKI, NS_TEMPLATE ] ) ) {
-            $policy = [
-                'index' => 'noindex',
-                'follow' => 'follow'
-            ];
-        }
-        return true;
-    }
+		return null;
+	}
 
-    static public function onShowMissingArticle( $article ) {
-        global $wgOut;
+	public static function onArticleSaveComplete( &$article ) {
+		if ( !empty( $article ) && $article instanceof Article ) {
+			$title = $article->getTitle();
 
-        if ( $article instanceof Article ) {
-            if ( $article->getTitle()->getNamespace() == NS_USER || $article->getTitle()->getNamespace() == NS_USER_TALK ) {
-                // bugId:PLA-844
-                $wgOut->setRobotPolicy( "noindex,nofollow" );
-            }
-        }
-        return true;
-    }
+			if ( !empty( $title ) && $title instanceof Title && !$title->isMainPage() ) {
+				WikiaDataAccess::cachePurge( self::makeOpenGraphKey( $title ) );
+			}
+		}
+
+		return true;
+	}
+
+	/**
+	 * @param $meta
+	 * @param $title Title
+	 * @return bool
+	 */
+	static public function onOpenGraphMetaHeaders( &$meta, $title ): Boolean {
+		if ( !empty( $title ) && $title instanceof Title && !$title->isMainPage() ) {
+			$namespace = $title->getNamespace();
+
+			if ( $namespace == NS_USER ) {
+				return true;
+			}
+
+			$imageUrl = WikiaDataAccess::cache(
+				self::makeOpenGraphKey( $title ),
+				WikiaResponse::CACHE_LONG,
+				function () use ( $namespace, $title ) {
+
+					if ( $namespace != NS_FILE ) {
+						$title = self::getFirstArticleImage( $title );
+					}
+
+					if ( !empty( $title ) ) {
+						$file = wfFindFile( $title );
+						if ( !empty( $file ) ) {
+							$thumb = self::getResizeImageUrlIfLargerThanMax( $file );
+							if ( !empty( $thumb ) ) $meta["og:image"] = $thumb;
+						}
+					}
+
+					if ( isset( $meta["og:image"] ) && ( !empty( $meta["og:image"] ) ) ) {
+						return $meta["og:image"];
+					} else {
+						// Even if there is no og:image, we store the info in memcahe so we don't do the
+						// processing again
+						return '';
+					}
+				}
+			);
+
+			// only when there is a thumbnail url add it to metatags
+			if ( !empty( $imageUrl ) ) {
+				$meta['og:image'] = $imageUrl;
+			}
+		}
+
+		return true;
+	}
+
+	static public function onArticleRobotPolicy( &$policy, Title $title ) {
+
+		$ns = MWNamespace::getSubject( $title->getNamespace() );
+
+		if ( in_array( $ns, [ NS_MEDIAWIKI, NS_TEMPLATE ] ) ) {
+			$policy = [
+				'index' => 'noindex',
+				'follow' => 'follow'
+			];
+		}
+		return true;
+	}
+
+	static public function onShowMissingArticle( $article ) {
+		if ( $article instanceof Article ) {
+			if ( $article->getTitle()->getNamespace() == NS_USER || $article->getTitle()->getNamespace() == NS_USER_TALK ) {
+				// bugId:PLA-844
+				RequestContext::getMain()->getOutput()->setRobotPolicy( "noindex,nofollow" );
+			}
+		}
+
+		return true;
+	}
 
 	/**
 	 * change title tag for Video Page and Image Page
@@ -176,10 +199,12 @@ class SEOTweaksHooksHelper {
 	 * @return bool
 	 */
 	static function onImagePageAfterImageLinks( $imgPage, $html ) {
-		$file = $imgPage->getDisplayedFile(); /* @var $file WikiaLocalFile */
-		$title = $imgPage->getTitle();  /* @var $title Title */
+		/* @var $file WikiaLocalFile */
+		$file = $imgPage->getDisplayedFile();
+		/* @var $title Title */
+		$title = $imgPage->getTitle();
 
-		if ( !empty( $file ) && !empty( $title ) && !F::app()->checkSkin('monobook') ) {
+		if ( !empty( $file ) && !empty( $title ) && !F::app()->checkSkin( 'monobook' ) ) {
 			$newTitle = self::getTitleForFilePage( $title, $file );
 
 			if ( !empty( $newTitle ) ) {
@@ -226,7 +251,7 @@ class SEOTweaksHooksHelper {
 
 			// lop off text after the ultimate dot (e.g. JPG)
 			$params['frame']['alt'] = $finalDotPosition ? substr( $fileName, 0,
-					$finalDotPosition ) : $fileName;
+				$finalDotPosition ) : $fileName;
 		}
 
 		return true;
@@ -250,9 +275,9 @@ class SEOTweaksHooksHelper {
 
 		$title = $article->getTitle();
 		if ( !$title->exists()
-				&& $title->isContentPage()
-				&& isset( $_SERVER['HTTP_REFERER'] )
-				&& preg_match( self::SHARING_HOSTS_REGEX, parse_url( $_SERVER['HTTP_REFERER'], PHP_URL_HOST ) )
+			&& $title->isContentPage()
+			&& isset( $_SERVER['HTTP_REFERER'] )
+			&& preg_match( self::SHARING_HOSTS_REGEX, parse_url( $_SERVER['HTTP_REFERER'], PHP_URL_HOST ) )
 		) {
 			$namespace = $title->getNamespace();
 			$dbr = wfGetDB( DB_SLAVE );

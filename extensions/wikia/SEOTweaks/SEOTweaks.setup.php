@@ -19,6 +19,7 @@ $wgHooks['BeforeParserMakeImageLinkObjOptions'][] = 'SEOTweaksHooksHelper::onBef
 $wgHooks['CategoryPageView'][] = 'SEOTweaksHooksHelper::onCategoryPageView';
 $wgHooks['ImagePageAfterImageLinks'][] = 'SEOTweaksHooksHelper::onImagePageAfterImageLinks';
 $wgHooks['OpenGraphMetaHeaders'][] = 'SEOTweaksHooksHelper::onOpenGraphMetaHeaders';
+$wgHooks['ArticleSaveComplete'][] = 'MyExtensionHooks::onArticleSaveComplete';
 $wgHooks['ShowMissingArticle'][] = 'SEOTweaksHooksHelper::onShowMissingArticle';
 
 // messages
