@@ -233,7 +233,7 @@ class DWDimensionApiController extends WikiaApiController {
 				];
 			}
 			$db->freeResult( $rows );
-		} catch (DBQueryError $e) {
+		} catch ( DBQueryError $e ) {
 			Wikia\Logger\WikiaLogger::instance()->error(
 				"Exception caught while querying wiki embed data", [
 				'exception' => $e,
@@ -262,7 +262,7 @@ class DWDimensionApiController extends WikiaApiController {
 				];
 			}
 			$db->freeResult( $rows );
-		} catch (DBQueryError $e) {
+		} catch ( DBQueryError $e ) {
 			Wikia\Logger\WikiaLogger::instance()->error(
 				"Exception caught while querying wiki images data", [
 				'exception' => $e,
@@ -293,7 +293,7 @@ class DWDimensionApiController extends WikiaApiController {
 				];
 			}
 			$db->freeResult( $rows );
-		} catch (DBQueryError $e) {
+		} catch ( DBQueryError $e ) {
 			Wikia\Logger\WikiaLogger::instance()->error(
 				"Exception caught while querying wiki info data", [
 				'exception' => $e,
@@ -319,7 +319,7 @@ class DWDimensionApiController extends WikiaApiController {
 				];
 			}
 			$db->freeResult( $rows );
-		} catch (DBQueryError $e) {
+		} catch ( DBQueryError $e ) {
 			Wikia\Logger\WikiaLogger::instance()->error(
 				"Exception caught while querying wiki info data", [
 				'exception' => $e,
@@ -338,7 +338,7 @@ class DWDimensionApiController extends WikiaApiController {
 		$dbname = $db->strencode( $dbname );
 		try {
 			$connection->query( "USE `".$dbname."`", __METHOD__ );
-		} catch (DBQueryError $e) {
+		} catch ( DBQueryError $e ) {
 			Wikia\Logger\WikiaLogger::instance()->error(
 				"Exception caught while trying to switch to DB", [
 				'exception' => $e,
