@@ -51,14 +51,15 @@ TEXT;
 	}
 
 	private static function getSolr() : Solarium_Client {
-		global $wgSolrHost, $wgSolrPort;
+		global $wgSolrMaster, $wgSolrPort;
 		$solariumConfig = [
 			'adapter' => 'Solarium_Client_Adapter_Curl',
 			'adapteroptions' => [
-				'host' => $wgSolrHost,
+				'host' => $wgSolrMaster,
 				'port' => $wgSolrPort,
 				'path' => '/solr/',
 				'core' => 'main',
+				'timeout' => 30,
 			]
 		];
 
