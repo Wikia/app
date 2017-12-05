@@ -389,13 +389,14 @@ class DWDimensionApiController extends WikiaApiController {
 		$result = [];
 		foreach( $wikis as $wiki ) {
 			$db = $this->getWikiConnection( $wiki[ 'cluster' ], $wiki[ 'dbname' ] );
+			$sub_result = null;
 			if ( isset( $db ) ) {
 				$sub_result = call_user_func( $dataGatherer, $db );
-				$result[] = [
-					'wiki_id' => $wiki[ 'wiki_id' ],
-					'data' => $sub_result
-				];
 			}
+			$result[] = [
+				'wiki_id' => $wiki[ 'wiki_id' ],
+				'data' => $sub_result
+			];
 		}
 		foreach( $this->connections as $connection ) {
 			$connection->close();
