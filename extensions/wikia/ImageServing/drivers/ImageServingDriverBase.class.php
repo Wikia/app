@@ -1,6 +1,6 @@
 <?php
 
-/*
+/**
  * @author: Tomek Odrobny
  *
  * This class is used to get image list for custom namespaces
@@ -49,9 +49,9 @@ abstract class ImageServingDriverBase {
 			return $cacheResult['cache'];
 		}
 
-		$this->allImages = array();
-		$this->imageCountsByArticle = array();
-		$this->filteredImages = array();
+		$this->allImages = [];
+		$this->imageCountsByArticle = [];
+		$this->filteredImages = [];
 
 		$this->loadFromDb( $articleIds );
 
@@ -74,9 +74,9 @@ abstract class ImageServingDriverBase {
 		return Article::newFromID( $articleId )->getRevIdFetched();
 	}
 
-	protected function loadFromCache( $articleIds = array() ) {
-		$cached = array();
-		$cacheMissArticleIds = array();
+	protected function loadFromCache( $articleIds = [] ) {
+		$cached = [];
+		$cacheMissArticleIds = [];
 		foreach ( $articleIds as $articleId ) {
 			$articleCache = $this->memc->get( $this->makeKey( $articleId, self::getRevId( $articleId ) ) );
 			if ( !empty( $articleCache ) ) {
@@ -86,7 +86,7 @@ abstract class ImageServingDriverBase {
 			}
 		}
 
-		return array( 'cache' => $cached, 'miss' => $cacheMissArticleIds );
+		return [ 'cache' => $cached, 'miss' => $cacheMissArticleIds ];
 	}
 
 	/**
@@ -111,9 +111,9 @@ abstract class ImageServingDriverBase {
 		return $this->allImages;
 	}
 
-	abstract protected function loadImagesFromDb( $articleIds = array() );
+	abstract protected function loadImagesFromDb( $articleIds = [] );
 
-	abstract protected function loadImageDetails( $imageNames = array() );
+	abstract protected function loadImageDetails( $imageNames = [] );
 
 	protected function formatResult( $allImages, $filteredImages ) {
 		wfProfileIn( __METHOD__ );
@@ -172,18 +172,18 @@ abstract class ImageServingDriverBase {
 		return $this->articles;
 	}
 
-	final public function setArticles( $articles = array() ) {
+	final public function setArticles( $articles = [] ) {
 		$this->articles = $articles;
 	}
 
 	protected function addImageDetails( $name, $count, $width, $height, $minorMime ) {
-		$this->filteredImages[$name] = array(
+		$this->filteredImages[$name] = [
 			'cnt' => $count,
 			'il_to' => $name,
 			'img_width' => $width,
 			'img_height' => $height,
 			'img_minor_mime' => $minorMime
-		);
+		];
 	}
 
 	protected function addImage( $imageName, $pageId, $order, $limit = 999 ) {
