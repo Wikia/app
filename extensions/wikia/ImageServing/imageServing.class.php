@@ -190,8 +190,6 @@ class ImageServing {
 			}
 		}
 
-		var_dump($out);
-
 		wfProfileOut( __METHOD__ );
 
 		return $out;
