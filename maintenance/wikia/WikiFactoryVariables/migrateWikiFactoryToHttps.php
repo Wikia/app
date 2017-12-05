@@ -22,6 +22,7 @@ class MigrateWikiFactoryToHttps extends Maintenance {
 	protected $dryRun  = false;
 	protected $verbose = false;
 	protected $varName = '';
+	protected $fh;
 
 	public function __construct() {
 		parent::__construct();
@@ -29,6 +30,13 @@ class MigrateWikiFactoryToHttps extends Maintenance {
 		$this->addOption( 'dryRun', 'Dry run mode', false, false, 'd' );
 		$this->addOption( 'varName', 'Name of the Wiki Factory variable', true, true, 'k' );
 		$this->addOption( 'file', 'File where to save values that are going to be altered', false, true, 'f' );
+	}
+
+	public function __destruct()
+	{
+		if ( $this->fh ) {
+			fclose( $this->fh );
+		}
 	}
 
 	public function execute() {
@@ -48,10 +56,9 @@ class MigrateWikiFactoryToHttps extends Maintenance {
 			return false;
 		}
 
-		$fh = false;
 		if ( $fileName ) {
-			$fh = fopen( $fileName, "a" );
-			if ( !$fh ) {
+			$this->fh = fopen( $fileName, "a" );
+			if ( !$this->fh ) {
 				$this->error( "Could not open file '$fileName' for write!'" . PHP_EOL );
 				return false;
 			}
@@ -61,10 +68,6 @@ class MigrateWikiFactoryToHttps extends Maintenance {
 
 		if ( empty( $keyValue ) ) {
 			$this->output( "Variable is empty for $wgCityId - skipping" . PHP_EOL );
-
-			if ( $fh ) {
-				fclose( $fh );
-			}
 			return false;
 		}
 
@@ -75,16 +78,12 @@ class MigrateWikiFactoryToHttps extends Maintenance {
 
 		if ( $keyValue == $oldValue ) {
 			$this->output( "Value not changed " . $keyValue . "- skipping" . PHP_EOL );
-
-			if ( $fh ) {
-				fclose( $fh );
-			}
 			return false;
 		}
 
 		$this->output("Setting " . $this->varName . " to " . var_export( $keyValue, true ) . "for:". $wgCityId .PHP_EOL );
-		if ( $fh ) {
-			fwrite( $fh, sprintf("%d, \"%s\", \"%s\"\n", $wgCityId, $oldValue, $keyValue));
+		if ( $this->fh ) {
+			fwrite( $this->fh, sprintf("%d, \"%s\", \"%s\"\n", $wgCityId, $oldValue, $keyValue));
 		}
 
 		if ( !$this->dryRun ) {
@@ -95,10 +94,6 @@ class MigrateWikiFactoryToHttps extends Maintenance {
 			$globalStateWrapper->wrap( function () use ( $wgCityId, $keyValue ) {
 				WikiFactory::setVarByName( $this->varName, $wgCityId, $keyValue, "migrating Wiki Factory links to https" );
 			} );
-		}
-
-		if ( $fh ) {
-			fclose( $fh );
 		}
 
 		$this->output(" ... DONE." . PHP_EOL );
