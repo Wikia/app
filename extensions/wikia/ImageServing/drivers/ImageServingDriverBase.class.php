@@ -70,11 +70,15 @@ abstract class ImageServingDriverBase {
 		return array_keys( $this->articles );
 	}
 
+	static private function getRevId( $articleId ) {
+		return Article::newFromID( $articleId )->getRevIdFetched();
+	}
+
 	protected function loadFromCache( $articleIds = array() ) {
 		$cached = array();
 		$cacheMissArticleIds = array();
 		foreach ( $articleIds as $articleId ) {
-			$articleCache = $this->memc->get( $this->makeKey( $articleId ), null );
+			$articleCache = $this->memc->get( $this->makeKey( $articleId, self::getRevId( $articleId ) ) );
 			if ( !empty( $articleCache ) ) {
 				$cached[$articleId] = $articleCache;
 			} else {
@@ -93,8 +97,8 @@ abstract class ImageServingDriverBase {
 	 *
 	 * @author Federico "Lox" Lucignano
 	 */
-	protected function makeKey( $articleId ) {
-		return wfMemcKey( "imageserving-images-data", $articleId, $this->minWidth, $this->minHeight );
+	protected function makeKey( $articleId, $revId ) {
+		return wfMemcKey( "imageserving-images-data", $articleId, $revId, $this->minWidth, $this->minHeight );
 	}
 
 	protected function loadFromDb( $articleIds ) {
@@ -114,8 +118,8 @@ abstract class ImageServingDriverBase {
 	protected function formatResult( $allImages, $filteredImages ) {
 		wfProfileIn( __METHOD__ );
 
-		$out = [ ];
-		$pageOrderedImages = [ ];
+		$out = [];
+		$pageOrderedImages = [];
 		foreach ( $allImages as $imageName => $pageData ) {
 			if ( isset( $filteredImages[$imageName] ) ) {
 				foreach ( $pageData as $pageId => $pageImageOrder ) {
@@ -160,7 +164,7 @@ abstract class ImageServingDriverBase {
 	protected function storeInCache( $articleImageIndex ) {
 		// store images for each article separately
 		foreach ( $articleImageIndex as $articleId => $imageIndex ) {
-			$this->memc->set( $this->makeKey( $articleId ), $imageIndex, 3600 );
+			$this->memc->set( $this->makeKey( $articleId, self::getRevId( $articleId ) ), $imageIndex, 3600 );
 		}
 	}
 

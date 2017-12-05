@@ -64,7 +64,6 @@ class SEOTweaksHooksHelper {
 		if ( !empty( $retTitle ) ) {
 			return $retTitle;
 		}
-
 		$retTitle = self::getFirstArticleImageLargerThan( $title, self::PREF_WIDTH, self::PREF_HEIGHT );
 
 		if ( !empty( $retTitle ) ) {
@@ -121,7 +120,7 @@ class SEOTweaksHooksHelper {
 
 			$imageUrl = WikiaDataAccess::cache(
 				self::makeOpenGraphKey( $title ),
-				WikiaResponse::CACHE_LONG,
+				WikiaResponse::CACHE_STANDARD,
 				function () use ( $namespace, $title ) {
 
 					if ( $namespace != NS_FILE ) {
@@ -143,7 +142,8 @@ class SEOTweaksHooksHelper {
 					// Even if there is no og:image, we store the info in memcahe so we don't do the
 					// processing again
 					return '';
-				}
+				},
+				WikiaDataAccess::REFRESH_CACHE
 			);
 
 			// only when there is a thumbnail url add it to metatags
@@ -165,6 +165,7 @@ class SEOTweaksHooksHelper {
 				'follow' => 'follow'
 			];
 		}
+
 		return true;
 	}
 
