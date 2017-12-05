@@ -103,6 +103,7 @@ window.wikiaJWPlayer = function (elementId, options, callback) {
 		playerInstance.setup(playerSetup);
 		logger.info('after setup');
 		logger.subscribeToPlayerErrors(playerInstance);
+		wikiaJWPlayerIdleScreen(playerInstance, i18n);
 
 		return playerInstance;
 	}
