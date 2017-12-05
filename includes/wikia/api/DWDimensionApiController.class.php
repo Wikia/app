@@ -336,7 +336,16 @@ class DWDimensionApiController extends WikiaApiController {
 		}
 		$connection = $connections[ $cluster ];
 		$dbname = $db->strencode( $dbname );
-		$connection->query( "USE `".$dbname."`", __METHOD__ );
+		try {
+			$connection->query( "USE `".$dbname."`", __METHOD__ );
+		} catch (DBQueryError $e) {
+			Wikia\Logger\WikiaLogger::instance()->error(
+				"Exception caught while trying to switch to DB", [
+				'exception' => $e,
+				'db'        => $dbname
+			] );
+			$connection = null;
+		}
 
 		return $connection;
 	}
@@ -380,11 +389,13 @@ class DWDimensionApiController extends WikiaApiController {
 		$result = [];
 		foreach( $wikis as $wiki ) {
 			$db = $this->getWikiConnection( $wiki[ 'cluster' ], $wiki[ 'dbname' ] );
-			$sub_result = call_user_func( $dataGatherer, $db );
-			$result[] = [
-				'wiki_id' => $wiki[ 'wiki_id' ],
-				'data' => $sub_result
-			];
+			if ( isset( $db ) ) {
+				$sub_result = call_user_func( $dataGatherer, $db );
+				$result[] = [
+					'wiki_id' => $wiki[ 'wiki_id' ],
+					'data' => $sub_result
+				];
+			}
 		}
 		foreach( $this->connections as $connection ) {
 			$connection->close();
