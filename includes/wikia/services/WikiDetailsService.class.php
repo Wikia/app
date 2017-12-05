@@ -177,7 +177,7 @@ class WikiDetailsService extends WikiService {
 	 */
 	protected function getFromService( $id ) {
 		$wikiStats = $this->getSiteStats( $id );
-		$topUsers = $this->getTopEditors( $id, static::DEFAULT_TOP_EDITORS_NUMBER, true );
+		$topUsers = $this->getTopEditors( $id, static::DEFAULT_TOP_EDITORS_NUMBER );
 		$modelData = $this->getDetails( [ $id ] );
 
 		//filter out flags

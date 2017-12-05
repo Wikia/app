@@ -157,7 +157,7 @@ class ChangesFeed {
 				$obj->rc_type == RC_EDIT &&
 				$obj->rc_namespace >= 0 &&
 				$obj->rc_cur_id == $sorted[$n-1]->rc_cur_id &&
-				$obj->rc_user_text == $sorted[$n-1]->rc_user_text ) {
+				static::authorsMatch( $obj, $sorted[$n-1] ) ) {
 				$sorted[$n-1]->rc_last_oldid = $obj->rc_last_oldid;
 			} else {
 				$sorted[$n] = $obj;
@@ -181,18 +181,31 @@ class ChangesFeed {
 				$url = $title->getFullURL();
 			}
 
+			// SUS-812: use user name lookup
+			if ( !( $obj->rc_deleted & Revision::DELETED_USER ) ) {
+				$userIp = RecentChange::extractUserIpFromRow( $obj );
+				$userName = User::getUsername( $obj->rc_user, $userIp );
+			} else {
+				$userName = wfMessage( 'rev-deleted-user' )->escaped();
+			}
+
 			$item = new FeedItem(
 				$title->getPrefixedText(),
 				FeedUtils::formatDiff( $obj ),
 				$url,
 				$obj->rc_timestamp,
-				($obj->rc_deleted & Revision::DELETED_USER) ? wfMsgHtml('rev-deleted-user') : $obj->rc_user_text,
+				$userName,
 				$talkpage
 			);
 			$feed->outItem( $item );
 		}
 		$feed->outFooter();
 		wfProfileOut( __METHOD__ );
+	}
+
+	private static function authorsMatch( $rowOne, $rowTwo ) {
+		return ( $rowOne->rc_user && $rowOne->rc_user == $rowTwo->rc_user ) ||
+			   ( !$rowOne->rc_user && $rowOne->rc_ip_bin == $rowTwo->rc_ip_bin );
 	}
 
 }
