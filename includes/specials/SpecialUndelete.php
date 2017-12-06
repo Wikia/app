@@ -622,7 +622,7 @@ class PageArchive {
 			$article->doEditUpdates( $revision, $user, array( 'created' => $created, 'oldcountable' => $oldcountable ) );
 		}
 
-		Hooks::run( 'ArticleUndelete', [ $this->title, $created, $comment, $oldPageId ] );
+		Hooks::run( 'ArticleUndelete', [ $this->title, $created, $comment, $oldPageId, $pageId ] );
 
 		if( $this->title->getNamespace() == NS_FILE ) {
 			// Wikia change begin @author Scott Rabin (srabin@wikia-inc.com)
