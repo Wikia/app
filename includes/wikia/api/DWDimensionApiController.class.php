@@ -218,21 +218,23 @@ class DWDimensionApiController extends WikiaApiController {
 		$result = [];
 		try {
 			$rows = $db->query( DWDimensionApiControllerSQL::DIMENSION_WIKI_EMBEDS, __METHOD__ );
-			while ( $row = $db->fetchObject( $rows ) ) {
-				$result[] = [
-					'article_id' => $row->article_id,
-					'video_title' => $row->video_title,
-					'added_at' => $row->added_at,
-					'added_by' => $row->added_by,
-					'duration' => $row->duration,
-					'premium' => $row->premium,
-					'hdfile' => $row->hdfile,
-					'removed' => $row->removed,
-					'views_30day' => $row->views_30day,
-					'views_total' => $row->views_total
-				];
+			if ( !empty( $rows ) ) {
+				while ( $row = $db->fetchObject( $rows ) ) {
+					$result[] = [
+						'article_id' => $row->article_id,
+						'video_title' => $row->video_title,
+						'added_at' => $row->added_at,
+						'added_by' => $row->added_by,
+						'duration' => $row->duration,
+						'premium' => $row->premium,
+						'hdfile' => $row->hdfile,
+						'removed' => $row->removed,
+						'views_30day' => $row->views_30day,
+						'views_total' => $row->views_total
+					];
+				}
+				$db->freeResult( $rows );
 			}
-			$db->freeResult( $rows );
 		} catch ( DBQueryError $e ) {
 			Wikia\Logger\WikiaLogger::instance()->error(
 				"Exception caught while querying wiki embed data", [
@@ -252,16 +254,18 @@ class DWDimensionApiController extends WikiaApiController {
 		$result = [];
 		try {
 			$rows = $db->query( DWDimensionApiControllerSQL::DIMENSION_WIKI_IMAGES, __METHOD__ );
-			while ( $row = $db->fetchObject( $rows ) ) {
-				$result[] = [
-					'name' => $row->image_name,
-					'user_id' => $row->user_id,
-					'minor_mime' => $row->minor_mime,
-					'media_type' => $row->media_type,
-					'created_at' => $row->created_at
-				];
+			if ( !empty( $rows ) ) {
+				while ( $row = $db->fetchObject( $rows ) ) {
+					$result[] = [
+						'name' => $row->image_name,
+						'user_id' => $row->user_id,
+						'minor_mime' => $row->minor_mime,
+						'media_type' => $row->media_type,
+						'created_at' => $row->created_at
+					];
+				}
+				$db->freeResult( $rows );
 			}
-			$db->freeResult( $rows );
 		} catch ( DBQueryError $e ) {
 			Wikia\Logger\WikiaLogger::instance()->error(
 				"Exception caught while querying wiki images data", [
@@ -280,19 +284,21 @@ class DWDimensionApiController extends WikiaApiController {
 		$result = [];
 		try {
 			$rows = $db->query( DWDimensionApiControllerSQL::DIMENSION_WIKI_INFO, __METHOD__ );
-			while ( $row = $db->fetchObject( $rows ) ) {
-				$result[] = [
-					'total_edits' => $row->total_edits,
-					'good_articles' => $row->good_articles,
-					'total_pages' => $row->total_pages,
-					'users' => $row->users,
-					'active_users' => $row->active_users,
-					'admins' => $row->admins,
-					'images' => $row->images,
-					'updated_at' => $row->updated_at
-				];
+			if ( !empty( $rows ) ) {
+				while ( $row = $db->fetchObject( $rows ) ) {
+					$result[] = [
+						'total_edits' => $row->total_edits,
+						'good_articles' => $row->good_articles,
+						'total_pages' => $row->total_pages,
+						'users' => $row->users,
+						'active_users' => $row->active_users,
+						'admins' => $row->admins,
+						'images' => $row->images,
+						'updated_at' => $row->updated_at
+					];
+				}
+				$db->freeResult( $rows );
 			}
-			$db->freeResult( $rows );
 		} catch ( DBQueryError $e ) {
 			Wikia\Logger\WikiaLogger::instance()->error(
 				"Exception caught while querying wiki info data", [
@@ -312,13 +318,15 @@ class DWDimensionApiController extends WikiaApiController {
 		$result = [];
 		try {
 			$rows = $db->query( DWDimensionApiControllerSQL::DIMENSION_WIKI_USER_GROUPS, __METHOD__ );
-			while ( $row = $db->fetchObject( $rows ) ) {
-				$result[] = [
-					'user_id' => $row->user_id,
-					'user_group' => $row->user_group
-				];
+			if ( !empty( $rows ) ) {
+				while ( $row = $db->fetchObject( $rows ) ) {
+					$result[] = [
+						'user_id' => $row->user_id,
+						'user_group' => $row->user_group
+					];
+				}
+				$db->freeResult( $rows );
 			}
-			$db->freeResult( $rows );
 		} catch ( DBQueryError $e ) {
 			Wikia\Logger\WikiaLogger::instance()->error(
 				"Exception caught while querying wiki info data", [
