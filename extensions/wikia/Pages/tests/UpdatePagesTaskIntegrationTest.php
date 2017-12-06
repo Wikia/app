@@ -11,14 +11,8 @@ class UpdatePagesTaskIntegrationTest extends WikiaDatabaseTest {
 		$this->updatePagesTask = ( new UpdatePagesTask() )->wikiId( 177 );
 	}
 
-	public function testNoRowInsertedIfArticleDoesNotExist() {
-		$this->updatePagesTask->insertOrUpdateEntry( 999, true );
-
-		$this->assertTableRowCount( 'pages', 2 );
-	}
-
 	public function testRowIsInsertedForNewArticle() {
-		$this->updatePagesTask->insertOrUpdateEntry( 3, true );
+		$this->updatePagesTask->insertOrUpdateEntry( $this->newPagesEntry( 3 ), true );
 
 		$queryTable = $this->getConnection()->createQueryTable( 'pages', 'SELECT * FROM pages' );
 		$expectedTable = $this->createYamlDataSet( __DIR__ . '/fixtures/state_post_insert_page.yaml' )
@@ -28,7 +22,7 @@ class UpdatePagesTaskIntegrationTest extends WikiaDatabaseTest {
 	}
 
 	public function testRowIsUpdatedIfExists() {
-		$this->updatePagesTask->insertOrUpdateEntry( 2, true );
+		$this->updatePagesTask->insertOrUpdateEntry( $this->newPagesEntry( 2 ), true );
 
 		$queryTable = $this->getConnection()->createQueryTable( 'pages', 'SELECT * FROM pages' );
 		$expectedTable = $this->createYamlDataSet( __DIR__ . '/fixtures/state_post_update_page.yaml' )
@@ -45,6 +39,12 @@ class UpdatePagesTaskIntegrationTest extends WikiaDatabaseTest {
 			->getTable( 'pages' );
 
 		$this->assertTablesEqual( $expectedTable, $queryTable );
+	}
+
+	private function newPagesEntry( int $articleId ) {
+		$wikiPage = WikiPage::newFromID( $articleId );
+
+		return PagesEntry::newFromPageAndRevision( $wikiPage, $wikiPage->getRevision() )->jsonSerialize();
 	}
 
 	protected function getDataSet() {

@@ -23,37 +23,21 @@ class UpdatePagesTask extends BaseTask {
 	/**
 	 * Insert a row for this article into dataware.pages table, or update the row if it already exists.
 	 *
-	 * @param int $articleId
-	 * @param bool $isContentPage
+	 * @param array $pagesEntryJson
 	 * @throws Exception
 	 */
-	public function insertOrUpdateEntry( int $articleId, bool $isContentPage ) {
-		$dbr = wfGetDB( DB_SLAVE );
+	public function insertOrUpdateEntry( array $pagesEntryJson ) {
+		$pagesEntry = PagesEntry::newFromJson( $pagesEntryJson );
 
-		// We will need all information about this page plus the timestamp of the last edit made to it
-		// Fetch that using the ID of the latest revision from page_latest
-		$rowToInsert = (array) $dbr->selectRow(
-			[ 'page', 'revision' ], [
-				'page_id',
-				'page_namespace',
-				'page_title',
-				'page_is_redirect',
-				'page_latest',
-				'rev_timestamp AS page_last_edited',
-			],
-			[ 'page_id' => $articleId ],
-			__METHOD__,
-			[],
-			[ 'revision' => [ 'INNER JOIN', [ 'page_latest = rev_id' ] ] ]
-		);
-
-		if ( !array_filter( $rowToInsert ) ) {
-			return;
-		}
-
-		$rowToInsert += [
-			'page_is_content' => $isContentPage,
-			'page_wikia_id' => $this->getWikiId()
+		$rowToInsert = [
+			'page_wikia_id' => $this->getWikiId(),
+			'page_id' => $pagesEntry->getArticleId(),
+			'page_namespace' => $pagesEntry->getNamespace(),
+			'page_title' => $pagesEntry->getTitle(),
+			'page_is_content' => $pagesEntry->isContentPage(),
+			'page_is_redirect' => $pagesEntry->isRedirect(),
+			'page_latest' => $pagesEntry->getLatestRevisionId(),
+			'page_last_edited' => $pagesEntry->getLatestRevisionTimestamp()
 		];
 
 		$primaryKey = [ 'page_id','page_wikia_id' ];
