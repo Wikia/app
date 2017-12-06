@@ -1904,5 +1904,5 @@ require_once "$IP/extensions/wikia/SpecialMultipleLookup/SpecialMultipleLookup.p
 // SUS-3475: Extension to update shared city_list table
 require_once "$IP/extensions/wikia/CityList/CityList.setup.php";
 
-// Extension to update shared dataware.pages table
+// SUS-3496: Extension to update shared dataware.pages table
 require_once "$IP/extensions/wikia/Pages/Pages.setup.php";
