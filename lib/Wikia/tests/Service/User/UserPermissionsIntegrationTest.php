@@ -2,18 +2,13 @@
 
 namespace Wikia\Service\User\Permissions;
 
-class UserPermissionsIntegrationTest extends \WikiaBaseTest {
+use Wikia\Util\GlobalStateWrapper;
+
+/**
+ * @group Integration
+ */
+class UserPermissionsIntegrationTest extends \WikiaDatabaseTest {
 	use PermissionsServiceAccessor;
-
-	/**
-	 * @var int
-	 */
-	protected $staffUserId;
-
-	/**
-	 * @var int
-	 */
-	protected $testCityId;
 
 	/**
 	 * @var \User
@@ -28,22 +23,13 @@ class UserPermissionsIntegrationTest extends \WikiaBaseTest {
 	/**
 	 * @var string
 	 */
-	const TEST_WIKI_NAME = "firefly";
-
-	/**
-	 * @var string
-	 */
 	const TEST_STAFF_USER_NAME = "PermissionTest";
 
 	protected function setUp() {
-		$this->staffUserId = \User::idFromName( self::TEST_STAFF_USER_NAME );
-		$this->testCityId = \WikiFactory::DBtoID( self::TEST_WIKI_NAME );
-		$this->staffUser = \User::newFromId( $this->staffUserId );
-		$this->anonUser = \User::newFromId( 0 );
-
-		$this->disableMemCache();
-
 		parent::setUp();
+
+		$this->staffUser = \User::newFromId( 9998 );
+		$this->anonUser = \User::newFromId( 0 );
 	}
 
 	function testShouldReturnExplicitGroups() {
@@ -225,32 +211,38 @@ class UserPermissionsIntegrationTest extends \WikiaBaseTest {
 	}
 
 	public function testShouldAddAndRemoveGlobalGroup() {
-		$this->mockGlobalVariable('wgWikiaIsCentralWiki', true);
+		$globalStateWrapper = new GlobalStateWrapper( [ 'wgWikiaIsCentralWiki' => true ] );
 
-		$groups = $this->permissionsService()->getExplicitGlobalGroups( $this->staffUser );
-		if ( !in_array( 'reviewer', $groups ) ) {
-			$this->permissionsService()->addToGroup( $this->staffUser, $this->staffUser, 'reviewer' );
-		}
-		$groups = $this->permissionsService()->getExplicitGlobalGroups( $this->staffUser );
-		$this->assertContains( 'reviewer', $groups );
+		$globalStateWrapper->wrap( function () {
 
-		$this->permissionsService()->removeFromGroup( $this->staffUser, $this->staffUser, 'reviewer' );
-		$groups = $this->permissionsService()->getExplicitGlobalGroups( $this->staffUser );
-		$this->assertNotContains( 'reviewer', $groups );
+			$groups = $this->permissionsService()->getExplicitGlobalGroups( $this->staffUser );
+			if ( !in_array( 'reviewer', $groups ) ) {
+				$this->permissionsService()
+					->addToGroup( $this->staffUser, $this->staffUser, 'reviewer' );
+			}
+			$groups = $this->permissionsService()->getExplicitGlobalGroups( $this->staffUser );
+			$this->assertContains( 'reviewer', $groups );
 
-		$this->permissionsService()->addToGroup( $this->staffUser, $this->staffUser, 'reviewer' );
-		$groups = $this->permissionsService()->getExplicitGlobalGroups( $this->staffUser );
-		$this->assertContains( 'reviewer', $groups );
+			$this->permissionsService()
+				->removeFromGroup( $this->staffUser, $this->staffUser, 'reviewer' );
+			$groups = $this->permissionsService()->getExplicitGlobalGroups( $this->staffUser );
+			$this->assertNotContains( 'reviewer', $groups );
 
-		$groups = $this->permissionsService()->getExplicitGlobalGroups( $this->staffUser );
-		$this->assertNotContains( 'content-review', $groups );
-		$this->assertFalse( $this->permissionsService()->addToGroup(
-			$this->staffUser, $this->staffUser, 'content-review' ) );
-		$groups = $this->permissionsService()->getExplicitGlobalGroups( $this->staffUser );
-		$this->assertNotContains( 'content-review', $groups );
+			$this->permissionsService()
+				->addToGroup( $this->staffUser, $this->staffUser, 'reviewer' );
+			$groups = $this->permissionsService()->getExplicitGlobalGroups( $this->staffUser );
+			$this->assertContains( 'reviewer', $groups );
 
-		$this->assertFalse( $this->permissionsService()->removeFromGroup(
-			$this->staffUser, $this->staffUser, 'some-made-up-group' ) );
+			$groups = $this->permissionsService()->getExplicitGlobalGroups( $this->staffUser );
+			$this->assertNotContains( 'content-review', $groups );
+			$this->assertFalse( $this->permissionsService()
+				->addToGroup( $this->staffUser, $this->staffUser, 'content-review' ) );
+			$groups = $this->permissionsService()->getExplicitGlobalGroups( $this->staffUser );
+			$this->assertNotContains( 'content-review', $groups );
+
+			$this->assertFalse( $this->permissionsService()
+				->removeFromGroup( $this->staffUser, $this->staffUser, 'some-made-up-group' ) );
+		} );
 	}
 
 	public function testShouldAddAndRemoveLocalGroup() {
@@ -296,5 +288,9 @@ class UserPermissionsIntegrationTest extends \WikiaBaseTest {
 			$this->staffUser, array( 'move', 'something-made-up' ) ) );
 		$this->assertFalse( $this->permissionsService()->hasAnyPermission(
 			$this->staffUser, array( 'something-made-up1', 'something-made-up2' ) ) );
+	}
+
+	protected function getDataSet() {
+		return $this->createYamlDataSet( __DIR__ . '/fixtures/user_permissions.yaml' );
 	}
 }
