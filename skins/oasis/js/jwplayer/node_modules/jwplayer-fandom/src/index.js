@@ -103,7 +103,6 @@ window.wikiaJWPlayer = function (elementId, options, callback) {
 		playerInstance.setup(playerSetup);
 		logger.info('after setup');
 		logger.subscribeToPlayerErrors(playerInstance);
-		wikiaJWPlayerIdleScreen(playerInstance, i18n);
 
 		return playerInstance;
 	}
@@ -112,6 +111,7 @@ window.wikiaJWPlayer = function (elementId, options, callback) {
 		var logger = wikiaJWPlayerLogger(options),
 			playerInstance = setupPlayer(elementId, options, logger);
 
+		wikiaJWPlayerIdleScreen(playerInstance, i18n);
 		wikiaJWPlayerReplaceIcons(playerInstance);
 		wikiaJWPlayerEvents(playerInstance, options.autoplay, logger);
 

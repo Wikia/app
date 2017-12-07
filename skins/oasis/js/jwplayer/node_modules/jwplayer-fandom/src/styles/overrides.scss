@@ -61,7 +61,7 @@
 		}
 	}
 
-	@mixin play-screen($play-icon-size, $padding, $title-font-size, $title-line-height, $duration-font-size) {
+	@mixin idle-screen($play-icon-size, $padding, $title-font-size, $title-line-height, $duration-font-size) {
 		$icon-padding: $padding - 0.083 * $play-icon-size;
 		$icon-container-size: 1.2 * $play-icon-size;
 
@@ -133,37 +133,37 @@
 	&.jw-state-idle {
 		&.jw-breakpoint-0,
 		&.jw-breakpoint-1 { // mobile portrait, oasis on-scroll
-			@include play-screen(60px, 12px, 16px, 20px, 12px);
+			@include idle-screen(60px, 12px, 16px, 20px, 12px);
 		}
 
 		&.jw-breakpoint-2 {
-			@include play-screen(60px, 18px, 16px, 20px, 12px);
+			@include idle-screen(60px, 18px, 16px, 20px, 12px);
 		}
 
 		&.jw-breakpoint-3 { // mobile landscape
-			@include play-screen(60px, 30px, 18px, 22px, 12px);
+			@include idle-screen(60px, 30px, 18px, 22px, 12px);
 		}
 
 		// oasis
 		&.jw-breakpoint-4 {
-			@include play-screen(90px, 30px, 24px, 28px, 16px);
+			@include idle-screen(90px, 30px, 24px, 28px, 16px);
 		}
 
 		// oasis
 		&.jw-breakpoint-5 {
-			@include play-screen(90px, 36px, 28px, 32px, 16px);
+			@include idle-screen(90px, 36px, 28px, 32px, 16px);
 		}
 
 		&.jw-breakpoint-6 {
-			@include play-screen(120px, 42px, 36px, 42px, 18px);
+			@include idle-screen(120px, 42px, 36px, 42px, 18px);
 		}
 
 		&.jw-breakpoint-7 {
-			@include play-screen(150px, 60px, 40px, 44px, 24px);
+			@include idle-screen(150px, 60px, 40px, 44px, 24px);
 		}
 
 		.jw-controls {
-			background: linear-gradient(to bottom, rgba(0,0,0,0) 50%,rgba(0,0,0,0.65) 100%);
+			background: linear-gradient(to bottom, rgba(0,0,0,0) 50%,rgba(0, 0, 0, .65) 100%);
 		}
 	}
 
