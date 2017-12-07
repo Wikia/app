@@ -1073,33 +1073,6 @@ CREATE TABLE /*_*/log_search (
 CREATE UNIQUE INDEX /*i*/ls_field_val ON /*_*/log_search (ls_field,ls_value,ls_log_id);
 CREATE INDEX /*i*/ls_log_id ON /*_*/log_search (ls_log_id);
 
-
--- Jobs performed by parallel apache threads or a command-line daemon
-CREATE TABLE /*_*/job (
-  job_id int unsigned NOT NULL PRIMARY KEY AUTO_INCREMENT,
-
-  -- Command name
-  -- Limited to 60 to prevent key length overflow
-  job_cmd varbinary(60) NOT NULL default '',
-
-  -- Namespace and title to act on
-  -- Should be 0 and '' if the command does not operate on a title
-  job_namespace int NOT NULL,
-  job_title varchar(255) binary NOT NULL,
-
-  -- Timestamp of when the job was inserted
-  -- NULL for jobs added before addition of the timestamp
-  job_timestamp varbinary(14) NULL default NULL,
-
-  -- Any other parameters to the command
-  -- Stored as a PHP serialized array, or an empty string if there are no parameters
-  job_params blob NOT NULL
-) /*$wgDBTableOptions*/;
-
-CREATE INDEX /*i*/job_cmd ON /*_*/job (job_cmd, job_namespace, job_title, job_params(128));
-CREATE INDEX /*i*/job_timestamp ON /*_*/job(job_timestamp);
-
-
 -- Details of updates to cached special pages
 CREATE TABLE /*_*/querycache_info (
   -- Special page name
