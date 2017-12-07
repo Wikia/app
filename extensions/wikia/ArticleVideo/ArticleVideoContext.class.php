@@ -78,7 +78,7 @@ class ArticleVideoContext {
 		return [];
 	}
 
-	private static function getVideoDataWithAttribution($videoData) {
+	private static function getVideoDataWithAttribution( $videoData ) {
 		if ( empty( $videoData['playlist'] ) || empty( $videoData['playlist'][0] ) ) {
 			return $videoData;
 		}
