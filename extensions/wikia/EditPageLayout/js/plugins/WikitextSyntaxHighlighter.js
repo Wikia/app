@@ -114,7 +114,9 @@ define('WikiTextSyntaxHighlighter', ['wikia.window', 'wikia.document', 'wikia.lo
 	function highlightSyntax () {
 		var startTime, endTime, diffTime,
 			fragment;
-		wpTextbox1.value = CKEDITOR.instances.wpTextbox1.getData();
+		
+		if ( typeof CKEDITOR  != 'undefined' ) wpTextbox1.value = CKEDITOR.instances.wpTextbox1.getData();
+
 		lastText = wpTextbox1.value;
 		/* Backslashes and apostrophes are CSS-escaped at the beginning and all
 		parsing regexes and functions are designed to match. On the other hand,
