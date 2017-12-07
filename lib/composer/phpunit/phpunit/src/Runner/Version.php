@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  * This file is part of PHPUnit.
  *
@@ -32,7 +32,7 @@ class Version
         }
 
         if (self::$version === null) {
-            $version       = new VersionId('6.4.4', \dirname(\dirname(__DIR__)));
+            $version       = new VersionId('6.5.3', \dirname(\dirname(__DIR__)));
             self::$version = $version->getVersion();
         }
 

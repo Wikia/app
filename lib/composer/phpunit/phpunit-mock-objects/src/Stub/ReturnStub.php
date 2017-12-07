@@ -7,22 +7,28 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+namespace PHPUnit\Framework\MockObject\Stub;
 
+use PHPUnit\Framework\MockObject\Invocation;
+use PHPUnit\Framework\MockObject\Stub;
 use SebastianBergmann\Exporter\Exporter;
 
 /**
  * Stubs a method by returning a user-defined value.
  */
-class PHPUnit_Framework_MockObject_Stub_Return implements PHPUnit_Framework_MockObject_Stub
+class ReturnStub implements Stub
 {
-    protected $value;
+    /**
+     * @var mixed
+     */
+    private $value;
 
     public function __construct($value)
     {
         $this->value = $value;
     }
 
-    public function invoke(PHPUnit_Framework_MockObject_Invocation $invocation)
+    public function invoke(Invocation $invocation)
     {
         return $this->value;
     }
@@ -31,7 +37,7 @@ class PHPUnit_Framework_MockObject_Stub_Return implements PHPUnit_Framework_Mock
     {
         $exporter = new Exporter;
 
-        return sprintf(
+        return \sprintf(
             'return user-specified value %s',
             $exporter->export($this->value)
         );
