@@ -36,7 +36,7 @@ foreach($desiredPluginNames as $pluginName){
 			$currentLanguage =  explode('.',explode('/',$file)[3])[0];
 			array_push($languages,array($currentLanguage => array()));
 			array_push($langCodes,$currentLanguage);
-			$data = json_decode(shell_exec("node script.js $file"));
+			$data = json_decode(shell_exec("node scriptPlugins.js $file"));
 			flatten($data,"rte-ck-"."$pluginName",$languages,$currentLanguage,$i);
 		}
 		if($init === True){

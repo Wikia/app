@@ -22,7 +22,7 @@ foreach ($files as $i => $file) {
 	$currentLanguage =  explode('.',$file)[0];
 	array_push($languages,array($currentLanguage => array()));
 	array_push($langCodes,$currentLanguage);
-	$data = json_decode(shell_exec("node script.js $file"));
+	$data = json_decode(shell_exec("node scriptCore.js $file"));
 	flatten($data,"rte-ck",$languages,$currentLanguage,$i);
 }	
 
