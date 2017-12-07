@@ -218,7 +218,9 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 
 	function updateCorrelator() {
 		push(function () {
-			win.googletag.pubads().updateCorrelator();
+			if (win.googletag && win.googletag.pubads) {
+				win.googletag.pubads().updateCorrelator();
+			}
 		});
 	}
 
