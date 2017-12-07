@@ -1899,3 +1899,6 @@ require_once "$IP/extensions/wikia/FacebookTags/FacebookTags.setup.php";
 
 // SUS-2956: Include MultiLookup extension
 require_once "$IP/extensions/wikia/SpecialMultipleLookup/SpecialMultipleLookup.php";
+
+// SUS-3475: Extension to update shared city_list table
+require_once "$IP/extensions/wikia/CityList/CityList.setup.php";

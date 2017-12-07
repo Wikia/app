@@ -11,6 +11,7 @@ require([
 	'ext.wikia.adEngine.dartHelper',
 	'ext.wikia.adEngine.messageListener',
 	'ext.wikia.adEngine.pageFairDetection',
+	'ext.wikia.adEngine.provider.btfBlocker',
 	'ext.wikia.adEngine.slot.service.actionHandler',
 	'ext.wikia.adEngine.slot.service.slotRegistry',
 	'ext.wikia.adEngine.slotTracker',
@@ -30,6 +31,7 @@ require([
 	dartHelper,
 	messageListener,
 	pageFairDetection,
+	btfBlocker,
 	actionHandler,
 	slotRegistry,
 	slotTracker,
@@ -55,8 +57,8 @@ require([
 	win.adSlotTweaker = slotTweaker;
 
 	// Custom ads (skins, footer, etc)
-	if (adContext.get('opts.isAdEngine3Enabled')) {
-		adEngineBridge.init(slotRegistry, pageLevelParams.getPageLevelParams(), adContext, 'oasis');
+	if (adContext.get('opts.isAdProductsBridgeEnabled')) {
+		adEngineBridge.init(slotRegistry, pageLevelParams.getPageLevelParams(), adContext, btfBlocker, 'oasis');
 		win.loadCustomAd = adEngineBridge.loadCustomAd(customAdsLoader.loadCustomAd);
 	} else {
 		win.loadCustomAd = customAdsLoader.loadCustomAd;

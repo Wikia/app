@@ -16,14 +16,14 @@ use Error;
 use PHP_Invoker;
 use PHP_Invoker_TimeoutException;
 use PHP_Timer;
-use PHPUnit_Framework_MockObject_Exception;
+use PHPUnit\Framework\MockObject\Exception as MockObjectException;
 use PHPUnit\Util\Blacklist;
 use PHPUnit\Util\InvalidArgumentHelper;
 use PHPUnit\Util\Printer;
 use ReflectionClass;
 use SebastianBergmann\CodeCoverage\CodeCoverage;
-use SebastianBergmann\CodeCoverage\Exception as OriginalCodeCoverageException;
 use SebastianBergmann\CodeCoverage\CoveredCodeNotExecutedException as OriginalCoveredCodeNotExecutedException;
+use SebastianBergmann\CodeCoverage\Exception as OriginalCodeCoverageException;
 use SebastianBergmann\CodeCoverage\MissingCoversAnnotationException as OriginalMissingCoversAnnotationException;
 use SebastianBergmann\CodeCoverage\UnintentionallyCoveredCodeException;
 use SebastianBergmann\ResourceOperations\ResourceOperations;
@@ -707,7 +707,7 @@ class TestResult implements Countable
             );
 
             $risky = true;
-        } catch (PHPUnit_Framework_MockObject_Exception $e) {
+        } catch (MockObjectException $e) {
             $e = new Warning(
                 $e->getMessage()
             );

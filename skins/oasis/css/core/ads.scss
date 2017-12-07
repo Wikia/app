@@ -76,6 +76,12 @@ $global-navigation-and-sitewide-messages-index: 5000101;
 	}
 }
 
+.has-bfaa {
+	.wds-community-header {
+		margin-top: 20px;
+	}
+}
+
 .bfaa-template {
 	&.WikiaSiteWrapper {
 		@include flexbox();

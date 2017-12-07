@@ -277,102 +277,12 @@ class SpecialNewpages extends IncludableSpecialPage {
 	}
 
 	/**
-	 * Format a row, providing the timestamp, links to the page/history, size, user links, and a comment
-	 *
-	 * @param $result Result row
-	 * @return String
-	 */
-	public function formatRow( $result ) {
-		# Revision deletion works on revisions, so we should cast one
-		$row = array(
-					  'comment' => $result->rc_comment,
-					  'deleted' => $result->rc_deleted,
-					  'user_text' => $result->rc_user_text,
-					  'user' => $result->rc_user,
-					);
-		$rev = new Revision( $row );
-
-		$classes = array();
-
-		$lang = $this->getLanguage();
-		$dm = $lang->getDirMark();
-
-		$title = Title::newFromRow( $result );
-		$spanTime = Html::element( 'span', array( 'class' => 'mw-newpages-time' ),
-			$lang->timeanddate( $result->rc_timestamp, true )
-		);
-		$time = Linker::linkKnown(
-			$title,
-			$spanTime,
-			array(),
-			array( 'oldid' => $result->rc_this_oldid ),
-			array()
-		);
-
-		$query = array( 'redirect' => 'no' );
-
-		if( $this->patrollable( $result ) ) {
-			$query['rcid'] = $result->rc_id;
-		}
-
-		$plink = Linker::linkKnown(
-			$title,
-			null,
-			array( 'class' => 'mw-newpages-pagename' ),
-			$query,
-			array( 'known' ) // Set explicitly to avoid the default of 'known','noclasses'. This breaks the colouration for stubs
-		);
-		$histLink = Linker::linkKnown(
-			$title,
-			wfMsgHtml( 'hist' ),
-			array(),
-			array( 'action' => 'history' )
-		);
-		$hist = Html::rawElement( 'span', array( 'class' => 'mw-newpages-history' ), wfMsg( 'parentheses', $histLink ) );
-
-		$length = Html::element( 'span', array( 'class' => 'mw-newpages-length' ),
-				'[' . $this->msg( 'nbytes' )->numParams( $result->length )->text() . ']'
-		);
-
-		$ulink = Linker::revUserTools( $rev );
-		$comment = Linker::revComment( $rev );
-
-		if ( $this->patrollable( $result ) ) {
-			$classes[] = 'not-patrolled';
-		}
-
-		# Add a class for zero byte pages
-		if ( $result->length == 0 ) {
-			$classes[] = 'mw-newpages-zero-byte-page';
-		}
-
-		# Tags, if any. check for including due to bug 23293
-		if ( !$this->including() ) {
-			list( $tagDisplay, $newClasses ) = ChangeTags::formatSummaryRow( $result->ts_tags, 'newpages' );
-			$classes = array_merge( $classes, $newClasses );
-		} else {
-			$tagDisplay = '';
-		}
-
-		$css = count( $classes ) ? ' class="' . implode( ' ', $classes ) . '"' : '';
-
-		# Display the old title if the namespace has been changed
-		$oldTitleText = '';
-		if ( $result->page_namespace !== $result->rc_namespace ) {
-			$oldTitleText = wfMessage( 'rc-old-title' )->params( Title::makeTitle( $result->rc_namespace, $result->rc_title )
-			                                           ->getPrefixedText() )->escaped();	
-		}
-
-		return "<li{$css}>{$time} {$dm}{$plink} {$hist} {$dm}{$length} {$dm}{$ulink} {$comment} {$tagDisplay} {$oldTitleText}</li>\n";
-	}
-
-	/**
 	 * Should a specific result row provide "patrollable" links?
 	 *
 	 * @param $result Result row
 	 * @return Boolean
 	 */
-	protected function patrollable( $result ) {
+	public function patrollable( $result ) {
 		return ( $this->getUser()->useNPPatrol() && !$result->rc_patrolled );
 	}
 
@@ -439,7 +349,8 @@ class SpecialNewpages extends IncludableSpecialPage {
 	}
 
 	protected function feedItemAuthor( $row ) {
-		return isset( $row->rc_user_text ) ? $row->rc_user_text : '';
+		// SUS-3079: Use user name lookup to determine author
+		return User::getUsername( $row->rc_user, RecentChange::extractUserIpFromRow( $row ) );
 	}
 
 	protected function feedItemDesc( $row ) {
@@ -458,18 +369,18 @@ class SpecialNewpages extends IncludableSpecialPage {
  * @ingroup SpecialPage Pager
  */
 class NewPagesPager extends ReverseChronologicalPager {
-	// Stored opts
+	/** @var array $userNames map of user IDs to user names */
+	private $userNames = [];
+
+	/** @var FormOptions $opts Stored opts */
 	protected $opts;
 
-	/**
-	 * @var HtmlForm
-	 */
-	protected $mForm;
+	protected $special;
 
-	function __construct( $form, FormOptions $opts ) {
-		parent::__construct( $form->getContext() );
-		$this->mForm = $form;
+	function __construct( SpecialNewpages $special, FormOptions $opts ) {
+		parent::__construct( $special->getContext() );
 		$this->opts = $opts;
+		$this->special = $special;
 	}
 
 	function getQueryInfo() {
@@ -494,10 +405,9 @@ class NewPagesPager extends ReverseChronologicalPager {
 		if( $wgEnableNewpagesUserFilter && $user ) {
 			// SUS-812: handle anon cases (IP address provided) and account names (user name provided)
 			if ( IP::isIPAddress( $user->getText() ) ) {
-				$conds['rc_user_text'] = $user->getText();
-				$rcIndexes = 'rc_user_text';
-			}
-			else {
+				$conds['rc_ip_bin'] = inet_pton( $user->getText() );
+				$rcIndexes = 'rc_ip_bin';
+			} else {
 				$conds['rc_user'] = User::idFromName( $user->getText() );
 			}
 		# If anons cannot make new pages, don't "exclude logged in users"!
@@ -519,7 +429,7 @@ class NewPagesPager extends ReverseChronologicalPager {
 		// Allow changes to the New Pages query
 		$tables = array( 'recentchanges', 'page' );
 		$fields = array(
-			'rc_namespace', 'rc_title', 'rc_cur_id', 'rc_user', 'rc_user_text',
+			'rc_namespace', 'rc_title', 'rc_cur_id', 'rc_user', 'rc_ip_bin',
 			'rc_comment', 'rc_timestamp', 'rc_patrolled','rc_id', 'rc_deleted',
 			'page_len AS length', 'page_latest AS rev_id', 'rc_this_oldid',
 			'page_namespace', 'page_title'
@@ -550,25 +460,125 @@ class NewPagesPager extends ReverseChronologicalPager {
 		return $info;
 	}
 
-	function getIndexField() {
-		return 'rc_timestamp';
-	}
-
-	function formatRow( $row ) {
-		return $this->mForm->formatRow( $row );
-	}
-
-	function getStartBody() {
+	protected function preprocessResults( $result ) {
 		# Do a batch existence check on pages
 		$linkBatch = new LinkBatch();
 		foreach ( $this->mResult as $row ) {
-			$userName = User::getUsername( $row->rc_user, $row->rc_user_text ); // SUS-812
+			$userId = $row->rc_user;
+			$userIp = RecentChange::extractUserIpFromRow( $row );
+
+			$userName = User::getUsername( $userId, $userIp ); // SUS-812
 
 			$linkBatch->add( NS_USER, $userName );
 			$linkBatch->add( NS_USER_TALK, $userName );
 			$linkBatch->add( $row->rc_namespace, $row->rc_title );
+
+			// SUS-3079: Cache the user name
+			if ( $userId && !isset( $this->userNames[$userId] ) ) {
+				$this->userNames[$userId] = $userName;
+			}
 		}
+
 		$linkBatch->execute();
+	}
+
+	function getIndexField() {
+		return 'rc_timestamp';
+	}
+
+
+	/**
+	 * Format a row, providing the timestamp, links to the page/history, size, user links, and a comment
+	 *
+	 * @param object $result Result row
+	 * @return String
+	 */
+	function formatRow( $result ) {
+		# Revision deletion works on revisions, so we should cast one
+		$row = array(
+			'comment' => $result->rc_comment,
+			'deleted' => $result->rc_deleted,
+			// SUS-3079: Use user name lookup here
+			'user_text' => $this->userNames[$result->rc_user] ?? RecentChange::extractUserIpFromRow( $result ),
+			'user' => $result->rc_user,
+		);
+		$rev = new Revision( $row );
+
+		$classes = array();
+
+		$lang = $this->getLanguage();
+		$dm = $lang->getDirMark();
+
+		$title = Title::newFromRow( $result );
+		$spanTime = Html::element( 'span', array( 'class' => 'mw-newpages-time' ),
+			$lang->timeanddate( $result->rc_timestamp, true )
+		);
+		$time = Linker::linkKnown(
+			$title,
+			$spanTime,
+			array(),
+			array( 'oldid' => $result->rc_this_oldid ),
+			array()
+		);
+
+		$query = array( 'redirect' => 'no' );
+
+		if( $this->special->patrollable( $result ) ) {
+			$query['rcid'] = $result->rc_id;
+		}
+
+		$plink = Linker::linkKnown(
+			$title,
+			null,
+			array( 'class' => 'mw-newpages-pagename' ),
+			$query,
+			array( 'known' ) // Set explicitly to avoid the default of 'known','noclasses'. This breaks the colouration for stubs
+		);
+		$histLink = Linker::linkKnown(
+			$title,
+			wfMsgHtml( 'hist' ),
+			array(),
+			array( 'action' => 'history' )
+		);
+		$hist = Html::rawElement( 'span', array( 'class' => 'mw-newpages-history' ), wfMsg( 'parentheses', $histLink ) );
+
+		$length = Html::element( 'span', array( 'class' => 'mw-newpages-length' ),
+			'[' . $this->msg( 'nbytes' )->numParams( $result->length )->text() . ']'
+		);
+
+		$ulink = Linker::revUserTools( $rev );
+		$comment = Linker::revComment( $rev );
+
+		if ( $this->special->patrollable( $result ) ) {
+			$classes[] = 'not-patrolled';
+		}
+
+		# Add a class for zero byte pages
+		if ( $result->length == 0 ) {
+			$classes[] = 'mw-newpages-zero-byte-page';
+		}
+
+		# Tags, if any. check for including due to bug 23293
+		if ( !$this->special->including() ) {
+			list( $tagDisplay, $newClasses ) = ChangeTags::formatSummaryRow( $result->ts_tags, 'newpages' );
+			$classes = array_merge( $classes, $newClasses );
+		} else {
+			$tagDisplay = '';
+		}
+
+		$css = count( $classes ) ? ' class="' . implode( ' ', $classes ) . '"' : '';
+
+		# Display the old title if the namespace has been changed
+		$oldTitleText = '';
+		if ( $result->page_namespace !== $result->rc_namespace ) {
+			$oldTitleText = wfMessage( 'rc-old-title' )->params( Title::makeTitle( $result->rc_namespace, $result->rc_title )
+				->getPrefixedText() )->escaped();
+		}
+
+		return "<li{$css}>{$time} {$dm}{$plink} {$hist} {$dm}{$length} {$dm}{$ulink} {$comment} {$tagDisplay} {$oldTitleText}</li>\n";
+	}
+
+	function getStartBody() {
 		return '<ul>';
 	}
 

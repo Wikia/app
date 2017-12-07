@@ -574,7 +574,8 @@ class WallHelper {
 
 		} else {
 			$objTitle = $rc->getTitle();
-			$userText = User::getUsername( $rc->getAttribute( 'rc_user' ), $rc->getAttribute( 'rc_user_text' ) );
+			$userIp = inet_ntop( $rc->getAttribute( 'rc_ip_bin' ) );
+			$userText = User::getUsername( $rc->getAttribute( 'rc_user' ), $userIp );
 			$isNew = false; // it doesn't metter for rc -- we've got there rc_log_action
 		}
 
