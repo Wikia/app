@@ -1,13 +1,13 @@
 #!/bin/bash
 
+# Copy required scripts into target directories.
 cp scripts/generate_i18n_from_core.php ../ckeditor/lang/.;
 cp scripts/scriptCore.js ../ckeditor/lang/.;
-
 cp scripts/generate_i18n_from_plugins.php ../ckeditor/plugins/.;
 cp scripts/scriptPlugins.js ../ckeditor/plugins/.;
-
 cp scripts/merge-into-one.php ../i18n/.;
 
+# CORE
 cd ../ckeditor/lang/.;
 printf "Currently at: ";
 printf `pwd`;
@@ -21,6 +21,7 @@ mv CK.core.i18n.phpCORE ../../i18n/.;
 rm generate_i18n_from_core.php;
 rm scriptCore.js;
 
+#PLUGINS
 cd ../plugins/.;
 printf "Currently at: ";
 printf `pwd`;
@@ -37,6 +38,7 @@ rm scriptPlugins.js;
 
 cd ../../i18n/.;
 
+# MERGING
 printf "Currently at: ";
 printf `pwd`;
 printf "\n";
