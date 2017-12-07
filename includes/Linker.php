@@ -1721,30 +1721,32 @@ class Linker {
 	/**
 	 * Create a headline for content
 	 *
-	 * @param $level Integer: the level of the headline (1-6)
-	 * @param $attribs String: any attributes for the headline, starting with
+	 * @param integer $level the level of the headline (1-6)
+	 * @param string $attribs any attributes for the headline, starting with
 	 *                 a space and ending with '>'
 	 *                 This *must* be at least '>' for no attribs
-	 * @param $anchor String: the anchor to give the headline (the bit after the #)
-	 * @param $html String: html for the text of the header
-	 * @param $link String: HTML to add for the section edit link
-	 * @param $legacyAnchor Mixed: a second, optional anchor to give for
+	 * @param string $anchor The anchor to give the headline (the bit after the #)
+	 * @param string $html HTML for the text of the header
+	 * @param string $link HTML to add for the section edit link
+	 * @param string|bool $fallbackAnchor A second, optional anchor to give for
 	 *   backward compatibility (false to omit)
 	 *
 	 * @return String: HTML headline
 	 */
-	public static function makeHeadline( $level, $attribs, $anchor, $html, $link, $legacyAnchor = false ) {
+	public static function makeHeadline( $level, $attribs, $anchor, $html, $link, $fallbackAnchor = false ) {
+		$anchorEscaped = htmlspecialchars( $anchor );
 		$ret = "<h$level$attribs"
 			. $link
-			. " <span class=\"mw-headline\" id=\"$anchor\">$html</span>"
+			. " <span class=\"mw-headline\" id=\"$anchorEscaped\">$html</span>"
 			. "</h$level>";
-		if ( $legacyAnchor !== false ) {
-			$ret = "<div id=\"$legacyAnchor\"></div>$ret";
+		if ( $fallbackAnchor !== false && $fallbackAnchor !== $anchor ) {
+			$fallbackAnchor = htmlspecialchars( $fallbackAnchor );
+			$ret = "<div id=\"$fallbackAnchor\"></div>$ret";
 		}
 
 		/* Wikia change begin - @author: Macbre */
 		$skin = RequestContext::getMain()->getSkin();
-		Hooks::run( 'MakeHeadline', array( $skin, $level, $attribs, $anchor, $html, $link, $legacyAnchor, &$ret ) );
+		Hooks::run( 'MakeHeadline', array( $skin, $level, $attribs, $anchor, $html, $link, $fallbackAnchor, &$ret ) );
 		/* Wikia change end */
 
 		return $ret;

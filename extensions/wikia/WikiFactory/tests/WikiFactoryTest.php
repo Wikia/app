@@ -3,18 +3,10 @@
 class WikiFactoryTest extends WikiaBaseTest {
 
 	private $serverName = null;
-	/**
-	 * Only for holding original values
-	 * @var array
-	 */
-	private $org_StagingList;
 
 	public function setUp() {
 		parent::setUp();
 
-		global $wgStagingList;
-		$this->org_StagingList = $wgStagingList;
-		$wgStagingList = ['teststagging'];
 		if ( isset($_SERVER['SERVER_NAME'] ) ) {
 			$this->serverName = $_SERVER['SERVER_NAME'];
 		}
@@ -23,23 +15,9 @@ class WikiFactoryTest extends WikiaBaseTest {
 	public function tearDown() {
 		parent::tearDown();
 
-		global $wgStagingList;
-		$wgStagingList = $this->org_StagingList;
 		if ( !empty($this->serverName) ) {
 			$_SERVER['SERVER_NAME'] = $this->serverName;
 		}
-	}
-
-	public function testGetCurrentStagingHostSandbox()
-	{
-		$this->assertEquals('teststagging.muppet.wikia.com',
-			WikiFactory::getCurrentStagingHost('muppet','http://www.muppet.wikia.com/', 'teststagging'));
-	}
-
-	public function testGetCurrentStagingHostDevbox() {
-		$this->mockGlobalVariable( 'wgDevDomain', 'mydevbox.wikia-dev.com' );
-		$this->assertEquals('muppet.mydevbox.wikia-dev.com',
-			WikiFactory::getCurrentStagingHost('muppet','http://www.muppet.wikia.com/', 'dev-mydevbox'));
 	}
 
 	/**
@@ -52,77 +30,11 @@ class WikiFactoryTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * @dataProvider getCurrentStagingHostDataProvider
-	 */
-	public function testGetCurrentStagingHost($host, $dbName, $devDomain, $expHost) {
-		$default = 'defaulthost';
-		$this->mockGlobalVariable('wgStagingList', ['preview',
-			'verify',
-			'sandbox-s1',
-			'sandbox-s2',
-			'sandbox-s3',
-			'sandbox-s4',
-			'sandbox-s5',
-			'sandbox-sony',
-			'externaltest',
-			'sandbox-qa01',
-			'sandbox-qa02',
-			'sandbox-qa03',
-			'sandbox-qa04',
-			'demo-sony',
-		] );
-		$this->mockGlobalVariable( 'wgDevDomain', $devDomain );
-
-		$this->assertEquals($expHost, WikiFactory::getCurrentStagingHost($dbName, $default, $host));
-	}
-
-	/**
 	 * @dataProvider prepareUrlToParseDataProvider
 	 */
 	public function testPrepareUrlToParse( $url, $expected ) {
 		$url = WikiFactory::prepareUrlToParse( $url );
 		$this->assertEquals( $expected, $url );
-	}
-
-	public function getCurrentStagingHostDataProvider() {
-		return [
-			[
-				'demo-sony-s1',
-				'muppet',
-				'',
-				'demo-sony.muppet.wikia.com'
-			],
-			[
-				'demo-sony-s2',
-				'muppet',
-				'',
-				'demo-sony.muppet.wikia.com'
-			],
-			[
-				'preview',
-				'muppet',
-				'',
-				'preview.muppet.wikia.com'
-			],
-			[
-				'verify',
-				'muppet',
-				'',
-				'verify.muppet.wikia.com',
-			],
-			[
-				'dev-test',
-				'muppet',
-				'test.wikia-dev.com',
-				'muppet.test.wikia-dev.com',
-			],
-			[
-				'sandbox-s3',
-				'muppet',
-				'',
-				'sandbox-s3.muppet.wikia.com'
-			]
-		];
 	}
 
 	public function getLocalEnvURLDataProvider() {
@@ -131,19 +43,19 @@ class WikiFactoryTest extends WikiaBaseTest {
 				'env' => WIKIA_ENV_PREVIEW,
 				'forcedEnv' => null,
 				'url' => 'http://muppet.wikia.com',
-				'expected' => 'http://preview.muppet.wikia.com'
+				'expected' => 'http://muppet.preview.wikia.com'
 			],
 			[
 				'env' => WIKIA_ENV_VERIFY,
 				'forcedEnv' => null,
 				'url' => 'http://muppet.wikia.com/wiki/Muppet',
-				'expected' => 'http://verify.muppet.wikia.com/wiki/Muppet'
+				'expected' => 'http://muppet.verify.wikia.com/wiki/Muppet'
 			],
 			[
 				'env' => WIKIA_ENV_STABLE,
 				'forcedEnv' => null,
 				'url' => 'http://muppet.wikia.com/wiki/Muppet',
-				'expected' => 'http://stable.muppet.wikia.com/wiki/Muppet'
+				'expected' => 'http://muppet.stable.wikia.com/wiki/Muppet'
 			],
 			[
 				'env' => WIKIA_ENV_DEV,
@@ -155,13 +67,13 @@ class WikiFactoryTest extends WikiaBaseTest {
 				'env' => WIKIA_ENV_SANDBOX,
 				'forcedEnv' => null,
 				'url' => 'http://gta.wikia.com/Vehicles_in_GTA_III',
-				'expected' => 'http://sandbox-s1.gta.wikia.com/Vehicles_in_GTA_III'
+				'expected' => 'http://gta.sandbox-s1.wikia.com/Vehicles_in_GTA_III'
 			],
 			[
 				'env' => WIKIA_ENV_VERIFY,
 				'forcedEnv' => null,
 				'url' => 'http://gta.wikia.com/wiki/test/test/test',
-				'expected' => 'http://verify.gta.wikia.com/wiki/test/test/test'
+				'expected' => 'http://gta.verify.wikia.com/wiki/test/test/test'
 			],
 			[
 				'env' => WIKIA_ENV_STAGING,
@@ -186,13 +98,13 @@ class WikiFactoryTest extends WikiaBaseTest {
 				'env' => WIKIA_ENV_DEV,
 				'forcedEnv' => WIKIA_ENV_PREVIEW,
 				'url' => 'http://gta.wikia.com/',
-				'expected' => 'http://preview.gta.wikia.com'
+				'expected' => 'http://gta.preview.wikia.com'
 			],
 			[
 				'env' => WIKIA_ENV_PREVIEW,
 				'forcedEnv' => WIKIA_ENV_DEV,
 				'url' => 'http://gta.wikia.com/',
-				'expected' => 'http://preview.gta.wikia.com'
+				'expected' => 'http://gta.preview.wikia.com'
 			],
 			[
 				'env' => WIKIA_ENV_PROD,
@@ -216,13 +128,13 @@ class WikiFactoryTest extends WikiaBaseTest {
 				'env' => WIKIA_ENV_STABLE,
 				'forcedEnv' => null,
 				'url' => 'http://gta.wikia.com/',
-				'expected' => 'http://stable.gta.wikia.com'
+				'expected' => 'http://gta.stable.wikia.com'
 			],
 			[
 				'env' => WIKIA_ENV_STABLE,
 				'forcedEnv' => null,
-				'url' => 'http://stable.gta.wikia.com/wiki/test',
-				'expected' => 'http://stable.gta.wikia.com/wiki/test'
+				'url' => 'http://gta.stable.wikia.com/wiki/test',
+				'expected' => 'http://gta.stable.wikia.com/wiki/test'
 			],
 			[
 				'env' => WIKIA_ENV_PROD,
@@ -246,13 +158,37 @@ class WikiFactoryTest extends WikiaBaseTest {
 				'env' => WIKIA_ENV_PREVIEW,
 				'forcedEnv' => null,
 				'url' => 'https://fallout.wikia.com/wiki/test',
-				'expected' => 'https://preview.fallout.wikia.com/wiki/test'
+				'expected' => 'https://fallout.preview.wikia.com/wiki/test'
 			],
 			[
 				'env' => WIKIA_ENV_DEV,
 				'forcedEnv' => null,
 				'url' => 'https://muppet.wikia.com/wiki',
 				'expected' => 'https://muppet.' . static::MOCK_DEV_NAME . '.wikia-dev.us/wiki'
+			],
+			[
+				'env' => WIKIA_ENV_PROD,
+				'forcedEnv' => null,
+				'url' => '//www.wikia.com/wiki/test',
+				'expected' => '//www.wikia.com/wiki/test',
+			],
+			[
+				'env' => WIKIA_ENV_STAGING,
+				'forcedEnv' => null,
+				'url' => '//fallout.wikia.com/wiki/test',
+				'expected' => '//fallout.wikia-staging.com/wiki/test'
+			],
+			[
+				'env' => WIKIA_ENV_PREVIEW,
+				'forcedEnv' => null,
+				'url' => '//fallout.wikia.com/wiki/test',
+				'expected' => '//fallout.preview.wikia.com/wiki/test'
+			],
+			[
+				'env' => WIKIA_ENV_DEV,
+				'forcedEnv' => null,
+				'url' => '//muppet.wikia.com/wiki',
+				'expected' => '//muppet.' . static::MOCK_DEV_NAME . '.wikia-dev.us/wiki'
 			],
 			[
 				'env' => WIKIA_ENV_PROD,

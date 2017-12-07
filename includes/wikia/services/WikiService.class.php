@@ -15,7 +15,7 @@ class WikiService extends WikiaModel {
 	const WAM_DEFAULT_ITEM_LIMIT_PER_PAGE = 20;
 	const IMAGE_HEIGHT_KEEP_ASPECT_RATIO = -1;
 	const TOPUSER_CACHE_VALID = 10800;
-	const TOPUSER_LIMIT = 150;
+	const TOPUSER_LIMIT = 10;
 
 	const CACHE_VERSION = '5';
 	const MAX_WIKI_RESULTS = 300;
@@ -262,43 +262,46 @@ class WikiService extends WikiaModel {
 	}
 
 	/**
-	 * get list of top editors
+	 * get list of top editors (bots excluded)
 	 *
 	 * @param integer $wikiId
 	 * @param integer $limit
-	 * @param bool    $excludeBots
 	 *
 	 * @return array topEditors [ array( user_id => edits ) ]
 	 */
-	public function getTopEditors( $wikiId = 0, $limit = 30, $excludeBots = false ) {
+	public function getTopEditors( int $wikiId , int $limit ) {
 		wfProfileIn( __METHOD__ );
 
-		$wikiId = ( empty($wikiId) ) ? $this->wg->CityId : $wikiId ;
 		$fname = __METHOD__;
 
 		$topEditors = WikiaDataAccess::cache(
-			wfSharedMemcKey( 'wiki_top_editors', $wikiId, $excludeBots ),
+			wfSharedMemcKey( 'wiki_top_editors:v1', $wikiId ),
 			static::TOPUSER_CACHE_VALID,
-			function() use ( $wikiId, $excludeBots, $fname ) {
-				global $wgSpecialsDB;
+			function() use ( $wikiId, $fname ) {
+				global $wgDWStatsDB;
 				$topEditors = array();
 
-				$db = wfGetDB( DB_SLAVE, array(), $wgSpecialsDB );
+				$db = wfGetDB( DB_SLAVE, array(), $wgDWStatsDB );
 
 				$result = $db->select(
-					array( 'events_local_users' ),
-					array( 'user_id', 'edits', 'all_groups' ),
-					array( 'wiki_id' => $wikiId, 'edits != 0' ),
+					array( 'rollup_wiki_user_events' ),
+					array( 'user_id', 'SUM(edits + creates) as edits' ),
+					array(
+						'period_id' => DataMartService::PERIOD_ID_WEEKLY,
+						'wiki_id' => $wikiId,
+						'time_id >= NOW() - INTERVAL 365 DAY', # SUS-3368 | use last year data only
+						'user_id > 0', # skip anons
+					),
 					$fname,
 					array(
-						'ORDER BY' => 'edits desc',
+						'ORDER BY' => 'edits DESC',
+						'GROUP BY' => 'user_id',
 						'LIMIT' => static::TOPUSER_LIMIT,
-						'USE INDEX' => 'PRIMARY', # mysql in Reston wants to use a different key (PLATFORM-1648)
 					)
 				);
 
-				while( $row = $db->fetchObject($result) ) {
-					if (!($excludeBots && $this->isBotGroup($row->all_groups))) {
+				foreach( $result as $row ) {
+					if ( User::newFromId( $row->user_id )->isBot() === false ) {
 						$topEditors[$row->user_id] = intval( $row->edits );
 					}
 				}
@@ -311,16 +314,18 @@ class WikiService extends WikiaModel {
 		return array_slice( $topEditors, 0, $limit, true );
 	}
 
-	public function isBotGroup($groups) {
-		$isBot = false;
+	/**
+	 * @param string $groups
+	 * @return bool
+	 */
+	private function isBotGroup($groups) {
 		$groups = explode(';', $groups);
 		foreach (self::$botGroups as $botGroup) {
 			if (in_array($botGroup, $groups)) {
-				$isBot = true;
-				break;
+				return true;
 			}
 		}
-		return $isBot;
+		return false;
 	}
 
 	/**
@@ -608,7 +613,7 @@ class WikiService extends WikiaModel {
 		$ret = null;
 
 		if ( !empty( $domain ) ) {
-			$ret = str_replace( 'http://', '',  $domain );
+			$ret = preg_replace( '!^https?://!', '', $domain );
 		}
 
 		return $ret;

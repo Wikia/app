@@ -664,7 +664,7 @@ class Revision implements IDBAccessObject {
 	 * @return String
 	 */
 	public function getRawUserText() {
-		if ( $this->mUserText === null ) {
+		if ( $this->mUserText === null || $this->mUserText === '' /* SUS-3459 */ ) {
 			$this->mUserText = User::whoIs( $this->mUser ); // load on demand
 			if ( $this->mUserText === false ) {
 				# This shouldn't happen, but it can if the wiki was recovered
@@ -1020,7 +1020,7 @@ class Revision implements IDBAccessObject {
 				'rev_comment'    => $this->mComment,
 				'rev_minor_edit' => $this->mMinorEdit ? 1 : 0,
 				'rev_user'       => $this->mUser,
-				'rev_user_text'  => $this->mUserText,
+				'rev_user_text'  => $this->getRawUser() === 0 ? $this->mUserText : '', // SUS-3078
 				'rev_timestamp'  => $dbw->timestamp( $this->mTimestamp ),
 				'rev_deleted'    => $this->mDeleted,
 				'rev_len'        => $this->mSize,

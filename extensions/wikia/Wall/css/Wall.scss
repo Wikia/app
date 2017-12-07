@@ -119,7 +119,7 @@ html>body #Wall .new-reply .speech-bubble-avatar { *position: absolute; *left:-9
 		}
 		.stafflogo {
 			background: none no-repeat scroll 0 0 transparent;
-			background: url("/extensions/wikia/DesignSystem/bower_components/design-system/dist/svg/wds-company-logo-fandom.svg"); /* $wgCdnStylePath */
+			background: url("/extensions/wikia/DesignSystem/bower_components/design-system/dist/svg/wds-company-logo-fandom.svg"); /* $wgResourceBasePath */
 			background-size: 100% 100%;
 			bottom: -1px;
 			display: inline-block;
@@ -451,7 +451,7 @@ html>body #Wall .new-reply .speech-bubble-avatar { *position: absolute; *left:-9
 	}
 
 	.loadingAjax {
-		background: url(/skins/common/images/ajax.gif) 0 2px; /* $wgCdnStylePath */
+		background: url(/skins/common/images/ajax.gif) 0 2px; /* $wgResourceBasePath */
 		display: none;
 		float: right;
 		height: 20px;
@@ -499,9 +499,9 @@ html>body #Wall .new-reply .speech-bubble-avatar { *position: absolute; *left:-9
 		top: -5px;
 		img {
 			@if $is-dark-wiki {
-				background-image: url("/extensions/wikia/Wall/images/kudo_20x20_white.png");	/* $wgCdnStylePath */
+				background-image: url("/extensions/wikia/Wall/images/kudo_20x20_white.png");	/* $wgResourceBasePath */
 			} @else {
-				background-image: url("/extensions/wikia/Wall/images/kudo_20x20.png");	/* $wgCdnStylePath */
+				background-image: url("/extensions/wikia/Wall/images/kudo_20x20.png");	/* $wgResourceBasePath */
 			}
 			cursor: pointer;
 			opacity: .2;
@@ -574,12 +574,12 @@ html>body #Wall .new-reply .speech-bubble-avatar { *position: absolute; *left:-9
 	.tools {
 		font-size: 11px;
 		.sprite.edit-pencil {
-			background: url(/skins/common/images/common/pencil.png) no-repeat 0 0; /* $wgCdnStylePath */
+			background: url(/skins/common/images/common/pencil.png) no-repeat 0 0; /* $wgResourceBasePath */
 			height: 18px;
 			width: 12px;
 		}
 		.sprite-small.delete {
-			background: url(/skins/common/images/common/trashcan.png) no-repeat 0 0; /* $wgCdnStylePath */
+			background: url(/skins/common/images/common/trashcan.png) no-repeat 0 0; /* $wgResourceBasePath */
 			height: 18px;
 			width: 12px;
 		}

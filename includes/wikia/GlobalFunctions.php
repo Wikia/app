@@ -111,27 +111,27 @@ function print_pre( $param, $return = 0 )
  */
 function wfReplaceImageServer( $url, $timestamp = false ) {
 	$wg = F::app()->wg;
-	global $wgWikiaNocookieDomain, $wgMedusaHostPrefix;
+	global $wgWikiaNocookieDomain, $wgMedusaHostPrefix, $wgResourceBasePath;
 
 	wfDebug( __METHOD__ . ": requested url $url\n" );
 	if ( substr( strtolower( $url ), -4 ) != '.ogg' ) {
 		$url = str_replace( 'http://', 'https://',
 			str_replace( "//{$wgMedusaHostPrefix}images", '//' . str_replace( '.', '-', $wgMedusaHostPrefix ) . 'images', $url ) );
 		if ( strlen( $url ) > 8 && substr ( $url, 0, 8 ) == "https://" ) {
-			// If there is no timestamp, use the cache-busting number from wgCdnStylePath.
+			// If there is no timestamp, use the cache-busting number from wgResourceBasePath.
 			if ( $timestamp == "" ) {
 				$matches = array();
 				// @TODO: consider using wgStyleVersion
-				if ( 0 < preg_match( "/\/__cb([0-9]+)/i", $wg->CdnStylePath, $matches ) ) {
+				if ( 0 < preg_match( "/\/__cb([0-9]+)/i", $wgResourceBasePath, $matches ) ) {
 					$timestamp = $matches[1];
 				} else {
 					// This results in no caching of the image.  Bad bad bad, but the best way to fail.
-					Wikia::log( __METHOD__, "", "BAD FOR CACHING!: There is a call to " . __METHOD__ . " without a timestamp and we could not parse a fallback cache-busting number out of wgCdnStylePath.  This means the '{$url}' image won't be cacheable!" );
+					Wikia::log( __METHOD__, "", "BAD FOR CACHING!: There is a call to " . __METHOD__ . " without a timestamp and we could not parse a fallback cache-busting number out of wgResourceBasePath.  This means the '{$url}' image won't be cacheable!" );
 					$timestamp = rand( 0, 1000 );
 				}
 			}
 
-			// NOTE: This should be the only use of the cache-buster which does not use $wg->CdnStylePath.
+			// NOTE: This should be the only use of the cache-buster which does not use $wgResourceBasePath
 			// RT#98969 if the url already has a cb value, don't add another one...
 			$cb = ( $timestamp != '' && strpos( $url, "__cb" ) === false ) ? "__cb{$timestamp}/" : '';
 
@@ -1358,28 +1358,6 @@ function wfGetBeaconId() {
 	return ( isset( $_COOKIE['wikia_beacon_id'] ) )
 	? $_COOKIE['wikia_beacon_id']
 	: '';
-}
-
-/**
- * Allow to find what staging machine we are on
- *
- * @author Tomasz Odrobny <tomek@wikia-inc.com>
- */
-function getHostPrefix() {
-	global $wgStagingList, $wgServer;
-	static $cache;
-	if ( !empty( $cache ) ) {
-		return $cache;
-	}
-	$hosts = $wgStagingList;
-	foreach ( $hosts as $host ) {
-		$prefix = 'http://' . $host . '.';
-		if ( strpos( $wgServer, $prefix )  !== false ) {
-			$cache = $host;
-			return  $host;
-		}
-	}
-	return null;
 }
 
 /**

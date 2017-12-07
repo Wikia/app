@@ -478,18 +478,20 @@ class WallHelper {
 	/**
 	 * Create a new Wall Notification from revision info, and dispatch it to wall_notifications table.
 	 *
-	 * @deprecated this interface should be converted to use background task at some point
 	 * @param Revision $rev
 	 * @param int $rcType whether this is a new thread/reply (RC_NEW = 1) or edit to existing one/wall action (RC_EDIT = 2)
-	 * @param bool $useMasterDB
+	 * @param User $user
 	 */
-	public static function sendNotification( Revision $rev, $rcType = RC_NEW, $useMasterDB = false ) {
-		global $wgUser;
+	public static function sendNotification( Revision $rev, int $rcType, User $user ) {
+		// SUS-3281: No point in creating notification for anons
+		if ( $user->isAnon() ) {
+			return;
+		}
 
-		$notif = WallNotificationEntity::createFromRev( $rev, $useMasterDB );
+		$notif = WallNotificationEntity::createFromRev( $rev );
 		$wh = new WallHistory();
 
-		$wh->add( $rcType == RC_NEW ? WH_NEW : WH_EDIT, $notif, $wgUser );
+		$wh->add( $rcType == RC_NEW ? WH_NEW : WH_EDIT, $notif, $user );
 
 		if ( $rcType == RC_NEW ) {
 			$wn = new WallNotifications();
@@ -554,7 +556,7 @@ class WallHelper {
 	}
 
 	/**
-	 * @param RecentChange $rc or a row from revison table
+	 * @param RCCacheEntry $rc or a row from revison table
 	 * @param array $row [ page_title, page_namespace, rev_user_text?, page_is_new?, rev_parent_id? ]
 	 * @return array|bool
 	 */

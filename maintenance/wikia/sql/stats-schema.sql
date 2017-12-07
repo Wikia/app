@@ -44,8 +44,6 @@ CREATE TABLE `events` (
   `event_type` tinyint(2) unsigned NOT NULL DEFAULT '1',
   `event_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `media_type` tinyint(2) unsigned NOT NULL DEFAULT '0',
-  `__rev_date` date NOT NULL DEFAULT '0000-00-00',
-  `__beacon_id` varchar(32) NOT NULL DEFAULT '',
   `ip_bin` varbinary(16) DEFAULT NULL,
   PRIMARY KEY (`wiki_id`,`page_id`,`rev_id`,`log_id`,`rev_timestamp`),
   KEY `event_date_idx` (`event_date`),
@@ -69,4 +67,4 @@ CREATE TABLE `events` (
  PARTITION ev9999 VALUES LESS THAN MAXVALUE ENGINE = InnoDB) */;
 
 
--- Dump completed on 2017-10-26 13:34:31
+-- Dump completed on 2017-11-20 11:50:23

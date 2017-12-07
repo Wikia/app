@@ -839,6 +839,9 @@ abstract class DatabaseBase implements DatabaseType {
 	 * @return bool Whether $sql is SQL for TEMPORARY table operation
 	 */
 	protected function registerTempTableOperation( $sql ) {
+		// SUS-3246: Trim the SQL query to avoid manually crafted queries not matching
+		$sql = ltrim( $sql );
+
 		if ( preg_match(
 			'/^CREATE\s+TEMPORARY\s+TABLE\s+(?:IF\s+NOT\s+EXISTS\s+)?[`"\']?(\w+)[`"\']?/i',
 			$sql,
@@ -3601,6 +3604,18 @@ abstract class DatabaseBase implements DatabaseType {
 	 */
 	protected function indexNameCallback( $matches ) {
 		return $this->indexName( $matches[1] );
+	}
+
+	/**
+	 * Check to see if a named lock is available. This is non-blocking.
+	 *
+	 * @param string $lockName name of lock to poll
+	 * @param string $method name of method calling us
+	 * @return Boolean
+	 * @since 1.20
+	 */
+	public function lockIsFree( $lockName, $method ) {
+		return true;
 	}
 
 	/**

@@ -50,16 +50,15 @@ class SpecialApiExplorer extends SpecialPage {
 		wfProfileIn( __METHOD__ );
 
 		// TODO: Make this work for ResourceLoader (Wikia isn't using RL yet at the time of this writing).
-		// Wikia has the cachebuster in the wgExtensionPath (we rewrite that in varnish because many proxies won't cache things that have "?" in the URL), but other MediaWikis need the style-version in the querystring.
-		$cbSuffix = ( isset( $wgCityId ) ? "?{$wgStyleVersion}" : "" );
-		$wgOut->addScript( "<script type=\"text/javascript\" src=\"{$wgExtensionsPath}/wikia/JavascriptAPI/Mediawiki.js{$cbSuffix}\"></script>" );
-		$wgOut->addScript( "<script type=\"text/javascript\" src=\"{$wgExtensionsPath}/ApiExplorer/apiExplorer.js{$cbSuffix}\"></script>" );
-		$wgOut->addScript( "<link rel=\"stylesheet\" type=\"text/css\" href=\"{$wgExtensionsPath}/ApiExplorer/apiExplorer.css{$cbSuffix}\" />" );
+		// Wikia interpolates wgStyleVersion in the wgExtensionPath (we rewrite that in varnish because many proxies won't cache things that have "?" in the URL), but other MediaWikis need the style-version in the querystring.
+		$wgOut->addScript( "<script type=\"text/javascript\" src=\"{$wgExtensionsPath}/wikia/JavascriptAPI/Mediawiki.js{$wgStyleVersion}\"></script>" );
+		$wgOut->addScript( "<script type=\"text/javascript\" src=\"{$wgExtensionsPath}/ApiExplorer/apiExplorer.js{$wgStyleVersion}\"></script>" );
+		$wgOut->addScript( "<link rel=\"stylesheet\" type=\"text/css\" href=\"{$wgExtensionsPath}/ApiExplorer/apiExplorer.css{$wgStyleVersion}\" />" );
 
 		ob_start();
 			$buttonHeight = 15;
-			$collapseSrc = "$wgExtensionsPath/ApiExplorer/collapse.png$cbSuffix";
-			$expandSrc = "$wgExtensionsPath/ApiExplorer/collapse.png$cbSuffix";
+			$collapseSrc = "$wgExtensionsPath/ApiExplorer/collapse.png$wgStyleVersion";
+			$expandSrc = "$wgExtensionsPath/ApiExplorer/collapse.png$wgStyleVersion";
 			?><style>
 				.collapsible h2 span, .collapsible h3 span{
 					width:<?= $buttonHeight ?>px;
@@ -69,10 +68,10 @@ class SpecialApiExplorer extends SpecialPage {
 
 					background-repeat:no-repeat;
 					background-position:right center;
-					background-image: url(<?= "$wgExtensionsPath/ApiExplorer/collapse.png$cbSuffix"; ?>);
+					background-image: url(<?= "$wgExtensionsPath/ApiExplorer/collapse.png$wgStyleVersion"; ?>);
 				}
 				.collapsed h2 span, .collapsed h3 span{
-					background-image: url(<?= "$wgExtensionsPath/ApiExplorer/expand.png$cbSuffix"; ?>);
+					background-image: url(<?= "$wgExtensionsPath/ApiExplorer/expand.png$wgStyleVersion"; ?>);
 				}
 			</style>
 			<div id='apEx_intro'>

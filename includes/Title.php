@@ -1302,16 +1302,39 @@ class Title {
 	 * @return String Base name
 	 */
 	public function getBaseText() {
+		$text = $this->getText();
+
 		if ( !MWNamespace::hasSubpages( $this->mNamespace ) ) {
-			return $this->getText();
+			return $text;
 		}
 
-		$parts = explode( '/', $this->getText() );
-		# Don't discard the real title if there's no subpage involved
-		if ( count( $parts ) > 1 ) {
-			unset( $parts[count( $parts ) - 1] );
+		$slashPosition = mb_strpos( $text, '/' );
+
+		if ( $slashPosition === false ) {
+			return $text;
 		}
-		return implode( '/', $parts );
+
+		return mb_substr( $text, 0, $slashPosition );
+	}
+
+	/**
+	 * Cut off the last subpage text
+	 * @return string
+	 */
+	public function getParentText() {
+		$text = $this->getText();
+
+		if ( !MWNamespace::hasSubpages( $this->mNamespace ) ) {
+			return $text;
+		}
+
+		$lastSlashPosition = mb_strrpos( $text, '/' );
+
+		if ( $lastSlashPosition === false ) {
+			return $text;
+		}
+
+		return mb_substr( $text, 0, $lastSlashPosition );
 	}
 
 	/**

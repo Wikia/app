@@ -3,7 +3,7 @@
 class AnyclipApiWrapper extends ApiWrapper {
 
 	protected $ingestion = true;
-
+	// HTTPS-note: not switching to https, as apis.anyclip.com doesn't seem to work at all.
 	protected static $API_URL = 'http://apis.anyclip.com/api/clip/$1/';
 	protected static $CACHE_KEY = 'anyclipapi';
 	protected static $CACHE_KEY_VERSION = 0.2;

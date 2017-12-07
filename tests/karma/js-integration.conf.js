@@ -19,6 +19,7 @@ module.exports = function (config) {
 
 			'resources/jquery/jquery-1.8.2.js',
 			'resources/wikia/libraries/define.mock.js',
+			'resources/mediawiki/mediawiki.js',
 
 			// JSMessages
 			'extensions/wikia/JSMessages/js/JSMessages.js',
@@ -76,7 +77,11 @@ module.exports = function (config) {
 
 			// Lightbox
 			'extensions/wikia/Lightbox/scripts/Lightbox.js',
-			'extensions/wikia/Lightbox/scripts/spec/integration/lightbox.spec.js'
+			'extensions/wikia/Lightbox/scripts/spec/integration/lightbox.spec.js',
+
+			// Portable Infobox
+			'extensions/wikia/PortableInfobox/js/PortableInfobox.js',
+			'extensions/wikia/PortableInfobox/js/spec/PortableInfobox.spec.js'
 		]
 	});
 };

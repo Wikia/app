@@ -9,9 +9,6 @@ class AssetsManagerSassBuilderTest extends WikiaBaseTest {
 
 	public function setUp() {
 		parent::setUp();
-
-		$this->cb = $this->app->wg->StyleVersion;
-		$this->cdn = $this->app->wg->CdnStylePath;
 	}
 
 	/**
@@ -19,11 +16,12 @@ class AssetsManagerSassBuilderTest extends WikiaBaseTest {
 	 * @slowExecutionTime 0.85936 ms
 	 */
 	public function testSassBuilder() {
+		global $wgStyleVersion, $wgResourceBasePath;
 		$this->disableMemCache();
 
 		$request = new WebRequest();
 		$request->setVal('oid', self::SASS_FILE);
-		$request->setVal('cb', $this->cb);
+		$request->setVal('cb', $wgStyleVersion);
 
 		$builder = new AssetsManagerSassBuilder($request);
 
@@ -31,8 +29,8 @@ class AssetsManagerSassBuilderTest extends WikiaBaseTest {
 
 		// test URLs rewriting
 		$this->assertContains('sprite.png', $builder->getContent());
-		$this->assertContains("{$this->cdn}/skins/shared/images/sprite.png", $builder->getContent());
-		$this->assertNotContains('/* $wgCdnStylePath */', $builder->getContent());
+		$this->assertContains("{$wgResourceBasePath}/skins/shared/images/sprite.png", $builder->getContent());
+		$this->assertNotContains('/* $wgResourceBasePath */', $builder->getContent());
 
 		// test base64 encoding
 		$this->assertNotContains('blank.gif', $builder->getContent());

@@ -1,0 +1,26 @@
+[
+	{
+		"regex": false,
+		"expires": "",
+		"timestamp": "20170915104112",
+		"text": "DawajTest",
+		"reason": "dawaj",
+		"exact": true,
+		"caseSensitive": false,
+		"id": 106243,
+		"authorId": 5447689,
+		"type": 8
+	},
+	{
+		"regex": false,
+		"expires": "",
+		"timestamp": "20170912123151",
+		"text": "KubernetesSynchronizationTest",
+		"reason": "[[w:Help:Spam|spam]]",
+		"exact": true,
+		"caseSensitive": false,
+		"id": 281768,
+		"authorId": 2200849,
+		"type": 8
+	}
+]

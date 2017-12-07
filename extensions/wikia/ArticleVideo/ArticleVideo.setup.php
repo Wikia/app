@@ -15,7 +15,7 @@ $wgResourceModules['ext.ArticleVideo'] = [
 
 $wgResourceModules['ext.ArticleVideo.jw'] = [
 	'scripts' => [
-		'extensions/wikia/ArticleVideo/node_modules/jwplayer-fandom/dist/wikiajwplayer.js',
+		'skins/oasis/js/jwplayer/node_modules/jwplayer-fandom/dist/wikiajwplayer.js',
 		'extensions/wikia/AdEngine/js/video/player/jwplayer/jwplayerTracker.js',
 		'extensions/wikia/ArticleVideo/scripts/featured-video.jwplayer.ads.js',
 		'extensions/wikia/ArticleVideo/scripts/featured-video.jwplayer.ads-tracking.js',

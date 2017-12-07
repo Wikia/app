@@ -118,7 +118,6 @@ class MysqlUpdater extends DatabaseUpdater {
 			array( 'addTable', 'protected_titles',                  'patch-protected_titles.sql' ),
 
 			// 1.13
-			array( 'addField', 'ipblocks',      'ipb_by_text',      'patch-ipb_by_text.sql' ),
 			array( 'addTable', 'page_props',                        'patch-page_props.sql' ),
 			array( 'addTable', 'updatelog',                         'patch-updatelog.sql' ),
 			array( 'addTable', 'category',                          'patch-category.sql' ),
@@ -145,7 +144,6 @@ class MysqlUpdater extends DatabaseUpdater {
 			array( 'addTable', 'user_properties',                   'patch-user_properties.sql' ),
 			array( 'addTable', 'log_search',                        'patch-log_search.sql' ),
 			array( 'addField', 'logging',       'log_user_text',    'patch-log_user_text.sql' ),
-			array( 'doLogUsertextPopulation' ), # listed separately from the previous update because 1.16 was released without this update
 			array( 'doLogSearchPopulation' ),
 			array( 'addTable', 'l10n_cache',                        'patch-l10n_cache.sql' ),
 			array( 'addTable', 'external_user',                     'patch-external_user.sql' ),

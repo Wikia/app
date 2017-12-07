@@ -900,8 +900,7 @@ abstract class IngestionApiWrapper extends PseudoApiWrapper {
  * those are only used by video migration scripts and serve no other purpose
  */
 abstract class LegacyVideoApiWrapper extends PseudoApiWrapper {
-	//@todo change this url
-	static $THUMBNAIL_URL = 'http://community.wikia.com/extensions/wikia/VideoHandlers/images/NoThumbnailBg.png';
+	static $THUMBNAIL_PATH = '/extensions/wikia/VideoHandlers/images/NoThumbnailBg.png';
 
 	public function __construct($videoId, array $overrideMetadata=array()) {
 
@@ -927,7 +926,12 @@ abstract class LegacyVideoApiWrapper extends PseudoApiWrapper {
 	}
 
 	public function getThumbnailUrl() {
-		return self::$THUMBNAIL_URL;
+		return self::getLegacyThumbnailUrl();
+	}
+
+	public static function getLegacyThumbnailUrl() {
+		global $wgResourceBasePath;
+		return $wgResourceBasePath . self::$THUMBNAIL_PATH;
 	}
 
 }

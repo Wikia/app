@@ -1613,7 +1613,7 @@ class Wikia {
 	}
 
 	/**
-	 * Send ETag header with article's last modification timestamp and cache buster
+	 * Send ETag header with article's last modification timestamp and style version
 	 *
 	 * See BAC-1227 for details
 	 *

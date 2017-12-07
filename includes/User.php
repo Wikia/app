@@ -672,7 +672,8 @@ class User implements JsonSerializable {
 		}
 
 		if ( isset( self::$idCacheByName[$name] ) ) {
-			return (int) self::$idCacheByName[$name];
+			// SUS-2981 - return NULL when a user is not found
+			return ( (int) self::$idCacheByName[$name] ) ?: null;
 		}
 
 		// SUS-2945 | this method makes ~32mm queries every day
@@ -683,7 +684,8 @@ class User implements JsonSerializable {
 		$cachedId = $wgMemc->get( $key );
 
 		if ( is_numeric( $cachedId ) ) {
-			return (int) self::$idCacheByName[$name] = $cachedId;
+			// SUS-2981 - return NULL when a user is not found
+			return ( (int) self::$idCacheByName[$name] = $cachedId ) ?: null;
 		}
 
 		// not in cache, query the database
@@ -696,13 +698,14 @@ class User implements JsonSerializable {
 		}
 
 		if ( $s === false ) {
-			$result = null;
+			// SUS-2981 - set cached value to zero when a user is not found, setting a memcache entry to NULL makes no sense
+			$result = 0;
 		} else {
-			$result = (int) $s->user_id;
-
-			// SUS-2945 - only store when there's a match
-			$wgMemc->set( $key, $result, WikiaResponse::CACHE_LONG );
+			$result = (int)$s->user_id;
 		}
+
+		// SUS-2981 - cache even when a given user is not found (set cache entry to 0)
+		$wgMemc->set( $key, $result, WikiaResponse::CACHE_LONG );
 
 		self::$idCacheByName[$name] = $result;
 
@@ -710,7 +713,7 @@ class User implements JsonSerializable {
 			self::$idCacheByName = array();
 		}
 
-		return $result;
+		return $result ?: null;
 	}
 
 	/**
@@ -1347,7 +1350,7 @@ class User implements JsonSerializable {
 		}
 
 		# User/IP blocking
-		$block = Block::newFromTarget( $this->getName(), $ip, !$bFromSlave );
+		$block = Block::newFromTarget( $this, $ip, !$bFromSlave );
 
 		# Proxy blocking
 		if ( !$block instanceof Block && $ip !== null && !$this->isAllowed( 'proxyunbannable' )
@@ -1784,6 +1787,19 @@ class User implements JsonSerializable {
 	public function setId( $v ) {
 		$this->mId = $v;
 		$this->clearInstanceCache( 'id' );
+	}
+
+	/**
+	 * SUS-3250: Just set the user ID, without any side-effects
+	 * @see User::setId() for bad design
+	 * @param $userId
+	 */
+	public function setUserId( $userId ) {
+		$this->mId = $userId;
+
+		// make sure user will be loaded from user id
+		$this->mFrom = 'id';
+		$this->setItemLoaded( 'id' );
 	}
 
 	/**
@@ -3878,7 +3894,7 @@ class User implements JsonSerializable {
 		global $wgEnableNewAuthModal;
 
 		if ( $wgEnableNewAuthModal ) {
-			return WikiFactory::getLocalEnvURL( "http://www.wikia.com/confirm-email?token=$token" );
+			return WikiFactory::getLocalEnvURL( "https://www.wikia.com/confirm-email?token=$token" );
 		}
 
 		// Hack to bypass localization of 'Special:'
@@ -4509,6 +4525,16 @@ class User implements JsonSerializable {
 	 */
 	public function isStaff() {
 		return self::permissionsService()->isInGroup( $this, 'staff' );
+	}
+
+	/**
+	 * Whether this user is a bot (either globally or on this wiki) or not
+	 * @return bool
+	 */
+	public function isBot() {
+		return self::permissionsService()->isInGroup( $this, 'bot' )
+			||
+			self::permissionsService()->isInGroup( $this, 'bot-global' );
 	}
 
 	/**

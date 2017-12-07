@@ -2,9 +2,9 @@
 
 class ViddlerApiWrapper extends ApiWrapper {
 	protected static $RESPONSE_FORMAT = self::RESPONSE_FORMAT_PHP;
-	protected static $API_URL = 'http://api.viddler.com/api/v2/viddler.videos.getDetails.php?add_embed_code=1&url=';
-	public static $WATCH_URL = 'http://www.viddler.com/v/$1';
-	public static $MAIN_URL = 'http://www.viddler.com/';
+	protected static $API_URL = 'https://api.viddler.com/api/v2/viddler.videos.getDetails.php?add_embed_code=1&url=';
+	public static $WATCH_URL = 'https://www.viddler.com/v/$1';
+	public static $MAIN_URL = 'https://www.viddler.com/';
 	protected static $CACHE_KEY = 'viddlerapi';
 	protected static $aspectRatio = 1.56160458;
 

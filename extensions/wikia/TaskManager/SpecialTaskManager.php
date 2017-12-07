@@ -30,7 +30,6 @@ $dir = __DIR__;
 require_once( $dir . "/BatchTask.php" );
 extAddBatchTask( $dir."/Tasks/PageImporterTask.php", "pageimporter", "PageImporterTask" );
 extAddBatchTask( $dir."/Tasks/SWMSendToGroupTask.php", "SWMSendToGroup", "SWMSendToGroupTask" );
-extAddBatchTask( $dir."/Tasks/LocalMaintenanceTask.php", "local-maintenance", "LocalMaintenanceTask" );
 extAddBatchTask( $dir ."/Tasks/UpdateSpecialPagesTask.php", "update_special_pages", "UpdateSpecialPagesTask" );
 
 /**

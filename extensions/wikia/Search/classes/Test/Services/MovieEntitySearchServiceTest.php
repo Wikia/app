@@ -8,10 +8,10 @@ class MovieEntitySearchServiceTest extends BaseTest {
 
 	/** @test */
 	public function shouldReturnCorrectArticleFormat() {
-		$this->getStaticMethodMock( '\WikiFactory', 'getCurrentStagingHost' )
+		$this->getStaticMethodMock( '\WikiFactory', 'getLocalEnvURL' )
 			->expects( $this->any() )
-			->method( 'getCurrentStagingHost' )
-			->will( $this->returnCallback( [ $this, 'mock_getCurrentStagingHost' ] ) );
+			->method( 'getLocalEnvURL' )
+			->will( $this->returnCallback( [ $this, 'mock_getLocalEnvURL' ] ) );
 
 		$mock = $this->getSolariumMock();
 		$mock->expects( $this->once() )
@@ -32,9 +32,9 @@ class MovieEntitySearchServiceTest extends BaseTest {
 		], $res );
 	}
 
-	public function mock_getCurrentStagingHost($arg1, $arg2)
+	public function mock_getLocalEnvURL($arg1, $arg2)
 	{
-		return 'newhost';
+		return preg_replace('/https?:\/\/[^\/]+/', 'http://newhost', $arg1, 1);
 	}
 
 	private function getSolariumMock() {

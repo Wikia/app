@@ -62,12 +62,12 @@ class WikiFactory {
 	];
 
 	# city_flags
-	const FLAG_CREATE_DB_DUMP        = 1;
-	const FLAG_CREATE_IMAGE_ARCHIVE  = 2;
-	const FLAG_DELETE_DB_IMAGES      = 4;
-	const FLAG_FREE_WIKI_URL         = 8;
-	const FLAG_HIDE_DB_IMAGES        = 16;
-	const FLAG_REDIRECT              = 32;
+	const FLAG_CREATE_DB_DUMP        = 1; // prepare a database dump and send it to Amazon's s3
+	const FLAG_CREATE_IMAGE_ARCHIVE  = 2; // prepare DFS bucket dump and send it to Amazon's s3
+	const FLAG_DELETE_DB_IMAGES      = 4; // remove DFS bucket
+	const FLAG_FREE_WIKI_URL         = 8; // removes wiki database and WikiFactory settings
+	const FLAG_HIDE_DB_IMAGES        = 16;  // images and DB dumps will be hidden on s3
+	const FLAG_REDIRECT              = 32;  // this wiki is a redirect - do not remove
 	const FLAG_ADOPTABLE             = 64;  //used by AutomaticWikiAdoption
 	const FLAG_ADOPT_MAIL_FIRST      = 128; //used by AutomaticWikiAdoption
 	const FLAG_ADOPT_MAIL_SECOND     = 256; //used by AutomaticWikiAdoption
@@ -1166,36 +1166,6 @@ class WikiFactory {
 		return isset( $oRow->city_dbname ) ? $oRow->city_dbname : false;
 	}
 
-
-	/**
-	 * Convert given host to current environment (devbox or sandbox).
-	 * @param string $dbName
-	 * @param string $default if on main wikia
-	 * @param string $host for testing
-	 * @return string changed host or $default
-	 */
-	public static function getCurrentStagingHost( $dbName='', $default='', $host = null) {
-		global $wgStagingList, $wgDevDomain;
-
-		if ( $host === null ) {
-			$host = gethostname();
-		}
-
-		if ( preg_match( '/^(demo-[a-z0-9]+)-[s|r][0-9]+$/i', $host, $m ) ) {
-			return $m[ 1 ] . '.' . ( $dbName ? $dbName : 'www' ) . static::WIKIA_TOP_DOMAIN;
-		}
-
-		if ( in_array( $host, $wgStagingList ) ) {
-			return $host . '.' . ( $dbName ? $dbName : 'www' ) . static::WIKIA_TOP_DOMAIN;
-		}
-
-		if ( preg_match( '/^dev-([a-z0-9]+)$/i', $host ) ) {
-			return "{$dbName}.{$wgDevDomain}";
-		}
-
-		return $default;
-	}
-
 	/**
 	 * getLocalEnvURL
 	 *
@@ -1224,10 +1194,11 @@ class WikiFactory {
 		global $wgWikiaEnvironment, $wgWikiaBaseDomain, $wgDevDomain;
 
 		// first - normalize URL
-		$regexp = '/^(https?):\/\/([^\/]+)\/?(.*)?$/';
+		$regexp = '/^(https?:)?\/\/([^\/]+)\/?(.*)?$/';
 		$wikiaDomainsRegexp = '/(wikia\.com|wikia-staging\.com|wikia-dev\.(com|us|pl))$/';
 		if ( preg_match( $regexp, $url, $groups ) === 0 ||
-		     preg_match( $wikiaDomainsRegexp, $groups[2] ) === 0
+		     preg_match( $wikiaDomainsRegexp, $groups[2] ) === 0 ||
+		     $groups[2] === 'fandom.wikia.com'
 		) {
 			// on fail at least return original url
 			return $url;
@@ -1241,7 +1212,7 @@ class WikiFactory {
 		}
 
 		// strip env-specific pre- and suffixes for staging environment
-		$server = preg_replace( '/^(stable|preview|verify|sandbox-[a-z0-9]+)\./', '', $server );
+		$server = preg_replace( '/\.(stable|preview|verify|sandbox-[a-z0-9]+)\.wikia\.com/', '.wikia.com', $server );
 		if ( !empty( $wgDevDomain ) ) {
 			$server = str_replace( ".{$wgDevDomain}", '', $server );
 		}
@@ -1260,19 +1231,19 @@ class WikiFactory {
 		// we do not have valid ssl certificate for these subdomains
 		switch ( $environment ) {
 			case WIKIA_ENV_PREVIEW:
-				return "$protocol://preview." . $server . static::WIKIA_TOP_DOMAIN . $address;
+				return "$protocol//" . $server . '.preview' . static::WIKIA_TOP_DOMAIN . $address;
 			case WIKIA_ENV_VERIFY:
-				return "$protocol://verify." . $server . static::WIKIA_TOP_DOMAIN . $address;
+				return "$protocol//" . $server . '.verify' . static::WIKIA_TOP_DOMAIN . $address;
 			case WIKIA_ENV_STABLE:
-				return "$protocol://stable." . $server . static::WIKIA_TOP_DOMAIN . $address;
+				return "$protocol//" . $server . '.stable' . static::WIKIA_TOP_DOMAIN . $address;
 			case WIKIA_ENV_STAGING:
 			case WIKIA_ENV_PROD:
-				return sprintf( '%s://%s.%s%s', $protocol, $server, $wgWikiaBaseDomain, $address );
+				return sprintf( '%s//%s.%s%s', $protocol, $server, $wgWikiaBaseDomain, $address );
 			case WIKIA_ENV_SANDBOX:
-				return "$protocol://" . static::getExternalHostName() . '.' . $server .
+				return "$protocol//" . $server . '.' . static::getExternalHostName() .
 				       static::WIKIA_TOP_DOMAIN . $address;
 			case WIKIA_ENV_DEV:
-				return "$protocol://" . $server . '.' . $wgDevDomain . $address;
+				return "$protocol//" . $server . '.' . $wgDevDomain . $address;
 		}
 
 		throw new Exception( sprintf( '%s: %s', __METHOD__, 'unknown env detected' ) );
@@ -3461,4 +3432,41 @@ class WikiFactory {
 		return var_export( $value, true );
 	}
 
+	/**
+	 * Returns value of a given variable for all wikis
+	 *
+	 * @param $variableName String Name of variable to get
+	 * @param $limit Int Limit of rows
+	 * @param $afterWikiId Int get value for wikis with id greater than this value. Optional, used for pagination.
+	 * @return array list of wiki ids and variable values
+	 */
+	static public function getVariableForAllWikis( $variableName, $limit, $afterWikiId = null ) {
+
+		$db = static::db( DB_SLAVE );
+
+		$variableId = static::getVarIdByName( $variableName );
+		$where = [ 'cv_variable_id = '.$variableId ];
+		if ( isset( $afterWikiId ) ) {
+			array_push( $where, 'cv_city_id > '.$afterWikiId );
+		}
+		$dbResult = $db->select(
+			[ 'city_variables' ],
+			[ 'cv_city_id', 'cv_value' ],
+			$where,
+			__METHOD__,
+			[
+				'ORDER BY' => 'cv_city_id',
+				'LIMIT' => $limit
+			]
+		);
+
+		$result = [];
+		while ($row = $db->fetchObject( $dbResult ) ) {
+			$result[] = [
+				'city_id' => $row->cv_city_id,
+				'value' => unserialize( $row->cv_value, [ 'allowed_classes' => false ] ) ];
+		}
+		$db->freeResult( $dbResult );
+		return $result;
+	}
 };

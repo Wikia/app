@@ -40,13 +40,12 @@ class UserRegistrationTask extends BaseTask {
 		list( $jsonObject ) = $userRegistrationInfoJson;
 		$userRegistrationInfo = UserRegistrationInfo::newFromJson( $jsonObject);
 
-		$userName = $userRegistrationInfo->getUserName();
 		$clientIp = $userRegistrationInfo->getClientIp();
 
 		// setup global session
 		$wgRequest->setIP( $clientIp );
 
-		$user = User::newFromName( $userName, false /* already validated by service */ );
+		$user = $userRegistrationInfo->toUser();
 
 		if ( !$userRegistrationInfo->isEmailConfirmed() && $this->isEmailAuthenticationRequired ) {
 			$this->sendConfirmationEmail( $user, $userRegistrationInfo );

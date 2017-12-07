@@ -53,7 +53,6 @@ class BrokenRedirectsPage extends PageQueryPage {
 			'fields' => array(
 					'p1.page_namespace AS namespace',
 					'p1.page_title AS title',
-					'p1.page_title AS value',
 					'rd_namespace',
 					'rd_title'
 			),

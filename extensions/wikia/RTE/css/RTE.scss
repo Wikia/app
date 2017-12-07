@@ -31,7 +31,7 @@
 	}
 
 	.cke_contents {
-		background: #ddd url(/skins/common/images/ajax.gif) no-repeat 50% 50% !important; /* $wgCdnStylePath */
+		background: #ddd url(/skins/common/images/ajax.gif) no-repeat 50% 50% !important; /* $wgResourceBasePath */
 		overflow: hidden;
 		position: relative;
 	}
@@ -199,7 +199,7 @@
 }
 
 .RTEPlaceholderPreviewLoading .RTEPlaceholderPreviewInner {
-	background: #fff url(/skins/common/images/ajax.gif) no-repeat 50% 50%; /* $wgCdnStylePath */
+	background: #fff url(/skins/common/images/ajax.gif) no-repeat 50% 50%; /* $wgResourceBasePath */
 	height: 30px;
 }
 
@@ -211,7 +211,7 @@
 }
 
 .RTEPlaceholderPreviewTitleBar span {
-	background: transparent url(/skins/shared/images/sprite.png) no-repeat -1146px -81px; /* $wgCdnStylePath */
+	background: transparent url(/skins/shared/images/sprite.png) no-repeat -1146px -81px; /* $wgResourceBasePath */
 	cursor: pointer;
 	height: 12px;
 	position: absolute;
@@ -347,7 +347,7 @@
 // dialog loading indicator
 .wikiaEditorLoading {
 	.cke_dialog_body {
-		background: transparent url(/skins/common/images/ajax.gif) no-repeat 50% 50%; /* $wgCdnStylePath */
+		background: transparent url(/skins/common/images/ajax.gif) no-repeat 50% 50%; /* $wgResourceBasePath */
 
 		* {
 			visibility: hidden !important;
@@ -355,7 +355,7 @@
 	}
 
 	.loading {
-		background: transparent url(/skins/common/images/ajax.gif) no-repeat 50% 50% !important; /* $wgCdnStylePath */
+		background: transparent url(/skins/common/images/ajax.gif) no-repeat 50% 50% !important; /* $wgResourceBasePath */
 	}
 }
 

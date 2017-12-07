@@ -28,7 +28,7 @@
 	}
 
 	.loading {
-		background: url(/skins/common/images/ajax.gif) no-repeat scroll center $color-page; /* $wgCdnStylePath */
+		background: url(/skins/common/images/ajax.gif) no-repeat scroll center $color-page; /* $wgResourceBasePath */
 		height: 16px;
 		margin: 0 auto;
 		opacity: .75;

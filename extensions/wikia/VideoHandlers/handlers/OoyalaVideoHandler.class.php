@@ -5,7 +5,7 @@ class OoyalaVideoHandler extends VideoHandler {
 	const OOYALA_PLAYER_ID_AGEGATE = '5b38887edf80466cae0b5edc918b27e8';
 
 	protected $apiName = 'OoyalaApiWrapper';
-	protected static $urlTemplate = 'http://player.ooyala.com/player.swf?embedCode=$1&version=2';
+	protected static $urlTemplate = 'https://player.ooyala.com/player.swf?embedCode=$1&version=2';
 	protected static $providerDetailUrlTemplate = 'http://video.wikia.com/';
 	protected static $providerHomeUrl = 'http://video.wikia.com/';
 
@@ -44,7 +44,7 @@ EOT;
 	}
 
 	public static function getOoyalaScriptUrl() {
-		return 'http://player.ooyala.com/v3/' . F::app()->wg->OoyalaApiConfig['playerId'] .
+		return 'https://player.ooyala.com/v3/' . F::app()->wg->OoyalaApiConfig['playerId'] .
 		       '?platform=html5-priority';
 	}
 

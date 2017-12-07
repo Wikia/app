@@ -47,7 +47,7 @@ describe('ext.wikia.adEngine.provider.directGpt', function () {
 			.toEqual(mocks.kiloAdUnitBuilder);
 	});
 
-	it('Return mega adUnit builder if there is premium ad layout set in context', function () {
+	it('Return mega adUnit builder when enabled in context', function () {
 		spyOn(mocks.factory, 'createProvider');
 		spyOn(mocks.adContext, 'getContext').and.returnValue({opts:{megaAdUnitBuilderEnabled: true}});
 
@@ -57,7 +57,7 @@ describe('ext.wikia.adEngine.provider.directGpt', function () {
 			.toEqual(mocks.megaAdUnitBuilder);
 	});
 
-	it('Return kilo adUnit builder if there premium ad layout is turned off', function () {
+	it('Return kilo adUnit builder when Mega is turned off', function () {
 		spyOn(mocks.factory, 'createProvider');
 		spyOn(mocks.adContext, 'getContext').and.returnValue({opts:{megaAdUnitBuilderEnabled: false}});
 

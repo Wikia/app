@@ -123,7 +123,7 @@ function upgradeYouTubeTag( EditPage $editpage, $request ): bool {
 				return $matches[0];
 			}
 
-			$url = 'http://www.youtube.com/watch?v=' . $ytid;
+			$url = 'https://www.youtube.com/watch?v=' . $ytid;
 
 			$videoService = new VideoService();
 			$videoFileUploader = new VideoFileUploader();
@@ -206,14 +206,11 @@ function wfYouTube( Parser $parser ): bool {
 		return true;
 	}
 	$parser->setHook( 'youtube', 'embedYouTube' );
-	$parser->setHook( 'gvideo',  'embedGoogleVideo' );
 	$parser->setHook( 'aovideo', 'embedArchiveOrgVideo' );
 	$parser->setHook( 'aoaudio', 'embedArchiveOrgAudio' );
 	$parser->setHook( 'wegame', 'embedWeGame' );
-	$parser->setHook( 'tangler', 'embedTangler' );
 	$parser->setHook( 'gtrailer', 'embedGametrailers' );
 	$parser->setHook( 'nicovideo', 'embedNicovideo' );
-	$parser->setHook( 'ggtube', 'embedGoGreenTube' );
 	$parser->setHook( 'cgamer', 'embedCrispyGamer' );
 	$parser->setHook( 'longtail', 'embedLongtailVideo' );
 
@@ -225,9 +222,9 @@ function wfYouTube( Parser $parser ): bool {
 function embedYouTube_url2ytid( $url ) {
 	$id = $url;
 
-	if ( preg_match( '/^http:\/\/www\.youtube\.com\/watch\?v=(.+)$/', $url, $preg ) ) {
+	if ( preg_match( '/^https?:\/\/www\.youtube\.com\/watch\?v=(.+)$/', $url, $preg ) ) {
 		$id = $preg[1];
-	} elseif ( preg_match( '/^http:\/\/www\.youtube\.com\/v\/([^&]+)(&autoplay=[0-1])?$/', $url, $preg ) ) {
+	} elseif ( preg_match( '/^https?:\/\/www\.youtube\.com\/v\/([^&]+)(&autoplay=[0-1])?$/', $url, $preg ) ) {
 		$id = $preg[1];
 	}
 
@@ -289,53 +286,15 @@ function embedYouTube( $input, $argv, $parser ) {
 	}
 
 	if ( !empty( $ytid ) ) {
-		$url = "http://www.youtube.com/v/{$ytid}&enablejsapi=1&version=2&playerapiid={$ytid}"; // it's not mistake, there should be &, not ?
+		$url = "https://www.youtube.com/v/{$ytid}&enablejsapi=1&version=2&playerapiid={$ytid}"; // it's not mistake, there should be &, not ?
 		return "<object type=\"application/x-shockwave-flash\" data=\"{$url}\" width=\"{$width}\" height=\"{$height}\" id=\"YT_{$ytid}\"><param name=\"movie\" value=\"{$url}\"/><param name=\"wmode\" value=\"transparent\"/><param name=\"allowScriptAccess\" value=\"always\"/></object>";
-	}
-}
-
-function embedYouTube_url2gvid( $url ) {
-	$id = $url;
-
-	if ( preg_match( '/^http:\/\/video\.google\.com\/videoplay\?docid=([^&]+)(&hl=.+)?$/', $url, $preg ) ) {
-		$id = $preg[1];
-	} elseif ( preg_match( '/^http:\/\/video\.google\.com\/googleplayer\.swf\?docId=(.+)$/', $url, $preg ) ) {
-		$id = $preg[1];
-	}
-
-	preg_match( '/([0-9-]+)/', $id, $preg );
-	$id = $preg[1];
-
-	return $id;
-}
-
-function embedGoogleVideo( $input, $argv, $parser ) {
-	$gvid   = '';
-	$width  = $width_max  = 400;
-	$height = $height_max = 326;
-
-	if ( !empty( $argv['gvid'] ) ) {
-		$gvid = embedYouTube_url2gvid( $argv['gvid'] );
-	} elseif ( !empty( $input ) ) {
-		$gvid = embedYouTube_url2gvid( $input );
-	}
-	if ( !empty( $argv['width'] ) && settype( $argv['width'], 'integer' ) && ( $width_max >= $argv['width'] ) ) {
-		$width = $argv['width'];
-	}
-	if ( !empty( $argv['height'] ) && settype( $argv['height'], 'integer' ) && ( $height_max >= $argv['height'] ) ) {
-		$height = $argv['height'];
-	}
-
-	if ( !empty( $gvid ) ) {
-		$url = "http://video.google.com/googleplayer.swf?docId={$gvid}";
-		return "<object type=\"application/x-shockwave-flash\" data=\"{$url}\" width=\"{$width}\" height=\"{$height}\"><param name=\"movie\" value=\"{$url}\"/><param name=\"wmode\" value=\"transparent\"/></object>";
 	}
 }
 
 function embedYouTube_url2aovid( $url ) {
 	$id = $url;
 
-	if ( preg_match( '/http:\/\/www\.archive\.org\/download\/(.+)\.flv$/', $url, $preg ) ) {
+	if ( preg_match( '/https?:\/\/www\.archive\.org\/download\/(.+)\.flv$/', $url, $preg ) ) {
 		$id = $preg[1];
 	}
 
@@ -363,15 +322,15 @@ function embedArchiveOrgVideo( $input, $argv, $parser ) {
 	}
 
 	if ( !empty( $aovid ) ) {
-		$url = "http://www.archive.org/download/{$aovid}.flv";
-		return "<object type=\"application/x-shockwave-flash\" data=\"http://www.archive.org/flv/FlowPlayerWhite.swf\" width=\"{$width}\" height=\"{$height}\"><param name=\"movie\" value=\"http://www.archive.org/flv/FlowPlayerWhite.swf\"/><param name=\"flashvars\" value=\"config={loop: false, videoFile: '{$url}', autoPlay: false}\"/></object>";
+		$url = "https://www.archive.org/download/{$aovid}.flv";
+		return "<object type=\"application/x-shockwave-flash\" data=\"https://www.archive.org/flv/FlowPlayerWhite.swf\" width=\"{$width}\" height=\"{$height}\"><param name=\"movie\" value=\"https://www.archive.org/flv/FlowPlayerWhite.swf\"/><param name=\"flashvars\" value=\"config={loop: false, videoFile: '{$url}', autoPlay: false}\"/></object>";
 	}
 }
 
 function embedYouTube_url2aoaid( $url ) {
 	$id = $url;
 
-	if ( preg_match( '/http:\/\/www\.archive\.org\/details\/(.+)$/', $url, $preg ) ) {
+	if ( preg_match( '/https?:\/\/www\.archive\.org\/details\/(.+)$/', $url, $preg ) ) {
 		$id = $preg[1];
 	}
 
@@ -399,15 +358,15 @@ function embedArchiveOrgAudio( $input, $argv, $parser ) {
 	}
 
 	if ( !empty( $aoaid ) ) {
-		$url = urlencode( "http://www.archive.org/audio/xspf-maker.php?identifier={$aoaid}" );
-		return "<object type=\"application/x-shockwave-flash\" data=\"http://www.archive.org/audio/xspf_player.swf?playlist_url={$url}\" width=\"{$width}\" height=\"{$height}\"><param name=\"movie\" value=\"http://www.archive.org/audio/xspf_player.swf?playlist_url={$url}\"/></object>";
+		$url = urlencode( "https://www.archive.org/audio/xspf-maker.php?identifier={$aoaid}" );
+		return "<object type=\"application/x-shockwave-flash\" data=\"https://www.archive.org/audio/xspf_player.swf?playlist_url={$url}\" width=\"{$width}\" height=\"{$height}\"><param name=\"movie\" value=\"https://www.archive.org/audio/xspf_player.swf?playlist_url={$url}\"/></object>";
 	}
 }
 
 function embedYouTube_url2weid( $url ) {
 	$id = $url;
 
-	if ( preg_match( '/^http:\/\/www\.wegame\.com\/watch\/(.+)\/$/', $url, $preg ) ) {
+	if ( preg_match( '/^https?:\/\/www\.wegame\.com\/watch\/(.+)\/$/', $url, $preg ) ) {
 		$id = $preg[1];
 	}
 
@@ -435,7 +394,7 @@ function embedWeGame( $input, $argv, $parser ) {
 	}
 
 	if ( !empty( $weid ) ) {
-		return "<object type=\"application/x-shockwave-flash\" data=\"http://www.wegame.com/static/flash/player2.swf\" width=\"{$width}\" height=\"{$height}\"><param name=\"flashvars\" value=\"tag={$weid}\"/></object>";
+		return "<object type=\"application/x-shockwave-flash\" data=\"https://www.wegame.com/static/flash/player2.swf\" width=\"{$width}\" height=\"{$height}\"><param name=\"flashvars\" value=\"tag={$weid}\"/></object>";
 
 	}
 }
@@ -457,26 +416,12 @@ function embedYouTube_url2tgid( $input ) {
 	return array( $tid, $gid );
 }
 
-function embedTangler( $input, $argv, $parser ) {
-	$tid = $gid = '';
-
-	if ( !empty( $argv['tid'] ) && !empty( $argv['gid'] ) ) {
-		list( $tid, $gid ) = embedYouTube_url2tgid( "{$argv['tid']}|{$argv['gid']}" );
-	} elseif ( !empty( $input ) ) {
-		list( $tid, $gid ) = embedYouTube_url2tgid( $input );
-	}
-
-	if ( !empty( $tid ) && !empty( $gid ) ) {
-		return "<p style=\"width: 410px; height: 480px\" id=\"tangler-embed-topic-{$tid}\"></p><script type=\"text/javascript\" src=\"http://www.tangler.com/widget/embedtopic.js?id={$tid}&gId={$gid}\"></script>";
-	}
-}
-
 function embedYouTube_url2gtid( $url ) {
 	$id = $url;
 
-	if ( preg_match( '/^http:\/\/www\.gametrailers\.com\/player\/(.+)\.html$/', $url, $preg ) ) {
+	if ( preg_match( '/^https?:\/\/www\.gametrailers\.com\/player\/(.+)\.html$/', $url, $preg ) ) {
 		$id = $preg[1];
-	} elseif ( preg_match( '/^http:\/\/www\.gametrailers\.com\/remote_wrap\.php\?mid=(.+)$/', $url, $preg ) ) {
+	} elseif ( preg_match( '/^https?:\/\/www\.gametrailers\.com\/remote_wrap\.php\?mid=(.+)$/', $url, $preg ) ) {
 		$id = $preg[1];
 	}
 
@@ -504,6 +449,7 @@ function embedGametrailers( $input, $argv, $parser ) {
 	}
 
 	if ( !empty( $gtid ) ) {
+		// www.gametrailers.com does not yet support HTTPS, to handle in (PLATFORM-3284)
 		$url = "http://www.gametrailers.com/remote_wrap.php?mid={$gtid}";
 		// return "<object type=\"application/x-shockwave-flash\" width=\"{$width}\" height=\"{$height}\"><param name=\"movie\" value=\"{$url}\"/></object>";
 		// gametrailers' flash doesn't work on FF with object tag alone )-: weird, yt and gvideo are ok )-: valid xhtml no more )-:
@@ -538,45 +484,7 @@ function embedNicovideo( $input, $argv, $parser ) {
 	}
 
 	if ( !empty( $nvid ) ) {
-		$url = "http://ext.nicovideo.jp/thumb_watch/{$nvid}?w={$width}&amp;h={$height}";
-		return "<script type=\"text/javascript\" src=\"{$url}\"></script>";
-	}
-}
-
-function embedYouTube_url2ggid( $url ) {
-	$id = $url;
-
-	if ( preg_match( '/^http:\/\/www\.gogreentube\.com\/watch\.php\?v=(.+)$/', $url, $preg ) ) {
-		$id = $preg[1];
-	} elseif ( preg_match( '/^http:\/\/www\.gogreentube\.com\/embed\/(.+)$/', $url, $preg ) ) {
-		$id = $preg[1];
-	}
-
-	preg_match( '/([0-9A-Za-z]+)/', $id, $preg );
-	$id = $preg[1];
-
-	return $id;
-}
-
-function embedGoGreenTube( $input, $argv, $parser ) {
-	$ggid = '';
-	$width  = $width_max  = 432;
-	$height = $height_max = 394;
-
-	if ( !empty( $argv['ggid'] ) ) {
-		$ggid = embedYouTube_url2ggid( $argv['ggid'] );
-	} elseif ( !empty( $input ) ) {
-		$ggid = embedYouTube_url2ggid( $input );
-	}
-	if ( !empty( $argv['width'] ) && settype( $argv['width'], 'integer' ) && ( $width_max >= $argv['width'] ) ) {
-		$width = $argv['width'];
-	}
-	if ( !empty( $argv['height'] ) && settype( $argv['height'], 'integer' ) && ( $height_max >= $argv['height'] ) ) {
-		$height = $argv['height'];
-	}
-
-	if ( !empty( $ggid ) ) {
-		$url = "http://www.gogreentube.com/embed/{$ggid}";
+		$url = "https://ext.nicovideo.jp/thumb_watch/{$nvid}?w={$width}&amp;h={$height}";
 		return "<script type=\"text/javascript\" src=\"{$url}\"></script>";
 	}
 }
@@ -600,7 +508,7 @@ function embedCrispyGamer( $input, $argv, $parser ) {
 	}
 
 	if ( !empty( $cvid ) ) {
-		$url = "http://www.crispygamer.com/partners/wikia.aspx?pid=0&amp;vid={$cvid}";
+		$url = "https://www.crispygamer.com/partners/wikia.aspx?pid=0&amp;vid={$cvid}";
 		return "<script type=\"text/javascript\" src=\"{$url}\"></script>";
 	}
 }
@@ -610,6 +518,6 @@ function embedCrispyGamer( $input, $argv, $parser ) {
 function embedLongtailVideo( $input, $argv, $parser ) {
 	if ( !empty( $argv['vid'] ) ) {
 		$vid = $argv['vid'];
-		return "<script type=\"text/javascript\" src=\"http://content.bitsontherun.com/players/{$vid}-McXqFI4P.js\"></script>";
+		return "<script type=\"text/javascript\" src=\"https://content.bitsontherun.com/players/{$vid}-McXqFI4P.js\"></script>";
 	}
 }

@@ -177,8 +177,7 @@ class WikiFactoryLoader {
 	 * getDB
 	 *
 	 * Method for getting database handler. It checks if $wgDBservers is
-	 * available, if yes it will take one of active slaves. If not it fallbacks
-	 * to $wgDBserver
+	 * available, if yes it will take one of active slaves.
 	 *
 	 * @author Krzysztof Krzyżaniak <eloy@wikia-inc.com>
 	 * @access public
@@ -189,7 +188,6 @@ class WikiFactoryLoader {
 	 * @return DatabaseBase database handler
 	 */
 	public function getDB( $type = DB_SLAVE ) {
-		global $wgDBserver, $wgDBuser, $wgDBpassword;
 
 		if( $this->mDBhandler instanceof DatabaseBase ) {
 			return $this->mDBhandler;
@@ -202,14 +200,10 @@ class WikiFactoryLoader {
 		$this->mDBhandler = wfGetDB( $type, array(), $this->mDBname );
 		$this->debug( "connecting to {$this->mDBname} via LoadBalancer" );
 
-		/**
-		 * if something goes wrong just fallback to $wgDBserver
-		 */
-		if( !$this->mDBhandler || !$this->mDBhandler->isOpen() ) {
-			error_log( "WikiFactoryLoader[{$this->mCityID}]: fallback to {$wgDBserver}" );
-			$this->mDBhandler = new DatabaseMysqli( $wgDBserver, $wgDBuser, $wgDBpassword, $this->mDBname );
-			$this->debug( "fallback to wgDBserver {$wgDBserver}" );
-		}
+		Wikia\Util\Assert::true(
+			$this->mDBhandler instanceof DatabaseBase && $this->mDBhandler->isOpen(),
+			__METHOD__
+		);
 
 		return $this->mDBhandler;
 	}
@@ -295,7 +289,7 @@ class WikiFactoryLoader {
 					);
 
 				if( isset( $oRow->city_id ) )  {
-					preg_match( "/http[s]*\:\/\/(.+)$/", $oRow->city_url, $matches );
+					preg_match( "/https?\:\/\/(.+)$/", $oRow->city_url, $matches );
 					$host = rtrim( $matches[1],  "/" );
 
 					$this->mCityID = $oRow->city_id;
@@ -342,7 +336,7 @@ class WikiFactoryLoader {
 				);
 				if( isset( $oRow->city_id ) &&  $oRow->city_id > 0 ) {
 					$oRow->city_domain = strtolower( $oRow->city_domain );
-					preg_match( "/http[s]*\:\/\/(.+)$/", $oRow->city_url, $matches );
+					preg_match( "/https?\:\/\/(.+)$/", $oRow->city_url, $matches );
 					$host = rtrim( $matches[1],  "/" );
 
 					if( $oRow->city_domain == $this->mServerName && $this->mServerName ) {
@@ -699,6 +693,9 @@ class WikiFactoryLoader {
 
 						$tValue = 'http://'.$stagingServer;
 						$wgConf->localVHosts = array_merge( $wgConf->localVHosts, [ $stagingServer ] );
+					}
+					if ( !empty( $_SERVER['HTTP_FASTLY_SSL'] ) ) {
+						$tValue = str_replace( 'http://', 'https://', $tValue );
 					}
 				}
 

@@ -26,40 +26,6 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.appnexus',[
 					],
 					position: 'atf'
 				},
-				PREFOOTER_LEFT_BOXAD: {
-					sizes: [
-						[300, 250]
-					],
-					position: 'btf'
-				},
-				PREFOOTER_MIDDLE_BOXAD: {
-					sizes: [
-						[300, 250]
-					],
-					position: 'btf'
-				},
-				PREFOOTER_RIGHT_BOXAD: {
-					sizes: [
-						[300, 250]
-					],
-					position: 'btf'
-				},
-				LEFT_SKYSCRAPER_2: {
-					sizes: [
-						[160, 600],
-						[300, 600],
-						[300, 250]
-					],
-					position: 'btf'
-				},
-				LEFT_SKYSCRAPER_3: {
-					sizes: [
-						[160, 600],
-						[300, 600],
-						[300, 250]
-					],
-					position: 'btf'
-				},
 				BOTTOM_LEADERBOARD: {
 					sizes: [
 						[728, 90],

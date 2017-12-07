@@ -49,8 +49,7 @@ $color-lightbox-border: mix($color-page-border, $color-page, 75%);
 		.lightbox-arrows,
 		.LightboxHeader,
 		.LightboxCarousel,
-		.media,
-		.modal_interstitial {
+		.media {
 			display: none;
 		}
 	}
@@ -396,16 +395,6 @@ $color-lightbox-border: mix($color-page-border, $color-page, 75%);
 		}
 		.content {
 			padding: 10px 20px;
-		}
-	}
-
-	.modal_interstitial {
-		height: 100%;
-		> div {
-			padding-bottom: 30px;
-		}
-		.wikia-ad {
-			position: relative;
 		}
 	}
 

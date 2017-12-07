@@ -1,3 +1,0 @@
-@function exp($value) {
-	@return summation('exp-maclaurin', $value, 0, 100);
-}

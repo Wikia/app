@@ -43,7 +43,7 @@ $(function () {
 						button: msg('wikiasmartbanner-view'),
 						inAppStore: msg('wikiasmartbanner-appstore'), // Text of price for iOS
 						inGooglePlay: msg('wikiasmartbanner-googleplay'), // Text of price for Android
-						icon: window.wgAppIcon.search(/^http:\/\//) === 0 ?
+						icon: window.wgAppIcon.search(/^https?:\/\//) === 0 ?
 							window.wgAppIcon : window.wgExtensionsPath + window.wgAppIcon // The URL of the icon (defaults to <meta name="apple-touch-icon">)
 					});
 				});

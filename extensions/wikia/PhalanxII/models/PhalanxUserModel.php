@@ -77,24 +77,24 @@ class PhalanxUserModel extends PhalanxModel {
 	public function userBlock( $type = 'exact' ) {
 		wfProfileIn( __METHOD__ );
 
-		$this->user->mBlockedby = $this->block->authorId;
+		$this->user->mBlockedby = $this->block->getAuthorId();
 		$this->user->mBlockedGlobally = true;
-		$this->user->mBlockreason = $this->getBlockReasonMessage( $this->block->reason, $type == 'exact', $type == 'ip' );
+		$this->user->mBlockreason = $this->getBlockReasonMessage( $this->block->getReason(), $type == 'exact', $type == 'ip' );
 
 		// set expiry information
 		$this->user->mBlock = new Block();
 		// protected
-		$this->user->mBlock->setId( $this->block->id );
+		$this->user->mBlock->setId( $this->block->getId() );
 		$this->user->mBlock->setBlockEmail( true );
-		$this->user->mBlock->setBlocker( User::newFromID( $this->block->authorId ) );
+		$this->user->mBlock->setBlocker( User::newFromID( $this->block->getAuthorId() ) );
 
 		// SUS-351: Prevent Phalanxed user from posting on their own Wall
 		$this->user->mBlock->prevents( 'editownusertalk', true );
 
-		// public
-		$this->user->mBlock->mExpiry = ( isset( $this->block->expires ) && !empty( $this->block->expires ) ) ? $this->block->expires : 'infinity';
-		$this->user->mBlock->mTimestamp = ( isset( $this->block->timestamp ) ? $this->block->timestamp : wfTimestampNow() );
-		$this->user->mBlock->mAddress = $this->block->text;
+		$blockExpiry = $this->block->getExpires();
+		$this->user->mBlock->mExpiry = !empty( $blockExpiry ) ? $blockExpiry : 'infinity';
+		$this->user->mBlock->mTimestamp = $this->block->getTimestamp();
+		$this->user->mBlock->mAddress = $this->block->getText();
 
 		wfProfileOut( __METHOD__ );
 		return $this;

@@ -28,12 +28,10 @@ class WallHooksHelper {
 	 * @param $allowUsertalk
 	 * @return bool
 	 */
-	static public function onUserIsBlockedFrom( $user, $title, &$blocked, &$allowUsertalk ) {
+	static public function onUserIsBlockedFrom( User $user, $title, &$blocked, &$allowUsertalk ) {
 
 		if ( !$user->mHideName && $allowUsertalk && $title->inNamespace( NS_USER_WALL_MESSAGE  ) ) {
-			$wm = new WallMessage( $title );
-
-			$blocked = !( $wm->isWallOwner( $user ) );
+			$blocked = $title->getBaseText() !== $user->getName();
 		}
 
 		return true;

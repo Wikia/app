@@ -36,6 +36,7 @@
     "wikia/file_ogg": "^1.0",
     "wikia/semantic-media-wiki": "^2.4",
     "wikia/maps": "^3.5",
-    "wikia/semantic-scribunto": "^1.1"
+    "wikia/semantic-scribunto": "^1.1",
+    "phpunit/dbunit": "^3.0"
   }
 }

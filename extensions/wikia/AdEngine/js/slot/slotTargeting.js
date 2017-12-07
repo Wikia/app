@@ -30,10 +30,6 @@ define('ext.wikia.adEngine.slot.slotTargeting', [
 			INCONTENT_PLAYER: 'i',
 			INCONTENT_BOXAD_1: 'f',
 			BOTTOM_LEADERBOARD: 'b',
-			LEFT_SKYSCRAPER_2: 's',
-			LEFT_SKYSCRAPER_3: 'k',
-			PREFOOTER_LEFT_BOXAD: 'p',
-			PREFOOTER_RIGHT_BOXAD: 'r',
 
 			MOBILE_TOP_LEADERBOARD: 'l',
 			MOBILE_IN_CONTENT: 'i',
