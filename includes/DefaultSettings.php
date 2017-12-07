@@ -4672,14 +4672,6 @@ $wgHooks = &Hooks::getHandlersArray();
 // Wikia change - end
 
 /**
- * Maps jobs to their handling classes; extensions
- * can add to this to provide custom jobs
- */
-$wgJobClasses = array(
-	'fixDoubleRedirect' => 'DoubleRedirectJob',
-);
-
-/**
 
  * Jobs that must be explicitly requested, i.e. aren't run by job runners unless special flags are set.
  *
@@ -5466,13 +5458,6 @@ $wgRegisterInternalExternals = false;
  * Maximum number of pages to move at once when moving subpages with a page.
  */
 $wgMaximumMovedPages = 100;
-
-/**
- * Fix double redirects after a page move.
- * Tends to conflict with page move vandalism, use only on a private wiki.
- * TODO: if this is ever set to true, make sure to migrate includes/job/DoubleRedirectJob.php over to using the new job queue system!
- */
-$wgFixDoubleRedirects = false;
 
 /**
  * Allow redirection to another page when a user logs in.
