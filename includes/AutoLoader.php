@@ -563,7 +563,6 @@ $wgAutoloadLocalClasses = array(
 	'WebInstallerPage' => 'includes/installer/WebInstallerPage.php',
 
 	# includes/job
-	'DoubleRedirectJob' => 'includes/job/DoubleRedirectJob.php',
 	'Job' => 'includes/job/JobQueue.php',
 
 	# includes/json

@@ -190,25 +190,25 @@ class ApiQueryRecentChanges extends ApiQueryGeneratorBase {
 		if ( !is_null( $params['user'] ) ) {
 			// SUS-812: handle anon cases (IP address provided) and account names (user name provided)
 			if ( IP::isIPAddress( $params['user'] ) ) {
-				$this->addWhereFld( 'rc_user_text', $params['user'] );
-				$index['recentchanges'] = 'rc_user_text';
-			}
-			else {
+				$this->addWhereFld( 'rc_ip_bin', inet_pton( $params['user'] ) );
+				$index['recentchanges'] = 'rc_ip_bin';
+			} else {
 				$this->addWhereFld( 'rc_user', User::idFromName( $params['user'] ) );
 				$index['recentchanges'] = 'rc_user';
 			}
 		}
 
 		if ( !is_null( $params['excludeuser'] ) ) {
+			// TODO SUS-3079: verify if this is still the case
 			// We don't use the rc_user_text index here because
 			// * it would require us to sort by rc_user_text before rc_timestamp
 			// * the != condition doesn't throw out too many rows anyway
 
 			// SUS-812: handle anon cases (IP address provided) and account names (user name provided)
 			if ( IP::isIPAddress( $params['excludeuser'] ) ) {
-				$this->addWhere( 'rc_user_text != ' . $this->getDB()->addQuotes( $params['excludeuser'] ) );
-			}
-			else {
+				$userIp = inet_pton( $params['excludeuser'] );
+				$this->addWhere( 'rc_ip_bin != ' . $this->getDB()->addQuotes( $userIp ) );
+			} else {
 				$this->addWhere( 'rc_user != ' . User::idFromName( $params['excludeuser'] ) );
 			}
 		}
@@ -242,7 +242,7 @@ class ApiQueryRecentChanges extends ApiQueryGeneratorBase {
 			$this->addFieldsIf( array( 'rc_id', 'rc_this_oldid', 'rc_last_oldid' ), $this->fld_ids );
 			$this->addFieldsIf( 'rc_comment', $this->fld_comment || $this->fld_parsedcomment );
 			$this->addFieldsIf( 'rc_user', $this->fld_user );
-			$this->addFieldsIf( 'rc_user_text', $this->fld_user || $this->fld_userid );
+			$this->addFieldsIf( 'rc_ip_bin', $this->fld_user || $this->fld_userid );
 			$this->addFieldsIf( array( 'rc_minor', 'rc_new', 'rc_bot' ) , $this->fld_flags );
 			$this->addFieldsIf( array( 'rc_old_len', 'rc_new_len' ), $this->fld_sizes );
 			$this->addFieldsIf( 'rc_patrolled', $this->fld_patrolled );
@@ -382,7 +382,8 @@ class ApiQueryRecentChanges extends ApiQueryGeneratorBase {
 		if ( $this->fld_user || $this->fld_userid ) {
 
 			if ( $this->fld_user ) {
-				$vals['user'] = User::getUsername( $row->rc_user, $row->rc_user_text );
+				$userIp = RecentChange::extractUserIpFromRow( $row );
+				$vals['user'] = User::getUsername( $row->rc_user, $userIp );
 			}
 
 			if ( $this->fld_userid ) {

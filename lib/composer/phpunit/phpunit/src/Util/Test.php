@@ -14,9 +14,9 @@ use PharIo\Version\VersionConstraintParser;
 use PHPUnit\Framework\CodeCoverageException;
 use PHPUnit\Framework\Exception;
 use PHPUnit\Framework\InvalidCoversTargetException;
-use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\SelfDescribing;
 use PHPUnit\Framework\SkippedTestError;
+use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Warning;
 use PHPUnit\Runner\Version;
 use ReflectionClass;
@@ -524,7 +524,15 @@ class Test
                 }
 
                 if ($data instanceof Traversable) {
-                    $data = \iterator_to_array($data, false);
+                    $origData = $data;
+                    $data     = [];
+                    foreach ($origData as $key => $value) {
+                        if (\is_int($key)) {
+                            $data[] = $value;
+                        } else {
+                            $data[$key] = $value;
+                        }
+                    }
                 }
 
                 if (\is_array($data)) {

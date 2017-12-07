@@ -87,10 +87,9 @@ class AbuseFilterViewTestBatch extends AbuseFilterView {
 
 		// SUS-812: handle anon cases (IP address provided) and account names (user name provided)
 		if ( IP::isIPAddress( $this->mTestUser ) ) {
-			$conds = array( 'rc_user_text' => $this->mTestUser );
-		}
-		else {
-			$conds = array( 'rc_user' => User::idFromName( $this->mTestUser ) );
+			$conds = [ 'rc_ip_bin' => inet_pton( $this->mTestUser )];
+		} else {
+			$conds = [ 'rc_user' => User::idFromName( $this->mTestUser ) ];
 		}
 
 		if ( $this->mTestPeriodStart ) {

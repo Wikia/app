@@ -13,13 +13,13 @@ namespace PHPUnit\TextUI;
 use PHP_Timer;
 use PHPUnit\Framework\AssertionFailedError;
 use PHPUnit\Framework\Exception;
-use PHPUnit\Framework\Warning;
-use PHPUnit\Framework\TestSuite;
-use PHPUnit\Framework\TestResult;
-use PHPUnit\Framework\TestListener;
-use PHPUnit\Framework\TestFailure;
-use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Test;
+use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\TestFailure;
+use PHPUnit\Framework\TestListener;
+use PHPUnit\Framework\TestResult;
+use PHPUnit\Framework\TestSuite;
+use PHPUnit\Framework\Warning;
 use PHPUnit\Runner\PhptTestCase;
 use PHPUnit\Util\InvalidArgumentHelper;
 use PHPUnit\Util\Printer;
@@ -532,7 +532,7 @@ class ResultPrinter extends Printer implements TestListener
         if ($this->debug) {
             $this->write(
                 \sprintf(
-                    "\nStarting test '%s'.\n",
+                    "Test '%s' started\n",
                     \PHPUnit\Util\Test::describe($test)
                 )
             );
@@ -547,6 +547,15 @@ class ResultPrinter extends Printer implements TestListener
      */
     public function endTest(Test $test, $time)
     {
+        if ($this->debug) {
+            $this->write(
+                \sprintf(
+                    "Test '%s' ended\n",
+                    \PHPUnit\Util\Test::describe($test)
+                )
+            );
+        }
+
         if (!$this->lastTestFailed) {
             $this->writeProgress('.');
         }
@@ -571,6 +580,10 @@ class ResultPrinter extends Printer implements TestListener
      */
     protected function writeProgress($progress)
     {
+        if ($this->debug) {
+            return;
+        }
+
         $this->write($progress);
         $this->column++;
         $this->numTestsRun++;

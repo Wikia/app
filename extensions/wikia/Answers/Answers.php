@@ -48,23 +48,6 @@ $wgSpecialPages['CreateQuestionPage'] = 'CreateQuestionPage';
 $wgAutoloadClasses['GetQuestionWidget'] = dirname( __FILE__ ) . "/SpecialGetQuestionWidget.php";
 $wgSpecialPages['GetQuestionWidget'] = 'GetQuestionWidget';
 
-$wgHooks['UserLoginComplete'][] = 'fnQuestionAttributionLogin';
-function fnQuestionAttributionLogin( $user ){
-	global $wgOut;
-
-	fnWatchHeldPage( $user );
-
-	//anon has asked a question and then logged in, so we have to give them attribution
-	if( isset( $_SESSION['wsQuestionAsk'] ) && $_SESSION['wsQuestionAsk'] != "" ){
-		fnQuestionAttribution( $user );
-		$title = Title::newFromText( $_SESSION['wsQuestionAsk'] );
-		unset($_SESSION['wsQuestionAsk']);
-		$wgOut->redirect( $title->getFullURL( ) );
-	}
-
-	return true;
-}
-
 function fnWatchHeldPage( $user ){
 	global $wgOut, $wgCookiePrefix, $wgCookieDomain, $wgCookieSecure ;
 	$watch_page = isset( $_COOKIE["{$wgCookiePrefix}wsWatchHold"] ) ? $_COOKIE["{$wgCookiePrefix}wsWatchHold"] : '';
@@ -76,63 +59,6 @@ function fnWatchHeldPage( $user ){
 		setCookie( "{$wgCookiePrefix}wsWatchHold", '', time() - 86400, '/', $wgCookieDomain,$wgCookieSecure );
 		$wgOut->redirect( $watched_title->getFullURL( ) );
 	}
-}
-
-/**
- * @param User $user
- * @return bool
- */
-function fnQuestionAttribution( $user ){
-	global $wgMemc;
-
-	$dbw = wfGetDB( DB_MASTER );
-
-	$title = Title::newFromText( $_SESSION['wsQuestionAsk'] );
-	$page_title_id = $title->getArticleID();
-
-	//watchlist page for them
-	$user->addWatch( $title );
-
-	//get first revisionID
-	$s = $dbw->selectRow( 'revision',
-		array( 'rev_id' ),
-		array( 'rev_page' =>  $page_title_id ),
-		__METHOD__,
-		array( "ORDER BY" => "rev_id ASC", "LIMIT" => 1 )
-	);
-	$revision_id = $s->rev_id;
-
-	//change neccessary tables
-	$dbw->update( 'revision',
-		array( /* SET */ 'rev_user' => $user->getID(), 'rev_user_text' => $user->getName()),
-		array( /* WHERE */ 'rev_id' => $revision_id),
-		__METHOD__
-	);
-	$dbw->commit(__METHOD__);
-
-	$dbw->update( 'recentchanges',
-		array( /* SET */ 'rc_user' => $user->getID(), 'rc_user_text' => $user->getName()),
-		array( /* WHERE */ 'rc_cur_id ' => $page_title_id, 'rc_new' => 1),
-		__METHOD__
-	);
-	$dbw->commit(__METHOD__);
-
-	//if the page happens to get deleted in between the anon asking a question
-	//and registration, we have to also update the archive
-	$dbw->update( 'archive',
-		array( /* SET */ 'ar_user' => $user->getID(), 'ar_user_text' => $user->getName()),
-		array( /* WHERE */ 'ar_title ' => $title->getDBKey() ),
-		__METHOD__
-	);
-	$dbw->commit(__METHOD__);
-
-	//clear cache
-	$title->invalidateCache();
-	$title->purgeSquid();
-	$key = wfMemcKey( 'answer_author', $page_title_id );
-	$wgMemc->delete( $key );
-
-	return true;
 }
 
 $wgHooks['UserProfileBeginLeft'][] = 'wfUserProfileAskedQuestions';

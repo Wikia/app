@@ -1,0 +1,7 @@
+city_list:
+  -
+    city_id: 1
+    city_flags: 0
+  -
+    city_id: 2
+    city_flags: 0
