@@ -141,7 +141,8 @@ class SpecialBlockList extends SpecialPage {
 					break;
 
 				case Block::TYPE_USER:
-					$conds['ipb_address'] = (string)$this->target;
+					// SUS-3250: Resolve query string to user ID
+					$conds['ipb_user'] = User::idFromName( (string)$this->target );
 					$conds['ipb_auto'] = 0;
 					break;
 			}
