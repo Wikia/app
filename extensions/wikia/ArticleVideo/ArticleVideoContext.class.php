@@ -70,10 +70,34 @@ class ArticleVideoContext {
 			$videoData['dfpContentSourceId'] = $wg->AdDriverDfpOoyalaContentSourceId;
 			$videoData['metadata'] = self::getVideoMetaData( $videoData );
 
+			$videoData = self::getVideoDataWithAttribution($videoData);
+
 			return $videoData;
 		}
 
 		return [];
+	}
+
+	private static function getVideoDataWithAttribution($videoData) {
+		if ( empty( $videoData['playlist'] ) || empty( $videoData['playlist'][0] ) ) {
+			return $videoData;
+		}
+
+		$playlist = $videoData['playlist'][0];
+
+		if ( !empty( $playlist['username'] ) ) {
+			$videoData['username'] = $playlist['username'];
+		}
+
+		if ( !empty( $playlist['userUrl'] ) ) {
+			$videoData['userUrl'] = $playlist['userUrl'];
+		}
+
+		if ( !empty( $playlist['userAvatarUrl'] ) ) {
+			$videoData['userAvatarUrl'] = $playlist['userAvatarUrl'];
+		}
+
+		return $videoData;
 	}
 
 	private static function getVideoMetaData( $videoDetails ) {
