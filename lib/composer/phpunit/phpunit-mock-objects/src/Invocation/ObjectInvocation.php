@@ -7,16 +7,17 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+namespace PHPUnit\Framework\MockObject\Invocation;
 
 /**
  * Represents a non-static invocation.
  */
-class PHPUnit_Framework_MockObject_Invocation_Object extends PHPUnit_Framework_MockObject_Invocation_Static
+class ObjectInvocation extends StaticInvocation
 {
     /**
      * @var object
      */
-    public $object;
+    private $object;
 
     /**
      * @param string $className
@@ -31,5 +32,10 @@ class PHPUnit_Framework_MockObject_Invocation_Object extends PHPUnit_Framework_M
         parent::__construct($className, $methodName, $parameters, $returnType, $cloneObjects);
 
         $this->object = $object;
+    }
+
+    public function getObject()
+    {
+        return $this->object;
     }
 }
