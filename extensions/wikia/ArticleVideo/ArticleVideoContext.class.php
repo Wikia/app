@@ -70,7 +70,7 @@ class ArticleVideoContext {
 			$videoData['dfpContentSourceId'] = $wg->AdDriverDfpOoyalaContentSourceId;
 			$videoData['metadata'] = self::getVideoMetaData( $videoData );
 
-			$videoData = self::getVideoDataWithAttribution($videoData);
+			$videoData = self::getVideoDataWithAttribution( $videoData );
 
 			return $videoData;
 		}
@@ -83,18 +83,18 @@ class ArticleVideoContext {
 			return $videoData;
 		}
 
-		$playlist = $videoData['playlist'][0];
+		$playlistVideo = $videoData['playlist'][0];
 
-		if ( !empty( $playlist['username'] ) ) {
-			$videoData['username'] = $playlist['username'];
+		if ( !empty( $playlistVideo['username'] ) ) {
+			$videoData['username'] = $playlistVideo['username'];
 		}
 
-		if ( !empty( $playlist['userUrl'] ) ) {
-			$videoData['userUrl'] = $playlist['userUrl'];
+		if ( !empty( $playlistVideo['userUrl'] ) ) {
+			$videoData['userUrl'] = $playlistVideo['userUrl'];
 		}
 
-		if ( !empty( $playlist['userAvatarUrl'] ) ) {
-			$videoData['userAvatarUrl'] = $playlist['userAvatarUrl'];
+		if ( !empty( $playlistVideo['userAvatarUrl'] ) ) {
+			$videoData['userAvatarUrl'] = $playlistVideo['userAvatarUrl'];
 		}
 
 		return $videoData;
