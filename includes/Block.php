@@ -211,7 +211,7 @@ class Block {
 		$db = wfGetDB( $this->mFromMaster ? DB_MASTER : DB_SLAVE );
 
 
-		if ( $this->type === Block::TYPE_USER ) {
+		if ( $this->type === Block::TYPE_USER && $this->target->isLoggedIn() ) {
 			$conds = [
 				'ipb_user' => $this->target->getId()
 			];
