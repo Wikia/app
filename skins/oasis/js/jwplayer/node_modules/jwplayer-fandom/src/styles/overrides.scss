@@ -95,9 +95,9 @@
 				color: white;
 				font-size: $duration-font-size;
 				font-weight: 600;
-				letter-spacing: 0.5px;
+				letter-spacing: .5px;
 				line-height: $duration-font-size;
-				opacity: 0.5;
+				opacity: .5;
 				padding-left: $padding;
 				padding-bottom: 6px;
 			}
@@ -116,7 +116,7 @@
 			.jw-title-primary {
 				font-size: $title-font-size;
 				font-weight: 600;
-				letter-spacing: 0.5px;
+				letter-spacing: .5px;
 				line-height: $title-line-height;
 				max-height: 2 * $title-line-height;
 				padding-left: $padding;
@@ -209,7 +209,7 @@
 
 	// all !important rules are here to override JWPlayer inline styles
 	.jw-text-track-cue {
-		background-color: rgba(0, 0, 0, 0.6);
+		background-color: rgba(0, 0, 0, .6);
 		font-size: 16px;
 		line-height: 24px;
 		padding: 6px;
