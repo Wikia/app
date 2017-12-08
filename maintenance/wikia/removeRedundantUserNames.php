@@ -35,7 +35,7 @@ class RemoveRedundantUserNames extends Maintenance {
 		[ 'table' => 'revision', 'userid_column' => 'rev_user', 'username_column' => 'rev_user_text' ],
 	];
 
-	const UPDATE_BATCH = 500;
+	const UPDATE_BATCH = 5000;
 
 	/**
 	 * Set script options
@@ -83,11 +83,13 @@ class RemoveRedundantUserNames extends Maintenance {
 					$this->output( '.' );
 				}
 				while ( $updated_in_batch > 0 );
-			}
 
-			// OPTIMIZE the table to reclaim the disk space and wait for slaves to catch-up
-			$db->query( sprintf( 'OPTIMIZE TABLE %s', $entry['table'] ), __METHOD__ );
-			wfWaitForSlaves( $db->getDBname() );
+				// OPTIMIZE the table to reclaim the disk space and wait for slaves to catch-up
+				if ( $rows_updated > 0 ) {
+					$db->query( sprintf( 'OPTIMIZE TABLE %s', $entry['table'] ), __METHOD__ );
+					wfWaitForSlaves( $db->getDBname() );
+				}
+			}
 
 			$this->output( sprintf( " %d rows updated\n", $rows_updated ) );
 			$rows_affected += $rows_updated;
