@@ -4,9 +4,11 @@ define('wikia.articleVideo.featuredVideo.ads', [
 	'ext.wikia.adEngine.slot.service.megaAdUnitBuilder',
 	'ext.wikia.adEngine.slot.service.srcProvider',
 	'ext.wikia.adEngine.video.vastDebugger',
-	'wikia.articleVideo.featuredVideo.adsTracking',
+	'ext.wikia.adEngine.video.player.jwplayer.adsTracking',
 	'wikia.log'
 ], function (adContext, vastUrlBuilder, megaAdUnitBuilder, srcProvider, vastDebugger, adsTracking, log) {
+	'use strict';
+	
 	var aspectRatio = 640 / 480,
 		baseSrc = adContext.get('targeting.skin') === 'oasis' ? 'gpt' : 'mobile',
 		featuredVideoPassback = 'jwplayer',

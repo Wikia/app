@@ -4,7 +4,7 @@ define('wikia.articleVideo.jwplayertag.ads', [
 	'ext.wikia.adEngine.slot.service.megaAdUnitBuilder',
 	'ext.wikia.adEngine.slot.service.srcProvider',
 	'ext.wikia.adEngine.video.vastDebugger',
-	'wikia.articleVideo.featuredVideo.adsTracking',
+	'ext.wikia.adEngine.video.player.jwplayer.adsTracking',
 	'wikia.log'
 ], function (adContext, vastUrlBuilder, megaAdUnitBuilder, srcProvider, vastDebugger, adsTracking, log) {
 	'use strict';
