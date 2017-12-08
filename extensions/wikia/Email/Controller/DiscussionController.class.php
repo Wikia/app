@@ -33,10 +33,6 @@ abstract class DiscussionController extends EmailController {
         if ( empty( $this->postUrl ) ) {
             throw new Check( 'Empty value passed for required param postUrl' );
         }
-
-        if ( empty( $this->postContent ) ) {
-            throw new Check( 'Empty value passed for required param postContent' );
-        }
     }
 
     /**
