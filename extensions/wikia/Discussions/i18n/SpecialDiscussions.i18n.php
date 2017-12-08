@@ -66,15 +66,15 @@ $messages['fr'] = array(
 );
 
 $messages['iris-4770'] = array(
-	'discussions' => '討論版',
-	'discussions-desc' => '由此頁面開啟或者進入到社區討論版。',
-	'discussions-pagetitle' => '討論版設置',
-	'discussions-activate' => '開始討論版',
-	'discussions-active' => '此社區的討論版已經開啟。',
-	'discussions-not-active' => '此社區的討論版還未開啟。',
-	'discussions-navigate' => '導航到討論版',
-	'discussions-activate-error' => '很抱歉出現錯誤，未能開啟討論版功能。已經發送錯誤，請稍後再試。',
-	'action-specialdiscussions' => 'Special:討論版',
+	'discussions' => 'Discussões',
+	'discussions-desc' => 'Ative ou acesse Discussões da comunidade desta página.',
+	'discussions-pagetitle' => 'Controle de Discussões',
+	'discussions-activate' => 'Ativar Discussões',
+	'discussions-active' => 'A função Discussões já está ativada nesta comunidade.',
+	'discussions-not-active' => 'A função Discussões não está ativada nesta comunidade.',
+	'discussions-navigate' => 'Vá para Discussões',
+	'discussions-activate-error' => 'A função Discussões não foi ativada por causa de um erro. O erro foi registrado. Por favor, tente novamente mais tarde.',
+	'action-specialdiscussions' => 'Especial:Discussões',
 	'right-specialdiscussions' => 'Allows access to Special:Discussions',
 );
 
