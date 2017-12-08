@@ -10,7 +10,7 @@
 	 * - editpage - force editor minimum height
 	 */
 	WE.plugins.autoresizer = $.createClass(WE.plugin,{
-		
+
 		requires: ['sizechangedevent'],
 
 		editarea: false,
@@ -26,7 +26,7 @@
 		wikiaBarEnabled: false,
 
 		beforeInit: function() {
-					this.mode = this.editor.config.autoResizeMode;
+			this.mode = this.editor.config.autoResizeMode;
 			this.wikiaBarEnabled = window.wgEnableWikiaBarExt && typeof window.WikiaBar === 'object';
 			if (this.mode !== false) {
 				this.editor.on('editboxReady',this.proxy(this.editboxReady));
@@ -40,7 +40,7 @@
 		},
 
 		initDom: function() {
-					this.editarea = $('#EditPageEditor');
+			this.editarea = $('#EditPageEditor');
 			this.editPage = $('#EditPage');
 			this.editPageEditorWrapper = $('#EditPageEditorWrapper');
 			this.editPageMain = $('#EditPageMain');
@@ -57,7 +57,6 @@
 		},
 
 		editboxReady: function(editor, editbox) {
-			
 			var node,
 				footerHeight = $("#WikiaFooter").outerHeight(true) || 0,
 				offsetHeight = 0,
@@ -85,12 +84,11 @@
 		},
 
 		delayedResize: function() {
-					setTimeout(this.proxy(this.resize),10);
+			setTimeout(this.proxy(this.resize),10);
 		},
 
 		// get height needed to fit given node into browser's viewport height
 		getHeightToFit: function(node) {
-							
 			var topOffset = node.offset().top,
 				viewportHeight = $window.height(),
 				dimensions = {

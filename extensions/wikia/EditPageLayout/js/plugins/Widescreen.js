@@ -1,4 +1,5 @@
 (function(window,$){
+
 	var WE = window.WikiaEditor = window.WikiaEditor || (new Observable());
 
 	/**
@@ -27,7 +28,7 @@
 		wide: false,
 
 		initNodes: function() {
-					this.$rail = $('#EditPageRail');
+			this.$rail = $('#EditPageRail');
 			this.$editpage = $('#EditPage');
 			this.$toolbar = $('#EditPageToolbar .cke_toolbar_source');
 			this.expandedToolbarBreakpoint =  this.$toolbar.width() + this.$rail.width();
@@ -35,7 +36,7 @@
 		},
 
 		sizeChanged: function() {
-					if (this.initialized) {
+			if (this.initialized) {
 				if(this.editor.mode === 'source' && this.wide &&
 					this.$editpage.width() < this.expandedToolbarBreakpoint
 				) {
@@ -47,7 +48,7 @@
 		},
 
 		activate: function() {
-					this.enabled = true;
+			this.enabled = true;
 			if (this.enabled) {
 				this.active = this.editor.mode === 'source';
 				// set up the trigger
@@ -70,7 +71,7 @@
 		},
 
 		modeChanged: function() {
-					var toolbar = this.editor.getSpace('toolbar');
+			var toolbar = this.editor.getSpace('toolbar');
 
 			// adjust bar height and position
 			var cssTop = toolbar.offset().top + toolbar.outerHeight(true) - this.trigger.offsetParent().offset().top;
@@ -90,7 +91,7 @@
 		},
 
 		toggle: function() {
-					this.setState(!this.getState());
+			this.setState(!this.getState());
 			this.saveState();
 
 			// toolbar height can change - resize the editor (BugId:5694)
@@ -111,20 +112,20 @@
 		},
 
 		setState: function( wide ) {
-					this.wide = wide;
+			this.wide = wide;
 			this.editor.element[wide ? 'addClass' : 'removeClass'](this.wideClassName);
 			this.editor.element[!wide ? 'addClass' : 'removeClass'](this.narrowClassName);
 		},
 
 		saveState: function() {
-					$.storage.set(this.storageEntry,this.wide);
+			$.storage.set(this.storageEntry,this.wide);
 			$.post(window.wgScript + '?action=ajax&rs=EditPageLayoutAjax&method=setWidescreen',{
 				state: this.wide ? '1' : '0'
 			});
 		},
 
 		getState: function() {
-					return this.editor.element.hasClass(this.wideClassName);
+			return this.editor.element.hasClass(this.wideClassName);
 		}
 	});
 
@@ -140,7 +141,7 @@
 		pageControlsHeight: false,
 
 		activate: function() {
-					this.enabled = true;
+			this.enabled = true;
 			if (this.enabled) {
 				this.editor.element.addClass('editpage-visualwidemode');
 				this.editor.on('toolbarsRendered',this.adjustHeights,this);
@@ -148,13 +149,13 @@
 		},
 
 		init: function() {
-					if (this.enabled) {
+			if (this.enabled) {
 				this.editor.fire('mainpagewidemodeinit');
 			}
 		},
 
 		adjustHeights: function() {
-					var toolbar = this.editor.getSpace('toolbar'),
+			var toolbar = this.editor.getSpace('toolbar'),
 				rail = this.editor.getSpace('rail');
 			if (!toolbar.exists() || !rail.exists()) {
 				return;

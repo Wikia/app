@@ -27,7 +27,7 @@
 		},
 
 		fireResizeEvent: function() {
-					this.editor.fire('sizeChanged',this.editor);
+			this.editor.fire('sizeChanged',this.editor);
 		}
 
 	});

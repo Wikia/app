@@ -13,14 +13,14 @@
 		CONTAINER_SELECTOR: '> .rail-auto-height',
 
 		beforeInit: function() {
-					this.editor.on('sizeChanged',this.proxy(this.delayedResize));
+			this.editor.on('sizeChanged',this.proxy(this.delayedResize));
 		},
 
 		delayedResize: function() {
-					setTimeout(this.proxy(this.resize),10);
+			setTimeout(this.proxy(this.resize),10);
 		},
 		resize: function() {
-					var viewportHeight = $(window).height();
+			var viewportHeight = $(window).height();
 			var el, rail = this.editor.getSpace('rail');
 
 			if (rail.exists() && (el = rail.find(this.CONTAINER_SELECTOR)) && el.exists()) {

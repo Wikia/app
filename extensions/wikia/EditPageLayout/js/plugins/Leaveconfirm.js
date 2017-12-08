@@ -21,7 +21,7 @@
 
 
 		init: function() {
-					this.leaveMessage = $.msg('wikia-editor-leaveconfirm-message');
+			this.leaveMessage = $.msg('wikia-editor-leaveconfirm-message');
 			this.editor.on('editorReady', this.proxy(this.onEditorReady));
 
 			// allow other plugins to mark content as changed
@@ -37,11 +37,11 @@
 		},
 
 		onEditorReady: function() {
-					this.initialContent = this.editor.getContent();
+			this.initialContent = this.editor.getContent();
 		},
 
 		onMarkDirty: function() {
-					this.isDirtyFlag = true;
+			this.isDirtyFlag = true;
 			this.editor.log('edit page marked as dirty');
 		},
 
@@ -60,7 +60,7 @@
 
 		// @see https://developer.mozilla.org/en/DOM/window.onbeforeunload
 		onBeforeUnload: function(ev) {
-					if (this.shouldDisplayConfirm()) {
+			if (this.shouldDisplayConfirm()) {
 				this.dialogShown = true;
 
 				if (ev) {
@@ -72,11 +72,11 @@
 		},
 
 		onUserLoginSubmit: function() {
-					this.disableLeaveConfirm = true;
+			this.disableLeaveConfirm = true;
 		},
 
 		isEditorDirty: function() {
-					if (this.editor.ck) {
+			if (this.editor.ck) {
 				// @see http://docs.cksource.com/ckeditor_api/symbols/CKEDITOR.editor.html#checkDirty
 				return this.editor.ck.checkDirty();
 			}
@@ -87,11 +87,11 @@
 
 		// was any change to the page made?
 		isDirty: function() {
-					return this.isDirtyFlag || this.isEditorDirty();
+			return this.isDirtyFlag || this.isEditorDirty();
 		},
 
 		shouldDisplayConfirm: function() {
-					return (!this.disableLeaveConfirm && this.isDirty());
+			return (!this.disableLeaveConfirm && this.isDirty());
 		}
 	});
 })(this,jQuery);

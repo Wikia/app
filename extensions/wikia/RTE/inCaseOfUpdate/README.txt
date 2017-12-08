@@ -11,3 +11,6 @@ Instructions:
 	OUTPUT: RTE/i18n/CK.core.i18n.php
 	
 	Use Wisely.
+
+
+Author: Kacper Olek ( kolek@wikia-inc.com )

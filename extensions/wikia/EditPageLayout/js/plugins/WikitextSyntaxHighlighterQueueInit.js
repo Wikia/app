@@ -5,14 +5,13 @@
  */
 (function ( window, $ ) {
 		'use strict';
-		
+
 		var WE = window.WikiaEditor = window.WikiaEditor || (new window.Observable()),
 			WikiTextSyntaxHighlighter;
 
 		WE.plugins.syntaxhighlighterqueueinit = $.createClass(WE.plugin, {
 
 			init: function () {
-				
 				this.editor.on('mode', this.proxy(this.initSyntaxHighlighting));
 				this.editor.on('editorReady', this.proxy(this.initSyntaxHighlighting));
 
@@ -24,7 +23,6 @@
 			},
 
 			initConfig: function () {
-				
 				var config;
 
 				if (window.wgIsDarkTheme) {
@@ -37,7 +35,6 @@
 			},
 
 			initSyntaxHighlighting: function () {
-				
 				if (WikiTextSyntaxHighlighter) {
 					if (this.editor.mode === 'source') {
 						var textarea = this.editor.getEditbox()[0],
@@ -51,7 +48,6 @@
 			},
 
 			initDarkThemeColors: function() {
-			
 				return {
 					boldOrItalicColor: '#44466d',
 					commentColor: '#4d1a19',
@@ -70,7 +66,6 @@
 			},
 
 			initLightThemeColors: function() {
-			
 				return {
 					boldOrItalicColor: '#e4e5f3',
 					commentColor: '#f8dbda',

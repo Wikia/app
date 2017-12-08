@@ -16,12 +16,12 @@
 		totalItemsCount: 0,
 
 		beforeInit: function(editor){
-					editor.on('notice',this.proxy(this.add));
+			editor.on('notice',this.proxy(this.add));
 			editor.on('editorClick', this.proxy(this.dismissClicked));
 		},
 
 		initDom: function(editor){
-					var self = this;
+			var self = this;
 
 			self.el = editor.getSpace('notices-short');
 			self.ul = self.el.find('ul').first();
@@ -60,23 +60,23 @@
 		},
 
 		getAllNotices: function(){
-					return this.ul.children('.' + this.itemClass);
+			return this.ul.children('.' + this.itemClass);
 		},
 
 		getCount: function(){
-					return this.getAllNotices().length;
+			return this.getAllNotices().length;
 		},
 
 		getTotalCount: function(){
-					return this.totalItemsCount;
+			return this.totalItemsCount;
 		},
 
 		getNoticeByHash: function(hash){
-					return this.getAllNotices().filter('[' + this.dataAttr + '="' + hash + '"]');
+			return this.getAllNotices().filter('[' + this.dataAttr + '="' + hash + '"]');
 		},
 
 		getNotice: function(hashOrElement){
-					var el;
+			var el;
 
 			if(typeof hashOrElement == 'string'){
 				el = this.getNoticeByHash(hashOrElement);
@@ -90,7 +90,7 @@
 		},
 
 		updateSplotch: function(){
-					var val = this.getTotalCount();
+			var val = this.getTotalCount();
 
 			this.notificationsLinkSplotch.html(val);
 			this.notificationsAreaSplotch.html(val);
@@ -102,24 +102,24 @@
 		},
 
 		hideSplotch: function(){
-					this.notificationsLinkSplotch.fadeOut('slow');
+			this.notificationsLinkSplotch.fadeOut('slow');
 			this.notificationsAreaSplotch.fadeOut('slow');
 		},
 
 		generateNoticeKey: function(hash){
-					return wgTitle + '-' + hash;
+			return wgTitle + '-' + hash;
 		},
 
 		getNoticeAreaStatus: function(){
-					return $.storage.get('WE-Noticearea-status');
+			return $.storage.get('WE-Noticearea-status');
 		},
 
 		setNoticeAreaStatus: function(status){
-					$.storage.set('WE-Noticearea-status', status);
+			$.storage.set('WE-Noticearea-status', status);
 		},
 
 		update: function(){
-					var count = this.getCount();
+			var count = this.getCount();
 
 			if(count > 0){
 				this.visible = true;
@@ -132,7 +132,7 @@
 		},
 
 		wasNoticeAlreadyShown: function(hashOrElement){
-					this.updateNoticeareaStatus();
+			this.updateNoticeareaStatus();
 
 			var notice = this.getNotice(hashOrElement),
 				hash = (notice) ? notice.attr(this.dataAttr) : null,
@@ -167,7 +167,7 @@
 		},
 
 		markNoticeAsShown: function(hashOrElement) {
-					var notice = this.getNotice(hashOrElement),
+			var notice = this.getNotice(hashOrElement),
 				isMainPageEduNote = this.isNoticeMainPageEduNote(notice);
 
 			if( notice ) {
@@ -209,7 +209,7 @@
 		},
 
 		updateNoticeareaStatus: function(){
-					var noticeareaStatus = this.getNoticeAreaStatus();
+			var noticeareaStatus = this.getNoticeAreaStatus();
 
 			if(noticeareaStatus != null){
 				var currentTs = (new Date()).getTime()/1000,
@@ -227,13 +227,13 @@
 		},
 
 		dismissFromNotice: function(notice){
-					this.totalItemsCount = 0;
+			this.totalItemsCount = 0;
 			this.updateSplotch();
 			this.dismissClicked(notice, true);
 		},
 
 		areaClicked: function(ev){
-					var self = this,
+			var self = this,
 				target = $(ev.target);
 
 			if(target.hasClass(self.itemActionClass)){
@@ -259,7 +259,7 @@
 		},
 
 		dismissClicked: function(sourceElement, hideSplotch){
-					var self = this,
+			var self = this,
 				notices = self.getNotice(sourceElement) || self.getAllNotices(),
 				clean = function(){
 					notices.each(function(){
@@ -280,7 +280,7 @@
 		},
 
 		add: function(message, type, html){
-					var li = $('<li>')
+			var li = $('<li>')
 				.html(message)
 				.addClass(this.itemClass + ' notice-' + (type || 'warning'));
 

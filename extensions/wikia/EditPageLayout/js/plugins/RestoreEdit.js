@@ -11,7 +11,7 @@ require(['uniqueId'], function(uniqueId) {
 
 		requires: ['noticearea'],
 		afterShow: function(editor) {
-					var self = this,
+			var self = this,
 				executed = 0;
 
 			this.editor = editor;
@@ -76,7 +76,7 @@ require(['uniqueId'], function(uniqueId) {
 		},
 
 		closeModal: function(){
-					if($().isModalShown()){
+			if($().isModalShown()){
 				$().getModalWrapper().closeModal();
 				this.editor.plugins.noticearea.dismissClicked(null, true);
 			}
@@ -103,7 +103,7 @@ require(['uniqueId'], function(uniqueId) {
 		timerId: null,
 
 	    constructor: function(articleName, timesample, callbackGetData){
-			        if(typeof callbackGetData != "function"){
+	        if(typeof callbackGetData != "function"){
 	            throw "callbackGetdata is not callback";
 	        }
 
@@ -142,13 +142,13 @@ require(['uniqueId'], function(uniqueId) {
 	    },
 
 	    deleteAll:function(){
-			    	this.storeData(null);
+	    	this.storeData(null);
 			$().log('Data reset', 'RestoreEdit');
 	    },
 
 	    /* global clean */
 	    clear: function(){
-			        var alldata = $.storage.get(this.mainKey),
+	        var alldata = $.storage.get(this.mainKey),
 			count = 0;
 
 			for(var i in alldata){
@@ -168,13 +168,13 @@ require(['uniqueId'], function(uniqueId) {
 	    },
 
 		stop: function(){
-					if(this.timerId != null){
+			if(this.timerId != null){
 				clearInterval(this.timerId);
 			}
 		},
 
 	    store: function(datatostore){
-			    	var data = this.getData();
+	    	var data = this.getData();
 
 	    	//local clean remove old sessions
 	    	for(var i in data.sessions){
@@ -195,7 +195,7 @@ require(['uniqueId'], function(uniqueId) {
 	    },
 
 	    getData: function(){
-			    	var alldata = $.storage.get(this.mainKey);
+	    	var alldata = $.storage.get(this.mainKey);
 			if(!alldata || !alldata[this.dataKey]){
 	    		return this.defaultData;
 	    	}
@@ -204,7 +204,7 @@ require(['uniqueId'], function(uniqueId) {
 	    },
 
 	    storeData: function(data) {
-	  		  	var alldata = $.storage.get(this.mainKey) || {};
+	    	var alldata = $.storage.get(this.mainKey) || {};
 
 	    	alldata[this.dataKey] = data;
 			try {
@@ -217,7 +217,7 @@ require(['uniqueId'], function(uniqueId) {
 	    },
 
 	    getOldData: function() {
-	 		       /* for now just take newest code is prepare for user base choice*/
+	        /* for now just take newest code is prepare for user base choice*/
 	    	if(this.oldData.newest){
 	    		return this.oldData.sessions[this.oldData.newest];
 	    	}
@@ -226,11 +226,11 @@ require(['uniqueId'], function(uniqueId) {
 	    },
 
 	    createSessionId: function() {
-			        return uniqueId('_', true);
+	        return uniqueId('_', true);
 	    },
 
 	    getTime: function() {
-			        return Math.round((new Date()).getTime() / 1000);
+	        return Math.round((new Date()).getTime() / 1000);
 	    }
 	});
 

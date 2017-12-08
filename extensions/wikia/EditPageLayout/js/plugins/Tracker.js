@@ -19,7 +19,7 @@
 		},
 
 		init: function() {
-					var	isMiniEditor = this.editor.config.isMiniEditor,
+			var	isMiniEditor = this.editor.config.isMiniEditor,
 				editorType = ( isMiniEditor ? '-mini-' : '-' ) +
 					( ( window.RTE !== undefined && !window.RTEEdgeCase ) ? 'ck' : 'mw' );
 
@@ -45,7 +45,7 @@
 
 		// CKEditor only events
 		onCkInstanceCreated: function( ck ) {
-					ck.on( 'buttonClick', this.proxy( this.onCkButtonClick ) );
+			ck.on( 'buttonClick', this.proxy( this.onCkButtonClick ) );
 			ck.on( 'dialogCancel', this.proxy( this.onCkDialogCancel ) );
 			ck.on( 'dialogClose', this.proxy( this.onCkDialogClose ) );
 			ck.on( 'dialogOk', this.proxy( this.onCkDialogOk ) );
@@ -55,27 +55,27 @@
 		},
 
 		onCkButtonClick: function( event ) {
-					var label = event.data.button.label.toLowerCase();
+			var label = event.data.button.label.toLowerCase();
 			this.track( 'button-' + label );
 		},
 
 		onCkDialogCancel: function( event ) {
-					var label = event.data._.name.toLowerCase();
+			var label = event.data._.name.toLowerCase();
 			this.track( 'dialog-' + label + '-button-cancel' );
 		},
 
 		onCkDialogClose: function( event ) {
-					var label = event.data._.name.toLowerCase();
+			var label = event.data._.name.toLowerCase();
 			this.track( 'dialog-' + label + '-button-close' );
 		},
 
 		onCkDialogOk: function( event ) {
-					var label = event.data._.name.toLowerCase();
+			var label = event.data._.name.toLowerCase();
 			this.track( 'dialog-' + label + '-button-ok' );
 		},
 
 		onCkDialogShow: function( event ) {
-					var label = event.data._.name.toLowerCase();
+			var label = event.data._.name.toLowerCase();
 
 			this.track({
 				action:  Wikia.Tracker.ACTIONS.OPEN,
@@ -84,7 +84,7 @@
 		},
 
 		onCkPanelClick: function( event ) {
-					var	label = event.data.me.label.toLowerCase(),
+			var	label = event.data.me.label.toLowerCase(),
 				value = event.data.value;
 
 			this.track( 'panel-' + label + '-item-' + value );
@@ -101,7 +101,7 @@
 
 		// Wrapper for Wikia.Tracker so we can perform some magic
 		track: function() {
-					var	args = slice.call( arguments ),
+			var	args = slice.call( arguments ),
 				data = {},
 				labelParts = [];
 
@@ -152,7 +152,7 @@
 		 *     }, WikiaEditor.trackWithEventData );
 		 */
 		trackWithEventData: function( event ) {
-					var data;
+			var data;
 
 			if ( typeof event === 'object' &&
 					typeof event.data === 'object' &&
@@ -169,7 +169,7 @@
 
 	// Proxy tracker methods onto WikiaEditor for static access
 	(function() {
-				var	i,
+		var	i,
 			l,
 			methodNames = [ 'track', 'trackWithEventData' ];
 
@@ -187,7 +187,7 @@
 	// tracked above, the stuff down here is just for edit page chrome that can't
 	// be tracked through CKEditor events.
 	$(function() {
-		
+
 		// Module: Page Controls
 		(function() {
 			var label = 'toolbar-';

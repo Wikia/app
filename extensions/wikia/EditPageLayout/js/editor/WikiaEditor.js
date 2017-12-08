@@ -1,5 +1,4 @@
 (function(window,$){
-	
 	var WE = window.WikiaEditor = window.WikiaEditor || (new Observable()),
 		slice = [].slice;
 
@@ -94,7 +93,6 @@
 
 	// Returns the currently active instance
 	WE.getInstance = function(instanceId) {
-		
 		return WE.instances[instanceId || WE.instanceId];
 	};
 
@@ -216,7 +214,6 @@
 
 		initPlugins: function() {
 			// Get the loading order
-
 			var order = [];
 			var loaded = {};
 			function queuePlugin(name){
@@ -409,7 +406,6 @@
 		},
 
 		beforeInit: function() {
-			
 			this.editor.ui = this;
 			var self = this;
 			$('body').click(function(ev){
@@ -418,7 +414,6 @@
 		},
 
 		init: function() {
-			
 			var chk = function() {
 				if (!this.initDomCalled) return;
 				if (this.uiReadyFired) return;
@@ -670,7 +665,6 @@
 		AUTO_SHOW_ATTRIBUTE: 'data-space-autoshow',
 
 		beforeInit: function() {
-			
 			this.editor.on('uiReady',this.proxy(this.renderToolbars));
 			this.toolbars = {};
 		},
@@ -710,7 +704,7 @@
 					toolbars[name].el.show();
 				}
 			}
-			
+
 			//Ckeditor upgrade table button fix
 			$('.cke_button_table').wrap('<span class="cke_button cke_button_big"></span>');
 
@@ -925,6 +919,7 @@
 
 		// wikiaEditor is now available as this.editor
 		initEditor: function() {
+
 			// Set up listeners on proxied ck events
 			this.editor.on('ck-mode', this.proxy(this.modeChanged));
 			this.editor.on('ck-modeSwitch', this.proxy(this.beforeModeChange));
@@ -946,6 +941,7 @@
 
 		afterLoadingStatus: function() {
 			this.editor.markAsReady();
+
 			// Loading is done, editor container can be visible again
 			// And typing can be re-enabled (BugId:23061)
 			$(this.editor.ck.container.$).addClass('visible').unbind('keydown.preventTyping');
@@ -953,6 +949,7 @@
 
 		// ckeditor instance is now available
 		ckInstanceCreated: function(ck) {
+
 			// Store a reference to the CKE instance in wikiaEditor
 			this.editor.ck = ck;
 
@@ -984,8 +981,7 @@
 			//kacper olek edit, rte update
 			//return $(this.editor.ck.getThemeSpace('contents').$);
 			return $(this.editor.ck.ui.space('contents').$);
-	
-	},
+		},
 
 		// Returns the original editor element that CKE has replaced
 		getEditorElement: function() {
@@ -993,6 +989,7 @@
 		},
 
 		beforeModeChange: function() {
+
 			// Hide the editor container while we switch modes
 			$(this.editor.ck.container.$).removeClass('visible')
 
@@ -1078,7 +1075,6 @@
 		stateProxiedCommands: {},
 
 		beforeInit: function() {
-			
 			this.editor.ui.addExternalProvider(this);
 			this.editor.on('ck-themeLoaded',this.ckReady,this);
 			this.editor.on('uiBuildClickHandler',this.buildWysiwygClickHandler,this);
@@ -1112,7 +1108,6 @@
 		},
 
 		proxyCommandState: function( commandName ) {
-			
 			var command = this.editor.ck.getCommand(commandName),
 				state = command && command.state,
 				elements = this.stateProxiedCommands[commandName];
@@ -1138,7 +1133,6 @@
 		},
 
 		elementCreated: function( editor, element, data ) {
-			
 			if (element.ckcommand) {
 				var commandName = element.ckcommand;
 				// auto state by ck command
@@ -1157,20 +1151,17 @@
 		},
 
 		ckReady: function() {
-			
 			this.ready = true;
 			this.editor.fire('uiExternalProviderReady',this.editor);
 		},
 
 		buildWysiwygClickHandler: function( editor, button ) {
-			
 			button.clickwysiwyg = function() {
 				this.editor.ck.execCommand(button.ckcommand,button.clickdatawysiwyg);
 			};
 		},
 
 		createElement: function( name ) {
-			
 			var ck = this.editor.ck, ui = this.editor.ck.ui, item;
 			if (ui.items[name] && (item = ui.create(name)) ) {
 				var output = [];

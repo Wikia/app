@@ -19,7 +19,7 @@
 			},
 
 			forceType: function () {
-						/* Break article submit if modal was forced */
+				/* Break article submit if modal was forced */
 				return !templateClassificationForceModal.forceType();
 			}
 

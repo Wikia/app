@@ -17,7 +17,7 @@
 		enabled: false,
 
 		beforeInit: function() {
-					// enable this plugin only for Firefox 4.0+ (BugId:5654)
+			// enable this plugin only for Firefox 4.0+ (BugId:5654)
 			this.enabled = !!$.browser.mozilla && (parseInt($.browser.version) >= 2 /* '2.0.1' = Fx 4.0.1 */);
 
 			if (this.enabled) {
@@ -36,7 +36,7 @@
 		},
 
 		init: function() {
-					if (this.enabled) {
+			if (this.enabled) {
 				this.stateChanged(this.editor,this.editor.state);
 			}
 		},
@@ -57,7 +57,7 @@
 		},
 
 		pollStylesheets: function() {
-					this.pollStylesheetsTimer.stop();
+			this.pollStylesheetsTimer.stop();
 
 			var ed = this.editor.element;
 
@@ -84,7 +84,7 @@
 		},
 
 		fireState: function( state ) {
-					if (this.lastAnnounced !== state) {
+			if (this.lastAnnounced !== state) {
 				this.editor.fire('extraState',this.editor,this.CSS_STATE_NAME,state);
 				this.lastAnnounced = state;
 			}

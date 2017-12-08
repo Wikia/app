@@ -2,7 +2,7 @@
 
 	var WE = window.WikiaEditor = window.WikiaEditor || (new Observable()),
 		editorName = function (mode) {
-					var RTE = (window.RTE === undefined);
+			var RTE = (window.RTE === undefined);
 
 			if (!RTE) {
 				return 'rte-' + mode;
@@ -16,7 +16,7 @@
 	WE.plugins.flowtracking = $.createClass(WE.plugin,{
 
 		init: function (editor) {
-					var namespace = window.mw.config.get('wgNamespaceNumber');
+			var namespace = window.mw.config.get('wgNamespaceNumber');
 
 			if (namespace === 0) {
 				require(['ext.wikia.flowTracking.createPageTracking'], function (flowTrackingCreatePage) {

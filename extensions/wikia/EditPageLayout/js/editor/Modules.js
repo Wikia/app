@@ -68,6 +68,7 @@
 			if (!this.enabled) {
 				return false;
 			}
+
 			var el = $(this.renderHtml());
 			this.el = el;
 			this.afterRender();
