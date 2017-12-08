@@ -395,7 +395,7 @@ class WikiFactoryLoader {
 		/**
 		 * redirection to another url
 		 */
-		if( $this->mIsWikiaActive == 2 ) {
+		if( $this->mIsWikiaActive == 2 && !$this->mCommandLine ) {
 			$this->debug( "city_id={$this->mWikiID};city_public={$this->mIsWikiaActive}), redirected to {$this->mCityHost}" );
 			header( "X-Redirected-By-WF: 2" );
 			header( "Location: http://{$this->mCityHost}/", true, 301 );
