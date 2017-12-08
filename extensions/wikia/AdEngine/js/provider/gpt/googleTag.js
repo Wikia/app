@@ -185,7 +185,7 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 		}
 		
 		if (!isGoogleTagLoaded()) {
-			log(['destroySlots', 'pubads not yet avialable', 'resetting cmd'], log.levels.info, logGroup);
+			log(['destroySlots', 'pubads not yet available', 'resetting cmd'], log.levels.info, logGroup);
 			win.googletag.cmd = [];
 			enableServices();
 			return;
