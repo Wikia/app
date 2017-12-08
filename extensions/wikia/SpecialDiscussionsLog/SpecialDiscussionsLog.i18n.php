@@ -88,7 +88,7 @@ $messages['de'] = array(
 	'discussionslog-page-title' => 'Diskussions-Benutzeraktivitätsprotokoll',
 	'discussionslog-site-header' => 'Site',
 	'discussionslog-user-action-header' => 'Aktion',
-	'right-specialdiscussionslog' => 'Im [[Spezial:Diskussionsprotokoll]] ansehen',
+	'right-specialdiscussionslog' => 'Das [[Special:DiscussionsLog|Diskussionsprotokoll]] einsehen',
 );
 
 $messages['es'] = array(
@@ -150,7 +150,7 @@ $messages['fr'] = array(
 	'discussionslog-page-title' => "Journaux d'activité des utilisateurs dans les discussions",
 	'discussionslog-site-header' => 'Site',
 	'discussionslog-user-action-header' => 'Action',
-	'right-specialdiscussionslog' => 'Voir [[Special:DiscussionsLog]]',
+	'right-specialdiscussionslog' => '',
 );
 
 $messages['it'] = array(
@@ -181,7 +181,7 @@ $messages['it'] = array(
 	'discussionslog-page-title' => "Registri delle attività di discussione dell'utente",
 	'discussionslog-site-header' => 'Sito',
 	'discussionslog-user-action-header' => 'Azione',
-	'right-specialdiscussionslog' => 'Visualizza [[Special:DiscussionsLog]]',
+	'right-specialdiscussionslog' => '',
 );
 
 $messages['ja'] = array(
@@ -217,7 +217,7 @@ $messages['ja'] = array(
 
 $messages['nl'] = array(
 	'discussionslog' => 'Gebruikerslogboeken discussies',
-	'discussionslog-desc' => "Wikia's Discussion users log extension",
+	'discussionslog-desc' => '',
 	'discussionslog-pagetitle' => 'Discussielogboeken van gebruikers van de mobiele app',
 	'discussionslog-contributions-link-title' => 'IP-geschiedenis discussie',
 	'discussionslog-username-label' => 'Gebruikersnaam: ',
@@ -367,7 +367,7 @@ $messages['zh-hans'] = array(
 	'discussionslog-page-title' => '讨论区用户活动日志',
 	'discussionslog-site-header' => '网站',
 	'discussionslog-user-action-header' => '操作',
-	'right-specialdiscussionslog' => '查看[[Special:DiscussionsLog]]',
+	'right-specialdiscussionslog' => '',
 );
 
 $messages['zh-hant'] = array(
@@ -398,6 +398,6 @@ $messages['zh-hant'] = array(
 	'discussionslog-page-title' => '討論區使用者活動日誌',
 	'discussionslog-site-header' => '網站',
 	'discussionslog-user-action-header' => '操作',
-	'right-specialdiscussionslog' => '查看[[Special:DiscussionsLog]]',
+	'right-specialdiscussionslog' => '',
 );
 
