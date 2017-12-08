@@ -8,7 +8,7 @@ define('wikia.articleVideo.featuredVideo.ads', [
 	'wikia.log'
 ], function (adContext, vastUrlBuilder, megaAdUnitBuilder, srcProvider, vastDebugger, adsTracking, log) {
 	'use strict';
-	
+
 	var aspectRatio = 640 / 480,
 		baseSrc = adContext.get('targeting.skin') === 'oasis' ? 'gpt' : 'mobile',
 		featuredVideoPassback = 'jwplayer',
