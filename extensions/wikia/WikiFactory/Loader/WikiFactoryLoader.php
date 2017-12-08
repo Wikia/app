@@ -392,6 +392,7 @@ class WikiFactoryLoader {
 
 		/**
 		 * redirection to another url
+		 * Make sure we are not running in command line mode where redirects have no sense at all
 		 */
 		if( $this->mIsWikiaActive == 2 && !$this->mCommandLine ) {
 			$this->debug( "city_id={$this->mWikiID};city_public={$this->mIsWikiaActive}), redirected to {$this->mCityHost}" );
