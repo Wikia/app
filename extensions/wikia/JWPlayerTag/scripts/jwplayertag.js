@@ -1,4 +1,6 @@
 require(['jquery', 'wikia.tracker'], function ($, tracker) {
+	'use strict';
+
 	var parserTagSelector = '.jwplayer-in-article-video .jwplayer-container',
 		jwVideoDataUrl = 'https://cdn.jwplayer.com/v2/media/';
 
@@ -21,7 +23,7 @@ require(['jquery', 'wikia.tracker'], function ($, tracker) {
 				category: 'in-article-video',
 				track: function (data) {
 					tracker.track(data);
-				},
+				}
 			},
 			videoDetails: {
 				description: jwVideoData.description,
@@ -37,7 +39,7 @@ require(['jquery', 'wikia.tracker'], function ($, tracker) {
 				window.wikiaJWPlayer(
 					videoParserTagElement.id,
 					getPlayerSetup(jwVideoData)
-				)
+				);
 			});
 	}
 
