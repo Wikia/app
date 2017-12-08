@@ -302,15 +302,21 @@ class WikiaResponse {
 	 *
 	 * @param string $policy caching policy (either private or public)
 	 */
-	public function setCachePolicy($policy) {
-		if ( in_array( $policy, [
+	public function setCachePolicy( $policy ) {
+		if ( !in_array( $policy, [
 				self::CACHE_PRIVATE,
 				self::CACHE_PUBLIC,
 				self::CACHE_ANON_PUBLIC_USER_PRIVATE,
 			] )
 		) {
-			$this->cachingPolicy = $policy;
+			\Wikia\Logger\WikiaLogger::instance()->error( 'Invalid cache policy provided', [
+				'policy' => $policy,
+				'exception' => new Exception(),
+			] );
+			return;
 		}
+
+		$this->cachingPolicy = $policy;
 	}
 
 	/**
