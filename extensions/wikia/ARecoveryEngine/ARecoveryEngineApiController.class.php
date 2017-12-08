@@ -42,10 +42,10 @@ class ARecoveryEngineApiController extends WikiaController {
 	}
 
 	public function getInstartLogicBootstrap() {
-        $resourceLoader = new ResourceLoaderAdEngineInstartLogicModule();
-        $resourceLoaderContext = new ResourceLoaderContext( new ResourceLoader(), new FauxRequest() );
-        $this->response->setVal( 'code', $resourceLoader->getScript( $resourceLoaderContext ) );
-    }
+		$resourceLoader = new ResourceLoaderAdEngineInstartLogicModule();
+		$resourceLoaderContext = new ResourceLoaderContext( new ResourceLoader(), new FauxRequest() );
+		$this->response->setVal( 'code', $resourceLoader->getScript( $resourceLoaderContext ) );
+	}
 
 	public function getLogInfo() {
 		\Wikia\Logger\WikiaLogger::instance()
