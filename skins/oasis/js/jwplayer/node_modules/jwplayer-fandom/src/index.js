@@ -47,16 +47,15 @@ window.wikiaJWPlayer = function (elementId, options, callback) {
 	 * @param elementId
 	 * @param options
 	 * @param logger
+	 * @param i18n
 	 * @return {*}
 	 */
-	function setupPlayer(elementId, options, logger) {
+	function setupPlayer(elementId, options, logger, lang, i18n) {
 		var playerInstance = jwplayer(elementId),
 			videoId = options.videoDetails.playlist[0].mediaid,
 			willAutoplay = options.autoplay,
-			lang = options.lang || 'en',
 			// IMA supports two-letter ISO 639-1 code
 			langForAds = lang.substr(0, 2),
-			i18n = wikiaJWPlayeri18n[lang] || wikiaJWPlayeri18n['en'],
 			playerSetup = {
 				advertising: {
 					autoplayadsmuted: willAutoplay,
@@ -109,8 +108,11 @@ window.wikiaJWPlayer = function (elementId, options, callback) {
 
 	loadJWPlayerScript(elementId, options.playerURL, function () {
 		var logger = wikiaJWPlayerLogger(options),
-			playerInstance = setupPlayer(elementId, options, logger);
+			lang = options.lang || 'en',
+			i18n = wikiaJWPlayeri18n[lang] || wikiaJWPlayeri18n['en'],
+			playerInstance = setupPlayer(elementId, options, logger, lang, i18n);
 
+		wikiaJWPlayerIdleScreen(playerInstance, i18n);
 		wikiaJWPlayerReplaceIcons(playerInstance);
 		wikiaJWPlayerEvents(playerInstance, options.autoplay, logger);
 
