@@ -12,7 +12,7 @@ define('wikia.articleVideo.jwplayertag.ads', [
 	var aspectRatio = 640 / 480,
 		baseSrc = adContext.get('targeting.skin') === 'oasis' ? 'gpt' : 'mobile',
 		videoPassback = 'jwplayer',
-		videoSlotName = 'VIDEOINARTICLE',
+		videoSlotName = 'VIDEO',
 		videoSource,
 		logGroup = 'wikia.articleVideo.jwplayertag.ads';
 
