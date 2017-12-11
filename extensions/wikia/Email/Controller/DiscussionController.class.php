@@ -15,6 +15,7 @@ abstract class DiscussionController extends EmailController {
         $this->postContent = $this->request->getVal( 'postContent' );
         $this->postUrl = $this->request->getVal( 'postUrl' );
         $this->setWikiFromWikiID();
+        $this->assertValidParams();
     }
 
     private function setWikiFromWikiID() {
@@ -201,7 +202,6 @@ class DiscussionUpvoteController extends DiscussionController {
     }
 
     protected function assertValidParams() {
-        parent::assertValidParams();
         if ( empty( $this->upVotes ) ) {
             throw new Check( 'Empty value passed for required param upVotes' );
         }
