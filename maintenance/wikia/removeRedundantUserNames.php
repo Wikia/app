@@ -79,14 +79,17 @@ class RemoveRedundantUserNames extends Maintenance {
 
 		// now process each user and keep the oldest entry in ipblocks table
 		foreach( $block_user_ids as $ipb_user ) {
-			// select ipb_id from ipblocks where ipb_user = 5693154 order by -1 limit 1
+			// select ipb_id from ipblocks where ipb_user = 5693154 order by ipb_id DESC limit 1
 			$ipb_block = $db->selectField(
 				'ipblocks',
 				'ipb_id',
 				[
 					'ipb_user' => $ipb_user,
 				],
-				__METHOD__
+				__METHOD__,
+				[
+					'ORDER BY' => 'ipb_id DESC'
+				]
 			);
 
 			if ( !$this->isDryRun ) {
