@@ -60,7 +60,7 @@ class RemoveRedundantUserNames extends Maintenance {
 	private function fixIpBlocks( DatabaseBase $db ) {
 		$this->output( 'Removing multiple entries in ipblocks table ...');
 
-		// select ipb_user from ipblocks group by ipb_user having count(*) > 1;
+		// select ipb_user from ipblocks group by ipb_user having count(*) > 1 AND user_id > 0;
 		$block_user_ids = $db->selectFieldValues(
 			'ipblocks',
 			'ipb_user',
@@ -68,7 +68,7 @@ class RemoveRedundantUserNames extends Maintenance {
 			__METHOD__,
 			[
 				'GROUP BY' => 'ipb_user',
-				'HAVING' => 'count(*) > 1'
+				'HAVING' => 'count(*) > 1 AND ipb_user > 0'
 			]
 		);
 
