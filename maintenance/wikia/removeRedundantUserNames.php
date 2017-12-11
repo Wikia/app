@@ -47,12 +47,77 @@ class RemoveRedundantUserNames extends Maintenance {
 		$this->mDescription = 'This script removes duplicated user-name related data from local wiki tables';
 	}
 
+	/**
+	 * ipblocks table can contain multiple entries for the same user ID, remove them
+	 *
+	 * This will allow us to avoid "Duplicate entry '31136422-0-0' for key 'ipb_address'
+	 * (geo-db-d-master.query.consul)" DB errors
+	 *
+	 * @see SUS-3538
+	 *
+	 * @param DatabaseBase $db
+	 */
+	private function fixIpBlocks( DatabaseBase $db ) {
+		$this->output( 'Removing multiple entries in ipblocks table ...');
+
+		// select ipb_user from ipblocks group by ipb_user having count(*) > 1 AND user_id > 0;
+		$block_user_ids = $db->selectFieldValues(
+			'ipblocks',
+			'ipb_user',
+			'',
+			__METHOD__,
+			[
+				'GROUP BY' => 'ipb_user',
+				'HAVING' => 'count(*) > 1 AND ipb_user > 0'
+			]
+		);
+
+		if ( empty( $block_user_ids ) ) {
+			$this->output( " no entries to fix\n");
+			return;
+		}
+
+		// now process each user and keep the oldest entry in ipblocks table
+		foreach( $block_user_ids as $ipb_user ) {
+			// select ipb_id from ipblocks where ipb_user = 5693154 order by ipb_id DESC limit 1
+			$ipb_block = $db->selectField(
+				'ipblocks',
+				'ipb_id',
+				[
+					'ipb_user' => $ipb_user,
+				],
+				__METHOD__,
+				[
+					'ORDER BY' => 'ipb_id DESC'
+				]
+			);
+
+			if ( !$this->isDryRun ) {
+				$db->delete(
+					'ipblocks',
+					[
+						'ipb_id' => $ipb_block
+					],
+					__METHOD__ . '::deleteBlockById'
+				);
+			}
+
+			$this->output( sprintf( ' #%d', $ipb_block ) );
+		}
+
+		$this->output(" done\n");
+	}
+
 	public function execute() {
 		global $wgDBname;
 		$this->isDryRun = $this->hasOption( 'dry-run' );
 
 		$rows_affected = 0;
 		$db = $this->getDB(DB_MASTER);
+
+		// SUS-3538: let's first clean up the ipblocks table that contain multiple entries for
+		// the same user ID
+		$this->fixIpBlocks( $db );
 
 		foreach(self::TABLES as $entry) {
 			$this->output( sprintf( 'Processing %s table ...', $entry['table'] ) );
