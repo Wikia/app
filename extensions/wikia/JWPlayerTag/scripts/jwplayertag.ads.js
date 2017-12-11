@@ -41,7 +41,7 @@ define('wikia.articleVideo.jwplayertag.ads', [
 			videoContainer = videoElement && videoElement.parentNode,
 			prerollPositionReached = false,
 			trackingParams = {
-				adProduct: 'in-article-video',
+				adProduct: 'video',
 				slotName: videoSlotName
 			},
 			videoDepth = 0;
@@ -51,7 +51,7 @@ define('wikia.articleVideo.jwplayertag.ads', [
 
 		if (adContext.get('opts.showAds')) {
 			player.on('adBlock', function () {
-				trackingParams.adProduct = 'in-article-video';
+				trackingParams.adProduct = 'video';
 			});
 
 			player.on('beforePlay', function () {
@@ -63,7 +63,7 @@ define('wikia.articleVideo.jwplayertag.ads', [
 				correlator = Math.round(Math.random() * 10000000000);
 				videoDepth += 1;
 
-				trackingParams.adProduct = 'in-article-video-preroll';
+				trackingParams.adProduct = 'video-preroll';
 				player.playAd(buildVastUrl('preroll', videoDepth, correlator));
 				prerollPositionReached = true;
 			});
@@ -78,7 +78,7 @@ define('wikia.articleVideo.jwplayertag.ads', [
 				vastDebugger.setVastAttributes(videoContainer, event.tag, 'error', event.ima && event.ima.ad);
 			});
 		} else {
-			trackingParams.adProduct = 'in-article-video-no-ad';
+			trackingParams.adProduct = 'video';
 		}
 
 		adsTracking(player, trackingParams);
