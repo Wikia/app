@@ -3,10 +3,10 @@ define('wikia.articleVideo.featuredVideo.ads', [
 	'ext.wikia.adEngine.video.vastUrlBuilder',
 	'ext.wikia.adEngine.slot.service.megaAdUnitBuilder',
 	'ext.wikia.adEngine.slot.service.srcProvider',
-	'ext.wikia.adEngine.video.vastDebugger',
 	'ext.wikia.adEngine.video.player.jwplayer.adsTracking',
+	'ext.wikia.adEngine.video.vastDebugger',
 	'wikia.log'
-], function (adContext, vastUrlBuilder, megaAdUnitBuilder, srcProvider, vastDebugger, adsTracking, log) {
+], function (adContext, vastUrlBuilder, megaAdUnitBuilder, srcProvider, adsTracking, vastDebugger, log) {
 	'use strict';
 
 	var aspectRatio = 640 / 480,
