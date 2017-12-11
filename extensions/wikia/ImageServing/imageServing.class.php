@@ -125,10 +125,10 @@ class ImageServing {
 
 			// fetch articles metadata (try from cache)
 			foreach ( $articles as $key => $value ) {
-				$article = Article::newFromID( $key );
+				$title = Title::newFromID( $key );
 
-				if ( $article instanceof  Article ) {
-					$mcValue = $this->memc->get( $this->makeKey( $key, $article->getRevIdFetched() ) );
+				if ( $title instanceof  Title ) {
+					$mcValue = $this->memc->get( $this->makeKey( $key, $title->getLatestRevID() ) );
 
 					if ( !empty( $mcValue ) ) {
 						unset( $articles[$key] );
