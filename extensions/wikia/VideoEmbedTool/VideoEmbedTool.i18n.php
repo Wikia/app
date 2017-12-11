@@ -527,6 +527,9 @@ $messages['de'] = array(
 	'vet-error-invalid-file-type' => 'Oops! The file is not a video. Please, check the supplied URL.',
 	'vet-url-label' => 'URL',
 	'vet-uploaddisabled' => 'Video uploads are disabled on this wiki',
+	'vet-video-wiki' => 'FANDOM-Videothek',
+	'vet-search-filter-caption' => 'Suchfilter',
+	'vet-thiswiki' => 'Dieses Wiki',
 );
 
 $messages['de-formal'] = array(
@@ -679,6 +682,9 @@ $messages['es'] = array(
 	'vet-desc' => "Wikia's Video Embed Tool",
 	'vet-error-invalid-file-type' => 'Oops! The file is not a video. Please, check the supplied URL.',
 	'vet-url-label' => 'URL',
+	'vet-video-wiki' => 'Videoteca de FANDOM',
+	'vet-search-filter-caption' => 'Filtro de búsqueda',
+	'vet-thiswiki' => 'Esta wikia',
 );
 
 $messages['eu'] = array(
@@ -755,6 +761,9 @@ $messages['fi'] = array(
 	'vet-url-label' => 'URL',
 	'vet-video-add-intro' => 'Looking for videos for your wiki? Try searching at [http://video.wikia.com FANDOM Video Library] for high quality videos licensed by FANDOM.',
 	'vet-uploaddisabled' => 'Video uploads are disabled on this wiki',
+	'vet-video-wiki' => 'FANDOM Video Library',
+	'vet-search-filter-caption' => 'Search filter',
+	'vet-thiswiki' => 'Tämä Wiki',
 );
 
 $messages['fr'] = array(
@@ -854,6 +863,9 @@ $messages['fr'] = array(
 	'vet-description-label' => 'Description',
 	'vet-error-invalid-file-type' => 'Oops! The file is not a video. Please, check the supplied URL.',
 	'vet-url-label' => 'URL',
+	'vet-video-wiki' => 'Vidéothèque de FANDOM',
+	'vet-search-filter-caption' => 'Filtre de recherche',
+	'vet-thiswiki' => 'Ce wiki',
 );
 
 $messages['gl'] = array(
@@ -1264,6 +1276,9 @@ $messages['it'] = array(
 	'vet-error-while-loading' => 'Error occurred while loading data. Please recheck your connection and refresh the page.',
 	'vet-placeholder-return' => 'Return to article',
 	'vet-uploaddisabled' => 'Video uploads are disabled on this wiki',
+	'vet-video-wiki' => 'FANDOM Video Library',
+	'vet-search-filter-caption' => 'Filtro di ricerca',
+	'vet-thiswiki' => 'Questa wiki',
 );
 
 $messages['ja'] = array(
@@ -1338,7 +1353,7 @@ $messages['ja'] = array(
 	'vet-gallery' => 'ギャラリー',
 	'vet-protected' => 'この動画は保護されています',
 	'vet-search-results-WVL' => 'FANDOM動画ライブラリで「$2」に一致する動画は $1 件でした',
-	'vet-video-add-intro' => 'Wikiに追加する動画をお探しの場合は、[http://video.wikia.com Fandom動画ライブラリ] で検索してみてください。Fandomで使用可能な高画質動画をご用意しています。',
+	'vet-video-add-intro' => 'Wikiに追加する動画をお探しの場合は、[http://video.wikia.com FANDOM動画ライブラリ] で検索してみてください。FANDOMで使用可能な高画質動画をご用意しています。',
 	'vet-add-from-preview' => '動画を追加',
 	'vet-no-results-found' => '見つかりませんでした',
 	'vet-search-label' => '検索',
@@ -1363,6 +1378,9 @@ $messages['ja'] = array(
 	'vet-suggestions' => 'Suggested videos',
 	'vet-url-label' => 'URL',
 	'vet-uploaddisabled' => 'Video uploads are disabled on this wiki',
+	'vet-video-wiki' => 'FANDOM動画ライブラリ',
+	'vet-search-filter-caption' => '検索対象',
+	'vet-thiswiki' => 'このウィキ',
 );
 
 $messages['kl'] = array(
@@ -1434,6 +1452,9 @@ $messages['ko'] = array(
 	'vet-error-invalid-file-type' => 'Oops! The file is not a video. Please, check the supplied URL.',
 	'vet-url-label' => 'URL',
 	'vet-uploaddisabled' => 'Video uploads are disabled on this wiki',
+	'vet-video-wiki' => '위키아 동영상 라이브러리',
+	'vet-search-filter-caption' => '검색 범위',
+	'vet-thiswiki' => '이 위키',
 );
 
 $messages['ksh'] = array(
@@ -1540,6 +1561,9 @@ $messages['lol'] = array(
 	'vet-warn3' => 'crwdns65856:0crwdne65856:0',
 	'vet-width' => 'crwdns65857:0crwdne65857:0',
 	'vet-uploaddisabled' => 'crwdns65858:0crwdne65858:0',
+	'vet-video-wiki' => 'crwdns66316:0crwdne66316:0',
+	'vet-search-filter-caption' => 'crwdns65837:0crwdne65837:0',
+	'vet-thiswiki' => 'crwdns65846:0crwdne65846:0',
 );
 
 $messages['mk'] = array(
@@ -1886,6 +1910,9 @@ Wellicht moet u de videopagina opschonen om de wijzigingen te zien.',
 	'vet-url-label' => 'URL',
 	'vet-video-add-intro' => 'Looking for videos for your wiki? Try searching at [http://video.wikia.com FANDOM Video Library] for high quality videos licensed by FANDOM.',
 	'vet-uploaddisabled' => 'Video uploads are disabled on this wiki',
+	'vet-video-wiki' => 'FANDOM Video Library',
+	'vet-search-filter-caption' => 'Search filter',
+	'vet-thiswiki' => 'Deze wiki',
 );
 
 $messages['nl-informal'] = array(
@@ -2043,6 +2070,9 @@ Podaj nazwę tego filmu. Może to być np. opis jego zawartości.',
 	'vet-desc' => "Wikia's Video Embed Tool",
 	'vet-error-invalid-file-type' => 'Oops! The file is not a video. Please, check the supplied URL.',
 	'vet-url-label' => 'URL',
+	'vet-video-wiki' => 'Wideoteka Fandomu',
+	'vet-search-filter-caption' => 'Filtr',
+	'vet-thiswiki' => 'Ta wiki',
 );
 
 $messages['pms'] = array(
@@ -2239,6 +2269,9 @@ $messages['pt'] = array(
 	'vet-desc' => "Wikia's Video Embed Tool",
 	'vet-error-invalid-file-type' => 'Oops! The file is not a video. Please, check the supplied URL.',
 	'vet-url-label' => 'URL',
+	'vet-video-wiki' => 'Videoteca do FANDOM',
+	'vet-search-filter-caption' => 'Procurar pelo filtro',
+	'vet-thiswiki' => 'Esta wiki',
 );
 
 $messages['ro'] = array(
@@ -2344,6 +2377,9 @@ $messages['ru'] = array(
 	'vet-style' => 'Caption',
 	'vet-url-label' => 'URL',
 	'vet-uploaddisabled' => 'Video uploads are disabled on this wiki',
+	'vet-video-wiki' => 'Видео Библиотека ФЭНДОМА',
+	'vet-search-filter-caption' => 'Фильтр поиска',
+	'vet-thiswiki' => 'Эта вики',
 );
 
 $messages['sl'] = array(
@@ -2663,6 +2699,9 @@ $messages['vi'] = array(
 	'vet-warn3' => 'Please supply name of the video you like to add',
 	'vet-width' => 'Width',
 	'vet-uploaddisabled' => 'Video uploads are disabled on this wiki',
+	'vet-video-wiki' => 'FANDOM Video Library',
+	'vet-search-filter-caption' => 'Search filter',
+	'vet-thiswiki' => 'This wiki',
 );
 
 $messages['yi'] = array(
@@ -2726,6 +2765,9 @@ $messages['zh-hans'] = array(
 	'vet-back' => 'Back',
 	'vet-close' => 'Close',
 	'vet-error-invalid-file-type' => 'Oops! The file is not a video. Please, check the supplied URL.',
+	'vet-video-wiki' => 'FANDOM视频库',
+	'vet-search-filter-caption' => '搜索特定位置',
+	'vet-thiswiki' => '本维基',
 );
 
 $messages['zh-hant'] = array(
@@ -2784,5 +2826,8 @@ $messages['zh-hant'] = array(
 	'vet-desc' => "Wikia's Video Embed Tool",
 	'vet-error-invalid-file-type' => 'Oops! The file is not a video. Please, check the supplied URL.',
 	'vet-upload-btn' => 'Add',
+	'vet-video-wiki' => 'FANDOM影片庫',
+	'vet-search-filter-caption' => '搜尋特定位置',
+	'vet-thiswiki' => '這個Wiki',
 );
 
