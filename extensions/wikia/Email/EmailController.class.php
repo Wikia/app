@@ -734,6 +734,7 @@ abstract class EmailController extends \WikiaController {
 			'currentUser' => $this->getCurrentUserName(),
 			'targetUser' => $this->getTargetUserName(),
 			'targetLang' => $this->targetLang,
+			'request' => $this->request->getVal( 'postUrl' )
 		] );
 	}
 
