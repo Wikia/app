@@ -1,10 +1,16 @@
 <?php
 
 use \Wikia\Logger\WikiaLogger;
+use \Wikia\Rabbit\ConnectionBase;
 
 class ScribeEventProducer {
+	protected static $rabbit;
 	private $app = null;
 	private $mParams, $mKey, $mEventType;
+	private $sendToScribe, $sendToRabbit;
+
+	const
+		RABBIT_KEY_PREFIX = 'mediawiki.edit.';
 
 	const
 		EDIT_CATEGORY       = 'log_edit',
@@ -50,6 +56,8 @@ class ScribeEventProducer {
 		$this->setArchive( $archive );
 		$this->setLanguage();
 		$this->setCategory();
+		$this->sendToScribe = true;
+		$this->sendToRabbit = true;
 	}
 
 	public function buildEditPackage( $oPage, $oUser, $oRevision = null ) {
@@ -367,10 +375,12 @@ class ScribeEventProducer {
 
 	}
 
-	private function logSendScribeMessage() {
+	private function logSendMessage() {
 		WikiaLogger::instance()->info( 'SendScribeMessage', [
 			'method' => __METHOD__,
 			'params' => $this->mParams,
+			'scribe_enabled' => $this->sendToScribe,
+			'rabbit_enabled' => $this->sendToRabbit,
 		] );
 	}
 
@@ -378,8 +388,14 @@ class ScribeEventProducer {
 		wfProfileIn( __METHOD__ );
 		try {
 			$data = json_encode($this->mParams);
-			WScribeClient::singleton( $this->mKey )->send( $data );
-			$this->logSendScribeMessage();
+			if ( $this->sendToScribe ) {
+				WScribeClient::singleton( $this->mKey )->send( $data );
+			}
+			if ( $this->sendToRabbit ) {
+				$key = static::RABBIT_KEY_PREFIX.$this->mKey;
+				$this->getRabbit()->publish( $key, $data );
+			}
+			$this->logSendMessage();
 		}
 		catch( TException $e ) {
 			Wikia::log( __METHOD__, 'scribeClient exception', $e->getMessage() );
@@ -424,5 +440,19 @@ class ScribeEventProducer {
 		wfProfileOut(__METHOD__);
 
 		return $links;
+	}
+
+	/*
+	 * Helper methods
+	 */
+	/** @return \Wikia\Rabbit\ConnectionBase */
+	protected static function getRabbit() {
+		global $wgEditEventsRabbitConfig;
+
+		if ( !isset( self::$rabbit ) ) {
+			self::$rabbit = new ConnectionBase( $wgEditEventsRabbitConfig );
+		}
+
+		return self::$rabbit;
 	}
 }
