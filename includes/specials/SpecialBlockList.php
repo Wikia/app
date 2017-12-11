@@ -141,7 +141,8 @@ class SpecialBlockList extends SpecialPage {
 					break;
 
 				case Block::TYPE_USER:
-					$conds['ipb_address'] = (string)$this->target;
+					// SUS-3250: Resolve query string to user ID
+					$conds['ipb_user'] = User::idFromName( (string)$this->target );
 					$conds['ipb_auto'] = 0;
 					break;
 			}
@@ -274,7 +275,10 @@ class BlockListPager extends TablePager {
 				if( $row->ipb_auto ){
 					$formatted = $this->msg( 'autoblockid', $row->ipb_id )->parse();
 				} else {
-					list( $target, $type ) = Block::parseTarget( $row->ipb_address );
+					// SUS-3502: use user name lookup on the block target if they are a registered user
+					$blockTarget = $row->ipb_user ? $this->userNames[$row->ipb_user] : $row->ipb_address;
+
+					list( $target, $type ) = Block::parseTarget( $blockTarget );
 					switch( $type ){
 						case Block::TYPE_USER:
 						case Block::TYPE_IP:
@@ -303,12 +307,15 @@ class BlockListPager extends TablePager {
 							array( 'wpTarget' => "#{$row->ipb_id}" )
 						);
 					} else {
+						// SUS-3502: use user name lookup on the block target if they are a registered user
+						$blockTarget = $row->ipb_user ? $this->userNames[$row->ipb_user] : $row->ipb_address;
+
 						$links[] = Linker::linkKnown(
-							SpecialPage::getTitleFor( 'Unblock', $row->ipb_address ),
+							SpecialPage::getTitleFor( 'Unblock', $blockTarget ),
 							$msg['unblocklink']
 						);
 						$links[] = Linker::linkKnown(
-							SpecialPage::getTitleFor( 'Block', $row->ipb_address ),
+							SpecialPage::getTitleFor( 'Block', $blockTarget ),
 							$msg['change-blocklink']
 						);
 					}

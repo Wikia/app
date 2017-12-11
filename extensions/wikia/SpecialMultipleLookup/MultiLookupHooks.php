@@ -21,7 +21,7 @@ class MultiLookupHooks {
 	 * @param RecentChange $recentChange
 	 */
 	static public function onRecentChangeSave( RecentChange $recentChange ) {
-		$ip = $recentChange->getAttribute( 'rc_ip' );
+		$ip = $recentChange->getUserIp();
 
 		if ( IP::isIPAddress( $ip ) ) {
 			global $wgCityId;

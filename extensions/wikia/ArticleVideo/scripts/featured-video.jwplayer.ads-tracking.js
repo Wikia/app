@@ -3,6 +3,8 @@ define('wikia.articleVideo.featuredVideo.adsTracking', [
 	'ext.wikia.adEngine.video.player.jwplayer.jwplayerTracker',
 	'ext.wikia.adEngine.video.vastParser'
 ], function (eventDispatcher, tracker, vastParser) {
+	'use strict';
+
 	function clearParams(params) {
 		params.lineItemId = undefined;
 		params.creativeId = undefined;

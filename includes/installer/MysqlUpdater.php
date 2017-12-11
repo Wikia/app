@@ -73,7 +73,7 @@ class MysqlUpdater extends DatabaseUpdater {
 			#array( 'addField', 'user',            'user_registration', 'patch-user_registration.sql' ),
 			array( 'doTemplatelinksUpdate' ),
 			array( 'addTable', 'externallinks',                       'patch-externallinks.sql' ),
-			array( 'addTable', 'job',                                 'patch-job.sql' ),
+			#array( 'addTable', 'job',                                 'patch-job.sql' ),
 			array( 'addField', 'site_stats',      'ss_images',        'patch-ss_images.sql' ),
 			array( 'addTable', 'langlinks',                           'patch-langlinks.sql' ),
 			array( 'addTable', 'querycache_info',                     'patch-querycacheinfo.sql' ),
@@ -181,7 +181,7 @@ class MysqlUpdater extends DatabaseUpdater {
 			array( 'addIndex', 'page', 'page_redirect_namespace_len', 'patch-page_redirect_namespace_len.sql' ),
 			array( 'modifyField', 'user_groups', 'ug_group', 'patch-ug_group-length-increase.sql' ),
 			array( 'addField',	'uploadstash',	'us_chunk_inx',		'patch-uploadstash_chunk.sql' ),
-			array( 'addfield', 'job',           'job_timestamp',    'patch-jobs-add-timestamp.sql' ),
+			#array( 'addfield', 'job',           'job_timestamp',    'patch-jobs-add-timestamp.sql' ),
 			array( 'modifyField', 'user_former_groups', 'ufg_group', 'patch-ufg_group-length-increase.sql' ),
 
 			// backports

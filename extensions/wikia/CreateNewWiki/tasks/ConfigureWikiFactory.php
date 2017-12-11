@@ -11,7 +11,7 @@ class ConfigureWikiFactory extends Task {
 	const DEFAULT_WIKI_LOGO = '$wgUploadPath/b/bc/Wiki.png';
 	const SANITIZED_BUCKET_NAME_MAXIMUM_LENGTH = 55;
 	const IMGROOT = "/images/";
-	const IMAGEURL = "http://images.wikia.com/";
+	const IMAGEURL = "https://images.wikia.com/";
 
 	public $imagesURL;
 	public $imagesDir;

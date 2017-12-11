@@ -16,6 +16,7 @@ return array(
     '94e265ce14c952a920a4ea5f7e8e9baa' => $vendorDir . '/mediawiki/parser-hooks/ParserHooks.php',
     '5a494680c593293bd6035e42e2a6825c' => $vendorDir . '/data-values/geo/Geo.php',
     'c3ae67574219cc56cab6c30ef8877b85' => $baseDir . '/extensions/Validator/Validator.php',
+    '6124b4c8570aa390c21fafd04a26c69f' => $vendorDir . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
     'bbf73f3db644d3dced353b837903e74c' => $vendorDir . '/php-di/php-di/src/DI/functions.php',
     '679670650e5628b8e655cb72d74ae35b' => $vendorDir . '/ooyala/v2-api/OoyalaApi.php',
     'cc7fdba6ccbdf8a9ed7028cb59f8bb6f' => $baseDir . '/extensions/Maps/Maps.php',
