@@ -1,4 +1,4 @@
-define('wikia.articleVideo.featuredVideo.adsTracking', [
+define('ext.wikia.adEngine.video.player.jwplayer.adsTracking', [
 	'ext.wikia.adEngine.utils.eventDispatcher',
 	'ext.wikia.adEngine.video.player.jwplayer.jwplayerTracker',
 	'ext.wikia.adEngine.video.vastParser'
