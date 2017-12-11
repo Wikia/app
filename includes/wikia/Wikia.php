@@ -83,6 +83,7 @@ class Wikia {
 
 	const USER = 'FANDOM';
 	const BOT_USER = 'FANDOMbot';
+	const BOT_USER_ID = 32794352;
 
 	const FAVICON_URL_CACHE_KEY = 'favicon-v1';
 
