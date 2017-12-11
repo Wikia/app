@@ -60,6 +60,7 @@ class ArticleVideoContext {
 				),
 				true
 			);
+
 			if ( !empty( $details ) ) {
 				$videoData = array_merge( $videoData, $details );
 				$videoData['duration'] = WikiaFileHelper::formatDuration( $details['playlist'][0]['duration'] );

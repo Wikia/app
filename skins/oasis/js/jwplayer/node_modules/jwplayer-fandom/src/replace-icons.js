@@ -35,7 +35,7 @@ function wikiaJWPlayerReplaceIcons(playerInstance) {
 				{ selector: '.jw-svg-icon-volume-100', iconName: 'volumeOn' }
 			],
 			displayControlsIcons = [
-				{ selector: '.jw-svg-icon-play', iconName: 'play' },
+				{ selector: '.jw-svg-icon-play', iconName: 'displayPlay' },
 				{ selector: '.jw-svg-icon-pause', iconName: 'pause' }
 			];
 

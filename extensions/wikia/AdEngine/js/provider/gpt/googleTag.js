@@ -170,6 +170,10 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 
 		onAdLoadCallback(element.getId(), gptEvent, iframe);
 	}
+	
+	function isGoogleTagLoaded() {
+		return typeof win.googletag.pubads === 'function';
+	}
 
 	function destroySlots(slotsNames) {
 		var allSlots,
@@ -177,6 +181,13 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 			success;
 
 		if (!isInitialized()) {
+			return;
+		}
+		
+		if (!isGoogleTagLoaded()) {
+			log(['destroySlots', 'pubads not yet available', 'resetting cmd'], log.levels.info, logGroup);
+			win.googletag.cmd = [];
+			enableServices();
 			return;
 		}
 

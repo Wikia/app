@@ -88,11 +88,7 @@ define('ext.wikia.adEngine.provider.btfBlocker', [
 				// If pendingAtfSlots is empty, start BTF slots
 				log(['remove from pendingAtfSlots', pendingAtfSlots, slotName], log.levels.debug, logGroup);
 				if (pendingAtfSlots.length === 0) {
-					/*
-					mobil require is asynchronous.
-					We need to wait for code that is executed by require (UAP) before we start executing BTF queue
-					 */
-					win.setTimeout(startBtfQueue, 0);
+					startBtfQueue();
 				}
 			}
 		}
