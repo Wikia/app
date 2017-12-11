@@ -60,6 +60,7 @@ class ArticleVideoContext {
 				),
 				true
 			);
+
 			if ( !empty( $details ) ) {
 				$videoData = array_merge( $videoData, $details );
 				$videoData['duration'] = WikiaFileHelper::formatDuration( $details['playlist'][0]['duration'] );
@@ -70,10 +71,34 @@ class ArticleVideoContext {
 			$videoData['dfpContentSourceId'] = $wg->AdDriverDfpOoyalaContentSourceId;
 			$videoData['metadata'] = self::getVideoMetaData( $videoData );
 
+			$videoData = self::getVideoDataWithAttribution( $videoData );
+
 			return $videoData;
 		}
 
 		return [];
+	}
+
+	private static function getVideoDataWithAttribution( $videoData ) {
+		if ( empty( $videoData['playlist'] ) || empty( $videoData['playlist'][0] ) ) {
+			return $videoData;
+		}
+
+		$playlistVideo = $videoData['playlist'][0];
+
+		if ( !empty( $playlistVideo['username'] ) ) {
+			$videoData['username'] = $playlistVideo['username'];
+		}
+
+		if ( !empty( $playlistVideo['userUrl'] ) ) {
+			$videoData['userUrl'] = $playlistVideo['userUrl'];
+		}
+
+		if ( !empty( $playlistVideo['userAvatarUrl'] ) ) {
+			$videoData['userAvatarUrl'] = $playlistVideo['userAvatarUrl'];
+		}
+
+		return $videoData;
 	}
 
 	private static function getVideoMetaData( $videoDetails ) {
