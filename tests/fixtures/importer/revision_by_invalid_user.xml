@@ -1,0 +1,129 @@
+<mediawiki xmlns="http://www.mediawiki.org/xml/export-0.10/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mediawiki.org/xml/export-0.10/ http://www.mediawiki.org/xml/export-0.10.xsd" version="0.10" xml:lang="en">
+	<siteinfo>
+		<sitename>Wookieepedia</sitename>
+		<dbname>starwars</dbname>
+		<base>http://starwars.wikia.com/wiki/Main_Page</base>
+		<generator>MediaWiki 1.19.24</generator>
+		<case>first-letter</case>
+		<namespaces>
+			<namespace key="-2" case="first-letter">Media</namespace>
+			<namespace key="-1" case="first-letter">Special</namespace>
+			<namespace key="0" case="first-letter" />
+			<namespace key="1" case="first-letter">Talk</namespace>
+			<namespace key="2" case="first-letter">User</namespace>
+			<namespace key="3" case="first-letter">User talk</namespace>
+			<namespace key="4" case="first-letter">Wookieepedia</namespace>
+			<namespace key="5" case="first-letter">Wookieepedia talk</namespace>
+			<namespace key="6" case="first-letter">File</namespace>
+			<namespace key="7" case="first-letter">File talk</namespace>
+			<namespace key="8" case="first-letter">MediaWiki</namespace>
+			<namespace key="9" case="first-letter">MediaWiki talk</namespace>
+			<namespace key="10" case="first-letter">Template</namespace>
+			<namespace key="11" case="first-letter">Template talk</namespace>
+			<namespace key="12" case="first-letter">Help</namespace>
+			<namespace key="13" case="first-letter">Help talk</namespace>
+			<namespace key="14" case="first-letter">Category</namespace>
+			<namespace key="15" case="first-letter">Category talk</namespace>
+			<namespace key="100" case="first-letter">Forum</namespace>
+			<namespace key="101" case="first-letter">Forum talk</namespace>
+			<namespace key="112" case="first-letter">Wookieepedia Contests</namespace>
+			<namespace key="113" case="first-letter">Wookieepedia Contests talk</namespace>
+			<namespace key="114" case="first-letter">Bracket</namespace>
+			<namespace key="115" case="first-letter">Bracket talk</namespace>
+			<namespace key="116" case="first-letter">Instant Expert</namespace>
+			<namespace key="117" case="first-letter">Instant Expert talk</namespace>
+			<namespace key="420" case="first-letter">Layer</namespace>
+			<namespace key="421" case="first-letter">Layer talk</namespace>
+			<namespace key="500" case="first-letter">User blog</namespace>
+			<namespace key="501" case="first-letter">User blog comment</namespace>
+			<namespace key="502" case="first-letter">Blog</namespace>
+			<namespace key="503" case="first-letter">Blog talk</namespace>
+			<namespace key="828" case="first-letter">Module</namespace>
+			<namespace key="829" case="first-letter">Module talk</namespace>
+			<namespace key="1200" case="first-letter">Message Wall</namespace>
+			<namespace key="1201" case="first-letter">Thread</namespace>
+			<namespace key="1202" case="first-letter">Message Wall Greeting</namespace>
+			<namespace key="2000" case="first-letter">Board</namespace>
+			<namespace key="2001" case="first-letter">Board Thread</namespace>
+			<namespace key="2002" case="first-letter">Topic</namespace>
+		</namespaces>
+	</siteinfo>
+	<page>
+		<title>Slicer</title>
+		<ns>0</ns>
+		<id>482660</id>
+		<revision>
+			<id>7267972</id>
+			<parentid>7171420</parentid>
+			<timestamp>2017-11-08T15:57:51Z</timestamp>
+			<contributor>
+				<username>NonExistingUser</username>
+				<id>372486</id>
+			</contributor>
+			<minor/>
+			<comment>/* Appearances */</comment>
+			<text xml:space="preserve" bytes="3904">{{Eras}}
+[[File:Merei_Spanjaf.png|thumb|right|200px|[[Merei Spanjaf]], a slicer]]
+{{Quote|I can't decrypt it. I'm not a slicer. Kidnap one of those next time.|[[Zaluna Myder]]|A New Dawn}}
+A '''&quot;slicer&quot;''' was an individual who specialized in '''slicing''' into [[computer]] systems and programs, and breaking encryption.
+
+==History==
+{{Quote|So they brought a slicer. I knew there was someone else.|Count [[Denetrius Vidian|Vidian]]|A New Dawn}}
+Nine [[Standard month/Canon|months]] after the [[Battle of Geonosis]], [[scientist]]s working for [[Confederacy of Independent Systems|Separatist]] leader [[Count]] [[Dooku]] successfully sliced into the [[Galactic Republic|Republic]] [[HoloNet]] by seeding the spaceways with hyperwave transceiver nodes of a novel design. Dooku used this access to the HoloNet to broadcast [[propaganda]] [[Shadowfeed]]s.&lt;ref name=&quot;tarkin&quot;&gt;''[[Tarkin (novel)|Tarkin]]''&lt;/ref&gt;
+
+Eight [[Standard year|years]] after the [[Proclamation of the New Order|rise]] of the [[Galactic Empire]], on the [[planet]] [[Gorse]] the explosives expert [[Skelly]] built all [[Sexes|his]] [[computer]]s from kits so that they were safe from slicing while he gathered evidence that the Empire's continued [[mining]] on Gorse's [[moon]] [[Cynda]] would result the moon being torn apart. [[Zaluna Myder]], a shift leader for the surveillance company [[Transcept Media Solutions]] on Gorse, was capable of slicing into various Imperial systems. When Myder joined Skelly, [[Kanan Jarrus]], and [[Hera Syndulla]] on a mission to stop Count [[Denetrius Vidian]]'s plan to destroy Cynda, she was able to slice into surveillance and communications systems and carried devices that helped her do so. However, when they had the opportunity to explore files downloaded from Vidian's [[Cybernetics|cybernetically]] enhanced [[brain]], Myder was unable to decrypt one of the files, claiming she was not a slicer. When confronted by Vidian, Myder's equipment fell out of her bag, leading the Count to believe she was indeed a slicer.&lt;ref name=&quot;newdawn&quot;&gt;''[[A New Dawn]]''&lt;/ref&gt;
+
+[[Sabine Wren]] possessed slicing skills.&lt;ref name=&quot;sketch&quot;&gt;''[[Star Wars Rebels: Sabine My Rebel Sketchbook]]''&lt;/ref&gt;
+
+==Appearances==
+{{Scroll box|
+*''[[Star Wars Battlefront II]]''
+*''[[Catalyst: A Rogue One Novel]]''
+*''[[Darth Vader: Dark Lord of the Sith 1: The Chosen One, Part I]]'' {{Mo}}
+*''[[Kanan 3: The Last Padawan, Part III: Pivot]]''
+*''[[Tarkin (novel)|Tarkin]]'' {{Mo}}
+*''[[Rebel Rising]]'' {{Mo}}
+*''[[Thrawn (novel)|Thrawn]]'' {{Mo}}
+*''[[A New Dawn]]'' {{1st}}
+*''[[Servants of the Empire: Rebel in the Ranks]]''
+*''[[Servants of the Empire: Imperial Justice]]''
+*''[[Servants of the Empire: The Secret Academy]]''
+*''[[Battlefront II: Inferno Squad]]''
+*''[[Heir to the Jedi]]''
+*''[[The Weapon of a Jedi: A Luke Skywalker Adventure]]'' {{Mo}}
+*''[[Darth Vader 2: Vader, Part II]]''
+*''[[Doctor Aphra 6: Aphra, Part VI]]'' {{Mo}}
+*''[[Doctor Aphra Annual 1]]''
+*''[[Moving Target: A Princess Leia Adventure]]'' {{Mo}}
+*''[[Shattered Empire, Part III]]''
+*''[[Aftermath]]'' {{Mo}}
+*''[[Star Wars: Uprising]]''
+*''[[Aftermath: Life Debt]]''
+*''[[Aftermath: Empire's End]]''
+*''[[Bloodline (novel)|Bloodline]]'' {{Mo}}
+*''[[Phasma (novel)|Phasma]]'' {{Mo}}
+*&quot;[[The Perfect Weapon]]&quot;
+*''[[Poe Dameron 6: Lockdown, Part III]]''
+*''[[Poe Dameron 7: The Gathering Storm]]''
+*''[[Poe Dameron 19: War Stories, Part III]]'' {{Mo}}
+*''[[Join the Resistance]]''
+*[[Star Wars: Episode VIII The Last Jedi|''Star Wars'': Episode VIII ''The Last Jedi'']]}}
+
+==Sources==
+*''[[Star Wars Rebels: Sabine My Rebel Sketchbook]]''
+*''[[Star Wars Rebels: Visual Guide: Epic Battles]]''
+*''[[Star Wars: Aliens of the Galaxy]]''
+*[[Star Wars: The Force Awakens Beginner Game|''Star Wars: The Force Awakens'' Beginner Game]]
+
+==Notes and references==
+{{Reflist}}
+
+{{Interlang
+|ru=Слайсер/Канон
+}}
+
+[[Category:Slicers| ]]</text>
+			<sha1>jkwdimyhtuxpg111tp1tzg031idxrs0</sha1>
+		</revision>
+	</page>
+</mediawiki>

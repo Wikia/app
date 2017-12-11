@@ -1262,15 +1262,20 @@ class WikiRevision {
 		$dbw = wfGetDB( DB_MASTER );
 
 		# Sneak a single revision into place
-		$user = User::newFromName( $this->getUser() );
-		if( $user ) {
-			$userId = intval( $user->getId() );
-			$userText = $user->getName();
-			$userObj = $user;
+		$userName = $this->getUser();
+
+		$userObj = User::newFromName( $userName ) ?: new User;
+		$userId = $userObj->getId();
+
+		// SUS-3533: Attribute the import to FANDOMbot if there is no user with this name
+		// If it is an anon, attribute it to the IP
+		if ( !$userId ) {
+			$isAnon = User::isIP( $userName );
+
+			$userId = $isAnon ? 0 : Wikia::BOT_USER_ID;
+			$userText = $isAnon ? $userName : '';
 		} else {
-			$userId = 0;
-			$userText = $this->getUser();
-			$userObj = new User;
+			$userText = '';
 		}
 
 		// avoid memory leak...?
@@ -1278,6 +1283,7 @@ class WikiRevision {
 		$linkCache->clear();
 
 		$page = WikiPage::factory( $this->title );
+		$page->loadPageData( 'fromdbmaster' );
 		if( !$page->exists() ) {
 			# must create the page...
 			$pageId = $page->insertOn( $dbw );
