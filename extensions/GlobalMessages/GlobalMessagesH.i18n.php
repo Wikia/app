@@ -5345,7 +5345,7 @@ Legenda: '''({{int:cur}})''' = differenze con la versione attuale, '''({{int:las
 
 $messages['ja'] = array(
 	'hidden-categories' => '{PLURAL:$1|Hidden category|Hidden categories}',
-	'hidden-category-category' => '非公開カテゴリ',
+	'hidden-category-category' => '隠しカテゴリ',
 	'help' => 'ヘルプ',
 	'history' => 'ページ履歴',
 	'history_short' => '履歴',
