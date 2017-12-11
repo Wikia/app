@@ -2558,9 +2558,9 @@ $messages['id'] = array(
 	'awc-metrics-exact-match' => 'sama persis',
 	'awc-metrics-recordspager' => "tunjukan catatan '''$1''' ke '''$2''' dari '''$3'''",
 	'closed-wiki' => 'Menutup Wiki',
-	'closed-wiki-info' => 'Wiki ini telah ditutup',
+	'closed-wiki-info' => 'Wiki ini telah di tutup',
 	'disabled-wiki-info' => 'Wiki ini telah dinonaktifkan',
-	'closed-wiki-dump-exists' => 'Anda dapat mengambil konten Anda jika Anda suka.<br />(Jika wiki Anda baru-baru ini ditutup, mungkin diperlukan waktu singkat untuk file yang akan dihasilkan)',
+	'closed-wiki-dump-exists' => 'Anda dapat mengambil konten yang anda inginkan. <br />(Jika wiki anda baru saja di tutup, mungkin membutuhkan waktu yang singkat untuk file bisa terlihat)',
 	'closed-wiki-dump-noexists' => 'Wiki ini telah ditutup. Dump konten akan tersedia dalam 24 jam. Silakan periksa kembali.',
 	'closed-wiki-create-wiki' => 'Buat wiki baru',
 	'closed-wiki-policy' => 'Lihat Kebijakan menutup Wikia',
@@ -2574,6 +2574,7 @@ $messages['id'] = array(
 	'closed-confirm-btn' => 'Konfirmasi penutupan',
 	'closed-redirect-alert' => 'Silakan memasukkan pengalihan URL baru !',
 	'closed-reason' => 'Alasan:',
+	'closed-wiki-dump-links' => '[$1 Halaman saat ini] (versi ini biasa digunakan untuk penggunaan bot)<br />[$2 Halaman sekarang dan riwayatnya] (perhatian: file ini mungkin terlalu besar)',
 );
 
 $messages['ig'] = array(
