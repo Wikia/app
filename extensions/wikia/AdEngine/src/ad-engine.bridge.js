@@ -59,7 +59,9 @@ function unifySlotInterface(slot) {
 	slot.getTargeting = () => slotContext.targeting;
 	slot.getElement = () => slot.container.parentElement;
 	slot = Object.assign(new EventEmitter(), slot);
-	SlotListener.onImpressionViewable(slot);
+	slot.pre('viewed', () => {
+		SlotListener.onImpressionViewable(slot);
+	});
 
 	return slot;
 }
