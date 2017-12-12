@@ -68,7 +68,7 @@ class PandoraCoppaImageReviewCleanUp extends Maintenance {
 			if ( !$this->getOption( 'dryRun', true ) ) {
 				( new WikiaSQL() )
 					->UPDATE( 'image_review.images_coppa' )
-					->SET( 'is_removed', 1 )
+					->SET( 'is_removed', 1, true )
 					->WHERE( 'image_id' )->IN( array_map( function ( $item ) {
 						return $item['image_id'];
 					}, $chunk ) )
