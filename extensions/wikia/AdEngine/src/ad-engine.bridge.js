@@ -14,8 +14,15 @@ import slotConfig from './slots';
 Context.extend(config);
 let supportedTemplates = [BigFancyAdAbove, BigFancyAdBelow];
 
-function init(slotRegistry, pageLevelTargeting, legacyContext, legacyBtfBlocker, skin) {
-	TemplateRegistry.init(legacyContext);
+function init(
+	slotRegistry,
+	mercuryListener,
+	pageLevelTargeting,
+	legacyContext,
+	legacyBtfBlocker,
+	skin
+) {
+	TemplateRegistry.init(legacyContext, mercuryListener);
 	ScrollListener.init();
 
 	Context.extend({slots: slotConfig[skin]});
