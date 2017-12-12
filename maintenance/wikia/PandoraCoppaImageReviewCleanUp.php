@@ -5,8 +5,10 @@ require_once( dirname( __FILE__ ) . '/../Maintenance.php' );
 class PandoraCoppaImageReviewCleanUp extends Maintenance {
 
 	public function execute() {
+		global $wgSpecialsDB;
 
-		$db = wfGetDB( DB_SLAVE, [], 'image_review' );
+		$db = wfGetDB( DB_SLAVE, [], $wgSpecialsDB );
+		$db->query('use image_review');
 		$result = $db->query( "SELECT * FROM images_coppa LIMIT 1" );
 		while ( $row = $result->fetchRow() ) {
 			var_dump( $row );
