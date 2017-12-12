@@ -415,7 +415,7 @@
 		$image-width: 18px;
 		$image-height: 14px;
 	}
-	@if $imageName == 'infobox' {
+	@if $imageName == 'infobox-light' {
 		$image-x: 1784px;
 		$image-y: 0px;
 		$image-width: 20px;
@@ -625,8 +625,8 @@
 	&.wikia-link {
 		@include sprite-edit-page('wikia_link',$width,$height);
 	}
-	&.infobox {
-		@include sprite-edit-page('infobox',$width,$height);
+	&.infobox-light {
+		@include sprite-edit-page('infobox-light',$width,$height);
 	}
 	&.infobox-dark {
 		@include sprite-edit-page('infobox-dark', $width, $height);

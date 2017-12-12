@@ -240,7 +240,7 @@
 		@include sprite-edit-page('video', 48px, 32px);
 	}
 	.RTETemplateButton.cke_button_big .cke_icon {
-		@include sprite-edit-page('infobox', 48px, 32px );
+		@include sprite-edit-page('infobox-' + $sprite-theme, 48px, 32px );
 	}
 
 	.RTEMUTButton.cke_button_big a {
