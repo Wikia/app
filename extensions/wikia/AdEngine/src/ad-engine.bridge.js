@@ -1,6 +1,8 @@
+import { EventEmitter } from 'events';
 import Client from 'ad-engine/src/utils/client';
 import Context from 'ad-engine/src/services/context-service';
 import ScrollListener from 'ad-engine/src/listeners/scroll-listener';
+import SlotListener from 'ad-engine/src/listeners/slot-listener';
 import SlotService from 'ad-engine/src/services/slot-service';
 import StringBuilder from 'ad-engine/src/utils/string-builder';
 import TemplateRegistry from './templates/templates-registry';
@@ -48,6 +50,9 @@ function unifySlotInterface(slot) {
 	slot.config = slotContext;
 	slot.getVideoAdUnit = () => buildVastAdUnit(slot.name);
 	slot.getTargeting = () => slotContext.targeting;
+	slot.getElement = () => slot.container.parentElement;
+	slot = Object.assign(new EventEmitter(), slot);
+	SlotListener.onImpressionViewable(slot);
 	return slot;
 }
 
