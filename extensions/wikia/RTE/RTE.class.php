@@ -54,50 +54,7 @@ class RTE {
 		return true;
 	}
 
-	/**
-	 * Callback function for preg_replace_callback which handle placeholer markers.
-	 * Called from RTEParser class.
-	 *
-	 * @author: Inez KorczyDski
-	 */
-	public static function replacePlaceholder( $var ) {
-		$data = RTEData::get('placeholder', intval($var[1]));
 
-		if($data) {
-			wfProfileIn(__METHOD__);
-
-			// XW-2433 - hack starts
-			if ($data['type'] == 'double-brackets' || $data['type'] == 'ext') {
-				global $wgTitle;
-
-				$wikitext = RTEData::get('wikitext', intval($data['wikitextIdx']));
-
-				// render template's wikitext
-				$parser = ParserPool::get();
-				$opts = ParserOptions::newFromContext( RequestContext::getMain() );
-
-				$parserOutput = $parser->parse( $wikitext, $wgTitle, $opts );
-
-				// store data
-				$data['placeholder'] = 1;
-				$dataIdx = RTEData::put('data', $data);
-
-				// wrap a template in contenteditable="false" element
-				$wrapper = Html::openElement('div', [
-					'_rte_dataidx' => sprintf('%04d', $dataIdx),
-					'class' => "placeholder placeholder-{$data['type']}",
-					'type' => $data['type'],
-					'contenteditable' => 'false',
-				]);
-
-				return $wrapper . $parserOutput->getText() . Html::closeElement('div');
-			}
-			// hack ends here
-
-			wfProfileOut(__METHOD__);
-			return RTE::renderPlaceholder($data['type'], $data);
-		}
-	}
 
 	/**
 	 * Render HTML for given placeholder

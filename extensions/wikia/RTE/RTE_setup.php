@@ -17,6 +17,7 @@ $wgAutoloadClasses['RTELinkerHooks'] = __DIR__ . '/RTELinkerHooks.class.php';
 $wgAutoloadClasses['RTEMagicWord'] = __DIR__ . '/RTEMagicWord.class.php';
 $wgAutoloadClasses['RTEMarker'] = __DIR__ . '/RTEMarker.class.php';
 $wgAutoloadClasses['RTEParser'] = __DIR__ . '/RTEParser.class.php';
+$wgAutoloadClasses['RTEPlaceholderProcessor'] = __DIR__ . '/RTEPlaceholderProcessor.php';
 $wgAutoloadClasses['RTEReverseParser'] = __DIR__ . '/RTEReverseParser.class.php';
 $wgAutoloadClasses['RTEController'] = __DIR__ . '/RTEController.class.php';
 
