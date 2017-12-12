@@ -10,7 +10,7 @@ class ArticleVideoContext {
 	 * @return bool
 	 *
 	 */
-	public static function isFeaturedVideoEmbedded( $pageId ) {
+	public static function isFeaturedVideoEmbedded( string $pageId ) {
 		$wg = F::app()->wg;
 
 		if ( !$wg->enableArticleFeaturedVideo ) {
@@ -32,7 +32,7 @@ class ArticleVideoContext {
 	 * @return array
 	 *
 	 */
-	public static function getFeaturedVideoData( $pageId ) {
+	public static function getFeaturedVideoData( string $pageId ) {
 		$wg = F::app()->wg;
 
 		if ( self::isFeaturedVideoEmbedded( $pageId ) ) {
