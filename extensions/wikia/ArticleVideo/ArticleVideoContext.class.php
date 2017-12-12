@@ -19,8 +19,7 @@ class ArticleVideoContext {
 
 		$mediaId = ArticleVideoService::getFeatureVideoForArticle( $wg->cityId, $pageId );
 
-		return !empty( $mediaId ) &&
-			// Prevents to show video on ?action=history etc.
+		return !empty( $mediaId ) && // Prevents to show video on ?action=history etc.
 			!WikiaPageType::isActionPage();
 	}
 
@@ -37,7 +36,7 @@ class ArticleVideoContext {
 
 		if ( self::isFeaturedVideoEmbedded( $pageId ) ) {
 			$videoData = [];
-			$videoData['mediaId'] = ArticleVideoService::getFeatureVideoForArticle($wg->cityId, $pageId);
+			$videoData['mediaId'] = ArticleVideoService::getFeatureVideoForArticle( $wg->cityId, $pageId );
 
 			$details = json_decode(
 				Http::get(
