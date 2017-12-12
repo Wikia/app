@@ -16,15 +16,15 @@ class PandoraCoppaImageReviewCleanUp extends Maintenance {
 			->SELECT( 'wiki_id', 'page_id', 'revision_id' )
 			->FROM( 'image_review.images_coppa' )
 			->WHERE( 'wiki_id' )->EQUAL_TO( $wgCityId )
-			->runLoop( $imageReviewDB, function ( $row ) {
-				return $row;
+			->runLoop( $imageReviewDB, function ( &$result, $row ) {
+				$result[$row->page_id] = [
+					'wiki_id' => $row->wiki_id,
+					'page_id' => $row->page_id,
+					'revision_id' => $row->revision_id
+				];
 			} );
 
-		$pages = array_combine( array_map( function ( $item ) {
-			return $item['page_id'];
-		}, $pageList ), $pageList );
-
-		$idChunks = array_chunk( $pages, 100, true );
+		$idChunks = array_chunk( $pageList, 100, true );
 
 		print_r( "Image review query time: " . ( time() - $start ) . "sec\n" );
 		print_r( "Images to check: " . count( $pageList ) . "\n" );
@@ -40,8 +40,8 @@ class PandoraCoppaImageReviewCleanUp extends Maintenance {
 				->IN( array_map( function ( $row ) {
 					return $row['page_id'];
 				}, $chunk ) )
-				->runLoop( $wikiDB, function ( $res ) use ( $chunk ) {
-					unset( $chunk[$res['page_id']] );
+				->runLoop( $wikiDB, function ( &$result, $row ) use ( $chunk ) {
+					unset( $chunk[$row->page_id] );
 				} );
 			print_r( "Chunk size after page id: " . count( $chunk ) . "\n" );
 			( new WikiaSQL() )
@@ -51,8 +51,8 @@ class PandoraCoppaImageReviewCleanUp extends Maintenance {
 				->IN( array_map( function ( $row ) {
 					return $row['revision_id'];
 				}, $chunk ) )
-				->runLoop( $wikiDB, function ( $res ) use ( $chunk ) {
-					unset( $chunk[$res['page_id']] );
+				->runLoop( $wikiDB, function ( &$result, $row ) use ( $chunk ) {
+					unset( $chunk[$row->page_id] );
 				} );
 			print_r( "Chunk size after rev id: " . count( $chunk ) . "\n" );
 
