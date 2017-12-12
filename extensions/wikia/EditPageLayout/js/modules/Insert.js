@@ -10,7 +10,8 @@
 			'InsertSlider',
 			'InsertMedia',
 			'Poll',
-			'Table'
+			'Table',
+			'InsertTemplate'
 		];
 
 		// show add video button if user has rights (wgAllVideosAdminOnly)

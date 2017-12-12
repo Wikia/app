@@ -85,6 +85,20 @@
 		precondition: checkGallery
 	};
 
+	buttons.InsertTemplate = {
+		type: 'button',
+		labelId: 'Template',
+		titleId: 'Tooltip',
+		className: 'RTETemplateButton',
+		forceLogin: true,
+		clicksource: function () {
+			//Source code here
+		},
+		ckcommand: 'addslider',
+		precondition: checkGallery
+
+	};
+
 	if (window.wgEnableVideoToolExt) {
 		buttons.InsertVideo = {
 			type: 'button',
