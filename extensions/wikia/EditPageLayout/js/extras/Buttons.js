@@ -85,11 +85,11 @@
 		precondition: checkGallery
 	};
 
-	buttons.InsertTemplate = {
+	buttons.InsertInfobox = {
 		type: 'button',
 		labelId: 'Infobox', //temp
 		titleId: 'Click to add Infobox', //temp
-		className: 'RTETemplateButton',
+		className: 'RTEInfoboxButton',
 		forceLogin: true,
 		clicksource: function () {
 			//Source code here

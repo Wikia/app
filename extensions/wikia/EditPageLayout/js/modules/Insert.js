@@ -11,7 +11,7 @@
 			'InsertMedia',
 			'Poll',
 			'Table',
-			'InsertTemplate'
+			'InsertInfobox'
 		];
 
 		// show add video button if user has rights (wgAllVideosAdminOnly)
