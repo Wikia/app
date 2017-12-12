@@ -157,7 +157,7 @@ class RecirculationHooks {
 		}
 
 		if ( !empty( $wgEnableArticleFeaturedVideo ) &&
-			ArticleVideoContext::isFeaturedVideoEmbedded( $title->getPrefixedDBkey() )
+			ArticleVideoContext::isFeaturedVideoEmbedded( $title->getArticleID() )
 		) {
 			$metaData['type'] = 'video';
 		}

@@ -35,7 +35,7 @@ class JWPlayerTagController extends WikiaController {
 		}
 
 		if ( ArticleVideoContext::isFeaturedVideoEmbedded(
-			RequestContext::getMain()->getTitle()->getPrefixedDBkey()
+			RequestContext::getMain()->getTitle()->getArticleID()
 		) ) {
 			$script = JSSnippets::addToStack( [
 				'/extensions/wikia/JWPlayerTag/scripts/jwplayertag.js'

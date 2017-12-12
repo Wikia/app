@@ -2,9 +2,9 @@
 
 class ArticleVideoHooks {
 	public static function onBeforePageDisplay( \OutputPage $out/*, \Skin $skin*/ ) {
-		$title = RequestContext::getMain()->getTitle()->getPrefixedDBkey();
+		$pageId = RequestContext::getMain()->getTitle()->getArticleID();
 
-		$featuredVideoData = ArticleVideoContext::getFeaturedVideoData( $title );
+		$featuredVideoData = ArticleVideoContext::getFeaturedVideoData( $pageId );
 
 		if ( !empty( $featuredVideoData ) ) {
 			self::addJWPlayerAssets( $out, $featuredVideoData );
