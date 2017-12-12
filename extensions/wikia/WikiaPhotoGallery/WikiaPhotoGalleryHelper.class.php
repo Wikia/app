@@ -76,16 +76,9 @@ class WikiaPhotoGalleryHelper {
 	 * Skip rendering of RTE placeholders for <gallery> and generate our own
 	 */
 	static public function useDefaultRTEPlaceholder($name, $params, $frame, $wikitextIdx) {
-		$name = strtolower($name);
-
-		if ($name == 'gallery') {
+		// generate custom placeholder for <gallery> tag
+		if ( $name == 'gallery' ) {
 			self::$mWikitextIdx = $wikitextIdx;
-
-			// generate custom placeholder for <gallery> tag
-			return false;
-		}
-		else {
-			return true;
 		}
 	}
 
