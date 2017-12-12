@@ -17,8 +17,7 @@ class ArticleVideoContext {
 			return false;
 		}
 
-		$articleVideoService = new ArticleVideoService();
-		$mediaId = $articleVideoService->getFeatureVideoForArticle( $wg->cityId, $pageId );
+		$mediaId = ArticleVideoService::getFeatureVideoForArticle( $wg->cityId, $pageId );
 
 		return !empty( $mediaId ) &&
 			// Prevents to show video on ?action=history etc.
@@ -38,7 +37,7 @@ class ArticleVideoContext {
 
 		if ( self::isFeaturedVideoEmbedded( $pageId ) ) {
 			$videoData = [];
-			$videoData['mediaId'] = (new ArticleVideoService())->getFeatureVideoForArticle($wg->cityId, $pageId);
+			$videoData['mediaId'] = ArticleVideoService::getFeatureVideoForArticle($wg->cityId, $pageId);
 
 			$details = json_decode(
 				Http::get(
@@ -118,10 +117,6 @@ class ArticleVideoContext {
 		}
 
 		return $isoTime;
-	}
-
-	private static function isFeaturedVideosValid( $featuredVideo ) {
-		return isset( $featuredVideo['mediaId'] );
 	}
 
 	/**
