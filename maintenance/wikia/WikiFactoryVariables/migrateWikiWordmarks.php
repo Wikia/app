@@ -133,6 +133,15 @@ class MigrateWikiWordmarks extends Maintenance {
 			}
 			return false;
 		}
+		// Related to SUS-2942 - we cannot change a setting that is not in defaultSettings
+		$refObject = new ReflectionObject( $themeSettings );
+		$refProperty = $refObject->getProperty( 'defaultSettings' );
+		$refProperty->setAccessible( true );
+		$defaultSettings = $refProperty->getValue( $themeSettings );
+		if ( !array_key_exists( $defaultSettings, $this->keyName ) ) {
+			$defaultSettings[$this->keyName] = '';
+			$refProperty->setValue($themeSettings, $defaultSettings);
+		}
 
 		$settings[$this->keyName] = $keyValue;
 		if ( $this->keyName == "wordmark-image-url" ) {
