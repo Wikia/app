@@ -814,8 +814,11 @@ class Sanitizer {
 			}
 
 			// FANDOM change - XW-4380: allow boolean values for contenteditable attribute in HTML5 mode
-			if ( $wgHtml5 && $attribute === 'contenteditable' && ( $value === 'true' || $value === 'false' ) ) {
-				$out[$attribute] = $value;
+			if ( $wgHtml5 && $attribute === 'contenteditable' ) {
+				if ( $value === 'true' || $value === 'false' ) {
+					$out[$attribute] = $value;
+				}
+
 				continue;
 			}
 			// end FANDOM change
