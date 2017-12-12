@@ -60,6 +60,7 @@ function unifySlotInterface(slot) {
 	slot.getElement = () => slot.container.parentElement;
 	slot = Object.assign(new EventEmitter(), slot);
 	SlotListener.onImpressionViewable(slot);
+
 	return slot;
 }
 
