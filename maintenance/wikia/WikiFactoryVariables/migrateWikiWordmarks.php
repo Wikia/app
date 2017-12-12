@@ -139,8 +139,8 @@ class MigrateWikiWordmarks extends Maintenance {
 		$refProperty->setAccessible( true );
 		$defaultSettings = $refProperty->getValue( $themeSettings );
 		if ( !array_key_exists( $defaultSettings, $this->keyName ) ) {
-			$defaultSettings[$this->keyName] = '';
-			$refProperty->setValue($themeSettings, $defaultSettings);
+			$defaultSettings[ $this->keyName ] = '';
+			$refProperty->setValue( $themeSettings, $defaultSettings );
 		}
 
 		$settings[$this->keyName] = $keyValue;
