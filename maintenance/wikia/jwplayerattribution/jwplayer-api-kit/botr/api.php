@@ -112,7 +112,7 @@
                     curl_close($curl);
                     break;
                 default:
-                    $response = file_get_contents($url);
+	                $response = file_get_contents($url);
             }
 
             $unserialized_response = @unserialize($response);

@@ -19,7 +19,6 @@ class MigrateJWAttributionToDashboard extends Maintenance {
 		$this->addOption( 'dry-run', 'Dry run mode', false, false, 'd' );
 
 		$this->jwApi = new BotrAPI('key', 'secret');
-
 	}
 
 	public function execute() {
@@ -44,30 +43,39 @@ class MigrateJWAttributionToDashboard extends Maintenance {
 			$this->output( 'Found ' . count( $videoConfig ) . " pages with Featured Video\n" );
 
 			foreach ( $videoConfig as $pageName => &$config ) {
-				$this->output( 'Working on page: ' . $pageName . "\n" );
+				if ( array_key_exists('mediaId', $config ) ) {
+					$this->output( 'Working on a page: ' . $pageName . "with mediaId" . $config['mediaId'] . "\n");
 
-				$payload = ['video_id' => $config['mediaId']];
+					$payload = ['video_key' => $config['mediaId']];
 
-				if ( array_key_exists('username', $config) ) {
-					$this->output( 'username: ' . $config['username'] );
-					$payload['custom.username'] = $config['username'];
+					if ( array_key_exists('username', $config) ) {
+						$this->output( 'username: ' . $config['username'] );
+						$payload['custom.username'] = $config['username'];
+					}
+
+					if ( array_key_exists('userUrl', $config) ) {
+						$this->output( 'userUrl: ' . $config['userUrl'] );
+						$payload['custom.userUrl'] = $config['userUrl'];
+					}
+
+					if ( array_key_exists('userAvatarUrl', $config) ) {
+						$this->output( 'userAvatarUrl: ' . $config['userAvatarUrl'] );
+						$payload['custom.userAvatarUrl'] = $config['userAvatarUrl'];
+					}
+
+					if ( array_key_exists( 'custom.userAvatarUrl', $payload ) ||
+						array_key_exists( 'custom.username', $payload ) ||
+						array_key_exists( 'custom.userUrl', $payload )
+					) {
+						$this->output( 'Updating dashboard...' . json_encode($payload) );
+						try {
+							$this->jwApi->call('/videos/update', $payload);
+						} catch ( Exception $exception ) {
+							$this->output( 'Exception: ' . $exception->getMessage() );
+						}
+					}
 				}
 
-				if ( array_key_exists('userUrl', $config) ) {
-					$this->output( 'userUrl: ' . $config['userUrl'] );
-					$payload['custom.userUrl'] = $config['userUrl'];
-				}
-
-				if ( array_key_exists('userAvatarUrl', $config) ) {
-					$this->output( 'userAvatarUrl: ' . $config['userAvatarUrl'] );
-					$payload['custom.userAvatarUrl'] = $config['userAvatarUrl'];
-				}
-			}
-
-			try {
-				$this->jwApi->call('/videos/update', $payload);
-			} catch ( Exception $exception ) {
-				$this->output( 'Exception: ' . $exception->getMessage() );
 			}
 		}
 	}
