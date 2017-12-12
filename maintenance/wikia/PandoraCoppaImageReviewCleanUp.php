@@ -24,7 +24,7 @@ class PandoraCoppaImageReviewCleanUp extends Maintenance {
 				];
 			} );
 
-		$idChunks = array_chunk( $pageList, 100, true );
+		$idChunks = array_chunk( $pageList, 1000, true );
 
 		$this->output( "Image review query time: " . ( time() - $start ) . "sec\n" );
 		$this->output( "Images to check: " . count( $pageList ) . "\n" );
