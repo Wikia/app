@@ -415,6 +415,18 @@
 		$image-width: 18px;
 		$image-height: 14px;
 	}
+	@if $imageName == 'infobox' {
+		$image-x: 1784px;
+		$image-y: 0px;
+		$image-width: 20px;
+		$image-height: 24px;
+	}
+	@if $imageName == 'infobox-dark' {
+		$image-x: 1827px;
+		$image-y: 0px;
+		$image-width: 20px;
+		$image-height: 24px;
+	}
 	@if $image-x != -1 {
 		$position-x: 0px - $image-x;
 		$position-y: 0px - $image-y;
@@ -612,6 +624,12 @@
 	}
 	&.wikia-link {
 		@include sprite-edit-page('wikia_link',$width,$height);
+	}
+	&.infobox {
+		@include sprite-edit-page('infobox',$width,$height);
+	}
+	&.infobox-dark {
+		@include sprite-edit-page('infobox-dark', $width, $height);
 	}
 }
 // @autosprite-end

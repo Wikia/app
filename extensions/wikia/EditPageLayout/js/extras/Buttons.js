@@ -87,15 +87,15 @@
 
 	buttons.InsertTemplate = {
 		type: 'button',
-		labelId: 'Template',
-		titleId: 'Tooltip',
+		labelId: 'Infobox', //temp
+		titleId: 'Click to add Infobox', //temp
 		className: 'RTETemplateButton',
 		forceLogin: true,
 		clicksource: function () {
 			//Source code here
 		},
-		ckcommand: 'addslider',
-		precondition: checkGallery
+		ckcommand: 'addinfobox',
+		precondition: checkGallery //??
 
 	};
 
