@@ -8,8 +8,7 @@ class PandoraCoppaImageReviewCleanUp extends Maintenance {
 		global $wgSpecialsDB;
 
 		$db = wfGetDB( DB_SLAVE, [], $wgSpecialsDB );
-		$db->query('use image_review');
-		$result = $db->query( "SELECT * FROM images_coppa LIMIT 1" );
+		$result = $db->query( "SELECT * FROM image_review.images_coppa LIMIT 1" );
 		while ( $row = $result->fetchRow() ) {
 			var_dump( $row );
 		}
