@@ -97,8 +97,8 @@ class Wikia {
 	const DEFAULT_FAVICON_FILE = '/skins/common/images/favicon.ico';
 	const DEFAULT_WIKI_LOGO_FILE = '/skins/common/images/wiki.png';
 
-	// Todo: Testing endpoint, change to VCL/service when rolling out!
-	const CSP_ENDPOINT = 'https://4bf228718fe576fb7a6ea338e42715c0.report-uri.com/r/d/csp/enforce';
+	// Todo: Testing endpoint, change to prod service when rolling out!
+	const CSP_ENDPOINT = 'https://services.wikia-dev.pl/csplogger/csp;
 
 	private static $vars = [];
 	private static $cachedLinker;
