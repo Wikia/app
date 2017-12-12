@@ -29,9 +29,8 @@ class ArticleVideoService {
 	public static function getFeaturedVideosForWiki( string $cityId ): array {
 		$key = wfMemcKey( 'article-video', 'get-for-product', $cityId );
 
-		return WikiaDataAccess::cache(
+		return WikiaDataAccess::cacheWithOptions(
 			$key,
-			WikiaResponse::CACHE_SHORT,
 			function () use ( $cityId ) {
 				$api = self::getMappingsInternalApiClient();
 				$api->getApiClient()->getConfig()->setApiKey( self::INTERNAL_REQUEST_HEADER, '1' );
@@ -54,7 +53,12 @@ class ArticleVideoService {
 				}
 
 				return $mappings;
-			}
+			},
+			[
+				'command' => WikiaDataAccess::USE_CACHE,
+				'cacheTTL' => WikiaResponse::CACHE_SHORT,
+				'negativeCacheTTL' => WikiaResponse::CACHE_VERY_SHORT
+			]
 		);
 	}
 
