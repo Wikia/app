@@ -7,6 +7,8 @@ class PandoraCoppaImageReviewCleanUp extends Maintenance {
 	public function execute() {
 		global $wgSpecialsDB, $wgCityId;
 
+		$start = time();
+
 		$imageReviewDB = wfGetDB( DB_SLAVE, [], $wgSpecialsDB );
 		$wikiDB = wfGetDB( DB_SLAVE );
 
@@ -16,6 +18,9 @@ class PandoraCoppaImageReviewCleanUp extends Maintenance {
 			'PandoraCoppaImageReviewCleanUp:execute'
 		);
 
+		print_r( "Image review query time: " . ( time() - $start ) . "sec\n" );
+		print_r( "Images to check: " . $result->numRows() . "\n" );
+		$wikiStart = time();
 		$missingImages = [];
 		while ( $row = $result->fetchRow() ) {
 			$pageTest = $wikiDB->select( 'page', [ 1 ], [ 'page_id = ' . $row['page_id'] ] );
@@ -25,8 +30,11 @@ class PandoraCoppaImageReviewCleanUp extends Maintenance {
 				$missingImages[] = $row;
 			}
 		}
+		print_r( "Wiki query time: " . ( time() - $wikiStart ) . "sec\n" );
 
-		print_r( $missingImages );
+		print_r( "Broken images number: " . count( $missingImages ) . "\n" );
+
+		print_r( "Total time: " . ( time() - $start ) . "sec\n" );
 	}
 }
 
