@@ -31,7 +31,15 @@ require(['jquery', 'wikia.window'], function ($, window) {
 									}
 								]
 							}
-						]
+						],
+						onShow: function () {
+							$('.infobox-templates-list').on('click', function (evt) {
+								debugger;
+								openInfoboxParametersEditDialog(
+									$(event.currentTarget).data('infobox-name')
+								)
+							})
+						}
 					};
 				});
 
@@ -44,15 +52,51 @@ require(['jquery', 'wikia.window'], function ($, window) {
 			return '';
 		}
 
-		var markup = '<ul>';
+		var markup = '<ul class="infobox-templates-list">';
 
 		data.query.allinfoboxes.forEach(function (infoboxData) {
-			markup += '<li><a>' + infoboxData.title + '</a></li>';
+			markup += '<li><a data-infobox-name="' + infoboxData.title + '">' + infoboxData.title + '</a></li>';
 		});
 
 		markup += '</ul>';
 
 		return markup;
+	}
+
+	function openInfoboxParametersEditDialog(infoboxName) {
+		// generate meta-data
+		var data = {
+			title: infoboxName,
+			wikitext: '{{' + infoboxName + '}}'
+		};
+
+		// this.placeholder.setPlaceholderType('double-brackets');
+		// this.placeholder.setData(data);
+
+		//RTE.templateEditor.usePlaceholder(this.placeholder);
+		//dialog.setLoading(true);
+
+		// get template info
+		var self = this;
+		RTE.tools.resolveDoubleBrackets(data.wikitext, function(info) {
+			//dialog.setLoading(false);
+
+			// store template info
+			//self.placeholder.data('info', info);
+
+			// show step #2 - params editor
+			if ( (typeof info.availableParams != 'undefined') && (info.availableParams.length > 0) ) {
+				RTE.templateEditor.selectStep(2);
+			}
+			else {
+				RTE.log('given template contains no params - inserting / updating...');
+				//RTE.templateEditor.commitChanges();
+
+				// close editor
+				//dialog.hide();
+				return;
+			}
+		});
 	}
 
 	registerPlugin();
