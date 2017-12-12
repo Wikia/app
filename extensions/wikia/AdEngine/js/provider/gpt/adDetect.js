@@ -272,7 +272,7 @@ define('ext.wikia.adEngine.provider.gpt.adDetect', [
 		}
 
 		if (uapContext.shouldDispatchEvent(slot.name)) {
-			uapContext.dispatchevent();
+			uapContext.dispatchEvent();
 		}
 
 		if (adType === 'manual') {

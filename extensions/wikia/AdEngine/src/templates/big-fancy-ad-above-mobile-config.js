@@ -29,7 +29,7 @@ function runOnReady(iframe, params, mercuryListener) {
 			adsModule.setSiteHeadOffset(0);
 			window.removeEventListener('resize', onResize);
 		});
-	}//
+	}
 }
 
 export function getConfig(mercuryListener) {

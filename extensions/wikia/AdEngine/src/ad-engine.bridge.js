@@ -55,6 +55,7 @@ function unifySlotInterface(slot) {
 	slot.config = slotContext;
 	slot.getVideoAdUnit = () => buildVastAdUnit(slot.name);
 	slot.getTargeting = () => slotContext.targeting;
+	slot.getElement = () => slot.container.parentElement;
 	return slot;
 }
 
