@@ -40,7 +40,7 @@ class PandoraCoppaImageReviewCleanUp extends Maintenance {
 				->IN( array_map( function ( $row ) {
 					return $row['page_id'];
 				}, $chunk ) )
-				->runLoop( $wikiDB, function ( &$result, $row ) use ( $chunk ) {
+				->runLoop( $wikiDB, function ( &$result, $row ) use ( &$chunk ) {
 					unset( $chunk[$row->page_id] );
 				} );
 			print_r( "Chunk size after page id: " . count( $chunk ) . "\n" );
@@ -51,7 +51,7 @@ class PandoraCoppaImageReviewCleanUp extends Maintenance {
 				->IN( array_map( function ( $row ) {
 					return $row['revision_id'];
 				}, $chunk ) )
-				->runLoop( $wikiDB, function ( &$result, $row ) use ( $chunk ) {
+				->runLoop( $wikiDB, function ( &$result, $row ) use ( &$chunk ) {
 					unset( $chunk[$row->page_id] );
 				} );
 			print_r( "Chunk size after rev id: " . count( $chunk ) . "\n" );
