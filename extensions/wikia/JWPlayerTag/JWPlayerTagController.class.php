@@ -38,6 +38,7 @@ class JWPlayerTagController extends WikiaController {
 			RequestContext::getMain()->getTitle()->getPrefixedDBkey()
 		) ) {
 			$script = JSSnippets::addToStack( [
+				'jwplayer_tag_ads_js',
 				'/extensions/wikia/JWPlayerTag/scripts/jwplayertag.js'
 			] );
 		} else {
