@@ -9,8 +9,7 @@ class ScribeEventProducer {
 	private $mParams, $mKey, $mEventType;
 	private $sendToScribe, $sendToRabbit;
 
-	const
-		RABBIT_KEY_PREFIX = 'mediawiki.edit.';
+	const RABBIT_KEY_PREFIX = 'mediawiki.edit.';
 
 	const
 		EDIT_CATEGORY       = 'log_edit',

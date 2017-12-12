@@ -8,6 +8,8 @@
  * @version: whatever goes here
  */
 
+use \Wikia\Logger\WikiaLogger;
+
 $wgHooks['ArticleSaveComplete'][] = "ScribeProducer::saveComplete";
 $wgHooks['NewRevisionFromEditComplete'][] = "ScribeProducer::saveRevisionComplete";
 $wgHooks['ArticleDeleteComplete'][] = "ScribeProducer::deleteComplete";
@@ -104,6 +106,12 @@ class ScribeProducer {
 				)
 			);
 			WScribeClient::singleton( $this->mKey )->send( $data );
+
+			WikiaLogger::instance()->info( 'ScribeProducer::send_log', [
+				'method' => __METHOD__,
+				'key' => $this->mKey,
+				'exception' => new Exception(),
+			] );
 		}
 		catch( TException $e ) {
 			Wikia::log( __METHOD__, 'scribeClient exception', $e->getMessage() );
