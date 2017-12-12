@@ -17,7 +17,7 @@ class ArticleVideoService {
 	const SERVICE_NAME = 'article-video';
 	const INTERNAL_REQUEST_HEADER = 'X-Wikia-Internal-Request';
 
-	private $articleVideoApiClient = null;
+	private static $articleVideoApiClient = null;
 
 	/**
 	 * @param $cityId
@@ -26,14 +26,14 @@ class ArticleVideoService {
 	 * @internal param $pageId
 	 *
 	 */
-	public function getFeaturedVideosForWiki( $cityId ): array {
+	public static function getFeaturedVideosForWiki( $cityId ): array {
 		$key = wfMemcKey( 'article-video', 'get-for-product', $cityId );
 
 		return WikiaDataAccess::cache(
 			$key,
 			WikiaResponse::CACHE_SHORT,
 			function () use ( $cityId ) {
-				$api = $this->getMappingsInternalApiClient();
+				$api = self::getMappingsInternalApiClient();
 				$api->getApiClient()->getConfig()->setApiKey( self::INTERNAL_REQUEST_HEADER, '1' );
 				$mappings = [];
 
@@ -64,7 +64,7 @@ class ArticleVideoService {
 	 *
 	 * @return string - mediaId of featured video for given video if exists, empty string otherwise
 	 */
-	public function getFeatureVideoForArticle( $cityId, $pageId ): string {
+	public static function getFeatureVideoForArticle( $cityId, $pageId ): string {
 		$mediaId = '';
 
 		$forArticle = array_map(
@@ -72,7 +72,7 @@ class ArticleVideoService {
 				return $mapping->getMediaId();
 			},
 			array_filter(
-				$this->getFeaturedVideosForWiki( $cityId ),
+				self::getFeaturedVideosForWiki( $cityId ),
 				function ( Mapping $mapping ) use ( $pageId ) {
 					return $mapping->getId() === (string) $pageId;
 				}
@@ -91,12 +91,12 @@ class ArticleVideoService {
 	 *
 	 * @return MappingsInternalApi
 	 */
-	private function getMappingsInternalApiClient(): MappingsInternalApi {
-		if ( is_null( $this->articleVideoApiClient ) ) {
-			$this->articleVideoApiClient = $this->createMappingsInternalApiClient();
+	private static function getMappingsInternalApiClient(): MappingsInternalApi {
+		if ( is_null( self::$articleVideoApiClient ) ) {
+			self::$articleVideoApiClient = self::createMappingsInternalApiClient();
 		}
 
-		return $this->articleVideoApiClient;
+		return self::$articleVideoApiClient;
 	}
 
 	/**
@@ -104,7 +104,7 @@ class ArticleVideoService {
 	 *
 	 * @return MappingsInternalApi
 	 */
-	private function createMappingsInternalApiClient(): MappingsInternalApi {
+	private static function createMappingsInternalApiClient(): MappingsInternalApi {
 		/** @var ApiProvider $apiProvider */
 		$apiProvider = Injector::getInjector()->get( ApiProvider::class );
 		$api = $apiProvider->getApi( self::SERVICE_NAME, MappingsInternalApi::class );
