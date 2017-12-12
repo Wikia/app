@@ -1,4 +1,9 @@
 .featured-video.is-collapsed {
+	// do not show title when video is collapsed in idle state
+	.jw-state-idle .jw-title {
+		display: none;
+	}
+
 	// do not show title when video is collapsed
 	.jw-title {
 		display: none;

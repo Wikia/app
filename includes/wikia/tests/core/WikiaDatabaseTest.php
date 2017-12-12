@@ -16,6 +16,8 @@ abstract class WikiaDatabaseTest extends TestCase {
 
 	const GLOBAL_DB_VARS = [ 'wgExternalSharedDB', 'wgSpecialsDB' ];
 
+	/** @var PDO $pdo */
+	private static $pdo = null;
 	/** @var InMemorySqliteDatabase $db */
 	private static $db = null;
 	/** @var Connection $conn */
@@ -29,7 +31,8 @@ abstract class WikiaDatabaseTest extends TestCase {
 	 */
 	public static function setUpBeforeClass() {
 		parent::setUpBeforeClass();
-		self::$db = new InMemorySqliteDatabase();
+		self::$pdo = new PDO('sqlite::memory:' );
+		self::$db = new InMemorySqliteDatabase( self::$pdo );
 
 		LBFactory::destroyInstance();
 		LBFactory::setInstance( new LBFactory_Single( [
@@ -44,6 +47,9 @@ abstract class WikiaDatabaseTest extends TestCase {
 		global $IP;
 		static::loadSchemaFile( "$IP/tests/fixtures/user.sql" );
 		static::loadSchemaFile( "$IP/tests/fixtures/user_properties.sql" );
+
+		// destroy leaked user accounts from other tests
+		User::$idCacheByName = [];
 	}
 
 	protected function setUp() {
@@ -65,11 +71,7 @@ abstract class WikiaDatabaseTest extends TestCase {
 	 */
 	final protected function getConnection() {
 		if ( !( $this->conn instanceof Connection ) ) {
-			if ( !( self::$db instanceof InMemorySqliteDatabase ) ) {
-				self::$db = wfGetDB( DB_MASTER );
-			}
-
-			$this->conn = $this->createDefaultDBConnection( self::$db->getConnection(), ':memory:' );
+			$this->conn = $this->createDefaultDBConnection( self::$pdo, ':memory:' );
 		}
 
 		return $this->conn;
@@ -89,6 +91,9 @@ abstract class WikiaDatabaseTest extends TestCase {
 	public static function tearDownAfterClass() {
 		parent::tearDownAfterClass();
 		LBFactory::destroyInstance();
+
+		// do not leak cached test user accounts to other tests
+		User::$idCacheByName = [];
 	}
 
 	protected function createYamlDataSet( string $fileName ): IDataSet {

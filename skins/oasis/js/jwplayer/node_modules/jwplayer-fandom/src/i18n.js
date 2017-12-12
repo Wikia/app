@@ -20,7 +20,8 @@ var wikiaJWPlayeri18n = {
   "skipmessage": "Werbung überspringen in xx Sekunden", 
   "skiptext": "Überspringen", 
   "videoQuality": "Video-Qualität", 
-  "volume": "Lautstärke"
+  "volume": "Lautstärke",
+  "watch": "ansehen"
 },
 "en": {
   "admessage": "The ad will end in xx seconds",
@@ -43,7 +44,8 @@ var wikiaJWPlayeri18n = {
   "skipmessage": "Skip ad in xx",
   "skiptext": "Skip",
   "videoQuality": "Video Quality",
-  "volume": "Volume"
+  "volume": "Volume",
+  "watch": "watch"
 },
 "es": {
   "admessage": "El anuncio termina en xx segundos", 
@@ -66,7 +68,8 @@ var wikiaJWPlayeri18n = {
   "skipmessage": "Pasar anuncio en xx", 
   "skiptext": "Pasar", 
   "videoQuality": "Calidad de video", 
-  "volume": "Volumen"
+  "volume": "Volumen",
+  "watch": "mirar"
 },
 "fr": {
   "admessage": "Fin de la publicité dans xx secondes", 
@@ -89,7 +92,8 @@ var wikiaJWPlayeri18n = {
   "skipmessage": "Ignorer la publicité dans xx", 
   "skiptext": "Ignorer", 
   "videoQuality": "Qualité vidéo", 
-  "volume": "Volume"
+  "volume": "Volume",
+  "watch": "regarder"
 },
 "it": {
   "admessage": "L'annuncio terminerà in xx secondi", 
@@ -112,7 +116,8 @@ var wikiaJWPlayeri18n = {
   "skipmessage": "Salta annuncio in xx", 
   "skiptext": "Salta", 
   "videoQuality": "Qualità video", 
-  "volume": "Volume"
+  "volume": "Volume",
+  "watch": "guarda"
 },
 "ja": {
   "admessage": "広告はxx秒後に終了します", 
@@ -135,7 +140,8 @@ var wikiaJWPlayeri18n = {
   "skipmessage": "xx秒後に広告をスキップ", 
   "skiptext": "スキップ", 
   "videoQuality": "動画の品質", 
-  "volume": "音量"
+  "volume": "音量",
+  "watch": "再生時間"
 },
 "pl": {
   "admessage": "Reklama skończy się za xx sek.", 
@@ -158,7 +164,8 @@ var wikiaJWPlayeri18n = {
   "skipmessage": "Pomiń reklamę za xx", 
   "skiptext": "Pomiń", 
   "videoQuality": "Jakość obrazu", 
-  "volume": "Głośność"
+  "volume": "Głośność",
+  "watch": "obejrzyj"
 },
 "pt": {
   "admessage": "O anúncio vai acabar em xx segundos", 
@@ -181,7 +188,8 @@ var wikiaJWPlayeri18n = {
   "skipmessage": "Pular anúncio em xx", 
   "skiptext": "Pular", 
   "videoQuality": "Qualidade de vídeo", 
-  "volume": "Volume"
+  "volume": "Volume",
+  "watch": "assistir"
 },
 "ru": {
   "admessage": "Реклама закончится через xx секунд(ы)", 
@@ -204,7 +212,8 @@ var wikiaJWPlayeri18n = {
   "skipmessage": "Пропустить рекламу через xx", 
   "skiptext": "Пропустить", 
   "videoQuality": "Качество видео", 
-  "volume": "Громкость"
+  "volume": "Громкость",
+  "watch": "длительность"
 },
 "zh": {
   "admessage": "广告将在xx秒结束", 
@@ -227,7 +236,8 @@ var wikiaJWPlayeri18n = {
   "skipmessage": "等待xx秒跳过广告", 
   "skiptext": "跳过", 
   "videoQuality": "视频质量", 
-  "volume": "音量"
+  "volume": "音量",
+  "watch": "观看"
 },
 "zh-hant": {
   "admessage": "廣告將在xx秒後結束", 
@@ -250,6 +260,7 @@ var wikiaJWPlayeri18n = {
   "skipmessage": "在xx中跳過廣告", 
   "skiptext": "跳過", 
   "videoQuality": "影片品質", 
-  "volume": "音量"
+  "volume": "音量",
+  "watch": "觀看"
 }
 };

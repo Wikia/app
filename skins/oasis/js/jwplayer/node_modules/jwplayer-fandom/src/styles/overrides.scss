@@ -61,6 +61,112 @@
 		}
 	}
 
+	@mixin idle-screen($play-icon-size, $padding, $title-font-size, $title-line-height, $duration-font-size) {
+		$icon-padding: $padding - 0.083 * $play-icon-size;
+		$icon-container-size: 1.2 * $play-icon-size;
+
+		.jw-icon-display {
+			bottom: $icon-padding;
+			height: $icon-container-size;
+			left: auto;
+			position: absolute;
+			right: $icon-padding;
+			top: auto;
+			width: $icon-container-size;
+
+			svg {
+				height: 100%;
+				width: 100%;
+			}
+		}
+
+		.jw-title {
+			bottom: $padding;
+			display: flex;
+			flex-direction: column;
+			height: $play-icon-size;
+			justify-content: center;
+			padding: 0;
+			position: absolute;
+			top: auto;
+			max-width: calc(100% - 2 * #{$padding} - #{$play-icon-size});
+
+			.wikia-jw-title-duration {
+				color: white;
+				font-size: $duration-font-size;
+				font-weight: 600;
+				letter-spacing: .5px;
+				line-height: $duration-font-size;
+				opacity: .5;
+				padding-left: $padding;
+				padding-bottom: 6px;
+			}
+
+			.wikia-jw-title-duration-watch {
+				text-transform: uppercase;
+			}
+
+			.wikia-jw-title-duration-time {
+				&:before {
+					content: '\2022'; // bullet (•)
+					padding: 0 4px;
+				}
+			}
+
+			.jw-title-primary {
+				font-size: $title-font-size;
+				font-weight: 600;
+				letter-spacing: .5px;
+				line-height: $title-line-height;
+				max-height: 2 * $title-line-height;
+				padding-left: $padding;
+				padding-right: 0;
+				white-space: normal;
+			}
+
+			.jw-title-secondary {
+				display: none;
+			}
+		}
+	}
+
+	&.jw-state-idle {
+		&.jw-breakpoint-0,
+		&.jw-breakpoint-1 { // mobile portrait, oasis on-scroll
+			@include idle-screen(60px, 12px, 16px, 20px, 12px);
+		}
+
+		&.jw-breakpoint-2 {
+			@include idle-screen(60px, 18px, 16px, 20px, 12px);
+		}
+
+		&.jw-breakpoint-3 { // mobile landscape
+			@include idle-screen(60px, 30px, 18px, 22px, 12px);
+		}
+
+		// oasis
+		&.jw-breakpoint-4 {
+			@include idle-screen(90px, 30px, 24px, 28px, 16px);
+		}
+
+		// oasis
+		&.jw-breakpoint-5 {
+			@include idle-screen(90px, 36px, 28px, 32px, 16px);
+		}
+
+		&.jw-breakpoint-6 {
+			@include idle-screen(120px, 42px, 36px, 42px, 18px);
+		}
+
+		&.jw-breakpoint-7 {
+			@include idle-screen(150px, 60px, 40px, 44px, 24px);
+		}
+
+		.jw-controls {
+			background: linear-gradient(to bottom, rgba(0,0,0,0) 50%,rgba(0, 0, 0, .65) 100%);
+		}
+	}
+
 	.jw-controlbar {
 		// background relies on player's id selector so it's impossible to set it for every case
 		background: linear-gradient(0, #000, transparent) !important;
@@ -103,7 +209,7 @@
 
 	// all !important rules are here to override JWPlayer inline styles
 	.jw-text-track-cue {
-		background-color: rgba(0, 0, 0, 0.6);
+		background-color: rgba(0, 0, 0, .6);
 		font-size: 16px;
 		line-height: 24px;
 		padding: 6px;

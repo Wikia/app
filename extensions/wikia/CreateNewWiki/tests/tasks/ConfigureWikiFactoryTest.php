@@ -83,8 +83,8 @@ class ConfigureWikiFactoryTest extends \WikiaBaseTest {
 
 	public function prepareDataProvider() {
 		return [
-			[ 'glee', 99, 'en', 'ok', 'http://images.wikia.com/glee/images', '/images/g/glee/images' ],
-			[ 'glee', 99, 'pl', 'ok', 'http://images.wikia.com/glee/pl/images', '/images/g/glee/pl/images' ],
+			[ 'glee', 99, 'en', 'ok', 'https://images.wikia.com/glee/images', '/images/g/glee/images' ],
+			[ 'glee', 99, 'pl', 'ok', 'https://images.wikia.com/glee/pl/images', '/images/g/glee/pl/images' ],
 			[ 'glee', 0, 'pl', 'error', null, null ]
 		];
 	}
@@ -108,32 +108,32 @@ class ConfigureWikiFactoryTest extends \WikiaBaseTest {
 
 	public function getStaticWikiFactoryVariablesDataProvider() {
 		return [
-			[ 'foo', 'http://images.wikia.com/foo/images', '/images/f/foo/images', 'foo', 'en', 'http://foo.wikia.com',
+			[ 'foo', 'https://images.wikia.com/foo/images', '/images/f/foo/images', 'foo', 'en', 'https://foo.wikia.com',
 				[
 					'wgSitename' => 'foo',
 					'wgLogo' => '$wgUploadPath/b/bc/Wiki.png',
-					'wgUploadPath' => 'http://images.wikia.com/foo/images',
+					'wgUploadPath' => 'https://images.wikia.com/foo/images',
 					'wgUploadDirectory' => '/images/f/foo/images',
 					'wgDBname' => 'foo',
 					'wgLocalInterwiki' => 'foo',
 					'wgLanguageCode' => 'en',
-					'wgServer' => 'http://foo.wikia.com',
+					'wgServer' => 'https://foo.wikia.com',
 					'wgEnableSectionEdit' => true,
 					'wgOasisLoadCommonCSS' => true,
 					'wgEnablePortableInfoboxEuropaTheme' => true,
 					'wgDBcluster' => 'c7'
 				]
 			],
-			[ 'foo:', 'http://images.wikia.com/foo/images', '/images/f/foo/images', 'foo', 'en', 'http://foo.wikia.com/',
+			[ 'foo:', 'https://images.wikia.com/foo/images', '/images/f/foo/images', 'foo', 'en', 'https://foo.wikia.com/',
 				[
 					'wgSitename' => 'foo:',
 					'wgLogo' => '$wgUploadPath/b/bc/Wiki.png',
-					'wgUploadPath' => 'http://images.wikia.com/foo/images',
+					'wgUploadPath' => 'https://images.wikia.com/foo/images',
 					'wgUploadDirectory' => '/images/f/foo/images',
 					'wgDBname' => 'foo',
 					'wgLocalInterwiki' => 'foo:',
 					'wgLanguageCode' => 'en',
-					'wgServer' => 'http://foo.wikia.com',
+					'wgServer' => 'https://foo.wikia.com',
 					'wgEnableSectionEdit' => true,
 					'wgOasisLoadCommonCSS' => true,
 					'wgEnablePortableInfoboxEuropaTheme' => true,
@@ -141,16 +141,16 @@ class ConfigureWikiFactoryTest extends \WikiaBaseTest {
 					'wgDBcluster' => 'c7'
 				]
 			],
-			[ 'foo_bar:fizz', 'http://images.wikia.com/foo/images', '/images/f/foo/images', 'foo', 'en', 'http://foo.wikia.com/',
+			[ 'foo_bar:fizz', 'https://images.wikia.com/foo/images', '/images/f/foo/images', 'foo', 'en', 'https://foo.wikia.com/',
 				[
 					'wgSitename' => 'foo_bar:fizz',
 					'wgLogo' => '$wgUploadPath/b/bc/Wiki.png',
-					'wgUploadPath' => 'http://images.wikia.com/foo/images',
+					'wgUploadPath' => 'https://images.wikia.com/foo/images',
 					'wgUploadDirectory' => '/images/f/foo/images',
 					'wgDBname' => 'foo',
 					'wgLocalInterwiki' => 'foo_bar:fizz',
 					'wgLanguageCode' => 'en',
-					'wgServer' => 'http://foo.wikia.com',
+					'wgServer' => 'https://foo.wikia.com',
 					'wgEnableSectionEdit' => true,
 					'wgOasisLoadCommonCSS' => true,
 					'wgEnablePortableInfoboxEuropaTheme' => true,
