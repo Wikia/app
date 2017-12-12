@@ -72,7 +72,7 @@ class PandoraCoppaImageReviewCleanUp extends Maintenance {
 					->WHERE( 'image_id' )->IN( $chunk )
 					->run( $imageReviewDB );
 			} else {
-				$this->output( "This is a dry run. " . count( $chunk ) . " not removed." );
+				$this->output( "This is a dry run. Not updating. \n" );
 			}
 		}
 
