@@ -26,7 +26,7 @@ class ArticleVideoService {
 	 * @internal param $pageId
 	 *
 	 */
-	public static function getFeaturedVideosForWiki( $cityId ): array {
+	public static function getFeaturedVideosForWiki( string $cityId ): array {
 		$key = wfMemcKey( 'article-video', 'get-for-product', $cityId );
 
 		return WikiaDataAccess::cache(
@@ -64,7 +64,7 @@ class ArticleVideoService {
 	 *
 	 * @return string - mediaId of featured video for given video if exists, empty string otherwise
 	 */
-	public static function getFeatureVideoForArticle( $cityId, $pageId ): string {
+	public static function getFeatureVideoForArticle( string $cityId, string $pageId ): string {
 		$mediaId = '';
 
 		$forArticle = array_map(

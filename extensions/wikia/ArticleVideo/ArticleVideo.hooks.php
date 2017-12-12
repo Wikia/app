@@ -2,7 +2,7 @@
 
 class ArticleVideoHooks {
 	public static function onBeforePageDisplay( \OutputPage $out/*, \Skin $skin*/ ) {
-		$pageId = RequestContext::getMain()->getTitle()->getArticleID();
+		$pageId = $out->getTitle()->getArticleID();
 
 		$featuredVideoData = ArticleVideoContext::getFeaturedVideoData( $pageId );
 
