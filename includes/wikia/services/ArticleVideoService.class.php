@@ -80,7 +80,7 @@ class ArticleVideoService {
 		);
 
 		if ( !empty( $forArticle ) ) {
-			$mediaId = array_pop($forArticle);
+			$mediaId = array_pop( $forArticle );
 		}
 
 		return $mediaId;
