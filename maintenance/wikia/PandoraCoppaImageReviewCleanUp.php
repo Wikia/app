@@ -15,7 +15,7 @@ class PandoraCoppaImageReviewCleanUp extends Maintenance {
 
 		$start = time();
 
-		$imageReviewDB = wfGetDB( DB_SLAVE, [], $wgSpecialsDB );
+		$imageReviewDB = wfGetDB( DB_MASTER, [], $wgSpecialsDB );
 		$wikiDB = wfGetDB( DB_SLAVE );
 
 		$pageList = ( new WikiaSQL() )
