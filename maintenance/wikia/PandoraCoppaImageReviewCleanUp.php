@@ -4,6 +4,12 @@ require_once( dirname( __FILE__ ) . '/../Maintenance.php' );
 
 class PandoraCoppaImageReviewCleanUp extends Maintenance {
 
+	public function __construct() {
+		parent::__construct();
+		$this->addOption( 'dryRun', "Whether to actually set images as removed. Script defaults to dryRun = true (attributes not actually removed)" );
+	}
+
+
 	public function execute() {
 		global $wgSpecialsDB, $wgCityId;
 
@@ -13,11 +19,12 @@ class PandoraCoppaImageReviewCleanUp extends Maintenance {
 		$wikiDB = wfGetDB( DB_SLAVE );
 
 		$pageList = ( new WikiaSQL() )
-			->SELECT( 'wiki_id', 'page_id', 'revision_id' )
+			->SELECT( 'image_id', 'wiki_id', 'page_id', 'revision_id' )
 			->FROM( 'image_review.images_coppa' )
 			->WHERE( 'wiki_id' )->EQUAL_TO( $wgCityId )
 			->runLoop( $imageReviewDB, function ( &$result, $row ) {
 				$result[$row->page_id] = [
+					'image_id' => $row->image_id,
 					'wiki_id' => $row->wiki_id,
 					'page_id' => $row->page_id,
 					'revision_id' => $row->revision_id
@@ -58,6 +65,15 @@ class PandoraCoppaImageReviewCleanUp extends Maintenance {
 			$this->output( "Chunk size after rev id: " . count( $chunk ) . "\n" );
 
 			$missingImages = array_merge( $missingImages, $chunk );
+			if ( !$this->getOption( 'dryRun', true ) ) {
+				( new WikiaSQL() )
+					->UPDATE( 'image_review.images_coppa' )
+					->SET( 'is_removed', '1' )
+					->WHERE( 'image_id' )->IN( $chunk )
+					->run( $imageReviewDB );
+			} else {
+				$this->output( "This is a dry run. " . count( $chunk ) . " not removed." );
+			}
 		}
 
 		$this->output( "Wiki query time: " . ( time() - $wikiStart ) . "sec\n" );
