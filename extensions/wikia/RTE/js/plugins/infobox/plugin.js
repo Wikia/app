@@ -11,7 +11,59 @@ require(['jquery', 'wikia.window'], function ($, window) {
 		});
 	}
 
-	function openInfoboxModal(editor) {
+	function openInfoboxBuilder( editor ) {
+
+		window.CKEDITOR.dialog.add( 'infoboxBuilder-dialog', function ( editor ) {
+			return {
+				title: 'Infobox Builder',
+				buttons: [],
+				minWidth: 250,
+				minHeight: 300,
+				contents: [
+					{
+						id: 'infoboxBuilderDialog',
+						label: '',
+						title: '',
+						elements: [
+							{
+								type: 'html',
+								html: ''
+							}
+						]
+					}
+				],
+
+			}
+		});
+
+		CKEDITOR.dialog.getCurrent().hide();
+
+		require(['wikia.loader', 'wikia.mustache', 'wikia.location'], function (loader, mustache, location) {
+			loader({
+				type: loader.MULTI,
+				resources: {
+					mustache: 'extensions/wikia/PortableInfoboxBuilder/templates/PortableInfoboxBuilderSpecialController_builder.mustache',
+					scripts: 'portable_infobox_builder_js'
+				}
+			}).done(function (assets) {
+				var html = mustache.render(assets.mustache[0], {
+					iframeUrl: location.origin + '/infobox-builder/',
+					classes: 've-ui-infobox-builder'
+				});
+
+				loader.processScript(assets.scripts);	
+		
+			RTE.getInstance().openDialog('infoboxBuilder-dialog');	
+				// Content
+			//	self.content = new OO.ui.PanelLayout({ padded: false, expanded: true });
+			//	self.content.$element.append(html);
+			//	self.$body.append(self.content.$element);
+			});
+		});
+	
+	}	
+
+	function openInfoboxModal( editor ) {
 
 		buttonStyle = "width:100%;background-image: none;background-color: white; text-align:center; color:black !important; border-radius:0px; border-color: black; border-style: dashed;";
 
@@ -26,7 +78,7 @@ require(['jquery', 'wikia.window'], function ($, window) {
 							id : 'something',
 							label : '+ Add Template',
 							style : buttonStyle,
-							onClick : onInfoboxTemplateChosen
+							onClick : openInfoboxBuilder
 						}
 						],
 						minWidth: 250,
