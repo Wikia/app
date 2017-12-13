@@ -11,10 +11,10 @@ define('ext.wikia.adEngine.context.uapContext', [
 		mainSlotName = 'TOP_LEADERBOARD',
 		uapTypes = ['uap', 'vuap'];
 
-	adEngineBridge.Context.onChange('slots.TOP_LEADERBOARD.targeting.uap', function () {
+	function setUapStateBasedOnBridge() {
 		setUapId(adEngineBridge.UniversalAdPackage.getUapId());
 		setType(adEngineBridge.UniversalAdPackage.getType());
-	});
+	}
 
 	function setUapId(uap) {
 		context.uapId = uap;
@@ -61,6 +61,9 @@ define('ext.wikia.adEngine.context.uapContext', [
 		context.eventDispatched = true;
 		log(['dispatchEvent', eventName], 'info', logGroup);
 	}
+
+	adEngineBridge.Context.onChange('slots.TOP_LEADERBOARD.targeting.uap', setUapStateBasedOnBridge);
+	adEngineBridge.Context.onChange('slots.MOBILE_TOP_LEADERBOARD.targeting.uap', setUapStateBasedOnBridge);
 
 	return {
 		dispatchEvent: dispatchEvent,
