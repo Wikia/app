@@ -204,8 +204,7 @@ class RTEParser extends Parser {
 		$isVideo = WikiaFileHelper::isFileTypeVideo( $file );
 
 		// get and merge image parameters returned by Parser::makeImage
-		$params = array_merge(self::$imageParams['frame'], self::$imageParams['handler']);
-
+		$params = array_merge(self::$imageParams['frame'] ?? [], self::$imageParams['handler'] ?? []);
 		// cleanup
 		if (isset($params['title'])) {
 			unset($params['title']);
@@ -413,19 +412,18 @@ class RTEParser extends Parser {
 
 	/**
 	 * Handle ParserMakeImageParams hook (get parsed image options)
+	 * @param Parser $parser
+	 * @param array $params
+	 * @return bool
 	 */
-	static public function makeImageParams($title, $file, &$params) {
+	static public function makeImageParams( Parser $parser, array &$params ) {
 		wfProfileIn(__METHOD__);
 
 		// run only when parsing for RTE
-		global $wgRTEParserEnabled;
-		if (empty($wgRTEParserEnabled)) {
-			wfProfileOut(__METHOD__);
-			return true;
+		if ( $parser instanceof RTEParser ) {
+			// store image params (to be used in makeImage)
+			self::$imageParams = $params;
 		}
-
-		// store image params (to be used in makeImage)
-		self::$imageParams = $params;
 
 		wfProfileOut(__METHOD__);
 		return true;

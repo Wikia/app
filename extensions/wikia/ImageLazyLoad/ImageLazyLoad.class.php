@@ -10,21 +10,11 @@ class ImageLazyLoad  {
 	const LAZY_IMAGE_CLASSES = 'lzy lzyPlcHld';
 	const IMG_ONLOAD = "if(typeof ImgLzy==='object'){ImgLzy.load(this)}";
 
-	private static $isWikiaMobile = null;
 	private static $enabled = null;
 
-	public static function isEnabled() {
+	public static function isEnabled(): bool {
 		if ( is_null( self::$enabled ) ) {
-			$app = F::app();
-			self::$enabled = false;
-
-			if ( self::$isWikiaMobile === null ) {
-				self::$isWikiaMobile = $app->checkSkin( 'wikiamobile' );
-			}
-
-			if ( !self::$isWikiaMobile && empty( $app->wg->RTEParserEnabled ) ) {
-				self::$enabled = true;
-			}
+			self::$enabled = !F::app()->checkSkin( 'wikiamobile' );
 		}
 
 		return self::$enabled;
@@ -61,9 +51,11 @@ class ImageLazyLoad  {
 	}
 
 	public static function onGalleryBeforeRenderImage( &$image ) {
-		global $wgRTEParserEnabled, $wgParser;
+		global $wgParser;
 
-		if ( self::isEnabled() && empty( $wgRTEParserEnabled ) ) {
+		$action = Action::getActionName( RequestContext::getMain() );
+
+		if ( self::isEnabled() && $action !== 'edit' ) {
 
 			// Don't lazy-load data elements
 			if ( startsWith( $image[ 'thumbnail' ], 'data:' ) ) {
@@ -118,14 +110,15 @@ class ImageLazyLoad  {
 
 	/**
 	 * Check whether or not the image is valid for lazy loading
-	 * @global boolean $wgRTEParserEnabled
 	 * @param string $imgSrc
 	 * @return boolean
 	 */
 	public static function isValidLazyLoadedImage( $imgSrc ) {
-		global $wgRTEParserEnabled, $wgParser;
+		global $wgParser;
 
-		if ( self::isEnabled() && empty( $wgRTEParserEnabled ) ) {
+		$action = Action::getActionName( RequestContext::getMain() );
+
+		if ( self::isEnabled() && $action !== 'edit' ) {
 			// Don't lazy-load data elements
 			if ( startsWith( $imgSrc, 'data:' ) ) {
 				return false;
