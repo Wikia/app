@@ -1177,7 +1177,14 @@ class PPFrame_DOM implements PPFrame {
 							'title' => new PPNode_DOM( $title ),
 							'parts' => new PPNode_DOM( $parts ),
 							'lineStart' => $lineStart );
+
+						// FANDOM change - XW-4380: Disable RTE parser during brace substitution
+						$wasRteParserEnabled = $wgRTEParserEnabled;
+						$wgRTEParserEnabled = false;
 						$ret = $this->parser->braceSubstitution( $params, $this );
+						$wgRTEParserEnabled = $wasRteParserEnabled;
+						// end FANDOM change
+
 						if ( isset( $ret['object'] ) ) {
 							$newIterator = $ret['object'];
 						} elseif ( $wgRTEParserEnabled && !$this->isTemplate() ) {
