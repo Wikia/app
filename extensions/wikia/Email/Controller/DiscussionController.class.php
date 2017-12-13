@@ -112,6 +112,7 @@ class DiscussionReplyController extends DiscussionController {
     public function initEmail() {
         parent::initEmail();
         $this->threadTitle = $this->request->getVal( "threadTitle" );
+	    $this->assertSubscribedToEmail();
     }
 
     public function getSubject() {
@@ -147,11 +148,6 @@ class DiscussionReplyController extends DiscussionController {
 
         return array_merge_recursive( parent::getEmailSpecificFormFields(), $formFields );
     }
-
-	public function assertCanEmail() {
-		parent::assertCanEmail();
-		$this->assertSubscribedToEmail();
-	}
 
 	/**
 	 * Asserts that target user is subscribed to Discussions Follow emails.
@@ -199,6 +195,7 @@ class DiscussionUpvoteController extends DiscussionController {
         $this->postTitle = $this->request->getVal( 'postTitle' );
         $this->upVotes = $this->request->getVal( 'upVotes' );
         $this->assertValidParams();
+	    $this->assertSubscribedToDiscussionsEmail();
     }
 
     protected function assertValidParams() {
@@ -262,11 +259,6 @@ class DiscussionUpvoteController extends DiscussionController {
 
         return array_merge_recursive( parent::getEmailSpecificFormFields(), $formFields );
     }
-
-	public function assertCanEmail() {
-		parent::assertCanEmail();
-		$this->assertSubscribedToDiscussionsEmail();
-	}
 
 	/**
 	 * Asserts that target user is subscribed to Discussions Upvote emails.
