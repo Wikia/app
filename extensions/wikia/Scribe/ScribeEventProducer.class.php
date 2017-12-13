@@ -9,8 +9,6 @@ class ScribeEventProducer {
 	private $mParams, $mKey, $mEventType;
 	private $sendToScribe, $sendToRabbit;
 
-	const RABBIT_KEY_PREFIX = 'mediawiki.edit.';
-
 	const
 		EDIT_CATEGORY       = 'log_edit',
 		CREATEPAGE_CATEGORY = 'log_create',
@@ -391,8 +389,7 @@ class ScribeEventProducer {
 				WScribeClient::singleton( $this->mKey )->send( $data );
 			}
 			if ( $this->sendToRabbit ) {
-				$key = static::RABBIT_KEY_PREFIX.$this->mKey;
-				$this->getRabbit()->publish( $key, $data );
+				$this->getRabbit()->publish( $this->mKey, $data );
 			}
 			$this->logSendMessage();
 		}
