@@ -15,7 +15,7 @@
 					<label for='old-username'><?= wfMessage( 'userrenametool-old' )->inContentLanguage()->escaped(); ?></label>
 				</td>
 				<td class='mw-input'>
-					<input type="text" id="old-username" name="oldUsername" size="30" tabindex="2" disabled maxlength="<?= $maxUsernameLength; ?>" value="<?= $oldUsername; ?>"/>
+					<input id="old-username" name="oldUsername" size="30" tabindex="2" readonly maxlength="<?= $maxUsernameLength; ?>" value="<?= $oldUsername; ?>"/>
 				</td>
 			</tr>
 			<tr>
