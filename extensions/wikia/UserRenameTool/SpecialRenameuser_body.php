@@ -66,7 +66,7 @@ class SpecialRenameuser extends SpecialPage {
 		return;
 	}
 
-	public static function validateData( array $data, User $user, bool $selfRename = true ) {
+	private static function validateData( array $data, User $user, bool $selfRename = true ) {
 		global $wgMaxNameChars;
 
 		$errorList = [];
@@ -115,6 +115,10 @@ class SpecialRenameuser extends SpecialPage {
 		return $errorList;
 	}
 
+	/**
+	 * @param User $requestorUser
+	 * @param User|null $oldUsername
+	 */
 	private function renderForm( User $requestorUser, $oldUsername = null ) {
 		global $wgMaxNameChars;
 
@@ -161,7 +165,7 @@ class SpecialRenameuser extends SpecialPage {
 		$template->set_vars( array_merge(
 			array_map( 'htmlspecialchars', $requestData ),
 			[
-				'submitUrl' => $this->getTitle()->getLocalURL(),
+				'submitUrl' => $this->getTitle($selfRename ? false : $oldUsername )->getLocalURL(),
 				'token' => $requestorUser->getEditToken(),
 				'maxUsernameLength' => $wgMaxNameChars,
 				'showForm' => $showForm,
