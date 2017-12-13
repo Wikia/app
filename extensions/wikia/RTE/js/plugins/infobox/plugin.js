@@ -66,47 +66,10 @@ require(['jquery', 'wikia.window'], function ($, window) {
 		var infoboxName = $(event.target).data('infobox-name');
 
 		if (infoboxName) {
-			openInfoboxParametersEditDialog(infoboxName);
 			console.log('did');
 			CKEDITOR.dialog.getCurrent().hide();
 			RTE.templateEditor.createTemplateEditor(infoboxName);
 		}
-	}
-
-	function openInfoboxParametersEditDialog(infoboxName) {
-		// generate meta-data
-		var data = {
-			title: infoboxName,
-			wikitext: '{{' + infoboxName + '}}'
-		};
-
-		// this.placeholder.setPlaceholderType('double-brackets');
-		// this.placeholder.setData(data);
-
-		//RTE.templateEditor.usePlaceholder(this.placeholder);
-		//dialog.setLoading(true);
-
-		// get template info
-		var self = this;
-		RTE.tools.resolveDoubleBrackets(data.wikitext, function(info) {
-			//dialog.setLoading(false);
-
-			// store template info
-			//self.placeholder.data('info', info);
-
-			// show step #2 - params editor
-			if ( (typeof info.availableParams != 'undefined') && (info.availableParams.length > 0) ) {
-				RTE.templateEditor.selectStep(2);
-			}
-			else {
-				RTE.log('given template contains no params - inserting / updating...');
-				//RTE.templateEditor.commitChanges();
-
-				// close editor
-				//dialog.hide();
-				return;
-			}
-		});
 	}
 
 	registerPlugin();
