@@ -38,7 +38,7 @@
 <?php } ?>
 <fieldset>
 	<legend><?= wfMessage( 'editaccount-frame-account', $user )->escaped(); ?></legend>
-	<?php echo $userEncoded ?><br />
+	<?php echo $userEncoded ?>&nbsp;<?= wfMessage( 'editaccount-label-edit-username', $user )->parse(); ?><br />
 	ID: <?php echo $userId; ?><br />
 	Reg: <?php echo $userReg ; ?><br />
 	<?= wfMessage( 'editaccount-labal-account-status' )->escaped(); ?>: <?php echo $userStatus; ?><br />
