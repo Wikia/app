@@ -18,6 +18,7 @@ CKEDITOR.plugins.add('rte-template',
 			},
 
 			init : function() {
+
 				this.startGroup(editor.lang.templateDropDown.title);
 
 				// list of templates to be added to dropdown

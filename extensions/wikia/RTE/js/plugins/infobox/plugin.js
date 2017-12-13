@@ -12,7 +12,7 @@ require(['jquery', 'wikia.window'], function ($, window) {
 	}
 
 	function openInfoboxModal(editor) {
-		$.get('/api.php?format=json&action=query&list=allinfoboxes&yselang=' + window.wgContentLanguage)
+		$.get('/api.php?format=json&action=query&list=allinfoboxes&uselang=' + window.wgContentLanguage)
 			.then(function (data) {
 				window.CKEDITOR.dialog.add( 'infobox-dialog', function( editor ) {
 					return {
@@ -34,12 +34,10 @@ require(['jquery', 'wikia.window'], function ($, window) {
 							}
 						],
 						onShow: function () {
-							$('.infobox-templates-list').on('click', function (evt) {
-								debugger;
-								openInfoboxParametersEditDialog(
-									$(event.currentTarget).data('infobox-name')
-								)
-							})
+							$('.infobox-templates-list').on('click', onInfoboxTemplateChosen);
+						},
+						onHide: function () {
+							$('.infobox-templates-list').off('click', onInfoboxTemplateChosen);
 						}
 					};
 				});
@@ -62,6 +60,17 @@ require(['jquery', 'wikia.window'], function ($, window) {
 		markup += '</ul>';
 
 		return markup;
+	}
+
+	function onInfoboxTemplateChosen(evt) {
+		var infoboxName = $(event.target).data('infobox-name');
+
+		if (infoboxName) {
+			openInfoboxParametersEditDialog(infoboxName);
+			console.log('did');
+			CKEDITOR.dialog.getCurrent().hide();
+			RTE.templateEditor.createTemplateEditor(infoboxName);
+		}
 	}
 
 	function openInfoboxParametersEditDialog(infoboxName) {
