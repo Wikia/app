@@ -17,6 +17,7 @@ require(['jquery', 'wikia.window'], function ($, window) {
 				window.CKEDITOR.dialog.add( 'infobox-dialog', function( editor ) {
 					return {
 						title: 'Select Infobox to Insert',
+						buttons: [],
 						minWidth: 400,
 						minHeight: 200,
 						contents: [
