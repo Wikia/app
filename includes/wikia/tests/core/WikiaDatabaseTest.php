@@ -15,12 +15,7 @@ abstract class WikiaDatabaseTest extends TestCase {
 		tearDown as protected databaseTearDown;
 	}
 
-	const GLOBAL_DB_VARS = [
-		// disable non-default databases
-		'wgExternalSharedDB', 'wgSpecialsDB', 'wgExternalDatawareDB',
-		// disable external revision storage
-		'wgDefaultExternalStore'
-	];
+	const GLOBAL_DB_VARS = [ 'wgExternalSharedDB', 'wgSpecialsDB', 'wgDefaultExternalStore' ];
 
 	/** @var PDO $pdo */
 	private static $pdo = null;

@@ -67,7 +67,10 @@ class UserArrayFromResult extends UserArray {
 		if ( $row === false ) {
 			$this->current = false;
 		} else {
-			$this->current = User::newFromRow( $row );
+			// SUS-3528
+			$this->current = $row->user_id > 0
+				? User::newFromId( $row->user_id )
+				: User::newFromRow( $row );
 		}
 	}
 

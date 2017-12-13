@@ -791,19 +791,11 @@ class WikiPage extends Page implements IDBAccessObject {
 		# @todo FIXME: This is expensive; cache this info somewhere.
 
 		$dbr = wfGetDB( DB_SLAVE );
-
-		if ( $dbr->implicitGroupby() ) {
-			$realNameField = 'user_real_name';
-		} else {
-			$realNameField = 'MIN(user_real_name) AS user_real_name';
-		}
-
-		$tables = array( 'revision', 'user' );
+		$tables = [ 'revision' ];
 
 		$fields = array(
 			'rev_user as user_id',
-			'rev_user_text AS user_name',
-			$realNameField,
+			'rev_user_text as user_name',
 			'MAX(rev_timestamp) AS timestamp',
 		);
 
@@ -820,16 +812,12 @@ class WikiPage extends Page implements IDBAccessObject {
 
 		$conds[] = "{$dbr->bitAnd( 'rev_deleted', Revision::DELETED_USER )} = 0"; // username hidden?
 
-		$jconds = array(
-			'user' => array( 'LEFT JOIN', 'rev_user = user_id' ),
-		);
-
 		$options = array(
 			'GROUP BY' => array( 'rev_user', 'rev_user_text' ),
 			'ORDER BY' => 'timestamp DESC',
 		);
 
-		$res = $dbr->select( $tables, $fields, $conds, __METHOD__, $options, $jconds );
+		$res = $dbr->select( $tables, $fields, $conds, __METHOD__, $options );
 		return new UserArrayFromResult( $res );
 	}
 
