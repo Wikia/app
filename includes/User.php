@@ -3499,7 +3499,7 @@ class User implements JsonSerializable {
 	/**
 	 * Check to see if the given clear-text password is one of the accepted passwords
 	 * @param $password String: user password.
-	 * @return AuthResult: True if the given password is correct, otherwise False.
+	 * @return AuthResult
 	 */
 	public function checkPassword( $password, &$errorMessageKey = null ) {
 		$this->load();
