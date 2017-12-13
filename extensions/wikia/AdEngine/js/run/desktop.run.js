@@ -60,7 +60,7 @@ require([
 	if (adContext.get('opts.isAdProductsBridgeEnabled')) {
 		adEngineBridge.init(
 			slotRegistry,
-			undefined,
+			null,
 			pageLevelParams.getPageLevelParams(),
 			adContext,
 			btfBlocker,
