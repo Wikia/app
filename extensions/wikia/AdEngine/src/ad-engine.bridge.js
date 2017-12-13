@@ -49,16 +49,18 @@ function overrideSlotService(slotRegistry, legacyBtfBlocker) {
 
 function unifySlotInterface(slot) {
 	const slotContext = Context.get(`slots.${slot.name}`) || {targeting: {}};
-	slot.getSlotName = () => slot.name;
-	slot.default = {
-		getSlotName: () => slot.name
-	};
-	slot.getId = () => slot.name;
-	slot.config = slotContext;
-	slot.getVideoAdUnit = () => buildVastAdUnit(slot.name);
-	slot.getTargeting = () => slotContext.targeting;
-	slot.getElement = () => slot.container.parentElement;
-	slot = Object.assign(new EventEmitter(), slot);
+
+	slot = Object.assign(new EventEmitter(), slot, {
+		config: slotContext,
+		default: {
+			getSlotName: () => slot.name
+		},
+		getElement: () => slot.container.parentElement,
+		getId: () => slot.name,
+		getSlotName: () => slot.name,
+		getTargeting: () => slotContext.targeting,
+		getVideoAdUnit: () => buildVastAdUnit(slot.name)
+	});
 	slot.pre('viewed', () => {
 		SlotListener.onImpressionViewable(slot);
 	});
