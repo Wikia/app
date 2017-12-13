@@ -4,7 +4,7 @@ class ArticleVideoHooks {
 	public static function onBeforePageDisplay( \OutputPage $out/*, \Skin $skin*/ ) {
 		$articleId = $out->getTitle()->getArticleID();
 
-		if ( !ArticleVideoContext::isFeaturedVideoEmbedded( $articleId ) ) {
+		if ( ArticleVideoContext::isFeaturedVideoEmbedded( $articleId ) ) {
 			self::addJWPlayerAssets();
 		}
 
