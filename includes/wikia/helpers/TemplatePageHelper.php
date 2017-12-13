@@ -128,22 +128,9 @@ class TemplatePageHelper {
 		$infoboxes = PortableInfoboxDataService::newFromTitle( $this->getTitle() )->getData();
 		if ( !empty( $infoboxes ) ) {
 			foreach ( $infoboxes as $infobox ) {
-				if ( isset( $infobox['sourcelabels'] ) ) {
-					// TODO remove after XW-2415 is merged
-					foreach ( $infobox['sourcelabels'] as $sourceName => $sourceLabel ) {
-						if ( !isset( $params[$sourceName] ) ) {
-							$params[$sourceName] = 1;
-						}
-					}
-				} elseif ( isset( $infobox['metadata'] ) ) {
-					// TODO run only this one after XW-2415 is merged
+				if ( isset( $infobox['metadata'] ) ) {
 					foreach ( $infobox['metadata'] as $nodeMetadata ) {
-						// TODO handle groups, use recursion like in https://github.com/Wikia/app/pull/12095/files#diff-14bd00400eb5fbf7b482fe6a5b3df21eR99
-						foreach ( $nodeMetadata['sources'] as $sourceName => $sourceMetadata ) {
-							if ( !isset( $params[$sourceName] ) ) {
-								$params[$sourceName] = 1;
-							}
-						}
+						$params = array_merge($params, $this->getInfoboxNodeParameters($nodeMetadata));
 					}
 				}
 			}
@@ -152,4 +139,24 @@ class TemplatePageHelper {
 		wfProfileOut(__METHOD__);
 		return array_keys( $params );
 	}
+
+	private function getInfoboxNodeParameters( $nodeMetadata ) {
+		$params = [];
+		if (isset($nodeMetadata['sources'])) {
+			foreach ( $nodeMetadata['sources'] as $sourceName => $sourceMetadata ) {
+				if ( !isset( $params[$sourceName] ) ) {
+					$params[$sourceName] = 1;
+				}
+			}
+		}
+
+		if (isset($nodeMetadata['metadata'])) {
+			foreach($nodeMetadata['metadata'] as $nestedNodeMetadata ) {
+				$params = array_merge($params, $this->getInfoboxNodeParameters($nestedNodeMetadata));
+			}
+		}
+
+		return $params;
+	}
+
 }

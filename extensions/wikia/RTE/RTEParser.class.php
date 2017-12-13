@@ -204,8 +204,7 @@ class RTEParser extends Parser {
 		$isVideo = WikiaFileHelper::isFileTypeVideo( $file );
 
 		// get and merge image parameters returned by Parser::makeImage
-		$params = array_merge(self::$imageParams['frame'], self::$imageParams['handler']);
-
+		$params = array_merge(self::$imageParams['frame'] ?? [], self::$imageParams['handler'] ?? []);
 		// cleanup
 		if (isset($params['title'])) {
 			unset($params['title']);
