@@ -95,6 +95,7 @@ class WikiaInYourLangController extends WikiaController {
 		/**
 		 * Cache the response for a day
 		 */
+		$this->response->setCachePolicy( WikiaResponse::CACHE_PUBLIC );
 		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
 
 		wfProfileOut( __METHOD__ );
