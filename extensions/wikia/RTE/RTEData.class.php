@@ -103,7 +103,7 @@ class RTEData {
 	 *
 	 * @author Macbre
 	 */
-	 public static function resolveLinksInMediaCaption(&$wikitext) {
+	 public static function removeInternalLinkMarkersFromText( &$wikitext) {
 		 wfProfileIn(__METHOD__);
 		 $resolved = false;
 

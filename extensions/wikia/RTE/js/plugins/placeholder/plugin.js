@@ -90,10 +90,6 @@ CKEDITOR.plugins.add('rte-placeholder',
 						title = info.title.replace(/_/g, ' ').replace(/^Template:/, window.RTEMessages.template + ':');
 						intro = info.exists ? lang.template.intro : lang.template.notExisting;
 
-						// show wikitext, if template does not exist
-						code = info.exists ? info.html : data.wikitext;
-						preformattedCode = !info.exists;
-
 						// is this template editable?
 						isEditable = (typeof info.availableParams != 'undefined' && info.availableParams.length);
 						break;
@@ -403,9 +399,10 @@ CKEDITOR.plugins.add('rte-placeholder',
 				//RTE.log([x, y]);
 
 				// calculate editarea size
-				var editarea = $('#cke_contents_wpTextbox1');
-				var maxX = parseInt(editarea.offset().left) + editarea.width();
-				var maxY = parseInt(editarea.offset().top) + editarea.height();
+				var editArea = document.getElementById('cke_1_contents'),
+					editAreaBounds = editArea.getBoundingClientRect();
+				var maxX = editAreaBounds.x + editAreaBounds.width;
+				var maxY = editAreaBounds.y + editAreaBounds.height;
 
 				//RTE.log([maxX, maxY]);
 

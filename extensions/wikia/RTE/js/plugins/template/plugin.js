@@ -524,21 +524,25 @@ RTE.templateEditor = {
 		RTE.log('storing modified template data');
 		RTE.log(this.data);
 
-		// store saved meta data
-		this.placeholder.setData(RTE.templateEditor.data);
+		RTE.tools.parse(this.data.wikitext, function(html) {
+			this.placeholder.html(html);
 
-		// regenerate template preview and data
-		this.placeholder.removeData('preview');
-		this.placeholder.removeData('info');
+			// store saved meta data
+			this.placeholder.setData(RTE.templateEditor.data);
 
-		// add placeholder to editor, if needed
-		if (!this.placeholder.parent().exists()) {
-			RTE.tools.insertElement(this.placeholder);
-		}
+			// regenerate template preview and data
+			this.placeholder.removeData('preview');
+			this.placeholder.removeData('info');
 
-		// cleanup
-		this.placeholder = false;
-		this.data = {};
+			// add placeholder to editor, if needed
+			if (!this.placeholder.parent().exists()) {
+				RTE.tools.insertElement(this.placeholder);
+			}
+
+			// cleanup
+			this.placeholder = false;
+			this.data = {};
+		}.bind(this));
 	},
 
 	// show template editor
