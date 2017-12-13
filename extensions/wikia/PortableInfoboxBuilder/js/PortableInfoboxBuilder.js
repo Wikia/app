@@ -1,5 +1,5 @@
 'use strict';
-
+debugger;
 require(['ponto', 'jquery'], function (ponto, $) {
 	var $infoboxBuilderIframe = $('#infoboxBuilderIframe');
 

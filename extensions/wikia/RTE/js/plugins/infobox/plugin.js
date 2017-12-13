@@ -1,5 +1,6 @@
-require(['jquery', 'wikia.window'], function ($, window) {
-	infoboxBuilderMarkup = null;
+require(['jquery', 'wikia.window', 'wikia.loader', 'wikia.mustache', 'wikia.location'], function ($, window, loader, mustache, location) {
+	var infoboxBuilderMarkup = null,
+		infoboxBuilderScripts = null;
 
 	function registerPlugin() {
 		window.CKEDITOR.plugins.add( 'rte-infobox', {
@@ -35,9 +36,9 @@ require(['jquery', 'wikia.window'], function ($, window) {
 					}
 				],
 				onShow: function () {
-					debugger;
 					if (infoboxBuilderMarkup) {
 						$('.ckeditor-infobox-builder').html(infoboxBuilderMarkup);
+						loader.processScript(infoboxBuilderScripts);
 					}
 				}
 			}
@@ -45,26 +46,21 @@ require(['jquery', 'wikia.window'], function ($, window) {
 
 		CKEDITOR.dialog.getCurrent().hide();
 
-		require(['wikia.loader', 'wikia.mustache', 'wikia.location'], function (loader, mustache, location) {
-			loader({
-				type: loader.MULTI,
-				resources: {
-					mustache: 'extensions/wikia/PortableInfoboxBuilder/templates/PortableInfoboxBuilderSpecialController_builder.mustache',
-					scripts: 'portable_infobox_builder_js'
-				}
-			}).done(function (assets) {
-				infoboxBuilderMarkup = mustache.render(assets.mustache[0], {
-					iframeUrl: location.origin + '/infobox-builder/',
-					classes: 've-ui-infobox-builder'
-				});
-debugger;
-				loader.processScript(assets.scripts);
-
-				RTE.getInstance().openDialog('infoboxBuilder-dialog');
-
+		loader({
+			type: loader.MULTI,
+			resources: {
+				mustache: 'extensions/wikia/PortableInfoboxBuilder/templates/PortableInfoboxBuilderSpecialController_builder.mustache',
+				scripts: 'portable_infobox_builder_js'
+			}
+		}).done(function (assets) {
+			infoboxBuilderMarkup = mustache.render(assets.mustache[0], {
+				iframeUrl: location.origin + '/infobox-builder/',
+				classes: 've-ui-infobox-builder'
 			});
-		});
+			infoboxBuilderScripts = assets.scripts;
 
+			RTE.getInstance().openDialog('infoboxBuilder-dialog');
+		});
 	}
 
 	function openInfoboxModal( editor ) {
