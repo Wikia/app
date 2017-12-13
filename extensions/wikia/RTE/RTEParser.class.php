@@ -516,8 +516,6 @@ class RTEParser extends Parser {
 
 		wfProfileIn(__METHOD__ . '::regexp');
 
-		$placeHolderProcessor = new RTEPlaceholderProcessor( new Parser(), $options, $title );
-
 		// remove EMPTY_LINES_BEFORE comments which are before closing tags - refs RT#38889
 		// <!-- RTE_EMPTY_LINES_BEFORE_1 --></td></tr></table>  <= remove this one
 		// <!-- RTE_EMPTY_LINES_BEFORE_1 --><p>
@@ -534,7 +532,7 @@ class RTEParser extends Parser {
 		$html = preg_replace_callback("/<(li|dd|dt|td|th)([^>]*)>(\x20+)/", 'RTEParser::spacesBeforeCallback', $html);
 
 		// replace placeholder markers with placeholders
-		$html = preg_replace_callback("/\x7f-01-(\d{4})/", [ $placeHolderProcessor, 'replacePlaceholder' ], $html);
+		$html = preg_replace_callback("/\x7f-01-(\d{4})/", 'RTE::replacePlaceholder', $html);
 
 		// replace dataidx attribute with data-rte-meta attribute storing JSON encoded meta data
 		$html = preg_replace_callback('/ _rte_dataidx="(\d{4})" /', 'RTEData::replaceIdxByData', $html);
