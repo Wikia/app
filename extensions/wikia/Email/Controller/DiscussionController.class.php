@@ -112,7 +112,7 @@ class DiscussionReplyController extends DiscussionController {
     public function initEmail() {
         parent::initEmail();
         $this->threadTitle = $this->request->getVal( "threadTitle" );
-	    $this->assertSubscribedToEmail();
+        $this->assertSubscribedToEmail();
     }
 
     public function getSubject() {
@@ -195,7 +195,7 @@ class DiscussionUpvoteController extends DiscussionController {
         $this->postTitle = $this->request->getVal( 'postTitle' );
         $this->upVotes = $this->request->getVal( 'upVotes' );
         $this->assertValidParams();
-	    $this->assertSubscribedToDiscussionsEmail();
+        $this->assertSubscribedToDiscussionsEmail();
     }
 
     protected function assertValidParams() {
