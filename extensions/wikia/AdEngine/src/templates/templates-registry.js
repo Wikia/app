@@ -9,8 +9,8 @@ import { getConfig as getDesktopBfaaConfig } from './big-fancy-ad-above-desktop-
 
 export default class TemplateRegistry {
 	static init(legacyContext, mercuryListener) {
-		const isMobile = legacyContext.get('targeting.skin') !== 'oasis',
-			getBfaaConfig = isMobile ? getMobileBfaaConfig : getDesktopBfaaConfig;
+		const isMobile = legacyContext.get('targeting.skin') !== 'oasis';
+		const getBfaaConfig = isMobile ? getMobileBfaaConfig : getDesktopBfaaConfig;
 
 		TemplateService.register(BigFancyAdAbove, getBfaaConfig(mercuryListener));
 		TemplateService.register(BigFancyAdBelow);
