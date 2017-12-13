@@ -124,7 +124,9 @@ class RenameUserProcess {
 			$this->addLog( 'Running query: ' . $dbw->lastQuery() . " resulted in {$affectedRows} row(s) being affected." );
 
 			if ( $affectedRows ) {
-				$dbw->commit();
+				$dbw->commit( __METHOD__ );
+				wfWaitForSlaves( $dbw->getDBname() );
+
 				$this->addLog( "Changed user {$this->mOldUsername} to {$this->mNewUsername} in {$wgExternalSharedDB}" );
 
 				User::clearUserCache( $this->mUserId );
@@ -394,7 +396,7 @@ class RenameUserProcess {
 	/**
 	 * Do the whole dirty job of renaming user
 	 *
-	 * @return bool True if the process succeded
+	 * @return bool True if the process was successful
 	 */
 	private function doRun() {
 		$this->addLog( "User rename global task start." . ( ( !empty( $this->mFakeUserId ) ) ? ' Process is being repeated.' : null ) );
@@ -407,6 +409,9 @@ class RenameUserProcess {
 			return false;
 		}
 
+		// SUS-3523: invalidate the destination user (by both name and ID, user name to ID
+		// mapping is cached as well)
+		$this->invalidateUser( User::newFromId( $this->mUserId ) );
 		$this->invalidateUser( $this->mNewUsername );
 
 		/*if not repeating the process
@@ -446,7 +451,11 @@ class RenameUserProcess {
 			$this->addLog( "Fake user account already exists: {$this->mFakeUserId}" );
 		}
 
+		// SUS-3523: invalidate the old user (by both name and ID, user name to ID
+		// mapping is cached as well)
+		$this->invalidateUser( User::newFromId( $this->mFakeUserId ) );
 		$this->invalidateUser( $this->mOldUsername );
+
 		if ( $this->mFakeUserId ) {
 			$this->addLog( "Cleaning up process data in user option renameData for ID {$this->mFakeUserId}" );
 
@@ -509,10 +518,11 @@ class RenameUserProcess {
 	private function invalidateUser( $user ) {
 		if ( is_string( $user ) ) {
 			$user = User::newFromName( $user );
-		} else if ( !is_object( $user ) ) {
+		} elseif ( !is_object( $user ) ) {
 			$this->addLog( "invalidateUser() called with some strange argument type: " . gettype( $user ) );
 			return;
 		}
+
 		if ( is_object( $user ) ) {
 			$user->invalidateCache();
 		}
