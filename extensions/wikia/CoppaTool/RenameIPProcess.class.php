@@ -343,7 +343,7 @@ class RenameIPProcess {
 		return $oldUser;
 	}
 
-		/**
+	/**
 	 * @author Federico "Lox" Lucignano <federico@wikia-inc.com>
 	 * Performs action for cleaning up temporary data at the very end of a process
 	 */
@@ -357,12 +357,8 @@ class RenameIPProcess {
 		}
 	}
 
-	public function addInternalLog( $text ) {
+	private function addInternalLog( $text ) {
 		$this->mInternalLog .= $text . "\n";
-	}
-
-	public function getInternalLog() {
-		return $this->mInternalLog;
 	}
 
 	static public function newFromData( $data ) {

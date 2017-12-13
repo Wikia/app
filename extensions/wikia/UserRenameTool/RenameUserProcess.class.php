@@ -503,7 +503,10 @@ class RenameUserProcess {
 		$log->addEntry( 'renameuser', Title::newFromText( $this->mOldUsername, NS_USER ), $text, array(), User::newFromId( $this->mRequestorId ) );
 	}
 
-	public function invalidateUser( $user ) {
+	/**
+	 * @param User|string $user
+	 */
+	private function invalidateUser( $user ) {
 		if ( is_string( $user ) ) {
 			$user = User::newFromName( $user );
 		} else if ( !is_object( $user ) ) {
@@ -515,12 +518,8 @@ class RenameUserProcess {
 		}
 	}
 
-	public function addInternalLog( $text ) {
+	private function addInternalLog( $text ) {
 		$this->mInternalLog .= $text . "\n";
-	}
-
-	public function getInternalLog() {
-		return $this->mInternalLog;
 	}
 
 	/**
@@ -529,7 +528,7 @@ class RenameUserProcess {
 	 * @param string $action
 	 * @param $text string Log message
 	 */
-	public function addMainLog( $action, $text ) {
+	private function addMainLog( $action, $text ) {
 		StaffLogger::log(
 			'renameuser',
 			$action,
