@@ -110,9 +110,8 @@ class DiscussionReplyController extends DiscussionController {
     private $threadTitle;
 
     public function initEmail() {
-        parent::initEmail();
-        $this->threadTitle = $this->request->getVal( "threadTitle" );
-        $this->assertSubscribedToEmail();
+		$this->threadTitle = $this->request->getVal( "threadTitle" );
+		parent::initEmail();
     }
 
     public function getSubject() {
@@ -154,7 +153,9 @@ class DiscussionReplyController extends DiscussionController {
 	 *
 	 * @throws \Email\Check
 	 */
-	protected function assertSubscribedToEmail() {
+	public function assertCanEmail() {
+		parent::assertCanEmail();
+
 		$wantsDiscussionEmails = ( bool ) $this->targetUser->getGlobalPreference( 'enotifdiscussionsfollows' );
 
 		if ( !$wantsDiscussionEmails ) {
@@ -191,14 +192,14 @@ class DiscussionUpvoteController extends DiscussionController {
     ];
 
     public function initEmail() {
-        parent::initEmail();
-        $this->postTitle = $this->request->getVal( 'postTitle' );
-        $this->upVotes = $this->request->getVal( 'upVotes' );
-        $this->assertValidParams();
-        $this->assertSubscribedToDiscussionsEmail();
+		$this->postTitle = $this->request->getVal( 'postTitle' );
+		$this->upVotes = $this->request->getVal( 'upVotes' );
+		parent::initEmail();
     }
 
     protected function assertValidParams() {
+		parent::assertValidParams();
+
         if ( empty( $this->upVotes ) ) {
             throw new Check( 'Empty value passed for required param upVotes' );
         }
@@ -265,7 +266,9 @@ class DiscussionUpvoteController extends DiscussionController {
 	 *
 	 * @throws \Email\Check
 	 */
-	protected function assertSubscribedToDiscussionsEmail() {
+	public function assertCanEmail() {
+		parent::assertCanEmail();
+
 		$wantsDiscussionEmails = ( bool ) $this->targetUser->getGlobalPreference( 'enotifdiscussionsvotes' );
 
 		if ( !$wantsDiscussionEmails ) {
