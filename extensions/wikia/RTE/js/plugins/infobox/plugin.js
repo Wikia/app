@@ -1,4 +1,6 @@
 require(['jquery', 'wikia.window'], function ($, window) {
+	infoboxBuilderMarkup = null;
+
 	function registerPlugin() {
 		window.CKEDITOR.plugins.add( 'rte-infobox', {
 			init: onEditorInit
@@ -27,12 +29,17 @@ require(['jquery', 'wikia.window'], function ($, window) {
 						elements: [
 							{
 								type: 'html',
-								html: ''
+								html: '<div class="ckeditor-infobox-builder"></div>'
 							}
 						]
 					}
 				],
-
+				onShow: function () {
+					debugger;
+					if (infoboxBuilderMarkup) {
+						$('.ckeditor-infobox-builder').html(infoboxBuilderMarkup);
+					}
+				}
 			}
 		});
 
@@ -46,22 +53,19 @@ require(['jquery', 'wikia.window'], function ($, window) {
 					scripts: 'portable_infobox_builder_js'
 				}
 			}).done(function (assets) {
-				var html = mustache.render(assets.mustache[0], {
+				infoboxBuilderMarkup = mustache.render(assets.mustache[0], {
 					iframeUrl: location.origin + '/infobox-builder/',
 					classes: 've-ui-infobox-builder'
 				});
+debugger;
+				loader.processScript(assets.scripts);
 
-				loader.processScript(assets.scripts);	
-		
-			RTE.getInstance().openDialog('infoboxBuilder-dialog');	
-				// Content
-			//	self.content = new OO.ui.PanelLayout({ padded: false, expanded: true });
-			//	self.content.$element.append(html);
-			//	self.$body.append(self.content.$element);
+				RTE.getInstance().openDialog('infoboxBuilder-dialog');
+
 			});
 		});
-	
-	}	
+
+	}
 
 	function openInfoboxModal( editor ) {
 
