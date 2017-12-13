@@ -1235,7 +1235,7 @@ class PPFrame_DOM implements PPFrame {
 						# RTE (Rich Text Editor) - begin
 						# @author: Inez Korczyński
 						global $wgRTEParserEnabled;
-						if(!empty($wgRTEParserEnabled)) {
+						if ( !empty( $wgRTEParserEnabled ) && !$this->isTemplate() ) {
 							if(strlen($out) === 0 || substr($out, -1) == "\n") {
 								if(substr($contextNode->textContent, -1) == "\n") {
 									$add = "\n";
