@@ -1,34 +1,38 @@
 <?php
 /**
- * RenameIPTask
+ * UserRenameTask
  *
  * @author Scott Rabin <srabin@wikia-inc.com>
  */
 
 use Wikia\Tasks\Tasks\BaseTask;
 
-class RenameIPTask extends BaseTask {
+class UserRenameTask extends BaseTask {
 	const EMAIL_CONTROLLER = \Email\Controller\UserNameChangeController::class;
 
 	/**
-	 * Marshal & execute the RenameIPProcess functions to rename an IP
+	 * Marshal & execute the RenameUserProcess functions to rename a user
 	 *
 	 * @param array $wikiCityIds
 	 * @param array $params
 	 *		requestor_id => ID of the user requesting this rename action
 	 *		requestor_name => Name of the user requesting this rename action
-	 *		old_ip => Current IP of the user to rename
-	 *		new_ip => New IP for the user to rename
+	 *		rename_user_id => ID of the user to rename
+	 *		rename_old_name => Current username of the user to rename
+	 *		rename_new_name => New username for the user to rename
 	 *		reason => Reason for requesting username change
+	 *		rename_fake_user_id => Repeated rename process special case (TODO: Don't know what this is)
 	 *		phalanx_block_id => Phalanx login block ID
 	 * @return bool
 	 */
-	public function renameIP( array $wikiCityIds, array $params ) {
+	public function renameUser( array $wikiCityIds, array $params ) {
 		global $IP;
 
+		$renameIP = !empty( $params['rename_ip'] );
+
 		$loadBalancerFactory = wfGetLBFactory();
-		$process = RenameIPProcess::newFromData( $params );
-		$process->setLogDestination( \RenameIPProcess::LOG_BATCH_TASK, $this );
+		$process = RenameUserProcess::newFromData( $params );
+		$process->setLogDestination( \RenameUserProcess::LOG_BATCH_TASK, $this );
 		$process->setRequestorUser();
 
 		$noErrors = true;
@@ -37,10 +41,10 @@ class RenameIPTask extends BaseTask {
 		$this->staffLog(
 			'start',
 			$params,
-			\RenameIPLogFormatter::start(
+			\RenameUserLogFormatter::start(
 				$params['requestor_name'],
-				$params['old_ip'],
-				$params['new_ip'],
+				$params['rename_old_name'],
+				$params['rename_new_name'],
 				$params['reason'],
 				[ $this->getTaskId() ]
 			)
@@ -51,23 +55,34 @@ class RenameIPTask extends BaseTask {
 				/**
 				 * execute maintenance script
 				 */
-				$cmd = sprintf( "SERVER_ID=%s php {$IP}/maintenance/wikia/RenameIP_local.php", $cityId );
+				$cmd = sprintf( "SERVER_ID=%s php {$IP}/maintenance/wikia/RenameUser_local.php", $cityId );
 				$opts = [
+					'rename-user-id' => $params['rename_user_id'],
 					'requestor-id' => $params['requestor_id'],
 					'reason' => $params['reason'],
 				];
 
-				$opts['old-ip'] = $params['old_ip'];
-				$opts['new-ip'] = $params['new_ip'];
+				if ( $renameIP ) {
+					$opts['rename-old-name'] = $params['rename_old_name'];
+					$opts['rename-new-name'] = $params['rename_new_name'];
+				} else {
+					$opts['rename-old-name-enc'] = rawurlencode( $params['rename_old_name'] );
+					$opts['rename-new-name-enc'] = rawurlencode( $params['rename_new_name'] );
+					$opts['rename-fake-user-id'] = $params['rename_fake_user_id'];
+					$opts['phalanx-block-id'] = $params['phalanx_block_id'];
+				}
 
 				foreach ( $opts as $opt => $val ) {
 					$cmd .= sprintf( ' --%s %s', $opt, escapeshellarg( $val ) );
 				}
-				
+				if ( $renameIP ) {
+					$cmd .= ' --rename-ip-address';
+				}
+
 				$exitCode = null;
 				$output = wfShellExec( $cmd, $exitCode );
-				$logMessage = sprintf( "Changes IP address %s to %s on city id %s",
-					$params['old_ip'], $params['new_ip'], $cityId );
+				$logMessage = sprintf( "Rename user %s to %s on city id %s",
+					$params['rename_old_name'], $params['rename_new_name'], $cityId );
 				$logContext = [
 					'command' => $cmd,
 					'exitStatus' => $exitCode,
@@ -82,10 +97,10 @@ class RenameIPTask extends BaseTask {
 				$this->staffLog(
 					'log',
 					$params,
-					\RenameIPLogFormatter::wiki(
+					\RenameUserLogFormatter::wiki(
 						$params['requestor_name'],
-						$params['old_ip'],
-						$params['new_ip'],
+						$params['rename_old_name'],
+						$params['rename_new_name'],
 						$cityId,
 						$params['reason'],
 						$exitCode > 0
@@ -108,18 +123,30 @@ class RenameIPTask extends BaseTask {
 
 		$this->notifyUser(
 			\User::newFromId( $params['requestor_id'] ),
-			$params['old_ip'],
-			$params['new_ip']
+			$params['rename_old_name'],
+			$params['rename_new_name']
 		);
+
+		if ( !$renameIP ) {
+			// mark user as renamed
+			$renamedUser = \User::newFromName( $params['rename_new_name'] );
+			$renamedUser->setGlobalFlag( 'wasRenamed', true );
+			$renamedUser->saveSettings();
+
+			if ( $params['notify_renamed'] ) {
+				// send e-mail to the user that rename process has finished
+				$this->notifyUser( $renamedUser, $params['rename_old_name'], $params['rename_new_name'] );
+			}
+		}
 
 		if ( $noErrors ) {
 			$this->staffLog(
 				'finish',
 				$params,
-				\RenameIPLogFormatter::finish(
+				\RenameUserLogFormatter::finish(
 					$params['requestor_name'],
-					$params['old_ip'],
-					$params['new_ip'],
+					$params['rename_old_name'],
+					$params['rename_new_name'],
 					$params['reason'],
 					[ $this->getTaskId() ]
 				)
@@ -128,10 +155,10 @@ class RenameIPTask extends BaseTask {
 			$this->staffLog(
 				'fail',
 				$params,
-				\RenameIPLogFormatter::fail(
+				\RenameUserLogFormatter::fail(
 					$params['requestor_name'],
-					$params['old_ip'],
-					$params['new_ip'],
+					$params['rename_old_name'],
+					$params['rename_new_name'],
 					$params['reason'],
 					[ $this->getTaskId() ]
 				)
@@ -142,7 +169,7 @@ class RenameIPTask extends BaseTask {
 	}
 
 	/**
-	 * Shim compatibility with RenameIPProcess calling ->log on this object
+	 * Shim compatibility with RenameUserProcess calling ->log on this object
 	 *
 	 * @param string $text
 	 */
@@ -159,12 +186,12 @@ class RenameIPTask extends BaseTask {
 	 */
 	protected function staffLog( $action, array $params, $text ) {
 		\StaffLogger::log(
-			'coppatool',
+			'renameuser',
 			$action,
 			$params['requestor_id'],
 			$params['requestor_name'],
-			0,
-			$params['new_ip'],
+			$params['rename_user_id'],
+			$params['rename_new_name'],
 			$text
 		);
 	}
@@ -173,19 +200,19 @@ class RenameIPTask extends BaseTask {
 	 * Send an email to a user notifying them that a rename action completed
 	 *
 	 * @param User $user
-	 * @param string $oldIP
-	 * @param string $newIP
+	 * @param string $oldUsername
+	 * @param string $newUsername
 	 */
-	protected function notifyUser( $user, $oldIP, $newIP ) {
+	protected function notifyUser( $user, $oldUsername, $newUsername ) {
 		if ( $user->getEmail() != null ) {
 			F::app()->sendRequest( self::EMAIL_CONTROLLER, 'handle', [
 				'targetUser' => $user,
-				'oldIP' => $oldIP,
-				'newIP' => $newIP
+				'oldUserName' => $oldUsername,
+				'newUserName' => $newUsername
 			] );
 			$this->info( 'rename user with email notification', [
-				'old_name' => $oldIP,
-				'new_name' => $newIP,
+				'old_name' => $oldUsername,
+				'new_name' => $newUsername,
 				'email' => $user->getEmail(),
 			] );
 		} else {
