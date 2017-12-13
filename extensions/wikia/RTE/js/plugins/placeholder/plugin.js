@@ -399,9 +399,10 @@ CKEDITOR.plugins.add('rte-placeholder',
 				//RTE.log([x, y]);
 
 				// calculate editarea size
-				var editarea = $('#cke_contents_wpTextbox1');
-				var maxX = parseInt(editarea.offset().left) + editarea.width();
-				var maxY = parseInt(editarea.offset().top) + editarea.height();
+				var editArea = document.getElementById('cke_1_contents'),
+					editAreaBounds = editArea.getBoundingClientRect();
+				var maxX = editAreaBounds.x + editAreaBounds.width;
+				var maxY = editAreaBounds.y + editAreaBounds.height;
 
 				//RTE.log([maxX, maxY]);
 
