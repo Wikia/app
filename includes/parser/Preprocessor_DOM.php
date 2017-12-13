@@ -1187,7 +1187,7 @@ class PPFrame_DOM implements PPFrame {
 
 						if ( isset( $ret['object'] ) ) {
 							$newIterator = $ret['object'];
-						} elseif ( $wgRTEParserEnabled && !$this->isTemplate() ) {
+						} elseif ( $wgRTEParserEnabled ) {
 							// FANDOM change start - XW-4380: in RTE mark templates contenteditable="false"
 							$wikiTextIdx = $contextNode->getAttribute( '_rte_wikitextidx' );
 							$rteData = [
@@ -1242,7 +1242,7 @@ class PPFrame_DOM implements PPFrame {
 						# RTE (Rich Text Editor) - begin
 						# @author: Inez Korczyński
 						global $wgRTEParserEnabled;
-						if ( !empty( $wgRTEParserEnabled ) && !$this->isTemplate() ) {
+						if ( !empty( $wgRTEParserEnabled ) ) {
 							if(strlen($out) === 0 || substr($out, -1) == "\n") {
 								if(substr($contextNode->textContent, -1) == "\n") {
 									$add = "\n";
@@ -1302,7 +1302,7 @@ class PPFrame_DOM implements PPFrame {
 					// FANDOM change - XW-4380: wrap extension tags in a placeholder
 					$tagMarker = $this->parser->extensionSubstitution( $params, $this );
 					global $wgRTEParserEnabled;
-					if ( $wgRTEParserEnabled && !$this->isTemplate() && $nameNode->textContent !== 'nowiki' ) {
+					if ( $wgRTEParserEnabled && $nameNode->textContent !== 'nowiki' ) {
 						$wikiTextIdx = $contextNode->getAttribute( '_rte_wikitextidx' );
 
 						$rteData = [
