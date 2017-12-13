@@ -58,7 +58,7 @@ class SpecialRenameuser extends SpecialPage {
 		}
 
 		if ( \RenameUserProcess::canUserChangeUsername( $requestorUser ) ) {
-			$this->renderForm( $requestorUser, $username );
+			$this->renderForm( $username );
 		} else {
 			$this->renderDisallow();
 		}
@@ -116,10 +116,9 @@ class SpecialRenameuser extends SpecialPage {
 	}
 
 	/**
-	 * @param User $requestorUser
-	 * @param User|null $oldUsername
+	 * @param string|null $oldUsername
 	 */
-	private function renderForm( User $requestorUser, $oldUsername = null ) {
+	private function renderForm( $oldUsername = null ) {
 		global $wgMaxNameChars;
 
 		$errors = [];
@@ -127,7 +126,7 @@ class SpecialRenameuser extends SpecialPage {
 		$warnings = [];
 		$showConfirm = false;
 		$showForm = true;
-		$selfRename = false;
+		$requestorUser = $this->getUser();
 		$canonicalNewUsername = '';
 		$out = $this->getOutput();
 		$request = $this->getRequest();
@@ -135,9 +134,13 @@ class SpecialRenameuser extends SpecialPage {
 		$newUsername = $requestData['newUsername'];
 		$isConfirmed = ( $requestData['isConfirmed'] === 'true' );
 
-		if ( !$oldUsername ) {
+		if ( is_null( $oldUsername ) ) {
 			$oldUsername = $requestorUser->getName();
 			$selfRename = true;
+		}
+		else {
+			// SUS-3547: staff mode, we want to rename a different user, not ourselves
+			$selfRename = $requestorUser->getName() === $oldUsername;
 		}
 
 		if ( $request->wasPosted() ) {
