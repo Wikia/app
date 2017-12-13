@@ -13,6 +13,8 @@ class PandoraCoppaImageReviewCleanUp extends Maintenance {
 	public function execute() {
 		global $wgSpecialsDB, $wgCityId;
 
+		$this->output( "Starting cleanup for wiki id: " . $wgCityId );
+
 		$start = time();
 
 		$imageReviewDB = wfGetDB( DB_MASTER, [], $wgSpecialsDB );
