@@ -9,7 +9,6 @@ use PHPUnit\DbUnit\TestCaseTrait;
  * Class WikiaDatabaseTest serves as an abstract base class for database integration tests
  */
 abstract class WikiaDatabaseTest extends TestCase {
-	use MockGlobalVariableTrait;
 	use TestCaseTrait {
 		setUp as protected databaseSetUp;
 		tearDown as protected databaseTearDown;
@@ -23,6 +22,8 @@ abstract class WikiaDatabaseTest extends TestCase {
 	private static $db = null;
 	/** @var Connection $conn */
 	private $conn = null;
+
+	private $globalVariableValues = [];
 
 	/**
 	 * Initializes the in-memory database with the specified schema files,
@@ -54,10 +55,9 @@ abstract class WikiaDatabaseTest extends TestCase {
 	protected function setUp() {
 		// override external databases to use the in-memory DB
 		foreach ( static::GLOBAL_DB_VARS as $globalName ) {
-			$this->mockGlobalVariable( $globalName, false );
+			$this->globalVariableValues[$globalName] = $GLOBALS[$globalName];
+			$GLOBALS[$globalName] = false;
 		}
-
-		$this->mockGlobalVariable( 'wgMemc', new EmptyBagOStuff() );
 
 		// schema is ready, let DbUnit populate the DB with fixtures
 		$this->databaseSetUp();
@@ -78,7 +78,10 @@ abstract class WikiaDatabaseTest extends TestCase {
 	}
 
 	protected function tearDown() {
-		$this->unsetGlobals();
+		foreach ( static::GLOBAL_DB_VARS as $globalName ) {
+			 $GLOBALS[$globalName] = $this->globalVariableValues[$globalName];
+		}
+
 		$this->databaseTearDown();
 	}
 
