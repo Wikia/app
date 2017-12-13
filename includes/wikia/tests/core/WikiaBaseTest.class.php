@@ -21,6 +21,8 @@ use PHPUnit\Framework\TestCase;
  * }
  */
 abstract class WikiaBaseTest extends TestCase {
+	use MockGlobalVariableTrait;
+
 	const MOCK_DEV_NAME = 'mockdevname';
 
 	protected static $alternativeConstructors = [
@@ -35,8 +37,6 @@ abstract class WikiaBaseTest extends TestCase {
 	/** @var WikiaApp */
 	protected $app = null;
 
-	/** @var array */
-	private $mockedGlobalVariables = array();
 	/** @var array */
 	private $mockedMessages = array();
 	/** @var WikiaMockProxy */
@@ -244,24 +244,6 @@ abstract class WikiaBaseTest extends TestCase {
 	}
 
 	/**
-	 * Mock global ($wg...) variable.
-	 *
-	 * @param $globalName string name of global variable (e.g. wgCity - WITH wg prefix)
-	 * @param $returnValue mixed value variable should be set to
-	 */
-	protected function mockGlobalVariable( $globalName, $returnValue ) {
-		if ( !empty($this->mockedGlobalVariables[$globalName] ) ) {
-			// revert changes done by previous variable mock
-			$this->mockedGlobalVariables[$globalName]->disable();
-		}
-
-		$mock = new WikiaGlobalVariableMock($globalName,$returnValue);
-		$mock->enable();
-
-		$this->mockedGlobalVariables[$globalName] = $mock;
-	}
-
-	/**
 	 * Mock global (wf...) function.
 	 *
 	 * @param $functionName string Global function name (including "wf" prefix)
@@ -424,14 +406,6 @@ abstract class WikiaBaseTest extends TestCase {
 		return WikiaMockProxyAction::currentInvocation();
 	}
 
-	private function unsetGlobals() {
-		/** @var $mock WikiaGlobalVariableMock */
-		foreach ($this->mockedGlobalVariables as $globalName => $mock) {
-			$mock->disable();
-		}
-		$this->mockedGlobals = array();
-	}
-
 	private function unsetMessages() {
 		$this->mockedMessages = array();
 	}
@@ -454,25 +428,10 @@ abstract class WikiaBaseTest extends TestCase {
 	}
 
 	/**
-	 * @return PHPUnit_Framework_MockObject_MockObject
-	 */
-	private function getMemCacheMock() {
-		$wgMemcMock = $this->getMockBuilder( 'MWMemcached' )
-			->disableOriginalConstructor()
-			->setMethods( [ 'get' ] )
-			->getMock();
-		$wgMemcMock->expects( $this->any() )
-			->method( 'get' )
-			->willReturn( null );
-
-		return $wgMemcMock;
-	}
-
-	/**
 	 * Mocks global $wgMemc->get() so it always returns null
 	 */
 	protected function disableMemCache() {
-		$this->mockGlobalVariable( 'wgMemc', $this->getMemCacheMock() );
+		$this->mockGlobalVariable( 'wgMemc', new EmptyBagOStuff() );
 	}
 
 	/**
@@ -485,7 +444,7 @@ abstract class WikiaBaseTest extends TestCase {
 	 */
 	protected function memCacheDisabledSection( callable $callback ) {
 		$globalState = new GlobalStateWrapper( [
-			'wgMemc' => $this->getMemCacheMock()
+			'wgMemc' => new EmptyBagOStuff()
 		] );
 
 		return $globalState->wrap( $callback );
