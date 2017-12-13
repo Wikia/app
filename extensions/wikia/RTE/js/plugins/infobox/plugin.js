@@ -12,14 +12,25 @@ require(['jquery', 'wikia.window'], function ($, window) {
 	}
 
 	function openInfoboxModal(editor) {
+
+		buttonStyle = "width:100%;background-image: none;background-color: white; text-align:center; color:black !important; border-radius:0px; border-color: black; border-style: dashed;";
+
 		$.get('/api.php?format=json&action=query&list=allinfoboxes&uselang=' + window.wgContentLanguage)
 			.then(function (data) {
 				window.CKEDITOR.dialog.add( 'infobox-dialog', function( editor ) {
 					return {
 						title: 'Select Infobox to Insert',
-						buttons: [],
-						minWidth: 400,
-						minHeight: 200,
+						buttons: [
+						{
+							type : 'button',
+							id : 'something',
+							label : '+ Add Template',
+							style : buttonStyle,
+							onClick : onInfoboxTemplateChosen
+						}
+						],
+						minWidth: 250,
+						minHeight: 300,
 						contents: [
 							{
 								id: 'ckeditorInfoboxPickDialog',
@@ -51,7 +62,7 @@ require(['jquery', 'wikia.window'], function ($, window) {
 			return '';
 		}
 
-		var markup = '<ul class="infobox-templates-list">';
+		var markup = '<ul class="infobox-templates-list" style="height:300px;overflow:hidden;overflow-y:scroll;">';
 
 		data.query.allinfoboxes.forEach(function (infoboxData) {
 			markup += '<li><a data-infobox-name="' + infoboxData.title + '">' + infoboxData.title + '</a></li>';
@@ -71,6 +82,5 @@ require(['jquery', 'wikia.window'], function ($, window) {
 			RTE.templateEditor.createTemplateEditor(infoboxName);
 		}
 	}
-
 	registerPlugin();
 });
