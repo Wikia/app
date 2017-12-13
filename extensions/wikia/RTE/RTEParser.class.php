@@ -219,7 +219,7 @@ class RTEParser extends Parser {
 		);
 
 		// try to resolve internal links in image caption (RT #90616)
-		if (RTEData::resolveLinksInMediaCaption($data['wikitext'])) {
+		if (RTEData::removeInternalLinkMarkersFromText( $data['wikitext'])) {
 			// now resolve link markers in caption parsed to HTML
 			if (!empty($holders)) {
 				$holders->replace($params['caption']);

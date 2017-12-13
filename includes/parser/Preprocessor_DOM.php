@@ -1662,7 +1662,7 @@ class PPTemplateFrame_DOM extends PPFrame_DOM {
 		return $arguments;
 	}
 
-	function getNumberedArgument( $index ) {
+	private function getNumberedArgument( $index ) {
 		if ( !isset( $this->numberedArgs[$index] ) ) {
 			return false;
 		}
@@ -1673,7 +1673,7 @@ class PPTemplateFrame_DOM extends PPFrame_DOM {
 		return $this->numberedExpansionCache[$index];
 	}
 
-	function getNamedArgument( $name ) {
+	private function getNamedArgument( $name ) {
 		if ( !isset( $this->namedArgs[$name] ) ) {
 			return false;
 		}
@@ -1690,6 +1690,11 @@ class PPTemplateFrame_DOM extends PPFrame_DOM {
 		if ( $text === false ) {
 			$text = $this->getNamedArgument( $name );
 		}
+
+		// FANDOM change - XW-4380: Remove internal link markers from template arguments
+		RTEData::removeInternalLinkMarkersFromText( $text );
+		// end FANDOM change
+
 		return $text;
 	}
 
