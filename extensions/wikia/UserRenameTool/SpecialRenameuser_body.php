@@ -32,7 +32,12 @@ class SpecialRenameuser extends SpecialPage {
 		$this->checkPermissions();
 
 		$usernameParam = $this->getRequest()->getText( 'username', $par );
-		$username = \User::isValidUsername( $usernameParam ) ? $usernameParam : null;
+
+		// SUS-3549: normalize the user name
+		// make the first letter uppercase, replace underscores with spaces
+		$usernameParam = User::getCanonicalName( $usernameParam );
+
+		$username = User::isValidUsername( $usernameParam ) ? $usernameParam : null;
 		$requestorUser = $this->getUser();
 		$canRenameAnotherUser = $requestorUser->isAllowed( 'renameanotheruser' );
 
