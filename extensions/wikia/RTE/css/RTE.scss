@@ -195,7 +195,7 @@
 	background-color: #fff;
 	border: solid 1px #d5d5d5;
 	padding: 2px;
-	min-width: 50px;
+	width: auto;
 }
 
 .RTEPlaceholderPreviewLoading .RTEPlaceholderPreviewInner {
@@ -223,7 +223,9 @@
 
 // [edit] / [delete]
 .RTEPlaceholderPreviewTools {
+	align-items: baseline;
 	border-top: solid 1px #aaa;
+	display: flex;
 	padding: 3px;
 	text-align: right;
 
