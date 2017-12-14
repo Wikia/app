@@ -63,9 +63,6 @@ require(['jquery', 'wikia.window', 'wikia.loader', 'wikia.mustache', 'wikia.loca
 	}
 
 	function openInfoboxModal( editor ) {
-
-		buttonStyle = "width:100%;background-image: none;background-color: white; text-align:center; color:black !important; border-radius:0px; border-color: black; border-style: dashed;";
-
 		$.get('/api.php?format=json&action=query&list=allinfoboxes&uselang=' + window.wgContentLanguage)
 			.then(function (data) {
 				window.CKEDITOR.dialog.add( 'infobox-dialog', function( editor ) {
@@ -74,9 +71,9 @@ require(['jquery', 'wikia.window', 'wikia.loader', 'wikia.mustache', 'wikia.loca
 						buttons: [
 						{
 							type : 'button',
+							class: 'infobox-dialog-button',
 							id : 'something',
 							label : '+ Add Template',
-							style : buttonStyle,
 							onClick : openInfoboxBuilder
 						}
 						],
@@ -113,7 +110,7 @@ require(['jquery', 'wikia.window', 'wikia.loader', 'wikia.mustache', 'wikia.loca
 			return '';
 		}
 
-		var markup = '<ul class="infobox-templates-list" style="height:300px;overflow:hidden;overflow-y:scroll;">';
+		var markup = '<ul class="infobox-templates-list">';
 
 		data.query.allinfoboxes.forEach(function (infoboxData) {
 			markup += '<li><a data-infobox-name="' + infoboxData.title + '">' + infoboxData.title + '</a></li>';
