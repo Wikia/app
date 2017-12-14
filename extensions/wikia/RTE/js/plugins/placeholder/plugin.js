@@ -50,7 +50,7 @@ CKEDITOR.plugins.add('rte-placeholder',
 			// setup events
 			preview.bind('mouseover', function() {
 				// don't hide this preview
-				self.showPreview(placeholder);
+				self.showPreview(placeholder, event);
 			});
 
 			preview.bind('mouseout', function() {
@@ -205,25 +205,13 @@ CKEDITOR.plugins.add('rte-placeholder',
 	},
 
 	// show preview popup
-	showPreview: function(placeholder) {
+	showPreview: function(placeholder, event) {
 		var preview = this.getPreview(placeholder);
 
 		// position preview node
-		var position = RTE.tools.getPlaceholderPosition(placeholder);
-		var tempTop,
-			freeBottomSpace = $(RTE.getInstance().getThemeSpace('contents').$).height() - position.top;
-		if (freeBottomSpace <= preview.height()) {
-			tempTop = position.top - preview.height() - placeholder.height();
-			preview.addClass('bottom');
-
-		} else {
-			tempTop = position.top + placeholder.height() + 6;
-			preview.removeClass('bottom');
-		}
-
 		preview.css({
-			'left': position.left + 'px',
-			'top': parseInt(tempTop) + 'px'
+			'left': event.clientX + 'px',
+			'top': event.clientY + 'px'
 		});
 
 		// hide remaining previews
@@ -295,8 +283,8 @@ CKEDITOR.plugins.add('rte-placeholder',
 		// unbind previous events
 		placeholder.unbind('.placeholder');
 
-		placeholder.bind('mouseover.placeholder', function() {
-			self.showPreview($(this));
+		placeholder.bind('mouseover.placeholder', function(event) {
+			self.showPreview($(this), event);
 		});
 
 		placeholder.bind('mouseout.placeholder', function() {
