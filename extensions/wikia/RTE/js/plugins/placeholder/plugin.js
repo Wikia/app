@@ -38,9 +38,6 @@ CKEDITOR.plugins.add('rte-placeholder',
 			return;
 		}
 
-		var chevron = '<img class="chevron chevronBackground" src="'+wgBlankImgUrl+'" />'
-			+'<img class="chevron" src="'+wgBlankImgUrl+'" />';
-
 		// get node in which preview is / will be stored
 		var preview = placeholder.data('preview');
 
@@ -48,7 +45,7 @@ CKEDITOR.plugins.add('rte-placeholder',
 		if (typeof preview == 'undefined') {
 			// create preview node
 			preview = $('<div>').addClass('RTEPlaceholderPreview RTEPlaceholderPreviewLoading');
-			preview.html(chevron + '<div class="RTEPlaceholderPreviewInner">&nbsp;</div>');
+			preview.html('<div class="RTEPlaceholderPreviewInner">&nbsp;</div>');
 
 			// setup events
 			preview.bind('mouseover', function() {
@@ -74,11 +71,7 @@ CKEDITOR.plugins.add('rte-placeholder',
 				// different look for different types
 				var title, intro;
 				var className = 'RTEPlaceholderPreviewOther';
-				var preformattedCode = true;
 				var isEditable = false;
-
-				// encode HTML inside wikisyntax
-				var code = data.wikitext.replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
 				// messages
 				var lang = RTE.getInstance().lang.hoverPreview;
@@ -97,9 +90,6 @@ CKEDITOR.plugins.add('rte-placeholder',
 					case 'comment':
 						title = lang.comment.title;
 						intro = lang.comment.intro;
-
-						// exclude comment beginning and end markers
-						code = data.wikitext.replace(/^<!--\s+/, '').replace(/\s+-->$/, '');
 
 						isEditable = true;
 						break;
@@ -125,14 +115,6 @@ CKEDITOR.plugins.add('rte-placeholder',
 					title = title.substr(0, 40) + RTEMessages.ellipsis;
 				}
 
-				// for IE replace \n with <br />
-				if (preformattedCode && CKEDITOR.env.ie) {
-					code = code.replace(/\n/g, '<br />');
-				}
-
-				// placeholder intro
-				var intro = '<div class="RTEPlaceholderPreviewIntro">' + intro + '</div>';
-
 				// render [edit] / [delete] buttons
 				var tools = '',
 					showEdit = true;
@@ -149,19 +131,8 @@ CKEDITOR.plugins.add('rte-placeholder',
 				//
 				// render HTML
 				//
-				var html = chevron;
-
 				// preview "header"
-				html += '<div class="RTEPlaceholderPreviewInner ' + className + '">';
-				html += '<div class="RTEPlaceholderPreviewTitleBar color1"><span />' + title + '</div>';
-
-				// second line
-				html += intro;
-
-				// preview content
-				html += '<div class="RTEPlaceholderPreviewCode ' +
-					(preformattedCode ? 'RTEPlaceholderPreviewPreformatted ' : '') +
-					'reset">' + code + '</div>';
+				var html = '<div class="RTEPlaceholderPreviewInner ' + className + '">';
 
 				// [edit] / [delete]
 				html += '<div class="RTEPlaceholderPreviewTools neutral">' + tools + '</div>';

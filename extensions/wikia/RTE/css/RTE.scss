@@ -195,28 +195,12 @@
 	background-color: #fff;
 	border: solid 1px #d5d5d5;
 	padding: 2px;
-	width: 350px;
+	min-width: 50px;
 }
 
 .RTEPlaceholderPreviewLoading .RTEPlaceholderPreviewInner {
 	background: #fff url(/skins/common/images/ajax.gif) no-repeat 50% 50%; /* $wgResourceBasePath */
 	height: 30px;
-}
-
-.RTEPlaceholderPreviewTitleBar {
-	font-weight: bold;
-	padding: 3px 5px;
-	position: relative;
-	white-space: nowrap;
-}
-
-.RTEPlaceholderPreviewTitleBar span {
-	background: transparent url(/skins/shared/images/sprite.png) no-repeat -1146px -81px; /* $wgResourceBasePath */
-	cursor: pointer;
-	height: 12px;
-	position: absolute;
-	right: 5px;
-	width: 12px;
 }
 
 // info line
@@ -228,23 +212,8 @@
 	padding: 3px 0;
 }
 
-// preview area
-.RTEPlaceholderPreviewCode {
-	color: #3a3a3a;
-	cursor: default;
-	min-height: 75px;
-	max-height: 350px;
-	overflow: auto;
-	padding: 4px;
-}
-
 .RTEPlaceholderPreviewExpanded {
 	max-height: 10000px !important;
-}
-
-.RTEPlaceholderPreviewCode * {
-	float: none !important; // RT #37692
-	cursor: default !important;
 }
 
 .RTEPlaceholderPreviewPreformatted {
