@@ -60,11 +60,11 @@ class QuickStatsController extends WikiaController {
 		$db = wfGetDB(DB_SLAVE, array(), $this->wg->DWStatsDB);
 		(new WikiaSQL())
 			->SELECT("date_format(time_id, '%Y-%m-%d')")->AS_('date')
-			->SUM('edits')->AS_('cnt')
+			->SUM('creates + edits')->AS_('cnt')
 			->FROM('rollup_wiki_user_events')
 			->WHERE('time_id')->BETWEEN("{$week} 00:00:00", "{$today} 00:00:00")
 			->AND_('wiki_id')->EQUAL_TO($cityID)
-			->AND_('period_id')->EQUAL_TO('1')
+			->AND_('period_id')->EQUAL_TO(DataMartService::PERIOD_ID_DAILY)
 			->GROUP_BY('date WITH ROLLUP')
 			->run($db, function($result) use (&$stats) {
 				while ($row = $result->fetchObject()) {
