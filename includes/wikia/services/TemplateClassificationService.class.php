@@ -193,7 +193,8 @@ class TemplateClassificationService extends ContextSource {
 		// cURL function is allowed to execute not longer than 1 second
 		$api->getApiClient()
 				->getConfig()
-				->setCurlTimeout(1);
+				//todo bring back the default value (1)
+				->setCurlTimeout(10);
 
 		return $api;
 	}

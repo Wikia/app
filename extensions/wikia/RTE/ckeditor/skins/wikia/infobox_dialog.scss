@@ -1,0 +1,26 @@
+.cke_dialog {
+	.infobox-dialog-list {
+		height: 300px;
+		overflow: hidden;
+		overflow-y: scroll;
+	}
+
+	a.infobox-dialog-button {
+		width: 100%;
+		background-image: none;
+		background-color: white;
+		text-align: center;
+		color: black !important;
+		border-radius: 0px;
+		border-color: black;
+		border-style: dashed;
+	}
+
+	.InfoboxBuilder {
+		height: 400px;
+	}
+}
+
+.ckeditor-infobox-builder .cke_dialog_footer {
+	display: none;
+}
