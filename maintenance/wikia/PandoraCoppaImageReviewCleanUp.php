@@ -13,7 +13,7 @@ class PandoraCoppaImageReviewCleanUp extends Maintenance {
 	public function execute() {
 		global $wgSpecialsDB, $wgCityId;
 
-		$this->output( "Starting cleanup for wiki id: " . $wgCityId );
+		$this->output( "Starting cleanup for wiki id: " . $wgCity . "\n" );
 
 		$start = time();
 
@@ -82,6 +82,9 @@ class PandoraCoppaImageReviewCleanUp extends Maintenance {
 
 		$this->output( "Wiki query time: " . ( time() - $wikiStart ) . "sec\n" );
 		$this->output( "Broken images number: " . count( $missingImages ) . "\n" );
+		foreach ($img in $missingImages ) {
+			$this->output( "missing image: wiki=" . $img->wiki_id . " page=" . $img->page_id . "rev=" . $img->revision_id )
+		}
 		$this->output( "Total time: " . ( time() - $start ) . "sec\n" );
 	}
 }
