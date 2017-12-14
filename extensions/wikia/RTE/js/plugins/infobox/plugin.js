@@ -35,6 +35,11 @@ require(['jquery', 'wikia.window', 'wikia.loader', 'wikia.mustache', 'wikia.loca
 					}
 				],
 				onShow: function () {
+
+					//hide footer
+					this._.element.addClass('infoboxBuilderDialog');
+					$('.infoboxBuilderDialog').find('.cke_dialog_footer').hide();
+
 					if (infoboxBuilderMarkup) {
 						$('.ckeditor-infobox-builder').html(infoboxBuilderMarkup);
 						loader.processScript(infoboxBuilderScripts);
