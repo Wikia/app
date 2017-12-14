@@ -84,9 +84,9 @@ class PandoraCoppaImageReviewCleanUp extends Maintenance {
 		$this->output( "Broken images number: " . count( $missingImages ) . "\n" );
 		if ( !$this->getOption( 'dryRun', true ) ) {
 			foreach ( $missingImages as $img ) {
-				$this->output( "missing image: wiki=" . $img['wiki_id'] . " page=" . $img['page_id'] . "rev=" . $img['revision_id'] )
+				$this->output( "missing image: wiki=" . $img['wiki_id'] . " page=" . $img['page_id'] . "rev=" . $img['revision_id'] );
 			}
-	  }
+		}
 		$this->output( "Total time: " . ( time() - $start ) . "sec\n" );
 	}
 }
