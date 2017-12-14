@@ -58,7 +58,7 @@ class SpecialRenameuser extends SpecialPage {
 		}
 
 		if ( \RenameUserProcess::canUserChangeUsername( $requestorUser ) ) {
-			$this->renderForm( $requestorUser, $username );
+			$this->renderForm( $username );
 		} else {
 			$this->renderDisallow();
 		}
@@ -66,7 +66,7 @@ class SpecialRenameuser extends SpecialPage {
 		return;
 	}
 
-	public static function validateData( array $data, User $user, bool $selfRename = true ) {
+	private static function validateData( array $data, User $user, bool $selfRename = true ) {
 		global $wgMaxNameChars;
 
 		$errorList = [];
@@ -115,7 +115,10 @@ class SpecialRenameuser extends SpecialPage {
 		return $errorList;
 	}
 
-	private function renderForm( User $requestorUser, $oldUsername = null ) {
+	/**
+	 * @param string|null $oldUsername
+	 */
+	private function renderForm( $oldUsername = null ) {
 		global $wgMaxNameChars;
 
 		$errors = [];
@@ -123,7 +126,7 @@ class SpecialRenameuser extends SpecialPage {
 		$warnings = [];
 		$showConfirm = false;
 		$showForm = true;
-		$selfRename = false;
+		$requestorUser = $this->getUser();
 		$canonicalNewUsername = '';
 		$out = $this->getOutput();
 		$request = $this->getRequest();
@@ -131,9 +134,13 @@ class SpecialRenameuser extends SpecialPage {
 		$newUsername = $requestData['newUsername'];
 		$isConfirmed = ( $requestData['isConfirmed'] === 'true' );
 
-		if ( !$oldUsername ) {
+		if ( is_null( $oldUsername ) ) {
 			$oldUsername = $requestorUser->getName();
 			$selfRename = true;
+		}
+		else {
+			// SUS-3547: staff mode, we want to rename a different user, not ourselves
+			$selfRename = $requestorUser->getName() === $oldUsername;
 		}
 
 		if ( $request->wasPosted() ) {
@@ -161,7 +168,7 @@ class SpecialRenameuser extends SpecialPage {
 		$template->set_vars( array_merge(
 			array_map( 'htmlspecialchars', $requestData ),
 			[
-				'submitUrl' => $this->getTitle()->getLocalURL(),
+				'submitUrl' => $this->getTitle($selfRename ? false : $oldUsername )->getLocalURL(),
 				'token' => $requestorUser->getEditToken(),
 				'maxUsernameLength' => $wgMaxNameChars,
 				'showForm' => $showForm,
