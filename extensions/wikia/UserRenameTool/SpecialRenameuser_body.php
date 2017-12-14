@@ -146,7 +146,7 @@ class SpecialRenameuser extends SpecialPage {
 			$canonicalNewUsername = \User::getCanonicalName( $newUsername, 'creatable' );
 
 			if ( empty( $errors ) && $isConfirmed ) {
-				$process = new RenameUserProcess( $oldUsername, $newUsername, true );
+				$process = new RenameUserProcess( $oldUsername, $canonicalNewUsername, true );
 				$status = $process->run();
 				$warnings = $process->getWarnings();
 				$errors = $process->getErrors();
