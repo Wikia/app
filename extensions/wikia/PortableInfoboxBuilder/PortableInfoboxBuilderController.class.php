@@ -76,7 +76,8 @@ class PortableInfoboxBuilderController extends WikiaController {
 	}
 
 	public function getTemplateExists() {
-		$title = PortableInfoboxBuilderHelper::getTitle( $this->getRequest()->getVal( 'title' ), new Status() );
+		$status = new Status();
+		$title = PortableInfoboxBuilderHelper::getTitle( $this->getRequest()->getVal( 'title' ), $status );
 
 		$response = $this->getResponse();
 		$response->setFormat( WikiaResponse::FORMAT_JSON );

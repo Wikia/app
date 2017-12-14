@@ -15,13 +15,12 @@ require(['jquery', 'wikia.window', 'wikia.loader', 'wikia.mustache', 'wikia.loca
 	}
 
 	function openInfoboxBuilder( editor ) {
-
 		window.CKEDITOR.dialog.add( 'infoboxBuilder-dialog', function ( editor ) {
 			return {
 				title: 'Infobox Builder',
 				buttons: [],
-				minWidth: 250,
-				minHeight: 300,
+				minWidth: 600,
+				minHeight: 400,
 				contents: [
 					{
 						id: 'infoboxBuilderDialog',
