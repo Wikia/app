@@ -1,8 +1,11 @@
 .cke_dialog {
-	.infobox-dialog-list {
+	.infobox-templates-list {
 		height: 300px;
 		overflow: hidden;
-		overflow-y: scroll;
+		overflow-y: auto;
+		a {
+			cursor: pointer;
+		}
 	}
 
 	a.infobox-dialog-button {
@@ -14,6 +17,7 @@
 		border-radius: 0px;
 		border-color: black;
 		border-style: dashed;
+		outline: none;
 	}
 
 	.InfoboxBuilder {
