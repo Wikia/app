@@ -26,6 +26,7 @@ class JSMessagesController extends WikiaController {
 
 		// cache it well :)
 		if ( !$this->request->isInternal() ) {
+			$this->response->setCachePolicy( WikiaResponse::CACHE_PUBLIC );
 			$this->response->setCacheValidity(self::CACHE_TIME);
 
 			$this->response->setContentType('text/javascript; charset=utf-8');

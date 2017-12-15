@@ -18,7 +18,7 @@ class OptimizelyController extends WikiaController {
 			$this->code = '';
 		}
 
-		$response->setVaryOnCookie( false );
+		$response->setCachePolicy( WikiaResponse::CACHE_PUBLIC );
 		$response->setCacheValidity( WikiaResponse::CACHE_VERY_SHORT );
 	}
 }

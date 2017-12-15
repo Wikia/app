@@ -11,6 +11,7 @@ class WikiaRssExternalController extends WikiaController {
 		$this->response->setVal( 'status', false );
 		$options = $this->request->getVal( 'options', false );
 
+		$this->response->setCachePolicy( WikiaResponse::CACHE_PUBLIC );
 		$this->response->setCacheValidity( self::CACHE_TIME ); //cache it on varnish for 1h
 
 		//somehow empty arrays are lost

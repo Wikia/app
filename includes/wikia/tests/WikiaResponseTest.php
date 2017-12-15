@@ -70,18 +70,18 @@ class WikiaResponseTest extends TestCase {
 			}
 		}
 
-		// there are two additional headers to be sent, content-type and vary
-		$headersNum = $replace ? 3 : $headersNum + 2;
+		// there is one additional header to be sent, content-type
+		$headersNum = $replace ? 2 : $headersNum + 1;
 
 		$this->object->expects( $this->exactly( $headersNum ))->method( 'sendHeader' );
 		$this->object->sendHeaders();
 	}
 
 	/**
-	 * By default we send content-type and vary headers, plus response code in this test
+	 * By default we send content-type header, plus response code in this test
 	 */
 	public function testSettingResponseCode() {
-		$this->object->expects( $this->exactly( 3 ) )->method( 'sendHeader' );
+		$this->object->expects( $this->exactly( 2 ) )->method( 'sendHeader' );
 		$this->object->setCode(200);
 		$this->object->sendHeaders();
 	}

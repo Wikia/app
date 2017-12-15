@@ -24,6 +24,7 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 			$title->method( 'getPrefixedDbKey' )->willReturn( 'Special:Search' );
 			$title->method( 'getNamespace' )->willReturn( -1 );
 			$title->method( 'isSpecialPage' )->willReturn( true );
+			$title->method( 'getArticleId' )->willReturn( 0 );
 		} else {
 			$title->method( 'getPrefixedDbKey' )->willReturn( $artDbKey );
 			$title->method( 'getArticleId' )->willReturn( $artId );
@@ -390,8 +391,7 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 	/**
 	 * @param $expected
 	 * @param $wgEnableArticleFeaturedVideo
-	 * @param $wgArticleVideoFeaturedVideos
-	 * @param $wgArticleVideoFeaturedVideos2
+	 * @param $mediaId
 	 * @param $message
 	 *
 	 * @dataProvider featuredVideoDataProvider
@@ -399,19 +399,19 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 	public function testFeaturedVideoInContext(
 		$expected,
 		$wgEnableArticleFeaturedVideo,
-		$wgArticleVideoFeaturedVideos,
-		$wgArticleVideoFeaturedVideos2,
+		$mediaId,
 		$message
 	) {
 		$this->mockGlobalVariable( 'wgEnableArticleFeaturedVideo', $wgEnableArticleFeaturedVideo );
-		$this->mockGlobalVariable( 'wgArticleVideoFeaturedVideos', $wgArticleVideoFeaturedVideos );
-		$this->mockGlobalVariable( 'wgArticleVideoFeaturedVideos2', $wgArticleVideoFeaturedVideos2 );
+
 		$titleMock = $this->getMockBuilder( 'Title' )
 			->disableOriginalConstructor()
-			->setMethods( [ 'getPrefixedDBkey' ] )
+			->setMethods( [ 'getArticleID' ] )
 			->getMock();
-		$titleMock->method( 'getPrefixedDBkey' )
-			->willReturn( 'test' );
+		$titleMock->method( 'getArticleID' )
+			->willReturn( 123 );
+
+		$this->mockStaticMethod( 'ArticleVideoService', 'getFeatureVideoForArticle', $mediaId );
 
 		$adContextService = new AdEngine2ContextService();
 		$result = $adContextService->getContext( $titleMock, 'test' );
@@ -427,30 +427,12 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 		return [
 			// hasFeaturedVideo result,
 			// wgEnableArticleFeaturedVideo,
-			// wgArticleVideoFeaturedVideos,
-			// wgArticleVideoFeaturedVideos2,
+			// mediaId
 			// message
-			[ false, false, [], [], 'hasFeaturedVideo is set when extension disabled' ],
-			[ false, true, [], [], 'hasFeaturedVideo is set when no data available' ],
-			[ false, true, [ 'test' => [] ], [], 'hasFeaturedVideo is set when data missing' ],
-			[ true, true, [
-				'test' => [
-					'mediaId' => 'aksdjlfkjsdlf',
-					'player' => 'jwplayer'
-			]
-			], [], 'hasFeaturedVideo is not set when correct data available' ],
-			[ false, true, [
-				'wrong_article_name' => [
-					'mediaId' => 'aksdjlfkjsdlf',
-					'player' => 'jwplayer'
-				]
-			], [], 'hasFeaturedVideo is set when data missing for title' ],
-			[ false, false, [
-				'test' => [
-					'mediaId' => 'aksdjlfkjsdlf',
-					'player' => 'jwplayer'
-				]
-			], [], 'hasFeaturedVideo is set when data is set but extension is disabled' ],
+			[ false, false, '', 'hasFeaturedVideo is set when extension disabled' ],
+			[ false, true, '', 'hasFeaturedVideo is set when no data available' ],
+			[ true, true, 'aksdjlfkjsdlf', 'hasFeaturedVideo is not set when correct data available' ],
+			[ false, false, 'aksdjlfkjsdlf', 'hasFeaturedVideo is set when data is set but extension is disabled' ],
 		];
 	}
 }
