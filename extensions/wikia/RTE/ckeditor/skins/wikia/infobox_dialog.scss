@@ -1,6 +1,12 @@
 @import "skins/shared/color";
 
 .cke_dialog {
+	.cke_dialog_contents{
+		padding-bottom: 0 !important;
+	}
+	.cke_dialog_body{
+		margin-bottom: 0 !important;
+	}
 	.infobox-templates-list {
 		height: 300px;
 		overflow: hidden;
@@ -25,6 +31,7 @@
 		border-color: $color-page-border;
 		outline: none;
 		background-color: transparent;
+
 		&:hover{
 			background-color: darken($color-page,10%);
 			@if $is-dark-wiki{
