@@ -134,8 +134,10 @@ CKEDITOR.plugins.add('rte-placeholder',
 				// preview "header"
 				var html = '<div class="RTEPlaceholderPreviewInner ' + className + '">';
 
+				html += '<div class="RTEPlaceholderPreviewTitleBar color1"><span />' + title + '</div>';
+
 				// [edit] / [delete]
-				html += '<div class="RTEPlaceholderPreviewTools neutral">' + tools + '</div>';
+				html += '<div class="RTEPlaceholderPreviewTools">' + tools + '</div>';
 
 				html += '</div>';
 
