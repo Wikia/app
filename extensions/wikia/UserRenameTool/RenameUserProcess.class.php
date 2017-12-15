@@ -1,8 +1,11 @@
 <?php
 
 use Wikia\Tasks\Tasks\RenameUserPagesTask;
+use Wikia\Logger\Loggable;
 
 class RenameUserProcess {
+	use Loggable;
+
 	const EMAIL_CONTROLLER = \Email\Controller\UserNameChangeController::class;
 
 	const RENAME_TAG = 'renamed_to';
@@ -486,6 +489,13 @@ class RenameUserProcess {
 		return empty( $this->getErrors() );
 	}
 
+	protected function getLoggerContext() {
+		return [
+			'user_rename_from' => $this->getOldUsername(),
+			'user_rename_to' => $this->getNewUsername(),
+		];
+	}
+
 	/**
 	 * Sends the internal log message to the specified destination
 	 *
@@ -500,16 +510,8 @@ class RenameUserProcess {
 		}
 
 		wfDebugLog( __CLASS__, $text );
-	}
 
-	/**
-	 * Adds log message in Special:Log for the current wiki
-	 *
-	 * @param $text string Log message
-	 */
-	public function addLocalLog( $text ) {
-		$log = new LogPage( 'renameuser' );
-		$log->addEntry( 'renameuser', Title::newFromText( $this->mOldUsername, NS_USER ), $text, array(), User::newFromId( $this->mRequestorId ) );
+		$this->info( $text );
 	}
 
 	/**
