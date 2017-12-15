@@ -140,7 +140,7 @@ class Editcount extends SpecialPage {
 					array( 'GROUP BY' => 'page_namespace' )
 				);
 
-				while( $row = $dbr->fetchObject( $res ) ) {
+				foreach( $res as $row ) {
 					$nscount[$row->page_namespace] = $row->count;
 				}
 			} else {
@@ -198,7 +198,7 @@ class Editcount extends SpecialPage {
 
 		if ( empty($nscount) ) {
 			$nscount = array();
-			$dbs = wfGetDB(DB_SLAVE, array(), $wgDWStatsDB);
+			$dbs = wfGetDB( DB_SLAVE, array(), $wgDWStatsDB );
 			$res = $dbs->select(
 				array( 'rollup_wiki_namespace_user_events' ),
 				array( 'namespace_id as namespace', 'sum(creates + edits) as count' ),
@@ -210,7 +210,6 @@ class Editcount extends SpecialPage {
 			while( $row = $dbs->fetchObject( $res ) ) {
 				$nscount[$row->namespace] = $row->count;
 			}
-			$dbs->freeResult( $res );
 			$wgMemc->set( $key, $nscount, self::CACHE_TIME );
 			$this->refreshTimestamps['allWikias'] = time()+self::CACHE_TIME;
 			$wgMemc->set( $keyTimestamp, $this->refreshTimestamps['allWikias'], self::CACHE_TIME );
