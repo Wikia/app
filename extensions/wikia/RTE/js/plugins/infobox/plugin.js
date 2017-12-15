@@ -19,7 +19,7 @@ require(['jquery', 'wikia.window', 'wikia.loader', 'wikia.mustache', 'wikia.loca
 			return {
 				title: 'Infobox Builder',
 				buttons: [],
-				minWidth: 600,
+				minWidth: 800,
 				minHeight: 400,
 				contents: [
 					{
@@ -83,7 +83,6 @@ require(['jquery', 'wikia.window', 'wikia.loader', 'wikia.mustache', 'wikia.loca
 						{
 							type : 'button',
 							class: 'infobox-dialog-button',
-							id : 'something',
 							label : '+ Add Template',
 							onClick : openInfoboxBuilder
 						}
@@ -136,7 +135,6 @@ require(['jquery', 'wikia.window', 'wikia.loader', 'wikia.mustache', 'wikia.loca
 		var infoboxName = $(event.target).data('infobox-name');
 
 		if (infoboxName) {
-			console.log('did');
 			CKEDITOR.dialog.getCurrent().hide();
 			RTE.templateEditor.createTemplateEditor(infoboxName);
 		}
