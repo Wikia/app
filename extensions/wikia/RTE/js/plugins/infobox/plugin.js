@@ -35,7 +35,6 @@ require(['jquery', 'wikia.window', 'wikia.loader', 'wikia.mustache', 'wikia.loca
 					}
 				],
 				onShow: function () {
-
 					//hide footer
 					this._.element.addClass('infoboxBuilderDialog');
 					$('.infoboxBuilderDialog').find('.cke_dialog_footer').hide();
@@ -44,6 +43,13 @@ require(['jquery', 'wikia.window', 'wikia.loader', 'wikia.mustache', 'wikia.loca
 						$('.ckeditor-infobox-builder').html(infoboxBuilderMarkup);
 						loader.processScript(infoboxBuilderScripts);
 					}
+
+					window.CKEDITOR.on('new-infobox-created', function (event) {
+						var infoboxTitle = event.data;
+
+						CKEDITOR.dialog.getCurrent().hide();
+						RTE.templateEditor.createTemplateEditor(infoboxTitle);
+					});
 				}
 			}
 		});

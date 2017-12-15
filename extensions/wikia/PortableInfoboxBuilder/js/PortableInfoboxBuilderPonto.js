@@ -39,7 +39,7 @@ define('wikia.infoboxBuilder.ponto', ['wikia.window', 'ponto'], function (w, pon
 		};
 
 		this.returnToCK = function (infoboxTitle) {
-			console.log('Returning to CK');
+			window.CKEDITOR.fire('new-infobox-created', infoboxTitle);
 		};
 	}
 
