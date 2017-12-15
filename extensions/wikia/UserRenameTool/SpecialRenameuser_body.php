@@ -55,13 +55,6 @@ class SpecialRenameuser extends SpecialPage {
 			return;
 		}
 
-		// TODO: remove after QA tests
-		if ( $username && $this->getRequest()->getVal( 'unlock' ) !== null ) {
-			$user = \User::newFromName( $username );
-			\RenameUserProcess::blockUserRenaming( $user, false );
-			$user->saveSettings();
-		}
-
 		if ( \RenameUserProcess::canUserChangeUsername( $requestorUser ) ) {
 			$this->renderForm( $username );
 		} else {

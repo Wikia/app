@@ -467,14 +467,11 @@ class RenameUserProcess {
 			$fakeUser->saveSettings();
 			$fakeUser->saveToCache();
 		}
-		
-		// mark user as renamed
-		$renamedUser = \User::newFromId( $this->mUserId );
 
-		if ( !User::newFromId( $this->mRequestorId )->isAllowed('renameanotheruser') ) {
-			self::blockUserRenaming( $renamedUser );
-			$renamedUser->saveSettings();
-		}
+		// mark user as renamed (even if a rename is performed by staff member)
+		$renamedUser = User::newFromId( $this->mUserId );
+		self::blockUserRenaming( $renamedUser );
+		$renamedUser->saveSettings();
 
 		// SUS-3120 Schedule background task to rename local user pages, blogs, Walls...
 		$task = new RenameUserPagesTask();
@@ -624,7 +621,12 @@ class RenameUserProcess {
 		return !$user->getGlobalFlag( self::USER_ALREADY_RENAMED_FLAG, false ) || $user->isAllowed( 'renameanotheruser' );
 	}
 
-	public static function blockUserRenaming( User $user, bool $flag = true ) {
-		return $user->setGlobalFlag( self::USER_ALREADY_RENAMED_FLAG, $flag );
+	/**
+	 * Mark a user as renamed. This will prevent any further attempts to rename it.
+	 *
+	 * @param User $user
+	 */
+	private static function blockUserRenaming( User $user ) {
+		$user->setGlobalFlag( self::USER_ALREADY_RENAMED_FLAG, true );
 	}
 }
