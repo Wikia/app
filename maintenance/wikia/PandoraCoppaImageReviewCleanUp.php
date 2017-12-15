@@ -50,6 +50,7 @@ class PandoraCoppaImageReviewCleanUp extends Maintenance {
 				->IN( array_map( function ( $row ) {
 					return $row['page_id'];
 				}, $chunk ) )
+				->AND( 'page_namespace' )->IN( [ /* filepage */ 6 ] )
 				->runLoop( $wikiDB, function ( &$result, $row ) use ( &$chunk ) {
 					unset( $chunk[$row->page_id] );
 				} );
