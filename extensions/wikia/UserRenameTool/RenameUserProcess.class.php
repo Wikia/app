@@ -482,6 +482,10 @@ class RenameUserProcess {
 
 		$targetCommunityIds = RenameUserPagesTask::getTargetCommunities( $this->mOldUsername );
 
+		if ( empty( $targetCommunityIds ) ) {
+			$this->info( 'RenameUserPagesTask::getTargetCommunities - no wikis were returned' );
+		}
+
 		foreach ( $targetCommunityIds as $wikiId ) {
 			$task->wikiId( $wikiId )->queue();
 		}
