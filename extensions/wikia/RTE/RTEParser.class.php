@@ -31,6 +31,13 @@ class RTEParser extends Parser {
 		$this->mShowToc = false;
 	}
 
+	function doBlockLevels( $text, $linestart ) {
+		// XW-4380: Make template placeholders in list items render correctly
+		$text = preg_replace( '/^(\*<div class="placeholder placeholder-double-brackets"[^>]+>)\n/m', '$1', $text );
+
+		return parent::doBlockLevels( $text, $linestart );
+	}
+
 	/*
 	 * Find empty lines in wikitext and mark following element
 	 */
