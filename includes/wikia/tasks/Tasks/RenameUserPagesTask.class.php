@@ -10,7 +10,8 @@ class RenameUserPagesTask extends BaseTask {
 		2, // User
 		3, // User talk
 		500, // User blog
-		1200 // Message Wall
+		1200, // Message Wall
+		1202, // Message Wall Greeting
 	];
 
 	/**
