@@ -221,16 +221,12 @@ class FounderEmails {
 
 		$db = wfGetDB( DB_SLAVE, array(), $wgDWStatsDB );
 
-		$oRow = $db->selectRow(
+		return $db->selectField(
 			array( 'rollup_wiki_user_events' ),
 			array( 'sum(creates + edits) as cnt' ),
 			array( "time_id = '$today 00:00:00'", 'wiki_id' => $cityID, 'period_id' => DataMartService::PERIOD_ID_DAILY ),
 			__METHOD__
 		);
-
-		$edits = isset( $oRow->cnt ) ? $oRow->cnt : 0;
-
-		return $edits;
 	}
 
 	/**
