@@ -214,7 +214,7 @@ $messages['it'] = array(
 	'page-header-subtitle-special' => 'Pagina speciale',
 	'page-header-subtitle-category' => 'Pagina della categoria',
 	'page-header-subtitle-forum' => 'Pagina del forum',
-	'page-header-subtitle-blog-category' => 'Post dei blog',
+	'page-header-subtitle-blog-category' => 'Blog',
 	'page-header-action-button-add-new-image' => 'Aggiungi una nuova immagine',
 );
 
