@@ -1199,9 +1199,9 @@ class PPFrame_DOM implements PPFrame {
 							];
 
 							$out .= Html::rawElement( 'div', [
+								'class' => "placeholder placeholder-double-brackets",
 								'data-rte-instance' => RTE::getInstanceId(),
 								'data-rte-meta' => RTEReverseParser::encodeRTEData( $rteData ),
-								'class' => "placeholder placeholder-double-brackets",
 								'type' => 'double-brackets',
 								'contenteditable' => 'false',
 							], PHP_EOL . $ret['text'] );

@@ -31,6 +31,13 @@ class RTEParser extends Parser {
 		$this->mShowToc = false;
 	}
 
+	function doBlockLevels( $text, $linestart ) {
+		// XW-4380: Make template placeholders in list items render correctly
+		$text = preg_replace( '/^(\*<div class="placeholder placeholder-double-brackets"[^>]+>)\n/m', '$1', $text );
+
+		return parent::doBlockLevels( $text, $linestart );
+	}
+
 	/*
 	 * Find empty lines in wikitext and mark following element
 	 */
@@ -469,6 +476,9 @@ class RTEParser extends Parser {
 	 */
 	public function parse( $text, Title $title, ParserOptions $options, $linestart = true, $clearState = true, $revid = null ) {
 		wfProfileIn(__METHOD__);
+
+		// XW-4380: Disable image lazy loading for images rendered in the editor
+		ImageLazyLoad::disable();
 
 		// get rid of all \r in wikitext
 		$text = str_replace("\r\n", "\n", $text);

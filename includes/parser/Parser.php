@@ -4171,9 +4171,6 @@ class Parser {
 				unset( $flags[0] );
 				extract( $flags );
 			}
-
-
-
 		} else {
 			if ( is_null( $attrText ) ) {
 				$attrText = '';

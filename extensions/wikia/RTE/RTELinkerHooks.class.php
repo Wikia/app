@@ -118,10 +118,10 @@ class RTELinkerHooks extends Linker {
 		}
 
 		// try to resolve internal links in broken image caption (RT #90616)
-		$wikitext = RTEData::get('wikitext', $wikitextIdx);
-		if (RTEData::removeInternalLinkMarkersFromText($wikitext)) {
+		$wikitext = RTEData::get( 'wikitext', $wikitextIdx );
+		if ( RTEData::removeInternalLinkMarkersFromText( $wikitext ) ) {
 			// update wikitext data
-			$wikitextIdx = RTEData::put('wikitext', $wikitext);
+			$wikitextIdx = RTEData::put( 'wikitext', $wikitext );
 		}
 
 		$ret = RTEMarker::generate(RTEMarker::PLACEHOLDER, RTEData::put('placeholder', array(

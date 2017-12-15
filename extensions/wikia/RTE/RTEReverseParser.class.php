@@ -138,6 +138,8 @@ class RTEReverseParser {
 
 		wfSuppressWarnings();
 
+		$oldDisable = libxml_disable_entity_loader( true );
+
 		if ($parseAsXML) {
 			// form proper XML string
 			$html = str_replace('&', '&amp;', $html);
@@ -162,6 +164,8 @@ class RTEReverseParser {
 				$ret = $this->dom->getElementsByTagName('body')->item(0);
 			}
 		}
+
+		libxml_disable_entity_loader( $oldDisable );
 
 		wfRestoreWarnings();
 
