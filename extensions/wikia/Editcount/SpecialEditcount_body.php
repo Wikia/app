@@ -202,7 +202,7 @@ class Editcount extends SpecialPage {
 			$res = $dbs->select(
 				array( 'rollup_wiki_namespace_user_events' ),
 				array( 'namespace_id as namespace', 'sum(creates + edits) as count' ),
-				array( 'user_id' => $uid ),
+				array( 'user_id' => $uid, 'period_id' => DataMartService::PERIOD_ID_DAILY ),
 				__METHOD__,
 				array ( 'GROUP BY' => 'namespace_id' )
 			);
