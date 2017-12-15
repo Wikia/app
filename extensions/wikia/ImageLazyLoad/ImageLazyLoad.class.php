@@ -12,12 +12,19 @@ class ImageLazyLoad  {
 
 	private static $enabled = null;
 
-	public static function isEnabled(): bool {
+	private static function isEnabled(): bool {
 		if ( is_null( self::$enabled ) ) {
 			self::$enabled = !F::app()->checkSkin( 'wikiamobile' );
 		}
 
 		return self::$enabled;
+	}
+
+	/**
+	 * Disable image loading for the scope of the current request
+	 */
+	public static function disable() {
+		self::$enabled = false;
 	}
 
 	public static function onThumbnailImageHTML( $options, $linkAttribs, $attribs, $file, &$html ) {
@@ -53,9 +60,7 @@ class ImageLazyLoad  {
 	public static function onGalleryBeforeRenderImage( &$image ) {
 		global $wgParser;
 
-		$action = Action::getActionName( RequestContext::getMain() );
-
-		if ( self::isEnabled() && $action !== 'edit' ) {
+		if ( self::isEnabled() ) {
 
 			// Don't lazy-load data elements
 			if ( startsWith( $image[ 'thumbnail' ], 'data:' ) ) {
@@ -116,9 +121,7 @@ class ImageLazyLoad  {
 	public static function isValidLazyLoadedImage( $imgSrc ) {
 		global $wgParser;
 
-		$action = Action::getActionName( RequestContext::getMain() );
-
-		if ( self::isEnabled() && $action !== 'edit' ) {
+		if ( self::isEnabled() ) {
 			// Don't lazy-load data elements
 			if ( startsWith( $imgSrc, 'data:' ) ) {
 				return false;
