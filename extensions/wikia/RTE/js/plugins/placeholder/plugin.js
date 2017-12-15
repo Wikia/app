@@ -209,7 +209,7 @@ CKEDITOR.plugins.add('rte-placeholder',
 		var preview = this.getPreview(placeholder);
 
 		// position preview node
-		if (!preview.is(':visible')) {
+		if (!preview.is(':visible') && event) {
 			preview.css({
 				'left': event.clientX + 'px',
 				'top': event.clientY + 'px'
