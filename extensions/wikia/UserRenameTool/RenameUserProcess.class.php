@@ -467,14 +467,11 @@ class RenameUserProcess {
 			$fakeUser->saveSettings();
 			$fakeUser->saveToCache();
 		}
-		
-		// mark user as renamed
-		$renamedUser = \User::newFromId( $this->mUserId );
 
-		if ( !User::newFromId( $this->mRequestorId )->isAllowed('renameanotheruser') ) {
-			self::blockUserRenaming( $renamedUser );
-			$renamedUser->saveSettings();
-		}
+		// mark user as renamed (even if a rename is performed by staff member)
+		$renamedUser = User::newFromId( $this->mUserId );
+		self::blockUserRenaming( $renamedUser );
+		$renamedUser->saveSettings();
 
 		// SUS-3120 Schedule background task to rename local user pages, blogs, Walls...
 		$task = new RenameUserPagesTask();
