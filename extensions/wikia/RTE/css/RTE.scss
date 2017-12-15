@@ -620,6 +620,11 @@
 	}
 }
 
+/* XW-4380: Control display of template placeholders in list items */
+li .placeholder-double-brackets {
+	display: inline-block;
+}
+
 // Used to control the visibility of editor content
 .client-js {
 	.editarea,
