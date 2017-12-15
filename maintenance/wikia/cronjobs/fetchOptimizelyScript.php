@@ -9,6 +9,9 @@
 
 require_once( dirname( __FILE__ ) . '/../../commandLine.inc' );
 
+// to make sure OptimizelyController class is loaded, and not be dependent on `wgEnableOptimizelyExt` variable
+require_once( dirname( __FILE__ ) . '/../../../extensions/wikia/Optimizely/OptimizelyController.class.php' );
+
 global $wgDevelEnvironment, $wgOptimizelyUrl, $wgOptimizelyDevUrl;
 
 $url = $wgDevelEnvironment ? $wgOptimizelyDevUrl : $wgOptimizelyUrl;
