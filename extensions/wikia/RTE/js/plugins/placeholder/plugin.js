@@ -48,7 +48,7 @@ CKEDITOR.plugins.add('rte-placeholder',
 			preview.html('<div class="RTEPlaceholderPreviewInner">&nbsp;</div>');
 
 			// setup events
-			preview.bind('mouseover', function() {
+			preview.bind('mouseover', function(event) {
 				// don't hide this preview
 				self.showPreview(placeholder, event);
 			});
@@ -211,7 +211,7 @@ CKEDITOR.plugins.add('rte-placeholder',
 		var preview = this.getPreview(placeholder);
 
 		// position preview node
-		if (!preview.is(':visible') && event) {
+		if (!preview.is(':visible')) {
 			preview.css({
 				'left': event.clientX + 'px',
 				'top': event.clientY + 'px'
