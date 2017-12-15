@@ -93,7 +93,10 @@ class LookupContribsAjax {
 			}
 		}
 
-		return json_encode( $result );
+		$response = new AjaxResponse( json_encode($result) );
+		$response->setContentType( 'application/json; charset=utf-8' );
+
+		return $response;
 	}
 
 	/**
