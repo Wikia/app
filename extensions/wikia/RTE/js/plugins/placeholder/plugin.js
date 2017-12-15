@@ -209,10 +209,12 @@ CKEDITOR.plugins.add('rte-placeholder',
 		var preview = this.getPreview(placeholder);
 
 		// position preview node
-		preview.css({
-			'left': event.clientX + 'px',
-			'top': event.clientY + 'px'
-		});
+		if (!preview.is(':visible')) {
+			preview.css({
+				'left': event.clientX + 'px',
+				'top': event.clientY + 'px'
+			});
+		}
 
 		// hide remaining previews
 		this.previews.children().not(preview).each(function() {
