@@ -71,6 +71,9 @@ class RTEParser extends Parser {
 		$oLine = preg_replace('/^<([^>]+data-rte-washtml="1")/', '<$1 data-rte-line-start="true"', $oLine);
 		wfProfileOut(__METHOD__ . '::lineStart');
 
+		// XW-4380: Make template placeholders in list items render correctly
+		$oLine = preg_replace( '/^(\*<div class="placeholder placeholder-double-brackets"[^>]+>)\n/', '$1 ', $oLine );
+
 		// store parser output before this line of wikitext is parsed
 		$this->lastOutput = $output;
 
