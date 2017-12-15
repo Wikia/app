@@ -60,6 +60,7 @@ $messages['en'] = array(
 	'editaccount-not-requested' => 'CAUTION: User has not requested an account closure',
 	'editaccount-labal-account-status' => 'Account Status',
 	'editaccount-labal-email-status' => 'Email Status',
+	'editaccount-label-edit-username' => '([[Special:UserRenameTool/$1|Edit]])',
 	'editaccount-status-confirmed' => 'Confirmed',
 	'editaccount-status-unconfirmed' => 'Unconfirmed',
 	'editaccount-status-realuser' => 'Real User',

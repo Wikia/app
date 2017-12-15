@@ -16,6 +16,7 @@ $messages['en'] = array(
 	'stafflog-filter-type-block' => 'Blocks',
 	'stafflog-filter-type-piggyback' => 'Piggyback',
 	'stafflog-filter-type-renameuser' => 'User renames',
+	'stafflog-filter-type-coppa' => 'COPPA',
 	'stafflog-filter-type-wikifactory' => 'Wiki status',
 	'action-stafflog' => 'view the centralized staff log',
 );

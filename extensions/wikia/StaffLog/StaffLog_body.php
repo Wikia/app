@@ -13,6 +13,7 @@ class StaffLog extends SpecialPage {
 			'block' => wfMessage( 'stafflog-filter-type-block' )->text(),
 			'piggyback' => wfMessage( 'stafflog-filter-type-piggyback' )->text(),
 			'renameuser' => wfMessage( 'stafflog-filter-type-renameuser' )->text(),
+			'coppatool' => wfMessage( 'stafflog-filter-type-coppa' )->text(),
 			'wikifactor' => wfMessage( 'stafflog-filter-type-wikifactory' )->text()
 		);
 	}
