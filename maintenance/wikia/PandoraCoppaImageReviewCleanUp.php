@@ -63,7 +63,7 @@ class PandoraCoppaImageReviewCleanUp extends Maintenance {
 
 			$this->output( "Total time: " . ( time() - $start ) . "sec\n" );
 		} else {
-			$this->output( "Starting cleanup for wiki id: " . $wgCity . "\n" );
+			$this->output( "Starting cleanup for wiki id: " . $wgCityId . "\n" );
 
 			$start = time();
 
