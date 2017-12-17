@@ -7,7 +7,7 @@ class PandoraCoppaImageReviewCleanUp extends Maintenance {
 	public function __construct() {
 		parent::__construct();
 		$this->addOption( 'dryRun', "Whether to actually set images as removed. Script defaults to dryRun = true (attributes not actually removed)" );
-		$this->addOption( 'cleanInvalidWikis', "A separate cleanup mode, where all images from non-existent wikis are removed")
+		$this->addOption( 'cleanInvalidWikis', "A separate cleanup mode, where all images from non-existent wikis are removed");
 	}
 
 
