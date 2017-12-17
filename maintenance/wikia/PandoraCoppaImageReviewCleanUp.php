@@ -21,45 +21,45 @@ class PandoraCoppaImageReviewCleanUp extends Maintenance {
 
 			$start = time();
 
-			// $wikicitiesDb = wfGetDB( DB_SLAVE, [], $wgExternalSharedDB );
-      //
-			// $wikiList = ( new WikiaSQL() )
-			// 	->SELECT( 'wiki_id' )
-			// 	->FROM( 'image_review.images_coppa' )
-			// 	->runLoop( $imageReviewDB, function ( &$result, $row ) {
-			// 		$result[$row->wiki_id] = $row->wiki_id;
-			// 	} );
-      //
-			// $chunks = array_chunk( $wikiList, 1000, true );
-      //
-			// foreach ( $chunks as $chunk ) {
-			// 	$this->output( "Chunk size: " . count( $chunk ) . "\n" );
-			// 	( new WikiaSQL() )
-			// 		->SELECT( 'city_id' )
-			// 		->FROM( 'city_list' )
-			// 		->WHERE( 'city_id' )
-			// 		->IN( $chunk )
-			// 		->runLoop( $wikicitiesDb, function ( &$result, $row ) use ( &$chunk ) {
-			// 			unset( $chunk[$row->city_id] );
-			// 		} );
-      //
-			// 		$this->output( "Number of missing wikis: " . count( $chunk ) . "\n" );
-      //
-			// 		if ( count( $chunk ) > 0 ) {
-			// 			if ( !$this->getOption( 'dryRun', true ) ) {
-			// 				( new WikiaSQL() )
-			// 					->UPDATE( 'image_review.images_coppa' )
-			// 					->SET( 'is_removed', 1, true )
-			// 					->WHERE( 'wiki_id' )->IN( $chunk )
-			// 					->run( $imageReviewDB );
-			// 			} else {
-			// 				$this->output( "This is a dry run. Not updating. \n" );
-			// 				foreach ( $chunk as $wikiId ) {
-			// 					$this->output( "Missing wiki: " . $wikiId . "\n" );
-			// 				}
-			// 			}
-			// 		}
-			// }
+			 $wikicitiesDb = wfGetDB( DB_SLAVE, [], $wgExternalSharedDB );
+
+			 $wikiList = ( new WikiaSQL() )
+			 	->SELECT( 'DISTINCT wiki_id' )
+			 	->FROM( 'image_review.images_coppa' )
+			 	->runLoop( $imageReviewDB, function ( &$result, $row ) {
+			 		$result[$row->wiki_id] = $row->wiki_id;
+			 	} );
+
+			 $chunks = array_chunk( $wikiList, 1000, true );
+
+			 foreach ( $chunks as $chunk ) {
+			 	$this->output( "Chunk size: " . count( $chunk ) . "\n" );
+			 	( new WikiaSQL() )
+			 		->SELECT( 'city_id' )
+			 		->FROM( 'city_list' )
+			 		->WHERE( 'city_id' )
+			 		->IN( $chunk )
+			 		->runLoop( $wikicitiesDb, function ( &$result, $row ) use ( &$chunk ) {
+			 			unset( $chunk[$row->city_id] );
+			 		} );
+
+			 		$this->output( "Number of missing wikis: " . count( $chunk ) . "\n" );
+
+			 		if ( count( $chunk ) > 0 ) {
+			 			if ( !$this->getOption( 'dryRun', true ) ) {
+			 				( new WikiaSQL() )
+			 					->UPDATE( 'image_review.images_coppa' )
+			 					->SET( 'is_removed', 1, true )
+			 					->WHERE( 'wiki_id' )->IN( $chunk )
+			 					->run( $imageReviewDB );
+			 			} else {
+			 				$this->output( "This is a dry run. Not updating. \n" );
+			 				foreach ( $chunk as $wikiId ) {
+			 					$this->output( "Missing wiki: " . $wikiId . "\n" );
+			 				}
+			 			}
+			 		}
+			 }
 
 			$this->output( "Total time: " . ( time() - $start ) . "sec\n" );
 		} else {
