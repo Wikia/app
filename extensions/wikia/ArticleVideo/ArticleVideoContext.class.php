@@ -13,14 +13,13 @@ class ArticleVideoContext {
 	public static function isFeaturedVideoEmbedded( string $pageId ) {
 		$wg = F::app()->wg;
 
-		if ( !$wg->enableArticleFeaturedVideo ) {
+		if ( !$wg->enableArticleFeaturedVideo || WikiaPageType::isActionPage()) {
 			return false;
 		}
 
 		$mediaId = ArticleVideoService::getFeatureVideoForArticle( $wg->cityId, $pageId );
 
-		return !empty( $mediaId ) && // Prevents to show video on ?action=history etc.
-			!WikiaPageType::isActionPage();
+		return !empty( $mediaId );
 	}
 
 	/**
