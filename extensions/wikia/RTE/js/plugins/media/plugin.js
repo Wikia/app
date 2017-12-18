@@ -281,9 +281,7 @@ CKEDITOR.plugins.add('rte-media', {
 		}).forEach(function (mediaNode) {
 			if (mediaNode.classList.contains('image')) {
 				self.setupImage($(mediaNode));
-			}
-
-			if (mediaNode.classList.contains('video')) {
+			} else if (mediaNode.classList.contains('video')) {
 				self.setupVideo($(mediaNode));
 			}
 		});
