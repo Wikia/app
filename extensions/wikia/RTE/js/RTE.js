@@ -1,9 +1,19 @@
-(function($, window, undefined) {
+(function($, window) {
 	var WE = window.WikiaEditor = window.WikiaEditor || (new Observable());
+
+	var rteAssets = [
+		'extensions/wikia/RTE/css/content.scss',
+		'extensions/wikia/PortableInfobox/styles/PortableInfobox.scss'
+	];
+
+	if (window.wgEnablePortableInfoboxEuropaTheme) {
+		rteAssets.push('extensions/wikia/PortableInfobox/styles/PortableInfoboxEuropaTheme.scss');
+	}
+
 	// Rich Text Editor
 	// See also: RTE.preferences.js
 	var RTE = {
-		
+
 		// configuration
 		// @see http://docs.cksource.com/ckeditor_api/symbols/CKEDITOR.config.html
 		config: {
@@ -16,13 +26,7 @@
 			baseFloatZIndex: 5000101, // $zTop + 1 from _layout.scss
 			bodyClass: 'WikiaArticle',
 			bodyId: 'bodyContent',
-			contentsCss: [
-				$.getSassLocalURL('extensions/wikia/RTE/css/content.scss'),
-				$.getSassLocalURL('extensions/wikia/PortableInfobox/styles/PortableInfobox.scss'),
-				// TODO check $wgEnablePortableInfoboxEuropaTheme first
-				$.getSassLocalURL('extensions/wikia/PortableInfobox/styles/PortableInfoboxEuropaTheme.scss'),
-				window.RTESiteCss
-			],
+			contentsCss: rteAssets.map($.getSassLocalURL).concat(window.RTESiteCss),
 			coreStyles_bold: {element: 'b', overrides: 'strong'},
 			coreStyles_italic: {element: 'i', overrides: 'em'},
 			customConfig: '',//'config.js' to add additional statements
@@ -40,7 +44,7 @@
 				'basicstyles,' +
 				'button,' +
 				'clipboard,' +
-				'contextmenu,' +	
+				'contextmenu,' +
 				'dialog,' +
 				'enterkey,' +
 				'format,' +
@@ -60,7 +64,7 @@
 			// Custom RTE plugins for CKEDITOR
 			// Used to be built in RTE.loadPlugins()
 		extraPlugins:
-		 
+
 				'rte-accesskey,' +
 				'rte-comment,' +
 				'rte-dialog,' +
@@ -169,7 +173,7 @@
 		},
 
 		initCk: function(editor) {
-					
+
 			if (editor.config.minHeight) {
 				RTE.config.height = editor.config.minHeight;
 			}
@@ -187,9 +191,6 @@
 			// This call creates a new CKE instance which replaces the textarea with the applicable ID
 			editor.ck = CKEDITOR.replace(editor.instanceId, RTE.config);
 
-			// load CSS files
-			RTE.loadExtraCss(editor.ck);
-
 			// clean HTML returned by CKeditor
 			editor.ck.on('getData', RTE.filterHtml);
 
@@ -197,30 +198,9 @@
 			GlobalTriggers.fire('rteinit', editor.ck);
 		},
 
-		// load extra CSS - modstly for PLB at this point.
-		// TODO: work this into getContentsCss()
-		loadExtraCss: function(editor) {
-			var css = [];
-
-			GlobalTriggers.fire('rterequestcss', css);
-
-			for (var n=0; n<css.length; n++) {
-				if( typeof(css[n]) != 'undefined' ) {
-					var cb = ( (css[n].indexOf('?') > -1 || css[n].indexOf('__am') > -1) ? '' : ('?' + CKEDITOR.timestamp) );
-					editor.addCss('@import url(' + css[n] + cb + ');');
-				}
-			}
-
-			// disable object resizing in IE. IMPORTANT! use local path
-			if (CKEDITOR.env.ie && RTE.config.disableObjectResizing) {
-				editor.addCss('img {behavior:url(' + RTE.constants.localPath + '/css/behaviors/disablehandles.htc)}');
-			}
-		},
-
 		// final setup of editor's instance
 		onEditorReady: function(event) {
-			var editor = event.editor,
-			instanceId = editor.instanceId;
+			var editor = event.editor;
 
 			// base colors: use color / background-color from .color1 CSS class
 			RTE.tools.getThemeColors();
@@ -235,10 +215,10 @@
 				if (editor.mode == 'wysiwyg') {
 					editor.fire('saveSnapshot');
 				}
-			
+
 				editor.fire('modeSwitch');
 			}
-	
+
 			// ok, we're done!
 			RTE.loaded.push(editor);
 
@@ -249,17 +229,6 @@
 				(window.RTEDevMode ? ' (in development mode)' : '') +
 				' is ready in "' + editor.mode + '" mode (loaded in ' + RTE.loadTime + ' s)');
 
-			// let extensions do their tasks when RTE is fully loaded
-			$(window).trigger('rteready', editor);
-			GlobalTriggers.fire('rteready', editor);
-
-	
-			// preload format dropdown (BugId:4592)
-			/*var formatDropdown = editor.ui.create('Format');
-			if (formatDropdown) {
-				formatDropdown.createPanel(editor);
-			}
-			*/
 			// send custom event "submit" when edit page is being saved (BugId:2947)
 			var editform = $(editor.element.$.form).bind('submit', $.proxy(function() {
 				editor.fire('submit', {form: editform}, editor);
@@ -305,11 +274,6 @@
 		// Returns the wikiaEditor instance that belongs to ID (or the current instance if no ID is given)
 		getInstanceEditor: function(instanceId) {
 			return WE.instances[instanceId || WE.instanceId];
-		},
-
-		// Returns the element associated with an instance ID (or the current element if no ID is given)
-		getInstanceElement: function(instanceId) {
-			return $('#' + instanceId || WE.instanceId);
 		},
 
 		// filter HTML returned by CKEditor
@@ -465,7 +429,7 @@ CKEDITOR.getUrl = function( resource ) {
 
 		return url;
 	}
-		
+
 	// If this is not a full or absolute path.
 	if ( resource.indexOf('://') == -1 && resource.indexOf( '/' ) !== 0 ) {
 		// Wikia: remove _source adder
@@ -476,7 +440,7 @@ CKEDITOR.getUrl = function( resource ) {
 	if ( this.timestamp && resource.charAt( resource.length - 1 ) != '/' ) {
 		resource += ( resource.indexOf( '?' ) >= 0 ? '&' : '?' ) + this.timestamp;
 	}
-//	console.log( resource );	
+
 	return resource;
 }
 
