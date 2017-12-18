@@ -1,4 +1,4 @@
-(function($, window, undefined) {
+(function($, window) {
 	var WE = window.WikiaEditor = window.WikiaEditor || (new Observable());
 
 	var rteAssets = [
@@ -190,9 +190,6 @@
 			// This call creates a new CKE instance which replaces the textarea with the applicable ID
 			editor.ck = CKEDITOR.replace(editor.instanceId, RTE.config);
 
-			// load CSS files
-			RTE.loadExtraCss(editor.ck);
-
 			// clean HTML returned by CKeditor
 			editor.ck.on('getData', RTE.filterHtml);
 
@@ -200,30 +197,9 @@
 			GlobalTriggers.fire('rteinit', editor.ck);
 		},
 
-		// load extra CSS - modstly for PLB at this point.
-		// TODO: work this into getContentsCss()
-		loadExtraCss: function(editor) {
-			var css = [];
-
-			GlobalTriggers.fire('rterequestcss', css);
-
-			for (var n=0; n<css.length; n++) {
-				if( typeof(css[n]) != 'undefined' ) {
-					var cb = ( (css[n].indexOf('?') > -1 || css[n].indexOf('__am') > -1) ? '' : ('?' + CKEDITOR.timestamp) );
-					editor.addCss('@import url(' + css[n] + cb + ');');
-				}
-			}
-
-			// disable object resizing in IE. IMPORTANT! use local path
-			if (CKEDITOR.env.ie && RTE.config.disableObjectResizing) {
-				editor.addCss('img {behavior:url(' + RTE.constants.localPath + '/css/behaviors/disablehandles.htc)}');
-			}
-		},
-
 		// final setup of editor's instance
 		onEditorReady: function(event) {
-			var editor = event.editor,
-			instanceId = editor.instanceId;
+			var editor = event.editor;
 
 			// base colors: use color / background-color from .color1 CSS class
 			RTE.tools.getThemeColors();
@@ -252,17 +228,6 @@
 				(window.RTEDevMode ? ' (in development mode)' : '') +
 				' is ready in "' + editor.mode + '" mode (loaded in ' + RTE.loadTime + ' s)');
 
-			// let extensions do their tasks when RTE is fully loaded
-			$(window).trigger('rteready', editor);
-			GlobalTriggers.fire('rteready', editor);
-
-
-			// preload format dropdown (BugId:4592)
-			/*var formatDropdown = editor.ui.create('Format');
-			if (formatDropdown) {
-				formatDropdown.createPanel(editor);
-			}
-			*/
 			// send custom event "submit" when edit page is being saved (BugId:2947)
 			var editform = $(editor.element.$.form).bind('submit', $.proxy(function() {
 				editor.fire('submit', {form: editform}, editor);
@@ -308,11 +273,6 @@
 		// Returns the wikiaEditor instance that belongs to ID (or the current instance if no ID is given)
 		getInstanceEditor: function(instanceId) {
 			return WE.instances[instanceId || WE.instanceId];
-		},
-
-		// Returns the element associated with an instance ID (or the current element if no ID is given)
-		getInstanceElement: function(instanceId) {
-			return $('#' + instanceId || WE.instanceId);
 		},
 
 		// filter HTML returned by CKEditor
@@ -479,7 +439,7 @@ CKEDITOR.getUrl = function( resource ) {
 	if ( this.timestamp && resource.charAt( resource.length - 1 ) != '/' ) {
 		resource += ( resource.indexOf( '?' ) >= 0 ? '&' : '?' ) + this.timestamp;
 	}
-//	console.log( resource );
+
 	return resource;
 }
 
