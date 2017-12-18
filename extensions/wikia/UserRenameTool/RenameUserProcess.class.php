@@ -1,8 +1,11 @@
 <?php
 
 use Wikia\Tasks\Tasks\RenameUserPagesTask;
+use Wikia\Logger\Loggable;
 
 class RenameUserProcess {
+	use Loggable;
+
 	const EMAIL_CONTROLLER = \Email\Controller\UserNameChangeController::class;
 
 	const RENAME_TAG = 'renamed_to';
@@ -464,14 +467,11 @@ class RenameUserProcess {
 			$fakeUser->saveSettings();
 			$fakeUser->saveToCache();
 		}
-		
-		// mark user as renamed
-		$renamedUser = \User::newFromId( $this->mUserId );
 
-		if ( !User::newFromId( $this->mRequestorId )->isAllowed('renameanotheruser') ) {
-			self::blockUserRenaming( $renamedUser );
-			$renamedUser->saveSettings();
-		}
+		// mark user as renamed (even if a rename is performed by staff member)
+		$renamedUser = User::newFromId( $this->mUserId );
+		self::blockUserRenaming( $renamedUser );
+		$renamedUser->saveSettings();
 
 		// SUS-3120 Schedule background task to rename local user pages, blogs, Walls...
 		$task = new RenameUserPagesTask();
@@ -479,11 +479,22 @@ class RenameUserProcess {
 
 		$targetCommunityIds = RenameUserPagesTask::getTargetCommunities( $this->mOldUsername );
 
+		if ( empty( $targetCommunityIds ) ) {
+			$this->info( 'RenameUserPagesTask::getTargetCommunities - no wikis were returned' );
+		}
+
 		foreach ( $targetCommunityIds as $wikiId ) {
 			$task->wikiId( $wikiId )->queue();
 		}
 
 		return empty( $this->getErrors() );
+	}
+
+	protected function getLoggerContext() {
+		return [
+			'user_rename_from' => $this->getOldUsername(),
+			'user_rename_to' => $this->getNewUsername(),
+		];
 	}
 
 	/**
@@ -500,16 +511,8 @@ class RenameUserProcess {
 		}
 
 		wfDebugLog( __CLASS__, $text );
-	}
 
-	/**
-	 * Adds log message in Special:Log for the current wiki
-	 *
-	 * @param $text string Log message
-	 */
-	public function addLocalLog( $text ) {
-		$log = new LogPage( 'renameuser' );
-		$log->addEntry( 'renameuser', Title::newFromText( $this->mOldUsername, NS_USER ), $text, array(), User::newFromId( $this->mRequestorId ) );
+		$this->info( $text );
 	}
 
 	/**
@@ -618,7 +621,12 @@ class RenameUserProcess {
 		return !$user->getGlobalFlag( self::USER_ALREADY_RENAMED_FLAG, false ) || $user->isAllowed( 'renameanotheruser' );
 	}
 
-	public static function blockUserRenaming( User $user, bool $flag = true ) {
-		return $user->setGlobalFlag( self::USER_ALREADY_RENAMED_FLAG, $flag );
+	/**
+	 * Mark a user as renamed. This will prevent any further attempts to rename it.
+	 *
+	 * @param User $user
+	 */
+	private static function blockUserRenaming( User $user ) {
+		$user->setGlobalFlag( self::USER_ALREADY_RENAMED_FLAG, true );
 	}
 }
