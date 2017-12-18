@@ -20,6 +20,6 @@
   },
   "dependencies": {
     "ad-engine": "^7.0.1",
-    "ad-products": "2.1.5"
+    "ad-products": "2.1.6"
   }
 }
