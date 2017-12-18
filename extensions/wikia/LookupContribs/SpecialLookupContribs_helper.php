@@ -182,10 +182,7 @@ class LookupContribsCore {
 				'unix_timestamp(editdate) as last_edit'
 			],
 			$where,
-			__METHOD__,
-			[
-				'ORDER BY' => 'editdate DESC'
-			]
+			__METHOD__
 		);
 
 		$wikiaIds = [];
