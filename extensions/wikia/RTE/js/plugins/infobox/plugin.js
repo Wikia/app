@@ -131,7 +131,7 @@ require(['jquery', 'wikia.window', 'wikia.loader', 'wikia.mustache', 'wikia.loca
 		return markup;
 	}
 
-	function onInfoboxTemplateChosen(evt) {
+	function onInfoboxTemplateChosen(event) {
 		var infoboxName = $(event.target).data('infobox-name');
 
 		if (infoboxName) {
