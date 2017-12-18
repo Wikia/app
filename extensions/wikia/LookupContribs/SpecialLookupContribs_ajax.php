@@ -55,10 +55,10 @@ class LookupContribsAjax {
 
 				if ( $lookupUser ) {
 					$result['sColumns'] = 'id,title,url,lastedit,edits,posts,lastpost,userrights,blocked';
-					$result['aaData'] = LookupContribsAjax::prepareLookupUserData( $activity['data'], $username );
+					$result['aaData'] = self::prepareLookupUserData( $activity['data'], $username );
 				} else {
-					$result['sColumns'] = 'id,dbname,title,url,lastedit,options';
-					$result['aaData'] = LookupContribsAjax::prepareLookupContribsData( $activity['data'] );
+					$result['sColumns'] = 'id,dbname,title,url,lastedit,options,edits';
+					$result['aaData'] = self::prepareLookupContribsData( $activity['data'] );
 				}
 			}
 		} else {
@@ -106,7 +106,9 @@ class LookupContribsAjax {
 	 *
 	 * @return array
 	 */
-	public static function prepareLookupContribsData( $activityData ) {
+	private static function prepareLookupContribsData( $activityData ) {
+		$wg = F::app()->wg;
+
 		$rows = [];
 		foreach ( $activityData as $row ) {
 			$rows[] = [
@@ -115,7 +117,8 @@ class LookupContribsAjax {
 				$row['title'], // wiki title
 				$row['url'], // wiki url
 				F::app()->wg->Lang->timeanddate( wfTimestamp( TS_MW, $row['lastedit'] ), true ), // last edited
-				'' // options
+				'', // options
+				$wg->ContLang->formatNum( $row['edits'] ),
 			];
 		}
 
@@ -129,7 +132,7 @@ class LookupContribsAjax {
 	 *
 	 * @return array
 	 */
-	public static function prepareLookupUserData( $activityData, $username ) {
+	private static function prepareLookupUserData( $activityData, $username ) {
 		$wg = F::app()->wg;
 
 		$rows = [];
