@@ -66,7 +66,6 @@ $wgResourceModules['ext.renameuser.modal'] = $userRenameResourceTemplate + array
 );
 
 // constants
-// define('ENV_DEVBOX', true);//TODO: used for some debug switches, comment out as soon as the code hits production!
 define( 'USERRENAME_ROWS_PER_LOOP', 500 );
 define( 'USERRENAME_LOOP_PAUSE', 5 );
 define( 'COMMUNITY_CENTRAL_CITY_ID', 177 );// city_id for community.wikia.com
