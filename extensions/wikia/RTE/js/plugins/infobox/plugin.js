@@ -20,7 +20,7 @@ require(['jquery', 'wikia.window', 'wikia.loader', 'wikia.mustache', 'wikia.loca
 				title: 'Infobox Builder',
 				buttons: [],
 				minWidth: 800,
-				minHeight: 400,
+				minHeight: 700,
 				contents: [
 					{
 						id: 'infoboxBuilderDialog',
