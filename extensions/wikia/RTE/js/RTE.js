@@ -19,8 +19,7 @@
 			contentsCss: [
 				$.getSassLocalURL('extensions/wikia/RTE/css/content.scss'),
 				$.getSassLocalURL('extensions/wikia/PortableInfobox/styles/PortableInfobox.scss'),
-				// TODO check $wgEnablePortableInfoboxEuropaTheme first
-				$.getSassLocalURL('extensions/wikia/PortableInfobox/styles/PortableInfoboxEuropaTheme.scss'),
+				...(wgEnablePortableInfoboxEuropaTheme ? [$.getSassLocalURL('extensions/wikia/PortableInfobox/styles/PortableInfoboxEuropaTheme.scss')] : []),
 				window.RTESiteCss
 			],
 			coreStyles_bold: {element: 'b', overrides: 'strong'},
