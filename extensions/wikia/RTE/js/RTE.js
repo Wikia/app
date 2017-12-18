@@ -1,9 +1,19 @@
 (function($, window, undefined) {
 	var WE = window.WikiaEditor = window.WikiaEditor || (new Observable());
+
+	var rteAssets = [
+		'extensions/wikia/RTE/css/content.scss',
+		'extensions/wikia/PortableInfobox/styles/PortableInfobox.scss'
+	];
+
+	if (window.wgEnablePortableInfoboxEuropaTheme) {
+		rteAssets.push('extensions/wikia/PortableInfobox/styles/PortableInfoboxEuropaTheme.scss');
+	}
+
 	// Rich Text Editor
 	// See also: RTE.preferences.js
 	var RTE = {
-		
+
 		// configuration
 		// @see http://docs.cksource.com/ckeditor_api/symbols/CKEDITOR.config.html
 		config: {
@@ -16,12 +26,7 @@
 			baseFloatZIndex: 5000101, // $zTop + 1 from _layout.scss
 			bodyClass: 'WikiaArticle',
 			bodyId: 'bodyContent',
-			contentsCss: [
-				$.getSassLocalURL('extensions/wikia/RTE/css/content.scss'),
-				$.getSassLocalURL('extensions/wikia/PortableInfobox/styles/PortableInfobox.scss'),
-				...(wgEnablePortableInfoboxEuropaTheme ? [$.getSassLocalURL('extensions/wikia/PortableInfobox/styles/PortableInfoboxEuropaTheme.scss')] : []),
-				window.RTESiteCss
-			],
+			contentsCss: rteAssets.map($.getSassLocalURL).concat(window.RTESiteCss),
 			coreStyles_bold: {element: 'b', overrides: 'strong'},
 			coreStyles_italic: {element: 'i', overrides: 'em'},
 			customConfig: '',//'config.js' to add additional statements
@@ -39,7 +44,7 @@
 				'basicstyles,' +
 				'button,' +
 				'clipboard,' +
-				'contextmenu,' +	
+				'contextmenu,' +
 				'dialog,' +
 				'enterkey,' +
 				'format,' +
@@ -59,7 +64,7 @@
 			// Custom RTE plugins for CKEDITOR
 			// Used to be built in RTE.loadPlugins()
 		extraPlugins:
-		 
+
 				'rte-accesskey,' +
 				'rte-comment,' +
 				'rte-dialog,' +
@@ -167,7 +172,7 @@
 		},
 
 		initCk: function(editor) {
-					
+
 			if (editor.config.minHeight) {
 				RTE.config.height = editor.config.minHeight;
 			}
@@ -233,10 +238,10 @@
 				if (editor.mode == 'wysiwyg') {
 					editor.fire('saveSnapshot');
 				}
-			
+
 				editor.fire('modeSwitch');
 			}
-	
+
 			// ok, we're done!
 			RTE.loaded.push(editor);
 
@@ -251,7 +256,7 @@
 			$(window).trigger('rteready', editor);
 			GlobalTriggers.fire('rteready', editor);
 
-	
+
 			// preload format dropdown (BugId:4592)
 			/*var formatDropdown = editor.ui.create('Format');
 			if (formatDropdown) {
@@ -463,7 +468,7 @@ CKEDITOR.getUrl = function( resource ) {
 
 		return url;
 	}
-		
+
 	// If this is not a full or absolute path.
 	if ( resource.indexOf('://') == -1 && resource.indexOf( '/' ) !== 0 ) {
 		// Wikia: remove _source adder
@@ -474,7 +479,7 @@ CKEDITOR.getUrl = function( resource ) {
 	if ( this.timestamp && resource.charAt( resource.length - 1 ) != '/' ) {
 		resource += ( resource.indexOf( '?' ) >= 0 ? '&' : '?' ) + this.timestamp;
 	}
-//	console.log( resource );	
+//	console.log( resource );
 	return resource;
 }
 
