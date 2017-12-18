@@ -146,7 +146,7 @@ class LookupContribsCore {
 	 * @throws MWException
 	 */
 	public function getUserActivity() {
-		global $wgMemc, $wgStatsDB, $wgStatsDBEnabled;
+		global $wgMemc, $wgSpecialsDB;
 
 		$memKey = $this->getUserActivityMemKey();
 		$data = $wgMemc->get( $memKey );
@@ -160,46 +160,33 @@ class LookupContribsCore {
 			'cnt' => 0
 		];
 
-		if ( empty( $wgStatsDBEnabled ) ) {
-			return $userActivity;
-		}
-
-		$dbr = wfGetDB( DB_SLAVE, 'stats', $wgStatsDB );
-		if ( is_null( $dbr ) ) {
-			return $userActivity;
-		}
+		$dbr = wfGetDB( DB_SLAVE, [], $wgSpecialsDB );
 
 		// bugId:6196
 		$excludedWikis = $this->getExclusionList();
 
 		$where = [
 			'user_id' => $this->mUserId,
-			'event_type' => [ 1, 2 ],
+			'edits > 0',
 		];
 
 		if ( !empty( $excludedWikis ) && is_array( $excludedWikis ) ) {
 			$where[] = 'wiki_id NOT IN (' . $dbr->makeList( $excludedWikis ) . ')';
 		}
 
-		$options = [
-			'GROUP BY' => 'wiki_id',
-			'ORDER BY' => 'last_edit DESC',
-		];
-
 		$res = $dbr->select(
-			'events',
+			'events_local_users',
 			[
 				'wiki_id',
-				'count(*) as edits',
-				'max(unix_timestamp(rev_timestamp)) as last_edit'
+				'edits',
+				'unix_timestamp(editdate) as last_edit'
 			],
 			$where,
-			__METHOD__,
-			$options
+			__METHOD__
 		);
 
 		$wikiaIds = [];
-		while ( $row = $dbr->fetchObject( $res ) ) {
+		foreach ( $res as $row ) {
 			$aItem = [
 				'id' => $row->wiki_id,
 				'lastedit' => $row->last_edit,
@@ -211,9 +198,6 @@ class LookupContribsCore {
 		}
 
 		$this->addWikiaInfo( $wikiaIds, $userActivity );
-
-		$dbr->freeResult( $res );
-
 		$wgMemc->set( $memKey, $userActivity, self::ACTIVITY_CACHE_TTL );
 
 		return $this->orderData( $userActivity );
@@ -243,16 +227,16 @@ class LookupContribsCore {
 	 * Clear the data cached by method getUserActivity
 	 */
 	public function clearUserActivityCache() {
-		$memKey = $this->getUserActivityMemKey();
-		F::app()->wg->Memc->delete( $memKey );
+		global $wgMemc;
+		$wgMemc->delete( $this->getUserActivityMemKey() );
 	}
 
 	private function getUserActivityMemKey() {
-		return wfSharedMemcKey( $this->mUserId, 'data' );
+		return wfSharedMemcKey( __CLASS__, $this->mUserId );
 	}
 
 	private function orderData( $userActivity ) {
-		\Wikia\Logger\WikiaLogger::instance()->info( 'SpecialLookupContribs debug', [
+		\Wikia\Logger\WikiaLogger::instance()->debug( 'SpecialLookupContribs debug', [
 			'mLimit' => $this->mLimit,
 			'mOffset' => $this->mOffset,
 			'mOrder' => $this->mOrder,
@@ -287,7 +271,7 @@ class LookupContribsCore {
 		}
 	}
 
-	function getExclusionList() {
+	private function getExclusionList() : array {
 		global $wgLookupContribsExcluded;
 
 		// Make sure there are exclusions defined
@@ -295,8 +279,7 @@ class LookupContribsCore {
 			return [];
 		}
 
-		// Start off by ignoring rows that have the undefined wiki ID of zero
-		$result = [ 0 ];
+		$result = [];
 
 		// Add any other wikis we want to exclude
 		foreach ( $wgLookupContribsExcluded as $excluded ) {
