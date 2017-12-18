@@ -42,8 +42,6 @@ class RTEParser extends Parser {
 	 * Find empty lines in wikitext and mark following element
 	 */
 	function doBlockLevelsLineStart(&$oLine, &$output) {
-		wfProfileIn(__METHOD__);
-
 		RTE::log(__METHOD__, $oLine);
 
 		$this->checkForContextSensitiveEdgeCases( $oLine );
@@ -73,8 +71,6 @@ class RTEParser extends Parser {
 
 		// store parser output before this line of wikitext is parsed
 		$this->lastOutput = $output;
-
-		wfProfileOut(__METHOD__);
 	}
 
 	/**
@@ -102,8 +98,6 @@ class RTEParser extends Parser {
 	 * Reset empty lines counter and store current line as previous one for next step of foreach
 	 */
 	function doBlockLevelsLineEnd(&$oLine, &$output) {
-		wfProfileIn(__METHOD__);
-
 		// reset empty lines counter
 		if ( (rtrim($oLine) != '') && ($this->emptyLinesBefore > 0) ) {
 			//RTE::log(__METHOD__, "resetting empty lines counter ({$this->emptyLinesBefore})");
@@ -122,16 +116,12 @@ class RTEParser extends Parser {
 
 		// store this for next call of doBlockLevelsLineStart()
 		$this->lastLineWasEmpty = ($oLine == '');
-
-		wfProfileOut(__METHOD__);
 	}
 
 	/**
 	 * Handle wikitext inside <div></div> sections
 	 */
 	function doOpenCloseMatch($t, $openmatch, $closematch) {
-		wfProfileIn(__METHOD__);
-
 		if ($closematch) {
 			if (preg_match('/<div/iS', $t)) {
 				$this->inDivStack++;
@@ -141,8 +131,6 @@ class RTEParser extends Parser {
 				$this->inDivStack--;
 			}
 		}
-
-		wfProfileOut(__METHOD__);
 	}
 
 	/**
@@ -151,13 +139,12 @@ class RTEParser extends Parser {
 	 * Don't remove whitespaces following header
 	 */
 	function doHeadings($text) {
-		wfProfileIn(__METHOD__);
 		for ( $i = 6; $i >= 1; --$i ) {
 			$h = str_repeat( '=', $i );
 			$text = preg_replace( "/^$h(.+)$h(\\s*)$/m",
 				"<h$i>\\1</h$i>\\2", $text );
 		}
-		wfProfileOut(__METHOD__);
+
 		return $text;
 	}
 
@@ -169,8 +156,6 @@ class RTEParser extends Parser {
 	 * @param int $wikitextIdx
 	 */
 	function makeImage($title, $options, $holders = false) {
-		wfProfileIn(__METHOD__);
-
 		$wikitextIdx = RTEMarker::getDataIdx(RTEMarker::IMAGE_DATA, $options);
 
 		// store wikitext for media placeholder rendering method
@@ -189,7 +174,6 @@ class RTEParser extends Parser {
 				// return HTML stored by renderMediaPlaceholder() method
 				$ret = self::$mediaPlaceholder;
 
-				wfProfileOut(__METHOD__);
 				return $ret;
 			}
 		}
@@ -203,7 +187,6 @@ class RTEParser extends Parser {
 			// handle not existing images
 			$ret = RTELinkerHooks::makeBrokenImageLinkObj($title, '', '', '', '', false, $wikitextIdx);
 
-			wfProfileOut(__METHOD__);
 			return $ret;
 		}
 
@@ -352,7 +335,6 @@ class RTEParser extends Parser {
 			$data['type'] = 'ogg-file';
 			$ret = RTEMarker::generate(RTEMarker::PLACEHOLDER, RTEData::put('placeholder', $data));
 
-			wfProfileOut(__METHOD__);
 			return $ret;
 		}
 
@@ -372,7 +354,6 @@ class RTEParser extends Parser {
 		// store data and mark HTML
 		$ret = RTEData::addIdxToTag(RTEData::put('data', $data), $ret);
 
-		wfProfileOut(__METHOD__);
 		return $ret;
 	}
 
@@ -380,9 +361,8 @@ class RTEParser extends Parser {
 	 * Render media (image / video) placeholder
 	 */
 	static public function renderMediaPlaceholder($data) {
-		wfProfileIn(__METHOD__);
-
 		global $wgBlankImgUrl;
+
 		$attribs = array(
 			'src' => $wgBlankImgUrl,
 			'class' => "media-placeholder {$data['type']} thumb",
@@ -413,7 +393,6 @@ class RTEParser extends Parser {
 
 		RTE::log(__METHOD__, $data['wikitext']);
 
-		wfProfileOut(__METHOD__);
 		return $ret;
 	}
 
@@ -424,15 +403,12 @@ class RTEParser extends Parser {
 	 * @return bool
 	 */
 	static public function makeImageParams( Parser $parser, array &$params ) {
-		wfProfileIn(__METHOD__);
-
 		// run only when parsing for RTE
 		if ( $parser instanceof RTEParser ) {
 			// store image params (to be used in makeImage)
 			self::$imageParams = $params;
 		}
 
-		wfProfileOut(__METHOD__);
 		return true;
 	}
 
@@ -442,8 +418,6 @@ class RTEParser extends Parser {
 	 * @private
 	 */
 	function maybeMakeExternalImage( $url ) {
-		wfProfileIn(__METHOD__);
-
 		$text = parent::maybeMakeExternalImage($url);
 
 		// MW parser has rendered an external whitelisted image
@@ -459,7 +433,6 @@ class RTEParser extends Parser {
 			$text = RTEData::addIdxToTag(RTEData::put('data', $data), $text);
 		}
 
-		wfProfileOut(__METHOD__);
 		return $text;
 	}
 
@@ -475,8 +448,6 @@ class RTEParser extends Parser {
 	 * @return ParserOutput a ParserOutput
 	 */
 	public function parse( $text, Title $title, ParserOptions $options, $linestart = true, $clearState = true, $revid = null ) {
-		wfProfileIn(__METHOD__);
-
 		// XW-4380: Disable image lazy loading for images rendered in the editor
 		ImageLazyLoad::disable();
 
@@ -563,7 +534,6 @@ class RTEParser extends Parser {
 		RTE::log(__METHOD__, $html);
 		$output->setText($html);
 
-		wfProfileOut(__METHOD__);
 		return $output;
 	}
 
@@ -571,7 +541,6 @@ class RTEParser extends Parser {
 	 * Special handling of entities when doing internal links parsing (RT #38844)
 	 */
 	public function replaceInternalLinks2(&$s) {
-		wfProfileIn(__METHOD__);
 
 		// use MW parser to parse internal links
 		$holders = parent::replaceInternalLinks2($s);
@@ -585,24 +554,19 @@ class RTEParser extends Parser {
 			}
 		}
 
-		wfProfileOut(__METHOD__);
 		return $holders;
 	}
 
 	public function makeKnownLinkHolder( $nt, $text = '', $query = '', $trail = '', $prefix = '' ) {
-		wfProfileIn(__METHOD__);
 
 		$dataIdx = RTEMarker::getDataIdx(RTEMarker::INTERNAL_DATA, $text);
 		$ret = parent::makeKnownLinkHolder($nt, $text, $query, $trail, $prefix);
 		$ret = RTEData::addIdxToTag($dataIdx, $ret);
 
-		wfProfileOut(__METHOD__);
 		return $ret;
 	}
 
 	public function doDoubleUnderscore( $text ) {
-		wfProfileIn(__METHOD__);
-
 		$mwa = MagicWord::getDoubleUnderscoreArray();
 		$regexes = $mwa->getRegex();
 		foreach($regexes as $regex) {
@@ -610,17 +574,13 @@ class RTEParser extends Parser {
 			$text = preg_replace_callback($regex, 'RTEParser::doDoubleUnderscoreReplace', $text);
 		}
 
-		wfProfileOut(__METHOD__);
 		return $text;
 	}
 
 	public static function doDoubleUnderscoreReplace($matches) {
-		wfProfileIn(__METHOD__);
-
 		$dataIdx = RTEData::put('placeholder', array('type' => 'double-underscore', 'wikitext' => $matches[0]));
 		$ret = RTEMarker::generate(RTEMarker::PLACEHOLDER, $dataIdx);
 
-		wfProfileOut(__METHOD__);
 		return $ret;
 	}
 
@@ -632,8 +592,6 @@ class RTEParser extends Parser {
 	 * Callback for marking table cells added using short markup
 	 */
 	private static function shortRowMarkupCallback($matches) {
-		wfProfileIn(__METHOD__);
-
 		$ret = $matches[0] . ' data-rte-short-row-markup="true"';
 
 		$spacesAfterLastCell = strlen($matches[1]);
@@ -641,7 +599,6 @@ class RTEParser extends Parser {
 			$ret .= " data-rte-spaces-after-last-cell=\"{$spacesAfterLastCell}\"";
 		}
 
-		wfProfileOut(__METHOD__);
 		return $ret;
 	}
 
@@ -649,12 +606,9 @@ class RTEParser extends Parser {
 	 * Callback for marking list items and table cells
 	 */
 	private static function spacesBeforeCallback($matches) {
-		wfProfileIn(__METHOD__);
-
 		$spacesBefore = strlen($matches[3]);
 		$ret = "<{$matches[1]}{$matches[2]} data-rte-spaces-before=\"{$spacesBefore}\">";
 
-		wfProfileOut(__METHOD__);
 		return $ret;
 	}
 
@@ -662,11 +616,8 @@ class RTEParser extends Parser {
 	 * Mark HTML entities using \x7f "magic" character
 	 */
 	public static function markEntities($text) {
-		wfProfileIn(__METHOD__);
-
 		$res = preg_replace('%&(#?[\w\d]+);%s', "\x7f-ENTITY-\\1-\x7f", $text);
 
-		wfProfileOut(__METHOD__);
 		return $res;
 	}
 
@@ -674,15 +625,12 @@ class RTEParser extends Parser {
 	 * Unmark HTML entities marked using \x7f "magic" character (and decode not marked HTML entities if requested)
 	 */
 	public static function unmarkEntities($text, $decode = false) {
-		wfProfileIn(__METHOD__);
-
 		if ($decode) {
 			$text = htmlspecialchars_decode($text);
 		}
 
 		$res = preg_replace("%\x7f-ENTITY-(#?[\w\d]+)-\x7f%", '&\1;', $text);
 
-		wfProfileOut(__METHOD__);
 		return $res;
 	}
 
@@ -690,11 +638,8 @@ class RTEParser extends Parser {
 	 * Wrap marked HTML entities inside <span> placeholders
 	 */
 	private static function wrapEntities($text) {
-		wfProfileIn(__METHOD__);
-
 		$res = preg_replace("%\x7f-ENTITY-(#?[\w\d]+)-\x7f%", '<span data-rte-entity="\1">&\1;</span>', $text);
 
-		wfProfileOut(__METHOD__);
 		return $res;
 	}
 
@@ -702,8 +647,6 @@ class RTEParser extends Parser {
 	 * Generate data-rte-attribs attribute storing original list of HTML node attributes
 	 */
 	public static function encodeAttributesStr($attribs) {
-		wfProfileIn(__METHOD__);
-
 		$encoded = Sanitizer::encodeAttribute($attribs);
 
 		// encode &quot; entity (fix for IE) and &#039; entity (RT #55179)
@@ -714,8 +657,6 @@ class RTEParser extends Parser {
 
 		$ret = "data-rte-attribs=\"{$encoded}\"";
 
-		wfProfileOut(__METHOD__);
-
 		return $ret;
 	}
 
@@ -725,7 +666,6 @@ class RTEParser extends Parser {
 	 * @return array
 	 */
 	public static function explodeImageArgs( $wikiText ) {
-		wfProfileIn(__METHOD__);
 		$bracketContext = false;
 		$counter		= 0;
 		$results		= array();
@@ -756,7 +696,7 @@ class RTEParser extends Parser {
 		if ( ! empty( $substr ) ) {
 			$results[]  = $substr;
 		}
-		wfProfileOut(__METHOD__);
+
 		return $results;
 	}
 }
