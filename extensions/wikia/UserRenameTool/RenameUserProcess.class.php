@@ -382,7 +382,9 @@ class RenameUserProcess {
 		// send e-mail to the user that rename process has finished
 
 		$finalMessage = $noErrors ? 'finish' : 'fail';
-		
+
+		$this->info( 'User rename process completed: ' . $finalMessage );
+
 		$this->addMainLog(
 			$finalMessage,
 			\RenameUserLogFormatter::$finalMessage(
@@ -484,6 +486,8 @@ class RenameUserProcess {
 		}
 
 		foreach ( $targetCommunityIds as $wikiId ) {
+			$this->info( 'RenameUserPagesTask queued for wiki #' . $wikiId );
+
 			$task->wikiId( $wikiId )->queue();
 		}
 
