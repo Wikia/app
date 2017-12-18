@@ -27,14 +27,11 @@ function init(
 	legacyBtfBlocker,
 	skin
 ) {
-	const porvataListeners = Context.get('listeners.porvata');
-
 	TemplateRegistry.init(legacyContext, mercuryListener);
 	ScrollListener.init();
 
 	Context.extend({slots: slotConfig[skin]});
-
-	porvataListeners.push(createTracker(legacyContext, geo, pageLevelTargeting, adTracker));
+	Context.push('listeners.porvata', createTracker(legacyContext, geo, pageLevelTargeting, adTracker));
 
 	overrideSlotService(slotRegistry, legacyBtfBlocker);
 	updatePageLevelTargeting(legacyContext, pageLevelTargeting, skin);
