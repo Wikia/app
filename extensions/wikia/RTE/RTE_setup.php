@@ -93,3 +93,11 @@ function addGlobalJsVariables( Array &$vars, &$scripts ) {
 
 	return true;
 }
+
+JSMessages::registerPackage( 'rte-infobox-builder', [
+	'rte-infobox',
+	'rte-add-template',
+	'rte-select-infobox-title',
+	'rte-infobox-builder'
+] );
+JSMessages::enqueuePackage( 'rte-infobox-builder', JSMessages::EXTERNAL );

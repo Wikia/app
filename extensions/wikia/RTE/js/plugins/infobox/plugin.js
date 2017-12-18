@@ -17,10 +17,10 @@ require(['jquery', 'wikia.window', 'wikia.loader', 'wikia.mustache', 'wikia.loca
 	function openInfoboxBuilder( editor ) {
 		window.CKEDITOR.dialog.add( 'infoboxBuilder-dialog', function ( editor ) {
 			return {
-				title: 'Infobox Builder',
+				title: $.msg('rte-infobox-builder'),
 				buttons: [],
 				minWidth: 800,
-				minHeight: 400,
+				minHeight: 700,
 				contents: [
 					{
 						id: 'infoboxBuilderDialog',
@@ -78,12 +78,12 @@ require(['jquery', 'wikia.window', 'wikia.loader', 'wikia.mustache', 'wikia.loca
 			.then(function (data) {
 				window.CKEDITOR.dialog.add( 'infobox-dialog', function( editor ) {
 					return {
-						title: 'Select Infobox to Insert',
+						title: $.msg('rte-select-infobox-title'),
 						buttons: [
 						{
 							type : 'button',
 							class: 'infobox-dialog-button',
-							label : '+ Add Template',
+							label : '+' + 'rte-add-template',
 							onClick : openInfoboxBuilder
 						}
 						],

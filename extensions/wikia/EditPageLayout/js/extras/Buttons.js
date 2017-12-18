@@ -87,16 +87,12 @@
 
 	buttons.InsertInfobox = {
 		type: 'button',
-		labelId: 'Infobox', //temp
-		titleId: 'Click to add Infobox', //temp
+		labelId: $.msg('infobox'),
+		titleId: $.msg('infobox'),
 		className: 'RTEInfoboxButton',
 		forceLogin: true,
-		clicksource: function () {
-			//Source code here
-		},
-		ckcommand: 'addinfobox',
-		precondition: checkGallery //??
-
+		clicksource: function () {},
+		ckcommand: 'addinfobox'
 	};
 
 	if (window.wgEnableVideoToolExt) {
