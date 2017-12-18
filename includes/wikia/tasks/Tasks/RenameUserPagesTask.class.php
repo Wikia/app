@@ -15,6 +15,19 @@ class RenameUserPagesTask extends BaseTask {
 	];
 
 	/**
+	 * Normalized user names use spaces, while article names in database
+	 * are stored with underscores instead of spaces.
+	 *
+	 * @see SUS-3560
+	 *
+	 * @param string $userName
+	 * @return string
+	 */
+	private static function normalizeUserName( string $userName ) : string {
+		return str_replace( ' ', '_', $userName );
+	}
+
+	/**
 	 * Get wikis where this user has an user page, user blog, Message Wall etc.
 	 * @param string $oldUserName
 	 * @return int[] array of wiki IDs
@@ -26,7 +39,7 @@ class RenameUserPagesTask extends BaseTask {
 
 		return $dbr->selectFieldValues( 'pages', 'page_wikia_id', [
 			'page_namespace' => static::NAMESPACES,
-			'page_title' => $oldUserName
+			'page_title' => self::normalizeUserName( $oldUserName )
 		], __METHOD__ , [ 'DISTINCT' ] );
 	}
 
@@ -38,6 +51,7 @@ class RenameUserPagesTask extends BaseTask {
 	 */
 	public function renameLocalPages( string $oldUserName, string $newUserName ) {
 		$dbr = wfGetDB( DB_SLAVE );
+		$oldUserName = self::normalizeUserName( $oldUserName );
 
 		$subPagesLikeQuery = $dbr->buildLike( "$oldUserName/", $dbr->anyString() );
 
