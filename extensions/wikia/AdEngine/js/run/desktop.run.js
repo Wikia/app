@@ -58,7 +58,14 @@ require([
 
 	// Custom ads (skins, footer, etc)
 	if (adContext.get('opts.isAdProductsBridgeEnabled')) {
-		adEngineBridge.init(slotRegistry, pageLevelParams.getPageLevelParams(), adContext, btfBlocker, 'oasis');
+		adEngineBridge.init(
+			slotRegistry,
+			null,
+			pageLevelParams.getPageLevelParams(),
+			adContext,
+			btfBlocker,
+			'oasis'
+		);
 		win.loadCustomAd = adEngineBridge.loadCustomAd(customAdsLoader.loadCustomAd);
 	} else {
 		win.loadCustomAd = customAdsLoader.loadCustomAd;
