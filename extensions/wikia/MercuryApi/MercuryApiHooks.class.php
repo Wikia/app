@@ -2,6 +2,8 @@
 
 class MercuryApiHooks {
 
+	private static $mobileHiddenSectionOpened = false;
+
 	/**
 	 * @desc Get number of user's contribution from DB
 	 *
@@ -143,5 +145,35 @@ class MercuryApiHooks {
 	 */
 	private static function encodeURIQueryParam( $str ) {
 		return strtr( rawurlencode( $str ), [ '%21' => '!', '%27' => "'", '%28' => '(', '%29' => ')', '%2A' => '*' ] );
+	}
+
+	/**
+	 * @desc Adds <section class="mobile-hidden"></section> wrapper for sections
+	 * @param $skin
+	 * @param $level
+	 * @param $attribs
+	 * @param $anchor
+	 * @param $text
+	 * @param $link
+	 * @param $legacyAnchor
+	 * @param $ret
+	 */
+	public static function onMakeHeadline( $skin, $level, $attribs, $anchor, $text, $link, $legacyAnchor, &$ret ){
+		if ( $level == 2 ) {
+			if ( self::$mobileHiddenSectionOpened ) {
+				$ret = '</section>' . $ret;
+			} else {
+				self::$mobileHiddenSectionOpened = true;
+			}
+			$id = "{$anchor}-collapsible-section";
+			$ret .= '<section id="' . $id .
+			        '" aria-pressed="false" aria-expanded="false" class="mobile-hidden">';
+		}
+	}
+
+	public static function onParserBeforeTidy( Parser $parser, &$text ) {
+		if ( self::$mobileHiddenSectionOpened ) {
+			$text .= '</section>';
+		}
 	}
 }
