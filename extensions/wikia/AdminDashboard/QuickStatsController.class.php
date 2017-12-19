@@ -60,7 +60,7 @@ class QuickStatsController extends WikiaController {
 		$db = wfGetDB(DB_SLAVE, array(), $this->wg->DWStatsDB);
 		(new WikiaSQL())
 			->SELECT("date_format(time_id, '%Y-%m-%d')")->AS_('date')
-			->SUM('creates + edits')->AS_('cnt')
+			->SUM('edits')->AS_('cnt')
 			->FROM('rollup_wiki_user_events')
 			->WHERE('time_id')->BETWEEN("{$week} 00:00:00", "{$today} 00:00:00")
 			->AND_('wiki_id')->EQUAL_TO($cityID)
