@@ -4,6 +4,9 @@ export default {
 		dfpId: '5441',
 	},
 	events: {},
+	listeners: {
+		porvata: []
+	},
 	slots: {},
 	vast: {
 		adUnitId: '/{custom.dfpId}/wka.{targeting.s0}/{targeting.s1}//{targeting.s2}/{src}/{slotName}',
