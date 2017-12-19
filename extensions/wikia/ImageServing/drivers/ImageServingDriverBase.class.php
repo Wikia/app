@@ -1,6 +1,6 @@
 <?php
 
-/*
+/**
  * @author: Tomek Odrobny
  *
  * This class is used to get image list for custom namespaces
@@ -49,9 +49,9 @@ abstract class ImageServingDriverBase {
 			return $cacheResult['cache'];
 		}
 
-		$this->allImages = array();
-		$this->imageCountsByArticle = array();
-		$this->filteredImages = array();
+		$this->allImages = [];
+		$this->imageCountsByArticle = [];
+		$this->filteredImages = [];
 
 		$this->loadFromDb( $articleIds );
 
@@ -70,11 +70,21 @@ abstract class ImageServingDriverBase {
 		return array_keys( $this->articles );
 	}
 
-	protected function loadFromCache( $articleIds = array() ) {
-		$cached = array();
-		$cacheMissArticleIds = array();
+	protected function getRevId( $articleId ): int {
+		$article = Article::newFromID( $articleId );
+
+		if ( $article instanceof Article ) {
+			return $article->getRevIdFetched();
+		} else {
+			return 0;
+		}
+	}
+
+	protected function loadFromCache( $articleIds = [] ) {
+		$cached = [];
+		$cacheMissArticleIds = [];
 		foreach ( $articleIds as $articleId ) {
-			$articleCache = $this->memc->get( $this->makeKey( $articleId ), null );
+			$articleCache = $this->memc->get( $this->makeKey( $articleId, $this->getRevId( $articleId ) ) );
 			if ( !empty( $articleCache ) ) {
 				$cached[$articleId] = $articleCache;
 			} else {
@@ -82,7 +92,7 @@ abstract class ImageServingDriverBase {
 			}
 		}
 
-		return array( 'cache' => $cached, 'miss' => $cacheMissArticleIds );
+		return [ 'cache' => $cached, 'miss' => $cacheMissArticleIds ];
 	}
 
 	/**
@@ -93,8 +103,8 @@ abstract class ImageServingDriverBase {
 	 *
 	 * @author Federico "Lox" Lucignano
 	 */
-	protected function makeKey( $articleId ) {
-		return wfMemcKey( "imageserving-images-data", $articleId, $this->minWidth, $this->minHeight );
+	protected function makeKey( $articleId, $revId ) {
+		return wfMemcKey( "imageserving-images-data", $articleId, $revId, $this->minWidth, $this->minHeight );
 	}
 
 	protected function loadFromDb( $articleIds ) {
@@ -107,15 +117,15 @@ abstract class ImageServingDriverBase {
 		return $this->allImages;
 	}
 
-	abstract protected function loadImagesFromDb( $articleIds = array() );
+	abstract protected function loadImagesFromDb( $articleIds = [] );
 
-	abstract protected function loadImageDetails( $imageNames = array() );
+	abstract protected function loadImageDetails( $imageNames = [] );
 
 	protected function formatResult( $allImages, $filteredImages ) {
 		wfProfileIn( __METHOD__ );
 
-		$out = [ ];
-		$pageOrderedImages = [ ];
+		$out = [];
+		$pageOrderedImages = [];
 		foreach ( $allImages as $imageName => $pageData ) {
 			if ( isset( $filteredImages[$imageName] ) ) {
 				foreach ( $pageData as $pageId => $pageImageOrder ) {
@@ -160,7 +170,7 @@ abstract class ImageServingDriverBase {
 	protected function storeInCache( $articleImageIndex ) {
 		// store images for each article separately
 		foreach ( $articleImageIndex as $articleId => $imageIndex ) {
-			$this->memc->set( $this->makeKey( $articleId ), $imageIndex, 3600 );
+			$this->memc->set( $this->makeKey( $articleId, $this->getRevId( $articleId ) ), $imageIndex, 3600 );
 		}
 	}
 
@@ -168,18 +178,18 @@ abstract class ImageServingDriverBase {
 		return $this->articles;
 	}
 
-	final public function setArticles( $articles = array() ) {
+	final public function setArticles( $articles = [] ) {
 		$this->articles = $articles;
 	}
 
 	protected function addImageDetails( $name, $count, $width, $height, $minorMime ) {
-		$this->filteredImages[$name] = array(
+		$this->filteredImages[$name] = [
 			'cnt' => $count,
 			'il_to' => $name,
 			'img_width' => $width,
 			'img_height' => $height,
 			'img_minor_mime' => $minorMime
-		);
+		];
 	}
 
 	protected function addImage( $imageName, $pageId, $order, $limit = 999 ) {

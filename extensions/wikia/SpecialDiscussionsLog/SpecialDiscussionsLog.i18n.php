@@ -88,7 +88,7 @@ $messages['de'] = array(
 	'discussionslog-page-title' => 'Diskussions-Benutzeraktivitätsprotokoll',
 	'discussionslog-site-header' => 'Site',
 	'discussionslog-user-action-header' => 'Aktion',
-	'right-specialdiscussionslog' => 'Im [[Spezial:Diskussionsprotokoll]] ansehen',
+	'right-specialdiscussionslog' => 'Das [[Special:DiscussionsLog|Diskussionsprotokoll]] einsehen',
 );
 
 $messages['es'] = array(

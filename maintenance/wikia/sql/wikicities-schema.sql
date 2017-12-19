@@ -534,16 +534,6 @@ CREATE TABLE `text` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Table structure for table `three_word_spam`
---
-
-DROP TABLE IF EXISTS `three_word_spam`;
-CREATE TABLE `three_word_spam` (
-  `dbname` varchar(64) NOT NULL,
-  PRIMARY KEY (`dbname`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
 -- Table structure for table `user`
 --
 
@@ -676,4 +666,4 @@ CREATE TABLE `wikia_tasks_log` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
--- Dump completed on 2017-10-26 13:34:32
+-- Dump completed on 2017-12-07 11:39:18

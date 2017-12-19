@@ -148,7 +148,7 @@ $messages['fr'] = array(
 	'multilookup-text' => 'Rechercher des comptes qui ont la même adresse IP sur de multiples wikis',
 	'multilookupdetails' => 'Voir les détails',
 	'multilookupinvaliduser' => '<p class="error">L\'adresse IP « <b>$1</b> » n\'existe pas. Vérifiez l\'adresse IP pour de possibles erreurs.</p>',
-	'multilookupwikiurl' => 'Adresse URL',
+	'multilookupwikiurl' => 'URL',
 	'multilookuplastedithdr' => 'Dernière modification',
 	'right-multilookup' => 'View IP actions across all wikis',
 	'action-multilookup' => 'rechercher des informations sur les utilisateurs dans plusieurs wikis',
@@ -437,7 +437,7 @@ $messages['vi'] = array(
 
 $messages['zh-hans'] = array(
 	'specialmultiplelookup-desc' => '在多个wiki上提供用户信息查阅',
-	'multilookup' => '查询多个帐户',
+	'multilookup' => '查询多个',
 	'multilookup-legend' => '查询多个',
 	'multilookup-text' => '搜索多个wiki上的同一IP地址的账户',
 	'multilookupdetails' => '查看资讯',

@@ -18,11 +18,24 @@ $wgExtensionCredits['specialpage'][] = [
 
 $wgAutoloadClasses['CoppaToolSpecialController'] =  __DIR__ . '/CoppaToolSpecialController.class.php';
 $wgAutoloadClasses['CoppaToolController'] =  __DIR__ . '/CoppaToolController.class.php';
+$wgAutoloadClasses['RenameIPProcess'] =  __DIR__ . '/RenameIPProcess.class.php';
+$wgAutoloadClasses['RenameIPTask'] =  __DIR__ . '/RenameIPTask.class.php';
+$wgAutoloadClasses['RenameIPHelper'] =  __DIR__ . '/RenameIPHelper.class.php';
+$wgAutoloadClasses['RenameIPLogFormatter'] =  __DIR__ . '/RenameIPLogFormatter.class.php';
 
 $wgExtensionMessagesFiles['CoppaTool'] = __DIR__ . '/CoppaTool.i18n.php' ;
 
 $wgSpecialPages['CoppaTool'] = 'CoppaToolSpecialController';
 $wgSpecialPageGroups['CoppaTool'] = 'wikia';
+
+// log type
+global $wgLogTypes, $wgLogNames, $wgLogHeaders, $wgLogActions;
+$wgLogTypes[]                          = 'coppatool';
+$wgLogNames['renameuser']              = 'coppatool-logpage';
+$wgLogHeaders['renameuser']            = 'coppatool-logpagetext';
+
+// hooks
+$wgHooks['StaffLog::formatRow'][] = 'CoppaToolStaffLogFormatRow';
 
 $wgResourceModules['ext.coppaTool'] = [
 	'localBasePath' => __DIR__ . '/modules',
@@ -32,3 +45,11 @@ $wgResourceModules['ext.coppaTool'] = [
 		'mediawiki.user'
 	],
 ];
+
+function CoppaToolStaffLogFormatRow( $type, $row, $time, &$out ) {
+	if ( $type == "coppatool" ) {
+		$out = "{$time} Rename IP - {$row->slog_comment}";
+		return false;
+	}
+	return true;
+}

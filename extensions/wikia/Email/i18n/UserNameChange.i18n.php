@@ -3,7 +3,7 @@ $messages = array();
 
 $messages['en'] = array(
 	'emailext-usernamechange-subject' => 'Your username change on FANDOM is complete!',
-	'emailext-usernamechange-summary' => 'Your username change on FANDOM is complete.',
+	'emailext-usernamechange-summary' => 'Your username change on FANDOM is complete. You can now log in using the new username and the current password.',
 	'emailext-usernamechange-changed' => "'''$1''' is now '''$2'''",
 	'emailext-usernamechange-profile-page' => 'Profile Page',
 	'emailext-usernamechange-check-out' => 'Check out FANDOM',

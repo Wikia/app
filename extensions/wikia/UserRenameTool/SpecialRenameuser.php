@@ -42,13 +42,30 @@ $wgExtensionMessagesFiles['UserRenameToolAliases'] = $dir . 'SpecialRenameuser.a
 
 // classes
 $wgAutoloadClasses['SpecialRenameuser'] = dirname( __FILE__ ) . '/SpecialRenameuser_body.php';
-$wgAutoloadClasses['RenameUserHelper'] = dirname( __FILE__ ) . '/RenameUserHelper.class.php';
 $wgAutoloadClasses['RenameUserProcess'] = dirname( __FILE__ ) . '/RenameUserProcess.class.php';
 $wgAutoloadClasses['RenameUserLogFormatter'] = dirname( __FILE__ ) . '/RenameUserLogFormatter.class.php';
-$wgAutoloadClasses['UserRenameTask'] = dirname( __FILE__ ) . '/UserRenameTask.class.php';
+
+// Resource Loader modules
+$userRenameResourceTemplate = array(
+	'localBasePath' => __DIR__ . '/modules',
+	'remoteExtPath' => 'wikia/UserRenameTool/modules'
+);
+$wgResourceModules['ext.renameuser.modal'] = $userRenameResourceTemplate + array(
+	'scripts' => 'ext.renameuser.modal.js',
+	'dependencies' => array(
+		'mediawiki.util'
+	),
+	'messages' => array(
+		'renameuser',
+		'userrenametool-new',
+		'userrenametool-confirm',
+		'userrenametool-confirm-intro',
+		'userrenametool-confirm-yes',
+		'userrenametool-confirm-no'
+	)
+);
 
 // constants
-// define('ENV_DEVBOX', true);//TODO: used for some debug switches, comment out as soon as the code hits production!
 define( 'USERRENAME_ROWS_PER_LOOP', 500 );
 define( 'USERRENAME_LOOP_PAUSE', 5 );
 define( 'COMMUNITY_CENTRAL_CITY_ID', 177 );// city_id for community.wikia.com

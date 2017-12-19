@@ -150,6 +150,7 @@ class AssetsManagerController extends WikiaController {
 			wfProfileOut( $profileId );
 		}
 
+		$this->response->setCachePolicy( WikiaResponse::CACHE_PUBLIC );
 		$this->response->setCacheValidity( WikiaResponse::CACHE_LONG );
 
 		$this->response->setFormat( 'json' );
@@ -230,6 +231,7 @@ class AssetsManagerController extends WikiaController {
 	public function getStyleVersion() {
 		wfProfileIn( __METHOD__ );
 		$this->response->setVal( 'styleVersion', $this->app->wg->StyleVersion );
+		$this->response->setCachePolicy( WikiaResponse::CACHE_PUBLIC );
 		$this->response->setCacheValidity( WikiaResponse::CACHE_SHORT );
 		$this->response->setFormat( 'json' );
 		wfProfileOut( __METHOD__ );

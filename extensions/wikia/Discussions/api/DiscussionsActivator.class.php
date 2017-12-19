@@ -76,7 +76,7 @@ class DiscussionsActivator {
 	}
 
 	private function logAndThrowError( Exception $e ) {
-		$this->logger->error(
+		$this->logger->critical(
 			'DISCUSSIONS Creating site caused an error',
 			[
 				'siteId' => $this->cityId,
