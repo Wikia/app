@@ -170,13 +170,20 @@ class WikiaMobileHooks {
 			//remove bold, italics, underline and anchor tags from section headings (also optimizes output size)
 			$text = preg_replace( '/<\/?(b|u|i|a|em|strong){1}(\s+[^>]*)*>/im', '', $text );
 			$chevron = '';
-			// if h2 and mobile-wiki
-			if ( $level == 2 && $wgArticleAsJson ) {
-				$text = '<div class="section-header-label">' . $text . '</div>';
-				// TODO replace with <use>
-				$chevron =
-					'<svg class="wds-icon wds-icon-small chevron" viewBox="0 0 18 18" width="18" height="18"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#wds-icons-menu-control-small"></use></svg>';
-				$attribs = 'aria-controls="' . $anchor . '-collapsible-section"' . $attribs;
+			// this is pseudo-versioning query param for collapsible sections (XW-4393)
+			// should be removed after all App caches are invalidated
+			if ( !empty( RequestContext::getMain()
+				->getRequest()
+				->getVal( 'collapsibleSections' ) )
+			) {
+				// if h2 and mobile-wiki
+				if ( $level == 2 && $wgArticleAsJson ) {
+					$text = '<div class="section-header-label">' . $text . '</div>';
+					// TODO replace with <use>
+					$chevron =
+						'<svg class="wds-icon wds-icon-small chevron" viewBox="0 0 18 18" width="18" height="18"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#wds-icons-menu-control-small"></use></svg>';
+					$attribs = 'aria-controls="' . $anchor . '-collapsible-section"' . $attribs;
+				}
 			}
 			$ret = "<h{$level} id='{$anchor}' section='{$section}' {$attribs}{$text}{$link}{$chevron}</h{$level}>";
 		}

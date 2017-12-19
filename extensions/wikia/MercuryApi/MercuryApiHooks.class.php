@@ -159,7 +159,11 @@ class MercuryApiHooks {
 	 * @param $ret
 	 */
 	public static function onMakeHeadline( $skin, $level, $attribs, $anchor, $text, $link, $legacyAnchor, &$ret ){
-		if ( $level == 2 ) {
+		// this is pseudo-versioning query param for collapsible sections (XW-4393)
+		// should be removed after all App caches are invalidated
+		if ( !empty( RequestContext::getMain()->getRequest()->getVal( 'collapsibleSections' ) ) &&
+		     $level == 2
+		) {
 			if ( self::$mobileHiddenSectionOpened ) {
 				$ret = '</section>' . $ret;
 			} else {
@@ -171,8 +175,17 @@ class MercuryApiHooks {
 		}
 	}
 
+	/**
+	 * @desc Closes last section
+	 * @param Parser $parser
+	 * @param $text
+	 */
 	public static function onParserBeforeTidy( Parser $parser, &$text ) {
-		if ( self::$mobileHiddenSectionOpened ) {
+		// this is pseudo-versioning query param for collapsible sections (XW-4393)
+		// should be removed after all App caches are invalidated
+		if ( !empty( RequestContext::getMain()->getRequest()->getVal( 'collapsibleSections' ) ) &&
+		     self::$mobileHiddenSectionOpened
+		) {
 			$text .= '</section>';
 		}
 	}
