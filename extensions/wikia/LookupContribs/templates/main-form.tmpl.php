@@ -50,7 +50,8 @@ $(document).ready(function() {
 			{ "sName": "title" },
 			{ "sName": "url" },
 			{ "sName": "lastedit" },
-			{ "sName": "options" }
+			{ "sName": "options" },
+			{ "sName": "edits" }
 		],
 		"aoColumnDefs": [
 			{ "bVisible": false,  "aTargets": [ 0 ], "bSortable" : false },
@@ -82,7 +83,8 @@ $(document).ready(function() {
 				},
 				"aTargets": [ 5 ],
 				"bSortable" : false
-			}
+			},
+			{ "sClass": "lc-datetime", "aTargets": [ 6 ], "bSortable" : true, "bVisible": true }
 		],
 		"bProcessing": true,
 		"bServerSide": true,
@@ -177,6 +179,7 @@ $(document).ready(function() {
 			<th width="20%"><?= wfMessage( 'lookupcontribswikiurl' )->escaped() ?></th>
 			<th width="20%"><?= wfMessage( 'lookupcontribslastedited' )->escaped() ?></th>
 			<th width="20%"><?= wfMessage( 'lookupcontribscontribtitleforuser' )->escaped() ?></th>
+			<th width="20%"><?= wfMessage( 'lookupcontribslastedits' )->escaped() ?></th>
 		</tr>
 	</thead>
 	<tbody>
@@ -192,6 +195,7 @@ $(document).ready(function() {
 			<th width="20%"><?= wfMessage( 'lookupcontribswikiurl' )->escaped() ?></th>
 			<th width="20%"><?= wfMessage( 'lookupcontribslastedited' )->escaped() ?></th>
 			<th width="20%"><?= wfMessage( 'lookupcontribscontribtitleforuser' )->escaped() ?></th>
+			<th width="20%"><?= wfMessage( 'lookupcontribslastedits' )->escaped() ?></th>
 		</tr>
 	</tfoot>
 </table>
