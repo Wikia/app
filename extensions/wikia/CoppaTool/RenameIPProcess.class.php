@@ -314,16 +314,6 @@ class RenameIPProcess {
 		);
 	}
 
-	/**
-	 * Adds log message in Special:Log for the current wiki
-	 *
-	 * @param $text string Log message
-	 */
-	public function addLocalLog( $text ) {
-		$log = new LogPage( 'coppatool' );
-		$log->addEntry( 'coppatool', Title::newFromText( $this->mOldIPAddress, NS_USER ), $text, array(), User::newFromId( $this->mRequestorId ) );
-	}
-
 	public function setRequestorUser() {
 		global $wgUser;
 		$oldUser = $wgUser;

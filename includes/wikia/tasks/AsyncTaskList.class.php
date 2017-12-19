@@ -252,9 +252,9 @@ class AsyncTaskList {
 			if ( $wgWikiaEnvironment == WIKIA_ENV_DEV && preg_match( '/^dev-(.*?)$/', $host ) ) {
 				$executionRunner = ["http://tasks.{$wgDevDomain}/proxy.php"];
 			} elseif ($wgWikiaEnvironment == WIKIA_ENV_SANDBOX) {
-				$executionRunner = ["http://{$host}.community.wikia.com/extensions/wikia/Tasks/proxy/proxy.php"];
+				$executionRunner = ["http://community.{$host}.wikia.com/extensions/wikia/Tasks/proxy/proxy.php"];
 			} elseif (in_array($wgWikiaEnvironment, [WIKIA_ENV_PREVIEW, WIKIA_ENV_VERIFY])) {
-				$executionRunner = ["http://{$wgWikiaEnvironment}.community.wikia.com/extensions/wikia/Tasks/proxy/proxy.php"];
+				$executionRunner = ["http://community.{$wgWikiaEnvironment}.wikia.com/extensions/wikia/Tasks/proxy/proxy.php"];
 			} else { // in other environments or when apache isn't available, ssh into this exact node to execute
 				wfDebug( __METHOD__ . " - fallback to remote_shell execution mode on {$host}!\n" );
 

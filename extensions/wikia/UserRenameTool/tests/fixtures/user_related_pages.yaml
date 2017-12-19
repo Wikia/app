@@ -2,7 +2,7 @@ page: # local page table
   - # user page
     page_id: 1
     page_namespace: 2
-    page_title: OldUserName
+    page_title: Old_User_Nąmę
     page_restrictions: ''
     page_random: 0
     page_latest: 1932
@@ -10,7 +10,7 @@ page: # local page table
   - # user page subpage
     page_id: 2
     page_namespace: 2
-    page_title: OldUserName/User_subpage
+    page_title: Old_User_Nąmę/User_subpage
     page_restrictions: ''
     page_random: 0
     page_latest: 15000
@@ -18,7 +18,7 @@ page: # local page table
   - # user talk page
     page_id: 3
     page_namespace: 3
-    page_title: OldUserName
+    page_title: Old_User_Nąmę
     page_restrictions: ''
     page_random: 0
     page_latest: 2040
@@ -26,7 +26,7 @@ page: # local page table
   - # user blog listing
     page_id: 4
     page_namespace: 500
-    page_title: OldUserName
+    page_title: Old_User_Nąmę
     page_restrictions: ''
     page_random: 0
     page_latest: 2060
@@ -34,7 +34,7 @@ page: # local page table
   - # user blog page
     page_id: 5
     page_namespace: 500
-    page_title: OldUserName/Test_blog
+    page_title: Old_User_Nąmę/Test_blog
     page_restrictions: ''
     page_random: 0
     page_latest: 4782
@@ -42,7 +42,7 @@ page: # local page table
   - # message wall
     page_id: 6
     page_namespace: 1200
-    page_title: OldUserName
+    page_title: Old_User_Nąmę
     page_restrictions: ''
     page_random: 0
     page_latest: 3600
@@ -52,32 +52,32 @@ pages: # global dataware.pages
     page_wikia_id: 177
     page_id: 8800
     page_namespace: 2
-    page_title: OldUserName
+    page_title: Old_User_Nąmę
   -
     page_wikia_id: 147
     page_id: 904
     page_namespace: 3
-    page_title: OldUserName
+    page_title: Old_User_Nąmę
   -
     page_wikia_id: 1770
     page_id: 10280
     page_namespace: 500
-    page_title: OldUserName
+    page_title: Old_User_Nąmę
   -
     page_wikia_id: 1240
     page_id: 3445
     page_namespace: 1200
-    page_title: OldUserName
+    page_title: Old_User_Nąmę
   - # main article page
     page_wikia_id: 1280
     page_id: 6512
     page_namespace: 0
-    page_title: OldUserName
+    page_title: Old_User_Nąmę
   - # talk page
     page_wikia_id: 1800
     page_id: 2871
     page_namespace: 1
-    page_title: OldUserName
+    page_title: Old_User_Nąmę
 revision: # latest revision needed for moving process
   -
     rev_id: 1932

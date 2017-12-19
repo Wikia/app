@@ -39,6 +39,7 @@ class ConnectionBase {
 	/**
 	 * @param $routingKey
 	 * @param $body
+	 * @param $properties optional properties
 	 */
 	public function publish( $routingKey, $body ) {
 		try {
@@ -49,6 +50,7 @@ class ConnectionBase {
 					'delivery_mode' => self::DURABLE_MESSAGE,
 					'expiration' => self::MESSAGE_TTL,
 					'app_id' => 'mediawiki',
+					'timestamp' => time(),
 					'correlation_id' => WikiaTracer::instance()->getTraceId(),
 				] ),
 				$this->exchange,

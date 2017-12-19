@@ -9,6 +9,8 @@ class LookupContribsPage extends SpecialPage {
 	 */
 	function  __construct() {
 		parent::__construct( "LookupContribs"  /*class*/, 'lookupcontribs' /*restriction*/ );
+
+		$this->mTitle = Title::makeTitle( NS_SPECIAL, 'LookupContribs' );
 	}
 
 	public function execute( $subpage ) {
@@ -23,7 +25,6 @@ class LookupContribsPage extends SpecialPage {
 		/**
 		 * initial output
 		 */
-		$this->mTitle = Title::makeTitle( NS_SPECIAL, 'LookupContribs' );
 		$this->mUsername = $wgRequest->getVal ( 'target', $subpage );
 		$this->mMode = $wgRequest->getVal ( 'mode' );
 		$this->mView = $wgRequest->getVal ( 'view' );

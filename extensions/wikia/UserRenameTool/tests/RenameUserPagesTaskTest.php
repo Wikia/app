@@ -6,8 +6,8 @@ use Wikia\Tasks\Tasks\RenameUserPagesTask;
  * @group Integration
  */
 class RenameUserPagesTaskTest extends WikiaDatabaseTest {
-	const OLD_USER_NAME = 'OldUserName';
-	const NEW_USER_NAME = 'NewUserName';
+	const OLD_USER_NAME = 'Old User Nąmę';
+	const NEW_USER_NAME = 'New User Name';
 
 	const WIKI_WITH_USER_PAGE = 177;
 	const WIKI_WITH_TALK_PAGE = 147;
