@@ -57,6 +57,10 @@ $global-navigation-and-sitewide-messages-index: 5000101;
 	}
 }
 
+.has-bfaa .WikiaTopAds {
+	z-index: $global-navigation-and-sitewide-messages-index;
+}
+
 .wikia-ad:not(#INVISIBLE_HIGH_IMPACT_2) .provider-container {
 	position: relative;
 }
