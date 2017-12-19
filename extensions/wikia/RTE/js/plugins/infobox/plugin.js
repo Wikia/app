@@ -1,7 +1,7 @@
 require(['jquery', 'wikia.window', 'wikia.loader', 'wikia.mustache', 'wikia.location'], function ($, window, loader, mustache, location) {
 	var infoboxBuilderMarkup = null,
 		infoboxBuilderScripts = null,
-		processed = false;
+		iframeLoaded = false;
 
 	function registerPlugin() {
 		window.CKEDITOR.plugins.add( 'rte-infobox', {
@@ -41,10 +41,15 @@ require(['jquery', 'wikia.window', 'wikia.loader', 'wikia.mustache', 'wikia.loca
 					$('.infoboxBuilderDialog').find('.cke_dialog_footer').hide();
 
 					if (infoboxBuilderMarkup) {
-						if (!processed) {
+						if (!iframeLoaded) {
+							// needs to be inserted only once, see comment bellow.
 							$('.ckeditor-infobox-builder').html(infoboxBuilderMarkup);
+
+							// this script needs to be executed only once, otherwise ponto stops working on second and
+							// further infobox-builder dialog appearences, which in fact causes blank dialogs without
+							// infobox builder. Becouse of that, the iFrame html needs to be inserted only once too.
 							loader.processScript(infoboxBuilderScripts);
-							processed = true;
+							iframeLoaded = true;
 						}
 
 					}
