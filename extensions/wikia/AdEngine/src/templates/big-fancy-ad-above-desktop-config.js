@@ -8,11 +8,13 @@ export function getConfig() {
 			'BOTTOM_LEADERBOARD',
 			'INCONTENT_BOXAD_1'
 		],
-		onInit(adSlot) {
-			SlotTweaker.onReady(adSlot).then((iframe) => {
-				updateNavbar(iframe);
+		onInit(adSlot, params) {
+			SlotTweaker.onReady(adSlot).then(() => {
+				updateNavbar(params.config);
 			});
-			ScrollListener.addCallback(updateNavbar);
+			ScrollListener.addCallback(() => {
+				updateNavbar(params.config);
+			});
 		}
 	};
 }
