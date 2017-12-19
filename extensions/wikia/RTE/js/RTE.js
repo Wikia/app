@@ -13,7 +13,7 @@
 	// Rich Text Editor
 	// See also: RTE.preferences.js
 	var RTE = {
-
+		
 		// configuration
 		// @see http://docs.cksource.com/ckeditor_api/symbols/CKEDITOR.config.html
 		config: {
@@ -44,7 +44,7 @@
 				'basicstyles,' +
 				'button,' +
 				'clipboard,' +
-				'contextmenu,' +
+				'contextmenu,' +	
 				'dialog,' +
 				'enterkey,' +
 				'format,' +
@@ -64,7 +64,6 @@
 			// Custom RTE plugins for CKEDITOR
 			// Used to be built in RTE.loadPlugins()
 		extraPlugins:
-
 				'rte-accesskey,' +
 				'rte-comment,' +
 				'rte-dialog,' +
@@ -172,7 +171,6 @@
 		},
 
 		initCk: function(editor) {
-
 			if (editor.config.minHeight) {
 				RTE.config.height = editor.config.minHeight;
 			}
@@ -214,10 +212,10 @@
 				if (editor.mode == 'wysiwyg') {
 					editor.fire('saveSnapshot');
 				}
-
+			
 				editor.fire('modeSwitch');
 			}
-
+	
 			// ok, we're done!
 			RTE.loaded.push(editor);
 
@@ -428,7 +426,7 @@ CKEDITOR.getUrl = function( resource ) {
 
 		return url;
 	}
-
+		
 	// If this is not a full or absolute path.
 	if ( resource.indexOf('://') == -1 && resource.indexOf( '/' ) !== 0 ) {
 		// Wikia: remove _source adder
@@ -439,7 +437,7 @@ CKEDITOR.getUrl = function( resource ) {
 	if ( this.timestamp && resource.charAt( resource.length - 1 ) != '/' ) {
 		resource += ( resource.indexOf( '?' ) >= 0 ? '&' : '?' ) + this.timestamp;
 	}
-
+//	console.log( resource );	
 	return resource;
 }
 
