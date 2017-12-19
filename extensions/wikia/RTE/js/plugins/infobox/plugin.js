@@ -1,6 +1,7 @@
 require(['jquery', 'wikia.window', 'wikia.loader', 'wikia.mustache', 'wikia.location'], function ($, window, loader, mustache, location) {
 	var infoboxBuilderMarkup = null,
-		infoboxBuilderScripts = null;
+		infoboxBuilderScripts = null,
+		processed = false;
 
 	function registerPlugin() {
 		window.CKEDITOR.plugins.add( 'rte-infobox', {
@@ -40,8 +41,12 @@ require(['jquery', 'wikia.window', 'wikia.loader', 'wikia.mustache', 'wikia.loca
 					$('.infoboxBuilderDialog').find('.cke_dialog_footer').hide();
 
 					if (infoboxBuilderMarkup) {
-						$('.ckeditor-infobox-builder').html(infoboxBuilderMarkup);
-						loader.processScript(infoboxBuilderScripts);
+						if (!processed) {
+							$('.ckeditor-infobox-builder').html(infoboxBuilderMarkup);
+							loader.processScript(infoboxBuilderScripts);
+							processed = true;
+						}
+
 					}
 
 					window.CKEDITOR.on('new-infobox-created', function (event) {
