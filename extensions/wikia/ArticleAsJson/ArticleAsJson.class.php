@@ -344,6 +344,12 @@ class ArticleAsJson {
 
 		if ( $wgArticleAsJson ) {
 			$confstr .= '!ArticleAsJson:' . self::CACHE_VERSION;
+			if ( !empty( RequestContext::getMain()
+				->getRequest()
+				->getVal( 'collapsibleSections' ) )
+			) {
+				$confstr .= ':collapsibleSections';
+			}
 		}
 
 		wfProfileOut( __METHOD__ );
