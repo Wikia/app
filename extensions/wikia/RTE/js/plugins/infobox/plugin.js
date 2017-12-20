@@ -47,7 +47,7 @@ require(['jquery', 'wikia.window', 'wikia.loader', 'wikia.mustache', 'wikia.loca
 
 							// this script needs to be executed only once, otherwise ponto stops working on second and
 							// further infobox-builder dialog appearences, which in fact causes blank dialogs without
-							// infobox builder. Becouse of that, the iFrame html needs to be inserted only once too.
+							// infobox builder. Because of that, the iFrame html needs to be inserted only once too.
 							loader.processScript(infoboxBuilderScripts);
 							iframeLoaded = true;
 						}
@@ -93,7 +93,7 @@ require(['jquery', 'wikia.window', 'wikia.loader', 'wikia.mustache', 'wikia.loca
 						{
 							type : 'button',
 							class: 'infobox-dialog-button',
-							label : '+' + 'rte-add-template',
+							label : '+rte-add-template',
 							onClick : openInfoboxBuilder
 						}
 						],
