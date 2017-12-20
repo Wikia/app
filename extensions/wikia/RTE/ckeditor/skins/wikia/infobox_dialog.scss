@@ -11,35 +11,34 @@
 		height: 300px;
 		overflow: hidden;
 		overflow-y: auto;
+
 		a {
 			cursor: pointer;
 			font-size: 14px;
 		}
+
 		li {
 			padding-bottom: 2px;
 		}
 	}
 
 	a.infobox-dialog-button {
-		width: 95%;
-		background-image: none;
-		background-color: white;
-		text-align: center;
+		background: transparent none;
+		border: 1px dashed $color-page-border;
+		border-radius: 0;
 		color: $color-text !important;
-		border: 1px dashed;
-		border-radius: 0px;
-		border-color: $color-page-border;
 		outline: none;
-		background-color: transparent;
+		text-align: center;
+		width: 95%;
 
 		&:hover{
 			background-color: darken($color-page,10%);
+
 			@if $is-dark-wiki{
 				background-color: lighten($color-page, 10%);
 			}
 		}
 	}
-
 
 	.InfoboxBuilder {
 		min-height: 700px;
