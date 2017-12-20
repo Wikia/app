@@ -31,8 +31,22 @@ class TemplateClassificationService extends ContextSource {
 
 	const NOT_AVAILABLE = 'not-available';
 
+	private $queryTimeout = 1;
+
 	private $apiClient = null;
 	private $cache = [];
+
+
+	public function __construct() {
+		global $wgWikiaEnvironment;
+
+		// FIXME: more generic solution needed here.
+		// Since we have master dev db in reston, request to template-classification-storage service in POZ takes longer
+		// than one second when classifying template
+		if ($wgWikiaEnvironment === WIKIA_ENV_DEV) {
+			$this->queryTimeout = 10;
+		}
+	}
 
 	/**
 	 * Get template type
@@ -193,8 +207,7 @@ class TemplateClassificationService extends ContextSource {
 		// cURL function is allowed to execute not longer than 1 second
 		$api->getApiClient()
 				->getConfig()
-				//todo bring back the default value (1)
-				->setCurlTimeout(10);
+				->setCurlTimeout($this->queryTimeout);
 
 		return $api;
 	}
