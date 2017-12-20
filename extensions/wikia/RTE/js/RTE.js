@@ -2,12 +2,12 @@
 	var WE = window.WikiaEditor = window.WikiaEditor || (new Observable());
 
 	var rteAssets = [
-		'extensions/wikia/RTE/css/content.scss',
-		'extensions/wikia/PortableInfobox/styles/PortableInfobox.scss'
+		$.getSassLocalURL('extensions/wikia/RTE/css/content.scss'),
+		$.getSassLocalURL('extensions/wikia/PortableInfobox/styles/PortableInfobox.scss'),
 	];
 
 	if (window.wgEnablePortableInfoboxEuropaTheme) {
-		rteAssets.push('extensions/wikia/PortableInfobox/styles/PortableInfoboxEuropaTheme.scss');
+		rteAssets.push($.getSassLocalURL('extensions/wikia/PortableInfobox/styles/PortableInfoboxEuropaTheme.scss'));
 	}
 
 	// Rich Text Editor
@@ -26,7 +26,7 @@
 			baseFloatZIndex: 5000101, // $zTop + 1 from _layout.scss
 			bodyClass: 'WikiaArticle',
 			bodyId: 'bodyContent',
-			contentsCss: rteAssets.map($.getSassLocalURL).concat(window.RTESiteCss),
+			contentsCss: rteAssets.concat(window.RTESiteCss),
 			coreStyles_bold: {element: 'b', overrides: 'strong'},
 			coreStyles_italic: {element: 'i', overrides: 'em'},
 			customConfig: '',//'config.js' to add additional statements
