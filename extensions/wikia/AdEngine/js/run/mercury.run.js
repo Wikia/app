@@ -40,7 +40,14 @@ require([
 	// Custom ads (skins, footer, etc)
 	if (geo.isProperGeo(instantGlobals.wgAdDriverAdProductsBridgeMobileCountries)) {
 		adContext.addCallback(function () {
-			adEngineBridge.init(slotRegistry, pageLevelParams.getPageLevelParams(), adContext, btfBlocker, 'mercury');
+			adEngineBridge.init(
+				slotRegistry,
+				mercuryListener,
+				pageLevelParams.getPageLevelParams(),
+				adContext,
+				btfBlocker,
+				'mercury'
+			);
 		});
 		win.loadCustomAd = adEngineBridge.loadCustomAd(customAdsLoader.loadCustomAd);
 	} else {
