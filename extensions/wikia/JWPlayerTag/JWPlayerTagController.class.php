@@ -80,7 +80,8 @@ class JWPlayerTagController extends WikiaController {
 			self::DATA_ATTRS => json_encode( [
 				'media-id' => $args['media-id'],
 				'element-id' => $elementId,
-			] )
+			] ),
+			self::STYLE_ATTR => 'overflow:hidden'
 		];
 
 		if ( !empty( $width ) && is_numeric( $width ) ) {
