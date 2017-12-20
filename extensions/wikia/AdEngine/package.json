@@ -19,7 +19,7 @@
     "watch": "webpack -p -w"
   },
   "dependencies": {
-    "ad-engine": "^7.0.1",
+    "ad-engine": "^8.0.0",
     "ad-products": "2.1.6"
   }
 }
