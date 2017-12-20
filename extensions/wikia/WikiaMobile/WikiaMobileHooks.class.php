@@ -179,7 +179,6 @@ class WikiaMobileHooks {
 				// if h2 and mobile-wiki
 				if ( $level == 2 && $wgArticleAsJson ) {
 					$text = '<div class="section-header-label">' . $text . '</div>';
-					// TODO replace with <use>
 					$chevron =
 						'<svg class="wds-icon wds-icon-small chevron" viewBox="0 0 18 18" width="18" height="18"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#wds-icons-menu-control-small"></use></svg>';
 					$attribs = 'aria-controls="' . $anchor . '-collapsible-section"' . $attribs;
