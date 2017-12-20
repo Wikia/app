@@ -1,4 +1,5 @@
 import { EventEmitter } from 'events';
+import { createTracker } from './tracking/porvata-tracker-factory';
 import Client from 'ad-engine/src/utils/client';
 import Context from 'ad-engine/src/services/context-service';
 import ScrollListener from 'ad-engine/src/listeners/scroll-listener';
@@ -17,6 +18,8 @@ Context.extend(config);
 let supportedTemplates = [BigFancyAdAbove, BigFancyAdBelow];
 
 function init(
+	adTracker,
+	geo,
 	slotRegistry,
 	mercuryListener,
 	pageLevelTargeting,
@@ -28,6 +31,7 @@ function init(
 	ScrollListener.init();
 
 	Context.extend({slots: slotConfig[skin]});
+	Context.push('listeners.porvata', createTracker(legacyContext, geo, pageLevelTargeting, adTracker));
 
 	overrideSlotService(slotRegistry, legacyBtfBlocker);
 	updatePageLevelTargeting(legacyContext, pageLevelTargeting, skin);
