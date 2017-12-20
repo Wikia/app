@@ -223,7 +223,7 @@ class FounderEmails {
 
 		return $db->selectField(
 			array( 'rollup_wiki_user_events' ),
-			array( 'sum(creates + edits) as cnt' ),
+			array( 'sum(edits) as cnt' ),
 			array( "time_id = '$today 00:00:00'", 'wiki_id' => $cityID, 'period_id' => DataMartService::PERIOD_ID_DAILY ),
 			__METHOD__
 		);
