@@ -96,7 +96,7 @@ require(['jquery', 'wikia.window', 'wikia.loader', 'wikia.mustache', 'wikia.loca
 							{
 								type: 'button',
 								class: 'infobox-dialog-button',
-								label: '+rte-add-template',
+								label: $.msg('rte-add-template'),
 								onClick: openInfoboxBuilder
 							}
 						],
