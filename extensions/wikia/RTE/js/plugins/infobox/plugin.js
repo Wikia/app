@@ -4,19 +4,19 @@ require(['jquery', 'wikia.window', 'wikia.loader', 'wikia.mustache', 'wikia.loca
 		iframeLoaded = false;
 
 	function registerPlugin() {
-		window.CKEDITOR.plugins.add( 'rte-infobox', {
+		window.CKEDITOR.plugins.add('rte-infobox', {
 			init: onEditorInit
 		});
 	}
 
 	function onEditorInit(editor) {
-		editor.addCommand( 'addinfobox', {
+		editor.addCommand('addinfobox', {
 			exec: openInfoboxModal
 		});
 	}
 
-	function openInfoboxBuilder( editor ) {
-		window.CKEDITOR.dialog.add( 'infoboxBuilder-dialog', function ( editor ) {
+	function openInfoboxBuilder(editor) {
+		window.CKEDITOR.dialog.add('infoboxBuilder-dialog', function (editor) {
 			return {
 				title: $.msg('rte-infobox-builder'),
 				buttons: [],
@@ -80,19 +80,25 @@ require(['jquery', 'wikia.window', 'wikia.loader', 'wikia.mustache', 'wikia.loca
 		});
 	}
 
-	function openInfoboxModal( editor ) {
-		$.get('/api.php?format=json&action=query&list=allinfoboxes&uselang=' + window.wgContentLanguage)
-			.then(function (data) {
-				window.CKEDITOR.dialog.add( 'infobox-dialog', function( editor ) {
+	function openInfoboxModal(editor) {
+		var api = new window.mw.Api();
+		api.get({
+				format: 'json',
+				action: 'query',
+				list: 'allinfoboxes',
+				uselang: window.wgContentLanguage
+			},
+			function (data) {
+				window.CKEDITOR.dialog.add('infobox-dialog', function (editor) {
 					return {
 						title: $.msg('rte-select-infobox-title'),
 						buttons: [
-						{
-							type : 'button',
-							class: 'infobox-dialog-button',
-							label : '+rte-add-template',
-							onClick : openInfoboxBuilder
-						}
+							{
+								type: 'button',
+								class: 'infobox-dialog-button',
+								label: '+rte-add-template',
+								onClick: openInfoboxBuilder
+							}
 						],
 						minWidth: 250,
 						minHeight: 300,
@@ -146,5 +152,6 @@ require(['jquery', 'wikia.window', 'wikia.loader', 'wikia.mustache', 'wikia.loca
 			RTE.templateEditor.createTemplateEditor(infoboxName);
 		}
 	}
+
 	registerPlugin();
 });
