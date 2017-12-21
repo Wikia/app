@@ -76,7 +76,7 @@ class CuratedContentHooks {
 		if ( CuratedContentHelper::shouldDisplayToolButton() ) {
 			$contentActions['edit-mobile-main-page'] = [
 				'href' => '/main/edit?useskin=wikiamobile',
-				'text' => wfMessage( 'page-header-action-button-edit-mobile-main-page' )->escaped(),
+				'text' => wfMessage( 'page-header-action-button-edit-mobile-main-page' )->text(),
 				'id' => 'CuratedContentTool'
 			];
 		}
