@@ -40,18 +40,15 @@ require(['jquery', 'wikia.window', 'wikia.loader', 'wikia.mustache', 'wikia.loca
 					this._.element.addClass('infoboxBuilderDialog');
 					$('.infoboxBuilderDialog').find('.cke_dialog_footer').hide();
 
-					if (infoboxBuilderMarkup) {
-						if (!iframeLoaded) {
-							// needs to be inserted only once, see comment bellow.
-							$('.ckeditor-infobox-builder').html(infoboxBuilderMarkup);
+					if (infoboxBuilderMarkup && !iframeLoaded) {
+						// needs to be inserted only once, see comment bellow.
+						$('.ckeditor-infobox-builder').html(infoboxBuilderMarkup);
 
-							// this script needs to be executed only once, otherwise ponto stops working on second and
-							// further infobox-builder dialog appearences, which in fact causes blank dialogs without
-							// infobox builder. Because of that, the iFrame html needs to be inserted only once too.
-							loader.processScript(infoboxBuilderScripts);
-							iframeLoaded = true;
-						}
-
+						// this script needs to be executed only once, otherwise ponto stops working on second and
+						// further infobox-builder dialog appearences, which in fact causes blank dialogs without
+						// infobox builder. Because of that, the iFrame html needs to be inserted only once too.
+						loader.processScript(infoboxBuilderScripts);
+						iframeLoaded = true;
 					}
 
 					window.CKEDITOR.on('new-infobox-created', function (event) {
