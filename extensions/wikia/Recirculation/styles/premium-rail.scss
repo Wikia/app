@@ -5,14 +5,36 @@ $recirculation-thumbnail-margin: 6px;
 $recirculation-thumbnail-size: 20px;
 
 .WikiaRail .premium-recirculation-rail {
+	.placeholder-thumbnail {
+		background-color: $color-article-thumb-background;
+		background-image: url('/extensions/wikia/Recirculation/images/brackets.svg'); /* $wgResourceBasePath */
+		background-position: center;
+		background-repeat: no-repeat;
+		background-size: contain;
+		display: block;
+		position: relative;
+
+		&::before {
+			content: '';
+			display: block;
+			padding-top: 56.25%;
+		}
+
+		img {
+			bottom: 0;
+			left: 0;
+			position: absolute;
+			right: 0;
+			top: 0;
+		}
+	}
 
 	.recirculation-sponsored-footer {
 		font-size: 12px;
 		font-style: italic;
-		letter-spacing: 0;
+		font-weight: bold;
 		opacity: 0.5;
 		padding-top: 3px;
-		text-transform: none;
 	}
 
 	.item {
