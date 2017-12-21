@@ -334,6 +334,11 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
 
 		if ( definition.onOk ) {
 			this.on( 'ok', function( evt ) {
+				// Wikia change - begin @author: kflorence
+				// adding tracking for dialogOk event
+				editor.fire( 'dialogOk', this );
+				// Wikia change - end
+
 				// Dialog confirm might probably introduce content changes (http://dev.ckeditor.com/ticket/5415).
 				editor.fire( 'saveSnapshot' );
 				setTimeout( function() {
