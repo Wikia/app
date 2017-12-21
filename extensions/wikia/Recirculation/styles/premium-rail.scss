@@ -36,6 +36,18 @@ $recirculation-thumbnail-size: 20px;
 		margin-top: 3px;
 	}
 
+	.video-icon-container {
+		@include flexbox();
+		@include align-items(center);
+		@include justify-content(center);
+
+		height: 100%;
+		left: 0;
+		position: absolute;
+		top: 0;
+		width: 100%;
+	}
+
 	a {
 		@include flexbox();
 		@include align-items(flex-start);
