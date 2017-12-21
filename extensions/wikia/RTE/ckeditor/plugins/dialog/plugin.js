@@ -348,6 +348,11 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
 		this.state = CKEDITOR.DIALOG_STATE_IDLE;
 
 		if ( definition.onCancel ) {
+			// Wikia change - begin
+			// adding tracking to the cancel event
+			editor.fire( 'dialogCancel', this );
+			// Wikia change - end
+
 			this.on( 'cancel', function( evt ) {
 				if ( definition.onCancel.call( this, evt ) === false )
 					evt.data.hide = false;
