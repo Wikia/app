@@ -1316,7 +1316,10 @@ class PPFrame_DOM implements PPFrame {
 						// this prevents extension tags at the end of lines from interfering with formatting
 						$tagMarker .= "&#x0200B;";
 
-						$out .= Html::rawElement( 'div', [
+						// <ref> tags are rendered within <p> so it needs to be wrapped by inline html tag.
+						// other extension tags can contain block elements, so they need to be wrapped in div.
+						$wrapperTagName = $nameNode->nodeValue === 'ref' ? 'span' : 'div';
+						$out .= Html::rawElement( $wrapperTagName, [
 							'data-rte-instance' => RTE::getInstanceId(),
 							'data-rte-meta' => RTEReverseParser::encodeRTEData( $rteData ),
 							'class' => "placeholder placeholder-ext",
