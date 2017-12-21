@@ -25,10 +25,17 @@
 		<? endif ?>
 		<?php foreach ( $posts as $index => $post ): ?>
 			<li class="mcf-card-discussions__item">
-				<a href="<?= AvatarService::getUrl( $post->author ) ?>" class="mcf-card-discussions__user-info" data-tracking="discussions-user-<?= $index ?>">
-					<img class="wds-avatar" src="<?= AvatarService::getAvatarUrl( $post->author, 26 ) ?>">
-					<span class="mcf-card-discussions__user-subtitle"><?= Sanitizer::escapeHtmlAllowEntities( $post->author ) ?>
-						• <time class="discussion-timestamp" datetime="<?= Sanitizer::encodeAttribute( $post->pub_date ) ?>"></time></span>
+				<a href="<?= !$post->authorIsAnon ? AvatarService::getUrl( $post->author )
+					: '#' ?>" class="mcf-card-discussions__user-info"<?= !$post->authorIsAnon
+					? ' data-tracking="discussions-user-' . $index . '"' : '' ?>>
+					<img class="wds-avatar"
+						 src="<?= AvatarService::getAvatarUrl( !$post->authorIsAnon ? $post->author
+						     : null, 26 ) ?>">
+					<span class="mcf-card-discussions__user-subtitle"><?= !$post->authorIsAnon
+							? Sanitizer::escapeHtmlAllowEntities( $post->author )
+							: 'A FANDOM User' ?>
+						• <time class="discussion-timestamp"
+								datetime="<?= Sanitizer::encodeAttribute( $post->pub_date ) ?>"></time></span>
 				</a>
 				<a href="<?= Sanitizer::encodeAttribute( $post->url )?>" data-tracking="discussions-post-<?= $index ?>">
 					<div class="mcf-card-discussions__content"><?= Sanitizer::escapeHtmlAllowEntities( $post->title ) ?></div>
