@@ -16,6 +16,8 @@ require(['jquery', 'wikia.window', 'wikia.loader', 'wikia.mustache', 'wikia.loca
 	}
 
 	function openInfoboxBuilder(editor) {
+		CKEDITOR.instances.wpTextbox1.fire( 'newTemplate');
+
 		window.CKEDITOR.dialog.add('infoboxBuilder-dialog', function (editor) {
 			return {
 				title: $.msg('rte-infobox-builder'),

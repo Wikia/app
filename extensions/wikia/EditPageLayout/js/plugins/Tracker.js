@@ -52,6 +52,7 @@
 			ck.on( 'dialogShow', this.proxy( this.onCkDialogShow ) );
 			ck.on( 'panelClick', this.proxy( this.onCkPanelClick ) );
 			ck.on( 'panelShowWE', this.proxy( this.onCkPanelShow ) );
+			ck.on( 'newTemplate', this.proxy( this.onCkNewTemplate ) );
 		},
 
 		onCkButtonClick: function( event ) {
@@ -97,6 +98,10 @@
 				action:  Wikia.Tracker.ACTIONS.OPEN,
 				label: 'panel-' + label
 			});
+		},
+
+		onCkNewTemplate: function( event ) {
+			this.track('add-new-template-button');
 		},
 
 		// Wrapper for Wikia.Tracker so we can perform some magic
