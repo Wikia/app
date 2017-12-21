@@ -80,6 +80,10 @@
 			className : definition.className || ( definition.command && 'cke_button_' + definition.command ) || '',
 			click: definition.click ||
 			function( editor ) {
+				//Wikia start
+				//tracking the button click
+				editor.fire( 'buttonClick', {button: this});
+				//Wikia end
 				editor.execCommand( definition.command );
 			}
 		} );
