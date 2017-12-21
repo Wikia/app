@@ -5,7 +5,8 @@ export default {
 	},
 	events: {},
 	listeners: {
-		porvata: []
+		porvata: [],
+		slot: []
 	},
 	slots: {},
 	vast: {

@@ -70,8 +70,8 @@ function unifySlotInterface(slot) {
 		getTargeting: () => slotContext.targeting,
 		getVideoAdUnit: () => buildVastAdUnit(slot.name)
 	});
-	slot.pre('viewed', () => {
-		SlotListener.onImpressionViewable(slot);
+	slot.pre('viewed', (event) => {
+		SlotListener.emitImpressionViewable(event, slot);
 	});
 
 	return slot;
