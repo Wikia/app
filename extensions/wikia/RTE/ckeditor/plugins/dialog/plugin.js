@@ -404,6 +404,11 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
 		}, this, null, 0 );
 
 		this.parts.close.on( 'click', function( evt ) {
+			// Wikia - start
+			this.fire('close', {close: true});
+			editor.fire( 'dialogClose', this );
+			// Wikia - end
+
 			if ( this.fire( 'cancel', { hide: true } ).hide !== false )
 				this.hide();
 			evt.data.preventDefault();
