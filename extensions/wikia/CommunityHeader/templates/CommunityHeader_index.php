@@ -20,7 +20,7 @@
 			<span class="wds-community-header__counter-label"><?= $counter->label->render() ?></span>
 		</div>
 		<div class="wds-community-header__wiki-buttons wds-button-group">
-			<?php foreach ( $wikiButtons as $wikiButton ): ?>
+			<?php foreach ( $wikiButtons->buttons as $wikiButton ): ?>
 				<a class="wds-button wds-is-squished wds-is-secondary<?= empty( $wikiButton->additionalClasses ) ? '' : ' ' . $wikiButton->additionalClasses ?>"
 				   href="<?= $wikiButton->href ?>"
 				   data-tracking="<?= $wikiButton->tracking ?>"<?php if ( !empty( $wikiButton->title ) ): ?> title="<?= $wikiButton->title->render() ?>"<?php endif; ?>>
@@ -30,6 +30,26 @@
 					<?php endif; ?>
 				</a>
 			<?php endforeach; ?>
+			<?php if ( !empty( $wikiButtons->moreButtons ) ): ?>
+				<div class="wds-dropdown">
+					<div class="wds-button wds-is-squished wds-is-secondary wds-dropdown__toggle">
+						<?= DesignSystemHelper::renderSvg( 'wds-icons-more', 'wds-icon wds-icon-small' ) ?>
+					</div>
+					<div class="wds-dropdown__content wds-is-not-scrollable wds-is-right-aligned">
+						<ul class="wds-list wds-is-linked">
+							<?php foreach ( $wikiButtons->moreButtons as $moreButton): ?>
+								<li>
+									<a href="<?= $moreButton->href ?>"
+									   data-tracking="<?= $moreButton->tracking ?>"<?= empty( $moreButton->additionalClasses )
+										? '' : ' class="' . $moreButton->additionalClasses . '"' ?>>
+									<?= $moreButton->label->render() ?>
+									</a>
+								</li>
+							<?php endforeach ?>
+						</ul>
+					</div>
+				</div>
+			<?php endif; ?>
 		</div>
 	</div>
 	<?= $app->renderView( 'CommunityHeaderService', 'localNavigation' ); ?>

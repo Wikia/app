@@ -2720,8 +2720,9 @@ $config['community_header_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => [ 'oasis' ],
 	'assets' => [
-		'//extensions/wikia/CommunityHeader/scripts/tracking.js',
+		'//extensions/wikia/CommunityHeader/scripts/all-shortcuts.js',
 		'//extensions/wikia/CommunityHeader/scripts/local-navigation-preview.js',
+		'//extensions/wikia/CommunityHeader/scripts/tracking.js',
 	],
 ];
 
