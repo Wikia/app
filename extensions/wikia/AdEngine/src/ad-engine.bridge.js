@@ -13,6 +13,7 @@ import BigFancyAdBelow from 'ad-products/src/modules/templates/uap/big-fancy-ad-
 import UniversalAdPackage from 'ad-products/src/modules/templates/uap/universal-ad-package';
 import config from './context';
 import slotConfig from './slots';
+import './ad-engine.bridge.scss';
 
 Context.extend(config);
 let supportedTemplates = [BigFancyAdAbove, BigFancyAdBelow];
