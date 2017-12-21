@@ -147,6 +147,8 @@ require(['jquery', 'wikia.window', 'wikia.loader', 'wikia.mustache', 'wikia.loca
 	}
 
 	function onInfoboxTemplateChosen(event) {
+		CKEDITOR.instances.wpTextbox1.fire( 'templateChosen' );
+
 		var infoboxName = decodeURI($(event.target).data('infobox-name'));
 
 		if (infoboxName) {
