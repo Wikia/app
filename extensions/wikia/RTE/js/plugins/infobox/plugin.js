@@ -136,7 +136,7 @@ require(['jquery', 'wikia.window', 'wikia.loader', 'wikia.mustache', 'wikia.loca
 		var markup = '<ul class="infobox-templates-list">';
 
 		data.query.allinfoboxes.forEach(function (infoboxData) {
-			markup += '<li><a data-infobox-name="' + infoboxData.title + '">' + infoboxData.title + '</a></li>';
+			markup += '<li><a data-infobox-name="' + encodeURI(infoboxData.title) + '">' + encodeURI(infoboxData.title) + '</a></li>';
 		});
 
 		markup += '</ul>';
@@ -145,7 +145,7 @@ require(['jquery', 'wikia.window', 'wikia.loader', 'wikia.mustache', 'wikia.loca
 	}
 
 	function onInfoboxTemplateChosen(event) {
-		var infoboxName = $(event.target).data('infobox-name');
+		var infoboxName = decodeURI($(event.target).data('infobox-name'));
 
 		if (infoboxName) {
 			CKEDITOR.dialog.getCurrent().hide();
