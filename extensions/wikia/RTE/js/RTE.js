@@ -207,7 +207,7 @@
                 var element = editor.document.getBody();
                 var range = editor.createRange();
                 if(range) {
-                    range.moveToElementEditablePosition(element, false);
+                    range.moveToElementEditablePosition(element, true);
                     range.select();
                 }
             }
