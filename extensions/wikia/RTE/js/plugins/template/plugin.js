@@ -555,8 +555,11 @@ RTE.templateEditor = {
 		// open template editor
 		RTE.getInstance().openDialog('rte-template');
 
-		if ( isInfobox != null && isInfobox == true ) {
+		if ( isInfobox == true ) {
 		        $('.cke_dialog_choose_another_tpl').hide();
+		}
+		else {
+		        $('.cke_dialog_choose_another_tpl').show();
 		}
 	},
 

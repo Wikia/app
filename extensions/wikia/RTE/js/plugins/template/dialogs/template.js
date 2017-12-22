@@ -33,9 +33,6 @@ CKEDITOR.dialog.add('rte-template', function(editor)
 			// "fake" Cancel button to let the user close this dialog by pressing ESC (RT #37696)
 			CKEDITOR.dialog.cancelButton
 		],
-		onHide: function () {
-			$('.cke_dialog_choose_another_tpl').show();
-		},
 		contents: [
 			{
 				// step #1: search / list of popular templates
