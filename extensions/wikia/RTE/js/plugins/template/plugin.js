@@ -546,7 +546,7 @@ RTE.templateEditor = {
 	},
 
 	// show template editor
-	showTemplateEditor: function(placeholder) {
+	showTemplateEditor: function(placeholder,isInfobox) {
 		RTE.log('calling template editor...');
 
 		// open editor for this element
@@ -554,10 +554,14 @@ RTE.templateEditor = {
 
 		// open template editor
 		RTE.getInstance().openDialog('rte-template');
+
+		if ( isInfobox != null && isInfobox == true ) {
+		        $('.cke_dialog_choose_another_tpl').hide();
+		}
 	},
 
 	// create new template placeholder (and maybe show template editor for it)
-	createTemplateEditor: function(templateName) {
+	createTemplateEditor: function(templateName,isInfobox) {
 		// quick hack to make it work in source mode
 		if (RTE.getInstance().mode == 'source') {
 			if (templateName) {
@@ -592,7 +596,7 @@ RTE.templateEditor = {
 			// only show template editor if template contains params
 			if ( (typeof info.availableParams != 'undefined') && (info.availableParams.length > 0) ) {
 				// call template editor
-				self.showTemplateEditor(placeholder);
+				self.showTemplateEditor(placeholder,isInfobox);
 			}
 			else {
 				RTE.log('given template contains no params - inserting...');
