@@ -52,9 +52,6 @@
 			ck.on( 'dialogShow', this.proxy( this.onCkDialogShow ) );
 			ck.on( 'panelClick', this.proxy( this.onCkPanelClick ) );
 			ck.on( 'panelShowWE', this.proxy( this.onCkPanelShow ) );
-			ck.on( 'newTemplate', this.proxy( this.onCkNewTemplate ) );
-			ck.on( 'templateChosen', this.proxy( this.onCkTemplateChosen ) );
-		
 		},
 
 		onCkButtonClick: function( event ) {
@@ -102,13 +99,6 @@
 			});
 		},
 
-		onCkNewTemplate: function( event ) {
-			this.track('add-new-template-button');
-		},
-
-		onCkTemplateChosen: function( event ) {
-			this.track('infobox-template-insert-from-plain-list');
-		},
 
 		// Wrapper for Wikia.Tracker so we can perform some magic
 		track: function() {

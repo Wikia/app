@@ -16,7 +16,8 @@ require(['jquery', 'wikia.window', 'wikia.loader', 'wikia.mustache', 'wikia.loca
 	}
 
 	function openInfoboxBuilder(editor) {
-		CKEDITOR.instances.wpTextbox1.fire( 'newTemplate');
+
+		WikiaEditor.track( 'add-new-template-button' );
 
 		window.CKEDITOR.dialog.add('infoboxBuilder-dialog', function (editor) {
 			return {
@@ -74,7 +75,7 @@ require(['jquery', 'wikia.window', 'wikia.loader', 'wikia.mustache', 'wikia.loca
 		}).done(function (assets) {
 			infoboxBuilderMarkup = mustache.render(assets.mustache[0], {
 				iframeUrl: location.origin + '/infobox-builder/',
-				classes: 've-ui-infobox-builder'
+				classes: 'ck-ui-infobox-builder'
 			});
 			infoboxBuilderScripts = assets.scripts;
 
@@ -147,7 +148,7 @@ require(['jquery', 'wikia.window', 'wikia.loader', 'wikia.mustache', 'wikia.loca
 	}
 
 	function onInfoboxTemplateChosen(event) {
-		CKEDITOR.instances.wpTextbox1.fire( 'templateChosen' );
+		WikiaEditor.track('infobox-template-insert-from-plain-list');
 
 		var infoboxName = decodeURI($(event.target).data('infobox-name'));
 
