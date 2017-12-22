@@ -16,7 +16,8 @@ class RecirculationController extends WikiaController {
 		}
 	}
 
-	public function discussionsAuthor() {
+	public function discussionsAuthor($data) {
+		$this->post = $data['post'];
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_PHP );
 	}
 
