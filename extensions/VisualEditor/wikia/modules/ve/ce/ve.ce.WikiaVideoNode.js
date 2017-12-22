@@ -72,7 +72,7 @@ ve.ce.WikiaVideoNode.static.getSizeString = function ( width ) {
  * @returns {jQuery}
  */
 ve.ce.WikiaVideoNode.prototype.createPlayButton = function () {
-	return this.$( '<span>' ).addClass( 'thumbnail-play-icon-container ve-no-shield' ).html(
+	return this.$( '<span>' ).addClass( 'thumbnail-play-icon-container' ).html(
 		'<svg class="thumbnail-play-icon" viewBox="0 0 180 180" width="100%" height="100%">' +
 			'<g fill="none" fill-rule="evenodd">' +
 				'<g opacity=".9" transform="rotate(90 75 90)">' +

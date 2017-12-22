@@ -119,7 +119,7 @@ ve.ce.wikiaExample = ( function ( utils ) {
 
 	media.html.video.block = {
 		title:
-			'<p class="title ve-no-shield">FooBar</p>'
+			'<p class="title">FooBar</p>'
 	};
 
 	/* Mock HTMLDOM */

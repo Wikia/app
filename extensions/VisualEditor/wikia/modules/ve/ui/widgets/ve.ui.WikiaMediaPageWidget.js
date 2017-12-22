@@ -217,7 +217,7 @@ ve.ui.WikiaMediaPageWidget.prototype.setupLicense = function ( $license ) {
  * @method
  */
 ve.ui.WikiaMediaPageWidget.prototype.setupVideoOverlay = function () {
-	this.$overlay = this.$( '<span>' ).addClass( 'thumbnail-play-icon-container ve-no-shield' ).html(
+	this.$overlay = this.$( '<span>' ).addClass( 'thumbnail-play-icon-container' ).html(
 		'<svg class="thumbnail-play-icon" viewBox="0 0 180 180" width="100%" height="100%">' +
 			'<g fill="none" fill-rule="evenodd">' +
 				'<g opacity=".9" transform="rotate(90 75 90)">' +
