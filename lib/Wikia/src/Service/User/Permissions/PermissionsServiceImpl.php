@@ -213,7 +213,13 @@ class PermissionsServiceImpl implements PermissionsService {
 	 * @return array map of user IDs to user groups
 	 */
 	private function loadUsersInGroup( \DatabaseBase $dbr, array $groups ) {
-		$res = $dbr->select( 'user_groups', [ 'ug_user', 'ug_group' ], [ 'ug_group' => $groups ], __METHOD__ );
+		$res = $dbr->select(
+			'user_groups',
+			[ 'ug_user', 'ug_group' ],
+			[ 'ug_group' => $groups ],
+			__METHOD__,
+			[ 'ORDER BY' => 'ug_user' ]
+		);
 
 		$userMapping = [];
 

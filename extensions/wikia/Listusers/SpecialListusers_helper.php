@@ -331,8 +331,8 @@ class ListusersData {
 			$dbr = wfGetDB( DB_SLAVE );
 			$centralDbr = wfGetDB( DB_SLAVE, [], $wgExternalSharedDB );
 
-			$this->loadCountOfUsersInGroups( $dbr, $localGroups );
-			$this->loadCountOfUsersInGroups( $centralDbr, $globalGroups );
+			$this->loadCountOfUsersInGroups( $dbr, $localGroups, $this->mGroups );
+			$this->loadCountOfUsersInGroups( $centralDbr, $globalGroups, $this->mGroups );
 		} else {
 			$this->mGroups = $cached;
 		}
@@ -346,8 +346,9 @@ class ListusersData {
 	 *
 	 * @param DatabaseBase $db DB connection to use
 	 * @param array $groups groups whose user count we need
+	 * @param array & $$mGroups reference to array to be filled with data
 	 */
-	private function loadCountOfUsersInGroups( DatabaseBase $db, array $groups ) {
+	public static function loadCountOfUsersInGroups( DatabaseBase $db, array $groups, array & $mGroups ) {
 		// CE-1487: exclude Poweruser group from group listing
 		$exclude = [ \Wikia\PowerUser\PowerUser::GROUP_NAME ];
 		$groups = array_diff( $groups, $exclude );
@@ -362,7 +363,7 @@ class ListusersData {
 
 		/** @var object $row */
 		foreach ( $res as $row ) {
-			$this->mGroups[$row->ug_group] = [
+			$mGroups[$row->ug_group] = [
 				'name' => User::getGroupName( $row->ug_group ),
 				'count' => $row->users_count
 			];
