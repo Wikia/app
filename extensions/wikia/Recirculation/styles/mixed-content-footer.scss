@@ -275,19 +275,13 @@ h1.mcf-header {
 		@include flex(1);
 		@include flexbox();
 		@include justify-content(center);
+	}
 
-		.wds-player-icon-play-medium {
-			display: none;
-		}
+	&__video-icon {
+		@include wds-player-icon-play($wds-player-icon-play-large);
 
 		@media #{$wds-breakpoint-m-down} {
-			.wds-player-icon-play-large {
-				display: none;
-			}
-
-			.wds-player-icon-play-medium {
-				display: block;
-			}
+			@include wds-player-icon-play($wds-player-icon-play-medium);
 		}
 	}
 
