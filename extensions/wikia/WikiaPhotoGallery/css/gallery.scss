@@ -16,6 +16,14 @@
 	.lightbox-caption {
 		@extend %p;
 	}
+
+	.thumbnail-play-icon-container {
+		bottom: 4px;
+		height: auto;
+		left: 4px;
+		top: auto;
+		width: auto;
+	}
 }
 
 .wikia-gallery-caption-below .lightbox-caption {
