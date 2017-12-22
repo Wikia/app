@@ -1,5 +1,7 @@
 @import "skins/shared/mixins/background-opacity";
 @import "skins/shared/mixins/border-opacity";
+@import 'extensions/wikia/DesignSystem/bower_components/design-system/dist/scss/wds-variables/index';
+@import 'extensions/wikia/DesignSystem/bower_components/design-system/dist/scss/wds-mixins/index';
 
 // See touchScreen.scss for modified hover state styles
 
@@ -19,6 +21,22 @@
 
 	// play button styles
 	// defaults to 'medium' size
+	.thumbnail-play-icon-container {
+		@include flexbox();
+		@include align-items(center);
+		@include justify-content(center);
+
+		height: 100%;
+		left: 0;
+		position: absolute;
+		top: 0;
+		width: 100%;
+	}
+
+	.thumbnail-play-icon {
+		@include wds-player-icon-play($wds-player-icon-play-medium);
+	}
+
 	.play-circle {
 		background-image: url('/skins/oasis/images/videoPlayButtons/50x50.png'); /* inline */
 		background-size: 100%;
@@ -41,6 +59,10 @@
 			left: 36px;
 			top: auto;
 		}
+
+		.thumbnail-play-icon {
+			@include wds-player-icon-play($wds-player-icon-play-tiny);
+		}
 	}
 
 	&.xxsmall {
@@ -61,6 +83,10 @@
 			left: 34px;
 			top: auto;
 		}
+
+		.thumbnail-play-icon {
+			@include wds-player-icon-play($wds-player-icon-play-small);
+		}
 	}
 
 	&.large {
@@ -71,6 +97,10 @@
 			margin: -35px 0 0 -35px;
 			width: 70px;
 		}
+
+		.thumbnail-play-icon {
+			@include wds-player-icon-play($wds-player-icon-play-large);
+		}
 	}
 
 	&.xlarge {
@@ -80,6 +110,10 @@
 			height: 90px;
 			margin: -45px 0 0 -45px;
 			width: 90px;
+		}
+
+		.thumbnail-play-icon {
+			@include wds-player-icon-play($wds-player-icon-play-xl);
 		}
 	}
 
