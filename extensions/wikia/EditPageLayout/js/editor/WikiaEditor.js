@@ -1084,7 +1084,7 @@
 
 		modeChanged: function( editor, mode ) {
 			//show/hide infobox button
-			mode == 'source' ? $('.RTEInfoboxButton').hide() : $('.RTEInfoboxButton').show();
+			mode == 'source' ? $('.RTEInfoboxButton').addClass('cke_hidden') : $('.RTEInfoboxButton').removeClass('cke_hidden');
 
 			// show/hide appropriate buttons
 			for (var name in this.modeAwareCommands) {
