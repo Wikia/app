@@ -3,6 +3,6 @@
   "private": true,
 
   "dependencies": {
-    "design-system": "Wikia/design-system#8.12.0"
+    "design-system": "Wikia/design-system#XW-4315"
   }
 }
