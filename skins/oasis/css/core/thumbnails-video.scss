@@ -5,17 +5,8 @@
 
 // See touchScreen.scss for modified hover state styles
 
-@mixin hoverState($size: '50') {
-	$url: '/skins/oasis/images/videoPlayButtons/' + $size + 'x' + $size + '_hover.png';
-
-	&:hover .play-circle {
-		background-image: url($url); /* inline */
-	}
-}
-
 // Video Thumbnails
 .video-thumbnail {
-	@include hoverState();
 	display: inline-block;
 	position: relative;
 
@@ -37,96 +28,27 @@
 		@include wds-player-icon-play($wds-player-icon-play-medium);
 	}
 
-	.play-circle {
-		background-image: url('/skins/oasis/images/videoPlayButtons/50x50.png'); /* inline */
-		background-size: 100%;
-		display: block;
-		height: 50px; // only for medium
-		left: 50%;
-		margin: -25px 0 0 -25px; // only for medium
-		position: absolute;
-		top: 50%;
-		width: 50px; // only for medium
-	}
-
 	&.xsmall, &.xxsmall {
-		@include hoverState('27');
-		.play-circle{
-			background-image: url('/skins/oasis/images/videoPlayButtons/27x27.png'); /* inline */
-			height: 27px;
-			width: 27px;
-			bottom: 10px;
-			left: 36px;
-			top: auto;
-		}
-
 		.thumbnail-play-icon {
 			@include wds-player-icon-play($wds-player-icon-play-tiny);
 		}
 	}
 
-	&.xxsmall {
-		// same play button size as xsmall but positioned lower
-		.play-circle {
-			bottom: 6px;
-			left: 32px;
-		}
-	}
-
 	&.small {
-		@include hoverState('35');
-		.play-circle{
-			background-image: url('/skins/oasis/images/videoPlayButtons/35x35.png'); /* inline */
-			height: 35px;
-			width: 35px;
-			bottom: 10px;
-			left: 34px;
-			top: auto;
-		}
-
 		.thumbnail-play-icon {
 			@include wds-player-icon-play($wds-player-icon-play-small);
 		}
 	}
 
 	&.large {
-		@include hoverState('70');
-		.play-circle{
-			background-image: url('/skins/oasis/images/videoPlayButtons/70x70.png'); /* inline */
-			height: 70px;
-			margin: -35px 0 0 -35px;
-			width: 70px;
-		}
-
 		.thumbnail-play-icon {
 			@include wds-player-icon-play($wds-player-icon-play-large);
 		}
 	}
 
 	&.xlarge {
-		@include hoverState('90');
-		.play-circle{
-			background-image: url('/skins/oasis/images/videoPlayButtons/90x90.png'); /* inline */
-			height: 90px;
-			margin: -45px 0 0 -45px;
-			width: 90px;
-		}
-
 		.thumbnail-play-icon {
 			@include wds-player-icon-play($wds-player-icon-play-xl);
-		}
-	}
-
-	&.hide-play {
-		// Don't show the thumbnail till hover
-		.play-circle {
-			display: none;
-		}
-
-		&:hover {
-			.play-circle {
-				display: block;
-			}
 		}
 	}
 
