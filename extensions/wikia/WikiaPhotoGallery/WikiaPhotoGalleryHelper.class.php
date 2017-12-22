@@ -670,7 +670,9 @@ class WikiaPhotoGalleryHelper {
 			$image['videoPlayButton'] = false;
 			if( WikiaFileHelper::isFileTypeVideo($img) ) {
 				// Get play button overlay for video thumb
-				$image['videoPlayButton'] = '<span class="play-circle"></span>';
+				$image['videoPlayButton'] = '<span class="thumbnail-play-icon-container">'
+					. DesignSystemHelper::renderSvg('wds-player-icon-play', 'thumbnail-play-icon')
+					. '</span>';
 			}
 
 			//need to use parse() - see RT#44270

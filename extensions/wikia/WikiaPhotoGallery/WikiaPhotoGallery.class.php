@@ -84,10 +84,13 @@ class WikiaPhotoGallery extends ImageGallery {
 	 * @var string play button html
 	 * @todo refactor this extension so it's easier to insert a template instead of hard coded strings
 	 */
-	private $videoPlayButton = '<span class="play-circle"></span>';
+	private $videoPlayButton;
 
 	function __construct() {
 		parent::__construct();
+		$this->videoPlayButton = '<span class="thumbnail-play-icon-container">'
+			. DesignSystemHelper::renderSvg('wds-player-icon-play', 'thumbnail-play-icon')
+			. '</span>';
 
 		$this->mData = array(
 			'externalImages' => array(),
