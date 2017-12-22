@@ -17,7 +17,7 @@ class WikiButtons {
 			} else {
 				$this->buttons = $this->userButtons();
 			}
-			$this->moreButtons = $this->getMoreButtons();
+			$this->moreButtons = $this->dropdownButtons();
 		} else {
 			$this->buttons = $this->anonButtons();
 		}
@@ -69,7 +69,7 @@ class WikiButtons {
 		return [ $addNewPageButton, $wikiActivityButton, $adminDashboardButton ];
 	}
 
-	private function getMoreButtons(): array {
+	private function dropdownButtons(): array {
 		$addNewImageButton =
 			new WikiButton( $this->getSpecialPageURL( 'Upload' ),
 				new Label( 'community-header-add-new-image', Label::TYPE_TRANSLATABLE_TEXT ), null,

@@ -42,7 +42,7 @@
 									<a href="<?= $moreButton->href ?>"
 									   data-tracking="<?= $moreButton->tracking ?>"<?= empty( $moreButton->additionalClasses )
 										? '' : ' class="' . $moreButton->additionalClasses . '"' ?>>
-									<?= $moreButton->label->render() ?>
+										<?= $moreButton->label->render() ?>
 									</a>
 								</li>
 							<?php endforeach ?>
