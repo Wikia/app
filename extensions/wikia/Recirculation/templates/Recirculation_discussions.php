@@ -28,7 +28,7 @@
 				<?php if ( $post->authorIsAnon ): ?>
 					<span class="mcf-card-discussions__user-info">
 						<?= F::app()
-							->renderPartial( 'Recirculation', 'discussionsAuthor',
+							->renderView( 'Recirculation', 'discussionsAuthor',
 								[ 'post' => $post ] ) ?>
 					</span>
 				<?php else: ?>
@@ -36,7 +36,7 @@
 					   class="mcf-card-discussions__user-info"
 					   data-tracking="discussions-user-<?= $index ?>">
 						<?= F::app()
-							->renderPartial( 'Recirculation', 'discussionsAuthor',
+							->renderView( 'Recirculation', 'discussionsAuthor',
 								[ 'post' => $post ] ) ?>
 					</a>
 				<?php endif; ?>
