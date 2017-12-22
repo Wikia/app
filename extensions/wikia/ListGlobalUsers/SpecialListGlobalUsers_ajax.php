@@ -53,30 +53,15 @@ class ListGlobalUsersAjax {
 					$groups = ( $data['blcked'] ) ? Xml::tags( 'span', array( 'class' => 'listusers_blockeduser' ), $data['groups'] ) : $data['groups'];
 					$edits = ( $data['blcked'] ) ? Xml::tags( 'span', array( 'class' => 'listusers_blockeduser' ), $data['rev_cnt'] ) : $data['rev_cnt'];
 
-					$last_edited  = "-";
-					if ( $data['last_edit_ts'] && $data['last_edit_page'] ) {
-						$last_edited  = Xml::openElement( 'div' );
-						$last_edited .= Xml::tags( 'span',
-							array( 'style' => 'font-size:90%;' ),
-							Xml::element('a', array( 'href' => $data['last_edit_page'] ), $data['last_edit_ts'] )
-						);
-						$last_edited .= Xml::tags( 'span',
-							array( 'style' => 'font-size:77%; padding-left:8px;' ),
-							Xml::element('a', array( 'href' => $data['last_edit_diff'] ), wfMsg('diff') )
-						);
-						$last_edited .= Xml::closeElement('div');
-					}
-
 					$rows[] = array(
 						$username, //User name
 						$groups, //Groups
 						$edits,//Revisions (edits)
-						$last_edited//Last edited
 					);
 				}
 			}
 			$result['aaData'] = $rows;
-			$result['sColumns'] =  join(',', ['username', 'groups', 'revcnt', 'dtedit']);
+			$result['sColumns'] =  join(',', ['username', 'groups', 'revcnt']);
 		}
 
 		wfProfileOut( __METHOD__ );

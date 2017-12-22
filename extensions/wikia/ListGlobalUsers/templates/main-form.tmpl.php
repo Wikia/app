@@ -21,13 +21,6 @@ var listUsersLanguage = {
 var listUserToolbar = '<div class="lu_filter">';
 listUserToolbar += '<span class="lu_filter lu_first"><?= wfMessage( 'listglobaluserbyname' )->escaped() ?></span>';
 listUserToolbar += '<span class="lu_filter"><input type="text" name="lu_search" id="lu_search" size="25" value="<?=$searchByUser?>"></span>';
-listUserToolbar += '<span class="lu_filter lu_first"><?= wfMessage( 'listglobaluserscontributed' )->escaped() ?></span>';
-listUserToolbar += '<span class="lu_filter"><select name="lu_contributed" id="lu_contributed" >';
-<?php
-/* @var array $contribs */
-foreach ( $contribs as $val => $text ) { ?>
-    listUserToolbar += '<option <?= ( $val == $defContrib ) ? "selected=\'selected\'" : "" ?> value="<?= $val ?>"><?= $text ?></option>';
-<? } ?>
 listUserToolbar += '</select></span>';
 listUserToolbar += '<span class="lu_filter"><input type="button" value="<?= wfMessage( 'listglobalusersdetails' )->escaped() ?>" id="lu-showusers"></span></div>';
 
@@ -103,7 +96,6 @@ $( function () {
 			<th><?= wfMessage( 'listglobalusers-username' )->escaped() ?></th>
 			<th><?= wfMessage( 'listglobalusers-groups' )->escaped() ?></th>
 			<th><?= wfMessage( 'listglobalusersrev-cnt' )->escaped() ?></th>
-			<th><?= wfMessage( 'listglobalusers-edited' )->escaped() ?></th>
 		</tr>
 	</thead>
 	<tbody>
@@ -116,7 +108,6 @@ $( function () {
 			<th><?= wfMessage( 'listglobalusers-username' )->escaped() ?></th>
 			<th><?= wfMessage( 'listglobalusers-groups' )->escaped() ?></th>
 			<th><?= wfMessage( 'listglobalusersrev-cnt' )->escaped() ?></th>
-			<th><?= wfMessage( 'listglobalusers-edited' )->escaped() ?></th>
 		</tr>
 	</tfoot>
 </table>

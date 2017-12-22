@@ -25,7 +25,6 @@ require(['wikia.log', 'wikia.window', 'jquery'], function(log, window, $) {
             {"sName": "username", "bSortable": false},
             {"sName": "groups"},
             {"sName": "revcnt"},
-            {"sName": "dtedit"}
         ],
         "bProcessing": true,
         "bServerSide": true,
@@ -97,9 +96,6 @@ require(['wikia.log', 'wikia.window', 'jquery'], function(log, window, $) {
                     }, {
                         'name': 'username',
                         'value': ( $('#lu_search').exists() ) ? $('#lu_search').val() : config.searchByUser
-                    }, {
-                        'name': 'edits',
-                        'value': ( $('#lu_contributed').exists() ) ? $('#lu_contributed').val() : config.defContrib
                     }, {
                         'name': 'limit',
                         'value': limit

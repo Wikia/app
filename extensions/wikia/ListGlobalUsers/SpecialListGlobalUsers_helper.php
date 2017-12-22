@@ -63,7 +63,7 @@ class ListGlobalUsersData {
 		);
 
 		$memkey = wfForeignMemcKey( $this->mCityId, __CLASS__, self::CACHE_VERSION, md5( implode(', ', $subMemkey) ) );
-		$cached = $wgMemc->get($memkey);
+		//$cached = $wgMemc->get($memkey);
 
 		if ( empty($cached) ) {
 			$data = $this->doLoadData( $context, $lang );
@@ -88,8 +88,10 @@ class ListGlobalUsersData {
 			$this->mFilterGroup :
 			$this->permissionsService->getConfiguration()->getGlobalGroups();
 
-		$usersInGroups = $this->permissionsService->getUsersInGroups( $groups );
+		$usersInGroups = $this->permissionsService()->getUsersInGlobalGroups( $groups, $this->mOffset, $this->mLimit );
+
 		$data = [];
+		$data[ 'cnt' ] = $this->permissionsService()->getUserCountInGlobalGroups( $groups );
 
 		if ( count( $usersInGroups ) > 0 ) {
 			$userIsBlocked = $user->isBlocked( true, false );
@@ -100,10 +102,9 @@ class ListGlobalUsersData {
 				$oUser = User::newFromId( $userId );
 
 				/* groups */
-				$groups = explode(";", $userGroups);
 				$group = "<i>" . wfMsg('listGlobalUsers-nonegroup') . "</i>";
 				if ( !empty( $groups ) ) {
-					$group = implode(", ", $groups);
+					$group = implode(", ", $userGroups);
 				}
 
 				$oEncUserName = urlencode( $oUser->getName() );
@@ -159,11 +160,11 @@ class ListGlobalUsersData {
 					'blcked'			=> false, //TODO $oRow->user_is_blocked,
 					'links'				=> "(" . implode( ") &#183; (", $links ) . ")",
 					'last_edit_page' 	=> null,
-					'last_edit_diff'	=> null,
-					'last_edit_ts'		=> "" //TODO remove
+					'last_edit_diff'	=> null
 				);
 			}
 		}
+
 		return $data;
 	}
 

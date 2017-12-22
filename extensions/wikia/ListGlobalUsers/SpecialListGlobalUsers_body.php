@@ -10,17 +10,14 @@ class ListGlobalUsers extends SpecialRedirectToSpecial {
 	private $mAction;
 	private $mTitle;
 	private $mDefGroups;
-	private $mContribs;
 
 	/* @var ListGlobalUsersData $mData */
 	private $mData;
 
-	private $mDefContrib = null;
 	private $searchByUser = '';
 
 	const TITLE		= 'ListGlobalUsers';
 	const DEF_GROUP_NAME	= 'all';
-	const DEF_EDITS		= 5;
 	const DEF_LIMIT		= 30;
 	const DEF_ORDER		= 'dtedit:desc';
 
@@ -54,15 +51,6 @@ class ListGlobalUsers extends SpecialRedirectToSpecial {
 		$this->mDefGroups = array();
 		$this->mTitle = Title::makeTitle( NS_SPECIAL, self::TITLE );
 		$this->mAction = htmlspecialchars( $this->mTitle->getLocalURL() );
-		$this->mContribs = array(
-			0	=> wfMessage( 'listGlobalUsersallusers' )->escaped(),
-			1	=> wfMessage( 'listGlobalUsers-1contribution' )->escaped(),
-			5	=> wfMessage( 'listGlobalUsers-5contributions' )->escaped(),
-			10	=> wfMessage( 'listGlobalUsers-10contributions' )->escaped(),
-			20	=> wfMessage( 'listGlobalUsers-20contributions' )->escaped(),
-			50	=> wfMessage( 'listGlobalUsers-50contributions' )->escaped(),
-			100	=> wfMessage( 'listGlobalUsers-100contributions' )->escaped()
-		);
 
 		/**
 		 * initial output
@@ -83,18 +71,13 @@ class ListGlobalUsers extends SpecialRedirectToSpecial {
 				$this->mDefGroups = array( $target );
 			}
 		} elseif ( !empty( $subpage ) ) {
-			@list ( $subpage, $this->mDefContrib, $this->searchByUser ) = explode( "/", $subpage );
-			if ( !in_array( $this->mDefContrib, array_keys( $this->mContribs ) ) ) {
-				$this->mDefContrib = null;
-			}
+			@list ( $subpage, $this->searchByUser ) = explode( "/", $subpage );
 			if ( strpos( $subpage, "," ) !== false )  {
 				$this->mDefGroups = explode( ",", $subpage );
 			} else {
 				$this->mDefGroups = array( $subpage );
 			}
 		}
-
-		$this->mDefContrib = is_null( $this->mDefContrib ) ? self::DEF_EDITS : $this->mDefContrib;
 
 		$this->mData = new ListGlobalUsersData( $wgCityId );
 		$this->mData->load();
@@ -122,7 +105,6 @@ class ListGlobalUsers extends SpecialRedirectToSpecial {
 		// make these values available in JS code via mw.config
 		// e.g. mw.config.get('listGlobalUsers').defContrib
 		$this->getOutput()->addJsConfigVars('listGlobalUsers', [
-			'defContrib' => $this->mDefContrib,
 			'searchByUser' => $this->searchByUser,
 		]);
 
@@ -132,12 +114,10 @@ class ListGlobalUsers extends SpecialRedirectToSpecial {
 			"wgContLang"		=> $wgContLang,
 			"wgExtensionsPath"	=> $wgExtensionsPath,
 			"wgStylePath"		=> $wgStylePath,
-			"defContrib"		=> $this->mDefContrib,
 			"searchByUser"		=> $this->searchByUser,
 			"wgUser"		=> $this->getUser(),
 			'groups'        => $this->mData->getGroups(),
 			'filtered_group' => $this->mData->getFilterGroup(),
-			'contribs'      => $this->mContribs,
 		));
 		$this->getOutput()->addHTML( $oTmpl->render( "main-form" ) );
 	}
