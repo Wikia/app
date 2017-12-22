@@ -16,6 +16,11 @@ class RecirculationController extends WikiaController {
 		}
 	}
 
+	public function discussionsAuthor() {
+		$this->setVal( 'post', $this->getVal( 'post' ) );
+		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_PHP );
+	}
+
 	public function discussions() {
 		$showZeroState = false;
 		$cityId = $this->request->getVal( 'cityId', null );
