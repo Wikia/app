@@ -11,7 +11,7 @@ export default {
 	slots: {},
 	vast: {
 		adUnitId: '/{custom.dfpId}/wka.{targeting.s0}/{targeting.s1}//{targeting.s2}/{src}/{slotName}',
-		megaAdUnitId: '/{custom.dfpId}/{src}.{slotConfig.slotGroup}/{slotConfig.lowerSlotName}/{custom.device}/{targeting.skin}-{targeting.s2}/{targeting.s1}-{targeting.s0}'
+		megaAdUnitId: '/{custom.dfpId}/wka1a.{adGroup}/{adProduct}/{custom.device}/{targeting.skin}-{targeting.s2}/{targeting.s1}-{targeting.s0}'
 	},
 	targeting: {
 		outstream: 'none',
