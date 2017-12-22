@@ -17,6 +17,14 @@ export default {
 		outstream: 'none',
 		uap: 'none',
 	},
+	slotGroups: {
+		LB: ['TOP_LEADERBOARD', 'MOBILE_TOP_LEADERBOARD'],
+		MR: ['TOP_RIGHT_BOXAD'],
+		PF: ['MOBILE_PREFOOTER', 'BOTTOM_LEADERBOARD', 'MOBILE_BOTTOM_LEADERBOARD'],
+		PX: ['INVISIBLE_SKIN', 'INVISIBLE_HIGH_IMPACT', 'INVISIBLE_HIGH_IMPACT_2'],
+		HiVi: ['INCONTENT_BOXAD_1', 'MOBILE_IN_CONTENT'],
+		VIDEO: ['FEATURED', 'OUTSTREAM', 'UAP_BFAA', 'UAP_BFAB', 'ABCD', 'OOYALA', 'VIDEO']
+	},
 	state: {
 		adStack: window.adsQueue || [],
 		isMobile: false
