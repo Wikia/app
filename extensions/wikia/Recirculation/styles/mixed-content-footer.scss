@@ -277,34 +277,11 @@ h1.mcf-header {
 		@include justify-content(center);
 	}
 
-	&__video {
-		$play-button-size: 90px;
-		$play-button-size-small: 60px;
-		@include align-items(center);
-		@include flexbox();
-		@include justify-content(center);
-		background-color: rgba($wds-color-black, 0.2);
-		border: solid 6px $wds-color-white;
-		border-radius: 50%;
-		box-sizing: border-box;
-		height: $play-button-size;
-		width: $play-button-size;
-
-		@media #{$wds-breakpoint-m-down} {
-			border-width: 4px;
-			height: $play-button-size-small;
-			width: $play-button-size-small;
-		}
-	}
-
 	&__video-icon {
-		$play-button-icon-small: 23px;
-		fill: $wds-color-white;
-		margin-left: 6px;
+		@include wds-player-icon-play($wds-player-icon-play-large);
 
 		@media #{$wds-breakpoint-m-down} {
-			height: $play-button-icon-small;
-			width: $play-button-icon-small;
+			@include wds-player-icon-play($wds-player-icon-play-medium);
 		}
 	}
 
@@ -339,7 +316,6 @@ h1.mcf-header {
 		right: 0;
 		width: 100px;
 	}
-
 }
 
 .mcf-card-wiki-articles {
