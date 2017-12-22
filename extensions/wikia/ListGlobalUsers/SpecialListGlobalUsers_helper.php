@@ -63,7 +63,7 @@ class ListGlobalUsersData {
 		);
 
 		$memkey = wfForeignMemcKey( $this->mCityId, __CLASS__, self::CACHE_VERSION, md5( implode(', ', $subMemkey) ) );
-		//$cached = $wgMemc->get($memkey);
+		$cached = $wgMemc->get($memkey);
 
 		if ( empty($cached) ) {
 			$data = $this->doLoadData( $context, $lang );
