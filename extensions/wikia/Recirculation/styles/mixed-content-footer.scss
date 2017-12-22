@@ -588,6 +588,7 @@ h1.mcf-header {
 	&__user-info {
 		@include align-items(center);
 		@include flexbox();
+		color: $wds-color-faint-gray;
 		margin-top: 12px;
 
 		.wds-avatar {
