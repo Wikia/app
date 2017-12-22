@@ -64,12 +64,12 @@ describe('ext.wikia.adEngine.tracking.viewabilityTracker', function () {
 
 		getModule().track(getSlot());
 
-		expect(mocks.adTracker.trackDW).toHaveBeenCalledWith({
-			'pv_unique_id': 'fooBarID',
-			'wsi': 'foo1',
-			'line_item_id': '567',
-			'creative_id': '123',
-			'rv': '2'
-		}, 'adengviewability');
+		var trackedData = mocks.adTracker.trackDW.calls.mostRecent().args[0];
+
+		expect(trackedData.pv_unique_id).toBe('fooBarID');
+		expect(trackedData.wsi).toBe('foo1');
+		expect(trackedData.line_item_id).toBe('567');
+		expect(trackedData.creative_id).toBe('123');
+		expect(trackedData.rv).toBe('2');
 	});
 });
