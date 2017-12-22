@@ -7,7 +7,7 @@
 				<li>
 					<div class="slide-image video video-thumbnail xlarge fluid" data-index="<?= $index ?>">
 						'<span class="thumbnail-play-icon-container">'
-							. DesignSystemHelper::renderSvg('wds-player-icon-play', 'thumbnail-play-icon')
+							. <?= DesignSystemHelper::renderSvg('wds-player-icon-play', 'thumbnail-play-icon') ?>
 							. '</span>';
 						<img src="<?= $videoData['largeThumbUrl'] ?>">
 						<div class="caption small-4 columns">
