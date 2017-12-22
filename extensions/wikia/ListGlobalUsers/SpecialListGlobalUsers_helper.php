@@ -157,10 +157,8 @@ class ListGlobalUsersData {
 					'groups_nbr' 		=> count( $userGroups ),
 					'groups' 			=> $group,
 					'rev_cnt' 			=> 0, //TODO
-					'blcked'			=> false, //TODO $oRow->user_is_blocked,
-					'links'				=> "(" . implode( ") &#183; (", $links ) . ")",
-					'last_edit_page' 	=> null,
-					'last_edit_diff'	=> null
+					'blcked'			=> $user->isBlocked(),
+					'links'				=> "(" . implode( ") &#183; (", $links ) . ")"
 				);
 			}
 		}
