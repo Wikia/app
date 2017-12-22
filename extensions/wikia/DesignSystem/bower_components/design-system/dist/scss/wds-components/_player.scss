@@ -1,16 +1,14 @@
 $sizes: (
-	tiny: 30px,
-	small: 42px,
-	medium: 60px,
-	large: 90px,
-	xl: 120px,
-	xxl: 150px
+	tiny: $wds-player-icon-play-tiny,
+	small: $wds-player-icon-play-small,
+	medium: $wds-player-icon-play-medium,
+	large: $wds-player-icon-play-large,
+	xl: $wds-player-icon-play-xl,
+	xxl: $wds-player-icon-play-xxl
 );
 
 @each $name, $size in $sizes {
 	.wds-player-icon-play-#{$name} {
-		// since play icon contains shadow around icon and designers provide sizes of icon without shadow, we need to
-		// calculate exact size of icon box
-		@include square($size * 1.2);
+		@include wds-player-icon-play($size);
 	}
 }
