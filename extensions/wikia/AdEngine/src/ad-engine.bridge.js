@@ -13,6 +13,7 @@ import BigFancyAdBelow from 'ad-products/src/modules/templates/uap/big-fancy-ad-
 import UniversalAdPackage from 'ad-products/src/modules/templates/uap/universal-ad-package';
 import config from './context';
 import slotConfig from './slots';
+import './ad-engine.bridge.scss';
 
 Context.extend(config);
 let supportedTemplates = [BigFancyAdAbove, BigFancyAdBelow];
@@ -65,8 +66,8 @@ function unifySlotInterface(slot) {
 		getTargeting: () => slotContext.targeting,
 		getVideoAdUnit: () => buildVastAdUnit(slot.name)
 	});
-	slot.pre('viewed', () => {
-		SlotListener.onImpressionViewable(slot);
+	slot.pre('viewed', (event) => {
+		SlotListener.emitImpressionViewable(event, slot);
 	});
 
 	return slot;
