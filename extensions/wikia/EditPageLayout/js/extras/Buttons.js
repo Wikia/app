@@ -85,16 +85,6 @@
 		precondition: checkGallery
 	};
 
-	buttons.InsertInfobox = {
-		type: 'button',
-		labelId: $.msg('infobox'),
-		titleId: $.msg('infobox'),
-		className: 'RTEInfoboxButton',
-		forceLogin: true,
-		clicksource: function () {},
-		ckcommand: 'addinfobox'
-	};
-
 	if (window.wgEnableVideoToolExt) {
 		buttons.InsertVideo = {
 			type: 'button',

@@ -10,6 +10,11 @@ require(['jquery', 'wikia.window', 'wikia.loader', 'wikia.mustache', 'wikia.loca
 	}
 
 	function onEditorInit(editor) {
+		editor.ui.addButton && editor.ui.addButton( 'AddInfobox', {
+			label: $.msg('infobox'),
+			command: 'addinfobox',
+		} );
+
 		editor.addCommand('addinfobox', {
 			exec: openInfoboxModal
 		});

@@ -707,6 +707,7 @@
 
 			//Ckeditor upgrade table button fix
 			$('.cke_button_table').wrap('<span class="cke_button cke_button_big"></span>');
+			$('.cke_button_addinfobox').wrap('<span class="cke_button cke_button_big"></span>');
 
 			this.editor.fire('toolbarsRendered',this.editor);
 			this.editor.fire('toolbarsResized',this.editor);
