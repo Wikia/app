@@ -99,7 +99,9 @@ $(function () {
 				});
 
 				if (this.cookies.get('special-video:add-video')) {
-					this.cookies.set('special-video:add-video', null);
+					this.cookies.set('special-video:add-video', null, {
+						path: '/'
+					});
 					addVideoButton.click();
 				}
 
