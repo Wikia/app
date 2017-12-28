@@ -12,9 +12,6 @@
 				<a href="{{url}}" class="image image-thumbnail {{#isVideo}} video video-thumbnail small{{/isVideo}}" title="{{alt}}">
 					<img src="{{thumbnail}}" srcset="{{thumbnail}} 1x, {{thumbnail2x}} 2x" class="pi-image-thumbnail" alt="{{alt}}" width="{{{width}}}" height="{{{height}}}" data-{{media-type}}-key="{{name}}" data-{{media-type}}-name="{{name}}"/>
 					{{#isVideo}}
-						{{#duration}}
-							<span class="duration" itemprop="duration">{{duration}}</span>
-						{{/duration}}
 						<span class="thumbnail-play-icon-container">
 							<svg class="thumbnail-play-icon" viewBox="0 0 180 180" width="100%" height="100%">
 								<g fill="none" fill-rule="evenodd">
