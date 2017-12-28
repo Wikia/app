@@ -76,9 +76,9 @@ class WikiButtons {
 				null, 'more-add-new-image' );
 
 		$addNewVideoButton =
-			new WikiButton( $this->getSpecialPageURL( 'Videos' ) . '?addvideo=1',
+			new WikiButton( $this->getSpecialPageURL( 'Videos' ),
 				new Label( 'community-header-add-new-video', Label::TYPE_TRANSLATABLE_TEXT ), null,
-				null, 'more-add-new-video' );
+				null, 'more-add-new-video', 'wiki-button-add-video' );
 
 		$recentChangesButton =
 			new WikiButton( $this->getSpecialPageURL( 'RecentChanges' ),
@@ -88,7 +88,7 @@ class WikiButtons {
 		$allShortcutsButton =
 			new WikiButton( '#',
 				new Label( 'community-header-all-shortcuts', Label::TYPE_TRANSLATABLE_TEXT ), null,
-				null, 'more-all-shortcuts', 'all-shortcuts' );
+				null, 'more-all-shortcuts', 'wiki-button-all-shortcuts' );
 
 		return [
 			$addNewImageButton,

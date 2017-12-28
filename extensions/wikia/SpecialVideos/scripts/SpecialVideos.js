@@ -98,7 +98,8 @@ $(function () {
 					}
 				});
 
-				if (window.Wikia.Querystring().getVal('addvideo')) {
+				if (this.cookies.get('special-video:add-video')) {
+					this.cookies.set('special-video:add-video', null);
 					addVideoButton.click();
 				}
 
@@ -151,8 +152,9 @@ $(function () {
 			});
 		}
 	};
-	require(['BannerNotification'], function (BannerNotification) {
+	require(['BannerNotification', 'wikia.cookies'], function (BannerNotification, cookies) {
 		SpecialVideos.bannerNotification = new BannerNotification().setType('error');
+		SpecialVideos.cookies = cookies;
 		SpecialVideos.init();
 	});
 
