@@ -76,7 +76,7 @@ class WikiButtons {
 				null, 'more-add-new-image' );
 
 		$addNewVideoButton =
-			new WikiButton( $this->getSpecialPageURL( 'Videos' ),
+			new WikiButton( $this->getSpecialPageURL( 'Videos' ) . '?addvideo=1',
 				new Label( 'community-header-add-new-video', Label::TYPE_TRANSLATABLE_TEXT ), null,
 				null, 'more-add-new-video' );
 

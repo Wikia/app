@@ -97,6 +97,11 @@ $(function () {
 						return false;
 					}
 				});
+
+				if (window.Wikia.Querystring().getVal('addvideo')) {
+					addVideoButton.click();
+				}
+
 			} else {
 				addVideoButton.hide();
 			}
