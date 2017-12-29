@@ -23,6 +23,7 @@
 				td: true,
 				th: true
 			},
+			title: false,
 			baseFloatZIndex: 5000101, // $zTop + 1 from _layout.scss
 			bodyClass: 'WikiaArticle',
 			bodyId: 'bodyContent',
