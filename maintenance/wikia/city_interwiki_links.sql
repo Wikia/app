@@ -114,7 +114,7 @@ REPLACE INTO interwiki (iw_prefix, iw_url, iw_local, iw_trans) VALUES
 ("muweb","http://www.dunstable.com/scripts/MuWebWeb?$1",0,0),
 ("netvillage","http://www.netbros.com/?$1",0,0),
 ("nswiki","http://ns.goobergunch.net/wiki/index.php/$1",0,0),
-("oeis","http://www.research.att.com/cgi-bin/access.cgi/as/njas/sequences/eisA.cgi?Anum=$1",0,0),
+("oeis","http://oeis.org/$1",0,0),
 ("openfacts","http://openfacts.berlios.de/index.phtml?title=$1",0,0),
 ("openwiki","http://openwiki.com/?$1",0,0),
 ("opera7wiki","http://nontroppo.org/wiki/$1",0,0),
