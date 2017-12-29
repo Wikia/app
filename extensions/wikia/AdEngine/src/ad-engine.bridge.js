@@ -31,6 +31,10 @@ function init(
 	TemplateRegistry.init(legacyContext, mercuryListener);
 	ScrollListener.init();
 
+	if (skin === 'mercury') {
+		Context.set('src', 'mobile');
+	}
+
 	Context.extend({slots: slotConfig[skin]});
 	Context.push('listeners.porvata', createTracker(legacyContext, geo, pageLevelTargeting, adTracker));
 
