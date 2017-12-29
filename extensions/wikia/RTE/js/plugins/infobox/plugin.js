@@ -159,7 +159,7 @@ require(['jquery', 'wikia.window', 'wikia.loader', 'wikia.mustache', 'wikia.loca
 
 		if (infoboxName) {
 			CKEDITOR.dialog.getCurrent().hide();
-			RTE.templateEditor.createTemplateEditor(infoboxName,true);
+			RTE.templateEditor.createTemplateEditor(infoboxName);
 		}
 	}
 

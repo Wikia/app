@@ -409,6 +409,13 @@ RTE.templateEditor = {
 				// show dialog footer - buttons
 				$('.templateEditorDialog').find('.cke_dialog_footer').show();
 
+				//hide the 'Choose another template' button if the template is an infobox
+				if ( info.html.search( 'portable-infobox' ) === -1 ){
+					$('.cke_dialog_choose_another_tpl' ).show();
+				} else {
+					$('.cke_dialog_choose_another_tpl' ).hide();
+				}
+
 				// template name (with localised namespace - RT #3808 - and spaces instead of underscores)
 				var templateName = info.title.replace(/_/g, ' ');
 				templateName = templateName.replace(/^Template:/, window.RTEMessages.template + ':');
@@ -546,7 +553,7 @@ RTE.templateEditor = {
 	},
 
 	// show template editor
-	showTemplateEditor: function(placeholder,isInfobox) {
+	showTemplateEditor: function(placeholder) {
 		RTE.log('calling template editor...');
 
 		// open editor for this element
@@ -555,16 +562,10 @@ RTE.templateEditor = {
 		// open template editor
 		RTE.getInstance().openDialog('rte-template');
 
-		if ( isInfobox === true ) {
-		        $('.cke_dialog_choose_another_tpl').hide();
-		}
-		else {
-		        $('.cke_dialog_choose_another_tpl').show();
-		}
 	},
 
 	// create new template placeholder (and maybe show template editor for it)
-	createTemplateEditor: function(templateName,isInfobox) {
+	createTemplateEditor: function(templateName) {
 		// quick hack to make it work in source mode
 		if (RTE.getInstance().mode == 'source') {
 			if (templateName) {
@@ -599,7 +600,7 @@ RTE.templateEditor = {
 			// only show template editor if template contains params
 			if ( (typeof info.availableParams != 'undefined') && (info.availableParams.length > 0) ) {
 				// call template editor
-				self.showTemplateEditor(placeholder,isInfobox);
+				self.showTemplateEditor(placeholder);
 			}
 			else {
 				RTE.log('given template contains no params - inserting...');
