@@ -70,8 +70,13 @@
 		},
 
 		onCkDialogOk: function( event ) {
-			var label = event.data._.name.toLowerCase();
-			this.track( 'dialog-' + label + '-button-ok' );
+			var label = event.data.dialog._.name.toLowerCase();
+			var type = event.data.type;
+
+			this.track({
+				label: 'dialog-' + label + '-button-ok',
+				value: type
+			 });
 		},
 
 		onCkDialogShow: function( event ) {

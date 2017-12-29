@@ -336,7 +336,11 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
 			this.on( 'ok', function( evt ) {
 				// Wikia change - begin @author: kflorence
 				// adding tracking for dialogOk event
-				editor.fire( 'dialogOk', this );
+				if ( RTE.templateEditor.placeholder ) {
+					editor.fire( 'dialogOk', { dialog : this, type : RTE.templateEditor.placeholder.data().info.templateType } );
+				} else {
+					editor.fire( 'dialogOk', { dialog: this });
+				}
 				// Wikia change - end
 
 				// Dialog confirm might probably introduce content changes (http://dev.ckeditor.com/ticket/5415).
