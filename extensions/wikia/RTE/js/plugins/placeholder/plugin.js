@@ -146,7 +146,12 @@ CKEDITOR.plugins.add('rte-placeholder',
 
 				// handle clicks on [delete] button
 				preview.find('.RTEPlaceholderPreviewToolsDelete').bind('click', function(ev) {
-					self.track( 'button-delete' );
+					var trackingLabel = 'button-delete';
+					if (info.templateType) {
+						trackingLabel += '-' + info.templateType;
+					}
+
+					self.track( trackingLabel );
 
 					RTE.tools.confirm(title, lang.confirmDelete, function() {
 						RTE.tools.removeElement(placeholder);
@@ -165,7 +170,12 @@ CKEDITOR.plugins.add('rte-placeholder',
 						// hide preview
 						preview.hide();
 
-						self.track( 'button-edit' );
+						var trackingLabel = 'button-edit';
+						if (info.templateType) {
+							trackingLabel += '-' + info.templateType;
+						}
+
+						self.track( trackingLabel );
 
 						// call editor for this type of placeholder
 						$(placeholder).trigger('edit');

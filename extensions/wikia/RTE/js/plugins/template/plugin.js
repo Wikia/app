@@ -555,7 +555,7 @@ RTE.templateEditor = {
 		// open template editor
 		RTE.getInstance().openDialog('rte-template');
 
-		if ( isInfobox == true ) {
+		if ( isInfobox === true ) {
 		        $('.cke_dialog_choose_another_tpl').hide();
 		}
 		else {

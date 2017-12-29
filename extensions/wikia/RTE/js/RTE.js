@@ -200,17 +200,17 @@
 		onEditorReady: function(event) {
 			var editor = event.editor;
 
-            // check if placeholder is the first element in the editor
-            // if yes, set the cursor on next editable element
-            if( $(editor.editable().$.children[0]).hasClass('placeholder') ){
-                editor.focus();
-                var element = editor.document.getBody();
-                var range = editor.createRange();
-                if(range) {
-                    range.moveToElementEditablePosition(element, true);
-                    range.select();
-                }
-            }
+			// check if placeholder is the first element in the editor
+			// if yes, set the cursor on next editable element
+			if ($(editor.editable().$.children[0]).hasClass('placeholder')) {
+				editor.focus();
+				var element = editor.document.getBody();
+				var range = editor.createRange();
+				if (range) {
+					range.moveToElementEditablePosition(element, true);
+					range.select();
+				}
+			}
 
 			// base colors: use color / background-color from .color1 CSS class
 			RTE.tools.getThemeColors();
@@ -227,8 +227,8 @@
 				}
 			
 				editor.fire('modeSwitch');
-			}
-	
+			};
+
 			// ok, we're done!
 			RTE.loaded.push(editor);
 
