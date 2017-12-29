@@ -351,7 +351,6 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 										<img src="http://thumbnail.jpg" srcset="http://thumbnail.jpg 1x, http://thumbnail2x.jpg 2x" class="pi-image-thumbnail"
 										alt="image alt" width="400" height="200" data-video-key="image"
 										data-video-name="image"/>
-										<span class="duration" itemprop="duration">1:20</span>
 										<span class="thumbnail-play-icon-container">
 											<svg class="thumbnail-play-icon" viewBox="0 0 180 180" width="100%" height="100%">
 												<g fill="none" fill-rule="evenodd">
