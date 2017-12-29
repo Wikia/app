@@ -1,6 +1,6 @@
 import ScrollListener from 'ad-engine/src/listeners/scroll-listener';
 import SlotTweaker from 'ad-engine/src/services/slot-tweaker';
-import updateNavbar from './navbar-updater';
+import { updateNavbar, navBarElement } from './navbar-updater';
 
 export function getConfig() {
 	return {
@@ -26,6 +26,21 @@ export function getConfig() {
 			}
 			if (spotlightFooter) {
 				spotlightFooter.parentNode.style.display = 'none';
+			}
+		},
+		onStickBfaaCallback(adSlot) {
+			adSlot.getElement().classList.add('sticky-bfaa');
+			navBarElement.style.position = 'fixed';
+		},
+		onUnstickBfaaCallback(adSlot) {
+			adSlot.getElement().classList.remove('sticky-bfaa');
+			navBarElement.style.position = '';
+		},
+		moveNavbar(offset) {
+			const styleTop = offset ? `${offset}px` : '';
+
+			if (navBarElement) {
+				navBarElement.style.top = styleTop;
 			}
 		}
 	};

@@ -33,6 +33,9 @@ function runOnReady(iframe, params, mercuryListener) {
 }
 
 export function getConfig(mercuryListener) {
+	let slotElement = null;
+	let navbarElement = null;
+
 	return {
 		slotsToEnable: [
 			'MOBILE_IN_CONTENT',
@@ -42,11 +45,20 @@ export function getConfig(mercuryListener) {
 		onInit(adSlot, params) {
 			const wrapper = document.getElementsByClassName('mobile-top-leaderboard')[0];
 
+			slotElement = adSlot.getElement();
+			navbarElement = document.querySelector('.site-head-container .site-head');
+
 			wrapper.style.opacity = '0';
 			SlotTweaker.onReady(adSlot).then((iframe) => {
 				wrapper.style.opacity = '';
 				runOnReady(iframe, params, mercuryListener);
 			});
+		},
+		moveNavbar(offset) {
+			const adsMobile = window.Mercury.Modules.Ads.getInstance();
+
+			adsMobile.setSiteHeadOffset(slotElement.offsetHeight);
+			navbarElement.style.top = offset ? `${slotElement.offsetHeight}px` : '';
 		}
 	};
 }
