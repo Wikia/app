@@ -29,7 +29,6 @@ CREATE TABLE `ab_experiment_group_ranges` (
   `scripts` blob,
   PRIMARY KEY (`version_id`,`group_id`),
   KEY `group_id` (`group_id`),
-  KEY `version_id` (`version_id`),
   CONSTRAINT `fk_range_group` FOREIGN KEY (`group_id`) REFERENCES `ab_experiment_groups` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_range_version` FOREIGN KEY (`version_id`) REFERENCES `ab_experiment_versions` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -454,4 +453,4 @@ CREATE TABLE `wikiastaff_log` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
--- Dump completed on 2018-01-02 15:12:35
+-- Dump completed on 2018-01-02 15:19:40
