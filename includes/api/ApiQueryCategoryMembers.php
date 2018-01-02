@@ -102,7 +102,7 @@ class ApiQueryCategoryMembers extends ApiQueryGeneratorBase {
 		global $wgMiserMode;
 		$miser_ns = array();
 		if ( $wgMiserMode ) {
-			$miser_ns = $params['namespace'];
+			$miser_ns = $params['namespace'] ?: [];
 		} else {
 			$this->addWhereFld( 'page_namespace', $params['namespace'] );
 		}

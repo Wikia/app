@@ -138,7 +138,7 @@ class ApiQueryLinks extends ApiQueryGeneratorBase {
 		if ( count( $this->getPageSet()->getGoodTitles() ) != 1 ) {
 			$order[] = $this->prefix . '_from' . $dir;
 		}
-		if ( count( $params['namespace'] ) != 1 ) {
+		if ( $params['namespace'] && count( $params['namespace'] ) != 1 ) {
 			$order[] = $this->prefix . '_namespace' . $dir;
 		}
 
