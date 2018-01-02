@@ -165,8 +165,7 @@ CREATE TABLE `global_watchlist` (
   `gwa_timestamp` varchar(14) DEFAULT NULL,
   `gwa_rev_timestamp` varchar(14) DEFAULT NULL,
   UNIQUE KEY `wikia_user` (`gwa_city_id`,`gwa_user_id`,`gwa_namespace`,`gwa_title`),
-  KEY `user_id` (`gwa_user_id`),
-  KEY `user_city_id` (`gwa_user_id`,`gwa_city_id`)
+  KEY `user_id` (`gwa_user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -455,4 +454,4 @@ CREATE TABLE `wikiastaff_log` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
--- Dump completed on 2017-11-29  8:33:17
+-- Dump completed on 2018-01-02 15:12:35
