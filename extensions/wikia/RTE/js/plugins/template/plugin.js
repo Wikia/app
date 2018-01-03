@@ -411,9 +411,9 @@ RTE.templateEditor = {
 
 				//hide the 'Choose another template' button if the template is an infobox
 				if ( info.html.search( 'portable-infobox' ) === -1 ){
-					$('.cke_dialog_choose_another_tpl' ).show();
+					$('.cke_dialog_choose_another_tpl' ).css('visibility', 'visible');
 				} else {
-					$('.cke_dialog_choose_another_tpl' ).hide();
+					$('.cke_dialog_choose_another_tpl' ).css('visibility', 'hidden');
 				}
 
 				// template name (with localised namespace - RT #3808 - and spaces instead of underscores)
