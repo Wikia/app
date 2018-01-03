@@ -5,53 +5,37 @@ class ArticleVideoContext {
 	/**
 	 * Checks if featured video is embedded on given article
 	 *
-	 * @param  string $title Prefixed article title (see: Title::getPrefixedDBkey)
+	 * @param $pageId
 	 *
 	 * @return bool
+	 *
 	 */
-	public static function isFeaturedVideoEmbedded( string $prefixedDbKey ) {
+	public static function isFeaturedVideoEmbedded( string $pageId ) {
 		$wg = F::app()->wg;
 
-		if ( !$wg->enableArticleFeaturedVideo ) {
+		if ( !$wg->enableArticleFeaturedVideo || WikiaPageType::isActionPage()) {
 			return false;
 		}
 
-		$featuredVideos = self::getFeaturedVideos();
+		$mediaId = ArticleVideoService::getFeatureVideoForArticle( $wg->cityId, $pageId );
 
-		return isset( $featuredVideos[$prefixedDbKey] ) &&
-			self::isFeaturedVideosValid( $featuredVideos[$prefixedDbKey] ) &&
-			// Prevents to show video on ?action=history etc.
-			!WikiaPageType::isActionPage();
-	}
-
-	/**
-	 * We are temporarily using two variables for storing the videos data
-	 * as we've run out of memory for one WF field. This will be replaced
-	 * soon by introducing a service to handle featured videos
-	 *
-	 * @return array
-	 */
-	public static function getFeaturedVideos() {
-		$wg = F::app()->wg;
-
-		return array_merge(
-			$wg->articleVideoFeaturedVideos,
-			$wg->articleVideoFeaturedVideos2
-		);
+		return !empty( $mediaId );
 	}
 
 	/**
 	 * Gets video id and labels for featured video
 	 *
-	 * @param string $prefixedDbKey Prefixed article title (see: Title::getPrefixedDBkey)
+	 * @param $pageId
 	 *
 	 * @return array
+	 *
 	 */
-	public static function getFeaturedVideoData( string $prefixedDbKey ) {
+	public static function getFeaturedVideoData( string $pageId ) {
 		$wg = F::app()->wg;
 
-		if ( self::isFeaturedVideoEmbedded( $prefixedDbKey ) ) {
-			$videoData = self::getFeaturedVideos()[$prefixedDbKey];
+		if ( self::isFeaturedVideoEmbedded( $pageId ) ) {
+			$videoData = [];
+			$videoData['mediaId'] = ArticleVideoService::getFeatureVideoForArticle( $wg->cityId, $pageId );
 
 			$details = json_decode(
 				Http::get(
@@ -131,10 +115,6 @@ class ArticleVideoContext {
 		}
 
 		return $isoTime;
-	}
-
-	private static function isFeaturedVideosValid( $featuredVideo ) {
-		return isset( $featuredVideo['mediaId'] );
 	}
 
 	/**

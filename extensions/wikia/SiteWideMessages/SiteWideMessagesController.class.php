@@ -11,7 +11,7 @@ class SiteWideMessagesController extends WikiaController {
 		$title = Title::newFromID( $this->getVal( 'articleId' ) );
 		if ( !is_null( $title ) ) {
 			$isFeaturedVideoEmbedded = !empty( $wgEnableArticleFeaturedVideo ) &&
-				ArticleVideoContext::isFeaturedVideoEmbedded( $title->getPrefixedDBkey() );
+				ArticleVideoContext::isFeaturedVideoEmbedded( $title->getArticleID() );
 		} else {
 			$isFeaturedVideoEmbedded = false;
 		}
