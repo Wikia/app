@@ -44,6 +44,7 @@ abstract class WikiaDatabaseTest extends TestCase {
 		global $IP;
 		static::loadSchemaFile( "$IP/tests/fixtures/user.sql" );
 		static::loadSchemaFile( "$IP/tests/fixtures/user_properties.sql" );
+		static::loadSchemaFile( "$IP/tests/fixtures/dataware.sql" );
 	}
 
 	protected function setUp() {

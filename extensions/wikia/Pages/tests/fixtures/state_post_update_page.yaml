@@ -1,0 +1,19 @@
+pages:
+  -
+    page_wikia_id: 177
+    page_id: 1
+    page_namespace: 0
+    page_title: TestPageOne
+    page_is_content: 1
+    page_is_redirect: 0
+    page_latest: 1
+    page_last_edited: 20110101000000
+  -
+    page_wikia_id: 177
+    page_id: 2
+    page_namespace: 0
+    page_title: TestPageTwo
+    page_is_content: 1
+    page_is_redirect: 0
+    page_latest: 2
+    page_last_edited: 20120202000000
