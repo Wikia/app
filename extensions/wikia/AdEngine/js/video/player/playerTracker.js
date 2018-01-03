@@ -43,6 +43,7 @@ define('ext.wikia.adEngine.video.player.playerTracker', [
 				'pv_unique_id': win.pvUID,
 				'pv_number': pageLevelParams.pv,
 				'country': geo.getCountryCode(),
+				'timestamp': (new Date()).getTime(),
 				'skin': pageLevelParams.skin,
 				'wsi': params.src ? slotTargeting.getWikiaSlotId(params.slotName, params.src) : emptyValue.string,
 				'player': playerName,

@@ -1,4 +1,4 @@
-@import 'extensions/wikia/AdEngine/js/build/styles.scss';
+@import 'extensions/wikia/AdEngine/js/build/bridge.scss';
 @import 'skins/shared/color';
 @import 'skins/shared/mixins/transition';
 @import 'layout';
@@ -55,6 +55,10 @@ $global-navigation-and-sitewide-messages-index: 5000101;
 			float: right; /* invisible tracking pixel is taking up height for some reason.  taking it out of the flow for now */
 		}
 	}
+}
+
+.has-bfaa .WikiaTopAds {
+	z-index: $global-navigation-and-sitewide-messages-index;
 }
 
 .wikia-ad:not(#INVISIBLE_HIGH_IMPACT_2) .provider-container {

@@ -103,6 +103,8 @@ class AdEngine2Hooks {
 	public static function onInstantGlobalsGetNewsAndStoriesVariables( array &$vars ) {
 		// shared variables with communities
 		$vars[] = 'wgAdDriverKikimoraPlayerTrackingCountries';
+		$vars[] = 'wgAdDriverKikimoraTrackingCountries';
+		$vars[] = 'wgAdDriverKikimoraViewabilityTrackingCountries';
 		$vars[] = 'wgAdDriverPlayAdsOnNextVideoCountries';
 		$vars[] = 'wgAdDriverPlayAdsOnNextVideoFrequency';
 		$vars[] = 'wgAdDriverPorvataMoatTrackingCountries';

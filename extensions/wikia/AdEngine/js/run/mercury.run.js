@@ -3,6 +3,7 @@ require([
 	'ad-engine.bridge',
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adLogicPageParams',
+	'ext.wikia.adEngine.adTracker',
 	'ext.wikia.adEngine.slot.service.stateMonitor',
 	'ext.wikia.adEngine.lookup.a9',
 	'ext.wikia.adEngine.lookup.prebid',
@@ -20,6 +21,7 @@ require([
 	adEngineBridge,
 	adContext,
 	pageLevelParams,
+	adTracker,
 	slotStateMonitor,
 	a9,
 	prebid,
@@ -40,7 +42,16 @@ require([
 	// Custom ads (skins, footer, etc)
 	if (geo.isProperGeo(instantGlobals.wgAdDriverAdProductsBridgeMobileCountries)) {
 		adContext.addCallback(function () {
-			adEngineBridge.init(slotRegistry, pageLevelParams.getPageLevelParams(), adContext, btfBlocker, 'mercury');
+			adEngineBridge.init(
+				adTracker,
+				geo,
+				slotRegistry,
+				mercuryListener,
+				pageLevelParams.getPageLevelParams(),
+				adContext,
+				btfBlocker,
+				'mercury'
+			);
 		});
 		win.loadCustomAd = adEngineBridge.loadCustomAd(customAdsLoader.loadCustomAd);
 	} else {

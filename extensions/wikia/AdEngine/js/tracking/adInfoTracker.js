@@ -13,7 +13,8 @@ define('ext.wikia.adEngine.tracking.adInfoTracker',  [
 	var logGroup = 'ext.wikia.adEngine.tracking.adInfoTracker';
 
 	function prepareData(slotName, pageParams, slotParams, creative, bidders) {
-		var data;
+		var data,
+			now = new Date();
 
 		function transformBidderPrice(bidderName) {
 			if (bidders.realSlotPrices && bidders.realSlotPrices[bidderName]) {
@@ -37,7 +38,8 @@ define('ext.wikia.adEngine.tracking.adInfoTracker',  [
 			'pv_unique_id': win.pvUID,
 			'browser': [ browserDetect.getOS(), browserDetect.getBrowser() ].join(' '),
 			'country': pageParams.geo || '',
-			'time_bucket': (new Date()).getHours(),
+			'time_bucket': now.getHours(),
+			'timestamp': now.getTime(),
 			'slot_size': creative.slotSize && creative.slotSize.length ? creative.slotSize.join('x') : '',
 			'kv_s0': pageParams.s0 || '',
 			'kv_s1': pageParams.s1 || '',
