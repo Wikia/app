@@ -32,7 +32,7 @@ function init(
 	TemplateRegistry.init(legacyContext, mercuryListener);
 	ScrollListener.init();
 
-	if (skin === 'mercury') {
+	if (skin === 'mercury' && !legacyContext.get('opts.isAdTestWiki')) {
 		Context.set('src', 'mobile');
 	}
 
