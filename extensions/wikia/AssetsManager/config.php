@@ -106,6 +106,7 @@ $config['adengine2_desktop_js'] = [
 		'//extensions/wikia/AdEngine/js/tracking/adInfoListener.js',
 		'//extensions/wikia/AdEngine/js/tracking/adInfoTracker.js',
 		'//extensions/wikia/AdEngine/js/tracking/pageLayout.js',
+		'//extensions/wikia/AdEngine/js/tracking/scrollDepthTracker.js',
 		'//extensions/wikia/AdEngine/js/tracking/viewabilityTracker.js',
 		'//extensions/wikia/AdEngine/js/utils/AdLogicZoneParams.js',
 		'//extensions/wikia/AdEngine/js/utils/eventDispatcher.js',

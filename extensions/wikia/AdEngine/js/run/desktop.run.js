@@ -19,6 +19,7 @@ require([
 	'ext.wikia.adEngine.slotTweaker',
 	'ext.wikia.adEngine.sourcePointDetection',
 	'ext.wikia.adEngine.tracking.adInfoListener',
+	'ext.wikia.adEngine.tracking.scrollDepthTracker',
 	'ext.wikia.aRecoveryEngine.adBlockDetection',
 	'wikia.geo',
 	'wikia.window'
@@ -41,6 +42,7 @@ require([
 	slotTweaker,
 	sourcePointDetection,
 	adInfoListener,
+	scrollDepthTracker,
 	adBlockDetection,
 	geo,
 	win
@@ -87,6 +89,8 @@ require([
 		adEngineRunner.run(adConfigDesktop, win.adslots2, 'queue.desktop', !!context.opts.delayEngine);
 
 		actionHandler.registerMessageListener();
+
+		scrollDepthTracker.run();
 
 		sourcePointDetection.initDetection();
 
