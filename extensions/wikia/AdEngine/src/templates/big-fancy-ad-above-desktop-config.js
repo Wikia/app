@@ -12,12 +12,24 @@ export function getConfig() {
 		onInit(adSlot, params) {
 			Context.set(`slots.${adSlot.getSlotName()}.options.isVideoMegaEnabled`, params.isVideoMegaEnabled);
 
+			const spotlightFooter = document.getElementById('SPOTLIGHT_FOOTER');
+			const wrapper = document.getElementById('WikiaTopAds');
+
+			wrapper.style.opacity = '0';
 			SlotTweaker.onReady(adSlot).then(() => {
+				wrapper.style.opacity = '';
 				updateNavbar(params.config);
 			});
 			ScrollListener.addCallback(() => {
 				updateNavbar(params.config);
 			});
+
+			if (!window.ads.runtime.disableCommunitySkinOverride) {
+				document.body.classList.add('uap-skin');
+			}
+			if (spotlightFooter) {
+				spotlightFooter.parentNode.style.display = 'none';
+			}
 		}
 	};
 }

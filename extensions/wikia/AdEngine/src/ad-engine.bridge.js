@@ -14,6 +14,7 @@ import UniversalAdPackage from 'ad-products/src/modules/templates/uap/universal-
 import AdUnitBuilder from './ad-unit-builder';
 import config from './context';
 import slotConfig from './slots';
+import './ad-engine.bridge.scss';
 
 Context.extend(config);
 let supportedTemplates = [BigFancyAdAbove, BigFancyAdBelow];
