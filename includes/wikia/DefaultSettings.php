@@ -1394,6 +1394,14 @@ $wgSitewideDisableKrux = false;
  */
 $wgAdDriverKikimoraTrackingCountries = [];
 
+
+/**
+ * @name $wgAdDriverScrollDepthTrackingCountries
+ * List of countries where scroll depth tracking is enabled.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverScrollDepthTrackingCountries = null;
+
 /**
  * @name $wgAdDriverSrcPremiumCountries
  * Enables setting src=premium param for all ad slots on page, when premium video
