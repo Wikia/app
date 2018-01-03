@@ -409,11 +409,13 @@ RTE.templateEditor = {
 				// show dialog footer - buttons
 				$('.templateEditorDialog').find('.cke_dialog_footer').show();
 
+				var $chooseAnotherTemplateButton = $('.cke_dialog_choose_another_tpl' );
+
 				//hide the 'Choose another template' button if the template is an infobox
-				if ( info.html.search( 'portable-infobox' ) === -1 ){
-					$('.cke_dialog_choose_another_tpl' ).css('visibility', 'visible');
+				if (info.html.search( 'portable-infobox' ) === -1 ) {
+					$chooseAnotherTemplateButton.css('visibility', 'visible');
 				} else {
-					$('.cke_dialog_choose_another_tpl' ).css('visibility', 'hidden');
+					$chooseAnotherTemplateButton.css('visibility', 'hidden');
 				}
 
 				// template name (with localised namespace - RT #3808 - and spaces instead of underscores)
