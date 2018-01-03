@@ -73,10 +73,11 @@
 			var label = event.data.dialog._.name.toLowerCase();
 			var type = event.data.type;
 
-			this.track({
-				label: 'dialog-' + label + '-button-ok',
-				value: type
-			 });
+			if (type) {
+				label += '-' + type;
+			}
+
+			this.track({label: 'dialog-' + label + '-button-ok'});
 		},
 
 		onCkDialogShow: function( event ) {
