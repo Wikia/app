@@ -10,7 +10,7 @@ export default {
 	},
 	slots: {},
 	vast: {
-		adUnitId: '/{custom.dfpId}/wka.{targeting.s0}/{targeting.s1}//{targeting.s2}/{src}/{slotName}',
+		adUnitId: '/{custom.dfpId}/wka.{targeting.s0}/{targeting.s1}//{targeting.s2}/{targeting.src}/{slotName}',
 		megaAdUnitId: '/{custom.dfpId}/wka1a.{adGroup}/{adProduct}/{custom.device}/{targeting.skin}-{targeting.s2}/{targeting.s1}-{targeting.s0}'
 	},
 	targeting: {

@@ -32,10 +32,6 @@ function init(
 	TemplateRegistry.init(legacyContext, mercuryListener);
 	ScrollListener.init();
 
-	if (skin === 'mercury' && !legacyContext.get('opts.isAdTestWiki')) {
-		Context.set('src', 'mobile');
-	}
-
 	Context.extend({slots: slotConfig[skin]});
 	Context.push('listeners.porvata', createTracker(legacyContext, geo, pageLevelTargeting, adTracker));
 
@@ -83,6 +79,7 @@ function loadCustomAd(fallback) {
 		if (getSupportedTemplateNames().includes(params.type)) {
 			const slot = SlotService.getBySlotName(params.slotName);
 			slot.container.parentNode.classList.add('gpt-ad');
+
 			Context.set(`slots.${slot.getSlotName()}.targeting.src`, params.src);
 			Context.set(`slots.${slot.getSlotName()}.options.loadedTemplate`, params.type);
 			Context.set(`slots.${slot.getSlotName()}.options.loadedProduct`, params.adProduct);
