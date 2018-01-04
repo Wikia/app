@@ -586,7 +586,7 @@ class RenameUserProcess {
 	 * @param $text String to match
 	 * @return String with HTML to display via AJAX
 	 */
-	public static function testBlock( $text ) {
+	private static function testBlock( $text ) {
 		wfProfileIn( __METHOD__ );
 
 		if ( !class_exists( 'PhalanxService' ) ) {
