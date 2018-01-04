@@ -79,6 +79,7 @@ function loadCustomAd(fallback) {
 		if (getSupportedTemplateNames().includes(params.type)) {
 			const slot = SlotService.getBySlotName(params.slotName);
 			slot.container.parentNode.classList.add('gpt-ad');
+
 			Context.set(`slots.${slot.getSlotName()}.targeting.src`, params.src);
 			Context.set(`slots.${slot.getSlotName()}.options.loadedTemplate`, params.type);
 			Context.set(`slots.${slot.getSlotName()}.options.loadedProduct`, params.adProduct);
