@@ -106,9 +106,6 @@ CKEDITOR.plugins.add('rte-modeswitch',
 						return;
 					}
 
-					//adding empty paragraph to fix the no cursor bug when there is only a template in editarea
-					data.html += '<p></p>';
-
 					// set data first and then set mode to avoid duplicated iframe inclusion and WysiwygModeReady event triggering (BugId:15655)
 					editor.setData(data.html);
 					editor.setMode('wysiwyg');

@@ -525,10 +525,8 @@ class RTEParser extends Parser {
 		// add extra attribute for p tags coming from parser
 		$html = strtr($html, array('<p>' => '<p data-rte-fromparser="true">', '<p ' => '<p data-rte-fromparser="true" '));
 
-		// add empty paragraph for new / empty pages
-		if ($html == '') {
-			$html = Xml::element('p');
-		}
+		// appending empty paragraph to the editarea XW-4367
+		$html .= Xml::element('p');
 
 		// update parser output
 		RTE::log(__METHOD__, $html);
