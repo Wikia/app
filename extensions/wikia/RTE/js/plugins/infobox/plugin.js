@@ -118,10 +118,10 @@ require(['jquery', 'wikia.window', 'wikia.loader', 'wikia.mustache', 'wikia.loca
 							}
 						],
 						onShow: function () {
-							$('.infobox-templates-list').on('click', onInfoboxTemplateChosen);
+							$('.infobox-templates-list').find('a').on('click', onInfoboxTemplateChosen);
 						},
 						onHide: function () {
-							$('.infobox-templates-list').off('click', onInfoboxTemplateChosen);
+							$('.infobox-templates-list').find('a').off('click', onInfoboxTemplateChosen);
 						}
 					};
 				});
