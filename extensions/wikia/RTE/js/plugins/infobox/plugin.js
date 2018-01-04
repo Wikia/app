@@ -11,7 +11,7 @@ require(['jquery', 'wikia.window', 'wikia.loader', 'wikia.mustache', 'wikia.loca
 
 	function onEditorInit(editor) {
 		editor.ui.addButton && editor.ui.addButton( 'AddInfobox', {
-			label: $.msg('infobox'),
+			label: $.msg('rte-infobox'),
 			command: 'addinfobox',
 		} );
 
