@@ -20,12 +20,17 @@ define('ext.wikia.adEngine.tracking.scrollDepthTracker', [
 			return;
 		}
 
-		var currentScrollBreakpoint = scrollBreakpoints.shift();
-
-		win.addEventListener('scroll', throttle(function() {
+		var currentScrollBreakpoint = scrollBreakpoints.shift(),
+		onScroll = throttle(function() {
 			log('on scroll', log.levels.debug, logGroup);
+			if (!currentScrollBreakpoint) {
+				log('no more breakpoints', log.levels.debug, logGroup);
+				win.removeEventListener('scroll', onScroll);
+				
+				return;
+			}
 
-			if (currentScrollBreakpoint && win.pageYOffset >= currentScrollBreakpoint) {
+			if (win.pageYOffset >= currentScrollBreakpoint) {
 				log('breakpoint: ' + currentScrollBreakpoint, log.levels.debug, logGroup);
 
 				var timeOnPage = Math.round((new Date().getTime() - win.performance.timing.domInteractive) / 1000);
@@ -37,7 +42,9 @@ define('ext.wikia.adEngine.tracking.scrollDepthTracker', [
 				});
 				currentScrollBreakpoint = scrollBreakpoints.shift();
 			}
-		}));
+		});
+
+		win.addEventListener('scroll', onScroll);
 	}
 
 	function isEnabled() {
