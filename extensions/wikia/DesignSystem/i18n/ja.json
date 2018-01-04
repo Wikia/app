@@ -1,7 +1,10 @@
 {
   "community-header-add": "投稿",
+  "community-header-add-new-image": "画像を追加",
   "community-header-add-new-page": "新しいページをつくる",
+  "community-header-add-new-video": "動画を追加",
   "community-header-admin-dashboard": "アドミン・ダッシュボード",
+  "community-header-all-shortcuts": "ショートカット",
   "community-header-community": "コミュニティ",
   "community-header-discuss": "ディスカッション",
   "community-header-discussions-post": "件の投稿",
@@ -12,6 +15,7 @@
   "community-header-page": "ページ",
   "community-header-pages": "ページ",
   "community-header-random-page": "おまかせ表示",
+  "community-header-recent-changes": "最近の更新",
   "community-header-videos": "動画",
   "community-header-wiki-activity": "ウィキアクティビティ",
   "global-footer-advertise-header": "広告について",
