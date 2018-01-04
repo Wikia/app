@@ -207,7 +207,7 @@
 				editor.focus();
 				var element = editor.document.getBody();
 				var range = editor.createRange();
-				debugger;
+
 				//Adding empty paragraph to fix the no cursor bug
 				element.appendHtml('<p></p>');
 

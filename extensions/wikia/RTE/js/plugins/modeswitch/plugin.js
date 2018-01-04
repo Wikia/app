@@ -105,7 +105,7 @@ CKEDITOR.plugins.add('rte-modeswitch',
 						editor.fire('modeSwitchCancelled');
 						return;
 					}
-					debugger;
+
 					//adding empty paragraph to fix the no cursor bug when there is only a template in editarea
 					data.html += '<p></p>';
 
