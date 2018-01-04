@@ -89,13 +89,7 @@ require(['jquery', 'wikia.window', 'wikia.loader', 'wikia.mustache', 'wikia.loca
 	}
 
 	function openInfoboxModal(editor) {
-		var api = new window.mw.Api();
-		api.get({
-				format: 'json',
-				action: 'query',
-				list: 'allinfoboxes',
-				uselang: window.wgContentLanguage
-			},
+		$.get('/api.php?format=json&action=query&list=allinfoboxes&uselang=' + window.wgContentLanguage,
 			function (data) {
 				window.CKEDITOR.dialog.add('infobox-dialog', function (editor) {
 					return {
