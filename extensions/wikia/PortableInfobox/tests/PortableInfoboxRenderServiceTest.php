@@ -346,7 +346,7 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 				'output' => '<aside class="portable-infobox pi-background">
 								<figure class="pi-item pi-image">
 									<a href="http://image.jpg"
-									class="image image-thumbnail video video-thumbnail small"
+									class="image image-thumbnail video video-thumbnail"
 									title="image alt">
 										<img src="http://thumbnail.jpg" srcset="http://thumbnail.jpg 1x, http://thumbnail2x.jpg 2x" class="pi-image-thumbnail"
 										alt="image alt" width="400" height="200" data-video-key="image"
