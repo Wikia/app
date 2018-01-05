@@ -62,8 +62,8 @@ export function getConfig(mercuryListener) {
 		moveNavbar(offset) {
 			const adsMobile = window.Mercury.Modules.Ads.getInstance();
 
-			adsMobile.setSiteHeadOffset(slotElement.offsetHeight);
-			navbarElement.style.top = offset ? `${slotElement.offsetHeight}px` : '';
+			adsMobile.setSiteHeadOffset(offset || slotElement.clientHeight);
+			navbarElement.style.top = offset ? `${offset}px` : '';
 		}
 	};
 }
