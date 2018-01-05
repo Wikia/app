@@ -92,16 +92,20 @@ require(['jquery', 'wikia.window', 'wikia.loader', 'wikia.mustache', 'wikia.loca
 		$.get('/api.php?format=json&action=query&list=allinfoboxes&uselang=' + window.wgContentLanguage,
 			function (data) {
 				window.CKEDITOR.dialog.add('infobox-dialog', function (editor) {
-					return {
-						title: $.msg('rte-select-infobox-title'),
-						buttons: [
-							{
+
+					//checking if user has rights to create new template
+					var buttons = window.wgEnablePortableInfoboxBuilderInVE
+						? [{
 								type: 'button',
 								class: 'infobox-dialog-button',
 								label: $.msg('rte-add-template'),
 								onClick: openInfoboxBuilder
-							}
-						],
+							}]
+						: [];
+
+					return {
+						title: $.msg('rte-select-infobox-title'),
+						buttons: buttons,
 						minWidth: 250,
 						minHeight: 300,
 						contents: [
