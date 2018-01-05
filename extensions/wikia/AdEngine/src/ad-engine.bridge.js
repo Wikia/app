@@ -37,6 +37,11 @@ function init(
 
 	overrideSlotService(slotRegistry, legacyBtfBlocker);
 	updatePageLevelTargeting(legacyContext, pageLevelTargeting, skin);
+
+	const wikiIdentifier = legacyContext.get('targeting.wikiIsTop1000') ?
+		Context.get('targeting.s1') : '_not_a_top1k_wiki';
+
+	Context.set('custom.wikiIdentifier', wikiIdentifier);
 }
 
 function overrideSlotService(slotRegistry, legacyBtfBlocker) {
