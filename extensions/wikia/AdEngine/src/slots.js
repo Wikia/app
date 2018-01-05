@@ -3,8 +3,6 @@ export default {
 		'TOP_LEADERBOARD': {
 			disabled: false,
 			slotName: 'TOP_LEADERBOARD',
-			lowerSlotName: 'top_leaderboard',
-			slotGroup: 'LB',
 			sizes: [
 				{
 					viewportSize: [728, 0],
@@ -13,6 +11,7 @@ export default {
 					]
 				}
 			],
+			options: {},
 			defaultSizes: [[2, 2]],
 			targeting: {
 				pos: 'TOP_LEADERBOARD',
@@ -22,14 +21,13 @@ export default {
 		'BOTTOM_LEADERBOARD': {
 			disabled: true,
 			slotName: 'BOTTOM_LEADERBOARD',
-			lowerSlotName: 'bottom_leaderboard',
-			slotGroup: 'PF',
 			sizes: [
 				{
 					viewportSize: [728, 0],
 					sizes: [[728, 90], [970, 250]]
 				}
 			],
+			options: {},
 			defaultSizes: [[2, 2]],
 			targeting: {
 				pos: 'BOTTOM_LEADERBOARD',
@@ -41,14 +39,13 @@ export default {
 		'MOBILE_BOTTOM_LEADERBOARD': {
 			disabled: true,
 			slotName: 'MOBILE_BOTTOM_LEADERBOARD',
-			lowerSlotName: 'mobile_bottom_leaderboard',
-			slotGroup: 'PF',
 			sizes: [
 				{
 					viewportSize: [0, 0],
 					sizes: [[320, 480]]
 				}
 			],
+			options: {},
 			defaultSizes: [[2, 2]],
 			targeting: {
 				pos: 'MOBILE_BOTTOM_LEADERBOARD',
@@ -58,14 +55,13 @@ export default {
 		'MOBILE_TOP_LEADERBOARD': {
 			disabled: false,
 			slotName: 'MOBILE_TOP_LEADERBOARD',
-			lowerSlotName: 'mobile_top_leaderboard',
-			slotGroup: 'TLB',
 			sizes: [
 				{
 					viewportSize: [0, 0],
 					sizes: [[320, 480]]
 				}
 			],
+			options: {},
 			defaultSizes: [[2, 2]],
 			targeting: {
 				pos: 'MOBILE_TOP_LEADERBOARD',
