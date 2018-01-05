@@ -81,7 +81,12 @@
 		},
 
 		onCkDialogShow: function( event ) {
-			var label = event.data._.name.toLowerCase();
+			var label = event.data.dialog._.name.toLowerCase();
+			var type = event.data.type;
+
+			if (type) {
+				label += '-' + type;
+			}
 
 			this.track({
 				action:  Wikia.Tracker.ACTIONS.OPEN,

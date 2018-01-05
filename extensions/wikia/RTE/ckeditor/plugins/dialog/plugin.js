@@ -951,7 +951,14 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
 				CKEDITOR.ui.fire( 'ready', this );
 
 				this.fire( 'show', {} );
-				this._.editor.fire( 'dialogShow', this );
+				if ( RTE.templateEditor.placeholder ) {
+					this._.editor.fire('dialogShow', {
+						dialog: this,
+						type: RTE.templateEditor.placeholder.data().info.templateType
+					});
+				} else {
+					this._.editor.fire( 'dialogShow', {dialog: this} );
+				}
 
 				if ( !this._.parentDialog )
 					this._.editor.focusManager.lock();
