@@ -18,17 +18,6 @@ CREATE TABLE `common_key_value` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Table structure for table `const_values`
---
-
-DROP TABLE IF EXISTS `const_values`;
-CREATE TABLE `const_values` (
-  `name` varchar(50) NOT NULL,
-  `val` int(8) unsigned NOT NULL,
-  PRIMARY KEY (`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
 -- Table structure for table `discussion_reporting`
 --
 
@@ -133,4 +122,4 @@ CREATE TABLE `script_log` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
--- Dump completed on 2017-12-04 11:45:53
+-- Dump completed on 2018-01-05 13:41:08
