@@ -107,8 +107,8 @@
   "community-header-admin-dashboard": "管理員面板",
   "community-header-discussions-post": "篇討論文章",
   "community-header-discussions-posts": "篇討論文章",
-  "community-header-add-new-image": "添加圖片",
-  "community-header-add-new-video": "增加影片",
+  "community-header-add-new-image": "增加新圖片",
+  "community-header-add-new-video": "增加新影片",
   "community-header-recent-changes": "最近更改",
-  "community-header-all-shortcuts": "所有快捷鍵"
+  "community-header-all-shortcuts": "快捷鍵"
 }
