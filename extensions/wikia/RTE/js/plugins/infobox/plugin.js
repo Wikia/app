@@ -147,7 +147,7 @@ require(['jquery', 'wikia.window', 'wikia.loader', 'wikia.mustache', 'wikia.loca
 	}
 
 	function onInfoboxTemplateChosen(event) {
-		WikiaEditor.track('infobox-template-insert-from-plain-list');
+		WikiaEditor.track({label: 'infobox-template-insert-from-plain-list', action: 'add'});
 
 		var infoboxName = decodeURI($(event.target).data('infobox-name'));
 
