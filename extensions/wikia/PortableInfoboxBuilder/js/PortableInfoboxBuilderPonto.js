@@ -1,6 +1,8 @@
 'use strict';
 
 define('wikia.infoboxBuilder.ponto', ['wikia.window', 'ponto'], function (w, ponto) {
+	var currentCallbackId = null;
+
 	function InfoboxBuilderPonto() {
 		/**
 		 * sends wiki context to infobox builder in mercury
@@ -40,6 +42,14 @@ define('wikia.infoboxBuilder.ponto', ['wikia.window', 'ponto'], function (w, pon
 
 		this.returnToCK = function (infoboxTitle) {
 			window.CKEDITOR.fire('new-infobox-created', infoboxTitle);
+		};
+
+		this.exposeForReloading = function (params, callbackId) {
+			currentCallbackId = callbackId;
+		};
+
+		this.reloadInfoboxBuilder = function () {
+			currentCallbackId && ponto.respond({}, currentCallbackId);
 		};
 	}
 
