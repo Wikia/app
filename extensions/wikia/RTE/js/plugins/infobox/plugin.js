@@ -1,4 +1,16 @@
-require(['jquery', 'wikia.window', 'wikia.loader', 'wikia.mustache', 'wikia.location'], function ($, window, loader, mustache, location) {
+require([
+	'jquery',
+	'wikia.window',
+	'wikia.loader',
+	'wikia.mustache',
+	'wikia.location',
+], function (
+	$,
+	window,
+	loader,
+	mustache,
+	location
+) {
 	var infoboxBuilderMarkup = null,
 		infoboxBuilderScripts = null,
 		iframeLoaded = false;
@@ -56,6 +68,11 @@ require(['jquery', 'wikia.window', 'wikia.loader', 'wikia.mustache', 'wikia.loca
 						// further infobox-builder dialog appearences, which in fact causes blank dialogs without
 						// infobox builder. Because of that, the iFrame html needs to be inserted only once too.
 						loader.processScript(infoboxBuilderScripts);
+						require(['wikia.infoboxBuilder.ponto'], function (infoboxBuilderPonto) {
+							$('.infoboxBuilderDialog .cke_dialog_close_button').on('click', function () {
+								infoboxBuilderPonto.getInstance().reloadInfoboxBuilder();
+							});
+						});
 						iframeLoaded = true;
 					}
 
@@ -67,7 +84,7 @@ require(['jquery', 'wikia.window', 'wikia.loader', 'wikia.mustache', 'wikia.loca
 					});
 				}
 			}
-		});
+	});
 
 		CKEDITOR.dialog.getCurrent().hide();
 
