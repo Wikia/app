@@ -90,6 +90,7 @@ class ProtectSiteJS {
 	 * @return boolean
 	 */
 	private static function isAllowedForContentReview( Title $title ) {
-		return Wikia::isUsingSafeJs() && $title->inNamespace( NS_MEDIAWIKI );
+		global $wgAllowUnreviewedJS;
+		return ( Wikia::isUsingSafeJs() || $wgAllowUnreviewedJS ) && $title->inNamespace( NS_MEDIAWIKI );
 	}
 }

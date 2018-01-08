@@ -2914,7 +2914,7 @@ $templates
 	 * @return string
 	 */
 	function getScriptsForBottomQueue( $inHead ) {
-		global $wgUseSiteJs, $wgAllowUserJs, $wgEnableContentReviewExt;
+		global $wgUseSiteJs, $wgAllowUserJs, $wgAllowUnreviewedJS;
 
 		// Script and Messages "only" requests marked for bottom inclusion
 		// If we're in the <head>, use load() calls rather than <script src="..."> tags
@@ -2945,16 +2945,17 @@ $templates
 		$userScripts = array();
 
 		// Add site JS if enabled
+		$extraQuery = [];
 		if ( Wikia::isUsingSafeJs() ) {
-			$extraQuery = [];
-
 			$contentReviewHelper = new \Wikia\ContentReview\Helper();
 			if ( $contentReviewHelper->isContentReviewTestModeEnabled() ) {
 				$extraQuery['current'] = $contentReviewHelper->getJsPagesTimestamp();
 			} else {
 				$extraQuery['reviewed'] = $contentReviewHelper->getReviewedJsPagesTimestamp();
 			}
+		}
 
+		if ( Wikia::isUsingSafeJs() || !empty( $wgAllowUnreviewedJS ) ) {
 			$scripts .= $this->makeResourceLoaderLink( 'site', ResourceLoaderModule::TYPE_SCRIPTS,
 				/* $useESI = */ false, /* $extraQuery = */ $extraQuery, /* $loadCall = */ $inHead
 			);

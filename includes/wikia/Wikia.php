@@ -1731,7 +1731,7 @@ class Wikia {
 	static function canEditInterfaceWhitelist(
 		Title $title, User $wgUser, string $action, &$result
 	): bool {
-		global $wgEditInterfaceWhitelist;
+		global $wgEditInterfaceWhitelist, $wgAllowUnreviewedJS;
 
 		// Allowed actions at this point
 		$allowedActions = [
@@ -1759,7 +1759,7 @@ class Wikia {
 		// In this NS, editinterface applies only to white listed pages
 		if ( in_array( $title->getDBKey(), $wgEditInterfaceWhitelist )
 			|| $title->isCssPage()
-			|| ( Wikia::isUsingSafeJs() && $title->isJsPage() )
+			|| ( ( Wikia::isUsingSafeJs() || !empty( $wgAllowUnreviewedJS ) ) && $title->isJsPage() )
 			|| startsWith( lcfirst( $title->getDBKey() ), self::CUSTOM_INTERFACE_PREFIX )
 			|| startsWith( lcfirst( $title->getDBKey() ), self::EDITNOTICE_INTERFACE_PREFIX )
 			|| startsWith( lcfirst( $title->getDBKey() ), self::TAG_INTERFACE_PREFIX )
@@ -1850,13 +1850,13 @@ class Wikia {
 	}
 
 	public static function onWikiaSkinTopScripts( &$vars, &$scripts, Skin $skin ) {
-		global $wgWikiDirectedAtChildrenByFounder;
+		global $wgWikiDirectedAtChildrenByFounder, $wgAllowUnreviewedJS;
 
 		if ( !empty( $wgWikiDirectedAtChildrenByFounder ) ) {
 			$vars['wgWikiDirectedAtChildrenByFounder'] = $wgWikiDirectedAtChildrenByFounder;
 		}
 
-		if ( self::isUsingSafeJs() ) {
+		if ( self::isUsingSafeJs() || !empty( $wgAllowUnreviewedJS ) ) {
 			$vars['wgUseSiteJs'] = true;
 		}
 
