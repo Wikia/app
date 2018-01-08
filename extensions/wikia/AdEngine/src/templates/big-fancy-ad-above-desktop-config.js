@@ -19,6 +19,7 @@ export function getConfig() {
 			SlotTweaker.onReady(adSlot).then(() => {
 				wrapper.style.opacity = '';
 				updateNavbar(params.config);
+				this.moveNavbar(adSlot.getElement().offsetHeight);
 			});
 			ScrollListener.addCallback(() => {
 				updateNavbar(params.config);
@@ -40,10 +41,8 @@ export function getConfig() {
 			navBarElement.style.position = '';
 		},
 		moveNavbar(offset) {
-			const styleTop = offset ? `${offset}px` : '';
-
 			if (navBarElement) {
-				navBarElement.style.top = styleTop;
+				navBarElement.style.top = offset ? `${offset}px` : '';
 			}
 		}
 	};
