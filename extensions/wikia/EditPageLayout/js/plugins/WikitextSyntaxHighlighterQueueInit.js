@@ -36,7 +36,7 @@
 
 			initSyntaxHighlighting: function () {
 				if (WikiTextSyntaxHighlighter) {
-					if (this.editor.mode === 'source') {
+					if (this.editor.mode === 'source' && this.editor.ready ) {
 						var textarea = this.editor.getEditbox()[0],
 							config = this.initConfig();
 

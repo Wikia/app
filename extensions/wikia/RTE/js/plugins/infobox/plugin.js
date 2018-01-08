@@ -23,7 +23,7 @@ require([
 
 	function onEditorInit(editor) {
 		editor.ui.addButton && editor.ui.addButton( 'AddInfobox', {
-			label: $.msg('infobox'),
+			label: $.msg('rte-infobox'),
 			command: 'addinfobox',
 		} );
 
@@ -106,25 +106,23 @@ require([
 	}
 
 	function openInfoboxModal(editor) {
-		var api = new window.mw.Api();
-		api.get({
-				format: 'json',
-				action: 'query',
-				list: 'allinfoboxes',
-				uselang: window.wgContentLanguage
-			},
+		$.get('/api.php?format=json&action=query&list=allinfoboxes&uselang=' + window.wgContentLanguage,
 			function (data) {
 				window.CKEDITOR.dialog.add('infobox-dialog', function (editor) {
-					return {
-						title: $.msg('rte-select-infobox-title'),
-						buttons: [
-							{
+
+					//checking if user has rights to create new template
+					var buttons = window.wgEnablePortableInfoboxBuilderInVE
+						? [{
 								type: 'button',
 								class: 'infobox-dialog-button',
 								label: $.msg('rte-add-template'),
 								onClick: openInfoboxBuilder
-							}
-						],
+							}]
+						: [];
+
+					return {
+						title: $.msg('rte-select-infobox-title'),
+						buttons: buttons,
 						minWidth: 250,
 						minHeight: 300,
 						contents: [
@@ -141,10 +139,10 @@ require([
 							}
 						],
 						onShow: function () {
-							$('.infobox-templates-list').on('click', onInfoboxTemplateChosen);
+							$('.infobox-templates-list a').on('click', onInfoboxTemplateChosen);
 						},
 						onHide: function () {
-							$('.infobox-templates-list').off('click', onInfoboxTemplateChosen);
+							$('.infobox-templates-list a').off('click', onInfoboxTemplateChosen);
 						}
 					};
 				});
@@ -170,7 +168,7 @@ require([
 	}
 
 	function onInfoboxTemplateChosen(event) {
-		WikiaEditor.track('infobox-template-insert-from-plain-list');
+		WikiaEditor.track({label: 'infobox-template-insert-from-plain-list', action: 'add'});
 
 		var infoboxName = decodeURI($(event.target).data('infobox-name'));
 
