@@ -1,7 +1,7 @@
 import Context from 'ad-engine/src/services/context-service';
 import ScrollListener from 'ad-engine/src/listeners/scroll-listener';
 import SlotTweaker from 'ad-engine/src/services/slot-tweaker';
-import updateNavbar from './navbar-updater';
+import { updateNavbar, navBarElement } from './navbar-updater';
 
 export function getConfig() {
 	return {
@@ -19,6 +19,7 @@ export function getConfig() {
 			SlotTweaker.onReady(adSlot).then(() => {
 				wrapper.style.opacity = '';
 				updateNavbar(params.config);
+				this.moveNavbar(adSlot.getElement().offsetHeight);
 			});
 			ScrollListener.addCallback(() => {
 				updateNavbar(params.config);
@@ -29,6 +30,19 @@ export function getConfig() {
 			}
 			if (spotlightFooter) {
 				spotlightFooter.parentNode.style.display = 'none';
+			}
+		},
+		onStickBfaaCallback(adSlot) {
+			adSlot.getElement().classList.add('sticky-bfaa');
+			navBarElement.style.position = 'fixed';
+		},
+		onUnstickBfaaCallback(adSlot) {
+			adSlot.getElement().classList.remove('sticky-bfaa');
+			navBarElement.style.position = '';
+		},
+		moveNavbar(offset) {
+			if (navBarElement) {
+				navBarElement.style.top = offset ? `${offset}px` : '';
 			}
 		}
 	};

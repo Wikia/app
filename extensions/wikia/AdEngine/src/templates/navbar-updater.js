@@ -1,8 +1,8 @@
 const leaderboard = document.getElementById('TOP_LEADERBOARD');
 const navBarStickClass = 'bfaa-pinned';
-const navBarElement = document.getElementById('globalNavigation');
+export const navBarElement = document.getElementById('globalNavigation');
 
-function updateNavbar(bfaaConfig) {
+export function updateNavbar(bfaaConfig) {
 	if (isElementInViewport(bfaaConfig)) {
 		navBarElement.classList.add(navBarStickClass);
 	} else {
@@ -19,5 +19,3 @@ function isElementInViewport(bfaaConfig) {
 
 	return position <= leaderboard.offsetHeight;
 }
-
-export default updateNavbar;
