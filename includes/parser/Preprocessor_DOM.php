@@ -1198,13 +1198,20 @@ class PPFrame_DOM implements PPFrame {
 								'placeholder' => 1
 							];
 
-							$out .= Html::rawElement( 'div', [
+							$attributes = [
 								'class' => "placeholder placeholder-double-brackets",
 								'data-rte-instance' => RTE::getInstanceId(),
 								'data-rte-meta' => RTEReverseParser::encodeRTEData( $rteData ),
 								'type' => 'double-brackets',
 								'contenteditable' => 'false',
-							], PHP_EOL . $ret['text'] );
+							];
+
+							// XW-4466: For template transclusions that are not on their own line, use an inline wrapper
+							if ( $lineStart ) {
+								$out .= Html::rawElement( 'div', $attributes, PHP_EOL . $ret['text'] );
+							} else {
+								$out .= Html::rawElement( 'span', $attributes, $ret['text'] );
+							}
 						} else {
 							$out .= $ret['text'];
 						}
