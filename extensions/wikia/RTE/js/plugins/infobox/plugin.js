@@ -69,9 +69,14 @@ require([
 						// infobox builder. Because of that, the iFrame html needs to be inserted only once too.
 						loader.processScript(infoboxBuilderScripts);
 						require(['wikia.infoboxBuilder.ponto'], function (infoboxBuilderPonto) {
-							$('.infoboxBuilderDialog .cke_dialog_close_button').on('click', function () {
+							var $closeButton = $('.infoboxBuilderDialog .cke_dialog_close_button');
+
+							function reloadInfoboxBuilder() {
 								infoboxBuilderPonto.getInstance().reloadInfoboxBuilder();
-							});
+								$closeButton.off('click', reloadInfoboxBuilder)
+							}
+
+							$closeButton.on('click', reloadInfoboxBuilder);
 						});
 						iframeLoaded = true;
 					}
