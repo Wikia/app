@@ -1,7 +1,8 @@
 require(['jquery', 'wikia.window', 'wikia.loader', 'wikia.mustache', 'wikia.location'], function ($, window, loader, mustache, location) {
 	var infoboxBuilderMarkup = null,
 		infoboxBuilderScripts = null,
-		iframeLoaded = false;
+		iframeLoaded = false,
+		isInfoboxListDialogOpen = false;
 
 	function registerPlugin() {
 		window.CKEDITOR.plugins.add('rte-infobox', {
@@ -89,6 +90,12 @@ require(['jquery', 'wikia.window', 'wikia.loader', 'wikia.mustache', 'wikia.loca
 	}
 
 	function openInfoboxModal(editor) {
+		if (isInfoboxListDialogOpen) {
+			return;
+		}
+
+		isInfoboxListDialogOpen = true;
+
 		$.get('/api.php?format=json&action=query&list=allinfoboxes&uselang=' + window.wgContentLanguage,
 			function (data) {
 				window.CKEDITOR.dialog.add('infobox-dialog', function (editor) {
@@ -125,6 +132,7 @@ require(['jquery', 'wikia.window', 'wikia.loader', 'wikia.mustache', 'wikia.loca
 							$('.infobox-templates-list a').on('click', onInfoboxTemplateChosen);
 						},
 						onHide: function () {
+							isInfoboxListDialogOpen = false;
 							$('.infobox-templates-list a').off('click', onInfoboxTemplateChosen);
 						}
 					};
