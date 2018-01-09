@@ -5,12 +5,13 @@
  */
 class SpecialDiscussionsLogHooks {
 	public static function onContributionsToolLinks( $id, $nt, &$tools ) {
+		global $wgTitle;
+
 		if ( F::app()->wg->User->isAllowed( 'specialdiscussionslog' ) ) {
-			$tools[] = Linker::link(
-				SpecialPage::getSafeTitleFor( 'DiscussionsLog' ),
-				wfMessage( 'discussionslog-contributions-link-title' )->escaped(),
-				[],
-				['username' => User::newFromId( $id )->getName()]
+			$urlHost = parse_url( $wgTitle->getFullURL(), PHP_URL_HOST );
+			$tools[] = Linker::makeExternalLink(
+				'http://' . $urlHost . '/d/log?username=' . User::newFromId( $id )->getName(),
+				wfMessage( 'discussionslog-contributions-link-title' )->escaped()
 			);
 		}
 
