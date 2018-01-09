@@ -1113,11 +1113,12 @@ class Sanitizer {
 		# RTE (Rich Text Editor) - begin
 		# @author: Inez Korczyński
 		global $wgRTEParserEnabled;
-		if(!empty($wgRTEParserEnabled)) {
-			if(strpos($text, "\x7f") !== false) {
+		if ( !empty( $wgRTEParserEnabled ) && !isset( $stripped['contenteditable'] ) ) {
+			if ( strpos( $text, "\x7f" ) !== false ) {
 				RTE::$edgeCases[] = 'COMPLEX.08';
 			}
-			$attribs[] = RTEParser::encodeAttributesStr($text);
+			
+			$attribs[] = RTEParser::encodeAttributesStr( $text );
 		}
 		# RTE - end
 
