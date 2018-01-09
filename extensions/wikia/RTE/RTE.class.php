@@ -275,6 +275,11 @@ class RTE {
 		$user = $app->wg->user;
 
 		if ( $app->checkSkin( 'oasis' ) ) {
+			/*
+			 * On Oasis we need to load both Common.css and Wikia.css
+			 * to use it inside of the editor's textarea in visual mode
+			 * module 'site' contains both stylesheets
+			 */
 			$url = ResourceLoader::makeLoaderURL(
 				['site'],
 				$out->getLanguage()->getCode(),
