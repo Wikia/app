@@ -1,22 +1,27 @@
 import { EventEmitter } from 'events';
+import {
+	client,
+	context,
+	scrollListener,
+	slotListener,
+	slotService,
+	templateService,
+	utils
+} from '@wikia/ad-engine';
+import {
+	BigFancyAdAbove,
+	BigFancyAdBelow,
+	universalAdPackage
+} from '@wikia/ad-products';
+
 import { createTracker } from './tracking/porvata-tracker-factory';
-import Client from 'ad-engine/src/utils/client';
-import Context from 'ad-engine/src/services/context-service';
-import ScrollListener from 'ad-engine/src/listeners/scroll-listener';
-import SlotListener from 'ad-engine/src/listeners/slot-listener';
-import SlotService from 'ad-engine/src/services/slot-service';
-import StringBuilder from 'ad-engine/src/utils/string-builder';
 import TemplateRegistry from './templates/templates-registry';
-import TemplateService from 'ad-engine/src/services/template-service';
-import BigFancyAdAbove from 'ad-products/src/modules/templates/uap/big-fancy-ad-above';
-import BigFancyAdBelow from 'ad-products/src/modules/templates/uap/big-fancy-ad-below';
-import UniversalAdPackage from 'ad-products/src/modules/templates/uap/universal-ad-package';
 import AdUnitBuilder from './ad-unit-builder';
 import config from './context';
 import slotConfig from './slots';
 import './ad-engine.bridge.scss';
 
-Context.extend(config);
+context.extend(config);
 let supportedTemplates = [BigFancyAdAbove, BigFancyAdBelow];
 
 function init(
@@ -30,36 +35,36 @@ function init(
 	skin
 ) {
 	TemplateRegistry.init(legacyContext, mercuryListener);
-	ScrollListener.init();
+	scrollListener.init();
 
-	Context.extend({slots: slotConfig[skin]});
-	Context.push('listeners.porvata', createTracker(legacyContext, geo, pageLevelTargeting, adTracker));
+	context.extend({slots: slotConfig[skin]});
+	context.push('listeners.porvata', createTracker(legacyContext, geo, pageLevelTargeting, adTracker));
 
 	overrideSlotService(slotRegistry, legacyBtfBlocker);
 	updatePageLevelTargeting(legacyContext, pageLevelTargeting, skin);
 
 	const wikiIdentifier = legacyContext.get('targeting.wikiIsTop1000') ?
-		Context.get('targeting.s1') : '_not_a_top1k_wiki';
+		context.get('targeting.s1') : '_not_a_top1k_wiki';
 
-	Context.set('custom.wikiIdentifier', wikiIdentifier);
+	context.set('custom.wikiIdentifier', wikiIdentifier);
 }
 
 function overrideSlotService(slotRegistry, legacyBtfBlocker) {
-	SlotService.getBySlotName = (id) => {
+	slotService.getBySlotName = (id) => {
 		let slot = slotRegistry.get(id);
 		if (id && slot) {
 			return unifySlotInterface(slot);
 		}
 	};
 
-	SlotService.legacyEnabled = SlotService.enable;
-	SlotService.enable = (slotName) => {
+	slotService.legacyEnabled = slotService.enable;
+	slotService.enable = (slotName) => {
 		legacyBtfBlocker.unblock(slotName);
 	};
 }
 
 function unifySlotInterface(slot) {
-	const slotContext = Context.get(`slots.${slot.name}`) || {targeting: {}};
+	const slotContext = context.get(`slots.${slot.name}`) || {targeting: {}};
 
 	slot = Object.assign(new EventEmitter(), slot, {
 		config: slotContext,
@@ -73,7 +78,7 @@ function unifySlotInterface(slot) {
 		getVideoAdUnit: () => AdUnitBuilder.build(slot)
 	});
 	slot.pre('viewed', (event) => {
-		SlotListener.emitImpressionViewable(event, slot);
+		slotListener.emitImpressionViewable(event, slot);
 	});
 
 	return slot;
@@ -82,14 +87,14 @@ function unifySlotInterface(slot) {
 function loadCustomAd(fallback) {
 	return (params) => {
 		if (getSupportedTemplateNames().includes(params.type)) {
-			const slot = SlotService.getBySlotName(params.slotName);
+			const slot = slotService.getBySlotName(params.slotName);
 			slot.container.parentNode.classList.add('gpt-ad');
 
-			Context.set(`slots.${slot.getSlotName()}.targeting.src`, params.src);
-			Context.set(`slots.${slot.getSlotName()}.options.loadedTemplate`, params.type);
-			Context.set(`slots.${slot.getSlotName()}.options.loadedProduct`, params.adProduct);
+			context.set(`slots.${slot.getSlotName()}.targeting.src`, params.src);
+			context.set(`slots.${slot.getSlotName()}.options.loadedTemplate`, params.type);
+			context.set(`slots.${slot.getSlotName()}.options.loadedProduct`, params.adProduct);
 
-			TemplateService.init(params.type, slot, params);
+			templateService.init(params.type, slot, params);
 		} else {
 			fallback(params);
 		}
@@ -101,17 +106,17 @@ function getSupportedTemplateNames() {
 }
 
 function updatePageLevelTargeting(legacyContext, params, skin) {
-	Context.set('custom.device', Client.getDeviceType());
-	Context.set('targeting.skin', skin);
-	Context.set('options.video.moatTracking.enabled', legacyContext.get('opts.porvataMoatTrackingEnabled'));
-	Context.set('options.video.moatTracking.sampling', legacyContext.get('opts.porvataMoatTrackingSampling'));
+	context.set('custom.device', utils.client.getDeviceType());
+	context.set('targeting.skin', skin);
+	context.set('options.video.moatTracking.enabled', legacyContext.get('opts.porvataMoatTrackingEnabled'));
+	context.set('options.video.moatTracking.sampling', legacyContext.get('opts.porvataMoatTrackingSampling'));
 
-	Object.keys(params).forEach((key) => Context.set(`targeting.${key}`, params[key]));
+	Object.keys(params).forEach((key) => context.set(`targeting.${key}`, params[key]));
 }
 
 export {
 	init,
 	loadCustomAd,
-	Context,
-	UniversalAdPackage
+	context,
+	universalAdPackage
 };

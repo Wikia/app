@@ -1,6 +1,4 @@
-import Context from 'ad-engine/src/services/context-service';
-import ScrollListener from 'ad-engine/src/listeners/scroll-listener';
-import SlotTweaker from 'ad-engine/src/services/slot-tweaker';
+import { context, scrollListener, slotTweaker } from '@wikia/ad-engine';
 import { updateNavbar, navBarElement } from './navbar-updater';
 
 export function getConfig() {
@@ -10,18 +8,18 @@ export function getConfig() {
 			'INCONTENT_BOXAD_1'
 		],
 		onInit(adSlot, params) {
-			Context.set(`slots.${adSlot.getSlotName()}.options.isVideoMegaEnabled`, params.isVideoMegaEnabled);
+			context.set(`slots.${adSlot.getSlotName()}.options.isVideoMegaEnabled`, params.isVideoMegaEnabled);
 
 			const spotlightFooter = document.getElementById('SPOTLIGHT_FOOTER');
 			const wrapper = document.getElementById('WikiaTopAds');
 
 			wrapper.style.opacity = '0';
-			SlotTweaker.onReady(adSlot).then(() => {
+			slotTweaker.onReady(adSlot).then(() => {
 				wrapper.style.opacity = '';
 				updateNavbar(params.config);
 				this.moveNavbar(adSlot.getElement().offsetHeight);
 			});
-			ScrollListener.addCallback(() => {
+			scrollListener.addCallback(() => {
 				updateNavbar(params.config);
 			});
 
