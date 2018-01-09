@@ -38,7 +38,6 @@ DROP TABLE IF EXISTS `events_local_users`;
 CREATE TABLE `events_local_users` (
   `wiki_id` int(8) unsigned NOT NULL,
   `user_id` int(10) unsigned NOT NULL,
-  `user_name` varchar(255) NOT NULL DEFAULT '',
   `edits` int(11) unsigned NOT NULL DEFAULT '0',
   `editdate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `last_revision` int(11) NOT NULL DEFAULT '0',
@@ -47,7 +46,7 @@ CREATE TABLE `events_local_users` (
   `all_groups` mediumtext NOT NULL,
   `user_is_blocked` tinyint(1) DEFAULT '0',
   `user_is_closed` tinyint(1) DEFAULT '0',
-  PRIMARY KEY (`wiki_id`,`user_id`,`user_name`),
+  PRIMARY KEY (`wiki_id`,`user_id`),
   KEY `user_edits` (`user_id`,`edits`,`wiki_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=DYNAMIC;
 
@@ -122,4 +121,4 @@ CREATE TABLE `script_log` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
--- Dump completed on 2018-01-05 13:41:08
+-- Dump completed on 2018-01-09 10:57:24
