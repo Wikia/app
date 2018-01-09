@@ -281,6 +281,10 @@ CKEDITOR.plugins.add( 'richcombo', {
 				};
 
 				list.onClick = function( value, marked ) {
+					// Wikia - start
+					//Adding tracking for panelClick event
+					editor.fire('panelClick', {panel: this, me: me, value: value});
+					// Wikia - end
 
 					if ( me.onClick )
 						me.onClick.call( me, value, marked );

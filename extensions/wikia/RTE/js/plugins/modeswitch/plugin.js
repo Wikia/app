@@ -125,6 +125,16 @@ CKEDITOR.plugins.add('rte-modeswitch',
 		// (BugId:19807)
 		if (editor.config.startupFocus) {
 			editor.focus();
+			// refocus the cursor into the editarea | XW-4398
+			if ( editor.mode === 'wysiwyg'){
+				var element = editor.document.getBody();
+				var range = editor.createRange();
+
+				if (range) {
+					range.moveToElementEditablePosition(element, true);
+					range.select();
+				}
+			}
 		}
 	},
 

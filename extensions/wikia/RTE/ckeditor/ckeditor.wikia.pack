@@ -196,7 +196,7 @@ packages :
 				'../js/plugins/temporary-save/plugin.js'
 				'../js/plugins/toolbar/plugin.js'
 				'../js/plugins/tools/plugin.js'
-
+				'../js/plugins/infobox/plugin.js'
 
 					//experimental!
 					'themes/wikia/theme.js'

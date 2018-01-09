@@ -113,6 +113,14 @@ class RTE {
 		// check 'useeditor' URL param, user settings...
 		self::checkEditorConditions();
 
+		JSMessages::registerPackage( 'rte-infobox-builder', [
+			'rte-infobox',
+			'rte-add-template',
+			'rte-select-infobox-title',
+			'rte-infobox-builder'
+		] );
+		JSMessages::enqueuePackage( 'rte-infobox-builder', JSMessages::INLINE );
+
 		// add global JS variables
 		$wgHooks['MakeGlobalVariablesScript'][] = 'RTE::makeGlobalVariablesScript';
 

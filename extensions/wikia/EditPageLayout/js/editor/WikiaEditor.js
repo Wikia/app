@@ -707,6 +707,7 @@
 
 			//Ckeditor upgrade table button fix
 			$('.cke_button_table').wrap('<span class="cke_button cke_button_big"></span>');
+			$('.cke_button_addinfobox').wrap('<span class="cke_button cke_button_big"></span>');
 
 			this.editor.fire('toolbarsRendered',this.editor);
 			this.editor.fire('toolbarsResized',this.editor);
@@ -1083,6 +1084,9 @@
 		},
 
 		modeChanged: function( editor, mode ) {
+			//show/hide infobox button
+			mode == 'source' ? $('.RTEInfoboxButton').addClass('cke_hidden') : $('.RTEInfoboxButton').removeClass('cke_hidden');
+
 			// show/hide appropriate buttons
 			for (var name in this.modeAwareCommands) {
 				var command = this.editor.ck.getCommand(name);

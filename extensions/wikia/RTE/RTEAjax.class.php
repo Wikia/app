@@ -139,11 +139,12 @@ class RTEAjax {
 	 * Get info about given wikitext with double brackets syntax (templates, magic words, parser functions)
 	 */
 	static public function resolveDoubleBrackets() {
-		global $wgRequest, $wgTitle, $wgRDBData;
+		global $wgRequest, $wgTitle, $wgRDBData, $wgCityId;
 
 		$templateHelper = new TemplatePageHelper();
 		$wikitext = $wgRequest->getVal( 'wikitext', '' );
 		$html = $templateHelper->getHtml( $wikitext, $wgTitle );
+		$tcs = new TemplateClassificationService();
 
 		// processing data from RDB mode
 		if(!is_array($wgRDBData) || !isset($wgRDBData['type']) || $wgRDBData['type'] == 'error') {
@@ -157,6 +158,7 @@ class RTEAjax {
 				if ($out['exists']) {
 					$templateHelper->setTemplateByTitle( $wgRDBData['title'] );
 					$out['availableParams'] = $templateHelper->getTemplateParams();
+					$out['templateType'] = $tcs->getType($wgCityId, $wgRDBData['title']->getArticleID());
 				}
 
 				// Get key and value for each argument

@@ -20,6 +20,10 @@ $messages['en'] = array(
 	'rte-enablerichtexteditormessage' => 'Rich Text Editor enabled!',
 	'rte-first-run-notice' => 'We have made some improvements to the rich text editor. For more information please visit the [[Help:Rich text editor|help page]].',
 	'prefs-rte' => 'Rich Text Editor',
+	'rte-infobox' => 'Infobox',
+	'rte-add-template' => 'Add a new template',
+	'rte-select-infobox-title' => 'Select infobox to insert',
+	'rte-infobox-builder' => 'Infobox Builder',
 );
 
 $messages['qqq'] = array(
@@ -27,6 +31,10 @@ $messages['qqq'] = array(
 	'rte-edgecase-triplecurls' => '{{Identical|Template parameter}}',
 	'rte-edgecase-redirect' => '{{Identical|Redirect}}',
 	'enablerichtexteditor' => '{{Related|Source mode (wikia)}}',
+	'rte-infobox' => 'Title and tooltip of the button that opens infobox insertion dialog',
+	'rte-add-template' => 'Label for the button that opens infobox builder',
+	'rte-select-infobox-title' => 'Title of the dialog with the list of infoboxes to insert',
+	'rte-infobox-builder' => 'Title of the dialog displaying infobox builder',
 );
 
 $messages['af'] = array(
@@ -172,6 +180,10 @@ $messages['de'] = array(
 * Falls du zurück zum alten Editor wechseln möchtest, kannst du das im ''Bearbeiten''-Reiter in deinen [[Special:Preferences#prefsection-4|Einstellungen]] tun.",
 	'rte-first-run-notice' => 'Wir haben den Editor verbessert. Weitere Informationen findest du in [http://de.wikia.com/wiki/Benutzer_Blog:Avatar/Neue_Version_des_grafischen_Editors dieser Ankündigung].',
 	'prefs-rte' => 'Grafischer Editor',
+	'rte-infobox' => 'Infobox',
+	'rte-add-template' => 'Neue Vorlage hinzufügen',
+	'rte-select-infobox-title' => 'Infobox zum Einfügen auswählen',
+	'rte-infobox-builder' => 'Infobox-Builder',
 );
 
 $messages['de-formal'] = array(
@@ -213,6 +225,10 @@ $messages['es'] = array(
 ''Ten en cuenta que el nuevo editor está disponible actualmente en la mayoría de los wikis, pero no en todos.''",
 	'rte-first-run-notice' => 'Hemos hecho algunas mejoras al editor. Para saber más, [http://www.wikia.com/wiki/User_blog:Kirkburn/Rich_text_editor_upgrade_news lee el anuncio].',
 	'prefs-rte' => 'Editor de Texto Enriquecido',
+	'rte-infobox' => 'Infobox',
+	'rte-add-template' => 'Añadir una plantilla',
+	'rte-select-infobox-title' => 'Selecciona la infobox que vas a insertar',
+	'rte-infobox-builder' => 'Constructor de Infoboxes',
 );
 
 $messages['fa'] = array(
@@ -246,6 +262,10 @@ $messages['fr'] = array(
 	'rte-enablerichtexteditormessage' => 'Éditeur de texte enrichi activé !',
 	'rte-first-run-notice' => "Nous avons apporté quelques améliorations à l'éditeur. Pour en savoir plus, [http://www.wikia.com/wiki/User_blog:Kirkburn/Rich_text_editor_upgrade_news lisez l'annonce].",
 	'prefs-rte' => 'Éditeur de texte enrichi',
+	'rte-infobox' => 'Infobox',
+	'rte-add-template' => 'Ajouter un nouveau modèle',
+	'rte-select-infobox-title' => 'Sélectionnez l\'infobox à insérer',
+	'rte-infobox-builder' => 'Outil de création d\'infobox',
 );
 
 $messages['gl'] = array(
@@ -330,6 +350,10 @@ $messages['it'] = array(
 	'rte-edgecase-unclosed-tags' => 'unclosed HTML tag',
 	'rte-enablerichtexteditormessage' => 'Rich Text Editor enabled!',
 	'rte-first-run-notice' => 'We have made some improvements to the rich text editor. For more information please visit the [[Help:Rich text editor|help page]].',
+	'rte-infobox' => 'Infobox',
+	'rte-add-template' => 'Aggiungi un nuovo template',
+	'rte-select-infobox-title' => 'Seleziona l\'infobox da inserire',
+	'rte-infobox-builder' => 'Infobox Builder',
 );
 
 $messages['ja'] = array(
@@ -351,6 +375,10 @@ $messages['ja'] = array(
 	'rte-enablerichtexteditormessage' => 'リッチテキストエディタを有効にしました',
 	'rte-first-run-notice' => '私たちは、エディタの改善に取り組んでいます。詳細につきましては、[http://www.wikia.com/wiki/User_blog:Kirkburn/Rich_text_editor_upgrade_news アナウンスを確認してください。]',
 	'prefs-rte' => 'リッチテキストエディタ',
+	'rte-infobox' => 'インフォボックス',
+	'rte-add-template' => '新しいテンプレートを追加',
+	'rte-select-infobox-title' => '挿入するインフォボックスを選択',
+	'rte-infobox-builder' => 'インフォボックス・ビルダー',
 );
 
 $messages['ka'] = array(
@@ -522,6 +550,10 @@ $messages['pl'] = array(
 	'rte-enablerichtexteditormessage' => 'Edytor wizualny został włączony!',
 	'rte-first-run-notice' => 'Wprowadziliśmy kilka usprawnień w edytorze. Aby dowiedzieć się więcej, [http://www.wikia.com/wiki/User_blog:Kirkburn/Rich_text_editor_upgrade_news przeczytaj ten wpis].',
 	'prefs-rte' => 'Edytor Wizualny',
+	'rte-infobox' => 'Infoboks',
+	'rte-add-template' => 'Dodaj nowy szablon',
+	'rte-select-infobox-title' => 'Wybierz infoboks, który chcesz dodać',
+	'rte-infobox-builder' => 'Kreator infoboksów',
 );
 
 $messages['pms'] = array(
@@ -564,6 +596,10 @@ $messages['pt'] = array(
 	'rte-enablerichtexteditormessage' => 'O Editor de Texto Enriquecido foi ativado!',
 	'rte-first-run-notice' => 'Fizemos algumas melhorias no editor. Para saber mais, [http://www.wikia.com/wiki/User_blog:Kirkburn/Rich_text_editor_upgrade_news leia o anúncio].',
 	'prefs-rte' => 'Editor de Texto Enriquecido',
+	'rte-infobox' => 'Infobox',
+	'rte-add-template' => 'Adicionar uma nova predefinição',
+	'rte-select-infobox-title' => 'Selecionar infobox para inserir',
+	'rte-infobox-builder' => 'Construtor de infoboxes',
 );
 
 $messages['roa-tara'] = array(
@@ -592,6 +628,10 @@ $messages['ru'] = array(
 	'rte-enablerichtexteditormessage' => 'Визуальный редактор включён!',
 	'rte-first-run-notice' => 'Мы сделали несколько улучшений в редактор. Чтобы узнать больше, [http://www.wikia.com/wiki/User_blog:Kirkburn/Rich_text_editor_upgrade_news посетите страницу] с описанием изменений.',
 	'prefs-rte' => 'Визуальный текстовый редактор (RTE)',
+	'rte-infobox' => 'Инфобокс',
+	'rte-add-template' => 'Добавить новый шаблон',
+	'rte-select-infobox-title' => 'Выберите инфобокс для вставки',
+	'rte-infobox-builder' => 'Конструктор инфобоксов',
 );
 
 $messages['sr-ec'] = array(
@@ -721,6 +761,10 @@ $messages['zh-hans'] = array(
 	'rte-enablerichtexteditormessage' => 'RTF编辑器启用！',
 	'rte-first-run-notice' => '我们对编辑器做出了一些改进。[http://www.wikia.com/wiki/User_blog:Kirkburn/Rich_text_editor_upgrade_news 点此]了解更多。',
 	'prefs-rte' => 'RTF编辑器',
+	'rte-infobox' => '信息框',
+	'rte-add-template' => '添加新的模板',
+	'rte-select-infobox-title' => '选择要插入的信息框',
+	'rte-infobox-builder' => '讯息框生成器',
 );
 
 $messages['zh-hant'] = array(
@@ -742,5 +786,9 @@ $messages['zh-hant'] = array(
 	'rte-enablerichtexteditormessage' => 'Rich Text Editor enabled!',
 	'rte-first-run-notice' => 'We have made some improvements to the rich text editor. For more information please visit the [[Help:Rich text editor|help page]].',
 	'prefs-rte' => 'Rich Text Editor',
+	'rte-infobox' => '資訊框',
+	'rte-add-template' => '增加新的模版',
+	'rte-select-infobox-title' => '選擇要插入的資訊框',
+	'rte-infobox-builder' => '訊息框產生器',
 );
 

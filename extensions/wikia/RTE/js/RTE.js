@@ -23,6 +23,7 @@
 				td: true,
 				th: true
 			},
+			title: false,
 			baseFloatZIndex: 5000101, // $zTop + 1 from _layout.scss
 			bodyClass: 'WikiaArticle',
 			bodyId: 'bodyContent',
@@ -83,7 +84,8 @@
 				'rte-template,' +
 				'rte-temporary-save,' +
 				'rte-toolbar,' +
-				'rte-tools',
+				'rte-tools,' +
+				'rte-infobox',
 			// TODO: Too buggy. Try to use this after we update to 3.6.2 (BugId:23061)
 			//readOnly: true,
 			toolbarCanCollapse: false,
@@ -214,8 +216,8 @@
 				}
 			
 				editor.fire('modeSwitch');
-			}
-	
+			};
+
 			// ok, we're done!
 			RTE.loaded.push(editor);
 
