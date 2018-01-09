@@ -439,7 +439,6 @@ CKEDITOR.getUrl = function( resource ) {
 	if ( this.timestamp && resource.charAt( resource.length - 1 ) != '/' ) {
 		resource += ( resource.indexOf( '?' ) >= 0 ? '&' : '?' ) + this.timestamp;
 	}
-//	console.log( resource );
 	return resource;
 }
 
