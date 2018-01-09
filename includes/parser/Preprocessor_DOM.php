@@ -597,7 +597,7 @@ class Preprocessor_DOM implements Preprocessor {
 
 				# we need to add to stack only if opening brace count is enough for one of the rules
 				if ( $count >= $rule['min'] ) {
-					$precedingCharacter = $text[$i-1];
+					$precedingCharacter = $i > 0 ? $text[$i-1] : '';
 
 					# Add it to the stack
 					$piece = array(
