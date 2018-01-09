@@ -309,7 +309,7 @@ class RTEReverseParser {
 			case 'i':
 
 			// strike/underline
-			case 'strike':
+			case 's':
 			case 'u':
 
 			// indexes
@@ -999,7 +999,7 @@ class RTEReverseParser {
 
 		switch($node->nodeName) {
 			case 'u':
-			case 'strike':
+			case 's':
 			case 'sup':
 			case 'sub':
 				$attributes = self::getAttributesStr($node);
@@ -1524,7 +1524,7 @@ class RTEReverseParser {
 					case 'i':
 					case 'u':
 					case 's':
-					case 'strike':
+					case 's':
 						// if next element is text node, don't add line break (refs RT #34043)
 						// if next element is <br />, don't add line break (refs RT #38257)
 						// if next element is <sup> or <sub>, don't add line break (ref RT #67354)
