@@ -270,7 +270,25 @@ class RTE {
 			'maxage' => $wgSquidMaxage,
 		));
 
-		$vars['RTESiteCss'] = $wgServer . Skin::makeNSUrl( ( F::app()->checkSkin( 'oasis' ) ) ? 'Wikia.css' : 'Common.css', $query, NS_MEDIAWIKI );
+		$app = F::app();
+		$out = $app->wg->out;
+		$user = $app->wg->user;
+
+		if ( $app->checkSkin( 'oasis' ) ) {
+			$url = ResourceLoader::makeLoaderURL(
+				['site'],
+				$out->getLanguage()->getCode(),
+				$out->getSkin()->getSkinName(),
+				$user,
+				null,
+				ResourceLoader::inDebugMode(),
+				ResourceLoaderModule::TYPE_STYLES
+			);
+
+			$vars['RTESiteCss'] = $wgServer . $url;
+		} else {
+			$vars['RTESiteCss'] = $wgServer . Skin::makeNSUrl( 'Common.css', $query, NS_MEDIAWIKI );
+		}
 
 		// domain and path for cookies
 		global $wgCookieDomain, $wgCookiePath;
