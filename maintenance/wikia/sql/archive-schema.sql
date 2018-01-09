@@ -54,6 +54,7 @@ CREATE TABLE `city_list` (
   `city_founding_ip` int(10) unsigned NOT NULL DEFAULT '0',
   `city_founding_ip_bin` varbinary(16) DEFAULT NULL,
   `city_vertical` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`city_id`),
   KEY `city_id` (`city_id`),
   KEY `city_dbname_idx` (`city_dbname`),
   KEY `city_title_idx` (`city_title`),
@@ -126,4 +127,4 @@ CREATE TABLE `wikia_tasks` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
--- Dump completed on 2018-01-09 10:57:24
+-- Dump completed on 2018-01-09 15:20:09
