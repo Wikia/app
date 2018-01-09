@@ -334,6 +334,15 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
 
 		if ( definition.onOk ) {
 			this.on( 'ok', function( evt ) {
+				// Wikia change - begin @author: kflorence
+				// adding tracking for dialogOk event
+				if ( RTE.templateEditor.placeholder ) {
+					editor.fire( 'dialogOk', { dialog : this, type : RTE.templateEditor.placeholder.data().info.templateType } );
+				} else {
+					editor.fire( 'dialogOk', { dialog: this });
+				}
+				// Wikia change - end
+
 				// Dialog confirm might probably introduce content changes (http://dev.ckeditor.com/ticket/5415).
 				editor.fire( 'saveSnapshot' );
 				setTimeout( function() {
@@ -348,6 +357,11 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
 		this.state = CKEDITOR.DIALOG_STATE_IDLE;
 
 		if ( definition.onCancel ) {
+			// Wikia change - begin
+			// adding tracking to the cancel event
+			editor.fire( 'dialogCancel', this );
+			// Wikia change - end
+
 			this.on( 'cancel', function( evt ) {
 				if ( definition.onCancel.call( this, evt ) === false )
 					evt.data.hide = false;
@@ -399,6 +413,11 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
 		}, this, null, 0 );
 
 		this.parts.close.on( 'click', function( evt ) {
+			// Wikia - start
+			this.fire('close', {close: true});
+			editor.fire( 'dialogClose', this );
+			// Wikia - end
+
 			if ( this.fire( 'cancel', { hide: true } ).hide !== false )
 				this.hide();
 			evt.data.preventDefault();
@@ -932,7 +951,14 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
 				CKEDITOR.ui.fire( 'ready', this );
 
 				this.fire( 'show', {} );
-				this._.editor.fire( 'dialogShow', this );
+				if ( RTE.templateEditor.placeholder ) {
+					this._.editor.fire('dialogShow', {
+						dialog: this,
+						type: RTE.templateEditor.placeholder.data().info.templateType
+					});
+				} else {
+					this._.editor.fire( 'dialogShow', {dialog: this} );
+				}
 
 				if ( !this._.parentDialog )
 					this._.editor.focusManager.lock();

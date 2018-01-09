@@ -55,17 +55,22 @@ class RTE {
 	}
 
 	/**
-	 * Callback function for preg_replace_callback which handle placeholer markers.
+	 * Callback function for preg_replace_callback which handles placeholder markers.
 	 * Called from RTEParser class.
+	 * @see RTEParser::parse()
 	 *
-	 * @author: Inez KorczyDski
+	 * @author: Inez Korczyński
+	 * @param $var
+	 * @return string
 	 */
-	public static function replacePlaceholder( $var ) {
-		$data = RTEData::get('placeholder', intval($var[1]));
+	public static function replacePlaceholder( $var ): string {
+		$data = RTEData::get( 'placeholder', intval( $var[1] ) );
 
-		if($data) {
-			return RTE::renderPlaceholder($data['type'], $data);
+		if ( $data ) {
+			return RTE::renderPlaceholder( $data['type'], $data );
 		}
+
+		return '';
 	}
 
 	/**
@@ -107,6 +112,14 @@ class RTE {
 
 		// check 'useeditor' URL param, user settings...
 		self::checkEditorConditions();
+
+		JSMessages::registerPackage( 'rte-infobox-builder', [
+			'rte-infobox',
+			'rte-add-template',
+			'rte-select-infobox-title',
+			'rte-infobox-builder'
+		] );
+		JSMessages::enqueuePackage( 'rte-infobox-builder', JSMessages::INLINE );
 
 		// add global JS variables
 		$wgHooks['MakeGlobalVariablesScript'][] = 'RTE::makeGlobalVariablesScript';

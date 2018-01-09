@@ -18,6 +18,7 @@ CKEDITOR.plugins.add('rte-template',
 			},
 
 			init : function() {
+
 				this.startGroup(editor.lang.templateDropDown.title);
 
 				// list of templates to be added to dropdown
@@ -408,6 +409,15 @@ RTE.templateEditor = {
 				// show dialog footer - buttons
 				$('.templateEditorDialog').find('.cke_dialog_footer').show();
 
+				var $chooseAnotherTemplateButton = $('.cke_dialog_choose_another_tpl' );
+
+				//hide the 'Choose another template' button if the template is an infobox
+				if (info.html.search( 'portable-infobox' ) === -1 ) {
+					$chooseAnotherTemplateButton.css('visibility', 'visible');
+				} else {
+					$chooseAnotherTemplateButton.css('visibility', 'hidden');
+				}
+
 				// template name (with localised namespace - RT #3808 - and spaces instead of underscores)
 				var templateName = info.title.replace(/_/g, ' ');
 				templateName = templateName.replace(/^Template:/, window.RTEMessages.template + ':');
@@ -523,21 +533,25 @@ RTE.templateEditor = {
 		RTE.log('storing modified template data');
 		RTE.log(this.data);
 
-		// store saved meta data
-		this.placeholder.setData(RTE.templateEditor.data);
+		RTE.tools.parse(this.data.wikitext, function(html) {
+			this.placeholder.html(html);
 
-		// regenerate template preview and data
-		this.placeholder.removeData('preview');
-		this.placeholder.removeData('info');
+			// store saved meta data
+			this.placeholder.setData(RTE.templateEditor.data);
 
-		// add placeholder to editor, if needed
-		if (!this.placeholder.parent().exists()) {
-			RTE.tools.insertElement(this.placeholder);
-		}
+			// regenerate template preview and data
+			this.placeholder.removeData('preview');
+			this.placeholder.removeData('info');
 
-		// cleanup
-		this.placeholder = false;
-		this.data = {};
+			// add placeholder to editor, if needed
+			if (!this.placeholder.parent().exists()) {
+				RTE.tools.insertElement(this.placeholder);
+			}
+
+			// cleanup
+			this.placeholder = false;
+			this.data = {};
+		}.bind(this));
 	},
 
 	// show template editor
@@ -549,6 +563,7 @@ RTE.templateEditor = {
 
 		// open template editor
 		RTE.getInstance().openDialog('rte-template');
+
 	},
 
 	// create new template placeholder (and maybe show template editor for it)

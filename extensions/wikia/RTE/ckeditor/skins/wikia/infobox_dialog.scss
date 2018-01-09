@@ -1,0 +1,50 @@
+@import "skins/shared/color";
+
+.cke_dialog {
+	.cke_dialog_contents {
+		padding-bottom: 0 !important;
+	}
+	.cke_dialog_body{
+		margin-bottom: 0 !important;
+	}
+	.infobox-templates-list {
+		height: 300px;
+		overflow: hidden;
+		overflow-y: auto;
+
+		a {
+			cursor: pointer;
+			font-size: 14px;
+		}
+
+		li {
+			padding-bottom: 2px;
+		}
+	}
+
+	a.infobox-dialog-button {
+		background: transparent none;
+		border: 1px dashed $color-page-border;
+		border-radius: 0;
+		color: $color-text !important;
+		outline: none;
+		text-align: center;
+		width: 95%;
+
+		&:hover{
+			background-color: darken($color-page,10%);
+
+			@if $is-dark-wiki{
+				background-color: lighten($color-page, 10%);
+			}
+		}
+	}
+
+	.InfoboxBuilder {
+		min-height: 700px;
+	}
+}
+
+.ckeditor-infobox-builder .cke_dialog_footer {
+	display: none;
+}

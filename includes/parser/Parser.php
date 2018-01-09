@@ -4119,31 +4119,6 @@ class Parser {
 		$name = $frame->expand( $params['name'] );
 		$attrText = !isset( $params['attr'] ) ? null : $frame->expand( $params['attr'] );
 		$content = !isset( $params['inner'] ) ? null : $frame->expand( $params['inner'] );
-		# RTE (Rich Text Editor) - begin
-		# @author: Inez Korczyński
-		global $wgRTEParserEnabled;
-		if( !empty( $wgRTEParserEnabled ) ) {
-			$wikitextIdx = RTEMarker::getDataIdx(RTEMarker::EXT_WIKITEXT, $content);
-
-			# Allow parser extensions to generate their own placeholders (instead of default one from RTE)
-			# @author: Macbre
-			if( Hooks::run( 'RTEUseDefaultPlaceholder', array( $name, $params, $frame, $wikitextIdx ) ) ) {
-				if( $wikitextIdx !== null) {
-					$dataIdx = RTEData::put('placeholder', array('type' => 'ext', 'wikitextIdx' => $wikitextIdx));
-					return RTEMarker::generate(RTEMarker::PLACEHOLDER, $dataIdx);
-				}
-			}
-			else {
-				RTE::log(__METHOD__, "skipped default placeholder for <{$name}>");
-
-				// restore value of $content
-				$content = RTEData::get('wikitext', $wikitextIdx);
-
-				// keep inner content of tag
-				$content = preg_replace('#^<[^>]+>(.*)<[^>]+>$#s', '\1', $content);
-			}
-		}
-		# RTE - end
 		$marker = "{$this->mUniqPrefix}-$name-" . sprintf( '%08X', $this->mMarkerIndex++ ) . self::MARKER_SUFFIX;
 
 		$isFunctionTag = isset( $this->mFunctionTagHooks[strtolower($name)] ) &&
@@ -5577,7 +5552,7 @@ class Parser {
 			$params['frame']['title'] = $this->stripAltText( $caption, $holders );
 		}
 
-		Hooks::run( 'ParserMakeImageParams', array( $title, $file, &$params ) );
+		Hooks::run( 'ParserMakeImageParams', [ $this, &$params ] );
 
 		# Linker does the rest
 		$time = isset( $options['time'] ) ? $options['time'] : false;

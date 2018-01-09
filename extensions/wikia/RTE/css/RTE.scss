@@ -168,24 +168,13 @@
 		border-bottom-color: #d5d5d5;
 		z-index: 5;
 	}
-	.chevronBackground {
-		border-width: 6px;
-		border-bottom-color: #fff;
-		z-index: 6;
-		top: -3px;
-		left: 1px;
-	}
+
 	&.bottom {
 		padding: 0 0 9px 0;
 		.chevron {
 			bottom: -4px;
 			top: auto;
 			border-top-color: #d5d5d5;
-			border-bottom-color: transparent;
-		}
-		.chevronBackground {
-			bottom: -2px;
-			border-top-color: #fff;
 			border-bottom-color: transparent;
 		}
 	}
@@ -195,66 +184,24 @@
 	background-color: #fff;
 	border: solid 1px #d5d5d5;
 	padding: 2px;
-	width: 350px;
+	width: auto;
 }
 
 .RTEPlaceholderPreviewLoading .RTEPlaceholderPreviewInner {
 	background: #fff url(/skins/common/images/ajax.gif) no-repeat 50% 50%; /* $wgResourceBasePath */
 	height: 30px;
-}
-
-.RTEPlaceholderPreviewTitleBar {
-	font-weight: bold;
-	padding: 3px 5px;
-	position: relative;
-	white-space: nowrap;
-}
-
-.RTEPlaceholderPreviewTitleBar span {
-	background: transparent url(/skins/shared/images/sprite.png) no-repeat -1146px -81px; /* $wgResourceBasePath */
-	cursor: pointer;
-	height: 12px;
-	position: absolute;
-	right: 5px;
-	width: 12px;
-}
-
-// info line
-.RTEPlaceholderPreviewIntro {
-	border-bottom: solid 1px #aaa;
-	color: #3a3a3a;
-	cursor: default;
-	font-style: italic;
-	padding: 3px 0;
-}
-
-// preview area
-.RTEPlaceholderPreviewCode {
-	color: #3a3a3a;
-	cursor: default;
-	min-height: 75px;
-	max-height: 350px;
-	overflow: auto;
-	padding: 4px;
+	width: 100px;
 }
 
 .RTEPlaceholderPreviewExpanded {
 	max-height: 10000px !important;
 }
 
-.RTEPlaceholderPreviewCode * {
-	float: none !important; // RT #37692
-	cursor: default !important;
-}
-
-.RTEPlaceholderPreviewPreformatted {
-	font-family: monospace;
-	white-space: pre;
-}
-
 // [edit] / [delete]
 .RTEPlaceholderPreviewTools {
+	align-items: baseline;
 	border-top: solid 1px #aaa;
+	display: flex;
 	padding: 3px;
 	text-align: right;
 
