@@ -106,18 +106,6 @@ CREATE TABLE `cu_changes` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Table structure for table `page_visited`
---
-
-DROP TABLE IF EXISTS `page_visited`;
-CREATE TABLE `page_visited` (
-  `article_id` int(9) NOT NULL,
-  `count` int(8) NOT NULL,
-  PRIMARY KEY (`article_id`),
-  KEY `page_visited_cnt_inx` (`count`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
 -- Table structure for table `wikia_tasks`
 --
 
@@ -138,4 +126,4 @@ CREATE TABLE `wikia_tasks` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
--- Dump completed on 2017-12-13 10:56:23
+-- Dump completed on 2018-01-09 10:57:24
