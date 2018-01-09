@@ -21,7 +21,7 @@
     "tag": "8.14.1",
     "commit": "e1da8edf5f89e747bfd47d121c687092928e274d"
   },
-  "_source": "git://github.com/Wikia/design-system.git",
+  "_source": "https://github.com/Wikia/design-system.git",
   "_target": "8.14.1",
   "_originalSource": "Wikia/design-system"
 }

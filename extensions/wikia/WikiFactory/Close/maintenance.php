@@ -470,17 +470,15 @@ class CloseWikiMaintenance {
 	 * @param int $city_id
 	 */
 	private function cleanupSharedData( $city_id ) {
-		global $wgExternalDatawareDB, $wgSpecialsDB, $wgStatsDB;
+		global $wgExternalDatawareDB, $wgSpecialsDB;
 		$dataware = wfGetDB( DB_MASTER, [], $wgExternalDatawareDB );
 		$specials = wfGetDB( DB_MASTER, [], $wgSpecialsDB );
-		$stats    = wfGetDB( DB_MASTER, [], $wgStatsDB );
 
 		/**
 		 * remove records from stats-related tables
 		 */
 		$this->doTableCleanup( $dataware, 'pages',              $city_id, 'page_wikia_id' );
 		$this->doTableCleanup( $specials, 'events_local_users', $city_id );
-		$this->doTableCleanup( $stats,    'events',             $city_id );
 
 		Hooks::run( 'CloseWikiPurgeSharedData', [ $city_id ] );
 	}
