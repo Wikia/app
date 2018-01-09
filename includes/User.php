@@ -2523,7 +2523,12 @@ class User implements JsonSerializable {
 	 * @return string
 	 */
 	public function getGlobalPreference($preference, $default = null, $ignoreHidden = false) {
-		global $wgPreferenceServiceRead;
+		global $wgPreferenceServiceRead, $wgDefaultUserOptions, $wgCityId, $wgCKEdefaultEditorTestWikis;
+
+		// TODO: Clean up after CK editor as default test is finished
+		if ( in_array( intval( $wgCityId ), $wgCKEdefaultEditorTestWikis ) ) {
+			$wgDefaultUserOptions['editor'] = EditorPreference::OPTION_EDITOR_CK;
+		}
 
 		if ($wgPreferenceServiceRead) {
 			$preferences = [];
