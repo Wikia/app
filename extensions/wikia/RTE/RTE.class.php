@@ -211,7 +211,7 @@ class RTE {
 	 * @author Macbre
 	 */
 	public static function makeGlobalVariablesScript( &$vars ) {
-		global $wgLegalTitleChars, $wgServer, $wgExtensionsPath;
+		global $wgLegalTitleChars, $wgServer, $wgExtensionsPath, $wgUseSiteCss;
 
 		wfProfileIn(__METHOD__);
 
@@ -274,25 +274,27 @@ class RTE {
 		$out = $app->wg->out;
 		$user = $app->wg->user;
 
-		if ( $app->checkSkin( 'oasis' ) ) {
-			/*
-			 * On Oasis we need to load both Common.css and Wikia.css
-			 * to use it inside of the editor's textarea in visual mode
-			 * module 'site' contains both stylesheets
-			 */
-			$url = ResourceLoader::makeLoaderURL(
-				['site'],
-				$out->getLanguage()->getCode(),
-				$out->getSkin()->getSkinName(),
-				$user,
-				null,
-				ResourceLoader::inDebugMode(),
-				ResourceLoaderModule::TYPE_STYLES
-			);
+		if ($wgUseSiteCss) {
+			if ( $app->checkSkin( 'oasis' ) ) {
+				/*
+				 * On Oasis we need to load both Common.css and Wikia.css
+				 * to use it inside of the editor's textarea in visual mode
+				 * module 'site' contains both stylesheets
+				 */
+				$url = ResourceLoader::makeLoaderURL(
+					['site'],
+					$out->getLanguage()->getCode(),
+					$out->getSkin()->getSkinName(),
+					$user,
+					null,
+					ResourceLoader::inDebugMode(),
+					ResourceLoaderModule::TYPE_STYLES
+				);
 
-			$vars['RTESiteCss'] = $wgServer . $url;
-		} else {
-			$vars['RTESiteCss'] = $wgServer . Skin::makeNSUrl( 'Common.css', $query, NS_MEDIAWIKI );
+				$vars['RTESiteCss'] = $wgServer . $url;
+			} else {
+				$vars['RTESiteCss'] = $wgServer . Skin::makeNSUrl( 'Common.css', $query, NS_MEDIAWIKI );
+			}
 		}
 
 		// domain and path for cookies
