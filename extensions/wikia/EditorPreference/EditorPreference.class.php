@@ -133,8 +133,14 @@ class EditorPreference {
 	 * @return integer The editor option value
 	 */
 	public static function getPrimaryEditor() {
-		global $wgUser, $wgEnableVisualEditorUI, $wgEnableRTEExt, $wgVisualEditorNeverPrimary;
+		global $wgUser, $wgEnableVisualEditorUI, $wgEnableRTEExt, $wgVisualEditorNeverPrimary, $wgCityId, $wgCKEdefaultEditorTestWikis;
+
 		$selectedOption = (int)$wgUser->getGlobalPreference( PREFERENCE_EDITOR );
+
+		// TODO: Clean up after CK editor as default test is finished
+		if ( in_array( intval( $wgCityId ), $wgCKEdefaultEditorTestWikis ) ) {
+			$selectedOption = self::OPTION_EDITOR_CK;
+		}
 
 		if ( !$wgVisualEditorNeverPrimary && $selectedOption === self::OPTION_EDITOR_VISUAL ) {
 			return self::OPTION_EDITOR_VISUAL;
