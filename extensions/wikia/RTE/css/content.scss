@@ -239,7 +239,7 @@ li .placeholder-double-brackets {
 	display: inline-block;
 }
 
-/* XW-4380: Render inline extension tags correctly */
-p[data-rte-fromparser="true"] .placeholder-ext {
-	display: inline;
+/* XW-4473: Hide RTE filler paragraphs between headings */
+p[data-rte-filler="true"] {
+	display: none;
 }
