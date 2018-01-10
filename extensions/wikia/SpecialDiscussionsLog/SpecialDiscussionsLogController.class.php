@@ -4,8 +4,6 @@
  * Discussion user log page
  */
 class SpecialDiscussionsLogController extends WikiaSpecialPageController {
-	const DEFAULT_TEMPLATE_ENGINE = \WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
-
 	public function __construct() {
 		parent::__construct( 'DiscussionsLog', '', false );
 	}
