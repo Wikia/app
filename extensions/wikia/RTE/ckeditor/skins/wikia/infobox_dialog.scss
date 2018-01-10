@@ -20,6 +20,12 @@
 		li {
 			padding-bottom: 2px;
 		}
+
+		.wikiaThrobber {
+			// overrides default absolute style so user can still close
+			// the modal even before anything loads
+			position: static;
+		}
 	}
 
 	a.infobox-dialog-button {

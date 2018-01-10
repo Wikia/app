@@ -3,7 +3,7 @@ require([
 	'wikia.window',
 	'wikia.loader',
 	'wikia.mustache',
-	'wikia.location',
+	'wikia.location'
 ], function (
 	$,
 	window,
@@ -13,8 +13,7 @@ require([
 ) {
 	var infoboxBuilderMarkup = null,
 		infoboxBuilderScripts = null,
-		iframeLoaded = false,
-		isInfoboxListDialogOpen = false;
+		iframeLoaded = false;
 
 	function registerPlugin() {
 		window.CKEDITOR.plugins.add('rte-infobox', {
@@ -25,7 +24,7 @@ require([
 	function onEditorInit(editor) {
 		editor.ui.addButton && editor.ui.addButton( 'AddInfobox', {
 			label: $.msg('rte-infobox'),
-			command: 'addinfobox',
+			command: 'addinfobox'
 		} );
 
 		editor.addCommand('addinfobox', {
@@ -33,8 +32,14 @@ require([
 		});
 	}
 
-	function openInfoboxBuilder(editor) {
+	window.CKEDITOR.on('new-infobox-created', function (event) {
+		var infoboxTitle = event.data;
 
+		CKEDITOR.dialog.getCurrent().hide();
+		RTE.templateEditor.createTemplateEditor(infoboxTitle);
+	});
+
+	function openInfoboxBuilder(editor) {
 		WikiaEditor.track( 'add-new-template-button' );
 
 		window.CKEDITOR.dialog.add('infoboxBuilder-dialog', function (editor) {
@@ -81,16 +86,9 @@ require([
 						});
 						iframeLoaded = true;
 					}
-
-					window.CKEDITOR.on('new-infobox-created', function (event) {
-						var infoboxTitle = event.data;
-
-						CKEDITOR.dialog.getCurrent().hide();
-						RTE.templateEditor.createTemplateEditor(infoboxTitle);
-					});
 				}
 			}
-	});
+		});
 
 		CKEDITOR.dialog.getCurrent().hide();
 
@@ -112,56 +110,52 @@ require([
 	}
 
 	function openInfoboxModal(editor) {
-		if (isInfoboxListDialogOpen) {
-			return;
-		}
+		window.CKEDITOR.dialog.add('infobox-dialog', function (editor) {
 
-		isInfoboxListDialogOpen = true;
+			//checking if user has rights to create new template
+			var buttons = window.wgEnablePortableInfoboxBuilderInVE
+				? [{
+						type: 'button',
+						class: 'infobox-dialog-button',
+						label: $.msg('rte-add-template'),
+						onClick: openInfoboxBuilder
+					}]
+				: [];
 
-		$.get('/api.php?format=json&action=query&list=allinfoboxes&uselang=' + window.wgContentLanguage,
-			function (data) {
-				window.CKEDITOR.dialog.add('infobox-dialog', function (editor) {
-
-					//checking if user has rights to create new template
-					var buttons = window.wgEnablePortableInfoboxBuilderInVE
-						? [{
-								type: 'button',
-								class: 'infobox-dialog-button',
-								label: $.msg('rte-add-template'),
-								onClick: openInfoboxBuilder
-							}]
-						: [];
-
-					return {
-						title: $.msg('rte-select-infobox-title'),
-						buttons: buttons,
-						minWidth: 250,
-						minHeight: 300,
-						contents: [
+			return {
+				title: $.msg('rte-select-infobox-title'),
+				buttons: buttons,
+				minWidth: 250,
+				minHeight: 300,
+				contents: [
+					{
+						id: 'ckeditorInfoboxPickDialog',
+						label: '',
+						title: '',
+						elements: [
 							{
-								id: 'ckeditorInfoboxPickDialog',
-								label: '',
-								title: '',
-								elements: [
-									{
-										type: 'html',
-										html: getInfoboxListMarkup(data)
-									}
-								]
+								type: 'html',
+								html: '<ul class="infobox-templates-list"><div class="wikiaThrobber"></div></ul>'
 							}
-						],
-						onShow: function () {
-							$('.infobox-templates-list a').on('click', onInfoboxTemplateChosen);
-						},
-						onHide: function () {
-							isInfoboxListDialogOpen = false;
-							$('.infobox-templates-list a').off('click', onInfoboxTemplateChosen);
-						}
-					};
-				});
+						]
+					}
+				],
+				onShow: function () {
+					var infoboxTemplateList = $('.infobox-templates-list');
 
-				RTE.getInstance().openDialog('infobox-dialog');
-			});
+					$.get('/api.php?format=json&action=query&list=allinfoboxes&uselang=' + window.wgContentLanguage).done(function(data) {
+						infoboxTemplateList.html(getInfoboxListMarkup(data));
+					});
+
+					infoboxTemplateList.on('click', 'a', onInfoboxTemplateChosen);
+				},
+				onHide: function () {
+					$('.infobox-templates-list').off('click', 'a', onInfoboxTemplateChosen);
+				}
+			};
+		});
+
+		RTE.getInstance().openDialog('infobox-dialog');
 	}
 
 	function getInfoboxListMarkup(data) {
@@ -169,13 +163,11 @@ require([
 			return '';
 		}
 
-		var markup = '<ul class="infobox-templates-list">';
+		var markup = '';
 
 		data.query.allinfoboxes.forEach(function (infoboxData) {
 			markup += '<li><a data-infobox-name="' + encodeURI(infoboxData.title) + '">' + encodeURI(infoboxData.title) + '</a></li>';
 		});
-
-		markup += '</ul>';
 
 		return markup;
 	}
