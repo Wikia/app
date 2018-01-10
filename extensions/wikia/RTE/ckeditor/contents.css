@@ -1,8 +1,7 @@
 /*
 Copyright (c) 2003-2017, CKSource - Frederico Knabben. All rights reserved.
-For licensing, see LICENSE.md or http://ckeditor.com/license
+For licensing, see LICENSE.md or https://ckeditor.com/legal/terms-of-use/#open-source-licences
 */
-@import "skins/shared/color";
 
 body
 {
@@ -11,10 +10,10 @@ body
 	font-size: 12px;
 
 	/* Text color */
-	color: $color-text;
+	color: #333;
 
 	/* Remove the background color to make it transparent */
-	background-color: $color-page;
+	background-color: #fff;
 
 	margin: 20px;
 }

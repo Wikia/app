@@ -1,6 +1,6 @@
 /**
  * @license Copyright (c) 2003-2017, CKSource - Frederico Knabben. All rights reserved.
- * For licensing, see LICENSE.md or http://ckeditor.com/license
+ * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
  */
 
 /**
@@ -31,7 +31,7 @@ CKEDITOR.lang[ 'fr' ] = {
 		browseServer: 'Parcourir le serveur',
 		url: 'URL',
 		protocol: 'Protocole',
-		upload: 'Téléverser',
+		upload: 'Télécharger',
 		uploadSubmit: 'Envoyer sur le serveur',
 		image: 'Image',
 		flash: 'Flash',
@@ -112,6 +112,8 @@ CKEDITOR.lang[ 'fr' ] = {
 		},
 
 		// Prepended to ARIA labels with shortcuts.
-		keyboardShortcut: 'Raccourci clavier'
+		keyboardShortcut: 'Raccourci clavier',
+
+		optionDefault: 'Default' // MISSING
 	}
 };

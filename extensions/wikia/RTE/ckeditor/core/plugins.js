@@ -1,6 +1,6 @@
 /**
  * @license Copyright (c) 2003-2017, CKSource - Frederico Knabben. All rights reserved.
- * For licensing, see LICENSE.md or http://ckeditor.com/license
+ * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
  */
 
 /**
@@ -105,7 +105,6 @@ CKEDITOR.plugins.load = CKEDITOR.tools.override( CKEDITOR.plugins.load, function
  * the respective translation.
  */
 CKEDITOR.plugins.setLang = function( pluginName, languageCode, languageEntries ) {
-	return;
 	var plugin = this.get( pluginName ),
 		pluginLangEntries = plugin.langEntries || ( plugin.langEntries = {} ),
 		pluginLang = plugin.lang || ( plugin.lang = [] );

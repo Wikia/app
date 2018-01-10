@@ -1,6 +1,6 @@
 ﻿/*
 Copyright (c) 2003-2017, CKSource - Frederico Knabben. All rights reserved.
-For licensing, see LICENSE.md or http://ckeditor.com/license
+For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
 */
 CKEDITOR.plugins.setLang( 'clipboard', 'gl', {
 	copy: 'Copiar',
@@ -8,5 +8,5 @@ CKEDITOR.plugins.setLang( 'clipboard', 'gl', {
 	cut: 'Cortar',
 	cutError: 'Os axustes de seguranza do seu navegador non permiten que o editor realice automaticamente as tarefas de corte. Use o teclado para iso (Ctrl/Cmd+X).',
 	paste: 'Pegar',
-	pasteNotification: 'Your browser doesn\'t allow you to paste this way. Press %1 to paste.' // MISSING
+	pasteNotification: 'O seu navegador non permite pegar deste xeito. Prema %1 para pegar.'
 } );

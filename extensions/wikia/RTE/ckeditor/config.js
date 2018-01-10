@@ -4,35 +4,14 @@
  */
 
 CKEDITOR.editorConfig = function( config ) {
-		
+	
 	// %REMOVE_START%
 	// The configuration options below are needed when running CKEditor from source files.
-//	config.plugins = 'wysiwygarea,button,autogrow,toolbar,indent,sourcearea';
-	
-//	config.skin = 'moono-lisa';
+	config.plugins = 'dialogui,dialog,about,a11yhelp,dialogadvtab,basicstyles,bidi,blockquote,notification,button,toolbar,clipboard,panelbutton,panel,floatpanel,colorbutton,colordialog,templates,menu,contextmenu,copyformatting,div,resize,elementspath,enterkey,entities,popup,filebrowser,find,fakeobjects,flash,floatingspace,listblock,richcombo,font,forms,format,horizontalrule,htmlwriter,iframe,wysiwygarea,image,indent,indentblock,indentlist,smiley,justify,menubutton,language,link,list,liststyle,magicline,maximize,newpage,pagebreak,pastetext,pastefromword,preview,print,removeformat,save,selectall,showblocks,showborders,sourcearea,specialchar,scayt,stylescombo,tab,table,tabletools,tableselection,undo,lineutils,widgetselection,widget,filetools,notificationaggregator,uploadwidget,uploadimage,wsc';
+	config.skin = 'moono-lisa';
 	// %REMOVE_END%
 
-	
-	config.toolbar = [
-//		{ name: 'something', items: [ 'Bold','Italic','Link','BulletedList','NumberedList','Indent','Outdent','Format','JustifyLeft','JustifyCenter','JustifyRight','Undo','Redo','Table','Underline','Strike','Signature','ModeSource','ModeWysiwyg' ] }
-	{ name : 'NoThing', items: ['ModeSource', 'ModeWysiwyg'] } 		 
-	];
-
-
-
-
-
-	// Define changes to default configuration here.
-	// For complete reference see:
-	// http://docs.ckeditor.com/#!/api/CKEDITOR.config
-
-	// The toolbar groups arrangement, optimized for a single toolbar row.
-
-
-	// The default plugins included in the basic setup define some buttons that
-	// are not needed in a basic editor. They are removed here.
-	//config.removeButtons = 'Cut,Copy,Paste,Undo,Redo,Anchor,Underline,Strike,Subscript,Superscript';
-
-	// Dialog windows are also simplified.
-//	config.removeDialogTabs = 'link:advanced';
+	// Define changes to default configuration here. For example:
+	// config.language = 'fr';
+	// config.uiColor = '#AADC6E';
 };

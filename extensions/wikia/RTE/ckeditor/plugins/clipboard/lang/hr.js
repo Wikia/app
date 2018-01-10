@@ -1,6 +1,6 @@
 ﻿/*
 Copyright (c) 2003-2017, CKSource - Frederico Knabben. All rights reserved.
-For licensing, see LICENSE.md or http://ckeditor.com/license
+For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
 */
 CKEDITOR.plugins.setLang( 'clipboard', 'hr', {
 	copy: 'Kopiraj',
@@ -8,5 +8,5 @@ CKEDITOR.plugins.setLang( 'clipboard', 'hr', {
 	cut: 'Izreži',
 	cutError: 'Sigurnosne postavke Vašeg pretraživača ne dozvoljavaju operacije automatskog izrezivanja. Molimo koristite kraticu na tipkovnici (Ctrl/Cmd+X).',
 	paste: 'Zalijepi',
-	pasteNotification: 'Your browser doesn\'t allow you to paste this way. Press %1 to paste.' // MISSING
+	pasteNotification: 'Vaš preglednik Vam ne dozvoljava lijepljenje na ovaj način. Za lijepljenje, pritisnite %1.'
 } );

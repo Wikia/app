@@ -1,12 +1,12 @@
 ﻿/**
  * @license Copyright (c) 2003-2017, CKSource - Frederico Knabben. All rights reserved.
- * For licensing, see LICENSE.md or http://ckeditor.com/license
+ * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
  */
 
 CKEDITOR.plugins.add( 'format', {
 	requires: 'richcombo',
 	// jscs:disable maximumLineLength
-	lang: 'af,ar,az,bg,bn,bs,ca,cs,cy,da,de,de-ch,el,en,en-au,en-ca,en-gb,eo,es,et,eu,fa,fi,fo,fr,fr-ca,gl,gu,he,hi,hr,hu,id,is,it,ja,ka,km,ko,ku,lt,lv,mk,mn,ms,nb,nl,no,oc,pl,pt,pt-br,ro,ru,si,sk,sl,sq,sr,sr-latn,sv,th,tr,tt,ug,uk,vi,zh,zh-cn', // %REMOVE_LINE_CORE%
+	lang: 'af,ar,az,bg,bn,bs,ca,cs,cy,da,de,de-ch,el,en,en-au,en-ca,en-gb,eo,es,es-mx,et,eu,fa,fi,fo,fr,fr-ca,gl,gu,he,hi,hr,hu,id,is,it,ja,ka,km,ko,ku,lt,lv,mk,mn,ms,nb,nl,no,oc,pl,pt,pt-br,ro,ru,si,sk,sl,sq,sr,sr-latn,sv,th,tr,tt,ug,uk,vi,zh,zh-cn', // %REMOVE_LINE_CORE%
 	// jscs:enable maximumLineLength
 	init: function( editor ) {
 		if ( editor.blockless )
@@ -36,6 +36,7 @@ CKEDITOR.plugins.add( 'format', {
 		// Hide entire combo when all formats are rejected.
 		if ( stylesCount === 0 )
 			return;
+
 		editor.ui.addRichCombo( 'Format', {
 			label: lang.label,
 			title: lang.panelTitle,
@@ -43,7 +44,7 @@ CKEDITOR.plugins.add( 'format', {
 			allowedContent: allowedContent,
 
 			panel: {
-				css: [ config.editorCss ].concat( config.contentsCss ),
+				css: [ CKEDITOR.skin.getPath( 'editor' ) ].concat( config.contentsCss ),
 				multiSelect: false,
 				attributes: { 'aria-label': lang.panelTitle }
 			},
@@ -66,9 +67,12 @@ CKEDITOR.plugins.add( 'format', {
 				var style = styles[ value ],
 					elementPath = editor.elementPath();
 
-				editor[ style.checkActive( elementPath, editor ) ? 'removeStyle' : 'applyStyle' ]( style );
+				// Always apply style, do not allow to toggle it by clicking on corresponding list item (#584).
+				if ( !style.checkActive( elementPath, editor ) ) {
+					editor.applyStyle( style );
+				}
 
-				// Save the undo snapshot after all changes are affected. (#4899)
+				// Save the undo snapshot after all changes are affected. (https://dev.ckeditor.com/ticket/4899)
 				setTimeout( function() {
 					editor.fire( 'saveSnapshot' );
 				}, 0 );
@@ -138,7 +142,7 @@ CKEDITOR.plugins.add( 'format', {
  * definition taken from [config.format_p](#!/api/CKEDITOR.config-cfg-format_p).
  *
  * Read more in the [documentation](#!/guide/dev_format)
- * and see the [SDK sample](http://sdk.ckeditor.com/samples/format.html).
+ * and see the [SDK sample](https://sdk.ckeditor.com/samples/format.html).
  *
  *		config.format_tags = 'p;h2;h3;pre';
  *
@@ -151,7 +155,7 @@ CKEDITOR.config.format_tags = 'p;h1;h2;h3;h4;h5;h6;pre;address;div';
  * The style definition to be used to apply the `Normal` format.
  *
  * Read more in the [documentation](#!/guide/dev_format)
- * and see the [SDK sample](http://sdk.ckeditor.com/samples/format.html).
+ * and see the [SDK sample](https://sdk.ckeditor.com/samples/format.html).
  *
  *		config.format_p = { element: 'p', attributes: { 'class': 'normalPara' } };
  *
@@ -164,7 +168,7 @@ CKEDITOR.config.format_p = { element: 'p' };
  * The style definition to be used to apply the `Normal (DIV)` format.
  *
  * Read more in the [documentation](#!/guide/dev_format)
- * and see the [SDK sample](http://sdk.ckeditor.com/samples/format.html).
+ * and see the [SDK sample](https://sdk.ckeditor.com/samples/format.html).
  *
  *		config.format_div = { element: 'div', attributes: { 'class': 'normalDiv' } };
  *
@@ -177,7 +181,7 @@ CKEDITOR.config.format_div = { element: 'div' };
  * The style definition to be used to apply the `Formatted` format.
  *
  * Read more in the [documentation](#!/guide/dev_format)
- * and see the [SDK sample](http://sdk.ckeditor.com/samples/format.html).
+ * and see the [SDK sample](https://sdk.ckeditor.com/samples/format.html).
  *
  *		config.format_pre = { element: 'pre', attributes: { 'class': 'code' } };
  *
@@ -190,7 +194,7 @@ CKEDITOR.config.format_pre = { element: 'pre' };
  * The style definition to be used to apply the `Address` format.
  *
  * Read more in the [documentation](#!/guide/dev_format)
- * and see the [SDK sample](http://sdk.ckeditor.com/samples/format.html).
+ * and see the [SDK sample](https://sdk.ckeditor.com/samples/format.html).
  *
  *		config.format_address = { element: 'address', attributes: { 'class': 'styledAddress' } };
  *
@@ -203,7 +207,7 @@ CKEDITOR.config.format_address = { element: 'address' };
  * The style definition to be used to apply the `Heading 1` format.
  *
  * Read more in the [documentation](#!/guide/dev_format)
- * and see the [SDK sample](http://sdk.ckeditor.com/samples/format.html).
+ * and see the [SDK sample](https://sdk.ckeditor.com/samples/format.html).
  *
  *		config.format_h1 = { element: 'h1', attributes: { 'class': 'contentTitle1' } };
  *
@@ -216,7 +220,7 @@ CKEDITOR.config.format_h1 = { element: 'h1' };
  * The style definition to be used to apply the `Heading 2` format.
  *
  * Read more in the [documentation](#!/guide/dev_format)
- * and see the [SDK sample](http://sdk.ckeditor.com/samples/format.html).
+ * and see the [SDK sample](https://sdk.ckeditor.com/samples/format.html).
  *
  *		config.format_h2 = { element: 'h2', attributes: { 'class': 'contentTitle2' } };
  *
@@ -229,7 +233,7 @@ CKEDITOR.config.format_h2 = { element: 'h2' };
  * The style definition to be used to apply the `Heading 3` format.
  *
  * Read more in the [documentation](#!/guide/dev_format)
- * and see the [SDK sample](http://sdk.ckeditor.com/samples/format.html).
+ * and see the [SDK sample](https://sdk.ckeditor.com/samples/format.html).
  *
  *		config.format_h3 = { element: 'h3', attributes: { 'class': 'contentTitle3' } };
  *
@@ -242,7 +246,7 @@ CKEDITOR.config.format_h3 = { element: 'h3' };
  * The style definition to be used to apply the `Heading 4` format.
  *
  * Read more in the [documentation](#!/guide/dev_format)
- * and see the [SDK sample](http://sdk.ckeditor.com/samples/format.html).
+ * and see the [SDK sample](https://sdk.ckeditor.com/samples/format.html).
  *
  *		config.format_h4 = { element: 'h4', attributes: { 'class': 'contentTitle4' } };
  *
@@ -255,7 +259,7 @@ CKEDITOR.config.format_h4 = { element: 'h4' };
  * The style definition to be used to apply the `Heading 5` format.
  *
  * Read more in the [documentation](#!/guide/dev_format)
- * and see the [SDK sample](http://sdk.ckeditor.com/samples/format.html).
+ * and see the [SDK sample](https://sdk.ckeditor.com/samples/format.html).
  *
  *		config.format_h5 = { element: 'h5', attributes: { 'class': 'contentTitle5' } };
  *
@@ -268,7 +272,7 @@ CKEDITOR.config.format_h5 = { element: 'h5' };
  * The style definition to be used to apply the `Heading 6` format.
  *
  * Read more in the [documentation](#!/guide/dev_format)
- * and see the [SDK sample](http://sdk.ckeditor.com/samples/format.html).
+ * and see the [SDK sample](https://sdk.ckeditor.com/samples/format.html).
  *
  *		config.format_h6 = { element: 'h6', attributes: { 'class': 'contentTitle6' } };
  *

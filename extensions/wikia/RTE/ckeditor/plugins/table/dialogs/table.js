@@ -1,6 +1,6 @@
 ﻿/**
  * @license Copyright (c) 2003-2017, CKSource - Frederico Knabben. All rights reserved.
- * For licensing, see LICENSE.md or http://ckeditor.com/license
+ * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
  */
 
 ( function() {
@@ -97,7 +97,7 @@
 					if ( selected && selected.is( 'table' ) )
 						table = selected;
 					else if ( ranges.length > 0 ) {
-						// Webkit could report the following range on cell selection (#4948):
+						// Webkit could report the following range on cell selection (https://dev.ckeditor.com/ticket/4948):
 						// <table><tr><td>[&nbsp;</td></tr></table>]
 						if ( CKEDITOR.env.webkit )
 							ranges[ 0 ].shrink( CKEDITOR.NODE_ELEMENT );
@@ -169,7 +169,7 @@
 						// Change TD to TH:
 						for ( i = 0; i < theRow.getChildCount(); i++ ) {
 							var th = theRow.getChild( i );
-							// Skip bookmark nodes. (#6155)
+							// Skip bookmark nodes. (https://dev.ckeditor.com/ticket/6155)
 							if ( th.type == CKEDITOR.NODE_ELEMENT && !th.data( 'cke-bookmark' ) ) {
 								th.renameNode( 'th' );
 								th.setAttribute( 'scope', 'col' );
@@ -231,7 +231,7 @@
 				if ( !this._.selectedElement ) {
 					editor.insertElement( table );
 					// Override the default cursor position after insertElement to place
-					// cursor inside the first cell (#7959), IE needs a while.
+					// cursor inside the first cell (https://dev.ckeditor.com/ticket/7959), IE needs a while.
 					setTimeout( function() {
 						var firstCell = new CKEDITOR.dom.element( table.$.rows[ 0 ].cells[ 0 ] );
 						var range = editor.createRange();
@@ -239,7 +239,7 @@
 						range.select();
 					}, 0 );
 				}
-				// Properly restore the selection, (#4822) but don't break
+				// Properly restore the selection, (https://dev.ckeditor.com/ticket/4822) but don't break
 				// because of this, e.g. updated table caption.
 				else {
 					try {
@@ -275,7 +275,7 @@
 							type: 'text',
 							id: 'txtCols',
 							'default': 2,
-							label: "Liczba kolumn",//editor.lang.table.columns,
+							label: editor.lang.table.columns,
 							required: true,
 							controlStyle: 'width:5em',
 							validate: validatorNum( editor.lang.table.invalidCols ),
@@ -378,7 +378,7 @@
 								controlStyle: 'width:5em',
 								label: editor.lang.common.width,
 								title: editor.lang.common.cssLengthTooltip,
-								// Smarter default table width. (#9600)
+								// Smarter default table width. (https://dev.ckeditor.com/ticket/9600)
 								'default': editor.filter.check( 'table{width}' ) ? ( editable.getSize( 'width' ) < 500 ? '100%' : 500 ) : 0,
 								getValue: defaultToPixel,
 								validate: CKEDITOR.dialog.validate.cssLength( editor.lang.common.invalidCssLength.replace( '%1', editor.lang.common.width ) ),
@@ -511,7 +511,7 @@
 									captionElement.getItem( i ).remove();
 							}
 						}
-					}/*,
+					},
 					{
 						type: 'text',
 						id: 'txtSummary',
@@ -527,7 +527,7 @@
 							else
 								selectedTable.removeAttribute( 'summary' );
 						}
-					}*/ ]
+					} ]
 				} ]
 			},
 			dialogadvtab && dialogadvtab.createAdvancedTab( editor, null, 'table' )
