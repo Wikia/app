@@ -638,7 +638,9 @@
 
 			// Check if toolbar exist and if so, then assign values to it (#491).
 			if ( editor.toolbar ) {
-				top = editor.ui.space( 'top' );
+				//Wikia start
+				top = editor.ui.space( 'contents' );
+				//Wikia end
 				topRect = top.getClientRect();
 			}
 

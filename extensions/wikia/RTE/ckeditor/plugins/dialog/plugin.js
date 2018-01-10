@@ -135,18 +135,18 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
 		input && input.removeAttribute( 'aria-invalid' );
 	}
 
-	var templateSource = '<div class="cke_reset_all {editorId} {editorDialogClass} {hidpi}' +
+	var templateSource = '<div class=" {editorId} {editorDialogClass} {hidpi}' +
 		'" dir="{langDir}"' +
 		' lang="{langCode}"' +
 		' role="dialog"' +
 		' aria-labelledby="cke_dialog_title_{id}"' +
 		'>' +
-		'<table class="cke_dialog ' + CKEDITOR.env.cssClass + ' cke_{langDir}"' +
+		'<table class="cke_dialog modalWrapper ' + CKEDITOR.env.cssClass + ' cke_{langDir}"' +
 			' style="position:absolute" role="presentation">' +
 			'<tr><td role="presentation">' +
 			'<div class="cke_dialog_body" role="presentation">' +
 				'<div id="cke_dialog_title_{id}" class="cke_dialog_title" role="presentation"></div>' +
-				'<a id="cke_dialog_close_button_{id}" class="cke_dialog_close_button" href="javascript:void(0)" title="{closeTitle}" role="button"><span class="cke_label">X</span></a>' +
+				'<a id="cke_dialog_close_button_{id}" class="cke_dialog_close_button close wikia-chiclet-button " href="javascript:void(0)" title="{closeTitle}" role="button"><img src="' + window.stylepath + '/oasis/images/icon_close.png"></a>' +
 				'<div id="cke_dialog_tabs_{id}" class="cke_dialog_tabs" role="tablist"></div>' +
 				'<table class="cke_dialog_contents" role="presentation">' +
 				'<tr>' +
@@ -335,6 +335,16 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
 		if ( definition.onOk ) {
 			this.on( 'ok', function( evt ) {
 				// Dialog confirm might probably introduce content changes (https://dev.ckeditor.com/ticket/5415).
+
+				// Wikia start
+				// adding tracking for dialogOk event
+				if ( RTE.templateEditor.placeholder ) {
+				    editor.fire( 'dialogOk', { dialog : this, type : RTE.templateEditor.placeholder.data().info.templateType } );
+				} else {
+				    editor.fire( 'dialogOk', { dialog: this });
+				}
+				// Wikia end
+
 				editor.fire( 'saveSnapshot' );
 				setTimeout( function() {
 					editor.fire( 'saveSnapshot' );
@@ -348,6 +358,11 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
 		this.state = CKEDITOR.DIALOG_STATE_IDLE;
 
 		if ( definition.onCancel ) {
+			// Wikia start
+			// adding tracking to the cancel event
+			editor.fire( 'dialogCancel', this );
+			// Wikia end
+
 			this.on( 'cancel', function( evt ) {
 				if ( definition.onCancel.call( this, evt ) === false )
 					evt.data.hide = false;
@@ -399,6 +414,11 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
 		}, this, null, 0 );
 
 		this.parts.close.on( 'click', function( evt ) {
+			// Wikia start
+			// adding tracking to the cancel event
+			editor.fire( 'dialogCancel', this );
+			// Wikia end
+
 			if ( this.fire( 'cancel', { hide: true } ).hide !== false )
 				this.hide();
 			evt.data.preventDefault();
@@ -934,7 +954,17 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
 				CKEDITOR.ui.fire( 'ready', this );
 
 				this.fire( 'show', {} );
-				this._.editor.fire( 'dialogShow', this );
+				//Wikia start
+
+				if ( RTE.templateEditor.placeholder ) {
+				    this._.editor.fire('dialogShow', {
+					dialog: this,
+					type: RTE.templateEditor.placeholder.data().info.templateType
+				    });
+				} else {
+				    this._.editor.fire( 'dialogShow', {dialog: this} );
+				}
+				//Wikia end
 
 				if ( !this._.parentDialog )
 					this._.editor.focusManager.lock();
@@ -1693,7 +1723,9 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
 		resizable: CKEDITOR.DIALOG_RESIZE_BOTH,
 		minWidth: 600,
 		minHeight: 400,
-		buttons: [ CKEDITOR.dialog.okButton, CKEDITOR.dialog.cancelButton ]
+		//Wikia start
+		buttons: [ CKEDITOR.dialog.okButton/*, CKEDITOR.dialog.cancelButton */]
+		//Wikia end
 	};
 
 	// Tool function used to return an item from an array based on its id
@@ -1767,6 +1799,12 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
 	 * @extends CKEDITOR.dialog.definition
 	 * @constructor Creates a definitionObject class instance.
 	 */
+	//Wikia start - we shoulnd't allow the user to resize the dialog window
+	CKEDITOR.on('dialogDefinition', function( evt ) {
+	      evt.data.definition.resizable = CKEDITOR.DIALOG_RESIZE_NONE;
+	});
+	//Wikia end
+
 	var definitionObject = function( dialog, dialogDefinition ) {
 			// TODO : Check if needed.
 			this.dialog = dialog;

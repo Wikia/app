@@ -77,8 +77,15 @@
 		// Set defaults.
 		{
 			title: definition.label,
+			//Wikia start
+                        className : definition.className || ( definition.command && 'cke_button_' + definition.command ) || '',
+			//Wikia end
 			click: definition.click ||
 			function( editor ) {
+                                //Wikia start
+                                //tracking the button click
+                                editor.fire( 'buttonClick', {button: this});
+                                //Wikia end
 				editor.execCommand( definition.command );
 			}
 		} );

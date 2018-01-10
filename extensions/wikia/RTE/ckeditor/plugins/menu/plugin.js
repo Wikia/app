@@ -160,7 +160,7 @@ CKEDITOR.plugins.add( 'menu', {
 			this._.level = definition.level || 1;
 
 			var panelDefinition = CKEDITOR.tools.extend( {}, definition.panel, {
-				css: [ CKEDITOR.skin.getPath( 'editor' ) ],
+				css: [ /*Wikia start*/ editor.config.editorCss /*Wikia end*/ ],
 				level: this._.level - 1,
 				block: {}
 			} );

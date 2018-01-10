@@ -255,6 +255,10 @@ CKEDITOR.plugins.add( 'richcombo', {
 
 					me.editorFocus && !editor.focusManager.hasFocus && editor.focus();
 
+					//Wikia start - fire tracking event
+					editor.fire('panelShowWE', {panel: this, me: me});
+					//Wikia end
+
 					if ( me.onOpen )
 						me.onOpen();
 				};
@@ -276,6 +280,9 @@ CKEDITOR.plugins.add( 'richcombo', {
 				};
 
 				list.onClick = function( value, marked ) {
+                                        // Wikia start - fire tracking event
+                                        editor.fire('panelClick', {panel: this, me: me, value: value});
+                                        // Wikia end
 
 					if ( me.onClick )
 						me.onClick.call( me, value, marked );

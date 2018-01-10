@@ -335,7 +335,10 @@ CKEDITOR.replaceClass = 'ckeditor';
 		if ( mode == CKEDITOR.ELEMENT_MODE_REPLACE ) {
 			// Do not replace the textarea right now, just hide it. The effective
 			// replacement will be done later in the editor creation lifecycle.
-			element.setStyle( 'visibility', 'hidden' );
+
+			//Wikia start - ArticleComment fix
+			//element.setStyle( 'visibility', 'hidden' );
+			//Wikia end
 
 			// https://dev.ckeditor.com/ticket/8031 Remember if textarea was required and remove the attribute.
 			editor._.required = element.hasAttribute( 'required' );
@@ -393,8 +396,10 @@ CKEDITOR.replaceClass = 'ckeditor';
 			elementMode = editor.elementMode;
 
 		// Get the HTML for the predefined spaces.
-		var topHtml = editor.fire( 'uiSpace', { space: 'top', html: '' } ).html;
-		var bottomHtml = editor.fire( 'uiSpace', { space: 'bottom', html: '' } ).html;
+		//Wikia start
+		//var topHtml = editor.fire( 'uiSpace', { space: 'top', html: '' } ).html;
+		//var bottomHtml = editor.fire( 'uiSpace', { space: 'bottom', html: '' } ).html;
+		//Wikia end
 
 		var themedTpl = new CKEDITOR.template(
 			'<{outerEl}' +
@@ -407,9 +412,9 @@ CKEDITOR.replaceClass = 'ckeditor';
 				'>' +
 				( editor.title ? '<span id="cke_{name}_arialbl" class="cke_voice_label">{voiceLabel}</span>' : '' ) +
 				'<{outerEl} class="cke_inner cke_reset" role="presentation">' +
-					'{topHtml}' +
+//					'{topHtml}' +
 					'<{outerEl} id="{contentId}" class="cke_contents cke_reset" role="presentation"></{outerEl}>' +
-					'{bottomHtml}' +
+//					'{bottomHtml}' +
 				'</{outerEl}>' +
 			'</{outerEl}>' );
 
@@ -419,9 +424,11 @@ CKEDITOR.replaceClass = 'ckeditor';
 			langDir: editor.lang.dir,
 			langCode: editor.langCode,
 			voiceLabel: editor.title,
-			topHtml: topHtml ? '<span id="' + editor.ui.spaceId( 'top' ) + '" class="cke_top cke_reset_all" role="presentation" style="height:auto">' + topHtml + '</span>' : '',
+			//Wikia start
+			//topHtml: topHtml ? '<span id="' + editor.ui.spaceId( 'top' ) + '" class="cke_top cke_reset_all" role="presentation" style="height:auto">' + topHtml + '</span>' : '',
 			contentId: editor.ui.spaceId( 'contents' ),
-			bottomHtml: bottomHtml ? '<span id="' + editor.ui.spaceId( 'bottom' ) + '" class="cke_bottom cke_reset_all" role="presentation">' + bottomHtml + '</span>' : '',
+			//bottomHtml: bottomHtml ? '<span id="' + editor.ui.spaceId( 'bottom' ) + '" class="cke_bottom cke_reset_all" role="presentation">' + bottomHtml + '</span>' : '',
+			//Wikia end
 			outerEl: CKEDITOR.env.ie ? 'span' : 'div'	// https://dev.ckeditor.com/ticket/9571
 		} ) );
 
@@ -437,9 +444,10 @@ CKEDITOR.replaceClass = 'ckeditor';
 
 		// Make top and bottom spaces unelectable, but not content space,
 		// otherwise the editable area would be affected.
-		topHtml && editor.ui.space( 'top' ).unselectable();
-		bottomHtml && editor.ui.space( 'bottom' ).unselectable();
-
+		//Wikia start
+		//topHtml && editor.ui.space( 'top' ).unselectable();
+		//bottomHtml && editor.ui.space( 'bottom' ).unselectable();
+		//Wikia end
 		var width = editor.config.width, height = editor.config.height;
 		if ( width )
 			container.setStyle( 'width', CKEDITOR.tools.cssLength( width ) );
@@ -457,6 +465,9 @@ CKEDITOR.replaceClass = 'ckeditor';
 		} );
 
 		editor.fireOnce( 'uiReady' );
+		//Wikia start - backwards compatibility for themeLoaded event
+		editor.fireOnce( 'themeLoaded' );
+		//Wikia end
 	}
 
 	// Replace all textareas with the default class name.

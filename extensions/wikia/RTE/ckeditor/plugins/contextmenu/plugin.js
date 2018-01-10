@@ -136,7 +136,9 @@ CKEDITOR.plugins.add( 'contextmenu', {
 		var contextMenu = editor.contextMenu = new CKEDITOR.plugins.contextMenu( editor );
 
 		editor.on( 'contentDom', function() {
-			contextMenu.addTarget( editor.editable(), editor.config.browserContextMenuOnCtrl !== false );
+			//Wikia start - contextmenu for whole editor fix
+			contextMenu.addTarget( editor.document, editor.config.browserContextMenuOnCtrl !== false );
+			//Wikia end
 		} );
 
 		editor.addCommand( 'contextMenu', {

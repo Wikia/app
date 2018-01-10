@@ -143,7 +143,10 @@ CKEDITOR.on( 'instanceDestroyed', function() {
 } );
 
 // Load the bootstrap script.
-CKEDITOR.loader.load( '_bootstrap' ); // %REMOVE_LINE%
+
+//Wikia start - let's not load that
+//CKEDITOR.loader.load( '_bootstrap' ); // %REMOVE_LINE%
+//Wikia end
 
 // Tri-state constants.
 /**

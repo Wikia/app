@@ -552,6 +552,25 @@ CKEDITOR.plugins.add( 'dialogui', {
 					element.unselectable();
 				}, this );
 
+                                // Wikia start - CSS Class changes
+                                if (typeof elementDefinition['class'] != 'undefined') {
+                                        elementDefinition['class'] = elementDefinition['class']
+                                                .replace(/cke_dialog_ui_button_cancel/, 'secondary')
+                                                .replace(/cke_dialog_ui_button_(\w+)/, '')
+                                                + ' wikia-button';
+                                }
+
+                                if (typeof elementDefinition['className'] != 'undefined') {
+                                        elementDefinition['className'] += ' wikia-button';
+
+                                        if (typeof elementDefinition['buttonType'] != 'undefined') {
+                                                elementDefinition['className'] += ' ' + elementDefinition['buttonType'];
+                                        }
+                                }
+                                else {
+                                        elementDefinition['className'] = 'wikia-button';
+                                }
+                                // Wikia start
 				var outerDefinition = CKEDITOR.tools.extend( {}, elementDefinition );
 				delete outerDefinition.style;
 

@@ -511,7 +511,7 @@
 									captionElement.getItem( i ).remove();
 							}
 						}
-					},
+					}/*,
 					{
 						type: 'text',
 						id: 'txtSummary',
@@ -527,7 +527,7 @@
 							else
 								selectedTable.removeAttribute( 'summary' );
 						}
-					} ]
+					} */]
 				} ]
 			},
 			dialogadvtab && dialogadvtab.createAdvancedTab( editor, null, 'table' )
