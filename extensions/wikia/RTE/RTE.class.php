@@ -285,13 +285,12 @@ class RTE {
 					['site'],
 					$out->getLanguage()->getCode(),
 					$out->getSkin()->getSkinName(),
-					$user,
+					$user->getName(),
 					null,
 					ResourceLoader::inDebugMode(),
 					ResourceLoaderModule::TYPE_STYLES
 				);
-
-				$vars['RTESiteCss'] = $wgServer . $url;
+				$vars['RTESiteCss'] = $url;
 			} else {
 				$vars['RTESiteCss'] = $wgServer . Skin::makeNSUrl( 'Common.css', $query, NS_MEDIAWIKI );
 			}

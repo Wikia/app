@@ -136,13 +136,14 @@
 				RTE.config.contentsCss.push(wgServer + '/extensions/wikia/AutoPageCreate/AutoPageCreate.css'); // local path needs to be used here
 			}
 
-			var contentsCss = '',
+			var contentsCss = [],
 				index = 0,
 				length = RTE.config.contentsCss.length;
 
 			(function load() {
 				$.get(RTE.config.contentsCss[index], function(css) {
-					contentsCss += css, index++;
+					contentsCss.push(css);
+					index++;
 
 					if (index < length) {
 						load();
