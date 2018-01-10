@@ -1,6 +1,6 @@
 /**
  * @license Copyright (c) 2003-2017, CKSource - Frederico Knabben. All rights reserved.
- * For licensing, see LICENSE.md or http://ckeditor.com/license
+ * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
  */
 
 /**
@@ -85,7 +85,7 @@
 		 * {@link CKEDITOR.editor#method-focus} instead.
 		 *
 		 *		var editor = CKEDITOR.instances.editor1;
-		 *		editor.focusManage.focus( editor.editable() );
+		 *		editor.focusManager.focus( editor.editable() );
 		 *
 		 * @param {CKEDITOR.dom.element} [currentActive] The new value of the {@link #currentActive} property.
 		 * @member CKEDITOR.focusManager
@@ -152,17 +152,8 @@
 			}
 
 			function doBlur() {
-				var editor = this._.editor;
-
 				if ( this.hasFocus ) {
 					this.hasFocus = false;
-
-					// Blink browsers leave selection in `[contenteditable=true]`
-					// when it's blurred and it's necessary to remove it manually for inline editor. (#13446)
-					// It seems to be related to https://bugs.chromium.org/p/chromium/issues/detail?id=433303.
-					if ( CKEDITOR.env.chrome && editor.elementMode == CKEDITOR.ELEMENT_MODE_INLINE ) {
-						editor.window.$.getSelection().removeAllRanges();
-					}
 
 					var ct = this._.editor.container;
 					ct && ct.removeClass( 'cke_focus' );

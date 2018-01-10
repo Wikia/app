@@ -1,6 +1,6 @@
-/**
+﻿/**
  * @license Copyright (c) 2003-2017, CKSource - Frederico Knabben. All rights reserved.
- * For licensing, see LICENSE.md or http://ckeditor.com/license
+ * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
  */
 
 /**
@@ -146,7 +146,7 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
 			'<tr><td role="presentation">' +
 			'<div class="cke_dialog_body" role="presentation">' +
 				'<div id="cke_dialog_title_{id}" class="cke_dialog_title" role="presentation"></div>' +
-				'<a id="cke_dialog_close_button_{id}" class="cke_dialog_close_button close wikia-chiclet-button" href="javascript:void(0)" title="{closeTitle}" role="button"><img src = "' + window.stylepath + '/oasis/images/icon_close.png"></a>' +
+				'<a id="cke_dialog_close_button_{id}" class="cke_dialog_close_button close wikia-chiclet-button " href="javascript:void(0)" title="{closeTitle}" role="button"><img src="' + window.stylepath + '/oasis/images/icon_close.png"></a>' +
 				'<div id="cke_dialog_tabs_{id}" class="cke_dialog_tabs" role="tablist"></div>' +
 				'<table class="cke_dialog_contents" role="presentation">' +
 				'<tr>' +
@@ -177,10 +177,10 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
 			title = body.getChild( 0 ),
 			close = body.getChild( 1 );
 
-		// Don't allow dragging on dialog (http://dev.ckeditor.com/ticket/13184).
+		// Don't allow dragging on dialog (https://dev.ckeditor.com/ticket/13184).
 		editor.plugins.clipboard && CKEDITOR.plugins.clipboard.preventDefaultDropOnElement( body );
 
-		// IFrame shim for dialog that masks activeX in IE. (http://dev.ckeditor.com/ticket/7619)
+		// IFrame shim for dialog that masks activeX in IE. (https://dev.ckeditor.com/ticket/7619)
 		if ( CKEDITOR.env.ie && !CKEDITOR.env.quirks && !CKEDITOR.env.edge ) {
 			var src = 'javascript:void(function(){' + encodeURIComponent( 'document.open();(' + CKEDITOR.tools.fixDomain + ')();document.close();' ) + '}())', // jshint ignore:line
 				iframe = CKEDITOR.dom.element.createFromHtml( '<iframe' +
@@ -229,7 +229,7 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
 			tabsToRemove = {},
 			i, processed, stopPropagation;
 
-		if ( ( buttonsOrder == 'OS' && CKEDITOR.env.mac ) || // The buttons in MacOS Apps are in reverse order (http://dev.ckeditor.com/ticket/4750)
+		if ( ( buttonsOrder == 'OS' && CKEDITOR.env.mac ) || // The buttons in MacOS Apps are in reverse order (https://dev.ckeditor.com/ticket/4750)
 		( buttonsOrder == 'rtl' && dir == 'ltr' ) || ( buttonsOrder == 'ltr' && dir == 'rtl' ) )
 			defaultDefinition.buttons.reverse();
 
@@ -334,16 +334,17 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
 
 		if ( definition.onOk ) {
 			this.on( 'ok', function( evt ) {
-				// Wikia change - begin @author: kflorence
+				// Dialog confirm might probably introduce content changes (https://dev.ckeditor.com/ticket/5415).
+
+				// Wikia start
 				// adding tracking for dialogOk event
 				if ( RTE.templateEditor.placeholder ) {
-					editor.fire( 'dialogOk', { dialog : this, type : RTE.templateEditor.placeholder.data().info.templateType } );
+				    editor.fire( 'dialogOk', { dialog : this, type : RTE.templateEditor.placeholder.data().info.templateType } );
 				} else {
-					editor.fire( 'dialogOk', { dialog: this });
+				    editor.fire( 'dialogOk', { dialog: this });
 				}
-				// Wikia change - end
+				// Wikia end
 
-				// Dialog confirm might probably introduce content changes (http://dev.ckeditor.com/ticket/5415).
 				editor.fire( 'saveSnapshot' );
 				setTimeout( function() {
 					editor.fire( 'saveSnapshot' );
@@ -357,10 +358,10 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
 		this.state = CKEDITOR.DIALOG_STATE_IDLE;
 
 		if ( definition.onCancel ) {
-			// Wikia change - begin
+			// Wikia start
 			// adding tracking to the cancel event
 			editor.fire( 'dialogCancel', this );
-			// Wikia change - end
+			// Wikia end
 
 			this.on( 'cancel', function( evt ) {
 				if ( definition.onCancel.call( this, evt ) === false )
@@ -413,10 +414,10 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
 		}, this, null, 0 );
 
 		this.parts.close.on( 'click', function( evt ) {
-			// Wikia - start
-			this.fire('close', {close: true});
-			editor.fire( 'dialogClose', this );
-			// Wikia - end
+			// Wikia start
+			// adding tracking to the cancel event
+			editor.fire( 'dialogCancel', this );
+			// Wikia end
 
 			if ( this.fire( 'cancel', { hide: true } ).hide !== false )
 				this.hide();
@@ -470,7 +471,7 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
 				currentIndex = currentIndex + offset;
 
 				if ( hasTabs && !me._.tabBarMode && ( currentIndex == focusList.length || currentIndex == -1 ) ) {
-					// If the dialog was not in tab mode, then focus the first tab (http://dev.ckeditor.com/ticket/13027).
+					// If the dialog was not in tab mode, then focus the first tab (https://dev.ckeditor.com/ticket/13027).
 					me._.tabBarMode = true;
 					me._.tabs[ me._.currentTabId ][ 0 ].focus();
 					me._.currentFocusIndex = -1;
@@ -547,7 +548,7 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
 					button && CKEDITOR.tools.setTimeout( button.click, 0, button );
 					processed = 1;
 				}
-				stopPropagation = 1; // Always block the propagation (http://dev.ckeditor.com/ticket/4269)
+				stopPropagation = 1; // Always block the propagation (https://dev.ckeditor.com/ticket/4269)
 			} else if ( keystroke == 27 /*ESC*/ ) {
 				button = this.getButton( 'cancel' );
 
@@ -558,7 +559,7 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
 					if ( this.fire( 'cancel', { hide: true } ).hide !== false )
 						this.hide();
 				}
-				stopPropagation = 1; // Always block the propagation (http://dev.ckeditor.com/ticket/4269)
+				stopPropagation = 1; // Always block the propagation (https://dev.ckeditor.com/ticket/4269)
 			} else {
 				return;
 			}
@@ -582,7 +583,7 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
 			dialogElement.on( 'keydown', keydownHandler, this );
 
 			// Some browsers instead, don't cancel key events in the keydown, but in the
-			// keypress. So we must do a longer trip in those cases. (http://dev.ckeditor.com/ticket/4531,http://dev.ckeditor.com/ticket/8985)
+			// keypress. So we must do a longer trip in those cases. (https://dev.ckeditor.com/ticket/4531,https://dev.ckeditor.com/ticket/8985)
 			if ( CKEDITOR.env.gecko )
 				dialogElement.on( 'keypress', keypressHandler, this );
 
@@ -615,7 +616,7 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
 				me._.tabs[ me._.currentTabId ][ 0 ].focus();
 				me._.currentFocusIndex = -1;
 			} else if ( !this._.hasFocus ) {
-				// http://dev.ckeditor.com/ticket/13114#comment:4.
+				// https://dev.ckeditor.com/ticket/13114#comment:4.
 				this._.currentFocusIndex = hasTabs ? -1 : this._.focusList.length - 1;
 
 				// Decide where to put the initial focus.
@@ -631,7 +632,7 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
 			}
 		}, this, null, 0xffffffff );
 
-		// IE6 BUG: Text fields and text areas are only half-rendered the first time the dialog appears in IE6 (http://dev.ckeditor.com/ticket/2661).
+		// IE6 BUG: Text fields and text areas are only half-rendered the first time the dialog appears in IE6 (https://dev.ckeditor.com/ticket/2661).
 		// This is still needed after [2708] and [2709] because text fields in hidden TR tags are still broken.
 		if ( CKEDITOR.env.ie6Compat ) {
 			this.on( 'load', function() {
@@ -807,7 +808,7 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
 			var element = this._.element.getFirst(), rtl = this._.editor.lang.dir == 'rtl';
 			var isFixed = element.getComputedStyle( 'position' ) == 'fixed';
 
-			// (http://dev.ckeditor.com/ticket/8888) In some cases of a very small viewport, dialog is incorrectly
+			// (https://dev.ckeditor.com/ticket/8888) In some cases of a very small viewport, dialog is incorrectly
 			// positioned in IE7. It also happens that it remains sticky and user cannot
 			// scroll down/up to reveal dialog's content below/above the viewport; this is
 			// cumbersome.
@@ -881,8 +882,10 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
 			// Reset all inputs back to their default value.
 			this.reset();
 
-			// Select the first tab by default.
-			this.selectPage( this.definition.contents[ 0 ].id );
+			// Selects the first tab if no tab is already selected.
+			if ( this._.currentTabId === null ) {
+				this.selectPage( this.definition.contents[ 0 ].id );
+			}
 
 			// Set z-index.
 			if ( CKEDITOR.dialog._.currentZIndex === null )
@@ -951,14 +954,17 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
 				CKEDITOR.ui.fire( 'ready', this );
 
 				this.fire( 'show', {} );
+				//Wikia start
+
 				if ( RTE.templateEditor.placeholder ) {
-					this._.editor.fire('dialogShow', {
-						dialog: this,
-						type: RTE.templateEditor.placeholder.data().info.templateType
-					});
+				    this._.editor.fire('dialogShow', {
+					dialog: this,
+					type: RTE.templateEditor.placeholder.data().info.templateType
+				    });
 				} else {
-					this._.editor.fire( 'dialogShow', {dialog: this} );
+				    this._.editor.fire( 'dialogShow', {dialog: this} );
 				}
+				//Wikia end
 
 				if ( !this._.parentDialog )
 					this._.editor.focusManager.lock();
@@ -1064,7 +1070,7 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
 		commitContent: function() {
 			var args = arguments;
 			this.foreach( function( widget ) {
-				// Make sure IE triggers "change" event on last focused input before closing the dialog. (http://dev.ckeditor.com/ticket/7915)
+				// Make sure IE triggers "change" event on last focused input before closing the dialog. (https://dev.ckeditor.com/ticket/7915)
 				if ( CKEDITOR.env.ie && this._.currentFocusIndex == widget.focusIndex )
 					widget.getInputElement().$.blur();
 
@@ -1116,11 +1122,11 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
 				var editor = this._.editor;
 				editor.focus();
 
-				// Give a while before unlock, waiting for focus to return to the editable. (http://dev.ckeditor.com/ticket/172)
+				// Give a while before unlock, waiting for focus to return to the editable. (https://dev.ckeditor.com/ticket/172)
 				setTimeout( function() {
 					editor.focusManager.unlock();
 
-					// Fixed iOS focus issue (http://dev.ckeditor.com/ticket/12381).
+					// Fixed iOS focus issue (https://dev.ckeditor.com/ticket/12381).
 					// Keep in mind that editor.focus() does not work in this case.
 					if ( CKEDITOR.env.iOS ) {
 						editor.window.focus();
@@ -1137,7 +1143,7 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
 				contentObj.resetInitValue && contentObj.resetInitValue();
 			} );
 
-			// Reset dialog state back to IDLE, if busy (http://dev.ckeditor.com/ticket/13213).
+			// Reset dialog state back to IDLE, if busy (https://dev.ckeditor.com/ticket/13213).
 			this.setState( CKEDITOR.DIALOG_STATE_IDLE );
 		},
 
@@ -1258,7 +1264,7 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
 
 			// [IE] an invisible input[type='text'] will enlarge it's width
 			// if it's value is long when it shows, so we clear it's value
-			// before it shows and then recover it (http://dev.ckeditor.com/ticket/5649)
+			// before it shows and then recover it (https://dev.ckeditor.com/ticket/5649)
 			if ( CKEDITOR.env.ie6Compat || CKEDITOR.env.ie7Compat ) {
 				clearOrRecoverTextInputValue( selected[ 1 ] );
 				selected[ 1 ].show();
@@ -1717,7 +1723,9 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
 		resizable: CKEDITOR.DIALOG_RESIZE_BOTH,
 		minWidth: 600,
 		minHeight: 400,
-		buttons: [ CKEDITOR.dialog.okButton]
+		//Wikia start
+		buttons: [ CKEDITOR.dialog.okButton/*, CKEDITOR.dialog.cancelButton */]
+		//Wikia end
 	};
 
 	// Tool function used to return an item from an array based on its id
@@ -1791,10 +1799,11 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
 	 * @extends CKEDITOR.dialog.definition
 	 * @constructor Creates a definitionObject class instance.
 	 */
-
+	//Wikia start - we shoulnd't allow the user to resize the dialog window
 	CKEDITOR.on('dialogDefinition', function( evt ) {
-		evt.data.definition.resizable = CKEDITOR.DIALOG_RESIZE_NONE;
+	      evt.data.definition.resizable = CKEDITOR.DIALOG_RESIZE_NONE;
 	});
+	//Wikia end
 
 	var definitionObject = function( dialog, dialogDefinition ) {
 			// TODO : Check if needed.
@@ -2230,7 +2239,7 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
 		resizeCover = resizeFunc;
 		win.on( 'resize', resizeFunc );
 		resizeFunc();
-		// Using Safari/Mac, focus must be kept where it is (http://dev.ckeditor.com/ticket/7027)
+		// Using Safari/Mac, focus must be kept where it is (https://dev.ckeditor.com/ticket/7027)
 		if ( !( CKEDITOR.env.mac && CKEDITOR.env.webkit ) )
 			coverElement.focus();
 
@@ -2591,7 +2600,7 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
 							if ( elementDefinition && elementDefinition.padding !== undefined ) {
 								styles.push( 'padding:' + cssLength( elementDefinition.padding ) );
 							}
-							// In IE Quirks alignment has to be done on table cells. (http://dev.ckeditor.com/ticket/7324)
+							// In IE Quirks alignment has to be done on table cells. (https://dev.ckeditor.com/ticket/7324)
 							if ( CKEDITOR.env.ie && CKEDITOR.env.quirks && children[ i ].align ) {
 								styles.push( 'text-align:' + children[ i ].align );
 							}
@@ -2650,7 +2659,7 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
 							html.push( 'height:100%;' );
 						html.push( 'width:' + cssLength( width || '100%' ), ';' );
 
-						// (http://dev.ckeditor.com/ticket/10123) Temp fix for dialog broken layout in latest webkit.
+						// (https://dev.ckeditor.com/ticket/10123) Temp fix for dialog broken layout in latest webkit.
 						if ( CKEDITOR.env.webkit )
 							html.push( 'float:none;' );
 
@@ -2670,7 +2679,7 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
 								styles.push( 'height:' + Math.floor( 100 / childHtmlList.length ) + '%' );
 							if ( elementDefinition && elementDefinition.padding !== undefined )
 								styles.push( 'padding:' + cssLength( elementDefinition.padding ) );
-							// In IE Quirks alignment has to be done on table cells. (http://dev.ckeditor.com/ticket/7324)
+							// In IE Quirks alignment has to be done on table cells. (https://dev.ckeditor.com/ticket/7324)
 							if ( CKEDITOR.env.ie && CKEDITOR.env.quirks && children[ i ].align )
 								styles.push( 'text-align:' + children[ i ].align );
 							if ( styles.length > 0 )
@@ -3015,7 +3024,7 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
 	/**
 	 * Generic dialog command. It opens a specific dialog when executed.
 	 *
-	 *		// Register the "link" command, which opens the "link" dialog.
+	 *		// Register the "link" command which opens the "link" dialog.
 	 *		editor.addCommand( 'link', new CKEDITOR.dialogCommand( 'link' ) );
 	 *
 	 * @class
@@ -3024,6 +3033,10 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
 	 * @param {String} dialogName The name of the dialog to open when executing
 	 * this command.
 	 * @param {Object} [ext] Additional command definition's properties.
+	 * @param {String} [ext.tabId] You can provide additional property (`tabId`) if you wish to open the dialog on a specific tabId.
+	 *
+	 *		// Open the dialog on the 'keystroke' tabId.
+	 *		editor.addCommand( 'keystroke', new CKEDITOR.dialogCommand( 'a11yHelp', { tabId: 'keystroke' } ) );
 	 */
 	CKEDITOR.dialogCommand = function( dialogName, ext ) {
 		this.dialogName = dialogName;
@@ -3032,7 +3045,13 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
 
 	CKEDITOR.dialogCommand.prototype = {
 		exec: function( editor ) {
-			editor.openDialog( this.dialogName );
+			var tabId = this.tabId;
+			editor.openDialog( this.dialogName, function( dialog ) {
+				// Select different tab if it's provided (#830).
+				if ( tabId ) {
+					dialog.selectPage( tabId );
+				}
+			} );
 		},
 
 		// Dialog commands just open a dialog ui, thus require no undo logic,

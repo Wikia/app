@@ -1,6 +1,6 @@
 ﻿/**
  * @license Copyright (c) 2003-2017, CKSource - Frederico Knabben. All rights reserved.
- * For licensing, see LICENSE.md or http://ckeditor.com/license
+ * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
  */
 
 CKEDITOR.plugins.add( 'richcombo', {
@@ -37,7 +37,7 @@ CKEDITOR.plugins.add( 'richcombo', {
 	template +=
 		' onkeydown="return CKEDITOR.tools.callFunction({keydownFn},event,this);"' +
 		' onfocus="return CKEDITOR.tools.callFunction({focusFn},event);" ' +
-			( CKEDITOR.env.ie ? 'onclick="return false;" onmouseup' : 'onclick' ) + // #188
+			( CKEDITOR.env.ie ? 'onclick="return false;" onmouseup' : 'onclick' ) + // https://dev.ckeditor.com/ticket/188
 				'="CKEDITOR.tools.callFunction({clickFn},this);return false;">' +
 			'<span id="{id}_text" class="cke_combo_text cke_combo_inlinelabel">{label}</span>' +
 			'<span class="cke_combo_open">' +
@@ -80,6 +80,7 @@ CKEDITOR.plugins.add( 'richcombo', {
 			// We don't want the panel definition in this object.
 			var panelDefinition = this.panel || {};
 			delete this.panel;
+
 			this.id = CKEDITOR.tools.getNextNumber();
 
 			this.document = ( panelDefinition.parent && panelDefinition.parent.getDocument() ) || CKEDITOR.document;
@@ -114,6 +115,7 @@ CKEDITOR.plugins.add( 'richcombo', {
 			 */
 			render: function( editor, output ) {
 				var env = CKEDITOR.env;
+
 				var id = 'cke_' + this.id;
 				var clickFn = CKEDITOR.tools.addFunction( function( el ) {
 					// Restore locked selection in Opera.
@@ -158,7 +160,7 @@ CKEDITOR.plugins.add( 'richcombo', {
 				};
 
 				function updateState() {
-					// Don't change state while richcombo is active (#11793).
+					// Don't change state while richcombo is active (https://dev.ckeditor.com/ticket/11793).
 					if ( this.getState() == CKEDITOR.TRISTATE_ON )
 						return;
 
@@ -235,10 +237,6 @@ CKEDITOR.plugins.add( 'richcombo', {
 			createPanel: function( editor ) {
 				if ( this._.panel )
 					return;
-				//Not Working
-			//	if (editor.config.richcomboCss != '' ) {
-			//		this._.panelDefinition.css = [editor.config.richcomboCss];
-			//	}
 
 				var panelDefinition = this._.panelDefinition,
 					panelBlockDefinition = this._.panelDefinition.block,
@@ -249,9 +247,6 @@ CKEDITOR.plugins.add( 'richcombo', {
 					me = this;
 
 				panel.onShow = function() {
-					//CK UPDATE
-					editor.fire('panelShowWE', {panel: this, me: me});
-
 					this.element.addClass( namedPanelCls );
 
 					me.setState( CKEDITOR.TRISTATE_ON );
@@ -259,6 +254,10 @@ CKEDITOR.plugins.add( 'richcombo', {
 					me._.on = 1;
 
 					me.editorFocus && !editor.focusManager.hasFocus && editor.focus();
+
+					//Wikia start - fire tracking event
+					editor.fire('panelShowWE', {panel: this, me: me});
+					//Wikia end
 
 					if ( me.onOpen )
 						me.onOpen();
@@ -281,10 +280,9 @@ CKEDITOR.plugins.add( 'richcombo', {
 				};
 
 				list.onClick = function( value, marked ) {
-					// Wikia - start
-					//Adding tracking for panelClick event
-					editor.fire('panelClick', {panel: this, me: me, value: value});
-					// Wikia - end
+                                        // Wikia start - fire tracking event
+                                        editor.fire('panelClick', {panel: this, me: me, value: value});
+                                        // Wikia end
 
 					if ( me.onClick )
 						me.onClick.call( me, value, marked );
@@ -365,6 +363,7 @@ CKEDITOR.plugins.add( 'richcombo', {
 			setState: function( state ) {
 				if ( this._.state == state )
 					return;
+
 				var el = this.document.getById( 'cke_' + this.id );
 				el.setState( state, 'cke_combo' );
 
@@ -425,15 +424,3 @@ CKEDITOR.plugins.add( 'richcombo', {
 	};
 
 } )();
-
-
-
-/**
- * CSS to be loaded for richcombo dropdown (added by Wikia)
- * @type string
- * @default ''
-*/
-CKEDITOR.config.richcomboCss = '';
-
-
-

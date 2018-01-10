@@ -1,6 +1,6 @@
 /**
  * @license Copyright (c) 2003-2017, CKSource - Frederico Knabben. All rights reserved.
- * For licensing, see LICENSE.md or http://ckeditor.com/license
+ * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
  */
 
 /**
@@ -72,12 +72,11 @@ CKEDITOR.keystrokeHandler = function( editor ) {
 				event.data.preventDefault( true );
 			}
 		};
-
-	var onKeyUp = function( event )
-	{
+	//Wikia start
+	var onKeyUp = function( event ) {
 		this._.editor.fire( 'keyUp' , { keyCode: event.data.getKeystroke() } );
-	};
-
+	}
+	//Wikia end
 	CKEDITOR.keystrokeHandler.prototype = {
 		/**
 		 * Attaches this keystroke handle to a DOM object. Keystrokes typed
@@ -88,9 +87,10 @@ CKEDITOR.keystrokeHandler = function( editor ) {
 		attach: function( domObject ) {
 			// For most browsers, it is enough to listen to the keydown event
 			// only.
-			domObject.on( 'keyup', onKeyUp, this );
 			domObject.on( 'keydown', onKeyDown, this );
-
+			//Wikia start
+			domObject.on( 'keyup' , onKeyUp, this );
+			//Wikia end
 			// Some browsers instead, don't cancel key events in the keydown, but in the
 			// keypress. So we must do a longer trip in those cases.
 			if ( CKEDITOR.env.gecko && CKEDITOR.env.mac )
