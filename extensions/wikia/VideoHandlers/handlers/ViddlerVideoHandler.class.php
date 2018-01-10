@@ -2,9 +2,9 @@
 
 class ViddlerVideoHandler extends VideoHandler {
 	protected $apiName = 'ViddlerApiWrapper';
-	protected static $urlTemplate = 'http://www.viddler.com/player/$1/';
-	protected static $providerDetailUrlTemplate = 'http://www.viddler.com/v/$1';
-	protected static $providerHomeUrl = 'http://www.viddler.com/';
+	protected static $urlTemplate = 'https://www.viddler.com/player/$1/';
+	protected static $providerDetailUrlTemplate = 'https://www.viddler.com/v/$1';
+	protected static $providerHomeUrl = 'https://www.viddler.com/';
 	protected static $autoplayParam = "autoplay";
 	protected static $autoplayValue = "t";
 

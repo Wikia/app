@@ -411,7 +411,6 @@ CREATE TABLE `page` (
   UNIQUE KEY `name_title` (`page_namespace`,`page_title`),
   KEY `page_random` (`page_random`),
   KEY `page_len` (`page_len`),
-  KEY `page_random_2` (`page_random`),
   KEY `page_redirect_namespace_len` (`page_is_redirect`,`page_namespace`,`page_len`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -532,16 +531,6 @@ CREATE TABLE `text` (
   KEY `user_timestamp` (`old_user`,`inverse_timestamp`),
   KEY `usertext_timestamp` (`old_user_text`,`inverse_timestamp`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Table structure for table `three_word_spam`
---
-
-DROP TABLE IF EXISTS `three_word_spam`;
-CREATE TABLE `three_word_spam` (
-  `dbname` varchar(64) NOT NULL,
-  PRIMARY KEY (`dbname`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Table structure for table `user`
@@ -676,4 +665,4 @@ CREATE TABLE `wikia_tasks_log` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
--- Dump completed on 2017-10-26 13:34:32
+-- Dump completed on 2018-01-09 10:57:28

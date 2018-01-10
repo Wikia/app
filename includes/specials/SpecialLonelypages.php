@@ -47,26 +47,39 @@ class LonelyPagesPage extends PageQueryPage {
 	function isSyndicated() { return false; }
 
 	function getQueryInfo() {
-		return array (
-			'tables' => array ( 'page', 'pagelinks',
-					'templatelinks' ),
-			'fields' => array ( 'page_namespace AS namespace',
-					'page_title AS title',
-					'page_title AS value' ),
-			'conds' => array ( 'pl_namespace IS NULL',
-					'page_namespace' => MWNamespace::getContentNamespaces(),
-					'page_is_redirect' => 0,
-					'tl_namespace IS NULL' ),
-			'join_conds' => array (
-					'pagelinks' => array (
-						'LEFT JOIN', array (
+		return [
+			'tables' => [
+				'page',
+				'pagelinks',
+				'templatelinks',
+			],
+			'fields' => [
+				'page_namespace AS namespace',
+				'page_title AS title',
+			],
+			'conds' => [
+				'pl_namespace IS NULL',
+				'page_namespace' => MWNamespace::getContentNamespaces(),
+				'page_is_redirect' => 0,
+				'tl_namespace IS NULL',
+			],
+			'join_conds' => [
+				'pagelinks' => [
+					'LEFT JOIN',
+					[
 						'pl_namespace = page_namespace',
-						'pl_title = page_title' ) ),
-					'templatelinks' => array (
-						'LEFT JOIN', array (
+						'pl_title = page_title',
+					],
+				],
+				'templatelinks' => [
+					'LEFT JOIN',
+					[
 						'tl_namespace = page_namespace',
-						'tl_title = page_title' ) ) )
-		);
+						'tl_title = page_title',
+					],
+				],
+			],
+		];
 	}
 
 	function getOrderFields() {

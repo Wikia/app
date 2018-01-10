@@ -25,45 +25,6 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.indexExchange',[
 					id: '2',
 					siteID: 183567
 				},
-				PREFOOTER_LEFT_BOXAD: {
-					sizes: [
-						[300, 250]
-					],
-					id: '4',
-					siteID: 185052
-				},
-				PREFOOTER_MIDDLE_BOXAD: {
-					sizes: [
-						[300, 250]
-					],
-					id: '5',
-					siteID: 185054
-				},
-				PREFOOTER_RIGHT_BOXAD: {
-					sizes: [
-						[300, 250]
-					],
-					id: '6',
-					siteID: 185053
-				},
-				LEFT_SKYSCRAPER_2: {
-					sizes: [
-						[160, 600],
-						[300, 600],
-						[300, 250]
-					],
-					id: '7',
-					siteID: 185050
-				},
-				LEFT_SKYSCRAPER_3: {
-					sizes: [
-						[160, 600],
-						[300, 600],
-						[300, 250]
-					],
-					id: '8',
-					siteID: 185051
-				},
 				INCONTENT_BOXAD_1: {
 					sizes: [
 						[160, 600],

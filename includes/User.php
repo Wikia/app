@@ -1350,7 +1350,7 @@ class User implements JsonSerializable {
 		}
 
 		# User/IP blocking
-		$block = Block::newFromTarget( $this->getName(), $ip, !$bFromSlave );
+		$block = Block::newFromTarget( $this, $ip, !$bFromSlave );
 
 		# Proxy blocking
 		if ( !$block instanceof Block && $ip !== null && !$this->isAllowed( 'proxyunbannable' )
@@ -3499,7 +3499,7 @@ class User implements JsonSerializable {
 	/**
 	 * Check to see if the given clear-text password is one of the accepted passwords
 	 * @param $password String: user password.
-	 * @return Boolean: True if the given password is correct, otherwise False.
+	 * @return AuthResult
 	 */
 	public function checkPassword( $password, &$errorMessageKey = null ) {
 		$this->load();
@@ -4525,6 +4525,16 @@ class User implements JsonSerializable {
 	 */
 	public function isStaff() {
 		return self::permissionsService()->isInGroup( $this, 'staff' );
+	}
+
+	/**
+	 * Whether this user is a bot (either globally or on this wiki) or not
+	 * @return bool
+	 */
+	public function isBot() {
+		return self::permissionsService()->isInGroup( $this, 'bot' )
+			||
+			self::permissionsService()->isInGroup( $this, 'bot-global' );
 	}
 
 	/**

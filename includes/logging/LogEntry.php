@@ -122,7 +122,7 @@ class DatabaseLogEntry extends LogEntryBase {
 		$tables = [ 'logging' ];
 		$fields = [
 			'log_id', 'log_type', 'log_action', 'log_timestamp',
-			'log_user', 'log_user_text',
+			'log_user',
 			'log_namespace', 'log_title', // unused log_page
 			'log_comment', 'log_params', 'log_deleted'
 		];
@@ -211,17 +211,8 @@ class DatabaseLogEntry extends LogEntryBase {
 	}
 
 	public function getPerformer() {
-		$userId = (int) $this->row->log_user;
-		if ( $userId !== 0 ) { // logged-in users
-			if ( isset( $this->row->user_name ) ) {
-				return User::newFromRow( $this->row );
-			} else {
-				return User::newFromId( $userId );
-			}
-		} else { // IP users
-			$userText = $this->row->log_user_text;
-			return User::newFromName( $userText, false );
-		}
+		// SUS-3222: All log entries are attributed to registered users
+		return User::newFromId( $this->row->log_user );
 	}
 
 	public function getTarget() {
@@ -266,14 +257,13 @@ class RCDatabaseLogEntry extends DatabaseLogEntry {
 	}
 
 	public function getPerformer() {
-		$userId = (int) $this->row->rc_user;
-		if ( $userId !== 0 ) {
-			return User::newFromId( $userId );
-		} else {
-			$userText = $this->row->rc_user_text;
-			// Might be an IP, don't validate the username
-			return User::newFromName( $userText, false );
+		if ( $this->row->rc_user ) {
+			return User::newFromId( $this->row->rc_user );
 		}
+
+		$userText = RecentChange::extractUserIpFromRow( $this->row );
+		// SUS-3079: this is an IP, don't validate the username
+		return User::newFromName( $userText, false );
 	}
 
 	public function getTarget() {

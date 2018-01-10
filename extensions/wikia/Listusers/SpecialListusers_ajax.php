@@ -115,10 +115,12 @@ class ListusersAjax {
 	 * @see SUS-3207
 	 */
 	private static function getWikiUsers( int $cityId ) {
+		$fname = __METHOD__;
+
 		return WikiaDataAccess::cache(
 			wfSharedMemcKey(__METHOD__, $cityId),
 			WikiaResponse::CACHE_VERY_SHORT,
-			function() use ($cityId) {
+			function() use ($cityId, $fname) {
 				global $wgSpecialsDB;
 
 				$dbr = wfGetDB( DB_SLAVE, [], $wgSpecialsDB );
@@ -128,7 +130,7 @@ class ListusersAjax {
 					[
 						'wiki_id' => $cityId,
 					],
-					__METHOD__
+					$fname
 				);
 			}
 		);

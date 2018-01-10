@@ -2705,6 +2705,56 @@ abstract class DatabaseBase implements DatabaseType {
 		$this->query( $sql, $fname );
 	}
 
+	public function upsert( $table, array $rows, array $uniqueIndexes, array $set,
+							$fname = __METHOD__
+	) {
+		if ( !count( $rows ) ) {
+			return true; // nothing to do
+		}
+		if ( !is_array( reset( $rows ) ) ) {
+			$rows = [ $rows ];
+		}
+		if ( count( $uniqueIndexes ) ) {
+			$clauses = []; // list WHERE clauses that each identify a single row
+			foreach ( $rows as $row ) {
+				foreach ( $uniqueIndexes as $index ) {
+					$index = is_array( $index ) ? $index : [ $index ]; // columns
+					$rowKey = []; // unique key to this row
+					foreach ( $index as $column ) {
+						$rowKey[$column] = $row[$column];
+					}
+					$clauses[] = $this->makeList( $rowKey, LIST_AND );
+				}
+			}
+			$where = [ $this->makeList( $clauses, LIST_OR ) ];
+		} else {
+			$where = false;
+		}
+		$useTrx = !$this->mTrxLevel;
+		if ( $useTrx ) {
+			$this->begin( $fname );
+		}
+		try {
+			# Update any existing conflicting row(s)
+			if ( $where !== false ) {
+				$ok = $this->update( $table, $set, $where, $fname );
+			} else {
+				$ok = true;
+			}
+			# Now insert any non-conflicting row(s)
+			$ok = $this->insert( $table, $rows, $fname, [ 'IGNORE' ] ) && $ok;
+		} catch ( Exception $e ) {
+			if ( $useTrx ) {
+				$this->rollback( $fname );
+			}
+			throw $e;
+		}
+		if ( $useTrx ) {
+			$this->commit( $fname );
+		}
+		return $ok;
+	}
+
 	/**
 	 * Returns the size of a text field, or -1 for "unlimited"
 	 *
@@ -3604,6 +3654,18 @@ abstract class DatabaseBase implements DatabaseType {
 	 */
 	protected function indexNameCallback( $matches ) {
 		return $this->indexName( $matches[1] );
+	}
+
+	/**
+	 * Check to see if a named lock is available. This is non-blocking.
+	 *
+	 * @param string $lockName name of lock to poll
+	 * @param string $method name of method calling us
+	 * @return Boolean
+	 * @since 1.20
+	 */
+	public function lockIsFree( $lockName, $method ) {
+		return true;
 	}
 
 	/**

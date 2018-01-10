@@ -4,9 +4,10 @@ class ArticleVideoController extends WikiaController {
 
 	private function fallbackLanguage( $lang ) {
 		switch ( $lang ) {
-			case 'zh-hant':
-			case 'zh-tw':
+			case 'zh-hans':
 				return 'zh';
+			case 'zh-tw':
+				return 'zh-hant';
 			case 'pt-br':
 				return 'pt';
 			default:
@@ -16,10 +17,10 @@ class ArticleVideoController extends WikiaController {
 
 	public function featured() {
 		$requestContext = $this->getContext();
-		$title = $requestContext->getTitle()->getPrefixedDBkey();
+		$pageId = $requestContext->getTitle()->getArticleID();
 		$lang = $requestContext->getLanguage()->getCode();
 
-		$featuredVideoData = ArticleVideoContext::getFeaturedVideoData( $title );
+		$featuredVideoData = ArticleVideoContext::getFeaturedVideoData( $pageId );
 
 		if ( !empty( $featuredVideoData ) ) {
 			$requestContext->getOutput()->addModules( 'ext.ArticleVideo' );

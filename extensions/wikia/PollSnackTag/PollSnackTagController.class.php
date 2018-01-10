@@ -3,6 +3,7 @@ class PollSnackTagController extends WikiaController {
 
 	const PARSER_TAG_NAME = 'pollsnack';
 
+	// files.quizsnack.com does not yet support HTTPS, to handle in (PLATFORM-3285)
 	const TAG_SRC = 'http://files.quizsnack.com/iframe/embed.html?';
 
 	const TAG_SOURCE_ALLOWED_PARAMS_WITH_DEFAULTS = [

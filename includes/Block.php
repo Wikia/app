@@ -204,12 +204,18 @@ class Block {
 	 *     3) An autoblock on the given IP
 	 * @param $vagueTarget User|String also search for blocks affecting this target.  Doesn't
 	 *     make any sense to use TYPE_AUTO / TYPE_ID here. Leave blank to skip IP lookups.
-	 * @return Bool whether a relevant block was found
+	 * @return bool whether a relevant block was found
+	 * @throws MWException
 	 */
 	protected function newLoad( $vagueTarget = null ) {
 		$db = wfGetDB( $this->mFromMaster ? DB_MASTER : DB_SLAVE );
 
-		if( $this->type !== null ){
+
+		if ( $this->type === Block::TYPE_USER && $this->target->isLoggedIn() ) {
+			$conds = [
+				'ipb_user' => $this->target->getId()
+			];
+		} elseif ( $this->type !== null ) {
 			$conds = array(
 				'ipb_address' => array( (string)$this->target ),
 			);
@@ -223,8 +229,8 @@ class Block {
 			list( $target, $type ) = self::parseTarget( $vagueTarget );
 			switch( $type ) {
 				case self::TYPE_USER:
-					# Slightly wierd, but who are we to argue?
-					$conds['ipb_address'][] = (string)$target;
+					// SUS-805: Query blocks by user ID for registered users
+					$conds['ipb_user'][] = $target->getId();
 					break;
 
 				case self::TYPE_IP:
@@ -355,12 +361,13 @@ class Block {
 	 * @param $row ResultWrapper: a row from the ipblocks table
 	 */
 	protected function initFromRow( $row ) {
-		$this->setTarget( $row->ipb_address );
-		if ( $row->ipb_by ) { // local user
-			$this->setBlocker( User::newFromID( $row->ipb_by ) );
-		} else { // foreign user
-			$this->setBlocker( $row->ipb_by_text );
+		// SUS-805: Use user name lookup for registered users
+		if ( $row->ipb_user ) {
+			$this->setTarget( User::newFromId( $row->ipb_user ) );
+		} else {
+			$this->setTarget( $row->ipb_address );
 		}
+		$this->setBlocker( User::newFromID( $row->ipb_by ) );
 
 		$this->mReason = $row->ipb_reason;
 		$this->mTimestamp = wfTimestamp( TS_MW, $row->ipb_timestamp );
@@ -488,7 +495,6 @@ class Block {
 			'ipb_address'          => (string)$this->target,
 			'ipb_user'             => $this->target instanceof User ? $this->target->getID() : 0,
 			'ipb_by'               => $this->getBy(),
-			'ipb_by_text'          => $this->getByName(),
 			'ipb_reason'           => $this->mReason,
 			'ipb_timestamp'        => $db->timestamp( $this->mTimestamp ),
 			'ipb_auto'             => $this->mAuto,
@@ -532,31 +538,31 @@ class Block {
 	 * blocked by this Block. This will use the recentchanges table.
 	 *
 	 * @param Block $block
-	 * @param Array &$blockIds
-	 * @return Array: block IDs of retroactive autoblocks made
+	 * @param int[] &$blockIds
 	 */
 	protected static function defaultRetroactiveAutoblock( Block $block, array &$blockIds ) {
+		// SUS-3079: Target is not a registered user, there is nothing to autoblock
+		if ( !( $block->getTarget() instanceof User ) ) {
+			return;
+		}
+
 		$dbr = wfGetDB( DB_SLAVE );
 
-		$options = array( 'ORDER BY' => 'rc_timestamp DESC' );
-		$conds = array( 'rc_user_text' => (string)$block->getTarget() );
+		$options = [ 'ORDER BY' => 'rc_timestamp DESC' ];
+		$conds = [ 'rc_user' => $block->getTarget()->getId() ];
 
 		// Just the last IP used.
-		$options['LIMIT'] = 1;
+		$row = $dbr->selectRow( 'recentchanges', 'rc_ip_bin', $conds, __METHOD__, $options );
 
-		$res = $dbr->select( 'recentchanges', array( 'rc_ip' ), $conds,
-			__METHOD__ ,  $options );
+		if ( !$row ) {
+			return;
+		}
 
-		if ( !$dbr->numRows( $res ) ) {
-			# No results, don't autoblock anything
-			wfDebug( "No IP found to retroactively autoblock\n" );
-		} else {
-			foreach ( $res as $row ) {
-				if ( $row->rc_ip ) {
-					$id = $block->doAutoblock( $row->rc_ip );
-					if ( $id ) $blockIds[] = $id;
-				}
-			}
+		$userIp = RecentChange::extractUserIpFromRow( $row );
+		$autoBlockId = $block->doAutoblock( $userIp );
+
+		if ( $autoBlockId ) {
+			$blockIds[] = $autoBlockId;
 		}
 	}
 

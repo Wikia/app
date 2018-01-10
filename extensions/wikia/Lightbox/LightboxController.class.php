@@ -23,11 +23,8 @@ class LightboxController extends WikiaController {
 	 * get lightbox modal content mustache template
 	 */
 	public function lightboxModalContent() {
-		// TODO: refactor this to AdEngine2Controller.php
-		$showAds = $this->wg->ShowAds;
-		$this->showAdModalInterstitial = $showAds && $this->wg->ShowAdModalInterstitial;
-
 		// set cache control to 1 day
+		$this->response->setCachePolicy( WikiaResponse::CACHE_PUBLIC );
 		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
 	}
 
@@ -39,6 +36,7 @@ class LightboxController extends WikiaController {
 		}
 
 		// set cache control to 1 day
+		$this->response->setCachePolicy( WikiaResponse::CACHE_PUBLIC );
 		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
 	}
 

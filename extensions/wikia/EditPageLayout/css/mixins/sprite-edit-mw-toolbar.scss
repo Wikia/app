@@ -2,7 +2,7 @@
 // @autosprite-start
 @mixin sprite-edit-mw-toolbar-base() {
 	background-color: transparent;
-	background-image: url('/extensions/wikia/EditPageLayout/images/sprite-edit-mw-toolbar.png'); /* wgCdnStylePath */
+	background-image: url('/extensions/wikia/EditPageLayout/images/sprite-edit-mw-toolbar.png'); /* wgResourceBasePath */
 	background-repeat: no-repeat;
 }
 @mixin sprite-edit-mw-toolbar-base-embed() {

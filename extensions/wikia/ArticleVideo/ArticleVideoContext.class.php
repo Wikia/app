@@ -5,53 +5,37 @@ class ArticleVideoContext {
 	/**
 	 * Checks if featured video is embedded on given article
 	 *
-	 * @param  string $title Prefixed article title (see: Title::getPrefixedDBkey)
+	 * @param $pageId
 	 *
 	 * @return bool
+	 *
 	 */
-	public static function isFeaturedVideoEmbedded( string $prefixedDbKey ) {
+	public static function isFeaturedVideoEmbedded( string $pageId ) {
 		$wg = F::app()->wg;
 
-		if ( !$wg->enableArticleFeaturedVideo ) {
+		if ( !$wg->enableArticleFeaturedVideo || WikiaPageType::isActionPage()) {
 			return false;
 		}
 
-		$featuredVideos = self::getFeaturedVideos();
+		$mediaId = ArticleVideoService::getFeatureVideoForArticle( $wg->cityId, $pageId );
 
-		return isset( $featuredVideos[$prefixedDbKey] ) &&
-			self::isFeaturedVideosValid( $featuredVideos[$prefixedDbKey] ) &&
-			// Prevents to show video on ?action=history etc.
-			!WikiaPageType::isActionPage();
-	}
-
-	/**
-	 * We are temporarily using two variables for storing the videos data
-	 * as we've run out of memory for one WF field. This will be replaced
-	 * soon by introducing a service to handle featured videos
-	 *
-	 * @return array
-	 */
-	public static function getFeaturedVideos() {
-		$wg = F::app()->wg;
-
-		return array_merge(
-			$wg->articleVideoFeaturedVideos,
-			$wg->articleVideoFeaturedVideos2
-		);
+		return !empty( $mediaId );
 	}
 
 	/**
 	 * Gets video id and labels for featured video
 	 *
-	 * @param string $prefixedDbKey Prefixed article title (see: Title::getPrefixedDBkey)
+	 * @param $pageId
 	 *
 	 * @return array
+	 *
 	 */
-	public static function getFeaturedVideoData( string $prefixedDbKey ) {
+	public static function getFeaturedVideoData( string $pageId ) {
 		$wg = F::app()->wg;
 
-		if ( self::isFeaturedVideoEmbedded( $prefixedDbKey ) ) {
-			$videoData = self::getFeaturedVideos()[$prefixedDbKey];
+		if ( self::isFeaturedVideoEmbedded( $pageId ) ) {
+			$videoData = [];
+			$videoData['mediaId'] = ArticleVideoService::getFeatureVideoForArticle( $wg->cityId, $pageId );
 
 			$details = json_decode(
 				Http::get(
@@ -60,6 +44,7 @@ class ArticleVideoContext {
 				),
 				true
 			);
+
 			if ( !empty( $details ) ) {
 				$videoData = array_merge( $videoData, $details );
 				$videoData['duration'] = WikiaFileHelper::formatDuration( $details['playlist'][0]['duration'] );
@@ -68,6 +53,9 @@ class ArticleVideoContext {
 			$videoData['recommendedLabel'] = $wg->featuredVideoRecommendedVideosLabel;
 			$videoData['recommendedVideoPlaylist'] = $wg->recommendedVideoPlaylist;
 			$videoData['dfpContentSourceId'] = $wg->AdDriverDfpOoyalaContentSourceId;
+			$videoData['metadata'] = self::getVideoMetaData( $videoData );
+
+			$videoData = self::getVideoDataWithAttribution( $videoData );
 
 			return $videoData;
 		}
@@ -75,8 +63,58 @@ class ArticleVideoContext {
 		return [];
 	}
 
-	private static function isFeaturedVideosValid( $featuredVideo ) {
-		return isset( $featuredVideo['mediaId'] );
+	private static function getVideoDataWithAttribution( $videoData ) {
+		if ( empty( $videoData['playlist'] ) || empty( $videoData['playlist'][0] ) ) {
+			return $videoData;
+		}
+
+		$playlistVideo = $videoData['playlist'][0];
+
+		if ( !empty( $playlistVideo['username'] ) ) {
+			$videoData['username'] = $playlistVideo['username'];
+		}
+
+		if ( !empty( $playlistVideo['userUrl'] ) ) {
+			$videoData['userUrl'] = $playlistVideo['userUrl'];
+		}
+
+		if ( !empty( $playlistVideo['userAvatarUrl'] ) ) {
+			$videoData['userAvatarUrl'] = $playlistVideo['userAvatarUrl'];
+		}
+
+		return $videoData;
+	}
+
+	private static function getVideoMetaData( $videoDetails ) {
+		$playlistItem = $videoDetails['playlist'][0];
+
+		return [
+			'name' => $videoDetails['title'],
+			'thumbnailUrl' => $playlistItem['image'],
+			'uploadDate' => date( 'c', $playlistItem['pubdate'] ),
+			'duration' => self::getIsoTime( $videoDetails['duration'] ),
+			'description' => $videoDetails['description'],
+			'contentUrl' => self::getVideoContentUrl( $playlistItem['sources'] )
+		];
+	}
+
+	private static function getVideoContentUrl( $sources ) {
+		return $sources[count( $sources ) - 1]['file'];
+	}
+
+	private static function getIsoTime( $colonDelimitedTime ) {
+		$segments = explode( ':', $colonDelimitedTime );
+		$isoTime = '';
+
+		if ( count( $segments ) > 2 ) {
+			$isoTime = 'H' . $segments[0] . 'M' . $segments[1] . 'S' . $segments[2];
+		} else if ( count( $segments ) > 1 ) {
+			$isoTime = 'M' . $segments[0] . 'S' . $segments[1];
+		} else if ( count( $segments ) > 0 ) {
+			$isoTime = 'S' . $segments[0];
+		}
+
+		return $isoTime;
 	}
 
 	/**
@@ -92,10 +130,8 @@ class ArticleVideoContext {
 
 		if ( !empty( $wg->enableArticleRelatedVideo ) && !empty( $relatedVideos ) ) {
 			foreach ( $relatedVideos as $videoData ) {
-				if (
-					isset( $videoData['articles'], $videoData['videoId'] ) &&
-					in_array( $title, $videoData['articles'] )
-				) {
+				if ( isset( $videoData['articles'], $videoData['videoId'] ) &&
+					in_array( $title, $videoData['articles'] ) ) {
 					return $videoData;
 				}
 			}

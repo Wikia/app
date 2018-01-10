@@ -4855,7 +4855,7 @@ $messages['id'] = array(
 	'hidden-category-category' => 'Kategori tersembunyi',
 	'help' => 'Bantuan',
 	'history' => 'Versi terdahulu halaman',
-	'history_short' => 'Versi terdahulu',
+	'history_short' => 'Riwayat',
 	'helppage' => 'Help:Isi',
 	'hidetoc' => 'sembunyikan',
 	'headline_sample' => 'Teks judul',
@@ -5345,7 +5345,7 @@ Legenda: '''({{int:cur}})''' = differenze con la versione attuale, '''({{int:las
 
 $messages['ja'] = array(
 	'hidden-categories' => '{PLURAL:$1|Hidden category|Hidden categories}',
-	'hidden-category-category' => '非公開カテゴリ',
+	'hidden-category-category' => '隠しカテゴリ',
 	'help' => 'ヘルプ',
 	'history' => 'ページ履歴',
 	'history_short' => '履歴',

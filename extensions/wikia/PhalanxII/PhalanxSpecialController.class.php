@@ -1,22 +1,17 @@
 <?php
 
-use Wikia\DependencyInjection\Injector;
-
 class PhalanxSpecialController extends WikiaSpecialPageController {
-
 	const RESULT_BLOCK_ADDED = 1;
 	const RESULT_BLOCK_UPDATED = 2;
 	const RESULT_ERROR = 3;
 
 	private $title;
-	private $service;
 
 	public function __construct() {
 		parent::__construct( 'Phalanx', 'phalanx' /* restrictions */ );
 		$this->includable( false );
 
 		$this->title = SpecialPage::getTitleFor( 'Phalanx' );
-		$this->service = Injector::getInjector()->get( PhalanxService::class );
 	}
 
 	/**
@@ -261,26 +256,31 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 	private function handleBlockTest( $blockText ) {
 		wfProfileIn( __METHOD__ );
 
-		$service = Injector::getInjector()->get( PhalanxService::class );
-		$service->setLimit( 20 );
+		$phalanxService = PhalanxServiceFactory::getServiceInstance();
+		$phalanxMatchParams = PhalanxMatchParams::withGlobalDefaults()->content( $blockText );
 
 		$listing = '';
 		$noMatches = true;
 
 		foreach ( Phalanx::getSupportedTypeNames() as $blockType ) {
-			$res = $service->match( $blockType, $blockText );
+			try {
+				$phalanxMatchParams->type( $blockType );
+				$res = $phalanxService->doMatch( $phalanxMatchParams );
 
-			if ( empty( $res ) ) {
-				continue;
+				if ( empty( $res ) ) {
+					continue;
+				}
+
+				$noMatches = false;
+
+				$pager = new PhalanxBlockTestPager( $blockType );
+				$pager->setContext( $this->getContext() );
+				$pager->setRows( $res );
+				$listing .= $pager->getHeader();
+				$listing .= $pager->getBody();
+			} catch ( PhalanxServiceException $phalanxServiceException ) {
+				\Wikia\Logger\WikiaLogger::instance()->error( 'Phalanx service failed' );
 			}
-
-			$noMatches = false;
-
-			$pager = new PhalanxBlockTestPager( $blockType );
-			$pager->setContext( $this->getContext() );
-			$pager->setRows( $res );
-			$listing .= $pager->getHeader();
-			$listing .= $pager->getBody();
 		}
 
 		if ( $noMatches ) {
@@ -350,13 +350,7 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 	public function validate() {
 		wfProfileIn( __METHOD__ );
 
-		if ( !$this->userCanExecute( $this->wg->User ) ) {
-			wfProfileOut( __METHOD__ );
-			$this->displayRestrictionError();
-			return;
-		}
-
-		$this->response->setFormat( 'json' );
+		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 		$this->setVal( 'valid', false );
 
 		$regexp = $this->request->getVal( 'regexp' );
@@ -370,31 +364,17 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 		}
 
 		if ( $token == $this->getToken() ) {
-			$this->setVal( 'valid', $this->service->validate( $regexp ) );
+			try {
+				$phalanxService = PhalanxServiceFactory::getServiceInstance();
+				$this->setVal( 'valid', $phalanxService->doRegexValidation( $regexp ) );
+			} catch ( PhalanxServiceException $phalanxServiceException ) {
+				$this->setVal( 'valid', true );
+			} catch ( RegexValidationException $regexValidationException ) {
+				$this->setVal( 'valid', $regexValidationException->getMessage() );
+			}
 		}
 
 		wfProfileOut( __METHOD__ );
-	}
-
-	public function matchBlock() {
-		if ( !$this->userCanExecute( $this->wg->User ) ) {
-			$this->displayRestrictionError();
-			return;
-		}
-
-		$result = array();
-		$token = $this->request->getVal( 'token' );
-		$block = $this->request->getVal( 'block' );
-
-		if ( $token == $this->getToken() ) {
-			foreach ( Phalanx::getSupportedTypeNames() as $type => $typeName ) {
-				$blocks = $this->service->match( $type, $block );
-				if ( !empty( $blocks ) ) {
-					$result[$type] = $blocks;
-				}
-			}
-		}
-		$this->setVal( 'blocks', $result );
 	}
 
 	private function getToken() {

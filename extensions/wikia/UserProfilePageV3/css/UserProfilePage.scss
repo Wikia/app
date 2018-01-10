@@ -229,7 +229,7 @@ $color-user-profile-gradient-bottom: desaturate(darken($color-menu-highlight, 5%
 		}
 		.icon {
 			border-radius: 50px;
-			background: $color-links url(/extensions/wikia/UserProfilePageV3/images/UPP-sprite.png); /* $wgCdnStylePath */
+			background: $color-links url(/extensions/wikia/UserProfilePageV3/images/UPP-sprite.png); /* $wgResourceBasePath */
 			height: 17px;
 			position: relative;
 			top: .3em;

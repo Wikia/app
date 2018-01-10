@@ -1,0 +1,50 @@
+page:
+  - # moved content
+    page_namespace: 2
+    page_title: New_User_Name
+    page_is_redirect: 0
+  -
+    page_namespace: 2
+    page_title: New_User_Name/User_subpage
+    page_is_redirect: 0
+  -
+    page_namespace: 3
+    page_title: New_User_Name
+    page_is_redirect: 0
+  -
+    page_namespace: 500
+    page_title: New_User_Name
+    page_is_redirect: 0
+  -
+    page_namespace: 500
+    page_title: New_User_Name/Test_blog
+    page_is_redirect: 0
+  -
+    page_namespace: 1200
+    page_title: New_User_Name
+    page_is_redirect: 0
+  - # redirects from old titles
+    page_namespace: 2
+    page_title: Old_User_Nąmę
+    page_is_redirect: 1
+  -
+    page_namespace: 2
+    page_title: Old_User_Nąmę/User_subpage
+    page_is_redirect: 1
+  -
+    page_namespace: 3
+    page_title: Old_User_Nąmę
+    page_is_redirect: 1
+  -
+    page_namespace: 500
+    page_title: Old_User_Nąmę
+    page_is_redirect: 1
+  -
+    page_namespace: 500
+    page_title: Old_User_Nąmę/Test_blog
+    page_is_redirect: 1
+  -
+    page_namespace: 1200
+    page_title: Old_User_Nąmę
+    page_is_redirect: 1
+

@@ -37,6 +37,8 @@ class WikiaUpdater {
 			array( 'addField', 'watchlist', 'wl_wikia_addedtimestamp', $dir . 'patch-watchlist-improvements.sql', true ),
 			array( 'modifyField', 'recentchanges', 'rc_ip', $dir . 'patch-rc_ip-varbinary.sql', true ),
 			array( 'addField', 'recentchanges', 'rc_ip_bin',$dir . 'patch-rc_ip_bin.sql', true ), // SUS-3079
+			// SUS-805
+			array( 'dropField', 'ipblocks', 'ipb_by_text', $dir . 'patch-drop-ipb_by_text.sql', true ),
 
 			# indexes
 			array( 'addIndex', 'archive', 'page_revision', $dir. 'patch-index-archive-page_revision.sql', true ),
@@ -71,6 +73,8 @@ class WikiaUpdater {
 			array( 'WikiaUpdater::do_clean_math_table' ),
 			array( 'WikiaUpdater::do_transcache_update' ),
 			array( 'WikiaUpdater::do_wall_history_ipv6_update' ), // SUS-2257
+			array( 'WikiaUpdater::doLoggingTableUserCleanup' ), // SUS-3222
+			array( 'WikiaUpdater::migrateRecentChangesIpData' ), // SUS-3079
 			array( 'dropField', 'interwiki', 'iw_api', $dir . 'patch-drop-iw_api.sql', true ),
 			array( 'dropField', 'interwiki', 'iw_wikiid', $dir . 'patch-drop-wikiid.sql', true ),
 			array( 'dropField', 'cu_changes', 'cuc_user_text', $ext_dir . '/CheckUser/patch-cu_changes.sql', true ), // SUS-3080
@@ -224,6 +228,79 @@ class WikiaUpdater {
 		$db->query( sprintf( 'ALTER TABLE %s DROP COLUMN %s', $table, $old_column ), __METHOD__ );
 
 		$updater->output( "done.\n" );
+	}
+
+	public static function doLoggingTableUserCleanup( DatabaseUpdater $databaseUpdater ) {
+		$databaseConnection = $databaseUpdater->getDB();
+
+		if ( !$databaseConnection->fieldExists( 'logging', 'log_user_text', __METHOD__ ) ) {
+			$databaseUpdater->output( "logging.log_user_text column does not exist.\n" );
+			return;
+		}
+
+		$databaseUpdater->output( 'Migrating legacy chat ban log entries... ' );
+
+		// Attribute old chat ban log entries to FANDOMbot
+		$databaseConnection->update(
+			'logging',
+			[ 'log_user' => 32794352 ],
+			[
+				'log_user' => 0,
+				'log_type' => 'chatban'
+			],
+			__METHOD__
+		);
+
+		$databaseUpdater->output( "done.\n" );
+		$databaseUpdater->output( 'Deleting log entries attributed to anons... ' );
+
+		$databaseConnection->delete( 'logging', [ 'log_user' => 0 ], __METHOD__ );
+
+		$databaseUpdater->output( "done.\n" );
+		$databaseUpdater->output( 'Dropping logging.log_user_text column... ' );
+
+		$databaseConnection->query( 'ALTER TABLE logging DROP COLUMN log_user_text', __METHOD__ );
+
+		$databaseUpdater->output( "done.\n" );
+
+		wfWaitForSlaves();
+	}
+
+	public static function migrateRecentChangesIpData( DatabaseUpdater $databaseUpdater ) {
+		$databaseConnection = $databaseUpdater->getDB();
+
+		if ( !$databaseConnection->fieldExists( 'recentchanges', 'rc_ip', __METHOD__ ) ) {
+			$databaseUpdater->output( "recentchanges.rc_ip column already migrated.\n" );
+			return;
+		}
+
+		$patchDir = static::get_patch_dir();
+
+		$databaseUpdater->output( 'Migrating rc_ip column to VARBINARY(16) rc_ip_bin... ' );
+		$databaseConnection->sourceFile( $patchDir . 'patch-populate-rc_ip_bin.sql' );
+		$databaseUpdater->output( "done.\n" );
+
+		$databaseUpdater->output( 'Dropping rc_ip index... ' );
+		$databaseConnection->query( 'ALTER TABLE recentchanges DROP INDEX rc_ip' );
+		$databaseUpdater->output( "done.\n" );
+
+		$databaseUpdater->output( 'Dropping rc_user_text index... ' );
+		$databaseConnection->query( 'ALTER TABLE recentchanges DROP INDEX rc_user_text' );
+		$databaseUpdater->output( "done.\n" );
+
+		$databaseUpdater->output( 'Dropping rc_ns_usertext index... ' );
+		$databaseConnection->query( 'ALTER TABLE recentchanges DROP INDEX rc_ns_usertext' );
+		$databaseUpdater->output( "done.\n" );
+
+		$databaseUpdater->output( 'Dropping rc_ip column... ' );
+		$databaseConnection->query( 'ALTER TABLE recentchanges DROP COLUMN rc_ip' );
+		$databaseUpdater->output( "done.\n" );
+
+		$databaseUpdater->output( 'Adding default empty value to rc_user_text column... ' );
+		$databaseConnection->sourceFile( $patchDir . 'patch-rc_user_text-default.sql' );
+		$databaseUpdater->output( "done.\n" );
+		
+		wfWaitForSlaves();
 	}
 
 	/**

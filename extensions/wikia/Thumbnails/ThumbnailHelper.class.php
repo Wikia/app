@@ -286,11 +286,6 @@ class ThumbnailHelper extends WikiaModel {
 			$linkClasses[] = 'lightbox';
 		}
 
-		// Hide the play button
-		if ( !empty( $options['hidePlayButton'] ) ) {
-			$linkClasses[] = 'hide-play';
-		}
-
 		// Check for fluid
 		if ( ! empty( $options[ 'fluid' ] ) ) {
 			$linkClasses[] = 'fluid';

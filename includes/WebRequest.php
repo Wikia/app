@@ -171,7 +171,9 @@ class WebRequest implements Wikia\Interfaces\IRequest {
 			}
 			$host = $parts[0];
 			if ( $parts[1] === false ) {
-				if ( isset( $_SERVER['SERVER_PORT'] ) ) {
+				if ( !empty( $_SERVER['HTTP_FASTLY_SSL'] ) ) {
+					$port = 443;
+				} elseif ( isset( $_SERVER['SERVER_PORT'] ) ) {
 					$port = $_SERVER['SERVER_PORT'];
 				} // else leave it as $stdPort
 			} else {
@@ -187,7 +189,7 @@ class WebRequest implements Wikia\Interfaces\IRequest {
 	 * @return array
 	 */
 	public static function detectProtocolAndStdPort() {
-		return ( isset( $_SERVER['HTTPS'] ) && $_SERVER['HTTPS'] == 'on' ) ? array( 'https', 443 ) : array( 'http', 80 );
+		return ( !empty( $_SERVER['HTTP_FASTLY_SSL'] ) || ( isset( $_SERVER['HTTPS'] ) && $_SERVER['HTTPS'] == 'on' ) ) ? array( 'https', 443 ) : array( 'http', 80 );
 	}
 
 	/**

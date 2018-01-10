@@ -9,29 +9,6 @@ class RecirculationHooks {
 	const DATE_FORMAT = 'Y-m-d H:i:s';
 
 	/**
-	 * Insert Recirculation to the right rail
-	 *
-	 * @param array $modules
-	 *
-	 * @return bool
-	 */
-	public static function onGetRailModuleList( &$modules ) {
-		// Check if we're on a page where we want to show a recirculation module.
-		// If we're not, stop right here.
-		if ( !static::isCorrectPageType() ) {
-			return true;
-		}
-
-		// Use a different position depending on whether the user is logged in
-		// This is based off of the logic from the VideosModule extension
-		$pos = RequestContext::getMain()->getUser()->isAnon() ? 1305 : 1285;
-
-		$modules[$pos] = [ 'Recirculation', 'container', [ 'containerId' => 'recirculation-rail' ] ];
-
-		return true;
-	}
-
-	/**
 	 * @param OutputPage $out
 	 * @param Skin $skin
 	 *
@@ -132,20 +109,24 @@ class RecirculationHooks {
 		$metaDataFromService = WikiaDataAccess::cache(
 			'liftigniter-metadata',
 			WikiaResponse::CACHE_SHORT,
-			function() {
+			function () {
 				$metaDataService = new LiftigniterMetadataService();
 
 				return $metaDataService->getLiMetadata();
 			}
 		);
 
-		return current(array_filter( $metaDataFromService, function ( Item $item ) use ( $cityId, $articleId ) {
-			if ( $item->getProduct() === $cityId && $item->getId() === $articleId ) {
-				return $item;
-			}
+		if ( is_array( $metaDataFromService ) ) {
+			return current( array_filter( $metaDataFromService, function ( Item $item ) use ( $cityId, $articleId ) {
+				if ( $item->getProduct() === $cityId && $item->getId() === $articleId ) {
+					return $item;
+				}
 
+				return null;
+			} ) );
+		} else {
 			return null;
-		}));
+		}
 	}
 
 	/**
@@ -176,7 +157,7 @@ class RecirculationHooks {
 		}
 
 		if ( !empty( $wgEnableArticleFeaturedVideo ) &&
-			ArticleVideoContext::isFeaturedVideoEmbedded( $title->getPrefixedDBkey() )
+			ArticleVideoContext::isFeaturedVideoEmbedded( $title->getArticleID() )
 		) {
 			$metaData['type'] = 'video';
 		}

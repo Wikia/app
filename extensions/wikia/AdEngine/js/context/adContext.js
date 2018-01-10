@@ -113,46 +113,6 @@ define('ext.wikia.adEngine.adContext', [
 		context.bidders.a9Video = geo.isProperGeo(instantGlobals.wgAdDriverA9VideoBidderCountries);
 	}
 
-	function isMEGAEnabledForFVMobile(context) {
-		return context.targeting.skin === 'mercury' &&
-			context.targeting.hasFeaturedVideo &&
-			geo.isProperGeo(instantGlobals.wgAdDriverAdMixCountries) &&
-			geo.isProperGeo(instantGlobals.wgAdDriverMegaAdUnitBuilderForFVCountries);
-	}
-
-	function isMEGAEnabledForFVOasis(context, isEnabledOnDesktopFeaturedVideo) {
-		return context.targeting.hasFeaturedVideo && isEnabledOnDesktopFeaturedVideo &&
-			geo.isProperGeo(instantGlobals.wgAdDriverMegaAdUnitBuilderForFVCountries);
-	}
-
-	function enableAdMixExperiment(context) {
-		var isPALEnabledOnDesktopFeaturedVideo = !!(
-				context.targeting.skin === 'oasis' &&
-				context.targeting.hasFeaturedVideo &&
-				geo.isProperGeo(instantGlobals.wgAdDriverAdMixCountries)
-			),
-			isPALEnabledOnRegularArticle = !!(
-				context.targeting.skin === 'oasis' &&
-				!context.targeting.hasFeaturedVideo &&
-				geo.isProperGeo(instantGlobals.wgAdDriverPremiumAdLayoutCountries)
-			);
-
-		context.opts.premiumAdLayoutEnabled = isPALEnabledOnDesktopFeaturedVideo || isPALEnabledOnRegularArticle;
-		context.slots.premiumAdLayoutSlotsToUnblock = [
-			'TOP_RIGHT_BOXAD',
-			'INVISIBLE_HIGH_IMPACT_2',
-			'INCONTENT_BOXAD_1',
-			'BOTTOM_LEADERBOARD'
-		];
-
-		context.opts.megaAdUnitBuilderEnabled = isMEGAEnabledForFVOasis(context, isPALEnabledOnDesktopFeaturedVideo) ||
-			isMEGAEnabledForFVMobile(context);
-
-		if (!context.targeting.hasFeaturedVideo) {
-			context.slots.premiumAdLayoutSlotsToUnblock.push('INCONTENT_PLAYER');
-		}
-	}
-
 	function referrerIsSonySite() {
 		return doc && doc.referrer && doc.referrer.match(/info\.tvsideview\.sony\.net/);
 	}
@@ -190,6 +150,8 @@ define('ext.wikia.adEngine.adContext', [
 		if (geo.isProperGeo(instantGlobals.wgAdDriverDelayCountries)) {
 			context.opts.delayEngine = true;
 		}
+
+		context.opts.isAdProductsBridgeEnabled = geo.isProperGeo(instantGlobals.wgAdDriverAdProductsBridgeCountries);
 
 		context.opts.premiumOnly = context.targeting.hasFeaturedVideo &&
 			geo.isProperGeo(instantGlobals.wgAdDriverSrcPremiumCountries);
@@ -245,22 +207,13 @@ define('ext.wikia.adEngine.adContext', [
 			(isPageType('article') || isPageType('search')) && !context.targeting.wikiIsCorporate
 		);
 
-		// Override prefooters sizes
-		context.opts.overridePrefootersSizes = !!(
-			context.targeting.skin === 'oasis' &&
-			geo.isProperGeo(instantGlobals.wgAdDriverOverridePrefootersCountries) && !isPageType('home')
-		);
-
 		context.opts.outstreamVideoFrequencyCapping = instantGlobals.wgAdDriverOutstreamVideoFrequencyCapping;
 		context.opts.porvataMoatTrackingEnabled =
 			geo.isProperGeo(instantGlobals.wgAdDriverPorvataMoatTrackingCountries);
+		context.opts.porvataMoatTrackingSampling = instantGlobals.wgAdDriverPorvataMoatTrackingSampling || 0;
 
-		enableAdMixExperiment(context);
-
-		context.opts.premiumAdLayoutRubiconFastlaneTagsEnabled = context.opts.premiumAdLayoutEnabled &&
-			geo.isProperGeo(instantGlobals.wgAdDriverPremiumAdLayoutRubiconFastlaneTagsCountries);
-		context.opts.premiumAdLayoutAppNexusTagsEnabled = context.opts.premiumAdLayoutEnabled &&
-			geo.isProperGeo(instantGlobals.wgAdDriverPremiumAdLayoutAppNexusTagsCountries);
+		context.opts.megaAdUnitBuilderEnabled = context.targeting.hasFeaturedVideo &&
+			geo.isProperGeo(instantGlobals.wgAdDriverMegaAdUnitBuilderForFVCountries);
 
 		context.opts.isFVMidrollEnabled = geo.isProperGeo(instantGlobals.wgAdDriverFVMidrollCountries);
 		context.opts.isFVPostrollEnabled = geo.isProperGeo(instantGlobals.wgAdDriverFVPostrollCountries);

@@ -96,7 +96,7 @@ class MercuryApiArticleHandler {
 	}
 
 	public static function getFeaturedVideoDetails( Title $title ): array {
-		$featuredVideo = ArticleVideoContext::getFeaturedVideoData( $title->getPrefixedDBkey() );
+		$featuredVideo = ArticleVideoContext::getFeaturedVideoData( $title->getArticleID() );
 
 		if ( !empty( $featuredVideo ) ) {
 			$featuredVideoData = [
@@ -114,6 +114,7 @@ class MercuryApiArticleHandler {
 			$featuredVideoData['embed']['jsParams']['videoId'] = $featuredVideo['mediaId'];
 			$featuredVideoData['embed']['jsParams']['playlist'] = $featuredVideo['playlist'];
 			$featuredVideoData['embed']['jsParams']['recommendedVideoPlaylist'] = $featuredVideo['recommendedVideoPlaylist'];
+			$featuredVideoData['metadata'] = $featuredVideo['metadata'];
 
 			return $featuredVideoData;
 		}

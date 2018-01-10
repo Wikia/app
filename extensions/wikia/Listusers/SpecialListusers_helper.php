@@ -96,7 +96,7 @@ class ListusersData {
 	function getGroups   	() { return $this->mGroups; }
 
 	public function loadData() {
-		global $wgMemc, $wgLang, $wgUser;
+		global $wgMemc;
 		wfProfileIn( __METHOD__ );
 
 		/* initial values for result */
@@ -105,6 +105,10 @@ class ListusersData {
 			'data' 	=> array()
 		);
 
+		$context = RequestContext::getMain();
+		$user = $context->getUser();
+		$lang = $context->getLanguage();
+
 		$orderby = implode(",", $this->mOrder);
 		$subMemkey = array(
 			'G'  . implode(",", is_array($this->mFilterGroup) ? $this->mFilterGroup : array()),
@@ -112,7 +116,8 @@ class ListusersData {
 			'E'  . $this->mEditsThreshold,
 			'O'  . $this->mOffset,
 			'L'  . $this->mLimit,
-			'O'  . $orderby
+			'O'  . $orderby,
+			'L'  . $lang->getCode(), // localized messages are cached, vary by user language
 		);
 
 		$memkey = wfForeignMemcKey( $this->mCityId, __CLASS__, self::CACHE_VERSION, md5( implode(', ', $subMemkey) ) );
@@ -176,8 +181,8 @@ class ListusersData {
 			);
 
 			if ( $data['cnt'] > 0 ) {
-				$userIsBlocked = $wgUser->isBlocked( true, false );
-				$sk = RequestContext::getMain()->getSkin();
+				$userIsBlocked = $user->isBlocked( true, false );
+				$sk = $context->getSkin();
 				/* select records */
 				$oRes = $dbs->select(
 					array( self::TABLE . ( ($this->mUseKey) ? ' use key('.$this->mUseKey.')' : '' ) ),
@@ -219,12 +224,12 @@ class ListusersData {
 						0 => "",
 						1 => $sk->makeLinkObj(
 							Title::newFromText( 'Contributions', NS_SPECIAL ),
-							$wgLang->ucfirst( wfMsg('contribslink') ),
+							$lang->ucfirst( wfMsg('contribslink') ),
 							"target={$oEncUserName}"
 						),
 						2 => $sk->makeLinkObj(
 							Title::newFromText( 'Editcount', NS_SPECIAL ),
-							$wgLang->ucfirst( wfMsg('listusersedits') ),
+							$lang->ucfirst( wfMsg('listusersedits') ),
 							"username={$oEncUserName}"
 						)
 					);
@@ -239,19 +244,19 @@ class ListusersData {
 					}
 
 					if ( $oUTitle instanceof Title ) {
-						$links[0] = $sk->makeLinkObj( $oUTitle, $wgLang->ucfirst(wfMsg($msg) ) );
+						$links[0] = $sk->makeLinkObj( $oUTitle, $lang->ucfirst(wfMsg($msg) ) );
 					}
 
-					if ( $wgUser->isAllowed( 'block' ) && ( !$userIsBlocked ) ) {
+					if ( $user->isAllowed( 'block' ) && ( !$userIsBlocked ) ) {
 						$links[] = $sk->makeLinkObj(
 							Title::newFromText( "BlockIP/{$oUser->getName()}", NS_SPECIAL ),
-							$wgLang->ucfirst( wfMsg('blocklink') )
+							$lang->ucfirst( wfMsg('blocklink') )
 						);
 					}
-					if ( $wgUser->isAllowed( 'userrights' ) && ( !$userIsBlocked ) ) {
+					if ( $user->isAllowed( 'userrights' ) && ( !$userIsBlocked ) ) {
 						$links[] = $sk->makeLinkObj(
 							Title::newFromText( 'UserRights', NS_SPECIAL ),
-							$wgLang->ucfirst( wfMsg('listgrouprights-rights') ),
+							$lang->ucfirst( wfMsg('listgrouprights-rights') ),
 							"user={$oEncUserName}"
 						);
 					};
@@ -267,7 +272,7 @@ class ListusersData {
 						'links'				=> "(" . implode( ") &#183; (", $links ) . ")",
 						'last_edit_page' 	=> null,
 						'last_edit_diff'	=> null,
-						'last_edit_ts'		=> ( !empty($oRow->ts_edit) ) ? $wgLang->timeanddate( $oRow->ts_edit, true ) : ""
+						'last_edit_ts'		=> ( !empty($oRow->ts_edit) ) ? $lang->timeanddate( $oRow->ts_edit, true ) : ""
 					);
 
 					if ( !empty($oRow->max_rev) ) {
@@ -376,13 +381,8 @@ class ListusersData {
 	 * @param		array   $removegroup - remove group(s)
 	 * @return void
 	 */
-	public function updateUserGroups( $user, $addgroup = array(), $removegroup = array() ) {
+	public function updateUserGroups( User $user, $addgroup = array(), $removegroup = array() ) {
 		wfProfileIn( __METHOD__ );
-
-		if ( !$user instanceof User ) {
-			wfProfileOut( __METHOD__ );
-			return;
-		}
 
 		$user_id = $user->getID();
 		$dbr = wfGetDB(DB_SLAVE, array(), $this->mDBh);
@@ -461,7 +461,6 @@ class ListusersData {
 				array(
 					"wiki_id"        => $this->mCityId,
 					"user_id"        => $user_id,
-					"user_name"  	 => '', # TODO: SUS-3204 - insert either user ID or user name
 					"edits"			 => $edits,
 					"editdate"		 => $editdate,
 					"last_revision"  => intval($lastrev),
@@ -484,5 +483,29 @@ class ListusersData {
 			);
 		}
 		wfProfileOut( __METHOD__ );
+	}
+
+	/**
+	 * Fills specials.events_local_users table with entries for a given wiki. This one will
+	 * replace an old Perl backend script - /usr/wikia/backend/bin/scribe/events_local_users.pl
+	 *
+	 * Used by CreateNewWikiTask class
+	 *
+	 * @see SUS-3264
+	 * @param int $cityId
+	 */
+	public static function populateEventsLocalUsers( int $cityId ) {
+		$listUsers = new \ListusersData( $cityId );
+		$res = wfGetDB(DB_SLAVE)->select(
+			'revision',
+			'DISTINCT(rev_user) as user_id',
+			[],
+			__METHOD__
+		);
+
+		foreach($res as $row) {
+			$user = \User::newFromId( $row->user_id );
+			$listUsers->updateUserGroups( $user, $user->getGroups() );
+		}
 	}
 }

@@ -6,14 +6,6 @@ describe('ext.wikia.adEngine.provider.factory.wikiaGpt', function () {
 
 	var mocks = {
 		log: noop,
-		context: {
-			opts: {}
-		},
-		adContext: {
-			getContext: function () {
-				return mocks.context;
-			}
-		},
 		adUnitBuilder: {
 			build: function(slotName, src) {
 				return '/5441/wka.ent/_muppet//home/' + src + '/' + slotName;
@@ -62,7 +54,6 @@ describe('ext.wikia.adEngine.provider.factory.wikiaGpt', function () {
 
 	function getModule() {
 		return modules['ext.wikia.adEngine.provider.factory.wikiaGpt'](
-			mocks.adContext,
 			mocks.btfBlocker,
 			mocks.gptHelper,
 			mocks.adUnitBuilder,
@@ -80,7 +71,6 @@ describe('ext.wikia.adEngine.provider.factory.wikiaGpt', function () {
 			{
 				TOP_LEADERBOARD:         {size: '728x90,970x250,970x90', pos: 'top'},
 				TOP_RIGHT_BOXAD:         {size: '300x250,300x600', pos: 'top'},
-				LEFT_SKYSCRAPER_2:       {size: '160x600', pos: 'middle'},
 				GPT_FLUSH:               {skipCall: true}
 			},
 			extra

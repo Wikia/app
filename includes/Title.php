@@ -1302,16 +1302,39 @@ class Title {
 	 * @return String Base name
 	 */
 	public function getBaseText() {
+		$text = $this->getText();
+
 		if ( !MWNamespace::hasSubpages( $this->mNamespace ) ) {
-			return $this->getText();
+			return $text;
 		}
 
-		$parts = explode( '/', $this->getText() );
-		# Don't discard the real title if there's no subpage involved
-		if ( count( $parts ) > 1 ) {
-			unset( $parts[count( $parts ) - 1] );
+		$slashPosition = mb_strpos( $text, '/' );
+
+		if ( $slashPosition === false ) {
+			return $text;
 		}
-		return implode( '/', $parts );
+
+		return mb_substr( $text, 0, $slashPosition );
+	}
+
+	/**
+	 * Cut off the last subpage text
+	 * @return string
+	 */
+	public function getParentText() {
+		$text = $this->getText();
+
+		if ( !MWNamespace::hasSubpages( $this->mNamespace ) ) {
+			return $text;
+		}
+
+		$lastSlashPosition = mb_strrpos( $text, '/' );
+
+		if ( $lastSlashPosition === false ) {
+			return $text;
+		}
+
+		return mb_substr( $text, 0, $lastSlashPosition );
 	}
 
 	/**
@@ -3654,10 +3677,11 @@ class Title {
 	 * @param $reason String the reason for the move
 	 * @param $createRedirect Bool Whether to create a redirect from the old title to the new title.
 	 *  Ignored if the user doesn't have the suppressredirect right.
-	 * @return Mixed true on success, getUserPermissionsErrors()-like array on failure
+	 * @param User|null $user
+	 * @return mixed true on success, getUserPermissionsErrors()-like array on failure
 	 */
-	public function moveTo( &$nt, $auth = true, $reason = '', $createRedirect = true ) {
-		global $wgUser;
+	public function moveTo( &$nt, $auth = true, $reason = '', $createRedirect = true, User $user = null ) {
+		$wgUser = $user ?? $GLOBALS['wgUser'];
 		$err = $this->isValidMoveOperation( $nt, $auth, $reason );
 		if ( is_array( $err ) ) {
 			// Auto-block user's IP if the account was "hard" blocked
@@ -3686,12 +3710,7 @@ class Title {
 		$protected = $this->isProtected();
 
 		// Do the actual move
-		$err = $this->moveToInternal( $nt, $reason, $createRedirect );
-		if ( is_array( $err ) ) {
-			# @todo FIXME: What about the File we have already moved?
-			$dbw->rollback();
-			return $err;
-		}
+		$this->moveToInternal( $nt, $reason, $createRedirect, $user );
 
 		// Refresh the sortkey for this row.  Be careful to avoid resetting
 		// cl_timestamp, which may disturb time-based lists on some sites.
@@ -3768,9 +3787,13 @@ class Title {
 	 * @param $reason String The reason for the move
 	 * @param $createRedirect Bool Whether to leave a redirect at the old title.  Ignored
 	 *   if the user doesn't have the suppressredirect right
+	 * @param User|null $user
+	 * @throws MWException
 	 */
-	private function moveToInternal( &$nt, $reason = '', $createRedirect = true ) {
-		global $wgUser, $wgContLang;
+	private function moveToInternal( &$nt, $reason = '', $createRedirect = true, User $user = null ) {
+		global $wgContLang;
+
+		$wgUser = $user ?? $GLOBALS['wgUser'];
 
 		if ( $nt->exists() ) {
 			$moveOverRedirect = true;

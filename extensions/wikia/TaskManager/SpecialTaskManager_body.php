@@ -272,7 +272,7 @@ class TaskManagerPage extends SpecialPage {
 	 *
 	 * @access private
 	 *
-	 * @return nothing
+	 * @return void
      */
 	private function loadTaskForm() {
 		global $wgUser;
@@ -289,6 +289,7 @@ class TaskManagerPage extends SpecialPage {
 		if( is_array( $wgWikiaBatchTasks )) {
 			foreach( $wgWikiaBatchTasks as $type => $class ) {
 				$oObject = new $class;
+				/* @var $oObject BatchTask */
 				if( $oObject->isVisible() === true ) {
 					$aTypes[$type] = $class;
 				}

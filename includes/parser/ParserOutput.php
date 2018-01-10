@@ -278,8 +278,11 @@ class ParserOutput extends CacheTime {
 		# This prevents spammers from hiding links from the filters
 		$url = Parser::replaceUnusualEscapes( $url );
 
-		if( $wgRegisterInternalExternals or stripos($url,$wgServer.'/')!==0)
+		if ( $wgRegisterInternalExternals ||
+			parse_url( $url, PHP_URL_HOST ) !== parse_url( $wgServer, PHP_URL_HOST )
+		) {
 			$this->mExternalLinks[$url] = 1;
+		}
 	}
 
 	/**

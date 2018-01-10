@@ -3,9 +3,9 @@
 class DailymotionVideoHandler extends VideoHandler {
 
 	protected $apiName = 'DailymotionApiWrapper';
-	protected static $urlTemplate = 'http://www.dailymotion.com/embed/video/$1';
-	protected static $providerDetailUrlTemplate = 'http://www.dailymotion.com/video/$1';
-	protected static $providerHomeUrl = 'http://www.dailymotion.com/';
+	protected static $urlTemplate = 'https://www.dailymotion.com/embed/video/$1';
+	protected static $providerDetailUrlTemplate = 'https://www.dailymotion.com/video/$1';
+	protected static $providerHomeUrl = 'https://www.dailymotion.com/';
 	protected static $autoplayParam = "autoPlay";
 	protected static $autoplayValue = "1";
 

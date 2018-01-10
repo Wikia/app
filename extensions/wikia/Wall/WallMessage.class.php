@@ -558,12 +558,6 @@ class WallMessage {
 	}
 
 	public function getWallOwner() {
-		if ( $this->title->inNamespace( NS_USER_WALL_MESSAGE ) ) {
-			$ownerUserName = $this->getTitleBaseText( $this->title );
-			return User::newFromName( $ownerUserName, false );
-		}
-
-		// horribile visu: Forum threads treat board name as user!
 		$boardName = $this->getTitleBaseText( $this->getArticleTitle() );
 		return User::newFromName( $boardName, false );
 	}
@@ -576,16 +570,6 @@ class WallMessage {
 	 * @return Title
 	 */
 	public function getArticleTitle(): Title {
-		$title = $this->getTitle();
-
-		// Wall Threads always belong to the user wall they were posted on
-		// No need to check comments index here
-		if ( $title->inNamespace( NS_USER_WALL_MESSAGE ) ) {
-			$parentPageText = $this->getTitleBaseText( $title );
-
-			return Title::makeTitle( NS_USER_WALL, $parentPageText );
-		}
-
 		// Forum Threads may have been moved to another board - use comments index as data source
 		try {
 			$commentsIndexEntry = $this->getCommentsIndexEntry();
@@ -599,6 +583,7 @@ class WallMessage {
 
 			return ( static::$titleCache[$parentPageId] = $parentTitle );
 		} catch ( CommentsIndexEntryNotFoundException $entryNotFoundException ) {
+			$title = $this->getTitle();
 			WikiaLogger::instance()->error( 'SUS-1680: No comments index entry for message', [
 				'messageTitle' => $title->getPrefixedText(),
 				'messageId' => $title->getArticleID(),

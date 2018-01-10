@@ -169,6 +169,30 @@ class WikiFactoryTest extends WikiaBaseTest {
 			[
 				'env' => WIKIA_ENV_PROD,
 				'forcedEnv' => null,
+				'url' => '//www.wikia.com/wiki/test',
+				'expected' => '//www.wikia.com/wiki/test',
+			],
+			[
+				'env' => WIKIA_ENV_STAGING,
+				'forcedEnv' => null,
+				'url' => '//fallout.wikia.com/wiki/test',
+				'expected' => '//fallout.wikia-staging.com/wiki/test'
+			],
+			[
+				'env' => WIKIA_ENV_PREVIEW,
+				'forcedEnv' => null,
+				'url' => '//fallout.wikia.com/wiki/test',
+				'expected' => '//fallout.preview.wikia.com/wiki/test'
+			],
+			[
+				'env' => WIKIA_ENV_DEV,
+				'forcedEnv' => null,
+				'url' => '//muppet.wikia.com/wiki',
+				'expected' => '//muppet.' . static::MOCK_DEV_NAME . '.wikia-dev.us/wiki'
+			],
+			[
+				'env' => WIKIA_ENV_PROD,
+				'forcedEnv' => null,
 				'url' => 'http://google.com',
 				'expected' => 'http://google.com'
 			],

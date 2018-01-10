@@ -99,7 +99,7 @@ class SpecialUnblock extends SpecialPage {
 			# User:Foo, and we've just got any block, auto or not, that applies to a target
 			# the user has specified.  Someone could be fishing to connect IPs to autoblocks,
 			# so don't show any distinction between unblocked IPs and autoblocked IPs
-			if( $type == Block::TYPE_AUTO && $this->type == Block::TYPE_IP ){
+			if ( $this->type == Block::TYPE_AUTO || ( $type == Block::TYPE_AUTO && $this->type == Block::TYPE_IP ) ) {
 				$fields['Target']['default'] = $this->target;
 				unset( $fields['Name'] );
 

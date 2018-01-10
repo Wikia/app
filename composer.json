@@ -13,7 +13,7 @@
   "require": {
     "wikia/fluent-sql-php": "1.0.*",
     "monolog/monolog": "^1.23",
-    "phpunit/phpunit": "^6.4",
+    "phpunit/phpunit": "^6.5",
     "cssjanus/cssjanus": "1.1.*",
     "tijsverkoyen/css-to-inline-styles": "1.5.2",
     "php-di/php-di": "^5.0",
@@ -36,6 +36,7 @@
     "wikia/file_ogg": "^1.0",
     "wikia/semantic-media-wiki": "^2.4",
     "wikia/maps": "^3.5",
-    "wikia/semantic-scribunto": "^1.1"
+    "wikia/semantic-scribunto": "^1.1",
+    "phpunit/dbunit": "^3.0"
   }
 }

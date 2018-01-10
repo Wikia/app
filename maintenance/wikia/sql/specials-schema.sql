@@ -18,17 +18,6 @@ CREATE TABLE `common_key_value` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Table structure for table `const_values`
---
-
-DROP TABLE IF EXISTS `const_values`;
-CREATE TABLE `const_values` (
-  `name` varchar(50) NOT NULL,
-  `val` int(8) unsigned NOT NULL,
-  PRIMARY KEY (`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
 -- Table structure for table `discussion_reporting`
 --
 
@@ -49,16 +38,15 @@ DROP TABLE IF EXISTS `events_local_users`;
 CREATE TABLE `events_local_users` (
   `wiki_id` int(8) unsigned NOT NULL,
   `user_id` int(10) unsigned NOT NULL,
-  `user_name` varchar(255) NOT NULL DEFAULT '',
   `edits` int(11) unsigned NOT NULL DEFAULT '0',
   `editdate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `last_revision` int(11) NOT NULL DEFAULT '0',
   `cnt_groups` smallint(4) NOT NULL DEFAULT '0',
-  `single_group` char(25) NOT NULL DEFAULT '',
+  `single_group` varchar(255) NOT NULL DEFAULT '',
   `all_groups` mediumtext NOT NULL,
   `user_is_blocked` tinyint(1) DEFAULT '0',
   `user_is_closed` tinyint(1) DEFAULT '0',
-  PRIMARY KEY (`wiki_id`,`user_id`,`user_name`),
+  PRIMARY KEY (`wiki_id`,`user_id`),
   KEY `user_edits` (`user_id`,`edits`,`wiki_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=DYNAMIC;
 
@@ -111,6 +99,7 @@ CREATE TABLE `phalanx_stats` (
   `ps_blocker_id` int(8) unsigned NOT NULL,
   `ps_blocker_type` smallint(1) unsigned NOT NULL,
   `ps_timestamp` binary(14) NOT NULL DEFAULT '\0\0\0\0\0\0\0\0\0\0\0\0\0\0',
+  `ps_blocked_user_id` int(11) DEFAULT NULL,
   `ps_blocked_user` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '',
   `ps_wiki_id` int(9) NOT NULL,
   `ps_blocker_hit` smallint(1) unsigned NOT NULL,
@@ -132,4 +121,4 @@ CREATE TABLE `script_log` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
--- Dump completed on 2017-10-26 13:34:31
+-- Dump completed on 2018-01-09 10:57:24

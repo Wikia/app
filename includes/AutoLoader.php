@@ -424,6 +424,7 @@ $wgAutoloadLocalClasses = array(
 	'Field' => 'includes/db/DatabaseUtility.php',
 	'IBM_DB2Blob' => 'includes/db/DatabaseIbm_db2.php',
 	'IBM_DB2Field' => 'includes/db/DatabaseIbm_db2.php',
+	'InMemorySqliteDatabase' => 'includes/db/InMemorySqliteDatabase.php',
 	'LBFactory' => 'includes/db/LBFactory.php',
 	'LBFactory_Multi' => 'includes/db/LBFactory_Multi.php',
 	'LBFactory_Simple' => 'includes/db/LBFactory.php',
@@ -562,7 +563,6 @@ $wgAutoloadLocalClasses = array(
 	'WebInstallerPage' => 'includes/installer/WebInstallerPage.php',
 
 	# includes/job
-	'DoubleRedirectJob' => 'includes/job/DoubleRedirectJob.php',
 	'Job' => 'includes/job/JobQueue.php',
 
 	# includes/json

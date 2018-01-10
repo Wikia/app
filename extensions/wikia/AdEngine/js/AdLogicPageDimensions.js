@@ -14,19 +14,6 @@ define('ext.wikia.adEngine.adLogicPageDimensions', [
 		wrappedAds = {},
 
 		/**
-		 * Slots based on page length
-		 */
-		preFootersThreshold = 1500,
-		slotsOnlyOnLongPages = {
-			LEFT_SKYSCRAPER_2: 2400,
-			LEFT_SKYSCRAPER_3: 4000,
-			PREFOOTER_LEFT_BOXAD: preFootersThreshold,
-			PREFOOTER_MIDDLE_BOXAD: preFootersThreshold,
-			PREFOOTER_RIGHT_BOXAD: preFootersThreshold
-		},
-		pageHeight,
-
-		/**
 		 * Slots based on screen width for responsive design
 		 *
 		 * @see skins/oasis/css/core/responsive-variables.scss
@@ -34,16 +21,12 @@ define('ext.wikia.adEngine.adLogicPageDimensions', [
 		 */
 		slotsToHideOnMediaQuery = {
 			TOP_RIGHT_BOXAD:         'oneColumn',
-			LEFT_SKYSCRAPER_2:       'oneColumn',
-			LEFT_SKYSCRAPER_3:       'oneColumn',
-			INCONTENT_BOXAD_1:       'oneColumn',
-			PREFOOTER_MIDDLE_BOXAD:  'noMiddlePrefooter'
+			INCONTENT_BOXAD_1:       'oneColumn'
 		},
 		mediaQueriesToCheck = {
 			twoColumns: 'screen and (min-width: 1024px)',
 			oneColumn: 'screen and (max-width: 1023px)',
 			noTopButton: 'screen and (max-width: 1063px)',
-			noMiddlePrefooter: 'screen and (max-width: 1083px)'
 		},
 		mediaQueriesMet,
 		matchMedia;
@@ -72,13 +55,9 @@ define('ext.wikia.adEngine.adLogicPageDimensions', [
 	 * @returns {boolean}
 	 */
 	function shouldBeShown(slotname) {
-		var longEnough = false,
-			wideEnough = false,
+		var wideEnough = false,
 			conflictingMediaQuery;
 
-		if (pageHeight) {
-			longEnough = !slotsOnlyOnLongPages[slotname] || pageHeight > slotsOnlyOnLongPages[slotname];
-		}
 		if (mediaQueriesMet) {
 			if (slotsToHideOnMediaQuery[slotname]) {
 				conflictingMediaQuery = slotsToHideOnMediaQuery[slotname];
@@ -88,11 +67,7 @@ define('ext.wikia.adEngine.adLogicPageDimensions', [
 			}
 		}
 
-		if (!longEnough || !wideEnough) {
-			return false;
-		}
-
-		return true;
+		return wideEnough;
 	}
 
 	/**
@@ -140,8 +115,6 @@ define('ext.wikia.adEngine.adLogicPageDimensions', [
 	 */
 	function updateVars() {
 		var mediaQueryIndex;
-
-		pageHeight = doc.documentElement.scrollHeight;
 
 		// All ads should be shown on non-responsive oasis
 		if (win.wgOasisResponsive || win.wgOasisBreakpoints) {
@@ -233,10 +206,7 @@ define('ext.wikia.adEngine.adLogicPageDimensions', [
 	function isApplicable(slotname) {
 		log(['isApplicable', slotname], 'debug', logGroup);
 
-		return !!(
-			slotsOnlyOnLongPages[slotname] ||
-			slotsToHideOnMediaQuery[slotname]
-		);
+		return !!slotsToHideOnMediaQuery[slotname];
 	}
 
 	return {

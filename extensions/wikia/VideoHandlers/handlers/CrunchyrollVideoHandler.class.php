@@ -10,8 +10,8 @@ class CrunchyrollVideoHandler extends VideoHandler {
 	 */
 
 	protected $apiName = 'CrunchyrollApiWrapper';
-	protected static $urlTemplate = "http://www.crunchyroll.com/affiliate_iframeplayer?aff=$2&media_id=$1&video_format=106&video_quality=60";
-	protected static $providerHomeUrl = 'http://www.crunchyroll.com/';
+	protected static $urlTemplate = "https://www.crunchyroll.com/affiliate_iframeplayer?aff=$2&media_id=$1&video_format=106&video_quality=60";
+	protected static $providerHomeUrl = 'https://www.crunchyroll.com/';
 
 	/**
 	 * @inheritdoc

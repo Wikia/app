@@ -14188,7 +14188,7 @@ Pastikan bahwa perubahan ini tetap mempertahankan kontinuitas versi terdahulu ha
 	'mostcategories' => 'Halaman dengan kategori terbanyak',
 	'mostimages' => 'Berkas yang tersering digunakan',
 	'mostrevisions' => 'Halaman dengan perubahan terbanyak',
-	'move' => 'Pindahkan',
+	'move' => 'Ubah Nama',
 	'movethispage' => 'Pindahkan halaman ini',
 	'mailnologin' => 'Tidak ada alamat surel',
 	'mailnologintext' => 'Anda harus [[Special:UserLogin|masuk log]] dan mempunyai alamat surel yang sah di dalam [[Special:Preferences|preferensi]] untuk mengirimkan surel kepada pengguna lain.',
