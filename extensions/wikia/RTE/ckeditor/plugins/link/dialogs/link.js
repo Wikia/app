@@ -1,486 +1,1015 @@
-/*
-Copyright (c) 2003-2009, CKSource - Frederico Knabben. All rights reserved.
-For licensing, see LICENSE.html or http://ckeditor.com/license
-*/
+﻿/**
+ * @license Copyright (c) 2003-2017, CKSource - Frederico Knabben. All rights reserved.
+ * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
+ */
 
-CKEDITOR.dialog.add( 'link', function( editor )
-{
-	var plugin = CKEDITOR.plugins.link,
-		linkTextDirty = false,
-		existsTimeout;
+'use strict';
 
-	function checkStatus() {
-		var pageName = CKEDITOR.dialog.getCurrent().getContentElement('internal','name').getValue();
-		if ( pageName ) {
-			$(".link-type-note span").html(editor.lang.link.status.checking);
-			$(".link-type-note img").show()[0].className = 'sprite progress';
+( function() {
+	CKEDITOR.dialog.add( 'link', function( editor ) {
+		var plugin = CKEDITOR.plugins.link,
+			initialLinkText;
 
-			// check our page name for validity
-			RTE.ajax('checkInternalLink', {title: pageName}, function(data) {
-				setLinkExistance(data.exists);
-			});
-		}
-		existsTimeout = null;
-	}
+		function createRangeForLink( editor, link ) {
+			var range = editor.createRange();
 
-	function setLinkExistance(exists) {
-		if ( exists ) {
-			$(".link-type-note span").html(editor.lang.link.status.exists);
-			$(".link-type-note img").show()[0].className = 'link-icon link-yes';
-		} else {
-			$(".link-type-note span").html(editor.lang.link.status.notexists);
-			$(".link-type-note img").show()[0].className = 'link-icon link-no';
-		}
-	}
+			range.setStartBefore( link );
+			range.setEndAfter( link );
 
-	var setMode = function( mode ) {
-		var linkDialog = CKEDITOR.dialog.getCurrent(),
-			radios;
-
-		// two things must be set to switch between int/ext mode,
-		// the upper-right mode label and the radio button
-		if ( mode == 'external' ) {
-			radios = linkDialog.getContentElement('internal','linktype');
-			if( radios.getValue() != 'ext' ){
-				radios.setValue('ext');
-			}
-			$(".link-type-note span").html(editor.lang.link.status.external);
-			$(".link-type-note img").show()[0].className = 'sprite external';
-
-			// disable suggestions on the name box if external url
-		} else if ( mode == 'internal' ) {
-			radios = linkDialog.getContentElement('internal','linktype');
-			if( radios.getValue() != 'wiki' ) {
-				radios.setValue('wiki');
-			}
-			checkStatus();
-
-			// setup MW suggest
-			linkDialog.
-				enableSuggesionsOn(linkDialog.getContentElement('internal', 'name')).
-				then(function(node) {
-					var dialog = this;
-
-					// synchronize "label" field with values from autosuggest dropdown (BugId:51413)
-					node.autocomplete({
-						select: function(ev, ui) {
-							var value = ui.item && ui.item.label,
-								labelField = dialog.getContentElement('internal', 'label');
-
-							if (typeof value !== 'undefined' && dialog.method == 'new') {
-								labelField.setValue(value);
-
-								// validate a link (BugId:51414)
-								setLinkExistance(true);
-							}
-						}
-					});
-				});
-		}
-	};
-
-	var setupDialog = function( editor, element ) {
-		// set value of link dialog fields
-		function setValues(tab, link, label) {
-			var	dialog = CKEDITOR.dialog.getCurrent();
-			// only one tab, so tab is ignored but kept for future use
-			dialog.setValueOf('internal', 'name', link);
-			dialog.setValueOf('internal', 'label', label || '');
+			return range;
 		}
 
-		RTE.log('opening link dialog');
+		function insertLinksIntoSelection( editor, data ) {
+			var attributes = plugin.getLinkAttributes( editor, data ),
+				ranges = editor.getSelection().getRanges(),
+				style = new CKEDITOR.style( {
+					element: 'a',
+					attributes: attributes.set
+				} ),
+				rangesToSelect = [],
+				range,
+				text,
+				nestedLinks,
+				i,
+				j;
 
-		// reset our dirty value
-		// Bug:2376 - by default update link description when link target changes
-		linkTextDirty = false;
+			style.type = CKEDITOR.STYLE_INLINE; // need to override... dunno why.
 
-		// get link' meta data
-		var data = element ? $(element.$).getData() : null,
-			linkTextField;
+			for ( i = 0; i < ranges.length; i++ ) {
+				range = ranges[ i ];
 
-		if (data) {
-			// handle existing links
+				// Use link URL as text with a collapsed cursor.
+				if ( range.collapsed ) {
+					// Short mailto link text view (https://dev.ckeditor.com/ticket/5736).
+					text = new CKEDITOR.dom.text( data.linkText || ( data.type == 'email' ?
+						data.email.address : attributes.set[ 'data-cke-saved-href' ] ), editor.document );
+					range.insertNode( text );
+					range.selectNodeContents( text );
+				} else if ( initialLinkText !== data.linkText ) {
+					text = new CKEDITOR.dom.text( data.linkText, editor.document );
 
-			// detect pasted links (RT #47454)
-			if (typeof data.type == 'undefined') {
-				RTE.log('pasted link detected');
+					// Shrink range to preserve block element.
+					range.shrink( CKEDITOR.SHRINK_TEXT );
 
-				// detect external links
-				var href = element.getAttribute('href');
+					// Use extractHtmlFromRange to remove markup within the selection. Also this method is a little
+					// smarter than range#deleteContents as it plays better e.g. with table cells.
+					editor.editable().extractHtmlFromRange( range );
 
-				if (RTE.tools.isExternalLink(href)) {
-					data = {
-						type: 'external',
-						link: href,
-						text: element.getText()
-					};
-					setMode('external');
+					range.insertNode( text );
 				}
-			} else {
-				// select a mode for our two proper link types
-				switch(data.type) {
-					case 'internal':
-						setMode('internal');
-						setTimeout(checkStatus,200);
+
+				// Editable links nested within current range should be removed, so that the link is applied to whole selection.
+				nestedLinks = range._find( 'a' );
+
+				for	( j = 0; j < nestedLinks.length; j++ ) {
+					nestedLinks[ j ].remove( true );
+				}
+
+
+				// Apply style.
+				style.applyToRange( range, editor );
+
+				rangesToSelect.push( range );
+			}
+
+			editor.getSelection().selectRanges( rangesToSelect );
+		}
+
+		function editLinksInSelection( editor, selectedElements, data ) {
+			var attributes = plugin.getLinkAttributes( editor, data ),
+				ranges = [],
+				element,
+				href,
+				textView,
+				newText,
+				i;
+
+			for ( i = 0; i < selectedElements.length; i++ ) {
+				// We're only editing an existing link, so just overwrite the attributes.
+				element = selectedElements[ i ];
+				href = element.data( 'cke-saved-href' );
+				textView = element.getHtml();
+
+				element.setAttributes( attributes.set );
+				element.removeAttributes( attributes.removed );
+
+
+				if ( data.linkText && initialLinkText != data.linkText ) {
+					// Display text has been changed.
+					newText = data.linkText;
+				} else if ( href == textView || data.type == 'email' && textView.indexOf( '@' ) != -1 ) {
+					// Update text view when user changes protocol (https://dev.ckeditor.com/ticket/4612).
+					// Short mailto link text view (https://dev.ckeditor.com/ticket/5736).
+					newText = data.type == 'email' ? data.email.address : attributes.set[ 'data-cke-saved-href' ];
+				}
+
+				if ( newText ) {
+					element.setText( newText );
+				}
+
+				ranges.push( createRangeForLink( editor, element ) );
+			}
+
+			// We changed the content, so need to select it again.
+			editor.getSelection().selectRanges( ranges );
+		}
+
+		// Handles the event when the "Target" selection box is changed.
+		var targetChanged = function() {
+				var dialog = this.getDialog(),
+					popupFeatures = dialog.getContentElement( 'target', 'popupFeatures' ),
+					targetName = dialog.getContentElement( 'target', 'linkTargetName' ),
+					value = this.getValue();
+
+				if ( !popupFeatures || !targetName )
+					return;
+
+				popupFeatures = popupFeatures.getElement();
+				popupFeatures.hide();
+				targetName.setValue( '' );
+
+				switch ( value ) {
+					case 'frame':
+						targetName.setLabel( editor.lang.link.targetFrameName );
+						targetName.getElement().show();
 						break;
-
-					case 'external':
-					case 'external-raw': // RT #85491
-						setMode('external');
+					case 'popup':
+						popupFeatures.show();
+						targetName.setLabel( editor.lang.link.targetPopupName );
+						targetName.getElement().show();
+						break;
+					default:
+						targetName.setValue( value );
+						targetName.getElement().hide();
 						break;
 				}
-			}
 
-			RTE.log(data);
+			};
 
-			linkTextField = this.getContentElement('internal', 'label');
-			switch (data.type) {
-				case 'external':
-					setValues('internal', data.link);
+		// Handles the event when the "Type" selection box is changed.
+		var linkTypeChanged = function() {
+				var dialog = this.getDialog(),
+					partIds = [ 'urlOptions', 'anchorOptions', 'emailOptions' ],
+					typeValue = this.getValue(),
+					uploadTab = dialog.definition.getContents( 'upload' ),
+					uploadInitiallyHidden = uploadTab && uploadTab.hidden;
 
-					// handle autonumbered external links
-					if( data.linktype != 'autonumber' ) {
-						this.setValueOf('internal', 'label', data.text);
-						linkTextDirty = true;
-					}
-					break;
-
-				// RT #85491
-				case 'external-raw':
-					setValues('external', data.link);
-					break;
-
-				case 'internal':
-					setValues('internal', data.link, data.text);
-					linkTextDirty = true;
-					break;
-			}
-			this.method = 'existing';
-		} else {
-			linkTextField = this.getContentElement('internal', 'label');
-			//linkTextField.enable();
-
-			// creating new link from selection
-			var selectionContent = RTE.tools.getSelectionContent(),
-				tab = 'internal';
-
-			setMode('internal');
-
-			if( selectionContent ){
-				// check for external link (RT #47454)
-				if (RTE.tools.isExternalLink(selectionContent)) {
-					setMode('external');
-					tab = 'external';
+				if ( typeValue == 'url' ) {
+					if ( editor.config.linkShowTargetTab )
+						dialog.showPage( 'target' );
+					if ( !uploadInitiallyHidden )
+						dialog.showPage( 'upload' );
+				} else {
+					dialog.hidePage( 'target' );
+					if ( !uploadInitiallyHidden )
+						dialog.hidePage( 'upload' );
 				}
 
-				// Bug:2376 - don't update link description when link target changes
-				linkTextDirty = true;
+				for ( var i = 0; i < partIds.length; i++ ) {
+					var element = dialog.getContentElement( 'info', partIds[ i ] );
+					if ( !element )
+						continue;
 
-				setValues(tab, selectionContent, selectionContent);
-				setTimeout(checkStatus,200);
+					element = element.getElement().getParent().getParent();
+					if ( partIds[ i ] == typeValue + 'Options' )
+						element.show();
+					else
+						element.hide();
+				}
 
-				this.method = 'new-from-selection';
+				dialog.layout();
+			};
 
-				RTE.log('link: using selected text "' + selectionContent + '" for new '+tab+' link');
-			} else {
-				this.method = 'new';
-				RTE.log('link: fresh link');
-			}
-		}
+		var setupParams = function( page, data ) {
+				if ( data[ page ] )
+					this.setValue( data[ page ][ this.id ] || '' );
+			};
 
-		// Record down the selected element in the dialog.
-		this._.selectedElement = element;
+		var setupPopupParams = function( data ) {
+				return setupParams.call( this, 'target', data );
+			};
 
-	};
+		var setupAdvParams = function( data ) {
+				return setupParams.call( this, 'advanced', data );
+			};
 
-	var createNewLink = function(editor) {
-		// Create element if current selection is collapsed.
-		var selection = editor.getSelection(),
-			ranges = selection.getRanges();
-		if ( ranges.length == 1 && ranges[0].collapsed ) {
-			var text = new CKEDITOR.dom.text( '', editor.document );
-			ranges[0].insertNode( text );
-			ranges[0].selectNodeContents( text );
-			selection.selectRanges( ranges );
-		}
+		var commitParams = function( page, data ) {
+				if ( !data[ page ] )
+					data[ page ] = {};
 
-		// Apply style.
-		var style = new CKEDITOR.style( { element : 'a', attributes: {'data-rte-new-link-temporary': true} } );
-		style.type = CKEDITOR.STYLE_INLINE;		// need to override... dunno why.
-		style.apply( editor.document );
+				data[ page ][ this.id ] = this.getValue() || '';
+			};
 
-		// get just created link using data-rte-new-link-temporary marker attribute
-		var node = RTE.getEditor().find('a[data-rte-new-link-temporary]');
-		node.removeAttr('data-rte-new-link-temporary');
+		var commitPopupParams = function( data ) {
+				return commitParams.call( this, 'target', data );
+			};
 
-		// return CKEDITOR DOM element for just created link
-		var link = new CKEDITOR.dom.element(node[0]);
+		var commitAdvParams = function( data ) {
+				return commitParams.call( this, 'advanced', data );
+			};
 
-		// create selection after link (RT #37703)
-		if (CKEDITOR.env.gecko || CKEDITOR.env.webkit) {
-			var dirty = new CKEDITOR.dom.text(' ', editor.document);
-			dirty.insertAfter(link);
-			selection.selectElement(dirty);
+		var commonLang = editor.lang.common,
+			linkLang = editor.lang.link,
+			anchors;
 
-			if (CKEDITOR.env.gecko) {
-				// In Webkit we have to keep this text node (cursor is lost on removal of selected node)
-				dirty.remove();
-			}
-		}
+		return {
+			title: linkLang.title,
+			minWidth: ( CKEDITOR.skinName || editor.config.skin ) == 'moono-lisa' ? 450 : 350,
+			minHeight: 240,
+			contents: [ {
+				id: 'info',
+				label: linkLang.info,
+				title: linkLang.info,
+				elements: [ {
+					type: 'text',
+					id: 'linkDisplayText',
+					label: linkLang.displayText,
+					setup: function() {
+						this.enable();
 
-		return link;
-	};
+						this.setValue( editor.getSelection().getSelectedText() );
 
-	var lang = editor.lang.link;
-
-	return {
-		title : editor.lang.link.title,
-		minWidth : 500,
-		minHeight : 185,
-		doNotCheckForChanged: true /* link dialog no longer warns on close (r25573 refactored) */,
-		contents : [
-			{
-				id : 'internal',
-				label : 'label',//lang.internal.tab,
-				title : 'title',//lang.internal.tab,
-				elements : [
-					{
-						'type': 'html',
-						'html': '<p class="link-type-note"><span>...</span><img alt="Link Status" class="" src="' + wgBlankImgUrl + '" /></p>',
-						'id': 'linkdisplay'
+						// Keep inner text so that it can be compared in commit function. By obtaining value from getData()
+						// we get value stripped from new line chars which is important when comparing the value later on.
+						initialLinkText = this.getValue();
 					},
-					{
-						'type': 'text',
-						'label': 'target',//editor.lang.link.label.target,
-						'id': 'name',
-						onKeyUp: function() {
-							var linkTextField = this.getDialog().getContentElement('internal', 'label');
+					commit: function( data ) {
+						data.linkText = this.isEnabled() ? this.getValue() : '';
+					}
+				},
+				{
+					id: 'linkType',
+					type: 'select',
+					label: linkLang.type,
+					'default': 'url',
+					items: [
+						[ linkLang.toUrl, 'url' ],
+						[ linkLang.toAnchor, 'anchor' ],
+						[ linkLang.toEmail, 'email' ]
+					],
+					onChange: linkTypeChanged,
+					setup: function( data ) {
+						this.setValue( data.type || 'url' );
+					},
+					commit: function( data ) {
+						data.type = this.getValue();
+					}
+				},
+				{
+					type: 'vbox',
+					id: 'urlOptions',
+					children: [ {
+						type: 'hbox',
+						widths: [ '25%', '75%' ],
+						children: [ {
+							id: 'protocol',
+							type: 'select',
+							label: commonLang.protocol,
+							'default': 'http://',
+							items: [
+								// Force 'ltr' for protocol names in BIDI. (https://dev.ckeditor.com/ticket/5433)
+								[ 'http://\u200E', 'http://' ],
+								[ 'https://\u200E', 'https://' ],
+								[ 'ftp://\u200E', 'ftp://' ],
+								[ 'news://\u200E', 'news://' ],
+								[ linkLang.other, '' ]
+							],
+							setup: function( data ) {
+								if ( data.url )
+									this.setValue( data.url.protocol || '' );
+							},
+							commit: function( data ) {
+								if ( !data.url )
+									data.url = {};
 
-							// set mode to external if we detect a link
-							if( RTE.tools.isExternalLink(this.getValue()) ){
-								setMode('external');
-							}
-
-							var linktype = this.getDialog().getContentElement('internal', 'linktype').getValue();
-							if( linktype == 'wiki' ){
-								// pretend we're checking for the page name,
-								// but don't really check until 1000ms after we stop typing
-								if( existsTimeout ){
-									clearTimeout(existsTimeout);
-								}
-								$(".link-type-note span").html(editor.lang.link.status.checking);
-								$(".link-type-note img").show()[0].className = 'sprite progress';
-								existsTimeout = setTimeout(checkStatus,1000);
-							}
-
-							if( linkTextField.getValue() == '' ){
-								linkTextDirty = false;
-							}
-							// match link text field if we're typing an internal link
-							if( !linkTextDirty && linkTextField.isEnabled() ){
-								linkTextField.setValue(this.getValue());
+								data.url.protocol = this.getValue();
 							}
 						},
-						validate: function() {
-							var linktype = this.getDialog().getContentElement('internal', 'linktype').getValue(),
-								re,
-								isValid;
-
-							if ( linktype == 'wiki' ) {
-								// validate page name and anchors (RT #34047)
-								re = new RegExp('^(#(.+))|[' + RTE.constants.validTitleChars + ']+$');
-								var validPageNameFunc = CKEDITOR.dialog.validate.regex(re, editor.lang.link.error.badPageTitle);
-
-								isValid = validPageNameFunc.apply(this);
-							} else {
-								// validate URL
-								re = new RegExp('^(' + RTE.constants.urlProtocols + ')');
-								if (!this.getValue().match(re)) {
-									this.setValue('http://' + this.getValue());
-								}
-								var validUrlFunc = CKEDITOR.dialog.validate.regex(re, editor.lang.link.error.badUrl);
-
-								isValid = validUrlFunc.apply(this);
-							}
-
-							return isValid;
-						}
-					},
-					{
-						'type': 'text',
-						'label': 'display',//editor.lang.link.label.display,
-						'id': 'label',
-						onFocus: function()
 						{
-							// no longer autofill when a user selects the link text
-							linkTextDirty = true;
+							type: 'text',
+							id: 'url',
+							label: commonLang.url,
+							required: true,
+							onLoad: function() {
+								this.allowOnChange = true;
+							},
+							onKeyUp: function() {
+								this.allowOnChange = false;
+								var protocolCmb = this.getDialog().getContentElement( 'info', 'protocol' ),
+									url = this.getValue(),
+									urlOnChangeProtocol = /^(http|https|ftp|news):\/\/(?=.)/i,
+									urlOnChangeTestOther = /^((javascript:)|[#\/\.\?])/i;
+
+								var protocol = urlOnChangeProtocol.exec( url );
+								if ( protocol ) {
+									this.setValue( url.substr( protocol[ 0 ].length ) );
+									protocolCmb.setValue( protocol[ 0 ].toLowerCase() );
+								} else if ( urlOnChangeTestOther.test( url ) ) {
+									protocolCmb.setValue( '' );
+								}
+
+								this.allowOnChange = true;
+							},
+							onChange: function() {
+								if ( this.allowOnChange ) // Dont't call on dialog load.
+								this.onKeyUp();
+							},
+							validate: function() {
+								var dialog = this.getDialog();
+
+								if ( dialog.getContentElement( 'info', 'linkType' ) && dialog.getValueOf( 'info', 'linkType' ) != 'url' )
+									return true;
+
+								if ( !editor.config.linkJavaScriptLinksAllowed && ( /javascript\:/ ).test( this.getValue() ) ) {
+									alert( commonLang.invalidValue ); // jshint ignore:line
+									return false;
+								}
+
+								if ( this.getDialog().fakeObj ) // Edit Anchor.
+								return true;
+
+								var func = CKEDITOR.dialog.validate.notEmpty( linkLang.noUrl );
+								return func.apply( this );
+							},
+							setup: function( data ) {
+								this.allowOnChange = false;
+								if ( data.url )
+									this.setValue( data.url.url );
+								this.allowOnChange = true;
+
+							},
+							commit: function( data ) {
+								// IE will not trigger the onChange event if the mouse has been used
+								// to carry all the operations https://dev.ckeditor.com/ticket/4724
+								this.onChange();
+
+								if ( !data.url )
+									data.url = {};
+
+								data.url.url = this.getValue();
+								this.allowOnChange = false;
+							}
+						} ],
+						setup: function() {
+							if ( !this.getDialog().getContentElement( 'info', 'linkType' ) )
+								this.getElement().show();
 						}
 					},
 					{
-						'type': 'radio',
-						'items': [[/*editor.lang.link.label.internal*/'internal','wiki'],[/*editor.lang.link.label.external*/'external','ext']],
-						'default': 'wiki',
-						'id': 'linktype',
-						'onChange': function( e )
-						{ // mode change should only happen when we're showing a dialog
-							if ( CKEDITOR.dialog.getCurrent() ) {
-								RTE.log("mode changed to "+e.data.value);
-								if ( e.data && e.data.value == 'ext' ) {
-									setMode('external');
-								} else {
-									setMode('internal');
+						type: 'button',
+						id: 'browse',
+						hidden: 'true',
+						filebrowser: 'info:url',
+						label: commonLang.browseServer
+					} ]
+				},
+				{
+					type: 'vbox',
+					id: 'anchorOptions',
+					width: 260,
+					align: 'center',
+					padding: 0,
+					children: [ {
+						type: 'fieldset',
+						id: 'selectAnchorText',
+						label: linkLang.selectAnchor,
+						setup: function() {
+							anchors = plugin.getEditorAnchors( editor );
+
+							this.getElement()[ anchors && anchors.length ? 'show' : 'hide' ]();
+						},
+						children: [ {
+							type: 'hbox',
+							id: 'selectAnchor',
+							children: [ {
+								type: 'select',
+								id: 'anchorName',
+								'default': '',
+								label: linkLang.anchorName,
+								style: 'width: 100%;',
+								items: [
+									[ '' ]
+								],
+								setup: function( data ) {
+									this.clear();
+									this.add( '' );
+
+									if ( anchors ) {
+										for ( var i = 0; i < anchors.length; i++ ) {
+											if ( anchors[ i ].name )
+												this.add( anchors[ i ].name );
+										}
+									}
+
+									if ( data.anchor )
+										this.setValue( data.anchor.name );
+
+									var linkType = this.getDialog().getContentElement( 'info', 'linkType' );
+									if ( linkType && linkType.getValue() == 'email' )
+										this.focus();
+								},
+								commit: function( data ) {
+									if ( !data.anchor )
+										data.anchor = {};
+
+									data.anchor.name = this.getValue();
+								}
+							},
+							{
+								type: 'select',
+								id: 'anchorId',
+								'default': '',
+								label: linkLang.anchorId,
+								style: 'width: 100%;',
+								items: [
+									[ '' ]
+								],
+								setup: function( data ) {
+									this.clear();
+									this.add( '' );
+
+									if ( anchors ) {
+										for ( var i = 0; i < anchors.length; i++ ) {
+											if ( anchors[ i ].id )
+												this.add( anchors[ i ].id );
+										}
+									}
+
+									if ( data.anchor )
+										this.setValue( data.anchor.id );
+								},
+								commit: function( data ) {
+									if ( !data.anchor )
+										data.anchor = {};
+
+									data.anchor.id = this.getValue();
+								}
+							} ],
+							setup: function() {
+								this.getElement()[ anchors && anchors.length ? 'show' : 'hide' ]();
+							}
+						} ]
+					},
+					{
+						type: 'html',
+						id: 'noAnchors',
+						style: 'text-align: center;',
+						html: '<div role="note" tabIndex="-1">' + CKEDITOR.tools.htmlEncode( linkLang.noAnchors ) + '</div>',
+						// Focus the first element defined in above html.
+						focus: true,
+						setup: function() {
+							this.getElement()[ anchors && anchors.length ? 'hide' : 'show' ]();
+						}
+					} ],
+					setup: function() {
+						if ( !this.getDialog().getContentElement( 'info', 'linkType' ) )
+							this.getElement().hide();
+					}
+				},
+				{
+					type: 'vbox',
+					id: 'emailOptions',
+					padding: 1,
+					children: [ {
+						type: 'text',
+						id: 'emailAddress',
+						label: linkLang.emailAddress,
+						required: true,
+						validate: function() {
+							var dialog = this.getDialog();
+
+							if ( !dialog.getContentElement( 'info', 'linkType' ) || dialog.getValueOf( 'info', 'linkType' ) != 'email' )
+								return true;
+
+							var func = CKEDITOR.dialog.validate.notEmpty( linkLang.noEmail );
+							return func.apply( this );
+						},
+						setup: function( data ) {
+							if ( data.email )
+								this.setValue( data.email.address );
+
+							var linkType = this.getDialog().getContentElement( 'info', 'linkType' );
+							if ( linkType && linkType.getValue() == 'email' )
+								this.select();
+						},
+						commit: function( data ) {
+							if ( !data.email )
+								data.email = {};
+
+							data.email.address = this.getValue();
+						}
+					},
+					{
+						type: 'text',
+						id: 'emailSubject',
+						label: linkLang.emailSubject,
+						setup: function( data ) {
+							if ( data.email )
+								this.setValue( data.email.subject );
+						},
+						commit: function( data ) {
+							if ( !data.email )
+								data.email = {};
+
+							data.email.subject = this.getValue();
+						}
+					},
+					{
+						type: 'textarea',
+						id: 'emailBody',
+						label: linkLang.emailBody,
+						rows: 3,
+						'default': '',
+						setup: function( data ) {
+							if ( data.email )
+								this.setValue( data.email.body );
+						},
+						commit: function( data ) {
+							if ( !data.email )
+								data.email = {};
+
+							data.email.body = this.getValue();
+						}
+					} ],
+					setup: function() {
+						if ( !this.getDialog().getContentElement( 'info', 'linkType' ) )
+							this.getElement().hide();
+					}
+				} ]
+			},
+			{
+				id: 'target',
+				requiredContent: 'a[target]', // This is not fully correct, because some target option requires JS.
+				label: linkLang.target,
+				title: linkLang.target,
+				elements: [ {
+					type: 'hbox',
+					widths: [ '50%', '50%' ],
+					children: [ {
+						type: 'select',
+						id: 'linkTargetType',
+						label: commonLang.target,
+						'default': 'notSet',
+						style: 'width : 100%;',
+						'items': [
+							[ commonLang.notSet, 'notSet' ],
+							[ linkLang.targetFrame, 'frame' ],
+							[ linkLang.targetPopup, 'popup' ],
+							[ commonLang.targetNew, '_blank' ],
+							[ commonLang.targetTop, '_top' ],
+							[ commonLang.targetSelf, '_self' ],
+							[ commonLang.targetParent, '_parent' ]
+						],
+						onChange: targetChanged,
+						setup: function( data ) {
+							if ( data.target )
+								this.setValue( data.target.type || 'notSet' );
+							targetChanged.call( this );
+						},
+						commit: function( data ) {
+							if ( !data.target )
+								data.target = {};
+
+							data.target.type = this.getValue();
+						}
+					},
+					{
+						type: 'text',
+						id: 'linkTargetName',
+						label: linkLang.targetFrameName,
+						'default': '',
+						setup: function( data ) {
+							if ( data.target )
+								this.setValue( data.target.name );
+						},
+						commit: function( data ) {
+							if ( !data.target )
+								data.target = {};
+
+							data.target.name = this.getValue().replace( /([^\x00-\x7F]|\s)/gi, '' );
+						}
+					} ]
+				},
+				{
+					type: 'vbox',
+					width: '100%',
+					align: 'center',
+					padding: 2,
+					id: 'popupFeatures',
+					children: [ {
+						type: 'fieldset',
+						label: linkLang.popupFeatures,
+						children: [ {
+							type: 'hbox',
+							children: [ {
+								type: 'checkbox',
+								id: 'resizable',
+								label: linkLang.popupResizable,
+								setup: setupPopupParams,
+								commit: commitPopupParams
+							},
+							{
+								type: 'checkbox',
+								id: 'status',
+								label: linkLang.popupStatusBar,
+								setup: setupPopupParams,
+								commit: commitPopupParams
+
+							} ]
+						},
+						{
+							type: 'hbox',
+							children: [ {
+								type: 'checkbox',
+								id: 'location',
+								label: linkLang.popupLocationBar,
+								setup: setupPopupParams,
+								commit: commitPopupParams
+
+							},
+							{
+								type: 'checkbox',
+								id: 'toolbar',
+								label: linkLang.popupToolbar,
+								setup: setupPopupParams,
+								commit: commitPopupParams
+
+							} ]
+						},
+						{
+							type: 'hbox',
+							children: [ {
+								type: 'checkbox',
+								id: 'menubar',
+								label: linkLang.popupMenuBar,
+								setup: setupPopupParams,
+								commit: commitPopupParams
+
+							},
+							{
+								type: 'checkbox',
+								id: 'fullscreen',
+								label: linkLang.popupFullScreen,
+								setup: setupPopupParams,
+								commit: commitPopupParams
+
+							} ]
+						},
+						{
+							type: 'hbox',
+							children: [ {
+								type: 'checkbox',
+								id: 'scrollbars',
+								label: linkLang.popupScrollBars,
+								setup: setupPopupParams,
+								commit: commitPopupParams
+
+							},
+							{
+								type: 'checkbox',
+								id: 'dependent',
+								label: linkLang.popupDependent,
+								setup: setupPopupParams,
+								commit: commitPopupParams
+
+							} ]
+						},
+						{
+							type: 'hbox',
+							children: [ {
+								type: 'text',
+								widths: [ '50%', '50%' ],
+								labelLayout: 'horizontal',
+								label: commonLang.width,
+								id: 'width',
+								setup: setupPopupParams,
+								commit: commitPopupParams
+
+							},
+							{
+								type: 'text',
+								labelLayout: 'horizontal',
+								widths: [ '50%', '50%' ],
+								label: linkLang.popupLeft,
+								id: 'left',
+								setup: setupPopupParams,
+								commit: commitPopupParams
+
+							} ]
+						},
+						{
+							type: 'hbox',
+							children: [ {
+								type: 'text',
+								labelLayout: 'horizontal',
+								widths: [ '50%', '50%' ],
+								label: commonLang.height,
+								id: 'height',
+								setup: setupPopupParams,
+								commit: commitPopupParams
+
+							},
+							{
+								type: 'text',
+								labelLayout: 'horizontal',
+								label: linkLang.popupTop,
+								widths: [ '50%', '50%' ],
+								id: 'top',
+								setup: setupPopupParams,
+								commit: commitPopupParams
+
+							} ]
+						} ]
+					} ]
+				} ]
+			},
+			{
+				id: 'upload',
+				label: linkLang.upload,
+				title: linkLang.upload,
+				hidden: true,
+				filebrowser: 'uploadButton',
+				elements: [ {
+					type: 'file',
+					id: 'upload',
+					label: commonLang.upload,
+					style: 'height:40px',
+					size: 29
+				},
+				{
+					type: 'fileButton',
+					id: 'uploadButton',
+					label: commonLang.uploadSubmit,
+					filebrowser: 'info:url',
+					'for': [ 'upload', 'upload' ]
+				} ]
+			},
+			{
+				id: 'advanced',
+				label: linkLang.advanced,
+				title: linkLang.advanced,
+				elements: [ {
+					type: 'vbox',
+					padding: 1,
+					children: [ {
+						type: 'hbox',
+						widths: [ '45%', '35%', '20%' ],
+						children: [ {
+							type: 'text',
+							id: 'advId',
+							requiredContent: 'a[id]',
+							label: linkLang.id,
+							setup: setupAdvParams,
+							commit: commitAdvParams
+						},
+						{
+							type: 'select',
+							id: 'advLangDir',
+							requiredContent: 'a[dir]',
+							label: linkLang.langDir,
+							'default': '',
+							style: 'width:110px',
+							items: [
+								[ commonLang.notSet, '' ],
+								[ linkLang.langDirLTR, 'ltr' ],
+								[ linkLang.langDirRTL, 'rtl' ]
+							],
+							setup: setupAdvParams,
+							commit: commitAdvParams
+						},
+						{
+							type: 'text',
+							id: 'advAccessKey',
+							requiredContent: 'a[accesskey]',
+							width: '80px',
+							label: linkLang.acccessKey,
+							maxLength: 1,
+							setup: setupAdvParams,
+							commit: commitAdvParams
+
+						} ]
+					},
+					{
+						type: 'hbox',
+						widths: [ '45%', '35%', '20%' ],
+						children: [ {
+							type: 'text',
+							label: linkLang.name,
+							id: 'advName',
+							requiredContent: 'a[name]',
+							setup: setupAdvParams,
+							commit: commitAdvParams
+
+						},
+						{
+							type: 'text',
+							label: linkLang.langCode,
+							id: 'advLangCode',
+							requiredContent: 'a[lang]',
+							width: '110px',
+							'default': '',
+							setup: setupAdvParams,
+							commit: commitAdvParams
+
+						},
+						{
+							type: 'text',
+							label: linkLang.tabIndex,
+							id: 'advTabIndex',
+							requiredContent: 'a[tabindex]',
+							width: '80px',
+							maxLength: 5,
+							setup: setupAdvParams,
+							commit: commitAdvParams
+
+						} ]
+					} ]
+				},
+				{
+					type: 'vbox',
+					padding: 1,
+					children: [ {
+						type: 'hbox',
+						widths: [ '45%', '55%' ],
+						children: [ {
+							type: 'text',
+							label: linkLang.advisoryTitle,
+							requiredContent: 'a[title]',
+							'default': '',
+							id: 'advTitle',
+							setup: setupAdvParams,
+							commit: commitAdvParams
+
+						},
+						{
+							type: 'text',
+							label: linkLang.advisoryContentType,
+							requiredContent: 'a[type]',
+							'default': '',
+							id: 'advContentType',
+							setup: setupAdvParams,
+							commit: commitAdvParams
+
+						} ]
+					},
+					{
+						type: 'hbox',
+						widths: [ '45%', '55%' ],
+						children: [ {
+							type: 'text',
+							label: linkLang.cssClasses,
+							requiredContent: 'a(cke-xyz)', // Random text like 'xyz' will check if all are allowed.
+							'default': '',
+							id: 'advCSSClasses',
+							setup: setupAdvParams,
+							commit: commitAdvParams
+
+						},
+						{
+							type: 'text',
+							label: linkLang.charset,
+							requiredContent: 'a[charset]',
+							'default': '',
+							id: 'advCharset',
+							setup: setupAdvParams,
+							commit: commitAdvParams
+
+						} ]
+					},
+					{
+						type: 'hbox',
+						widths: [ '45%', '55%' ],
+						children: [ {
+							type: 'text',
+							label: linkLang.rel,
+							requiredContent: 'a[rel]',
+							'default': '',
+							id: 'advRel',
+							setup: setupAdvParams,
+							commit: commitAdvParams
+						},
+						{
+							type: 'text',
+							label: linkLang.styles,
+							requiredContent: 'a{cke-xyz}', // Random text like 'xyz' will check if all are allowed.
+							'default': '',
+							id: 'advStyles',
+							validate: CKEDITOR.dialog.validate.inlineStyle( editor.lang.common.invalidInlineStyle ),
+							setup: setupAdvParams,
+							commit: commitAdvParams
+						} ]
+					},
+					{
+						type: 'hbox',
+						widths: [ '45%', '55%' ],
+						children: [ {
+							type: 'checkbox',
+							id: 'download',
+							requiredContent: 'a[download]',
+							label: linkLang.download,
+							setup: function( data ) {
+								if ( data.download !== undefined )
+									this.setValue( 'checked', 'checked' );
+							},
+							commit: function( data ) {
+								if ( this.getValue() ) {
+									data.download = this.getValue();
 								}
 							}
-						}
-					}
-				]
-			}
-		],
-		// get selected link and populate dialog data
-		onShow : function()
-		{
-			// add class to template editor dialog wrapper
-			this._.element.addClass('wikiaEditorDialog');
-			this._.element.addClass('linkEditorDialog');
+						} ]
+					} ]
+				} ]
+			} ],
+			onShow: function() {
+				var editor = this.getParentEditor(),
+					selection = editor.getSelection(),
+					displayTextField = this.getContentElement( 'info', 'linkDisplayText' ).getElement().getParent().getParent(),
+					elements = plugin.getSelectedLink( editor, true ),
+					firstLink = elements[ 0 ] || null;
 
-			this.fakeObj = false;
-
-			var editor = this.getParentEditor(),
-				selection = editor.getSelection(),
-				ranges = selection.getRanges(),
-				element = null,
-				me = this;
-
-			element = plugin.getSelectedLink( editor );
-			if ( element && element.getAttribute( 'href' ) ) {
-				selection.selectElement( element );
-			} else {
-				element = null;
-			}
-
-			// remove old page status info
-			$(".link-type-note span").html('...');
-			$(".link-type-note img").hide()[0].className = 'sprite';
-
-			// setup editor fields
-			setupDialog.apply( this, [editor, element] );
-		},
-
-		// create new link / update link' meta data
-		onOk : function()
-		{
-			// RT #37023 - wait until dialog is hidden
-			if (this._.dontHide) {
-				return;
-			}
-
-			// get selected type
-			var currentType = this.getContentElement('internal', 'linktype').getValue(),
-				element;
-
-			// create new link
-			if (!this._.selectedElement) {
-				RTE.log('creating new link...');
-				element = createNewLink.apply(this, [editor]);
-			} else {
-				element = this._.selectedElement;
-			}
-
-			// extra check
-			if (!element) {
-				return;
-			}
-
-			// CSS classes (prepare)
-			element.removeClass('external');
-			element.removeClass('autonumber');
-
-			// set / update meta data and link text
-			var data = {};
-
-			// check for full link to local wiki article pasted into 'internal link' tab ((RT #47456)
-			if (currentType == 'wiki') {
-				var href = this.getValueOf('internal', 'name');
-
-				if (href.indexOf(window.wgServer) == 0) {
-					// URL to local wiki provided - get article name from it
-					var re = new RegExp( window.wgArticlePath.replace(/\$1/, '(.*)') );
-					var matches = href.match(re);
-
-					if (matches) {
-						var pageName = matches[1];
-
-						// decode page name
-						pageName = decodeURIComponent(pageName);
-						pageName = pageName.replace(/_/g, ' ');
-
-						// move values to "internal" tab
-						this.setValueOf('internal', 'name', pageName);
-						this.setValueOf('internal', 'label', this.getValueOf('external', 'label') );
-
-						RTE.log('internal full URL detected: ' + href + ' > ' + pageName);
+				// Fill in all the relevant fields if there's already one link selected.
+				if ( firstLink && firstLink.hasAttribute( 'href' ) ) {
+					// Don't change selection if some element is already selected.
+					// For example - don't destroy fake selection.
+					if ( !selection.getSelectedElement() && !selection.isInTable() ) {
+						selection.selectElement( firstLink );
 					}
 				}
+
+				var data = plugin.parseLinkAttributes( editor, firstLink );
+
+				// Here we'll decide whether or not we want to show Display Text field.
+				if ( elements.length <= 1 && plugin.showDisplayTextForElement( firstLink, editor ) ) {
+					displayTextField.show();
+				} else {
+					displayTextField.hide();
+				}
+
+				// Record down the selected element in the dialog.
+				this._.selectedElements = elements;
+
+				this.setupContent( data );
+			},
+			onOk: function() {
+				var data = {};
+
+				// Collect data from fields.
+				this.commitContent( data );
+
+				if ( !this._.selectedElements.length ) {
+					insertLinksIntoSelection( editor, data );
+				} else {
+					editLinksInSelection( editor, this._.selectedElements, data );
+
+					delete this._.selectedElements;
+				}
+			},
+			onLoad: function() {
+				if ( !editor.config.linkShowAdvancedTab )
+					this.hidePage( 'advanced' ); //Hide Advanded tab.
+
+				if ( !editor.config.linkShowTargetTab )
+					this.hidePage( 'target' ); //Hide Target tab.
+			},
+			// Inital focus on 'url' field if link is of type URL.
+			onFocus: function() {
+				var linkType = this.getContentElement( 'info', 'linkType' ),
+					urlField;
+
+				if ( linkType && linkType.getValue() == 'url' ) {
+					urlField = this.getContentElement( 'info', 'url' );
+					urlField.select();
+				}
 			}
-
-			switch (currentType) {
-				case 'ext':
-					data = {
-						'type': 'external',
-						'link': this.getValueOf('internal', 'name'),
-						'text': this.getValueOf('internal', 'label'),
-						'wikitext': null
-					};
-
-					if ( data.text == '' ) {
-						// autonumbered link
-						data.linktype = 'autonumber';
-						data.text = '[1]';
-
-						element.addClass('autonumber');
-					}
-
-					element.setAttribute('href',data.link);
-
-					element.addClass('external');
-					element.removeClass('new');
-					break;
-				case 'wiki':
-					data = {
-						'type': 'internal',
-						'link': this.getValueOf('internal', 'name'),
-						'text': this.getValueOf('internal', 'label'),
-
-						// reset these fields
-						'noforce': true,
-						'wikitext': null
-					};
-
-					// add .new CSS class if needed
-					RTE.tools.checkInternalLink(element, data.link);
-					break;
-			}
-
-			// set content of link element
-			var linkContent = (data.text != '') ? data.text : data.link;
-			element.setHtml(linkContent);
-
-			$(element.$).setData(data);
-
-			// log updated meta data entry
-			RTE.log('updating link data');
-			RTE.log([element, $(element.$).getData()]);
-			RTE.log(linkContent);
-
-			// regenerate numbers of external "autonumber" links
-			RTE.tools.renumberExternalLinks();
-
-			// hide MW suggest results container
-			if (typeof this._.suggestContainer != 'undefined') {
-				this._.suggestContainer.css('visibility', 'hidden');
-			}
-
-			RTE.getInstanceEditor().fire('editorAddLink');
-		}
-	};
-} );
+		};
+	} );
+} )();
+// jscs:disable maximumLineLength
+/**
+ * The e-mail address anti-spam protection option. The protection will be
+ * applied when creating or modifying e-mail links through the editor interface.
+ *
+ * Two methods of protection can be chosen:
+ *
+ * 1. The e-mail parts (name, domain, and any other query string) are
+ *     assembled into a function call pattern. Such function must be
+ *     provided by the developer in the pages that will use the contents.
+ * 2. Only the e-mail address is obfuscated into a special string that
+ *     has no meaning for humans or spam bots, but which is properly
+ *     rendered and accepted by the browser.
+ *
+ * Both approaches require JavaScript to be enabled.
+ *
+ *		// href="mailto:tester@ckeditor.com?subject=subject&body=body"
+ *		config.emailProtection = '';
+ *
+ *		// href="<a href=\"javascript:void(location.href=\'mailto:\'+String.fromCharCode(116,101,115,116,101,114,64,99,107,101,100,105,116,111,114,46,99,111,109)+\'?subject=subject&body=body\')\">e-mail</a>"
+ *		config.emailProtection = 'encode';
+ *
+ *		// href="javascript:mt('tester','ckeditor.com','subject','body')"
+ *		config.emailProtection = 'mt(NAME,DOMAIN,SUBJECT,BODY)';
+ *
+ * @since 3.1
+ * @cfg {String} [emailProtection='' (empty string = disabled)]
+ * @member CKEDITOR.config
+ */

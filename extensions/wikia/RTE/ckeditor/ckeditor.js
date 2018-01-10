@@ -1,6 +1,6 @@
 /**
  * @license Copyright (c) 2003-2017, CKSource - Frederico Knabben. All rights reserved.
- * For licensing, see LICENSE.md or http://ckeditor.com/license
+ * For licensing, see LICENSE.md or https://ckeditor.com/legal/terms-of-use/#open-source-licences
  */
 
 // Compressed version of core/ckeditor_base.js. See original for instructions.
@@ -12,12 +12,11 @@ a,!1),b()):document.attachEvent&&"complete"===document.readyState&&(document.det
 !window.frameElement}catch(e){}if(document.documentElement.doScroll&&b){var d=function(){try{document.documentElement.doScroll("left")}catch(b){setTimeout(d,1);return}a()};d()}}}}()},d=window.CKEDITOR_GETURL;if(d){var g=b.getUrl;b.getUrl=function(a){return d.call(b,a)||g.call(b,a)}}return b}());
 /* jscs:enable */
 /* jshint ignore:end */
+//Wikia start - disable automatic load of ckeditor scripts
 /*
-	if ( CKEDITOR.loader ){
+if ( CKEDITOR.loader )
 	CKEDITOR.loader.load( 'ckeditor' );
-		
-	}	
-	else {
+else {
 	// Set the script name to be loaded by the loader.
 	CKEDITOR._autoLoad = 'ckeditor';
 
@@ -48,3 +47,4 @@ a,!1),b()):document.attachEvent&&"complete"===document.readyState&&(document.det
  * @member CKEDITOR
  */
 CKEDITOR.skinName = 'wikia';
+//Wikia end

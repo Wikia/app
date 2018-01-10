@@ -1,6 +1,6 @@
 /**
  * @license Copyright (c) 2003-2017, CKSource - Frederico Knabben. All rights reserved.
- * For licensing, see LICENSE.md or http://ckeditor.com/license
+ * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
  */
 
 /**
@@ -125,7 +125,7 @@
 			offset = overrideOffset || ( icon && icon.offset );
 			bgsize = overrideBgsize || ( icon && icon.bgsize ) || '16px';
 
-			// If we use apostrophes in background-image, we must escape apostrophes in path (just to be sure). (#13361)
+			// If we use apostrophes in background-image, we must escape apostrophes in path (just to be sure). (https://dev.ckeditor.com/ticket/13361)
 			if ( path )
 				path = path.replace( /'/g, '\\\'' );
 
@@ -159,7 +159,9 @@
 				}
 			}
 		}
+		//Wikia start
 		return $.getSassCommonURL('extensions/wikia/RTE/ckeditor/skins/wikia/' + part + '.scss');
+		//Wikia end
 	}
 
 	function loadCss( part, callback ) {
@@ -167,8 +169,9 @@
 		if ( !cssLoaded[ part ] ) {
 			CKEDITOR.document.appendStyleSheet( getCssPath( part ) );
 			cssLoaded[ part ] = 1;
-			//dialog scss already loaded in editor.scss
+			//Wikia start - Already loaded in editor.scss
 			if ( part === 'editor' ) cssLoaded[ 'dialog' ] = 1;
+			//Wikia end
 		}
 
 		// CSS loading should not be blocking.

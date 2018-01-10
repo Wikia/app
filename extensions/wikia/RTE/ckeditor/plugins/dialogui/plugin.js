@@ -1,6 +1,6 @@
 ﻿/**
  * @license Copyright (c) 2003-2017, CKSource - Frederico Knabben. All rights reserved.
- * For licensing, see LICENSE.md or http://ckeditor.com/license
+ * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
  */
 
 /**
@@ -72,7 +72,7 @@ CKEDITOR.plugins.add( 'dialogui', {
 					if ( !this._.domOnChangeRegistered ) {
 						dialog.on( 'load', function() {
 							this.getInputElement().on( 'change', function() {
-								// Make sure 'onchange' doesn't get fired after dialog closed. (#5719)
+								// Make sure 'onchange' doesn't get fired after dialog closed. (https://dev.ckeditor.com/ticket/5719)
 								if ( !dialog.parts.dialog.isVisible() )
 									return;
 
@@ -240,7 +240,7 @@ CKEDITOR.plugins.add( 'dialogui', {
 							keyPressedOnMe = true;
 					} );
 
-					// Lower the priority this 'keyup' since 'ok' will close the dialog.(#3749)
+					// Lower the priority this 'keyup' since 'ok' will close the dialog.(https://dev.ckeditor.com/ticket/3749)
 					me.getInputElement().on( 'keyup', function( evt ) {
 						if ( evt.data.getKeystroke() == 13 && keyPressedOnMe ) {
 							dialog.getButton( 'ok' ) && setTimeout( function() {
@@ -472,7 +472,7 @@ CKEDITOR.plugins.add( 'dialogui', {
 						if ( typeof inputDefinition.inputStyle != 'undefined' )
 							inputDefinition.style = inputDefinition.inputStyle;
 
-						// Make inputs of radio type focusable (#10866).
+						// Make inputs of radio type focusable (https://dev.ckeditor.com/ticket/10866).
 						inputDefinition.keyboardFocusable = true;
 
 						children.push( new CKEDITOR.ui.dialog.uiElement( dialog, inputDefinition, inputHtml, 'input', null, inputAttributes ) );
@@ -537,7 +537,7 @@ CKEDITOR.plugins.add( 'dialogui', {
 					( function() {
 						element.on( 'click', function( evt ) {
 							me.click();
-							// #9958
+							// https://dev.ckeditor.com/ticket/9958
 							evt.data.preventDefault();
 						} );
 
@@ -552,27 +552,25 @@ CKEDITOR.plugins.add( 'dialogui', {
 					element.unselectable();
 				}, this );
 
-				// wikia: CSS class changes
-				if (typeof elementDefinition['class'] != 'undefined') {
-					elementDefinition['class'] = elementDefinition['class']
-						.replace(/cke_dialog_ui_button_cancel/, 'secondary')
-						.replace(/cke_dialog_ui_button_(\w+)/, '')
-						+ ' wikia-button';
-				}
+                                // Wikia start - CSS Class changes
+                                if (typeof elementDefinition['class'] != 'undefined') {
+                                        elementDefinition['class'] = elementDefinition['class']
+                                                .replace(/cke_dialog_ui_button_cancel/, 'secondary')
+                                                .replace(/cke_dialog_ui_button_(\w+)/, '')
+                                                + ' wikia-button';
+                                }
 
-				if (typeof elementDefinition['className'] != 'undefined') {
-					elementDefinition['className'] += ' wikia-button';
+                                if (typeof elementDefinition['className'] != 'undefined') {
+                                        elementDefinition['className'] += ' wikia-button';
 
-					if (typeof elementDefinition['buttonType'] != 'undefined') {
-						elementDefinition['className'] += ' ' + elementDefinition['buttonType'];
-					}
-				}
-				else {
-					elementDefinition['className'] = 'wikia-button';
-				}
-				// wikia: end
-
-
+                                        if (typeof elementDefinition['buttonType'] != 'undefined') {
+                                                elementDefinition['className'] += ' ' + elementDefinition['buttonType'];
+                                        }
+                                }
+                                else {
+                                        elementDefinition['className'] = 'wikia-button';
+                                }
+                                // Wikia start
 				var outerDefinition = CKEDITOR.tools.extend( {}, elementDefinition );
 				delete outerDefinition.style;
 
@@ -707,7 +705,7 @@ CKEDITOR.plugins.add( 'dialogui', {
 							' src="javascript:void('
 					];
 
-					// Support for custom document.domain on IE. (#10165)
+					// Support for custom document.domain on IE. (https://dev.ckeditor.com/ticket/10165)
 					html.push( CKEDITOR.env.ie ?
 						'(function(){' + encodeURIComponent(
 							'document.open();' +
@@ -1444,7 +1442,7 @@ CKEDITOR.plugins.add( 'dialogui', {
 								'<label id="', _.labelId, '" for="', inputId, '" style="display:none">',
 									CKEDITOR.tools.htmlEncode( elementDefinition.label ),
 								'</label>',
-								// Set width to make sure that input is not clipped by the iframe (#11253).
+								// Set width to make sure that input is not clipped by the iframe (https://dev.ckeditor.com/ticket/11253).
 								'<input style="width:100%" id="', inputId, '" aria-labelledby="', _.labelId, '" type="file" name="',
 									CKEDITOR.tools.htmlEncode( elementDefinition.id || 'cke_upload' ),
 									'" size="',
@@ -1467,7 +1465,7 @@ CKEDITOR.plugins.add( 'dialogui', {
 						buttons[ i ].enable();
 				}
 
-				// #3465: Wait for the browser to finish rendering the dialog first.
+				// https://dev.ckeditor.com/ticket/3465: Wait for the browser to finish rendering the dialog first.
 				if ( CKEDITOR.env.gecko )
 					setTimeout( generateFormField, 500 );
 				else
