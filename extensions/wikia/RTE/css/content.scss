@@ -243,3 +243,8 @@ li .placeholder-double-brackets {
 p[data-rte-filler="true"] {
 	display: none;
 }
+
+/* XW-4482: Hide placeholders inside template transclusions */
+.placeholder-double-brackets .placeholder {
+	display: none;
+}
