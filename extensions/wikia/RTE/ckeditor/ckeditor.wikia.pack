@@ -165,6 +165,7 @@ packages :
 				'plugins/dialog/plugin.js'
 				'plugins/table/plugin.js'				
 				'plugins/tabletools/plugin.js'
+				'plugins/table/dialogs/table.js'
 				'plugins/removeformat/plugin.js'
 				'plugins/pastetext/plugin.js'
 				'plugins/sourcearea/plugin.js'
