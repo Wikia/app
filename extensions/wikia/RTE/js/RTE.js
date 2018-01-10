@@ -13,7 +13,7 @@
 	// Rich Text Editor
 	// See also: RTE.preferences.js
 	var RTE = {
-		
+
 		// configuration
 		// @see http://docs.cksource.com/ckeditor_api/symbols/CKEDITOR.config.html
 		config: {
@@ -27,7 +27,7 @@
 			baseFloatZIndex: 5000101, // $zTop + 1 from _layout.scss
 			bodyClass: 'WikiaArticle',
 			bodyId: 'bodyContent',
-			contentsCss: rteAssets.concat(window.RTESiteCss),
+			contentsCss: window.RTESiteCss ? rteAssets.concat(window.RTESiteCss) : rteAssets,
 			coreStyles_bold: {element: 'b', overrides: 'strong'},
 			coreStyles_italic: {element: 'i', overrides: 'em'},
 			customConfig: '',//'config.js' to add additional statements
@@ -45,7 +45,7 @@
 				'basicstyles,' +
 				'button,' +
 				'clipboard,' +
-				'contextmenu,' +	
+				'contextmenu,' +
 				'dialog,' +
 				'enterkey,' +
 				'format,' +
@@ -136,13 +136,14 @@
 				RTE.config.contentsCss.push(wgServer + '/extensions/wikia/AutoPageCreate/AutoPageCreate.css'); // local path needs to be used here
 			}
 
-			var contentsCss = '',
+			var contentsCss = [],
 				index = 0,
 				length = RTE.config.contentsCss.length;
 
 			(function load() {
 				$.get(RTE.config.contentsCss[index], function(css) {
-					contentsCss += css, index++;
+					contentsCss.push(css);
+					index++;
 
 					if (index < length) {
 						load();
@@ -214,7 +215,7 @@
 				if (editor.mode == 'wysiwyg') {
 					editor.fire('saveSnapshot');
 				}
-			
+
 				editor.fire('modeSwitch');
 			};
 
@@ -428,7 +429,7 @@ CKEDITOR.getUrl = function( resource ) {
 
 		return url;
 	}
-		
+
 	// If this is not a full or absolute path.
 	if ( resource.indexOf('://') == -1 && resource.indexOf( '/' ) !== 0 ) {
 		// Wikia: remove _source adder
@@ -439,7 +440,6 @@ CKEDITOR.getUrl = function( resource ) {
 	if ( this.timestamp && resource.charAt( resource.length - 1 ) != '/' ) {
 		resource += ( resource.indexOf( '?' ) >= 0 ? '&' : '?' ) + this.timestamp;
 	}
-//	console.log( resource );	
 	return resource;
 }
 
