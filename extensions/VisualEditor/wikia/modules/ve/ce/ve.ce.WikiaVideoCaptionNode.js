@@ -45,7 +45,7 @@ ve.ce.WikiaVideoCaptionNode.prototype.createTitle = function () {
 	var title = new mw.Title( this.model.getParent().getFilename() );
 	// It's inside a protected node, so user can't see href/title.
 	return this.$( '<p>' )
-		.addClass( 'title ve-no-shield' )
+		.addClass( 'title' )
 		.text( title.getNameText() );
 };
 

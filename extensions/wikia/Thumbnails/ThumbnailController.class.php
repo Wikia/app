@@ -60,7 +60,6 @@ class ThumbnailController extends WikiaController {
 			$duration = null;
 		}
 
-		$this->response->setVal( 'duration', WikiaFileHelper::formatDuration( $duration ) );
 		$this->response->setVal( 'mediaType', 'video' );
 
 		$lazyLoaded = ThumbnailHelper::setLazyLoad( $this, $options );

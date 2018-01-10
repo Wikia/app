@@ -1,7 +1,10 @@
 {
   "community-header-add": "Adicionar",
+  "community-header-add-new-image": "Adicionar nova imagem",
   "community-header-add-new-page": "Adicionar nova página",
+  "community-header-add-new-video": "Adicionar novo vídeo",
   "community-header-admin-dashboard": "Painel de Administração",
+  "community-header-all-shortcuts": "Todos os atalhos",
   "community-header-community": "Comunidade",
   "community-header-discuss": "Converse",
   "community-header-discussions-post": "Posts",
@@ -12,6 +15,7 @@
   "community-header-page": "Página",
   "community-header-pages": "Páginas",
   "community-header-random-page": "Página Aleatória",
+  "community-header-recent-changes": "Mudanças recentes",
   "community-header-videos": "Vídeos",
   "community-header-wiki-activity": "Atividade na Wiki",
   "global-footer-advertise-header": "Anuncie",

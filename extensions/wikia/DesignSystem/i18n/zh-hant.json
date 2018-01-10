@@ -1,7 +1,10 @@
 {
   "community-header-add": "增加",
+  "community-header-add-new-image": "增加新圖片",
   "community-header-add-new-page": "增加新頁面",
+  "community-header-add-new-video": "增加新影片",
   "community-header-admin-dashboard": "管理員面板",
+  "community-header-all-shortcuts": "快捷鍵",
   "community-header-community": "社區",
   "community-header-discuss": "討論",
   "community-header-discussions-post": "篇討論文章",
@@ -12,6 +15,7 @@
   "community-header-page": "頁面",
   "community-header-pages": "個頁面",
   "community-header-random-page": "隨機頁面",
+  "community-header-recent-changes": "最近更改",
   "community-header-videos": "影片",
   "community-header-wiki-activity": "Wiki動態",
   "global-footer-advertise-header": "廣告投放",

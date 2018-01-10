@@ -791,6 +791,8 @@ p.SliderLink {
 }
 
 /* Hack to position the play circle in slider preview. */
-#WikiaPhotoGallerySliderEditorPreview .play-circle {
+#WikiaPhotoGallerySliderEditorPreview .thumbnail-play-icon-container {
+	height: auto;
 	top: 80px;
+	width: auto;
 }

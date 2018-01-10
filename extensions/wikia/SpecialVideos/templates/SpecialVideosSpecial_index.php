@@ -33,7 +33,7 @@
 			</div>
 			<? if($isRemovalAllowed): ?>
 				<a class="remove">
-					<img class="sprite trash" src="<?= wfBlankImgUrl() ?>" title="<?= wfMessage( 'specialvideos-remove-modal-title' )->escaped(); ?>">
+					<?= DesignSystemHelper::renderSvg('wds-icons-trash-small', 'wds-icon wds-icon-small'); ?>
 				</a>
 			<? endif; ?>
 		</li>
