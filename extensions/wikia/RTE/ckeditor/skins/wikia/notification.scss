@@ -44,6 +44,7 @@ For licensing, see LICENSE.md or http://ckeditor.com/license
  * Success and info notifications have the same structure as warning, but use
  * `cke_notification_success` and `cke_notification_info` instead of `cke_notification_warning`.
  */
+@import "skins/shared/color";
 .cke_notifications_area
 {
 	/* Prevent notifications margin capture clicking. */
@@ -55,8 +56,8 @@ For licensing, see LICENSE.md or http://ckeditor.com/license
 	position: relative;
 	margin: 10px;
 	width: 300px;
-	color: #222;
-	border-radius: 5px;
+	color: $color-text;
+	border-radius: 6px;
 	text-align: center;
 	opacity: 0.95;
 	filter: alpha(opacity = 95);
@@ -95,13 +96,13 @@ For licensing, see LICENSE.md or http://ckeditor.com/license
 
 .cke_notification_info
 {
-	background: #54D3EC;
-	border: 1px solid #01b2d2;
+	background: $color-page;
+	border: 1px solid $color-page-border;
 }
 
 .cke_notification_info span.cke_notification_progress
 {
-	background-color: #01b2d2;
+	background-color: $color-page;
 	display: block;
 	padding: 0;
 	margin: 0;
@@ -125,9 +126,14 @@ For licensing, see LICENSE.md or http://ckeditor.com/license
 
 .cke_notification_close
 {
-	background-image: url(images/sprites.png);
-	background-repeat: no-repeat;
-	background-position: 0 -1022px;
+//	background-image: url(images/sprites.png);
+//	background-repeat: no-repeat;
+//	background-position: 0 -1022px;
+	background-color: darken($color-page, 20%);
+	@if $is-dark-wiki{
+	    background-color: lighten($color-page, 20%);
+	}
+	border-radius: 3px;
 	position: absolute;
 	cursor: pointer;
 	text-align: center;

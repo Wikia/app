@@ -350,8 +350,8 @@ Notification.prototype = {
 		notificationElement.append( notificationMessageElement );
 
 		notificationCloseElement = CKEDITOR.dom.element.createFromHtml(
-			'<a class="cke_notification_close" href="javascript:void(0)" title="' + close + '" role="button" tabindex="-1">' +
-				'<span class="cke_label">X</span>' +
+			'<a class="cke_notification_close close wikia-chiclet-button " href="javascript:void(0)" title="' + close + '" role="button" tabindex="-1">' +
+				'<img src = "' + window.stylepath + '/oasis/images/icon_close.png">' +
 			'</a>' );
 		notificationElement.append( notificationCloseElement );
 
