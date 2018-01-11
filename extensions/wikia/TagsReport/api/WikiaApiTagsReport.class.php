@@ -90,8 +90,8 @@ class WikiaApiTagsReport extends ApiQueryBase {
 	 * @return DatabaseBase
 	 */
 	protected function getDB() {
-		global $wgStatsDB;
-		return wfGetDB( DB_SLAVE, 'api', $wgStatsDB );
+		global $wgSpecialsDB;
+		return wfGetDB( DB_SLAVE, 'api', $wgSpecialsDB );
 	}
 
 	public function getAllowedParams() {
