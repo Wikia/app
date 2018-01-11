@@ -1243,7 +1243,18 @@ class PPFrame_DOM implements PPFrame {
 					$title = $titles->item( 0 );
 					$parts = $xpath->query( 'part', $contextNode );
 
-					if ( $flags & PPFrame::NO_ARGS ) {
+					# RTE (Rich Text Editor) - begin
+					# @author: Wladyslaw Bodzek
+					global $wgRTEParserEnabled;
+					if ( !empty( $wgRTEParserEnabled ) && $this->isTemplate() ) {
+						$dataIdx = RTEData::put( 'placeholder', [
+							'type' => 'tplarg',
+							'wikitextIdx' => $contextNode->getAttribute( '_rte_wikitextidx' ),
+							'lineStart' => $contextNode->getAttribute( 'lineStart' ),
+							'title' => $title->textContent,
+						] );
+						$out .= RTEMarker::generate( RTEMarker::PLACEHOLDER, $dataIdx );
+					} elseif ( $flags & PPFrame::NO_ARGS ) {
 						$newIterator = $this->virtualBracketedImplode( '{{{', '|', '}}}', $title, $parts );
 					} else {
 						$params = array(
