@@ -38,6 +38,7 @@ class CheckUserHooks {
 
 		// SUS-3257 / SUS-3467: Make sure the text fits into the database
 		$actionTextTrim = substr( $actionText, 0, static::ACTION_TEXT_MAX_LENGTH );
+		$agentTrim = substr( $agent, 0, static::ACTION_TEXT_MAX_LENGTH );
 
 		$dbw = wfGetDB( DB_MASTER );
 		$cuc_id = $dbw->nextSequenceValue( 'cu_changes_cu_id_seq' );
@@ -58,7 +59,7 @@ class CheckUserHooks {
 			'cuc_ip_hex'     => $ip ? IP::toHex( $ip ) : null,
 			'cuc_xff'        => !$isSquidOnly ? $xff : '',
 			'cuc_xff_hex'    => ( $xff_ip && !$isSquidOnly ) ? IP::toHex( $xff_ip ) : null,
-			'cuc_agent'      => $agent
+			'cuc_agent'      => $agentTrim
 		);
 		# On PG, MW unsets cur_id due to schema incompatibilites. So it may not be set!
 		if ( isset( $rc_cur_id ) ) {
