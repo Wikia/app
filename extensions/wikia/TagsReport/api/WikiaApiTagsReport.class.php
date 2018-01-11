@@ -85,7 +85,7 @@ class WikiaApiTagsReport extends ApiQueryBase {
 	}
 
 	/**
-	 * Get connection to the stats DB slave
+	 * Get connection to the specials DB
 	 *
 	 * @return DatabaseBase
 	 */
