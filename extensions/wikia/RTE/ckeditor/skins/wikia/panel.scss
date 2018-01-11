@@ -94,7 +94,9 @@ panel contents and color panels check menu.css and colorpanel.css.
 	overflow-y: auto;
 	overflow-x: hidden;
 }
-
+.cke_combo_label {
+	display: none;
+}
 /*
 Here we start the definition of panel lists (e.g. combo panels). The following
 is its visual representation:
