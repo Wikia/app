@@ -23,7 +23,6 @@ class ListusersData {
 	private $mOffset;
 	private $mOrder;
 	private $mOrderOptions;
-	private $mUseKey;
 	private $mDBh;
 
 	const TABLE = 'events_local_users';
@@ -38,12 +37,6 @@ class ListusersData {
 			'groups' 	=> array( 'all_groups %s', 'cnt_groups %s'),
 			'revcnt' 	=> array( 'edits %s' ),
 			'dtedit' 	=> array( 'editdate %s' )
-		);
-
-		$this->mUseKeyOptions = array(
-			'groups' 	=> '',
-			'revcnt' 	=> 'wiki_edits_by_user',
-			'dtedit' 	=> 'wiki_editdate_user_edits'
 		);
 	}
 
@@ -81,8 +74,6 @@ class ListusersData {
 					foreach ( $this->mOrderOptions[$orderName] as $orderStr ) {
 						$this->mOrder[] = sprintf( $orderStr, $orderDesc );
 					}
-					// disable mUseKey temporarily due to PLATFORM-1174 MAIN-4386
-					// $this->mUseKey = $this->mUseKeyOptions[$orderName];
 				}
 			}
 		}
@@ -185,13 +176,12 @@ class ListusersData {
 				$sk = $context->getSkin();
 				/* select records */
 				$oRes = $dbs->select(
-					array( self::TABLE . ( ($this->mUseKey) ? ' use key('.$this->mUseKey.')' : '' ) ),
+					array( self::TABLE ),
 					array(
 						'user_id',
 						'cnt_groups',
 						'all_groups',
 						'edits',
-						'user_is_blocked',
 						'last_revision',
 						'editdate',
 						'ifnull(last_revision, 0) as max_rev',
@@ -208,7 +198,6 @@ class ListusersData {
 
 				$data['data'] = array();
 				while ( $oRow = $dbs->fetchObject( $oRes ) ) {
-					// SUS-2772: don't do a DB query for every row
 					$oUser = User::newFromId( $oRow->user_id );
 
 					/* groups */
@@ -268,7 +257,7 @@ class ListusersData {
 						'groups_nbr' 		=> $oRow->cnt_groups,
 						'groups' 			=> $group,
 						'rev_cnt' 			=> $oRow->edits,
-						'blcked'			=> $oRow->user_is_blocked,
+						'blcked'			=> $oUser->isBlocked( true, false ),
 						'links'				=> "(" . implode( ") &#183; (", $links ) . ")",
 						'last_edit_page' 	=> null,
 						'last_edit_diff'	=> null,
