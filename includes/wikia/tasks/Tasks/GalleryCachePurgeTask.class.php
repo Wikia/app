@@ -67,14 +67,14 @@ class GalleryCachePurgeTask extends BaseTask {
 		global $wgSpecialsDB;
 		$app = \F::app();
 
-		$statsdb = wfGetDB( DB_SLAVE, null, $wgSpecialsDB );
+		$specialsDB = wfGetDB( DB_SLAVE, null, $wgSpecialsDB );
 		$pages = ( new \WikiaSQL() )
 			->SELECT( 'DISTINCT ct_page_id' )
 			->FROM( 'city_used_tags' )
 			->WHERE( 'ct_wikia_id' )->EQUAL_TO( $app->wg->CityId )
 			->LIMIT( self::PAGE_COUNT_LIMIT )
 			->OFFSET( $offset )
-			->runLoop( $statsdb, function ( &$pages, $row ) {
+			->runLoop( $specialsDB, function ( &$pages, $row ) {
 				$pages[] = $row->ct_page_id;
 			} );
 
@@ -89,12 +89,12 @@ class GalleryCachePurgeTask extends BaseTask {
 		global $wgSpecialsDB;
 		$app = \F::app();
 
-		$statsdb = wfGetDB( DB_SLAVE, null, $wgSpecialsDB );
+		$specialsDB = wfGetDB( DB_SLAVE, null, $wgSpecialsDB );
 		$count = ( new \WikiaSQL() )
 			->SELECT( 'COUNT(DISTINCT ct_page_id)' )->AS_( 'count' )
 			->FROM( 'city_used_tags' )
 			->WHERE( 'ct_wikia_id' )->EQUAL_TO( $app->wg->CityId )
-			->run( $statsdb, function ( $row ) {
+			->run( $specialsDB, function ( $row ) {
 				$row = $row->fetchObject();
 				return empty($row) ? 0 : $row->count;
 			} );
