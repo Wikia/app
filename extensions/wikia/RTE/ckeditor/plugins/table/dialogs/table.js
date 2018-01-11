@@ -227,6 +227,9 @@
 						table.removeAttribute( 'style' );
 				}
 
+				// Wikia change - add table class
+				table.addClass('article-table');
+
 				// Insert the table element if we're creating one.
 				if ( !this._.selectedElement ) {
 					editor.insertElement( table );
