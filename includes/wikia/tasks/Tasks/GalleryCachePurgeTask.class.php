@@ -64,9 +64,10 @@ class GalleryCachePurgeTask extends BaseTask {
 	 * @return array
 	 */
 	protected function getGalleryPageIds( $offset = 0 ) {
+		global $wgSpecialsDB;
 		$app = \F::app();
 
-		$statsdb = wfGetDB( DB_SLAVE, null, $app->wg->StatsDB );
+		$statsdb = wfGetDB( DB_SLAVE, null, $wgSpecialsDB );
 		$pages = ( new \WikiaSQL() )
 			->SELECT( 'DISTINCT ct_page_id' )
 			->FROM( 'city_used_tags' )
@@ -85,9 +86,10 @@ class GalleryCachePurgeTask extends BaseTask {
 	 * @return int
 	 */
 	protected function getGalleryPageCount() {
+		global $wgSpecialsDB;
 		$app = \F::app();
 
-		$statsdb = wfGetDB( DB_SLAVE, null, $app->wg->StatsDB );
+		$statsdb = wfGetDB( DB_SLAVE, null, $wgSpecialsDB );
 		$count = ( new \WikiaSQL() )
 			->SELECT( 'COUNT(DISTINCT ct_page_id)' )->AS_( 'count' )
 			->FROM( 'city_used_tags' )
