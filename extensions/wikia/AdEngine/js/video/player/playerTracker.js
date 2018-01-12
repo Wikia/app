@@ -69,10 +69,10 @@ define('ext.wikia.adEngine.video.player.playerTracker', [
 				trackingData['price'] = bidHelper.transformPriceFromBid(params.bid);
 			}
 
-            if (params.bid.bidderCode === 'beachfront') {
-                trackingData['vast_id'] = params.bid.creative_id || emptyValue.string;
-                trackingData['price'] = bidHelper.transformPriceFromBid(params.bid);
-            }
+			if (params.bid.bidderCode === 'beachfront') {
+				trackingData['vast_id'] = params.bid.creative_id || emptyValue.string;
+				trackingData['price'] = bidHelper.transformPriceFromBid(params.bid);
+			}
 
 			if (params.bid.bidderCode === 'appnexusAst') {
 				trackingData['vast_id'] = params.bid.creative_id || emptyValue.string;

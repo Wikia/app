@@ -107,8 +107,8 @@ define('ext.wikia.adEngine.adContext', [
         context.bidders.rubicon = geo.isProperGeo(instantGlobals.wgAdDriverRubiconPrebidCountries) &&
             !hasFeaturedVideo;
 
-        context.bidders.beachfront = geo.isProperGeo(instantGlobals.wgAdDriverBeachfrontBidderCountries) &&
-            !hasFeaturedVideo;
+		context.bidders.beachfront = geo.isProperGeo(instantGlobals.wgAdDriverBeachfrontBidderCountries) &&
+			!hasFeaturedVideo;
 
 		context.bidders.appnexusAst = geo.isProperGeo(instantGlobals.wgAdDriverAppNexusAstBidderCountries) &&
 			!hasFeaturedVideo;
