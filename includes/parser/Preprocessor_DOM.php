@@ -711,7 +711,13 @@ class Preprocessor_DOM implements Preprocessor {
 							$openIdx = $openAt[0];
 							$closeIdx = $closeAt[count($closeAt)-1];
 							$openAt = $closeAt = array();
-							$attr .= ' _rte_wikitextidx="'.RTEData::put('wikitext', substr($text, $openIdx-$count, $closeIdx-$openIdx+2*$count)).'"';
+
+							$start = $openIdx-$count;
+							$length = $closeIdx-$openIdx+2*$count;
+							if ($text[$start + $length] == "\n") {
+								$length++;
+							}
+							$attr .= ' _rte_wikitextidx="'.RTEData::put('wikitext', substr($text, $start, $length)).'"';
 						}
 					}
 					# RTE - end
