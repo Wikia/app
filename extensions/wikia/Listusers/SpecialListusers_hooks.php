@@ -26,17 +26,19 @@ class ListusersHooks {
 
 
 	static public function updateUserRights( User $user ) {
-		$listUsersUpdate = new ListUsersUpdate();
-		$listUsersUpdate->setUserId( $user->getId() );
-		$listUsersUpdate->setUserGroups( $user->getGroups() );
+		if ( !$user->isAllowed( 'bot' ) ) {
+			$listUsersUpdate = new ListUsersUpdate();
+			$listUsersUpdate->setUserId( $user->getId() );
+			$listUsersUpdate->setUserGroups( $user->getGroups() );
 
-		$task = UpdateListUsersTask::newLocalTask();
-		$task->call( 'updateUserGroups', $listUsersUpdate );
-		$task->queue();
+			$task = UpdateListUsersTask::newLocalTask();
+			$task->call( 'updateUserGroups', $listUsersUpdate );
+			$task->queue();
+		}
 	}
 
 	public static function doEditUpdate( WikiPage $wikiPage, Revision $revision, $baseRevId, User $user ) {
-		if ( $user->isAnon() ) {
+		if ( $user->isAnon() || $user->isAllowed( 'bot' ) ) {
 			return;
 		}
 
