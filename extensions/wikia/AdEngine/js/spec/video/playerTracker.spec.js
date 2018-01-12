@@ -185,6 +185,21 @@ describe('ext.wikia.adEngine.video.player.playerTracker', function () {
 		expect(getTrackedValue('price')).toEqual('1.20');
 	});
 
+    it('Track data with Beachfront data for beachfront ad product', function () {
+        tracker.track({
+            adProduct: 'beachfront',
+            slotName: 'TOP_LEADERBOARD',
+            bid: {
+                bidderCode: 'beachfront',
+                creative_id: 'w1k14',
+                cpm: 456
+            }
+        }, 'fooPlayer', 'barEvent');
+
+        expect(getTrackedValue('vast_id')).toEqual('w1k14');
+        expect(getTrackedValue('price')).toEqual('1.20');
+    });
+
 	it('Track data with AppNexus data for appnexusAst ad product', function () {
 		tracker.track({
 			adProduct: 'appnexusAst',

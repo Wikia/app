@@ -37,7 +37,8 @@ define('ext.wikia.adEngine.slot.slotTargeting', [
 			MOBILE_BOTTOM_LEADERBOARD: 'b'
 		},
 		videoBidders = {
-			appnexusAst: 'aa',
+            appnexusAst: 'aa',
+            beachfront: 'bf',
 			rubicon: 'ru'
 		},
 		videoSlots = {
