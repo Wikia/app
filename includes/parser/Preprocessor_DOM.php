@@ -1334,6 +1334,7 @@ class PPFrame_DOM implements PPFrame {
 					global $wgRTEParserEnabled;
 					if ( $wgRTEParserEnabled ) {
 						$wikiTextIdx = $contextNode->getAttribute( '_rte_wikitextidx' );
+						$inlineExt = [ 'ref', 'nowiki' ];
 
 						$rteData = [
 							'type' => 'ext',
@@ -1342,13 +1343,16 @@ class PPFrame_DOM implements PPFrame {
 							'placeholder' => 1
 						];
 
+						if ( !in_array($nameNode->nodeValue, $inlineExt) ) {
+							$rteData['wikitext'] .= "\n";
+						}
+
 						// append a zero-width space
 						// this prevents extension tags at the end of lines from interfering with formatting
 						$tagMarker .= "&#x0200B;";
 
 						// <ref> tags are rendered within <p> so it needs to be wrapped by inline html tag.
 						// other extension tags can contain block elements, so they need to be wrapped in div.
-						$inlineExt = [ 'ref', 'nowiki' ];
 						$wrapperTagName = in_array($nameNode->nodeValue, $inlineExt) ? 'span' : 'div';
 						$out .= Html::rawElement(
 							$wrapperTagName,
