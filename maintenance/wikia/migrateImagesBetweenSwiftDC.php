@@ -104,6 +104,54 @@ class MigrateImagesBetweenSwiftDC extends Maintenance {
 	}
 
 	/**
+	 * @param \Wikia\SwiftSync\Queue $item
+	 */
+	private function processQueueItem($item) {
+		$this->imageSyncQueueItem = $item;
+
+		$this->output( sprintf( "Run %s operation: (record: %d)\n", $this->imageSyncQueueItem->action, $this->imageSyncQueueItem->id ) );
+		$this->output( sprintf( "\tSource: %s\n\tDestination: %s\n", $this->imageSyncQueueItem->src, $this->imageSyncQueueItem->dst ) );
+
+		if ( is_null( $this->imageSyncQueueItem->city_id ) ) {
+			$this->output( "\tWiki ID cannot be null\n" );
+		} elseif ( empty( $this->imageSyncQueueItem->dst ) ) {
+			$this->output( "\tSource and destination path cannot be empty\n" );
+		} elseif ( empty( $this->imageSyncQueueItem->action ) ) {
+			$this->output( "\tAction cannot be empty \n" );
+		} elseif ( !in_array( $this->imageSyncQueueItem->action, [ 'store', 'delete', 'copy', 'move' ] ) ) {
+			$this->output( "\tInvalid action: {$this->imageSyncQueueItem->action} \n" );
+		} else {
+			if ( $this->imageSyncQueueItem->action == 'delete' ) {
+				$res = $this->delete();
+			} else {
+				$res = $this->store();
+			}
+
+			/**
+			 * $res === true  - we're fine
+			 * $res === false - error, keep an item in the queue (i.e. retry in the next run)
+			 * $res === null  - error, move the item to archive (i.e. ignore the error)
+			 */
+			if ( $res === false ) {
+				$this->output( "\tCannot finish operation {$this->imageSyncQueueItem->action} in destination DC \n\n" );
+			} else {
+				$this->imageSyncQueueItem->moveToArchive();
+				$this->output( "\tRecord moved to archive\n\n" );
+			}
+
+			$this->getLogger()->debug( 'MigrateImagesBetweenSwiftDC' , [
+				'is_ok'   => ( $res === true ),
+				'retry'   => ( $res === false ),
+				'id'      => $this->imageSyncQueueItem->id,
+				'action'  => $this->imageSyncQueueItem->action,
+				'city_id' => $this->imageSyncQueueItem->city_id,
+				'src'     => $this->imageSyncQueueItem->src,
+				'dst'     => $this->imageSyncQueueItem->dst,
+			] );
+		}
+	}
+
+	/**
 	 * @param None
 	 */
 	public function execute() {
@@ -121,47 +169,8 @@ class MigrateImagesBetweenSwiftDC extends Maintenance {
 		/* take X elements from queue */
 		/* @var \Wikia\SwiftSync\ImageSync $imageSyncList */
 		$imageSyncList = \Wikia\SwiftSync\ImageSync::newFromQueue( $this->mLimit );
-		foreach ( $imageSyncList as $this->imageSyncQueueItem ) {
-			$this->output( sprintf( "Run %s operation: (record: %d)\n", $this->imageSyncQueueItem->action, $this->imageSyncQueueItem->id ) );
-			$this->output( sprintf( "\tSource: %s\n\tDestination: %s\n", $this->imageSyncQueueItem->src, $this->imageSyncQueueItem->dst ) );
-
-			if ( is_null( $this->imageSyncQueueItem->city_id ) ) {
-				$this->output( "\tWiki ID cannot be null\n" );
-			} elseif ( empty( $this->imageSyncQueueItem->dst ) ) {
-				$this->output( "\tSource and destination path cannot be empty\n" );
-			} elseif ( empty( $this->imageSyncQueueItem->action ) ) {
-				$this->output( "\tAction cannot be empty \n" );
-			} elseif ( !in_array( $this->imageSyncQueueItem->action, [ 'store', 'delete', 'copy', 'move' ] ) ) {
-				$this->output( "\tInvalid action: {$this->imageSyncQueueItem->action} \n" );
-			} else {
-				if ( $this->imageSyncQueueItem->action == 'delete' ) {
-					$res = $this->delete();
-				} else {
-					$res = $this->store();
-				}
-
-				/**
-				 * $res === true  - we're fine
-				 * $res === false - error, keep an item in the queue (i.e. retry in the next run)
-				 * $res === null  - error, move the item to archive (i.e. ignore the error)
-				 */
-				if ( $res === false ) {
-					$this->output( "\tCannot finish operation {$this->imageSyncQueueItem->action} in destination DC \n\n" );
-				} else {
-					$this->imageSyncQueueItem->moveToArchive();
-					$this->output( "\tRecord moved to archive\n\n" );
-				}
-
-				$this->getLogger()->debug( 'MigrateImagesBetweenSwiftDC' , [
-					'is_ok'   => ( $res === true ),
-					'retry'   => ( $res === false ),
-					'id'      => $this->imageSyncQueueItem->id,
-					'action'  => $this->imageSyncQueueItem->action,
-					'city_id' => $this->imageSyncQueueItem->city_id,
-					'src'     => $this->imageSyncQueueItem->src,
-					'dst'     => $this->imageSyncQueueItem->dst,
-				] );
-			}
+		foreach ( $imageSyncList as $item ) {
+			$this->processQueueItem( $item );
 		}
 
 		if ( $imageSyncList->count() > 0 ) {
