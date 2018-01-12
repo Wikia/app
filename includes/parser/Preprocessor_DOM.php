@@ -486,7 +486,7 @@ class Preprocessor_DOM implements Preprocessor {
 
 				// FANDOM change - XW-4380: store wikitext for extension tags
 				$extAttrs = '';
-				if ( $wgRTEParserEnabled && $name !== 'nowiki' ) {
+				if ( $wgRTEParserEnabled ) {
 					$wikiTextIdx = RTEData::put( 'wikitext', substr( $text, $tagStartPos, $i - $tagStartPos ) );
 					$extAttrs = " _rte_wikitextidx=\"$wikiTextIdx\"";
 				}
@@ -1332,7 +1332,7 @@ class PPFrame_DOM implements PPFrame {
 					// FANDOM change - XW-4380: wrap extension tags in a placeholder
 					$tagMarker = $this->parser->extensionSubstitution( $params, $this );
 					global $wgRTEParserEnabled;
-					if ( $wgRTEParserEnabled && $nameNode->textContent !== 'nowiki' ) {
+					if ( $wgRTEParserEnabled ) {
 						$wikiTextIdx = $contextNode->getAttribute( '_rte_wikitextidx' );
 
 						$rteData = [
@@ -1348,15 +1348,20 @@ class PPFrame_DOM implements PPFrame {
 
 						// <ref> tags are rendered within <p> so it needs to be wrapped by inline html tag.
 						// other extension tags can contain block elements, so they need to be wrapped in div.
-						$wrapperTagName = $nameNode->nodeValue === 'ref' ? 'span' : 'div';
-						$out .= Html::rawElement( $wrapperTagName, [
-							'data-rte-instance' => RTE::getInstanceId(),
-							'data-rte-meta' => RTEReverseParser::encodeRTEData( $rteData ),
-							'class' => "placeholder placeholder-ext",
-							'type' => 'ext',
-							'contenteditable' => 'false',
-						], $tagMarker );
-					} else {
+						$inlineExt = [ 'ref', 'nowiki' ];
+						$wrapperTagName = in_array($nameNode->nodeValue, $inlineExt) ? 'span' : 'div';
+						$out .= Html::rawElement(
+							$wrapperTagName,
+							[
+								'data-rte-instance' => RTE::getInstanceId(),
+								'data-rte-meta' => RTEReverseParser::encodeRTEData( $rteData ),
+								'class' => "placeholder placeholder-ext",
+								'type' => 'ext',
+								'contenteditable' => 'false',
+							],
+							$tagMarker
+						);
+					}  else {
 						$out .= $tagMarker;
 					}
 					$RTEext_1 = true;
