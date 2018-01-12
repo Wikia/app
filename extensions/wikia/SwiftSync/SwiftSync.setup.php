@@ -14,6 +14,7 @@ $dir = dirname(__FILE__) . '/';
 $wgAutoloadClasses[ 'Wikia\\SwiftSync\\Hooks'         ] = $dir . "classes/Hooks.php";
 $wgAutoloadClasses[ 'Wikia\\SwiftSync\\Queue'         ] = $dir . "classes/Queue.class.php";
 $wgAutoloadClasses[ 'Wikia\\SwiftSync\\ImageSync'     ] = $dir . "classes/ImageSync.class.php";
+$wgAutoloadClasses[ 'Wikia\\SwiftSync\\ImageSyncTask' ] = $dir . "classes/ImageSyncTask.php";
 
 # hooks
 $wgHooks[ 'SwiftFileBackend::doStoreInternal'     ][] = 'Wikia\SwiftSync\Hooks::doStoreInternal';
