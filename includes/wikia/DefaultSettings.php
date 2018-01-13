@@ -1920,5 +1920,5 @@ require_once "$IP/extensions/wikia/Pages/Pages.setup.php";
 $wgAutoloadClasses['FullRequestLogger'] = "$IP/includes/wikia/FullRequestLogger.class.php";
 $wgAutoloadClasses['AuditLog'] = "$IP/includes/wikia/AuditLog.class.php";
 
-$wgHooks['SetupAfterCache'][] = 'FullRequestLogger::init';
 $wgHooks['SetupAfterCache'][] = 'AuditLog::init';
+$wgHooks['SetupAfterCache'][] = 'FullRequestLogger::init';

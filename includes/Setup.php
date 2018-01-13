@@ -465,6 +465,9 @@ wfDebug( 'CACHES: ' . get_class( $wgMemc ) . '[main] ' .
 
 wfProfileOut( $fname . '-memcached' );
 
+print_r($wgHooks['SetupAfterCache']);
+exit;
+
 # # Most of the config is out, some might want to run hooks here.
 Hooks::run( 'SetupAfterCache' );
 
