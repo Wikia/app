@@ -1915,3 +1915,10 @@ require_once "$IP/extensions/wikia/CityList/CityList.setup.php";
 
 // SUS-3496: Extension to update shared dataware.pages table
 require_once "$IP/extensions/wikia/Pages/Pages.setup.php";
+
+// SRE-76: Logging classes that have been initially defined in config.
+$wgAutoloadClasses['FullRequestLogger'] = "$IP/includes/wikia/FullRequestLogger.class.php";
+$wgAutoloadClasses['AuditLog'] = "$IP/includes/wikia/AuditLog.class.php";
+
+$wgHooks['SetupAfterCache'][] = 'FullRequestLogger::init';
+$wgHooks['SetupAfterCache'][] = 'AuditLog::init';
