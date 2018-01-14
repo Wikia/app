@@ -229,6 +229,12 @@
 				(window.RTEDevMode ? ' (in development mode)' : '') +
 				' is ready in "' + editor.mode + '" mode (loaded in ' + RTE.loadTime + ' s)');
 
+			// preload format dropdown (BugId:4592)
+			var formatDropdown = editor.ui.create('Format');
+			if (formatDropdown) {
+				formatDropdown.createPanel(editor);
+			}
+
 			// send custom event "submit" when edit page is being saved (BugId:2947)
 			var editform = $(editor.element.$.form).bind('submit', $.proxy(function() {
 				editor.fire('submit', {form: editform}, editor);
