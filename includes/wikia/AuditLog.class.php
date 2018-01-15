@@ -190,6 +190,8 @@ class AuditLog {
 			$context['@root'] = $root;
 		}
 
+		$context['class'] = __CLASS__;
+
 		$logger = \Wikia\Logger\WikiaLogger::instance();
 		$logger->info( $text, $context );
 	}
