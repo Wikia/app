@@ -533,20 +533,8 @@ RTE.templateEditor = {
 		RTE.log('storing modified template data');
 		RTE.log(this.data);
 
-		RTE.tools.parse(this.data.wikitext, function(html) {
-			this.placeholder.html(html);
-
-			// store saved meta data
-			this.placeholder.setData(RTE.templateEditor.data);
-
-			// regenerate template preview and data
-			this.placeholder.removeData('preview');
-			this.placeholder.removeData('info');
-
-			// add placeholder to editor, if needed
-			if (!this.placeholder.parent().exists()) {
-				RTE.tools.insertElement(this.placeholder);
-			}
+		RTE.tools.parseRTE(this.data.wikitext, function(html) {
+			RTE.tools.insertElement(html);
 
 			// cleanup
 			this.placeholder = false;
