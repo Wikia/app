@@ -75,7 +75,6 @@ class SpecialVideosHelper extends WikiaModel {
 				'fluid'          => true,
 				'showViews'      => true,
 				'fixedHeight'    => self::THUMBNAIL_HEIGHT,
-				'hidePlayButton' => true,
 			];
 		}
 

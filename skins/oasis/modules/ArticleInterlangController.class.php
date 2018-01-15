@@ -8,11 +8,11 @@
 class ArticleInterlangController extends WikiaService {
 	public function init() {
 		if($this->app->getSkinTemplateObj()) {
-			$this->language_urls = $this->app->getSkinTemplateObj()->data['language_urls'];
+			$this->language_urls = $this->app->getSkinTemplateObj()->data['language_urls'] ?: [];
 		} else {
-			$this->language_urls = array();
+			$this->language_urls = [];
 		}
-		$this->language_list = null;
+		$this->languageList = null;
 	}
 
 	public function executeIndex() {
@@ -20,42 +20,23 @@ class ArticleInterlangController extends WikiaService {
 	}
 
 	private function widgetLanguages() {
-		$request_language_urls = $this->request->getVal('request_language_urls');
-		if(!empty($request_language_urls)) {
-			$this->language_urls = $request_language_urls;
+		$requestLanguageUrls = $this->request->getVal('request_language_urls');
+		if(!empty($requestLanguageUrls)) {
+			$this->language_urls = $requestLanguageUrls;
 		}
-		$language_urls = $this->language_urls;
-		$langSortBy = array();
-		// only display the interlang links if there are interlanguage links
-		if(!empty($language_urls) && is_array($language_urls)) {
-			$lang_index = array();
+		$languageUrls = $this->language_urls;
+		$languages = [];
 
-			// language order
-			$langSortBy = array("interwiki-en" => 1, "interwiki-de" => 2, "interwiki-es" => 3, "interwiki-ru" => 4, "interwiki-pl" => 5, "interwiki-fr" => 6, "interwiki-it" => 7, "interwiki-pt" => 8);
-
-			foreach($language_urls as $val) {
-				if (!in_array($val['href'], $lang_index)) {
-					if (!isset($langSortBy[$val["class"]])) {
-						$langSortBy[$val["class"]] = true;
-					}
-
-					$langSortBy[$val["class"]] = array(
-							'href'  => $val['href'],
-							'name'  => $val['text'],
-							'class'  => $val['class'],
-					);
-				}
-			}
-			//	ordering the languages
-			foreach ($langSortBy as $key => $value) {
-				 if (!is_array($value)) {
-						unset($langSortBy[$key]);
-				}
-			}
+		foreach ( $languageUrls as $lang) {
+			$languages[$lang['lang']] = [
+				'href' => $lang['href'],
+				'name' => $lang['text'],
+				'class'  => $lang['class'],
+			];
 		}
-		if (!empty($langSortBy)) {
-			$this->language_list = $langSortBy;
-		}
+
+		ksort( $languages );
+		$this->languageList = $languages;
 	}
 
 	public static function onMakeGlobalVariablesScript(Array &$vars) {
