@@ -53,14 +53,4 @@ class UpdatePagesTask extends BaseTask {
 
 		return wfGetDB( DB_MASTER, [], $wgExternalDatawareDB );
 	}
-
-	/**
-	 * Construct a new {@see UpdatePagesTask} instance that will be run in the context of the current wiki
-	 * @return UpdatePagesTask
-	 */
-	public static function newLocalTask(): UpdatePagesTask {
-		global $wgCityId;
-
-		return ( new self() )->wikiId( $wgCityId );
-	}
 }
