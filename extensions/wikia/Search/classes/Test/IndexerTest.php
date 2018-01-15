@@ -3,7 +3,9 @@
  * Class definition for Wikia\Search\Test\IndexerTest
  */
 namespace Wikia\Search\Test;
-use ReflectionProperty, ReflectionMethod;
+use ReflectionMethod;
+use ReflectionProperty;
+
 /**
  * Tests Wikia\Search\Indexer
  * @author relwell
@@ -243,76 +245,6 @@ class IndexerTest extends BaseTest
 		$this->assertTrue(
 				$indexer->updateDocuments( $documents )
 		);
-	}
-
-	/**
-	 * @group Slow
-	 * @slowExecutionTime 0.09558 ms
-	 * @covers Wikia\Search\Indexer::reindexWiki
-	 */
-	public function testReindexWiki() {
-		$dataSource = $this->getMockBuilder( 'WikiaDataSource' )
-		                   ->disableOriginalConstructor()
-		                   ->setMethods( [ 'getDB' ] )
-		                   ->getMock();
-		$dbHandler = $this->getMockBuilder( 'DatabaseMysqli' )
-		                  ->disableOriginalConstructor()
-		                  ->setMethods( [ 'query', 'fetchObject'] )
-		                  ->getMock();
-		$rows = $this->getMockBuilder( 'ResultWrapper' )
-		             ->disableOriginalconstructor()
-		             ->getMock();
-		$sp = $this->getMockBuilder( 'ScribeProduce' )
-		           ->disableOriginalConstructor()
-		           ->setMethods( [ 'reindexPage' ] )
-		           ->getMock();
-		$exception = $this->getMockBuilder( '\Exception' )
-		                  ->disableOriginalConstructor()
-		                  ->getMock();
-		$logger = $this->getMock( 'Wikia', [ 'log' ] );
-		$indexer = $this->getMock( 'Wikia\Search\Indexer', [ 'getLogger' ] );
-
-		$indexer
-		    ->expects( $this->once() )
-		    ->method ( 'getLogger' )
-		    ->will   ( $this->returnValue( $logger ) )
-		;
-		$dataSource
-		    ->expects( $this->at( 0 ) )
-		    ->method ( 'getDB' )
-		    ->will   ( $this->returnValue( $dbHandler ) )
-		;
-		$dbHandler
-		    ->expects( $this->at( 0 ) )
-		    ->method ( 'query' )
-		    ->with   ( 'SELECT page_id FROM page' )
-		    ->will   ( $this->returnValue( $rows ) )
-		;
-		$dbHandler
-		    ->expects( $this->at( 1 ) )
-		    ->method ( 'fetchObject' )
-		    ->with   ( $rows )
-		    ->will   ( $this->returnValue( (object) array( 'page_id' => 123 ) ) )
-		;
-		$dbHandler
-		    ->expects( $this->at( 2 ) )
-		    ->method ( 'fetchObject' )
-		    ->with   ( $rows )
-		    ->will   ( $this->returnValue( null ) )
-		;
-		$sp
-		    ->expects( $this->once() )
-		    ->method ( 'reindexPage' )
-		;
-		$this->mockClass( 'ScribeProducer', $sp );
-		$this->mockClass( 'WikiDataSource', $dataSource );
-		$indexer->reindexWiki( 123 );
-		$dataSource
-		    ->expects( $this->at( 0 ) )
-		    ->method ( 'getDB' )
-		    ->will   ( $this->throwException( $exception ) )
-		;
-		$this->assertTrue( $indexer->reindexWiki( 123 ) );
 	}
 
 	/**

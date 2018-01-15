@@ -4,7 +4,7 @@
  */
 namespace Wikia\Search;
 
-use \Solarium_Client, \Exception, \WikiDataSource, \Wikia, \ScribeProducer;
+use \Solarium_Client, \Exception, \WikiDataSource, \Wikia, \Wikia\IndexingPipeline\PipelineEventProducer, \Title;
 
 /**
  * This class is responsible for (soon to be) deprecated getPages functionality, and application-based indexing logic.
@@ -177,8 +177,7 @@ class Indexer {
 			$dbHandler = $dataSource->getDB();
 			$rows = $dbHandler->query( "SELECT page_id FROM page" );
 			while ( $page = $dbHandler->fetchObject( $rows ) ) {
-				$sp = new ScribeProducer( 'reindex', $page->page_id );
-				$sp->reindexPage();
+				PipelineEventProducer::reindexPage( Title::newFromRow( $page ) );
 			}
 		} catch ( \Exception $e ) {
 			$this->getLogger()->log( __METHOD__, '', $e );
