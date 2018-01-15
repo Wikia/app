@@ -26,6 +26,12 @@ $wgExtensionCredits['parserhook'][] = array(
 	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/AjaxPoll',
 );
 
+$wgResourceModules['ext.wikia.ajaxpoll'] = [
+	'styles' => [ 'AjaxPoll.scss' ],
+
+	'localBasePath' => __DIR__ . '/css',
+];
+
 $wgHooks['ParserFirstCallInit'][] = "wfAjaxPollTag";
 $wgExtensionMessagesFiles["AjaxPoll"] = __DIR__ . '/AjaxPoll.i18n.php';
 

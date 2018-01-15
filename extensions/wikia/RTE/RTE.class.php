@@ -306,7 +306,7 @@ class RTE {
 				 * module 'site' contains both stylesheets
 				 */
 				$url = ResourceLoader::makeLoaderURL(
-					['site'],
+					['site', 'ext.tabber', 'ext.wikia.ajaxpoll'],
 					$out->getLanguage()->getCode(),
 					$out->getSkin()->getSkinName(),
 					$user->getName(),
