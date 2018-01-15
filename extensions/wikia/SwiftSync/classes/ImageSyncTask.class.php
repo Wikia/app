@@ -16,8 +16,105 @@ class ImageSyncTask extends BaseTask {
 		return ( new self() )->wikiId( $wgCityId );
 	}
 
-	public function synchronize( array $params ) {
-		$this->info( 'Task started' );
-		$this->info( json_encode( $params ) );
+	public function synchronize( array $tasks ) {
+		foreach($tasks as $task) {
+			if ($task['op'] === 'delete') {
+				$res = $this->delete( $task );
+			} else {
+				$res = $this->store( $task );
+			}
+
+			if (!$res) {
+				$this->error( __METHOD__, $task);
+			}
+		}
 	}
+
+	/**
+	 * Store image in destination path
+	 *
+	 * @param array $task
+	 * @return bool
+	 */
+	private function store( array $task ) {
+		/* connect to source Ceph/Swift */
+		$srcStorage = $this->srcConn();
+
+		/* read source file to string (src here is tmp file, so dst should be set here) */
+		$remoteFile = $this->getRemotePath( $task['dst'] );
+
+		if ( !$srcStorage->exists( $remoteFile ) ) {
+			$this->error( 'MigrateImagesBetweenSwiftDC: cannot find image to sync' , $task);
+			$result = false;
+		} else {
+			/* save image content into memory and send content to destination storage */
+			$fp = fopen( "php://memory", "wb" );
+			if ( !$fp ) {
+				$this->error( "Cannot open memory stream", $task );
+				$result = false;
+			} else {
+				/* read image content from source destination */
+				fwrite( $fp, $srcStorage->read( $remoteFile ) );
+				rewind( $fp );
+
+				/* check the size of the source file - PLATFORM-841 */
+				$size = intval( fstat( $fp )[ 'size' ] );
+
+				if ( $size === 0 ) {
+					$this->error( "File is empty!", $task );
+
+					fclose( $fp );
+					return false;
+				}
+
+				/* connect to destination Ceph/Swift */
+				$dstStorage = $this->destConn();
+
+				$magic = \MimeMagic::singleton();
+				$ext = pathinfo( basename( $remoteFile ), PATHINFO_EXTENSION );
+				$mime_type = $magic->guessTypesForExtension( $ext );
+				if ( empty( $mime_type ) ) {
+					$mime_type = 'unknown/unknown';
+				}
+
+				/* store image in destination path (fclose is called internally in store method) */
+				$result = $dstStorage->store( $fp, $remoteFile, array(), $mime_type )->isOK();
+			}
+		}
+
+		return $result;
+	}
+
+	/**
+	 * Delete image from destination path
+	 *
+	 * @param array $task
+	 * @return bool
+	 */
+	private function delete( array $task ) {
+		/* connect to source Ceph/Swift */
+		$srcStorage = $this->srcConn();
+
+		/* read source file to string (src here is tmp file, so dst should be set here) */
+		$remoteFile = $this->getRemotePath( $task['dst'] );
+
+		if ( !$srcStorage->exists( $remoteFile ) ) {
+			/* connect to destination Ceph/Swift */
+			$dstStorage = $this->destConn();
+
+			/* store image in destination path */
+			if ( $dstStorage->exists( $remoteFile ) ) {
+				$result = $dstStorage->remove( $remoteFile )->isOK();
+			} else {
+				$this->error( 'MigrateImagesBetweenSwiftDC: file do delete does not exist in dest DC', $task);
+				$result = false;
+			}
+		} else {
+			$this->error( 'MigrateImagesBetweenSwiftDC: new version of the file exists in source DC' , $task);
+			$result = false;
+		}
+
+		return $result;
+	}
+
 }
