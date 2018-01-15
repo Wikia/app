@@ -62,7 +62,9 @@ class Hooks {
 	 * @return bool
 	 */
 	public static function onRestInPeace() {
-		self::addTask( self::$stack );
+		if ( !empty( self::$stack ) ) {
+			self::addTask( self::$stack );
+		}
 
 		self::$stack = [];
 		return true;
