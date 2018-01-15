@@ -17,8 +17,6 @@ class AuditLog {
 		$wgHooks['PrefsPasswordAudit'][] = 'AuditLog::onPrefsPasswordAudit';
 		// user preferences change
 		$wgHooks["BeforeUserSaveSettings"][] = 'AuditLog::onBeforeUserSaveSettings';
-		// user registration
-		$wgHooks['AddNewAccount'][] = 'AuditLog::onAddNewAccount';
 
 		return true;
 	}
@@ -166,10 +164,6 @@ class AuditLog {
 				] );
 		}
 
-		return true;
-	}
-
-	static public function onAddNewAccount() {
 		return true;
 	}
 
