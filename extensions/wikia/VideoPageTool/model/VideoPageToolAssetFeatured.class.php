@@ -15,7 +15,6 @@ class VideoPageToolAssetFeatured extends VideoPageToolAsset {
 	public static $defaultThumbOptions = [
 		'noLightbox' => true,
 		'fluid' => true,
-		'hidePlayButton' => true,
 		'imgClass' => 'vpt-featured-thumbnail',
 		'noLazyLoad' => true,
 	];

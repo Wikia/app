@@ -85,13 +85,13 @@ class WikiaApiTagsReport extends ApiQueryBase {
 	}
 
 	/**
-	 * Get connection to the stats DB slave
+	 * Get connection to the specials DB
 	 *
 	 * @return DatabaseBase
 	 */
 	protected function getDB() {
-		global $wgStatsDB;
-		return wfGetDB( DB_SLAVE, 'api', $wgStatsDB );
+		global $wgSpecialsDB;
+		return wfGetDB( DB_SLAVE, 'api', $wgSpecialsDB );
 	}
 
 	public function getAllowedParams() {

@@ -9,7 +9,9 @@
 			   title="<?= Sanitizer::encodeAttribute( $row['title'] ); ?>"
 			>
 				<? if ( $row['isVideo'] == true ): ?>
-					<span class="play-circle"></span>
+					'<span class="thumbnail-play-icon-container">'
+					. DesignSystemHelper::renderSvg('wds-player-icon-play', 'thumbnail-play-icon')
+					. '</span>';
 				<? endif; ?>
 				<img src="<?= Sanitizer::encodeAttribute( $row['img'] ); ?>"
 					 alt="<?= Sanitizer::encodeAttribute( $row['title'] ); ?>"

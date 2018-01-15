@@ -1090,6 +1090,10 @@ $messages['hy'] = array(
 	'wikia-visualeditor-dialog-wikiasourcemode-apply-button' => 'Կիրառել փոփոխությունները',
 );
 
+$messages['id'] = array(
+	'visualeditor-ca-classiceditor' => 'Klasik Editor',
+);
+
 $messages['it'] = array(
 	'visualeditor-ca-classiceditor' => 'Editor classico',
 	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => 'Media',

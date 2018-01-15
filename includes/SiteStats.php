@@ -162,23 +162,8 @@ class SiteStats {
 	 * @return int
 	 */
 	static function jobs() {
-		if ( !isset( self::$jobs ) ) {
-			// wikia change start, eloy
-			global $wgMemc;
-			$key = wfMemcKey( 'SiteStats', 'jobs' );
-			self::$jobs = $wgMemc->get( $key );
-			if ( !self::$jobs ) {
-			// wikia change end
-				$dbr = wfGetDB( DB_SLAVE );
-				self::$jobs = $dbr->estimateRowCount( 'job' );
-				/* Zero rows still do single row read for row that doesn't exist, but people are annoyed by that */
-				if ( self::$jobs == 1 ) {
-					self::$jobs = 0;
-				}
-				$wgMemc->set( $key, self::$jobs, 3600 );
-			}
-		}
-		return self::$jobs;
+		// SUS-3471 | Wikia change - we no longer use MediaWiki-based jobs dispatcher
+		return 0;
 	}
 
 	/**

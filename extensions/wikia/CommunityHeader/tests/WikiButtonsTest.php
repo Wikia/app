@@ -33,7 +33,7 @@ class WikiButtonsTest extends \WikiaBaseTest {
 
 		$wikiButtons = new WikiButtons();
 
-		$this->assertEquals( $expected, $wikiButtons->getButtons() );
+		$this->assertEquals( $expected, $wikiButtons->buttons );
 	}
 
 	private function getUserMock( $isLoggedIn, $hasAdminDashboardRight = false ) {

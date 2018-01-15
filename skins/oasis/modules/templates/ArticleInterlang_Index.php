@@ -1,8 +1,8 @@
-<?php if ( $language_list ): ?>
+<?php if ( $languageList ): ?>
 	<nav class="WikiaArticleInterlang">
 		<h3><?= wfMessage( 'oasis-interlang-languages' )->escaped(); ?> </h3>
 		<ul>
-			<?php foreach ( $language_list as $key => $val ) : ?>
+			<?php foreach ( $languageList as $key => $val ) : ?>
 				<li><a data-tracking="<?= $key ?>"
 					   href="<?= Sanitizer::encodeAttribute( $val['href'] ); ?>"><?= htmlspecialchars( $val['name'] ); ?></a>
 				</li>
