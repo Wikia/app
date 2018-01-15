@@ -11,6 +11,10 @@ class UpdateListUsersTask extends BaseTask {
 	/** @var EditCountService $editCountService */
 	private $editCountService;
 
+	public function __construct( EditCountService $editCountService = null ) {
+		$this->editCountService = $editCountService ?? new EditCountService();
+	}
+
 	public function updateEditInformation( array $editUpdateInfo ) {
 		$editUpdate = ListUsersEditUpdate::newFromJson( $editUpdateInfo );
 		$wikiId = $this->getWikiId();
