@@ -41,8 +41,8 @@ describe('ext.wikia.adEngine.video.player.playerTracker', function () {
 			},
 			log: noop,
 			bidHelper: {
-				transformPriceFromBid: function () {
-					return '1.20';
+				transformPriceFromBid: function (bid) {
+					return bid.cpm;
 				}
 			},
 			slotTargeting: {
@@ -182,7 +182,7 @@ describe('ext.wikia.adEngine.video.player.playerTracker', function () {
 		}, 'fooPlayer', 'barEvent');
 
 		expect(getTrackedValue('vast_id')).toEqual('foo89:56bar');
-		expect(getTrackedValue('price')).toEqual('1.20');
+		expect(getTrackedValue('price')).toEqual(123);
 	});
 
 	it('Track data with Beachfront data for beachfront ad product', function () {
@@ -197,7 +197,7 @@ describe('ext.wikia.adEngine.video.player.playerTracker', function () {
 		}, 'fooPlayer', 'barEvent');
 
 		expect(getTrackedValue('vast_id')).toEqual('w1k14');
-		expect(getTrackedValue('price')).toEqual('1.20');
+		expect(getTrackedValue('price')).toEqual(456);
 	});
 
 	it('Track data with AppNexus data for appnexusAst ad product', function () {
@@ -207,12 +207,12 @@ describe('ext.wikia.adEngine.video.player.playerTracker', function () {
 			bid: {
 				bidderCode: 'appnexusAst',
 				creative_id: '87765',
-				cpm: 1.20
+				cpm: 789
 			}
 		}, 'fooPlayer', 'barEvent');
 
 		expect(getTrackedValue('vast_id')).toEqual('87765');
-		expect(getTrackedValue('price')).toEqual('1.20');
+		expect(getTrackedValue('price')).toEqual(789);
 	});
 
 	it('Track data with wsi when src is available', function () {
