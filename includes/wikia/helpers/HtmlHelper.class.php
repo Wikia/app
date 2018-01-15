@@ -161,7 +161,6 @@ class HtmlHelper {
 		return $domStripped;
 	}
 
-	// TODO: write tests for it
 	public static function renameNode( DOMElement $node, string $newName ) {
 		$newnode = $node->ownerDocument->createElement($newName);
 		foreach ($node->childNodes as $child){
