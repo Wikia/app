@@ -22,12 +22,9 @@ class UpdateListUsersTaskIntegrationTest extends WikiaDatabaseTest {
 		require_once __DIR__ . '/../SpecialListusers.php';
 
 		$this->editCountServiceMock = $this->createMock( EditCountService::class );
-		$this->updateListUsersTask = ( new UpdateListUsersTask() )->wikiId( static::TEST_WIKI_ID );
-
-		// UserStatsService does not work with SQLite - use mock instead
-		$reflEditCountService = new ReflectionProperty( UpdateListUsersTask::class, 'editCountService' );
-		$reflEditCountService->setAccessible( true );
-		$reflEditCountService->setValue( $this->updateListUsersTask, $this->editCountServiceMock );
+		$this->updateListUsersTask =
+			( new UpdateListUsersTask( $this->editCountServiceMock ) )
+				->wikiId( static::TEST_WIKI_ID );
 
 		$this->dbr = wfGetDB( DB_SLAVE );
 	}
@@ -122,7 +119,7 @@ class UpdateListUsersTaskIntegrationTest extends WikiaDatabaseTest {
 		$this->assertEquals( 'chatmoderator', $row->all_groups );
 	}
 
-	private function selectUserRow( int $userId ){
+	private function selectUserRow( int $userId ) {
 		return $this->dbr->selectRow( 'events_local_users', '*', [ 'wiki_id' => static::TEST_WIKI_ID, 'user_id' => $userId ] );
 	}
 
