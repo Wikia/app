@@ -58,7 +58,7 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.beachfront', function () {
 	it('prepareAdUnit returns data in correct shape', function () {
 		var beachfront = getBeachfront();
 		expect(beachfront.prepareAdUnit('INCONTENT_PLAYER', {
-			exchangeId: 'ww-11-kk-11-44'
+			appId: 'ww-11-kk-11-44'
 		})).toEqual({
 			code: 'INCONTENT_PLAYER',
 			sizes: [640, 480],

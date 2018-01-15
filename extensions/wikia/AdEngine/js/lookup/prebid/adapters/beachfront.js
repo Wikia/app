@@ -13,12 +13,12 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.beachfront', [
 		slots = {
 			oasis: {
 				INCONTENT_PLAYER: {
-					exchangeId: 'd239e601-dd57-4163-fe5d-35012d77395f'
+					appId: 'd239e601-dd57-4163-fe5d-35012d77395f'
 				}
 			},
 			mercury: {
 				MOBILE_IN_CONTENT: {
-					exchangeId: 'f377a8b1-c5c0-4108-f932-0102a81ff43d'
+					appId: 'f377a8b1-c5c0-4108-f932-0102a81ff43d'
 				}
 			}
 		};
@@ -37,8 +37,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.beachfront', [
 					bidder: bidderName,
 					params: {
 						bidfloor: bidfloor,
-						appId: config.exchangeId,
-						video: {}
+						appId: config.appId
 					}
 				}
 			]
