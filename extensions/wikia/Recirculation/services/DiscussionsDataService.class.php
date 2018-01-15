@@ -134,6 +134,7 @@ class DiscussionsDataService {
 			'title' => $postTitle,
 			'publishDate' => wfTimestamp( TS_ISO_8601, $rawPost['creationDate']['epochSecond'] ),
 			'author' => $rawPost['createdBy']['name'],
+			'authorIsAnon' => $rawPost['createdBy']['id'] === '0',
 			'source' => 'discussions',
 			'isVideo' => false,
 			'meta' => $meta,

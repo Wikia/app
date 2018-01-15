@@ -909,8 +909,10 @@ abstract class DatabaseMysqlBase extends DatabaseBase {
 	 * @param array $uniqueIndexes
 	 * @param array $set
 	 * @param string $fname
-	 * @param array $options
 	 * @return bool
+	 * @throws DBQueryError
+	 * @throws DBUnexpectedError
+	 * @throws MWException
 	 */
 	public function upsert(
 		$table, array $rows, array $uniqueIndexes, array $set, $fname = __METHOD__

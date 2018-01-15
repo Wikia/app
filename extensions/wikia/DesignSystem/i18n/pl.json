@@ -1,7 +1,10 @@
 {
   "community-header-add": "Dodaj",
+  "community-header-add-new-image": "Dodaj nowy obraz",
   "community-header-add-new-page": "Dodaj nową stronę",
+  "community-header-add-new-video": "Dodaj nowy film",
   "community-header-admin-dashboard": "Panel administratora",
+  "community-header-all-shortcuts": "Wszystkie skróty",
   "community-header-community": "Społeczność",
   "community-header-discuss": "Dyskutuj",
   "community-header-discussions-post": "Post",
@@ -12,6 +15,7 @@
   "community-header-page": "Strona",
   "community-header-pages": "Stron",
   "community-header-random-page": "Losowa strona",
+  "community-header-recent-changes": "Ostatnie zmiany",
   "community-header-videos": "Filmy",
   "community-header-wiki-activity": "Aktywność na wiki",
   "global-footer-advertise-header": "Reklamy",

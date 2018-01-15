@@ -10,7 +10,6 @@ class VideoPageToolAssetCategory extends VideoPageToolAsset {
 	protected $displayTitle;
 
 	protected $defaultThumbOptions = [
-		'hidePlayButton' => true,
 		'noLazyLoad'     => true,
 	];
 

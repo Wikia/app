@@ -1,7 +1,10 @@
 {
   "community-header-add": "Создать",
+  "community-header-add-new-image": "Добавить изображение",
   "community-header-add-new-page": "Создать cтраницу",
+  "community-header-add-new-video": "Добавить видео",
   "community-header-admin-dashboard": "Кабинет администратора",
+  "community-header-all-shortcuts": "Служебные страницы",
   "community-header-community": "Сообщество",
   "community-header-discuss": "Общение",
   "community-header-discussions-post": "Опубликовать",
@@ -12,6 +15,7 @@
   "community-header-page": "Страница",
   "community-header-pages": "Страницы",
   "community-header-random-page": "Случайная статья",
+  "community-header-recent-changes": "Свежие правки",
   "community-header-videos": "Видео",
   "community-header-wiki-activity": "Вики-деятельность",
   "global-footer-advertise-header": "Реклама на сайте",

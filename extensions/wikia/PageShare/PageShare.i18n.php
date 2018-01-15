@@ -51,6 +51,9 @@ $messages['ru'] = array(
 	'page-share-modal-title' => 'Поделиться $1',
 );
 
+$messages['vi'] = array(
+);
+
 $messages['zh-hans'] = array(
 	'page-share-entry-point-label' => '分享',
 	'page-share-modal-title' => '分享$1',

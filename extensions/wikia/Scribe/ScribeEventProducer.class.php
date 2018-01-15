@@ -1,12 +1,12 @@
 <?php
 
-use \Wikia\Logger\WikiaLogger;
-use \Wikia\Rabbit\ConnectionBase;
+use Wikia\Logger\WikiaLogger;
+use Wikia\Rabbit\ConnectionBase;
 
 class ScribeEventProducer {
 	protected static $rabbit;
 	private $app = null;
-	private $mParams, $mKey, $mEventType;
+	private $mParams, $mKey;
 	private $sendToScribe, $sendToRabbit;
 
 	const
@@ -15,30 +15,20 @@ class ScribeEventProducer {
 		UNDELETE_CATEGORY   = 'log_undelete',
 		DELETE_CATEGORY     = 'log_delete';
 
-	const
-		EDIT_CATEGORY_INT       = 1,
-		CREATEPAGE_CATEGORY_INT = 2,
-		DELETE_CATEGORY_INT     = 3,
-		UNDELETE_CATEGORY_INT   = 4;
-
 	function __construct( $key, $archive = 0 ) {
 		$this->app = F::app();
 		switch ( $key ) {
 			case 'edit':
 				$this->mKey = self::EDIT_CATEGORY;
-				$this->mEventType = self::EDIT_CATEGORY_INT;
 				break;
 			case 'create':
 				$this->mKey = self::CREATEPAGE_CATEGORY;
-				$this->mEventType = self::CREATEPAGE_CATEGORY_INT;
 				break;
 			case 'delete':
 				$this->mKey = self::DELETE_CATEGORY;
-				$this->mEventType = self::DELETE_CATEGORY_INT;
 				break;
 			case 'undelete':
 				$this->mKey = self::UNDELETE_CATEGORY;
-				$this->mEventType = self::UNDELETE_CATEGORY_INT;
 				break;
 		}
 		$geo = json_decode( RequestContext::getMain()->getRequest()->getCookie( 'Geo', '' ) );

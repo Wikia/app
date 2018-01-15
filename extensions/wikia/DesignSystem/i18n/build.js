@@ -43,10 +43,9 @@ var languages = fs.readdirSync(rootDir).filter(function (file) {
 languages.forEach(function (lang) {
 	var i18n = require(rootDir + '/' + lang + '/' + filename);
 
-	// Oasis uses zh for simplified Chinese, while the DS uses zh for traditional
-	// so we need to correct the lang code here so the Oasis fallbacks take effect
+	// zh in DS is zh-hans in Oasis
 	if (lang === 'zh') {
-		lang = 'zh-hant';
+		lang = 'zh-hans';
 	}
 
 	Object.keys(messageParamsMapping).forEach(function (key) {
