@@ -101,25 +101,16 @@ class ImageSyncTask extends BaseTask {
 	 * @return bool
 	 */
 	private function delete( array $task ) {
-		/* connect to source Ceph/Swift */
-		$srcStorage = $this->srcConn();
-
-		/* read source file to string (src here is tmp file, so dst should be set here) */
 		$remoteFile = $this->getRemotePath( $task['dst'] );
 
-		if ( !$srcStorage->exists( $remoteFile ) ) {
-			/* connect to destination Ceph/Swift */
-			$dstStorage = $this->destConn();
+		/* connect to destination Ceph/Swift */
+		$dstStorage = $this->destConn();
 
-			/* store image in destination path */
-			if ( $dstStorage->exists( $remoteFile ) ) {
-				$result = $dstStorage->remove( $remoteFile )->isOK();
-			} else {
-				$this->error( 'MigrateImagesBetweenSwiftDC: file do delete does not exist in dest DC', $task);
-				$result = false;
-			}
+		/* store image in destination path */
+		if ( $dstStorage->exists( $remoteFile ) ) {
+			$result = $dstStorage->remove( $remoteFile )->isOK();
 		} else {
-			$this->error( 'MigrateImagesBetweenSwiftDC: new version of the file exists in source DC' , $task);
+			$this->error( 'MigrateImagesBetweenSwiftDC: file to delete does not exist in dest DC', $task);
 			$result = false;
 		}
 
