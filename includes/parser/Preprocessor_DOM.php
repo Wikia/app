@@ -697,7 +697,15 @@ class Preprocessor_DOM implements Preprocessor {
 							$openIdx = $openAt[0];
 							$closeIdx = $closeAt[count($closeAt)-1];
 							$openAt = $closeAt = array();
-							$attr .= ' _rte_wikitextidx="'.RTEData::put('wikitext', substr($text, $openIdx-$count, $closeIdx-$openIdx+2*$count)).'"';
+
+							$start = $openIdx - $count;
+							$length = $closeIdx - $openIdx + 2 * $count;
+							if ($text[$start + $length] == "\n") {
+								$length++;
+							}
+							$attr .= ' _rte_wikitextidx="'
+								. RTEData::put( 'wikitext', substr( $text, $start, $length ) )
+								. '"';
 						}
 					}
 					# RTE - end
@@ -1307,6 +1315,7 @@ class PPFrame_DOM implements PPFrame {
 					global $wgRTEParserEnabled;
 					if ( $wgRTEParserEnabled ) {
 						$wikiTextIdx = $contextNode->getAttribute( '_rte_wikitextidx' );
+						$inlineExt = [ 'ref', 'nowiki' ];
 
 						$rteData = [
 							'type' => 'ext',
@@ -1315,13 +1324,16 @@ class PPFrame_DOM implements PPFrame {
 							'placeholder' => 1
 						];
 
+						if ( !in_array($nameNode->nodeValue, $inlineExt) ) {
+							$rteData['wikitext'] .= "\n";
+						}
+
 						// append a zero-width space
 						// this prevents extension tags at the end of lines from interfering with formatting
 						$tagMarker .= "&#x0200B;";
 
-						// <ref> tags are rendered within <p> so it needs to be wrapped by inline html tag.
-						// other extension tags can contain block elements, so they need to be wrapped in div.
-						$inlineExt = [ 'ref', 'nowiki' ];
+						// some extensions render only inline htlm tags, so they should be wrapped in inline wrapper
+						// to not break paragraphs
 						$wrapperTagName = in_array($nameNode->nodeValue, $inlineExt) ? 'span' : 'div';
 						$out .= Html::rawElement(
 							$wrapperTagName,
