@@ -11,8 +11,6 @@ class AuditLog {
 		$wgHooks["UserLoginComplete"][] = 'AuditLog::onUserLoginComplete';
 		$wgHooks["UserLoadFromHeliosToken"][] = 'AuditLog::onUserLoadFromHeliosToken';
 		$wgHooks['LoginAuthenticateAudit'][] = 'AuditLog::onLoginAuthenticateAudit';
-		// user password reset
-		$wgHooks['User::mailPasswordInternal'][] = 'AuditLog::onUserMailPasswordInternal';
 		// user password change
 		$wgHooks['PrefsPasswordAudit'][] = 'AuditLog::onPrefsPasswordAudit';
 		// user preferences change
@@ -109,16 +107,6 @@ class AuditLog {
 					'success' => false,
 				] );
 		}
-		return true;
-	}
-
-	static public function onUserMailPasswordInternal( User $user, $ip, User $account ) {
-		self::log( sprintf( 'Password reset for: "%s"', $account->getName() ),
-			[ 'user_change', 'user_password_reset' ], [
-				'target_user' => $account->getName(),
-				'target_user_id' => $account->getId(),
-			] );
-
 		return true;
 	}
 
