@@ -411,7 +411,6 @@ CREATE TABLE `page` (
   UNIQUE KEY `name_title` (`page_namespace`,`page_title`),
   KEY `page_random` (`page_random`),
   KEY `page_len` (`page_len`),
-  KEY `page_random_2` (`page_random`),
   KEY `page_redirect_namespace_len` (`page_is_redirect`,`page_namespace`,`page_len`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -666,4 +665,4 @@ CREATE TABLE `wikia_tasks_log` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
--- Dump completed on 2017-12-07 11:39:18
+-- Dump completed on 2018-01-09 10:57:28

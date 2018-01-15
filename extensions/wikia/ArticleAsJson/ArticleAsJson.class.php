@@ -142,8 +142,6 @@ class ArticleAsJson {
 	}
 
 	public static function createMediaObject( $details, $imageName, $caption = null, $link = null ) {
-		wfProfileIn( __METHOD__ );
-
 		$context = '';
 		$media = [
 			'type' => $details['mediaType'],
@@ -194,14 +192,10 @@ class ArticleAsJson {
 			$media['context'] = $context;
 		}
 
-		wfProfileOut( __METHOD__ );
-
 		return $media;
 	}
 
 	private static function addUserObj( $details ) {
-		wfProfileIn( __METHOD__ );
-
 		$userTitle = Title::newFromText( $details['userName'], NS_USER );
 
 		self::$users[$details['userName']] = [
@@ -209,14 +203,10 @@ class ArticleAsJson {
 			'avatar' => $details['userThumbUrl'],
 			'url' => $userTitle instanceof Title ? $userTitle->getLocalURL() : ''
 		];
-
-		wfProfileOut( __METHOD__ );
 	}
 
 	public static function onGalleryBeforeProduceHTML( $data, &$out ) {
 		global $wgArticleAsJson;
-
-		wfProfileIn( __METHOD__ );
 
 		if ( $wgArticleAsJson ) {
 			$parser = ParserPool::get();
@@ -257,19 +247,14 @@ class ArticleAsJson {
 			}
 
 			ParserPool::release( $parser );
-			wfProfileOut( __METHOD__ );
 
 			return false;
 		}
-
-		wfProfileOut( __METHOD__ );
 
 		return true;
 	}
 
 	public static function onExtendPortableInfoboxImageData( $data, &$ref ) {
-		wfProfileIn( __METHOD__ );
-
 		$title = Title::newFromText( $data['name'] );
 		if ( $title ) {
 			$details = self::getMediaDetailWithSizeFallback( $title, self::$mediaDetailConfig );
@@ -277,8 +262,6 @@ class ArticleAsJson {
 			self::$media[] = self::createMediaObject( $details, $title->getText(), $data['caption'] );
 			$ref = count( self::$media ) - 1;
 		}
-
-		wfProfileOut( __METHOD__ );
 
 		return true;
 	}
@@ -293,8 +276,6 @@ class ArticleAsJson {
 		&$res
 	) {
 		global $wgArticleAsJson;
-
-		wfProfileIn( __METHOD__ );
 
 		if ( $wgArticleAsJson ) {
 			$linkHref = '';
@@ -327,12 +308,8 @@ class ArticleAsJson {
 
 			$res = self::createMarker( $media );
 
-			wfProfileOut( __METHOD__ );
-
 			return false;
 		}
-
-		wfProfileOut( __METHOD__ );
 
 		return true;
 	}
@@ -340,21 +317,24 @@ class ArticleAsJson {
 	public static function onPageRenderingHash( &$confstr ) {
 		global $wgArticleAsJson;
 
-		wfProfileIn( __METHOD__ );
-
 		if ( $wgArticleAsJson ) {
 			$confstr .= '!ArticleAsJson:' . self::CACHE_VERSION;
-		}
 
-		wfProfileOut( __METHOD__ );
+			// this is pseudo-versioning query param for collapsible sections (XW-4393)
+			// should be removed after all App caches are invalidated
+			if ( !empty( RequestContext::getMain()
+				->getRequest()
+				->getVal( 'collapsibleSections' ) )
+			) {
+				$confstr .= ':collapsibleSections';
+			}
+		}
 
 		return true;
 	}
 
 	public static function onParserAfterTidy( Parser $parser, &$text ): bool {
 		global $wgArticleAsJson;
-
-		wfProfileIn( __METHOD__ );
 
 		if ( $wgArticleAsJson && !is_null( $parser->getRevisionId() ) ) {
 
@@ -406,8 +386,6 @@ class ArticleAsJson {
 				]
 			);
 		}
-
-		wfProfileOut( __METHOD__ );
 
 		return true;
 	}
