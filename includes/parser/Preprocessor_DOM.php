@@ -712,12 +712,14 @@ class Preprocessor_DOM implements Preprocessor {
 							$closeIdx = $closeAt[count($closeAt)-1];
 							$openAt = $closeAt = array();
 
-							$start = $openIdx-$count;
-							$length = $closeIdx-$openIdx+2*$count;
+							$start = $openIdx - $count;
+							$length = $closeIdx - $openIdx + 2 * $count;
 							if ($text[$start + $length] == "\n") {
 								$length++;
 							}
-							$attr .= ' _rte_wikitextidx="'.RTEData::put('wikitext', substr($text, $start, $length)).'"';
+							$attr .= ' _rte_wikitextidx="'
+								. RTEData::put( 'wikitext', substr( $text, $start, $length ) )
+								. '"';
 						}
 					}
 					# RTE - end
@@ -1351,8 +1353,8 @@ class PPFrame_DOM implements PPFrame {
 						// this prevents extension tags at the end of lines from interfering with formatting
 						$tagMarker .= "&#x0200B;";
 
-						// <ref> tags are rendered within <p> so it needs to be wrapped by inline html tag.
-						// other extension tags can contain block elements, so they need to be wrapped in div.
+						// some extensions render only inline htlm tags, so they should be wrapped in inline wrapper
+						// to not break paragraphs
 						$wrapperTagName = in_array($nameNode->nodeValue, $inlineExt) ? 'span' : 'div';
 						$out .= Html::rawElement(
 							$wrapperTagName,
