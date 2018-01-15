@@ -210,6 +210,7 @@ class CombinedSearchService {
 			"article_type_s",
 			Utilities::field( 'html', $lang )
 		];
+
 		$config = ( new Factory() )->getSolariumClientConfig();
 
 		$client = new \Solarium_Client( $config );
