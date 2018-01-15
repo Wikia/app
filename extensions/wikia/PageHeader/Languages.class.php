@@ -31,10 +31,10 @@ class Languages {
 		$languageUrls = $app->getSkinTemplateObj()->data['language_urls'] ?: [];
 		$languages = [];
 
-		foreach ( $languageUrls as $key => $val ) {
-			$languages[$key] = [
-				'href' => $val['href'],
-				'name' => $val['text'],
+		foreach ( $languageUrls as $lang) {
+			$languages[$lang['lang']] = [
+				'href' => $lang['href'],
+				'name' => $lang['text'],
 			];
 		}
 

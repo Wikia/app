@@ -84,10 +84,13 @@ class WikiaPhotoGallery extends ImageGallery {
 	 * @var string play button html
 	 * @todo refactor this extension so it's easier to insert a template instead of hard coded strings
 	 */
-	private $videoPlayButton = '<span class="play-circle"></span>';
+	private $videoPlayButton;
 
 	function __construct() {
 		parent::__construct();
+		$this->videoPlayButton = '<span class="thumbnail-play-icon-container">'
+			. DesignSystemHelper::renderSvg('wds-player-icon-play', 'thumbnail-play-icon')
+			. '</span>';
 
 		$this->mData = array(
 			'externalImages' => array(),
@@ -991,11 +994,6 @@ class WikiaPhotoGallery extends ImageGallery {
 			if ( !empty( $image['thumbnail'] ) ) {
 				if ( $isVideo ) {
 					$thumbHtml = '';
-					$duration = $fileObject->getMetadataDuration();
-					if ( !empty( $duration ) ) {
-						$duration = WikiaFileHelper::formatDuration( $duration );
-						$thumbHtml .= '<span class="duration">' . $duration . '</span>';
-					}
 					$playButtonSize = ThumbnailHelper::getThumbnailSize( $image['width'] );
 					$thumbHtml .= $this->videoPlayButton;
 					$linkAttribs['class'] .= ' video video-thumbnail ' . $playButtonSize;

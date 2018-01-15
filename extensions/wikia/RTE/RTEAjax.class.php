@@ -165,36 +165,40 @@ class RTEAjax {
 				for ($argIndex = 0; $argIndex < $wgRDBData['args']->node->length; $argIndex++) {
 					$argNode = new PPNode_DOM($wgRDBData['args']->node->item($argIndex));
 					$argParts = $argNode->splitArg();
+
 					$key = !empty($argParts['index']) ? $argParts['index'] : $argParts['name']->node->textContent;
 					$valueNodes = $argParts['value']->getChildren();
 
 					$value = "";
 
 					// Loop through all children and concatenate their contents, parsing tags if necessary
-					for ($valueIndex = 0; $valueIndex < $valueNodes->node->length; $valueIndex++) {
-						$valueNode = new PPNode_DOM($valueNodes->node->item($valueIndex));
+					for ( $valueIndex = 0; $valueIndex < $valueNodes->node->length; $valueIndex++ ) {
+						$valueNode = new PPNode_DOM( $valueNodes->node->item( $valueIndex ) );
 
 						// Parse extension tags (BugId:43779)
-						if ($valueNode->node->nodeName == 'ext') {
+						if ( $valueNode->node->nodeName == 'ext' ) {
 							$extParts = $valueNode->splitExt();
 
 							// Name and attr are required parameters, the others are optional.
-							$value .= "<" . $extParts['name']->node->textContent . $extParts['attr']->node->textContent . ">";
+							$value .= "<" .
+								$extParts['name']->node->textContent .
+								$extParts['attr']->node->textContent .
+								">";
 
-							if (isset($extParts['inner'])) {
+							if ( isset( $extParts['inner'] ) ) {
 								$value .= $extParts['inner']->node->textContent;
 							}
 
-							if (isset($extParts['close'])) {
+							if ( isset( $extParts['close'] ) ) {
 								$value .= $extParts['close']->node->textContent;
 							}
-
-						// Just use text content
-						} else {
+						} elseif ( $valueNode->node->nodeName === 'template' ) {
+							$value .= self::getTemplateInvocationWikitext( $valueNode->node );
+						} else { // Just use text content
 							$value .= $valueNode->node->textContent;
 						}
 
-						$out['passedParams'][ trim($key) ] = trim($value);
+						$out['passedParams'][trim( $key )] = trim( $value );
 					}
 				}
 			}
@@ -203,6 +207,43 @@ class RTEAjax {
 			$out['html'] = $html;
 		}
 		return $out;
+	}
+
+	static private function getTemplateInvocationWikitext( $templateNode ) {
+		$xpath = new DOMXPath( $templateNode->ownerDocument );
+		$templateTitle = $xpath->query( 'title', $templateNode )->item( 0 )->nodeValue;
+		$templateParameters = $xpath->query( 'part', $templateNode );
+
+		$wikitext = '{{' . $templateTitle;
+		foreach ( $templateParameters as $param ) {
+			$wikitext .= '|';
+			for ( $i = 0; $i < $param->childNodes->length; $i++ ) {
+				$paramChild = $param->childNodes->item( $i );
+
+				if ( $paramChild->nodeName === 'value' ) {
+					$wikitext .= self::getTemplateParamValueWikitext( $paramChild );
+				} else {
+					$wikitext .= $paramChild->textContent;
+				}
+			}
+		}
+		$wikitext .= '}}';
+
+		return $wikitext;
+	}
+
+	static private function getTemplateParamValueWikitext( $paramValueNode ) {
+		$wikitext = '';
+		for ( $j = 0; $j < $paramValueNode->childNodes->length; $j++ ) {
+			$paramValueChildNode = $paramValueNode->childNodes->item( $j );
+			if ( $paramValueChildNode->nodeName === 'template' ) {
+				$wikitext .= self::getTemplateInvocationWikitext( $paramValueChildNode );
+			} else {
+				$wikitext .= $paramValueChildNode->textContent;
+			}
+		}
+
+		return $wikitext;
 	}
 
 	/**

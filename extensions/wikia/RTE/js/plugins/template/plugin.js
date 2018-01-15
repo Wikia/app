@@ -412,7 +412,7 @@ RTE.templateEditor = {
 				var $chooseAnotherTemplateButton = $('.cke_dialog_choose_another_tpl' );
 
 				//hide the 'Choose another template' button if the template is an infobox
-				if (info.html.search( 'portable-infobox' ) === -1 ) {
+				if (info.html.search( 'infobox' ) === -1 ) {
 					$chooseAnotherTemplateButton.css('visibility', 'visible');
 				} else {
 					$chooseAnotherTemplateButton.css('visibility', 'hidden');

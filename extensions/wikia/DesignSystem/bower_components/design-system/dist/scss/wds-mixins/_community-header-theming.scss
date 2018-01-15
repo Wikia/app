@@ -47,6 +47,10 @@
 		}
 	}
 
+	.wds-button-group {
+		@include button-group-theming($text-color);
+	}
+
 	.wds-tabs__tab-label {
 		color: $text-color;
 

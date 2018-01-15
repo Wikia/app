@@ -5,6 +5,7 @@ import TemplateService from 'ad-engine/src/services/template-service';
 
 import { getConfig as getMobileBfaaConfig } from './big-fancy-ad-above-mobile-config';
 import { getConfig as getDesktopBfaaConfig } from './big-fancy-ad-above-desktop-config';
+import { getConfig as getBfabConfig } from './big-fancy-ad-below-config';
 
 
 export default class TemplateRegistry {
@@ -13,6 +14,6 @@ export default class TemplateRegistry {
 		const getBfaaConfig = isMobile ? getMobileBfaaConfig : getDesktopBfaaConfig;
 
 		TemplateService.register(BigFancyAdAbove, getBfaaConfig(mercuryListener));
-		TemplateService.register(BigFancyAdBelow);
+		TemplateService.register(BigFancyAdBelow, getBfabConfig());
 	}
 }

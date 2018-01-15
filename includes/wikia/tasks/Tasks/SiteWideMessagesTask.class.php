@@ -56,10 +56,6 @@ class SiteWideMessagesTask extends BaseTask {
 					case 'REGISTRATION':
 						$result = $this->sendMessageToRegistered( $args );
 						break;
-
-					case 'EDITCOUNT':
-						$result = $this->sendMessageByEditcountGlobal( $args );
-						break;
 				}
 				break;
 
@@ -432,57 +428,6 @@ class SiteWideMessagesTask extends BaseTask {
 		});
 
 		$this->info('add records about new message to right users', [
-			'users' => count($sqlValues),
-		]);
-
-		return $this->sendMessageHelperToUsers( $sqlValues );
-	}
-
-	/**
-	 * sendMessageByEditcountGlobal
-	 *
-	 * sends a message to specified group of users
-	 *
-	 * @access private
-	 * @author Daniel Grunwell (grunny)
-	 *
-	 * @param mixed $params - task arguments
-	 *
-	 * @return boolean: result of sending
-	 */
-	private function sendMessageByEditcountGlobal( $params ) {
-		global $wgStatsDB;
-
-		$sql = (new \WikiaSQL())
-			->SELECT('user_id', 'count(*) as editcnt')
-			->FROM('events')
-			->WHERE('event_type')->EQUAL_TO(1)
-				->OR_('event_type')->EQUAL_TO(2)
-			->GROUP_BY('user_id');
-
-		switch ( $params['editCountOption'] ) {
-			case 'more':
-				$sql->HAVING('editcnt')->GREATER_THAN($params['editCountStart']);
-				break;
-			case 'less':
-				$sql->HAVING('editcnt')->LESS_THAN($params['editCountStart']);
-				break;
-			case 'between':
-				$sql->HAVING('editcnt')->BETWEEN($params['editCountStart'], $params['editCountEnd']);
-				break;
-		}
-
-		$this->info('make list of user ids from users who have a specific edit count', [
-			'operator' => $params['editCountOption'],
-			'edits_min' => $params['editCountStart'],
-			'edits_max' => $params['editCountEnd'],
-		]);
-
-		$sqlValues = $sql->runLoop(wfGetDB( DB_SLAVE, [], $wgStatsDB ), function(&$results, $row) use ($params) {
-			$results []= [0, $row->user_id, $params['messageId'], MSG_STATUS_UNSEEN];
-		});
-
-		$this->info('add records about new message to correct users', [
 			'users' => count($sqlValues),
 		]);
 

@@ -478,10 +478,12 @@ class RTEParser extends Parser {
 		// parse to HTML
 		$output = parent::parse($text, $title, $options, $linestart, $clearState, $revid);
 
-		$wgRTEParserEnabled = false;
-
 		// add extra RTE attributes to HTML elements (for correct handling of spaces and newlines when parsing back to wikitext)
 		$html = $output->getText();
+
+		Hooks::run('RTE::afterParsing', [&$html]);
+
+		$wgRTEParserEnabled = false;
 
 		// add RTE_EMPTY_LINES_BEFORE comment
 		if ($emptyLinesAtStart > 0) {

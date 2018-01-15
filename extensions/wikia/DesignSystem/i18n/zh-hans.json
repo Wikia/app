@@ -1,7 +1,10 @@
 {
   "community-header-add": "添加",
+  "community-header-add-new-image": "添加新图片",
   "community-header-add-new-page": "添加新页面",
+  "community-header-add-new-video": "添加新视频",
   "community-header-admin-dashboard": "管理员控制面板",
+  "community-header-all-shortcuts": "快捷方式",
   "community-header-community": "社区",
   "community-header-discuss": "讨论版",
   "community-header-discussions-post": "条帖子",
@@ -12,6 +15,7 @@
   "community-header-page": "页面",
   "community-header-pages": "个页面",
   "community-header-random-page": "随机页面",
+  "community-header-recent-changes": "最近更改",
   "community-header-videos": "视频",
   "community-header-wiki-activity": "维基动态",
   "global-footer-advertise-header": "广告投放",
