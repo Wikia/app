@@ -13,11 +13,18 @@ namespace Wikia\SwiftSync;
  */
 class Hooks {
 
+	/**
+	 * Stack of DFS operation to be pushed to tasks queue when an upload is completed
+	 *
+	 * @var array
+	 */
+	private static $stack = [];
+
 	/* save image into local repo */
 	public static function doStoreInternal( array $params, \Status $status ) {
 
 		if ( $status->isGood() ) {
-			self::addTask( $params );
+			self::$stack[] =  self::normalizeParams( $params );
 		}
 
 		return true;
@@ -26,7 +33,7 @@ class Hooks {
 	public static function doCopyInternal( array $params, \Status $status ) {
 
 		if ( $status->isGood() ) {
-			self::addTask( $params );
+			self::$stack[] =  self::normalizeParams( $params );
 		}
 		return true;
 	}
@@ -42,8 +49,21 @@ class Hooks {
 		}
 
 		if ( $status->isGood() ) {
-			self::addTask( $params );
+			self::$stack[] =  self::normalizeParams( $params );
 		}
+		return true;
+	}
+
+	/**
+	 * DFS operations triggered by the above hooks are now pushed to tasks queue
+	 *
+	 * @param \LocalFile $file
+	 * @return bool
+	 */
+	public static function onFileUpload( \LocalFile $file ) {
+		self::addTask( self::$stack );
+
+		self::$stack = [];
 		return true;
 	}
 
@@ -58,7 +78,7 @@ class Hooks {
 	private static function addTask( array $params ) {
 		$task = ImageSyncTask::newLocalTask();
 
-		$task->call( 'synchronize', self::normalizeParams( $params ) );
+		$task->call( 'synchronize', $params );
 		$task->queue();
 	}
 
