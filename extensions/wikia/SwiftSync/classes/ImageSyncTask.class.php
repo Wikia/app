@@ -3,6 +3,7 @@
 namespace Wikia\SwiftSync;
 
 use Wikia\Tasks\Tasks\BaseTask;
+use \Wikia\SwiftStorage;
 
 /**
  * A Celery task that is run to synchronize SJC and RES DFS storage
@@ -16,6 +17,10 @@ class ImageSyncTask extends BaseTask {
 		return ( new self() )->wikiId( $wgCityId );
 	}
 
+	/**
+	 * @param array $tasks
+	 * @throws \WikiaException
+	 */
 	public function synchronize( array $tasks ) {
 		foreach($tasks as $task) {
 			if ($task['op'] === 'delete') {
@@ -26,6 +31,10 @@ class ImageSyncTask extends BaseTask {
 
 			if (!$res) {
 				$this->error( __METHOD__, $task);
+				throw new \WikiaException( __METHOD__ );
+			}
+			else {
+				$this->info( __METHOD__, $task);
 			}
 		}
 	}
@@ -115,6 +124,41 @@ class ImageSyncTask extends BaseTask {
 		}
 
 		return $result;
+	}
+
+	/**
+	 * Create container and authenticate - for source Ceph/Swift storage
+	 *
+	 * @return \Wikia\SwiftStorage storage instance
+	 */
+	private function srcConn() {
+		global $wgCityId;
+		return SwiftStorage::newFromWiki( $wgCityId, WIKIA_DC_SJC );
+	}
+
+	/**
+	 * Create container and authenticate - for destination Ceph/Swift storage
+	 *
+	 * @return \Wikia\SwiftStorage storage instance
+	 */
+	private function destConn() {
+		global $wgCityId;
+		return SwiftStorage::newFromWiki( $wgCityId, WIKIA_DC_RES );
+	}
+
+	/**
+	 * build remote path to container
+	 *
+	 * @param $path String - file path
+	 *
+	 * @return String $content
+	 */
+	private function getRemotePath( string $path ) : string {
+		if ( strpos( $path, 'mwstore' ) === 0 ) {
+			$path = preg_replace( '/mwstore\:\/\/swift-backend\/(.*)\/(images|avatars)/', '', $path );
+		}
+
+		return $path;
 	}
 
 }
