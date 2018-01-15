@@ -202,5 +202,15 @@ describe('ext.wikia.adEngine.video.vastUrlBuilder', function () {
 
 		expect(vastUrl).not.toMatch(/&vid=abc/);
 	});
+
+	it('Should build VAST URL with uap parameter', function () {
+		var vastUrl = getModule().build(1, {
+			uap: '6666',
+			src: 'src',
+			pos: 'SLOT_NAME'
+		}, {});
+
+		expect(vastUrl).toContain(encodeURIComponent('uap=6666'));
+	});
 });
 
