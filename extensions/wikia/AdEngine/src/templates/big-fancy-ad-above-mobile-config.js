@@ -1,3 +1,4 @@
+import Context from 'ad-engine/src/services/context-service';
 import SlotTweaker from 'ad-engine/src/services/slot-tweaker';
 
 let adsModule;
@@ -33,6 +34,9 @@ function runOnReady(iframe, params, mercuryListener) {
 }
 
 export function getConfig(mercuryListener) {
+	let slotElement = null;
+	let navbarElement = null;
+
 	return {
 		slotsToEnable: [
 			'MOBILE_IN_CONTENT',
@@ -40,7 +44,26 @@ export function getConfig(mercuryListener) {
 			'MOBILE_BOTTOM_LEADERBOARD'
 		],
 		onInit(adSlot, params) {
+			Context.set(`slots.${adSlot.getSlotName()}.options.isVideoMegaEnabled`, params.isVideoMegaEnabled);
+
 			SlotTweaker.onReady(adSlot).then((iframe) => runOnReady(iframe, params, mercuryListener));
+
+			const wrapper = document.getElementsByClassName('mobile-top-leaderboard')[0];
+
+			slotElement = adSlot.getElement();
+			navbarElement = document.querySelector('.site-head-container .site-head');
+
+			wrapper.style.opacity = '0';
+			SlotTweaker.onReady(adSlot).then((iframe) => {
+				wrapper.style.opacity = '';
+				runOnReady(iframe, params, mercuryListener);
+			});
+		},
+		moveNavbar(offset) {
+			const adsMobile = window.Mercury.Modules.Ads.getInstance();
+
+			adsMobile.setSiteHeadOffset(offset || slotElement.clientHeight);
+			navbarElement.style.top = offset ? `${offset}px` : '';
 		}
 	};
 }

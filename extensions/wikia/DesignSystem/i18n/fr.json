@@ -1,7 +1,10 @@
 {
   "community-header-add": "Ajouter",
+  "community-header-add-new-image": "Ajouter une image",
   "community-header-add-new-page": "Ajouter une page",
+  "community-header-add-new-video": "Ajouter une vidéo",
   "community-header-admin-dashboard": "Tableau de bord administrateur",
+  "community-header-all-shortcuts": "Tous les raccourcis",
   "community-header-community": "Communauté",
   "community-header-discuss": "Discuter",
   "community-header-discussions-post": "Publication",
@@ -12,6 +15,7 @@
   "community-header-page": "Page",
   "community-header-pages": "Pages",
   "community-header-random-page": "Page au hasard",
+  "community-header-recent-changes": "Modifications récentes",
   "community-header-videos": "Vidéos",
   "community-header-wiki-activity": "Activité du wiki",
   "global-footer-advertise-header": "Publicité",

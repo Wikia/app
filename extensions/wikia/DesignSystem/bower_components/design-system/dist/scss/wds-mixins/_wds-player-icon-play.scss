@@ -1,0 +1,5 @@
+@mixin wds-player-icon-play($circle-size) {
+	// since play icon contains shadow around icon and designers provide sizes of icon without shadow, we need to
+	// calculate exact size of icon box
+	@include square($circle-size * 1.2);
+}

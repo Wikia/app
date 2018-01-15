@@ -100,7 +100,8 @@ CREATE TABLE /*_*/page (
   -- A page name is broken into a namespace and a title.
   -- The namespace keys are UI-language-independent constants,
   -- defined in includes/Defines.php
-  page_namespace int NOT NULL,
+  -- SUS-3535: page namespaces can not be negative
+  page_namespace int unsigned NOT NULL,
 
   -- The rest of the title, as text.
   -- Spaces are transformed into underscores in title storage.

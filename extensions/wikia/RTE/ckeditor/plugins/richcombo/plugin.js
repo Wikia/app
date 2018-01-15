@@ -235,10 +235,11 @@ CKEDITOR.plugins.add( 'richcombo', {
 			createPanel: function( editor ) {
 				if ( this._.panel )
 					return;
-				//Not Working
-			//	if (editor.config.richcomboCss != '' ) {
-			//		this._.panelDefinition.css = [editor.config.richcomboCss];
-			//	}
+				//Wikia start
+				if (editor.config.richcomboCss != '' ) {
+					this._.panelDefinition.css = [editor.config.richcomboCss];
+				}
+				//Wikia end
 
 				var panelDefinition = this._.panelDefinition,
 					panelBlockDefinition = this._.panelDefinition.block,

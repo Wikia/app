@@ -615,14 +615,17 @@ class PageArchive {
 		$created = (bool)$newid;
 
 		// Attach the latest revision to the page...
-		$wasnew = $article->updateIfNewerOn( $dbw, $revision, $previousRevId );
+		$wasnew = $article->updateIfNewerOn( $dbw, $revision );
 		if ( $created || $wasnew ) {
 			// Update site stats, link tables, etc
 			$user = User::newFromName( $revision->getRawUserText(), false );
 			$article->doEditUpdates( $revision, $user, array( 'created' => $created, 'oldcountable' => $oldcountable ) );
+
+			// SUS-3496: add useful hook that receives revision info
+			Hooks::run( 'ArticleUndeleteComplete', [ $article, $revision ] );
 		}
 
-		Hooks::run( 'ArticleUndelete', [ $this->title, $created, $comment, $oldPageId ] );
+		Hooks::run( 'ArticleUndelete', [ $this->title, $created, $comment, $oldPageId, $pageId ] );
 
 		if( $this->title->getNamespace() == NS_FILE ) {
 			// Wikia change begin @author Scott Rabin (srabin@wikia-inc.com)

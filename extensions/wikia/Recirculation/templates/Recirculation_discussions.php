@@ -25,11 +25,21 @@
 		<? endif ?>
 		<?php foreach ( $posts as $index => $post ): ?>
 			<li class="mcf-card-discussions__item">
-				<a href="<?= AvatarService::getUrl( $post->author ) ?>" class="mcf-card-discussions__user-info" data-tracking="discussions-user-<?= $index ?>">
-					<img class="wds-avatar" src="<?= AvatarService::getAvatarUrl( $post->author, 26 ) ?>">
-					<span class="mcf-card-discussions__user-subtitle"><?= Sanitizer::escapeHtmlAllowEntities( $post->author ) ?>
-						• <time class="discussion-timestamp" datetime="<?= Sanitizer::encodeAttribute( $post->pub_date ) ?>"></time></span>
-				</a>
+				<?php if ( $post->authorIsAnon ): ?>
+					<span class="mcf-card-discussions__user-info">
+						<?= F::app()
+							->renderView( 'Recirculation', 'discussionsAuthor',
+								[ 'post' => $post ] ) ?>
+					</span>
+				<?php else: ?>
+					<a href="<?= AvatarService::getUrl( $post->author ) ?>"
+					   class="mcf-card-discussions__user-info"
+					   data-tracking="discussions-user-<?= $index ?>">
+						<?= F::app()
+							->renderView( 'Recirculation', 'discussionsAuthor',
+								[ 'post' => $post ] ) ?>
+					</a>
+				<?php endif; ?>
 				<a href="<?= Sanitizer::encodeAttribute( $post->url )?>" data-tracking="discussions-post-<?= $index ?>">
 					<div class="mcf-card-discussions__content"><?= Sanitizer::escapeHtmlAllowEntities( $post->title ) ?></div>
 					<div class="mcf-card-discussions__meta">
