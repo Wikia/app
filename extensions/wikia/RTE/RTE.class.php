@@ -85,11 +85,9 @@ class RTE {
 			for ( $i = 0; $i < $templatePlaceholders->length; $i++ ) {
 				$placeholder = $templatePlaceholders->item( $i );
 				$found = $xpath->query( $blockElements, $placeholder );
-				if ( $found->length ) {
-					// leave div as wrapper
-				} else {
+				if ( !$found->length ) {
 					// change wrapper tag to span so it does not break html if template is used inside inline html tag
-					HtmlHelper::renameNode($placeholder, 'span');
+					HtmlHelper::renameNode( $placeholder, 'span' );
 				}
 			}
 
