@@ -20,4 +20,5 @@ $wgHooks[ 'SwiftFileBackend::doCopyInternal'      ][] = 'Wikia\SwiftSync\Hooks::
 $wgHooks[ 'SwiftFileBackend::doDeleteInternal'    ][] = 'Wikia\SwiftSync\Hooks::doDeleteInternal';
 
 # DFS operations triggered by the above hooks are pushed to tasks queue via this hook
-$wgHooks[ 'FileUpload' ][] = 'Wikia\SwiftSync\Hooks::onFileUpload';
+$wgHooks[ 'FileUpload'            ][] = 'Wikia\SwiftSync\Hooks::onFileUpload';
+$wgHooks[ 'OldFileDeleteComplete' ][] = 'Wikia\SwiftSync\Hooks::onOldFileDeleteComplete';

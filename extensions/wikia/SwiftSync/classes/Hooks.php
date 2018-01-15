@@ -57,10 +57,28 @@ class Hooks {
 	/**
 	 * DFS operations triggered by the above hooks are now pushed to tasks queue
 	 *
+	 * This hook handles file uploads synchronization.
+	 *
 	 * @param \LocalFile $file
 	 * @return bool
 	 */
 	public static function onFileUpload( \LocalFile $file ) {
+		self::addTask( self::$stack );
+
+		self::$stack = [];
+		return true;
+	}
+
+	/**
+	 * DFS operations triggered by the above hooks are now pushed to tasks queue
+	 *
+	 * This hook handles file deletes synchronization.
+	 *
+	 * @param \Title $title
+	 * @param $oi_timestamp
+	 * @return bool
+	 */
+	public static function onOldFileDeleteComplete( \Title $title, $oi_timestamp ) {
 		self::addTask( self::$stack );
 
 		self::$stack = [];
