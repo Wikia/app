@@ -6,6 +6,20 @@
 
 
 --
+-- Table structure for table `city_used_tags`
+--
+
+DROP TABLE IF EXISTS `city_used_tags`;
+CREATE TABLE `city_used_tags` (
+  `ct_wikia_id` int(8) unsigned NOT NULL,
+  `ct_page_id` int(8) unsigned NOT NULL,
+  `ct_namespace` int(8) unsigned NOT NULL,
+  `ct_kind` varchar(50) NOT NULL DEFAULT '',
+  `ct_timestamp` varchar(14) NOT NULL DEFAULT '19700101000000',
+  PRIMARY KEY (`ct_wikia_id`,`ct_page_id`,`ct_namespace`,`ct_kind`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
 -- Table structure for table `common_key_value`
 --
 
@@ -15,17 +29,6 @@ CREATE TABLE `common_key_value` (
   `content` mediumblob NOT NULL,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`identifier`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Table structure for table `const_values`
---
-
-DROP TABLE IF EXISTS `const_values`;
-CREATE TABLE `const_values` (
-  `name` varchar(50) NOT NULL,
-  `val` int(8) unsigned NOT NULL,
-  PRIMARY KEY (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -49,7 +52,6 @@ DROP TABLE IF EXISTS `events_local_users`;
 CREATE TABLE `events_local_users` (
   `wiki_id` int(8) unsigned NOT NULL,
   `user_id` int(10) unsigned NOT NULL,
-  `user_name` varchar(255) NOT NULL DEFAULT '',
   `edits` int(11) unsigned NOT NULL DEFAULT '0',
   `editdate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `last_revision` int(11) NOT NULL DEFAULT '0',
@@ -58,7 +60,7 @@ CREATE TABLE `events_local_users` (
   `all_groups` mediumtext NOT NULL,
   `user_is_blocked` tinyint(1) DEFAULT '0',
   `user_is_closed` tinyint(1) DEFAULT '0',
-  PRIMARY KEY (`wiki_id`,`user_id`,`user_name`),
+  PRIMARY KEY (`wiki_id`,`user_id`),
   KEY `user_edits` (`user_id`,`edits`,`wiki_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=DYNAMIC;
 
@@ -133,4 +135,4 @@ CREATE TABLE `script_log` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
--- Dump completed on 2017-12-04 11:45:53
+-- Dump completed on 2018-01-12  9:13:55

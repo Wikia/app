@@ -119,6 +119,10 @@
 
 	&__wiki-buttons {
 		margin: 20px 20px auto 15px;
+
+		.wds-dropdown__toggle {
+			padding: 7px 3px;
+		}
 	}
 
 	&__local-navigation {

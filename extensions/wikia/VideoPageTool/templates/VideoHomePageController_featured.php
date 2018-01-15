@@ -5,8 +5,10 @@
 			<? $index = 0; ?>
 			<? foreach ( $assets as $videoData ): ?>
 				<li>
-					<div class="slide-image video video-thumbnail xlarge hide-play fluid" data-index="<?= $index ?>">
-						<span class="play-circle"></span>
+					<div class="slide-image video video-thumbnail xlarge fluid" data-index="<?= $index ?>">
+						<span class="thumbnail-play-icon-container">
+							 <?= DesignSystemHelper::renderSvg('wds-player-icon-play', 'thumbnail-play-icon') ?>
+						</span>
 						<img src="<?= $videoData['largeThumbUrl'] ?>">
 						<div class="caption small-4 columns">
 							<span class="title"><?= $videoData['displayTitle'] ?></span>

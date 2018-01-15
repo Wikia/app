@@ -69,7 +69,7 @@ class FavoriteWikisModel extends WikiaModel {
 			'rollup_wiki_user_events',
 			[
 				'wiki_id',
-				'SUM(creates + edits) AS edits',
+				'SUM(edits) AS edits',
 			],
 			$where,
 			__METHOD__,

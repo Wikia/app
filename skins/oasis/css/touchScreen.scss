@@ -32,10 +32,3 @@ td.mw-input,
 td.mw-label {
 	vertical-align: middle;
 }
-
-// Play buttons should always show on touch-enabled devices
-.video-thumbnail.hide-play {
-	.play-circle {
-		display: block;
-	}
-}

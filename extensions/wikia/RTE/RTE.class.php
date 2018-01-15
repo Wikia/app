@@ -73,6 +73,30 @@ class RTE {
 		return '';
 	}
 
+	public static function onAfterParsing( &$html) {
+		global $wgRTEParserEnabled;
+
+		if ($wgRTEParserEnabled) {
+			$document = HtmlHelper::createDOMDocumentFromText( $html );
+			$xpath = new DOMXPath( $document );
+			$templatePlaceholders = $xpath->query( "//div[contains(@class, 'placeholder-double-brackets')]", $document );
+
+			$blockElements = implode( "|", HtmlHelper::BLOCK_ELEMENTS);
+			for ( $i = 0; $i < $templatePlaceholders->length; $i++ ) {
+				$placeholder = $templatePlaceholders->item( $i );
+				$found = $xpath->query( $blockElements, $placeholder );
+				if ( !$found->length ) {
+					// change wrapper tag to span so it does not break html if template is used inside inline html tag
+					HtmlHelper::renameNode( $placeholder, 'span' );
+				}
+			}
+
+			$html = HtmlHelper::getBodyHtml( $document );
+		}
+
+		return true;
+	}
+
 	/**
 	 * Render HTML for given placeholder
 	 *

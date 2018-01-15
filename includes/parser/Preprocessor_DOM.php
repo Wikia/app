@@ -20,8 +20,6 @@ class Preprocessor_DOM implements Preprocessor {
 
 	const CACHE_VERSION = 1;
 
-	const TEMPLATE_BLOCK_CONTEXT_PRECEDING_CHARACTER_SET = [ PHP_EOL, '}' ];
-
 	function __construct( $parser ) {
 		$this->parser = $parser;
 		$mem = ini_get( 'memory_limit' );
@@ -486,7 +484,7 @@ class Preprocessor_DOM implements Preprocessor {
 
 				// FANDOM change - XW-4380: store wikitext for extension tags
 				$extAttrs = '';
-				if ( $wgRTEParserEnabled && $name !== 'nowiki' ) {
+				if ( $wgRTEParserEnabled ) {
 					$wikiTextIdx = RTEData::put( 'wikitext', substr( $text, $tagStartPos, $i - $tagStartPos ) );
 					$extAttrs = " _rte_wikitextidx=\"$wikiTextIdx\"";
 				}
@@ -597,21 +595,13 @@ class Preprocessor_DOM implements Preprocessor {
 
 				# we need to add to stack only if opening brace count is enough for one of the rules
 				if ( $count >= $rule['min'] ) {
-					$precedingCharacter = $i > 0 ? $text[$i-1] : '';
-
 					# Add it to the stack
 					$piece = array(
 						'open' => $curChar,
 						'close' => $rule['end'],
 						'count' => $count,
-						'lineStart' => ($i > 0 && $precedingCharacter == "\n"),
+						'lineStart' => ($i > 0 && $text[$i-1] == "\n"),
 					);
-
-					if ( $curChar === '{' ) {
-						$piece['isBlockContext'] =
-							$i === 0 || in_array( $precedingCharacter,
-								static::TEMPLATE_BLOCK_CONTEXT_PRECEDING_CHARACTER_SET );
-					}
 
 					$stack->push( $piece );
 					$accum =& $stack->getAccum();
@@ -696,10 +686,6 @@ class Preprocessor_DOM implements Preprocessor {
 						$attr = ' lineStart="1"';
 					} else {
 						$attr = '';
-					}
-
-					if ( !empty( $piece->isBlockContext ) ) {
-						$attr .= ' isBlockContext="1"';
 					}
 
 					# RTE (Rich Text Editor) - begin
@@ -888,8 +874,7 @@ class PPDStackElement {
 		$close,     	    // Matching closing character
 		$count,             // Number of opening characters found (number of "=" for heading)
 		$parts,             // Array of PPDPart objects describing pipe-separated parts.
-		$lineStart,         // True if the open char appeared at the start of the input line. Not set for headings.
-		$isBlockContext;
+		$lineStart;         // True if the open char appeared at the start of the input line. Not set for headings.
 
 	var $partClass = 'PPDPart';
 
@@ -1188,7 +1173,6 @@ class PPFrame_DOM implements PPFrame {
 						$newIterator = $this->virtualBracketedImplode( '{{', '|', '}}', $title, $parts );
 					} else {
 						$lineStart = $contextNode->getAttribute( 'lineStart' );
-						$isBlockContext = $contextNode->hasAttribute( 'isBlockContext' );
 
 						$params = array(
 							'title' => new PPNode_DOM( $title ),
@@ -1223,12 +1207,7 @@ class PPFrame_DOM implements PPFrame {
 								'contenteditable' => 'false',
 							];
 
-							// XW-4466: For template transclusions that are not on their own line, use an inline wrapper
-							if ( $isBlockContext ) {
-								$out .= Html::rawElement( 'div', $attributes, PHP_EOL . $ret['text'] );
-							} else {
-								$out .= Html::rawElement( 'span', $attributes, $ret['text'] );
-							}
+							$out .= Html::rawElement( 'div', $attributes, PHP_EOL . $ret['text'] );
 						} else {
 							$out .= $ret['text'];
 						}
@@ -1326,7 +1305,7 @@ class PPFrame_DOM implements PPFrame {
 					// FANDOM change - XW-4380: wrap extension tags in a placeholder
 					$tagMarker = $this->parser->extensionSubstitution( $params, $this );
 					global $wgRTEParserEnabled;
-					if ( $wgRTEParserEnabled && $nameNode->textContent !== 'nowiki' ) {
+					if ( $wgRTEParserEnabled ) {
 						$wikiTextIdx = $contextNode->getAttribute( '_rte_wikitextidx' );
 
 						$rteData = [
@@ -1342,15 +1321,20 @@ class PPFrame_DOM implements PPFrame {
 
 						// <ref> tags are rendered within <p> so it needs to be wrapped by inline html tag.
 						// other extension tags can contain block elements, so they need to be wrapped in div.
-						$wrapperTagName = $nameNode->nodeValue === 'ref' ? 'span' : 'div';
-						$out .= Html::rawElement( $wrapperTagName, [
-							'data-rte-instance' => RTE::getInstanceId(),
-							'data-rte-meta' => RTEReverseParser::encodeRTEData( $rteData ),
-							'class' => "placeholder placeholder-ext",
-							'type' => 'ext',
-							'contenteditable' => 'false',
-						], $tagMarker );
-					} else {
+						$inlineExt = [ 'ref', 'nowiki' ];
+						$wrapperTagName = in_array($nameNode->nodeValue, $inlineExt) ? 'span' : 'div';
+						$out .= Html::rawElement(
+							$wrapperTagName,
+							[
+								'data-rte-instance' => RTE::getInstanceId(),
+								'data-rte-meta' => RTEReverseParser::encodeRTEData( $rteData ),
+								'class' => "placeholder placeholder-ext",
+								'type' => 'ext',
+								'contenteditable' => 'false',
+							],
+							$tagMarker
+						);
+					}  else {
 						$out .= $tagMarker;
 					}
 					$RTEext_1 = true;

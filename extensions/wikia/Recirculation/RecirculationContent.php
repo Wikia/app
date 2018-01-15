@@ -32,6 +32,7 @@ class RecirculationContent implements JsonSerializable {
 			'title' => $this->get( 'title' ),
 			'pub_date' => $this->get( 'publishDate' ),
 			'author' => $this->get( 'author' ),
+			'authorIsAnon' => $this->get( 'authorIsAnon' ),
 			'source' => $this->get( 'source' ),
 			'isVideo' => $this->get( 'isVideo' ),
 			'meta' => $this->get( 'meta' ),

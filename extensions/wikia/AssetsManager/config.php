@@ -106,6 +106,7 @@ $config['adengine2_desktop_js'] = [
 		'//extensions/wikia/AdEngine/js/tracking/adInfoListener.js',
 		'//extensions/wikia/AdEngine/js/tracking/adInfoTracker.js',
 		'//extensions/wikia/AdEngine/js/tracking/pageLayout.js',
+		'//extensions/wikia/AdEngine/js/tracking/scrollDepthTracker.js',
 		'//extensions/wikia/AdEngine/js/tracking/viewabilityTracker.js',
 		'//extensions/wikia/AdEngine/js/utils/AdLogicZoneParams.js',
 		'//extensions/wikia/AdEngine/js/utils/eventDispatcher.js',
@@ -137,7 +138,7 @@ $config['adengine2_desktop_js'] = [
 		'//extensions/wikia/AdEngine/js/provider/evolve2.js',
 
 		'//extensions/wikia/AdEngine/js/run/desktop.run.js',
-		'//extensions/wikia/AdEngine/js/build/ad-engine.bridge.js',
+		'//extensions/wikia/AdEngine/js/build/bridge.js',
 	],
 ];
 
@@ -150,6 +151,10 @@ $config['adengine2_rabbit_js'] = [
 		'//extensions/wikia/AdEngine/js/ml/fmr/fmrPassiveAggressiveClassifier.js',
 		'//extensions/wikia/AdEngine/js/ml/modelFactory.js',
 		'//extensions/wikia/AdEngine/js/ml/model/linear.js',
+		'//extensions/wikia/AdEngine/js/ml/n1/n1InputParser.js',
+		'//extensions/wikia/AdEngine/js/ml/n1/n1LogisticRegression.js',
+		'//extensions/wikia/AdEngine/js/ml/outstream/outstreamInputParser.js',
+		'//extensions/wikia/AdEngine/js/ml/outstream/outstreamLogisticRegression.js',
 		'//extensions/wikia/AdEngine/js/ml/rabbit.js',
 	],
 ];
@@ -936,7 +941,7 @@ $config['mercury_ads_js'] = [
 		'//extensions/wikia/AdEngine/js/video/videoSettings.js',
 		'//resources/wikia/modules/abTest.js',
 		'//resources/wikia/modules/krux.js',
-		'//extensions/wikia/AdEngine/js/build/ad-engine.bridge.js',
+		'//extensions/wikia/AdEngine/js/build/bridge.js',
 		'//extensions/wikia/AdEngine/js/run/mercury.run.js',
 		'#group_adengine2_rabbit_js',
 		'#group_jwplayer_featured_video_ads_js',
@@ -2720,8 +2725,9 @@ $config['community_header_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => [ 'oasis' ],
 	'assets' => [
-		'//extensions/wikia/CommunityHeader/scripts/tracking.js',
 		'//extensions/wikia/CommunityHeader/scripts/local-navigation-preview.js',
+		'//extensions/wikia/CommunityHeader/scripts/more-wiki-buttons.js',
+		'//extensions/wikia/CommunityHeader/scripts/tracking.js',
 	],
 ];
 

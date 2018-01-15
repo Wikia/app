@@ -215,25 +215,18 @@ class FounderEmails {
 	}
 
 	public function getDailyEdits ( $cityID, /*Y-m-d*/ $day = null ) {
-		global $wgStatsDB, $wgStatsDBEnabled;
+		global $wgDWStatsDB;
 
-		$edits = 0;
-		if ( !empty( $wgStatsDBEnabled ) ) {
-			$today = ( empty( $day ) ) ? date( 'Y-m-d', strtotime( '-1 day' ) ) : $day;
+		$today = ( empty( $day ) ) ? date( 'Y-m-d', strtotime( '-1 day' ) ) : $day;
 
-			$db = wfGetDB( DB_SLAVE, array(), $wgStatsDB );
+		$db = wfGetDB( DB_SLAVE, array(), $wgDWStatsDB );
 
-			$oRow = $db->selectRow(
-				array( 'events' ),
-				array( 'count(0) as cnt' ),
-				array(  " rev_timestamp between '$today 00:00:00' and '$today 23:59:59' ", 'wiki_id' => $cityID ),
-				__METHOD__
-			);
-
-			$edits = isset( $oRow->cnt ) ? $oRow->cnt : 0;
-		}
-
-		return $edits;
+		return $db->selectField(
+			array( 'rollup_wiki_user_events' ),
+			array( 'sum(edits) as cnt' ),
+			array( "time_id = '$today 00:00:00'", 'wiki_id' => $cityID, 'period_id' => DataMartService::PERIOD_ID_DAILY ),
+			__METHOD__
+		);
 	}
 
 	/**

@@ -227,6 +227,9 @@
 						table.removeAttribute( 'style' );
 				}
 
+				// Wikia change - add table class
+				table.addClass('article-table');
+
 				// Insert the table element if we're creating one.
 				if ( !this._.selectedElement ) {
 					editor.insertElement( table );
@@ -275,7 +278,7 @@
 							type: 'text',
 							id: 'txtCols',
 							'default': 2,
-							label: "Liczba kolumn",//editor.lang.table.columns,
+							label: editor.lang.table.columns,
 							required: true,
 							controlStyle: 'width:5em',
 							validate: validatorNum( editor.lang.table.invalidCols ),
@@ -292,7 +295,7 @@
 							type: 'select',
 							id: 'selHeaders',
 							requiredContent: 'th',
-							'default': '',
+							'default': 'row', //Wikia - changed default from ''
 							label: editor.lang.table.headers,
 							items: [
 								[ editor.lang.table.headersNone, '' ],
@@ -328,7 +331,7 @@
 							id: 'txtBorder',
 							requiredContent: 'table[border]',
 							// Avoid setting border which will then disappear.
-							'default': editor.filter.check( 'table[border]' ) ? 1 : 0,
+							'default': '0', // Wikia - changed default from 1
 							label: editor.lang.table.border,
 							controlStyle: 'width:3em',
 							validate: CKEDITOR.dialog.validate.number( editor.lang.table.invalidBorder ),

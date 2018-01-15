@@ -1,7 +1,10 @@
 {
   "community-header-add": "생성",
+  "community-header-add-new-image": "Add New Image",
   "community-header-add-new-page": "새 문서 생성",
+  "community-header-add-new-video": "Add New Video",
   "community-header-admin-dashboard": "관리 대시보드",
+  "community-header-all-shortcuts": "All Shortcuts",
   "community-header-community": "커뮤니티",
   "community-header-discuss": "토론방",
   "community-header-discussions-post": "게시글",
@@ -12,6 +15,7 @@
   "community-header-page": "문서",
   "community-header-pages": "문서",
   "community-header-random-page": "임의 문서",
+  "community-header-recent-changes": "Recent Changes",
   "community-header-videos": "동영상",
   "community-header-wiki-activity": "위키 활동 내역",
   "global-footer-advertise-header": "광고 문의",

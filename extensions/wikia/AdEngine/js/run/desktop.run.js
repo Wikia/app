@@ -5,6 +5,7 @@ require([
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adEngineRunner',
 	'ext.wikia.adEngine.adLogicPageParams',
+	'ext.wikia.adEngine.adTracker',
 	'ext.wikia.adEngine.slot.service.stateMonitor',
 	'ext.wikia.adEngine.config.desktop',
 	'ext.wikia.adEngine.customAdsLoader',
@@ -18,13 +19,16 @@ require([
 	'ext.wikia.adEngine.slotTweaker',
 	'ext.wikia.adEngine.sourcePointDetection',
 	'ext.wikia.adEngine.tracking.adInfoListener',
+	'ext.wikia.adEngine.tracking.scrollDepthTracker',
 	'ext.wikia.aRecoveryEngine.adBlockDetection',
+	'wikia.geo',
 	'wikia.window'
 ], function (
 	adEngineBridge,
 	adContext,
 	adEngineRunner,
 	pageLevelParams,
+	adTracker,
 	slotStateMonitor,
 	adConfigDesktop,
 	customAdsLoader,
@@ -38,7 +42,9 @@ require([
 	slotTweaker,
 	sourcePointDetection,
 	adInfoListener,
+	scrollDepthTracker,
 	adBlockDetection,
+	geo,
 	win
 ) {
 	'use strict';
@@ -59,6 +65,8 @@ require([
 	// Custom ads (skins, footer, etc)
 	if (adContext.get('opts.isAdProductsBridgeEnabled')) {
 		adEngineBridge.init(
+			adTracker,
+			geo,
 			slotRegistry,
 			null,
 			pageLevelParams.getPageLevelParams(),
@@ -81,6 +89,8 @@ require([
 		adEngineRunner.run(adConfigDesktop, win.adslots2, 'queue.desktop', !!context.opts.delayEngine);
 
 		actionHandler.registerMessageListener();
+
+		scrollDepthTracker.run();
 
 		sourcePointDetection.initDetection();
 

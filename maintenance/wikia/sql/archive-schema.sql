@@ -54,7 +54,7 @@ CREATE TABLE `city_list` (
   `city_founding_ip` int(10) unsigned NOT NULL DEFAULT '0',
   `city_founding_ip_bin` varbinary(16) DEFAULT NULL,
   `city_vertical` int(11) NOT NULL DEFAULT '0',
-  KEY `city_id` (`city_id`),
+  PRIMARY KEY (`city_id`),
   KEY `city_dbname_idx` (`city_dbname`),
   KEY `city_title_idx` (`city_title`),
   KEY `city_url_idx` (`city_url`),
@@ -106,18 +106,6 @@ CREATE TABLE `cu_changes` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Table structure for table `page_visited`
---
-
-DROP TABLE IF EXISTS `page_visited`;
-CREATE TABLE `page_visited` (
-  `article_id` int(9) NOT NULL,
-  `count` int(8) NOT NULL,
-  PRIMARY KEY (`article_id`),
-  KEY `page_visited_cnt_inx` (`count`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
 -- Table structure for table `wikia_tasks`
 --
 
@@ -138,4 +126,4 @@ CREATE TABLE `wikia_tasks` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
--- Dump completed on 2017-12-13 10:56:23
+-- Dump completed on 2018-01-09 15:30:20

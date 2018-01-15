@@ -17,12 +17,6 @@ class RenameUserPagesTaskTest extends WikiaDatabaseTest {
 	/** @var RenameUserPagesTask $renameUserPagesTask */
 	private $renameUserPagesTask;
 
-	public static function setUpBeforeClass() {
-		parent::setUpBeforeClass();
-		$dbw = wfGetDB( DB_MASTER );
-		$dbw->sourceFile( __DIR__ . '/fixtures/dataware-pages.sql' );
-	}
-
 	protected function setUp() {
 		parent::setUp();
 		$this->renameUserPagesTask = new RenameUserPagesTask();

@@ -197,6 +197,8 @@
 		addBlock: function( name, block ) {
 			block = this._.blocks[ name ] = block instanceof CKEDITOR.ui.panel.block ? block : new CKEDITOR.ui.panel.block( this.getHolderElement(), block );
 
+			//Wikia - fix for preloading Format richcombo
+			if ( _.size( this._.blocks ) == 1 ) { return block; }
 			if ( !this._.currentBlock )
 				this.showBlock( name );
 

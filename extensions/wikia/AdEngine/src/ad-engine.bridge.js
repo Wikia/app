@@ -1,4 +1,5 @@
 import { EventEmitter } from 'events';
+import { createTracker } from './tracking/porvata-tracker-factory';
 import Client from 'ad-engine/src/utils/client';
 import Context from 'ad-engine/src/services/context-service';
 import ScrollListener from 'ad-engine/src/listeners/scroll-listener';
@@ -10,13 +11,17 @@ import TemplateService from 'ad-engine/src/services/template-service';
 import BigFancyAdAbove from 'ad-products/src/modules/templates/uap/big-fancy-ad-above';
 import BigFancyAdBelow from 'ad-products/src/modules/templates/uap/big-fancy-ad-below';
 import UniversalAdPackage from 'ad-products/src/modules/templates/uap/universal-ad-package';
+import AdUnitBuilder from './ad-unit-builder';
 import config from './context';
 import slotConfig from './slots';
+import './ad-engine.bridge.scss';
 
 Context.extend(config);
 let supportedTemplates = [BigFancyAdAbove, BigFancyAdBelow];
 
 function init(
+	adTracker,
+	geo,
 	slotRegistry,
 	mercuryListener,
 	pageLevelTargeting,
@@ -28,9 +33,15 @@ function init(
 	ScrollListener.init();
 
 	Context.extend({slots: slotConfig[skin]});
+	Context.push('listeners.porvata', createTracker(legacyContext, geo, pageLevelTargeting, adTracker));
 
 	overrideSlotService(slotRegistry, legacyBtfBlocker);
 	updatePageLevelTargeting(legacyContext, pageLevelTargeting, skin);
+
+	const wikiIdentifier = legacyContext.get('targeting.wikiIsTop1000') ?
+		Context.get('targeting.s1') : '_not_a_top1k_wiki';
+
+	Context.set('custom.wikiIdentifier', wikiIdentifier);
 }
 
 function overrideSlotService(slotRegistry, legacyBtfBlocker) {
@@ -59,20 +70,13 @@ function unifySlotInterface(slot) {
 		getId: () => slot.name,
 		getSlotName: () => slot.name,
 		getTargeting: () => slotContext.targeting,
-		getVideoAdUnit: () => buildVastAdUnit(slot.name)
+		getVideoAdUnit: () => AdUnitBuilder.build(slot)
 	});
-	slot.pre('viewed', () => {
-		SlotListener.onImpressionViewable(slot);
+	slot.pre('viewed', (event) => {
+		SlotListener.emitImpressionViewable(event, slot);
 	});
 
 	return slot;
-}
-
-function buildVastAdUnit(slotName) {
-	return StringBuilder.build(
-		Context.get(`vast.adUnitId`),
-		Object.assign({}, Context.get('targeting'), Context.get(`slots.${slotName}`))
-	);
 }
 
 function loadCustomAd(fallback) {
@@ -80,7 +84,11 @@ function loadCustomAd(fallback) {
 		if (getSupportedTemplateNames().includes(params.type)) {
 			const slot = SlotService.getBySlotName(params.slotName);
 			slot.container.parentNode.classList.add('gpt-ad');
-			Context.set(`slots.${params.slotName}.targeting.src`, params.src);
+
+			Context.set(`slots.${slot.getSlotName()}.targeting.src`, params.src);
+			Context.set(`slots.${slot.getSlotName()}.options.loadedTemplate`, params.type);
+			Context.set(`slots.${slot.getSlotName()}.options.loadedProduct`, params.adProduct);
+
 			TemplateService.init(params.type, slot, params);
 		} else {
 			fallback(params);

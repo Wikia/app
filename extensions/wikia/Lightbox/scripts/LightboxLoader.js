@@ -135,7 +135,7 @@
 					}
 
 					// Display video inline, don't open lightbox
-					isVideo = $this.children('.play-circle').length;
+					isVideo = $this.children('.thumbnail-play-icon-container').length;
 					if (
 						isVideo &&
 						$thumb.width() >= self.videoThumbWidthThreshold &&
