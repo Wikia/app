@@ -68,8 +68,7 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.beachfront', function () {
 					bidder: 'beachfront',
 					params: {
 						bidfloor: 0.01,
-						appId: 'ww-11-kk-11-44',
-						video: {}
+						appId: 'ww-11-kk-11-44'
 					}
 				}
 			]
