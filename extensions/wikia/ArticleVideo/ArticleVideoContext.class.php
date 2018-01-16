@@ -1,6 +1,8 @@
 <?php
 
 class ArticleVideoContext {
+	const JW_PLAYER_API_REQUEST_TIMEOUT = 2; // seconds
+	const JW_PLAYER_API_REQUEST_RETRY_COUNT = 3;
 
 	/**
 	 * Checks if featured video is embedded on given article
@@ -37,13 +39,7 @@ class ArticleVideoContext {
 			$videoData = [];
 			$videoData['mediaId'] = ArticleVideoService::getFeatureVideoForArticle( $wg->cityId, $pageId );
 
-			$details = json_decode(
-				Http::get(
-					'https://cdn.jwplayer.com/v2/media/' . $videoData['mediaId'],
-					1
-				),
-				true
-			);
+			$details = json_decode( static::getVideoDetailsWithRetries( $videoData['mediaId'] ), true );
 
 			if ( !empty( $details ) ) {
 				$videoData = array_merge( $videoData, $details );
@@ -61,6 +57,16 @@ class ArticleVideoContext {
 		}
 
 		return [];
+	}
+
+	private static function getVideoDetailsWithRetries( $mediaId, int $retries = 1 ) {
+		$response = Http::get( "https://cdn.jwplayer.com/v2/media/$mediaId", static::JW_PLAYER_API_REQUEST_TIMEOUT );
+		
+		if ( !$response && $retries < static::JW_PLAYER_API_REQUEST_RETRY_COUNT ) {
+			return static::getVideoDetailsWithRetries( $mediaId, ++$retries );
+		}
+
+		return $response;
 	}
 
 	private static function getVideoDataWithAttribution( $videoData ) {
