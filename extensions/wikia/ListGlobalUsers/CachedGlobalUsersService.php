@@ -32,6 +32,7 @@ class CachedGlobalUsersService implements GlobalUsersService {
 	}
 
 	private static function makeCacheKey( array $groupSet ): string {
+		asort( $groupSet );
 		return call_user_func_array( 'wfSharedMemcKey', array_merge( [ 'global-users' ], $groupSet ) );
 	}
 }
