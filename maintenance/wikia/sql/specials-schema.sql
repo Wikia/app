@@ -58,7 +58,6 @@ CREATE TABLE `events_local_users` (
   `cnt_groups` smallint(4) NOT NULL DEFAULT '0',
   `single_group` varchar(255) NOT NULL DEFAULT '',
   `all_groups` mediumtext NOT NULL,
-  `user_is_blocked` tinyint(1) DEFAULT '0',
   `user_is_closed` tinyint(1) DEFAULT '0',
   PRIMARY KEY (`wiki_id`,`user_id`),
   KEY `user_edits` (`user_id`,`edits`,`wiki_id`)
@@ -135,4 +134,4 @@ CREATE TABLE `script_log` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
--- Dump completed on 2018-01-12  9:13:55
+-- Dump completed on 2018-01-16 15:16:14

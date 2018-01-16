@@ -1,7 +1,8 @@
 import Context from 'ad-engine/src/services/context-service';
 import ScrollListener from 'ad-engine/src/listeners/scroll-listener';
 import SlotTweaker from 'ad-engine/src/services/slot-tweaker';
-import { updateNavbar, navBarElement } from './navbar-updater';
+
+import { pinNavbar, navBarElement, navBarStickClass, isElementInViewport } from './navbar-updater';
 
 export function getConfig() {
 	return {
@@ -14,16 +15,23 @@ export function getConfig() {
 
 			const spotlightFooter = document.getElementById('SPOTLIGHT_FOOTER');
 			const wrapper = document.getElementById('WikiaTopAds');
+			const container = adSlot.getElement();
+			const updateNavbar = () => {
+				const isSticky = container.classList.contains('sticky-bfaa');
+				const isInViewport = isElementInViewport(adSlot, params);
 
+				pinNavbar(isInViewport && !isSticky);
+				this.moveNavbar(isSticky ? container.offsetHeight : 0);
+			};
+
+			this.slotConfig = params.config;
 			wrapper.style.opacity = '0';
+
 			SlotTweaker.onReady(adSlot).then(() => {
 				wrapper.style.opacity = '';
-				updateNavbar(params.config);
-				this.moveNavbar(adSlot.getElement().offsetHeight);
+				updateNavbar();
 			});
-			ScrollListener.addCallback(() => {
-				updateNavbar(params.config);
-			});
+			ScrollListener.addCallback(updateNavbar);
 
 			if (!window.ads.runtime.disableCommunitySkinOverride) {
 				document.body.classList.add('uap-skin');
@@ -34,11 +42,11 @@ export function getConfig() {
 		},
 		onStickBfaaCallback(adSlot) {
 			adSlot.getElement().classList.add('sticky-bfaa');
-			navBarElement.style.position = 'fixed';
+			pinNavbar(false);
 		},
-		onUnstickBfaaCallback(adSlot) {
+		onUnstickBfaaCallback(adSlot, params) {
 			adSlot.getElement().classList.remove('sticky-bfaa');
-			navBarElement.style.position = '';
+			pinNavbar(isElementInViewport(adSlot, params));
 		},
 		moveNavbar(offset) {
 			if (navBarElement) {
