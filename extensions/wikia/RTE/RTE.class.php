@@ -71,10 +71,6 @@ class RTE {
 		return '';
 	}
 
-	public static function onAfterParsing() {
-		return true;
-	}
-
 	/**
 	 * Render HTML for given placeholder
 	 *

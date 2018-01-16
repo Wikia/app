@@ -25,7 +25,6 @@ $wgHooks['EditPage::showEditForm:initial'][] = 'RTE::init';
 $wgHooks['ParserMakeImageParams'][] = 'RTEParser::makeImageParams';
 $wgHooks['AlternateEdit'][] = 'RTE::reverse';
 $wgHooks['EditPageBeforeConflictDiff'][] = 'RTE::reverse';
-$wgHooks['RTE::afterParsing'][] = 'RTE::onAfterParsing';
 
 // hooks for user preferences handling
 $wgHooks['EditingPreferencesBefore'][] = 'RTE::onEditingPreferencesBefore';
