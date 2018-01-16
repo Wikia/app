@@ -20,6 +20,9 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.beachfront', function () {
 			isBlocking: function () {
 				return false;
 			}
+		},
+		loc: {
+			href: '//bar'
 		}
 	};
 
@@ -30,6 +33,7 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.beachfront', function () {
 			mocks.adContext,
 			mocks.slotsContext,
 			mocks.instartLogic,
+			mocks.loc,
 			mocks.log
 		);
 	}

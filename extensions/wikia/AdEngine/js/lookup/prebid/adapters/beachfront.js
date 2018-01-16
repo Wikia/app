@@ -3,12 +3,14 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.beachfront', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.context.slotsContext',
 	'ext.wikia.aRecoveryEngine.instartLogic.recovery',
+	'wikia.location',
 	'wikia.log'
-], function (adContext, slotsContext, instartLogic, log) {
+], function (adContext, slotsContext, instartLogic, loc, log) {
 	'use strict';
 
 	var bidderName = 'beachfront',
 		bidfloor = 0.01,
+		debugAppId = '2e55f7ad-3558-49eb-a3e1-056ccd0e74e2',
 		logGroup = 'ext.wikia.adEngine.lookup.prebid.adapters.beachfront',
 		slots = {
 			oasis: {
@@ -28,6 +30,8 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.beachfront', [
 	}
 
 	function prepareAdUnit(slotName, config) {
+		var isDebugMode = loc.href.indexOf('beachfront_debug_mode=1') >= 0;
+
 		var adUnit =  {
 			code: slotName,
 			sizes: [640, 480],
@@ -37,7 +41,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.beachfront', [
 					bidder: bidderName,
 					params: {
 						bidfloor: bidfloor,
-						appId: config.appId
+						appId: isDebugMode ? debugAppId : config.appId
 					}
 				}
 			]
