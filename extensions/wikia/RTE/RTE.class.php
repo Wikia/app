@@ -69,7 +69,6 @@ class RTE {
 		}
 
 		return '';
-	}
 
 	/**
 	 * Render HTML for given placeholder
@@ -550,6 +549,17 @@ HTML
 		$debug = "RTE: {$method}\n" . Wikia::hex( $string, false, false, true );
 
 		wfDebug( "{$debug}\n" );
+	}
+
+	/**
+	 * Add hexdump of given variable to MW log
+	 *
+	 * @author Macbre
+	 */
+	public static function hex( $method, $string ) {
+		$debug = "RTE: {$method}\n" . Wikia::hex($string, false, false, true);
+
+		wfDebug("{$debug}\n");
 	}
 
 	/**

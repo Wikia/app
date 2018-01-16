@@ -1322,10 +1322,15 @@ class RTEReverseParser {
 
 			$out = $this->fixForTableCell($node, $out);
 
-			if (self::isChildOf($node, 'div')) {
-				if (self::isFirstChild($node) /* RT#38254 */ || self::previousSiblingIs($node, 'center') /* BugId:4748 */) {
+			if (self::previousSiblingIs($node, 'div')
+				|| (
+					self::isChildOf($node, 'div') && (
+						self::isFirstChild($node) /* RT#38254 */ ||
+						self::previousSiblingIs($node, 'center')  /* BugId:4748 */
+					)
+				)
+			) {
 					$out = "\n{$out}";
-				}
 			}
 		}
 		else {
