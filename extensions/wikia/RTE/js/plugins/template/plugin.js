@@ -532,9 +532,10 @@ RTE.templateEditor = {
 	commitChanges: function() {
 		RTE.log('storing modified template data');
 		RTE.log(this.data);
+
 		RTE.tools.parseRTE(this.data.wikitext, function(html) {
 			if (this.placeholder.parent().exists()) {
-				// If placeholder has parent = it's already inserted in the article
+				// If placeholder has a parent = it's already inserted in the article
 				// So we are editing, not creating. Thus, replacing the existing article element
 				// With it's edited version
 				this.placeholder.replaceWith(html)
