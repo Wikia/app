@@ -21,7 +21,7 @@
   },
   "dependencies": {
     "ad-engine": "8.1.0",
-    "ad-products": "2.1.13",
+    "ad-products": "2.2.0",
     "lodash": "^4.17.4"
   }
 }

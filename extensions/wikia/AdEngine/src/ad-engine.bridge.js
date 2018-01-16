@@ -45,10 +45,17 @@ function init(
 }
 
 function overrideSlotService(slotRegistry, legacyBtfBlocker) {
+
+	const slotsCache = {};
+
 	SlotService.getBySlotName = (id) => {
 		let slot = slotRegistry.get(id);
 		if (id && slot) {
-			return unifySlotInterface(slot);
+			if (!slotsCache.hasOwnProperty(id)) {
+				slotsCache[id] = unifySlotInterface(slot);
+			}
+
+			return slotsCache[id];
 		}
 	};
 
