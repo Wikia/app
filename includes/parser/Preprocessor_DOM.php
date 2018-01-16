@@ -700,9 +700,7 @@ class Preprocessor_DOM implements Preprocessor {
 
 							$start = $openIdx - $count;
 							$length = $closeIdx - $openIdx + 2 * $count;
-							if ($text[$start + $length] == "\n") {
-								$length++;
-							}
+
 							$attr .= ' _rte_wikitextidx="'
 								. RTEData::put( 'wikitext', substr( $text, $start, $length ) )
 								. '"';
@@ -1215,7 +1213,12 @@ class PPFrame_DOM implements PPFrame {
 								'contenteditable' => 'false',
 							];
 
-							$out .= Html::rawElement( $this->getPlaceholderTagName( $ret['text'] ), $attributes, PHP_EOL . $ret['text'] );
+							// when template is used in header new line breaks layout, however it is needed for other contexts
+							if ($contextNode->parentNode->nodeName === 'h') {
+								$out .= Html::rawElement( $this->getPlaceholderTagName( $ret['text'] ), $attributes, $ret['text'] );
+							} else {
+								$out .= Html::rawElement( $this->getPlaceholderTagName( $ret['text'] ), $attributes, PHP_EOL . $ret['text'] );
+							}
 						} else {
 							$out .= $ret['text'];
 						}
@@ -1323,10 +1326,6 @@ class PPFrame_DOM implements PPFrame {
 							'lineStart' => $contextNode->getAttribute( 'lineStart' ),
 							'placeholder' => 1
 						];
-
-						if ( !in_array($nameNode->nodeValue, $inlineExt) ) {
-							$rteData['wikitext'] .= "\n";
-						}
 
 						// append a zero-width space
 						// this prevents extension tags at the end of lines from interfering with formatting

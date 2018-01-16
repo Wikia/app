@@ -416,6 +416,13 @@ class RTEReverseParser {
 		// extra fixes for different types of placeholders
 		if (isset($data['type'])) {
 			switch($data['type']) {
+				// templates and extension tags which are wrapped in <div> needs to have additional newline at the end
+				case 'double-brackets':
+				case 'ext':
+					if ($node->nodeName === 'div') {
+						$out = "\n{$out}";
+					}
+					break;
 				case 'comment':
 					// FIXME: dirty fix for RT #83859
 					// assuming here that comments in wysiyg mode must be placed at the beginning of new line
