@@ -1215,7 +1215,12 @@ class PPFrame_DOM implements PPFrame {
 								'contenteditable' => 'false',
 							];
 
-							$out .= Html::rawElement( 'div', $attributes, PHP_EOL . $ret['text'] );
+							// when template is used in header new line breaks layout, however it is needed for other contexts
+							if ($contextNode->parentNode->nodeName === 'h') {
+								$out .= Html::rawElement( 'div', $attributes, $ret['text'] );
+							} else {
+								$out .= Html::rawElement( 'div', $attributes, PHP_EOL . $ret['text'] );
+							}
 						} else {
 							$out .= $ret['text'];
 						}
