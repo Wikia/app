@@ -48,7 +48,7 @@ class RTEData {
 
 				unset($data['wikitextIdx']);
 
-				if(strpos($data['wikitext'], '_rte_wikitextidx') !== false) {
+				if(strpos($data['wikitext'], '_rte_wikitextidx') !== false && !preg_match('/<ext _rte_wikitextidx="[^"]*"><name>nowiki/', $data['wikitext'])) {
 					RTE::$edgeCases[] = 'COMPLEX.01';
 				} else if(strpos($data['wikitext'], '_rte_dataidx') !== false) {
 					RTE::$edgeCases[] = 'COMPLEX.02';
