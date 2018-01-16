@@ -41,6 +41,7 @@ class SpecialListGlobalUsersController extends WikiaSpecialPageController {
 			];
 		}
 
+		$this->setVal( 'formAction', $this->getTitle()->getLocalURL() );
 		$this->setVal( 'groupNameCheckBoxSet', $groupNameCheckBoxSet );
 
 		$userSet = [];

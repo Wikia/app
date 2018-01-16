@@ -1,4 +1,4 @@
-<form>
+<form action="<?= Sanitizer::encodeAttribute( $formAction ); ?>" method="get">
 	<fieldset>
 		<legend><?= wfMessage( 'listglobalusers' )->escaped(); ?></legend>
 		<p><?= wfMessage( 'listglobalusers-legend' )->escaped(); ?></p>
