@@ -1,6 +1,6 @@
 {
   "name": "@wikia/ad-engine-app-bridge",
-  "version": "1.0.0",
+  "version": "0.0.0",
   "private": true,
   "devDependencies": {
     "babel-core": "^6.26.0",
@@ -22,8 +22,8 @@
     "watch": "webpack -p -w"
   },
   "dependencies": {
-    "@wikia/ad-engine": "^8.0.1",
-    "@wikia/ad-products": "^2.1.13",
+    "@wikia/ad-engine": "^9.0.0",
+    "@wikia/ad-products": "^3.0.0",
     "core-decorators": "^0.20.0",
     "lodash": "^4.17.4"
   }

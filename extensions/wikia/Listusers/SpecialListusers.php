@@ -12,54 +12,60 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 	exit( 1 ) ;
 }
 
-$wgExtensionCredits['specialpage'][] = array(
+$GLOBALS['wgExtensionCredits']['specialpage'][] = [
 	"name" => "Local users",
 	"description-msg" => "listusers-desc",
 	"author" => "Piotr Molski",
-	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/Listusers'
-);
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/Listusers',
+];
 
 /**
  * Messages
  */
-$wgExtensionMessagesFiles['Listusers'] = __DIR__ . '/SpecialListusers.i18n.php';
-$wgExtensionMessagesFiles['ListusersAlias'] = __DIR__ . '/SpecialListusers.alias.php';
+$GLOBALS['wgExtensionMessagesFiles']['Listusers'] = __DIR__ . '/SpecialListusers.i18n.php';
+$GLOBALS['wgExtensionMessagesFiles']['ListusersAlias'] = __DIR__ . '/SpecialListusers.alias.php';
+
+$GLOBALS['wgAutoloadClasses']['EditCountService'] = __DIR__ . '/update/EditCountService.php';
+$GLOBALS['wgAutoloadClasses']['ListUsersUpdate'] = __DIR__ . '/update/ListUsersUpdate.php';
+$GLOBALS['wgAutoloadClasses']['ListUsersEditUpdate'] = __DIR__ . '/update/ListUsersEditUpdate.php';
+$GLOBALS['wgAutoloadClasses']['UpdateListUsersTask'] = __DIR__ . '/update/UpdateListUsersTask.php';
 
 /**
  * Helpers
  */
-$wgAutoloadClasses['ListusersData']  = __DIR__ . '/SpecialListusers_helper.php';
+$GLOBALS['wgAutoloadClasses']['ListusersData']  = __DIR__ . '/SpecialListusers_helper.php';
 
 /**
  * Hooks
  */
-$wgAutoloadClasses['ListusersAjax'] = __DIR__ . '/SpecialListusers_ajax.php';
-$wgAutoloadClasses['ListusersHooks'] = __DIR__ . '/SpecialListusers_hooks.php';
+$GLOBALS['wgAutoloadClasses']['ListusersAjax'] = __DIR__ . '/SpecialListusers_ajax.php';
+$GLOBALS['wgAutoloadClasses']['ListusersHooks'] = __DIR__ . '/SpecialListusers_hooks.php';
 
-$wgHooks['SpecialPage_initList'][] = 'ListusersHooks::ActiveUsers';
-$wgAjaxExportList[] = 'ListusersAjax::axShowUsers';
-$wgAjaxExportList[] = 'ListusersAjax::axSuggestUsers';
+$GLOBALS['wgHooks']['SpecialPage_initList'][] = 'ListusersHooks::ActiveUsers';
+$GLOBALS['wgAjaxExportList'][] = 'ListusersAjax::axShowUsers';
+$GLOBALS['wgAjaxExportList'][] = 'ListusersAjax::axSuggestUsers';
 
-$wgHooks['UserRights'][] = 'ListusersHooks::updateUserRights';
+$GLOBALS['wgHooks']['UserRights'][] = 'ListusersHooks::updateUserRights';
+$GLOBALS['wgHooks']['NewRevisionFromEditComplete'][] = 'ListusersHooks::doEditUpdate';
 
 /**
  * Special pages
  */
-$wgAutoloadClasses['Listusers'] = __DIR__ . '/SpecialListusers_body.php';
-$wgAutoloadClasses['SpecialListStaff'] = __DIR__ . '/SpecialListusers_body.php';
-$wgAutoloadClasses['SpecialListVstf'] = __DIR__ . '/SpecialListusers_body.php';
-$wgAutoloadClasses['SpecialListHelpers'] = __DIR__ . '/SpecialListusers_body.php';
+$GLOBALS['wgAutoloadClasses']['Listusers'] = __DIR__ . '/SpecialListusers_body.php';
+$GLOBALS['wgAutoloadClasses']['SpecialListStaff'] = __DIR__ . '/SpecialListusers_body.php';
+$GLOBALS['wgAutoloadClasses']['SpecialListVstf'] = __DIR__ . '/SpecialListusers_body.php';
+$GLOBALS['wgAutoloadClasses']['SpecialListHelpers'] = __DIR__ . '/SpecialListusers_body.php';
 
-$wgSpecialPages['Listusers'] = 'Listusers';
-$wgSpecialPages['Liststaff'] = 'SpecialListStaff';
-$wgSpecialPages['Listvstf'] = 'SpecialListVstf';
-$wgSpecialPages['Listhelpers'] = 'SpecialListHelpers';
+$GLOBALS['wgSpecialPages']['Listusers'] = 'Listusers';
+$GLOBALS['wgSpecialPages']['Liststaff'] = 'SpecialListStaff';
+$GLOBALS['wgSpecialPages']['Listvstf'] = 'SpecialListVstf';
+$GLOBALS['wgSpecialPages']['Listhelpers'] = 'SpecialListHelpers';
 
 // Only add Listusers to Special:SpecialPages
-$wgSpecialPageGroups['Listusers'] = 'users';
+$GLOBALS['wgSpecialPageGroups']['Listusers'] = 'users';
 
 // Resources Loader module
-$wgResourceModules['ext.wikia.ListUsers'] = [
+$GLOBALS['wgResourceModules']['ext.wikia.ListUsers'] = [
 	'scripts' => [
 		'js/table.js'
 	],
