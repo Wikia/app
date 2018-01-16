@@ -2,9 +2,9 @@
 
 /**
  * Parse white-list addresses
- * use 
+ * use
  * 	- '$wgWhitelistFiles' - to define files with addresses
- * 	- $wgWhiteListCacheTime - to define memcache expiry time 
+ * 	- $wgWhiteListCacheTime - to define memcache expiry time
  *
  * @author Piotr Molski <moli@wikia.com>
  */
@@ -33,15 +33,15 @@ function wfWhiteListParseSetup() {
 
 	if ( empty($wgWhitelistFiles) ) # default values
 		$whiteListSetup['files'] = null;
-	else 
+	else
 		$whiteListSetup['files'] = (is_array($wgWhitelistFiles)) ? $wgWhitelistFiles : array($wgWhitelistFiles);
 
 	if ( empty($wgWhiteListCacheTime) ) # default values
 		$whiteListSetup['expiryTime'] = 900;
-	else 
+	else
 		$whiteListSetup['expiryTime'] = $wgWhiteListCacheTime;
-		
-	return $whiteListSetup;	
+
+	return $whiteListSetup;
 }
 
 function wfWhiteListParse($text) {
@@ -51,16 +51,16 @@ function wfWhiteListParse($text) {
 	$whitelist = $wgWhiteListNoFollow;
 	//---
 	if (preg_match(sprintf(REGEX_PARSE_WHITELIST,'rel','nofollow'), $text)) {
-	    //---
+		//---
 		preg_match('#href\s*?=\s*?[\'"]?([^\'" ]*)[\'"]?#i', $text, $captures);
 		if ( is_array($captures) && isset($captures[1]) ) {
 			$lhref = $captures[1];
-			if (preg_match('#^\s*http://#', $lhref)) {
+			if (preg_match('#^\s*https?://#', $lhref)) {
 				$lparsed = @parse_url($lhref);
 				#---
 				if ( empty($lparsed) || (!is_array($lparsed)) ) {
 					wfProfileOut( __METHOD__ );
-					return $text;				
+					return $text;
 				}
 				$lschema = (!empty($lparsed['scheme'])) ? $lparsed['scheme'] : "http";
 				//---
@@ -102,12 +102,12 @@ function wfWhiteListParse($text) {
 				return $text;
 			}
 		}
-	} 
-	
+	}
+
 	wfProfileOut( __METHOD__ );
 	return $text;
 }
-	
+
 function wfWhiteListRemoveNoFollowLinks(&$str) {
 	return preg_replace_callback("#(<a.*?>)#i", create_function('$matches', 'return wfWhiteListParse($matches[1]);'), $str);
 }
@@ -115,62 +115,62 @@ function wfWhiteListRemoveNoFollowLinks(&$str) {
 #----
 #
 #
-class WikiaWhitelist 
+class WikiaWhitelist
 {
 	private $spamList = null;
 	private $settings = array();
-    private static $_oInstance = null;
+	private static $_oInstance = null;
 
 	function __construct( $settings = array() )
 	{
 		global $wgDBname;
-		
+
 		foreach ( $settings as $name => $value ) {
 			$this->$name = $value;
 		}
 
 		wfDebug ("build whitelist link list \n");
-		
+
 		$use_prefix = 0;
 		if (empty($settings['regexes'])) {
-		    $settings['regexes'] = false;
-        }
+			$settings['regexes'] = false;
+		}
 		if (empty($settings['previousFilter'])) {
-		    $settings['previousFilter'] = false;
-        }
+			$settings['previousFilter'] = false;
+		}
 		if (empty($settings['files'])) {
-		    $settings['files'] = array("DB: wikia MediaWiki:External_links_whitelist");
-        } else {
-            $use_prefix = 1;
-        }
+			$settings['files'] = array("DB: wikia MediaWiki:External_links_whitelist");
+		} else {
+			$use_prefix = 1;
+		}
 		if (empty($settings['warningTime'])) {
-		    $settings['warningTime'] = 600;
-        }
+			$settings['warningTime'] = 600;
+		}
 		if (empty($settings['expiryTime'])) {
-		    $settings['expiryTime'] = 900;
-        }
+			$settings['expiryTime'] = 900;
+		}
 		if (empty($settings['warningChance'])) {
-		    $settings['warningChance'] = 100;
-        }
-        if (empty($settings['memcache_file'])) {
-            $settings['memcache_file']  = 'whitelist_file'.(($use_prefix == 1) ? '_'.$wgDBname : "");
-        }
+			$settings['warningChance'] = 100;
+		}
+		if (empty($settings['memcache_file'])) {
+			$settings['memcache_file']  = 'whitelist_file'.(($use_prefix == 1) ? '_'.$wgDBname : "");
+		}
 		if (empty($settings['memcache_regexes'])) {
-		    $settings['memcache_regexes'] = 'whitelist_regexes'.(($use_prefix == 1) ? '_'.$wgDBname : "");
-        }
+			$settings['memcache_regexes'] = 'whitelist_regexes'.(($use_prefix == 1) ? '_'.$wgDBname : "");
+		}
 
 		$this->settings = $settings;
 		$this->spamList = new WikiaSpamRegexBatch("whitelistlinks", $this->settings);
 		$this->regexes = $this->spamList->getRegexes();
 	}
 
-    public static function Instance($settings = array()) {
-        if(!self::$_oInstance instanceof self) {
-            wfDebug("New instamce of WikiaWhitelist class \n");
-            self::$_oInstance = new self($settings);
-        }
-        return self::$_oInstance;
-    }
+	public static function Instance($settings = array()) {
+		if(!self::$_oInstance instanceof self) {
+			wfDebug("New instamce of WikiaWhitelist class \n");
+			self::$_oInstance = new self($settings);
+		}
+		return self::$_oInstance;
+	}
 
 	public function getSettings() { return $this->settings; }
 	public function getSpamList() { return $this->spamList; }
