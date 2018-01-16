@@ -1215,9 +1215,9 @@ class PPFrame_DOM implements PPFrame {
 
 							// when template is used in header new line breaks layout, however it is needed for other contexts
 							if ($contextNode->parentNode->nodeName === 'h') {
-								$out .= Html::rawElement( 'div', $attributes, $ret['text'] );
+								$out .= Html::rawElement( $this->getPlaceholderTagName( $ret['text'] ), $attributes, $ret['text'] );
 							} else {
-								$out .= Html::rawElement( 'div', $attributes, PHP_EOL . $ret['text'] );
+								$out .= Html::rawElement( $this->getPlaceholderTagName( $ret['text'] ), $attributes, PHP_EOL . $ret['text'] );
 							}
 						} else {
 							$out .= $ret['text'];
@@ -1402,6 +1402,40 @@ class PPFrame_DOM implements PPFrame {
 		--$expansionDepth;
 		wfProfileOut( __METHOD__ );
 		return $outStack[0];
+	}
+
+	/**
+	 * In order to properly display a template inside an editor we need to know if it should be displayed
+	 * inside block or inline-block element
+	 *
+	 * We could not find a better way than parsing the template and searching for any block elements inside
+	 *
+	 * @param $text string wikitext
+	 * @return string tagName div or span
+	 */
+	function getPlaceholderTagName( string $text ): string {
+		$tagName = 'div';
+
+		$html = $this->parser->internalParse( $text, false);
+
+		if ( !empty( $html ) ) {
+			$document = HtmlHelper::createDOMDocumentFromText( $html );
+			$xpath = new DOMXPath( $document );
+			$templatePlaceholders = $xpath->query( "//div[contains(@class, 'placeholder-double-brackets')]", $document );
+
+			$blockElements = implode( "|", HtmlHelper::BLOCK_ELEMENTS );
+			for ( $i = 0; $i < $templatePlaceholders->length; $i++ ) {
+				$placeholder = $templatePlaceholders->item( $i );
+				$found = $xpath->query( $blockElements, $placeholder );
+				if ( !$found->length ) {
+					// change wrapper tag to span so it does not break html if template is used inside inline html tag
+					$tagName = 'span';
+					break;
+				}
+			}
+		}
+
+		return $tagName;
 	}
 
 	/**

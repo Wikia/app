@@ -6,31 +6,27 @@ class RTEAjax {
 	 * Perform wikitext parsing to HTML
 	 */
 	static public function wiki2html() {
-		wfProfileIn(__METHOD__);
-		global $wgRequest;
+		$wikitext = RequestContext::getMain()->getRequest()->getVal( 'wikitext', '' );
 
-		$wikitext = $wgRequest->getVal('wikitext', '');
+		RTE::log( __METHOD__, $wikitext );
 
-		RTE::log(__METHOD__, $wikitext);
-
-		$ret = array(
-			'html' => RTE::WikitextToHtml($wikitext),
+		$ret = [
+			'html' => RTE::WikitextToHtml( $wikitext ),
 			'instanceId' => RTE::getInstanceId(),
-		);
+		];
 
-		if (RTE::edgeCasesFound()) {
-			$ret = array(
-				'edgecase' => array(
+		if ( RTE::edgeCasesFound() ) {
+			$ret = [
+				'edgecase' => [
 					'type' => RTE::getEdgeCaseType(),
-					'info' => array(
-						'title' => wfMsg('rte-edgecase-info-title'),
-						'content' => wfMsg('rte-edgecase-info'),
-					),
-				)
-			);
+					'info' => [
+						'title' => wfMsg( 'rte-edgecase-info-title' ),
+						'content' => wfMsg( 'rte-edgecase-info' ),
+					],
+				]
+			];
 		}
 
-		wfProfileOut(__METHOD__);
 		return $ret;
 	}
 
@@ -39,15 +35,15 @@ class RTEAjax {
 	 */
 	static public function html2wiki() {
 		global $wgRequest;
-		$html = $wgRequest->getVal('html', '');
+		$html = $wgRequest->getVal( 'html', '' );
 
-		RTE::log(__METHOD__, $html);
+		RTE::log( __METHOD__, $html );
 
-		$wikitext = RTE::HtmlToWikitext($html);
+		$wikitext = RTE::HtmlToWikitext( $html );
 
-		return array(
+		return [
 			'wikitext' => $wikitext,
-		);
+		];
 	}
 
 	/**
@@ -55,26 +51,24 @@ class RTEAjax {
 	 */
 	static public function checkInternalLink() {
 		global $wgTitle, $wgEnableWallEngine;
-		wfProfileIn(__METHOD__);
 
-		$res = array('exists' => false);
+		$res = [ 'exists' => false ];
 
-		if (!empty($wgTitle)) {
+		if ( !empty( $wgTitle ) ) {
 			// existing local URL or interwiki link
 			$exists = $wgTitle->exists()
-			        || $wgTitle->isSpecialPage()
-			        || $wgTitle->isExternal()
-			        || ( !empty($wgEnableWallEngine) && WallHelper::isWallNamespace($wgTitle->getNamespace()) );
+				|| $wgTitle->isSpecialPage()
+				|| $wgTitle->isExternal()
+				|| ( !empty( $wgEnableWallEngine ) && WallHelper::isWallNamespace( $wgTitle->getNamespace() ) );
 
-			$res = array(
+			$res = [
 				'exists' => $exists,
 				'external' => $wgTitle->isExternal(),
 				'href' => $wgTitle->getLocalUrl(),
-				'title' => $exists ? $wgTitle->getPrefixedText() : wfMsg('red-link-title', $wgTitle->getPrefixedText()),
-			);
+				'title' => $exists ? $wgTitle->getPrefixedText() : wfMsg( 'red-link-title', $wgTitle->getPrefixedText() ),
+			];
 		}
 
-		wfProfileOut(__METHOD__);
 		return $res;
 	}
 
@@ -83,24 +77,22 @@ class RTEAjax {
 	 */
 	static public function parse() {
 		global $wgTitle, $wgRequest, $wgUser;
-		wfProfileIn(__METHOD__);
 
-		$wikitext = $wgRequest->getVal('wikitext', '');
+		$wikitext = $wgRequest->getVal( 'wikitext', '' );
 
 		$parser = new Parser();
 		$parserOptions = new ParserOptions();
 
 		// call preSaveTransform so signatures, {{subst:foo}}, etc. will work
-		$wikitext = $parser->preSaveTransform($wikitext, $wgTitle, $wgUser, $parserOptions);
+		$wikitext = $parser->preSaveTransform( $wikitext, $wgTitle, $wgUser, $parserOptions );
 
 		// parse wikitext using MW parser
-		$html = $parser->parse($wikitext, $wgTitle, $parserOptions)->getText();
+		$html = $parser->parse( $wikitext, $wgTitle, $parserOptions )->getText();
 
-		$res = array(
+		$res = [
 			'html' => $html,
-		);
+		];
 
-		wfProfileOut(__METHOD__);
 		return $res;
 	}
 
@@ -109,29 +101,27 @@ class RTEAjax {
 	 */
 	static public function rteparse() {
 		global $wgTitle, $wgRequest, $wgUser;
-		wfProfileIn(__METHOD__);
 
-		$wikitext = $wgRequest->getVal('wikitext', '');
+		$wikitext = $wgRequest->getVal( 'wikitext', '' );
 
 		$parserOptions = new ParserOptions();
 		// don't show [edit] link for sections
-		$parserOptions->setEditSection(false);
+		$parserOptions->setEditSection( false );
 		// disable headings numbering
-		$parserOptions->setNumberHeadings(false);
+		$parserOptions->setNumberHeadings( false );
 
 		$parser = new RTEParser();
 
 		// call preSaveTransform so signatures, {{subst:foo}}, etc. will work
-		$wikitext = $parser->preSaveTransform($wikitext, $wgTitle, $wgUser, $parserOptions);
+		$wikitext = $parser->preSaveTransform( $wikitext, $wgTitle, $wgUser, $parserOptions );
 
 		// parse wikitext using RTE parser
-		$html = $parser->parse($wikitext, $wgTitle, $parserOptions)->getText();
+		$html = $parser->parse( $wikitext, $wgTitle, $parserOptions )->getText();
 
-		$res = array(
+		$res = [
 			'html' => $html,
-		);
+		];
 
-		wfProfileOut(__METHOD__);
 		return $res;
 	}
 
@@ -147,23 +137,23 @@ class RTEAjax {
 		$tcs = new TemplateClassificationService();
 
 		// processing data from RDB mode
-		if(!is_array($wgRDBData) || !isset($wgRDBData['type']) || $wgRDBData['type'] == 'error') {
-			$out = array('type' => 'unknown');
+		if ( !is_array( $wgRDBData ) || !isset( $wgRDBData['type'] ) || $wgRDBData['type'] == 'error' ) {
+			$out = [ 'type' => 'unknown' ];
 		} else {
-			if ($wgRDBData['type'] == 'tpl') {
-				$out = array();
+			if ( $wgRDBData['type'] == 'tpl' ) {
+				$out = [];
 				$out['title'] = $wgRDBData['title']->getPrefixedDBkey();
 				$out['exists'] = $wgRDBData['title']->exists() ? true : false;
 
-				if ($out['exists']) {
+				if ( $out['exists'] ) {
 					$templateHelper->setTemplateByTitle( $wgRDBData['title'] );
 					$out['availableParams'] = $templateHelper->getTemplateParams();
-					$out['templateType'] = $tcs->getType($wgCityId, $wgRDBData['title']->getArticleID());
+					$out['templateType'] = $tcs->getType( $wgCityId, $wgRDBData['title']->getArticleID() );
 				}
 
 				// Get key and value for each argument
-				for ($argIndex = 0; $argIndex < $wgRDBData['args']->node->length; $argIndex++) {
-					$argNode = new PPNode_DOM($wgRDBData['args']->node->item($argIndex));
+				for ( $argIndex = 0; $argIndex < $wgRDBData['args']->node->length; $argIndex++ ) {
+					$argNode = new PPNode_DOM( $wgRDBData['args']->node->item( $argIndex ) );
 					$argParts = $argNode->splitArg();
 
 					$key = !empty($argParts['index']) ? $argParts['index'] : $argParts['name']->node->textContent;
@@ -262,8 +252,8 @@ class RTEAjax {
 		$lang = $wgLang->getCode();
 
 		// get CK messages array
-		$messages = RTELang::getMessages($lang);
-		$js = "CKEDITOR.lang['{$lang}'] = " . json_encode($messages) . ';';
+		$messages = RTELang::getMessages( $lang );
+		$js = "CKEDITOR.lang['{$lang}'] = " . json_encode( $messages ) . ';';
 
 		return $js;
 	}
@@ -276,9 +266,9 @@ class RTEAjax {
 	static public function i18n() {
 		$js = self::getMessagesScript();
 
-		$ret = new AjaxResponse($js);
-		$ret->setContentType('application/x-javascript');
-		$ret->setCacheDuration(86400 * 365 * 10); // 10 years
+		$ret = new AjaxResponse( $js );
+		$ret->setContentType( 'application/x-javascript' );
+		$ret->setCacheDuration( 86400 * 365 * 10 ); // 10 years
 
 		return $ret;
 	}
