@@ -1,0 +1,23 @@
+.list-global-users-input {
+    align-content: space-between;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    max-height: 150px;
+}
+
+.list-global-users-submit.wds-is-squished {
+    display: block;
+    margin: 12px auto 0;
+}
+
+.list-global-users-members {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: left;
+}
+
+.list-global-users-members li {
+    margin: 3px 12px;
+    flex-basis: 30%;
+}
