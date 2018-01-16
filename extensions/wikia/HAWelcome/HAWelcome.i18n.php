@@ -2359,8 +2359,7 @@ $2",
 	'hawelcomeedit' => 'HA欢迎编辑',
 	'welcome-message-wall-user' => '您好，我是{{SITENAME}}的管理员！欢迎您参与这个社区，并且感谢您对页面[[:$1]]所作的编辑。
 
-如果您需要帮助，请访问[[Help:创建FANDOM
-|帮助页面]]，或者联络我们以及[[Special:Listusers/sysop|另外一位管理员]]。如果您需要一般性的帮助，请访问[[w:c:zh.community|社区中心]]、[[w:c:zh.community:Special:Forum|中心论坛]]以及[[w:c:zh.community:Category:社区中心博客|员工博客]]了解更多内容。
+如果您需要帮助，请访问[[Help:创建FANDOM|帮助页面]]，或者联络我们以及[[Special:Listusers/sysop|另外一位管理员]]。如果您需要一般性的帮助，请访问[[w:c:zh.community|社区中心]]、[[w:c:zh.community:Special:Forum|中心论坛]]以及[[w:c:zh.community:Category:社区中心博客|员工博客]]了解更多内容。
 
 希望您在{{SITENAME}}上玩的愉快！',
 	'welcome-message-wall-user-staff' => '您好，欢迎来到{{SITENAME}}！我们是FANDOM社区支持团队。感谢您对页面[[:$1]]所作的编辑。

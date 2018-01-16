@@ -24,23 +24,30 @@ class ListusersHooks {
 		return true;
 	}
 
-	/**
-	 * update list users table on user right change
-	 *
-	 * @see https://www.mediawiki.org/wiki/Manual:Hooks/UserRights
-	 *
-	 * @author      Piotr Molski <moli@wikia-inc.com>
-	 * @version     1.0.0
-	 * @param       User    $user object
-	 * @param       array   $addgroup - selected groups for user
-	 * @param       array   $removegroup - disabled groups for user
-	 * @return bool
-	 */
-	static public function updateUserRights( User $user, array $addgroup, array $removegroup ) {
-		global $wgCityId;
 
-		$data = new ListusersData($wgCityId);
-		$data->updateUserGroups( $user, $addgroup, $removegroup );
-		return true;
+	static public function updateUserRights( User $user ) {
+		$listUsersUpdate = new ListUsersUpdate();
+		$listUsersUpdate->setUserId( $user->getId() );
+		$listUsersUpdate->setUserGroups( $user->getGroups() );
+
+		$task = UpdateListUsersTask::newLocalTask();
+		$task->call( 'updateUserGroups', $listUsersUpdate );
+		$task->queue();
+	}
+
+	public static function doEditUpdate( WikiPage $wikiPage, Revision $revision, $baseRevId, User $user ) {
+		if ( $user->isAnon() ) {
+			return;
+		}
+
+		$editUpdate = new ListUsersEditUpdate();
+		$editUpdate->setUserId( $user->getId() );
+		$editUpdate->setUserGroups( $user->getGroups() );
+		$editUpdate->setLatestRevisionId( $revision->getId() );
+		$editUpdate->setLatestRevisionTimestamp( $revision->getTimestamp() );
+
+		$task = UpdateListUsersTask::newLocalTask();
+		$task->call( 'updateEditInformation', $editUpdate );
+		$task->queue();
 	}
 }

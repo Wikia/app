@@ -49,7 +49,6 @@ class CombinedSearchService {
 				"person",
 				"tv_episode",
 				"tv_season",
-				"tv_series",
 				"video_game"
 			],
 			true
@@ -211,6 +210,7 @@ class CombinedSearchService {
 			"article_type_s",
 			Utilities::field( 'html', $lang )
 		];
+
 		$config = ( new Factory() )->getSolariumClientConfig();
 
 		$client = new \Solarium_Client( $config );
@@ -235,7 +235,7 @@ class CombinedSearchService {
 			);
 		}
 
-		$boostedTypes = [ "character", "tv_series", "tv_episode", "person", "move", "video_game" ];
+		$boostedTypes = [ "character", "tv_episode", "person", "move", "video_game" ];
 		$dismax->setBoostQuery(
 			'+(wikititle_en:"' . $phrase . '"^100000)' . " +(article_type_s:(" . implode( " OR ", $boostedTypes ) . "))"
 		);

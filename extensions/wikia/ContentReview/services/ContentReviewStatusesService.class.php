@@ -313,7 +313,7 @@ class ContentReviewStatusesService {
 	private function createRevisionTalkpageLink( \Title $title ) {
 		return \Html::element(
 			'a',
-			[ 'href' => $title->getTalkPage() ],
+			[ 'href' => $title->getTalkPage()->getLocalURL() ],
 			wfMessage( 'content-review-rejection-reason-link' )->escaped()
 		);
 	}
