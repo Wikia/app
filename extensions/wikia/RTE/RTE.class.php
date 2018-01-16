@@ -76,7 +76,7 @@ class RTE {
 	public static function onAfterParsing( &$html) {
 		global $wgRTEParserEnabled;
 
-		if ($wgRTEParserEnabled) {
+		if ($wgRTEParserEnabled && !empty( $html ) ) {
 			$document = HtmlHelper::createDOMDocumentFromText( $html );
 			$xpath = new DOMXPath( $document );
 			$templatePlaceholders = $xpath->query( "//div[contains(@class, 'placeholder-double-brackets')]", $document );
