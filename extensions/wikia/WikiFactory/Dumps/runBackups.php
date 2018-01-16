@@ -26,8 +26,8 @@ require_once(__DIR__ .'/../../../../maintenance/commandLine.inc');
  */
 function runBackups( $from, $to, $full, $options ) {
 
-	global $IP, $wgWikiaLocalSettingsPath, $wgWikiaAdminSettingsPath,
-		$wgMaxShellTime, $wgMaxShellFileSize, $wgDumpsDisabledWikis;
+	global $IP, $wgWikiaLocalSettingsPath, $wgMaxShellTime,
+		$wgMaxShellFileSize, $wgDumpsDisabledWikis;
 
 	$range = array();
 
@@ -132,7 +132,7 @@ function runBackups( $from, $to, $full, $options ) {
  * @param array $args optional extra arguments for dumpBackup.php
  */
 function doDumpBackup( $row, $path, array $args = [] ) {
-	global $IP, $wgWikiaLocalSettingsPath, $wgWikiaAdminSettingsPath, $options;
+	global $IP, $wgWikiaLocalSettingsPath, $options;
 	$logger = Wikia\Logger\WikiaLogger::instance();
 
 	$time = wfTime();
@@ -144,7 +144,6 @@ function doDumpBackup( $row, $path, array $args = [] ) {
 		"php -d display_errors=1",
 		"{$IP}/maintenance/dumpBackup.php",
 		"--conf {$wgWikiaLocalSettingsPath}",
-		"--aconf {$wgWikiaAdminSettingsPath}",
 		"--xml",
 		"--quiet",
 		"--server=$server",
