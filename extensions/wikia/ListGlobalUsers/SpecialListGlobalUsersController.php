@@ -30,17 +30,18 @@ class SpecialListGlobalUsersController extends WikiaSpecialPageController {
 
 		$groupsToSelect = array_intersect( $globalGroups, $queryGroups );
 
-		$groupNameForm = [];
+		$groupNameCheckBoxSet = [];
 
 		foreach ( $globalGroups as $groupName ) {
-			$groupNameForm[] = [
+			$groupNameCheckBoxSet[] = [
 				'groupName' => $groupName,
+				'groupId' => "mw-input-groups-$groupName",
 				'groupLabel' => User::getGroupName( $groupName ),
-				'active' => in_array( $groupName, $groupsToSelect )
+				'checked' => in_array( $groupName, $groupsToSelect ) ? 'checked' : ''
 			];
 		}
 
-		$this->setVal( 'groupNameForm', $groupNameForm );
+		$this->setVal( 'groupNameCheckBoxSet', $groupNameCheckBoxSet );
 
 		$userSet = [];
 		if ( !empty( $groupsToSelect ) ) {

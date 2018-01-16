@@ -3,12 +3,10 @@
 		<legend><?= wfMessage( 'listglobalusers' )->escaped(); ?></legend>
 		<p><?= wfMessage( 'listglobalusers-legend' )->escaped(); ?></p>
 		<div class="list-global-users-input">
-		<?php foreach ( $groupNameForm as $field ): ?>
+		<?php foreach ( $groupNameCheckBoxSet as $checkBox ): ?>
 			<div>
-				<?php $groupId = Sanitizer::encodeAttribute( "mw-input-groups-{$field['groupName']}" ); ?>
-				<?php $checked = $field['active'] ? 'checked' : ''; ?>
-				<input id="<?= $groupId ?>" type="checkbox" name="groups[]" value="<?= Sanitizer::encodeAttribute( $field['groupName'] ); ?>" <?= $checked ?> />
-				<label for="<?= $groupId ?>"><?= htmlspecialchars( $field['groupLabel'] ); ?></label>
+				<input id="<?= Sanitizer::encodeAttribute( $checkBox['groupId'] ); ?>" type="checkbox" name="groups[]" value="<?= Sanitizer::encodeAttribute( $checkBox['groupName'] ); ?>" <?= $checkBox['checked'] ?> />
+				<label for="<?= Sanitizer::encodeAttribute( $checkBox['groupId'] ); ?>"><?= htmlspecialchars( $checkBox['groupLabel'] ); ?></label>
 			</div>
 		<?php endforeach; ?>
 		</div>
