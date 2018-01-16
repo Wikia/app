@@ -48,7 +48,13 @@ class RTEData {
 
 				unset($data['wikitextIdx']);
 
-				if(strpos($data['wikitext'], '_rte_wikitextidx') !== false && !preg_match('/<ext _rte_wikitextidx="[^"]*"><name>nowiki/', $data['wikitext'])) {
+				if(strpos($data['wikitext'], '_rte_wikitextidx') !== false
+					// don't treat xml representation of nowiki tags as an edgecase
+					// previously nowiki ext didn't have _rte_wikitextidx attribute at all, but it is needed to correctly
+					// generate wikitext when switching to source mode. XML representation of nowiki tags can appear
+					// at this stage when parsing <ref>
+					&& !preg_match('/<ext _rte_wikitextidx="[^"]*"><name>nowiki/', $data['wikitext'])) {
+
 					RTE::$edgeCases[] = 'COMPLEX.01';
 				} else if(strpos($data['wikitext'], '_rte_dataidx') !== false) {
 					RTE::$edgeCases[] = 'COMPLEX.02';
