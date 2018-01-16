@@ -697,7 +697,13 @@ class Preprocessor_DOM implements Preprocessor {
 							$openIdx = $openAt[0];
 							$closeIdx = $closeAt[count($closeAt)-1];
 							$openAt = $closeAt = array();
-							$attr .= ' _rte_wikitextidx="'.RTEData::put('wikitext', substr($text, $openIdx-$count, $closeIdx-$openIdx+2*$count)).'"';
+
+							$start = $openIdx - $count;
+							$length = $closeIdx - $openIdx + 2 * $count;
+
+							$attr .= ' _rte_wikitextidx="'
+								. RTEData::put( 'wikitext', substr( $text, $start, $length ) )
+								. '"';
 						}
 					}
 					# RTE - end
@@ -1207,7 +1213,12 @@ class PPFrame_DOM implements PPFrame {
 								'contenteditable' => 'false',
 							];
 
-							$out .= Html::rawElement( 'div', $attributes, PHP_EOL . $ret['text'] );
+							// when template is used in header new line breaks layout, however it is needed for other contexts
+							if ($contextNode->parentNode->nodeName === 'h') {
+								$out .= Html::rawElement( $this->getPlaceholderTagName( $ret['text'] ), $attributes, $ret['text'] );
+							} else {
+								$out .= Html::rawElement( $this->getPlaceholderTagName( $ret['text'] ), $attributes, PHP_EOL . $ret['text'] );
+							}
 						} else {
 							$out .= $ret['text'];
 						}
@@ -1307,6 +1318,7 @@ class PPFrame_DOM implements PPFrame {
 					global $wgRTEParserEnabled;
 					if ( $wgRTEParserEnabled ) {
 						$wikiTextIdx = $contextNode->getAttribute( '_rte_wikitextidx' );
+						$inlineExt = [ 'ref', 'nowiki' ];
 
 						$rteData = [
 							'type' => 'ext',
@@ -1319,9 +1331,8 @@ class PPFrame_DOM implements PPFrame {
 						// this prevents extension tags at the end of lines from interfering with formatting
 						$tagMarker .= "&#x0200B;";
 
-						// <ref> tags are rendered within <p> so it needs to be wrapped by inline html tag.
-						// other extension tags can contain block elements, so they need to be wrapped in div.
-						$inlineExt = [ 'ref', 'nowiki' ];
+						// some extensions render only inline htlm tags, so they should be wrapped in inline wrapper
+						// to not break paragraphs
 						$wrapperTagName = in_array($nameNode->nodeValue, $inlineExt) ? 'span' : 'div';
 						$out .= Html::rawElement(
 							$wrapperTagName,
@@ -1391,6 +1402,40 @@ class PPFrame_DOM implements PPFrame {
 		--$expansionDepth;
 		wfProfileOut( __METHOD__ );
 		return $outStack[0];
+	}
+
+	/**
+	 * In order to properly display a template inside an editor we need to know if it should be displayed
+	 * inside block or inline-block element
+	 *
+	 * We could not find a better way than parsing the template and searching for any block elements inside
+	 *
+	 * @param $text string wikitext
+	 * @return string tagName div or span
+	 */
+	function getPlaceholderTagName( string $text ): string {
+		$tagName = 'div';
+
+		$html = $this->parser->internalParse( $text, false);
+
+		if ( !empty( $html ) ) {
+			$document = HtmlHelper::createDOMDocumentFromText( $html );
+			$xpath = new DOMXPath( $document );
+			$templatePlaceholders = $xpath->query( "//div[contains(@class, 'placeholder-double-brackets')]", $document );
+
+			$blockElements = implode( "|", HtmlHelper::BLOCK_ELEMENTS );
+			for ( $i = 0; $i < $templatePlaceholders->length; $i++ ) {
+				$placeholder = $templatePlaceholders->item( $i );
+				$found = $xpath->query( $blockElements, $placeholder );
+				if ( !$found->length ) {
+					// change wrapper tag to span so it does not break html if template is used inside inline html tag
+					$tagName = 'span';
+					break;
+				}
+			}
+		}
+
+		return $tagName;
 	}
 
 	/**
