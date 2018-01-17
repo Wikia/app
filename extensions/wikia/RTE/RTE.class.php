@@ -82,8 +82,10 @@ class RTE {
 
 			if ( !empty( $html ) ) {
 				// wrap in custom tag to properly load xml
-				$xml = '<articlecontent>' . $html . '</articlecontent>';
-				//encode for correct load
+				$xml = '<wikiaarticlecontent>' . $html . '</wikiaarticlecontent>';
+
+				//encode for correct load, loading as xml instead of HTML to avoid html parser fixing html issues like
+				// block element inside inline one
 				$document->loadXML( mb_convert_encoding( $xml, 'HTML-ENTITIES', 'UTF-8' ) );
 			}
 
