@@ -160,18 +160,4 @@ class HtmlHelper {
 
 		return $domStripped;
 	}
-
-	public static function renameNode( DOMElement $node, string $newName ) {
-		$newnode = $node->ownerDocument->createElement($newName);
-		foreach ($node->childNodes as $child){
-			$child = $node->ownerDocument->importNode($child, true);
-			$newnode->appendChild($child);
-		}
-		foreach ($node->attributes as $attrName => $attrNode) {
-			$newnode->setAttribute($attrName, $attrNode->nodeValue);
-		}
-		$node->parentNode->replaceChild($newnode, $node);
-
-		return $newnode;
-	}
 }
