@@ -81,8 +81,9 @@ class RTE {
 			$document = new DOMDocument();
 
 			if ( !empty( $html ) ) {
-				//encode for correct load
+				// wrap in custom tag to properly load xml
 				$xml = '<articlecontent>' . $html . '</articlecontent>';
+				//encode for correct load
 				$document->loadXML( mb_convert_encoding( $xml, 'HTML-ENTITIES', 'UTF-8' ) );
 			}
 

@@ -172,9 +172,13 @@ class HtmlHelper {
 	}
 
 	public static function renameNode( DOMElement $node, string $newName ) {
+		// For unknown reason iterating through $node->childNodes did not iterate over all of children, for example
+		// <i> and <b> was omitted
+		$xpath = new DOMXPath( $node->ownerDocument );
+		$children = $xpath->query("child::*", $node);
 		$newnode = $node->ownerDocument->createElement($newName);
-		for($i = 0; $i < $node->childNodes->length; $i++) {
-			$child = $node->childNodes->item($i);
+
+		foreach($children as $child) {
 			$child = $node->ownerDocument->importNode($child, true);
 			$newnode->appendChild($child);
 		}
