@@ -52,7 +52,6 @@ $wgCheckUserForceSummary = false;
 # Recent changes data hook
 $wgHooks['RecentChange_save'][] = 'CheckUserHooks::updateCheckUserData';
 $wgHooks['EmailUser'][] = 'CheckUserHooks::updateCUEmailData';
-$wgHooks['User::mailPasswordInternal'][] = 'CheckUserHooks::updateCUPasswordResetData';
 $wgHooks['AuthPluginAutoCreate'][] = 'CheckUserHooks::onAuthPluginAutoCreate';
 $wgHooks['AddNewAccount'][] = 'CheckUserHooks::onAddNewAccount';
 $wgHooks['LoggableUserIPData'][] = 'CheckUserHooks::onLoggableUserIPData';
