@@ -12,14 +12,10 @@ class DatabaseGlobalUsersService implements GlobalUsersService {
 		$selectQuery = [ 'ug_group' => $groupSet ];
 		$userIds = $dbr->selectFieldValues( 'user_groups', 'ug_user', $selectQuery, __METHOD__, [ 'DISTINCT' ] );
 
-		$userInfo = [];
+		$userMap = User::whoAre( $userIds );
 
-		foreach ( $userIds as $userId ) {
-			$userInfo[$userId] = User::whoIs( $userId );
-		}
+		asort( $userMap );
 
-		asort( $userInfo );
-
-		return $userInfo;
+		return $userMap;
 	}
 }
