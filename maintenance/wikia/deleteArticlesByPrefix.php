@@ -31,6 +31,9 @@ class DeleteArticlesByPrefix extends Maintenance {
 	}
 
 	public function execute() {
+		global $wgUser;
+		$wgUser = User::newFromName(Wikia::BOT_USER);
+
 		$prefix = $this->getOption('prefix');
 		$namespace = intval($this->getOption('namespace', 0));
 		$isDryRun = $this->hasOption('dry-run');
