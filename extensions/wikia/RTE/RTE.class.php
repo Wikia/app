@@ -97,7 +97,14 @@ class RTE {
 				}
 			}
 
-			$html = XmlHelper::getNodeHtml($document, $document->firstChild);
+			if ( !empty( $document->firstChild ) ) {
+				$html = XmlHelper::getNodeHtml($document, $document->firstChild);
+			} else {
+				\Wikia\Logger\WikiaLogger::instance()->warning("empty document", [
+					'html' => $html,
+					'document' => $document->saveXML()
+				]);
+			}
 		}
 
 		return true;
