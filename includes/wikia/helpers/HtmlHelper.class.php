@@ -84,6 +84,16 @@ class HtmlHelper {
 		return implode( "", $result );
 	}
 
+	public static function getNodeHtml( DOMDocument $document, DOMNode $node ) {
+		// strip <html> and <body> tags
+		$result = [ ];
+		for ( $i = 0; $i < $node->childNodes->length; $i++ ) {
+			$result[] = $document->saveHTML( $node->childNodes->item( $i ) );
+		}
+
+		return implode( "", $result );
+	}
+
 	/**
 	 * Removes given node
 	 *
@@ -163,7 +173,8 @@ class HtmlHelper {
 
 	public static function renameNode( DOMElement $node, string $newName ) {
 		$newnode = $node->ownerDocument->createElement($newName);
-		foreach ($node->childNodes as $child){
+		for($i = 0; $i < $node->childNodes->length; $i++) {
+			$child = $node->childNodes->item($i);
 			$child = $node->ownerDocument->importNode($child, true);
 			$newnode->appendChild($child);
 		}

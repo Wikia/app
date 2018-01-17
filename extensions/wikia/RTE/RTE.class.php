@@ -77,7 +77,19 @@ class RTE {
 		global $wgRTEParserEnabled;
 
 		if ($wgRTEParserEnabled && !empty( $html ) ) {
-			$document = HtmlHelper::createDOMDocumentFromText( $html );
+			$error_setting = libxml_use_internal_errors( true );
+			$document = new DOMDocument();
+
+			if ( !empty( $html ) ) {
+				//encode for correct load
+				$xml = '<articlecontent>' . $html . '</articlecontent>';
+				$document->loadXML( mb_convert_encoding( $xml, 'HTML-ENTITIES', 'UTF-8' ) );
+			}
+
+			// clear user generated html parsing errors
+			libxml_clear_errors();
+			libxml_use_internal_errors( $error_setting );
+
 			$xpath = new DOMXPath( $document );
 			$templatePlaceholders = $xpath->query( "//div[contains(@class, 'placeholder-double-brackets')]", $document );
 
@@ -91,7 +103,7 @@ class RTE {
 				}
 			}
 
-			$html = HtmlHelper::getBodyHtml( $document );
+			$html = HtmlHelper::getNodeHtml($document, $document->firstChild);
 		}
 
 		return true;
