@@ -1414,25 +1414,14 @@ class PPFrame_DOM implements PPFrame {
 	 * @return string tagName div or span
 	 */
 	function getPlaceholderTagName( string $text ): string {
-		$tagName = 'div';
-
 		$html = $this->parser->internalParse( $text, false);
 
-		if ( !empty( $html ) ) {
-			$document = HtmlHelper::createDOMDocumentFromText( $html );
-			$xpath = new DOMXPath( $document );
-			$templatePlaceholders = $xpath->query( "//div[contains(@class, 'placeholder-double-brackets')]", $document );
-
-			$blockElements = implode( "|", HtmlHelper::BLOCK_ELEMENTS );
-			for ( $i = 0; $i < $templatePlaceholders->length; $i++ ) {
-				$placeholder = $templatePlaceholders->item( $i );
-				$found = $xpath->query( $blockElements, $placeholder );
-				if ( !$found->length ) {
-					// change wrapper tag to span so it does not break html if template is used inside inline html tag
-					$tagName = 'span';
-					break;
-				}
-			}
+		if (preg_match('/<(' . implode( '|', HtmlHelper::BLOCK_ELEMENTS) . ')[^>]*>/', $html)
+			|| preg_match('/' . Parser::MARKER_PREFIX . '[^\\x7f]*' . Parser::MARKER_SUFFIX . '/', $html)) {
+			// TODO: check if marker is for <nowiki> or <ref> -- if so return span
+			$tagName = 'div';
+		} else {
+			$tagName = 'span';
 		}
 
 		return $tagName;
