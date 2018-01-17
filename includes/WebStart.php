@@ -150,18 +150,6 @@ if ( $wgEnableSelenium ) {
 }
 
 // Wikia change - begin - @author: wladek
-// attach sink to the profiler
-if ( $wgProfiler instanceof Profiler ) {
-	if ( empty($wgProfilerSendViaScribe) ) {
-		$sink = new ProfilerDataUdpSink();
-	} else {
-		$sink = new ProfilerDataScribeSink();
-	}
-	$wgProfiler->addSink( $sink );
-}
-// Wikia change - end
-
-// Wikia change - begin - @author: wladek
 // Catch all output
 $initialOutput = ob_get_clean();
 // Wikia change - end
