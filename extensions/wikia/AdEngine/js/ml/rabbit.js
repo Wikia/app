@@ -1,13 +1,22 @@
 /*global define, require*/
 define('ext.wikia.adEngine.ml.rabbit', [
 	require.optional('ext.wikia.adEngine.ml.fmr.fmrLogisticRegression'),
-	require.optional('ext.wikia.adEngine.ml.fmr.fmrPassiveAggressiveClassifier')
-], function (fmrLr, fmrPac) {
+	require.optional('ext.wikia.adEngine.ml.fmr.fmrPassiveAggressiveClassifier'),
+	require.optional('ext.wikia.adEngine.ml.n1.n1LogisticRegression'),
+	require.optional('ext.wikia.adEngine.ml.outstream.outstreamLogisticRegression')
+], function (
+	fmrLr,
+	fmrPac,
+	n1Lr,
+	outstreamLr
+) {
 	'use strict';
 
 	var models = [
 		fmrLr,
-		fmrPac
+		fmrPac,
+		n1Lr,
+		outstreamLr
 	];
 
 	function getSerializedResults() {

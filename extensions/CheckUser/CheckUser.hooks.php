@@ -5,6 +5,9 @@ class CheckUserHooks {
 	/**
 	 * Hook function for RecentChange_save
 	 * Saves user data into the cu_changes table
+	 *
+	 * @param RecentChange $rc
+	 * @return bool
 	 */
 	public static function updateCheckUserData( RecentChange $rc ) {
 		global $wgRequest;
@@ -33,8 +36,9 @@ class CheckUserHooks {
 			$actionText = '';
 		}
 
-		// SUS-3257: Make sure the text fits into the database
-		$actionTextTrim = mb_substr( $actionText, 0, static::ACTION_TEXT_MAX_LENGTH );
+		// SUS-3257 / SUS-3467: Make sure the text fits into the database
+		$actionTextTrim = substr( $actionText, 0, static::ACTION_TEXT_MAX_LENGTH );
+		$agentTrim = substr( $agent, 0, static::ACTION_TEXT_MAX_LENGTH );
 
 		$dbw = wfGetDB( DB_MASTER );
 		$cuc_id = $dbw->nextSequenceValue( 'cu_changes_cu_id_seq' );
@@ -55,50 +59,12 @@ class CheckUserHooks {
 			'cuc_ip_hex'     => $ip ? IP::toHex( $ip ) : null,
 			'cuc_xff'        => !$isSquidOnly ? $xff : '',
 			'cuc_xff_hex'    => ( $xff_ip && !$isSquidOnly ) ? IP::toHex( $xff_ip ) : null,
-			'cuc_agent'      => $agent
+			'cuc_agent'      => $agentTrim
 		);
 		# On PG, MW unsets cur_id due to schema incompatibilites. So it may not be set!
 		if ( isset( $rc_cur_id ) ) {
 			$rcRow['cuc_page_id'] = $rc_cur_id;
 		}
-		$dbw->insert( 'cu_changes', $rcRow, __METHOD__ );
-
-		return true;
-	}
-
-	/**
-	 * Hook function to store password reset
-	 * Saves user data into the cu_changes table
-	 */
-	public static function updateCUPasswordResetData( User $user, $ip, $account ) {
-		global $wgRequest;
-
-		// Get XFF header
-		$xff = $wgRequest->getHeader( 'X-Forwarded-For' );
-		list( $xff_ip, $isSquidOnly ) = IP::getClientIPfromXFF( $xff );
-		// Get agent
-		$agent = $wgRequest->getHeader( 'User-Agent' );
-		$dbw = wfGetDB( DB_MASTER );
-		$cuc_id = $dbw->nextSequenceValue( 'cu_changes_cu_id_seq' );
-		$rcRow = array(
-			'cuc_id'         => $cuc_id,
-			'cuc_namespace'  => NS_USER,
-			'cuc_title'      => '',
-			'cuc_minor'      => 0,
-			'cuc_user'       => $user->getId(),
-			// 'cuc_user_text'  => $user->getName(),// SUS-3080 - this column is redundant
-			'cuc_actiontext' => wfMsgForContent( 'checkuser-reset-action', $account->getName() ),
-			'cuc_comment'    => '',
-			'cuc_this_oldid' => 0,
-			'cuc_last_oldid' => 0,
-			'cuc_type'       => RC_LOG,
-			'cuc_timestamp'  => $dbw->timestamp( wfTimestampNow() ),
-			'cuc_ip'         => IP::sanitizeIP( $ip ),
-			'cuc_ip_hex'     => $ip ? IP::toHex( $ip ) : null,
-			'cuc_xff'        => !$isSquidOnly ? $xff : '',
-			'cuc_xff_hex'    => ( $xff_ip && !$isSquidOnly ) ? IP::toHex( $xff_ip ) : null,
-			'cuc_agent'      => $agent
-		);
 		$dbw->insert( 'cu_changes', $rcRow, __METHOD__ );
 
 		return true;

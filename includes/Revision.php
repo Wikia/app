@@ -21,6 +21,11 @@ class Revision implements IDBAccessObject {
 	protected $mTitle;
 	protected $mCurrent;
 
+	/**
+	 * SUS-3466: Maximum possible length of revision summary in bytes.
+	 */
+	const REVISION_SUMMARY_MAX_LENGTH = 255;
+
 	// Revision deletion constants
 	const DELETED_TEXT = 1;
 	const DELETED_COMMENT = 2;
@@ -282,27 +287,13 @@ class Revision implements IDBAccessObject {
 	 * @return Revision or null
 	 */
 	private static function loadFromConds( $db, $conditions, $flags = 0 ) {
-		$res = self::fetchFromConds( $db, $conditions, $flags );
-		if( $res ) {
-			$row = $res->fetchObject();
-			if( $row ) {
-				$ret = new Revision( self::replaceUsernameFieldsWithVariables( $row ) ); // SUS-2779
-				return $ret;
-			}
+		$row = self::fetchFromConds( $db, $conditions, $flags );
+
+		if ( $row ) {
+			return new Revision( $row );
 		}
-		$ret = null;
-		return $ret;
-	}
 
-	/**
-	 * @param $row
-	 */
-	private static function replaceUsernameFieldsWithVariables( $row ) {
-		$userName = User::getUsername( $row->rev_user, $row->rev_user_text );
-		$row->user_name = $userName;
-		$row->rev_user_text = $userName;
-
-		return $row;
+		return null;
 	}
 
 	/**
@@ -313,7 +304,7 @@ class Revision implements IDBAccessObject {
 	 * @param $db DatabaseBase
 	 * @param $conditions Array
 	 * @param $flags integer (optional)
-	 * @return ResultWrapper
+	 * @return object
 	 */
 	private static function fetchFromConds( $db, $conditions, $flags = 0 ) {
 		// SUS-2779
@@ -325,7 +316,8 @@ class Revision implements IDBAccessObject {
 		if ( ( $flags & self::READ_LOCKING ) == self::READ_LOCKING ) {
 			$options[] = 'LOCK IN SHARE MODE';
 		}
-		return $db->select(
+
+		return $db->selectRow(
 			array( 'revision', 'page' ),
 			$fields,
 			$conditions,
@@ -1006,7 +998,8 @@ class Revision implements IDBAccessObject {
 			$this->mTextId = $dbw->insertId();
 		}
 
-		if ( $this->mComment === null ) $this->mComment = "";
+		// SUS-3466: Truncate edit summaries before insert to prevent database error
+		$this->mComment = substr( $this->mComment ?? '', 0, static::REVISION_SUMMARY_MAX_LENGTH );
 
 		# Record the edit in revisions
 		$rev_id = isset( $this->mId )

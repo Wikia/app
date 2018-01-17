@@ -106,5 +106,9 @@
   "community-header-forum": "Forum",
   "community-header-admin-dashboard": "Admin Dashboard",
   "community-header-discussions-post": "Post",
-  "community-header-discussions-posts": "Posts"
+  "community-header-discussions-posts": "Posts",
+  "community-header-add-new-image": "Add New Image",
+  "community-header-add-new-video": "Add New Video",
+  "community-header-recent-changes": "Recent Changes",
+  "community-header-all-shortcuts": "All Shortcuts"
 }

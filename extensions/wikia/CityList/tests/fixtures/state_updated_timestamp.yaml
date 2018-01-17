@@ -1,0 +1,7 @@
+city_list:
+  -
+    city_id: 1
+    city_last_timestamp: 20171201000000
+  -
+    city_id: 2
+    city_last_timestamp: 20110101000000

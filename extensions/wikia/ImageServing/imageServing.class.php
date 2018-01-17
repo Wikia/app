@@ -44,22 +44,22 @@ class ImageServing {
 	 * @param $proportionOrHight array|Integer can by array with proportion(example: array("w" => 1, "h" => 1)) or just height in pixels (example: 100)  proportion will be
 	 * calculated automatically
 	 */
-	function __construct( $articles = null, $width = 100, $proportionOrHeight = array( "w" => 1, "h" => 1 ), $db = null ){
-		if($width == 0 || (!is_array( $proportionOrHeight )  && $proportionOrHeight == 0)) {
+	function __construct( $articles = null, $width = 100, $proportionOrHeight = array( "w" => 1, "h" => 1 ), $db = null ) {
+		if ( $width == 0 || ( !is_array( $proportionOrHeight ) && $proportionOrHeight == 0 ) ) {
 			$wg = F::app()->wg;
 			WikiaLogger::instance()->error( __METHOD__ . ' agent requested zero width or height',
-				["user_agent" => $wg->Request->getHeader( 'USER-AGENT' )] );
+				[ "user_agent" => $wg->Request->getHeader( 'USER-AGENT' ) ] );
 		}
 
-		if( !is_array( $proportionOrHeight ) ) {
+		if ( !is_array( $proportionOrHeight ) ) {
 			$height = (int) $proportionOrHeight;
-			$this->proportion = array("w" => $width, "h" => $height);
-			$this->proportionString = $width.":".$height;
+			$this->proportion = array( "w" => $width, "h" => $height );
+			$this->proportionString = $width . ":" . $height;
 			$this->height = $height;
 		} else {
 			$this->proportion = $proportionOrHeight;
-			$this->proportionString = implode(":", $proportionOrHeight);
-			$this->height = (int) round($width / $proportionOrHeight['w'] * $proportionOrHeight['h']);
+			$this->proportionString = implode( ":", $proportionOrHeight );
+			$this->height = (int) round( $width / $proportionOrHeight['w'] * $proportionOrHeight['h'] );
 		}
 		$this->articles = array();
 
@@ -67,7 +67,7 @@ class ImageServing {
 
 		$this->app = F::app();
 		$this->width = $width;
-		$this->memc =  $this->app->wg->Memc;
+		$this->memc = $this->app->wg->Memc;
 		$this->imageServingDrivers = $this->app->wg->ImageServingDrivers;
 
 		$this->db = $db;
@@ -99,7 +99,7 @@ class ImageServing {
 	 *
 	 * @return mixed array of images for each requested article
 	 */
-	public function getImages( $limit = 5, $driverName = null) {
+	public function getImages( $limit = 5, $driverName = null ) {
 		wfProfileIn( __METHOD__ );
 		$articles = $this->articles;
 		$out = array();
@@ -107,13 +107,13 @@ class ImageServing {
 		// force ImageServing to return an empty list
 		// see PLATFORM-392
 		global $wgImageServingForceNoResults;
-		if (!empty($wgImageServingForceNoResults)) {
-			wfProfileOut(__METHOD__);
+		if ( !empty( $wgImageServingForceNoResults ) ) {
+			wfProfileOut( __METHOD__ );
 			return $out;
 		}
 
-		if( !empty( $articles ) ) {
-			if( $this->db == null ) {
+		if ( !empty( $articles ) ) {
+			if ( $this->db == null ) {
 				$db = wfGetDB( DB_SLAVE, array() );
 			} else {
 				$db = $this->db;
@@ -121,75 +121,80 @@ class ImageServing {
 
 			$this->articlesByNS = array();
 
-			wfProfileIn( __METHOD__  . '::fetchMetadata');
+			wfProfileIn( __METHOD__ . '::fetchMetadata' );
 
 			// fetch articles metadata (try from cache)
-			foreach($articles as $key => $value) {
-				$mcValue = $this->memc->get( $this->makeKey($key) );
+			foreach ( $articles as $key => $value ) {
+				$title = Title::newFromID( $key );
 
-				if(!empty($mcValue)) {
-					unset($articles[$key]);
-					$this->addArticleToList($mcValue);
+				if ( $title instanceof  Title ) {
+					$mcValue = $this->memc->get( $this->makeKey( $key, $title->getLatestRevID() ) );
+
+					if ( !empty( $mcValue ) ) {
+						unset( $articles[$key] );
+						$this->addArticleToList( $mcValue );
+					}
 				}
 			}
 
 			// fetch articles metadata (from database + cache it)
-			if (!empty($articles)) {
+			if ( !empty( $articles ) ) {
 				$res = $db->select(
 					array( 'page' ),
 					array(
 						'page_namespace as ns',
 						'page_title as title',
-						'page_id as id'
+						'page_id as id',
+						'page_latest'
 					),
 					array(
-						'page_id' =>  $articles
+						'page_id' => $articles
 					),
 					__METHOD__
 				);
 
-				while ($row =  $db->fetchRow( $res ) ) {
-					$this->memc->set( $this->makeKey($row['id']), $row, 86400 );
-					$this->addArticleToList($row);
+				while ( $row = $db->fetchRow( $res ) ) {
+					$this->memc->set( $this->makeKey( $row['id'], $row['page_latest'] ), $row, 86400 );
+					$this->addArticleToList( $row );
 				}
 			}
 
-			wfProfileOut( __METHOD__  . '::fetchMetadata');
+			wfProfileOut( __METHOD__ . '::fetchMetadata' );
 
-			if(empty($driverName)) {
-				foreach($this->imageServingDrivers as $key => $value ) {
-					if(!empty($this->articlesByNS[$key])) {
+			if ( empty( $driverName ) ) {
+				foreach ( $this->imageServingDrivers as $key => $value ) {
+					if ( !empty( $this->articlesByNS[$key] ) ) {
 						/* @var ImageServingDriverBase $driver */
-						$driver = new $value($db, $this, $this->proportionString);
-						$driver->setArticles($this->articlesByNS[$key]);
-						unset($this->articlesByNS[$key]);
-						$out = $out + $driver->execute($limit);
+						$driver = new $value( $db, $this, $this->proportionString );
+						$driver->setArticles( $this->articlesByNS[$key] );
+						unset( $this->articlesByNS[$key] );
+						$out = $out + $driver->execute( $limit );
 					}
 				}
 
-				$driver = new ImageServingDriverMainNS($db, $this, $this->proportionString);
+				$driver = new ImageServingDriverMainNS( $db, $this );
 			} else {
-				$driver = new $driverName($db, $this, $this->proportionString);
+				$driver = new $driverName( $db, $this, $this->proportionString );
 			}
 
 			//rest of article in MAIN name spaces
-			foreach( $this->articlesByNS as $value ) {
+			foreach ( $this->articlesByNS as $value ) {
 				$driver->setArticles( $value );
 				$out = $out + $driver->execute();
 			}
 
-			if( empty( $out ) ) {
+			if ( empty( $out ) ) {
 				// Hook for finding fallback images if there were no matches. - NOTE: should this fallback any time (count($out) < $limit)? Seems like overkill.
 				Hooks::run( 'ImageServing::fallbackOnNoResults', [ $this, $limit, &$out ] );
 			}
 
 			// apply limiting
-			foreach($out as &$entry) {
-				$entry = array_slice($entry, 0, $limit);
+			foreach ( $out as &$entry ) {
+				$entry = array_slice( $entry, 0, $limit );
 			}
 		}
 
-		wfProfileOut(__METHOD__);
+		wfProfileOut( __METHOD__ );
 
 		return $out;
 	}
@@ -205,9 +210,9 @@ class ImageServing {
 	 * @TODO: Please refactor this... it's a really weird/confusing datastructure.
 	 * @TODO: Is there any reason to store the whole article data instead of just the title at the end?
 	 */
-	private function addArticleToList($value) {
-		if( empty($this->articlesByNS[$value['ns']] )) {
-			$this->articlesByNS[$value['ns']]  = array();
+	private function addArticleToList( $value ) {
+		if ( empty( $this->articlesByNS[$value['ns']] ) ) {
+			$this->articlesByNS[$value['ns']] = array();
 		}
 		$this->articlesByNS[$value['ns']][$value['id']] = $value;
 	}
@@ -216,10 +221,11 @@ class ImageServing {
 	 * Returns memcache key to be used to cache articles metadata (article id + namespace id)
 	 *
 	 * @param $articleId int
+	 * @param $revId int
 	 * @return String
 	 */
-	private function makeKey( $articleId ) {
-		return wfMemcKey("imageserving-article-metadata", $articleId);
+	private function makeKey( $articleId, $revId ) {
+		return wfMemcKey( "imageserving-article-metadata", $articleId, $revId );
 	}
 
 	/**
@@ -236,13 +242,13 @@ class ImageServing {
 		wfProfileIn( __METHOD__ );
 
 		$imagesIds = array();
-		if( !empty( $fileNames ) ) {
+		if ( !empty( $fileNames ) ) {
 			/**
 			 * @var $fileName LocalFile
 			 * @var $title Title
 			 */
 			foreach ( $fileNames as $fileName ) {
-				if(!($fileName instanceof LocalFile)) {
+				if ( !( $fileName instanceof LocalFile ) ) {
 					$title = Title::newFromText( $fileName, NS_FILE );
 				} else {
 					$img = $fileName;
@@ -252,17 +258,17 @@ class ImageServing {
 
 			// do not query for page_id = 0
 			if ( $title->exists() ) {
-				$imagesIds[ $title->getArticleId() ] = $title->getDBkey();
-				$this->articles[ $title->getArticleId() ] = $title->getArticleId();
+				$imagesIds[$title->getArticleId()] = $title->getDBkey();
+				$this->articles[$title->getArticleId()] = $title->getArticleId();
 			}
 		}
 
-		$out = $this->getImages(1);
+		$out = $this->getImages( 1 );
 
 		$ret = array();
-		foreach($imagesIds as $key => $value) {
-			if(!empty($out[$key]) && count($out[$key]) > 0) {
-				$ret[ $value ] = $out[$key][0];
+		foreach ( $imagesIds as $key => $value ) {
+			if ( !empty( $out[$key] ) && count( $out[$key] ) > 0 ) {
+				$ret[$value] = $out[$key][0];
 			}
 		}
 
@@ -289,19 +295,19 @@ class ImageServing {
 		} else {
 			//TODO: Create files local cache of IS
 			$file_title = Title::newFromText( $name, NS_FILE );
-			$img = wfFindFile( $file_title  );
-			if( empty( $img ) ) {
+			$img = wfFindFile( $file_title );
+			if ( empty( $img ) ) {
 				wfProfileOut( __METHOD__ );
 				return "";
 			}
 		}
 
-		if (WikiaFileHelper::isVideoFile($img)) {
-			$H = ( float )( ( $width ) * ( $this->proportion['h'] / $this->proportion['w'] ) );
+		if ( WikiaFileHelper::isVideoFile( $img ) ) {
+			$H = ( float ) ( ( $width ) * ( $this->proportion['h'] / $this->proportion['w'] ) );
 			$this->tmpDeltaY = 0.5 - $H / $height / 2;
 		}
 
-		return $this->getVignetteUrl($img, $width, $height);
+		return $this->getVignetteUrl( $img, $width, $height );
 	}
 
 	/**
@@ -310,25 +316,25 @@ class ImageServing {
 	 * @param $height
 	 * @return string
 	 */
-	private function getVignetteUrl(URLGeneratorInterface $image, $width, $height) {
-		list($top, $right, $bottom, $left) = $this->getCutParams($width, $height);
+	private function getVignetteUrl( URLGeneratorInterface $image, $width, $height ) {
+		list( $top, $right, $bottom, $left ) = $this->getCutParams( $width, $height );
 
 		$generator = $image->getUrlGenerator()
-			->width($this->width);
+			->width( $this->width );
 
 		/**
 		 * negative offsets are ignored in the legacy thumbnailer. Vignette respects these, so explicitly set
 		 * the mode to scale-to-width to maintain consistency with the legacy thumbnailer
 		 */
-		if ($top < 0 || $bottom < 0 || $right < 0 || $left < 0) {
+		if ( $top < 0 || $bottom < 0 || $right < 0 || $left < 0 ) {
 			$generator->scaleToWidth();
 		} else {
 			$generator
 				->windowCrop()
-				->xOffset($left)
-				->yOffset($top)
-				->windowWidth($right - $left)
-				->windowHeight($bottom - $top);
+				->xOffset( $left )
+				->yOffset( $top )
+				->windowWidth( $right - $left )
+				->windowHeight( $bottom - $top );
 		}
 
 		return $generator->url();
@@ -344,47 +350,47 @@ class ImageServing {
 	 *
 	 * @return string prefix for thumb image
 	 */
-	public function getCut( $width, $height, $align = "center", $issvg = false  ) {
-		list($top, $right, $bottom, $left) = $this->getCutParams($width, $height, $align, $issvg);
+	public function getCut( $width, $height, $align = "center", $issvg = false ) {
+		list( $top, $right, $bottom, $left ) = $this->getCutParams( $width, $height, $align, $issvg );
 		$cut = "{$this->width}px";
 
-		if ($left >= 0 && $right >= 0 && $top >= 0 && $bottom >= 0) {
+		if ( $left >= 0 && $right >= 0 && $top >= 0 && $bottom >= 0 ) {
 			$cut .= "-$left,$right,$top,$bottom";
 		}
 
 		return $cut;
 	}
 
-	private function getCutParams($width, $height, $align="center", $issvg=false) {
+	private function getCutParams( $width, $height, $align = "center", $issvg = false ) {
 		//rescale of png always use width 512;
-		if( $issvg ) {
-			$height = round( ( 512 * $height) / $width );
+		if ( $issvg ) {
+			$height = round( ( 512 * $height ) / $width );
 			$width = 512;
 		}
 
 		// make sure these are numeric and nonzero (BugId:20644, BugId:25965)
-		$width = max(1, intval($width));
-		$height = max(1, intval($height));
+		$width = max( 1, intval( $width ) );
+		$height = max( 1, intval( $height ) );
 		// in case we're missing some proportions, maintain the original aspect ratio
-		if (empty($this->proportion['h']) && !empty($this->proportion['w'])) {
-			$this->proportion['h'] = (float)$height * $this->proportion['w'] / $width;
+		if ( empty( $this->proportion['h'] ) && !empty( $this->proportion['w'] ) ) {
+			$this->proportion['h'] = (float) $height * $this->proportion['w'] / $width;
 		}
-		if (empty($this->proportion['w']) && !empty($this->proportion['h'])) {
-			$this->proportion['w'] = (float)$width * $this->proportion['h'] / $height;
+		if ( empty( $this->proportion['w'] ) && !empty( $this->proportion['h'] ) ) {
+			$this->proportion['w'] = (float) $width * $this->proportion['h'] / $height;
 		}
 
-		if($this->proportion['w'] == 0) {
+		if ( $this->proportion['w'] == 0 ) {
 			$this->proportion['w'] = 1;
 		}
 
-		if($this->proportion['h'] == 0) {
+		if ( $this->proportion['h'] == 0 ) {
 			$this->proportion['h'] = 1;
 		}
 
 		$pHeight = round( ( $width ) * ( $this->proportion['h'] / $this->proportion['w'] ) );
 
-		if( $pHeight >= $height ) {
-			$pWidth =  round( $height * ( $this->proportion['w'] / $this->proportion['h'] ) );
+		if ( $pHeight >= $height ) {
+			$pWidth = round( $height * ( $this->proportion['w'] / $this->proportion['h'] ) );
 			$top = 0;
 			if ( $align == "center" ) {
 				$left = round( $width / 2 - $pWidth / 2 );
@@ -408,7 +414,7 @@ class ImageServing {
 				$top = 0;
 			}
 
-			if( $bottom > $height ) {
+			if ( $bottom > $height ) {
 				$bottom = $pHeight;
 				$top = 0;
 			}
@@ -417,26 +423,26 @@ class ImageServing {
 			$right = $width;
 		}
 
-		return [$top, $right, $bottom, $left];
+		return [ $top, $right, $bottom, $left ];
 	}
 
 	public function getDeltaY() {
-		if (is_null($this->deltaY)) {
+		if ( is_null( $this->deltaY ) ) {
 			$this->deltaY = ( $this->proportion['w'] / $this->proportion['h'] - 1 ) * 0.1;
 		}
 		return $this->deltaY;
 	}
 
-	public function setDeltaY( $iCenterPosition = 0 ){
+	public function setDeltaY( $iCenterPosition = 0 ) {
 		$this->deltaY = $iCenterPosition;
 	}
 
 	public function setArticleIds( $articleIds ) {
-		if( is_array( $articleIds ) ) {
+		if ( is_array( $articleIds ) ) {
 			foreach ( $articleIds as $article ) {
 				$articleId = ( int ) $article;
 
-				if ($articleId > 0) {
+				if ( $articleId > 0 ) {
 					$this->articles[$articleId] = $articleId;
 				}
 			}

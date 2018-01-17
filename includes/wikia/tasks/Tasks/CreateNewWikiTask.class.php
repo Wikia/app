@@ -426,7 +426,6 @@ class CreateNewWikiTask extends BaseTask {
 			->WHERE( 'rev_page' )->GREATER_THAN( 0 )
 			->ORDER_BY( 'rev_id' )
 			->run( $dbr, function ( \ResultWrapper $res ) {
-				global $wgEnableScribeNewReport;
 
 				$numRows = 0;
 				$pages = [ ];
@@ -436,25 +435,17 @@ class CreateNewWikiTask extends BaseTask {
 					$user = \User::newFromId( $row->rev_user );
 					$revision = \Revision::newFromId( $row->rev_id );
 
-					if ( $wgEnableScribeNewReport ) {
-						$key = ( isset( $pages[ $row->page_id ] ) ) ? 'edit' : 'create';
-						$scribeProducer = new \ScribeEventProducer( $key, 0 );
-						if ( is_object( $scribeProducer ) ) {
-							if ( $scribeProducer->buildEditPackage( $article, $user, $revision ) ) {
-								// SUS-760 Do not send images images (creations and edits) for review while creating a wiki.
-								if ( $article->getTitle()->inNamespaces( NS_FILE, NS_IMAGE ) ) {
-									$scribeProducer->setIsImageForReview( false );
-								}
-								$scribeProducer->sendLog();
-							}
-						}
-					} else {
-						$flags = "";
-						$status = \Status::newGood( array() );
-						$status->value[ 'new' ] = ( isset( $pages[ $row->page_id ] ) ? false : true );
-						$archive = 0;
 
-						\ScribeProducer::saveComplete( $article, $user, null, null, null, $archive, null, $flags, $revision, $status, 0 );
+					$key = ( isset( $pages[ $row->page_id ] ) ) ? 'edit' : 'create';
+					$scribeProducer = new \ScribeEventProducer( $key, 0 );
+					if ( is_object( $scribeProducer ) ) {
+						if ( $scribeProducer->buildEditPackage( $article, $user, $revision ) ) {
+							// SUS-760 Do not send images images (creations and edits) for review while creating a wiki.
+							if ( $article->getTitle()->inNamespaces( NS_FILE, NS_IMAGE ) ) {
+								$scribeProducer->setIsImageForReview( false );
+							}
+							$scribeProducer->sendLog();
+						}
 					}
 
 					$pages[ $row->page_id ] = $row->rev_id;

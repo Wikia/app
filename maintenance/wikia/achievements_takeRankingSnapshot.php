@@ -8,7 +8,7 @@
  *
  * @author: Federico 'Lox' Lucignano <federico@wikia-inc.com>
  *
- * @usage: SERVER_ID=177 php achievements_takeRankingSnapshot.php --conf /usr/wikia/conf/current/wiki.factory/LocalSettings.php --aconf /usr/wikia/conf/current/AdminSettings.php
+ * @usage: SERVER_ID=177 php achievements_takeRankingSnapshot.php --conf /usr/wikia/conf/current/wiki.factory/LocalSettings.php
  */
 
 ini_set( "include_path", dirname(__FILE__)."/../" );

@@ -21,6 +21,15 @@ class LogicalXor extends Constraint
      */
     protected $constraints = [];
 
+    public static function fromConstraints(Constraint ...$constraints): self
+    {
+        $constraint = new self;
+
+        $constraint->constraints = \array_values($constraints);
+
+        return $constraint;
+    }
+
     /**
      * @param Constraint[] $constraints
      */

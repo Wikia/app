@@ -1259,54 +1259,6 @@ class Wikia {
 	}
 
 	/**
-	 * get_const_values
-	 * Returns some stats values from const_values table
-	 *
-	 * @static
-	 * @access public
-	 * @author Piotr Molski
-	 *
-	 * @param $name String
-	 * @return int
-	 *
-	 */
-	static public function get_const_values( $name = '' ) {
-		global $wgMemc;
-		$key = wfSharedMemcKey('const_values', $name);
-		$value = $wgMemc->get($key);
-
-		if ( !is_numeric($value) ) {
-			$dbr = wfGetDB( DB_SLAVE, array(), 'specials' );
-
-			$oRes = $dbr->select('const_values', array('val'), array( 'name' =>  $name ), __METHOD__ );
-
-			$value = 0;
-			if ( $oRow = $dbr->fetchRow( $oRes ) ) {
-				$value = $oRow['val'];
-				$wgMemc->set( $key, $value, 60 * 60 * 5 );
-			}
-		}
-
-		return $value;
-	}
-
-
-	/**
-	 * get_content_page
-	 * Returns number of pages in content namespaces
-	 *
-	 * @static
-	 * @access public
-	 * @author Piotr Molski
-	 *
-	 * @return int
-	 *
-	 */
-	static public function get_content_pages( ) {
-		return self::get_const_values( 'content_ns' );
-	}
-
-	/**
 	 * Add some extra request parameters to control memcache behavior @author: owen
 	 * mcache=none disables memcache for the duration of the request (not really that useful)
 	 * mcache=writeonly disables memcache reads for the duration of the request

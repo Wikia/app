@@ -1,8 +1,11 @@
+@import 'extensions/wikia/DesignSystem/bower_components/design-system/dist/scss/wds-variables/_colors';
+
 @import "skins/oasis/css/core/layout";
 @import "skins/shared/color";
 @import "skins/shared/mixins/bodytext";
 @import "skins/shared/mixins/box-shadow";
 @import "skins/shared/mixins/clearfix";
+@import "skins/shared/mixins/flexbox";
 @import "skins/shared/mixins/gradient";
 
 $placeholder-bg-img: url(/extensions/wikia/SpecialVideos/images/AddVideoIcons_Dark.png);  /* inline */
@@ -88,7 +91,7 @@ $placeholder-bg-color: darken($color-page, 10%);
 		padding-bottom: 5px;
 		position: relative;
 		&:hover .remove {
-			display: block;
+			@include flexbox();
 		}
 	}
 
@@ -178,17 +181,26 @@ $placeholder-bg-color: darken($color-page, 10%);
 		}
 	}
 	.remove {
-		background-color: #ddd;
+		@include align-items(center);
+		@include justify-content(center);
+
+		background-color: rgba($wds-color-light-c6, .8);
 		cursor: pointer;
 		display: none;
+		height: 40px;
 		margin-right: 12px;
-		padding: 0px 2px 4px 5px;
 		position: absolute;
 		right: 0;
 		top: 0;
+		width: 40px;
 		z-index: 101;
+
+		svg {
+			fill: $wds-color-white;
+		}
 	}
 }
+
 .messageHolder {
 	display: none;
 }

@@ -27,10 +27,7 @@ describe('ext.wikia.adEngine.provider.btfBlocker', function () {
 			}
 		},
 		win: {
-			addEventListener: noop,
-			setTimeout: function (callback) {
-				callback();
-			}
+			addEventListener: noop
 		}
 	};
 

@@ -1,0 +1,138 @@
+page: # local page table
+  - # user page
+    page_id: 1
+    page_namespace: 2
+    page_title: Old_User_Nąmę
+    page_restrictions: ''
+    page_random: 0
+    page_latest: 1932
+    page_len: 0
+  - # user page subpage
+    page_id: 2
+    page_namespace: 2
+    page_title: Old_User_Nąmę/User_subpage
+    page_restrictions: ''
+    page_random: 0
+    page_latest: 15000
+    page_len: 0
+  - # user talk page
+    page_id: 3
+    page_namespace: 3
+    page_title: Old_User_Nąmę
+    page_restrictions: ''
+    page_random: 0
+    page_latest: 2040
+    page_len: 0
+  - # user blog listing
+    page_id: 4
+    page_namespace: 500
+    page_title: Old_User_Nąmę
+    page_restrictions: ''
+    page_random: 0
+    page_latest: 2060
+    page_len: 0
+  - # user blog page
+    page_id: 5
+    page_namespace: 500
+    page_title: Old_User_Nąmę/Test_blog
+    page_restrictions: ''
+    page_random: 0
+    page_latest: 4782
+    page_len: 0
+  - # message wall
+    page_id: 6
+    page_namespace: 1200
+    page_title: Old_User_Nąmę
+    page_restrictions: ''
+    page_random: 0
+    page_latest: 3600
+    page_len: 0
+pages: # global dataware.pages
+  -
+    page_wikia_id: 177
+    page_id: 8800
+    page_namespace: 2
+    page_title: Old_User_Nąmę
+  -
+    page_wikia_id: 147
+    page_id: 904
+    page_namespace: 3
+    page_title: Old_User_Nąmę
+  -
+    page_wikia_id: 1770
+    page_id: 10280
+    page_namespace: 500
+    page_title: Old_User_Nąmę
+  -
+    page_wikia_id: 1240
+    page_id: 3445
+    page_namespace: 1200
+    page_title: Old_User_Nąmę
+  - # main article page
+    page_wikia_id: 1280
+    page_id: 6512
+    page_namespace: 0
+    page_title: Old_User_Nąmę
+  - # talk page
+    page_wikia_id: 1800
+    page_id: 2871
+    page_namespace: 1
+    page_title: Old_User_Nąmę
+revision: # latest revision needed for moving process
+  -
+    rev_id: 1932
+    rev_page: 1
+    rev_text_id: 250
+    rev_comment: ''
+    rev_user: 0
+    rev_user_text: 188.146.144.183
+  -
+    rev_id: 15000
+    rev_page: 2
+    rev_parent_id: 2039
+    rev_text_id: 340
+    rev_comment: ''
+    rev_user: 56371
+    rev_user_text: ''
+  -
+    rev_id: 2040
+    rev_page: 3
+    rev_text_id: 339
+    rev_comment: ''
+    rev_user: 0
+    rev_user_text: 188.146.144.183
+  -
+    rev_id: 2060
+    rev_page: 4
+    rev_text_id: 600
+    rev_comment: ''
+    rev_user: 56371
+    rev_user_text: ''
+  -
+    rev_id: 4782
+    rev_page: 5
+    rev_text_id: 600
+    rev_comment: ''
+    rev_user: 56371
+    rev_user_text: ''
+  -
+    rev_id: 3600
+    rev_page: 6
+    rev_text_id: 600
+    rev_comment: ''
+    rev_user: 56371
+    rev_user_text: ''
+user:
+  -
+    user_id: 192
+    user_name: FANDOMbot
+    user_real_name: ''
+    user_email: 'ferenc.jozsef@kuk.at'
+    user_touched: '20110101000000'
+    user_token: 'loremipsum'
+    user_email_authenticated: '20101102000000'
+    user_email_token: 'dolorsitamet'
+    user_email_token_expires: '20120301120000'
+    user_registration: '20090604060000'
+    user_editcount: 2500
+    user_birthdate:

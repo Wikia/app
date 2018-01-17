@@ -285,7 +285,7 @@ class WikiService extends WikiaModel {
 
 				$result = $db->select(
 					array( 'rollup_wiki_user_events' ),
-					array( 'user_id', 'SUM(edits + creates) as edits' ),
+					array( 'user_id', 'SUM(edits) as edits' ),
 					array(
 						'period_id' => DataMartService::PERIOD_ID_WEEKLY,
 						'wiki_id' => $wikiId,

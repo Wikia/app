@@ -106,13 +106,9 @@ class TagsReportPage extends SpecialPage {
 			wfMemcKey( __METHOD__ ),
 			WikiaResponse::CACHE_SHORT,
 			function() {
-				global $wgCityId, $wgStatsDB, $wgStatsDBEnabled;
+				global $wgCityId, $wgSpecialsDB;
 
-				if ( empty( $wgStatsDBEnabled ) ) {
-					return [];
-				}
-
-				$dbs = wfGetDB( DB_SLAVE, [], $wgStatsDB );
+				$dbs = wfGetDB( DB_SLAVE, [], $wgSpecialsDB );
 				$res = $dbs->select(
 					self::TABLE,
 					[ 'ct_kind as tag', 'count(*) as cnt' ],
@@ -148,13 +144,9 @@ class TagsReportPage extends SpecialPage {
 			wfMemcKey( __METHOD__, $tag ),
 			WikiaResponse::CACHE_SHORT,
 			function() use ( $tag ) {
-				global $wgCityId, $wgStatsDB, $wgStatsDBEnabled;
+				global $wgCityId, $wgSpecialsDB;
 
-				if ( empty( $wgStatsDBEnabled ) ) {
-					return [];
-				}
-
-				$dbs = wfGetDB( DB_SLAVE, [], $wgStatsDB );
+				$dbs = wfGetDB( DB_SLAVE, [], $wgSpecialsDB );
 				$res = $dbs->select(
 					self::TABLE,
 					[ ' ct_namespace', 'ct_page_id' ],
@@ -184,13 +176,9 @@ class TagsReportPage extends SpecialPage {
 	 * @throws MWException
 	 */
 	private function getGenDate() {
-		global $wgLang, $wgStatsDB, $wgCityId, $wgStatsDBEnabled;
+		global $wgLang, $wgSpecialsDB, $wgCityId;
 
-		if ( empty( $wgStatsDBEnabled ) ) {
-			return [];
-		}
-
-		$dbs = wfGetDB( DB_SLAVE, [], $wgStatsDB );
+		$dbs = wfGetDB( DB_SLAVE, [], $wgSpecialsDB );
 		$ts = $dbs->selectField(
 			self::TABLE,
 			'max(ct_timestamp) as ts',

@@ -3146,10 +3146,10 @@ class Parser {
 			case 'sitename':
 				return $wgSitename;
 			case 'server':
-				return $wgServer;
+				return wfProtocolUrlToRelative( $wgServer );
 			case 'servername':
 				$serverParts = wfParseUrl( $wgServer );
-				return $serverParts && isset( $serverParts['host'] ) ? $serverParts['host'] : $wgServer;
+				return $serverParts && isset( $serverParts['host'] ) ? $serverParts['host'] : wfProtocolUrlToRelative( $wgServer );
 			case 'scriptpath':
 				return $wgScriptPath;
 			case 'stylepath':

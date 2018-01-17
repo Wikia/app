@@ -97,6 +97,14 @@ $(function () {
 						return false;
 					}
 				});
+
+				if (this.cookies.get('special-video:add-video')) {
+					this.cookies.set('special-video:add-video', null, {
+						path: '/'
+					});
+					addVideoButton.click();
+				}
+
 			} else {
 				addVideoButton.hide();
 			}
@@ -146,8 +154,9 @@ $(function () {
 			});
 		}
 	};
-	require(['BannerNotification'], function (BannerNotification) {
+	require(['BannerNotification', 'wikia.cookies'], function (BannerNotification, cookies) {
 		SpecialVideos.bannerNotification = new BannerNotification().setType('error');
+		SpecialVideos.cookies = cookies;
 		SpecialVideos.init();
 	});
 
