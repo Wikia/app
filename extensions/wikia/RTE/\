@@ -422,6 +422,9 @@ class RTEReverseParser {
 					if ($node->nodeName === 'div' && !self::isFirstChild($node)) {
 						$out = "\n{$out}";
 					}
+					if(self::nextSiblingIs($node, p)){
+						$out = "HELLOTHERE";
+					}
 					break;
 				case 'comment':
 					// FIXME: dirty fix for RT #83859
@@ -1330,12 +1333,12 @@ class RTEReverseParser {
 					)
 				)
 			) {
-					$out = "{$out}";
+					$out = "\n{$out}";
 			}
 		}
 		else {
 			// RT #75625: don't render empty headings
-			$out = "";
+			$out = "\n";
 		}
 
 		wfProfileOut(__METHOD__);
