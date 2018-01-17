@@ -719,7 +719,7 @@ class ExtParserFunctions {
 		}
 
 		if ( intval( $inLength ) == 0 ) {
-			$result = mb_substr( $inStr, intval( $inStart ) );
+			$result = mb_substr( $inStr, $inStart );
 		} else {
 			$result = mb_substr( $inStr, intval( $inStart ), intval( $inLength ) );
 		}
