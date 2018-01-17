@@ -28,7 +28,7 @@ class XmlHelper {
 		// For unknown reason iterating through $node->childNodes did not iterate over all of children, for example
 		// <i> and <b> was omitted
 		$xpath = new DOMXPath( $node->ownerDocument );
-		$children = $xpath->query("child::*", $node);
+		$children = $xpath->query("child::node()", $node);
 		$newnode = $node->ownerDocument->createElement($newName);
 
 		foreach($children as $child) {
