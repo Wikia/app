@@ -84,16 +84,6 @@ class HtmlHelper {
 		return implode( "", $result );
 	}
 
-	public static function getNodeHtml( DOMDocument $document, DOMNode $node ) {
-		// strip <html> and <body> tags
-		$result = [ ];
-		for ( $i = 0; $i < $node->childNodes->length; $i++ ) {
-			$result[] = $document->saveHTML( $node->childNodes->item( $i ) );
-		}
-
-		return implode( "", $result );
-	}
-
 	/**
 	 * Removes given node
 	 *
@@ -169,24 +159,5 @@ class HtmlHelper {
 		unset( $dom );
 
 		return $domStripped;
-	}
-
-	public static function renameNode( DOMElement $node, string $newName ) {
-		// For unknown reason iterating through $node->childNodes did not iterate over all of children, for example
-		// <i> and <b> was omitted
-		$xpath = new DOMXPath( $node->ownerDocument );
-		$children = $xpath->query("child::*", $node);
-		$newnode = $node->ownerDocument->createElement($newName);
-
-		foreach($children as $child) {
-			$child = $node->ownerDocument->importNode($child, true);
-			$newnode->appendChild($child);
-		}
-		foreach ($node->attributes as $attrName => $attrNode) {
-			$newnode->setAttribute($attrName, $attrNode->nodeValue);
-		}
-		$node->parentNode->replaceChild($newnode, $node);
-
-		return $newnode;
 	}
 }

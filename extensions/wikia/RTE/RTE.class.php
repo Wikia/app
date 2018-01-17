@@ -77,21 +77,12 @@ class RTE {
 		global $wgRTEParserEnabled;
 
 		if ($wgRTEParserEnabled && !empty( $html ) ) {
-			$error_setting = libxml_use_internal_errors( true );
-			$document = new DOMDocument();
+			// wrap in custom tag to properly load xml
+			$xml = '<wikiaarticlecontent>' . $html . '</wikiaarticlecontent>';
 
-			if ( !empty( $html ) ) {
-				// wrap in custom tag to properly load xml
-				$xml = '<wikiaarticlecontent>' . $html . '</wikiaarticlecontent>';
-
-				//encode for correct load, loading as xml instead of HTML to avoid html parser fixing html issues like
-				// block element inside inline one
-				$document->loadXML( mb_convert_encoding( $xml, 'HTML-ENTITIES', 'UTF-8' ) );
-			}
-
-			// clear user generated html parsing errors
-			libxml_clear_errors();
-			libxml_use_internal_errors( $error_setting );
+			//loading as xml instead of HTML to avoid html parser fixing html issues like
+			// block element inside inline one
+			$document = XmlHelper::createXmlDocumentFromText( $xml );
 
 			$xpath = new DOMXPath( $document );
 			$templatePlaceholders = $xpath->query( "//div[contains(@class, 'placeholder-double-brackets')]", $document );
@@ -102,11 +93,11 @@ class RTE {
 				$found = $xpath->query( $blockElements, $placeholder );
 				if ( !$found->length ) {
 					// change wrapper tag to span so it does not break html if template is used inside inline html tag
-					HtmlHelper::renameNode( $placeholder, 'span' );
+					XmlHelper::renameNode( $placeholder, 'span' );
 				}
 			}
 
-			$html = HtmlHelper::getNodeHtml($document, $document->firstChild);
+			$html = XmlHelper::getNodeHtml($document, $document->firstChild);
 		}
 
 		return true;
