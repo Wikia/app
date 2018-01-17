@@ -74,13 +74,6 @@ class DWDimensionApiController extends WikiaApiController {
 		return null;
 	}
 
-	private function getCategoryName( $allCategories, $categoryId ) {
-		if ( isset( $allCategories[ $categoryId ] ) ) {
-			return $allCategories[ $categoryId ][ 'name' ];
-		}
-		return null;
-	}
-
 	public function getWikis() {
 		$db = $this->getSharedDbSlave();
 
@@ -94,7 +87,6 @@ class DWDimensionApiController extends WikiaApiController {
 		$query = str_replace( '$limit', $limit, $query);
 
 		$allVerticals = WikiFactoryHub::getInstance()->getAllVerticals();
-		$allCategories = WikiFactoryHub::getInstance()->getAllCategories();
 
 		$dbResult = $db->query( $query,__METHOD__ );
 		$result = [];
@@ -110,11 +102,6 @@ class DWDimensionApiController extends WikiaApiController {
 				'public' => $row->public,
 				'lang' => $row->lang,
 				'lang_id' => $row->lang_id,
-				'ad_tag' => $row->ad_tag,
-				'category_id' => $row->category_id,
-				'category_name' => $this->getCategoryName( $allCategories, $row->category_id ),
-				'hub_id' => $row->category_id,
-				'hub_name' => $this->getCategoryName( $allCategories, $row->category_id ),
 				'vertical_id' => $row->vertical_id,
 				'vertical_name' => $this->getVerticalName( $allVerticals, $row->vertical_id ),
 				'cluster' => $row->cluster,

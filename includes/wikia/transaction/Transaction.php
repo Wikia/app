@@ -69,7 +69,6 @@ class Transaction {
 			$instance = new TransactionTrace( array(
 				// plugins
 				new TransactionTraceNewrelic(),
-				new TransactionTraceScribe(),
 			) );
 			$instance->set( self::PARAM_ENVIRONMENT, $wgWikiaEnvironment );
 			$instance->set( self::PARAM_HOSTNAME, wfHostname() );
