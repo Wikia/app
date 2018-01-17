@@ -1330,12 +1330,12 @@ class RTEReverseParser {
 					)
 				)
 			) {
-					$out = "{$out}";
+					$out = "\n{$out}";
 			}
 		}
 		else {
 			// RT #75625: don't render empty headings
-			$out = "";
+			$out = "\n";
 		}
 
 		wfProfileOut(__METHOD__);
