@@ -534,6 +534,12 @@ RTE.templateEditor = {
 		RTE.log(this.data);
 
 		RTE.tools.parseRTE(this.data.wikitext, function(html) {
+			// store saved meta data
+			this.placeholder.setData(RTE.templateEditor.data);
+			// regenerate template preview and data
+			this.placeholder.removeData('preview');
+			this.placeholder.removeData('info');
+
 			if (this.placeholder.parent().exists()) {
 				// If placeholder has a parent = it's already inserted in the article
 				// So we are editing, not creating. Thus, replacing the existing article element
