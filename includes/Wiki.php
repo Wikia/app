@@ -448,42 +448,7 @@ class MediaWiki {
 		$this->context->getOutput()->output();
 		// Do any deferred jobs
 		DeferredUpdates::doUpdates( 'commit' );
-		$this->doJobs();
 		wfProfileOut( __METHOD__ );
-	}
-
-	/**
-	 * Do a job from the job queue
-	 */
-	private function doJobs() {
-		global $wgJobRunRate;
-
-		if ( $wgJobRunRate <= 0 || wfReadOnly() ) {
-			return;
-		}
-		if ( $wgJobRunRate < 1 ) {
-			$max = mt_getrandmax();
-			if ( mt_rand( 0, $max ) > $max * $wgJobRunRate ) {
-				return;
-			}
-			$n = 1;
-		} else {
-			$n = intval( $wgJobRunRate );
-		}
-
-		while ( $n-- && false != ( $job = Job::pop() ) ) {
-			$output = $job->toString() . "\n";
-			$t = - microtime( true );
-			$success = $job->run();
-			$t += microtime( true );
-			$t = round( $t * 1000 );
-			if ( !$success ) {
-				$output .= "Error: " . $job->getLastError() . ", Time: $t ms\n";
-			} else {
-				$output .= "Success, Time: $t ms\n";
-			}
-			wfDebugLog( 'jobqueue', $output );
-		}
 	}
 
 	/**
