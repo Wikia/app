@@ -63,6 +63,24 @@ interface PermissionsService
      */
     public function getPermissions( \User $user );
 
+	/**
+	 * @param array $groups list of global groups to look for users in
+	 * @param int $offset row no from which to start (used for pagination)
+	 * @param int $limit max number of rows to return (used for pagination) (0 = no limit)
+	 * @return array user id => groups
+	 */
+	public function getUsersInGlobalGroups( array $groups, int $offset = 0, int $limit = 0 ): array;
+
+	/**
+	 * @param array $groups list of global groups to look for users in
+	 * @return int amount of users which are in the given groups
+	 */
+	public function getUserCountInGlobalGroups( array $groups );
+
+	/**
+	 * @param array $groups list of groups to look for users in
+	 * @return array user id => groups
+	 */
 	public function getUsersInGroups( array $groups ): array;
 
     /**

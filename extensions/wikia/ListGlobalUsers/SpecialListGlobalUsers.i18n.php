@@ -1,0 +1,47 @@
+<?php
+$messages = array();
+
+$messages['en'] = array(
+	'listglobalusers-desc' => 'Special list global users',
+	'listglobalusers' => 'Global users list',
+	'listglobaluserstitle' => 'Global list users',
+	'listglobalusersfound' => 'Found <strong>$1</strong> users',
+	'listglobalusersrecordspager' => 'Showing <strong>$1</strong> to <strong>$2</strong> of <strong>$3</strong> records',
+	'listglobaluserscount' => '<strong>$1</strong> users',
+	'listglobalusersdetails' => 'Show',
+	'listglobalusersnogroup' => 'No group',
+	'listglobaluserbyname' => 'Find by a user name:',
+	'listglobalusersallusers' => 'all users',
+	'listglobaluserscontributed' => 'Contributed: ',
+	'listglobalusers-1contribution' => '1 time or more',
+	'listglobalusers-5contributions' => '5 times or more',
+	'listglobalusers-10contributions' => '10 times or more',
+	'listglobalusers-20contributions' => '20 times or more',
+	'listglobalusers-50contributions' => '50 times or more',
+	'listglobalusers-100contributions' => '100 times or more',
+	'listglobalusersnodata' => 'No users found!',
+	'listglobalusersnext' => 'next',
+	'listglobalusersprevious' => 'previous',
+	'listglobalusersnbrresult' => 'Number of results: ',
+	'listglobalusersrev-cnt' => 'Edits',
+	'listglobalusers-edited' => 'Last edited',
+	'listglobaluserscontribs' => 'Contribs',
+	'listglobalusersoptions' => 'Options',
+	'listglobalusersedits' => 'Edit stats',
+	'listglobalusersblock' => 'Block',
+	'listglobalusersrights' => 'Rights',
+	'listglobalusers-groups' => 'Groups',
+	'listglobalusers-options' => 'Options',
+	'listglobalusers-results' => 'Results',
+	'listglobalusers-username' => 'User name',
+	'listglobalusers-blocked' => 'Blocked',
+	'listglobalusers-nonegroup' => 'none',
+	'listglobalusers-select-all' => 'Select all',
+	'listglobalusers-deselect-all' => 'Deselect all',
+);
+
+$messages['qqq'] = array(
+	'listglobalusers-desc' => '{{desc}}',
+	'listglobalusers-select-all' => 'Text for button to select all user group checkboxes',
+	'listglobalusers-deselect-all' => 'Text for button to deselect all user group checkboxes',
+);

@@ -156,6 +156,42 @@ class PermissionsServiceImpl implements PermissionsService {
 		return $permissions;
 	}
 
+	public function getUserCountInGlobalGroups( array $groups ) {
+		global $wgMemc;
+		$cacheKey = self::buildUserGlobalGroupMembersCountCacheKey( $groups );
+		$cachedValue = $wgMemc->get( $cacheKey);
+
+		if ( is_array( $cachedValue ) ) {
+			return $cachedValue;
+		}
+
+		$result = $this->getUsersInGroupCount( self::getSharedDB(), $groups );
+
+		$wgMemc->set( $cacheKey, $result, 86400 );
+
+		return $result;
+
+	}
+
+	public function getUsersInGlobalGroups( array $groups, int $offset = 0, int $limit = 0 ): array {
+		global $wgMemc;
+		$cacheKey = self::buildUserGlobalGroupMembersCacheKey( $groups, $offset, $limit );
+		$cachedValue = $wgMemc->get( $cacheKey);
+
+		if ( is_array( $cachedValue ) ) {
+			return $cachedValue;
+		}
+
+		$groupMembers = $this->loadUsersInGroup( self::getSharedDB(), $groups, $offset, $limit );
+		foreach ( $groupMembers as $userId => $userGroups ) {
+			$groupMembers[$userId] = $userGroups;
+		}
+
+		$wgMemc->set( $cacheKey, $groupMembers, 86400 );
+
+		return $groupMembers;
+	}
+
 	/**
 	 * @param array $groups
 	 * @return array map of user IDs to user groups
@@ -207,13 +243,35 @@ class PermissionsServiceImpl implements PermissionsService {
 		return wfMemcKey( 'user-group-members', implode( ':', $groups ) );
 	}
 
+	private static function buildUserGlobalGroupMembersCacheKey( array $groups, $offset, $limit ) {
+		return wfMemcKey( 'user-global-group-members', implode( ':', $groups ), $offset, $limit );
+	}
+
+	private static function buildUserGlobalGroupMembersCountCacheKey( array $groups ) {
+		return wfMemcKey( 'user-global-group-members-count', implode( ':', $groups ) );
+	}
+
 	/**
 	 * @param \DatabaseBase $dbr
 	 * @param array $groups
+	 * @param int $offset row no from which to start (used for pagination)
+	 * @param int $limit max number of rows to return (used for pagination) (0 = no limit)
 	 * @return array map of user IDs to user groups
 	 */
-	private function loadUsersInGroup( \DatabaseBase $dbr, array $groups ) {
-		$res = $dbr->select( 'user_groups', [ 'ug_user', 'ug_group' ], [ 'ug_group' => $groups ], __METHOD__ );
+	private function loadUsersInGroup( \DatabaseBase $dbr, array $groups, int $offset = 0, int $limit = 0 ) {
+
+		$options = [ 'ORDER BY' => 'ug_user', 'OFFSET' => $offset ];
+		if ( $limit > 0 ) {
+			$options['LIMIT'] = $limit;
+		}
+
+		$res = $dbr->select(
+			'user_groups',
+			[ 'ug_user', 'ug_group' ],
+			[ 'ug_group' => $groups ],
+			__METHOD__,
+			$options
+		);
 
 		$userMapping = [];
 
@@ -223,6 +281,21 @@ class PermissionsServiceImpl implements PermissionsService {
 		}
 
 		return $userMapping;
+	}
+
+	/**
+	 * @param \DatabaseBase $dbr
+	 * @param array $groups
+	 * @return int number of users in given groups
+	 */
+	private function getUsersInGroupCount( \DatabaseBase $dbr, array $groups ) {
+
+		return $dbr->selectField(
+			'user_groups',
+			'count(distinct ug_user)',
+			[ 'ug_group' => $groups ],
+			__METHOD__
+		);
 	}
 
 	/**
