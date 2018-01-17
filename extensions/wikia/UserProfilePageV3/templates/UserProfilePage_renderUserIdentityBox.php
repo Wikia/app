@@ -109,7 +109,7 @@
 
 					<? if ( !empty( $user['website'] ) ): ?>
 						<li class="website">
-							<a href="<?= $user['website'] ?>" rel="nofollow">
+							<a href="<?= Sanitizer::encodeAttribute( $user['website'] ) ?>" rel="nofollow">
 								<img src="<?= $wgBlankImgUrl ?>" class="website icon">
 								<?= wfMessage( 'user-identity-box-my-website' )->escaped(); ?>
 							</a>
@@ -125,7 +125,7 @@
 
 					<? if ( !empty( $user['fbPage'] ) ): ?>
 						<li class="facebook">
-							<a href="<?= $user['fbPage'] ?>" rel="nofollow">
+							<a href="<?= Sanitizer::encodeAttribute( $user['fbPage'] ) ?>" rel="nofollow">
 								<img src="<?= $wgBlankImgUrl ?>" class="facebook icon">
 								<?= wfMessage( 'user-identity-box-my-fb-page' )->escaped(); ?>
 							</a>
