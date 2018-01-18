@@ -7,8 +7,14 @@ class SpecialListGlobalUsersController extends WikiaSpecialPageController {
 
 	use PermissionsServiceAccessor;
 
+	/** @var GlobalUsersService $globalUsersService */
+	private $globalUsersService;
+
 	public function __construct() {
 		parent::__construct( 'ListGlobalUsers' );
+
+		$databaseService = new DatabaseGlobalUsersService();
+		$this->globalUsersService = new CachedGlobalUsersService( $this->wg->Memc, $databaseService );
 	}
 
 	public function index() {
@@ -45,17 +51,10 @@ class SpecialListGlobalUsersController extends WikiaSpecialPageController {
 			];
 		}
 
+		$userSet = $this->globalUsersService->getGroupMembers( $groupsToSelect );
+
 		$this->setVal( 'formAction', $this->getTitle()->getLocalURL() );
 		$this->setVal( 'groupNameCheckBoxSet', $groupNameCheckBoxSet );
-
-		$userSet = [];
-		if ( !empty( $groupsToSelect ) ) {
-			$databaseService = new DatabaseGlobalUsersService();
-			$cachedService = new CachedGlobalUsersService( $this->wg->Memc, $databaseService );
-
-			$userSet = $cachedService->getGroupMembers( $groupsToSelect );
-		}
-
 		$this->setVal( 'userSet', $userSet );
 	}
 }

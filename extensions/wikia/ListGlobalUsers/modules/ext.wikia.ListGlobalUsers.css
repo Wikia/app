@@ -22,3 +22,7 @@
     margin: 3px 12px;
     flex-basis: 30%;
 }
+
+#list-global-users-selector-toggle {
+    float: right;
+}

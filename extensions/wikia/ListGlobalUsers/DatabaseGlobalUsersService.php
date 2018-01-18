@@ -14,6 +14,9 @@ class DatabaseGlobalUsersService implements GlobalUsersService {
 
 		$userMap = User::whoAre( $userIds );
 
+		// unset default entry for anonymous user since there can't be any of them here
+		unset( $userMap[0] );
+
 		asort( $userMap );
 
 		return $userMap;

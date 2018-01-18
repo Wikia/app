@@ -16,9 +16,7 @@ class DatabaseGlobalUsersServiceIntegrationTest extends WikiaDatabaseTest {
 	public function testReturnsMappingOfGroupMemberUserIdsOrderedByName() {
 		$resultMap = $this->dataBaseGlobalUsersService->getGroupMembers( [ 'staff', 'vstf' ] );
 
-		$this->assertCount( 3, $resultMap );
-		// fallback for anon user
-		$this->assertArrayHasKey( 0, $resultMap );
+		$this->assertCount( 2, $resultMap );
 		$this->assertEquals( $resultMap[1], 'KossuthLajos' );
 		$this->assertEquals( $resultMap[3], 'FerencJozsef' );
 

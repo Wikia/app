@@ -19,10 +19,14 @@ $GLOBALS['wgSpecialPages']['ListVstf'] = 'SpecialListVstf';
 $GLOBALS['wgSpecialPages']['ListHelpers'] = 'SpecialListHelpers';
 
 $GLOBALS['wgResourceModules']['ext.wikia.ListGlobalUsers'] = [
-	'scripts' => [],
-	'styles' => [ 'modules/ext.wikia.ListGlobalUsers.css' ],
+	'scripts' => [ 'ext.wikia.ListGlobalUsers.js' ],
+	'styles' => [ 'ext.wikia.ListGlobalUsers.css' ],
+	'messages' => [
+		'listglobalusers-select-all',
+		'listglobalusers-deselect-all',
+	],
 	'dependencies' => [],
 
-	'localBasePath' => __DIR__,
+	'localBasePath' => __DIR__ . '/modules',
 	'remoteExtPath' => 'extensions/ListGlobalUsers',
 ];
