@@ -19,7 +19,7 @@ class RenameUserMaintenance extends Maintenance {
 	/**
 	 * Set script options
 	 */
-	public function __construct() {
+	public function __construct() { // test
 		parent::__construct();
 
 		$this->addOption( 'old-username', 'User to rename', true );
