@@ -439,7 +439,7 @@ RTE.templateEditor = {
 					value = value.replace(/&/g, '&amp;');
 
 					// show different message for unnamed template parameters (#1 / foo)
-					var keyLabel = !!parseInt(key) ? ('#' + parseInt(i+1)) : key;
+					var keyLabel = !!parseInt(key) ? ('#' + key) : key;
 
 					// render key - value pair
 					html += '<dt><label for="templateEditorParameter' + i + '">' + keyLabel  + '</label></dt>';
