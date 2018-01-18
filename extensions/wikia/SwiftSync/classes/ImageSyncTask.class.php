@@ -12,11 +12,6 @@ use \Wikia\SwiftStorage;
  */
 class ImageSyncTask extends BaseTask {
 
-	public static function newLocalTask(): self {
-		global $wgCityId;
-		return ( new self() )->wikiId( $wgCityId );
-	}
-
 	/**
 	 * @param array $tasks
 	 * @throws \WikiaException
