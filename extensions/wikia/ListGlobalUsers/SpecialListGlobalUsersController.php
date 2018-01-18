@@ -3,6 +3,8 @@
 use Wikia\Service\User\Permissions\PermissionsServiceAccessor;
 
 class SpecialListGlobalUsersController extends WikiaSpecialPageController {
+	const GROUPS_SELECTED_BY_DEFAULT = [ 'global-discussions-moderator', 'helper', 'staff', 'vanguard', 'vstf' ];
+
 	use PermissionsServiceAccessor;
 
 	public function __construct() {
@@ -28,7 +30,9 @@ class SpecialListGlobalUsersController extends WikiaSpecialPageController {
 			$permissionsConfiguration->getImplicitGroups()
 		);
 
-		$groupsToSelect = array_intersect( $globalGroups, $queryGroups );
+		asort( $globalGroups );
+
+		$groupsToSelect = array_intersect( $globalGroups, $queryGroups ) ?: static::GROUPS_SELECTED_BY_DEFAULT;
 
 		$groupNameCheckBoxSet = [];
 
