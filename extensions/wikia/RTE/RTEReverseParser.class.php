@@ -1128,6 +1128,10 @@ class RTEReverseParser {
 					$out = "\n{$out}";
 				}
 
+				if ( self::previousSiblingIs( $node, 'div' ) ) {
+					$out = "\n{$out}";
+				}
+
 				// bugfix: fogbugz BugID 11537
 				// losing newline before : and * following h[1-6] or div
 				if(self::wasHtml($node->previousSibling)) {

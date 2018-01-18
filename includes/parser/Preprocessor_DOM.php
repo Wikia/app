@@ -1213,11 +1213,12 @@ class PPFrame_DOM implements PPFrame {
 								'contenteditable' => 'false',
 							];
 
+							$placeholderTag = $this->getPlaceholderTagName( $ret['text'] );
 							// when template is used in header new line breaks layout, however it is needed for other contexts
-							if ($contextNode->parentNode->nodeName === 'h') {
-								$out .= Html::rawElement( $this->getPlaceholderTagName( $ret['text'] ), $attributes, $ret['text'] );
+							if ($contextNode->parentNode->nodeName === 'h' || $placeholderTag === 'span') {
+								$out .= Html::rawElement( $placeholderTag, $attributes, $ret['text'] );
 							} else {
-								$out .= Html::rawElement( $this->getPlaceholderTagName( $ret['text'] ), $attributes, PHP_EOL . $ret['text'] );
+								$out .= Html::rawElement( $placeholderTag, $attributes, PHP_EOL . $ret['text'] );
 							}
 						} else {
 							$out .= $ret['text'];
