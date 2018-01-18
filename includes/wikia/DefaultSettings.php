@@ -1261,6 +1261,13 @@ $wgAdDriverUseAudienceNetworkBidder = false;
 $wgAdDriverAudienceNetworkBidderCountries = null;
 
 /**
+ * @name $wgAdDriverBeachfrontBidderCountries
+ * List of countries where Beachfront bidding platform is enabled.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverBeachfrontBidderCountries = null;
+
+/**
  * @name $wgAdDriverIndexExchangeBidderCountries
  * List of countries where indexExchange bidding platform is enabled.
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
