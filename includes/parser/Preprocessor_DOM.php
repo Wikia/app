@@ -1318,7 +1318,6 @@ class PPFrame_DOM implements PPFrame {
 					global $wgRTEParserEnabled;
 					if ( $wgRTEParserEnabled ) {
 						$wikiTextIdx = $contextNode->getAttribute( '_rte_wikitextidx' );
-						$inlineExt = [ 'ref', 'nowiki' ];
 
 						$rteData = [
 							'type' => 'ext',
@@ -1333,7 +1332,7 @@ class PPFrame_DOM implements PPFrame {
 
 						// some extensions render only inline htlm tags, so they should be wrapped in inline wrapper
 						// to not break paragraphs
-						$wrapperTagName = in_array($nameNode->nodeValue, $inlineExt) ? 'span' : 'div';
+						$wrapperTagName = in_array($nameNode->nodeValue, RTEParser::INLINE_EXT_TAGS) ? 'span' : 'div';
 						$out .= Html::rawElement(
 							$wrapperTagName,
 							[
@@ -1408,17 +1407,38 @@ class PPFrame_DOM implements PPFrame {
 	 * In order to properly display a template inside an editor we need to know if it should be displayed
 	 * inside block or inline-block element
 	 *
-	 * We could not find a better way than parsing the template and searching for any block elements inside
+	 * We could not find a better way than parsing the template and searching for any block elements or extension tags
+	 * inside
 	 *
 	 * @param $text string wikitext
 	 * @return string tagName div or span
 	 */
 	function getPlaceholderTagName( string $text ): string {
-		$html = $this->parser->internalParse( $text, false);
+		$html = $this->parser->internalParse( $text, false );
 
-		if (preg_match('/<(' . implode( '|', HtmlHelper::BLOCK_ELEMENTS) . ')[^>]*>/', $html)
-			|| preg_match('/' . Parser::MARKER_PREFIX . '[^\\x7f]*' . Parser::MARKER_SUFFIX . '/', $html)) {
-			// TODO: check if marker is for <nowiki> or <ref> -- if so return span
+		$blockElements = preg_match( '/<(' . implode( '|', HtmlHelper::BLOCK_ELEMENTS ) . ')[^>]*>/', $html );
+
+		$markerMatches = [];
+		preg_match_all(
+			'/' . Parser::MARKER_PREFIX . '[^\\x7f]*' . Parser::MARKER_SUFFIX . '/',
+			$html,
+			$markerMatches
+		);
+		$markerMatches = array_filter(
+			$markerMatches[0],
+			function ( $marker ) {
+				// RTEParser::INLINE_EXT_TAGS are considered as ones that do not render using block elements
+				foreach ( RTEParser::INLINE_EXT_TAGS as $tag ) {
+					if ( strpos( $marker, "-${tag}-" ) ) {
+						return false;
+					}
+				}
+
+				return true;
+			}
+		);
+
+		if ( $blockElements || $markerMatches ) {
 			$tagName = 'div';
 		} else {
 			$tagName = 'span';
