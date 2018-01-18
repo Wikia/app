@@ -419,7 +419,7 @@ class RTEReverseParser {
 				// templates and extension tags which are wrapped in <div> needs to have additional newline at the end
 				case 'double-brackets':
 				case 'ext':
-					if ($node->nodeName === 'div') {
+					if ($node->nodeName === 'div' && !self::isFirstChild($node)) {
 						$out = "\n{$out}";
 					}
 					break;
