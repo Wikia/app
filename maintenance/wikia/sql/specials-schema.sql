@@ -6,6 +6,20 @@
 
 
 --
+-- Table structure for table `city_used_tags`
+--
+
+DROP TABLE IF EXISTS `city_used_tags`;
+CREATE TABLE `city_used_tags` (
+  `ct_wikia_id` int(8) unsigned NOT NULL,
+  `ct_page_id` int(8) unsigned NOT NULL,
+  `ct_namespace` int(8) unsigned NOT NULL,
+  `ct_kind` varchar(50) NOT NULL DEFAULT '',
+  `ct_timestamp` varchar(14) NOT NULL DEFAULT '19700101000000',
+  PRIMARY KEY (`ct_wikia_id`,`ct_page_id`,`ct_namespace`,`ct_kind`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
 -- Table structure for table `common_key_value`
 --
 
@@ -44,7 +58,6 @@ CREATE TABLE `events_local_users` (
   `cnt_groups` smallint(4) NOT NULL DEFAULT '0',
   `single_group` varchar(255) NOT NULL DEFAULT '',
   `all_groups` mediumtext NOT NULL,
-  `user_is_blocked` tinyint(1) DEFAULT '0',
   `user_is_closed` tinyint(1) DEFAULT '0',
   PRIMARY KEY (`wiki_id`,`user_id`),
   KEY `user_edits` (`user_id`,`edits`,`wiki_id`)
@@ -121,4 +134,4 @@ CREATE TABLE `script_log` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
--- Dump completed on 2018-01-09 10:57:24
+-- Dump completed on 2018-01-16 15:16:14

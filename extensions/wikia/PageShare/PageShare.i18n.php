@@ -52,6 +52,8 @@ $messages['ru'] = array(
 );
 
 $messages['vi'] = array(
+	'page-share-entry-point-label' => 'Chia sẻ',
+	'page-share-modal-title' => 'Chia sẻ $1',
 );
 
 $messages['zh-hans'] = array(

@@ -417,4 +417,9 @@ abstract class BaseTask {
 		return AsyncTaskList::batch( $taskLists, $priority );
 	}
 
+	public static function newLocalTask(): BaseTask {
+		global $wgCityId;
+
+		return ( new static() )->wikiId( $wgCityId );
+	}
 }

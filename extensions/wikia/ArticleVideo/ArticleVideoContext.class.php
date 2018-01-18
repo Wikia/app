@@ -93,7 +93,7 @@ class ArticleVideoContext {
 			'thumbnailUrl' => $playlistItem['image'],
 			'uploadDate' => date( 'c', $playlistItem['pubdate'] ),
 			'duration' => self::getIsoTime( $videoDetails['duration'] ),
-			'description' => $videoDetails['description'],
+			'description' => $videoDetails['description'] ?? '',
 			'contentUrl' => self::getVideoContentUrl( $playlistItem['sources'] )
 		];
 	}
