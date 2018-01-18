@@ -69,12 +69,7 @@ class Scribunto_LuaStandaloneInterpreter extends Scribunto_LuaInterpreter {
 			$options['errorFile'] = wfGetNull();
 		}
 		if ( $options['luaPath'] === null ) {
-      $path = 'lua5_1_5_linux_64_generic/lua';
-			if ( $path === false ) {
-				throw new Scribunto_LuaInterpreterNotFoundError( 
-					'No Lua interpreter was given in the configuration, ' .
-					'and no bundled binary exists for this platform.' );
-			}
+			$path = 'lua5_1_5_linux_64_generic/lua';
 			$options['luaPath'] = dirname( __FILE__ ) . "/binaries/$path";
 		}
 
