@@ -1623,7 +1623,6 @@ $wgUseETag = true;
  */
 $wgApiAccess = [
 	'SearchApiController' => [
-		'getCombined' =>  ApiAccessService::ENV_SANDBOX,
 		'getCrossWiki' => ApiAccessService::WIKIA_CORPORATE,
 		'getList' => ApiAccessService::WIKIA_NON_CORPORATE,
 	],
