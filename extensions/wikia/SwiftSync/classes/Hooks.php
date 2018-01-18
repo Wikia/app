@@ -23,6 +23,11 @@ class Hooks {
 	/* save image into local repo */
 	public static function doStoreInternal( array $params, \Status $status ) {
 
+		// SUS-3826 | do not sync temporary files
+		if ( self::isTempFile( $params['dst'] ) ) {
+			return true;
+		}
+
 		if ( $status->isGood() ) {
 			self::$stack[] =  self::normalizeParams( $params );
 		}
@@ -39,6 +44,11 @@ class Hooks {
 	}
 
 	public static function doDeleteInternal( array $params, \Status $status ) {
+
+		// SUS-3826 | do not sync temporary files
+		if ( self::isTempFile( $params['src'] ) ) {
+			return true;
+		}
 
 		if ( !empty( $params['src'] ) && ( strpos( $params['src'], '/images/thumb' ) !== false ) ) {
 			return true;
@@ -68,6 +78,22 @@ class Hooks {
 
 		self::$stack = [];
 		return true;
+	}
+
+	/**
+	 * Checks if a given file is a temporary one. It should be ignored and not synced.
+	 *
+	 * These files exist for quite short period of time and usually it's too late to sync them
+	 * when ImageSync task is executed.
+	 *
+	 * @see SUS-3826
+	 *
+	 * @param string $path
+	 * @return bool
+	 */
+	public static function isTempFile( string $path) : bool {
+		// e.g. mwstore://swift-backend/easternlight/zh-tw/images/3/35/Temp_file_1516192811
+		return preg_match('#/Temp_file_[\d_]+$#', $path);
 	}
 
 	/**

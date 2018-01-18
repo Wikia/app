@@ -23,7 +23,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.appnexusAst', [
 		};
 
 	function isEnabled() {
-		return adContext.getContext().bidders.appnexusAst && !instartLogic.isBlocking();;
+		return adContext.getContext().bidders.appnexusAst && !instartLogic.isBlocking();
 	}
 
 	function prepareAdUnit(slotName, config) {

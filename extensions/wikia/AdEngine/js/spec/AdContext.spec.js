@@ -878,6 +878,30 @@ describe('AdContext', function () {
 		{
 			hasFeaturedVideo: true,
 			instantGlobals: {
+				wgAdDriverBeachfrontBidderCountries: ['CURRENT_COUNTRY']
+			},
+			testedBidder: 'beachfront',
+			expectedResult: false
+		},
+		{
+			hasFeaturedVideo: false,
+			instantGlobals: {
+				wgAdDriverBeachfrontBidderCountries: ['ZZ']
+			},
+			testedBidder: 'beachfront',
+			expectedResult: false
+		},
+		{
+			hasFeaturedVideo: false,
+			instantGlobals: {
+				wgAdDriverBeachfrontBidderCountries: ['CURRENT_COUNTRY']
+			},
+			testedBidder: 'beachfront',
+			expectedResult: true
+		},
+		{
+			hasFeaturedVideo: true,
+			instantGlobals: {
 				wgAdDriverAppNexusAstBidderCountries: ['CURRENT_COUNTRY']
 			},
 			testedBidder: 'appnexusAst',
