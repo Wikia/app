@@ -17,13 +17,11 @@ class DatabaseGlobalUsersServiceIntegrationTest extends WikiaDatabaseTest {
 		$resultMap = $this->dataBaseGlobalUsersService->getGroupMembers( [ 'staff', 'vstf' ] );
 
 		$this->assertCount( 2, $resultMap );
-		$this->assertEquals( $resultMap[1], 'KossuthLajos' );
-		$this->assertEquals( $resultMap[3], 'FerencJozsef' );
+		$this->assertEquals( 'KossuthLajos', $resultMap[1]['name'] );
+		$this->assertEquals( 'FerencJozsef', $resultMap[3]['name'] );
 
-		$sortedMap = $resultMap;
-		asort( $sortedMap );
-
-		$this->assertEquals( $sortedMap, $resultMap );
+		$this->assertEquals( [ 'staff', 'vstf' ], $resultMap[1]['groups'] );
+		$this->assertEquals( [ 'vstf' ], $resultMap[3]['groups'] );
 	}
 
 	public function testReturnsEmptyMapForEmptySetOfGroups() {

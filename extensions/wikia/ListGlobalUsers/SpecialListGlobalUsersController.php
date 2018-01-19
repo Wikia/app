@@ -51,10 +51,10 @@ class SpecialListGlobalUsersController extends WikiaSpecialPageController {
 			];
 		}
 
-		$userSet = $this->globalUsersService->getGroupMembers( $groupsToSelect );
+		$userMap = $this->globalUsersService->getGroupMembers( $groupsToSelect );
 
 		$this->setVal( 'formAction', $this->getTitle()->getLocalURL() );
 		$this->setVal( 'groupNameCheckBoxSet', $groupNameCheckBoxSet );
-		$this->setVal( 'userSet', $userSet );
+		$this->setVal( 'userMap', $userMap );
 	}
 }

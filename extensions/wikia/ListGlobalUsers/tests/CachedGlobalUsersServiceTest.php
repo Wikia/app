@@ -26,7 +26,7 @@ class CachedGlobalUsersServiceTest extends TestCase {
 	}
 
 	public function testFreshResultFetchedOnCacheMissThenCached() {
-		$example = [ 123 => 'Example' ];
+		$example = [ 123 => [ 'name' => 'Example', 'groups' => [ 'staff' ] ] ];
 
 		$this->cacheServiceSpy->expects( $this->exactly( 2 ) )
 			->method( 'get' );
@@ -48,7 +48,7 @@ class CachedGlobalUsersServiceTest extends TestCase {
 	}
 
 	public function testOrderOfUserGroupsIsNotRelevantForCaching() {
-		$example = [ 123 => 'Example' ];
+		$example = [ 123 => [ 'name' => 'Example', 'groups' => [ 'staff' ] ] ];
 
 		$this->cacheServiceSpy->expects( $this->exactly( 3 ) )
 			->method( 'get' );

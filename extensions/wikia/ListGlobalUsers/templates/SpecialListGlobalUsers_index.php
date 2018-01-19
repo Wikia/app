@@ -18,7 +18,8 @@
 	</fieldset>
 </form>
 <ul class="list-global-users-members">
-	<?php foreach ( $userSet as $userId => $userName ): ?>
-		<li><?= Linker::userLink( $userId, $userName ) . Linker::userToolLinks( $userId, $userName, false, Linker::TOOL_LINKS_NOBLOCK ); ?></li>
+	<?php foreach ( $userMap as $userId => $userData ): ?>
+		<li><?= Linker::userLink( $userId, $userData['name'] ) . Linker::userToolLinks( $userId, $userData['name'],
+				false, Linker::TOOL_LINKS_NOBLOCK ) . ' ' . wfMessage( 'parentheses', implode( wfMessage( 'comma-separator' )->text(), $userData['groups'] ) )->escaped(); ?></li>
 	<?php endforeach; ?>
 </ul>

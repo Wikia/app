@@ -1,5 +1,6 @@
 .list-global-users-input {
     align-content: space-between;
+    clear: both;
     display: flex;
     flex-wrap: wrap;
     flex-direction: column;
@@ -14,8 +15,11 @@
 
 .list-global-users-members {
     display: flex;
+    flex-direction: column;
     flex-wrap: wrap;
     justify-content: left;
+    max-height: 500px;
+    overflow: scroll;
 }
 
 .list-global-users-members li {
@@ -25,4 +29,5 @@
 
 #list-global-users-selector-toggle {
     float: right;
+    font-size: 90%;
 }

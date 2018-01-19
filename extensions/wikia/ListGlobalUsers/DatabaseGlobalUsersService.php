@@ -9,15 +9,32 @@ class DatabaseGlobalUsersService implements GlobalUsersService {
 		global $wgExternalSharedDB;
 		$dbr = wfGetDB( DB_SLAVE, [], $wgExternalSharedDB );
 
-		$selectQuery = [ 'ug_group' => $groupSet ];
-		$userIds = $dbr->selectFieldValues( 'user_groups', 'ug_user', $selectQuery, __METHOD__, [ 'DISTINCT' ] );
+		$groupMemberQuery = [ 'ug_group' => $groupSet ];
+		$usersInGroups = $dbr->selectFieldValues( 'user_groups', 'ug_user', $groupMemberQuery, __METHOD__ );
+		// get all other groups for these users
+		$result = $dbr->select( 'user_groups', '*', [ 'ug_user' => $usersInGroups ], __METHOD__ );
 
-		$userMap = User::whoAre( $userIds );
+		$userIdsToGroups = [];
+
+		foreach ( $result as $row ) {
+			$userIdsToGroups[$row->ug_user] = $userIdsToGroups[$row->ug_user] ?? [];
+
+			$userIdsToGroups[$row->ug_user][] = $row->ug_group;
+			$userIds[] = $row->ug_user;
+		}
+
+		$userNameMap = User::whoAre( $userIds );
 
 		// unset default entry for anonymous user since there can't be any of them here
-		unset( $userMap[0] );
+		unset( $userNameMap[0] );
+		asort( $userNameMap );
 
-		asort( $userMap );
+		$userMap = [];
+
+		foreach ( $userNameMap as $userId => $userName ) {
+			$userMap[$userId]['groups'] = $userIdsToGroups[$userId];
+			$userMap[$userId]['name'] = $userName;
+		}
 
 		return $userMap;
 	}
