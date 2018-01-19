@@ -176,128 +176,32 @@ RTE.templateEditor = {
 	// generate template wikitext from given name and list of parameters
 	generateWikitext: function(name, params) {
 		var wikitext,
-			paramsCount = 0,
-			currentData = this.placeholder ? this.placeholder.getData() : false,
-			bracketPattern = /\[\[(.*?)\]\]/g;
+			currentData = this.placeholder.getData(),
+			availableParams = RTE.tools.resolveDoubleBracketsCache[currentData.wikitext].availableParams,
+			templateTitle = currentData.title,
+			multiline = currentData.wikitext.indexOf("\n|") !== -1,
+			updatedParams = [],
+			glue = multiline ? "\n| " : " | ";
 
-		// Check for any bracketed syntax and mark the pipes within (BugID: 2264 and 69126)
-		if ( bracketPattern.test( currentData.wikitext ) ) {
-			var	results = currentData.wikitext.match( bracketPattern ),
-				i = 0,
-				replacement;
-			for ( i = 0; i < results.length; i++ ) {
-				replacement = results[i].replace( /\|/g, '\x7f' );
-				currentData.wikitext = currentData.wikitext.replace( results[i], replacement );
-			}
-		}
-
-		// "parse" current wikitext
-		var wikitextParts = currentData.wikitext.
-			substring(2, currentData.wikitext.length - 2).				// remove {{ and }}
-			split('|');													// split by pipe
-
-		//RTE.log(currentData.wikitext); RTE.log(wikitextParts); RTE.log(params);
-
-		// parts of new wikitext (first one is template name from current wikitext)
-		var partsStack = [wikitextParts.shift()];
-
-		// counter for unnamed parameters
-		var unnamedCounter = 0;
-
-		// set to true if line break is found in partTail
-		var lineBreakInTail = false;
-
-		// if there's currently no param, add new line after each part of the template
-		if (wikitextParts.length == 0) {
-			partsStack = [name + "\n"];
-			lineBreakInTail = true;
-		}
-
-		// parse and update each part (handle existing params)
-		$.each(wikitextParts, function(i, part) {
-			var parsedPart = part.match(/([^=]+)( *\= *)(.*)(\n?)/); //RTE.log(parsedPart);
-
-			// param name    = value (named parameter)
-			if (parsedPart) {
-				var partName = $.trim(parsedPart[1]);
-				var partSeparator = parsedPart[2];
-				var partValue = parsedPart[3];
-				var partTail = parsedPart[4];
-
-				if (partTail != '') {
-					lineBreakInTail = true;
-				}
-
-				// update this part with new value
-				if (typeof params[partName] != 'undefined') {
-					partsStack.push(parsedPart[1] + partSeparator + params[partName] + partTail);
-					delete params[partName];
-				}
-			}
-			// foo bar (unnamed parameter)
-			else {
-				parsedPart = part.match(/(.*)(\n?)/); //RTE.log(part); RTE.log(parsedPart);
-
-				var partName = ++unnamedCounter;
-				var partValue = parsedPart[1];
-				var partTail = parsedPart[2];
-
-				if (partTail != '') {
-					lineBreakInTail = true;
-				}
-
-				// update this part with new value (numbered param)
-				if (typeof params[partName] != 'undefined') {
-					partsStack.push(params[partName] + partTail);
-				}
-				else if ($.trim(partValue)) {
-					partsStack.push(partValue + partTail);
-				}
-				else {
-					// add empty unnamed param to stack, don't add line break (RT #93340)
-					partsStack.push('');
-				}
-
-				delete params[partName];
-			}
-		});
-
-		// add new params
-		$.each(params, function(key, value) {
-			if (typeof value == 'undefined') {
-				return;
-			}
-
-			// unnamed param (add even if empty)
-			if (parseInt(key) && parseInt(key) == key) {
-				// for unnamed params don't add line break (RT #93340)
-				partsStack.push(value != '' ? value : '');
-
-				// remove line break from template name (RT #93340)
-				if (wikitextParts.length == 0) {
-					partsStack[0] = $.trim(partsStack[0]);
-				}
-			}
-			// named param
-			else {
-				if (value != '') {
-					partsStack.push(key + ' = ' + value + (lineBreakInTail ? '\n' : ''));
+		availableParams.forEach(function(paramKey) {
+			if (params[paramKey] !== "") {
+				if ( isNaN(parseInt(paramKey))) {
+					updatedParams.push(paramKey + " = " + params[paramKey]);
+				} else {
+					updatedParams.push(params[paramKey]);
 				}
 			}
 		});
-
-		//RTE.log(partsStack);
 
 		// generate new wikitext
-		wikitext = '{{';
-		wikitext += partsStack.
-			join('|').					// join template params
-			replace('\x7f', '|').		// replace pipe markers
-			replace(/[\n|]+$/g, '').	// remove trailing pipes
-			replace(/\n+$/g, '');		// remove trailing line breaks
+		wikitext = '{{' + templateTitle;
+		if (updatedParams.length > 0) {
+			wikitext += "| " + updatedParams.join(glue);
+			if (multiline) {
+				wikitext += "\n";
+			}
+		}
 		wikitext += '}}';
-
-		$().log(currentData.wikitext, 'RTE: old wikitext'); $().log(wikitext, 'RTE: new wikitext');
 
 		return wikitext;
 	},
