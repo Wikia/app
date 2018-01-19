@@ -690,6 +690,13 @@ require_once( "{$IP}/extensions/wikia/Tasks/Tasks.setup.php");
 require_once( "{$IP}/includes/wikia/tasks/autoload.php");
 
 /**
+ * @name wgDBAvgStatusPoll
+ * Scale load balancer polling time so that under overload conditions, the database server
+ * receives a SHOW STATUS query at an average interval of this many microseconds
+ */
+$wgDBAvgStatusPoll = 30000;
+
+/**
  * @name wgExternalSharedDB
  * All wikis use shared database to fetch user data
  */
