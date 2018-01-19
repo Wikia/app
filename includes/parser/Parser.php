@@ -1149,7 +1149,9 @@ class Parser {
 			if ( !array_pop( $has_opened_tr ) ) {
 				$out .= "<tr><td></td></tr>\n" ;
 			}
-
+			if ($wgRTEParserEnabled) {
+				RTE::$edgeCases[] = 'COMPLEX.12';
+			}
 			$out .= "</table>\n";
 		}
 
