@@ -60,7 +60,6 @@ class SassUtil {
 	/**
 	 * Gets theme settings from following places:
 	 *  - theme designer ($wgOasisThemeSettings)
-	 *  - theme chosen using usetheme URL param
 	 */
 	public static function getOasisSettings() {
 		wfProfileIn(__METHOD__);

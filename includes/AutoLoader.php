@@ -13,6 +13,12 @@
 global $wgAutoloadLocalClasses;
 
 $wgAutoloadLocalClasses = array(
+	# SUS-3836: Skins
+	'SkinOasis' => 'skins/Oasis.php',
+	'SkinMonoBook' => 'skins/MonoBook.php',
+	'SkinUncyclopedia' => 'skins/Uncyclopedia.php',
+	'SkinWikiaMobile' => 'skins/WikiaMobile.php',
+
 	# Includes
 	'Action' => 'includes/Action.php',
 	'AjaxDispatcher' => 'includes/AjaxDispatcher.php',
@@ -826,7 +832,6 @@ $wgAutoloadLocalClasses = array(
 	'SpecialExport' => 'includes/specials/SpecialExport.php',
 	'SpecialFilepath' => 'includes/specials/SpecialFilepath.php',
 	'SpecialImport' => 'includes/specials/SpecialImport.php',
-	'SpecialJavaScriptTest' => 'includes/specials/SpecialJavaScriptTest.php',
 	'SpecialListFiles' => 'includes/specials/SpecialListfiles.php',
 	'SpecialListGroupRights' => 'includes/specials/SpecialListgrouprights.php',
 	'SpecialLockdb' => 'includes/specials/SpecialLockdb.php',

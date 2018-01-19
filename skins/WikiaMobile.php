@@ -13,10 +13,6 @@ global $wgHtml5;
 $wgHtml5 = true;
 
 class SkinWikiaMobile extends WikiaSkin {
-	function __construct() {
-		parent::__construct( 'WikiaMobileTemplate', 'wikiamobile' );
-	}
-
 	/*
 	 * This is due Wikiamobile needs a lot less global variables
 	 * having separate getTopScripts allows for less injecting itself into  WikiaSkin
@@ -47,6 +43,10 @@ class SkinWikiaMobile extends WikiaSkin {
 		);
 
 		return WikiaSkin::makeInlineVariablesScript( $vars + $globalVariables ) . $scripts;
+	}
+
+	protected function getTemplate(): QuickTemplate {
+		return new WikiaMobileTemplate();
 	}
 }
 

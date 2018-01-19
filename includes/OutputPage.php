@@ -3598,7 +3598,7 @@ $templates
 	 * @return String: modified value of the "media" attribute
 	 */
 	public static function transformCssMedia( $media ) {
-		global $wgRequest, $wgHandheldForIPhone;
+		global $wgRequest;
 
 		// Switch in on-screen display for media testing
 		$switches = array(
@@ -3612,18 +3612,6 @@ $templates
 				} elseif( $media == 'screen' ) {
 					return null;
 				}
-			}
-		}
-
-		// Expand longer media queries as iPhone doesn't grok 'handheld'
-		if( $wgHandheldForIPhone ) {
-			$mediaAliases = array(
-				'screen' => 'screen and (min-device-width: 481px)',
-				'handheld' => 'handheld, only screen and (max-device-width: 480px)',
-			);
-
-			if( isset( $mediaAliases[$media] ) ) {
-				$media = $mediaAliases[$media];
 			}
 		}
 

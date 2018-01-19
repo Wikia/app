@@ -25,8 +25,8 @@
  * over to the tryUISubmit static method of this class.
  */
 
-use Wikia\Logger\WikiaLogger;
 use Wikia\DependencyInjection\Injector;
+use Wikia\Logger\WikiaLogger;
 use Wikia\Service\User\Preferences\Migration\PreferenceScopeService;
 
 class Preferences {
@@ -527,14 +527,32 @@ class Preferences {
 	 * @return void
 	 */
 	static function skinPreferences( $user, IContextSource $context, &$defaultPreferences ) {
-		## Skin #####################################
-		global $wgAllowUserCss, $wgAllowUserJs;
-		$defaultPreferences['skin'] = array(
+		// SUS-3836: Simplify skin handling
+		global $wgAllowUserCss, $wgAllowUserJs, $wgDefaultSkin;
+
+		$skinOptions = [];
+
+		foreach ( Skin::SKINS as $skinName => $skinClass ) {
+			$isDefaultSkin = $skinName === $wgDefaultSkin;
+			if ( isset( Skin::SKINS_AVAILABLE_AS_PREFERENCE[$skinName] ) || $isDefaultSkin ) {
+				$option = $context->msg( "skinname-$skinName" )->text();
+
+				if ( $isDefaultSkin ) {
+					$option .= $context->msg( 'parentheses', $context->msg( 'default' )->text() )->text();
+				}
+
+				$skinOptions[$option] = $skinName;
+			}
+		}
+
+		$defaultPreferences['skin'] = [
 			'type' => 'radio',
-			'options' => self::generateSkinOptions( $user, $context ),
-			'label' => '&#160;',
-			'section' => 'rendering/skin',
-		);
+			'options' => $skinOptions,
+			'label' => '&nbsp;',
+			'section' => 'personal/layout',
+		];
+
+		// end FANDOM change
 
 		# Create links to user CSS/JS pages for all skins
 		# This code is basically copied from generateSkinOptions().  It'd
@@ -1121,66 +1139,10 @@ class Preferences {
 	}
 
 	/**
-	 * @param $user User The User object
-	 * @param $context IContextSource
-	 * @return Array: text/links to display as key; $skinkey as value
-	 */
-	static function generateSkinOptions( $user, IContextSource $context ) {
-		global $wgDefaultSkin, $wgAllowUserCss, $wgAllowUserJs;
-		$ret = array();
-
-		$mptitle = Title::newMainPage();
-		$previewtext = $context->msg( 'skin-preview' )->text();
-
-		# Only show members of Skin::getSkinNames() rather than
-		# $skinNames (skins is all skin names from Language.php)
-		$validSkinNames = Skin::getUsableSkins();
-
-		# Sort by UI skin name. First though need to update validSkinNames as sometimes
-		# the skinkey & UI skinname differ (e.g. "standard" skinkey is "Classic" in the UI).
-		foreach ( $validSkinNames as $skinkey => &$skinname ) {
-			$msg = $context->msg( "skinname-{$skinkey}" );
-			if ( $msg->exists() ) {
-				$skinname = htmlspecialchars( $msg->text() );
-			}
-		}
-		asort( $validSkinNames );
-
-		foreach ( $validSkinNames as $skinkey => $sn ) {
-			$linkTools = array();
-
-			# Mark the default skin
-			if ( $skinkey == $wgDefaultSkin ) {
-				$linkTools[] = $context->msg( 'default' )->escaped();
-			}
-
-			# Create preview link
-			$mplink = htmlspecialchars( $mptitle->getLocalURL( "useskin=$skinkey" ) );
-			$linkTools[] = "<a target='_blank' href=\"$mplink\">$previewtext</a>";
-
-			# Create links to user CSS/JS pages
-			if ( $wgAllowUserCss ) {
-				$cssPage = Title::makeTitleSafe( NS_USER, $user->getName() . '/' . $skinkey . '.css' );
-				$linkTools[] = Linker::link( $cssPage, $context->msg( 'prefs-custom-css' )->escaped() );
-			}
-
-			if ( $wgAllowUserJs ) {
-				$jsPage = Title::makeTitleSafe( NS_USER, $user->getName() . '/' . $skinkey . '.js' );
-				$linkTools[] = Linker::link( $jsPage, $context->msg( 'prefs-custom-js' )->escaped() );
-			}
-
-			$display = $sn . ' ' . $context->msg( 'parentheses', $context->getLanguage()->pipeList( $linkTools ) )->text();
-			$ret[$display] = $skinkey;
-		}
-
-		return $ret;
-	}
-
-	/**
 	 * @param $context IContextSource
 	 * @return array
 	 */
-	static function getDateOptions( IContextSource $context ) {
+	static function sgetDateOptions( IContextSource $context ) {
 		$lang = $context->getLanguage();
 		$dateopts = $lang->getDatePreferences();
 

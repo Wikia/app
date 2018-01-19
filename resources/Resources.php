@@ -778,43 +778,6 @@ return array(
 		),
 		'dependencies' => array( 'mediawiki.libs.jpegmeta', 'mediawiki.util' ),
 	),
-	'mediawiki.special.javaScriptTest' => array(
-		'scripts' => 'resources/mediawiki.special/mediawiki.special.javaScriptTest.js',
-		'messages' => array_merge( Skin::getSkinNameMessages(), array(
-			'colon-separator',
-			'javascripttest-pagetext-skins',
-		) ),
-		'dependencies' => array( 'jquery.qunit' ),
-		'position' => 'top',
-	),
-
-	/* MediaWiki Tests */
-
-	'test.sinonjs' => array(
-		'scripts' => array(
-			'resources/sinonjs/sinon-1.9.0.js',
-			// We want tests to work in IE, but can't include this as it
-			// will break the placeholders in Sinon because the hack it uses
-			// to hijack IE globals relies on running in the global scope
-			// and in ResourceLoader this won't be running in the global scope.
-			// Including it results (among other things) in sandboxed timers
-			// being broken due to Date inheritance being undefined.
-			// 'resources/sinonjs/sinon-ie-1.9.0.js',
-		),
-		'targets' => array( 'desktop', 'mobile' ),
-	),
-
-	'mediawiki.tests.qunit.testrunner' => array(
-		'scripts' => 'tests/qunit/data/testrunner.js',
-		'dependencies' => array(
-			'jquery.qunit',
-			'jquery.qunit.completenessTest',
-			'mediawiki.page.startup',
-			'mediawiki.page.ready',
-			'test.sinonjs'
-		),
-		'position' => 'top',
-	),
 
 	/* MediaWiki Legacy */
 
