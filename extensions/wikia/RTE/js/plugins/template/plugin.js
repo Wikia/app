@@ -185,7 +185,7 @@ RTE.templateEditor = {
 
 		availableParams.forEach(function(paramKey) {
 			if (params[paramKey] !== "") {
-				if ( isNaN(parseInt(paramKey))) {
+				if (isNaN(parseInt(paramKey))) {
 					updatedParams.push(paramKey + " = " + params[paramKey]);
 				} else {
 					updatedParams.push(params[paramKey]);
