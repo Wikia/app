@@ -1213,7 +1213,7 @@ class PPFrame_DOM implements PPFrame {
 								'contenteditable' => 'false',
 							];
 
-							$placeholderTag = $this->getPlaceholderTagName( $ret['text'] );
+							$placeholderTag = $this->getPlaceholderTagName( $ret['text'], boolval( $lineStart ) );
 							// when template is used in header new line breaks layout, however it is needed for other contexts
 							if ($contextNode->parentNode->nodeName === 'h' || $placeholderTag === 'span') {
 								$out .= Html::rawElement( $placeholderTag, $attributes, $ret['text'] );
@@ -1412,10 +1412,13 @@ class PPFrame_DOM implements PPFrame {
 	 * inside
 	 *
 	 * @param $text string wikitext
+	 * @param bool $linestart
+	 *
 	 * @return string tagName div or span
 	 */
-	function getPlaceholderTagName( string $text ): string {
+	function getPlaceholderTagName( string $text, bool $linestart ): string {
 		$html = $this->parser->internalParse( $text, false );
+		$html = $this->parser->doBlockLevels( $html, $linestart);
 
 		$blockElements = preg_match( '/<(' . implode( '|', HtmlHelper::BLOCK_ELEMENTS ) . ')[^>]*>/', $html );
 
