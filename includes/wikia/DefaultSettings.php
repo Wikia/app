@@ -649,7 +649,6 @@ $wgSkipSkins = array(
 		'search',
 		'test',
 		'uncyclopedia',
-		'wowwiki',
 		'lostbook',
 		'quartz',
 		'monaco_old',
