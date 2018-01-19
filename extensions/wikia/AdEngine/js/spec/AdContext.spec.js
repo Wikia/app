@@ -569,6 +569,54 @@ describe('AdContext', function () {
 		expect(getModule().getContext().opts.pageFairDetection).toBeFalsy();
 	});
 
+	it('enable BlockAdBlock detection for current country on whitelist on oasis', function () {
+		spyOn(mocks.sampler, 'sample').and.callFake(function () {
+			return true;
+		});
+		mocks.instantGlobals = {wgAdDriverBabDetectionDesktopCountries: ['CURRENT_COUNTRY', 'ZZ']};
+		expect(getModule().getContext().opts.babDetectionDesktop).toBeTruthy();
+	});
+
+	it('disable BlockAdBlock detection when current country is not on whitelist on oasis', function () {
+		spyOn(mocks.sampler, 'sample').and.callFake(function () {
+			return true;
+		});
+		mocks.instantGlobals = {wgAdDriverBabDetectionDesktopCountries: ['OTHER_COUNTRY', 'ZZ']};
+		expect(getModule().getContext().opts.babDetectionDesktop).toBeFalsy();
+	});
+
+	it('enable BlockAdBlock detection for current country on whitelist on mobile-wiki', function () {
+		spyOn(mocks.sampler, 'sample').and.callFake(function () {
+			return true;
+		});
+		mocks.instantGlobals = {wgAdDriverBabDetectionMobileCountries: ['CURRENT_COUNTRY', 'ZZ']};
+		expect(getModule().getContext().opts.babDetectionMobile).toBeTruthy();
+	});
+
+	it('disable BlockAdBlock detection when current country is not on whitelist on mobile-wiki', function () {
+		spyOn(mocks.sampler, 'sample').and.callFake(function () {
+			return true;
+		});
+		mocks.instantGlobals = {wgAdDriverBabDetectionMobileCountries: ['OTHER_COUNTRY', 'ZZ']};
+		expect(getModule().getContext().opts.babDetectionMobile).toBeFalsy();
+	});
+
+	it('enable BlockAdBlock detection for current country on whitelist on news&stories', function () {
+		spyOn(mocks.sampler, 'sample').and.callFake(function () {
+			return true;
+		});
+		mocks.instantGlobals = {wgAdDriverBabDetectionFandomCountries: ['CURRENT_COUNTRY', 'ZZ']};
+		expect(getModule().getContext().opts.babDetectionFandom).toBeTruthy();
+	});
+
+	it('disable BlockAdBlock detection when current country is not on whitelist on news&stories', function () {
+		spyOn(mocks.sampler, 'sample').and.callFake(function () {
+			return true;
+		});
+		mocks.instantGlobals = {wgAdDriverBabDetectionFandomCountries: ['OTHER_COUNTRY', 'ZZ']};
+		expect(getModule().getContext().opts.babDetectionFandom).toBeFalsy();
+	});
+
 	it('enables PageFair detection when url param pagefairdetection is set and current country is on whitelist', function () {
 		mocks.instantGlobals = {wgAdDriverPageFairDetectionCountries: ['CURRENT_COUNTRY', 'ZZ']};
 		spyOn(mocks.querystring, 'getVal').and.callFake(function (param) {

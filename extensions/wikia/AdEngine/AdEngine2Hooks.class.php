@@ -42,6 +42,9 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverAudienceNetworkBidderCountries';
 		$vars[] = 'wgAdDriverA9BidderCountries';
 		$vars[] = 'wgAdDriverA9VideoBidderCountries';
+		$vars[] = 'wgAdDriverBabDetectionDesktopCountries';
+		$vars[] = 'wgAdDriverBabDetectionMobileCountries';
+		$vars[] = 'wgAdDriverBabDetectionFandomCountries';
 		$vars[] = 'wgAdDriverDelayCountries';
 		$vars[] = 'wgAdDriverDelayTimeout';
 		$vars[] = 'wgAdDriverDisableSraCountries';

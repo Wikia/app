@@ -61,6 +61,11 @@
 				trackName: 'pageFair',
 				dimension: 7,
 				name: 'pagefair'
+			},
+			babDetector: {
+				trackName: 'babDetector',
+				dimension: 30,
+				name: 'babdetector'
 			}
 		},
 		listenerSettings = [
@@ -83,6 +88,16 @@
 				eventName: 'pf.not_blocking',
 				value: false,
 				detectorSettings: GASettings.pageFair
+			},
+			{
+				eventName: 'bab.blocking',
+				value: true,
+				detectorSettings: GASettings.babDetector
+			},
+			{
+				eventName: 'bab.not_blocking',
+				value: false,
+				detectorSettings: GASettings.babDetector
 			}
 		];
 

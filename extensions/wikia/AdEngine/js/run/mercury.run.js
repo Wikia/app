@@ -4,6 +4,7 @@ require([
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adLogicPageParams',
 	'ext.wikia.adEngine.adTracker',
+	'ext.wikia.adEngine.babDetection',
 	'ext.wikia.adEngine.slot.service.stateMonitor',
 	'ext.wikia.adEngine.lookup.a9',
 	'ext.wikia.adEngine.lookup.prebid',
@@ -22,6 +23,7 @@ require([
 	adContext,
 	pageLevelParams,
 	adTracker,
+	babDetection,
 	slotStateMonitor,
 	a9,
 	prebid,
@@ -37,6 +39,9 @@ require([
 	win
 ) {
 	'use strict';
+
+	var context = adContext.getContext();
+
 	messageListener.init();
 
 	// Custom ads (skins, footer, etc)
@@ -54,6 +59,10 @@ require([
 			);
 		});
 		win.loadCustomAd = adEngineBridge.loadCustomAd(customAdsLoader.loadCustomAd);
+
+		if (context.opts.babDetectionMobile) {
+			adEngineBridge.checkAdBlocking(babDetection);
+		}
 	} else {
 		win.loadCustomAd = customAdsLoader.loadCustomAd;
 	}

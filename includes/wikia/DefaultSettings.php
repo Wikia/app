@@ -1559,6 +1559,24 @@ $wgAdDriverPageFairRecoveryCountries = null;
 $wgAdDriverEnablePageFairRecovery = true;
 
 /**
+ * @name $wgAdDriverBabDetectionDesktopCountries
+ * List of countries to call BlockAdBlock detection scripts on oasis
+ */
+$wgAdDriverBabDetectionDesktopCountries = null;
+
+/**
+ * @name $wgAdDriverBabDetectionMobileCountries
+ * List of countries to call BlockAdBlock detection scripts on mobile-wiki
+ */
+$wgAdDriverBabDetectionMobileCountries = null;
+
+/**
+ * @name $wgAdDriverBabDetectionFandomCountries
+ * List of countries to call BlockAdBlock detection scripts on news&stories
+ */
+$wgAdDriverBabDetectionFandomCountries = null;
+
+/**
  * trusted proxy service registry
  */
 $wgAutoloadClasses[ 'TrustedProxyService'] =  "$IP/includes/wikia/services/TrustedProxyService.class.php" ;
