@@ -1,7 +1,7 @@
 <?php
 
 class RTEParser extends Parser {
-
+	const INLINE_EXT_TAGS = [ 'ref', 'nowiki' ];
 	// count empty lines before HTML tag
 	private $emptyLinesBefore = 0;
 

@@ -414,19 +414,21 @@ class RTEReverseParser {
 		$out = $data['wikitext'];
 
 		// extra fixes for different types of placeholders
-		if (isset($data['type'])) {
-			switch($data['type']) {
+		if ( isset( $data['type'] ) ) {
+			switch ( $data['type'] ) {
 				// templates and extension tags which are wrapped in <div> needs to have additional newline at the end
 				case 'double-brackets':
 				case 'ext':
-					if ($node->nodeName === 'div') {
+					if ( $node->nodeName === 'div' &&
+						!self::isFirstChild( $node ) &&
+						!self::previousSiblingIs( $node, [ 'h1', 'h2', 'h3', 'h4', 'h5', 'h6' ] ) ) {
 						$out = "\n{$out}";
 					}
 					break;
 				case 'comment':
 					// FIXME: dirty fix for RT #83859
 					// assuming here that comments in wysiyg mode must be placed at the beginning of new line
-					if (self::isChildOf($node->parentNode, 'div')) {
+					if ( self::isChildOf( $node->parentNode, 'div' ) ) {
 						$out = "\n{$out}";
 					}
 					break;
@@ -741,6 +743,10 @@ class RTEReverseParser {
 		}
 		else {
 			$out = "{$textContent}\n";
+		}
+
+		if ( self::previousSiblingIs( $node, 'div' ) ) {
+			$out = "\n{$out}";
 		}
 
 		// if next paragraph has been pasted into CK add extra newline
@@ -1122,6 +1128,10 @@ class RTEReverseParser {
 				// this list (789) is nested list
 				// <ul><li>abc<ul><li>789</li></ul></li></ul>
 				if ( self::isChildOf($node, 'li') && !self::isFirstChild($node) ) {
+					$out = "\n{$out}";
+				}
+
+				if ( self::previousSiblingIs( $node, 'div' ) ) {
 					$out = "\n{$out}";
 				}
 

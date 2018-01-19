@@ -1213,11 +1213,12 @@ class PPFrame_DOM implements PPFrame {
 								'contenteditable' => 'false',
 							];
 
+							$placeholderTag = $this->getPlaceholderTagName( $ret['text'] );
 							// when template is used in header new line breaks layout, however it is needed for other contexts
-							if ($contextNode->parentNode->nodeName === 'h') {
-								$out .= Html::rawElement( $this->getPlaceholderTagName( $ret['text'] ), $attributes, $ret['text'] );
+							if ($contextNode->parentNode->nodeName === 'h' || $placeholderTag === 'span') {
+								$out .= Html::rawElement( $placeholderTag, $attributes, $ret['text'] );
 							} else {
-								$out .= Html::rawElement( $this->getPlaceholderTagName( $ret['text'] ), $attributes, PHP_EOL . $ret['text'] );
+								$out .= Html::rawElement( $placeholderTag, $attributes, PHP_EOL . $ret['text'] );
 							}
 						} else {
 							$out .= $ret['text'];
@@ -1318,7 +1319,6 @@ class PPFrame_DOM implements PPFrame {
 					global $wgRTEParserEnabled;
 					if ( $wgRTEParserEnabled ) {
 						$wikiTextIdx = $contextNode->getAttribute( '_rte_wikitextidx' );
-						$inlineExt = [ 'ref', 'nowiki' ];
 
 						$rteData = [
 							'type' => 'ext',
@@ -1333,7 +1333,7 @@ class PPFrame_DOM implements PPFrame {
 
 						// some extensions render only inline htlm tags, so they should be wrapped in inline wrapper
 						// to not break paragraphs
-						$wrapperTagName = in_array($nameNode->nodeValue, $inlineExt) ? 'span' : 'div';
+						$wrapperTagName = in_array($nameNode->nodeValue, RTEParser::INLINE_EXT_TAGS) ? 'span' : 'div';
 						$out .= Html::rawElement(
 							$wrapperTagName,
 							[
@@ -1408,31 +1408,41 @@ class PPFrame_DOM implements PPFrame {
 	 * In order to properly display a template inside an editor we need to know if it should be displayed
 	 * inside block or inline-block element
 	 *
-	 * We could not find a better way than parsing the template and searching for any block elements inside
+	 * We could not find a better way than parsing the template and searching for any block elements or extension tags
+	 * inside
 	 *
 	 * @param $text string wikitext
 	 * @return string tagName div or span
 	 */
 	function getPlaceholderTagName( string $text ): string {
-		$tagName = 'div';
+		$html = $this->parser->internalParse( $text, false );
 
-		$html = $this->parser->internalParse( $text, false);
+		$blockElements = preg_match( '/<(' . implode( '|', HtmlHelper::BLOCK_ELEMENTS ) . ')[^>]*>/', $html );
 
-		if ( !empty( $html ) ) {
-			$document = HtmlHelper::createDOMDocumentFromText( $html );
-			$xpath = new DOMXPath( $document );
-			$templatePlaceholders = $xpath->query( "//div[contains(@class, 'placeholder-double-brackets')]", $document );
-
-			$blockElements = implode( "|", HtmlHelper::BLOCK_ELEMENTS );
-			for ( $i = 0; $i < $templatePlaceholders->length; $i++ ) {
-				$placeholder = $templatePlaceholders->item( $i );
-				$found = $xpath->query( $blockElements, $placeholder );
-				if ( !$found->length ) {
-					// change wrapper tag to span so it does not break html if template is used inside inline html tag
-					$tagName = 'span';
-					break;
+		$markerMatches = [];
+		preg_match_all(
+			'/' . Parser::MARKER_PREFIX . '[^\\x7f]*' . Parser::MARKER_SUFFIX . '/',
+			$html,
+			$markerMatches
+		);
+		$markerMatches = array_filter(
+			$markerMatches[0],
+			function ( $marker ) {
+				// RTEParser::INLINE_EXT_TAGS are considered as ones that do not render using block elements
+				foreach ( RTEParser::INLINE_EXT_TAGS as $tag ) {
+					if ( strpos( $marker, "-${tag}-" ) ) {
+						return false;
+					}
 				}
+
+				return true;
 			}
+		);
+
+		if ( $blockElements || $markerMatches ) {
+			$tagName = 'div';
+		} else {
+			$tagName = 'span';
 		}
 
 		return $tagName;
