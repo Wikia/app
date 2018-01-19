@@ -13,20 +13,6 @@
     margin: 12px auto 0;
 }
 
-.list-global-users-members {
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    justify-content: left;
-    max-height: 500px;
-    overflow: scroll;
-}
-
-.list-global-users-members li {
-    margin: 3px 12px;
-    flex-basis: 30%;
-}
-
 #list-global-users-selector-toggle {
     float: right;
     font-size: 90%;
