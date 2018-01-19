@@ -1,42 +1,27 @@
 const path = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
-const destinationPath = path.resolve(__dirname, 'js/build');
-
 module.exports = {
+	context: __dirname,
 	entry: {
-		'bridge': path.resolve(__dirname, 'src/ad-engine.bridge.js'),
+		'bridge': './src/ad-engine.bridge.js',
 	},
 	output: {
-		path: destinationPath,
+		path: path.resolve(__dirname, 'js/build'),
 		filename: '[name].js',
 		libraryTarget: 'amd',
-		library: 'ad-engine.bridge'
-	},
-	resolve: {
-		modules: ['./', './node_modules'],
-		extensions: ['.js', '.scss'],
-		alias: {
-			'ad-engine': path.join(__dirname, 'node_modules/ad-engine'),
-			'ad-products': path.join(__dirname, 'node_modules/ad-products'),
-		}
+		library: 'ext.wikia.adEngine.bridge'
 	},
 	module: {
 		rules: [
 			{
 				test: /\.jsx?$/,
-				use: {
-					loader: 'babel-loader',
-					options: {
-						plugins: ['lodash'],
-						presets: [
-							'env'
-						]
-					}
-				}
+				include: path.resolve(__dirname, 'src'),
+				use: 'babel-loader',
 			},
 			{
 				test: /\.s?css$/,
+				include: path.resolve(__dirname, 'src'),
 				loader: ExtractTextPlugin.extract({
 					fallback: 'style-loader',
 					use: [
