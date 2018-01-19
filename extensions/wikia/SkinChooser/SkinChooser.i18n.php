@@ -2,6 +2,10 @@
 $messages = array();
 
 $messages['en'] = array(
+	'skinchooser-desc' => 'Allows users to choose skins in their preferences',
+	'site-layout' => 'Site Layouts',
+	'new-look' => 'Wikia',
+	'right-setadminskin' => 'Set the default skin',
 );
 
 $messages['qqq'] = array(
