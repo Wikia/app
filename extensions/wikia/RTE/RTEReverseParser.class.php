@@ -515,6 +515,9 @@ class RTEReverseParser {
 					$beforeText = "\n";
 				}
 			}
+		// ignore errors displayed by extension tags
+		} elseif ( $node->nodeName === 'strong' && $node->getAttribute( 'class' ) === 'error' ) {
+			return '';
 		}
 
 		// fix for wikitext that is context-sensitive
