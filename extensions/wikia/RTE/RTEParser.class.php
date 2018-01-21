@@ -445,9 +445,11 @@ class RTEParser extends Parser {
 	 * @param $linestart boolean
 	 * @param $clearState boolean
 	 * @param $revid Int: number to pass in {{REVISIONID}}
+	 * @param bool $trailingParagraph
+	 *
 	 * @return ParserOutput a ParserOutput
 	 */
-	public function parse( $text, Title $title, ParserOptions $options, $linestart = true, $clearState = true, $revid = null ) {
+	public function parse( $text, Title $title, ParserOptions $options, $linestart = true, $clearState = true, $revid = null, $trailingParagraph = true ) {
 		// XW-4380: Disable image lazy loading for images rendered in the editor
 		ImageLazyLoad::disable();
 
@@ -526,7 +528,9 @@ class RTEParser extends Parser {
 		$html = strtr($html, array('<p>' => '<p data-rte-fromparser="true">', '<p ' => '<p data-rte-fromparser="true" '));
 
 		// appending empty paragraph to the editarea XW-4367
-		$html .= Xml::element('p');
+		if ( $trailingParagraph ) {
+			$html .= Xml::element('p');
+		}
 
 		// update parser output
 		RTE::log(__METHOD__, $html);
