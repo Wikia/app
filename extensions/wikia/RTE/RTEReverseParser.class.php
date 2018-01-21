@@ -413,6 +413,16 @@ class RTEReverseParser {
 
 		$out = $data['wikitext'];
 
+		// For some of placeholders like mainpage-left-column-start, we need to parse the content of the placeholder as
+		// placeholder's html does not contain this content
+		if ( isset($data['rteParsePlaceholderContent']) && $data['rteParsePlaceholderContent'] ) {
+			// remove leading and trailing non-width spaces from textContent added in Preprocessor_DOM.php
+			$content = preg_replace('/^&#x200b;/', '', $textContent);
+			$content = preg_replace('/&#x200b;$/', '', $content);
+
+			$out .= trim($content);
+		}
+
 		// extra fixes for different types of placeholders
 		if ( isset( $data['type'] ) ) {
 			switch ( $data['type'] ) {
@@ -1343,7 +1353,7 @@ class RTEReverseParser {
 					)
 				)
 			) {
-					$out = "\n{$out}";
+				$out = "\n{$out}";
 			}
 		}
 		else {

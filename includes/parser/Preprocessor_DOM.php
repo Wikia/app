@@ -1319,12 +1319,22 @@ class PPFrame_DOM implements PPFrame {
 					global $wgRTEParserEnabled;
 					if ( $wgRTEParserEnabled ) {
 						$wikiTextIdx = $contextNode->getAttribute( '_rte_wikitextidx' );
+						$wikitext = RTEData::get( 'wikitext', intval( $wikiTextIdx ) );
+
+						// content of some extension tags needs to be editable and RTEReverseParser needs to add its
+						// wikitext to output
+						$nestedEditableContent = array_filter(
+							[ 'mainpage-leftcolumn-start', 'mainpage-rightcolumn-start' ],
+							function($tagname) use($wikitext) {
+								return boolval(strpos( $wikitext, $tagname ));
+							});
 
 						$rteData = [
 							'type' => 'ext',
-							'wikitext' => RTEData::get( 'wikitext', intval( $wikiTextIdx ) ),
+							'wikitext' => $wikitext,
 							'lineStart' => $contextNode->getAttribute( 'lineStart' ),
-							'placeholder' => 1
+							'placeholder' => 1,
+							'rteParsePlaceholderContent' => !empty($nestedEditableContent)
 						];
 
 						// append a zero-width space
@@ -1341,7 +1351,7 @@ class PPFrame_DOM implements PPFrame {
 								'data-rte-meta' => RTEReverseParser::encodeRTEData( $rteData ),
 								'class' => "placeholder placeholder-ext",
 								'type' => 'ext',
-								'contenteditable' => 'false',
+								'contenteditable' => !empty($nestedEditableContent),
 							],
 							$tagMarker
 						);
