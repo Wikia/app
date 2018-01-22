@@ -40,7 +40,6 @@ require([
 			},
 			selectedCaptionsLanguage: featuredVideoCookieService.getCaptions(),
 			settings: {
-				showAutoplayToggle: false,
 				showQuality: true,
 				showCaptions: true
 			},
