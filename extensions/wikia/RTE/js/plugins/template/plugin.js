@@ -178,6 +178,7 @@ RTE.templateEditor = {
 		var wikitext,
 			currentData = this.placeholder.getData(),
 			availableParams = RTE.tools.resolveDoubleBracketsCache[currentData.wikitext].availableParams,
+			passedParams = RTE.tools.resolveDoubleBracketsCache[currentData.wikitext].passedParams,
 			templateTitle = currentData.title,
 			multiline = currentData.wikitext.indexOf("\n|") !== -1,
 			updatedParams = [],
@@ -192,6 +193,19 @@ RTE.templateEditor = {
 				}
 			}
 		});
+
+		// XW-4540: save parameters that are not yet supported by template but were passed in template invocation
+		if (passedParams) {
+			Object.keys(passedParams).forEach(function (key) {
+				if (!params.hasOwnProperty(key)) {
+					if (isNaN(parseInt(key))) {
+						updatedParams.push(key + " = " + passedParams[key]);
+					} else {
+						updatedParams.push(passedParams[key]);
+					}
+				}
+			});
+		}
 
 		// generate new wikitext
 		wikitext = '{{' + templateTitle;
