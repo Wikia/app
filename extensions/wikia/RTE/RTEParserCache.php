@@ -4,7 +4,7 @@
  * A ParserOptions-agnostic ParserCache implementation for use by RTE.
  */
 class RTEParserCache extends ParserCache {
-	const TTL = 86400 * 7; // 7 days
+	const TTL = 86400 * 3; // 3 days
 
 	public function __construct( BagOStuff $memCached ) {
 		parent::__construct( $memCached );

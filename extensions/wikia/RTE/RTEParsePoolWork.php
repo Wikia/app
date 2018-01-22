@@ -58,7 +58,7 @@ class RTEParsePoolWork extends PoolCounterWork {
 			$this->revisionId );
 
 		if ( $this->cacheable && $this->parserOutput->isCacheable() ) {
-			// set a custom TTL (7 days instead of 14 for normal parser output)
+			// set a custom TTL (3 days instead of 14 for normal parser output)
 			$this->parserOutput->updateCacheExpiry( RTEParserCache::TTL );
 
 			$this->parserCache->save(
