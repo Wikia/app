@@ -1806,6 +1806,13 @@ $wgAdDriverMobileFloorAdhesionCountries = null;
 $wgAdDriverIncontentPlayerSlotCountries = null;
 
 /**
+ * @name $wgAdDriverDisableBadgeAdCountries
+ * Disables badge ad (next to TOP_LEADERBOARD).
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverDisableBadgeAdCountries = null;
+
+/**
  * manage a user's preferences externally
  */
 $wgPreferenceServiceRead = false;

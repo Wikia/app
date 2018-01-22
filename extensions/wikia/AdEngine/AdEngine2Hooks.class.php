@@ -45,6 +45,7 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverDelayCountries';
 		$vars[] = 'wgAdDriverDelayTimeout';
 		$vars[] = 'wgAdDriverDisableSraCountries';
+		$vars[] = 'wgAdDriverDisableBadgeAdCountries';
 		$vars[] = 'wgAdDriverEvolve2Countries';
 		$vars[] = 'wgAdDriverFMRLogisticRegressionRabbitCountries';
 		$vars[] = 'wgAdDriverFMRPassiveAggressiveClassifierRabbitCountries';

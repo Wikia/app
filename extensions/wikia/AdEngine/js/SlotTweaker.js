@@ -3,9 +3,11 @@ define('ext.wikia.adEngine.slotTweaker', [
 	'ext.wikia.adEngine.domElementTweaker',
 	'ext.wikia.adEngine.slot.adSlot',
 	'wikia.document',
+	'wikia.geo',
+	'wikia.instantGlobals',
 	'wikia.log',
 	'wikia.window'
-], function (DOMElementTweaker, adSlot, doc, log, win) {
+], function (DOMElementTweaker, adSlot, doc, geo, instantGlobals, log, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.slotTweaker',
@@ -69,17 +71,17 @@ define('ext.wikia.adEngine.slotTweaker', [
 		}
 	}
 
-	// TODO: fix it, it's a hack!
+	// TODO: remove it after fully disabling Badge Ad: ADEN-6579
 	function adjustLeaderboardSize(slotname) {
 		var slot = doc.getElementById(slotname);
-		if (isTopLeaderboard(slotname) && isStandardLeaderboardSize(slotname)) {
+		if (!geo.isProperGeo(instantGlobals.wgAdDriverDisableBadgeAdCountries) && isTopLeaderboard(slotname) && isStandardLeaderboardSize(slotname)) {
 			slot.className += ' ' + standardLeaderboardSizeClass;
 		}
 	}
 
-	// TODO: fix it, it's a hack!
+	// TODO: remove it after fully disabling Badge Ad: ADEN-6579
 	function removeTopButtonIfNeeded(slotname) {
-		if (isTopLeaderboard(slotname) && isStandardLeaderboardSize(slotname)) {
+		if (!geo.isProperGeo(instantGlobals.wgAdDrivelrDisableBadgeAdCountries) && isTopLeaderboard(slotname) && isStandardLeaderboardSize(slotname)) {
 			win.Wikia.reviveQueue = win.Wikia.reviveQueue || [];
 
 			win.Wikia.reviveQueue.push({
