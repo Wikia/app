@@ -544,7 +544,7 @@ RTE.templateEditor = {
 				// If placeholder has a parent = it's already inserted in the article
 				// So we are editing, not creating. Thus, replacing the existing article element
 				// With it's edited version (but keeping the placeholder)
-				this.placeholder.html($(html).children());
+				this.placeholder.html($(html).html());
 			} else {
 				RTE.tools.insertElement(html);
 			}
