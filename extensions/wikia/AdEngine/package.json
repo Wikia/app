@@ -1,12 +1,14 @@
 {
-  "name": "app",
-  "version": "0.0.1",
-  "main": "index.js",
-  "license": "MIT",
+  "name": "@wikia/ad-engine-app-bridge",
+  "version": "0.0.0",
+  "private": true,
   "devDependencies": {
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
     "babel-plugin-lodash": "^3.3.2",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-plugin-transform-decorators-legacy": "^1.3.4",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-env": "^1.6.1",
     "css-loader": "^0.28.7",
     "extract-text-webpack-plugin": "^3.0.2",
@@ -20,8 +22,9 @@
     "watch": "webpack -p -w"
   },
   "dependencies": {
-    "ad-engine": "8.1.0",
-    "ad-products": "2.2.1",
+    "@wikia/ad-engine": "^9.0.0",
+    "@wikia/ad-products": "^3.0.0",
+    "core-decorators": "^0.20.0",
     "lodash": "^4.17.4"
   }
 }

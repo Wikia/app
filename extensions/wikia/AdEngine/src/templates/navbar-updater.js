@@ -1,4 +1,4 @@
-import ResolvedState from 'ad-products/src/modules/templates/uap/resolved-state';
+import { resolvedState } from '@wikia/ad-products';
 
 const lockedStateClass = 'theme-locked';
 export const navBarStickClass = 'bfaa-pinned';
@@ -18,7 +18,7 @@ export function isElementInViewport(adSlot, params) {
 
 	if (params.config && params.config.aspectRatio) {
 		const { resolved, default: _default } = params.config.aspectRatio;
-		const isResolved = ResolvedState.isResolvedState(params) || container.classList.contains(lockedStateClass);
+		const isResolved = resolvedState.isResolvedState(params) || container.classList.contains(lockedStateClass);
 
 		return position <= document.body.offsetWidth / (isResolved ? resolved : _default);
 	}

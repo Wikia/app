@@ -1,6 +1,6 @@
 /*global require*/
 require([
-	'ad-engine.bridge',
+	'ext.wikia.adEngine.bridge',
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adLogicPageParams',
 	'ext.wikia.adEngine.adTracker',
