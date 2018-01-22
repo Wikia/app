@@ -1213,12 +1213,20 @@ class PPFrame_DOM implements PPFrame {
 								'contenteditable' => 'false',
 							];
 
-							$placeholderTag = $this->getPlaceholderTagName( $ret['text'] );
+							$placeholderTag = $this->getPlaceholderTagName( $ret['text'], boolval( $lineStart ) );
+							if ($placeholderTag === 'span') {
+								// wrap content of inline template with non-width spaces to prevent CKE from modifying
+								// dom structure
+								$content = "&#x0200B;" . $ret['text'] . "&#x0200B;";
+							} else {
+								$content = $ret['text'];
+							}
+
 							// when template is used in header new line breaks layout, however it is needed for other contexts
 							if ($contextNode->parentNode->nodeName === 'h' || $placeholderTag === 'span') {
-								$out .= Html::rawElement( $placeholderTag, $attributes, $ret['text'] );
+								$out .= Html::rawElement( $placeholderTag, $attributes,  $content );
 							} else {
-								$out .= Html::rawElement( $placeholderTag, $attributes, PHP_EOL . $ret['text'] );
+								$out .= Html::rawElement( $placeholderTag, $attributes, PHP_EOL . $content );
 							}
 						} else {
 							$out .= $ret['text'];
@@ -1412,10 +1420,13 @@ class PPFrame_DOM implements PPFrame {
 	 * inside
 	 *
 	 * @param $text string wikitext
+	 * @param bool $linestart
+	 *
 	 * @return string tagName div or span
 	 */
-	function getPlaceholderTagName( string $text ): string {
+	function getPlaceholderTagName( string $text, bool $linestart ): string {
 		$html = $this->parser->internalParse( $text, false );
+		$html = $this->parser->doBlockLevels( $html, $linestart);
 
 		$blockElements = preg_match( '/<(' . implode( '|', HtmlHelper::BLOCK_ELEMENTS ) . ')[^>]*>/', $html );
 

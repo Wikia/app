@@ -25,6 +25,7 @@ Edgecases description:
 * COMPLEX.09 - double brackets found in image/video caption - [[Image:Foo.png|{{foo}}]]
 * COMPLEX.10 - table cell line begin with a comment
 * COMPLEX.11 - parser hook found inside HTML table - <table><staff /></table>
+* COMPLEX.12 - unclosed <table>, <tr> or <td> tag found
 
 
 Custom HTML5 data-* attributes used by RTE:
