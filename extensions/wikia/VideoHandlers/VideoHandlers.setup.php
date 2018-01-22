@@ -201,10 +201,6 @@ $wgAutoloadClasses['CrunchyrollApiWrapper'] =  $dir . '/apiwrappers/CrunchyrollA
 $wgAutoloadClasses['CrunchyrollVideoHandler'] =  $dir . '/handlers/CrunchyrollVideoHandler.class.php';
 $wgMediaHandlers['video/crunchyroll'] = 'CrunchyrollVideoHandler';
 
-$wgAutoloadClasses['MakerstudiosApiWrapper'] =  $dir . '/apiwrappers/MakerstudiosApiWrapper.class.php';
-$wgAutoloadClasses['MakerstudiosVideoHandler'] =  $dir . '/handlers/MakerstudiosVideoHandler.class.php';
-$wgMediaHandlers['video/makerstudios'] = 'MakerstudiosVideoHandler';
-
 /**
  * Feed ingesters
  */
@@ -216,7 +212,6 @@ $wgAutoloadClasses[ 'AnyclipFeedIngester' ] = $dir . '/feedingesters/AnyclipFeed
 $wgAutoloadClasses[ 'OoyalaFeedIngester' ] = $dir . '/feedingesters/OoyalaFeedIngester.class.php';
 $wgAutoloadClasses[ 'IvaFeedIngester' ] = $dir . '/feedingesters/IvaFeedIngester.class.php';
 $wgAutoloadClasses[ 'CrunchyrollFeedIngester' ] = $dir . '/feedingesters/CrunchyrollFeedIngester.class.php';
-$wgAutoloadClasses[ 'MakerstudiosFeedIngester' ] = $dir . '/feedingesters/MakerstudiosFeedIngester.class.php';
 $wgAutoloadClasses[ 'TestVideoFeedIngester' ] = $dir . '/tests/TestVideoFeedIngester.class.php';
 
 $wgAutoloadClasses[ 'FeedIngesterDataNormalizer' ] = $dir . '/feedingesters/FeedIngesterDataNormalizer.class.php';

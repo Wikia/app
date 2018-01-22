@@ -12,7 +12,6 @@ class FeedIngesterFactory {
 	const PROVIDER_OOYALA = 'ooyala';
 	const PROVIDER_IVA = 'iva';
 	const PROVIDER_CRUNCHYROLL = 'crunchyroll';
-	const PROVIDER_MAKER_STUDIOS = 'makerstudios';
 
 	// Providers from which we ingest daily video data
 	protected static $ACTIVE_PROVIDERS = [
