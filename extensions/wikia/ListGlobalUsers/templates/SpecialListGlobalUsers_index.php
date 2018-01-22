@@ -14,7 +14,7 @@
 			</div>
 		<?php endforeach; ?>
 		</div>
-		<input type="submit" class="list-global-users-submit wds-button wds-is-squished" value="<?= wfMessage( 'htmlform-submit' )->escaped(); ?>" />
+		<input type="submit" class="list-global-users-submit wds-button wds-is-squished" value="<?= wfMessage( 'listglobalusers-submit' )->escaped(); ?>" />
 	</fieldset>
 </form>
 <ul class="list-global-users-members">

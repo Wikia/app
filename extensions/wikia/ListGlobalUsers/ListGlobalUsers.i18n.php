@@ -7,6 +7,7 @@ $messages['en'] = array(
 	'listglobalusers-legend' => 'List users who are members of one or more global groups',
 	'listglobalusers-select-all' => 'Select all',
 	'listglobalusers-deselect-all' => 'Deselect all',
+	'listglobalusers-submit' => 'Submit',
 );
 
 $messages['qqq'] = array(
@@ -14,4 +15,5 @@ $messages['qqq'] = array(
 	'listglobalusers-legend' => 'Form description shown on Special:ListGlobalUsers',
 	'listglobalusers-select-all' => 'Text for toggle to select all user group checkboxes',
 	'listglobalusers-deselect-all' => 'Text for toggle to deselect all user group checkboxes',
+	'listglobalusers-submit' => 'Label for submit button on Special:ListGlobalUsers search form',
 );
