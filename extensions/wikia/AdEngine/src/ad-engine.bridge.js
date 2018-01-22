@@ -122,11 +122,10 @@ function updatePageLevelTargeting(legacyContext, params, skin) {
 }
 
 function checkAdBlocking(detection) {
-	let adsBlocked = false;
-
-	client.checkBlocking(() => { adsBlocked = true; });
-
-	detection.initDetection(adsBlocked);
+	utils.client.checkBlocking(
+		() => { detection.initDetection(true); },
+		() => { detection.initDetection(false); }
+	);
 }
 
 export {

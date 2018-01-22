@@ -22,7 +22,7 @@
     "watch": "webpack -p -w"
   },
   "dependencies": {
-    "@wikia/ad-engine": "^9.0.0",
+    "@wikia/ad-engine": "^9.1.0",
     "@wikia/ad-products": "^3.0.0",
     "core-decorators": "^0.20.0",
     "lodash": "^4.17.4"
