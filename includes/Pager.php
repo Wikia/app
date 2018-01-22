@@ -123,11 +123,7 @@ abstract class IndexPager extends ContextSource implements Pager {
 		list( $this->mLimit, /* $offset */ ) = $this->mRequest->getLimitOffset();
 
 		$this->mIsBackwards = ( $this->mRequest->getVal( 'dir' ) == 'prev' );
-
-		// FANDOM change - allow to use different DB connection than local one
-		if ( $this->mDb === null ) {
-			$this->mDb = wfGetDB( DB_SLAVE );
-		}
+		$this->mDb = wfGetDB( DB_SLAVE );
 
 		$index = $this->getIndexField(); // column to sort on
 		$extraSort = $this->getExtraSortFields(); // extra columns to sort on for query planning
