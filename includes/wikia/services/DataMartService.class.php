@@ -673,43 +673,6 @@ class DataMartService {
 		}
 	}
 
-	/**
-	 * Returns an array of IDs of wikias ordered by WAM rank.
-	 * The default limit is 200. If 0 is provided - no limit is used.
-	 * @param int $limit Default is set as the DEFAULT_TOP_WIKIAS_LIMIT const
-	 * @param array $wikisIds Limit the range to certain wikis
-	 * @return bool|array An array of IDs or `false` on no results
-	 */
-	public function getWikisOrderByWam( $limit = self::DEFAULT_TOP_WIKIAS_LIMIT, array $wikisIds = [] ) {
-		$db = DataMartService::getDB();
-
-		$sql = ( new WikiaSQL() )->skipIf( self::isDisabled() )
-			->cacheGlobal( self::TTL )
-			->SELECT( 'wiki_id' )
-			->FROM( 'dimension_top_wikis' )
-			->ORDER_BY( 'rank' );
-
-		/**
-		 * Limit the results to certain wikias
-		 */
-		if ( !empty( $wikisIds ) ) {
-			$sql->WHERE( 'wiki_id' )->IN( $wikisIds );
-		}
-
-		/**
-		 * Limit the number of results
-		 */
-		if ( $limit > 0 ) {
-			$sql->LIMIT( (int)$limit );
-		}
-
-		$wikis = $sql->runLoop( $db, function( &$wikis, $row ) {
-			$wikis[] = (int)$row->wiki_id;
-		} );
-
-		return $wikis;
-	}
-
 	protected static function getDB() {
 		$app = F::app();
 		wfGetLB( $app->wg->DWStatsDB )->allowLagged( true );
