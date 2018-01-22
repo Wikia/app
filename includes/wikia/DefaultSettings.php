@@ -141,7 +141,7 @@ $wgHooks['ArticleCommentListPurgeComplete'][] = 'ApiHooks::ArticleCommentListPur
 
 
 //Wikia API base controller, all the others extend this class
-$wgAutoloadClasses[ 'WikiaApiController'] =  "{$IP}/includes/wikia/api/WikiaApiController.class.php" ;
+$wgAutoloadClasses['WikiaApiController'] =  "{$IP}/includes/wikia/api/WikiaApiController.class.php" ;
 
 //Wikia API controllers
 $wgAutoloadClasses['DiscoverApiController'] = "{$IP}/includes/wikia/api/DiscoverApiController.class.php";
@@ -153,7 +153,6 @@ $wgAutoloadClasses['StatsApiController'] = "{$IP}/includes/wikia/api/StatsApiCon
 $wgAutoloadClasses['RelatedPagesApiController'] = "{$IP}/includes/wikia/api/RelatedPagesApiController.class.php";
 $wgAutoloadClasses['ActivityApiController'] = "{$IP}/includes/wikia/api/ActivityApiController.class.php";
 $wgAutoloadClasses['UserApiController'] = "{$IP}/includes/wikia/api/UserApiController.class.php";
-$wgAutoloadClasses['TvApiController'] = "{$IP}/includes/wikia/api/TvApiController.class.php";
 $wgAutoloadClasses['MoviesApiController'] = "{$IP}/includes/wikia/api/MoviesApiController.class.php";
 $wgAutoloadClasses['DWDimensionApiController'] = "{$IP}/includes/wikia/api/DWDimensionApiController.class.php";
 $wgAutoloadClasses['DWDimensionApiControllerSQL'] = "{$IP}/includes/wikia/api/DWDimensionApiControllerSQL.class.php";
@@ -171,7 +170,6 @@ $wgWikiaApiControllers['StatsApiController'] = "{$IP}/includes/wikia/api/StatsAp
 $wgWikiaApiControllers['RelatedPagesApiController'] = "{$IP}/includes/wikia/api/RelatedPagesApiController.class.php";
 $wgWikiaApiControllers['ActivityApiController'] = "{$IP}/includes/wikia/api/ActivityApiController.class.php";
 $wgWikiaApiControllers['UserApiController'] = "{$IP}/includes/wikia/api/UserApiController.class.php";
-$wgWikiaApiControllers['TvApiController'] = "{$IP}/includes/wikia/api/TvApiController.class.php";
 $wgWikiaApiControllers['MoviesApiController'] = "{$IP}/includes/wikia/api/MoviesApiController.class.php";
 $wgWikiaApiControllers['DWDimensionApiController'] = "{$IP}/includes/wikia/api/DWDimensionApiController.class.php";
 $wgWikiaApiControllers['InfoboxApiController'] = "{$IP}/includes/wikia/api/InfoboxApiController.class.php";
@@ -262,7 +260,6 @@ $wgAutoloadClasses[ 'Transaction'                     ] = "$IP/includes/wikia/tr
 $wgAutoloadClasses[ 'TransactionTrace'                ] = "$IP/includes/wikia/transaction/TransactionTrace.php";
 $wgAutoloadClasses[ 'TransactionClassifier'           ] = "$IP/includes/wikia/transaction/TransactionClassifier.php";
 $wgAutoloadClasses[ 'TransactionTraceNewrelic'        ] = "$IP/includes/wikia/transaction/TransactionTraceNewrelic.php";
-$wgAutoloadClasses[ 'TransactionTraceScribe'          ] = "$IP/includes/wikia/transaction/TransactionTraceScribe.php";
 $wgHooks          [ 'ArticleViewAddParserOutput'      ][] = 'Transaction::onArticleViewAddParserOutput';
 $wgHooks          [ 'AfterSmwfGetStore'               ][] = 'Transaction::onAfterSmwfGetStore';
 $wgHooks          [ 'RestInPeace'                     ][] = 'Transaction::onRestInPeace';
@@ -424,12 +421,9 @@ $wgAutoloadClasses['TitleTrait'] = $IP . '/includes/wikia/traits/TitleTrait.php'
 // Profiler classes
 $wgAutoloadClasses['ProfilerData'] = "{$IP}/includes/profiler/ProfilerData.php";
 $wgAutoloadClasses['ProfilerDataSink'] = "{$IP}/includes/profiler/sinks/ProfilerDataSink.php";
-$wgAutoloadClasses['ProfilerDataUdpSink'] = "{$IP}/includes/profiler/sinks/ProfilerDataUdpSink.php";
-$wgAutoloadClasses['ProfilerDataScribeSink'] = "{$IP}/includes/profiler/sinks/ProfilerDataScribeSink.php";
 
 //RabbitMq
 $wgAutoloadClasses['Wikia\Rabbit\ConnectionBase'] = "{$IP}/includes/wikia/rabbitmq/ConnectionBase.class.php";
-
 
 // Skin loading scripts
 $wgHooks['WikiaSkinTopScripts'][] = 'WikiFactoryHubHooks::onWikiaSkinTopScripts';
@@ -696,6 +690,13 @@ require_once( "{$IP}/extensions/wikia/Tasks/Tasks.setup.php");
 require_once( "{$IP}/includes/wikia/tasks/autoload.php");
 
 /**
+ * @name wgDBAvgStatusPoll
+ * Scale load balancer polling time so that under overload conditions, the database server
+ * receives a SHOW STATUS query at an average interval of this many microseconds
+ */
+$wgDBAvgStatusPoll = 30000;
+
+/**
  * @name wgExternalSharedDB
  * All wikis use shared database to fetch user data
  */
@@ -724,7 +725,6 @@ $wgStatsDB = 'stats';
 $wgDWStatsDB = 'statsdb';
 $wgStatsDBEnabled = true;
 $wgSpecialsDB = 'specials';
-$wgSwiftSyncDB = 'swift_sync';
 $wgSharedKeyPrefix = "wikicities"; // default value for shared key prefix, @see wfSharedMemcKey
 $wgPortabilityDB = 'portability_db';
 $wgForceMasterDatabase = false;  // true only during wiki creation process
@@ -1268,6 +1268,13 @@ $wgAdDriverUseAudienceNetworkBidder = false;
 $wgAdDriverAudienceNetworkBidderCountries = null;
 
 /**
+ * @name $wgAdDriverBeachfrontBidderCountries
+ * List of countries where Beachfront bidding platform is enabled.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverBeachfrontBidderCountries = null;
+
+/**
  * @name $wgAdDriverIndexExchangeBidderCountries
  * List of countries where indexExchange bidding platform is enabled.
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
@@ -1630,12 +1637,10 @@ $wgUseETag = true;
  */
 $wgApiAccess = [
 	'SearchApiController' => [
-		'getCombined' =>  ApiAccessService::ENV_SANDBOX,
 		'getCrossWiki' => ApiAccessService::WIKIA_CORPORATE,
 		'getList' => ApiAccessService::WIKIA_NON_CORPORATE,
 	],
 	'SearchSuggestionsApiController' => ApiAccessService::WIKIA_NON_CORPORATE,
-	'TvApiController' => ApiAccessService::WIKIA_CORPORATE,
 	'MoviesApiController' => ApiAccessService::WIKIA_CORPORATE,
 	'WAMApiController' => ApiAccessService::WIKIA_CORPORATE,
 	'WikisApiController' => ApiAccessService::WIKIA_CORPORATE,
@@ -1737,12 +1742,6 @@ $wgXhprofUDPPort = '3911';
  * Threshold for total time spent in function to be reported (set to 0 to report all entries)
  */
 $wgXhprofMinimumTime = 0.001;
-
-/**
- * @name wgProfilerSendViaScribe
- * Enables sending profiler reports via Scribe
- */
-$wgProfilerSendViaScribe = true;
 
 /**
  * Force ImageServing to return an empty list
@@ -1922,3 +1921,8 @@ require_once "$IP/extensions/wikia/CityList/CityList.setup.php";
 
 // SUS-3496: Extension to update shared dataware.pages table
 require_once "$IP/extensions/wikia/Pages/Pages.setup.php";
+
+// SRE-76: Logging classes that have been initially defined in config.
+$wgAutoloadClasses['AuditLog'] = "$IP/includes/wikia/AuditLog.class.php";
+
+$wgHooks['SetupAfterCache'][] = 'AuditLog::init';

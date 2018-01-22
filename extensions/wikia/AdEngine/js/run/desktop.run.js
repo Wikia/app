@@ -1,7 +1,7 @@
 /*global require*/
 /*jshint camelcase:false*/
 require([
-	'ad-engine.bridge',
+	'ext.wikia.adEngine.bridge',
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adEngineRunner',
 	'ext.wikia.adEngine.adLogicPageParams',

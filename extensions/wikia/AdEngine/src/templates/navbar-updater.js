@@ -1,21 +1,27 @@
-const leaderboard = document.getElementById('TOP_LEADERBOARD');
-const navBarStickClass = 'bfaa-pinned';
+import { resolvedState } from '@wikia/ad-products';
+
+const lockedStateClass = 'theme-locked';
+export const navBarStickClass = 'bfaa-pinned';
 export const navBarElement = document.getElementById('globalNavigation');
 
-export function updateNavbar(bfaaConfig) {
-	if (isElementInViewport(bfaaConfig)) {
+export function pinNavbar(bfaaPinned) {
+	if (bfaaPinned) {
 		navBarElement.classList.add(navBarStickClass);
 	} else {
 		navBarElement.classList.remove(navBarStickClass);
 	}
 }
 
-function isElementInViewport(bfaaConfig) {
-	let position = window.scrollY || window.pageYOffset;
+export function isElementInViewport(adSlot, params) {
+	const position = window.scrollY || window.pageYOffset || 0;
+	const container = adSlot.getElement();
 
-	if (bfaaConfig && bfaaConfig.aspectRatio) {
-		return position <= document.body.offsetWidth / bfaaConfig.aspectRatio.default;
+	if (params.config && params.config.aspectRatio) {
+		const { resolved, default: _default } = params.config.aspectRatio;
+		const isResolved = resolvedState.isResolvedState(params) || container.classList.contains(lockedStateClass);
+
+		return position <= document.body.offsetWidth / (isResolved ? resolved : _default);
 	}
 
-	return position <= leaderboard.offsetHeight;
+	return position <= container.offsetHeight;
 }

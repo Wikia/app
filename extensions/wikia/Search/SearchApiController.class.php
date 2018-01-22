@@ -3,7 +3,6 @@
  * Class definition for SearchApiController
  */
 use Wikia\Search\Config, Wikia\Search\QueryService\Factory, Wikia\Search\QueryService\DependencyContainer;
-use Wikia\Search\Services\CombinedSearchService;
 
 /**
  * Controller to execute searches in the content of a wiki.
@@ -117,60 +116,12 @@ class SearchApiController extends WikiaApiController {
 	}
 
 	/**
-	 * Fetches results for combined search for submitted query
-	 *
-	 * @requestParam string $query The query to use for the search
-	 * @requestParam string[] $langs [OPTIONAL] list of characters
-	 * @requestParam string[] $hubs [OPTIONAL] list of hubs to filter by
-	 * @requestParam string[] $namespaces [OPTIONAL] list of namespaces to filter by
-	 * @requestParam integer $limit [OPTIONAL] The number of items
-	 *
-	 * @responseParam array $result contains list of wikias results and articles results.
-	 *
-	 * @example &query=kermit
-	 * @example &query=kermit&langs=en&limit=2
-	 */
-	public function getCombined() {
-		if ( !$this->request->getVal( 'query' ) ) {
-			throw new MissingParameterApiException( 'query' );
-		}
-		// use langs not lang
-		if ( $this->request->getVal( 'lang' ) ) {
-			throw new InvalidParameterApiException( 'lang' );
-		}
-		$minArticleQuality =
-			$this->request->getVal( self::MIN_ARTICLE_QUALITY_PARAM_NAME, self::DEFAULT_MIN_ARTICLE_QUALITY );
-
-		$hubs = $this->request->getArray( 'hubs' );
-		foreach ( $hubs as $hub ) {
-			if ( !isset( $this->allowedHubs[$hub] ) ) {
-				$hub = htmlentities( $hub, ENT_QUOTES );
-				throw new InvalidParameterApiException( 'hubs (' . $hub . ')' );
-			}
-		}
-
-		$query = $this->request->getVal( 'query' );
-		$langs = $this->request->getArray( 'langs', [ 'en' ] );
-		$namespaces = $this->request->getArray( 'namespaces', [ NS_MAIN ] );
-		$limit = $this->request->getVal( 'limit', null );
-
-		$searchService = new CombinedSearchService();
-		$response = $searchService->search( $query, $langs, $namespaces, $hubs, $limit, $minArticleQuality );
-
-		$this->setResponseData(
-			$response,
-			[ 'urlFields' => [ 'url', 'image' ] ]
-		);
-	}
-
-	/**
 	 * Sets the response based on values set in config
 	 *
 	 * @param Wikia\Search\Config $searchConfig
-	 * @param array $fields that will be returned in items array
-	 * @param bool $metadata if true, will return also query statistics
 	 *
 	 * @throws InvalidParameterApiException if query field in request is missing
+	 * @throws NotFoundApiException
 	 */
 	protected function setResponseFromConfig( Wikia\Search\Config $searchConfig ) {
 		if ( !$searchConfig->getQuery()->hasTerms() ) {

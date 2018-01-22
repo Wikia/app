@@ -1,7 +1,5 @@
-import BigFancyAdAbove from 'ad-products/src/modules/templates/uap/big-fancy-ad-above';
-import BigFancyAdBelow from 'ad-products/src/modules/templates/uap/big-fancy-ad-below';
-import SlotTweaker from 'ad-engine/src/services/slot-tweaker';
-import TemplateService from 'ad-engine/src/services/template-service';
+import { BigFancyAdAbove, BigFancyAdBelow } from '@wikia/ad-products';
+import { slotTweaker, templateService } from '@wikia/ad-engine';
 
 import { getConfig as getMobileBfaaConfig } from './big-fancy-ad-above-mobile-config';
 import { getConfig as getDesktopBfaaConfig } from './big-fancy-ad-above-desktop-config';
@@ -13,7 +11,7 @@ export default class TemplateRegistry {
 		const isMobile = legacyContext.get('targeting.skin') !== 'oasis';
 		const getBfaaConfig = isMobile ? getMobileBfaaConfig : getDesktopBfaaConfig;
 
-		TemplateService.register(BigFancyAdAbove, getBfaaConfig(mercuryListener));
-		TemplateService.register(BigFancyAdBelow, getBfabConfig());
+		templateService.register(BigFancyAdAbove, getBfaaConfig(mercuryListener));
+		templateService.register(BigFancyAdBelow, getBfabConfig());
 	}
 }
