@@ -161,10 +161,6 @@ $wgAutoloadClasses['SouthparkstudiosVideoHandler'] =  $dir . '/handlers/Southpar
 $wgAutoloadClasses['SouthparkstudiosApiWrapper'] =  $dir . '/apiwrappers/SouthparkstudiosApiWrapper.class.php';
 $wgMediaHandlers['video/southparkstudios'] = 'SouthparkstudiosVideoHandler';
 
-$wgAutoloadClasses['ViddlerVideoHandler'] =  $dir . '/handlers/ViddlerVideoHandler.class.php';
-$wgAutoloadClasses['ViddlerApiWrapper'] =  $dir . '/apiwrappers/ViddlerApiWrapper.class.php';
-$wgMediaHandlers['video/viddler'] = 'ViddlerVideoHandler';
-
 $wgAutoloadClasses['VimeoVideoHandler'] =  $dir . '/handlers/VimeoVideoHandler.class.php';
 $wgAutoloadClasses['VimeoApiWrapper'] =  $dir . '/apiwrappers/VimeoApiWrapper.class.php';
 $wgMediaHandlers['video/vimeo'] = 'VimeoVideoHandler';
@@ -201,10 +197,6 @@ $wgAutoloadClasses['CrunchyrollApiWrapper'] =  $dir . '/apiwrappers/CrunchyrollA
 $wgAutoloadClasses['CrunchyrollVideoHandler'] =  $dir . '/handlers/CrunchyrollVideoHandler.class.php';
 $wgMediaHandlers['video/crunchyroll'] = 'CrunchyrollVideoHandler';
 
-$wgAutoloadClasses['MakerstudiosApiWrapper'] =  $dir . '/apiwrappers/MakerstudiosApiWrapper.class.php';
-$wgAutoloadClasses['MakerstudiosVideoHandler'] =  $dir . '/handlers/MakerstudiosVideoHandler.class.php';
-$wgMediaHandlers['video/makerstudios'] = 'MakerstudiosVideoHandler';
-
 /**
  * Feed ingesters
  */
@@ -216,7 +208,6 @@ $wgAutoloadClasses[ 'AnyclipFeedIngester' ] = $dir . '/feedingesters/AnyclipFeed
 $wgAutoloadClasses[ 'OoyalaFeedIngester' ] = $dir . '/feedingesters/OoyalaFeedIngester.class.php';
 $wgAutoloadClasses[ 'IvaFeedIngester' ] = $dir . '/feedingesters/IvaFeedIngester.class.php';
 $wgAutoloadClasses[ 'CrunchyrollFeedIngester' ] = $dir . '/feedingesters/CrunchyrollFeedIngester.class.php';
-$wgAutoloadClasses[ 'MakerstudiosFeedIngester' ] = $dir . '/feedingesters/MakerstudiosFeedIngester.class.php';
 $wgAutoloadClasses[ 'TestVideoFeedIngester' ] = $dir . '/tests/TestVideoFeedIngester.class.php';
 
 $wgAutoloadClasses[ 'FeedIngesterDataNormalizer' ] = $dir . '/feedingesters/FeedIngesterDataNormalizer.class.php';
@@ -233,7 +224,6 @@ $wgVideoMigrationProviderMap = array(
 	12 => 'Sevenload',
 	13 => 'Vimeo',
 	18 => 'Dailymotion',
-	19 => 'Viddler',
 	21 => 'Screenplay',
 	22 => 'Movieclips',
 	/*
