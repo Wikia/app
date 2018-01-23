@@ -161,10 +161,6 @@ $wgAutoloadClasses['SouthparkstudiosVideoHandler'] =  $dir . '/handlers/Southpar
 $wgAutoloadClasses['SouthparkstudiosApiWrapper'] =  $dir . '/apiwrappers/SouthparkstudiosApiWrapper.class.php';
 $wgMediaHandlers['video/southparkstudios'] = 'SouthparkstudiosVideoHandler';
 
-$wgAutoloadClasses['ViddlerVideoHandler'] =  $dir . '/handlers/ViddlerVideoHandler.class.php';
-$wgAutoloadClasses['ViddlerApiWrapper'] =  $dir . '/apiwrappers/ViddlerApiWrapper.class.php';
-$wgMediaHandlers['video/viddler'] = 'ViddlerVideoHandler';
-
 $wgAutoloadClasses['VimeoVideoHandler'] =  $dir . '/handlers/VimeoVideoHandler.class.php';
 $wgAutoloadClasses['VimeoApiWrapper'] =  $dir . '/apiwrappers/VimeoApiWrapper.class.php';
 $wgMediaHandlers['video/vimeo'] = 'VimeoVideoHandler';
@@ -228,7 +224,6 @@ $wgVideoMigrationProviderMap = array(
 	12 => 'Sevenload',
 	13 => 'Vimeo',
 	18 => 'Dailymotion',
-	19 => 'Viddler',
 	21 => 'Screenplay',
 	22 => 'Movieclips',
 	/*
