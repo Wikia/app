@@ -62,16 +62,7 @@ class WikiaTracerTest extends WikiaBaseTest {
 	}
 
 	public function getAppNameFromCallerProvider() {
-		return [
-			[
-				'Wikia\Service\Helios\HeliosClientImpl:Wikia\Service\Helios\{closure}',
-				'Helios'
-			],
-			[
-				'Wikia\Service\Gateway\ConsulUrlProvider:getUrl',
-				'ConsulUrlProvider:getUrl'
-			]
-		];
+		yield [ 'Wikia\Service\Helios\HeliosClientImpl:Wikia\Service\Helios\{closure}', 'Helios' ];
 	}
 
 	/**
