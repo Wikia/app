@@ -51,9 +51,9 @@ class RenameUserPagesTask extends BaseTask {
 	 */
 	public function renameLocalPages( string $oldUserName, string $newUserName ) {
 		// SUS-3835: suppress watchlist emails triggered by UserRenameTool page renames
-		global $wgEnotifWatchlist, $wEnotifUserTalk;
+		global $wgEnotifWatchlist, $wgEnotifUserTalk;
 		$wgEnotifWatchlist = false;
-		$wEnotifUserTalk = false;
+		$wgEnotifUserTalk = false;
 
 		$dbr = wfGetDB( DB_SLAVE );
 		$oldUserName = self::normalizeUserName( $oldUserName );
