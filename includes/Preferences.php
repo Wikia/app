@@ -534,7 +534,9 @@ class Preferences {
 
 		foreach ( Skin::SKINS as $skinName => $skinClass ) {
 			$isDefaultSkin = $skinName === $wgDefaultSkin;
-			if ( isset( Skin::SKINS_AVAILABLE_AS_PREFERENCE[$skinName] ) || $isDefaultSkin ) {
+
+			// SUS-3836: allow to select whitelisted skins + make any special default skins always available
+			if ( in_array( $skinName, Skin::SKINS_AVAILABLE_AS_PREFERENCE ) || $isDefaultSkin ) {
 				$option = $context->msg( "skinname-$skinName" )->text();
 
 				if ( $isDefaultSkin ) {
@@ -1142,7 +1144,7 @@ class Preferences {
 	 * @param $context IContextSource
 	 * @return array
 	 */
-	static function sgetDateOptions( IContextSource $context ) {
+	static function getDateOptions( IContextSource $context ) {
 		$lang = $context->getLanguage();
 		$dateopts = $lang->getDatePreferences();
 

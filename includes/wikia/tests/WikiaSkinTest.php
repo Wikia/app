@@ -64,7 +64,7 @@ class WikiaSkinTest extends \WikiaBaseTest {
 
 		$this->mockOutputPageWithStyles($cssFiles);
 
-		$skin = new DummySkin();
+		$skin = new DummySkin( 'karamba' );
 		$combinedStyles = $skin->getStylesWithCombinedSASS($sassFiles);
 
 		$this->assertEquals(3, substr_count($combinedStyles, '<link rel="stylesheet"'), 'There should be three CSS/SASS requests made - ' . $combinedStyles);

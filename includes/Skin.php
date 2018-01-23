@@ -41,10 +41,14 @@ abstract class Skin extends ContextSource {
 
 	/**
 	 * Fetch the set of available skins.
-	 * @return string[] skin names
+	 * @return array
 	 */
 	static function getSkinNames() {
-		return array_keys( static::SKINS );
+		$skinNames = array_keys( static::SKINS );
+
+		return array_combine( $skinNames, array_map( function ( $skinName ) {
+			return wfMessage( "skinname-$skinName" )->text();
+		}, $skinNames ) );
 	}
 
 	/**
