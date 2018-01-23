@@ -2,10 +2,11 @@
 	"@metadata": {
 		"authors": [
 			"Meno25",
-			"روخو"
+			"روخو",
+			"ديفيد"
 		]
 	},
-	"validator-desc": "المحقق يوفر طريقة سهلة للامتدادات الأخرى للتحقق من محددات دوال المحلل وامتدادات الوسوم، وضبط القيم الافتراضية وتوليد رسائل الخطأ",
+	"validator-desc": "مكتبة معالجة الوسائط البيانية",
 	"validator-warning": "تحذير: $1",
 	"validator-error": "خطأ: $1",
 	"validator-fatal-error": "خطأ قاتل: $1",
@@ -42,7 +43,7 @@
 	"validator_list_error_must_be_integer": "المحدد $1 يمكن أن يحتوي فقط على أرقام صحيحة.",
 	"validator_list_error_invalid_range": "كل قيم المحدد $1 يجب أن تكون بين $2 و$3.",
 	"validator_list_error_invalid_argument": "قيمة واحدة أو أكثر للمحدد $1 غير صحيحة.",
-	"validator_error_accepts_only": "المحدد $1 يقبل فقط {{PLURAL:$3|هذه القيمة|هذه القيم}}: $2.",
+	"validator_error_accepts_only": "القيمة \"$4\" غير صالحة للوسيط $1; إنها تقبل فقط {{PLURAL:$3|هذه القيمة|هذه القيم}}: $2.",
 	"validator_list_omitted": "{{PLURAL:$2|القيمة|القيم}} $1 {{PLURAL:$2|تم|تم}} مسحها.",
 	"validator-message-nodesc": "لا وصف تم توفيره"
 }

@@ -28,11 +28,11 @@ class DistanceParser extends StringValueParser {
 	public function stringParse( $value ) {
 		$distance = \MapsDistanceParser::parseDistance( $value );
 
-		if ( $distance === false ) {
-			throw new ParseException( 'Not a distance' );
+		if ( is_float( $distance ) ) {
+			return $distance;
 		}
 
-		return $distance;
+		throw new ParseException( 'Not a distance' );
 	}
 
 }

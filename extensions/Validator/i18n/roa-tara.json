@@ -20,5 +20,14 @@
 	"validator-type-boolean-list": "elenghe de sìne/none",
 	"validator-type-char-list": "elenghe de carattere",
 	"validator-type-title-list": "elenghe de titole",
-	"validator-listerrors-errors": "Errore"
+	"validator-listerrors-errors": "Errore",
+	"validator-describe-empty": "vacande",
+	"validator-describe-required": "richieste",
+	"validator-describe-header-parameter": "Parametre",
+	"validator-describe-header-aliases": "Alias",
+	"validator-describe-header-type": "Tipe",
+	"validator-describe-header-default": "De base",
+	"validator-describe-header-description": "Descrizione",
+	"validator-describe-parameters": "Parametre",
+	"validator-describe-syntax": "Sindasse"
 }

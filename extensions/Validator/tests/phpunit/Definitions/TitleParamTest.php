@@ -34,26 +34,26 @@ class TitleParamTest extends ParamDefinitionTest {
 	 * @return array
 	 */
 	public function valueProvider( $stringlyTyped = true ) {
-		$values = array(
-			'empty-empty' => array(
-				array( 'foo bar page', true, \Title::newFromText( 'foo bar page' ) ),
-				array( '|', false ),
-				array( '', false ),
-			),
-			'empty' => array(
-				array( 'foo bar page', false ),
-				array( '|', false ),
-				array( '', false ),
-			),
-			'values-empty' => array(
-				array( 'foo', true, \Title::newFromText( 'foo' ) ),
-				array( 'foo bar page', false ),
-			),
-			'values' => array(
-				array( 'foo', false ),
-				array( 'foo bar page', false ),
-			),
-		);
+		$values = [
+			'empty-empty' => [
+				[ 'foo bar page', true, \Title::newFromText( 'foo bar page' ) ],
+				[ '|', false ],
+				[ '', false ],
+			],
+			'empty' => [
+				[ 'foo bar page', false ],
+				[ '|', false ],
+				[ '', false ],
+			],
+			'values-empty' => [
+				[ 'foo', true, \Title::newFromText( 'foo' ) ],
+				[ 'foo bar page', false ],
+			],
+			'values' => [
+				[ 'foo', false ],
+				[ 'foo bar page', false ],
+			],
+		];
 
 		if ( !$stringlyTyped ) {
 			foreach ( $values as &$set ) {
