@@ -609,7 +609,6 @@ include_once( "$IP/extensions/wikia/CreateNewWiki/CreateNewWiki_global_setup.php
 include_once( "$IP/extensions/wikia/Security/Security.setup.php" );
 include_once( "$IP/extensions/wikia/CommunityHeader/CommunityHeader.setup.php" );
 include_once( "$IP/extensions/wikia/PageHeader/PageHeader.setup.php" );
-include_once( "$IP/extensions/ApiExplorer/SpecialApiExplorer.php" );
 include_once( "$IP/extensions/wikia/Bucky/Bucky.setup.php" );
 include_once( "$IP/extensions/wikia/QuickTools/QuickTools.setup.php" );
 include_once( "$IP/extensions/wikia/TOC/TOC.setup.php" );
@@ -649,7 +648,6 @@ $wgSkipSkins = array(
 		'search',
 		'test',
 		'uncyclopedia',
-		'wowwiki',
 		'lostbook',
 		'quartz',
 		'monaco_old',
@@ -1821,6 +1819,13 @@ $wgAdDriverMobileFloorAdhesionCountries = null;
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverIncontentPlayerSlotCountries = null;
+
+/**
+ * @name $wgAdDriverDisableBadgeAdCountries
+ * Disables badge ad (next to TOP_LEADERBOARD).
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverDisableBadgeAdCountries = null;
 
 /**
  * manage a user's preferences externally
