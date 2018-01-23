@@ -130,9 +130,6 @@ foreach ( $providersVideoFeed as $provider ) {
 		case FeedIngesterFactory::PROVIDER_CRUNCHYROLL:
 			// No file needed
 			break;
-		case FeedIngesterFactory::PROVIDER_MAKER_STUDIOS:
-			$file = $feedIngester->downloadFeed();
-			break;
 		default:
 	}
 
