@@ -55,17 +55,17 @@
 			sourcePoint: {
 				trackName: 'sourcePoint',
 				name: 'sourcepoint',
-				dimension: 6
+				dimension: 999
+			},
+			babDetector: {
+				trackName: 'babDetector',
+				dimension: 6,
+				name: 'babdetector'
 			},
 			pageFair: {
 				trackName: 'pageFair',
 				dimension: 7,
 				name: 'pagefair'
-			},
-			babDetector: {
-				trackName: 'babDetector',
-				dimension: 30,
-				name: 'babdetector'
 			}
 		},
 		listenerSettings = [
@@ -80,16 +80,6 @@
 				detectorSettings: GASettings.sourcePoint
 			},
 			{
-				eventName: 'pf.blocking',
-				value: true,
-				detectorSettings: GASettings.pageFair
-			},
-			{
-				eventName: 'pf.not_blocking',
-				value: false,
-				detectorSettings: GASettings.pageFair
-			},
-			{
 				eventName: 'bab.blocking',
 				value: true,
 				detectorSettings: GASettings.babDetector
@@ -98,6 +88,16 @@
 				eventName: 'bab.not_blocking',
 				value: false,
 				detectorSettings: GASettings.babDetector
+			},
+			{
+				eventName: 'pf.blocking',
+				value: true,
+				detectorSettings: GASettings.pageFair
+			},
+			{
+				eventName: 'pf.not_blocking',
+				value: false,
+				detectorSettings: GASettings.pageFair
 			}
 		];
 

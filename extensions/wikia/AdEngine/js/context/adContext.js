@@ -69,10 +69,6 @@ define('ext.wikia.adEngine.adContext', [
 		return geo.isProperGeo(instantGlobals.wgAdDriverBabDetectionMobileCountries);
 	}
 
-	function isBabDetectionFandomEnabled() {
-		return geo.isProperGeo(instantGlobals.wgAdDriverBabDetectionFandomCountries);
-	}
-
 	function updateDetectionServicesAdContext(context, noExternals) {
 		// SourcePoint detection integration
 		context.opts.sourcePointDetection = !noExternals && isSourcePointDetectionDesktopEnabled(context);
@@ -84,7 +80,6 @@ define('ext.wikia.adEngine.adContext', [
 		// BlockAdBlock detection
 		context.opts.babDetectionDesktop = !noExternals && isBabDetectionDesktopEnabled();
 		context.opts.babDetectionMobile = !noExternals && isBabDetectionMobileEnabled();
-		context.opts.babDetectionFandom = !noExternals && isBabDetectionFandomEnabled();
 	}
 
 	function updateAdContextRecoveryServices(context, noExternals) {

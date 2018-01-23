@@ -59,10 +59,6 @@ require([
 			);
 		});
 		win.loadCustomAd = adEngineBridge.loadCustomAd(customAdsLoader.loadCustomAd);
-
-		if (context.opts.babDetectionMobile) {
-			adEngineBridge.checkAdBlocking(babDetection);
-		}
 	} else {
 		win.loadCustomAd = customAdsLoader.loadCustomAd;
 	}

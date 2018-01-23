@@ -1585,10 +1585,10 @@ $wgAdDriverBabDetectionDesktopCountries = null;
 $wgAdDriverBabDetectionMobileCountries = null;
 
 /**
- * @name $wgAdDriverBabDetectionFandomCountries
+ * @name $wgAdDriverF2BabDetectionCountries
  * List of countries to call BlockAdBlock detection scripts on news&stories
  */
-$wgAdDriverBabDetectionFandomCountries = null;
+$wgAdDriverF2BabDetectionCountries = null;
 
 /**
  * trusted proxy service registry

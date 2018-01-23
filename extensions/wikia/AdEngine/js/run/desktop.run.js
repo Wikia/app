@@ -98,8 +98,6 @@ require([
 
 		scrollDepthTracker.run();
 
-		sourcePointDetection.initDetection();
-
 		if (context.opts.pageFairDetection) {
 			pageFairDetection.initDetection(context);
 		}
