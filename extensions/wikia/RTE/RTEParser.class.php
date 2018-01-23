@@ -450,11 +450,6 @@ class RTEParser extends Parser {
 	 * @return ParserOutput a ParserOutput
 	 */
 	public function parse( $text, Title $title, ParserOptions $options, $linestart = true, $clearState = true, $revid = null, $trailingParagraph = true ) {
-		if ( $title->isMainPage() ) {
-			RTE::edgeCasesPush('MAINPAGE');
-			return new ParserOutput();
-		}
-
 		// XW-4380: Disable image lazy loading for images rendered in the editor
 		ImageLazyLoad::disable();
 

@@ -1326,6 +1326,11 @@ class PPFrame_DOM implements PPFrame {
 					$tagMarker = $this->parser->extensionSubstitution( $params, $this );
 					global $wgRTEParserEnabled;
 					if ( $wgRTEParserEnabled ) {
+						if ( in_array( $nameNode->nodeValue,
+							[ 'mainpage-leftcolumn-start', 'mainpage-rightcolumn-start' ]) ) {
+							RTE::edgeCasesPush('MAINPAGE');
+						}
+
 						$wikiTextIdx = $contextNode->getAttribute( '_rte_wikitextidx' );
 
 						$rteData = [
