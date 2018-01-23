@@ -97,4 +97,14 @@ class DWDimensionApiControllerSQL {
 			ug_user  AS user_id,
 			ug_group AS user_group
 		FROM user_groups';
+
+	const DIMENSION_WIKI_CATEGORIES = '
+		SELECT
+			id,
+			city_id,
+			cat_id
+		FROM city_cat_mapping
+		WHERE id > $after_id
+		ORDER BY id      
+		LIMIT $limit';
 }

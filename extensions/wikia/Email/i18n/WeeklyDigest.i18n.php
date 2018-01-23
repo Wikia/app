@@ -37,8 +37,8 @@ $messages['ja'] = array(
 );
 
 $messages['ko'] = array(
-	'emailext-weeklydigest-subject' => '이번 주에는 주시 중인 위키아 문서에 무슨 일이 있었을까요?',
-	'emailext-weeklydigest-summary' => '위키아 커뮤니티 회원들이 귀하가 주시 중인 문서를 더욱더 발전시켰습니다. 자세히 확인해 보세요.',
+	'emailext-weeklydigest-subject' => '이번 주에는 주시 중인 팬덤 문서에 무슨 일이 있었을까요?',
+	'emailext-weeklydigest-summary' => '팬덤 커뮤니티 회원들이 귀하가 주시 중인 문서들을 더욱 발전시켰습니다. 자세히 확인해 보세요.',
 );
 
 $messages['nl'] = array(
