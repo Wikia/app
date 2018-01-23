@@ -411,7 +411,7 @@ class RTEReverseParser {
 			}
 		}
 
-		$out = $data['wikitext'];
+		$out = $data['wikitext'] ?? '';
 
 		// extra fixes for different types of placeholders
 		if ( isset( $data['type'] ) ) {
