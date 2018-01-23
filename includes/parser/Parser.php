@@ -4121,6 +4121,18 @@ class Parser {
 		$name = $frame->expand( $params['name'] );
 		$attrText = !isset( $params['attr'] ) ? null : $frame->expand( $params['attr'] );
 		$content = !isset( $params['inner'] ) ? null : $frame->expand( $params['inner'] );
+
+		# RTE (Rich Text Editor) - begin
+		# @author: Inez Korczyński
+		global $wgRTEParserEnabled;
+		if ( !empty( $wgRTEParserEnabled && in_array($name, RTEParser::CUSTOM_PLACEHOLDER_TAG ) ) ) {
+			# Allow parser extensions to generate their own placeholders (instead of default one from RTE)
+			# @author: Macbre
+			$wikitextIdx = $params[ 'wikitextIdx' ];
+			Hooks::run( 'RTEUseDefaultPlaceholder', [ $name, $params, $frame, $wikitextIdx ] );
+		}
+		# RTE - end
+
 		$marker = "{$this->mUniqPrefix}-$name-" . sprintf( '%08X', $this->mMarkerIndex++ ) . self::MARKER_SUFFIX;
 
 		$isFunctionTag = isset( $this->mFunctionTagHooks[strtolower($name)] ) &&
