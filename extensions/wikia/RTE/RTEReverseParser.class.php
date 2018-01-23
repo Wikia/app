@@ -1221,6 +1221,9 @@ class RTEReverseParser {
 				else {
 					$out = "{$out}\n";
 				}
+				if ( self::previousSiblingIs( $node, 'div' ) ) {
+					$out = "\n{$out}";
+				}
 
 				$out = $this->fixForTableCell($node, $out);
 				break;
