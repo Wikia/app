@@ -1,14 +1,14 @@
 <?php
 $messages = array();
 
-$messages['qqq'] = array(
-	'discussionslog-contributions-link-title' => 'Link to Discussions Log, visible on Special:Contributions',
-	'right-specialdiscussionslog' => 'Description of user right, visible on Special:ListGroupRights',
-);
-
 $messages['en'] = array(
 	'discussionslog-contributions-link-title' => 'Discussion IP history',
 	'right-specialdiscussionslog' => 'View [[Special:DiscussionsLog]]',
+);
+
+$messages['qqq'] = array(
+	'discussionslog-contributions-link-title' => 'Link to Discussions Log, visible on Special:Contributions',
+	'right-specialdiscussionslog' => 'Description of user right, visible on Special:ListGroupRights',
 );
 
 $messages['de'] = array(
@@ -65,3 +65,4 @@ $messages['zh-hant'] = array(
 	'discussionslog-contributions-link-title' => '討論區IP歷史',
 	'right-specialdiscussionslog' => '查看[[Special:DiscussionsLog]]',
 );
+
