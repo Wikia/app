@@ -142,10 +142,6 @@ $wgAutoloadClasses['GametrailersVideoHandler'] =  $dir . '/handlers/Gametrailers
 $wgAutoloadClasses['GametrailersApiWrapper'] =  $dir . '/apiwrappers/GametrailersApiWrapper.class.php';
 $wgMediaHandlers['video/gametrailers'] = 'GametrailersVideoHandler';
 
-$wgAutoloadClasses['MovieclipsVideoHandler'] =  $dir . '/handlers/MovieclipsVideoHandler.class.php';
-$wgAutoloadClasses['MovieclipsApiWrapper'] =  $dir . '/apiwrappers/MovieclipsApiWrapper.class.php';
-$wgMediaHandlers['video/movieclips'] = 'MovieclipsVideoHandler';
-
 // Uses Ooyala for video handler
 $wgAutoloadClasses['ScreenplayApiWrapper'] =  $dir . '/apiwrappers/ScreenplayApiWrapper.class.php';
 
@@ -225,7 +221,6 @@ $wgVideoMigrationProviderMap = array(
 	13 => 'Vimeo',
 	18 => 'Dailymotion',
 	21 => 'Screenplay',
-	22 => 'Movieclips',
 	/*
 	// a trick to make video.wikia and local files accessible via wrappers:
 	24 => 'Wikia',
