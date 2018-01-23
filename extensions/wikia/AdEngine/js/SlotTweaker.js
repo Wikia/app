@@ -82,7 +82,7 @@ define('ext.wikia.adEngine.slotTweaker', [
 
 	// TODO: remove it after fully disabling Badge Ad: ADEN-6579
 	function removeTopButtonIfNeeded(slotname) {
-		if (!geo.isProperGeo(instantGlobals.wgAdDrivelrDisableBadgeAdCountries) &&
+		if (!geo.isProperGeo(instantGlobals.wgAdDriverDisableBadgeAdCountries) &&
 			isTopLeaderboard(slotname) && isStandardLeaderboardSize(slotname)) {
 			win.Wikia.reviveQueue = win.Wikia.reviveQueue || [];
 
