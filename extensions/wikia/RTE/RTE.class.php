@@ -506,7 +506,7 @@ HTML
 
 		RTE::$parser = new RTEParser();
 
-		$html = RTE::$parser->parse( $wikitext, $wgTitle, $options )->getText();
+		$html = RTE::$parser->parse( $wikitext, $wgTitle, $options, true, true, $wgTitle->getLatestRevID() )->getText();
 
 		return $html;
 	}

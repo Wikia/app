@@ -116,7 +116,7 @@ class RTEAjax {
 		$wikitext = $parser->preSaveTransform( $wikitext, $wgTitle, $wgUser, $parserOptions );
 
 		// parse wikitext using RTE parser
-		$html = $parser->parse( $wikitext, $wgTitle, $parserOptions, false, true, null, false )->getText();
+		$html = $parser->parse( $wikitext, $wgTitle, $parserOptions, false, true, $wgTitle->getLatestRevID(), false )->getText();
 
 		$res = [
 			'html' => $html,
