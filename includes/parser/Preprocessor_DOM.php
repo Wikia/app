@@ -1320,12 +1320,13 @@ class PPFrame_DOM implements PPFrame {
 						'attr' => $attrs->length > 0 ? new PPNode_DOM( $attrs->item( 0 ) ) : null,
 						'inner' => $inners->length > 0 ? new PPNode_DOM( $inners->item( 0 ) ) : null,
 						'close' => $closes->length > 0 ? new PPNode_DOM( $closes->item( 0 ) ) : null,
+						'wikitextIdx' => $contextNode->getAttribute( '_rte_wikitextidx' )
 					);
 
 					// FANDOM change - XW-4380: wrap extension tags in a placeholder
 					$tagMarker = $this->parser->extensionSubstitution( $params, $this );
 					global $wgRTEParserEnabled;
-					if ( $wgRTEParserEnabled ) {
+					if ( $wgRTEParserEnabled && !in_array( $nameNode->nodeValue, RTEParser::CUSTOM_PLACEHOLDER_TAG ) ) {
 						if ( in_array( $nameNode->nodeValue,
 							[ 'mainpage-leftcolumn-start', 'mainpage-rightcolumn-start' ]) ) {
 							RTE::edgeCasesPush('MAINPAGE');

@@ -889,13 +889,13 @@ class RTEReverseParser {
 				// [[<current_page_name>/foo|/foo]] -> [[/foo]]
 				global $wgTitle;
 				$pageName = $wgTitle->getPrefixedText();
-				if ($data['link'] == $pageName . $textContentOriginal) {
+				if (isset($data['link']) && $data['link'] == $pageName . $textContentOriginal) {
 					$data['link'] = $textContent;
 				}
 
 				// support [[/foo/]] (RT #56095) and [[Page/foo|foo]] (RT #143377)
 				// both are giving the same entries in $data - detect them using original wikitext
-				if ($data['link'] == "{$pageName}/{$textContentOriginal}") {
+				if (isset($data['link']) && $data['link'] == "{$pageName}/{$textContentOriginal}") {
 
 					// keep [[/foo/]] links (RT #56095)
 					if (strpos($data['wikitext'], '|') === false) {
@@ -906,11 +906,11 @@ class RTEReverseParser {
 					}
 				}
 
-				$out .= $data['link'];
+				$out .= $data['link'] ?? '';
 
 				// check for possible trail
 				// [[foo|foos]] -> [[foo]]s
-				if ( (strlen($textContentOriginal) > strlen($data['link'])) ) {
+				if ( isset($data['link']) && (strlen($textContentOriginal) > strlen($data['link'])) ) {
 					if (substr($textContentOriginal, 0, strlen($data['link'])) == $data['link']) {
 						$possibleTrail = substr($textContentOriginal, strlen($data['link']));
 						// check against trail valid characters regexp
@@ -922,7 +922,7 @@ class RTEReverseParser {
 				}
 
 				// link description after pipe
-				if ( ($trail === false) && ($data['link'] != $textContentOriginal) ) {
+				if ( ($trail === false) && isset($data['link']) && ($data['link'] != $textContentOriginal) ) {
 					$out .= "|{$textContent}";
 				}
 
@@ -2052,7 +2052,7 @@ class RTEReverseParser {
 
 		$ret = false;
 
-		if (strpos($data['link'], ':') !== false) {
+		if (isset($data['link']) && strpos($data['link'], ':') !== false) {
 			// get localised names of namespaces and cache them
 			global $wgContLang;
 			static $namespaces = false;
