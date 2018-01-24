@@ -157,10 +157,6 @@ $wgAutoloadClasses['AnyclipVideoHandler'] =  $dir . '/handlers/AnyclipVideoHandl
 $wgAutoloadClasses['AnyclipApiWrapper'] =  $dir . '/apiwrappers/AnyclipApiWrapper.class.php';
 $wgMediaHandlers['video/anyclip'] = 'AnyclipVideoHandler';
 
-$wgAutoloadClasses['TwitchtvVideoHandler'] =  $dir . '/handlers/TwitchtvVideoHandler.class.php';
-$wgAutoloadClasses['TwitchtvApiWrapper'] =  $dir . '/apiwrappers/TwitchtvApiWrapper.class.php';
-$wgMediaHandlers['video/twitchtv'] = 'TwitchtvVideoHandler';
-
 $wgAutoloadClasses[ 'OoyalaVideoHandler'] =  $dir . '/handlers/OoyalaVideoHandler.class.php' ;
 $wgAutoloadClasses[ 'OoyalaApiWrapper'] =  $dir . '/apiwrappers/OoyalaApiWrapper.class.php' ;
 $wgMediaHandlers['video/ooyala'] = 'OoyalaVideoHandler';
@@ -204,7 +200,6 @@ $wgVideoMigrationProviderMap = array(
 	24 => 'Wikia',
 	*/
 	26 => 'Anyclip',
-	27 => 'Twitchtv',
 	28 => 'Ooyala',
 	32 => 'Youku'
 );
