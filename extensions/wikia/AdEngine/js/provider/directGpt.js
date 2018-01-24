@@ -8,8 +8,7 @@ define('ext.wikia.adEngine.provider.directGpt', [
 	'ext.wikia.adEngine.slot.service.megaAdUnitBuilder',
 	'ext.wikia.adEngine.slotTweaker',
 	require.optional('ext.wikia.aRecoveryEngine.instartLogic.recovery'),
-	require.optional('ext.wikia.aRecoveryEngine.pageFair.recovery'),
-	require.optional('ext.wikia.aRecoveryEngine.sourcePoint.recovery')
+	require.optional('ext.wikia.aRecoveryEngine.pageFair.recovery')
 ], function (
 	adContext,
 	uapContext,
@@ -18,8 +17,7 @@ define('ext.wikia.adEngine.provider.directGpt', [
 	megaAdUnitBuilder,
 	slotTweaker,
 	instartLogic,
-	pageFair,
-	sourcePoint
+	pageFair
 ) {
 	'use strict';
 
@@ -61,7 +59,6 @@ define('ext.wikia.adEngine.provider.directGpt', [
 			},
 			isInstartLogicRecoverable: instartLogic ? instartLogic.isSlotRecoverable : false,
 			isPageFairRecoverable: pageFair ? pageFair.isSlotRecoverable : false,
-			isSourcePointRecoverable: sourcePoint ? sourcePoint.isSlotRecoverable : false,
 			sraEnabled: sraEnabled,
 			atfSlots: atfSlots,
 			getAdUnitBuilder: function () {

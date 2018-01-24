@@ -48,15 +48,9 @@
 	var cookieExists,
 		isProductionEnv,
 		blockingTracked = {
-			sourcePoint: false,
 			pageFair: false
 		},
 		GASettings = {
-			sourcePoint: {
-				trackName: 'sourcePoint',
-				name: 'sourcepoint',
-				dimension: 6
-			},
 			pageFair: {
 				trackName: 'pageFair',
 				dimension: 7,
@@ -64,16 +58,6 @@
 			}
 		},
 		listenerSettings = [
-			{
-				eventName: 'sp.blocking',
-				value: true,
-				detectorSettings: GASettings.sourcePoint
-			},
-			{
-				eventName: 'sp.not_blocking',
-				value: false,
-				detectorSettings: GASettings.sourcePoint
-			},
 			{
 				eventName: 'pf.blocking',
 				value: true,

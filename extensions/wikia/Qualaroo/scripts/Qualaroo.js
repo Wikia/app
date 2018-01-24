@@ -98,21 +98,7 @@
 		createCookie('qualaroo_survey_submission');
 	});
 
-	if (window.ads.context.opts.sourcePointDetection) {
-		if (!window.ads.runtime || !window.ads.runtime.sp || window.ads.runtime.sp.blocking === undefined) {
-			document.addEventListener('sp.blocking', function () {
-				setAdBlockEnabledAndLoadQualaroo(true);
-			});
-
-			document.addEventListener('sp.not_blocking', function () {
-				setAdBlockEnabledAndLoadQualaroo(false);
-			});
-		} else {
-			setAdBlockEnabledAndLoadQualaroo(window.ads.runtime.sp.blocking);
-		}
-	} else {
-		loadQualaroo();
-	}
+	loadQualaroo();
 
 	setABTestProperties();
 

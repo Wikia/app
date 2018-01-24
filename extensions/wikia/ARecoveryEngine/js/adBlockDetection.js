@@ -23,10 +23,7 @@ define('ext.wikia.aRecoveryEngine.adBlockDetection', [
 		onBlockingEventsQueue = lazyQueue.makeQueue([], cb),
 		onNotBlockingEventsQueue = lazyQueue.makeQueue([], cb);
 
-	function initEventQueues() {
-		doc.addEventListener('sp.not_blocking', onNotBlockingEventsQueue.start);
-		doc.addEventListener('sp.blocking', onBlockingEventsQueue.start);
-	}
+	function initEventQueues() {}
 
 	function addOnBlockingCallback(callback) {
 		onBlockingEventsQueue.push(callback);

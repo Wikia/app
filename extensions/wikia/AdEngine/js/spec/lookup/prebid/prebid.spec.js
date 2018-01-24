@@ -67,7 +67,7 @@ describe('ext.wikia.adEngine.lookup.prebid', function () {
 				}
 			},
 			log: noop,
-			sourcePoint: {
+			adBlockDetection: {
 				addOnBlockingCallback: noop
 			},
 			win: {
@@ -130,7 +130,7 @@ describe('ext.wikia.adEngine.lookup.prebid', function () {
 		return modules['ext.wikia.adEngine.lookup.lookupFactory'](
 			mocks.adContext,
 			mocks.adTracker,
-			mocks.sourcePoint,
+			mocks.adBlockDetection,
 			mocks.lazyQueue,
 			mocks.log
 		);
