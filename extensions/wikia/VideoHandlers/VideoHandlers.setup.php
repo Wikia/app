@@ -145,10 +145,6 @@ $wgAutoloadClasses['IgnVideoHandler'] =  $dir . '/handlers/IgnVideoHandler.class
 $wgAutoloadClasses['IgnApiWrapper'] =  $dir . '/apiwrappers/IgnApiWrapper.class.php';
 $wgMediaHandlers['video/ign'] = 'IgnVideoHandler';
 
-$wgAutoloadClasses['SevenloadVideoHandler'] =  $dir . '/handlers/SevenloadVideoHandler.class.php';
-$wgAutoloadClasses['SevenloadApiWrapper'] =  $dir . '/apiwrappers/SevenloadApiWrapper.class.php';
-$wgMediaHandlers['video/sevenload'] = 'SevenloadVideoHandler';
-
 $wgAutoloadClasses['SouthparkstudiosVideoHandler'] =  $dir . '/handlers/SouthparkstudiosVideoHandler.class.php';
 $wgAutoloadClasses['SouthparkstudiosApiWrapper'] =  $dir . '/apiwrappers/SouthparkstudiosApiWrapper.class.php';
 $wgMediaHandlers['video/southparkstudios'] = 'SouthparkstudiosVideoHandler';
@@ -209,7 +205,6 @@ $wgVideoMigrationProviderMap = array(
 	4 => 'Fivemin',
 	5 => 'Youtube',
 	6 => 'Hulu',
-	12 => 'Sevenload',
 	13 => 'Vimeo',
 	18 => 'Dailymotion',
 	21 => 'Screenplay',
