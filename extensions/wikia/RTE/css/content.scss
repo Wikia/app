@@ -52,7 +52,9 @@ head {
  */
 img.image,
 img.media-placeholder,
-img.video {
+img.video,
+div.placeholder,
+span.placeholder {
 	cursor: move !important;
 }
 
@@ -248,4 +250,9 @@ p[data-rte-filler="true"] {
 /* XW-4482: Hide placeholders inside template transclusions */
 .placeholder-double-brackets .placeholder {
 	display: none;
+}
+
+div.placeholder,
+span.placeholder {
+	user-select: all;
 }

@@ -32,6 +32,35 @@ CKEDITOR.plugins.add('rte-placeholder',
 					$placeholder.html('<img class="empty-placeholder">');
 				}
 
+				if ($placeholder.prop('tagName') === 'DIV' || $placeholder.prop('tagName') === 'SPAN') {
+					$placeholder.on('mousedown', function (ev) {
+						$placeholder.css({
+							width: $placeholder.width() + 'px',
+							height: $placeholder.height() + 'px',
+							display: 'inline-block'
+						});
+					})
+				}
+
+				if ($placeholder.prop('tagName') === 'DIV') {
+					$placeholder.on('mouseup', function (ev) {
+						$placeholder.css({
+							width: '',
+							height: '',
+							display: 'block'
+						});
+					})
+				}
+
+				if ($placeholder.prop('tagName') === 'SPAN') {
+					$placeholder.on('mouseup', function (ev) {
+						$placeholder.css({
+							width: '',
+							height: '',
+							display: 'inline'
+						});
+					})
+				}
 			});
 
 			// regenerate preview and template info
