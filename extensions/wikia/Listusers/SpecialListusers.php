@@ -52,16 +52,8 @@ $GLOBALS['wgHooks']['NewRevisionFromEditComplete'][] = 'ListusersHooks::doEditUp
  * Special pages
  */
 $GLOBALS['wgAutoloadClasses']['Listusers'] = __DIR__ . '/SpecialListusers_body.php';
-$GLOBALS['wgAutoloadClasses']['SpecialListStaff'] = __DIR__ . '/SpecialListusers_body.php';
-$GLOBALS['wgAutoloadClasses']['SpecialListVstf'] = __DIR__ . '/SpecialListusers_body.php';
-$GLOBALS['wgAutoloadClasses']['SpecialListHelpers'] = __DIR__ . '/SpecialListusers_body.php';
 
 $GLOBALS['wgSpecialPages']['Listusers'] = 'Listusers';
-$GLOBALS['wgSpecialPages']['Liststaff'] = 'SpecialListStaff';
-$GLOBALS['wgSpecialPages']['Listvstf'] = 'SpecialListVstf';
-$GLOBALS['wgSpecialPages']['Listhelpers'] = 'SpecialListHelpers';
-
-// Only add Listusers to Special:SpecialPages
 $GLOBALS['wgSpecialPageGroups']['Listusers'] = 'users';
 
 // Resources Loader module
