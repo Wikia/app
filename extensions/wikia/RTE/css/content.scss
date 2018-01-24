@@ -53,7 +53,6 @@ head {
 img.image,
 img.media-placeholder,
 img.video,
-div.placeholder,
 span.placeholder {
 	cursor: move !important;
 }
@@ -252,7 +251,6 @@ p[data-rte-filler="true"] {
 	display: none;
 }
 
-span.placeholder,
-span.placeholder * {
+span.placeholder {
 	user-select: all;
 }
