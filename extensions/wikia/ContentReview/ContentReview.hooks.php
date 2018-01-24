@@ -238,7 +238,7 @@ class Hooks {
 	public function onArticleSaveComplete( \WikiPage $article, \User $user, $text, $summary,
 			$minoredit, $watchthis, $sectionanchor, $flags, $revision, &$status, $baseRevId
 	): bool {
-		global $wgCityId;
+		global $wgCityId, $wgAutoapproveJS;
 
 		/**
 		 * If no new revision has been created we can quit early.
@@ -253,7 +253,7 @@ class Hooks {
 			if ( $title->isJsPage() ) {
 				$this->purgeContentReviewData();
 
-				if ( ( new Helper() )->userCanAutomaticallyApprove( $user ) ) {
+				if ( ( new Helper() )->userCanAutomaticallyApprove( $user ) || $wgAutoapproveJS ) {
 					( new ContentReviewService() )
 						->automaticallyApproveRevision( $user, $wgCityId, $title->getArticleID(), $revision->getId() );
 				}
