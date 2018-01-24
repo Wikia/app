@@ -250,7 +250,7 @@ class SkinChooser {
 				} else {
 					$userSkin = 'oasis';
 				}
-			} else if ( !empty( $wgAdminSkin ) && $userSkin != 'oasis' && $userSkin != 'monobook' && $userSkin != 'wowwiki' && $userSkin != 'lostbook' ) {
+			} else if ( !empty( $wgAdminSkin ) && $userSkin != 'oasis' && $userSkin != 'monobook' ) {
 				$adminSkinArray = explode( '-', $wgAdminSkin );
 				$userSkin = isset( $adminSkinArray[0] ) ? $adminSkinArray[0] : null;
 				$userTheme = isset( $adminSkinArray[1] ) ? $adminSkinArray[1] : null;

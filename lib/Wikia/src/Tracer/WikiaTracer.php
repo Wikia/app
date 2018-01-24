@@ -417,7 +417,6 @@ class WikiaTracer {
 	 * Get the app / service name using the name of the PHP method that performed the HTTP request
 	 *
 	 * For instance: "Wikia\Service\Helios\HeliosClientImpl:Wikia\Service\Helios\{closure}" will give "Helios"
-	 * For instance: "Wikia\Service\Gateway\ConsulUrlProvider:getUrl" will give "ConsulUrlProvider:getUrl"
 	 *
 	 * @param string $caller
 	 * @return string
