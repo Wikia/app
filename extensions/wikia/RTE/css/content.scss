@@ -252,7 +252,7 @@ p[data-rte-filler="true"] {
 	display: none;
 }
 
-div.placeholder,
-span.placeholder {
+span.placeholder,
+span.placeholder * {
 	user-select: all;
 }
