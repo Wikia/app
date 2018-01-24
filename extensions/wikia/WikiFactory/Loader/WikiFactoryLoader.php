@@ -9,7 +9,6 @@
  * @todo change use of mIsWikiaActive to a series of isClosed, isDeleted, etc. methods
  */
 
-require_once( "$IP/includes/Defines.php" );
 require_once( "$IP/includes/DefaultSettings.php" );
 require_once( "$IP/includes/Hooks.php" );
 require_once( "$IP/includes/GlobalFunctions.php" );
