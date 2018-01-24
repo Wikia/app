@@ -182,7 +182,7 @@ RTE.templateEditor = {
 			templateTitle = currentData.title,
 			multiline = currentData.wikitext.indexOf("\n|") !== -1,
 			updatedParams = [],
-			glue = multiline ? "\n| " : " | ";
+			glue = multiline ? "\n|" : "|";
 
 		availableParams.forEach(function(paramKey) {
 			if (params[paramKey] !== "") {
@@ -210,7 +210,7 @@ RTE.templateEditor = {
 		// generate new wikitext
 		wikitext = '{{' + templateTitle;
 		if (updatedParams.length > 0) {
-			wikitext += "| " + updatedParams.join(glue);
+			wikitext += "|" + updatedParams.join(glue);
 			if (multiline) {
 				wikitext += "\n";
 			}
