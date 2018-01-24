@@ -200,8 +200,8 @@ class DataMartService {
 					->FIELD( 'pageviews' )
 					->FROM( 'rollup_wiki_pageviews' )
 					->AS_( 'r' )
-					->WHERE('period_id')->EQUAL_TO( DataMartService::PERIOD_ID_MONTHLY )
-					->AND_('time_id')->EQUAL_TO( $timeId )
+					->WHERE( 'period_id' )->EQUAL_TO( DataMartService::PERIOD_ID_MONTHLY )
+					->AND_( 'time_id' )->EQUAL_TO( $timeId )
 					->ORDER_BY( [ 'pageviews', 'desc' ] )
 					->LIMIT( $limitUsed );
 
@@ -209,16 +209,14 @@ class DataMartService {
 				$sql->JOIN( 'dimension_wikis' )
 					->AS_( 'd' )
 					->ON( 'r.wiki_id', 'd.wiki_id' )
-					->AND_( 'd.public' )
-					->EQUAL_TO( $public );
+					->AND_( 'd.public' )->EQUAL_TO( $public );
 			}
 
-			if (!empty( $categoryId ) ) {
+			if ( !empty( $categoryId ) ) {
 				$sql->JOIN( 'dimension_wiki_categories')
 					->AS_('c')
 					->ON( 'r.wiki_id', 'c.wiki_id' )
-					->AND_( 'c.category_id' )
-					->EQUAL_TO( $categoryId );
+					->AND_( 'c.category_id' )->EQUAL_TO( $categoryId );
 			}
 
 			if ( !empty( $langs ) ) {
