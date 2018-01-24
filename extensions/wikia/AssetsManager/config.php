@@ -2776,6 +2776,16 @@ $config['jwplayer_tag_js'] = [
 	'assets' => [
 		'#group_jwplayer_tag_ads_js',
 		'//skins/oasis/js/jwplayer/node_modules/jwplayer-fandom/dist/wikiajwplayer.js',
+		'//extensions/wikia/ArticleVideo/scripts/featured-video.cookies.js',
+		'//extensions/wikia/JWPlayerTag/scripts/jwplayertag.js',
+	],
+];
+
+$config['jwplayer_tag_with_featured_video_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'#group_jwplayer_tag_ads_js',
 		'//extensions/wikia/JWPlayerTag/scripts/jwplayertag.js',
 	],
 ];
@@ -2788,3 +2798,10 @@ $config['jwplayer_tag_css'] = [
 	],
 ];
 
+$config['jwplayer_tag_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'//extensions/wikia/JWPlayerTag/styles/jwplayertag.scss'
+	]
+];
