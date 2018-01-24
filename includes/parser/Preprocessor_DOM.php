@@ -1338,7 +1338,8 @@ class PPFrame_DOM implements PPFrame {
 							'type' => 'ext',
 							'wikitext' => RTEData::get( 'wikitext', intval( $wikiTextIdx ) ),
 							'lineStart' => $contextNode->getAttribute( 'lineStart' ),
-							'placeholder' => 1
+							'placeholder' => 1,
+							'extName' => $nameNode->nodeValue
 						];
 
 						// append a zero-width space

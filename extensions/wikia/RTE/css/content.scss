@@ -114,7 +114,8 @@ img.withCaption {
 /**
  *  placeholders
  */
-img.placeholder {
+img.placeholder,
+img.empty-placeholder {
 	background-image: url(/extensions/wikia/RTE/ckeditor/skins/wikia/icons.png);/* $wgResourceBasePath */
 	background-position: 0 -1294px;
 	height: 16px !important;
