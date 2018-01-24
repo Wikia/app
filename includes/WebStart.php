@@ -96,6 +96,10 @@ if ( $IP === false ) {
 	$IP = realpath( '.' );
 }
 
+# FANDOM change: add common MW directories to include_path to speed up
+# include/require with relative paths.
+ini_set( 'include_path', "{$IP}:{$IP}/includes:{$IP}/languages:{$IP}/lib/vendor:.:" );
+
 if ( isset( $_SERVER['MW_COMPILED'] ) ) {
 	define( 'MW_COMPILED', 1 );
 } else {
