@@ -2,7 +2,6 @@
 <section>
 	<div class="header-container">
 		<h2><?= wfMsg('oasis-spotlights-footer-title') ?></h2>
-		<?= F::app()->renderView('RandomWiki', 'Index') ?>
 	</div>
 	<script type='text/javascript'>
 		wgAfterContentAndJS.push(function() {
