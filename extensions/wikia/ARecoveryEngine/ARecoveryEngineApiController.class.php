@@ -4,14 +4,6 @@ class ARecoveryEngineApiController extends WikiaController {
 	const DEFAULT_TEMPLATE_ENGINE = WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
 	const MAX_EVENT_INTERVAL = 900;
 
-	public function getDelivery() {}
-
-	public function getspmsg() {}
-
-	public function getspmmsc() {}
-
-	public function getBootstrap() {}
-
 	public function getPageFairBootstrapHead() {
 		$resourceLoader = new ResourceLoaderAdEnginePageFairRecoveryModule();
 		$this->response->getView()->setTemplate( 'ARecoveryEngineApiController', 'getPageFairBootstrap' );

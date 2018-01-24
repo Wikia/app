@@ -93,9 +93,6 @@ require([
 		if (context.opts.pageFairDetection) {
 			pageFairDetection.initDetection(context);
 		}
-
-		// Recovery & detection
-		adBlockDetection.initEventQueues();
 	});
 });
 

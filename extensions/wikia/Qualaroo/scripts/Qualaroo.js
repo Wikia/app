@@ -40,14 +40,6 @@
 		}, 1);
 	}
 
-	function setAdBlockEnabledAndLoadQualaroo(enabled) {
-		_kiq.push(['set', {
-			'adBlockEnabled': enabled
-		}]);
-		loadQualaroo();
-	}
-
-
 	if (window.wgUser) {
 		_kiq.push(['identify', window.wgUser]);
 	}
