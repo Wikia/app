@@ -9,7 +9,6 @@
  * @todo change use of mIsWikiaActive to a series of isClosed, isDeleted, etc. methods
  */
 
-require_once( "$IP/includes/db/Database.php" );
 require_once( "$IP/extensions/wikia/WikiFactory/WikiFactory.php" );
 
 if( !function_exists("wfProfileIn") ) {
