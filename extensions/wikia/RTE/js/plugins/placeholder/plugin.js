@@ -31,7 +31,6 @@ CKEDITOR.plugins.add('rte-placeholder',
 				if ( $.trim($placeholder.html().replace(/[\u200B]/, '')) === '') {
 					$placeholder.html('<img class="empty-placeholder">');
 				}
-
 			});
 
 			// regenerate preview and template info
