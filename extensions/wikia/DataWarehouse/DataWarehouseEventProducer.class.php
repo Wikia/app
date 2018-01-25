@@ -379,6 +379,9 @@ class DataWarehouseEventProducer {
 		wfProfileIn( __METHOD__ );
 		$data = json_encode($this->mParams);
 		$this->getRabbit()->publish( $this->mKey, $data );
+		WikiaLogger::instance()->info( 'DW event sent', [
+			'method' => __METHOD__
+		] );
 		wfProfileOut( __METHOD__ );
 	}
 
