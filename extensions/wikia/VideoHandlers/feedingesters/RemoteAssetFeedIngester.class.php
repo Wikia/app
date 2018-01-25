@@ -5,7 +5,7 @@
  *
  * This class is used to represent remote assets, ie, videos which we upload onto
  * Ooyala for hosting. Most providers host videos themselves, but for special
- * cases (currently IVA and Screenplay), we upload their videos onto Ooyala and when
+ * cases (currently Screenplay), we upload their videos onto Ooyala and when
  * the OoyalaFeedIngester runs, these videos are ingested along with all of Ooyala's
  * own content.
  */
