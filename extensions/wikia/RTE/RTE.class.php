@@ -174,7 +174,7 @@ class RTE {
 			$pageTitle = $out->getTitle()->getPrefixedText();
 			$revisionId = $form->getArticle()->getRevIdFetched();
 
-			$html = $parsoidClient->wt2html( $pageTitle, $revisionId );
+			$html = $parsoidClient->getPageHtml( $pageTitle, $revisionId );
 
 			$out->addJsConfigVars( 'wgRTERevisionId', $revisionId );
 		}
@@ -487,17 +487,10 @@ HTML
 	 * Parse given wikitext to HTML for CK
 	 */
 	public static function WikitextToHtml( $wikitext ) {
-		global $wgTitle;
 
-		//wfProfileIn(__METHOD__);
-		//
-		//$options = static::makeParserOptions();
-		//
-		//RTE::$parser = new RTEParser();
-		//
-		//$html = RTE::$parser->parse($wikitext, $wgTitle, $options)->getText();
-		//
-		//wfProfileOut(__METHOD__);
+		/** @var  ParsoidClient $parsoidClient */
+		$parsoidClient = \Wikia\DependencyInjection\Injector::getInjector()->get( ParsoidClient::class );
+		$html = $parsoidClient->wt2html( $wikitext );
 
 		return $html;
 	}
@@ -516,14 +509,10 @@ HTML
 	 * Parse given HTML from CK back to wikitext
 	 */
 	public static function HtmlToWikitext( $html, $pageTitle, $revisionId ) {
-		wfProfileIn(__METHOD__);
 
 		/** @var  ParsoidClient $parsoidClient */
 		$parsoidClient = \Wikia\DependencyInjection\Injector::getInjector()->get( ParsoidClient::class );
 		$wikitext = $parsoidClient->html2wt( $html, $pageTitle, $revisionId );
-
-
-		wfProfileOut(__METHOD__);
 
 		return $wikitext;
 	}

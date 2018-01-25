@@ -10,13 +10,15 @@ class ParsoidClient {
 		$this->urlProvider = $urlProvider;
 	}
 
-	public function wt2html( string $pageTitle, int $revisionId ) {
+	public function getPageHtml( string $pageTitle, int $revisionId ) {
 		$baseUrl = $this->urlProvider->getUrl( 'parsoid-redux' );
-		$apiUrl = wfExpandUrl( wfScript( 'api' ) );
+		$apiUrl = urlencode(wfExpandUrl( wfScript( 'api' ) ));
 
-		$fullUrl = "$baseUrl/$apiUrl/v3/page/html/$pageTitle/$revisionId";
+		$fullUrl = "http://$baseUrl/$apiUrl/v3/page/html/$pageTitle/$revisionId";
 
-		return Http::get( $fullUrl );
+		$ret =  Http::get( $fullUrl );
+
+		return $ret;
 	}
 
 	public function html2wt( string $html, string $pageTitle, int $revisionId ) {
@@ -25,6 +27,15 @@ class ParsoidClient {
 
 		$fullUrl = "$baseUrl/$apiUrl/v3/transform/html/to/wikitext/$pageTitle/$revisionId";
 
-		return Http::post( $fullUrl, [ $html => $html ] );
+		return Http::post( $fullUrl, [ 'html' => $html ] );
+	}
+
+	public function wt2html( string $wikitext) {
+		$baseUrl = $this->urlProvider->getUrl( 'parsoid-redux' );
+		$apiUrl = wfExpandUrl( wfScript( 'api' ) );
+
+		$fullUrl = "http://$baseUrl/$apiUrl/v3/transform/wikitext/to/html";
+
+		return Http::post( $fullUrl, [ 'wikitext' => $wikitext, 'body_only' => true ] );
 	}
 }
