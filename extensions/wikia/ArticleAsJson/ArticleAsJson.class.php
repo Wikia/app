@@ -1,13 +1,13 @@
 <?php
 
 class ArticleAsJson {
-	static $media = [ ];
-	static $users = [ ];
+	static $media = [];
+	static $users = [];
 	static $mediaDetailConfig = [
 		'imageMaxWidth' => false
 	];
 
-	const CACHE_VERSION = 1;
+	const CACHE_VERSION = 9;
 
 	const ICON_MAX_SIZE = 48;
 	// Line height in Mercury
@@ -32,7 +32,7 @@ class ArticleAsJson {
 				->height( $scaledSize['height'] )
 				->width( $scaledSize['width'] )
 				->url();
-		} catch (InvalidArgumentException $e) {
+		} catch ( InvalidArgumentException $e ) {
 			// Media URL isn't valid Vignette URL so we can't generate the thumbnail
 			$thumbUrl = null;
 		}
@@ -57,27 +57,9 @@ class ArticleAsJson {
 			\MustacheService::getInstance()->render(
 				self::MEDIA_THUMBNAIL_TEMPLATE,
 				[
-					'mediaAttrs' => json_encode( [ 'ref' => $id ] ),
 					'media' => $media,
-					'width' => $media['width'],
-					'height' => $media['height'],
-					'url' => $media['url'],
-					'title' => $media['title'],
-					'fileUrl' => $media['fileUrl'],
-					'caption' => $media['caption'] ?? '',
-					'href' => $media['href'],
-					'isLinkedByUser' => $media['isLinkedByUser'],
-					/**
-					 * data-ref has to be set for now because it's read in
-					 * extensions/wikia/PortableInfobox/services/Parser/Nodes/NodeImage.php:getGalleryData
-					 * and in
-					 * extensions/wikia/PortableInfobox/services/Parser/Nodes/NodeImage.php:getTabberData.
-					 * Base on presence of data-ref element is classified as an image
-					 * - without that service would return null
-					 *
-					 * @TODO XW-1460 fix the regex and remove this attribute
-					 */
-					'ref' => $id
+					'mediaAttrs' => json_encode($media),
+					'fromApi' => true
 				]
 			)
 		);
@@ -88,24 +70,8 @@ class ArticleAsJson {
 			\MustacheService::getInstance()->render(
 				self::MEDIA_GALLERY_TEMPLATE,
 				[
-					'galleryAttrs' => json_encode( [ 'ref' => $id ] ),
-					/**
-					 * data-ref has to be set for now because it's read in
-					 * extensions/wikia/PortableInfobox/services/Parser/Nodes/NodeImage.php::getGalleryData
-					 * and in
-					 * extensions/wikia/PortableInfobox/services/Parser/Nodes/NodeImage.php::getTabberData
-					 * Base on presence of data-ref element is classified as an image
-					 * - without that service would return null
-					 *
-					 * !!! Important note - data-ref inside template has ' instead of "
-					 * because this is how regex in
-					 * extensions/wikia/PortableInfobox/services/Parser/Nodes/NodeImage.php::getGalleryData
-					 * works
-					 *
-					 * @TODO XW-1460 fix the regex and remove this attribute
-					 */
-					'ref' => $id,
 					'media' => $media,
+					'galleryAttrs' => json_encode(['items' => $media]),
 					'hasLinkedImages' => $hasLinkedImages
 				]
 			)
@@ -195,16 +161,6 @@ class ArticleAsJson {
 		return $media;
 	}
 
-	private static function addUserObj( $details ) {
-		$userTitle = Title::newFromText( $details['userName'], NS_USER );
-
-		self::$users[$details['userName']] = [
-			'id' => (int) $details['userId'],
-			'avatar' => $details['userThumbUrl'],
-			'url' => $userTitle instanceof Title ? $userTitle->getLocalURL() : ''
-		];
-	}
-
 	public static function onGalleryBeforeProduceHTML( $data, &$out ) {
 		global $wgArticleAsJson;
 
@@ -212,7 +168,7 @@ class ArticleAsJson {
 			$parser = ParserPool::get();
 			$parserOptions = new ParserOptions();
 			$title = F::app()->wg->Title;
-			$media = [ ];
+			$media = [];
 
 			foreach ( $data['images'] as $image ) {
 				$details = self::getMediaDetailWithSizeFallback(
@@ -233,12 +189,11 @@ class ArticleAsJson {
 				}
 
 				$linkHref = isset( $image['linkhref'] ) ? $image['linkhref'] : null;
-				$media[] = self::createMediaObject( $details, $image['name'], $caption, $linkHref );
+				$mediaObj = self::createMediaObject( $details, $image['name'], $caption, $linkHref );
+				$mediaObj['mediaAttr'] = json_encode($mediaObj);
 
-				self::addUserObj( $details );
+				$media[] = $mediaObj;
 			}
-
-			self::$media[] = $media;
 
 			if ( !empty( $media ) ) {
 				$out = self::createMarker( $media, true );
@@ -302,9 +257,6 @@ class ArticleAsJson {
 
 			$caption = $frameParams['caption'] ?? null;
 			$media = self::createMediaObject( $details, $title->getText(), $caption, $linkHref );
-			self::$media[] = $media;
-
-			self::addUserObj( $details );
 
 			$res = self::createMarker( $media );
 
@@ -338,53 +290,11 @@ class ArticleAsJson {
 
 		if ( $wgArticleAsJson && !is_null( $parser->getRevisionId() ) ) {
 
-			$userName = $parser->getRevisionUser();
-
-			if ( !empty( $userName ) ) {
-				if ( User::isIP( $userName ) ) {
-
-					self::addUserObj(
-						[
-							'userId' => 0,
-							'userName' => $userName,
-							'userThumbUrl' => AvatarService::getAvatarUrl(
-								$userName,
-								AvatarService::AVATAR_SIZE_MEDIUM
-							),
-							'userPageUrl' => Title::newFromText( $userName )->getLocalURL()
-						]
-					);
-				} else {
-					$user = User::newFromName( $userName );
-					if ( $user instanceof User ) {
-						self::addUserObj(
-							[
-								'userId' => $user->getId(),
-								'userName' => $user->getName(),
-								'userThumbUrl' => AvatarService::getAvatarUrl(
-									$user,
-									AvatarService::AVATAR_SIZE_MEDIUM
-								),
-								'userPageUrl' => $user->getUserPage()->getLocalURL()
-							]
-						);
-					}
-				}
-			}
-
 			foreach ( self::$media as &$media ) {
 				self::linkifyMediaCaption( $parser, $media );
 			}
 
 			Hooks::run( 'ArticleAsJsonBeforeEncode', [ &$text ] );
-
-			$text = json_encode(
-				[
-					'content' => $text,
-					'media' => self::$media,
-					'users' => self::$users
-				]
-			);
 		}
 
 		return true;
@@ -447,7 +357,7 @@ class ArticleAsJson {
 	 * @return string
 	 */
 	private static function unwrapParsedTextFromParagraph( $text ) {
-		$matches = [ ];
+		$matches = [];
 
 		if ( preg_match( '/^<p>(.*)\n?<\/p>\n?$/sU', $text, $matches ) ) {
 			$text = $matches[1];

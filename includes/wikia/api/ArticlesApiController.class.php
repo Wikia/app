@@ -986,8 +986,16 @@ class ArticlesApiController extends WikiaApiController {
 		$parsedArticle = $article->getParserOutput();
 
 		if ( $parsedArticle instanceof ParserOutput ) {
-			$articleContent = json_decode( $parsedArticle->getText() );
-			$content = $articleContent->content;
+			$articleContent = $parsedArticle->getText();
+
+			$content = explode('<h2 id', $articleContent);
+			$first = array_shift($content);
+
+			$cont = array_map(function($a) {return '<h2 id' . $a;}, $content);
+			array_unshift($cont, $first);
+
+			$content = $cont;
+
 			$wgArticleAsJson = false;
 		} else {
 			$wgArticleAsJson = false;
@@ -1007,13 +1015,10 @@ class ArticlesApiController extends WikiaApiController {
 		}
 
 		$result = [
-			'content' => $content,
-			'media' => $articleContent->media,
-			'users' => $articleContent->users,
-			'categories' => $categories,
 			// The same transformation that happens in OutputPage::setPageTitle:
 			'displayTitle' => Sanitizer::stripAllTags( $parsedArticle->getTitleText()
 				?: $article->getTitle()->getText() ),
+			'content' => $content
 		];
 
 		$this->setResponseData( $result, '', self::SIMPLE_JSON_VARNISH_CACHE_EXPIRATION );
