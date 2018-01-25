@@ -6,8 +6,7 @@
 #
 extensions/3rdparty/RSS/*		@Wikia/sus 
 extensions/AbuseFilter/*		@Wikia/sus 
-extensions/AntiBot/*		@Wikia/sus 
-extensions/ApiExplorer/*		@Wikia/sus 
+extensions/AntiBot/*		@Wikia/sus
 extensions/Arrays/*		@Wikia/sus 
 extensions/Autoincrement/*		@Wikia/sus 
 extensions/CategoryIntersection/*		@Wikia/sus 

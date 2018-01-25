@@ -1,6 +1,6 @@
 /*global define*/
 define('ext.wikia.adEngine.context.uapContext', [
-	'ad-engine.bridge',
+	'ext.wikia.adEngine.bridge',
 	'ext.wikia.adEngine.utils.eventDispatcher',
 	'wikia.log'
 ], function (adEngineBridge, eventDispatcher, log) {
@@ -12,8 +12,8 @@ define('ext.wikia.adEngine.context.uapContext', [
 		uapTypes = ['uap', 'vuap'];
 
 	function setUapStateBasedOnBridge() {
-		setUapId(adEngineBridge.UniversalAdPackage.getUapId());
-		setType(adEngineBridge.UniversalAdPackage.getType());
+		setUapId(adEngineBridge.universalAdPackage.getUapId());
+		setType(adEngineBridge.universalAdPackage.getType());
 	}
 
 	function setUapId(uap) {
@@ -62,8 +62,8 @@ define('ext.wikia.adEngine.context.uapContext', [
 		log(['dispatchEvent', eventName], 'info', logGroup);
 	}
 
-	adEngineBridge.Context.onChange('slots.TOP_LEADERBOARD.targeting.uap', setUapStateBasedOnBridge);
-	adEngineBridge.Context.onChange('slots.MOBILE_TOP_LEADERBOARD.targeting.uap', setUapStateBasedOnBridge);
+	adEngineBridge.context.onChange('slots.TOP_LEADERBOARD.targeting.uap', setUapStateBasedOnBridge);
+	adEngineBridge.context.onChange('slots.MOBILE_TOP_LEADERBOARD.targeting.uap', setUapStateBasedOnBridge);
 
 	return {
 		dispatchEvent: dispatchEvent,

@@ -1,4 +1,4 @@
-import Context from 'ad-engine/src/services/context-service';
+import { context } from '@wikia/ad-engine';
 
 export function createTracker(legacyContext, geo, pageLevelParams, tracker) {
 	return {
@@ -12,7 +12,7 @@ export function createTracker(legacyContext, geo, pageLevelParams, tracker) {
 				pv_number: pageLevelParams.pv,
 				country: geo.getCountryCode(),
 				skin: pageLevelParams.skin,
-				wsi: Context.get(`slots.${params.position}.targeting.wsi`) || '(none)'
+				wsi: context.get(`slots.${params.position}.targeting.wsi`) || '(none)'
 			});
 
 			tracker.trackDW(trackingData, 'adengplayerinfo');

@@ -13,10 +13,8 @@ class VideoFeedIngesterTest extends WikiaBaseTest {
 		$providers = FeedIngesterFactory::getActiveProviders();
 		$ooyalaIndex = array_search( FeedIngesterFactory::PROVIDER_OOYALA, $providers );
 		$screenplayIndex = array_search( FeedIngesterFactory::PROVIDER_SCREENPLAY, $providers );
-		$ivaIndex = array_search( FeedIngesterFactory::PROVIDER_IVA, $providers );
 
 		$this->assertTrue( $ooyalaIndex < $screenplayIndex, 'Ooyala should be loaded before screenplay' );
-		$this->assertTrue( $ooyalaIndex < $ivaIndex, 'Ooyala should be loaded before iva' );
 	}
 
 	/**

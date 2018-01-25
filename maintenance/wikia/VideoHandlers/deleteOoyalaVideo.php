@@ -115,12 +115,6 @@ do {
 			continue;
 		}
 
-		if ( $video['metadata']['source'] != 'iva' ) {
-			echo "\tSKIP: $title - source not IVA in Custom Metadata.\n";
-			$skipped++;
-			continue;
-		}
-
 		if ( empty( $video['metadata']['keywords'] ) ) {
 			echo "\tSKIP: $title - keywords not found in Custom Metadata.\n";
 			$skipped++;
