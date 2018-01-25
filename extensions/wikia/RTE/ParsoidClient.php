@@ -27,10 +27,14 @@ class ParsoidClient {
 
 		$fullUrl = "$baseUrl/v3/transform/html/to/wikitext/$pageTitle/$revisionId";
 
-		return Http::post( $fullUrl, [ 'html' => $html ] );
+		$requestOptions = [
+			'postData' => [ 'html' => $html ]
+		];
+
+		return Http::post( $fullUrl, array_merge( static::DEFAULT_REQUEST_OPTIONS, $requestOptions ) );
 	}
 
-	public function wt2html( string $wikitext) {
+	public function wt2html( string $wikitext ) {
 		$baseUrl = $this->getParsoidUrl();
 
 		$fullUrl = "$baseUrl/v3/transform/wikitext/to/html";
