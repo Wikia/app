@@ -1014,11 +1014,13 @@ class ArticlesApiController extends WikiaApiController {
 			}
 		}
 
+
 		$result = [
 			// The same transformation that happens in OutputPage::setPageTitle:
 			'displayTitle' => Sanitizer::stripAllTags( $parsedArticle->getTitleText()
 				?: $article->getTitle()->getText() ),
-			'content' => $content
+			'content' => $content,
+			'categories' => $categories
 		];
 
 		$this->setResponseData( $result, '', self::SIMPLE_JSON_VARNISH_CACHE_EXPIRATION );
