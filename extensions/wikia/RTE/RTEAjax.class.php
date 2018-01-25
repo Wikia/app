@@ -85,25 +85,19 @@ class RTEAjax {
 	 * Parse provided wikitext to HTML using MW parser
 	 */
 	static public function parse() {
-		global $wgTitle, $wgRequest, $wgUser;
-		wfProfileIn(__METHOD__);
+		global $wgRequest;
 
 		$wikitext = $wgRequest->getVal('wikitext', '');
 
-		$parser = new Parser();
-		$parserOptions = new ParserOptions();
+		/** @var ParsoidClient $parsoidClient */
+		$parsoidClient = \Wikia\DependencyInjection\Injector::getInjector()->get( ParsoidClient::class );
 
-		// call preSaveTransform so signatures, {{subst:foo}}, etc. will work
-		$wikitext = $parser->preSaveTransform($wikitext, $wgTitle, $wgUser, $parserOptions);
-
-		// parse wikitext using MW parser
-		$html = $parser->parse($wikitext, $wgTitle, $parserOptions)->getText();
+		$html = $parsoidClient->wt2html( $wikitext );
 
 		$res = array(
 			'html' => $html,
 		);
 
-		wfProfileOut(__METHOD__);
 		return $res;
 	}
 
@@ -111,30 +105,19 @@ class RTEAjax {
 	 * Parse provided wikitext to HTML using RTE parser
 	 */
 	static public function rteparse() {
-		global $wgTitle, $wgRequest, $wgUser;
-		wfProfileIn(__METHOD__);
+		global $wgRequest;
 
 		$wikitext = $wgRequest->getVal('wikitext', '');
 
-		$parserOptions = new ParserOptions();
-		// don't show [edit] link for sections
-		$parserOptions->setEditSection(false);
-		// disable headings numbering
-		$parserOptions->setNumberHeadings(false);
+		/** @var ParsoidClient $parsoidClient */
+		$parsoidClient = \Wikia\DependencyInjection\Injector::getInjector()->get( ParsoidClient::class );
 
-		$parser = new RTEParser();
-
-		// call preSaveTransform so signatures, {{subst:foo}}, etc. will work
-		$wikitext = $parser->preSaveTransform($wikitext, $wgTitle, $wgUser, $parserOptions);
-
-		// parse wikitext using RTE parser
-		$html = $parser->parse($wikitext, $wgTitle, $parserOptions)->getText();
+		$html = $parsoidClient->wt2html( $wikitext );
 
 		$res = array(
 			'html' => $html,
 		);
 
-		wfProfileOut(__METHOD__);
 		return $res;
 	}
 
