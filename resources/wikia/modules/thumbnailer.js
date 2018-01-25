@@ -19,7 +19,8 @@
 			legacyThumbnailerPath = '/images/thumb/',
 			// [0-9a-f-]{36} is to match UUIDs like in
 			// https://vignette.wikia.nocookie.net/ff8b7617-46fa-4efb-ac2f-ff98edf04bcf
-			thumbnailerBaseURLRegex = new RegExp('(.*/revision/\\w+|.*/[0-9a-f-]{36}).*');
+			thumbnailerBaseURLRegex = new RegExp('(.*/revision/\\w+|.*/[0-9a-f-]{36}).*'),
+			thumborProxyUrl = 'http://dev-igor:5050';
 
 		/**
 		 * Converts the URL of a full size image or of a thumbnail into one of a thumbnail of
@@ -35,6 +36,11 @@
 			url = url || '';
 			height = height || 0;
 			width = (width || 50);
+
+			console.log('### Original URL', url);
+			// FIXME hackathon hack
+			url = url.replace('https://vignette.wikia.nocookie.net', thumborProxyUrl);
+			console.log('### Thumbor proxy URL', url);
 
 			if (isLegacyThumbnailerUrl(url)) {
 				// URL points to a thumbnail, remove crop and size
@@ -95,7 +101,7 @@
 		 * @returns {boolean}
 		 */
 		function isThumbnailerUrl(url) {
-			return url && /\/\/vignette(-poz|\d?)\.wikia/.test(url);
+			return url && (/dev-igor/.test(url) || /\/\/vignette(-poz|\d?)\.wikia/.test(url));
 		}
 
 		/**
