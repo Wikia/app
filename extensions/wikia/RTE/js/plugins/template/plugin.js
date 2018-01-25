@@ -178,31 +178,48 @@ RTE.templateEditor = {
 		var wikitext,
 			currentData = this.placeholder.getData(),
 			availableParams = RTE.tools.resolveDoubleBracketsCache[currentData.wikitext].availableParams,
+			availableUnnamedParams = availableParams.filter(function(elem) {
+				return !isNaN(elem);
+			}),
+			availableNamedParams = availableParams.filter(isNaN),
 			passedParams = RTE.tools.resolveDoubleBracketsCache[currentData.wikitext].passedParams,
+			passedUnnamedParams = Object.keys(passedParams).filter(function(elem) {
+				return !isNaN(elem);
+			}).map(Number),
+			passedNamedParams = Object.keys(passedParams).filter(isNaN),
+			allUnnamedParams = availableUnnamedParams.concat(passedUnnamedParams),
 			templateTitle = currentData.title,
 			multiline = currentData.wikitext.indexOf("\n|") !== -1,
 			updatedParams = [],
 			glue = multiline ? "\n|" : "|";
 
-		availableParams.forEach(function(paramKey) {
-			if (params[paramKey] !== "") {
-				if (isNaN(parseInt(paramKey))) {
-					updatedParams.push(paramKey + " = " + params[paramKey]);
-				} else {
-					updatedParams.push(params[paramKey]);
-				}
+		// filter duplicates
+		allUnnamedParams = allUnnamedParams.filter(function(value, index) {
+			return allUnnamedParams.indexOf(value) === index;
+		}).sort();
+
+		// sorted unnamed parameters goes first
+		allUnnamedParams.forEach(function(paramKey) {
+			if (params[paramKey] !== "" && typeof params[paramKey] !== 'undefined' ) {
+				updatedParams.push(params[paramKey]);
+			} else {
+				updatedParams.push(passedParams[paramKey]);
 			}
 		});
 
-		// XW-4540: save parameters that are not yet supported by template but were passed in template invocation
+		// then named parameters, order is not crucial
+		availableNamedParams.forEach(function(paramKey) {
+			if (params[paramKey] !== "" && typeof params[paramKey] !== 'undefined') {
+				updatedParams.push(paramKey + " = " + params[paramKey]);
+			}
+		});
+
+		// XW-4540: save named parameters that are not yet supported by template but were passed in template invocation
+		// (unnamed were handled before)
 		if (passedParams) {
-			Object.keys(passedParams).forEach(function (key) {
+			passedNamedParams.forEach(function (key) {
 				if (!params.hasOwnProperty(key)) {
-					if (isNaN(parseInt(key))) {
-						updatedParams.push(key + " = " + passedParams[key]);
-					} else {
-						updatedParams.push(passedParams[key]);
-					}
+					updatedParams.push(key + " = " + passedParams[key]);
 				}
 			});
 		}
