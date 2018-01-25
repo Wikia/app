@@ -1213,7 +1213,7 @@ class PPFrame_DOM implements PPFrame {
 								'contenteditable' => 'false',
 							];
 
-							$placeholderTag = $this->getPlaceholderTagName( $ret['text'], boolval( $lineStart ) );
+							$placeholderTag = $this->getPlaceholderTagName( $ret['text'] );
 							if ($placeholderTag === 'span') {
 								// wrap content of inline template with non-width spaces to prevent CKE from modifying
 								// dom structure
@@ -1431,10 +1431,9 @@ class PPFrame_DOM implements PPFrame {
 	 *
 	 * @return string tagName div or span
 	 */
-	function getPlaceholderTagName( string $text, bool $linestart ): string {
+	function getPlaceholderTagName( string $text ): string {
 		$html = $this->parser->internalParse( $text, false );
-		$html = $this->parser->doBlockLevels( $html, $linestart);
-
+		$html = $this->parser->doBlockLevels( $html, false);
 		$blockElements = preg_match( '/<(' . implode( '|', HtmlHelper::BLOCK_ELEMENTS ) . ')[^>]*>/', $html );
 
 		$markerMatches = [];
