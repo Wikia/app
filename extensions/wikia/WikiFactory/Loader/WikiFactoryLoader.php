@@ -9,22 +9,6 @@
  * @todo change use of mIsWikiaActive to a series of isClosed, isDeleted, etc. methods
  */
 
-if( !function_exists("wfProfileIn") ) {
-	require_once( "$IP/StartProfiler.php" );
-}
-
-/**
- * wfUnserializeErrorHandler
- *
- * @author Emil Podlaszewski <emil@wikia.com>
- */
-function wfUnserializeHandler( $errno, $errstr ) {
-	global $_variable_key, $_variable_value;
-
-	$serverMame = isset($_SERVER['SERVER_NAME']) ? $_SERVER['SERVER_NAME'] : '';
-	error_log("$serverMame ($_variable_key=$_variable_value): $errno, $errstr");
-}
-
 class WikiFactoryLoader {
 
 	// TODO: FIXME: Why is there a mWikiID and an mCityID?
