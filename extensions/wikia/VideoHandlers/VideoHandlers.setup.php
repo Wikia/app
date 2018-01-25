@@ -145,10 +145,6 @@ $wgAutoloadClasses['IgnVideoHandler'] =  $dir . '/handlers/IgnVideoHandler.class
 $wgAutoloadClasses['IgnApiWrapper'] =  $dir . '/apiwrappers/IgnApiWrapper.class.php';
 $wgMediaHandlers['video/ign'] = 'IgnVideoHandler';
 
-$wgAutoloadClasses['SouthparkstudiosVideoHandler'] =  $dir . '/handlers/SouthparkstudiosVideoHandler.class.php';
-$wgAutoloadClasses['SouthparkstudiosApiWrapper'] =  $dir . '/apiwrappers/SouthparkstudiosApiWrapper.class.php';
-$wgMediaHandlers['video/southparkstudios'] = 'SouthparkstudiosVideoHandler';
-
 $wgAutoloadClasses['VimeoVideoHandler'] =  $dir . '/handlers/VimeoVideoHandler.class.php';
 $wgAutoloadClasses['VimeoApiWrapper'] =  $dir . '/apiwrappers/VimeoApiWrapper.class.php';
 $wgMediaHandlers['video/vimeo'] = 'VimeoVideoHandler';
