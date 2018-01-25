@@ -221,6 +221,7 @@ $wgAutoloadClasses[ "GlobalFile"                      ] = "$IP/includes/wikia/Gl
 $wgAutoloadClasses[ "WikiFactory"                     ] = "$IP/extensions/wikia/WikiFactory/WikiFactory.php";
 $wgAutoloadClasses[ "WikiFactoryHub"                  ] = "$IP/extensions/wikia/WikiFactory/Hubs/WikiFactoryHub.php";
 $wgAutoloadClasses[ "WikiFactoryHubHooks"             ] = "$IP/extensions/wikia/WikiFactory/Hubs/WikiFactoryHubHooks.class.php";
+$wgAutoloadClasses[ 'WikiFactoryLoader'               ] = "$IP/extensions/wikia/WikiFactory/Loader/WikiFactoryLoader.php";
 $wgAutoloadClasses[ 'FakeLocalFile'                   ] = "$IP/includes/wikia/FakeLocalFile.class.php";
 $wgAutoloadClasses[ 'WikiaUploadStash'                ] = "$IP/includes/wikia/upload/WikiaUploadStash.class.php";
 $wgAutoloadClasses[ 'WikiaUploadStashFile'            ] = "$IP/includes/wikia/upload/WikiaUploadStashFile.class.php";
