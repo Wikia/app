@@ -115,8 +115,11 @@ function wfReplaceImageServer( $url, $timestamp = false ) {
 
 	wfDebug( __METHOD__ . ": requested url $url\n" );
 	if ( substr( strtolower( $url ), -4 ) != '.ogg' ) {
-		$url = str_replace( 'http://', 'https://',
-			str_replace( "//{$wgMedusaHostPrefix}images", '//' . str_replace( '.', '-', $wgMedusaHostPrefix ) . 'images', $url ) );
+		if ( strpos( $url, "http://dev-igor" ) !== 0 ) {
+			$url = str_replace( 'http://', 'https://',
+				str_replace( "//{$wgMedusaHostPrefix}images", '//' . str_replace( '.', '-', $wgMedusaHostPrefix ) . 'images', $url ) );
+		}
+
 		if ( strlen( $url ) > 8 && substr ( $url, 0, 8 ) == "https://" ) {
 			// If there is no timestamp, use the cache-busting number from wgResourceBasePath.
 			if ( $timestamp == "" ) {
