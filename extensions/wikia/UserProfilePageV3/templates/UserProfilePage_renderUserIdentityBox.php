@@ -25,7 +25,7 @@
 		<hgroup>
 			<h1 itemprop="name"><?= $user['name']; ?></h1>
 			<? if ( !empty( $user['realName'] ) ): ?>
-				<h2><?= wfMessage( 'user-identity-box-aka-label', htmlspecialchars( $user['realName'] ) )->plain(); ?></h2>
+				<h2><?= wfMessage( 'user-identity-box-aka-label' )->rawParams( htmlspecialchars( $user['realName'] ) )->parse(); ?></h2>
 			<? endif; ?>
 			<? if ( !empty( $user['tags'] ) ): ?>
 				<?php foreach ( $user['tags'] as $tag ): ?>
@@ -62,13 +62,13 @@
 					<a href="<?= Sanitizer::encodeAttribute( $user['contributionsURL'] ); ?>">
 						<em><?= htmlspecialchars( $user['edits'] ); ?></em>
 						<span>
-							<?= wfMessage( 'user-identity-box-edits-since-joining', $user['registration'] )->plain() ?>
+							<?= wfMessage( 'user-identity-box-edits-since-joining' )->rawParams( $user['registration'] )->parse(); ?>
 						</span>
 					</a>
 				<? else: ?>
 					<?php if ( $user['edits'] >= 0 ): ?>
 						<a href="<?= Sanitizer::encodeAttribute( $user['contributionsURL'] ) ?>">
-							<?= wfMessage( 'user-identity-box-edits', htmlspecialchars( $user['edits'] ) )->plain(); ?>
+							<?= wfMessage( 'user-identity-box-edits' )->rawParams( htmlspecialchars( $user['edits'] ) )->parse(); ?>
 						</a>
 					<?php else: ?>
 						<br/>
@@ -155,7 +155,7 @@
 		<div class="details">
 			<ul>
 				<? if ( !empty( $user['location'] ) ): ?>
-					<li itemprop="address"><?= wfMessage( 'user-identity-box-location', htmlspecialchars( $user['location'] ) )->plain(); ?></li>
+					<li itemprop="address"><?= wfMessage( 'user-identity-box-location' )->rawParams( htmlspecialchars( $user['location'] ) )->parse(); ?></li>
 				<? else: ?>
 					<? if ( $user['showZeroStates'] && ( $isUserPageOwner || $canEditProfile ) ): ?>
 						<li><?= wfMessage( 'user-identity-box-zero-state-location' )->escaped(); ?></li>
@@ -163,7 +163,7 @@
 				<? endif; ?>
 
 				<? if ( !empty( $user['birthday'] ) && intval( $user['birthday']['month'] ) > 0 && intval( $user['birthday']['month'] ) < 13 ): ?>
-					<li><?= wfMessage( 'user-identity-box-was-born-on', F::app()->wg->Lang->getMonthName( intval( $user['birthday']['month'] ) ), htmlspecialchars( $user['birthday']['day'] ) )->plain(); ?></li>
+					<li><?= wfMessage( 'user-identity-box-was-born-on' )->params( $wg->Lang->getMonthName( intval( $user['birthday']['month'] ) ) )->numParams( intval( $user['birthday']['day'] ) )->parse(); ?></li>
 				<? else: ?>
 					<? if ( $user['showZeroStates'] && ( $isUserPageOwner || $canEditProfile ) ): ?>
 						<li><?= wfMessage( 'user-identity-box-zero-state-birthday' )->escaped(); ?></li>
@@ -171,7 +171,7 @@
 				<? endif; ?>
 
 				<? if ( !empty( $user['occupation'] ) ): ?>
-					<li><?= wfMessage( 'user-identity-box-occupation', htmlspecialchars( $user['occupation'] ) )->plain(); ?></li>
+					<li><?= wfMessage( 'user-identity-box-occupation' )->rawParams( htmlspecialchars( $user['occupation'] ) )->parse(); ?></li>
 				<? elseif ( !empty( $user['showZeroStates'] ) ): ?>
 					<? if ( $user['showZeroStates'] && ( $isUserPageOwner || $canEditProfile ) ): ?>
 						<li><?= wfMessage( 'user-identity-box-zero-state-occupation' )->escaped(); ?></li>
@@ -179,7 +179,7 @@
 				<? endif; ?>
 
 				<? if ( !empty( $user['gender'] ) ): ?>
-					<li><?= wfMessage( 'user-identity-i-am', htmlspecialchars( $user['gender'] ) )->plain(); ?></li>
+					<li><?= wfMessage( 'user-identity-i-am' )->rawParams( htmlspecialchars( $user['gender'] ) )->parse(); ?></li>
 				<? else: ?>
 					<? if ( $user['showZeroStates'] && ( $isUserPageOwner || $canEditProfile ) ): ?>
 						<li><?= wfMessage( 'user-identity-box-zero-state-gender' )->escaped(); ?></li>

@@ -16,10 +16,10 @@
 				<span class=mstGr><?= wfMessage( 'user-identity-box-banned-from-chat' )->escaped(); ?></span>
 			<? endif; ?>
 			<? if( !empty($user['realName']) ): ?>
-				<h2 class=mstRn><?= wfMessage( 'user-identity-box-aka-label', htmlspecialchars( $user['realName'] ) )->plain(); ?></h2>
+				<h2 class=mstRn><?= wfMessage( 'user-identity-box-aka-label' )->rawParams( htmlspecialchars( $user['realName'] ) )->parse(); ?></h2>
 			<? endif; ?>
 			<?php if( $user['edits'] >= 0 ): ?>
-				<p class=mstEd><?= wfMessage( 'user-identity-box-edits', htmlspecialchars( $user['edits'] ) )->plain(); ?></p>
+				<p class=mstEd><?= wfMessage( 'user-identity-box-edits' )->rawParams( htmlspecialchars( $user['edits'] ) )->parse(); ?></p>
 			<?php endif; ?>
 		</hgroup>
 	</div>
@@ -27,17 +27,17 @@
 	<div class=mstInf>
 		<ul class=mstUl>
 			<? if( !empty($user['location']) ): ?>
-				<li class=mstSectLi itemprop=address><?= wfMessage( 'user-identity-box-location', htmlspecialchars( $user['location'] ) )->plain(); ?></li>
+				<li class=mstSectLi itemprop=address><?= wfMessage( 'user-identity-box-location' )->rawParams( htmlspecialchars( $user['location'] ) )->parse(); ?></li>
 			<? endif; ?>
 			<? if( !empty($user['birthday']) && intval( $user['birthday']['month'] ) > 0 && intval( $user['birthday']['month'] ) < 13 ): ?>
-				<li class=mstSectLi><?= wfMessage( 'user-identity-box-was-born-on', F::app()->wg->Lang->getMonthName( intval( $user['birthday']['month'] ) ), htmlspecialchars( $user['birthday']['day'] ) )->plain();
+				<li class=mstSectLi><?= wfMessage( 'user-identity-box-was-born-on' )->params( $wg->Lang->getMonthName( intval( $user['birthday']['month'] ) ) )->numParams( htmlspecialchars( $user['birthday']['day'] ) )->parse();
 				?></li>
 			<? endif; ?>
 			<? if( !empty($user['occupation']) ): ?>
-				<li class=mstSectLi><?= wfMessage( 'user-identity-box-occupation', htmlspecialchars( $user['occupation'] ) )->plain(); ?></li>
+				<li class=mstSectLi><?= wfMessage( 'user-identity-box-occupation' )->rawParams( htmlspecialchars( $user['occupation'] ) )->parse(); ?></li>
 			<? endif; ?>
 			<? if( !empty($user['gender']) ): ?>
-				<li class=mstSectLi><?= wfMessage( 'user-identity-i-am', htmlspecialchars( $user['gender'] ) )->plain(); ?></li>
+				<li class=mstSectLi><?= wfMessage( 'user-identity-i-am' )->rawParams( htmlspecialchars( $user['gender'] ) )->parse(); ?></li>
 			<? endif; ?>
 			<? if( (!array_key_exists('hideEditsWikis', $user) || !$user['hideEditsWikis']) && !empty($user['topWikis']) && is_array($user['topWikis']) ): ?>
 				<li class=mstSectLi><span><?= wfMessage( 'user-identity-box-fav-wikis' )->escaped(); ?></span>
