@@ -7,7 +7,6 @@ class ScribeEventProducer {
 	protected static $rabbit;
 	private $app = null;
 	private $mParams, $mKey;
-	private $sendToScribe, $sendToRabbit;
 
 	const
 		EDIT_CATEGORY       = 'log_edit',
@@ -43,8 +42,6 @@ class ScribeEventProducer {
 		$this->setArchive( $archive );
 		$this->setLanguage();
 		$this->setCategory();
-		$this->sendToScribe = true;
-		$this->sendToRabbit = true;
 	}
 
 	public function buildEditPackage( $oPage, $oUser, $oRevision = null ) {
@@ -366,26 +363,16 @@ class ScribeEventProducer {
 		WikiaLogger::instance()->info( 'SendScribeMessage', [
 			'method' => __METHOD__,
 			'params' => $this->mParams,
-			'scribe_enabled' => $this->sendToScribe,
-			'rabbit_enabled' => $this->sendToRabbit,
 		] );
 	}
 
 	public function sendLog() {
 		wfProfileIn( __METHOD__ );
-		try {
-			$data = json_encode($this->mParams);
-			if ( $this->sendToScribe ) {
-				WScribeClient::singleton( $this->mKey )->send( $data );
-			}
-			if ( $this->sendToRabbit ) {
-				$this->getRabbit()->publish( $this->mKey, $data );
-			}
-			$this->logSendMessage();
-		}
-		catch( TException $e ) {
-			Wikia::log( __METHOD__, 'scribeClient exception', $e->getMessage() );
-		}
+		$data = json_encode( $this->mParams );
+
+		$this->getRabbit()->publish( $this->mKey, $data );
+		$this->logSendMessage();
+
 		wfProfileOut( __METHOD__ );
 	}
 
