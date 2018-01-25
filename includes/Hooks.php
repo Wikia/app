@@ -27,6 +27,10 @@
  * Hooks class.
  *
  * Used to supersede $wgHooks, because globals are EVIL.
+ *
+ * Hrmpf, as a matter of fact the way hooks deal with the global state
+ * is even worse from the technical standpoint.  And hooks-based imperative
+ * implementations are simply a lack of taste. :-)
  */
 class Hooks {
 
