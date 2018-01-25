@@ -166,21 +166,15 @@ class RTE {
 
 		// let's parse wikitext (only for wysiwyg mode)
 		if ( self::$initMode == self::INIT_MODE_WYSIWYG ) {
-			// SUS-3839: perform RTE parsing behind PoolCounter + parser cache
-			$parserCacheStorage = wfGetParserCacheStorage();
+			/** @var ParsoidClient $parsoidClient */
+			$parsoidClient = \Wikia\DependencyInjection\Injector::getInjector()->get( ParsoidClient::class );
 
-			$parserCache = new RTEParserCache( $parserCacheStorage );
-			$parserOptions = static::makeParserOptions();
+			$pageTitle = $out->getTitle()->getPrefixedText();
+			$revisionId = $form->getArticle()->getRevIdFetched();
 
-			$worker = new RTEParsePoolWork( $parserCache, $form, $parserOptions );
+			$html = $parsoidClient->wt2html( $pageTitle, $revisionId );
 
-			// fall back to source mode if RTE parsing fails
-			if ( !$worker->execute() ) {
-				self::$initMode = self::INIT_MODE_SOURCE;
-				return true;
-			}
-
-			$html = $worker->getParserOutput()->getText();
+			$out->addJsConfigVars( 'wgRTERevisionId', $revisionId );
 		}
 
 		// check for edgecases (found during parsing done above)

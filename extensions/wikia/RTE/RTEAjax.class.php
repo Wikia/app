@@ -41,9 +41,15 @@ class RTEAjax {
 		global $wgRequest;
 		$html = $wgRequest->getVal('html', '');
 
+		$pageTitle = $wgRequest->getVal( 'title' );
+		$revisionId = $wgRequest->getInt( 'revision' );
+
 		RTE::log(__METHOD__, $html);
 
-		$wikitext = RTE::HtmlToWikitext($html);
+		/** @var ParsoidClient $parsoidClient */
+		$parsoidClient = \Wikia\DependencyInjection\Injector::getInjector()->get( ParsoidClient::class );
+
+		$wikitext = $parsoidClient->html2wt( $html, $pageTitle, $revisionId );
 
 		return array(
 			'wikitext' => $wikitext,
