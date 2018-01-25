@@ -3,15 +3,63 @@ require([
 	'wikia.window',
 	'wikia.articleVideo.featuredVideo.jwplayer.onScroll',
 	'wikia.articleVideo.featuredVideo.jwplayer.videoFeedback',
+	'wikia.articleVideo.featuredVideo.jwplayer.annotations',
+	'jquery',
 	require.optional('wikia.articleVideo.featuredVideo.jwplayer.instance')
 ], function (mw,
              win,
              jwPlayerOnScroll,
              jwPlayerVideoFeedback,
+             featuredVideoAnnotations,
+             $,
              playerInstance) {
 	var $featuredVideo = $('.featured-video'),
 		$featuredVideoWrapper = $('.featured-video__wrapper'),
-		$playerContainer = $('.featured-video__player-container');
+		$playerContainer = $('.featured-video__player-container'),
+		lastUpdatedFor = 0;
+
+	function setupCommentedBy(playerInstance, annotations) {
+		debugger;
+		if (!annotations || !annotations.comments || !annotations.comments.length) {
+			return;
+		}
+
+		comments = annotations.comments;
+
+		playerInstance.on('time', function (data) {
+			var roundedPosition = Math.floor(data.position);
+
+			if (roundedPosition > lastUpdatedFor + 30 && roundedPosition > lastUpdatedFor) {
+				updateCommentedBy(comments, data.position);
+				lastUpdatedFor = roundedPosition;
+			}
+		});
+
+		updateCommentedBy(comments, 0);
+	}
+
+	function updateCommentedBy(comments, startTime) {
+		var commentedBy = getCommentedByFor30seconds(comments, startTime);
+
+		if (commentedBy.length) {
+			$('.featured-video__commented-by')
+				.html('')
+				.append(
+					$('<div>').html('Video comments from:'),
+					$('<ul>').html(commentedBy)
+				);
+		} else {
+			$('.featured-video__commented-by').html('<div>No video comments yet</div>');
+		}
+	}
+
+	function getCommentedByFor30seconds(comments, startTime) {
+		return comments.filter(function (comment) {
+			return comment.displayAt > startTime && comment.displayAt < startTime + 30;
+		}).map(function (comment) {
+			return '<li class="commented-by-avatar"><img src="'+ comment.createdBy.avatar + '"></li>';
+		});
+	}
 
 	function run() {
 		var unbindOnScrollEvents = jwPlayerOnScroll(playerInstance, $featuredVideo, $playerContainer);
@@ -25,6 +73,10 @@ require([
 				playerInstance = null;
 				unbindOnScrollEvents();
 			}
+		});
+
+		featuredVideoAnnotations.getAnnotations(1).then(function(annotations) {
+			setupCommentedBy(playerInstance, annotations);
 		});
 	}
 

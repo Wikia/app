@@ -91,3 +91,30 @@
 		display: none;
 	}
 }
+
+.featured-video__commented-by {
+	align-items: center;
+	display: flex;
+	height: 50px;
+	justify-content: flex-end;
+	padding: 5px 10px;
+
+	div {
+		font-size: 18px;
+		font-weight: bold;
+		padding-right: 10px;
+	}
+
+	ul {
+		display: flex;
+	}
+
+	.commented-by-avatar {
+		img {
+			border: solid 2px #ccc;
+			border-radius: 50%;
+			height: 40px;
+			width: 40px;
+		}
+	}
+}

@@ -9,6 +9,7 @@ require([
 	'wikia.articleVideo.featuredVideo.ads',
 	'wikia.articleVideo.featuredVideo.moatTracking',
 	'wikia.articleVideo.featuredVideo.cookies',
+	'wikia.articleVideo.featuredVideo.jwplayer.annotations',
 	require.optional('ext.wikia.adEngine.lookup.a9')
 ], function (
 	win,
@@ -21,6 +22,7 @@ require([
 	featuredVideoAds,
 	featuredVideoMoatTracking,
 	featuredVideoCookieService,
+	featuredVideoAnnotations,
 	a9
 ) {
 	if (!videoDetails) {
@@ -32,7 +34,8 @@ require([
 		recommendedPlaylist = videoDetails.recommendedVideoPlaylist || 'Y2RWCKuS',
 		inAutoplayCountries = geo.isProperGeo(instantGlobals.wgArticleVideoAutoplayCountries),
 		willAutoplay = isAutoplayEnabled() && inAutoplayCountries,
-		bidParams;
+		bidParams,
+		annotations;
 
 	function isFromRecirculation() {
 		return window.location.search.indexOf('wikia-footer-wiki-rec') > -1;
@@ -108,7 +111,8 @@ require([
 			logger: {
 				clientName: 'oasis'
 			},
-			lang: videoDetails.lang
+			lang: videoDetails.lang,
+			annotations: annotations
 		}, onPlayerReady);
 	}
 
@@ -122,9 +126,19 @@ require([
 			})
 			.then(function (params) {
 				bidParams = params;
+				return featuredVideoAnnotations.getAnnotations(1);
+			})
+			.then(function (fetchedAnnotations) {
+				annotations = fetchedAnnotations;
 				setupPlayer();
+			})
+			.then(function (params) {
 			});
 	} else {
-		setupPlayer();
+		featuredVideoAnnotations.getAnnotations(1)
+			.then(function (fetchedAnnotations) {
+				annotations = fetchedAnnotations;
+				setupPlayer();
+			});
 	}
 });

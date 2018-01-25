@@ -6,6 +6,7 @@
 	<meta itemprop="contentURL" content="<?= htmlspecialchars( $videoDetails['metadata']['contentUrl'] ) ?>">
 	<meta itemprop="uploadDate" content="<?= htmlspecialchars( $videoDetails['metadata']['uploadDate'] ) ?>">
 	<div class="featured-video__wrapper">
+		<div class="featured-video__commented-by"></div>
 		<div class="featured-video">
 			<div class="featured-video__player-container">
 				<div id="featured-video__player" class="featured-video__player"></div>
