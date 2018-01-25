@@ -38,6 +38,13 @@ class ParsoidClient {
 
 		$fullUrl = "http://$baseUrl/$apiUrl/v3/transform/wikitext/to/html";
 
-		return Http::post( $fullUrl, array_merge( static::DEFAULT_REQUEST_OPTIONS, [ 'wikitext' => $wikitext, 'body_only' => true ] ) );
+		$requestOptions = [
+			'postData' => [
+				'wikitext' => $wikitext,
+				'body_only' => true
+			]
+		];
+
+		return Http::post( $fullUrl, array_merge( static::DEFAULT_REQUEST_OPTIONS, $requestOptions ) );
 	}
 }
