@@ -28,7 +28,8 @@ class MiniEditorHelper extends WikiaModel {
 					}
 
 				} else if ($convertToFormat == 'wikitext') {
-					$content = RTE::HtmlToWikitext($content);
+					// TODO: fix me
+					//$content = RTE::HtmlToWikitext($content);
 				}
 			}
 		}

@@ -42,7 +42,9 @@ class RTE {
 			if($wgRequest->getVal('RTEMode') == 'wysiwyg') {
 				RTE::log('performing reverse parsing back to wikitext');
 				if($out == null) {
-					$wikitext = RTE::HtmlToWikitext($wgRequest->getText('wpTextbox1'));
+					$pageName = $form->getArticle()->getTitle()->getPrefixedText();
+					$revId = $form->getArticle()->getRevIdFetched();
+					$wikitext = RTE::HtmlToWikitext($wgRequest->getText('wpTextbox1'), $pageName, $revId);
 					$wgRequest->setVal('wpTextbox1', $wikitext);
 				} else {
 					$form->textbox1 = $form->getContent();
@@ -487,15 +489,15 @@ HTML
 	public static function WikitextToHtml( $wikitext ) {
 		global $wgTitle;
 
-		wfProfileIn(__METHOD__);
-
-		$options = static::makeParserOptions();
-
-		RTE::$parser = new RTEParser();
-
-		$html = RTE::$parser->parse($wikitext, $wgTitle, $options)->getText();
-
-		wfProfileOut(__METHOD__);
+		//wfProfileIn(__METHOD__);
+		//
+		//$options = static::makeParserOptions();
+		//
+		//RTE::$parser = new RTEParser();
+		//
+		//$html = RTE::$parser->parse($wikitext, $wgTitle, $options)->getText();
+		//
+		//wfProfileOut(__METHOD__);
 
 		return $html;
 	}
@@ -513,11 +515,13 @@ HTML
 	/**
 	 * Parse given HTML from CK back to wikitext
 	 */
-	public static function HtmlToWikitext( $html ) {
+	public static function HtmlToWikitext( $html, $pageTitle, $revisionId ) {
 		wfProfileIn(__METHOD__);
 
-		$RTEReverseParser = new RTEReverseParser();
-		$wikitext = $RTEReverseParser->parse($html);
+		/** @var  ParsoidClient $parsoidClient */
+		$parsoidClient = \Wikia\DependencyInjection\Injector::getInjector()->get( ParsoidClient::class );
+		$wikitext = $parsoidClient->html2wt( $html, $pageTitle, $revisionId );
+
 
 		wfProfileOut(__METHOD__);
 

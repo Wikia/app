@@ -66,8 +66,10 @@ class EditPageLayoutHooks {
 	 */
 	static function onEditPageBeforeConflictDiff( EditPage $editform, OutputPage $out ): bool {
 		$helper = EditPageLayoutHelper::getInstance();
+		$pageName = $editform->getArticle()->getTitle()->getPrefixedText();
+		$revId = $editform->getArticle()->getRevIdFetched();
 		if ( class_exists( 'RTE' ) && $helper->getRequest()->getVal( 'RTEMode' ) == 'wysiwyg') {
-			$editform->textbox2 = RTE::HtmlToWikitext( $editform->textbox2 );
+			$editform->textbox2 = RTE::HtmlToWikitext( $editform->textbox2, $pageName, $revId );
 		}
 
 		return true;

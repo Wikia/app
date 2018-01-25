@@ -288,7 +288,8 @@ class MercuryApiController extends WikiaController {
 		$wrapper = new GlobalStateWrapper( [ 'wgArticleAsJson' => true ] );
 
 		if ( !empty( $this->getVal( 'CKmarkup' ) ) ) {
-			$wikitext = RTE::HtmlToWikitext( $this->getVal( 'CKmarkup' ) );
+			//TODO: support it here
+			//$wikitext = RTE::HtmlToWikitext( $this->getVal( 'CKmarkup' ) );
 		}
 
 		if ( $title ) {

@@ -159,7 +159,8 @@ class SpecialCustomEditPage extends SpecialPage {
 
 		// perform reverse parsing when needed (i.e. convert HTML from RTE to wikitext)
 		if (class_exists('RTE') && ($this->request->getVal('RTEMode') == 'wysiwyg' || $this->request->getVal('mode') == 'wysiwyg' )) {
-			$wikitext = RTE::HtmlToWikitext($wikitext);
+			//TODO: fix me
+			//$wikitext = RTE::HtmlToWikitext($wikitext);
 			$this->request->setVal('RTEMode', null);
 		}
 

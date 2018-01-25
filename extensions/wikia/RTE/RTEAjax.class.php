@@ -46,10 +46,7 @@ class RTEAjax {
 
 		RTE::log(__METHOD__, $html);
 
-		/** @var ParsoidClient $parsoidClient */
-		$parsoidClient = \Wikia\DependencyInjection\Injector::getInjector()->get( ParsoidClient::class );
-
-		$wikitext = $parsoidClient->html2wt( $html, $pageTitle, $revisionId );
+		$wikitext = RTE::HtmlToWikitext($html, $pageTitle, $revisionId);
 
 		return array(
 			'wikitext' => $wikitext,
