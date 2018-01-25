@@ -114,6 +114,12 @@ if ( isset( $_SERVER['MW_COMPILED'] ) ) {
 
 	# Load up some global defines.
 	require_once( "$IP/includes/Defines.php" );
+
+	# Wikia change: GlobalFunctions.php are normally loaded later
+	# in includes/Setup.php.  It is too late for us and we need
+	# to load it here so that WikiFactory can inject configuration
+	# in LocalSettings.php.
+	require_once( "$IP/includes/GlobalFunctions.php" );
 }
 
 # Start the profiler
