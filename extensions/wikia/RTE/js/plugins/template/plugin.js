@@ -181,18 +181,12 @@ RTE.templateEditor = {
 			availableUnnamedParams = availableParams.filter(function(elem) {
 				return !isNaN(elem);
 			}),
-			availableNamedParams = availableParams.filter(function(elem) {
-				return isNaN(elem);
-			}),
+			availableNamedParams = availableParams.filter(isNaN),
 			passedParams = RTE.tools.resolveDoubleBracketsCache[currentData.wikitext].passedParams,
 			passedUnnamedParams = Object.keys(passedParams).filter(function(elem) {
 				return !isNaN(elem);
-			}).map(function (elem) {
-				return Number(elem);
-			}),
-			passedNamedParams = Object.keys(passedParams).filter(function(elem) {
-				return isNaN(elem);
-			}),
+			}).map(Number),
+			passedNamedParams = Object.keys(passedParams).filter(isNaN),
 			allUnnamedParams = availableUnnamedParams.concat(passedUnnamedParams),
 			templateTitle = currentData.title,
 			multiline = currentData.wikitext.indexOf("\n|") !== -1,
