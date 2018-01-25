@@ -22,6 +22,18 @@ CKEDITOR.plugins.add('rte-placeholder',
 			// get all placeholders (template / magic words / double underscores / broken image links)
 			var placeholders = RTE.tools.getPlaceholders();
 
+			// if placeholder does not have content, render green puzzle
+			placeholders.each(function (p) {
+				var $placeholder = $(placeholders.get(p));
+
+				// to check if content of placeholder is empty we need to get rid of non-width spaces (replace does not
+				// change the original string)
+				if ( $.trim($placeholder.html().replace(/[\u200B]/, '')) === '') {
+					$placeholder.html('<img class="empty-placeholder">');
+				}
+
+			});
+
 			// regenerate preview and template info
 			placeholders.removeData('preview').removeData('info');
 
@@ -103,7 +115,10 @@ CKEDITOR.plugins.add('rte-placeholder',
 
 						intro = lang.media.notExisting;
 						break;
-
+					case 'ext':
+						title = data.extName;
+						intro = lang.codedElement.intro;
+						break;
 					default:
 						title = lang.codedElement.title;
 						intro = lang.codedElement.intro;
