@@ -5684,13 +5684,13 @@ $messages['ru'] = array(
 	'group-sysop.css' => '/* Размещённый здесь CSS будет применяться только для администраторов */',
 	'group-bureaucrat.css' => '/* Размещённый здесь CSS будет применяться только для бюрократов */',
 	'group-content-moderator' => 'Модераторы контента',
-	'group-content-moderator-member' => 'Модератор контента',
+	'group-content-moderator-member' => 'модератор контента',
 	'group-helper' => 'Помощники Фэндома',
 	'group-helper-member' => 'Помощник Фэндома',
 	'group-staff' => 'Сотрудники Фэндома',
-	'group-staff-member' => 'Сотрудник Фэндома',
+	'group-staff-member' => 'сотрудник Фэндома',
 	'group-util' => 'Утилиты Фэндома',
-	'group-util-member' => 'Утилита Фэндома',
+	'group-util-member' => 'утилита Фэндома',
 	'googlesearch' => '<form method="get" action="//www.google.com/search" id="googlesearch">
 	<input type="hidden" name="domains" value="{{SERVER}}" />
 	<input type="hidden" name="num" value="50" />
@@ -5715,17 +5715,17 @@ $messages['ru'] = array(
 	'grouppage-staff' => 'wikia:Community_Central:Staff',
 	'grouppage-util' => 'wikia:Community_Central:Staff',
 	'group-reviewer' => 'Проверяющие изображения',
-	'group-reviewer-member' => 'Проверяющий изображения',
+	'group-reviewer-member' => 'проверяющий изображения',
 	'grouppage-reviewer' => 'wikia:Community_Central:Image_review',
 	'group-vanguard' => 'Vanguards',
 	'group-vanguard-member' => 'Vanguard',
 	'group-voldev' => 'Разработчики-волонтёры',
-	'group-voldev-member' => 'Разработчик-волонтёр',
+	'group-voldev-member' => 'разработчик-волонтёр',
 	'grouppage-voldev' => 'w:c:dev:Разработчики_Волонтеры',
 	'group-fandom-editor' => 'News and Stories Wordpress access',
 	'group-fandom-editor-member' => 'News and Stories Wordpress access',
-	'group-global-discussions-moderator' => 'Модератор Обсуждений Фэндома',
-	'group-global-discussions-moderator-member' => 'Модератор Обсуждений Фэндома',
+	'group-global-discussions-moderator' => 'модератор обсуждений Фэндома',
+	'group-global-discussions-moderator-member' => 'модератор обсуждений Фэндома',
 );
 
 $messages['rue'] = array(
