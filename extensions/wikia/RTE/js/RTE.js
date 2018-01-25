@@ -8,7 +8,6 @@
 		// configuration
 		// @see http://docs.cksource.com/ckeditor_api/symbols/CKEDITOR.config.html
 		config: {
-			fullPage: true,
 			alignableElements: {
 				div: true,
 				p: true,

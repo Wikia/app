@@ -15,7 +15,8 @@ class ParsoidClient {
 	public function getPageHtml( string $pageTitle, int $revisionId ) {
 		$baseUrl = $this->getParsoidUrl();
 
-		$fullUrl = "$baseUrl/v3/page/html/$pageTitle/$revisionId";
+		$query = http_build_query( [ 'body_only' => true ] );
+		$fullUrl = "$baseUrl/v3/page/html/$pageTitle/$revisionId?$query";
 
 		$ret =  Http::get( $fullUrl, 'default', static::DEFAULT_REQUEST_OPTIONS );
 
