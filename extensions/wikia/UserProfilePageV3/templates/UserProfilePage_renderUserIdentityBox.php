@@ -62,7 +62,7 @@
 					<a href="<?= Sanitizer::encodeAttribute( $user['contributionsURL'] ); ?>">
 						<em><?= htmlspecialchars( $user['edits'] ); ?></em>
 						<span>
-							<?= wfMessage( 'user-identity-box-edits-since-joining' )->rawParams( $user['registration'] )->parse(); ?>
+							<?= wfMessage( 'user-identity-box-edits-since-joining', $user['registration'] )->parse(); ?>
 						</span>
 					</a>
 				<? else: ?>
