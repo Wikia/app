@@ -138,10 +138,6 @@ $wgAutoloadClasses['FiveminVideoHandler'] =  $dir . '/handlers/FiveminVideoHandl
 $wgAutoloadClasses['FiveminApiWrapper'] =  $dir . '/apiwrappers/FiveminApiWrapper.class.php';
 $wgMediaHandlers['video/fivemin'] = 'FiveminVideoHandler';
 
-$wgAutoloadClasses['GametrailersVideoHandler'] =  $dir . '/handlers/GametrailersVideoHandler.class.php';
-$wgAutoloadClasses['GametrailersApiWrapper'] =  $dir . '/apiwrappers/GametrailersApiWrapper.class.php';
-$wgMediaHandlers['video/gametrailers'] = 'GametrailersVideoHandler';
-
 // Uses Ooyala for video handler
 $wgAutoloadClasses['ScreenplayApiWrapper'] =  $dir . '/apiwrappers/ScreenplayApiWrapper.class.php';
 
