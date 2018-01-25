@@ -1,6 +1,8 @@
 <?php
 
-class ScribeEventProducerController {
+use Wikia\Logger\WikiaLogger;
+
+class DataWarehouseEventProducerController {
 
 	static public function onSaveComplete(
 		WikiPage $oPage, User $oUser, $text, $summary, $minor, $undef1, $undef2,
@@ -11,9 +13,9 @@ class ScribeEventProducerController {
 		$key = ( isset( $status->value['new'] ) && $status->value['new'] == 1 ) ? 'create' : 'edit';
 		$is_archive = !empty( $undef1 );
 
- 		$oScribeProducer = new ScribeEventProducer( $key, $is_archive );
-		if ( $oScribeProducer->buildEditPackage( $oPage, $oUser, $oRevision ) ) {
-			$oScribeProducer->sendLog();
+ 		$oEventProducer = new DataWarehouseEventProducer( $key, $is_archive );
+		if ( $oEventProducer->buildEditPackage( $oPage, $oUser, $oRevision ) ) {
+			$oEventProducer->sendLog();
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -25,10 +27,10 @@ class ScribeEventProducerController {
 
 		# producer
 		if ( $allow ) {
-			$oScribeProducer = new ScribeEventProducer( 'edit' );
+			$oEventProducer = new DataWarehouseEventProducer( 'edit' );
 
-			if ( $oScribeProducer->buildEditPackage( $oPage, $oUser, $oRevision ) ) {
-				$oScribeProducer->sendLog();
+			if ( $oEventProducer->buildEditPackage( $oPage, $oUser, $oRevision ) ) {
+				$oEventProducer->sendLog();
 			}
 		}
 
@@ -40,9 +42,9 @@ class ScribeEventProducerController {
 	static public function onDeleteComplete( WikiPage $oPage, User $oUser, $reason, $page_id ): bool {
 		wfProfileIn( __METHOD__ );
 
- 		$oScribeProducer = new ScribeEventProducer( 'delete' );
-		if ( $oScribeProducer->buildRemovePackage ( $oPage, $oUser, $page_id ) ) {
-			$oScribeProducer->sendLog();
+ 		$oEventProducer = new DataWarehouseEventProducer( 'delete' );
+		if ( $oEventProducer->buildRemovePackage ( $oPage, $oUser, $page_id ) ) {
+			$oEventProducer->sendLog();
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -56,9 +58,9 @@ class ScribeEventProducerController {
 		$oPage = WikiPage::factory( $oTitle );
 		$oUser = User::newFromId( $oRevision->getUser() );
 
- 		$oScribeProducer = new ScribeEventProducer( 'edit' );
-		if ( $oScribeProducer->buildEditPackage( $oPage, $oUser, $oRevision ) ) {
-			$oScribeProducer->sendLog();
+ 		$oEventProducer = new DataWarehouseEventProducer( 'edit' );
+		if ( $oEventProducer->buildEditPackage( $oPage, $oUser, $oRevision ) ) {
+			$oEventProducer->sendLog();
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -68,9 +70,9 @@ class ScribeEventProducerController {
 	static public function onArticleUndelete( Title $oTitle, $created = false ) {
 		wfProfileIn( __METHOD__ );
 
- 		$oScribeProducer = new ScribeEventProducer( 'undelete' );
-		if ( $oScribeProducer->buildUndeletePackage( $oTitle, $created ) ) {
-			$oScribeProducer->sendLog();
+ 		$oEventProducer = new DataWarehouseEventProducer( 'undelete' );
+		if ( $oEventProducer->buildUndeletePackage( $oTitle, $created ) ) {
+			$oEventProducer->sendLog();
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -82,15 +84,15 @@ class ScribeEventProducerController {
 	): bool {
 		wfProfileIn( __METHOD__ );
 
- 		$oScribeProducer = new ScribeEventProducer( 'edit' );
-		if ( $oScribeProducer->buildMovePackage( $oNewTitle, $oUser, $page_id ) ) {
-			$oScribeProducer->sendLog();
+ 		$oEventProducer = new DataWarehouseEventProducer( 'edit' );
+		if ( $oEventProducer->buildMovePackage( $oNewTitle, $oUser, $page_id ) ) {
+			$oEventProducer->sendLog();
 		}
 
 		if ( !empty( $redirect_id ) ) {
-			$oScribeProducer = new ScribeEventProducer( 'edit' );
-			if ( $oScribeProducer->buildMovePackage( $oOldTitle, $oUser, null, $redirect_id ) ) {
-				$oScribeProducer->sendLog();
+			$oEventProducer = new DataWarehouseEventProducer( 'edit' );
+			if ( $oEventProducer->buildMovePackage( $oOldTitle, $oUser, null, $redirect_id ) ) {
+				$oEventProducer->sendLog();
 			}
 		}
 
@@ -103,22 +105,26 @@ class ScribeEventProducerController {
 
 		$username = $oPage->getUserText();
 		if ( empty( $username ) ) {
-			Wikia::log( __METHOD__, "error", "Cannot send log using scribe: invalid username" );
+			WikiaLogger::instance()->error( 'Cannot send log: invalid username', [
+				'method' => __METHOD__
+			] );
 			wfProfileOut( __METHOD__ );
 			return true;
 		}
 
 		$oUser = User::newFromName( $username );
 		if ( !$oUser instanceof User ) {
-			Wikia::log( __METHOD__, "error", "Cannot send log using scribe: invalid user object" );
+			WikiaLogger::instance()->error( 'Cannot send log: invalid user object', [
+				'method' => __METHOD__
+			] );
 			wfProfileOut( __METHOD__ );
 			return true;
 		}
 
-		$oScribeProducer = new ScribeEventProducer( 'edit' );
-		if ( is_object( $oScribeProducer ) ) {
-			if ( $oScribeProducer->buildEditPackage( $oPage, $oUser) ) {
-				$oScribeProducer->sendLog();
+		$oEventProducer = new DataWarehouseEventProducer( 'edit' );
+		if ( is_object( $oEventProducer ) ) {
+			if ( $oEventProducer->buildEditPackage( $oPage, $oUser) ) {
+				$oEventProducer->sendLog();
 			}
 		}
 
