@@ -204,8 +204,8 @@ RTE.templateEditor = {
 			return allUnnamedParams.indexOf(value) === index;
 		}).sort();
 
+		// sorted unnamed parameters goes first
 		allUnnamedParams.forEach(function(paramKey) {
-			console.log(paramKey,params[paramKey]);
 			if (params[paramKey] !== "" && typeof params[paramKey] !== 'undefined' ) {
 				updatedParams.push(params[paramKey]);
 			} else {
@@ -213,13 +213,15 @@ RTE.templateEditor = {
 			}
 		});
 
+		// then named parameters, order is not crucial
 		availableNamedParams.forEach(function(paramKey) {
 			if (params[paramKey] !== "" && typeof params[paramKey] !== 'undefined') {
 				updatedParams.push(paramKey + " = " + params[paramKey]);
 			}
 		});
 
-		// XW-4540: save parameters that are not yet supported by template but were passed in template invocation
+		// XW-4540: save named parameters that are not yet supported by template but were passed in template invocation
+		// (unnamed were handled before)
 		if (passedParams) {
 			passedNamedParams.forEach(function (key) {
 				if (!params.hasOwnProperty(key)) {
