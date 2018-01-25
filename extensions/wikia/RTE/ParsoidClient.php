@@ -3,6 +3,8 @@
 use Wikia\Service\Gateway\UrlProvider;
 
 class ParsoidClient {
+	const DEFAULT_REQUEST_OPTIONS = [ 'noProxy' => true ];
+
 	/** @var UrlProvider $urlProvider */
 	private $urlProvider;
 
@@ -16,7 +18,7 @@ class ParsoidClient {
 
 		$fullUrl = "http://$baseUrl/$apiUrl/v3/page/html/$pageTitle/$revisionId";
 
-		$ret =  Http::get( $fullUrl );
+		$ret =  Http::get( $fullUrl, 'default', static::DEFAULT_REQUEST_OPTIONS );
 
 		return $ret;
 	}
@@ -36,6 +38,6 @@ class ParsoidClient {
 
 		$fullUrl = "http://$baseUrl/$apiUrl/v3/transform/wikitext/to/html";
 
-		return Http::post( $fullUrl, [ 'wikitext' => $wikitext, 'body_only' => true ] );
+		return Http::post( $fullUrl, array_merge( static::DEFAULT_REQUEST_OPTIONS, [ 'wikitext' => $wikitext, 'body_only' => true ] ) );
 	}
 }
