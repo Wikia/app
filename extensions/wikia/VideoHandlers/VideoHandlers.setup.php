@@ -134,10 +134,6 @@ $wgAutoloadClasses['HuluVideoHandler'] =  $dir . '/handlers/HuluVideoHandler.cla
 $wgAutoloadClasses['HuluApiWrapper'] =  $dir . '/apiwrappers/HuluApiWrapper.class.php';
 $wgMediaHandlers['video/hulu'] = 'HuluVideoHandler';
 
-$wgAutoloadClasses['FiveminVideoHandler'] =  $dir . '/handlers/FiveminVideoHandler.class.php';
-$wgAutoloadClasses['FiveminApiWrapper'] =  $dir . '/apiwrappers/FiveminApiWrapper.class.php';
-$wgMediaHandlers['video/fivemin'] = 'FiveminVideoHandler';
-
 // Uses Ooyala for video handler
 $wgAutoloadClasses['ScreenplayApiWrapper'] =  $dir . '/apiwrappers/ScreenplayApiWrapper.class.php';
 
@@ -156,10 +152,6 @@ $wgMediaHandlers['video/youtube'] = 'YoutubeVideoHandler';
 $wgAutoloadClasses['AnyclipVideoHandler'] =  $dir . '/handlers/AnyclipVideoHandler.class.php';
 $wgAutoloadClasses['AnyclipApiWrapper'] =  $dir . '/apiwrappers/AnyclipApiWrapper.class.php';
 $wgMediaHandlers['video/anyclip'] = 'AnyclipVideoHandler';
-
-$wgAutoloadClasses['TwitchtvVideoHandler'] =  $dir . '/handlers/TwitchtvVideoHandler.class.php';
-$wgAutoloadClasses['TwitchtvApiWrapper'] =  $dir . '/apiwrappers/TwitchtvApiWrapper.class.php';
-$wgMediaHandlers['video/twitchtv'] = 'TwitchtvVideoHandler';
 
 $wgAutoloadClasses[ 'OoyalaVideoHandler'] =  $dir . '/handlers/OoyalaVideoHandler.class.php' ;
 $wgAutoloadClasses[ 'OoyalaApiWrapper'] =  $dir . '/apiwrappers/OoyalaApiWrapper.class.php' ;
@@ -193,7 +185,6 @@ $wgAutoloadClasses[ 'OoyalaAsset' ] = $dir . '/feedingesters/OoyalaAsset.class.p
 
 
 $wgVideoMigrationProviderMap = array(
-	4 => 'Fivemin',
 	5 => 'Youtube',
 	6 => 'Hulu',
 	13 => 'Vimeo',
@@ -204,7 +195,6 @@ $wgVideoMigrationProviderMap = array(
 	24 => 'Wikia',
 	*/
 	26 => 'Anyclip',
-	27 => 'Twitchtv',
 	28 => 'Ooyala',
 	32 => 'Youku'
 );

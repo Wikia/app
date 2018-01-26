@@ -3,11 +3,10 @@
 use Wikia\Logger\WikiaLogger;
 use Wikia\Rabbit\ConnectionBase;
 
-class ScribeEventProducer {
+class DataWarehouseEventProducer {
 	protected static $rabbit;
 	private $app = null;
 	private $mParams, $mKey;
-	private $sendToScribe, $sendToRabbit;
 
 	const
 		EDIT_CATEGORY       = 'log_edit',
@@ -43,28 +42,32 @@ class ScribeEventProducer {
 		$this->setArchive( $archive );
 		$this->setLanguage();
 		$this->setCategory();
-		$this->sendToScribe = true;
-		$this->sendToRabbit = true;
 	}
 
 	public function buildEditPackage( $oPage, $oUser, $oRevision = null ) {
 		wfProfileIn( __METHOD__ );
 
 		if ( !is_object( $oPage ) ) {
-			Wikia::log( __METHOD__, "error", "Cannot send log using scribe ({$this->app->wg->CityId}): invalid WikiPage object" );
+			WikiaLogger::instance()->error( "Cannot send log ({$this->app->wg->CityId}): invalid WikiPage object", [
+				'method' => __METHOD__
+			] );
 			wfProfileOut( __METHOD__ );
 			return false;
 		}
 
 		if ( !$oUser instanceof User ) {
-			Wikia::log( __METHOD__, "error", "Cannot send log using scribe ({$this->app->wg->CityId}): invalid user object" );
+			WikiaLogger::instance()->error( "Cannot send log ({$this->app->wg->CityId}): invalid user object", [
+				'method' => __METHOD__
+			] );
 			wfProfileOut( __METHOD__ );
 			return false;
 		}
 
 		if ( !empty( $oRevision ) ) {
 			if ( !$oRevision instanceof Revision ) {
-				Wikia::log( __METHOD__, "error", "Cannot send log using scribe ({$this->app->wg->CityId}): invalid revision object" );
+				WikiaLogger::instance()->error( "Cannot send log ({$this->app->wg->CityId}): invalid revision object", [
+					'method' => __METHOD__
+				] );
 				wfProfileOut( __METHOD__ );
 				return false;
 			}
@@ -121,13 +124,17 @@ class ScribeEventProducer {
 		wfProfileIn( __METHOD__ );
 
 		if ( !is_object( $oPage ) ) {
-			Wikia::log( __METHOD__, "error", "Cannot send log using scribe ({$this->app->wg->CityId}): invalid WikiPage object" );
+			WikiaLogger::instance()->error( "Cannot send log ({$this->app->wg->CityId}): invalid WikiPage object", [
+				'method' => __METHOD__
+			] );
 			wfProfileOut( __METHOD__ );
 			return false;
 		}
 
 		if ( !$oUser instanceof User ) {
-			Wikia::log( __METHOD__, "error", "Cannot send log using scribe ({$this->app->wg->CityId}): invalid user object" );
+			WikiaLogger::instance()->error( "Cannot send log ({$this->app->wg->CityId}): invalid user object", [
+				'method' => __METHOD__
+			] );
 			wfProfileOut( __METHOD__ );
 			return false;
 		}
@@ -174,28 +181,36 @@ class ScribeEventProducer {
 		wfProfileIn( __METHOD__ );
 
 		if ( !is_object( $oTitle ) ) {
-			Wikia::log( __METHOD__, "error", "Cannot send log using scribe ({$this->app->wg->CityId}): invalid title object" );
+			WikiaLogger::instance()->error( "Cannot send log ({$this->app->wg->CityId}): invalid title object", [
+				'method' => __METHOD__
+			] );
 			wfProfileOut( __METHOD__ );
 			return true;
 		}
 
 		$oPage = WikiPage::factory( $oTitle );
 		if ( !$oPage instanceof WikiPage ) {
-			Wikia::log( __METHOD__, "error", "Cannot send log using scribe ({$this->app->wg->CityId}): invalid WikiPage object" );
+			WikiaLogger::instance()->error( "Cannot send log ({$this->app->wg->CityId}): invalid WikiPage object", [
+				'method' => __METHOD__
+			] );
 			wfProfileOut( __METHOD__ );
 			return true;
 		}
 
 		$username = $oPage->getUserText();
 		if ( empty( $username ) ) {
-			Wikia::log( __METHOD__, "error", "Cannot send log using scribe ({$this->app->wg->CityId}): invalid username" );
+			WikiaLogger::instance()->error( "Cannot send log ({$this->app->wg->CityId}): invalid username", [
+				'method' => __METHOD__
+			] );
 			wfProfileOut( __METHOD__ );
 			return true;
 		}
 
 		$oUser = User::newFromName( $username );
 		if ( !$oUser instanceof User ) {
-			Wikia::log( __METHOD__, "error", "Cannot send log using scribe ({$this->app->wg->CityId}): invalid user object" );
+			WikiaLogger::instance()->error( "Cannot send log ({$this->app->wg->CityId}): invalid user object", [
+				'method' => __METHOD__
+			] );
 			wfProfileOut( __METHOD__ );
 			return true;
 		}
@@ -214,7 +229,9 @@ class ScribeEventProducer {
 		wfProfileIn( __METHOD__ );
 
 		if ( !$oTitle instanceof Title ) {
-			Wikia::log( __METHOD__, "error", "Cannot send log using scribe ({$this->app->wg->CityId}): invalid title object" );
+			WikiaLogger::instance()->error( "Cannot send log ({$this->app->wg->CityId}): invalid title object", [
+				'method' => __METHOD__
+			] );
 			wfProfileOut( __METHOD__ );
 			return true;
 		}
@@ -225,7 +242,9 @@ class ScribeEventProducer {
 			$oRevision = Revision::loadFromPageId( $db, $redirect_id );
 		}
 		if ( !$oRevision instanceof Revision ) {
-			Wikia::log( __METHOD__, "error", "Cannot send log using scribe ({$this->app->wg->CityId}): invalid revision object" );
+			WikiaLogger::instance()->error( "Cannot send log ({$this->app->wg->CityId}): invalid revision object", [
+				'method' => __METHOD__
+			] );
 			wfProfileOut( __METHOD__ );
 			return true;
 		}
@@ -240,7 +259,9 @@ class ScribeEventProducer {
 
 		$oPage = WikiPage::newFromID( $page_id );
 		if ( !$oPage instanceof WikiPage ) {
-			Wikia::log( __METHOD__, "error", "Cannot send log using scribe ({$this->app->wg->CityId}): invalid WikiPage object" );
+			WikiaLogger::instance()->error( "Cannot send log ({$this->app->wg->CityId}): invalid WikiPage object", [
+				'method' => __METHOD__
+			] );
 			wfProfileOut( __METHOD__ );
 			return true;
 		}
@@ -352,40 +373,15 @@ class ScribeEventProducer {
 	public function setCategory() {
 		//This field is called categoryId but getCategory returns an object with cat_id and cat_name fields
 		$this->mParams['categoryId'] = WikiFactory::getCategory( $this->app->wg->CityId );
-
-		// The code should probably be changed to this after double checking the scribe consumers
-		//$category = WikiFactory::getCategory( $this->app->wg->CityId );
-		//$this->mParams['categoryId'] = isset($category->cat_id) ? $category->cat_id : 0;
-		//
-		// And when categories are updated:
-		//$this->mParams['categories'] = WikiFactory::getCategories( $this->app->wg->CityId );
-
-	}
-
-	private function logSendMessage() {
-		WikiaLogger::instance()->info( 'SendScribeMessage', [
-			'method' => __METHOD__,
-			'params' => $this->mParams,
-			'scribe_enabled' => $this->sendToScribe,
-			'rabbit_enabled' => $this->sendToRabbit,
-		] );
 	}
 
 	public function sendLog() {
 		wfProfileIn( __METHOD__ );
-		try {
-			$data = json_encode($this->mParams);
-			if ( $this->sendToScribe ) {
-				WScribeClient::singleton( $this->mKey )->send( $data );
-			}
-			if ( $this->sendToRabbit ) {
-				$this->getRabbit()->publish( $this->mKey, $data );
-			}
-			$this->logSendMessage();
-		}
-		catch( TException $e ) {
-			Wikia::log( __METHOD__, 'scribeClient exception', $e->getMessage() );
-		}
+		$data = json_encode($this->mParams);
+		$this->getRabbit()->publish( $this->mKey, $data );
+		WikiaLogger::instance()->info( 'DW event sent', [
+			'method' => __METHOD__
+		] );
 		wfProfileOut( __METHOD__ );
 	}
 
