@@ -142,10 +142,12 @@ window.wikiaJWPlayer = function (elementId, options, callback) {
 			callback(playerInstance);
 		}
 
-		wikiaJWPlayerAnnotation(playerInstance, {
-			annotations: options.annotations.overlays,
-			comments: options.annotations.comments,
-			spoilers: options.annotations.spoilers
-		});
+		if (options.annotations) {
+			wikiaJWPlayerAnnotation(playerInstance, {
+				annotations: options.annotations.overlays,
+				comments: options.annotations.comments,
+				spoilers: options.annotations.spoilers
+			});
+		}
 	});
 };
