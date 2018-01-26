@@ -41,12 +41,12 @@
 	/* vertical bar with an arrow to show/hide the rail */
 	.editpage-widemode-trigger {
 		border-left: 1px solid $color-page-border;
-		bottom: 0;
+		bottom: 10px;
 		cursor: pointer;
 		display: block;
 		position: absolute;
 		right: $width-rail-epl;
-		top: 0;
+		top: 49px !important;
 		width: 10px;
 		z-index: 1;
 
@@ -66,6 +66,15 @@
 
 	/* vertical bar styling when right rail is hidden */
 	&.editpage-sourcewidemode-on {
+		.EditPageToolbar {
+			border-bottom: 1px solid $color-page-border;
+			margin-bottom: 10px;
+		}
+
+		.cke_toolbar_source {
+			border: none;
+		}
+
 		.editpage-widemode-trigger {
 			left: auto;
 			right: 0px;
