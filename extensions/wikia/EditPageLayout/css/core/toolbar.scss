@@ -1,17 +1,20 @@
 .EditPageToolbar {
-	@include box-shadow(0, 4px, 2px, $color-epl-gradient-shadow, false, 0);
-	@include linear-gradient($color-epl-gradient, top, $color-epl-gradient-light, 50%, $color-epl-gradient-dark, 100%);
+	//@include box-shadow(0, 4px, 2px, $color-epl-gradient-shadow, false, 0);
+	//@include linear-gradient($color-epl-gradient, top, $color-epl-gradient-light, 50%, $color-epl-gradient-dark, 100%);
 	@include clearfix;
+
+	background-color: $color-page;
 	padding: 0 15px;
 	position: relative;
-	border-bottom: solid 1px $color-page-border;
 
 	.cke_buttons {
 		@include clearfix;
+
+		border-bottom: solid 1px $color-page-border;
 		display: block;
 		padding: 5px 0;
+
 		&.cke_toolbar_format_expanded {
-			border-top: solid 1px $color-page-border;
 			padding-top: 5px;
 		}
 	}

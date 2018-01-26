@@ -1,9 +1,11 @@
 .EditPageTabs {
-	bottom: -1px;
 	display: none;
 	line-height: 12px;
 	position: absolute;
-	right: $width-rail-epl;
+	top: 227px;
+	left:-60px;
+	z-index: 30;
+	transform: rotate(270deg);
 
 	.cke_button {
 		background-color: $color-epl-gradient-light;
@@ -12,7 +14,7 @@
 		border-top-left-radius: 5px;
 		border-top-right-radius: 5px;
 		display: inline-block;
-		margin-left: 3px;
+		//margin-left: 3px;
 		padding: 1px 0;
 		zoom: 1; // ie
 

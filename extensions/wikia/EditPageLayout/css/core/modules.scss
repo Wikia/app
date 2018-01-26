@@ -11,20 +11,21 @@ $color-icon: mix($color-text, #fff, 90%);
 
 .EditPage {
 	.module {
-		@include box-shadow(0, 2px, 2px, $color-epl-gradient-shadow, false, 0);
+		//@include box-shadow(0, 2px, 2px, $color-epl-gradient-shadow, false, 0);
 
 		&.module_page_controls {
 			@include clear-box-shadow;
 		}
 
 		> h3 {
-			@include gradient-module-header;
 			@include clearfix;
 			color: $color-text;
 			cursor: pointer;
 			font-size: 14px;
 			font-weight: bold;
-			padding: 8px 20px;
+			margin: 8px 20px;
+			//padding: 8px 20px;
+			border-bottom: 1px solid $color-page;
 
 			> span {
 				float: left;
@@ -48,9 +49,8 @@ $color-icon: mix($color-text, #fff, 90%);
 		}
 
 		> .module_content {
-			@include gradient-module;
 			color: $color-epl-text-secondary;
-			padding: 10px 20px 20px 20px;
+			padding: 0 20px 20px 20px;
 		}
 	}
 
@@ -208,9 +208,6 @@ $color-icon: mix($color-text, #fff, 90%);
 	// module specific styling
 	.module_insert,
 	.module_templates {
-		> .module_content {
-			padding: 10px 0 10px 12px;
-		}
 		.cke_button_big  {
 			display: inline-block;
 			margin: 5px 0 4px 5px;
@@ -227,7 +224,6 @@ $color-icon: mix($color-text, #fff, 90%);
 	.module_templates {
 		.text-links {
 			> .tmpl_other {
-				border-right: solid 1px $color-epl-input-border;
 				display: inline;
 				margin-right: 10px;
 				padding-right: 10px;
@@ -254,10 +250,10 @@ $color-icon: mix($color-text, #fff, 90%);
 
 	// license module
 	.module_license {
-		&,
 		.module_content {
 			// remove background gradient and shadow
 			@include clear-box-shadow;
+			padding-top: 30px;
 			background: none;
 		}
 	}

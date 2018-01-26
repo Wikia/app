@@ -81,7 +81,7 @@ body {
 
 .EditPage {
 	@include clearfix;
-	background: $color-epl-page-secondary;
+	background: $color-page;
 	overflow: hidden;
 	position: relative;
 
@@ -109,11 +109,13 @@ body {
 
 .EditPageRail {
 	// Special variable with shadow details to be passed to multiple-box-shadow mixin -- check multiple-box-shadow.scss for details
-	$edit-page-rail-shadow: -2px 2px 2px $color-epl-gradient-shadow, -1px 0 0 $color-page-border;
-	@include multiple-box-shadow($edit-page-rail-shadow);
+	//$edit-page-rail-shadow: -2px 2px 2px $color-epl-gradient-shadow, -1px 0 0 $color-page-border;
+	//@include multiple-box-shadow($edit-page-rail-shadow);
 
-	background-color: $color-epl-page-tertiary;
+	background-color: $color-page;
+	border-left: solid 1px $color-page-border;
 	float: right;
+	margin-bottom: 10px;
 	position: relative; // Make sure the box shadow of #EditPageRail is layered on top of #EditPageMain
 	width: $width-rail-epl;
 	z-index: 101; // and the loading status indicator (z-index: 100)
@@ -130,7 +132,7 @@ body {
 
 .EditPageEditorWrapper {
 	padding-left: 10px;
-
+	background-color: $color-page;
 	&.hasPreloads {
 		.editpage-editarea {
 			border-top: 1px solid $color-page-border;
@@ -209,14 +211,6 @@ body {
 .EditPageEditor {
 	position: relative;
 
-	&.noFooter {
-		margin-bottom: 10px;
-
-		.editpage-editarea {
-			border-bottom: 1px solid $color-page-border;
-		}
-	}
-
 	// source mode tweak
 	textarea {
 		@include epl-editorarea;
@@ -248,7 +242,6 @@ body {
 
 	// wrapper for edit area
 	.editpage-editarea {
-		border-left: 1px solid $color-page-border;
 		position: relative;
 
 		textarea {
@@ -405,7 +398,7 @@ body {
 			display: none;
 
 			&.module_page_controls {
-				@include gradient-module;
+				//@include gradient-module;
 				display: block;
 				height: 300px;
 
