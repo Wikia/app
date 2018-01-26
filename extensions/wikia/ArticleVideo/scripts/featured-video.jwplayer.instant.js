@@ -79,6 +79,58 @@ require([
 	}
 
 	function setupPlayer() {
+		var captions = {
+			'ACUL7O9Z': {
+				'en': {
+					label: 'English',
+					main: true
+				}
+			},
+			'ljcvENql': {
+				'en': {
+					label: 'English',
+					main: true
+				}
+			},
+			'qXQJW3OH': {
+				'en': {
+					label: 'English',
+					main: true
+				},
+				'pl': {
+					label: 'Polski'
+				},
+				'ru': {
+					label: 'русский'
+				},
+				'es': {
+					label: 'Español'
+				},
+				'de': {
+					label: 'Deutsch'
+				}
+			},
+			'zjyAvp4b': {
+				'en': {
+					label: 'English',
+					main: true
+				}
+			}
+		};
+
+		Object.keys(captions).forEach(function (mediaId) {
+			if (mediaId === videoDetails.mediaId) {
+				Object.keys(captions[mediaId]).forEach(function (language) {
+					videoDetails.playlist[0].tracks.push({
+						file: '/wikia.php?controller=AdEngine2Api&method=getSubtitles&language=' + language + '&mediaId=' + mediaId,
+						label: captions[mediaId][language].label,
+						kind: 'captions',
+						'default': captions[mediaId][language].main
+					});
+				});
+			}
+		});
+
 		win.wikiaJWPlayer('featured-video__player', {
 			tracking: {
 				track: function (data) {

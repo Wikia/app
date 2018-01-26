@@ -25,4 +25,12 @@ class AdEngine2ApiController extends WikiaController {
 
 		$this->response->setCacheValidity( WikiaResponse::CACHE_SHORT );
 	}
+
+	public function getSubtitles() {
+		$params = $this->request->getParams();
+		$filename = sprintf('%s-%s.srt', $params['mediaId'], $params['language']);
+
+		$this->response->setBody(file_get_contents(__DIR__ . '/subtitles/' . $filename));
+		$this->response->setCacheValidity( WikiaResponse::CACHE_SHORT );
+	}
 }
