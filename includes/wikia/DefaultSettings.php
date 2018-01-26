@@ -31,6 +31,112 @@ $wgCityId = null;
 $wgUseFakeExternalStoreDB = false;
 
 /**
+ * Overrides of inclues/DefaultSettings.php
+ */
+$wgRepositoryBaseUrl = "https://commons.wikimedia.org/wiki/File:";
+
+// Minimum upload chunk size, in bytes. When using chunked upload, non-final
+// chunks smaller than this will be rejected. May be reduced based on the
+// 'upload_max_filesize' or 'post_max_size' PHP settings.
+$wgMinUploadChunkSize = 1024;
+
+// Allow users to enable email notification ("enotif") on Discussions changes.
+$wgEnotifDiscussions = true;
+
+// SQL Mode - default is turning off all modes, including strict, if set.
+// null can be used to skip the setting for performance reasons and assume
+// DBA has done his best job.
+// String override can be used for some additional fun :-)
+$wgSQLMode = null;
+
+// Revision text may be cached in $wgMemc to reduce load on external storage
+// servers and object extraction overhead for frequently-loaded revisions.
+// Set to 0 to disable, or number of seconds before cache expiry.
+$wgRevisionCacheExpiry = 3600 * 24  * 30; // 30 days
+
+// Read/write timeout for MemCached server communication, in microseconds.
+$wgMemCachedTimeout = 500000;
+
+// List of language codes that don't correspond to an actual language.
+// These codes are mostly leftoffs from renames, or other legacy things.
+// This array makes them not appear as a selectable language on the installer,
+// and excludes them when running the transstat.php script.
+$wgDummyLanguageCodes[ 'lol' => 'lol' ]; # Used for In Context Translations
+
+// Default skin, for new users and anonymous visitors.
+$wgDefaultSkin = 'oasis';
+
+// Expiry time for cache of interwiki table
+$wgInterwikiExpiry = 86400;
+
+// Characters to prevent during new account creations.
+// This is used in a regular expression character class during
+// registration (regex metacharacters like / are escaped).
+$wgInvalidUsernameCharacters = '@:';
+
+// Limits on the possible sizes of range blocks.
+// For IPv6, RFC 3177 recommends that a /48 be allocated to every residential
+// customer, so range blocks larger than /64 (half the number of bits) will
+// plainly be required. RFC 4692 implies that a very large ISP may be
+// allocated a /19 if a generous HD-Ratio of 0.8 is used, so we will use that
+// as our limit. As of 2012, blocking the whole world would require a /4 range.
+$wgBlockCIDRLimit = [ 'IPv6' => 19 ];
+
+// Discard setting from includes/DefaultSettings.php completely
+$wgGroupPermissions = [];
+
+// Simple rate limiter options to brake edit floods.  Maximum number actions
+// allowed in the given number of seconds; after that the violating client re-
+// ceives HTTP 500 error pages until the period elapses.
+$wgRateLimits['upload'] => [
+	'user'   => null,
+	'newbie' => null,
+	'ip'     => null,
+	'subnet' => null,
+];
+
+// Set this to an integer to only do synchronous site_stats updates
+// one every *this many* updates. The other requests go into pending
+// delta values in $wgMemc. Make sure that $wgMemc is a global cache.
+// If set to -1, updates *only* go to $wgMemc (useful for daemons).
+//
+// PLATFORM-2275
+$wgSiteStatsAsyncFactor = 1;
+
+// Recentchanges items are periodically purged; keep the number of rows at the stable level
+//
+// PLATFORM-1393
+// PLATFORM-1460
+$wgRCMaxRows = 20000;
+
+// Global list of hooks.
+$wgHooks = &Hooks::getHandlersArray();
+
+// Discard includes/DefaultSettings.php completely.
+$wgJobClasses = [];
+
+// Additional functions to be performed with updateSpecialPages.
+// Expensive Querypages are already updated.
+$wgSpecialPageCacheUpdates = [
+	'SiteStatsRegenerate' => [ 'SiteStatsInit', 'doAllAndCommit' ], # PLATFORM-2275
+	'Statistics'          => [ 'SiteStatsUpdate', 'cacheUpdate' ],
+];
+
+// Settings for incoming cross-site AJAX requests.
+$wgCrossSiteAJAXdomains = [
+	"internal-vstf.{$wgWikiaBaseDomain}", # PLATFORM-1719
+];
+
+// Maximum amount of virtual memory available to shell processes under linux, in KB.
+$wgMaxShellMemory = 0; // Wikia change - OPS-8226
+
+// Timeout for HTTP requests done internally
+$wgHTTPTimeout = defined( 'RUN_MAINTENANCE_IF_MAIN' ) ? 25 : 5;
+
+// When enabled, RL will output links without the server part.
+$wgEnableLocalResourceLoaderLinks = true;
+
+/**
  * includes common for all wikis
  */
 require_once( "$IP/extensions/wikia/WikiFactory/WikiFactory.php" );
