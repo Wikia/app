@@ -6,7 +6,7 @@ export default class Comment extends Base {
 		super(...arguments);
 	}
 
-	createElement({ text, createdBy }) {
+	createElement({ content, createdBy }) {
 		const domString = `
 				<div class="wikia-annotation wikia-annotation--comment">
 					<div class="wikia-annotation__author">
@@ -18,7 +18,7 @@ export default class Comment extends Base {
 						</div>
 					</div>
 					<div class="wikia-annotation__text">
-						${text}
+						${content}
 					</div>
 				</div>
 			`;

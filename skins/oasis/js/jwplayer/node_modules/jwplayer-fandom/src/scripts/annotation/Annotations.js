@@ -6,11 +6,11 @@ export default class Annotation extends Base {
 		super(...arguments);
 	}
 
-	createElement({ text, linksTo }) {
+	createElement({ content, linksTo }) {
 		const domString = `
 				<div class="wikia-annotation wikia-annotation--annotation">
 					<a href="${linksTo}" class="wikia-annotation__text">
-						${text}
+						${content}
 					</a>
 				</div>
 			`;

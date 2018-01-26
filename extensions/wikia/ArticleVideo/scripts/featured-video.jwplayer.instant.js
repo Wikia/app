@@ -137,8 +137,8 @@ require([
 	} else {
 		featuredVideoAnnotations.getAnnotations(1)
 			.then(function (fetchedAnnotations) {
-				annotations = fetchedAnnotations;
 				debugger;
+				annotations = fetchedAnnotations;
 				setupPlayer();
 			});
 	}
