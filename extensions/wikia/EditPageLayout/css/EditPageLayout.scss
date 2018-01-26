@@ -33,6 +33,25 @@
 @import 'skins/oasis/css/core/responsive-core';
 @import 'skins/oasis/css/core/responsive-variables';
 
+.wds-community-header {
+	width: 100% !important;
+}
+
+.page-header__main {
+	margin-left: 10px;
+}
+
+.page-header__contribution {
+	margin-right: 20px;
+}
+
+.page-header__separator {
+	display: none;
+}
+
+.page-header {
+	background-color: $color-page;
+}
 
 .popover-inner {
 	padding: 3px 8px;

@@ -1,35 +1,37 @@
 <?= $header ?>
 <section id="WikiaPage" class="WikiaPage">
 	<article id="WikiaMainContent" class="WikiaMainContent">
-		<header id="EditPageHeader" class="EditPageHeader">
-			<span class="wordmark <?= $wordmark['wordmarkSize'] ?> <?= $wordmark['wordmarkType'] ?> font-<?= $wordmark['wordmarkFont'] ?>">
-				<a accesskey="z" href="<?= htmlspecialchars($wordmark['mainPageURL']) ?>" title="<?= htmlspecialchars($wordmark['wordmarkText']) ?>">
-					<?php if ( !empty( $wordmark['wordmarkUrl'] ) ): ?>
-						<img src="<?= $wordmark['wordmarkUrl'] ?>" alt="<?= htmlspecialchars($wordmark['wordmarkText']) ?>">
-					<?php elseif ( mb_substr( $wordmark['wordmarkText'], 0, 10 ) == $wordmark['wordmarkText'] ): ?>
-							<?= htmlspecialchars( $wordmark['wordmarkText'] ) ?>
-					<?php else: ?>
-						<?= htmlspecialchars( mb_substr( $wordmark['wordmarkText'], 0, 10 ) ) . '&hellip;' ?>
-					<?php endif ?>
-				</a>
-			</span>
-			<h2><?= $editing ?></h2>
-			<h1>
-				<a href="<?= htmlspecialchars($title->getLocalUrl()) ?>" class="<?= $hideTitle ? 'hiddenTitle' : '' ?>" title="<?= htmlspecialchars($titleText) ?>"><?= htmlspecialchars($titleText) ?></a>
-			</h1>
-			<a id="EditPageTitle" class="EditPageTitle" title="<?= wfMessage('editpagelayout-edit-title')->escaped() ?>">
-				<img class="sprite edit-pencil-small" src="<?= $wg->BlankImgUrl ?>">
-			</a>
-			<?php if ( !empty( $extraHeaderHtml ) ) : ?>
-				<div class="editpage-extra-header-html">
-					<?= $extraHeaderHtml ?>
-				</div>
-			<?php endif; ?>
-			<nav id="EditPageTabs" class="EditPageTabs editpage-tabs" data-space-type="tabs" data-space-autoshow="true"></nav>
-			<aside id="HelpLink" class="HelpLink"><?= $helpLink ?></aside>
-			<aside id="NotificationsLink" class="NotificationsLink"><a href="#"><?= $notificationsLink ?></a></aside>
-		</header>
-
+		<!--<header id="EditPageHeader" class="EditPageHeader">-->
+		<!--	<span class="wordmark --><?//= $wordmark['wordmarkSize'] ?><!-- --><?//= $wordmark['wordmarkType'] ?><!-- font---><?//= $wordmark['wordmarkFont'] ?><!--">-->
+		<!--		<a accesskey="z" href="--><?//= htmlspecialchars($wordmark['mainPageURL']) ?><!--" title="--><?//= htmlspecialchars($wordmark['wordmarkText']) ?><!--">-->
+		<!--			--><?php //if ( !empty( $wordmark['wordmarkUrl'] ) ): ?>
+		<!--				<img src="--><?//= $wordmark['wordmarkUrl'] ?><!--" alt="--><?//= htmlspecialchars($wordmark['wordmarkText']) ?><!--">-->
+		<!--			--><?php //elseif ( mb_substr( $wordmark['wordmarkText'], 0, 10 ) == $wordmark['wordmarkText'] ): ?>
+		<!--					--><?//= htmlspecialchars( $wordmark['wordmarkText'] ) ?>
+		<!--			--><?php //else: ?>
+		<!--				--><?//= htmlspecialchars( mb_substr( $wordmark['wordmarkText'], 0, 10 ) ) . '&hellip;' ?>
+		<!--			--><?php //endif ?>
+		<!--		</a>-->
+		<!--	</span>-->
+		<!--	<h2>--><?//= $editing ?><!--</h2>-->
+		<!--	<h1>-->
+		<!--		<a href="--><?//= htmlspecialchars($title->getLocalUrl()) ?><!--" class="--><?//= $hideTitle ? 'hiddenTitle' : '' ?><!--" title="--><?//= htmlspecialchars($titleText) ?><!--">--><?//= htmlspecialchars($titleText) ?><!--</a>-->
+		<!--	</h1>-->
+		<!--	<a id="EditPageTitle" class="EditPageTitle" title="--><?//= wfMessage('editpagelayout-edit-title')->escaped() ?><!--">-->
+		<!--		<img class="sprite edit-pencil-small" src="--><?//= $wg->BlankImgUrl ?><!--">-->
+		<!--	</a>-->
+		<!--	--><?php //if ( !empty( $extraHeaderHtml ) ) : ?>
+		<!--		<div class="editpage-extra-header-html">-->
+		<!--			--><?//= $extraHeaderHtml ?>
+		<!--		</div>-->
+		<!--	--><?php //endif; ?>
+		<!--	<nav id="EditPageTabs" class="EditPageTabs editpage-tabs" data-space-type="tabs" data-space-autoshow="true"></nav>-->
+		<!--	<aside id="HelpLink" class="HelpLink">--><?//= $helpLink ?><!--</aside>-->
+		<!--	<aside id="NotificationsLink" class="NotificationsLink"><a href="#">--><?//= $notificationsLink ?><!--</a></aside>-->
+		<!--</header>-->
+		<?= $app->renderView( 'CommunityHeaderService', 'index' ) ?>
+		<?= $app->renderView('Wikia\PageHeader\PageHeader', 'index') ?>
+		<!--<nav id="EditPageTabs" class="EditPageTabs editpage-tabs" data-space-type="tabs" data-space-autoshow="true"></nav>-->
 		<form id="editform" class="editform" name="editform" method="post" action="<?= htmlspecialchars($editFormAction) ?>" enctype="multipart/form-data">
 			<section id="EditPage" class="EditPage">
 				<div id="EditPageMain" class="EditPageMain">
