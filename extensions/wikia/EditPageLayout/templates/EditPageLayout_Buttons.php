@@ -8,9 +8,6 @@
 	<?php switch( $buttonType ):
 		// The odd formatting here is intentional, see: https://bugs.php.net/bug.php?id=36729
 		case 'save': ?>
-			<input class="<?=$buttonClasses?>" tabindex="22" id="wpSave" name="wpSave" type="submit" value="<?= wfMessage('savearticle')->escaped() ?>" accesskey="<?=wfMessage('accesskey-save')->escaped();?>" />
-			<!-- If JavaScript is enabled, disable the save button immediately. -->
-			<script type="text/javascript">document.getElementById('wpSave').disabled=true;</script>
 			<?php break ?>
 		<?php case 'preview': ?>
 			<?php

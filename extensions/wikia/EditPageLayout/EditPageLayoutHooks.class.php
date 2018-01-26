@@ -5,6 +5,28 @@
 
 
 class EditPageLayoutHooks {
+	static function onBeforePrepareActionButtons( $controller, &$actions ) {
+		if (WikiaPageType::isEditPage()) {
+			$actions = [
+				'publish' => [
+					'class' => '',
+					'text' => wfMessage('savearticle')->escaped(),
+					'href' => '#',
+					'primary' => true,
+					'id' => 'wpSave',
+					'type' => 'submit',
+					'form' => 'editform'
+				],
+				'diff' => [
+					'href' => '#',
+					'text' => wfMessage('showdiff')->escaped(),
+					'accesskey' => 'v',
+					'id' => 'wpDiff',
+				]
+			];
+		}
+	}
+
 	static function onAlternateEditPageClass( &$editPage ) {
 		global $wgArticle;
 		$app = F::app();

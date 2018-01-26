@@ -12,6 +12,7 @@ use WikiaPageType;
 class ActionButton {
 	const LOCK_ICON = 'wds-icons-lock-small';
 	const EDIT_ICON = 'wds-icons-pencil-small';
+	const PUBLISH_ICON = 'wds-icons-checkmark-small';
 
 	private $contentActions;
 	private $buttonAction;
@@ -74,7 +75,8 @@ class ActionButton {
 			'undelete',
 			'replace-file',
 			'talk',
-			'edit-mobile-main-page'
+			'edit-mobile-main-page',
+			'diff'
 		];
 
 		// Enable to modify actions list on dropdown
@@ -100,6 +102,12 @@ class ActionButton {
 		// "Add topic" action - remove on diff pages (RT #72666)
 		if ( isset( $this->contentActions['addsection'] ) && $isDiff ) {
 				unset( $this->contentActions['addsection'] );
+		}
+
+		if (isset($this->contentActions['publish'])) {
+			$this->buttonAction = $this->contentActions['publish'];
+			$this->buttonIcon = self::PUBLISH_ICON;
+			unset($this->contentActions['publish']);
 		}
 
 		// handle protected pages (they should have viewsource link and lock icon) - BugId:9494

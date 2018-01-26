@@ -55,6 +55,7 @@ $wgHooks['EditForm:AfterDisplayingTextbox'][] = 'EditPageLayoutHooks::onAfterDis
 $wgHooks['EditForm:BeforeDisplayingTextbox'][] = 'EditPageLayoutHooks::onBeforeDisplayingTextbox';
 $wgHooks['GetPreferences'][] = 'EditPageLayoutHooks::onGetPreferences';
 $wgHooks['LogEventsListShowLogExtract'][] = 'EditPageLayoutHooks::onLogEventsListShowLogExtract';
+$wgHooks['BeforePrepareActionButtons'][] = 'EditPageLayoutHooks::onBeforePrepareActionButtons';
 
 // messages
 $wgExtensionMessagesFiles['EditPageLayout'] = $dir . '/EditPageLayout.i18n.php';

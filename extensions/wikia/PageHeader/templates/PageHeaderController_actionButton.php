@@ -1,14 +1,29 @@
 <div class="wds-button-group">
-	<a href="<?= $buttonAction['href'] ?>"
-	   class="wds-is-squished wds-button"
-	   id="<?= Sanitizer::encodeAttribute( $buttonAction['id'] ) ?>"
-	   data-tracking="<?= $buttonAction['data-tracking'] ?>"
-		<?= empty( $buttonAction['accesskey'] ) ? ''
-			: 'accesskey="' . Sanitizer::encodeAttribute( $buttonAction['accesskey'] ) . '"' ?>
-	>
-		<?= DesignSystemHelper::renderSvg( $buttonAction['icon'], 'wds-icon wds-icon-small' ); ?>
-		<span><?= htmlspecialchars( $buttonAction['text'] ) ?></span>
-	</a>
+	<? if ($buttonAction['type'] ?? '' == 'submit'): ?>
+		<button
+		   class="wds-is-squished wds-button"
+		   id="<?= Sanitizer::encodeAttribute( $buttonAction['id'] ) ?>"
+		   data-tracking="<?= $buttonAction['data-tracking'] ?>"
+		   form="<?= $buttonAction['form'] ?>"
+		   type="submit"
+			<?= empty( $buttonAction['accesskey'] ) ? ''
+				: 'accesskey="' . Sanitizer::encodeAttribute( $buttonAction['accesskey'] ) . '"' ?>
+		>
+			<?= DesignSystemHelper::renderSvg( $buttonAction['icon'], 'wds-icon wds-icon-small' ); ?>
+			<span><?= htmlspecialchars( $buttonAction['text'] ) ?></span>
+		</button>
+	<? else: ?>
+		<a href="<?= $buttonAction['href'] ?>"
+		   class="wds-is-squished wds-button"
+		   id="<?= Sanitizer::encodeAttribute( $buttonAction['id'] ) ?>"
+		   data-tracking="<?= $buttonAction['data-tracking'] ?>"
+			<?= empty( $buttonAction['accesskey'] ) ? ''
+				: 'accesskey="' . Sanitizer::encodeAttribute( $buttonAction['accesskey'] ) . '"' ?>
+		>
+			<?= DesignSystemHelper::renderSvg( $buttonAction['icon'], 'wds-icon wds-icon-small' ); ?>
+			<span><?= htmlspecialchars( $buttonAction['text'] ) ?></span>
+		</a>
+	<?endif;?>
 	<div class="wds-dropdown">
 		<div class="wds-button wds-is-squished wds-dropdown__toggle">
 			<?= DesignSystemHelper::renderSvg( 'wds-icons-dropdown-tiny',

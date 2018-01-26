@@ -30,8 +30,8 @@
 		<!--	<aside id="NotificationsLink" class="NotificationsLink"><a href="#">--><?//= $notificationsLink ?><!--</a></aside>-->
 		<!--</header>-->
 		<?= $app->renderView( 'CommunityHeaderService', 'index' ) ?>
-		<?= $app->renderView('Wikia\PageHeader\PageHeader', 'index') ?>
 		<!--<nav id="EditPageTabs" class="EditPageTabs editpage-tabs" data-space-type="tabs" data-space-autoshow="true"></nav>-->
+		<?= $app->renderView('Wikia\PageHeader\PageHeader', 'index') ?>
 		<form id="editform" class="editform" name="editform" method="post" action="<?= htmlspecialchars($editFormAction) ?>" enctype="multipart/form-data">
 			<section id="EditPage" class="EditPage">
 				<div id="EditPageMain" class="EditPageMain">
