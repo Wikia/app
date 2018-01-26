@@ -23,7 +23,7 @@ require([
 			return;
 		}
 
-		comments = annotations.comments;
+		var comments = annotations.comments;
 
 		playerInstance.on('time', function (data) {
 			var roundedPosition = Math.floor(data.position);

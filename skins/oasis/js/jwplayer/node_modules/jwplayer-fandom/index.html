@@ -131,7 +131,12 @@
 		// logging level, default is error, available values: 'info', 'warn', 'error', 'off'
 		logLevel: 'info',
 		// language code, default 'en'
-		lang: 'pl'
+		lang: 'pl',
+		annotations: {
+			overlays: [{ displayAt: 1.5, createdBy: {}, text: "Hello world!", linksTo: "https://facebook.com" }],
+			comments: [{ displayAt: 1, createdBy: { username: "Majkel", avatarUrl: "https://raw.githubusercontent.com/Ashwinvalento/cartoon-avatar/master/lib/images/female/68.png"}, text: "My first comment!"}],
+			spoilers: []
+		}
 	}, function (playerInstance) {
 		// callback with jwplayer instance as an argument
 	});
