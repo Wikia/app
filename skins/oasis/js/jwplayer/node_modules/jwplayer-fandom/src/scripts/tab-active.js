@@ -1,9 +1,9 @@
-function wikiaJWPlayerHandleTabNotActive(playerInstance, willAutoplay) {
+export default function wikiaJWPlayerHandleTabNotActive(playerInstance, willAutoplay) {
 	function canPlayVideo(willAutoplay) {
 		return !document.hidden && willAutoplay && (['playing', 'paused', 'complete'].indexOf(playerInstance.getState()) === -1 || pausedOnRelated);
 	}
 
-	var pausedOnRelated = false;
+	let pausedOnRelated = false;
 
 	document.addEventListener('visibilitychange', function () {
 		if (canPlayVideo(willAutoplay)) {

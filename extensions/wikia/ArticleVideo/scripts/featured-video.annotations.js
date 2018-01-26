@@ -8,7 +8,7 @@ define('wikia.articleVideo.featuredVideo.jwplayer.annotations', function () {
 			} else {
 				fetch('https://services.wikia-dev.pl/video-annotations/videos/' + mediaId + '/annotations/')
 					.then(function (response) {
-						return response.json()
+						return response.json();
 					})
 					.then(function (fetchedAnnotations) {
 						annotations = fetchedAnnotations;

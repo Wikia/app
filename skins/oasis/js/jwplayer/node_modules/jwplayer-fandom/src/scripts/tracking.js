@@ -1,6 +1,6 @@
-function wikiaJWPlayerTracking(playerInstance, willAutoplay, tracker) {
+export default function wikiaJWPlayerTracking(playerInstance, willAutoplay, tracker) {
 	//This will replace 'trackingevent' in internal tracker url path
-	var eventName = 'videoplayerevent',
+	const eventName = 'videoplayerevent',
 		gaCategory = tracker.category || 'featured-video';
 
 	function updateVideoCustomDimensions(currentVideo) {
@@ -14,13 +14,13 @@ function wikiaJWPlayerTracking(playerInstance, willAutoplay, tracker) {
 	}
 
 	function addTrackingPixel(id, url) {
-		var mountedPixel = document.getElementById(id);
+		const mountedPixel = document.getElementById(id),
+			img = document.createElement('img');
 
 		if (mountedPixel) {
 			mountedPixel.parentElement.removeChild(mountedPixel);
 		}
 
-		var img = document.createElement('img');
 		img.src = url;
 		img.id = id;
 
@@ -39,7 +39,7 @@ function wikiaJWPlayerTracking(playerInstance, willAutoplay, tracker) {
 			return;
 		}
 
-		var pixelID = 'comscoreVideoMetrixTrack',
+		const pixelID = 'comscoreVideoMetrixTrack',
 			url = 'http://b.scorecardresearch.com/p?C1=1&C2=6177433&C5=04';
 
 		addTrackingPixel(pixelID, url);
@@ -59,7 +59,7 @@ function wikiaJWPlayerTracking(playerInstance, willAutoplay, tracker) {
 			throw new Error('No tracking label provided');
 		}
 
-		var trackingData = {
+		const trackingData = {
 			action: gaData.action || 'click',
 			category: gaCategory,
 			label: gaData.label,
@@ -127,7 +127,7 @@ function wikiaJWPlayerTracking(playerInstance, willAutoplay, tracker) {
 	});
 
 	playerInstance.on('playerStart', function (data) {
-		var gaData = data.auto ?
+		const gaData = data.auto ?
 			{ label: 'autoplay-start', action: 'impression' } :
 			{ label: 'user-start' };
 
