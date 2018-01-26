@@ -1,27 +1,43 @@
 .EditPage {
-		a.cke_button_on {
-				@include box-shadow(-1px, 1px, 2px, $color-epl-button-shadow, true);
-				background-color: $color-epl-button-active;
-				border-top-color: $color-epl-button-border;
-				border-right-color: $color-epl-button-border;
+	a.cke_button_on {
+		//@include box-shadow(-1px, 1px, 2px, $color-epl-button-shadow, true);
+		background-color: $color-epl-button-active;
+		border-top-color: $color-epl-button-border;
+		border-right-color: $color-epl-button-border;
 	}
-	
-		 a.cke_button_disabled {
-			
-				opacity: .2;
-				zoom: 1; /* IE fix to make opacity work */
-			
-		}
-		 a.cke_button_hidden {
-			display: none;
-		}
-	
 
- 
-		a.cke_button {
-			background-color: $color-epl-button;
-			border: solid 1px $color-epl-button-border;
-			border-radius: 4px;
+	a.cke_button_disabled {
+
+		opacity: .2;
+		zoom: 1; /* IE fix to make opacity work */
+
+	}
+	a.cke_button_hidden {
+		display: none;
+	}
+
+	a.cke_button {
+		//background-color: $color-epl-button;
+		//border: solid 1px $color-epl-button-border;
+		//border-radius: 4px;
+		cursor: default;
+		display: inline-block;
+		float: left;
+		height: 26px;
+		margin: 0 5px;
+		width: 26px;
+
+		&:hover {
+			@include gradient-button-hover;
+		}
+	}
+
+	.cke_button {
+		> a {
+
+			//background-color: $color-epl-button;
+			//border: solid 1px $color-epl-button-border;
+			//border-radius: 4px;
 			cursor: default;
 			display: inline-block;
 			float: left;
@@ -33,26 +49,9 @@
 				@include gradient-button-hover;
 			}
 		}
+	}
 
-		.cke_button {
-			> a {
-	
-			background-color: $color-epl-button;
-			border: solid 1px $color-epl-button-border;
-			border-radius: 4px;
-			cursor: default;
-			display: inline-block;
-			float: left;
-			height: 26px;
-			margin: 0 5px;
-			width: 26px;
-
-			&:hover {
-				@include gradient-button-hover;
-			}}
-		}
-
-		.cke_button {
+	.cke_button {
 
 		.cke_button_label {
 			display: none;
@@ -71,7 +70,6 @@
 			vertical-align: baseline;
 			float: none;
 		}
-	
 
 		.cke_label {
 			display: none;
@@ -109,22 +107,22 @@
 				}
 			}
 		}
-		
+
 		&.cke_button_big {
-				.cke_button_label {
-					bottom: 0;
-					display: block;
-					left: 0;
-					overflow: hidden;
-					position: absolute;
-					text-align: center;
-					width: 51px;
-				}
+			.cke_button_label {
+				bottom: 0;
+				display: block;
+				left: 0;
+				overflow: hidden;
+				position: absolute;
+				text-align: center;
+				width: 51px;
+			}
 		}
 
-	}	
+	}
 	a.cke_button_big {
-	
+
 		display: inline-block;
 		height: 51px;
 		margin: 0 5px;
@@ -138,15 +136,15 @@
 			position: absolute;
 			text-align: center;
 			width: 51px;
-			}
 		}
-		
+	}
+
 	.cke_button_icon {
-			@include sprite-edit-page-base;
-			display: inline-block;
-			height: 16px;
-			width: 16px;
-			margin: 5px;
+		@include sprite-edit-page-base;
+		display: inline-block;
+		height: 16px;
+		width: 16px;
+		margin: 5px;
 	}
 
 	// Button icons
@@ -247,7 +245,7 @@
 		}
 		.cke_icon:after {
 			background-color: #ff8080; /* for IE8 */
-			background-color: rgba(255,0,0,0.4);
+			background-color: rgba(255, 0, 0, 0.4);
 			border-top-left-radius: 3px;
 			border-top-right-radius: 3px;
 			color: $color-page;
@@ -265,7 +263,7 @@
 	.cke_button_icon.cke_button__table_icon {
 		@include sprite-edit-page('table', 48px, 32px);
 	}
-	.cke_button_icon.cke_button__addinfobox_icon{
+	.cke_button_icon.cke_button__addinfobox_icon {
 		@include sprite-edit-page('infobox-' + $sprite-theme, 48px, 32px);
 	}
 	.module_templates .cke_button_big .cke_icon {

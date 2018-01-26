@@ -8,7 +8,7 @@
 	transform: rotate(270deg);
 
 	.cke_button {
-		background-color: $color-epl-gradient-light;
+		background-color: $color-page;
 		border: 1px solid $color-page-border;
 		border-bottom: 0;
 		border-top-left-radius: 5px;
@@ -27,7 +27,7 @@
 			margin-left: 0;
 		}
 		&.cke_button_off {
-			background-color: $color-epl-hover;
+			background-color: $color-page-border;
 			border-bottom: 1px solid $color-page-border;
 			padding-bottom: 0;
 
