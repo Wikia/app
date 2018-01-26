@@ -143,35 +143,4 @@ class Listusers extends SpecialRedirectToSpecial {
 	}
 }
 
-/**
- * Listusers redirects
- * @author Cqm
- * VOLDEV-49
- */
 
-/**
- * ListStaff --> ListUsers/staff
- */
-class SpecialListStaff extends SpecialRedirectToSpecial {
-	function __construct() {
-		parent::__construct( 'Liststaff', 'Listusers', 'staff' );
-	}
-}
-
-/**
- * ListVstf --> ListUsers/vstf
- */
-class SpecialListVstf extends SpecialRedirectToSpecial {
-	function __construct() {
-		parent::__construct( 'Listvstf', 'Listusers', 'vstf' );
-	}
-}
-
-/**
- * ListHelpers --> ListUser/helper
- */
-class SpecialListHelpers extends SpecialRedirectToSpecial {
-	function __construct() {
-		parent::__construct( 'Listhelpers', 'Listusers', 'helper' );
-	}
-}

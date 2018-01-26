@@ -1937,6 +1937,9 @@ require_once "$IP/extensions/wikia/CityList/CityList.setup.php";
 // SUS-3496: Extension to update shared dataware.pages table
 require_once "$IP/extensions/wikia/Pages/Pages.setup.php";
 
+// SUS-3455: Special:ListGlobalUsers for all wikis
+require_once "$IP/extensions/wikia/ListGlobalUsers/ListGlobalUsers.setup.php";
+
 // SRE-76: Logging classes that have been initially defined in config.
 $wgAutoloadClasses['AuditLog'] = "$IP/includes/wikia/AuditLog.class.php";
 
