@@ -40,10 +40,23 @@ class MercuryApiCategoryModel {
 						$membersGrouped[$firstLetter] = [];
 					}
 
+					$img = F::app()->sendRequest( 'ImageServing', 'getImages', [
+						'ids' => [ $memberTitle->getArticleID() ],
+						'height' => 184,
+						'width' => 184,
+						'count' => 1
+					] )->getVal( 'result' );
+
+					$thumbnail = null;
+					if( isset( $img[ $memberTitle->getArticleID() ] ) ){
+						$thumbnail = $img[$memberTitle->getArticleID()][0]['url'];
+					}
+
 					array_push( $membersGrouped[$firstLetter], [
 						'title' => $titleText,
 						'url' => $memberTitle->getLocalURL(),
-						'isCategory' => $memberTitle->inNamespace( NS_CATEGORY )
+						'isCategory' => $memberTitle->inNamespace( NS_CATEGORY ),
+					    'thumbnail' => $thumbnail
 					] );
 				}
 
