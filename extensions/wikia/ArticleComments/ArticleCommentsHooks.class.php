@@ -13,7 +13,7 @@ class ArticleCommentsHooks {
 		$service = PageStatsService::newFromTitle( $title );
 		$comments = $service->getCommentsCount();
 
-		if ( ArticleCommentInit::ArticleCommentCheckTitle( $title ) ) {
+		if ( ArticleCommentInit::ArticleCommentCheckTitle( $title ) && !WikiaPageType::isEditPage() ) {
 			if ( $comments > 0 ) {
 				$label = wfMessage( 'article-comments-comments' )
 					->params( CommentsLikesController::formatCount( $comments ) )

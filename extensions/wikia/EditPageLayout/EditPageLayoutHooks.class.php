@@ -1,4 +1,7 @@
 <?php
+
+use Wikia\PageHeader\Button;
+
 /**
  * @author: pbablok@wikia-inc.com
  */
@@ -6,11 +9,11 @@
 
 class EditPageLayoutHooks {
 	static function onBeforePrepareActionButtons( $controller, &$actions ) {
-		if (WikiaPageType::isEditPage()) {
+		if ( WikiaPageType::isEditPage() ) {
 			$actions = [
 				'publish' => [
 					'class' => '',
-					'text' => wfMessage('savearticle')->escaped(),
+					'text' => wfMessage( 'savearticle' )->escaped(),
 					'href' => '#',
 					'primary' => true,
 					'id' => 'wpSave',
@@ -19,12 +22,28 @@ class EditPageLayoutHooks {
 				],
 				'diff' => [
 					'href' => '#',
-					'text' => wfMessage('showdiff')->escaped(),
+					'text' => wfMessage( 'showdiff' )->escaped(),
 					'accesskey' => 'v',
 					'id' => 'wpDiff',
 				]
 			];
 		}
+
+		return true;
+	}
+
+	static function onAfterPageHeaderButtons($title, &$buttons) {
+		if ( WikiaPageType::isEditPage() ) {
+			// TODO: check if mobile preview should be displayed
+			$buttons = [
+				new Button(wfMessage('editpagelayout-preview-label-mobile')->escaped(),
+					'wds-icons-eye', '#', 'wds-is-secondary', 'wpPreviewMobile'),
+				new Button(wfMessage('editpagelayout-preview-label-desktop')->escaped(),
+					'wds-icons-eye', '#', 'wds-is-secondary', 'wpPreview')
+			];
+		}
+
+		return true;
 	}
 
 	static function onAlternateEditPageClass( &$editPage ) {
