@@ -277,13 +277,24 @@ class RTE {
 
 		if ( $wgUseSiteCss ) {
 			if ( $app->checkSkin( 'oasis' ) ) {
+				global $wgEnableTabberExt, $wgEnableAjaxPollExt;
 				/*
 				 * On Oasis we need to load both Common.css and Wikia.css
 				 * to use it inside of the editor's textarea in visual mode
 				 * module 'site' contains both stylesheets
 				 */
+				$resources = [ 'site' ];
+
+				if ( $wgEnableTabberExt ) {
+					$resources[] = 'ext.tabber';
+				}
+
+				if ( $wgEnableAjaxPollExt ) {
+					$resources[] = 'ext.wikia.ajaxpoll';
+				}
+
 				$url = ResourceLoader::makeLoaderURL(
-					[ 'site', 'ext.tabber', 'ext.wikia.ajaxpoll' ],
+					$resources,
 					$out->getLanguage()->getCode(),
 					$out->getSkin()->getSkinName(),
 					$user->getName(),
