@@ -22,7 +22,8 @@ import slotConfig from './slots';
 import './ad-engine.bridge.scss';
 
 context.extend(config);
-let supportedTemplates = [BigFancyAdAbove, BigFancyAdBelow];
+
+const supportedTemplates = [BigFancyAdAbove, BigFancyAdBelow];
 
 function init(
 	adTracker,
