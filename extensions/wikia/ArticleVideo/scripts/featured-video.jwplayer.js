@@ -19,7 +19,6 @@ require([
 		lastUpdatedFor = 0;
 
 	function setupCommentedBy(playerInstance, annotations) {
-		debugger;
 		if (!annotations || !annotations.comments || !annotations.comments.length) {
 			return;
 		}
