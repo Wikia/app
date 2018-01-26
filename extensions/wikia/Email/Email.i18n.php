@@ -141,14 +141,20 @@ $messages['ja'] = array(
 
 $messages['ko'] = array(
 	'emailext-anonymous-editor' => '익명 사용자',
-	'emailext-fanverse-tagline' => '팬을 위한 팬에 의한 위키아 커뮤니티',
-	'emailext-recipient-notice' => '받는이: $1 / 보낸이: 위키아',
-	'emailext-unsubscribe' => '위키아에서 보내는 모든 이메일 알림을 받지 않으시려면 [$1 이곳]을 들러 주세요.',
+	'emailext-fanverse-tagline' => 'Powered by Wikia',
+	'emailext-recipient-notice' => '받는이: $1 / 보낸이: 팬덤',
+	'emailext-unsubscribe' => '팬덤에서 보내는 모든 이메일 알림을 받지 않으시려면 [$1 이곳]을 들러 주십시오.',
 	'emailext-desc' => '이메일 전송을 관리하는 확장 기능',
 	'emailext-no-reply-name' => '댓글 없음',
 	'emailext-salutation' => '안녕하세요, $1 님!',
-	'emailext-unfollow-text' => '더 이상 이에 관한 이메일 알림을 받고 싶지 않으신가요? [$1 이곳]에서 {{SITENAME}}의 $2 문서를 주시 해제하실 수 있습니다.',
-	'emailext-update-frequency' => '종류에 따른 이메일 알림 여부를 설정하시려면 귀하의 [{{fullurl:Special:Preferences|#mw-prefsection-emailv2}} 환경 설정] 페이지에 들러 주세요.',
+	'emailext-unfollow-text' => '[$1 이곳]에서 {{SITENAME}}의 $2 문서를 주시 해제하실 수 있습니다.',
+	'emailext-update-frequency' => '[{{fullurl:Special:Preferences|#mw-prefsection-emailv2}} 환경설정] 페이지에서 이메일 수신 여부를 설정하실 수 있습니다.',
+	'group-translator' => '팬덤 번역자',
+	'emailext-wikia-home-url' => 'http://fandom.wikia.com/',
+	'grouppage-translator' => 'wikia:Help:Internationalization',
+	'group-translator-member' => '팬덤 번역자',
+	'emailext-mobile-application-footer-1' => '모바일에서도 팬덤과 함께해 보세요.',
+	'emailext-mobile-application-footer-2' => '아래에서 팬덤 커뮤니티 앱을 다운로드하실 수 있습니다.',
 );
 
 $messages['nl'] = array(

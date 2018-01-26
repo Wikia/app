@@ -165,7 +165,22 @@ class RTE {
 
 		// let's parse wikitext (only for wysiwyg mode)
 		if ( self::$initMode == self::INIT_MODE_WYSIWYG ) {
-			$html = RTE::WikitextToHtml( $form->textbox1 );
+
+			// SUS-3839: perform RTE parsing behind PoolCounter + parser cache
+			$parserCacheStorage = wfGetParserCacheStorage();
+
+			$parserCache = new RTEParserCache( $parserCacheStorage );
+			$parserOptions = static::makeParserOptions();
+
+			$worker = new RTEParsePoolWork( $parserCache, $form, $parserOptions );
+
+			// fall back to source mode if RTE parsing fails
+			if ( !$worker->execute() ) {
+				self::$initMode = self::INIT_MODE_SOURCE;
+				return true;
+			}
+
+			$html = $worker->getParserOutput()->getText();
 		}
 
 		// check for edgecases (found during parsing done above)
@@ -498,17 +513,25 @@ HTML
 	public static function WikitextToHtml( $wikitext ) {
 		global $wgTitle;
 
-		$options = new ParserOptions();
-		// don't show [edit] link for sections
-		$options->setEditSection( false );
-		// disable headings numbering
-		$options->setNumberHeadings( false );
+		wfProfileIn(__METHOD__);
+
+		$options = static::makeParserOptions();
 
 		RTE::$parser = new RTEParser();
 
 		$html = RTE::$parser->parse( $wikitext, $wgTitle, $options, true, true, $wgTitle->getLatestRevID() )->getText();
 
 		return $html;
+	}
+
+	private static function makeParserOptions(): ParserOptions {
+		$options = new ParserOptions();
+		// don't show [edit] link for sections
+		$options->setEditSection( false );
+		// disable headings numbering
+		$options->setNumberHeadings( false );
+
+		return $options;
 	}
 
 	/**

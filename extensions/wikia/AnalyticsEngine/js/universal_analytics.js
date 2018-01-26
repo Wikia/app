@@ -55,7 +55,12 @@
 			sourcePoint: {
 				trackName: 'sourcePoint',
 				name: 'sourcepoint',
-				dimension: 6
+				dimension: 999
+			},
+			babDetector: {
+				trackName: 'babDetector',
+				dimension: 6,
+				name: 'babdetector'
 			},
 			pageFair: {
 				trackName: 'pageFair',
@@ -73,6 +78,16 @@
 				eventName: 'sp.not_blocking',
 				value: false,
 				detectorSettings: GASettings.sourcePoint
+			},
+			{
+				eventName: 'bab.blocking',
+				value: true,
+				detectorSettings: GASettings.babDetector
+			},
+			{
+				eventName: 'bab.not_blocking',
+				value: false,
+				detectorSettings: GASettings.babDetector
 			},
 			{
 				eventName: 'pf.blocking',

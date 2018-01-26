@@ -5,18 +5,13 @@ use Wikia\Logger\WikiaLogger;
 class UpdateThumbnailTask extends BaseTask {
 
 	const DEFAULT_PROVIDER = "default";
-	const IVA = "ooyala/iva";
 	const DEFAULT_THUMB_SHA = "m03a6fnvxhk8oj5kgnt11t6j7phj5nh";
 
 	private static $delays = [
 		self::DEFAULT_PROVIDER => [
 			"5 minutes",
 			"1 hour",
-			"1 day" ],
-		self::IVA => [
-			"5 minutes",
-			"1 hour",
-			"1 week" ]
+			"1 day" ]
 	];
 
 	/**
@@ -30,9 +25,7 @@ class UpdateThumbnailTask extends BaseTask {
 	 * @param $videoId
 	 * @return FileRepoStatus
 	 */
-	public function retryThumbUpload( $title, $delayIndex, $provider, $videoId ) {
-		global $IP, $wgCityId;
-
+	public function retryThumbUpload( $title, $delayIndex, $provider ) {
 		/** @var Title $title */
 		$file = WikiaFileHelper::getVideoFileFromTitle( $title );
 		if ( empty( $file ) ) {
@@ -47,21 +40,8 @@ class UpdateThumbnailTask extends BaseTask {
 		$delayIndex++;
 		$this->log( "start", $delayIndex, $title->getText(), $provider );
 
-		// IVA requires extra steps to update their thumbnail, use the script we have for that
-		if ( $provider == self::IVA ) {
-			$cmd = sprintf( "SERVER_ID={$wgCityId} php {$IP}/maintenance/wikia/VideoHandlers/updateOoyalaThumbnail.php --videoId={$videoId} --delayIndex={$delayIndex}" );
-			$response = wfShellExec( $cmd, $exitStatus );
-			if ( $exitStatus == 0 ) {
-				$msg = "Video thumbnail uploaded successfully";
-				$status = Status::newGood( $msg );
-			} else {
-				$msg = "Error uploading video thumbnail: $response";
-				$status = Status::newFatal( $msg );
-			}
-		} else {
-			$helper = new VideoHandlerHelper();
-			$status = $helper->resetVideoThumb( $file, null, $delayIndex );
-		}
+		$helper = new VideoHandlerHelper();
+		$status = $helper->resetVideoThumb( $file, null, $delayIndex );
 
 		if ( $status->isGood() ) {
 			// A good status doesn't necessarily mean we updated the actual thumbnail. A good status is returned for

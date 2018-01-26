@@ -69,28 +69,7 @@ class Scribunto_LuaStandaloneInterpreter extends Scribunto_LuaInterpreter {
 			$options['errorFile'] = wfGetNull();
 		}
 		if ( $options['luaPath'] === null ) {
-			$path = false;
-
-			if ( PHP_OS == 'Linux' ) {
-				if ( PHP_INT_SIZE == 4 ) {
-					$path = 'lua5_1_5_linux_32_generic/lua';
-				} elseif ( PHP_INT_SIZE == 8 ) {
-					$path = 'lua5_1_5_linux_64_generic/lua';
-				}
-			} elseif ( PHP_OS == 'Windows' || PHP_OS == 'WINNT' || PHP_OS == 'Win32' ) {
-				if ( PHP_INT_SIZE == 4 ) {
-					$path = 'lua5_1_4_Win32_bin/lua5.1.exe';
-				} elseif ( PHP_INT_SIZE == 8 ) {
-					$path = 'lua5_1_4_Win64_bin/lua5.1.exe';
-				}
-			} elseif ( PHP_OS == 'Darwin' ) {
-				$path = 'lua5_1_5_mac_lion_fat_generic/lua';
-			}
-			if ( $path === false ) {
-				throw new Scribunto_LuaInterpreterNotFoundError( 
-					'No Lua interpreter was given in the configuration, ' .
-					'and no bundled binary exists for this platform.' );
-			}
+			$path = 'lua5_1_5_linux_64_generic/lua';
 			$options['luaPath'] = dirname( __FILE__ ) . "/binaries/$path";
 		}
 
@@ -113,15 +92,6 @@ class Scribunto_LuaStandaloneInterpreter extends Scribunto_LuaInterpreter {
 				$cmd );
 		}
 
-		if ( php_uname( 's' ) == 'Windows NT' ) {
-			// Like the passthru() in older versions of PHP,
-			// PHP's invokation of cmd.exe in proc_open() is broken:
-			// http://news.php.net/php.internals/21796
-			// Unlike passthru(), it is not fixed in any PHP version,
-			// so we use the fix similar to one in wfShellExec()
-			$cmd = '"' . $cmd . '"';
-		}
-		
 		wfDebug( __METHOD__.": creating interpreter: $cmd\n" );
 
 		$this->proc = proc_open(

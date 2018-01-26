@@ -61,6 +61,14 @@ define('ext.wikia.adEngine.adContext', [
 			geo.isProperGeo(instantGlobals.wgAdDriverSourcePointDetectionMobileCountries);
 	}
 
+	function isBabDetectionDesktopEnabled() {
+		return geo.isProperGeo(instantGlobals.wgAdDriverBabDetectionDesktopCountries);
+	}
+
+	function isBabDetectionMobileEnabled() {
+		return geo.isProperGeo(instantGlobals.wgAdDriverBabDetectionMobileCountries);
+	}
+
 	function updateDetectionServicesAdContext(context, noExternals) {
 		// SourcePoint detection integration
 		context.opts.sourcePointDetection = !noExternals && isSourcePointDetectionDesktopEnabled(context);
@@ -68,6 +76,10 @@ define('ext.wikia.adEngine.adContext', [
 
 		// PageFair detection
 		context.opts.pageFairDetection = !noExternals && isPageFairDetectionEnabled();
+
+		// BlockAdBlock detection
+		context.opts.babDetectionDesktop = !noExternals && isBabDetectionDesktopEnabled();
+		context.opts.babDetectionMobile = !noExternals && isBabDetectionMobileEnabled();
 	}
 
 	function updateAdContextRecoveryServices(context, noExternals) {
@@ -105,6 +117,9 @@ define('ext.wikia.adEngine.adContext', [
 		context.bidders.rubiconDisplay = geo.isProperGeo(instantGlobals.wgAdDriverRubiconDisplayPrebidCountries);
 
 		context.bidders.rubicon = geo.isProperGeo(instantGlobals.wgAdDriverRubiconPrebidCountries) &&
+			!hasFeaturedVideo;
+
+		context.bidders.beachfront = geo.isProperGeo(instantGlobals.wgAdDriverBeachfrontBidderCountries) &&
 			!hasFeaturedVideo;
 
 		context.bidders.appnexusAst = geo.isProperGeo(instantGlobals.wgAdDriverAppNexusAstBidderCountries) &&

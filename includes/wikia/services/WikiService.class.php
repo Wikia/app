@@ -655,7 +655,7 @@ class WikiService extends WikiaModel {
 
 		if ( !is_array( $results ) ) {
 			$results = array();
-			$wikis = DataMartService::getTopWikisByPageviews( DataMartService::PERIOD_ID_WEEKLY, self::MAX_WIKI_RESULTS, $langs, $hub, 1 /* only pubic */ );
+			$wikis = DataMartService::getTopWikisByPageviews( self::MAX_WIKI_RESULTS, $langs, $hub, 1 /* only pubic */ );
 
 			foreach ( $wikis as $wikiId => $wiki ) {
 				//fetching data from WikiFactory
