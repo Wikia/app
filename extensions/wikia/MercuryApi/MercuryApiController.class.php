@@ -389,7 +389,7 @@ class MercuryApiController extends WikiaController {
 
 						if ( !$title->isContentPage() ) {
 							// Remove the namespace prefix from display title
-							$displayTitle = Title::newFromText( $displayTitle )->getText();
+							// $displayTitle = Title::newFromText( $displayTitle )->getText();
 							$data['article']['displayTitle'] = $displayTitle;
 						}
 					}
