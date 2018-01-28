@@ -861,8 +861,8 @@ abstract class Maintenance {
 	 * @return array consisting of mysql user and pass
 	 */
 	protected function getDatabaseCredentials() {
-		global $wgDBmaintuser, $wgDBmaintpass;
-		return [ $wgDBmaintuser, $wgDBmaintpass ];
+		global $wgMysqlMaintenanceUser, $wgMysqlMaintenancePass;
+		return [ $wgMysqlMaintenanceUser, $wgMysqlMaintenancePass ];
 	}
 
 	/**

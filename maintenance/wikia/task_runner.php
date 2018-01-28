@@ -26,8 +26,8 @@ class TaskRunnerMaintenance extends Maintenance {
 	 * @return array consisting of mysql user and pass
 	 */
 	protected function getDatabaseCredentials() {
-		global $wgDBtasksuser, $wgDBtaskspass;
-		return [ $wgDBtasksuser, $wgDBtaskspass ];
+		global $wgMysqlTasksUser, $wgMysqlTasksPass;
+		return [ $wgMysqlTasksUser, $wgMysqlTasksPass ];
 	}
 
 	public function loadParamsAndArgs( $self = null, $opts = null, $args = null ) {
