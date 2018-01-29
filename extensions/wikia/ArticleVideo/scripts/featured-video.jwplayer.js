@@ -25,20 +25,11 @@ require([
 
 		var comments = annotations.comments;
 
-		playerInstance.on('time', function (data) {
-			var roundedPosition = Math.floor(data.position);
-
-			if (roundedPosition > lastUpdatedFor + 30 && roundedPosition > lastUpdatedFor) {
-				updateCommentedBy(comments, data.position);
-				lastUpdatedFor = roundedPosition;
-			}
-		});
-
-		updateCommentedBy(comments, 0);
+		updateCommentedBy(comments);
 	}
 
-	function updateCommentedBy(comments, startTime) {
-		var commentedBy = getCommentedByFor30seconds(comments, startTime);
+	function updateCommentedBy(comments) {
+		var commentedBy = getCommentedBy(comments);
 
 		if (commentedBy.length) {
 			$('.featured-video__commented-by')
@@ -52,10 +43,8 @@ require([
 		}
 	}
 
-	function getCommentedByFor30seconds(comments, startTime) {
-		return comments.filter(function (comment) {
-			return comment.displayAt > startTime && comment.displayAt < startTime + 30;
-		}).map(function (comment) {
+	function getCommentedBy(comments) {
+		return comments.map(function (comment) {
 			return '<li class="commented-by-avatar"><img src="'+ comment.createdBy.avatarUrl + '"></li>';
 		});
 	}
