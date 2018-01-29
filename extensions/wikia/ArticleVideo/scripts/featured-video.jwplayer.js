@@ -63,7 +63,7 @@ require([
 			}
 		});
 
-		featuredVideoAnnotations.getAnnotations(1).then(function(annotations) {
+		featuredVideoAnnotations.getAnnotations(10).then(function(annotations) {
 			setupCommentedBy(playerInstance, annotations);
 		});
 	}

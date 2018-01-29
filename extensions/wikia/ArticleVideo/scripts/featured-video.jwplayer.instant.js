@@ -135,7 +135,7 @@ require([
 			.then(function (params) {
 			});
 	} else {
-		featuredVideoAnnotations.getAnnotations(1)
+		featuredVideoAnnotations.getAnnotations(10)
 			.then(function (fetchedAnnotations) {
 				annotations = fetchedAnnotations;
 				setupPlayer();
