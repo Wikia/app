@@ -136,7 +136,7 @@
 			}
 
 			// buttons separator
-			.cke_separator {
+			.cke_toolbar_separator {
 				background-color: $color-MiniEditor-button-border;
 				display: inline-block;
 				float: left;
@@ -146,8 +146,7 @@
 			}
 		}
 
-		.cke_button {
-			> a {
+		a.cke_button {
 				background-color: $color-MiniEditor-button;
 				border: solid 1px $color-MiniEditor-button-border;
 				border-radius: 4px;
@@ -163,49 +162,101 @@
 					@include linear-gradient($color-MiniEditor-button-hover, top, $color-MiniEditor-button, 0%, $color-MiniEditor-button-hover, 100%);
 					text-decoration: none;
 				}
-			}
+				.cke_button__modesource_label {
+					display: none;
+				}
+				.cke_button__modewysiwyg_label {
+					display: none;
+				}
+				.cke_button_label{
+					display: none;
+				}
 
-			.cke_icon {
-				@include sprite-MiniEditor-base;
+	
+				.cke_button_icon {
+					@include sprite-MiniEditor-base;
+					display: inline-block;
+					height: 16px;
+					margin: 2px;
+					width: 16px;
+
+
+					// mode switch
+					&.cke_button__modesource_icon {	
+							@include sprite-MiniEditor('source-' + $sprite-theme, 16px, 16px);
+					}
+				
+					&.cke_button__modewysiwyg_icon {
+							@include sprite-MiniEditor('visual-' + $sprite-theme, 16px, 16px);
+					}
+			
+			
+					// format
+					&.cke_button__bold_icon {
+						@include sprite-MiniEditor('bold-' + $sprite-theme, 16px, 16px);	
+					}
+
+					&.cke_button__italic_icon {
+						@include sprite-MiniEditor('italic-' + $sprite-theme, 16px, 16px);
+					}
+
+					&.cke_button__link_icon {
+						@include sprite-MiniEditor('link-' + $sprite-theme, 16px, 16px);
+					}	
+
+				}
+
+				.cke_icon {
+					@include sprite-MiniEditor-base;
+					display: inline-block;
+					height: 16px;
+					margin: 2px;
+					width: 16px;
+
+				}
+				
+			}
+			.cke_button {
+
+
+				// format source mode
+				&.cke_button_bold .cke_icon {
+					@include sprite-MiniEditor('bold-' + $sprite-theme, 16px, 16px);	
+				}
+
+				&.cke_button_italic .cke_icon {
+					@include sprite-MiniEditor('italic-' + $sprite-theme, 16px, 16px);
+				}
+
+				&.cke_button_link .cke_icon {
+					@include sprite-MiniEditor('link-' + $sprite-theme, 16px, 16px);
+				}
+
+				> a {
+
+				background-color: $color-MiniEditor-button;
+				border: solid 1px $color-MiniEditor-button-border;
+				border-radius: 4px;
+				cursor: pointer;
 				display: inline-block;
-				height: 16px;
-				margin: 2px;
-				width: 16px;
-			}
+				float: left;
+				height: 20px;
+				margin-right: 5px;
+				outline: none; // webkit
+				width: 20px;
 
-			// mode switch
-			.cke_button_ModeSource {
+
+				}		
+			
 				.cke_icon {
-					@include sprite-MiniEditor('source-' + $sprite-theme, 16px, 16px);
+					@include sprite-MiniEditor-base;
+					display: inline-block;
+					height: 16px;
+					margin: 2px;
+					width: 16px;
+
 				}
 
-				.cke_label {
-					display: none;
-				}
-			}
-
-			.cke_button_ModeWysiwyg {
-				.cke_icon {
-					@include sprite-MiniEditor('visual-' + $sprite-theme, 16px, 16px);
-				}
-
-				.cke_label {
-					display: none;
-				}
-			}
-
-			// format
-			.cke_button_bold .cke_icon {
-				@include sprite-MiniEditor('bold-' + $sprite-theme, 16px, 16px);
-			}
-
-			.cke_button_italic .cke_icon {
-				@include sprite-MiniEditor('italic-' + $sprite-theme, 16px, 16px);
-			}
-
-			.cke_button_link .cke_icon {
-				@include sprite-MiniEditor('link-' + $sprite-theme, 16px, 16px);
-			}
 
 			// insert
 			.RTEImageButton .cke_icon { // used for RTE disabled and enabled in Mini Editor
@@ -216,17 +267,17 @@
 				@include sprite-MiniEditor('addvideo');
 			}
 
-			&.cke_on {
-				> a {
-					@include box-shadow(-1px, 1px, 2px, $color-MiniEditor-button-shadow, true);
-					background-color: $color-MiniEditor-button-active;
-				}
+			&.cke_button_on {
+				
+				@include box-shadow(-1px, 1px, 2px, $color-MiniEditor-button-shadow, true);
+				background-color: $color-MiniEditor-button-active;
+				
 			}
 
-			&.cke_disabled {
-				> a {
+			&.cke_button_disabled {
+				
 					opacity: .2;
-				}
+				
 			}
 
 			&.cke_hidden {

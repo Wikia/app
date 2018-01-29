@@ -52,6 +52,10 @@ CKEDITOR.plugins.add('rte-dragdrop',
 			return true;
 		}
 
+		if (ev.target.closest('div.placeholder')) {
+			return false;
+		}
+
 		// create undo point (RT #36064)
 		this.fire('saveSnapshot');
 		RTE.log('drag&drop: undo point');
