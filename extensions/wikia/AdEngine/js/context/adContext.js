@@ -51,9 +51,21 @@ define('ext.wikia.adEngine.adContext', [
 		return isUrlParamSet('pagefairdetection') || (isSupportedGeo && sampler.sample('pageFairDetection', 1, 10));
 	}
 
+	function isBabDetectionDesktopEnabled() {
+		return geo.isProperGeo(instantGlobals.wgAdDriverBabDetectionDesktopCountries);
+	}
+
+	function isBabDetectionMobileEnabled() {
+		return geo.isProperGeo(instantGlobals.wgAdDriverBabDetectionMobileCountries);
+	}
+
 	function updateDetectionServicesAdContext(context, noExternals) {
 		// PageFair detection
 		context.opts.pageFairDetection = !noExternals && isPageFairDetectionEnabled();
+
+		// BlockAdBlock detection
+		context.opts.babDetectionDesktop = !noExternals && isBabDetectionDesktopEnabled();
+		context.opts.babDetectionMobile = !noExternals && isBabDetectionMobileEnabled();
 	}
 
 	function updateAdContextRecoveryServices(context, noExternals) {

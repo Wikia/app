@@ -48,9 +48,15 @@
 	var cookieExists,
 		isProductionEnv,
 		blockingTracked = {
+			babDetector: false,
 			pageFair: false
 		},
 		GASettings = {
+			babDetector: {
+				trackName: 'babDetector',
+				dimension: 6,
+				name: 'babdetector'
+			},
 			pageFair: {
 				trackName: 'pageFair',
 				dimension: 7,
@@ -58,6 +64,16 @@
 			}
 		},
 		listenerSettings = [
+			{
+				eventName: 'bab.blocking',
+				value: true,
+				detectorSettings: GASettings.babDetector
+			},
+			{
+				eventName: 'bab.not_blocking',
+				value: false,
+				detectorSettings: GASettings.babDetector
+			},
 			{
 				eventName: 'pf.blocking',
 				value: true,

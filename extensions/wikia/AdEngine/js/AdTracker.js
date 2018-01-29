@@ -18,6 +18,10 @@ define('ext.wikia.adEngine.adTracker', [
 			extraParams.pf = win.ads.runtime.pf.blocking ? 'yes' : 'no';
 		}
 
+		if (win.ads && win.ads.runtime.bab && typeof win.ads.runtime.bab.blocking === 'boolean') {
+			extraParams.bab = win.ads.runtime.bab.blocking ? 'yes' : 'no';
+		}
+
 		for (key in extraParams) {
 			if (extraParams.hasOwnProperty(key)) {
 				keys.push(key);

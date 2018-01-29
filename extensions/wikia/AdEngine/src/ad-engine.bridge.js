@@ -121,9 +121,17 @@ function updatePageLevelTargeting(legacyContext, params, skin) {
 	Object.keys(params).forEach((key) => context.set(`targeting.${key}`, params[key]));
 }
 
+function checkAdBlocking(detection) {
+	utils.client.checkBlocking(
+		() => { detection.initDetection(true); },
+		() => { detection.initDetection(false); }
+	);
+}
+
 export {
 	init,
 	loadCustomAd,
+	checkAdBlocking,
 	context,
 	universalAdPackage
 };

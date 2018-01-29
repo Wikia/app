@@ -19,6 +19,8 @@ $wgAutoloadClasses['RTEMarker'] = __DIR__ . '/RTEMarker.class.php';
 $wgAutoloadClasses['RTEParser'] = __DIR__ . '/RTEParser.class.php';
 $wgAutoloadClasses['RTEReverseParser'] = __DIR__ . '/RTEReverseParser.class.php';
 $wgAutoloadClasses['RTEController'] = __DIR__ . '/RTEController.class.php';
+$wgAutoloadClasses['RTEParserCache'] = __DIR__ . '/RTEParserCache.php';
+$wgAutoloadClasses['RTEParsePoolWork'] = __DIR__ . '/RTEParsePoolWork.php';
 
 // hooks
 $wgHooks['EditPage::showEditForm:initial'][] = 'RTE::init';

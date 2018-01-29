@@ -388,7 +388,6 @@ $wgAutoloadClasses['LatestEarnedBadgesController'] = $IP.'/extensions/wikia/Achi
 $wgAutoloadClasses['HotSpotsController'] = $IP.'/skins/oasis/modules/HotSpotsController.class.php';
 $wgAutoloadClasses['CommunityCornerController'] = $IP.'/skins/oasis/modules/CommunityCornerController.class.php';
 $wgAutoloadClasses['PopularBlogPostsController'] = $IP.'/skins/oasis/modules/PopularBlogPostsController.class.php';
-$wgAutoloadClasses['RandomWikiController'] = $IP.'/skins/oasis/modules/RandomWikiController.class.php';
 $wgAutoloadClasses['ArticleInterlangController'] = $IP.'/skins/oasis/modules/ArticleInterlangController.class.php';
 $wgAutoloadClasses['UploadPhotosController'] = $IP.'/skins/oasis/modules/UploadPhotosController.class.php';
 $wgAutoloadClasses['WikiaTempFilesUpload'] = $IP.'/includes/wikia/WikiaTempFilesUpload.class.php';
@@ -1544,6 +1543,24 @@ $wgAdDriverPageFairRecoveryCountries = null;
 $wgAdDriverEnablePageFairRecovery = true;
 
 /**
+ * @name $wgAdDriverBabDetectionDesktopCountries
+ * List of countries to call BlockAdBlock detection scripts on oasis
+ */
+$wgAdDriverBabDetectionDesktopCountries = null;
+
+/**
+ * @name $wgAdDriverBabDetectionMobileCountries
+ * List of countries to call BlockAdBlock detection scripts on mobile-wiki
+ */
+$wgAdDriverBabDetectionMobileCountries = null;
+
+/**
+ * @name $wgAdDriverF2BabDetectionCountries
+ * List of countries to call BlockAdBlock detection scripts on news&stories
+ */
+$wgAdDriverF2BabDetectionCountries = null;
+
+/**
  * trusted proxy service registry
  */
 $wgAutoloadClasses[ 'TrustedProxyService'] =  "$IP/includes/wikia/services/TrustedProxyService.class.php" ;
@@ -1892,6 +1909,9 @@ require_once "$IP/extensions/wikia/CityList/CityList.setup.php";
 
 // SUS-3496: Extension to update shared dataware.pages table
 require_once "$IP/extensions/wikia/Pages/Pages.setup.php";
+
+// SUS-3455: Special:ListGlobalUsers for all wikis
+require_once "$IP/extensions/wikia/ListGlobalUsers/ListGlobalUsers.setup.php";
 
 // SRE-76: Logging classes that have been initially defined in config.
 $wgAutoloadClasses['AuditLog'] = "$IP/includes/wikia/AuditLog.class.php";
