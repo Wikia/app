@@ -137,7 +137,7 @@ abstract class WikiaDispatchableObject extends WikiaObject {
 	/**
 	 * Convenience method for setting a value on the response object
 	 * @param string $key
-	 * @param string $value
+	 * @param mixed $value
 	 */
 	protected function setVal($key, $value) {
 		$this->response->setVal($key, $value);

@@ -21,8 +21,7 @@ Within premium videos there's a distinction between whether a video is a remote 
 remote asset is one which is hosted by the provider themselves. For example, all of our CrunchyRoll videos are hosted
 on CrunchyRoll servers and are played using CrunchyRoll's player. IGN is the same. All IGN's videos are hosted on IGN
 servers and use the IGN player. A remote asset on the other hand, is a premium video which is actually hosted on Ooyala
-and is played through Ooyala's player. Currently we have 2 providers whose videos we treat as remote assets: IVA and
-Screenplay. During the ingestion process for these 2 providers, rather than uploading their assets onto our site, we instead
+and is played through Ooyala's player. Currently we have 1 provider whose videos we treat as remote assets: Screenplay. During the ingestion process for these providers, rather than uploading their assets onto our site, we instead
 use Ooyala's API and load them onto Ooyala. Then, when we ingest videos from Ooyala, we ingest the video to Wikia normally
 from there.
 
