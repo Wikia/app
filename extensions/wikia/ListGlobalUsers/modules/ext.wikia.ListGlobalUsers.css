@@ -1,0 +1,19 @@
+.list-global-users-input {
+    align-content: space-between;
+    clear: both;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    max-height: 150px;
+}
+
+.list-global-users-submit.wds-is-squished {
+    cursor: pointer;
+    display: block;
+    margin: 12px auto 0;
+}
+
+#list-global-users-selector-toggle {
+    float: right;
+    font-size: 90%;
+}

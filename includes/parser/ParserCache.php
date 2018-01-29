@@ -212,22 +212,19 @@ class ParserCache {
 	 * @param $parserOutput ParserOutput
 	 * @param $article Page
 	 * @param $popts ParserOptions
+	 * @param $cacheTime string Time when the cache was generated
 	 */
-	public function save( ParserOutput $parserOutput, Page $article, ParserOptions $popts ) {
-
-		Hooks::run( 'BeforeParserCacheSave', [ $parserOutput, $article ] );
-
+	public function save( ParserOutput $parserOutput, Page $article, ParserOptions $popts, $cacheTime = null ) {
 		$expire = $parserOutput->getCacheExpiry();
-
-		if( $expire > 0 ) {
-			$now = wfTimestampNow();
+		if ( $expire > 0 ) {
+			$cacheTime = $cacheTime ?: wfTimestampNow();
 
 			$optionsKey = new CacheTime;
 			$optionsKey->mUsedOptions = $parserOutput->getUsedOptions();
 			$optionsKey->updateCacheExpiry( $expire );
 
-			$optionsKey->setCacheTime( $now );
-			$parserOutput->setCacheTime( $now );
+			$optionsKey->setCacheTime( $cacheTime );
+			$parserOutput->setCacheTime( $cacheTime );
 
 			$optionsKey->setContainsOldMagic( $parserOutput->containsOldMagic() );
 

@@ -1,0 +1,58 @@
+user:
+  - user_id: 1
+    user_name: 'KossuthLajos'
+    user_real_name: ''
+    user_email: 'kossuth.lajos@lajoskossuth.hu'
+    user_touched: '20110101000000'
+    user_token: 'loremipsum'
+    user_email_authenticated: '20101102000000'
+    user_email_token: 'dolorsitamet'
+    user_email_token_expires: '20120301120000'
+    user_registration: '20090604060000'
+    user_editcount: 2500
+    user_birthdate:
+  - user_id: 2
+    user_name: 'TestUser'
+    user_real_name: ''
+    user_email: 'kossuth.lajos@lajoskossuth.hu'
+    user_touched: '20110101000000'
+    user_token: 'loremipsum'
+    user_email_authenticated: '20101102000000'
+    user_email_token: 'dolorsitamet'
+    user_email_token_expires: '20120301120000'
+    user_registration: '20090604060000'
+    user_editcount: 2500
+    user_birthdate:
+  - user_id: 3
+    user_name: 'FerencJozsef'
+    user_real_name: ''
+    user_email: 'kossuth.lajos@lajoskossuth.hu'
+    user_touched: '20110101000000'
+    user_token: 'loremipsum'
+    user_email_authenticated: '20101102000000'
+    user_email_token: 'dolorsitamet'
+    user_email_token_expires: '20120301120000'
+    user_registration: '20090604060000'
+    user_editcount: 2500
+    user_birthdate:
+  - user_id: 4
+    user_name: 'RandomOtherUser'
+    user_real_name: ''
+    user_email: 'kossuth.lajos@lajoskossuth.hu'
+    user_touched: '20110101000000'
+    user_token: 'loremipsum'
+    user_email_authenticated: '20101102000000'
+    user_email_token: 'dolorsitamet'
+    user_email_token_expires: '20120301120000'
+    user_registration: '20090604060000'
+    user_editcount: 2500
+    user_birthdate:
+user_groups:
+  - ug_user: 1
+    ug_group: staff
+  - ug_user: 1
+    ug_group: vstf
+  - ug_user: 2
+    ug_group: rollback
+  - ug_user: 3
+    ug_group: vstf

@@ -61,6 +61,7 @@ $config['adengine2_desktop_js'] = [
 		'//extensions/wikia/AdEngine/js/SlotTweaker.js',
 		'//extensions/wikia/AdEngine/js/SourcePointDetection.js',
 		'//extensions/wikia/AdEngine/js/pageFairDetection.js',
+		'//extensions/wikia/AdEngine/js/babDetection.js',
 		'//extensions/wikia/AdEngine/js/WikiaDartHelper.js',
 		'//extensions/wikia/AdEngine/js/config/desktop.js',
 		'//extensions/wikia/AdEngine/js/provider/btfBlocker.js',
@@ -912,6 +913,7 @@ $config['mercury_ads_js'] = [
 		'//extensions/wikia/AdEngine/js/CustomAdsLoader.js',
 		'//extensions/wikia/AdEngine/js/SourcePointDetection.js',
 		'//extensions/wikia/AdEngine/js/pageFairDetection.js',
+		'//extensions/wikia/AdEngine/js/babDetection.js',
 		'//extensions/wikia/AdEngine/js/mobile/mercuryListener.js',
 		'//extensions/wikia/AdEngine/js/slot/service/actionHandler.js',
 		'//extensions/wikia/AdEngine/js/slot/resolvedState.js',
@@ -2776,6 +2778,16 @@ $config['jwplayer_tag_js'] = [
 	'assets' => [
 		'#group_jwplayer_tag_ads_js',
 		'//skins/oasis/js/jwplayer/node_modules/jwplayer-fandom/dist/wikiajwplayer.js',
+		'//extensions/wikia/ArticleVideo/scripts/featured-video.cookies.js',
+		'//extensions/wikia/JWPlayerTag/scripts/jwplayertag.js',
+	],
+];
+
+$config['jwplayer_tag_with_featured_video_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'#group_jwplayer_tag_ads_js',
 		'//extensions/wikia/JWPlayerTag/scripts/jwplayertag.js',
 	],
 ];
@@ -2788,3 +2800,10 @@ $config['jwplayer_tag_css'] = [
 	],
 ];
 
+$config['jwplayer_tag_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'//extensions/wikia/JWPlayerTag/styles/jwplayertag.scss'
+	]
+];

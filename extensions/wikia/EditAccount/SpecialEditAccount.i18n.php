@@ -2329,7 +2329,7 @@ $messages['ru'] = array(
 	'editaccount-log-entry-pass' => 'изменил пароль участника $2',
 	'editaccount-log-entry-realname' => 'изменил настоящее имя участника $2',
 	'editaccount-log-entry-close' => 'отключил учётную запись $2',
-	'edit-account-closed-flag' => '<div class="errorbox" style="padding: 1em;">Эта учётная запись отключена по [[Справка:Отключение_учётной_записи|выбору участника]] или по решению сайта Фэндом.</div>',
+	'edit-account-closed-flag' => '<div class="errorbox" style="padding: 1em;">Эта учётная запись отключена по [[Справка:Отключение_учётной_записи|выбору участника]] или по решению сотрудников ФЭНДОМА.</div>',
 	'right-editaccount' => 'Редактировать настройки других участников',
 	'action-editaccount' => 'редактировать информацию других пользователей',
 	'editaccount-frame-fan-contributor' => 'Adding user to fan contributor program: $1',
