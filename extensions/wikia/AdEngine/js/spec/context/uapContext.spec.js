@@ -7,7 +7,7 @@ describe('ext.wikia.adEngine.context.uapContext', function () {
 
 	var mocks = {
 		adEngineBridge: {
-			Context: {
+			context: {
 				onChange: noop
 			}
 		},

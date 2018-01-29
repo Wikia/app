@@ -2079,19 +2079,6 @@ CREATE TABLE `lookup_language_codes` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Table structure for table `lookup_rovi_tv_shows`
---
-
-DROP TABLE IF EXISTS `lookup_rovi_tv_shows`;
-CREATE TABLE `lookup_rovi_tv_shows` (
-  `rovi_id` int(10) unsigned NOT NULL,
-  `title` varchar(255) DEFAULT NULL,
-  `lookup_title` varchar(255) DEFAULT NULL,
-  `tvrage_id` int(10) unsigned DEFAULT NULL,
-  PRIMARY KEY (`rovi_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
 -- Table structure for table `lookup_search_domains`
 --
 
@@ -2112,59 +2099,6 @@ DROP TABLE IF EXISTS `lookup_system_users`;
 CREATE TABLE `lookup_system_users` (
   `user_id` int(10) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Table structure for table `lookup_top_tv_shows`
---
-
-DROP TABLE IF EXISTS `lookup_top_tv_shows`;
-CREATE TABLE `lookup_top_tv_shows` (
-  `tvrage_id` int(10) unsigned NOT NULL,
-  `title` varchar(255) NOT NULL DEFAULT '',
-  PRIMARY KEY (`tvrage_id`,`title`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Table structure for table `lookup_tv_show_episodes`
---
-
-DROP TABLE IF EXISTS `lookup_tv_show_episodes`;
-CREATE TABLE `lookup_tv_show_episodes` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `tvrage_id` int(10) unsigned DEFAULT NULL,
-  `season` int(10) unsigned DEFAULT NULL,
-  `episode` int(10) unsigned DEFAULT NULL,
-  `production_code` varchar(255) DEFAULT NULL,
-  `airdate` date DEFAULT NULL,
-  `episode_title` varchar(255) DEFAULT NULL,
-  `is_special` char(1) DEFAULT NULL,
-  `tvrage_link` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `tvrage_id` (`tvrage_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Table structure for table `lookup_tv_shows`
---
-
-DROP TABLE IF EXISTS `lookup_tv_shows`;
-CREATE TABLE `lookup_tv_shows` (
-  `title` varchar(255) NOT NULL DEFAULT '',
-  `directory` varchar(255) DEFAULT NULL,
-  `tvrage_id` int(10) unsigned DEFAULT NULL,
-  `start_date` date DEFAULT NULL,
-  `end_date` date DEFAULT NULL,
-  `episodes` varchar(255) DEFAULT NULL,
-  `run_time` varchar(255) DEFAULT NULL,
-  `network` varchar(255) DEFAULT NULL,
-  `country` varchar(255) DEFAULT NULL,
-  `episode_count` smallint(5) unsigned DEFAULT NULL,
-  `lookup_title` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`title`),
-  KEY `tvrage_id` (`tvrage_id`),
-  KEY `network` (`network`),
-  KEY `lookup_title` (`lookup_title`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -10450,4 +10384,4 @@ CREATE TABLE `test_dimension_wiki_local_namespaces` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
--- Dump completed on 2017-12-01 12:32:54
+-- Dump completed on 2018-01-23 14:37:49
