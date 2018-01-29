@@ -264,8 +264,8 @@ $messages['fr'] = array(
 	'prefs-rte' => 'Éditeur de texte enrichi',
 	'rte-infobox' => 'Infobox',
 	'rte-add-template' => 'Ajouter un nouveau modèle',
-	'rte-select-infobox-title' => 'Sélectionnez l\'infobox à insérer',
-	'rte-infobox-builder' => 'Outil de création d\'infobox',
+	'rte-select-infobox-title' => "Sélectionnez l'infobox à insérer",
+	'rte-infobox-builder' => "Outil de création d'infobox",
 );
 
 $messages['gl'] = array(
@@ -352,7 +352,7 @@ $messages['it'] = array(
 	'rte-first-run-notice' => 'We have made some improvements to the rich text editor. For more information please visit the [[Help:Rich text editor|help page]].',
 	'rte-infobox' => 'Infobox',
 	'rte-add-template' => 'Aggiungi un nuovo template',
-	'rte-select-infobox-title' => 'Seleziona l\'infobox da inserire',
+	'rte-select-infobox-title' => "Seleziona l'infobox da inserire",
 	'rte-infobox-builder' => 'Infobox Builder',
 );
 
