@@ -44,17 +44,17 @@ class ArticleVideoController extends WikiaController {
 	}
 
 	public function purgeVideo() {
-		global $wgCityId, $wgTheSchwartzSecretToken;
+		global $wgCityId;
 
 		$request = RequestContext::getMain()->getRequest();
 		$articleId = $request->getVal( 'articleId', null );
-		$token = $request->getHeader( 'X-Wikia-Schwartz' );
+		$internalRequest = $request->getHeader( 'X-Wikia-Internal-Request' );
 
-		if ( empty( $articleId ) || empty( $token ) ) {
+		if ( empty( $articleId ) || !$request->wasPosted() ) {
 			throw new BadRequestException();
 		}
 
-		if ( !hash_equals( $wgTheSchwartzSecretToken, $token ) ) {
+		if ( empty( $internalRequest ) ) {
 			throw new ForbiddenException();
 		}
 
