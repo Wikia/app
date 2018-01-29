@@ -121,10 +121,6 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverVideoMoatTrackingSampling';
 		$vars[] = 'wgAdDriverVideoPostrollCountries';
 
-		// TODO: Remove after src=[gpt,ns] is finished
-		$vars[] = 'wgAdDriverNewsAndStoriesSingleSrcKeyValueCountries';
-		$vars[] = 'wgAdDriverNewsAndStoriesSrcKeyValueCountries';
-
 		// news&stories variables only
 		$vars[] = 'wgAdDriverF2BabDetectionCountries';
 		$vars[] = 'wgAdDriverF2InstartLogicRecoveryCountries';
