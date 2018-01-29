@@ -56,7 +56,7 @@ require([
 		return comments.filter(function (comment) {
 			return comment.displayAt > startTime && comment.displayAt < startTime + 30;
 		}).map(function (comment) {
-			return '<li class="commented-by-avatar"><img src="'+ comment.createdBy.avatar + '"></li>';
+			return '<li class="commented-by-avatar"><img src="'+ comment.createdBy.avatarUrl + '"></li>';
 		});
 	}
 

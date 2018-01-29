@@ -15,7 +15,7 @@ define('wikia.articleVideo.featuredVideo.jwplayer.videoFeedback', ['wikia.articl
 			if (videoFeedbackBox) {
 				videoFeedbackBox.show();
 			} else {
-				playerInstance.on('time', videoFeedbackInit);
+				// playerInstance.on('time', videoFeedbackInit);
 			}
 		});
 
