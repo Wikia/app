@@ -615,49 +615,6 @@ include_once( "$IP/extensions/wikia/SEOTweaks/SEOTweaks.setup.php" );
 include_once( "$IP/extensions/wikia/StaticUserPages/StaticUserPages.setup.php" );
 
 /**
- * @name $wgSkipSkins
- *
- * NOTE: a few wikis may have local override for this var,
- * you need to modify those by hand.
- * A SELECT on city_variables will get you a list.
- */
-$wgSkipSkins = array(
-		'armchairgm',
-		'cars',
-		'corporate',
-		'corporatebase',
-		'corporatehome',
-		'curse',
-		'entertainment',
-		'food',
-		'games',
-		'gwmonobook',
-		'halo',
-		'halogamespot',
-		'health',
-		'home',
-		'law',
-		'local',
-		'memalpha',
-		'music',
-		'politics',
-		'psn',
-		'restaurants',
-		'searchwikia',
-		'search',
-		'test',
-		'uncyclopedia',
-		'lostbook',
-		'quartz',
-		'monaco_old',
-		'smartphone',
-		'efmonaco',
-		'answers',
-		'campfire',
-		'wikiamobile',
-);
-
-/**
  * @name $wgBiggestCategoriesBlacklist
  * Lists phrases that disqualify a category from appearing in
  * the biggest category list (Monaco sidebar)
@@ -1720,17 +1677,6 @@ $wgEnableSpecialSearchCaching = true;
  * Unit: percent (100 = all, 1 = 1%, 0.1 = 0.1%)
  */
 $wgBuckySampling = 10;
-
-/**
- * @name wgBuckyEnabledSkins
- * List of skins where Bucky reporting should be enabled
- */
-$wgBuckyEnabledSkins = [
-	'monobook',
-	'oasis',
-	'uncyclopedia',
-	'wikiamobile',
-];
 
 /**
  * @name wgMemcacheStatsSampling

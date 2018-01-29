@@ -136,7 +136,6 @@ class SpecialPageFactory {
 		'Blockme'                   => 'SpecialBlockme',
 		'Diff'                      => 'SpecialDiff',
 		'Emailuser'                 => 'SpecialEmailUser',
-		'JavaScriptTest'            => 'SpecialJavaScriptTest',
 		'Movepage'                  => 'MovePageForm',
 		'Mycontributions'           => 'SpecialMycontributions',
 		'Mypage'                    => 'SpecialMypage',

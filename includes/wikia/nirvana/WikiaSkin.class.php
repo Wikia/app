@@ -13,8 +13,8 @@ abstract class WikiaSkin extends SkinTemplate {
 	const USER_LOGIN_STATUS_CLASS_LOGGED = ' user-logged';
 	const USER_LOGIN_STATUS_CLASS_ANON = ' user-anon';
 
-	protected $app = null;
-	protected $wg = null;
+	protected $app;
+	protected $wg;
 
 	//strict mode for checking if an asset's URL is registered for the current skin
 	//@see AssetsManager::checkAssetUrlForSkin
@@ -22,43 +22,13 @@ abstract class WikiaSkin extends SkinTemplate {
 
 	private $assetsManager;
 
-	/**
-	 * WikiaSkin constructor
-	 *
-	 * @param String $templateClassName Mame of the QuickTemplate subclass to associate to this skin
-	 * @param String $skinName Name of the skin (lowercase)
-	 * @param String $styleName The style name, will use $skinName if not specified
-	 * @param null $themeName The theme name, will use $skinName if not specified
-	 */
-	function __construct( $templateClassName = null, $skinName = null, $themeName = null, $styleName = null ) {
+	public function __construct( string $skinName ) {
+		parent::__construct( $skinName );
+
 		$this->app = F::app();
 		$this->wg = $this->app->wg;
 
 		$this->assetsManager = AssetsManager::getInstance();
-
-		/**
-		 * old skins initialize template, skinname, stylename and themename statically in the class declaration,
-		 * we need to support them too so, that's what the following checks are meant for
-		 */
-		if ( $templateClassName !== null ) {
-			$this->template  = $templateClassName;
-		}
-
-		if ( $skinName !== null ) {
-			$this->skinname = $skinName;
-		}
-
-		if ( $styleName !== null ) {
-			$this->stylename = $styleName;
-		} elseif ( !isset( $this->stylename ) ) {
-			$this->stylename = $this->skinname;
-		}
-
-		if ( $themeName !== null ) {
-			$this->themename = $themeName;
-		} elseif ( !isset( $this->themename ) ) {
-				$this->themename = $this->skinname;
-		}
 	}
 
 	/**

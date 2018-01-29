@@ -17,12 +17,8 @@ abstract class WikiaSkinMonoBook extends WikiaSkin {
 
 	protected $ads;
 
-	function __construct() {
-		//required to let Common.css and MonoBook.css be output
-		//@see Skin::setupUserCss
-		$this->themename = '';
-
-		parent::__construct();
+	public function __construct( string $skinName ) {
+		parent::__construct( $skinName );
 
 		//allow non-strick asset check agains skin, @see WikiaSkin::getScripts and WikiaSkin::getStyles
 		$this->strictAssetUrlCheck = false;

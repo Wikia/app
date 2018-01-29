@@ -24,29 +24,26 @@ if( !defined( 'MEDIAWIKI' ) )
 class SkinMonoBook extends WikiaSkinMonoBook {
 /* Wikia change end */
 
-	/** Using monobook. */
-	var $skinname = 'monobook', $stylename = 'monobook',
-		$template = 'MonoBookTemplate', $useHeadElement = true;
-
 	/**
 	 * @param $out OutputPage
 	 */
 	function setupSkinUserCss( OutputPage $out ) {
-		global $wgHandheldStyle;
 		parent::setupSkinUserCss( $out );
 
 		$out->addModuleStyles( 'skins.monobook' );
-
-		// Ugh. Can't do this properly because $wgHandheldStyle may be a URL
-		if( $wgHandheldStyle ) {
-			// Currently in testing... 
-			$out->addStyle( $wgHandheldStyle, 'handheld' );
-		}
 
 		// TODO: Migrate all of these
 		$out->addStyle( 'monobook/IE60Fixes.css', 'screen', 'IE 6' );
 		$out->addStyle( 'monobook/IE70Fixes.css', 'screen', 'IE 7' );
 
+	}
+
+	protected function getTemplate(): QuickTemplate {
+		return new MonoBookTemplate();
+	}
+
+	protected function usesHeadElement(): bool {
+		return true;
 	}
 }
 
@@ -56,20 +53,6 @@ class SkinMonoBook extends WikiaSkinMonoBook {
  */
 // Wikia change - begin - @author: wladek
 class MonoBookTemplate extends WikiaSkinTemplate {
-	/*
-	 * added here because of BugzId:45526
-	 * but frankly, I have no idea why or when this stopped working
-	 * @TODO additional investigation, possibly remove the part below
-	 *
-	 * @author tor
-	 */
-	function __construct() {
-		parent::__construct();
-		$this->translator = new MediaWiki_I18n();
-	}
-// Wikia change - end
-
-
 	/**
 	 * Template filter callback for MonoBook skin.
 	 * Takes an associative array of data set from a SkinTemplate-based
@@ -79,9 +62,6 @@ class MonoBookTemplate extends WikiaSkinTemplate {
 	 * @access private
 	 */
 	function execute() {
-		// Suppress warnings to prevent notices about missing indexes in $this->data
-		wfSuppressWarnings();
-
 		$this->html( 'headelement' );
 		/* Wikia change begin - @author: Tomek */
 		$afterBodyHtml = '';
@@ -90,14 +70,7 @@ class MonoBookTemplate extends WikiaSkinTemplate {
 		/* Wikia change end */
 ?><div id="globalWrapper">
 <div id="column-content">
-<?php
-/* Wikia change begin - @author: Hyun */
-if (isset($this->data['skin']) && method_exists($this->data['skin'], 'printTopHtml')) {
-	$this->data['skin']->printTopHtml();
-}
-/* Wikia change end */
-?>
-<div id="content" <?php $this->html("specialpageattributes") ?>>
+	<div id="content" <?php $this->html("specialpageattributes") ?>>
 	<a id="top"></a>
 	<?php if($this->data['sitenotice']) { ?><div id="siteNotice"><?php $this->html('sitenotice') ?></div><?php } ?>
 <?php
@@ -228,7 +201,6 @@ echo $footerEnd;
 		$this->printTrail();
 		echo Html::closeElement( 'body' );
 		echo Html::closeElement( 'html' );
-		wfRestoreWarnings();
 	} // end of execute() method
 
 	/*************************************************************************************************/
