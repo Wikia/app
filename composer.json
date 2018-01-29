@@ -24,7 +24,6 @@
     "wikia/phpflickr": "^3.1",
     "param-processor/param-processor": "~1.2",
     "data-values/geo": "~1.0",
-    "ooyala/v2-api": "^2.0",
     "pear/Mail_Mime": "^1.10",
     "pear/archive_tar": "^1.4",
     "wikia/mail2": "^0.1.1",

@@ -39,7 +39,7 @@ function mapMetadata( $videoTitle, $ingester, $data ) {
 
 			$keywords[] = $keyword;
 
-			// remove page categories from keywords (for ooyala, iva)
+			// remove page categories from keywords (for iva)
 			if ( !empty( $data['series'] ) ) {
 				$categories[] = $data['series'];
 			}
@@ -110,9 +110,7 @@ function mapMetadata( $videoTitle, $ingester, $data ) {
 	$data['ageGate'] = empty( $data['ageRequired'] ) ? 0 : 1;
 
 	$errorMsg = '';
-	if ( $force ) {
-		$metadata = generateMetadataScreenplay( $ingester, $data, $errorMsg );
-	} else {
+	if ( empty( $force ) ){
 		$metadata = $ingester->generateMetadata( $data, $errorMsg );
 	}
 	if ( !empty( $errorMsg ) ) {
@@ -127,7 +125,7 @@ function mapMetadata( $videoTitle, $ingester, $data ) {
 
 	// map additional metadata (per provider)
 	$provider = strtolower( $metadata['provider'] );
-	// use iva function for ooyala
+	// use iva function
 	if ( strstr( $provider, '/' ) ) {
 		$provider = 'iva';
 	}
@@ -210,29 +208,6 @@ function mapMetadataAnyclip( $ingester, $data, &$metadata ) {
 	}
 }
 
-/**
- * generate metadata for screenplay
- * @param VideoFeedIngester $ingester
- * @param array $data
- * @param string $errorMsg
- * @return array $metadata
- */
-function generateMetadataScreenplay( $ingester, $data, &$errorMsg ) {
-	if ( !empty( $data['stdBitrateCode'] ) ) {
-		return $ingester->generateMetadata( $data, $errorMsg );
-	}
-
-	// set fake value
-	$data['stdBitrateCode'] = 1;
-
-	$metadata = $ingester->generateMetadata( $data, $errorMsg );
-
-	// remove fake value
-	$metadata['stdBitrateCode'] = '';
-
-	return $metadata;
-}
-
 // ----------------------------- Main ------------------------------------
 
 ini_set( "include_path", dirname( __FILE__ )."/../../" );
@@ -246,7 +221,6 @@ if ( isset($options['help']) ) {
 	--limit                        limit number of videos (required)
 	--name                         video title (optional)
 	--end                          end date (optional)
-	--force                        force mapping (for screenplay only) (optional)
 	--help                         you are reading it right now\n\n" );
 }
 
@@ -267,10 +241,6 @@ if ( empty( $provider ) ) {
 
 if ( !is_numeric( $limit ) ) {
 	die( "Error: Invalid limit.\n" );
-}
-
-if ( $force && $provider != 'screenplay' ) {
-	die( "Error: force mapping for screenplay only.\n" );
 }
 
 echo "Wiki: $wgCityId ($wgDBname)\n";

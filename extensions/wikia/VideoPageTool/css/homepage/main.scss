@@ -136,16 +136,6 @@ $color-page-border: #bbbdc0;
 			@include sprite-VideoPageTool('ico_iva', 0, 0, 0, -3px);
 			width: 85px;
 		}
-
-		.ico-ooyala {
-			@include sprite-VideoPageTool('ico_ooyala');
-			width: 107px;
-		}
-
-		.ico-screenplay {
- 		@include sprite-VideoPageTool('ico_screenplay');
- 		width: 35px;
-		}
 	}
 }
 

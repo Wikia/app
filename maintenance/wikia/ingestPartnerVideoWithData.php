@@ -33,7 +33,6 @@ Options:
   -d                Debug mode
   -r				Reingest videos (overwrite existing)
   -a				get all videos
-  --ra				use ooyala remote asset to ingest video
   --summary			show summary information
 
 Args:
@@ -104,11 +103,6 @@ foreach ( $providersVideoFeed as $provider ) {
 	$file = '';
 	$startDate = $endDate = '';
 	switch ( $provider ) {
-		case FeedIngesterFactory::PROVIDER_SCREENPLAY:
-			// no file needed
-			$startDate = date( 'm/d/y', $startDateTS );
-			$endDate = date( 'm/d/y', $endDateTS );
-			break;
 		case FeedIngesterFactory::PROVIDER_IGN:
 			$startDate = date( 'Y-m-d', $startDateTS ).'T00:00:00-0800';
 			$endDate = date( 'Y-m-d', $endDateTS ).'T00:00:00-0800';
@@ -116,11 +110,6 @@ foreach ( $providersVideoFeed as $provider ) {
 			break;
 		case FeedIngesterFactory::PROVIDER_ANYCLIP:
 			$file = $feedIngester->downloadFeed( $getAllVideos );
-			break;
-		case FeedIngesterFactory::PROVIDER_OOYALA:
-			// no file needed
-			$startDate = date( 'Y-m-d', $startDateTS ).'T00:00:00Z';
-			$endDate = date( 'Y-m-d', $endDateTS ).'T00:00:00Z';
 			break;
 		case FeedIngesterFactory::PROVIDER_CRUNCHYROLL:
 			// No file needed

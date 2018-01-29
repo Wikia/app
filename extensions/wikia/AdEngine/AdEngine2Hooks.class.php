@@ -129,7 +129,6 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverF2BabDetectionCountries';
 		$vars[] = 'wgAdDriverF2InstartLogicRecoveryCountries';
 		$vars[] = 'wgAdDriverF2MEGAVideosCountries';
-		$vars[] = 'wgAdDriverF2OoyalaPosKeyValueCountries';
 
 		return true;
 	}

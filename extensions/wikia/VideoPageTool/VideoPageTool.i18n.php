@@ -71,8 +71,6 @@ $messages['en'] = array(
 	'videohomepage-partner-name-anyclip' => 'Anyclip',
 	'videohomepage-partner-name-ign' => 'IGN',
 	'videohomepage-partner-name-iva' => 'IVA',
-	'videohomepage-partner-name-ooyala' => 'Ooyala',
-	'videohomepage-partner-name-screenplay' => 'Screenplay',
 );
 
 $messages['qqq'] = array(
@@ -140,8 +138,6 @@ $messages['qqq'] = array(
 	'videohomepage-partner-name-anyclip' => 'This text is the name of a partner: anyclip',
 	'videohomepage-partner-name-ign' => 'This text is the name of a partner: IGN',
 	'videohomepage-partner-name-iva' => 'This text is the name of a partner: IVA',
-	'videohomepage-partner-name-ooyala' => 'This text is the name of a partner: Ooyala',
-	'videohomepage-partner-name-screenplay' => 'This text is the name of a partner: Screenplay',
 );
 
 $messages['de'] = array(
@@ -214,8 +210,6 @@ $messages['de'] = array(
 	'videohomepage-partner-name-anyclip' => 'Anyclip',
 	'videohomepage-partner-name-ign' => 'IGN',
 	'videohomepage-partner-name-iva' => 'IVA',
-	'videohomepage-partner-name-ooyala' => 'Ooyala',
-	'videohomepage-partner-name-screenplay' => 'Screenplay',
 );
 
 $messages['es'] = array(
@@ -288,8 +282,6 @@ $messages['es'] = array(
 	'videohomepage-partner-name-anyclip' => 'Anyclip',
 	'videohomepage-partner-name-ign' => 'IGN',
 	'videohomepage-partner-name-iva' => 'IVA',
-	'videohomepage-partner-name-ooyala' => 'Ooyala',
-	'videohomepage-partner-name-screenplay' => 'Screenplay',
 );
 
 $messages['fi'] = array(
@@ -370,8 +362,6 @@ $messages['fr'] = array(
 	'videohomepage-partner-name-anyclip' => 'Anyclip',
 	'videohomepage-partner-name-ign' => 'IGN',
 	'videohomepage-partner-name-iva' => 'IVA',
-	'videohomepage-partner-name-ooyala' => 'Ooyala',
-	'videohomepage-partner-name-screenplay' => 'Screenplay',
 );
 
 $messages['it'] = array(
@@ -444,8 +434,6 @@ $messages['it'] = array(
 	'videohomepage-partner-name-anyclip' => 'Anyclip',
 	'videohomepage-partner-name-ign' => 'IGN',
 	'videohomepage-partner-name-iva' => 'IVA',
-	'videohomepage-partner-name-ooyala' => 'Ooyala',
-	'videohomepage-partner-name-screenplay' => 'Screenplay',
 );
 
 $messages['ja'] = array(
@@ -457,8 +445,6 @@ $messages['ja'] = array(
 	'videohomepage-partner-name-anyclip' => 'Anyclip',
 	'videohomepage-partner-name-ign' => 'IGN',
 	'videohomepage-partner-name-iva' => 'IVA',
-	'videohomepage-partner-name-ooyala' => 'Ooyala (ウーヤラ)',
-	'videohomepage-partner-name-screenplay' => 'スクリーンプレイ',
 	'videohomepage-partner-section-title' => 'パートナー',
 	'videopagetool-button-add-thumbnail' => '画像を追加',
 	'videopagetool-button-add-video' => '動画を追加',
@@ -592,8 +578,6 @@ $messages['pl'] = array(
 	'videohomepage-partner-name-anyclip' => 'Anyclip',
 	'videohomepage-partner-name-ign' => 'IGN',
 	'videohomepage-partner-name-iva' => 'IVA',
-	'videohomepage-partner-name-ooyala' => 'Ooyala',
-	'videohomepage-partner-name-screenplay' => 'Screenplay',
 );
 
 $messages['pt'] = array(
@@ -666,8 +650,6 @@ $messages['pt'] = array(
 	'videohomepage-partner-name-anyclip' => 'Anyclip',
 	'videohomepage-partner-name-ign' => 'IGN',
 	'videohomepage-partner-name-iva' => 'IVA',
-	'videohomepage-partner-name-ooyala' => 'Ooyala',
-	'videohomepage-partner-name-screenplay' => 'Roteiro',
 );
 
 $messages['ru'] = array(
@@ -740,8 +722,6 @@ $messages['ru'] = array(
 	'videohomepage-partner-name-anyclip' => 'Anyclip',
 	'videohomepage-partner-name-ign' => 'IGN',
 	'videohomepage-partner-name-iva' => 'IVA',
-	'videohomepage-partner-name-ooyala' => 'Ooyala',
-	'videohomepage-partner-name-screenplay' => 'Screenplay',
 );
 
 $messages['zh-hans'] = array(
@@ -814,8 +794,6 @@ $messages['zh-hans'] = array(
 	'videohomepage-partner-name-anyclip' => 'Anyclip',
 	'videohomepage-partner-name-ign' => 'IGN',
 	'videohomepage-partner-name-iva' => 'IVA',
-	'videohomepage-partner-name-ooyala' => 'Ooyala',
-	'videohomepage-partner-name-screenplay' => 'Screenplay',
 );
 
 $messages['zh-hant'] = array(
@@ -888,7 +866,5 @@ $messages['zh-hant'] = array(
 	'videohomepage-partner-name-anyclip' => 'Anyclip',
 	'videohomepage-partner-name-ign' => 'IGN',
 	'videohomepage-partner-name-iva' => 'IVA',
-	'videohomepage-partner-name-ooyala' => 'Ooyala',
-	'videohomepage-partner-name-screenplay' => 'Screenplay',
 );
 

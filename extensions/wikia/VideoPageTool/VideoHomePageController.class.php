@@ -63,8 +63,6 @@ class VideoHomePageController extends WikiaController {
 		$partners[ 'anyclip' ] = array( 'label' => 'AnyClip' );
 		$partners[ 'ign' ] = array( 'label' => 'IGN' );
 		$partners[ 'iva' ] = array( 'label' => 'IVA' );
-		$partners[ 'screenplay' ] = array( 'label' => 'Screenplay' );
-		$partners[ 'ooyala' ] = array( 'label' => 'Ooyala' );
 
 		foreach( $partners as &$partner ) {
 			$partner['url'] = GlobalTitle::newFromText( $partner['label'], NS_CATEGORY, VideoHandlerHooks::VIDEO_WIKI )->getFullUrl();

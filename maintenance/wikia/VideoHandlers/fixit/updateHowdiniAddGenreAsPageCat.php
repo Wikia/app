@@ -45,13 +45,6 @@ class UpdateHowdiniAddGenreAsPageCat extends BaseMaintVideoScript {
 
 			$videos = [$video];
 			$total = 1;
-		} else {
-			$videos = $this->getVideosByProvider( 'ooyala/howdini', $this->limit );
-			if ( !$videos ) {
-				$this->outputError( "no video files found!" );
-				exit();
-			}
-			$total = count( $videos );
 		}
 
 		foreach ( $videos as $video ) {
