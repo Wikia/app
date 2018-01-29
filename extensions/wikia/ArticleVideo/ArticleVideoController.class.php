@@ -42,4 +42,23 @@ class ArticleVideoController extends WikiaController {
 			$this->skipRendering();
 		}
 	}
+
+	public function purgeVideo() {
+		global $wgCityId, $wgTheSchwartzSecretToken;
+
+		$request = RequestContext::getMain()->getRequest();
+		$articleId = $request->getVal( 'articleId', null );
+		$token = $request->getHeader( 'X-Wikia-Schwartz' );
+
+		if ( empty( $articleId ) || empty( $token ) ) {
+			throw new BadRequestException();
+		}
+
+		if ( !hash_equals( $wgTheSchwartzSecretToken, $token ) ) {
+			throw new ForbiddenException();
+		}
+
+		ArticleVideoService::purgeVideoMemCache( $wgCityId );
+		Title::newFromID($articleId)->purgeSquid();
+	}
 }
