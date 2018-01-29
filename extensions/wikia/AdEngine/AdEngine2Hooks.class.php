@@ -42,6 +42,8 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverAudienceNetworkBidderCountries';
 		$vars[] = 'wgAdDriverA9BidderCountries';
 		$vars[] = 'wgAdDriverA9VideoBidderCountries';
+		$vars[] = 'wgAdDriverBabDetectionDesktopCountries';
+		$vars[] = 'wgAdDriverBabDetectionMobileCountries';
 		$vars[] = 'wgAdDriverBeachfrontBidderCountries';
 		$vars[] = 'wgAdDriverDelayCountries';
 		$vars[] = 'wgAdDriverDelayTimeout';
@@ -119,11 +121,8 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverVideoMoatTrackingSampling';
 		$vars[] = 'wgAdDriverVideoPostrollCountries';
 
-		// TODO: Remove after src=[gpt,ns] is finished
-		$vars[] = 'wgAdDriverNewsAndStoriesSingleSrcKeyValueCountries';
-		$vars[] = 'wgAdDriverNewsAndStoriesSrcKeyValueCountries';
-
 		// news&stories variables only
+		$vars[] = 'wgAdDriverF2BabDetectionCountries';
 		$vars[] = 'wgAdDriverF2InstartLogicRecoveryCountries';
 		$vars[] = 'wgAdDriverF2MEGAVideosCountries';
 		$vars[] = 'wgAdDriverF2OoyalaPosKeyValueCountries';
