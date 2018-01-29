@@ -64,19 +64,6 @@ CREATE TABLE `events_local_users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=DYNAMIC;
 
 --
--- Table structure for table `jobs_dirty`
---
-
-DROP TABLE IF EXISTS `jobs_dirty`;
-CREATE TABLE `jobs_dirty` (
-  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `city_id` int(8) unsigned NOT NULL,
-  `locked` timestamp NULL DEFAULT NULL,
-  UNIQUE KEY `city_id_inx` (`city_id`),
-  KEY `locked` (`locked`)
-) ENGINE=MEMORY DEFAULT CHARSET=latin1;
-
---
 -- Table structure for table `jobs_summary`
 --
 
@@ -134,4 +121,4 @@ CREATE TABLE `script_log` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
--- Dump completed on 2018-01-16 15:16:14
+-- Dump completed on 2018-01-29 15:34:01
