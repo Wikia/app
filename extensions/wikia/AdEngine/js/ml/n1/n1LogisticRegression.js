@@ -20,6 +20,7 @@ define('ext.wikia.adEngine.ml.n1.n1LogisticRegression', [
 		inputParser: inputParser,
 		model: linearModel.create(coefficients, intercept),
 		name: 'n1lr',
-		wgCountriesVariable: 'wgAdDriverN1LogisticRegressionRabbitCountries'
+		wgCountriesVariable: 'wgAdDriverN1LogisticRegressionRabbitCountries',
+		enabled: true
 	});
 });

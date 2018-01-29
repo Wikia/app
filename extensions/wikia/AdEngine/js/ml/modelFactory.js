@@ -29,7 +29,7 @@ define('ext.wikia.adEngine.ml.modelFactory', [
 			},
 
 			isEnabled: function () {
-				return geo.isProperGeo(instantGlobals[modelData.wgCountriesVariable]);
+				return modelData.enabled && geo.isProperGeo(instantGlobals[modelData.wgCountriesVariable]);
 			},
 
 			predict: function () {
