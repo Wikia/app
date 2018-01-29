@@ -1,9 +1,10 @@
 /*global define*/
 define('ext.wikia.adEngine.ml.n1.n1LogisticRegression', [
+	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.ml.n1.n1InputParser',
 	'ext.wikia.adEngine.ml.modelFactory',
 	'ext.wikia.adEngine.ml.model.linear'
-], function (inputParser, modelFactory, linearModel) {
+], function (adContext, inputParser, modelFactory, linearModel) {
 	'use strict';
 
 	var coefficients = [
@@ -21,6 +22,6 @@ define('ext.wikia.adEngine.ml.n1.n1LogisticRegression', [
 		model: linearModel.create(coefficients, intercept),
 		name: 'n1lr',
 		wgCountriesVariable: 'wgAdDriverN1LogisticRegressionRabbitCountries',
-		enabled: true
+		enabled: adContext.get('targeting.skin') === 'oasis'
 	});
 });
