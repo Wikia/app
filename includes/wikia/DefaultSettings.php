@@ -1475,33 +1475,6 @@ $wgHighValueCountries = null;
 $wgAdDriverTurtleCountries = null;
 
 /**
- * @name $wgAdDriverSourcePointDetectionCountries
- * List of countries to call SourcePoint detection scripts
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverSourcePointDetectionCountries = null;
-
-/**
- * @name $wgAdDriverSourcePointDetectionMobileCountries
- * List of countries to call SourcePoint detection scripts on Mercury
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverSourcePointDetectionMobileCountries = null;
-
-/**
- * @name $wgAdDriverSourcePointRecoveryCountries
- * List of countries to call ads through SourcePoint
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverSourcePointRecoveryCountries = null;
-
-/**
- * @name wgAdDriverEnableSourcePointRecovery
- * Enable SourcePoint Recovery per wiki
- */
-$wgAdDriverEnableSourcePointRecovery = true;
-
-/**
  * @name wgAdDriverEnableInstartLogicRecovery
  * Enable InstartLogic Recovery per wiki
  */
@@ -1863,7 +1836,7 @@ $wgReviveSpotlightsCountries = null;
 $wgDisableImprovedGenderSupport = true;
 
 /**
- * Enable SourcePoint recovery
+ * Enable recovery
  * It should be always included even if recovery is disabled as we use Recovery classes outside the module
  */
 include_once("$IP/extensions/wikia/ARecoveryEngine/ARecoveryEngine.setup.php");
