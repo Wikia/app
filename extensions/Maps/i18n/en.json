@@ -50,6 +50,7 @@
 	"maps-coordinates-par-location": "The coordinates you want to format.",
 	"maps-coordinates-par-format": "The target format for the coordinates.",
 	"maps-coordinates-par-directional": "Indicates if the coordinates should be outputted directional or not.",
+	"maps-par-scrollwheelzoom": "Indicates if mouse scrolling should be enabled or not.",
 	"maps-distance-par-distance": "The distance to convert to its equivalent with a specified unit.",
 	"maps-distance-par-decimals": "The maximum number of fractional digits to use in the resulting value.",
 	"maps-distance-par-unit": "The unit to output the distance in.",

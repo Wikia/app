@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "f328ea542e446f3c68049840eb0d696e",
+    "content-hash": "80c319e04dbc07f2a21f00479440b1a4",
     "packages": [
         {
             "name": "composer/installers",
@@ -1058,11 +1058,11 @@
         },
         {
             "name": "mediawiki/maps",
-            "version": "5.2.0.1",
+            "version": "5.2.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Wikia/Maps",
-                "reference": "e4f1b2b06b367ce64759e332d752b8501a01b0a5"
+                "reference": "3e22469a614a1449dc7b38fed7348b47e8cef20b"
             },
             "require": {
                 "composer/installers": "^1.0.1",
@@ -1147,7 +1147,7 @@
                 "irc": "irc://irc.freenode.net/mediawiki",
                 "source": "https://github.com/JeroenDeDauw/Maps"
             },
-            "time": "2018-01-24T11:07:59+00:00"
+            "time": "2018-01-29T11:45:47+00:00"
         },
         {
             "name": "mediawiki/parser-hooks",

@@ -58,6 +58,7 @@
 	"maps-coordinates-par-location": "您希望格式化的坐标。",
 	"maps-coordinates-par-format": "目标坐标的格式。",
 	"maps-coordinates-par-directional": "指示坐标是否应输出方向。",
+	"maps-par-scrollwheelzoom": "表明是否应启用鼠标滚动。",
 	"maps-distance-par-distance": "要转换至其使用指定单位的等值的距离。",
 	"maps-distance-par-decimals": "结果值中使用的小数位数最大数。",
 	"maps-distance-par-unit": "输出的距离单位。",

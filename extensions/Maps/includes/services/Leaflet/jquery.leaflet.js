@@ -260,7 +260,9 @@
 					position: 'topleft'
 				};
 			}
-			
+						
+			mapOptions.scrollWheelZoom = options.scrollwheelzoom;
+
 			if (options.static) {
 				mapOptions.scrollWheelZoom = false;
 				mapOptions.doubleClickZoom = false;

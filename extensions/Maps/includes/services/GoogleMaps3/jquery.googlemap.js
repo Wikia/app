@@ -547,8 +547,8 @@
 			}
 
 			var layerMapping = {
-				'traffic':'new google.maps.TrafficLayer()',
-				'bicycling':'new google.maps.BicyclingLayer()'
+				'traffic': new google.maps.TrafficLayer(),
+				'bicycling': new google.maps.BicyclingLayer()
 			};
 
 			for (i = options.layers.length - 1; i >= 0; i--) {

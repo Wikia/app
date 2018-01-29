@@ -56,6 +56,7 @@
 	"maps-coordinates-par-location": "Die zu formatierenden Koordinaten.",
 	"maps-coordinates-par-format": "Das Zielformat der Koordinaten.",
 	"maps-coordinates-par-directional": "Gibt an, ob die Koordinaten eine Richtungsangabe haben sollen oder nicht.",
+	"maps-par-scrollwheelzoom": "Zeigt an, ob das Mausscrollen aktiviert werden soll oder nicht.",
 	"maps-distance-par-distance": "Die Entfernung zum konvertieren dieser Einheit in ihr Äquivalent einer angegebenen Einheit.",
 	"maps-distance-par-decimals": "Die bei der Ergebnisausgabe zu verwendende Höchstzahl an Nachkommastellen.",
 	"maps-distance-par-unit": "Die Ausgabeeinheit für die Entfernung.",

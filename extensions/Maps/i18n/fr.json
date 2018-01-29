@@ -70,6 +70,7 @@
 	"maps-coordinates-par-location": "Les coordonnées que vous souhaitez formater.",
 	"maps-coordinates-par-format": "Le format cible pour les coordonnées.",
 	"maps-coordinates-par-directional": "Indique si les coordonnées doivent être imprimées directionnellement ou non.",
+	"maps-par-scrollwheelzoom": "Indique si le défilement à la souris doit être ou non activé.",
 	"maps-distance-par-distance": "La distance à convertir dans son équivalent avec une unité spécifiée.",
 	"maps-distance-par-decimals": "Le nombre maximal de chiffres après la virgule à utiliser dans le résultat.",
 	"maps-distance-par-unit": "L'unité utilisée pour afficher la distance.",

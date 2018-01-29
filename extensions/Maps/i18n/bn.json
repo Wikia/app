@@ -36,6 +36,7 @@
 	"validation-error-no-non-numerics": "\"$1\" পরামিতি অবশ্যই এক বা একাধিক অ-সাংখ্যিক স্ট্রিং হতে হবে।",
 	"maps-layer-of-type": "\"$1\" ধরণের লেয়ার",
 	"maps-layer-of-type-and-name": "\"$2\" স্তরটি \"$1\" ধরণের",
+	"maps-par-scrollwheelzoom": "নির্দেশ করে যদি মাউস স্ক্রোলিং সক্রিয় করা উচিত বা উচিত না।",
 	"maps-finddestination-par-location": "প্রারম্ভিক অবস্থান",
 	"maps-finddestination-par-distance": "ভ্রমণ করার ব্যবধান",
 	"validation-error-invalid-location": "স্থিতিমাপ \"$1\" একটি বৈধ অবস্থান হতে হবে।",

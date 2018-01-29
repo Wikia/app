@@ -11,7 +11,8 @@
 			"Vitorvicentevalente",
 			"Macofe",
 			"Malafaya",
-			"Fúlvio"
+			"Fúlvio",
+			"Athena in Wonderland"
 		]
 	},
 	"maps-desc": "Permite incorporar mapas dinâmicos nas páginas da wiki, converter endereços em geocódigos e outras operações geográficas",
@@ -59,6 +60,7 @@
 	"maps-coordinates-par-location": "As coordenadas que quer formatar.",
 	"maps-coordinates-par-format": "O formato em que quer as coordenadas.",
 	"maps-coordinates-par-directional": "Indica se as coordenadas devem ser produzidas com formato direccional ou não.",
+	"maps-par-scrollwheelzoom": "Indica se o deslizamento do rato deve ser ativado ou não.",
 	"maps-distance-par-distance": "A distância para converter para a equivalente numa unidade especificada.",
 	"maps-distance-par-decimals": "O número máximo de casas decimais a usar no valor resultante.",
 	"maps-distance-par-unit": "As unidades em que a distância será produzida.",
