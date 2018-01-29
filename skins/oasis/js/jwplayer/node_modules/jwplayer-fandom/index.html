@@ -133,9 +133,9 @@
 		// language code, default 'en'
 		lang: 'pl',
 		annotations: {
-			overlays: [{ displayAt: 1.5, createdBy: {}, text: "Hello world!", linksTo: "https://facebook.com" }],
-			comments: [{ displayAt: 1, createdBy: { username: "Majkel", avatarUrl: "https://raw.githubusercontent.com/Ashwinvalento/cartoon-avatar/master/lib/images/female/68.png"}, text: "My first comment!"}],
-			spoilers: []
+			overlays: [{ displayAt: 0.1, createdBy: {}, content: "Hello world!", linksTo: "https://facebook.com" }],
+			comments: [{ displayAt: 1, createdBy: { username: "Majkel", avatarUrl: "https://raw.githubusercontent.com/Ashwinvalento/cartoon-avatar/master/lib/images/female/68.png"}, content: "My first comment!"}],
+			spoilers: [{ displayAt: 1, moveTo: 10, content: "Hello!" }]
 		}
 	}, function (playerInstance) {
 		// callback with jwplayer instance as an argument

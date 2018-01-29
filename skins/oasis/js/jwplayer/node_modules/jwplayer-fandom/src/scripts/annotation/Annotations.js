@@ -9,7 +9,7 @@ export default class Annotation extends Base {
 	createElement({ content, linksTo }) {
 		const domString = `
 				<div class="wikia-annotation wikia-annotation--annotation">
-					<a href="${linksTo}" class="wikia-annotation__text">
+					<a href="${linksTo}" class="wikia-annotation__text"  target="_blank">
 						${content}
 					</a>
 				</div>

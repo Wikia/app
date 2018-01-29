@@ -5,6 +5,7 @@ import wikiaJWPlayerTracking from './tracking';
 import wikiaJWPlayerHandleTabNotActive from './tab-active';
 import wikiaJWPlayerLogger from './logger';
 import wikiaJWPlayerSettingsPlugin from './settings.plugin';
+import wikiaJWPlayerCommentPlugin from './comment.plugin';
 import wikiaJWPlayerAllowControllOnTouchDevices from './allow-control-on-touch';
 import wikiaJWPlayerAnnotation from './annotation/index';
 import wikiaJWPlayeri18n from './../locales/i18n';
@@ -24,6 +25,7 @@ window.wikiaJWPlayer = function (elementId, options, callback) {
 
 		script.onload = function () {
 			wikiaJWPlayerSettingsPlugin.register();
+			wikiaJWPlayerCommentPlugin.register();
 			loadCallbacks.forEach(function (callback) {
 				callback();
 			});
@@ -91,6 +93,14 @@ window.wikiaJWPlayer = function (elementId, options, callback) {
 		if (options.settings) {
 			playerSetup.plugins = {
 				wikiaSettings: {
+					showAutoplayToggle: options.settings.showAutoplayToggle,
+					showQuality: options.settings.showQuality,
+					showCaptions: options.settings.showCaptions,
+					autoplay: options.autoplay,
+					selectedCaptionsLanguage: options.selectedCaptionsLanguage,
+					i18n: i18n
+				},
+				wikiaComment: {
 					showAutoplayToggle: options.settings.showAutoplayToggle,
 					showQuality: options.settings.showQuality,
 					showCaptions: options.settings.showCaptions,

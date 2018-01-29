@@ -31,7 +31,7 @@ export default class Base {
 		}
 	}
 
-	isDisplayed() {
+	wasDisplayed() {
 		return this.displayed;
 	}
 }

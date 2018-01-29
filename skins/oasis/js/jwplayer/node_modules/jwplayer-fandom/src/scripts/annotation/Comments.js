@@ -7,6 +7,9 @@ export default class Comment extends Base {
 	}
 
 	createElement({ content, createdBy }) {
+		if (!createdBy.avatarUrl) {
+			createdBy.avatarUrl = 'https://vignette.wikia-dev.pl/messaging/images/1/19/Avatar.jpg/revision/latest/scale-to-width-down/150';
+		}
 		const domString = `
 				<div class="wikia-annotation wikia-annotation--comment">
 					<div class="wikia-annotation__author">

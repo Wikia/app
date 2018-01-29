@@ -1,6 +1,26 @@
 @import '../../node_modules/design-system/dist/scss/wds-variables/index';
 
-.wikia-jw-settings {
+.wikia-jw-settings,
+.wikia-jw-comment {
+	padding: 15px 10px;
+
+	.comment-form {
+		input {
+			background: transparent;
+			border: 0;
+			border-bottom: 1px solid #ddd;
+			box-shadow: none;
+			color: #ddd;
+			height: 30px;
+			outline: none;
+			padding: 5px;
+		}
+
+		input:focus {
+			outline: none;
+		}
+	}
+
 	background-color: $wds-color-black;
 	border-radius: 4px;
 	bottom: 44px;
@@ -110,6 +130,7 @@
 }
 
 // hide jw settings menu button
-.jw-settings-submenu-button {
+.jw-settings-submenu-button,
+.jw-comment-submenu-button {
 	display: none !important;
 }
