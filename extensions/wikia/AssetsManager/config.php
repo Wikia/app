@@ -154,6 +154,8 @@ $config['adengine2_rabbit_js'] = [
 		'//extensions/wikia/AdEngine/js/ml/model/linear.js',
 		'//extensions/wikia/AdEngine/js/ml/n1/n1InputParser.js',
 		'//extensions/wikia/AdEngine/js/ml/n1/n1LogisticRegression.js',
+		'//extensions/wikia/AdEngine/js/ml/n1/n1mInputParser.js',
+		'//extensions/wikia/AdEngine/js/ml/n1/n1mLogisticRegression.js',
 		'//extensions/wikia/AdEngine/js/ml/outstream/outstreamInputParser.js',
 		'//extensions/wikia/AdEngine/js/ml/outstream/outstreamLogisticRegression.js',
 		'//extensions/wikia/AdEngine/js/ml/rabbit.js',
