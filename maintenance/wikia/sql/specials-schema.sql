@@ -64,18 +64,6 @@ CREATE TABLE `events_local_users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=DYNAMIC;
 
 --
--- Table structure for table `jobs_summary`
---
-
-DROP TABLE IF EXISTS `jobs_summary`;
-CREATE TABLE `jobs_summary` (
-  `city_id` int(8) unsigned NOT NULL,
-  `total` int(8) unsigned DEFAULT '0',
-  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`city_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
 -- Table structure for table `multilookup`
 --
 
@@ -121,4 +109,4 @@ CREATE TABLE `script_log` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
--- Dump completed on 2018-01-29 15:34:01
+-- Dump completed on 2018-01-30 12:33:44
