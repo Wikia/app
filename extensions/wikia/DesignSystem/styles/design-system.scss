@@ -90,3 +90,14 @@ $global-navigation-z-index: 5000101;
 		}
 	}
 }
+
+/* MAIN-12770: harmonize DS buttons with older ones */
+.wds-button {
+	background-image: none;
+	border-radius: 0;
+	font-family: inherit;
+
+	&:hover {
+		background-image: none;
+	}
+}
