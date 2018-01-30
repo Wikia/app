@@ -5,7 +5,7 @@ define('ext.wikia.adEngine.ml.model.decisionTreeClassifier', [
 	'use strict';
 
 	function buildUrl(modelId) {
-		return '/wikia.php?controller=AdEngine2Api&method=getModelData&id=' + modelId
+		return '/wikia.php?controller=AdEngine2Api&method=getModelData&id=' + modelId;
 	}
 
 	function findMax(nums) {
