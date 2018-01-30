@@ -49,9 +49,9 @@ class ImageReviewTask extends BaseTask {
 
 			if ( count( $imageData ) == 3 ) {
 				$command =
-					"/usr/wikia/backend/bin/run_maintenance --id=${wikiId} --script='wikia/deleteImageRevision.php --pageId=${imageId} --revisionId=${revisionId}'";
+					"php {$IP}/maintenance/wikia/deleteImageRevision.php --pageId=${imageId} --revisionId=${revisionId}";
 
-				$output = wfShellExec( $command, $exitStatus );
+				$output = wfShellExec( $command, $exitStatus, [ 'SERVER_ID' => $wikiId ] );
 
 				if ( $exitStatus !== 0 ) {
 					$this->error( 'article deletion error', [
