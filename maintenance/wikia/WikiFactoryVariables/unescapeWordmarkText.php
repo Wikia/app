@@ -7,7 +7,7 @@
 * 	# this will process wordmark-text for wiki with ID 119:
 * 	migrateWikiWordmarks --dry-run --wiki 119 --verbose
 *   # or
-*   /usr/wikia/backend/bin/run_maintenance '--script=wikia/WikiFactoryVariables/unescapeWordmarkText.php --dry-run' --id=119
+*   run_maintenance --script='wikia/WikiFactoryVariables/unescapeWordmarkText.php --dry-run' --id=119
 */
 
 ini_set( 'display_errors', 'stderr' );

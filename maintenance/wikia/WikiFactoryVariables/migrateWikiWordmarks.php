@@ -11,7 +11,7 @@
 * 	# this will migrate wordmark-image-url for wiki with ID 119:
 * 	migrateWikiWordmarks --dry-run --wiki 119 --verbose --keyName wordmark-image-url
 *   # or
-*   /usr/wikia/backend/bin/run_maintenance '--script=wikia/WikiFactoryVariables/migrateWikiWordmarks.php --dry-run --verbose --keyName wordmark-image-url' --id=119
+*   run_maintenance --script='wikia/WikiFactoryVariables/migrateWikiWordmarks.php --dry-run --verbose --keyName wordmark-image-url' --id=119
 */
 
 ini_set( 'display_errors', 'stderr' );
