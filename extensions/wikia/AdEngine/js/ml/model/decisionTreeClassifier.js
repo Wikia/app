@@ -64,8 +64,6 @@ define('ext.wikia.adEngine.ml.model.decisionTreeClassifier', [
 		};
 	}
 
-
-
 	return {
 		create: create
 	};
