@@ -183,15 +183,22 @@ RTE.templateEditor = {
 			}),
 			availableNamedParams = availableParams.filter(isNaN),
 			passedParams = RTE.tools.resolveDoubleBracketsCache[currentData.wikitext].passedParams,
-			passedUnnamedParams = Object.keys(passedParams).filter(function(elem) {
-				return !isNaN(elem);
-			}).map(Number),
-			passedNamedParams = Object.keys(passedParams).filter(isNaN),
-			allUnnamedParams = availableUnnamedParams.concat(passedUnnamedParams),
+			passedUnnamedParams = [],
+			passedNamedParams = [],
+			allUnnamedParams = [],
 			templateTitle = currentData.title,
 			multiline = currentData.wikitext.indexOf("\n|") !== -1,
 			updatedParams = [],
 			glue = multiline ? "\n|" : "|";
+
+			if (passedParams) {
+				passedUnnamedParams = Object.keys(passedParams).filter(function(elem) {
+					return !isNaN(elem);
+				}).map(Number);
+				passedNamedParams = Object.keys(passedParams).filter(isNaN);
+			}
+			allUnnamedParams = availableUnnamedParams.concat(passedUnnamedParams),
+
 
 		// filter duplicates
 		allUnnamedParams = allUnnamedParams.filter(function(value, index) {
