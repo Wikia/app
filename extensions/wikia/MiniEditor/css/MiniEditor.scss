@@ -105,7 +105,6 @@
 	// Toolbar with buttons
 	.toolbar {
 		@include clearfix;
-		display: none;
 		margin-top: 10px;
 
 		.cke_buttons {
