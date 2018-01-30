@@ -1890,6 +1890,12 @@ $wgReviveSpotlightsCountries = null;
 $wgDisableImprovedGenderSupport = true;
 
 /**
+ * @name $wgAutoapproveJS
+ * Enables autoapproving JS pages changes
+ */
+$wgAutoapproveJS = false;
+
+/**
  * Enable recovery
  * It should be always included even if recovery is disabled as we use Recovery classes outside the module
  */
