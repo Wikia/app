@@ -26,7 +26,6 @@ define('ext.wikia.adEngine.ml.rabbit', [
 		var results = [];
 
 		models.forEach(function (model) {
-			console.log(model && model.getName(), model && model.isEnabled());
 			if (model && model.isEnabled()) {
 				results.push(model.getResult());
 			}
