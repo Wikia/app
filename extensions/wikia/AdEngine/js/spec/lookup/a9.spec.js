@@ -18,7 +18,7 @@ describe('Method ext.wikia.adEngine.lookup.a9', function () {
 		return modules['ext.wikia.adEngine.lookup.lookupFactory'](
 			mocks.adContext,
 			mocks.adTracker,
-			mocks.sourcePoint,
+			mocks.adBlockDetection,
 			mocks.lazyQueue,
 			mocks.log
 		);
@@ -80,7 +80,7 @@ describe('Method ext.wikia.adEngine.lookup.a9', function () {
 			},
 			track: noop
 		},
-		sourcePoint: {
+		adBlockDetection: {
 			addOnBlockingCallback: noop
 		},
 		document: {

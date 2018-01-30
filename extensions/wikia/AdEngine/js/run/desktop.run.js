@@ -18,7 +18,6 @@ require([
 	'ext.wikia.adEngine.slot.service.slotRegistry',
 	'ext.wikia.adEngine.slotTracker',
 	'ext.wikia.adEngine.slotTweaker',
-	'ext.wikia.adEngine.sourcePointDetection',
 	'ext.wikia.adEngine.tracking.adInfoListener',
 	'ext.wikia.adEngine.tracking.scrollDepthTracker',
 	'ext.wikia.aRecoveryEngine.adBlockDetection',
@@ -42,7 +41,6 @@ require([
 	slotRegistry,
 	slotTracker,
 	slotTweaker,
-	sourcePointDetection,
 	adInfoListener,
 	scrollDepthTracker,
 	adBlockDetection,
@@ -101,9 +99,6 @@ require([
 		if (context.opts.pageFairDetection) {
 			pageFairDetection.initDetection(context);
 		}
-
-		// Recovery & detection
-		adBlockDetection.initEventQueues();
 	});
 });
 

@@ -1,0 +1,43 @@
+/*
+Copyright (c) 2003-2017, CKSource - Frederico Knabben. All rights reserved.
+For licensing, see LICENSE.md or http://ckeditor.com/license
+*/
+
+/* "Source" button label */
+.cke_button__source_label,
+.cke_button__sourcedialog_label
+{
+	display: inline;
+}
+
+/* "Font Size" combo width */
+.cke_combo__fontsize .cke_combo_text
+{
+	width: 30px;
+}
+
+/* "Font Size" panel size */
+.cke_combopanel__fontsize
+{
+	width: 120px;
+}
+
+/* Editable regions */
+textarea.cke_source
+{
+	border: 0;
+	color: #D5D4D4;
+	font-family: monospace;
+	font-size: 13px;
+	line-height: 140%;
+	background-color: #000000;
+	white-space: pre-wrap;
+	overflow: auto;
+
+
+}
+
+.cke_wysiwyg_frame, .cke_wysiwyg_div
+{
+	background-color: #fff;
+}

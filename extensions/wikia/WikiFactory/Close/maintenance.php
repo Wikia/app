@@ -62,8 +62,7 @@ class CloseWikiMaintenance {
 	 * @access public
 	 */
 	public function execute() {
-        
-		global $wgUploadDirectory, $wgDBname, $IP;
+		global $IP;
 
 		$first     = isset( $this->mOptions[ "first" ] ) ? true : false;
 		$sleep     = isset( $this->mOptions[ "sleep" ] ) ? $this->mOptions[ "sleep" ] : 15;
@@ -124,7 +123,7 @@ class CloseWikiMaintenance {
 			$xdumpok  = true;
 			$newFlags = 0;
 			$dbname   = $row->city_dbname;
-			$cityid   = $row->city_id;
+			$cityid   = intval( $row->city_id );
 			$folder   = WikiFactory::getVarValueByName( "wgUploadDirectory", $cityid );
 			$cluster  = WikiFactory::getVarValueByName( "wgDBcluster", $cityid );
 
@@ -156,18 +155,11 @@ class CloseWikiMaintenance {
 				$this->log( "Dumping database on remote host" );
 
 				$script = ( $hide )
-					? "--script='../extensions/wikia/WikiFactory/Dumps/runBackups.php --both --id={$cityid} --tmp --s3'"
-					: "--script='../extensions/wikia/WikiFactory/Dumps/runBackups.php --both --id={$cityid} --hide --tmp --s3'";
+					? "php {$IP}/extensions/wikia/WikiFactory/Dumps/runBackups.php --both --id={$cityid} --tmp --s3"
+					: "php {$IP}/extensions/wikia/WikiFactory/Dumps/runBackups.php --both --id={$cityid} --hide --tmp --s3";
 
-				$cmd  = array(
-					"/usr/wikia/backend/bin/run_maintenance",
-					"--id=177",
-					$script
-				);
-
-                $cmd = '/usr/wikia/backend/bin/run_maintenance --id=177 ' . wfEscapeShellArg( $script );
-				$this->log( $cmd );
-				$output = wfShellExec( $cmd, $retval );
+				$this->log( $script );
+				$output = wfShellExec( $script, $retval, [ 'SERVER_ID' => Wikia::COMMUNITY_WIKI_ID ] );
 				$xdumpok = empty( $retval ) ? true : false;
 				/**
 				 * reset flag
@@ -507,11 +499,8 @@ class CloseWikiMaintenance {
 		}
 	}
 
-	/**
-	 * just helper for logging
-	 */
-	private function log( $message ) {
-		Wikia::log( "CloseWiki", false, $message, true, true );
+	private function log( string $message ) {
+		WikiaLogger::instance()->info( $message );
 	}
 
 	private function removeDiscussions( int $cityId ) {

@@ -3,11 +3,10 @@ define('ext.wikia.adEngine.video.player.porvata.googleImaSetup', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.slot.service.megaAdUnitBuilder',
 	'ext.wikia.adEngine.video.vastUrlBuilder',
-	'ext.wikia.aRecoveryEngine.sourcePoint.recovery',
 	'wikia.browserDetect',
 	'wikia.log',
 	'wikia.window'
-], function (adContext, megaAdUnitBuilder, vastUrlBuilder, adBlockRecovery, browserDetect, log, win) {
+], function (adContext, megaAdUnitBuilder, vastUrlBuilder, browserDetect, log, win) {
 	'use strict';
 	var logGroup = 'ext.wikia.adEngine.video.player.porvata.googleImaSetup';
 
@@ -42,7 +41,7 @@ define('ext.wikia.adEngine.video.player.porvata.googleImaSetup', [
 
 		log(['build vast url', vastUrl, params], log.levels.debug, logGroup);
 
-		return adBlockRecovery.getSafeUri(vastUrl);
+		return vastUrl;
 	}
 
 	function getOverriddenVast() {

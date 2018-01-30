@@ -264,7 +264,7 @@ CREATE TABLE `dimension_top_wikis_7vert` (
   `domain` varchar(255) DEFAULT NULL,
   `title` varchar(255) DEFAULT NULL,
   `founding_user_id` int(10) unsigned DEFAULT NULL,
-  `public` tinyint(3) unsigned DEFAULT NULL,
+  `public` tinyint(3) DEFAULT NULL,
   `lang` varchar(8) DEFAULT NULL,
   `lang_id` smallint(5) unsigned DEFAULT NULL,
   `ad_tag` varchar(255) DEFAULT NULL,
@@ -602,6 +602,17 @@ CREATE TABLE `dimension_wiki_cat_mapping` (
   `wiki_id` int(11) NOT NULL,
   `cat_id` int(11) NOT NULL,
   PRIMARY KEY (`wiki_id`,`cat_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Table structure for table `dimension_wiki_categories`
+--
+
+DROP TABLE IF EXISTS `dimension_wiki_categories`;
+CREATE TABLE `dimension_wiki_categories` (
+  `wiki_id` int(10) unsigned NOT NULL,
+  `category_id` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`wiki_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -2117,11 +2128,11 @@ CREATE TABLE `official_communities` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Table structure for table `report_wiki_recent_pageviews`
+-- Table structure for table `report_wiki_recent_pageviews_have_mercy_finish_it_and_delete_me`
 --
 
-DROP TABLE IF EXISTS `report_wiki_recent_pageviews`;
-CREATE TABLE `report_wiki_recent_pageviews` (
+DROP TABLE IF EXISTS `report_wiki_recent_pageviews_have_mercy_finish_it_and_delete_me`;
+CREATE TABLE `report_wiki_recent_pageviews_have_mercy_finish_it_and_delete_me` (
   `wiki_id` int(10) unsigned NOT NULL,
   `hub_name` varchar(255) DEFAULT NULL,
   `lang` varchar(255) DEFAULT NULL,
@@ -10384,4 +10395,4 @@ CREATE TABLE `test_dimension_wiki_local_namespaces` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
--- Dump completed on 2018-01-23 14:37:49
+-- Dump completed on 2018-01-29 15:34:03

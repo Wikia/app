@@ -475,9 +475,7 @@ class ListusersData {
 	}
 
 	/**
-	 * Fills specials.events_local_users table with entries for a given wiki. This one will
-	 * replace an old Perl backend script - /usr/wikia/backend/bin/scribe/events_local_users.pl
-	 *
+	 * Fills specials.events_local_users table with entries for a given wiki.
 	 * Used by CreateNewWikiTask class
 	 *
 	 * @see SUS-3264

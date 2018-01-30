@@ -275,11 +275,16 @@ CKEDITOR.plugins.add('rte-media', {
 		});
 
 		// images / videos specific setup
-		image = media.filter('img.image');
-		self.setupImage(image);
-
-		video = media.filter('img.video');
-		self.setupVideo(video);
+		// XW-4380: Filter out media inside templates, extension tags etc. which are not editable
+		media.get().filter(function (mediaNode) {
+			return mediaNode.isContentEditable;
+		}).forEach(function (mediaNode) {
+			if (mediaNode.classList.contains('image')) {
+				self.setupImage($(mediaNode));
+			} else if (mediaNode.classList.contains('video')) {
+				self.setupVideo($(mediaNode));
+			}
+		});
 
 		// RT #69635
 		if (RTE.config.disableDragDrop) {
