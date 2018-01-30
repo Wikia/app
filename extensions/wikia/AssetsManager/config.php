@@ -115,7 +115,7 @@ $config['adengine2_desktop_js'] = [
 		'//extensions/wikia/AdEngine/js/video/player/ooyala/ooyalaTracker.js',
 		'#group_adengine2_playwire_js',
 		'#group_adengine2_porvata_js',
-		'#group_adengine2_rabbit_js',
+		'#group_adengine2_rabbit_desktop_js',
 		'#group_adengine2_video_ui_js',
 		'//extensions/wikia/AdEngine/js/video/uapVideo.js',
 		'//extensions/wikia/AdEngine/js/video/videoSettings.js',
@@ -144,18 +144,37 @@ $config['adengine2_rabbit_js'] = [
 	'skin' => [ 'oasis' ],
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [
+		'//extensions/wikia/AdEngine/js/ml/modelFactory.js',
+		'//extensions/wikia/AdEngine/js/ml/model/decisionTreeClassifier.js',
+		'//extensions/wikia/AdEngine/js/ml/model/linear.js',
+		'//extensions/wikia/AdEngine/js/ml/rabbit.js',
+	],
+];
+
+$config['adengine2_rabbit_desktop_js'] = [
+	'skin' => [ 'oasis' ],
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => [
+		'#group_adengine2_rabbit_js',
 		'//extensions/wikia/AdEngine/js/ml/fmr/fmrInputParser.js',
 		'//extensions/wikia/AdEngine/js/ml/fmr/fmrLogisticRegression.js',
 		'//extensions/wikia/AdEngine/js/ml/fmr/fmrPassiveAggressiveClassifier.js',
-		'//extensions/wikia/AdEngine/js/ml/modelFactory.js',
-		'//extensions/wikia/AdEngine/js/ml/model/linear.js',
+		'//extensions/wikia/AdEngine/js/ml/n1/n1DecisionTreeClassifier.js',
+		'//extensions/wikia/AdEngine/js/ml/n1/n1DecisionTreeClassifierInputParser.js',
 		'//extensions/wikia/AdEngine/js/ml/n1/n1InputParser.js',
 		'//extensions/wikia/AdEngine/js/ml/n1/n1LogisticRegression.js',
-		'//extensions/wikia/AdEngine/js/ml/n1/n1mInputParser.js',
-		'//extensions/wikia/AdEngine/js/ml/n1/n1mLogisticRegression.js',
 		'//extensions/wikia/AdEngine/js/ml/outstream/outstreamInputParser.js',
 		'//extensions/wikia/AdEngine/js/ml/outstream/outstreamLogisticRegression.js',
-		'//extensions/wikia/AdEngine/js/ml/rabbit.js',
+	],
+];
+
+$config['adengine2_rabbit_mobile_js'] = [
+	'skin' => [ 'oasis' ],
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => [
+		'#group_adengine2_rabbit_js',
+		'//extensions/wikia/AdEngine/js/ml/n1/n1mInputParser.js',
+		'//extensions/wikia/AdEngine/js/ml/n1/n1mLogisticRegression.js',
 	],
 ];
 
@@ -942,20 +961,12 @@ $config['mercury_ads_js'] = [
 		'//resources/wikia/modules/krux.js',
 		'//extensions/wikia/AdEngine/js/build/bridge.js',
 		'//extensions/wikia/AdEngine/js/run/mercury.run.js',
-		'#group_adengine2_rabbit_js',
+		'#group_adengine2_rabbit_mobile_js',
 		'#group_jwplayer_featured_video_ads_js',
 	],
 ];
 
 $config['pr3b1d_prod_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => [
-		'//extensions/wikia/AdEngine/resources/prebid/prebid.min.js'
-	]
-];
-
-//TODO: remove after ADEN-5624 release + 24h (2 Aug 2017)
-$config['prebid_prod_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [
 		'//extensions/wikia/AdEngine/resources/prebid/prebid.min.js'
