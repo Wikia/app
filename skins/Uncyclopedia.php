@@ -19,9 +19,20 @@ if( !defined( 'MEDIAWIKI' ) )
  * @ingroup Skins
  */
 
+require_once("skins/MonoBook.php");
+
 class SkinUncyclopedia extends SkinMonoBook {
+	/**
+	 * Using monobook.
+	 *
+	 * @param OutputPage $out
+	 */
 	function initPage( OutputPage $out ) {
 		parent::initPage( $out );
+		$this->skinname  = 'uncyclopedia';
+		$this->stylename = 'uncyclopedia';
+		$this->template  = 'UncyclopediaTemplate';
+
 		// turn off ads
 		$this->ads = false;
 	}
@@ -63,10 +74,6 @@ HTML;
 
 	public function addWikiaCss(&$out) {
 		return true;
-	}
-
-	protected function getTemplate(): QuickTemplate {
-		return new UncyclopediaTemplate();
 	}
 }
 

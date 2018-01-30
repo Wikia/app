@@ -64,9 +64,7 @@ class WikiaTest extends WikiaBaseTest {
 		$context->setTitle( new Title() );
 		$context->setRequest( $request );
 
-		$skinTemplate = $this->getMockBuilder( SkinTemplate::class )
-			->disableOriginalConstructor()
-			->getMockForAbstractClass();
+		$skinTemplate = new SkinTemplate();
 		$quickTemplate = new OasisTemplate();
 
 		$skinTemplate->setContext( $context );
@@ -87,9 +85,7 @@ class WikiaTest extends WikiaBaseTest {
 		$context->setTitle( new Title() );
 		$context->setRequest( new FauxRequest() );
 
-		$skinTemplate = $this->getMockBuilder( SkinTemplate::class )
-			->disableOriginalConstructor()
-			->getMockForAbstractClass();
+		$skinTemplate = new SkinTemplate();
 		$quickTemplate = new OasisTemplate();
 
 		$skinTemplate->setContext( $context );
@@ -110,9 +106,7 @@ class WikiaTest extends WikiaBaseTest {
 		$context->setTitle( new Title() );
 		$context->setRequest( new FauxRequest() );
 
-		$skinTemplate = $this->getMockBuilder( SkinTemplate::class )
-			->disableOriginalConstructor()
-			->getMockForAbstractClass();
+		$skinTemplate = new SkinTemplate();
 		$quickTemplate = new OasisTemplate();
 
 		$skinTemplate->thisquery = '';
@@ -134,10 +128,7 @@ class WikiaTest extends WikiaBaseTest {
 		$context->setTitle( new Title() );
 		$context->setRequest( new FauxRequest() );
 
-		$skinTemplate = $this->getMockBuilder( SkinTemplate::class )
-			->disableOriginalConstructor()
-			->getMockForAbstractClass();
-
+		$skinTemplate = new SkinTemplate();
 		$quickTemplate = new OasisTemplate();
 
 		$skinTemplate->thisquery = '';

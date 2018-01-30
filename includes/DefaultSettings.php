@@ -2278,6 +2278,38 @@ $wgValidateAllHtml = false;
 $wgDefaultSkin = 'oasis';
 
 /**
+ * Specify the name of a skin that should not be presented in the list of
+ * available skins.  Use for blacklisting a skin which you do not want to
+ * remove from the .../skins/ directory
+ */
+$wgSkipSkins = array();
+
+/**
+ * Optionally, we can specify a stylesheet to use for media="handheld".
+ * This is recognized by some, but not all, handheld/mobile/PDA browsers.
+ * If left empty, compliant handheld browsers won't pick up the skin
+ * stylesheet, which is specified for 'screen' media.
+ *
+ * Can be a complete URL, base-relative path, or $wgStylePath-relative path.
+ *
+ * Will also be switched in when 'handheld=yes' is added to the URL, like
+ * the 'printable=yes' mode for print media.
+ */
+$wgHandheldStyle = false;
+
+/**
+ * If set, 'screen' and 'handheld' media specifiers for stylesheets are
+ * transformed such that they apply to the iPhone/iPod Touch Mobile Safari,
+ * which doesn't recognize 'handheld' but does support media queries on its
+ * screen size.
+ *
+ * Consider only using this if you have a *really good* handheld stylesheet,
+ * as iPhone users won't have any way to disable it and use the "grown-up"
+ * styles instead.
+ */
+$wgHandheldForIPhone = false;
+
+/**
  * Allow user Javascript page?
  * This enables a lot of neat customizations, but may
  * increase security risk to users and server load.
@@ -4573,6 +4605,17 @@ $wgExtensionMessagesFiles = array();
  *    function outputHook( $outputPage, $parserOutput, $data ) { ... }
  */
 $wgParserOutputHooks = array();
+
+/**
+ * List of valid skin names.
+ * The key should be the name in all lower case, the value should be a properly
+ * cased name for the skin. This value will be prefixed with "Skin" to create the
+ * class name of the skin to load, and if the skin's class cannot be found through
+ * the autoloader it will be used to load a .php file by that name in the skins directory.
+ * The default skins will be added later, by Skin::getSkinNames(). Use
+ * Skin::getSkinNames() as an accessor if you wish to have access to the full list.
+ */
+$wgValidSkinNames = array();
 
 /**
  * Special page list.

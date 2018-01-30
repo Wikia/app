@@ -3,8 +3,8 @@ if( !defined( 'MEDIAWIKI' ) )
 	die( -1 );
 
 class SkinOasis extends WikiaSkin {
-	public function __construct( string $skinName ) {
-		parent::__construct( $skinName );
+	function __construct() {
+		parent::__construct( 'OasisTemplate', 'oasis' );
 
 		//non-strict checks of css/js/scss assets/packages
 		$this->strictAssetUrlCheck = false;
@@ -22,10 +22,6 @@ class SkinOasis extends WikiaSkin {
 		$bottomScripts = parent::bottomScripts();
 		$bottomScripts = str_replace( $this->wg->out->getScriptsOnly(), '', $bottomScripts );
 		return $bottomScripts;
-	}
-
-	protected function getTemplate(): QuickTemplate {
-		return new OasisTemplate();
 	}
 }
 

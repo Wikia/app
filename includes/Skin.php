@@ -22,53 +22,177 @@ if ( !defined( 'MEDIAWIKI' ) ) {
  * //Wikia Change End
  */
 abstract class Skin extends ContextSource {
-	const SKINS = [
-		'oasis' => 'SkinOasis',
-		'monobook' => 'SkinMonoBook',
-		'uncyclopedia' => 'SkinUncyclopedia',
-		'wikiamobile' => 'SkinWikiaMobile',
-	];
-
-	const SKINS_AVAILABLE_AS_PREFERENCE = [ 'oasis', 'monobook' ];
-
-	protected $skinname;
+	protected $skinname = 'oasis';
 	protected $mRelevantTitle = null;
 	protected $mRelevantUser = null;
 
-	public function __construct( string $skinName ) {
-		$this->skinname = $skinName;
+	/**
+	 * Fetch the set of available skins.
+	 * @return array associative of strings
+	 */
+	static function getSkinNames() {
+		global $wgValidSkinNames;
+		static $skinsInitialised = false;
+
+		if ( !$skinsInitialised || !count( $wgValidSkinNames ) ) {
+			# Get a list of available skins
+			# Build using the regular expression '^(.*).php$'
+			# Array keys are all lower case, array value keep the case used by filename
+			#
+			wfProfileIn( __METHOD__ . '-init' );
+
+			global $wgStyleDirectory;
+
+			$skinDir = dir( $wgStyleDirectory );
+
+			# while code from www.php.net
+			while ( false !== ( $file = $skinDir->read() ) ) {
+				// Skip non-PHP files, hidden files, and '.dep' includes
+				$matches = array();
+
+				if ( preg_match( '/^([^.]*)\.php$/', $file, $matches ) ) {
+					$aSkin = $matches[1];
+					$wgValidSkinNames[strtolower( $aSkin )] = $aSkin;
+				}
+			}
+			$skinDir->close();
+			$skinsInitialised = true;
+
+			ksort($wgValidSkinNames); // Wikia change - BAC-1154
+
+			# PLATFORM-1652 Remove legacy skins
+			# Michał 'Mix' Roszka <mix@wikia.com>
+			# I am wondering how often we do these file system scans.
+			# I see room for improvement here.
+			# I log therefore I am.
+			if ( ( new Wikia\Util\Statistics\BernoulliTrial( 0.01 ) )->shouldSample() ) {
+				Wikia\Logger\WikiaLogger::instance()->info(
+					'PLATFORM-1652 getSkinNames',
+					[ 'wgValidSkinNames' => $wgValidSkinNames ]
+				);
+			}
+
+			wfProfileOut( __METHOD__ . '-init' );
+		}
+		return $wgValidSkinNames;
+	}
+
+ 	/**
+	 * Fetch the skinname messages for available skins.
+	 * @return array of strings
+	 */
+	static function getSkinNameMessages() {
+		$messages = array();
+		foreach( self::getSkinNames() as $skinKey => $skinName ) {
+			$messages[] = "skinname-$skinKey";
+		}
+		return $messages;
 	}
 
 	/**
-	 * Fetch the set of available skins.
-	 * @return array
+	 * Fetch the list of usable skins in regards to $wgSkipSkins.
+	 * Useful for Special:Preferences and other places where you
+	 * only want to show skins users _can_ use.
+	 * @return array of strings
 	 */
-	static function getSkinNames() {
-		$skinNames = array_keys( static::SKINS );
+	public static function getUsableSkins() {
+		global $wgSkipSkins;
 
-		return array_combine( $skinNames, array_map( function ( $skinName ) {
-			return wfMessage( "skinname-$skinName" )->text();
-		}, $skinNames ) );
+		$usableSkins = self::getSkinNames();
+
+		foreach ( $wgSkipSkins as $skip ) {
+			unset( $usableSkins[$skip] );
+		}
+
+		return $usableSkins;
+	}
+
+	/**
+	 * Normalize a skin preference value to a form that can be loaded.
+	 * If a skin can't be found, it will fall back to the configured
+	 * default (or the old 'Classic' skin if that's broken).
+	 * @param $key String: 'monobook', etc.
+	 * @return string
+	 */
+	static function normalizeKey( $key ) {
+		global $wgDefaultSkin;
+
+		$skinNames = Skin::getSkinNames();
+
+		if ( $key == '' ) {
+			// Don't return the default immediately;
+			// in a misconfiguration we need to fall back.
+			$key = $wgDefaultSkin;
+		}
+
+		if ( isset( $skinNames[$key] ) ) {
+			return $key;
+		}
+
+		// Older versions of the software used a numeric setting
+		// in the user preferences.
+		$fallback = array(
+			0 => $wgDefaultSkin
+		);
+
+		if ( isset( $fallback[$key] ) ) {
+			$key = $fallback[$key];
+		}
+
+		if ( isset( $skinNames[$key] ) ) {
+			return $key;
+		} elseif ( isset( $skinNames[$wgDefaultSkin] ) ) {
+			return $wgDefaultSkin;
+		} else {
+			return 'oasis';
+		}
 	}
 
 	/**
 	 * Factory method for loading a skin of a given type
-	 * @param string $skinName: 'monobook', etc.
+	 * @param $key String: 'monobook', etc.
 	 * @return Skin
 	 */
-	static function newFromKey( string $skinName ): Skin {
-		$lowerCaseName = strtolower( $skinName );
+	static function &newFromKey( $key ) {
+		global $wgStyleDirectory;
 
-		if ( isset( static::SKINS[$lowerCaseName] ) && class_exists( static::SKINS[$lowerCaseName] ) ) {
-			$className = static::SKINS[$lowerCaseName];
-			return new $className( $lowerCaseName );
+		$key = Skin::normalizeKey( $key );
+
+		$skinNames = Skin::getSkinNames();
+		$skinName = $skinNames[$key];
+		$className = "Skin{$skinName}";
+
+		# Grab the skin class and initialise it.
+		if ( !MWInit::classExists( $className ) ) {
+
+			if ( !defined( 'MW_COMPILED' ) ) {
+				// Preload base classes to work around APC/PHP5 bug
+				$deps = "{$wgStyleDirectory}/{$skinName}.deps.php";
+				if ( file_exists( $deps ) ) {
+					include_once( $deps );
+				}
+				require_once( "{$wgStyleDirectory}/{$skinName}.php" );
+			}
+
+			# Check if we got if not failback to default skin
+			if ( !MWInit::classExists( $className ) ) {
+				# DO NOT die if the class isn't found. This breaks maintenance
+				# scripts and can cause a user account to be unrecoverable
+				# except by SQL manipulation if a previously valid skin name
+				# is no longer valid.
+				wfDebug( "Skin class does not exist: $className\n" );
+				$className = 'SkinOasis';
+				if ( !defined( 'MW_COMPILED' ) ) {
+					require_once( "{$wgStyleDirectory}/Oasis.php" );
+				}
+			}
 		}
-
-		return new SkinOasis( 'oasis' );
+		$skin = new $className( $key );
+		return $skin;
 	}
 
 	/** @return string skin name */
-	public final function getSkinName() {
+	public function getSkinName() {
 		return $this->skinname;
 	}
 
