@@ -71,8 +71,37 @@ class MediaWiki_I18N {
  *
  * @ingroup Skins
  */
-abstract class SkinTemplate extends Skin {
-	public $data;
+class SkinTemplate extends Skin {
+	/**#@+
+	 * @private
+	 */
+
+	/**
+	 * Name of our skin, it probably needs to be all lower case.  Child classes
+	 * should override the default.
+	 */
+	var $skinname = 'monobook';
+
+	/**
+	 * Stylesheets set to use.  Subdirectory in skins/ where various stylesheets
+	 * are located.  Child classes should override the default.
+	 */
+	var $stylename = 'monobook';
+
+	/**
+	 * For QuickTemplate, the name of the subclass which will actually fill the
+	 * template.  Child classes should override the default.
+	 */
+	var $template = 'QuickTemplate';
+
+	/**
+	 * Whether this skin use OutputPage::headElement() to generate the <head>
+	 * tag
+	 */
+	var $useHeadElement = false;
+
+	var $data;
+	/**#@-*/
 
 	/**
 	 * Add specific styles for this skin
@@ -81,6 +110,21 @@ abstract class SkinTemplate extends Skin {
 	 */
 	function setupSkinUserCss( OutputPage $out ) {
 		$out->addModuleStyles( array( 'mediawiki.legacy.shared', 'mediawiki.legacy.commonPrint' ) );
+	}
+
+	/**
+	 * Create the template engine object; we feed it a bunch of data
+	 * and eventually it spits out some HTML. Should have interface
+	 * roughly equivalent to PHPTAL 0.7.
+	 *
+	 * @param $classname String
+	 * @param $repository string: subdirectory where we keep template files
+	 * @param $cache_dir string
+	 * @return QuickTemplate
+	 * @private
+	 */
+	function setupTemplate( $classname, $repository = false, $cache_dir = false ) {
+		return new $classname();
 	}
 
 	/**
@@ -117,7 +161,7 @@ abstract class SkinTemplate extends Skin {
 		wfProfileIn( __METHOD__ . '-init' );
 		$this->initPage( $out );
 
-		$tpl = $this->getTemplate();
+		$tpl = $this->setupTemplate( $this->template, 'skins' );
 		wfProfileOut( __METHOD__ . '-init' );
 
 		wfProfileIn( __METHOD__ . '-stuff' );
@@ -146,7 +190,7 @@ abstract class SkinTemplate extends Skin {
 		wfProfileOut( __METHOD__ . '-stuff' );
 
 		wfProfileIn( __METHOD__ . '-stuff-head' );
-		if ( !$this->usesHeadElement() ) {
+		if ( !$this->useHeadElement ) {
 			$tpl->set( 'pagecss', false );
 			$tpl->set( 'usercss', false );
 
@@ -487,7 +531,7 @@ abstract class SkinTemplate extends Skin {
 		$tpl->set( 'nav_urls', $this->buildNavUrls() );
 
 		// Set the head scripts near the end, in case the above actions resulted in added scripts
-		if ( $this->usesHeadElement() ) {
+		if ( $this->useHeadElement ) {
 			$tpl->set( 'headelement', $out->headElement( $this ) );
 		} else {
 			$tpl->set( 'headscripts', $out->getHeadScripts() . $out->getHeadItems() );
@@ -1261,21 +1305,6 @@ abstract class SkinTemplate extends Skin {
 	public function commonPrintStylesheet() {
 		return false;
 	}
-
-	/**
-	 * SUS-3836: Factory method to get an instance of the {@link QuickTemplate} implementation powering this skin.
-	 * Must be implemented by subclasses.
-	 *
-	 * @return QuickTemplate
-	 */
-	abstract protected function getTemplate(): QuickTemplate;
-
-	/**
-	 * Whether this skin uses {@see OutputPage::headElement()} to output the <head> tag
-	 */
-	protected function usesHeadElement(): bool {
-		return false;
-	}
 }
 
 /**
@@ -1286,9 +1315,6 @@ abstract class SkinTemplate extends Skin {
 abstract class QuickTemplate {
 	/* @var array */
 	var $data;
-
-	/** @var MediaWiki_I18N $translator */
-	protected $translator;
 
 	/**
 	 * Constructor

@@ -2,8 +2,6 @@
 
 namespace Wikia\Tests\WikiaSkin;
 
-use QuickTemplate;
-
 class DummySkin extends \WikiaSkin {
 
 	protected $strictAssetUrlCheck = false;
@@ -17,15 +15,6 @@ class DummySkin extends \WikiaSkin {
 		return $this->getOutput()->getBottomScripts();
 	}
 
-	/**
-	 * SUS-3836: Factory method to get an instance of the {@link QuickTemplate} implementation powering this skin.
-	 * Must be implemented by subclasses.
-	 *
-	 * @return QuickTemplate
-	 */
-	protected function getTemplate(): QuickTemplate {
-		return null;
-	}
 }
 
 /**
@@ -64,7 +53,7 @@ class WikiaSkinTest extends \WikiaBaseTest {
 
 		$this->mockOutputPageWithStyles($cssFiles);
 
-		$skin = new DummySkin( 'karamba' );
+		$skin = new DummySkin();
 		$combinedStyles = $skin->getStylesWithCombinedSASS($sassFiles);
 
 		$this->assertEquals(3, substr_count($combinedStyles, '<link rel="stylesheet"'), 'There should be three CSS/SASS requests made - ' . $combinedStyles);

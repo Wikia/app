@@ -240,9 +240,9 @@ class WikiaApp {
 	}
 	/** Getter/Setter for global/static skin template object
 	 *
-	 * @param QuickTemplate $skinTemplate
+	 * @param SkinTemplate $skinTemplate
 	 */
-	public function setSkinTemplateObj( QuickTemplate $skinTemplate ) {
+	public function setSkinTemplateObj( &$skinTemplate ) {
 		$this->skinTemplateObj = $skinTemplate;
 	}
 

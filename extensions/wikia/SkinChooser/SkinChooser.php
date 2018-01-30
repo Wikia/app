@@ -21,4 +21,5 @@ $wgAutoloadClasses['SkinChooser'] = $dir . 'SkinChooser.class.php';
 $wgExtensionMessagesFiles['SkinChooser'] = $dir . 'SkinChooser.i18n.php';
 
 // register hooks
+$wgHooks['GetPreferences'][] = 'SkinChooser::onGetPreferences';
 $wgHooks['RequestContextCreateSkin'][] = 'SkinChooser::onGetSkin';
