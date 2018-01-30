@@ -140,21 +140,26 @@
 				index = 0,
 				length = RTE.config.contentsCss.length;
 
-			(function load() {
-				$.get(RTE.config.contentsCss[index], function(css) {
-					contentsCss.push(css);
-					index++;
+			if (RTE.config.contentCssLoaded) {
+				RTE.initCk(editor);
+			} else {
+				(function load() {
+					$.get(RTE.config.contentsCss[index], function (css) {
+						contentsCss.push(css);
+						index++;
 
-					if (index < length) {
-						load();
+						if (index < length) {
+							load();
 
-					// Done loading
-					} else {
-						RTE.config.contentsCss = contentsCss;
-						RTE.initCk(editor);
-					}
-				});
-			}());
+							// Done loading
+						} else {
+							RTE.config.contentsCss = contentsCss;
+							RTE.config.contentCssLoaded = true;
+							RTE.initCk(editor);
+						}
+					});
+				}());
+			}
 		},
 
 		init: function(editor) {
