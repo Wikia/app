@@ -132,6 +132,10 @@ abstract class Maintenance {
 			? getenv( 'MW_INSTALL_PATH' )
 			: realpath( dirname( __FILE__ ) . '/..' );
 
+		# FANDOM change: add common MW directories to include_path to
+		# speed up possible require/include with relative paths.
+		ini_set( "include_path", "{$IP}:{$IP}/includes:{$IP}/languages:{$IP}/lib/vendor:.:" );
+
 		$this->addDefaultParams();
 		register_shutdown_function( array( $this, 'outputChanneled' ), false );
 	}
