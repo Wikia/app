@@ -1768,13 +1768,17 @@ class PPTemplateFrame_DOM extends PPFrame_DOM {
 	}
 
 	function getArgument( $name ) {
+		global $wgRTEParserEnabled;
+
 		$text = $this->getNumberedArgument( $name );
 		if ( $text === false ) {
 			$text = $this->getNamedArgument( $name );
 		}
 
 		// FANDOM change - XW-4380: Remove internal link markers from template arguments
-		RTEData::removeInternalLinkMarkersFromText( $text );
+		if ( !empty( $wgRTEParserEnabled ) ) {
+			RTEData::removeInternalLinkMarkersFromText( $text );
+		}
 		// end FANDOM change
 
 		return $text;
