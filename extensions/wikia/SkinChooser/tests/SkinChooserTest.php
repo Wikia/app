@@ -1,75 +1,52 @@
 <?php
 
-use PHPUnit\Framework\TestCase;
+class SkinChooserTest extends WikiaBaseTest {
 
-class SkinChooserTest extends TestCase {
-	/** @var IContextSource $context */
-	private $context;
-	/** @var FauxRequest $request */
-	private $request;
-
-	protected function setUp() {
+	function setUp() {
 		parent::setUp();
-
-		$this->request = new FauxRequest();
-
-		$this->context = new RequestContext();
-		$this->context->setRequest( $this->request );
+		$this->mockGlobalVariable('wgDefaultSkin', 'oasis');
 	}
 
 	/**
-	 * @dataProvider xSkinHeaderProvider
-	 * @param string $headerValue
-	 * @param string $expectedParamValue
+	 * @param string||false $headerValue
+	 * @param string $expectedSkinClass
+	 *
+	 * @dataProvider onGetSkinProvider
 	 */
-	public function testXSkinHeaderIsMappedToRequestParam( string $headerValue, string $expectedParamValue ) {
-		$this->request->setHeader( 'X-Skin', $headerValue );
+	function testOnGetSkin( $headerValue, $expectedSkinClass ) {
+		/** @var WebRequest $requestMock */
+		$requestMock = $this->createConfiguredMock( WebRequest::class, [
+			'getHeader' => $headerValue
+		] );
 
-		SkinChooser::onGetSkin( $this->context );
+		/** @var User $userMock */
+		$userMock = $this->createConfiguredMock( User::class, [
+			'isLoggedIn' => false
+		] );
 
-		$this->assertEquals( $expectedParamValue, $this->request->getVal( 'useskin' ) );
-	}
+		$context = new RequestContext();
+		$context->setRequest( $requestMock );
+		$context->setUser( $userMock );
 
-	public function xSkinHeaderProvider(): Traversable {
-		yield 'X-Skin: mercury is mapped to wikiamobile' => [ 'mercury', 'wikiamobile' ];
+		SkinChooser::onGetSkin( $context, $skin );
 
-		foreach ( array_keys( Skin::SKINS ) as $skinName ) {
-			yield "X-Skin: $skinName is supported" => [ $skinName, $skinName ];
+		if ($expectedSkinClass !== null) {
+			$this->assertInstanceOf( $expectedSkinClass, $skin );
+		}
+		else {
+			$this->assertNull( $skin );
 		}
 	}
 
-	public function testXSkinHeaderHasNoEffectForInvalidSkin() {
-		$this->request->setHeader( 'X-Skin', 'karamba' );
-
-		SkinChooser::onGetSkin( $this->context );
-
-		$this->assertNull( $this->request->getVal( 'useskin' ) );
-	}
-
-	public function testValidXSkinHeaderOverridesRequestParam() {
-		$this->request->setVal( 'useskin', 'monobook' );
-		$this->request->setHeader( 'X-Skin', 'oasis' );
-
-		SkinChooser::onGetSkin( $this->context );
-
-		$this->assertEquals( 'oasis', $this->request->getVal( 'useskin' ) );
-	}
-
-	/**
-	 * @dataProvider legacySkinProvider
-	 * @param string $rawValue
-	 * @param string $mappedParamValue
-	 */
-	public function testLegacySkinNamesProvidedInRequestParamAreMapped( string $rawValue, string $mappedParamValue ) {
-		$this->request->setVal( 'useskin', $rawValue );
-
-		SkinChooser::onGetSkin( $this->context );
-
-		$this->assertEquals( $mappedParamValue, $this->request->getVal( 'useskin' ) );
-	}
-
-	public function legacySkinProvider(): Traversable {
-		yield 'mercury is mapped to wikiamobile' => [ 'mercury', 'wikiamobile' ];
-		yield 'wikia is mapped to oasis' => [ 'wikia', 'oasis' ];
+	function onGetSkinProvider() {
+		return [
+			[ 'dynks', null ], # SkinChooser logic leaves early when X-Skin is set to an unknown skin (and returns no skin instance)
+			[ false, SkinOasis::class ], # use $wgDefaultSkin (for anons)
+			[ 'monobook', SkinMonoBook::class ],
+			[ 'oasis', SkinOasis::class ],
+			[ 'wikia', SkinOasis::class ],
+			[ 'uncyclopedia', SkinUncyclopedia::class ],
+			[ 'mercury', SkinWikiaMobile::class ],
+		];
 	}
 }

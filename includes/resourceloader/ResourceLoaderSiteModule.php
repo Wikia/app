@@ -32,9 +32,11 @@ class ResourceLoaderSiteModule extends ResourceLoaderGlobalWikiModule {
 	 *
 	 * @param $context ResourceLoaderContext
 	 *
-	 * @return array List of pages
+	 * @return Array: List of pages
 	 */
 	protected function getPages( ResourceLoaderContext $context ) {
+		global $wgHandheldStyle;
+
 		$pages = array(
 			'MediaWiki:Common.js' => array( 'type' => 'script' ),
 			'MediaWiki:Common.css' => array( 'type' => 'style' ),
@@ -42,6 +44,11 @@ class ResourceLoaderSiteModule extends ResourceLoaderGlobalWikiModule {
 			'MediaWiki:' . ucfirst( $context->getSkin() ) . '.css' => array( 'type' => 'style' ),
 			'MediaWiki:Print.css' => array( 'type' => 'style', 'media' => 'print' ),
 		);
+		if ( $wgHandheldStyle ) {
+			$pages['MediaWiki:Handheld.css'] = array( 
+				'type' => 'style', 
+				'media' => 'handheld' );
+		}
 
 		Hooks::run( 'ResourceLoaderSiteModule::getPages', array( $this, $context, &$pages ) );
 

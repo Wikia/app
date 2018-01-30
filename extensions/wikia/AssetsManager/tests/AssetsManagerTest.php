@@ -95,6 +95,34 @@ class AssetsManagerTest extends WikiaBaseTest {
 	}
 
 	/**
+	 * @dataProvider getGroupsForSkin
+	 */
+	public function testCheckIfGroupForSkin( $skin, $skinRegisteredInGroup, $isSkinStrict, $expectedValue ) {
+		$wikiaSkinMock = $this->getMock( 'WikiaSkin', ['getSkinName', 'isStrict'] );
+		$wikiaSkinMock
+			->expects( $this->any() )
+			->method( 'getSkinName' )
+			->will( $this->returnValue( $skin ) );
+
+		$wikiaSkinMock
+			->expects( $this->any() )
+			->method( 'isStrict' )
+			->will( $this->returnValue( $isSkinStrict) );
+
+		$assetsManagerConfigMock = $this->getMock( 'AssetsConfig', ['getGroupSkin'] );
+		$assetsManagerConfigMock
+			->expects( $this->any() )
+			->method( 'getGroupSkin' )
+			->will( $this->returnValue( $skinRegisteredInGroup ) );
+
+		// This needs to be called because AssetsConfig is a private singleton inside AssetsManager class
+		$this->mockClass( 'AssetsConfig', $assetsManagerConfigMock );
+		$assetsManagerMock = $this->getMock( 'AssetsManager', null, [], '', false );
+
+		$this->assertEquals( $assetsManagerMock->checkIfGroupForSkin( 'foo', $wikiaSkinMock ), $expectedValue );
+	}
+
+	/**
 	 * @dataProvider checkAssetUrlForSkinDataProvider
 	 */
 	public function testCheckAssetUrlForSkin( $url, $isSkinStrict, $expectedValue ) {
@@ -222,6 +250,13 @@ class AssetsManagerTest extends WikiaBaseTest {
 			[AssetsManager::getInstance()->getSassCommonURL( self::SASS_FILE ), self::SASS_FILE],
 			[self::SASS_FILE, self::SASS_FILE],
 			['http://google.com' . self::SASS_FILE, 'http://google.com' . self::SASS_FILE],
+		];
+	}
+
+	public function getGroupsForSkin() {
+		return [
+			[ 'oasis', [ 'oasis' ], false, true ],
+			[ 'oasis', [], false, true ],
 		];
 	}
 }

@@ -6,8 +6,6 @@ $messages['en'] = array(
 	'site-layout' => 'Site Layouts',
 	'new-look' => 'Wikia',
 	'right-setadminskin' => 'Set the default skin',
-	'skinname-oasis' => 'Wikia',
-	'skinname-uncyclopedia' => 'Uncyclopedia',
 );
 
 $messages['qqq'] = array(

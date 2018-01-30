@@ -93,14 +93,15 @@ class UserPreferencesV2 {
 			$defaultPreferences[self::LANDING_PAGE_PROP_NAME]['help'] = wfMessage( 'preferences-v2-redirect-explanation', parse_url( $wgServer, PHP_URL_HOST ) )->plain();
 			$defaultPreferences = self::moveToEndOfArray( $defaultPreferences, self::LANDING_PAGE_PROP_NAME );
 		}
-
-		$defaultPreferences['showAds']['section'] = 'personal/appearance';
-		$defaultPreferences['showAds']['label-message'] = 'tog-showAdsv2';
-		$defaultPreferences['showAds']['type'] = 'select';
-		$adOptions[wfMessage( 'preferences-v2-showads-disable' )->plain()] = 0;
-		$adOptions[wfMessage( 'preferences-v2-showads-enable' )->plain()] = 1;
-		$defaultPreferences['showAds']['options'] = $adOptions;
-		$defaultPreferences = self::moveToEndOfArray( $defaultPreferences, 'showAds' );
+		if ( isset( $defaultPreferences['showAds'] ) ) {
+			$defaultPreferences['showAds']['section'] = 'personal/appearance';
+			$defaultPreferences['showAds']['label-message'] = 'tog-showAdsv2';
+			$defaultPreferences['showAds']['type'] = 'select';
+			$adOptions[wfMessage( 'preferences-v2-showads-disable' )->plain()] = 0;
+			$adOptions[wfMessage( 'preferences-v2-showads-enable' )->plain()] = 1;
+			$defaultPreferences['showAds']['options'] = $adOptions;
+			$defaultPreferences = self::moveToEndOfArray( $defaultPreferences, 'showAds' );
+		}
 
 		// Tab 2: Email
 		unset( $defaultPreferences['imagesize'] );
