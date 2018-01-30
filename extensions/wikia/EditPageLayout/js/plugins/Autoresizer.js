@@ -115,6 +115,9 @@
 						var dimensions = this.getHeightToFit(this.editbox);
 						if ( dimensions.viewportHeight > this.minPageHeight ) {
 							this.editbox.height( dimensions.nodeHeight );
+							//fix for source editor's height - XW-4418
+							this.editbox.find('.cke_source').height( dimensions.nodeHeight );
+							$('#wpTextbox0').height( dimensions.nodeHeight );
 						}
 					}
 					break;

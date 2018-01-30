@@ -1518,33 +1518,6 @@ $wgHighValueCountries = null;
 $wgAdDriverTurtleCountries = null;
 
 /**
- * @name $wgAdDriverSourcePointDetectionCountries
- * List of countries to call SourcePoint detection scripts
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverSourcePointDetectionCountries = null;
-
-/**
- * @name $wgAdDriverSourcePointDetectionMobileCountries
- * List of countries to call SourcePoint detection scripts on Mercury
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverSourcePointDetectionMobileCountries = null;
-
-/**
- * @name $wgAdDriverSourcePointRecoveryCountries
- * List of countries to call ads through SourcePoint
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverSourcePointRecoveryCountries = null;
-
-/**
- * @name wgAdDriverEnableSourcePointRecovery
- * Enable SourcePoint Recovery per wiki
- */
-$wgAdDriverEnableSourcePointRecovery = true;
-
-/**
  * @name wgAdDriverEnableInstartLogicRecovery
  * Enable InstartLogic Recovery per wiki
  */
@@ -1568,6 +1541,24 @@ $wgAdDriverPageFairRecoveryCountries = null;
  * Enable PageFair Recovery per wiki
  */
 $wgAdDriverEnablePageFairRecovery = true;
+
+/**
+ * @name $wgAdDriverBabDetectionDesktopCountries
+ * List of countries to call BlockAdBlock detection scripts on oasis
+ */
+$wgAdDriverBabDetectionDesktopCountries = null;
+
+/**
+ * @name $wgAdDriverBabDetectionMobileCountries
+ * List of countries to call BlockAdBlock detection scripts on mobile-wiki
+ */
+$wgAdDriverBabDetectionMobileCountries = null;
+
+/**
+ * @name $wgAdDriverF2BabDetectionCountries
+ * List of countries to call BlockAdBlock detection scripts on news&stories
+ */
+$wgAdDriverF2BabDetectionCountries = null;
 
 /**
  * trusted proxy service registry
@@ -1905,7 +1896,7 @@ $wgDisableImprovedGenderSupport = true;
 $wgAutoapproveJS = false;
 
 /**
- * Enable SourcePoint recovery
+ * Enable recovery
  * It should be always included even if recovery is disabled as we use Recovery classes outside the module
  */
 include_once("$IP/extensions/wikia/ARecoveryEngine/ARecoveryEngine.setup.php");
@@ -1924,6 +1915,9 @@ require_once "$IP/extensions/wikia/CityList/CityList.setup.php";
 
 // SUS-3496: Extension to update shared dataware.pages table
 require_once "$IP/extensions/wikia/Pages/Pages.setup.php";
+
+// SUS-3455: Special:ListGlobalUsers for all wikis
+require_once "$IP/extensions/wikia/ListGlobalUsers/ListGlobalUsers.setup.php";
 
 // SRE-76: Logging classes that have been initially defined in config.
 $wgAutoloadClasses['AuditLog'] = "$IP/includes/wikia/AuditLog.class.php";

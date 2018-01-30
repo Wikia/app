@@ -845,11 +845,9 @@ $messages['ru'] = array(
 	'insights-list-subtitle-flags' => 'Страницы, отмеченные флагами',
 	'insights-list-description-flags' => 'Используйте Флаги, чтобы упорядочить статьи на вашей вики. Этот список позволит вам просматривать отчёты об отмеченных флагами статьях и выявить статьи, которые больше всего нуждаются в улучшении. [[Справка:Флаги|Узнайте больше о флагах]]',
 	'insights-notification-message-inprogress-flags' => 'Эта страница отмечена флагом.',
-	'insights-list-subtitle-nonportableinfoboxes' => 'Немодульные инфобоксы',
-	'insights-list-description-nonportableinfoboxes' => 'Эти инфобоксы построены с помощью таблиц и блоков и должны быть переписаны с использованием новой [[Справка:Модульные инфобоксы|модульной разметки]] для корректного отображения на всех устройствах.
-
-[[w:c:ru.community:Thread:59124|Обсуждение модульных инфобокосв]] на русском языке.',
-	'insights-notification-message-inprogress-nonportableinfoboxes' => 'Этот инфобокс необходимо переписать с использованием новой модульной разметки.',
+	'insights-list-subtitle-nonportableinfoboxes' => 'Инфобоксы с вики-разметкой',
+	'insights-list-description-nonportableinfoboxes' => 'Эти инфобоксы построены с помощью таблиц и блоков и должны быть переписаны с использованием  [[Справка:Инфобоксы|новой разметки]] для корректного отображения на всех устройствах.',
+	'insights-notification-message-inprogress-nonportableinfoboxes' => 'Этот инфобокс необходимо переписать с использованием новой разметки.',
 	'insights-notification-message-fixed-nonportableinfoboxes' => 'Отлично! Инфобокс на этой странице был конвертирован.',
 	'insights-notification-next-item-nonportableinfoboxes' => 'Конвертируйте следующий инфобокс.',
 	'insights-sort-pv7' => 'Количеству просмотров страниц за прошлую неделю',

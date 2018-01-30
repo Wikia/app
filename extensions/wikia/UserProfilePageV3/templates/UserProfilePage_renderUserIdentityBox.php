@@ -1,7 +1,7 @@
 <input type="hidden" id="reloadUrl" value="<?= $reloadUrl; ?>">
 <section id="UserProfileMasthead" class="UserProfileMasthead <?= $zeroStateCssClass ?>" itemscope itemtype="http://schema.org/Person">
 	<div class="masthead-avatar">
-		<img src="<?= $user['avatar']; ?>" itemprop="image" class="avatar">
+		<img src="<?= Sanitizer::encodeAttribute( $user['avatar'] ); ?>" itemprop="image" class="avatar">
 
 		<div class="avatar-controls">
 			<? if ( $canEditProfile ): ?>
@@ -13,7 +13,7 @@
 			<?php if ( $canRemoveAvatar ): ?>
 				<span>
 					<img src="<?= $wgBlankImgUrl ?>" class="sprite trash">
-					<a id="UserAvatarRemove" data-name="<?= $user['name']; ?>" href="#" data-confirm="<?= wfMessage( 'user-identity-remove-confirmation' )->escaped(); ?>">
+					<a id="UserAvatarRemove" data-name="<?= Sanitizer::encodeAttribute( $user['name'] ); ?>" href="#" data-confirm="<?= wfMessage( 'user-identity-remove-confirmation' )->escaped(); ?>">
 						<?= wfMessage( 'user-identity-box-delete-avatar' )->escaped(); ?>
 					</a>
 				</span>
@@ -25,7 +25,7 @@
 		<hgroup>
 			<h1 itemprop="name"><?= $user['name']; ?></h1>
 			<? if ( !empty( $user['realName'] ) ): ?>
-				<h2><?= wfMessage( 'user-identity-box-aka-label', $user['realName'] )->plain(); ?></h2>
+				<h2><?= wfMessage( 'user-identity-box-aka-label' )->rawParams( htmlspecialchars( $user['realName'] ) )->parse(); ?></h2>
 			<? endif; ?>
 			<? if ( !empty( $user['tags'] ) ): ?>
 				<?php foreach ( $user['tags'] as $tag ): ?>
@@ -59,16 +59,16 @@
 		<div class="masthead-info-lower">
 			<div class="contributions-details tally">
 				<? if ( !empty( $user['registration'] ) ): ?>
-					<a href="<?= Sanitizer::encodeAttribute( $user['contributionsURL'] ) ?>">
-						<em><?= $user['edits'] ?></em>
+					<a href="<?= Sanitizer::encodeAttribute( $user['contributionsURL'] ); ?>">
+						<em><?= htmlspecialchars( $user['edits'] ); ?></em>
 						<span>
-							<?= wfMessage( 'user-identity-box-edits-since-joining', $user['registration'] )->plain() ?>
+							<?= wfMessage( 'user-identity-box-edits-since-joining', $user['registration'] )->parse(); ?>
 						</span>
 					</a>
 				<? else: ?>
 					<?php if ( $user['edits'] >= 0 ): ?>
 						<a href="<?= Sanitizer::encodeAttribute( $user['contributionsURL'] ) ?>">
-							<?= wfMessage( 'user-identity-box-edits', $user['edits'] )->text(); ?>
+							<?= wfMessage( 'user-identity-box-edits' )->rawParams( htmlspecialchars( $user['edits'] ) )->parse(); ?>
 						</a>
 					<?php else: ?>
 						<br/>
@@ -93,7 +93,7 @@
 				<ul class="links">
 					<? if ( !empty( $user['twitter'] ) ): ?>
 						<li class="twitter">
-							<a href="http://twitter.com/<?= $user['twitter'] ?>" rel="nofollow">
+							<a href="http://twitter.com/<?= Sanitizer::encodeAttribute( $user['twitter'] ); ?>" rel="nofollow">
 								<img src="<?= $wgBlankImgUrl ?>" class="twitter icon">
 								<?= wfMessage( 'user-identity-box-my-twitter' )->escaped(); ?>
 							</a>
@@ -109,7 +109,7 @@
 
 					<? if ( !empty( $user['website'] ) ): ?>
 						<li class="website">
-							<a href="<?= $user['website'] ?>" rel="nofollow">
+							<a href="<?= Sanitizer::encodeAttribute( $user['website'] ); ?>" rel="nofollow">
 								<img src="<?= $wgBlankImgUrl ?>" class="website icon">
 								<?= wfMessage( 'user-identity-box-my-website' )->escaped(); ?>
 							</a>
@@ -125,7 +125,7 @@
 
 					<? if ( !empty( $user['fbPage'] ) ): ?>
 						<li class="facebook">
-							<a href="<?= $user['fbPage'] ?>" rel="nofollow">
+							<a href="<?= Sanitizer::encodeAttribute( $user['fbPage'] ); ?>" rel="nofollow">
 								<img src="<?= $wgBlankImgUrl ?>" class="facebook icon">
 								<?= wfMessage( 'user-identity-box-my-fb-page' )->escaped(); ?>
 							</a>
@@ -155,7 +155,7 @@
 		<div class="details">
 			<ul>
 				<? if ( !empty( $user['location'] ) ): ?>
-					<li itemprop="address"><?= wfMessage( 'user-identity-box-location', $user['location'] )->plain(); ?></li>
+					<li itemprop="address"><?= wfMessage( 'user-identity-box-location' )->rawParams( htmlspecialchars( $user['location'] ) )->parse(); ?></li>
 				<? else: ?>
 					<? if ( $user['showZeroStates'] && ( $isUserPageOwner || $canEditProfile ) ): ?>
 						<li><?= wfMessage( 'user-identity-box-zero-state-location' )->escaped(); ?></li>
@@ -163,7 +163,7 @@
 				<? endif; ?>
 
 				<? if ( !empty( $user['birthday'] ) && intval( $user['birthday']['month'] ) > 0 && intval( $user['birthday']['month'] ) < 13 ): ?>
-					<li><?= wfMessage( 'user-identity-box-was-born-on', F::app()->wg->Lang->getMonthName( intval( $user['birthday']['month'] ) ), $user['birthday']['day'] )->plain(); ?></li>
+					<li><?= wfMessage( 'user-identity-box-was-born-on' )->params( $wg->Lang->getMonthName( intval( $user['birthday']['month'] ) ) )->numParams( intval( $user['birthday']['day'] ) )->parse(); ?></li>
 				<? else: ?>
 					<? if ( $user['showZeroStates'] && ( $isUserPageOwner || $canEditProfile ) ): ?>
 						<li><?= wfMessage( 'user-identity-box-zero-state-birthday' )->escaped(); ?></li>
@@ -171,7 +171,7 @@
 				<? endif; ?>
 
 				<? if ( !empty( $user['occupation'] ) ): ?>
-					<li><?= wfMessage( 'user-identity-box-occupation', $user['occupation'] )->plain(); ?></li>
+					<li><?= wfMessage( 'user-identity-box-occupation' )->rawParams( htmlspecialchars( $user['occupation'] ) )->parse(); ?></li>
 				<? elseif ( !empty( $user['showZeroStates'] ) ): ?>
 					<? if ( $user['showZeroStates'] && ( $isUserPageOwner || $canEditProfile ) ): ?>
 						<li><?= wfMessage( 'user-identity-box-zero-state-occupation' )->escaped(); ?></li>
@@ -179,7 +179,7 @@
 				<? endif; ?>
 
 				<? if ( !empty( $user['gender'] ) ): ?>
-					<li><?= wfMessage( 'user-identity-i-am', $user['gender'] )->plain(); ?></li>
+					<li><?= wfMessage( 'user-identity-i-am' )->rawParams( htmlspecialchars( $user['gender'] ) )->parse(); ?></li>
 				<? else: ?>
 					<? if ( $user['showZeroStates'] && ( $isUserPageOwner || $canEditProfile ) ): ?>
 						<li><?= wfMessage( 'user-identity-box-zero-state-gender' )->escaped(); ?></li>
@@ -188,7 +188,7 @@
 				<? if ( !empty( $user['bio'] ) ): ?>
 					<li class="bio" id="bio-content">
 						<?= wfMessage( 'user-identity-bio' )
-							->rawParams( preg_replace( "/(?:\r\n|\r|\n)/", "<br />", $user['bio'] ) )
+							->rawParams( preg_replace( "/(?:\r\n|\r|\n)/", "<br />", htmlspecialchars( $user['bio'] ) ) )
 							->parse(); ?>
 					</li>
 					<div class="bio-toggle" id="bio-toggler" data-modal-title="<?= wfMessage( 'user-identity-bio-modal-title' )->escaped(); ?>">

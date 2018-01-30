@@ -122,14 +122,6 @@ class UserIdentityBox extends WikiaObject {
 			$data['showZeroStates'] = $this->checkIfDisplayZeroStates( $data );
 		}
 
-		// Sanitize data to prevent XSS (VE-720)
-		$keysToSanitize = [ 'gender', 'location', 'name', 'occupation', 'realName', 'twitter', 'fbPage', 'website', 'bio' ];
-		foreach ( $keysToSanitize as $key ) {
-			if ( !empty( $data[ $key ] ) ) {
-				$data[ $key ] = htmlspecialchars( strip_tags( $data[ $key ] ), ENT_QUOTES );
-			}
-		}
-
 		wfProfileOut( __METHOD__ );
 		return $data;
 	}

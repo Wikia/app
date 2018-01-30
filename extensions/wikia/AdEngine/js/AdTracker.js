@@ -14,12 +14,12 @@ define('ext.wikia.adEngine.adTracker', [
 	function encodeAsQueryString(extraParams) {
 		var out = [], key, keys = [], i, len;
 
-		if (win.ads && win.ads.runtime.sp && typeof win.ads.runtime.sp.blocking === 'boolean') {
-			extraParams.sp = win.ads.runtime.sp.blocking ? 'yes' : 'no';
-		}
-
 		if (win.ads && win.ads.runtime.pf && typeof win.ads.runtime.pf.blocking === 'boolean') {
 			extraParams.pf = win.ads.runtime.pf.blocking ? 'yes' : 'no';
+		}
+
+		if (win.ads && win.ads.runtime.bab && typeof win.ads.runtime.bab.blocking === 'boolean') {
+			extraParams.bab = win.ads.runtime.bab.blocking ? 'yes' : 'no';
 		}
 
 		for (key in extraParams) {

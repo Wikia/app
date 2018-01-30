@@ -6,6 +6,7 @@ require([
 	'ext.wikia.adEngine.adEngineRunner',
 	'ext.wikia.adEngine.adLogicPageParams',
 	'ext.wikia.adEngine.adTracker',
+	'ext.wikia.adEngine.babDetection',
 	'ext.wikia.adEngine.slot.service.stateMonitor',
 	'ext.wikia.adEngine.config.desktop',
 	'ext.wikia.adEngine.customAdsLoader',
@@ -17,7 +18,6 @@ require([
 	'ext.wikia.adEngine.slot.service.slotRegistry',
 	'ext.wikia.adEngine.slotTracker',
 	'ext.wikia.adEngine.slotTweaker',
-	'ext.wikia.adEngine.sourcePointDetection',
 	'ext.wikia.adEngine.tracking.adInfoListener',
 	'ext.wikia.adEngine.tracking.scrollDepthTracker',
 	'ext.wikia.aRecoveryEngine.adBlockDetection',
@@ -29,6 +29,7 @@ require([
 	adEngineRunner,
 	pageLevelParams,
 	adTracker,
+	babDetection,
 	slotStateMonitor,
 	adConfigDesktop,
 	customAdsLoader,
@@ -40,7 +41,6 @@ require([
 	slotRegistry,
 	slotTracker,
 	slotTweaker,
-	sourcePointDetection,
 	adInfoListener,
 	scrollDepthTracker,
 	adBlockDetection,
@@ -75,6 +75,10 @@ require([
 			'oasis'
 		);
 		win.loadCustomAd = adEngineBridge.loadCustomAd(customAdsLoader.loadCustomAd);
+
+		if (context.opts.babDetectionDesktop) {
+			adEngineBridge.checkAdBlocking(babDetection);
+		}
 	} else {
 		win.loadCustomAd = customAdsLoader.loadCustomAd;
 	}
@@ -92,14 +96,9 @@ require([
 
 		scrollDepthTracker.run();
 
-		sourcePointDetection.initDetection();
-
 		if (context.opts.pageFairDetection) {
 			pageFairDetection.initDetection(context);
 		}
-
-		// Recovery & detection
-		adBlockDetection.initEventQueues();
 	});
 });
 
