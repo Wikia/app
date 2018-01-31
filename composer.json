@@ -44,6 +44,7 @@
     "wikia/semantic-scribunto": "^1.1",
     "phpunit/dbunit": "^3.0",
     "mediawiki/validator": "2.2.2.1",
-    "mediawiki/maps": "5.2.0.2"
+    "mediawiki/maps": "5.2.0.2",
+    "mcustiel/phiremock": "^1.8"
   }
 }
