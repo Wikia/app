@@ -1162,12 +1162,6 @@ $wgAdDriverIsAdTestWiki = false;
 $wgAdDriverNetzAthletenCountries = null;
 
 /**
- * @name $wgAdDriverDfpOoyalaContentSourceId
- * Defines content source id sent in VAST url
- */
-$wgAdDriverDfpOoyalaContentSourceId = '2458214';
-
-/**
  * @name wgAdDriverA9VideoBidderCountries
  * List of countries where A9 video bidding platform is enabled.
  * It won't work if A9 display bidder isn't enabled

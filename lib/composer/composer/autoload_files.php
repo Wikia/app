@@ -18,6 +18,5 @@ return array(
     '6124b4c8570aa390c21fafd04a26c69f' => $vendorDir . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
     'c3ae67574219cc56cab6c30ef8877b85' => $baseDir . '/extensions/Validator/Validator.php',
     'bbf73f3db644d3dced353b837903e74c' => $vendorDir . '/php-di/php-di/src/DI/functions.php',
-    '679670650e5628b8e655cb72d74ae35b' => $vendorDir . '/ooyala/v2-api/OoyalaApi.php',
     '9ebf2cbcc0b7687b276c44d77096b002' => $baseDir . '/extensions/Maps/Maps.php',
 );

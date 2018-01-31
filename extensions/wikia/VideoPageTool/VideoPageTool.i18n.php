@@ -70,8 +70,6 @@ $messages['en'] = array(
 	'videohomepage-partner-section-title' => 'Our Partners',
 	'videohomepage-partner-name-ign' => 'IGN',
 	'videohomepage-partner-name-iva' => 'IVA',
-	'videohomepage-partner-name-ooyala' => 'Ooyala',
-	'videohomepage-partner-name-screenplay' => 'Screenplay',
 );
 
 $messages['qqq'] = array(
@@ -138,8 +136,6 @@ $messages['qqq'] = array(
 	'videohomepage-partner-section-title' => 'Title for section that links to videos from our content partners',
 	'videohomepage-partner-name-ign' => 'This text is the name of a partner: IGN',
 	'videohomepage-partner-name-iva' => 'This text is the name of a partner: IVA',
-	'videohomepage-partner-name-ooyala' => 'This text is the name of a partner: Ooyala',
-	'videohomepage-partner-name-screenplay' => 'This text is the name of a partner: Screenplay',
 );
 
 $messages['de'] = array(
@@ -211,8 +207,6 @@ $messages['de'] = array(
 	'right-videopagetool' => 'Auf Fandoms Video-Werkzeug zugreifen',
 	'videohomepage-partner-name-ign' => 'IGN',
 	'videohomepage-partner-name-iva' => 'IVA',
-	'videohomepage-partner-name-ooyala' => 'Ooyala',
-	'videohomepage-partner-name-screenplay' => 'Screenplay',
 );
 
 $messages['es'] = array(
@@ -284,8 +278,6 @@ $messages['es'] = array(
 	'videopagetool-formerror-videokey' => 'Por favor añade un video',
 	'videohomepage-partner-name-ign' => 'IGN',
 	'videohomepage-partner-name-iva' => 'IVA',
-	'videohomepage-partner-name-ooyala' => 'Ooyala',
-	'videohomepage-partner-name-screenplay' => 'Screenplay',
 );
 
 $messages['fi'] = array(
@@ -365,8 +357,6 @@ $messages['fr'] = array(
 	'videopagetool-formerror-videokey' => 'Veuillez ajouter une vidéo',
 	'videohomepage-partner-name-ign' => 'IGN',
 	'videohomepage-partner-name-iva' => 'IVA',
-	'videohomepage-partner-name-ooyala' => 'Ooyala',
-	'videohomepage-partner-name-screenplay' => 'Screenplay',
 );
 
 $messages['it'] = array(
@@ -438,8 +428,6 @@ $messages['it'] = array(
 	'right-videopagetool' => 'Accedere allo strumento per i Video di FANDOM',
 	'videohomepage-partner-name-ign' => 'IGN',
 	'videohomepage-partner-name-iva' => 'IVA',
-	'videohomepage-partner-name-ooyala' => 'Ooyala',
-	'videohomepage-partner-name-screenplay' => 'Screenplay',
 );
 
 $messages['ja'] = array(
@@ -450,8 +438,6 @@ $messages['ja'] = array(
 	'videohomepage-header-dropdown-name' => '発見',
 	'videohomepage-partner-name-ign' => 'IGN',
 	'videohomepage-partner-name-iva' => 'IVA',
-	'videohomepage-partner-name-ooyala' => 'Ooyala (ウーヤラ)',
-	'videohomepage-partner-name-screenplay' => 'スクリーンプレイ',
 	'videohomepage-partner-section-title' => 'パートナー',
 	'videopagetool-button-add-thumbnail' => '画像を追加',
 	'videopagetool-button-add-video' => '動画を追加',
@@ -584,8 +570,6 @@ $messages['pl'] = array(
 	'right-videopagetool' => 'Udostępnia narzędzie wideo Fandomu',
 	'videohomepage-partner-name-ign' => 'IGN',
 	'videohomepage-partner-name-iva' => 'IVA',
-	'videohomepage-partner-name-ooyala' => 'Ooyala',
-	'videohomepage-partner-name-screenplay' => 'Screenplay',
 );
 
 $messages['pt'] = array(
@@ -657,8 +641,6 @@ $messages['pt'] = array(
 	'right-videopagetool' => 'Acessar a Ferramenta de Vídeo FANDOM',
 	'videohomepage-partner-name-ign' => 'IGN',
 	'videohomepage-partner-name-iva' => 'IVA',
-	'videohomepage-partner-name-ooyala' => 'Ooyala',
-	'videohomepage-partner-name-screenplay' => 'Roteiro',
 );
 
 $messages['ru'] = array(
@@ -730,8 +712,6 @@ $messages['ru'] = array(
 	'right-videopagetool' => 'Доступ к инструменту Фэндома для создания видео',
 	'videohomepage-partner-name-ign' => 'IGN',
 	'videohomepage-partner-name-iva' => 'IVA',
-	'videohomepage-partner-name-ooyala' => 'Ooyala',
-	'videohomepage-partner-name-screenplay' => 'Screenplay',
 );
 
 $messages['zh-hans'] = array(
@@ -803,8 +783,6 @@ $messages['zh-hans'] = array(
 	'videohomepage-partner-section-title' => 'Our Partners',
 	'videohomepage-partner-name-ign' => 'IGN',
 	'videohomepage-partner-name-iva' => 'IVA',
-	'videohomepage-partner-name-ooyala' => 'Ooyala',
-	'videohomepage-partner-name-screenplay' => 'Screenplay',
 );
 
 $messages['zh-hant'] = array(
@@ -876,7 +854,5 @@ $messages['zh-hant'] = array(
 	'right-videopagetool' => '使用Fandom影片工具',
 	'videohomepage-partner-name-ign' => 'IGN',
 	'videohomepage-partner-name-iva' => 'IVA',
-	'videohomepage-partner-name-ooyala' => 'Ooyala',
-	'videohomepage-partner-name-screenplay' => 'Screenplay',
 );
 

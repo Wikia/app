@@ -2228,40 +2228,6 @@
         "description": "Component for reading phar.io manifest information from a PHP Archive (PHAR)"
     },
     {
-        "name": "ooyala/v2-api",
-        "version": "v2.0",
-        "version_normalized": "2.0.0.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/ooyala/php-v2-sdk.git",
-            "reference": "cbe7d28bd31133daa6cd1b59919fac055629312f"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/ooyala/php-v2-sdk/zipball/cbe7d28bd31133daa6cd1b59919fac055629312f",
-            "reference": "cbe7d28bd31133daa6cd1b59919fac055629312f",
-            "shasum": ""
-        },
-        "time": "2016-06-27T16:45:25+00:00",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "1.0.x-dev"
-            }
-        },
-        "installation-source": "dist",
-        "autoload": {
-            "files": [
-                "OoyalaApi.php"
-            ]
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "proprietary"
-        ],
-        "description": "Ooyala's V2 API PHP SDK"
-    },
-    {
         "name": "pear/pear_exception",
         "version": "v1.0.0",
         "version_normalized": "1.0.0.0",

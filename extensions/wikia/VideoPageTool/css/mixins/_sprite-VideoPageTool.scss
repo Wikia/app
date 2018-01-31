@@ -49,20 +49,6 @@
 		$image-width: 85px;
 		$image-height: 38px;
 	}
-	// @autosprite-image-details: ico_ooyala.png@486,0,179f4581bea111361206a824e53faf97
-	@if $imageName == 'ico_ooyala' {
-		$image-x: 486px;
-		$image-y: 0px;
-		$image-width: 107px;
-		$image-height: 18px;
-	}
-	// @autosprite-image-details: ico_screenplay.png@605,0,cf4f575536b5f71cd83107c9648c674f
-	@if $imageName == 'ico_screenplay' {
-		$image-x: 605px;
-		$image-y: 0px;
-		$image-width: 35px;
-		$image-height: 40px;
-	}
 	// @autosprite-image-details: logo_wikiavideo.png@652,0,39ddd3d3ae05b31a906d99cdd5a3ceb2
 	@if $imageName == 'logo_wikiavideo' {
 		$image-x: 652px;
@@ -121,18 +107,6 @@
 		$image-height: 38px;
 		background-image: url('/extensions/wikia/VideoPageTool/images/sprite-VideoPageTool/ico_iva.png'); /* inline */
 	}
-	// @autosprite-image-details: ico_ooyala.png@486,0,179f4581bea111361206a824e53faf97
-	@if $imageName == 'ico_ooyala' {
-		$image-width: 107px;
-		$image-height: 18px;
-		background-image: url('/extensions/wikia/VideoPageTool/images/sprite-VideoPageTool/ico_ooyala.png'); /* inline */
-	}
-	// @autosprite-image-details: ico_screenplay.png@605,0,cf4f575536b5f71cd83107c9648c674f
-	@if $imageName == 'ico_screenplay' {
-		$image-width: 35px;
-		$image-height: 40px;
-		background-image: url('/extensions/wikia/VideoPageTool/images/sprite-VideoPageTool/ico_screenplay.png'); /* inline */
-	}
 	// @autosprite-image-details: logo_wikiavideo.png@652,0,39ddd3d3ae05b31a906d99cdd5a3ceb2
 	@if $imageName == 'logo_wikiavideo' {
 		$image-width: 187px;
@@ -182,12 +156,6 @@
 	&.ico-iva {
 		@include sprite-VideoPageTool('ico_iva',$width,$height);
 	}
-	&.ico-ooyala {
-		@include sprite-VideoPageTool('ico_ooyala',$width,$height);
-	}
-	&.ico-screenplay {
-		@include sprite-VideoPageTool('ico_screenplay',$width,$height);
-	}
 	&.logo-wikiavideo {
 		@include sprite-VideoPageTool('logo_wikiavideo',$width,$height);
 	}
@@ -208,12 +176,6 @@
 	}
 	&.ico-iva {
 		@include sprite-VideoPageTool-embed('ico_iva',$width,$height);
-	}
-	&.ico-ooyala {
-		@include sprite-VideoPageTool-embed('ico_ooyala',$width,$height);
-	}
-	&.ico-screenplay {
-		@include sprite-VideoPageTool-embed('ico_screenplay',$width,$height);
 	}
 	&.logo-wikiavideo {
 		@include sprite-VideoPageTool-embed('logo_wikiavideo',$width,$height);
