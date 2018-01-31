@@ -22,8 +22,8 @@
     "watch": "webpack -p -w"
   },
   "dependencies": {
-    "@wikia/ad-engine": "9.2.0",
-    "@wikia/ad-products": "3.2.1",
+    "@wikia/ad-engine": "9.2.1",
+    "@wikia/ad-products": "3.2.2",
     "core-decorators": "^0.20.0",
     "lodash": "^4.17.4"
   }
