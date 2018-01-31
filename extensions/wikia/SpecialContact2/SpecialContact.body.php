@@ -781,7 +781,7 @@ class ContactForm extends SpecialPage {
 	}
 	
 	private function isRenameAccountSupported() {
-		global $wgContLang, $wgEnableUserRenameToolExt;
+		global $wgEnableUserRenameToolExt;
 		return !empty( $wgEnableUserRenameToolExt );
 	}
 }
