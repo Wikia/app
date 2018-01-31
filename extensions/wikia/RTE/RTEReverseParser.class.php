@@ -1517,6 +1517,12 @@ class RTEReverseParser {
 	 * @see http://www.mediawiki.org/wiki/Images
 	 */
 	private function handleSpan($node, $textContent) {
+		// XW-4579: ignoring spans with zero-width space added in RTEParser::parse to prevent CKE from removing attributes
+		// from <br /> tags
+		if ($node->hasAttribute(self::DATA_RTE_FILTER)) {
+			return '';
+		}
+
 		// if tag contains style attribute, preserve full HTML (BugId:7098)
 		if ($node->hasAttribute('style')) {
 			$attrs = self::getAttributesStr($node);
