@@ -125,56 +125,13 @@ function mapMetadata( $videoTitle, $ingester, $data ) {
 
 	// map additional metadata (per provider)
 	$provider = strtolower( $metadata['provider'] );
-	// use iva function
-	if ( strstr( $provider, '/' ) ) {
-		$provider = 'iva';
-	}
+
 	if ( in_array( $provider, $extraMapping ) ) {
 		$function = 'mapMetadata'.ucfirst( $provider );
 		$function( $ingester, $data, $metadata );
 	}
 
 	return $metadata;
-}
-
-/**
- * mapping additional metadata for IVA
- * @param VideoFeedIngester $ingester
- * @param array $data
- * @param array $metadata
- */
-function mapMetadataIva( $ingester, $data, &$metadata ) {
-	global $countryNames, $languageNames;
-
-	// get language
-	if ( !empty( $metadata['language'] ) && !empty( $languageNames ) && array_key_exists( $metadata['language'], $languageNames ) ) {
-		$metadata['language'] = $languageNames[$metadata['language']];
-	}
-
-	// get subtitle
-	if ( !empty( $metadata['subtitle'] ) && !empty( $languageNames ) && array_key_exists( $metadata['subtitle'], $languageNames ) ) {
-		$metadata['subtitle'] = $languageNames[$metadata['subtitle']];
-	}
-
-	// get country code
-	if ( !empty( $metadata['targetCountry'] ) && !empty( $countryNames ) && array_key_exists( $metadata['targetCountry'], $countryNames ) ) {
-		$metadata['targetCountry'] = $countryNames[$metadata['targetCountry']];
-	}
-
-	$metadata['category'] = $ingester->getCategory( $metadata['category'] );
-	if ( !empty( $data['category'] ) ) {
-		$metadata['type'] = $ingester->getType( $data['category'] );
-	}
-
-	// add page categories to metadata
-	$metadata['pageCategories'] = empty( $data['pageCategories'] ) ? '' : $data['pageCategories'];
-	if ( empty( $data['pageCategories'] ) ) {
-		$metadata['pageCategories'] = '';
-	} else {
-		$categories = array_map( 'trim', explode( ',', $data['pageCategories'] ) );
-		$categories = $ingester->generateCategories( $metadata, $categories );
-		$metadata['pageCategories'] = implode( ', ', $categories );
-	}
 }
 
 /**
