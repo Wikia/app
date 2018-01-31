@@ -27,7 +27,7 @@ class ArticleVideoService {
 	 *
 	 */
 	public static function getFeaturedVideosForWiki( string $cityId ): array {
-		$key = wfMemcKey( 'article-video', 'get-for-product', $cityId );
+		$key = self::getMemCacheKey( $cityId );
 
 		return WikiaDataAccess::cacheWithOptions(
 			$key,
@@ -90,6 +90,15 @@ class ArticleVideoService {
 		return $mediaId;
 	}
 
+	public static function purgeVideoMemCache( $cityId ) {
+		$key = self::getMemCacheKey($cityId);
+
+		WikiaDataAccess::cachePurge($key);
+	}
+
+	private static function getMemCacheKey( $cityId ) {
+		return wfMemcKey( 'article-video', 'get-for-product', $cityId );
+	}
 	/**
 	 * Get Swagger-generated API client
 	 *
