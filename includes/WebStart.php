@@ -130,9 +130,7 @@ if ( file_exists( "$IP/StartProfiler.php" ) ) {
 
 wfProfileIn( 'WebStart.php-conf' );
 
-# Load default settings
-# Wikia change - comment out the next line since we include DefaultSettings.php
-# in LocalSettings.php
+# Wikia change: discard MediaWiki defaults completely and jump right to LocalSettings.php.
 #require_once( MWInit::compiledPath( "includes/DefaultSettings.php" ) );
 
 if ( defined( 'MW_CONFIG_CALLBACK' ) ) {
