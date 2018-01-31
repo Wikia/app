@@ -1101,6 +1101,19 @@ class Parser {
 					# A cell could contain both parameters and data
 					$cell_data = explode( '|' , $cell , 2 );
 
+					// Wikia change start XW-4587
+					// TODO: the same for rows, table and all that stuff
+					if ( !empty( $wgRTEParserEnabled ) ) {
+						// $cell_data[0] in this place contains either attributes of td/th/caption or if there were no
+						// attributes specified it will contain whole content of a cell. In the first case treat it all
+						// as content so wikitext after parse/reverseparse is not broken. In the second case implode does
+						// not change anything
+						if ( preg_match( "/<[^>]*placeholder.*/", $cell_data[0] ) ) {
+							$cell_data = [ implode( "|", $cell_data ) ];
+						}
+					}
+					// Wikia change end
+
 					# Bug 553: Note that a '|' inside an invalid link should not
 					# be mistaken as delimiting cell parameters
 					if ( strpos( $cell_data[0], '[[' ) !== false ) {
