@@ -1,7 +1,7 @@
 <?php
 require_once( dirname( __FILE__ ) . '/Maintenance.php' );
 
-class CountTags extends Maintenance {
+class CountVideoTags extends Maintenance {
 
 	public function execute() {
 		global $wgSpecialsDB, $wgCityId;
@@ -41,3 +41,6 @@ class CountTags extends Maintenance {
 	}
 
 }
+
+$maintClass = CountVideoTags::class;
+require_once( RUN_MAINTENANCE_IF_MAIN );
