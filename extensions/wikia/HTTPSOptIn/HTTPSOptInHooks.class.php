@@ -77,7 +77,7 @@ class HTTPSOptInHooks {
 			$user->getGlobalPreference( 'https-opt-in', false );
 	}
 
-	private static function httpsEnabledTitle(Title $title) {
+	private static function httpsEnabledTitle( Title $title ): bool {
 		global $wgDBname;
 		return array_key_exists( $wgDBname, self::$httpsArticles ) &&
 			in_array( $title->getDBKey(), self::$httpsArticles[ $wgDBname ] );
