@@ -1,2 +1,6 @@
 ==markerclusterer.js and markerwithlabel.js==
-Is fetched from trunk @ http://google-maps-utility-library-v3.googlecode.com
+Is fetched from trunk @ https://github.com/googlemaps/v3-utility-library
+
+On update don't forget to add the following line at the end of the file:
+
+    window.MarkerClusterer = MarkerClusterer;
