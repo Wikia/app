@@ -128,39 +128,6 @@ $wgRCMaxRows = 20000;
 
 $wgHooks = &Hooks::getHandlersArray();
 
-/**
- * Additional functions to be performed with updateSpecialPages.
- * Expensive Querypages are already updated.
- */
-$wgSpecialPageCacheUpdates = [
-	'SiteStatsRegenerate' => [ 'SiteStatsInit', 'doAllAndCommit' ], # PLATFORM-2275
-	'Statistics'          => [ 'SiteStatsUpdate', 'cacheUpdate' ],
-];
-
-$wgCrossSiteAJAXdomains = [
-	"internal-vstf.{$wgWikiaBaseDomain}", # PLATFORM-1719
-];
-
-/**
- * Maximum amount of virtual memory available to shell processes under linux, in KB.
- */
-$wgMaxShellMemory = 0; // Wikia change - OPS-8226
-
-/**
- * Timeout for HTTP requests done internally
- *
- * Let's use different values when running a maintenance script (that includes Wikia Tasks)
- * and when serving HTTP request
- *
- * @see PLATFORM-2385
- */
-$wgHTTPTimeout = defined( 'RUN_MAINTENANCE_IF_MAIN' ) ? 25 : 5; # Wikia change
-
-/**
- * When enabled, RL will output links without the server part.
- */
-$wgEnableLocalResourceLoaderLinks = true;
-
 /* End of overrides/supplements of vanilla includes/DefaultSettings.php. */
 /*-----------------------------------------------------------------------*/
 
