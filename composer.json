@@ -28,7 +28,7 @@
     "doctrine/annotations": "~1.2",
     "doctrine/cache": "~1.0",
     "ocramius/proxy-manager": "~1.0",
-    "sensiolabs/consul-php-sdk": "^1.0",
+    "sensiolabs/consul-php-sdk": "^3.0",
     "wikia/phpflickr": "^3.1",
     "ooyala/v2-api": "^2.0",
     "pear/Mail_Mime": "^1.10",
