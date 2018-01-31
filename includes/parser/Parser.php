@@ -975,6 +975,17 @@ class Parser {
 					}
 				}
 				# RTE - end
+
+				// Wikia change start XW-4587
+				if ( !empty( $wgRTEParserEnabled ) ) {
+					// from placeholder remove tag name, <, >, </ so only attributes and template content left.
+					// They are attached then to <table> and this <table> is treated as placeholder
+					$attributes = preg_replace("/<span/", '', $attributes);
+					$attributes = preg_replace("/>\&#x0200B;/", ' ', $attributes);
+					$attributes = preg_replace("/\&#x0200B;<\/span>/", '', $attributes);
+				}
+				// Wikia change end
+
 				$attributes = Sanitizer::fixTagAttributes( $attributes , 'table' );
 
 				$outLine = str_repeat( '<dl><dd>' , $indent_level ) . "<table{$attributes}>";
@@ -1113,7 +1124,6 @@ class Parser {
 					$cell_data = explode( '|' , $cell , 2 );
 
 					// Wikia change start XW-4587
-					// TODO: the same for rows, table and all that stuff
 					if ( !empty( $wgRTEParserEnabled ) ) {
 						// $cell_data[0] in this place contains either attributes of td/th/caption or if there were no
 						// attributes specified it will contain whole content of a cell. In the first case treat it all

@@ -426,6 +426,9 @@ class RTEReverseParser {
 					} elseif ( $node->nodeName === 'tr' ) {
 						// case when table row attributes are defined in template
 						$out = "|-{$out}{$textContent}";
+					} elseif ( $node->nodeName === 'table' ) {
+						// case when table attributes are defined in template
+						$out = "{|{$out}\n{$textContent}\n|}\n";
 					}
 					break;
 				case 'comment':
