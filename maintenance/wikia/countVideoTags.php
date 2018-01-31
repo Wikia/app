@@ -6,6 +6,8 @@ class CountTags extends Maintenance {
 	public function execute() {
 		global $wgSpecialsDB, $wgCityId;
 
+		$this->output( "Starting video tag count" );
+
 		$counts = [
 			'youtube' => 0,
 			'aovideo' => 0,
@@ -19,12 +21,16 @@ class CountTags extends Maintenance {
 
 		$specials = wfGetDB( DB_SLAVE, false, $wgSpecialsDB );
 
+		$this->output( "Got handle to specials db" );
+
 		$res = $specials->select( 'city_used_tags', [ 'ct_wikia_id', 'ct_page_id' ], [ 'ct_kind' => "youtube", 'ct_wikia_id' => $wgCityId ] );
+
+		$this->output( "Query executed" );
 
 		foreach ( $res as $row ) {
 			$content = Title::newFromID( $row->ct_page_id )->fetchContent();
-			foreach ( $counts as $tag => $c ) {
-				$counts[$tag] += preg_match_all( "<" . $tag, $content );
+			foreach ( $counts as $tag => $count ) {
+				$counts[$tag] = $count + preg_match_all( "<" . $tag, $content );
 			}
 		}
 
