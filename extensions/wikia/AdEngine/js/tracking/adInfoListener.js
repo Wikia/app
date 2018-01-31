@@ -92,8 +92,8 @@ define('ext.wikia.adEngine.tracking.adInfoListener',  [
 
 		tracker.track(
 			vastInfo.pos,
-			vastInfo,
-			vastInfo,
+			vastInfo.customParams,
+			vastInfo.customParams,
 			{
 				adProduct: vastInfo.position,
 				creativeId: adInfo.creativeId,
