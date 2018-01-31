@@ -1024,6 +1024,17 @@ class Parser {
 					}
 				}
 				# RTE - end
+
+				// Wikia change start XW-4587
+				if ( !empty( $wgRTEParserEnabled ) ) {
+					// from placeholder remove tag name, <, >, </ so only attributes and template content left.
+					// They are attached then to <tr> and this <tr> is treated as placeholder
+					$attributes = preg_replace("/<span/", '', $attributes);
+					$attributes = preg_replace("/>\&#x0200B;/", ' ', $attributes);
+					$attributes = preg_replace("/\&#x0200B;<\/span>/", '', $attributes);
+				}
+				// Wikia change end
+
 				$attributes = Sanitizer::fixTagAttributes( $attributes, 'tr' );
 				array_pop( $tr_attributes );
 				array_push( $tr_attributes, $attributes );
@@ -1110,6 +1121,8 @@ class Parser {
 						// not change anything
 						if ( preg_match( "/<[^>]*placeholder.*/", $cell_data[0] ) ) {
 							$cell_data = [ implode( "|", $cell_data ) ];
+							// TODO: if we rename placeholder's tag name to img, remove inner html and closing tag of
+							// TODO: placeholder then we'll have puzzle displayed
 						}
 					}
 					// Wikia change end
