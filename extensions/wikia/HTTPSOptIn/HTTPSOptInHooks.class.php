@@ -1,6 +1,18 @@
 <?php
 
 class HTTPSOptInHooks {
+
+	// List of articles that shouldn't redirect to http versions even for users that don't have https enabled.
+	// This array contains wgDBname mapped to array of article keys.
+	static $httpsArticles = [
+		/* www.wikia.com */
+		'wikiaglobal' => [ 'Licensing', 'Privacy_Policy', 'Terms_of_Use'  ],
+		/* ja.wikia.com */
+		'jacorporate' => [ 'Privacy_Policy', 'Terms_of_Use' ],
+		/* community.wikia.com */
+		'wikia' => [ 'Community_Central:Licensing' ]
+	];
+
 	public static function onGetPreferences( User $user, array &$preferences ): bool {
 		global $wgAllowHTTPS;
 		if ( !empty( $wgAllowHTTPS ) && $user->isAllowed( 'https-opt-in' ) ) {
@@ -42,13 +54,16 @@ class HTTPSOptInHooks {
 	public static function onBeforeInitialize( Title $title, $unused, OutputPage $output,
 		User $user, WebRequest $request, MediaWiki $mediawiki
 	): bool {
+
 		if ( WebRequest::detectProtocol() === 'http' &&
 			self::userAllowedHTTPS( $user )
 		) {
 			$output->redirect( preg_replace( '/^http:\/\//', 'https://', $request->getFullRequestURL() ) );
 		} elseif ( WebRequest::detectProtocol() === 'https' &&
 			!self::userAllowedHTTPS( $user ) &&
-			!self::disableHTTPSDowngrade()
+			!self::disableHTTPSDowngrade() &&
+			!$request->getHeader( 'X-Wikia-WikiaAppsID' ) &&
+			!self::httpsEnabledTitle( $title )
 		) {
 			$output->redirect( preg_replace( '/^https:\/\//', 'http://', $request->getFullRequestURL() ) );
 		}
@@ -60,6 +75,12 @@ class HTTPSOptInHooks {
 		return !empty( $wgAllowHTTPS ) &&
 			$user->isAllowed( 'https-opt-in' ) &&
 			$user->getGlobalPreference( 'https-opt-in', false );
+	}
+
+	private static function httpsEnabledTitle(Title $title) {
+		global $wgDBname;
+		return array_key_exists( $wgDBname, self::$httpsArticles ) &&
+			in_array( $title->getDBKey(), self::$httpsArticles[ $wgDBname ] );
 	}
 
 	private static function disableHTTPSDowngrade(): bool {
