@@ -26,15 +26,15 @@ class TitleParserTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	public function validInputProvider() {
-		$argLists = array();
+		$argLists = [];
 
-		$valid = array(
+		$valid = [
 			'Foo bar',
 			'Ohi there!',
-		);
+		];
 
 		foreach ( $valid as $value ) {
-			$argLists[] = array( $value, new MediaWikiTitleValue( \Title::newFromText( $value ) ) );
+			$argLists[] = [ $value, new MediaWikiTitleValue( \Title::newFromText( $value ) ) ];
 		}
 
 		return $argLists;
