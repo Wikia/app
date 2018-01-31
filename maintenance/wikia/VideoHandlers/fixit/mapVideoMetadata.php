@@ -125,10 +125,7 @@ function mapMetadata( $videoTitle, $ingester, $data ) {
 
 	// map additional metadata (per provider)
 	$provider = strtolower( $metadata['provider'] );
-	// use iva function
-	if ( strstr( $provider, '/' ) ) {
-		$provider = 'iva';
-	}
+	
 	if ( in_array( $provider, $extraMapping ) ) {
 		$function = 'mapMetadata'.ucfirst( $provider );
 		$function( $ingester, $data, $metadata );

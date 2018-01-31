@@ -69,7 +69,6 @@ $messages['en'] = array(
 	'videopagetool-header-published-by' => "'''Published by:''' $1",
 	'videohomepage-partner-section-title' => 'Our Partners',
 	'videohomepage-partner-name-ign' => 'IGN',
-	'videohomepage-partner-name-iva' => 'IVA',
 );
 
 $messages['qqq'] = array(
@@ -206,7 +205,6 @@ $messages['de'] = array(
 	'videopagetool-desc' => 'FANDOM Video-Tool',
 	'right-videopagetool' => 'Auf Fandoms Video-Werkzeug zugreifen',
 	'videohomepage-partner-name-ign' => 'IGN',
-	'videohomepage-partner-name-iva' => 'IVA',
 );
 
 $messages['es'] = array(
@@ -277,7 +275,6 @@ $messages['es'] = array(
 	'right-videopagetool' => 'Acceder a la videoteca de FANDOM',
 	'videopagetool-formerror-videokey' => 'Por favor añade un video',
 	'videohomepage-partner-name-ign' => 'IGN',
-	'videohomepage-partner-name-iva' => 'IVA',
 );
 
 $messages['fi'] = array(
@@ -356,7 +353,6 @@ $messages['fr'] = array(
 	'videopagetool-date-title' => 'Date',
 	'videopagetool-formerror-videokey' => 'Veuillez ajouter une vidéo',
 	'videohomepage-partner-name-ign' => 'IGN',
-	'videohomepage-partner-name-iva' => 'IVA',
 );
 
 $messages['it'] = array(
@@ -427,7 +423,6 @@ $messages['it'] = array(
 	'videopagetool-desc' => 'Strumento video di FANDOM',
 	'right-videopagetool' => 'Accedere allo strumento per i Video di FANDOM',
 	'videohomepage-partner-name-ign' => 'IGN',
-	'videohomepage-partner-name-iva' => 'IVA',
 );
 
 $messages['ja'] = array(
@@ -437,7 +432,6 @@ $messages['ja'] = array(
 	'videohomepage-header-browse' => '閲覧',
 	'videohomepage-header-dropdown-name' => '発見',
 	'videohomepage-partner-name-ign' => 'IGN',
-	'videohomepage-partner-name-iva' => 'IVA',
 	'videohomepage-partner-section-title' => 'パートナー',
 	'videopagetool-button-add-thumbnail' => '画像を追加',
 	'videopagetool-button-add-video' => '動画を追加',
@@ -569,7 +563,6 @@ $messages['pl'] = array(
 	'videopagetool-desc' => 'Narzędzia wideo portalu FANDOM',
 	'right-videopagetool' => 'Udostępnia narzędzie wideo Fandomu',
 	'videohomepage-partner-name-ign' => 'IGN',
-	'videohomepage-partner-name-iva' => 'IVA',
 );
 
 $messages['pt'] = array(
@@ -640,7 +633,6 @@ $messages['pt'] = array(
 	'videopagetool-desc' => 'Ferramenta de Vídeo FANDOM',
 	'right-videopagetool' => 'Acessar a Ferramenta de Vídeo FANDOM',
 	'videohomepage-partner-name-ign' => 'IGN',
-	'videohomepage-partner-name-iva' => 'IVA',
 );
 
 $messages['ru'] = array(
@@ -711,7 +703,6 @@ $messages['ru'] = array(
 	'videopagetool-desc' => 'Инструмент Фэндома для видео',
 	'right-videopagetool' => 'Доступ к инструменту Фэндома для создания видео',
 	'videohomepage-partner-name-ign' => 'IGN',
-	'videohomepage-partner-name-iva' => 'IVA',
 );
 
 $messages['zh-hans'] = array(
@@ -782,7 +773,6 @@ $messages['zh-hans'] = array(
 	'videopagetool-header-published-by' => "'''Published by:''' $1",
 	'videohomepage-partner-section-title' => 'Our Partners',
 	'videohomepage-partner-name-ign' => 'IGN',
-	'videohomepage-partner-name-iva' => 'IVA',
 );
 
 $messages['zh-hant'] = array(
@@ -853,6 +843,5 @@ $messages['zh-hant'] = array(
 	'videopagetool-desc' => 'Fandom影片工具',
 	'right-videopagetool' => '使用Fandom影片工具',
 	'videohomepage-partner-name-ign' => 'IGN',
-	'videohomepage-partner-name-iva' => 'IVA',
 );
 
