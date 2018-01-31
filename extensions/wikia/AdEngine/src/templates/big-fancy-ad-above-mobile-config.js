@@ -57,6 +57,10 @@ export function getConfig(mercuryListener) {
 				wrapper.style.opacity = '';
 				runOnReady(iframe, params, mercuryListener);
 			});
+
+			if (adsModule.hideSmartBanner) {
+				adsModule.hideSmartBanner();
+			}
 		},
 		moveNavbar(offset) {
 			const adsMobile = window.Mercury.Modules.Ads.getInstance();

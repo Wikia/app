@@ -71,10 +71,6 @@ define('ext.wikia.adEngine.template.bfaaMobile', [
 					});
 				});
 		}
-
-		if (adsModule.hideSmartBanner) {
-			adsModule.hideSmartBanner();
-		}
 	}
 
 	function show(params) {
