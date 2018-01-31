@@ -96,6 +96,10 @@ if ( $IP === false ) {
 	$IP = realpath( '.' );
 }
 
+# FANDOM change: add common MW directories to include_path to speed up
+# possible require/include with relative paths.
+ini_set( "include_path", "{$IP}:{$IP}/includes:{$IP}/languages:{$IP}/lib/vendor:.:" );
+
 if ( isset( $_SERVER['MW_COMPILED'] ) ) {
 	define( 'MW_COMPILED', 1 );
 } else {
@@ -110,6 +114,12 @@ if ( isset( $_SERVER['MW_COMPILED'] ) ) {
 
 	# Load up some global defines.
 	require_once( "$IP/includes/Defines.php" );
+
+	# Wikia change: GlobalFunctions.php are normally loaded later
+	# in includes/Setup.php.  It is too late for us and we need
+	# to load it here so that WikiFactory can inject configuration
+	# in LocalSettings.php.
+	require_once( "$IP/includes/GlobalFunctions.php" );
 }
 
 # Start the profiler
@@ -121,9 +131,7 @@ if ( file_exists( "$IP/StartProfiler.php" ) ) {
 wfProfileIn( 'WebStart.php-conf' );
 
 # Load default settings
-# Wikia change - comment out the next line since we include DefaultSettings.php
-# in LocalSettings.php
-#require_once( MWInit::compiledPath( "includes/DefaultSettings.php" ) );
+require_once( MWInit::compiledPath( "includes/DefaultSettings.php" ) );
 
 if ( defined( 'MW_CONFIG_CALLBACK' ) ) {
 	# Use a callback function to configure MediaWiki

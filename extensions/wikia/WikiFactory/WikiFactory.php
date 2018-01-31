@@ -16,16 +16,14 @@ $wgExtensionCredits['other'][] = [
 	"author" => "[http://www.wikia.com/wiki/User:Eloy.wikia Krzysztof Krzyżaniak (eloy)]"
 ];
 
-if ( ! function_exists( "wfUnserializeHandler" ) ) {
-	/**
-	 * wfUnserializeErrorHandler
-	 *
-	 * @author Emil Podlaszewski <emil@wikia-inc.com>
-	 */
-	function wfUnserializeHandler( $errno, $errstr ) {
-		global $_variable_key, $_variable_value;
-		Wikia::log( __FUNCTION__, $_SERVER['SERVER_NAME'], "({$_variable_key}={$_variable_value}): {$errno}, {$errstr}" );
-	}
+/**
+ * wfUnserializeErrorHandler
+ *
+ * @author Emil Podlaszewski <emil@wikia-inc.com>
+ */
+function wfUnserializeHandler( $errno, $errstr ) {
+	global $_variable_key, $_variable_value;
+	Wikia::log( __FUNCTION__, $_SERVER['SERVER_NAME'], "({$_variable_key}={$_variable_value}): {$errno}, {$errstr}" );
 }
 
 /**

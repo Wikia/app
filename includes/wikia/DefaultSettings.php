@@ -11,11 +11,158 @@
  * edit /wikia-conf/CommonSettings.php
  */
 
+$wgWikiaBaseDomain = "wikia.com";
+$wgWikiaNocookieDomain = "wikia.nocookie.net";
+
 # This is not a valid entry point, perform no further processing unless MEDIAWIKI is defined
 if( !defined( 'MEDIAWIKI' ) ) {
 	echo "This file is part of MediaWiki and is not a valid entry point\n";
 	die( 1 );
 }
+
+/*-------------------------------------------------------------------
+ * Overrides and supplements of vanilla includes/DefaultSettings.php.
+ *
+ * The following section contains some settings that have been
+ * in includes/DefaultSettings.php before I brought it back to
+ * the vanilla 1.19.24 shape.
+ */
+$wgRepositoryBaseUrl = "https://commons.wikimedia.org/wiki/File:";
+
+/**
+ * Minimum upload chunk size, in bytes. When using chunked upload, non-final
+ * chunks smaller than this will be rejected. May be reduced based on the
+ * 'upload_max_filesize' or 'post_max_size' PHP settings.
+ * @since 1.26
+ */
+$wgMinUploadChunkSize = 1024; # 1KB
+
+/**
+ * Allow users to enable email notification ("enotif") on Discussions changes.
+ */
+$wgEnotifDiscussions = true;
+
+/**
+ * SQL Mode - default is turning off all modes, including strict, if set.
+ * null can be used to skip the setting for performance reasons and assume
+ * DBA has done his best job.
+ * String override can be used for some additional fun :-)
+ */
+$wgSQLMode = null;
+
+/**
+ * Revision text may be cached in $wgMemc to reduce load on external storage
+ * servers and object extraction overhead for frequently-loaded revisions.
+ *
+ * Set to 0 to disable, or number of seconds before cache expiry.
+ */
+$wgRevisionCacheExpiry = 30 * 24 * 3600; // 30 days
+
+/*
+ * Read/write timeout for MemCached server communication, in microseconds.
+ */
+$wgMemCachedTimeout = 500000;
+
+/**
+ * List of language codes that don't correspond to an actual language.
+ * These codes are mostly leftoffs from renames, or other legacy things.
+ * This array makes them not appear as a selectable language on the installer,
+ * and excludes them when running the transstat.php script.
+ */
+$wgDummyLanguageCodes['lol'] = 'lol'; # Used for In Context Translations
+
+/*
+ * Default skin, for new users and anonymous visitors.
+ */
+$wgDefaultSkin = 'oasis';
+
+/**
+ * Expiry time for cache of interwiki table
+ */
+$wgInterwikiExpiry = 86400;
+
+/**
+ * Characters to prevent during new account creations.
+ * This is used in a regular expression character class during
+ * registration (regex metacharacters like / are escaped).
+ */
+$wgInvalidUsernameCharacters = '@:';
+
+/*
+ * Limits on the possible sizes of range blocks.
+ */
+$wgBlockCIDRLimit['IPv6'] = 19;
+
+/*
+ * Discard vanilla $wgGroupPermissions completely.
+ */
+$wgGroupPermissions = [];
+
+/*
+ * Simple rate limiter options to brake edit floods.
+ */
+$wgRateLimits['upload'] = [
+	'user'   => null,
+	'newbie' => null,
+	'ip'     => null,
+	'subnet' => null,
+];
+
+/**
+ * Set this to an integer to only do synchronous site_stats updates
+ * one every *this many* updates. The other requests go into pending
+ * delta values in $wgMemc. Make sure that $wgMemc is a global cache.
+ * If set to -1, updates *only* go to $wgMemc (useful for daemons).
+ *
+ * @see PLATFORM-2275
+ */
+$wgSiteStatsAsyncFactor = 1;
+
+/**
+ * Wikia change: Recentchanges items are periodically purged; keep the number of rows at the stable level
+ *
+ * @see PLATFORM-1393
+ * @see PLATFORM-1460
+ */
+$wgRCMaxRows = 20000;
+
+$wgHooks = &Hooks::getHandlersArray();
+
+/**
+ * Additional functions to be performed with updateSpecialPages.
+ * Expensive Querypages are already updated.
+ */
+$wgSpecialPageCacheUpdates = [
+	'SiteStatsRegenerate' => [ 'SiteStatsInit', 'doAllAndCommit' ], # PLATFORM-2275
+	'Statistics'          => [ 'SiteStatsUpdate', 'cacheUpdate' ],
+];
+
+$wgCrossSiteAJAXdomains = [
+	"internal-vstf.{$wgWikiaBaseDomain}", # PLATFORM-1719
+];
+
+/**
+ * Maximum amount of virtual memory available to shell processes under linux, in KB.
+ */
+$wgMaxShellMemory = 0; // Wikia change - OPS-8226
+
+/**
+ * Timeout for HTTP requests done internally
+ *
+ * Let's use different values when running a maintenance script (that includes Wikia Tasks)
+ * and when serving HTTP request
+ *
+ * @see PLATFORM-2385
+ */
+$wgHTTPTimeout = defined( 'RUN_MAINTENANCE_IF_MAIN' ) ? 25 : 5; # Wikia change
+
+/**
+ * When enabled, RL will output links without the server part.
+ */
+$wgEnableLocalResourceLoaderLinks = true;
+
+/* End of overrides/supplements of vanilla includes/DefaultSettings.php. */
+/*-----------------------------------------------------------------------*/
 
 /**
  * @name $wgCityId
@@ -33,8 +180,7 @@ $wgUseFakeExternalStoreDB = false;
 /**
  * includes common for all wikis
  */
-require_once ( $IP."/includes/wikia/Defines.php" );
-require_once ( $IP."/includes/wikia/GlobalFunctions.php" );
+require_once( "$IP/extensions/wikia/WikiFactory/WikiFactory.php" );
 require_once ( $IP."/includes/wikia/Wikia.php" );
 require_once ( $IP."/includes/wikia/WikiaMailer.php" );
 require_once ( $IP."/extensions/GlobalMessages/GlobalMessages.setup.php" );
@@ -222,6 +368,7 @@ $wgAutoloadClasses[ "GlobalFile"                      ] = "$IP/includes/wikia/Gl
 $wgAutoloadClasses[ "WikiFactory"                     ] = "$IP/extensions/wikia/WikiFactory/WikiFactory.php";
 $wgAutoloadClasses[ "WikiFactoryHub"                  ] = "$IP/extensions/wikia/WikiFactory/Hubs/WikiFactoryHub.php";
 $wgAutoloadClasses[ "WikiFactoryHubHooks"             ] = "$IP/extensions/wikia/WikiFactory/Hubs/WikiFactoryHubHooks.class.php";
+$wgAutoloadClasses[ 'WikiFactoryLoader'               ] = "$IP/extensions/wikia/WikiFactory/Loader/WikiFactoryLoader.php";
 $wgAutoloadClasses[ 'FakeLocalFile'                   ] = "$IP/includes/wikia/FakeLocalFile.class.php";
 $wgAutoloadClasses[ 'WikiaUploadStash'                ] = "$IP/includes/wikia/upload/WikiaUploadStash.class.php";
 $wgAutoloadClasses[ 'WikiaUploadStashFile'            ] = "$IP/includes/wikia/upload/WikiaUploadStashFile.class.php";
