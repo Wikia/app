@@ -7,4 +7,5 @@ $wgDevelEnvironment = true;
 require_once __DIR__ . '/../maintenance/commandLine.inc';
 
 $wgWikiFactoryCacheType = CACHE_NONE;
+$wgMessageCacheType = CACHE_NONE;
 $wgMemc = new EmptyBagOStuff();
