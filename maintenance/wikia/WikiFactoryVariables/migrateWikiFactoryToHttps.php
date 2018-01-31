@@ -4,7 +4,7 @@
 * Maintenance script to manage WikiFactory variable to https
 * @usage
 * 	# this will migrate wgUploadPath for wiki with ID 119:
-*   /usr/wikia/backend/bin/run_maintenance '--script=wikia/WikiFactoryVariables/migrateWikiFactoryToHttps.php --dryRun --varName wgUploadPath' --id=119
+*   run_maintenance --script='wikia/WikiFactoryVariables/migrateWikiFactoryToHttps.php --dryRun --varName wgUploadPath' --id=119
 */
 
 ini_set( 'display_errors', 'stderr' );

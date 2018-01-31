@@ -105,19 +105,6 @@
 
 				</div>
 
-				<? if ( ARecoveryModule::isSourcePointRecoveryEnabled() ) : ?>
-					<!--googleoff: all-->
-					<div id="WikiaArticleMsg">
-						<h2><?= wfMessage('arecovery-blocked-message-headline')->escaped() ?></h2>
-						<br />
-						<h3><?= wfMessage('arecovery-blocked-message-part-one')->escaped() ?>
-							<br /><br />
-							<?= wfMessage('arecovery-blocked-message-part-two')->escaped() ?>
-						</h3>
-					</div>
-					<!--googleon: all-->
-				<? endif; ?>
-
 				<? if ( empty( $wg->SuppressArticleCategories ) ): ?>
 					<? if ( !empty( $wg->EnableCategorySelectExt ) && CategorySelectHelper::isEnabled() ): ?>
 						<?= $app->renderView( 'CategorySelect', 'articlePage' ) ?>

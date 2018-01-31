@@ -51,7 +51,7 @@
 			ck.on( 'dialogOk', this.proxy( this.onCkDialogOk ) );
 			ck.on( 'dialogShow', this.proxy( this.onCkDialogShow ) );
 			ck.on( 'panelClick', this.proxy( this.onCkPanelClick ) );
-			ck.on( 'panelShow', this.proxy( this.onCkPanelShow ) );
+			ck.on( 'panelShowWE', this.proxy( this.onCkPanelShow ) );
 		},
 
 		onCkButtonClick: function( event ) {
@@ -70,12 +70,23 @@
 		},
 
 		onCkDialogOk: function( event ) {
-			var label = event.data._.name.toLowerCase();
-			this.track( 'dialog-' + label + '-button-ok' );
+			var label = event.data.dialog._.name.toLowerCase();
+			var type = event.data.type;
+
+			if (type) {
+				label += '-' + type;
+			}
+
+			this.track({label: 'dialog-' + label + '-button-ok'});
 		},
 
 		onCkDialogShow: function( event ) {
-			var label = event.data._.name.toLowerCase();
+			var label = event.data.dialog._.name.toLowerCase();
+			var type = event.data.type;
+
+			if (type) {
+				label += '-' + type;
+			}
 
 			this.track({
 				action:  Wikia.Tracker.ACTIONS.OPEN,
@@ -98,6 +109,7 @@
 				label: 'panel-' + label
 			});
 		},
+
 
 		// Wrapper for Wikia.Tracker so we can perform some magic
 		track: function() {

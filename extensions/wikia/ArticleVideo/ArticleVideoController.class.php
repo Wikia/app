@@ -42,4 +42,23 @@ class ArticleVideoController extends WikiaController {
 			$this->skipRendering();
 		}
 	}
+
+	public function purgeVideo() {
+		global $wgCityId;
+
+		$request = RequestContext::getMain()->getRequest();
+		$articleId = $request->getVal( 'articleId', null );
+		$internalRequest = $request->getHeader( 'X-Wikia-Internal-Request' );
+
+		if ( empty( $articleId ) || !$request->wasPosted() ) {
+			throw new BadRequestException();
+		}
+
+		if ( empty( $internalRequest ) ) {
+			throw new ForbiddenException();
+		}
+
+		ArticleVideoService::purgeVideoMemCache( $wgCityId );
+		Title::newFromID($articleId)->purgeSquid();
+	}
 }

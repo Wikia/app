@@ -84,8 +84,6 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverRubiconDisplayPrebidCountries';
 		$vars[] = 'wgAdDriverRubiconPrebidCountries';
 		$vars[] = 'wgAdDriverScrollDepthTrackingCountries';
-		$vars[] = 'wgAdDriverSourcePointDetectionCountries';
-		$vars[] = 'wgAdDriverSourcePointDetectionMobileCountries';
 		$vars[] = 'wgAdDriverSrcPremiumCountries';
 		$vars[] = 'wgAdDriverTurtleCountries';
 		$vars[] = 'wgPorvataVastLoggerConfig';
@@ -121,14 +119,12 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverVideoMoatTrackingSampling';
 		$vars[] = 'wgAdDriverVideoPostrollCountries';
 
-		// TODO: Remove after src=[gpt,ns] is finished
-		$vars[] = 'wgAdDriverNewsAndStoriesSingleSrcKeyValueCountries';
-		$vars[] = 'wgAdDriverNewsAndStoriesSrcKeyValueCountries';
-
 		// news&stories variables only
 		$vars[] = 'wgAdDriverF2BabDetectionCountries';
 		$vars[] = 'wgAdDriverF2InstartLogicRecoveryCountries';
 		$vars[] = 'wgAdDriverF2MEGAVideosCountries';
+		// todo remove when AdOps will stop using Ooyala on f2
+		$vars[] = 'wgAdDriverF2OoyalaPosKeyValueCountries';
 
 		return true;
 	}

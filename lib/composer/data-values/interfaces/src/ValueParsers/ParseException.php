@@ -63,4 +63,5 @@ class ParseException extends RuntimeException {
 	public function getRawValue() {
 		return $this->rawValue;
 	}
+
 }

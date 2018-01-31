@@ -3,43 +3,37 @@
 namespace Maps\Api;
 
 use ApiBase;
+use Maps\MapsFactory;
 
 /**
- * API module for geocoding.
- *
- * @since 1.0.3
- *
- * @ingroup API
- *
  * @licence GNU GPL v2++
  * @author Jeroen De Dauw < jeroendedauw@gmail.com >
  */
 class Geocode extends ApiBase {
 
-	public function __construct( $main, $action ) {
-		parent::__construct( $main, $action );
-	}
-
 	public function execute() {
 		global $wgUser;
 
 		if ( !$wgUser->isAllowed( 'geocode' ) || $wgUser->isBlocked() ) {
-			$this->dieUsageMsg( array( 'badaccess-groups' ) );
+			$this->dieUsageMsg( [ 'badaccess-groups' ] );
 		}
+
+		$geocoder = MapsFactory::newDefault()->newGeocoder();
 
 		$params = $this->extractRequestParams();
 
-		$results = array();
+		$results = [];
 
 		foreach ( array_unique( $params['locations'] ) as $location ) {
-			$result = \Maps\Geocoders::geocode( $location, $params['service'] );
+			$result = $geocoder->geocode( $location );
 
-			$results[$location] = array(
-				'count' => $result === false ? 0 : 1,
-				'locations' => array()
-			);
+			$results[$location] = [
+				'count' => $result === null ? 0 : 1,
+				'locations' => []
+			];
 
-			if ( $result !== false ) {
+			if ( $result !== null ) {
+				// FIXME: this makes the API use private var names in its output!
 				$results[$location]['locations'][] = $result;
 			}
 
@@ -54,51 +48,40 @@ class Geocode extends ApiBase {
 	}
 
 	public function getAllowedParams() {
-		return array(
-			'locations' => array(
+		return [
+			'locations' => [
 				ApiBase::PARAM_TYPE => 'string',
 				ApiBase::PARAM_REQUIRED => true,
 				ApiBase::PARAM_ISMULTI => true,
-			),
-			'service' => array(
-				ApiBase::PARAM_TYPE => \Maps\Geocoders::getAvailableGeocoders(),
-			),
-			'props' => array(
-				ApiBase::PARAM_ISMULTI => true,
-				ApiBase::PARAM_TYPE => array( 'lat', 'lon', 'alt' ),
-				ApiBase::PARAM_DFLT => 'lat|lon',
-			),
-		);
+			],
+		];
 	}
 
 	public function getParamDescription() {
-		return array(
+		return [
 			'locations' => 'The locations to geocode',
-			'service' => 'The geocoding service to use',
-		);
+		];
 	}
 
 	public function getDescription() {
-		return array(
+		return [
 			'API module for geocoding.'
-		);
+		];
 	}
 
+	// Wikia change - make method public for MW 1.19 compat
 	public function getExamples() {
-		return array(
+		return [
 			'api.php?action=geocode&locations=new york',
 			'api.php?action=geocode&locations=new york|brussels|london',
-			'api.php?action=geocode&locations=new york&service=geonames',
-		);
+		];
 	}
 
 	/**
-	 * Wikia change
-	 * MAIN-8474: In new version of MediaWiki and Maps extension ApiBase::getVersion method does not exist
-	 * However it still does in our 1.19 version and we need to implement it to prevent PHP fatal
+	 * Wikia change - implement MW 1.19 required method
 	 * @return string
 	 */
 	public function getVersion() {
-		return __CLASS__ . '-' . Maps_VERSION;
+		return Maps_VERSION;
 	}
 }

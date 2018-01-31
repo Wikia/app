@@ -15,17 +15,17 @@ define( 'Maps_EARTH_RADIUS', 6371000 );
  * @author Pnelnik
  * @author Matěj Grabovský
  */
-final class MapsGeoFunctions {	
-	
+final class MapsGeoFunctions {
+
 	/**
 	 * Returns the geographical distance between two coordinates.
 	 * See http://en.wikipedia.org/wiki/Geographical_distance
-	 * 
+	 *
 	 * @since 2.0
-	 * 
+	 *
 	 * @param LatLongValue $start
 	 * @param LatLongValue $end
-	 * 
+	 *
 	 * @return float Distance in m.
 	 */
 	public static function calculateDistance( LatLongValue $start, LatLongValue $end ) {
@@ -34,13 +34,13 @@ final class MapsGeoFunctions {
 
 		$cosNorth1 = cos( $northRad1 );
 		$cosEast1 = cos( $eastRad1 );
-		
+
 		$sinNorth1 = sin( $northRad1 );
 		$sinEast1 = sin( $eastRad1 );
-		
+
 		$northRad2 = deg2rad( $end->getLatitude() );
 		$eastRad2 = deg2rad( $end->getLongitude() );
-		
+
 		$cosNorth2 = cos( $northRad2 );
 		$cosEast2 = cos( $eastRad2 );
 
@@ -59,34 +59,41 @@ final class MapsGeoFunctions {
 
 		return $distance;
 	}
-	
+
 	/**
 	 * Finds a destination given a starting location, bearing and distance.
-	 * 
+	 *
 	 * @since 2.0
-	 * 
+	 *
 	 * @param LatLongValue $startingCoordinates
 	 * @param float $bearing The initial bearing in degrees.
 	 * @param float $distance The distance to travel in km.
-	 * 
+	 *
 	 * @return array The destination coordinates, as non-directional floats in an array with lat and lon keys.
 	 */
 	public static function findDestination( LatLongValue $startingCoordinates, $bearing, $distance ) {
-		$startingCoordinates = array(
+		$startingCoordinates = [
 			'lat' => deg2rad( $startingCoordinates->getLatitude() ),
 			'lon' => deg2rad( $startingCoordinates->getLongitude() ),
-		);
+		];
 
-		$radBearing = deg2rad ( (float)$bearing );
+		$radBearing = deg2rad( (float)$bearing );
 		$angularDistance = $distance / Maps_EARTH_RADIUS;
-		
-		$lat = asin (sin ( $startingCoordinates['lat'] ) * cos ( $angularDistance ) + cos ( $startingCoordinates['lat'] )  * sin ( $angularDistance ) * cos ( $radBearing ) );
-		$lon = $startingCoordinates['lon'] + atan2 ( sin ( $radBearing ) * sin ( $angularDistance ) * cos ( $startingCoordinates['lat'] ), cos ( $angularDistance ) - sin ( $startingCoordinates['lat'] ) * sin ( $lat ) );
-	
-		return array(
+
+		$lat = asin(
+			sin( $startingCoordinates['lat'] ) * cos( $angularDistance ) + cos( $startingCoordinates['lat'] ) * sin(
+				$angularDistance
+			) * cos( $radBearing )
+		);
+		$lon = $startingCoordinates['lon'] + atan2(
+				sin( $radBearing ) * sin( $angularDistance ) * cos( $startingCoordinates['lat'] ),
+				cos( $angularDistance ) - sin( $startingCoordinates['lat'] ) * sin( $lat )
+			);
+
+		return [
 			'lat' => rad2deg( $lat ),
 			'lon' => rad2deg( $lon )
-		);
+		];
 	}
-	
+
 }

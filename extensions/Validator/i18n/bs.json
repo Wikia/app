@@ -1,10 +1,11 @@
 {
 	"@metadata": {
 		"authors": [
-			"CERminator"
+			"CERminator",
+			"Srdjan m"
 		]
 	},
-	"validator-desc": "Validator pruža jednostavni način za druga proširenja u svrhu validacije parametara parserskih funkcija i proširenja oznaka, postavlja pretpostavljene vrijednosti i generira poruke pogrešaka.",
+	"validator-desc": "Deklarativna biblioteka za obradu parametara",
 	"validator-warning": "Upozorenje: $1",
 	"validator-error": "Greška: $1",
 	"validator-fatal-error": "Fatalna greška: $1",

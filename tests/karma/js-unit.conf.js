@@ -17,7 +17,6 @@ module.exports = function (config) {
 		exclude: [
 			'resources/wikia/ui_components/**/Gruntfile.js',
 			'resources/wikia/ui_components/**/node_modules/**/*.js',
-			'extensions/wikia/ARecoveryEngine/js/SourcePoint/*_fallback.js'
 		],
 		files: [
 			'resources/wikia/libraries/define.mock.js',

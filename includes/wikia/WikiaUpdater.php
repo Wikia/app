@@ -79,6 +79,7 @@ class WikiaUpdater {
 			array( 'dropField', 'interwiki', 'iw_wikiid', $dir . 'patch-drop-wikiid.sql', true ),
 			array( 'dropField', 'cu_changes', 'cuc_user_text', $ext_dir . '/CheckUser/patch-cu_changes.sql', true ), // SUS-3080
 			array( 'WikiaUpdater::do_drop_table', 'tag_summary' ), // SUS-3066
+			array( 'WikiaUpdater::do_drop_table', 'sitemap_blobs' ), // SUS-3589
 		);
 
 		if ( $wgDBname === $wgExternalSharedDB ) {
