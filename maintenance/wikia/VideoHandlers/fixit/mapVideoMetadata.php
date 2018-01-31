@@ -193,24 +193,6 @@ function mapMetadataIgn( $ingester, $data, &$metadata ) {
 }
 
 /**
- * mapping additional metadata for Anyclip
- * @param VideoFeedIngester $ingester
- * @param array $data
- * @param array $metadata
- */
-function mapMetadataAnyclip( $ingester, $data, &$metadata ) {
-	global $languageNames;
-	if ( !empty( $metadata['category'] ) && strtolower( $metadata['category'] == 'Movies' ) ) {
-		$metadata['type'] = 'Clip';
-	}
-
-	// get language
-	if ( !empty( $metadata['language'] ) && !empty( $languageNames ) && array_key_exists( $metadata['language'], $languageNames ) ) {
-		$metadata['language'] = $languageNames[$metadata['language']];
-	}
-}
-
-/**
  * generate metadata for screenplay
  * @param VideoFeedIngester $ingester
  * @param array $data
@@ -294,7 +276,7 @@ $categories = array(
 );
 
 // providers that require extra mapping
-$extraMapping = array( 'iva', 'ign', 'anyclip' );
+$extraMapping = array( 'iva', 'ign' );
 
 // include cldr extension for language code ($languageNames), country code ($countryNames)
 include( dirname( __FILE__ ).'/../../../extensions/cldr/CldrNames/CldrNamesEn.php' );

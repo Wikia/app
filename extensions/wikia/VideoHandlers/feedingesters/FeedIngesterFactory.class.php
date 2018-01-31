@@ -8,7 +8,6 @@ class FeedIngesterFactory {
 	// Constants for referring to short provider names
 	const PROVIDER_SCREENPLAY = 'screenplay';
 	const PROVIDER_IGN = 'ign';
-	const PROVIDER_ANYCLIP = 'anyclip';
 	const PROVIDER_OOYALA = 'ooyala';
 	const PROVIDER_CRUNCHYROLL = 'crunchyroll';
 
@@ -26,9 +25,7 @@ class FeedIngesterFactory {
 	private function __construct() {}
 
 	// These providers are not ingested daily, but can be ingested from if specifically named
-	protected static $INACTIVE_PROVIDERS = [
-		self::PROVIDER_ANYCLIP,
-	];
+	protected static $INACTIVE_PROVIDERS = [];
 
 	/**
 	 * Return a list of all the providers we actively ingest from

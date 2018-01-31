@@ -122,11 +122,6 @@ $color-page-border: #bbbdc0;
 			margin-bottom: 14px;
 		}
 
-		.ico-anyclip {
-			@include sprite-VideoPageTool('ico_anyclip');
-			width: 82px;
-		}
-
 		.ico-ign {
 			@include sprite-VideoPageTool('ico_ign');
 			width: 76px;

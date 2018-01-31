@@ -114,9 +114,6 @@ foreach ( $providersVideoFeed as $provider ) {
 			$endDate = date( 'Y-m-d', $endDateTS ).'T00:00:00-0800';
 			$file = $feedIngester->downloadFeed( $startDate, $endDate );
 			break;
-		case FeedIngesterFactory::PROVIDER_ANYCLIP:
-			$file = $feedIngester->downloadFeed( $getAllVideos );
-			break;
 		case FeedIngesterFactory::PROVIDER_OOYALA:
 			// no file needed
 			$startDate = date( 'Y-m-d', $startDateTS ).'T00:00:00Z';

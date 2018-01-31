@@ -60,7 +60,6 @@ class VideoHomePageController extends WikiaController {
 	public function partners() {
 		$partners = array();
 		// keys are lowercase as they are used to compose CSS & i18n keys
-		$partners[ 'anyclip' ] = array( 'label' => 'AnyClip' );
 		$partners[ 'ign' ] = array( 'label' => 'IGN' );
 		$partners[ 'iva' ] = array( 'label' => 'IVA' );
 		$partners[ 'screenplay' ] = array( 'label' => 'Screenplay' );

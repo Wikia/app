@@ -35,13 +35,6 @@
 		$image-width: 42px;
 		$image-height: 55px;
 	}
-	// @autosprite-image-details: ico_anyclip.png@207,0,7f5a01073cdd282c51e020c86cdbed16
-	@if $imageName == 'ico_anyclip' {
-		$image-x: 207px;
-		$image-y: 0px;
-		$image-width: 82px;
-		$image-height: 30px;
-	}
 	// @autosprite-image-details: ico_ign.png@301,0,7a185b3a2f9e2f21ed500b0172b5b5bc
 	@if $imageName == 'ico_ign' {
 		$image-x: 301px;
@@ -116,12 +109,6 @@
 		$image-height: 55px;
 		background-image: url('/extensions/wikia/VideoPageTool/images/sprite-VideoPageTool/carousel_right_arrow_white.png'); /* inline */
 	}
-	// @autosprite-image-details: ico_anyclip.png@207,0,7f5a01073cdd282c51e020c86cdbed16
-	@if $imageName == 'ico_anyclip' {
-		$image-width: 82px;
-		$image-height: 30px;
-		background-image: url('/extensions/wikia/VideoPageTool/images/sprite-VideoPageTool/ico_anyclip.png'); /* inline */
-	}
 	// @autosprite-image-details: ico_ign.png@301,0,7a185b3a2f9e2f21ed500b0172b5b5bc
 	@if $imageName == 'ico_ign' {
 		$image-width: 76px;
@@ -189,9 +176,6 @@
 	&.carousel-right-arrow-white {
 		@include sprite-VideoPageTool('carousel_right_arrow_white',$width,$height);
 	}
-	&.ico-anyclip {
-		@include sprite-VideoPageTool('ico_anyclip',$width,$height);
-	}
 	&.ico-ign {
 		@include sprite-VideoPageTool('ico_ign',$width,$height);
 	}
@@ -218,9 +202,6 @@
 	}
 	&.carousel-right-arrow-white {
 		@include sprite-VideoPageTool-embed('carousel_right_arrow_white',$width,$height);
-	}
-	&.ico-anyclip {
-		@include sprite-VideoPageTool-embed('ico_anyclip',$width,$height);
 	}
 	&.ico-ign {
 		@include sprite-VideoPageTool-embed('ico_ign',$width,$height);
