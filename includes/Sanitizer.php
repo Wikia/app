@@ -813,6 +813,16 @@ class Sanitizer {
 				continue;
 			}
 
+			// FANDOM change - XW-4380: allow boolean values for contenteditable attribute in HTML5 mode
+			if ( $wgHtml5 && $attribute === 'contenteditable' ) {
+				if ( $value === 'true' || $value === 'false' ) {
+					$out[$attribute] = $value;
+				}
+
+				continue;
+			}
+			// end FANDOM change
+
 			# Strip javascript "expression" from stylesheets.
 			# http://msdn.microsoft.com/workshop/author/dhtml/overview/recalc.asp
 			if( $attribute == 'style' ) {
@@ -1099,14 +1109,16 @@ class Sanitizer {
 			$attribs[] = "$encAttribute=\"$encValue\"";
 		}
 
+
 		# RTE (Rich Text Editor) - begin
 		# @author: Inez Korczyński
 		global $wgRTEParserEnabled;
-		if(!empty($wgRTEParserEnabled)) {
-			if(strpos($text, "\x7f") !== false) {
+		if ( !empty( $wgRTEParserEnabled ) && !isset( $stripped['contenteditable'] ) ) {
+			if ( strpos( $text, "\x7f" ) !== false ) {
 				RTE::$edgeCases[] = 'COMPLEX.08';
 			}
-			$attribs[] = RTEParser::encodeAttributesStr($text);
+			
+			$attribs[] = RTEParser::encodeAttributesStr( $text );
 		}
 		# RTE - end
 
@@ -1603,6 +1615,12 @@ class Sanitizer {
 			    'about', 'property', 'resource', 'datatype', 'typeof',
 			) );
 		}
+
+		// FANDOM change - XW-4380: allow contenteditable attribute in HTML5 mode
+		if ( $wgHtml5 ) {
+			$common[] = 'contenteditable';
+		}
+		// end FANDOM change
 
 		if ( $wgHtml5 && $wgAllowMicrodataAttributes ) {
 			# add HTML5 microdata tages as pecified by http://www.whatwg.org/specs/web-apps/current-work/multipage/microdata.html#the-microdata-model

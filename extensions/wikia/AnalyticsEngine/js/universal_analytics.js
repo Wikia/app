@@ -48,15 +48,10 @@
 	var cookieExists,
 		isProductionEnv,
 		blockingTracked = {
-			sourcePoint: false,
+			babDetector: false,
 			pageFair: false
 		},
 		GASettings = {
-			sourcePoint: {
-				trackName: 'sourcePoint',
-				name: 'sourcepoint',
-				dimension: 999
-			},
 			babDetector: {
 				trackName: 'babDetector',
 				dimension: 6,
@@ -69,16 +64,6 @@
 			}
 		},
 		listenerSettings = [
-			{
-				eventName: 'sp.blocking',
-				value: true,
-				detectorSettings: GASettings.sourcePoint
-			},
-			{
-				eventName: 'sp.not_blocking',
-				value: false,
-				detectorSettings: GASettings.sourcePoint
-			},
 			{
 				eventName: 'bab.blocking',
 				value: true,

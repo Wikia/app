@@ -332,8 +332,6 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 				'pageType' => 'all_ads',
 				'showAds' => true,
 				'delayBtf' => true,
-				'sourcePointMMSDomain' => 'mms.bre.wikia-dev.com',
-				'sourcePointRecovery' => true,
 				'pageFairRecovery' => true,
 				'instartLogicRecovery' => true
 			],
@@ -372,10 +370,6 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 		foreach ( $expectedSlots as $var => $val ) {
 			$expected['slots'][$var] = $val;
 		}
-
-		// Check for SourcePoint URL
-		$this->assertStringMatchesFormat( $expectedAdEngineResourceURLFormat, $result['opts']['sourcePointDetectionUrl'] );
-		unset($result['opts']['sourcePointDetectionUrl']);
 
 		// Check for PageFair URL
 		$this->assertStringMatchesFormat( $expectedAdEngineResourceURLFormat, $result['opts']['pageFairDetectionUrl'] );

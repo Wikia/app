@@ -9,13 +9,10 @@
  */
 class MapsLeaflet extends MapsMappingService {
 
-	/**
-	 * Constructor
-	 */
 	public function __construct( $serviceName ) {
 		parent::__construct(
 			$serviceName,
-			array( 'leafletmaps', 'leaflet' )
+			[ 'leafletmaps', 'leaflet' ]
 		);
 	}
 
@@ -25,30 +22,89 @@ class MapsLeaflet extends MapsMappingService {
 	 * @since 3.0
 	 */
 	public function addParameterInfo( array &$params ) {
-		$params['zoom'] = array(
-			'type' => 'integer',
-			'range' => array( 0, 20 ),
-			'default' => false,
-			'message' => 'maps-leaflet-par-zoom'
-		);
+		global $GLOBALS;
 
-		$params['defzoom'] = array(
+		$params['zoom'] = [
 			'type' => 'integer',
-			'range' => array( 0, 20 ),
+			'range' => [ 0, 20 ],
+			'default' => false,
+			'message' => 'maps-par-zoom'
+		];
+
+		$params['defzoom'] = [
+			'type' => 'integer',
+			'range' => [ 0, 20 ],
 			'default' => self::getDefaultZoom(),
 			'message' => 'maps-leaflet-par-defzoom'
-		);
+		];
 
-		$params['resizable'] = array(
+		$params['layers'] = [
+			'aliases' => 'layer',
+			'type' => 'string',
+			'values' => array_keys( $GLOBALS['egMapsLeafletAvailableLayers'], true, true ),
+			'default' => $GLOBALS['egMapsLeafletLayers'],
+			'message' => 'maps-leaflet-par-layers',
+			'islist' => true,
+		];
+
+		$params['overlaylayers'] = [
+			'type' => 'string',
+			'values' => array_keys( $GLOBALS['egMapsLeafletAvailableOverlayLayers'], true, true ),
+			'default' => $GLOBALS['egMapsLeafletOverlayLayers'],
+			'message' => 'maps-leaflet-par-overlaylayers',
+			'islist' => true,
+		];
+
+		$params['resizable'] = [
 			'type' => 'boolean',
 			'default' => $GLOBALS['egMapsResizableByDefault'],
-			'message' => 'maps-leaflet-par-resizable'
-		);
+			'message' => 'maps-par-resizable'
+		];
+
+		$params['enablefullscreen'] = [
+			'type' => 'boolean',
+			'default' => false,
+			'message' => 'maps-par-enable-fullscreen',
+		];
+
+		$params['scrollwheelzoom'] = [
+			'type' => 'boolean',
+			'default' => true,
+			'message' => 'maps-par-scrollwheelzoom',
+		];
+
+		$params['markercluster'] = [
+			'type' => 'boolean',
+			'default' => false,
+			'message' => 'maps-par-markercluster',
+		];
+
+		$params['clustermaxzoom'] = [
+			'type' => 'integer',
+			'default' => 20,
+			'message' => 'maps-par-clustermaxzoom',
+		];
+
+		$params['clusterzoomonclick'] = [
+			'type' => 'boolean',
+			'default' => true,
+			'message' => 'maps-par-clusterzoomonclick',
+		];
+
+		$params['clustermaxradius'] = [
+			'type' => 'integer',
+			'default' => 80,
+			'message' => 'maps-par-maxclusterradius',
+		];
+
+		$params['clusterspiderfy'] = [
+			'type' => 'boolean',
+			'default' => true,
+			'message' => 'maps-leaflet-par-clusterspiderfy',
+		];
 	}
 
 	/**
-	 * @see iMappingService::getDefaultZoom
-	 *
 	 * @since 3.0
 	 */
 	public function getDefaultZoom() {
@@ -80,17 +136,17 @@ class MapsLeaflet extends MapsMappingService {
 	public function getResourceModules() {
 		return array_merge(
 			parent::getResourceModules(),
-			array( 'ext.maps.leaflet' )
+			[ 'ext.maps.leaflet' ]
 		);
 	}
 
 	protected function getDependencies() {
 		$leafletPath = $GLOBALS['wgScriptPath'] . '/extensions/Maps/includes/services/Leaflet/leaflet';
-		return array(
+
+		return [
 			Html::linkedStyle( "$leafletPath/leaflet.css" ),
-			'<!--[if lte IE 8]>' . Html::linkedStyle( "$leafletPath/leaflet.ie.css" ). '<![endif]-->',
 			Html::linkedScript( "$leafletPath/leaflet.js" ),
-		);
+		];
 	}
 
 }

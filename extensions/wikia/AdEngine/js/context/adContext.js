@@ -51,16 +51,6 @@ define('ext.wikia.adEngine.adContext', [
 		return isUrlParamSet('pagefairdetection') || (isSupportedGeo && sampler.sample('pageFairDetection', 1, 10));
 	}
 
-	function isSourcePointDetectionDesktopEnabled(context) {
-		return context.opts.sourcePointDetectionUrl && context.targeting.skin === 'oasis' &&
-			geo.isProperGeo(instantGlobals.wgAdDriverSourcePointDetectionCountries);
-	}
-
-	function isSourcePointDetectionMobileEnabled(context) {
-		return context.opts.sourcePointDetectionUrl && context.targeting.skin === 'mercury' &&
-			geo.isProperGeo(instantGlobals.wgAdDriverSourcePointDetectionMobileCountries);
-	}
-
 	function isBabDetectionDesktopEnabled() {
 		return geo.isProperGeo(instantGlobals.wgAdDriverBabDetectionDesktopCountries);
 	}
@@ -70,10 +60,6 @@ define('ext.wikia.adEngine.adContext', [
 	}
 
 	function updateDetectionServicesAdContext(context, noExternals) {
-		// SourcePoint detection integration
-		context.opts.sourcePointDetection = !noExternals && isSourcePointDetectionDesktopEnabled(context);
-		context.opts.sourcePointDetectionMobile = !noExternals && isSourcePointDetectionMobileEnabled(context);
-
 		// PageFair detection
 		context.opts.pageFairDetection = !noExternals && isPageFairDetectionEnabled();
 
@@ -98,17 +84,6 @@ define('ext.wikia.adEngine.adContext', [
 		context.opts.pageFairRecovery = serviceCanBeEnabled && !isRecoveryServiceAlreadyEnabled &&
 			context.opts.pageFairRecovery && geo.isProperGeo(instantGlobals.wgAdDriverPageFairRecoveryCountries) &&
 			!browserDetect.isEdge();
-		isRecoveryServiceAlreadyEnabled |= context.opts.pageFairRecovery;
-
-		// SourcePoint recovery
-		context.opts.sourcePointRecovery = serviceCanBeEnabled && !isRecoveryServiceAlreadyEnabled &&
-			context.opts.sourcePointRecovery && geo.isProperGeo(instantGlobals.wgAdDriverSourcePointRecoveryCountries);
-		isRecoveryServiceAlreadyEnabled |= context.opts.sourcePointRecovery;
-
-		// SourcePoint MMS
-		context.opts.sourcePointMMS = serviceCanBeEnabled && !isRecoveryServiceAlreadyEnabled && context.opts.sourcePointMMS;
-
-		context.opts.sourcePointBootstrap = context.opts.sourcePointMMS || context.opts.sourcePointRecovery;
 	}
 
 	function updateAdContextBidders(context) {

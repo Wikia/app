@@ -4,26 +4,6 @@ class ARecoveryEngineApiController extends WikiaController {
 	const DEFAULT_TEMPLATE_ENGINE = WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
 	const MAX_EVENT_INTERVAL = 900;
 
-	public function getDelivery() {
-		$this->loadScript(new ResourceLoaderAdEngineSourcePointCSDelivery());
-	}
-
-	public function getspmsg() {
-		$this->loadScript(new ResourceLoaderAdEngineSourcePointMessage());
-	}
-
-	public function getspmmsc() {
-		$this->loadScript(new ResourceLoaderAdEngineSourcePointMMSClient());
-	}
-
-	public function getBootstrap() {
-		$resourceLoader = new ResourceLoaderAdEngineSourcePointCSBootstrap();
-		$resourceLoaderContext = new ResourceLoaderContext( new ResourceLoader(), new FauxRequest() );
-		$this->response->setVal( 'code', $resourceLoader->getScript( $resourceLoaderContext ) );
-		$this->response->setVal( 'domain', F::app()->wg->server );
-		$this->response->setVal( 'cs_endpoint', ResourceLoaderAdEngineSourcePointCSDelivery::CS_ENDPOINT );
-	}
-
 	public function getPageFairBootstrapHead() {
 		$resourceLoader = new ResourceLoaderAdEnginePageFairRecoveryModule();
 		$this->response->getView()->setTemplate( 'ARecoveryEngineApiController', 'getPageFairBootstrap' );

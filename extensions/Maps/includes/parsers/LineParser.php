@@ -2,10 +2,11 @@
 
 namespace Maps;
 
-use DataValues\Geo\Parsers\GeoCoordinateParser;
 use DataValues\Geo\Values\LatLongValue;
+use Jeroen\SimpleGeocoder\Geocoder;
 use Maps\Elements\Line;
 use ValueParsers\StringValueParser;
+use ValueParsers\ValueParser;
 
 /**
  * ValueParser that parses the string representation of a line.
@@ -16,12 +17,19 @@ use ValueParsers\StringValueParser;
  * @author Kim Eik
  * @author Jeroen De Dauw < jeroendedauw@gmail.com >
  */
-class LineParser extends StringValueParser {
+class LineParser implements ValueParser {
 
-	protected $supportGeocoding = true;
+	private $metaDataSeparator = '~';
 
-	// TODO: use options
-	protected $metaDataSeparator = '~';
+	private $geocoder;
+
+	public function __construct() {
+		$this->geocoder = MapsFactory::newDefault()->newGeocoder();
+	}
+
+	public function setGeocoder( Geocoder $geocoder ) {
+		$this->geocoder = $geocoder;
+	}
 
 	/**
 	 * @see StringValueParser::stringParse
@@ -32,16 +40,22 @@ class LineParser extends StringValueParser {
 	 *
 	 * @return Line
 	 */
-	public function stringParse( $value ) {
-		$parts = explode( $this->metaDataSeparator , $value );
+	public function parse( $value ) {
+		$parts = explode( $this->metaDataSeparator, $value );
 
-		$line = $this->constructShapeFromLatLongValues( $this->parseCoordinates(
-			explode( ':' , array_shift( $parts ) )
-		) );
+		$line = $this->constructShapeFromLatLongValues(
+			$this->parseCoordinates(
+				explode( ':', array_shift( $parts ) )
+			)
+		);
 
 		$this->handleCommonParams( $parts, $line );
 
 		return $line;
+	}
+
+	protected function constructShapeFromLatLongValues( array $locations ) {
+		return new Line( $locations );
 	}
 
 	/**
@@ -52,32 +66,19 @@ class LineParser extends StringValueParser {
 	 * @return LatLongValue[]
 	 */
 	protected function parseCoordinates( array $coordinateStrings ) {
-		$coordinates = array();
-		$coordinateParser = new GeoCoordinateParser( new \ValueParsers\ParserOptions() );
-
-		$supportsGeocoding = $this->supportGeocoding && \Maps\Geocoders::canGeocode();
+		$coordinates = [];
 
 		foreach ( $coordinateStrings as $coordinateString ) {
-			if ( $supportsGeocoding ) {
-				$coordinate = \Maps\Geocoders::attemptToGeocode( $coordinateString );
+			$coordinate = $this->geocoder->geocode( $coordinateString );
 
-				if ( $coordinate === false ) {
-					// TODO
-				}
-				else {
-					$coordinates[] = $coordinate;
-				}
-			}
-			else {
-				$coordinates[] = $coordinateParser->parse( $coordinateString );
+			if ( $coordinate === null ) {
+				// TODO: good if the user knows something has been omitted
+			} else {
+				$coordinates[] = $coordinate;
 			}
 		}
 
 		return $coordinates;
-	}
-
-	protected function constructShapeFromLatLongValues( array $locations ) {
-		return new Line( $locations );
 	}
 
 	/**
@@ -98,12 +99,11 @@ class LineParser extends StringValueParser {
 		//create link data
 		$linkOrTitle = array_shift( $params );
 		if ( $link = $this->isLinkParameter( $linkOrTitle ) ) {
-			$this->setLinkFromParameter( $line , $link );
+			$this->setLinkFromParameter( $line, $link );
 		} else {
 			//create bubble data
-			$this->setBubbleDataFromParameter( $line , $params , $linkOrTitle );
+			$this->setBubbleDataFromParameter( $line, $params, $linkOrTitle );
 		}
-
 
 		//handle stroke parameters
 		if ( $color = array_shift( $params ) ) {
@@ -119,17 +119,26 @@ class LineParser extends StringValueParser {
 		}
 	}
 
-	protected function setBubbleDataFromParameter( Line &$line , &$params , $title ) {
-		if ( $title ) {
-			$line->setTitle( $title );
+	/**
+	 * Checks if a string is prefixed with link:
+	 *
+	 * @static
+	 *
+	 * @param $link
+	 *
+	 * @return bool|string
+	 * @since 2.0
+	 */
+	private function isLinkParameter( $link ) {
+		if ( strpos( $link, 'link:' ) === 0 ) {
+			return substr( $link, 5 );
 		}
-		if ( $text = array_shift( $params ) ) {
-			$line->setText( $text );
-		}
+
+		return false;
 	}
 
-	protected function setLinkFromParameter( Line &$line , $link ) {
-		if ( filter_var( $link , FILTER_VALIDATE_URL , FILTER_FLAG_SCHEME_REQUIRED ) ) {
+	protected function setLinkFromParameter( Line &$line, $link ) {
+		if ( filter_var( $link, FILTER_VALIDATE_URL, FILTER_FLAG_SCHEME_REQUIRED ) ) {
 			$line->setLink( $link );
 		} else {
 			$title = \Title::newFromText( $link );
@@ -137,19 +146,13 @@ class LineParser extends StringValueParser {
 		}
 	}
 
-	/**
-	 * Checks if a string is prefixed with link:
-	 * @static
-	 * @param $link
-	 * @return bool|string
-	 * @since 2.0
-	 */
-	private function isLinkParameter( $link ) {
-		if ( strpos( $link , 'link:' ) === 0 ) {
-			return substr( $link , 5 );
+	protected function setBubbleDataFromParameter( Line &$line, &$params, $title ) {
+		if ( $title ) {
+			$line->setTitle( $title );
 		}
-
-		return false;
+		if ( $text = array_shift( $params ) ) {
+			$line->setText( $text );
+		}
 	}
 
 }

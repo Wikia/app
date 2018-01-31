@@ -52,7 +52,8 @@ head {
  */
 img.image,
 img.media-placeholder,
-img.video {
+img.video,
+span.placeholder {
 	cursor: move !important;
 }
 
@@ -114,8 +115,9 @@ img.withCaption {
 /**
  *  placeholders
  */
-img.placeholder {
-	background-image: url(/extensions/wikia/RTE/ckeditor/_source/skins/wikia/icons.png);/* $wgResourceBasePath */
+img.placeholder,
+img.empty-placeholder {
+	background-image: url(/extensions/wikia/RTE/ckeditor/skins/wikia/icons.png);/* $wgResourceBasePath */
 	background-position: 0 -1294px;
 	height: 16px !important;
 	margin: 0 3px 3px 3px;
@@ -232,4 +234,23 @@ h1 {
 	pre {
 		font-family: monospace;
 	}
+}
+
+/* XW-4380: Control display of template placeholders in list items */
+li .placeholder-double-brackets {
+	display: inline-block;
+}
+
+/* XW-4473: Hide RTE filler paragraphs between headings */
+p[data-rte-filler="true"] {
+	display: none;
+}
+
+/* XW-4482: Hide placeholders inside template transclusions */
+.placeholder-double-brackets .placeholder {
+	display: none;
+}
+
+span.placeholder {
+	user-select: all;
 }

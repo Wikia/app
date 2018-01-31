@@ -25,7 +25,7 @@ abstract class ParserHook {
 	 *
 	 * @var array
 	 */
-	protected static $registeredHooks = array();
+	protected static $registeredHooks = [];
 
 	/**
 	 * Returns an array of registered parser hooks (keys) and their handling
@@ -168,7 +168,7 @@ abstract class ParserHook {
 	 *
 	 * @return true
 	 */
-	public function init( Parser &$parser ) {
+	public function init( Parser $parser ) {
 		$className = get_class( $this );
 		$first = true;
 
@@ -182,7 +182,7 @@ abstract class ParserHook {
 			if ( $this->forTagExtensions ) {
 				$parser->setHook(
 					$name,
-					array( new ParserHookCaller( $className, 'renderTag' ), 'runTagHook' )
+					[ new ParserHookCaller( $className, 'renderTag' ), 'runTagHook' ]
 				);
 			}
 
@@ -205,7 +205,7 @@ abstract class ParserHook {
 				
 				$parser->setFunctionHook(
 					$name,
-					array( new ParserHookCaller( $className, $function ), $callerFunction ),
+					[ new ParserHookCaller( $className, $function ), $callerFunction ],
 					$flags
 				);
 			}
@@ -225,7 +225,7 @@ abstract class ParserHook {
 		$names = $this->getName();
 
 		if ( !is_array( $names ) ) {
-			$names = array( $names );
+			$names = [ $names ];
 		}
 
 		return $names;
@@ -243,7 +243,7 @@ abstract class ParserHook {
 	 */
 	public function magic( array &$magicWords, $langCode ) {
 		foreach ( $this->getNames() as $name ) {
-			$magicWords[$name] = array( 0, $name );
+			$magicWords[$name] = [ 0, $name ];
 		}
 
 		return true;
@@ -281,12 +281,12 @@ abstract class ParserHook {
 	 *
 	 * @since 0.4
 	 *
-	 * @param Parser &$parser
+	 * @param Parser $parser
 	 * ... further arguments ...
 	 *
 	 * @return array
 	 */
-	public function renderFunction( Parser &$parser /*, n args */ ) {
+	public function renderFunction( Parser $parser /*, n args */ ) {
 		$args = func_get_args();
 		
 		$this->parser = array_shift( $args );
@@ -303,7 +303,7 @@ abstract class ParserHook {
 		}
 
 		return array_merge(
-			array( $output ),
+			[ $output ],
 			$options
 		);
 	}
@@ -314,16 +314,16 @@ abstract class ParserHook {
 	 *
 	 * @since 0.4.13
 	 * 
-	 * @param Parser &$parser
+	 * @param Parser $parser
 	 * @param PPFrame $frame
 	 * @param type $args
 	 * @return array 
 	 */
-	public function renderFunctionObj( Parser &$parser, PPFrame $frame, $args ) {		
+	public function renderFunctionObj( Parser $parser, PPFrame $frame, $args ) {
 		$this->frame = $frame;
 		
 		// create non-object args for old style 'renderFunction()'
-		$oldStyleArgs = array( &$parser );
+		$oldStyleArgs = [ $parser ];
 		
 		foreach( $args as $arg ) {
 			$oldStyleArgs[] = trim( $frame->expand( $arg ) );
@@ -333,7 +333,7 @@ abstract class ParserHook {
 		 * since we can't validate un-expandet arguments, we just go on with old-style function
 		 * handling from here. Only advantage is that we have $this->frame set properly.
 		 */
-		return call_user_func_array( array( $this, 'renderFunction' ), $oldStyleArgs );
+		return call_user_func_array( [ $this, 'renderFunction' ], $oldStyleArgs );
 	}
 
 	/**
@@ -344,7 +344,7 @@ abstract class ParserHook {
 	 * @return array
 	 */
 	protected function getFunctionOptions() {
-		return array();
+		return [];
 	}
 
 	/**
@@ -391,8 +391,8 @@ abstract class ParserHook {
 	 * @return array of array of ProcessingError
 	 */
 	protected function getErrorsToDisplay() {
-		$errors = array();
-		$warnings = array();
+		$errors = [];
+		$warnings = [];
 
 		foreach ( $this->validator->getErrors() as $error ) {
 			// Check if the severity of the error is high enough to display it.
@@ -404,7 +404,7 @@ abstract class ParserHook {
 			}
 		}
 
-		return array( 'errors' => $errors, 'warnings' => $warnings );
+		return [ 'errors' => $errors, 'warnings' => $warnings ];
 	}
 
 	/**
@@ -435,7 +435,7 @@ abstract class ParserHook {
 	 * @return array
 	 */
 	protected function getParameterInfo( $type ) {
-		return array();
+		return [];
 	}
 
 	public function getParamDefinitions( $type = self::TYPE_FUNCTION ) {
@@ -462,7 +462,7 @@ abstract class ParserHook {
 	 * @return array
 	 */
 	protected function getDefaultParameters( $type ) {
-		return array();
+		return [];
 	}
 
 	/**
@@ -478,13 +478,13 @@ abstract class ParserHook {
 	 * @return array
 	 */
 	public function getDescriptionData( $type ) {
-		return array(
+		return [
 			'names' => $this->getNames(),
 			'description' => $this->getDescription(),
 			'message' => $this->getMessage(),
 			'parameters' => ParamDefinition::getCleanDefinitions( $this->getParameterInfo( $type ) ),
 			'defaults' => $this->getDefaultParameters( $type ),
-		);
+		];
 	}
 
 	/**
@@ -602,7 +602,7 @@ class ParserHookCaller {
 	public function runFunctionHook( Parser $parser /*, n args */ ) {
 		$args = func_get_args();
 		$args[0] = $parser; // with '&' becaus call_user_func_array is being used
-		return call_user_func_array( array( new $this->class(), $this->method ), $args );
+		return call_user_func_array( [ new $this->class(), $this->method ], $args );
 	}
 	
 	public function runFunctionHookObj( Parser $parser, PPFrame $frame, array $args ) {

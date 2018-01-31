@@ -84,8 +84,6 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverRubiconDisplayPrebidCountries';
 		$vars[] = 'wgAdDriverRubiconPrebidCountries';
 		$vars[] = 'wgAdDriverScrollDepthTrackingCountries';
-		$vars[] = 'wgAdDriverSourcePointDetectionCountries';
-		$vars[] = 'wgAdDriverSourcePointDetectionMobileCountries';
 		$vars[] = 'wgAdDriverSrcPremiumCountries';
 		$vars[] = 'wgAdDriverTurtleCountries';
 		$vars[] = 'wgPorvataVastLoggerConfig';
@@ -120,10 +118,6 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverVideoMoatTrackingCountries';
 		$vars[] = 'wgAdDriverVideoMoatTrackingSampling';
 		$vars[] = 'wgAdDriverVideoPostrollCountries';
-
-		// TODO: Remove after src=[gpt,ns] is finished
-		$vars[] = 'wgAdDriverNewsAndStoriesSingleSrcKeyValueCountries';
-		$vars[] = 'wgAdDriverNewsAndStoriesSrcKeyValueCountries';
 
 		// news&stories variables only
 		$vars[] = 'wgAdDriverF2BabDetectionCountries';

@@ -63,12 +63,9 @@ class PlacesHooks {
  	}
 
 	static public function onRTEUseDefaultPlaceholder( $name, $params, $frame, $wikitextIdx ) {
-		if ( $name !== 'place' ) {
-			return true;
-		} else {
+		if ( $name === 'place' ) {
 			// store metadata index to be used when rendering placeholder for RTE
 			PlacesParserHookHandler::$lastWikitextId = $wikitextIdx;
-			return false;
 		}
 	}
 

@@ -16,11 +16,11 @@ use ValueFormatters\FormatterOptions;
 class FormatterOptionsTest extends \PHPUnit_Framework_TestCase {
 
 	public function testConstructor() {
-		$options = array(
+		$options = [
 			'foo' => 42,
 			'bar' => 4.2,
-			'baz' => array( 'o_O', false, null, '42' => 42, array() )
-		);
+			'baz' => [ 'o_O', false, null, '42' => 42, [] ]
+		];
 
 		$formatterOptions = new FormatterOptions( $options );
 
@@ -36,11 +36,11 @@ class FormatterOptionsTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	public function testConstructorFail() {
-		$options = array(
+		$options = [
 			'foo' => 42,
 			'bar' => 4.2,
-			42 => array( 'o_O', false, null, '42' => 42, array() )
-		);
+			42 => [ 'o_O', false, null, '42' => 42, [] ]
+		];
 
 		$this->setExpectedException( 'Exception' );
 
@@ -48,14 +48,14 @@ class FormatterOptionsTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	public function setOptionProvider() {
-		$argLists = array();
+		$argLists = [];
 
 		$formatterOptions = new FormatterOptions();
 
-		$argLists[] = array( $formatterOptions, 'foo', 42 );
-		$argLists[] = array( $formatterOptions, 'bar', 42 );
-		$argLists[] = array( $formatterOptions, 'foo', 'foo' );
-		$argLists[] = array( $formatterOptions, 'foo', null );
+		$argLists[] = [ $formatterOptions, 'foo', 42 ];
+		$argLists[] = [ $formatterOptions, 'bar', 42 ];
+		$argLists[] = [ $formatterOptions, 'foo', 'foo' ];
+		$argLists[] = [ $formatterOptions, 'foo', null ];
 
 		return $argLists;
 	}
@@ -74,11 +74,11 @@ class FormatterOptionsTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	public function testHashOption() {
-		$options = array(
+		$options = [
 			'foo' => 42,
 			'bar' => 4.2,
-			'baz' => array( 'o_O', false, null, '42' => 42, array() )
-		);
+			'baz' => [ 'o_O', false, null, '42' => 42, [] ]
+		];
 
 		$formatterOptions = new FormatterOptions( $options );
 
@@ -91,17 +91,17 @@ class FormatterOptionsTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	public function testSetOption() {
-		$formatterOptions = new FormatterOptions( array( 'foo' => 'bar' ) );
+		$formatterOptions = new FormatterOptions( [ 'foo' => 'bar' ] );
 
-		$values = array(
-			array( 'foo', 'baz' ),
-			array( 'foo', 'bar' ),
-			array( 'onoez', '' ),
-			array( 'hax', 'zor' ),
-			array( 'nyan', 9001 ),
-			array( 'cat', 4.2 ),
-			array( 'spam', array( '~=[,,_,,]:3' ) ),
-		);
+		$values = [
+			[ 'foo', 'baz' ],
+			[ 'foo', 'bar' ],
+			[ 'onoez', '' ],
+			[ 'hax', 'zor' ],
+			[ 'nyan', 9001 ],
+			[ 'cat', 4.2 ],
+			[ 'spam', [ '~=[,,_,,]:3' ] ],
+		];
 
 		foreach ( $values as $value ) {
 			$formatterOptions->setOption( $value[0], $value[1] );
@@ -114,7 +114,7 @@ class FormatterOptionsTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testGetOption( $nonExistingOption ) {
 		$this->assertTrue( true );
-		$formatterOptions = new FormatterOptions( array( 'foo' => 'bar' ) );
+		$formatterOptions = new FormatterOptions( [ 'foo' => 'bar' ] );
 
 		$this->setExpectedException( 'OutOfBoundsException' );
 
@@ -122,23 +122,23 @@ class FormatterOptionsTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	public function nonExistingOptionsProvider() {
-		$argLists = array();
+		$argLists = [];
 
-		$argLists[] = array( 'bar' );
-		$argLists[] = array( 'Foo' );
-		$argLists[] = array( 'FOO' );
-		$argLists[] = array( 'spam' );
-		$argLists[] = array( 'onoez' );
+		$argLists[] = [ 'bar' ];
+		$argLists[] = [ 'Foo' ];
+		$argLists[] = [ 'FOO' ];
+		$argLists[] = [ 'spam' ];
+		$argLists[] = [ 'onoez' ];
 
 		return $argLists;
 	}
 
 	public function testRequireOption() {
-		$options = array(
+		$options = [
 			'foo' => 42,
 			'bar' => 4.2,
-			'baz' => array( 'o_O', false, null, '42' => 42, array() )
-		);
+			'baz' => [ 'o_O', false, null, '42' => 42, [] ]
+		];
 
 		$formatterOptions = new FormatterOptions( $options );
 
@@ -152,11 +152,11 @@ class FormatterOptionsTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	public function testDefaultOption() {
-		$options = array(
+		$options = [
 			'foo' => 42,
 			'bar' => 4.2,
-			'baz' => array( 'o_O', false, null, '42' => 42, array() )
-		);
+			'baz' => [ 'o_O', false, null, '42' => 42, [] ]
+		];
 
 		$formatterOptions = new FormatterOptions( $options );
 
@@ -170,12 +170,12 @@ class FormatterOptionsTest extends \PHPUnit_Framework_TestCase {
 			);
 		}
 
-		$defaults = array(
+		$defaults = [
 			'N' => 42,
 			'y' => 4.2,
 			'a' => false,
-			'n' => array( '42' => 42, array( '' ) )
-		);
+			'n' => [ '42' => 42, [ '' ] ]
+		];
 
 		foreach ( $defaults as $option => $value ) {
 			$formatterOptions->defaultOption( $option, $value );

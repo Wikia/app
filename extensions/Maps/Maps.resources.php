@@ -13,62 +13,56 @@
  */
 return call_user_func( function() {
 
-	$pathParts = ( explode( DIRECTORY_SEPARATOR . 'extensions' . DIRECTORY_SEPARATOR, __DIR__, 2 ) );
+	$pathParts = explode( '/', str_replace( DIRECTORY_SEPARATOR, '/', __DIR__ ) );
 
-	$moduleTemplate = array(
+	$moduleTemplate = [
 		'position' => 'top',
 		'localBasePath' => __DIR__ . '/includes',
 		'remoteExtPath' =>  end( $pathParts ) . '/includes',
 		'group' => 'ext.maps',
-		'targets' => array(
+		'targets' => [
 			'mobile',
 			'desktop'
-		)
-	);
+		]
+	];
 
-	return array(
-		'ext.maps.common' => $moduleTemplate + array(
-			'messages' => array(
+	return [
+		'ext.maps.common' => $moduleTemplate + [
+			'messages' => [
 				'maps-load-failed',
-			) ,
-			'scripts' => array(
+			] ,
+			'scripts' => [
 				'ext.maps.common.js',
-			),
-		),
+			],
+		],
 
-		'ext.maps.layers' => $moduleTemplate + array(
-			'styles' => array(
-				'ext.maps.layers.css'
-			)
-		),
-
-		'ext.maps.coord' => $moduleTemplate + array(
-			'messages' => array(
+		'ext.maps.coord' => $moduleTemplate + [
+			'messages' => [
 				'maps-abb-north',
 				'maps-abb-east',
 				'maps-abb-south',
 				'maps-abb-west',
-			),
-			'scripts' => array(
+			],
+			'scripts' => [
 				'ext.maps.coord.js'
-			),
-		),
+			],
+		],
 
-		'ext.maps.resizable' => $moduleTemplate + array(
+		'ext.maps.resizable' => $moduleTemplate + [
 			'dependencies' => 'jquery.ui.resizable',
-		),
+		],
 
-		'mapeditor' => $moduleTemplate + array(
-			'scripts' => array(
+		'mapeditor' => $moduleTemplate + [
+			'scripts' => [
 				'editor/js/jquery.miniColors.js',
 				'editor/js/mapeditor.iefixes.js',
 				'editor/js/mapeditor.js',
-			),
-			'styles' => array(
+			],
+			'styles' => [
 				'editor/css/jquery.miniColors.css',
 				'editor/css/mapeditor.css',
-			),
-			'messages' => array(
+			],
+			'messages' => [
 				'mapeditor-parser-error',
 				'mapeditor-none-text',
 				'mapeditor-done-button',
@@ -80,27 +74,26 @@ return call_user_func( function() {
 				'mapeditor-mapparam-button',
 				'mapeditor-clear-button',
 				'mapeditor-imageoverlay-button',
-			),
-			'dependencies' => array(
+			],
+			'dependencies' => [
 				'ext.maps.common',
 				'jquery.ui.autocomplete',
 				'jquery.ui.slider',
 				'jquery.ui.dialog',
-			),
-		),
+			],
+		],
 
-		'ext.maps.services' => $moduleTemplate + array(
+		'ext.maps.services' => $moduleTemplate + [
 			'group' => 'ext.maps',
-			'scripts' => array(
+			'scripts' => [
 				'ext.maps.services.js',
-			),
-			'dependencies' => array(
+			],
+			'dependencies' => [
 				'ext.maps.common',
-				'ext.maps.layers',
 				'ext.maps.coord'
-			)
-		)
-	);
+			]
+		]
+	];
 
 } );
 // @codeCoverageIgnoreEnd
