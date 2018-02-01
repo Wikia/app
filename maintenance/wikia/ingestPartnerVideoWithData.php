@@ -108,9 +108,6 @@ foreach ( $providersVideoFeed as $provider ) {
 			$endDate = date( 'Y-m-d', $endDateTS ).'T00:00:00-0800';
 			$file = $feedIngester->downloadFeed( $startDate, $endDate );
 			break;
-		case FeedIngesterFactory::PROVIDER_CRUNCHYROLL:
-			// No file needed
-			break;
 		default:
 	}
 

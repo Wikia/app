@@ -7,12 +7,10 @@ class FeedIngesterFactory {
 
 	// Constants for referring to short provider names
 	const PROVIDER_IGN = 'ign';
-	const PROVIDER_CRUNCHYROLL = 'crunchyroll';
 
 	// Providers from which we ingest daily video data
 	protected static $ACTIVE_PROVIDERS = [
 		self::PROVIDER_IGN,
-		self::PROVIDER_CRUNCHYROLL,
 	];
 
 	/**
