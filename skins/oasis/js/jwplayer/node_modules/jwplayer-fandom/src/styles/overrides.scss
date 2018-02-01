@@ -61,6 +61,10 @@
 		}
 	}
 
+	.wikia-jw-title-duration {
+		display: none;
+	}
+
 	@mixin idle-screen($play-icon-size, $padding, $title-font-size, $title-line-height, $duration-font-size) {
 		$icon-padding: $padding - 0.083 * $play-icon-size;
 		$icon-container-size: 1.2 * $play-icon-size;
@@ -93,6 +97,7 @@
 
 			.wikia-jw-title-duration {
 				color: white;
+				display: block;
 				font-size: $duration-font-size;
 				font-weight: 600;
 				letter-spacing: .5px;
@@ -170,7 +175,7 @@
 	.jw-controlbar {
 		// background relies on player's id selector so it's impossible to set it for every case
 		background: linear-gradient(0, #000, transparent) !important;
-		// set z-index to make sure ui buttons are displayed properly with vpaid 
+		// set z-index to make sure ui buttons are displayed properly with vpaid
 		z-index: 2;
 	}
 
