@@ -3185,8 +3185,10 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
 		openDialog: function( dialogName, callback ) {
 			var dialog = null, dialogDefinitions = CKEDITOR.dialog._.dialogDefinitions[ dialogName ];
 
-			if ( CKEDITOR.dialog._.currentTop === null )
-				showCover( this );
+			//Wikia start
+			//if ( CKEDITOR.dialog._.currentTop === null )
+				//showCover( this );
+			//Wikia end
 
 			// If the dialogDefinition is already loaded, open it immediately.
 			if ( typeof dialogDefinitions == 'function' ) {
