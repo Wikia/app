@@ -42,13 +42,6 @@
 		$image-width: 76px;
 		$image-height: 23px;
 	}
-	// @autosprite-image-details: ico_iva.png@389,0,7510e435a389e8b25d0f900917c75a59
-	@if $imageName == 'ico_iva' {
-		$image-x: 389px;
-		$image-y: 0px;
-		$image-width: 85px;
-		$image-height: 38px;
-	}
 	// @autosprite-image-details: logo_wikiavideo.png@652,0,39ddd3d3ae05b31a906d99cdd5a3ceb2
 	@if $imageName == 'logo_wikiavideo' {
 		$image-x: 652px;
@@ -101,12 +94,6 @@
 		$image-height: 23px;
 		background-image: url('/extensions/wikia/VideoPageTool/images/sprite-VideoPageTool/ico_ign.png'); /* inline */
 	}
-	// @autosprite-image-details: ico_iva.png@389,0,7510e435a389e8b25d0f900917c75a59
-	@if $imageName == 'ico_iva' {
-		$image-width: 85px;
-		$image-height: 38px;
-		background-image: url('/extensions/wikia/VideoPageTool/images/sprite-VideoPageTool/ico_iva.png'); /* inline */
-	}
 	// @autosprite-image-details: logo_wikiavideo.png@652,0,39ddd3d3ae05b31a906d99cdd5a3ceb2
 	@if $imageName == 'logo_wikiavideo' {
 		$image-width: 187px;
@@ -153,9 +140,6 @@
 	&.ico-ign {
 		@include sprite-VideoPageTool('ico_ign',$width,$height);
 	}
-	&.ico-iva {
-		@include sprite-VideoPageTool('ico_iva',$width,$height);
-	}
 	&.logo-wikiavideo {
 		@include sprite-VideoPageTool('logo_wikiavideo',$width,$height);
 	}
@@ -173,9 +157,6 @@
 	}
 	&.ico-ign {
 		@include sprite-VideoPageTool-embed('ico_ign',$width,$height);
-	}
-	&.ico-iva {
-		@include sprite-VideoPageTool-embed('ico_iva',$width,$height);
 	}
 	&.logo-wikiavideo {
 		@include sprite-VideoPageTool-embed('logo_wikiavideo',$width,$height);

@@ -126,11 +126,6 @@ $color-page-border: #bbbdc0;
 			@include sprite-VideoPageTool('ico_ign');
 			width: 76px;
 		}
-
-		.ico-iva {
-			@include sprite-VideoPageTool('ico_iva', 0, 0, 0, -3px);
-			width: 85px;
-		}
 	}
 }
 
