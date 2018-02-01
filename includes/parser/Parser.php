@@ -975,6 +975,17 @@ class Parser {
 					}
 				}
 				# RTE - end
+
+				// Wikia change start XW-4587
+				if ( !empty( $wgRTEParserEnabled ) ) {
+					// from placeholder remove tag name, <, >, </ so only attributes and template content left.
+					// They are attached then to <table> and this <table> is treated as placeholder
+					$attributes = preg_replace("/<span/", '', $attributes);
+					$attributes = preg_replace("/>\&#x0200B;/", ' ', $attributes);
+					$attributes = preg_replace("/\&#x0200B;<\/span>/", '', $attributes);
+				}
+				// Wikia change end
+
 				$attributes = Sanitizer::fixTagAttributes( $attributes , 'table' );
 
 				$outLine = str_repeat( '<dl><dd>' , $indent_level ) . "<table{$attributes}>";
@@ -1024,6 +1035,17 @@ class Parser {
 					}
 				}
 				# RTE - end
+
+				// Wikia change start XW-4587
+				if ( !empty( $wgRTEParserEnabled ) ) {
+					// from placeholder remove tag name, <, >, </ so only attributes and template content left.
+					// They are attached then to <tr> and this <tr> is treated as placeholder
+					$attributes = preg_replace("/<span/", '', $attributes);
+					$attributes = preg_replace("/>\&#x0200B;/", ' ', $attributes);
+					$attributes = preg_replace("/\&#x0200B;<\/span>/", '', $attributes);
+				}
+				// Wikia change end
+
 				$attributes = Sanitizer::fixTagAttributes( $attributes, 'tr' );
 				array_pop( $tr_attributes );
 				array_push( $tr_attributes, $attributes );
@@ -1100,6 +1122,20 @@ class Parser {
 
 					# A cell could contain both parameters and data
 					$cell_data = explode( '|' , $cell , 2 );
+
+					// Wikia change start XW-4587
+					if ( !empty( $wgRTEParserEnabled ) ) {
+						// $cell_data[0] in this place contains either attributes of td/th/caption or if there were no
+						// attributes specified it will contain whole content of a cell. In the first case treat it all
+						// as content so wikitext after parse/reverseparse is not broken. In the second case implode does
+						// not change anything
+						if ( preg_match( "/<[^>]*placeholder.*/", $cell_data[0] ) ) {
+							$cell_data = [ implode( "|", $cell_data ) ];
+							// TODO: if we rename placeholder's tag name to img, remove inner html and closing tag of
+							// TODO: placeholder then we'll have puzzle displayed
+						}
+					}
+					// Wikia change end
 
 					# Bug 553: Note that a '|' inside an invalid link should not
 					# be mistaken as delimiting cell parameters
