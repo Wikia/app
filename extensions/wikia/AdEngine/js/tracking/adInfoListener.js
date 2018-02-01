@@ -4,10 +4,11 @@ define('ext.wikia.adEngine.tracking.adInfoListener',  [
 	'ext.wikia.adEngine.lookup.services',
 	'ext.wikia.adEngine.tracking.adInfoTracker',
 	'ext.wikia.adEngine.video.vastParser',
+	'ext.wikia.adEngine.slot.service.slotRegistry',
 	'wikia.log',
 	'wikia.querystring',
 	'wikia.window'
-], function (adContext, lookupServices, tracker, vastParser, log, Querystring, win) {
+], function (adContext, lookupServices, tracker, vastParser, slotRegistry, log, Querystring, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.tracking.adInfoListener',
@@ -89,6 +90,8 @@ define('ext.wikia.adEngine.tracking.adInfoListener',  [
 		if (vastInfo.amznbid) {
 			slotPrices.a9 = vastInfo.amznbid;
 		}
+
+		slotRegistry.storeScrollY(vastInfo.pos);
 
 		tracker.track(
 			vastInfo.pos,
