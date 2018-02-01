@@ -36,6 +36,8 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 	exit( 1 );
 }
 
+use Wikia\Logger\WikiaLogger;
+
 // Avoid unstubbing $wgParser on setHook() too early on modern (1.12+) MW versions, as per r35980
 $wgHooks['ParserFirstCallInit'][] = 'wfYouTube';
 
@@ -89,6 +91,10 @@ function upgradeYouTubeTag( EditPage $editpage, $request ): bool {
 	if ( !$app->wg->User->isAllowed( 'videoupload' ) ) {
 		return true;
 	}
+
+	WikiaLogger::instance()->info( 'Upgrading youtube tag', [
+		'method' => __METHOD__
+	] );
 
 	$text = $editpage->textbox1;
 
@@ -286,6 +292,10 @@ function embedYouTube( $input, $argv, $parser ) {
 	}
 
 	if ( !empty( $ytid ) ) {
+		WikiaLogger::instance()->info( 'Embedding youtube: ' . $ytid, [
+			'method' => __METHOD__,
+			'video_source' => 'youtube'
+		] );
 		$url = "https://www.youtube.com/v/{$ytid}&enablejsapi=1&version=2&playerapiid={$ytid}"; // it's not mistake, there should be &, not ?
 		return "<object type=\"application/x-shockwave-flash\" data=\"{$url}\" width=\"{$width}\" height=\"{$height}\" id=\"YT_{$ytid}\"><param name=\"movie\" value=\"{$url}\"/><param name=\"wmode\" value=\"transparent\"/><param name=\"allowScriptAccess\" value=\"always\"/></object>";
 	}
@@ -322,6 +332,10 @@ function embedArchiveOrgVideo( $input, $argv, $parser ) {
 	}
 
 	if ( !empty( $aovid ) ) {
+		WikiaLogger::instance()->info( 'Embedding aovideo: ' . $aovid, [
+			'method' => __METHOD__,
+			'video_source' => 'aovideo'
+		] );
 		$url = "https://www.archive.org/download/{$aovid}.flv";
 		return "<object type=\"application/x-shockwave-flash\" data=\"https://www.archive.org/flv/FlowPlayerWhite.swf\" width=\"{$width}\" height=\"{$height}\"><param name=\"movie\" value=\"https://www.archive.org/flv/FlowPlayerWhite.swf\"/><param name=\"flashvars\" value=\"config={loop: false, videoFile: '{$url}', autoPlay: false}\"/></object>";
 	}
@@ -358,6 +372,10 @@ function embedArchiveOrgAudio( $input, $argv, $parser ) {
 	}
 
 	if ( !empty( $aoaid ) ) {
+		WikiaLogger::instance()->info( 'Embedding aoaudio: ' . $aoaid, [
+			'method' => __METHOD__,
+			'video_source' => 'aoaudio'
+		] );
 		$url = urlencode( "https://www.archive.org/audio/xspf-maker.php?identifier={$aoaid}" );
 		return "<object type=\"application/x-shockwave-flash\" data=\"https://www.archive.org/audio/xspf_player.swf?playlist_url={$url}\" width=\"{$width}\" height=\"{$height}\"><param name=\"movie\" value=\"https://www.archive.org/audio/xspf_player.swf?playlist_url={$url}\"/></object>";
 	}
@@ -394,6 +412,10 @@ function embedWeGame( $input, $argv, $parser ) {
 	}
 
 	if ( !empty( $weid ) ) {
+		WikiaLogger::instance()->info( 'Embedding wegame: ' . $weid, [
+			'method' => __METHOD__,
+			'video_source' => 'wegame'
+		] );
 		return "<object type=\"application/x-shockwave-flash\" data=\"https://www.wegame.com/static/flash/player2.swf\" width=\"{$width}\" height=\"{$height}\"><param name=\"flashvars\" value=\"tag={$weid}\"/></object>";
 
 	}
@@ -449,6 +471,10 @@ function embedGametrailers( $input, $argv, $parser ) {
 	}
 
 	if ( !empty( $gtid ) ) {
+		WikiaLogger::instance()->info( 'Embedding gtrailer: ' . $gtid, [
+			'method' => __METHOD__,
+			'video_source' => 'gtrailer'
+		] );
 		// www.gametrailers.com does not yet support HTTPS, to handle in (PLATFORM-3284)
 		$url = "http://www.gametrailers.com/remote_wrap.php?mid={$gtid}";
 		// return "<object type=\"application/x-shockwave-flash\" width=\"{$width}\" height=\"{$height}\"><param name=\"movie\" value=\"{$url}\"/></object>";
@@ -484,6 +510,10 @@ function embedNicovideo( $input, $argv, $parser ) {
 	}
 
 	if ( !empty( $nvid ) ) {
+		WikiaLogger::instance()->info( 'Embedding nicovideo: ' . $nvid, [
+			'method' => __METHOD__,
+			'video_source' => 'nicovideo'
+		] );
 		$url = "https://ext.nicovideo.jp/thumb_watch/{$nvid}?w={$width}&amp;h={$height}";
 		return "<script type=\"text/javascript\" src=\"{$url}\"></script>";
 	}
@@ -508,6 +538,10 @@ function embedCrispyGamer( $input, $argv, $parser ) {
 	}
 
 	if ( !empty( $cvid ) ) {
+		WikiaLogger::instance()->info( 'Embedding cgamer: ' . $cvid, [
+			'method' => __METHOD__,
+			'video_source' => 'cgamer'
+		] );
 		$url = "https://www.crispygamer.com/partners/wikia.aspx?pid=0&amp;vid={$cvid}";
 		return "<script type=\"text/javascript\" src=\"{$url}\"></script>";
 	}
@@ -518,6 +552,10 @@ function embedCrispyGamer( $input, $argv, $parser ) {
 function embedLongtailVideo( $input, $argv, $parser ) {
 	if ( !empty( $argv['vid'] ) ) {
 		$vid = $argv['vid'];
+		WikiaLogger::instance()->info( 'Embedding longtail: ' . $vid, [
+			'method' => __METHOD__,
+			'video_source' => 'longtail'
+		] );
 		return "<script type=\"text/javascript\" src=\"https://content.bitsontherun.com/players/{$vid}-McXqFI4P.js\"></script>";
 	}
 }

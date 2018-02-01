@@ -6,7 +6,8 @@
 			"Glanthor Reviol",
 			"Misibacsi",
 			"Máté",
-			"Macofe"
+			"Macofe",
+			"TK-999"
 		]
 	},
 	"maps-desc": "Lehetővé teszi a dinamikus térképek beágyazását a wiki lapokba, címek geográfiai kódolását és más geográfiai műveleteket",
@@ -51,12 +52,10 @@
 	"maps-geocoder-not-available": "A térképek kiterjesztés geokódoló funkciója nem elérhető. A tartózkodási helyed nem geokódolható.",
 	"maps_click_to_activate": "Kattints a térkép aktiválásához",
 	"maps_centred_on": "Térkép középre igazítva a következő koordináták alapján: $1, $2.",
+	"maps-par-kml": "Betöltendő KML fájlok.",
 	"maps-googlemaps3-incompatbrowser": "A böngésződ nem kompatibilis a Google Maps v3-mal.",
 	"maps-googlemaps3-par-type": "Elsőre megjelenítendő térkép típusa.",
 	"maps-googlemaps3-par-zoomstyle": "A nagyítás irányításának stílusa.",
-	"maps-googlemaps3-par-kml": "Betöltendő KML fájlok.",
-	"maps-osm-par-thumbs": "Bélyegképek megjelenítése",
-	"maps-osm-par-photos": "Fényképek megjelenítése",
 	"mapeditor": "Térkép szerkesztő",
 	"specialpages-group-maps": "Térképek",
 	"mapeditor-none-text": "Nincs",
@@ -77,5 +76,14 @@
 	"mapeditor-form-field-icon": "Ikon",
 	"mapeditor-form-field-group": "Csoport",
 	"mapeditor-form-field-inlinelabel": "Beágyazott címke",
-	"mapeditor-form-field-image": "Kép"
+	"mapeditor-form-field-image": "Kép",
+	"semanticmaps-unrecognizeddistance": "A(z) $1 érték nem egy érvényes távolság.",
+	"semanticmaps-kml-link": "KML fájl megtekintése",
+	"semanticmaps-default-kml-pagelink": "A(z) $1 lap megtekintése",
+	"semanticmaps-latitude": "Szélesség: $1",
+	"semanticmaps-longitude": "Hosszúság: $1",
+	"semanticmaps-altitude": "Tengerszint feletti magasság: $1",
+	"semanticmaps-forminput-locations": "Helyszínek",
+	"semanticmaps-par-staticlocations": "A térképre a lekérdezett adatok mellett felveendő helyek listája. Akárcsak a megjelenítési pontokkal, minden helyhez megadhatsz címet, leírást és ikont hullámvonal (\"~\") elválasztóval.",
+	"semanticmaps-par-showtitle": "Megjelenítse a címet a jelző információs ablakában, vagy ne? Ennek kikapcsolás hasznos lehet, ha sablonnal formázod az információs ablak tartalmát."
 }

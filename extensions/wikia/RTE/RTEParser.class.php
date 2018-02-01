@@ -523,6 +523,10 @@ class RTEParser extends Parser {
 		// RT#40786: add empty paragraphs between headings (</h3>\n<h3 ...)
 		$html = preg_replace("%(</h\d>\s)(<h\d)%s", '$1<p data-rte-filler="true"></p>$2', $html);
 
+		// XW-4579: CKE somehow optimizes html in a way that if there is empty line after <br /> it removes all attributes
+		// from it. This added span with zero-width space prevents such behaviour and is be ignored in RTEReverseParser::parse
+		$html = preg_replace("/(<br[^>]*>)/", '$1<span data-rte-filler="true">&#x0200B;</span>', $html);
+
 		wfProfileOut(__METHOD__ . '::regexp');
 
 		// add extra attribute for p tags coming from parser

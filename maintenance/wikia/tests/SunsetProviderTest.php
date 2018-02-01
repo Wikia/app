@@ -68,7 +68,7 @@ class SunsetProviderTest extends WikiaBaseTest {
 		// expect script to fetch list of videos from DB
 		$dbMock->expects( $this->at( 0 ) )
 			->method( 'select' )
-			->with( 'video_info', 'video_title', [ 'provider' => $providerName ], 'SunsetProvider::getProviderVideos' )
+			->with( 'video_info', 'video_title', [ 'provider' => $providerName, 'premium' => 0 ], 'SunsetProvider::getProviderVideos' )
 			->willReturn( new FakeResultWrapper( $providerVideoData ) );
 
 		// expect script to fetch list of articles where videos from provider are embedded from DB

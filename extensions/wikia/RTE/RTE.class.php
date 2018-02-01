@@ -780,6 +780,11 @@ HTML
 			$ret = false;
 		}
 
+		// Disable Edge
+		if ( strpos( $sAgent, 'Edge/' ) !== false ) {
+			$ret = false;
+		}
+
 		RTE::log( __METHOD__, $ret ? 'yes' : 'no' );
 		return $ret;
 	}

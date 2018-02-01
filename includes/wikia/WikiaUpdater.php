@@ -79,11 +79,16 @@ class WikiaUpdater {
 			array( 'dropField', 'interwiki', 'iw_wikiid', $dir . 'patch-drop-wikiid.sql', true ),
 			array( 'dropField', 'cu_changes', 'cuc_user_text', $ext_dir . '/CheckUser/patch-cu_changes.sql', true ), // SUS-3080
 			array( 'WikiaUpdater::do_drop_table', 'tag_summary' ), // SUS-3066
+			array( 'WikiaUpdater::do_drop_table', 'sitemap_blobs' ), // SUS-3589
 		);
 
 		if ( $wgDBname === $wgExternalSharedDB ) {
 			$wikia_update[] = array( 'addTable', 'city_list', $dir . 'wf/patch-create-city_list.sql', true );
 			$wikia_update[] = array( 'addTable', 'city_list', $dir . 'wf/patch-create-city_cats.sql', true );
+		}
+		else {
+			// run these updates on per-wiki databases only
+			$wikia_update[] = array( 'WikiaUpdater::do_drop_table', 'ach_ranking_snapshots' ); // SUS-3592
 		}
 
 		foreach ( $wikia_update as $update ) {

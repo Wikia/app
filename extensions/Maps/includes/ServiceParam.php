@@ -28,6 +28,32 @@ class ServiceParam extends StringParam {
 	protected $feature;
 
 	/**
+	 * @see ParamDefinition::setArrayValues()
+	 *
+	 * @since 2.0
+	 *
+	 * @param array $param
+	 */
+	public function setArrayValues( array $param ) {
+		parent::setArrayValues( $param );
+
+		if ( array_key_exists( 'feature', $param ) ) {
+			$this->setFeature( $param['feature'] );
+		}
+	}
+
+	/**
+	 * Sets the mapping feature.
+	 *
+	 * @since 2.0
+	 *
+	 * @param string $feature
+	 */
+	public function setFeature( $feature ) {
+		$this->feature = $feature;
+	}
+
+	/**
 	 * @see ParamDefinition::postConstruct()
 	 *
 	 * @since 2.0
@@ -35,7 +61,12 @@ class ServiceParam extends StringParam {
 	protected function postConstruct() {
 		global $egMapsDefaultService, $egMapsDefaultServices;
 
-		$this->setDefault( array_key_exists( $this->feature, $egMapsDefaultServices ) ? $egMapsDefaultServices[$this->feature] : $egMapsDefaultService );
+		$this->setDefault(
+			array_key_exists(
+				$this->feature,
+				$egMapsDefaultServices
+			) ? $egMapsDefaultServices[$this->feature] : $egMapsDefaultService
+		);
 
 		// FIXME
 		$this->allowedValues = MapsMappingServices::getAllServiceValues();
@@ -66,32 +97,6 @@ class ServiceParam extends StringParam {
 		$definitions = ParamDefinition::getCleanDefinitions( $definitions );
 
 		return $value;
-	}
-
-	/**
-	 * @see ParamDefinition::setArrayValues()
-	 *
-	 * @since 2.0
-	 *
-	 * @param array $param
-	 */
-	public function setArrayValues( array $param ) {
-		parent::setArrayValues( $param );
-
-		if ( array_key_exists( 'feature', $param ) ) {
-			$this->setFeature( $param['feature'] );
-		}
-	}
-
-	/**
-	 * Sets the mapping feature.
-	 *
-	 * @since 2.0
-	 *
-	 * @param string $feature
-	 */
-	public function setFeature( $feature ) {
-		$this->feature = $feature;
 	}
 
 }

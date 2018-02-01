@@ -5,7 +5,8 @@
 			"Inkbug",
 			"Rotemliss",
 			"YaronSh",
-			"IKhitron"
+			"IKhitron",
+			"Guycn2"
 		]
 	},
 	"validator-desc": "ספריית עיבוד פרמטרים הצהרתי",
@@ -25,6 +26,7 @@
 	"validator-type-float": "מספר",
 	"validator-type-boolean": "כן או לא",
 	"validator-type-char": "תו",
+	"validator-type-dimension": "מספר ויחידה ממדית",
 	"validator-type-title": "כותרת",
 	"validator-type-string-list": "רשימת טקסטים",
 	"validator-type-integer-list": "רשימת מספרים שלמים",
@@ -38,7 +40,7 @@
 	"validator-listerrors-normal": "רגילה",
 	"validator-listerrors-high": "גבוהה",
 	"validator-listerrors-fatal": "חמורה",
-	"validator-listerrors-description": "מכין רשימת של שגיאות ואזהרות שהתרחשו במילות הפעלה של מפענח שנוספו דרך Validator.\nרק רשימות עבור מילות הפעלה של מפענח מעל listerrors;\nיש לשים את listerrors בתחתית העמוד או קרוב אליה כדי לקבל את כל השגיאות.",
+	"validator-listerrors-description": "מכין רשימת שגיאות ואזהרות שהתרחשו במילות הפעלה של מפענח שנוספו דרך Validator.\nרק רשימות עבור מילות הפעלה של מפענח מעל listerrors;\nיש לשים את listerrors בתחתית הדף או קרוב אליה כדי לקבל את כל השגיאות.",
 	"validator-listerrors-par-minseverity": "יש להזין את רמת החומרה המזערית.",
 	"validator-describe-description": "מחולל תיעוד עבור מילות הפעלה במפענח שמוגדרות דרך Validator.",
 	"validator-describe-notfound": "\"$1\" אינו מטופל על־ידי שום מילת הפעלה במפענח.",

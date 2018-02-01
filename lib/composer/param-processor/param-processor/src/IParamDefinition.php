@@ -21,7 +21,7 @@ interface IParamDefinition {
 	 *
 	 * @since 1.0
 	 *
-	 * @param mixed $aliases string or array of string
+	 * @param string|string[] $aliases
 	 */
 	public function addAliases( $aliases );
 
@@ -31,7 +31,7 @@ interface IParamDefinition {
 	 *
 	 * @since 1.0
 	 *
-	 * @param mixed $dependencies string or array of string
+	 * @param string|string[] $dependencies
 	 */
 	public function addDependencies( $dependencies );
 
@@ -51,7 +51,7 @@ interface IParamDefinition {
 	 *
 	 * @since 1.0
 	 *
-	 * @return array
+	 * @return string[]
 	 */
 	public function getAliases();
 
@@ -80,7 +80,7 @@ interface IParamDefinition {
 	 *
 	 * @since 1.0
 	 *
-	 * @return array
+	 * @return string[]
 	 */
 	public function getDependencies();
 

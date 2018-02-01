@@ -5,10 +5,9 @@ namespace Maps;
 use MWException;
 
 /**
- * Interface for elements that can be places upon a map.
+ * Interface for elements that can be placed upon a map.
  *
  * @since 3.0
- *
  *
  * @licence GNU GPL v2+
  * @author Jeroen De Dauw < jeroendedauw@gmail.com >
@@ -32,7 +31,7 @@ interface Element {
 	 *
 	 * @return ElementOptions
 	 */
-	public function getOptions();
+	public function getOptions(): ElementOptions;
 
 	/**
 	 * Sets the elements options.
@@ -45,14 +44,9 @@ interface Element {
 
 }
 
-class OptionsObject {
+class ElementOptions {
 
-	/**
-	 * @since 3.0
-	 *
-	 * @var array
-	 */
-	protected $options = array();
+	private $options = [];
 
 	/**
 	 * @since 3.0
@@ -60,11 +54,11 @@ class OptionsObject {
 	 * @param string $name
 	 * @param mixed $value
 	 *
-	 * @throws MWException
+	 * @throws \InvalidArgumentException
 	 */
 	public function setOption( $name, $value ) {
 		if ( !is_string( $name ) ) {
-			throw new MWException( 'Option name should be a string' );
+			throw new \InvalidArgumentException( 'Option name should be a string' );
 		}
 
 		$this->options[$name] = $value;
@@ -75,15 +69,16 @@ class OptionsObject {
 	 *
 	 * @param string $name
 	 *
-	 * @throws MWException
+	 * @throws \InvalidArgumentException
+	 * @throws \OutOfBoundsException
 	 */
 	public function getOption( $name ) {
 		if ( !is_string( $name ) ) {
-			throw new MWException( 'Option name should be a string' );
+			throw new \InvalidArgumentException( 'Option name should be a string' );
 		}
 
 		if ( !array_key_exists( $name, $this->options ) ) {
-			throw new MWException( 'Tried to obtain option "' . $name . '" while it has not been set' );
+			throw new \OutOfBoundsException( 'Tried to obtain option "' . $name . '" while it has not been set' );
 		}
 
 		return $this->options[$name];
@@ -95,15 +90,14 @@ class OptionsObject {
 	 * @param string $name
 	 *
 	 * @return boolean
+	 * @throws \InvalidArgumentException
 	 */
 	public function hasOption( $name ) {
+		if ( !is_string( $name ) ) {
+			throw new \InvalidArgumentException( 'Option name should be a string' );
+		}
+
 		return array_key_exists( $name, $this->options );
 	}
-
-}
-
-class ElementOptions extends OptionsObject {
-
-
 
 }
