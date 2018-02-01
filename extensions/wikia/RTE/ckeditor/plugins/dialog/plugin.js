@@ -3185,7 +3185,7 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
 		openDialog: function( dialogName, callback ) {
 			var dialog = null, dialogDefinitions = CKEDITOR.dialog._.dialogDefinitions[ dialogName ];
 
-			//Wikia start
+			//Wikia start - prevent adding too many covers
 			//if ( CKEDITOR.dialog._.currentTop === null )
 				//showCover( this );
 			//Wikia end
