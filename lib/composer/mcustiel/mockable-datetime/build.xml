@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="SSMS-Classes" default="all">
+	<php expression="require('vendor/autoload.php')" />
+
+	<!-- Properties -->
+	<property name="dir.base" value="." />
+	<property name="dir.tests" value="${project.basedir}/tests" />
+	<property name="dir.build" value="${project.basedir}/build" />
+	<property name="dir.docs" value="${dir.build}/docs" />
+	<property name="dir.docs.phpdoc" value="${dir.docs}/phpdoc" />
+	<property name="dir.reports" value="${dir.build}/logs" />
+	<property name="dir.reports.pdepend" value="${dir.reports}/pdepend" />
+	<property name="dir.reports.coverage" value="${dir.reports}/phpunit/coverage" />
+	<property name="dir.reports.build" value="${dir.reports}/htmlreport" />
+
+	<!-- ============================================ -->
+	<!-- Fileset: sources (all php files but those in test) -->
+	<!-- ============================================ -->
+	<fileset expandsymboliclinks="true" dir="${dir.base}" id="sources">
+		<include name="src/**/*.php" />
+	</fileset>
+
+	<!-- ============================================ -->
+	<!-- Target: clean -->
+	<!-- ============================================ -->
+	<target name="clean" description="Clean up build directories.">
+		<echo msg="Cleaning build directories ..." />
+		<delete dir="${dir.build}" verbose="false" />
+	</target>
+
+	<!-- ============================================ -->
+	<!-- Target: prepare -->
+	<!-- ============================================ -->
+	<target name="prepare" description="Create build directories.">
+		<echo msg="Creating build directories ..." />
+		<mkdir dir="${dir.build}" />
+		<mkdir dir="${dir.docs}" />
+		<mkdir dir="${dir.docs.phpdoc}" />
+		<mkdir dir="${dir.reports}" />
+		<mkdir dir="${dir.reports.coverage}" />
+		<mkdir dir="${dir.reports.pdepend}" />
+		<mkdir dir="${dir.reports.build}" />
+	</target>
+
+	<!-- ============================================ -->
+	<!-- Target: all (default target) -->
+	<!-- ============================================ -->
+	<target name="all" depends="clean, prepare">
+		<phingcall target="codecheck" />
+		<phingcall target="tests" />
+	</target>
+
+	<!-- ============================================ -->
+	<!-- Target: codecheck (run all static code checks) -->
+	<!-- ============================================ -->
+	<target name="codecheck">
+		<phingcall target="codestyle" />
+		<phingcall target="mess" />
+		<phingcall target="copypaste" />
+		<phingcall target="measure" />
+		<phingcall target="pdepend" />
+	</target>
+
+	<!-- ============================================ -->
+	<!-- Target: tests (run all tests) -->
+	<!-- ============================================ -->
+	<target name="tests">
+		<phingcall target="unittests" />
+	</target>
+
+	<!-- ============================================ -->
+	<!-- Target: codestyle (Checks code style compliance) -->
+	<!-- ============================================ -->
+	<target name="codestyle">
+		<echo msg="Running code sniffer to check zend standard..." />
+		<phpcodesniffer standard="PSR2" showSniffs="true" showWarnings="true" verbosity="0" encoding="UTF-8">
+			<fileset refid="sources" />
+			<formatter type="full" outfile="${dir.reports}/reportcs.txt" />
+			<formatter type="checkstyle" outfile="${dir.reports}/checkstylecs.xml" />
+		</phpcodesniffer>
+	</target>
+
+	<!-- ============================================ -->
+	<!-- Target: mess (Detects mess in code. Recommended rulesets: -->
+	<!-- unusedcode,codesize,controversial,design,naming) -->
+	<!-- ============================================ -->
+	<target name="mess">
+		<echo msg="Running mess detector" />
+		<exec 
+			command="./vendor/bin/phpmd ${dir.base}/src xml unusedcode,codesize,controversial,design,naming --reportfile ${dir.reports}/pmd.xml" 
+			outputProperty="output"
+		/>
+		<echo msg="${output}" />
+	</target>
+
+	<target name="pdepend">
+		<echo msg="Running phpdepend analysis..." />
+		<phpdepend>
+			<fileset refid="sources" />
+			<analyzer type="coderank-mode" value="method" />
+			<logger type="jdepend-xml" outfile="${dir.reports}/pdepend/pdepend.xml" />
+			<logger type="jdepend-chart" outfile="${dir.reports}/pdepend/dependencies.svg"/>
+			<logger type="overview-pyramid" outfile="${dir.reports}/pdepend/overview-pyramid.svg"/>
+		</phpdepend>
+	</target>
+
+	<!-- ============================================ -->
+	<!-- Target: copypaste (detects copy/paste in code) -->
+	<!-- ============================================ -->
+	<target name="copypaste">
+		<echo msg="Running copy/paste detector..." />
+		<phpcpd>
+			<fileset refid="sources" />
+			<formatter type="pmd" outfile="${dir.reports}/pmd-cpd.xml" />
+		</phpcpd>
+	</target>
+	
+	<!-- ============================================ -->
+	<!-- Target: measure (measures the code) -->
+	<!-- ============================================ -->
+	<target name="measure">
+		<echo msg="Running code measurements..." />
+		<phploc reportType="csv" reportName="phploc" reportDirectory="${dir.reports}">
+			<fileset refid="sources" />
+		</phploc>
+	</target>
+
+	<!-- ============================================ -->
+	<!-- Target: unittests (unit testing) -->
+	<!-- ============================================ -->
+	<target name="unittests">
+		<echo msg="Running unit tests..." />
+		<exec command="./vendor/bin/phpunit -d zend.enable_gc=0 --log-junit ${dir.reports}/phpunit/phpunit.xml --coverage-clover ${dir.reports.coverage}/clover.xml --coverage-html ${dir.reports.coverage}/ --testdox-html ${dir.reports}/phpunit/testdox.html -c ${dir.tests}" outputProperty="output" returnProperty="returnout" />
+		<echo msg="${output}" />
+		<if>
+			<not>
+				<equals arg1="${returnout}" arg2="0" />
+			</not>
+			<then>
+				<fail msg="Failures occurred in unit tests." />
+			</then>
+		</if>
+	</target>
+</project>
