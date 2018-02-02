@@ -423,6 +423,12 @@ class RTEReverseParser {
 						!self::isFirstChild( $node ) &&
 						!self::previousSiblingIs( $node, [ 'h1', 'h2', 'h3', 'h4', 'h5', 'h6' ] ) ) {
 						$out = "\n{$out}";
+					} elseif ( $node->nodeName === 'tr' ) {
+						// case when table row attributes are defined in template
+						$out = "|-{$out}{$textContent}";
+					} elseif ( $node->nodeName === 'table' ) {
+						// case when table attributes are defined in template
+						$out = "{|{$out}\n{$textContent}\n|}\n";
 					}
 					break;
 				case 'comment':
@@ -1517,6 +1523,12 @@ class RTEReverseParser {
 	 * @see http://www.mediawiki.org/wiki/Images
 	 */
 	private function handleSpan($node, $textContent) {
+		// XW-4579: ignoring spans with zero-width space added in RTEParser::parse to prevent CKE from removing attributes
+		// from <br /> tags
+		if ($node->hasAttribute(self::DATA_RTE_FILTER)) {
+			return '';
+		}
+
 		// if tag contains style attribute, preserve full HTML (BugId:7098)
 		if ($node->hasAttribute('style')) {
 			$attrs = self::getAttributesStr($node);
