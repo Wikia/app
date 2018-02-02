@@ -1323,6 +1323,17 @@ class PPFrame_DOM implements PPFrame {
 						'wikitextIdx' => $contextNode->getAttribute( '_rte_wikitextidx' )
 					);
 
+					// FANDOM change - XW-4604: raise edgecase for includeonly, noinclude, onlyinclude tags
+					// checking for emptiness of $wgEnableRTEExt instead of $wgRTEParserEnabled because for some reason
+					// $wgRTEParserEnabled is null when parsing mentioned tags
+					global $wgEnableRTEExt;
+					if ( !empty( $wgEnableRTEExt ) ) {
+						if ( in_array( $nameNode->nodeValue, [ 'includeonly', 'noinclude', 'onlyinclude' ] ) ) {
+							RTE::edgeCasesPush( $nameNode->nodeValue );
+						}
+					}
+					// FANDOM change end
+
 					// FANDOM change - XW-4380: wrap extension tags in a placeholder
 					$tagMarker = $this->parser->extensionSubstitution( $params, $this );
 					global $wgRTEParserEnabled;
