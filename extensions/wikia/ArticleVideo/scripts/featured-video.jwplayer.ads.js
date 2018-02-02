@@ -5,8 +5,9 @@ define('wikia.articleVideo.featuredVideo.ads', [
 	'ext.wikia.adEngine.slot.service.srcProvider',
 	'ext.wikia.adEngine.video.player.jwplayer.adsTracking',
 	'ext.wikia.adEngine.video.vastDebugger',
+	'ext.wikia.adEngine.slot.service.slotRegistry',
 	'wikia.log'
-], function (adContext, vastUrlBuilder, megaAdUnitBuilder, srcProvider, adsTracking, vastDebugger, log) {
+], function (adContext, vastUrlBuilder, megaAdUnitBuilder, srcProvider, adsTracking, vastDebugger, slotRegistry, log) {
 	'use strict';
 
 	var aspectRatio = 640 / 480,
@@ -127,6 +128,8 @@ define('wikia.articleVideo.featuredVideo.ads', [
 				prerollPositionReached = false;
 			});
 			player.on('adRequest', function (event) {
+				slotRegistry.storeScrollY(featuredVideoSlotName);
+
 				vastDebugger.setVastAttributes(featuredVideoContainer, event.tag, 'success', event.ima && event.ima.ad);
 			});
 			player.on('adError', function (event) {
