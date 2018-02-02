@@ -28,8 +28,6 @@ define('ext.wikia.adEngine.ml.model.decisionTreeClassifier', [
 					id: modelId
 				},
 				callback: function(params) {
-					console.log(params);
-
 					lChilds = params.lChilds;
 					rChilds = params.rChilds;
 					thresholds = params.thresholds;
