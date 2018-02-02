@@ -1,0 +1,50 @@
+{
+	"keywords" : [
+		"request",
+		"validation",
+		"filtering",
+		"minimalist",
+		"annotations"
+	],
+	"authors" : [{
+			"name" : "Mariano Custiel",
+			"email" : "jmcustiel@gmail.com",
+			"homepage" : "https://github.com/mcustiel",
+			"role" : "Developer"
+		}
+	],
+	"autoload" : {
+		"psr-4" : {
+			"Mcustiel\\SimpleRequest\\" : "src"
+		}
+	},
+    "autoload-dev" : {
+        "psr-4" : {
+            "Unit\\" : "tests/unit",
+            "Integration\\" : "tests/integration",
+            "Fixtures\\": "tests/fixtures"
+        }
+    },
+	"name" : "mcustiel/php-simple-request",
+	"type" : "library",
+	"description" : "php-simple-request is a minimalist library designed to simplify requests validation and filtering",
+	"license" : "GPL-3.0+",
+	"require" : {
+		"php" : ">=5.5",
+		"doctrine/annotations" : "^1.2",
+        "psr/cache": "^1.0.0"
+	},
+	"require-dev" : {
+		"phpunit/phpunit" : "^4.8.9",
+		"phing/phing" : "^2.12.0",
+		"squizlabs/php_codesniffer" : "^2.3.4",
+		"phpmd/phpmd" : "^2.3.2",
+		"sebastian/phpcpd" : "^2.0.2",
+		"pdepend/pdepend" : "^2.0.6",
+		"phploc/phploc" : "^2.1.1",
+		"friendsofphp/php-cs-fixer": "^1.11",
+        	"symfony/cache": "dev-master",
+		"satooshi/php-coveralls": "~1.0"
+	},
+	"minimum-stability" : "stable"
+}

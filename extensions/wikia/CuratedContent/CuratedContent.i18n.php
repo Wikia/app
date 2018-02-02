@@ -658,9 +658,9 @@ $messages['vi'] = array(
 
 $messages['zh-hans'] = array(
 	'wikiacuratedcontent-content-save' => '保存',
-	'wikiacuratedcontent-desc' => 'FANDOM内容手机移动应用模块',
-	'wikiacuratedcontent-preview-description' => '这是FANDOM内容选择功能的效果展示图。',
-	'wikiacuratedcontent-content-title' => 'FANDOM应用内容管理工具',
+	'wikiacuratedcontent-desc' => 'FANDOM手机App内容编辑模块',
+	'wikiacuratedcontent-preview-description' => '这是FANDOM手机App内容编辑功能的效果展示图。',
+	'wikiacuratedcontent-content-title' => 'FANDOM手机App内容管理工具',
 	'wikiacuratedcontent-content-item' => '条目',
 	'wikiacuratedcontent-content-section' => '条目分类（可选）',
 	'wikiacuratedcontent-content-name' => '内容名称',

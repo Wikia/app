@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit bootstrap="./bootstrap.php" colors="true"
+	convertErrorsToExceptions="true" convertNoticesToExceptions="false"
+	convertWarningsToExceptions="false">
+	<testsuite name="PhpSimpleRequestUnitTests">
+		<directory>./unit</directory>
+	</testsuite>
+	<php>
+	</php>
+</phpunit>
