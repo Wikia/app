@@ -1,12 +1,9 @@
 /*global define*/
 define('ext.wikia.adEngine.ml.model.decisionTreeClassifier', [
-	'wikia.log'
-], function () {
+	'wikia.nirvana',
+	'wikia.window'
+], function (nirvana, win) {
 	'use strict';
-
-	function buildUrl(modelId) {
-		return '/wikia.php?controller=AdEngine2Api&method=getModelData&id=' + modelId;
-	}
 
 	function findMax(nums) {
 		var index = 0;
@@ -21,11 +18,17 @@ define('ext.wikia.adEngine.ml.model.decisionTreeClassifier', [
 		var lChilds, rChilds, thresholds, indices, classes;
 
 		function loadParameters(callback) {
-			var request = new XMLHttpRequest();
-
-			request.onreadystatechange = function() {
-				if (this.readyState === 4 && this.status === 200) {
-					var params = JSON.parse(this.responseText);
+			nirvana.sendRequest({
+				controller: 'AdEngine2Api',
+				method: 'getModelData',
+				format: 'json',
+				type: 'get',
+				scriptPath: win.wgCdnApiUrl,
+				data: {
+					id: modelId
+				},
+				callback: function(params) {
+					console.log(params);
 
 					lChilds = params.lChilds;
 					rChilds = params.rChilds;
@@ -35,10 +38,7 @@ define('ext.wikia.adEngine.ml.model.decisionTreeClassifier', [
 
 					callback(params);
 				}
-			};
-
-			request.open('GET', buildUrl(modelId), true);
-			request.send();
+			});
 		}
 
 		function predict(features, node) {

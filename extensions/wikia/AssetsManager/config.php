@@ -145,7 +145,6 @@ $config['adengine2_rabbit_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [
 		'//extensions/wikia/AdEngine/js/ml/modelFactory.js',
-		'//extensions/wikia/AdEngine/js/ml/model/decisionTreeClassifier.js',
 		'//extensions/wikia/AdEngine/js/ml/model/linear.js',
 		'//extensions/wikia/AdEngine/js/ml/rabbit.js',
 	],
@@ -159,6 +158,7 @@ $config['adengine2_rabbit_desktop_js'] = [
 		'//extensions/wikia/AdEngine/js/ml/fmr/fmrInputParser.js',
 		'//extensions/wikia/AdEngine/js/ml/fmr/fmrLogisticRegression.js',
 		'//extensions/wikia/AdEngine/js/ml/fmr/fmrPassiveAggressiveClassifier.js',
+		'//extensions/wikia/AdEngine/js/ml/model/decisionTreeClassifier.js',
 		'//extensions/wikia/AdEngine/js/ml/n1/n1DecisionTreeClassifier.js',
 		'//extensions/wikia/AdEngine/js/ml/n1/n1DecisionTreeClassifierInputParser.js',
 		'//extensions/wikia/AdEngine/js/ml/n1/n1InputParser.js',

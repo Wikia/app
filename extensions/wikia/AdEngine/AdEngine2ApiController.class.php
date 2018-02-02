@@ -27,6 +27,10 @@ class AdEngine2ApiController extends WikiaController {
 	}
 
 	public function getModelData() {
+		$cors = new CrossOriginResourceSharingHeaderHelper();
+		$cors->setAllowAllOrigins();
+		$cors->setHeaders( $this->response );
+
 		$params = $this->request->getParams();
 
 		switch ($params['id']) {
