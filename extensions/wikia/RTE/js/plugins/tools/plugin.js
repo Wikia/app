@@ -159,7 +159,7 @@ window.RTE.tools = {
 	getEditorScrollOffsets: function() {
 		var scrollLeft, scrollTop;
 
-		if (CKEDITOR.env.webkit) {
+		if (CKEDITOR.env.safari) {
 			// RT #46408: use different property for Safari to get scroll offset
 			scrollLeft = RTE.getInstance().document.$.body.scrollLeft;
 			scrollTop = RTE.getInstance().document.$.body.scrollTop;
