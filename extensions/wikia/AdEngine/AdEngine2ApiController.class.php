@@ -37,6 +37,7 @@ class AdEngine2ApiController extends WikiaController {
 				$json = '{}';
 		}
 
+		$this->response->setCachePolicy(WikiaResponse::CACHE_PUBLIC);
 		$this->response->setContentType('application/json');
 		$this->response->setBody($json);
 		$this->response->setCacheValidity(WikiaResponse::CACHE_LONG);
