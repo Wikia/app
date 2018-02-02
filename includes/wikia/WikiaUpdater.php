@@ -84,6 +84,8 @@ class WikiaUpdater {
 		if ( $wgDBname === $wgExternalSharedDB ) {
 			$wikia_update[] = array( 'addTable', 'city_list', $dir . 'wf/patch-create-city_list.sql', true );
 			$wikia_update[] = array( 'addTable', 'city_list', $dir . 'wf/patch-create-city_cats.sql', true );
+		} else {
+			$wikia_update[] = array( 'WikiaUpdater::do_drop_table', 'spoofuser' ); // SUS-3590
 		}
 
 		foreach ( $wikia_update as $update ) {
