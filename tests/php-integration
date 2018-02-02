@@ -1,0 +1,8 @@
+export PHIREMOCK_HOST=127.0.0.1
+export PHIREMOCK_PORT=10349
+
+../lib/composer/bin/phiremock -i $PHIREMOCK_HOST -p $PHIREMOCK_PORT >build/logs/phiremock.log &
+PHIREMOCK_PID=$!
+
+make phpunit-infrastructure
+kill $PHIREMOCK_PID
