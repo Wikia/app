@@ -27,10 +27,10 @@ require([
 		return;
 	}
 
-	var inNextVideoAutoplayCountries = geo.isProperGeo(instantGlobals.wgArticleVideoNextVideoAutoplayCountries),
+	var inNextVideoAutoplayCountries = true, //geo.isProperGeo(instantGlobals.wgArticleVideoNextVideoAutoplayCountries),
 		//Fallback to the generic playlist when no recommended videos playlist is set for the wiki
 		recommendedPlaylist = videoDetails.recommendedVideoPlaylist || 'Y2RWCKuS',
-		inAutoplayCountries = geo.isProperGeo(instantGlobals.wgArticleVideoAutoplayCountries),
+		inAutoplayCountries = true, //geo.isProperGeo(instantGlobals.wgArticleVideoAutoplayCountries),
 		willAutoplay = isAutoplayEnabled() && inAutoplayCountries,
 		bidParams;
 
