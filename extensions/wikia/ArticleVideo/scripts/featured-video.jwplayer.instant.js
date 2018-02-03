@@ -1,7 +1,7 @@
 require([
 	'wikia.window',
 	'wikia.geo',
-	'wikia.instantGlobals',
+//	'wikia.instantGlobals',
 	'wikia.cookies',
 	'wikia.tracker',
 	'ext.wikia.adEngine.adContext',
@@ -13,7 +13,7 @@ require([
 ], function (
 	win,
 	geo,
-	instantGlobals,
+//	instantGlobals,
 	cookies,
 	tracker,
 	adContext,
