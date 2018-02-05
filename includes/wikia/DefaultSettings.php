@@ -94,7 +94,7 @@ $wgAutoloadClasses['WikiaAccessRules'] = $IP . '/includes/wikia/nirvana/WikiaAcc
 // unit tests related classes
 $wgAutoloadClasses['WikiaBaseTest'] = $IP . '/includes/wikia/tests/core/WikiaBaseTest.class.php';
 $wgAutoloadClasses['WikiaDatabaseTest'] = $IP . '/includes/wikia/tests/core/WikiaDatabaseTest.php';
-$wgAutoloadClasses['WikiaTestSpeedAnnotator'] = $IP . '/includes/wikia/tests/core/WikiaTestSpeedAnnotator.class.php';
+$wgAutoloadClasses['HttpIntegrationTest'] = "$IP/includes/wikia/tests/core/HttpIntegrationTest.php";
 $wgAutoloadClasses['WikiaMockProxy'] = $IP . '/includes/wikia/tests/core/WikiaMockProxy.class.php';
 $wgAutoloadClasses['WikiaMockProxyAction'] = $IP . '/includes/wikia/tests/core/WikiaMockProxyAction.class.php';
 $wgAutoloadClasses['WikiaMockProxyInvocation'] = $IP . '/includes/wikia/tests/core/WikiaMockProxyInvocation.class.php';
@@ -1160,12 +1160,6 @@ $wgAdDriverIsAdTestWiki = false;
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverNetzAthletenCountries = null;
-
-/**
- * @name $wgAdDriverDfpOoyalaContentSourceId
- * Defines content source id sent in VAST url
- */
-$wgAdDriverDfpOoyalaContentSourceId = '2458214';
 
 /**
  * @name wgAdDriverA9VideoBidderCountries

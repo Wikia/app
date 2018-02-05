@@ -5,19 +5,6 @@
 class VideoFeedIngesterTest extends WikiaBaseTest {
 
 	/**
-	 * Ooyala has to be loaded before providers which load their content onto Ooyala (aka, remote assets),
-	 * otherwise videos can be uploaded more than once.
-	 * See VID-1871 for more information.
-	 */
-	public function testOoyalaLoadedBeforeRemoteAssets() {
-		$providers = FeedIngesterFactory::getActiveProviders();
-		$ooyalaIndex = array_search( FeedIngesterFactory::PROVIDER_OOYALA, $providers );
-		$screenplayIndex = array_search( FeedIngesterFactory::PROVIDER_SCREENPLAY, $providers );
-
-		$this->assertTrue( $ooyalaIndex < $screenplayIndex, 'Ooyala should be loaded before screenplay' );
-	}
-
-	/**
 	 * @dataProvider baseFeedIngesterDataProvider
 	 * @expectedException FeedIngesterWarningException
 	 */

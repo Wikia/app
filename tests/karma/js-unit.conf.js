@@ -115,40 +115,9 @@ module.exports = function (config) {
 			'extensions/wikia/PhalanxII/js/modules/phalanx.js',
 			'extensions/wikia/PhalanxII/spec/*.spec.js',
 
-			/**
-			 * Extension: VideoPageTool
-			 * @description This extension is actually split up into a 'homepage' & an 'admin' component and is
-			 * built using Backbone. Therefore, these unit tests are to be organized in a mirrored structure.
-			 */
-
-			/*
-			 * Common VideoPageTool Deps
-			 */
-			'extensions/wikia/VideoPageTool/scripts/lib/lodash/dist/lodash.underscore.js',
-			'extensions/wikia/VideoPageTool/scripts/lib/backbone/backbone.js',
-			'extensions/wikia/VideoPageTool/scripts/shared/views/switcher.js',
-
-			// Collections
-			'extensions/wikia/VideoPageTool/scripts/admin/collections/category.js',
-			'extensions/wikia/VideoPageTool/scripts/admin/collections/categorydata.js',
-			// Views
-			'extensions/wikia/VideoPageTool/scripts/admin/views/autocomplete.js',
-
 			//CreateNewWiki
 			'extensions/wikia/CreateNewWiki/js/CreateNewWikiHelper.js',
 			'extensions/wikia/CreateNewWiki/js/spec/*.spec.js',
-
-			/*
-			 * VideoPageTool: Homepage Module
-			 */
-			'extensions/wikia/VideoPageTool/scripts/homepage/collections/featuredslides.js',
-
-			/*
-			 * VideoPageTool: Source the tests
-			 */
-			'extensions/wikia/VideoPageTool/scripts/spec/*.spec.js',
-			'extensions/wikia/VideoPageTool/scripts/spec/**/*.spec.js',
-			'extensions/wikia/VideoPageTool/scripts/spec/**/**/*.spec.js',
 
 			/*
 			 * Extension: VideosModule

@@ -99,7 +99,9 @@ Id of DOM element where the player should be placed
     // logging level, default is error, available values: 'info', 'warn', 'error', 'off'
     logLevel: string,
     // client name (will be passed into logging service) e.g. 'oasis', 'mobile-wiki'
-    clientName: string
+    clientName: string,
+    // client version
+    clientVersion: string,
   },
   // services domain, required by logging errors to event-logger service, default: 'services.wikia.com'
   servicesDomian: string,

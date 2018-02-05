@@ -98,7 +98,6 @@ $config['adengine2_desktop_js'] = [
 		'//extensions/wikia/AdEngine/js/template/modal.js',
 		'//extensions/wikia/AdEngine/js/template/modalHandlerFactory.js',
 		'//extensions/wikia/AdEngine/js/template/modalOasisHandler.js',
-		'//extensions/wikia/AdEngine/js/template/ooyala.js',
 		'//extensions/wikia/AdEngine/js/template/playwire.js',
 		'//extensions/wikia/AdEngine/js/template/porvata.js',
 		'//extensions/wikia/AdEngine/js/template/roadblock.js',
@@ -112,7 +111,6 @@ $config['adengine2_desktop_js'] = [
 		'//extensions/wikia/AdEngine/js/utils/eventDispatcher.js',
 		'//extensions/wikia/AdEngine/js/utils/hooks.js',
 		'//extensions/wikia/AdEngine/js/utils/math.js',
-		'//extensions/wikia/AdEngine/js/video/player/ooyala/ooyalaTracker.js',
 		'#group_adengine2_playwire_js',
 		'#group_adengine2_porvata_js',
 		'#group_adengine2_rabbit_desktop_js',
@@ -130,7 +128,6 @@ $config['adengine2_desktop_js'] = [
 		'//resources/wikia/modules/viewportObserver.js',
 
 		// was: late queue
-		'//extensions/wikia/AdEngine/js/OoyalaTracking.js',
 		'//extensions/wikia/AdEngine/js/WikiaDartVideoHelper.js',
 		'//extensions/wikia/AdEngine/js/utils/scriptLoader.js',
 		'//extensions/wikia/AdEngine/js/provider/evolve2.js',
@@ -245,7 +242,6 @@ $config['adengine2_top_js'] = [
 		'//extensions/wikia/AdEngine/js/utils/AdLogicZoneParams.js',
 		'//extensions/wikia/AdEngine/js/utils/math.js',
 		'//extensions/wikia/AdEngine/js/utils/time.js',
-		'//extensions/wikia/AdEngine/js/video/ooyalaAdSetProvider.js',
 		'//extensions/wikia/AdEngine/js/video/player/playerTracker.js',
 		'//extensions/wikia/AdEngine/js/video/vastDebugger.js',
 		'//extensions/wikia/AdEngine/js/video/vastParser.js',
@@ -950,12 +946,10 @@ $config['mercury_ads_js'] = [
 		'//extensions/wikia/AdEngine/js/video/videoFrequencyMonitor.js',
 		'//extensions/wikia/AdEngine/js/video/videoFrequencySettings.js',
 		'//extensions/wikia/AdEngine/js/video/videoFrequencyStore.js',
-		'//extensions/wikia/AdEngine/js/video/player/ooyala/ooyalaTracker.js',
 		'//extensions/wikia/AdEngine/js/video/player/playerTracker.js',
 		'#group_adengine2_playwire_js',
 		'#group_adengine2_porvata_js',
 		'#group_adengine2_video_ui_js',
-		'//extensions/wikia/AdEngine/js/video/ooyalaAdSetProvider.js',
 		'//extensions/wikia/AdEngine/js/video/uapVideo.js',
 		'//extensions/wikia/AdEngine/js/video/videoSettings.js',
 		'//resources/wikia/modules/abTest.js',
@@ -1406,152 +1400,6 @@ $config['VET_js'] = [
 		'//resources/jquery.ui/jquery.ui.widget.js',
 		'//resources/jquery.ui/jquery.ui.mouse.js',
 		'//resources/jquery.ui/jquery.ui.slider.js',
-	],
-];
-
-/**
- * @name VideoPageTool
- * @description Assets for the VideoPageTool, same styles as SpecialEditHub
- * The JS is split into two different packages for the dashboard and edit pages
- */
-
-$config['videopageadmin_dashboard_js'] = [
-	'skin' => [ 'oasis' ],
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => [
-		// Library Dependencies
-		'//extensions/wikia/VideoPageTool/scripts/lib/lodash/dist/lodash.underscore.js',
-		'//extensions/wikia/VideoPageTool/scripts/lib/backbone/backbone.js',
-		'//resources/jquery.ui/jquery.ui.datepicker.js',
-
-		'//extensions/wikia/VideoPageTool/scripts/admin/models/datepicker.js',
-		'//extensions/wikia/VideoPageTool/scripts/admin/views/datepicker.js',
-		'//extensions/wikia/VideoPageTool/scripts/admin/views/dashboard.js',
-	],
-];
-$config['videopageadmin_edit_js'] = [
-	'skin' => [ 'oasis' ],
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => [
-		// Lodash is an underscore.js rewrite and a prereq for Backbone
-		'//extensions/wikia/VideoPageTool/scripts/lib/lodash/dist/lodash.underscore.js',
-		'//extensions/wikia/VideoPageTool/scripts/lib/backbone/backbone.js',
-
-		// Library Dependencies
-		'//resources/wikia/libraries/jquery/owl.carousel/owl.carousel.js',
-		'//resources/jquery.ui/jquery.ui.core.js',
-		'//resources/jquery/jquery.validate.js',
-		'//resources/wikia/modules/aim.js',
-		'//extensions/wikia/WikiaMiniUpload/js/WMU.js',
-		// TODO: probably move this jQuery plugin to /resources at some point
-		'//extensions/wikia/VideoPageTool/scripts/shared/views/switcher.js',
-
-		// Compiled Mustache templates
-		'//extensions/wikia/VideoPageTool/scripts/templates.mustache.js',
-
-		'//extensions/wikia/VideoPageTool/scripts/admin/models/thumbnail.js',
-		'//extensions/wikia/VideoPageTool/scripts/admin/models/validator.js',
-		'//extensions/wikia/VideoPageTool/scripts/admin/views/thumbnailupload.js',
-		'//extensions/wikia/VideoPageTool/scripts/admin/views/editbase.js',
-		'//extensions/wikia/VideoPageTool/scripts/admin/views/featured.js',
-		'//extensions/wikia/VideoPageTool/scripts/admin/collections/category.js',
-		'//extensions/wikia/VideoPageTool/scripts/admin/collections/categorydata.js',
-
-		'//extensions/wikia/VideoPageTool/scripts/shared/views/owlcarousel.js',
-		'//extensions/wikia/VideoPageTool/scripts/shared/views/carouselThumb.js',
-		'//extensions/wikia/VideoPageTool/scripts/admin/views/carousel.js',
-		'//extensions/wikia/VideoPageTool/scripts/admin/views/autocompleteitem.js',
-		'//extensions/wikia/VideoPageTool/scripts/admin/views/autocomplete.js',
-		'//extensions/wikia/VideoPageTool/scripts/admin/views/categoryforms.js',
-		'//extensions/wikia/VideoPageTool/scripts/admin/views/category.js',
-		'//extensions/wikia/VideoPageTool/scripts/admin/views/index.js',
-	],
-];
-
-$config['videopageadmin_css'] = [
-	'skin' => [ 'oasis' ],
-	'type' => AssetsManager::TYPE_CSS,
-	'assets' => [
-		'//resources/jquery.ui/themes/default/jquery.ui.datepicker.css',
-		'//resources/wikia/libraries/jquery/owl.carousel/owl.carousel.css',
-	],
-];
-
-$config['videopageadmin_scss'] = [
-	'skin' => [ 'oasis' ],
-	'type' => AssetsManager::TYPE_SCSS,
-	'assets' => [
-		'//skins/oasis/css/modules/CorporateDatepicker.scss',
-		'//extensions/wikia/WikiaMiniUpload/css/WMU.scss',
-		'//extensions/wikia/VideoPageTool/css/admin/VideoPageTool.scss',
-		'//extensions/wikia/VideoPageTool/css/admin/VideoPageTool_Header.scss',
-		'//extensions/wikia/VideoPageTool/css/carousel.scss',
-	],
-];
-
-/*
- * @name videohomepage
- * @description Assets for http://video.wikia.com/
- */
-
-$config['videohomepage_js'] = [
-	'skin' => [ 'oasis' ],
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => [
-		// jQuery plugins
-		'//resources/wikia/libraries/jquery/bxslider/jquery.bxslider.js',
-		'//resources/wikia/libraries/jquery/owl.carousel/owl.carousel.js',
-
-		// Lodash is an underscore.js rewrite and a prereq for Backbone
-		'//extensions/wikia/VideoPageTool/scripts/lib/lodash/dist/lodash.underscore.js',
-		'//extensions/wikia/VideoPageTool/scripts/lib/backbone/backbone.js',
-
-		// Compiled Mustache templates
-		'//extensions/wikia/VideoPageTool/scripts/templates.mustache.js',
-
-		// Featured video slider
-		'//extensions/wikia/VideoPageTool/scripts/homepage/collections/featuredslides.js',
-		'//extensions/wikia/VideoPageTool/scripts/homepage/views/featured.js',
-
-		// Latest videos / category carousels
-		'//extensions/wikia/VideoPageTool/scripts/homepage/models/categorycarousel.js',
-		'//extensions/wikia/VideoPageTool/scripts/homepage/models/categorythumb.js',
-
-		'//extensions/wikia/VideoPageTool/scripts/admin/collections/category.js',
-		'//extensions/wikia/VideoPageTool/scripts/admin/collections/categorydata.js',
-
-		'//extensions/wikia/VideoPageTool/scripts/shared/views/carouselThumb.js',
-		'//extensions/wikia/VideoPageTool/scripts/shared/views/owlcarousel.js',
-		'//extensions/wikia/VideoPageTool/scripts/homepage/views/carouselThumb.js',
-		'//extensions/wikia/VideoPageTool/scripts/homepage/views/carousels.js',
-		'//extensions/wikia/VideoPageTool/scripts/homepage/views/carousel.js',
-
-		// Search box
-		'//extensions/wikia/VideoPageTool/scripts/homepage/views/search.js',
-
-		// "Router" for views
-		'//extensions/wikia/VideoPageTool/scripts/homepage/views/index.js',
-	],
-];
-
-$config['videohomepage_css'] = [
-	'skin' => [ 'oasis' ],
-	'type' => AssetsManager::TYPE_CSS,
-	'assets' => [
-		'//resources/wikia/libraries/jquery/owl.carousel/owl.carousel.css',
-	],
-];
-
-$config['videohomepage_scss'] = [
-	'skin' => [ 'oasis' ],
-	'type' => AssetsManager::TYPE_SCSS,
-	'assets' => [
-		// Dependencies
-		'//resources/wikia/libraries/jquery/bxslider/jquery.bxslider.scss',
-		// VideoHomePage
-		'//extensions/wikia/VideoPageTool/css/homepage/main.scss',
-		'//extensions/wikia/VideoPageTool/css/carousel.scss',
-		'//extensions/wikia/VideoPageTool/css/homepage/featured.scss',
 	],
 ];
 
@@ -2648,22 +2496,6 @@ $config['flow_tracking_create_page_js'] = [
 	],
 ];
 
-$config['ooyala_scss'] = [
-	'type' => AssetsManager::TYPE_SCSS,
-	'skin' => [ 'oasis' ],
-	'assets' => [
-		'//extensions/wikia/ArticleVideo/styles/wikia-ooyala-skin.scss',
-	],
-];
-
-$config['ooyala_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'oasis' ],
-	'assets' => [
-		'//extensions/wikia/ArticleVideo/scripts/ooyala-player.js'
-	],
-];
-
 $config['article_featured_video_scss'] = [
 	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => [ 'oasis' ],
@@ -2679,7 +2511,6 @@ $config['article_featured_video_js'] = [
 	'skin' => [ 'oasis' ],
 	'assets' => [
 		'//extensions/wikia/ArticleVideo/scripts/article-featured-video.js',
-		'//extensions/wikia/ArticleVideo/scripts/ooyala-service.js',
 		'//extensions/wikia/ArticleVideo/scripts/tracking-queue.js',
 		'//extensions/wikia/ArticleVideo/scripts/video-feedback.js',
 	],
