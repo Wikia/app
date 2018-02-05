@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit bootstrap="./bootstrap.php" colors="true"
+	convertErrorsToExceptions="true" convertNoticesToExceptions="false"
+	convertWarningsToExceptions="false">
+	<testsuite name="PhpSimpleRequestUnitTests">
+		<directory>./unit</directory>
+	</testsuite>
+	<testsuite name="PhpSimpleRequestTests">
+		<directory>./unit</directory>
+		<directory>./integration</directory>
+		<exclude>./integration/PerformanceTest.php</exclude>
+	</testsuite>
+	<testsuite name="PhpSimpleRequestIntegrationTests">
+		<directory>./integration</directory>
+		<exclude>./integration/PerformanceTest.php</exclude>
+	</testsuite>
+	<testsuite name="PhpSimpleRequestPerformanceTests">
+		<file>./integration/PerformanceTest.php</file>
+	</testsuite>
+	<filter>
+		<whitelist processUncoveredFilesFromWhitelist="true">
+			<directory suffix=".php">../src</directory>
+		</whitelist>
+	</filter>
+	<php>
+	</php>
+</phpunit>

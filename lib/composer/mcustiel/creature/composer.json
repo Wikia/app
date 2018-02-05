@@ -1,0 +1,37 @@
+{
+	"keywords" : [
+		"instances",
+		"creator",
+		"instantiator",
+		"create",
+		"object"
+	],
+	"authors" : [{
+			"name" : "Mariano Custiel",
+			"email" : "jmcustiel@gmail.com",
+			"homepage" : "https://github.com/mcustiel",
+			"role" : "Developer"
+		}
+	],
+	"autoload" : {
+		"psr-4" : {
+			"Mcustiel\\Creature\\" : "src"
+		}
+	},
+	"autoload-dev" : {
+		"psr-4" : {
+			"Mcustiel\\Creature\\Unit\\" : "tests/unit",
+			"Mcustiel\\Tests\\Fixtures\\" : "tests/fixtures"
+		}
+	},
+	"name" : "mcustiel/creature",
+	"type" : "library",
+	"description" : "Allows to create objects using a common interface",
+	"license" : "GPL-3.0+",
+	"require" : {
+		"php" : ">=5.6"
+	},
+	"require-dev" : {
+		"phpunit/phpunit" : "~4.8.23"
+	}
+}

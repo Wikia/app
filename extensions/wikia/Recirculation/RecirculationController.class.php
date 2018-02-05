@@ -52,6 +52,7 @@ class RecirculationController extends WikiaController {
 				$postObjects[] = $post->jsonSerialize();
 			}
 
+			$this->response->setCachePolicy(WikiaResponse::CACHE_PUBLIC);
 			$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_PHP );
 			$this->response->setCacheValidity( WikiaResponse::CACHE_VERY_SHORT );
 			$this->response->setData( [
