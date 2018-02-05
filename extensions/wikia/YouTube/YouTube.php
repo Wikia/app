@@ -92,10 +92,6 @@ function upgradeYouTubeTag( EditPage $editpage, $request ): bool {
 		return true;
 	}
 
-	WikiaLogger::instance()->info( 'Upgrading youtube tag', [
-		'method' => __METHOD__
-	] );
-
 	$text = $editpage->textbox1;
 
 	// Note that we match <nowiki> here to consume that text and any possible
@@ -107,6 +103,10 @@ function upgradeYouTubeTag( EditPage $editpage, $request ): bool {
 			if ( empty( $matches[2] ) ) {
 				return $matches[0];
 			}
+
+			WikiaLogger::instance()->info( 'Youtube tag used', [
+				'method' => __METHOD__
+			] );
 
 			// Separate the Youtube ID and parameters
 			$paramText = trim( $matches[3] );
@@ -142,6 +142,9 @@ function upgradeYouTubeTag( EditPage $editpage, $request ): bool {
 			$retval = $videoService->addVideo( $url );
 
 			if ( is_array( $retval ) ) {
+				WikiaLogger::instance()->info( 'Youtube tag upgraded', [
+					'method' => __METHOD__
+				] );
 				list( $title, $videoPageId, $videoProvider ) = $retval;
 				return "[[$title|" . $params['width'] . "px]]";
 			} else {
