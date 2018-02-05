@@ -35,7 +35,7 @@ define('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', [
 			],
 			'PX': ['INVISIBLE_SKIN', 'INVISIBLE_HIGH_IMPACT', 'INVISIBLE_HIGH_IMPACT_2'],
 			'HiVi': ['INCONTENT_BOXAD_1', 'MOBILE_IN_CONTENT'],
-			'VIDEO': ['FEATURED', 'OUTSTREAM', 'UAP_BFAA', 'UAP_BFAB', 'ABCD', 'OOYALA', 'VIDEO']
+			'VIDEO': ['FEATURED', 'OUTSTREAM', 'UAP_BFAA', 'UAP_BFAB', 'ABCD', 'VIDEO']
 		};
 
 		// OTHER: 'INCONTENT_PLAYER'
