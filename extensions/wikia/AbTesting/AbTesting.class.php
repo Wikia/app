@@ -61,7 +61,7 @@ class AbTesting extends WikiaObject {
 		$app = F::app();
 
 		if ( $app->checkSkin( [ 'oasis', 'wikiamobile' ], $skin ) ) {
-			$modules[] = 'wikia.ext.abtesting';
+			$modules[] = 'wikia.ext.abt3sting';
 		}
 
 		return true;
