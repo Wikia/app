@@ -1,0 +1,196 @@
+{
+	"globalPreferences": [
+		{
+			"name": "CategoryExhibitionDisplayType",
+			"value": "exhibition"
+		},
+		{
+			"name": "CategoryExhibitionSortType",
+			"value": "alphabetical"
+		},
+		{
+			"name": "createpagedefaultblank",
+			"value": "1"
+		},
+		{
+			"name": "date",
+			"value": "ymd"
+		},
+		{
+			"name": "disablemail",
+			"value": "1"
+		},
+		{
+			"name": "editfont",
+			"value": "monospace"
+		},
+		{
+			"name": "editor",
+			"value": "3"
+		},
+		{
+			"name": "enableGoSearch",
+			"value": "1"
+		},
+		{
+			"name": "enableuserjs",
+			"value": "1"
+		},
+		{
+			"name": "enotiffollowedpages",
+			"value": "0"
+		},
+		{
+			"name": "enotifminoredits",
+			"value": "false"
+		},
+		{
+			"name": "enotifusertalkpages",
+			"value": "false"
+		},
+		{
+			"name": "enotifwallthread",
+			"value": "-1"
+		},
+		{
+			"name": "enotifwatchlistpages",
+			"value": "false"
+		},
+		{
+			"name": "forceeditsummary",
+			"value": "1"
+		},
+		{
+			"name": "hideDeleted",
+			"value": "true"
+		},
+		{
+			"name": "hideEditsWikis",
+			"value": "0"
+		},
+		{
+			"name": "language",
+			"value": "en"
+		},
+		{
+			"name": "oasis-toolbar-contents",
+			"value": "a:8:{i:0;a:3:{s:4:\"type\";s:4:\"item\";s:2:\"id\";s:25:\"SpecialPage:RecentChanges\";s:4:\"data\";a:0:{}}i:1;a:3:{s:4:\"type\";s:4:\"item\";s:2:\"id\";s:15:\"SpecialPage:Log\";s:4:\"data\";a:0:{}}i:2;a:3:{s:4:\"type\";s:4:\"item\";s:2:\"id\";s:17:\"SpecialPage:Block\";s:4:\"data\";a:0:{}}i:3;a:3:{s:4:\"type\";s:4:\"item\";s:2:\"id\";s:21:\"SpecialPage:BlockList\";s:4:\"data\";a:0:{}}i:4;a:3:{s:4:\"type\";s:4:\"item\";s:2:\"id\";s:21:\"SpecialPage:ListUsers\";s:4:\"data\";a:0:{}}i:5;a:3:{s:4:\"type\";s:4:\"item\";s:2:\"id\";s:20:\"SpecialPage:NewPages\";s:4:\"data\";a:0:{}}i:6;a:3:{s:4:\"type\";s:4:\"item\";s:2:\"id\";s:17:\"PageAction:Follow\";s:4:\"data\";a:0:{}}i:7;a:4:{s:4:\"type\";s:4:\"menu\";s:2:\"id\";s:13:\"Menu:my-tools\";s:4:\"data\";a:0:{}s:5:\"items\";a:3:{i:0;a:3:{s:4:\"type\";s:4:\"item\";s:2:\"id\";s:18:\"PageAction:History\";s:4:\"data\";a:0:{}}i:1;a:3:{s:4:\"type\";s:4:\"item\";s:2:\"id\";s:24:\"PageAction:Whatlinkshere\";s:4:\"data\";a:0:{}}i:2;a:3:{s:4:\"type\";s:4:\"item\";s:2:\"id\";s:25:\"SpecialPage:ThemeDesigner\";s:4:\"data\";a:0:{}}}}}"
+		},
+		{
+			"name": "oasis-toolbar-promotions",
+			"value": "a:2:{i:0;s:25:\"SpecialPage:ThemeDesigner\";i:2;s:25:\"SpecialPage:LayoutBuilder\";}"
+		},
+		{
+			"name": "rcdays",
+			"value": "91"
+		},
+		{
+			"name": "rclimit",
+			"value": "250"
+		},
+		{
+			"name": "searchAllNamespaces",
+			"value": "1"
+		},
+		{
+			"name": "showAds",
+			"value": "1"
+		},
+		{
+			"name": "showhiddencats",
+			"value": "1"
+		},
+		{
+			"name": "shownumberswatching",
+			"value": "0"
+		},
+		{
+			"name": "skinoverwrite",
+			"value": "0"
+		},
+		{
+			"name": "timecorrection",
+			"value": "ZoneInfo|60|Europe/Budapest"
+		},
+		{
+			"name": "unsubscribed",
+			"value": "1"
+		},
+		{
+			"name": "usenewrc",
+			"value": "false"
+		},
+		{
+			"name": "userlandingpage",
+			"value": "3"
+		},
+		{
+			"name": "variant",
+			"value": ""
+		},
+		{
+			"name": "wallshowsource",
+			"value": "1"
+		},
+		{
+			"name": "wall_sort_history",
+			"value": "of"
+		},
+		{
+			"name": "wall_sort_index",
+			"value": "nt"
+		},
+		{
+			"name": "watchcreations",
+			"value": "false"
+		},
+		{
+			"name": "watchdefault",
+			"value": "false"
+		},
+		{
+			"name": "watchdeletion",
+			"value": "false"
+		},
+		{
+			"name": "watchlistdigest",
+			"value": "false"
+		},
+		{
+			"name": "WikiaBarDisplayState",
+			"value": "shown"
+		}
+	],
+	"localPreferences": [
+		{
+			"wikiId": 451224,
+			"name": "founderemails-edits",
+			"value": "1"
+		},
+		{
+			"wikiId": 451224,
+			"name": "founderemails-joins",
+			"value": "1"
+		},
+		{
+			"wikiId": 1534722,
+			"name": "founderemails-edits",
+			"value": "1"
+		},
+		{
+			"wikiId": 1534722,
+			"name": "founderemails-joins",
+			"value": "1"
+		},
+		{
+			"wikiId": 1602781,
+			"name": "founderemails-edits",
+			"value": "1"
+		},
+		{
+			"wikiId": 1602781,
+			"name": "founderemails-joins",
+			"value": "1"
+		}
+	]
+}

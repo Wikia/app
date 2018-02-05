@@ -423,6 +423,12 @@ class RTEReverseParser {
 						!self::isFirstChild( $node ) &&
 						!self::previousSiblingIs( $node, [ 'h1', 'h2', 'h3', 'h4', 'h5', 'h6' ] ) ) {
 						$out = "\n{$out}";
+					} elseif ( $node->nodeName === 'tr' ) {
+						// case when table row attributes are defined in template
+						$out = "|-{$out}{$textContent}";
+					} elseif ( $node->nodeName === 'table' ) {
+						// case when table attributes are defined in template
+						$out = "{|{$out}\n{$textContent}\n|}\n";
 					}
 					break;
 				case 'comment':
