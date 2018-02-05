@@ -92,8 +92,6 @@ $messages['zh-tw'] = [
 	'videohomepage-partner-name-anyclip' => 'Anyclip',
 	'videohomepage-partner-name-ign' => 'IGN',
 	'videohomepage-partner-name-iva' => 'IVA',
-	'videohomepage-partner-name-ooyala' => 'Ooyala',
-	'videohomepage-partner-name-screenplay' => 'Screenplay',
 	'videohomepage-partner-section-title' => '我們的合作夥伴',
 ];
 

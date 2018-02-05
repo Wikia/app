@@ -52,7 +52,6 @@ class ArticleVideoContext {
 
 			$videoData['recommendedLabel'] = $wg->featuredVideoRecommendedVideosLabel;
 			$videoData['recommendedVideoPlaylist'] = $wg->recommendedVideoPlaylist;
-			$videoData['dfpContentSourceId'] = $wg->AdDriverDfpOoyalaContentSourceId;
 			$videoData['metadata'] = self::getVideoMetaData( $videoData );
 
 			$videoData = self::getVideoDataWithAttribution( $videoData );
