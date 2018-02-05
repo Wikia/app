@@ -1232,6 +1232,11 @@ class PPFrame_DOM implements PPFrame {
 								if ($contextNode->parentNode->nodeName === 'h' || $placeholderTag === 'span') {
 									$out .= Html::rawElement( $placeholderTag, $attributes,  $content );
 								} else {
+									// XW-4609: if template contains list items, placeholder's closing div should be in
+									// the new line to not mess with list html
+									if (preg_match('/^\s*[\*#:;]/m', $content)) {
+										$content .= PHP_EOL;
+									}
 									$out .= Html::rawElement( $placeholderTag, $attributes, PHP_EOL . $content );
 								}
 							}

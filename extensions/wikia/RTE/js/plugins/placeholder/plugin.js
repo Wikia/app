@@ -28,7 +28,7 @@ CKEDITOR.plugins.add('rte-placeholder',
 
 				// to check if content of placeholder is empty we need to get rid of non-width spaces (replace does not
 				// change the original string)
-				if ( $.trim($placeholder.html().replace(/[\u200B]/, '')) === '') {
+				if ( $placeholder.tagName in ['div', 'span'] && $.trim($placeholder.html().replace(/[\u200B]/, '')) === '') {
 					$placeholder.html('<img class="empty-placeholder">');
 				}
 			});
