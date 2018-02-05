@@ -89,7 +89,6 @@ $messages['zh-tw'] = [
 	'videohomepage-header-browse' => '瀏覽',
 	'videohomepage-header-dropdown-name' => '探索',
 	'videohomepage-partner-name-ign' => 'IGN',
-	'videohomepage-partner-name-iva' => 'IVA',
 	'videohomepage-partner-section-title' => '我們的合作夥伴',
 ];
 
