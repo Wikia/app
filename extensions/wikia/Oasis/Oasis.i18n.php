@@ -814,6 +814,7 @@ $messages['de'] = array(
 	'oasis-navigation-v2-edit-page' => 'Seite bearbeiten',
 	'oasis-navigation-v2-edit-this-menu' => 'Wiki-Navigation bearbeiten',
 	'oasis-page-header-diff' => '<strong>Änderungen:</strong> $1',
+	'oasis-related-video-by-5min' => 'von 5min Video',
 );
 
 $messages['de-formal'] = array(
@@ -1037,6 +1038,7 @@ $messages['es'] = array(
 	'oasis-navigation-v2-edit-page' => 'Editar esta página',
 	'oasis-navigation-v2-edit-this-menu' => 'Editar la navegación del wiki',
 	'oasis-page-header-diff' => '<strong>Cambios:</strong> $1',
+	'oasis-related-video-by-5min' => 'video de 5min',
 );
 
 $messages['fa'] = array(
@@ -1441,6 +1443,7 @@ $messages['fr'] = array(
 	'oasis-navigation-v2-edit-page' => 'Modifier cette page',
 	'oasis-navigation-v2-edit-this-menu' => 'Modifier la navigation',
 	'oasis-page-header-diff' => '<strong>Modifications :</strong> $1',
+	'oasis-related-video-by-5min' => 'de 5min Video',
 );
 
 $messages['gl'] = array(
@@ -2195,6 +2198,7 @@ $messages['it'] = array(
 	'oasis-navigation-v2-edit-page' => 'Modifica questa pagina',
 	'oasis-navigation-v2-edit-this-menu' => 'Modifica la navigazione della wiki',
 	'oasis-page-header-diff' => '<strong>Differenze:</strong> $1',
+	'oasis-related-video-by-5min' => 'di 5min Video',
 );
 
 $messages['ja'] = array(
@@ -2387,6 +2391,7 @@ $messages['ja'] = array(
 	'oasis-navigation-v2-edit-page' => 'このページを編集',
 	'oasis-navigation-v2-edit-this-menu' => 'ウィキナビゲーションを編集',
 	'oasis-page-header-diff' => '<strong>変更:</strong> $1',
+	'oasis-related-video-by-5min' => '提供: 5min Video',
 );
 
 $messages['jp'] = array(
@@ -3510,6 +3515,7 @@ $messages['pl'] = array(
 	'oasis-navigation-v2-edit-page' => 'Edytuj tę stronę',
 	'oasis-navigation-v2-edit-this-menu' => 'Edytuj nawigację',
 	'oasis-page-header-diff' => '<strong>Zmiany:</strong> $1',
+	'oasis-related-video-by-5min' => 'z 5min Video',
 );
 
 $messages['pms'] = array(
@@ -3737,6 +3743,7 @@ $messages['pt'] = array(
 	'oasis-navigation-v2-edit-page' => 'Editar esta página',
 	'oasis-navigation-v2-edit-this-menu' => 'Editar a navegação da wiki',
 	'oasis-page-header-diff' => '<strong>Alterações:</strong> $1',
+	'oasis-related-video-by-5min' => 'por 5min, vídeo',
 );
 
 $messages['ru'] = array(
@@ -3930,6 +3937,7 @@ $messages['ru'] = array(
 	'oasis-navigation-v2-edit-page' => 'Редактировать страницу',
 	'oasis-navigation-v2-edit-this-menu' => 'Править меню вики',
 	'oasis-page-header-diff' => '<strong>Изменения:</strong> $1',
+	'oasis-related-video-by-5min' => 'с сайта 5min Video',
 );
 
 $messages['sr-ec'] = array(
@@ -4525,6 +4533,7 @@ $messages['vi'] = array(
 	'oasis-social-reddit-link' => 'https://www.reddit.com/r/wikia',
 	'oasis-social-instagram' => 'Instagram',
 	'oasis-social-instagram-link' => 'https://www.instagram.com/getfandom/',
+	'oasis-related-video-by-5min' => 'bởi 5min Video',
 );
 
 $messages['zh-hans'] = array(
@@ -4720,6 +4729,7 @@ $messages['zh-hans'] = array(
 	'oasis-navigation-v2-edit-page' => '编辑此页面',
 	'oasis-navigation-v2-edit-this-menu' => '编辑维基导航',
 	'oasis-page-header-diff' => '<strong>更改内容：</strong> $1',
+	'oasis-related-video-by-5min' => '由5min网站提供',
 );
 
 $messages['zh-hant'] = array(
@@ -4913,5 +4923,6 @@ $messages['zh-hant'] = array(
 	'oasis-navigation-v2-edit-page' => '編輯此頁',
 	'oasis-navigation-v2-edit-this-menu' => '編輯Wiki導航',
 	'oasis-page-header-diff' => '<strong>變更：</strong> $1',
+	'oasis-related-video-by-5min' => '由5min網站提供',
 );
 
