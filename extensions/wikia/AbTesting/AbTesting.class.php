@@ -61,6 +61,8 @@ class AbTesting extends WikiaObject {
 		$app = F::app();
 
 		if ( $app->checkSkin( [ 'oasis', 'wikiamobile' ], $skin ) ) {
+			// ADEN-6673 Short-term fix for blocked InstantGlobals request
+			// $modules[] = 'wikia.ext.abtesting';
 			$modules[] = 'wikia.ext.abt3sting';
 		}
 
