@@ -64,14 +64,7 @@ phpunit-single-coverage: prepare
 phpunit-fast: prepare
 	${CMD_PHPUNIT} \
 		--log-junit=${LOGS_PATH}/phpunit-fast.xml \
-		--exclude-group Slow,Infrastructure,Integration,Broken,Stub,Monitoring,Hack,UsingDB,ExternalIntegration
-
-# lists all slow test cases with execution time
-phpunit-slow-list: prepare
-	${CMD_PHPUNIT} \
-		--log-junit=${LOGS_PATH}/phpunit-slow.xml \
-		--exclude-group=Infrastructure,Integration,Broken,Stub,Monitoring,Hack \
-		--slow-list
+		--exclude-group Infrastructure,Integration,Broken,Stub,Monitoring,Hack,UsingDB,ExternalIntegration
 
 # run tests for a specific group
 phpunit-group: prepare
