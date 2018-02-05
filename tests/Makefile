@@ -43,18 +43,6 @@ phpunit-infrastructure: prepare
 		--log-junit=${LOGS_PATH}/phpunit-infrastructure.xml \
 		--group Infrastructure,Integration
 
-# runs external partners api integration tests only
-phpunit-externals: prepare
-	${CMD_PHPUNIT} \
-		--log-junit=${LOGS_PATH}/phpunit-externals.xml \
-		--group ExternalIntegration
-
-# runs tests for externally used parts
-phpunit-contractual-responsibilities: prepare
-	${CMD_PHPUNIT} \
-		--log-junit=${LOGS_PATH}/phpunit-contractual-responsibilities.xml \
-		--group ContractualResponsibilitiesValidation
-
 # runs all (i.e. both unit and integration) tests from a given directory or a file
 phpunit-single: prepare
 	${CMD_PHPUNIT} \

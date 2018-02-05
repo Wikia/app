@@ -15,7 +15,6 @@ function runOnReady(iframe, params, mercuryListener) {
 		},
 		page = document.getElementsByClassName('application-wrapper')[0];
 
-	adsModule = window.Mercury.Modules.Ads.getInstance();
 	page.classList.add('bfaa-template');
 	adjustPadding(iframe, params.aspectRatio);
 	window.addEventListener('resize', onResize.bind(null, params.aspectRatio));
@@ -43,6 +42,8 @@ export function getConfig(mercuryListener) {
 			'MOBILE_BOTTOM_LEADERBOARD'
 		],
 		onInit(adSlot, params) {
+			adsModule = window.Mercury.Modules.Ads.getInstance();
+
 			context.set(`slots.${adSlot.getSlotName()}.options.isVideoMegaEnabled`, params.isVideoMegaEnabled);
 
 			slotTweaker.onReady(adSlot).then((iframe) => runOnReady(iframe, params, mercuryListener));
@@ -57,6 +58,10 @@ export function getConfig(mercuryListener) {
 				wrapper.style.opacity = '';
 				runOnReady(iframe, params, mercuryListener);
 			});
+
+			if (adsModule.hideSmartBanner) {
+				adsModule.hideSmartBanner();
+			}
 		},
 		moveNavbar(offset) {
 			const adsMobile = window.Mercury.Modules.Ads.getInstance();
