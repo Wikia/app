@@ -2104,38 +2104,6 @@
             "time": "2016-08-02T04:16:55+00:00"
         },
         {
-            "name": "ooyala/v2-api",
-            "version": "v2.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/ooyala/php-v2-sdk.git",
-                "reference": "cbe7d28bd31133daa6cd1b59919fac055629312f"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/ooyala/php-v2-sdk/zipball/cbe7d28bd31133daa6cd1b59919fac055629312f",
-                "reference": "cbe7d28bd31133daa6cd1b59919fac055629312f",
-                "shasum": ""
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0.x-dev"
-                }
-            },
-            "autoload": {
-                "files": [
-                    "OoyalaApi.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "proprietary"
-            ],
-            "description": "Ooyala's V2 API PHP SDK",
-            "time": "2016-06-27T16:45:25+00:00"
-        },
-        {
             "name": "param-processor/param-processor",
             "version": "1.3.3",
             "source": {
