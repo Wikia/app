@@ -1,8 +1,7 @@
 <?php
-$dir = dirname( __FILE__ );
 
-require_once( $dir . '/../../Maintenance.php' );
-require_once( $dir . '/lyrics.setup.php' );
+require_once( __DIR__  . '/../../../../maintenance/Maintenance.php' );
+require_once( __DIR__ . '/lyrics.setup.php' );
 
 use Wikia\Logger\WikiaLogger;
 
