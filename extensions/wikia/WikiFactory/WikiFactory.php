@@ -68,9 +68,6 @@ class WikiFactory {
 	const FLAG_FREE_WIKI_URL         = 8; // removes wiki database and WikiFactory settings
 	const FLAG_HIDE_DB_IMAGES        = 16;  // images and DB dumps will be hidden on s3
 	const FLAG_REDIRECT              = 32;  // this wiki is a redirect - do not remove
-	const FLAG_ADOPTABLE             = 64;  //used by AutomaticWikiAdoption (removed)
-	const FLAG_ADOPT_MAIL_FIRST      = 128; //used by AutomaticWikiAdoption (removed)
-	const FLAG_ADOPT_MAIL_SECOND     = 256; //used by AutomaticWikiAdoption (removed)
 	const FLAG_PROTECTED             = 512; //wiki cannot be closed
 
 	const db            = "wikicities"; // @see $wgExternalSharedDB
