@@ -8,15 +8,22 @@
     "require": {
         "php": ">=5.4.0"
     },
+    "require-dev": {
+        "phpunit/phpunit": "~4.8"
+    },
     "autoload": {
         "psr-4": {
             "React\\Promise\\": "src/"
         },
         "files": ["src/functions_include.php"]
     },
-    "extra": {
-        "branch-alias": {
-            "dev-master": "2.0-dev"
+    "autoload-dev": {
+        "psr-4": {
+            "React\\Promise\\": "tests/fixtures"
         }
-    }
+    },
+    "keywords": [
+        "promise",
+        "promises"
+    ]
 }

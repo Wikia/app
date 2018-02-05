@@ -536,6 +536,10 @@ RTE.mediaEditor = {
 			var editor = RTE.getInstance(),
 				newMedia = $(html).children('img');
 
+			if (!newMedia.exists()) {
+				newMedia = $(html, editor.document.$);
+			}
+
 			// replace old one with new one
 			newMedia.insertAfter(media);
 			newMedia.setData('wikitext', wikitext);
