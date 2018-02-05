@@ -130,10 +130,6 @@ $wgAutoloadClasses['DailymotionVideoHandler'] =  $dir . '/handlers/DailymotionVi
 $wgAutoloadClasses['DailymotionApiWrapper'] =  $dir . '/apiwrappers/DailymotionApiWrapper.class.php';
 $wgMediaHandlers['video/dailymotion'] = 'DailymotionVideoHandler';
 
-$wgAutoloadClasses['HuluVideoHandler'] =  $dir . '/handlers/HuluVideoHandler.class.php';
-$wgAutoloadClasses['HuluApiWrapper'] =  $dir . '/apiwrappers/HuluApiWrapper.class.php';
-$wgMediaHandlers['video/hulu'] = 'HuluVideoHandler';
-
 $wgAutoloadClasses['IgnVideoHandler'] =  $dir . '/handlers/IgnVideoHandler.class.php';
 $wgAutoloadClasses['IgnApiWrapper'] =  $dir . '/apiwrappers/IgnApiWrapper.class.php';
 $wgMediaHandlers['video/ign'] = 'IgnVideoHandler';
@@ -173,7 +169,6 @@ $wgAutoloadClasses[ 'FeedIngesterLogger' ] = $dir . '/feedingesters/FeedIngester
 
 $wgVideoMigrationProviderMap = array(
 	5 => 'Youtube',
-	6 => 'Hulu',
 	13 => 'Vimeo',
 	18 => 'Dailymotion',
 	/*
