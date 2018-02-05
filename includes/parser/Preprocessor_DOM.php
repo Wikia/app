@@ -1446,8 +1446,13 @@ class PPFrame_DOM implements PPFrame {
 	function getPlaceholderTagName( string $text ): string {
 		$html = $this->parser->internalParse( $text, false );
 		$html = $this->parser->doBlockLevels( $html, false);
-		$blockElements = preg_match( '/<(' . implode( '|', HtmlHelper::BLOCK_ELEMENTS ) . ')[^>]*>/', $html );
 
+		// $html returned above, if $text consists only from plain text, is wrapped in <p></p> which should not be
+		// the reason to treat whole template as block element
+		$html = preg_replace('/^<p>/', '', $html);
+		$html = preg_replace('/<\/p>$/', '', $html);
+
+		$blockElements = preg_match( '/<(' . implode( '|', HtmlHelper::BLOCK_ELEMENTS ) . ')[^>]*>/', $html );;
 		$markerMatches = [];
 		preg_match_all(
 			'/' . Parser::MARKER_PREFIX . '[^\\x7f]*' . Parser::MARKER_SUFFIX . '/',
