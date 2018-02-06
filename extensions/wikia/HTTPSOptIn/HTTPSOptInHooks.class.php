@@ -34,7 +34,7 @@ class HTTPSOptInHooks {
 			$output->redirect( preg_replace( '/^http:\/\//', 'https://', $request->getFullRequestURL() ) );
 		} elseif ( WebRequest::detectProtocol() === 'https' &&
 			!self::userAllowedHTTPS( $user ) &&
-			!self::disableHTTPSDowngrade()
+			empty( $wgDisableHTTPSDowngrade )
 		) {
 			$output->redirect( preg_replace( '/^https:\/\//', 'http://', $request->getFullRequestURL() ) );
 		}
@@ -46,11 +46,5 @@ class HTTPSOptInHooks {
 		return !empty( $wgAllowHTTPS ) &&
 			$user->isAllowed( 'https-opt-in' ) &&
 			$user->getGlobalPreference( 'https-opt-in', false );
-	}
-
-	private static function disableHTTPSDowngrade(): bool {
-		global $wgDevelEnvironment, $wgStagingEnvironment, $wgDisableHTTPSDowngrade;
-		return ( !empty( $wgDevelEnvironment ) || !empty( $wgStagingEnvironment ) ) &&
-			!empty( $wgDisableHTTPSDowngrade );
 	}
 }
