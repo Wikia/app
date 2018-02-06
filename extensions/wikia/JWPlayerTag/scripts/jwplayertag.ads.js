@@ -1,12 +1,13 @@
 define('wikia.articleVideo.jwplayertag.ads', [
 	'ext.wikia.adEngine.adContext',
+	'ext.wikia.adEngine.provider.btfBlocker',
 	'ext.wikia.adEngine.video.vastUrlBuilder',
 	'ext.wikia.adEngine.slot.service.megaAdUnitBuilder',
 	'ext.wikia.adEngine.slot.service.srcProvider',
 	'ext.wikia.adEngine.video.vastDebugger',
 	'ext.wikia.adEngine.video.player.jwplayer.adsTracking',
 	'wikia.log'
-], function (adContext, vastUrlBuilder, megaAdUnitBuilder, srcProvider, vastDebugger, adsTracking, log) {
+], function (adContext, btfBlocker, vastUrlBuilder, megaAdUnitBuilder, srcProvider, vastDebugger, adsTracking, log) {
 	'use strict';
 
 	var aspectRatio = 640 / 480,
@@ -64,8 +65,20 @@ define('wikia.articleVideo.jwplayertag.ads', [
 				videoDepth += 1;
 
 				trackingParams.adProduct = 'video-preroll';
-				player.playAd(buildVastUrl('preroll', videoDepth, correlator));
-				prerollPositionReached = true;
+
+				console.log('blocker2');
+
+
+				btfBlocker.decorate(
+					function() {
+						console.log('blocker');
+
+						player.playAd(buildVastUrl('preroll', videoDepth, correlator));
+						prerollPositionReached = true;
+
+					},
+					{atfSlots: ['TOP_LEADERBOARD', 'GPT_FLUSH', 'TOP_RIGHT_BOXAD', 'INVISIBLE_SKIN']}
+					)({name: 'VIDEO'});
 			});
 
 			player.on('complete', function () {
