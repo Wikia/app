@@ -1233,6 +1233,14 @@ class PPFrame_DOM implements PPFrame {
 									}
 
 									$content .=  "&#x0200B;";
+
+									if ( !empty( $contextNode->nextSibling ) &&
+										$contextNode->nextSibling->nodeName === '#text' ) {
+										$rteData['spacesafter'] = substr($contextNode->nextSibling->nodeValue, 0,
+											strlen( $contextNode->nextSibling->nodeValue ) - strlen( ltrim(  $contextNode->nextSibling->nodeValue, "\t " ) )
+										);
+										$attributes['data-rte-meta'] = RTEReverseParser::encodeRTEData( $rteData );
+									}
 								}
 
 								// when template is used in header new line breaks layout, however it is needed for other contexts
