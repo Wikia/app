@@ -31,12 +31,6 @@ class VideosModuleHooks {
 			return true;
 		}
 
-		// Don't do anything if this is the main page of a site with the VPT enabled
-		if ( $app->wg->Title->isMainPage() && $app->wg->EnableVideoPageToolExt ) {
-			wfProfileOut(__METHOD__);
-			return true;
-		}
-
 		JSMessages::enqueuePackage( 'VideosModule', JSMessages::EXTERNAL );
 
 		Wikia::addAssetsToOutput( 'videos_module_js' );

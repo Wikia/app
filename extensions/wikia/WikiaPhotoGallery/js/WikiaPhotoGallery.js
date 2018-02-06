@@ -2507,7 +2507,7 @@
 
 		// get DOM node of editarea (either of MW editor or RTE source mode)
 		getEditarea: function() {
-			if (typeof window.RTE === 'undefined') { qq
+			if (typeof window.RTE === 'undefined') {
 				// MW editor
 				var control = document.getElementById('wpTextbox1');
 			} else {

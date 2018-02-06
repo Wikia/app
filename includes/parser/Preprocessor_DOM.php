@@ -1213,20 +1213,27 @@ class PPFrame_DOM implements PPFrame {
 								'contenteditable' => 'false',
 							];
 
-							$placeholderTag = $this->getPlaceholderTagName( $ret['text'] );
-							if ($placeholderTag === 'span') {
-								// wrap content of inline template with non-width spaces to prevent CKE from modifying
-								// dom structure
-								$content = "&#x0200B;" . $ret['text'] . "&#x0200B;";
+							$err = '';
+							// If content of a template contains not valid html, then append empty placeholder, which
+							// will result in green puzzle displayed. Otherwise, wrap template in block or inline template
+							if ( MWTidy::checkErrors($ret['text'], $err) === false ) {
+								$out .= Html::rawElement( 'span', $attributes, "&#x0200B;");
 							} else {
-								$content = $ret['text'];
-							}
+								$placeholderTag = $this->getPlaceholderTagName( $ret['text'] );
+								if ($placeholderTag === 'span') {
+									// wrap content of inline template with non-width spaces to prevent CKE from modifying
+									// dom structure
+									$content = "&#x0200B;" . $ret['text'] . "&#x0200B;";
+								} else {
+									$content = $ret['text'];
+								}
 
-							// when template is used in header new line breaks layout, however it is needed for other contexts
-							if ($contextNode->parentNode->nodeName === 'h' || $placeholderTag === 'span') {
-								$out .= Html::rawElement( $placeholderTag, $attributes,  $content );
-							} else {
-								$out .= Html::rawElement( $placeholderTag, $attributes, PHP_EOL . $content );
+								// when template is used in header new line breaks layout, however it is needed for other contexts
+								if ($contextNode->parentNode->nodeName === 'h' || $placeholderTag === 'span') {
+									$out .= Html::rawElement( $placeholderTag, $attributes,  $content );
+								} else {
+									$out .= Html::rawElement( $placeholderTag, $attributes, PHP_EOL . $content );
+								}
 							}
 						} else {
 							$out .= $ret['text'];

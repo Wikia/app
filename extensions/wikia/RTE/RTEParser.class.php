@@ -478,6 +478,17 @@ class RTEParser extends Parser {
 
 		//RTE::log(__METHOD__ . '::beforeParse', $text);
 
+		// check if includeonly, noinclude, onlyinclude tags are used in wikitext. If yes, rise edgecase
+		if ( strpos( $text, '<includeonly>' ) !== false ) {
+			RTE::edgeCasesPush( 'includeonly' );
+		}
+		if ( strpos( $text, '<noinclude>' ) !== false ) {
+			RTE::edgeCasesPush( 'noinclude' );
+		}
+		if ( strpos( $text, '<onlyinclude>' ) !== false ) {
+			RTE::edgeCasesPush( 'onlyinclude' );
+		}
+
 		// parse to HTML
 		$output = parent::parse($text, $title, $options, $linestart, $clearState, $revid);
 

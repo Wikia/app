@@ -65,8 +65,7 @@ abstract class VideoFeedIngester {
 	 * should skip that video for any reason, preparing that videoData into
 	 * a more general metaData array which includes stubs for all fields we
 	 * want saved for a given video, and finally saving that video either onto
-	 * Wikia or Ooyala. See RemoteAssetFeedIngester for more info on that
-	 * distinction.
+	 * Wikia
 	 * @param array $videoData
 	 * @param array $addlCategories
 	 * @return int
@@ -176,8 +175,7 @@ abstract class VideoFeedIngester {
 	}
 
 	/**
-	 * Checks if the video is a duplicate. This is overridden by RemoteAssettFeedIngester
-	 * which checks both if the video exists on Wikia, but also if it exists on Ooyala.
+	 * Checks if the video is a duplicate.
 	 */
 	public function checkIsDuplicateVideo() {
 		$this->checkVideoExistsOnWikia();
