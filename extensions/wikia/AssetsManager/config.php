@@ -128,7 +128,6 @@ $config['adengine2_desktop_js'] = [
 		'//resources/wikia/modules/viewportObserver.js',
 
 		// was: late queue
-		'//extensions/wikia/AdEngine/js/WikiaDartVideoHelper.js',
 		'//extensions/wikia/AdEngine/js/utils/scriptLoader.js',
 		'//extensions/wikia/AdEngine/js/provider/evolve2.js',
 
@@ -888,9 +887,6 @@ $config['mobile_base_ads_js'] = [
 		// Recovery
 		'//extensions/wikia/ARecoveryEngine/js/adBlockDetection.js',
 		'//extensions/wikia/ARecoveryEngine/js/adBlockRecovery.js',
-
-		// Video ads
-		'//extensions/wikia/AdEngine/js/WikiaDartVideoHelper.js',
 
 		// Paid asset drop
 		'//extensions/wikia/PaidAssetDrop/js/paidAssetDrop.js',
