@@ -80,6 +80,7 @@ class WikiaUpdater {
 			array( 'dropField', 'cu_changes', 'cuc_user_text', $ext_dir . '/CheckUser/patch-cu_changes.sql', true ), // SUS-3080
 			array( 'WikiaUpdater::do_drop_table', 'tag_summary' ), // SUS-3066
 			array( 'WikiaUpdater::do_drop_table', 'sitemap_blobs' ), // SUS-3589
+			array( 'WikiaUpdater::do_clean_video_info_table' ), // SUS-3862
 		);
 
 		if ( $wgDBname === $wgExternalSharedDB ) {
@@ -268,6 +269,16 @@ class WikiaUpdater {
 
 		$databaseUpdater->output( "done.\n" );
 
+		wfWaitForSlaves();
+	}
+
+	public static function do_clean_video_info_table( DatabaseUpdater $databaseUpdater ) {
+		$dbw = $databaseUpdater->getDB();
+		$databaseUpdater->output( 'Removing video_info rows for premium video providers... ' );
+
+		$dbw->delete( 'video_info', [ 'premium' => 1 ], __METHOD__ );
+
+		$databaseUpdater->output( "done.\n" );
 		wfWaitForSlaves();
 	}
 
