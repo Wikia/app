@@ -2,10 +2,6 @@
 
 class UserProfilePageHelper {
 
-	const GLOBAL_RESTRICTED_WIKIS_ID = 0;
-	const GLOBAL_RESTRICTED_WIKIS_TYPE = 1;
-	const GLOBAL_RESTRICTED_WIKIS_CACHE_TIME = 0;
-
 	/**
 	 * @brief Get user object from given title
 	 *
