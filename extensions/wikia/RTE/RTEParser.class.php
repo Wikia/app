@@ -34,7 +34,9 @@ class RTEParser extends Parser {
 
 	function doBlockLevels( $text, $linestart ) {
 		// XW-4380: Make template placeholders in list items render correctly
-		$text = preg_replace( '/^([\*#;:]<div class="placeholder placeholder-double-brackets"[^>]+>)\n+/m', '$1', $text );
+		$text = preg_replace_callback('/([\*#;:]<div class="placeholder placeholder-double-brackets"[^>]+>&#x0200B;)\n?(.*?)(&#x0200B;<\/div>)/s', function($matches) {
+			return preg_replace('/\\n/', '', $matches[0]);
+		}, str_replace("\r\n", "\n", $text));
 		$text = preg_replace( '/^([\*#;:]<span class="placeholder placeholder-double-brackets"[^>]+>\&#x0200B;)\n+/m', '$1', $text );
 
 		return parent::doBlockLevels( $text, $linestart );

@@ -1225,19 +1225,22 @@ class PPFrame_DOM implements PPFrame {
 									// dom structure
 									$content = "&#x0200B;" . $ret['text'] . "&#x0200B;";
 								} else {
-									$content = $ret['text'];
+									$content = "&#x0200B;" . PHP_EOL . $ret['text'];
+									// XW-4609: if template contains list items, placeholder's closing div should be in
+									// the new line to not mess with list html
+									if (preg_match('/^\s*[\*#:;]/m', $content)) {
+										$content .= PHP_EOL;
+									}
+
+									$content .=  "&#x0200B;";
 								}
 
 								// when template is used in header new line breaks layout, however it is needed for other contexts
 								if ($contextNode->parentNode->nodeName === 'h' || $placeholderTag === 'span') {
 									$out .= Html::rawElement( $placeholderTag, $attributes,  $content );
 								} else {
-									// XW-4609: if template contains list items, placeholder's closing div should be in
-									// the new line to not mess with list html
-									if (preg_match('/^\s*[\*#:;]/m', $content)) {
-										$content .= PHP_EOL;
-									}
-									$out .= Html::rawElement( $placeholderTag, $attributes, PHP_EOL . $content );
+
+									$out .= Html::rawElement( $placeholderTag, $attributes, $content );
 								}
 							}
 						} else {
