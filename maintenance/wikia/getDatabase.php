@@ -37,10 +37,10 @@ if (array_key_exists('p', $opts)) {
 }
 switch($wgWikiaDatacenter) {
 	case WIKIA_DC_POZ:
-		$wgDBdevboxServer = 'master.db-dev-db.service.poz-dev.consul';
+		$wgDBdevboxServer = 'geo-db-dev-db-master.query.consul';
 		break;
 	case WIKIA_DC_SJC:
-		$wgDBdevboxServer = 'master.db-dev-db.service.sjc-dev.consul';
+		$wgDBdevboxServer = 'geo-db-dev-db-master.query.consul';
 		break;
 	default:
 		die("unknown data center: {$opts['p']}\n$USAGE");
