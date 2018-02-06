@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit bootstrap="./bootstrap.php" colors="true"
+    convertErrorsToExceptions="true" convertNoticesToExceptions="false"
+    convertWarningsToExceptions="false">
+    <testsuite name="PowerRouteUnitTests">
+        <directory>./unit</directory>
+    </testsuite>
+    <testsuite name="PowerRouteFuncitonalTests">
+        <directory>./functional</directory>
+    </testsuite>
+    <testsuite name="PowerRouteTests">
+        <directory>./functional</directory>
+        <directory>./unit</directory>
+    </testsuite>
+    <php>
+    </php>
+    <filter>
+        <whitelist processUncoveredFilesFromWhitelist="true">
+            <directory suffix=".php">../src</directory>
+        </whitelist>
+    </filter>
+</phpunit>

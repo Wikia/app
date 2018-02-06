@@ -58,7 +58,7 @@ class VideoInfo extends WikiaModel {
 
 	/**
 	 * Set the provider name
-	 * @param string $provider The name of the provider for this video (e.g., 'ooyala', 'anyclip')
+	 * @param string $provider The name of the provider for this video (e.g., 'youtube')
 	 */
 	public function setProvider( $provider ) {
 		$this->provider = $provider;

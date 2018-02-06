@@ -467,6 +467,14 @@ class WallExternalController extends WikiaController {
 	}
 
 	public function undoAction() {
+		try {
+			// SUS-4042: Validate edit token
+			$this->checkWriteRequest();
+		} catch ( BadRequestException $e ) {
+			$this->setTokenMismatchError();
+			return false;
+		}
+
 		/**
 		 * @var $mw WallMessage
 		 */
@@ -499,6 +507,14 @@ class WallExternalController extends WikiaController {
 	}
 
 	public function restoreMessage() {
+		try {
+			// SUS-4042: Validate edit token
+			$this->checkWriteRequest();
+		} catch ( BadRequestException $e ) {
+			$this->setTokenMismatchError();
+			return false;
+		}
+
 		/**
 		 * @var $mw WallMessage
 		 */
@@ -530,6 +546,14 @@ class WallExternalController extends WikiaController {
 	}
 
 	public function vote() {
+		try {
+			// SUS-4042: Validate edit token
+			$this->checkWriteRequest();
+		} catch ( BadRequestException $e ) {
+			$this->setTokenMismatchError();
+			return false;
+		}
+
 		$id = $this->request->getVal( 'id' );
 		$dir  = $this->request->getVal( 'dir' );
 
