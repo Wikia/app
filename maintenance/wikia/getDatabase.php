@@ -37,8 +37,6 @@ if (array_key_exists('p', $opts)) {
 }
 switch($wgWikiaDatacenter) {
 	case WIKIA_DC_POZ:
-		$wgDBdevboxServer = 'geo-db-dev-db-master.query.consul';
-		break;
 	case WIKIA_DC_SJC:
 		$wgDBdevboxServer = 'geo-db-dev-db-master.query.consul';
 		break;
