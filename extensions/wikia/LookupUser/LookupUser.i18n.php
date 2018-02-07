@@ -304,6 +304,7 @@ $messages['de'] = array(
 	'lookupuser-admin' => 'Admin',
 	'lookupuser-table-cannot-be-displayed' => 'Die Beitragstabelle kann nicht angezeigt werden - Ihre Erweiterung scheint deaktiviert zu sein.',
 	'action-lookupuser' => 'Benutzerinformationen einsehen',
+	'lookupuser-user-allowed-adoption' => 'Dieser Benutzer kann automatisch Wikis adoptieren.',
 );
 
 $messages['dsb'] = array(
@@ -408,6 +409,8 @@ $messages['es'] = array(
 	'lookupuser-account-status-tempuser' => 'Usuario temporal',
 	'lookupuser-account-status-realuser' => 'Usuario real',
 	'action-lookupuser' => 'ver información de usuario',
+	'lookupuser-user-not-allowed-adoption' => 'Este usuario no puede auto-adoptar.',
+	'lookupuser-user-allowed-adoption' => 'Este usuario puede auto-adoptar.',
 );
 
 $messages['et'] = array(
@@ -503,6 +506,7 @@ $messages['fr'] = array(
 	'lookupuser-account-status-tempuser' => 'Utilisateur temporaire',
 	'lookupuser-account-status-realuser' => 'Utilisateur réel',
 	'action-lookupuser' => "récupérer les informations de l'utilisateur",
+	'lookupuser-user-allowed-adoption' => 'Adoption automatique autorisée pour cet utilisateur.',
 );
 
 $messages['frp'] = array(
@@ -749,6 +753,8 @@ $messages['it'] = array(
 	'lookupuser-account-status-tempuser' => 'Utente temporaneo',
 	'lookupuser-account-status-realuser' => 'Utente reale',
 	'action-lookupuser' => 'controlla informazioni utente',
+	'lookupuser-user-not-allowed-adoption' => "A questo utente non è consentita l'adozione automatica.",
+	'lookupuser-user-allowed-adoption' => "A questo utente è consentita l'adozione automatica.",
 );
 
 $messages['ja'] = array(
@@ -795,6 +801,8 @@ $messages['ja'] = array(
 	'lookupuser-account-status-tempuser' => '一時的なユーザー',
 	'lookupuser-account-status-realuser' => '本ユーザー',
 	'action-lookupuser' => 'ユーザーの情報を検索',
+	'lookupuser-user-not-allowed-adoption' => 'このユーザーは自動アダプションが許可されていません。',
+	'lookupuser-user-allowed-adoption' => 'このユーザーは自動アダプションが許可されています。',
 );
 
 $messages['jv'] = array(
@@ -952,6 +960,8 @@ $messages['lol'] = array(
 	'lookupuser-account-status-tempuser' => 'crwdns66874:0crwdne66874:0',
 	'lookupuser-account-status-realuser' => 'crwdns66875:0crwdne66875:0',
 	'action-lookupuser' => 'crwdns66876:0crwdne66876:0',
+	'lookupuser-user-not-allowed-adoption' => 'crwdns66870:0crwdne66870:0',
+	'lookupuser-user-allowed-adoption' => 'crwdns66869:0crwdne66869:0',
 );
 
 $messages['lt'] = array(
@@ -1353,6 +1363,8 @@ $messages['ru'] = array(
 	'lookupuser-account-status-tempuser' => 'Временный участник',
 	'lookupuser-account-status-realuser' => 'Реальный участник',
 	'action-lookupuser' => 'поиск информации об участнике',
+	'lookupuser-user-not-allowed-adoption' => 'Участнику запрещено автоматическое принятие вики.',
+	'lookupuser-user-allowed-adoption' => 'Участнику разрешено автоматическое принятие вики.',
 );
 
 $messages['sc'] = array(
@@ -1660,6 +1672,8 @@ $messages['zh-hans'] = array(
 	'lookupuser-account-status-tempuser' => '临时用户',
 	'lookupuser-account-status-realuser' => '真实用户',
 	'action-lookupuser' => '查看用户信息',
+	'lookupuser-user-not-allowed-adoption' => '此用户帐户不允许自动领养。',
+	'lookupuser-user-allowed-adoption' => '此用户帐户允许自动领养。',
 );
 
 $messages['zh-hant'] = array(
@@ -1706,5 +1720,7 @@ $messages['zh-hant'] = array(
 	'lookupuser-account-status-tempuser' => '臨時用戶',
 	'lookupuser-account-status-realuser' => '真實用戶',
 	'action-lookupuser' => '查詢用戶資料',
+	'lookupuser-user-not-allowed-adoption' => '這個用戶不允許自動領養。',
+	'lookupuser-user-allowed-adoption' => '允許這個用戶自動領養。',
 );
 
