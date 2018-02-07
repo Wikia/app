@@ -117,7 +117,7 @@ define('ext.wikia.adEngine.provider.btfBlocker', [
 			}
 
 			// For the above the fold slot:
-			if (config.atfSlots.indexOf(slot.name) > -1) {
+			if (config && config.atfSlots && config.atfSlots.indexOf(slot.name) > -1) {
 				pendingAtfSlots.push(slot.name);
 
 				slot.pre('renderEnded', fillInSlotOnResponse);
@@ -130,8 +130,8 @@ define('ext.wikia.adEngine.provider.btfBlocker', [
 			}
 
 			// For the below the fold slot:
-			btfQueue.push(slot);
 			fillInSlotCallbacks[slot.name] = fillInSlot;
+			btfQueue.push(slot);
 		}
 
 		return fillInSlotWithDelay;
