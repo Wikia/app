@@ -34,7 +34,7 @@ class DesignSystemGlobalFooterModelTest extends WikiaBaseTest {
 				DesignSystemGlobalFooterModel::PRODUCT_WIKIS,
 				'wikia',
 				'CC-BY-SA',
-				'//www.wikia.com/Licensing',
+				'http://www.wikia.com/Licensing',
 				[
 					'description' => [
 						'type' => 'translatable-text',
@@ -54,7 +54,7 @@ class DesignSystemGlobalFooterModelTest extends WikiaBaseTest {
 									'type' => 'text',
 									'value' => 'CC-BY-SA'
 								],
-								'href' => '//www.wikia.com/Licensing',
+								'href' => 'http://www.wikia.com/Licensing',
 								'tracking_label' => 'license',
 							],
 						],
@@ -65,7 +65,7 @@ class DesignSystemGlobalFooterModelTest extends WikiaBaseTest {
 				DesignSystemGlobalFooterModel::PRODUCT_WIKIS,
 				'memory-alpha',
 				'CC-BY-NC-SA',
-				'//memory-alpha.wikia.com/wiki/Project:Licensing',
+				'http://memory-alpha.wikia.com/wiki/Project:Licensing',
 				[
 					'description' => [
 						'type' => 'translatable-text',
@@ -85,7 +85,7 @@ class DesignSystemGlobalFooterModelTest extends WikiaBaseTest {
 									'type' => 'text',
 									'value' => 'CC-BY-NC-SA'
 								],
-								'href' => '//memory-alpha.wikia.com/wiki/Project:Licensing',
+								'href' => 'http://memory-alpha.wikia.com/wiki/Project:Licensing',
 								'tracking_label' => 'license',
 							],
 						],
