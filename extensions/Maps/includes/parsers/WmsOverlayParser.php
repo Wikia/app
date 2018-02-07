@@ -28,11 +28,11 @@ class WmsOverlayParser extends StringValueParser {
 	 */
 	protected function stringParse( $value ) {
 		$separator = " ";
-		$metaData = explode($separator, $value);
+		$metaData = explode( $separator, $value );
 
 		if ( count( $metaData ) >= 2 ) {
 			$wmsOverlay = new WmsOverlay( $metaData[0], $metaData[1] );
-			if ( count( $metaData ) == 3) {
+			if ( count( $metaData ) == 3 ) {
 				$wmsOverlay->setWmsStyleName( $metaData[2] );
 			}
 

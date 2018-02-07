@@ -168,7 +168,7 @@ class MyHome {
 		// dirty hack to make skin chooser work ($wgTitle is not set at this point yet)
 		$wgTitle = Title::newMainPage();
 
-		// do not redirect for skins different then Oasis or logged-in requests driven by RandomWiki (FB#1033)
+		// do not redirect for skins different then Oasis (FB#1033)
 		if(get_class(RequestContext::getMain()->getSkin()) != 'SkinOasis' || ( $wgUser->isLoggedIn() && $wgRequest->getVal( 'redirect' ) == 'no' ) ) {
 			wfProfileOut(__METHOD__);
 			return true;

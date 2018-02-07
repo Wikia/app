@@ -19,6 +19,8 @@ $wgAutoloadClasses['RTEMarker'] = __DIR__ . '/RTEMarker.class.php';
 $wgAutoloadClasses['RTEParser'] = __DIR__ . '/RTEParser.class.php';
 $wgAutoloadClasses['RTEReverseParser'] = __DIR__ . '/RTEReverseParser.class.php';
 $wgAutoloadClasses['RTEController'] = __DIR__ . '/RTEController.class.php';
+$wgAutoloadClasses['RTEParserCache'] = __DIR__ . '/RTEParserCache.php';
+$wgAutoloadClasses['RTEParsePoolWork'] = __DIR__ . '/RTEParsePoolWork.php';
 
 // hooks
 $wgHooks['EditPage::showEditForm:initial'][] = 'RTE::init';
@@ -42,6 +44,8 @@ $wgHooks['EditPage::getContent::end'][] = 'RTEMagicWord::checkEditPageContent';
 $wgHooks['MakeHeadline'][] = 'RTELinkerHooks::onMakeHeadline';
 $wgHooks['LinkEnd'][] = 'RTELinkerHooks::onLinkEnd';
 $wgHooks['LinkerMakeExternalLink'][] = 'RTELinkerHooks::onLinkerMakeExternalLink';
+$wgHooks['WikiaSkinTopScripts'][] = 'addGlobalJsVariables';
+
 
 // i18n
 $wgExtensionMessagesFiles['RTE'] = __DIR__ . '/i18n/RTE.i18n.php';
@@ -74,4 +78,20 @@ function RTEAjax() {
 
 	wfProfileOut(__METHOD__);
 	return $ret;
+}
+
+/**
+ * MW1.19 - ResourceLoaderStartUpModule class adds more variables
+ * @param array $vars JS variables to be added at the bottom of the page
+ * @param OutputPage $out
+ * @return bool return true - it's a hook
+ */
+function addGlobalJsVariables( Array &$vars, &$scripts ) {
+	wfProfileIn( __METHOD__ );
+
+	$vars['wgEnablePortableInfoboxEuropaTheme'] = F::app()->wg->EnablePortableInfoboxEuropaTheme;
+
+	wfProfileOut( __METHOD__ );
+
+	return true;
 }

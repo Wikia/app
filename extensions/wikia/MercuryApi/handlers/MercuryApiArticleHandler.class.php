@@ -99,16 +99,6 @@ class MercuryApiArticleHandler {
 		$featuredVideo = ArticleVideoContext::getFeaturedVideoData( $title->getArticleID() );
 
 		if ( !empty( $featuredVideo ) ) {
-			$featuredVideoData = [
-				'type' => 'video',
-				'context' => 'featured-video',
-				'embed' => [
-					'jsParams' => [
-						'dfpContentSourceId' => F::app()->wg->AdDriverDfpOoyalaContentSourceId,
-					],
-				]
-			];
-
 			$featuredVideoData['provider'] = 'jwplayer';
 			$featuredVideoData['embed']['provider'] = 'jwplayer';
 			$featuredVideoData['embed']['jsParams']['videoId'] = $featuredVideo['mediaId'];

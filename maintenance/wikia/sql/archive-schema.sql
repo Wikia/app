@@ -14,7 +14,8 @@ CREATE TABLE `city_domains` (
   `city_id` int(10) unsigned NOT NULL,
   `city_domain` varchar(255) NOT NULL DEFAULT 'wikia.com',
   `city_timestamp` varchar(14) NOT NULL DEFAULT '19700101000000',
-  `city_new_id` int(10) unsigned DEFAULT NULL
+  `city_new_id` int(10) unsigned DEFAULT NULL,
+  PRIMARY KEY (`city_id`,`city_domain`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -126,4 +127,4 @@ CREATE TABLE `wikia_tasks` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
--- Dump completed on 2018-01-09 15:30:20
+-- Dump completed on 2018-01-17 15:46:35

@@ -22,6 +22,7 @@ define('ext.wikia.adEngine.ml.outstream.outstreamLogisticRegression', [
 		inputParser: inputParser,
 		model: linearModel.create(coefficients, intercept),
 		name: 'outstreamlr',
-		wgCountriesVariable: 'wgAdDriverOutstreamLogisticRegressionRabbitCountries'
+		wgCountriesVariable: 'wgAdDriverOutstreamLogisticRegressionRabbitCountries',
+		enabled: true
 	});
 });

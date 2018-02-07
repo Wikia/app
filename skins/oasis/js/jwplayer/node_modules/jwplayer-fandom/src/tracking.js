@@ -1,7 +1,9 @@
 function wikiaJWPlayerTracking(playerInstance, willAutoplay, tracker) {
 	//This will replace 'trackingevent' in internal tracker url path
 	var eventName = 'videoplayerevent',
-		gaCategory = tracker.category || 'featured-video';
+		gaCategory = tracker.category || 'featured-video',
+		onScroll = false,
+		percentPlayed = 0;
 
 	function updateVideoCustomDimensions(currentVideo) {
 		if (typeof tracker.setCustomDimension !== 'function') {
@@ -70,6 +72,7 @@ function wikiaJWPlayerTracking(playerInstance, willAutoplay, tracker) {
 			eventName: eventName,
 			videoId: playerInstance.getPlaylistItem().mediaid,
 			player: 'jwplayer',
+			onScroll: onScroll,
 			trackingMethod: 'analytics'
 		};
 
@@ -120,10 +123,12 @@ function wikiaJWPlayerTracking(playerInstance, willAutoplay, tracker) {
 		trackCustomPixel(data.item.pixel);
 	});
 
-	playerInstance.on('videoResumed', function () {
-		track({
-			label: 'play-resumed'
-		})
+	playerInstance.on('videoResumed', function (data) {
+		if (data.playReason === 'interaction') {
+			track({
+				label: 'play-resumed'
+			});
+		}
 	});
 
 	playerInstance.on('playerStart', function (data) {
@@ -137,10 +142,12 @@ function wikiaJWPlayerTracking(playerInstance, willAutoplay, tracker) {
 		trackCustomPixel(tracker.pixel);
 	});
 
-	playerInstance.on('pause', function () {
-		track({
-			label: 'paused'
-		});
+	playerInstance.on('pause', function (data) {
+		if (data.pauseReason === 'interaction') {
+			track({
+				label: 'paused'
+			});
+		}
 	});
 
 	playerInstance.on('firstUnmute', function () {
@@ -150,8 +157,9 @@ function wikiaJWPlayerTracking(playerInstance, willAutoplay, tracker) {
 	});
 
 	playerInstance.on('videoPercentPlayed', function (data) {
+		percentPlayed = data.value;
 		track({
-			label: 'played-percentage-' + data.value,
+			label: 'played-percentage-' + percentPlayed,
 			action: 'view'
 		});
 	});
@@ -163,11 +171,15 @@ function wikiaJWPlayerTracking(playerInstance, willAutoplay, tracker) {
 		});
 	});
 
-	playerInstance.on('onScrollClosed', function () {
-		track({
-			label: 'collapsed',
-			action: 'close'
-		});
+	playerInstance.on('onScrollStateChanged', function (data) {
+		if (data.state === 'closed') {
+			track({
+				label: 'played-percentage-' + percentPlayed,
+				action: 'close'
+			});
+		}
+		onScroll = data.state === 'active';
+		tracker.setCustomDimension(38, onScroll ? 'Yes' : 'No');
 	});
 
 	playerInstance.on('videoFeedbackImpression', function () {

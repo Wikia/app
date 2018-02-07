@@ -72,7 +72,6 @@
 <?= $krux ?>
 <?= $netzathleten ?>
 <?= $dynamicYield ?>
-<?= $sourcePoint ?>
 <?= $gfc ?>
 
 <div class="WikiaSiteWrapper">

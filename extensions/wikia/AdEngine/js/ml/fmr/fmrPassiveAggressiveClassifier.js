@@ -48,6 +48,7 @@ define('ext.wikia.adEngine.ml.fmr.fmrPassiveAggressiveClassifier', [
 		inputParser: inputParser,
 		model: linearModel.create(coefficients, intercept),
 		name: 'fmrpac',
-		wgCountriesVariable: 'wgAdDriverFMRPassiveAggressiveClassifierRabbitCountries'
+		wgCountriesVariable: 'wgAdDriverFMRPassiveAggressiveClassifierRabbitCountries',
+		enabled: true
 	});
 });
