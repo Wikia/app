@@ -49,7 +49,8 @@ class AdEngine2ContextService {
 					'pageFairRecovery' => ARecoveryModule::isPageFairRecoveryEnabled(),
 					'instartLogicRecovery' => ARecoveryModule::isInstartLogicRecoveryEnabled(),
 					'prebidBidderUrl' => $prebidBidderUrl,
-					'isAdTestWiki' => $wg->AdDriverIsAdTestWiki
+					'isAdTestWiki' => $wg->AdDriverIsAdTestWiki,
+					'cdnApiUrl' => $wg->wgCdnApiUrl
 				] ),
 				'targeting' => $this->filterOutEmptyItems( [
 					'enableKruxTargeting' => AnalyticsProviderKrux::isEnabled(),

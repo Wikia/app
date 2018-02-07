@@ -238,7 +238,7 @@ define('ext.wikia.adEngine.adContext', [
 		return nextElement;
 	}
 
-	setContext(w.ads ? w.ads.context : {});
+	setContext((w.ads && w.ads.context) ? w.ads.context : {});
 
 	return {
 		get: get,

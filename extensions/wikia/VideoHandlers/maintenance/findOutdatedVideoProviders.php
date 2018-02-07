@@ -118,7 +118,7 @@ TEXT;
 		global $wgMediaHandlers;
 		$solr = self::getSolr();
 
-		// e.g. $wgMediaHandlers['video/crunchyroll'] = 'CrunchyrollVideoHandler';
+		// e.g. $wgMediaHandlers['video/youtube'] = 'YoutubeVideoHandler';
 		foreach( $wgMediaHandlers as $key => $_ ) {
 			list( $type, $provider ) = explode( '/', $key, 2 );
 

@@ -9,12 +9,13 @@ define('ext.wikia.adEngine.ml.modelFactory', [
 		'inputParser',
 		'model',
 		'name',
-		'wgCountriesVariable'
+		'wgCountriesVariable',
+		'enabled'
 	];
 
 	function create(modelData) {
 		requiredData.forEach(function (key) {
-			if (!modelData[key]) {
+			if (typeof modelData[key] === 'undefined') {
 				throw new Error('Missing ' + key + ' in model definition.');
 			}
 		});

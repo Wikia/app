@@ -2,12 +2,13 @@ define('wikia.articleVideo.featuredVideo.ads', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.video.vastUrlBuilder',
 	'ext.wikia.adEngine.slot.service.megaAdUnitBuilder',
+	'ext.wikia.adEngine.slot.service.slotRegistry',
 	'ext.wikia.adEngine.slot.service.srcProvider',
 	'ext.wikia.adEngine.video.articleVideoAd',
 	'ext.wikia.adEngine.video.player.jwplayer.adsTracking',
 	'ext.wikia.adEngine.video.vastDebugger',
 	'wikia.log'
-], function (adContext, vastUrlBuilder, megaAdUnitBuilder, srcProvider, articleVideoAd, adsTracking, vastDebugger, log) {
+], function (adContext, vastUrlBuilder, megaAdUnitBuilder, slotRegistry, srcProvider, articleVideoAd, adsTracking, vastDebugger, log) {
 	'use strict';
 
 	var baseSrc = adContext.get('targeting.skin') === 'oasis' ? 'gpt' : 'mobile',
@@ -73,6 +74,8 @@ define('wikia.articleVideo.featuredVideo.ads', [
 			});
 
 			player.on('adRequest', function (event) {
+				slotRegistry.storeScrollY(featuredVideoSlotName);
+
 				vastDebugger.setVastAttributes(featuredVideoContainer, event.tag, 'success', event.ima && event.ima.ad);
 			});
 

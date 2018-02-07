@@ -30,7 +30,6 @@ class MastheadTest extends WikiaBaseTest {
 	function testGetPurgeUrl($avatarOption, $expectedUrl) {
 		$masthead = $this->getMastheadWithAvatar($avatarOption);
 		$this->mockGlobalVariable( 'wgVignetteUrl', 'https://vignette.wikia.nocookie.net' );
-		$this->mockGlobalVariable( 'wgBlogAvatarPath', 'https://vignette.wikia.nocookie.net/common/avatars' );
 		$this->assertEquals($expectedUrl, $masthead->getPurgeUrl(), 'Avatar URL should match the expected value');
 	}
 

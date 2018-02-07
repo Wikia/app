@@ -18,7 +18,7 @@ define('wikia.media.class', ['wikia.window'], function(window){
 
 		if(image.type === Media.types.VIDEO) {
 			this.type = Media.types.VIDEO;
-			//some providers come with a 'subname' like ooyala/wikiawebinar
+			//some providers come with a 'subname' like <provider>/wikiawebinar
 			this.supported = supportedVideos.indexOf((image.provider || '').split('/')[0]) != -1;
 		}else{
 			this.type = Media.types.IMAGE;

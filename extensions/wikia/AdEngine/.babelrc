@@ -2,8 +2,9 @@
     "presets": [
         ["env", {
             "targets": {
-                "browsers": ["last 2 versions"]
-            }
+                "browsers": ["last 2 versions", "safari >= 9.0"]
+            },
+            "modules": false
         }]
     ],
     "plugins": [

@@ -1,7 +1,7 @@
 <?php
 
 class RTEParser extends Parser {
-	const INLINE_EXT_TAGS = [ 'ref', 'nowiki' ];
+	const INLINE_EXT_TAGS = [ 'ref', 'nowiki', 'staff' ];
 	const CUSTOM_PLACEHOLDER_TAG = [ 'gallery', 'place' ];
 	// count empty lines before HTML tag
 	private $emptyLinesBefore = 0;
@@ -34,7 +34,13 @@ class RTEParser extends Parser {
 
 	function doBlockLevels( $text, $linestart ) {
 		// XW-4380: Make template placeholders in list items render correctly
-		$text = preg_replace( '/^(\*<div class="placeholder placeholder-double-brackets"[^>]+>)\n/m', '$1', $text );
+		// XW-4609: remove newlines from template's placeholder when used inside list's item to not break list
+		$text = preg_replace_callback('/^([\*#;:][^\n]*<div class="placeholder placeholder-double-brackets"[^>]+>&#x0200B;)\n?(.*?)(&#x0200B;<\/div>)/ms', function($matches) {
+			return preg_replace('/\\n/', '', $matches[0]);
+		}, str_replace("\r\n", "\n", $text));
+		$text = preg_replace_callback('/^([\*#;:][^\n]*<span class="placeholder placeholder-double-brackets"[^>]+>&#x0200B;)\n?(.*?)(&#x0200B;<\/span>)/ms', function($matches) {
+			return preg_replace('/\\n/', '', $matches[0]);
+		}, str_replace("\r\n", "\n", $text));
 
 		return parent::doBlockLevels( $text, $linestart );
 	}
@@ -477,6 +483,17 @@ class RTEParser extends Parser {
 		$wgPreprocessorCacheThreshold = 1000000;
 
 		//RTE::log(__METHOD__ . '::beforeParse', $text);
+
+		// check if includeonly, noinclude, onlyinclude tags are used in wikitext. If yes, rise edgecase
+		if ( strpos( $text, '<includeonly>' ) !== false ) {
+			RTE::edgeCasesPush( 'includeonly' );
+		}
+		if ( strpos( $text, '<noinclude>' ) !== false ) {
+			RTE::edgeCasesPush( 'noinclude' );
+		}
+		if ( strpos( $text, '<onlyinclude>' ) !== false ) {
+			RTE::edgeCasesPush( 'onlyinclude' );
+		}
 
 		// parse to HTML
 		$output = parent::parse($text, $title, $options, $linestart, $clearState, $revid);

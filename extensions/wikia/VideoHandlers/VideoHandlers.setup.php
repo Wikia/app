@@ -130,13 +130,6 @@ $wgAutoloadClasses['DailymotionVideoHandler'] =  $dir . '/handlers/DailymotionVi
 $wgAutoloadClasses['DailymotionApiWrapper'] =  $dir . '/apiwrappers/DailymotionApiWrapper.class.php';
 $wgMediaHandlers['video/dailymotion'] = 'DailymotionVideoHandler';
 
-$wgAutoloadClasses['HuluVideoHandler'] =  $dir . '/handlers/HuluVideoHandler.class.php';
-$wgAutoloadClasses['HuluApiWrapper'] =  $dir . '/apiwrappers/HuluApiWrapper.class.php';
-$wgMediaHandlers['video/hulu'] = 'HuluVideoHandler';
-
-// Uses Ooyala for video handler
-$wgAutoloadClasses['ScreenplayApiWrapper'] =  $dir . '/apiwrappers/ScreenplayApiWrapper.class.php';
-
 $wgAutoloadClasses['IgnVideoHandler'] =  $dir . '/handlers/IgnVideoHandler.class.php';
 $wgAutoloadClasses['IgnApiWrapper'] =  $dir . '/apiwrappers/IgnApiWrapper.class.php';
 $wgMediaHandlers['video/ign'] = 'IgnVideoHandler';
@@ -149,52 +142,28 @@ $wgAutoloadClasses['YoutubeVideoHandler'] =  $dir . '/handlers/YoutubeVideoHandl
 $wgAutoloadClasses['YoutubeApiWrapper'] =  $dir . '/apiwrappers/YoutubeApiWrapper.class.php';
 $wgMediaHandlers['video/youtube'] = 'YoutubeVideoHandler';
 
-$wgAutoloadClasses['AnyclipVideoHandler'] =  $dir . '/handlers/AnyclipVideoHandler.class.php';
-$wgAutoloadClasses['AnyclipApiWrapper'] =  $dir . '/apiwrappers/AnyclipApiWrapper.class.php';
-$wgMediaHandlers['video/anyclip'] = 'AnyclipVideoHandler';
-
-$wgAutoloadClasses[ 'OoyalaVideoHandler'] =  $dir . '/handlers/OoyalaVideoHandler.class.php' ;
-$wgAutoloadClasses[ 'OoyalaApiWrapper'] =  $dir . '/apiwrappers/OoyalaApiWrapper.class.php' ;
-$wgMediaHandlers['video/ooyala'] = 'OoyalaVideoHandler';
-
 $wgAutoloadClasses['YoukuApiWrapper'] =  $dir . '/apiwrappers/YoukuApiWrapper.class.php';
 $wgAutoloadClasses['YoukuVideoHandler'] =  $dir . '/handlers/YoukuVideoHandler.class.php';
 $wgMediaHandlers['video/youku'] = 'YoukuVideoHandler';
-
-$wgAutoloadClasses['CrunchyrollApiWrapper'] =  $dir . '/apiwrappers/CrunchyrollApiWrapper.class.php';
-$wgAutoloadClasses['CrunchyrollVideoHandler'] =  $dir . '/handlers/CrunchyrollVideoHandler.class.php';
-$wgMediaHandlers['video/crunchyroll'] = 'CrunchyrollVideoHandler';
 
 /**
  * Feed ingesters
  */
 $wgAutoloadClasses[ 'VideoFeedIngester' ] = $dir . '/feedingesters/VideoFeedIngester.class.php';
-$wgAutoloadClasses[ 'RemoteAssetFeedIngester' ] = $dir . '/feedingesters/RemoteAssetFeedIngester.class.php';
-$wgAutoloadClasses[ 'ScreenplayFeedIngester' ] = $dir . '/feedingesters/ScreenplayFeedIngester.class.php';
 $wgAutoloadClasses[ 'IgnFeedIngester' ] = $dir . '/feedingesters/IgnFeedIngester.class.php';
-$wgAutoloadClasses[ 'AnyclipFeedIngester' ] = $dir . '/feedingesters/AnyclipFeedIngester.class.php';
-$wgAutoloadClasses[ 'OoyalaFeedIngester' ] = $dir . '/feedingesters/OoyalaFeedIngester.class.php';
-$wgAutoloadClasses[ 'CrunchyrollFeedIngester' ] = $dir . '/feedingesters/CrunchyrollFeedIngester.class.php';
 $wgAutoloadClasses[ 'TestVideoFeedIngester' ] = $dir . '/tests/TestVideoFeedIngester.class.php';
 
 $wgAutoloadClasses[ 'FeedIngesterDataNormalizer' ] = $dir . '/feedingesters/FeedIngesterDataNormalizer.class.php';
 $wgAutoloadClasses[ 'FeedIngesterFactory' ] = $dir . '/feedingesters/FeedIngesterFactory.class.php';
 $wgAutoloadClasses[ 'FeedIngesterLogger' ] = $dir . '/feedingesters/FeedIngesterLogger.class.php';
 
-$wgAutoloadClasses[ 'OoyalaAsset' ] = $dir . '/feedingesters/OoyalaAsset.class.php';
-
-
 $wgVideoMigrationProviderMap = array(
 	5 => 'Youtube',
-	6 => 'Hulu',
 	13 => 'Vimeo',
 	18 => 'Dailymotion',
-	21 => 'Screenplay',
 	/*
 	// a trick to make video.wikia and local files accessible via wrappers:
 	24 => 'Wikia',
 	*/
-	26 => 'Anyclip',
-	28 => 'Ooyala',
 	32 => 'Youku'
 );
