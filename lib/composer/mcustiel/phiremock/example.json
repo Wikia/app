@@ -1,0 +1,23 @@
+{
+    "scenarioName": "potato",
+    "scenarioStateIs": "Scenario.START",
+    "newScenarioState": "tomato",
+    "request": {
+            "method": "GET",
+            "url": {
+                "isEqualTo" : "/some/thing"
+            },
+            "headers" : {
+                "Content-Type" : { 
+                    "isEqualTo" : "text/plain"
+                }
+            }
+    },
+    "response": {
+            "statusCode": 200,
+            "body": "Hello world!",
+            "headers": {
+                    "Content-Type": "text/plain"
+            }
+    }
+}

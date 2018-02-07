@@ -334,11 +334,6 @@ class WikiaFileHelper {
 					$data['duration'] = $file->getMetadataDuration();
 					$data['isAdded'] = self::isAdded( $file );
 					$mediaPage = self::getMediaPage( $fileTitle );
-
-					// Extra height is needed for lightbox when more elements must be fitted
-					if ( strtolower( $data['providerName'] ) == 'crunchyroll' ) {
-						$data['extraHeight'] = CrunchyrollVideoHandler::CRUNCHYROLL_WIDGET_HEIGHT_PX;
-					}
 				} else {
 					$width = !empty( $config[ 'imageMaxWidth' ] ) ? min( $config[ 'imageMaxWidth' ], $width ) : $width;
 					$mediaPage = new ImagePage( $fileTitle );

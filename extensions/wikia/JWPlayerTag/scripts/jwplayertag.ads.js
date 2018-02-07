@@ -17,17 +17,17 @@ define('wikia.articleVideo.jwplayertag.ads', [
 		videoSource,
 		logGroup = 'wikia.articleVideo.jwplayertag.ads';
 
-	function buildVastUrl(position, videoDepth, correlator) {
+	function buildVastUrl(position, videoDepth, correlator, slotTargeting) {
 		var options = {
 				correlator: correlator,
 				vpos: position
 			},
-			slotParams = {
+			slotParams = Object.assign({
 				passback: videoPassback,
 				pos: videoSlotName,
 				rv: videoDepth,
 				src: videoSource
-			};
+			}, slotTargeting);
 
 		options.adUnit = megaAdUnitBuilder.build(slotParams.pos, slotParams.src);
 
@@ -36,7 +36,7 @@ define('wikia.articleVideo.jwplayertag.ads', [
 		return vastUrlBuilder.build(aspectRatio, slotParams, options);
 	}
 
-	return function(player) {
+	return function(player, slotTargeting) {
 		var correlator,
 			videoElement = player && player.getContainer && player.getContainer(),
 			videoContainer = videoElement && videoElement.parentNode,
@@ -47,6 +47,7 @@ define('wikia.articleVideo.jwplayertag.ads', [
 			},
 			videoDepth = 0;
 
+		slotTargeting = slotTargeting || {};
 		videoSource = srcProvider.get(baseSrc, {testSrc: 'test'}, 'JWPLAYER');
 		trackingParams.src = videoSource;
 
@@ -56,6 +57,10 @@ define('wikia.articleVideo.jwplayertag.ads', [
 			});
 
 			player.on('beforePlay', function () {
+				var currentMedia = player.getPlaylistItem() || {};
+
+				slotTargeting.v1 = currentMedia.mediaid;
+
 				if (prerollPositionReached) {
 					return;
 				}
@@ -67,7 +72,7 @@ define('wikia.articleVideo.jwplayertag.ads', [
 				trackingParams.adProduct = 'video-preroll';
 
 				btfBlocker.decorate(function() {
-						player.playAd(buildVastUrl('preroll', videoDepth, correlator));
+						player.playAd(buildVastUrl('preroll', videoDepth, correlator, slotTargeting));
 				})({name: videoSlotName});
 
 				prerollPositionReached = true;

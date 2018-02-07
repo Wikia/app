@@ -1,7 +1,7 @@
 require([
 	'wikia.window',
 	'wikia.geo',
-	'wikia.instantGlobals',
+//	'wikia.instantGlobals',
 	'wikia.cookies',
 	'wikia.tracker',
 	'ext.wikia.adEngine.adContext',
@@ -13,7 +13,7 @@ require([
 ], function (
 	win,
 	geo,
-	instantGlobals,
+//	instantGlobals,
 	cookies,
 	tracker,
 	adContext,
@@ -27,11 +27,14 @@ require([
 		return;
 	}
 
-	var inNextVideoAutoplayCountries = geo.isProperGeo(instantGlobals.wgArticleVideoNextVideoAutoplayCountries),
+	var inNextVideoAutoplayCountries = true, //geo.isProperGeo(instantGlobals.wgArticleVideoNextVideoAutoplayCountries),
 		//Fallback to the generic playlist when no recommended videos playlist is set for the wiki
 		recommendedPlaylist = videoDetails.recommendedVideoPlaylist || 'Y2RWCKuS',
-		inAutoplayCountries = geo.isProperGeo(instantGlobals.wgArticleVideoAutoplayCountries),
+		inAutoplayCountries = true, //geo.isProperGeo(instantGlobals.wgArticleVideoAutoplayCountries),
 		willAutoplay = isAutoplayEnabled() && inAutoplayCountries,
+		slotTargeting = {
+			plist: recommendedPlaylist
+		},
 		bidParams;
 
 	function isFromRecirculation() {
@@ -49,7 +52,7 @@ require([
 
 		win.dispatchEvent(new CustomEvent('wikia.jwplayer.instanceReady', {detail: playerInstance}));
 
-		featuredVideoAds(playerInstance, bidParams);
+		featuredVideoAds(playerInstance, bidParams, slotTargeting);
 		featuredVideoMoatTracking(playerInstance);
 
 		playerInstance.on('autoplayToggle', function (data) {
