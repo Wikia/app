@@ -33,6 +33,7 @@ define('ext.wikia.adEngine.template.porvata', [
 	'use strict';
 	var fallbackBidders = [
 			'appnexusAst',
+			'beachfront',
 			'rubicon'
 		],
 		logGroup = 'ext.wikia.adEngine.template.porvata',

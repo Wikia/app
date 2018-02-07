@@ -169,30 +169,25 @@ class DataMartService {
 	 * Get top wikis by pageviews over a specified span of time, optionally filtering by
 	 * public status, language and vertical (hub)
 	 *
-	 * @param integer $periodId The interval of time to take into consideration, one of PERIOD_ID_WEEKLY,
-	 * PERIOD_ID_MONTHLY or PERIOD_ID_QUARTERLY
 	 * @param integer $limit The maximum number of results, defaults to 200
 	 * @param array $langs (optional) The language code to use as a filter (e.g. en for English), null for all (default)
 	 * @param string $hub (optional) The vertical name to use as a filter (e.g. Gaming), null for all (default)
 	 * @param integer $public (optional) Filter results by public status, one of 0, 1 or null (for both, default)
 	 * @return array $topWikis [ array( wikiId => pageviews ) ]
 	 */
-	public static function getTopWikisByPageviews ( $periodId, $limit = 200, Array $langs = [], $hub = null, $public = null ) {
-		$limitDefault = 200;
-		$limitUsed = ( $limit > $limitDefault ) ? $limit : $limitDefault;
+	public static function getTopWikisByPageviews ( $limit = 300, Array $langs = [], $hub = null, $public = null ) {
+		$limitDefault = 300;
+		$limitUsed = ( $limit < $limitDefault ) ? $limit : $limitDefault;
 
-		switch ( $periodId ) {
-			case self::PERIOD_ID_WEEKLY:
-				$field = 'pageviews_7day';
-				break;
-			case self::PERIOD_ID_QUARTERLY:
-				$field = 'pageviews_90day';
-				break;
-			case self::PERIOD_ID_MONTHLY:
-			default:
-				$field = 'pageviews_30day';
-				break;
+		$categoryId = null;
+		if ( !empty( $hub ) ) {
+			#external api use cases indicate that hub values passed are actually categories, not verticals,
+			#so assuming that interpretation
+			$categoryId = WikiFactoryHub::getInstance()->getCategoryByName( $hub )['id'];
 		}
+
+		#Latest first day of month, but no sooner than two days before to give some space for data to arrive
+		$timeId = date( 'Y-m-01', strtotime('-2 day') );
 
 		try {
 			$db = DataMartService::getDB();
@@ -202,10 +197,11 @@ class DataMartService {
 					->cacheGlobal( self::TTL )
 					->SELECT( 'r.wiki_id' )
 					->AS_( 'id' )
-					->FIELD( $field )
-					->AS_( 'pageviews' )
-					->FROM( 'report_wiki_recent_pageviews' )
+					->FIELD( 'pageviews' )
+					->FROM( 'rollup_wiki_pageviews' )
 					->AS_( 'r' )
+					->WHERE( 'period_id' )->EQUAL_TO( DataMartService::PERIOD_ID_MONTHLY )
+					->AND_( 'time_id' )->EQUAL_TO( $timeId )
 					->ORDER_BY( [ 'pageviews', 'desc' ] )
 					->LIMIT( $limitUsed );
 
@@ -213,16 +209,18 @@ class DataMartService {
 				$sql->JOIN( 'dimension_wikis' )
 					->AS_( 'd' )
 					->ON( 'r.wiki_id', 'd.wiki_id' )
-					->WHERE( 'd.public' )
-					->EQUAL_TO( $public );
+					->AND_( 'd.public' )->EQUAL_TO( $public );
+			}
+
+			if ( !empty( $categoryId ) ) {
+				$sql->JOIN( 'dimension_wiki_categories')
+					->AS_('c')
+					->ON( 'r.wiki_id', 'c.wiki_id' )
+					->AND_( 'c.category_id' )->EQUAL_TO( $categoryId );
 			}
 
 			if ( !empty( $langs ) ) {
 				$sql->AND_( 'r.lang' )->IN( $langs );
-			}
-
-			if ( !empty( $hub ) ) {
-				$sql->AND_( 'r.hub_name' )->EQUAL_TO( $hub );
 			}
 
 			$topWikis = $sql->runLoop( $db, function ( &$topWikis, $row ) {
@@ -584,7 +582,6 @@ class DataMartService {
 		// fetch the top 10 wikis on a weekly pageviews basis
 		// this has it's own cache
 		$wikis = DataMartService::getTopWikisByPageviews(
-			DataMartService::PERIOD_ID_WEEKLY,
 			self::TOP_WIKIS_FOR_HUB,
 			$langs,
 			$hub,
@@ -671,43 +668,6 @@ class DataMartService {
 		} catch ( DBError $dbError ) {
 			return [];
 		}
-	}
-
-	/**
-	 * Returns an array of IDs of wikias ordered by WAM rank.
-	 * The default limit is 200. If 0 is provided - no limit is used.
-	 * @param int $limit Default is set as the DEFAULT_TOP_WIKIAS_LIMIT const
-	 * @param array $wikisIds Limit the range to certain wikis
-	 * @return bool|array An array of IDs or `false` on no results
-	 */
-	public function getWikisOrderByWam( $limit = self::DEFAULT_TOP_WIKIAS_LIMIT, array $wikisIds = [] ) {
-		$db = DataMartService::getDB();
-
-		$sql = ( new WikiaSQL() )->skipIf( self::isDisabled() )
-			->cacheGlobal( self::TTL )
-			->SELECT( 'wiki_id' )
-			->FROM( 'dimension_top_wikis' )
-			->ORDER_BY( 'rank' );
-
-		/**
-		 * Limit the results to certain wikias
-		 */
-		if ( !empty( $wikisIds ) ) {
-			$sql->WHERE( 'wiki_id' )->IN( $wikisIds );
-		}
-
-		/**
-		 * Limit the number of results
-		 */
-		if ( $limit > 0 ) {
-			$sql->LIMIT( (int)$limit );
-		}
-
-		$wikis = $sql->runLoop( $db, function( &$wikis, $row ) {
-			$wikis[] = (int)$row->wiki_id;
-		} );
-
-		return $wikis;
 	}
 
 	protected static function getDB() {

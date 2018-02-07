@@ -43,7 +43,15 @@ class SunsetProvider extends Maintenance {
 	 * @return ResultWrapper
 	 */
 	private function getProviderVideos( string $providerName ): ResultWrapper {
-		$videoEmbeds = $this->getDB( DB_SLAVE )->select( 'video_info', 'video_title', [ 'provider' => $providerName ], __METHOD__ );
+		$videoEmbeds = $this->getDB( DB_SLAVE )->select(
+			'video_info',
+			'video_title',
+			[
+				'provider' => $providerName,
+				'premium' => 0
+			],
+			__METHOD__
+		);
 
 		return $videoEmbeds;
 	}
@@ -104,13 +112,13 @@ class SunsetProvider extends Maintenance {
 					// If the page never existed in the first place, that's good with us :)
 					$pageDeleteResult = $page->doDeleteArticleReal( $reason ) >= WikiPage::DELETE_SUCCESS;
 				}
-			}
 
-			if ( !$pageDeleteResult || !$fileDeleteStatus->isOK() ) {
-				$this->error( "Failed to delete video: {$video->video_title}" );
-			}
-			else {
-				$this->output( sprintf("Deleted %s video\n", $title->getPrefixedDBkey()) );
+				if ( !$pageDeleteResult || !$fileDeleteStatus->isOK() ) {
+					$this->error( "Failed to delete video: {$video->video_title}" );
+				}
+				else {
+					$this->output( sprintf("Deleted %s video\n", $title->getPrefixedDBkey()) );
+				}
 			}
 		}
 

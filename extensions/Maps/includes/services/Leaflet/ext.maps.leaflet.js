@@ -11,7 +11,8 @@
 
 		$( '.maps-leaflet' ).each( function() {
 			var $this = $( this );
-			$this.leafletmaps( $.parseJSON( $this.find( 'div').text() ) );
+			var map = $this.leafletmaps( $.parseJSON( $this.find( 'div').text() ) );
+			window.maps.leafletList.push(map);
 		} );
 	} );
 

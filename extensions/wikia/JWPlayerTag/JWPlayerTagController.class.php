@@ -38,13 +38,14 @@ class JWPlayerTagController extends WikiaController {
 			RequestContext::getMain()->getTitle()->getArticleID()
 		) ) {
 			$script = JSSnippets::addToStack( [
-				'jwplayer_tag_ads_js',
-				'/extensions/wikia/JWPlayerTag/scripts/jwplayertag.js'
+				'jwplayer_tag_with_featured_video_js',
+				'jwplayer_tag_scss'
 			] );
 		} else {
 			$script = JSSnippets::addToStack( [
 				'jwplayer_tag_js',
-				'jwplayer_tag_css'
+				'jwplayer_tag_css',
+				'jwplayer_tag_scss'
 			] );
 		}
 
@@ -80,11 +81,12 @@ class JWPlayerTagController extends WikiaController {
 			self::DATA_ATTRS => json_encode( [
 				'media-id' => $args['media-id'],
 				'element-id' => $elementId,
-			] )
+			] ),
+			self::STYLE_ATTR => 'overflow:hidden;'
 		];
 
 		if ( !empty( $width ) && is_numeric( $width ) ) {
-			$attributes[self::STYLE_ATTR] = 'width:' . $width . 'px;';
+			$attributes[self::STYLE_ATTR] .= 'width:' . $width . 'px;';
 		}
 
 		return $attributes;

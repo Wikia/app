@@ -94,7 +94,7 @@ $wgAutoloadClasses['WikiaAccessRules'] = $IP . '/includes/wikia/nirvana/WikiaAcc
 // unit tests related classes
 $wgAutoloadClasses['WikiaBaseTest'] = $IP . '/includes/wikia/tests/core/WikiaBaseTest.class.php';
 $wgAutoloadClasses['WikiaDatabaseTest'] = $IP . '/includes/wikia/tests/core/WikiaDatabaseTest.php';
-$wgAutoloadClasses['WikiaTestSpeedAnnotator'] = $IP . '/includes/wikia/tests/core/WikiaTestSpeedAnnotator.class.php';
+$wgAutoloadClasses['HttpIntegrationTest'] = "$IP/includes/wikia/tests/core/HttpIntegrationTest.php";
 $wgAutoloadClasses['WikiaMockProxy'] = $IP . '/includes/wikia/tests/core/WikiaMockProxy.class.php';
 $wgAutoloadClasses['WikiaMockProxyAction'] = $IP . '/includes/wikia/tests/core/WikiaMockProxyAction.class.php';
 $wgAutoloadClasses['WikiaMockProxyInvocation'] = $IP . '/includes/wikia/tests/core/WikiaMockProxyInvocation.class.php';
@@ -231,7 +231,6 @@ $wgAutoloadClasses[ 'PaginationController'            ] = "$IP/includes/wikia/se
 $wgAutoloadClasses[ 'MemcacheSync'                    ] = "$IP/includes/wikia/MemcacheSync.class.php";
 $wgAutoloadClasses[ 'LibmemcachedBagOStuff'           ] = "$IP/includes/cache/wikia/LibmemcachedBagOStuff.php";
 $wgAutoloadClasses[ 'WikiaAssets'                     ] = "$IP/includes/wikia/WikiaAssets.class.php";
-$wgAutoloadClasses[ 'AutomaticWikiAdoptionGatherData' ] = "$IP/extensions/wikia/AutomaticWikiAdoption/maintenance/AutomaticWikiAdoptionGatherData.php";
 $wgAutoloadClasses[ 'FakeSkin'                        ] = "$IP/includes/wikia/FakeSkin.class.php";
 $wgAutoloadClasses[ 'WikiaUpdater'                    ] = "$IP/includes/wikia/WikiaUpdater.php";
 $wgHooks          [ 'LoadExtensionSchemaUpdates'      ][] = 'WikiaUpdater::update';
@@ -388,7 +387,6 @@ $wgAutoloadClasses['LatestEarnedBadgesController'] = $IP.'/extensions/wikia/Achi
 $wgAutoloadClasses['HotSpotsController'] = $IP.'/skins/oasis/modules/HotSpotsController.class.php';
 $wgAutoloadClasses['CommunityCornerController'] = $IP.'/skins/oasis/modules/CommunityCornerController.class.php';
 $wgAutoloadClasses['PopularBlogPostsController'] = $IP.'/skins/oasis/modules/PopularBlogPostsController.class.php';
-$wgAutoloadClasses['RandomWikiController'] = $IP.'/skins/oasis/modules/RandomWikiController.class.php';
 $wgAutoloadClasses['ArticleInterlangController'] = $IP.'/skins/oasis/modules/ArticleInterlangController.class.php';
 $wgAutoloadClasses['UploadPhotosController'] = $IP.'/skins/oasis/modules/UploadPhotosController.class.php';
 $wgAutoloadClasses['WikiaTempFilesUpload'] = $IP.'/includes/wikia/WikiaTempFilesUpload.class.php';
@@ -609,7 +607,6 @@ include_once( "$IP/extensions/wikia/CreateNewWiki/CreateNewWiki_global_setup.php
 include_once( "$IP/extensions/wikia/Security/Security.setup.php" );
 include_once( "$IP/extensions/wikia/CommunityHeader/CommunityHeader.setup.php" );
 include_once( "$IP/extensions/wikia/PageHeader/PageHeader.setup.php" );
-include_once( "$IP/extensions/ApiExplorer/SpecialApiExplorer.php" );
 include_once( "$IP/extensions/wikia/Bucky/Bucky.setup.php" );
 include_once( "$IP/extensions/wikia/QuickTools/QuickTools.setup.php" );
 include_once( "$IP/extensions/wikia/TOC/TOC.setup.php" );
@@ -649,7 +646,6 @@ $wgSkipSkins = array(
 		'search',
 		'test',
 		'uncyclopedia',
-		'wowwiki',
 		'lostbook',
 		'quartz',
 		'monaco_old',
@@ -688,6 +684,13 @@ $wgLangCreationVariables = array();
  */
 require_once( "{$IP}/extensions/wikia/Tasks/Tasks.setup.php");
 require_once( "{$IP}/includes/wikia/tasks/autoload.php");
+
+/**
+ * @name wgDBAvgStatusPoll
+ * Scale load balancer polling time so that under overload conditions, the database server
+ * receives a SHOW STATUS query at an average interval of this many microseconds
+ */
+$wgDBAvgStatusPoll = 30000;
 
 /**
  * @name wgExternalSharedDB
@@ -1158,12 +1161,6 @@ $wgAdDriverIsAdTestWiki = false;
 $wgAdDriverNetzAthletenCountries = null;
 
 /**
- * @name $wgAdDriverDfpOoyalaContentSourceId
- * Defines content source id sent in VAST url
- */
-$wgAdDriverDfpOoyalaContentSourceId = '2458214';
-
-/**
  * @name wgAdDriverA9VideoBidderCountries
  * List of countries where A9 video bidding platform is enabled.
  * It won't work if A9 display bidder isn't enabled
@@ -1259,6 +1256,13 @@ $wgAdDriverUseAudienceNetworkBidder = false;
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverAudienceNetworkBidderCountries = null;
+
+/**
+ * @name $wgAdDriverBeachfrontBidderCountries
+ * List of countries where Beachfront bidding platform is enabled.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverBeachfrontBidderCountries = null;
 
 /**
  * @name $wgAdDriverIndexExchangeBidderCountries
@@ -1507,33 +1511,6 @@ $wgHighValueCountries = null;
 $wgAdDriverTurtleCountries = null;
 
 /**
- * @name $wgAdDriverSourcePointDetectionCountries
- * List of countries to call SourcePoint detection scripts
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverSourcePointDetectionCountries = null;
-
-/**
- * @name $wgAdDriverSourcePointDetectionMobileCountries
- * List of countries to call SourcePoint detection scripts on Mercury
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverSourcePointDetectionMobileCountries = null;
-
-/**
- * @name $wgAdDriverSourcePointRecoveryCountries
- * List of countries to call ads through SourcePoint
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverSourcePointRecoveryCountries = null;
-
-/**
- * @name wgAdDriverEnableSourcePointRecovery
- * Enable SourcePoint Recovery per wiki
- */
-$wgAdDriverEnableSourcePointRecovery = true;
-
-/**
  * @name wgAdDriverEnableInstartLogicRecovery
  * Enable InstartLogic Recovery per wiki
  */
@@ -1557,6 +1534,24 @@ $wgAdDriverPageFairRecoveryCountries = null;
  * Enable PageFair Recovery per wiki
  */
 $wgAdDriverEnablePageFairRecovery = true;
+
+/**
+ * @name $wgAdDriverBabDetectionDesktopCountries
+ * List of countries to call BlockAdBlock detection scripts on oasis
+ */
+$wgAdDriverBabDetectionDesktopCountries = null;
+
+/**
+ * @name $wgAdDriverBabDetectionMobileCountries
+ * List of countries to call BlockAdBlock detection scripts on mobile-wiki
+ */
+$wgAdDriverBabDetectionMobileCountries = null;
+
+/**
+ * @name $wgAdDriverF2BabDetectionCountries
+ * List of countries to call BlockAdBlock detection scripts on news&stories
+ */
+$wgAdDriverF2BabDetectionCountries = null;
 
 /**
  * trusted proxy service registry
@@ -1623,7 +1618,6 @@ $wgUseETag = true;
  */
 $wgApiAccess = [
 	'SearchApiController' => [
-		'getCombined' =>  ApiAccessService::ENV_SANDBOX,
 		'getCrossWiki' => ApiAccessService::WIKIA_CORPORATE,
 		'getList' => ApiAccessService::WIKIA_NON_CORPORATE,
 	],
@@ -1792,6 +1786,13 @@ $wgAdDriverMobileFloorAdhesionCountries = null;
 $wgAdDriverIncontentPlayerSlotCountries = null;
 
 /**
+ * @name $wgAdDriverDisableBadgeAdCountries
+ * Disables badge ad (next to TOP_LEADERBOARD).
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverDisableBadgeAdCountries = null;
+
+/**
  * manage a user's preferences externally
  */
 $wgPreferenceServiceRead = false;
@@ -1882,7 +1883,13 @@ $wgReviveSpotlightsCountries = null;
 $wgDisableImprovedGenderSupport = true;
 
 /**
- * Enable SourcePoint recovery
+ * @name $wgAutoapproveJS
+ * Enables autoapproving JS pages changes
+ */
+$wgAutoapproveJS = false;
+
+/**
+ * Enable recovery
  * It should be always included even if recovery is disabled as we use Recovery classes outside the module
  */
 include_once("$IP/extensions/wikia/ARecoveryEngine/ARecoveryEngine.setup.php");
@@ -1901,6 +1908,12 @@ require_once "$IP/extensions/wikia/CityList/CityList.setup.php";
 
 // SUS-3496: Extension to update shared dataware.pages table
 require_once "$IP/extensions/wikia/Pages/Pages.setup.php";
+
+// SUS-3455: Special:ListGlobalUsers for all wikis
+require_once "$IP/extensions/wikia/ListGlobalUsers/ListGlobalUsers.setup.php";
+
+// SEC-59: Form-based Userlogout for Monobook
+require_once "$IP/extensions/wikia/UserLogout/UserLogout.setup.php";
 
 // SRE-76: Logging classes that have been initially defined in config.
 $wgAutoloadClasses['AuditLog'] = "$IP/includes/wikia/AuditLog.class.php";

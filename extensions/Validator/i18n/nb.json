@@ -2,10 +2,11 @@
 	"@metadata": {
 		"authors": [
 			"Event",
-			"Nghtwlkr"
+			"Nghtwlkr",
+			"Jon Harald Søby"
 		]
 	},
-	"validator-desc": "Gir generisk støtte for parameterhåndtering fra andre utvidelser",
+	"validator-desc": "Bibliotek for deklarativ parameterprosessering",
 	"validator-warning": "Advarsel: $1",
 	"validator-error": "Feil: $1",
 	"validator-fatal-error": "Kritisk feil: $1",
@@ -22,6 +23,14 @@
 	"validator-type-float": "tall",
 	"validator-type-boolean": "ja/nei",
 	"validator-type-char": "tegn",
+	"validator-type-dimension": "tall med måleenhet",
+	"validator-type-title": "tittel",
+	"validator-type-string-list": "liste over tekster",
+	"validator-type-integer-list": "liste over heltall",
+	"validator-type-float-list": "liste over tall",
+	"validator-type-boolean-list": "liste over ja/nei",
+	"validator-type-char-list": "liste over tegn",
+	"validator-type-title-list": "liste over titler",
 	"validator-listerrors-errors": "Feil",
 	"validator-listerrors-minor": "Mindre",
 	"validator-listerrors-low": "Lav",
@@ -60,6 +69,8 @@
 	"validator_error_empty_argument": "Parameter $1 kan ikke ha en tom verdi.",
 	"validator_error_must_be_number": "Parameter $1 må være et tall.",
 	"validator_error_must_be_integer": "Parameter $1 må være et heltall.",
+	"validator_error_must_be_title": "Parameteren $1 kan kun være et gyldig wikisidenavn.",
+	"validator_error_must_be_existing_title": "Parameteren $1 kan kun være et eksisterende wikisidenavn.",
 	"validator-error-must-be-float": "Parameter $1 må være et flyttall.",
 	"validator_error_invalid_range": "Parameter $1 må være mellom $2 og $3.",
 	"validator-error-invalid-regex": "Parameter $1 må samsvare med dette regulæruttrykket: $2.",
@@ -69,6 +80,8 @@
 	"validator_list_error_empty_argument": "Parameter $1 kan ikke ikke ha en tom verdi.",
 	"validator_list_error_must_be_number": "Parameter $1 kan bare inneholde tall.",
 	"validator_list_error_must_be_integer": "Parameter $1 kan bare inneholde heltall.",
+	"validator_list_error_must_be_title": "Parameteren $1 kan kun inneholde gyldige wikisidenavn.",
+	"validator_list_error_must_be_existing_title": "Parameteren $1 kan kun inneholde eksisterende wikisidenavn.",
 	"validator-list-error-must-be-float": "Parameter $1 kan bare innholde flyttall.",
 	"validator_list_error_invalid_range": "Alle verdier av parameter $1 må være mellom $2 og $3.",
 	"validator-list-error-invalid-regex": "Alle verdier av parameter $1 må samsvare med dette regulæruttrykket: $2.",
@@ -77,5 +90,6 @@
 	"validator-list-error-accepts-only-omitted": "En eller flere verdier for parameter $1 er ugyldige.\nDen godtar bare {{PLURAL:$3|denne verdien|disse verdiene}}: $2 (og $4 {{PLURAL:$4|utelatt verdi|utelatte verdier}}).",
 	"validator_error_accepts_only": "Verdien «$4» er ikke gyldig for parameter $1. Den godtar kun {{PLURAL:$3|denne verdien|disse verdiene}}: $2.",
 	"validator-error-accepts-only-omitted": "Verdien «$2» er ikke gyldig for parameter $1.\nDen godtar bare {{PLURAL:$5|denne verdien|disse verdiene}}: $3 (og $4 {{PLURAL:$4|utelatt verdi|utelatte verdier}}).",
-	"validator_list_omitted": "{{PLURAL:$2|Verdien|Verdiene}} $1 har blitt utelatt."
+	"validator_list_omitted": "{{PLURAL:$2|Verdien|Verdiene}} $1 har blitt utelatt.",
+	"validator-message-nodesc": "Ingen beskrivelse angitt"
 }

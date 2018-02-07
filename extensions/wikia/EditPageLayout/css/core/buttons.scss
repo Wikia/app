@@ -1,6 +1,24 @@
 .EditPage {
-	.cke_button {
-		> a {
+		a.cke_button_on {
+				@include box-shadow(-1px, 1px, 2px, $color-epl-button-shadow, true);
+				background-color: $color-epl-button-active;
+				border-top-color: $color-epl-button-border;
+				border-right-color: $color-epl-button-border;
+	}
+	
+		 a.cke_button_disabled {
+			
+				opacity: .2;
+				zoom: 1; /* IE fix to make opacity work */
+			
+		}
+		 a.cke_button_hidden {
+			display: none;
+		}
+	
+
+ 
+		a.cke_button {
 			background-color: $color-epl-button;
 			border: solid 1px $color-epl-button-border;
 			border-radius: 4px;
@@ -15,6 +33,46 @@
 				@include gradient-button-hover;
 			}
 		}
+
+		.cke_button {
+			> a {
+	
+			background-color: $color-epl-button;
+			border: solid 1px $color-epl-button-border;
+			border-radius: 4px;
+			cursor: default;
+			display: inline-block;
+			float: left;
+			height: 26px;
+			margin: 0 5px;
+			width: 26px;
+
+			&:hover {
+				@include gradient-button-hover;
+			}}
+		}
+
+		.cke_button {
+
+		.cke_button_label {
+			display: none;
+			cursor: inherit;
+			font-size: 10px;
+			color: $color-text;
+			white-space: nowrap;
+
+			// ck reset
+			padding-top: 0;
+			padding-left: 0;
+			padding-right: 0;
+			padding-bottom: 0;
+			height: auto;
+			line-height: normal;
+			vertical-align: baseline;
+			float: none;
+		}
+	
+
 		.cke_label {
 			display: none;
 			cursor: inherit;
@@ -32,23 +90,7 @@
 			vertical-align: baseline;
 			float: none;
 		}
-		&.cke_on {
-			> a {
-				@include box-shadow(-1px, 1px, 2px, $color-epl-button-shadow, true);
-				background-color: $color-epl-button-active;
-				border-top-color: $color-epl-button-border;
-				border-right-color: $color-epl-button-border;
-			}
-		}
-		&.cke_disabled {
-			> a {
-				opacity: .2;
-				zoom: 1; /* IE fix to make opacity work */
-			}
-		}
-		&.cke_hidden {
-			display: none;
-		}
+
 		&.cke_button_big {
 			> a {
 				display: inline-block;
@@ -67,6 +109,44 @@
 				}
 			}
 		}
+		
+		&.cke_button_big {
+				.cke_button_label {
+					bottom: 0;
+					display: block;
+					left: 0;
+					overflow: hidden;
+					position: absolute;
+					text-align: center;
+					width: 51px;
+				}
+		}
+
+	}	
+	a.cke_button_big {
+	
+		display: inline-block;
+		height: 51px;
+		margin: 0 5px;
+		position: relative;
+		width: 51px;
+		.cke_label {
+			bottom: 0;
+			display: block;
+			left: 0;
+			overflow: hidden;
+			position: absolute;
+			text-align: center;
+			width: 51px;
+			}
+		}
+		
+	.cke_button_icon {
+			@include sprite-edit-page-base;
+			display: inline-block;
+			height: 16px;
+			width: 16px;
+			margin: 5px;
 	}
 
 	// Button icons
@@ -87,51 +167,56 @@
 			width: 48px;
 			margin: 3px 1px;
 		}
-		.cke_button_bold .cke_icon {
+		&.cke_button_big .cke_button_icon {
+			height: 32px;
+			width: 48px;
+			margin: 3px 1px;
+		}
+		.cke_button__bold_icon {
 			@include sprite-edit-page('bold-' + $sprite-theme, 16px, 16px);
 		}
-		.cke_button_italic .cke_icon {
+		.cke_button__italic_icon {
 			@include sprite-edit-page('italic-' + $sprite-theme, 16px, 16px);
 		}
-		.cke_button_link .cke_icon {
+		.cke_button__link_icon {
 			@include sprite-edit-page('addlink-' + $sprite-theme, 16px, 16px);
 		}
-		.cke_button_bulletedlist .cke_icon {
+		.cke_button__bulletedlist_icon {
 			@include sprite-edit-page('unordered-' + $sprite-theme, 16px, 16px);
 		}
-		.cke_button_numberedlist .cke_icon {
+		.cke_button__numberedlist_icon {
 			@include sprite-edit-page('ordered-' + $sprite-theme, 16px, 16px);
 		}
-		.cke_button_indent .cke_icon {
+		.cke_button__indent_icon {
 			@include sprite-edit-page('indent-' + $sprite-theme, 16px, 16px);
 		}
-		.cke_button_outdent .cke_icon {
+		.cke_button__outdent_icon {
 			@include sprite-edit-page('outdent-' + $sprite-theme, 16px, 16px);
 		}
-		.cke_button_justifyleft .cke_icon {
+		.cke_button__justifyleft_icon {
 			@include sprite-edit-page('alignleft-' + $sprite-theme, 16px, 16px);
 		}
-		.cke_button_justifycenter .cke_icon {
+		.cke_button__justifycenter_icon {
 			@include sprite-edit-page('aligncenter-' + $sprite-theme, 16px, 16px);
 		}
-		.cke_button_justifyright .cke_icon {
+		.cke_button__justifyright_icon {
 			@include sprite-edit-page('alignright-' + $sprite-theme, 16px, 16px);
 		}
-		.cke_button_undo .cke_icon {
+		.cke_button__undo_icon {
 			@include sprite-edit-page('undo-' + $sprite-theme, 16px, 16px);
 		}
-		.cke_button_redo .cke_icon {
+		.cke_button__redo_icon {
 			@include sprite-edit-page('redo-' + $sprite-theme, 16px, 16px);
 		}
-		.cke_button_underline .cke_icon {
+		.cke_button__underline_icon {
 			@include sprite-edit-page('underline-' + $sprite-theme, 16px, 20px);
 			@include button-icon-resize-square(16px, 20px);
 		}
-		.cke_button_strike .cke_icon {
+		.cke_button__strike_icon {
 			@include sprite-edit-page('strike-' + $sprite-theme, 22px, 16px);
 			@include button-icon-resize-square(22px, 16px);
 		}
-		.cke_button_signature .cke_icon {
+		.cke_button__signature_icon {
 			@include sprite-edit-page('signature-' + $sprite-theme, 26px, 22px);
 			@include button-icon-resize(26px, 22px);
 		}
@@ -154,6 +239,7 @@
 	.RTEMUTButton.cke_button_big .cke_icon {
 		@include sprite-edit-page('video', 48px, 32px);
 	}
+
 	.RTEMUTButton.cke_button_big a {
 		position: relative;
 		.cke_icon {
@@ -176,8 +262,11 @@
 	.RTEPollButton.cke_button_big .cke_icon {
 		@include sprite-edit-page('poll', 48px, 32px);
 	}
-	.cke_button_table.cke_button_big .cke_icon {
+	.cke_button_icon.cke_button__table_icon {
 		@include sprite-edit-page('table', 48px, 32px);
+	}
+	.cke_button_icon.cke_button__addinfobox_icon{
+		@include sprite-edit-page('infobox-' + $sprite-theme, 48px, 32px);
 	}
 	.module_templates .cke_button_big .cke_icon {
 		@include sprite-edit-page('puzzle_piece', 48px, 32px, 2px);
@@ -185,13 +274,15 @@
 
 	// Buttons with label (Signature, Underline, Highlight)
 	.cke_label_button {
-		> a {
+		&.cke_button_signature {
 			width: auto;
 		}
-		.cke_icon {
+	}
+	.cke_label_button {
+		.cke_button_icon {
 			float: left;
 		}
-		.cke_label {
+		.cke_button_label {
 			display: inline;
 			line-height: 26px;
 			padding: 0 4px;
@@ -209,9 +300,15 @@
 }
 
 .EditPageTabs {
-	.cke_button {
-		.cke_label {
+	.cke_button__modewysiwyg {
+		.cke_button_label {
 			color: $color-text;
 		}
 	}
+	.cke_button__modesource {
+		.cke_button_label {
+			color: $color-text;
+		}
+	}
+
 }

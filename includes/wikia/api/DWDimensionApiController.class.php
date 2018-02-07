@@ -10,11 +10,7 @@ class DWDimensionApiController extends WikiaApiController {
 
 	const WIKI_DOMAINS_AFTER_DOMAIN = null;
 
-	const DEFAULT_AFTER_WIKI_ID = -1;
-
-	const DEFAULT_AFTER_USER_ID = -1;
-
-	const DEFAULT_AFTER_ARTICLE_ID = -1;
+	const DEFAULT_AFTER_ID = -1;
 
 	const ARTICLE_LAST_EDITED = '1970-01-01';
 
@@ -41,7 +37,7 @@ class DWDimensionApiController extends WikiaApiController {
 		$limit = min($db->strencode( $this->getRequest()->getInt(
 			'wiki_limit', static::LIMIT ) ), static::LIMIT_MAX);
 		$afterWikiId = $db->strencode( $this->getRequest()->getInt(
-			'after_wiki_id', static::DEFAULT_AFTER_WIKI_ID ) );
+			'after_wiki_id', static::DEFAULT_AFTER_ID ) );
 
 		$variables = WikiFactory::getVariableForAllWikis( static::DART_TAG_VARIABLE_NAME, $limit,
             $afterWikiId );
@@ -80,7 +76,7 @@ class DWDimensionApiController extends WikiaApiController {
 		$limit = min( $db->strencode( $this->getRequest()->getVal(
 			'limit', static::LIMIT ) ), static::LIMIT_MAX );
 		$afterWikiId = $db->strencode( $this->getRequest()->getVal(
-			'after_wiki_id', static::DEFAULT_AFTER_WIKI_ID ) );
+			'after_wiki_id', static::DEFAULT_AFTER_ID ) );
 
 		$query = str_replace( '$city_id', $afterWikiId,
             DWDimensionApiControllerSQL::DIMENSION_WIKIS_QUERY );
@@ -130,9 +126,9 @@ class DWDimensionApiController extends WikiaApiController {
         $limit = min($db->strencode( $this->getRequest()->getInt( 'limit', static::LIMIT ) ),
             static::LIMIT_MAX);
         $afterWikiId = $db->strencode( $this->getRequest()->getInt( 'after_wiki_id',
-            static::DEFAULT_AFTER_WIKI_ID ) );
+            static::DEFAULT_AFTER_ID ) );
         $afterArticleId = $db->strencode( $this->getRequest()->getInt( 'after_article_id',
-            static::DEFAULT_AFTER_ARTICLE_ID ) );
+            static::DEFAULT_AFTER_ID ) );
         $last_edited = $db->strencode( $this->getRequest()->getVal( 'last_edited',
             static::ARTICLE_LAST_EDITED ) );
 
@@ -167,7 +163,7 @@ class DWDimensionApiController extends WikiaApiController {
 		$limit = min( $db->strencode( $this->getRequest()->getVal(
 			'limit', static::LIMIT ) ), static::LIMIT_MAX );
 		$afterUserId = $db->strencode( $this->getRequest()->getVal(
-			'after_user_id', static::DEFAULT_AFTER_USER_ID ) );
+			'after_user_id', static::DEFAULT_AFTER_ID ) );
 
 		$query = str_replace( '$user_id', $afterUserId, DWDimensionApiControllerSQL::DIMENSION_USERS );
 		$query = str_replace( '$limit', $limit, $query);
@@ -189,6 +185,35 @@ class DWDimensionApiController extends WikiaApiController {
 			];
 		}
 		$db->freeResult( $dbResult );
+
+		$this->setResponseData(
+			$result,
+			null,
+			WikiaResponse::CACHE_DISABLED
+		);
+	}
+
+	public function getWikiCategories() {
+		$db = $this->getSharedDbSlave();
+
+		$limit = min( $db->strencode( $this->getRequest()->getVal(
+			'limit', static::LIMIT ) ), static::LIMIT_MAX );
+		$afterId = $db->strencode( $this->getRequest()->getVal(
+			'after_id', static::DEFAULT_AFTER_ID ) );
+
+		$query = str_replace( '$after_id', $afterId, DWDimensionApiControllerSQL::DIMENSION_WIKI_CATEGORIES );
+		$query = str_replace( '$limit', $limit, $query);
+
+		$dbResult = $db->query( $query,__METHOD__);
+
+		$result = [];
+		foreach( $dbResult as $row ) {
+			$result[] = [
+				'id' => $row->id,
+				'wiki_id' => $row->city_id,
+				'category_id' => $row->cat_id
+			];
+		}
 
 		$this->setResponseData(
 			$result,
@@ -351,7 +376,7 @@ class DWDimensionApiController extends WikiaApiController {
 		$limit = min( $db->strencode( $this->getRequest()->getVal( 'wiki_limit', static::LIMIT ) ),
             static::LIMIT_MAX );
 		$afterWikiId = $db->strencode( $this->getRequest()->getVal( 'after_wiki_id',
-            static::DEFAULT_AFTER_WIKI_ID ) );
+            static::DEFAULT_AFTER_ID ) );
 
 		$rows = $db->select(
 			[ "city_list" ],

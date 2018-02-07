@@ -60,6 +60,12 @@ $wgResourceModules['wikia.ext.abtesting'] = array(
 	'class' => 'ResourceLoaderAbTestingModule',
 );
 
+// ADEN-6673 Short-term fix for blocked InstantGlobals request
+// Register Resource Loader module
+$wgResourceModules['wikia.ext.abt3sting'] = array(
+	'class' => 'ResourceLoaderAbTestingModule',
+);
+
 $wgResourceModules['wikia.ext.abtest'] = array(
 	'scripts' => array(
 		'extensions/wikia/AbTesting/js/AbTest.js',

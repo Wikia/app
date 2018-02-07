@@ -287,4 +287,61 @@ class FunctionReduceTest extends TestCase
         $d1->resolve(1);
         $d2->resolve(2);
     }
+
+    /** @test */
+    public function shouldRejectWhenInputPromiseRejects()
+    {
+        $mock = $this->createCallableMock();
+        $mock
+            ->expects($this->once())
+            ->method('__invoke')
+            ->with($this->identicalTo(null));
+
+        reduce(
+            reject(),
+            $this->plus(),
+            1
+        )->then($this->expectCallableNever(), $mock);
+    }
+
+    /** @test */
+    public function shouldCancelInputPromise()
+    {
+        $mock = $this
+            ->getMockBuilder('React\Promise\CancellablePromiseInterface')
+            ->getMock();
+        $mock
+            ->expects($this->once())
+            ->method('cancel');
+
+        reduce(
+            $mock,
+            $this->plus(),
+            1
+        )->cancel();
+    }
+
+    /** @test */
+    public function shouldCancelInputArrayPromises()
+    {
+        $mock1 = $this
+            ->getMockBuilder('React\Promise\CancellablePromiseInterface')
+            ->getMock();
+        $mock1
+            ->expects($this->once())
+            ->method('cancel');
+
+        $mock2 = $this
+            ->getMockBuilder('React\Promise\CancellablePromiseInterface')
+            ->getMock();
+        $mock2
+            ->expects($this->once())
+            ->method('cancel');
+
+        reduce(
+            [$mock1, $mock2],
+            $this->plus(),
+            1
+        )->cancel();
+    }
 }
