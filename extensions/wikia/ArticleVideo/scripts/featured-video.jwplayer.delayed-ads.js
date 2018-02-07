@@ -65,7 +65,7 @@ require([
 		};
 
 		jwplayerInstance.on('beforePlay', beforePlay);
-		if (jwplayerInstance.getState() === 'playing') {
+		if (jwplayerInstance.getState() === 'playing' || jwplayerInstance.getState() === 'buffering') {
 			beforePlay();
 		}
 
