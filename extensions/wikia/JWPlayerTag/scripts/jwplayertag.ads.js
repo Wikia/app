@@ -68,7 +68,7 @@ define('wikia.articleVideo.jwplayertag.ads', [
 
 				btfBlocker.decorate(function() {
 						player.playAd(buildVastUrl('preroll', videoDepth, correlator));
-				})({name: 'VIDEO'});
+				})({name: videoSlotName});
 
 				prerollPositionReached = true;
 			});

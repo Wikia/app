@@ -63,7 +63,10 @@ define('ext.wikia.adEngine.provider.btfBlocker', [
 				return;
 			}
 
-			slot.collapse({adType: 'blocked'});
+			log(['Collapsing slot', slot.name], log.levels.info, logGroup);
+			if (slot.collapse) {
+				slot.collapse({adType: 'blocked'});
+			}
 		}
 
 		function startBtfQueue() {
