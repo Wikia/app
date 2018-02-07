@@ -58,7 +58,6 @@ define('ext.wikia.adEngine.provider.btfBlocker', [
 
 			if (unblockedSlots.indexOf(slot.name) > -1 || !isBTFDisabledByCreative()) {
 				log(['Filling slot', slot.name], log.levels.info, logGroup);
-				// fillInSlot(slot);
 				fillInSlotCallbacks[slot.name](slot);
 				return;
 			}
