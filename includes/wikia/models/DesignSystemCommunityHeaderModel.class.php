@@ -206,7 +206,7 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 							'type' => 'translatable-text',
 							'key' => $item[ 'key' ],
 						],
-						'href' => $this->getFullUrl( $item[ 'title' ], NS_SPECIAL, true),
+						'href' => $this->getFullUrl( $item[ 'title' ], NS_SPECIAL, true ),
 						'tracking_label' => $item[ 'tracking' ]
 					];
 				}, array_values( array_filter( $exploreItems, function ( $item ) {
