@@ -115,9 +115,11 @@ define('ext.wikia.adEngine.provider.evolve2', [
 
 	function decorateFillInSlot() {
 		if (adContext.getContext().targeting.skin === 'oasis') {
-			return btfBlocker.decorate(fillInSlot, {
+			btfBlocker.initialize({
 				atfSlots: atfSlots
 			});
+
+			return btfBlocker.decorate(fillInSlot);
 		}
 
 		return fillInSlot;

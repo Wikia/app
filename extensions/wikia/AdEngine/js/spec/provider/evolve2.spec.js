@@ -16,6 +16,7 @@ describe('Evolve2 Provider targeting', function () {
 				}
 			},
 			btfBlocker: {
+				initialize: noop,
 				decorate: function (callback) {
 					return callback;
 				}

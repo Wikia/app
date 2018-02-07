@@ -58,6 +58,7 @@ describe('ext.wikia.adEngine.provider.*', function () {
 		afterSuccess: noop,
 		afterHop: noop,
 		btfBlocker: {
+			initialize: noop,
 			decorate: function (fillInSlot) {
 				return fillInSlot;
 			}

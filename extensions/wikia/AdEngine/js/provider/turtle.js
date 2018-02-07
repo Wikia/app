@@ -50,11 +50,13 @@ define('ext.wikia.adEngine.provider.turtle', [
 		log(['fillInSlot', slot, 'done'], 'debug', logGroup);
 	}
 
+	btfBlocker.initialize({
+		atfSlots: atfSlots
+	});
+
 	return {
 		name: 'Turtle',
 		canHandleSlot: canHandleSlot,
-		fillInSlot: btfBlocker.decorate(fillInSlot, {
-			atfSlots: atfSlots
-		})
+		fillInSlot: btfBlocker.decorate(fillInSlot)
 	};
 });

@@ -93,6 +93,7 @@ describe('ext.wikia.adEngine.provider.btfBlocker', function () {
 			};
 		mocks.context.opts.delayBtf = false;
 
+		btfBlocker.initialize({});
 		fillInSlot = btfBlocker.decorate(fakeFillInSlot);
 		fillInSlot(slot);
 
@@ -105,7 +106,8 @@ describe('ext.wikia.adEngine.provider.btfBlocker', function () {
 			fakeProvider = getFakeProvider(),
 			slot = getFakeSlot('ATF_SLOT');
 
-		fillInSlot = btfBlocker.decorate(fakeProvider.fillInSlot, fakeProvider.config);
+		btfBlocker.initialize(fakeProvider.config);
+		fillInSlot = btfBlocker.decorate(fakeProvider.fillInSlot);
 		fillInSlot(slot);
 
 		expect(slot.success).toHaveBeenCalled();
@@ -117,7 +119,8 @@ describe('ext.wikia.adEngine.provider.btfBlocker', function () {
 			fakeProvider = getFakeProvider(),
 			slot = getFakeSlot('BTF_SLOT');
 
-		fillInSlot = btfBlocker.decorate(fakeProvider.fillInSlot, fakeProvider.config);
+		btfBlocker.initialize(fakeProvider.config);
+		fillInSlot = btfBlocker.decorate(fakeProvider.fillInSlot);
 		fillInSlot(slot);
 
 		expect(slot.success).not.toHaveBeenCalled();
@@ -128,7 +131,8 @@ describe('ext.wikia.adEngine.provider.btfBlocker', function () {
 			btfBlocker = getBtfBlocker(),
 			fakeProvider = getFakeProvider();
 
-		fillInSlot = btfBlocker.decorate(fakeProvider.fillInSlot, fakeProvider.config);
+		btfBlocker.initialize(fakeProvider.config);
+		fillInSlot = btfBlocker.decorate(fakeProvider.fillInSlot);
 		fillInSlot(getFakeSlot('ATF_SLOT'));
 		fillInSlot(getFakeSlot('BTF_SLOT'));
 
@@ -141,7 +145,8 @@ describe('ext.wikia.adEngine.provider.btfBlocker', function () {
 			btfSlot = getFakeSlot('BTF_SLOT'),
 			fakeProvider = getFakeProvider();
 
-		fillInSlot = btfBlocker.decorate(fakeProvider.fillInSlot, fakeProvider.config);
+		btfBlocker.initialize(fakeProvider.config);
+		fillInSlot = btfBlocker.decorate(fakeProvider.fillInSlot);
 		fillInSlot(getFakeSlot('ATF_SLOT'));
 		mocks.win.ads.runtime.disableBtf = true;
 		fillInSlot(btfSlot);
@@ -155,7 +160,8 @@ describe('ext.wikia.adEngine.provider.btfBlocker', function () {
 			btfBlocker = getBtfBlocker(),
 			fakeProvider = getFakeProvider();
 
-		fillInSlot = btfBlocker.decorate(fakeProvider.fillInSlot, fakeProvider.config);
+		btfBlocker.initialize(fakeProvider.config);
+		fillInSlot = btfBlocker.decorate(fakeProvider.fillInSlot);
 		fillInSlot(getFakeSlot('ATF_SLOT'));
 		mocks.win.ads.runtime.disableBtf = true;
 		btfBlocker.unblock('BTF_SLOT');
@@ -170,7 +176,8 @@ describe('ext.wikia.adEngine.provider.btfBlocker', function () {
 			btfSlot = getFakeSlot('BTF_SLOT'),
 			fakeProvider = getFakeProvider();
 
-		fillInSlot = btfBlocker.decorate(fakeProvider.fillInSlot, fakeProvider.config);
+		btfBlocker.initialize(fakeProvider.config);
+		fillInSlot = btfBlocker.decorate(fakeProvider.fillInSlot);
 		fillInSlot(getFakeSlot('ATF_SLOT'));
 		mocks.win.ads.runtime.disableBtf = true;
 		mocks.win.ads.runtime.unblockHighlyViewableSlots = true;
@@ -187,7 +194,8 @@ describe('ext.wikia.adEngine.provider.btfBlocker', function () {
 			btfSlot = getFakeSlot('BTF_SLOT'),
 			fakeProvider = getFakeProvider();
 
-		fillInSlot = btfBlocker.decorate(fakeProvider.fillInSlot, fakeProvider.config);
+		btfBlocker.initialize(fakeProvider.config);
+		fillInSlot = btfBlocker.decorate(fakeProvider.fillInSlot);
 		fillInSlot(getFakeSlot('ATF_SLOT'));
 		mocks.win.ads.runtime.disableBtf = true;
 		mocks.win.ads.runtime.unblockHighlyViewableSlots = true;
@@ -206,7 +214,8 @@ describe('ext.wikia.adEngine.provider.btfBlocker', function () {
 			btfSlot = getFakeSlot('BTF_SLOT'),
 			fakeProvider = getFakeProvider();
 
-		fillInSlot = btfBlocker.decorate(fakeProvider.fillInSlot, fakeProvider.config);
+		btfBlocker.initialize(fakeProvider.config);
+		fillInSlot = btfBlocker.decorate(fakeProvider.fillInSlot);
 		fillInSlot(getFakeSlot('ATF_SLOT'));
 		mocks.win.ads.runtime.disableBtf = true;
 		mocks.win.ads.runtime.unblockHighlyViewableSlots = true;
