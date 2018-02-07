@@ -1268,6 +1268,7 @@ class Parser {
 		}
 		$text = $this->replaceInternalLinks( $text );
 
+		// FANDOM change start: XW-4614
 		global $wgRTEParserEnabled;
 		if ( !empty( $wgRTEParserEnabled ) ) {
 			// XW-4380: Make template placeholders in list items render correctly
@@ -1280,7 +1281,7 @@ class Parser {
 				return preg_replace('/\\n/', '', $matches[0]);
 			}, str_replace("\r\n", "\n", $text));
 		}
-
+		// FANDOM change end
 
 		$text = $this->doAllQuotes( $text );
 		$text = $this->replaceExternalLinks( $text );
