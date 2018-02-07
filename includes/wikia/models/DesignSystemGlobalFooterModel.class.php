@@ -301,7 +301,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 				'type' => 'text',
 				'value' => WikiFactory::getVarValueByName( 'wgRightsText', $this->productInstanceId ) ?: $this->wg->RightsText,
 			],
-			'href' => $this->getLicenseUrl(),
+			'href' => $this->getLicenseUrl( true ),
 			'tracking_label' => 'license',
 		];
 	}
@@ -320,7 +320,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 						'type' => 'translatable-text',
 						'key' => 'global-footer-fandom-overview-link-vertical-games'
 					],
-					'href' => 'http://fandom.wikia.com/games',
+					'href' => '//fandom.wikia.com/games',
 					'tracking_label' => 'fandom-overview.games',
 				],
 				[
@@ -330,7 +330,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 						'type' => 'translatable-text',
 						'key' => 'global-footer-fandom-overview-link-vertical-movies'
 					],
-					'href' => 'http://fandom.wikia.com/movies',
+					'href' => '//fandom.wikia.com/movies',
 					'tracking_label' => 'fandom-overview.movies',
 				],
 				[
@@ -340,7 +340,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 						'type' => 'translatable-text',
 						'key' => 'global-footer-fandom-overview-link-vertical-tv'
 					],
-					'href' => 'http://fandom.wikia.com/tv',
+					'href' => '//fandom.wikia.com/tv',
 					'tracking_label' => 'fandom-overview.tv',
 				],
 			];
@@ -523,7 +523,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 		return $this->getHref( 'local-sitemap-fandom' );
 	}
 
-	private function getLicenseUrl() {
+	private function getLicenseUrl( $protocolRelative = false ) {
 		// no license URL for Fandom
 		if ( $this->product === static::PRODUCT_FANDOMS ) {
 			return '';
@@ -531,10 +531,13 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 
 		$licenseUrl = WikiFactory::getVarValueByName( 'wgRightsUrl', $this->productInstanceId ) ?: $this->wg->RightsUrl;
 		$licensePage = WikiFactory::getVarValueByName( 'wgRightsPage', $this->productInstanceId ) ?: $this->wg->RightsPage;
-
 		if ( $licensePage ) {
 			$title = GlobalTitle::newFromText( $licensePage, NS_MAIN, $this->productInstanceId );
 			$licenseUrl = $title->getFullURL();
+		}
+
+		if ( $protocolRelative ) {
+			$licenseUrl = wfProtocolUrlToRelative( $licenseUrl );
 		}
 
 		return $licenseUrl;

@@ -23,7 +23,7 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 		$this->langCode = $langCode;
 		$this->themeSettings = new ThemeSettings( $cityId );
 		$this->settings = $this->themeSettings->getSettings( $cityId );
-		$this->mainPageUrl = GlobalTitle::newMainPage( $this->productInstanceId )->getFullURL();
+		$this->mainPageUrl = wfProtocolUrlToRelative( GlobalTitle::newMainPage( $this->productInstanceId )->getFullURL() );
 	}
 
 	public function getData(): array {
@@ -206,7 +206,7 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 							'type' => 'translatable-text',
 							'key' => $item[ 'key' ],
 						],
-						'href' => GlobalTitle::newFromText( $item[ 'title' ], NS_SPECIAL, $this->productInstanceId )->getFullURL(),
+						'href' => $this->getFullUrl( $item[ 'title' ], NS_SPECIAL, true),
 						'tracking_label' => $item[ 'tracking' ]
 					];
 				}, array_values( array_filter( $exploreItems, function ( $item ) {
@@ -216,6 +216,14 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 		}
 
 		return $this->exploreMenu;
+	}
+
+	private function getFullUrl( $pageTitle, $namespace, $protocolRelative = false ) {
+		$url = GlobalTitle::newFromText( $pageTitle, NS_SPECIAL, $this->productInstanceId )->getFullURL();
+		if ( $protocolRelative ) {
+			$url = wfProtocolUrlToRelative( $url );
+		}
+		return $url;
 	}
 
 	public function getDiscussLinkData(): array {
@@ -232,7 +240,7 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 				$key = 'community-header-discuss';
 				$tracking = 'discuss';
 			} else if ( !empty( $wgEnableForumExt ) ) {
-				$url = GlobalTitle::newFromText( 'Forum', NS_SPECIAL, $this->productInstanceId )->getFullURL();
+				$url = $this->getFullUrl( 'Forum', NS_SPECIAL, true );
 				$key = 'community-header-forum';
 				$tracking = 'forum';
 			}
