@@ -13,6 +13,20 @@ class HTTPSOptInHooks {
 		return true;
 	}
 
+	public static function onMercuryWikiVariables( array &$wikiVariables ): bool {
+		$basePath = $wikiVariables['basePath'];
+		$user = RequestContext::getMain()->getUser();
+		if ( startsWith( $basePath, 'http://' ) && self::userAllowedHTTPS( $user ) ) {
+			$wikiVariables['basePath'] = preg_replace( '/^http:\/\//', 'https://', $basePath );
+		} elseif ( startsWith( $basePath, 'https://' ) &&
+			!self::userAllowedHTTPS( $user ) &&
+			!self::disableHTTPSDowngrade()
+		) {
+			$wikiVariables['basePath'] = preg_replace( '/^https:\/\//', 'http://', $basePath );
+		}
+		return true;
+	}
+
 	/**
 	 * Handle redirecting users who have opted in to HTTPS, and those
 	 * who haven't back to HTTP if necessary.

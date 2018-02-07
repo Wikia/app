@@ -32,6 +32,9 @@ require([
 		recommendedPlaylist = videoDetails.recommendedVideoPlaylist || 'Y2RWCKuS',
 		inAutoplayCountries = true, //geo.isProperGeo(instantGlobals.wgArticleVideoAutoplayCountries),
 		willAutoplay = isAutoplayEnabled() && inAutoplayCountries,
+		slotTargeting = {
+			plist: recommendedPlaylist
+		},
 		bidParams;
 
 	function isFromRecirculation() {
@@ -49,7 +52,7 @@ require([
 
 		win.dispatchEvent(new CustomEvent('wikia.jwplayer.instanceReady', {detail: playerInstance}));
 
-		featuredVideoAds(playerInstance, bidParams);
+		featuredVideoAds(playerInstance, bidParams, slotTargeting);
 		featuredVideoMoatTracking(playerInstance);
 
 		playerInstance.on('autoplayToggle', function (data) {
