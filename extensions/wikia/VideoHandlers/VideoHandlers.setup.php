@@ -146,17 +146,6 @@ $wgAutoloadClasses['YoukuApiWrapper'] =  $dir . '/apiwrappers/YoukuApiWrapper.cl
 $wgAutoloadClasses['YoukuVideoHandler'] =  $dir . '/handlers/YoukuVideoHandler.class.php';
 $wgMediaHandlers['video/youku'] = 'YoukuVideoHandler';
 
-/**
- * Feed ingesters
- */
-$wgAutoloadClasses[ 'VideoFeedIngester' ] = $dir . '/feedingesters/VideoFeedIngester.class.php';
-$wgAutoloadClasses[ 'IgnFeedIngester' ] = $dir . '/feedingesters/IgnFeedIngester.class.php';
-$wgAutoloadClasses[ 'TestVideoFeedIngester' ] = $dir . '/tests/TestVideoFeedIngester.class.php';
-
-$wgAutoloadClasses[ 'FeedIngesterDataNormalizer' ] = $dir . '/feedingesters/FeedIngesterDataNormalizer.class.php';
-$wgAutoloadClasses[ 'FeedIngesterFactory' ] = $dir . '/feedingesters/FeedIngesterFactory.class.php';
-$wgAutoloadClasses[ 'FeedIngesterLogger' ] = $dir . '/feedingesters/FeedIngesterLogger.class.php';
-
 $wgVideoMigrationProviderMap = array(
 	5 => 'Youtube',
 	13 => 'Vimeo',
