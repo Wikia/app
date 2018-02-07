@@ -23,17 +23,17 @@ define('ext.wikia.adEngine.video.articleVideoAd', [
 		return (depth < 2 || !capping) ? 1 : (Math.floor((depth - 1) / capping) + 1);
 	}
 
-	function buildVastUrl(position, videoDepth, correlator, bidParams) {
+	function buildVastUrl(position, videoDepth, correlator, slotTargeting, bidParams) {
 		var options = {
 				correlator: correlator,
 				vpos: position
 			},
-			slotParams = {
+			slotParams = Object.assign({
 				passback: featuredVideoPassback,
 				pos: featuredVideoSlotName,
 				rv: calculateRV(videoDepth),
 				src: srcProvider.get(baseSrc, {testSrc: 'test'}, 'JWPLAYER')
-			};
+			}, slotTargeting);
 
 		if (videoDepth === 1 && bidParams) {
 			Object.keys(bidParams).forEach(function (key) {
@@ -54,9 +54,9 @@ define('ext.wikia.adEngine.video.articleVideoAd', [
 	}
 
 	function canAdBePlayed(depth) {
-		var isReplay = depth > 1;
-		var adCanBePlayed = !isReplay || (isReplay && shouldPlayAdOnNextVideo(depth));
-		var slotIsEnabled = slotsContext.isApplicable(featuredVideoSlotName);
+		var isReplay = depth > 1,
+			adCanBePlayed = !isReplay || (isReplay && shouldPlayAdOnNextVideo(depth)),
+			slotIsEnabled = slotsContext.isApplicable(featuredVideoSlotName);
 
 		return slotIsEnabled && adCanBePlayed;
 	}
