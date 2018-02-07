@@ -776,20 +776,6 @@ CREATE TABLE `dimension_wiki_premium_adds` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Table structure for table `dimension_wiki_premium_videos`
---
-
-DROP TABLE IF EXISTS `dimension_wiki_premium_videos`;
-CREATE TABLE `dimension_wiki_premium_videos` (
-  `wiki_id` int(10) unsigned NOT NULL,
-  `video_title` varchar(255) NOT NULL,
-  `added_at` datetime DEFAULT NULL,
-  `added_by` int(10) unsigned DEFAULT NULL,
-  `removed` tinyint(3) unsigned DEFAULT NULL,
-  PRIMARY KEY (`wiki_id`,`video_title`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
 -- Table structure for table `dimension_wiki_redirects`
 --
 
@@ -833,21 +819,6 @@ CREATE TABLE `dimension_wiki_variables` (
   `wgUseDARTOnMainPage` tinyint(3) unsigned DEFAULT NULL,
   `wgEnableArticleCommentsExt` tinyint(3) unsigned DEFAULT NULL,
   PRIMARY KEY (`wiki_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Table structure for table `dimension_wiki_videos`
---
-
-DROP TABLE IF EXISTS `dimension_wiki_videos`;
-CREATE TABLE `dimension_wiki_videos` (
-  `wiki_id` int(10) unsigned NOT NULL,
-  `name` varchar(255) NOT NULL DEFAULT '',
-  `user_id` int(10) unsigned NOT NULL DEFAULT '0',
-  `premium` tinyint(4) NOT NULL DEFAULT '0',
-  `provider` varchar(255) NOT NULL DEFAULT '',
-  `date_added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  PRIMARY KEY (`wiki_id`,`name`,`provider`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -2125,23 +2096,6 @@ CREATE TABLE `official_communities` (
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Table structure for table `report_wiki_recent_pageviews_have_mercy_finish_it_and_delete_me`
---
-
-DROP TABLE IF EXISTS `report_wiki_recent_pageviews_have_mercy_finish_it_and_delete_me`;
-CREATE TABLE `report_wiki_recent_pageviews_have_mercy_finish_it_and_delete_me` (
-  `wiki_id` int(10) unsigned NOT NULL,
-  `hub_name` varchar(255) DEFAULT NULL,
-  `lang` varchar(255) DEFAULT NULL,
-  `pageviews_7day` int(10) unsigned NOT NULL DEFAULT '0',
-  `pageviews_30day` int(10) unsigned NOT NULL DEFAULT '0',
-  `pageviews_90day` int(10) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`wiki_id`),
-  KEY `hub_lang` (`hub_name`,`lang`),
-  KEY `lang_hub` (`lang`,`hub_name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -10395,4 +10349,4 @@ CREATE TABLE `test_dimension_wiki_local_namespaces` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
--- Dump completed on 2018-01-29 15:34:03
+-- Dump completed on 2018-02-06 15:45:30

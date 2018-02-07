@@ -1,7 +1,7 @@
 <?php
 
 class RTEParser extends Parser {
-	const INLINE_EXT_TAGS = [ 'ref', 'nowiki' ];
+	const INLINE_EXT_TAGS = [ 'ref', 'nowiki', 'staff' ];
 	const CUSTOM_PLACEHOLDER_TAG = [ 'gallery', 'place' ];
 	// count empty lines before HTML tag
 	private $emptyLinesBefore = 0;
@@ -30,13 +30,6 @@ class RTEParser extends Parser {
 
 		// don't show TOC in edit mode
 		$this->mShowToc = false;
-	}
-
-	function doBlockLevels( $text, $linestart ) {
-		// XW-4380: Make template placeholders in list items render correctly
-		$text = preg_replace( '/^(\*<div class="placeholder placeholder-double-brackets"[^>]+>)\n/m', '$1', $text );
-
-		return parent::doBlockLevels( $text, $linestart );
 	}
 
 	/*
@@ -547,6 +540,12 @@ class RTEParser extends Parser {
 		if ( $trailingParagraph ) {
 			$html .= Xml::element('p');
 		}
+
+		// search for occurences of block templates invoked inside <span></span>
+		$html = preg_replace_callback("/(<span[^>]*>)(.*?)(<\/span>)/s", function($matches) {
+			$inner = preg_replace("/<div (class=\"placeholder placeholder-double-brackets\"[^>]+>&#x200b;).*?&#x200b;<\/div>/s", "<span $1</span>", $matches[2]);
+			return $matches[1] . $inner . $matches[3];
+		}, $html);
 
 		// update parser output
 		RTE::log(__METHOD__, $html);

@@ -11,7 +11,8 @@ describe('ext.wikia.adEngine.ml.modelFactory', function () {
 			inputParser: {},
 			model: {},
 			name: 'foo',
-			wgCountriesVariable: 'bar'
+			wgCountriesVariable: 'bar',
+			enabled: true
 		});
 
 		expect(typeof(model.getResult)).toBe('function');
@@ -25,7 +26,8 @@ describe('ext.wikia.adEngine.ml.modelFactory', function () {
 			getModule().create({
 				inputParser: {},
 				model: {},
-				wgCountriesVariable: 'bar'
+				wgCountriesVariable: 'bar',
+				enabled: true
 			});
 		}).toThrowError('Missing name in model definition.');
 	});
