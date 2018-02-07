@@ -63,12 +63,6 @@
 			<input type="text" name="wpNewRealName" value="<?= $userRealName ?>" <?= $disabled; ?> />
 		</div>
 
-		<div>
-			<input type="radio" id="wpActionToggleAdopt" name="wpAction" value="toggleadopter" />
-			<label for="wpActionToggleAdopt"><?= wfMessage( 'editaccount-label-toggleadopt' )->escaped() ?></label>
-			<span><?= ( $isAdopter ) ? wfMessage( 'editaccount-label-toggleadopt-prevent' )->escaped() : wfMessage( 'editaccount-label-toggleadopt-allow' )->escaped() ?></span>
-		</div>
-
 		<?php if( $isUnsub ) { ?>
 		<div>
 			<input type="radio" id="wpActionClearUnsub" name="wpAction" value="clearunsub" <?= $disabled; ?> />
