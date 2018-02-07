@@ -165,24 +165,6 @@ abstract class Base extends \WikiaModel {
 	}
 
 	/**
-	 * Can be used by subclasses to clear the external video list (from the video wiki) if they require it
-	 *
-	 * @return bool
-	 */
-	protected function clearExternalVideoListCache() {
-		$params = [
-			'controller' => 'VideoHandler',
-			'method'     => 'clearVideoListCache',
-			'sort'       => $this->sort,
-			'limit'      => $this->getPaddedVideoLimit(),
-			'category'   => $this->categories,
-		];
-
-		$response = \ApiService::foreignCall( $this->wg->WikiaVideoRepoDBName, $params, \ApiService::WIKIA );
-		return !empty( $response ) && $response['status'] == 'ok';
-	}
-
-	/**
 	 * General logging method
 	 *
 	 * @param $message
@@ -213,57 +195,6 @@ abstract class Base extends \WikiaModel {
 	 */
 	public function atVideoLimit() {
 		return count( $this->videos ) >= $this->limit;
-	}
-
-	/**
-	 * Get video list from Video wiki
-	 *
-	 * @return array
-	 */
-	public function addVideosFromVideoWiki() {
-		$params = [
-			'controller' => 'VideoHandler',
-			'method'     => 'getVideoList',
-			'sort'       => $this->sort,
-			'limit'      => $this->getPaddedVideoLimit(),
-			'category'   => $this->categories,
-		];
-
-		$response = \ApiService::foreignCall( $this->wg->WikiaVideoRepoDBName, $params, \ApiService::WIKIA );
-
-		if ( !empty( $response['videos'] ) ) {
-			$videosWithDetails = $this->getVideoDetailFromVideoWiki(
-				array_column( $response['videos'], 'title' )
-			);
-
-			foreach ( $videosWithDetails as $video ) {
-				if ( $this->atVideoLimit() ) {
-					break;
-				}
-				$this->addVideo( $video );
-			}
-		}
-	}
-
-	/**
-	 * Call 'VideoHandlerHelper::getVideoDetail' on the video wiki for each of a list of video titles.  Returns a list
-	 * of video details for each title passed
-	 *
-	 * @param array $videos A list of video titles
-	 * @return array
-	 */
-	public function getVideoDetailFromVideoWiki( $videos ) {
-		$videoDetails = [];
-		if ( !empty( $videos ) ) {
-			$helper = new \VideoHandlerHelper();
-			$videoDetails = $helper->getVideoDetailFromWiki(
-				$this->wg->WikiaVideoRepoDBName,
-				$videos,
-				self::$videoOptions
-			);
-		}
-
-		return $videoDetails;
 	}
 
 	/**

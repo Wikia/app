@@ -45,17 +45,6 @@ class Staff extends Base {
 	 * @return array
 	 */
 	public function getModuleVideos() {
-		$this->addVideosFromVideoWiki();
-
 		return $this->videos;
-	}
-
-	/**
-	 * Clear the normal cache plus the cached list of videos on the video wiki
-	 * @return bool|void
-	 */
-	public function clearCache() {
-		parent::clearCache();
-		$this->clearExternalVideoListCache();
 	}
 }
