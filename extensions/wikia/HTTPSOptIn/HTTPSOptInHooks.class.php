@@ -54,14 +54,14 @@ class HTTPSOptInHooks {
 	public static function onBeforeInitialize( Title $title, $unused, OutputPage $output,
 		User $user, WebRequest $request, MediaWiki $mediawiki
 	): bool {
-
+		global $wgDisableHTTPSDowngrade;
 		if ( WebRequest::detectProtocol() === 'http' &&
 			self::userAllowedHTTPS( $user )
 		) {
 			$output->redirect( preg_replace( '/^http:\/\//', 'https://', $request->getFullRequestURL() ) );
 		} elseif ( WebRequest::detectProtocol() === 'https' &&
 			!self::userAllowedHTTPS( $user ) &&
-			!self::disableHTTPSDowngrade() &&
+			empty( $wgDisableHTTPSDowngrade ) &&
 			!$request->getHeader( 'X-Wikia-WikiaAppsID' ) &&
 			!self::httpsEnabledTitle( $title )
 		) {
@@ -81,11 +81,5 @@ class HTTPSOptInHooks {
 		global $wgDBname;
 		return array_key_exists( $wgDBname, self::$httpsArticles ) &&
 			in_array( $title->getDBKey(), self::$httpsArticles[ $wgDBname ] );
-	}
-
-	private static function disableHTTPSDowngrade(): bool {
-		global $wgDevelEnvironment, $wgStagingEnvironment, $wgDisableHTTPSDowngrade;
-		return ( !empty( $wgDevelEnvironment ) || !empty( $wgStagingEnvironment ) ) &&
-			!empty( $wgDisableHTTPSDowngrade );
 	}
 }
