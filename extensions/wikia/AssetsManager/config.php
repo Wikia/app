@@ -138,6 +138,8 @@ $config['adengine2_desktop_js'] = [
 
 		'//extensions/wikia/AdEngine/js/run/desktop.run.js',
 		'//extensions/wikia/AdEngine/js/build/bridge.js',
+
+		'//extensions/wikia/ArticleVideo/scripts/featured-video.jwplayer.delayed-ads.js',
 	],
 ];
 

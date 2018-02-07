@@ -49,7 +49,9 @@ require([
 
 		win.dispatchEvent(new CustomEvent('wikia.jwplayer.instanceReady', {detail: playerInstance}));
 
-		featuredVideoAds(playerInstance, bidParams);
+		if (!adContext.get('opts.isFVBtf')) {
+			featuredVideoAds(playerInstance, bidParams);
+		}
 		featuredVideoMoatTracking(playerInstance);
 
 		playerInstance.on('autoplayToggle', function (data) {
@@ -112,7 +114,7 @@ require([
 		}, onPlayerReady);
 	}
 
-	if (a9 && adContext.get('bidders.a9Video')) {
+	if (!adContext.get('opts.isFVBtf') && a9 && adContext.get('bidders.a9Video')) {
 		a9.waitForResponse()
 			.then(function () {
 				return a9.getSlotParams('FEATURED');

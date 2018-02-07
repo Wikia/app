@@ -8,7 +8,11 @@ define('ext.wikia.adEngine.provider.btfBlocker', [
 ], function (adContext, uapContext, lazyQueue, log, win) {
 	'use strict';
 
-	var logGroup = 'ext.wikia.adEngine.provider.btfBlocker',
+	var btfQueue = [],
+		btfQueueStarted = false,
+		fillInSlotCallbacks = {},
+		logGroup = 'ext.wikia.adEngine.provider.btfBlocker',
+		pendingAtfSlots = [], // ATF slots pending for response
 		unblockedSlots = [];
 
 	win.ads = win.ads || {};
@@ -24,10 +28,6 @@ define('ext.wikia.adEngine.provider.btfBlocker', [
 	function isBTFDisabledByCreative() {
 		return win.ads.runtime.disableBtf;
 	}
-	var btfQueue = [],
-		btfQueueStarted = false,
-		pendingAtfSlots = []; // ATF slots pending for response
-	var fillInSlotCallbacks = {};
 
 	function decorate(fillInSlot, config) {
 
@@ -58,7 +58,6 @@ define('ext.wikia.adEngine.provider.btfBlocker', [
 
 			if (unblockedSlots.indexOf(slot.name) > -1 || !isBTFDisabledByCreative()) {
 				log(['Filling slot', slot.name], log.levels.info, logGroup);
-				// fillInSlot(slot);
 				fillInSlotCallbacks[slot.name](slot);
 				return;
 			}
