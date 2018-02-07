@@ -96,10 +96,17 @@ define('ext.wikia.adEngine.provider.factory.wikiaGpt', [
 			log(['fillInSlot', slot.name, providerName, 'done'], 'debug', logGroup);
 		}
 
+		var fillInSlotHandle = fillInSlot;
+
+		if (extra.atfSlots) {
+			btfBlocker.initialize(extra);
+			fillInSlotHandle = btfBlocker.decorate(fillInSlot);
+		}
+
 		return {
 			name: providerName,
 			canHandleSlot: canHandleSlot,
-			fillInSlot: extra.atfSlots ? btfBlocker.decorate(fillInSlot, extra) : fillInSlot
+			fillInSlot: fillInSlotHandle
 		};
 	}
 

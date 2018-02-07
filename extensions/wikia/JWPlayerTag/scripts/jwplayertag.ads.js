@@ -66,19 +66,12 @@ define('wikia.articleVideo.jwplayertag.ads', [
 
 				trackingParams.adProduct = 'video-preroll';
 
-				console.log('blocker2');
+				function fillInSlot() {
+					player.playAd(buildVastUrl('preroll', videoDepth, correlator));
+				}
+				btfBlocker.decorate(fillInSlot)({name: videoSlotName});
 
-
-				btfBlocker.decorate(
-					function() {
-						console.log('blocker');
-
-						player.playAd(buildVastUrl('preroll', videoDepth, correlator));
-						prerollPositionReached = true;
-
-					},
-					{atfSlots: ['TOP_LEADERBOARD', 'GPT_FLUSH', 'TOP_RIGHT_BOXAD', 'INVISIBLE_SKIN']}
-					)({name: 'VIDEO'});
+				prerollPositionReached = true;
 			});
 
 			player.on('complete', function () {
