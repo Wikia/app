@@ -47,17 +47,17 @@ define('wikia.articleVideo.featuredVideo.ads', [
 		return adContext.get('opts.isFVPostrollEnabled') && canAdBePlayed(videoDepth);
 	}
 
-	function buildVastUrl(position, videoDepth, correlator, bidParams) {
+	function buildVastUrl(position, videoDepth, correlator, slotTargeting, bidParams) {
 		var options = {
 				correlator: correlator,
 				vpos: position
 			},
-			slotParams = {
+			slotParams = Object.assign({
 				passback: featuredVideoPassback,
 				pos: featuredVideoSlotName,
 				rv: calculateRV(videoDepth),
 				src: featuredVideoSource
-			};
+			}, slotTargeting);
 
 		if (videoDepth === 1 && bidParams) {
 			Object.keys(bidParams).forEach(function (key) {
@@ -71,7 +71,7 @@ define('wikia.articleVideo.featuredVideo.ads', [
 		return vastUrlBuilder.build(aspectRatio, slotParams, options);
 	}
 
-	return function(player, bidParams) {
+	return function(player, bidParams, slotTargeting) {
 		var correlator,
 			featuredVideoElement = player && player.getContainer && player.getContainer(),
 			featuredVideoContainer = featuredVideoElement && featuredVideoElement.parentNode,
@@ -82,6 +82,7 @@ define('wikia.articleVideo.featuredVideo.ads', [
 			},
 			videoDepth = 0;
 
+		slotTargeting = slotTargeting || {};
 		featuredVideoSource = srcProvider.get(baseSrc, {testSrc: 'test'}, 'JWPLAYER');
 		trackingParams.src = featuredVideoSource;
 
@@ -91,6 +92,10 @@ define('wikia.articleVideo.featuredVideo.ads', [
 			});
 
 			player.on('beforePlay', function () {
+				var currentMedia = player.getPlaylistItem() || {};
+
+				slotTargeting.v1 = currentMedia.mediaid;
+
 				if (prerollPositionReached) {
 					return;
 				}
@@ -102,7 +107,7 @@ define('wikia.articleVideo.featuredVideo.ads', [
 
 				if (shouldPlayPreroll(videoDepth)) {
 					trackingParams.adProduct = 'featured-video-preroll';
-					player.playAd(buildVastUrl('preroll', videoDepth, correlator, bidParams));
+					player.playAd(buildVastUrl('preroll', videoDepth, correlator, slotTargeting, bidParams));
 				}
 				prerollPositionReached = true;
 			});
@@ -111,7 +116,7 @@ define('wikia.articleVideo.featuredVideo.ads', [
 				log('Midroll position reached', log.levels.info, logGroup);
 				if (shouldPlayMidroll(videoDepth)) {
 					trackingParams.adProduct = 'featured-video-midroll';
-					player.playAd(buildVastUrl('midroll', videoDepth, correlator));
+					player.playAd(buildVastUrl('midroll', videoDepth, correlator, slotTargeting));
 				}
 
 			});
@@ -120,7 +125,7 @@ define('wikia.articleVideo.featuredVideo.ads', [
 				log('Postroll position reached', log.levels.info, logGroup);
 				if (shouldPlayPostroll(videoDepth)) {
 					trackingParams.adProduct = 'featured-video-postroll';
-					player.playAd(buildVastUrl('postroll', videoDepth, correlator));
+					player.playAd(buildVastUrl('postroll', videoDepth, correlator, slotTargeting));
 				}
 			});
 
