@@ -197,7 +197,7 @@ RTE.templateEditor = {
 				}).map(Number);
 				passedNamedParams = Object.keys(passedParams).filter(isNaN);
 			}
-			allUnnamedParams = availableUnnamedParams.concat(passedUnnamedParams),
+			allUnnamedParams = availableUnnamedParams.concat(passedUnnamedParams);
 
 
 		// filter duplicates
@@ -210,7 +210,9 @@ RTE.templateEditor = {
 			if (params[paramKey] !== "" && typeof params[paramKey] !== 'undefined' ) {
 				updatedParams.push(params[paramKey]);
 			} else {
-				updatedParams.push(passedParams[paramKey]);
+				if (typeof passedParams !== 'undefined' && passedParams[paramKey] !== "" && typeof passedParams[paramKey] !== 'undefined' ) {
+					updatedParams.push(passedParams[paramKey]);
+				}
 			}
 		});
 
