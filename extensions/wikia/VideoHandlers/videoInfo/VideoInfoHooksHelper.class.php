@@ -64,39 +64,6 @@ class VideoInfoHooksHelper {
 	}
 
 	/**
-	 * Hook: add premium video and clear cache (video embed tool, video service)
-	 * @param Title $title
-	 * @return true
-	 */
-	public static function onAddPremiumVideo( $title ) {
-
-		if ( $title instanceof Title ) {
-			$videoInfoHelper = new VideoInfoHelper();
-			$videoInfo = $videoInfoHelper->getVideoInfoFromTitle( $title, true );
-			if ( !empty($videoInfo) ) {
-				// Sometimes videoInfo doesn't reflect what's actually in the video_info table
-				// so make sure the removed flag is cleared
-				$videoInfo->restoreVideo();
-
-				$affected = $videoInfo->addPremiumVideo( F::app()->wg->User->getId() );
-
-				if ( $affected ) {
-					# Add a log entry
-					$log = new LogPage( 'upload' );
-					$comment = wfMessage('videohandler-log-add-video')->plain();
-					$log->addEntry( 'upload', $title, $comment, array(), F::app()->wg->User );
-
-					$mediaService = new MediaQueryService();
-					$mediaService->clearCacheTotalVideos();
-					$mediaService->clearCacheTotalPremiumVideos();
-				}
-			}
-		}
-
-		return true;
-	}
-
-	/**
 	 * Hook: remove premium video and clear cache
 	 * @param Title $title
 	 * @return true
@@ -223,66 +190,6 @@ class VideoInfoHooksHelper {
 		if ( $affected ) {
 			$mediaService = new MediaQueryService();
 			$mediaService->clearCacheTotalVideos();
-		}
-
-		return true;
-	}
-
-	/**
-	 * Hook: delete premium video and clear cache when the file page is deleted
-	 * @param WikiPage $wikiPage
-	 * @param User $user
-	 * @param string $reason
-	 * @param integer $pageId
-	 * @return bool true
-	 */
-	public static function onArticleDeleteComplete( WikiPage $wikiPage, User $user, $reason, $pageId ): bool {
-
-		$title = $wikiPage->getTitle();
-		if ( $title instanceof Title && $title->getNamespace() == NS_FILE ) {
-			$videoInfo = VideoInfo::newFromTitle( $title->getDBKey() );
-			if ( empty($videoInfo) ) {
-				$affected = false;
-
-				// add removed video
-				$videoInfoHelper = new VideoInfoHelper();
-				$videoInfo = $videoInfoHelper->getVideoInfoFromTitle( $title, true );
-				if ( !empty($videoInfo) ) {
-					$videoInfo->setRemoved();
-					$affected = $videoInfo->addPremiumVideo( $user->getId() );
-				}
-			} else {
-				// set removed video
-				$affected = $videoInfo->removeVideo();
-			}
-
-			if ( $affected ) {
-				$mediaService = new MediaQueryService();
-				$mediaService->clearCacheTotalVideos();
-				$mediaService->clearCacheTotalPremiumVideos();
-			}
-		}
-
-		return true;
-	}
-
-	/**
-	 * Hook: restore premium video and clear cache when the file page is undeleted
-	 * @param Title $title
-	 * @param User $user
-	 * @param string $reason
-	 * @return bool true
-	 */
-	public static function onUndeleteComplete( Title $title, User $user, string $reason ): bool {
-
-		if ( $title instanceof Title && $title->getNamespace() == NS_FILE ) {
-			$videoInfoHelper = new VideoInfoHelper();
-			$affected = $videoInfoHelper->restorePremiumVideo( $title, $user->getId() );
-			if ( $affected ) {
-				$mediaService = new MediaQueryService();
-				$mediaService->clearCacheTotalVideos();
-				$mediaService->clearCacheTotalPremiumVideos();
-			}
 		}
 
 		return true;
