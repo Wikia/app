@@ -125,15 +125,6 @@ class VideoInfo extends WikiaModel {
 	}
 
 	/**
-	 * Check if it is premium video
-	 * @return boolean
-	 * @deprecated
-	 */
-	public function isPremium() {
-		return false;
-	}
-
-	/**
 	 * Check if it is hd file
 	 * @return boolean
 	 */
@@ -270,7 +261,7 @@ class VideoInfo extends WikiaModel {
 	/**
 	 * get video object from title
 	 * @param string $videoTitle
-	 * @return object $video
+	 * @return self $video
 	 */
 	public static function newFromTitle( $videoTitle ) {
 		$app = F::App();
@@ -306,7 +297,7 @@ class VideoInfo extends WikiaModel {
 	/**
 	 * get video object from row
 	 * @param object $row
-	 * @return array video
+	 * @return self video
 	 */
 	protected static function newFromRow( $row ) {
 		$data = array(
@@ -387,6 +378,8 @@ class VideoInfo extends WikiaModel {
 	 * save to cache
 	 */
 	protected function saveToCache() {
+		$cache = [];
+
 		foreach ( self::$fields as $field ) {
 			$cache[$field] = $this->$field;
 		}

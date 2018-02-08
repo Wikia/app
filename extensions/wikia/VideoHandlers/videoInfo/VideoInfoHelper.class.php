@@ -185,10 +185,9 @@ class VideoInfoHelper extends WikiaModel {
 	/**
 	 * check if video exists
 	 * @param Title|string $title
-	 * @param Boolean $premiumOnly
 	 * @return Boolean
 	 */
-	public function videoExists( $title, $premiumOnly = false ) {
+	public function videoExists( $title ) {
 		if ( is_string($title) ) {
 			$title = Title::newFromText( $title, NS_FILE );
 		}
@@ -196,10 +195,6 @@ class VideoInfoHelper extends WikiaModel {
 		if ( $title instanceof Title ) {
 			$videoInfo = VideoInfo::newFromTitle( $title->getDBKey() );
 			if ( !empty($videoInfo) ) {
-				if ( $premiumOnly ) {
-					return $videoInfo->isPremium();
-				}
-
 				return true;
 			}
 		}
