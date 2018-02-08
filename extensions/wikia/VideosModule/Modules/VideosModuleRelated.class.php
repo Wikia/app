@@ -19,25 +19,7 @@ class Related extends Base {
 	 * @return array - Premium videos related to the local wiki.
 	 */
 	public function getModuleVideos() {
-		// Strip Wiki off the end of the wiki name if it exists
-		$wikiTitle = preg_replace( '/ Wiki$/', '', $this->wg->Sitename );
-
-		$params = [
-			'defaultTopic' => $wikiTitle,
-			'limit' => $this->getPaddedVideoLimit( $this->limit ),
-		];
-
-		$videoResults = $this->app->sendRequest( 'WikiaSearchController', 'searchVideosByTopics', $params )->getData();
-		$videosWithDetails = $this->getVideoDetailFromVideoWiki( array_column( $videoResults, 'title' ) );
-
-		foreach ( $videosWithDetails as $video ) {
-			if ( $this->atVideoLimit() ) {
-				break;
-			}
-			$this->addVideo( $video );
-		}
-
-		return $this->videos;
+		return [];
 	}
 
 	public function getCacheKey() {
