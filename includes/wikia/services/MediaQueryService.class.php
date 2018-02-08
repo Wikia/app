@@ -611,13 +611,6 @@ class MediaQueryService extends WikiaModel {
 	}
 
 	/**
-	 * Clear the cache of total premium video count
-	 */
-	public function clearCacheTotalPremiumVideos() {
-		$this->wg->Memc->delete( $this->getMemKeyTotalPremiumVideos() );
-	}
-
-	/**
 	 * Get memcache key for total video views
 	 * @TODO: Remove $async once EnableAsyncVideoViewCache is removed - @see VID-2103
 	 *

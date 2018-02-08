@@ -52,10 +52,6 @@ class VideoInfoHooksHelper {
 		$mediaService = new MediaQueryService();
 		$mediaService->clearCacheTotalVideos();
 
-		if ( !$file->isLocal() ) {
-			$mediaService->clearCacheTotalPremiumVideos();
-		}
-
 		if ( !empty( F::app()->wg->UseVideoVerticalFilters ) ) {
 			VideoInfoHooksHelper::clearCategories( $file->getTitle() );
 		}
