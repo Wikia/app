@@ -621,7 +621,8 @@ class RTEReverseParser {
 		// 789
 		//
 		// ignore cases like: <p><br /><!-- RTE_LINE_BREAK -->foo</p>
-		if ($comment['type'] == 'LINE_BREAK') {
+		if ($comment['type'] == 'LINE_BREAK' && !self::previousSiblingIs($node, 'span')
+			&& !$node->previousSibiling->hasAttribute(self::DATA_RTE_FILTER)) {
 			$spaces = str_repeat(' ', intval($comment['data']['spaces']));
 			$out = "{$spaces}\n";
 		}
@@ -1527,8 +1528,10 @@ class RTEReverseParser {
 	 */
 	private function handleSpan($node, $textContent) {
 		// XW-4579: ignoring spans with zero-width space added in RTEParser::parse to prevent CKE from removing attributes
-		// from <br /> tags
-		if ($node->hasAttribute(self::DATA_RTE_FILTER)) {
+		// from <br /> tags, checking if textcontent is empty because user can type something inside this span and it should
+		// disappear
+		$textContent = preg_replace("/^(&#x0200B;)+\n?/", '', $textContent);
+		if ($node->hasAttribute(self::DATA_RTE_FILTER) && $textContent === '') {
 			return '';
 		}
 

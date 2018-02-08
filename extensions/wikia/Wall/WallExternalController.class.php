@@ -863,7 +863,7 @@ class WallExternalController extends WikiaController {
 				$markup = $this->getConvertedContent( '<div class="quote">'
 					. wfMessage( 'wall-quote-author', $username )
 						->inContentLanguage()->escaped()
-					. "<br>" . $mw->getRawText() . "\n</div><br>" );
+					. "<br>" . $mw->getRawText() . "</div>" );
 			}
 
 			$status = 'success';
