@@ -341,30 +341,6 @@ class VideoInfo extends WikiaModel {
 	}
 
 	/**
-	 * add premium video
-	 * @param integer $userId
-	 * @return boolean
-	 */
-	public function addPremiumVideo( $userId ) {
-		wfProfileIn( __METHOD__ );
-
-		$this->addedAt = wfTimestamp( TS_MW );
-		if ( !empty($userId) ) {
-			$this->addedBy = $userId;
-		}
-
-		$affected = $this->addToDatabase();
-
-		// create file page when adding premium video to wiki
-		$videoHandlerHelper = new VideoHandlerHelper();
-		$status = $videoHandlerHelper->addCategoryVideos( $this->videoTitle, $this->addedBy );
-
-		wfProfileOut( __METHOD__ );
-
-		return $affected;
-	}
-
-	/**
 	 * reupload video
 	 * @return boolean
 	 */

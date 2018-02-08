@@ -236,34 +236,6 @@ class VideoInfoHelper extends WikiaModel {
 	}
 
 	/**
-	 * restore premium video
-	 * @param Title $title
-	 * @param integer $userId
-	 * @return boolean $affected
-	 */
-	public function restorePremiumVideo( $title, $userId ) {
-		wfProfileIn( __METHOD__ );
-
-		$affected = false;
-		if ( $title instanceof Title ) {
-			$videoInfo = VideoInfo::newFromTitle( $title->getDBKey() );
-			if ( empty($videoInfo) ) {
-				$newVideoInfo = $this->getVideoInfoFromTitle( $title, true );
-				if ( !empty($newVideoInfo) ) {
-					// add premium video if not exist
-					$affected = $newVideoInfo->addPremiumVideo( $userId );
-				}
-			} else {
-				$affected = $videoInfo->restoreVideo();
-			}
-		}
-
-		wfProfileOut( __METHOD__ );
-
-		return $affected;
-	}
-
-	/**
 	 * Fetch the list of local (e.g. non-premium) videos from this wiki
 	 * @return array $titles
 	 */
