@@ -301,7 +301,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 				'type' => 'text',
 				'value' => WikiFactory::getVarValueByName( 'wgRightsText', $this->productInstanceId ) ?: $this->wg->RightsText,
 			],
-			'href' => $this->getLicenseUrl( false ),
+			'href' => $this->getLicenseUrl(),
 			'tracking_label' => 'license',
 		];
 	}
@@ -523,7 +523,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 		return $this->getHref( 'local-sitemap-fandom' );
 	}
 
-	private function getLicenseUrl( $protocolRelative = false ) {
+	private function getLicenseUrl() {
 		// no license URL for Fandom
 		if ( $this->product === static::PRODUCT_FANDOMS ) {
 			return '';
@@ -533,11 +533,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 		$licensePage = WikiFactory::getVarValueByName( 'wgRightsPage', $this->productInstanceId ) ?: $this->wg->RightsPage;
 		if ( $licensePage ) {
 			$title = GlobalTitle::newFromText( $licensePage, NS_MAIN, $this->productInstanceId );
-			$licenseUrl = $title->getFullURL();
-		}
-
-		if ( $protocolRelative ) {
-			$licenseUrl = wfProtocolUrlToRelative( $licenseUrl );
+			$licenseUrl = wfProtocolUrlToRelative( $title->getFullURL() );
 		}
 
 		return $licenseUrl;
