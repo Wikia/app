@@ -185,10 +185,9 @@ class VideoInfoHelper extends WikiaModel {
 	/**
 	 * check if video exists
 	 * @param Title|string $title
-	 * @param Boolean $premiumOnly
 	 * @return Boolean
 	 */
-	public function videoExists( $title, $premiumOnly = false ) {
+	public function videoExists( $title ) {
 		if ( is_string($title) ) {
 			$title = Title::newFromText( $title, NS_FILE );
 		}
@@ -196,10 +195,6 @@ class VideoInfoHelper extends WikiaModel {
 		if ( $title instanceof Title ) {
 			$videoInfo = VideoInfo::newFromTitle( $title->getDBKey() );
 			if ( !empty($videoInfo) ) {
-				if ( $premiumOnly ) {
-					return $videoInfo->isPremium();
-				}
-
 				return true;
 			}
 		}
@@ -228,34 +223,6 @@ class VideoInfoHelper extends WikiaModel {
 		$videoInfo = $this->getVideoInfoFromTitle( $newTitle );
 		if ( !empty($videoInfo) ) {
 			$affected = $videoInfo->addVideo();
-		}
-
-		wfProfileOut( __METHOD__ );
-
-		return $affected;
-	}
-
-	/**
-	 * restore premium video
-	 * @param Title $title
-	 * @param integer $userId
-	 * @return boolean $affected
-	 */
-	public function restorePremiumVideo( $title, $userId ) {
-		wfProfileIn( __METHOD__ );
-
-		$affected = false;
-		if ( $title instanceof Title ) {
-			$videoInfo = VideoInfo::newFromTitle( $title->getDBKey() );
-			if ( empty($videoInfo) ) {
-				$newVideoInfo = $this->getVideoInfoFromTitle( $title, true );
-				if ( !empty($newVideoInfo) ) {
-					// add premium video if not exist
-					$affected = $newVideoInfo->addPremiumVideo( $userId );
-				}
-			} else {
-				$affected = $videoInfo->restoreVideo();
-			}
 		}
 
 		wfProfileOut( __METHOD__ );

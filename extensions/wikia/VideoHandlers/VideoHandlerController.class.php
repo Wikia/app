@@ -317,7 +317,6 @@ class VideoHandlerController extends WikiaController {
 
 		$mediaService = new \MediaQueryService();
 		$videoList = $mediaService->getVideoList(
-			$params['filter'],
 			$params['limit'],
 			$params['page'],
 			$params['providers'],

@@ -32,19 +32,6 @@ class RTEParser extends Parser {
 		$this->mShowToc = false;
 	}
 
-	function doBlockLevels( $text, $linestart ) {
-		// XW-4380: Make template placeholders in list items render correctly
-		// XW-4609: remove newlines from template's placeholder when used inside list's item to not break list
-		$text = preg_replace_callback('/^([\*#;:][^\n]*<div class="placeholder placeholder-double-brackets"[^>]+>&#x0200B;)\n?(.*?)(&#x0200B;<\/div>)/ms', function($matches) {
-			return preg_replace('/\\n/', '', $matches[0]);
-		}, str_replace("\r\n", "\n", $text));
-		$text = preg_replace_callback('/^([\*#;:][^\n]*<span class="placeholder placeholder-double-brackets"[^>]+>&#x0200B;)\n?(.*?)(&#x0200B;<\/span>)/ms', function($matches) {
-			return preg_replace('/\\n/', '', $matches[0]);
-		}, str_replace("\r\n", "\n", $text));
-
-		return parent::doBlockLevels( $text, $linestart );
-	}
-
 	/*
 	 * Find empty lines in wikitext and mark following element
 	 */
@@ -553,6 +540,12 @@ class RTEParser extends Parser {
 		if ( $trailingParagraph ) {
 			$html .= Xml::element('p');
 		}
+
+		// search for occurences of block templates invoked inside <span></span>
+		$html = preg_replace_callback("/(<span[^>]*>)(.*?)(<\/span>)/s", function($matches) {
+			$inner = preg_replace("/<div (class=\"placeholder placeholder-double-brackets\"[^>]+>&#x200b;).*?&#x200b;<\/div>/s", "<span $1</span>", $matches[2]);
+			return $matches[1] . $inner . $matches[3];
+		}, $html);
 
 		// update parser output
 		RTE::log(__METHOD__, $html);

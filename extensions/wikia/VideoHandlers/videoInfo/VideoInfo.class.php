@@ -11,7 +11,6 @@ class VideoInfo extends WikiaModel {
 	protected $provider = '';
 	protected $addedAt = 0;
 	protected $addedBy = 0;
-	protected $premium = 0;
 	protected $duration = 0;
 	protected $hdfile = 0;
 	protected $removed = 0;
@@ -23,7 +22,6 @@ class VideoInfo extends WikiaModel {
 		'provider',
 		'addedAt',
 		'addedBy',
-		'premium',
 		'duration',
 		'hdfile',
 		'removed',
@@ -112,7 +110,7 @@ class VideoInfo extends WikiaModel {
 
 	/**
 	 * Get the id of user who added the video
-	 * @return interger
+	 * @return integer
 	 */
 	public function getAddedBy() {
 		return $this->addedBy;
@@ -124,14 +122,6 @@ class VideoInfo extends WikiaModel {
 	 */
 	public function getDuration() {
 		return $this->duration;
-	}
-
-	/**
-	 * Check if it is premium video
-	 * @return boolean
-	 */
-	public function isPremium() {
-		return ( $this->premium == 1 );
 	}
 
 	/**
@@ -177,7 +167,6 @@ class VideoInfo extends WikiaModel {
 					'added_at' => $this->addedAt,
 					'added_by' => $this->addedBy,
 					'duration' => $this->duration,
-					'premium' => $this->premium,
 					'hdfile' => $this->hdfile,
 					'removed' => $this->removed,
 					'featured' => $this->featured,
@@ -224,7 +213,6 @@ class VideoInfo extends WikiaModel {
 					'added_at' => $this->addedAt,
 					'added_by' => $this->addedBy,
 					'duration' => $this->duration,
-					'premium' => $this->premium,
 					'hdfile' => $this->hdfile,
 					'removed' => $this->removed,
 					'featured' => $this->featured,
@@ -273,7 +261,7 @@ class VideoInfo extends WikiaModel {
 	/**
 	 * get video object from title
 	 * @param string $videoTitle
-	 * @return object $video
+	 * @return self $video
 	 */
 	public static function newFromTitle( $videoTitle ) {
 		$app = F::App();
@@ -309,7 +297,7 @@ class VideoInfo extends WikiaModel {
 	/**
 	 * get video object from row
 	 * @param object $row
-	 * @return array video
+	 * @return self video
 	 */
 	protected static function newFromRow( $row ) {
 		$data = array(
@@ -319,7 +307,6 @@ class VideoInfo extends WikiaModel {
 			'addedAt' => $row->added_at,
 			'addedBy' => $row->added_by,
 			'duration' => $row->duration,
-			'premium' => $row->premium,
 			'hdfile' => $row->hdfile,
 			'removed' => $row->removed,
 			'featured' => $row->featured,
@@ -338,30 +325,6 @@ class VideoInfo extends WikiaModel {
 	 */
 	public function addVideo() {
 		return $this->addToDatabase();
-	}
-
-	/**
-	 * add premium video
-	 * @param integer $userId
-	 * @return boolean
-	 */
-	public function addPremiumVideo( $userId ) {
-		wfProfileIn( __METHOD__ );
-
-		$this->addedAt = wfTimestamp( TS_MW );
-		if ( !empty($userId) ) {
-			$this->addedBy = $userId;
-		}
-
-		$affected = $this->addToDatabase();
-
-		// create file page when adding premium video to wiki
-		$videoHandlerHelper = new VideoHandlerHelper();
-		$status = $videoHandlerHelper->addCategoryVideos( $this->videoTitle, $this->addedBy );
-
-		wfProfileOut( __METHOD__ );
-
-		return $affected;
 	}
 
 	/**
@@ -415,6 +378,8 @@ class VideoInfo extends WikiaModel {
 	 * save to cache
 	 */
 	protected function saveToCache() {
+		$cache = [];
+
 		foreach ( self::$fields as $field ) {
 			$cache[$field] = $this->$field;
 		}
