@@ -11,7 +11,6 @@ class VideoInfo extends WikiaModel {
 	protected $provider = '';
 	protected $addedAt = 0;
 	protected $addedBy = 0;
-	protected $premium = 0;
 	protected $duration = 0;
 	protected $hdfile = 0;
 	protected $removed = 0;
@@ -23,7 +22,6 @@ class VideoInfo extends WikiaModel {
 		'provider',
 		'addedAt',
 		'addedBy',
-		'premium',
 		'duration',
 		'hdfile',
 		'removed',
@@ -112,7 +110,7 @@ class VideoInfo extends WikiaModel {
 
 	/**
 	 * Get the id of user who added the video
-	 * @return interger
+	 * @return integer
 	 */
 	public function getAddedBy() {
 		return $this->addedBy;
@@ -129,9 +127,10 @@ class VideoInfo extends WikiaModel {
 	/**
 	 * Check if it is premium video
 	 * @return boolean
+	 * @deprecated
 	 */
 	public function isPremium() {
-		return ( $this->premium == 1 );
+		return false;
 	}
 
 	/**
@@ -177,7 +176,6 @@ class VideoInfo extends WikiaModel {
 					'added_at' => $this->addedAt,
 					'added_by' => $this->addedBy,
 					'duration' => $this->duration,
-					'premium' => $this->premium,
 					'hdfile' => $this->hdfile,
 					'removed' => $this->removed,
 					'featured' => $this->featured,
@@ -224,7 +222,6 @@ class VideoInfo extends WikiaModel {
 					'added_at' => $this->addedAt,
 					'added_by' => $this->addedBy,
 					'duration' => $this->duration,
-					'premium' => $this->premium,
 					'hdfile' => $this->hdfile,
 					'removed' => $this->removed,
 					'featured' => $this->featured,
@@ -319,7 +316,6 @@ class VideoInfo extends WikiaModel {
 			'addedAt' => $row->added_at,
 			'addedBy' => $row->added_by,
 			'duration' => $row->duration,
-			'premium' => $row->premium,
 			'hdfile' => $row->hdfile,
 			'removed' => $row->removed,
 			'featured' => $row->featured,
