@@ -396,9 +396,6 @@ class MediaQueryService extends WikiaModel {
 	 * Get list of videos based on a few filters ($type, $providers, $category)
 	 * and sort options ($sort, $limit, $page).
 	 *
-	 * @param string $type What type of videos to return.  Valid options are:
-	 *                     - all     : Show all videos (DEFAULT)
-	 *                     - premium : Show only premium videos
 	 * @param integer $limit Limit the number of videos to return
 	 * @param integer $page Specify a page of results (DEFAULT $page = 1)
 	 * @param array $providers An array of content providers.  Only videos hosted by these providers
@@ -407,7 +404,7 @@ class MediaQueryService extends WikiaModel {
 	 *                         (DEFAULT any category)
 	 * @return array $videoList
 	 */
-	public function getVideoList( $type = 'all', $limit = 0, $page = 1, $providers = [], $categories = [], $sort = self::SORT_RECENT_FIRST ) {
+	public function getVideoList( $limit = 0, $page = 1, $providers = [], $categories = [], $sort = self::SORT_RECENT_FIRST ) {
 		wfProfileIn( __METHOD__ );
 
 		// Setup the base query cache for a minimal amount of time
@@ -452,10 +449,6 @@ class MediaQueryService extends WikiaModel {
 
 		if ( $providers ) {
 			$query->AND_( 'provider' )->IN( $providers );
-		}
-
-		if ( $type == 'premium' ) {
-			$query->AND_( 'premium' )->EQUAL_TO( 1 );
 		}
 
 		if ( $limit ) {
@@ -528,38 +521,6 @@ class MediaQueryService extends WikiaModel {
 	}
 
 	/**
-	 * Get number of total premium videos
-	 * @return integer $totalVideos
-	 */
-	public function getTotalPremiumVideos() {
-		wfProfileIn( __METHOD__ );
-
-		$memKey = $this->getMemKeyTotalPremiumVideos();
-		$totalVideos = $this->wg->Memc->get( $memKey );
-		if ( !is_numeric($totalVideos) ) {
-			$db = wfGetDB( DB_SLAVE );
-
-			$row = $db->selectRow(
-				array( 'video_info' ),
-				array( 'count(video_title) cnt' ),
-				array(
-					'premium' => 1,
-					'removed' => 0,
-				),
-				__METHOD__
-			);
-
-			$totalVideos = ($row) ? $row->cnt : 0 ;
-
-			$this->wg->Memc->set( $memKey, $totalVideos, 60*60*24 );
-		}
-
-		wfProfileOut( __METHOD__ );
-
-		return $totalVideos;
-	}
-
-	/**
 	 * Get number of total videos in a given category
 	 *
 	 * @param string $category Category name
@@ -601,20 +562,6 @@ class MediaQueryService extends WikiaModel {
 	 */
 	public function clearCacheTotalVideosByCategory( $category ) {
 		$this->wg->Memc->delete( $this->getMemKeyTotalVideosByCategory( $category ) );
-	}
-
-	/**
-	 * Get memcache key for total premium videos
-	 */
-	protected function getMemKeyTotalPremiumVideos() {
-		return wfMemcKey( 'videos', 'total_premium_videos', 'v3' );
-	}
-
-	/**
-	 * Clear the cache of total premium video count
-	 */
-	public function clearCacheTotalPremiumVideos() {
-		$this->wg->Memc->delete( $this->getMemKeyTotalPremiumVideos() );
 	}
 
 	/**
