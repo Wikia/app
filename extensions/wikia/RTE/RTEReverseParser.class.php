@@ -426,6 +426,10 @@ class RTEReverseParser {
 						!self::isFirstChild( $node ) &&
 						!self::previousSiblingIs( $node, [ 'h1', 'h2', 'h3', 'h4', 'h5', 'h6' ] ) ) {
 						$out = "\n{$out}";
+
+						if ( self::nextSiblingIs($node, 'p') ) {
+							$out = "{$out}\n";
+						}
 					} elseif ( $node->nodeName === 'tr' ) {
 						// case when table row attributes are defined in template
 						$out = "|-{$out}{$textContent}";
@@ -466,8 +470,7 @@ class RTEReverseParser {
 			if ($parentWasHtml) {
 				// nested HTML
 				$prefix = "\n";
-			}
-			else {
+			} else {
 				// only add line break if there's no empty line before and previous sibling was not a tag
 				if ( self::getEmptyLinesBefore($node) == 0
 					&& !self::isFirstChild($node)
@@ -621,8 +624,7 @@ class RTEReverseParser {
 		// 789
 		//
 		// ignore cases like: <p><br /><!-- RTE_LINE_BREAK -->foo</p>
-		if ($comment['type'] == 'LINE_BREAK' && !self::previousSiblingIs($node, 'span')
-			&& !$node->previousSibiling->hasAttribute(self::DATA_RTE_FILTER)) {
+		if ($comment['type'] == 'LINE_BREAK') {
 			$spaces = str_repeat(' ', intval($comment['data']['spaces']));
 			$out = "{$spaces}\n";
 		}
@@ -753,10 +755,6 @@ class RTEReverseParser {
 		}
 		else {
 			$out = "{$textContent}\n";
-		}
-
-		if ( self::previousSiblingIs( $node, 'div' ) ) {
-			$out = "\n{$out}";
 		}
 
 		// if next paragraph has been pasted into CK add extra newline
@@ -1527,14 +1525,6 @@ class RTEReverseParser {
 	 * @see http://www.mediawiki.org/wiki/Images
 	 */
 	private function handleSpan($node, $textContent) {
-		// XW-4579: ignoring spans with zero-width space added in RTEParser::parse to prevent CKE from removing attributes
-		// from <br /> tags, checking if textcontent is empty because user can type something inside this span and it should
-		// disappear
-		$textContent = preg_replace("/^(&#x0200B;)+\n?/", '', $textContent);
-		if ($node->hasAttribute(self::DATA_RTE_FILTER) && $textContent === '') {
-			return '';
-		}
-
 		// if tag contains style attribute, preserve full HTML (BugId:7098)
 		if ($node->hasAttribute('style')) {
 			$attrs = self::getAttributesStr($node);
