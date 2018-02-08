@@ -396,8 +396,6 @@ class MediaQueryService extends WikiaModel {
 	 * Get list of videos based on a few filters ($type, $providers, $category)
 	 * and sort options ($sort, $limit, $page).
 	 *
-	 * @param string $type What type of videos to return.  Valid options are:
-	 *                     - all     : Show all videos (DEFAULT)
 	 * @param integer $limit Limit the number of videos to return
 	 * @param integer $page Specify a page of results (DEFAULT $page = 1)
 	 * @param array $providers An array of content providers.  Only videos hosted by these providers
@@ -406,7 +404,7 @@ class MediaQueryService extends WikiaModel {
 	 *                         (DEFAULT any category)
 	 * @return array $videoList
 	 */
-	public function getVideoList( $type = 'all', $limit = 0, $page = 1, $providers = [], $categories = [], $sort = self::SORT_RECENT_FIRST ) {
+	public function getVideoList( $limit = 0, $page = 1, $providers = [], $categories = [], $sort = self::SORT_RECENT_FIRST ) {
 		wfProfileIn( __METHOD__ );
 
 		// Setup the base query cache for a minimal amount of time

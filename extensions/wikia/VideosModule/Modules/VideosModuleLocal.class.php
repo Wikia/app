@@ -20,11 +20,10 @@ class Local extends Base {
 	 */
 	public function getModuleVideos() {
 
-		$filter = 'all';
 		$paddedLimit = $this->getPaddedVideoLimit( $this->limit );
 
 		$mediaService = new \MediaQueryService();
-		$videoList = $mediaService->getVideoList( $filter, $paddedLimit );
+		$videoList = $mediaService->getVideoList( $paddedLimit );
 		$videosWithDetails = $this->getVideoDetailFromLocalWiki( $videoList );
 
 		foreach ( $videosWithDetails as $video ) {

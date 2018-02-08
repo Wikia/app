@@ -80,7 +80,7 @@ class SpecialVideosHelper extends WikiaModel {
 
 		// get video list
 		$mediaService = new MediaQueryService();
-		$videoList = $mediaService->getVideoList( $filter, $limit, $page, $providers, $category );
+		$videoList = $mediaService->getVideoList( $limit, $page, $providers, $category );
 
 		$videoOptions = [
 			'thumbWidth'       => self::THUMBNAIL_WIDTH,
