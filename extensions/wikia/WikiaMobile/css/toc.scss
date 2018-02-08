@@ -14,7 +14,7 @@ $width: 260px;
 	bottom: 0;
 	width: $width;
 	background: $toc-background;
-	z-index: $video-overlay-z-index; //For overlaying Ooyala Videos
+	z-index: $video-overlay-z-index; //For overlaying Videos
 
 	counter-reset: level1, level2, level3;
 

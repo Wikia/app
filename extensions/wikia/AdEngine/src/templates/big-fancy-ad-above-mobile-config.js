@@ -1,5 +1,4 @@
-import Context from 'ad-engine/src/services/context-service';
-import SlotTweaker from 'ad-engine/src/services/slot-tweaker';
+import { context, slotTweaker } from '@wikia/ad-engine';
 
 let adsModule;
 
@@ -16,7 +15,6 @@ function runOnReady(iframe, params, mercuryListener) {
 		},
 		page = document.getElementsByClassName('application-wrapper')[0];
 
-	adsModule = window.Mercury.Modules.Ads.getInstance();
 	page.classList.add('bfaa-template');
 	adjustPadding(iframe, params.aspectRatio);
 	window.addEventListener('resize', onResize.bind(null, params.aspectRatio));
@@ -44,9 +42,11 @@ export function getConfig(mercuryListener) {
 			'MOBILE_BOTTOM_LEADERBOARD'
 		],
 		onInit(adSlot, params) {
-			Context.set(`slots.${adSlot.getSlotName()}.options.isVideoMegaEnabled`, params.isVideoMegaEnabled);
+			adsModule = window.Mercury.Modules.Ads.getInstance();
 
-			SlotTweaker.onReady(adSlot).then((iframe) => runOnReady(iframe, params, mercuryListener));
+			context.set(`slots.${adSlot.getSlotName()}.options.isVideoMegaEnabled`, params.isVideoMegaEnabled);
+
+			slotTweaker.onReady(adSlot).then((iframe) => runOnReady(iframe, params, mercuryListener));
 
 			const wrapper = document.getElementsByClassName('mobile-top-leaderboard')[0];
 
@@ -54,10 +54,14 @@ export function getConfig(mercuryListener) {
 			navbarElement = document.querySelector('.site-head-container .site-head');
 
 			wrapper.style.opacity = '0';
-			SlotTweaker.onReady(adSlot).then((iframe) => {
+			slotTweaker.onReady(adSlot).then((iframe) => {
 				wrapper.style.opacity = '';
 				runOnReady(iframe, params, mercuryListener);
 			});
+
+			if (adsModule.hideSmartBanner) {
+				adsModule.hideSmartBanner();
+			}
 		},
 		moveNavbar(offset) {
 			const adsMobile = window.Mercury.Modules.Ads.getInstance();

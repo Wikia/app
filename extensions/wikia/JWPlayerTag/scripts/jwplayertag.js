@@ -1,8 +1,9 @@
 require([
 	'jquery',
 	'wikia.articleVideo.jwplayertag.ads',
-	'wikia.tracker'
-], function ($, videoAds, tracker) {
+	'wikia.tracker',
+	'wikia.articleVideo.featuredVideo.cookies'
+], function ($, videoAds, tracker, featuredVideoCookieService) {
 	'use strict';
 
 	var parserTagSelector = '.jwplayer-in-article-video .jwplayer-container',
@@ -22,6 +23,10 @@ require([
 
 	function onPlayerReady(playerInstance) {
 		videoAds(playerInstance);
+
+		playerInstance.on('captionsSelected', function (data) {
+			featuredVideoCookieService.setCaptions(data.selectedLang);
+		});
 	}
 
 	function getPlayerSetup(jwVideoData) {
@@ -32,6 +37,11 @@ require([
 				track: function (data) {
 					tracker.track(data);
 				}
+			},
+			selectedCaptionsLanguage: featuredVideoCookieService.getCaptions(),
+			settings: {
+				showQuality: true,
+				showCaptions: true
 			},
 			videoDetails: {
 				description: jwVideoData.description,

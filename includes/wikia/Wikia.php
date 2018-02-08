@@ -64,6 +64,7 @@ $wgHooks['WikiaSkinTopScripts'][] = 'Wikia::onWikiaSkinTopScripts';
 
 # handle internal requests - PLATFORM-1473
 $wgHooks['WebRequestInitialized'][] = 'Wikia::onWebRequestInitialized';
+$wgHooks['WebRequestInitialized'][] = 'Wikia::outputHTTPSHeaders';
 
 # Log user email changes
 $wgHooks['BeforeUserSetEmail'][] = 'Wikia::logEmailChanges';
@@ -1239,6 +1240,20 @@ class Wikia {
 			$request->response()->header( 'X-Wikia-Is-Internal-Request: ' . $requestSource );
 		}
 
+		return true;
+	}
+
+	/**
+	 * Output HTTPS-specific headers like CSP or Strict-Transport-Security.
+	 *
+	 * @param WebRequest $request
+	 * @return bool true, it's a hook
+	 */
+	static public function outputHTTPSHeaders( WebRequest $request ) {
+		global $wgCSPLoggerUrl;
+		if ( WebRequest::detectProtocol() === 'https' ) {
+			$request->response()->header( "Content-Security-Policy-Report-Only: default-src https:; script-src https: 'unsafe-inline' 'unsafe-eval'; style-src https: 'unsafe-inline'; img-src https: data:; report-uri {$wgCSPLoggerUrl}" );
+		}
 		return true;
 	}
 

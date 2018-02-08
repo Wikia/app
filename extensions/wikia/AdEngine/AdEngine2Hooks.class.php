@@ -42,9 +42,13 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverAudienceNetworkBidderCountries';
 		$vars[] = 'wgAdDriverA9BidderCountries';
 		$vars[] = 'wgAdDriverA9VideoBidderCountries';
+		$vars[] = 'wgAdDriverBabDetectionDesktopCountries';
+		$vars[] = 'wgAdDriverBabDetectionMobileCountries';
+		$vars[] = 'wgAdDriverBeachfrontBidderCountries';
 		$vars[] = 'wgAdDriverDelayCountries';
 		$vars[] = 'wgAdDriverDelayTimeout';
 		$vars[] = 'wgAdDriverDisableSraCountries';
+		$vars[] = 'wgAdDriverDisableBadgeAdCountries';
 		$vars[] = 'wgAdDriverEvolve2Countries';
 		$vars[] = 'wgAdDriverFMRLogisticRegressionRabbitCountries';
 		$vars[] = 'wgAdDriverFMRPassiveAggressiveClassifierRabbitCountries';
@@ -65,6 +69,7 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverMegaAdUnitBuilderForFVCountries';
 		$vars[] = 'wgAdDriverMoatTrackingForFeaturedVideoAdCountries';
 		$vars[] = 'wgAdDriverMoatTrackingForFeaturedVideoAdSampling';
+		$vars[] = 'wgAdDriverN1DecisionTreeClassifierRabbitCountries';
 		$vars[] = 'wgAdDriverN1LogisticRegressionRabbitCountries';
 		$vars[] = 'wgAdDriverNetzAthletenCountries';
 		$vars[] = 'wgAdDriverOpenXPrebidBidderCountries';
@@ -80,8 +85,6 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverRubiconDisplayPrebidCountries';
 		$vars[] = 'wgAdDriverRubiconPrebidCountries';
 		$vars[] = 'wgAdDriverScrollDepthTrackingCountries';
-		$vars[] = 'wgAdDriverSourcePointDetectionCountries';
-		$vars[] = 'wgAdDriverSourcePointDetectionMobileCountries';
 		$vars[] = 'wgAdDriverSrcPremiumCountries';
 		$vars[] = 'wgAdDriverTurtleCountries';
 		$vars[] = 'wgPorvataVastLoggerConfig';
@@ -117,13 +120,11 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverVideoMoatTrackingSampling';
 		$vars[] = 'wgAdDriverVideoPostrollCountries';
 
-		// TODO: Remove after src=[gpt,ns] is finished
-		$vars[] = 'wgAdDriverNewsAndStoriesSingleSrcKeyValueCountries';
-		$vars[] = 'wgAdDriverNewsAndStoriesSrcKeyValueCountries';
-
 		// news&stories variables only
+		$vars[] = 'wgAdDriverF2BabDetectionCountries';
 		$vars[] = 'wgAdDriverF2InstartLogicRecoveryCountries';
 		$vars[] = 'wgAdDriverF2MEGAVideosCountries';
+		// todo remove when AdOps will stop using Ooyala on f2
 		$vars[] = 'wgAdDriverF2OoyalaPosKeyValueCountries';
 
 		return true;

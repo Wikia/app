@@ -49,6 +49,10 @@ DataValues Common has been written by the Wikidata team, as [Wikimedia Germany]
 
 ## Release notes
 
+### 0.4.0 (2017-08-09)
+
+* Removed MediaWiki integration
+
 ### 0.3.1 (2015-08-14)
 
 * The component can now be installed together with DataValues Interfaces 0.1.5

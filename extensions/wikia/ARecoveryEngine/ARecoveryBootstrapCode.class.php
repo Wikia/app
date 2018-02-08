@@ -22,12 +22,6 @@ class ARecoveryBootstrapCode {
 			static::getBootstrapDisabledMessage( 'Bottom body' );
 	}
 
-	public static function getSourcePointBootstrapCode() {
-		return ARecoveryModule::shouldLoadSourcePointBootstrap() ?
-			F::app()->sendRequest( 'ARecoveryEngineApiController', 'getBootstrap' ) :
-			static::getBootstrapDisabledMessage();
-	}
-
 	public static function getInstartLogicBootstrapCode() {
 		return ARecoveryModule::isInstartLogicRecoveryEnabled() ?
 			F::app()->sendRequest( 'ARecoveryEngineApiController', 'getInstartLogicBootstrap' ) :

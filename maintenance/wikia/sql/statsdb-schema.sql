@@ -264,7 +264,7 @@ CREATE TABLE `dimension_top_wikis_7vert` (
   `domain` varchar(255) DEFAULT NULL,
   `title` varchar(255) DEFAULT NULL,
   `founding_user_id` int(10) unsigned DEFAULT NULL,
-  `public` tinyint(3) unsigned DEFAULT NULL,
+  `public` tinyint(3) DEFAULT NULL,
   `lang` varchar(8) DEFAULT NULL,
   `lang_id` smallint(5) unsigned DEFAULT NULL,
   `ad_tag` varchar(255) DEFAULT NULL,
@@ -605,6 +605,17 @@ CREATE TABLE `dimension_wiki_cat_mapping` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
+-- Table structure for table `dimension_wiki_categories`
+--
+
+DROP TABLE IF EXISTS `dimension_wiki_categories`;
+CREATE TABLE `dimension_wiki_categories` (
+  `wiki_id` int(10) unsigned NOT NULL,
+  `category_id` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`wiki_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
 -- Table structure for table `dimension_wiki_category`
 --
 
@@ -765,20 +776,6 @@ CREATE TABLE `dimension_wiki_premium_adds` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Table structure for table `dimension_wiki_premium_videos`
---
-
-DROP TABLE IF EXISTS `dimension_wiki_premium_videos`;
-CREATE TABLE `dimension_wiki_premium_videos` (
-  `wiki_id` int(10) unsigned NOT NULL,
-  `video_title` varchar(255) NOT NULL,
-  `added_at` datetime DEFAULT NULL,
-  `added_by` int(10) unsigned DEFAULT NULL,
-  `removed` tinyint(3) unsigned DEFAULT NULL,
-  PRIMARY KEY (`wiki_id`,`video_title`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
 -- Table structure for table `dimension_wiki_redirects`
 --
 
@@ -822,21 +819,6 @@ CREATE TABLE `dimension_wiki_variables` (
   `wgUseDARTOnMainPage` tinyint(3) unsigned DEFAULT NULL,
   `wgEnableArticleCommentsExt` tinyint(3) unsigned DEFAULT NULL,
   PRIMARY KEY (`wiki_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Table structure for table `dimension_wiki_videos`
---
-
-DROP TABLE IF EXISTS `dimension_wiki_videos`;
-CREATE TABLE `dimension_wiki_videos` (
-  `wiki_id` int(10) unsigned NOT NULL,
-  `name` varchar(255) NOT NULL DEFAULT '',
-  `user_id` int(10) unsigned NOT NULL DEFAULT '0',
-  `premium` tinyint(4) NOT NULL DEFAULT '0',
-  `provider` varchar(255) NOT NULL DEFAULT '',
-  `date_added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  PRIMARY KEY (`wiki_id`,`name`,`provider`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -2079,19 +2061,6 @@ CREATE TABLE `lookup_language_codes` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Table structure for table `lookup_rovi_tv_shows`
---
-
-DROP TABLE IF EXISTS `lookup_rovi_tv_shows`;
-CREATE TABLE `lookup_rovi_tv_shows` (
-  `rovi_id` int(10) unsigned NOT NULL,
-  `title` varchar(255) DEFAULT NULL,
-  `lookup_title` varchar(255) DEFAULT NULL,
-  `tvrage_id` int(10) unsigned DEFAULT NULL,
-  PRIMARY KEY (`rovi_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
 -- Table structure for table `lookup_search_domains`
 --
 
@@ -2115,59 +2084,6 @@ CREATE TABLE `lookup_system_users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Table structure for table `lookup_top_tv_shows`
---
-
-DROP TABLE IF EXISTS `lookup_top_tv_shows`;
-CREATE TABLE `lookup_top_tv_shows` (
-  `tvrage_id` int(10) unsigned NOT NULL,
-  `title` varchar(255) NOT NULL DEFAULT '',
-  PRIMARY KEY (`tvrage_id`,`title`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Table structure for table `lookup_tv_show_episodes`
---
-
-DROP TABLE IF EXISTS `lookup_tv_show_episodes`;
-CREATE TABLE `lookup_tv_show_episodes` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `tvrage_id` int(10) unsigned DEFAULT NULL,
-  `season` int(10) unsigned DEFAULT NULL,
-  `episode` int(10) unsigned DEFAULT NULL,
-  `production_code` varchar(255) DEFAULT NULL,
-  `airdate` date DEFAULT NULL,
-  `episode_title` varchar(255) DEFAULT NULL,
-  `is_special` char(1) DEFAULT NULL,
-  `tvrage_link` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `tvrage_id` (`tvrage_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Table structure for table `lookup_tv_shows`
---
-
-DROP TABLE IF EXISTS `lookup_tv_shows`;
-CREATE TABLE `lookup_tv_shows` (
-  `title` varchar(255) NOT NULL DEFAULT '',
-  `directory` varchar(255) DEFAULT NULL,
-  `tvrage_id` int(10) unsigned DEFAULT NULL,
-  `start_date` date DEFAULT NULL,
-  `end_date` date DEFAULT NULL,
-  `episodes` varchar(255) DEFAULT NULL,
-  `run_time` varchar(255) DEFAULT NULL,
-  `network` varchar(255) DEFAULT NULL,
-  `country` varchar(255) DEFAULT NULL,
-  `episode_count` smallint(5) unsigned DEFAULT NULL,
-  `lookup_title` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`title`),
-  KEY `tvrage_id` (`tvrage_id`),
-  KEY `network` (`network`),
-  KEY `lookup_title` (`lookup_title`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
 -- Table structure for table `official_communities`
 --
 
@@ -2180,23 +2096,6 @@ CREATE TABLE `official_communities` (
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Table structure for table `report_wiki_recent_pageviews`
---
-
-DROP TABLE IF EXISTS `report_wiki_recent_pageviews`;
-CREATE TABLE `report_wiki_recent_pageviews` (
-  `wiki_id` int(10) unsigned NOT NULL,
-  `hub_name` varchar(255) DEFAULT NULL,
-  `lang` varchar(255) DEFAULT NULL,
-  `pageviews_7day` int(10) unsigned NOT NULL DEFAULT '0',
-  `pageviews_30day` int(10) unsigned NOT NULL DEFAULT '0',
-  `pageviews_90day` int(10) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`wiki_id`),
-  KEY `hub_lang` (`hub_name`,`lang`),
-  KEY `lang_hub` (`lang`,`hub_name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -10450,4 +10349,4 @@ CREATE TABLE `test_dimension_wiki_local_namespaces` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
--- Dump completed on 2017-12-01 12:32:54
+-- Dump completed on 2018-02-06 15:45:30
