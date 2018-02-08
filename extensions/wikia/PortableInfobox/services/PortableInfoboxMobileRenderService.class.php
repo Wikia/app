@@ -161,11 +161,7 @@ class PortableInfoboxMobileRenderService extends PortableInfoboxRenderService {
 		}
 
 		if ( $type === 'image' && !isset( $heroData['image'] ) && count( $item['data'] ) === 1 ) {
-			$imageWidth = $this->getImageHelper()->getFileWidth( $item['data'][0]['name'] );
-
-			if ( $imageWidth >= self::MINIMAL_HERO_IMG_WIDTH ) {
-				return true;
-			}
+			return true;
 		}
 
 		return false;
