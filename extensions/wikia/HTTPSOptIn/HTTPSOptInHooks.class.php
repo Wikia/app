@@ -80,6 +80,6 @@ class HTTPSOptInHooks {
 	private static function httpsEnabledTitle( Title $title ): bool {
 		global $wgDBname;
 		return array_key_exists( $wgDBname, self::$httpsArticles ) &&
-			in_array( $title->getDBKey(), self::$httpsArticles[ $wgDBname ] );
+			in_array( $title->getPrefixedDBKey(), self::$httpsArticles[ $wgDBname ] );
 	}
 }
