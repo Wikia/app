@@ -72,8 +72,8 @@ define('ext.wikia.adEngine.template.floor', [
 			iframe.addEventListener('load', function () {
 				var iFrameBody = iframe.contentWindow.document.body;
 
-				body.style.cursor = 'pointer';
-				body.addEventListener('click', params.onClick)
+				iFrameBody.style.cursor = 'pointer';
+				iFrameBody.addEventListener('click', params.onClick)
 			});
 		}
 
