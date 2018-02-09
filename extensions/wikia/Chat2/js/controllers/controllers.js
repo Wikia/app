@@ -15,6 +15,7 @@ var NodeChatSocketWrapper = $.createClass(Observable, {
 		NodeChatSocketWrapper.superclass.constructor.apply(this, arguments);
 		this.roomId = roomId;
 		this.wikiId = window.wgCityId;
+		this.track = window.Wikia.Tracker.track;
 	},
 
 	log: function(msg, group) {
@@ -27,6 +28,13 @@ var NodeChatSocketWrapper = $.createClass(Observable, {
 		if (this.socket) {
 			this.socket.emit('message', $msg);
 		}
+
+		this.track({
+			action: 'click',
+			category: 'chat',
+			label: 'message',
+			trackingMethod: 'analytics'
+		});
 	},
 
 	connect: function () {
@@ -116,6 +124,16 @@ var NodeChatSocketWrapper = $.createClass(Observable, {
 				break;
 			case 'initial':
 				this.firstConnected = true;	//we are 100% sure about conenction
+				break;
+			// SUS-3855 | Chat's events tracking
+			case 'join':
+				// this tracks both public and private channels
+				this.track({
+					action: 'impression',
+					category: 'chat',
+					label: 'join',
+					trackingMethod: 'analytics'
+				});
 				break;
 		}
 		if (this.firstConnected) {
@@ -611,6 +629,8 @@ var NodeChatController = $.createClass(NodeRoomController, {
 			.focus($.proxy(this.resetActivityTimer, this));
 
 		this.chats.main = this;
+
+		this.track = window.Wikia.Tracker.track;
 		return this;
 	},
 
@@ -742,6 +762,13 @@ var NodeChatController = $.createClass(NodeRoomController, {
 				this.showRoom(data.get('roomId'));
 				this.chats.privates[data.get('roomId')].init();
 				//this.socket.send(data.xport());
+
+				this.track({
+					action: 'impression',
+					category: 'chat',
+					label: 'join-private-chat',
+					trackingMethod: 'analytics'
+				});
 			}, this)
 		});
 		this.viewUsers.hideMenu();
