@@ -78,7 +78,12 @@ function wfJSVariablesTopScripts(Array &$vars, &$scripts) {
 
 	$vars['wgTransactionContext'] = Transaction::getAttributes();
 
-	$scripts .= Html::inlineScript("var wgNow = new Date();") .	"\n";
+	$scripts .= Html::inlineScript("var wgNow = new Date();") . "\n";
+
+	// ADEN-6676: Inline InstantGlobals to prevent AdBlock block
+	$instantGlobalsModule = new InstantGlobalsModule();
+	$instantGlobals = $instantGlobalsModule->getScript(new ResourceLoaderContext(new ResourceLoader(), $wg->Request));
+	$scripts .= Html::inlineScript($instantGlobals) . "\n";
 
 	return true;
 }
