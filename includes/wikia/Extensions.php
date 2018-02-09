@@ -1583,7 +1583,6 @@ if ( !empty( $wgEnablePoolCounter ) ) {
 }
 
 if( !empty( $wgEnableLyricsApi ) ) {
-    $wgLyricsItunesAffiliateToken = '11lwWb';
     include "$IP/extensions/wikia/LyricsApi/LyricsApi.setup.php";
 }
 
