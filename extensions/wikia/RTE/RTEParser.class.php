@@ -529,7 +529,7 @@ class RTEParser extends Parser {
 
 		// XW-4579: CKE somehow optimizes html in a way that if there is empty line after <br /> it removes all attributes
 		// from it. This added span with zero-width space prevents such behaviour and is be ignored in RTEReverseParser::parse
-		$html = preg_replace("/(<br[^>]*>)/", '$1<span data-rte-filler="true">&#x0200B;</span>', $html);
+		$html = preg_replace("/(<br[^>]*>)\n/", '$1&nbsp;', $html);
 
 		wfProfileOut(__METHOD__ . '::regexp');
 
