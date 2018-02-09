@@ -183,6 +183,8 @@ class MercuryApiController extends WikiaController {
 			'parts' => array_values( $htmlTitle->getAllParts() ),
 		];
 
+		\Hooks::run( 'MercuryWikiVariables', [ &$wikiVariables ] );
+
 		return $wikiVariables;
 	}
 

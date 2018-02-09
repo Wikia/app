@@ -218,19 +218,6 @@ CREATE TABLE `email_types` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Table structure for table `global_registry`
---
-
-DROP TABLE IF EXISTS `global_registry`;
-CREATE TABLE `global_registry` (
-  `item_id` int(10) NOT NULL,
-  `item_type` int(10) NOT NULL,
-  `item_value` blob NOT NULL,
-  `item_updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`item_id`,`item_type`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
 -- Table structure for table `global_watchlist`
 --
 
@@ -369,4 +356,4 @@ CREATE TABLE `wikiastaff_log` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
--- Dump completed on 2018-02-05 13:59:55
+-- Dump completed on 2018-02-07 15:16:51

@@ -207,9 +207,6 @@ class VideoEmbedToolSearchService
 			],
 		];
 
-		// Determine the source for the search
-		$isLocalSearch = ( $this->getSearchType() === 'local' );
-
 		$helper = new VideoHandlerHelper();
 
 		foreach ( $searchResponse['items'] as $singleVideoData ) {
@@ -217,19 +214,10 @@ class VideoEmbedToolSearchService
 				continue;
 			}
 
-			// Get data about this video from the video wiki
-			if ( $isLocalSearch ) {
-				$videosDetail = $helper->getVideoDetail(
-					$singleVideoData,
-					$videoOptions
-				);
-			} else {
-				$videosDetail = $helper->getVideoDetailFromWiki(
-					F::app()->wg->WikiaVideoRepoDBName,
-					$singleVideoData['title'],
-					$videoOptions
-				);
-			}
+			$videosDetail = $helper->getVideoDetail(
+				$singleVideoData,
+				$videoOptions
+			);
 
 			$trimTitle = $this->getTrimTitle();
 			if ( ! empty( $trimTitle ) ) {
