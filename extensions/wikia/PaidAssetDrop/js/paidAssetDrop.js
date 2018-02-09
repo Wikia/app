@@ -134,12 +134,23 @@ define('ext.wikia.paidAssetDrop.paidAssetDrop', [
 
 		log('Sending request to: ' + url, 'debug', logGroup);
 
-		$.ajax({url: url, dataType: 'json'}).then(function (response) {
+		var padRequest;
+
+		if (win.fetch) {
+			padRequest = win.fetch(url).then(function(data) {return data.json()})
+		} else {
+			padRequest = $.ajax({url: url, dataType: 'json'})
+		}
+
+		padRequest.then(function (response) {
 			var padContent = fetchPadContent(response);
 
 			if (padContent) {
 				log(['Injecting PAD into:', placeHolder], 'info', logGroup);
-				$(placeHolder).prepend(padContent);
+				if ( typeof placeHolder === 'string' ) {
+					placeHolder = document.querySelector(placeHolder);
+				}
+                placeHolder.insertAdjacentHTML('afterbegin', padContent);
 			}
 		});
 	}
