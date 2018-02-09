@@ -150,7 +150,7 @@ define('ext.wikia.paidAssetDrop.paidAssetDrop', [
 				if ( typeof placeHolder === 'string' ) {
 					placeHolder = document.querySelector(placeHolder);
 				}
-                placeHolder.insertAdjacentHTML('afterbegin', padContent);
+				placeHolder.insertAdjacentHTML('afterbegin', padContent);
 			}
 		});
 	}
