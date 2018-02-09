@@ -80,10 +80,9 @@ function wfJSVariablesTopScripts(Array &$vars, &$scripts) {
 
 	$scripts .= Html::inlineScript("var wgNow = new Date();") . "\n";
 
-	// ADEN-6676: Inline InstantGlobals to prevent AdBlock block
+	// ADEN-6676
 	$instantGlobalsModule = new InstantGlobalsModule();
-	$instantGlobals = $instantGlobalsModule->getScript(new ResourceLoaderContext(new ResourceLoader(), $wg->Request));
-	$scripts .= Html::inlineScript($instantGlobals) . "\n";
+	$scripts .= Html::inlineScript( JavaScriptMinifier::minify( $instantGlobalsModule->getScript() ) ) . "\n";
 
 	return true;
 }

@@ -45,8 +45,16 @@ class InstantGlobalsModule extends ResourceLoaderModule {
 		return (object) $ret;
 	}
 
-	public function getScript( ResourceLoaderContext $context ) {
-		$variables = $this->getVariablesValues();
+	public function getScript( ResourceLoaderContext $context = null ) {
+		global $wgMemc;
+		$variables = null;
+		$cacheKey = wfMemcKey( 'instantGlobalsVariablesValues' );
+
+		if ( !( $variables = $wgMemc->get( $cacheKey ) ) ) {
+			$variables = $this->getVariablesValues();
+
+			$wgMemc->set( $cacheKey, $variables, 300 );
+		}
 
 		return sprintf( 'Wikia.InstantGlobals = %s', json_encode( $variables ) );
 	}
