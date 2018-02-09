@@ -107,7 +107,7 @@ define('ext.wikia.adEngine.template.floor', [
 			event.preventDefault();
 			floor.classList.add('hidden');
 		});
-		floor.querySelector('.ad').innerHTML = iframe;
+		floor.querySelector('.ad').appendChild(iframe);
 
 		if (!async) {
 			showFloor();
