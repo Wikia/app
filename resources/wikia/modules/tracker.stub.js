@@ -237,7 +237,11 @@ function veTrack( data ) {
 			defaultData.whichVE = 'unknown';
 		}
 
-		finalData = $.extend( {}, defaultData, data );
+		if (window.$) {
+            finalData = $.extend( {}, defaultData, data );
+        } else {
+            finalData = Object.assign( {}, defaultData, data );
+        }
 	} catch( e ) {
 		finalData = { failed: true };
 	}
