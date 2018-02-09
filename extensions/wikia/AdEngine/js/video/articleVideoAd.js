@@ -23,16 +23,16 @@ define('ext.wikia.adEngine.video.articleVideoAd', [
 		return (depth < 2 || !capping) ? 1 : (Math.floor((depth - 1) / capping) + 1);
 	}
 
-	function buildVastUrl(position, videoDepth, correlator, slotTargeting, bidParams) {
+	function buildVastUrl(slotName, position, videoDepth, correlator, slotTargeting, bidParams) {
 		var options = {
 				correlator: correlator,
 				vpos: position
 			},
 			slotParams = Object.assign({
 				passback: featuredVideoPassback,
-				pos: featuredVideoSlotName,
+				pos: slotName,
 				rv: calculateRV(videoDepth),
-				src: srcProvider.get(baseSrc, {testSrc: 'test'}, 'JWPLAYER')
+				src: srcProvider.get(baseSrc, {testSrc: 'test'})
 			}, slotTargeting);
 
 		if (videoDepth === 1 && bidParams) {
