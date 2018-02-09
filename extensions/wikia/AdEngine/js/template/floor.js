@@ -65,7 +65,7 @@ define('ext.wikia.adEngine.template.floor', [
 				win.WikiaBar.hideContainer();
 			}
 
-			floor.classList.add('hidden');
+			floor.classList.remove('hidden');
 		}
 
 		if (params.onClick) {
