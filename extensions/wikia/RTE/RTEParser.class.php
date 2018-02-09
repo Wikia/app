@@ -510,7 +510,8 @@ class RTEParser extends Parser {
 		// move empty lines counter data from comment to next opening tag attribute (thx to Marooned)
 		// XW-4626: prevent adding data-rte-empty-lines-before to inline tags to not break paragraph layout
 		$blockLevelsRegex = implode('|', HtmlHelper::BLOCK_ELEMENTS);
-		$html = preg_replace('%<!-- RTE_EMPTY_LINES_BEFORE_(\d+) -->(?!<!)(.*?)(<(' . $blockLevelsRegex . ')[^>]*)>%s', '\2\3 data-rte-empty-lines-before="\1">', $html);
+		$html = preg_replace('%<!-- RTE_EMPTY_LINES_BEFORE_(\d+) -->(?!<!)(.*?)(<(' . $blockLevelsRegex . '|tr)[^>]*)>%s',
+			'\2\3 data-rte-empty-lines-before="\1">', $html);
 
 		// remove not replaced EMPTY_LINES_BEFORE comments
 		// <!-- RTE_EMPTY_LINES_BEFORE_1 -- data-rte-empty-lines-before="1">
