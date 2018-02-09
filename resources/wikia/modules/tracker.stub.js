@@ -238,10 +238,10 @@ function veTrack( data ) {
 		}
 
 		if (window.$) {
-            finalData = $.extend( {}, defaultData, data );
-        } else {
-            finalData = Object.assign( {}, defaultData, data );
-        }
+			finalData = $.extend( {}, defaultData, data );
+		} else {
+			finalData = Object.assign( {}, defaultData, data );
+		}
 	} catch( e ) {
 		finalData = { failed: true };
 	}
