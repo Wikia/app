@@ -28,13 +28,6 @@ var NodeChatSocketWrapper = $.createClass(Observable, {
 		if (this.socket) {
 			this.socket.emit('message', $msg);
 		}
-
-		this.track({
-			action: 'click',
-			category: 'chat',
-			label: 'message',
-			trackingMethod: 'analytics'
-		});
 	},
 
 	connect: function () {
@@ -215,6 +208,7 @@ var NodeRoomController = $.createClass(Observable, {
 		}, this));
 
 		this.viewDiscussion.getTextInput().focus();
+		this.track = window.Wikia.Tracker.track;
 	},
 
 	isMain: function () {
@@ -355,9 +349,24 @@ var NodeRoomController = $.createClass(Observable, {
 						this.model.chats.add(chatEntry);
 					} else {
 						this.socket.send(chatEntry.xport());
+
+
+						this.track({
+							action: 'click',
+							category: 'chat',
+							label: 'message-private-chat',
+							trackingMethod: 'analytics'
+						});
 					}
 				} else {
 					this.socket.send(chatEntry.xport());
+
+					this.track({
+						action: 'click',
+						category: 'chat',
+						label: 'message',
+						trackingMethod: 'analytics'
+					});
 				}
 
 				inputField.val('').focus();
