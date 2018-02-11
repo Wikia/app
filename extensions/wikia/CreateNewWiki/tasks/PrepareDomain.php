@@ -23,17 +23,17 @@ class PrepareDomain extends Task {
 		$inputDomain = $this->sanitizeInputDomain( $inputDomain );
 		$this->taskContext->setInputDomain($inputDomain);
 
-		$domain = $this->sanitizeDomain( $inputDomain );
-		$this->taskContext->setWikiName( $domain );
+		$subDomain = $this->sanitizeDomain( $inputDomain );
+		$this->taskContext->setWikiName( $subDomain );
 
-		$subdomain = $domain;
+		$path = '';
 
-		if ( !empty($wikiLanguage) && $wikiLanguage !== "en" ) {
-			$subdomain = strtolower( $wikiLanguage ) . "." . $domain;
+		if ( !empty( $wikiLanguage ) && $wikiLanguage !== "en" ) {
+			$path = strtolower( $wikiLanguage );
 		}
 
-		$this->taskContext->setDomain( sprintf( "%s.%s", $subdomain, $wgWikiaBaseDomain ) );
-		$this->taskContext->setUrl( sprintf( "http://%s.%s/", $subdomain, $wgWikiaBaseDomain ) );
+		$this->taskContext->setDomain( sprintf( "%s.%s/%s", $subDomain, $wgWikiaBaseDomain, $path ) );
+		$this->taskContext->setUrl( sprintf( "http://%s.%s/%s", $subDomain, $wgWikiaBaseDomain, $path ) );
 
 		return TaskResult::createForSuccess();
 	}

@@ -117,8 +117,8 @@ class WikiFactory {
 	 *
 	 * @return boolean	current value of static::$mIsUsed
 	 */
-	static public function isUsed( $flag = false ) {
-		if ( $flag ) {
+	static public function isUsed( $flag = null ) {
+		if ( $flag !== null ) {
 			static::$mIsUsed = (bool) $flag;
 		}
 
