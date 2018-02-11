@@ -132,6 +132,10 @@ abstract class Maintenance {
 			? getenv( 'MW_INSTALL_PATH' )
 			: realpath( dirname( __FILE__ ) . '/..' );
 
+		# FANDOM change: add common MW directories to include_path
+		# to speed up include/require with relative paths.
+		ini_set( 'include_path', "{$IP}:{$IP}/includes:{$IP}/languages:{$IP}/lib/vendor:.:" );
+
 		$this->addDefaultParams();
 		register_shutdown_function( array( $this, 'outputChanneled' ), false );
 	}
@@ -857,8 +861,8 @@ abstract class Maintenance {
 	 * @return array consisting of mysql user and pass
 	 */
 	protected function getDatabaseCredentials() {
-		global $wgDBmaintuser, $wgDBmaintpass;
-		return [ $wgDBmaintuser, $wgDBmaintpass ];
+		global $wgMysqlMaintenanceUser, $wgMysqlMaintenancePass;
+		return [ $wgMysqlMaintenanceUser, $wgMysqlMaintenancePass ];
 	}
 
 	/**

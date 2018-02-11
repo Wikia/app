@@ -63,6 +63,13 @@ if ( isset( $_SERVER['MW_COMPILED'] ) ) {
 	# Get the MWInit class
 	require_once( "$IP/includes/Init.php" );
 	require_once( "$IP/includes/AutoLoader.php" );
+
+	# Wikia change: GlobalFunctions.php are normally loaded later
+	# in includes/Setup.php.  It is too late for us and we need
+	# to load it here so that WikiFactory can inject configuration
+	# in LocalSettings.php.
+	require_once( "$IP/includes/GlobalFunctions.php" );
+
 }
 
 # Stub the profiler
@@ -75,9 +82,7 @@ require_once( "$IP/StartProfiler.php" );
 if ( !defined( 'MW_COMPILED' ) ) {
 	require_once( "$IP/includes/Defines.php" );
 }
-# Wikia change - comment out the next line since we include DefaultSettings.php
-# in LocalSettings.php
-#require_once( MWInit::compiledPath( 'includes/DefaultSettings.php' ) );
+require_once( MWInit::compiledPath( 'includes/DefaultSettings.php' ) );
 
 if ( defined( 'MW_CONFIG_CALLBACK' ) ) {
 	# Use a callback function to configure MediaWiki

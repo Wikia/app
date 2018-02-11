@@ -2,6 +2,17 @@
 /**
  * A few constants that might be needed in Wikia code
  */
+define( 'WIKIA_DC_SJC',		'sjc'     );
+define( 'WIKIA_DC_RES',		'res'     );
+define( 'WIKIA_DC_POZ',		'poz'     );
+
+define( 'WIKIA_ENV_DEV',	'dev'     );
+define( 'WIKIA_ENV_PREVIEW',	'preview' );
+define( 'WIKIA_ENV_PROD',	'prod'    );
+define( 'WIKIA_ENV_SANDBOX',	'sandbox' );
+define( 'WIKIA_ENV_VERIFY',	'verify'  );
+define( 'WIKIA_ENV_STABLE',	'stable'  );
+define( 'WIKIA_ENV_STAGING',	'staging' );
 
 /**
  * @name DB_DPL

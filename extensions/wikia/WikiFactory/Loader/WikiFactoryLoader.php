@@ -9,34 +9,6 @@
  * @todo change use of mIsWikiaActive to a series of isClosed, isDeleted, etc. methods
  */
 
-ini_set( "include_path", "{$IP}:{$IP}/includes:{$IP}/languages:{$IP}/lib/vendor:.:" );
-ini_set( "cgi.fix_pathinfo", 1);
-
-require_once( "$IP/includes/Defines.php" );
-require_once( "$IP/includes/DefaultSettings.php" );
-require_once( "$IP/includes/Hooks.php" );
-require_once( "$IP/includes/GlobalFunctions.php" );
-require_once( "$IP/includes/wikia/GlobalFunctions.php" );
-require_once( "$IP/includes/Exception.php" );
-require_once( "$IP/includes/db/Database.php" );
-require_once( "$IP/extensions/wikia/WikiFactory/WikiFactory.php" );
-
-if( !function_exists("wfProfileIn") ) {
-	require_once( "$IP/StartProfiler.php" );
-}
-
-/**
- * wfUnserializeErrorHandler
- *
- * @author Emil Podlaszewski <emil@wikia.com>
- */
-function wfUnserializeHandler( $errno, $errstr ) {
-	global $_variable_key, $_variable_value;
-
-	$serverMame = isset($_SERVER['SERVER_NAME']) ? $_SERVER['SERVER_NAME'] : '';
-	error_log("$serverMame ($_variable_key=$_variable_value): $errno, $errstr");
-}
-
 class WikiFactoryLoader {
 
 	// TODO: FIXME: Why is there a mWikiID and an mCityID?
