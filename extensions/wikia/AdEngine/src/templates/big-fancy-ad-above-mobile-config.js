@@ -2,10 +2,8 @@ import { context, slotTweaker } from '@wikia/ad-engine';
 import { universalAdPackage, animateUAPSlot } from '@wikia/ad-products';
 
 const {
-	CSS_CLASSNAME_FADE_IN_ANIMATION,
-	CSS_CLASSNAME_SLIDE_OUT_ANIMATION,
-	CSS_CLASSNAME_STICKY_BFAA,
-	CSS_TIMING_EASE_IN_CUBIC
+	CSS_TIMING_EASE_IN_CUBIC,
+	SLIDE_OUT_TIME
 } = universalAdPackage;
 
 export const getConfig = mercuryListener => ({
@@ -68,21 +66,17 @@ export const getConfig = mercuryListener => ({
 		}
 	},
 
-	onUnstickBfaaCallback(adSlot) {
-		const slideOutDuration = 600;
-
+	onBeforeUnstickBfaaCallback() {
 		Object.assign(this.navbarElement.style, {
-			transition: `top ${slideOutDuration}ms ${CSS_TIMING_EASE_IN_CUBIC}`,
+			transition: `top ${SLIDE_OUT_TIME}ms ${CSS_TIMING_EASE_IN_CUBIC}`,
 			top: '0'
 		});
-		animateUAPSlot(adSlot, CSS_CLASSNAME_SLIDE_OUT_ANIMATION, slideOutDuration).then(() => {
-			Object.assign(this.navbarElement.style, {
-				transition: '',
-				top: ''
-			});
-			adSlot.getElement().classList.remove(CSS_CLASSNAME_STICKY_BFAA);
+	},
 
-			return animateUAPSlot(adSlot, CSS_CLASSNAME_FADE_IN_ANIMATION, 400);
+	onAfterUnstickBfaaCallback() {
+		Object.assign(this.navBarElement.style, {
+			transition: '',
+			top: ''
 		});
 	},
 
