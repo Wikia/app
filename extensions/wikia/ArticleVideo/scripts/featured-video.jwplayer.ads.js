@@ -47,7 +47,7 @@ define('wikia.articleVideo.featuredVideo.ads', [
 		return adContext.get('opts.isFVPostrollEnabled') && canAdBePlayed(videoDepth);
 	}
 
-	function buildVastUrl(position, videoDepth, correlator, slotTargeting, bidParams) {
+	function buildVastUrl(position, videoDepth, correlator, slotTargeting, playerMuted, bidParams) {
 		var options = {
 				correlator: correlator,
 				vpos: position
@@ -56,7 +56,8 @@ define('wikia.articleVideo.featuredVideo.ads', [
 				passback: featuredVideoPassback,
 				pos: featuredVideoSlotName,
 				rv: calculateRV(videoDepth),
-				src: featuredVideoSource
+				src: featuredVideoSource,
+				audio: playerMuted ? 'no' : 'yes'
 			}, slotTargeting);
 
 		if (videoDepth === 1 && bidParams) {
@@ -64,7 +65,7 @@ define('wikia.articleVideo.featuredVideo.ads', [
 				slotParams[key] = bidParams[key];
 			});
 		}
-		options.adUnit = megaAdUnitBuilder.build(slotParams.pos, slotParams.src);
+		options.adUnit = megaAdUnitBuilder.build(slotParams.pos, slotParams.src, (playerMuted ? '' : '-audio'));
 
 		log(['buildVastUrl', position, videoDepth, slotParams, options], log.levels.debug, logGroup);
 
@@ -107,7 +108,7 @@ define('wikia.articleVideo.featuredVideo.ads', [
 
 				if (shouldPlayPreroll(videoDepth)) {
 					trackingParams.adProduct = 'featured-video-preroll';
-					player.playAd(buildVastUrl('preroll', videoDepth, correlator, slotTargeting, bidParams));
+					player.playAd(buildVastUrl('preroll', videoDepth, correlator, slotTargeting, player.getMute(), bidParams));
 				}
 				prerollPositionReached = true;
 			});
@@ -116,7 +117,7 @@ define('wikia.articleVideo.featuredVideo.ads', [
 				log('Midroll position reached', log.levels.info, logGroup);
 				if (shouldPlayMidroll(videoDepth)) {
 					trackingParams.adProduct = 'featured-video-midroll';
-					player.playAd(buildVastUrl('midroll', videoDepth, correlator, slotTargeting));
+					player.playAd(buildVastUrl('midroll', videoDepth, correlator, slotTargeting, player.getMute()));
 				}
 
 			});
@@ -125,7 +126,7 @@ define('wikia.articleVideo.featuredVideo.ads', [
 				log('Postroll position reached', log.levels.info, logGroup);
 				if (shouldPlayPostroll(videoDepth)) {
 					trackingParams.adProduct = 'featured-video-postroll';
-					player.playAd(buildVastUrl('postroll', videoDepth, correlator, slotTargeting));
+					player.playAd(buildVastUrl('postroll', videoDepth, correlator, slotTargeting, player.getMute()));
 				}
 			});
 
