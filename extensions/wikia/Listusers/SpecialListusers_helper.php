@@ -328,10 +328,6 @@ class ListusersData {
 	 * @param array $groups groups whose user count we need
 	 */
 	private function loadCountOfUsersInGroups( DatabaseBase $db, array $groups ) {
-		// CE-1487: exclude Poweruser group from group listing
-		$exclude = [ \Wikia\PowerUser\PowerUser::GROUP_NAME ];
-		$groups = array_diff( $groups, $exclude );
-
 		$res = $db->select(
 			'user_groups',
 			[ 'ug_group', 'COUNT(*) AS users_count' ],
