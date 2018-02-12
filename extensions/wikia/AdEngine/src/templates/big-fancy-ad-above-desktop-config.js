@@ -4,10 +4,9 @@ import autobind from 'core-decorators/es/autobind';
 import { pinNavbar, navBarElement, navBarStickClass, isElementInViewport } from './navbar-updater';
 
 const {
-	CSS_CLASSNAME_FADE_IN_ANIMATION,
-	CSS_CLASSNAME_SLIDE_OUT_ANIMATION,
 	CSS_CLASSNAME_STICKY_BFAA,
-	CSS_TIMING_EASE_IN_CUBIC
+	CSS_TIMING_EASE_IN_CUBIC,
+	SLIDE_OUT_TIME
 } = universalAdPackage;
 
 export const getConfig = () => ({
@@ -44,32 +43,27 @@ export const getConfig = () => ({
 		}
 	},
 
-	onStickBfaaCallback(adSlot) {
-		adSlot.getElement().classList.add(CSS_CLASSNAME_STICKY_BFAA);
+	onAfterStickBfaaCallback() {
 		pinNavbar(false);
 	},
 
-	onUnstickBfaaCallback(adSlot) {
-		const slideOutDuration = 600;
-
+	onBeforeUnstickBfaaCallback() {
 		scrollListener.removeCallback(this.updateNavbarOnScroll);
 		this.updateNavbarOnScroll = null;
 		Object.assign(navBarElement.style, {
-			transition: `top ${slideOutDuration}ms ${CSS_TIMING_EASE_IN_CUBIC}`,
+			transition: `top ${SLIDE_OUT_TIME}ms ${CSS_TIMING_EASE_IN_CUBIC}`,
 			top: '0'
 		});
-		animateUAPSlot(adSlot, CSS_CLASSNAME_SLIDE_OUT_ANIMATION, slideOutDuration).then(() => {
-			Object.assign(navBarElement.style, {
-				transition: '',
-				top: ''
-			});
-			adSlot.getElement().classList.remove(CSS_CLASSNAME_STICKY_BFAA);
-			this.updateNavbar();
+	},
 
-			return animateUAPSlot(adSlot, CSS_CLASSNAME_FADE_IN_ANIMATION, 400);
-		}).then(() => {
-			this.updateNavbarOnScroll = scrollListener.addCallback(() => this.updateNavbar());
+	onAfterUnstickBfaaCallback() {
+		Object.assign(navBarElement.style, {
+			transition: '',
+			top: ''
 		});
+
+		this.updateNavbar();
+		this.updateNavbarOnScroll = scrollListener.addCallback(() => this.updateNavbar());
 	},
 
 	updateNavbar() {

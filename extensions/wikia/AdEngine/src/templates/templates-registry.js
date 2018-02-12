@@ -11,8 +11,6 @@ export default class TemplateRegistry {
 		const isMobile = legacyContext.get('targeting.skin') !== 'oasis';
 		const getBfaaConfig = isMobile ? getMobileBfaaConfig : getDesktopBfaaConfig;
 
-		console.log(getBfaaConfig(mercuryListener));
-
 		templateService.register(BigFancyAdAbove, getBfaaConfig(mercuryListener));
 		templateService.register(BigFancyAdBelow, getBfabConfig());
 	}
