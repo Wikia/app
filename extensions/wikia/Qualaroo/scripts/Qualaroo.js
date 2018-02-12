@@ -56,9 +56,6 @@
 		// all verticals
 		'fullVerticalName': window.fullVerticalName,
 		'visitorType': window.visitorType,
-		'isPowerUserAdmin': !!window.wikiaIsPowerUserAdmin,
-		'isPowerUserFrequent': !!window.wikiaIsPowerUserFrequent,
-		'isPowerUserLifetime': !!window.wikiaIsPowerUserLifetime,
 		'isLoggedIn': !!window.wgUserName,
 		'cpBenefitsModalShown': document.cookie.indexOf('cpBenefitsModalShown') > -1,
 		'isContributor': window.isContributor,
