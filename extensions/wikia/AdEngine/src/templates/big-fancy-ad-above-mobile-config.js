@@ -58,7 +58,7 @@ export const getConfig = mercuryListener => ({
 		wrapper.style.opacity = '0';
 		slotTweaker.onReady(adSlot).then((iframe) => {
 			wrapper.style.opacity = '';
-			this.runOnReady(iframe);
+			this.onReady(iframe);
 		});
 
 		if (this.adsModule.hideSmartBanner) {
