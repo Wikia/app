@@ -1,5 +1,5 @@
 import { context, slotTweaker } from '@wikia/ad-engine';
-import { universalAdPackage, animateUAPSlot } from '@wikia/ad-products';
+import { universalAdPackage } from '@wikia/ad-products';
 
 const {
 	CSS_TIMING_EASE_IN_CUBIC,

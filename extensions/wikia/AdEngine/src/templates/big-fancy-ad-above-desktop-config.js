@@ -1,4 +1,4 @@
-import { universalAdPackage, animateUAPSlot } from '@wikia/ad-products';
+import { universalAdPackage } from '@wikia/ad-products';
 import { context, scrollListener, slotTweaker } from '@wikia/ad-engine';
 import autobind from 'core-decorators/es/autobind';
 import { pinNavbar, navBarElement, navBarStickClass, isElementInViewport } from './navbar-updater';
