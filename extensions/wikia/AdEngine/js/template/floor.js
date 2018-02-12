@@ -98,7 +98,7 @@ define('ext.wikia.adEngine.template.floor', [
 		if (!floor) {
 			floor = document.createElement('div');
 			floor.id = floorId;
-			floor.classNames = 'hidden';
+			floor.className = 'hidden';
 			floor.innerHTML = floorHtml;
 			doc.body.insertAdjacentElement('beforeend', floor);
 		}
