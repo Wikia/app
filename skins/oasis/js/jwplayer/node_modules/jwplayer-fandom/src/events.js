@@ -98,7 +98,7 @@ function wikiaJWPlayerEvents(playerInstance, willAutoplay, logger) {
 
 	playerInstance.on('play', function (data) {
 		if (isPlayerPaused) {
-			playerInstance.trigger('videoResumed');
+			playerInstance.trigger('videoResumed', data);
 			logger.info('videoResumed triggered');
 		}
 

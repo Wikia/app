@@ -442,8 +442,11 @@ class OggHandler extends MediaHandler {
 		return "$wgExtensionAssetsPath/OggHandler";
 	}
 
+	/**
+	 * @param OutputPage $out
+	 */
 	function setHeaders( $out ) {
-		global $wgOggScriptVersion, $wgCortadoJarFile;
+		global $wgOggScriptVersion;
 
 		if ( $out->hasHeadItem( 'OggHandlerScript' ) && $out->hasHeadItem( 'OggHandlerInlineScript' ) &&
 			$out->hasHeadItem( 'OggHandlerInlineCSS' ) ) {
@@ -451,21 +454,15 @@ class OggHandler extends MediaHandler {
 		}
 
 		$msgNames = array( 'ogg-play', 'ogg-pause', 'ogg-stop', 'ogg-no-player',
-			'ogg-player-videoElement', 'ogg-player-oggPlugin', 'ogg-player-cortado', 'ogg-player-vlc-mozilla',
+			'ogg-player-videoElement', 'ogg-player-oggPlugin', 'ogg-player-vlc-mozilla',
 			'ogg-player-vlc-activex', 'ogg-player-quicktime-mozilla', 'ogg-player-quicktime-activex',
 			'ogg-player-totem', 'ogg-player-kaffeine', 'ogg-player-kmplayer', 'ogg-player-mplayerplug-in',
 			'ogg-player-thumbnail', 'ogg-player-selected', 'ogg-use-player', 'ogg-more', 'ogg-download',
 			'ogg-desc-link', 'ogg-dismiss', 'ogg-player-soundthumb', 'ogg-no-xiphqt' );
 		$msgValues = array_map( 'wfMsg', $msgNames );
 		$jsMsgs = Xml::encodeJsVar( (object)array_combine( $msgNames, $msgValues ) );
-		$cortadoUrl = $wgCortadoJarFile;
 		$scriptPath = self::getMyScriptPath();
-		if( substr( $cortadoUrl, 0, 1 ) != '/'
-				&& substr( $cortadoUrl, 0, 4 ) != 'http' )
-		{
-			$cortadoUrl = wfExpandUrl( "$scriptPath/$cortadoUrl", PROTO_CURRENT );
-		}
-		$encCortadoUrl = Xml::encodeJsVar( $cortadoUrl );
+
 		$encExtPathUrl = Xml::encodeJsVar( $scriptPath );
 		$alignStart = wfUILang()->alignStart();
 
@@ -474,7 +471,6 @@ class OggHandler extends MediaHandler {
 		$out->addHeadItem( 'OggHandlerInlineScript',  Html::inlineScript( <<<EOT
 
 wgOggPlayer.msg = $jsMsgs;
-wgOggPlayer.cortadoUrl = $encCortadoUrl;
 wgOggPlayer.extPathUrl = $encExtPathUrl;
 
 EOT

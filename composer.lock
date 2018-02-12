@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "791fbc5f0b72000426bc527f8ca11001",
+    "content-hash": "5ebf03dc0b32276ba6616fbd3d125631",
     "packages": [
         {
             "name": "composer/installers",
@@ -2104,38 +2104,6 @@
             "time": "2016-08-02T04:16:55+00:00"
         },
         {
-            "name": "ooyala/v2-api",
-            "version": "v2.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/ooyala/php-v2-sdk.git",
-                "reference": "cbe7d28bd31133daa6cd1b59919fac055629312f"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/ooyala/php-v2-sdk/zipball/cbe7d28bd31133daa6cd1b59919fac055629312f",
-                "reference": "cbe7d28bd31133daa6cd1b59919fac055629312f",
-                "shasum": ""
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0.x-dev"
-                }
-            },
-            "autoload": {
-                "files": [
-                    "OoyalaApi.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "proprietary"
-            ],
-            "description": "Ooyala's V2 API PHP SDK",
-            "time": "2016-06-27T16:45:25+00:00"
-        },
-        {
             "name": "param-processor/param-processor",
             "version": "1.3.3",
             "source": {
@@ -3038,16 +3006,16 @@
         },
         {
             "name": "phpunit/dbunit",
-            "version": "3.0.2",
+            "version": "3.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/dbunit.git",
-                "reference": "403350339b6aca748ee0067d027d85621992e21f"
+                "reference": "0fa4329e490480ab957fe7b1185ea0996ca11f44"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/dbunit/zipball/403350339b6aca748ee0067d027d85621992e21f",
-                "reference": "403350339b6aca748ee0067d027d85621992e21f",
+                "url": "https://api.github.com/repos/sebastianbergmann/dbunit/zipball/0fa4329e490480ab957fe7b1185ea0996ca11f44",
+                "reference": "0fa4329e490480ab957fe7b1185ea0996ca11f44",
                 "shasum": ""
             },
             "require": {
@@ -3086,7 +3054,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2017-11-18T17:40:34+00:00"
+            "time": "2018-01-23T13:32:26+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -3339,16 +3307,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "6.5.4",
+            "version": "6.5.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "1b2f933d5775f9237369deaa2d2bfbf9d652be4c"
+                "reference": "3330ef26ade05359d006041316ed0fa9e8e3cefe"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/1b2f933d5775f9237369deaa2d2bfbf9d652be4c",
-                "reference": "1b2f933d5775f9237369deaa2d2bfbf9d652be4c",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/3330ef26ade05359d006041316ed0fa9e8e3cefe",
+                "reference": "3330ef26ade05359d006041316ed0fa9e8e3cefe",
                 "shasum": ""
             },
             "require": {
@@ -3419,7 +3387,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2017-12-10T08:06:19+00:00"
+            "time": "2018-02-01T05:57:37+00:00"
         },
         {
             "name": "phpunit/phpunit-mock-objects",

@@ -4,11 +4,7 @@
  * @group Integration
  */
 class UpdateCityListTaskIntegrationTest extends WikiaDatabaseTest {
-	const ADOPTABLE_WIKI_ID = 1;
-	const NON_ADOPTABLE_WIKI_ID = 2;
-
-	const ADMIN_USER_ID = 1;
-	const NOT_ADMIN_USER_ID = 2;
+	const WIKI_ID = 1;
 
 	/** @var UpdateCityListTask $updateCityListTask */
 	private $updateCityListTask;
@@ -27,7 +23,7 @@ class UpdateCityListTaskIntegrationTest extends WikiaDatabaseTest {
 	}
 
 	public function testTimestampIsUpdated() {
-		$this->updateCityListTask->wikiId( static::ADOPTABLE_WIKI_ID )
+		$this->updateCityListTask->wikiId( static::WIKI_ID )
 			->updateLastTimestamp( '20171201000000' );
 
 		$queryTable = $this->getConnection()->createQueryTable(
@@ -38,30 +34,6 @@ class UpdateCityListTaskIntegrationTest extends WikiaDatabaseTest {
 			->getTable( 'city_list' );
 
 		$this->assertTablesEqual( $expectedTable, $queryTable );
-	}
-
-	/**
-	 * @dataProvider provideUserIds
-	 * @param int $userId
-	 */
-	public function testWikiIsNotAdoptableWhenItHasOverThousandEdits( int $userId ) {
-		$this->updateCityListTask->wikiId( static::ADOPTABLE_WIKI_ID )
-			->checkIfWikiIsStillAdoptable( $userId );
-
-		$queryTable = $this->getConnection()->createQueryTable(
-			'city_list', 'SELECT city_id, city_flags FROM city_list'
-		);
-
-		$expectedTable = $this->createYamlDataSet( __DIR__ . '/fixtures/state_no_wiki_is_adoptable.yaml' )
-			->getTable( 'city_list' );
-
-		$this->assertTablesEqual( $expectedTable, $queryTable );
-	}
-
-	public function provideUserIds(): Generator {
-		yield [ static::ADMIN_USER_ID ];
-		yield [ static::NOT_ADMIN_USER_ID ];
-		yield [ 0 ];
 	}
 
 	protected function getDataSet() {

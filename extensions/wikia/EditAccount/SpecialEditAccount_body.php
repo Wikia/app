@@ -185,10 +185,6 @@ class EditAccount extends SpecialPage {
 				$this->mStatus = $this->clearClosureRequest();
 				$template = 'displayuser';
 				break;
-			case 'toggleadopter':
-				$this->mStatus = $this->toggleAdopterStatus();
-				$template = 'displayuser';
-				break;
 			case 'displayuser':
 				$template = 'displayuser';
 				break;
@@ -244,7 +240,6 @@ class EditAccount extends SpecialPage {
 				'isUnsub' => $this->mUser->getGlobalPreference('unsubscribed'),
 				'isDisabled' => $this->mUser->getGlobalFlag('disabled'),
 				'isClosureRequested' => $this->isClosureRequested(),
-				'isAdopter' => $this->mUser->getGlobalFlag('AllowAdoption', 1 ),
 				'isFanContributor' => $this->isFanContributor(),
 				'userStatus' => $userStatus,
 				'emailStatus' => $emailStatus,
@@ -485,15 +480,6 @@ class EditAccount extends SpecialPage {
 		$this->mUser->saveSettings();
 
 		$this->mStatusMsg = wfMsg( 'editaccount-success-disable', $this->mUser->mName );
-
-		return true;
-	}
-
-	function toggleAdopterStatus() {
-		$this->mUser->setGlobalFlag( 'AllowAdoption', (int) !$this->mUser->getGlobalFlag( 'AllowAdoption', 1 ) );
-		$this->mUser->saveSettings();
-
-		$this->mStatusMsg = wfMsg( 'editaccount-success-toggleadopt', $this->mUser->mName );
 
 		return true;
 	}

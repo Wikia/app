@@ -2124,7 +2124,7 @@ $messages['ja'] = array(
 	'userrenametool-info-failed' => '$1のユーザー名$2から$3への変更は失敗しました。',
 	'userrenametool-info-wiki-finished' => '$1さんが$4で「$2」から「$3」に名前を変更しました。
 理由：「$5」。',
-	'userrenametool-info-wiki-finished-problems' => '$1さんが$4で「$2」から「$3」に名前を変更した際にエラーが発生しました。
+	'userrenametool-info-wiki-finished-problems' => '$1さんが$4で「$2」から「$3」に名前を変更しましたがエラーがあります。
 理由：「$5」。',
 	'userrenametool-info-in-progress' => '名前の変更処理を行っています。
 残りの処理はバックグラウンドで継続されます。

@@ -57,7 +57,6 @@ $messages['pt-br'] = [
 	'videohomepage-header-search-placeholder' => 'Procure pelos vídeos da Wikia',
 	'videohomepage-header-browse' => 'Navegue',
 	'videohomepage-header-dropdown-name' => 'Descubra',
-	'videohomepage-partner-name-anyclip' => '',
 	'videohomepage-partner-section-title' => 'Nossos Parceiros',
 ];
 
@@ -89,11 +88,7 @@ $messages['zh-tw'] = [
 	'videohomepage-header-search-placeholder' => '搜尋Wikia影片',
 	'videohomepage-header-browse' => '瀏覽',
 	'videohomepage-header-dropdown-name' => '探索',
-	'videohomepage-partner-name-anyclip' => 'Anyclip',
 	'videohomepage-partner-name-ign' => 'IGN',
-	'videohomepage-partner-name-iva' => 'IVA',
-	'videohomepage-partner-name-ooyala' => 'Ooyala',
-	'videohomepage-partner-name-screenplay' => 'Screenplay',
 	'videohomepage-partner-section-title' => '我們的合作夥伴',
 ];
 

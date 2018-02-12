@@ -226,6 +226,6 @@ class CuratedContentValidator {
 	}
 
 	private static function isSupportedProvider( $provider ) {
-		return ( $provider === 'youtube' ) || ( startsWith( $provider, 'ooyala' ) );
+		return ( $provider === 'youtube' );
 	}
 }
