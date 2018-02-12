@@ -7,9 +7,17 @@ class DatabaseForumActivityService implements ForumActivityService {
 		$dbr = wfGetDB( DB_SLAVE );
 
 		$res = $dbr->select(
-			[ 'page', 'comments_index', 'thread_rev' => 'revision', 'last_comment_rev' => 'revision' ],
 			[
-				'page_id', 'page_namespace', 'page_title',
+				'page',
+				'comments_index',
+				'thread_rev' => 'revision',
+				'last_comment_page' => 'page',
+				'last_comment_rev' => 'revision'
+			],
+			[
+				'page.page_id AS page_id',
+				'page.page_namespace AS page_namespace',
+				'page.page_title AS page_title',
 				'thread_rev.rev_text_id AS thread_text_id',
 				'thread_rev.rev_user AS thread_author_id',
 				'thread_rev.rev_user_text AS thread_author_name',
@@ -19,7 +27,7 @@ class DatabaseForumActivityService implements ForumActivityService {
 				'last_comment_rev.rev_timestamp AS last_comment_timestamp'
 			],
 			[
-				'page_namespace' => NS_WIKIA_FORUM_BOARD_THREAD,
+				'page.page_namespace' => NS_WIKIA_FORUM_BOARD_THREAD,
 				'archived' => 0,
 				'deleted' => 0,
 				'removed' => 0,
@@ -34,9 +42,10 @@ class DatabaseForumActivityService implements ForumActivityService {
 				'ORDER BY' => 'last_touched DESC'
 			],
 			[
-				'comments_index' => [ 'INNER JOIN', 'page_id = comment_id' ],
-				'last_comment_rev' => [ 'INNER JOIN', 'last_comment_rev.rev_page = last_child_comment_id' ],
-				'thread_rev' => [ 'INNER JOIN', 'thread_rev.rev_id = page_latest' ],
+				'comments_index' => [ 'INNER JOIN', 'page.page_id = comment_id' ],
+				'last_comment_page' => [ 'INNER JOIN', 'last_comment_page.page_id = last_child_comment_id' ],
+				'last_comment_rev' => [ 'INNER JOIN', 'last_comment_rev.rev_id = last_comment_page.page_latest' ],
+				'thread_rev' => [ 'INNER JOIN', 'thread_rev.rev_id = page.page_latest' ],
 			]
 		);
 
