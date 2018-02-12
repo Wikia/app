@@ -354,7 +354,8 @@
 				type: 'POST',
 				data: {
 					dir: dir,
-					id: id
+					id: id,
+					token: mw.user.tokens.get('editToken')
 				},
 				callback: function (data) {
 					callback($target, data, dir);
@@ -407,7 +408,8 @@
 				method: 'undoAction',
 				type: 'POST',
 				data: {
-					msgid: id
+					msgid: id,
+					token: mw.user.tokens.get('editToken')
 				},
 				callback: this.proxy(function () {
 					var msg = $target.closest('li');
@@ -428,7 +430,8 @@
 				type: 'POST',
 				data: {
 					msgid: id,
-					formdata: formdata
+					formdata: formdata,
+					token: mw.user.tokens.get('editToken')
 				},
 				callback: this.proxy(function () {
 					window.location.reload();

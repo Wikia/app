@@ -258,12 +258,7 @@ class LightboxController extends WikiaController {
 				$articleTitleText = $articleTitleObj->getText();
 			}
 
-			// check if the file is added to the wiki
-			if ( WikiaFileHelper::isAdded( $file ) ) {
-				$fileUrl = $fileTitleObj->getFullURL();
-			} else {
-				$fileUrl = WikiaFileHelper::getFullUrlPremiumVideo( $fileTitleObj->getDBkey() );
-			}
+			$fileUrl = $fileTitleObj->getFullURL();
 
 			// determine share url
 			$sharingNamespaces = array(
