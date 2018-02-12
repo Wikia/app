@@ -20,6 +20,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	'wikia.instantGlobals',
 	'wikia.log',
 	'wikia.window',
+	require.optional('ext.wikia.adEngine.ml.rabbit'),
 	require.optional('ext.wikia.adEngine.provider.gpt.sraHelper'),
 	require.optional('ext.wikia.aRecoveryEngine.instartLogic.recovery'),
 	require.optional('ext.wikia.aRecoveryEngine.pageFair.recovery')
@@ -43,6 +44,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	instantGlobals,
 	log,
 	win,
+	rabbit,
 	sraHelper,
 	instartLogic,
 	pageFair
@@ -124,6 +126,10 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 
 			if (slotTargetingData.src) {
 				slotTargetingData.src = srcProvider.get(slotTargetingData.src, extra);
+			}
+
+			if (rabbit) {
+				slotTargetingData.rabbit = rabbit.getResults(instantGlobals.wgAdDriverRabbitTargetingKeyValues);
 			}
 
 			slotTargetingData.passback = passbackHandler.get(slotName) || 'none';
