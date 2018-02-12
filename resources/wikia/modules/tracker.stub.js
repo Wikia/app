@@ -237,6 +237,9 @@ function veTrack( data ) {
 			defaultData.whichVE = 'unknown';
 		}
 
+		// This file is loaded both in mobile-wiki and oasis
+		// On oasis we do have $ and we need to support IE11
+		// On mobile-wiki we do not have jquery and we don't have to support IE11 so we can safely use Object.assign
 		if (window.$) {
 			finalData = $.extend( {}, defaultData, data );
 		} else {
