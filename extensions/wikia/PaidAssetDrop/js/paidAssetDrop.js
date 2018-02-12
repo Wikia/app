@@ -136,6 +136,9 @@ define('ext.wikia.paidAssetDrop.paidAssetDrop', [
 
 		var padRequest;
 
+		// This file is loaded both in Oasis and mobile-wiki
+		// in mobile-wiki we do not have jquery but we do have a fetch polyfill so it is save to use this
+		// in oasis, we do have $.ajax so we can fallback to it if a browser does not suppor fetch
 		if (win.fetch) {
 			padRequest = win.fetch(url).then(function(data) {return data.json()})
 		} else {
