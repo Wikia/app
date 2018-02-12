@@ -48,7 +48,7 @@ export const getConfig = mercuryListener => ({
 
 	onInit(adSlot, params) {
 		this.adSlot = adSlot;
-		this.slotParams = slotParams;
+		this.slotParams = params;
 		this.adsModule = window.Mercury.Modules.Ads.getInstance();
 		this.navbarElement = document.querySelector('.site-head-container .site-head');
 
@@ -74,14 +74,14 @@ export const getConfig = mercuryListener => ({
 	},
 
 	onAfterUnstickBfaaCallback() {
-		Object.assign(this.navBarElement.style, {
+		Object.assign(this.navbarElement.style, {
 			transition: '',
 			top: ''
 		});
 	},
 
 	moveNavbar(offset) {
-		this.adsMobile.setSiteHeadOffset(offset || slotElement.clientHeight);
+		window.Mercury.Modules.Ads.getInstance().setSiteHeadOffset(offset || this.adSlot.getElement().clientHeight);
 		this.navbarElement.style.top = offset ? `${offset}px` : '';
 	}
 });
