@@ -7,8 +7,6 @@
  * @author macbre
  */
 class InstantGlobalsModule extends ResourceLoaderModule {
-	const IG_CACHE_TIME = 300;
-
 	/**
 	 * Get variables values
 	 *
@@ -52,7 +50,7 @@ class InstantGlobalsModule extends ResourceLoaderModule {
 
 		$variables = WikiaDataAccess::cache(
 			$cacheKey,
-			self::IG_CACHE_TIME,
+			WikiaDataAccess::DEFAULT_TTL,
 			function() {
 				return $this->getVariablesValues();
 			}
