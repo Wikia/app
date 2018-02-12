@@ -2692,10 +2692,10 @@ class User implements JsonSerializable {
 	 * Get a global user flag.
 	 *
 	 * Flags are typically boolean settings that are used internally to signify
-	 * something about the user such as whether or not their account has been
-	 * disabled or if they are a power user.
+	 * something about the user.
 	 *
 	 * @param string $flag
+	 * @param bool $default
 	 * @return bool
 	 */
 	public function getGlobalFlag($flag, $default = null) {
