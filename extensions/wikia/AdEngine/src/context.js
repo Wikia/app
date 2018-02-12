@@ -11,7 +11,7 @@ export default {
 	slots: {},
 	vast: {
 		adUnitId: '/{custom.dfpId}/wka.{targeting.s0}/{custom.wikiIdentifier}//{targeting.s2}/{targeting.src}/{slotName}',
-		megaAdUnitId: '/{custom.dfpId}/wka1a.{adGroup}/{adProduct}/{custom.device}/{targeting.skin}-{targeting.s2}/{custom.wikiIdentifier}-{targeting.s0}'
+		megaAdUnitId: '/{custom.dfpId}/wka1a.{adGroup}/{adProduct}{audioSegment}/{custom.device}/{targeting.skin}-{targeting.s2}/{custom.wikiIdentifier}-{targeting.s0}'
 	},
 	targeting: {
 		outstream: 'none',
@@ -38,6 +38,13 @@ export default {
 				enabled: false,
 				partnerCode: 'wikiaimajsint377461931603',
 				sampling: 0
+			}
+		},
+		porvata: {
+			audio: {
+				exposeToSlot: true,
+				segment: '-audio',
+				key: 'audio'
 			}
 		}
 	}
