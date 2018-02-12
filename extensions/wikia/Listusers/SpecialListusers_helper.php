@@ -131,15 +131,6 @@ class ListusersData {
 				foreach ( $this->mFilterGroup as $group ) {
 					if ( !empty($group) ) {
 						if ( $group == Listusers::DEF_GROUP_NAME ) {
-							/**
-							 * @see CE-1487
-							 * Until poweruser group is still being evaluated
-							 * and developed - we consider it as 'invisible'
-							 * and include it in the No group checkbox
-							 */
-							$powerUserGroupName = \Wikia\PowerUser\PowerUser::GROUP_NAME;
-							$whereGroup[] = ' single_group = ' . $dbs->addQuotes( $powerUserGroupName );
-
 							$whereGroup[] = " all_groups = '' ";
 						} else {
 							$whereGroup[] = " all_groups " . $dbs->buildLike( $dbs->anyString(), $group );
