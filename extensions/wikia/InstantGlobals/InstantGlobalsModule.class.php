@@ -7,6 +7,7 @@
  * @author macbre
  */
 class InstantGlobalsModule extends ResourceLoaderModule {
+	const IG_CACHE_TIME = 300;
 
 	/**
 	 * Get variables values
@@ -46,15 +47,16 @@ class InstantGlobalsModule extends ResourceLoaderModule {
 	}
 
 	public function getScript( ResourceLoaderContext $context = null ) {
-		global $wgMemc;
 		$variables = null;
-		$cacheKey = wfMemcKey( 'instantGlobalsVariablesValues' );
+		$cacheKey = wfSharedMemcKey( 'instantGlobalsVariablesValues' );
 
-		if ( !( $variables = $wgMemc->get( $cacheKey ) ) ) {
-			$variables = $this->getVariablesValues();
-
-			$wgMemc->set( $cacheKey, $variables, 300 );
-		}
+		$variables = WikiaDataAccess::cache(
+			$cacheKey,
+			self::IG_CACHE_TIME,
+			function() {
+				return $this->getVariablesValues();
+			}
+		);
 
 		return sprintf( 'Wikia.InstantGlobals = %s', json_encode( $variables ) );
 	}
