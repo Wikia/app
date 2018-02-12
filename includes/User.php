@@ -78,7 +78,6 @@ class User implements JsonSerializable {
 	/**
 	 * Traits extending the class
 	 */
-	use PowerUserTrait;
 	use AuthServiceAccessor;
 	# WIKIA CHANGE END
 
