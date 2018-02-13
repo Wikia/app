@@ -66,16 +66,17 @@ export const getConfig = () => ({
 		this.updateNavbarOnScroll = scrollListener.addCallback(() => this.updateNavbar());
 	},
 
-	async updateNavbar() {
+	updateNavbar() {
 		// Wait for others callbacks to be executed before we update navbar position
-		await utils.wait();
+		setTimeout(function() {
+			const container = this.adSlot.getElement();
+			const isSticky = container.classList.contains(CSS_CLASSNAME_STICKY_BFAA);
+			const isInViewport = isElementInViewport(this.adSlot, this.slotParams);
 
-		const container = this.adSlot.getElement();
-		const isSticky = container.classList.contains(CSS_CLASSNAME_STICKY_BFAA);
-		const isInViewport = isElementInViewport(this.adSlot, this.slotParams);
+			pinNavbar(isInViewport && !isSticky);
+			this.moveNavbar(isSticky ? container.offsetHeight : 0);
+		}, 0)
 
-		pinNavbar(isInViewport && !isSticky);
-		this.moveNavbar(isSticky ? container.offsetHeight : 0);
 	},
 
 	moveNavbar(offset) {
