@@ -1,8 +1,9 @@
 /*global define*/
 define('ext.wikia.adEngine.ml.modelFactory', [
+	'ext.wikia.adEngine.adContext',
 	'wikia.geo',
 	'wikia.instantGlobals'
-], function (geo, instantGlobals) {
+], function (adContext, geo, instantGlobals) {
 	'use strict';
 
 	var requiredData = [
@@ -21,6 +22,10 @@ define('ext.wikia.adEngine.ml.modelFactory', [
 		});
 
 		var predictedValue = null;
+
+		adContext.addCallback(function () {
+			predictedValue = null;
+		});
 
 		return {
 			getResult: function () {
