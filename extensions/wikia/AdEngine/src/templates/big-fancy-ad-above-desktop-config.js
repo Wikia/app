@@ -32,7 +32,9 @@ export const getConfig = () => ({
 			wrapper.style.opacity = '';
 			this.updateNavbar();
 		});
-		this.updateNavbarOnScroll = scrollListener.addCallback(() => this.updateNavbar());
+
+		// Wait for others callbacks to be executed before we update navbar position
+		this.updateNavbarOnScroll = scrollListener.addCallback(() => setTimeout(this.updateNavbar.bind(this), 0));
 
 		if (!window.ads.runtime.disableCommunitySkinOverride) {
 			document.body.classList.add('uap-skin');
@@ -67,16 +69,12 @@ export const getConfig = () => ({
 	},
 
 	updateNavbar() {
-		// Wait for others callbacks to be executed before we update navbar position
-		setTimeout(function() {
-			const container = this.adSlot.getElement();
-			const isSticky = container.classList.contains(CSS_CLASSNAME_STICKY_BFAA);
-			const isInViewport = isElementInViewport(this.adSlot, this.slotParams);
+		const container = this.adSlot.getElement();
+		const isSticky = container.classList.contains(CSS_CLASSNAME_STICKY_BFAA);
+		const isInViewport = isElementInViewport(this.adSlot, this.slotParams);
 
-			pinNavbar(isInViewport && !isSticky);
-			this.moveNavbar(isSticky ? container.offsetHeight : 0);
-		}, 0)
-
+		pinNavbar(isInViewport && !isSticky);
+		this.moveNavbar(isSticky ? container.offsetHeight : 0);
 	},
 
 	moveNavbar(offset) {
