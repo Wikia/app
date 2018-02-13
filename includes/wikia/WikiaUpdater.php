@@ -81,6 +81,7 @@ class WikiaUpdater {
 			array( 'WikiaUpdater::do_drop_table', 'tag_summary' ), // SUS-3066
 			array( 'WikiaUpdater::do_drop_table', 'sitemap_blobs' ), // SUS-3589
 			array( 'WikiaUpdater::do_clean_video_info_table' ), // SUS-3862
+			array( 'WikiaUpdater::removeUnusedGroups' ), // SUS-4169
 		);
 
 		if ( $wgDBname === $wgExternalSharedDB ) {
@@ -317,6 +318,10 @@ class WikiaUpdater {
 		$databaseUpdater->output( "done.\n" );
 		
 		wfWaitForSlaves();
+	}
+
+	public function removeUnusedGroups( DatabaseUpdater $databaseUpdater ) {
+		$databaseUpdater->maintenance->runChild( RemoveUnusedGroups::class );
 	}
 
 	/**
