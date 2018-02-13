@@ -1,54 +1,84 @@
-import { context, scrollListener, slotTweaker } from '@wikia/ad-engine';
+import { universalAdPackage } from '@wikia/ad-products';
+import { context, scrollListener, slotTweaker, utils } from '@wikia/ad-engine';
+import autobind from 'core-decorators/es/autobind';
 import { pinNavbar, navBarElement, navBarStickClass, isElementInViewport } from './navbar-updater';
 
-export function getConfig() {
-	return {
-		slotsToEnable: [
-			'BOTTOM_LEADERBOARD',
-			'INCONTENT_BOXAD_1'
-		],
-		onInit(adSlot, params) {
-			context.set(`slots.${adSlot.getSlotName()}.options.isVideoMegaEnabled`, params.isVideoMegaEnabled);
+const {
+	CSS_CLASSNAME_STICKY_BFAA,
+	CSS_TIMING_EASE_IN_CUBIC,
+	SLIDE_OUT_TIME
+} = universalAdPackage;
 
-			const spotlightFooter = document.getElementById('SPOTLIGHT_FOOTER');
-			const wrapper = document.getElementById('WikiaTopAds');
-			const container = adSlot.getElement();
-			const updateNavbar = () => {
-				const isSticky = container.classList.contains('sticky-bfaa');
-				const isInViewport = isElementInViewport(adSlot, params);
+export const getConfig = () => ({
+	adSlot: null,
+	slotParams: null,
+	updateNavbarOnScroll: null,
 
-				pinNavbar(isInViewport && !isSticky);
-				this.moveNavbar(isSticky ? container.offsetHeight : 0);
-			};
+	slotsToEnable: [
+		'BOTTOM_LEADERBOARD',
+		'INCONTENT_BOXAD_1'
+	],
 
-			this.slotConfig = params.config;
-			wrapper.style.opacity = '0';
+	onInit(adSlot, params) {
+		this.adSlot = adSlot;
+		this.slotParams = params;
+		context.set(`slots.${adSlot.getSlotName()}.options.isVideoMegaEnabled`, params.isVideoMegaEnabled);
 
-			slotTweaker.onReady(adSlot).then(() => {
-				wrapper.style.opacity = '';
-				updateNavbar();
-			});
-			scrollListener.addCallback(updateNavbar);
+		const spotlightFooter = document.getElementById('SPOTLIGHT_FOOTER');
+		const wrapper = document.getElementById('WikiaTopAds');
 
-			if (!window.ads.runtime.disableCommunitySkinOverride) {
-				document.body.classList.add('uap-skin');
-			}
-			if (spotlightFooter) {
-				spotlightFooter.parentNode.style.display = 'none';
-			}
-		},
-		onStickBfaaCallback(adSlot) {
-			adSlot.getElement().classList.add('sticky-bfaa');
-			pinNavbar(false);
-		},
-		onUnstickBfaaCallback(adSlot, params) {
-			adSlot.getElement().classList.remove('sticky-bfaa');
-			pinNavbar(isElementInViewport(adSlot, params));
-		},
-		moveNavbar(offset) {
-			if (navBarElement) {
-				navBarElement.style.top = offset ? `${offset}px` : '';
-			}
+		wrapper.style.opacity = '0';
+		slotTweaker.onReady(adSlot).then(() => {
+			wrapper.style.opacity = '';
+			this.updateNavbar();
+		});
+
+		this.updateNavbarOnScroll = scrollListener.addCallback(() => this.updateNavbar());
+
+		if (!window.ads.runtime.disableCommunitySkinOverride) {
+			document.body.classList.add('uap-skin');
 		}
-	};
-}
+
+		if (spotlightFooter) {
+			spotlightFooter.parentNode.style.display = 'none';
+		}
+	},
+
+	onAfterStickBfaaCallback() {
+		pinNavbar(false);
+	},
+
+	onBeforeUnstickBfaaCallback() {
+		scrollListener.removeCallback(this.updateNavbarOnScroll);
+		this.updateNavbarOnScroll = null;
+		Object.assign(navBarElement.style, {
+			transition: `top ${SLIDE_OUT_TIME}ms ${CSS_TIMING_EASE_IN_CUBIC}`,
+			top: '0'
+		});
+	},
+
+	onAfterUnstickBfaaCallback() {
+		Object.assign(navBarElement.style, {
+			transition: '',
+			top: ''
+		});
+
+		this.updateNavbar();
+		this.updateNavbarOnScroll = scrollListener.addCallback(() => this.updateNavbar());
+	},
+
+	updateNavbar() {
+		const container = this.adSlot.getElement();
+		const isSticky = container.classList.contains(CSS_CLASSNAME_STICKY_BFAA);
+		const isInViewport = isElementInViewport(this.adSlot, this.slotParams);
+
+		pinNavbar(isInViewport && !isSticky);
+		this.moveNavbar(isSticky ? container.offsetHeight : 0);
+	},
+
+	moveNavbar(offset) {
+		if (navBarElement) {
+			navBarElement.style.top = offset ? `${offset}px` : '';
+		}
+	}
+});
