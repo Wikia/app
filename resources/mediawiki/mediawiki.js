@@ -1349,7 +1349,7 @@ var mw = ( function ( $, undefined ) {
 				 *  be assumed if loading a URL, and false will be assumed otherwise.
 				 */
 				load: function ( modules, type, async ) {
-					var filtered, m;
+					var filtered, m, domainRegex;
 
 					// Validate input
 					if ( typeof modules !== 'object' && typeof modules !== 'string' ) {
@@ -1363,6 +1363,13 @@ var mw = ( function ( $, undefined ) {
 								// Assume async for bug 34542
 								async = true;
 							}
+							// Wikia change - make URL protocol relative if it's ours, a single subdomain,
+							// and currently using plain HTTP
+							domainRegex = new RegExp( '^http:\\/\\/[^\\.]+\\.' + mw.config.get( 'wgWikiaBaseDomainRegex' ) );
+							if ( domainRegex.test( modules ) ) {
+								modules = modules.replace( /^http:\/\//, '//' );
+							}
+							// End Wikia change
 							if ( type === 'text/css' ) {
 								$( 'head' ).append( $( '<link>', {
 									rel: 'stylesheet',
