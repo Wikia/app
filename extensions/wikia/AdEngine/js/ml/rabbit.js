@@ -35,6 +35,8 @@ define('ext.wikia.adEngine.ml.rabbit', [
 
 	function getResults(allowedModels) {
 		var results = [];
+		
+		allowedModels = allowedModels || [];
 
 		models.forEach(function (model) {
 			if (model && model.isEnabled() && allowedModels.indexOf(model.getName()) !== -1) {
