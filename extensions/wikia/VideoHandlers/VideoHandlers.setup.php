@@ -136,10 +136,3 @@ $wgMediaHandlers['video/youtube'] = 'YoutubeVideoHandler';
 $wgAutoloadClasses['YoukuApiWrapper'] =  $dir . '/apiwrappers/YoukuApiWrapper.class.php';
 $wgAutoloadClasses['YoukuVideoHandler'] =  $dir . '/handlers/YoukuVideoHandler.class.php';
 $wgMediaHandlers['video/youku'] = 'YoukuVideoHandler';
-
-$wgVideoMigrationProviderMap = array(
-	5 => 'Youtube',
-	13 => 'Vimeo',
-	18 => 'Dailymotion',
-	32 => 'Youku'
-);
