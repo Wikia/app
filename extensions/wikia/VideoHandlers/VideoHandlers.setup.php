@@ -125,10 +125,6 @@ $wgAutoloadClasses['DailymotionVideoHandler'] =  $dir . '/handlers/DailymotionVi
 $wgAutoloadClasses['DailymotionApiWrapper'] =  $dir . '/apiwrappers/DailymotionApiWrapper.class.php';
 $wgMediaHandlers['video/dailymotion'] = 'DailymotionVideoHandler';
 
-$wgAutoloadClasses['IgnVideoHandler'] =  $dir . '/handlers/IgnVideoHandler.class.php';
-$wgAutoloadClasses['IgnApiWrapper'] =  $dir . '/apiwrappers/IgnApiWrapper.class.php';
-$wgMediaHandlers['video/ign'] = 'IgnVideoHandler';
-
 $wgAutoloadClasses['VimeoVideoHandler'] =  $dir . '/handlers/VimeoVideoHandler.class.php';
 $wgAutoloadClasses['VimeoApiWrapper'] =  $dir . '/apiwrappers/VimeoApiWrapper.class.php';
 $wgMediaHandlers['video/vimeo'] = 'VimeoVideoHandler';
@@ -145,9 +141,5 @@ $wgVideoMigrationProviderMap = array(
 	5 => 'Youtube',
 	13 => 'Vimeo',
 	18 => 'Dailymotion',
-	/*
-	// a trick to make video.wikia and local files accessible via wrappers:
-	24 => 'Wikia',
-	*/
 	32 => 'Youku'
 );
