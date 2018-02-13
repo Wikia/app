@@ -25,6 +25,14 @@ define('ext.wikia.adEngine.ml.rabbit', [
 		outstreamLr
 	];
 
+	function getModelNames() {
+		return models.map(function (model) {
+			if (model) {
+				return model.getName();
+			}
+		});
+	}
+
 	function getResults(allowedModels) {
 		var results = [];
 
@@ -38,11 +46,7 @@ define('ext.wikia.adEngine.ml.rabbit', [
 	}
 
 	function getAllSerializedResults() {
-		var allowedModels = models.map(function (model) {
-			if (model) {
-				return model.getName();
-			}
-		});
+		var allowedModels = getModelNames();
 
 		return getResults(allowedModels).join(';');
 	}
