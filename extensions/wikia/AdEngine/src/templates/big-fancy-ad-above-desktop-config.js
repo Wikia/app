@@ -33,8 +33,7 @@ export const getConfig = () => ({
 			this.updateNavbar();
 		});
 
-		// Wait for others callbacks to be executed before we update navbar position
-		this.updateNavbarOnScroll = scrollListener.addCallback(() => setTimeout(this.updateNavbar.bind(this), 0));
+		this.updateNavbarOnScroll = scrollListener.addCallback(() => this.updateNavbar());
 
 		if (!window.ads.runtime.disableCommunitySkinOverride) {
 			document.body.classList.add('uap-skin');
