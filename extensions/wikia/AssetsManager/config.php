@@ -208,15 +208,6 @@ $config['recirculation_scss'] = [
 	],
 ];
 
-$config['spotlights_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => [
-		// ads
-		'//extensions/wikia/Spotlights/js/AdProviderOpenX.js',
-		'//extensions/wikia/Spotlights/js/LazyLoadAds.js',
-	],
-];
-
 
 $config['adengine2_top_js'] = [
 	'type' => AssetsManager::TYPE_JS,
