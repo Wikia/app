@@ -74,6 +74,8 @@ define('ext.wikia.adEngine.video.player.porvata.porvataTracker', [
 			return;
 		}
 
+		params.withAudio = !params.autoPlay;
+
 		track(params, 'ready');
 
 		Object.keys(trackingEventsMap).forEach(function (playerEvent) {
