@@ -26,16 +26,10 @@ define('ext.wikia.adEngine.ml.rabbit', [
 	];
 
 	function getResults(allowedModels) {
-		allowedModels = allowedModels || [];
-
 		var results = [];
 
 		models.forEach(function (model) {
-			if (model && model.isEnabled()) {
-				if (allowedModels.length > 0 && allowedModels.indexOf(model.getName()) === -1) {
-					return;
-				}
-
+			if (model && model.isEnabled() && allowedModels.indexOf(model.getName()) !== -1) {
 				results.push(model.getResult());
 			}
 		});
@@ -43,12 +37,18 @@ define('ext.wikia.adEngine.ml.rabbit', [
 		return results;
 	}
 
-	function getSerializedResults() {
-		return getResults().join(';');
+	function getAllSerializedResults() {
+		var allowedModels = models.map(function (model) {
+			if (model) {
+				return model.getName();
+			}
+		});
+
+		return getResults(allowedModels).join(';');
 	}
 
 	return {
 		getResults: getResults,
-		getSerializedResults: getSerializedResults
+		getAllSerializedResults: getAllSerializedResults
 	};
 });
