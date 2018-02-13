@@ -6,9 +6,8 @@ class AchRankedUser {
 	private $mUsername;
 	private $mUserPageUrl;
 	private $mCurrentRanking;
-	private $mPreviousRanking;
 
-	function __construct(User $userObj, $score, $currentRanking = null, $previousRanking = null) {
+	public function __construct( User $userObj, $score, $currentRanking = null ) {
 	    wfProfileIn(__METHOD__);
 
 	    $this->mUserId = $userObj->getID();
@@ -16,7 +15,6 @@ class AchRankedUser {
 	    $this->mScore = $score;
 	    $this->mUserPageUrl = $userObj->getUserPage()->getLocalURL();
 	    $this->mCurrentRanking = $currentRanking;
-	    $this->mPreviousRanking = $previousRanking;
 
 	    wfProfileOut(__METHOD__);
 	}
@@ -39,9 +37,5 @@ class AchRankedUser {
 
 	public function getCurrentRanking() {
 	    return $this->mCurrentRanking;
-	}
-
-	public function getPreviousRanking() {
-	    return $this->mPreviousRanking;
 	}
 }
