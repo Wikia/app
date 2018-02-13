@@ -44,6 +44,7 @@ define('ext.wikia.adEngine.context.slotsContext', [
 		setStatus('INVISIBLE_HIGH_IMPACT_2', !context.targeting.hasFeaturedVideo && geo.isProperGeo(instantGlobals.wgAdDriverHighImpact2SlotCountries));
 
 		setStatus('INCONTENT_PLAYER', isIncontentEnabled);
+		setStatus('FEATURED', context.targeting.hasFeaturedVideo);
 
 		log(['Slots:', slots], log.levels.info, logGroup);
 	}

@@ -24,11 +24,12 @@ define('ext.wikia.adEngine.provider.btfBlocker', [
 	function isBTFDisabledByCreative() {
 		return win.ads.runtime.disableBtf;
 	}
+	var btfQueue = [],
+		btfQueueStarted = false,
+		pendingAtfSlots = []; // ATF slots pending for response
+	var fillInSlotCallbacks = {};
 
 	function decorate(fillInSlot, config) {
-		var btfQueue = [],
-			btfQueueStarted = false,
-			pendingAtfSlots = []; // ATF slots pending for response
 
 		// Update state on each pv on Mercury
 		adContext.addCallback(function () {
@@ -44,6 +45,7 @@ define('ext.wikia.adEngine.provider.btfBlocker', [
 		win.addEventListener('wikia.blocking', startBtfQueue);
 
 		function processBtfSlot(slot) {
+
 			if (uapContext.isUapLoaded() && slot.name === 'INVISIBLE_HIGH_IMPACT_2') {
 				log(['IHI2 disabled when UAP on page'], log.levels.info, logGroup);
 				return;
@@ -56,11 +58,14 @@ define('ext.wikia.adEngine.provider.btfBlocker', [
 
 			if (unblockedSlots.indexOf(slot.name) > -1 || !isBTFDisabledByCreative()) {
 				log(['Filling slot', slot.name], log.levels.info, logGroup);
-				fillInSlot(slot);
+				fillInSlotCallbacks[slot.name](slot);
 				return;
 			}
 
-			slot.collapse({adType: 'blocked'});
+			log(['Collapsing slot', slot.name], log.levels.info, logGroup);
+			if (slot.collapse) {
+				slot.collapse({adType: 'blocked'});
+			}
 		}
 
 		function startBtfQueue() {
@@ -114,7 +119,7 @@ define('ext.wikia.adEngine.provider.btfBlocker', [
 			}
 
 			// For the above the fold slot:
-			if (config.atfSlots.indexOf(slot.name) > -1) {
+			if (config && config.atfSlots && config.atfSlots.indexOf(slot.name) > -1) {
 				pendingAtfSlots.push(slot.name);
 
 				slot.pre('renderEnded', fillInSlotOnResponse);
@@ -127,6 +132,7 @@ define('ext.wikia.adEngine.provider.btfBlocker', [
 			}
 
 			// For the below the fold slot:
+			fillInSlotCallbacks[slot.name] = fillInSlot;
 			btfQueue.push(slot);
 		}
 
