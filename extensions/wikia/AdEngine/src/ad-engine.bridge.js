@@ -83,7 +83,10 @@ function unifySlotInterface(slot) {
 		getId: () => slot.name,
 		getSlotName: () => slot.name,
 		getTargeting: () => slotContext.targeting,
-		getVideoAdUnit: () => AdUnitBuilder.build(slot)
+		getVideoAdUnit: () => AdUnitBuilder.build(slot),
+		setConfigProperty: (key, value) => {
+			context.set(`slots.${slot.name}.${key}`, value);
+		}
 	});
 	slot.pre('viewed', (event) => {
 		slotListener.emitImpressionViewable(event, slot);

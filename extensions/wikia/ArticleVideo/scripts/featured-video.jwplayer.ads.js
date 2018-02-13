@@ -58,6 +58,7 @@ define('wikia.articleVideo.featuredVideo.ads', [
 						videoDepth,
 						correlator,
 						slotTargeting,
+						player.getMute(),
 						bidParams
 					));
 				}
@@ -73,7 +74,8 @@ define('wikia.articleVideo.featuredVideo.ads', [
 						'midroll',
 						videoDepth,
 						correlator,
-						slotTargeting
+						slotTargeting,
+						player.getMute()
 					));
 				}
 
@@ -88,7 +90,8 @@ define('wikia.articleVideo.featuredVideo.ads', [
 						'postroll',
 						videoDepth,
 						correlator,
-						slotTargeting
+						slotTargeting,
+						player.getMute()
 					));
 				}
 			});

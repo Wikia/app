@@ -58,7 +58,7 @@ define('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', [
 		return result;
 	}
 
-	function build(slotName, src) {
+	function build(slotName, src, slotNameSuffix = '') {
 		var adUnitElements,
 			params = page.getPageLevelParams(),
 			device = getDevice(params),
@@ -70,7 +70,7 @@ define('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', [
 			'',
 			dfpId,
 			provider + '.' + getGroup(slotName),
-			slotName.toLowerCase(),
+			slotName.toLowerCase() + slotNameSuffix,
 			device,
 			params.skin + '-' + getAdLayout(params),
 			wikiName + '-' + vertical

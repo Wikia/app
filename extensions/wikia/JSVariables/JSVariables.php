@@ -78,7 +78,11 @@ function wfJSVariablesTopScripts(Array &$vars, &$scripts) {
 
 	$vars['wgTransactionContext'] = Transaction::getAttributes();
 
-	$scripts .= Html::inlineScript("var wgNow = new Date();") .	"\n";
+	$scripts .= Html::inlineScript("var wgNow = new Date();") . "\n";
+
+	// ADEN-6676
+	$instantGlobalsModule = new InstantGlobalsModule();
+	$scripts .= Html::inlineScript( JavaScriptMinifier::minify( $instantGlobalsModule->getScript() ) ) . "\n";
 
 	return true;
 }

@@ -32,19 +32,6 @@ class RTEParser extends Parser {
 		$this->mShowToc = false;
 	}
 
-	function doBlockLevels( $text, $linestart ) {
-		// XW-4380: Make template placeholders in list items render correctly
-		// XW-4609: remove newlines from template's placeholder when used inside list's item to not break list
-		$text = preg_replace_callback('/^([\*#;:][^\n]*<div class="placeholder placeholder-double-brackets"[^>]+>&#x0200B;)\n?(.*?)(&#x0200B;<\/div>)/ms', function($matches) {
-			return preg_replace('/\\n/', '', $matches[0]);
-		}, str_replace("\r\n", "\n", $text));
-		$text = preg_replace_callback('/^([\*#;:][^\n]*<span class="placeholder placeholder-double-brackets"[^>]+>&#x0200B;)\n?(.*?)(&#x0200B;<\/span>)/ms', function($matches) {
-			return preg_replace('/\\n/', '', $matches[0]);
-		}, str_replace("\r\n", "\n", $text));
-
-		return parent::doBlockLevels( $text, $linestart );
-	}
-
 	/*
 	 * Find empty lines in wikitext and mark following element
 	 */
@@ -521,7 +508,10 @@ class RTEParser extends Parser {
 		$html = preg_replace('%<!-- RTE_EMPTY_LINES_BEFORE_(\d+) -->(</[^>]+></)%s', '\2', $html);
 
 		// move empty lines counter data from comment to next opening tag attribute (thx to Marooned)
-		$html = preg_replace('%<!-- RTE_EMPTY_LINES_BEFORE_(\d+) -->(?!<!)(.*?)(<[^/][^>]*)>%s', '\2\3 data-rte-empty-lines-before="\1">', $html);
+		// XW-4626: prevent adding data-rte-empty-lines-before to inline tags to not break paragraph layout
+		$blockLevelsRegex = implode('|', HtmlHelper::BLOCK_ELEMENTS);
+		$html = preg_replace('%<!-- RTE_EMPTY_LINES_BEFORE_(\d+) -->(?!<!)(.*?)(<(' . $blockLevelsRegex . '|tr)[^>]*)>%s',
+			'\2\3 data-rte-empty-lines-before="\1">', $html);
 
 		// remove not replaced EMPTY_LINES_BEFORE comments
 		// <!-- RTE_EMPTY_LINES_BEFORE_1 -- data-rte-empty-lines-before="1">
@@ -542,7 +532,7 @@ class RTEParser extends Parser {
 
 		// XW-4579: CKE somehow optimizes html in a way that if there is empty line after <br /> it removes all attributes
 		// from it. This added span with zero-width space prevents such behaviour and is be ignored in RTEReverseParser::parse
-		$html = preg_replace("/(<br[^>]*>)/", '$1<span data-rte-filler="true">&#x0200B;</span>', $html);
+		$html = preg_replace("/(<br[^>]*>)\n/", '$1&nbsp;', $html);
 
 		wfProfileOut(__METHOD__ . '::regexp');
 
@@ -553,6 +543,12 @@ class RTEParser extends Parser {
 		if ( $trailingParagraph ) {
 			$html .= Xml::element('p');
 		}
+
+		// search for occurences of block templates invoked inside <span></span>
+		$html = preg_replace_callback("/(<span[^>]*>)(.*?)(<\/span>)/s", function($matches) {
+			$inner = preg_replace("/<div (class=\"placeholder placeholder-double-brackets\"[^>]+>&#x200b;).*?&#x200b;<\/div>/s", "<span $1</span>", $matches[2]);
+			return $matches[1] . $inner . $matches[3];
+		}, $html);
 
 		// update parser output
 		RTE::log(__METHOD__, $html);
