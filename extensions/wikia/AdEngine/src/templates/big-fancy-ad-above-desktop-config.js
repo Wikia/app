@@ -1,5 +1,5 @@
 import { universalAdPackage } from '@wikia/ad-products';
-import { context, scrollListener, slotTweaker } from '@wikia/ad-engine';
+import { context, scrollListener, slotTweaker, utils } from '@wikia/ad-engine';
 import autobind from 'core-decorators/es/autobind';
 import { pinNavbar, navBarElement, navBarStickClass, isElementInViewport } from './navbar-updater';
 
@@ -66,7 +66,10 @@ export const getConfig = () => ({
 		this.updateNavbarOnScroll = scrollListener.addCallback(() => this.updateNavbar());
 	},
 
-	updateNavbar() {
+	async updateNavbar() {
+		// Wait for others callbacks to be executed before we update navbar position
+		await utils.wait();
+
 		const container = this.adSlot.getElement();
 		const isSticky = container.classList.contains(CSS_CLASSNAME_STICKY_BFAA);
 		const isInViewport = isElementInViewport(this.adSlot, this.slotParams);
