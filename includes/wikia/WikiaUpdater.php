@@ -320,8 +320,17 @@ class WikiaUpdater {
 		wfWaitForSlaves();
 	}
 
-	public function removeUnusedGroups( DatabaseUpdater $databaseUpdater ) {
-		$databaseUpdater->maintenance->runChild( RemoveUnusedGroups::class );
+	public static function removeUnusedGroups( DatabaseUpdater $databaseUpdater ) {
+		global $IP;
+
+		$databaseUpdater->output( "Cleaning up after unused user groups...\n" );
+
+		$worker = $databaseUpdater->maintenance->runChild(
+			'RemoveUnusedGroups',
+			"$IP/maintenance/wikia/removeUnusedGroups.php"
+		);
+
+		$worker->execute();
 	}
 
 	/**

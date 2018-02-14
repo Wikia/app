@@ -9,12 +9,12 @@ class RemoveUnusedGroups extends Maintenance {
 	public function __construct() {
 		parent::__construct();
 		$this->addDescription( 'Removes entries for no longer existing groups from user_groups table' );
-		$this->addArg( 'dry-run', 'run script without making any changes' );
-		$this->addArg( 'run-on-wikicities', 'execute script against wikicities (shared) DB' );
+		$this->addOption( 'dry-run', 'run script without making any changes', false );
+		$this->addOption( 'run-on-wikicities', 'execute script against wikicities (shared) DB', false );
 	}
 
 	public function execute() {
-		if ( $this->hasArg( 'dry-run' ) ) {
+		if ( $this->hasOption( 'dry-run' ) ) {
 			$this->output( "Dry-run mode, no changes will be made!\n" );
 
 			$dbr = $this->getDatabase( DB_SLAVE );
@@ -26,7 +26,26 @@ class RemoveUnusedGroups extends Maintenance {
 				__METHOD__
 			);
 
-			$this->output( "Found $count entries referring to nonexistent groups" );
+			$notValidScope = $this->hasOption( 'run-on-wikicities' ) ? "local" : "global";
+
+			$notValidGroups = $dbr->select(
+				'user_groups',
+				'distinct ug_group',
+				'ug_group NOT IN (' . $dbr->makeList( $this->getValidGroups() ) . ')',
+				__METHOD__
+			);
+
+			if ( $count == 0 ) {
+				$this->output( "There are no entries referring to nonexistent or $notValidScope groups.\n" );
+				return;
+			}
+
+			$this->output( "Found $count entries referring to the following nonexistent or $notValidScope groups:\n" );
+
+			foreach ( $notValidGroups as $row ) {
+				$this->output( "\t- {$row->ug_group}\n" );
+			}
+
 		} else {
 			$dbw = $this->getDatabase( DB_MASTER );
 
@@ -36,7 +55,7 @@ class RemoveUnusedGroups extends Maintenance {
 				__METHOD__
 			);
 
-			$this->output( "Deleted {$dbw->affectedRows()} entries referring to nonexistent groups." );
+			$this->output( "Deleted {$dbw->affectedRows()} entries referring to nonexistent groups.\n" );
 		}
 	}
 
@@ -45,7 +64,7 @@ class RemoveUnusedGroups extends Maintenance {
 		$permissionsConfiguration =
 			$injector->get( \Wikia\Service\User\Permissions\PermissionsConfiguration::class );
 
-		if ( $this->hasArg( 'run-on-wikicities' ) ) {
+		if ( $this->hasOption( 'run-on-wikicities' ) ) {
 			// only global groups should be set on wikicities
 			return $permissionsConfiguration->getGlobalGroups();
 		}
@@ -58,7 +77,7 @@ class RemoveUnusedGroups extends Maintenance {
 	}
 
 	private function getDatabase( int $dbType ): DatabaseBase {
-		if ( $this->hasArg( 'run-on-wikicities' ) ) {
+		if ( $this->hasOption( 'run-on-wikicities' ) ) {
 			global $wgExternalSharedDB;
 			return wfGetDB( $dbType, [], $wgExternalSharedDB );
 		}
