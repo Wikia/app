@@ -26,7 +26,7 @@ class PortableInfoboxMobileRenderService extends PortableInfoboxRenderService {
 		}
 
 		if ( !empty( $infoboxHtmlContent ) ) {
-			$output = $this->renderItem( 'wrapper', [ 'content' => $infoboxHtmlContent ] );
+			$output = $this->renderItem( 'wrapper', [ 'content' => $infoboxHtmlContent, 'isMercury' => $this->isMercury() ] );
 		} else {
 			$output = '';
 		}
