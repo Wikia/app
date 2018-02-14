@@ -22,7 +22,7 @@ class RemoveUnusedGroups extends Maintenance {
 			$count = $dbr->selectField(
 				'user_groups',
 				'count(*)',
-			'ug_group NOT IN (' . $dbr->makeList( $this->getValidGroups() ) . ')',
+				'ug_group NOT IN (' . $dbr->makeList( $this->getValidGroups() ) . ')',
 				__METHOD__
 			);
 

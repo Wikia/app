@@ -325,6 +325,7 @@ class WikiaUpdater {
 
 		$databaseUpdater->output( "Cleaning up after unused user groups...\n" );
 
+		// this will instantiate and run the script in the context of the current update process
 		$worker = $databaseUpdater->maintenance->runChild(
 			'RemoveUnusedGroups',
 			"$IP/maintenance/wikia/removeUnusedGroups.php"
