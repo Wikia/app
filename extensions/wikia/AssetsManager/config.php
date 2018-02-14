@@ -1776,20 +1776,6 @@ $config['api_docs_scss'] = [
 	],
 ];
 
-$config['videos_module_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'oasis' ],
-	'assets' => [
-		'//extensions/wikia/Thumbnails/scripts/templates.mustache.js',
-		'//extensions/wikia/Thumbnails/scripts/views/titleThumbnail.js',
-		'//extensions/wikia/VideosModule/scripts/templates.mustache.js',
-		'//extensions/wikia/VideosModule/scripts/models/videos.js',
-		'//extensions/wikia/VideosModule/scripts/views/titleThumbnail.js',
-		'//extensions/wikia/VideosModule/scripts/views/index.js',
-		'//extensions/wikia/VideosModule/scripts/controllers/rail.js',
-	],
-];
-
 $config['qualaroo_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => [ 'oasis' ],
