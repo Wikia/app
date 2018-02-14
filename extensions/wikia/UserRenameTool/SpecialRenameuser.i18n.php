@@ -1081,7 +1081,7 @@ Bonvolu retroigi kaj reprovi.',
 $messages['es'] = array(
 	'userrenametool' => 'Cambiar el nombre de un usuario',
 	'renameuser' => 'Cambiar el nombre de usuario',
-	'userrenametool-warning' => '<strong>Por favor lea cuidadosamente la siguiente información</strong>:<p>En FANDOM, permitimos a los usuarios el renombrar su cuenta una vez. Antes de hacer un pedido de renombre, asegúrate que el nuevo nombre es el que realmente quieres usar en FANDOM. Esto se puede hacer a través de forma que aparece abajo. Una vez que la forma sea completada, el renombre será final y no se permitirán otro renombre.
+	'userrenametool-warning' => '<strong>Por favor lee cuidadosamente la siguiente información</strong>:<p>En FANDOM, permitimos a los usuarios el renombrar su cuenta una vez. Antes de hacer un pedido de renombre, asegúrate que el nuevo nombre es el que realmente quieres usar en FANDOM. Esto se puede hacer a través de la forma que aparece abajo. Una vez que la forma sea completada, el renombre será final y no se permitirá otro renombre.
 <br /><br />No puedes renombrar tu cuenta a:
 <ul>
 <li>un nombre de usuario que otra persona ya tiene registrado</li>
@@ -1091,7 +1091,7 @@ $messages['es'] = array(
 <li>un nombre de usuario que contenga caracteres no alfabéticos, por ejemplo, símbolos de cartas</li>
 <li>un nombre de usuario que comienza con un letra en minúscula</li>
 </ul>
-<br />Una vez que hayas enviado esta forma, tu cuenta será renombrada. Luego de ello podrás ingresar a FANDOM usando la nueva cuenta. La contraseña será la misma. Puedes leer más sobre renombres de cuenta [[w:c:Ayuda:Cambiar_tu_nombre_de_usuario|aquí]].',
+<br />Una vez que hayas enviado esta forma, tu cuenta será renombrada. Luego de ello podrás ingresar a FANDOM usando la nueva cuenta. La contraseña será la misma. Puedes leer más sobre renombres de cuenta [[w:c:comunidad:Ayuda:Cambiar_tu_nombre_de_usuario|aquí]].',
 	'userrenametool-desc' => "Añade una [[Special:UserRenameTool|página especial]] para renombrar a un usuario (necesita el derecho ''renameuser'') y procesa todos los datos relacionados",
 	'userrenametool-old' => 'Nombre de usuario actual:',
 	'userrenametool-new' => 'Nuevo nombre de usuario:',
@@ -1167,7 +1167,7 @@ Motivo: $2',
 	'userrenametool-error-no-username' => 'Este nombre de usuario está en blanco.',
 	'userrenametool-error-not-repeated-correctly' => 'Nuevo nombre de usuario no está repetido correctamente.',
 	'userrenametool-error-token-not-match' => 'La ficha de edición del usuario no coincide.',
-	'userrenametool-new-repeat' => 'Repita el nuevo nombre de usuario:',
+	'userrenametool-new-repeat' => 'Repite el nuevo nombre de usuario:',
 	'userrenametool-error-token-not-exists' => 'La ficha de edición del usuario no existe.',
 	'userrenametool-current-password' => 'Contraseña actual:',
 	'userrenametool-error-consequences' => 'Debes entender las consecuencias de cambiar tu nombre de usuario. Por favor, haz clic en la casilla de verificación adecuada.',

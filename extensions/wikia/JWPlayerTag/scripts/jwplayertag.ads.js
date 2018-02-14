@@ -1,39 +1,20 @@
 define('wikia.articleVideo.jwplayertag.ads', [
 	'ext.wikia.adEngine.adContext',
+	'ext.wikia.adEngine.provider.btfBlocker',
 	'ext.wikia.adEngine.video.vastUrlBuilder',
 	'ext.wikia.adEngine.slot.service.megaAdUnitBuilder',
 	'ext.wikia.adEngine.slot.service.srcProvider',
+	'ext.wikia.adEngine.video.articleVideoAd',
 	'ext.wikia.adEngine.video.vastDebugger',
 	'ext.wikia.adEngine.video.player.jwplayer.adsTracking',
 	'wikia.log'
-], function (adContext, vastUrlBuilder, megaAdUnitBuilder, srcProvider, vastDebugger, adsTracking, log) {
+], function (adContext, btfBlocker, vastUrlBuilder, megaAdUnitBuilder, srcProvider, articleVideoAd, vastDebugger, adsTracking, log) {
 	'use strict';
 
-	var aspectRatio = 640 / 480,
-		baseSrc = adContext.get('targeting.skin') === 'oasis' ? 'gpt' : 'mobile',
-		videoPassback = 'jwplayer',
+	var baseSrc = adContext.get('targeting.skin') === 'oasis' ? 'gpt' : 'mobile',
 		videoSlotName = 'VIDEO',
 		videoSource,
 		logGroup = 'wikia.articleVideo.jwplayertag.ads';
-
-	function buildVastUrl(position, videoDepth, correlator, slotTargeting) {
-		var options = {
-				correlator: correlator,
-				vpos: position
-			},
-			slotParams = Object.assign({
-				passback: videoPassback,
-				pos: videoSlotName,
-				rv: videoDepth,
-				src: videoSource
-			}, slotTargeting);
-
-		options.adUnit = megaAdUnitBuilder.build(slotParams.pos, slotParams.src);
-
-		log(['buildVastUrl', position, videoDepth, slotParams, options], log.levels.debug, logGroup);
-
-		return vastUrlBuilder.build(aspectRatio, slotParams, options);
-	}
 
 	return function(player, slotTargeting) {
 		var correlator,
@@ -69,7 +50,17 @@ define('wikia.articleVideo.jwplayertag.ads', [
 				videoDepth += 1;
 
 				trackingParams.adProduct = 'video-preroll';
-				player.playAd(buildVastUrl('preroll', videoDepth, correlator, slotTargeting));
+
+				btfBlocker.decorate(function() {
+					player.playAd(articleVideoAd.buildVastUrl(
+						videoSlotName,
+						'preroll',
+						videoDepth,
+						correlator,
+						slotTargeting
+					));
+				})({name: videoSlotName});
+
 				prerollPositionReached = true;
 			});
 

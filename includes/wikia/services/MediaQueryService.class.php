@@ -556,15 +556,6 @@ class MediaQueryService extends WikiaModel {
 	}
 
 	/**
-	 * Clear the cache of total videos for a given category
-	 *
-	 * @param $category The category name
-	 */
-	public function clearCacheTotalVideosByCategory( $category ) {
-		$this->wg->Memc->delete( $this->getMemKeyTotalVideosByCategory( $category ) );
-	}
-
-	/**
 	 * Get memcache key for total video views
 	 * @TODO: Remove $async once EnableAsyncVideoViewCache is removed - @see VID-2103
 	 *
