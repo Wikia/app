@@ -21,6 +21,8 @@ define('ext.wikia.adEngine.video.player.porvata.porvataTracker', [
 			'adError': 'error',
 			'wikiaAdPlayTriggered': 'play_triggered',
 			'wikiaAdStop': 'closed',
+			'wikiaAdMute': 'mute',
+			'wikiaAdUnmute': 'unmute',
 			'wikiaInViewportWithDirect': 'in_viewport_with_direct',
 			'wikiaInViewportWithFallbackBid': 'in_viewport_with_fallback_bid',
 			'wikiaInViewportWithoutOffer': 'in_viewport_without_offer'
