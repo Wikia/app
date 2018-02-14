@@ -1,4 +1,7 @@
 <?php
+
+use Wikia\DependencyInjection\InjectorBuilder;
+use Wikia\DependencyInjection\InjectorInitializer;
 use \Wikia\Service\User\Permissions\PermissionsServiceImpl;
 use \Wikia\Service\User\Permissions\PermissionsService;
 use \Wikia\DependencyInjection\Injector;
@@ -44,16 +47,18 @@ class UserTagsStrategyTest extends WikiaBaseTest {
 	 * @dataProvider getUserTagsDataProvider
 	 */
 	public function testGetUserTags( array $globalGroups, array $localGroups, $isBlocked, $isChatBanned, $isFounder, array $expectedTags ) {
-		$permissionsServiceMock = $this->getMock( PermissionsServiceImpl::class, [ 'getExplicitGlobalGroups' , 'getExplicitLocalGroups' ] );
+		$permissionsServiceMock = $this->createMock( PermissionsServiceImpl::class );
 		$permissionsServiceMock->expects( $this->any() )
 			->method( 'getExplicitGlobalGroups' )
 			->willReturn( $globalGroups );
 		$permissionsServiceMock->expects( $this->any() )
 			->method( 'getExplicitLocalGroups' )
 			->willReturn( $localGroups );
-		$container = ContainerBuilder::buildDevContainer();
-		$container->set( PermissionsService::class, $permissionsServiceMock );
-		$injector = new Injector( $container );
+
+		$injector = InjectorInitializer::newInjectorWithOverrides( function ( InjectorBuilder $builder ) use ( $permissionsServiceMock ) {
+			$builder->bind( PermissionsService::class )->to( $permissionsServiceMock );
+		} );
+
 		Injector::setInjector( $injector );
 
 		$chatUserMock = $this->getMockBuilder( ChatUser::class )
