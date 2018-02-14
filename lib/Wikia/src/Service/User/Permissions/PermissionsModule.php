@@ -8,7 +8,7 @@ use Wikia\DependencyInjection\Module;
 class PermissionsModule implements Module {
 
 	public function configure( InjectorBuilder $builder ) {
-		$builder
-			->bind( PermissionsService::class )->toClass( PermissionsServiceImpl::class );
+		$builder->bind( PermissionsService::class )->toClass( PermissionsServiceImpl::class );
+		$builder->bind( PermissionsConfiguration::class )->toClass( PermissionsConfigurationImpl::class );
 	}
 }

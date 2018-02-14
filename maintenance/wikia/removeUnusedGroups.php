@@ -6,8 +6,6 @@ require_once __DIR__ . '/../Maintenance.php';
  * SUS-4169: Maintenance script that runs periodically to clean unused user groups from database.
  */
 class RemoveUnusedGroups extends Maintenance {
-	use Wikia\Service\User\Permissions\PermissionsServiceAccessor;
-
 	public function __construct() {
 		parent::__construct();
 		$this->addDescription( 'Removes entries for no longer existing groups from user_groups table' );
@@ -43,7 +41,9 @@ class RemoveUnusedGroups extends Maintenance {
 	}
 
 	private function getValidGroups(): array {
-		$permissionsConfiguration = $this->permissionsService()->getConfiguration();
+		$injector = \Wikia\DependencyInjection\Injector::getInjector();
+		$permissionsConfiguration =
+			$injector->get( \Wikia\Service\User\Permissions\PermissionsConfiguration::class );
 
 		if ( $this->hasArg( 'run-on-wikicities' ) ) {
 			// only global groups should be set on wikicities

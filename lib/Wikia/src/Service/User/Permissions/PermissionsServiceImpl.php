@@ -19,8 +19,12 @@ class PermissionsServiceImpl implements PermissionsService {
 	/** @var string[string] - key is user id */
 	private $userPermissions = [];
 
-	public function __construct() {
-		$this->permissionsConfiguration = new PermissionsConfigurationImpl();
+	/**
+	 * @Inject
+	 * @param PermissionsConfiguration $permissionsConfiguration
+	 */
+	public function __construct( PermissionsConfiguration $permissionsConfiguration ) {
+		$this->permissionsConfiguration = $permissionsConfiguration;
 	}
 
 	public function getConfiguration() {
