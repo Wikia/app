@@ -4,7 +4,6 @@ class PortableInfoboxMobileRenderService extends PortableInfoboxRenderService {
 	const MEDIA_CONTEXT_INFOBOX_HERO_IMAGE = 'infobox-hero-image';
 	const MEDIA_CONTEXT_INFOBOX = 'infobox';
 	const MOBILE_THUMBNAIL_WIDTH = 360;
-	const MINIMAL_HERO_IMG_WIDTH = 300;
 
 	/**
 	 * renders infobox
@@ -146,7 +145,6 @@ class PortableInfoboxMobileRenderService extends PortableInfoboxRenderService {
 
 	/**
 	 * checks if infobox data item is valid hero component data.
-	 * If image is smaller than MINIMAL_HERO_IMG_WIDTH const, doesn't render the hero module.
 	 *
 	 * @param array $item - infobox data item
 	 * @param array $heroData - hero component data
@@ -156,15 +154,9 @@ class PortableInfoboxMobileRenderService extends PortableInfoboxRenderService {
 	private function isValidHeroDataItem( $item, $heroData ) {
 		$type = $item['type'];
 
-		if ( $type === 'title' && !isset( $heroData['title'] ) ) {
-			return true;
-		}
-
-		if ( $type === 'image' && !isset( $heroData['image'] ) && count( $item['data'] ) === 1 ) {
-			return true;
-		}
-
-		return false;
+		return ( $type === 'title' && !isset( $heroData['title'] ) ) ||
+		       ( $type === 'image' && !isset( $heroData['image'] ) &&
+		         count( $item['data'] ) === 1 );
 	}
 
 	private function isMercury() {
