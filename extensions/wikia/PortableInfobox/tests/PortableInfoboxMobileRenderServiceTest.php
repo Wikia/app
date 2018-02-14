@@ -789,7 +789,7 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 									</hgroup>
 									<figure data-component="portable-infobox-hero-image" data-attrs="{&quot;itemContext&quot;:&quot;portable-infobox&quot;,&quot;ref&quot;:44}">
 										<a href="http://image.jpg">
-											<img class="article-media-placeholder" src="data:image/svg+xml;charset=utf-8,%3Csvg xmlns%3D\'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg\' viewBox%3D\'0 0 200 200\'%2F%3E" alt="" width="400" height="200"/>
+											<img class="article-media-placeholder" src="data:image/svg+xml;charset=utf-8,%3Csvg xmlns%3D\'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg\' viewBox%3D\'0 0 200 200\'%2F%3E" alt="" width="200" height="200"/>
 											<noscript>
 												<img src="http://image.jpg" alt="" width="200" height="200"/>
 											</noscript>
