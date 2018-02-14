@@ -76,7 +76,7 @@ define('ext.wikia.adEngine.tracking.adInfoTracker',  [
 			'viewport_height': win.innerHeight || 0,
 			'ad_status': creative.status || 'unknown',
 			'scroll_y': slotRegistry.getScrollY(slotName) || 0,
-			'rabbit': (rabbit && rabbit.getSerializedResults()) || '',
+			'rabbit': (rabbit && rabbit.getAllSerializedResults()) || '',
 			'page_width': win.document.body.scrollWidth || '',
 			'page_layout': pageLayout.getSerializedData(slotName) || ''
 		};
