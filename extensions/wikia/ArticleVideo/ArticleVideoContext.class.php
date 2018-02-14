@@ -45,28 +45,26 @@ class ArticleVideoContext {
 				true
 			);
 
-			if ( !empty( $details ) ) {
+			if ( !empty( $details ) && !empty( $videoData['playlist'] ) && empty( $videoData['playlist'][0] ) ) {
 				$videoData = array_merge( $videoData, $details );
+
 				$videoData['duration'] = WikiaFileHelper::formatDuration( $details['playlist'][0]['duration'] );
+				$videoData['metadata'] = self::getVideoMetaData( $videoData );
+				$videoData['recommendedLabel'] = $wg->featuredVideoRecommendedVideosLabel;
+				$videoData['recommendedVideoPlaylist'] = $wg->recommendedVideoPlaylist;
+
+				$videoData = self::getVideoDataWithAttribution( $videoData );
+
+				return $videoData;
 			}
 
-			$videoData['recommendedLabel'] = $wg->featuredVideoRecommendedVideosLabel;
-			$videoData['recommendedVideoPlaylist'] = $wg->recommendedVideoPlaylist;
-			$videoData['metadata'] = self::getVideoMetaData( $videoData );
-
-			$videoData = self::getVideoDataWithAttribution( $videoData );
-
-			return $videoData;
+			return [];
 		}
 
 		return [];
 	}
 
 	private static function getVideoDataWithAttribution( $videoData ) {
-		if ( empty( $videoData['playlist'] ) || empty( $videoData['playlist'][0] ) ) {
-			return $videoData;
-		}
-
 		$playlistVideo = $videoData['playlist'][0];
 
 		if ( !empty( $playlistVideo['username'] ) ) {
