@@ -1,3 +1,23 @@
+MYSQL_CONTAINER_ID=$(docker run -e MYSQL_ALLOW_EMPTY_PASSWORD=yes -d -p 3306:3306 mysql:5.7)
+
+echo "Initializing MySQL database for integration tests"
+until mysql --protocol=tcp -e "select 1" -uroot &> /dev/null
+do
+  printf "."
+  sleep 1
+done
+
+echo "MySQL database booted, creating integration tests schema..."
+
+mysql --protocol=tcp -uroot -e 'create database mw_integration_tests';
+
+mysql --protocol=tcp -uroot mw_integration_tests < ../maintenance/tables.sql
+mysql --protocol=tcp -uroot mw_integration_tests < ../maintenance/wikia/sql/dataware-schema.sql
+mysql --protocol=tcp -uroot mw_integration_tests < ../maintenance/wikia/sql/wikicities-schema.sql
+mysql --protocol=tcp -uroot mw_integration_tests < ../maintenance/wikia/sql/specials-schema.sql
+
+echo "MySQL integration tests schema import complete."
+
 export PHIREMOCK_HOST=127.0.0.1
 export PHIREMOCK_PORT=10349
 
@@ -6,3 +26,4 @@ PHIREMOCK_PID=$!
 
 make phpunit-infrastructure
 kill $PHIREMOCK_PID
+docker kill $MYSQL_CONTAINER_ID

@@ -19,8 +19,6 @@ abstract class WikiaDatabaseTest extends TestCase {
 
 	/** @var PDO $pdo */
 	private static $pdo = null;
-	/** @var InMemorySqliteDatabase $db */
-	private static $db = null;
 	/** @var Connection $conn */
 	private $conn = null;
 
@@ -30,24 +28,6 @@ abstract class WikiaDatabaseTest extends TestCase {
 	 */
 	public static function setUpBeforeClass() {
 		parent::setUpBeforeClass();
-		self::$pdo = new PDO('sqlite::memory:' );
-		self::$db = new InMemorySqliteDatabase( self::$pdo );
-
-		LBFactory::destroyInstance();
-		LBFactory::setInstance( new LBFactory_Single( [
-			'connection' => self::$db
-		] ) );
-
-		// init core MW schema
-		$schemaFile = self::$db->getSchemaPath();
-		static::loadSchemaFile( $schemaFile );
-
-		// SUS-3071: add shared db tables
-		global $IP;
-		static::loadSchemaFile( "$IP/tests/fixtures/user.sql" );
-		static::loadSchemaFile( "$IP/tests/fixtures/user_properties.sql" );
-		static::loadSchemaFile( "$IP/tests/fixtures/dataware.sql" );
-		static::loadSchemaFile( "$IP/tests/fixtures/specials.sql" );
 
 		// destroy leaked user accounts from other tests
 		User::$idCacheByName = [];
@@ -61,8 +41,10 @@ abstract class WikiaDatabaseTest extends TestCase {
 
 		$this->mockGlobalVariable( 'wgMemc', new EmptyBagOStuff() );
 
+		$dbw = wfGetDB( DB_MASTER );
+
 		foreach ( $this->extraSchemaFiles() as $schemaFile ) {
-			static::loadSchemaFile( $schemaFile );
+			$dbw->sourceFile( $schemaFile );
 		}
 
 		// schema is ready, let DbUnit populate the DB with fixtures
@@ -76,15 +58,16 @@ abstract class WikiaDatabaseTest extends TestCase {
 		return [];
 	}
 
-	/**
-	 * Acquire a connection to the in-memory database that DbUnit can use
-	 * This is the same connection set up for MediaWiki
-	 * @see WikiaDatabaseTest::setUpBeforeClass()
-	 * @return Connection
-	 */
 	final protected function getConnection() {
 		if ( !( $this->conn instanceof Connection ) ) {
-			$this->conn = $this->createDefaultDBConnection( self::$pdo, ':memory:' );
+			global $wgDBname;
+
+			if ( !( static::$pdo instanceof PDO ) ) {
+				global $wgDBserver, $wgDBuser, $wgDBpassword;
+				static::$pdo = new PDO( "mysql:dbname=$wgDBname;host=$wgDBserver", $wgDBuser, $wgDBpassword );
+			}
+
+			$this->conn = $this->createDefaultDBConnection( static::$pdo, $wgDBname );
 		}
 
 		return $this->conn;
@@ -108,9 +91,5 @@ abstract class WikiaDatabaseTest extends TestCase {
 
 	protected function createYamlDataSet( string $fileName ): IDataSet {
 		return new YamlDataSet( $fileName );
-	}
-
-	protected static function loadSchemaFile( string $schemaFile ) {
-		self::$db->sourceFile( $schemaFile );
 	}
 }
