@@ -118,7 +118,8 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 		}
 
 		function setAdditionalTargeting(slotTargetingData) {
-			var abId;
+			var abId,
+			    rabbitResults = rabbit && rabbit.getResults(instantGlobals.wgAdDriverRabbitTargetingKeyValues);
 
 			if (isRecoverableByIL()) {
 				slotTargetingData.requestSource = 'instartLogic';
@@ -128,8 +129,8 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 				slotTargetingData.src = srcProvider.get(slotTargetingData.src, extra);
 			}
 
-			if (rabbit) {
-				slotTargetingData.rabbit = rabbit.getResults(instantGlobals.wgAdDriverRabbitTargetingKeyValues);
+			if (rabbitResults && rabbitResults.length) {
+				slotTargetingData.rabbit = rabbitResults;
 			}
 
 			slotTargetingData.passback = passbackHandler.get(slotName) || 'none';
