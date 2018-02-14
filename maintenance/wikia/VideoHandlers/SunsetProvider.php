@@ -68,7 +68,7 @@ class SunsetProvider extends Maintenance {
 			);
 
 			if ( $db->affectedRows() > 0 ) {
-				$this->output( sprintf( "Applied fallback to image table for %s provider",
+				$this->output( sprintf( "Applied fallback to image table for '%s' provider\n",
 					$providerName ) );
 			}
 		}
