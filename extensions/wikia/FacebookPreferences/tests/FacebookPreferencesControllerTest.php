@@ -1,6 +1,7 @@
 <?php
 use PHPUnit\Framework\TestCase;
 use Swagger\Client\ApiException;
+use Wikia\Factory\ServiceFactory;
 use Wikia\Service\User\ExternalAuth\FacebookService;
 
 class FacebookPreferencesControllerTest extends TestCase {
@@ -34,14 +35,12 @@ class FacebookPreferencesControllerTest extends TestCase {
 		$context = new RequestContext();
 		$context->setUser( $this->userMock );
 
+		ServiceFactory::instance()->externalAuthFactory()->setFacebookService( $this->facebookServiceMock );
+
 		$this->facebookPreferencesController = new FacebookPreferencesController();
 		$this->facebookPreferencesController->setContext( $context );
 		$this->facebookPreferencesController->setRequest( $this->requestMock );
 		$this->facebookPreferencesController->setResponse( $this->response );
-
-		$reflService = new ReflectionProperty( FacebookPreferencesController::class, 'facebookService' );
-		$reflService->setAccessible( true );
-		$reflService->setValue( $this->facebookPreferencesController, $this->facebookServiceMock );
 	}
 
 	/**
@@ -259,5 +258,10 @@ class FacebookPreferencesControllerTest extends TestCase {
 			WikiaResponse::RESPONSE_CODE_INTERNAL_SERVER_ERROR,
 			$this->response->getCode()
 		);
+	}
+
+	public static function tearDownAfterClass() {
+		parent::tearDownAfterClass();
+		ServiceFactory::clearState();
 	}
 }

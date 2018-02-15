@@ -2,15 +2,13 @@
 
 namespace Wikia\Service\User\Preferences;
 
-use Doctrine\Common\Cache\CacheProvider;
-use Doctrine\Common\Cache\VoidCache;
 use PHPUnit\Framework\TestCase;
 use PHPUnit_Framework_MockObject_MockObject;
 use Wikia\Domain\User\Preferences\UserPreferences;
 use Wikia\Persistence\User\Preferences\PreferencePersistence;
 use Wikia\Service\PersistenceException;
 
-class PreferenceServiceImplTest extends TestCase {
+class PreferenceServiceTest extends TestCase {
 	const TEST_WIKI_ID = 123;
 
 	/** @var int */
@@ -22,9 +20,6 @@ class PreferenceServiceImplTest extends TestCase {
 	/** @var PHPUnit_Framework_MockObject_MockObject */
 	protected $persistence;
 
-	/** @var CacheProvider */
-	protected $cache;
-
 	protected function setUp() {
 		$this->userId = 1;
 		$this->savedPreferences = new UserPreferences();
@@ -32,23 +27,13 @@ class PreferenceServiceImplTest extends TestCase {
 			->setGlobalPreference( 'language', 'en' )
 			->setGlobalPreference( 'marketingallowed', '1' )
 			->setLocalPreference( 'wiki-pref', self::TEST_WIKI_ID, '0' );
-		$this->cache = new VoidCache();
-		$this->persistence = $this->getMockBuilder( PreferencePersistence::class )
-			->setMethods( [
-				'save',
-				'get',
-				'deleteAll',
-				'findWikisWithLocalPreferenceValue',
-				'findUsersWithGlobalPreferenceValue'
-			] )
-			->disableOriginalConstructor()
-			->getMock();
+		$this->persistence = $this->createMock( PreferencePersistence::class );
 	}
 
 	public function testGetFromDefault() {
 		$defaultPreferences = ( new UserPreferences() )
 			->setGlobalPreference( 'pref1', 'val1' );
-		$preferences = new PreferenceServiceImpl( $this->cache, $this->persistence, $defaultPreferences, [], [] );
+		$preferences = new PreferenceService( $this->persistence, $defaultPreferences, [], [] );
 
 		$this->assertEquals( "val1", $preferences->getGlobalDefault( "pref1" ) );
 		$this->assertNull( $preferences->getGlobalDefault( "pref2" ) );
@@ -57,13 +42,13 @@ class PreferenceServiceImplTest extends TestCase {
 	public function testGetAnon() {
 		$defaultPreferences = ( new UserPreferences() )
 			->setGlobalPreference( 'pref1', 'val1' );
-		$preferences = new PreferenceServiceImpl( $this->cache, $this->persistence, $defaultPreferences, [], [] );
+		$preferences = new PreferenceService( $this->persistence, $defaultPreferences, [], [] );
 		$this->assertEquals( 'val1', $preferences->getPreferences( 0 )->getGlobalPreference( 'pref1' ) );
 	}
 
 	public function testGet() {
 		$this->setupServiceExpects();
-		$preferences = new PreferenceServiceImpl( $this->cache, $this->persistence, new UserPreferences(), [], [] );
+		$preferences = new PreferenceService( $this->persistence, new UserPreferences(), [], [] );
 
 		$this->assertEquals( "en", $preferences->getGlobalPreference( $this->userId, "language" ) );
 		$this->assertEquals( "1", $preferences->getGlobalPreference( $this->userId, "marketingallowed" ) );
@@ -77,7 +62,7 @@ class PreferenceServiceImplTest extends TestCase {
 
 	public function testGetWithHiddenNoDefaults() {
 		$this->setupServiceExpects();
-		$preferences = new PreferenceServiceImpl( $this->cache, $this->persistence, new UserPreferences(), ['marketingallowed'], [] );
+		$preferences = new PreferenceService( $this->persistence, new UserPreferences(), [ 'marketingallowed'], [] );
 		$this->assertEquals( "1", $preferences->getGlobalPreference( $this->userId, "marketingallowed", null, true ) );
 		$this->assertNull( $preferences->getGlobalPreference( $this->userId, "marketingallowed" ) );
 	}
@@ -86,7 +71,7 @@ class PreferenceServiceImplTest extends TestCase {
 		$this->setupServiceExpects();
 		$defaultPreferences = ( new UserPreferences() )
 			->setGlobalPreference( 'marketingallowed', '0' );
-		$preferences = new PreferenceServiceImpl( $this->cache, $this->persistence, $defaultPreferences, ["marketingallowed"], [] );
+		$preferences = new PreferenceService( $this->persistence, $defaultPreferences, [ "marketingallowed"], [] );
 		$this->assertEquals( "1", $preferences->getGlobalPreference( $this->userId, "marketingallowed", null, true ) );
 		$this->assertEquals( "0", $preferences->getGlobalPreference( $this->userId, "marketingallowed" ) );
 		$this->assertNull( $preferences->getGlobalPreference( $this->userId, "unsetpreference" ) );
@@ -94,7 +79,7 @@ class PreferenceServiceImplTest extends TestCase {
 
 	public function testSet() {
 		$this->setupServiceExpects();
-		$preferences = new PreferenceServiceImpl( $this->cache, $this->persistence, new UserPreferences(), [], [] );
+		$preferences = new PreferenceService( $this->persistence, new UserPreferences(), [], [] );
 		$preferences->setGlobalPreference( $this->userId, "newpreference", "foo" );
 		$this->assertEquals( "foo", $preferences->getGlobalPreference( $this->userId, "newpreference" ) );
 	}
@@ -103,20 +88,20 @@ class PreferenceServiceImplTest extends TestCase {
 		$this->setupServiceExpects();
 		$defaultPreferences = ( new UserPreferences() )
 			->setGlobalPreference( 'newpreference', 'foo' );
-		$preferences = new PreferenceServiceImpl( $this->cache, $this->persistence, $defaultPreferences, [], [] );
+		$preferences = new PreferenceService( $this->persistence, $defaultPreferences, [], [] );
 		$preferences->setGlobalPreference( $this->userId, "newpreference", null );
 		$this->assertEquals( "foo", $preferences->getPreferences( $this->userId )->getGlobalPreference( "newpreference" ) );
 	}
 
 	public function testSetNullWithoutDefault() {
 		$this->setupServiceExpects();
-		$preferences = new PreferenceServiceImpl( $this->cache, $this->persistence, new UserPreferences(), [], [] );
+		$preferences = new PreferenceService( $this->persistence, new UserPreferences(), [], [] );
 		$preferences->setGlobalPreference( $this->userId, "newpreference", null );
 		$this->assertNull( $preferences->getPreferences( $this->userId )->getGlobalPreference( "newpreference" ) );
 	}
 
 	public function testDelete() {
-		$preferences = new PreferenceServiceImpl( $this->cache, $this->persistence, new UserPreferences(), [], [] );
+		$preferences = new PreferenceService( $this->persistence, new UserPreferences(), [], [] );
 
 		$this->persistence->expects( $this->any() )
 			->method( 'get' )
@@ -137,7 +122,7 @@ class PreferenceServiceImplTest extends TestCase {
 
 	public function testFindWikisWithLocalPreferenceValue() {
 		$wikiList = ['1', '2', '3'];
-		$preferences = new PreferenceServiceImpl( $this->cache, $this->persistence, new UserPreferences(), [], [] );
+		$preferences = new PreferenceService( $this->persistence, new UserPreferences(), [], [] );
 
 		$this->persistence->expects( $this->once() )
 			->method( 'findWikisWithLocalPreferenceValue' )
@@ -149,7 +134,7 @@ class PreferenceServiceImplTest extends TestCase {
 	}
 
 	public function testGetWithPersistenceExceptionReturnsReadOnly() {
-		$preferences = new PreferenceServiceImpl( $this->cache, $this->persistence, new UserPreferences(), [], [] );
+		$preferences = new PreferenceService( $this->persistence, new UserPreferences(), [], [] );
 
 		$this->persistence->expects( $this->once() )
 			->method( 'get' )
@@ -161,7 +146,7 @@ class PreferenceServiceImplTest extends TestCase {
 	}
 
 	public function testSaveShortCircuit() {
-		$preferences = new PreferenceServiceImpl( $this->cache, $this->persistence, new UserPreferences(), [], [] );
+		$preferences = new PreferenceService( $this->persistence, new UserPreferences(), [], [] );
 
 		$this->persistence->expects( $this->exactly( 1 ) )
 			->method( 'get' )
@@ -179,7 +164,7 @@ class PreferenceServiceImplTest extends TestCase {
 	}
 
 	public function testDeleteAllShortCircuit() {
-		$preferences = new PreferenceServiceImpl( $this->cache, $this->persistence, new UserPreferences(), [], [] );
+		$preferences = new PreferenceService( $this->persistence, new UserPreferences(), [], [] );
 
 		$this->persistence->expects( $this->exactly( 1 ) )
 			->method( 'get' )
