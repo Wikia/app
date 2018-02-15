@@ -15,6 +15,7 @@ var NodeChatSocketWrapper = $.createClass(Observable, {
 		NodeChatSocketWrapper.superclass.constructor.apply(this, arguments);
 		this.roomId = roomId;
 		this.wikiId = window.wgCityId;
+		this.track = window.Wikia.Tracker.track;
 	},
 
 	log: function(msg, group) {
@@ -117,6 +118,16 @@ var NodeChatSocketWrapper = $.createClass(Observable, {
 			case 'initial':
 				this.firstConnected = true;	//we are 100% sure about conenction
 				break;
+			// SUS-3855 | Chat's events tracking
+			case 'join':
+				// this tracks both public and private channels
+				this.track({
+					action: 'impression',
+					category: 'chat',
+					label: 'join',
+					trackingMethod: 'analytics'
+				});
+				break;
 		}
 		if (this.firstConnected) {
 			this.fire(message.event, message);
@@ -197,6 +208,7 @@ var NodeRoomController = $.createClass(Observable, {
 		}, this));
 
 		this.viewDiscussion.getTextInput().focus();
+		this.track = window.Wikia.Tracker.track;
 	},
 
 	isMain: function () {
@@ -337,9 +349,24 @@ var NodeRoomController = $.createClass(Observable, {
 						this.model.chats.add(chatEntry);
 					} else {
 						this.socket.send(chatEntry.xport());
+
+
+						this.track({
+							action: 'click',
+							category: 'chat',
+							label: 'message-private-chat',
+							trackingMethod: 'analytics'
+						});
 					}
 				} else {
 					this.socket.send(chatEntry.xport());
+
+					this.track({
+						action: 'click',
+						category: 'chat',
+						label: 'message',
+						trackingMethod: 'analytics'
+					});
 				}
 
 				inputField.val('').focus();
@@ -611,6 +638,8 @@ var NodeChatController = $.createClass(NodeRoomController, {
 			.focus($.proxy(this.resetActivityTimer, this));
 
 		this.chats.main = this;
+
+		this.track = window.Wikia.Tracker.track;
 		return this;
 	},
 
@@ -742,6 +771,13 @@ var NodeChatController = $.createClass(NodeRoomController, {
 				this.showRoom(data.get('roomId'));
 				this.chats.privates[data.get('roomId')].init();
 				//this.socket.send(data.xport());
+
+				this.track({
+					action: 'impression',
+					category: 'chat',
+					label: 'join-private-chat',
+					trackingMethod: 'analytics'
+				});
 			}, this)
 		});
 		this.viewUsers.hideMenu();

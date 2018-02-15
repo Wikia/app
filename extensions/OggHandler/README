@@ -49,20 +49,6 @@ after the require line in LocalSettings.php. The default is "/usr/bin/ffmpeg".
 If $wgOggThumbLocation is set to something other than false, FFmpeg will not be
 used.
 
-Cortado
--------
-
-Wikimedia uses Cortado Java applet from Xiph.org.
-
-A .jar file compiled from this tree is provided in the OggHandler directory for
-your convenience.
-
-For information about Cortado see:
-
-    http://theora.org/cortado/
-
-See LICENSE.cortado, LICENSE.jheora and LICENSE.smoke for license information. 
-
 PEAR File_Ogg
 -------------
 

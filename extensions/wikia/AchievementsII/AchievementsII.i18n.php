@@ -10440,7 +10440,7 @@ $messages['zh-hant'] = array(
  '''各種徽章的價值有多少?'''",
 	'leaderboard' => '成就排行榜',
 	'achievements-recent-earned-badges' => '最近獲得的徽章',
-	'achievements-recent-info' => '<strong>$3</strong>< br />$4< br />由<a href="$1">$2</a>< br />$5獲得',
+	'achievements-recent-info' => '<strong>$3</strong><br />$4<br />由<a href="$1">$2</a><br />$5獲得',
 	'achievements-activityfeed-info' => '獲得徽章<strong><a href="$3" class="badgeName">$1</a></strong><br/>$2',
 	'achievements-leaderboard-disclaimer' => '排行榜顯示更新至昨日',
 	'achievements-leaderboard-rank-label' => '排名',

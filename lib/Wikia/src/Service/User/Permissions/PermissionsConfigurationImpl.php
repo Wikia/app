@@ -26,7 +26,6 @@ class PermissionsConfigurationImpl implements PermissionsConfiguration {
 		'content-reviewer',
 		'council',
 		'helper',
-		'poweruser',
 		'restricted-login',
 		'restricted-login-exempt',
 		'reviewer',
@@ -44,7 +43,6 @@ class PermissionsConfigurationImpl implements PermissionsConfiguration {
 		'*',
 		'user',
 		'autoconfirmed',
-		'poweruser',
 		'restricted-login-auto',
 	];
 

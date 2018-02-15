@@ -218,19 +218,6 @@ CREATE TABLE `email_types` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Table structure for table `global_registry`
---
-
-DROP TABLE IF EXISTS `global_registry`;
-CREATE TABLE `global_registry` (
-  `item_id` int(10) NOT NULL,
-  `item_type` int(10) NOT NULL,
-  `item_value` blob NOT NULL,
-  `item_updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`item_id`,`item_type`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
 -- Table structure for table `global_watchlist`
 --
 
@@ -346,29 +333,6 @@ CREATE TABLE `wall_notification_queue_processed` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Table structure for table `wikia_rss_feeds`
---
-
-DROP TABLE IF EXISTS `wikia_rss_feeds`;
-CREATE TABLE `wikia_rss_feeds` (
-  `wrf_wikia_id` int(10) unsigned NOT NULL,
-  `wrf_page_id` int(10) unsigned NOT NULL,
-  `wrf_url` varchar(255) DEFAULT NULL,
-  `wrf_feed` char(20) NOT NULL DEFAULT '',
-  `wrf_pub_date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `wrf_title` varchar(255) DEFAULT NULL,
-  `wrf_description` varchar(1024) DEFAULT NULL,
-  `wrf_img_url` varchar(500) DEFAULT NULL,
-  `wrf_img_width` int(5) DEFAULT NULL,
-  `wrf_img_height` int(5) DEFAULT NULL,
-  `wrf_ins_date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `wrf_source` char(10) NOT NULL,
-  PRIMARY KEY (`wrf_wikia_id`,`wrf_page_id`,`wrf_feed`,`wrf_pub_date`),
-  KEY `fresh_content` (`wrf_feed`,`wrf_pub_date`),
-  KEY `last_inserted` (`wrf_feed`,`wrf_source`,`wrf_ins_date`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
 -- Table structure for table `wikiastaff_log`
 --
 
@@ -392,4 +356,4 @@ CREATE TABLE `wikiastaff_log` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
--- Dump completed on 2018-01-16 12:22:09
+-- Dump completed on 2018-02-07 15:16:51

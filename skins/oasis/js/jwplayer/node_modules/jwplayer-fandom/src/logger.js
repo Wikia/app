@@ -11,7 +11,8 @@ function wikiaJWPlayerLogger(options) {
 		},
 		loggerOptions = options.logger || {},
 		logLevel = loggerOptions.logLevel ? logLevels[loggerOptions.logLevel] : logLevels['error'],
-		clientName = loggerOptions.clientName;
+		clientName = loggerOptions.clientName,
+		clientVersion = loggerOptions.clientVersion;
 
 	/**
 	 * logs errors to event-logger service
@@ -31,6 +32,10 @@ function wikiaJWPlayerLogger(options) {
 
 		if (clientName) {
 			data.client = clientName;
+		}
+
+		if (clientVersion) {
+			data.client_version = clientVersion;
 		}
 
 		request.open('POST', loggerUrl, true);
