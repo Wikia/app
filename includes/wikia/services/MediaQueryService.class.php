@@ -402,9 +402,11 @@ class MediaQueryService extends WikiaModel {
 	 *                        will be returned (DEFAULT all providers)
 	 * @param array|string $categories - category names.  Only videos tagged with these categories will be returned
 	 *                         (DEFAULT any category)
+	 * @param string $sort
 	 * @return array $videoList
 	 */
-	public function getVideoList( $limit = 0, $page = 1, $providers = [], $categories = [], $sort = self::SORT_RECENT_FIRST ) {
+	public function getVideoList( int $limit = 0, int $page = 1, $providers = [], $categories = [],
+	                              $sort = self::SORT_RECENT_FIRST ) {
 		wfProfileIn( __METHOD__ );
 
 		// Setup the base query cache for a minimal amount of time
