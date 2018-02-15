@@ -57,7 +57,8 @@ define('wikia.articleVideo.jwplayertag.ads', [
 						'preroll',
 						videoDepth,
 						correlator,
-						slotTargeting
+						slotTargeting,
+						player.getMute()
 					));
 				})({name: videoSlotName});
 

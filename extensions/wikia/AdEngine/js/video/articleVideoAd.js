@@ -23,7 +23,7 @@ define('ext.wikia.adEngine.video.articleVideoAd', [
 		return (depth < 2 || !capping) ? 1 : (Math.floor((depth - 1) / capping) + 1);
 	}
 
-	function buildVastUrl(slotName, position, videoDepth, correlator, slotTargeting, bidParams) {
+	function buildVastUrl(slotName, position, videoDepth, correlator, slotTargeting, playerMuted, bidParams) {
 		var options = {
 				correlator: correlator,
 				vpos: position
@@ -32,7 +32,8 @@ define('ext.wikia.adEngine.video.articleVideoAd', [
 				passback: featuredVideoPassback,
 				pos: slotName,
 				rv: calculateRV(videoDepth),
-				src: srcProvider.get(baseSrc, {testSrc: 'test'})
+				src: srcProvider.get(baseSrc, {testSrc: 'test'}),
+				audio: playerMuted ? 'no' : 'yes'
 			}, slotTargeting);
 
 		if (videoDepth === 1 && bidParams) {
@@ -40,7 +41,7 @@ define('ext.wikia.adEngine.video.articleVideoAd', [
 				slotParams[key] = bidParams[key];
 			});
 		}
-		options.adUnit = megaAdUnitBuilder.build(slotParams.pos, slotParams.src);
+		options.adUnit = megaAdUnitBuilder.build(slotParams.pos, slotParams.src, (playerMuted ? '' : '-audio'));
 
 		log(['buildVastUrl', position, videoDepth, slotParams, options], log.levels.debug, logGroup);
 
