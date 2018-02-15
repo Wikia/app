@@ -47,6 +47,7 @@ class ApiWrapperFactory {
 	 * @throws WikiaException
 	 */
 	public function getApiWrapper( $url ) {
+		global $wgVideoApiWrappers;
 		wfProfileIn( __METHOD__ );
 
 		if ( empty( F::app()->wg->allowNonPremiumVideos ) ) {
@@ -62,12 +63,11 @@ class ApiWrapperFactory {
 			return false;
 		}
 
-		$map = F::app()->wg->videoMigrationProviderMap;
-		foreach( $map as $name ) {
-			$class_name = $name . 'ApiWrapper';
-			if ( $class_name::isMatchingHostname( $parsed['host'] ) ) {
+		foreach( $wgVideoApiWrappers as $apiWrapper ) {
+			/* @var $apiWrapper ApiWrapper */
+			if ( $apiWrapper::isMatchingHostname( $parsed['host'] ) ) {
 				wfProfileOut( __METHOD__ );
-				return $class_name::newFromUrl( $url );
+				return $apiWrapper::newFromUrl( $url );
 			}
 		}
 		wfProfileOut( __METHOD__ );
