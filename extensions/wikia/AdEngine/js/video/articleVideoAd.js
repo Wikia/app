@@ -41,7 +41,7 @@ define('ext.wikia.adEngine.video.articleVideoAd', [
 				slotParams[key] = bidParams[key];
 			});
 		}
-		options.adUnit = megaAdUnitBuilder.build(slotParams.pos, slotParams.src);
+		options.adUnit = megaAdUnitBuilder.build(slotParams.pos, slotParams.src, (playerMuted ? '' : '-audio'));
 
 		log(['buildVastUrl', position, videoDepth, slotParams, options], log.levels.debug, logGroup);
 
