@@ -29,13 +29,17 @@
 		window.beacon_id = beacon;
 	} else {
 		// something went terribly wrong
-		document.addEventListener("DOMContentLoaded", function (event) {
-			var image = document.createElement('img');
-			image.src = 'http://logs-01.loggly.com/inputs/88a88e56-77c6-49cc-af41-6f44f83fe7fe.gif?message=wikia_beacon_id%20is%20empty';
-			image.style.position = 'absolute';
-			image.style.top = '-1000px';
-			document.body.appendChild(image);
-		});
+		try {
+            var request = new XMLHttpRequest(),
+                data = {
+                    name: 'MediaWiki.track',
+                    description: 'wikia_beacon_id is empty',
+                    client: 'mediawiki'
+                };
+            request.open('POST', '{{{event-logger-url}}}/error', true);
+            request.setRequestHeader('Content-type', 'application/json');
+            request.send(JSON.stringify(data));
+        } catch() {}
 	}
 
 	window.sessionId = sessionId ? sessionId : genUID();
