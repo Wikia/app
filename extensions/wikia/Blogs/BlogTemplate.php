@@ -305,7 +305,7 @@ class BlogTemplateClass {
 		"/\{\{#dpl(.*)\}\}/siU",
 		"/\{\{#dplchapter(.*)\}\}/siU",
 		"/<(dpl|dynamicpagelist)(.*)>(.*)<\/(dpl|dynamicpagelist)>/siU",
-		"/<(youtube|gvideo|aovideo|aoaudio|wegame|tangler|gtrailer|nicovideo|ggtube)(.*)>(.*)<\/(youtube|gvideo|aovideo|aoaudio|wegame|tangler|gtrailer|nicovideo|ggtube)>/siU",
+		"/<(youtube|gvideo|aovideo|aoaudio|wegame|tangler|nicovideo|ggtube)(.*)>(.*)<\/(youtube|gvideo|aovideo|aoaudio|wegame|tangler|nicovideo|ggtube)>/siU",
 		"/<(inputbox|widget|googlemap|imagemap|poll|rss|math|googlespreadsheet|gallery)(.*)>(.*)<\/(inputbox|widget|googlemap|imagemap|poll|rss|math|googlespreadsheet|gallery)>/siU",
 	);
 

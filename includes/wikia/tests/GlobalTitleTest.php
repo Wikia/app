@@ -17,14 +17,22 @@ class GlobalTitleTest extends WikiaBaseTest {
 				[ 'wgServer', 113, 'http://memory-alpha.wikia.com' ],
 				[ 'wgServer', 490, 'http://wowwiki.wikia.com' ],
 				[ 'wgServer', 1686, 'http://spolecznosc.wikia.com' ],
+				[ 'wgServer', 165, 'http://firefly.wikia.com' ],
 				[ 'wgLanguageCode', 177, 'en' ],
 				[ 'wgLanguageCode', 113, 'en' ],
 				[ 'wgLanguageCode', 490, 'en' ],
 				[ 'wgLanguageCode', 1686, 'pl' ],
+				[ 'wgLanguageCode', 165, 'en' ],
 				[ 'wgExtraNamespacesLocal', 177, false, [], [] ],
 				[ 'wgExtraNamespacesLocal', 113, false, [], [] ],
 				[ 'wgExtraNamespacesLocal', 490, false, [], [ 116 => 'Portal' ] ],
 				[ 'wgExtraNamespacesLocal', 1686, false, [], [] ],
+				[ 'wgExtraNamespacesLocal', 165, false, [], [] ],
+				[ 'wgAllowHTTPS', 177, false ],
+				[ 'wgAllowHTTPS', 113, false ],
+				[ 'wgAllowHTTPS', 490, false ],
+				[ 'wgAllowHTTPS', 1686, false ],
+				[ 'wgAllowHTTPS', 165, true ],
 			] );
 	}
 
@@ -159,6 +167,17 @@ class GlobalTitleTest extends WikiaBaseTest {
 		$this->assertEquals( GlobalTitle::stripArticlePath( $path, $articlePath ), $expResult );
 	}
 
+	/**
+	 * @dataProvider httpsUrlsProvider
+	 */
+	public function testHTTPSUrls( $cityId, $requestProtocol, $expectedUrl ) {
+		$this->mockProdEnv();
+		$this->mockStaticMethod( 'WebRequest', 'detectProtocol', $requestProtocol );
+
+		$fullUrl = GlobalTitle::newFromText( 'Test', NS_MAIN, $cityId )->getFullURL();
+		$this->assertEquals( $fullUrl, $expectedUrl );
+	}
+
 	public function urlsSpacesProvider() {
 		return [
 			[ WIKIA_ENV_DEV, 'Test Ze Spacjami', NS_TALK, 177, 'http://community.' . self::MOCK_DEV_NAME . '.wikia-dev.us/wiki/Talk:Test_Ze_Spacjami' ],
@@ -223,6 +242,15 @@ class GlobalTitleTest extends WikiaBaseTest {
 				'Test',
 			],
 			[ 'Notexists', false, [], false, 'Main Page' ],
+		];
+	}
+
+	public function httpsUrlsProvider() {
+		return [
+			[ 177, 'http', 'http://community.wikia.com/wiki/Test' ],
+			[ 177, 'https', 'http://community.wikia.com/wiki/Test' ],
+			[ 165, 'http', 'http://firefly.wikia.com/wiki/Test' ],
+			[ 165, 'https', 'https://firefly.wikia.com/wiki/Test' ],
 		];
 	}
 }

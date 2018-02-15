@@ -31,6 +31,7 @@ define('ext.wikia.adEngine.ml.n1.n1mLogisticRegression', [
 		model: linearModel.create(coefficients, intercept),
 		name: 'n1mlr',
 		wgCountriesVariable: 'wgAdDriverN1LogisticRegressionRabbitCountries',
-		enabled: adContext.get('targeting.skin') !== 'oasis'
+		enabled: adContext.get('targeting.skin') !== 'oasis',
+		cachePrediction: true
 	});
 });

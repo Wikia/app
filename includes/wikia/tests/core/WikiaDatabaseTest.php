@@ -61,8 +61,19 @@ abstract class WikiaDatabaseTest extends TestCase {
 
 		$this->mockGlobalVariable( 'wgMemc', new EmptyBagOStuff() );
 
+		foreach ( $this->extraSchemaFiles() as $schemaFile ) {
+			static::loadSchemaFile( $schemaFile );
+		}
+
 		// schema is ready, let DbUnit populate the DB with fixtures
 		$this->databaseSetUp();
+	}
+
+	/**
+	 * Override this in the test class to load extra schema files
+	 */
+	protected function extraSchemaFiles() {
+		return [];
 	}
 
 	/**

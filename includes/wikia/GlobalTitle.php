@@ -719,8 +719,8 @@ class GlobalTitle extends Title {
 		 */
 		$server = WikiFactory::getVarValueByName( "wgServer", $this->mCityId );
 		if ( $server ) {
-			$this->mServer = \WikiFactory::getLocalEnvURL( $server );
-			return $server;
+			$this->mServer = $this->formatServer( $server );
+			return $this->mServer;
 		}
 
 		/**
@@ -730,11 +730,24 @@ class GlobalTitle extends Title {
 
 		if ( $city ) {
 			$server = rtrim( $city->city_url, "/" );
-			$this->mServer = \WikiFactory::getLocalEnvURL( $server );
-			return $server;
+			$this->mServer = $this->formatServer( $server );
+			return $this->mServer;
 		}
 
 		return false;
+	}
+
+	private function formatServer( string $server ): string {
+		if ( $this->usingHTTPS() ) {
+			$server = preg_replace( '/^http:\/\//', 'https://', $server );
+		}
+
+		return \WikiFactory::getLocalEnvURL( $server );
+	}
+
+	private function usingHTTPS(): bool {
+		return WebRequest::detectProtocol() === 'https' &&
+			WikiFactory::getVarValueByName( 'wgAllowHTTPS', $this->mCityId );
 	}
 
 	/**
@@ -917,7 +930,11 @@ class GlobalTitle extends Title {
 	 * @return string
 	 */
 	private function memcKey() {
-		return wfSharedMemcKey( 'globaltitlev1', $this->mCityId );
+		$baseKey = 'globaltitlev1';
+		if ( $this->usingHTTPS() ) {
+			$baseKey .= ':https';
+		}
+		return wfSharedMemcKey( $baseKey, $this->mCityId );
 	}
 
 	/**
