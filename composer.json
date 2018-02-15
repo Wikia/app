@@ -18,6 +18,12 @@
     "prepend-autoloader": false,
     "optimize-autoloader": true
   },
+  "autoload": {
+    "psr-4" : {
+      "Wikia\\": "lib/Wikia/src/",
+      "Swagger\\Client\\": "lib/Swagger/src/"
+    }
+  },
   "require": {
     "wikia/fluent-sql-php": "1.0.*",
     "monolog/monolog": "^1.23",

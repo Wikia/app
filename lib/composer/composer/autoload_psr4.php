@@ -8,6 +8,7 @@ $baseDir = dirname(dirname($vendorDir));
 return array(
     'phpDocumentor\\Reflection\\' => array($vendorDir . '/phpdocumentor/reflection-common/src', $vendorDir . '/phpdocumentor/type-resolver/src', $vendorDir . '/phpdocumentor/reflection-docblock/src'),
     'Zend\\Diactoros\\' => array($vendorDir . '/zendframework/zend-diactoros/src'),
+    'Wikia\\' => array($baseDir . '/lib/Wikia/src'),
     'Webmozart\\Assert\\' => array($vendorDir . '/webmozart/assert/src'),
     'ValueValidators\\' => array($vendorDir . '/data-values/validators/src', $vendorDir . '/data-values/interfaces/src/ValueValidators'),
     'ValueParsers\\' => array($vendorDir . '/data-values/interfaces/src/ValueParsers', $vendorDir . '/data-values/common/src/ValueParsers'),
@@ -16,6 +17,7 @@ return array(
     'Symfony\\Polyfill\\Apcu\\' => array($vendorDir . '/symfony/polyfill-apcu'),
     'Symfony\\Component\\Yaml\\' => array($vendorDir . '/symfony/yaml'),
     'Symfony\\Component\\Cache\\' => array($vendorDir . '/symfony/cache'),
+    'Swagger\\Client\\' => array($baseDir . '/lib/Swagger/src'),
     'SimpleCache\\' => array($vendorDir . '/jeroen/simple-cache/src'),
     'Serializers\\' => array($vendorDir . '/serialization/serialization/src/Serializers'),
     'SensioLabs\\Consul\\' => array($vendorDir . '/sensiolabs/consul-php-sdk/Consul'),
