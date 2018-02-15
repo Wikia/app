@@ -45,7 +45,8 @@ class CommunitySetupController extends WikiaApiController {
 			if (!WikiFactory::setVarById($varId, $wikiId, $fcId, self::REASON)) {
 				throw new Exception("saving WF variable failed");
 			}
-			$this->response->setCode(204);
+			// i want this to be 204 but through the icache internal proxy that ends up being a 503 :|
+			$this->response->setCode(200);
 		} catch (Exception $e) {
 			$this->response->setCode(503);
 		}
