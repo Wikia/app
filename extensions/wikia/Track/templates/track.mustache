@@ -30,16 +30,16 @@
 	} else {
 		// something went terribly wrong
 		try {
-            var request = new XMLHttpRequest(),
-                data = {
-                    name: 'MediaWiki.track',
-                    description: 'wikia_beacon_id is empty',
-                    client: 'oasis'
-                };
-            request.open('POST', '{{{event-logger-url}}}/error', true);
-            request.setRequestHeader('Content-type', 'application/json');
-            request.send(JSON.stringify(data));
-        } catch() {}
+			var request = new XMLHttpRequest(),
+				data = {
+					name: 'MediaWiki.track',
+					description: 'wikia_beacon_id is empty',
+					client: 'oasis'
+				};
+			request.open('POST', '{{{event-logger-url}}}/error', true);
+			request.setRequestHeader('Content-type', 'application/json');
+			request.send(JSON.stringify(data));
+		} catch() {}
 	}
 
 	window.sessionId = sessionId ? sessionId : genUID();
