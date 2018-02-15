@@ -22,6 +22,7 @@ class CommunitySetupController extends WikiaApiController {
 		$params = $this->request->getParams();
 		if (!$this->request->wasPosted()) {
 			$this->response->setCode(405);
+			return;
 		}
 
 		if (empty($params[self::PARAM_WIKI_ID]) || empty($params[self::PARAM_FC_ID])) {
