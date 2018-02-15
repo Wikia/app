@@ -281,8 +281,11 @@ class ForumController extends WallBaseController {
 	}
 
 	public function forumActivityModule() {
-		$wallHistory = new WallHistory();
-		$out = $wallHistory->getLastPosts( NS_WIKIA_FORUM_BOARD );
+		$baseForumActivityService = new DatabaseForumActivityService();
+		$forumActivityService = new CachedForumActivityService( $baseForumActivityService, $this->wg->Memc );
+
+		$out = $forumActivityService->getRecentlyUpdatedThreads();
+
 		$this->response->setVal( 'posts', $out );
 	}
 

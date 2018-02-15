@@ -108,22 +108,30 @@ define('ext.wikia.adEngine.video.player.porvata.porvataPlayerFactory', [
 			resume: function () {
 				ima.getAdsManager().resume();
 			},
-			mute: function () {
-				return this.setVolume(0);
+			mute: function (userAction = false) {
+				return this.setVolume(0, userAction);
 			},
-			unmute: function () {
-				return this.setVolume(0.75);
+			unmute: function (userAction = false) {
+				return this.setVolume(0.75, userAction);
 			},
 			volumeToggle: function () {
 				if (this.isMuted()) {
-					this.unmute();
+					this.unmute(true);
 				} else {
-					this.mute();
+					this.mute(true);
 				}
 			},
-			setVolume: function (volume) {
+			setVolume: function (volume, userAction = false) {
 				this.updateVideoDOMElement(volume);
 				ima.getAdsManager().setVolume(volume);
+
+				if (userAction) {
+					if (volume === 0) {
+						ima.dispatchEvent('wikiaAdMute');
+					} else {
+						ima.dispatchEvent('wikiaAdUnmute');
+					}
+				}
 
 				// This is hack for Safari, because it can't dispatch original IMA event (volumeChange)
 				ima.dispatchEvent('wikiaVolumeChange');

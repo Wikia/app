@@ -137,6 +137,7 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 			{},
 			mocks.log,
 			undefined,
+			undefined,
 			mocks.sraHelper,
 			undefined,
 			mocks.pageFair

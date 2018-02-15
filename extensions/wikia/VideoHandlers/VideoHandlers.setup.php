@@ -105,11 +105,6 @@ $wgHooks['FileUndeleteComplete'][] = 'VideoInfoHooksHelper::onFileUndeleteComple
 $wgHooks['SpecialMovepageAfterMove'][] = 'VideoInfoHooksHelper::onFileRenameComplete';
 $wgHooks['ForeignFileDeleted'][] = 'VideoInfoHooksHelper::onForeignFileDeleted';
 $wgHooks['WikiFilePageCheckFile'][] = 'VideoInfoHooksHelper::onCheckGhostFile';
-if ( !empty( $wgUseVideoVerticalFilters ) ) {
-	$wgHooks['ArticleDelete'][] = 'VideoInfoHooksHelper::onArticleDelete';
-	$wgHooks['ArticleUpdateBeforeRedirect'][] = 'VideoInfoHooksHelper::onArticleUpdateBeforeRedirect';
-	$wgHooks['CategorySelectSave'][] = 'VideoInfoHooksHelper::onCategorySelectSave';
-}
 
 $wgHooks['ParserFirstCallInit'][] = 'VideoHandlerHooks::initParserHook';
 
