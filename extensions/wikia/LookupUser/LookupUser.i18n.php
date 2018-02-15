@@ -40,8 +40,6 @@ $messages['en'] = array(
 	'lookupuser-chatmoderator' => 'Chat moderator',
 	'lookupuser-username-blocked-globally' => '<span style="color:red;">This username <strong>is</strong> blocked globally.</span>',
 	'lookupuser-username-not-blocked-globally' => 'This username <strong>is not</strong> blocked globally.',
-	'lookupuser-user-allowed-adoption' => 'This user is allowed to auto-adopt.',
-	'lookupuser-user-not-allowed-adoption' => 'This user is not allowed to auto-adopt.',
 	'lookupuser-founder' => 'Founder',
 	'lookupuser-table-cannot-be-displayed' => 'The contribution table cannot be displayed -- its extension seems to be disabled.',
 	'lookupuser-account-status' => 'Account Status: ',
@@ -304,10 +302,9 @@ $messages['de'] = array(
 	'lookupuser-table-posts' => 'Diskussionen',
 	'lookupuser-table-last-post' => 'Letzter Post',
 	'lookupuser-admin' => 'Admin',
-	'lookupuser-user-allowed-adoption' => 'Dieser Benutzer kann automatisch Wikis adoptieren.',
-	'lookupuser-user-not-allowed-adoption' => 'Dieser Benutzer kann die automatische Übernahme nicht nutzen.',
 	'lookupuser-table-cannot-be-displayed' => 'Die Beitragstabelle kann nicht angezeigt werden - Ihre Erweiterung scheint deaktiviert zu sein.',
 	'action-lookupuser' => 'Benutzerinformationen einsehen',
+	'lookupuser-user-allowed-adoption' => 'Dieser Benutzer kann automatisch Wikis adoptieren.',
 );
 
 $messages['dsb'] = array(
@@ -406,14 +403,14 @@ $messages['es'] = array(
 	'lookupuser-chatmoderator' => 'Moderador del chat',
 	'lookupuser-username-blocked-globally' => '<span style="color:red;">Este nombre de usuario <strong>está</strong> bloqueado globalmente.</span>',
 	'lookupuser-username-not-blocked-globally' => 'Este nombre de usuario <strong>no está</strong> bloqueado globalmente.',
-	'lookupuser-user-allowed-adoption' => 'Este usuario puede auto-adoptar.',
-	'lookupuser-user-not-allowed-adoption' => 'Este usuario no puede auto-adoptar.',
 	'lookupuser-founder' => 'Fundador',
 	'lookupuser-table-cannot-be-displayed' => 'Esta tabla de contribución no puede ser mostrado, para que la extensión está deshabilitada.',
 	'lookupuser-account-status' => 'Estado de la cuenta: ',
 	'lookupuser-account-status-tempuser' => 'Usuario temporal',
 	'lookupuser-account-status-realuser' => 'Usuario real',
 	'action-lookupuser' => 'ver información de usuario',
+	'lookupuser-user-not-allowed-adoption' => 'Este usuario no puede auto-adoptar.',
+	'lookupuser-user-allowed-adoption' => 'Este usuario puede auto-adoptar.',
 );
 
 $messages['et'] = array(
@@ -503,14 +500,13 @@ $messages['fr'] = array(
 	'lookupuser-chatmoderator' => 'Modérateur du tchat',
 	'lookupuser-username-blocked-globally' => "<span style=\"color:red;\">Ce nom d'utilisateur <strong>fait l'objet</strong> d'un blocage global.</span>",
 	'lookupuser-username-not-blocked-globally' => "Ce nom d'utilisateur <strong>ne fait pas l'objet</strong> d'un blocage global.",
-	'lookupuser-user-allowed-adoption' => 'Adoption automatique autorisée pour cet utilisateur.',
-	'lookupuser-user-not-allowed-adoption' => 'Adoption automatique non autorisée pour cet utilisateur.',
 	'lookupuser-founder' => 'Fondateur',
 	'lookupuser-table-cannot-be-displayed' => "Impossible d'afficher le tableau des contributions. Son extension semble désactivée.",
 	'lookupuser-account-status' => 'État du compte : ',
 	'lookupuser-account-status-tempuser' => 'Utilisateur temporaire',
 	'lookupuser-account-status-realuser' => 'Utilisateur réel',
 	'action-lookupuser' => "récupérer les informations de l'utilisateur",
+	'lookupuser-user-allowed-adoption' => 'Adoption automatique autorisée pour cet utilisateur.',
 );
 
 $messages['frp'] = array(
@@ -751,14 +747,14 @@ $messages['it'] = array(
 	'lookupuser-chatmoderator' => 'Moderatore della chat',
 	'lookupuser-username-blocked-globally' => '<span style="color:red;">Questo nome utente <strong>è</strong> bloccato a livello globale.</span>',
 	'lookupuser-username-not-blocked-globally' => 'Questo nome utente <strong>non è</strong> bloccato a livello globale.',
-	'lookupuser-user-allowed-adoption' => "A questo utente è consentita l'adozione automatica.",
-	'lookupuser-user-not-allowed-adoption' => "A questo utente non è consentita l'adozione automatica.",
 	'lookupuser-founder' => 'Fondatore',
 	'lookupuser-table-cannot-be-displayed' => 'Non è possibile visualizzare la tabella dei contributi -- la sua estensione sembra disattivata.',
 	'lookupuser-account-status' => "Stato dell'account: ",
 	'lookupuser-account-status-tempuser' => 'Utente temporaneo',
 	'lookupuser-account-status-realuser' => 'Utente reale',
 	'action-lookupuser' => 'controlla informazioni utente',
+	'lookupuser-user-not-allowed-adoption' => "A questo utente non è consentita l'adozione automatica.",
+	'lookupuser-user-allowed-adoption' => "A questo utente è consentita l'adozione automatica.",
 );
 
 $messages['ja'] = array(
@@ -799,14 +795,14 @@ $messages['ja'] = array(
 	'lookupuser-chatmoderator' => 'チャットモデレーター',
 	'lookupuser-username-blocked-globally' => '<span style="color:red;">このユーザー名はサイト全体で<strong>ブロックされています</strong>。</span>',
 	'lookupuser-username-not-blocked-globally' => 'このユーザー名はサイト全体で<strong>ブロックされていません</strong>。',
-	'lookupuser-user-allowed-adoption' => 'このユーザーは自動アダプションが許可されています。',
-	'lookupuser-user-not-allowed-adoption' => 'このユーザーは自動アダプションが許可されていません。',
 	'lookupuser-founder' => '設立者',
 	'lookupuser-table-cannot-be-displayed' => '投稿の表を表示できません -- 拡張機能が無効になっているようです。',
 	'lookupuser-account-status' => 'アカウントの状態：',
 	'lookupuser-account-status-tempuser' => '一時的なユーザー',
 	'lookupuser-account-status-realuser' => '本ユーザー',
 	'action-lookupuser' => 'ユーザーの情報を検索',
+	'lookupuser-user-not-allowed-adoption' => 'このユーザーは自動アダプションが許可されていません。',
+	'lookupuser-user-allowed-adoption' => 'このユーザーは自動アダプションが許可されています。',
 );
 
 $messages['jv'] = array(
@@ -958,14 +954,14 @@ $messages['lol'] = array(
 	'lookupuser-chatmoderator' => 'crwdns66866:0crwdne66866:0',
 	'lookupuser-username-blocked-globally' => 'crwdns66867:0crwdne66867:0',
 	'lookupuser-username-not-blocked-globally' => 'crwdns66868:0crwdne66868:0',
-	'lookupuser-user-allowed-adoption' => 'crwdns66869:0crwdne66869:0',
-	'lookupuser-user-not-allowed-adoption' => 'crwdns66870:0crwdne66870:0',
 	'lookupuser-founder' => 'crwdns66871:0crwdne66871:0',
 	'lookupuser-table-cannot-be-displayed' => 'crwdns66872:0crwdne66872:0',
 	'lookupuser-account-status' => 'crwdns66873:0crwdne66873:0',
 	'lookupuser-account-status-tempuser' => 'crwdns66874:0crwdne66874:0',
 	'lookupuser-account-status-realuser' => 'crwdns66875:0crwdne66875:0',
 	'action-lookupuser' => 'crwdns66876:0crwdne66876:0',
+	'lookupuser-user-not-allowed-adoption' => 'crwdns66870:0crwdne66870:0',
+	'lookupuser-user-allowed-adoption' => 'crwdns66869:0crwdne66869:0',
 );
 
 $messages['lt'] = array(
@@ -1185,7 +1181,6 @@ $messages['pl'] = array(
 	'lookupuser-table-recordspager' => "Wyświetla od '''$1''' do '''$2''' z '''$3''' rekordów.",
 	'lookupuser-table-title' => 'Nazwa',
 	'lookupuser-table-userrights' => 'Grupy użytkownika',
-	'lookupuser-user-allowed-adoption' => 'Ten użytkownik ma prawo do automatycznej adopcji.',
 	'lookupuser-username-not-blocked-globally' => 'Ten użytkownik <strong>nie jest</strong> zablokowany globalnie.',
 	'lookupuser-nonexistent-id' => 'Błąd: Użytkownik o numerze ID #$1 nie istnieje',
 	'lookupuser-email-change-requested' => 'Użytkownik poprzez Ustawienia poprosił o zmianę adresu e-mail na $1.',
@@ -1199,7 +1194,6 @@ $messages['pl'] = array(
 	'lookupuser-bureaucrat' => 'Biurokrata',
 	'lookupuser-chatmoderator' => 'Moderator czatu',
 	'lookupuser-username-blocked-globally' => '<span style="color:red;">Ta nazwa użytkownika <strong>jest</strong> zablokowana globalnie.</span>',
-	'lookupuser-user-not-allowed-adoption' => 'Ten użytkownik nie ma prawa do automatycznej adopcji.',
 	'lookupuser-founder' => 'Założyciel',
 	'lookupuser-table-cannot-be-displayed' => 'Tabela edycji nie może być wyświetlona -- jej rozszerzenie zdaje się być wyłączone.',
 	'lookupuser-account-status-tempuser' => 'Użytkownik tymczasowy',
@@ -1274,8 +1268,6 @@ Context | Edit Context",
 	'lookupuser-chatmoderator' => 'Moderador do chat',
 	'lookupuser-username-blocked-globally' => '<span style="color:red;"> Este nome de usuário <strong>está</strong> bloqueado globalmente.</span>',
 	'lookupuser-username-not-blocked-globally' => 'Este nome de usuário <strong>não está</strong> bloqueado globalmente.',
-	'lookupuser-user-allowed-adoption' => 'Este usuário tem permissão para autoadotar.',
-	'lookupuser-user-not-allowed-adoption' => 'Este usuário não tem permissão para autoadotar.',
 	'lookupuser-founder' => 'Fundador',
 	'lookupuser-table-cannot-be-displayed' => 'A tabela de contribuição não pode ser exibida -- sua extensão parece estar desativada.',
 	'lookupuser-account-status' => 'Status da conta: ',
@@ -1367,12 +1359,12 @@ $messages['ru'] = array(
 	'lookupuser-table-url' => 'URL',
 	'lookupuser-table-posts' => 'Сообщений',
 	'lookupuser-table-last-post' => 'Посл. сообщение',
-	'lookupuser-user-allowed-adoption' => 'Участнику разрешено автоматическое принятие вики.',
-	'lookupuser-user-not-allowed-adoption' => 'Участнику запрещено автоматическое принятие вики.',
 	'lookupuser-account-status' => 'Статус учётной записи: ',
 	'lookupuser-account-status-tempuser' => 'Временный участник',
 	'lookupuser-account-status-realuser' => 'Реальный участник',
 	'action-lookupuser' => 'поиск информации об участнике',
+	'lookupuser-user-not-allowed-adoption' => 'Участнику запрещено автоматическое принятие вики.',
+	'lookupuser-user-allowed-adoption' => 'Участнику разрешено автоматическое принятие вики.',
 );
 
 $messages['sc'] = array(
@@ -1674,14 +1666,14 @@ $messages['zh-hans'] = array(
 	'lookupuser-chatmoderator' => '聊天主持人',
 	'lookupuser-username-blocked-globally' => '<span style="color:red;"><strong>这个用户名已被全网封禁。</strong></span>',
 	'lookupuser-username-not-blocked-globally' => '<strong>这个用户名未被全网封禁。</strong>',
-	'lookupuser-user-allowed-adoption' => '此用户帐户允许自动领养。',
-	'lookupuser-user-not-allowed-adoption' => '此用户帐户不允许自动领养。',
 	'lookupuser-founder' => '创始人',
 	'lookupuser-table-cannot-be-displayed' => '贡献列表无法显示—— 其扩展功能可能已被禁用。',
 	'lookupuser-account-status' => '帐户状态：',
 	'lookupuser-account-status-tempuser' => '临时用户',
 	'lookupuser-account-status-realuser' => '真实用户',
 	'action-lookupuser' => '查看用户信息',
+	'lookupuser-user-not-allowed-adoption' => '此用户帐户不允许自动领养。',
+	'lookupuser-user-allowed-adoption' => '此用户帐户允许自动领养。',
 );
 
 $messages['zh-hant'] = array(
@@ -1722,13 +1714,13 @@ $messages['zh-hant'] = array(
 	'lookupuser-chatmoderator' => '聊天主持人',
 	'lookupuser-username-blocked-globally' => '<span style="color:red;"><strong>這個用戶已被全站封禁。</strong></span>',
 	'lookupuser-username-not-blocked-globally' => '這個用戶名<strong>未</strong>被全站封禁。 ',
-	'lookupuser-user-allowed-adoption' => '允許這個用戶自動領養。',
-	'lookupuser-user-not-allowed-adoption' => '這個用戶不允許自動領養。',
 	'lookupuser-founder' => '創始人',
 	'lookupuser-table-cannot-be-displayed' => '貢獻列表無法顯示—— 其擴展功能可能已被關閉。',
 	'lookupuser-account-status' => '帳號狀態：',
 	'lookupuser-account-status-tempuser' => '臨時用戶',
 	'lookupuser-account-status-realuser' => '真實用戶',
 	'action-lookupuser' => '查詢用戶資料',
+	'lookupuser-user-not-allowed-adoption' => '這個用戶不允許自動領養。',
+	'lookupuser-user-allowed-adoption' => '允許這個用戶自動領養。',
 );
 

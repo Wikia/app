@@ -85,6 +85,11 @@ class ContactForm extends SpecialPage {
 			$closeAccountTitle = SpecialPage::getTitleFor( 'CloseMyAccount' );
 			$out->redirect( $closeAccountTitle->getFullURL() );
 		}
+		
+		if ( $par === 'rename-account' && $this->isRenameAccountSupported() ) {
+			$renameAccountTitle = SpecialPage::getTitleFor( 'UserRenameTool' );
+			$out->redirect( $renameAccountTitle->getFullURL() );
+		}
 
 		$out->addStyle( AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/SpecialContact2/SpecialContact.scss'));
 
@@ -773,5 +778,10 @@ class ContactForm extends SpecialPage {
 		global $wgContLang, $wgEnableCloseMyAccountExt, $wgSupportedCloseMyAccountLang;
 		return !empty( $wgEnableCloseMyAccountExt )
 				&& in_array( $wgContLang->getCode(), $wgSupportedCloseMyAccountLang );
+	}
+	
+	private function isRenameAccountSupported() {
+		global $wgEnableUserRenameToolExt;
+		return !empty( $wgEnableUserRenameToolExt );
 	}
 }

@@ -9,7 +9,7 @@ if ( !defined('MEDIAWIKI') ) {
  * @subpackage PartnerFeed
  * @author Jakub Kurcek
  *
- * To use this extension $wgEnableWidgetBoxFeed = true
+ * To use this extension $wgEnablePartnerFeedExt = true
   */
   
 $wgExtensionCredits[ 'specialpage' ][ ] = array(

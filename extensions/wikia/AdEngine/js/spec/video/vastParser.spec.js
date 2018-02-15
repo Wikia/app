@@ -5,7 +5,8 @@ describe('ext.wikia.adEngine.video.vastParser', function () {
 	function noop() {
 	}
 
-	var dummyVast = 'dummy.vast?sz=640x480&foo=bar&cust_params=foo1%3Dbar1%26foo2%3Dbar2&vpos=preroll',
+	var dummyVast = 'dummy.vast?sz=640x480&foo=bar&cust_params=foo1%3Dbar1%26foo2%3Dbar2' +
+		'%26customTitle%3D100%25%20Orange%20Juice%3Dbar2&vpos=preroll',
 		mocks = {
 			log: noop
 		},
@@ -49,7 +50,8 @@ describe('ext.wikia.adEngine.video.vastParser', function () {
 
 		expect(adInfo.customParams).toEqual({
 			foo1: 'bar1',
-			foo2: 'bar2'
+			foo2: 'bar2',
+			customTitle: '100% Orange Juice'
 		});
 	});
 

@@ -269,8 +269,6 @@
 		['set', 'dimension19', window.wgArticleType],                               // ArticleType
 		['set', 'dimension20', 'not set'],                                          // Performance A/B testing (Not used any more)
 		['set', 'dimension21', String(window.wgArticleId)],                         // ArticleId
-		['set', 'dimension23', window.wikiaIsPowerUserFrequent ? 'Yes' : 'No'],     // IsPowerUser: Frequent
-		['set', 'dimension24', window.wikiaIsPowerUserLifetime ? 'Yes' : 'No'],     // IsPowerUser: Lifetime
 		['set', 'dimension25', String(window.wgNamespaceNumber)],                   // Namespace Number
 		['set', 'dimension27', String(window.wgCanonicalSpecialPageName || '')],    // Special page canonical name (SUS-1465)
 		['set', 'dimension28', hasPortableInfobox()],                               // If there is Portable Infobox on the page (ADEN-4708)
@@ -422,8 +420,6 @@
 	window.ga('ads.set', 'dimension19', window.wgArticleType);                           // ArticleType
 	window.ga('ads.set', 'dimension20', 'not set');                                      // Performance A/B testing (not used any more)
 	window.ga('ads.set', 'dimension21', String(window.wgArticleId));                     // ArticleId
-	window.ga('ads.set', 'dimension23', window.wikiaIsPowerUserFrequent ? 'Yes' : 'No'); // IsPowerUser: Frequent
-	window.ga('ads.set', 'dimension24', window.wikiaIsPowerUserLifetime ? 'Yes' : 'No'); // IsPowerUser: Lifetime
 	window.ga('ads.set', 'dimension25', String(window.wgNamespaceNumber));               // Namespace Number
 	window.ga('ads.set', 'dimension27', String(window.wgCanonicalSpecialPageName || '')); // Special page canonical name (SUS-1465)
 	window.ga('ads.set', 'dimension28', hasPortableInfobox());                            // If there is Portable Infobox on the page (ADEN-4708)

@@ -423,11 +423,11 @@ $wgUpdateCompatibleMetadata = false;
  */
 $wgUseSharedUploads = false;
 /** Full path on the web server where shared uploads can be found */
-$wgSharedUploadPath = "http://commons.wikimedia.org/shared/images";
+$wgSharedUploadPath = null;
 /** Fetch commons image description pages and display them on the local wiki? */
 $wgFetchCommonsDescriptions = false;
 /** Path on the file system where shared uploads can be found. */
-$wgSharedUploadDirectory = "/var/www/wiki3/images";
+$wgSharedUploadDirectory = null;
 /** DB name with metadata about shared directory. Set this to false if the uploads do not come from a wiki. */
 $wgSharedUploadDBname = false;
 /** Optional table prefix used in database. */
@@ -3254,28 +3254,6 @@ $wgInvalidUsernameCharacters = '@:';
  * modify the user rights of those users via Special:UserRights
  */
 $wgUserrightsInterwikiDelimiter = '@';
-
-/**
- * Use some particular type of external authentication.  The specific
- * authentication module you use will normally require some extra settings to
- * be specified.
- *
- * null indicates no external authentication is to be used.  Otherwise,
- * $wgExternalAuthType must be the name of a non-abstract class that extends
- * ExternalUser.
- *
- * Core authentication modules can be found in includes/extauth/.
- */
-$wgExternalAuthType = null;
-
-/**
- * Configuration for the external authentication.  This may include arbitrary
- * keys that depend on the authentication mechanism.  For instance,
- * authentication against another web app might require that the database login
- * info be provided.  Check the file where your auth mechanism is defined for
- * info on what to put here.
- */
-$wgExternalAuthConf = array();
 
 /**
  * Policies for how each preference is allowed to be changed, in the presence

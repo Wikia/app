@@ -284,9 +284,6 @@ EOT
 			$wgOut->addWikiText( '*' . wfMessage( 'lookupuser-email-change-requested', $newEmail )->plain() );
 		}
 
-		$allowedAdoption = $user->getGlobalFlag( 'AllowAdoption', true );
-		$wgOut->addWikiText( '*' . wfMessage( 'lookupuser-user' . ( !$allowedAdoption ? '-not' : '' ) . '-allowed-adoption' )->plain() );
-
 		// Begin: Small Stuff Week - adding table from Special:LookupContribs --nAndy
 		if ( !empty( $wgEnableLookupContribsExt ) ) {
 			$wgOut->addExtensionStyle( "{$wgExtensionsPath}/wikia/LookupContribs/css/table.css" );

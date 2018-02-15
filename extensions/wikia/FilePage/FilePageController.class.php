@@ -41,41 +41,23 @@ class FilePageController extends WikiaController {
 		$seeMoreLink = '';
 		$shortenedSummary = array(); // A subset of the data returned to show immediately
 
-		$type = $this->getVal( 'type', 'local' );
+		$heading = wfMessage( 'video-page-file-list-header' )->escaped();
+		$summary = $this->getLocalUsage();
 
-		// Based on $type get global or local data
-		if ( $type === 'global' ) {
-			$heading = wfMessage( 'video-page-global-file-list-header' )->escaped();
-
-			// Forward to the getGlobalUsage method
-			$summary = $this->getGlobalUsage();
-			if ( array_key_exists( $this->wg->DBname, $summary ) ) {
-				unset( $summary[$this->wg->DBname] );
-			}
-
-			// Shorten the list to 3 articles.  We'll flesh out these three with full
-			// details to display now and flesh out the others dynamically from JS when
-			// the user pages forward
-			$shortenedSummary = array_slice( $summary, 0, self::LIMIT_DISPLAYED_USAGES );
-		} else {
-			$heading = wfMessage( 'video-page-file-list-header' )->escaped();
-			$summary = $this->getLocalUsage();
-
-			// Shorten the list down to three articles much like above in global, but
-			// here we also need to make the $shortentedSummary structure uniform to match
-			// the global case
-			if ( $summary && count( $summary ) ) {
-				$dbName = $this->wg->DBname;
-				$shortenedSummary = array( $dbName => array_slice( $summary, 0, self::LIMIT_DISPLAYED_USAGES ) );
-			}
+		// Shorten the list down to three articles much like above in global, but
+		// here we also need to make the $shortentedSummary structure uniform to match
+		// the global case
+		if ( $summary && count( $summary ) ) {
+			$dbName = $this->wg->DBname;
+			$shortenedSummary = array( $dbName => array_slice( $summary, 0, self::LIMIT_DISPLAYED_USAGES ) );
 		}
 
 		// Send the $shortenedSummary to fileList to flesh out the details
-		$params = array( 'summary' => $shortenedSummary, 'type' => $type );
+		$params = array( 'summary' => $shortenedSummary, 'type' => 'local' );
 		$data = $this->sendSelfRequest( 'fileList', $params )->getData();
 		$fileList = empty( $data['fileList'] ) ? array() : $data['fileList'];
 
-		if ( $type === 'local' && count( $summary ) > self::LIMIT_DISPLAYED_USAGES ) {
+		if ( count( $summary ) > self::LIMIT_DISPLAYED_USAGES ) {
 			$seeMoreLink = SpecialPage::getTitleFor( 'WhatLinksHere' )->escapeLocalUrl() .
 				'/' . $this->wg->Title->getPrefixedDBkey();
 		}
@@ -84,84 +66,11 @@ class FilePageController extends WikiaController {
 		$this->heading = $heading;
 		$this->fileList = $fileList;
 		$this->summary = $summary;
-		$this->type = $type;
+		$this->type = 'local';
 		$this->seeMoreLink = $seeMoreLink;
 		$this->seeMoreText = wfMessage( 'file-page-more-links' )->escaped();
 
 		wfProfileOut( __METHOD__ );
-	}
-
-	/**
-	 * Figure out what articles include this file from any wiki
-	 * @param string $fileTitle
-	 * @return array
-	 */
-	private function getGlobalUsage( $fileTitle = null ): array {
-		wfProfileIn( __METHOD__ );
-
-		if ( empty( $this->wg->EnableGlobalUsageExt ) ) {
-			wfProfileOut( __METHOD__ );
-			return [];
-		}
-
-		$titleObj = empty( $fileTitle ) ? $this->wg->Title : Title::newFromText( $fileTitle );
-
-		$memcKey = $this->getMemcKeyGlobalUsage( $titleObj->getDBkey() );
-		$globalUsage = $this->wg->Memc->get( $memcKey );
-		if ( !is_array( $globalUsage ) ) {
-			// Query the global usage table to see where the current File title is used
-			$db = wfGetDB( DB_SLAVE, array(), $this->wg->GlobalUsageDatabase );
-
-			$gilTo = $db->addQuotes( $titleObj->getDBkey() );
-			$wiki = $db->addQuotes( $this->wg->DBname );
-
-			// The 'limit' parameter is used by both usage methods we forward to as a way to limit
-			// the number of rows returned.  This is a safeguard against extreme cases
-			$limit = self::LIMIT_GLOBAL_USAGE;
-
-			$sql = <<<SQL
-				SELECT *
-				FROM (
-					SELECT  *
-					FROM `globalimagelinks`
-					WHERE gil_to = $gilTo AND gil_wiki != $wiki
-					ORDER BY gil_wiki, gil_page_namespace_id
-					LIMIT 1000
-				) s
-				GROUP BY gil_wiki
-				LIMIT $limit
-SQL;
-			$result = $db->query( trim( $sql ), __METHOD__ );
-
-			// We need to make sure $globalUsage is an array. If the query below returns no rows, $globalUsage
-			// ends up being null due to it's initial assignment of $globalUsage = $this->wg->Memc->get( $memcKey );
-			$globalUsage = array();
-			while ( $row = $db->fetchObject( $result ) ) {
-
-				// Don't show private wikis in the list of global usage for a video
-				$wikiId = WikiFactory::DBtoID( $row->gil_wiki );
-				$isPrivate = WikiFactory::getVarByName( 'wgIsPrivateWiki', $wikiId )->cv_value;
-				// getVarByName returns a serialized value, eg 'b:1'
-				$isPrivate = unserialize( $isPrivate );
-
-				if ( $isPrivate ) {
-					continue;
-				}
-
-				$globalUsage[$row->gil_wiki][] = [
-					'image' => $row->gil_page_title,
-					'id' => $row->gil_page,
-					'namespace_id' => $row->gil_page_namespace_id,
-					'title' => $row->gil_to,
-					'wiki' => $row->gil_wiki,
-				];
-			}
-
-			$this->wg->Memc->set( $memcKey, $globalUsage, 60*60 );
-		}
-
-		wfProfileOut( __METHOD__ );
-		return $globalUsage;
 	}
 
 	/**
@@ -301,19 +210,14 @@ SQL;
 		wfProfileIn( __METHOD__ );
 
 		$summary = $this->getVal( 'summary', '' );
-		$type = $this->getVal( 'type', '' );
 		$result = array();
-		if ( empty( $summary ) || empty( $type ) ) {
+		if ( empty( $summary ) ) {
 			$this->result = $result;
 			wfProfileOut( __METHOD__ );
 			return;
 		}
 
-		if ( $type === 'global' ) {
-			$expandedSummary = $this->addGlobalSummary( $summary );
-		} else {
-			$expandedSummary = $this->addLocalSummary( $summary );
-		}
+		$expandedSummary = $this->addLocalSummary( $summary );
 
 		foreach ( $expandedSummary as $wiki => $articles ) {
 			foreach ( $articles as $article ) {
@@ -324,53 +228,9 @@ SQL;
 		}
 
 		$this->fileList = $result;
-		$this->type = $type;
+		$this->type = 'local';
 
 		wfProfileOut( __METHOD__ );
-	}
-
-	/**
-	 * Add more detail for global articles to the current $data by making HTTP requests to the other wiki URLs
-	 * @param array $data
-	 * @return array
-	 */
-	private function addGlobalSummary( array $data ): array {
-		return $this->addSummary( $data, function ( $dbName, $articleIds ) {
-			$ids = array();
-			$result = array();
-
-			foreach ( $articleIds as $id ) {
-				$memcKey = $this->getMemcKeyGlobalSummary( $dbName, $id );
-				$summary = $this->wg->Memc->get( $memcKey );
-				if ( is_array( $summary ) ) {
-					$result['summary'][$id] = $summary;
-				} else {
-					$ids[] = $id;
-				}
-			}
-
-			if ( !empty( $ids ) ) {
-				$params = array(
-					'controller' => 'ArticleSummaryController',
-					'method' => 'blurb',
-					'ids' => implode( ',', $ids ),
-				);
-
-				$response = ApiService::foreignCall( $dbName, $params, ApiService::WIKIA );
-				if ( !empty( $response['summary'] ) ) {
-					foreach ( $response['summary'] as $id => $info ) {
-						if ( !array_key_exists( 'error', $info ) ) {
-							$result['summary'][$id] = $info;
-
-							$memcKey = $this->getMemcKeyGlobalSummary( $dbName, $id );
-							$this->wg->Memc->set( $memcKey, $info, 60*60 );
-						}
-					}
-				}
-			}
-
-			return $result;
-		});
 	}
 
 	/**
@@ -480,24 +340,5 @@ SQL;
 		$this->regionalRestrictions = $regionalRestrictions;
 
 		wfProfileOut( __METHOD__ );
-	}
-
-	/**
-	 * Get memcache key for global usage of the video
-	 * @param string $title
-	 * @return string
-	 */
-	private function getMemcKeyGlobalUsage( string $title ): string {
-		return wfSharedMemcKey( 'filepage', 'globalusage', md5( $title ) );
-	}
-
-	/**
-	 * Get memcache key for summary of the global usage
-	 * @param string $dbName
-	 * @param integer $pageId
-	 * @return string
-	 */
-	private function getMemcKeyGlobalSummary( string $dbName, int $pageId ): string {
-		return wfSharedMemcKey( 'filepage', 'globalusage', $dbName, $pageId );
 	}
 }

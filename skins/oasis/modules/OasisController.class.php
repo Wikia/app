@@ -87,8 +87,6 @@ class OasisController extends WikiaController {
 	 * at the bottom for performance reasons, but there are some exceptions for engineering reasons).
 	 *
 	 * TODO: make sure JavaScripts can be always loaded on bottom
-	 *
-	 * Note: NS_FILE pages need JS at top because AnyClips relies on jQuery.
 	 */
 	public static function JsAtBottom(){
 		global $wgTitle;

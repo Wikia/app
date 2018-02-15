@@ -55,7 +55,4 @@
 			<group>Stub</group>
 		</exclude>
 	</groups>
-	<listeners>
-		<listener class="WikiaTestContextPrinter" file="WikiaTestContextPrinter.php" />
-	</listeners>
 </phpunit>
