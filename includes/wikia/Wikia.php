@@ -1250,12 +1250,12 @@ class Wikia {
 	 * @return bool true, it's a hook
 	 */
 	static public function outputHTTPSHeaders( WebRequest $request ) {
-		global $wgCSPLoggerUrl;
+		global $wgServicesExternalDomain;
 		if ( WebRequest::detectProtocol() === 'https' ) {
 			$request->response()->header("Content-Security-Policy-Report-Only: " .
 				"default-src https: 'self' data: blob:; " .
 				"script-src https: 'self' data: 'unsafe-inline' 'unsafe-eval' blob:; " .
-				"style-src https: 'self' 'unsafe-inline' blob:; report-uri {$wgCSPLoggerUrl}" );
+				"style-src https: 'self' 'unsafe-inline' blob:; report-uri {$wgServicesExternalDomain}csp-logger/csp" );
 		}
 		return true;
 	}

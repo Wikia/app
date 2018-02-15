@@ -66,3 +66,5 @@ $wgGroupPermissions['helper']['specialdiscussions'] = true;
 $wgGroupPermissions['staff']['specialdiscussions'] = true;
 
 $wgHooks['WikiaSkinTopScripts'][] = 'DiscussionsHooksHelper::addDiscussionJsVariable';
+
+$wgDiscussionsApiUrl = $wgServicesExternalDomain . 'discussion';
