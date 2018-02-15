@@ -7,6 +7,11 @@
  */
 class ApiWrapperFactoryTest extends WikiaBaseTest {
 
+	public function setUp() {
+		$this->setupFile = __DIR__ . '/../VideoHandlers.setup.php';
+		parent::setUp();
+	}
+
 	/**
 	 * @param string $expectedProvider
 	 * @param string $url
