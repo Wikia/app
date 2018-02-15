@@ -18,10 +18,14 @@ class ApiWrapperFactoryTest extends WikiaBaseTest {
 	 * @dataProvider getApiWrapperDataProvider
 	 */
 	function testGetApiWrapper($expectedProvider, $url) {
-		$this->assertInstanceOf(
-			$expectedProvider,
-			ApiWrapperFactory::getInstance()->getApiWrapper( $url )
-		);
+		$wrapper = ApiWrapperFactory::getInstance()->getApiWrapper( $url );
+
+		if ( is_null( $expectedProvider ) ) {
+			$this->assertNull( $wrapper );
+		}
+		else {
+			$this->assertInstanceOf( $expectedProvider, $wrapper );
+		}
 	}
 
 	function getApiWrapperDataProvider() {
@@ -30,5 +34,8 @@ class ApiWrapperFactoryTest extends WikiaBaseTest {
 		yield [ YoutubeApiWrapper::class, 'https://www.youtube.com/watch?v=iRvI4c9VsW8' ];
 		yield [ YoutubeApiWrapper::class, 'https://youtu.be/iRvI4c9VsW8' ]; # short URL
 		yield [ YoukuApiWrapper::class, 'http://v.youku.com/v_show/id_XMzQwNDg0NTE5Ng==.html' ];
+
+		yield [ null, 'http://example.com' ];
+		yield [ null, 'https://www.youtube.com' ];
 	}
 }
