@@ -25,7 +25,6 @@ class ComposerStaticInitb367f9b4bf4d43e0d5ea402c134db26b
         '6124b4c8570aa390c21fafd04a26c69f' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
         'c3ae67574219cc56cab6c30ef8877b85' => __DIR__ . '/../../..' . '/extensions/Validator/Validator.php',
         'bbf73f3db644d3dced353b837903e74c' => __DIR__ . '/..' . '/php-di/php-di/src/DI/functions.php',
-        '679670650e5628b8e655cb72d74ae35b' => __DIR__ . '/..' . '/ooyala/v2-api/OoyalaApi.php',
         '9ebf2cbcc0b7687b276c44d77096b002' => __DIR__ . '/../../..' . '/extensions/Maps/Maps.php',
     );
 

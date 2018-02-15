@@ -152,14 +152,14 @@ window.RTE.tools = {
 
 	// get height of editor's iframe
 	getEditorHeight: function() {
-		return $('#cke_contents_' + WikiaEditor.instanceId).height();
+		return $('#cke_' + WikiaEditor.instanceId).height();
 	},
 
 	// get editor's document scroll offsets
 	getEditorScrollOffsets: function() {
 		var scrollLeft, scrollTop;
 
-		if (CKEDITOR.env.webkit) {
+		if (CKEDITOR.env.safari) {
 			// RT #46408: use different property for Safari to get scroll offset
 			scrollLeft = RTE.getInstance().document.$.body.scrollLeft;
 			scrollTop = RTE.getInstance().document.$.body.scrollTop;

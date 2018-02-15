@@ -72,8 +72,7 @@ class FilePageTabbed extends WikiaFilePage {
 		$app = F::App();
 		$out = $this->getContext()->getOutput();
 
-		$out->addHTML( $app->renderView( 'FilePageController', 'fileUsage', array('type' => 'local') ) );
-		$out->addHTML( $app->renderView( 'FilePageController', 'fileUsage', array('type' => 'global') ) );
+		$out->addHTML( $app->renderView( 'FilePageController', 'fileUsage' ) );
 
 		// Close div from about section (opened in imageContent)
 		$out->addHTML('</div>');

@@ -97,8 +97,6 @@ class Wikia {
 	const DEFAULT_FAVICON_FILE = '/skins/common/images/favicon.ico';
 	const DEFAULT_WIKI_LOGO_FILE = '/skins/common/images/wiki.png';
 
-	const CSP_ENDPOINT = 'https://services.wikia.com/csp-logger/csp';
-
 	private static $vars = [];
 	private static $cachedLinker;
 
@@ -1252,8 +1250,11 @@ class Wikia {
 	 * @return bool true, it's a hook
 	 */
 	static public function outputHTTPSHeaders( WebRequest $request ) {
+		global $wgCSPLoggerUrl;
 		if ( WebRequest::detectProtocol() === 'https' ) {
-			$request->response()->header( "Content-Security-Policy-Report-Only: default-src https:; script-src https: 'unsafe-inline' 'unsafe-eval'; style-src https: 'unsafe-inline'; img-src https: data:; report-uri " . self::CSP_ENDPOINT );
+			$request->response()->header( "Content-Security-Policy-Report-Only: default-src 'self' https: data:; " .
+				"script-src https: 'self' 'unsafe-inline' 'unsafe-eval'; " .
+				"style-src https: 'self' 'unsafe-inline'; img-src https: 'self' data:; report-uri {$wgCSPLoggerUrl}" );
 		}
 		return true;
 	}

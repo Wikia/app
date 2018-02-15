@@ -183,6 +183,8 @@ class MercuryApiController extends WikiaController {
 			'parts' => array_values( $htmlTitle->getAllParts() ),
 		];
 
+		\Hooks::run( 'MercuryWikiVariables', [ &$wikiVariables ] );
+
 		return $wikiVariables;
 	}
 
@@ -239,8 +241,6 @@ class MercuryApiController extends WikiaController {
 		$wikiCategoryNames = WikiFactoryHub::getInstance()->getWikiCategoryNames( $wgCityId );
 		$wikiCategoryNames = join( ',', $wikiCategoryNames );
 
-		$powerUserTypes = ( new \Wikia\PowerUser\PowerUser( $wgUser ) )->getTypesForUser();
-
 		$dimensions[1] = $wgDBname;
 		$dimensions[2] = $wgLanguageCode;
 		$dimensions[4] = 'mercury';
@@ -251,8 +251,6 @@ class MercuryApiController extends WikiaController {
 		$dimensions[15] = WikiaPageType::isCorporatePage() ? 'yes' : 'no';
 		$dimensions[17] = WikiFactoryHub::getInstance()->getWikiVertical( $wgCityId )['short'];
 		$dimensions[18] = $wikiCategoryNames;
-		$dimensions[23] = in_array( 'poweruser_lifetime', $powerUserTypes ) ? 'yes' : 'no';
-		$dimensions[24] = in_array( 'poweruser_frequent', $powerUserTypes ) ? 'yes' : 'no';
 		$dimensions[28] = !empty( $adContext['targeting']['hasPortableInfobox'] ) ? 'yes' : 'no';
 		$dimensions[29] = !empty( $adContext['targeting']['hasFeaturedVideo'] ) ? 'yes' : 'no';
 

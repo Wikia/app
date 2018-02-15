@@ -92,10 +92,6 @@ function upgradeYouTubeTag( EditPage $editpage, $request ): bool {
 		return true;
 	}
 
-	WikiaLogger::instance()->info( 'Upgrading youtube tag', [
-		'method' => __METHOD__
-	] );
-
 	$text = $editpage->textbox1;
 
 	// Note that we match <nowiki> here to consume that text and any possible
@@ -107,6 +103,10 @@ function upgradeYouTubeTag( EditPage $editpage, $request ): bool {
 			if ( empty( $matches[2] ) ) {
 				return $matches[0];
 			}
+
+			WikiaLogger::instance()->info( 'Youtube tag used', [
+				'method' => __METHOD__
+			] );
 
 			// Separate the Youtube ID and parameters
 			$paramText = trim( $matches[3] );
@@ -142,6 +142,9 @@ function upgradeYouTubeTag( EditPage $editpage, $request ): bool {
 			$retval = $videoService->addVideo( $url );
 
 			if ( is_array( $retval ) ) {
+				WikiaLogger::instance()->info( 'Youtube tag upgraded', [
+					'method' => __METHOD__
+				] );
 				list( $title, $videoPageId, $videoProvider ) = $retval;
 				return "[[$title|" . $params['width'] . "px]]";
 			} else {
@@ -215,7 +218,6 @@ function wfYouTube( Parser $parser ): bool {
 	$parser->setHook( 'aovideo', 'embedArchiveOrgVideo' );
 	$parser->setHook( 'aoaudio', 'embedArchiveOrgAudio' );
 	$parser->setHook( 'wegame', 'embedWeGame' );
-	$parser->setHook( 'gtrailer', 'embedGametrailers' );
 	$parser->setHook( 'nicovideo', 'embedNicovideo' );
 	$parser->setHook( 'cgamer', 'embedCrispyGamer' );
 	$parser->setHook( 'longtail', 'embedLongtailVideo' );
@@ -436,51 +438,6 @@ function embedYouTube_url2tgid( $input ) {
 	}
 
 	return array( $tid, $gid );
-}
-
-function embedYouTube_url2gtid( $url ) {
-	$id = $url;
-
-	if ( preg_match( '/^https?:\/\/www\.gametrailers\.com\/player\/(.+)\.html$/', $url, $preg ) ) {
-		$id = $preg[1];
-	} elseif ( preg_match( '/^https?:\/\/www\.gametrailers\.com\/remote_wrap\.php\?mid=(.+)$/', $url, $preg ) ) {
-		$id = $preg[1];
-	}
-
-	preg_match( '/([0-9]+)/', $id, $preg );
-	$id = $preg[1];
-
-	return $id;
-}
-
-function embedGametrailers( $input, $argv, $parser ) {
-	$gtid   = '';
-	$width  = $width_max  = 480;
-	$height = $height_max = 392;
-
-	if ( !empty( $argv['gtid'] ) ) {
-		$gtid = embedYouTube_url2gtid( $argv['gtid'] );
-	} elseif ( !empty( $input ) ) {
-		$gtid = embedYouTube_url2gtid( $input );
-	}
-	if ( !empty( $argv['width'] ) && settype( $argv['width'], 'integer' ) && ( $width_max >= $argv['width'] ) ) {
-		$width = $argv['width'];
-	}
-	if ( !empty( $argv['height'] ) && settype( $argv['height'], 'integer' ) && ( $height_max >= $argv['height'] ) ) {
-		$height = $argv['height'];
-	}
-
-	if ( !empty( $gtid ) ) {
-		WikiaLogger::instance()->info( 'Embedding gtrailer: ' . $gtid, [
-			'method' => __METHOD__,
-			'video_source' => 'gtrailer'
-		] );
-		// www.gametrailers.com does not yet support HTTPS, to handle in (PLATFORM-3284)
-		$url = "http://www.gametrailers.com/remote_wrap.php?mid={$gtid}";
-		// return "<object type=\"application/x-shockwave-flash\" width=\"{$width}\" height=\"{$height}\"><param name=\"movie\" value=\"{$url}\"/></object>";
-		// gametrailers' flash doesn't work on FF with object tag alone )-: weird, yt and gvideo are ok )-: valid xhtml no more )-:
-		return "<object classid=\"clsid:d27cdb6e-ae6d-11cf-96b8-444553540000\"  codebase=\"http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=8,0,0,0\" id=\"gtembed\" width=\"{$width}\" height=\"{$height}\">	<param name=\"allowScriptAccess\" value=\"sameDomain\" /> 	<param name=\"allowFullScreen\" value=\"true\" /> <param name=\"movie\" value=\"{$url}\"/> <param name=\"quality\" value=\"high\" /> <embed src=\"{$url}\" swLiveConnect=\"true\" name=\"gtembed\" align=\"middle\" allowScriptAccess=\"sameDomain\" allowFullScreen=\"true\" quality=\"high\" pluginspage=\"http://www.macromedia.com/go/getflashplayer\" type=\"application/x-shockwave-flash\" width=\"{$width}\" height=\"{$height}\"></embed> </object>";
-	}
 }
 
 function embedYouTube_url2nvid( $url ) {
