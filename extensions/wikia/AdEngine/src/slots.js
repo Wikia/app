@@ -42,7 +42,7 @@ export default {
 			sizes: [
 				{
 					viewportSize: [0, 0],
-					sizes: [[320, 480]]
+					sizes: [[320, 50], [300, 250], [300, 50]]
 				}
 			],
 			options: {},
