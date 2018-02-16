@@ -166,15 +166,6 @@ class RecirculationHooks {
 	}
 
 	/**
-	 * @return bool
-	 */
-	private static function isProduction() {
-		global $wgWikiaEnvironment;
-
-		return $wgWikiaEnvironment === WIKIA_ENV_PROD;
-	}
-
-	/**
 	 * @param Item $metaDataFromService is actual Data returned by Liftigniter Metadata Service
 	 *
 	 * @return bool
@@ -196,7 +187,7 @@ class RecirculationHooks {
 
 		$isPrivateWiki = WikiFactory::isWikiPrivate( $wgCityId ) || $wgIsPrivateWiki;
 
-		return !self::isProduction() || $isPrivateWiki;
+		return !Wikia::isProductionEnv() || $isPrivateWiki;
 	}
 
 	/**

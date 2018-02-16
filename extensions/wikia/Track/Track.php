@@ -97,9 +97,7 @@ class Track {
 	}
 
 	private static function getGATrackingIds() {
-		global $wgWikiaEnvironment;
-
-		$tids = [ $wgWikiaEnvironment !== WIKIA_ENV_PROD ? 'UA-32129070-2' : 'UA-32129070-1' ];
+		$tids = [ !Wikia::isProductionEnv() ? 'UA-32129070-2' : 'UA-32129070-1' ];
 
 		return $tids;
 	}

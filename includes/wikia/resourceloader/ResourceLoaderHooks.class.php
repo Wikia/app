@@ -56,7 +56,7 @@ class ResourceLoaderHooks {
 		}
 
 		// Determine the shared domain name
-		if ( $wgWikiaEnvironment === WIKIA_ENV_PROD ) {
+		if ( Wikia::isProductionEnv() ) {
 			// Adding https here doesn't change anything, as $wgEnableResourceLoaderRewrites is enabled
 			// everywhere so this gets replaced with $wgCdnRootUrl anyway.
 			$host = 'https://' . (empty($wgMedusaHostPrefix) ? 'community.' : $wgMedusaHostPrefix) . 'wikia.com';
@@ -79,7 +79,7 @@ class ResourceLoaderHooks {
 			// rewrite common source
 			$url = $sources['common']['loadScript'];
 			$url = str_replace( "/load{$wgScriptExtension}", "/__load/-/", $url );
-			if ( $wgWikiaEnvironment === WIKIA_ENV_PROD ) {
+			if ( Wikia::isProductionEnv() ) {
 				$url = str_replace( $host, $wgCdnRootUrl, $url );
 			}
 			$sources['common']['loadScript'] = $url;
