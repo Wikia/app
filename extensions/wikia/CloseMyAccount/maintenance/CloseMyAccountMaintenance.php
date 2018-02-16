@@ -2,8 +2,7 @@
 
 require_once __DIR__ . '/../../../../maintenance/Maintenance.php';
 
-use Wikia\DependencyInjection\Injector;
-use Wikia\Service\User\Preferences\PreferenceService;
+use Wikia\Factory\ServiceFactory;
 
 /**
  * Maintenance script for closing accounts that have been scheduled
@@ -27,8 +26,7 @@ class CloseMyAccountMaintenance extends Maintenance {
 	}
 
 	public function getUsers() {
-		/** @var PreferenceService $preferenceService */
-		$preferenceService = Injector::getInjector()->get( PreferenceService::class );
+		$preferenceService = ServiceFactory::instance()->preferencesFactory()->preferenceService();
 
 		return $preferenceService->findUsersWithGlobalPreferenceValue( CloseMyAccountHelper::REQUEST_CLOSURE_PREF );
 	}

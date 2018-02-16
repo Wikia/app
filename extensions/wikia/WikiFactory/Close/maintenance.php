@@ -10,9 +10,8 @@
 ini_set( "include_path", dirname(__FILE__) . "/../../../../maintenance/" );
 
 use Swagger\Client\Discussion\Api\SitesApi;
-use Wikia\DependencyInjection\Injector;
+use Wikia\Factory\ServiceFactory;
 use Wikia\Logger\WikiaLogger;
-use Wikia\Service\Swagger\ApiProvider;
 
 $optionsWithArgs = array( "limit", "sleep" );
 
@@ -517,8 +516,8 @@ class CloseWikiMaintenance {
 	 * @return SitesApi
 	 */
 	private function getSitesApi() {
-		/** @var ApiProvider $apiProvider */
-		$apiProvider = Injector::getInjector()->get( ApiProvider::class );
+		$apiProvider = ServiceFactory::instance()->providerFactory()->apiProvider();
+
 		/** @var SitesApi $api */
 		$api = $apiProvider->getApi( 'discussion', SitesApi::class );
 		$api->getApiClient()->getConfig()->setCurlTimeout( 5 );

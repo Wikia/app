@@ -35,10 +35,8 @@ class UserAttributeTest extends TestCase {
 	protected $defaultAttributes;
 
 	protected function setUp() {
-		$this->service = $this->getMockBuilder( AttributeService::class )
-			->setMethods( [ 'set', 'get', 'delete' ] )
-			->disableOriginalConstructor()
-			->getMock();
+		$this->service = $this->createMock( AttributeService::class );
+
 		$this->attribute1 = new Attribute( 'nickName', 'Lebowski' );
 		$this->attribute2 = new Attribute( 'gender', 'female' );
 		$this->savedAttributesForUser = [ $this->attribute1, $this->attribute2 ];
