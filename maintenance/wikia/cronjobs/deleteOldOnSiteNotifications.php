@@ -1,8 +1,7 @@
 <?php
 
 use Swagger\Client\OnSiteNotifications\Api\MaintenanceApi;
-use Wikia\DependencyInjection\Injector;
-use Wikia\Service\Swagger\ApiProvider;
+use Wikia\Factory\ServiceFactory;
 use \Wikia\Logger\WikiaLogger;
 
 ini_set('display_errors', 'stderr');
@@ -63,8 +62,7 @@ class deleteOldOnSiteNotifications extends Maintenance {
 	}
 
 	private function getMaintenanceApi(): MaintenanceApi {
-		/** @var ApiProvider $apiProvider */
-		$apiProvider = Injector::getInjector()->get( ApiProvider::class );
+		$apiProvider = ServiceFactory::instance()->providerFactory()->apiProvider();
 		$api = $apiProvider->getApi(self::SERVICE_NAME, MaintenanceApi::class);
 		$api->getApiClient()->getConfig()->setCurlTimeout( self::TIMEOUT );
 

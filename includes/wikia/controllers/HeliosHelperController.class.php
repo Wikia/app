@@ -3,8 +3,6 @@
 namespace Wikia\Helios;
 
 use Email\Controller\EmailConfirmationController;
-use Wikia\DependencyInjection\Injector;
-use Wikia\Service\User\Auth\AuthService;
 
 /**
  * A helper controller to provide end points exposing MediaWiki functionality to Helios.

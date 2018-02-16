@@ -23,6 +23,5 @@ return array(
     'ebf8799635f67b5d7248946fe2154f4a' => $vendorDir . '/ringcentral/psr7/src/functions_include.php',
     '6124b4c8570aa390c21fafd04a26c69f' => $vendorDir . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
     'c3ae67574219cc56cab6c30ef8877b85' => $baseDir . '/extensions/Validator/Validator.php',
-    'bbf73f3db644d3dced353b837903e74c' => $vendorDir . '/php-di/php-di/src/DI/functions.php',
     '9ebf2cbcc0b7687b276c44d77096b002' => $baseDir . '/extensions/Maps/Maps.php',
 );

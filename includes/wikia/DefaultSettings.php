@@ -49,14 +49,6 @@ require_once("$IP/lib/composer/autoload.php");
 // configure FluentSQL to use the extended WikiaSQL class
 FluentSql\StaticSQL::setClass("\\WikiaSQL");
 
-/**
- * All lib/Wikia assets should conform to PSR-4 autoloader specification. See
- * ttps://github.com/php-fig/fig-standards/blob/master/accepted/PSR-4-autoloader.md.
- */
-require_once ( $IP."/lib/Wikia/autoload.php");
-
-require_once ( $IP."/lib/Swagger/autoload.php");
-
 global $wgDBname;
 if($wgDBname != 'uncyclo') {
 	include_once( "$IP/extensions/wikia/SkinChooser/SkinChooser.php" );
