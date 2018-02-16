@@ -2,7 +2,7 @@
 
 namespace Wikia\Helios;
 
-use Wikia\Service\Helios\HeliosClientImpl;
+use Wikia\Service\Helios\HeliosClient;
 
 
 class HeliosClientTest extends \WikiaBaseTest {
@@ -18,7 +18,7 @@ class HeliosClientTest extends \WikiaBaseTest {
 	public function testCannotMakeRequests() {
 		$this->mockStaticMethod( '\MWHttpRequest', 'canMakeRequests', false );
 
-		$client = new HeliosClientImpl( 'http://example.com', 'id', 'secret' );
+		$client = new HeliosClient( 'http://example.com', 'id', 'secret' );
 		$client->request( 'resource', [], [], [] );
 	}
 
@@ -38,7 +38,7 @@ class HeliosClientTest extends \WikiaBaseTest {
 
 		$this->mockStaticMethod( '\Http', 'request', $requestMock );
 
-		$client = new HeliosClientImpl( 'http://example.com', 'id', 'secret' );
+		$client = new HeliosClient( 'http://example.com', 'id', 'secret' );
 		$client->request( 'resource', [], [], [] );
 	}
 
@@ -58,7 +58,7 @@ class HeliosClientTest extends \WikiaBaseTest {
 			->method( 'request' )
 			->willReturn( $requestMock );
 
-		$client = new HeliosClientImpl( 'http://example.com', 'id', 'secret' );
+		$client = new HeliosClient( 'http://example.com', 'id', 'secret' );
 		$this->assertInternalType( 'object', $client->request( 'resource', [], [], [] ) );
 	}
 
@@ -81,7 +81,7 @@ class HeliosClientTest extends \WikiaBaseTest {
 			->method( 'request' )
 			->willReturn( $requestMock );
 
-		$client = new HeliosClientImpl( 'http://example.com', 'id', 'secret' );
+		$client = new HeliosClient( 'http://example.com', 'id', 'secret' );
 		$client->request( 'resource', [], [], [] );
 	}
 
