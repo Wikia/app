@@ -1,8 +1,8 @@
 <?php
 namespace Wikia\Factory;
 
+use Wikia\Logger\WikiaLogger;
 use Wikia\Service\Gateway\KubernetesUrlProvider;
-use Wikia\Service\Gateway\StaticUrlProvider;
 use Wikia\Service\Gateway\UrlProvider;
 use Wikia\Service\Swagger\ApiProvider;
 use Wikia\Util\Statistics\BernoulliTrial;
@@ -22,8 +22,9 @@ class ProviderFactory {
 
 	public function urlProvider(): UrlProvider {
 		if ( $this->urlProvider === null ) {
-			global $wgWikiaEnvironment, $wgWikiaDatacenter;
-			$this->urlProvider = new KubernetesUrlProvider( $wgWikiaEnvironment, $wgWikiaDatacenter );
+			global $wgRealEnvironment, $wgWikiaDatacenter;
+			$this->urlProvider = new KubernetesUrlProvider( $wgRealEnvironment, $wgWikiaDatacenter );
+			$this->urlProvider->setLogger( WikiaLogger::instance() );
 		}
 
 		return $this->urlProvider;
