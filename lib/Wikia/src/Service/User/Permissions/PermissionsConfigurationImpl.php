@@ -224,7 +224,6 @@ class PermissionsConfigurationImpl implements PermissionsConfiguration {
 		'renameuser',
 		'userrollback',
 		'specialvideohandler',
-		'uploadpremiumvideo',
 		'wdacreview',
 		'WhereIsExtension',
 		'smwallowaskpage',
