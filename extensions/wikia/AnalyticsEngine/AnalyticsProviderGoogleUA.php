@@ -37,7 +37,7 @@ class AnalyticsProviderGoogleUA implements iAnalyticsProvider {
 		}
 
 		// Enable collecting stats to staging accounts on all dev and staging environments
-		if ( $wgWikiaEnvironment !== WIKIA_ENV_PROD ) {
+		if ( !Wikia::isProductionEnv() ) {
 			$vars['wgGaStaging'] = true;
 		}
 
