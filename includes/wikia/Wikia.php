@@ -1252,9 +1252,10 @@ class Wikia {
 	static public function outputHTTPSHeaders( WebRequest $request ) {
 		global $wgCSPLoggerUrl;
 		if ( WebRequest::detectProtocol() === 'https' ) {
-			$request->response()->header( "Content-Security-Policy-Report-Only: default-src 'self' https: data:; " .
-				"script-src https: 'self' 'unsafe-inline' 'unsafe-eval'; " .
-				"style-src https: 'self' 'unsafe-inline'; img-src https: 'self' data:; report-uri {$wgCSPLoggerUrl}" );
+			$request->response()->header("Content-Security-Policy-Report-Only: " .
+				"default-src https: 'self' data: blob:; " .
+				"script-src https: 'self' 'unsafe-inline' 'unsafe-eval' blob:; " .
+				"style-src https: 'self' 'unsafe-inline' blob:; report-uri {$wgCSPLoggerUrl}" );
 		}
 		return true;
 	}
