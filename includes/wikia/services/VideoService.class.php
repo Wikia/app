@@ -45,10 +45,6 @@ class VideoService extends WikiaModel {
 				$videoPageId = $title->getArticleId();
 				$videoProvider = '';
 			} else {
-				if ( empty( $this->wg->allowNonPremiumVideos ) ) {
-					wfProfileOut( __METHOD__ );
-					return wfMessage( 'videohandler-non-premium' )->parse();
-				}
 				list($videoTitle, $videoPageId, $videoProvider) = $this->addVideoVideoHandlers( $url );
 
 				// SUS-1195: by-pass the RepoGroup process cache
