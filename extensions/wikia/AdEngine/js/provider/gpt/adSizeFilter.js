@@ -1,15 +1,13 @@
 /*global define, require*/
 define('ext.wikia.adEngine.provider.gpt.adSizeFilter', [
-	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.context.uapContext',
 	'wikia.document',
 	'wikia.log',
 	'wikia.window'
-], function (adContext, uapContext, doc, log, win) {
+], function (uapContext, doc, log, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.gpt.adSizeFilter',
-		context = adContext.getContext(),
 		minSkinWidth = 1240;
 
 	function getNewSizes(sizes, maxWidth, fallbackSizes) {
@@ -53,6 +51,8 @@ define('ext.wikia.adEngine.provider.gpt.adSizeFilter', [
 	function filterSizes(slotName, slotSizes) {
 		log(['filterSizes', slotName, slotSizes], 'debug', logGroup);
 
+		var context = getAdContext();
+
 		slotSizes = removeUAPForFeaturedVideoPages(slotName, slotSizes);
 
 		switch (true) {
@@ -60,11 +60,12 @@ define('ext.wikia.adEngine.provider.gpt.adSizeFilter', [
 				return getNewSizes(slotSizes, doc.documentElement.offsetWidth, [[728, 90]]);
 			case slotName === 'INVISIBLE_SKIN':
 				return doc.documentElement.offsetWidth >= minSkinWidth ? slotSizes : [[1, 1]];
-			case slotName === 'BOTTOM_LEADERBOARD':
+			case slotName === 'BOTTOM_LEADERBOARD' && context.targeting.skin === 'oasis':
 				return getNewSizes(slotSizes, doc.getElementById('WikiaFooter').offsetWidth, [[728, 90]]);
 			case slotName === 'INCONTENT_BOXAD_1' && context.targeting.hasFeaturedVideo:
 				return [[300, 250]];
-			case slotName === 'MOBILE_BOTTOM_LEADERBOARD':
+			case slotName === 'MOBILE_BOTTOM_LEADERBOARD' ||
+				(slotName === 'BOTTOM_LEADERBOARD' && context.targeting.skin === 'mercury'):
 				return uapContext.isUapLoaded() ? [[2, 2]] : removeUAPFromSlotSizes(slotSizes);
 			default:
 				return slotSizes;
