@@ -1,8 +1,7 @@
 <?php
 
-use Wikia\DependencyInjection\Injector;
-use Wikia\Service\Swagger\ApiProvider;
 use Swagger\Client\Discussion\Api\ContributionApi;
+use Wikia\Factory\ServiceFactory;
 
 class DiscussionsActivity {
 
@@ -35,7 +34,7 @@ class DiscussionsActivity {
 	 * @return ContributionApi
 	 */
 	private static function getDiscussionContributionApi() {
-		$apiProvider = Injector::getInjector()->get( ApiProvider::class );
+		$apiProvider = ServiceFactory::instance()->providerFactory()->apiProvider();
 		$api = $apiProvider->getApi( 'discussion', ContributionApi::class );
 
 		$api->getApiClient()->getConfig()->setCurlTimeout( 5 );

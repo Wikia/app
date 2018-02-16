@@ -2,8 +2,7 @@
 
 use Swagger\Client\ApiException;
 use Swagger\Client\User\Avatars\Api\UserAvatarsApi;
-use Wikia\DependencyInjection\Injector;
-use Wikia\Service\Swagger\ApiProvider;
+use Wikia\Factory\ServiceFactory;
 
 /**
  * A simple wrapper for user avatars service API
@@ -98,8 +97,7 @@ class UserAvatarsService {
 	 * @return UserAvatarsApi
 	 */
 	private function getApiClient() {
-		/** @var ApiProvider $apiProvider */
-		$apiProvider = Injector::getInjector()->get(ApiProvider::class);
+		$apiProvider = ServiceFactory::instance()->providerFactory()->apiProvider();
 		return $apiProvider->getAuthenticatedApi( self::SERVICE_NAME, $this->mUserId, UserAvatarsApi::class );
 	}
 

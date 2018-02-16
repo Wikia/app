@@ -3,8 +3,7 @@
 use Swagger\Client\ApiException;
 use Swagger\Client\Discussion\Api\SitesApi;
 use Swagger\Client\Discussion\Models\SiteInput;
-use Wikia\DependencyInjection\Injector;
-use Wikia\Service\Swagger\ApiProvider;
+use Wikia\Factory\ServiceFactory;
 
 class DiscussionsActivator {
 
@@ -66,8 +65,8 @@ class DiscussionsActivator {
 	}
 
 	private function getSitesApi() {
-		/** @var ApiProvider $apiProvider */
-		$apiProvider = Injector::getInjector()->get( ApiProvider::class );
+		$apiProvider = ServiceFactory::instance()->providerFactory()->apiProvider();
+
 		/** @var SitesApi $api */
 		$api = $apiProvider->getApi( self::SERVICE_NAME, SitesApi::class );
 		$api->getApiClient()->getConfig()->setCurlTimeout( self::TIMEOUT );
