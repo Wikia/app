@@ -1143,11 +1143,11 @@ class Wikia {
 	}
 
 	static public function getEnvironmentRobotPolicy(WebRequest $request) {
-		global $wgDevelEnvironment, $wgStagingEnvironment, $wgDefaultRobotPolicy;
+		global $wgDefaultRobotPolicy;
 
 		$policy = '';
 
-		if( !empty( $wgDevelEnvironment ) || !empty( $wgStagingEnvironment ) ) {
+		if ( !Wikia::isProductionEnv() ) {
 			$policy = $wgDefaultRobotPolicy;
 		}
 
@@ -1919,4 +1919,8 @@ class Wikia {
 		CeleryPurge::purgeBySurrogateKey( $key );
 	}
 
+	public static function isProductionEnv(): bool {
+		global $wgWikiaEnvironment;
+		return $wgWikiaEnvironment === WIKIA_ENV_PROD;
+	}
 }
