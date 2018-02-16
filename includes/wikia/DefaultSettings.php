@@ -671,7 +671,6 @@ $wgLangCreationVariables = array();
  * Tasks
  */
 require_once( "{$IP}/extensions/wikia/Tasks/Tasks.setup.php");
-require_once( "{$IP}/includes/wikia/tasks/autoload.php");
 
 /**
  * @name wgDBAvgStatusPoll
