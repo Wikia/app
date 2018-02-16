@@ -55,8 +55,6 @@ class ArticleVideoContext {
 
 			if ( empty( $details ) || empty( $details['playlist'] ) || empty( $details['playlist'][0] ) ) {
 				$logger->error( self::JWPLAYER_API_ERROR_MESSAGE );
-
-				return [];
 			} else {
 				$videoData = array_merge( $videoData, $details );
 
