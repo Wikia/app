@@ -32,7 +32,6 @@
 			<directory>../maintenance/wikia/tests/</directory>
 		</testsuite>
 		<testsuite name="Wikia Search Test Suite">
-			<directory>../extensions/wikia/Search/classes/Test</directory>
 			<directory>../extensions/wikia/GameGuides/tests/GameGuidesModelTest.php</directory>
 			<directory>../extensions/w3rdparty/LyricWiki/tests/ServerTest.php</directory>
 		</testsuite>
