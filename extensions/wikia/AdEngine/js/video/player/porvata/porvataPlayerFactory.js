@@ -108,10 +108,10 @@ define('ext.wikia.adEngine.video.player.porvata.porvataPlayerFactory', [
 			resume: function () {
 				ima.getAdsManager().resume();
 			},
-			mute: function (userAction = false) {
+			mute: function (userAction) {
 				return this.setVolume(0, userAction);
 			},
-			unmute: function (userAction = false) {
+			unmute: function (userAction) {
 				return this.setVolume(0.75, userAction);
 			},
 			volumeToggle: function () {
@@ -121,7 +121,7 @@ define('ext.wikia.adEngine.video.player.porvata.porvataPlayerFactory', [
 					this.mute(true);
 				}
 			},
-			setVolume: function (volume, userAction = false) {
+			setVolume: function (volume, userAction) {
 				this.updateVideoDOMElement(volume);
 				ima.getAdsManager().setVolume(volume);
 
