@@ -18,7 +18,7 @@ class AnalyticsProviderGoogleUA implements iAnalyticsProvider {
 	}
 
 	static public function onWikiaSkinTopScripts( &$vars, &$scripts, $skin ){
-		global $wgDevelEnvironment, $wgGAUserIdSalt, $wgStagingEnvironment;
+		global $wgWikiaEnvironment, $wgGAUserIdSalt;
 
 		$app = F::app();
 
@@ -37,7 +37,7 @@ class AnalyticsProviderGoogleUA implements iAnalyticsProvider {
 		}
 
 		// Enable collecting stats to staging accounts on all dev and staging environments
-		if ($wgDevelEnvironment || $wgStagingEnvironment) {
+		if ( $wgWikiaEnvironment !== WIKIA_ENV_PROD ) {
 			$vars['wgGaStaging'] = true;
 		}
 

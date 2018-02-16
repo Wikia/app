@@ -169,11 +169,9 @@ class RecirculationHooks {
 	 * @return bool
 	 */
 	private static function isProduction() {
-		global $wgDevelEnvironment, $wgStagingEnvironment, $wgWikiaEnvironment;
+		global $wgWikiaEnvironment;
 
-		return empty( $wgDevelEnvironment ) &&
-			empty( $wgStagingEnvironment ) &&
-			$wgWikiaEnvironment !== WIKIA_ENV_STAGING;
+		return $wgWikiaEnvironment === WIKIA_ENV_PROD;
 	}
 
 	/**

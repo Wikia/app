@@ -1143,11 +1143,11 @@ class Wikia {
 	}
 
 	static public function getEnvironmentRobotPolicy(WebRequest $request) {
-		global $wgDevelEnvironment, $wgStagingEnvironment, $wgDefaultRobotPolicy;
+		global $wgWikiaEnvironment, $wgDefaultRobotPolicy;
 
 		$policy = '';
 
-		if( !empty( $wgDevelEnvironment ) || !empty( $wgStagingEnvironment ) ) {
+		if ( $wgWikiaEnvironment !== WIKIA_ENV_PROD ) {
 			$policy = $wgDefaultRobotPolicy;
 		}
 

@@ -4,6 +4,7 @@ namespace Wikia\Service\Gateway;
 use Generator;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
+use Psr\Log\NullLogger;
 
 class KubernetesUrlProviderTest extends TestCase {
 
@@ -18,6 +19,7 @@ class KubernetesUrlProviderTest extends TestCase {
 		string $env, string $dc, string $serviceName
 	) {
 		$kubernetesUrlProvider = new KubernetesUrlProvider( $env, $dc );
+		$kubernetesUrlProvider->setLogger( new NullLogger() );
 
 		$this->assertEquals(
 			"$env.$dc.k8s.wikia.net/$serviceName",
@@ -35,31 +37,25 @@ class KubernetesUrlProviderTest extends TestCase {
 	}
 
 	/**
-	 * @dataProvider provideExoticEnvironmentDatacenterAndServiceName
+	 * @dataProvider provideExoticEnvironmentDatacenter
 	 *
 	 * @param string $env
 	 * @param string $dc
-	 * @param string $serviceName
 	 */
-	public function testFallsBackToProductionForExoticEnvironments(
-		string $env, string $dc, string $serviceName
-	) {
-		$prodEnv = WIKIA_ENV_PROD;
-		$kubernetesUrlProvider = new KubernetesUrlProvider( $env, $dc );
+	public function testThrowsExceptionForExoticEnvironments( string $env, string $dc ) {
+		$this->expectException( InvalidArgumentException::class );
+		$this->expectExceptionMessage( "Invalid environment $env" );
 
-		$this->assertEquals(
-			"$prodEnv.$dc.k8s.wikia.net/$serviceName",
-			$kubernetesUrlProvider->getUrl( $serviceName )
-		);
+		new KubernetesUrlProvider( $env, $dc );
 	}
 
-	public function provideExoticEnvironmentDatacenterAndServiceName(): Generator {
-		yield [ WIKIA_ENV_SANDBOX, WIKIA_DC_SJC, 'example' ];
-		yield [ WIKIA_ENV_SANDBOX, WIKIA_DC_SJC, 'foobar' ];
-		yield [ WIKIA_ENV_VERIFY, WIKIA_DC_SJC, 'example' ];
-		yield [ WIKIA_ENV_VERIFY, WIKIA_DC_SJC, 'foobar' ];
-		yield [ WIKIA_ENV_PREVIEW, WIKIA_DC_SJC, 'example' ];
-		yield [ WIKIA_ENV_PREVIEW, WIKIA_DC_SJC, 'foobar' ];
+	public function provideExoticEnvironmentDatacenter(): Generator {
+		yield [ WIKIA_ENV_SANDBOX, WIKIA_DC_SJC ];
+		yield [ WIKIA_ENV_SANDBOX, WIKIA_DC_SJC ];
+		yield [ WIKIA_ENV_VERIFY, WIKIA_DC_SJC ];
+		yield [ WIKIA_ENV_VERIFY, WIKIA_DC_SJC ];
+		yield [ WIKIA_ENV_PREVIEW, WIKIA_DC_SJC ];
+		yield [ WIKIA_ENV_PREVIEW, WIKIA_DC_SJC ];
 	}
 
 	/**
@@ -73,6 +69,7 @@ class KubernetesUrlProviderTest extends TestCase {
 		string $env, string $dc, string $serviceName
 	) {
 		$kubernetesUrlProvider = new KubernetesUrlProvider( $env, $dc );
+		$kubernetesUrlProvider->setLogger( new NullLogger() );
 
 		$this->assertEquals(
 			"$env.$dc-dev.k8s.wikia.net/$serviceName",
@@ -85,12 +82,5 @@ class KubernetesUrlProviderTest extends TestCase {
 		yield [ WIKIA_ENV_DEV, WIKIA_DC_SJC, 'foobar' ];
 		yield [ WIKIA_ENV_DEV, WIKIA_DC_POZ, 'example' ];
 		yield [ WIKIA_ENV_DEV, WIKIA_DC_POZ, 'foobar' ];
-	}
-
-	/**
-	 * @expectedException InvalidArgumentException
-	 */
-	public function testThrowsExceptionForInvalidEnvironment() {
-		return new KubernetesUrlProvider( 'blabla', WIKIA_DC_SJC );
 	}
 }
