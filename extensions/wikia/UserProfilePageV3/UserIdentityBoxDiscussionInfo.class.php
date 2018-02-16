@@ -43,7 +43,7 @@ class UserIdentityBoxDiscussionInfo {
 	}
 
 	private function getDiscussionApi( $apiClass ) {
-		$apiProvider = ServiceFactory::instance()->providerFactory()->urlProvider();
+		$apiProvider = ServiceFactory::instance()->providerFactory()->apiProvider();
 		$api = $apiProvider->getApi( self::DISCUSSION_SERVICE_NAME, $apiClass );
 		$api->getApiClient()->getConfig()->setCurlTimeout( self::TIMEOUT );
 
@@ -71,7 +71,7 @@ class UserIdentityBoxDiscussionInfo {
 	/**
 	 * @return ContributionApi
 	 */
-	private function getDiscussionContributionApi() {
+	private function getDiscussionContributionApi(): ContributionApi {
 		return $this->getDiscussionApi( ContributionApi::class );
 	}
 
@@ -81,7 +81,7 @@ class UserIdentityBoxDiscussionInfo {
 	 * @param $user
 	 * @return UserIdentityBoxDiscussionInfo
 	 */
-	public static function createFor( $user ) {
+	public static function createFor( $user ): UserIdentityBoxDiscussionInfo {
 		$discussionInfo = new UserIdentityBoxDiscussionInfo( $user );
 		$discussionInfo->fetchDiscussionPostsNumber();
 		return $discussionInfo;
