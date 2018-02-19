@@ -81,6 +81,7 @@ class WikiaUpdater {
 			array( 'WikiaUpdater::do_drop_table', 'tag_summary' ), // SUS-3066
 			array( 'WikiaUpdater::do_drop_table', 'sitemap_blobs' ), // SUS-3589
 			array( 'WikiaUpdater::do_clean_video_info_table' ), // SUS-3862
+			array( 'WikiaUpdater::removeUnusedGroups' ), // SUS-4169
 			array( 'WikiaUpdater::do_drop_table', 'objectcache' ), // SUS-4171
 		);
 
@@ -318,6 +319,20 @@ class WikiaUpdater {
 		$databaseUpdater->output( "done.\n" );
 		
 		wfWaitForSlaves();
+	}
+
+	public static function removeUnusedGroups( DatabaseUpdater $databaseUpdater ) {
+		global $IP;
+
+		$databaseUpdater->output( "Cleaning up after unused user groups...\n" );
+
+		// this will instantiate and run the script in the context of the current update process
+		$worker = $databaseUpdater->maintenance->runChild(
+			'RemoveUnusedGroups',
+			"$IP/maintenance/wikia/removeUnusedGroups.php"
+		);
+
+		$worker->execute();
 	}
 
 	/**
