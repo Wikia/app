@@ -1,8 +1,7 @@
 <?php
 
 use Swagger\Client\CurationCMS\Api\TopicsApi;
-use Wikia\DependencyInjection\Injector;
-use Wikia\Service\Swagger\ApiProvider;
+use Wikia\Factory\ServiceFactory;
 use \Wikia\Logger\WikiaLogger;
 
 ini_set('display_errors', 'stderr');
@@ -52,8 +51,8 @@ class updateCurationCMSTopicRanks extends Maintenance {
 	}
 
 	private function getTopicsApi(): TopicsApi {
-		/** @var ApiProvider $apiProvider */
-		$apiProvider = Injector::getInjector()->get( ApiProvider::class );
+		$apiProvider = ServiceFactory::instance()->providerFactory()->apiProvider();
+
 		/** @var TopicsApi $api */
 		$api = $apiProvider->getApi(self::SERVICE_NAME, TopicsApi::class);
 		$api->getApiClient()->getConfig()->setCurlTimeout( self::TIMEOUT );

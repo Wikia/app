@@ -7,8 +7,6 @@
  * @version: $Id$
  */
 
-use Wikia\DependencyInjection\Injector;
-use Wikia\Service\User\Permissions\PermissionsService;
 use Wikia\Service\User\Permissions\PermissionsServiceAccessor;
 
 class ListusersData {

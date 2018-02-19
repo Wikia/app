@@ -2,6 +2,9 @@
 
 class ArticleVideoContext {
 
+	const ARTICLE_VIDEO_ERROR_MESSAGE = 'JWPlayer: Could not find mediaId in article-video service';
+	const JWPLAYER_API_ERROR_MESSAGE = 'JWPlayer: Could not find enough playback info in JW API to play the video';
+
 	/**
 	 * Checks if featured video is embedded on given article
 	 *
@@ -36,6 +39,11 @@ class ArticleVideoContext {
 		if ( self::isFeaturedVideoEmbedded( $pageId ) ) {
 			$videoData = [];
 			$videoData['mediaId'] = ArticleVideoService::getFeatureVideoForArticle( $wg->cityId, $pageId );
+			$logger = Wikia\Logger\WikiaLogger::instance();
+
+			if ( empty( $videoData['mediaId'] ) ) {
+				$logger->error( self::ARTICLE_VIDEO_ERROR_MESSAGE );
+			}
 
 			$details = json_decode(
 				Http::get(
@@ -45,28 +53,26 @@ class ArticleVideoContext {
 				true
 			);
 
-			if ( !empty( $details ) ) {
+			if ( empty( $details ) || empty( $details['playlist'] ) || empty( $details['playlist'][0] ) ) {
+				$logger->error( self::JWPLAYER_API_ERROR_MESSAGE );
+			} else {
 				$videoData = array_merge( $videoData, $details );
+
 				$videoData['duration'] = WikiaFileHelper::formatDuration( $details['playlist'][0]['duration'] );
+				$videoData['metadata'] = self::getVideoMetaData( $videoData );
+				$videoData['recommendedLabel'] = $wg->featuredVideoRecommendedVideosLabel;
+				$videoData['recommendedVideoPlaylist'] = $wg->recommendedVideoPlaylist;
+
+				$videoData = self::getVideoDataWithAttribution( $videoData );
+
+				return $videoData;
 			}
-
-			$videoData['recommendedLabel'] = $wg->featuredVideoRecommendedVideosLabel;
-			$videoData['recommendedVideoPlaylist'] = $wg->recommendedVideoPlaylist;
-			$videoData['metadata'] = self::getVideoMetaData( $videoData );
-
-			$videoData = self::getVideoDataWithAttribution( $videoData );
-
-			return $videoData;
 		}
 
 		return [];
 	}
 
 	private static function getVideoDataWithAttribution( $videoData ) {
-		if ( empty( $videoData['playlist'] ) || empty( $videoData['playlist'][0] ) ) {
-			return $videoData;
-		}
-
 		$playlistVideo = $videoData['playlist'][0];
 
 		if ( !empty( $playlistVideo['username'] ) ) {

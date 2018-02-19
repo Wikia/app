@@ -2,7 +2,7 @@
 
 namespace Wikia\Service\User\Auth;
 
-use Wikia\DependencyInjection\Injector;
+use Wikia\Factory\ServiceFactory;
 
 trait AuthServiceAccessor {
 
@@ -16,7 +16,7 @@ trait AuthServiceAccessor {
 	 */
 	protected function authenticationService(): AuthService {
 		if ( is_null( $this->authenticationService ) ) {
-			$this->authenticationService = Injector::getInjector()->get( AuthService::class );
+			$this->authenticationService = ServiceFactory::instance()->heliosFactory()->authService();
 		}
 
 		return $this->authenticationService;

@@ -253,6 +253,10 @@ class Phalanx extends WikiaModel implements ArrayAccess {
 		// Commit the transaction so that Phalanx service will see the update when it is notified
 		$dbw->commit();
 
+		global $wgSpecialsDB;
+		$sdw = wfGetDB( DB_MASTER, [], $wgSpecialsDB );
+		$sdw->delete( 'phalanx_stats', [ 'ps_blocker_id' => $this->data['id'] ], __METHOD__ );
+
 		if ( $removed ) {
 			$this->log( 'delete' );
 			WikiaLogger::instance()->info( 'Phalanx block rule deleted', $this->data );

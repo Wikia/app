@@ -1,7 +1,6 @@
 <?php
 
-use Wikia\DependencyInjection\Injector;
-use Wikia\Service\User\Preferences\PreferenceService;
+use Wikia\Factory\ServiceFactory;
 
 class FounderEmails {
 	static private $instance = null;
@@ -52,8 +51,7 @@ class FounderEmails {
 	 */
 
 	public function getWikisWithFounderPreference( $preferenceName ) {
-		/** @var PreferenceService $preferenceService */
-		$preferenceService = Injector::getInjector()->get( PreferenceService::class );
+		$preferenceService = ServiceFactory::instance()->preferencesFactory()->preferenceService();
 		return $preferenceService->findWikisWithLocalPreferenceValue( $preferenceName, "1" );
 	}
 
