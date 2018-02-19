@@ -1274,12 +1274,26 @@ class Parser {
 			// XW-4380: Make template placeholders in list items render correctly
 			// XW-4609: remove newlines from template's placeholder when used inside list's item to not break list
 			// before this code was executed inside doBlockLevels(), however it needs to be done before doAllQuotes to not break bolds and italics
-			$text = preg_replace_callback('/^([\*#;:][^\n]*<div class="placeholder placeholder-double-brackets"[^>]+>&#x0200B;)\n?(.*?)(&#x0200B;<\/div>)/ms', function($matches) {
-				return preg_replace('/\\n/', '', $matches[0]);
-			}, str_replace("\r\n", "\n", $text));
-			$text = preg_replace_callback('/^([\*#;:][^\n]*<span class="placeholder placeholder-double-brackets"[^>]+>&#x0200B;)\n?(.*?)(&#x0200B;<\/span>)/ms', function($matches) {
-				return preg_replace('/\\n/', '', $matches[0]);
-			}, str_replace("\r\n", "\n", $text));
+
+			do {
+				$before = $text;
+				$text = preg_replace_callback('/^([\*#;:][^\n]*<div class="placeholder placeholder-double-brackets"[^>]+>&#x0200B;)(.*?)(&#x0200B;<\/div>)/ms',
+					function($matches) {
+						return preg_replace('/\\n/', '', $matches[0]);
+					},
+					str_replace("\r\n", "\n", $text));
+			} while ( $before != $text );
+
+			do {
+				$before = $text;
+				$text = preg_replace_callback(
+					'/^([\*#;:][^\n]*<span class="placeholder placeholder-double-brackets"[^>]+>&#x0200B;)(.*?)(&#x0200B;<\/span>)/ms',
+					function ( $matches ) {
+						return preg_replace( '/\\n/', '', $matches[0] );
+					},
+					str_replace( "\r\n", "\n", $text )
+				);
+			} while ( $before != $text );
 		}
 		// FANDOM change end
 
