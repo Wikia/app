@@ -51,7 +51,6 @@ class WikiaUpdater {
 			array( 'dropIndex', 'wall_related_pages', 'page_id_idx_2',  $dir . 'patch-wall_related_pages-drop-page_id_idx_2.sql', true ), // SUS-3096
 
 			# functions
-			array( 'WikiaUpdater::do_page_vote_unique_update' ),
 			array( 'WikiaUpdater::do_page_wikia_props_update' ),
 			array( 'WikiaUpdater::do_drop_table', 'imagetags' ),
 			array( 'WikiaUpdater::do_drop_table', 'send_queue' ),
@@ -112,19 +111,6 @@ class WikiaUpdater {
 		if ( $db->tableExists( $table ) ) {
 			$updater->output( "...dropping $table table... " );
 			$db->dropTable( $table, __METHOD__ );
-			$updater->output( "ok\n" );
-		}
-	}
-
-	public static function do_page_vote_unique_update( DatabaseUpdater $updater ) {
-		$db = $updater->getDB();
-		$dir = self::get_patch_dir();
-		$updater->output( "Checking wikia page_vote table...\n" );
-		if( $updater->getDB()->indexExists( 'page_vote', 'unique_vote' ) ) {
-			$updater->output( "...page_vote unique key already set.\n" );
-		} else {
-			$updater->output( "Making page_vote unique key... " );
-			$db->sourceFile( $dir . 'patch-page_vote_unique_vote.sql' );
 			$updater->output( "ok\n" );
 		}
 	}
