@@ -1,6 +1,6 @@
 <?php
 
-use Wikia\Service\Gateway\KubernetesUrlProvider;
+use Wikia\Factory\ServiceFactory;
 
 class DiscussionsDataService {
 	const DISCUSSIONS_API_SORT_KEY_TRENDING = 'trending';
@@ -109,11 +109,8 @@ class DiscussionsDataService {
 		return $this->getDiscussionsApiUrl() . '/' . $endpoint . '?' . http_build_query( $params );
 	}
 
-	private function getDiscussionsApiUrl() {
-		global $wgWikiaEnvironment, $wgWikiaDatacenter;
-
-		return "http://" . ( new KubernetesUrlProvider( $wgWikiaEnvironment, $wgWikiaDatacenter ) )
-				->getUrl( 'discussion' );
+	private function getDiscussionsApiUrl(): string {
+		return "http://" . ServiceFactory::instance()->providerFactory()->urlProvider()->getUrl( 'discussion' );
 	}
 
 	private function buildPost( $rawPost, $index ) {
