@@ -82,6 +82,8 @@ class WikiaUpdater {
 			array( 'WikiaUpdater::do_clean_video_info_table' ), // SUS-3862
 			array( 'WikiaUpdater::removeUnusedGroups' ), // SUS-4169
 			array( 'WikiaUpdater::do_drop_table', 'objectcache' ), // SUS-4171
+			array( 'WikiaUpdater::doPageVoteCleanup' ), // SUS-3390
+			array( 'addIndex', 'page_vote', 'article_user_idx', $dir. 'patch-index-page_vote.sql', true ), // SUS-3390
 		);
 
 		if ( $wgDBname === $wgExternalSharedDB ) {
@@ -267,6 +269,33 @@ class WikiaUpdater {
 		$dbw->delete( 'video_info', [ 'premium' => 1 ], __METHOD__ );
 
 		$databaseUpdater->output( "done.\n" );
+		wfWaitForSlaves();
+	}
+
+	public static function doPageVoteCleanup( DatabaseUpdater $databaseUpdater ) {
+		$dbw = $databaseUpdater->getDB();
+
+		$databaseUpdater->output( 'Removing page_vote rows for anons... ' );
+		$dbw->delete( 'page_vote', [ 'user_id' => 0 ], __METHOD__ );
+		$affectedRows = $dbw->affectedRows();
+
+		$databaseUpdater->output( "done - {$affectedRows} rows affected\n" );
+
+		$databaseUpdater->output( 'Removing page_vote rows for non-forum pages... ' );
+		$ids = $dbw->selectField(
+			['page_vote', 'page'],
+			'GROUP_CONCAT(DISTINCT(page_id))',
+			[
+				'page.page_id = article_id',
+				'page_namespace <> 2001'
+			],
+			__METHOD__
+		);
+
+		$dbw->delete( 'page_vote', [ 'article_id' => explode( ',', $ids ) ], __METHOD__ );
+		$affectedRows = $dbw->affectedRows();
+
+		$databaseUpdater->output( "done - {$affectedRows} rows affected\n" );
 		wfWaitForSlaves();
 	}
 
