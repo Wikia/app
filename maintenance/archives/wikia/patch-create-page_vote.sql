@@ -5,5 +5,5 @@ CREATE TABLE /*$wgDBprefix*/page_vote (
 	`vote` int(2) NOT NULL,
 	`ip` varbinary(32) DEFAULT NULL,
 	`time` datetime NOT NULL,
-	KEY `article_user_idx` (`article_id`, `user_id`)
+	UNIQUE KEY `article_user_idx` (`article_id`, `user_id`)
 ) ENGINE=InnoDB;
