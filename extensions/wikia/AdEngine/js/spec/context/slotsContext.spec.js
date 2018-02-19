@@ -174,4 +174,11 @@ describe('ext.wikia.adEngine.context.slotsContext', function () {
 			BOTTOM_LEADERBOARD: 9
 		});
 	});
+
+	it('should enable article video slot by default', function () {
+		var context = getContext();
+
+		expect(context.isApplicable('FEATURED')).toBeTruthy();
+	});
+
 });

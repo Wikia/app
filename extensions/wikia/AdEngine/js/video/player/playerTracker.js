@@ -54,6 +54,7 @@ define('ext.wikia.adEngine.video.player.playerTracker', [
 				'content_type': params.contentType || contentType || emptyValue.string,
 				'line_item_id': params.lineItemId || emptyValue.int,
 				'creative_id': params.creativeId || emptyValue.int,
+				'audio': params.withAudio ? 1 : 0,
 				'price': emptyValue.price,
 				'browser': [ browserDetect.getOS(), browserDetect.getBrowser() ].join(' '),
 				'additional_1': canFloat,

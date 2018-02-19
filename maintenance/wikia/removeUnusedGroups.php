@@ -60,9 +60,8 @@ class RemoveUnusedGroups extends Maintenance {
 	}
 
 	private function getValidGroups(): array {
-		$injector = \Wikia\DependencyInjection\Injector::getInjector();
-		$permissionsConfiguration =
-			$injector->get( \Wikia\Service\User\Permissions\PermissionsConfiguration::class );
+		$permissionsConfiguration = \Wikia\Factory\ServiceFactory::instance()->permissionsFactory()
+			->permissionsConfiguration();
 
 		if ( $this->hasOption( 'run-on-wikicities' ) ) {
 			// only global groups should be set on wikicities

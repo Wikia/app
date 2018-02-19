@@ -82,6 +82,7 @@ class WikiaUpdater {
 			array( 'WikiaUpdater::do_drop_table', 'sitemap_blobs' ), // SUS-3589
 			array( 'WikiaUpdater::do_clean_video_info_table' ), // SUS-3862
 			array( 'WikiaUpdater::removeUnusedGroups' ), // SUS-4169
+			array( 'WikiaUpdater::do_drop_table', 'objectcache' ), // SUS-4171
 		);
 
 		if ( $wgDBname === $wgExternalSharedDB ) {

@@ -49,6 +49,7 @@ define('ext.wikia.adEngine.ml.fmr.fmrLogisticRegression', [
 		model: linearModel.create(coefficients, intercept),
 		name: 'fmrlr',
 		wgCountriesVariable: 'wgAdDriverFMRLogisticRegressionRabbitCountries',
-		enabled: true
+		enabled: true,
+		cachePrediction: true
 	});
 });

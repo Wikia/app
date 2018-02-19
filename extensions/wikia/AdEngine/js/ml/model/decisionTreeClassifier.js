@@ -41,7 +41,7 @@ define('ext.wikia.adEngine.ml.model.decisionTreeClassifier', [
 
 		function predict(features, node) {
 			if (!lChilds || !rChilds || !thresholds || !indices || !classes) {
-				return;
+				return null;
 			}
 
 			node = (typeof node !== 'undefined') ? node : 0;

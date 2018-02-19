@@ -603,9 +603,7 @@ define('wikia.vet', [
 			$.extend(this.searchCachedStuff, searchSettings);
 
 			// load mustache as deferred object and then make request for suggestions
-			$.when(
-				$.loadMustache()
-			).done($.proxy(this.fetchSuggestions, this));
+			$.loadMustache();
 
 			// cache selectors
 			this.cachedSelectors = {
@@ -827,12 +825,7 @@ define('wikia.vet', [
 					}
 
 					if (itemsShown * 2 > totalItems - indexEnd) {
-						// depends on fetch mode send request to different controller
-						if (!self.searchCachedStuff.inSearchMode) {
-							self.fetchSuggestions();
-						} else {
-							self.fetchSearch();
-						}
+						self.fetchSearch();
 					}
 					previousIndexStart = indexStart;
 				}
@@ -907,59 +900,6 @@ define('wikia.vet', [
 				this.cachedSelectors.resultCaption.text(txt);
 			} else {
 				this.cachedSelectors.resultCaption.text(this.cachedResultCaption);
-			}
-		},
-
-		// METHOD: fetch part of suggestions
-		fetchSuggestions: function () {
-
-			var self = this,
-				// index - start fetching from item number...
-				svStart = this.suggestionsCachedStuff.fetchedResoultsCount,
-				// number of requested items
-				svSize = 20;
-
-			if (this.canFatch === true) {
-				this.canFatch = false; // fetching in progress
-
-				this.carouselMode = 'suggestion';
-
-				this.requestInProgress = $.nirvana.sendRequest({
-					controller: 'VideoEmbedToolController',
-					method: 'getSuggestedVideos',
-					type: 'get',
-					data: {
-						svStart: svStart,
-						svSize: svSize,
-						articleId: window.wgArticleId
-					},
-					callback: function (data) {
-						var i,
-							items = data.items,
-							length = items.length;
-
-						if (length > 0) {
-							tracking({
-								label: 'suggestions-loaded-' + data.searchQuery
-							});
-
-							self.trimTitles(data);
-							self.addSuggestions(data);
-
-							// update results counter
-							self.suggestionsCachedStuff.fetchedResoultsCount = data.nextStartFrom;
-							self.suggestionsCachedStuff.suggestionQuery = data.searchQuery;
-
-							// cache fetched items
-							for (i = 0; i < length; i += 1) {
-								self.suggestionsCachedStuff.cashedSuggestions.push(items[i]);
-							}
-
-							self.isCarouselCheck();
-							self.canFatch = true;
-						}
-					}
-				});
 			}
 		},
 

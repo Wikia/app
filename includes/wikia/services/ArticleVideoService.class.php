@@ -3,9 +3,8 @@
 use Swagger\Client\ApiException;
 use Swagger\Client\ArticleVideo\Api\MappingsInternalApi;
 use Swagger\Client\ArticleVideo\Models\Mapping;
-use Wikia\DependencyInjection\Injector;
+use Wikia\Factory\ServiceFactory;
 use Wikia\Logger\WikiaLogger;
-use Wikia\Service\Swagger\ApiProvider;
 
 /**
  * Created by PhpStorm.
@@ -118,8 +117,7 @@ class ArticleVideoService {
 	 * @return MappingsInternalApi
 	 */
 	private static function createMappingsInternalApiClient(): MappingsInternalApi {
-		/** @var ApiProvider $apiProvider */
-		$apiProvider = Injector::getInjector()->get( ApiProvider::class );
+		$apiProvider = ServiceFactory::instance()->providerFactory()->apiProvider();
 		$api = $apiProvider->getApi( self::SERVICE_NAME, MappingsInternalApi::class );
 
 		// default CURLOPT_TIMEOUT for API client is set to 0 which means no timeout.
