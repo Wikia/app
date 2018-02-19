@@ -144,7 +144,7 @@ define('ext.wikia.adEngine.adEngine', [
 						slot.container.setAttribute('data-slot-result', 'collapse');
 					},
 					isEnabled: function () {
-						log(['disable', provider.name, slotName], log.levels.debug, logGroup);
+						log(['isEnabled', provider.name, slotName], log.levels.debug, logGroup);
 						return slot.enabled;
 					},
 					disable: function () {

@@ -14,7 +14,7 @@ define('ext.wikia.adEngine.slot.adSlot', [
 		function registerHook(name) {
 			return function (adInfo) {
 				if (typeof callbacks[name] === 'function') {
-					callbacks[name](adInfo);
+					return callbacks[name](adInfo);
 				}
 			};
 		}
