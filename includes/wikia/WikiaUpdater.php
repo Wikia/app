@@ -282,6 +282,10 @@ class WikiaUpdater {
 		$databaseUpdater->output( "done - {$affectedRows} rows affected\n" );
 
 		$databaseUpdater->output( 'Removing page_vote rows for non-forum pages... ' );
+
+		// so that GROUP_CONCAT below will return all values
+		$dbw->query('SET SESSION group_concat_max_len = 100000', __METHOD__);
+
 		$ids = $dbw->selectField(
 			['page_vote', 'page'],
 			'GROUP_CONCAT(DISTINCT(page_id))',
