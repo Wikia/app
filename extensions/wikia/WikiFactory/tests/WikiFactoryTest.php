@@ -1,6 +1,7 @@
 <?php
 
-class WikiFactoryTest extends WikiaBaseTest {
+class WikiFactoryTest extends WikiaDatabaseTest {
+	use MockGlobalVariableTrait;
 
 	private $serverName = null;
 
@@ -24,7 +25,8 @@ class WikiFactoryTest extends WikiaBaseTest {
 	 * @dataProvider getLocalEnvURLDataProvider
 	 */
 	public function testGetLocalEnvURL( $environment, $forcedEnv, $url, $expected ) {
-		$this->mockEnvironment( $environment );
+		$this->mockGlobalVariable( 'wgWikiaEnvironment', $environment );
+
 		$url = WikiFactory::getLocalEnvURL( $url, $forcedEnv );
 		$this->assertEquals( $expected, $url );
 	}
@@ -309,5 +311,9 @@ array (
 EOT;
 
 		$this->assertEquals( $expectedRender, WikiFactory::renderValue( $variable ) );
+	}
+
+	protected function getDataSet() {
+		return $this->createYamlDataSet( __DIR__ . '/fixtures/' );
 	}
 }

@@ -2,8 +2,9 @@
 
 /**
  * @group LyricFindTracking
+ * @group Integration
  */
-class LyricFindTrackingServiceTest extends WikiaBaseTest {
+class LyricFindTrackingServiceTest extends WikiaDatabaseTest {
 
 	const SERVICE_URL = 'http://api.foo.net/service/';
 	const API_KEY = '123456';
@@ -15,9 +16,6 @@ class LyricFindTrackingServiceTest extends WikiaBaseTest {
 		// mock API settings
 		$this->mockGlobalVariable('wgLyricFindApiUrl', self::SERVICE_URL);
 		$this->mockGlobalVariable('wgLyricFindApiKeys', ['display' => self::API_KEY]);
-
-		// prevent DB changes
-		$this->mockGlobalFunction('wfSetWikiaPageProp', null);
 	}
 
 	/**
@@ -32,14 +30,11 @@ class LyricFindTrackingServiceTest extends WikiaBaseTest {
 	public function testFormatTrackId($amgId, $gracenoteId, $title, $expected) {
 		$service = new LyricFindTrackingService();
 
-		$method = new ReflectionMethod('LyricFindTrackingService', 'formatTrackId');
-		$method->setAccessible(true);
-
-		$trackId = $method->invoke($service, [
+		$trackId = $service->formatTrackId( [
 			'amg' => $amgId,
 			'gracenote' => $gracenoteId,
-			'title' => $title
-		]);
+			'title' => $title,
+		] );
 
 		$this->assertEquals($expected, $trackId, 'Track ID should match expected value');
 	}
@@ -159,5 +154,14 @@ class LyricFindTrackingServiceTest extends WikiaBaseTest {
 				'res' => true
 			],
 		];
+	}
+
+	/**
+	 * Returns the test dataset.
+	 *
+	 * @return \PHPUnit\DbUnit\DataSet\IDataSet
+	 */
+	protected function getDataSet() {
+		// TODO: Implement getDataSet() method.
 	}
 }

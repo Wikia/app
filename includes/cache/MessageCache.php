@@ -89,6 +89,14 @@ class MessageCache {
 	}
 
 	/**
+	 * Wikia change - setup a mock message cache for testing that will return the message key for values
+	 * @param array $overrides message key => text overrides
+	 */
+	public static function setupForTesting( array $overrides = [] ) {
+		self::$instance = new TestMessageCache( $overrides );
+	}
+
+	/**
 	 * Destroy the singleton instance
 	 *
 	 * @since 1.18

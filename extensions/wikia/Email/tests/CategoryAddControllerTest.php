@@ -11,7 +11,6 @@ class CategoryAddControllerTest extends WikiaBaseTest {
 	 */
 	public function testAssertCanEmailFailsAfterThrottleAmountReached() {
 		$this->mockUser();
-		$this->mockTitle();
 		$this->mockInternalRequest();
 		$this->mockMemcache( CategoryAddController::EMAILS_PER_THROTTLE_PERIOD );
 
@@ -23,7 +22,6 @@ class CategoryAddControllerTest extends WikiaBaseTest {
 
 	public function testAssertCanEmailSucceedsBeforeThrottleAmountReached() {
 		$this->mockUser();
-		$this->mockTitle();
 		$this->mockInternalRequest();
 		$this->mockMemcache( CategoryAddController::EMAILS_PER_THROTTLE_PERIOD - 1 );
 
@@ -64,18 +62,6 @@ class CategoryAddControllerTest extends WikiaBaseTest {
 			->will( $this->returnValue( true ) );
 
 		$this->mockGlobalVariable( 'wgUser', $mockUser );
-	}
-
-	private function mockTitle() {
-		$mockedTitle = $this->getMockBuilder( Title::class )
-			->setMethods( [ 'getPrefixedText', 'getText', 'exists' ] )
-			->getMock();
-
-		$mockedTitle->expects( $this->once() )
-			->method( 'exists' )
-			->will( $this->returnValue( true ) );
-
-		$this->mockClassEx('Title',  $mockedTitle );
 	}
 
 	private function mockInternalRequest() {

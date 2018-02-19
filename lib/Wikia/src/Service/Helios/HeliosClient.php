@@ -4,7 +4,6 @@ namespace Wikia\Service\Helios;
 use Wikia\Tracer\WikiaTracer;
 use Wikia\Util\GlobalStateWrapper;
 use Wikia\Service\Constants;
-use \Wikia\Util\Assert;
 
 /**
  * A client for Wikia authentication service.
@@ -62,9 +61,6 @@ class HeliosClient {
 	 * @return mixed|null
 	 */
 	public function request( $resourceName, $getParams = [], $postData = [], $extraRequestOptions = [] ) {
-		// Crash if we cannot make HTTP requests.
-		Assert::true( \MWHttpRequest::canMakeRequests() );
-
 		// Request URI pre-processing.
 		$uri = "{$this->baseUri}{$resourceName}?" . http_build_query( $getParams );
 

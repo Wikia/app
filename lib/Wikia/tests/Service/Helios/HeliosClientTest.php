@@ -2,33 +2,26 @@
 
 namespace Wikia\Helios;
 
+use PHPUnit\Framework\TestCase;
 use Wikia\Service\Helios\HeliosClient;
 
 
-class HeliosClientTest extends \WikiaBaseTest {
+class HeliosClientTest extends TestCase {
+	use \HttpIntegrationTest;
+
+	/** @var HeliosClient $heliosClient */
+	private $heliosClient;
 
 	public function setUp() {
-
 		parent::setUp();
+
+		$this->heliosClient = new HeliosClient( "http://{$this->getMockUrl()}", 'secret' );
 	}
-
-	/**
-	 * @expectedException \Wikia\Util\AssertionException
-	 */
-	public function testCannotMakeRequests() {
-		$this->mockStaticMethod( '\MWHttpRequest', 'canMakeRequests', false );
-
-		$client = new HeliosClient( 'http://example.com', 'id', 'secret' );
-		$client->request( 'resource', [], [], [] );
-	}
-
 	/**
 	 * @expectedException \Wikia\Service\Helios\ClientException
 	 * @expectedExceptionMessage Invalid Helios response
 	 */
 	public function testInvalidResponse() {
-		$this->mockStaticMethod( '\MWHttpRequest', 'canMakeRequests', true );
-
 		$requestMock = $this->getMock( '\CurlHttpRequest', [ 'execute', 'getContent' ], [ 'http://example.com' ], '', false );
 		$requestMock->expects( $this->once() )
 			->method( 'getContent' )
@@ -43,8 +36,6 @@ class HeliosClientTest extends \WikiaBaseTest {
 	}
 
 	public function testSuccess() {
-		$this->mockStaticMethod( '\MWHttpRequest', 'canMakeRequests', true );
-
 		$requestMock = $this->getMock( '\CurlHttpRequest', [ 'execute', 'getContent' ], [ 'http://example.com' ], '', false );
 		$requestMock->expects( $this->once() )
 			->method( 'getContent' )
@@ -63,11 +54,6 @@ class HeliosClientTest extends \WikiaBaseTest {
 	}
 
 	public function testRetry() {
-		// To reduce the unit test time, mock the 'sleep' method called between retries.
-		$this->mockGlobalFunction( 'sleep', null );
-
-		$this->mockStaticMethod( '\MWHttpRequest', 'canMakeRequests', true );
-
 		$requestMock = $this->getMock( '\CurlHttpRequest', [ 'execute', 'getContent' ], [ 'http://example.com' ], '', false );
 		$requestMock->expects( $this->once() )
 			->method( 'getContent' )

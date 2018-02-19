@@ -45,19 +45,6 @@ class UserPasswordTest extends WikiaBaseTest {
 		$response = new StdClass();
 		$response->errors = [ $error ];
 
-		$mockMessage =
-			$this->getMockBuilder( 'Message' )
-				->disableOriginalConstructor()
-				->setMethods( [ 'text' ] )
-				->getMock();
-		$mockMessage->expects( $this->once() )->method( 'text' )->willReturn( '' );
-
-		$this->getGlobalFunctionMock( 'wfMessage' )
-			->expects( $this->once() )
-			->method( 'wfMessage' )
-			->with( 'passwordtooshort' )
-			->willReturn( $mockMessage );
-
 		$this->heliosClientMock->expects( $this->once() )
 			->method( 'setPassword' )
 			->willReturn( $response );
@@ -87,19 +74,6 @@ class UserPasswordTest extends WikiaBaseTest {
 		$response = new StdClass();
 		$response->errors = [ $error ];
 
-		$mockMessage =
-			$this->getMockBuilder( 'Message' )
-				->disableOriginalConstructor()
-				->setMethods( [ 'text' ] )
-				->getMock();
-		$mockMessage->expects( $this->once() )->method( 'text' )->willReturn( '' );
-
-		$this->getGlobalFunctionMock( 'wfMessage' )
-			->expects( $this->once() )
-			->method( 'wfMessage' )
-			->with( $error->description )
-			->willReturn( $mockMessage );
-
 		$this->heliosClientMock->expects( $this->never() )->method( 'setPassword' );
 
 		$this->heliosClientMock->expects( $this->once() )
@@ -113,19 +87,6 @@ class UserPasswordTest extends WikiaBaseTest {
 	 * @expectedException PasswordError
 	 */
 	public function testSetPasswordDeletePasswordUnknownError() {
-		$mockMessage =
-			$this->getMockBuilder( 'Message' )
-				->disableOriginalConstructor()
-				->setMethods( [ 'text' ] )
-				->getMock();
-		$mockMessage->expects( $this->once() )->method( 'text' )->willReturn( '' );
-
-		$this->getGlobalFunctionMock( 'wfMessage' )
-			->expects( $this->once() )
-			->method( 'wfMessage' )
-			->with( 'externaldberror' )
-			->willReturn( $mockMessage );
-
 		$this->heliosClientMock->expects( $this->never() )->method( 'setPassword' );
 
 		$this->heliosClientMock->expects( $this->once() )

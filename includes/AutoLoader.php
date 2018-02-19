@@ -382,6 +382,7 @@ $wgAutoloadLocalClasses = array(
 	'LinkBatch' => 'includes/cache/LinkBatch.php',
 	'LinkCache' => 'includes/cache/LinkCache.php',
 	'MessageCache' => 'includes/cache/MessageCache.php',
+	'TestMessageCache' => 'includes/cache/TestMessageCache.php',
 	'ObjectFileCache' => 'includes/cache/ObjectFileCache.php',
 	'ResourceFileCache' => 'includes/cache/ResourceFileCache.php',
 	'SquidUpdate' => 'includes/cache/SquidUpdate.php',

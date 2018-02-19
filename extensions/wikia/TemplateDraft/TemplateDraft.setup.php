@@ -8,7 +8,7 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  */
 
-$wgExtensionCredits['other'][] = [
+$GLOBALS['wgExtensionCredits']['other'][] = [
 	'name'				=> 'TemplateDraft',
 	'version'			=> '1.0',
 	'author'			=> 'Adam Karmiński',
@@ -19,35 +19,35 @@ $wgExtensionCredits['other'][] = [
 /**
  * Messages
  */
-$wgExtensionMessagesFiles['TemplateDraft'] = __DIR__ . '/TemplateDraft.i18n.php';
+$GLOBALS['wgExtensionMessagesFiles']['TemplateDraft'] = __DIR__ . '/TemplateDraft.i18n.php';
 
 /**
  * Controllers
  */
-$wgAutoloadClasses['TemplateDraftController'] = __DIR__ . '/controllers/TemplateDraftController.class.php';
+$GLOBALS['wgAutoloadClasses']['TemplateDraftController'] = __DIR__ . '/controllers/TemplateDraftController.class.php';
 
 /**
  * Hooks
  */
-$wgAutoloadClasses['TemplateDraftHooks'] = __DIR__ . '/TemplateDraftHooks.class.php';
-$wgHooks['EditFormPreloadText'][] = 'TemplateDraftHooks::onEditFormPreloadText';
-$wgHooks['EditPageLayoutShowIntro'][] = 'TemplateDraftHooks::onEditPageLayoutShowIntro';
-$wgHooks['GetRailModuleList'][] = 'TemplateDraftHooks::onGetRailModuleList';
-$wgHooks['SkinAfterBottomScripts'][] = 'TemplateDraftHooks::onSkinAfterBottomScripts';
+$GLOBALS['wgAutoloadClasses']['TemplateDraftHooks'] = __DIR__ . '/TemplateDraftHooks.class.php';
+$GLOBALS['wgHooks']['EditFormPreloadText'][] = 'TemplateDraftHooks::onEditFormPreloadText';
+$GLOBALS['wgHooks']['EditPageLayoutShowIntro'][] = 'TemplateDraftHooks::onEditPageLayoutShowIntro';
+$GLOBALS['wgHooks']['GetRailModuleList'][] = 'TemplateDraftHooks::onGetRailModuleList';
+$GLOBALS['wgHooks']['SkinAfterBottomScripts'][] = 'TemplateDraftHooks::onSkinAfterBottomScripts';
 
 /**
  * Helpers
  */
-$wgAutoloadClasses['TemplateDraftHelper'] = __DIR__ . '/TemplateDraftHelper.class.php';
-$wgAutoloadClasses['TemplateConverter'] = __DIR__ . '/TemplateConverter.class.php';
+$GLOBALS['wgAutoloadClasses']['TemplateDraftHelper'] = __DIR__ . '/TemplateDraftHelper.class.php';
+$GLOBALS['wgAutoloadClasses']['TemplateConverter'] = __DIR__ . '/TemplateConverter.class.php';
 
 /**
  * Right rail module
  */
-$wgAutoloadClasses['TemplateDraftModuleController'] = $IP . '/skins/oasis/modules/TemplateDraftModuleController.class.php';
+$GLOBALS['wgAutoloadClasses']['TemplateDraftModuleController'] = $IP . '/skins/oasis/modules/TemplateDraftModuleController.class.php';
 
 /**
  * Add approvedraft action (?action=apprevedraft)
  */
-$wgAutoloadLocalClasses['ApprovedraftAction'] = __DIR__ . '/ApprovedraftAction.php';
-$wgActions['approvedraft'] = true;
+$GLOBALS['wgAutoloadLocalClasses']['ApprovedraftAction'] = __DIR__ . '/ApprovedraftAction.php';
+$GLOBALS['wgActions']['approvedraft'] = true;

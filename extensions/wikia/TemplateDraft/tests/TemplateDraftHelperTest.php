@@ -1,138 +1,55 @@
 <?php
 
-class TemplateDraftHelperTest extends WikiaBaseTest {
+use PHPUnit\Framework\TestCase;
 
-	public function setUp() {
-		$this->setupFile = __DIR__ . '/../TemplateDraft.setup.php';
-		parent::setUp();
+class TemplateDraftHelperTest extends TestCase {
+	const TEMPLATE_DRAFT_MSG_EN = 'DraftY7123277';
+	const TEMPLATE_DRAFT_MSG_PL = 'SzkicQ7123278';
+
+	public static function setUpBeforeClass() {
+		parent::setUpBeforeClass();
+
+		require_once __DIR__ . '/../TemplateDraft.setup.php';
+
+		$overrides = [
+			'templatedraft-subpage' => [
+				'en' => static::TEMPLATE_DRAFT_MSG_EN,
+				'pl' => static::TEMPLATE_DRAFT_MSG_PL
+			]
+		];
+
+		MessageCache::setupForTesting( $overrides );
 	}
 
 	/**
 	 * @dataProvider isTitleDraftProvider
+	 *
+	 * @param int $namespace
+	 * @param string $title
+	 * @param bool $isTitleDraftExpected
 	 */
-	public function testIsTitleDraft(
-		$paramTitleNamespace,
-		$paramIsSubpage,
-		$paramSubpageText,
-		$paramMessageSubpageTextContentLang,
-		$paramMessageSubpageTextEnLang,
-		$isTitleDraftExpected
-	) {
+	public function testIsTitleDraft( int $namespace, string $title, bool $isTitleDraftExpected ) {
+		$title = Title::makeTitle( $namespace, $title );
 
-		$this->mockMessagesForTemplateDraftNameCheck(
-			$paramMessageSubpageTextContentLang,
-			$paramMessageSubpageTextEnLang
-		);
-
-		/** @var Title $mockTitle */
-		$mockTitle = $this->getMockBuilder( 'Title' )
-			->disableOriginalConstructor()
-			->setMethods( [ 'getNamespace', 'getSubpageText', 'isSubpage' ] )
-			->getMock();
-
-		$mockTitle->expects( $this->any() )
-			->method( 'getNamespace' )
-			->will( $this->returnValue( $paramTitleNamespace ) );
-
-		$mockTitle->expects( $this->any() )
-			->method( 'getSubpageText' )
-			->will( $this->returnValue( $paramSubpageText ) );
-
-		$mockTitle->expects( $this->any() )
-			->method( 'isSubpage' )
-			->will( $this->returnValue( $paramIsSubpage ) );
-
-		/* Mock tested class /*
-		/* @var TemplateDraftHelper $mockTemplateDraftHelper */
-		$mockTemplateDraftHelper = $this->getMockBuilder( 'TemplateDraftHelper' )
-			->disableOriginalConstructor()
-			->setMethods( null )
-			->getMock();
-
-		$isTitleDraftActual = $mockTemplateDraftHelper->isTitleDraft( $mockTitle );
-
-		$this->assertEquals( $isTitleDraftExpected, $isTitleDraftActual );
+		$this->assertEquals( $isTitleDraftExpected, TemplateDraftHelper::isTitleDraft( $title ) );
 	}
 
-	/* Data providers */
 	public function isTitleDraftProvider() {
-		$defaultEnDraftName = 'DraftY7123277';
-		$plDraftName = 'SzkicQ7123278';
+		$defaultEnDraftName = static::TEMPLATE_DRAFT_MSG_EN;
+		$plDraftName = static::TEMPLATE_DRAFT_MSG_PL;
 		$randomPageName = 'SomeNameRE2342233';
-		/*
-		 * Params order
-		 * [
-		 *	$paramTitleNamespace,
-		 *	$paramIsSubpage,
-		 *	$paramSubpageText,
-		 *	$paramMessageSubpageTextContentLang,
-		 *	$paramMessageSubpageTextEnLang,
-		 *	$isTitleDraftExpected
-		 * ]
-		 */
-		return [
-			/* Simple case: Template namespace, is subpage, EN page name and content lang */
-			[ NS_TEMPLATE, true, $defaultEnDraftName, $defaultEnDraftName, $defaultEnDraftName, true ],
-			/* EN name of page and different content language - should match default EN lang criteria */
-			[ NS_TEMPLATE, true, $defaultEnDraftName, $plDraftName, $defaultEnDraftName, true ],
-			/* PL name of page and PL content lang */
-			[ NS_TEMPLATE, true, $plDraftName, $plDraftName, $defaultEnDraftName, true ],
-			/* Not a sub page */
-			[ NS_TEMPLATE, false, $defaultEnDraftName, $defaultEnDraftName, $defaultEnDraftName, false ],
-			/* Main namespace */
-			[ NS_MAIN, true, $defaultEnDraftName, $defaultEnDraftName, $defaultEnDraftName, false ],
-			/* Not a sub page and Main namespace */
-			[ NS_MAIN, false, $defaultEnDraftName, $defaultEnDraftName, $defaultEnDraftName, false ],
-			/* Random page name and PL content lang */
-			[ NS_TEMPLATE, true, $randomPageName, $plDraftName, $defaultEnDraftName, false ],
-		];
+
+		yield 'EN template draft page' => [ NS_TEMPLATE, "$randomPageName/$defaultEnDraftName", true ];
+		yield 'PL template draft page' => [ NS_TEMPLATE, "$randomPageName/$plDraftName", true ];
+		yield 'non-draft template page' => [ NS_TEMPLATE, $randomPageName, false ];
+		yield 'template page with same title as EN draft' => [ NS_TEMPLATE, $defaultEnDraftName, false ];
+		yield 'template page with same title as PL draft' => [ NS_TEMPLATE, $plDraftName, false ];
+		yield 'main namespace subpage' => [ NS_MAIN, "$randomPageName/$defaultEnDraftName", true ];
+		yield 'main namespace subpage PL title' => [ NS_MAIN, "$randomPageName/$plDraftName", true ];
 	}
 
-	/* Helper functions */
-	private function mockMessagesForTemplateDraftNameCheck( $paramMessageSubpageTextContentLang, $paramMessageSubpageTextEnLang ) {
-		/* Mock message for in content language request */
-		$mockMessageContentLang = $this->getMockBuilder( 'Message' )
-			->disableOriginalConstructor()
-			->setMethods( array( 'escaped' ) )
-			->getMock();
-		$mockMessageContentLang
-			->expects( $this->any() )
-			->method( 'escaped' )
-			->will( $this->returnValue( $paramMessageSubpageTextContentLang ) );
-
-		/* Mock message for default EN language request */
-		$mockMessageEn = $this->getMockBuilder( 'Message' )
-			->disableOriginalConstructor()
-			->setMethods( array( 'escaped' ) )
-			->getMock();
-		$mockMessageEn
-			->expects( $this->any() )
-			->method( 'escaped' )
-			->will( $this->returnValue( $paramMessageSubpageTextEnLang ) );
-
-		/* Mock message to return different one depending on language call */
-		$mockMessage = $this->getMockBuilder( 'Message' )
-			->disableOriginalConstructor()
-			->setMethods( array( 'inContentLanguage', 'inLanguage' ) )
-			->getMock();
-		$mockMessage
-			->expects( $this->any() )
-			->method( 'inContentLanguage' )
-			->will( $this->returnValue( $mockMessageContentLang ) );
-		$mockMessage
-			->expects( $this->any() )
-			->method( 'inLanguage' )
-			->with( 'en' )
-			->will( $this->returnValue( $mockMessageEn ) );
-
-		/* Mock global wfMessage */
-		$mockWfMessage = $this->getGlobalFunctionMock( 'wfMessage' );
-
-		$mockWfMessage
-			->expects( $this->any() )
-			->method( 'wfMessage' )
-			->with( 'templatedraft-subpage' )
-			->will( $this->returnValue( $mockMessage ) );
+	public static function tearDownAfterClass() {
+		parent::tearDownAfterClass();
+		MessageCache::destroyInstance();
 	}
-
 }

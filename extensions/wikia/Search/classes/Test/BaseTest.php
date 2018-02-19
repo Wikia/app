@@ -16,10 +16,5 @@ abstract class BaseTest extends WikiaBaseTest {
 	    $this->setupFile = "{$IP}/extensions/wikia/Search/WikiaSearch.setup.php";
 
 		parent::setUp();
-
-	    // hack to overwrite irritating static logging functions
-	    $wikia = $this->getMock( 'Wikia', array( 'log', 'logBacktrace' ) );
-	    $this->mockClass( 'Wikia', $wikia, 'logBacktrace' );
-	    $this->mockClass( 'Wikia', $wikia, 'log' );
 	}
 }
