@@ -52,10 +52,6 @@ define('ext.wikia.adEngine.provider.directGpt', [
 		{
 			afterSuccess: function (slotName) {
 				slotTweaker.removeDefaultHeight(slotName);
-				if (!uapContext.isBfaaLoaded()) {
-					slotTweaker.removeTopButtonIfNeeded(slotName);
-					slotTweaker.adjustLeaderboardSize(slotName);
-				}
 			},
 			isInstartLogicRecoverable: instartLogic ? instartLogic.isSlotRecoverable : false,
 			isPageFairRecoverable: pageFair ? pageFair.isSlotRecoverable : false,

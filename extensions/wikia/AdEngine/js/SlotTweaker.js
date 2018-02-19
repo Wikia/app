@@ -3,11 +3,9 @@ define('ext.wikia.adEngine.slotTweaker', [
 	'ext.wikia.adEngine.domElementTweaker',
 	'ext.wikia.adEngine.slot.adSlot',
 	'wikia.document',
-	'wikia.geo',
-	'wikia.instantGlobals',
 	'wikia.log',
 	'wikia.window'
-], function (DOMElementTweaker, adSlot, doc, geo, instantGlobals, log, win) {
+], function (DOMElementTweaker, adSlot, doc, log, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.slotTweaker',
@@ -68,28 +66,6 @@ define('ext.wikia.adEngine.slotTweaker', [
 
 		if (slot) {
 			slot.className += ' ' + defaultHeightClass;
-		}
-	}
-
-	// TODO: remove it after fully disabling Badge Ad: ADEN-6579
-	function adjustLeaderboardSize(slotname) {
-		var slot = doc.getElementById(slotname);
-		if (!geo.isProperGeo(instantGlobals.wgAdDriverDisableBadgeAdCountries) &&
-			isTopLeaderboard(slotname) && isStandardLeaderboardSize(slotname)) {
-			slot.className += ' ' + standardLeaderboardSizeClass;
-		}
-	}
-
-	// TODO: remove it after fully disabling Badge Ad: ADEN-6579
-	function removeTopButtonIfNeeded(slotname) {
-		if (!geo.isProperGeo(instantGlobals.wgAdDriverDisableBadgeAdCountries) &&
-			isTopLeaderboard(slotname) && isStandardLeaderboardSize(slotname)) {
-			win.Wikia.reviveQueue = win.Wikia.reviveQueue || [];
-
-			win.Wikia.reviveQueue.push({
-				zoneId: 27,
-				slotName: 'TOP_BUTTON_WIDE'
-			});
 		}
 	}
 
@@ -204,7 +180,6 @@ define('ext.wikia.adEngine.slotTweaker', [
 	return {
 		addDefaultHeight: addDefaultHeight,
 		adjustIframeByContentSize: adjustIframeByContentSize,
-		adjustLeaderboardSize: adjustLeaderboardSize,
 		collapse: collapse,
 		expand: expand,
 		hackChromeRefresh: hackChromeRefresh,
@@ -213,7 +188,6 @@ define('ext.wikia.adEngine.slotTweaker', [
 		makeResponsive: makeResponsive,
 		onReady: onReady,
 		removeDefaultHeight: removeDefaultHeight,
-		removeTopButtonIfNeeded: removeTopButtonIfNeeded,
 		show: show,
 		tweakRecoveredSlot: tweakRecoveredSlot
 	};

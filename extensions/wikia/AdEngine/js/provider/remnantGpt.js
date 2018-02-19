@@ -28,10 +28,6 @@ define('ext.wikia.adEngine.provider.remnantGpt', [
 		{
 			afterSuccess: function (slotName) {
 				slotTweaker.removeDefaultHeight(slotName);
-				if (!uapContext.isBfaaLoaded()) {
-					slotTweaker.removeTopButtonIfNeeded(slotName);
-					slotTweaker.adjustLeaderboardSize(slotName);
-				}
 			},
 			getAdUnitBuilder: function () {
 				return adContext.getContext().opts.enableRemnantNewAdUnit ? megaAdUnitBuilder : adUnitBuilder;

@@ -47,8 +47,6 @@ describe('ext.wikia.adEngine.provider.*', function () {
 		},
 		slotTweaker: {
 			removeDefaultHeight: noop,
-			removeTopButtonIfNeeded: noop,
-			adjustLeaderboardSize: noop
 		},
 		uapContext: {
 			isUapLoaded: noop
