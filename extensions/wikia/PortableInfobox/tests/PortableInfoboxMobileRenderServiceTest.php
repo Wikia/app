@@ -74,7 +74,7 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 						]
 					]
 				],
-				'output' => '<aside class="portable-infobox pi-background">
+				'output' => '<aside class="portable-infobox pi-background pi">
 								<h2 class="pi-item pi-item-spacing pi-title">Test Title</h2>
 							</aside>',
 				'description' => 'Only title',
@@ -89,7 +89,7 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 						]
 					]
 				],
-				'output' => '<aside class="portable-infobox pi-background">
+				'output' => '<aside class="portable-infobox pi-background pi">
 								<nav class="pi-navigation pi-item-spacing pi-secondary-background pi-secondary-font">navigation value</nav>
 							</aside>',
 				'description' => 'navigation only',
@@ -105,7 +105,7 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 						]
 					]
 				],
-				'output' => '<aside class="portable-infobox pi-background">
+				'output' => '<aside class="portable-infobox pi-background pi">
 								<div class="pi-item pi-data pi-item-spacing pi-border-color">
 									<h3 class="pi-data-label pi-secondary-font">test label</h3>
 									<div class="pi-data-value pi-font">test value</div>
@@ -142,7 +142,7 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 						]
 					]
 				],
-				'output' => '<aside class="portable-infobox pi-background">
+				'output' => '<aside class="portable-infobox pi-background pi">
 								<div class="pi-item pi-hero">
 									<hgroup class="pi-hero-title-wrapper pi-item-spacing">
 										<h2 class="pi-hero-title">Test Title</h2>
@@ -198,7 +198,7 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 						]
 					]
 				],
-				'output' => '<aside class="portable-infobox pi-background">
+				'output' => '<aside class="portable-infobox pi-background pi">
 								<h2 class="pi-item pi-item-spacing pi-title">Test Title</h2>
 								<div class="pi-item pi-data pi-item-spacing pi-border-color">
 									<h3 class="pi-data-label pi-secondary-font">test label</h3>
@@ -224,7 +224,7 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 						]
 					]
 				],
-				'output' => '<aside class="portable-infobox pi-background">
+				'output' => '<aside class="portable-infobox pi-background pi">
 								<h2 class="pi-item pi-item-spacing pi-title">Test Title</h2>
 								<div class="pi-item pi-data pi-item-spacing pi-border-color">
 									<h3 class="pi-data-label pi-secondary-font">test label</h3>
@@ -273,7 +273,7 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 						]
 					]
 				],
-				'output' => '<aside class="portable-infobox pi-background">
+				'output' => '<aside class="portable-infobox pi-background pi">
 								<h2 class="pi-item pi-item-spacing pi-title">Test Title</h2>
 								<section class="pi-item pi-group pi-border-color">
 									<h2 class="pi-item pi-header pi-secondary-font pi-item-spacing pi-secondary-background">Test Header</h2>
@@ -323,7 +323,7 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 						]
 					]
 				],
-				'output' => '<aside class="portable-infobox pi-background">
+				'output' => '<aside class="portable-infobox pi-background pi">
 								<section class="pi-item pi-group pi-border-color">
 									<table class="pi-horizontal-group">
 										<caption
@@ -384,7 +384,7 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 						]
 					]
 				],
-				'output' => '<aside class="portable-infobox pi-background">
+				'output' => '<aside class="portable-infobox pi-background pi">
 								<section class="pi-item pi-group pi-border-color">
 									<table class="pi-horizontal-group pi-horizontal-group-no-labels">
 										<tbody>
@@ -416,7 +416,7 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 						]
 					]
 				],
-				'output' => '<aside class="portable-infobox pi-background">
+				'output' => '<aside class="portable-infobox pi-background pi">
 								<nav class="pi-navigation pi-item-spacing pi-secondary-background pi-secondary-font">
 									<p>Links</p>
 								</nav>
@@ -440,7 +440,7 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 						]
 					]
 				],
-				'output' => '<aside class="portable-infobox pi-background">
+				'output' => '<aside class="portable-infobox pi-background pi">
 								<div class="pi-item pi-hero">
 									<img
 									src="data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D" data-src="http://image.jpg" class="pi-image-thumbnail lazy media article-media" alt="image alt"  data-image-key="test1" data-image-name="test1" data-ref="1" data-params=\'[{"name":"test1", "full":"http://image.jpg"}]\' />
@@ -485,7 +485,7 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 						]
 					]
 				],
-				'output' => '<aside class="portable-infobox pi-background">
+				'output' => '<aside class="portable-infobox pi-background pi">
 								<div class="pi-item pi-hero">
 									<hgroup class="pi-hero-title-wrapper pi-item-spacing">
 										<h2 class="pi-hero-title">Test <a href="example.com">Title</a></h2>
@@ -527,7 +527,7 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 						]
 					]
 				],
-				'output' => '<aside class="portable-infobox pi-background">
+				'output' => '<aside class="portable-infobox pi-background pi">
 								<div class="pi-item pi-hero">
 									<figure data-component="portable-infobox-hero-image" data-attrs="{&quot;itemContext&quot;:&quot;portable-infobox&quot;,&quot;ref&quot;:1}">
 										<a href="http://image.jpg">
@@ -581,7 +581,7 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 						]
 					]
 				],
-				'output' => '<aside class="portable-infobox pi-background">
+				'output' => '<aside class="portable-infobox pi-background pi">
 								<div class="pi-item pi-hero">
 									<hgroup class="pi-hero-title-wrapper pi-item-spacing">
 										<h2 class="pi-hero-title">Test <a href="example.com">Title</a></h2>
@@ -674,7 +674,7 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 						]
 					]
 				],
-				'output' => '<aside class="portable-infobox pi-background">
+				'output' => '<aside class="portable-infobox pi-background pi">
 								<div class="pi-item pi-hero">
 									<hgroup class="pi-hero-title-wrapper pi-item-spacing">
 										<h2 class="pi-hero-title">Test <a href="example.com">Title</a></h2>
@@ -782,8 +782,20 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 						]
 					]
 				],
-				'output' => '<aside class="portable-infobox pi-background">
-								<h2 class="pi-item pi-item-spacing pi-title">Test Title</h2>
+				'output' => '<aside class="portable-infobox pi-background pi">
+								<div class="pi-item pi-hero">
+									<hgroup class="pi-hero-title-wrapper pi-item-spacing">
+										<h2 class="pi-hero-title">Test <a href="example.com">Title</a></h2>
+									</hgroup>
+									<figure data-component="portable-infobox-hero-image" data-attrs="{&quot;itemContext&quot;:&quot;portable-infobox&quot;,&quot;ref&quot;:44}">
+										<a href="http://image.jpg">
+											<img class="article-media-placeholder" src="data:image/svg+xml;charset=utf-8,%3Csvg xmlns%3D\'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg\' viewBox%3D\'0 0 200 200\'%2F%3E" alt="" width="200" height="200"/>
+											<noscript>
+												<img src="http://image.jpg" alt="" width="200" height="200"/>
+											</noscript>
+										</a>
+									</figure>
+								</div>
 								<div class="pi-item pi-data pi-item-spacing pi-border-color">
 									<h3 class="pi-data-label pi-secondary-font">Test 1</h3>
 									<div class="pi-data-value pi-font">test value 1</div>
@@ -793,20 +805,6 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 									<div class="pi-item pi-data pi-item-spacing pi-border-color">
 										<h3 class="pi-data-label pi-secondary-font">Test 2</h3>
 										<div class="pi-data-value pi-font">test value 2</div>
-									</div>
-									<div class="pi-item pi-image">
-										<figure class="article-media-thumbnail" data-component="article-media-thumbnail" data-attrs="{&quot;itemContext&quot;:&quot;portable-infobox&quot;,&quot;ref&quot;:44}">
-											<a href="http://image.jpg">
-												<img class="article-media-placeholder"
-													src="data:image/svg+xml;charset=utf-8,%3Csvg xmlns%3D\'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg\' viewBox%3D\'0 0 200 200\'%2F%3E"
-													alt=""
-													 width="200"
-													 height="200"/>
-												<noscript>
-													<img src="http://image.jpg" alt="" width="200" height="200"/>
-												</noscript>
-											</a>
-										</figure>
 									</div>
 									<div class="pi-item pi-data pi-item-spacing pi-border-color">
 										<h3 class="pi-data-label pi-secondary-font">Test 3</h3>
