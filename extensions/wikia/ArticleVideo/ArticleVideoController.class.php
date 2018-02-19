@@ -60,5 +60,7 @@ class ArticleVideoController extends WikiaController {
 
 		ArticleVideoService::purgeVideoMemCache( $wgCityId );
 		Title::newFromID($articleId)->purgeSquid();
+
+		$this->skipRendering();
 	}
 }
