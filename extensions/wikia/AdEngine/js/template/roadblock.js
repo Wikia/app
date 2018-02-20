@@ -23,6 +23,7 @@ define('ext.wikia.adEngine.template.roadblock', [
 	var context = adContext.getContext(),
 		logGroup = 'ext.wikia.adEngine.template.roadblock',
 		medrecSlotElement = doc.getElementById('TOP_RIGHT_BOXAD'),
+		skinSlotElement = doc.getElementById('INVISIBLE_SKIN'),
 		uapType = 'ruap';
 
 	function handleMedrec(medrecSlotElement) {
@@ -41,14 +42,19 @@ define('ext.wikia.adEngine.template.roadblock', [
 		}
 	}
 
+	function handleSkin(skinSlotElement) {
+		var skinSlot = slotRegistry.get(skinSlotElement.id);
+
+		btfBlocker.unblock(skinSlot.name);
+		log(['handleSkin', 'unblocking slot', skinSlot.name], log.levels.info, logGroup);
+	}
+
 	/**
 	 * @param {object} params
 	 * @param {string} [params.uap] - UAP ATF line item id
 	 * @param {object} [params.skin] - skin template params (see skin template for more info)
  	 */
 	function show(params) {
-		var isSkinAvailable = params.skin && params.skin.skinImage;
-
 		uapContext.setUapId(params.uap);
 		uapContext.setType(uapType);
 
@@ -56,9 +62,8 @@ define('ext.wikia.adEngine.template.roadblock', [
 			handleMedrec(medrecSlotElement);
 		}
 
-		if (skinTemplate && isSkinAvailable) {
-			log(['show', 'loading skin', params.skin], log.levels.info, logGroup);
-			skinTemplate.show(params.skin);
+		if (skinSlotElement) {
+			handleSkin(skinSlotElement);
 		}
 
 		log(['show', params.uap], log.levels.info, logGroup);
