@@ -1599,3 +1599,11 @@ function wfProtocolUrlToRelative( $url ) {
 
 	return $url;
 }
+
+function wfHttpToHttps( $url ) {
+	return preg_replace( '/^http:\/\//', 'https://', $url );
+}
+
+function wfHttpsToHttp( $url ) {
+	return preg_replace( '/^https:\/\//', 'http://', $url );
+}
