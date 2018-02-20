@@ -10,10 +10,11 @@
  */
 /*global define, require*/
 define('ext.wikia.adEngine.lookup.services', [
+	'ext.wikia.adEngine.adContext',
 	'wikia.log',
 	require.optional('ext.wikia.adEngine.lookup.prebid'),
 	require.optional('ext.wikia.adEngine.lookup.a9')
-], function (log, prebid, a9) {
+], function (adContext, log, prebid, a9) {
 	'use strict';
 	var logGroup = 'ext.wikia.adEngine.lookup.services',
 		bidders = [
@@ -31,13 +32,24 @@ define('ext.wikia.adEngine.lookup.services', [
 			}
 		},
 		bidMarker = ['x', 'x', 'x', 'x', 'x'],
-		realSlotPrices = {};
+		realSlotPrices = {},
+		slotAliases = {
+			mercury: {
+				BOTTOM_LEADERBOARD: 'MOBILE_PREFOOTER',
+				MOBILE_BOTTOM_LEADERBOARD: 'MOBILE_PREFOOTER'
+			}
+		};
 
 
 	function addParameters(providerName, slotName, slotTargeting) {
 		var params = {},
 			floorPrice = 0,
-			prebidPrices;
+			prebidPrices,
+			skin = adContext.getContext().targeting.skin;
+
+		if (slotAliases[skin] && slotAliases[skin][slotName]) {
+			slotName = slotAliases[skin][slotName];
+		}
 
 		if (prebid && prebid.wasCalled()) {
 			prebidPrices = prebid.getBestSlotPrice(slotName);
