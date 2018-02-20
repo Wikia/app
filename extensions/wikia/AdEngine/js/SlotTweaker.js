@@ -37,28 +37,6 @@ define('ext.wikia.adEngine.slotTweaker', [
 		}
 	}
 
-	function isTopLeaderboard(slotname) {
-		return slotname.indexOf('TOP_LEADERBOARD') !== -1;
-	}
-
-	function isStandardLeaderboardSize(slotname) {
-		var slot = doc.getElementById(slotname),
-			isStandardSize;
-
-		if (slot) {
-			isStandardSize = slot.offsetHeight >= 90 && slot.offsetHeight <= 95 && slot.offsetWidth <= 728;
-
-			log(
-				['isStandardLeaderboardSize', slotname, slot.offsetWidth + 'x' + slot.offsetHeight, isStandardSize],
-				3,
-				logGroup
-			);
-
-			return isStandardSize;
-		}
-		log('isStandardLeaderboardSize: ' + slotname + ' missing', 3, logGroup);
-	}
-
 	function addDefaultHeight(slotname) {
 		var slot = doc.getElementById(slotname);
 
@@ -184,7 +162,6 @@ define('ext.wikia.adEngine.slotTweaker', [
 		expand: expand,
 		hackChromeRefresh: hackChromeRefresh,
 		hide: hide,
-		isTopLeaderboard: isTopLeaderboard,
 		makeResponsive: makeResponsive,
 		onReady: onReady,
 		removeDefaultHeight: removeDefaultHeight,
