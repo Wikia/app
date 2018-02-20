@@ -33,11 +33,6 @@ abstract class WikiaDatabaseTest extends TestCase {
 		self::$pdo = new PDO('sqlite::memory:' );
 		self::$db = new InMemorySqliteDatabase( self::$pdo );
 
-		LBFactory::destroyInstance();
-		LBFactory::setInstance( new LBFactory_Single( [
-			'connection' => self::$db
-		] ) );
-
 		// init core MW schema
 		$schemaFile = self::$db->getSchemaPath();
 		static::loadSchemaFile( $schemaFile );
@@ -48,6 +43,7 @@ abstract class WikiaDatabaseTest extends TestCase {
 		static::loadSchemaFile( "$IP/tests/fixtures/user_properties.sql" );
 		static::loadSchemaFile( "$IP/tests/fixtures/dataware.sql" );
 		static::loadSchemaFile( "$IP/tests/fixtures/specials.sql" );
+		static::loadSchemaFile( "$IP/tests/fixtures/wikicities.sql" );
 
 		// destroy leaked user accounts from other tests
 		User::$idCacheByName = [];
@@ -64,6 +60,11 @@ abstract class WikiaDatabaseTest extends TestCase {
 		foreach ( $this->extraSchemaFiles() as $schemaFile ) {
 			static::loadSchemaFile( $schemaFile );
 		}
+
+		// override MW load balancer before each test
+		LBFactory::setInstance( new LBFactory_Single( [
+			'connection' => new InMemorySqliteDatabase( self::$pdo )
+		] ) );
 
 		// schema is ready, let DbUnit populate the DB with fixtures
 		$this->databaseSetUp();
@@ -112,5 +113,10 @@ abstract class WikiaDatabaseTest extends TestCase {
 
 	protected static function loadSchemaFile( string $schemaFile ) {
 		self::$db->sourceFile( $schemaFile );
+	}
+
+	public function __sleep() {
+		$this->conn = null;
+		return [];
 	}
 }
