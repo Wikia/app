@@ -9,6 +9,11 @@ describe('Method ext.wikia.adEngine.lookup.services', function () {
 	}
 
 	mocks = {
+		adContext: {
+			getContext: function() {
+				return { targeting: { skin: 'oasis' } };
+			}
+		},
 		a9: {
 			trackState: noop,
 			wasCalled: noop,
@@ -30,6 +35,7 @@ describe('Method ext.wikia.adEngine.lookup.services', function () {
 
 	it('extends slot targeting for A9', function () {
 		var lookup = modules['ext.wikia.adEngine.lookup.services'](
+				mocks.adContext,
 				mocks.log,
 				undefined,
 				mocks.a9
@@ -62,6 +68,7 @@ describe('Method ext.wikia.adEngine.lookup.services', function () {
 
 	it('extends slot targeting for Prebid.js', function () {
 		var lookup = modules['ext.wikia.adEngine.lookup.services'](
+			mocks.adContext,
 			mocks.log,
 			mocks.prebid
 			),

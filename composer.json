@@ -18,16 +18,18 @@
     "prepend-autoloader": false,
     "optimize-autoloader": true
   },
+  "autoload": {
+    "psr-4" : {
+      "Wikia\\": "lib/Wikia/src/",
+      "Swagger\\Client\\": "lib/Swagger/src/"
+    }
+  },
   "require": {
     "wikia/fluent-sql-php": "1.0.*",
     "monolog/monolog": "^1.23",
     "phpunit/phpunit": "^6.5",
     "cssjanus/cssjanus": "1.1.*",
     "tijsverkoyen/css-to-inline-styles": "1.5.2",
-    "php-di/php-di": "^5.0",
-    "doctrine/annotations": "~1.2",
-    "doctrine/cache": "~1.0",
-    "ocramius/proxy-manager": "~1.0",
     "sensiolabs/consul-php-sdk": "^3.0",
     "wikia/phpflickr": "^3.1",
     "pear/Mail_Mime": "^1.10",

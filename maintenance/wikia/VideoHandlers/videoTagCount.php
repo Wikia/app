@@ -64,7 +64,7 @@ class VideoTagCount extends Maintenance {
 			}
 
 			$text = $page->getText();
-			if ( preg_match_all("/(<youtube[^>]*>|<gvideo[^>]*>|<aovideo[^>]*>|<aoaudio[^>]*>|<wegame[^>]*>|<tangler>|<gtrailer>|<nicovideo>|<ggtube>|<cgamer>|<longtail>)/", $text, $matches ) ) {
+			if ( preg_match_all("/(<youtube[^>]*>|<gvideo[^>]*>|<aovideo[^>]*>|<aoaudio[^>]*>|<wegame[^>]*>|<tangler>|<nicovideo>|<ggtube>|<cgamer>|<longtail>)/", $text, $matches ) ) {
 				$tags = $matches[1];
 				foreach ( $tags as $t ) {
 					$t2 = preg_replace('/<([^> ]+).*>/', '$1', $t);

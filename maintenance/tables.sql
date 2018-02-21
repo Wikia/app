@@ -985,16 +985,6 @@ CREATE TABLE /*_*/querycache (
 
 CREATE UNIQUE INDEX /*i*/qc_type_value_ns_title ON /*_*/querycache (qc_type,qc_value,qc_namespace,qc_title);
 
---
--- For a few generic cache operations if not using Memcached
---
-CREATE TABLE /*_*/objectcache (
-  keyname varbinary(255) NOT NULL default '' PRIMARY KEY,
-  value mediumblob,
-  exptime datetime
-) /*$wgDBTableOptions*/;
-CREATE INDEX /*i*/exptime ON /*_*/objectcache (exptime);
-
 
 --
 -- Cache of interwiki transclusion

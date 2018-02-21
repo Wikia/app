@@ -2,35 +2,38 @@
 
 namespace Wikia\Service\User\ExternalAuth;
 
+use Swagger\Client\ExternalAuth\Api\FacebookApi;
 use Swagger\Client\ExternalAuth\Models\LinkedFacebookAccount;
 use User;
+use Wikia\Service\Swagger\ApiProvider;
 
 class FacebookService {
-	/** @var ExternalAuthApiFactory $externalAuthApiFactory */
-	private $externalAuthApiFactory;
+	const EXTERNAL_AUTH_SERVICE = 'external-auth';
 
-	/**
-	 * @Inject
-	 * @param ExternalAuthApiFactory $factory
-	 */
-	public function __construct( ExternalAuthApiFactory $factory ) {
-		$this->externalAuthApiFactory = $factory;
+	/** @var ApiProvider $apiProvider */
+	private $apiProvider;
+
+	public function __construct( ApiProvider $apiProvider ) {
+		$this->apiProvider = $apiProvider;
 	}
 
 	public function unlinkAccount( User $user ) {
 		$userId = $user->getId();
 
-		$this->externalAuthApiFactory->getFacebookApi( $userId )->unlinkAccount( $userId );
+		$this->getFacebookApi( $userId )->unlinkAccount( $userId );
 	}
 
 	public function linkAccount( User $user, string $accessToken ) {
 		$userId = $user->getId();
 
-		$this->externalAuthApiFactory->getFacebookApi( $userId )
-			->linkAccount( $userId, $accessToken );
+		$this->getFacebookApi( $userId )->linkAccount( $userId, $accessToken );
 	}
 
 	public function getExternalIdentity( User $user ): LinkedFacebookAccount {
-		return $this->externalAuthApiFactory->getFacebookApi( $user->getId() )->me();
+		return $this->getFacebookApi( $user->getId() )->me();
+	}
+
+	private function getFacebookApi( int $userId ): FacebookApi {
+		return $this->apiProvider->getAuthenticatedApi( static::EXTERNAL_AUTH_SERVICE, $userId, FacebookApi::class );
 	}
 }

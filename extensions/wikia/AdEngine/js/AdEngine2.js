@@ -143,6 +143,18 @@ define('ext.wikia.adEngine.adEngine', [
 						tracker.track('collapse', adInfo);
 						slot.container.setAttribute('data-slot-result', 'collapse');
 					},
+					isEnabled: function () {
+						log(['isEnabled', provider.name, slotName], log.levels.debug, logGroup);
+						return slot.enabled;
+					},
+					disable: function () {
+						log(['disable', provider.name, slotName], log.levels.debug, logGroup);
+						slot.enabled = false;
+					},
+					enable: function () {
+						log(['disable', provider.name, slotName], log.levels.debug, logGroup);
+						slot.enabled = true;
+					},
 					hop: function (adInfo) {
 						log(['hop', provider.name, slotName, adInfo], log.levels.debug, logGroup);
 						slotTweaker.hide(container.id);
