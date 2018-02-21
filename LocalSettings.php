@@ -2,7 +2,7 @@
 
 $IP = __DIR__;
 require "$IP/../config/LocalSettings.php";
-require "$IP/includes/wikia/Extensions.php";
+require_once "$IP/includes/wikia/Extensions.php";
 
 /* @var $wgDBcluster string */
 // in some cases $wgMemc is still null at this point, let's initialize it (SUS-2699)
