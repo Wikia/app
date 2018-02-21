@@ -82,7 +82,7 @@ class WikiaUpdater {
 			array( 'WikiaUpdater::do_clean_video_info_table' ), // SUS-3862
 			array( 'WikiaUpdater::removeUnusedGroups' ), // SUS-4169
 			array( 'WikiaUpdater::do_drop_table', 'objectcache' ), // SUS-4171
-			array( 'WikiaUpdater::doPageVoteCleanup' ), // SUS-3390
+			array( 'WikiaUpdater::doPageVoteCleanup' ), // SUS-3390 / SUS-4252
 			array( 'addIndex', 'page_vote', 'article_user_idx', $dir. 'patch-index-page_vote.sql', true ), // SUS-3390
 		);
 
@@ -272,19 +272,29 @@ class WikiaUpdater {
 		wfWaitForSlaves();
 	}
 
+	/**
+	 * Removes the following entries from per-wiki "page_vote" table:
+	 *  - those for anons (user_id = 0) // see SUS-2754 for more details
+	 *  - those that refer to non-forum pages (page_ns <> 2001)
+	 *  - those that refer to no longer existing pages (join with "page" table)
+	 *
+	 * @param DatabaseUpdater $databaseUpdater
+	 */
 	public static function doPageVoteCleanup( DatabaseUpdater $databaseUpdater ) {
 		$dbw = $databaseUpdater->getDB();
 
+		// SUS-2754
 		$databaseUpdater->output( 'Removing page_vote rows for anons... ' );
 		$dbw->delete( 'page_vote', [ 'user_id' => 0 ], __METHOD__ );
 		$affectedRows = $dbw->affectedRows();
 
 		$databaseUpdater->output( "done - {$affectedRows} rows affected\n" );
 
-		$databaseUpdater->output( 'Removing page_vote rows for non-forum pages... ' );
-
 		// so that GROUP_CONCAT below will return all values
 		$dbw->query('SET SESSION group_concat_max_len = 100000', __METHOD__);
+
+		// SUS-3390
+		$databaseUpdater->output( 'Removing page_vote rows for non-forum pages... ' );
 
 		$ids = $dbw->selectField(
 			['page_vote', 'page'],
@@ -297,6 +307,27 @@ class WikiaUpdater {
 		);
 
 		$dbw->delete( 'page_vote', [ 'article_id' => explode( ',', $ids ) ], __METHOD__ );
+		$affectedRows = $dbw->affectedRows();
+
+		$databaseUpdater->output( "done - {$affectedRows} rows affected\n" );
+
+		// SUS-4252
+		$databaseUpdater->output( 'Removing page_vote rows for no longer existing pages... ' );
+
+		$row = $dbw->selectRow(
+			['page_vote', 'page'],
+			'GROUP_CONCAT(DISTINCT(article_id)) AS ids',
+			[
+				'page_namespace is null'
+			],
+			__METHOD__,
+			[],
+			[
+				'page' => [ 'LEFT JOIN', 'page.page_id = page_vote.article_id' ]
+			]
+		);
+
+		$dbw->delete( 'page_vote', [ 'article_id' => explode( ',', $row->ids ) ], __METHOD__ );
 		$affectedRows = $dbw->affectedRows();
 
 		$databaseUpdater->output( "done - {$affectedRows} rows affected\n" );
