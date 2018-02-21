@@ -1,10 +1,10 @@
 <?php
 
 $IP = __DIR__;
-require __DIR__.'/../config/LocalSettings.php';
+require "$IP/../config/LocalSettings.php";
+require "$IP/includes/wikia/Extensions.php";
 
 /* @var $wgDBcluster string */
-
 // in some cases $wgMemc is still null at this point, let's initialize it (SUS-2699)
 $wgMemc = wfGetMainCache();
 
