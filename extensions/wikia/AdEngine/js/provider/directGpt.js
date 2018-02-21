@@ -61,8 +61,11 @@ define('ext.wikia.adEngine.provider.directGpt', [
 			isPageFairRecoverable: pageFair ? pageFair.isSlotRecoverable : false,
 			sraEnabled: sraEnabled,
 			atfSlots: atfSlots,
-			getAdUnitBuilder: function () {
-				return context.opts.megaAdUnitBuilderEnabled ? megaAdUnitBuilder : kiloAdUnitBuilder;
+			megaAdUnitSlots: ['INVISIBLE_SKIN'],
+			getAdUnitBuilder: function (slotName) {
+				var isMegaSlot = this.megaAdUnitSlots.indexOf(slotName) >= 0;
+
+				return (context.opts.megaAdUnitBuilderEnabled || isMegaSlot) ? megaAdUnitBuilder : kiloAdUnitBuilder;
 			},
 			highlyViewableSlots: [
 				'INCONTENT_BOXAD_1',
