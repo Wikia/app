@@ -6,8 +6,7 @@ define('ext.wikia.adEngine.template.roadblock', [
 	'ext.wikia.adEngine.provider.gpt.helper',
 	'ext.wikia.adEngine.slot.service.slotRegistry',
 	'wikia.document',
-	'wikia.log',
-	require.optional('ext.wikia.adEngine.template.skin')
+	'wikia.log'
 ], function (
 	adContext,
 	uapContext,
@@ -15,8 +14,7 @@ define('ext.wikia.adEngine.template.roadblock', [
 	gptHelper,
 	slotRegistry,
 	doc,
-	log,
-	skinTemplate
+	log
 ) {
 	'use strict';
 
@@ -31,15 +29,6 @@ define('ext.wikia.adEngine.template.roadblock', [
 
 		btfBlocker.unblock(medrecSlot.name);
 		log(['handleMedrec', 'unblocking slot', medrecSlot.name], log.levels.info, logGroup);
-
-		if (!context.opts.disableSra) {
-			medrecSlotElement.style.opacity = '0';
-			gptHelper.refreshSlot(medrecSlot.name);
-			medrecSlot.pre('renderEnded', function () {
-				medrecSlotElement.style.opacity = '';
-			});
-			log(['handleMedrec', 'refreshing slot', medrecSlot], log.levels.info, logGroup);
-		}
 	}
 
 	function handleSkin(skinSlotElement) {
