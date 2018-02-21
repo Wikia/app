@@ -1,9 +1,7 @@
 <?php
 
-use Wikia\Service\Helios\ClientException;
+use Wikia\Factory\ServiceFactory;
 use Wikia\Service\Helios\HeliosClient;
-use Wikia\DependencyInjection\Injector;
-use Wikia\DependencyInjection\InjectorBuilder;
 
 class UserPasswordTest extends WikiaBaseTest {
 
@@ -14,12 +12,6 @@ class UserPasswordTest extends WikiaBaseTest {
 
 	private $heliosClientMock;
 
-	protected static $currentInjector;
-
-	public static function setUpBeforeClass() {
-		self::$currentInjector = Injector::getInjector();
-	}
-
 	public function setUp() {
 		parent::setUp();
 		$this->setupAndInjectServiceMocks();
@@ -27,19 +19,10 @@ class UserPasswordTest extends WikiaBaseTest {
 		$this->testUser = User::newFromId( self::TEST_USER_ID );
 	}
 
-	public static function tearDownAfterClass() {
-		Injector::setInjector( self::$currentInjector );
-	}
-
 	private function setupAndInjectServiceMocks() {
-		$this->heliosClientMock = $this->getMock( HeliosClient::class,
-			[ 'login', 'forceLogout', 'invalidateToken', 'register', 'info', 'generateToken',
-				'setPassword', 'validatePassword', 'deletePassword', 'requestPasswordReset' ] );
+		$this->heliosClientMock = $this->createMock( HeliosClient::class );
 
-		$container = ( new InjectorBuilder() )
-			->bind( HeliosClient::class )->to( $this->heliosClientMock )
-			->build();
-		Injector::setInjector( $container );
+		ServiceFactory::instance()->heliosFactory()->setHeliosClient( $this->heliosClientMock );
 	}
 
 	public function testSetPassword() {
@@ -62,13 +45,12 @@ class UserPasswordTest extends WikiaBaseTest {
 		$response = new StdClass();
 		$response->errors = [ $error ];
 
-		$mockMessage = $this->getMockBuilder( 'Message' )
-			->disableOriginalConstructor()
-			->setMethods( [ 'text' ] )
-			->getMock();
-		$mockMessage->expects( $this->once() )
-			->method( 'text' )
-			->willReturn( '' );
+		$mockMessage =
+			$this->getMockBuilder( 'Message' )
+				->disableOriginalConstructor()
+				->setMethods( [ 'text' ] )
+				->getMock();
+		$mockMessage->expects( $this->once() )->method( 'text' )->willReturn( '' );
 
 		$this->getGlobalFunctionMock( 'wfMessage' )
 			->expects( $this->once() )
@@ -87,8 +69,7 @@ class UserPasswordTest extends WikiaBaseTest {
 		$response = new StdClass();
 		$response->success = true;
 
-		$this->heliosClientMock->expects( $this->never() )
-			->method( 'setPassword' );
+		$this->heliosClientMock->expects( $this->never() )->method( 'setPassword' );
 
 		$this->heliosClientMock->expects( $this->once() )
 			->method( 'deletePassword' )
@@ -106,13 +87,12 @@ class UserPasswordTest extends WikiaBaseTest {
 		$response = new StdClass();
 		$response->errors = [ $error ];
 
-		$mockMessage = $this->getMockBuilder( 'Message' )
-			->disableOriginalConstructor()
-			->setMethods( [ 'text' ] )
-			->getMock();
-		$mockMessage->expects( $this->once() )
-			->method( 'text' )
-			->willReturn( '' );
+		$mockMessage =
+			$this->getMockBuilder( 'Message' )
+				->disableOriginalConstructor()
+				->setMethods( [ 'text' ] )
+				->getMock();
+		$mockMessage->expects( $this->once() )->method( 'text' )->willReturn( '' );
 
 		$this->getGlobalFunctionMock( 'wfMessage' )
 			->expects( $this->once() )
@@ -120,8 +100,7 @@ class UserPasswordTest extends WikiaBaseTest {
 			->with( $error->description )
 			->willReturn( $mockMessage );
 
-		$this->heliosClientMock->expects( $this->never() )
-			->method( 'setPassword' );
+		$this->heliosClientMock->expects( $this->never() )->method( 'setPassword' );
 
 		$this->heliosClientMock->expects( $this->once() )
 			->method( 'deletePassword' )
@@ -134,13 +113,12 @@ class UserPasswordTest extends WikiaBaseTest {
 	 * @expectedException PasswordError
 	 */
 	public function testSetPasswordDeletePasswordUnknownError() {
-		$mockMessage = $this->getMockBuilder( 'Message' )
-			->disableOriginalConstructor()
-			->setMethods( [ 'text' ] )
-			->getMock();
-		$mockMessage->expects( $this->once() )
-			->method( 'text' )
-			->willReturn( '' );
+		$mockMessage =
+			$this->getMockBuilder( 'Message' )
+				->disableOriginalConstructor()
+				->setMethods( [ 'text' ] )
+				->getMock();
+		$mockMessage->expects( $this->once() )->method( 'text' )->willReturn( '' );
 
 		$this->getGlobalFunctionMock( 'wfMessage' )
 			->expects( $this->once() )
@@ -148,8 +126,7 @@ class UserPasswordTest extends WikiaBaseTest {
 			->with( 'externaldberror' )
 			->willReturn( $mockMessage );
 
-		$this->heliosClientMock->expects( $this->never() )
-			->method( 'setPassword' );
+		$this->heliosClientMock->expects( $this->never() )->method( 'setPassword' );
 
 		$this->heliosClientMock->expects( $this->once() )
 			->method( 'deletePassword' )
@@ -194,7 +171,8 @@ class UserPasswordTest extends WikiaBaseTest {
 			->method( 'validatePassword' )
 			->willReturn( $response );
 
-		$this->assertEquals( [ 'passwordtooshort', 'password-name-match' ], $this->testUser->getPasswordValidity( 'foo' ) );
+		$this->assertEquals( [ 'passwordtooshort', 'password-name-match' ],
+			$this->testUser->getPasswordValidity( 'foo' ) );
 	}
 
 	public function testGetPasswordValidityUnknownError() {
@@ -203,5 +181,11 @@ class UserPasswordTest extends WikiaBaseTest {
 			->willReturn( null );
 
 		$this->assertEquals( 'unknown-error', $this->testUser->getPasswordValidity( 'abc' ) );
+	}
+
+	public static function tearDownAfterClass() {
+		parent::tearDownAfterClass();
+
+		ServiceFactory::clearState();
 	}
 }

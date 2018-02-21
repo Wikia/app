@@ -1,8 +1,7 @@
 <?php
-use \Wikia\Service\User\Permissions\PermissionsServiceImpl;
+
+use Wikia\Factory\ServiceFactory;
 use \Wikia\Service\User\Permissions\PermissionsService;
-use \Wikia\DependencyInjection\Injector;
-use \DI\ContainerBuilder;
 
 /**
  * Expected behavior of user tags:
@@ -14,17 +13,6 @@ use \DI\ContainerBuilder;
  * @covers UserTagsStrategy
  */
 class UserTagsStrategyTest extends WikiaBaseTest {
-	/** @var Injector $injector Original Injector singleton instance */
-	private static $injector = null;
-
-	/**
-	 * Back up Injector instance before test
-	 */
-	public static function setUpBeforeClass() {
-		static::$injector = Injector::getInjector();
-		parent::setUpBeforeClass();
-	}
-
 	public function setUp() {
 		$this->setupFile = __DIR__ . '/../UserProfilePage.setup.php';
 		parent::setUp();
@@ -44,17 +32,15 @@ class UserTagsStrategyTest extends WikiaBaseTest {
 	 * @dataProvider getUserTagsDataProvider
 	 */
 	public function testGetUserTags( array $globalGroups, array $localGroups, $isBlocked, $isChatBanned, $isFounder, array $expectedTags ) {
-		$permissionsServiceMock = $this->getMock( PermissionsServiceImpl::class, [ 'getExplicitGlobalGroups' , 'getExplicitLocalGroups' ] );
+		$permissionsServiceMock = $this->createMock( PermissionsService::class );
 		$permissionsServiceMock->expects( $this->any() )
 			->method( 'getExplicitGlobalGroups' )
 			->willReturn( $globalGroups );
 		$permissionsServiceMock->expects( $this->any() )
 			->method( 'getExplicitLocalGroups' )
 			->willReturn( $localGroups );
-		$container = ContainerBuilder::buildDevContainer();
-		$container->set( PermissionsService::class, $permissionsServiceMock );
-		$injector = new Injector( $container );
-		Injector::setInjector( $injector );
+
+		ServiceFactory::instance()->permissionsFactory()->setPermissionsService( $permissionsServiceMock );
 
 		$chatUserMock = $this->getMockBuilder( ChatUser::class )
 			->disableOriginalConstructor()
@@ -190,7 +176,6 @@ class UserTagsStrategyTest extends WikiaBaseTest {
 	 * Restore original Injector instance
 	 */
 	public static function tearDownAfterClass() {
-		Injector::setInjector( static::$injector );
-		parent::tearDownAfterClass();
+		ServiceFactory::clearState();
 	}
 }

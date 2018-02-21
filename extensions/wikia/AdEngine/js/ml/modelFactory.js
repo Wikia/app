@@ -1,8 +1,9 @@
 /*global define*/
 define('ext.wikia.adEngine.ml.modelFactory', [
+	'ext.wikia.adEngine.adContext',
 	'wikia.geo',
 	'wikia.instantGlobals'
-], function (geo, instantGlobals) {
+], function (adContext, geo, instantGlobals) {
 	'use strict';
 
 	var requiredData = [
@@ -20,6 +21,12 @@ define('ext.wikia.adEngine.ml.modelFactory', [
 			}
 		});
 
+		var predictedValue = null;
+
+		adContext.addCallback(function () {
+			predictedValue = null;
+		});
+
 		return {
 			getResult: function () {
 				return this.getName() + '_' + this.predict();
@@ -34,9 +41,13 @@ define('ext.wikia.adEngine.ml.modelFactory', [
 			},
 
 			predict: function () {
-				var data = modelData.inputParser.getData();
+				if (predictedValue === null || !modelData.cachePrediction) {
+					var data = modelData.inputParser.getData();
 
-				return modelData.model.predict(data);
+					predictedValue = modelData.model.predict(data);
+				}
+
+				return predictedValue;
 			}
 		};
 	}

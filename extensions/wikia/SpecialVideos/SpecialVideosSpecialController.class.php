@@ -58,7 +58,7 @@ class SpecialVideosSpecialController extends WikiaSpecialPageController {
 		// Add meta description tag to HTML source
 		$this->getContext()->getOutput()->addMeta( 'description', $helper->getMetaTagDescription() );
 
-		$page = $this->request->getVal( 'page', 1 );
+		$page = $this->request->getInt( 'page', 1 );
 		$category = $this->request->getVal( 'category', '' );
 		// Filter on a comma separated list of providers if given.
 		$providers = $this->request->getVal( 'provider', '' );
@@ -134,7 +134,7 @@ class SpecialVideosSpecialController extends WikiaSpecialPageController {
 	public function getVideos() {
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 
-		$page = $this->request->getVal( 'page', 1 );
+		$page = $this->request->getInt( 'page', 1 );
 		$category = $this->request->getVal( 'category', '' );
 		$providers = $this->request->getVal( 'provider', '' );
 		$getThumbnail = $this->request->getVal( 'getThumbnail', true );

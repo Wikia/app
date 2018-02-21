@@ -17,7 +17,7 @@ trait HttpIntegrationTest {
 	}
 
 	protected final function getMockUrlProvider(): UrlProvider {
-		return new StaticUrlProvider( "http://{$this->getMockServerHost()}:{$this->getMockServerPort()}") ;
+		return new StaticUrlProvider( "{$this->getMockServerHost()}:{$this->getMockServerPort()}") ;
 	}
 
 	protected final function getMockServerHost(): string {

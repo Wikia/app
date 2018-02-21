@@ -1,8 +1,7 @@
 <?php
 
 use Swagger\Client\ImageReview\Api\ImageApi;
-use Wikia\DependencyInjection\Injector;
-use Wikia\Service\Swagger\ApiProvider;
+use Wikia\Factory\ServiceFactory;
 
 
 class ImageReviewService {
@@ -50,8 +49,7 @@ class ImageReviewService {
 	 * @return ImageApi
 	 */
 	private function createImageApiClient() {
-		/** @var ApiProvider $apiProvider */
-		$apiProvider = Injector::getInjector()->get(ApiProvider::class);
+		$apiProvider = ServiceFactory::instance()->providerFactory()->apiProvider();
 		$api = $apiProvider->getApi( self::SERVICE_NAME, ImageApi::class );
 
 		// default CURLOPT_TIMEOUT for API client is set to 0 which means no timeout.

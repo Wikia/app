@@ -49,14 +49,6 @@ require_once("$IP/lib/composer/autoload.php");
 // configure FluentSQL to use the extended WikiaSQL class
 FluentSql\StaticSQL::setClass("\\WikiaSQL");
 
-/**
- * All lib/Wikia assets should conform to PSR-4 autoloader specification. See
- * ttps://github.com/php-fig/fig-standards/blob/master/accepted/PSR-4-autoloader.md.
- */
-require_once ( $IP."/lib/Wikia/autoload.php");
-
-require_once ( $IP."/lib/Swagger/autoload.php");
-
 global $wgDBname;
 if($wgDBname != 'uncyclo') {
 	include_once( "$IP/extensions/wikia/SkinChooser/SkinChooser.php" );
@@ -271,8 +263,6 @@ $wgAutoloadClasses[ 'CrossOriginResourceSharingHeaderHelper' ] = "$IP/includes/w
 $wgAutoloadClasses[ 'VignetteRequest'                 ] = "{$IP}/includes/wikia/vignette/VignetteRequest.php";
 $wgAutoloadClasses[ 'UrlGeneratorInterface'           ] = "{$IP}/includes/wikia/vignette/UrlGeneratorInterface.php";
 $wgAutoloadClasses[ 'VignetteUrlToUrlGenerator'       ] = "{$IP}/includes/wikia/vignette/VignetteUrlToUrlGenerator.php";
-$wgAutoloadClasses[ 'Wikia\\Cache\\AsyncCacheTask'    ] = "$IP/includes/wikia/AsyncCacheTask.php";
-$wgAutoloadClasses[ 'Wikia\\Cache\\AsyncCache'        ] = "$IP/includes/wikia/AsyncCache.php";
 $wgAutoloadClasses['Swagger'] = "$IP/includes/wikia/swagger/Swagger.php";
 $wgAutoloadClasses['SwaggerResource'] = "$IP/includes/wikia/swagger/SwaggerResource.php";
 $wgAutoloadClasses['SwaggerApi'] = "$IP/includes/wikia/swagger/SwaggerApi.php";
@@ -1040,12 +1030,6 @@ $wgResourceLoaderAssetsSkinMapping = [
  * core mediawiki feature variable
  */
 $wgArticleCountMethod = "any";
-
-/**
- * @name $wgEnableResourceLoaderRewrites
- * enable rewriting of Resource Loader links on nocookie domain
- */
-$wgEnableResourceLoaderRewrites = true;
 
 /**
  * Javascript minifier used by ResourceLoader
@@ -1853,19 +1837,6 @@ $wgEnableHostnameInHtmlTitle = true;
  * Use template types from Template Classification Service in MW context
  */
 include_once("$IP/includes/wikia/parser/templatetypes/TemplateTypes.setup.php");
-
-/**
- * @name $wgEnableReviveSpotlights
- * Enables Revive Spotlights
- */
-$wgEnableReviveSpotlights = true;
-
-/**
- * @name $wgReviveSpotlightsCountries
- * Enables Revive Spotlights in these countries (given wgEnableReviveSpotlights is also true).
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgReviveSpotlightsCountries = null;
 
 /**
  * @name $wgDisableImprovedGenderSupport

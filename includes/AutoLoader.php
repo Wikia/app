@@ -80,7 +80,6 @@ $wgAutoloadLocalClasses = array(
 	'ExternalStore' => 'includes/ExternalStore.php',
 	'ExternalStoreDB' => 'includes/ExternalStoreDB.php',
 	'ExternalStoreHttp' => 'includes/ExternalStoreHttp.php',
-	'ExternalUser' => 'includes/ExternalUser.php',
 	'FakeTitle' => 'includes/FakeTitle.php',
 	'Fallback' => 'includes/Fallback.php',
 	'FatalError' => 'includes/Exception.php',
@@ -464,10 +463,6 @@ $wgAutoloadLocalClasses = array(
 	'WikiDiff3' => 'includes/diff/WikiDiff3.php',
 	'WordLevelDiff' => 'includes/diff/DairikiDiff.php',
 
-	# includes/extauth
-	'ExternalUser_Hardcoded' => 'includes/extauth/Hardcoded.php',
-	'ExternalUser_vB' => 'includes/extauth/vB.php',
-
 	# includes/filerepo
 	'FileRepo' => 'includes/filerepo/FileRepo.php',
 	'FileRepoStatus' => 'includes/filerepo/FileRepoStatus.php',
@@ -636,13 +631,11 @@ $wgAutoloadLocalClasses = array(
 	'EmptyBagOStuff' => 'includes/objectcache/EmptyBagOStuff.php',
 	'FakeMemCachedClient' => 'includes/objectcache/EmptyBagOStuff.php',
 	'HashBagOStuff' => 'includes/objectcache/HashBagOStuff.php',
-	'MediaWikiBagOStuff' => 'includes/objectcache/SqlBagOStuff.php',
 	'MemCachedClientforWiki' => 'includes/objectcache/MemcachedClient.php',
 	'MemcachedPhpBagOStuff' => 'includes/objectcache/MemcachedPhpBagOStuff.php',
 	'MultiWriteBagOStuff' => 'includes/objectcache/MultiWriteBagOStuff.php',
 	'MWMemcached' => 'includes/objectcache/MemcachedClient.php',
 	'ObjectCache' => 'includes/objectcache/ObjectCache.php',
-	'SqlBagOStuff' => 'includes/objectcache/SqlBagOStuff.php',
 	'WinCacheBagOStuff' => 'includes/objectcache/WinCacheBagOStuff.php',
 	'XCacheBagOStuff' => 'includes/objectcache/XCacheBagOStuff.php',
 

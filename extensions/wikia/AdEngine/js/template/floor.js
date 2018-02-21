@@ -12,14 +12,10 @@ define('ext.wikia.adEngine.template.floor', [
 
 	var logGroup = 'ext.wikia.adEngine.template.floor',
 		floorId = 'ext-wikia-adEngine-template-floor',
-		floorHtml = '<div id="' + floorId + '">' +
-			'<div class="background"></div>' +
+		floorHtml = '<div class="background"></div>' +
 			'<div class="ad"></div>' +
 			'<a class="close" title="Close" href="#">' +
-			'<svg role="img" class="ads-floor-close-button"><use xlink:href="#close"></use></svg>' +
-			'</a>' +
-			'</div>',
-		$ = win.$;
+			'<svg role="img" class="ads-floor-close-button"><use xlink:href="#close"></use></svg></a>';
 
 	/**
 	 * Show the floor ad.
@@ -52,8 +48,7 @@ define('ext.wikia.adEngine.template.floor', [
 				width: params.width,
 				height: params.height
 			}),
-			$floor = $('#' + floorId),
-			isFloorPresent = $floor.length > 0,
+			floor = document.getElementById(floorId),
 			gptEventMock = {
 				size: {
 					width: params.width,
@@ -70,13 +65,15 @@ define('ext.wikia.adEngine.template.floor', [
 				win.WikiaBar.hideContainer();
 			}
 
-			$floor.removeClass('hidden');
+			floor.classList.remove('hidden');
 		}
 
 		if (params.onClick) {
-			$(iframe).on('load', function () {
-				var iframeDoc = iframe.contentWindow.document;
-				$('html', iframeDoc).css('cursor', 'pointer').on('click', params.onClick);
+			iframe.addEventListener('load', function () {
+				var iFrameBody = iframe.contentWindow.document.body;
+
+				iFrameBody.style.cursor = 'pointer';
+				iFrameBody.addEventListener('click', params.onClick)
 			});
 		}
 
@@ -93,22 +90,24 @@ define('ext.wikia.adEngine.template.floor', [
 					win.postMessage('{"AdEngine":{"slot_' + params.slotName + '":true,"status":"hop"}}', '*');
 				}
 			});
-			$(iframe).on('load', function () {
+			iframe.addEventListener('load', function () {
 				adDetect.onAdLoad(slot, gptEventMock, iframe);
 			});
 		}
 
-		if (!isFloorPresent) {
-			$floor = $(floorHtml);
-			$floor.addClass('hidden');
-			$(doc.body).append($floor);
+		if (!floor) {
+			floor = document.createElement('div');
+			floor.id = floorId;
+			floor.className = 'hidden';
+			floor.innerHTML = floorHtml;
+			doc.body.insertAdjacentElement('beforeend', floor);
 		}
 
-		$floor.find('a.close').click(function (event) {
+		floor.querySelector('a.close').addEventListener('click', function (event) {
 			event.preventDefault();
-			$floor.addClass('hidden');
+			floor.classList.add('hidden');
 		});
-		$floor.find('.ad').html(iframe);
+		floor.querySelector('.ad').appendChild(iframe);
 
 		if (!async) {
 			showFloor();

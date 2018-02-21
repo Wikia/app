@@ -255,8 +255,6 @@ abstract class DatabaseUpdater {
 		}
 
 		if ( isset( $what['purge'] ) ) {
-			$this->purgeCache();
-
 			if ( $wgLocalisationCacheConf['manualRecache'] ) {
 				$this->rebuildLocalisationCache();
 			}
@@ -562,17 +560,6 @@ abstract class DatabaseUpdater {
 			$this->insertUpdateRow( $updateKey );
 			$this->output( "done.\n" );
 		}
-	}
-
-	/**
-	 * Purge the objectcache table
-	 */
-	protected function purgeCache() {
-		# We can't guarantee that the user will be able to use TRUNCATE,
-		# but we know that DELETE is available to us
-		$this->output( "Purging caches..." );
-		$this->db->delete( 'objectcache', '*', __METHOD__ );
-		$this->output( "done.\n" );
 	}
 
 	/**

@@ -971,9 +971,7 @@ var mw = ( function ( $, undefined ) {
 				);
 				request = sortQuery( request );
 
-				// Wikia - change begin - @author: wladek
-				// @see $wgEnableResourceLoaderRewrites
-//				mw.log('ResourceLoader',sourceLoadScript,moduleMap,sourceLoadScript.substr(sourceLoadScript.length-1));
+				// Wikia - change begin - @author: wladek - support for loading shared assets from nocookie.net with rewrite
 				if ( sourceLoadScript.substr(sourceLoadScript.length-1) == '/' ) {
 					var modules = request.modules;
 					delete request.modules

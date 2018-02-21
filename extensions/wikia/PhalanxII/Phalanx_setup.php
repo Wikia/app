@@ -37,7 +37,6 @@ $classes = [
 
 	'PhalanxBlockInfo' => __DIR__ . '/services/PhalanxBlockInfo.php',
 	'PhalanxMatchParams' => __DIR__ . '/services/PhalanxMatchParams.php',
-	'PhalanxHttpClient' => __DIR__ . '/services/PhalanxHttpClient.php',
 
 	/* hooks */
 	'PhalanxUserBlock' => __DIR__ . '/hooks/PhalanxUserBlock.class.php',

@@ -50,7 +50,6 @@ $wgAutoloadClasses[ 'WikiaRevertVideoAction'] = $dir . '/actions/WikiaRevertVide
 $wgAutoloadClasses[ 'ApiWrapperFactory' ] = $dir . '/apiwrappers/ApiWrapperFactory.class.php';
 $wgAutoloadClasses[ 'ApiWrapper' ] = $dir . '/apiwrappers/ApiWrapper.class.php';
 $wgAutoloadClasses[ 'PseudoApiWrapper' ] = $dir . '/apiwrappers/ApiWrapper.class.php';
-$wgAutoloadClasses[ 'IngestionApiWrapper' ] = $dir . '/apiwrappers/ApiWrapper.class.php';
 $wgAutoloadClasses[ 'LegacyVideoApiWrapper'] = $dir . '/apiwrappers/ApiWrapper.class.php';
 
 // api exceptions and errors
@@ -106,11 +105,6 @@ $wgHooks['FileUndeleteComplete'][] = 'VideoInfoHooksHelper::onFileUndeleteComple
 $wgHooks['SpecialMovepageAfterMove'][] = 'VideoInfoHooksHelper::onFileRenameComplete';
 $wgHooks['ForeignFileDeleted'][] = 'VideoInfoHooksHelper::onForeignFileDeleted';
 $wgHooks['WikiFilePageCheckFile'][] = 'VideoInfoHooksHelper::onCheckGhostFile';
-if ( !empty( $wgUseVideoVerticalFilters ) ) {
-	$wgHooks['ArticleDelete'][] = 'VideoInfoHooksHelper::onArticleDelete';
-	$wgHooks['ArticleUpdateBeforeRedirect'][] = 'VideoInfoHooksHelper::onArticleUpdateBeforeRedirect';
-	$wgHooks['CategorySelectSave'][] = 'VideoInfoHooksHelper::onCategorySelectSave';
-}
 
 $wgHooks['ParserFirstCallInit'][] = 'VideoHandlerHooks::initParserHook';
 
@@ -125,10 +119,6 @@ $wgAutoloadClasses['DailymotionVideoHandler'] =  $dir . '/handlers/DailymotionVi
 $wgAutoloadClasses['DailymotionApiWrapper'] =  $dir . '/apiwrappers/DailymotionApiWrapper.class.php';
 $wgMediaHandlers['video/dailymotion'] = 'DailymotionVideoHandler';
 
-$wgAutoloadClasses['IgnVideoHandler'] =  $dir . '/handlers/IgnVideoHandler.class.php';
-$wgAutoloadClasses['IgnApiWrapper'] =  $dir . '/apiwrappers/IgnApiWrapper.class.php';
-$wgMediaHandlers['video/ign'] = 'IgnVideoHandler';
-
 $wgAutoloadClasses['VimeoVideoHandler'] =  $dir . '/handlers/VimeoVideoHandler.class.php';
 $wgAutoloadClasses['VimeoApiWrapper'] =  $dir . '/apiwrappers/VimeoApiWrapper.class.php';
 $wgMediaHandlers['video/vimeo'] = 'VimeoVideoHandler';
@@ -137,17 +127,13 @@ $wgAutoloadClasses['YoutubeVideoHandler'] =  $dir . '/handlers/YoutubeVideoHandl
 $wgAutoloadClasses['YoutubeApiWrapper'] =  $dir . '/apiwrappers/YoutubeApiWrapper.class.php';
 $wgMediaHandlers['video/youtube'] = 'YoutubeVideoHandler';
 
-$wgAutoloadClasses['YoukuApiWrapper'] =  $dir . '/apiwrappers/YoukuApiWrapper.class.php';
 $wgAutoloadClasses['YoukuVideoHandler'] =  $dir . '/handlers/YoukuVideoHandler.class.php';
+$wgAutoloadClasses['YoukuApiWrapper'] =  $dir . '/apiwrappers/YoukuApiWrapper.class.php';
 $wgMediaHandlers['video/youku'] = 'YoukuVideoHandler';
 
-$wgVideoMigrationProviderMap = array(
-	5 => 'Youtube',
-	13 => 'Vimeo',
-	18 => 'Dailymotion',
-	/*
-	// a trick to make video.wikia and local files accessible via wrappers:
-	24 => 'Wikia',
-	*/
-	32 => 'Youku'
-);
+$wgVideoApiWrappers = [
+	'DailymotionApiWrapper',
+	'VimeoApiWrapper',
+	'YoutubeApiWrapper',
+	'YoukuApiWrapper',
+];

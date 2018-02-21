@@ -42,7 +42,6 @@ class UpdateMediaWiki extends Maintenance {
 		$this->addOption( 'ext-only', 'Only update extension schema' );
 		$this->addOption( 'quick', 'Skip 5 second countdown before starting' );
 		$this->addOption( 'doshared', 'Also update shared tables' );
-		$this->addOption( 'nopurge', 'Do not purge the objectcache table after updates' );
 		$this->addOption( 'force', 'Override when $wgAllowSchemaUpdates disables this script' );
 	}
 
@@ -83,9 +82,7 @@ class UpdateMediaWiki extends Maintenance {
 		$shared = $this->hasOption( 'doshared' );
 
 		$updates = !$this->hasOption( 'ext-only' ) ? array( 'core', 'extensions', 'stats' ) : [ 'extensions' ];
-		if( !$this->hasOption('nopurge') ) {
-			$updates[] = 'purge';
-		}
+		$updates[] = 'purge';
 
 		$updater = DatabaseUpdater::newForDb( $db, $shared, $this );
 		$updater->doUpdates( $updates );

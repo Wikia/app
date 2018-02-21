@@ -17,7 +17,7 @@ class AttributePersistenceSwaggerTest extends TestCase {
 
 	protected $userId = 1;
 
-	/** @var AttributePersistenceSwagger */
+	/** @var AttributePersistence */
 	protected $persistence;
 
 	/** @var \PHPUnit_Framework_MockObject_MockObject */
@@ -40,10 +40,10 @@ class AttributePersistenceSwaggerTest extends TestCase {
 			->getMock();
 		$this->apiProvider->expects( $this->any() )
 			->method('getAuthenticatedApi')
-			->with( AttributePersistenceSwagger::SERVICE_NAME, $this->userId, UsersAttributesApi::class )
+			->with( AttributePersistence::SERVICE_NAME, $this->userId, UsersAttributesApi::class )
 			->willReturn( $this->userAttributesApi );
 
-		$this->persistence = new AttributePersistenceSwagger( $this->apiProvider );
+		$this->persistence = new AttributePersistence( $this->apiProvider );
 		$this->attribute = new Attribute( "attrName", "attrValue" );
 	}
 
