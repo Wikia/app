@@ -455,7 +455,7 @@ spl_autoload_register( function( $class ) {
 	return false;
 });
 
-// TODO:move this inclusions to CommonExtensions?
+// TODO: move this inclusions to includes/wikia/Extensions.php ?
 require_once( $IP.'/extensions/wikia/ImageTweaks/ImageTweaks.setup.php' );
 require_once( $IP.'/extensions/wikia/Oasis/Oasis_setup.php' );
 
