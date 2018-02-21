@@ -41,7 +41,7 @@
 <section id="WikiaPage" class="WikiaPage<?= empty( $wg->OasisNavV2 ) ? '' : ' V2' ?><?= !empty( $isGridLayoutEnabled ) ? ' WikiaGrid' : '' ?>" onclick="">
 	<div id="WikiaPageBackground" class="WikiaPageBackground"></div>
 	<div class="WikiaPageContentWrapper">
-		<? if ( !empty( $wgEnableAnswers ) ) : ?>
+		<? if ( !empty( $wg->EnableAnswers ) ) : ?>
 			<?= $app->renderView( 'WikiAnswers', 'QuestionBox' ) ?>
 		<? endif; ?>
 
