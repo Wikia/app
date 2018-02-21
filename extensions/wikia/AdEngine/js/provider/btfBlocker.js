@@ -2,10 +2,11 @@
 define('ext.wikia.adEngine.provider.btfBlocker', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.context.uapContext',
+	'ext.wikia.adEngine.messageListener',
 	'wikia.lazyqueue',
 	'wikia.log',
 	'wikia.window'
-], function (adContext, uapContext, lazyQueue, log, win) {
+], function (adContext, uapContext, messageListener, lazyQueue, log, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.btfBlocker',
@@ -16,6 +17,10 @@ define('ext.wikia.adEngine.provider.btfBlocker', [
 	win.ads.runtime.disableBtf = false;
 	win.ads.runtime.unblockHighlyViewableSlots = false;
 
+	messageListener.register({dataKey: 'disableBtf'}, function (isDisabled) {
+		win.ads.runtime.disableBtf = Boolean(isDisabled);
+	});
+
 	function unblock(slotName) {
 		log(['unblocking', slotName], log.levels.info, logGroup);
 		unblockedSlots.push(slotName);
@@ -24,6 +29,7 @@ define('ext.wikia.adEngine.provider.btfBlocker', [
 	function isBTFDisabledByCreative() {
 		return win.ads.runtime.disableBtf;
 	}
+
 	var btfQueue = [],
 		btfQueueStarted = false,
 		pendingAtfSlots = []; // ATF slots pending for response
