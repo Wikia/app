@@ -48,9 +48,6 @@ describe('ext.wikia.adEngine.provider.*', function () {
 		slotTweaker: {
 			removeDefaultHeight: noop,
 		},
-		uapContext: {
-			isUapLoaded: noop
-		},
 		lazyQueue: {},
 		window: {},
 		afterSuccess: noop,
@@ -86,7 +83,6 @@ describe('ext.wikia.adEngine.provider.*', function () {
 			case 'directGpt':
 				return modules['ext.wikia.adEngine.provider.' + providerName](
 					mocks.adContext,
-					mocks.uapContext,
 					getFactory(),
 					mocks.kiloAdUnitBuilder,
 					mocks.slotTweaker
