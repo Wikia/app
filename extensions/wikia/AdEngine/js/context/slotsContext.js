@@ -37,7 +37,7 @@ define('ext.wikia.adEngine.context.slotsContext', [
 		// those slots exists on all pages
 		setStatus('TOP_LEADERBOARD', true);
 		setStatus('TOP_RIGHT_BOXAD', true);
-		setStatus('BOTTOM_LEADERBOARD', true);
+		setStatus('BOTTOM_LEADERBOARD', context.targeting.skin === 'oasis');
 
 		setStatus('INCONTENT_BOXAD_1', !isHome);
 
