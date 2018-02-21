@@ -89,21 +89,14 @@ class ApiService {
 	private static function getHostByDbName( string $dbName ): string {
 		global $wgDevelEnvironment, $wgDevDomain;
 
-		/**
-		 * wgServer is generated in runtime on devboxes therefore we
-		 * can't use it to get host by db name
-		 */
-		if ( !empty( $wgDevelEnvironment ) ) {
-			$hostName = WikiFactory::DBtoUrl( $dbName );
+		$hostName = WikiFactory::DBtoUrl( $dbName );
 
+		if ( !empty( $wgDevelEnvironment ) ) {
 			if ( strpos( $hostName, 'wikia.com' ) ) {
 				$hostName = str_replace( 'wikia.com', $wgDevDomain, $hostName );
 			} else {
 				$hostName = WikiFactory::getLocalEnvURL( $hostName );
 			}
-		} else {
-			$cityId = WikiFactory::DBtoID( $dbName );
-			$hostName = WikiFactory::getVarValueByName( 'wgServer', $cityId );
 		}
 
 		return rtrim( $hostName, '/' );
