@@ -99,8 +99,6 @@ define('ext.wikia.adEngine.provider.evolve2', [
 		}
 		slot.pre('success', function () {
 			slotTweaker.removeDefaultHeight(slot.name);
-			slotTweaker.removeTopButtonIfNeeded(slot.name);
-			slotTweaker.adjustLeaderboardSize(slot.name);
 		});
 		gptHelper.pushAd(
 			slot,

@@ -14,7 +14,6 @@ describe('ext.wikia.adEngine.provider.directGpt', function () {
 
 				}
 			},
-			uapContext: {},
 			factory: {
 				createProvider: noop
 			},
@@ -27,7 +26,6 @@ describe('ext.wikia.adEngine.provider.directGpt', function () {
 	function getModule() {
 		return modules['ext.wikia.adEngine.provider.directGpt'](
 			mocks.adContext,
-			mocks.uapContext,
 			mocks.factory,
 			mocks.kiloAdUnitBuilder,
 			mocks.megaAdUnitBuilder,
