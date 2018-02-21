@@ -65,7 +65,7 @@ define('ext.wikia.adEngine.provider.factory.wikiaGpt', [
 
 		function getAdUnit(slot) {
 			if (extra.getAdUnitBuilder) {
-				return extra.getAdUnitBuilder().build(slot.name, src);
+				return extra.getAdUnitBuilder(slot.name).build(slot.name, src);
 			}
 
 			return defaultAdUnitBuilder.build(slot.name, src);
