@@ -1,68 +1,87 @@
 import { context, slotTweaker } from '@wikia/ad-engine';
+import { universalAdPackage } from '@wikia/ad-products';
 
-let adsModule;
+const {
+	CSS_TIMING_EASE_IN_CUBIC,
+	SLIDE_OUT_TIME
+} = universalAdPackage;
 
-function adjustPadding(iframe, aspectRatio) {
-	var viewPortWidth = Math.max(document.documentElement.clientWidth, window.innerWidth || 0),
-		height = aspectRatio ? viewPortWidth / aspectRatio : iframe.contentWindow.document.body.offsetHeight;
+export const getConfig = mercuryListener => ({
+	adsModule: null,
+	adSlot: null,
+	slotParams: null,
+	navbarElement: null,
+	slotsToEnable: [
+		'MOBILE_IN_CONTENT',
+		'MOBILE_PREFOOTER',
+		'MOBILE_BOTTOM_LEADERBOARD'
+	],
 
-	adsModule.setSiteHeadOffset(height);
-}
+	adjustPadding(iframe, { aspectRatio }) {
+		const viewPortWidth = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+		const height = aspectRatio ? viewPortWidth / aspectRatio : iframe.contentWindow.document.body.offsetHeight;
 
-function runOnReady(iframe, params, mercuryListener) {
-	const onResize = (aspectRatio) => {
-			adjustPadding(iframe, aspectRatio);
-		},
-		page = document.getElementsByClassName('application-wrapper')[0];
+		this.adsModule.setSiteHeadOffset(height);
+	},
 
-	adsModule = window.Mercury.Modules.Ads.getInstance();
-	page.classList.add('bfaa-template');
-	adjustPadding(iframe, params.aspectRatio);
-	window.addEventListener('resize', onResize.bind(null, params.aspectRatio));
+	onReady(iframe) {
+		const onResize = () => {
+			adjustPadding(iframe, this.params);
+		};
+		const page = document.querySelector('.application-wrapper');
 
-	if (mercuryListener) {
-		mercuryListener.onPageChange(() => {
-			page.classList.remove('bfaa-template');
-			document.body.classList.remove('vuap-loaded');
-			document.body.classList.remove('has-bfaa');
-			document.body.style.paddingTop = '';
-			adsModule.setSiteHeadOffset(0);
-			window.removeEventListener('resize', onResize);
-		});
-	}
-}
+		page.classList.add('bfaa-template');
+		this.adjustPadding(iframe, this.slotParams);
+		window.addEventListener('resize', onResize);
 
-export function getConfig(mercuryListener) {
-	let slotElement = null;
-	let navbarElement = null;
-
-	return {
-		slotsToEnable: [
-			'MOBILE_IN_CONTENT',
-			'MOBILE_PREFOOTER',
-			'MOBILE_BOTTOM_LEADERBOARD'
-		],
-		onInit(adSlot, params) {
-			context.set(`slots.${adSlot.getSlotName()}.options.isVideoMegaEnabled`, params.isVideoMegaEnabled);
-
-			slotTweaker.onReady(adSlot).then((iframe) => runOnReady(iframe, params, mercuryListener));
-
-			const wrapper = document.getElementsByClassName('mobile-top-leaderboard')[0];
-
-			slotElement = adSlot.getElement();
-			navbarElement = document.querySelector('.site-head-container .site-head');
-
-			wrapper.style.opacity = '0';
-			slotTweaker.onReady(adSlot).then((iframe) => {
-				wrapper.style.opacity = '';
-				runOnReady(iframe, params, mercuryListener);
+		if (this.mercuryListener) {
+			this.mercuryListener.onPageChange(() => {
+				page.classList.remove('bfaa-template');
+				document.body.classList.remove('vuap-loaded');
+				document.body.classList.remove('has-bfaa');
+				document.body.style.paddingTop = '';
+				this.adsModule.setSiteHeadOffset(0);
+				window.removeEventListener('resize', onResize);
 			});
-		},
-		moveNavbar(offset) {
-			const adsMobile = window.Mercury.Modules.Ads.getInstance();
-
-			adsMobile.setSiteHeadOffset(offset || slotElement.clientHeight);
-			navbarElement.style.top = offset ? `${offset}px` : '';
 		}
-	};
-}
+	},
+
+	onInit(adSlot, params) {
+		this.adSlot = adSlot;
+		this.slotParams = params;
+		this.adsModule = window.Mercury.Modules.Ads.getInstance();
+		this.navbarElement = document.querySelector('.site-head-container .site-head');
+
+		const wrapper = document.querySelector('.mobile-top-leaderboard');
+
+		context.set(`slots.${adSlot.getSlotName()}.options.isVideoMegaEnabled`, params.isVideoMegaEnabled);
+		wrapper.style.opacity = '0';
+		slotTweaker.onReady(adSlot).then((iframe) => {
+			wrapper.style.opacity = '';
+			this.onReady(iframe);
+		});
+
+		if (this.adsModule.hideSmartBanner) {
+			this.adsModule.hideSmartBanner();
+		}
+	},
+
+	onBeforeUnstickBfaaCallback() {
+		Object.assign(this.navbarElement.style, {
+			transition: `top ${SLIDE_OUT_TIME}ms ${CSS_TIMING_EASE_IN_CUBIC}`,
+			top: '0'
+		});
+	},
+
+	onAfterUnstickBfaaCallback() {
+		Object.assign(this.navbarElement.style, {
+			transition: '',
+			top: ''
+		});
+	},
+
+	moveNavbar(offset) {
+		window.Mercury.Modules.Ads.getInstance().setSiteHeadOffset(offset || this.adSlot.getElement().clientHeight);
+		this.navbarElement.style.top = offset ? `${offset}px` : '';
+	}
+});

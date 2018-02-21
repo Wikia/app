@@ -2,8 +2,7 @@
 
 namespace FandomCreator;
 
-use Wikia\DependencyInjection\Injector;
-use Wikia\Service\Gateway\UrlProvider;
+use Wikia\Factory\ServiceFactory;
 use WikiaDispatchableObject;
 
 class Hooks {
@@ -191,8 +190,7 @@ class Hooks {
 			if ( !empty( $wgFandomCreatorOverrideUrl ) ) {
 				$fandomCreatorUrl = $wgFandomCreatorOverrideUrl;
 			} else {
-				/** @var UrlProvider $urlProvider */
-				$urlProvider = Injector::getInjector()->get( UrlProvider::class );
+				$urlProvider = ServiceFactory::instance()->providerFactory()->urlProvider();
 				$fandomCreatorUrl = $urlProvider->getUrl( self::SERVICE_NAME );
 			}
 

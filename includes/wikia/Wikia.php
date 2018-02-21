@@ -97,8 +97,6 @@ class Wikia {
 	const DEFAULT_FAVICON_FILE = '/skins/common/images/favicon.ico';
 	const DEFAULT_WIKI_LOGO_FILE = '/skins/common/images/wiki.png';
 
-	const CSP_ENDPOINT = 'https://services.wikia.com/csp-logger/csp';
-
 	private static $vars = [];
 	private static $cachedLinker;
 
@@ -1145,11 +1143,11 @@ class Wikia {
 	}
 
 	static public function getEnvironmentRobotPolicy(WebRequest $request) {
-		global $wgDevelEnvironment, $wgStagingEnvironment, $wgDefaultRobotPolicy;
+		global $wgDefaultRobotPolicy;
 
 		$policy = '';
 
-		if( !empty( $wgDevelEnvironment ) || !empty( $wgStagingEnvironment ) ) {
+		if ( !Wikia::isProductionEnv() ) {
 			$policy = $wgDefaultRobotPolicy;
 		}
 
@@ -1252,8 +1250,12 @@ class Wikia {
 	 * @return bool true, it's a hook
 	 */
 	static public function outputHTTPSHeaders( WebRequest $request ) {
+		global $wgCSPLoggerUrl;
 		if ( WebRequest::detectProtocol() === 'https' ) {
-			$request->response()->header( "Content-Security-Policy-Report-Only: default-src https:; script-src https: 'unsafe-inline' 'unsafe-eval'; style-src https: 'unsafe-inline'; img-src https: data:; report-uri " . self::CSP_ENDPOINT );
+			$request->response()->header("Content-Security-Policy-Report-Only: " .
+				"default-src https: 'self' data: blob:; " .
+				"script-src https: 'self' data: 'unsafe-inline' 'unsafe-eval' blob:; " .
+				"style-src https: 'self' 'unsafe-inline' blob:; report-uri {$wgCSPLoggerUrl}" );
 		}
 		return true;
 	}
@@ -1918,4 +1920,8 @@ class Wikia {
 		CeleryPurge::purgeBySurrogateKey( $key );
 	}
 
+	public static function isProductionEnv(): bool {
+		global $wgWikiaEnvironment;
+		return $wgWikiaEnvironment === WIKIA_ENV_PROD;
+	}
 }

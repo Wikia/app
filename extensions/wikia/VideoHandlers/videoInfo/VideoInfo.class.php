@@ -6,14 +6,11 @@
  */
 class VideoInfo extends WikiaModel {
 
-	const SCHEMA_VERSION = 2;
-
 	protected $videoTitle = 0;
 	protected $videoId = '';
 	protected $provider = '';
 	protected $addedAt = 0;
 	protected $addedBy = 0;
-	protected $premium = 0;
 	protected $duration = 0;
 	protected $hdfile = 0;
 	protected $removed = 0;
@@ -25,7 +22,6 @@ class VideoInfo extends WikiaModel {
 		'provider',
 		'addedAt',
 		'addedBy',
-		'premium',
 		'duration',
 		'hdfile',
 		'removed',
@@ -58,7 +54,7 @@ class VideoInfo extends WikiaModel {
 
 	/**
 	 * Set the provider name
-	 * @param string $provider The name of the provider for this video (e.g., 'ooyala', 'anyclip')
+	 * @param string $provider The name of the provider for this video (e.g., 'youtube')
 	 */
 	public function setProvider( $provider ) {
 		$this->provider = $provider;
@@ -114,7 +110,7 @@ class VideoInfo extends WikiaModel {
 
 	/**
 	 * Get the id of user who added the video
-	 * @return interger
+	 * @return integer
 	 */
 	public function getAddedBy() {
 		return $this->addedBy;
@@ -126,14 +122,6 @@ class VideoInfo extends WikiaModel {
 	 */
 	public function getDuration() {
 		return $this->duration;
-	}
-
-	/**
-	 * Check if it is premium video
-	 * @return boolean
-	 */
-	public function isPremium() {
-		return ( $this->premium == 1 );
 	}
 
 	/**
@@ -179,7 +167,6 @@ class VideoInfo extends WikiaModel {
 					'added_at' => $this->addedAt,
 					'added_by' => $this->addedBy,
 					'duration' => $this->duration,
-					'premium' => $this->premium,
 					'hdfile' => $this->hdfile,
 					'removed' => $this->removed,
 					'featured' => $this->featured,
@@ -226,7 +213,6 @@ class VideoInfo extends WikiaModel {
 					'added_at' => $this->addedAt,
 					'added_by' => $this->addedBy,
 					'duration' => $this->duration,
-					'premium' => $this->premium,
 					'hdfile' => $this->hdfile,
 					'removed' => $this->removed,
 					'featured' => $this->featured,
@@ -273,100 +259,9 @@ class VideoInfo extends WikiaModel {
 	}
 
 	/**
-	 * Create the video_info table if it does not exist
-	 */
-	public function createTableVideoInfo() {
-		wfProfileIn( __METHOD__ );
-
-		if ( !wfReadOnly() ) {
-			$db = wfGetDB( DB_MASTER );
-
-			$sql =<<<SQL
-				CREATE TABLE IF NOT EXISTS `video_info` (
-					`video_title` varchar(255) CHARACTER SET latin1 COLLATE latin1_bin NOT NULL DEFAULT '',
-					`video_id` varchar(255) NOT NULL DEFAULT '',
-					`provider` varchar(255),
-					`added_at` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-					`added_by` int(10) unsigned NOT NULL DEFAULT '0',
-					`duration` int(10) unsigned NOT NULL DEFAULT '0',
-					`premium` tinyint(1) NOT NULL DEFAULT '0',
-					`hdfile` tinyint(1) NOT NULL DEFAULT '0',
-					`removed` tinyint(1) NOT NULL DEFAULT '0',
-					`featured` tinyint(1) NOT NULL DEFAULT '0',
-					`views_7day` int(10) unsigned DEFAULT '0',
-					`views_30day` int(10) unsigned DEFAULT '0',
-					`views_total` int(10) unsigned DEFAULT '0',
-					PRIMARY KEY (`video_title`),
-					KEY `added_at` (`added_at`, `duration`),
-					KEY `premium` (`premium`, `added_at`),
-					KEY `hdfile` (`hdfile`, `added_at`),
-					KEY `featured` (`featured`, `added_at`),
-					KEY `provider` (`provider`,`added_at`),
-					KEY `video_id` (`video_id`,`provider`)
-				) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-SQL;
-
-			$db->query( $sql, __METHOD__ );
-			$db->commit( __METHOD__ );
-		}
-
-		wfProfileOut( __METHOD__ );
-	}
-
-	// Define SQL needed to update the video_info table
-	protected $versions = array(
-		1 => "
-			ALTER TABLE video_info
-			ADD featured tinyint(1) NOT NULL DEFAULT 0 AFTER removed,
-			ADD INDEX featured (featured, added_at)
-		",
-		2 => "
-			ALTER TABLE video_info
-			ADD provider varchar(255) AFTER video_title,
-			ADD INDEX provider (provider, added_at)
-		",
-		3 => "
-			ALTER TABLE video_info
-			ADD `views_7day` int(10) unsigned DEFAULT '0' AFTER featured
-		",
-		4 => "
-			ALTER TABLE video_info
-			ADD `video_id` varchar(255) NOT NULL DEFAULT '' AFTER video_title,
-			ADD INDEX video_id (video_id, provider)
-		",
-	);
-
-	/**
-	 * Perform an ALTER TABLE operation on the video_info table, given a specific schema version.  Note
-	 * that this will only perform single, consecutive updates, e.g., to update from version 3 to version 5 of the
-	 * schema, you must update first to 4 then update to 5.
-	 *
-	 * @param int $version The schema version to update to.  Defaults to SCHEMA_VERSION
-	 */
-	public function alterTableVideoInfo( $version = VideoInfo::SCHEMA_VERSION ) {
-		wfProfileIn( __METHOD__ );
-
-		if ( !wfReadOnly() ) {
-			$db = wfGetDB( DB_MASTER );
-
-			if ( $db->tableExists( 'video_info' ) ) {
-				if ( isset($this->versions[$version]) ) {
-					$sql = $this->versions[$version];
-					$db->query( $sql, __METHOD__ );
-					$db->commit( __METHOD__ );
-				}
-			} else {
-				$this->createTableVideoInfo();
-			}
-		}
-
-		wfProfileOut( __METHOD__ );
-	}
-
-	/**
 	 * get video object from title
 	 * @param string $videoTitle
-	 * @return object $video
+	 * @return self $video
 	 */
 	public static function newFromTitle( $videoTitle ) {
 		$app = F::App();
@@ -402,7 +297,7 @@ SQL;
 	/**
 	 * get video object from row
 	 * @param object $row
-	 * @return array video
+	 * @return self video
 	 */
 	protected static function newFromRow( $row ) {
 		$data = array(
@@ -412,7 +307,6 @@ SQL;
 			'addedAt' => $row->added_at,
 			'addedBy' => $row->added_by,
 			'duration' => $row->duration,
-			'premium' => $row->premium,
 			'hdfile' => $row->hdfile,
 			'removed' => $row->removed,
 			'featured' => $row->featured,
@@ -431,30 +325,6 @@ SQL;
 	 */
 	public function addVideo() {
 		return $this->addToDatabase();
-	}
-
-	/**
-	 * add premium video
-	 * @param integer $userId
-	 * @return boolean
-	 */
-	public function addPremiumVideo( $userId ) {
-		wfProfileIn( __METHOD__ );
-
-		$this->addedAt = wfTimestamp( TS_MW );
-		if ( !empty($userId) ) {
-			$this->addedBy = $userId;
-		}
-
-		$affected = $this->addToDatabase();
-
-		// create file page when adding premium video to wiki
-		$videoHandlerHelper = new VideoHandlerHelper();
-		$status = $videoHandlerHelper->addCategoryVideos( $this->videoTitle, $this->addedBy );
-
-		wfProfileOut( __METHOD__ );
-
-		return $affected;
 	}
 
 	/**
@@ -508,6 +378,8 @@ SQL;
 	 * save to cache
 	 */
 	protected function saveToCache() {
+		$cache = [];
+
 		foreach ( self::$fields as $field ) {
 			$cache[$field] = $this->$field;
 		}

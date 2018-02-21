@@ -5,8 +5,7 @@
 # The Sustaining Team
 #
 extensions/3rdparty/RSS/*		@Wikia/sus 
-extensions/AbuseFilter/*		@Wikia/sus 
-extensions/AntiBot/*		@Wikia/sus
+extensions/AbuseFilter/*		@Wikia/sus
 extensions/Arrays/*		@Wikia/sus 
 extensions/Autoincrement/*		@Wikia/sus 
 extensions/CategoryIntersection/*		@Wikia/sus 
@@ -31,8 +30,7 @@ extensions/Loops/*		@Wikia/sus
 extensions/Maps/*		@Wikia/sus 
 extensions/Math/*		@Wikia/sus 
 extensions/MultiUpload/*		@Wikia/sus 
-extensions/NewestPages/*		@Wikia/sus 
-extensions/Nuke/*		@Wikia/sus 
+extensions/Nuke/*		@Wikia/sus
 extensions/NumberFormat/*		@Wikia/sus 
 extensions/OAI/*		@Wikia/sus 
 extensions/OggHandler/*		@Wikia/sus 

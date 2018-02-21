@@ -489,20 +489,6 @@ CREATE INDEX /*i*/el_index ON /*_*/externallinks (el_index(60));
 
 
 --
--- Track external user accounts, if ExternalAuth is used
---
-CREATE TABLE /*_*/external_user (
-  -- Foreign key to user_id
-  eu_local_id int unsigned NOT NULL PRIMARY KEY,
-
-  -- Some opaque identifier provided by the external database
-  eu_external_id varchar(255) binary NOT NULL
-) /*$wgDBTableOptions*/;
-
-CREATE UNIQUE INDEX /*i*/eu_external_id ON /*_*/external_user (eu_external_id);
-
-
---
 -- Track interlanguage links
 --
 CREATE TABLE /*_*/langlinks (
@@ -998,16 +984,6 @@ CREATE TABLE /*_*/querycache (
 -- CREATE INDEX /*i*/qc_type ON /*_*/querycache (qc_type,qc_value); // PLATFORM-1914
 
 CREATE UNIQUE INDEX /*i*/qc_type_value_ns_title ON /*_*/querycache (qc_type,qc_value,qc_namespace,qc_title);
-
---
--- For a few generic cache operations if not using Memcached
---
-CREATE TABLE /*_*/objectcache (
-  keyname varbinary(255) NOT NULL default '' PRIMARY KEY,
-  value mediumblob,
-  exptime datetime
-) /*$wgDBTableOptions*/;
-CREATE INDEX /*i*/exptime ON /*_*/objectcache (exptime);
 
 
 --

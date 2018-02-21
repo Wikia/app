@@ -1213,20 +1213,43 @@ class PPFrame_DOM implements PPFrame {
 								'contenteditable' => 'false',
 							];
 
+							$err = '';
+							// If content of a template contains not valid html, then append empty placeholder, which
+							// will result in green puzzle displayed. Otherwise, wrap template in block or inline template
 							$placeholderTag = $this->getPlaceholderTagName( $ret['text'] );
-							if ($placeholderTag === 'span') {
-								// wrap content of inline template with non-width spaces to prevent CKE from modifying
-								// dom structure
-								$content = "&#x0200B;" . $ret['text'] . "&#x0200B;";
+							if ( MWTidy::checkErrors($ret['text'], $err) === false ) {
+								$out .= Html::rawElement( $placeholderTag, $attributes, "&#x0200B;");
 							} else {
-								$content = $ret['text'];
-							}
+								if ($placeholderTag === 'span') {
+									// wrap content of inline template with non-width spaces to prevent CKE from modifying
+									// dom structure
+									$content = "&#x0200B;" . trim( $ret['text'], "\n" ) . "&#x0200B;";
+								} else {
+									$content = "&#x0200B;" . PHP_EOL . $ret['text'];
+									// XW-4609: if template contains list items, placeholder's closing div should be in
+									// the new line to not mess with list html
+									if (preg_match('/^\s*[\*#:;]/m', $content)) {
+										$content .= PHP_EOL;
+									}
 
-							// when template is used in header new line breaks layout, however it is needed for other contexts
-							if ($contextNode->parentNode->nodeName === 'h' || $placeholderTag === 'span') {
-								$out .= Html::rawElement( $placeholderTag, $attributes,  $content );
-							} else {
-								$out .= Html::rawElement( $placeholderTag, $attributes, PHP_EOL . $content );
+									$content .=  "&#x0200B;";
+
+									if ( !empty( $contextNode->nextSibling ) &&
+										$contextNode->nextSibling->nodeName === '#text' ) {
+										$rteData['spacesafter'] = substr($contextNode->nextSibling->nodeValue, 0,
+											strlen( $contextNode->nextSibling->nodeValue ) - strlen( ltrim(  $contextNode->nextSibling->nodeValue, "\t " ) )
+										);
+										$attributes['data-rte-meta'] = RTEReverseParser::encodeRTEData( $rteData );
+									}
+								}
+
+								// when template is used in header new line breaks layout, however it is needed for other contexts
+								if ($contextNode->parentNode->nodeName === 'h' || $placeholderTag === 'span') {
+									$out .= Html::rawElement( $placeholderTag, $attributes,  $content );
+								} else {
+
+									$out .= Html::rawElement( $placeholderTag, $attributes, $content );
+								}
 							}
 						} else {
 							$out .= $ret['text'];
@@ -1434,8 +1457,13 @@ class PPFrame_DOM implements PPFrame {
 	function getPlaceholderTagName( string $text ): string {
 		$html = $this->parser->internalParse( $text, false );
 		$html = $this->parser->doBlockLevels( $html, false);
-		$blockElements = preg_match( '/<(' . implode( '|', HtmlHelper::BLOCK_ELEMENTS ) . ')[^>]*>/', $html );
 
+		// $html returned above, if $text consists only from plain text, is wrapped in <p></p> which should not be
+		// the reason to treat whole template as block element
+		$html = preg_replace('/^<p>/', '', $html);
+		$html = preg_replace('/<\/p>$/', '', $html);
+
+		$blockElements = preg_match( '/<(' . implode( '|', HtmlHelper::BLOCK_ELEMENTS ) . ')[^>]*>/', $html );;
 		$markerMatches = [];
 		preg_match_all(
 			'/' . Parser::MARKER_PREFIX . '[^\\x7f]*' . Parser::MARKER_SUFFIX . '/',

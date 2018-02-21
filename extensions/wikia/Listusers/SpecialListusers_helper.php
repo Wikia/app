@@ -7,8 +7,6 @@
  * @version: $Id$
  */
 
-use Wikia\DependencyInjection\Injector;
-use Wikia\Service\User\Permissions\PermissionsService;
 use Wikia\Service\User\Permissions\PermissionsServiceAccessor;
 
 class ListusersData {
@@ -131,15 +129,6 @@ class ListusersData {
 				foreach ( $this->mFilterGroup as $group ) {
 					if ( !empty($group) ) {
 						if ( $group == Listusers::DEF_GROUP_NAME ) {
-							/**
-							 * @see CE-1487
-							 * Until poweruser group is still being evaluated
-							 * and developed - we consider it as 'invisible'
-							 * and include it in the No group checkbox
-							 */
-							$powerUserGroupName = \Wikia\PowerUser\PowerUser::GROUP_NAME;
-							$whereGroup[] = ' single_group = ' . $dbs->addQuotes( $powerUserGroupName );
-
 							$whereGroup[] = " all_groups = '' ";
 						} else {
 							$whereGroup[] = " all_groups " . $dbs->buildLike( $dbs->anyString(), $group );
@@ -337,10 +326,6 @@ class ListusersData {
 	 * @param array $groups groups whose user count we need
 	 */
 	private function loadCountOfUsersInGroups( DatabaseBase $db, array $groups ) {
-		// CE-1487: exclude Poweruser group from group listing
-		$exclude = [ \Wikia\PowerUser\PowerUser::GROUP_NAME ];
-		$groups = array_diff( $groups, $exclude );
-
 		$res = $db->select(
 			'user_groups',
 			[ 'ug_group', 'COUNT(*) AS users_count' ],

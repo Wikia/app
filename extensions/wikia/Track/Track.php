@@ -86,8 +86,6 @@ class Track {
 			'cd18' => implode( ',', $hubFactory->getWikiCategories( $wgCityId ) ),
 			'cd19' => WikiaPageType::getArticleType(),
 			'cd21' => $wgTitle->getArticleID(),
-			'cd23' => $wgUser->isSpecificPowerUser( Wikia\PowerUser\PowerUser::TYPE_FREQUENT ) ? 'Yes' : 'No',
-			'cd24' => $wgUser->isSpecificPowerUser( Wikia\PowerUser\PowerUser::TYPE_LIFETIME ) ? 'Yes' : 'No',
 			'cd25' => $wgTitle->getNamespace(),
 		];
 		if ( !$wgUser->isAnon() ) {
@@ -99,9 +97,7 @@ class Track {
 	}
 
 	private static function getGATrackingIds() {
-		global $wgDevelEnvironment, $wgStagingEnvironment;
-
-		$tids = [ $wgDevelEnvironment || $wgStagingEnvironment ? 'UA-32129070-2' : 'UA-32129070-1' ];
+		$tids = [ !Wikia::isProductionEnv() ? 'UA-32129070-2' : 'UA-32129070-1' ];
 
 		return $tids;
 	}

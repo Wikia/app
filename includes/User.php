@@ -21,8 +21,8 @@
  */
 
 use Email\Controller\EmailConfirmationController;
-use Wikia\DependencyInjection\Injector;
 use Wikia\Domain\User\Attribute;
+use Wikia\Factory\ServiceFactory;
 use Wikia\Logger\Loggable;
 use Wikia\Logger\WikiaLogger;
 use Wikia\Service\Helios\ClientException;
@@ -78,7 +78,6 @@ class User implements JsonSerializable {
 	/**
 	 * Traits extending the class
 	 */
-	use PowerUserTrait;
 	use AuthServiceAccessor;
 	# WIKIA CHANGE END
 
@@ -192,11 +191,6 @@ class User implements JsonSerializable {
 	private $globalAuthToken = null;
 
 	/**
-	 * @var UserAttributes
-	 */
-	private $attributeService;
-
-	/**
 	 * @var PermissionsService
 	 */
 	private static $permissionsService;
@@ -222,25 +216,16 @@ class User implements JsonSerializable {
 		return $this->getName();
 	}
 
-	/**
-	 * @return HeliosClient
-	 */
-	private static function heliosClient() {
-		return Injector::getInjector()->get( HeliosClient::class );
+	private static function heliosClient(): HeliosClient {
+		return ServiceFactory::instance()->heliosFactory()->heliosClient();
 	}
 
-	/**
-	 * @return CookieHelper
-	 */
-	private static function authCookieHelper() {
-		return Injector::getInjector()->get( CookieHelper::class );
+	private static function authCookieHelper(): CookieHelper {
+		return ServiceFactory::instance()->heliosFactory()->cookieHelper();
 	}
 
-	/**
-	 * @return PreferenceService
-	 */
-	private function userPreferences() {
-		return Injector::getInjector()->get(PreferenceService::class);
+	private function userPreferences(): PreferenceService {
+		return ServiceFactory::instance()->preferencesFactory()->preferenceService();
 	}
 
 	/**
@@ -250,23 +235,13 @@ class User implements JsonSerializable {
 		return $this->userPreferences()->getPreferences( $this->getId() )->isReadOnly();
 	}
 
-	/**
-	 * @return UserAttributes
-	 */
-	private function userAttributes() {
-		if ( is_null( $this->attributeService ) ) {
-			$this->attributeService = Injector::getInjector()->get( UserAttributes::class );
-		}
-
-		return $this->attributeService;
+	private function userAttributes(): UserAttributes {
+		return ServiceFactory::instance()->attributesFactory()->userAttributes();
 	}
 
-	/**
-	 * @return PermissionsService
-	 */
-	private static function permissionsService() {
+	private static function permissionsService(): PermissionsService {
 		if ( is_null( self::$permissionsService ) ) {
-			self::$permissionsService = Injector::getInjector()->get( PermissionsService::class );
+			self::$permissionsService = ServiceFactory::instance()->permissionsFactory()->permissionsService();
 		}
 
 		return self::$permissionsService;
@@ -2693,10 +2668,10 @@ class User implements JsonSerializable {
 	 * Get a global user flag.
 	 *
 	 * Flags are typically boolean settings that are used internally to signify
-	 * something about the user such as whether or not their account has been
-	 * disabled or if they are a power user.
+	 * something about the user.
 	 *
 	 * @param string $flag
+	 * @param bool $default
 	 * @return bool
 	 */
 	public function getGlobalFlag($flag, $default = null) {

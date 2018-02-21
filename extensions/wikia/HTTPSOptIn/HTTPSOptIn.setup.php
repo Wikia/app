@@ -6,3 +6,4 @@ $wgExtensionMessagesFiles['HTTPSOptIn'] = __DIR__ . '/HTTPSOptIn.i18n.php' ;
 
 $wgHooks['GetPreferences'][] = 'HTTPSOptInHooks::onGetPreferences';
 $wgHooks['BeforeInitialize'][] = 'HTTPSOptInHooks::onBeforeInitialize';
+$wgHooks['MercuryWikiVariables'][] = 'HTTPSOptInHooks::onMercuryWikiVariables';

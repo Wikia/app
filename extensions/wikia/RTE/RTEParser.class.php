@@ -1,7 +1,7 @@
 <?php
 
 class RTEParser extends Parser {
-	const INLINE_EXT_TAGS = [ 'ref', 'nowiki' ];
+	const INLINE_EXT_TAGS = [ 'ref', 'nowiki', 'staff' ];
 	const CUSTOM_PLACEHOLDER_TAG = [ 'gallery', 'place' ];
 	// count empty lines before HTML tag
 	private $emptyLinesBefore = 0;
@@ -30,13 +30,6 @@ class RTEParser extends Parser {
 
 		// don't show TOC in edit mode
 		$this->mShowToc = false;
-	}
-
-	function doBlockLevels( $text, $linestart ) {
-		// XW-4380: Make template placeholders in list items render correctly
-		$text = preg_replace( '/^(\*<div class="placeholder placeholder-double-brackets"[^>]+>)\n/m', '$1', $text );
-
-		return parent::doBlockLevels( $text, $linestart );
 	}
 
 	/*
@@ -478,6 +471,17 @@ class RTEParser extends Parser {
 
 		//RTE::log(__METHOD__ . '::beforeParse', $text);
 
+		// check if includeonly, noinclude, onlyinclude tags are used in wikitext. If yes, rise edgecase
+		if ( strpos( $text, '<includeonly>' ) !== false ) {
+			RTE::edgeCasesPush( 'includeonly' );
+		}
+		if ( strpos( $text, '<noinclude>' ) !== false ) {
+			RTE::edgeCasesPush( 'noinclude' );
+		}
+		if ( strpos( $text, '<onlyinclude>' ) !== false ) {
+			RTE::edgeCasesPush( 'onlyinclude' );
+		}
+
 		// parse to HTML
 		$output = parent::parse($text, $title, $options, $linestart, $clearState, $revid);
 
@@ -504,7 +508,10 @@ class RTEParser extends Parser {
 		$html = preg_replace('%<!-- RTE_EMPTY_LINES_BEFORE_(\d+) -->(</[^>]+></)%s', '\2', $html);
 
 		// move empty lines counter data from comment to next opening tag attribute (thx to Marooned)
-		$html = preg_replace('%<!-- RTE_EMPTY_LINES_BEFORE_(\d+) -->(?!<!)(.*?)(<[^/][^>]*)>%s', '\2\3 data-rte-empty-lines-before="\1">', $html);
+		// XW-4626: prevent adding data-rte-empty-lines-before to inline tags to not break paragraph layout
+		$blockLevelsRegex = implode('|', HtmlHelper::BLOCK_ELEMENTS);
+		$html = preg_replace('%<!-- RTE_EMPTY_LINES_BEFORE_(\d+) -->(?!<!)(.*?)(<(' . $blockLevelsRegex . '|tr)[^>]*)>%s',
+			'\2\3 data-rte-empty-lines-before="\1">', $html);
 
 		// remove not replaced EMPTY_LINES_BEFORE comments
 		// <!-- RTE_EMPTY_LINES_BEFORE_1 -- data-rte-empty-lines-before="1">
@@ -525,7 +532,7 @@ class RTEParser extends Parser {
 
 		// XW-4579: CKE somehow optimizes html in a way that if there is empty line after <br /> it removes all attributes
 		// from it. This added span with zero-width space prevents such behaviour and is be ignored in RTEReverseParser::parse
-		$html = preg_replace("/(<br[^>]*>)/", '$1<span data-rte-filler="true">&#x0200B;</span>', $html);
+		$html = preg_replace("/(<br[^>]*>)\n/", '$1&nbsp;', $html);
 
 		wfProfileOut(__METHOD__ . '::regexp');
 
@@ -536,6 +543,12 @@ class RTEParser extends Parser {
 		if ( $trailingParagraph ) {
 			$html .= Xml::element('p');
 		}
+
+		// search for occurences of block templates invoked inside <span></span>
+		$html = preg_replace_callback("/(<span[^>]*>)(.*?)(<\/span>)/s", function($matches) {
+			$inner = preg_replace("/<div (class=\"placeholder placeholder-double-brackets\"[^>]+>&#x200b;).*?&#x200b;<\/div>/s", "<span $1</span>", $matches[2]);
+			return $matches[1] . $inner . $matches[3];
+		}, $html);
 
 		// update parser output
 		RTE::log(__METHOD__, $html);

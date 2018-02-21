@@ -1,7 +1,6 @@
 <?php
 
-use Wikia\DependencyInjection\Injector;
-use Wikia\Service\User\Preferences\PreferenceService;
+use Wikia\Factory\ServiceFactory;
 
 class FounderEmails {
 	static private $instance = null;
@@ -52,8 +51,7 @@ class FounderEmails {
 	 */
 
 	public function getWikisWithFounderPreference( $preferenceName ) {
-		/** @var PreferenceService $preferenceService */
-		$preferenceService = Injector::getInjector()->get( PreferenceService::class );
+		$preferenceService = ServiceFactory::instance()->preferencesFactory()->preferenceService();
 		return $preferenceService->findWikisWithLocalPreferenceValue( $preferenceName, "1" );
 	}
 
@@ -143,12 +141,6 @@ class FounderEmails {
 			// If we are in digest mode, grey out the individual email options
 			$disableEmailPrefs = $wgUser->getLocalPreference( 'founderemails-complete-digest', $wgCityId );
 
-			$defaultPreferences["adoptionmails-label-$wgCityId"] = array(
-				'type' => 'info',
-				'label' => '',
-				'help' => wfMsg( 'wikiadoption-pref-label', $wgSitename ),
-				'section' => $section,
-			);
 			$defaultPreferences["founderemails-joins-$wgCityId"] = array(
 				'type' => 'toggle',
 				'label-message' => array( 'founderemails-pref-joins' . $prefVersion, $wgSitename ),

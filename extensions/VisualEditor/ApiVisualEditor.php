@@ -17,7 +17,8 @@ class ApiVisualEditor extends ApiBase {
 	 * @return String
 	 */
 	protected function getApiSource() {
-		return wfExpandUrl( wfScript( 'api' ) );
+		// Make sure Parsoid is requesting MediaWiki over HTTP internally for now (PLATFORM-3363)
+		return preg_replace( '/^https:\/\//', 'http://', wfExpandUrl( wfScript( 'api' ) ) );
 	}
 
 	/**

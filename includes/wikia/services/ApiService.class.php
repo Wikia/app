@@ -1,8 +1,7 @@
 <?php
 
-use \Wikia\DependencyInjection\Injector;
+use Wikia\Factory\ServiceFactory;
 use \Wikia\Service\User\Auth\CookieHelper;
-use \Wikia\Service\User\Auth\HeliosCookieHelper;
 
 class ApiService {
 
@@ -135,9 +134,11 @@ class ApiService {
 			$cookie .= $wgCookiePrefix . $key . '=' . $value . ';';
 		}
 
-		$token = Injector::getInjector()->get( CookieHelper::class )->getAccessToken( $context->getRequest() );
+		$cookieHelper = ServiceFactory::instance()->heliosFactory()->cookieHelper();
+
+		$token = $cookieHelper->getAccessToken( $context->getRequest() );
 		if ( !empty( $token ) ) {
-			$cookie .= HeliosCookieHelper::ACCESS_TOKEN_COOKIE_NAME . '=' . $token . ';';
+			$cookie .= CookieHelper::ACCESS_TOKEN_COOKIE_NAME . '=' . $token . ';';
 		}
 		$options[ 'curlOptions' ] = [ CURLOPT_COOKIE => $cookie ];
 

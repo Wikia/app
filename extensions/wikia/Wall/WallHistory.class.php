@@ -5,11 +5,6 @@
  */
 class WallHistory extends WikiaModel {
 
-	/**
-	 * Number of activity items for getLastPosts() method.
-	 */
-	const DEFAULT_LAST_POSTS_COUNT = 5;
-
 	private $page = 1;
 	private $perPage = 100;
 
@@ -28,7 +23,7 @@ class WallHistory extends WikiaModel {
 		switch( $type ) {
 			case WH_EDIT:
 			case WH_NEW:
-				// wall the wall action goes through this point.
+				// notify Forum extension
 				Hooks::run( 'WallAction', [ $type, $feed->data->parent_id, $feed->data->title_id ] );
 				$this->addNewOrEdit( $type, $feed, $user );
 			break;
@@ -37,13 +32,11 @@ class WallHistory extends WikiaModel {
 			case WH_REOPEN:
 			case WH_REMOVE:
 			case WH_RESTORE:
-				// wall the wall action goes through this point.
+				// notify Forum extension
 				Hooks::run( 'WallAction', [ $type, $feed->data->parent_id, $feed->data->message_id ] );
 				$this->addStatChangeAction( $type, $feed );
 			break;
 		}
-
-		WikiaDataAccess::cachePurge( $this->getLastPostsMemcKey() );
 	}
 
 	/**
@@ -167,124 +160,6 @@ class WallHistory extends WikiaModel {
 			],
 			__METHOD__
 		);
-	}
-
-	/**
-	 * Gets data for Forum Activity Module with a cache layer (called by ForumController).
-	 *
-	 * @param int $ns    The namespace (this should theoretically work for Forum and Wall)
-	 * @param int $count The number of activities to get
-	 *
-	 * @return array Formatted data that gets passed to the view
-	 */
-	public function getLastPosts( $ns, $count = self::DEFAULT_LAST_POSTS_COUNT ) {
-		wfProfileIn( __METHOD__ );
-
-		$key = $this->getLastPostsMemcKey();
-		$cacheTime = 86400; // Cache for a day unless explicitly purged by `WallHistory::add()`.
-
-		$data = WikiaDataAccess::cache( $key, $cacheTime, function () use ( $ns, $count ) {
-			return $this->getLastPostsFromDB( $ns, $count );
-		} );
-
-		wfProfileOut( __METHOD__ );
-
-		return $data;
-	}
-
-	/**
-	 * Get a wiki-specific memcache key to use in the `getLastPosts()` method.
-	 *
-	 * @return string
-	 */
-	public function getLastPostsMemcKey() {
-		return wfMemcKey( 'WallHistory::getLastPosts' );
-	}
-
-	/**
-	 * Gets data for Forum Activity Module directly from the DB.
-	 *
-	 * @param int $ns    The namespace (this should theoretically work for Forum and Wall)
-	 * @param int $count The number of activities to get
-	 *
-	 * @return array Formatted data that gets passed to the view
-	 */
-	private function getLastPostsFromDB( $ns, $count = self::DEFAULT_LAST_POSTS_COUNT ) {
-		wfProfileIn( __METHOD__ );
-
-		$ns    = (int)MWNamespace::getSubject( $ns );
-		$count = (int)$count;
-		$db    = $this->getDB( DB_SLAVE );
-		$out   = [ ];
-
-		$result = $db->query(
-			'SELECT
-				`parent_page_id`,
-				`post_user_id`,
-				`post_user_ip_bin`,
-				`is_reply`,
-				`parent_comment_id`,
-				`comment_id`,
-				`action`,
-				`event_date`,
-				(
-					SELECT `metatitle`
-					FROM `wall_history` AS `last_title`
-					WHERE
-						`parent_comment_id` = `wall_history`.`parent_comment_id`
-						AND (`event_date`, `revision_id`) = (
-							SELECT MAX(`event_date`), MAX(`revision_id`)
-							FROM `wall_history`
-							WHERE
-								`action` IN (' . WH_EDIT . ', ' . WH_NEW . ')
-								AND `parent_comment_id` = `last_title`.`parent_comment_id`
-						)
-					LIMIT 1
-				) AS `metatitle`,
-				`reason`,
-				`revision_id`
-			FROM `wall_history`
-			RIGHT JOIN
-				(
-					SELECT
-						`parent_comment_id`,
-						MAX(`event_date`) AS `event_date`,
-						MAX(`revision_id`) AS `revision_id`
-					FROM `wall_history`
-					RIGHT JOIN
-						(
-							SELECT `parent_comment_id`
-							FROM `wall_history`
-							WHERE
-								`action` = ' . WH_NEW . '
-								AND `deleted_or_removed` = 0
-								AND `post_ns` = ' . $ns . '
-								AND `is_reply` = 0
-						) AS `not_removed_parents`
-						USING (`parent_comment_id`)
-					WHERE
-						`action` = ' . WH_NEW . '
-						AND `deleted_or_removed` = 0
-						AND `post_ns` = ' . $ns . '
-					GROUP BY `parent_comment_id`
-					ORDER BY `event_date` DESC
-					LIMIT ' . $count . '
-				) AS `last_new_post_date`
-				USING (`parent_comment_id`, `event_date`, `revision_id`)',
-			__METHOD__
-		);
-
-		while ( $row = $db->fetchRow( $result ) ) {
-			$data = $this->formatData( $row );
-			// This empty check shouldn't be necessary, but I'll leave it here just in case.
-			if ( !empty( $data ) ) {
-				$out[] = $data;
-			}
-		}
-
-		wfProfileOut( __METHOD__ );
-
-		return $out;
 	}
 
 	/**

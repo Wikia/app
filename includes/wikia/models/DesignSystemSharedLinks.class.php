@@ -87,6 +87,7 @@ class DesignSystemSharedLinks {
 			'games' => '//fandom.wikia.com/topics/games',
 			'movies' => '//fandom.wikia.com/topics/movies',
 			'tv' => '//fandom.wikia.com/topics/tv',
+			'video' => '//fandom.wikia.com/video',
 			'fandom-university' => '//community.wikia.com/wiki/Fandom_University',
 			'user-signin' => 'https://www.wikia.com/signin',
 			'user-logout' => 'https://www.wikia.com/logout',

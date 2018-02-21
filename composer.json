@@ -18,19 +18,20 @@
     "prepend-autoloader": false,
     "optimize-autoloader": true
   },
+  "autoload": {
+    "psr-4" : {
+      "Wikia\\": "lib/Wikia/src/",
+      "Swagger\\Client\\": "lib/Swagger/src/"
+    }
+  },
   "require": {
     "wikia/fluent-sql-php": "1.0.*",
     "monolog/monolog": "^1.23",
     "phpunit/phpunit": "^6.5",
     "cssjanus/cssjanus": "1.1.*",
     "tijsverkoyen/css-to-inline-styles": "1.5.2",
-    "php-di/php-di": "^5.0",
-    "doctrine/annotations": "~1.2",
-    "doctrine/cache": "~1.0",
-    "ocramius/proxy-manager": "~1.0",
-    "sensiolabs/consul-php-sdk": "^1.0",
+    "sensiolabs/consul-php-sdk": "^3.0",
     "wikia/phpflickr": "^3.1",
-    "ooyala/v2-api": "^2.0",
     "pear/Mail_Mime": "^1.10",
     "pear/archive_tar": "^1.4",
     "wikia/mail2": "^0.1.1",
@@ -44,6 +45,7 @@
     "wikia/semantic-scribunto": "^1.1",
     "phpunit/dbunit": "^3.0",
     "mediawiki/validator": "2.2.2.1",
-    "mediawiki/maps": "5.2.0.2"
+    "mediawiki/maps": "5.2.0.2",
+    "mcustiel/phiremock": "^1.8"
   }
 }

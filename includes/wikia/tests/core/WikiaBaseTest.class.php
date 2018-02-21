@@ -43,8 +43,6 @@ abstract class WikiaBaseTest extends TestCase {
 	private $mockProxy = null;
 	private $mockMessageCacheGet = null;
 
-	private static $numberSlowTests = 0;
-
 	protected function setUp() {
 		$this->startTime = microtime(true);
 		$this->app = F::app();
@@ -65,8 +63,6 @@ abstract class WikiaBaseTest extends TestCase {
 	}
 
 	protected function tearDown() {
-		global $wgAnnotateTestSpeed;
-
 		$this->unsetGlobals();
 		$this->unsetMessages();
 		if ( $this->mockProxy === null ) {
@@ -74,15 +70,6 @@ abstract class WikiaBaseTest extends TestCase {
 		}
 		$this->mockProxy->disable();
 		$this->mockProxy = null;
-
-		if ( WikiaTestSpeedAnnotator::isMarkedAsSlow($this->getAnnotations() ) ) {
-			self::$numberSlowTests++;
-		}
-
-		if ($wgAnnotateTestSpeed) {
-			WikiaTestSpeedAnnotator::add(get_class($this), $this->getName(false), microtime(true) - $this->startTime,
-				$this->getAnnotations());
-		}
 	}
 
 	/**
@@ -452,7 +439,6 @@ abstract class WikiaBaseTest extends TestCase {
 
 	protected function mockPreviewEnv() {
 		$this->mockGlobalVariable( 'wgDevelEnvironment', false );
-		$this->mockGlobalVariable( 'wgStagingEnvironment', true );
 		$this->mockGlobalVariable( 'wgWikiaEnvironment', WIKIA_ENV_PREVIEW );
 	}
 
@@ -464,19 +450,16 @@ abstract class WikiaBaseTest extends TestCase {
 
 	protected function mockVerifyEnv() {
 		$this->mockGlobalVariable( 'wgDevelEnvironment', false );
-		$this->mockGlobalVariable( 'wgStagingEnvironment', true );
 		$this->mockGlobalVariable( 'wgWikiaEnvironment', WIKIA_ENV_VERIFY );
 	}
 
 	protected function mockStableEnv() {
 		$this->mockGlobalVariable( 'wgDevelEnvironment', false );
-		$this->mockGlobalVariable( 'wgStagingEnvironment', true );
 		$this->mockGlobalVariable( 'wgWikiaEnvironment', WIKIA_ENV_STABLE );
 	}
 
 	protected function mockSandboxEnv() {
 		$this->mockGlobalVariable( 'wgDevelEnvironment', false );
-		$this->mockGlobalVariable( 'wgStagingEnvironment', false );
 		$this->mockGlobalVariable( 'wgWikiaEnvironment', WIKIA_ENV_SANDBOX );
 		$this->getStaticMethodMock( 'WikiFactory', 'getExternalHostName' )
 			->expects( $this->any() )

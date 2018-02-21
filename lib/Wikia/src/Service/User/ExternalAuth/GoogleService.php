@@ -2,23 +2,22 @@
 
 namespace Wikia\Service\User\ExternalAuth;
 
+use Swagger\Client\ExternalAuth\Api\GoogleApi;
 use User;
+use Wikia\Service\Swagger\ApiProvider;
 
 class GoogleService {
-	/** @var ExternalAuthApiFactory $externalAuthApiFactory */
-	private $externalAuthApiFactory;
+	/** @var ApiProvider $apiProvider */
+	private $apiProvider;
 
-	/**
-	 * @Inject
-	 * @param ExternalAuthApiFactory $factory
-	 */
-	public function __construct( ExternalAuthApiFactory $factory ) {
-		$this->externalAuthApiFactory = $factory;
+	public function __construct( ApiProvider $apiProvider ) {
+		$this->apiProvider = $apiProvider;
 	}
 
 	public function unlinkAccount( User $user ) {
 		$userId = $user->getId();
 
-		$this->externalAuthApiFactory->getGoogleApi( $userId )->unlinkAccount( $userId );
+		$this->apiProvider->getAuthenticatedApi( 'external-auth', $userId, GoogleApi::class )
+			->unlinkAccount( $userId );
 	}
 }

@@ -35,7 +35,7 @@ define('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', [
 			],
 			'PX': ['INVISIBLE_SKIN', 'INVISIBLE_HIGH_IMPACT', 'INVISIBLE_HIGH_IMPACT_2'],
 			'HiVi': ['INCONTENT_BOXAD_1', 'MOBILE_IN_CONTENT'],
-			'VIDEO': ['FEATURED', 'OUTSTREAM', 'UAP_BFAA', 'UAP_BFAB', 'ABCD', 'OOYALA', 'VIDEO']
+			'VIDEO': ['FEATURED', 'OUTSTREAM', 'UAP_BFAA', 'UAP_BFAB', 'ABCD', 'VIDEO']
 		};
 
 		// OTHER: 'INCONTENT_PLAYER'
@@ -58,7 +58,7 @@ define('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', [
 		return result;
 	}
 
-	function build(slotName, src) {
+	function build(slotName, src, slotNameSuffix) {
 		var adUnitElements,
 			params = page.getPageLevelParams(),
 			device = getDevice(params),
@@ -70,7 +70,7 @@ define('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', [
 			'',
 			dfpId,
 			provider + '.' + getGroup(slotName),
-			slotName.toLowerCase(),
+			slotName.toLowerCase() + (slotNameSuffix || ''),
 			device,
 			params.skin + '-' + getAdLayout(params),
 			wikiName + '-' + vertical

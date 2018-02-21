@@ -4,8 +4,7 @@
  * Insights
  *
  * This extension provides a set of subpages with insights on articles that
- * require more attention than others. It's one of productivity boosting features
- * for Power Users that focuses their efforts in the places that really need them.
+ * require more attention than others.
  *
  * @author Łukasz Konieczny
  * @author Adam Karminski

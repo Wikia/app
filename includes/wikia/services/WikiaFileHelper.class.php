@@ -192,22 +192,6 @@ class WikiaFileHelper {
 	}
 
 	/**
-	 * Can WikiaVideo extension be used to ingest video
-	 * @return boolean
-	 */
-	public static function useWikiaVideoExtForIngestion() {
-		return !empty(F::app()->wg->ingestVideosUseWikiaVideoExt);
-	}
-
-	/**
-	 * Can VideoHandlers extensions be used to ingest video
-	 * @return boolean
-	 */
-	public static function useVideoHandlersExtForIngestion() {
-		return !empty( F::app()->wg->ingestVideosUseVideoHandlersExt );
-	}
-
-	/**
 	 * Can VideoHandlers extension be used to embed video
 	 * @return boolean
 	 */
@@ -223,16 +207,6 @@ class WikiaFileHelper {
 	 */
 	public static function isUrlMatchThisWiki( $url ) {
 		return stripos( $url, F::app()->wg->server ) !== false;
-	}
-
-	/**
-	 * Could the given URL exist on the Wikia video repository? Does not
-	 * actually check if video exists.
-	 * @param string $url
-	 * @return boolean
-	 */
-	public static function isUrlMatchWikiaVideoRepo( $url ) {
-		return stripos( $url, F::app()->wg->wikiaVideoRepoPath ) !== false;
 	}
 
 	/**
@@ -334,11 +308,6 @@ class WikiaFileHelper {
 					$data['duration'] = $file->getMetadataDuration();
 					$data['isAdded'] = self::isAdded( $file );
 					$mediaPage = self::getMediaPage( $fileTitle );
-
-					// Extra height is needed for lightbox when more elements must be fitted
-					if ( strtolower( $data['providerName'] ) == 'crunchyroll' ) {
-						$data['extraHeight'] = CrunchyrollVideoHandler::CRUNCHYROLL_WIDGET_HEIGHT_PX;
-					}
 				} else {
 					$width = !empty( $config[ 'imageMaxWidth' ] ) ? min( $config[ 'imageMaxWidth' ], $width ) : $width;
 					$mediaPage = new ImagePage( $fileTitle );
@@ -351,12 +320,7 @@ class WikiaFileHelper {
 				$mediaQuery =  new ArticlesUsingMediaQuery( $fileTitle );
 				$articleList = $mediaQuery->getArticleList();
 
-				if ( $data['isAdded'] ) {
-					$data['fileUrl'] = $fileTitle->getFullUrl();
-				} else {
-					$data['fileUrl'] = self::getFullUrlPremiumVideo( $fileTitle->getDBkey() );
-				}
-
+				$data['fileUrl'] = $fileTitle->getFullUrl();
 				$data['imageUrl'] = $thumb->getUrl();
 				$data['rawImageUrl'] = $file->getUrl();
 				$data['userId'] = $user->getId();
@@ -598,34 +562,9 @@ class WikiaFileHelper {
 			$repo = $file->getRepo();
 			// When repo is an instance of ForeignAPIRepo
 			// file comes from MediaWiki and isn't stored on any wikia.
-			return !( $repo instanceof ForeignAPIRepo ||
-				F::app()->wg->WikiaVideoRepoDBName == $repo->getWiki() &&
-				empty( VideoInfo::newFromTitle( $file->getTitle()->getDBkey() ) ) );
+			return !( $repo instanceof ForeignAPIRepo );
 		}
 		return true;
-	}
-
-	/**
-	 * Get full url for premium video
-	 * @param string $fileTitle
-	 * @return string $fullUrl
-	 */
-	public static function getFullUrlPremiumVideo( $fileTitle ) {
-		return self::getFullUrlFromDBName( $fileTitle, F::app()->wg->WikiaVideoRepoDBName );
-	}
-
-	/**
-	 * Get full url from dbname
-	 * @param string $fileTitle
-	 * @param string $dbName
-	 * @return string $fullUrl
-	 */
-	public static function getFullUrlFromDBName( $fileTitle, $dbName ) {
-		$wikiId = WikiFactory::DBtoID( $dbName );
-		$globalTitle = GlobalTitle::newFromText( $fileTitle, NS_FILE, $wikiId );
-		$fullUrl = $globalTitle->getFullURL();
-
-		return $fullUrl;
 	}
 
 	/**
