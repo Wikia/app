@@ -54,8 +54,7 @@ class WikiaTest extends WikiaBaseTest {
 	}
 
 	public function testOnSkinTemplateOutputPageBeforeExec_setsNoIndexNoFollowBecauseHeaders() {
-		$this->mockGlobalVariable('wgDevelEnvironment', false);
-		$this->mockGlobalVariable('wgStagingEnvironment', false);
+		$this->mockProdEnv();
 
 		$request = new FauxRequest();
 		$request->setHeader( 'X-Staging', 'externaltest' );
@@ -78,8 +77,7 @@ class WikiaTest extends WikiaBaseTest {
 	}
 
 	public function testOnSkinTemplateOutputPageBeforeExec_setsNoIndexNoFollowBecauseDevbox() {
-		$this->mockGlobalVariable('wgDevelEnvironment', true);
-		$this->mockGlobalVariable('wgStagingEnvironment', false);
+		$this->mockDevEnv();
 
 		$context = new RequestContext();
 		$context->setTitle( new Title() );
@@ -99,8 +97,7 @@ class WikiaTest extends WikiaBaseTest {
 	}
 
 	public function testOnSkinTemplateOutputPageBeforeExec_setsNoIndexNoFollowBecauseStaging() {
-		$this->mockGlobalVariable('wgDevelEnvironment', false);
-		$this->mockGlobalVariable('wgStagingEnvironment', true);
+		$this->mockStagingEnv();
 
 		$context = new RequestContext();
 		$context->setTitle( new Title() );
@@ -121,8 +118,7 @@ class WikiaTest extends WikiaBaseTest {
 	}
 
 	public function testOnSkinTemplateOutputPageBeforeExec_doesNotSetNoIndexNoFollow() {
-		$this->mockGlobalVariable('wgDevelEnvironment', false);
-		$this->mockGlobalVariable('wgStagingEnvironment', false);
+		$this->mockProdEnv();
 
 		$context = new RequestContext();
 		$context->setTitle( new Title() );

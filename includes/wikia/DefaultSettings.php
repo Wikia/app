@@ -455,7 +455,7 @@ spl_autoload_register( function( $class ) {
 	return false;
 });
 
-// TODO:move this inclusions to CommonExtensions?
+// TODO: move this inclusions to includes/wikia/Extensions.php ?
 require_once( $IP.'/extensions/wikia/ImageTweaks/ImageTweaks.setup.php' );
 require_once( $IP.'/extensions/wikia/Oasis/Oasis_setup.php' );
 
@@ -1030,12 +1030,6 @@ $wgResourceLoaderAssetsSkinMapping = [
  * core mediawiki feature variable
  */
 $wgArticleCountMethod = "any";
-
-/**
- * @name $wgEnableResourceLoaderRewrites
- * enable rewriting of Resource Loader links on nocookie domain
- */
-$wgEnableResourceLoaderRewrites = true;
 
 /**
  * Javascript minifier used by ResourceLoader
@@ -1843,19 +1837,6 @@ $wgEnableHostnameInHtmlTitle = true;
  * Use template types from Template Classification Service in MW context
  */
 include_once("$IP/includes/wikia/parser/templatetypes/TemplateTypes.setup.php");
-
-/**
- * @name $wgEnableReviveSpotlights
- * Enables Revive Spotlights
- */
-$wgEnableReviveSpotlights = true;
-
-/**
- * @name $wgReviveSpotlightsCountries
- * Enables Revive Spotlights in these countries (given wgEnableReviveSpotlights is also true).
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgReviveSpotlightsCountries = null;
 
 /**
  * @name $wgDisableImprovedGenderSupport
