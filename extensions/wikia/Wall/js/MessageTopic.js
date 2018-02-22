@@ -82,7 +82,7 @@
 		getSuggestions: function(q) {
 			var d = $.Deferred();
 			$.ajax({
-				url: wgScript,
+				url: mw.util.wikiScript(),
 				data: {
 					action: 'ajax',
 					rs: 'getLinkSuggest',
@@ -126,8 +126,8 @@
 				$.loadMustache()
 			).then(function() {
 				messageTopic.autocomplete = messageTopic.input.autocomplete({
-					serviceUrl: wgScript + '?action=ajax&rs=getLinkSuggest&format=json&nospecial=1&nsfilter=0',
-					onSelect: function(value, data) {
+					serviceUrl: mw.util.wikiScript() + '?action=ajax&rs=getLinkSuggest&format=json&nospecial=1&nsfilter=0',
+					onSelect: function(value) {
 						$().log("on select");
 						messageTopic.addSelection(value);
 						messageTopic.input.val('');
