@@ -913,10 +913,6 @@ if( !empty($wgWikiaStarterLockdown) ) {
 	unset( $StarterLockdownNamespaces );
 }
 
-if( !empty($wgEnableSpecialListIncludedFilesExt) ) {
-	include("$IP/extensions/wikia/Development/SpecialListIncludedFiles/Special_ListIncludedFiles.php");
-}
-
 if( !empty($wgWikiaEnableFounderEmailsExt) ) {
 	include("$IP/extensions/wikia/FounderEmails/FounderEmails.php");
 }
