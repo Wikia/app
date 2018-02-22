@@ -36,10 +36,8 @@ class SpecialUserlogout extends UnlistedSpecialPage {
 	}
 
 	function execute( $par ) {
-		global $wgUser;        /* wikia change */
-
 		/**
-		 * Some satellite ISPs use broken precaching schemes that log people out straight after
+		 * Some satellite ISPs use broken pre-caching schemes that log people out straight after
 		 * they're logged in (bug 17790). Luckily, there's a way to detect such requests.
 		 */
 		if ( isset( $_SERVER['REQUEST_URI'] ) &&
@@ -51,6 +49,17 @@ class SpecialUserlogout extends UnlistedSpecialPage {
 		}
 
 		$this->logger->info( 'IRIS-4228 Logout has been called' );
+		if ( F::app()->wg->DevelEnvironment ) {
+			// IRIS-3871 If this is a development environment perform standard logging out
+			// in other case ignore logging out and redirect to the desired URL
+			$this->performLogout();
+		}
+		$this->getOutput()->setArticleBodyOnly( true );
+		$this->getOutput()->redirect( $this->getRedirectUrl() );
+	}
+
+	public function performLogout() {
+		global $wgUser;        /* wikia change */
 
 		$this->setHeaders();
 		$this->outputHeader();
@@ -75,24 +84,22 @@ class SpecialUserlogout extends UnlistedSpecialPage {
 		wfResetSessionID();
 
 		$injectedHTML = '';
+
 		Hooks::run( 'UserLogoutComplete', array( &$user, &$injectedHTML, $oldName ) );
 
-		// redirection
-
-		$referer = $this->getRequest()->getHeader('REFERER');
-		$redirectUrl = 'http://www.wikia.com/';
-		if ( isset( $referer ) ) {
+	/**
+	 * @return string
+	 */
+	public function getRedirectUrl( ) {
+		$referer = $this->getRequest()->getHeader( 'REFERER' );
+		if ( !empty( $referer ) ) {
 			$parsedReferer = parse_url( $referer );
-			$redirectUrl = $this->getHostname( $parsedReferer );
 			if ( strpos( $parsedReferer['path'], '/d' ) === 0 ) {
-				$redirectUrl = $this->getHostname( $parsedReferer ) . '/d';
+				return $this->getHostname( $parsedReferer ) . '/d';
 			}
+			return $this->getHostname( $parsedReferer );
 		}
-
-		$out = $this->getOutput();
-		$out->redirect( $redirectUrl );
-
-		return;
+		return 'http://www.wikia.com/';
 	}
 
 	/**
