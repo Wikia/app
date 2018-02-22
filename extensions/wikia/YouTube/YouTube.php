@@ -66,12 +66,6 @@ define( 'AUDIO_ONLY_HEIGHT', 30 );
 
 // Register the magic word "youtube" so that it can be used as a parser-function.
 function wfParserFunction_magic( &$magicWords, $langCode ) {
-	global $wgAllowNonPremiumVideos;
-
-	if ( !$wgAllowNonPremiumVideos ) {
-		return true;
-	}
-
 	$magicWords['youtube'] = array( 0, 'youtube' );
 	return true;
 }
@@ -209,11 +203,6 @@ function createRawOutput( $value ) {
  * @return bool
  */
 function wfYouTube( Parser $parser ): bool {
-	global $wgAllowNonPremiumVideos;
-
-	if ( !$wgAllowNonPremiumVideos ) {
-		return true;
-	}
 	$parser->setHook( 'youtube', 'embedYouTube' );
 	$parser->setFunctionHook( 'youtube', 'wfParserFunction_youTube' );
 

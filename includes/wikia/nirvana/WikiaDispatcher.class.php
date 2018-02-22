@@ -260,12 +260,13 @@ class WikiaDispatcher {
 
 				$response->setException($e);
 
+				$controllerClassName = $controllerClassName ?? $controllerName ?? '';
 				Wikia\Logger\WikiaLogger::instance()->error(
 					__METHOD__ . " - {$controllerClassName} controller dispatch exception",
 					[
 						'exception' => $e,
 						'controller_name' => $controllerClassName,
-						'method_name' => $method
+						'method_name' => isset( $method ) ? $method : ''
 					]
 				);
 

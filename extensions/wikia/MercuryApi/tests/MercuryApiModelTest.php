@@ -551,13 +551,6 @@ class MercuryApiModelTest extends WikiaBaseTest {
 	public function processCuratedContentDataProvider() {
 		return [
 			[
-				'$expected' => null,
-				'$data' => [],
-				'$sectionsData' => [],
-				'$itemsData' => [],
-				'$featuredData' => []
-			],
-			[
 				'$expected' => [
 					'items' => [ 'A', 'B', 'C', 'P', 'Q', 'R' ],
 					'featured' => [ 'X', 'Y', 'Z' ]
