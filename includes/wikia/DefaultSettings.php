@@ -455,7 +455,7 @@ spl_autoload_register( function( $class ) {
 	return false;
 });
 
-// TODO:move this inclusions to CommonExtensions?
+// TODO: move this inclusions to includes/wikia/Extensions.php ?
 require_once( $IP.'/extensions/wikia/ImageTweaks/ImageTweaks.setup.php' );
 require_once( $IP.'/extensions/wikia/Oasis/Oasis_setup.php' );
 
@@ -1863,6 +1863,13 @@ $wgDisableImprovedGenderSupport = true;
  * Enables autoapproving JS pages changes
  */
 $wgAutoapproveJS = false;
+
+/**
+ * @name $wgWikiaBaseDomainRegex
+ * A central regex string for use in domain checking, so we can easily
+ * update/add/change domains in the future
+ */
+$wgWikiaBaseDomainRegex = '(wikia\\.com|wikia-staging\\.com|wikia-dev\\.(com|us|pl))';
 
 /**
  * Enable recovery

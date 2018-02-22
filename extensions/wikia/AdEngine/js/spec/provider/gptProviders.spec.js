@@ -47,11 +47,6 @@ describe('ext.wikia.adEngine.provider.*', function () {
 		},
 		slotTweaker: {
 			removeDefaultHeight: noop,
-			removeTopButtonIfNeeded: noop,
-			adjustLeaderboardSize: noop
-		},
-		uapContext: {
-			isUapLoaded: noop
 		},
 		lazyQueue: {},
 		window: {},
@@ -88,7 +83,6 @@ describe('ext.wikia.adEngine.provider.*', function () {
 			case 'directGpt':
 				return modules['ext.wikia.adEngine.provider.' + providerName](
 					mocks.adContext,
-					mocks.uapContext,
 					getFactory(),
 					mocks.kiloAdUnitBuilder,
 					mocks.slotTweaker
@@ -96,7 +90,6 @@ describe('ext.wikia.adEngine.provider.*', function () {
 			case 'remnantGpt':
 				return modules['ext.wikia.adEngine.provider.' + providerName](
 					mocks.adContext,
-					mocks.uapContext,
 					getFactory(),
 					mocks.adUnitBuilder,
 					mocks.slotTweaker
