@@ -1218,12 +1218,12 @@ class PPFrame_DOM implements PPFrame {
 							// will result in green puzzle displayed. Otherwise, wrap template in block or inline template
 							$placeholderTag = $this->getPlaceholderTagName( $ret['text'] );
 							if ( MWTidy::checkErrors($ret['text'], $err) === false ) {
-								$out .= Html::rawElement( $placeholderTag, $attributes, "&#x0200B;");
+								$out .= Html::rawElement( $placeholderTag, $attributes, "&#x0200B;&#x0200B;");
 							} else {
 								if ($placeholderTag === 'span') {
 									// wrap content of inline template with non-width spaces to prevent CKE from modifying
 									// dom structure
-									$content = "&#x0200B;" . $ret['text'] . "&#x0200B;";
+									$content = "&#x0200B;" . trim( $ret['text'], "\n" ) . "&#x0200B;";
 								} else {
 									$content = "&#x0200B;" . PHP_EOL . $ret['text'];
 									// XW-4609: if template contains list items, placeholder's closing div should be in

@@ -72,7 +72,8 @@ CREATE TABLE `city_variables` (
   `cv_city_id` int(9) unsigned NOT NULL DEFAULT '1',
   `cv_variable_id` smallint(5) unsigned NOT NULL DEFAULT '0',
   `cv_value` mediumblob NOT NULL,
-  `cv_timestamp` char(14) NOT NULL DEFAULT '19700101000000'
+  `cv_timestamp` char(14) NOT NULL DEFAULT '19700101000000',
+  PRIMARY KEY (`cv_variable_id`,`cv_city_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -127,4 +128,4 @@ CREATE TABLE `wikia_tasks` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
--- Dump completed on 2018-01-17 15:46:35
+-- Dump completed on 2018-02-21 14:31:22

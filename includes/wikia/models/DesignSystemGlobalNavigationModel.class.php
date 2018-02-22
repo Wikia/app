@@ -356,7 +356,7 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 	}
 
 	private function getVerticalsSection() {
-		return [
+		$verticals = [
 			'links' => [
 				[
 					'type' => 'link-branded',
@@ -390,6 +390,21 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 				]
 			]
 		];
+
+		if ( $this->product === static::PRODUCT_FANDOMS ) {
+			$verticals['links'][] = [
+				'type' => 'link-branded',
+				'brand' => 'video',
+				'title' => [
+					'type' => 'translatable-text',
+					'key' => 'global-navigation-fandom-overview-link-video'
+				],
+				'href' => $this->getHref( 'video' ),
+				'tracking_label' => 'link.video'
+			];
+		}
+
+		return $verticals;
 	}
 
 	private function isMessageWallEnabled() {
