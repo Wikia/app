@@ -41,7 +41,7 @@ define('ext.wikia.adEngine.tracking.adInfoTracker',  [
 			'country': pageParams.geo || '',
 			'time_bucket': now.getHours(),
 			'timestamp': timestamp,
-			'ad_load_time': timestamp - window.performance.timing.connectStart,
+			'ad_load_time': timestamp - win.performance.timing.connectStart,
 			'slot_size': creative.slotSize && creative.slotSize.length ? creative.slotSize.join('x') : '',
 			'kv_s0': pageParams.s0 || '',
 			'kv_s1': pageParams.s1 || '',
