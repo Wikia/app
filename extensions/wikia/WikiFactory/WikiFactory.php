@@ -2765,7 +2765,7 @@ class WikiFactory {
 		}
 
 		/**
-		 * it is called in CommonExtensions.php and wgMemc is not initialized there
+		 * it is called in includes/wikia/Extensions.php and wgMemc is not initialized there
 		 */
 		global $wgWikiFactoryCacheType;
 		$oMemc = wfGetCache( $wgWikiFactoryCacheType );

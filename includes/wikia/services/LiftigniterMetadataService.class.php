@@ -3,9 +3,8 @@
 use Swagger\Client\Liftigniter\Metadata\Api\ItemsInternalApi;
 use Swagger\Client\Liftigniter\Metadata\Models\Item;
 use Swagger\Client\ApiException;
-use Wikia\DependencyInjection\Injector;
+use Wikia\Factory\ServiceFactory;
 use Wikia\Logger\WikiaLogger;
-use Wikia\Service\Swagger\ApiProvider;
 
 class LiftigniterMetadataService {
 	const SERVICE_NAME = 'liftigniter-metadata';
@@ -62,8 +61,7 @@ class LiftigniterMetadataService {
 	 * @return ItemsInternalApi
 	 */
 	private function createItemsInternalApiClient(): ItemsInternalApi {
-		/** @var ApiProvider $apiProvider */
-		$apiProvider = Injector::getInjector()->get( ApiProvider::class );
+		$apiProvider = ServiceFactory::instance()->providerFactory()->apiProvider();
 		$api = $apiProvider->getApi( self::SERVICE_NAME, ItemsInternalApi::class );
 
 		// default CURLOPT_TIMEOUT for API client is set to 0 which means no timeout.

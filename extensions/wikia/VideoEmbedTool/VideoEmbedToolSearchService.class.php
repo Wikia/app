@@ -107,43 +107,6 @@ class VideoEmbedToolSearchService
 	}
 
 	/**
-	 * Get suggested videos by article id (raw data)
-	 * @param int $articleId
-	 * @return array
-	 */
-	public function getSuggestedVideosByArticleId( $articleId ) {
-		$log = WikiaLogger::instance();
-
-		$this->setSuggestionQueryByArticleId( $articleId );
-		$query = $this->getSuggestionQuery();
-		$query =  (new Solarium_Query_Helper)->escapeTerm( $query,  ENT_COMPAT, 'UTF-8' );
-		$expectedFields = $this->getExpectedFields();
-
-		$log->info( __METHOD__.' - Querying SOLR', [
-			'method'         => __METHOD__,
-			'query'          => $query,
-			'expectedFields' => $expectedFields
-		] );
-
-		$config = $this->getConfig()->setWikiId( Wikia\Search\QueryService\Select\Dismax\Video::VIDEO_WIKI_ID )
-		                            ->setQuery( $query )
-									->setRequestedFields( $expectedFields )
-		                            ->setFilterQuery( "+(title_en:({$query}) OR video_actors_txt:({$query}) OR nolang_txt:({$query}) OR html_media_extras_txt:({$query}))" )
-		                            ->setVideoEmbedToolSearch( true );
-
-		return $this->getFactory()->getFromConfig( $config )->searchAsApi( $expectedFields, true );
-	}
-
-	/**
-	 * Provided an article ID, return an array of suggested videos.
-	 * @param int $articleId
-	 * @return array
-	 */
-	public function getSuggestionsForArticleId( $articleId ) {
-		return $this->postProcessSearchResponse( $this->getSuggestedVideosByArticleId( $articleId ));
-	}
-
-	/**
 	 * Returns an array of results for a given query, based on settings in config
 	 * @param string $query
 	 * @return array

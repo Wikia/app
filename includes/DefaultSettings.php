@@ -1491,7 +1491,6 @@ $wgCacheDirectory = false;
  *
  *   - CACHE_ANYTHING:   Use anything, as long as it works
  *   - CACHE_NONE:       Do not cache
- *   - CACHE_DB:         Store cache objects in the DB
  *   - CACHE_MEMCACHED:  MemCached, must specify servers in $wgMemCachedServers
  *   - CACHE_ACCEL:      APC, XCache or WinCache
  *   - CACHE_DBA:        Use PHP's DBA extension to store in a DBM-style
@@ -1538,7 +1537,6 @@ $wgParserCacheType = CACHE_ANYTHING;
  */
 $wgObjectCaches = array(
 	CACHE_NONE => array( 'class' => 'EmptyBagOStuff' ),
-	CACHE_DB => array( 'class' => 'SqlBagOStuff', 'table' => 'objectcache' ),
 	CACHE_DBA => array( 'class' => 'DBABagOStuff' ),
 
 	CACHE_ANYTHING => array( 'factory' => 'ObjectCache::newAnything' ),
@@ -3254,28 +3252,6 @@ $wgInvalidUsernameCharacters = '@:';
  * modify the user rights of those users via Special:UserRights
  */
 $wgUserrightsInterwikiDelimiter = '@';
-
-/**
- * Use some particular type of external authentication.  The specific
- * authentication module you use will normally require some extra settings to
- * be specified.
- *
- * null indicates no external authentication is to be used.  Otherwise,
- * $wgExternalAuthType must be the name of a non-abstract class that extends
- * ExternalUser.
- *
- * Core authentication modules can be found in includes/extauth/.
- */
-$wgExternalAuthType = null;
-
-/**
- * Configuration for the external authentication.  This may include arbitrary
- * keys that depend on the authentication mechanism.  For instance,
- * authentication against another web app might require that the database login
- * info be provided.  Check the file where your auth mechanism is defined for
- * info on what to put here.
- */
-$wgExternalAuthConf = array();
 
 /**
  * Policies for how each preference is allowed to be changed, in the presence

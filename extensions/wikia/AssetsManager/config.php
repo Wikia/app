@@ -208,15 +208,6 @@ $config['recirculation_scss'] = [
 	],
 ];
 
-$config['spotlights_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => [
-		// ads
-		'//extensions/wikia/Spotlights/js/AdProviderOpenX.js',
-		'//extensions/wikia/Spotlights/js/LazyLoadAds.js',
-	],
-];
-
 
 $config['adengine2_top_js'] = [
 	'type' => AssetsManager::TYPE_JS,
@@ -241,6 +232,7 @@ $config['adengine2_top_js'] = [
 		'//extensions/wikia/AdEngine/js/utils/AdLogicZoneParams.js',
 		'//extensions/wikia/AdEngine/js/utils/math.js',
 		'//extensions/wikia/AdEngine/js/utils/time.js',
+		'//extensions/wikia/AdEngine/js/video/articleVideoAd.js',
 		'//extensions/wikia/AdEngine/js/video/player/playerTracker.js',
 		'//extensions/wikia/AdEngine/js/video/vastDebugger.js',
 		'//extensions/wikia/AdEngine/js/video/vastParser.js',
@@ -920,7 +912,6 @@ $config['mercury_ads_js'] = [
 		'//extensions/wikia/AbTesting/js/AbTest.js',
 		'//extensions/wikia/AdEngine/js/AdLogicPageViewCounter.js',
 		'//extensions/wikia/AdEngine/js/CustomAdsLoader.js',
-		'//extensions/wikia/AdEngine/js/pageFairDetection.js',
 		'//extensions/wikia/AdEngine/js/babDetection.js',
 		'//extensions/wikia/AdEngine/js/mobile/mercuryListener.js',
 		'//extensions/wikia/AdEngine/js/slot/service/actionHandler.js',
@@ -939,6 +930,7 @@ $config['mercury_ads_js'] = [
 		'//extensions/wikia/AdEngine/js/template/roadblock.js',
 		'//extensions/wikia/AdEngine/js/utils/scriptLoader.js',
 		'//extensions/wikia/AdEngine/js/utils/time.js',
+		'//extensions/wikia/AdEngine/js/video/articleVideoAd.js',
 		'//extensions/wikia/AdEngine/js/video/videoFrequencyMonitor.js',
 		'//extensions/wikia/AdEngine/js/video/videoFrequencySettings.js',
 		'//extensions/wikia/AdEngine/js/video/videoFrequencyStore.js',
@@ -1771,20 +1763,6 @@ $config['api_docs_scss'] = [
 	'type' => AssetsManager::TYPE_SCSS,
 	'assets' => [
 		'//extensions/wikia/ApiDocs/css/ApiDocs.scss',
-	],
-];
-
-$config['videos_module_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'oasis' ],
-	'assets' => [
-		'//extensions/wikia/Thumbnails/scripts/templates.mustache.js',
-		'//extensions/wikia/Thumbnails/scripts/views/titleThumbnail.js',
-		'//extensions/wikia/VideosModule/scripts/templates.mustache.js',
-		'//extensions/wikia/VideosModule/scripts/models/videos.js',
-		'//extensions/wikia/VideosModule/scripts/views/titleThumbnail.js',
-		'//extensions/wikia/VideosModule/scripts/views/index.js',
-		'//extensions/wikia/VideosModule/scripts/controllers/rail.js',
 	],
 ];
 

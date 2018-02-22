@@ -31,7 +31,7 @@ class TransactionClassifier {
 	const NS_BLOG_LISTING_TALK = 503;
 
 	// copied from extensions/wikia/SemanticMediaWiki/includes/SMW_Setup.php to use a constant below
-	// NOTE: this assumes $smwgNamespaceIndex is set to 300 (set in CommonExtensions.php)
+	// NOTE: this assumes $smwgNamespaceIndex is set to 300 (set in includes/wikia/Extensions.php)
 	// while not being dependant on SMW extension inclusion
 	const SMW_NS_PROPERTY = 302;
 	const SMW_NS_TYPE = 304;

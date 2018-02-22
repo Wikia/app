@@ -3,7 +3,11 @@ describe('ext.wikia.adEngine.ml.modelFactory', function () {
 	'use strict';
 
 	function getModule() {
-		return modules['ext.wikia.adEngine.ml.modelFactory']();
+		return modules['ext.wikia.adEngine.ml.modelFactory'](
+			{
+				addCallback: function () {}
+			}
+		);
 	}
 
 	it('Create model with proper interface', function () {

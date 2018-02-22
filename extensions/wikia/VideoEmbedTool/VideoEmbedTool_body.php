@@ -341,7 +341,7 @@ class VideoEmbedTool {
 
 	/**
 	 * Upload video using LocalFile framework
-	 * @param mixed $provider string or int from $wgVideoMigrationProviderMap
+	 * @param string $provider
 	 * @param string $videoId
 	 * @param string $videoName
 	 * @param $oTitle
