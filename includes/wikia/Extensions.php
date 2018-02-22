@@ -232,11 +232,6 @@ if (!empty($wgWikiaEnableEventCountdownExt)) {
 	include("{$IP}/extensions/3rdparty/EventCountdown/EventCountdown.php");
 }
 
-#--- 11. Emailtag
-if( !empty($wgWikiaEnableEmailtagExt) ) {
-	include("{$IP}/extensions/3rdparty/emailtag/emailtag.php");
-}
-
 #--- 12. MultiUpload
 if( !empty( $wgEnableMultiUploadExt ) ) {
 	if( empty($wgMaxUploadFiles) ) {
