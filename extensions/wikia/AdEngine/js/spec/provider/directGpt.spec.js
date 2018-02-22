@@ -21,6 +21,7 @@ describe('ext.wikia.adEngine.provider.directGpt', function () {
 			megaAdUnitBuilder: {name: 'megaAdUnit'},
 			slotTweaker: {},
 			pageFairRecovery: {},
+			instartLogicRecovery: {}
 		};
 
 	function getModule() {
@@ -30,7 +31,8 @@ describe('ext.wikia.adEngine.provider.directGpt', function () {
 			mocks.kiloAdUnitBuilder,
 			mocks.megaAdUnitBuilder,
 			mocks.slotTweaker,
-			mocks.pageFairRecovery,
+			mocks.instartLogicRecovery,
+			mocks.pageFairRecovery
 		);
 	}
 
@@ -51,6 +53,21 @@ describe('ext.wikia.adEngine.provider.directGpt', function () {
 
 		expect(mocks.factory.createProvider.calls.argsFor(0)[4].getAdUnitBuilder())
 			.toEqual(mocks.megaAdUnitBuilder);
+	});
+
+	it('Return mega adUnit builder for specific slots', function () {
+		var module;
+
+		spyOn(mocks.factory, 'createProvider');
+		spyOn(mocks.adContext, 'getContext').and.returnValue({opts:{megaAdUnitBuilderEnabled: false}});
+
+		getModule();
+
+		module = mocks.factory.createProvider.calls.argsFor(0)[4];
+		module.megaAdUnitSlots = ['MEGA_SLOT'];
+
+		expect(module.getAdUnitBuilder('MEGA_SLOT')).toEqual(mocks.megaAdUnitBuilder);
+		expect(module.getAdUnitBuilder('KILO_SLOT')).toEqual(mocks.kiloAdUnitBuilder);
 	});
 
 	it('Return kilo adUnit builder when Mega is turned off', function () {
