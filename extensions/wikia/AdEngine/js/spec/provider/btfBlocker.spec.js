@@ -17,9 +17,6 @@ describe('ext.wikia.adEngine.provider.btfBlocker', function () {
 				return mocks.context;
 			}
 		},
-		messageListener: {
-			register: noop
-		},
 		methodCalledInsideFillInSlot: noop,
 		uapContext: {
 			isUapLoaded: function () {
@@ -44,7 +41,6 @@ describe('ext.wikia.adEngine.provider.btfBlocker', function () {
 		return modules['ext.wikia.adEngine.provider.btfBlocker'](
 			mocks.adContext,
 			mocks.uapContext,
-			mocks.messageListener,
 			modules['wikia.lazyqueue'](),
 			mocks.log,
 			mocks.win

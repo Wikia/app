@@ -11,6 +11,12 @@ describe('ext.wikia.adEngine.provider.factory.wikiaGpt', function () {
 				return '/5441/wka.ent/_muppet//home/' + src + '/' + slotName;
 			}
 		},
+		megaAdUnitBuilder: {
+			build: function () {
+				return 'wikia_gpt/5441/wka1a.PX/' + slotName + '/desktop/oasis-article-ic/_project43-life';
+			},
+			isMegaSlot: noop
+		},
 		extraUnitBuilder: {
 			build: function(slotName, src) {
 				return 'extra/' + src + '/' + slotName;
@@ -57,6 +63,7 @@ describe('ext.wikia.adEngine.provider.factory.wikiaGpt', function () {
 			mocks.btfBlocker,
 			mocks.gptHelper,
 			mocks.adUnitBuilder,
+			mocks.megaAdUnitBuilder,
 			mocks.slotRegistry,
 			mocks.log,
 			mocks.lookups
