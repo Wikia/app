@@ -84,6 +84,9 @@ define('ext.wikia.adEngine.adContext', [
 		context.opts.pageFairRecovery = serviceCanBeEnabled && !isRecoveryServiceAlreadyEnabled &&
 			context.opts.pageFairRecovery && geo.isProperGeo(instantGlobals.wgAdDriverPageFairRecoveryCountries) &&
 			!browserDetect.isEdge();
+
+		// BlockAdBlock recovery
+		context.opts.babRecovery = serviceCanBeEnabled && geo.isProperGeo(instantGlobals.wgAdDriverBabRecoveryCountries);
 	}
 
 	function updateAdContextBidders(context) {

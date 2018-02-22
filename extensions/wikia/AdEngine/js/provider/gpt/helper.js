@@ -75,6 +75,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	 * @param {string}  extra.forcedAdType     - ad type for callbacks info
 	 * @param {bool}    extra.isInstartLogicRecoverable - true if currently processed slot is recovered by IL
 	 * @param {bool}    extra.isPageFairRecoverable - true if currently processed slot is recovered by PF
+	 * @param {bool}    extra.isRecoveryBehindBab - true if recovery should be enabled when BlockAdBlock detection is positive
 	 */
 	function pushAd(slot, slotPath, slotTargetingData, extra) {
 		extra = extra || {};

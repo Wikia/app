@@ -17,6 +17,13 @@ describe('ext.wikia.adEngine.slot.service.srcProvider', function () {
 			},
 			instartLogic: {
 				isEnabled: noop
+			},
+			window: {
+				ads: {
+					runtime: {
+						bab: false
+					}
+				}
 			}
 		};
 
@@ -25,6 +32,7 @@ describe('ext.wikia.adEngine.slot.service.srcProvider', function () {
 			mocks.adContext,
 			mocks.adBlockDetection,
 			mocks.adBlockRecovery,
+			mocks.window,
 			mocks.instartLogic
 		);
 	}
@@ -36,15 +44,15 @@ describe('ext.wikia.adEngine.slot.service.srcProvider', function () {
 	}
 
 	it('pass provided src param for non-test wikis', function () {
-		expect(getModule().get('xyz')).toBe('xyz');
-		expect(getModule().get('abc')).toBe('abc');
+		expect(getModule().get('xyz', {})).toBe('xyz');
+		expect(getModule().get('abc', {})).toBe('abc');
 	});
 
 	it('adds test- prefix for test wikis', function () {
 		spyOn(mocks.adContext, 'get').and.returnValue(true);
 
-		expect(getModule().get('xyz')).toBe('test-xyz');
-		expect(getModule().get('abc')).toBe('test-abc');
+		expect(getModule().get('xyz', {})).toBe('test-xyz');
+		expect(getModule().get('abc', {})).toBe('test-abc');
 	});
 
 	it('overrides src for test wiki if it is passed', function () {
@@ -60,7 +68,7 @@ describe('ext.wikia.adEngine.slot.service.srcProvider', function () {
 			'opts.premiumOnly': true
 		});
 
-		expect(getModule().get('xyz')).toBe('premium');
+		expect(getModule().get('xyz', {})).toBe('premium');
 	});
 
 	it('returns test even for premium pages', function () {
@@ -69,7 +77,7 @@ describe('ext.wikia.adEngine.slot.service.srcProvider', function () {
 			'opts.premiumOnly': true
 		});
 
-		expect(getModule().get('xyz')).toBe('test-xyz');
+		expect(getModule().get('xyz', {})).toBe('test-xyz');
 	});
 
 	it('doesn\'t change src to rec if ad is not recoverable', function () {
@@ -81,6 +89,19 @@ describe('ext.wikia.adEngine.slot.service.srcProvider', function () {
 		spyOn(mocks.adBlockRecovery, 'isEnabled').and.returnValue(true);
 
 		expect(getModule().get('asd', extra)).toEqual('asd');
+	});
+
+	it('doesn\'t change src to rec if ad is recoverable but not allowed by BlockAdBlock', function () {
+		var extra = {
+			isPageFairRecoverable: false,
+			isInstartLogicRecoverable: true,
+			isRecoveryBehindBab: true
+		};
+
+		spyOn(mocks.adBlockDetection, 'isBlocking').and.returnValue(true);
+		spyOn(mocks.adBlockRecovery, 'isEnabled').and.returnValue(true);
+
+		expect(getModule().get('asd', extra)).toBe('rec');
 	});
 
 	it('changes src to rec if ad is recoverable', function () {
@@ -129,7 +150,7 @@ describe('ext.wikia.adEngine.slot.service.srcProvider', function () {
 
 	it('doesn\'t set src=premium if article isn\'t premium', function () {
 		mockContext({'opts.premiumOnly': false});
-		expect(getModule().get('abc')).not.toBe('premium');
+		expect(getModule().get('abc', {})).not.toBe('premium');
 	});
 
 	it('doesn\'t set src=rec if recovery service is enabled and ad is recoverable but adblock is off', function () {

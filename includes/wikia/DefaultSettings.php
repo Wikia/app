@@ -1536,6 +1536,12 @@ $wgAdDriverBabDetectionMobileCountries = null;
 $wgAdDriverF2BabDetectionCountries = null;
 
 /**
+ * @name $wgAdDriverBabRecoveryCountries
+ * List of countries to put recovery behind BlockAdBlock detection
+ */
+$wgAdDriverBabRecoveryCountries = null;
+
+/**
  * trusted proxy service registry
  */
 $wgAutoloadClasses[ 'TrustedProxyService'] =  "$IP/includes/wikia/services/TrustedProxyService.class.php" ;

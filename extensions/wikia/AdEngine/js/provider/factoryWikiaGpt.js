@@ -22,6 +22,7 @@ define('ext.wikia.adEngine.provider.factory.wikiaGpt', [
 			sraEnabled: extra.sraEnabled,
 			isInstartLogicRecoverable: extra.isInstartLogicRecoverable ? extra.isInstartLogicRecoverable(slotName) : false,
 			isPageFairRecoverable: extra.isPageFairRecoverable ? extra.isPageFairRecoverable(slotName) : false,
+			isRecoveryBehindBab: extra.isRecoveryBehindBab,
 		};
 	}
 
