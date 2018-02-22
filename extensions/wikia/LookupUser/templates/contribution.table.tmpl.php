@@ -1,6 +1,6 @@
 <script type="text/javascript" charset="utf-8">
 $(document).ready(function() {
-	var baseurl = wgScript + "?action=ajax&rs=LookupContribsAjax::axData&lookupUser=1";
+	var baseurl = mw.util.wikiScript() + "?action=ajax&rs=LookupContribsAjax::axData&lookupUser=1";
 	var username = '<?= Xml::escapeJsString( $username ) ?>';
 
 	if ( !username ) {
@@ -148,7 +148,7 @@ $(document).ready(function() {
 									username: username,
 									id: wikiId,
 								},
-								url: wgScript + "?action=ajax&rs=LookupUserPage::requestApiAboutUser",
+								url: mw.util.wikiScript() + "?action=ajax&rs=LookupUserPage::requestApiAboutUser",
 								success: function(res) {
 									var blockedInfo = $('.user-blocked-placeholder-' + wikiId);
 
