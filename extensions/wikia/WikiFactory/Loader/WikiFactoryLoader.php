@@ -433,9 +433,7 @@ class WikiFactoryLoader {
 		$cond2 = $this->mAlternativeDomainUsed && ( $url['host'] != $this->mOldServerName );
 
 		if( ( $cond1 || $cond2 ) && empty( $wgDevelEnvironment ) ) {
-			$url = rtrim( $this->mCityUrl, '/' );
-
-			$target = $url . '/' . $this->pathParams;
+			$target = rtrim( $this->mCityUrl, '/' ) . '/' . $this->pathParams;
 
 			if ( !empty( $_GET ) ) {
 				$target .= '?' . http_build_query( $_GET );
