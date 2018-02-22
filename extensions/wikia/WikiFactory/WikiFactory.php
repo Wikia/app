@@ -1589,7 +1589,7 @@ class WikiFactory {
 	 */
 	static public function getDomainKey( $domain ) {
 		$domainHash = static::getDomainHash($domain);
-		return "wikifactory:domains:by_domain_hash:{$domainHash}:v2";
+		return "wikifactory:domains:by_domain_hash:{$domainHash}:v3";
 	}
 
 	/**
