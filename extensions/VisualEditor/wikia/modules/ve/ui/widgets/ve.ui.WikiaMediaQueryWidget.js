@@ -253,7 +253,6 @@ ve.ui.WikiaMediaQueryWidget.prototype.onLogInSuccess = function () {
  */
 ve.ui.WikiaMediaQueryWidget.prototype.displayMessages = {
 	mustbeloggedin: ve.msg( 'wikia-visualeditor-notification-media-must-be-logged-in' ),
-	onlyallowpremium: ve.msg( 'wikia-visualeditor-notification-media-only-premium-videos-allowed' ),
 	permissiondenied: ve.msg( 'wikia-visualeditor-notification-media-permission-denied' ),
 	mediaqueryfailed: ve.msg( 'wikia-visualeditor-notification-media-query-failed' )
 };
