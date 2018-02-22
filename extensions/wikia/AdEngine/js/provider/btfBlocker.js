@@ -17,8 +17,8 @@ define('ext.wikia.adEngine.provider.btfBlocker', [
 	win.ads.runtime.disableBtf = false;
 	win.ads.runtime.unblockHighlyViewableSlots = false;
 
-	messageListener.register({dataKey: 'disableBtf'}, function (isDisabled) {
-		win.ads.runtime.disableBtf = Boolean(isDisabled);
+	messageListener.register({dataKey: 'disableBtf', infinite: true}, function (msg) {
+		win.ads.runtime.disableBtf = Boolean(msg.disableBtf);
 	});
 
 	function unblock(slotName) {
