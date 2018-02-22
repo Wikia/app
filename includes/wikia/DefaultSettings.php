@@ -1858,6 +1858,13 @@ $wgDisableImprovedGenderSupport = true;
 $wgAutoapproveJS = false;
 
 /**
+ * @name $wgWikiaBaseDomainRegex
+ * A central regex string for use in domain checking, so we can easily
+ * update/add/change domains in the future
+ */
+$wgWikiaBaseDomainRegex = '(wikia\\.com|wikia-staging\\.com|wikia-dev\\.(com|us|pl))';
+
+/**
  * Enable recovery
  * It should be always included even if recovery is disabled as we use Recovery classes outside the module
  */
