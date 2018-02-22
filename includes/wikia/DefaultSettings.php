@@ -455,7 +455,7 @@ spl_autoload_register( function( $class ) {
 	return false;
 });
 
-// TODO:move this inclusions to CommonExtensions?
+// TODO: move this inclusions to includes/wikia/Extensions.php ?
 require_once( $IP.'/extensions/wikia/ImageTweaks/ImageTweaks.setup.php' );
 require_once( $IP.'/extensions/wikia/Oasis/Oasis_setup.php' );
 
@@ -1030,12 +1030,6 @@ $wgResourceLoaderAssetsSkinMapping = [
  * core mediawiki feature variable
  */
 $wgArticleCountMethod = "any";
-
-/**
- * @name $wgEnableResourceLoaderRewrites
- * enable rewriting of Resource Loader links on nocookie domain
- */
-$wgEnableResourceLoaderRewrites = true;
 
 /**
  * Javascript minifier used by ResourceLoader
