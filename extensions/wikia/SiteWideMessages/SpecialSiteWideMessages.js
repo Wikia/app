@@ -34,7 +34,7 @@
 	function SWMAjaxDismiss( e ) {
 		e.preventDefault();
 		var	id = e.data.id,
-			ajaxUrl = mw.util.wikiScript() + "?title=" + wgPageName + "&action=ajax&rs=SiteWideMessagesAjaxDismiss&rsargs[]=" + id;
+			ajaxUrl = mw.util.wikiScript() + "?title=" + encodeURIComponent(mw.config.get('wgPageName')) + "&action=ajax&rs=SiteWideMessagesAjaxDismiss&rsargs[]=" + id;
 
 		$.get(ajaxUrl,function(){
 			$("#msg_"+id).remove();
