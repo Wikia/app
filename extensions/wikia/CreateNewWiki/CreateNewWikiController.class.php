@@ -266,12 +266,11 @@ class CreateNewWikiController extends WikiaController {
 		}
 
 		//check if description content pass phalanx blocks
-		$description = $params[ 'wDescription' ];
-		if ( !empty( $description ) ) {
+		if ( !empty( $params[ 'wDescription' ] ) ) {
 			$blockedKeyword = '';
-			Hooks::run( 'CheckContent', array( $description, &$blockedKeyword ) );
+			Hooks::run( 'CheckContent', array( $params[ 'wDescription' ], &$blockedKeyword ) );
 			if ( !empty( $blockedKeyword ) ) {
-				$this->setContentBlockedByPhalanxErrorResponse( $description, $blockedKeyword );
+				$this->setContentBlockedByPhalanxErrorResponse( $params[ 'wDescription' ], $blockedKeyword );
 				wfProfileOut( __METHOD__ );
 				return;
 			}
