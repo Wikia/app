@@ -48,7 +48,7 @@ export default {
 			options: {},
 			defaultSizes: [[2, 2]],
 			targeting: {
-				pos: 'BOTTOM_LEADERBOARD, MOBILE_BOTTOM_LEADERBOARD, MOBILE_PREFOOTER',
+				pos: ['BOTTOM_LEADERBOARD', 'MOBILE_BOTTOM_LEADERBOARD', 'MOBILE_PREFOOTER'],
 				loc: 'footer'
 			}
 		},
