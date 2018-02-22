@@ -741,10 +741,6 @@ if (!empty($wgEnableAbuseFilterExtension)) {
 	$wgAbuseFilterAvailableActions = array( 'flag', 'throttle', 'warn', 'disallow', 'blockautopromote', 'block', 'tag', 'rangeblock' );
 }
 
-if (!empty($wgEnableWikiaSearchExt)) {
-	include("$IP/extensions/wikia/Search/WikiaSearch.setup.php");
-}
-
 if (!empty($wgEnableWikiaSpecialVersionExt)) {
 	include("$IP/extensions/wikia/SpecialVersion/WikiaSpecialVersion.setup.php");
 }
@@ -1811,3 +1807,6 @@ include "$IP/extensions/wikia/JWPlayerTag/JWPlayerTag.setup.php";
 include_once("$IP/extensions/wikia/DataWarehouse/DataWarehouseEventProducer.setup.php");
 
 include "$IP/extensions/wikia/HTTPSOptIn/HTTPSOptIn.setup.php";
+
+// Search should be enabled globally, always
+include "$IP/extensions/wikia/Search/WikiaSearch.setup.php";
