@@ -7,9 +7,6 @@
 
 $dir = __DIR__ . '/';
 
-require_once( $IP . '/lib/vendor/Solarium/Autoloader.php' );
-Solarium_Autoloader::register();
-
 /**
  * constants we want for search profiles
  */
@@ -18,23 +15,6 @@ define( 'SEARCH_PROFILE_IMAGES', 'images' );
 define( 'SEARCH_PROFILE_USERS', 'users' );
 define( 'SEARCH_PROFILE_ALL', 'all' );
 define( 'SEARCH_PROFILE_ADVANCED', 'advanced' );
-
-// autoloads values in the search namespace
-spl_autoload_register(
-	function ( $class ) {
-		if ( substr_count( $class, 'Wikia\\Search\\' ) > 0 ) {
-			$class = preg_replace( '/\\\\?Wikia\\\\Search\\\\/', '', $class );
-			$file = __DIR__ . '/classes/' . strtr( $class, '\\', '/' ) . '.php';
-			if ( file_exists( $file ) ) {
-				require_once( $file );
-
-				return true;
-			}
-
-			return false;
-		}
-	}
-);
 
 /**
  * Keeping the traditional controller registry for now

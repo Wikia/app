@@ -32,8 +32,7 @@ class MovieEntitySearchServiceTest extends BaseTest {
 		], $res );
 	}
 
-	public function mock_getLocalEnvURL($arg1, $arg2)
-	{
+	public function mock_getLocalEnvURL( $arg1, $arg2 = null ) {
 		return preg_replace('/https?:\/\/[^\/]+/', 'http://newhost', $arg1, 1);
 	}
 

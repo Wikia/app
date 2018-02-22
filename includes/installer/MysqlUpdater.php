@@ -26,7 +26,6 @@ class MysqlUpdater extends DatabaseUpdater {
 			// 1.3
 			# array( 'addField', 'user',          'user_real_name',   'patch-user-realname.sql' ),
 			array( 'addTable', 'querycache',                        'patch-querycache.sql' ),
-			array( 'addTable', 'objectcache',                       'patch-objectcache.sql' ),
 			array( 'addTable', 'categorylinks',                     'patch-categorylinks.sql' ),
 			array( 'doOldLinksUpdate' ),
 			array( 'doFixAncientImagelinks' ),

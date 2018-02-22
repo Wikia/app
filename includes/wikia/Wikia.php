@@ -1924,4 +1924,9 @@ class Wikia {
 		global $wgWikiaEnvironment;
 		return $wgWikiaEnvironment === WIKIA_ENV_PROD;
 	}
+
+	public static function isDevEnv(): bool {
+		global $wgWikiaEnvironment;
+		return $wgWikiaEnvironment === WIKIA_ENV_DEV;
+	}
 }
