@@ -8,6 +8,8 @@ define('ext.wikia.adEngine.provider.remnantGpt', [
 ], function (adContext, factory, adUnitBuilder, megaAdUnitBuilder, slotTweaker) {
 	'use strict';
 
+	var context = adContext.getContext();
+
 	return factory.createProvider(
 		'ext.wikia.adEngine.provider.remnantGpt',
 		'RemnantGpt',
@@ -28,8 +30,11 @@ define('ext.wikia.adEngine.provider.remnantGpt', [
 			afterSuccess: function (slotName) {
 				slotTweaker.removeDefaultHeight(slotName);
 			},
-			getAdUnitBuilder: function () {
-				return adContext.getContext().opts.enableRemnantNewAdUnit ? megaAdUnitBuilder : adUnitBuilder;
+			megaAdUnitSlots: ['INVISIBLE_SKIN'],
+			getAdUnitBuilder: function (slotName) {
+				var isMegaSlot = this.megaAdUnitSlots.indexOf(slotName) >= 0;
+
+				return (context.opts.megaAdUnitBuilderEnabled || isMegaSlot) ? megaAdUnitBuilder : adUnitBuilder;
 			}
 		}
 	);

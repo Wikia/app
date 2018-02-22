@@ -85,6 +85,7 @@ describe('ext.wikia.adEngine.provider.*', function () {
 					mocks.adContext,
 					getFactory(),
 					mocks.kiloAdUnitBuilder,
+					mocks.megaAdUnitBuilder,
 					mocks.slotTweaker
 				);
 			case 'remnantGpt':
@@ -92,6 +93,7 @@ describe('ext.wikia.adEngine.provider.*', function () {
 					mocks.adContext,
 					getFactory(),
 					mocks.adUnitBuilder,
+					mocks.megaAdUnitBuilder,
 					mocks.slotTweaker
 				);
 			case 'directGptMobile':
