@@ -66,6 +66,7 @@ class WikiaTest extends WikiaBaseTest {
 		$skinTemplate = new SkinTemplate();
 		$quickTemplate = new OasisTemplate();
 
+		$skinTemplate->thisquery = 'foo';
 		$skinTemplate->setContext( $context );
 
 		Wikia::onSkinTemplateOutputPageBeforeExec( $skinTemplate, $quickTemplate );
@@ -74,6 +75,7 @@ class WikiaTest extends WikiaBaseTest {
 			'<meta name="robots" content="noindex,nofollow" />',
 			$context->getOutput()->getHeadLinks()
 		);
+		$this->assertEquals( 'foo', $quickTemplate->get( 'thisquery' ) );
 	}
 
 	public function testOnSkinTemplateOutputPageBeforeExec_setsNoIndexNoFollowBecauseDevbox() {
@@ -86,6 +88,7 @@ class WikiaTest extends WikiaBaseTest {
 		$skinTemplate = new SkinTemplate();
 		$quickTemplate = new OasisTemplate();
 
+		$skinTemplate->thisquery = 'foo';
 		$skinTemplate->setContext( $context );
 
 		Wikia::onSkinTemplateOutputPageBeforeExec( $skinTemplate, $quickTemplate );
@@ -94,6 +97,7 @@ class WikiaTest extends WikiaBaseTest {
 			'<meta name="robots" content="noindex,nofollow" />',
 			$context->getOutput()->getHeadLinks()
 		);
+		$this->assertEquals( 'foo', $quickTemplate->get( 'thisquery' ) );
 	}
 
 	public function testOnSkinTemplateOutputPageBeforeExec_setsNoIndexNoFollowBecauseStaging() {
@@ -106,7 +110,7 @@ class WikiaTest extends WikiaBaseTest {
 		$skinTemplate = new SkinTemplate();
 		$quickTemplate = new OasisTemplate();
 
-		$skinTemplate->thisquery = '';
+		$skinTemplate->thisquery = 'foo';
 		$skinTemplate->setContext( $context );
 
 		Wikia::onSkinTemplateOutputPageBeforeExec( $skinTemplate, $quickTemplate );
@@ -127,7 +131,7 @@ class WikiaTest extends WikiaBaseTest {
 		$skinTemplate = new SkinTemplate();
 		$quickTemplate = new OasisTemplate();
 
-		$skinTemplate->thisquery = '';
+		$skinTemplate->thisquery = 'foo';
 		$skinTemplate->setContext( $context );
 
 		Wikia::onSkinTemplateOutputPageBeforeExec( $skinTemplate, $quickTemplate );
@@ -136,5 +140,6 @@ class WikiaTest extends WikiaBaseTest {
 			'<meta name="robots" content="noindex,nofollow" />',
 			$context->getOutput()->getHeadLinks()
 		);
+		$this->assertEquals( 'foo', $quickTemplate->get( 'thisquery' ) );
 	}
 }

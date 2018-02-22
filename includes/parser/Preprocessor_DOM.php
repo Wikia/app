@@ -1218,7 +1218,7 @@ class PPFrame_DOM implements PPFrame {
 							// will result in green puzzle displayed. Otherwise, wrap template in block or inline template
 							$placeholderTag = $this->getPlaceholderTagName( $ret['text'] );
 							if ( MWTidy::checkErrors($ret['text'], $err) === false ) {
-								$out .= Html::rawElement( $placeholderTag, $attributes, "&#x0200B;");
+								$out .= Html::rawElement( $placeholderTag, $attributes, "&#x0200B;&#x0200B;");
 							} else {
 								if ($placeholderTag === 'span') {
 									// wrap content of inline template with non-width spaces to prevent CKE from modifying

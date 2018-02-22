@@ -6,7 +6,7 @@ use PHPUnit\Framework\TestCase;
 use PHPUnit_Framework_MockObject_MockObject;
 use Wikia\Domain\User\Attribute;
 
-class UserAttributeTest extends TestCase {
+class UserAttributesTest extends TestCase {
 	/** @var int */
 	protected $userId = 1;
 
@@ -81,6 +81,11 @@ class UserAttributeTest extends TestCase {
 	}
 
 	public function testSetAttribute() {
+		$this->service->expects( $this->once() )
+			->method( 'get' )
+			->with( $this->userId )
+			->willReturn( [] );
+
 		$userAttributes = new UserAttributes( $this->service, [] );
 		$userAttributes->setAttribute( $this->userId, new Attribute( 'newAttr', 'foo' ) );
 		$this->assertEquals( 'foo', $userAttributes->getAttribute( $this->userId, 'newAttr' ) );
@@ -89,6 +94,11 @@ class UserAttributeTest extends TestCase {
 	}
 
 	public function testSaveAttribute() {
+		$this->service->expects( $this->once() )
+			->method( 'get' )
+			->with( $this->userId )
+			->willReturn( [] );
+
 		$this->service->expects( $this->once() )
 			->method( 'delete' )
 			->with( $this->userId, $this->defaultAttribute1 );
@@ -126,7 +136,7 @@ class UserAttributeTest extends TestCase {
 		$this->assertNull( $userAttributes->getAttribute( $this->userId, $this->attribute1->getName() ) );
 	}
 
-	public function testDeleteAttrbutesWithNullValue() {
+	public function testDeleteAttributesWithNullValue() {
 		$attrNullValue = new Attribute( "someKey", null );
 		$this->setupServiceGetExpects();
 		$this->service->expects( $this->once() )
