@@ -1,8 +1,7 @@
 <?php
 
-use \Wikia\DependencyInjection\Injector;
+use Wikia\Factory\ServiceFactory;
 use \Wikia\Service\User\Auth\CookieHelper;
-use \Wikia\Service\User\Auth\HeliosCookieHelper;
 
 class ApiService {
 
@@ -90,21 +89,14 @@ class ApiService {
 	private static function getHostByDbName( string $dbName ): string {
 		global $wgDevelEnvironment, $wgDevDomain;
 
-		/**
-		 * wgServer is generated in runtime on devboxes therefore we
-		 * can't use it to get host by db name
-		 */
-		if ( !empty( $wgDevelEnvironment ) ) {
-			$hostName = WikiFactory::DBtoUrl( $dbName );
+		$hostName = WikiFactory::DBtoUrl( $dbName );
 
+		if ( !empty( $wgDevelEnvironment ) ) {
 			if ( strpos( $hostName, 'wikia.com' ) ) {
 				$hostName = str_replace( 'wikia.com', $wgDevDomain, $hostName );
 			} else {
 				$hostName = WikiFactory::getLocalEnvURL( $hostName );
 			}
-		} else {
-			$cityId = WikiFactory::DBtoID( $dbName );
-			$hostName = WikiFactory::getVarValueByName( 'wgServer', $cityId );
 		}
 
 		return rtrim( $hostName, '/' );
@@ -135,9 +127,11 @@ class ApiService {
 			$cookie .= $wgCookiePrefix . $key . '=' . $value . ';';
 		}
 
-		$token = Injector::getInjector()->get( CookieHelper::class )->getAccessToken( $context->getRequest() );
+		$cookieHelper = ServiceFactory::instance()->heliosFactory()->cookieHelper();
+
+		$token = $cookieHelper->getAccessToken( $context->getRequest() );
 		if ( !empty( $token ) ) {
-			$cookie .= HeliosCookieHelper::ACCESS_TOKEN_COOKIE_NAME . '=' . $token . ';';
+			$cookie .= CookieHelper::ACCESS_TOKEN_COOKIE_NAME . '=' . $token . ';';
 		}
 		$options[ 'curlOptions' ] = [ CURLOPT_COOKIE => $cookie ];
 

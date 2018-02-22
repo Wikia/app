@@ -134,12 +134,26 @@ define('ext.wikia.paidAssetDrop.paidAssetDrop', [
 
 		log('Sending request to: ' + url, 'debug', logGroup);
 
-		$.ajax({url: url, dataType: 'json'}).then(function (response) {
+		var padRequest;
+
+		// This file is loaded both in Oasis and mobile-wiki
+		// in mobile-wiki we do not have jquery but we do have a fetch polyfill so it is save to use this
+		// in oasis, we do have $.ajax so we can fallback to it if a browser does not suppor fetch
+		if (win.fetch) {
+			padRequest = win.fetch(url).then(function(data) {return data.json()})
+		} else {
+			padRequest = $.ajax({url: url, dataType: 'json'})
+		}
+
+		padRequest.then(function (response) {
 			var padContent = fetchPadContent(response);
 
 			if (padContent) {
 				log(['Injecting PAD into:', placeHolder], 'info', logGroup);
-				$(placeHolder).prepend(padContent);
+				if ( typeof placeHolder === 'string' ) {
+					placeHolder = document.querySelector(placeHolder);
+				}
+				placeHolder.insertAdjacentHTML('afterbegin', padContent);
 			}
 		});
 	}

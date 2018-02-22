@@ -119,12 +119,6 @@ module.exports = function (config) {
 			'extensions/wikia/CreateNewWiki/js/CreateNewWikiHelper.js',
 			'extensions/wikia/CreateNewWiki/js/spec/*.spec.js',
 
-			/*
-			 * Extension: VideosModule
-			 */
-			'extensions/wikia/VideosModule/scripts/models/videos.js',
-			'extensions/wikia/VideosModule/scripts/spec/**/*.spec.js',
-
 			//Search
 			'extensions/wikia/Search/js/SearchAbTest.js',
 			'extensions/wikia/Search/js/SearchAbTest.*.js',

@@ -1,7 +1,7 @@
 <?php
 
 use Swagger\Client\ExternalAuth\Models\LinkedFacebookAccount;
-use Wikia\DependencyInjection\Injector;
+use Wikia\Factory\ServiceFactory;
 use Wikia\Logger\Loggable;
 use Wikia\Service\User\ExternalAuth\FacebookService;
 use Wikia\Util\Assert;
@@ -15,7 +15,7 @@ class FacebookPreferencesModuleService extends WikiaService {
 	public function __construct() {
 		parent::__construct();
 
-		$this->facebookService = Injector::getInjector()->get( FacebookService::class );
+		$this->facebookService = ServiceFactory::instance()->externalAuthFactory()->facebookService();
 	}
 
 	public function renderFacebookPreferences() {

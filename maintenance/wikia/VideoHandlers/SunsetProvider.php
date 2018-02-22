@@ -43,7 +43,9 @@ class SunsetProvider extends Maintenance {
 	 * @return ResultWrapper
 	 */
 	private function getProviderVideos( string $providerName ): ResultWrapper {
-		$videoEmbeds = $this->getDB( DB_SLAVE )->select(
+		$db = $this->getDB( DB_SLAVE );
+
+		$videoEmbeds = $db->select(
 			'video_info',
 			'video_title',
 			[
@@ -52,6 +54,24 @@ class SunsetProvider extends Maintenance {
 			],
 			__METHOD__
 		);
+
+		// fallback to image table, video_info is out of sync on mediawiki119.wikia.com
+		if ( $db->affectedRows() === 0 ) {
+			$videoEmbeds = $db->select(
+				'image',
+				'img_name AS video_title',
+				[
+					'img_minor_mime' => $providerName,
+					'img_media_type' => 'VIDEO'
+				],
+				__METHOD__
+			);
+
+			if ( $db->affectedRows() > 0 ) {
+				$this->output( sprintf( "Applied fallback to image table for '%s' provider\n",
+					$providerName ) );
+			}
+		}
 
 		return $videoEmbeds;
 	}

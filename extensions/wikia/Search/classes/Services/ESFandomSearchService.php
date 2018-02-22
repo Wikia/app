@@ -2,8 +2,8 @@
 
 namespace Wikia\Search\Services;
 
+use Wikia\Factory\ServiceFactory;
 use Wikia\Logger\WikiaLogger;
-use Wikia\Service\Gateway\KubernetesUrlProvider;
 
 class ESFandomSearchService extends AbstractSearchService {
 
@@ -27,11 +27,8 @@ class ESFandomSearchService extends AbstractSearchService {
 	const MATCHES_URL_KEY = 'url';
 
 
-	protected function getFandomSearchServiceUrl() {
-		global $wgWikiaEnvironment, $wgWikiaDatacenter;
-
-		return ( new KubernetesUrlProvider( $wgWikiaEnvironment, $wgWikiaDatacenter ) )
-			->getUrl( 'fandom-search-service' );
+	protected function getFandomSearchServiceUrl(): string {
+		return ServiceFactory::instance()->providerFactory()->urlProvider()->getUrl( 'fandom-search-service' );
 	}
 
 	protected function prepareQuery( string $query ) {

@@ -25,19 +25,36 @@ define('ext.wikia.adEngine.ml.rabbit', [
 		outstreamLr
 	];
 
-	function getSerializedResults() {
+	function getModelNames() {
+		return models.map(function (model) {
+			if (model) {
+				return model.getName();
+			}
+		});
+	}
+
+	function getResults(allowedModels) {
 		var results = [];
+		
+		allowedModels = allowedModels || [];
 
 		models.forEach(function (model) {
-			if (model && model.isEnabled()) {
+			if (model && model.isEnabled() && allowedModels.indexOf(model.getName()) !== -1) {
 				results.push(model.getResult());
 			}
 		});
 
-		return results.join(';');
+		return results;
+	}
+
+	function getAllSerializedResults() {
+		var allowedModels = getModelNames();
+
+		return getResults(allowedModels).join(';');
 	}
 
 	return {
-		getSerializedResults: getSerializedResults
+		getResults: getResults,
+		getAllSerializedResults: getAllSerializedResults
 	};
 });

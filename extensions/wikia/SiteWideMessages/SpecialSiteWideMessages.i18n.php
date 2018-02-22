@@ -2197,6 +2197,8 @@ $messages['lol'] = array(
 	'swm-label-mode-wikis-created-hint' => 'crwdns65647:0crwdne65647:0',
 	'swm-error-created-tobeforefrom' => 'crwdns65648:0crwdne65648:0',
 	'right-messagetool' => 'crwdns65649:0crwdne65649:0',
+	'swm-label-mode-users-poweruser' => 'crwdns65578:0crwdne65578:0',
+	'swm-label-mode-users-poweruser-hint' => 'crwdns65579:0crwdne65579:0',
 );
 
 $messages['lrc'] = array(
