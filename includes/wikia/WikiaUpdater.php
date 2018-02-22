@@ -51,7 +51,6 @@ class WikiaUpdater {
 			array( 'dropIndex', 'wall_related_pages', 'page_id_idx_2',  $dir . 'patch-wall_related_pages-drop-page_id_idx_2.sql', true ), // SUS-3096
 
 			# functions
-			array( 'WikiaUpdater::do_page_vote_unique_update' ),
 			array( 'WikiaUpdater::do_page_wikia_props_update' ),
 			array( 'WikiaUpdater::do_drop_table', 'imagetags' ),
 			array( 'WikiaUpdater::do_drop_table', 'send_queue' ),
@@ -81,7 +80,10 @@ class WikiaUpdater {
 			array( 'WikiaUpdater::do_drop_table', 'tag_summary' ), // SUS-3066
 			array( 'WikiaUpdater::do_drop_table', 'sitemap_blobs' ), // SUS-3589
 			array( 'WikiaUpdater::do_clean_video_info_table' ), // SUS-3862
+			array( 'WikiaUpdater::removeUnusedGroups' ), // SUS-4169
 			array( 'WikiaUpdater::do_drop_table', 'objectcache' ), // SUS-4171
+			array( 'WikiaUpdater::doPageVoteCleanup' ), // SUS-3390 / SUS-4252
+			array( 'addIndex', 'page_vote', 'article_user_idx', $dir. 'patch-index-page_vote.sql', true ), // SUS-3390
 		);
 
 		if ( $wgDBname === $wgExternalSharedDB ) {
@@ -111,19 +113,6 @@ class WikiaUpdater {
 		if ( $db->tableExists( $table ) ) {
 			$updater->output( "...dropping $table table... " );
 			$db->dropTable( $table, __METHOD__ );
-			$updater->output( "ok\n" );
-		}
-	}
-
-	public static function do_page_vote_unique_update( DatabaseUpdater $updater ) {
-		$db = $updater->getDB();
-		$dir = self::get_patch_dir();
-		$updater->output( "Checking wikia page_vote table...\n" );
-		if( $updater->getDB()->indexExists( 'page_vote', 'unique_vote' ) ) {
-			$updater->output( "...page_vote unique key already set.\n" );
-		} else {
-			$updater->output( "Making page_vote unique key... " );
-			$db->sourceFile( $dir . 'patch-page_vote_unique_vote.sql' );
 			$updater->output( "ok\n" );
 		}
 	}
@@ -283,6 +272,68 @@ class WikiaUpdater {
 		wfWaitForSlaves();
 	}
 
+	/**
+	 * Removes the following entries from per-wiki "page_vote" table:
+	 *  - those for anons (user_id = 0) // see SUS-2754 for more details
+	 *  - those that refer to non-forum pages (page_ns <> 2001)
+	 *  - those that refer to no longer existing pages (join with "page" table)
+	 *
+	 * @param DatabaseUpdater $databaseUpdater
+	 */
+	public static function doPageVoteCleanup( DatabaseUpdater $databaseUpdater ) {
+		$dbw = $databaseUpdater->getDB();
+
+		// SUS-2754
+		$databaseUpdater->output( 'Removing page_vote rows for anons... ' );
+		$dbw->delete( 'page_vote', [ 'user_id' => 0 ], __METHOD__ );
+		$affectedRows = $dbw->affectedRows();
+
+		$databaseUpdater->output( "done - {$affectedRows} rows affected\n" );
+
+		// so that GROUP_CONCAT below will return all values
+		$dbw->query('SET SESSION group_concat_max_len = 100000', __METHOD__);
+
+		// SUS-3390
+		$databaseUpdater->output( 'Removing page_vote rows for non-forum pages... ' );
+
+		$ids = $dbw->selectField(
+			['page_vote', 'page'],
+			'GROUP_CONCAT(DISTINCT(page_id))',
+			[
+				'page.page_id = article_id',
+				'page_namespace <> 2001'
+			],
+			__METHOD__
+		);
+
+		$dbw->delete( 'page_vote', [ 'article_id' => explode( ',', $ids ) ], __METHOD__ );
+		$affectedRows = $dbw->affectedRows();
+
+		$databaseUpdater->output( "done - {$affectedRows} rows affected\n" );
+
+		// SUS-4252
+		$databaseUpdater->output( 'Removing page_vote rows for no longer existing pages... ' );
+
+		$row = $dbw->selectRow(
+			['page_vote', 'page'],
+			'GROUP_CONCAT(DISTINCT(article_id)) AS ids',
+			[
+				'page_namespace is null'
+			],
+			__METHOD__,
+			[],
+			[
+				'page' => [ 'LEFT JOIN', 'page.page_id = page_vote.article_id' ]
+			]
+		);
+
+		$dbw->delete( 'page_vote', [ 'article_id' => explode( ',', $row->ids ) ], __METHOD__ );
+		$affectedRows = $dbw->affectedRows();
+
+		$databaseUpdater->output( "done - {$affectedRows} rows affected\n" );
+		wfWaitForSlaves();
+	}
+
 	public static function migrateRecentChangesIpData( DatabaseUpdater $databaseUpdater ) {
 		$databaseConnection = $databaseUpdater->getDB();
 
@@ -318,6 +369,20 @@ class WikiaUpdater {
 		$databaseUpdater->output( "done.\n" );
 		
 		wfWaitForSlaves();
+	}
+
+	public static function removeUnusedGroups( DatabaseUpdater $databaseUpdater ) {
+		global $IP;
+
+		$databaseUpdater->output( "Cleaning up after unused user groups...\n" );
+
+		// this will instantiate and run the script in the context of the current update process
+		$worker = $databaseUpdater->maintenance->runChild(
+			'RemoveUnusedGroups',
+			"$IP/maintenance/wikia/removeUnusedGroups.php"
+		);
+
+		$worker->execute();
 	}
 
 	/**

@@ -92,7 +92,7 @@ $wgExtensionMessagesFiles['AchievementsIIAliases'] = $dir.'AchievementsII.alias.
 // BugId:10474
 // I want the code of the extension to be included regardless of the $wgEnableAchievementsExt.
 // The effective execution still depends on $wgEnableAchievementsExt's value.
-// Also: grep CommonExtensions.php for BugId:10474
+// Also: grep includes/wikia/Extensions.php for BugId:10474
 if( !empty( $wgEnableAchievementsExt ) ) {
     // SETUP
     $wgExtensionFunctions[] = 'Ach_Setup';

@@ -455,7 +455,7 @@ spl_autoload_register( function( $class ) {
 	return false;
 });
 
-// TODO:move this inclusions to CommonExtensions?
+// TODO: move this inclusions to includes/wikia/Extensions.php ?
 require_once( $IP.'/extensions/wikia/ImageTweaks/ImageTweaks.setup.php' );
 require_once( $IP.'/extensions/wikia/Oasis/Oasis_setup.php' );
 
@@ -1029,12 +1029,6 @@ $wgResourceLoaderAssetsSkinMapping = [
  * core mediawiki feature variable
  */
 $wgArticleCountMethod = "any";
-
-/**
- * @name $wgEnableResourceLoaderRewrites
- * enable rewriting of Resource Loader links on nocookie domain
- */
-$wgEnableResourceLoaderRewrites = true;
 
 /**
  * Javascript minifier used by ResourceLoader
@@ -1844,19 +1838,6 @@ $wgEnableHostnameInHtmlTitle = true;
 include_once("$IP/includes/wikia/parser/templatetypes/TemplateTypes.setup.php");
 
 /**
- * @name $wgEnableReviveSpotlights
- * Enables Revive Spotlights
- */
-$wgEnableReviveSpotlights = true;
-
-/**
- * @name $wgReviveSpotlightsCountries
- * Enables Revive Spotlights in these countries (given wgEnableReviveSpotlights is also true).
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgReviveSpotlightsCountries = null;
-
-/**
  * @name $wgDisableImprovedGenderSupport
  *
  * Allow to disable "improved" gender support included in MW 1.18
@@ -1876,31 +1857,38 @@ $wgDisableImprovedGenderSupport = true;
 $wgAutoapproveJS = false;
 
 /**
+ * @name $wgWikiaBaseDomainRegex
+ * A central regex string for use in domain checking, so we can easily
+ * update/add/change domains in the future
+ */
+$wgWikiaBaseDomainRegex = '(wikia\\.com|wikia-staging\\.com|wikia-dev\\.(com|us|pl))';
+
+/**
  * Enable recovery
  * It should be always included even if recovery is disabled as we use Recovery classes outside the module
  */
 include_once("$IP/extensions/wikia/ARecoveryEngine/ARecoveryEngine.setup.php");
 
-require_once "$IP/extensions/wikia/ImageReview/ImageReviewEvents.setup.php";
+include_once "$IP/extensions/wikia/ImageReview/ImageReviewEvents.setup.php";
 
 // SUS-2164: Include Facebook extensions - enabled globally
-require_once "$IP/extensions/wikia/FacebookPreferences/FacebookPreferences.setup.php";
-require_once "$IP/extensions/wikia/FacebookTags/FacebookTags.setup.php";
+include_once "$IP/extensions/wikia/FacebookPreferences/FacebookPreferences.setup.php";
+include_once "$IP/extensions/wikia/FacebookTags/FacebookTags.setup.php";
 
 // SUS-2956: Include MultiLookup extension
-require_once "$IP/extensions/wikia/SpecialMultipleLookup/SpecialMultipleLookup.php";
+include_once "$IP/extensions/wikia/SpecialMultipleLookup/SpecialMultipleLookup.php";
 
 // SUS-3475: Extension to update shared city_list table
-require_once "$IP/extensions/wikia/CityList/CityList.setup.php";
+include_once "$IP/extensions/wikia/CityList/CityList.setup.php";
 
 // SUS-3496: Extension to update shared dataware.pages table
-require_once "$IP/extensions/wikia/Pages/Pages.setup.php";
+include_once "$IP/extensions/wikia/Pages/Pages.setup.php";
 
 // SUS-3455: Special:ListGlobalUsers for all wikis
-require_once "$IP/extensions/wikia/ListGlobalUsers/ListGlobalUsers.setup.php";
+include_once "$IP/extensions/wikia/ListGlobalUsers/ListGlobalUsers.setup.php";
 
 // SEC-59: Form-based Userlogout for Monobook
-require_once "$IP/extensions/wikia/UserLogout/UserLogout.setup.php";
+include_once "$IP/extensions/wikia/UserLogout/UserLogout.setup.php";
 
 // SRE-76: Logging classes that have been initially defined in config.
 $wgAutoloadClasses['AuditLog'] = "$IP/includes/wikia/AuditLog.class.php";
