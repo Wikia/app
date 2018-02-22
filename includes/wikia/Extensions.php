@@ -672,7 +672,6 @@ if (!empty($wgEnableAnswers)) {
 	# disable AutoPageCreate extension (RT #48292)
 	$wgWikiaEnableAutoPageCreateExt = false;
 
-	$wgEnableWikiAnswers = true;
 	include( "$IP/extensions/wikia/WikiAnswers/WikiAnswers.php" );
 
 	// macbre: RelatedPages queries on answers wikis are killing the database
