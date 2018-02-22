@@ -36,6 +36,23 @@ export default {
 		}
 	},
 	mercury: {
+		'BOTTOM_LEADERBOARD': {
+			disabled: false,
+			slotName: 'BOTTOM_LEADERBOARD',
+			sizes: [
+				{
+					viewportSize: [0, 0],
+					sizes: [[320, 50], [300, 250], [300, 50]]
+				}
+			],
+			options: {},
+			defaultSizes: [[2, 2]],
+			targeting: {
+				pos: 'BOTTOM_LEADERBOARD, MOBILE_BOTTOM_LEADERBOARD, MOBILE_PREFOOTER',
+				loc: 'footer'
+			}
+		},
+		// TODO ADEN-6719 cleanup MBLB leftovers
 		'MOBILE_BOTTOM_LEADERBOARD': {
 			disabled: true,
 			slotName: 'MOBILE_BOTTOM_LEADERBOARD',
