@@ -1188,13 +1188,12 @@ class WikiFactory {
 	 * @throws \Exception
 	 */
 	static public function getLocalEnvURL( $url, $forcedEnv = null ) {
-		global $wgWikiaEnvironment, $wgWikiaBaseDomain, $wgDevDomain;
+		global $wgWikiaEnvironment, $wgWikiaBaseDomain, $wgDevDomain, $wgWikiaBaseDomainRegex;
 
 		// first - normalize URL
 		$regexp = '/^(https?:)?\/\/([^\/]+)\/?(.*)?$/';
-		$wikiaDomainsRegexp = '/(wikia\.com|wikia-staging\.com|wikia-dev\.(com|us|pl))$/';
 		if ( preg_match( $regexp, $url, $groups ) === 0 ||
-		     preg_match( $wikiaDomainsRegexp, $groups[2] ) === 0 ||
+		     preg_match( '/' . $wgWikiaBaseDomainRegex . '$/', $groups[2] ) === 0 ||
 		     $groups[2] === 'fandom.wikia.com'
 		) {
 			// on fail at least return original url
@@ -2765,7 +2764,7 @@ class WikiFactory {
 		}
 
 		/**
-		 * it is called in CommonExtensions.php and wgMemc is not initialized there
+		 * it is called in includes/wikia/Extensions.php and wgMemc is not initialized there
 		 */
 		global $wgWikiFactoryCacheType;
 		$oMemc = wfGetCache( $wgWikiFactoryCacheType );

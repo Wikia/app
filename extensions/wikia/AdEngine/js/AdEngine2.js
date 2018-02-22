@@ -184,12 +184,6 @@ define('ext.wikia.adEngine.adEngine', [
 				slot.isViewed = true;
 			});
 
-			if (slotTweaker.isTopLeaderboard(slotName)) {
-				slot.pre('collapse', function () {
-					slotTweaker.hide('TOP_BUTTON_WIDE');
-				});
-			}
-
 			slotRegistry.add(slot, provider.name);
 			initializeProviderOnce(provider);
 

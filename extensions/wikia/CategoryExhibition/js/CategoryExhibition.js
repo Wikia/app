@@ -60,7 +60,7 @@ var CategoryExhibition = {
 			display: UrlVars['display']
 		};
 
-		$.get(wgScript, data, function(axData){
+		$.get(mw.config.get('wgScriptPath') + mw.config.get('wgScript'), data, function(axData){
 			var goBack = clickedObj.attr('data-back');
 			var room1 = pageSection.find('div.category-gallery-room1');
 			var room2 = pageSection.find('div.category-gallery-room2');
@@ -93,4 +93,4 @@ var CategoryExhibition = {
 };
 
 //on content ready
-wgAfterContentAndJS.push(CategoryExhibition.init);
+mw.hook('wikipage.content').add(CategoryExhibition.init);

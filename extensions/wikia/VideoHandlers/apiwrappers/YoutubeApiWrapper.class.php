@@ -28,9 +28,7 @@ class YoutubeApiWrapper extends ApiWrapper {
 			$id = $aData['v'];
 		}
 
-		if ( empty( $id ) ) {
-			$parsedUrl = parse_url( $url );
-
+		if ( empty( $id ) && isset( $parsedUrl['path'] ) ) {
 			$aExploded = explode( '/', $parsedUrl['path'] );
 			$id = array_pop( $aExploded );
 		}
