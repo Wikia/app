@@ -1942,6 +1942,11 @@ Der Originalbeitrag und deine Zusammenfassung werden weiterhin in der Versionsge
 	'wall-posting-message-failed-filter-body' => 'Dieser Beitrag konnte nicht gespeichert werden, da er unangemessene Inhalte enthält. Bitte formuliere ihn neu.',
 	'wall-message-not-found' => 'Diese Nachricht konnte nicht gefunden werden. Wenn dieser Fehler angezeigt wird, kontaktiere bitte FANDOM per [[Spezial:Kontakt]], und gib so viele Details wie möglich dazu an, wie der Fehler reproduziert werden kann. Vielen Dank!',
 	'wall-deleted-msg-pagetitle' => 'Nachricht gelöscht',
+	'wall-history-who-involved-thread-title' => 'Wer beteiligt sich an dieser Diskussion?',
+	'wall-history-rail-wall' => 'Nachrichten',
+	'wall-history-who-involved-wall-title' => 'Wer beteiligt sich an dieser Nachrichtenseite?',
+	'wall-history-rail-contribs' => 'Beiträge',
+	'wall-history-rail-block' => 'sperren',
 );
 
 $messages['diq'] = array(
@@ -2338,6 +2343,11 @@ El mensaje original y tu resumen seguirán apareciendo en el historial del wiki.
 	'wall-posting-message-failed-filter-body' => 'Esta edición no pudo ser guardada ya que tiene contenido inapropiado. Por favor, cambiar de contenido.',
 	'wall-message-not-found' => 'Este mensaje no pudo ser encontrado. Si ves este error, por favor, contacta con FANDOM a través de [[Special:Contact|Especial:Contactar]] y aporta todos los detalles que puedas dar sobre cómo puede reproducirse este error. ¡Gracias!',
 	'wall-deleted-msg-pagetitle' => 'Mensaje borrado',
+	'wall-history-who-involved-thread-title' => '¿Quiénes participaron de este hilo?',
+	'wall-history-rail-wall' => 'muro',
+	'wall-history-who-involved-wall-title' => '¿Quiénes participaron?',
+	'wall-history-rail-contribs' => 'contribuciones',
+	'wall-history-rail-block' => 'bloquear',
 );
 
 $messages['eu'] = array(
@@ -2934,6 +2944,11 @@ Le message original et votre résumé seront toujours visibles dans l’historiq
 	'wall-posting-message-failed-filter-body' => "Cette modification n'a pas pu être enregistrée car elle inclut du contenu inapproprié. Veuillez reformuler.",
 	'wall-message-not-found' => 'Impossible de trouver ce message. Si vous voyez cette erreur, veuillez contacter FANDOM via [[Special:Contact]] et fournir autant de détails que possible sur la façon de reproduire ce bug. Merci !',
 	'wall-deleted-msg-pagetitle' => 'Message supprimé',
+	'wall-history-who-involved-thread-title' => 'Qui a participé à ce fil ?',
+	'wall-history-rail-wall' => 'mur',
+	'wall-history-who-involved-wall-title' => 'Qui a participé ?',
+	'wall-history-rail-contribs' => 'contributions',
+	'wall-history-rail-block' => 'bloquer',
 );
 
 $messages['fy'] = array(
@@ -3199,7 +3214,6 @@ $messages['he'] = array(
 );
 
 $messages['hi'] = array(
-
 );
 
 $messages['hu'] = array(
@@ -4169,6 +4183,11 @@ Il messaggio originale e la tua motivazione continueranno ad apparire nella cron
 	'wall-posting-message-failed-filter-body' => 'Non è possibile salvare questa modifica, in quanto contiene contenuti inappropriati. Si prega di riformulare.',
 	'wall-message-not-found' => 'Impossibile trovare questo messaggio. Se si visualizza questo errore, contattare FANDOM a [[Special:Contact]] e fornire quanti più dettagli possibile su come è possibile riprodurre questo bug. Grazie!',
 	'wall-deleted-msg-pagetitle' => 'Messaggio cancellato',
+	'wall-history-who-involved-thread-title' => 'Chi ha partecipato a questa discussione?',
+	'wall-history-rail-wall' => 'bacheca',
+	'wall-history-who-involved-wall-title' => 'Chi ha partecipato?',
+	'wall-history-rail-contribs' => 'contributi',
+	'wall-history-rail-block' => 'blocca',
 );
 
 $messages['ja'] = array(
@@ -4431,6 +4450,11 @@ $messages['ja'] = array(
 	'wall-posting-message-failed-filter-body' => '不適切なコンテンツが含まれているため、この編集を保存できませんでした。内容を言い換えた上、再度お試しください',
 	'wall-message-not-found' => 'このメッセージは見つかりませんでした。お手数ですが、どのようにしてこのバグが発生したか、[[特別:お問い合わせ]]より詳細をご連絡いただきますようお願いします。',
 	'wall-deleted-msg-pagetitle' => 'メッセージが削除されました',
+	'wall-history-who-involved-thread-title' => 'このスレッドに投稿した利用者',
+	'wall-history-rail-wall' => 'ウォール',
+	'wall-history-who-involved-wall-title' => 'このウォールに投稿した利用者',
+	'wall-history-rail-contribs' => '投稿記録',
+	'wall-history-rail-block' => 'ブロック',
 );
 
 $messages['ka'] = array(
@@ -5063,6 +5087,11 @@ $messages['lol'] = array(
 	'right-notifyeveryone' => 'crwdns57579:0crwdne57579:0',
 	'right-editwallarchivedpages' => 'crwdns57580:0crwdne57580:0',
 	'wall-deleted-msg-pagetitle' => 'crwdns26692:0crwdne26692:0',
+	'wall-history-who-involved-thread-title' => 'crwdns26729:0crwdne26729:0',
+	'wall-history-rail-wall' => 'crwdns26737:0crwdne26737:0',
+	'wall-history-who-involved-wall-title' => 'crwdns26728:0crwdne26728:0',
+	'wall-history-rail-contribs' => 'crwdns26738:0crwdne26738:0',
+	'wall-history-rail-block' => 'crwdns26739:0crwdne26739:0',
 );
 
 $messages['lrc'] = array(
@@ -6396,6 +6425,11 @@ Oryginał wiadomości i twój komentarz wciąż pozostaną w historii wiki.',
 	'wall-posting-message-failed-filter-body' => 'Twoja edycja nie mogła zostać zapisana, ponieważ zawiera nieodpowiednie treści. Spróbuj inaczej sformułować zdanie.',
 	'wall-message-not-found' => 'Nie odnaleziono wiadomości. Jeżeli widzisz ten błąd, powiadom nas przez [[{{#special:Contact}}]], podając dokładne informacje na temat okoliczności jego wystąpienia, abyśmy mogli spróbować go odtworzyć. Dziękujemy!',
 	'wall-deleted-msg-pagetitle' => 'Wiadomość została skasowana',
+	'wall-history-who-involved-thread-title' => 'Kto edytował ten wątek?',
+	'wall-history-rail-wall' => 'tablica',
+	'wall-history-who-involved-wall-title' => 'Kto edytował?',
+	'wall-history-rail-contribs' => 'edycje',
+	'wall-history-rail-block' => 'zablokuj',
 );
 
 $messages['ps'] = array(
@@ -6714,6 +6748,11 @@ O post original e seu sumário ainda aparecerão no histórico da wiki.',
 	'wall-posting-message-failed-filter-body' => 'Esta edição não pôde ser salva porque contém conteúdo impróprio. Por favor, reformule.',
 	'wall-message-not-found' => 'This message could not be found. If you see this error, please contact FANDOM at [[Special:Contact]] and provide as much detail as possible about how this bug can be reproduced. Thank you!',
 	'wall-deleted-msg-pagetitle' => 'Mensagem excluída',
+	'wall-history-who-involved-thread-title' => 'Quem está envolvido neste tópico?',
+	'wall-history-rail-wall' => 'mural',
+	'wall-history-who-involved-wall-title' => 'Quem está envolvido?',
+	'wall-history-rail-contribs' => 'contribs',
+	'wall-history-rail-block' => 'bloquear',
 );
 
 $messages['qu'] = array(
@@ -7019,6 +7058,11 @@ $messages['ru'] = array(
 	'wall-posting-message-failed-filter-body' => 'Невозможно сохранить правку из-за её неприемлемого содержания. Пожалуйста, перепишите сообщение.',
 	'wall-message-not-found' => 'Это сообщение не найдено. Если вы видите это сообщение об ошибке, свяжитесь с сотрудниками Фэндома через [[Служебная:Contact|форму обратной связи]] и сообщите подробности, чтобы мы могли решить проблему.',
 	'wall-deleted-msg-pagetitle' => 'Сообщение удалено',
+	'wall-history-who-involved-thread-title' => 'Участники этой темы',
+	'wall-history-rail-wall' => 'стена обсуждения',
+	'wall-history-who-involved-wall-title' => 'Участники этого обсуждения',
+	'wall-history-rail-contribs' => 'вклад',
+	'wall-history-rail-block' => 'заблокировать',
 );
 
 $messages['sco'] = array(
@@ -7520,7 +7564,6 @@ $messages['ta'] = array(
 );
 
 $messages['te'] = array(
-
 );
 
 $messages['tl'] = array(
@@ -8667,6 +8710,11 @@ $messages['zh-hans'] = array(
 	'wall-posting-message-failed-filter-body' => '无法保存此编辑，因为它包含不恰当的内容。请重新撰写。',
 	'wall-message-not-found' => '找不到此信息。如果您看到此错误，请在[[Special:Contact]]联系Fandom并尽可能提供如何重现此问题的信息。谢谢您！',
 	'wall-deleted-msg-pagetitle' => '信息已删除',
+	'wall-history-who-involved-thread-title' => '谁参与了此话题？',
+	'wall-history-rail-wall' => '信息墙',
+	'wall-history-who-involved-wall-title' => '涉及谁？',
+	'wall-history-rail-contribs' => '贡献',
+	'wall-history-rail-block' => '封禁',
 );
 
 $messages['zh-hant'] = array(
@@ -8929,5 +8977,10 @@ $messages['zh-hant'] = array(
 	'wall-posting-message-failed-filter-body' => '無法保存此編輯，因為它包含不恰當的內容。請重新表述。',
 	'wall-message-not-found' => '找不到此訊息。如果您看到此錯誤，請用[[special:Contact]]聯絡Fandom，並儘量提供關於這個問題發生的詳細訊息。謝謝！',
 	'wall-deleted-msg-pagetitle' => '訊息已刪除',
+	'wall-history-who-involved-thread-title' => '誰參與這個話題？',
+	'wall-history-rail-wall' => '訊息牆',
+	'wall-history-who-involved-wall-title' => '有誰參與？',
+	'wall-history-rail-contribs' => '貢獻',
+	'wall-history-rail-block' => '封禁',
 );
 

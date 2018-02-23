@@ -3430,7 +3430,7 @@ $messages['pt'] = array(
 <li>um nome de usuário que tenta representar outro usuário do FANDOM</li> <li>um nome de usuário que contém caracteres não-alfabéticos, por exemplo, naipes de cartas ou símbolos de marcas registradas</li>
 <li>um nome de usuário que começa com letra minúscula</li>
 </ul>
-<br />Uma vez que tenha enviado o formulário abaixo, sua conta será renomeada. Você pode então entrar no FANDOM usando seu nome de usuário novo. A senha permanecerá a mesma. Você pode ler mais sobre renomeação de contas [[Help:Renomeie minha conta|aqui]].',
+<br />Uma vez que tenha enviado o formulário abaixo, sua conta será renomeada. Você pode então entrar no FANDOM usando seu nome de usuário novo. A senha permanecerá a mesma. Você pode ler mais sobre renomeação de contas [[w:c:Help:Renomeie minha conta|aqui]].',
 	'userrenametool-desc' => "Adiciona uma [[Special:Renameuser|página especial]] para renomear um usuário (requer privilégio ''renameuser'')",
 	'userrenametool-old' => 'Nome de usuário atual:',
 	'userrenametool-new' => 'Novo nome de usuário:',
@@ -3499,7 +3499,7 @@ Quando este terminar, receberá uma notificação por e-mail.',
 	'userrenametool-warnings-maxlength' => 'Comprimento do novo nome de usuário não pode exceder 255 caracteres!',
 	'userrenametool-warning-phalanx-block' => 'Phrase "$1" is globally blocked by Phalanx. $2.',
 	'userrenametool-see-list-of-blocks' => 'Veja a lista de bloqueios aqui',
-	'userrenametool-error-alreadyrenamed' => 'Esta conta já foi renomeada. Como nossa [[Help:Renomeie minha conta | página de ajuda para renomear conta]] afirma, o FANDOM não permite que contas sejam renomeadas mais uma vez; isso significa que você não pode renomear sua conta novamente.',
+	'userrenametool-error-alreadyrenamed' => 'Esta conta já foi renomeada. Como nossa [[w:c:Help:Renomeie minha conta | página de ajuda para renomear conta]] afirma, o FANDOM não permite que contas sejam renomeadas mais uma vez; isso significa que você não pode renomear sua conta novamente.',
 	'userrenametool-error-non-alphanumeric' => 'Este nome de usuário contém caracteres não-alfanuméricos.',
 	'userrenametool-errors' => 'Erros:',
 	'userrenametool-error-email-not-confirmed' => 'Por favor, confirme o seu e-mail.',
@@ -4614,7 +4614,7 @@ $messages['zh-hans'] = array(
 <li>用户名包含非字母格式，比如特殊符号或者版权标志等</li>
 <li>用户名首字母非大写</li>
 </ul>
-<br />一旦提交这个表格，您将完成重命名申请。您之后就可以在FANDOM上使用新的用户名。密码将保持不变。您可以单击这里了解更多有关[[Help:Rename my account|重命名帮助讯息]]。',
+<br />一旦提交这个表格，您将完成重命名申请。您之后就可以在FANDOM上使用新的用户名。密码将保持不变。您可以单击这里了解更多有关[[w:c:Help:Rename my account|重命名帮助讯息]]。',
 	'userrenametool-desc' => '添加一个[[Special:UserRenameTool|特殊页面]]以重命名用户（需要“renameuser”权限）并处理所有相关的数据',
 	'userrenametool-old' => '当前用户名:',
 	'userrenametool-new' => '新用户名:',
@@ -4692,7 +4692,7 @@ $messages['zh-hans'] = array(
 	'userrenametool-error-token-not-exists' => '用户的编辑令牌不存在。',
 	'userrenametool-current-password' => '当前密码:',
 	'userrenametool-error-consequences' => '您必须了解更改用户名所产生的后果。请选中复选框。',
-	'userrenametool-error-alreadyrenamed' => '这个帐户之前已经重命名过。正如我们[[Help:Rename my account|重命名帮助页]]所述，FANDOM只允许用户对帐户重命名一次，之后您将无法再次对帐户重新命名。',
+	'userrenametool-error-alreadyrenamed' => '这个帐户之前已经重命名过。正如我们[[w:c:Help:Rename my account|重命名帮助页]]所述，FANDOM只允许用户对帐户重命名一次，之后您将无法再次对帐户重新命名。',
 	'userrenametool-error-password-not-match' => '密码输入错误。您必须提供当前使用的密码。',
 	'userrenametool-understand-consequences' => '我同意上面所描述的关于重命名所产生的后果',
 	'userrenametool-error-too-long' => '此用户名超过50个字符。',
@@ -4776,7 +4776,7 @@ $messages['zh-hant'] = array(
 <li>用戶名包含非字母格式，比如撲克牌符號或者商標等</li>
 <li>用戶名首字母非大寫</li>
 </ul>
-<br />一旦提交這個表單，您將完成此次重命名請求。您之後就可以在FANDOM上使用新的用戶名。密碼將保持不變。您可以按[[Help:Rename my account|這裡]]獲得更多相關資訊。',
+<br />一旦提交這個表單，您將完成此次重命名請求。您之後就可以在FANDOM上使用新的用戶名。密碼將保持不變。您可以按[[w:c:Help:Rename my account|這裡]]獲得更多相關資訊。',
 	'userrenametool-phalanx-matches' => 'Phalanx 過濾器符合 $1:',
 	'userrenametool-warning-phalanx-block' => '"$1" 這個詞由Phalanx全域封禁。 $2.',
 	'userrenametool-error-non-alphanumeric' => '此用戶名包含了非英文字母或數位字元。',
@@ -4789,7 +4789,7 @@ $messages['zh-hant'] = array(
 	'userrenametool-error-token-not-exists' => '用戶的編輯令牌不存在。',
 	'userrenametool-current-password' => '當前密碼：',
 	'userrenametool-error-consequences' => '您必須清楚更改用 戶名所產生的後果。請點擊方框。',
-	'userrenametool-error-alreadyrenamed' => '這個帳戶之前已經重新命名過。正如我們的[[Help:Rename my account|重命名幫助頁]]所述，FANDOM只允許用戶對帳戶重命名一次，之後您將無法再次重新命名帳戶。',
+	'userrenametool-error-alreadyrenamed' => '這個帳戶之前已經重新命名過。正如我們的[[w:c:Help:Rename my account|重命名幫助頁]]所述，FANDOM只允許用戶對帳戶重命名一次，之後您將無法再次重新命名帳戶。',
 	'userrenametool-error-password-not-match' => '密碼錯誤。您必須提供當前使用的密碼。',
 	'userrenametool-understand-consequences' => '我理解上述關於重命名的後果',
 	'userrenametool-error-too-long' => '此用戶名超過了50個字元。',
