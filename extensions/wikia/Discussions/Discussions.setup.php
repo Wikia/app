@@ -36,7 +36,7 @@ if ( !empty( $wgEnableDiscussions ) && empty( $wgEnableForumExt ) ) {
 
 	// IRIS-5184: Exclude outgoing links in Forum content from Special:WhatLinksHere and Special:WantedPages
 	$wgHooks['SpecialWhatLinksHere::beforeQuery'][] = 'DiscussionsHooksHelper::onSpecialWhatLinksHereBeforeQuery';
-	$wgHooks['WantedPages::getQueryInfo'][] = 'DiscussionsHooksHelper::onWantedPagesGetQueryInfo';
+	$wgHooks['WantedPages::getExcludedSourceNamespaces'][] = 'DiscussionsHooksHelper::onWantedPagesGetExcludedSourceNamespaces';
 
 	// Make sure we recognize the Forum namespaces so we can redirect them if requested
 	$wgExtensionNamespacesFiles['Discussions'] = __DIR__ . '/../Forum/Forum.namespaces.php';
