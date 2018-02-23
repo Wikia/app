@@ -157,7 +157,7 @@ class BodyController extends WikiaController {
 		$latestActivityKey = $user->isAnon() ? 1250 : 1300;
 
 		// Forum Extension
-		if ( $this->wg->EnableForumExt && ForumHelper::isForum() ) {
+		if ( $this->wg->EnableForumExt && ForumHelper::isForum() && !BodyController::isEditPage() ) {
 			$railModuleList = [
 				1202 => [ 'Forum', 'forumRelatedThreads', null ],
 				1201 => [ 'Forum', 'forumActivityModule', null ],
@@ -225,14 +225,7 @@ class BodyController extends WikiaController {
 		}
 
 		//  No rail on main page or edit page for oasis skin
-		// except &action=history of wall
-		if ( !empty( $this->wg->EnableWallEngine ) ) {
-			$isEditPage = !WallHelper::isWallNamespace( $namespace ) && BodyController::isEditPage() || $this->wg->Request->getVal( 'diff' );
-		} else {
-			$isEditPage = BodyController::isEditPage();
-		}
-
-		if ( $isEditPage || WikiaPageType::isMainPage() ) {
+		if ( BodyController::isEditPage() || WikiaPageType::isMainPage() ) {
 			$modules = [ ];
 			Hooks::run( 'GetEditPageRailModuleList', [ &$modules ] );
 			return $modules;
