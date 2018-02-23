@@ -57,27 +57,8 @@ class ArticleAsJson {
 			\MustacheService::getInstance()->render(
 				self::MEDIA_THUMBNAIL_TEMPLATE,
 				[
-					'mediaAttrs' => json_encode( [ 'ref' => $id ] ),
 					'media' => $media,
-					'width' => $media['width'],
-					'height' => $media['height'],
-					'url' => $media['url'],
-					'title' => $media['title'],
-					'fileUrl' => $media['fileUrl'],
-					'caption' => $media['caption'] ?? '',
-					'href' => $media['href'],
-					'isLinkedByUser' => $media['isLinkedByUser'],
-					/**
-					 * data-ref has to be set for now because it's read in
-					 * extensions/wikia/PortableInfobox/services/Parser/Nodes/NodeImage.php:getGalleryData
-					 * and in
-					 * extensions/wikia/PortableInfobox/services/Parser/Nodes/NodeImage.php:getTabberData.
-					 * Base on presence of data-ref element is classified as an image
-					 * - without that service would return null
-					 *
-					 * @TODO XW-1460 fix the regex and remove this attribute
-					 */
-					'ref' => $id
+					'mediaAttrs' => json_encode( $media ),
 				]
 			)
 		);
@@ -88,25 +69,9 @@ class ArticleAsJson {
 			\MustacheService::getInstance()->render(
 				self::MEDIA_GALLERY_TEMPLATE,
 				[
-					'galleryAttrs' => json_encode( [ 'ref' => $id ] ),
-					/**
-					 * data-ref has to be set for now because it's read in
-					 * extensions/wikia/PortableInfobox/services/Parser/Nodes/NodeImage.php::getGalleryData
-					 * and in
-					 * extensions/wikia/PortableInfobox/services/Parser/Nodes/NodeImage.php::getTabberData
-					 * Base on presence of data-ref element is classified as an image
-					 * - without that service would return null
-					 *
-					 * !!! Important note - data-ref inside template has ' instead of "
-					 * because this is how regex in
-					 * extensions/wikia/PortableInfobox/services/Parser/Nodes/NodeImage.php::getGalleryData
-					 * works
-					 *
-					 * @TODO XW-1460 fix the regex and remove this attribute
-					 */
-					'ref' => $id,
-					'media' => $media,
-					'hasLinkedImages' => $hasLinkedImages
+					'galleryAttrs' => json_encode( [ 'items' => $media ] ),
+					'hasLinkedImages' => $hasLinkedImages,
+					'media' => $media
 				]
 			)
 		);
@@ -154,8 +119,6 @@ class ArticleAsJson {
 
 		// Only images are allowed to be linked by user
 		if ( is_string( $link ) && $link !== '' && $media['type'] === 'image' ) {
-			// TODO remove after XW-2653 is released
-			$media['link'] = $link;
 			$media['href'] = $link;
 			$media['isLinkedByUser'] = true;
 		} else {
@@ -233,7 +196,10 @@ class ArticleAsJson {
 				}
 
 				$linkHref = isset( $image['linkhref'] ) ? $image['linkhref'] : null;
-				$media[] = self::createMediaObject( $details, $image['name'], $caption, $linkHref );
+				$mediaObj = self::createMediaObject( $details, $image['name'], $caption, $linkHref );
+				$mediaObj['mediaAttr'] = json_encode( $mediaObj );
+
+				$media[] = $mediaObj;
 
 				self::addUserObj( $details );
 			}
