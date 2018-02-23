@@ -32,7 +32,7 @@ var NodeChatSocketWrapper = $.createClass(Observable, {
 
 	connect: function () {
 		// Global vars from env
-		var url = 'http://' + window.wgChatHost + ':' + window.wgChatPort;
+		var url = 'https://' + window.wgChatHost + ':' + window.wgChatPort;
 		this.log('Connecting to chat server: ' + url + ' ...');
 
 		if (this.socket) {
