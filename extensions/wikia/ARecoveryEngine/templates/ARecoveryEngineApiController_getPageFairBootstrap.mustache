@@ -5,7 +5,13 @@
 		var context = adContext.getContext();
 
 		if (context.opts.pageFairRecovery === true && !window.wgUserName) {
-			{{{code}}}
+			if (context.opts.babRecovery) {
+				document.addEventListener('bab.blocking', function () {
+					{{{code}}}
+				});
+			} else {
+				{{{code}}}
+			}
 		}
 	});
 </script>

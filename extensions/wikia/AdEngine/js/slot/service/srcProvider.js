@@ -45,7 +45,7 @@ define('ext.wikia.adEngine.slot.service.srcProvider',  [
 		if (adContext.get('opts.premiumOnly') && !adContext.get('opts.isAdTestWiki')) {
 			originalSrc = 'premium';
 		}
-		if (isRecoverableByPF(extra) || (isRecoveryAllowedByBab(extra) && isRecoverableByIL())) {
+		if (isRecoveryAllowedByBab(extra) && (isRecoverableByPF(extra) || isRecoverableByIL())) {
 			originalSrc = 'rec';
 		}
 
