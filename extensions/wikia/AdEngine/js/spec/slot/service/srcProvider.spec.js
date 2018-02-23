@@ -91,19 +91,6 @@ describe('ext.wikia.adEngine.slot.service.srcProvider', function () {
 		expect(getModule().get('asd', extra)).toEqual('asd');
 	});
 
-	it('doesn\'t change src to rec if ad is recoverable but not allowed by BlockAdBlock', function () {
-		var extra = {
-			isPageFairRecoverable: false,
-			isInstartLogicRecoverable: true,
-			isRecoveryBehindBab: true
-		};
-
-		spyOn(mocks.adBlockDetection, 'isBlocking').and.returnValue(true);
-		spyOn(mocks.adBlockRecovery, 'isEnabled').and.returnValue(true);
-
-		expect(getModule().get('asd', extra)).toBe('rec');
-	});
-
 	it('changes src to rec if ad is recoverable', function () {
 		var extra = {
 			isPageFairRecoverable: true

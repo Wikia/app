@@ -5,12 +5,19 @@
 		var context = adContext.getContext();
 
 		if (context.opts.pageFairRecovery === true && !window.wgUserName) {
+			var event = doc.createEvent('Event');
+			event.initEvent('rcv.ilb', true, false);
+
+			doc.addEventListener('rcv.ilb', function () {
+				{{{code}}}
+			});
+
 			if (context.opts.babRecovery) {
-				document.addEventListener('bab.blocking', function () {
-					{{{code}}}
+				doc.addEventListener('bab.blocking', function () {
+					doc.dispatchEvent(event);
 				});
 			} else {
-				{{{code}}}
+				doc.dispatchEvent(event);
 			}
 		}
 	});
