@@ -22,11 +22,6 @@ class SyntaxHighlight_GeSHi {
 	 * @return string
 	 */
 	public static function parserHook( $text, $args = array(), $parser, $frame ) {
-		// SUS-1913: In production, swap 1% of GeSHi calls with Syntax Highlight experiment
-		if ( SyntaxHighlightHooks::shouldReplaceGeshi() ) {
-			return SyntaxHighlightHooks::onRenderSyntaxHighlightTag( $text, $args, $parser, $frame );
-		}
-
 		global $wgSyntaxHighlightDefaultLang, $wgUseSiteCss, $wgUseTidy;
 		wfProfileIn( __METHOD__ );
 		self::initialise();
