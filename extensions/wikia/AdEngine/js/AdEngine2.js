@@ -143,6 +143,18 @@ define('ext.wikia.adEngine.adEngine', [
 						tracker.track('collapse', adInfo);
 						slot.container.setAttribute('data-slot-result', 'collapse');
 					},
+					isEnabled: function () {
+						log(['isEnabled', provider.name, slotName], log.levels.debug, logGroup);
+						return slot.enabled;
+					},
+					disable: function () {
+						log(['disable', provider.name, slotName], log.levels.debug, logGroup);
+						slot.enabled = false;
+					},
+					enable: function () {
+						log(['disable', provider.name, slotName], log.levels.debug, logGroup);
+						slot.enabled = true;
+					},
 					hop: function (adInfo) {
 						log(['hop', provider.name, slotName, adInfo], log.levels.debug, logGroup);
 						slotTweaker.hide(container.id);
@@ -171,12 +183,6 @@ define('ext.wikia.adEngine.adEngine', [
 			slot.post('viewed', function () {
 				slot.isViewed = true;
 			});
-
-			if (slotTweaker.isTopLeaderboard(slotName)) {
-				slot.pre('collapse', function () {
-					slotTweaker.hide('TOP_BUTTON_WIDE');
-				});
-			}
 
 			slotRegistry.add(slot, provider.name);
 			initializeProviderOnce(provider);

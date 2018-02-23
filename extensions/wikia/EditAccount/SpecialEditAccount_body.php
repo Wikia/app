@@ -18,10 +18,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 	exit( 1 );
 }
 
-use Wikia\DependencyInjection\Injector;
-use Wikia\Service\Helios\HeliosClient;
-use Wikia\Service\User\ExternalAuth\FacebookService;
-use Wikia\Service\User\ExternalAuth\GoogleService;
+use Wikia\Factory\ServiceFactory;
 
 class EditAccount extends SpecialPage {
 	/** @var User */
@@ -433,16 +430,13 @@ class EditAccount extends SpecialPage {
 			// All clear!
 			$mStatusMsg = wfMessage( 'editaccount-success-close', $user->mName )->plain();
 
-			/** @var FacebookService $facebookService */
-			$facebookService = Injector::getInjector()->get( FacebookService::class );
-			$facebookService->unlinkAccount( $user );
+			$serviceFactory = ServiceFactory::instance();
+			$externalAuthFactory = $serviceFactory->externalAuthFactory();
 
-			/** @var GoogleService $googleService */
-			$googleService = Injector::getInjector()->get( GoogleService::class );
-			$googleService->unlinkAccount( $user );
+			$externalAuthFactory->facebookService()->unlinkAccount( $user );
+			$externalAuthFactory->googleService()->unlinkAccount( $user );
 
-			/** @var HeliosClient $heliosClient */
-			$heliosClient = Injector::getInjector()->get(HeliosClient::class);
+			$heliosClient = $serviceFactory->heliosFactory()->heliosClient();
 			$heliosClient->forceLogout($user->getId());
 
 			return true;
@@ -565,8 +559,7 @@ class EditAccount extends SpecialPage {
 	private function logOut() {
 		$ok = false;
 		try {
-			/** @var HeliosClient $heliosClient */
-			$heliosClient = Injector::getInjector()->get(HeliosClient::class);
+			$heliosClient = ServiceFactory::instance()->heliosFactory()->heliosClient();
 			$response = $heliosClient->forceLogout($this->mUser->getId());
 
 			// successful logout returns 204 No Content and forceLogout() returns null

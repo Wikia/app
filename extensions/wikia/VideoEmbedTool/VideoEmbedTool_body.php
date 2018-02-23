@@ -118,11 +118,6 @@ class VideoEmbedTool {
 			if ( !$file ) {
 				header( 'X-screen-type: error' );
 				if ( $nonPremiumException ) {
-					if ( empty( F::app()->wg->allowNonPremiumVideos ) ) {
-						wfProfileOut( __METHOD__ );
-						return wfMessage( 'videohandler-non-premium' )->parse();
-					}
-
 					if ( $nonPremiumException->getMessage() != '' ) {
 						wfProfileOut( __METHOD__ );
 						return $nonPremiumException->getMessage();
@@ -341,7 +336,7 @@ class VideoEmbedTool {
 
 	/**
 	 * Upload video using LocalFile framework
-	 * @param mixed $provider string or int from $wgVideoMigrationProviderMap
+	 * @param string $provider
 	 * @param string $videoId
 	 * @param string $videoName
 	 * @param $oTitle

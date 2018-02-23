@@ -202,12 +202,6 @@ class UserPermissionsIntegrationTest extends \WikiaDatabaseTest {
 		$this->assertContains( 'content-reviewer', $groups['remove'] );
 		$this->assertNotContains( 'content-reviewer', $groups['add-self'] );
 		$this->assertNotContains( 'content-reviewer', $groups['remove-self'] );
-
-		$groups = $this->permissionsService()->getConfiguration()->getGroupsChangeableByGroup( 'staff' );
-		$this->assertContains( 'staff', $groups['add'] );
-		$this->assertContains( 'staff', $groups['remove'] );
-		$this->assertContains( 'staff', $groups['add-self'] );
-		$this->assertContains( 'staff', $groups['remove-self'] );
 	}
 
 	public function testShouldAddAndRemoveGlobalGroup() {
@@ -215,30 +209,19 @@ class UserPermissionsIntegrationTest extends \WikiaDatabaseTest {
 
 		$globalStateWrapper->wrap( function () {
 
+			$this->permissionsService()->addToGroup( $this->staffUser, $this->staffUser, 'fandom-editor' );
 			$groups = $this->permissionsService()->getExplicitGlobalGroups( $this->staffUser );
-			if ( !in_array( 'reviewer', $groups ) ) {
-				$this->permissionsService()
-					->addToGroup( $this->staffUser, $this->staffUser, 'reviewer' );
-			}
-			$groups = $this->permissionsService()->getExplicitGlobalGroups( $this->staffUser );
-			$this->assertContains( 'reviewer', $groups );
+			$this->assertContains( 'fandom-editor', $groups );
 
-			$this->permissionsService()
-				->removeFromGroup( $this->staffUser, $this->staffUser, 'reviewer' );
+			$this->permissionsService()->removeFromGroup( $this->staffUser, $this->staffUser, 'fandom-editor' );
 			$groups = $this->permissionsService()->getExplicitGlobalGroups( $this->staffUser );
 			$this->assertNotContains( 'reviewer', $groups );
 
-			$this->permissionsService()
-				->addToGroup( $this->staffUser, $this->staffUser, 'reviewer' );
 			$groups = $this->permissionsService()->getExplicitGlobalGroups( $this->staffUser );
-			$this->assertContains( 'reviewer', $groups );
-
+			$this->assertNotContains( 'content-reviewer', $groups );
+			$this->assertFalse( $this->permissionsService()->addToGroup( $this->staffUser, $this->staffUser, 'content-reviewer' ) );
 			$groups = $this->permissionsService()->getExplicitGlobalGroups( $this->staffUser );
-			$this->assertNotContains( 'content-review', $groups );
-			$this->assertFalse( $this->permissionsService()
-				->addToGroup( $this->staffUser, $this->staffUser, 'content-review' ) );
-			$groups = $this->permissionsService()->getExplicitGlobalGroups( $this->staffUser );
-			$this->assertNotContains( 'content-review', $groups );
+			$this->assertNotContains( 'content-reviewer', $groups );
 
 			$this->assertFalse( $this->permissionsService()
 				->removeFromGroup( $this->staffUser, $this->staffUser, 'some-made-up-group' ) );

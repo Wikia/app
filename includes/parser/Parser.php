@@ -1130,9 +1130,18 @@ class Parser {
 						// as content so wikitext after parse/reverseparse is not broken. In the second case implode does
 						// not change anything
 						if ( preg_match( "/<[^>]*placeholder.*/", $cell_data[0] ) ) {
-							$cell_data = [ implode( "|", $cell_data ) ];
-							// TODO: if we rename placeholder's tag name to img, remove inner html and closing tag of
-							// TODO: placeholder then we'll have puzzle displayed
+							$cellDataSize = count($cell_data);
+							$cell_data = implode( "|", $cell_data );
+
+							if ( $cellDataSize > 1 ) {
+								$cell_data = preg_replace(
+									'/(<span class="placeholder placeholder-double-brackets"[^>]+>&#x0200B;)(.*?&#x0200B;)(<\/span>)/s',
+									'$1$3',
+									$cell_data
+								);
+							}
+
+							$cell_data = [ $cell_data ];
 						}
 					}
 					// Wikia change end
@@ -1274,12 +1283,26 @@ class Parser {
 			// XW-4380: Make template placeholders in list items render correctly
 			// XW-4609: remove newlines from template's placeholder when used inside list's item to not break list
 			// before this code was executed inside doBlockLevels(), however it needs to be done before doAllQuotes to not break bolds and italics
-			$text = preg_replace_callback('/^([\*#;:][^\n]*<div class="placeholder placeholder-double-brackets"[^>]+>&#x0200B;)\n?(.*?)(&#x0200B;<\/div>)/ms', function($matches) {
-				return preg_replace('/\\n/', '', $matches[0]);
-			}, str_replace("\r\n", "\n", $text));
-			$text = preg_replace_callback('/^([\*#;:][^\n]*<span class="placeholder placeholder-double-brackets"[^>]+>&#x0200B;)\n?(.*?)(&#x0200B;<\/span>)/ms', function($matches) {
-				return preg_replace('/\\n/', '', $matches[0]);
-			}, str_replace("\r\n", "\n", $text));
+
+			do {
+				$before = $text;
+				$text = preg_replace_callback('/^([\*#;:][^\n]*<div class="placeholder placeholder-double-brackets"[^>]+>&#x0200B;)(.*?)(&#x0200B;<\/div>)/ms',
+					function($matches) {
+						return preg_replace('/\\n/', '', $matches[0]);
+					},
+					str_replace("\r\n", "\n", $text));
+			} while ( $before != $text );
+
+			do {
+				$before = $text;
+				$text = preg_replace_callback(
+					'/^([\*#;:][^\n]*<span class="placeholder placeholder-double-brackets"[^>]+>&#x0200B;)(.*?)(&#x0200B;<\/span>)/ms',
+					function ( $matches ) {
+						return preg_replace( '/\\n/', '', $matches[0] );
+					},
+					str_replace( "\r\n", "\n", $text )
+				);
+			} while ( $before != $text );
 		}
 		// FANDOM change end
 

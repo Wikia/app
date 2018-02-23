@@ -51,7 +51,7 @@ class TaskRunnerMaintenance extends Maintenance {
 			'source' => 'celery'
 		] );
 
-		$runner = new TaskRunner(
+		$runner = new Wikia\Tasks\TaskRunner(
 			$this->mOptions['wiki_id'],
 			$this->mOptions['task_id'],
 			$this->mOptions['task_list'],
@@ -63,7 +63,7 @@ class TaskRunnerMaintenance extends Maintenance {
 		$runner->run();
 		$result = $runner->format();
 
-		if ($runner->runTime() > TaskRunner::TASK_NOTIFY_TIMEOUT) {
+		if ($runner->runTime() > Wikia\Tasks\TaskRunner::TASK_NOTIFY_TIMEOUT) {
 			Http::post( "{$wgFlowerUrl}/api/task/status/{$this->mOptions['task_id']}", [
 				'noProxy' => true,
 				'postData' => json_encode( [

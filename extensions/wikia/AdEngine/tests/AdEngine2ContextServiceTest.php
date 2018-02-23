@@ -232,7 +232,7 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 		$catId = WikiFactoryHub::CATEGORY_ID_LIFESTYLE;
 		$shortCat = 'shortcat';
 		// mech: using %S for hostname as RL can produce local links when $wgEnableLocalResourceLoaderLinks is set to true
-		$expectedAdEngineResourceURLFormat = '%S/__load/-/cb%3D%d%26debug%3Dfalse%26lang%3D%s%26only%3Dscripts%26skin%3Doasis/%s';
+		$expectedAdEngineResourceURLFormat = '%S/load.php?cb=%d&debug=false&lang=%s&modules=%s&only=scripts&skin=oasis&*';
 		$expectedPrebidBidderUrl = 'http://i2.john-doe.wikia-dev.com/__am/123/group/-/pr3b1d_prod_js';
 
 		$assetsManagerMock = $this->getMockBuilder( 'AssetsManager' )

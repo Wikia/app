@@ -3,8 +3,7 @@
 use Swagger\Client\TemplateClassification\Storage\Api\TCSApi;
 use Swagger\Client\TemplateClassification\Storage\Models\TemplateTypeHolder;
 use Swagger\Client\TemplateClassification\Storage\Models\TemplateTypeProvider;
-use Wikia\DependencyInjection\Injector;
-use Wikia\Service\Swagger\ApiProvider;
+use Wikia\Factory\ServiceFactory;
 
 class TemplateClassificationService extends ContextSource {
 
@@ -198,8 +197,7 @@ class TemplateClassificationService extends ContextSource {
 	 * @return TCSApi
 	 */
 	private function createApiClient() {
-		/** @var ApiProvider $apiProvider */
-		$apiProvider = Injector::getInjector()->get(ApiProvider::class);
+		$apiProvider = ServiceFactory::instance()->providerFactory()->apiProvider();
 		$api = $apiProvider->getApi( self::SERVICE_NAME, TCSApi::class );
 
 		// default CURLOPT_TIMEOUT for API client is set to 0 which means no timeout.

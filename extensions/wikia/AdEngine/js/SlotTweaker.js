@@ -3,11 +3,9 @@ define('ext.wikia.adEngine.slotTweaker', [
 	'ext.wikia.adEngine.domElementTweaker',
 	'ext.wikia.adEngine.slot.adSlot',
 	'wikia.document',
-	'wikia.geo',
-	'wikia.instantGlobals',
 	'wikia.log',
 	'wikia.window'
-], function (DOMElementTweaker, adSlot, doc, geo, instantGlobals, log, win) {
+], function (DOMElementTweaker, adSlot, doc, log, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.slotTweaker',
@@ -39,28 +37,6 @@ define('ext.wikia.adEngine.slotTweaker', [
 		}
 	}
 
-	function isTopLeaderboard(slotname) {
-		return slotname.indexOf('TOP_LEADERBOARD') !== -1;
-	}
-
-	function isStandardLeaderboardSize(slotname) {
-		var slot = doc.getElementById(slotname),
-			isStandardSize;
-
-		if (slot) {
-			isStandardSize = slot.offsetHeight >= 90 && slot.offsetHeight <= 95 && slot.offsetWidth <= 728;
-
-			log(
-				['isStandardLeaderboardSize', slotname, slot.offsetWidth + 'x' + slot.offsetHeight, isStandardSize],
-				3,
-				logGroup
-			);
-
-			return isStandardSize;
-		}
-		log('isStandardLeaderboardSize: ' + slotname + ' missing', 3, logGroup);
-	}
-
 	function addDefaultHeight(slotname) {
 		var slot = doc.getElementById(slotname);
 
@@ -68,28 +44,6 @@ define('ext.wikia.adEngine.slotTweaker', [
 
 		if (slot) {
 			slot.className += ' ' + defaultHeightClass;
-		}
-	}
-
-	// TODO: remove it after fully disabling Badge Ad: ADEN-6579
-	function adjustLeaderboardSize(slotname) {
-		var slot = doc.getElementById(slotname);
-		if (!geo.isProperGeo(instantGlobals.wgAdDriverDisableBadgeAdCountries) &&
-			isTopLeaderboard(slotname) && isStandardLeaderboardSize(slotname)) {
-			slot.className += ' ' + standardLeaderboardSizeClass;
-		}
-	}
-
-	// TODO: remove it after fully disabling Badge Ad: ADEN-6579
-	function removeTopButtonIfNeeded(slotname) {
-		if (!geo.isProperGeo(instantGlobals.wgAdDriverDisableBadgeAdCountries) &&
-			isTopLeaderboard(slotname) && isStandardLeaderboardSize(slotname)) {
-			win.Wikia.reviveQueue = win.Wikia.reviveQueue || [];
-
-			win.Wikia.reviveQueue.push({
-				zoneId: 27,
-				slotName: 'TOP_BUTTON_WIDE'
-			});
 		}
 	}
 
@@ -204,16 +158,13 @@ define('ext.wikia.adEngine.slotTweaker', [
 	return {
 		addDefaultHeight: addDefaultHeight,
 		adjustIframeByContentSize: adjustIframeByContentSize,
-		adjustLeaderboardSize: adjustLeaderboardSize,
 		collapse: collapse,
 		expand: expand,
 		hackChromeRefresh: hackChromeRefresh,
 		hide: hide,
-		isTopLeaderboard: isTopLeaderboard,
 		makeResponsive: makeResponsive,
 		onReady: onReady,
 		removeDefaultHeight: removeDefaultHeight,
-		removeTopButtonIfNeeded: removeTopButtonIfNeeded,
 		show: show,
 		tweakRecoveredSlot: tweakRecoveredSlot
 	};
