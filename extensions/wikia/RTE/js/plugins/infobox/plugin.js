@@ -143,7 +143,7 @@ require([
 				onShow: function () {
 					var infoboxTemplateList = $('.infobox-templates-list');
 
-					$.get('/api.php?format=json&action=query&list=allinfoboxes&uselang=' + window.wgContentLanguage).done(function(data) {
+					$.get(window.wgScriptPath + '/api.php?format=json&action=query&list=allinfoboxes&uselang=' + window.wgContentLanguage).done(function(data) {
 						infoboxTemplateList.html(getInfoboxListMarkup(data));
 					});
 
