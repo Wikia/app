@@ -322,7 +322,6 @@ if (!empty( $wgWikiaEnableCreatepageExt)) {
 
 #--- 38. SyntaxHighlight_GeSHi parser ext.; requires lib/geshi
 if (!empty($wgEnableSyntaxHighlightGeSHiExt)) {
-	include "$IP/extensions/wikia/SyntaxHighlight/SyntaxHighlight.setup.php";
    	include "$IP/extensions/SyntaxHighlight_GeSHi/SyntaxHighlight_GeSHi.php";
 }
 
