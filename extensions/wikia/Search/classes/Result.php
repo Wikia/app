@@ -29,7 +29,7 @@ class Result extends ReadWrite {
 	 */
 	public function __construct( $fields = [], $boosts = [] ) {
 		parent::__construct( $fields, $boosts );
-		$this->service = ( new \Wikia\Search\ProfiledClassFactory )->get( 'Wikia\Search\MediaWikiService' );
+		$this->service = new MediaWikiService();
 	}
 
 	/**
