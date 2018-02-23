@@ -69,7 +69,7 @@ class ChatServerApiClient {
 	 * @return int|null
 	 */
 	private static function getRoomId( $roomType, $roomUsers = [ ] ) {
-		global $wgCityId, $wgServer, $wgArticlePath;
+		global $wgCityId, $wgScriptPath, $wgServer, $wgArticlePath;
 
 		wfProfileIn( __METHOD__ );
 
@@ -78,6 +78,7 @@ class ChatServerApiClient {
 		// Add some extra data that the server will want in order to store it in the room's hash.
 		$extraData = [
 			'wgServer' => $wgServer,
+			'wgScriptPath' => $wgScriptPath,
 			'wgArticlePath' => $wgArticlePath
 		];
 		$extraDataString = json_encode( $extraData );
