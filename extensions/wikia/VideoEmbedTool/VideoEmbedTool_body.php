@@ -118,11 +118,6 @@ class VideoEmbedTool {
 			if ( !$file ) {
 				header( 'X-screen-type: error' );
 				if ( $nonPremiumException ) {
-					if ( empty( F::app()->wg->allowNonPremiumVideos ) ) {
-						wfProfileOut( __METHOD__ );
-						return wfMessage( 'videohandler-non-premium' )->parse();
-					}
-
 					if ( $nonPremiumException->getMessage() != '' ) {
 						wfProfileOut( __METHOD__ );
 						return $nonPremiumException->getMessage();

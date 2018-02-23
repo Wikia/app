@@ -546,10 +546,6 @@ abstract class ApiWrapper {
 			return false;
 		}
 
-		if ( !$user->isAllowed( 'uploadpremiumvideo' ) ) {
-			return false;
-		}
-
 		return true;
 	}
 

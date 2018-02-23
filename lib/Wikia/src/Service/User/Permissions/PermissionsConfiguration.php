@@ -231,7 +231,6 @@ class PermissionsConfiguration {
 		'renameuser',
 		'userrollback',
 		'specialvideohandler',
-		'uploadpremiumvideo',
 		'wdacreview',
 		'WhereIsExtension',
 		'smwallowaskpage',
