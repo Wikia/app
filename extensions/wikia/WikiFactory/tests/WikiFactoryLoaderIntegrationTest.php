@@ -17,7 +17,7 @@ class WikiFactoryLoaderIntegrationTest extends WikiaDatabaseTest {
 	 * @param int $expectedCityId
 	 * @param array $server
 	 */
-	public function testWikiLoadedWhenPathMatchesOrIsRequestForRootDomain(
+	public function testWikiLoadedWhenDomainExists(
 		int $expectedCityId, array $server
 	) {
 		$wikiFactoryLoader = new WikiFactoryLoader( $server, [] );
@@ -62,7 +62,7 @@ class WikiFactoryLoaderIntegrationTest extends WikiaDatabaseTest {
 	 * @param string $expectedRedirect
 	 * @param array $server
 	 */
-	public function testRedirectsToPrimaryDomainWhenAlternativeDomainUsedOrPathNotExistsAndRootDomainHasSameLangAsPath(
+	public function testRedirectsToPrimaryDomainWhenAlternativeDomainUsed(
 		string $expectedRedirect, array $server
 	) {
 		$this->mockGlobalVariable( 'wgDevelEnvironment', false );
@@ -95,7 +95,7 @@ class WikiFactoryLoaderIntegrationTest extends WikiaDatabaseTest {
 	 *
 	 * @param array $server
 	 */
-	public function testRedirectsToNotValidPageWhenRootDomainDoesNotExistOrPathDoesNotExistAndRootDomainLanguageMismatch(
+	public function testRedirectsToNotValidPageWhenNoEntryForDomain(
 		array $server
 	) {
 		$wikiFactoryLoader = new WikiFactoryLoader( $server, [] );
@@ -221,6 +221,26 @@ class WikiFactoryLoaderIntegrationTest extends WikiaDatabaseTest {
 		yield [ 6, [ 'SERVER_DBNAME' => 'dead' ] ];
 		yield [ 7, [ 'SERVER_ID' => 7 ] ];
 		yield [ 7, [ 'SERVER_DBNAME' => 'redirect' ] ];
+	}
+
+	/**
+	 * @dataProvider providePrecedence
+	 *
+	 * @param int $expectedCityId
+	 * @param array $env
+	 * @param array $server
+	 */
+	public function testRequestInfoOverridesServerIdOverridesDbName( int $expectedCityId, array $env, array $server ) {
+		$wikiFactoryLoader = new WikiFactoryLoader( $server, $env );
+		$result = $wikiFactoryLoader->execute();
+
+		$this->assertEquals( $expectedCityId, $result );
+	}
+
+	public function providePrecedence() {
+		yield 'Request info takes precedence over SERVER_ID' => [ 9, [ 'SERVER_ID' => 1 ], [ 'SERVER_NAME' => 'poznan.wikia.com', 'REQUEST_URI'	=> 'http://poznan.wikia.com/' ] ];
+		yield 'Request info takes precedence over SERVER_DBNAME' => [ 9, [ 'SERVER_DBNAME' => 'test1' ], [ 'SERVER_NAME' => 'poznan.wikia.com', 'REQUEST_URI' => 'http://poznan.wikia.com/' ] ];
+		yield 'SERVER_ID takes precedence over SERVER_DBNAME' => [ 1, [ 'SERVER_ID' => 1, 'SERVER_DBNAME' => 'poznan' ], [] ];
 	}
 
 	public function testExceptionThrownWhenNoDataProvided() {
