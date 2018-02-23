@@ -24,4 +24,3 @@ if ( is_string( $wgDBcluster ) && WikiFactoryLoader::checkPerClusterReadOnlyFlag
 if ( !empty( $wgGroupPermissionsLocal ) ) {
 	WikiFactoryLoader::LocalToGlobalPermissions( $wgGroupPermissionsLocal );
 }
-
