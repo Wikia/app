@@ -62,6 +62,7 @@ $messages['en'] = array(
 	'user-identity-box-group-vanguard' => 'Vanguard',
 	'user-identity-box-group-content-moderator' => 'Content Moderator',
 	'user-identity-box-group-global-discussions-moderator' => 'Global Discussions Moderator',
+	'user-identity-box-group-content-volunteer' => 'Content Volunteer',
 	'user-identity-box-zero-state-location' => 'Location',
 	'user-identity-box-zero-state-birthday' => 'Birthday',
 	'user-identity-box-zero-state-gender' => 'Gender',
