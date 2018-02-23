@@ -19,8 +19,12 @@
     "optimize-autoloader": true
   },
   "autoload": {
+    "psr-0": {
+      "Solarium_": "lib/vendor/Solarium/"
+    },
     "psr-4" : {
       "Wikia\\": "lib/Wikia/src/",
+      "Wikia\\Search\\": "extensions/wikia/Search/classes/",
       "Swagger\\Client\\": "lib/Swagger/src/"
     }
   },

@@ -12,6 +12,7 @@ class RecentChangeTest extends TestCase {
 	protected function setUp() {
 		parent::setUp();
 		$this->recentChange = new RecentChange();
+		$this->row = new stdClass();
 	}
 
 	public function testRecentChangeProvidesFallbackForEmptyIp() {

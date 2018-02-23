@@ -42,7 +42,6 @@ class AdEngine2ContextService {
 					'delayBtf' => $delayBtf,
 					'enableAdsInMaps' => $wg->AdDriverEnableAdsInMaps,
 					'pageType' => $adPageTypeService->getPageType(),
-					'paidAssetDropConfig' => $wg->PaidAssetDropConfig, // @see extensions/wikia/PaidAssetDrop
 					'showAds' => $adPageTypeService->areAdsShowableOnPage(),
 					'trackSlotState' => $wg->AdDriverTrackState,
 					'pageFairDetectionUrl' => $pageFairDetectionUrl,

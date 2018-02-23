@@ -6,7 +6,9 @@
  */
 namespace Wikia\Search\QueryService;
 
-use \Wikia\Search\Config, \Wikia\Search\MediaWikiService, \Solarium_Client;
+use Solarium_Client;
+use Wikia\Search\Config;
+use Wikia\Search\MediaWikiService;
 
 /**
  * This class is responsible for instantiating the appropriate QueryService based on values in the config.
@@ -47,8 +49,7 @@ class Factory {
 	}
 
 	public function getSolariumClientConfig( $forceMaster = false ) {
-		/* @var \Wikia\Search\MediaWikiService $service */
-		$service = ( new \Wikia\Search\ProfiledClassFactory )->get( 'Wikia\Search\MediaWikiService' );
+		$service = new MediaWikiService();
 
 		$host = $service->getGlobalWithDefault( 'SolrHost', 'localhost' );
 		$masterHost = $service->getGlobalWithDefault( 'SolrMaster', 'localhost' );

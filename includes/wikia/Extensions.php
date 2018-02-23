@@ -232,11 +232,6 @@ if (!empty($wgWikiaEnableEventCountdownExt)) {
 	include("{$IP}/extensions/3rdparty/EventCountdown/EventCountdown.php");
 }
 
-#--- 11. Emailtag
-if( !empty($wgWikiaEnableEmailtagExt) ) {
-	include("{$IP}/extensions/3rdparty/emailtag/emailtag.php");
-}
-
 #--- 12. MultiUpload
 if( !empty( $wgEnableMultiUploadExt ) ) {
 	if( empty($wgMaxUploadFiles) ) {
@@ -327,7 +322,6 @@ if (!empty( $wgWikiaEnableCreatepageExt)) {
 
 #--- 38. SyntaxHighlight_GeSHi parser ext.; requires lib/geshi
 if (!empty($wgEnableSyntaxHighlightGeSHiExt)) {
-	include "$IP/extensions/wikia/SyntaxHighlight/SyntaxHighlight.setup.php";
    	include "$IP/extensions/SyntaxHighlight_GeSHi/SyntaxHighlight_GeSHi.php";
 }
 
@@ -677,7 +671,6 @@ if (!empty($wgEnableAnswers)) {
 	# disable AutoPageCreate extension (RT #48292)
 	$wgWikiaEnableAutoPageCreateExt = false;
 
-	$wgEnableWikiAnswers = true;
 	include( "$IP/extensions/wikia/WikiAnswers/WikiAnswers.php" );
 
 	// macbre: RelatedPages queries on answers wikis are killing the database
@@ -744,10 +737,6 @@ if (!empty($wgEnableAbuseFilterExtension)) {
 
 	// override default actions palette to exclude some
 	$wgAbuseFilterAvailableActions = array( 'flag', 'throttle', 'warn', 'disallow', 'blockautopromote', 'block', 'tag', 'rangeblock' );
-}
-
-if (!empty($wgEnableWikiaSearchExt)) {
-	include("$IP/extensions/wikia/Search/WikiaSearch.setup.php");
 }
 
 if (!empty($wgEnableWikiaSpecialVersionExt)) {
@@ -917,10 +906,6 @@ if( !empty($wgWikiaStarterLockdown) ) {
 		$wgNamespaceProtection[ $ns ] = [ 'editinterface' ];
 	}
 	unset( $StarterLockdownNamespaces );
-}
-
-if( !empty($wgEnableSpecialListIncludedFilesExt) ) {
-	include("$IP/extensions/wikia/Development/SpecialListIncludedFiles/Special_ListIncludedFiles.php");
 }
 
 if( !empty($wgWikiaEnableFounderEmailsExt) ) {
@@ -1816,3 +1801,6 @@ include "$IP/extensions/wikia/JWPlayerTag/JWPlayerTag.setup.php";
 include_once("$IP/extensions/wikia/DataWarehouse/DataWarehouseEventProducer.setup.php");
 
 include "$IP/extensions/wikia/HTTPSOptIn/HTTPSOptIn.setup.php";
+
+// Search should be enabled globally, always
+include "$IP/extensions/wikia/Search/WikiaSearch.setup.php";
