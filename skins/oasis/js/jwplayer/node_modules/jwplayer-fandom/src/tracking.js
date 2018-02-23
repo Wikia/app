@@ -221,4 +221,10 @@ function wikiaJWPlayerTracking(playerInstance, willAutoplay, tracker) {
 			label: 'language-selected-' + data.selectedLang.toLowerCase()
 		});
 	});
+
+    playerInstance.on('watermarkClicked', function (data) {
+        track({
+            label: 'watermark-fandom'
+        });
+    });
 }
