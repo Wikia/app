@@ -28,7 +28,7 @@ CKEDITOR.plugins.add('rte-placeholder',
 
 				// to check if content of placeholder is empty we need to get rid of non-width spaces (replace does not
 				// change the original string
-				if ( ['DIV', 'SPAN'].includes($placeholder.prop('tagName')) && $.trim($placeholder.html().replace(/[\u200B]/, '')) === '') {
+				if ( ['DIV', 'SPAN'].includes($placeholder.prop('tagName')) && $.trim($placeholder.html().replace(/[\u200B]*/, '')) === '') {
 					// empty gif in scr
 					$placeholder.html('<img class="empty-placeholder" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7">');
 				}

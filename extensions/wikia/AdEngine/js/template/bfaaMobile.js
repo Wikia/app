@@ -26,7 +26,9 @@ define('ext.wikia.adEngine.template.bfaaMobile', [
 		logGroup = 'ext.wikia.adEngine.template.bfaaMobile',
 		page,
 		unblockedSlots = [
+			// TODO remove in ADEN-6719
 			'MOBILE_BOTTOM_LEADERBOARD',
+			'BOTTOM_LEADERBOARD',
 			'MOBILE_IN_CONTENT',
 			'MOBILE_PREFOOTER'
 		],

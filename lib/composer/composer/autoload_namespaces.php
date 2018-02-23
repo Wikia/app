@@ -7,8 +7,8 @@ $baseDir = dirname(dirname($vendorDir));
 
 return array(
     'Symfony\\Component\\CssSelector\\' => array($vendorDir . '/symfony/css-selector'),
+    'Solarium_' => array($baseDir . '/lib/vendor/Solarium'),
     'SimplePie' => array($vendorDir . '/simplepie/simplepie/library'),
-    'ProxyManager\\' => array($vendorDir . '/ocramius/proxy-manager/src'),
     'Prophecy\\' => array($vendorDir . '/phpspec/prophecy/src'),
     'PEAR' => array($vendorDir . '/pear/pear_exception'),
     'Net' => array($vendorDir . '/wikia/net_socket2', $vendorDir . '/pear/net_socket', $vendorDir . '/wikia/net_smtp2'),
@@ -16,8 +16,6 @@ return array(
     'File' => array($vendorDir . '/wikia/file_ogg'),
     'Evenement' => array($vendorDir . '/evenement/evenement/src'),
     'Doctrine\\Common\\Lexer\\' => array($vendorDir . '/doctrine/lexer/lib'),
-    'Doctrine\\Common\\Cache\\' => array($vendorDir . '/doctrine/cache/lib'),
-    'Doctrine\\Common\\Annotations\\' => array($vendorDir . '/doctrine/annotations/lib'),
     'DataValues\\' => array($vendorDir . '/data-values/data-values/src'),
     'Console' => array($vendorDir . '/pear/console_getopt'),
     'Archive_Tar' => array($vendorDir . '/pear/archive_tar'),

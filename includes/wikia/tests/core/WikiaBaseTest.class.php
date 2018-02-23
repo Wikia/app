@@ -439,7 +439,6 @@ abstract class WikiaBaseTest extends TestCase {
 
 	protected function mockPreviewEnv() {
 		$this->mockGlobalVariable( 'wgDevelEnvironment', false );
-		$this->mockGlobalVariable( 'wgStagingEnvironment', true );
 		$this->mockGlobalVariable( 'wgWikiaEnvironment', WIKIA_ENV_PREVIEW );
 	}
 
@@ -451,19 +450,16 @@ abstract class WikiaBaseTest extends TestCase {
 
 	protected function mockVerifyEnv() {
 		$this->mockGlobalVariable( 'wgDevelEnvironment', false );
-		$this->mockGlobalVariable( 'wgStagingEnvironment', true );
 		$this->mockGlobalVariable( 'wgWikiaEnvironment', WIKIA_ENV_VERIFY );
 	}
 
 	protected function mockStableEnv() {
 		$this->mockGlobalVariable( 'wgDevelEnvironment', false );
-		$this->mockGlobalVariable( 'wgStagingEnvironment', true );
 		$this->mockGlobalVariable( 'wgWikiaEnvironment', WIKIA_ENV_STABLE );
 	}
 
 	protected function mockSandboxEnv() {
 		$this->mockGlobalVariable( 'wgDevelEnvironment', false );
-		$this->mockGlobalVariable( 'wgStagingEnvironment', false );
 		$this->mockGlobalVariable( 'wgWikiaEnvironment', WIKIA_ENV_SANDBOX );
 		$this->getStaticMethodMock( 'WikiFactory', 'getExternalHostName' )
 			->expects( $this->any() )

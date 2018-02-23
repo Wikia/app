@@ -47,11 +47,6 @@ describe('ext.wikia.adEngine.provider.*', function () {
 		},
 		slotTweaker: {
 			removeDefaultHeight: noop,
-			removeTopButtonIfNeeded: noop,
-			adjustLeaderboardSize: noop
-		},
-		uapContext: {
-			isUapLoaded: noop
 		},
 		lazyQueue: {},
 		window: {},
@@ -88,7 +83,6 @@ describe('ext.wikia.adEngine.provider.*', function () {
 			case 'directGpt':
 				return modules['ext.wikia.adEngine.provider.' + providerName](
 					mocks.adContext,
-					mocks.uapContext,
 					getFactory(),
 					mocks.kiloAdUnitBuilder,
 					mocks.slotTweaker
@@ -96,7 +90,6 @@ describe('ext.wikia.adEngine.provider.*', function () {
 			case 'remnantGpt':
 				return modules['ext.wikia.adEngine.provider.' + providerName](
 					mocks.adContext,
-					mocks.uapContext,
 					getFactory(),
 					mocks.adUnitBuilder,
 					mocks.slotTweaker
@@ -182,7 +175,7 @@ describe('ext.wikia.adEngine.provider.*', function () {
 			INVISIBLE_HIGH_IMPACT: '1x1',
 			INVISIBLE_HIGH_IMPACT_2: 'out-of-page',
 			MOBILE_TOP_LEADERBOARD: '300x50,320x50,320x100,320x480,2x2',
-			MOBILE_BOTTOM_LEADERBOARD: '320x480,2x2',
+			MOBILE_BOTTOM_LEADERBOARD: '320x50,300x250,300x50,2x2',
 			MOBILE_IN_CONTENT: '320x50,300x250,300x50,320x480',
 			MOBILE_PREFOOTER: '320x50,300x250,300x50'
 		};
@@ -195,7 +188,7 @@ describe('ext.wikia.adEngine.provider.*', function () {
 			INVISIBLE_HIGH_IMPACT: null,
 			INVISIBLE_HIGH_IMPACT_2: null,
 			MOBILE_TOP_LEADERBOARD: '300x50,320x50,320x100,320x480,2x2',
-			MOBILE_BOTTOM_LEADERBOARD: '320x480,2x2',
+			MOBILE_BOTTOM_LEADERBOARD: '320x50,300x250,300x50,2x2',
 			MOBILE_IN_CONTENT: '320x50,300x250,300x50,320x480',
 			MOBILE_PREFOOTER: '320x50,300x250,300x50'
 		};

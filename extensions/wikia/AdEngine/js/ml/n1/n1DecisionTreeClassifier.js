@@ -14,7 +14,8 @@ define('ext.wikia.adEngine.ml.n1.n1DecisionTreeClassifier', [
 			model: dtc,
 			name: 'n1dtc',
 			wgCountriesVariable: 'wgAdDriverN1DecisionTreeClassifierRabbitCountries',
-			enabled: false
+			enabled: false,
+			cachePrediction: true
 		};
 
 	if (geo.isProperGeo(instantGlobals[modelData.wgCountriesVariable])) {

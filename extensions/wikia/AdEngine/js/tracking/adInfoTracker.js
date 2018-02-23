@@ -14,7 +14,8 @@ define('ext.wikia.adEngine.tracking.adInfoTracker',  [
 
 	function prepareData(slotName, pageParams, slotParams, creative, bidders) {
 		var data,
-			now = new Date();
+			now = new Date(),
+			timestamp = now.getTime();
 
 		function transformBidderPrice(bidderName) {
 			if (bidders.realSlotPrices && bidders.realSlotPrices[bidderName]) {
@@ -39,7 +40,8 @@ define('ext.wikia.adEngine.tracking.adInfoTracker',  [
 			'browser': [ browserDetect.getOS(), browserDetect.getBrowser() ].join(' '),
 			'country': pageParams.geo || '',
 			'time_bucket': now.getHours(),
-			'timestamp': now.getTime(),
+			'timestamp': timestamp,
+			'ad_load_time': timestamp - win.performance.timing.connectStart,
 			'slot_size': creative.slotSize && creative.slotSize.length ? creative.slotSize.join('x') : '',
 			'kv_s0': pageParams.s0 || '',
 			'kv_s1': pageParams.s1 || '',
@@ -76,7 +78,7 @@ define('ext.wikia.adEngine.tracking.adInfoTracker',  [
 			'viewport_height': win.innerHeight || 0,
 			'ad_status': creative.status || 'unknown',
 			'scroll_y': slotRegistry.getScrollY(slotName) || 0,
-			'rabbit': (rabbit && rabbit.getSerializedResults()) || '',
+			'rabbit': (rabbit && rabbit.getAllSerializedResults()) || '',
 			'page_width': win.document.body.scrollWidth || '',
 			'page_layout': pageLayout.getSerializedData(slotName) || ''
 		};

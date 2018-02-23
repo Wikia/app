@@ -49,14 +49,6 @@ require_once("$IP/lib/composer/autoload.php");
 // configure FluentSQL to use the extended WikiaSQL class
 FluentSql\StaticSQL::setClass("\\WikiaSQL");
 
-/**
- * All lib/Wikia assets should conform to PSR-4 autoloader specification. See
- * ttps://github.com/php-fig/fig-standards/blob/master/accepted/PSR-4-autoloader.md.
- */
-require_once ( $IP."/lib/Wikia/autoload.php");
-
-require_once ( $IP."/lib/Swagger/autoload.php");
-
 global $wgDBname;
 if($wgDBname != 'uncyclo') {
 	include_once( "$IP/extensions/wikia/SkinChooser/SkinChooser.php" );
@@ -271,8 +263,6 @@ $wgAutoloadClasses[ 'CrossOriginResourceSharingHeaderHelper' ] = "$IP/includes/w
 $wgAutoloadClasses[ 'VignetteRequest'                 ] = "{$IP}/includes/wikia/vignette/VignetteRequest.php";
 $wgAutoloadClasses[ 'UrlGeneratorInterface'           ] = "{$IP}/includes/wikia/vignette/UrlGeneratorInterface.php";
 $wgAutoloadClasses[ 'VignetteUrlToUrlGenerator'       ] = "{$IP}/includes/wikia/vignette/VignetteUrlToUrlGenerator.php";
-$wgAutoloadClasses[ 'Wikia\\Cache\\AsyncCacheTask'    ] = "$IP/includes/wikia/AsyncCacheTask.php";
-$wgAutoloadClasses[ 'Wikia\\Cache\\AsyncCache'        ] = "$IP/includes/wikia/AsyncCache.php";
 $wgAutoloadClasses['Swagger'] = "$IP/includes/wikia/swagger/Swagger.php";
 $wgAutoloadClasses['SwaggerResource'] = "$IP/includes/wikia/swagger/SwaggerResource.php";
 $wgAutoloadClasses['SwaggerApi'] = "$IP/includes/wikia/swagger/SwaggerApi.php";
@@ -465,7 +455,7 @@ spl_autoload_register( function( $class ) {
 	return false;
 });
 
-// TODO:move this inclusions to CommonExtensions?
+// TODO: move this inclusions to includes/wikia/Extensions.php ?
 require_once( $IP.'/extensions/wikia/ImageTweaks/ImageTweaks.setup.php' );
 require_once( $IP.'/extensions/wikia/Oasis/Oasis_setup.php' );
 
@@ -681,7 +671,6 @@ $wgLangCreationVariables = array();
  * Tasks
  */
 require_once( "{$IP}/extensions/wikia/Tasks/Tasks.setup.php");
-require_once( "{$IP}/includes/wikia/tasks/autoload.php");
 
 /**
  * @name wgDBAvgStatusPoll
@@ -1042,12 +1031,6 @@ $wgResourceLoaderAssetsSkinMapping = [
 $wgArticleCountMethod = "any";
 
 /**
- * @name $wgEnableResourceLoaderRewrites
- * enable rewriting of Resource Loader links on nocookie domain
- */
-$wgEnableResourceLoaderRewrites = true;
-
-/**
  * Javascript minifier used by ResourceLoader
  * @var false|callback
  */
@@ -1261,6 +1244,13 @@ $wgAdDriverAudienceNetworkBidderCountries = null;
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverBeachfrontBidderCountries = null;
+
+/**
+ * @name $wgAdDriverBottomLeaderBoardOnMobileCountries
+ * List of countries where BOTTOM_LEADERBOARD ad slot is enabled on mobile-wiki.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverBottomLeaderBoardOnMobileCountries = null;
 
 /**
  * @name $wgAdDriverIndexExchangeBidderCountries
@@ -1855,19 +1845,6 @@ $wgEnableHostnameInHtmlTitle = true;
 include_once("$IP/includes/wikia/parser/templatetypes/TemplateTypes.setup.php");
 
 /**
- * @name $wgEnableReviveSpotlights
- * Enables Revive Spotlights
- */
-$wgEnableReviveSpotlights = true;
-
-/**
- * @name $wgReviveSpotlightsCountries
- * Enables Revive Spotlights in these countries (given wgEnableReviveSpotlights is also true).
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgReviveSpotlightsCountries = null;
-
-/**
  * @name $wgDisableImprovedGenderSupport
  *
  * Allow to disable "improved" gender support included in MW 1.18
@@ -1887,31 +1864,38 @@ $wgDisableImprovedGenderSupport = true;
 $wgAutoapproveJS = false;
 
 /**
+ * @name $wgWikiaBaseDomainRegex
+ * A central regex string for use in domain checking, so we can easily
+ * update/add/change domains in the future
+ */
+$wgWikiaBaseDomainRegex = '(wikia\\.com|wikia-staging\\.com|wikia-dev\\.(com|us|pl))';
+
+/**
  * Enable recovery
  * It should be always included even if recovery is disabled as we use Recovery classes outside the module
  */
 include_once("$IP/extensions/wikia/ARecoveryEngine/ARecoveryEngine.setup.php");
 
-require_once "$IP/extensions/wikia/ImageReview/ImageReviewEvents.setup.php";
+include_once "$IP/extensions/wikia/ImageReview/ImageReviewEvents.setup.php";
 
 // SUS-2164: Include Facebook extensions - enabled globally
-require_once "$IP/extensions/wikia/FacebookPreferences/FacebookPreferences.setup.php";
-require_once "$IP/extensions/wikia/FacebookTags/FacebookTags.setup.php";
+include_once "$IP/extensions/wikia/FacebookPreferences/FacebookPreferences.setup.php";
+include_once "$IP/extensions/wikia/FacebookTags/FacebookTags.setup.php";
 
 // SUS-2956: Include MultiLookup extension
-require_once "$IP/extensions/wikia/SpecialMultipleLookup/SpecialMultipleLookup.php";
+include_once "$IP/extensions/wikia/SpecialMultipleLookup/SpecialMultipleLookup.php";
 
 // SUS-3475: Extension to update shared city_list table
-require_once "$IP/extensions/wikia/CityList/CityList.setup.php";
+include_once "$IP/extensions/wikia/CityList/CityList.setup.php";
 
 // SUS-3496: Extension to update shared dataware.pages table
-require_once "$IP/extensions/wikia/Pages/Pages.setup.php";
+include_once "$IP/extensions/wikia/Pages/Pages.setup.php";
 
 // SUS-3455: Special:ListGlobalUsers for all wikis
-require_once "$IP/extensions/wikia/ListGlobalUsers/ListGlobalUsers.setup.php";
+include_once "$IP/extensions/wikia/ListGlobalUsers/ListGlobalUsers.setup.php";
 
 // SEC-59: Form-based Userlogout for Monobook
-require_once "$IP/extensions/wikia/UserLogout/UserLogout.setup.php";
+include_once "$IP/extensions/wikia/UserLogout/UserLogout.setup.php";
 
 // SRE-76: Logging classes that have been initially defined in config.
 $wgAutoloadClasses['AuditLog'] = "$IP/includes/wikia/AuditLog.class.php";
