@@ -8,6 +8,82 @@
  * defined in the extension code. Constants specific to a small group of related
  * extensions must be defined in one of them. Those are proper dependency
  * handling practices that aid future maintenance and reverse engineering.
+ * 
+ * Keep the definitions in alphabetical order.
+ */
+
+/**
+ * @name WIKIA_DC_POZ
+ * Named constant for POZ (Poznań) datacenter.
+ * @deprecated Code portability: do not add more datacenter-specific code.
+ */
+define( 'WIKIA_DC_POZ', 'poz' );
+
+/**
+ * @name WIKIA_DC_RES
+ * Named constant for RES (Reston) datacenter.
+ * @deprecated Code portability: do not add more datacenter-specific code.
+ */
+define( 'WIKIA_DC_RES', 'res' );
+
+/**
+ * @name WIKIA_DC_SJC
+ * Named constant for SJC (San Jose) datacenter.
+ * @deprecated Code portability: do not add more datacenter-specific code.
+ */
+define( 'WIKIA_DC_SJC', 'sjc' );
+
+/**
+ * @name WIKIA_ENV_DEV
+ * Name constant for "dev" environment.
+ * @deprecated Code portability: do not add more environment-specific code.
+ */
+define( 'WIKIA_ENV_DEV', 'dev' );
+
+/**
+ * @name WIKIA_ENV_PREVIEW
+ * Name constant for "preview" environment.
+ * @deprecated Code portability: do not add more environment-specific code.
+ */
+define( 'WIKIA_ENV_PREVIEW', 'preview' );
+
+/**
+ * @name WIKIA_ENV_PROD
+ * Name constant for "prod" environment.
+ * @deprecated Code portability: do not add more environment-specific code.
+ */
+define( 'WIKIA_ENV_PROD', 'prod' );
+
+/**
+ * @name WIKIA_ENV_SANDBOX
+ * Name constant for "sandbox" environment.
+ * @deprecated Code portability: do not add more environment-specific code.
+ */
+define( 'WIKIA_ENV_SANDBOX', 'sandbox' );
+
+/**
+ * @name WIKIA_ENV_STABLE
+ * Name constant for "stable" environment.
+ * @deprecated Code portability: do not add more environment-specific code.
+ */
+define( 'WIKIA_ENV_STABLE', 'stable' );
+
+/**
+ * @name WIKIA_ENV_STAGING
+ * Name constant for "staging" environment.
+ * @deprecated Code portability: do not add more environment-specific code.
+ */
+define( 'WIKIA_ENV_STAGING', 'staging' );
+
+/**
+ * @name WIKIA_ENV_VERIFY
+ * Name constant for "verify" environment.
+ * @deprecated Code portability: do not add more environment-specific code.
+ */
+define( 'WIKIA_ENV_VERIFY', 'verify' );
+
+/**
+ *  CONFIG_REVISION: The old contents of the file follows.
  */
 
 /**
