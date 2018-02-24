@@ -493,7 +493,7 @@ class WikiFactoryLoader {
 				#--- some magic, rewritting path, etc legacy data
 				global $_variable_key, $_variable_value;
 
-				set_error_handler( "wfUnserializeHandler" );
+				set_error_handler( 'WikiFactory::unserializeHandler' );
 				$_variable_key = $oRow->cv_name;
 				$_variable_value = $oRow->cv_value;
 				$tUnserVal = unserialize( $oRow->cv_value, [ 'allowed_classes' => false ] );
