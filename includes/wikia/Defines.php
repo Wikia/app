@@ -1,6 +1,13 @@
 <?php
 /**
- * A few constants that might be needed in Wikia code
+ * By the analogy to MediaWiki's includes/Defines.php, this file contains
+ * FANDOM-specific constants of general purpose.
+ * 
+ * IMPORTANT: Only define constants here, that affect the behaviour of the
+ * entire application. Constants tightly coupled with an extension must be
+ * defined in the extension code. Constants specific to a small group of related
+ * extensions must be defined in one of them. Those are proper dependency
+ * handling practices that aid future maintenance and reverse engineering.
  */
 
 /**

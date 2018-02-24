@@ -33,7 +33,6 @@ $wgUseFakeExternalStoreDB = false;
 /**
  * includes common for all wikis
  */
-require_once ( $IP."/includes/wikia/Defines.php" );
 require_once ( $IP."/includes/wikia/GlobalFunctions.php" );
 require_once ( $IP."/includes/wikia/Wikia.php" );
 require_once ( $IP."/includes/wikia/WikiaMailer.php" );

@@ -1,7 +1,11 @@
 <?php
-
+// IP stands for Installation Path, the top folder of MediaWiki codebase.
 $IP = __DIR__;
 
+// FANDOM-specific constants.
+require "$IP/includes/wikia/Defines.php";
+
+// the rest of the old contents
 require "$IP/../config/LocalSettings.php";
 require_once "$IP/includes/wikia/Extensions.php";
 
