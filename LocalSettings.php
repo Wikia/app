@@ -54,7 +54,16 @@ if ( is_string( $wgDBcluster ) && WikiFactoryLoader::checkPerClusterReadOnlyFlag
 	$wgReadOnly = WikiFactoryLoader::PER_CLUSTER_READ_ONLY_MODE_REASON;
 }
 
-# this has to be fired after extensions - because any extension may add some new permissions (initialized with their default values)
+// This is to discard permission changes made by WikiFactory and extensions
+// setups.
+require "$IP/lib/Wikia/src/Service/User/Permissions/data/PermissionsDefinesAfterWikiFactory.php";
+
+// The above has originally been loaded before the statement below. Yet, the
+// old comment brings confusion:
+// 
+// this has to be fired after extensions - because any extension may add some
+// new permissions (initialized with their default values)
+// CONFIG_REVISION: clarify the confusion with permissions and WikiFactory
 if ( !empty( $wgGroupPermissionsLocal ) ) {
 	WikiFactoryLoader::LocalToGlobalPermissions( $wgGroupPermissionsLocal );
 }
