@@ -38,11 +38,11 @@ class GlobalFileTest extends WikiaBaseTest {
 		$this->getSelectRowMock()
 			->expects( $this->any() )
 			->method( 'selectRow' )
-			->will( $this->returnCallback( function( $table, $vars, $conds, $fname ) use ($row) {
+			->will( $this->returnCallback( function( $table, $vars, $conds, $fname ) use ( $row, $cityId ) {
 				if ( $fname == 'GlobalFile::loadData' ) {
 					return $row;
 				} else { // don't mess with WikiFactory accessing database
-					return $this->getCurrentInvocation()->callOriginal();
+					return WikiFactory::IDtoDB( $cityId );
 				}
 			}));
 
@@ -129,7 +129,7 @@ class GlobalFileTest extends WikiaBaseTest {
 		$this->getSelectRowMock()
 			->expects( $this->any() )
 			->method( 'selectRow' )
-			->will( $this->returnCallback( function( $table, $vars, $conds, $fname ) use ($row) {
+			->will( $this->returnCallback( function( $table, $vars, $conds, $fname ) use ( $row, $cityId ) {
 				if ( $fname == 'GlobalFile::loadData' ) {
 					if ( $conds['img_name'] == $row->img_name ) {
 						return $row;
@@ -137,7 +137,7 @@ class GlobalFileTest extends WikiaBaseTest {
 						return false;
 					}
 				} else { // don't mess with WikiFactory accessing database
-					return $this->getCurrentInvocation()->callOriginal();
+					return WikiFactory::IDtoDB( $cityId );
 				}
 			}));
 

@@ -14,7 +14,9 @@ export const getConfig = mercuryListener => ({
 	slotsToEnable: [
 		'MOBILE_IN_CONTENT',
 		'MOBILE_PREFOOTER',
-		'MOBILE_BOTTOM_LEADERBOARD'
+		// TODO remove in ADEN-6719
+		'MOBILE_BOTTOM_LEADERBOARD',
+		'BOTTOM_LEADERBOARD'
 	],
 
 	adjustPadding(iframe, { aspectRatio }) {

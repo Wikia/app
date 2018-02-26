@@ -137,11 +137,12 @@ class UserAttributes {
 	 * @param $value
 	 * @return bool
 	 */
-	private function attributeShouldBeSaved( $name, $value ) {
-		return (
-			( is_null( $this->defaultAttributes[$name] ) ) && !( $value === false || is_null( $value ) ) ||
-			$value != $this->defaultAttributes[$name]
-		);
+	private function attributeShouldBeSaved( $name, $value ): bool {
+		if ( !isset( $this->defaultAttributes[$name] ) ) {
+			return $value !== false && $value !== null;
+		}
+
+		return $value !== $this->defaultAttributes[$name];
 	}
 
 	private function attributeShouldBeDeleted( $name, $value ) {

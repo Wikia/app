@@ -3,7 +3,7 @@
 <script type="text/javascript" charset="utf-8">
 
 $(document).ready(function() {
-	var baseurl = wgScript + "?action=ajax&rs=LookupContribsAjax::axData";
+	var baseurl = mw.util.wikiScript() + "?action=ajax&rs=LookupContribsAjax::axData";
 	var username = '<?= Xml::escapeJsString( $username ) ?>';
 	var mode = '<?= Xml::escapeJsString( $mode ) ?>';
 	var wiki = '<?= Xml::escapeJsString( $wiki ) ?>';

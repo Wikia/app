@@ -169,6 +169,11 @@ class UserTagsStrategyTest extends WikiaBaseTest {
 					wfMessage( 'user-identity-box-group-chatmoderator' )->escaped()
 				]
 			],
+			'Content volunteer' => [ [ 'content-volunteer' ], [], false, false, false,
+				[
+					wfMessage( 'user-identity-box-group-content-volunteer' )->escaped()
+				]
+			],
 		];
 	}
 

@@ -35,10 +35,6 @@ define('ext.wikia.adEngine.slotTracker', [
 			return false;
 			//eventName === 'register';
 		}
-		// TOP_BUTTON_WIDE is uninteresting, TOP_BUTTON_WIDE.force is the real thing
-		if (data.slotname === 'TOP_BUTTON_WIDE') {
-			return false;
-		}
 		// Don't track state events yet
 		if (!context.opts.trackSlotState && eventName.match(/^state/)) {
 			return false;
