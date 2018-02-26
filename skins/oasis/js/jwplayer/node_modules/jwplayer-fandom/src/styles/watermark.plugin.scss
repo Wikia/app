@@ -7,8 +7,19 @@
 	top: 5%;
 	width: 18%;
 
+	.jw-breakpoint-6 & {
+		left: 2.5%;
+		top: 4%;
+	}
+
+	.jw-breakpoint-7 & {
+		left: 2%;
+		top: 3.5%;
+	}
+
 	svg {
 		height: auto;
+		max-width: 105px;
 		width: 100%;
 	}
 }
