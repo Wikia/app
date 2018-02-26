@@ -19,7 +19,7 @@ div#sidebar { display: none !important; }
 <script type="text/javascript" charset="utf-8">
 
 $(document).ready(function() {
-	var baseurl = wgScript + "?action=ajax&rs=axAWCMetricsCategory";
+	var baseurl = mw.util.wikiScript() + "?action=ajax&rs=axAWCMetricsCategory";
 	var cnt = 0;
 	var oTable = $('#wfm-table').dataTable( {
 		bAutoWidth: false,
@@ -140,7 +140,7 @@ $(document).ready(function() {
 		<tr>
 			<th width="10%">Month</th>
 <? if ( count($aCategories) > 0 ) foreach ($aCategories as $id => $catName) : ?>
-			<th width="<?=intval(80/count($aCategories))?>"><?=$catName['name']?></option>
+			<th width="<?=intval(80/count($aCategories))?>"><?=$catName['name']?></th>
 <? endforeach ?>
 			<th width="10%"><?=wfMsg('awc-metrics-sum-day')?></th>
 		</tr>
@@ -154,7 +154,7 @@ $(document).ready(function() {
 		<tr>
 			<th width="10%">Month</th>
 <? if ( count($aCategories) > 0 ) foreach ($aCategories as $id => $catName) : ?>
-			<th width="<?=intval(80/count($aCategories))?>"><?=$catName['name']?></option>
+			<th width="<?=intval(80/count($aCategories))?>"><?=$catName['name']?></th>
 <? endforeach ?>
 			<th width="10%"><?=wfMsg('awc-metrics-sum-day')?></th>
 		</tr>

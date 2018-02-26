@@ -12,9 +12,8 @@ class WallRailHelper {
 		wfProfileIn( __METHOD__ );
 
 		$namespace = $app->wg->Title->getNamespace();
-		$action = $app->wg->Request->getVal( 'action', null );
 
-		if ( $action !== 'history'
+		if ( !BodyController::isEditPage()
 			&& $namespace === NS_USER_WALL
 			&& !$app->wg->Title->isSubpage()
 		) {
@@ -25,11 +24,6 @@ class WallRailHelper {
 					unset( $modules[$rightRailEl] );
 				}
 			}
-		}
-
-		if ( $action === 'history' && WallHelper::isWallNamespace( $namespace ) ) {
-			$modules = [ ];
-			$modules[1440] = [ 'WallRail', 'index', null ];
 		}
 
 		wfProfileOut( __METHOD__ );

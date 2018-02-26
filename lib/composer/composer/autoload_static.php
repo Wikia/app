@@ -3321,7 +3321,6 @@ class ComposerStaticInitb367f9b4bf4d43e0d5ea402c134db26b
         'Wikia\\Search\\Match\\Article' => __DIR__ . '/../../..' . '/extensions/wikia/Search/classes/Match/Article.php',
         'Wikia\\Search\\Match\\Wiki' => __DIR__ . '/../../..' . '/extensions/wikia/Search/classes/Match/Wiki.php',
         'Wikia\\Search\\MediaWikiService' => __DIR__ . '/../../..' . '/extensions/wikia/Search/classes/MediaWikiService.php',
-        'Wikia\\Search\\ProfiledClassFactory' => __DIR__ . '/../../..' . '/extensions/wikia/Search/classes/ProfiledClassFactory.php',
         'Wikia\\Search\\QueryService\\DependencyContainer' => __DIR__ . '/../../..' . '/extensions/wikia/Search/classes/QueryService/DependencyContainer.php',
         'Wikia\\Search\\QueryService\\Factory' => __DIR__ . '/../../..' . '/extensions/wikia/Search/classes/QueryService/Factory.php',
         'Wikia\\Search\\QueryService\\Select\\AbstractSelect' => __DIR__ . '/../../..' . '/extensions/wikia/Search/classes/QueryService/Select/AbstractSelect.php',

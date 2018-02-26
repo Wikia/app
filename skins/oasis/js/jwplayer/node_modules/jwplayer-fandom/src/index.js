@@ -13,6 +13,7 @@ window.wikiaJWPlayer = function (elementId, options, callback) {
 
 		script.onload = function () {
 			wikiaJWPlayerSettingsPlugin.register();
+
 			loadCallbacks.forEach(function (callback) {
 				callback();
 			});
@@ -76,16 +77,16 @@ window.wikiaJWPlayer = function (elementId, options, callback) {
 				localization: i18n
 			};
 
+		playerSetup.plugins = {};
+
 		if (options.settings) {
-			playerSetup.plugins = {
-				wikiaSettings: {
-					showAutoplayToggle: options.settings.showAutoplayToggle,
-					showQuality: options.settings.showQuality,
-					showCaptions: options.settings.showCaptions,
-					autoplay: options.autoplay,
-					selectedCaptionsLanguage: options.selectedCaptionsLanguage,
-					i18n: i18n
-				}
+			playerSetup.plugins['wikiaSettings'] = {
+				showAutoplayToggle: options.settings.showAutoplayToggle,
+				showQuality: options.settings.showQuality,
+				showCaptions: options.settings.showCaptions,
+				autoplay: options.autoplay,
+				selectedCaptionsLanguage: options.selectedCaptionsLanguage,
+				i18n: i18n
 			};
 		}
 
@@ -96,6 +97,10 @@ window.wikiaJWPlayer = function (elementId, options, callback) {
 				oncomplete: options.related.autoplay ? 'autoplay' : 'show',
 				autoplaymessage: i18n.nextUpInSeconds
 			};
+		}
+
+		if (options.watermark !== false) {
+			playerSetup.plugins['wikiaWatermark'] = {};
 		}
 
 		logger.info('setupPlayer');
@@ -128,6 +133,10 @@ window.wikiaJWPlayer = function (elementId, options, callback) {
 		wikiaJWPlayerHandleTabNotActive(playerInstance, options.autoplay);
 
 		wikiaJWPlayerAllowControllOnTouchDevices(playerInstance);
+
+		if(options.watermark !== false) {
+			WikiaJWPlayerWatermarkPlugin.register();
+		}
 
 		if (callback) {
 			callback(playerInstance);

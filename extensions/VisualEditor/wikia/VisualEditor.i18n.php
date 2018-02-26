@@ -2217,6 +2217,7 @@ $messages['ru'] = array(
 	'wikia-visualeditor-dialog-wikiamapinsert-headline' => 'Чтобы добавить карту, выберите уже существующую или создайте новую.  <a href="$1" target="_blank">Узнать больше.</a>',
 	'wikia-visualeditor-dialog-wikiamapinsert-empty-headline' => 'Ещё нет ни одной созданной карты',
 	'wikia-visualeditor-dialog-wikiamapinsert-empty-text' => 'Сотрудничайте с участниками, чтобы добавить интересные точки на карты. <a href="$1" target="_blank">Узнать больше.</a>',
+	'wikia-visualeditor-notification-media-only-premium-videos-allowed' => 'На эту вики можно добавлять только лицензионный контент из <a href="http://video.wikia.com" target="_blank">Видео Библиотеки ФЭНДОМА</a>. Пожалуйста, перейдите на <a href="http://video.wikia.com" target="_blank">video.wikia.com</a> для поиска видео.',
 );
 
 $messages['sc'] = array(
