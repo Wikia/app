@@ -31,7 +31,7 @@ function __makeParamValue() {
 }
 
 $(document).ready(function() {
-	var baseurl = wgScript + "?action=ajax&rs=axAWCMetrics";
+	var baseurl = mw.util.wikiScript() + "?action=ajax&rs=axAWCMetrics";
 
 	var oTable = $('#wfm-table').dataTable( {
 		bAutoWidth: false,

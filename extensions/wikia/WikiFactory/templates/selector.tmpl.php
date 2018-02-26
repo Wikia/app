@@ -59,7 +59,7 @@ table.TablePager { border: 1px solid gray;}
 /*<![CDATA[*/
 	$.loadJQueryAutocomplete(function() {
 		$('#citydomain').autocomplete({
-			serviceUrl: wgServer + wgScript + '?action=ajax&rs=axWFactoryDomainQuery',
+			serviceUrl: mw.util.wikiScript() + '?action=ajax&rs=axWFactoryDomainQuery',
 			onSelect: function(v, d) {
 				// redirect to Special:WikiFactory/<city id>
 				window.location.href = wgArticlePath.replace(/\$1/, wgPageName + '/' + d);
