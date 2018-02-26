@@ -106,7 +106,9 @@ define('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', [
 	}
 
 	function isMegaSlot(slotName) {
-		return megaSlots.indexOf(slotName) !== -1;
+		return megaSlots.indexOf(slotName) !== -1 ||
+				// TODO move BLB to megaSlots in ADEN-6779
+			(getContextTargeting().skin === 'mercury' && slotName === 'BOTTOM_LEADERBOARD');
 	}
 
 	adContext.addCallback(function () {
