@@ -62,7 +62,6 @@ if (!empty($wgEnableWallEngine) || !empty($wgEnableArticleCommentsExt) || !empty
 	// redirect
 	$wgHooks['ArticleFromTitle'][] = 'ArticleCommentList::ArticleFromTitle';
 	// init
-	$wgHooks['BeforePageDisplay'][] = 'ArticleCommentInit::ArticleCommentAddJS';
 	$wgHooks['SkinTemplateTabs'][] = 'ArticleCommentInit::ArticleCommentHideTab';
 	// user talk comment and notify
 	$wgHooks['UserMailer::NotifyUser'][] = 'ArticleCommentInit::ArticleCommentNotifyUser';
@@ -88,12 +87,6 @@ if (!empty($wgEnableWallEngine) || !empty($wgEnableArticleCommentsExt) || !empty
 	$wgHooks['AfterPageHeaderButtons'][] = 'ArticleCommentsHooks::onAfterPageHeaderButtons';
 }
 
-//JSMEssages setup
-JSMessages::registerPackage( 'ArticleCommentsCounter', [
-	'oasis-comments-header',
-	'oasis-comments-showing-most-recent'
-] );
-
 JSMessages::registerPackage( 'WikiaMobileComments', [
 	'wikiamobile-article-comments-replies',
 	'wikiamobile-article-comments-view',
@@ -102,6 +95,31 @@ JSMessages::registerPackage( 'WikiaMobileComments', [
 	'wikiamobile-article-comments-login-post',
 	'wikiamobile-article-comments-post-fail'
 ] );
+
+$wgResourceModules['ext.wikia.articleComments'] = [
+	'scripts' => [ 'js/ArticleComments.js' ],
+	'skinStyles' => [
+		'monobook' => 'css/ArticleComments.css'
+	],
+	'messages' => [
+		'oasis-comments-header',
+		'oasis-comments-showing-most-recent',
+	],
+
+	'localBasePath' => __DIR__,
+	'remoteExtPath' => 'wikia/ArticleComments',
+];
+
+$wgResourceModules['ext.wikia.articleComments.dynamicStyles'] = [
+	'styles' => [
+		'ArticleComments/css/ArticleComments.scss',
+		'MiniEditor/css/MiniEditor.scss',
+		'MiniEditor/css/ArticleComments/ArticleComments.scss',
+	],
+
+	'localBasePath' => __DIR__ . '/..',
+	'remoteExtPath' => 'wikia',
+];
 
 // Ajax dispatcher
 $wgAjaxExportList[] = 'ArticleCommentsAjax';

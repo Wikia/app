@@ -345,8 +345,6 @@ $config['oasis_noads_extensions_js'] = [
 		'//extensions/wikia/Lightbox/scripts/LightboxLoader.js',
 		'#group_imglzy_js',
 		'//extensions/wikia/MiniEditor/js/MiniEditor.js',
-		// needs to load after MiniEditor
-		'#group_articlecomments_js',
 
 		// This needs to load last after all common extensions, please keep this last.
 		'//skins/oasis/js/GlobalModal.js',
@@ -1030,7 +1028,6 @@ $config['monobook_js'] = [
 		'#group_oasis_shared_core_js',
 		'#group_oasis_jquery',
 		'#group_bucky_js',
-		'#group_articlecomments_js',
 
 		// TODO: remove dependency on YUI (see BugId:3116)
 		'//resources/wikia/libraries/yui/utilities/utilities.js',
@@ -1062,32 +1059,6 @@ $config['monobook_js'] = [
 /********** Extensions packages **********/
 
 /** Article Comments **/
-$config['articlecomments_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'oasis', 'monobook' ],
-	'assets' => [
-		'//extensions/wikia/ArticleComments/js/ArticleComments.js',
-	],
-];
-
-$config['articlecomments_scss'] = [
-	'type' => AssetsManager::TYPE_SCSS,
-	'skin' => 'oasis',
-	'assets' => [
-		'//skins/oasis/css/core/ArticleComments.scss',
-	],
-];
-
-$config['articlecomments_mini_editor_scss'] = [
-	'type' => AssetsManager::TYPE_SCSS,
-	'skin' => 'oasis',
-	'assets' => [
-		'#group_articlecomments_scss',
-		'//extensions/wikia/MiniEditor/css/MiniEditor.scss',
-		'//extensions/wikia/MiniEditor/css/ArticleComments/ArticleComments.scss',
-	],
-];
-
 $config['articlecomments_js_wikiamobile'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => 'wikiamobile',

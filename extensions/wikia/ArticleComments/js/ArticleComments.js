@@ -1,14 +1,7 @@
-/* global wgAfterContentAndJS, wgArticleId, wgPageName, wgScript, MiniEditor, skin */
+/* global wgAfterContentAndJS, wgArticleId, wgPageName, MiniEditor, skin */
 
 (function (window, $) {
 	'use strict';
-
-	// This file is included on every page.
-	// If we aren't on an article page, halt execution here.
-	// TODO: revisit this at some point when we have dependency loading.
-	if (!window.wgIsArticle) {
-		return;
-	}
 
 	var $window = $(window),
 		ArticleComments;
@@ -17,16 +10,12 @@
 		animations: {}, // Used by MiniEditor
 		processing: false,
 		mostRecentCount: 0,
-		messagesLoaded: false,
 		miniEditorEnabled: window.wgEnableMiniEditorExt,
 		loadOnDemand: window.wgArticleCommentsLoadOnDemand,
 		initCompleted: false,
 		wrapperSelector: '#WikiaArticleComments',
-		bucky: window.Bucky('ArticleComments'),
 
 		init: function () {
-			ArticleComments.bucky.timer.start('init');
-
 			var $articleComments = $('#article-comments'),
 				$articleCommFbMonit = $('#article-comm-fbMonit'),
 				$fbCommentMessage = $('#fbCommentMessage'),
@@ -78,8 +67,6 @@
 
 			ArticleComments.addHover();
 			ArticleComments.initCompleted = true;
-
-			ArticleComments.bucky.timer.stop('init');
 		},
 
 		actionProxy: function (callback) {
@@ -112,11 +99,10 @@
 			}
 
 			function makeRequest() {
-				ArticleComments.bucky.timer.start('edit.makeRequest');
 				var commentId = e.target.id.replace(/^comment/, ''),
 					$textfield = $('#article-comm-textfield-' + commentId);
 
-				$.getJSON(wgScript, {
+				$.getJSON(mw.util.wikiScript(), {
 					action: 'ajax',
 					article: wgArticleId,
 					convertToFormat: ArticleComments.getLoadConversionFormat($textfield),
@@ -167,7 +153,6 @@
 					}
 
 					ArticleComments.processing = false;
-					ArticleComments.bucky.timer.stop('edit.makeRequest');
 				});
 			}
 
@@ -191,7 +176,6 @@
 		saveEdit: function (e) {
 			var commentId, commentFormDiv, $throbber, $submitButton, $textfield, content;
 
-			ArticleComments.bucky.timer.start('saveEdit');
 			e.preventDefault();
 
 			if (ArticleComments.processing) {
@@ -218,7 +202,7 @@
 				$throbber.css('visibility', 'visible');
 				$textfield.attr('readonly', 'readonly');
 
-				$.postJSON(wgScript, {
+				$.postJSON(mw.util.wikiScript(), {
 					action: 'ajax',
 					article: wgArticleId,
 					convertToFormat: ArticleComments.getSaveConversionFormat($textfield),
@@ -260,7 +244,6 @@
 					$textfield.removeAttr('readonly');
 
 					ArticleComments.processing = false;
-					ArticleComments.bucky.timer.stop('saveEdit');
 				});
 
 				ArticleComments.processing = true;
@@ -268,14 +251,13 @@
 		},
 
 		reply: function (e) {
-			ArticleComments.bucky.timer.start('reply');
 			e.preventDefault();
 
 			if (ArticleComments.processing) {
 				return;
 			}
 
-			$.getJSON(wgScript, {
+			$.getJSON(mw.util.wikiScript(), {
 				action: 'ajax',
 				article: wgArticleId,
 				id: $(this).closest('.comment').attr('id').replace(/^comm-/, ''),
@@ -344,7 +326,6 @@
 				}
 
 				ArticleComments.processing = false;
-				ArticleComments.bucky.timer.stop('reply');
 			});
 
 			ArticleComments.processing = true;
@@ -396,7 +377,6 @@
 			function requestCallback(json) {
 				var $parent, $subcomments, parentId, nodes;
 
-				ArticleComments.bucky.timer.start('postComment.requestCallback');
 				$throbber.css('visibility', 'hidden');
 
 				if (ArticleComments.miniEditorEnabled) {
@@ -431,11 +411,6 @@
 						nodes.prependTo(ArticleComments.$commentsList);
 					}
 
-					//update counter
-					// Counter update disabled for MAIN-7023.  Until we can find a way to have wikitext
-					// as part of this message AND have this JS update the counter, this should stay commented out
-					//$('#article-comments-counter-header').html($.msg('oasis-comments-header', json.counter));
-
 					if (window.skin === 'oasis') {
 						$('#WikiaUserPagesHeader').find('.commentsbubble').html(json.counter);
 
@@ -444,8 +419,8 @@
 								ArticleComments.mostRecentCount + 1 :
 								ArticleComments.$commentsList.children('li').length;
 
-							$('#article-comments-counter-recent').html(
-								$.msg('oasis-comments-showing-most-recent', ArticleComments.mostRecentCount)
+							$('#article-comments-counter-recent').text(
+								mw.message('oasis-comments-showing-most-recent', ArticleComments.mostRecentCount).text()
 							);
 						}
 					}
@@ -461,27 +436,18 @@
 				$target.removeAttr('disabled');
 
 				ArticleComments.processing = false;
-				ArticleComments.bucky.timer.stop('postComment.requestCallback');
 			}
 
 			function makeRequest() {
-				$.postJSON(wgScript, data, requestCallback);
+				$.postJSON(mw.util.wikiScript(), data, requestCallback);
 
 				ArticleComments.processing = true;
 			}
 
-			if (!ArticleComments.messagesLoaded) {
-				$.getMessages('ArticleCommentsCounter', function () {
-					ArticleComments.messagesLoaded = true;
-					makeRequest();
-				});
-			} else {
-				makeRequest();
-			}
+			makeRequest();
 		},
 
 		setPage: function (e) {
-			ArticleComments.bucky.timer.start('setPage');
 
 			var page = parseInt($(this).attr('page'));
 
@@ -489,7 +455,11 @@
 
 			ArticleComments.$commentsList.addClass('loading');
 
-			$.getJSON(wgScript + '?action=ajax&rs=ArticleCommentsAjax&method=axGetComments', {
+			$.getJSON(mw.util.wikiScript(), {
+				action: 'ajax',
+				rs: 'ArticleCommentsAjax',
+				method: 'axGetComments'
+			}, {
 				article: wgArticleId,
 				order: $('#article-comm-order').attr('value'),
 				page: page,
@@ -508,7 +478,6 @@
 				}
 
 				ArticleComments.processing = false;
-				ArticleComments.bucky.timer.stop('setPage');
 			});
 		},
 
@@ -532,7 +501,6 @@
 
 		// Used to initialize MiniEditor
 		editorInit: function (element, events, content, edgeCases) {
-			ArticleComments.bucky.timer.start('editorInit');
 			var $element = $(element),
 				wikiaEditor = $element.data('wikiaEditor'),
 				editorActivated,
@@ -603,7 +571,6 @@
 					initEditor();
 				}
 			}
-			ArticleComments.bucky.timer.stop('editorInit');
 		},
 
 		getContent: function (element) {
@@ -666,7 +633,7 @@
 
 	if (ArticleComments.loadOnDemand) {
 		$(function () {
-			var content, hash, permalink, styleAssets = [], belowTheFold, loadAssets;
+			var content, hash, permalink, belowTheFold, loadAssets;
 
 			// Cache jQuery selector after DOM ready
 			ArticleComments.$wrapper = $(ArticleComments.wrapperSelector);
@@ -679,22 +646,13 @@
 			hash = window.location.hash;
 			permalink = /^#comm-/.test(hash);
 
-			styleAssets.push($.getSassCommonURL('skins/oasis/css/core/ArticleComments.scss'));
-
 			belowTheFold = function () {
 				return ArticleComments.$wrapper.offset().top >= ($window.scrollTop() + $window.height());
 			};
 
-			if (ArticleComments.miniEditorEnabled) {
-				styleAssets.push($.getSassCommonURL('extensions/wikia/MiniEditor/css/MiniEditor.scss'));
-				styleAssets.push($.getSassCommonURL(
-					'extensions/wikia/MiniEditor/css/ArticleComments/ArticleComments.scss'));
-			}
-
 			loadAssets = function () {
-				ArticleComments.bucky.timer.start('loadAssets');
 				$.when(
-					$.getResources(styleAssets),
+					mw.loader.using('ext.wikia.articleComments.dynamicStyles'),
 					$.nirvana.sendRequest({
 						controller: 'ArticleCommentsController',
 						method: 'Content',
@@ -717,8 +675,6 @@
 					if (permalink) {
 						ArticleComments.scrollToElement(hash);
 					}
-
-					ArticleComments.bucky.timer.stop('loadAssets');
 				});
 			};
 
