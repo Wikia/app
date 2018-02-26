@@ -98,6 +98,10 @@ function unifySlotInterface(slot) {
 function loadCustomAd(fallback) {
 	return (params) => {
 		if (getSupportedTemplateNames().includes(params.type)) {
+			if (params.slotName.indexOf(',') !== -1) {
+				params.slotName = params.slotName.split(',')[0];
+			}
+
 			const slot = slotService.getBySlotName(params.slotName);
 			slot.container.parentNode.classList.add('gpt-ad');
 

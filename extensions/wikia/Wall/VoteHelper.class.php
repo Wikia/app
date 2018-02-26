@@ -46,7 +46,7 @@ class VoteHelper {
 		return $out;
 	}
 
-	function addVote( $score = 1 ) {
+	function addVote() {
 		if ( $this->isVoted() ) {
 			return false;
 		}
@@ -54,10 +54,9 @@ class VoteHelper {
 
 		$values = [
 			'article_id' => $this->pageId,
-			'ip' => '',
 			'user_id' => $this->userId,
 			'time' => wfTimestampNow(),
-			'vote' => $score,
+			'vote' => 1, // TODO: SUS-3890 - remove this column
 		];
 
 		$dbr->insert(

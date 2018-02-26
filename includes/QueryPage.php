@@ -298,10 +298,10 @@ abstract class QueryPage extends SpecialPage {
 		 */
 
 		if ( $res ) {
-			$num = $dbr->numRows( $res );
+			$num = 0;
 			# Fetch results
 			$vals = array();
-			while ( $res && $row = $dbr->fetchObject( $res ) ) {
+			foreach ( $res as $row ) {
 				if ( isset( $row->value ) ) {
 					if ( $this->usesTimestamps() ) {
 						$value = wfTimestamp( TS_UNIX,
@@ -313,10 +313,14 @@ abstract class QueryPage extends SpecialPage {
 					$value = 0;
 				}
 
-				$vals[] = array( 'qc_type' => $this->getName(),
-						'qc_namespace' => $row->namespace,
-						'qc_title' => $row->title,
-						'qc_value' => $value );
+				$vals[] = [
+					'qc_type' => $this->getName(),
+					'qc_namespace' => $row->namespace,
+					'qc_title' => $row->title,
+					'qc_value' => $value,
+				];
+
+				$num++;
 			}
 
 			# Save results into the querycache table on the master

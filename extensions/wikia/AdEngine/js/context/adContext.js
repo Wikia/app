@@ -208,6 +208,9 @@ define('ext.wikia.adEngine.adContext', [
 		context.opts.replayAdsForFV = geo.isProperGeo(instantGlobals.wgAdDriverPlayAdsOnNextFVCountries);
 		context.opts.fvAdsFrequency = fvAdsFrequency !== undefined ? fvAdsFrequency : 3;
 		context.opts.disableSra = geo.isProperGeo(instantGlobals.wgAdDriverDisableSraCountries);
+		context.opts.isBLBOnMobileEnabled =
+			geo.isProperGeo(instantGlobals.wgAdDriverBottomLeaderBoardOnMobileCountries);
+
 		// Export the context back to ads.context
 		// Only used by Lightbox.js, WikiaBar.js and AdsInContext.js
 		if (w.ads && w.ads.context) {

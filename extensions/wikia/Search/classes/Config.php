@@ -4,10 +4,10 @@
  */
 namespace Wikia\Search;
 
-use Wikia\Search\MediaWikiService, Wikia\Search\Match;
-use Wikia\Search\TestProfile\Base as BaseProfile;
+use Solarium_Query_Select;
+use Wikia\Search\Match;
 use Wikia\Search\Query\Select as Query;
-use Solarium_Query_Select, Wikia\Search\Traits\ArrayConfigurableTrait;
+use Wikia\Search\Traits\ArrayConfigurableTrait;
 
 /**
  * A config class intended to handle variable flags for search
@@ -1452,9 +1452,9 @@ class Config {
 	 *
 	 * @return \Wikia\Search\MediaWikiService
 	 */
-	protected function getService() {
+	protected function getService(): MediaWikiService {
 		if ( $this->service === null ) {
-			$this->service = ( new \Wikia\Search\ProfiledClassFactory )->get( 'Wikia\Search\MediaWikiService' );
+			$this->service = new MediaWikiService();
 		}
 
 		return $this->service;
