@@ -11,9 +11,7 @@
 
 		if (context.opts.pageFairRecovery === true && !window.wgUserName) {
 			if (context.opts.babRecovery) {
-				doc.addEventListener('bab.blocking', function () {
-					runPFCode();
-				});
+				doc.addEventListener('bab.blocking', runPFCode);
 			} else {
 				runPFCode();
 			}

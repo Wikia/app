@@ -11,9 +11,7 @@
 
 		if (context.opts.instartLogicRecovery) {
 			if (context.opts.babRecovery) {
-				doc.addEventListener('bab.blocking', function () {
-					runILCode();
-				});
+				doc.addEventListener('bab.blocking', runILCode);
 			} else {
 				runILCode();
 			}
