@@ -279,8 +279,8 @@ class HomePageList {
 	}
 
 	/**
-	 * @param $pageTitle
-	 * @param $text
+	 * @param string $pageTitle
+	 * @param string $text
 	 * @return string
 	 */
 	private function createLinkListElement($pageTitle, $text): string
