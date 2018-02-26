@@ -809,7 +809,7 @@ class WikiFactory {
 			// update the memcache entry for the variable, instead of deleting it from the cache
 			// and forcing a SELECT query
 			global $wgMemc;
-			$variable->cv_value = $value;
+			$variable->cv_value = serialize( $value );
 			$wgMemc->set(  static::getVarValueKey( $city_id, $variable->cv_id ), $variable, 3600 );
 		}
 		catch ( DBQueryError $e ) {
