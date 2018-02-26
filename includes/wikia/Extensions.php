@@ -161,7 +161,7 @@ if ( ! empty( $wgEnableLyricWikiExt ) ) {
 	require_once "$LW/lw_impliedRedirects.php";
 	# Turn off subpages on the main namespace (otherwise every AC/DC song links back to "AC"), etc.
 	$wgNamespacesWithSubpages[ NS_MAIN ] = false;
-        
+
 	require_once "$LW/LyricFind/LyricFind.setup.php";
 }
 /**
@@ -1663,6 +1663,8 @@ if ( !empty( $wgUseSiteJs ) && !empty( $wgEnableContentReviewExt ) ) {
 		include( "$IP/extensions/wikia/ContentReview/ContentReviewSpecialPage.setup.php" );
 	}
 }
+
+include "$IP/extensions/wikia/ContentReview/ImportJS.setup.php";
 
 /**
  * Parser tags which are replacing verbatim tags

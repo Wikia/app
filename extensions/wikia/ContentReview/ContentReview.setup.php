@@ -60,8 +60,6 @@ $wgAutoloadClasses['Wikia\ContentReview\Integrations\SlackIntegration'] = __DIR_
  * Helpers
  */
 $wgAutoloadClasses['Wikia\ContentReview\Helper'] = __DIR__ . '/ContentReviewHelper.php';
-$wgAutoloadClasses['Wikia\ContentReview\ImportJS'] = __DIR__ . '/jsmodules/ImportJS.php';
-$wgAutoloadClasses['Wikia\ContentReview\ProfileTags'] = __DIR__ . '/jsmodules/ProfileTags.php';
 
 /**
  * Hooks
