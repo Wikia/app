@@ -33,7 +33,7 @@ class HTTPSOptInHooks {
 			$wikiVariables['basePath'] = preg_replace( '/^http:\/\//', 'https://', $basePath );
 		} elseif ( startsWith( $basePath, 'https://' ) &&
 			!self::userAllowedHTTPS( $user ) &&
-			!$wgDisableHTTPSDowngrade
+			empty( $wgDisableHTTPSDowngrade )
 		) {
 			$wikiVariables['basePath'] = preg_replace( '/^https:\/\//', 'http://', $basePath );
 		}
