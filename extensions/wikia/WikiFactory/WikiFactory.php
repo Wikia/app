@@ -805,6 +805,15 @@ class WikiFactory {
 
 			// SUS-4264 | make sure changes will reach the slave before leaving this method
 			wfWaitForSlaves( $dbw->getDBname() );
+
+			// clear wiki metadata
+			static::clearCache( $city_id );
+
+			// update the memcache entry for the variable, instead of deleting it from the cache
+			// and forcing a SELECT query
+			global $wgMemc;
+			$variable->cv_value = $value;
+			$wgMemc->set(  static::getVarValueKey( $city_id, $variable->cv_id ), $variable, 3600 );
 		}
 		catch ( DBQueryError $e ) {
 			Wikia::log( __METHOD__, "", "Database error, cannot write variable." );
@@ -815,11 +824,6 @@ class WikiFactory {
 			// throw $e;
 		}
 
-
-		static::clearCache( $city_id );
-
-		global $wgMemc;
-		$wgMemc->delete( static::getVarValueKey( $city_id, $variable->cv_id ) );
 
 		wfProfileOut( __METHOD__ );
 		return $bStatus;
