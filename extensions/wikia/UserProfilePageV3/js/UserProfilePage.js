@@ -26,7 +26,7 @@ require(
 			UserProfilePage.bannerNotification = new BannerNotification().setType('error');
 
 			if (UserProfilePage.reloadUrl === '' || UserProfilePage.reloadUrl === false) {
-				UserProfilePage.reloadUrl = mw.config.get('wgScript') + '?title=' + mw.config.get('wgPageName');
+				UserProfilePage.reloadUrl = mw.config.get('wgArticlePath').replace('$1', mw.config.get('wgPageName'));
 			}
 
 			$userIdentityBoxEdit.click(function (event) {
