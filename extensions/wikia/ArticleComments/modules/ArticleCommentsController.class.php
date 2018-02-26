@@ -58,8 +58,6 @@ class ArticleCommentsController extends WikiaController {
 			if ( $isMobile ) {
 				$this->forward( __CLASS__, 'WikiaMobileIndex', false );
 
-			} else if ( $this->app->checkSkin( 'oasis' ) ) {
-				$this->response->addAsset( 'articlecomments' . ( $this->isMiniEditorEnabled ? '_mini_editor' : '' ) . '_scss' );
 			}
 		}
 	}
@@ -210,7 +208,7 @@ class ArticleCommentsController extends WikiaController {
 	}
 
 	public static function onBeforePageDisplay( OutputPage $out, Skin $skin ): bool {
-		if ( class_exists( 'ArticleCommentInit' ) && ArticleCommentInit::ArticleCommentCheck() ) {
+		if ( ArticleCommentInit::ArticleCommentCheck( $out->getTitle() ) ) {
 			$app = F::app();
 
 			// This is the actual entry point for Article Comment generation
@@ -225,6 +223,10 @@ class ArticleCommentsController extends WikiaController {
 						'/extensions/wikia/MiniEditor/js/Wall/Wall.Animations.js'
 					]
 				] );
+			}
+
+			if ( $skin->getSkinName() !== 'wikiamobile' ) {
+				$out->addModules( 'ext.wikia.articleComments' );
 			}
 		}
 		return true;

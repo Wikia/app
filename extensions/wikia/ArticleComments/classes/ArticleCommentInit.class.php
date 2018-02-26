@@ -104,24 +104,6 @@ class ArticleCommentInit {
 		return true;
 	}
 
-	/**
-	 * @param OutputPage $out
-	 * @param Skin $skin
-	 * @return bool
-	 */
-	static public function ArticleCommentAddJS( OutputPage $out, Skin $skin ): bool {
-		global $wgExtensionsPath;
-
-		if ( self::ArticleCommentCheck() ) {
-			// FB#21244 this should run only for MonoBook, Oasis and WikiaMobile have their own SASS-based styling
-			if ( $skin->getSkinName() === 'monobook' ) {
-				$out->addExtensionStyle( "$wgExtensionsPath/wikia/ArticleComments/css/ArticleComments.css" );
-			}
-		}
-
-		return true;
-	}
-
 	// TODO: not used in oasis - remove
 	static public function ArticleCommentHideTab( $skin, &$content_actions ) {
 		global $wgArticleCommentsHideDiscussionTab;
