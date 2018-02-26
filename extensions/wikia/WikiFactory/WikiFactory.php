@@ -803,9 +803,6 @@ class WikiFactory {
 			wfProfileOut( __METHOD__."-citylist" );
 			$dbw->commit();
 
-			// SUS-4264 | make sure changes will reach the slave before leaving this method
-			wfWaitForSlaves( $dbw->getDBname() );
-
 			// clear wiki metadata
 			static::clearCache( $city_id );
 
