@@ -125,7 +125,7 @@ var $Factory = {};
 $Factory.Domain = {};
 $Factory.Variable = {};
 
-var ajaxpath = wgServer + wgScript;
+var ajaxpath = mw.util.wikiScript();
 $Factory.city_id = <?php echo $wiki->city_id ?>;
 $Factory.token = <?= Xml::encodeJsVar( F::app()->wg->User->getEditToken() ) ?>;
 
@@ -136,7 +136,7 @@ $Factory.VariableCallback = {
         //--- now add listeners and events
 		$.loadJQueryAutocomplete(function() {
 			$('#tagName').autocomplete({
-				serviceUrl: wgServer+wgScript+'?action=ajax&rs=WikiFactoryTags::axQuery',
+				serviceUrl: ajaxpath+'?action=ajax&rs=WikiFactoryTags::axQuery',
 				minChars:3,
 				deferRequestBy: 0
 			});

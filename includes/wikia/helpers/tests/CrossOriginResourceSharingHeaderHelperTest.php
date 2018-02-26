@@ -1,7 +1,6 @@
 <?php
-use Wikia\Search\Test\BaseTest;
 
-class CrossOriginResourceSharingHeaderHelperTest extends BaseTest {
+class CrossOriginResourceSharingHeaderHelperTest extends WikiaBaseTest {
 
 	public function tearDown() {
 		parent::tearDown();

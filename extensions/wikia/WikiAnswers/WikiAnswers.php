@@ -18,14 +18,23 @@ $wgHooks['OutputPageParserOutput'][] = 'wfWikiAnswersPageTitle';
 // show the answer box
 $wgHooks['OutputPageBeforeHTML'][] = 'wfWikiAnswersAnswerBox';
 
+$wgResourceModules['ext.wikiAnswers'] = [
+	'scripts' => [ 'ext.wikiAnswers.js' ],
+	'styles' => [ 'ext.wikiAnswers.css' ],
+	'dependencies' => [ 'mediawiki.api' ],
+	'messages' => [ 'ellipsis' ],
+
+	'localBasePath' => __DIR__ . '/modules',
+	'remoteExtPath' => 'wikia/WikiAnswers'
+];
+
 /**
  * @param OutputPage $out
  * @param $skin
  * @return bool
  */
 function wfWikiAnswersAddStyle( OutputPage $out, Skin $skin ): bool {
-	global $wgExtensionsPath;
-	$out->addExtensionStyle( "$wgExtensionsPath/wikia/WikiAnswers/WikiAnswers.css" );
+	$out->addModules( 'ext.wikiAnswers' );
 	return true;
 }
 
@@ -69,6 +78,7 @@ function wfWikiAnswersAnswerBox( OutputPage $out, string &$html ): bool {
 	$answerObj = Answer::newFromTitle( $out->getTitle() );
 	if( $answerObj->isQuestion() &&
 	    in_array( ucfirst(Answer::getSpecialCategory("unanswered")), $out->getCategories() ) ) {
+		$out->addJsConfigVars( 'wgIsUnansweredQuestion', true );
 		$html = F::app()->getView( 'WikiAnswers', 'AnswerBox' )->render();
 	}
 	return true;

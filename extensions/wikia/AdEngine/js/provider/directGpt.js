@@ -2,7 +2,6 @@
 /*jshint maxlen: 150*/
 define('ext.wikia.adEngine.provider.directGpt', [
 	'ext.wikia.adEngine.adContext',
-	'ext.wikia.adEngine.context.uapContext',
 	'ext.wikia.adEngine.provider.factory.wikiaGpt',
 	'ext.wikia.adEngine.slot.service.kiloAdUnitBuilder',
 	'ext.wikia.adEngine.slot.service.megaAdUnitBuilder',
@@ -11,7 +10,6 @@ define('ext.wikia.adEngine.provider.directGpt', [
 	require.optional('ext.wikia.aRecoveryEngine.pageFair.recovery')
 ], function (
 	adContext,
-	uapContext,
 	factory,
 	kiloAdUnitBuilder,
 	megaAdUnitBuilder,
@@ -52,10 +50,6 @@ define('ext.wikia.adEngine.provider.directGpt', [
 		{
 			afterSuccess: function (slotName) {
 				slotTweaker.removeDefaultHeight(slotName);
-				if (!uapContext.isBfaaLoaded()) {
-					slotTweaker.removeTopButtonIfNeeded(slotName);
-					slotTweaker.adjustLeaderboardSize(slotName);
-				}
 			},
 			isInstartLogicRecoverable: instartLogic ? instartLogic.isSlotRecoverable : false,
 			isPageFairRecoverable: pageFair ? pageFair.isSlotRecoverable : false,

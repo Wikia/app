@@ -1130,9 +1130,18 @@ class Parser {
 						// as content so wikitext after parse/reverseparse is not broken. In the second case implode does
 						// not change anything
 						if ( preg_match( "/<[^>]*placeholder.*/", $cell_data[0] ) ) {
-							$cell_data = [ implode( "|", $cell_data ) ];
-							// TODO: if we rename placeholder's tag name to img, remove inner html and closing tag of
-							// TODO: placeholder then we'll have puzzle displayed
+							$cellDataSize = count($cell_data);
+							$cell_data = implode( "|", $cell_data );
+
+							if ( $cellDataSize > 1 ) {
+								$cell_data = preg_replace(
+									'/(<span class="placeholder placeholder-double-brackets"[^>]+>&#x0200B;)(.*?&#x0200B;)(<\/span>)/s',
+									'$1$3',
+									$cell_data
+								);
+							}
+
+							$cell_data = [ $cell_data ];
 						}
 					}
 					// Wikia change end

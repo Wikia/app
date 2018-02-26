@@ -23,9 +23,6 @@ var AjaxPoll = {
 				$('#wpPollVote' + pollId + '-' + barId).html('0').attr('title', '0');
 			}
 		});
-
-		// send purge request
-		//$.post(wgScript, {action: 'purge', title: wgPageName});
 	},
 
 	submit: function( e ) {
@@ -56,7 +53,7 @@ var AjaxPoll = {
 		$('#axPollSubmit' + pollId).attr('disabled', true);
 
 		// send AJAX request
-		$.post(wgScript, params, AjaxPoll.callback, 'json');
+		$.post(mw.util.wikiScript(), params, AjaxPoll.callback, 'json');
 
 		return false;
 	},
