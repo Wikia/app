@@ -17,13 +17,6 @@ describe('ext.wikia.adEngine.slot.service.srcProvider', function () {
 			},
 			instartLogic: {
 				isEnabled: noop
-			},
-			window: {
-				ads: {
-					runtime: {
-						bab: false
-					}
-				}
 			}
 		};
 
@@ -32,7 +25,6 @@ describe('ext.wikia.adEngine.slot.service.srcProvider', function () {
 			mocks.adContext,
 			mocks.adBlockDetection,
 			mocks.adBlockRecovery,
-			mocks.window,
 			mocks.instartLogic
 		);
 	}
