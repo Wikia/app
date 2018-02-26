@@ -2,24 +2,28 @@
 	// overrides `.jw-plugin` bottom property
 	bottom: auto !important;
 	display: none;
-	left: 3%;
+	left: 6px;
+	max-width: 105px;
+	min-width: 60px;
 	opacity: 0.75;
-	top: 5%;
+	top: 6px;
 	width: 18%;
 
-	.jw-breakpoint-6 & {
-		left: 2.5%;
-		top: 4%;
+	.jw-breakpoint-3 &,
+	.jw-breakpoint-4 & {
+		left: 12px;
+		top: 12px;
 	}
 
+	.jw-breakpoint-5 &,
+	.jw-breakpoint-6 &,
 	.jw-breakpoint-7 & {
-		left: 2%;
-		top: 3.5%;
+		left: 18px;
+		top: 18px;
 	}
 
 	svg {
 		height: auto;
-		max-width: 105px;
 		width: 100%;
 	}
 }
