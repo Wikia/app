@@ -3,13 +3,11 @@ define('ext.wikia.adEngine.slot.service.srcProvider',  [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.aRecoveryEngine.adBlockDetection',
 	'ext.wikia.aRecoveryEngine.adBlockRecovery',
-	'wikia.window',
 	require.optional('ext.wikia.aRecoveryEngine.instartLogic.recovery')
 ], function (
 	adContext,
 	adBlockDetection,
 	adBlockRecovery,
-	win,
 	instartLogic
 ) {
 	'use strict';

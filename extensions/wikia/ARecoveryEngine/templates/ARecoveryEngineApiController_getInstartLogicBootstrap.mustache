@@ -5,20 +5,17 @@
 	], function (doc, adContext) {
 		var context = adContext.getContext();
 
+		function runILCode() {
+			{{{code}}}
+		}
+
 		if (context.opts.instartLogicRecovery) {
-			var event = doc.createEvent('Event');
-			event.initEvent('rcv.ilb', true, false);
-
-			doc.addEventListener('rcv.ilb', function () {
-				{{{code}}}
-			});
-
 			if (context.opts.babRecovery) {
 				doc.addEventListener('bab.blocking', function () {
-					doc.dispatchEvent(event);
+					runILCode();
 				});
 			} else {
-				doc.dispatchEvent(event);
+				runILCode();
 			}
 		}
 	});

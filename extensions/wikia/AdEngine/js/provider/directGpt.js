@@ -53,7 +53,6 @@ define('ext.wikia.adEngine.provider.directGpt', [
 			},
 			isInstartLogicRecoverable: instartLogic ? instartLogic.isSlotRecoverable : false,
 			isPageFairRecoverable: pageFair ? pageFair.isSlotRecoverable : false,
-			isRecoveryBehindBab: context.opts.babRecovery,
 			sraEnabled: sraEnabled,
 			atfSlots: atfSlots,
 			getAdUnitBuilder: function () {
