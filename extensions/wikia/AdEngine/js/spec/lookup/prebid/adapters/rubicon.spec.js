@@ -15,6 +15,20 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.rubicon', function () {
 			}
 		},
 		log: function () {},
+		adLogicZoneParams: {
+			getLanguage: function () {
+				return 'en';
+			},
+			getName: function () {
+				return 'test';
+			},
+			getPageType: function () {
+				return 'article';
+			},
+			getSite: function () {
+				return 'life';
+			}
+		},
 		instartLogic: {
 			isBlocking: function() {
 				return false;
@@ -28,6 +42,7 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.rubicon', function () {
 		return modules['ext.wikia.adEngine.lookup.prebid.adapters.rubicon'](
 			mocks.adContext,
 			mocks.slotsContext,
+			mocks.adLogicZoneParams,
 			mocks.instartLogic,
 			mocks.log
 		);
@@ -37,6 +52,9 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.rubicon', function () {
 		mocks.context = {
 			bidders: {
 				rubicon: true
+			},
+			targeting: {
+				wikiIsTop1000: true
 			}
 		};
 	});
@@ -44,6 +62,13 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.rubicon', function () {
 	it('Is disabled when context is disabled', function () {
 		mocks.context.bidders.rubicon = false;
 		var rubicon = getBidder();
+
+		expect(rubicon.isEnabled()).toBeFalsy();
+	});
+
+	it('Is disabled when context is enabled but is blocking', function () {
+		var rubicon = getBidder();
+		spyOn(mocks.instartLogic, 'isBlocking').and.returnValue(true);
 
 		expect(rubicon.isEnabled()).toBeFalsy();
 	});
@@ -59,7 +84,7 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.rubicon', function () {
 		expect(bidder.prepareAdUnit('TOP_LEADERBOARD', {
 			zoneId: 519058,
 			position: 'atf'
-		})).toEqual({
+		}, 'oasis')).toEqual({
 			code: 'TOP_LEADERBOARD',
 			sizes: [
 				[640, 480]
@@ -74,6 +99,14 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.rubicon', function () {
 						zoneId: 519058,
 						name: 'TOP_LEADERBOARD',
 						position: 'atf',
+						inventory: {
+							pos: 'TOP_LEADERBOARD',
+							src: 'gpt',
+							s0: 'life',
+							s1: 'test',
+							s2: 'article',
+							lang: 'en'
+						},
 						video: {
 							playerHeight: 480,
 							playerWidth: 640,
