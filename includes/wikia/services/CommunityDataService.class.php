@@ -17,8 +17,7 @@ class CommunityDataService {
 	public function setCuratedContent( $data, $reason = null ) {
 		$ready = $this->isLegacyFormat( $data ) ? $this->toNew( $data ) : $data;
 		$status = WikiFactory::setVarByName( self::CURATED_CONTENT_VAR_NAME, $this->cityId, $ready, $reason );
-		if ( $status ) {
-			wfWaitForSlaves();
+		if ( $status === true ) {
 			$this->curatedContentData = $ready;
 		}
 		return $status;

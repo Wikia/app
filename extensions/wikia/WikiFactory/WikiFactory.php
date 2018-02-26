@@ -802,6 +802,9 @@ class WikiFactory {
 			}
 			wfProfileOut( __METHOD__."-citylist" );
 			$dbw->commit();
+
+			// SUS-4264 | make sure changes will reach the slave before leaving this method
+			wfWaitForSlaves( $dbw->getDBname() );
 		}
 		catch ( DBQueryError $e ) {
 			Wikia::log( __METHOD__, "", "Database error, cannot write variable." );
