@@ -253,42 +253,6 @@ class DWDimensionApiController extends WikiaApiController {
 		return $result;
 	}
 
-	public function getWikiEmbeds() {
-		$this->getDataPerWiki( array( $this, 'getWikiEmbedsData' ) );
-	}
-
-	private function getWikiEmbedsData( DatabaseMysqli $db ) {
-		$result = [];
-		try {
-			$rows = $db->query( DWDimensionApiControllerSQL::DIMENSION_WIKI_EMBEDS, __METHOD__ );
-			if ( !empty( $rows ) ) {
-				while ( $row = $db->fetchObject( $rows ) ) {
-					$result[] = [
-						'article_id' => $row->article_id,
-						'video_title' => $row->video_title,
-						'added_at' => $row->added_at,
-						'added_by' => $row->added_by,
-						'duration' => $row->duration,
-						'premium' => $row->premium,
-						'hdfile' => $row->hdfile,
-						'removed' => $row->removed,
-						'views_30day' => $row->views_30day,
-						'views_total' => $row->views_total
-					];
-				}
-				$db->freeResult( $rows );
-			}
-		} catch ( DBQueryError $e ) {
-			Wikia\Logger\WikiaLogger::instance()->error(
-				"Exception caught while querying wiki embed data", [
-				'exception' => $e,
-				'db'        => $db->getDBname()
-			] );
-		}
-
-		return $result;
-	}
-
 	public function getWikiImages() {
 		$this->getDataPerWiki( array( $this, 'getWikiImagesData' ) );
 	}
