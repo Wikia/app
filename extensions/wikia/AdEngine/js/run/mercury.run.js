@@ -45,23 +45,19 @@ require([
 	messageListener.init();
 
 	// Custom ads (skins, footer, etc)
-	if (geo.isProperGeo(instantGlobals.wgAdDriverAdProductsBridgeMobileCountries)) {
-		adContext.addCallback(function () {
-			adEngineBridge.init(
-				adTracker,
-				geo,
-				slotRegistry,
-				mercuryListener,
-				pageLevelParams.getPageLevelParams(),
-				adContext,
-				btfBlocker,
-				'mercury'
-			);
-		});
-		win.loadCustomAd = adEngineBridge.loadCustomAd(customAdsLoader.loadCustomAd);
-	} else {
-		win.loadCustomAd = customAdsLoader.loadCustomAd;
-	}
+	adContext.addCallback(function () {
+		adEngineBridge.init(
+			adTracker,
+			geo,
+			slotRegistry,
+			mercuryListener,
+			pageLevelParams.getPageLevelParams(),
+			adContext,
+			btfBlocker,
+			'mercury'
+		);
+	});
+	win.loadCustomAd = adEngineBridge.loadCustomAd(customAdsLoader.loadCustomAd);
 
 	function callBiddersOnConsecutivePageView() {
 		if (geo.isProperGeo(instantGlobals.wgAdDriverPrebidBidderCountries)) {

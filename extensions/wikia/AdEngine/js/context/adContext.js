@@ -141,8 +141,6 @@ define('ext.wikia.adEngine.adContext', [
 			context.opts.delayEngine = true;
 		}
 
-		context.opts.isAdProductsBridgeEnabled = geo.isProperGeo(instantGlobals.wgAdDriverAdProductsBridgeCountries);
-
 		context.opts.premiumOnly = context.targeting.hasFeaturedVideo &&
 			geo.isProperGeo(instantGlobals.wgAdDriverSrcPremiumCountries);
 
