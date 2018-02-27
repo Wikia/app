@@ -1,3 +1,6 @@
+<?php
+    global $wgUser;
+?>
 <div id="answer_level">
 	<div id="answer_box" class="accent">
 		<h1 id="answer_heading"><?= wfMessage( 'answer_this_question' )->escaped(); ?></h1>
