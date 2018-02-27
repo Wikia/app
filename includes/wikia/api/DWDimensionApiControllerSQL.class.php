@@ -64,22 +64,6 @@ class DWDimensionApiControllerSQL {
 		ORDER BY user_id      
 		LIMIT $limit';
 
-	const DIMENSION_WIKI_EMBEDS = '
-		SELECT
-			il.il_from AS article_id,
-			v.video_title,
-			v.added_at,
-			v.added_by,
-			v.duration,
-			v.premium,
-			v.hdfile,
-			v.removed,
-			v.views_30day,
-			v.views_total
-		FROM imagelinks il
-		JOIN video_info v
-		ON v.video_title = il.il_to';
-
 	const DIMENSION_WIKI_IMAGES = '
 		SELECT
 			img_name       AS image_name,
