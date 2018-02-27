@@ -2,8 +2,9 @@ define('wikia.articleVideo.featuredVideo.attribution', ['wikia.mustache', 'wikia
 	'use strict';
 
 	return function (playerInstance) {
-		playerInstance.on('relatedVideoPlay', function (item) {
-			var attributionContainer = $('.featured-video__attribution-container');
+		playerInstance.on('relatedVideoPlay', function (data) {
+			var attributionContainer = $('.featured-video__attribution-container'),
+				item = data.item;
 
 			if (item.username && item.userUrl && item.userAvatarUrl) {
 				var params = {
