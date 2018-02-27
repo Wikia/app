@@ -7,12 +7,6 @@ $wgAutoloadClasses['ArticleVideoController'] = __DIR__ . '/ArticleVideoControlle
 $wgHooks['BeforePageDisplay'][] = 'ArticleVideoHooks::onBeforePageDisplay';
 $wgHooks['InstantGlobalsGetVariables'][] = 'ArticleVideoHooks::onInstantGlobalsGetVariables';
 
-$wgResourceModules['ext.ArticleVideo'] = [
-	'messages' => [
-		'articlevideo-watch',
-	],
-];
-
 $wgResourceModules['ext.ArticleVideo.jw'] = [
 	'scripts' => [
 		'skins/oasis/js/jwplayer/node_modules/jwplayer-fandom/dist/wikiajwplayer.js',
@@ -25,3 +19,11 @@ $wgResourceModules['ext.ArticleVideo.jw'] = [
 		'extensions/wikia/ArticleVideo/scripts/featured-video.jwplayer.moat-tracking.js',
 	],
 ];
+
+$wgExtensionFunctions[] = function() {
+	JSMessages::registerPackage( 'ArticleVideo', [
+		'articlevideo-attribution-from',
+	] );
+};
+
+JSMessages::enqueuePackage('ArticleVideo', JSMessages::EXTERNAL);
