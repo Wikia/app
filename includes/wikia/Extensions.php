@@ -117,11 +117,6 @@ switch ( $wgLanguageCode ) {
 
 }
 
-// new style of per-lang config
-if (!in_array($wgLanguageCode, $wgAvailableAnswersLang) && !in_array(preg_replace("/-.*$/", "", $wgLanguageCode), $wgAvailableAnswersLang)) {
-   $wgEnableAnswersMonacoWidget = false;
-}
-
 /*
  * WikisApi
  */
