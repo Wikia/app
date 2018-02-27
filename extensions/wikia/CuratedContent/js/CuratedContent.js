@@ -62,7 +62,7 @@
 				title = t.title.replace(/ /g, '_');
 			}else{
 				//links in ie. images do not have title attribute
-				title = t.pathname.replace('/wiki/', '');
+				title = t.pathname.replace(window.wgScriptPath + '/wiki/', '');
 			}
 
 			if(title.indexOf(':') > -1) {
