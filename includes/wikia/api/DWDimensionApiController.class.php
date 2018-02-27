@@ -247,7 +247,7 @@ class DWDimensionApiController extends WikiaApiController {
 			Wikia\Logger\WikiaLogger::instance()->error(
 				"Exception caught while querying wiki images data", [
 				'exception' => $e,
-				'db'		=> $db->getDBname()
+				'db' => $db->getDBname()
 			] );
 		}
 		return $result;
@@ -280,7 +280,7 @@ class DWDimensionApiController extends WikiaApiController {
 			Wikia\Logger\WikiaLogger::instance()->error(
 				"Exception caught while querying wiki info data", [
 				'exception' => $e,
-				'db'		=> $db->getDBname()
+				'db' => $db->getDBname()
 			] );
 		}
 
@@ -308,7 +308,7 @@ class DWDimensionApiController extends WikiaApiController {
 			Wikia\Logger\WikiaLogger::instance()->error(
 				"Exception caught while querying wiki info data", [
 				'exception' => $e,
-				'db'		=> $db->getDBname()
+				'db' => $db->getDBname()
 			] );
 		}
 
@@ -327,7 +327,7 @@ class DWDimensionApiController extends WikiaApiController {
 			Wikia\Logger\WikiaLogger::instance()->error(
 				"Exception caught while trying to switch to DB", [
 				'exception' => $e,
-				'db'		=> $dbname
+				'db' => $dbname
 			] );
 			$connection = null;
 		}
