@@ -583,11 +583,6 @@ if(!empty($wgEnableLinkSuggestExt)) {
 	include("$IP/extensions/wikia/LinkSuggest/LinkSuggest.php");
 }
 
-if(!empty($wgEnableWidgetTag)) {
-	include_once("$IP/extensions/wikia/WidgetFramework/WidgetFramework.php");
-	include("$IP/extensions/wikia/WidgetTag/WidgetTag.php");
-}
-
 if(!empty($wgEnableMainPageTag)) {
 	include("$IP/extensions/wikia/MainPageTag/MainPageTag.php");
 }
