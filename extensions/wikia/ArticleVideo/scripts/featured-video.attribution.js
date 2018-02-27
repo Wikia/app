@@ -19,7 +19,7 @@ define('wikia.articleVideo.featuredVideo.attribution',
 					if (attributionContainer.length) {
 						attributionContainer.replaceWith(attributionHTML);
 					} else {
-						$('featured-video').after(attributionHTML);
+						$('.featured-video').after(attributionHTML);
 					}
 				} else {
 					attributionContainer.remove();
