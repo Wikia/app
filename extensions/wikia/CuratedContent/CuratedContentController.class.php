@@ -333,6 +333,10 @@ class CuratedContentController extends WikiaController {
 
 				if ( $status ) {
 					Hooks::run( 'CuratedContentSave', [ $sections ] );
+
+					// SUS-4254 | a dirty hack to trigger purges and wait a bit for them to happen
+					CeleryPurge::onRestInPeace();
+					sleep( 2 );
 				}
 			}
 			$this->response->setVal( 'status', $status );
