@@ -1,5 +1,9 @@
-define('wikia.articleVideo.featuredVideo.attribution',
-	['wikia.mustache', 'wikia.articleVideo.featuredVideo.templates', 'JSMessages'], function (mustache, templates, msg) {
+define('wikia.articleVideo.featuredVideo.attribution', [
+		'wikia.mustache',
+		'wikia.articleVideo.featuredVideo.templates',
+		'JSMessages'
+	],
+	function (mustache, templates, msg) {
 		'use strict';
 
 		return function (playerInstance) {
@@ -21,9 +25,11 @@ define('wikia.articleVideo.featuredVideo.attribution',
 					} else {
 						$('.featured-video').after(attributionHTML);
 					}
+
 				} else {
 					attributionContainer.remove();
 				}
+
 			});
 		}
 	});

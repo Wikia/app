@@ -65,14 +65,14 @@ class ArticleVideoController extends WikiaController {
 	}
 
 	public function attribution() {
-		$videoDetails = $this->getVal('videoDetails');
+		$videoDetails = $this->getVal( 'videoDetails' );
 
-		$this->response->setValues([
+		$this->response->setValues( [
 			'userAvatarUrl' => $videoDetails['userAvatarUrl'],
 			'userUrl' => $videoDetails['userUrl'],
 			'username' => $videoDetails['username'],
-			'fromMsg' => wfMessage( 'articlevideo-attribution-from' )->escaped()
-		]);
+			'fromMsg' => wfMessage( 'articlevideo-attribution-from' )->escaped(),
+		] );
 
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
 	}

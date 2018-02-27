@@ -20,10 +20,10 @@ $wgResourceModules['ext.ArticleVideo.jw'] = [
 	],
 ];
 
-$wgExtensionFunctions[] = function() {
+$wgExtensionFunctions[] = function () {
 	JSMessages::registerPackage( 'ArticleVideo', [
 		'articlevideo-attribution-from',
 	] );
 };
 
-JSMessages::enqueuePackage('ArticleVideo', JSMessages::EXTERNAL);
+JSMessages::enqueuePackage( 'ArticleVideo', JSMessages::EXTERNAL );
