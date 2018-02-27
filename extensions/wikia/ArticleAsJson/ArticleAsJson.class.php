@@ -355,7 +355,7 @@ class ArticleAsJson {
 					'content' => $text,
 					'media' => self::$media,
 					'users' => self::$users,
-					'heroImage' => self::$heroImage
+					'heroImage' => empty(self::$heroImage) ? null : self::$heroImage
 				]
 			);
 		}
