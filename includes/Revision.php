@@ -268,7 +268,7 @@ class Revision implements IDBAccessObject {
 		//use master, as this function can be called during article creation hook handling
 		$db = wfGetDB( DB_MASTER );
 		return $db->selectField(
-			array( 'revision', 'page' ),
+			'revision',
 			'rev_timestamp',
 			[ 'rev_page' => intval( $pageid ) ],
 			__METHOD__,
