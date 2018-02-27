@@ -48,6 +48,7 @@ window.wikiaJWPlayer = function (elementId, options, callback) {
 	 * @param elementId
 	 * @param options
 	 * @param logger
+	 * @param lang
 	 * @param i18n
 	 * @return {*}
 	 */
@@ -119,7 +120,7 @@ window.wikiaJWPlayer = function (elementId, options, callback) {
 
 		wikiaJWPlayerIdleScreen(playerInstance, i18n);
 		wikiaJWPlayerReplaceIcons(playerInstance);
-		wikiaJWPlayerEvents(playerInstance, options.autoplay, logger);
+		wikiaJWPlayerEvents(playerInstance, options.autoplay, logger, options.related.playlistId);
 
 		if (options.related) {
 			wikiaJWPlayerRelatedVideoSound(playerInstance);
@@ -127,7 +128,7 @@ window.wikiaJWPlayer = function (elementId, options, callback) {
 
 		if (options.tracking) {
 			options.tracking.pixel = options.videoDetails.playlist[0].pixel;
-			wikiaJWPlayerTracking(playerInstance, options.autoplay, options.tracking);
+			wikiaJWPlayerTracking(playerInstance, options.autoplay, options.tracking, logger, options.related.playlistId);
 		}
 
 		wikiaJWPlayerHandleTabNotActive(playerInstance, options.autoplay);
