@@ -283,11 +283,11 @@ class HomePageList {
 	 * @param string $text
 	 * @return string
 	 */
-	private function createLinkListElement($pageTitle, $text): string
-	{
-		$title = Title::newFromText($pageTitle);
-		if ($title) {
-			return "<li><a href=\"" . urlencode($title->getLocalURL()) . "\">" . htmlspecialchars(Answer::s2q($text)) . "</a></li>";
+	private function createLinkListElement( $pageTitle, $text ): string {
+		$title = Title::newFromText( $pageTitle );
+		if ( $title ) {
+			return "<li><a href=\"" . urlencode( $title->getLocalURL() ) . "\">" .
+				   htmlspecialchars( Answer::s2q( $text ) ) . "</a></li>";
 		} else {
 			return "";
 		}
