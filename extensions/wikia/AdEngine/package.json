@@ -23,7 +23,7 @@
   },
   "dependencies": {
     "@wikia/ad-engine": "^9.7.0",
-    "@wikia/ad-products": "^4.2.0",
+    "@wikia/ad-products": "^4.2.2",
     "core-decorators": "^0.20.0",
     "lodash": "^4.17.4"
   }
