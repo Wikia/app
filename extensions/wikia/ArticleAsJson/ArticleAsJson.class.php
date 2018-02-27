@@ -3,11 +3,12 @@
 class ArticleAsJson {
 	static $media = [ ];
 	static $users = [ ];
+	static $heroImage = [ ];
 	static $mediaDetailConfig = [
 		'imageMaxWidth' => false
 	];
 
-	const CACHE_VERSION = 1;
+	const CACHE_VERSION = 2;
 
 	const ICON_MAX_SIZE = 48;
 	// Line height in Mercury
@@ -225,7 +226,12 @@ class ArticleAsJson {
 		if ( $title ) {
 			$details = self::getMediaDetailWithSizeFallback( $title, self::$mediaDetailConfig );
 			$details['context'] = $data['context'];
-			self::$media[] = self::createMediaObject( $details, $title->getText(), $data['caption'] );
+			$mediaObj = self::createMediaObject( $details, $title->getText(), $data['caption'] );
+			self::$media[] = $mediaObj;
+
+			if ($details['context'] == 'infobox-hero-image') {
+				self::$heroImage = $mediaObj;
+			}
 			$ref = count( self::$media ) - 1;
 		}
 
@@ -348,7 +354,8 @@ class ArticleAsJson {
 				[
 					'content' => $text,
 					'media' => self::$media,
-					'users' => self::$users
+					'users' => self::$users,
+					'heroImage' => self::$heroImage
 				]
 			);
 		}
