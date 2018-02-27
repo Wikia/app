@@ -810,7 +810,7 @@ class WikiFactory {
 			// and forcing a SELECT query
 			global $wgMemc;
 			$variable->cv_value = serialize( $value );
-			$wgMemc->set(  static::getVarValueKey( $city_id, $variable->cv_id ), $variable, 3600 );
+			$wgMemc->set(  static::getVarValueKey( $city_id, $variable->cv_id ), $variable, WikiaResponse::CACHE_STANDARD );
 		}
 		catch ( DBQueryError $e ) {
 			Wikia::log( __METHOD__, "", "Database error, cannot write variable." );
@@ -2124,7 +2124,7 @@ class WikiFactory {
 		if ( !empty( $city_id ) ) {
 			$oRow2 = WikiaDataAccess::cache(
 				static::getVarValueKey( $city_id, $oRow->cv_id ),
-				3600,
+				WikiaResponse::CACHE_STANDARD,
 				function() use ($dbr, $oRow, $city_id, $fname) {
 					return $dbr->selectRow(
 						[ "city_variables" ],
