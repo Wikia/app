@@ -25,7 +25,7 @@
 		link = links[i];
 		path = link.pathname || link.href;
 		parent = link.parentElement;
-		notAllowed = ((link.host && link.host !== host) || path === '/wikia.php') &&
+		notAllowed = ((link.host && link.host !== host) || path === window.wgScriptPath + '/wikia.php') &&
 			parent.className.indexOf('thumb') === -1;
 
 		if(!notAllowed && path.indexOf(':') > -1) {
