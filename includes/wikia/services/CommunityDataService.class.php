@@ -14,7 +14,7 @@ class CommunityDataService {
 		$this->cityId = $cityId;
 	}
 
-	public function setCuratedContent( $data, $reason = null ) {
+	public function setCuratedContent( $data, $reason = null ) : bool {
 		$ready = $this->isLegacyFormat( $data ) ? $this->toNew( $data ) : $data;
 		$status = WikiFactory::setVarByName( self::CURATED_CONTENT_VAR_NAME, $this->cityId, $ready, $reason );
 		if ( $status === true ) {
