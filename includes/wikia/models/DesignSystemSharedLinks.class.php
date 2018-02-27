@@ -66,7 +66,7 @@ class DesignSystemSharedLinks {
 			'about' => '//www.wikia.com/about',
 			'careers' => 'https://careers.wikia.com',
 			'press' => '//fandom.wikia.com/press',
-			'contact' => '//fandom.wikia.com/about',
+			'contact' => '//fandom.wikia.com/about#contact',
 			'wikia-org' => 'https://www.wikia.org',
 			'terms-of-use' => '//www.wikia.com/Terms_of_use',
 			'privacy-policy' => '//www.wikia.com/Privacy_Policy',
