@@ -37,7 +37,8 @@ class UpdatePagesTask extends BaseTask {
 			'page_is_content' => $pagesEntry->isContentPage(),
 			'page_is_redirect' => $pagesEntry->isRedirect(),
 			'page_latest' => $pagesEntry->getLatestRevisionId(),
-			'page_last_edited' => $pagesEntry->getLatestRevisionTimestamp()
+			'page_last_edited' => $pagesEntry->getLatestRevisionTimestamp(),
+			'page_created_at' => $pagesEntry->getCreatedAtTimestamp()
 		];
 
 		$primaryKey = [ 'page_id','page_wikia_id' ];

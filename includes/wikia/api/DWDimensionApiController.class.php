@@ -147,6 +147,7 @@ class DWDimensionApiController extends WikiaApiController {
                 'article_id' => $row->article_id,
                 'title' => $row->title,
                 'is_redirect' => $row->is_redirect,
+				'created_at' => ( new DateTime( $row->created_at ) )->format( 'Y-m-d H:i:s' )
             ];
         }
         $db->freeResult( $dbResult );
@@ -220,37 +221,6 @@ class DWDimensionApiController extends WikiaApiController {
 			null,
 			WikiaResponse::CACHE_DISABLED
 		);
-	}
-
-	public function getWikiArticles() {
-		$this->getDataPerWiki( array( $this, 'getWikiArticlesData' ) );
-	}
-
-	private function getWikiArticlesData( DatabaseMysqli $db ) {
-		$result = [];
-		try {
-			$rows = $db->query( DWDimensionApiControllerSQL::DIMENSION_WIKI_ARTICLES, __METHOD__ );
-			if ( !empty( $rows ) ) {
-				while ( $row = $db->fetchObject( $rows ) ) {
-					$result[] = [
-						'namespace_id' => $row->namespace_id,
-						'article_id' => $row->article_id,
-						'title' => $row->title,
-						'is_redirect' => $row->is_redirect,
-						'created_at' => ( new DateTime( $row->created_at ) )->format( 'Y-m-d H:i:s' )
-					];
-				}
-				$db->freeResult( $rows );
-			}
-		} catch ( DBQueryError $e ) {
-			Wikia\Logger\WikiaLogger::instance()->error(
-				"Exception caught while querying wiki article data", [
-				'exception' => $e,
-				'db'        => $db->getDBname()
-			] );
-		}
-
-		return $result;
 	}
 
 	public function getWikiImages() {

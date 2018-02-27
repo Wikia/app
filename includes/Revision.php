@@ -259,6 +259,24 @@ class Revision implements IDBAccessObject {
 	}
 
 	/**
+	 * Gets the timestamp of the oldest revision - so pretty much article creation date.
+	 *
+	 * @param $pageid int page id
+	 * @return false|string timestamp or false on failure
+	 */
+	public static function getOldestRevisionTimestamp( $pageid ) {
+		//use master, as this function can be called during article creation hook handling
+		$db = wfGetDB( DB_MASTER );
+		return $db->selectField(
+			array( 'revision', 'page' ),
+			'rev_timestamp',
+			[ 'rev_page' => intval( $pageid ) ],
+			__METHOD__,
+			[ 'ORDER BY' => 'rev_id', 'LIMIT' => 1 ]
+		);
+	}
+
+	/**
 	 * Given a set of conditions, fetch a revision.
 	 *
 	 * @param $conditions Array
