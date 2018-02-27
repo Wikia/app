@@ -123,6 +123,16 @@ define('ext.wikia.adEngine.lookup.lookupFactory', [
 			});
 		}
 
+		function waitForResponse(milisToTimeout) {
+			return Promise.createWithTimeout(function (resolve) {
+				if (hasResponse()) {
+					resolve();
+				} else {
+					addResponseListener(resolve);
+				}
+			}, milisToTimeout);
+		}
+
 		resetState();
 
 		if (mercuryListener) {
@@ -138,7 +148,8 @@ define('ext.wikia.adEngine.lookup.lookupFactory', [
 			hasResponse: hasResponse,
 			isSlotSupported: isSlotSupported,
 			trackState: trackState,
-			wasCalled: wasCalled
+			wasCalled: wasCalled,
+			waitForResponse: waitForResponse
 		};
 	}
 
