@@ -37,7 +37,6 @@ $wgAutoloadClasses['WallExternalController'] =  $dir . '/WallExternalController.
 $wgAutoloadClasses['WallHistoryController'] =  $dir . '/WallHistoryController.class.php';
 $wgAutoloadClasses['WallHooksHelper'] =  $dir . '/WallHooksHelper.class.php';
 $wgAutoloadClasses['WallRailHelper'] =  $dir . '/WallRailHelper.class.php';
-$wgAutoloadClasses['WallRailController'] =  $dir . '/WallRailController.class.php';
 $wgAutoloadClasses['WallHelper'] =  $dir . '/WallHelper.class.php';
 $wgAutoloadClasses['WallHistory'] =  $dir . '/WallHistory.class.php';
 $wgAutoloadClasses['WallBaseController'] =  $dir . '/WallBaseController.class.php';

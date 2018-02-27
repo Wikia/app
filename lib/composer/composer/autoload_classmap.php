@@ -2843,7 +2843,6 @@ return array(
     'Wikia\\Search\\Match\\Article' => $baseDir . '/extensions/wikia/Search/classes/Match/Article.php',
     'Wikia\\Search\\Match\\Wiki' => $baseDir . '/extensions/wikia/Search/classes/Match/Wiki.php',
     'Wikia\\Search\\MediaWikiService' => $baseDir . '/extensions/wikia/Search/classes/MediaWikiService.php',
-    'Wikia\\Search\\ProfiledClassFactory' => $baseDir . '/extensions/wikia/Search/classes/ProfiledClassFactory.php',
     'Wikia\\Search\\QueryService\\DependencyContainer' => $baseDir . '/extensions/wikia/Search/classes/QueryService/DependencyContainer.php',
     'Wikia\\Search\\QueryService\\Factory' => $baseDir . '/extensions/wikia/Search/classes/QueryService/Factory.php',
     'Wikia\\Search\\QueryService\\Select\\AbstractSelect' => $baseDir . '/extensions/wikia/Search/classes/QueryService/Select/AbstractSelect.php',

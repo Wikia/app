@@ -117,11 +117,6 @@ switch ( $wgLanguageCode ) {
 
 }
 
-// new style of per-lang config
-if (!in_array($wgLanguageCode, $wgAvailableAnswersLang) && !in_array(preg_replace("/-.*$/", "", $wgLanguageCode), $wgAvailableAnswersLang)) {
-   $wgEnableAnswersMonacoWidget = false;
-}
-
 /*
  * WikisApi
  */
@@ -581,11 +576,6 @@ if(!empty($wgEnableWikiaMiniUploadExt)) {
 
 if(!empty($wgEnableLinkSuggestExt)) {
 	include("$IP/extensions/wikia/LinkSuggest/LinkSuggest.php");
-}
-
-if(!empty($wgEnableWidgetTag)) {
-	include_once("$IP/extensions/wikia/WidgetFramework/WidgetFramework.php");
-	include("$IP/extensions/wikia/WidgetTag/WidgetTag.php");
 }
 
 if(!empty($wgEnableMainPageTag)) {

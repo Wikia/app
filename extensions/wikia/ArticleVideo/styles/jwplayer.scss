@@ -43,6 +43,10 @@
 				display: block;
 			}
 		}
+
+	  	.jw-related-close {
+			display: none;
+		}
 	}
 
 	&__details {
@@ -80,7 +84,7 @@
 	&__close {
 		display: none;
 		fill: #fff;
-		left: 0;
+		right: 0;
 		padding: 7px;
 		position: absolute;
 		top: 0;
