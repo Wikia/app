@@ -38,12 +38,15 @@ class UpdatePagesTask extends BaseTask {
 			'page_is_redirect' => $pagesEntry->isRedirect(),
 			'page_latest' => $pagesEntry->getLatestRevisionId(),
 			'page_last_edited' => $pagesEntry->getLatestRevisionTimestamp(),
-			'page_created_at' => $pagesEntry->getCreatedAtTimestamp()
+			//This value is only used for inserts - so we can take current revision timestamp
+			//and on updates it will be left with previous value
+			'page_created_at' => $pagesEntry->getLatestRevisionTimestamp()
 		];
 
 		$primaryKey = [ 'page_id','page_wikia_id' ];
 
-		$fieldsToUpdate = array_diff_key( $rowToInsert, array_flip( $primaryKey ) );
+		$fieldsToUpdate = array_diff_key( $rowToInsert,
+			array_flip( array_merge( $primaryKey, 'page_created_at' ) ) );
 
 		$this->getDatawareMaster()
 			->upsert( 'pages', [ $rowToInsert ], [ $primaryKey ], $fieldsToUpdate, __METHOD__ );

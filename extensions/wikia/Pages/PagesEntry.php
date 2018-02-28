@@ -24,9 +24,6 @@ class PagesEntry implements JsonSerializable {
 	/** @var string $latestRevisionTimestamp */
 	private $latestRevisionTimestamp;
 
-	/** @var string $createdAtTimestamp */
-	private $createdAtTimestamp;
-
 	public static function newFromPageAndRevision( WikiPage $wikiPage, Revision $revision ): PagesEntry {
 		$pagesEntry = new PagesEntry();
 
@@ -42,8 +39,6 @@ class PagesEntry implements JsonSerializable {
 
 		$pagesEntry->latestRevisionId = $revision->getId();
 		$pagesEntry->latestRevisionTimestamp = $revision->getTimestamp();
-
-		$pagesEntry->createdAtTimestamp = Revision::getOldestRevisionTimestamp( $revision->getPage() );
 
 		return $pagesEntry;
 	}
@@ -95,13 +90,6 @@ class PagesEntry implements JsonSerializable {
 	 */
 	public function getLatestRevisionTimestamp(): string {
 		return $this->latestRevisionTimestamp;
-	}
-
-	/**
-	 * @return string
-	 */
-	public function getCreatedAtTimestamp(): string {
-		return $this->createdAtTimestamp;
 	}
 
 	public function jsonSerialize() {
