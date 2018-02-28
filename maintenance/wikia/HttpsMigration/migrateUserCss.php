@@ -10,8 +10,8 @@
 ini_set( 'display_errors', 'stderr' );
 ini_set( 'error_reporting', E_NOTICE );
 
-require_once( dirname( __FILE__ ) . '/../../Maintenance.php' );
-//require_once('/usr/wikia/slot1/current/src/maintenance/Maintenance.php');
+//require_once( dirname( __FILE__ ) . '/../../Maintenance.php' );
+require_once('/usr/wikia/slot1/current/src/maintenance/Maintenance.php');
 
 use \Wikia\Logger\WikiaLogger;
 
@@ -81,7 +81,9 @@ class MigrateUserCssToHttps extends Maintenance {
 
 	private function isVignetteUrl( $url ) {
 		$host = parse_url( $url, PHP_URL_HOST );
-		return preg_match( '/^(vignette|images|img|static)\d*\.wikia.nocookie.net$/', $host ) || $host === 'images.wikia.com';
+		return (preg_match( '/^(vignette|images|img|static)\d*\.wikia.nocookie.net$/', $host ) ||
+			$host === 'images.wikia.com' ||
+			$host === 'static.wikia.com');
 	}
 
 	private function upgradeToHttps( $url ) {
@@ -91,20 +93,37 @@ class MigrateUserCssToHttps extends Maintenance {
 		return $url;
 	}
 
-	private function countSubdomains( $url ) {
-		$host = parse_url( $url, PHP_URL_HOST );
-		return substr_count( $host, '.' );
+	private $currentHost = null;
+
+	private function isCurrentWikiLink( $url ) {
+		global $wgServer;
+		if ( !$this->currentHost ) {
+			$this->currentHost = parse_url( $wgServer, PHP_URL_HOST );
+		}
+		return parse_url( $wgServer, PHP_URL_HOST ) === $this->currentHost;
 	}
 
-	private function maybeProtolRelative( $url ) {
-		if ( $this->isWikiaComLink( $url ) || $this->isHttpLink( $url ) || $this->countSubdomains( $url ) === 2 ) {
-			$url = wfProtocolUrlToRelative( $url );
+	private function stripProtocolAndHost( $url ) {
+		$parse_url = parse_url( $url );
+		return $parse_url['path'] .
+			( ( isset( $parse_url['query'] ) ) ? '?' . $parse_url['query'] : '' ) .
+			( ( isset( $parse_url['fragment'] ) ) ? '#' . $parse_url['fragment'] : '' );
+	}
+
+	private function fixWikiLink( $url ) {
+		if ( $this->isCurrentWikiLink( $url ) ) {
+			$url = $this->stripProtocolAndHost( $url );
+		} else {
+			if ( $this->isWikiaComLink( $url ) && $this->isHttpLink( $url ) ) {
+				$url = wfProtocolUrlToRelative( $url );
+			}
 		}
 		return $url;
 	}
 
 	private function upgradeThirdPartyLink( $url ) {
-		$known_https_hosts = [ 'en.wikipedia.org', 'i.imgur.com', 'upload.wikimedia.org', 'fonts.googleapis.com' ];
+		$known_https_hosts = [ 'en.wikipedia.org', 'i.imgur.com', 'upload.wikimedia.org', 'fonts.googleapis.com',
+			'commons.wikimedia.org'];
 		$host = parse_url( $url, PHP_URL_HOST );
 		if ( in_array( $host, $known_https_hosts ) ) {
 			$newUrl = $this->upgradeToHttps( $url );
@@ -129,7 +148,7 @@ class MigrateUserCssToHttps extends Maintenance {
 			$this->logUrlChange( 'Replaced vignette url', $matches[1], $url );
 		} else {
 			if ( $this->isWikiaComLink( $url ) ) {
-				$url = $this->maybeProtolRelative( $url );
+				$url = $this->fixWikiLink( $url );
 				$this->logUrlChange( 'Converted url to protocol relative', $matches[1], $url );
 			} else {
 				$this->output( "Don't know to handle {$url}\n" );
@@ -179,7 +198,6 @@ class MigrateUserCssToHttps extends Maintenance {
 					// $status->isGood()
 					*/
 				}
-				// save changes, return true
 				return true;
 			}
 		}
