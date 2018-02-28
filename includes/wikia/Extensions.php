@@ -1030,12 +1030,6 @@ if (!empty($wgEnableCategoryExhibitionExt)) {
 		include("$IP/extensions/wikia/CategoryExhibition/CategoryExhibition_setup.php" );
 }
 
-# SponsorshipDashboard
-if (!empty($wgEnableSponsorshipDashboardExt)) {
-	include("$IP/extensions/wikia/SponsorshipDashboard/SponsorshipDashboard_setup.php" );
-	include("$IP/extensions/wikia/GoogleAnalyticsSampling/GoogleAnalyticsSampling.setup.php");
-}
-
 /*
  * Send email from the app authenticated by a secret token
  */
