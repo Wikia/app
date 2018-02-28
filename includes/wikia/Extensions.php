@@ -1663,10 +1663,6 @@ if ( !empty( $wgEnablePolldaddyTagExt ) ) {
 	include "$IP/extensions/wikia/PolldaddyTag/PolldaddyTag.setup.php";
 }
 
-if ( !empty( $wgEnablePollSnackTagExt ) ) {
-	include "$IP/extensions/wikia/PollSnackTag/PollSnackTag.setup.php";
-}
-
 if ( !empty( $wgEnableSoundCloudTagExt ) ) {
 	include "$IP/extensions/wikia/SoundCloudTag/SoundCloudTag.setup.php";
 }
