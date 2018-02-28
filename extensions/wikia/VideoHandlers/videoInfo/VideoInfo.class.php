@@ -12,7 +12,6 @@ class VideoInfo extends WikiaModel {
 	protected $addedAt = 0;
 	protected $addedBy = 0;
 	protected $duration = 0;
-	protected $hdfile = 0;
 	protected $removed = 0;
 	protected $featured = 0;
 
@@ -23,7 +22,6 @@ class VideoInfo extends WikiaModel {
 		'addedAt',
 		'addedBy',
 		'duration',
-		'hdfile',
 		'removed',
 		'featured',
 	);
@@ -125,14 +123,6 @@ class VideoInfo extends WikiaModel {
 	}
 
 	/**
-	 * Check if it is hd file
-	 * @return boolean
-	 */
-	public function isHdfile() {
-		return ( $this->hdfile == 1 );
-	}
-
-	/**
 	 * check if it is removed
 	 * @return boolean
 	 */
@@ -167,7 +157,6 @@ class VideoInfo extends WikiaModel {
 					'added_at' => $this->addedAt,
 					'added_by' => $this->addedBy,
 					'duration' => $this->duration,
-					'hdfile' => $this->hdfile,
 					'removed' => $this->removed,
 					'featured' => $this->featured,
 				),
@@ -213,7 +202,6 @@ class VideoInfo extends WikiaModel {
 					'added_at' => $this->addedAt,
 					'added_by' => $this->addedBy,
 					'duration' => $this->duration,
-					'hdfile' => $this->hdfile,
 					'removed' => $this->removed,
 					'featured' => $this->featured,
 				),
@@ -307,7 +295,6 @@ class VideoInfo extends WikiaModel {
 			'addedAt' => $row->added_at,
 			'addedBy' => $row->added_by,
 			'duration' => $row->duration,
-			'hdfile' => $row->hdfile,
 			'removed' => $row->removed,
 			'featured' => $row->featured,
 		);

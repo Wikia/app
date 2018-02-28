@@ -38,36 +38,14 @@ abstract class ApiWrapper {
 	}
 
 	/**
-	 *
 	 * @param string $videoId
-	 * @param array $overrideMetadata one or more metadata fields that override API response
-	 * In this case, metadata is passed through constructor, so $orverrideMetadata should be set.
 	 */
-	public function __construct( $videoId, $overrideMetadata = array() ) {
-
-		wfProfileIn( __METHOD__ );
-
+	public function __construct( $videoId ) {
 		$this->videoId = $this->sanitizeVideoId( $videoId );
 
-		if ( !is_array( $overrideMetadata ) ) {
-			$overrideMetadata = array();
-		}
+		$this->initializeInterfaceObject();
 
-		if ( empty($overrideMetadata) ) {
-			$this->initializeInterfaceObject();
-		} else {
-			if( isset($overrideMetadata['destinationTitle']) ) {
-				$this->videoName = $overrideMetadata['destinationTitle'];
-				// make sure that this field is not saved in the metadata
-				unset( $overrideMetadata['destinationTitle'] );
-			} else {
-				// this if just a fallback, shouldn't happen
-				$this->videoName = $this->getProvider() . '-' . $videoId;
-			}
-		}
-
-		$this->loadMetadata( $overrideMetadata );
-		wfProfileOut( __METHOD__ );
+		$this->loadMetadata();
 	}
 
 	/**
@@ -103,10 +81,6 @@ abstract class ApiWrapper {
 		}
 
 		return $this->videoId;
-	}
-
-	public function isIngestion() {
-		return false;
 	}
 
 	public function videoExists() {
@@ -238,26 +212,18 @@ abstract class ApiWrapper {
 		return $this->metadata;
 	}
 
-	protected function loadMetadata(array $overrideFields=array()) {
+	protected function loadMetadata() {
 
 		wfProfileIn( __METHOD__ );
 
-		$metadata = $overrideFields;	// $overrideFields may have more fields
-						// than the standard ones, listed below.
-						// This is ok.
+		$metadata = [];
 		$this->metadata = $metadata;	// must do this to facilitate getters below
 						// $this->metadata will be reset at end of this function
 
 		if ( !isset($metadata['videoId']) ) {
 			$metadata['videoId'] = $this->videoId;
 		}
-		// for providers that use diffrent video id for embeded code
-		if ( !isset($metadata['altVideoId']) ) {
-			$metadata['altVideoId'] = $this->getAltVideoId();
-		}
-		if ( !isset($metadata['hd']) ) {
-			$metadata['hd'] = $this->isHdAvailable();
-		}
+
 		if ( !isset($metadata['duration']) ) {
 			$metadata['duration'] = $this->getVideoDuration();
 		}
@@ -267,70 +233,34 @@ abstract class ApiWrapper {
 		if ( !isset($metadata['description']) ) {
 			$metadata['description'] = $this->getOriginalDescription();
 		}
-		if ( !isset( $metadata['name'] ) ) {
-			$metadata['name'] = $this->getVideoName();
-		}
-		if ( !isset( $metadata['type'] ) ) {
-			$metadata['type'] = $this->getVideoType();
-		}
+
 		if ( !isset($metadata['category']) ) {
 			$metadata['category'] = $this->getVideoCategory();
 		}
 		if ( !isset($metadata['keywords']) ) {
 			$metadata['keywords'] = $this->getVideoKeywords();
 		}
-		if ( !isset($metadata['industryRating']) ) {
-			$metadata['industryRating'] = $this->getIndustryRating();
-		}
-		if ( !isset($metadata['ageGate']) ) {
-			$metadata['ageGate'] = $this->isAgeGate();
-		}
-		if ( !isset( $metadata['ageRequired'] ) ) {
-			$metadata['ageRequired'] = $this->getAgeRequired();
-		}
+
 		if ( !isset($metadata['provider']) ) {
 			$metadata['provider'] = $this->getProvider();
 		}
 		if ( !isset($metadata['language']) ) {
 			$metadata['language'] = $this->getLanguage();
 		}
-		if ( !isset( $metadata['subtitle'] ) ) {
-			$metadata['subtitle'] = $this->getSubtitle();
-		}
-		if ( !isset( $metadata['genres'] ) ) {
-			$metadata['genres'] = $this->getGenres();
-		}
-		if ( !isset( $metadata['actors'] ) ) {
-			$metadata['actors'] = $this->getActors();
-		}
-		if ( !isset( $metadata['targetCountry'] ) ) {
-			$metadata['targetCountry'] = $this->getTargetCountry();
-		}
+
 		if ( !isset( $metadata['series'] ) ) {
 			$metadata['series'] = $this->getSeries();
 		}
-		if ( !isset( $metadata['season'] ) ) {
-			$metadata['season'] = $this->getSeason();
-		}
-		if ( !isset( $metadata['episode'] ) ) {
-			$metadata['episode'] = $this->getEpisode();
-		}
+
 		if ( !isset( $metadata['characters'] ) ) {
 			$metadata['characters'] = $this->getCharacters();
 		}
-		if ( !isset( $metadata['resolution'] ) ) {
-			$metadata['resolution'] = $this->getResolution();
-		}
+
 		// set to default if empty
 		if ( empty( $metadata['aspectRatio'] ) ) {
 			$metadata['aspectRatio'] = $this->getAspectRatio();
 		}
-		if ( empty( $metadata['expirationDate'] ) ) {
-			$metadata['expirationDate'] = $this->getVideoExpirationDate();
-		}
-		if ( empty( $metadata['regionalRestrictions'] ) ) {
-			$metadata['regionalRestrictions'] = $this->getRegionalRestrictions();
-		}
+
 		if ( !isset($metadata['title']) ) {
 			$metadata['title'] = $this->getTitle();
 		}
@@ -373,10 +303,6 @@ abstract class ApiWrapper {
 		return '';
 	}
 
-	protected function isHdAvailable(){
-		return false;
-	}
-
 	/**
 	 * List of keywords, separated by comma
 	 * @return string
@@ -393,90 +319,11 @@ abstract class ApiWrapper {
 		return static::$aspectRatio;
 	}
 
-	protected function getAltVideoId() {
-		return '';
-	}
-
-	/**
-	 * Rating from industry board. (include MPAA trailer)
-	 * Examples MPAA trailer rating (e.g. "greenband", "redband")
-	 * Examples from MPAA: R, PG-13
-	 * Examples from ESRB: E, T, AO
-	 * @return string
-	 */
-	protected function getIndustryRating() {
-		return '';
-	}
-
-	/**
-	 * Is clip age-gated?
-	 * @return boolean
-	 */
-	protected function isAgeGate() {
-		return false;
-	}
-
-	/**
-	 * Get age required
-	 * @return integer
-	 */
-	protected function getAgeRequired() {
-		return 0;
-	}
-
 	/**
 	 * Get language
 	 * @return string
 	 */
 	protected function getLanguage() {
-		return '';
-	}
-
-	/**
-	 * Get subtitle
-	 * @return string
-	 */
-	protected function getSubtitle() {
-		return '';
-	}
-
-	/**
-	 * Get genres
-	 * @return string
-	 */
-	protected function getGenres() {
-		return '';
-	}
-
-	/**
-	 * Get actors
-	 * @return string
-	 */
-	protected function getActors() {
-		return '';
-	}
-
-	/**
-	 * Get expiration date
-	 * @return string
-	 */
-	protected function getVideoExpirationDate() {
-		return '';
-	}
-
-	/**
-	 * Get regional restrictions
-	 * @return string
-	 */
-	protected function getRegionalRestrictions() {
-		return '';
-	}
-
-	/**
-	 * Get target country
-	 * @return string
-	 */
-	protected function getTargetCountry() {
 		return '';
 	}
 
@@ -489,86 +336,11 @@ abstract class ApiWrapper {
 	}
 
 	/**
-	 * Get season
-	 * @return string
-	 */
-	protected function getSeason() {
-		return '';
-	}
-
-	/**
-	 * Get episode
-	 * @return string
-	 */
-	protected function getEpisode() {
-		return '';
-	}
-
-	/**
-	 * Get resolution
-	 * @return string
-	 */
-	protected function getResolution() {
-		return '';
-	}
-
-	/**
 	 * Get characters
 	 * @return string
 	 */
 	protected function getCharacters() {
 		return '';
-	}
-
-	/**
-	 * Get video type
-	 * @return string
-	 */
-	protected function getVideoType() {
-		return '';
-	}
-
-	/**
-	 * Get video name
-	 * @return string
-	 */
-	protected function getVideoName() {
-		return '';
-	}
-
-	/**
-	 * Check if valid permisions
-	 * @return boolean
-	 */
-	protected static function isAllowed() {
-		$user = F::app()->wg->User;
-		if ( !$user->isLoggedIn() ) {
-			return false;
-		}
-
-		return true;
-	}
-
-	/**
-	 * Get content for the url
-	 * @param string $url
-	 * @return mixed
-	 */
-	protected static function getUrlContent( $url ) {
-		wfProfileIn( __METHOD__ );
-
-		$req = MWHttpRequest::factory( $url, [ 'noProxy' => true ] );
-		$status = $req->execute();
-		if ( $status->isGood() ) {
-			$result = json_decode( $req->getContent(), true );
-		} else {
-			$result = false;
-			print( "ERROR: problem downloading content (".$status->getMessage().").\n" );
-		}
-
-		wfProfileOut( __METHOD__ );
-
-		return $result;
 	}
 }
 
@@ -652,17 +424,9 @@ abstract class PseudoApiWrapper extends ApiWrapper {
 abstract class LegacyVideoApiWrapper extends PseudoApiWrapper {
 	static $THUMBNAIL_PATH = '/extensions/wikia/VideoHandlers/images/NoThumbnailBg.png';
 
-	public function __construct($videoId, array $overrideMetadata=array()) {
-
-		wfProfileIn( __METHOD__ );
-
+	public function __construct($videoId) {
 		$this->videoId = $this->sanitizeVideoId( $videoId );
-		if (!is_array($overrideMetadata)) {
-			$overrideMetadata = array();
-		}
-		$this->loadMetadata($overrideMetadata);
-
-		wfProfileOut( __METHOD__ );
+		$this->loadMetadata();
 	}
 
 	protected function getVideoTitle() {

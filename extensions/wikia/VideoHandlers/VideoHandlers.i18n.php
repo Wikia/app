@@ -4,7 +4,6 @@ $messages = array();
 $messages['en'] = array(
 	'wikia-videohandlers-desc' => 'Handling of videos within MediaWiki file architecture',
 	'videohandler' => 'Video handler',
-	'right-specialvideohandler' => 'Allows access to Special:VideoHandler',
 	'prototype-videohandler-extension-desc' => 'Prototype video handler',
 	'youtube-videohandler-extension-desc' => 'YouTube video handler',
 	'videohandler-error-missing-parameter' => 'Required parameter "$1" is missing',
