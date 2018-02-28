@@ -112,7 +112,6 @@ class PermissionsConfiguration {
 		'writeapi',
 		'canremovemap',
 		'wikifactory',
-		'wikifactorymetrics',
 		'dumpsondemand',
 		'wikifeatures',
 		'MultiFileUploader',

@@ -1,4 +1,4 @@
-function wikiaJWPlayerTracking(playerInstance, willAutoplay, tracker, logger, playlistId) {
+function wikiaJWPlayerTracking(playerInstance, willAutoplay, tracker) {
 	//This will replace 'trackingevent' in internal tracker url path
 	var eventName = 'videoplayerevent',
 		gaCategory = tracker.category || 'featured-video',
@@ -106,13 +106,6 @@ function wikiaJWPlayerTracking(playerInstance, willAutoplay, tracker, logger, pl
 		updateVideoCustomDimensions(
 			data.item
 		);
-
-		if (data.auto && data.position > 0) {
-			data.mediaId = playerInstance.getPlaylistItem().mediaid;
-			data.playlistId = playlistId;
-
-			logger.error('recommended-video-autoplay', data)
-		}
 
 		var labelPrefix = data.auto ? 'recommended-video-autoplay' : 'recommended-video-select-' + data.position;
 
