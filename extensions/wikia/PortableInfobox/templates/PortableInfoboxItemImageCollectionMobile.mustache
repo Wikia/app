@@ -1,9 +1,20 @@
 <div class="pi-image-collection"
 	data-component="portable-infobox-image-collection"
 	data-attrs="{{mercuryComponentAttrs}}">
-	<img class="article-media-placeholder"
-		src="data:image/svg+xml;charset=utf-8,%3Csvg xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg' viewBox%3D'0 0 {{firstImage.width}} {{firstImage.height}}'%2F%3E"
-		alt="{{firstImage.title}}"
-		{{#firstImage.width}}width="{{firstImage.width}}"{{/firstImage.width}}
-		{{#firstImage.height}}height="{{firstImage.height}}"{{/firstImage.height}}/>
+
+	{{#images}}
+		<figure class="pi-item pi-image">
+			<a href="{{url}}">
+				<img class="article-media-placeholder"
+				     src="data:image/svg+xml;charset=utf-8,%3Csvg xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg' viewBox%3D'0 0 {{width}} {{height}}'%2F%3E"
+				     alt="{{title}}"
+					{{#width}} width="{{width}}"{{/width}}
+					{{#height}} height="{{height}}"{{/height}} />
+				<noscript>
+					<img src="{{url}}" alt="{{alt}}"{{#width}} width="{{width}}"{{/width}}{{#height}} height="{{height}}"{{/height}} />
+				</noscript>
+			</a>
+			{{#caption}}<figcaption class="pi-item-spacing pi-caption">{{{caption}}}</figcaption>{{/caption}}
+		</figure>
+	{{/images}}
 </div>
