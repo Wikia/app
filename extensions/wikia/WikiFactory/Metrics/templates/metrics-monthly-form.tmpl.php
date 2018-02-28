@@ -19,7 +19,7 @@ div#sidebar { display: none !important; }
 <script type="text/javascript" charset="utf-8">
 
 $(document).ready(function() {
-	var baseurl = wgScript + "?action=ajax&rs=axAWCMetricsCategory";
+	var baseurl = mw.util.wikiScript() + "?action=ajax&rs=axAWCMetricsCategory";
 	var cnt = 0;
 	var oTable = $('#wfm-table').dataTable( {
 		bAutoWidth: false,

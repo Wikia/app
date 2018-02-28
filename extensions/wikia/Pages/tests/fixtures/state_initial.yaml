@@ -58,6 +58,7 @@ pages:
     page_is_redirect: 0
     page_latest: 1
     page_last_edited: 20110101000000
+    page_created_at: 20110101000000
   -
     page_wikia_id: 177
     page_id: 2
@@ -67,3 +68,4 @@ pages:
     page_is_redirect: 0
     page_latest: 2
     page_last_edited: 20120202000000
+    page_created_at: 20120202000000

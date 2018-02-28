@@ -31,7 +31,7 @@ require(['wikia.log', 'wikia.window', 'jquery'], function(log, window, $) {
         "bServerSide": true,
         "bFilter": false,
         "sPaginationType": "full_numbers",
-        "sAjaxSource": window.wgScript + "?action=ajax&rs=ListusersAjax::axShowUsers&uselang=" + encodeURIComponent(window.wgUserLanguage),
+        "sAjaxSource": mw.util.wikiScript() + "?action=ajax&rs=ListusersAjax::axShowUsers&uselang=" + encodeURIComponent(window.wgUserLanguage),
         /*"fnInitComplete" : function ( oInstance, oSettings, json ) {
             // make CSS buttons
         },*/
@@ -130,7 +130,7 @@ require(['wikia.log', 'wikia.window', 'jquery'], function(log, window, $) {
     $('#lu_search').autocomplete({
         source: function( request, response ) {
             $.getJSON(
-                window.wgScript + "?action=ajax&rs=ListusersAjax::axSuggestUsers",
+                mw.util.wikiScript() + "?action=ajax&rs=ListusersAjax::axSuggestUsers",
                 {
                     'query': request.term
                 },

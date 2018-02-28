@@ -1341,17 +1341,6 @@ $wgSitewideDisableAdsOnMercury = false;
 $wgSitewideDisableGpt = false;
 
 /**
- * @name $wgSitewideDisablePaidAssetDrop
- * @link https://wikia-inc.atlassian.net/wiki/display/ADEN/Disaster+Recovery
- * @link http://community.wikia.com/wiki/Special:WikiFactory/community/variables/wgSitewideDisablePaidAssetDrop
- *
- * Disable Paid Asset Drop (PAD) sitewide in case a disaster happens.
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- * For more details consult https://wikia-inc.atlassian.net/wiki/display/ADEN/Disaster+Recovery
- */
-$wgSitewideDisablePaidAssetDrop = false;
-
-/**
  * @name $wgEnableKruxTargeting
  *
  * Enables Krux Targeting
@@ -1732,14 +1721,6 @@ $wgOasisTypography = true;
 $wgOasisBreakpoints = true;
 
 /**
- * @name $wgPaidAssetDropConfig
- *
- * Disables Paid Asset Drop campaign if set to false. Enables it if set to an array with two dates (YYYY-MM-DD format).
- * https://one.wikia-inc.com/wiki/Ad_Engineering/Paid_Asset_Drop
- */
-$wgPaidAssetDropConfig = false;
-
-/**
  * @name $wgAdDriverHighImpact2SlotCountries
  * Enables INVISIBLE_HIGH_IMPACT_2 slot in these countries
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
@@ -1754,7 +1735,6 @@ $wgAdDriverHighImpact2SlotCountries = null;
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverMobileTransitionInterstitialCountries = null;
-
 
 /**
  * @name $wgAdDriverMobileFloorAdhesionCountries
@@ -1771,13 +1751,6 @@ $wgAdDriverMobileFloorAdhesionCountries = null;
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverIncontentPlayerSlotCountries = null;
-
-/**
- * @name $wgAdDriverDisableBadgeAdCountries
- * Disables badge ad (next to TOP_LEADERBOARD).
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverDisableBadgeAdCountries = null;
 
 /**
  * manage a user's preferences externally

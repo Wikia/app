@@ -238,11 +238,6 @@ class SyntaxHighlight_GeSHi {
 	 * @return bool
 	 */
 	public static function viewHook( $text, $title, $output ) {
-		// SUS-1913: In production, swap 1% of GeSHi calls with Syntax Highlight experiment
-		if ( SyntaxHighlightHooks::shouldReplaceGeshi() ) {
-			return SyntaxHighlightHooks::onShowRawCssJs( $text, $title, $output );
-		}
-
 		global $wgUseSiteCss;
 		// Determine the language
 		$matches = array();
