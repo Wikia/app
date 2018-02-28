@@ -8,10 +8,9 @@
 */
 
 ini_set( 'display_errors', 'stderr' );
-ini_set( 'error_reporting', E_NOTICE );
+ini_set( 'error_reporting', E_ALL ^ E_NOTICE );
 
-//require_once( dirname( __FILE__ ) . '/../../Maintenance.php' );
-require_once('/usr/wikia/slot1/current/src/maintenance/Maintenance.php');
+require_once( dirname( __FILE__ ) . '/../../Maintenance.php' );
 
 use \Wikia\Logger\WikiaLogger;
 
@@ -45,6 +44,18 @@ class MigrateUserCssToHttps extends Maintenance {
 						$description, $oldValue, $newValue) );
 			}
 		}
+	}
+
+	private $editSummary = null;
+
+	private function getEditSummary() {
+		if ( !$this->editSummary ) {
+			$contactTitle = Title::makeTitle( NS_SPECIAL, 'Contact' );
+			$contactLink = $contactTitle->escapeLocalUrl( );
+			$this->editSummary = "Applying changes that should make this CSS file HTTPS-ready. " .
+				"In case of any questions or issues, please reach out to us using the {$contactLink} page.";
+		}
+		return $this->editSummary;
 	}
 
 	private function isHttpLink( $url ) {
@@ -100,7 +111,7 @@ class MigrateUserCssToHttps extends Maintenance {
 		if ( !$this->currentHost ) {
 			$this->currentHost = parse_url( $wgServer, PHP_URL_HOST );
 		}
-		return parse_url( $wgServer, PHP_URL_HOST ) === $this->currentHost;
+		return parse_url( $url, PHP_URL_HOST ) === $this->currentHost;
 	}
 
 	private function stripProtocolAndHost( $url ) {
@@ -185,18 +196,17 @@ class MigrateUserCssToHttps extends Maintenance {
 			$updatedText = $this->updateCSSContent($text);
 			if ($text !== $updatedText) {
 				if ( !$this->dryRun ) {
-					// TBD...
-					/*
 					$article = new Article( $title );
 					$editPage = new EditPage( $article );
-					$editPage->initialiseForm();
-					//$editPage->edittime = $article->getTimestamp();
-					$editPage->summary = ".....";
-
+					$editPage->summary = $this->getEditSummary();
+					$editPage->textbox1 = $updatedText;
 					$result = [ ];
-					$status = $editPage->internalAttemptSave( $result, true );
-					// $status->isGood()
-					*/
+					$status = $editPage->internalAttemptSave( $result, /* bot */ true );
+					if ( $status->isGood() ) {
+						$this->output( "Saved updated CSS file\n" );
+					} else {
+						$this->error( "Failed to save CSS file!\n" );
+					}
 				}
 				return true;
 			}
