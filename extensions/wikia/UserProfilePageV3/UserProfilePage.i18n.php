@@ -739,6 +739,7 @@ $messages['de'] = array(
 	'right-clearuserprofile' => 'Inhalte eines Nutzerprofils mit einem Klick löschen',
 	'user-identity-box-group-global-discussions-moderator' => 'Globaler Diskussions-Moderator',
 	'user-identity-box-group-bot' => 'Bot',
+	'user-identity-box-group-content-volunteer' => 'Inhalts-Volunteer',
 );
 
 $messages['de-ch'] = array(
@@ -1171,6 +1172,7 @@ $messages['fr'] = array(
 	'right-clearuserprofile' => "Supprimer en un clic le contenu du bandeau du profil d'un utilisateur",
 	'user-identity-box-group-global-discussions-moderator' => 'Modérateur global de discussions',
 	'user-identity-box-group-bot' => 'Robot',
+	'user-identity-box-group-content-volunteer' => 'Créateur de contenu bénévole',
 );
 
 $messages['gl'] = array(
@@ -3025,6 +3027,7 @@ $messages['ru'] = array(
 	'right-clearuserprofile' => 'Удалить содержание профиля участника одним нажатием клавиши',
 	'user-identity-box-group-global-discussions-moderator' => 'Модератор Обсуждений Фэндома',
 	'user-identity-box-group-bot' => 'Бот',
+	'user-identity-box-group-content-volunteer' => 'Волонтёр по контенту',
 );
 
 $messages['sr-ec'] = array(
