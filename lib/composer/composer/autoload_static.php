@@ -18,12 +18,12 @@ class ComposerStaticInitb367f9b4bf4d43e0d5ea402c134db26b
         '5a494680c593293bd6035e42e2a6825c' => __DIR__ . '/..' . '/data-values/geo/Geo.php',
         'c964ee0ededf28c96ebd9db5099ef910' => __DIR__ . '/..' . '/guzzlehttp/promises/src/functions_include.php',
         'a0edc8309cc5e1d60e3047b5df6b7052' => __DIR__ . '/..' . '/guzzlehttp/psr7/src/functions_include.php',
-        'f4c767faab43077fd89ff7cf99ffb4b8' => __DIR__ . '/..' . '/serialization/serialization/Serialization.php',
-        '94e265ce14c952a920a4ea5f7e8e9baa' => __DIR__ . '/..' . '/mediawiki/parser-hooks/ParserHooks.php',
         '37a3dc5111fe8f707ab4c132ef1dbc62' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/functions_include.php',
+        '94e265ce14c952a920a4ea5f7e8e9baa' => __DIR__ . '/..' . '/mediawiki/parser-hooks/ParserHooks.php',
         'ebf8799635f67b5d7248946fe2154f4a' => __DIR__ . '/..' . '/ringcentral/psr7/src/functions_include.php',
-        '6124b4c8570aa390c21fafd04a26c69f' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
+        'f4c767faab43077fd89ff7cf99ffb4b8' => __DIR__ . '/..' . '/serialization/serialization/Serialization.php',
         'c3ae67574219cc56cab6c30ef8877b85' => __DIR__ . '/../../..' . '/extensions/Validator/Validator.php',
+        '6124b4c8570aa390c21fafd04a26c69f' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
         '9ebf2cbcc0b7687b276c44d77096b002' => __DIR__ . '/../../..' . '/extensions/Maps/Maps.php',
     );
 
@@ -141,8 +141,8 @@ class ComposerStaticInitb367f9b4bf4d43e0d5ea402c134db26b
         'phpDocumentor\\Reflection\\' => 
         array (
             0 => __DIR__ . '/..' . '/phpdocumentor/reflection-common/src',
-            1 => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src',
-            2 => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src',
+            1 => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src',
+            2 => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src',
         ),
         'Zend\\Diactoros\\' => 
         array (
@@ -162,18 +162,18 @@ class ComposerStaticInitb367f9b4bf4d43e0d5ea402c134db26b
         ),
         'ValueValidators\\' => 
         array (
-            0 => __DIR__ . '/..' . '/data-values/validators/src',
-            1 => __DIR__ . '/..' . '/data-values/interfaces/src/ValueValidators',
+            0 => __DIR__ . '/..' . '/data-values/interfaces/src/ValueValidators',
+            1 => __DIR__ . '/..' . '/data-values/validators/src',
         ),
         'ValueParsers\\' => 
         array (
-            0 => __DIR__ . '/..' . '/data-values/interfaces/src/ValueParsers',
-            1 => __DIR__ . '/..' . '/data-values/common/src/ValueParsers',
+            0 => __DIR__ . '/..' . '/data-values/common/src/ValueParsers',
+            1 => __DIR__ . '/..' . '/data-values/interfaces/src/ValueParsers',
         ),
         'ValueFormatters\\' => 
         array (
-            0 => __DIR__ . '/..' . '/data-values/interfaces/src/ValueFormatters',
-            1 => __DIR__ . '/..' . '/data-values/common/src/ValueFormatters',
+            0 => __DIR__ . '/..' . '/data-values/common/src/ValueFormatters',
+            1 => __DIR__ . '/..' . '/data-values/interfaces/src/ValueFormatters',
         ),
         'TijsVerkoyen\\CssToInlineStyles\\' => 
         array (
@@ -281,8 +281,8 @@ class ComposerStaticInitb367f9b4bf4d43e0d5ea402c134db26b
         ),
         'ParamProcessor\\' => 
         array (
-            0 => __DIR__ . '/..' . '/param-processor/param-processor/src',
-            1 => __DIR__ . '/../../..' . '/extensions/Validator/src/ParamProcessor',
+            0 => __DIR__ . '/../../..' . '/extensions/Validator/src/ParamProcessor',
+            1 => __DIR__ . '/..' . '/param-processor/param-processor/src',
         ),
         'Onoi\\MessageReporter\\' => 
         array (
@@ -405,10 +405,6 @@ class ComposerStaticInitb367f9b4bf4d43e0d5ea402c134db26b
             array (
                 0 => __DIR__ . '/../../..' . '/lib/vendor/Solarium',
             ),
-            'SimplePie' => 
-            array (
-                0 => __DIR__ . '/..' . '/simplepie/simplepie/library',
-            ),
         ),
         'P' => 
         array (
@@ -425,9 +421,9 @@ class ComposerStaticInitb367f9b4bf4d43e0d5ea402c134db26b
         array (
             'Net' => 
             array (
-                0 => __DIR__ . '/..' . '/wikia/net_socket2',
-                1 => __DIR__ . '/..' . '/pear/net_socket',
-                2 => __DIR__ . '/..' . '/wikia/net_smtp2',
+                0 => __DIR__ . '/..' . '/pear/net_socket',
+                1 => __DIR__ . '/..' . '/wikia/net_smtp2',
+                2 => __DIR__ . '/..' . '/wikia/net_socket2',
             ),
         ),
         'M' => 
@@ -2667,41 +2663,6 @@ class ComposerStaticInitb367f9b4bf4d43e0d5ea402c134db26b
         'SimpleCache\\Cache\\SimpleInMemoryCache' => __DIR__ . '/..' . '/jeroen/simple-cache/src/Cache/SimpleInMemoryCache.php',
         'SimpleCache\\KeyBuilder\\KeyBuilder' => __DIR__ . '/..' . '/jeroen/simple-cache/src/KeyBuilder/KeyBuilder.php',
         'SimpleCache\\KeyBuilder\\NamespacedKeyBuilder' => __DIR__ . '/..' . '/jeroen/simple-cache/src/KeyBuilder/NamespacedKeyBuilder.php',
-        'SimplePie' => __DIR__ . '/..' . '/simplepie/simplepie/library/SimplePie.php',
-        'SimplePie_Author' => __DIR__ . '/..' . '/simplepie/simplepie/library/SimplePie/Author.php',
-        'SimplePie_Cache' => __DIR__ . '/..' . '/simplepie/simplepie/library/SimplePie/Cache.php',
-        'SimplePie_Cache_Base' => __DIR__ . '/..' . '/simplepie/simplepie/library/SimplePie/Cache/Base.php',
-        'SimplePie_Cache_DB' => __DIR__ . '/..' . '/simplepie/simplepie/library/SimplePie/Cache/DB.php',
-        'SimplePie_Cache_File' => __DIR__ . '/..' . '/simplepie/simplepie/library/SimplePie/Cache/File.php',
-        'SimplePie_Cache_Memcache' => __DIR__ . '/..' . '/simplepie/simplepie/library/SimplePie/Cache/Memcache.php',
-        'SimplePie_Cache_Memcached' => __DIR__ . '/..' . '/simplepie/simplepie/library/SimplePie/Cache/Memcached.php',
-        'SimplePie_Cache_MySQL' => __DIR__ . '/..' . '/simplepie/simplepie/library/SimplePie/Cache/MySQL.php',
-        'SimplePie_Cache_Redis' => __DIR__ . '/..' . '/simplepie/simplepie/library/SimplePie/Cache/Redis.php',
-        'SimplePie_Caption' => __DIR__ . '/..' . '/simplepie/simplepie/library/SimplePie/Caption.php',
-        'SimplePie_Category' => __DIR__ . '/..' . '/simplepie/simplepie/library/SimplePie/Category.php',
-        'SimplePie_Content_Type_Sniffer' => __DIR__ . '/..' . '/simplepie/simplepie/library/SimplePie/Content/Type/Sniffer.php',
-        'SimplePie_Copyright' => __DIR__ . '/..' . '/simplepie/simplepie/library/SimplePie/Copyright.php',
-        'SimplePie_Core' => __DIR__ . '/..' . '/simplepie/simplepie/library/SimplePie/Core.php',
-        'SimplePie_Credit' => __DIR__ . '/..' . '/simplepie/simplepie/library/SimplePie/Credit.php',
-        'SimplePie_Decode_HTML_Entities' => __DIR__ . '/..' . '/simplepie/simplepie/library/SimplePie/Decode/HTML/Entities.php',
-        'SimplePie_Enclosure' => __DIR__ . '/..' . '/simplepie/simplepie/library/SimplePie/Enclosure.php',
-        'SimplePie_Exception' => __DIR__ . '/..' . '/simplepie/simplepie/library/SimplePie/Exception.php',
-        'SimplePie_File' => __DIR__ . '/..' . '/simplepie/simplepie/library/SimplePie/File.php',
-        'SimplePie_HTTP_Parser' => __DIR__ . '/..' . '/simplepie/simplepie/library/SimplePie/HTTP/Parser.php',
-        'SimplePie_IRI' => __DIR__ . '/..' . '/simplepie/simplepie/library/SimplePie/IRI.php',
-        'SimplePie_Item' => __DIR__ . '/..' . '/simplepie/simplepie/library/SimplePie/Item.php',
-        'SimplePie_Locator' => __DIR__ . '/..' . '/simplepie/simplepie/library/SimplePie/Locator.php',
-        'SimplePie_Misc' => __DIR__ . '/..' . '/simplepie/simplepie/library/SimplePie/Misc.php',
-        'SimplePie_Net_IPv6' => __DIR__ . '/..' . '/simplepie/simplepie/library/SimplePie/Net/IPv6.php',
-        'SimplePie_Parse_Date' => __DIR__ . '/..' . '/simplepie/simplepie/library/SimplePie/Parse/Date.php',
-        'SimplePie_Parser' => __DIR__ . '/..' . '/simplepie/simplepie/library/SimplePie/Parser.php',
-        'SimplePie_Rating' => __DIR__ . '/..' . '/simplepie/simplepie/library/SimplePie/Rating.php',
-        'SimplePie_Registry' => __DIR__ . '/..' . '/simplepie/simplepie/library/SimplePie/Registry.php',
-        'SimplePie_Restriction' => __DIR__ . '/..' . '/simplepie/simplepie/library/SimplePie/Restriction.php',
-        'SimplePie_Sanitize' => __DIR__ . '/..' . '/simplepie/simplepie/library/SimplePie/Sanitize.php',
-        'SimplePie_Source' => __DIR__ . '/..' . '/simplepie/simplepie/library/SimplePie/Source.php',
-        'SimplePie_XML_Declaration_Parser' => __DIR__ . '/..' . '/simplepie/simplepie/library/SimplePie/XML/Declaration/Parser.php',
-        'SimplePie_gzdecode' => __DIR__ . '/..' . '/simplepie/simplepie/library/SimplePie/gzdecode.php',
         'Solarium_Autoloader' => __DIR__ . '/../../..' . '/lib/vendor/Solarium/Autoloader.php',
         'Solarium_Client' => __DIR__ . '/../../..' . '/lib/vendor/Solarium/Client.php',
         'Solarium_Client_Adapter' => __DIR__ . '/../../..' . '/lib/vendor/Solarium/Client/Adapter.php',
