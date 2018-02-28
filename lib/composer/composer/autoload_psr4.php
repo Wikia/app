@@ -6,14 +6,14 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname(dirname($vendorDir));
 
 return array(
-    'phpDocumentor\\Reflection\\' => array($vendorDir . '/phpdocumentor/reflection-common/src', $vendorDir . '/phpdocumentor/type-resolver/src', $vendorDir . '/phpdocumentor/reflection-docblock/src'),
+    'phpDocumentor\\Reflection\\' => array($vendorDir . '/phpdocumentor/reflection-common/src', $vendorDir . '/phpdocumentor/reflection-docblock/src', $vendorDir . '/phpdocumentor/type-resolver/src'),
     'Zend\\Diactoros\\' => array($vendorDir . '/zendframework/zend-diactoros/src'),
     'Wikia\\Search\\' => array($baseDir . '/extensions/wikia/Search/classes'),
     'Wikia\\' => array($baseDir . '/lib/Wikia/src'),
     'Webmozart\\Assert\\' => array($vendorDir . '/webmozart/assert/src'),
-    'ValueValidators\\' => array($vendorDir . '/data-values/validators/src', $vendorDir . '/data-values/interfaces/src/ValueValidators'),
-    'ValueParsers\\' => array($vendorDir . '/data-values/interfaces/src/ValueParsers', $vendorDir . '/data-values/common/src/ValueParsers'),
-    'ValueFormatters\\' => array($vendorDir . '/data-values/interfaces/src/ValueFormatters', $vendorDir . '/data-values/common/src/ValueFormatters'),
+    'ValueValidators\\' => array($vendorDir . '/data-values/interfaces/src/ValueValidators', $vendorDir . '/data-values/validators/src'),
+    'ValueParsers\\' => array($vendorDir . '/data-values/common/src/ValueParsers', $vendorDir . '/data-values/interfaces/src/ValueParsers'),
+    'ValueFormatters\\' => array($vendorDir . '/data-values/common/src/ValueFormatters', $vendorDir . '/data-values/interfaces/src/ValueFormatters'),
     'TijsVerkoyen\\CssToInlineStyles\\' => array($vendorDir . '/tijsverkoyen/css-to-inline-styles/src'),
     'Symfony\\Polyfill\\Apcu\\' => array($vendorDir . '/symfony/polyfill-apcu'),
     'Symfony\\Component\\Yaml\\' => array($vendorDir . '/symfony/yaml'),
@@ -40,7 +40,7 @@ return array(
     'Psr\\Cache\\' => array($vendorDir . '/psr/cache/src'),
     'PhpAmqpLib\\' => array($vendorDir . '/php-amqplib/php-amqplib/PhpAmqpLib'),
     'ParserHooks\\' => array($vendorDir . '/mediawiki/parser-hooks/src'),
-    'ParamProcessor\\' => array($vendorDir . '/param-processor/param-processor/src', $baseDir . '/extensions/Validator/src/ParamProcessor'),
+    'ParamProcessor\\' => array($baseDir . '/extensions/Validator/src/ParamProcessor', $vendorDir . '/param-processor/param-processor/src'),
     'Onoi\\MessageReporter\\' => array($vendorDir . '/onoi/message-reporter/src'),
     'Onoi\\HttpRequest\\' => array($vendorDir . '/onoi/http-request/src'),
     'Onoi\\EventDispatcher\\' => array($vendorDir . '/onoi/event-dispatcher/src'),
