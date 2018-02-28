@@ -5,15 +5,15 @@
 	], function (doc, adContext) {
 		var context = adContext.getContext();
 
-		function runPFCode() {
+		function {{methodName}}() {
 			{{{code}}}
 		}
 
 		if (context.opts.pageFairRecovery === true && !window.wgUserName) {
 			if (context.opts.babRecovery) {
-				doc.addEventListener('bab.blocking', runPFCode);
+				doc.addEventListener('bab.blocking', {{methodName}});
 			} else {
-				runPFCode();
+				{{methodName}}();
 			}
 		}
 	});
