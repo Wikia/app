@@ -83,7 +83,7 @@ require([
 		actionHandler.registerMessageListener();
 
 		window.addEventListener('adengine.emitter', function (event) {
-
+			adEngineBridge.passSlotEvent(event.detail.slotName, event.detail.eventName);
 		});
 	});
 
