@@ -83,11 +83,15 @@ require([
 		actionHandler.registerMessageListener();
 
 		window.addEventListener('adengine.emitter', function (event) {
-			adEngineBridge.passSlotEvent(event.detail.slotName, event.detail.eventName);
+
 		});
 	});
 
 	mercuryListener.afterPageWithAdsRender(function () {
 		callBiddersOnConsecutivePageView();
+	});
+
+	mercuryListener.onMenuOpen(function () {
+		adEngineBridge.passSlotEvent('MOBILE_TOP_LEADERBOARD', 'unstickImmediately');
 	});
 });
