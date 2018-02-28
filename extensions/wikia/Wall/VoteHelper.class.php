@@ -46,7 +46,7 @@ class VoteHelper {
 		return $out;
 	}
 
-	function addVote( $score = 1 ) {
+	function addVote() {
 		if ( $this->isVoted() ) {
 			return false;
 		}
@@ -54,10 +54,8 @@ class VoteHelper {
 
 		$values = [
 			'article_id' => $this->pageId,
-			'ip' => '',
 			'user_id' => $this->userId,
-			'time' => wfTimestampNow(),
-			'vote' => $score,
+			'time' => wfTimestampNow()
 		];
 
 		$dbr->insert(

@@ -63,24 +63,20 @@ require([
 	win.adSlotTweaker = slotTweaker;
 
 	// Custom ads (skins, footer, etc)
-	if (adContext.get('opts.isAdProductsBridgeEnabled')) {
-		adEngineBridge.init(
-			adTracker,
-			geo,
-			slotRegistry,
-			null,
-			pageLevelParams.getPageLevelParams(),
-			adContext,
-			btfBlocker,
-			'oasis'
-		);
-		win.loadCustomAd = adEngineBridge.loadCustomAd(customAdsLoader.loadCustomAd);
+	adEngineBridge.init(
+		adTracker,
+		geo,
+		slotRegistry,
+		null,
+		pageLevelParams.getPageLevelParams(),
+		adContext,
+		btfBlocker,
+		'oasis'
+	);
+	win.loadCustomAd = adEngineBridge.loadCustomAd(customAdsLoader.loadCustomAd);
 
-		if (context.opts.babDetectionDesktop) {
-			adEngineBridge.checkAdBlocking(babDetection);
-		}
-	} else {
-		win.loadCustomAd = customAdsLoader.loadCustomAd;
+	if (context.opts.babDetectionDesktop) {
+		adEngineBridge.checkAdBlocking(babDetection);
 	}
 
 	// Everything starts after content and JS

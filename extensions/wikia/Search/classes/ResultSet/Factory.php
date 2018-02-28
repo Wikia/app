@@ -4,7 +4,7 @@
  */
 namespace Wikia\Search\ResultSet;
 
-use \Solarium_Result_Select, \Solarium_Result_Select_Empty, \Wikia\Search\Config;
+use Solarium_Result_Select_Empty;
 
 /**
  * A factory for instantiating search result sets.
@@ -33,18 +33,15 @@ class Factory {
 			);
 		}
 		$result = $container->getResult();
-		$terminal = 'Base';
+
 		if ( $result === null || $result instanceof Solarium_Result_Select_Empty ) {
-			$terminal = 'EmptySet';
+			return new EmptySet( $container );
 		} else if ( $searchConfig->getQueryService() ===
 			'\\Wikia\\Search\\QueryService\\Select\\Dismax\\CombinedMedia'
 		) {
-			$terminal = 'CombinedMediaResultSet';
+			return new CombinedMediaResultSet( $container );
 		}
 
-		return ( new \Wikia\Search\ProfiledClassFactory )->get(
-			'Wikia\\Search\\ResultSet\\' . $terminal,
-			[ $container ]
-		);
+		return new Base( $container );
 	}
 }

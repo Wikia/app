@@ -22,11 +22,6 @@ class SyntaxHighlight_GeSHi {
 	 * @return string
 	 */
 	public static function parserHook( $text, $args = array(), $parser, $frame ) {
-		// SUS-1913: In production, swap 1% of GeSHi calls with Syntax Highlight experiment
-		if ( SyntaxHighlightHooks::shouldReplaceGeshi() ) {
-			return SyntaxHighlightHooks::onRenderSyntaxHighlightTag( $text, $args, $parser, $frame );
-		}
-
 		global $wgSyntaxHighlightDefaultLang, $wgUseSiteCss, $wgUseTidy;
 		wfProfileIn( __METHOD__ );
 		self::initialise();
@@ -105,10 +100,6 @@ class SyntaxHighlight_GeSHi {
 			wfProfileOut( __METHOD__ );
 			return $error;
 		}
-
-		// SUS-1514: Log GeSHi parsing time
-		static::profileGeshiPerformance( $geshi );
-
 		// Armour for Parser::doBlockLevels()
 		if( $enclose === GESHI_HEADER_DIV ) {
 			$out = str_replace( "\n", '', $out );
@@ -247,11 +238,6 @@ class SyntaxHighlight_GeSHi {
 	 * @return bool
 	 */
 	public static function viewHook( $text, $title, $output ) {
-		// SUS-1913: In production, swap 1% of GeSHi calls with Syntax Highlight experiment
-		if ( SyntaxHighlightHooks::shouldReplaceGeshi() ) {
-			return SyntaxHighlightHooks::onShowRawCssJs( $text, $title, $output );
-		}
-
 		global $wgUseSiteCss;
 		// Determine the language
 		$matches = array();
@@ -262,9 +248,6 @@ class SyntaxHighlight_GeSHi {
 		if( $geshi instanceof GeSHi ) {
 			$out = $geshi->parse_code();
 			if( !$geshi->error() ) {
-				// SUS-1514: Log GeSHi parsing time
-				static::profileGeshiPerformance( $geshi );
-
 				// Done
 				$output->addHeadItem( "source-$lang", self::buildHeadItem( $geshi ) );
 				$output->addHTML( "<div dir=\"ltr\">{$out}</div>" );
@@ -494,18 +477,5 @@ class SyntaxHighlight_GeSHi {
 			$out .= $chunk;
 		}
 		return $out;
-	}
-
-	/**
-	 * Wikia change
-	 * Log GeSHi syntax highlight parsing time with 10% sampling
-	 *
-	 * @see https://wikia-inc.atlassian.net/browse/SUS-1514
-	 * @param GeSHi $geSHi
-	 */
-	private static function profileGeshiPerformance( GeSHi $geSHi ) {
-		\Wikia\Logger\WikiaLogger::instance()->debugSampled( 0.1, 'SUS-1514 - GeSHi syntax highlight performance', [
-			'parsingTime' => $geSHi->get_time()
-		] );
 	}
 }

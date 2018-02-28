@@ -50,11 +50,6 @@ class ApiWrapperFactory {
 		global $wgVideoApiWrappers;
 		wfProfileIn( __METHOD__ );
 
-		if ( empty( F::app()->wg->allowNonPremiumVideos ) ) {
-			wfProfileOut( __METHOD__ );
-			throw new WikiaException( wfMessage( "videohandler-non-premium-with-links" )->parse() );
-		}
-
 		$url = trim( $url );
 		$parsed = parse_url( strtolower( $url ) );
 

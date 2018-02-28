@@ -11,7 +11,6 @@
  */
 abstract class WikiaDispatchableObject extends WikiaObject {
 	const DEFAULT_TEMPLATE_ENGINE = WikiaResponse::TEMPLATE_ENGINE_PHP;
-	const NIRVANA_API_PATH = '/wikia.php';
 
 	/**
 	 * Mediawiki RequestContext object
@@ -301,7 +300,7 @@ abstract class WikiaDispatchableObject extends WikiaObject {
 			$baseParams = array_merge( $baseParams, $params );
 		}
 
-		return wfAppendQuery( self::NIRVANA_API_PATH, $baseParams );
+		return wfScript( 'wikia' ) . '?' . http_build_query( $baseParams );
 	}
 
 	/**
@@ -316,7 +315,7 @@ abstract class WikiaDispatchableObject extends WikiaObject {
 	 */
 	public static function getFullUrl( $method, $params = null, $format = null ) {
 		$app = F::app();
-		return wfExpandUrl( $app->wg->Server . $app->wg->ScriptPath . self::getLocalUrl( $method, $params, $format ) );
+		return wfExpandUrl( $app->wg->Server . self::getLocalUrl( $method, $params, $format ) );
 	}
 
 	/**
@@ -331,7 +330,7 @@ abstract class WikiaDispatchableObject extends WikiaObject {
 	 */
 	public static function getNoCookieUrl( $method, $params = null, $format = null ) {
 		$app = F::app();
-		return wfExpandUrl( $app->wg->CdnApiUrl . $app->wg->ScriptPath . self::getLocalUrl( $method, $params, $format ) );
+		return wfExpandUrl( $app->wg->CdnApiUrl . self::getLocalUrl( $method, $params, $format ) );
 	}
 
 

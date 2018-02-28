@@ -80,9 +80,6 @@ class ApiAddMediaTemporary extends ApiAddMedia {
 	}
 
 	private function execute3rdPartyVideo( $url ) {
-		if ( empty( F::app()->wg->allowNonPremiumVideos ) ) {
-			$this->dieUsage( 'Only premium videos are allowed', 'onlyallowpremium' );
-		}
 		if ( !preg_match( '/^https?:\/\//', $url ) ) {
 			$url = 'http://' . $url;
 		}

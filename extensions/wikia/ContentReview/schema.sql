@@ -72,6 +72,7 @@ CREATE TABLE `reviewed_content_logs` (
   `review_start` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `review_end` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `escalated` tinyint(1) NOT NULL DEFAULT '0',
+  UNIQUE KEY `wiki_page_rev_idx` (`wiki_id`,`page_id`,`revision_id`),
   KEY `wiki_id_review_end_idx` (`wiki_id`,`review_end`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;

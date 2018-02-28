@@ -455,7 +455,7 @@ spl_autoload_register( function( $class ) {
 	return false;
 });
 
-// TODO:move this inclusions to CommonExtensions?
+// TODO: move this inclusions to includes/wikia/Extensions.php ?
 require_once( $IP.'/extensions/wikia/ImageTweaks/ImageTweaks.setup.php' );
 require_once( $IP.'/extensions/wikia/Oasis/Oasis_setup.php' );
 
@@ -590,7 +590,6 @@ include_once( "$IP/extensions/wikia/AutoFollow/AutoFollow.setup.php" );
 include_once( "$IP/extensions/wikia/WikiaLogo/WikiaLogo.setup.php" );
 include_once( "$IP/extensions/wikia/Rail/Rail.setup.php" );
 include_once( "$IP/extensions/wikia/PageShare/PageShare.setup.php" );
-include_once( "$IP/extensions/wikia/PaidAssetDrop/PaidAssetDrop.setup.php" );
 include_once( "$IP/extensions/wikia/CreateNewWiki/CreateNewWiki_global_setup.php" );
 include_once( "$IP/extensions/wikia/Security/Security.setup.php" );
 include_once( "$IP/extensions/wikia/CommunityHeader/CommunityHeader.setup.php" );
@@ -671,7 +670,6 @@ $wgLangCreationVariables = array();
  * Tasks
  */
 require_once( "{$IP}/extensions/wikia/Tasks/Tasks.setup.php");
-require_once( "{$IP}/includes/wikia/tasks/autoload.php");
 
 /**
  * @name wgDBAvgStatusPoll
@@ -1247,6 +1245,13 @@ $wgAdDriverAudienceNetworkBidderCountries = null;
 $wgAdDriverBeachfrontBidderCountries = null;
 
 /**
+ * @name $wgAdDriverBottomLeaderBoardOnMobileCountries
+ * List of countries where BOTTOM_LEADERBOARD ad slot is enabled on mobile-wiki.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverBottomLeaderBoardOnMobileCountries = null;
+
+/**
  * @name $wgAdDriverIndexExchangeBidderCountries
  * List of countries where indexExchange bidding platform is enabled.
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
@@ -1334,17 +1339,6 @@ $wgSitewideDisableAdsOnMercury = false;
  * For more details consult https://wikia-inc.atlassian.net/wiki/display/ADEN/Disaster+Recovery
  */
 $wgSitewideDisableGpt = false;
-
-/**
- * @name $wgSitewideDisablePaidAssetDrop
- * @link https://wikia-inc.atlassian.net/wiki/display/ADEN/Disaster+Recovery
- * @link http://community.wikia.com/wiki/Special:WikiFactory/community/variables/wgSitewideDisablePaidAssetDrop
- *
- * Disable Paid Asset Drop (PAD) sitewide in case a disaster happens.
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- * For more details consult https://wikia-inc.atlassian.net/wiki/display/ADEN/Disaster+Recovery
- */
-$wgSitewideDisablePaidAssetDrop = false;
 
 /**
  * @name $wgEnableKruxTargeting
@@ -1727,14 +1721,6 @@ $wgOasisTypography = true;
 $wgOasisBreakpoints = true;
 
 /**
- * @name $wgPaidAssetDropConfig
- *
- * Disables Paid Asset Drop campaign if set to false. Enables it if set to an array with two dates (YYYY-MM-DD format).
- * https://one.wikia-inc.com/wiki/Ad_Engineering/Paid_Asset_Drop
- */
-$wgPaidAssetDropConfig = false;
-
-/**
  * @name $wgAdDriverHighImpact2SlotCountries
  * Enables INVISIBLE_HIGH_IMPACT_2 slot in these countries
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
@@ -1749,7 +1735,6 @@ $wgAdDriverHighImpact2SlotCountries = null;
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverMobileTransitionInterstitialCountries = null;
-
 
 /**
  * @name $wgAdDriverMobileFloorAdhesionCountries
@@ -1766,13 +1751,6 @@ $wgAdDriverMobileFloorAdhesionCountries = null;
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverIncontentPlayerSlotCountries = null;
-
-/**
- * @name $wgAdDriverDisableBadgeAdCountries
- * Disables badge ad (next to TOP_LEADERBOARD).
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverDisableBadgeAdCountries = null;
 
 /**
  * manage a user's preferences externally
@@ -1858,31 +1836,38 @@ $wgDisableImprovedGenderSupport = true;
 $wgAutoapproveJS = false;
 
 /**
+ * @name $wgWikiaBaseDomainRegex
+ * A central regex string for use in domain checking, so we can easily
+ * update/add/change domains in the future
+ */
+$wgWikiaBaseDomainRegex = '(wikia\\.com|wikia-staging\\.com|wikia-dev\\.(com|us|pl))';
+
+/**
  * Enable recovery
  * It should be always included even if recovery is disabled as we use Recovery classes outside the module
  */
 include_once("$IP/extensions/wikia/ARecoveryEngine/ARecoveryEngine.setup.php");
 
-require_once "$IP/extensions/wikia/ImageReview/ImageReviewEvents.setup.php";
+include_once "$IP/extensions/wikia/ImageReview/ImageReviewEvents.setup.php";
 
 // SUS-2164: Include Facebook extensions - enabled globally
-require_once "$IP/extensions/wikia/FacebookPreferences/FacebookPreferences.setup.php";
-require_once "$IP/extensions/wikia/FacebookTags/FacebookTags.setup.php";
+include_once "$IP/extensions/wikia/FacebookPreferences/FacebookPreferences.setup.php";
+include_once "$IP/extensions/wikia/FacebookTags/FacebookTags.setup.php";
 
 // SUS-2956: Include MultiLookup extension
-require_once "$IP/extensions/wikia/SpecialMultipleLookup/SpecialMultipleLookup.php";
+include_once "$IP/extensions/wikia/SpecialMultipleLookup/SpecialMultipleLookup.php";
 
 // SUS-3475: Extension to update shared city_list table
-require_once "$IP/extensions/wikia/CityList/CityList.setup.php";
+include_once "$IP/extensions/wikia/CityList/CityList.setup.php";
 
 // SUS-3496: Extension to update shared dataware.pages table
-require_once "$IP/extensions/wikia/Pages/Pages.setup.php";
+include_once "$IP/extensions/wikia/Pages/Pages.setup.php";
 
 // SUS-3455: Special:ListGlobalUsers for all wikis
-require_once "$IP/extensions/wikia/ListGlobalUsers/ListGlobalUsers.setup.php";
+include_once "$IP/extensions/wikia/ListGlobalUsers/ListGlobalUsers.setup.php";
 
 // SEC-59: Form-based Userlogout for Monobook
-require_once "$IP/extensions/wikia/UserLogout/UserLogout.setup.php";
+include_once "$IP/extensions/wikia/UserLogout/UserLogout.setup.php";
 
 // SRE-76: Logging classes that have been initially defined in config.
 $wgAutoloadClasses['AuditLog'] = "$IP/includes/wikia/AuditLog.class.php";

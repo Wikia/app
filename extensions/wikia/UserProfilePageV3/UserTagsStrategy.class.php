@@ -21,6 +21,7 @@ class UserTagsStrategy extends WikiaObject {
 		'voldev',
 		'vanguard',
 		'council',
+		'content-volunteer',
 	];
 
 	/** @var array LOCAL_GROUPS_RANK Local groups that should be shown in masthead, in order of importance  */
@@ -30,6 +31,7 @@ class UserTagsStrategy extends WikiaObject {
 		'content-moderator',
 		'threadmoderator',
 		'chatmoderator',
+		'bot',
 	];
 
 	/** @var string[] List of explicit global groups this user belongs to */
@@ -138,6 +140,9 @@ class UserTagsStrategy extends WikiaObject {
 				case 'global-discussions-moderator':
 					$tags[] = wfMessage( 'user-identity-box-group-global-discussions-moderator' )->escaped();
 					break;
+				case 'content-volunteer':
+					$tags[] = wfMessage( 'user-identity-box-group-content-volunteer' )->escaped();
+					break;
 			}
 		}
 
@@ -169,6 +174,9 @@ class UserTagsStrategy extends WikiaObject {
 					break;
 				case 'chatmoderator':
 					$tags[] = wfMessage( 'user-identity-box-group-chatmoderator' )->escaped();
+					break;
+				case 'bot':
+					$tags[] = wfMessage( 'user-identity-box-group-bot' )->escaped();
 					break;
 			}
 		}

@@ -49,8 +49,6 @@ class MercuryApi {
 			$key,
 			self::CACHE_TIME_TOP_CONTRIBUTORS,
 			function () use ( $articleId, $limit, $method ) {
-				// Log DB hit
-				Wikia::log( $method, false, sprintf( 'Cache for articleId: %d was empty', $articleId ) );
 				$db = wfGetDB( DB_SLAVE );
 				$res = $db->select(
 					'revision',
@@ -484,46 +482,43 @@ class MercuryApi {
 	 * @return mixed
 	 */
 	public function processCuratedContentItem( $item ) {
-		$result = [
-			'label' => empty( $item['label'] ) ? $item['title'] : $item['label'],
-			'imageUrl' => $item['image_url'],
-			'imageCrop' => isset( $item['image_crop'] ) ? $item['image_crop'] : null,
-			'type' => $item['type'],
-		];
-
 		if ( !empty( $item['article_id'] ) ) {
 			$title = Title::newFromID( $item['article_id'] );
 
 			if ( !empty( $title ) ) {
-				$result['url'] = $title->getLocalURL();
-
-				return $result;
+				return $this->getCuratedContentItemResult( $title, $item );
 			}
-		} elseif ( $item['article_id'] === 0 ) {
+		} elseif ( isset( $item['article_id'] ) && $item['article_id'] === 0 ) {
 			$title =  Title::newFromText( $item['title'] );
 
 			$category = empty( $title ) ? null : Category::newFromTitle( $title );
 
 			if ( !empty( $category ) && $category->getPageCount() ) {
-				$result['url'] = $title->getLocalURL();
-
-				return $result;
+				return $this->getCuratedContentItemResult( $title, $item );
 			}
 		}
 
 		return null;
 	}
 
-	public function processTrendingArticlesData( $data ) {
-		$data = $data['items'];
+	private function getCuratedContentItemResult( Title $title, array $item ): array {
+		return [
+			'label' => empty( $item['label'] ) ? $item['title'] : $item['label'],
+			'imageUrl' => $item['image_url'],
+			'imageCrop' => isset( $item['image_crop'] ) ? $item['image_crop'] : null,
+			'type' => $item['type'],
+			'url' => $title->getLocalURL(),
+		];
+	}
 
-		if ( !isset( $data ) || !is_array( $data ) ) {
+	public function processTrendingArticlesData( $data ) {
+		if ( !isset( $data['items'] ) || !is_array( $data['items'] ) ) {
 			return null;
 		}
 
 		$items = [];
 
-		foreach ( $data as $item ) {
+		foreach ( $data['items'] as $item ) {
 			$processedItem = $this->processTrendingArticlesItem( $item );
 
 			if ( !empty( $processedItem ) ) {
@@ -558,15 +553,13 @@ class MercuryApi {
 	}
 
 	public function processTrendingVideoData( $data ) {
-		$videosData = $data['videos'];
-
-		if ( !isset( $videosData ) || !is_array( $videosData ) ) {
+		if ( !isset( $data['videos'] ) || !is_array( $data['videos'] ) ) {
 			return null;
 		}
 
 		$items = [];
 
-		foreach ( $videosData as $item ) {
+		foreach ( $data['videos'] as $item ) {
 			$items[] = ArticleAsJson::createMediaObject(
 				WikiaFileHelper::getMediaDetail(
 					Title::newFromText( $item['title'], NS_FILE ),

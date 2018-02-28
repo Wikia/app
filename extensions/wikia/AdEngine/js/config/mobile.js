@@ -3,14 +3,12 @@ define('ext.wikia.adEngine.config.mobile', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.provider.directGptMobile',
 	'ext.wikia.adEngine.provider.evolve2',
-	'ext.wikia.adEngine.provider.paidAssetDrop',
 	'ext.wikia.adEngine.provider.remnantGptMobile',
 	require.optional('wikia.instantGlobals')
 ], function (
 	adContext,
 	directGptMobile,
 	evolve2,
-	paidAssetDrop,
 	remnantGptMobile,
 	instantGlobals
 ) {
@@ -44,10 +42,6 @@ define('ext.wikia.adEngine.config.mobile', [
 
 		if (!context.slots.invisibleHighImpact && slotName === 'INVISIBLE_HIGH_IMPACT') {
 			return [];
-		}
-
-		if (paidAssetDrop.canHandleSlot(slotName)) {
-			return [paidAssetDrop];
 		}
 
 		if (context.providers.evolve2 && evolve2.canHandleSlot(slotName)) {

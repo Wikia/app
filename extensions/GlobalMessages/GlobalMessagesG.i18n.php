@@ -72,6 +72,8 @@ $messages['en'] = array(
 	'grouppage-voldev' => 'w:c:dev:Volunteer_Developers',
 	'group-content-moderator' => 'Content Moderators',
 	'group-content-moderator-member' => 'Content Moderator',
+	'group-content-volunteer' => 'Content Volunteers',
+	'group-content-volunteer-member' => 'Content Volunteer',
 	'group-fandom-editor' => 'News and Stories Wordpress access',
 	'group-fandom-editor-member' => 'News and Stories Wordpress access',
 	'group-global-discussions-moderator' => 'Global Discussions Moderator',
@@ -1790,6 +1792,8 @@ $messages['es'] = array(
 	'group-fandom-editor-member' => 'News and Stories Wordpress access',
 	'group-global-discussions-moderator' => 'Moderador global de discusiones',
 	'group-global-discussions-moderator-member' => 'Moderador global de discusiones',
+	'group-content-volunteer' => 'Voluntarios de Contenido',
+	'group-content-volunteer-member' => 'Voluntario de Contenido',
 );
 
 $messages['et'] = array(
@@ -3107,8 +3111,8 @@ $messages['it'] = array(
 	'group-content-moderator-member' => 'Moderatore di contenuti',
 	'group-helper' => 'Helper di FANDOM',
 	'group-helper-member' => 'Helper di FANDOM',
-	'group-staff' => 'Staff FANDOM',
-	'group-staff-member' => 'Staff FANDOM',
+	'group-staff' => 'Staff di FANDOM',
+	'group-staff-member' => 'Staff di FANDOM',
 	'group-util' => 'FANDOM Utilities',
 	'group-util-member' => 'FANDOM Utilities',
 	'googlesearch' => '<form method="get" action="//www.google.com/search" id="googlesearch">
@@ -3142,6 +3146,8 @@ $messages['it'] = array(
 	'group-fandom-editor-member' => 'News and Stories Wordpress access',
 	'group-global-discussions-moderator' => 'Moderatore globale di Discussioni',
 	'group-global-discussions-moderator-member' => 'Moderatore globale di Discussioni',
+	'group-content-volunteer' => 'Volontari per i contenuti',
+	'group-content-volunteer-member' => 'Volontario per i contenuti',
 );
 
 $messages['iu'] = array(
@@ -3259,6 +3265,8 @@ $messages['ja'] = array(
 	'group-fandom-editor-member' => 'News and Stories Wordpress access',
 	'group-global-discussions-moderator' => 'グローバル・ディスカッション・モデレーター',
 	'group-global-discussions-moderator-member' => 'グローバル・ディスカッション・モデレーター',
+	'group-content-volunteer' => 'コンテンツ・ボランティア',
+	'group-content-volunteer-member' => 'コンテンツ・ボランティア',
 );
 
 $messages['jam'] = array(
@@ -5262,6 +5270,8 @@ $messages['pl'] = array(
 	'group-fandom-editor-member' => 'News and Stories Wordpress access',
 	'group-global-discussions-moderator' => 'Globalni moderatorzy Dyskusji',
 	'group-global-discussions-moderator-member' => 'globalny moderator Dyskusji',
+	'group-content-volunteer' => 'Wolontariusze treści',
+	'group-content-volunteer-member' => 'Wolontariusz treści',
 );
 
 $messages['pms'] = array(
@@ -5477,6 +5487,8 @@ $messages['pt'] = array(
 	'group-fandom-editor-member' => 'Acesso a histórias e notícias Wordpress',
 	'group-global-discussions-moderator' => 'Moderador global de discussões',
 	'group-global-discussions-moderator-member' => 'Moderador global de discussões',
+	'group-content-volunteer' => 'Voluntários de conteúdo',
+	'group-content-volunteer-member' => 'Voluntário de conteúdo',
 );
 
 $messages['qu'] = array(
@@ -7494,6 +7506,8 @@ $messages['zh-hans'] = array(
 	'group-fandom-editor-member' => 'News and Stories Wordpress access',
 	'group-global-discussions-moderator' => '全网话题版主',
 	'group-global-discussions-moderator-member' => '全网话题版主',
+	'group-content-volunteer' => '内容志愿者',
+	'group-content-volunteer-member' => '内容志愿者',
 );
 
 $messages['zh-hant'] = array(
@@ -7571,6 +7585,8 @@ $messages['zh-hant'] = array(
 	'group-fandom-editor-member' => 'News and Stories Wordpress access',
 	'group-global-discussions-moderator' => '全站話題版主',
 	'group-global-discussions-moderator-member' => '全站話題版主',
+	'group-content-volunteer' => '內容志願者',
+	'group-content-volunteer-member' => '內容志願者',
 );
 
 $messages['zu'] = array(

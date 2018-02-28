@@ -117,8 +117,8 @@ class WikiFactory {
 	 *
 	 * @return boolean	current value of static::$mIsUsed
 	 */
-	static public function isUsed( $flag = false ) {
-		if ( $flag ) {
+	static public function isUsed( $flag = null ) {
+		if ( $flag !== null ) {
 			static::$mIsUsed = (bool) $flag;
 		}
 
@@ -802,6 +802,15 @@ class WikiFactory {
 			}
 			wfProfileOut( __METHOD__."-citylist" );
 			$dbw->commit();
+
+			// clear wiki metadata
+			static::clearCache( $city_id );
+
+			// update the memcache entry for the variable, instead of deleting it from the cache
+			// and forcing a SELECT query
+			global $wgMemc;
+			$variable->cv_value = serialize( $value );
+			$wgMemc->set(  static::getVarValueKey( $city_id, $variable->cv_id ), $variable, WikiaResponse::CACHE_STANDARD );
 		}
 		catch ( DBQueryError $e ) {
 			Wikia::log( __METHOD__, "", "Database error, cannot write variable." );
@@ -812,11 +821,6 @@ class WikiFactory {
 			// throw $e;
 		}
 
-
-		static::clearCache( $city_id );
-
-		global $wgMemc;
-		$wgMemc->delete( static::getVarValueKey( $city_id, $variable->cv_id ) );
 
 		wfProfileOut( __METHOD__ );
 		return $bStatus;
@@ -1188,13 +1192,12 @@ class WikiFactory {
 	 * @throws \Exception
 	 */
 	static public function getLocalEnvURL( $url, $forcedEnv = null ) {
-		global $wgWikiaEnvironment, $wgWikiaBaseDomain, $wgDevDomain;
+		global $wgWikiaEnvironment, $wgWikiaBaseDomain, $wgDevDomain, $wgWikiaBaseDomainRegex;
 
 		// first - normalize URL
 		$regexp = '/^(https?:)?\/\/([^\/]+)\/?(.*)?$/';
-		$wikiaDomainsRegexp = '/(wikia\.com|wikia-staging\.com|wikia-dev\.(com|us|pl))$/';
 		if ( preg_match( $regexp, $url, $groups ) === 0 ||
-		     preg_match( $wikiaDomainsRegexp, $groups[2] ) === 0 ||
+		     preg_match( '/' . $wgWikiaBaseDomainRegex . '$/', $groups[2] ) === 0 ||
 		     $groups[2] === 'fandom.wikia.com'
 		) {
 			// on fail at least return original url
@@ -1589,7 +1592,7 @@ class WikiFactory {
 	 */
 	static public function getDomainKey( $domain ) {
 		$domainHash = static::getDomainHash($domain);
-		return "wikifactory:domains:by_domain_hash:{$domainHash}:v2";
+		return "wikifactory:domains:by_domain_hash:{$domainHash}:v3";
 	}
 
 	/**
@@ -2121,7 +2124,7 @@ class WikiFactory {
 		if ( !empty( $city_id ) ) {
 			$oRow2 = WikiaDataAccess::cache(
 				static::getVarValueKey( $city_id, $oRow->cv_id ),
-				3600,
+				WikiaResponse::CACHE_STANDARD,
 				function() use ($dbr, $oRow, $city_id, $fname) {
 					return $dbr->selectRow(
 						[ "city_variables" ],
@@ -2765,7 +2768,7 @@ class WikiFactory {
 		}
 
 		/**
-		 * it is called in CommonExtensions.php and wgMemc is not initialized there
+		 * it is called in includes/wikia/Extensions.php and wgMemc is not initialized there
 		 */
 		global $wgWikiFactoryCacheType;
 		$oMemc = wfGetCache( $wgWikiFactoryCacheType );

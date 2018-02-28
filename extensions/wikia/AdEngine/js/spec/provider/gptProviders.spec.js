@@ -27,7 +27,8 @@ describe('ext.wikia.adEngine.provider.*', function () {
 			build: function () {}
 		},
 		megaAdUnitBuilder: {
-			build: function () {}
+			build: function () {},
+			isMegaSlot: noop
 		},
 		gptHelper: {
 			pushAd: function (slotName, slotElement, slotPath, slotTargeting, extra) {
@@ -47,11 +48,6 @@ describe('ext.wikia.adEngine.provider.*', function () {
 		},
 		slotTweaker: {
 			removeDefaultHeight: noop,
-			removeTopButtonIfNeeded: noop,
-			adjustLeaderboardSize: noop
-		},
-		uapContext: {
-			isUapLoaded: noop
 		},
 		lazyQueue: {},
 		window: {},
@@ -77,6 +73,7 @@ describe('ext.wikia.adEngine.provider.*', function () {
 			mocks.btfBlocker,
 			mocks.gptHelper,
 			mocks.adUnitBuilder,
+			mocks.megaAdUnitBuilder,
 			mocks.slotRegistry,
 			mocks.log,
 			mocks.lookups
@@ -88,17 +85,17 @@ describe('ext.wikia.adEngine.provider.*', function () {
 			case 'directGpt':
 				return modules['ext.wikia.adEngine.provider.' + providerName](
 					mocks.adContext,
-					mocks.uapContext,
 					getFactory(),
 					mocks.kiloAdUnitBuilder,
+					mocks.megaAdUnitBuilder,
 					mocks.slotTweaker
 				);
 			case 'remnantGpt':
 				return modules['ext.wikia.adEngine.provider.' + providerName](
 					mocks.adContext,
-					mocks.uapContext,
 					getFactory(),
 					mocks.adUnitBuilder,
+					mocks.megaAdUnitBuilder,
 					mocks.slotTweaker
 				);
 			case 'directGptMobile':
