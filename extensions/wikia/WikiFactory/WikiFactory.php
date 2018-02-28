@@ -802,6 +802,15 @@ class WikiFactory {
 			}
 			wfProfileOut( __METHOD__."-citylist" );
 			$dbw->commit();
+
+			// clear wiki metadata
+			static::clearCache( $city_id );
+
+			// update the memcache entry for the variable, instead of deleting it from the cache
+			// and forcing a SELECT query
+			global $wgMemc;
+			$variable->cv_value = serialize( $value );
+			$wgMemc->set(  static::getVarValueKey( $city_id, $variable->cv_id ), $variable, WikiaResponse::CACHE_STANDARD );
 		}
 		catch ( DBQueryError $e ) {
 			Wikia::log( __METHOD__, "", "Database error, cannot write variable." );
@@ -812,11 +821,6 @@ class WikiFactory {
 			// throw $e;
 		}
 
-
-		static::clearCache( $city_id );
-
-		global $wgMemc;
-		$wgMemc->delete( static::getVarValueKey( $city_id, $variable->cv_id ) );
 
 		wfProfileOut( __METHOD__ );
 		return $bStatus;
@@ -2120,7 +2124,7 @@ class WikiFactory {
 		if ( !empty( $city_id ) ) {
 			$oRow2 = WikiaDataAccess::cache(
 				static::getVarValueKey( $city_id, $oRow->cv_id ),
-				3600,
+				WikiaResponse::CACHE_STANDARD,
 				function() use ($dbr, $oRow, $city_id, $fname) {
 					return $dbr->selectRow(
 						[ "city_variables" ],
