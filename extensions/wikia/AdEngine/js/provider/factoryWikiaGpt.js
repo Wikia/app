@@ -3,6 +3,7 @@ define('ext.wikia.adEngine.provider.factory.wikiaGpt', [
 	'ext.wikia.adEngine.provider.btfBlocker',
 	'ext.wikia.adEngine.provider.gpt.helper',
 	'ext.wikia.adEngine.slot.adUnitBuilder',
+	'ext.wikia.adEngine.slot.service.megaAdUnitBuilder',
 	'ext.wikia.adEngine.slot.service.slotRegistry',
 	'wikia.log',
 	require.optional('ext.wikia.adEngine.lookup.services')
@@ -10,6 +11,7 @@ define('ext.wikia.adEngine.provider.factory.wikiaGpt', [
 	btfBlocker,
 	gptHelper,
 	defaultAdUnitBuilder,
+	megaAdUnitBuilder,
 	slotRegistry,
 	log,
 	lookups
@@ -64,6 +66,10 @@ define('ext.wikia.adEngine.provider.factory.wikiaGpt', [
 		}
 
 		function getAdUnit(slot) {
+			if (megaAdUnitBuilder.isMegaSlot(slot.name)) {
+				return megaAdUnitBuilder.build(slot.name, src);
+			}
+
 			if (extra.getAdUnitBuilder) {
 				return extra.getAdUnitBuilder().build(slot.name, src);
 			}

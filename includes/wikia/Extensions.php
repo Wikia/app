@@ -117,11 +117,6 @@ switch ( $wgLanguageCode ) {
 
 }
 
-// new style of per-lang config
-if (!in_array($wgLanguageCode, $wgAvailableAnswersLang) && !in_array(preg_replace("/-.*$/", "", $wgLanguageCode), $wgAvailableAnswersLang)) {
-   $wgEnableAnswersMonacoWidget = false;
-}
-
 /*
  * WikisApi
  */
@@ -583,11 +578,6 @@ if(!empty($wgEnableLinkSuggestExt)) {
 	include("$IP/extensions/wikia/LinkSuggest/LinkSuggest.php");
 }
 
-if(!empty($wgEnableWidgetTag)) {
-	include_once("$IP/extensions/wikia/WidgetFramework/WidgetFramework.php");
-	include("$IP/extensions/wikia/WidgetTag/WidgetTag.php");
-}
-
 if(!empty($wgEnableMainPageTag)) {
 	include("$IP/extensions/wikia/MainPageTag/MainPageTag.php");
 }
@@ -1038,12 +1028,6 @@ if (!empty( $wgEnablePaginatorExt )){
 # Category Exhibition
 if (!empty($wgEnableCategoryExhibitionExt)) {
 		include("$IP/extensions/wikia/CategoryExhibition/CategoryExhibition_setup.php" );
-}
-
-# SponsorshipDashboard
-if (!empty($wgEnableSponsorshipDashboardExt)) {
-	include("$IP/extensions/wikia/SponsorshipDashboard/SponsorshipDashboard_setup.php" );
-	include("$IP/extensions/wikia/GoogleAnalyticsSampling/GoogleAnalyticsSampling.setup.php");
 }
 
 /*
