@@ -46,7 +46,7 @@ class UpdatePagesTask extends BaseTask {
 		$primaryKey = [ 'page_id','page_wikia_id' ];
 
 		$fieldsToUpdate = array_diff_key( $rowToInsert,
-			array_flip( array_merge( $primaryKey, 'page_created_at' ) ) );
+			array_flip( array_merge( $primaryKey, [ 'page_created_at' ] ) ) );
 
 		$this->getDatawareMaster()
 			->upsert( 'pages', [ $rowToInsert ], [ $primaryKey ], $fieldsToUpdate, __METHOD__ );
