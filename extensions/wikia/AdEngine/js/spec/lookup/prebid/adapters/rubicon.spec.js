@@ -15,18 +15,16 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.rubicon', function () {
 			}
 		},
 		log: function () {},
-		adLogicZoneParams: {
-			getLanguage: function () {
-				return 'en';
-			},
-			getName: function () {
-				return 'test';
-			},
-			getPageType: function () {
-				return 'article';
-			},
-			getSite: function () {
-				return 'life';
+		adaptersHelper: {
+			getTargeting: function () {
+				return {
+					pos: ['TOP_LEADERBOARD'],
+					src: ['gpt'],
+					s0: ['life'],
+					s1: ['test'],
+					s2: ['article'],
+					lang: ['en']
+				}
 			}
 		},
 		instartLogic: {
@@ -42,7 +40,7 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.rubicon', function () {
 		return modules['ext.wikia.adEngine.lookup.prebid.adapters.rubicon'](
 			mocks.adContext,
 			mocks.slotsContext,
-			mocks.adLogicZoneParams,
+			mocks.adaptersHelper,
 			mocks.instartLogic,
 			mocks.log
 		);
@@ -100,12 +98,12 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.rubicon', function () {
 						name: 'TOP_LEADERBOARD',
 						position: 'atf',
 						inventory: {
-							pos: 'TOP_LEADERBOARD',
-							src: 'gpt',
-							s0: 'life',
-							s1: 'test',
-							s2: 'article',
-							lang: 'en'
+							pos: ['TOP_LEADERBOARD'],
+							src: ['gpt'],
+							s0: ['life'],
+							s1: ['test'],
+							s2: ['article'],
+							lang: ['en']
 						},
 						video: {
 							playerHeight: 480,

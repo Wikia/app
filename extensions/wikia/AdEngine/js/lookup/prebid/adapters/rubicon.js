@@ -2,10 +2,10 @@
 define('ext.wikia.adEngine.lookup.prebid.adapters.rubicon', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.context.slotsContext',
-	'ext.wikia.adEngine.utils.adLogicZoneParams',
+	'ext.wikia.adEngine.lookup.prebid.adaptersHelper',
 	'ext.wikia.aRecoveryEngine.instartLogic.recovery',
 	'wikia.log'
-], function (adContext, slotsContext, adLogicZoneParams, instartLogic, log) {
+], function (adContext, slotsContext, adaptersHelper, instartLogic, log) {
 	'use strict';
 
 	var bidderName = 'rubicon', // aka rubicon vulcan
@@ -32,26 +32,12 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.rubicon', [
 		return adContext.getContext();
 	}
 
-	function getTargeting(slotName, skin) {
-		var provider = skin === 'oasis' ? 'gpt' : 'mobile',
-			s1 = getAdContext().targeting.wikiIsTop1000 ? adLogicZoneParams.getName() : 'not a top1k wiki';
-
-		return {
-			pos: slotName,
-			src: provider,
-			s0: adLogicZoneParams.getSite(),
-			s1: s1,
-			s2: adLogicZoneParams.getPageType(),
-			lang: adLogicZoneParams.getLanguage()
-		};
-	}
-
 	function isEnabled() {
 		return getAdContext().bidders.rubicon && !instartLogic.isBlocking();
 	}
 
 	function prepareAdUnit(slotName, config, skin) {
-		var targeting = getTargeting(slotName, skin),
+		var targeting = adaptersHelper.getTargeting(slotName, skin),
 			adUnit,
 			bidParams;
 
