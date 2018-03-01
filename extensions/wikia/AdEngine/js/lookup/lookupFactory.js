@@ -5,9 +5,8 @@ define('ext.wikia.adEngine.lookup.lookupFactory', [
 	'ext.wikia.aRecoveryEngine.adBlockDetection',
 	'wikia.lazyqueue',
 	'wikia.log',
-	'wikia.promise',
 	require.optional('ext.wikia.adEngine.mobile.mercuryListener')
-], function (adContext, adTracker, adBlockDetection, lazyQueue, log, Promise, mercuryListener) {
+], function (adContext, adTracker, adBlockDetection, lazyQueue, log, mercuryListener) {
 	'use strict';
 
 	function create(module) {
@@ -123,14 +122,23 @@ define('ext.wikia.adEngine.lookup.lookupFactory', [
 			});
 		}
 
-		function waitForResponse(milisToTimeout) {
-			return Promise.createWithTimeout(function (resolve) {
-				if (hasResponse()) {
-					resolve();
-				} else {
-					addResponseListener(resolve);
-				}
-			}, milisToTimeout);
+		function waitForResponse(onSuccess, onTimeout, millisToTimeout) {
+			var resolved = false;
+
+			if (hasResponse()) {
+				onSuccess();
+			} else {
+				setTimeout(function () {
+					onTimeout();
+					resolved = true;
+				}, millisToTimeout);
+
+				addResponseListener(function () {
+					if (!resolved) {
+						onSuccess();
+					}
+				});
+			}
 		}
 
 		resetState();

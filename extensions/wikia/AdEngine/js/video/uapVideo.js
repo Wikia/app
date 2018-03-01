@@ -42,49 +42,49 @@ define('ext.wikia.adEngine.video.uapVideo', [
 		return uapTypesToMegaMap[type];
 	}
 
-	function loadPorvata(params, slotContainer, providerContainer, videoSettings) {
+	function loadPorvata(params, slotContainer, providerContainer, videoSettings, onLoad) {
 		params.container = slotContainer;
 
 		log(['VUAP loadPorvata', params], log.levels.debug, logGroup);
 
-		return porvata.inject(videoSettings)
-			.then(function (video) {
-				video.container.style.position = 'relative';
-				if (mercuryListener) {
-					mercuryListener.onPageChange(function () {
-						video.destroy();
-					});
-				}
+		function onPlayerCreated(video) {
+			var splitLayoutVideoPosition = params.splitLayoutVideoPosition,
+				template = UITemplate.selectTemplate(videoSettings);
 
-				return video;
-			})
-			.then(function (video) {
-				var splitLayoutVideoPosition = params.splitLayoutVideoPosition,
-					template = UITemplate.selectTemplate(videoSettings);
-
-				videoInterface.setup(video, template, {
-					aspectRatio: params.aspectRatio,
-					autoPlay: videoSettings.isAutoPlay(),
-					container: slotContainer,
-					hideWhenPlaying: params.videoPlaceholderElement || params.image,
-					image: providerContainer,
-					videoAspectRatio: params.videoAspectRatio
+			video.container.style.position = 'relative';
+			if (mercuryListener) {
+				mercuryListener.onPageChange(function () {
+					video.destroy();
 				});
+			}
 
-				if (splitLayoutVideoPosition) {
-					video.container.style.position = 'absolute';
-					video.container.classList.add(positionVideoPlayerClassName + splitLayoutVideoPosition);
-				}
-
-				video.addEventListener('wikiaAdCompleted', function () {
-					video.reload();
-				});
-
-				return video;
+			videoInterface.setup(video, template, {
+				aspectRatio: params.aspectRatio,
+				autoPlay: videoSettings.isAutoPlay(),
+				container: slotContainer,
+				hideWhenPlaying: params.videoPlaceholderElement || params.image,
+				image: providerContainer,
+				videoAspectRatio: params.videoAspectRatio
 			});
+
+			if (splitLayoutVideoPosition) {
+				video.container.style.position = 'absolute';
+				video.container.classList.add(positionVideoPlayerClassName + splitLayoutVideoPosition);
+			}
+
+			video.addEventListener('wikiaAdCompleted', function () {
+				video.reload();
+			});
+
+			if (typeof onLoad === 'function') {
+				onLoad(video);
+			}
+		}
+
+		porvata.inject(videoSettings, onPlayerCreated);
 	}
 
-	function loadPlaywire(params, adSlot, providerContainer, videoSettings) {
+	function loadPlaywire(params, adSlot, providerContainer, videoSettings, onLoad) {
 		var container = doc.createElement('div');
 
 		container.classList.add('video-player', 'hidden');
@@ -93,33 +93,37 @@ define('ext.wikia.adEngine.video.uapVideo', [
 		params.container = container;
 
 		log(['VUAP loadPlaywire', params], log.levels.debug, logGroup);
-		return playwire.inject(params)
-			.then(function (video) {
-				videoInterface.setup(video, [
-					'closeButton',
-					'toggleAnimation'
-				], {
-					image: providerContainer,
-					container: adSlot,
-					aspectRatio: params.aspectRatio,
-					videoAspectRatio: params.videoAspectRatio
-				});
 
-				video.addEventListener('wikiaAdStarted', function () {
-					var size = getVideoSize(adSlot, params, videoSettings);
-					video.resize(size.width, size.height);
-				});
-
-				if (params.autoPlay) {
-					var size = getVideoSize(adSlot, params, videoSettings);
-					video.play(size.width, size.height);
-				}
-
-				return video;
+		function onPlayerCreated(video) {
+			videoInterface.setup(video, [
+				'closeButton',
+				'toggleAnimation'
+			], {
+				image: providerContainer,
+				container: adSlot,
+				aspectRatio: params.aspectRatio,
+				videoAspectRatio: params.videoAspectRatio
 			});
+
+			video.addEventListener('wikiaAdStarted', function () {
+				var size = getVideoSize(adSlot, params, videoSettings);
+				video.resize(size.width, size.height);
+			});
+
+			if (params.autoPlay) {
+				var size = getVideoSize(adSlot, params, videoSettings);
+				video.play(size.width, size.height);
+			}
+
+			if (typeof onLoad === 'function') {
+				onLoad(video);
+			}
+		}
+
+		playwire.inject(params, onPlayerCreated);
 	}
 
-	function loadVideoAd(videoSettings) {
+	function loadVideoAd(videoSettings, onLoad) {
 		var params = videoSettings.getParams(),
 			loadedPlayer,
 			providerContainer = adSlot.getProviderContainer(params.slotName),
@@ -142,13 +146,7 @@ define('ext.wikia.adEngine.video.uapVideo', [
 
 		log(['loadVideoAd upadated params', params], log.levels.debug, logGroup);
 
-		if (params.player === 'playwire') {
-			loadedPlayer = loadPlaywire(params, videoContainer, providerContainer, videoSettings);
-		} else {
-			loadedPlayer = loadPorvata(params, videoContainer, providerContainer, videoSettings);
-		}
-
-		return loadedPlayer.then(function (video) {
+		function onPlayerLoad() {
 			function playVideo() {
 				var videoSize = getVideoSize(videoContainer, params, videoSettings);
 				video.play(videoSize.width, videoSize.height);
@@ -170,8 +168,16 @@ define('ext.wikia.adEngine.video.uapVideo', [
 			win.addEventListener('resize', throttle(resizeVideo));
 			video.addEventListener('play', resizeVideo);
 
-			return video;
-		});
+			if (typeof onLoad === 'function') {
+				onLoad(video);
+			}
+		}
+
+		if (params.player === 'playwire') {
+			loadPlaywire(params, videoContainer, providerContainer, videoSettings, onPlayerLoad);
+		} else {
+			loadPorvata(params, videoContainer, providerContainer, videoSettings, onPlayerLoad);
+		}
 	}
 
 	/**
