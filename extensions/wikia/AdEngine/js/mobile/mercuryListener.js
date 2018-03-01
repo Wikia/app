@@ -82,7 +82,6 @@ define('ext.wikia.adEngine.mobile.mercuryListener', [
 		onEveryPageChange: onEveryPageChange,
 		onLoad: onLoad,
 		onPageChange: onPageChange,
-		onMenuOpenClear: onMenuOpenClear,
 		onMenuOpen: onMenuOpen,
 		runOnMenuOpenCallbacks: runOnMenuOpenCallbacks,
 		runAfterPageWithAdsRenderCallbacks: runAfterPageWithAdsRenderCallbacks,
