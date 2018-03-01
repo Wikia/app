@@ -1719,10 +1719,6 @@ if ( !empty( $wgEnableSeoLinkHreflangExt ) ) {
 	include "$IP/extensions/wikia/SeoLinkHreflang/SeoLinkHreflang.setup.php";
 }
 
-if ( !empty( $wgEnableSitemapPageExt ) ) {
-	include( "$IP/extensions/wikia/SitemapPage/SitemapPage.setup.php" );
-}
-
 if ( !empty( $wgEnableSitemapXmlExt ) ) {
 	include( "$IP/extensions/wikia/SitemapXml/SitemapXml.setup.php" );
 }
