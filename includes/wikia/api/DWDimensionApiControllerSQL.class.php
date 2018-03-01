@@ -31,7 +31,8 @@ class DWDimensionApiControllerSQL {
             page_namespace AS namespace_id,
             page_id AS article_id,
             page_title AS title,
-            page_is_redirect AS is_redirect
+            page_is_redirect AS is_redirect,
+            page_created_at AS created_at
         FROM 
             pages
         WHERE
@@ -41,15 +42,6 @@ class DWDimensionApiControllerSQL {
         ORDER BY
             page_wikia_id, page_id
         LIMIT $limit';
-
-	const DIMENSION_WIKI_ARTICLES = '
-		SELECT
-            page_namespace AS namespace_id,
-            page_id AS article_id,
-            page_title AS title,
-            page_is_redirect AS is_redirect,
-            (SELECT MIN(rev_timestamp) from revision r where r.rev_page = p.page_id) as created_at
-		FROM page p';
 
 	const DIMENSION_USERS = '
 		SELECT 

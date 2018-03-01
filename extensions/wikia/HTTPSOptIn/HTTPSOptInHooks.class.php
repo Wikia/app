@@ -26,15 +26,16 @@ class HTTPSOptInHooks {
 	}
 
 	public static function onMercuryWikiVariables( array &$wikiVariables ): bool {
+		global $wgDisableHTTPSDowngrade;
 		$basePath = $wikiVariables['basePath'];
 		$user = RequestContext::getMain()->getUser();
 		if ( startsWith( $basePath, 'http://' ) && self::userAllowedHTTPS( $user ) ) {
-			$wikiVariables['basePath'] = preg_replace( '/^http:\/\//', 'https://', $basePath );
+			$wikiVariables['basePath'] = wfHttpToHttps( $basePath );
 		} elseif ( startsWith( $basePath, 'https://' ) &&
 			!self::userAllowedHTTPS( $user ) &&
-			!self::disableHTTPSDowngrade()
+			empty( $wgDisableHTTPSDowngrade )
 		) {
-			$wikiVariables['basePath'] = preg_replace( '/^https:\/\//', 'http://', $basePath );
+			$wikiVariables['basePath'] = wfHttpsToHttp( $basePath );
 		}
 		return true;
 	}
@@ -58,14 +59,14 @@ class HTTPSOptInHooks {
 		if ( WebRequest::detectProtocol() === 'http' &&
 			self::userAllowedHTTPS( $user )
 		) {
-			$output->redirect( preg_replace( '/^http:\/\//', 'https://', $request->getFullRequestURL() ) );
+			$output->redirect( wfHttpToHttps( $request->getFullRequestURL() ) );
 		} elseif ( WebRequest::detectProtocol() === 'https' &&
 			!self::userAllowedHTTPS( $user ) &&
 			empty( $wgDisableHTTPSDowngrade ) &&
 			!$request->getHeader( 'X-Wikia-WikiaAppsID' ) &&
 			!self::httpsEnabledTitle( $title )
 		) {
-			$output->redirect( preg_replace( '/^https:\/\//', 'http://', $request->getFullRequestURL() ) );
+			$output->redirect( wfHttpsToHttp( $request->getFullRequestURL() ) );
 		}
 		return true;
 	}
