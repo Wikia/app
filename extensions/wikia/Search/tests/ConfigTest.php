@@ -326,7 +326,6 @@ class ConfigTest extends BaseTest {
 	 * @covers \Wikia\Search\Config::setInterWiki
 	 * @covers \Wikia\Search\Config::setVideoSearch
 	 * @covers \Wikia\Search\Config::setVideoEmbedToolSearch
-	 * @covers \Wikia\Search\Config::setVideoTitleSearch
 	 * @covers \Wikia\Search\Config::setDirectLuceneQuery
 	 * @covers \Wikia\Search\Config::setCrossWikiLuceneQuery
 	 */
@@ -345,8 +344,7 @@ class ConfigTest extends BaseTest {
 		$types = [ 
 				'InterWiki' => 'Select\\Dismax\\InterWiki', 
 				'VideoSearch' => 'Select\\Dismax\\Video', 
-				'VideoEmbedToolSearch' => 'Select\\Dismax\\VideoEmbedTool', 
-				'VideoTitleSearch' => 'Select\\Dismax\\VideoTitle', 
+				'VideoEmbedToolSearch' => 'Select\\Dismax\\VideoEmbedTool',
 				'DirectLuceneQuery' => 'Select\\Lucene\\Lucene', 
 				'CrossWikiLuceneQuery' => 'Select\\Lucene\\CrossWikiLucene' 
 		];
@@ -1725,25 +1723,16 @@ class ConfigTest extends BaseTest {
 	}
 	
 	/**
-	 * @group Slow
-	 * @slowExecutionTime 0.0772 ms
 	 * @covers \Wikia\Search\Config::bootstrapQueryService
 	 */
 	public function testBootstrapQueryServiceDefault() {
-		$config = $this->getMockBuilder( 'Wikia\Search\Config' )
-		               ->disableOriginalConstructor()
-		               ->setMethods( [ 'getWikiId', 'getService' ] )
-		               ->getMock();
+		$config = new Config();
 
 		$this->mockStaticMethod( 'WikiaPageType', 'isCorporatePage', false );
 
 		$bs = new ReflectionMethod( $config, 'bootstrapQueryService' );
 		$bs->setAccessible( true );
-		$config
-		    ->expects( $this->once() )
-		    ->method ( 'getWikiId' )
-		    ->will   ( $this->returnValue( 123 ) )
-		;
+
 		$this->assertEquals(
 				'Select\\Dismax\\OnWiki',
 				$bs->invoke( $config )
@@ -1751,51 +1740,16 @@ class ConfigTest extends BaseTest {
 	}
 	
 	/**
-	 * @group Slow
-	 * @slowExecutionTime 0.0758 ms
-	 * @covers \Wikia\Search\Config::bootstrapQueryService
-	 */
-	public function testBootstrapQueryServiceVideo() {
-		$config = $this->getMockBuilder( 'Wikia\Search\Config' )
-		               ->disableOriginalConstructor()
-		               ->setMethods( [ 'getWikiId', 'getService' ] )
-		               ->getMock();
-
-		$this->mockStaticMethod( 'WikiaPageType', 'isCorporatePage', false );
-
-		$bs = new ReflectionMethod( $config, 'bootstrapQueryService' );
-		$bs->setAccessible( true );
-		$config
-		    ->expects( $this->once() )
-		    ->method ( 'getWikiId' )
-		    ->will   ( $this->returnValue( \Wikia\Search\QueryService\Select\Dismax\Video::VIDEO_WIKI_ID ) )
-		;
-		$this->assertEquals(
-				'Select\\Dismax\\Video',
-				$bs->invoke( $config )
-		);
-	}
-	
-	/**
-	 * @group Slow
-	 * @slowExecutionTime 0.07578 ms
 	 * @covers \Wikia\Search\Config::bootstrapQueryService
 	 */
 	public function testBootstrapQueryServiceInterWiki() {
-		$config = $this->getMockBuilder( 'Wikia\Search\Config' )
-		               ->disableOriginalConstructor()
-		               ->setMethods( [ 'getWikiId', 'getService' ] )
-		               ->getMock();
+		$config = new Config();
 
 		$this->mockStaticMethod( 'WikiaPageType', 'isCorporatePage', true );
 
 		$bs = new ReflectionMethod( $config, 'bootstrapQueryService' );
 		$bs->setAccessible( true );
-		$config
-		    ->expects( $this->once() )
-		    ->method ( 'getWikiId' )
-		    ->will   ( $this->returnValue( 123 ) )
-		;
+
 		$this->assertEquals(
 				'Select\\Dismax\\InterWiki',
 				$bs->invoke( $config )
