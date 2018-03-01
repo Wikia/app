@@ -509,53 +509,6 @@ function wfWaitForSlavesExt( $maxLag, $cluster = null ) {
 	}
 }
 
-/**
- * wfGetCurrentUrl
- *
- * Get full url for request, used when $wgTitle is not available yet
- * based on code from marco panichi
- *
- * @author Krzysztof Krzyżaniak <eloy@wikia-inc.com>
- * @access public
- *
- * @param boolean $s_string default false -- return url as string not array
- *
- * @return array	parts of current url
- */
-function wfGetCurrentUrl( $as_string = false ) {
-	$uri = $_SERVER['REQUEST_URI'];
-
-	/**
-	 * sometimes $uri contain whole url, not only last part
-	 */
-	if ( !preg_match( '!^https?://!', $uri ) ) {
-		$uri = isset( $_SERVER[ "SERVER_NAME" ] )
-			? "http://" . $_SERVER[ "SERVER_NAME" ] . $uri
-			: "http://localhost" . $uri;
-	}
-	$arr = parse_url( $uri );
-
-	/**
-	 * host
-	 */
-	$arr[ "host" ] = $_SERVER['SERVER_NAME'];
-
-	/**
-	 * scheme
-	 */
-	$server_prt = explode( '/', $_SERVER['SERVER_PROTOCOL'] );
-	$arr[ "scheme" ] = strtolower( $server_prt[0] );
-
-	/**
-	 * full url
-	 */
-	$arr[ "url" ] = $arr[ "scheme" ] . '://' . $arr[ "host" ] . $arr[ "path" ];
-	$arr[ "url" ] = isset( $arr[ "query" ] ) ? $arr[ "url" ] . "?" . $arr[ "query" ] : $arr[ "url" ];
-
-	return ( $as_string ) ? $arr[ "url" ]: $arr ;
-}
-
-
 function getMenuHelper( $name, $limit = 7 ) {
 	global $wgMemc;
 	wfProfileIn( __METHOD__ );
