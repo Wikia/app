@@ -36,14 +36,18 @@ export const getConfig = mercuryListener => ({
 		this.adjustPadding(iframe, this.slotParams);
 		window.addEventListener('resize', onResize);
 
-		if (this.mercuryListener) {
-			this.mercuryListener.onPageChange(() => {
+		if (mercuryListener) {
+			mercuryListener.onPageChange(() => {
 				page.classList.remove('bfaa-template');
 				document.body.classList.remove('vuap-loaded');
 				document.body.classList.remove('has-bfaa');
 				document.body.style.paddingTop = '';
 				this.adsModule.setSiteHeadOffset(0);
 				window.removeEventListener('resize', onResize);
+			});
+			mercuryListener.onMenuOpenClear();
+			mercuryListener.onMenuOpen(() => {
+				this.adSlot.emit('unstickImmediately');
 			});
 		}
 	},

@@ -90,8 +90,4 @@ require([
 	mercuryListener.afterPageWithAdsRender(function () {
 		callBiddersOnConsecutivePageView();
 	});
-
-	mercuryListener.onMenuOpen(function () {
-		adEngineBridge.passSlotEvent('MOBILE_TOP_LEADERBOARD', 'unstickImmediately');
-	});
 });
