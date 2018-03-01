@@ -1855,6 +1855,9 @@ $wgAutoapproveJS = false;
  */
 $wgWikiaBaseDomainRegex = '(wikia\\.com|wikia-staging\\.com|wikia-dev\\.(com|us|pl))';
 
+
+$wgEnableOpenXSPC = true;
+
 /**
  * Enable recovery
  * It should be always included even if recovery is disabled as we use Recovery classes outside the module

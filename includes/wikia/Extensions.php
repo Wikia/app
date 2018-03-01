@@ -1780,6 +1780,10 @@ if ( !empty( $wgEnableGoogleAmp ) ) {
     include "$IP/extensions/wikia/GoogleAmp/GoogleAmp.setup.php";
 }
 
+if ( !empty( $wgEnableOpenXSPC ) ) {
+	include "$IP/extensions/wikia/Spotlights/Spotlights.setup.php";
+}
+
 include "$IP/extensions/wikia/JWPlayerTag/JWPlayerTag.setup.php";
 
 include_once("$IP/extensions/wikia/DataWarehouse/DataWarehouseEventProducer.setup.php");
