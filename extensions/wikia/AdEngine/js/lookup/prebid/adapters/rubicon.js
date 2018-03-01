@@ -2,9 +2,10 @@
 define('ext.wikia.adEngine.lookup.prebid.adapters.rubicon', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.context.slotsContext',
+	'ext.wikia.adEngine.lookup.prebid.adaptersHelper',
 	'ext.wikia.aRecoveryEngine.instartLogic.recovery',
 	'wikia.log'
-], function (adContext, slotsContext, instartLogic, log) {
+], function (adContext, slotsContext, adaptersHelper, instartLogic, log) {
 	'use strict';
 
 	var bidderName = 'rubicon', // aka rubicon vulcan
@@ -27,12 +28,34 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.rubicon', [
 			}
 		};
 
-	function isEnabled() {
-		return adContext.getContext().bidders.rubicon && !instartLogic.isBlocking();
+	function getAdContext() {
+		return adContext.getContext();
 	}
 
-	function prepareAdUnit(slotName, config) {
-		var adUnit = {
+	function isEnabled() {
+		return getAdContext().bidders.rubicon && !instartLogic.isBlocking();
+	}
+
+	function prepareAdUnit(slotName, config, skin) {
+		var targeting = adaptersHelper.getTargeting(slotName, skin),
+			adUnit,
+			bidParams;
+
+		bidParams = {
+			accountId: rubiconAccountId,
+			siteId: rubiconSiteId,
+			zoneId: config.zoneId,
+			name: slotName,
+			position: config.position,
+			inventory: targeting,
+			video: {
+				playerHeight: 480,
+				playerWidth: 640,
+				size_id: outstreamSizeId
+			}
+		};
+
+		adUnit = {
 			code: slotName,
 			sizes: [
 				[640, 480]
@@ -41,18 +64,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.rubicon', [
 			bids: [
 				{
 					bidder: bidderName,
-					params: {
-						accountId: rubiconAccountId,
-						siteId: rubiconSiteId,
-						zoneId: config.zoneId,
-						name: slotName,
-						position: config.position,
-						video: {
-							playerHeight: 480,
-							playerWidth: 640,
-							size_id: outstreamSizeId
-						}
-					}
+					params: bidParams
 				}
 			]
 		};
