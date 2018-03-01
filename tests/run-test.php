@@ -14,6 +14,10 @@ if (isset($params['exclude-group'])) {
 	}
 }
 
-require_once __DIR__ . '/bootstrap.php';
+require_once dirname(__FILE__) . '/bootstrap.php';
+
+if (extension_loaded('xdebug')) {
+    xdebug_disable();
+}
 
 \PHPUnit\TextUI\Command::main();
