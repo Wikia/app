@@ -12,6 +12,8 @@ class UpdateCityListTaskIntegrationTest extends WikiaDatabaseTest {
 	public static function setUpBeforeClass() {
 		parent::setUpBeforeClass();
 		require_once __DIR__ . '/../CityList.setup.php';
+
+		static::loadSchemaFile( __DIR__ . '/fixtures/city-list.sql' );
 	}
 
 	protected function setUp() {
