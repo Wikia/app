@@ -1,14 +1,8 @@
 <?php
 
 $IP = __DIR__;
-
 require "$IP/../config/LocalSettings.php";
 require_once "$IP/includes/wikia/Extensions.php";
-
-$wgScript = "$wgScriptPath/index.php";
-$wgArticlePath = "$wgScriptPath/wiki/$1";
-$wgUploadPath = "$wgScriptPath/images";
-$wgLogo = "$wgUploadPath/b/bc/Wiki.png";
 
 /* @var $wgDBcluster string */
 // in some cases $wgMemc is still null at this point, let's initialize it (SUS-2699)
