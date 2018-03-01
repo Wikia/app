@@ -607,7 +607,7 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 
 		descriptionVal = $('#Description').val();
 
-		$.get('/api.php', {
+		$.get(mw.util.wikiScript('api'), {
 			action: 'query',
 			uiprop: 'preferencestoken',
 			meta: 'userinfo',

@@ -31,7 +31,12 @@ describe('ext.wikia.adEngine.tracking.adInfoTracker', function () {
 					scrollHeight: 500
 				}
 			},
-			pvUID: 'foo-xxx-bar'
+			pvUID: 'foo-xxx-bar',
+			performance: {
+				timing: {
+					connectStart: 1234
+				}
+			}
 		},
 		log: noop
 	};
