@@ -31,17 +31,6 @@
 								<li>
 									<label><input type="checkbox" name="filters[]" value="is_hd" <? if($form['is_hd']){ ?>checked<? } ?> /><?= wfMessage('wikiasearch2-filter-hd') ?></label>
 								</li>
-								<? if($is_video_wiki) { ?>
-									<li>
-										<label><input type="checkbox" name="by_category" value="1" <? if($form['by_category']){ ?>checked<? } ?> id="filter-by-category" /><?= wfMessage('wikiasearch2-filter-category') ?></label>
-										<select name="filters[]" <? if(!$form['by_category']){ ?>disabled<? } ?>>
-											<option value="" ><?= wfMessage('wikiasearch2-choose-category') ?></option>
-											<option value="cat_videogames" <? if($form['cat_videogames']){ ?>selected<? } ?>><?= wfMessage('hub-Gaming') ?></option>
-											<option value="cat_entertainment" <? if($form['cat_entertainment']){ ?>selected<? } ?>><?= wfMessage('hub-Entertainment') ?></option>
-											<option value="cat_lifestyle" <? if($form['cat_lifestyle']){ ?>selected<? } ?>><?= wfMessage('hub-Lifestyle') ?></option>
-										</select>
-									</li>
-								<? } ?>
 							</ul>
 						</li>
 					</ul>

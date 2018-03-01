@@ -302,7 +302,9 @@ class MercuryApi {
 			return ( new WikiaLogoHelper() )->getMainCorpPageURL();
 		}
 
-		return 'http://www.wikia.com'; // default homepage url
+		global $wgWikiaBaseDomain;
+
+		return "http://www.{$wgWikiaBaseDomain}"; // default homepage url
 	}
 
 
