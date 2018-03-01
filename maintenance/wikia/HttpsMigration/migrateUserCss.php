@@ -46,16 +46,9 @@ class MigrateUserCssToHttps extends Maintenance {
 		}
 	}
 
-	private $editSummary = null;
-
 	private function getEditSummary() {
-		if ( !$this->editSummary ) {
-			$contactTitle = Title::makeTitle( NS_SPECIAL, 'Contact' );
-			$contactLink = $contactTitle->escapeLocalUrl( );
-			$this->editSummary = "Applying changes that should make this CSS file HTTPS-ready. " .
-				"In case of any questions or issues, please reach out to us using the {$contactLink} page.";
-		}
-		return $this->editSummary;
+		return "Applying changes that should make this CSS file HTTPS-ready. If you have any questions or noticed " .
+			"issues related to this edit, please reach out to us using the [[Special:Contact]] page.";
 	}
 
 	private function isHttpLink( $url ) {
@@ -92,7 +85,8 @@ class MigrateUserCssToHttps extends Maintenance {
 
 	private function isVignetteUrl( $url ) {
 		$host = parse_url( $url, PHP_URL_HOST );
-		return (preg_match( '/^(vignette|images|img|static)\d*\.wikia.nocookie.net$/', $host ) ||
+		return (preg_match( '/^(www\.)?(vignette|images|img|static|slot)\d*\.wikia\.nocookie\.net$/', $host ) ||
+			preg_match( '/^(www\.)?slot\d*[\.-]images\.wikia\.nocookie\.net$/', $host ) ||
 			$host === 'images.wikia.com' ||
 			$host === 'static.wikia.com');
 	}
@@ -160,7 +154,7 @@ class MigrateUserCssToHttps extends Maintenance {
 		} else {
 			if ( $this->isWikiaComLink( $url ) ) {
 				$url = $this->fixWikiLink( $url );
-				$this->logUrlChange( 'Converted url to protocol relative', $matches[1], $url );
+				$this->logUrlChange( 'Converted wiki url to protocol/host relative', $matches[1], $url );
 			} else {
 				$this->output( "Don't know to handle {$url}\n" );
 			}
