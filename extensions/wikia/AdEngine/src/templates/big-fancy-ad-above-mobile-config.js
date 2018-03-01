@@ -45,7 +45,6 @@ export const getConfig = mercuryListener => ({
 				this.adsModule.setSiteHeadOffset(0);
 				window.removeEventListener('resize', onResize);
 			});
-			mercuryListener.onMenuOpenClear();
 			mercuryListener.onMenuOpen(() => {
 				this.adSlot.emit('unstickImmediately');
 			});

@@ -24,10 +24,6 @@ define('ext.wikia.adEngine.mobile.mercuryListener', [
 		onEveryPageChangeCallbacks.push(callback);
 	}
 
-	function onMenuOpenClear() {
-		onMenuOpenCallbacks = [];
-	}
-
 	function onMenuOpen(callback) {
 		onMenuOpenCallbacks.push(callback);
 	}
@@ -42,6 +38,8 @@ define('ext.wikia.adEngine.mobile.mercuryListener', [
 	}
 
 	function runOnPageChangeCallbacks() {
+		clearOnMenuOpenCallbacks();
+
 		var callback;
 		log(['runOnPageChangeCallbacks', onPageChangeCallbacks.length], 'info', logGroup);
 
@@ -68,6 +66,11 @@ define('ext.wikia.adEngine.mobile.mercuryListener', [
 		onMenuOpenCallbacks.forEach(function(callback) {
 			callback();
 		});
+	}
+
+	function clearOnMenuOpenCallbacks() {
+		log('clearOnMenuOpenCallbacks', 'info', logGroup);
+		onMenuOpenCallbacks = [];
 	}
 
 	lazyQueue.makeQueue(onLoadQueue, function (callback) {
