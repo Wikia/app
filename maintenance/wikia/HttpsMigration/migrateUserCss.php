@@ -45,9 +45,8 @@ class MigrateUserCssToHttps extends Maintenance {
 		global $wgCityId;
 		if ( $oldValue !== $newValue ) {
 			if ( $this->fh ) {
-				fwrite( $this->fh,
-					sprintf("%d, \"%s\", \"%s\", \"%s\", \"%s\"\n", $wgCityId, $this->currentTitle->getDBkey(),
-						$description, $oldValue, $newValue) );
+				fputcsv( $this->fh,
+					[ $wgCityId, $this->currentTitle->getDBkey(), $description, $oldValue, $newValue ] );
 			}
 		}
 	}
