@@ -168,7 +168,6 @@ function wfDevBoxDisableWikiFactory(WikiFactoryLoader $wikiFactoryLoader) {
 	return true;
 }
 
-
 function wfDevBoxResourceLoaderGetConfigVars( &$vars ) {
 	global $wgDevelEnvironment, $wgWikiaDatacenter;
 
