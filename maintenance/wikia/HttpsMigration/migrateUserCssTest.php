@@ -29,7 +29,7 @@ class MigrateUserCssToHttpsTest extends WikiaBaseTest {
 		$this->assertEquals( 'https://vignette.wikia.nocookie.net/runescape/images/a/ab/Runescape_chat.eot?a=b',
 			$this->task->fixUrl( 'http://images.wikia.com/runescape/images/a/ab/Runescape_chat.eot?a=b' ) );
 
-		// if there params are empty, allow to remove the question mark
+		// if the params are empty, allow to remove the question mark
 		$this->assertEquals( 'https://vignette.wikia.nocookie.net/runescape/images/a/ab/Runescape_chat.eot',
 			$this->task->fixUrl( 'http://images.wikia.com/runescape/images/a/ab/Runescape_chat.eot?' ) );
 	}
