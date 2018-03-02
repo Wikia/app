@@ -147,6 +147,8 @@ $messages['de'] = array(
 	'wikiamobile-wikiasearch2-prev' => 'Vorherige',
 	'wikiamobile-wikiasearch2-count-of-results' => '$1-$2 von $3 {{PLURAL:$3|Ergebnis|Ergebnisse}}',
 	'wikiasearch2-video-results' => "Videos für '$1'",
+	'wikiasearch2-choose-category' => 'Kategorie auswählen',
+	'wikiasearch2-filter-category' => 'Kategorie',
 );
 
 $messages['de-formal'] = array(
@@ -241,6 +243,8 @@ $messages['es'] = array(
 	'wikiamobile-wikiasearch2-prev' => 'Anterior',
 	'wikiamobile-wikiasearch2-count-of-results' => '$1-$2 of $3 {{PLURAL:$1|resultado|resultados}}',
 	'wikiasearch2-video-results' => "Videos de '$1'",
+	'wikiasearch2-choose-category' => 'Elegir categoría',
+	'wikiasearch2-filter-category' => 'Categoría',
 );
 
 $messages['et'] = array(
@@ -307,6 +311,8 @@ $messages['fr'] = array(
 	'wikiamobile-wikiasearch2-prev' => 'Précédent',
 	'wikiamobile-wikiasearch2-count-of-results' => '$1-$2 de $3 {{PLURAL:$3|résultat|résultats}}',
 	'wikiasearch2-video-results' => "Vidéos pour '$1'",
+	'wikiasearch2-choose-category' => 'Choisissez une catégorie',
+	'wikiasearch2-filter-category' => 'Catégorie',
 );
 
 $messages['gd'] = array(
@@ -396,6 +402,8 @@ $messages['it'] = array(
 	'wikiamobile-wikiasearch2-prev' => 'Indietro',
 	'wikiamobile-wikiasearch2-count-of-results' => '$1-$2 di $3 {{PLURAL:$3|risultato|risultati}}',
 	'wikiasearch2-video-results' => 'Video per "$1"',
+	'wikiasearch2-choose-category' => 'Seleziona una categoria',
+	'wikiasearch2-filter-category' => 'Categoria',
 );
 
 $messages['ja'] = array(
@@ -445,6 +453,8 @@ $messages['ja'] = array(
 	'wikiamobile-wikiasearch2-prev' => '戻る',
 	'wikiamobile-wikiasearch2-count-of-results' => '$1～$2/$3{{PLURAL:$3|件|件}}',
 	'wikiasearch2-video-results' => '「$1」の動画',
+	'wikiasearch2-choose-category' => 'Choose Category',
+	'wikiasearch2-filter-category' => 'カテゴリ',
 );
 
 $messages['jam'] = array(
@@ -632,6 +642,8 @@ $messages['pl'] = array(
 	'wikiasearch2-video-results' => 'Filmy dla „$1”',
 	'wikiasearch2-images' => '$1 {{PLURAL:$2|obraz|obrazy|obrazów}}',
 	'wikiasearch2-videos' => '$1 {{PLURAL:$2|film|filmy|filmów}}',
+	'wikiasearch2-choose-category' => 'Wybierz kategorię',
+	'wikiasearch2-filter-category' => 'Kategoria',
 );
 
 $messages['pms'] = array(
@@ -687,6 +699,8 @@ $messages['pt'] = array(
 	'wikiamobile-wikiasearch2-prev' => 'Anterior',
 	'wikiamobile-wikiasearch2-count-of-results' => '$1-$2 de $ 3 {{PLURAL:$3|resultado|resultados}}',
 	'wikiasearch2-video-results' => "Vídeos para '$1'",
+	'wikiasearch2-choose-category' => 'Escolher categoria',
+	'wikiasearch2-filter-category' => 'Categoria',
 );
 
 $messages['ro'] = array(
@@ -739,6 +753,8 @@ $messages['ru'] = array(
 	'wikiamobile-wikiasearch2-prev' => 'Предыдущая',
 	'wikiamobile-wikiasearch2-count-of-results' => '$1-$2 из $3 {{PLURAL:$3|результата|результатов}}',
 	'wikiasearch2-video-results' => 'Видео для «$1»',
+	'wikiasearch2-choose-category' => 'Выберите категорию',
+	'wikiasearch2-filter-category' => 'Категории',
 );
 
 $messages['sr-ec'] = array(
@@ -848,6 +864,8 @@ $messages['zh-hans'] = array(
 	'wikiamobile-wikiasearch2-prev' => '上一页',
 	'wikiamobile-wikiasearch2-count-of-results' => '$3{{PLURAL:$3|项结果|项结果}}中的$1- $2',
 	'wikiasearch2-video-results' => '关于"$1"的视频',
+	'wikiasearch2-choose-category' => '选择分类',
+	'wikiasearch2-filter-category' => '分类',
 );
 
 $messages['zh-hant'] = array(
@@ -897,5 +915,7 @@ $messages['zh-hant'] = array(
 	'wikiamobile-wikiasearch2-prev' => '上一頁',
 	'wikiamobile-wikiasearch2-count-of-results' => '$3{{PLURAL:$3|項結果|項結果}}中的$1- $2',
 	'wikiasearch2-video-results' => '關於「$1」的影片',
+	'wikiasearch2-choose-category' => '選擇分類',
+	'wikiasearch2-filter-category' => '分類',
 );
 
