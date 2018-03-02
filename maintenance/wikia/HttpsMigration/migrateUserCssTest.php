@@ -25,6 +25,15 @@ class MigrateUserCssToHttpsTest extends WikiaBaseTest {
 
 	}
 
+	public function testVignetteUrlsWithParams() {
+		$this->assertEquals( 'https://vignette.wikia.nocookie.net/runescape/images/a/ab/Runescape_chat.eot?a=b',
+			$this->task->fixUrl( 'http://images.wikia.com/runescape/images/a/ab/Runescape_chat.eot?a=b' ) );
+
+		// if there params are empty, allow to remove the question mark
+		$this->assertEquals( 'https://vignette.wikia.nocookie.net/runescape/images/a/ab/Runescape_chat.eot',
+			$this->task->fixUrl( 'http://images.wikia.com/runescape/images/a/ab/Runescape_chat.eot?' ) );
+	}
+
 	public function testShardedVignetteUrls() {
 
 		$this->assertEquals( 'https://vignette.wikia.nocookie.net/djinni/images/6/68/Wikia_logo.png',
@@ -167,6 +176,10 @@ class MigrateUserCssToHttpsTest extends WikiaBaseTest {
 			# uppercase
 			[ 'background: #fff; URL("http://images.wikia.com/gaia/images/1/1d/Gaiaonline_global_bg.jpg") repeat scroll center top;' ,
 				[ 'URL("http://images.wikia.com/gaia/images/1/1d/Gaiaonline_global_bg.jpg")', 'http://images.wikia.com/gaia/images/1/1d/Gaiaonline_global_bg.jpg' ] ],
+			# parentheses in url
+			[ 'background-image: url("http://runescape.wikia.com/wiki/Special:FilePath?file=Inventory_interface_(horizontal).png");' ,
+				[ 'url("http://runescape.wikia.com/wiki/Special:FilePath?file=Inventory_interface_(horizontal).png")', 'http://runescape.wikia.com/wiki/Special:FilePath?file=Inventory_interface_(horizontal).png' ] ],
+			#
 			# @import
 			[ '@import "http://gaia.wikia.com/index.php?title=MediaWiki:Common.css&action=raw&ctype=text/css";' ,
 				[ '@import "http://gaia.wikia.com/index.php?title=MediaWiki:Common.css&action=raw&ctype=text/css"', 'http://gaia.wikia.com/index.php?title=MediaWiki:Common.css&action=raw&ctype=text/css' ] ],
