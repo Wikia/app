@@ -15,7 +15,8 @@ function wikiaJWPlayerSettingsPlugin(player, config, div) {
 	this.container.appendChild(this.wikiaSettingsElement);
 
 	this.player.on('levels', this.onQualityLevelsChange.bind(this));
-	this.player.on('captionsList', this.onCaptionsChange.bind(this));
+	this.player.on('relatedVideoPlay', this.onCaptionsChange.bind(this));
+	this.player.once('ready', this.onCaptionsChange.bind(this));
 
 	document.addEventListener('click', this.documentClickHandler);
 	// fixes issue when opening the menu on iPhone 5, executing documentClickHandler twice doesn't break anything
@@ -248,18 +249,19 @@ wikiaJWPlayerSettingsPlugin.prototype.updateCurrentQuality = function (data) {
 // end quality
 
 // captions button specific methods
-wikiaJWPlayerSettingsPlugin.prototype.onCaptionsChange = function (event) {
+wikiaJWPlayerSettingsPlugin.prototype.onCaptionsChange = function () {
 	var emptyCaptionsClass = 'are-captions-empty',
+		captions = this.player.getCaptionsList(),
 		suitableCaptionsTrack = this.getSuitableCaptionsIndex(
 			this.config.selectedCaptionsLanguage || this.captionLangMap[this.getUserLang()],
-			event.tracks
+			captions
 		);
 
 	clearListElement(this.captionsList);
 
 	// tracks always include "off" item
-	if (this.captionsList && event.tracks.length > 1) {
-		event.tracks.forEach(this.createCaptionsListItem, this);
+	if (this.captionsList && captions.length > 1) {
+		captions.forEach(this.createCaptionsListItem, this);
 
 		this.wikiaSettingsElement.classList.remove(emptyCaptionsClass);
 		this.show();
