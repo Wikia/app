@@ -70,7 +70,6 @@ class DesignSystemSharedLinks {
 			'wikia-org' => 'https://www.wikia.org',
 			'terms-of-use' => '//www.wikia.com/Terms_of_use',
 			'privacy-policy' => '//www.wikia.com/Privacy_Policy',
-			'global-sitemap' => '//www.wikia.com/Sitemap',
 			'local-sitemap' => '/wiki/Local_Sitemap',
 			'local-sitemap-fandom' => '//fandom.wikia.com/local-sitemap',
 			'community-central' => '//community.wikia.com/wiki/Community_Central',
