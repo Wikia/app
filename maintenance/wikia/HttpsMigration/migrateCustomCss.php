@@ -250,7 +250,7 @@ class MigrateCustomCssToHttps extends Maintenance {
 		$text = preg_replace_callback( '/\(src="(.*?)"/i', [ $this, 'makeUrlHttpsComatible' ], $text );
 		// match (src='http://...'
 		$text = preg_replace_callback( '/\(src=\'(.*?)\'/i', [ $this, 'makeUrlHttpsComatible' ], $text );
-		// match (src=http://... - up to a
+		// match (src=http://... - up to a comma or closing parenthesis
 		return preg_replace_callback( '/\(src=\s*([^"\',\)]*)/i', [ $this, 'makeUrlHttpsComatible' ], $text );
 	}
 
