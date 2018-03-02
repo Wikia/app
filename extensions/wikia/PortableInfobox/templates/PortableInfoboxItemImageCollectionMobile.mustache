@@ -1,9 +1,9 @@
-<div class="pi-image-collection"
+<div class="pi-image-collection gallery"
 	data-component="portable-infobox-image-collection"
-	data-attrs="{{mercuryComponentAttrs}}">
+	data-attrs="{{dataAttrs}}">
 
 	{{#images}}
-		<figure class="pi-item pi-image">
+		<figure class="pi-item pi-image" data-ref="{{dataRef}}">
 			<a href="{{url}}">
 				<img class="article-media-placeholder lazyload"
 				     src="data:image/svg+xml;charset=utf-8,%3Csvg xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg' viewBox%3D'0 0 {{width}} {{height}}'%2F%3E"

@@ -93,6 +93,7 @@ class PortableInfoboxMobileRenderService extends PortableInfoboxRenderService {
 		}
 
 		$data = SanitizerBuilder::createFromType( 'image' )->sanitize( $data );
+
 		return parent::render( $templateName, $data );
 	}
 
