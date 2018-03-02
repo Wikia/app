@@ -132,6 +132,42 @@ function wfUnitForceWiki(){
 	return false;
 }
 
+/**
+ * "Disable" WikiFactory wiki-specific settings when $wgDevboxSkipWikiFactoryVariables = true
+ *
+ * @author macbre
+ *
+ * @param WikiFactoryLoader $wikiFactoryLoader
+ * @return bool true
+ */
+function wfDevBoxDisableWikiFactory(WikiFactoryLoader $wikiFactoryLoader) {
+	global $wgDevboxSkipWikiFactoryVariables;
+
+	if (!empty($wgDevboxSkipWikiFactoryVariables)) {
+		wfDebug(__METHOD__ . ": WikiFactory settings are disabled!\n");
+
+		$whitelist = array(
+			'wgDBcluster',
+			'wgDBname',
+			'wgSitename',
+			'wgArticlePath',
+			'wgUploadPath',
+			'wgUploadDirectory',
+			'wgLogo',
+			'wgFavicon',
+			'wgLanguageCode'
+		);
+
+		foreach($wikiFactoryLoader->mVariables as $key => $value) {
+			if (!in_array($key, $whitelist)) {
+				unset($wikiFactoryLoader->mVariables[$key]);
+			}
+		}
+	}
+
+	return true;
+}
+
 
 function wfDevBoxResourceLoaderGetConfigVars( &$vars ) {
 	global $wgDevelEnvironment, $wgWikiaDatacenter;
@@ -171,42 +207,6 @@ function getForcedWikiValue(){
 
 	// Otherwise assume it's a wiki and try it anyway
 	return $_SERVER['HTTP_HOST'];
-}
-
-/**
- * "Disable" WikiFactory wiki-specific settings when $wgDevboxSkipWikiFactoryVariables = true
- *
- * @author macbre
- *
- * @param WikiFactoryLoader $wikiFactoryLoader
- * @return bool true
- */
-function wfDevBoxDisableWikiFactory(WikiFactoryLoader $wikiFactoryLoader) {
-	global $wgDevboxSkipWikiFactoryVariables;
-
-	if (!empty($wgDevboxSkipWikiFactoryVariables)) {
-		wfDebug(__METHOD__ . ": WikiFactory settings are disabled!\n");
-
-		$whitelist = array(
-			'wgDBcluster',
-			'wgDBname',
-			'wgSitename',
-			'wgArticlePath',
-			'wgUploadPath',
-			'wgUploadDirectory',
-			'wgLogo',
-			'wgFavicon',
-			'wgLanguageCode'
-		);
-
-		foreach($wikiFactoryLoader->mVariables as $key => $value) {
-			if (!in_array($key, $whitelist)) {
-				unset($wikiFactoryLoader->mVariables[$key]);
-			}
-		}
-	}
-
-	return true;
 }
 
 /**
