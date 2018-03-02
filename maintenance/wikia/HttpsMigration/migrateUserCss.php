@@ -4,9 +4,9 @@
  * Maintenance script to migrate urls included in custom CSS files to https/protocol relative
  * @usage
  * 	# this will migrate assets for wiki with ID 119:
- *  run_maintenance --script='wikia/HttpsMigration/MigrateUserCss.php' --id=119
+ *  run_maintenance --script='wikia/HttpsMigration/MigrateUserCss.php  --saveChanges' --id=119
  * 	# running on some wikis in dry mode and dumping url changes to a csv file:
- *  run_maintenance --script='wikia/HttpsMigration/MigrateUserCss.php --dryRun --file migrate_css.csv' --where='city_id < 10000'
+ *  run_maintenance --script='wikia/HttpsMigration/MigrateUserCss.php --file migrate_css.csv' --where='city_id < 10000'
  *
  */
 
@@ -22,13 +22,13 @@ use \Wikia\Logger\WikiaLogger;
  */
 class MigrateUserCssToHttps extends Maintenance {
 
-	protected $dryRun  = false;
+	protected $saveChanges  = false;
 	protected $fh;	// handle to the output csv file
 
 	public function __construct() {
 		parent::__construct();
 		$this->mDescription = 'Migrates urls in custom CSS assets to HTTPS';
-		$this->addOption( 'dryRun', 'Dry run mode', false, false, 'd' );
+		$this->addOption( 'saveChanges', 'Edit articles for real.', false, false, 'd' );
 		$this->addOption( 'file', 'CSV file where to save values that are going to be altered', false, true, 'f' );
 	}
 
@@ -257,7 +257,7 @@ class MigrateUserCssToHttps extends Maintenance {
 			$text = $revision->getText();
 			$updatedText = $this->updateCSSContent($text);
 			if ($text !== $updatedText) {
-				if ( !$this->dryRun ) {
+				if ( $this->saveChanges ) {
 					$article = new Article( $title );
 					$editPage = new EditPage( $article );
 					$editPage->summary = $this->getEditSummary();
@@ -281,7 +281,7 @@ class MigrateUserCssToHttps extends Maintenance {
 
 		$wgUser = User::newFromName( Wikia::BOT_USER ); // Make changes as FANDOMbot
 
-		$this->dryRun = $this->hasOption( 'dryRun' );
+		$this->saveChanges = $this->hasOption( 'saveChanges' );
 		$fileName = $this->getOption( 'file', false );
 		if ( $fileName ) {
 			$this->fh = fopen( $fileName, "a" );
