@@ -3,21 +3,6 @@
  * @package MediaWiki
  * @author: Sean Colombo, Owen Davis
  * @date: 20100107
- *
- * This panel will help developers administer their dev-boxes
- * more easily.  This includes the ability to see what databases
- * are currently available locally and to easily pull new databases
- * in from production slaves.
- *
- * This panel will only work on systems where $wgDevelEnvironment is set to true.
- *
- * Prerequisite: need to have the 'devbox' user on your editable (usually localhost) database.
- * Look in the private svn's wikia-conf/DevBoxDatabase.php for the query to use.
- *
- *
- * TODO: GUI for setting which local databases will override the production slaves.
- *
- * TODO: Programmatically install a link in the User Links for the Dev Box Panel
  */
 
 if(!defined('MEDIAWIKI')) die("Not a valid entry point.");
@@ -32,14 +17,17 @@ if (!empty($wgRunningUnitTests) && $wgNoDBUnits) {
 	$wgHooks['WikiFactory::execute'][] = "wfDevBoxForceWiki";
 }
 
-//$wgHooks['WikiFactory::executeBeforeTransferToGlobals'][] = "wfDevBoxDisableWikiFactory";
+$wgHooks['WikiFactory::executeBeforeTransferToGlobals'][] = "wfDevBoxDisableWikiFactory";
 $wgHooks['ResourceLoaderGetConfigVars'][] = 'wfDevBoxResourceLoaderGetConfigVars';
 $wgExceptionHooks['MWExceptionRaw'][] = "wfDevBoxLogExceptions";
+
+// Asset manaager and ajax requests come in "too early" for the rest of config
+// So we need a fallback global domain.  This is kind of a hack, fixme.
+$wgDevboxDefaultWikiDomain = 'www.wikia.com';
 
 if (getenv('wgDevelEnvironmentName')) {
 	$wgDevelEnvironmentName = getenv('wgDevelEnvironmentName');
 } else {
-
 	# PLATFORM-1737 (Allow multiple dashes on dev hostnames)
 	# Get first hyphen, if there's any, delete it and everything from the left side of that "-", else pass whole $host
 	$host = gethostname();
@@ -51,15 +39,16 @@ if (getenv('wgDevelEnvironmentName')) {
 	}
 }
 
-// Asset manaager and ajax requests come in "too early" for the rest of config
-// So we need a fallback global domain.  This is kind of a hack, fixme.
-$wgDevboxDefaultWikiDomain = 'www.wikia.com';
-
 /**
  * Hooks into WikiFactory to force use of the wiki which the developer
  * has explicitly set using this panel (if applicable).
  *
+ * @param WikiFactoryLoader $wikiFactoryLoader
+ *
  * @return boolean true to allow the WikiFactoryLoader to do its other necessary initalization.
+ *
+ * @throws DBQueryError
+ * @throws MWException
  */
 function wfDevBoxForceWiki(WikiFactoryLoader $wikiFactoryLoader){
 	global $wgDevelEnvironment, $wgExternalSharedDB, $wgCommandLineMode, $wgDevboxDefaultWikiDomain;
@@ -182,7 +171,42 @@ function getForcedWikiValue(){
 
 	// Otherwise assume it's a wiki and try it anyway
 	return $_SERVER['HTTP_HOST'];
+}
 
+/**
+ * "Disable" WikiFactory wiki-specific settings when $wgDevboxSkipWikiFactoryVariables = true
+ *
+ * @author macbre
+ *
+ * @param WikiFactoryLoader $wikiFactoryLoader
+ * @return bool true
+ */
+function wfDevBoxDisableWikiFactory(WikiFactoryLoader $wikiFactoryLoader) {
+	global $wgDevboxSkipWikiFactoryVariables;
+
+	if (!empty($wgDevboxSkipWikiFactoryVariables)) {
+		wfDebug(__METHOD__ . ": WikiFactory settings are disabled!\n");
+
+		$whitelist = array(
+			'wgDBcluster',
+			'wgDBname',
+			'wgSitename',
+			'wgArticlePath',
+			'wgUploadPath',
+			'wgUploadDirectory',
+			'wgLogo',
+			'wgFavicon',
+			'wgLanguageCode'
+		);
+
+		foreach($wikiFactoryLoader->mVariables as $key => $value) {
+			if (!in_array($key, $whitelist)) {
+				unset($wikiFactoryLoader->mVariables[$key]);
+			}
+		}
+	}
+
+	return true;
 }
 
 /**
