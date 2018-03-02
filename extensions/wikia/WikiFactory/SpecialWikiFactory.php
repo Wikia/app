@@ -45,3 +45,21 @@ $wgSpecialPageGroups['WikiFactory'] = 'wikia';
 $wgAutoloadClasses[ "CloseWikiPage" ] = $dir. "/Close/SpecialCloseWiki_body.php";
 $wgSpecialPages[ "CloseWiki" ] = "CloseWikiPage";
 $wgSpecialPageGroups[ "CloseWiki" ] = 'wikia';
+
+$wgAutoloadClasses['WikiFactoryVariableParser'] = __DIR__ . '/WikiFactoryVariableParser.php';
+$wgAutoloadClasses['WikiFactoryVariableParseException'] = __DIR__ . '/WikiFactoryVariableParseException.php';
+$wgAutoloadClasses['ApiWikiFactorySaveVariable'] = __DIR__ . '/api/ApiWikiFactorySaveVariable.php';
+$wgAutoloadClasses['ApiWikiFactoryRemoveVariable'] = __DIR__ . '/api/ApiWikiFactoryRemoveVariable.php';
+$wgAPIModules['wfsavevariable'] = 'ApiWikiFactorySaveVariable';
+$wgAPIModules['wfremovevariable'] = 'ApiWikiFactoryRemoveVariable';
+
+$wgResourceModules['ext.wikia.wikiFactory'] = [
+	'scripts' => [
+		'js/ext.wikia.wikiFactory.requestManager.js',
+		'js/ext.wikia.wikiFactory.variableService.js',
+		'js/ext.wikia.wikiFactory.variableManager.js',
+	],
+
+	'localBasePath' => __DIR__,
+	'remoteExtPath' => 'wikia/WikiFactory',
+];
