@@ -180,148 +180,6 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	}
 
 	/**
-	 * Delivers a JSON response for videos matching a provided title
-	 * Expects query param "title" for the title value.
-	 *
-	 * @requestParam string title Text used for searching against video titles
-	 * @requestParam int limit Limit the number of results returned
-	 */
-	public function searchVideosByTitle() {
-		$searchConfig = new Wikia\Search\Config;
-		$title = $this->getVal( 'title' );
-		$limit = $this->getVal( 'limit' );
-		$mm = $this->getVal( 'mm', '80%' );
-		if ( empty( $title ) ) {
-			throw new Exception( "Please include a value for 'title'." );
-		}
-		$searchConfig->setVideoTitleSearch( true )->setQuery( $title )->setMinimumMatch( $mm );
-		if ( !empty( $limit ) ) {
-			$searchConfig->setLimit( $limit );
-		}
-
-		$queryService = $this->queryServiceFactory->getFromConfig( $searchConfig );
-
-		$minDuration = $this->getVal( 'minseconds' );
-		$maxDuration = $this->getVal( 'maxseconds' );
-
-		if ( $minDuration && $maxDuration ) {
-			$queryService->setMinDuration( $minDuration )->setMaxDuration( $maxDuration );
-		}
-
-		$log = WikiaLogger::instance();
-		$log->info(
-			__METHOD__ . ' - Querying SOLR',
-			[
-				'method' => __METHOD__,
-				'title' => $title,
-				'limit' => $limit,
-				'mm' => $mm,
-				'minDuration' => $minDuration,
-				'maxDuration' => $maxDuration
-			]
-		);
-
-		$this->getResponse()->setFormat( 'json' );
-		$this->getResponse()->setData( $queryService->searchAsApi() );
-	}
-
-	/**
-	 * A wrapper around searchVideosByTitle that passes in topics for the current Wiki.  Topics are pulled from
-	 * the WikiFactory variables:
-	 *
-	 *   wgWikiVideoSearchTopics
-	 *   wgWikiVideoSearchTopicsAutomated
-	 *
-	 * If there are no topics, the 'defaultTopic' parameter is used instead.  If that isn't given, nothing is returned.
-	 *
-	 * @requestParam string defaultTopic Text to use for the topic if no topics are found on this wiki.
-	 * @requestParam int limit Limit the number of results returned
-	 */
-	public function searchVideosByWikiTopic() {
-		$defaultTopic = $this->getVal( 'defaultTopic' );
-		$topics = $this->getTopicsAsQuery( $defaultTopic );
-
-		if ( $topics ) {
-			$this->request->setVal( 'title', $topics );
-			$this->searchVideosByTitle();
-		}
-	}
-
-	/**
-	 * Search videos by topics
-	 *
-	 * @requestParam string defaultTopic - Text to use for the topic if no topics are found on this wiki.
-	 * @requestParam int limit - Limit the number of results returned
-	 */
-	public function searchVideosByTopics() {
-		$limit = $this->getVal( 'limit' );
-		$defaultTopic = $this->getVal( 'defaultTopic' );
-		$topics = $this->getTopicsAsQuery( $defaultTopic );
-		if ( !empty( $topics ) ) {
-			$searchConfig = new Wikia\Search\Config;
-			$mm = $this->getVal( 'mm', '80%' );
-			$searchConfig->setVideoContentSearch( true )->setQuery( $topics )->setMinimumMatch( $mm );
-			if ( !empty( $limit ) ) {
-				$searchConfig->setLimit( $limit );
-			}
-
-			$queryService = $this->queryServiceFactory->getFromConfig( $searchConfig );
-			$minDuration = $this->getVal( 'minseconds' );
-			$maxDuration = $this->getVal( 'maxseconds' );
-			if ( $minDuration && $maxDuration ) {
-				$queryService->setMinDuration( $minDuration )->setMaxDuration( $maxDuration );
-			}
-
-			$log = WikiaLogger::instance();
-			$log->info(
-				__METHOD__ . ' - Querying SOLR',
-				[
-					'method' => __METHOD__,
-					'topics' => $topics,
-					'limit' => $limit,
-					'mm' => $mm,
-					'minDuration' => $minDuration,
-					'maxDuration' => $maxDuration
-				]
-			);
-
-			$this->getResponse()->setFormat( 'json' );
-			$this->getResponse()->setData( $queryService->searchAsApi() );
-		}
-	}
-
-	/**
-	 * Returns a query string made up of topics found in the WikiFactory variables:
-	 *
-	 *   wgWikiVideoSearchTopics
-	 *   wgWikiVideoSearchTopicsAutomated
-	 *
-	 * @param string $default
-	 *
-	 * @return string
-	 */
-	protected function getTopicsAsQuery( $default = '' ) {
-		$wg = \F::app()->wg;
-		$topics = [];
-
-		if ( is_array( $wg->WikiVideoSearchTopics ) ) {
-			foreach ( $wg->WikiVideoSearchTopics as $topic ) {
-				$topics[] = sprintf( '"%s"', $topic );
-			}
-		}
-
-		if ( is_array( $wg->WikiVideoSearchTopicsAutomated ) ) {
-			foreach ( $wg->WikiVideoSearchTopicsAutomated as $topic ) {
-				$topics[] = sprintf( '"%s"', $topic );
-			}
-		}
-
-		$topics = array_unique( $topics );
-
-		return empty( $topics ) ? '"' . $default . '"' : implode( ' OR ', $topics );
-	}
-
-	/**
 	 * Given a "title" parameter, tests if there's a near match, and then returns the canonical title
 	 */
 	public function resolveEntities() {
@@ -339,8 +197,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	}
 
 	/**
-	 * JSON service that supports the access of video (and optionally photo) content from both
-	 * the current and premium video wiki.
+	 * JSON service that supports the access of video (and optionally photo) content from the current wiki
 	 *
 	 *  Request params:
 	 *  -- q (required) the query
@@ -624,7 +481,6 @@ class WikiaSearchController extends WikiaSpecialPageController {
 
 		$tabsArgs = [
 			'config' => $searchConfig,
-			'by_category' => $this->getVal( 'by_category', false ),
 			'filters' => $this->getVal( 'filters', [] ),
 		];
 
@@ -830,6 +686,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			$this->response->addAsset( 'extensions/wikia/Search/css/WikiaSearch.scss' );
 		}
 		if ( $skin instanceof SkinWikiaMobile ) {
+			WikiaLogger::instance()->info( 'SUS-4233 - Mobile search has been rendered' );
 			$this->overrideTemplate( 'WikiaMobileIndex' );
 		}
 
@@ -925,10 +782,8 @@ class WikiaSearchController extends WikiaSpecialPageController {
 
 		$filters = $config->getFilterQueries();
 		$rank = $config->getRank();
-		$is_video_wiki = $this->wg->CityId == Wikia\Search\QueryService\Select\Dismax\Video::VIDEO_WIKI_ID;
 
 		$form = [
-			'by_category' => $this->getVal( 'by_category', false ),
 			'cat_videogames' => isset( $filters['cat_videogames'] ),
 			'cat_entertainment' => isset( $filters['cat_entertainment'] ),
 			'cat_lifestyle' => isset( $filters['cat_lifestyle'] ),
@@ -941,17 +796,10 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			'no_filter' => !( isset( $filters['is_image'] ) || isset( $filters['is_video'] ) ),
 		];
 
-		// Set video wiki to display only videos by default
-		if ( $is_video_wiki && $form['no_filter'] == 1 && !in_array( 'no_filter', $this->getVal( 'filters', [] ) ) ) {
-			$form['is_video'] = 1;
-			$form['no_filter'] = 0;
-		}
-
 		$this->setVal( 'bareterm', $config->getQuery()->getSanitizedQuery() );
 		$this->setVal( 'searchProfiles', $config->getSearchProfiles() );
 		$this->setVal( 'activeTab', $config->getActiveTab() );
 		$this->setVal( 'form', $form );
-		$this->setVal( 'is_video_wiki', $is_video_wiki );
 	}
 
 	/**
@@ -1001,10 +849,6 @@ class WikiaSearchController extends WikiaSpecialPageController {
 
 		foreach ( $config->getNamespaces() as $ns ) {
 			$extraParams['ns'.$ns] = 1;
-		}
-
-		if ( $this->request->getVal( 'by_category', false ) ) {
-			$extraParams['by_category'] = 1;
 		}
 
 		$limit = $config->getLimit();

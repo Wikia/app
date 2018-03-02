@@ -97,13 +97,6 @@ class AdEngine2Hooks {
 		$vars[] = 'wgSitewideDisableGpt';
 		$vars[] = 'wgSitewideDisableKrux';
 
-		/**
-		 * Temporary variables while removing Paid Asset Drop
-		 * ADEN-6760
-		 */
-		$vars[] = 'wgSitewideDisablePaidAssetDrop';
-		$vars[] = 'wgPaidAssetDropConfig';
-
 		return true;
 	}
 

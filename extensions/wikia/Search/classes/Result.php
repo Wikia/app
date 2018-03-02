@@ -165,7 +165,11 @@ class Result extends ReadWrite {
 	 * @return string
 	 */
 	public function getUrl() {
-		return isset( $this->_fields['url'] ) ? $this->_fields['url'] : '';
+		$url = $this->_fields['url'] ?? '';
+		if ( \WebRequest::detectProtocol() === 'https' ) {
+			$url = \wfHttpToHttps( $url );
+		}
+		return $url;
 	}
 
 	/**
