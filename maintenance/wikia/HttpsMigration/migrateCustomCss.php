@@ -74,11 +74,11 @@ class MigrateCustomCssToHttps extends Maintenance {
 	/**
 	 * True if the url doesn't contain the host part.
 	 */
-	private function isLocalUrl( $link ) {
+	private function isLocalUrl( $url ) {
 
-		if ( $this->isHttpUrl( $link ) ||
-			$this->isHttpsUrl( $link ) ||
-			$this->isProtocolRelativeUrl( $link ) ) {
+		if ( $this->isHttpUrl( $url ) ||
+			$this->isHttpsUrl( $url ) ||
+			$this->isProtocolRelativeUrl( $url ) ) {
 			return false;
 		}
 		return true;
@@ -98,7 +98,7 @@ class MigrateCustomCssToHttps extends Maintenance {
 	}
 
 	/**
-	 * Returns true if the links points to one of many variations of our vignette domains.
+	 * Returns true if the url points to one of many variations of our vignette domains.
 	 * Handles a lot of historical formats that are not used anymore.
 	 */
 	private function isVignetteUrl( $url ) {
@@ -110,7 +110,7 @@ class MigrateCustomCssToHttps extends Maintenance {
 	}
 
 	/**
-	 * Replaces http protocl with https. Protocol-relative links are not affected.
+	 * Replaces http protocl with https. Protocol-relative urls are not affected.
 	 */
 	private function upgradeToHttps( $url ) {
 		if ( $this->isHttpUrl( $url ) ) {
@@ -148,8 +148,8 @@ class MigrateCustomCssToHttps extends Maintenance {
 
 	/**
 	 * Fixes wiki urls according to our guidelines:
-	 * - links to current wiki should be local, without protocol or host
-	 * - links to other wiki should be protocol-relative.
+	 * - urls to current wiki should be local, without protocol or host
+	 * - urls to other wiki should be protocol-relative.
 	 */
 	private function fixWikiUrl( $url ) {
 		if ( $this->isCurrentWikiUrl( $url ) ) {
