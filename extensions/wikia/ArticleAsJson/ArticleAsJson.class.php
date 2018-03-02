@@ -8,7 +8,7 @@ class ArticleAsJson {
 		'imageMaxWidth' => false
 	];
 
-	const CACHE_VERSION = 3.2;
+	const CACHE_VERSION = 3.3;
 
 	const ICON_MAX_SIZE = 48;
 	// Line height in Mercury
@@ -115,7 +115,8 @@ class ArticleAsJson {
 			'fileUrl' => $details['fileUrl'],
 			'title' => $imageName,
 			'user' => $details['userName'],
-			'mime' => $details['mime']
+			'mime' => $details['mime'],
+			'isVideo' => $details['mediaType'] === 'video'
 		];
 
 		// Only images are allowed to be linked by user
