@@ -238,7 +238,7 @@ class MigrateCustomCssToHttps extends Maintenance {
 		// changes and prevent us from changing something we didn't mean to change.
 		$text =  preg_replace_callback( '/url\s*\("(.*?)"\)/i', [ $this, 'makeUrlHttpsComatible' ], $text );
 		$text =  preg_replace_callback( '/url\s*\(\'(.*?)\'\)/i', [ $this, 'makeUrlHttpsComatible' ], $text );
-		$text =  preg_replace_callback( '/url\s*\((.*?)\)/i', [ $this, 'makeUrlHttpsComatible' ], $text );
+		$text =  preg_replace_callback( '/url\s*\(\s*([^\'"].*?)\s*\)/i', [ $this, 'makeUrlHttpsComatible' ], $text );
 		$text = preg_replace_callback( '/@import\s+\'(.*?)\'/i', [ $this, 'makeUrlHttpsComatible' ], $text );
 		$text = preg_replace_callback( '/@import\s+"(.*?)"/i', [ $this, 'makeUrlHttpsComatible' ], $text );
 		$text = preg_replace_callback( '/\(src="(.*?)"/i', [ $this, 'makeUrlHttpsComatible' ], $text );
