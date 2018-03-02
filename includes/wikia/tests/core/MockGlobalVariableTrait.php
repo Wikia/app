@@ -21,7 +21,6 @@ trait MockGlobalVariableTrait {
 	 */
 	protected function mockGlobalVariable( string $globalName, $returnValue ) {
 		$this->mockedGlobalVariables[$globalName] = $GLOBALS[$globalName] ?? null;
-
 		$this->setInGlobalScope( $globalName, $returnValue );
 	}
 

@@ -147,7 +147,8 @@ class DWDimensionApiController extends WikiaApiController {
 				'article_id' => $row->article_id,
 				'title' => $row->title,
 				'is_redirect' => $row->is_redirect,
-				'created_at' => ( new DateTime( $row->created_at ) )->format( 'Y-m-d H:i:s' )
+				'created_at' => isset( $row->created_at ) ?
+					( new DateTime( $row->created_at ) )->format( 'Y-m-d H:i:s' ) : null
 			];
 		}
 		$db->freeResult( $dbResult );
