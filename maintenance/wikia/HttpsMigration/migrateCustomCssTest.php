@@ -162,41 +162,41 @@ class MigrateCustomCssToHttpsTest extends WikiaBaseTest {
 	public function getCssUrlExtractorDataProvider() {
 		return [
 			# regular url
-			[ 'background: #fff; url(http://images.wikia.com/gaia/images/1/1d/Gaiaonline_global_bg.jpg) repeat scroll center top;' ,
+			[ 'background: #fff; url(http://images.wikia.com/gaia/images/1/1d/Gaiaonline_global_bg.jpg) repeat scroll center top;',
 				[ 'url(http://images.wikia.com/gaia/images/1/1d/Gaiaonline_global_bg.jpg)', 'http://images.wikia.com/gaia/images/1/1d/Gaiaonline_global_bg.jpg' ] ],
 			# space after "url"
-			[ 'background: #fff; url (http://images.wikia.com/gaia/images/1/1d/Gaiaonline_global_bg.jpg) repeat scroll center top;' ,
+			[ 'background: #fff; url (http://images.wikia.com/gaia/images/1/1d/Gaiaonline_global_bg.jpg) repeat scroll center top;',
 				[ 'url (http://images.wikia.com/gaia/images/1/1d/Gaiaonline_global_bg.jpg)', 'http://images.wikia.com/gaia/images/1/1d/Gaiaonline_global_bg.jpg' ] ],
 			# single quotes
-			[ 'background: #fff; url(\'http://images.wikia.com/gaia/images/1/1d/Gaiaonline_global_bg.jpg\') repeat scroll center top;' ,
+			[ 'background: #fff; url(\'http://images.wikia.com/gaia/images/1/1d/Gaiaonline_global_bg.jpg\') repeat scroll center top;',
 				[ 'url(\'http://images.wikia.com/gaia/images/1/1d/Gaiaonline_global_bg.jpg\')', 'http://images.wikia.com/gaia/images/1/1d/Gaiaonline_global_bg.jpg' ] ],
 			# double quotes
-			[ 'background: #fff; url("http://images.wikia.com/gaia/images/1/1d/Gaiaonline_global_bg.jpg") repeat scroll center top;' ,
+			[ 'background: #fff; url("http://images.wikia.com/gaia/images/1/1d/Gaiaonline_global_bg.jpg") repeat scroll center top;',
 				[ 'url("http://images.wikia.com/gaia/images/1/1d/Gaiaonline_global_bg.jpg")', 'http://images.wikia.com/gaia/images/1/1d/Gaiaonline_global_bg.jpg' ] ],
 			# uppercase
-			[ 'background: #fff; URL("http://images.wikia.com/gaia/images/1/1d/Gaiaonline_global_bg.jpg") repeat scroll center top;' ,
+			[ 'background: #fff; URL("http://images.wikia.com/gaia/images/1/1d/Gaiaonline_global_bg.jpg") repeat scroll center top;',
 				[ 'URL("http://images.wikia.com/gaia/images/1/1d/Gaiaonline_global_bg.jpg")', 'http://images.wikia.com/gaia/images/1/1d/Gaiaonline_global_bg.jpg' ] ],
 			# parentheses in url
-			[ 'background-image: url("http://runescape.wikia.com/wiki/Special:FilePath?file=Inventory_interface_(horizontal).png");' ,
+			[ 'background-image: url("http://runescape.wikia.com/wiki/Special:FilePath?file=Inventory_interface_(horizontal).png");',
 				[ 'url("http://runescape.wikia.com/wiki/Special:FilePath?file=Inventory_interface_(horizontal).png")', 'http://runescape.wikia.com/wiki/Special:FilePath?file=Inventory_interface_(horizontal).png' ] ],
 			#
 			# @import
-			[ '@import "http://gaia.wikia.com/index.php?title=MediaWiki:Common.css&action=raw&ctype=text/css";' ,
+			[ '@import "http://gaia.wikia.com/index.php?title=MediaWiki:Common.css&action=raw&ctype=text/css";',
 				[ '@import "http://gaia.wikia.com/index.php?title=MediaWiki:Common.css&action=raw&ctype=text/css"', 'http://gaia.wikia.com/index.php?title=MediaWiki:Common.css&action=raw&ctype=text/css' ] ],
-			[ '@import \'http://gaia.wikia.com/index.php?title=MediaWiki:Common.css&action=raw&ctype=text/css\';' ,
+			[ '@import \'http://gaia.wikia.com/index.php?title=MediaWiki:Common.css&action=raw&ctype=text/css\';',
 				[ '@import \'http://gaia.wikia.com/index.php?title=MediaWiki:Common.css&action=raw&ctype=text/css\'', 'http://gaia.wikia.com/index.php?title=MediaWiki:Common.css&action=raw&ctype=text/css' ] ],
-			[ '@IMPORT \'http://gaia.wikia.com/index.php?title=MediaWiki:Common.css&action=raw&ctype=text/css\';' ,
+			[ '@IMPORT \'http://gaia.wikia.com/index.php?title=MediaWiki:Common.css&action=raw&ctype=text/css\';',
 				[ '@IMPORT \'http://gaia.wikia.com/index.php?title=MediaWiki:Common.css&action=raw&ctype=text/css\'', 'http://gaia.wikia.com/index.php?title=MediaWiki:Common.css&action=raw&ctype=text/css' ] ],
 			# alpha filter
-			[ '#submit {filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src=\'/images/btn.png\', sizingMethod=\'scale\');}' ,
+			[ '#submit {filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src=\'/images/btn.png\', sizingMethod=\'scale\');}',
 				[ '(src=\'/images/btn.png\'', '/images/btn.png' ] ],
-			[ 'filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src=http://commons.wikimedia.org/wiki/File:RomanF-01.png, sizingMethod=\'crop\')' ,
+			[ 'filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src=http://commons.wikimedia.org/wiki/File:RomanF-01.png, sizingMethod=\'crop\')',
 				[ '(src=http://commons.wikimedia.org/wiki/File:RomanF-01.png', 'http://commons.wikimedia.org/wiki/File:RomanF-01.png' ] ],
-			[ 'filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src=http://commons.wikimedia.org/wiki/File:RomanF-01.png)' ,
+			[ 'filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src=http://commons.wikimedia.org/wiki/File:RomanF-01.png)',
 				[ '(src=http://commons.wikimedia.org/wiki/File:RomanF-01.png', 'http://commons.wikimedia.org/wiki/File:RomanF-01.png' ] ],
 
 			# urls that should not be altered
-			[ '.speech-bubble-message a[href="http://theuniversim.wikia.com/wiki/Message_Wall:"]:not(.subtle)::after {' , null ],
+			[ '.speech-bubble-message a[href="http://theuniversim.wikia.com/wiki/Message_Wall:"]:not(.subtle)::after {', null ],
 			[ '* For more information see <http://dev.wikia.com/wiki/Less>', null ],
 			[ ' bottom (see http://www.fontspring.com/blog/the-new-bulletproof-font-face-syntax)', null ],
 			[ 'a[href="http://ru.bloodborne.wikia.com/wiki/%D0%A1%D0%BB%D1%83%D0%B6%D0%B5%D0%B1%D0%BD%D0%B0%D1%8F:Contributions/Bermoodok"]', null ],
