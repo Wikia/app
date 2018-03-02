@@ -8,7 +8,7 @@ class ArticleAsJson {
 		'imageMaxWidth' => false
 	];
 
-	const CACHE_VERSION = 3;
+	const CACHE_VERSION = 3.2;
 
 	const ICON_MAX_SIZE = 48;
 	// Line height in Mercury
@@ -70,7 +70,7 @@ class ArticleAsJson {
 			\MustacheService::getInstance()->render(
 				self::MEDIA_GALLERY_TEMPLATE,
 				[
-					'galleryAttrs' => json_encode( [ 'items' => $media ] ),
+					'galleryAttrs' => json_encode( $media ),
 					'hasLinkedImages' => $hasLinkedImages,
 					'media' => $media
 				]
@@ -178,7 +178,7 @@ class ArticleAsJson {
 			$title = F::app()->wg->Title;
 			$media = [ ];
 
-			foreach ( $data['images'] as $image ) {
+			foreach ( $data['images'] as $index => $image ) {
 				$details = self::getMediaDetailWithSizeFallback(
 					Title::newFromText( $image['name'], NS_FILE ),
 					self::$mediaDetailConfig
@@ -199,6 +199,7 @@ class ArticleAsJson {
 				$linkHref = isset( $image['linkhref'] ) ? $image['linkhref'] : null;
 				$mediaObj = self::createMediaObject( $details, $image['name'], $caption, $linkHref );
 				$mediaObj['mediaAttr'] = json_encode( $mediaObj );
+				$mediaObj['galleryRef'] = $index;
 
 				$media[] = $mediaObj;
 
