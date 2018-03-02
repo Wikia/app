@@ -74,7 +74,7 @@ class MigrateCustomCssToHttps extends Maintenance {
 	/**
 	 * True if the url doesn't contain the host part.
 	 */
-	private function isLocalUrl($link) {
+	private function isLocalUrl( $link ) {
 
 		if ( $this->isHttpUrl( $link ) ||
 			$this->isHttpsUrl( $link ) ||
@@ -103,10 +103,10 @@ class MigrateCustomCssToHttps extends Maintenance {
 	 */
 	private function isVignetteUrl( $url ) {
 		$host = parse_url( $url, PHP_URL_HOST );
-		return (preg_match( '/^(www\.)?(vignette|images|image|img|static|slot)\d*\.wikia\.nocookie\.net$/', $host ) ||
+		return ( preg_match( '/^(www\.)?(vignette|images|image|img|static|slot)\d*\.wikia\.nocookie\.net$/', $host ) ||
 			preg_match( '/^(www\.)?slot\d*[\.-]images\.wikia\.nocookie\.net$/', $host ) ||
 			$host === 'images.wikia.com' ||
-			$host === 'static.wikia.com');
+			$host === 'static.wikia.com' );
 	}
 
 	/**
@@ -120,7 +120,7 @@ class MigrateCustomCssToHttps extends Maintenance {
 	}
 
 	private function forceHttps( $url ) {
-		return http_build_url($url, ['scheme' => 'https']);
+		return http_build_url( $url, [ 'scheme' => 'https' ] );
 	}
 
 	private $currentHost = null;
@@ -141,9 +141,9 @@ class MigrateCustomCssToHttps extends Maintenance {
 	 */
 	private function stripProtocolAndHost( $url ) {
 		$parse_url = parse_url( $url );
-		return $parse_url['path'] .
-			( ( isset( $parse_url['query'] ) ) ? '?' . $parse_url['query'] : '' ) .
-			( ( isset( $parse_url['fragment'] ) ) ? '#' . $parse_url['fragment'] : '' );
+		return $parse_url[ 'path' ] .
+			( ( isset( $parse_url[ 'query' ] ) ) ? '?' . $parse_url[ 'query' ] : '' ) .
+			( ( isset( $parse_url[ 'fragment' ] ) ) ? '#' . $parse_url[ 'fragment' ] : '' );
 	}
 
 	/**
@@ -167,7 +167,7 @@ class MigrateCustomCssToHttps extends Maintenance {
 	 */
 	private function upgradeThirdPartyUrl( $url ) {
 		$known_https_hosts = [ 'en.wikipedia.org', 'i.imgur.com', 'upload.wikimedia.org', 'fonts.googleapis.com',
-			'commons.wikimedia.org'];
+			'commons.wikimedia.org' ];
 		$host = parse_url( $url, PHP_URL_HOST );
 		if ( in_array( $host, $known_https_hosts ) ) {
 			$newUrl = $this->upgradeToHttps( $url );
@@ -212,8 +212,8 @@ class MigrateCustomCssToHttps extends Maintenance {
 	 */
 	public function makeUrlHttpsComatible( $matches ) {
 		$url = $this->fixUrl( $matches[ 1 ] );
-		$matches[0] = str_replace( $matches[ 1 ], $url, $matches[0] );
-		return $matches[0];
+		$matches[ 0 ] = str_replace( $matches[ 1 ], $url, $matches[ 0 ] );
+		return $matches[ 0 ];
 	}
 
 	/**
@@ -221,8 +221,8 @@ class MigrateCustomCssToHttps extends Maintenance {
 	 * @param $text CSS source code
 	 * @return mixed Updated CSS source code
 	 */
-	public function updateCSSContent($text) {
-		$lines = explode("\n", $text);
+	public function updateCSSContent( $text ) {
+		$lines = explode( "\n", $text );
 		// check if we covered all CSS urls with our regex
 		foreach($lines as $line) {
 			if ( strpos( $line, 'http://' ) !== FALSE || strpos( $line, 'https://' ) !== FALSE) {
@@ -255,14 +255,14 @@ class MigrateCustomCssToHttps extends Maintenance {
 		$revision = Revision::newFromId( $revId );
 		if( !is_null( $revision ) ) {
 			$text = $revision->getText();
-			$updatedText = $this->updateCSSContent($text);
+			$updatedText = $this->updateCSSContent( $text );
 			if ($text !== $updatedText) {
 				if ( $this->saveChanges ) {
 					$article = new Article( $title );
 					$editPage = new EditPage( $article );
 					$editPage->summary = $this->getEditSummary();
 					$editPage->textbox1 = $updatedText;
-					$result = [ ];
+					$result = [];
 					$status = $editPage->internalAttemptSave( $result, /* bot */ true );
 					if ( $status->isGood() ) {
 						$this->output( "Saved updated CSS file\n" );
@@ -302,14 +302,14 @@ class MigrateCustomCssToHttps extends Maintenance {
 		foreach( $result as $row ) {
 			$title = Title::makeTitle( NS_MEDIAWIKI, $row->page_title );
 			if ( $title->isCssPage() ) {
-				$this->output("Processing CSS file {$row->page_title}...\n");
+				$this->output( "Processing CSS file {$row->page_title}...\n" );
 				if ( $this->migrateCSS( $title ) ) {
 					$migratedFiles += 1;
 				}
 			}
 		}
 		$result->free();
-		$this->output("Migrated {$migratedFiles} CSS files.\n");
+		$this->output( "Migrated {$migratedFiles} CSS files.\n" );
 	}
 
 }

@@ -9,7 +9,7 @@ class MigrateCustomCssToHttpsTest extends WikiaBaseTest {
 	function setUp() {
 		parent::setUp();
 		$this->task = new MigrateCustomCssToHttps();
-		$this->mockGlobalVariable( 'wgServer', 'http://mechtest.wikia.com');
+		$this->mockGlobalVariable( 'wgServer', 'http://mechtest.wikia.com' );
 	}
 
 	public function testWikiaComVignetteUrls() {
