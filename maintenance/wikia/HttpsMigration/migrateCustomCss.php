@@ -174,7 +174,7 @@ class MigrateCustomCssToHttps extends Maintenance {
 			$this->logUrlChange( 'Upgraded third party url', $url, $newUrl );
 			$url = $newUrl;
 		} else {
-			$this->output( "Found unrecognized third party http url {$url}\n" );
+			//$this->output( "Found unrecognized third party http url {$url}\n" );
 		}
 		return $url;
 	}
@@ -222,18 +222,6 @@ class MigrateCustomCssToHttps extends Maintenance {
 	 * @return mixed Updated CSS source code
 	 */
 	public function updateCSSContent( $text ) {
-		$lines = explode( "\n", $text );
-		// check if we covered all CSS urls with our regex
-		foreach($lines as $line) {
-			if ( strpos( $line, 'http://' ) !== FALSE || strpos( $line, 'https://' ) !== FALSE) {
-				if ( strpos( $line, 'url(' ) === FALSE &&
-					strpos( $line, 'url (' ) === FALSE &&
-					strpos( $line, '(src=\'' ) === FALSE && strpos( $line, '(src="' ) === FALSE &&
-					strpos( $line, '@import' ) === FALSE) {
-					$this->output( "Unexpected url usage in {$line}\n" );
-				}
-			}
-		}
 		// To be on the safe side, only replace urls in image and import statements. This should reduce the number of
 		// changes and prevent us from changing something we didn't mean to change.
 		// match url("http://...")
@@ -251,7 +239,17 @@ class MigrateCustomCssToHttps extends Maintenance {
 		// match (src='http://...'
 		$text = preg_replace_callback( '/\(src=\'(.+?)\'/i', [ $this, 'makeUrlHttpsComatible' ], $text );
 		// match (src=http://... - up to a comma or closing parenthesis
-		return preg_replace_callback( '/\(src=\s*([^"\',\) ]+)/i', [ $this, 'makeUrlHttpsComatible' ], $text );
+		$text = preg_replace_callback( '/\(src=\s*([^"\',\) ]+)/i', [ $this, 'makeUrlHttpsComatible' ], $text );
+
+		// logging - output lines that still use http protocol
+		$lines = explode( "\n", $text );
+		foreach($lines as $line) {
+			if ( strpos( $line, 'http://' ) !== FALSE ) {
+				$this->output( "Notice: http protocol still used in \"{$line}\"\n" );
+			}
+		}
+
+		return $text;
 	}
 
 	/**
