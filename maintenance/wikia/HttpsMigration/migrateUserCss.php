@@ -243,7 +243,8 @@ class MigrateUserCssToHttps extends Maintenance {
 		$text = preg_replace_callback( '/@import\s+\'(.*?)\'/i', [ $this, 'makeUrlHttpsComatible' ], $text );
 		$text = preg_replace_callback( '/@import\s+"(.*?)"/i', [ $this, 'makeUrlHttpsComatible' ], $text );
 		$text = preg_replace_callback( '/\(src="(.*?)"/i', [ $this, 'makeUrlHttpsComatible' ], $text );
-		return preg_replace_callback( '/\(src=\'(.*?)\'/i', [ $this, 'makeUrlHttpsComatible' ], $text );
+		$text = preg_replace_callback( '/\(src=\'(.*?)\'/i', [ $this, 'makeUrlHttpsComatible' ], $text );
+		return preg_replace_callback( '/\(src=\s*([^"\',]*)/i', [ $this, 'makeUrlHttpsComatible' ], $text );
 	}
 
 	/**

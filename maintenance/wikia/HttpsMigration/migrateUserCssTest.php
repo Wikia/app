@@ -190,6 +190,10 @@ class MigrateUserCssToHttpsTest extends WikiaBaseTest {
 			# alpha filter
 			[ '#submit {filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src=\'/images/btn.png\', sizingMethod=\'scale\');}' ,
 				[ '(src=\'/images/btn.png\'', '/images/btn.png' ] ],
+			[ 'filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src=http://commons.wikimedia.org/wiki/File:RomanF-01.png, sizingMethod=\'crop\')' ,
+				[ '(src=http://commons.wikimedia.org/wiki/File:RomanF-01.png', 'http://commons.wikimedia.org/wiki/File:RomanF-01.png' ] ],
+
+
 			# urls that should not be altered
 			[ '.speech-bubble-message a[href="http://theuniversim.wikia.com/wiki/Message_Wall:"]:not(.subtle)::after {' , null ],
 			[ '* For more information see <http://dev.wikia.com/wiki/Less>', null ],
