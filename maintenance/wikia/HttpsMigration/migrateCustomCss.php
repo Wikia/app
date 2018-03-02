@@ -4,9 +4,9 @@
  * Maintenance script to migrate urls included in custom CSS files to https/protocol relative
  * @usage
  * 	# this will migrate assets for wiki with ID 119:
- *  run_maintenance --script='wikia/HttpsMigration/MigrateUserCss.php  --saveChanges' --id=119
+ *  run_maintenance --script='wikia/HttpsMigration/MigrateCustomCss.php  --saveChanges' --id=119
  * 	# running on some wikis in dry mode and dumping url changes to a csv file:
- *  run_maintenance --script='wikia/HttpsMigration/MigrateUserCss.php --file migrate_css.csv' --where='city_id < 10000'
+ *  run_maintenance --script='wikia/HttpsMigration/MigrateCustomCss.php --file migrate_css.csv' --where='city_id < 10000'
  *
  */
 
@@ -18,9 +18,9 @@ require_once( dirname( __FILE__ ) . '/../../Maintenance.php' );
 use \Wikia\Logger\WikiaLogger;
 
 /**
- * Class MigrateUserCssToHttps
+ * Class MigrateCustomCssToHttps
  */
-class MigrateUserCssToHttps extends Maintenance {
+class MigrateCustomCssToHttps extends Maintenance {
 
 	protected $saveChanges  = false;
 	protected $fh;	// handle to the output csv file
@@ -314,5 +314,5 @@ class MigrateUserCssToHttps extends Maintenance {
 
 }
 
-$maintClass = "MigrateUserCssToHttps";
+$maintClass = "MigrateCustomCssToHttps";
 require_once( RUN_MAINTENANCE_IF_MAIN );

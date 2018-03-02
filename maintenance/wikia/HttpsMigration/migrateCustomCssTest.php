@@ -2,13 +2,13 @@
 
 use PHPUnit\Framework\TestCase;
 
-require "migrateUserCss.php";
+require_once 'migrateCustomCss.php';
 
-class MigrateUserCssToHttpsTest extends WikiaBaseTest {
+class MigrateCustomCssToHttpsTest extends WikiaBaseTest {
 
 	function setUp() {
 		parent::setUp();
-		$this->task = new MigrateUserCssToHttps();
+		$this->task = new MigrateCustomCssToHttps();
 		$this->mockGlobalVariable( 'wgServer', 'http://mechtest.wikia.com');
 	}
 
@@ -147,7 +147,7 @@ class MigrateUserCssToHttpsTest extends WikiaBaseTest {
 	 * @dataProvider getCssUrlExtractorDataProvider
 	 */
 	public function testCssUrlExtractor($css, $match) {
-		$taskMock = $this->getMockBuilder( 'MigrateUserCssToHttps' )
+		$taskMock = $this->getMockBuilder( 'MigrateCustomCssToHttps' )
 			->setMethods( [ 'makeUrlHttpsComatible' ] )
 			->getMock();
 
