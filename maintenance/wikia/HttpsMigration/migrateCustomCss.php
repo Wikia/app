@@ -237,21 +237,21 @@ class MigrateCustomCssToHttps extends Maintenance {
 		// To be on the safe side, only replace urls in image and import statements. This should reduce the number of
 		// changes and prevent us from changing something we didn't mean to change.
 		// match url("http://...")
-		$text =  preg_replace_callback( '/url\s*\("(.*?)"\)/i', [ $this, 'makeUrlHttpsComatible' ], $text );
+		$text =  preg_replace_callback( '/url\s*\(\s*"(.+?)"\s*\)/i', [ $this, 'makeUrlHttpsComatible' ], $text );
 		// match url('http://...')
-		$text =  preg_replace_callback( '/url\s*\(\'(.*?)\'\)/i', [ $this, 'makeUrlHttpsComatible' ], $text );
+		$text =  preg_replace_callback( '/url\s*\(\s*\'(.+?)\'\s*\)/i', [ $this, 'makeUrlHttpsComatible' ], $text );
 		// match url(http://...)
-		$text =  preg_replace_callback( '/url\s*\(\s*([^\'"].*?)\s*\)/i', [ $this, 'makeUrlHttpsComatible' ], $text );
+		$text =  preg_replace_callback( '/url\s*\(\s*([^\'"]+?)\s*\)/i', [ $this, 'makeUrlHttpsComatible' ], $text );
 		// match @import 'http://...'
-		$text = preg_replace_callback( '/@import\s+\'(.*?)\'/i', [ $this, 'makeUrlHttpsComatible' ], $text );
+		$text = preg_replace_callback( '/@import\s+\'(.+?)\'/i', [ $this, 'makeUrlHttpsComatible' ], $text );
 		// match @import "http://..."
-		$text = preg_replace_callback( '/@import\s+"(.*?)"/i', [ $this, 'makeUrlHttpsComatible' ], $text );
+		$text = preg_replace_callback( '/@import\s+"(.+?)"/i', [ $this, 'makeUrlHttpsComatible' ], $text );
 		// match (src="http://..."
-		$text = preg_replace_callback( '/\(src="(.*?)"/i', [ $this, 'makeUrlHttpsComatible' ], $text );
+		$text = preg_replace_callback( '/\(src="(.+?)"/i', [ $this, 'makeUrlHttpsComatible' ], $text );
 		// match (src='http://...'
-		$text = preg_replace_callback( '/\(src=\'(.*?)\'/i', [ $this, 'makeUrlHttpsComatible' ], $text );
+		$text = preg_replace_callback( '/\(src=\'(.+?)\'/i', [ $this, 'makeUrlHttpsComatible' ], $text );
 		// match (src=http://... - up to a comma or closing parenthesis
-		return preg_replace_callback( '/\(src=\s*([^"\',\)]*)/i', [ $this, 'makeUrlHttpsComatible' ], $text );
+		return preg_replace_callback( '/\(src=\s*([^"\',\) ]+)/i', [ $this, 'makeUrlHttpsComatible' ], $text );
 	}
 
 	/**

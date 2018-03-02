@@ -8,7 +8,11 @@ class MigrateCustomCssToHttpsTest extends WikiaBaseTest {
 
 	function setUp() {
 		parent::setUp();
-		$this->task = new MigrateCustomCssToHttps();
+		// mock the class to silence the output method
+		$this->task = $this->getMockBuilder( 'MigrateCustomCssToHttps' )
+			->setMethods( [ 'output' ] )
+			->getMock();
+
 		$this->mockGlobalVariable( 'wgServer', 'http://mechtest.wikia.com' );
 	}
 
@@ -148,7 +152,7 @@ class MigrateCustomCssToHttpsTest extends WikiaBaseTest {
 	 */
 	public function testCssUrlExtractor($css, $match) {
 		$taskMock = $this->getMockBuilder( 'MigrateCustomCssToHttps' )
-			->setMethods( [ 'makeUrlHttpsComatible' ] )
+			->setMethods( [ 'makeUrlHttpsComatible', 'output' ] )
 			->getMock();
 
 		$taskMock
@@ -170,6 +174,10 @@ class MigrateCustomCssToHttpsTest extends WikiaBaseTest {
 			# single quotes
 			[ 'background: #fff; url(\'http://images.wikia.com/gaia/images/1/1d/Gaiaonline_global_bg.jpg\') repeat scroll center top;',
 				[ 'url(\'http://images.wikia.com/gaia/images/1/1d/Gaiaonline_global_bg.jpg\')', 'http://images.wikia.com/gaia/images/1/1d/Gaiaonline_global_bg.jpg' ] ],
+			[ 'background: #fff; url( \'http://images.wikia.com/gaia/images/1/1d/Gaiaonline_global_bg.jpg\' ) repeat scroll center top;',
+				[ 'url( \'http://images.wikia.com/gaia/images/1/1d/Gaiaonline_global_bg.jpg\' )', 'http://images.wikia.com/gaia/images/1/1d/Gaiaonline_global_bg.jpg' ] ],
+			[ 'background: #fff; url ( "http://images.wikia.com/gaia/images/1/1d/Gaiaonline_global_bgx.jpg" ) repeat scroll center top;',
+				[ 'url ( "http://images.wikia.com/gaia/images/1/1d/Gaiaonline_global_bgx.jpg" )', 'http://images.wikia.com/gaia/images/1/1d/Gaiaonline_global_bgx.jpg' ] ],
 			# double quotes
 			[ 'background: #fff; url("http://images.wikia.com/gaia/images/1/1d/Gaiaonline_global_bg.jpg") repeat scroll center top;',
 				[ 'url("http://images.wikia.com/gaia/images/1/1d/Gaiaonline_global_bg.jpg")', 'http://images.wikia.com/gaia/images/1/1d/Gaiaonline_global_bg.jpg' ] ],
