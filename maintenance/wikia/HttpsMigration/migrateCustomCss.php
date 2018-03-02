@@ -98,10 +98,10 @@ class MigrateCustomCssToHttps extends Maintenance {
 	}
 
 	/**
-	 * Returns true if the url points to one of many variations of our vignette domains.
+	 * Returns true if the url points to one of many variations of our image domains.
 	 * Handles a lot of historical formats that are not used anymore.
 	 */
-	private function isVignetteUrl( $url ) {
+	private function isWikiaImageUrl( $url ) {
 		$host = parse_url( $url, PHP_URL_HOST );
 		return ( preg_match( '/^(www\.)?(vignette|images|image|img|static|slot)\d*\.wikia\.nocookie\.net$/', $host ) ||
 			preg_match( '/^(www\.)?slot\d*[\.-]images\.wikia\.nocookie\.net$/', $host ) ||
@@ -119,8 +119,12 @@ class MigrateCustomCssToHttps extends Maintenance {
 		return $url;
 	}
 
-	private function forceHttps( $url ) {
-		return http_build_url( $url, [ 'scheme' => 'https' ] );
+	private function forceWikiaImageOverHttps( $url ) {
+		$host = parse_url( $url, PHP_URL_HOST );
+
+		$domain = ( strpos( $host, 'vignette' ) !== FALSE ) ?  'vignette.wikia.nocookie.net' : 'images.wikia.nocookie.net';
+
+		return http_build_url( $url, [ 'scheme' => 'https', 'host' => $domain ] );
 	}
 
 	private $currentHost = null;
@@ -191,8 +195,8 @@ class MigrateCustomCssToHttps extends Maintenance {
 			if ( $this->isHttpUrl( $url ) ) {
 				$url = $this->upgradeThirdPartyUrl( $url );
 			}
-		} elseif ( $this->isVignetteUrl( $url ) ) {
-			$url = $this->forceHttps( http_build_url( $url, [ 'host' => 'vignette.wikia.nocookie.net' ] ) );
+		} elseif ( $this->isWikiaImageUrl( $url ) ) {
+			$url = $this->forceWikiaImageOverHttps( $url );
 			$this->logUrlChange( 'Replaced vignette url', $originalUrl, $url );
 		} else {
 			if ( $this->isWikiaComSubdomainUrl( $url ) ) {

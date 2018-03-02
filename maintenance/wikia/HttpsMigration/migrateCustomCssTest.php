@@ -18,80 +18,89 @@ class MigrateCustomCssToHttpsTest extends WikiaBaseTest {
 
 	public function testWikiaComVignetteUrls() {
 
-		$this->assertEquals( 'https://vignette.wikia.nocookie.net/guildwars/es/images//6/64/Favicon.ico',
+		$this->assertEquals( 'https://images.wikia.nocookie.net/guildwars/es/images//6/64/Favicon.ico',
 			$this->task->fixUrl( 'http://images.wikia.com/guildwars/es/images//6/64/Favicon.ico' ) );
 
-		$this->assertEquals( 'https://vignette.wikia.nocookie.net/guildwars/es/images//6/64/Favicon.ico',
+		$this->assertEquals( 'https://images.wikia.nocookie.net/guildwars/es/images//6/64/Favicon.ico',
 			$this->task->fixUrl( 'http://static.wikia.com/guildwars/es/images//6/64/Favicon.ico' ) );
 
-		$this->assertEquals( 'https://vignette.wikia.nocookie.net/guildwars/es/images//6/64/Favicon.ico',
+		$this->assertEquals( 'https://images.wikia.nocookie.net/guildwars/es/images//6/64/Favicon.ico',
 			$this->task->fixUrl( 'https://static.wikia.com/guildwars/es/images//6/64/Favicon.ico' ) );
 
+		$this->assertEquals( 'https://vignette.wikia.nocookie.net/guildwars/es/images//6/64/Favicon.ico',
+			$this->task->fixUrl( 'http://vignette2.wikia.nocookie.net/guildwars/es/images//6/64/Favicon.ico' ) );
 	}
 
 	public function testVignetteUrlsWithParams() {
-		$this->assertEquals( 'https://vignette.wikia.nocookie.net/runescape/images/a/ab/Runescape_chat.eot?a=b',
+		$this->assertEquals( 'https://images.wikia.nocookie.net/runescape/images/a/ab/Runescape_chat.eot?a=b',
 			$this->task->fixUrl( 'http://images.wikia.com/runescape/images/a/ab/Runescape_chat.eot?a=b' ) );
 
+		$this->assertEquals( 'https://vignette.wikia.nocookie.net/guildwars/es/images//6/64/Favicon.ico?a=b',
+			$this->task->fixUrl( 'http://vignette2.wikia.nocookie.net/guildwars/es/images//6/64/Favicon.ico?a=b' ) );
+
+
 		// if the params are empty, allow to remove the question mark
-		$this->assertEquals( 'https://vignette.wikia.nocookie.net/runescape/images/a/ab/Runescape_chat.eot',
+		$this->assertEquals( 'https://images.wikia.nocookie.net/runescape/images/a/ab/Runescape_chat.eot',
 			$this->task->fixUrl( 'http://images.wikia.com/runescape/images/a/ab/Runescape_chat.eot?' ) );
 	}
 
 	public function testShardedVignetteUrls() {
 
-		$this->assertEquals( 'https://vignette.wikia.nocookie.net/djinni/images/6/68/Wikia_logo.png',
+		$this->assertEquals( 'https://images.wikia.nocookie.net/djinni/images/6/68/Wikia_logo.png',
 			$this->task->fixUrl( 'http://images1.wikia.nocookie.net/djinni/images/6/68/Wikia_logo.png' ) );
 
 		$this->assertEquals( 'https://vignette.wikia.nocookie.net/djinni/images/6/68/Wikia_logo.png',
 			$this->task->fixUrl( 'http://vignette5.wikia.nocookie.net/djinni/images/6/68/Wikia_logo.png' ) );
 
-		$this->assertEquals( 'https://vignette.wikia.nocookie.net/djinni/images/6/68/Wikia_logo.png',
+		$this->assertEquals( 'https://images.wikia.nocookie.net/djinni/images/6/68/Wikia_logo.png',
 			$this->task->fixUrl( 'http://img1.wikia.nocookie.net/djinni/images/6/68/Wikia_logo.png' ) );
 
-		$this->assertEquals( 'https://vignette.wikia.nocookie.net/monsterhunters/ko/images/c/cc/Infobox_header_overlay.png',
+		$this->assertEquals( 'https://images.wikia.nocookie.net/monsterhunters/ko/images/c/cc/Infobox_header_overlay.png',
 			$this->task->fixUrl( 'http://image3.wikia.nocookie.net/monsterhunters/ko/images/c/cc/Infobox_header_overlay.png' ) );
 
-		$this->assertEquals( 'https://vignette.wikia.nocookie.net/djinni/images/6/68/Wikia_logo.png',
+		$this->assertEquals( 'https://images.wikia.nocookie.net/djinni/images/6/68/Wikia_logo.png',
 			$this->task->fixUrl( 'http://static1.wikia.nocookie.net/djinni/images/6/68/Wikia_logo.png' ) );
 
-		$this->assertEquals( 'https://vignette.wikia.nocookie.net/djinni/images/6/68/Wikia_logo.png',
+		$this->assertEquals( 'https://images.wikia.nocookie.net/djinni/images/6/68/Wikia_logo.png',
 			$this->task->fixUrl( 'http://slot1.wikia.nocookie.net/djinni/images/6/68/Wikia_logo.png' ) );
 	}
 
 	public function testWwwPrefixedVignetteUrls() {
-		$this->assertEquals( 'https://vignette.wikia.nocookie.net/djinni/images/6/68/Wikia_logo.png',
+		$this->assertEquals( 'https://images.wikia.nocookie.net/djinni/images/6/68/Wikia_logo.png',
 			$this->task->fixUrl( 'http://www.images.wikia.nocookie.net/djinni/images/6/68/Wikia_logo.png' ) );
 
-		$this->assertEquals( 'https://vignette.wikia.nocookie.net/__cb20121002232621/narutofantasyrpg/de/images/e/e1/Benutzer_Icon_Monobook.png',
+		$this->assertEquals( 'https://images.wikia.nocookie.net/__cb20121002232621/narutofantasyrpg/de/images/e/e1/Benutzer_Icon_Monobook.png',
 			$this->task->fixUrl( 'http://www.images2.wikia.nocookie.net/__cb20121002232621/narutofantasyrpg/de/images/e/e1/Benutzer_Icon_Monobook.png' ) );
 
-		$this->assertEquals( 'https://vignette.wikia.nocookie.net/djinni/images/6/68/Wikia_logo.png',
+		$this->assertEquals( 'https://images.wikia.nocookie.net/djinni/images/6/68/Wikia_logo.png',
 			$this->task->fixUrl( 'http://www.static.wikia.nocookie.net/djinni/images/6/68/Wikia_logo.png' ) );
 	}
 
-	public function testLegacyImagesWikiaVignetteUrls() {
+	public function testLegacyImagesUrls() {
 
-		$this->assertEquals( 'https://vignette.wikia.nocookie.net/__cb100006/common/skins/oasis/images/sprite.png',
+		$this->assertEquals( 'https://images.wikia.nocookie.net/__cb100006/common/skins/oasis/images/sprite.png',
 			$this->task->fixUrl( 'http://slot1.images.wikia.nocookie.net/__cb100006/common/skins/oasis/images/sprite.png' ) );
 
-		$this->assertEquals( 'https://vignette.wikia.nocookie.net/__cb1509098293/common/skins/shared/images/sprite.png',
+		$this->assertEquals( 'https://images.wikia.nocookie.net/__cb1509098293/common/skins/shared/images/sprite.png',
 			$this->task->fixUrl( 'https://slot1-images.wikia.nocookie.net/__cb1509098293/common/skins/shared/images/sprite.png' ) );
 
-		$this->assertEquals( 'https://vignette.wikia.nocookie.net/__cb58376/common/resources/jquery.ui/themes/default/jquery.ui.theme.css',
+		$this->assertEquals( 'https://images.wikia.nocookie.net/__cb58376/common/resources/jquery.ui/themes/default/jquery.ui.theme.css',
 			$this->task->fixUrl( 'http://slot2.images.wikia.nocookie.net/__cb58376/common/resources/jquery.ui/themes/default/jquery.ui.theme.css' ) );
 
-		$this->assertEquals( 'https://vignette.wikia.nocookie.net/__cb1509098293/common/skins/shared/images/sprite.png',
+		$this->assertEquals( 'https://images.wikia.nocookie.net/__cb1509098293/common/skins/shared/images/sprite.png',
 			$this->task->fixUrl( 'https://www.slot1-images.wikia.nocookie.net/__cb1509098293/common/skins/shared/images/sprite.png' ) );
 
-		$this->assertEquals( 'https://vignette.wikia.nocookie.net/__cb58376/common/resources/jquery.ui/themes/default/jquery.ui.theme.css',
+		$this->assertEquals( 'https://images.wikia.nocookie.net/__cb58376/common/resources/jquery.ui/themes/default/jquery.ui.theme.css',
 			$this->task->fixUrl( 'http://slot2.images.wikia.nocookie.net/__cb58376/common/resources/jquery.ui/themes/default/jquery.ui.theme.css' ) );
 	}
 
 	public function testProtocolRelativeVignetteUrls() {
 
-		$this->assertEquals( 'https://vignette.wikia.nocookie.net/djinni/images/6/68/Wikia_logo.png',
+		$this->assertEquals( 'https://images.wikia.nocookie.net/djinni/images/6/68/Wikia_logo.png',
 			$this->task->fixUrl( '//www.static.wikia.nocookie.net/djinni/images/6/68/Wikia_logo.png' ) );
+
+		$this->assertEquals( 'https://vignette.wikia.nocookie.net/djinni/images/6/68/Wikia_logo.png',
+			$this->task->fixUrl( '//vignette.wikia.nocookie.net/djinni/images/6/68/Wikia_logo.png' ) );
 	}
 
 	public function testExternalHttpUrls() {
