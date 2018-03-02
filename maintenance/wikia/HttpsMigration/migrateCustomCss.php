@@ -3,9 +3,9 @@
 /**
  * Maintenance script to migrate urls included in custom CSS files to https/protocol relative
  * @usage
- * 	# this will migrate assets for wiki with ID 119:
+ *  # this will migrate assets for wiki with ID 119:
  *  run_maintenance --script='wikia/HttpsMigration/migrateCustomCss.php  --saveChanges' --id=119
- * 	# running on some wikis in dry mode and dumping url changes to a csv file:
+ *  # running on some wikis in dry mode and dumping url changes to a csv file:
  *  run_maintenance --script='wikia/HttpsMigration/migrateCustomCss.php --file migrate_css.csv' --where='city_id < 10000'
  *
  */
