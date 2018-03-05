@@ -229,37 +229,6 @@ class CloseWikiPage extends SpecialPage {
 		}
 	}
 
-	/**
-	 * @access private
-	 */
-	private function moveOldDomains($wikiaId, $newWikiaId = null, $remove = 0) {
-		global $wgExternalArchiveDB;
-
-		$aDomainsToMove = WikiFactory::getDomains( $wikiaId );
-
-		if ( !empty($aDomainsToMove) ) {
-			#-- connect to dataware;
-			$dbs = wfGetDB( DB_MASTER, array(), $wgExternalArchiveDB );
-			if (!is_null($dbs)) {
-				#-- save domains in archive DB
-				$dbs->begin();
-				foreach ($aDomainsToMove as $domain) {
-					$dbs->insert(
-						"city_domains",
-						array(
-							"city_id" => $wikiaId,
-							"city_domain" => $domain,
-							"city_timestamp" => wfTimestampNow(),
-							"city_new_id" => $newWikiaId,
-						),
-						__METHOD__
-					);
-				}
-				$dbs->commit();
-			}
-		}
-	}
-
 	private function prefixMainDomain( $cityId ) {
 		$mainDomain = substr( WikiFactory::getVarValueByName("wgServer", $cityId), 7 );
 		if(!empty($mainDomain)) {
@@ -297,7 +266,6 @@ class CloseWikiPage extends SpecialPage {
 				$message = wfMsgExt( 'closewiki-wiki-closed', array('parse'), $wiki->city_title, $wiki->city_url );
 				if ( !empty($newWiki) ) {
 					Wikia::log( __METHOD__,  " ... and redirecting to: {$this->mRedirect} (id: {$newWiki})" );
-					$this->moveOldDomains( $wiki->city_id, $newWiki );
 
 					#-- add "old" prefix to main domain and set is as primary
 					$prefixedDomain = $this->prefixMainDomain( $wiki->city_id );
