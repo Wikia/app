@@ -12155,7 +12155,8 @@ URLを間違って打ったか、正しくないリンクを辿った可能性�
 下記のことが可能です、お選びください。
 
 * 既存の記事の中から<span class=\"plainlinks\">[{{fullurl:Special:Search|search={{urlencode:{{PAGENAME}}}}}} {{PAGENAME}}]</span>を検索する
-* <span class=\"plainlinks\">[{{fullurl:{{FULLPAGENAME}}|action=create}} {{FULLPAGENAME}}]</span>}}の記事を作成する",
+* <span class=\"plainlinks\">[{{fullurl:{{FULLPAGENAME}}|action=create}} {{FULLPAGENAME}}]</span>の記事を作成する
+}}",
 	'note' => "'''お知らせ：'''",
 	'nonunicodebrowser' => "'''警告：使用中のブラウザがUnicodeに対応していません。'''
 安全にページを編集する回避策が表示されています：編集ボックス中の非ASCII文字は16進数文字コードによって表現されます。",

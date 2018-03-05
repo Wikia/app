@@ -42,7 +42,6 @@
     "wikia/net_socket2": "^0.1.1",
     "wikia/net_smtp2": "^0.1.0",
     "wikia/simplehtmldom": "^1.6",
-    "simplepie/simplepie": "^1.5",
     "php-amqplib/php-amqplib": "^2.6",
     "wikia/file_ogg": "^1.0",
     "wikia/semantic-media-wiki": "^2.4",

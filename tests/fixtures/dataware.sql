@@ -7,6 +7,7 @@ CREATE TABLE `pages` (
   `page_is_redirect` tinyint unsigned NOT NULL DEFAULT '0',
   `page_latest` int unsigned NOT NULL DEFAULT '0',
   `page_last_edited` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `page_created_at` timestamp NULL,
   PRIMARY KEY (`page_wikia_id`,`page_id`)
 );
 
