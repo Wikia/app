@@ -193,8 +193,7 @@ class VideoInfo extends WikiaModel {
 					'duration' => $this->duration,
 					'removed' => $this->removed,
 				),
-				__METHOD__,
-				'IGNORE'
+				__METHOD__
 			);
 
 			$affected = $db->affectedRows() > 0;
