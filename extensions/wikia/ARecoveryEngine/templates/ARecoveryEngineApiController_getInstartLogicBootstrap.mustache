@@ -1,11 +1,20 @@
 <script type="text/javascript">
 	require([
+		'wikia.document',
 		'ext.wikia.adEngine.adContext'
-	], function (adContext) {
+	], function (doc, adContext) {
 		var context = adContext.getContext();
 
-		if (context.opts.instartLogicRecovery) {
+		function runILCode() {
 			{{{code}}}
+		}
+
+		if (context.opts.instartLogicRecovery) {
+			if (context.opts.babRecovery) {
+				doc.addEventListener('bab.blocking', runILCode);
+			} else {
+				runILCode();
+			}
 		}
 	});
 </script>

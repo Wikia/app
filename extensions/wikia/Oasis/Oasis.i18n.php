@@ -3938,8 +3938,6 @@ $messages['ru'] = array(
 	'oasis-navigation-v2-edit-this-menu' => 'Править меню вики',
 	'oasis-page-header-diff' => '<strong>Изменения:</strong> $1',
 	'oasis-related-video-by-5min' => 'с сайта 5min Video',
-	'oasis-spotlights-rail-title' => 'Ещё на ФЭНДОМЕ',
-	'oasis-spotlights-footer-title' => 'Также на ФЭНДОМЕ',
 );
 
 $messages['sr-ec'] = array(
@@ -4536,8 +4534,6 @@ $messages['vi'] = array(
 	'oasis-social-instagram' => 'Instagram',
 	'oasis-social-instagram-link' => 'https://www.instagram.com/getfandom/',
 	'oasis-related-video-by-5min' => 'bởi 5min Video',
-	'oasis-spotlights-rail-title' => 'Nhiều hơn từ',
-	'oasis-spotlights-footer-title' => 'Cũng trên FANDOM',
 );
 
 $messages['zh-hans'] = array(
