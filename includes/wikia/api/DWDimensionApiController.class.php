@@ -40,7 +40,7 @@ class DWDimensionApiController extends WikiaApiController {
 			'after_wiki_id', static::DEFAULT_AFTER_ID ) );
 
 		$variables = WikiFactory::getVariableForAllWikis( static::DART_TAG_VARIABLE_NAME, $limit,
-            $afterWikiId );
+			$afterWikiId );
 
 		$result = [];
 		foreach ( $variables as $variable ) {
@@ -79,7 +79,7 @@ class DWDimensionApiController extends WikiaApiController {
 			'after_wiki_id', static::DEFAULT_AFTER_ID ) );
 
 		$query = str_replace( '$city_id', $afterWikiId,
-            DWDimensionApiControllerSQL::DIMENSION_WIKIS_QUERY );
+			DWDimensionApiControllerSQL::DIMENSION_WIKIS_QUERY );
 		$query = str_replace( '$limit', $limit, $query);
 
 		$allVerticals = WikiFactoryHub::getInstance()->getAllVerticals();
@@ -114,48 +114,50 @@ class DWDimensionApiController extends WikiaApiController {
 		);
 	}
 
-    private function getDataWareDbSlave() {
-        global $wgExternalDatawareDB;
-        return wfGetDB( DB_SLAVE, array(), $wgExternalDatawareDB );
-    }
+	private function getDataWareDbSlave() {
+		global $wgExternalDatawareDB;
+		return wfGetDB( DB_SLAVE, array(), $wgExternalDatawareDB );
+	}
 
-    public function getAllArticles() {
+	public function getAllArticles() {
 
-        $db = $this->getDataWareDbSlave();
+		$db = $this->getDataWareDbSlave();
 
-        $limit = min($db->strencode( $this->getRequest()->getInt( 'limit', static::LIMIT ) ),
-            static::LIMIT_MAX);
-        $afterWikiId = $db->strencode( $this->getRequest()->getInt( 'after_wiki_id',
-            static::DEFAULT_AFTER_ID ) );
-        $afterArticleId = $db->strencode( $this->getRequest()->getInt( 'after_article_id',
-            static::DEFAULT_AFTER_ID ) );
-        $last_edited = $db->strencode( $this->getRequest()->getVal( 'last_edited',
-            static::ARTICLE_LAST_EDITED ) );
+		$limit = min($db->strencode( $this->getRequest()->getInt( 'limit', static::LIMIT ) ),
+			static::LIMIT_MAX);
+		$afterWikiId = $db->strencode( $this->getRequest()->getInt( 'after_wiki_id',
+			static::DEFAULT_AFTER_ID ) );
+		$afterArticleId = $db->strencode( $this->getRequest()->getInt( 'after_article_id',
+			static::DEFAULT_AFTER_ID ) );
+		$last_edited = $db->strencode( $this->getRequest()->getVal( 'last_edited',
+			static::ARTICLE_LAST_EDITED ) );
 
-        $query = str_replace( '$wiki_id', $afterWikiId,
-            DWDimensionApiControllerSQL::DIMENSION_ALL_ARTICLES );
-        $query = str_replace( '$article_id', $afterArticleId, $query );
-        $query = str_replace( '$last_edited', $last_edited, $query );
-        $query = str_replace( '$limit', $limit, $query );
+		$query = str_replace( '$wiki_id', $afterWikiId,
+			DWDimensionApiControllerSQL::DIMENSION_ALL_ARTICLES );
+		$query = str_replace( '$article_id', $afterArticleId, $query );
+		$query = str_replace( '$last_edited', $last_edited, $query );
+		$query = str_replace( '$limit', $limit, $query );
 
-        $dbResult = $db->query( $query,__METHOD__ );
-        $result = [];
-        while ( $row = $db->fetchObject( $dbResult ) ) {
-            $result[] = [
-                'wiki_id' => $row->wiki_id,
-                'namespace_id' => $row->namespace_id,
-                'article_id' => $row->article_id,
-                'title' => $row->title,
-                'is_redirect' => $row->is_redirect,
-            ];
-        }
-        $db->freeResult( $dbResult );
-        $this->setResponseData(
-            $result,
-            null,
-            WikiaResponse::CACHE_DISABLED
-        );
-    }
+		$dbResult = $db->query( $query,__METHOD__ );
+		$result = [];
+		while ( $row = $db->fetchObject( $dbResult ) ) {
+			$result[] = [
+				'wiki_id' => $row->wiki_id,
+				'namespace_id' => $row->namespace_id,
+				'article_id' => $row->article_id,
+				'title' => $row->title,
+				'is_redirect' => $row->is_redirect,
+				'created_at' => isset( $row->created_at ) ?
+					( new DateTime( $row->created_at ) )->format( 'Y-m-d H:i:s' ) : null
+			];
+		}
+		$db->freeResult( $dbResult );
+		$this->setResponseData(
+			$result,
+			null,
+			WikiaResponse::CACHE_DISABLED
+		);
+	}
 
 	public function getUsers() {
 		$db = $this->getSharedDbSlave();
@@ -222,73 +224,6 @@ class DWDimensionApiController extends WikiaApiController {
 		);
 	}
 
-	public function getWikiArticles() {
-		$this->getDataPerWiki( array( $this, 'getWikiArticlesData' ) );
-	}
-
-	private function getWikiArticlesData( DatabaseMysqli $db ) {
-		$result = [];
-		try {
-			$rows = $db->query( DWDimensionApiControllerSQL::DIMENSION_WIKI_ARTICLES, __METHOD__ );
-			if ( !empty( $rows ) ) {
-				while ( $row = $db->fetchObject( $rows ) ) {
-					$result[] = [
-						'namespace_id' => $row->namespace_id,
-						'article_id' => $row->article_id,
-						'title' => $row->title,
-						'is_redirect' => $row->is_redirect,
-						'created_at' => ( new DateTime( $row->created_at ) )->format( 'Y-m-d H:i:s' )
-					];
-				}
-				$db->freeResult( $rows );
-			}
-		} catch ( DBQueryError $e ) {
-			Wikia\Logger\WikiaLogger::instance()->error(
-				"Exception caught while querying wiki article data", [
-				'exception' => $e,
-				'db'        => $db->getDBname()
-			] );
-		}
-
-		return $result;
-	}
-
-	public function getWikiEmbeds() {
-		$this->getDataPerWiki( array( $this, 'getWikiEmbedsData' ) );
-	}
-
-	private function getWikiEmbedsData( DatabaseMysqli $db ) {
-		$result = [];
-		try {
-			$rows = $db->query( DWDimensionApiControllerSQL::DIMENSION_WIKI_EMBEDS, __METHOD__ );
-			if ( !empty( $rows ) ) {
-				while ( $row = $db->fetchObject( $rows ) ) {
-					$result[] = [
-						'article_id' => $row->article_id,
-						'video_title' => $row->video_title,
-						'added_at' => $row->added_at,
-						'added_by' => $row->added_by,
-						'duration' => $row->duration,
-						'premium' => $row->premium,
-						'hdfile' => $row->hdfile,
-						'removed' => $row->removed,
-						'views_30day' => $row->views_30day,
-						'views_total' => $row->views_total
-					];
-				}
-				$db->freeResult( $rows );
-			}
-		} catch ( DBQueryError $e ) {
-			Wikia\Logger\WikiaLogger::instance()->error(
-				"Exception caught while querying wiki embed data", [
-				'exception' => $e,
-				'db'        => $db->getDBname()
-			] );
-		}
-
-		return $result;
-	}
-
 	public function getWikiImages() {
 		$this->getDataPerWiki( array( $this, 'getWikiImagesData' ) );
 	}
@@ -313,7 +248,7 @@ class DWDimensionApiController extends WikiaApiController {
 			Wikia\Logger\WikiaLogger::instance()->error(
 				"Exception caught while querying wiki images data", [
 				'exception' => $e,
-				'db'        => $db->getDBname()
+				'db' => $db->getDBname()
 			] );
 		}
 		return $result;
@@ -346,7 +281,7 @@ class DWDimensionApiController extends WikiaApiController {
 			Wikia\Logger\WikiaLogger::instance()->error(
 				"Exception caught while querying wiki info data", [
 				'exception' => $e,
-				'db'        => $db->getDBname()
+				'db' => $db->getDBname()
 			] );
 		}
 
@@ -374,7 +309,7 @@ class DWDimensionApiController extends WikiaApiController {
 			Wikia\Logger\WikiaLogger::instance()->error(
 				"Exception caught while querying wiki info data", [
 				'exception' => $e,
-				'db'        => $db->getDBname()
+				'db' => $db->getDBname()
 			] );
 		}
 
@@ -393,7 +328,7 @@ class DWDimensionApiController extends WikiaApiController {
 			Wikia\Logger\WikiaLogger::instance()->error(
 				"Exception caught while trying to switch to DB", [
 				'exception' => $e,
-				'db'        => $dbname
+				'db' => $dbname
 			] );
 			$connection = null;
 		}
@@ -405,9 +340,9 @@ class DWDimensionApiController extends WikiaApiController {
 		$db = $this->getSharedDbSlave();
 
 		$limit = min( $db->strencode( $this->getRequest()->getVal( 'wiki_limit', static::LIMIT ) ),
-            static::LIMIT_MAX );
+			static::LIMIT_MAX );
 		$afterWikiId = $db->strencode( $this->getRequest()->getVal( 'after_wiki_id',
-            static::DEFAULT_AFTER_ID ) );
+			static::DEFAULT_AFTER_ID ) );
 
 		$rows = $db->select(
 			[ "city_list" ],

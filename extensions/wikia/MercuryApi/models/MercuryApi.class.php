@@ -119,7 +119,8 @@ class MercuryApi {
 		       $wgDisableMobileSectionEditor, $wgEnableCommunityData, $wgEnableDiscussions,
 		       $wgEnableDiscussionsImageUpload, $wgDiscussionColorOverride, $wgEnableNewAuth,
 		       $wgLanguageCode, $wgSitename, $wgWikiDirectedAtChildrenByFounder,
-		       $wgWikiDirectedAtChildrenByStaff, $wgCdnRootUrl, $wgEnableFandomAppSmartBanner, $wgEnableDiscussionsPostsWithoutText, $wgEnableDiscussionsPolls;
+		       $wgWikiDirectedAtChildrenByStaff, $wgCdnRootUrl, $wgScriptPath,
+		       $wgEnableDiscussionsPostsWithoutText, $wgEnableDiscussionsPolls;
 
 		$enableFAsmartBannerCommunity = WikiFactory::getVarValueByName( 'wgEnableFandomAppSmartBanner', WikiFactory::COMMUNITY_CENTRAL );
 
@@ -151,6 +152,7 @@ class MercuryApi {
 			],
 			'mainPageTitle' => Title::newMainPage()->getPrefixedDBkey(),
 			'namespaces' => $wgContLang->getNamespaces(),
+			'scriptPath' => $wgScriptPath,
 			'siteMessage' => $this->getSiteMessage(),
 			'siteName' => $wgSitename,
 			'theme' => SassUtil::normalizeThemeColors( SassUtil::getOasisSettings() ),
@@ -302,7 +304,9 @@ class MercuryApi {
 			return ( new WikiaLogoHelper() )->getMainCorpPageURL();
 		}
 
-		return 'http://www.wikia.com'; // default homepage url
+		global $wgWikiaBaseDomain;
+
+		return "http://www.{$wgWikiaBaseDomain}"; // default homepage url
 	}
 
 

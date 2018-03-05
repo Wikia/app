@@ -738,6 +738,8 @@ $messages['de'] = array(
 	'right-renameprofilev3' => 'Benutzerseiten verschieben',
 	'right-clearuserprofile' => 'Inhalte eines Nutzerprofils mit einem Klick löschen',
 	'user-identity-box-group-global-discussions-moderator' => 'Globaler Diskussions-Moderator',
+	'user-identity-box-group-bot' => 'Bot',
+	'user-identity-box-group-content-volunteer' => 'Content-Volunteer',
 );
 
 $messages['de-ch'] = array(
@@ -919,6 +921,8 @@ $messages['es'] = array(
 	'right-renameprofilev3' => 'Mover páginas de usuario',
 	'right-clearuserprofile' => 'Borrar el contenido del perfil de un usuario en un clic',
 	'user-identity-box-group-global-discussions-moderator' => 'Moderador global de discusiones',
+	'user-identity-box-group-bot' => 'Bot',
+	'user-identity-box-group-content-volunteer' => 'Voluntario de contenido',
 );
 
 $messages['fa'] = array(
@@ -1167,6 +1171,8 @@ $messages['fr'] = array(
 	'right-renameprofilev3' => 'Déplacer des pages utilisateur',
 	'right-clearuserprofile' => "Supprimer en un clic le contenu du bandeau du profil d'un utilisateur",
 	'user-identity-box-group-global-discussions-moderator' => 'Modérateur global de discussions',
+	'user-identity-box-group-bot' => 'Robot',
+	'user-identity-box-group-content-volunteer' => 'Créateur de contenu bénévole',
 );
 
 $messages['gl'] = array(
@@ -1767,6 +1773,8 @@ $messages['it'] = array(
 	'right-renameprofilev3' => 'Spostare pagine utente',
 	'right-clearuserprofile' => "Rimuovere i contenuti dell'intestazione del profilo di un utente in un click",
 	'user-identity-box-group-global-discussions-moderator' => 'Moderatore globale di Discussioni',
+	'user-identity-box-group-bot' => 'Bot',
+	'user-identity-box-group-content-volunteer' => 'Volontario per i contenuti',
 );
 
 $messages['ja'] = array(
@@ -1903,6 +1911,8 @@ $messages['ja'] = array(
 	'right-renameprofilev3' => 'ユーザーページを移動',
 	'right-clearuserprofile' => 'ユーザーのプロフィール・マストヘッドのコンテンツをワンクリックで消去',
 	'user-identity-box-group-global-discussions-moderator' => 'グローバル・ディスカッション・モデレーター',
+	'user-identity-box-group-bot' => 'ボット',
+	'user-identity-box-group-content-volunteer' => 'コンテンツ・ボランティア',
 );
 
 $messages['ko'] = array(
@@ -2677,6 +2687,8 @@ $messages['pl'] = array(
 	'right-renameprofilev3' => 'Przenoszenie stron użytkowników',
 	'right-clearuserprofile' => 'Umożliwia czyszczenie profili użytkowników jednym kliknięciem',
 	'user-identity-box-group-global-discussions-moderator' => 'Globalny moderator Dyskusji',
+	'user-identity-box-group-bot' => 'Bot',
+	'user-identity-box-group-content-volunteer' => 'Wolontariusz treści',
 );
 
 $messages['pms'] = array(
@@ -2866,6 +2878,8 @@ $messages['pt'] = array(
 	'right-renameprofilev3' => 'Mover páginas de usuário',
 	'right-clearuserprofile' => 'Limpar o conteúdo do cabeçalho do perfil de um usuário com um clique',
 	'user-identity-box-group-global-discussions-moderator' => 'Moderador global de discussões',
+	'user-identity-box-group-bot' => 'Bot',
+	'user-identity-box-group-content-volunteer' => 'Voluntário de conteúdo',
 );
 
 $messages['roa-tara'] = array(
@@ -3012,6 +3026,8 @@ $messages['ru'] = array(
 	'right-renameprofilev3' => 'Переименовать страницы участника',
 	'right-clearuserprofile' => 'Удалить содержание профиля участника одним нажатием клавиши',
 	'user-identity-box-group-global-discussions-moderator' => 'Модератор Обсуждений Фэндома',
+	'user-identity-box-group-bot' => 'Бот',
+	'user-identity-box-group-content-volunteer' => 'Content Volunteer',
 );
 
 $messages['sr-ec'] = array(
@@ -3660,6 +3676,8 @@ $messages['zh-hans'] = array(
 	'right-renameprofilev3' => '移动用户页面',
 	'right-clearuserprofile' => '单击进行一次性清除用户主页标题内容',
 	'user-identity-box-group-global-discussions-moderator' => '全网话题版主',
+	'user-identity-box-group-bot' => '机器人',
+	'user-identity-box-group-content-volunteer' => '内容志愿者',
 );
 
 $messages['zh-hant'] = array(
@@ -3795,5 +3813,7 @@ $messages['zh-hant'] = array(
 	'right-renameprofilev3' => '移動用戶頁面',
 	'right-clearuserprofile' => '點擊進行清除用戶頁面刊頭內容',
 	'user-identity-box-group-global-discussions-moderator' => '全站話題版主',
+	'user-identity-box-group-bot' => '機器人',
+	'user-identity-box-group-content-volunteer' => '內容志願者',
 );
 

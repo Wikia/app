@@ -12,9 +12,7 @@ class VideoInfo extends WikiaModel {
 	protected $addedAt = 0;
 	protected $addedBy = 0;
 	protected $duration = 0;
-	protected $hdfile = 0;
 	protected $removed = 0;
-	protected $featured = 0;
 
 	protected static $fields = array(
 		'videoTitle',
@@ -23,9 +21,7 @@ class VideoInfo extends WikiaModel {
 		'addedAt',
 		'addedBy',
 		'duration',
-		'hdfile',
 		'removed',
-		'featured',
 	);
 
 	public function __construct( $data = array() ) {
@@ -125,27 +121,11 @@ class VideoInfo extends WikiaModel {
 	}
 
 	/**
-	 * Check if it is hd file
-	 * @return boolean
-	 */
-	public function isHdfile() {
-		return ( $this->hdfile == 1 );
-	}
-
-	/**
 	 * check if it is removed
 	 * @return boolean
 	 */
 	public function isRemoved() {
 		return ( $this->removed == 1 );
-	}
-
-	/**
-	 * Check if it is featured video
-	 * @return boolean
-	 */
-	public function isFeatured() {
-		return ( $this->featured == 1 );
 	}
 
 	/**
@@ -167,9 +147,7 @@ class VideoInfo extends WikiaModel {
 					'added_at' => $this->addedAt,
 					'added_by' => $this->addedBy,
 					'duration' => $this->duration,
-					'hdfile' => $this->hdfile,
 					'removed' => $this->removed,
-					'featured' => $this->featured,
 				),
 				array( 'video_title' => $this->videoTitle ),
 				__METHOD__
@@ -213,9 +191,7 @@ class VideoInfo extends WikiaModel {
 					'added_at' => $this->addedAt,
 					'added_by' => $this->addedBy,
 					'duration' => $this->duration,
-					'hdfile' => $this->hdfile,
 					'removed' => $this->removed,
-					'featured' => $this->featured,
 				),
 				__METHOD__,
 				'IGNORE'
@@ -277,7 +253,15 @@ class VideoInfo extends WikiaModel {
 
 			$row = $db->selectRow(
 				'video_info',
-				'*',
+				[
+					"video_title",
+					"video_id",
+					"provider",
+					"added_at",
+					"added_by",
+					"duration",
+					"removed",
+				],
 				array( 'video_title' => $videoTitle ),
 				__METHOD__
 			);
@@ -307,9 +291,7 @@ class VideoInfo extends WikiaModel {
 			'addedAt' => $row->added_at,
 			'addedBy' => $row->added_by,
 			'duration' => $row->duration,
-			'hdfile' => $row->hdfile,
 			'removed' => $row->removed,
-			'featured' => $row->featured,
 		);
 
 		$class = get_class();

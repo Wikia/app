@@ -29,7 +29,7 @@ class Result extends ReadWrite {
 	 */
 	public function __construct( $fields = [], $boosts = [] ) {
 		parent::__construct( $fields, $boosts );
-		$this->service = ( new \Wikia\Search\ProfiledClassFactory )->get( 'Wikia\Search\MediaWikiService' );
+		$this->service = new MediaWikiService();
 	}
 
 	/**
@@ -165,7 +165,11 @@ class Result extends ReadWrite {
 	 * @return string
 	 */
 	public function getUrl() {
-		return isset( $this->_fields['url'] ) ? $this->_fields['url'] : '';
+		$url = $this->_fields['url'] ?? '';
+		if ( \WebRequest::detectProtocol() === 'https' ) {
+			$url = \wfHttpToHttps( $url );
+		}
+		return $url;
 	}
 
 	/**
