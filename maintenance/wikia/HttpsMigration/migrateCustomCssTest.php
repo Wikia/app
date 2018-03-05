@@ -217,7 +217,6 @@ class MigrateCustomCssToHttpsTest extends WikiaBaseTest {
 			[ '* For more information see <http://dev.wikia.com/wiki/Less>', null ],
 			[ ' bottom (see http://www.fontspring.com/blog/the-new-bulletproof-font-face-syntax)', null ],
 			[ 'a[href="http://ru.bloodborne.wikia.com/wiki/%D0%A1%D0%BB%D1%83%D0%B6%D0%B5%D0%B1%D0%BD%D0%B0%D1%8F:Contributions/Bermoodok"]', null ],
-			[ 'a[href="http://ru.bloodborne.wikia.com/wiki/%D0%A1%D0%BB%D1%83%D0%B6%D0%B5%D0%B1%D0%BD%D0%B0%D1%8F:Contributions/Bermoodok"]', null ],
 			[ '.listofponies a[href^="http://www.reddit.com/r/listofponies"],', null ],
 		];
 	}
