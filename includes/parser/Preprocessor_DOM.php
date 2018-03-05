@@ -1220,15 +1220,21 @@ class PPFrame_DOM implements PPFrame {
 							if ( MWTidy::checkErrors($ret['text'], $err) === false ) {
 								$out .= Html::rawElement( $placeholderTag, $attributes, "&#x0200B;&#x0200B;");
 							} else {
-								if ($placeholderTag === 'span') {
+								if ( $placeholderTag === 'span' ) {
 									// wrap content of inline template with non-width spaces to prevent CKE from modifying
 									// dom structure
 									$content = "&#x0200B;" . trim( $ret['text'], "\n" ) . "&#x0200B;";
+								} else if ( $placeholderTag === 'tr' ) {
+									// XW-4742: indicates that during reverse parsing |- should not be added at the beginning
+									// of row since template contains it already
+									$rteData['template-only'] = true;
+									$attributes['data-rte-meta'] = RTEReverseParser::encodeRTEData( $rteData );
+									$content = '&#x0200B;&#x0200B;';
 								} else {
 									$content = "&#x0200B;" . PHP_EOL . $ret['text'];
 									// XW-4609: if template contains list items, placeholder's closing div should be in
 									// the new line to not mess with list html
-									if (preg_match('/^\s*[\*#:;]/m', $content)) {
+									if ( preg_match( '/^\s*[\*#:;]/m', $content ) ) {
 										$content .= PHP_EOL;
 									}
 
@@ -1243,11 +1249,15 @@ class PPFrame_DOM implements PPFrame {
 									}
 								}
 
-								// when template is used in header new line breaks layout, however it is needed for other contexts
-								if ($contextNode->parentNode->nodeName === 'h' || $placeholderTag === 'span') {
-									$out .= Html::rawElement( $placeholderTag, $attributes,  $content );
+								if ($placeholderTag === 'tr') {
+									// XW-4742: for the case when whole table row is defined inside template, we need to insert
+									// fake row with fake invisible content to make it appear in the output html
+									// this fake stuff will be ommited in reverse parsing. Inserting simple <tr> with
+									// all the placeholder's attributes is not enough since tables are processed later
+									// by parser and it would be treated as regular cell content
+									$out .= '|-' . Html::rawElement( 'span', $attributes, $content ) . PHP_EOL
+										. '| data-rte-filler="true" |' . '<span class="placeholder placeholder placeholder-double-brackets">&#x0200B;&#x0200B;</span>';
 								} else {
-
 									$out .= Html::rawElement( $placeholderTag, $attributes, $content );
 								}
 							}
@@ -1455,6 +1465,11 @@ class PPFrame_DOM implements PPFrame {
 	 * @return string tagName div or span
 	 */
 	function getPlaceholderTagName( string $text ): string {
+		if ( substr( $text, 0, 2) === '|-' ) {
+			// XW-4742: template defines table row
+			return 'tr';
+		}
+
 		$html = $this->parser->internalParse( $text, false );
 		$html = $this->parser->doBlockLevels( $html, false);
 

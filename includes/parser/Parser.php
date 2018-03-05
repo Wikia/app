@@ -1266,6 +1266,17 @@ class Parser {
 		# places.
 		$text = $this->doTableStuff( $text );
 
+		// FANDOM change start
+		// XW-4742: cleanup after handling table rows defined inside templates
+		global $wgRTEParserEnabled;
+		if ( !empty( $wgRTEParserEnabled ) ) {
+			$text = preg_replace(
+				'/\|-(<span[^>]+>&#x0200B;&#x0200B;<\/span>)\n\| data-rte-filler="true" \|<span[^>]+>&#x0200B;&#x0200B;<\/span>/',
+				'$1',
+				$text);
+		}
+		// FANDOM change end
+
 		$text = preg_replace( '/(^|\n)-----*/', '\\1<hr />', $text );
 
 		$text = $this->doDoubleUnderscore( $text );
