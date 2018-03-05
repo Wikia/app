@@ -248,6 +248,7 @@ CREATE TABLE `pages` (
   `page_is_redirect` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `page_latest` int(8) unsigned NOT NULL DEFAULT '0',
   `page_last_edited` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `page_created_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`page_wikia_id`,`page_id`),
   KEY `page_title_namespace_latest_idx` (`page_title`,`page_namespace`,`page_latest`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -356,4 +357,4 @@ CREATE TABLE `wikiastaff_log` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
--- Dump completed on 2018-02-07 15:16:51
+-- Dump completed on 2018-02-28 15:33:32

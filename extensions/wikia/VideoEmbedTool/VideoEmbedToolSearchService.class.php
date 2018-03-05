@@ -3,8 +3,6 @@
  * Class definition for VideoEmbedToolSearchService, intended to be an interface between VET and Search
  */
 
-use \Wikia\Logger\WikiaLogger;
-
 class VideoEmbedToolSearchService
 {
 	use Wikia\Search\Traits\ArrayConfigurableTrait;
@@ -220,11 +218,8 @@ class VideoEmbedToolSearchService
 			             ->setNamespaces( [ NS_FILE ] )
 			             ->setRank( $this->getRank() );
 			$this->config->setFilterQueryByCode( Wikia\Search\Config::FILTER_VIDEO );
-			if ( $this->getSearchType() == 'premium' ) {
-				$this->config->setWikiId( Wikia\Search\QueryService\Select\Dismax\Video::VIDEO_WIKI_ID );
-			}
-
 		}
+
 		return $this->config;
 	}
 

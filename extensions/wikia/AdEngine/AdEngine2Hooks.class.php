@@ -44,6 +44,7 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverA9VideoBidderCountries';
 		$vars[] = 'wgAdDriverBabDetectionDesktopCountries';
 		$vars[] = 'wgAdDriverBabDetectionMobileCountries';
+		$vars[] = 'wgAdDriverBabRecoveryCountries';
 		$vars[] = 'wgAdDriverBeachfrontBidderCountries';
 		$vars[] = 'wgAdDriverBottomLeaderBoardOnMobileCountries';
 		$vars[] = 'wgAdDriverDelayCountries';
@@ -96,13 +97,6 @@ class AdEngine2Hooks {
 		 */
 		$vars[] = 'wgSitewideDisableGpt';
 		$vars[] = 'wgSitewideDisableKrux';
-
-		/**
-		 * Temporary variables while removing Paid Asset Drop
-		 * ADEN-6760
-		 */
-		$vars[] = 'wgSitewideDisablePaidAssetDrop';
-		$vars[] = 'wgPaidAssetDropConfig';
 
 		return true;
 	}

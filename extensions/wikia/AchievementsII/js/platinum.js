@@ -31,7 +31,7 @@ var SpecialCustomizePlatinum = {
 		$("#body").addClass("ajax");
 
 		$.get(
-			'/index.php',
+			mw.util.wikiScript(),
 			{
 				'action': 'ajax',
 				'rs': 'AchAjax',

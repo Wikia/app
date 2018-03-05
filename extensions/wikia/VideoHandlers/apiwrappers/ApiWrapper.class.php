@@ -1,10 +1,6 @@
 <?php
 abstract class ApiWrapper {
 
-	const RESPONSE_FORMAT_JSON = 0;
-	const RESPONSE_FORMAT_XML = 1;
-	const RESPONSE_FORMAT_PHP = 2;
-
 	protected static $aspectRatio = 1.7777778;
 
 	protected $videoId;
@@ -16,7 +12,6 @@ abstract class ApiWrapper {
 	protected static $CACHE_KEY;
 	protected static $CACHE_KEY_VERSION = 0.1;
 	protected static $CACHE_EXPIRY = 86400;
-	protected static $RESPONSE_FORMAT = self::RESPONSE_FORMAT_JSON;
 
 	/**
 	 * Get appropriate ApiWrapper for the given URL
@@ -196,32 +191,7 @@ abstract class ApiWrapper {
 	}
 
 	protected function processResponse( $response ){
-
-		wfProfileIn( __METHOD__ );
-		switch ( static::$RESPONSE_FORMAT ){
-			case self::RESPONSE_FORMAT_JSON :
-				 $return = json_decode( $response, true );
-			break;
-			case self::RESPONSE_FORMAT_XML :
-				$sp = new SimplePie();
-				$sp->set_raw_data( $response );
-				$sp->init();
-				if ( $sp->error() ) {
-					$return = $sp->data;
-				} else {
-					$oItem = $sp->get_item();
-					if ( empty( $oItem ) ) $this->videoNotFound();
-					$return = get_object_vars( $oItem->get_enclosure() );
-				}
-			break;
-			case self::RESPONSE_FORMAT_PHP :
-				$return = unserialize( $response, [ 'allowed_classes' => false ] );
-			break;
-			default: throw new UnsuportedTypeSpecifiedException();
-		}
-
-		wfProfileOut( __METHOD__ );
-
+		$return = json_decode( $response, true );
 		return $this->postProcess( $return );
 	}
 
