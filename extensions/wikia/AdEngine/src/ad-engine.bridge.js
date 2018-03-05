@@ -136,10 +136,15 @@ function checkAdBlocking(detection) {
 	);
 }
 
+function passSlotEvent(slotName, eventName) {
+	slotService.getBySlotName(slotName).emit(eventName);
+}
+
 export {
 	init,
 	loadCustomAd,
 	checkAdBlocking,
+	passSlotEvent,
 	context,
 	universalAdPackage
 };
