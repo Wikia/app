@@ -511,6 +511,22 @@ describe('AdContext', function () {
 		expect(getModule().getContext().opts.babDetectionMobile).toBeFalsy();
 	});
 
+	it('enable recovery behind BlockAdBlock detection for current country on whitelist', function () {
+		spyOn(mocks.sampler, 'sample').and.callFake(function () {
+			return true;
+		});
+		mocks.instantGlobals = {wgAdDriverBabRecoveryCountries: ['CURRENT_COUNTRY', 'ZZ']};
+		expect(getModule().getContext().opts.babRecovery).toBeTruthy();
+	});
+
+	it('disable recovery behind BlockAdBlock detection when current country is not on whitelist', function () {
+		spyOn(mocks.sampler, 'sample').and.callFake(function () {
+			return true;
+		});
+		mocks.instantGlobals = {wgAdDriverBabRecoveryCountries: ['OTHER_COUNTRY', 'ZZ']};
+		expect(getModule().getContext().opts.babRecovery).toBeFalsy();
+	});
+
 	it('enables PageFair detection when url param pagefairdetection is set and current country is on whitelist', function () {
 		mocks.instantGlobals = {wgAdDriverPageFairDetectionCountries: ['CURRENT_COUNTRY', 'ZZ']};
 		spyOn(mocks.querystring, 'getVal').and.callFake(function (param) {

@@ -1,0 +1,10 @@
+{
+  "name": "wikia.article-video",
+  "scripts": {
+    "setup-template": "npm install && grunt"
+  },
+  "dependencies": {
+    "grunt": "^0.4.5",
+    "grunt-mustache": "~0.1.5"
+  }
+}

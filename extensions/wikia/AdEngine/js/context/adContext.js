@@ -84,6 +84,9 @@ define('ext.wikia.adEngine.adContext', [
 		context.opts.pageFairRecovery = serviceCanBeEnabled && !isRecoveryServiceAlreadyEnabled &&
 			context.opts.pageFairRecovery && geo.isProperGeo(instantGlobals.wgAdDriverPageFairRecoveryCountries) &&
 			!browserDetect.isEdge();
+
+		// BlockAdBlock recovery
+		context.opts.babRecovery = serviceCanBeEnabled && geo.isProperGeo(instantGlobals.wgAdDriverBabRecoveryCountries);
 	}
 
 	function updateAdContextBidders(context) {
@@ -140,8 +143,6 @@ define('ext.wikia.adEngine.adContext', [
 		if (geo.isProperGeo(instantGlobals.wgAdDriverDelayCountries)) {
 			context.opts.delayEngine = true;
 		}
-
-		context.opts.isAdProductsBridgeEnabled = geo.isProperGeo(instantGlobals.wgAdDriverAdProductsBridgeCountries);
 
 		context.opts.premiumOnly = context.targeting.hasFeaturedVideo &&
 			geo.isProperGeo(instantGlobals.wgAdDriverSrcPremiumCountries);

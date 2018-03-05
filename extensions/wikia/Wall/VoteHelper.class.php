@@ -55,8 +55,7 @@ class VoteHelper {
 		$values = [
 			'article_id' => $this->pageId,
 			'user_id' => $this->userId,
-			'time' => wfTimestampNow(),
-			'vote' => 1, // TODO: SUS-3890 - remove this column
+			'time' => wfTimestampNow()
 		];
 
 		$dbr->insert(

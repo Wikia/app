@@ -1,0 +1,54 @@
+<?php
+
+class SpotlightsHooks {
+	const ASSET_GROUP_SPOTLIGHTS = 'spotlights_js';
+
+	/**
+	 * Register spotlights related var on top
+	 *
+	 * @param array $vars
+	 * @param array $scripts
+	 *
+	 * @return bool
+	 */
+	public static function onWikiaSkinTopScripts(&$vars, &$scripts)
+	{
+		global $wgEnableOpenXSPC, $wgEnableReviveSpotlights;
+
+		if ($wgEnableOpenXSPC && !SpotlightsHelper::isEnglishWiki()) {
+			$vars['wgEnableOpenXSPC'] = $wgEnableOpenXSPC;
+			$vars['wgEnableReviveSpotlights'] = $wgEnableReviveSpotlights;
+		}
+
+		return true;
+	}
+
+	/**
+	 * Register "instant" global JS
+	 *
+	 * @param array $vars
+	 *
+	 * @return bool
+	 */
+	public static function onInstantGlobalsGetVariables( array &$vars )
+	{
+		$vars[] = 'wgReviveSpotlightsCountries';
+
+		return true;
+	}
+
+	/**
+	 * Modify assets appended to the bottom of the page
+	 *
+	 * @param array $jsAssets
+	 *
+	 * @return bool
+	 */
+	public static function onOasisSkinAssetGroups( &$jsAssets ) {
+		if (!SpotlightsHelper::isEnglishWiki()) {
+			$jsAssets[] = self::ASSET_GROUP_SPOTLIGHTS;
+		}
+
+		return true;
+	}
+}
