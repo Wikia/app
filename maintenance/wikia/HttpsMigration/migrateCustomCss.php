@@ -304,7 +304,8 @@ class MigrateCustomCssToHttps extends Maintenance {
 
 		$this->db = wfGetDB( DB_SLAVE );
 
-		$where = [ 'page_namespace' => NS_MEDIAWIKI, 'page_is_redirect' => 0 ];
+		$where = [ 'page_namespace' => NS_MEDIAWIKI, 'page_is_redirect' => 0,
+			'page_title ' . $this->db->buildLike( $this->db->anyString(), '.css' ) ];
 		$options = [ 'ORDER BY' => 'page_title ASC' ];
 		$result = $this->db->select( 'page', [ 'page_id', 'page_title', 'page_is_redirect' ], $where, __METHOD__, $options );
 		$migratedFiles = 0;
