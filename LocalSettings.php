@@ -1,8 +1,15 @@
 <?php
 
 $IP = __DIR__;
+
 require "$IP/../config/LocalSettings.php";
 require_once "$IP/includes/wikia/Extensions.php";
+
+// SUS-3851 - if the wiki has a language code path component, recalculate wgScript and wgArticlePath with its value
+if ( !empty( $wgScriptPath ) ) {
+	$wgScript = $wgScriptPath . $wgScript;
+	$wgArticlePath = $wgScriptPath . $wgArticlePath;
+}
 
 /* @var $wgDBcluster string */
 // in some cases $wgMemc is still null at this point, let's initialize it (SUS-2699)

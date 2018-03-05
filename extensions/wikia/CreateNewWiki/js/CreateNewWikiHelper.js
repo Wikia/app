@@ -24,7 +24,7 @@ define(
 				wikiLanguage: wikiLanguage
 			});
 
-			return '/register?redirect=' + encodeURIComponent(redirectUrl.toString());
+			return window.wgScriptPath + '/register?redirect=' + encodeURIComponent(redirectUrl.toString());
 		}
 
 		return {

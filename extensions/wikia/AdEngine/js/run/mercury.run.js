@@ -81,6 +81,10 @@ require([
 		adInfoListener.run();
 		slotStateMonitor.run();
 		actionHandler.registerMessageListener();
+
+		window.addEventListener('adengine.emitter', function (event) {
+			adEngineBridge.passSlotEvent(event.detail.slotName, event.detail.eventName);
+		});
 	});
 
 	mercuryListener.afterPageWithAdsRender(function () {

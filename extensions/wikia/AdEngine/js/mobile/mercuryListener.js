@@ -9,7 +9,8 @@ define('ext.wikia.adEngine.mobile.mercuryListener', [
 		onLoadQueue = [],
 		onPageChangeCallbacks = [],
 		onEveryPageChangeCallbacks = [],
-		afterPageWithAdsRenderCallbacks = [];
+		afterPageWithAdsRenderCallbacks = [],
+		onMenuOpenCallbacks = [];
 
 	function onLoad(callback) {
 		onLoadQueue.push(callback);
@@ -23,6 +24,10 @@ define('ext.wikia.adEngine.mobile.mercuryListener', [
 		onEveryPageChangeCallbacks.push(callback);
 	}
 
+	function onMenuOpen(callback) {
+		onMenuOpenCallbacks.push(callback);
+	}
+
 	function afterPageWithAdsRender(callback) {
 		afterPageWithAdsRenderCallbacks.push(callback);
 	}
@@ -33,6 +38,8 @@ define('ext.wikia.adEngine.mobile.mercuryListener', [
 	}
 
 	function runOnPageChangeCallbacks() {
+		clearOnMenuOpenCallbacks();
+
 		var callback;
 		log(['runOnPageChangeCallbacks', onPageChangeCallbacks.length], 'info', logGroup);
 
@@ -54,6 +61,18 @@ define('ext.wikia.adEngine.mobile.mercuryListener', [
 		});
 	}
 
+	function runOnMenuOpenCallbacks() {
+		log(['runOnMenuOpenCallbacks', onMenuOpenCallbacks.length], 'info', logGroup);
+		onMenuOpenCallbacks.forEach(function(callback) {
+			callback();
+		});
+	}
+
+	function clearOnMenuOpenCallbacks() {
+		log('clearOnMenuOpenCallbacks', 'info', logGroup);
+		onMenuOpenCallbacks = [];
+	}
+
 	lazyQueue.makeQueue(onLoadQueue, function (callback) {
 		callback();
 	});
@@ -63,6 +82,8 @@ define('ext.wikia.adEngine.mobile.mercuryListener', [
 		onEveryPageChange: onEveryPageChange,
 		onLoad: onLoad,
 		onPageChange: onPageChange,
+		onMenuOpen: onMenuOpen,
+		runOnMenuOpenCallbacks: runOnMenuOpenCallbacks,
 		runAfterPageWithAdsRenderCallbacks: runAfterPageWithAdsRenderCallbacks,
 		runOnPageChangeCallbacks: runOnPageChangeCallbacks,
 		startOnLoadQueue: startOnLoadQueue

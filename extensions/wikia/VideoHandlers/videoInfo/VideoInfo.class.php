@@ -253,7 +253,15 @@ class VideoInfo extends WikiaModel {
 
 			$row = $db->selectRow(
 				'video_info',
-				'*',
+				[
+					"video_title",
+					"video_id",
+					"provider",
+					"added_at",
+					"added_by",
+					"duration",
+					"removed",
+				],
 				array( 'video_title' => $videoTitle ),
 				__METHOD__
 			);
