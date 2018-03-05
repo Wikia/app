@@ -205,6 +205,15 @@ $config['recirculation_scss'] = [
 	],
 ];
 
+$config['spotlights_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => [
+		// ads
+		'//extensions/wikia/Spotlights/js/AdProviderOpenX.js',
+		'//extensions/wikia/Spotlights/js/LazyLoadAds.js',
+	],
+];
+
 
 $config['adengine2_top_js'] = [
 	'type' => AssetsManager::TYPE_JS,
@@ -2508,6 +2517,8 @@ $config['jwplayer_js'] = [
 		'//extensions/wikia/ArticleVideo/scripts/featured-video.jwplayer.js',
 		'//extensions/wikia/ArticleVideo/scripts/featured-video.jwplayer.on-scroll.js',
 		'//extensions/wikia/ArticleVideo/scripts/featured-video.jwplayer.video-feedback.js',
+		'//extensions/wikia/ArticleVideo/scripts/featured-video.attribution.js',
+		'//extensions/wikia/ArticleVideo/scripts/templates.mustache.js',
 	    '//extensions/wikia/ArticleVideo/scripts/video-feedback.js'
 	],
 ];
