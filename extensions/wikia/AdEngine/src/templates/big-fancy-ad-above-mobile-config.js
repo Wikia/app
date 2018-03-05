@@ -14,7 +14,9 @@ export const getConfig = mercuryListener => ({
 	slotsToEnable: [
 		'MOBILE_IN_CONTENT',
 		'MOBILE_PREFOOTER',
-		'MOBILE_BOTTOM_LEADERBOARD'
+		// TODO remove in ADEN-6719
+		'MOBILE_BOTTOM_LEADERBOARD',
+		'BOTTOM_LEADERBOARD'
 	],
 
 	adjustPadding(iframe, { aspectRatio }) {
@@ -34,14 +36,17 @@ export const getConfig = mercuryListener => ({
 		this.adjustPadding(iframe, this.slotParams);
 		window.addEventListener('resize', onResize);
 
-		if (this.mercuryListener) {
-			this.mercuryListener.onPageChange(() => {
+		if (mercuryListener) {
+			mercuryListener.onPageChange(() => {
 				page.classList.remove('bfaa-template');
 				document.body.classList.remove('vuap-loaded');
 				document.body.classList.remove('has-bfaa');
 				document.body.style.paddingTop = '';
 				this.adsModule.setSiteHeadOffset(0);
 				window.removeEventListener('resize', onResize);
+			});
+			mercuryListener.onMenuOpen(() => {
+				this.adSlot.emit('unstickImmediately');
 			});
 		}
 	},

@@ -274,10 +274,6 @@ class WallHistoryController extends WallController {
 					];
 				}
 			}
-
-			$userid = $user->getId();
-			if ( $user->isAnon() ) WallRailController::addAnon( $userid, $user );
-			else WallRailController::addUser( $userid, $user );
 		}
 
 		return $history;

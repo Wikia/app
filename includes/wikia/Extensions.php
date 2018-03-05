@@ -117,11 +117,6 @@ switch ( $wgLanguageCode ) {
 
 }
 
-// new style of per-lang config
-if (!in_array($wgLanguageCode, $wgAvailableAnswersLang) && !in_array(preg_replace("/-.*$/", "", $wgLanguageCode), $wgAvailableAnswersLang)) {
-   $wgEnableAnswersMonacoWidget = false;
-}
-
 /*
  * WikisApi
  */
@@ -322,7 +317,6 @@ if (!empty( $wgWikiaEnableCreatepageExt)) {
 
 #--- 38. SyntaxHighlight_GeSHi parser ext.; requires lib/geshi
 if (!empty($wgEnableSyntaxHighlightGeSHiExt)) {
-	include "$IP/extensions/wikia/SyntaxHighlight/SyntaxHighlight.setup.php";
    	include "$IP/extensions/SyntaxHighlight_GeSHi/SyntaxHighlight_GeSHi.php";
 }
 
@@ -582,11 +576,6 @@ if(!empty($wgEnableWikiaMiniUploadExt)) {
 
 if(!empty($wgEnableLinkSuggestExt)) {
 	include("$IP/extensions/wikia/LinkSuggest/LinkSuggest.php");
-}
-
-if(!empty($wgEnableWidgetTag)) {
-	include_once("$IP/extensions/wikia/WidgetFramework/WidgetFramework.php");
-	include("$IP/extensions/wikia/WidgetTag/WidgetTag.php");
 }
 
 if(!empty($wgEnableMainPageTag)) {
@@ -1039,12 +1028,6 @@ if (!empty( $wgEnablePaginatorExt )){
 # Category Exhibition
 if (!empty($wgEnableCategoryExhibitionExt)) {
 		include("$IP/extensions/wikia/CategoryExhibition/CategoryExhibition_setup.php" );
-}
-
-# SponsorshipDashboard
-if (!empty($wgEnableSponsorshipDashboardExt)) {
-	include("$IP/extensions/wikia/SponsorshipDashboard/SponsorshipDashboard_setup.php" );
-	include("$IP/extensions/wikia/GoogleAnalyticsSampling/GoogleAnalyticsSampling.setup.php");
 }
 
 /*
@@ -1680,10 +1663,6 @@ if ( !empty( $wgEnablePolldaddyTagExt ) ) {
 	include "$IP/extensions/wikia/PolldaddyTag/PolldaddyTag.setup.php";
 }
 
-if ( !empty( $wgEnablePollSnackTagExt ) ) {
-	include "$IP/extensions/wikia/PollSnackTag/PollSnackTag.setup.php";
-}
-
 if ( !empty( $wgEnableSoundCloudTagExt ) ) {
 	include "$IP/extensions/wikia/SoundCloudTag/SoundCloudTag.setup.php";
 }
@@ -1795,6 +1774,10 @@ if ( !empty( $wgEnablePlaybuzzTagExt ) ) {
 
 if ( !empty( $wgEnableGoogleAmp ) ) {
     include "$IP/extensions/wikia/GoogleAmp/GoogleAmp.setup.php";
+}
+
+if ( !empty( $wgEnableOpenXSPC ) ) {
+	include "$IP/extensions/wikia/Spotlights/Spotlights.setup.php";
 }
 
 include "$IP/extensions/wikia/JWPlayerTag/JWPlayerTag.setup.php";

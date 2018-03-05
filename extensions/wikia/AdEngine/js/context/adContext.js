@@ -84,6 +84,9 @@ define('ext.wikia.adEngine.adContext', [
 		context.opts.pageFairRecovery = serviceCanBeEnabled && !isRecoveryServiceAlreadyEnabled &&
 			context.opts.pageFairRecovery && geo.isProperGeo(instantGlobals.wgAdDriverPageFairRecoveryCountries) &&
 			!browserDetect.isEdge();
+
+		// BlockAdBlock recovery
+		context.opts.babRecovery = serviceCanBeEnabled && geo.isProperGeo(instantGlobals.wgAdDriverBabRecoveryCountries);
 	}
 
 	function updateAdContextBidders(context) {
@@ -140,8 +143,6 @@ define('ext.wikia.adEngine.adContext', [
 		if (geo.isProperGeo(instantGlobals.wgAdDriverDelayCountries)) {
 			context.opts.delayEngine = true;
 		}
-
-		context.opts.isAdProductsBridgeEnabled = geo.isProperGeo(instantGlobals.wgAdDriverAdProductsBridgeCountries);
 
 		context.opts.premiumOnly = context.targeting.hasFeaturedVideo &&
 			geo.isProperGeo(instantGlobals.wgAdDriverSrcPremiumCountries);
@@ -210,6 +211,9 @@ define('ext.wikia.adEngine.adContext', [
 		context.opts.replayAdsForFV = geo.isProperGeo(instantGlobals.wgAdDriverPlayAdsOnNextFVCountries);
 		context.opts.fvAdsFrequency = fvAdsFrequency !== undefined ? fvAdsFrequency : 3;
 		context.opts.disableSra = geo.isProperGeo(instantGlobals.wgAdDriverDisableSraCountries);
+		context.opts.isBLBOnMobileEnabled =
+			geo.isProperGeo(instantGlobals.wgAdDriverBottomLeaderBoardOnMobileCountries);
+
 		// Export the context back to ads.context
 		// Only used by Lightbox.js, WikiaBar.js and AdsInContext.js
 		if (w.ads && w.ads.context) {

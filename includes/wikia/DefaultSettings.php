@@ -590,7 +590,6 @@ include_once( "$IP/extensions/wikia/AutoFollow/AutoFollow.setup.php" );
 include_once( "$IP/extensions/wikia/WikiaLogo/WikiaLogo.setup.php" );
 include_once( "$IP/extensions/wikia/Rail/Rail.setup.php" );
 include_once( "$IP/extensions/wikia/PageShare/PageShare.setup.php" );
-include_once( "$IP/extensions/wikia/PaidAssetDrop/PaidAssetDrop.setup.php" );
 include_once( "$IP/extensions/wikia/CreateNewWiki/CreateNewWiki_global_setup.php" );
 include_once( "$IP/extensions/wikia/Security/Security.setup.php" );
 include_once( "$IP/extensions/wikia/CommunityHeader/CommunityHeader.setup.php" );
@@ -1246,6 +1245,13 @@ $wgAdDriverAudienceNetworkBidderCountries = null;
 $wgAdDriverBeachfrontBidderCountries = null;
 
 /**
+ * @name $wgAdDriverBottomLeaderBoardOnMobileCountries
+ * List of countries where BOTTOM_LEADERBOARD ad slot is enabled on mobile-wiki.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverBottomLeaderBoardOnMobileCountries = null;
+
+/**
  * @name $wgAdDriverIndexExchangeBidderCountries
  * List of countries where indexExchange bidding platform is enabled.
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
@@ -1333,17 +1339,6 @@ $wgSitewideDisableAdsOnMercury = false;
  * For more details consult https://wikia-inc.atlassian.net/wiki/display/ADEN/Disaster+Recovery
  */
 $wgSitewideDisableGpt = false;
-
-/**
- * @name $wgSitewideDisablePaidAssetDrop
- * @link https://wikia-inc.atlassian.net/wiki/display/ADEN/Disaster+Recovery
- * @link http://community.wikia.com/wiki/Special:WikiFactory/community/variables/wgSitewideDisablePaidAssetDrop
- *
- * Disable Paid Asset Drop (PAD) sitewide in case a disaster happens.
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- * For more details consult https://wikia-inc.atlassian.net/wiki/display/ADEN/Disaster+Recovery
- */
-$wgSitewideDisablePaidAssetDrop = false;
 
 /**
  * @name $wgEnableKruxTargeting
@@ -1533,6 +1528,12 @@ $wgAdDriverBabDetectionMobileCountries = null;
  * List of countries to call BlockAdBlock detection scripts on news&stories
  */
 $wgAdDriverF2BabDetectionCountries = null;
+
+/**
+ * @name $wgAdDriverBabRecoveryCountries
+ * List of countries to put recovery behind BlockAdBlock detection
+ */
+$wgAdDriverBabRecoveryCountries = null;
 
 /**
  * trusted proxy service registry
@@ -1726,14 +1727,6 @@ $wgOasisTypography = true;
 $wgOasisBreakpoints = true;
 
 /**
- * @name $wgPaidAssetDropConfig
- *
- * Disables Paid Asset Drop campaign if set to false. Enables it if set to an array with two dates (YYYY-MM-DD format).
- * https://one.wikia-inc.com/wiki/Ad_Engineering/Paid_Asset_Drop
- */
-$wgPaidAssetDropConfig = false;
-
-/**
  * @name $wgAdDriverHighImpact2SlotCountries
  * Enables INVISIBLE_HIGH_IMPACT_2 slot in these countries
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
@@ -1748,7 +1741,6 @@ $wgAdDriverHighImpact2SlotCountries = null;
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverMobileTransitionInterstitialCountries = null;
-
 
 /**
  * @name $wgAdDriverMobileFloorAdhesionCountries
@@ -1765,13 +1757,6 @@ $wgAdDriverMobileFloorAdhesionCountries = null;
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverIncontentPlayerSlotCountries = null;
-
-/**
- * @name $wgAdDriverDisableBadgeAdCountries
- * Disables badge ad (next to TOP_LEADERBOARD).
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverDisableBadgeAdCountries = null;
 
 /**
  * manage a user's preferences externally
@@ -1838,6 +1823,19 @@ $wgEnableHostnameInHtmlTitle = true;
 include_once("$IP/includes/wikia/parser/templatetypes/TemplateTypes.setup.php");
 
 /**
+ * @name $wgEnableReviveSpotlights
+ * Enables Revive Spotlights
+ */
+$wgEnableReviveSpotlights = true;
+
+/**
+ * @name $wgReviveSpotlightsCountries
+ * Enables Revive Spotlights in these countries (given wgEnableReviveSpotlights is also true).
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgReviveSpotlightsCountries = null;
+
+/**
  * @name $wgDisableImprovedGenderSupport
  *
  * Allow to disable "improved" gender support included in MW 1.18
@@ -1862,6 +1860,9 @@ $wgAutoapproveJS = false;
  * update/add/change domains in the future
  */
 $wgWikiaBaseDomainRegex = '(wikia\\.com|wikia-staging\\.com|wikia-dev\\.(com|us|pl))';
+
+
+$wgEnableOpenXSPC = true;
 
 /**
  * Enable recovery

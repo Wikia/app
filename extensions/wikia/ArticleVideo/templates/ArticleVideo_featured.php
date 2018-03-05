@@ -28,6 +28,6 @@
 			</script>
 			<script><?= $jwPlayerScript ?></script>
 		</div>
-		<?= $app->renderPartial( 'ArticleVideo', 'attribution', [ 'videoDetails' => $videoDetails ] ) ?>
+		<?= $app->renderView( 'ArticleVideo', 'attribution', [ 'videoDetails' => $videoDetails ] ) ?>
 	</div>
 </div>

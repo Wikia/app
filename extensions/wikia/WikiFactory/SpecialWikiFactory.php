@@ -34,15 +34,6 @@ $wgExtensionMessagesFiles["WikiFactory"] =  $dir . '/SpecialWikiFactory.i18n.php
 require_once( $dir . '/SpecialWikiFactory_ajax.php' );
 
 /**
- * metrics
- */
-require_once( $dir . '/Metrics/SpecialAWCMetrics.php' );
-$wgAutoloadClasses['NewWikisGraphSpecialPageController'] = $dir . '/Metrics/SpecialNewWikisGraph.php';
-$wgSpecialPages['NewWikisGraph'] = 'NewWikisGraphSpecialPageController';
-$wgAutoloadClasses['SpecialNewWikisGraphOutput'] = $dir . '/Metrics/output/SpecialNewWikisGraphOutput.class.php';
-$wgAutoloadClasses['SpecialNewWikisGraphSourceDatabase'] = $dir . '/Metrics/SpecialNewWikisGraphSourceDatabase.class.php';
-
-/**
  * tags
  */
 require_once( $dir . '/Tags/WikiFactoryTags.php' );
@@ -54,5 +45,3 @@ $wgSpecialPageGroups['WikiFactory'] = 'wikia';
 $wgAutoloadClasses[ "CloseWikiPage" ] = $dir. "/Close/SpecialCloseWiki_body.php";
 $wgSpecialPages[ "CloseWiki" ] = "CloseWikiPage";
 $wgSpecialPageGroups[ "CloseWiki" ] = 'wikia';
-
-require_once( $dir . '/../SponsorshipDashboard/SponsorshipDashboard_autoload.php' );

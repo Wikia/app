@@ -739,7 +739,7 @@ class GlobalTitle extends Title {
 
 	private function formatServer( string $server ): string {
 		if ( $this->usingHTTPS() ) {
-			$server = preg_replace( '/^http:\/\//', 'https://', $server );
+			$server = wfHttpToHttps( $server );
 		}
 
 		return \WikiFactory::getLocalEnvURL( $server );

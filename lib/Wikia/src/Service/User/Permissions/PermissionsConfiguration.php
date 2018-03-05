@@ -30,6 +30,7 @@ class PermissionsConfiguration {
 		'beta',
 		'bot-global',
 		'content-reviewer',
+		'content-volunteer',
 		'council',
 		'helper',
 		'restricted-login',
@@ -111,7 +112,6 @@ class PermissionsConfiguration {
 		'writeapi',
 		'canremovemap',
 		'wikifactory',
-		'wikifactorymetrics',
 		'dumpsondemand',
 		'wikifeatures',
 		'MultiFileUploader',
@@ -406,8 +406,8 @@ class PermissionsConfiguration {
 		$this->groupsRemovableByGroup['bureaucrat'] = [ 'rollback', 'sysop', 'bot', 'content-moderator' ];
 		$this->groupsSelfRemovableByGroup['bureaucrat'] = [ 'bureaucrat' ];
 
-		$this->groupsAddableByGroup['staff'] = [ 'rollback', 'bot', 'sysop', 'bureaucrat', 'content-moderator', 'chatmoderator', 'threadmoderator', 'fandom-editor', 'global-discussions-moderator' ];
-		$this->groupsRemovableByGroup['staff'] = [ 'rollback', 'bot', 'sysop', 'bureaucrat', 'content-moderator', 'chatmoderator', 'threadmoderator', 'fandom-editor', 'global-discussions-moderator' ];
+		$this->groupsAddableByGroup['staff'] = [ 'rollback', 'bot', 'sysop', 'bureaucrat', 'content-moderator', 'chatmoderator', 'threadmoderator', 'fandom-editor', 'global-discussions-moderator', 'content-volunteer' ];
+		$this->groupsRemovableByGroup['staff'] = [ 'rollback', 'bot', 'sysop', 'bureaucrat', 'content-moderator', 'chatmoderator', 'threadmoderator', 'fandom-editor', 'global-discussions-moderator', 'content-volunteer' ];
 
 		$this->groupsAddableByGroup['helper'] = [ 'rollback', 'bot', 'sysop', 'bureaucrat', 'content-moderator', 'chatmoderator', 'threadmoderator' ];
 		$this->groupsRemovableByGroup['helper'] = [ 'rollback', 'bot', 'sysop', 'bureaucrat', 'content-moderator', 'chatmoderator', 'threadmoderator' ];

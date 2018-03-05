@@ -88,9 +88,6 @@ $config['adengine2_desktop_js'] = [
 		'//extensions/wikia/AdEngine/js/slot/service/slotRegistry.js',
 		'//extensions/wikia/AdEngine/js/slot/service/stateMonitor.js',
 		'//extensions/wikia/AdEngine/js/slot/service/viewabilityHandler.js',
-		'//extensions/wikia/AdEngine/js/template/bfaa.js',
-		'//extensions/wikia/AdEngine/js/template/bfaaDesktop.js',
-		'//extensions/wikia/AdEngine/js/template/bfab.js',
 		'//extensions/wikia/AdEngine/js/template/floatingRail.js',
 		'//extensions/wikia/AdEngine/js/template/floor.js',
 		'//extensions/wikia/AdEngine/js/template/floorAdhesion.js',
@@ -208,6 +205,15 @@ $config['recirculation_scss'] = [
 	],
 ];
 
+$config['spotlights_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => [
+		// ads
+		'//extensions/wikia/Spotlights/js/AdProviderOpenX.js',
+		'//extensions/wikia/Spotlights/js/LazyLoadAds.js',
+	],
+];
+
 
 $config['adengine2_top_js'] = [
 	'type' => AssetsManager::TYPE_JS,
@@ -266,6 +272,7 @@ $config['adengine2_pr3b1d_js'] = [
 		'//extensions/wikia/AdEngine/js/lookup/prebid/prebidHelper.js',
 		'//extensions/wikia/AdEngine/js/lookup/prebid/prebidSettings.js',
 		'//extensions/wikia/AdEngine/js/lookup/prebid/priceGranularityHelper.js',
+		'//extensions/wikia/AdEngine/js/lookup/prebid/adaptersHelper.js',
 		'//extensions/wikia/AdEngine/js/lookup/prebid/adaptersPerformanceTracker.js',
 		'//extensions/wikia/AdEngine/js/lookup/prebid/adaptersPricesTracker.js',
 		'//extensions/wikia/AdEngine/js/lookup/prebid/adaptersRegistry.js',
@@ -852,7 +859,6 @@ $config['mobile_base_ads_js'] = [
 		'//extensions/wikia/AdEngine/js/provider/gpt/googleSlots.js',
 		'//extensions/wikia/AdEngine/js/provider/gpt/helper.js',
 		'//extensions/wikia/AdEngine/js/provider/gpt/targeting.js',
-		'//extensions/wikia/AdEngine/js/provider/paidAssetDrop.js',
 		'//extensions/wikia/AdEngine/js/provider/remnantGptMobile.js',
 		'//extensions/wikia/AdEngine/js/slot/adSlot.js',
 		'//extensions/wikia/AdEngine/js/slot/adUnitBuilder.js',
@@ -879,9 +885,6 @@ $config['mobile_base_ads_js'] = [
 		// Recovery
 		'//extensions/wikia/ARecoveryEngine/js/adBlockDetection.js',
 		'//extensions/wikia/ARecoveryEngine/js/adBlockRecovery.js',
-
-		// Paid asset drop
-		'//extensions/wikia/PaidAssetDrop/js/paidAssetDrop.js',
 
 		//Prebid
 		'#group_adengine2_pr3b1d_js',
@@ -916,9 +919,6 @@ $config['mercury_ads_js'] = [
 		'//extensions/wikia/AdEngine/js/mobile/mercuryListener.js',
 		'//extensions/wikia/AdEngine/js/slot/service/actionHandler.js',
 		'//extensions/wikia/AdEngine/js/slot/resolvedState.js',
-		'//extensions/wikia/AdEngine/js/template/bfaa.js',
-		'//extensions/wikia/AdEngine/js/template/bfaaMobile.js',
-		'//extensions/wikia/AdEngine/js/template/bfab.js',
 		'//extensions/wikia/AdEngine/js/template/floor.js',
 		'//extensions/wikia/AdEngine/js/template/floorAdhesion.js',
 		'//extensions/wikia/AdEngine/js/template/modal.js',
@@ -2021,14 +2021,6 @@ $config['portable_infobox_builder_preview_scss'] = [
 	],
 ];
 
-$config['paid_asset_drop_desktop_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => [
-		'//extensions/wikia/PaidAssetDrop/js/run/desktop.run.js',
-		'//extensions/wikia/PaidAssetDrop/js/paidAssetDrop.js',
-	],
-];
-
 $config['special_email_admin_css'] = [
 	'type' => AssetsManager::TYPE_SCSS,
 	'assets' => [
@@ -2525,6 +2517,8 @@ $config['jwplayer_js'] = [
 		'//extensions/wikia/ArticleVideo/scripts/featured-video.jwplayer.js',
 		'//extensions/wikia/ArticleVideo/scripts/featured-video.jwplayer.on-scroll.js',
 		'//extensions/wikia/ArticleVideo/scripts/featured-video.jwplayer.video-feedback.js',
+		'//extensions/wikia/ArticleVideo/scripts/featured-video.attribution.js',
+		'//extensions/wikia/ArticleVideo/scripts/templates.mustache.js',
 	    '//extensions/wikia/ArticleVideo/scripts/video-feedback.js'
 	],
 ];

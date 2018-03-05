@@ -215,7 +215,7 @@ class RTE {
 	 * @author Macbre
 	 */
 	public static function makeGlobalVariablesScript( &$vars ) {
-		global $wgLegalTitleChars, $wgServer, $wgExtensionsPath, $wgUseSiteCss;
+		global $wgLegalTitleChars, $wgScriptPath, $wgServer, $wgExtensionsPath, $wgUseSiteCss;
 
 		// reason why wysiwyg is disabled
 		if ( self::$useWysiwyg === false ) {
@@ -257,7 +257,7 @@ class RTE {
 
 		// local path to RTE (used to apply htc fixes for IE)
 		// this MUST point to local domain
-		$vars['RTELocalPath'] = $wgServer . '/extensions/wikia/RTE';
+		$vars['RTELocalPath'] = $wgServer . $wgScriptPath . '/extensions/wikia/RTE';
 
 		$vars['CKEDITOR_BASEPATH'] = $wgExtensionsPath . '/wikia/RTE/ckeditor/';
 
@@ -304,7 +304,7 @@ class RTE {
 				);
 				$vars['RTESiteCss'] = $url;
 			} else {
-				$vars['RTESiteCss'] = $wgServer . Skin::makeNSUrl( 'Common.css', $query, NS_MEDIAWIKI );
+				$vars['RTESiteCss'] = $wgServer . $wgScriptPath . Skin::makeNSUrl( 'Common.css', $query, NS_MEDIAWIKI );
 			}
 		}
 

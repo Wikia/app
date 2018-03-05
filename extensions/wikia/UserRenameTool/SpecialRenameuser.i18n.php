@@ -14,7 +14,7 @@ $messages['en'] = array(
 <li>a username that contains non-alphabetic characters, for example, card suit symbols or trademark signs</li>
 <li>a username that starts with an uncapitalized letter</li>
 </ul>
-<br />Once you have submitted the form below, your account will be renamed. You can then log back into FANDOM using your new username. The password will remain the same. You can read more about account renames [[w:c:Help:Rename my account|here]].',
+<br />Once you have submitted the form below, your account will be renamed. You can then log back into FANDOM using your new username. The password will remain the same. You can read more about account renames [[Help:Rename my account|here]].',
 	'userrenametool-desc' => "Adds a [[Special:UserRenameTool|special page]] to rename a user (need ''renameuser'' right) and process all the related data",
 	'userrenametool-old' => 'Current username:',
 	'userrenametool-new' => 'New username:',
@@ -33,7 +33,7 @@ $messages['en'] = array(
 	'userrenametool-confirm' => 'Yes, rename the user',
 	'userrenametool-submit' => 'Change username',
 	'userrenametool-understand-consequences' => 'I understand the consequences of renaming described above',
-	'userrenametool-error-alreadyrenamed' => 'This account has already been renamed. As our [[w:c:Help:Rename my account|account rename help page]] states, FANDOM does not allow more than one rename per account, and this means you can not rename your account again.',
+	'userrenametool-error-alreadyrenamed' => 'This account has already been renamed. As our [[Help:Rename my account|account rename help page]] states, FANDOM does not allow more than one rename per account, and this means you can not rename your account again.',
 	'userrenametool-error-token-not-exists' => "User's edit token not exists.",
 	'userrenametool-error-token-not-match' => "User's edit token not matched.",
 	'userrenametool-error-consequences' => 'You must understand the consequences of changing your username. Please click the proper checkbox.',

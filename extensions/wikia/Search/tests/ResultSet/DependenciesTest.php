@@ -3,7 +3,9 @@
  * Class definition for Wikia\Search\Test\ResultSet\DependenciesTest
  */
 namespace Wikia\Search\Test\ResultSet;
-use Wikia, ReflectionProperty, ReflectionMethod;
+
+use Wikia;
+
 /**
  * Tests Factory and DependencyContainer in Wikia\Search\ResultSet
  */
@@ -14,119 +16,45 @@ class DependenciesTest extends Wikia\Search\Test\BaseTest {
 	 * @covers Wikia\Search\ResultSet\Factory::get
 	 */
 	public function testFactoryGet() {
-		$factory = $this->getMockBuilder( 'Wikia\Search\ResultSet\Factory' )
-		                ->disableOriginalConstructor()
-		                ->setMethods( null )
-		                ->getMock();
+		$factory = new Wikia\Search\ResultSet\Factory();
 		
-		$mockDc = $this->getMockBuilder( 'Wikia\Search\ResultSet\DependencyContainer' )
-		               ->disableOriginalConstructor()
-		               ->setMethods( array( 'getConfig', 'getResult', 'getService' ) )
-		               ->getMock();
-		
-		$mockService = $this->getMock( 'Wikia\Search\MediaWikiService', array( 'getWikiMatchByHost' ) );
-		
-		$mockEmptyResult = $this->getMockBuilder( 'Solarium_Result_Select_Empty' )
-		                   ->disableOriginalConstructor()
-		                   ->getMock();
-		
-		$mockResult = $this->getMockBuilder( 'Solarium_Result_Select' )
-		                   ->disableOriginalConstructor()
-		                   ->getMock();
-		
-		$mockMatch = $this->getMockBuilder( 'Wikia\Search\Match\Wiki' )
-		                  ->disableOriginalConstructor()
-		                  ->getMock();
-		
-		$mockConfig = $this->getMock( 'Wikia\Search\Config', array( 'getInterWiki', 'getQueryService' ) );
-		$pcf = $this->getMock( 'Wikia\Search\ProfiledClassFactory', [ 'get' ] );
-		$setMockStrings = array( 'Base', 'EmptySet' );
-		$setMocks = array();
-		foreach ( $setMockStrings as $name ) {
-			$fullName = 'Wikia\Search\ResultSet\\'.$name;
-			$setMocks[$name] = $this->getMockBuilder( $fullName )
-			                        ->disableOriginalConstructor()
-			                        ->getMock();
-			$this->mockClass( $fullName, $setMocks[$name] );
-		}
-		$this->mockClass( 'Wikia\Search\ProfiledClassFactory', $pcf );
+		$mockEmptyResult = $this->createMock( \Solarium_Result_Select_Empty::class );
+		$mockResult = $this->createMock( \Solarium_Result_Select::class );
 
-		$mockDc
-		    ->expects( $this->at( 0 ) )
-		    ->method ( 'getConfig' )
-		    ->will   ( $this->returnValue( null ) )
-		;
-		try {
-			$factory->get( $mockDc );
-		} catch ( \Exception $e ) {}
+		$mockResult->expects( $this->any() )
+			->method( 'getDocuments' )
+			->willReturn( [] );
+		
+		$config = new Wikia\Search\Config();
+
+		$dependencyContainer = new Wikia\Search\ResultSet\DependencyContainer();
+		$dependencyContainer->setConfig( $config );
+
 		$this->assertInstanceOf(
-				'Exception',
-				$e
+			Wikia\Search\ResultSet\EmptySet::class,
+			$factory->get( $dependencyContainer )
 		);
-		$mockDc
-		    ->expects( $this->at( 0 ) )
-		    ->method ( 'getConfig' )
-		    ->will   ( $this->returnValue( $mockConfig ) )
-		;
-		$mockDc
-		    ->expects( $this->at( 1 ) )
-		    ->method ( 'getResult' )
-		    ->will   ( $this->returnValue( $mockEmptyResult ) )
-		;
-		$pcf
-		    ->expects( $this->at( 0 ) )
-		    ->method ( 'get' )
-		    ->with   ( 'Wikia\Search\ResultSet\EmptySet', [ $mockDc ] )
-		    ->will   ( $this->returnValue( $setMocks['EmptySet'] ) )
-		;
-		$this->assertEquals(
-				$setMocks['EmptySet'],
-				$factory->get( $mockDc )
+
+		$dependencyContainer->setResult( $mockEmptyResult );
+
+		$this->assertInstanceOf(
+				Wikia\Search\ResultSet\EmptySet::class,
+				$factory->get( $dependencyContainer )
 		);
-		$mockDc
-		    ->expects( $this->at( 0 ) )
-		    ->method ( 'getConfig' )
-		    ->will   ( $this->returnValue( $mockConfig ) )
-		;
-		$mockDc
-		    ->expects( $this->at( 1 ) )
-		    ->method ( 'getResult' )
-		    ->will   ( $this->returnValue( null ) )
-		;
-		$pcf
-		    ->expects( $this->at( 0 ) )
-		    ->method ( 'get' )
-		    ->with   ( 'Wikia\Search\ResultSet\EmptySet', [ $mockDc ] )
-		    ->will   ( $this->returnValue( $setMocks['EmptySet'] ) )
-		;
-		$this->assertEquals(
-				$setMocks['EmptySet'],
-				$factory->get( $mockDc )
+
+		$dependencyContainer->setResult( $mockResult );
+		$config->setInterWiki( true );
+
+		$this->assertInstanceOf(
+				Wikia\Search\ResultSet\Base::class,
+				$factory->get( $dependencyContainer )
 		);
-		$mockDc
-		    ->expects( $this->at( 0 ) )
-		    ->method ( 'getConfig' )
-		    ->will   ( $this->returnValue( $mockConfig ) )
-		;
-		$mockDc
-		    ->expects( $this->at( 1 ) )
-		    ->method ( 'getResult' )
-		    ->will   ( $this->returnValue( $mockResult ) )
-		;
-		$mockConfig
-		    ->expects( $this->once() )
-		    ->method ( 'getQueryService' )
-		    ->will   ( $this->returnValue( '\\Wikia\\Search\\QueryService\\Select\\Dismax\\InterWiki' ) )
-		;
-		$pcf
-		    ->expects( $this->at( 0 ) )
-		    ->method ( 'get' )
-		    ->with   ( 'Wikia\Search\ResultSet\Base', [ $mockDc ] )
-		    ->will   ( $this->returnValue( $setMocks['Base'] ) )
-		;
-		$this->assertEquals(
-				$setMocks['Base'],
-				$factory->get( $mockDc )
+
+		$config->setCombinedMediaSearch( true );
+
+		$this->assertInstanceOf(
+			Wikia\Search\ResultSet\CombinedMediaResultSet::class,
+			$factory->get( $dependencyContainer )
 		);
 	}
 	
