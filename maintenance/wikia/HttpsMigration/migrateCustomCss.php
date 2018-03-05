@@ -272,6 +272,7 @@ class MigrateCustomCssToHttps extends Maintenance {
 					$editPage = new EditPage( $article );
 					$editPage->summary = $this->getEditSummary();
 					$editPage->textbox1 = $updatedText;
+					$editPage->minoredit = true;
 					$result = [];
 					$status = $editPage->internalAttemptSave( $result, /* bot */ true );
 					if ( $status->isGood() ) {
