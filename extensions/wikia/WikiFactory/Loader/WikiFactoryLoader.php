@@ -360,7 +360,7 @@ class WikiFactoryLoader {
 				 * store value in cache
 				 */
 				$oMemc->set(
-					WikiFactory::getDomainKey( $this->mServerName ),
+					WikiFactory::getDomainKey( $this->mServerName . '/' . $this->langCode ),
 					$this->mDomain,
 					$this->mExpireDomainCacheTimeout
 				);
