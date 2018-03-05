@@ -144,10 +144,10 @@ class MigrateCustomCssToHttps extends Maintenance {
 	 * Removes the host part of the url leaving only the path.
 	 */
 	private function stripProtocolAndHost( $url ) {
-		$parse_url = parse_url( $url );
-		return $parse_url[ 'path' ] .
-			( ( isset( $parse_url[ 'query' ] ) ) ? '?' . $parse_url[ 'query' ] : '' ) .
-			( ( isset( $parse_url[ 'fragment' ] ) ) ? '#' . $parse_url[ 'fragment' ] : '' );
+		$parsedUrl = parse_url( $url );
+		return $parsedUrl[ 'path' ] .
+			( ( isset( $parsedUrl[ 'query' ] ) ) ? '?' . $parsedUrl[ 'query' ] : '' ) .
+			( ( isset( $parsedUrl[ 'fragment' ] ) ) ? '#' . $parsedUrl[ 'fragment' ] : '' );
 	}
 
 	/**
@@ -158,10 +158,8 @@ class MigrateCustomCssToHttps extends Maintenance {
 	private function fixWikiUrl( $url ) {
 		if ( $this->isCurrentWikiUrl( $url ) ) {
 			$url = $this->stripProtocolAndHost( $url );
-		} else {
-			if ( $this->isWikiaComSubdomainUrl( $url ) && $this->isHttpUrl( $url ) ) {
-				$url = wfProtocolUrlToRelative( $url );
-			}
+		} elseif ( $this->isWikiaComSubdomainUrl( $url ) && $this->isHttpUrl( $url ) ) {
+			$url = wfProtocolUrlToRelative( $url );
 		}
 		return $url;
 	}
@@ -170,10 +168,10 @@ class MigrateCustomCssToHttps extends Maintenance {
 	 * For host that we know for sure that support https, upgrade the url to use it.
 	 */
 	private function upgradeThirdPartyUrl( $url ) {
-		$known_https_hosts = [ 'en.wikipedia.org', 'i.imgur.com', 'upload.wikimedia.org', 'fonts.googleapis.com',
+		$knownHttpsHosts = [ 'en.wikipedia.org', 'i.imgur.com', 'upload.wikimedia.org', 'fonts.googleapis.com',
 			'commons.wikimedia.org' ];
 		$host = parse_url( $url, PHP_URL_HOST );
-		if ( in_array( $host, $known_https_hosts ) ) {
+		if ( in_array( $host, $knownHttpsHosts ) ) {
 			$newUrl = $this->upgradeToHttps( $url );
 			$this->logUrlChange( 'Upgraded third party url', $url, $newUrl );
 			$url = $newUrl;
@@ -247,7 +245,7 @@ class MigrateCustomCssToHttps extends Maintenance {
 
 		// logging - output lines that still use http protocol
 		$lines = explode( "\n", $text );
-		foreach($lines as $line) {
+		foreach( $lines as $line ) {
 			if ( strpos( $line, 'http://' ) !== FALSE ) {
 				$this->output( "Notice: http protocol still used in \"{$line}\"\n" );
 			}
@@ -266,7 +264,7 @@ class MigrateCustomCssToHttps extends Maintenance {
 		if( !is_null( $revision ) ) {
 			$text = $revision->getText();
 			$updatedText = $this->updateCSSContent( $text );
-			if ($text !== $updatedText) {
+			if ( $text !== $updatedText ) {
 				if ( $this->saveChanges ) {
 					$article = new Article( $title );
 					$editPage = new EditPage( $article );
