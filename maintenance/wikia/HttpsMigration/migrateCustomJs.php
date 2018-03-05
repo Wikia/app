@@ -51,6 +51,28 @@ class MigrateCustomJsToHttps extends Maintenance {
 		}
 	}
 
+	/**
+	 * Convert the url to https if possible. Can return an empty string in case local address should be used.
+	 * @param $url protocol and domain name
+	 * @return updated address
+	 */
+	public function convertToHttp( $url ) {
+		// IMPLEMENT!!!
+		return $url;
+	}
+
+	/**
+	 * @param $matches - regex match array, $matches[1] contain the protocol and domain
+	 * @return updated url address match
+	 */
+	public function makeUrlHttpsComatible( $matches ) {
+		$this->output( "Updating '{$matches[1]}' used in {$matches[0]}\n" );
+		$domain = $this->convertToHttp( $matches[1] );
+		if ( $domain != $matches[1] ) {
+			$matches[ 0 ] = str_replace( $matches[ 1 ], $domain, $matches[ 0 ] );
+		}
+		return $matches[ 0 ];
+	}
 
 	/**
 	 * Process JS source code upgrading urls to https/protocol-relative.
@@ -58,6 +80,17 @@ class MigrateCustomJsToHttps extends Maintenance {
 	 * @return mixed Updated JS source code
 	 */
 	public function updateJSContent( $text ) {
+		// the goal is to catch all http urls wrapped with single or double quotes
+		$text =  preg_replace_callback( '/"(http:\/\/[^\/"]+)[^"]+"/i', [ $this, 'makeUrlHttpsComatible' ], $text );
+		$text =  preg_replace_callback( "/'(http:\/\/[^\/']+)[^']+'/i", [ $this, 'makeUrlHttpsComatible' ], $text );
+
+		// log urls that were not altered, most likely there will be a lot of those
+		$lines = explode( "\n", $text );
+		foreach( $lines as $line ) {
+			if ( strpos( $line, 'http://' ) !== FALSE ) {
+				$this->output( "Notice: http protocol used in \"{$line}\"\n" );
+			}
+		}
 		return $text;
 	}
 
@@ -105,7 +138,9 @@ class MigrateCustomJsToHttps extends Maintenance {
 
 		$this->db = wfGetDB( DB_SLAVE );
 
-		$where = [ 'page_namespace' => NS_MEDIAWIKI, 'page_is_redirect' => 0 ];
+		$where = [ 'page_namespace' => NS_MEDIAWIKI,
+			'page_is_redirect' => 0,
+			'page_title ' . $this->db->buildLike( $this->db->anyString(), '.js' ) ];
 		$options = [ 'ORDER BY' => 'page_title ASC' ];
 		$result = $this->db->select( 'page', [ 'page_id', 'page_title', 'page_is_redirect' ], $where, __METHOD__, $options );
 		$migratedFiles = 0;
