@@ -435,8 +435,13 @@ class RTEReverseParser {
 							$out = "{$out}\n";
 						}
 					} elseif ( $node->nodeName === 'tr' ) {
-						// case when table row attributes are defined in template
-						$out = "|-{$out}{$textContent}";
+						if ( !empty( $data['template-only'] ) ) {
+							// XW-4742: case when whole table row is defined within template
+							$out = "\n{$out}";
+						} else {
+							// case when table row attributes are defined in template
+							$out = "|-{$out}{$textContent}";
+						}
 					} elseif ( $node->nodeName === 'table' ) {
 						// case when table attributes are defined in template
 						$out = "{|{$out}\n{$textContent}\n|}\n";
@@ -1460,6 +1465,11 @@ class RTEReverseParser {
 
 			case 'th':
 			case 'td':
+				if ( strpos( $attributes, 'data-rte-filler="true"' ) !== false ) {
+					// XW-4742: fake cell added to handle rows defined inside template, do not add anything
+					break;
+				}
+
 				$out = '';
 				$char = ($node->nodeName == 'td') ? '|' : '!';
 
