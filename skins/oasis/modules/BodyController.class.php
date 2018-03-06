@@ -301,7 +301,11 @@ class BodyController extends WikiaController {
 		}
 
 		// Display chromed header on Special:AdminDashboard
-		if ( $this->wg->Title->isSpecial( 'AdminDashboard' ) && $this->wg->User->isAllowed( 'admindashboard' ) ) {
+		if (
+			$this->wg->EnableAdminDashboardExt &&
+			$this->wg->Title->isSpecial( 'AdminDashboard' ) &&
+			$this->wg->User->isAllowed( 'admindashboard' )
+		) {
 			$this->displayAdminDashboard = true;
 		} else {
 			$this->displayAdminDashboard = false;
