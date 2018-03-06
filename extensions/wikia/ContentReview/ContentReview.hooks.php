@@ -264,7 +264,7 @@ class Hooks {
 	}
 
 	private function disableTestMode( \WebRequest $request ) {
-		$key = \ContentReviewApiController::CONTENT_REVIEW_TEST_MODE_KEY;
+		$key = Helper::CONTENT_REVIEW_TEST_MODE_KEY;
 
 		$wikis = $request->getSessionData( $key );
 		if ( !empty( $wikis ) ) {

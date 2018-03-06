@@ -1640,6 +1640,9 @@ $wgPreferenceServiceRead = true;
 /**
  * Enable the Content Review extension
  */
+// Load classes that should always be available
+include "$IP/extensions/wikia/ContentReview/ContentReviewShared.setup.php";
+
 if ( !empty( $wgUseSiteJs ) && !empty( $wgEnableContentReviewExt ) ) {
 	include( "$IP/extensions/wikia/ContentReview/ContentReview.setup.php" );
 
