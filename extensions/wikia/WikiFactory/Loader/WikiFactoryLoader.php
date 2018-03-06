@@ -433,7 +433,8 @@ class WikiFactoryLoader {
 		$cond2 = $this->mAlternativeDomainUsed && ( $url['host'] != $this->mOldServerName );
 
 		if( ( $cond1 || $cond2 ) && empty( $wgDevelEnvironment ) ) {
-			$target = rtrim( $this->mCityUrl, '/' ) . '/' . $this->pathParams;
+			$redirectUrl = WikiFactory::getLocalEnvURL( $this->mCityUrl );
+			$target = rtrim( $redirectUrl, '/' ) . '/' . $this->pathParams;
 
 			if ( !empty( $_GET ) ) {
 				$target .= '?' . http_build_query( $_GET );
