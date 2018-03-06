@@ -68,7 +68,7 @@ class FixBrokenVideoReuploads extends Maintenance {
 
 		$repo = RepoGroup::singleton()->getLocalRepo();
 
-		$old = OldLocalFile::newFromKey( $row->oi_sha1, $repo, $row->oi_timestamp );
+		$old = OldLocalFile::newFromTitle( $row->img_name, $repo, $row->oi_timestamp );
 		$metadata = unserialize($old->getMetadata());
 
 		if ( empty( $metadata['provider'] ) ) {
