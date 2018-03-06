@@ -8,7 +8,7 @@ class ArticleAsJson {
 		'imageMaxWidth' => false
 	];
 
-	const CACHE_VERSION = 3.7;
+	const CACHE_VERSION = 3.8;
 
 	const ICON_MAX_SIZE = 48;
 	// Line height in Mercury
@@ -202,6 +202,11 @@ class ArticleAsJson {
 				$mediaObj = self::createMediaObject( $details, $image['name'], $caption, $linkHref );
 				$mediaObj['mediaAttr'] = json_encode( $mediaObj );
 				$mediaObj['galleryRef'] = $index;
+				$mediaObj['thumbnailUrl'] = VignetteRequest::fromUrl( $mediaObj['url'] )
+					->thumbnailDown()
+					->width( 195 )
+					->height( 195 )
+					->url();
 
 				$media[] = $mediaObj;
 
