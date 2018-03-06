@@ -84,7 +84,12 @@ class FixBrokenVideoReuploads extends Maintenance {
 		// do fix the video, re-upload it
 		if ( $this->getOption('fix-it') ) {
 			$title = Title::newFromText($old->getName(), NS_FILE);
-			$res = VideoFileUploader::uploadVideo( $provider, $videoId, $title );
+
+			$uploader = new VideoFileUploader();
+			$uploader->setProvider( $provider );
+			$uploader->setVideoId( $videoId );
+			$uploader->setTargetTitle( $title->getBaseText() );
+			$res = $uploader->upload( $title );
 		}
 		else {
 			$res = Status::newFatal( 'dry-run' );
