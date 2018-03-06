@@ -6,8 +6,7 @@
  * @author Jakub Olek
  */
 
-ini_set( "include_path", dirname(__FILE__) . "/.." );
-require_once( "commandLine.inc" );
+require_once( __DIR__ . "/../../../../maintenance/commandLine.inc" );
 
 //Path where to save assets
 $path = $IP . '/extensions/wikia/GameGuides/assets/';
