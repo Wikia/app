@@ -86,6 +86,9 @@ class MigrateCustomCssToHttps extends Maintenance {
 
 	private function isWikiaComSubdomainUrl( $url ) {
 		$host = parse_url( $url, PHP_URL_HOST );
+		if ( empty( $host ) ) {
+			return false;
+		}
 		return endsWith( $host, '.wikia.com' );
 	}
 
@@ -94,6 +97,9 @@ class MigrateCustomCssToHttps extends Maintenance {
 	 */
 	private function isThirdPartyUrl( $url ) {
 		$host = parse_url( $url, PHP_URL_HOST );
+		if ( empty( $host ) ) {
+			return false;
+		}
 		return !endsWith( $host, '.wikia.com' ) && !endsWith( $host, '.wikia.nocookie.net' );
 	}
 
@@ -103,6 +109,9 @@ class MigrateCustomCssToHttps extends Maintenance {
 	 */
 	private function isWikiaImageUrl( $url ) {
 		$host = parse_url( $url, PHP_URL_HOST );
+		if ( empty( $host ) ) {
+			return false;
+		}
 		return ( preg_match( '/^(www\.)?(vignette|images|image|img|static|slot)\d*\.wikia\.nocookie\.net$/', $host ) ||
 			preg_match( '/^(www\.)?slot\d*[\.-]images\.wikia\.nocookie\.net$/', $host ) ||
 			$host === 'images.wikia.com' ||
@@ -114,7 +123,10 @@ class MigrateCustomCssToHttps extends Maintenance {
 	 */
 	private function upgradeToHttps( $url ) {
 		if ( $this->isHttpUrl( $url ) ) {
-			$url = http_build_url( $url, [ 'scheme' => 'https' ] );
+			$result = http_build_url( $url, [ 'scheme' => 'https' ] );
+			if ( FALSE !== $result ) {
+				return $result;
+			}
 		}
 		return $url;
 	}
@@ -122,9 +134,17 @@ class MigrateCustomCssToHttps extends Maintenance {
 	private function forceWikiaImageOverHttps( $url ) {
 		$host = parse_url( $url, PHP_URL_HOST );
 
+		if ( empty( $host ) ) {
+			return $url;
+		}
+
 		$domain = ( strpos( $host, 'vignette' ) !== FALSE ) ?  'vignette.wikia.nocookie.net' : 'images.wikia.nocookie.net';
 
-		return http_build_url( $url, [ 'scheme' => 'https', 'host' => $domain ] );
+		$result = http_build_url( $url, [ 'scheme' => 'https', 'host' => $domain ] );
+		if ( FALSE === $result ) {
+			return $url;
+		}
+		return $result;
 	}
 
 	private $currentHost = null;
@@ -145,6 +165,9 @@ class MigrateCustomCssToHttps extends Maintenance {
 	 */
 	private function stripProtocolAndHost( $url ) {
 		$parsedUrl = parse_url( $url );
+		if ( $parsedUrl === FALSE ) {
+			return $url;
+		}
 		return $parsedUrl[ 'path' ] .
 			( ( isset( $parsedUrl[ 'query' ] ) ) ? '?' . $parsedUrl[ 'query' ] : '' ) .
 			( ( isset( $parsedUrl[ 'fragment' ] ) ) ? '#' . $parsedUrl[ 'fragment' ] : '' );
@@ -214,7 +237,9 @@ class MigrateCustomCssToHttps extends Maintenance {
 	 */
 	public function makeUrlHttpsComatible( $matches ) {
 		$url = $this->fixUrl( $matches[ 1 ] );
-		$matches[ 0 ] = str_replace( $matches[ 1 ], $url, $matches[ 0 ] );
+		if ( !empty( $url ) && $url !== $matches[ 1 ] ) {
+			$matches[ 0 ] = str_replace( $matches[ 1 ], $url, $matches[ 0 ] );
+		}
 		return $matches[ 0 ];
 	}
 
