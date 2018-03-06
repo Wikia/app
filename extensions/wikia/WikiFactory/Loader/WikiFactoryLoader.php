@@ -74,10 +74,14 @@ class WikiFactoryLoader {
 	 * @author Krzysztof Krzyżaniak <eloy@wikia-inc.com>
 	 *
 	 * @param array $server
+	 * @param array $queryParams
 	 * @param array $environment
 	 * @param array $wikiFactoryDomains
 	 */
-	public function  __construct( array $server, array $environment, array $wikiFactoryDomains = [] ) {
+	public function __construct(
+		array $server = [], array $queryParams = [], array $environment = [],
+		array $wikiFactoryDomains = []
+	) {
 		global $wgDevelEnvironment;
 
 		// initializations
@@ -103,19 +107,12 @@ class WikiFactoryLoader {
 			// normal HTTP request
 			$this->mServerName = strtolower( $server['SERVER_NAME'] );
 
-			$path = parse_url( $server['REQUEST_URI'], PHP_URL_PATH );
-
-			$slash = strpos( $path, '/', 1 ) ?: strlen( $path );
-
-			if ( $slash ) {
+			if ( isset( $queryParams['lang'] ) && $queryParams['lang'] !== 'en' ) {
+				$langCode = $queryParams['lang'];
 				$languages = Language::getLanguageNames();
-				$langCode = substr( $path, 1, $slash - 1 );
 
 				if ( isset( $languages[$langCode] ) ) {
 					$this->langCode = $langCode;
-					$this->pathParams = substr( $path, $slash + 1 ) ?: '';
-				} else {
-					$this->pathParams = substr( $path, 1 );
 				}
 			}
 

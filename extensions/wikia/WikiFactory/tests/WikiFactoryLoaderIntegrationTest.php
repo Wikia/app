@@ -16,11 +16,12 @@ class WikiFactoryLoaderIntegrationTest extends WikiaDatabaseTest {
 	 *
 	 * @param int $expectedCityId
 	 * @param array $server
+	 * @param array $queryParams
 	 */
 	public function testWikiLoadedWhenDomainExists(
-		int $expectedCityId, array $server
+		int $expectedCityId, array $server, array $queryParams
 	) {
-		$wikiFactoryLoader = new WikiFactoryLoader( $server, [] );
+		$wikiFactoryLoader = new WikiFactoryLoader( $server, $queryParams );
 		$cityId = $wikiFactoryLoader->execute();
 
 		$this->assertEquals( $expectedCityId, $cityId );
@@ -28,11 +29,12 @@ class WikiFactoryLoaderIntegrationTest extends WikiaDatabaseTest {
 	}
 
 	public function provideRequestDataForExistingWikis() {
-		yield [ 1, [ 'SERVER_NAME' => 'test1.wikia.com', 'REQUEST_URI' => 'http://test1.wikia.com/wiki/Test' ] ];
-		yield [ 2, [ 'SERVER_NAME' => 'test1.wikia.com', 'REQUEST_URI' => 'http://test1.wikia.com/de/wiki/Bar' ] ];
-		yield [ 8, [ 'SERVER_NAME' => 'poznan.wikia.com', 'REQUEST_URI' => 'http://poznan.wikia.com/en/wiki/Stary_Rynek' ] ];
-		yield [ 9, [ 'SERVER_NAME' => 'poznan.wikia.com', 'REQUEST_URI' => 'http://poznan.wikia.com/wiki/Strona_główna' ] ];
-		yield [ 9, [ 'SERVER_NAME' => 'poznan.wikia.com', 'REQUEST_URI' => 'http://poznan.wikia.com/' ] ];
+		yield [ 1, [ 'SERVER_NAME' => 'test1.wikia.com' ], [] ];
+		yield [ 1, [ 'SERVER_NAME' => 'test1.wikia.com' ], [ 'lang' => 'en' ] ];
+		yield [ 2, [ 'SERVER_NAME' => 'test1.wikia.com' ], [ 'lang' => 'de' ] ];
+		yield [ 8, [ 'SERVER_NAME' => 'poznan.wikia.com' ], [] ];
+		yield [ 8, [ 'SERVER_NAME' => 'poznan.wikia.com' ], [ 'lang' => 'en' ] ];
+		yield [ 9, [ 'SERVER_NAME' => 'poznan.wikia.com' ], [ 'lang' => 'pl' ] ];
 	}
 
 	/**
@@ -42,7 +44,7 @@ class WikiFactoryLoaderIntegrationTest extends WikiaDatabaseTest {
 	 * @param array $env
 	 */
 	public function testLoadExistingWikiFromEnvironmentServerIdOrDbName( int $expectedCityId, array $env ) {
-		$wikiFactoryLoader = new WikiFactoryLoader( [], $env );
+		$wikiFactoryLoader = new WikiFactoryLoader( [], [], $env );
 		$cityId = $wikiFactoryLoader->execute();
 
 		$this->assertEquals( $expectedCityId, $cityId );
@@ -61,14 +63,15 @@ class WikiFactoryLoaderIntegrationTest extends WikiaDatabaseTest {
 	 *
 	 * @param string $expectedRedirect
 	 * @param array $server
+	 * @param array $queryParams
 	 */
 	public function testRedirectsToPrimaryDomainWhenAlternativeDomainUsed(
-		string $expectedRedirect, array $server
+		string $expectedRedirect, array $server, array $queryParams
 	) {
 		$this->mockGlobalVariable( 'wgWikiaEnvironment', WIKIA_ENV_PROD );
 		$this->mockGlobalVariable( 'wgDevelEnvironment', false );
 
-		$wikiFactoryLoader = new WikiFactoryLoader( $server, [], [ 'wikicities.com' ] );
+		$wikiFactoryLoader = new WikiFactoryLoader( $server, $queryParams, [], [ 'wikicities.com' ] );
 		$result = $wikiFactoryLoader->execute();
 
 		$headers = xdebug_get_headers();
@@ -80,13 +83,12 @@ class WikiFactoryLoaderIntegrationTest extends WikiaDatabaseTest {
 	}
 
 	public function provideRequestWithAlternativeDomain() {
-		yield [ 'http://test1.wikia.com/wiki/Foo', [ 'SERVER_NAME' => 'test1.wikicities.com', 'REQUEST_URI' => 'http://test1.wikicities.com/wiki/Foo' ] ];
-		yield [ 'http://test1.wikia.com/de/wiki/Bar', [ 'SERVER_NAME' => 'einetest.wikia.com', 'REQUEST_URI' => 'http://einetest.wikia.com/wiki/Bar' ] ];
-		yield [ 'http://test1.wikia.com/de/wiki/Bar', [ 'SERVER_NAME' => 'einetest.wikia.com', 'REQUEST_URI' => 'http://einetest.wikia.com/wiki/Bar' ] ];
-		yield [ 'http://test1.wikia.com/wiki/Test', [ 'SERVER_NAME' => 'test1.wikia.com', 'REQUEST_URI' => 'http://test1.wikia.com/en/wiki/Test' ] ];
-		yield [ 'http://poznan.wikia.com/wiki/Strona_główna', [ 'SERVER_NAME' => 'poznan.wikia.com', 'REQUEST_URI' => 'http://poznan.wikia.com/pl/wiki/Strona_główna' ] ];
-		yield [ 'http://poznan.wikia.com/', [ 'SERVER_NAME' => 'poznan.wikia.com', 'REQUEST_URI' => 'http://poznan.wikia.com/pl' ] ];
-		yield [ 'http://poznan.wikia.com/', [ 'SERVER_NAME' => 'poznan.wikia.com', 'REQUEST_URI' => 'http://poznan.wikia.com/pl/' ] ];
+		yield [ 'http://test1.wikia.com/', [ 'SERVER_NAME' => 'test1.wikicities.com' ], [] ];
+		yield [ 'http://test1.wikia.com/de/', [ 'SERVER_NAME' => 'einetest.wikia.com' ], [] ];
+		yield [ 'http://test1.wikia.com/de/', [ 'SERVER_NAME' => 'test1.wikicities.com' ], [ 'lang' => 'de' ] ];
+		yield [ 'http://poznan.wikia.com/pl/', [ 'SERVER_NAME' => 'poznan.wikicities.com' ], [ 'lang' => 'pl' ] ];
+		yield [ 'http://poznan.wikia.com/', [ 'SERVER_NAME' => 'poznan.wikicities.com' ], [ 'lang' => 'en' ] ];
+		yield [ 'http://poznan.wikia.com/', [ 'SERVER_NAME' => 'poznan.wikicities.com' ], [] ];
 	}
 
 	/**
@@ -95,11 +97,12 @@ class WikiFactoryLoaderIntegrationTest extends WikiaDatabaseTest {
 	 * @preserveGlobalState disabled
 	 *
 	 * @param array $server
+	 * @param array $queryParams
 	 */
 	public function testRedirectsToNotValidPageWhenNoEntryForDomain(
-		array $server
+		array $server, array $queryParams
 	) {
-		$wikiFactoryLoader = new WikiFactoryLoader( $server, [] );
+		$wikiFactoryLoader = new WikiFactoryLoader( $server, $queryParams );
 		$result = $wikiFactoryLoader->execute();
 
 		$headers = xdebug_get_headers();
@@ -109,20 +112,24 @@ class WikiFactoryLoaderIntegrationTest extends WikiaDatabaseTest {
 	}
 
 	public function provideNotExistingWikisRequests() {
-		yield [ [ 'SERVER_NAME' => 'badwiki.wikia.com', 'REQUEST_URI' => 'http://badwiki.wikia.com/wiki/Foo' ], [] ];
-		yield [ [ 'SERVER_NAME' => 'poznan.wikia.com', 'REQUEST_URI' => 'http://poznan.wikia.com/de/wiki/Posen' ], [] ];
-		yield [ [ 'SERVER_NAME' => 'zgubieni.wikia.com', 'REQUEST_URI' => 'http://zgubieni.wikia.com/en/wiki/London' ], [] ];
+		yield [ [ 'SERVER_NAME' => 'badwiki.wikia.com' ], [] ];
+		yield [ [ 'SERVER_NAME' => 'poznan.wikia.com' ], [ 'lang' => 'de' ] ];
+		yield [ [ 'SERVER_NAME' => 'zgubieni.wikia.com' ], [] ];
+		yield [ [ 'SERVER_NAME' => 'zgubieni.wikia.com' ], [ 'lang' => 'en' ] ];
 	}
 
 	/**
 	 * @dataProvider provideWikisMarkedForClosing
 	 * @runInSeparateProcess
 	 * @preserveGlobalState disabled
-	 * 
+	 *
 	 * @param array $server
+	 * @param array $queryParams
 	 */
-	public function testReturnsFalseAndRedirectsWhenWikiIsMarkedForClosing( array $server ) {
-		$wikiFactoryLoader = new WikiFactoryLoader( $server, [] );
+	public function testReturnsFalseAndRedirectsWhenWikiIsMarkedForClosing(
+		array $server, array $queryParams
+	) {
+		$wikiFactoryLoader = new WikiFactoryLoader( $server, $queryParams );
 		$result = $wikiFactoryLoader->execute();
 
 		$headers = xdebug_get_headers();
@@ -132,8 +139,9 @@ class WikiFactoryLoaderIntegrationTest extends WikiaDatabaseTest {
 	}
 	
 	public function provideWikisMarkedForClosing() {
-		yield [ [ 'SERVER_NAME' => 'zamkniete.wikia.com', 'REQUEST_URI' => 'http://zamkniete.wikia.com/api.php' ] ];
-		yield [ [ 'SERVER_NAME' => 'spamtest.wikia.com', 'REQUEST_URI' => 'http://spamtest.wikia.com/wiki/Foo' ] ];
+		yield [ [ 'SERVER_NAME' => 'zamkniete.wikia.com' ], [ 'lang' => 'pl' ] ];
+		yield [ [ 'SERVER_NAME' => 'spamtest.wikia.com' ], [] ];
+		yield [ [ 'SERVER_NAME' => 'spamtest.wikia.com' ], [ 'lang' => 'en' ] ];
 	}
 
 	/**
@@ -142,9 +150,10 @@ class WikiFactoryLoaderIntegrationTest extends WikiaDatabaseTest {
 	 * @preserveGlobalState disabled
 	 *
 	 * @param array $server
+	 * @param array $queryParams
 	 */
-	public function testReturnsFalseAndRedirectsWhenWikiIsDisabled( array $server ) {
-		$wikiFactoryLoader = new WikiFactoryLoader( $server, [] );
+	public function testReturnsFalseAndRedirectsWhenWikiIsDisabled( array $server, array $queryParams ) {
+		$wikiFactoryLoader = new WikiFactoryLoader( $server, $queryParams );
 		$result = $wikiFactoryLoader->execute();
 
 		$headers = xdebug_get_headers();
@@ -154,8 +163,11 @@ class WikiFactoryLoaderIntegrationTest extends WikiaDatabaseTest {
 	}
 
 	public function provideDisabledWikis() {
-		yield [ [ 'SERVER_NAME' => 'rekt.wikia.com', 'REQUEST_URI' => 'http://rekt.wikia.com/wiki/No_page' ] ];
-		yield [ [ 'SERVER_NAME' => 'dead.wikia.com', 'REQUEST_URI' => 'http://dead.wikia.com/wiki/Special:Version' ] ];
+		yield [ [ 'SERVER_NAME' => 'rekt.wikia.com' ], [] ];
+		yield [ [ 'SERVER_NAME' => 'rekt.wikia.com' ], [ 'lang' => 'en' ] ];
+		yield [ [ 'SERVER_NAME' => 'dead.wikia.com' ], [] ];
+		yield [ [ 'SERVER_NAME' => 'dead.wikia.com' ], [ 'lang' => 'en' ] ];
+		yield [ [ 'SERVER_NAME' => 'umarła.wikia.com' ], [ 'lang' => 'pl' ] ];
 	}
 
 	/**
@@ -163,25 +175,29 @@ class WikiFactoryLoaderIntegrationTest extends WikiaDatabaseTest {
 	 * @runInSeparateProcess
 	 * @preserveGlobalState disabled
 	 *
+	 * @param string $expectedRedirectUrl
 	 * @param array $server
+	 * @param array $queryParams
 	 */
-	public function testReturnsFalseAndRedirectsWhenWikiIsFunctioningAsARedirect( array $server ) {
-		$wikiFactoryLoader = new WikiFactoryLoader( $server, [] );
+	public function testReturnsFalseAndRedirectsWhenWikiIsFunctioningAsARedirect(
+		string $expectedRedirectUrl, array $server, array $queryParams
+	) {
+		$wikiFactoryLoader = new WikiFactoryLoader( $server, $queryParams );
 		$result = $wikiFactoryLoader->execute();
 
 		$headers = xdebug_get_headers();
 
 		$this->assertFalse( $result );
 		$this->assertContains( 'X-Redirected-By-WF: 2', $headers );
-		$this->assertContains( 'Location: http://redirect-target.wikia.com/', $headers );
+		$this->assertContains( "Location: $expectedRedirectUrl", $headers );
 		$this->assertEquals( 301, http_response_code() );
 	}
 
 	public function provideRedirectWikiRequests() {
-		yield [ [ 'SERVER_NAME' => 'redirect.wikia.com', 'REQUEST_URI' => 'http://redirect.wikia.com/wiki/Test_redirect' ] ];
-		yield [ [ 'SERVER_NAME' => 'redirect2.wikia.com', 'REQUEST_URI' => 'http://redirect2.wikia.com/wikia.php' ] ];
-		yield [ [ 'SERVER_NAME' => 'redirect.wikia.com', 'REQUEST_URI' => 'http://redirect.wikia.com/en/wiki/Test_redirect' ] ];
-		yield [ [ 'SERVER_NAME' => 'redirect2.wikia.com', 'REQUEST_URI' => 'http://redirect2.wikia.com/en/wikia.php' ] ];
+		yield [ 'http://redirect-target.wikia.com/', [ 'SERVER_NAME' => 'redirect.wikia.com' ], [] ];
+		yield [ 'http://redirect-target.wikia.com/', [ 'SERVER_NAME' => 'redirect2.wikia.com' ], [ 'lang' => 'en' ] ];
+		yield [ 'http://redirect-target.wikia.com/pl/', [ 'SERVER_NAME' => 'redirect.wikia.com' ], [ 'lang' => 'pl' ] ];
+		yield [ 'http://redirect-target.wikia.com/pl/', [ 'SERVER_NAME' => 'dawaj.wikia.com' ], [] ];
 	}
 
 	/**
@@ -189,7 +205,7 @@ class WikiFactoryLoaderIntegrationTest extends WikiaDatabaseTest {
 	 * @param array $env
 	 */
 	public function testWikiIdZeroWhenIdDbNameProvidedAndWikiDoesNotExist( array $env ) {
-		$wikiFactoryLoader = new WikiFactoryLoader( [], $env );
+		$wikiFactoryLoader = new WikiFactoryLoader( [], [], $env );
 		$result = $wikiFactoryLoader->execute();
 
 		$this->assertEquals( 0, $result );
@@ -209,7 +225,7 @@ class WikiFactoryLoaderIntegrationTest extends WikiaDatabaseTest {
 	public function testWikiIdLoadedWhenIdDbNameProvidedAndWikiIsMarkedForClosingIsDisabledOrIsRedirect(
 		int $expectedCityId, array $env
 	) {
-		$wikiFactoryLoader = new WikiFactoryLoader( [], $env );
+		$wikiFactoryLoader = new WikiFactoryLoader( [], [], $env );
 		$result = $wikiFactoryLoader->execute();
 
 		$this->assertEquals( $expectedCityId, $result );
@@ -232,15 +248,15 @@ class WikiFactoryLoaderIntegrationTest extends WikiaDatabaseTest {
 	 * @param array $server
 	 */
 	public function testRequestInfoOverridesServerIdOverridesDbName( int $expectedCityId, array $env, array $server ) {
-		$wikiFactoryLoader = new WikiFactoryLoader( $server, $env );
+		$wikiFactoryLoader = new WikiFactoryLoader( $server, [], $env );
 		$result = $wikiFactoryLoader->execute();
 
 		$this->assertEquals( $expectedCityId, $result );
 	}
 
 	public function providePrecedence() {
-		yield 'Request info takes precedence over SERVER_ID' => [ 9, [ 'SERVER_ID' => 1 ], [ 'SERVER_NAME' => 'poznan.wikia.com', 'REQUEST_URI'	=> 'http://poznan.wikia.com/' ] ];
-		yield 'Request info takes precedence over SERVER_DBNAME' => [ 9, [ 'SERVER_DBNAME' => 'test1' ], [ 'SERVER_NAME' => 'poznan.wikia.com', 'REQUEST_URI' => 'http://poznan.wikia.com/' ] ];
+		yield 'Request info takes precedence over SERVER_ID' => [ 8, [ 'SERVER_ID' => 1 ], [ 'SERVER_NAME' => 'poznan.wikia.com' ] ];
+		yield 'Request info takes precedence over SERVER_DBNAME' => [ 8, [ 'SERVER_DBNAME' => 'test1' ], [ 'SERVER_NAME' => 'poznan.wikia.com' ] ];
 		yield 'SERVER_ID takes precedence over SERVER_DBNAME' => [ 1, [ 'SERVER_ID' => 1, 'SERVER_DBNAME' => 'poznan' ], [] ];
 	}
 
