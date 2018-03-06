@@ -106,7 +106,13 @@ class FixBrokenVideoReuploads extends Maintenance {
 		$cnt = 0;
 
 		foreach($videos as $video) {
-			$this->processVideo( $video );
+			try {
+				$this->processVideo( $video );
+			}
+			catch (Exception $ex) {
+				$this->error( sprintf("%s: <%s> re-upload failed with '%s'",
+					$wgDBname, $video->img_name, $ex->getMessage() ) );
+			}
 			$cnt++;
 		}
 
