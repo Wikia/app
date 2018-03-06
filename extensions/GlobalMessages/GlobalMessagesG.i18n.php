@@ -7471,7 +7471,7 @@ $messages['zh-hans'] = array(
 	'group-helper-member' => 'FANDOM助手',
 	'group-staff' => 'FANDOM员工',
 	'group-staff-member' => 'FANDOM员工',
-	'group-util' => 'FANDOM功能',
+	'group-util' => 'FANDOM Utilities',
 	'group-util-member' => 'FANDOM Utilities',
 	'googlesearch' => '<form method="get" action="//www.google.com/search" id="googlesearch">
 	<input type="hidden" name="domains" value="{{SERVER}}" />
