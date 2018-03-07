@@ -107,8 +107,8 @@ class WikiFactoryLoader {
 			// normal HTTP request
 			$this->mServerName = strtolower( $server['SERVER_NAME'] );
 
-			if ( isset( $queryParams['lang'] ) && $queryParams['lang'] !== 'en' ) {
-				$langCode = $queryParams['lang'];
+			if ( isset( $queryParams['langpath'] ) && $queryParams['langpath'] !== 'en' ) {
+				$langCode = $queryParams['langpath'];
 				$languages = Language::getLanguageNames();
 
 				if ( isset( $languages[$langCode] ) ) {

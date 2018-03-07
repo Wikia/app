@@ -30,11 +30,11 @@ class WikiFactoryLoaderIntegrationTest extends WikiaDatabaseTest {
 
 	public function provideRequestDataForExistingWikis() {
 		yield [ 1, [ 'SERVER_NAME' => 'test1.wikia.com' ], [] ];
-		yield [ 1, [ 'SERVER_NAME' => 'test1.wikia.com' ], [ 'lang' => 'en' ] ];
-		yield [ 2, [ 'SERVER_NAME' => 'test1.wikia.com' ], [ 'lang' => 'de' ] ];
+		yield [ 1, [ 'SERVER_NAME' => 'test1.wikia.com' ], [ 'langpath' => 'en' ] ];
+		yield [ 2, [ 'SERVER_NAME' => 'test1.wikia.com' ], [ 'langpath' => 'de' ] ];
 		yield [ 8, [ 'SERVER_NAME' => 'poznan.wikia.com' ], [] ];
-		yield [ 8, [ 'SERVER_NAME' => 'poznan.wikia.com' ], [ 'lang' => 'en' ] ];
-		yield [ 9, [ 'SERVER_NAME' => 'poznan.wikia.com' ], [ 'lang' => 'pl' ] ];
+		yield [ 8, [ 'SERVER_NAME' => 'poznan.wikia.com' ], [ 'langpath' => 'en' ] ];
+		yield [ 9, [ 'SERVER_NAME' => 'poznan.wikia.com' ], [ 'langpath' => 'pl' ] ];
 	}
 
 	/**
@@ -85,9 +85,9 @@ class WikiFactoryLoaderIntegrationTest extends WikiaDatabaseTest {
 	public function provideRequestWithAlternativeDomain() {
 		yield [ 'http://test1.wikia.com/', [ 'SERVER_NAME' => 'test1.wikicities.com' ], [] ];
 		yield [ 'http://test1.wikia.com/de/', [ 'SERVER_NAME' => 'einetest.wikia.com' ], [] ];
-		yield [ 'http://test1.wikia.com/de/', [ 'SERVER_NAME' => 'test1.wikicities.com' ], [ 'lang' => 'de' ] ];
-		yield [ 'http://poznan.wikia.com/pl/', [ 'SERVER_NAME' => 'poznan.wikicities.com' ], [ 'lang' => 'pl' ] ];
-		yield [ 'http://poznan.wikia.com/', [ 'SERVER_NAME' => 'poznan.wikicities.com' ], [ 'lang' => 'en' ] ];
+		yield [ 'http://test1.wikia.com/de/', [ 'SERVER_NAME' => 'test1.wikicities.com' ], [ 'langpath' => 'de' ] ];
+		yield [ 'http://poznan.wikia.com/pl/', [ 'SERVER_NAME' => 'poznan.wikicities.com' ], [ 'langpath' => 'pl' ] ];
+		yield [ 'http://poznan.wikia.com/', [ 'SERVER_NAME' => 'poznan.wikicities.com' ], [ 'langpath' => 'en' ] ];
 		yield [ 'http://poznan.wikia.com/', [ 'SERVER_NAME' => 'poznan.wikicities.com' ], [] ];
 	}
 
@@ -113,9 +113,9 @@ class WikiFactoryLoaderIntegrationTest extends WikiaDatabaseTest {
 
 	public function provideNotExistingWikisRequests() {
 		yield [ [ 'SERVER_NAME' => 'badwiki.wikia.com' ], [] ];
-		yield [ [ 'SERVER_NAME' => 'poznan.wikia.com' ], [ 'lang' => 'de' ] ];
+		yield [ [ 'SERVER_NAME' => 'poznan.wikia.com' ], [ 'langpath' => 'de' ] ];
 		yield [ [ 'SERVER_NAME' => 'zgubieni.wikia.com' ], [] ];
-		yield [ [ 'SERVER_NAME' => 'zgubieni.wikia.com' ], [ 'lang' => 'en' ] ];
+		yield [ [ 'SERVER_NAME' => 'zgubieni.wikia.com' ], [ 'langpath' => 'en' ] ];
 	}
 
 	/**
@@ -139,9 +139,9 @@ class WikiFactoryLoaderIntegrationTest extends WikiaDatabaseTest {
 	}
 	
 	public function provideWikisMarkedForClosing() {
-		yield [ [ 'SERVER_NAME' => 'zamkniete.wikia.com' ], [ 'lang' => 'pl' ] ];
+		yield [ [ 'SERVER_NAME' => 'zamkniete.wikia.com' ], [ 'langpath' => 'pl' ] ];
 		yield [ [ 'SERVER_NAME' => 'spamtest.wikia.com' ], [] ];
-		yield [ [ 'SERVER_NAME' => 'spamtest.wikia.com' ], [ 'lang' => 'en' ] ];
+		yield [ [ 'SERVER_NAME' => 'spamtest.wikia.com' ], [ 'langpath' => 'en' ] ];
 	}
 
 	/**
@@ -164,10 +164,10 @@ class WikiFactoryLoaderIntegrationTest extends WikiaDatabaseTest {
 
 	public function provideDisabledWikis() {
 		yield [ [ 'SERVER_NAME' => 'rekt.wikia.com' ], [] ];
-		yield [ [ 'SERVER_NAME' => 'rekt.wikia.com' ], [ 'lang' => 'en' ] ];
+		yield [ [ 'SERVER_NAME' => 'rekt.wikia.com' ], [ 'langpath' => 'en' ] ];
 		yield [ [ 'SERVER_NAME' => 'dead.wikia.com' ], [] ];
-		yield [ [ 'SERVER_NAME' => 'dead.wikia.com' ], [ 'lang' => 'en' ] ];
-		yield [ [ 'SERVER_NAME' => 'umarła.wikia.com' ], [ 'lang' => 'pl' ] ];
+		yield [ [ 'SERVER_NAME' => 'dead.wikia.com' ], [ 'langpath' => 'en' ] ];
+		yield [ [ 'SERVER_NAME' => 'umarła.wikia.com' ], [ 'langpath' => 'pl' ] ];
 	}
 
 	/**
@@ -195,8 +195,8 @@ class WikiFactoryLoaderIntegrationTest extends WikiaDatabaseTest {
 
 	public function provideRedirectWikiRequests() {
 		yield [ 'http://redirect-target.wikia.com/', [ 'SERVER_NAME' => 'redirect.wikia.com' ], [] ];
-		yield [ 'http://redirect-target.wikia.com/', [ 'SERVER_NAME' => 'redirect2.wikia.com' ], [ 'lang' => 'en' ] ];
-		yield [ 'http://redirect-target.wikia.com/pl/', [ 'SERVER_NAME' => 'redirect.wikia.com' ], [ 'lang' => 'pl' ] ];
+		yield [ 'http://redirect-target.wikia.com/', [ 'SERVER_NAME' => 'redirect2.wikia.com' ], [ 'langpath' => 'en' ] ];
+		yield [ 'http://redirect-target.wikia.com/pl/', [ 'SERVER_NAME' => 'redirect.wikia.com' ], [ 'langpath' => 'pl' ] ];
 		yield [ 'http://redirect-target.wikia.com/pl/', [ 'SERVER_NAME' => 'dawaj.wikia.com' ], [] ];
 	}
 
