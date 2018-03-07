@@ -6,6 +6,22 @@ class ArticleVideoContext {
 	const JWPLAYER_API_ERROR_MESSAGE = 'JWPlayer: Could not find enough playback info in JW API to play the video';
 
 	/**
+	 * to get playlist for given article: $playlist = self::RECOMMENDED_VIDEO_MAPPINGS[$cityId][$articleId]
+	 */
+	const RECOMMENDED_VIDEO_MAPPINGS_POZ_DEV = [
+		// harrypotter Knight_Bus
+		509 => [
+			509 => '1Dw2sjAj',
+		]
+	];
+
+	const RECOMMENDED_VIDEO_MAPPINGS_PROD = [
+		509 => [
+			509 => '1Dw2sjAj',
+		]
+	];
+
+	/**
 	 * Checks if featured video is embedded on given article
 	 *
 	 * @param $pageId
@@ -122,26 +138,23 @@ class ArticleVideoContext {
 		return $isoTime;
 	}
 
-	/**
-	 * Returns related video data for given article title, empty array in case of no video
-	 *
-	 * @param string $title Prefixed article title (see: Title::getPrefixedDBkey)
-	 *
-	 * @return array Related video data, empty if not applicable
-	 */
-	public static function getRelatedVideoData( $title ) {
-		$wg = F::app()->wg;
-		$relatedVideos = $wg->articleVideoRelatedVideos;
+	public static function getRecommendedVideoPlaylistId( int $pageId ): string {
+		global $wgCityId, $wgWikiaEnvironment, $wgWikiaDatacenter;
 
-		if ( !empty( $wg->enableArticleRelatedVideo ) && !empty( $relatedVideos ) ) {
-			foreach ( $relatedVideos as $videoData ) {
-				if ( isset( $videoData['articles'], $videoData['videoId'] ) &&
-					in_array( $title, $videoData['articles'] ) ) {
-					return $videoData;
-				}
+		$playlist = '';
+
+		if ( $wgWikiaEnvironment === WIKIA_ENV_DEV ) {
+			if ( $wgWikiaDatacenter === WIKIA_DC_POZ ) {
+				$playlist = self::RECOMMENDED_VIDEO_MAPPINGS_POZ_DEV[$wgCityId][$pageId];
 			}
+		} else {
+			$playlist = self::RECOMMENDED_VIDEO_MAPPINGS_PROD[$wgCityId][$pageId];
 		}
 
-		return [];
+		return $playlist;
+	}
+
+	public static function isRecommendedVideoAvailable( int $pageId ): bool {
+		return !empty( self::getRecommendedVideoPlaylistId( $pageId ) );
 	}
 }
