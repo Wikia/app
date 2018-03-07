@@ -117,6 +117,9 @@ define('wikia.preview', [
 					// get width of article Wrapper
 					// subtract scrollbar width to get correct width needed as reference point for scaling
 					articleWrapperWidth = $article.parent().width() - editPageOptions.scrollbarWidth;
+					// scale preview when opening modal
+					// scale preview when changing dropdown option is handled inside switchPreview function
+					scalePreview(previewTypes[currentTypeName].name);
 				}
 
 				if (currentTypeName) {
@@ -256,9 +259,6 @@ define('wikia.preview', [
 			loadPreview(previewTypes[currentTypeName].name, true);
 
 			if (window.wgOasisResponsive || window.wgOasisBreakpoints) {
-				//scale preview when opening modal
-				//scale preview when changing dropdown option is handled inside switchPreview function
-				scalePreview(previewTypes[currentTypeName].name);
 				// adding type dropdown to preview
 				if (!previewTemplate) {
 					loader({
