@@ -249,8 +249,7 @@ $config['adengine2_top_js'] = [
 		'//extensions/wikia/ARecoveryEngine/js/adBlockRecovery.js',
 		'//extensions/wikia/ARecoveryEngine/js/PageFair/recovery.js',
 		'//resources/wikia/modules/browserDetect.js',
-		'//resources/wikia/modules/krux.js',
-		'//resources/wikia/modules/promise.js',
+		'//resources/wikia/modules/krux.js'
 	],
 ];
 
