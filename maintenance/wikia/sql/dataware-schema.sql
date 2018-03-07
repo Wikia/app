@@ -98,86 +98,6 @@ CREATE TABLE `blobs` (
  PARTITION p4 VALUES LESS THAN (83110720) ENGINE = InnoDB,
  PARTITION p5 VALUES LESS THAN (103888400) ENGINE = InnoDB,
  PARTITION p6 VALUES LESS THAN MAXVALUE ENGINE = InnoDB) */;
-DELIMITER ;;
-        DECLARE global_row_cnt INT DEFAULT -1;
-        DECLARE wikia_row_cnt INT DEFAULT -1;
-
-        DECLARE edits_ns INT DEFAULT -1;
-
-        DECLARE global_first_rev INT DEFAULT 0;
-        DECLARE wikia_first_rev INT DEFAULT 0;
-        DECLARE global_page_first INT DEFAULT 0;
-        DECLARE wikia_page_first INT DEFAULT 0;
-        DECLARE global_ns_first INT DEFAULT 0;
-        DECLARE wikia_ns_first INT DEFAULT 0;
-
-        DECLARE wikia_ts_edit_first TIMESTAMP DEFAULT NULL;
-        DECLARE global_ts_edit_first TIMESTAMP DEFAULT NULL;
-        
-        DECLARE page_status_value INT DEFAULT 1;
-
-        
-        SELECT  edit_count INTO edits_ns 
-        FROM user_edits_summary WHERE city_id = NEW.rev_wikia_id and edit_ns = NEW.rev_namespace and user_id = NEW.rev_user;
-        
-        SELECT  edit_count, rev_first, page_first, ns_first, ts_edit_first 
-        INTO wikia_row_cnt, wikia_first_rev, wikia_page_first, wikia_ns_first, wikia_ts_edit_first
-        FROM user_summary WHERE user_id = NEW.rev_user and city_id = NEW.rev_wikia_id;
-        
-        SELECT  edit_count, rev_first, page_first, ns_first, ts_edit_first  
-        INTO global_row_cnt, global_first_rev, global_page_first, global_ns_first, global_ts_edit_first 
-        FROM user_summary WHERE user_id = NEW.rev_user and city_id = 0;
-        
-        SELECT  page_status INTO page_status_value FROM pages WHERE page_wikia_id = NEW.rev_wikia_id and page_id = NEW.rev_page_id;
-        IF page_status_value = 0 THEN 
-                
-                IF wikia_row_cnt >= 0 THEN
-                        
-                        UPDATE  user_summary SET 
-                        edit_count = wikia_row_cnt + 1, 
-                        rev_last = NEW.rev_id,
-                        page_last = NEW.rev_page_id,
-                        ns_last = NEW.rev_namespace,
-                        ts_edit_last = NEW.rev_timestamp,
-                        rev_first = if(wikia_first_rev=0, NEW.rev_id, wikia_first_rev),
-                        page_first = if(wikia_first_rev=0, NEW.rev_page_id, wikia_page_first),
-                        ns_first = if(wikia_first_rev=0, NEW.rev_namespace, wikia_ns_first),
-                        ts_edit_first = if(wikia_first_rev=0, NEW.rev_timestamp, wikia_ts_edit_first)
-                        WHERE user_id = NEW.rev_user and city_id = NEW.rev_wikia_id;
-                ELSE
-                        INSERT INTO  user_summary (city_id, user_id, edit_count, rev_first, rev_last, page_first, page_last, ns_first, ns_last, ts_edit_first, ts_edit_last)
-                        VALUES (NEW.rev_wikia_id, NEW.rev_user, 1, NEW.rev_id, NEW.rev_id, NEW.rev_page_id, NEW.rev_page_id, NEW.rev_namespace, NEW.rev_namespace, NEW.rev_timestamp, NEW.rev_timestamp);
-                END IF;
-                
-                if edits_ns >= 0 THEN
-                        UPDATE  user_edits_summary SET 
-                        edit_count = edits_ns + 1 
-                        WHERE user_id = NEW.rev_user and city_id = NEW.rev_wikia_id and edit_ns = NEW.rev_namespace;
-                ELSE
-                        INSERT INTO  user_edits_summary (city_id, user_id, edit_ns, edit_count)
-                        VALUES (NEW.rev_wikia_id, NEW.rev_user, NEW.rev_namespace, 1);
-                END IF;
-                
-                IF global_row_cnt >= 0 THEN
-                        
-                        UPDATE  user_summary SET 
-                        edit_count = global_row_cnt + 1, 
-                        rev_last = NEW.rev_id,
-                        page_last = NEW.rev_page_id,
-                        ns_last = NEW.rev_namespace,
-                        ts_edit_last = NEW.rev_timestamp,
-                        rev_first = if(global_first_rev=0, NEW.rev_id, global_first_rev),
-                        page_first = if(global_first_rev=0, NEW.rev_page_id, global_page_first),
-                        ns_first = if(global_first_rev=0, NEW.rev_namespace, global_ns_first),
-                        ts_edit_first = if(global_first_rev=0, NEW.rev_timestamp, global_ts_edit_first)
-                        WHERE user_id = NEW.rev_user and city_id = 0;
-                ELSE
-                        INSERT INTO  user_summary (city_id, user_id, edit_count, rev_first, rev_last, page_first, page_last, ns_first, ns_last, ts_edit_first, ts_edit_last)
-                        VALUES (0, NEW.rev_user, 1, NEW.rev_id, NEW.rev_id, NEW.rev_page_id, NEW.rev_page_id, NEW.rev_namespace, NEW.rev_namespace, NEW.rev_timestamp, NEW.rev_timestamp);
-                END IF;
-        END IF;        
-END */;;
-DELIMITER ;
 
 --
 -- Table structure for table `chat_ban_users`
@@ -357,4 +277,4 @@ CREATE TABLE `wikiastaff_log` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
--- Dump completed on 2018-02-28 15:33:32
+-- Dump completed on 2018-03-07 14:30:05
