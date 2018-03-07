@@ -8,7 +8,7 @@ class ArticleAsJson {
 		'imageMaxWidth' => false
 	];
 
-	const CACHE_VERSION = 3.8;
+	const CACHE_VERSION = 3.11;
 
 	const ICON_MAX_SIZE = 48;
 	// Line height in Mercury
@@ -283,6 +283,8 @@ class ArticleAsJson {
 
 			$caption = $frameParams['caption'] ?? null;
 			$media = self::createMediaObject( $details, $title->getText(), $caption, $linkHref );
+			$media['srcset'] = self::getSrcset( $media['url'], intval($media['width']), intval($media['height']));
+
 			self::$media[] = $media;
 
 			self::addUserObj( $details );
@@ -293,6 +295,26 @@ class ArticleAsJson {
 		}
 
 		return true;
+	}
+
+	private static function getSrcset(string $url, int $originalWidth, int $originalHeight): string {
+		$widths = [ 284, 340, 732, 985 ];
+		$ratio = $originalWidth / $originalHeight;
+		$srcSetItems = [];
+
+		foreach( $widths as $width ) {
+			if ( $width <= $originalWidth ) {
+				$url = VignetteRequest::fromUrl( $url )
+					->thumbnailDown()
+					->width( $width )
+					->height( $originalHeight * $ratio )
+					->url();
+
+				$srcSetItems[] = "${url} ${width}w";
+			}
+		}
+
+		return implode( ',', $srcSetItems);
 	}
 
 	public static function onPageRenderingHash( &$confstr ) {

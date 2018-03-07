@@ -3,15 +3,17 @@
 		<img class="article-media-placeholder lazyload"
 			src="data:image/svg+xml;charset=utf-8,%3Csvg xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg' viewBox%3D'0 0 {{media.width}} {{media.height}}'%2F%3E"
 			data-src="{{media.url}}"
+			data-srcset="{{media.srcset}}"
+			data-sizes="auto"
 			alt="{{media.title}}"
 			{{#media.width}} width="{{media.width}}"{{/media.width}}
 			{{#media.height}} height="{{media.height}}"{{/media.height}}>
 		<noscript>
-			<img src="{{media.url}}" alt="{{media.title}}"{{#media.width}} width="{{media.width}}"{{/media.width}}{{#media.height}} height="{{media.height}}"{{/media.height}}>
+			<img srcset="{{media.srcset}}" alt="{{media.title}}"{{#media.width}} width="{{media.width}}"{{/media.width}}{{#media.height}} height="{{media.height}}"{{/media.height}}>
 		</noscript>
 		{{#media.isVideo}}
 			<div class="video-icon-container">
-				<svg class="wds-player-icon-play-medium" viewBox="0 0 180 180" width="100%" height="100%">
+				<svg class="wds-player-icon-play-medium" viewBox="0 0 180 180">
 					<g fill="none" fill-rule="evenodd">
 						<g opacity=".9" transform="rotate(90 75 90)">
 							<g fill="#000" filter="url(#a)"><rect id="b" width="150" height="150" rx="75"></rect></g>
