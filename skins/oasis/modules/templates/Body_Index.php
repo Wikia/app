@@ -79,6 +79,8 @@
 					<?= $app->renderView( 'ArticleVideo', 'featured' ) ?>
 				<? endif; ?>
 
+				<?= $app->renderView( 'ArticleVideo', 'recommendedVideo' ) ?>
+
 				<? if ( $subtitle != '' && $headerModuleName === 'UserPagesHeader' ) : ?>
 					<div id="contentSub"><?= $subtitle ?></div>
 				<? endif; ?>

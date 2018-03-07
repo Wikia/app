@@ -1,5 +1,5 @@
-<div class="article-recommended-video-wrapper">
-	<h2>FANDOM Video</h2>
-	<a>close</a>
+<div class="article-recommended-video-unit">
+	<h2><strong>Fandom</strong>Video</h2>
+	<a class="article-recommended-video-unit__close-button">close</a>
 	<section></section>
 </div>

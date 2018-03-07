@@ -76,4 +76,12 @@ class ArticleVideoController extends WikiaController {
 
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
 	}
+
+	public function recommendedVideo() {
+		$articleId = $this->wg->out->getTitle()->getArticleID();
+
+		if ( empty( ArticleVideoContext::isRecommendedVideoAvailable( $articleId ) ) ) {
+			$this->skipRendering();
+		}
+	}
 }
