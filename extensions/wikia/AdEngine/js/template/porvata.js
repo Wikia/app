@@ -207,7 +207,7 @@ define('ext.wikia.adEngine.template.porvata', [
 		}
 
 		settings = videoSettings.create(params);
-		porvata.inject(settings).then(function (video) {
+		porvata.inject(settings, function (video) {
 			var imaVpaidMode = win.google.ima.ImaSdkSettings.VpaidMode,
 				templateName = params.isDynamic ? 'outstreamIncontent' : 'outstreamLeaderboard',
 				videoPlayer;
