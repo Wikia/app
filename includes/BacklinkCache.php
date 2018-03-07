@@ -142,7 +142,7 @@ class BacklinkCache {
 
 			$res = $this->getDB()->select(
 				array( $table, 'page' ),
-				array( 'page_namespace', 'page_title', 'page_id' ),
+				array( 'page_namespace', 'page_title', 'page_id', 'page_touched' /* SUS-3685 Wikia change */ ),
 				$conds,
 				__METHOD__,
 				array(
@@ -160,7 +160,7 @@ class BacklinkCache {
 			wfDebug( __METHOD__ . ": from DB\n" );
 			$res = $this->getDB()->select(
 				array( $table, 'page' ),
-				array( 'page_namespace', 'page_title', 'page_id' ),
+				array( 'page_namespace', 'page_title', 'page_id', 'page_touched' /* SUS-3685 Wikia change */ ),
 				$this->getConditions( $table ),
 				__METHOD__,
 				array(

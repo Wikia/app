@@ -17,7 +17,7 @@ class BatchRefreshLinksForTemplate extends BaseTask {
 	/** @var integer|false $end */
 	private $end   = null;
 
-	public function refreshTemplateLinks( $start, $end ) {
+	public function refreshTemplateLinks( $start, $end, $taskScheduledTime ) {
 		$this->setStartAndEndBoundaries( $start, $end );
 
 		if ( !$this->isValidTask() ) {
@@ -30,8 +30,12 @@ class BatchRefreshLinksForTemplate extends BaseTask {
 
 		// refresh a batch of pages
 		// do not enqueue tasks for each title, run them one by one - PLATFORM-2375
-		foreach( $titles as $title ) {
-			$this->runForTitle( $title );
+		/** @var \Title $title */
+		foreach ( $titles as $title ) {
+			// SUS-3685: deduplication logic - only run task if the title hasn't been updated since the task started
+			if ( $title->getTouchedCached() < $taskScheduledTime ) {
+				$this->runForTitle( $title );
+			}
 		}
 
 		return true;
