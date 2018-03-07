@@ -42,6 +42,26 @@ class ArticleVideoContext {
 	}
 
 	/**
+	 * Checks if featured video is embedded on given article
+	 *
+	 * @param $pageId
+	 *
+	 * @return bool
+	 *
+	 */
+	public static function hasRecommendedVideo( string $pageId ) {
+		$wg = F::app()->wg;
+
+		if ( !$wg->enableArticleFeaturedVideo || WikiaPageType::isActionPage()) {
+			return false;
+		}
+
+		$mediaId = ArticleVideoService::getFeatureVideoForArticle( $wg->cityId, $pageId );
+
+		return !empty( $mediaId );
+	}
+
+	/**
 	 * Gets video id and labels for featured video
 	 *
 	 * @param $pageId
@@ -145,7 +165,8 @@ class ArticleVideoContext {
 
 		if ( $wgWikiaEnvironment === WIKIA_ENV_DEV ) {
 			if ( $wgWikiaDatacenter === WIKIA_DC_POZ ) {
-				$playlist = self::RECOMMENDED_VIDEO_MAPPINGS_POZ_DEV[$wgCityId][$pageId];
+				//$playlist = self::RECOMMENDED_VIDEO_MAPPINGS_POZ_DEV[$wgCityId][$pageId];
+				$playlist = self::RECOMMENDED_VIDEO_MAPPINGS_POZ_DEV[509][509];
 			}
 		} else {
 			$playlist = self::RECOMMENDED_VIDEO_MAPPINGS_PROD[$wgCityId][$pageId];
