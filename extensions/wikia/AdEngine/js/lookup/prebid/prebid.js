@@ -111,26 +111,26 @@ define('ext.wikia.adEngine.lookup.prebid', [
 			var params = win.pbjs.getBidResponses(slotName) || {};
 
 			if (params && params[slotName] && params[slotName].bids && params[slotName].bids.length) {
-				var targeting,
-					priority = adaptersRegistry.getPriority();
+				var bidParams,
+					priorities = adaptersRegistry.getPriorities();
 
 				params[slotName].bids.forEach(function (param) {
-					if (!targeting) {
-						targeting = param;
+					if (!bidParams) {
+						bidParams = param;
 					} else {
-						if (targeting.cpm === param.cpm) {
-							if (priority[targeting.bidder] === priority[param.bidder]) {
-								targeting = targeting.timeToRespond > param.timeToRespond ? param : targeting;
+						if (bidParams.cpm === param.cpm) {
+							if (priorities[bidParams.bidder] === priorities[param.bidder]) {
+								bidParams = bidParams.timeToRespond > param.timeToRespond ? param : bidParams;
 							} else {
-								targeting = priority[targeting.bidder] < priority[param.bidder] ? param : targeting;
+								bidParams = priorities[bidParams.bidder] < priorities[param.bidder] ? param : bidParams;
 							}
 						} else {
-							targeting = targeting.cpm < param.cpm ? param : targeting;
+							bidParams = bidParams.cpm < param.cpm ? param : bidParams;
 						}
 					}
 				});
 
-				slotParams = targeting.adserverTargeting;
+				slotParams = bidParams.adserverTargeting;
 			}
 		}
 

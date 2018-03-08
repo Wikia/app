@@ -13,7 +13,6 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.rubiconDisplay', [
 			'rubicon': [bidderName]
 		},
 		logGroup = 'ext.wikia.adEngine.lookup.prebid.adapters.rubiconDisplay',
-		priorityLevel = 1,
 		rubiconAccountId = 7450,
 		slots = {
 			oasis: {
@@ -118,10 +117,6 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.rubiconDisplay', [
 		return bidderName;
 	}
 
-	function getPriority() {
-		return priorityLevel;
-	}
-
 	function getAliases() {
 		return aliases;
 	}
@@ -130,7 +125,6 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.rubiconDisplay', [
 		isEnabled: isEnabled,
 		getAliases: getAliases,
 		getName: getName,
-		getPriority: getPriority,
 		getSlots: getSlots,
 		prepareAdUnit: prepareAdUnit
 	};

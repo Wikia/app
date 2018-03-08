@@ -7,7 +7,6 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.indexExchange',[
 	'use strict';
 
 	var bidderName = 'indexExchange',
-		priorityLevel = 1,
 		slots = {
 			oasis: {
 				TOP_LEADERBOARD: {
@@ -136,14 +135,9 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.indexExchange',[
 		return bidderName;
 	}
 
-	function getPriority() {
-		return priorityLevel;
-	}
-
 	return {
 		isEnabled: isEnabled,
 		getName: getName,
-		getPriority: getPriority,
 		getSlots: getSlots,
 		prepareAdUnit: prepareAdUnit
 	};

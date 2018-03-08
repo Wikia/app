@@ -8,7 +8,6 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.wikia',[
 	'use strict';
 
 	var bidderName = 'wikia',
-		priorityLevel = 1,
 		slots = {
 			oasis: {
 				TOP_LEADERBOARD: {
@@ -60,10 +59,6 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.wikia',[
 
 	function getName() {
 		return bidderName;
-	}
-
-	function getPriority() {
-		return priorityLevel;
 	}
 
 	function getCreative(price, size) {
@@ -120,7 +115,6 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.wikia',[
 		create: create,
 		isEnabled: isEnabled,
 		getName: getName,
-		getPriority: getPriority,
 		getSlots: getSlots,
 		prepareAdUnit: prepareAdUnit
 	};

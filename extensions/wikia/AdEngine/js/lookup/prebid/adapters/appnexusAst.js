@@ -9,7 +9,6 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.appnexusAst', [
 
 	var bidderName = 'appnexusAst',
 		debugPlacementId = '5768085',
-		priorityLevel = 1,
 		slots = {
 			oasis: {
 				INCONTENT_PLAYER: {
@@ -57,14 +56,9 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.appnexusAst', [
 		return bidderName;
 	}
 
-	function getPriority() {
-		return priorityLevel;
-	}
-
 	return {
 		isEnabled: isEnabled,
 		getName: getName,
-		getPriority: getPriority,
 		getSlots: getSlots,
 		prepareAdUnit: prepareAdUnit
 	};

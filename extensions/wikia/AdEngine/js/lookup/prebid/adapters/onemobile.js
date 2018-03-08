@@ -10,7 +10,6 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.onemobile', [
 
 	var bidderName = 'onemobile',
 		siteId = '2c9d2b50015e5e9a6540a64f3eac0266',
-		priorityLevel = 1,
 		slots = {
 			mercury: {
 				MOBILE_TOP_LEADERBOARD: {
@@ -57,14 +56,9 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.onemobile', [
 		return bidderName;
 	}
 
-	function getPriority() {
-		return priorityLevel;
-	}
-
 	return {
 		isEnabled: isEnabled,
 		getName: getName,
-		getPriority: getPriority,
 		getSlots: getSlots,
 		prepareAdUnit: prepareAdUnit
 	};

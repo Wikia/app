@@ -84,11 +84,11 @@ define('ext.wikia.adEngine.lookup.prebid.adaptersRegistry', [
 		});
 	}
 
-	function getPriority() {
-		var priority = [];
+	function getPriorities() {
+		var priority = {};
 
 		adapters.forEach(function (adapter) {
-			priority[adapter.getName()] = adapter.getPriority();
+			priority[adapter.getName()] = typeof adapter.getPriority === 'function' ? adapter.getPriority() : 1;
 		});
 
 		return priority;
@@ -96,7 +96,7 @@ define('ext.wikia.adEngine.lookup.prebid.adaptersRegistry', [
 
 	return {
 		getAdapters: getAdapters,
-		getPriority: getPriority,
+		getPriorities: getPriorities,
 		push: push,
 		registerAliases: registerAliases,
 		setupCustomAdapters: setupCustomAdapters

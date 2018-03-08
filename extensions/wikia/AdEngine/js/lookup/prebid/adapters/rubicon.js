@@ -10,7 +10,6 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.rubicon', [
 
 	var bidderName = 'rubicon', // aka rubicon vulcan
 		logGroup = 'ext.wikia.adEngine.lookup.prebid.adapters.rubicon',
-		priorityLevel = 1,
 		outstreamSizeId = 203,
 		rubiconAccountId = 7450,
 		rubiconSiteId = 55412,
@@ -82,14 +81,9 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.rubicon', [
 		return bidderName;
 	}
 
-	function getPriority() {
-		return priorityLevel;
-	}
-
 	return {
 		isEnabled: isEnabled,
 		getName: getName,
-		getPriority: getPriority,
 		getSlots: getSlots,
 		prepareAdUnit: prepareAdUnit
 	};
