@@ -6,14 +6,14 @@
  *  # this will migrate assets for wiki with ID 119:
  *  run_maintenance --script='wikia/HttpsMigration/migrateCustomJs.php  --saveChanges' --id=119
  *  # running on some wikis in dry mode and dumping url changes to a csv file:
- *  run_maintenance --script='wikia/HttpsMigration/migrateCustomJss.php --file migrate_js.csv' --where='city_id < 10000'
+ *  run_maintenance --script='wikia/HttpsMigration/migrateCustomJs.php --file migrate_js.csv' --where='city_id < 10000'
  *
  */
 
 ini_set( 'display_errors', 'stderr' );
 ini_set( 'error_reporting', E_ALL ^ E_NOTICE );
 
-require_once( dirname( __FILE__ ) . '/../../Maintenance.php' );
+require_once __DIR__ . '/../../Maintenance.php';
 
 use \Wikia\Logger\WikiaLogger;
 
@@ -24,6 +24,7 @@ class MigrateCustomJsToHttps extends Maintenance {
 
 	protected $saveChanges  = false;
 	protected $fh;	// handle to the output csv file
+	private $contentReview;
 
 	public function __construct() {
 		parent::__construct();
@@ -52,12 +53,176 @@ class MigrateCustomJsToHttps extends Maintenance {
 	}
 
 	/**
-	 * Convert the url to https if possible. Can return an empty string in case local address should be used.
-	 * @param $url protocol and domain name
-	 * @return updated address
+	 * Returns css file edit summary
 	 */
-	public function convertToHttp( $url ) {
-		// IMPLEMENT!!!
+	private function getEditSummary() {
+		return "Applying changes that should make this JS file partially HTTPS-ready. If you have any questions or noticed " .
+			"issues related to this edit, please reach out to us using the [[Special:Contact]] page.";
+	}
+
+	private function isHttpUrl( $url ) {
+		return startsWith( $url, 'http://' );
+	}
+
+	private function isHttpsUrl( $url ) {
+		return startsWith( $url, 'https://' );
+	}
+
+	private function isProtocolRelativeUrl( $url ) {
+		return startsWith( $url, '//' );
+	}
+
+	/**
+	 * True if the url doesn't contain the host part.
+	 */
+	private function isLocalUrl( $url ) {
+		if ( $this->isHttpUrl( $url ) ||
+			$this->isHttpsUrl( $url ) ||
+			$this->isProtocolRelativeUrl( $url ) ) {
+			return false;
+		}
+		return true;
+	}
+
+	private function isWikiaComSubdomainUrl( $url ) {
+		$host = parse_url( $url, PHP_URL_HOST );
+		if ( empty( $host ) ) {
+			return false;
+		}
+		return endsWith( $host, '.wikia.com' );
+	}
+
+	/**
+	 * True the the url points outside of our wikia.com and vignette domain.
+	 */
+	private function isThirdPartyUrl( $url ) {
+		$host = parse_url( $url, PHP_URL_HOST );
+		if ( empty( $host ) ) {
+			return false;
+		}
+		return !endsWith( $host, '.wikia.com' ) && !endsWith( $host, '.wikia.nocookie.net' );
+	}
+
+	/**
+	 * Returns true if the url points to one of many variations of our image domains.
+	 * Handles a lot of historical formats that are not used anymore.
+	 */
+	private function isWikiaImageUrl( $url ) {
+		$host = parse_url( $url, PHP_URL_HOST );
+		if ( empty( $host ) ) {
+			return false;
+		}
+		return ( preg_match( '/^(www\.)?(vignette|images|image|img|static|slot)\d*\.wikia\.nocookie\.net$/', $host ) ||
+			preg_match( '/^(www\.)?slot\d*[\.-]images\.wikia\.nocookie\.net$/', $host ) ||
+			$host === 'images.wikia.com' ||
+			$host === 'static.wikia.com' );
+	}
+
+	/**
+	 * Replaces http protocl with https. Protocol-relative urls are not affected.
+	 */
+	private function upgradeToHttps( $url ) {
+		if ( $this->isHttpUrl( $url ) ) {
+			$result = http_build_url( $url, [ 'scheme' => 'https' ] );
+			if ( FALSE !== $result ) {
+				return $result;
+			}
+		}
+		return $url;
+	}
+
+	private function forceWikiaImageOverHttps( $url ) {
+		$host = parse_url( $url, PHP_URL_HOST );
+
+		if ( empty( $host ) ) {
+			return $url;
+		}
+
+		$domain = ( strpos( $host, 'vignette' ) !== FALSE ) ?  'vignette.wikia.nocookie.net' : 'images.wikia.nocookie.net';
+
+		$result = http_build_url( $url, [ 'scheme' => 'https', 'host' => $domain ] );
+		if ( FALSE === $result ) {
+			return $url;
+		}
+		return $result;
+	}
+
+	private $currentHost = null;
+
+	/**
+	 * True if the url point to currently processed wiki.
+	 */
+	private function isCurrentWikiUrl( $url ) {
+		global $wgServer;
+		if ( !$this->currentHost ) {
+			$this->currentHost = parse_url( $wgServer, PHP_URL_HOST );
+		}
+		return parse_url( $url, PHP_URL_HOST ) === $this->currentHost;
+	}
+
+	/**
+	 * Removes the host part of the url leaving only the path.
+	 */
+	private function stripProtocolAndHost( $url ) {
+		$parsedUrl = parse_url( $url );
+		if ( $parsedUrl === FALSE ) {
+			return $url;
+		}
+		return $parsedUrl[ 'path' ] .
+			( ( isset( $parsedUrl[ 'query' ] ) ) ? '?' . $parsedUrl[ 'query' ] : '' ) .
+			( ( isset( $parsedUrl[ 'fragment' ] ) ) ? '#' . $parsedUrl[ 'fragment' ] : '' );
+	}
+
+	/**
+	 * Fixes wiki urls according to our guidelines:
+	 * - urls to current wiki should be local, without protocol or host
+	 * - urls to other wiki should be protocol-relative.
+	 */
+	private function fixWikiUrl( $url ) {
+		if ( $this->isWikiaComSubdomainUrl( $url ) && $this->isHttpUrl( $url ) ) {
+			$url = wfProtocolUrlToRelative( $url );
+		}
+		return $url;
+	}
+
+	/**
+	 * For host that we know for sure that support https, upgrade the url to use it.
+	 */
+	private function upgradeThirdPartyUrl( $url ) {
+		$knownHttpsHosts = [ 'en.wikipedia.org', 'i.imgur.com', 'upload.wikimedia.org', 'fonts.googleapis.com',
+			'commons.wikimedia.org' ];
+		$host = parse_url( $url, PHP_URL_HOST );
+		if ( in_array( $host, $knownHttpsHosts ) ) {
+			$newUrl = $this->upgradeToHttps( $url );
+			$this->logUrlChange( 'Upgraded third party url', $url, $newUrl );
+			$url = $newUrl;
+		} else {
+			//$this->output( "Found unrecognized third party http url {$url}\n" );
+		}
+		return $url;
+	}
+
+	/**
+	 * Try to make a single url https-ready
+	 */
+	public function fixUrl( $originalUrl ) {
+		$url = $originalUrl;
+
+		if ( $this->isLocalUrl( $url ) ) {
+			//$this->output( "Skipping local link {$url}\n" );
+		} elseif ( $this->isThirdPartyUrl( $url ) ) {
+			if ( $this->isHttpUrl( $url ) ) {
+				$url = $this->upgradeThirdPartyUrl( $url );
+			}
+		} elseif ( $this->isWikiaImageUrl( $url ) ) {
+			$url = $this->forceWikiaImageOverHttps( $url );
+			$this->logUrlChange( 'Replaced vignette url', $originalUrl, $url );
+		} elseif ( $this->isWikiaComSubdomainUrl( $url ) ) {
+			$url = $this->fixWikiUrl( $url );
+			$this->logUrlChange( 'Converted wiki url to protocol/host relative', $originalUrl, $url );
+		} else {
+			$this->output( "Don't know to handle {$url}\n" );
+		}
 		return $url;
 	}
 
@@ -67,8 +232,9 @@ class MigrateCustomJsToHttps extends Maintenance {
 	 */
 	public function makeUrlHttpsComatible( $matches ) {
 		$this->output( "Updating '{$matches[1]}' used in {$matches[0]}\n" );
-		$domain = $this->convertToHttp( $matches[1] );
+		$domain = $this->fixUrl( $matches[1] );
 		if ( $domain != $matches[1] ) {
+			$this->output( "Updating '{$matches[1]}' to {$domain}\n" );
 			$matches[ 0 ] = str_replace( $matches[ 1 ], $domain, $matches[ 0 ] );
 		}
 		return $matches[ 0 ];
@@ -80,17 +246,19 @@ class MigrateCustomJsToHttps extends Maintenance {
 	 * @return mixed Updated JS source code
 	 */
 	public function updateJSContent( $text ) {
-		// the goal is to catch all http urls wrapped with single or double quotes
-		$text =  preg_replace_callback( '/"(http:\/\/[^\/"]+)[^"]+"/i', [ $this, 'makeUrlHttpsComatible' ], $text );
-		$text =  preg_replace_callback( "/'(http:\/\/[^\/']+)[^']+'/i", [ $this, 'makeUrlHttpsComatible' ], $text );
-
-		// log urls that were not altered, most likely there will be a lot of those
 		$lines = explode( "\n", $text );
-		foreach( $lines as $line ) {
-			if ( strpos( $line, 'http://' ) !== FALSE ) {
-				$this->output( "Notice: http protocol used in \"{$line}\"\n" );
+		foreach ( $lines as $index => $line ) {
+			// Try to skip the most common comment patterns
+			if ( !preg_match( '/^(\s*\*|\s*\/\/\s+)/', $line ) ) {
+				$lines[$index] = preg_replace_callback( '/(https?:\/\/[a-zA-Z0-9\\.]+)/i', [ $this, 'makeUrlHttpsComatible' ], $line );
+				// log urls that were not altered, most likely there will be a lot of those
+				if ( strpos( $lines[$index], 'http://' ) !== false ) {
+					$this->output( "Notice: http protocol used in \"{$lines[$index]}\"\n" );
+				}
 			}
 		}
+
+		$text = implode( "\n", $lines );
 		return $text;
 	}
 
@@ -98,7 +266,8 @@ class MigrateCustomJsToHttps extends Maintenance {
 	 * If possible, make the JS https-ready and save the updated content (if not running in dry mode)
 	 */
 	public function migrateJS( Title $title ) {
-		$revId = $title->getLatestRevID();
+		global $wgCityId, $wgRequest;
+		$revId = $title->getLatestRevID( Title::GAID_FOR_UPDATE );
 		$this->currentTitle = $title;
 		$revision = Revision::newFromId( $revId );
 		if( !is_null( $revision ) ) {
@@ -106,12 +275,29 @@ class MigrateCustomJsToHttps extends Maintenance {
 			$updatedText = $this->updateJSContent( $text );
 			if ($text !== $updatedText) {
 				if ( $this->saveChanges ) {
-					// make changes
 					// pay attention to JS-review process. if the latest revision is the same as
 					// the one returned from ContentReviewHelper's getReviewedRevisionId, just autoapprove
 					// (which requires FANDOMBot to be added to the content review group.
 					// autoapprove can be set by using wpApprove parameter.
 					// if the current JS revision is not approved yet, do not autoapprove JS changes!
+					$latestReviewedID = $this->contentReview->getReviewedRevisionId( $title->getArticleID(), $wgCityId );
+					if ( $revId === $latestReviewedID ) {
+						$this->output( "Auto-approving change\n" );
+						$wgRequest->setVal( 'wpApprove', '1' );
+					}
+					$article = new Article( $title );
+					$editPage = new EditPage( $article );
+					$editPage->summary = $this->getEditSummary();
+					$editPage->textbox1 = $updatedText;
+					$editPage->minoredit = true;
+					$result = [];
+					$status = $editPage->internalAttemptSave( $result, /* bot */ true );
+					if ( $status->isGood() ) {
+						$this->output( "Saved updated JS file\n" );
+					} else {
+						$this->error( "Failed to save JS file!\n" );
+					}
+					$wgRequest->setVal( 'wpApprove', false );
 				}
 				return true;
 			}
@@ -123,6 +309,7 @@ class MigrateCustomJsToHttps extends Maintenance {
 		global $wgUser, $wgCityId;
 
 		$wgUser = User::newFromName( Wikia::BOT_USER ); // Make changes as FANDOMbot
+		$this->contentReview = new Wikia\ContentReview\Helper();
 
 		$this->saveChanges = $this->hasOption( 'saveChanges' );
 		$fileName = $this->getOption( 'file', false );
