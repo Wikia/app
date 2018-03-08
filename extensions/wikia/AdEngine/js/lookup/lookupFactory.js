@@ -128,10 +128,6 @@ define('ext.wikia.adEngine.lookup.lookupFactory', [
 
 			if (hasResponse()) {
 				onSuccess();
-
-				if (timeoutId) {
-					clearTimeout(timeoutId);
-				}
 			} else {
 				timeoutId = setTimeout(function () {
 					onTimeout();
@@ -141,6 +137,10 @@ define('ext.wikia.adEngine.lookup.lookupFactory', [
 				addResponseListener(function () {
 					if (!resolved) {
 						onSuccess();
+
+						if (timeoutId) {
+							clearTimeout(timeoutId);
+						}
 					}
 				});
 			}
