@@ -42,26 +42,6 @@ class ArticleVideoContext {
 	}
 
 	/**
-	 * Checks if featured video is embedded on given article
-	 *
-	 * @param $pageId
-	 *
-	 * @return bool
-	 *
-	 */
-	public static function hasRecommendedVideo( string $pageId ) {
-		$wg = F::app()->wg;
-
-		if ( !$wg->enableArticleFeaturedVideo || WikiaPageType::isActionPage()) {
-			return false;
-		}
-
-		$mediaId = ArticleVideoService::getFeatureVideoForArticle( $wg->cityId, $pageId );
-
-		return !empty( $mediaId );
-	}
-
-	/**
 	 * Gets video id and labels for featured video
 	 *
 	 * @param $pageId
