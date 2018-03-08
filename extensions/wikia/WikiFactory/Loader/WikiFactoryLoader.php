@@ -427,8 +427,15 @@ class WikiFactoryLoader {
 			$redirectUrl = WikiFactory::getLocalEnvURL( $this->mCityUrl );
 			$target = rtrim( $redirectUrl, '/' ) . '/' . $this->pathParams;
 
-			if ( !empty( $_GET ) ) {
-				$target .= '?' . http_build_query( $_GET );
+			$queryParams = array_filter(
+				$_GET,
+				function ($key) {
+					return $key !== 'langpath';
+				},
+				ARRAY_FILTER_USE_KEY
+			);
+			if ( !empty( $queryParams ) ) {
+				$target .= '?' . http_build_query( $queryParams );
 			}
 
 			header( "X-Redirected-By-WF: NotPrimary" );
