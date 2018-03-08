@@ -123,12 +123,17 @@ define('ext.wikia.adEngine.lookup.lookupFactory', [
 		}
 
 		function waitForResponse(onSuccess, onTimeout, millisToTimeout) {
-			var resolved = false;
+			var resolved = false,
+				timeoutId;
 
 			if (hasResponse()) {
 				onSuccess();
+
+				if (timeoutId) {
+					clearTimeout(timeoutId);
+				}
 			} else {
-				setTimeout(function () {
+				timeoutId = setTimeout(function () {
 					onTimeout();
 					resolved = true;
 				}, millisToTimeout);
