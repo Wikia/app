@@ -13,17 +13,47 @@ class Hooks {
 	 * Register hooks for the extension
 	 */
 	public static function register() {
-		$hooks = new self();
-		\Hooks::register( 'BeforePageDisplay', [ $hooks, 'onBeforePageDisplay' ] );
-		\Hooks::register( 'PageHeaderPageTypePrepared', [ $hooks, 'onPageHeaderPageTypePrepared' ] );
-		\Hooks::register( 'QueryPageUseResultsBeforeRecache', [ $hooks, 'onQueryPageUseResultsBeforeRecache' ] );
+
+		\Hooks::register( 'BeforePageDisplay', [ 'Wikia\\TemplateClassification\\Hooks::onBeforePageDisplay' ] );
+		\Hooks::register( 'PageHeaderPageTypePrepared', [ 'Wikia\\TemplateClassification\\Hooks::onPageHeaderPageTypePrepared' ] );
+		\Hooks::register( 'QueryPageUseResultsBeforeRecache', [ 'Wikia\\TemplateClassification\\Hooks::onQueryPageUseResultsBeforeRecache' ] );
 		/* Edit page hooks */
-		\Hooks::register( 'ArticleSaveComplete', [ $hooks, 'onArticleSaveComplete' ] );
-		\Hooks::register( 'EditPage::showEditForm:fields', [ $hooks, 'onEditPageShowEditFormFields' ] );
-		\Hooks::register( 'EditPageLayoutExecute', [ $hooks, 'onEditPageLayoutExecute' ] );
-		\Hooks::register( 'EditPageMakeGlobalVariablesScript', [ $hooks, 'onEditPageMakeGlobalVariablesScript' ] );
-		\Hooks::register( 'SkinTemplateNavigation', [ $hooks, 'onSkinTemplateNavigation' ] );
-		\Hooks::register( 'PageHeaderDropdownActions', [ $hooks, 'onPageHeaderDropdownActions' ] );
+		\Hooks::register( 'ArticleSaveComplete', [ 'Wikia\\TemplateClassification\\Hooks::onArticleSaveComplete' ] );
+		\Hooks::register( 'EditPage::showEditForm:fields', [ 'Wikia\\TemplateClassification\\Hooks::onEditPageShowEditFormFields' ] );
+		\Hooks::register( 'EditPageLayoutExecute', [ 'Wikia\\TemplateClassification\\Hooks::onEditPageLayoutExecute' ] );
+		\Hooks::register( 'EditPageMakeGlobalVariablesScript', [ 'Wikia\\TemplateClassification\\Hooks::onEditPageMakeGlobalVariablesScript' ] );
+		\Hooks::register( 'SkinTemplateNavigation', [ 'Wikia\\TemplateClassification\\Hooks::onSkinTemplateNavigation' ] );
+		\Hooks::register( 'PageHeaderDropdownActions', [ 'Wikia\\TemplateClassification\\Hooks::onPageHeaderDropdownActions' ] );
+
+		\Hooks::register( 'ArticleDeleteComplete', [ 'Wikia\\TemplateClassification\\Hooks::onArticleDeleteComplete' ] );
+		\Hooks::register( 'WikiFactoryDoCloseWiki', [ 'Wikia\\TemplateClassification\\Hooks::onWikiFactoryDoCloseWiki' ] );
+	}
+
+	/**
+	 * When a template is deleted from the wiki, delete its classification data from TCS
+	 *
+	 * @param \WikiPage $page
+	 * @param \User $user
+	 * @param string $reason
+	 * @param int $pageId
+	 * @throws ApiException
+	 */
+	public static function onArticleDeleteComplete( \WikiPage $page, \User $user, string $reason, int $pageId ) {
+		global $wgCityId;
+
+		if ( $page->getTitle()->inNamespace( NS_TEMPLATE ) ) {
+			( new \TemplateClassificationService() )->deleteTemplateInformation( $wgCityId, $pageId );
+		}
+	}
+
+	/**
+	 * When a wiki is closed, delete all of its template classification data from TCS
+	 *
+	 * @param $wiki
+	 * @throws ApiException
+	 */
+	public static function onWikiFactoryDoCloseWiki( $wiki ) {
+		( new \TemplateClassificationService() )->deleteTemplateInformationForWiki( $wiki->city_id );
 	}
 
 	/**
