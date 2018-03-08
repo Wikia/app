@@ -84,3 +84,18 @@ CREATE TABLE `city_tag_map` (
 );
 
 CREATE INDEX `tag_id` ON `city_tag_map` (`tag_id`);
+
+CREATE TABLE `city_list_log` (
+  `id` int(11) NOT NULL PRIMARY KEY AUTOINCREMENT,
+  `cl_city_id` int(9) NOT NULL,
+  `cl_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `cl_user_id` int(5) DEFAULT NULL,
+  `cl_type` int(5) NOT NULL,
+  `cl_text` mediumtext NOT NULL,
+  `cl_var_id` int(5) DEFAULT NULL
+);
+
+CREATE INDEX `cl_city_id_idx` ON `city_list_log` (`cl_city_id`);
+CREATE INDEX `cl_type_idx` ON `city_list_log` (`cl_type`);
+CREATE INDEX `cl_timestamp_idx` ON `city_list_log` (`cl_timestamp`);
+CREATE INDEX `var_city` ON `city_list_log` (`cl_var_id`,`cl_city_id`);

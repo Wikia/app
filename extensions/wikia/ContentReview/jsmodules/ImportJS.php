@@ -46,18 +46,19 @@ class ImportJS {
 	 * @return array
 	 */
 	public function prepareImports( Array $scripts ) {
+		global $wgUseSiteJs;
 		$imports = [];
 
 		foreach ( $scripts as $key => $script ) {
 			$script = trim( $script );
 
-			if ( substr( $script, -3 ) === Helper::JS_FILE_EXTENSION
+			if ( substr( $script, -3 ) === '.js'
 				&& !preg_match( \Title::getTitleInvalidRegex(), $script )
 			) {
 				$scriptParts = explode( ':', $script );
 				$count = count( $scriptParts );
 				// Local script
-				if ( $count === 1 ) {
+				if ( $count === 1 && !empty( $wgUseSiteJs ) ) {
 					$imports[] = $script;
 					// External script, only dev.wikia.com is allowed
 				} elseif ( $count === 2 && $scriptParts[0] === 'dev' ) {

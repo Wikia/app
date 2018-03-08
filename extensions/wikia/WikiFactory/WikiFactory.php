@@ -542,6 +542,44 @@ class WikiFactory {
 	}
 
 	/**
+	 * @param $varId
+	 * @param $cityId
+	 * @param $value
+	 * @param null $reason
+	 * @return bool
+	 * @throws WikiFactoryDuplicateWgServer
+	 * @throws WikiFactoryVariableParseException
+	 */
+	static public function validateAndSetVarById( $varId, $cityId, $value, $reason = null ) {
+		global $wgWikicitiesReadOnly;
+
+		if ( !static::isUsed() ) {
+			Wikia::log( __METHOD__, "", "WikiFactory is not used." );
+			return false;
+		}
+
+		if ( $wgWikicitiesReadOnly ) {
+			Wikia::log( __METHOD__, "", "wgWikicitiesReadOnly mode. Skipping update.");
+			return false;
+		}
+
+		if ( empty( $varId ) || empty( $cityId ) ) {
+			return false;
+		}
+
+		$variable = static::loadVariableFromDB( $varId, false, $cityId );
+
+		if ( $variable ) {
+			$wikiFactoryVariableParser = new WikiFactoryVariableParser( $variable->cv_variable_type );
+			$value = $wikiFactoryVariableParser->transformValue( $value );
+
+			return static::setVarById( $varId, $cityId, $value, $reason );
+		}
+
+		return false;
+	}
+
+	/**
 	 * setVarById
 	 *
 	 * used for saving new variable value, logging changes and update city_list
@@ -811,16 +849,11 @@ class WikiFactory {
 			global $wgMemc;
 			$variable->cv_value = serialize( $value );
 			$wgMemc->set(  static::getVarValueKey( $city_id, $variable->cv_id ), $variable, WikiaResponse::CACHE_STANDARD );
-		}
-		catch ( DBQueryError $e ) {
+		} catch ( DBQueryError $e ) {
 			Wikia::log( __METHOD__, "", "Database error, cannot write variable." );
 			$dbw->rollback();
 			$bStatus = false;
-			// rethrowing here does not seem to be right. Callers expect success or failure
-			// as result value, not DBQueryError exception
-			// throw $e;
 		}
-
 
 		wfProfileOut( __METHOD__ );
 		return $bStatus;
@@ -3402,8 +3435,8 @@ class WikiFactory {
 		if ( !isset( $variable->cv_value ) ) {
 			return "";
 		}
-		$value = static::parseValue( unserialize( $variable->cv_value, [ 'allowed_classes' => false ] ), $variable->cv_variable_type );
-		return htmlspecialchars( $value );
+
+		return static::parseValue( unserialize( $variable->cv_value, [ 'allowed_classes' => false ] ), $variable->cv_variable_type );
 	}
 
 	/**
@@ -3419,17 +3452,14 @@ class WikiFactory {
 	 */
 	static private function parseValue( $value, $type ) {
 		if ( $type == "string" || $type == "integer"  ) {
-			return $value;
+			return htmlspecialchars( $value );
 		}
 
-		if ( $type == "array" ) {
-			$json = json_encode ( $value );
-			if ( !preg_match_all( "/\".*\":/U", $json ) ) {
-				return $json;
-			}
+		if ( $type == "array" || $type == "struct" || $type == "hash" ) {
+			return json_encode( $value, JSON_PRETTY_PRINT );
 		}
 
-		return var_export( $value, true );
+		return htmlspecialchars( var_export( $value, true ) );
 	}
 
 	/**
