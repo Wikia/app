@@ -13,17 +13,9 @@
  *
  * Copyright (c) 2008-2017, Ryan McGeary (ryan -[at]- mcgeary [*dot*] org)
  */
-
 (function (factory) {
-  if (typeof define === 'function' && define.amd) {
-    // AMD. Register as an anonymous module.
-    define(['jquery'], factory);
-  } else if (typeof module === 'object' && typeof module.exports === 'object') {
-    factory(require('jquery'));
-  } else {
     // Browser globals
     factory(jQuery);
-  }
 }(function ($) {
   $.timeago = function(timestamp) {
     if (timestamp instanceof Date) {

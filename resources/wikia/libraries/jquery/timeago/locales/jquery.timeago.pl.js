@@ -1,11 +1,6 @@
+console.log("zupa");
 (function (factory) {
-  if (typeof define === 'function' && define.amd) {
-    define(['jquery'], factory);
-  } else if (typeof module === 'object' && typeof module.exports === 'object') {
-    factory(require('jquery'));
-  } else {
     factory(jQuery);
-  }
 }(function (jQuery) {
   // Polish
   function numpf(n, s, t) {
