@@ -8,7 +8,7 @@ class ArticleAsJson {
 		'imageMaxWidth' => false
 	];
 
-	const CACHE_VERSION = 3.11;
+	const CACHE_VERSION = 3.13;
 
 	const ICON_MAX_SIZE = 48;
 	// Line height in Mercury
@@ -203,7 +203,7 @@ class ArticleAsJson {
 				$mediaObj['mediaAttr'] = json_encode( $mediaObj );
 				$mediaObj['galleryRef'] = $index;
 				$mediaObj['thumbnailUrl'] = VignetteRequest::fromUrl( $mediaObj['url'] )
-					->thumbnailDown()
+					->zoomCrop()
 					->width( 195 )
 					->height( 195 )
 					->url();
@@ -284,6 +284,7 @@ class ArticleAsJson {
 			$caption = $frameParams['caption'] ?? null;
 			$media = self::createMediaObject( $details, $title->getText(), $caption, $linkHref );
 			$media['srcset'] = self::getSrcset( $media['url'], intval($media['width']), intval($media['height']));
+			$media['thumbnail'] = self::getThumbnailUrlForWidth( $media['url'], $media['width'], $media['height'], 340);
 
 			self::$media[] = $media;
 
@@ -299,22 +300,26 @@ class ArticleAsJson {
 
 	private static function getSrcset(string $url, int $originalWidth, int $originalHeight): string {
 		$widths = [ 284, 340, 732, 985 ];
-		$ratio = $originalWidth / $originalHeight;
 		$srcSetItems = [];
 
 		foreach( $widths as $width ) {
 			if ( $width <= $originalWidth ) {
-				$url = VignetteRequest::fromUrl( $url )
-					->thumbnailDown()
-					->width( $width )
-					->height( $originalHeight * $ratio )
-					->url();
-
-				$srcSetItems[] = "${url} ${width}w";
+				$thumb = self::getThumbnailUrlForWidth( $url, $originalWidth, $originalHeight, $width );
+				$srcSetItems[] = "${thumb} ${width}w";
 			}
 		}
 
 		return implode( ',', $srcSetItems);
+	}
+
+	private static function getThumbnailUrlForWidth( string $url, int $originalWidth, int $originalHeight, int $requestedWidth ) {
+		$ratio =  $originalHeight / $originalWidth;
+
+		return VignetteRequest::fromUrl( $url )
+			->thumbnailDown()
+			->width( $requestedWidth )
+			->height( round($requestedWidth * $ratio) )
+			->url();
 	}
 
 	public static function onPageRenderingHash( &$confstr ) {
