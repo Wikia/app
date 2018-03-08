@@ -74,16 +74,34 @@ class DataTables {
 		return $wikitext;
 	}
 
+	private static function hasTableCellsWithSpanAttributes( $table ) {
+		$headCells = $table->getElementsByTagName( 'th' );
+		$dataCells = $table->getElementsByTagName( 'td' );
+		$cells = array_merge( $headCells, $dataCells );
+
+		foreach ( $cells as $cell ) {
+			if (
+				$cell->hasAttribute( 'rowspan' ) ||
+				$cell->hasAttribute( 'colspan' )
+			) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	private static function processTables( $html ) {
 		$result = "";
 		$document = HtmlHelper::createDOMDocumentFromText( $html );
 
-		$tables = $document->getElementsByTagName( 'table' );
+		$xpath = new DOMXPath( $document );
+		// get only first-level tables
+		$tables = $xpath->query( './/table[not(*)]' );
 		if ( $tables->length > 0 ) {
-			$xpath = new DOMXPath( $document );
 			/** @var DOMElement $table */
 			foreach ( $tables as $table ) {
-				$nestedTables = $xpath->query( './/table', $table );
+				$nestedTables = $table->getElementsByTagName( 'table' );
 				// mark nested tables and parent table as not portable
 				if ( $nestedTables->length > 0 ) {
 					$table->setAttribute( self::DATA_PORTABLE_ATTRIBUTE, 'false' );
@@ -92,8 +110,9 @@ class DataTables {
 					foreach ( $nestedTables as $nestedTable ) {
 						$nestedTable->setAttribute( self::DATA_PORTABLE_ATTRIBUTE, 'false' );
 					}
-				} elseif ( !$table->hasAttribute( static::DATA_PORTABLE_ATTRIBUTE ) &&
-						   $xpath->query( '*//*[@rowspan]|*//*[@colspan]', $table )->length == 0
+				} elseif (
+					!$table->hasAttribute( static::DATA_PORTABLE_ATTRIBUTE ) &&
+					!self::hasTableCellsWithSpanAttributes( $table )
 				) {
 					$table->setAttribute( self::DATA_PORTABLE_ATTRIBUTE, 'true' );
 				}
