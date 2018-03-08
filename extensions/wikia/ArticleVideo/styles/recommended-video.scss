@@ -1,26 +1,124 @@
+$unit-padding: 17px;
+
 .article-recommended-video-unit {
-	background: #fff;
+	background-color: rgba(255, 255, 255, 0.98);
 	bottom: 0;
+	box-shadow: 0 2px 9px 0 rgba(0, 0, 0, 0.5);
+	box-sizing: border-box;
+	display: flex;
 	font-size: 14px;
 	height: 230px;
+	justify-content: space-around;
 	left: 0;
-	padding: 17px 76px;
+	transform: translate(0, 230px);
+	padding: $unit-padding $unit-padding;
 	position: fixed;
 	right: 0;
-	z-index: 10000000;
+	transition: 0.2s transform ease-in;
+	z-index: 9999999999999999;
+
+	&__close-button {
+		align-items: center;
+		cursor: pointer;
+		display: flex;
+		height: 24px;
+		justify-content: center;
+		position: absolute;
+		right: 10px;
+		top: 10px;
+		width: 24px;
+	}
+
+	&.revealed {
+		transform: translate(0, 0);
+	}
+
+	&.expanded {
+		height: 519px;
+
+		.article-recommended-videos {
+			flex-direction: column;
+		}
+
+		.article-recommended-video {
+			display: flex;
+			flex-grow: 1;
+			width: auto;
+		}
+
+		.article-recommended-video-placeholder {
+			width: 122px;
+		}
+	}
+}
+
+.article-recommended-videos-wrapper {
+	align-items: center;
+	display: flex;
+	flex-direction: column;
+	max-width: calc(100vw - 2 * #{$unit-padding});
 
 	h2 {
+		align-self: flex-start;
 		color: #000;
+		margin-bottom: 16px;
 		text-transform: uppercase;
 
 		strong {
 			font-weight: bold;
 		}
 	}
+}
 
-	&__close-button {
+.article-recommended-videos {
+	display: flex;
+	overflow: auto;
+	width: 100%;
+}
+
+.article-recommended-video-placeholder {
+	cursor: pointer;
+	position: relative;
+	width: 100%;
+
+	svg {
+		fill: #fff;
+		height: 60px;
+		left: calc(50% - 30px);
 		position: absolute;
-		right: 10px;
-		top: 10px;
+		top: calc(50% - 30px);
+		width: 60px;
 	}
+}
+
+.article-recommended-video {
+	flex-shrink: 0;
+	display: inline-block;
+	width: 200px;
+
+	img {
+		height: auto;
+		opacity: 0.7;
+		width: 100%;
+	}
+
+	h3 {
+		font-size: 12px;
+		font-weight: bold;
+		margin-top: 9px;
+	}
+
+	&:not(:first-child) {
+		h3 {
+			margin-top: 6px;
+		}
+	}
+}
+
+.article-recommended-video:not(:last-child) {
+	margin-right: 16px;
+}
+
+.article-recommended-video:first-child .article-recommended-video-placeholder {
+	display: none;
 }

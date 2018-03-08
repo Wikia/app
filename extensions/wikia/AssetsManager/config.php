@@ -2636,6 +2636,7 @@ $config['recommended_video_js'] = [
 	'skin' => [ 'oasis' ],
 	'assets' => [
 		'//skins/oasis/js/jwplayer/node_modules/jwplayer-fandom/dist/wikiajwplayer.js',
+		'//extensions/wikia/ArticleVideo/scripts/featured-video.cookies.js',
 		'//extensions/wikia/ArticleVideo/scripts/recommended-video.jwplayer.js',
 	]
 ];

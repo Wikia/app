@@ -36,7 +36,7 @@
 <? if ( empty( $wg->SuppressCommunityHeader ) && !WikiaPageType::isCorporatePage() && $wg->user->isAllowed('read')) : ?>
 	<?= $app->renderView( 'CommunityHeaderService', 'index' ) ?>
 <? endif; ?>
-
+<?= $app->renderView( 'ArticleVideo', 'recommendedVideo' ) ?>
 <!-- empty onclick event needs to be applied here to ensure that wds dropdowns work correctly on ios -->
 <section id="WikiaPage" class="WikiaPage<?= empty( $wg->OasisNavV2 ) ? '' : ' V2' ?><?= !empty( $isGridLayoutEnabled ) ? ' WikiaGrid' : '' ?>" onclick="">
 	<div id="WikiaPageBackground" class="WikiaPageBackground"></div>
@@ -78,8 +78,6 @@
 				<? if ( $wg->enableArticleFeaturedVideo ) : ?>
 					<?= $app->renderView( 'ArticleVideo', 'featured' ) ?>
 				<? endif; ?>
-
-				<?= $app->renderView( 'ArticleVideo', 'recommendedVideo' ) ?>
 
 				<? if ( $subtitle != '' && $headerModuleName === 'UserPagesHeader' ) : ?>
 					<div id="contentSub"><?= $subtitle ?></div>
