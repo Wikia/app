@@ -416,7 +416,7 @@ class WikiFactoryLoader {
 		// check if domain from browser is different than main domain for wiki
 		// todo - will $url['path'] !== "/{$this->langCode}" work if the url['path'] end with a slash?
 		$cond1 = !empty( $this->mServerName ) &&
-				 ( strtolower( $url['host'] ) != $this->mServerName || $url['path'] !== "/{$this->langCode}" );
+				 ( strtolower( $url['host'] ) != $this->mServerName || rtrim( $url['path'], '/' ) !== rtrim( "/{$this->langCode}", '/' ) );
 
 		/**
 		 * check if not additional domain was used (then we redirect anyway)
