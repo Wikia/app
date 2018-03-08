@@ -243,7 +243,7 @@ class MediaWiki {
 		} elseif ( $request->getVal( 'action', 'view' ) == 'view' && !$request->wasPosted()
 			&& ( $request->getVal( 'title' ) === null ||
 				$title->getPrefixedDBKey() != $request->getVal( 'title' ) )
-			&& !count( $request->getValueNames( array( 'action', 'title', '_ga', 'langpath' ) ) )
+			&& !count( $request->getValueNames( array( 'action', 'title', '_ga' /*, 'langpath'*/ ) ) )
 			&& Hooks::run( 'TestCanonicalRedirect', array( $request, $title, $output ) ) )
 		{
 			if ( $title->isSpecialPage() ) {
