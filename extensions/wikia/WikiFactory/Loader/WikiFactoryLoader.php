@@ -421,6 +421,7 @@ class WikiFactoryLoader {
 		$url = parse_url( $this->mCityUrl );
 
 		// check if domain from browser is different than main domain for wiki
+		// todo - will $url['path'] !== "/{$this->langCode}" work if the url['path'] end with a slash?
 		$cond1 = !empty( $this->mServerName ) &&
 				 ( strtolower( $url['host'] ) != $this->mServerName || $url['path'] !== "/{$this->langCode}" );
 
