@@ -10,6 +10,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.audienceNetwork',[
 	'use strict';
 
 	var bidderName = 'audienceNetwork',
+		priorityLevel = 1,
 		// only first size for each slot will be requested anyways - this is how Audience Network works
 		slots = {
 			mercury: {
@@ -67,9 +68,14 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.audienceNetwork',[
 		return bidderName;
 	}
 
+	function getPriority() {
+		return priorityLevel;
+	}
+
 	return {
 		isEnabled: isEnabled,
 		getName: getName,
+		getPriority: getPriority,
 		getSlots: getSlots,
 		prepareAdUnit: prepareAdUnit
 	};

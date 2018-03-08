@@ -10,6 +10,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.appnexus',[
 
 	var bidderName = 'appnexus',
 		logGroup = 'ext.wikia.adEngine.lookup.prebid.adapters.appnexus',
+		priorityLevel = 1,
 		slots = {
 			oasis: {
 				TOP_LEADERBOARD: {
@@ -98,9 +99,14 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.appnexus',[
 		return bidderName;
 	}
 
+	function getPriority() {
+		return priorityLevel;
+	}
+
 	return {
 		isEnabled: isEnabled,
 		getName: getName,
+		getPriority: getPriority,
 		getSlots: getSlots,
 		prepareAdUnit: prepareAdUnit
 	};

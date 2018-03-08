@@ -3,6 +3,7 @@ define('ext.wikia.adEngine.lookup.prebid.adaptersRegistry', [
 	'ext.wikia.adEngine.lookup.prebid.adapters.aol',
 	'ext.wikia.adEngine.lookup.prebid.adapters.appnexus',
 	'ext.wikia.adEngine.lookup.prebid.adapters.appnexusAst',
+	'ext.wikia.adEngine.lookup.prebid.adapters.appnexusWebAds',
 	'ext.wikia.adEngine.lookup.prebid.adapters.audienceNetwork',
 	'ext.wikia.adEngine.lookup.prebid.adapters.beachfront',
 	'ext.wikia.adEngine.lookup.prebid.adapters.indexExchange',
@@ -17,6 +18,7 @@ define('ext.wikia.adEngine.lookup.prebid.adaptersRegistry', [
 	aol,
 	appnexus,
 	appnexusAst,
+	appnexusWebAds,
 	audienceNetwork,
 	beachfront,
 	indexExchange,
@@ -34,6 +36,7 @@ define('ext.wikia.adEngine.lookup.prebid.adaptersRegistry', [
 			aol,
 			appnexus,
 			appnexusAst,
+			appnexusWebAds,
 			audienceNetwork,
 			beachfront,
 			indexExchange,
@@ -81,8 +84,19 @@ define('ext.wikia.adEngine.lookup.prebid.adaptersRegistry', [
 		});
 	}
 
+	function getPriority() {
+		var priority = [];
+
+		adapters.forEach(function (adapter) {
+			priority[adapter.getName()] = adapter.getPriority();
+		});
+
+		return priority;
+	}
+
 	return {
 		getAdapters: getAdapters,
+		getPriority: getPriority,
 		push: push,
 		registerAliases: registerAliases,
 		setupCustomAdapters: setupCustomAdapters

@@ -9,6 +9,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.aol', [
 
 	var bidderName = 'aol',
 		network = '9435.1',
+		priorityLevel = 1,
 		slots = {
 			oasis: {
 				TOP_LEADERBOARD: {
@@ -98,9 +99,14 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.aol', [
 		return bidderName;
 	}
 
+	function getPriority() {
+		return priorityLevel;
+	}
+
 	return {
 		isEnabled: isEnabled,
 		getName: getName,
+		getPriority: getPriority,
 		getSlots: getSlots,
 		prepareAdUnit: prepareAdUnit
 	};

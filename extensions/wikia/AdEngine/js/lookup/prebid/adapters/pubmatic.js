@@ -10,6 +10,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.pubmatic',[
 
 	var bidderName = 'pubmatic',
 		logGroup = 'ext.wikia.adEngine.lookup.prebid.adapters.pubmatic',
+		priorityLevel = 1,
 		publisherId = 156260,
 		slots = {
 			oasis: {
@@ -118,9 +119,14 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.pubmatic',[
 		return bidderName;
 	}
 
+	function getPriority() {
+		return priorityLevel;
+	}
+
 	return {
 		isEnabled: isEnabled,
 		getName: getName,
+		getPriority: getPriority,
 		getSlots: getSlots,
 		prepareAdUnit: prepareAdUnit
 	};

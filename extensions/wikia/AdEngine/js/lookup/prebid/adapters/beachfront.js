@@ -12,6 +12,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.beachfront', [
 		bidfloor = 0.01,
 		debugAppId = '2e55f7ad-3558-49eb-a3e1-056ccd0e74e2',
 		logGroup = 'ext.wikia.adEngine.lookup.prebid.adapters.beachfront',
+		priorityLevel = 1,
 		slots = {
 			oasis: {
 				INCONTENT_PLAYER: {
@@ -59,9 +60,14 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.beachfront', [
 		return bidderName;
 	}
 
+	function getPriority() {
+		return priorityLevel;
+	}
+
 	return {
 		isEnabled: isEnabled,
 		getName: getName,
+		getPriority: getPriority,
 		getSlots: getSlots,
 		prepareAdUnit: prepareAdUnit
 	};

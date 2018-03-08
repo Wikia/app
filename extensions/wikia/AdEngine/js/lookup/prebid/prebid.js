@@ -105,13 +105,36 @@ define('ext.wikia.adEngine.lookup.prebid', [
 	}
 
 	function getSlotParams(slotName) {
-		var params;
+		var slotParams;
 
-		if (win.pbjs && typeof win.pbjs.getAdserverTargetingForAdUnitCode === 'function') {
-			params = win.pbjs.getAdserverTargetingForAdUnitCode(slotName) || {};
+		if (win.pbjs && typeof win.pbjs.getBidResponses === 'function') {
+			var params = win.pbjs.getBidResponses(slotName) || {};
+
+			if (params && params[slotName] && params[slotName].bids && params[slotName].bids.length) {
+				var targeting,
+					priority = adaptersRegistry.getPriority();
+
+				params[slotName].bids.forEach(function (param) {
+					if (!targeting) {
+						targeting = param;
+					} else {
+						if (targeting.cpm === param.cpm) {
+							if (priority[targeting.bidder] === priority[param.bidder]) {
+								targeting = targeting.timeToRespond > param.timeToRespond ? param : targeting;
+							} else {
+								targeting = priority[targeting.bidder] < priority[param.bidder] ? param : targeting;
+							}
+						} else {
+							targeting = targeting.cpm < param.cpm ? param : targeting;
+						}
+					}
+				});
+
+				slotParams = targeting.adserverTargeting;
+			}
 		}
 
-		return params || {};
+		return slotParams || {};
 	}
 
 	function getBestSlotPrice(slotName) {
