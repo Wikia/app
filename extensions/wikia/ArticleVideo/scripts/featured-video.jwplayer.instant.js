@@ -53,7 +53,7 @@ require([
 		win.dispatchEvent(new CustomEvent('wikia.jwplayer.instanceReady', {detail: playerInstance}));
 
 		featuredVideoAds(playerInstance, bidParams, slotTargeting);
-		featuredVideoMoatTracking(playerInstance);
+		featuredVideoMoatTracking.track(playerInstance);
 
 		playerInstance.on('autoplayToggle', function (data) {
 			featuredVideoCookieService.setAutoplay(data.enabled ? '1' : '0');
@@ -113,6 +113,8 @@ require([
 			},
 			lang: videoDetails.lang
 		}, onPlayerReady);
+
+		featuredVideoMoatTracking.loadTrackingPlugin();
 	}
 
 	if (a9 && adContext.get('bidders.a9Video')) {
