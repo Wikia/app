@@ -70,7 +70,6 @@ class WikiaUpdater {
 			array( 'WikiaUpdater::do_drop_table', 'watchlist_old' ),
 			array( 'WikiaUpdater::do_drop_table', 'hidden' ), // SUS-2401
 			array( 'WikiaUpdater::do_clean_math_table' ),
-			array( 'WikiaUpdater::do_transcache_update' ),
 			array( 'WikiaUpdater::do_wall_history_ipv6_update' ), // SUS-2257
 			array( 'WikiaUpdater::doLoggingTableUserCleanup' ), // SUS-3222
 			array( 'WikiaUpdater::migrateRecentChangesIpData' ), // SUS-3079
@@ -147,41 +146,6 @@ class WikiaUpdater {
 			else {
 				$updater->output( "... already altered to integer.\n" );
 			}
-		}
-	}
-
-	public static function do_transcache_update( DatabaseUpdater $updater ) {
-		$db = $updater->getDB();
-		$transcache = $db->tableName( 'transcache' );
-		$res = $db->query( "SHOW COLUMNS FROM transcache" );
-		$columns = array(
-			'tc_contents' => array(
-				'old' => 'text',
-				'new' => 'blob'
-			),
-			'tc_url'      => array(
-				'old' => 'varchar(255)',
-				'new' => 'varbinary(255)'
-			)
-		);
-		$patch = array();
-		while ( $row = $db->fetchObject( $res ) ) {
-			if ( !$row ) continue;
-			$column = !empty( $columns[ $row->Field ] ) ? $columns[ $row->Field ] : '';
-
-			if ( $column && $columns[ $row->Field ]['old'] == $row->Type ) {
-				$patch[] = sprintf( "MODIFY %s %s", $row->Field, $columns[ $row->Field ]['new'] );
-			} else {
-				$updater->output( "...{$row->Field} is up-to-date.\n" );
-			}
-		}
-
-		if ( !empty( $patch ) ) {
-			$db->query( sprintf( "ALTER TABLE transcache %s", implode( ",", $patch ) ), __METHOD__ );
-			$updater->output( "... altered to binary.\n" );
-		}
-		else {
-			$updater->output( "... transcache table is up-to-date.\n" );
 		}
 	}
 
