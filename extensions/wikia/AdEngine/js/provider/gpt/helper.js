@@ -17,7 +17,6 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	'ext.wikia.adEngine.slotTweaker',
 	'wikia.document',
 	'wikia.log',
-	require.optional('ext.wikia.adEngine.ml.hivi.leaderboard'),
 	require.optional('ext.wikia.adEngine.ml.rabbit'),
 	require.optional('ext.wikia.adEngine.provider.gpt.sraHelper'),
 	require.optional('ext.wikia.aRecoveryEngine.instartLogic.recovery'),
@@ -39,7 +38,6 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	slotTweaker,
 	doc,
 	log,
-	hiviLeaderboard,
 	rabbit,
 	sraHelper,
 	instartLogic,
@@ -140,13 +138,6 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 			abId = slotTargeting.getAbTestId(slotTargetingData);
 			if (abId) {
 				slotTargetingData.abi = abId;
-			}
-
-			if (hiviLeaderboard && slotName === 'TOP_LEADERBOARD') {
-				slotTargetingData.hivi = [];
-				hiviLeaderboard.getValue().forEach(function (value) {
-					slotTargetingData.hivi.push(value);
-				});
 			}
 		}
 

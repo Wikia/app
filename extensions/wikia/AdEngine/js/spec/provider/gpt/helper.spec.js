@@ -130,7 +130,6 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 			mocks.doc,
 			mocks.log,
 			undefined,
-			undefined,
 			mocks.sraHelper,
 			undefined,
 			mocks.pageFair
