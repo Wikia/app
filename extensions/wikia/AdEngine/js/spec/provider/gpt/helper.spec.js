@@ -106,11 +106,6 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 					};
 				}
 			},
-			geo: {
-				isProperGeo: function () {
-					return false;
-				}
-			},
 			log: noop
 		};
 
@@ -133,8 +128,6 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 			mocks.adBlockRecovery,
 			mocks.slotTweaker,
 			mocks.doc,
-			mocks.geo,
-			{},
 			mocks.log,
 			undefined,
 			undefined,

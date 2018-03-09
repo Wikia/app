@@ -1382,21 +1382,6 @@ $wgAdDriverSrcPremiumCountries = [];
 $wgAdDriverKILOCountries = null;
 
 /**
- * @name $wgAdDriverLBScrollExperimentCountires
- * Enables experiment that sends scrolltop position keyval to DFP for TLB requests
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverLBScrollExperimentCountires = null;
-
-/**
- * @name $wgAdDriverLBScrollExperimentBucket
- * Bucket size for experiment enabled in $wgAdDriverLBScrollExperimentCountires
- * eg for 50, available values: 0, 50, 100, 150, 200, 250, 300...
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverLBScrollExperimentBucket = null;
-
-/**
  * @name $wgAdDriverMEGACountries
  * Enables new way of building adUnits (currently limited for remnant).
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.

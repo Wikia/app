@@ -16,10 +16,8 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	'ext.wikia.aRecoveryEngine.adBlockRecovery',
 	'ext.wikia.adEngine.slotTweaker',
 	'wikia.document',
-	'wikia.geo',
-	'wikia.instantGlobals',
 	'wikia.log',
-	'wikia.window',
+	require.optional('ext.wikia.adEngine.ml.hivi.leaderboard'),
 	require.optional('ext.wikia.adEngine.ml.rabbit'),
 	require.optional('ext.wikia.adEngine.provider.gpt.sraHelper'),
 	require.optional('ext.wikia.aRecoveryEngine.instartLogic.recovery'),
@@ -40,10 +38,8 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	adBlockRecovery,
 	slotTweaker,
 	doc,
-	geo,
-	instantGlobals,
 	log,
-	win,
+	hiviLeaderboard,
 	rabbit,
 	sraHelper,
 	instartLogic,
@@ -146,12 +142,11 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 				slotTargetingData.abi = abId;
 			}
 
-			if (
-				(slotName === 'TOP_LEADERBOARD' || slotName === 'MOBILE_TOP_LEADERBOARD') &&
-				geo.isProperGeo(instantGlobals.wgAdDriverLBScrollExperimentCountires) &&
-				instantGlobals.wgAdDriverLBScrollExperimentBucket > 0
-			) {
-				slotTargetingData.scrolltop = 'top_' + Math.floor(win.scrollY / instantGlobals.wgAdDriverLBScrollExperimentBucket) * instantGlobals.wgAdDriverLBScrollExperimentBucket;
+			if (hiviLeaderboard && slotName === 'TOP_LEADERBOARD') {
+				slotTargetingData.hivi = [];
+				hiviLeaderboard.getValue().forEach(function (value) {
+					slotTargetingData.hivi.push(value);
+				});
 			}
 		}
 
