@@ -5,8 +5,9 @@ define('ext.wikia.adEngine.lookup.lookupFactory', [
 	'ext.wikia.aRecoveryEngine.adBlockDetection',
 	'wikia.lazyqueue',
 	'wikia.log',
-	require.optional('ext.wikia.adEngine.mobile.mercuryListener')
-], function (adContext, adTracker, adBlockDetection, lazyQueue, log, mercuryListener) {
+	require.optional('ext.wikia.adEngine.mobile.mercuryListener'),
+	require.optional('wikia.promise')
+], function (adContext, adTracker, adBlockDetection, lazyQueue, log, mercuryListener, Promise) {
 	'use strict';
 
 	function create(module) {
@@ -122,7 +123,17 @@ define('ext.wikia.adEngine.lookup.lookupFactory', [
 			});
 		}
 
-		function waitForResponse(onSuccess, onTimeout, millisToTimeout) {
+		function waitForResponse(milisToTimeout) {
+			return Promise.createWithTimeout(function (resolve) {
+				if (hasResponse()) {
+					resolve();
+				} else {
+					addResponseListener(resolve);
+				}
+			}, milisToTimeout);
+		}
+
+		function waitForResponseCallbacks(onSuccess, onTimeout, millisToTimeout) {
 			var resolved = false,
 				timeoutId;
 
@@ -162,7 +173,9 @@ define('ext.wikia.adEngine.lookup.lookupFactory', [
 			isSlotSupported: isSlotSupported,
 			trackState: trackState,
 			wasCalled: wasCalled,
-			waitForResponse: waitForResponse
+			// TODO: ADEN-6812 remove waitForResponse
+			waitForResponse: waitForResponse,
+			waitForResponseCallbacks: waitForResponseCallbacks
 		};
 	}
 

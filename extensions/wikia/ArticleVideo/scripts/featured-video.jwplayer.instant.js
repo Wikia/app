@@ -116,9 +116,8 @@ require([
 		}, onPlayerReady);
 	}
 
-
 	if (a9 && adContext.get('bidders.a9Video')) {
-		a9.waitForResponse(
+		a9.waitForResponseCallbacks(
 			function onSuccess() {
 				bidParams = a9.getSlotParams('FEATURED');
 				setupPlayer();

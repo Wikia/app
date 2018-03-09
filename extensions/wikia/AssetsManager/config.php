@@ -250,7 +250,7 @@ $config['adengine2_top_js'] = [
 		'//extensions/wikia/ARecoveryEngine/js/PageFair/recovery.js',
 		'//resources/wikia/modules/browserDetect.js',
 		'//resources/wikia/modules/krux.js',
-		// TODO: remove promise.js after ADEN-6624 is live
+		// TODO ADEN-6812 remove promise.js after ADEN-6624 is live
 		'//resources/wikia/modules/promise.js'
 	],
 ];
