@@ -8,7 +8,7 @@ class ArticleAsJson {
 		'imageMaxWidth' => false
 	];
 
-	const CACHE_VERSION = 3.14;
+	const CACHE_VERSION = 3.15;
 
 	const ICON_MAX_SIZE = 48;
 	// Line height in Mercury
@@ -236,6 +236,7 @@ class ArticleAsJson {
 			$details['context'] = $data['context'];
 			$mediaObj = self::createMediaObject( $details, $title->getText(), $data['caption'] );
 			self::$media[] = $mediaObj;
+			$mediaObj['srcset'] = self::getSrcset( $mediaObj['url'], $mediaObj['width'] );
 			$dataAttrs = $mediaObj;
 
 			if ($details['context'] == 'infobox-hero-image') {
@@ -298,7 +299,7 @@ class ArticleAsJson {
 		return true;
 	}
 
-	private static function getSrcset( string $url, int $originalWidth ): string {
+	public static function getSrcset( string $url, int $originalWidth ): string {
 		$widths = [ 284, 340, 732, 985 ];
 		$srcSetItems = [];
 

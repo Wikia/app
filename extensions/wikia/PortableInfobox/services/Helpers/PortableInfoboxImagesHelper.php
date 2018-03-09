@@ -70,6 +70,7 @@ class PortableInfoboxImagesHelper {
 			'key' => urlencode( $data['key'] ?? '' ),
 			'media-type' => isset( $data['isVideo'] ) && $data['isVideo'] ? 'video' : 'image',
 			'fileName' => $dataAttrs['fileName'],
+			'srcset' => $dataAttrs['srcset'],
 			'dataAttrs' => json_encode( $dataAttrs ),
 		] );
 	}
