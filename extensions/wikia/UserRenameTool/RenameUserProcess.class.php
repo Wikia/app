@@ -593,7 +593,7 @@ class RenameUserProcess {
 	private static function testBlock( $text ) {
 		wfProfileIn( __METHOD__ );
 
-		if ( !class_exists( 'PhalanxService' ) ) {
+		if ( !class_exists( 'PhalanxServiceFactory' ) ) {
 			wfProfileOut( __METHOD__ );
 			return '';
 		}
