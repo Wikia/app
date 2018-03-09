@@ -22,14 +22,16 @@ define('wikia.articleVideo.featuredVideo.moatTracking', [
 
 	function loadTrackingPlugin() {
 		if (!win.moatjw) {
-			var s = win.document.createElement('script');
-			s.src = jwplayerPluginUrl;
-			win.document.head.appendChild(s);
+			var scriptElement = win.document.createElement('script');
+			scriptElement.async = true;
+			scriptElement.src = jwplayerPluginUrl;
+			win.document.head.appendChild(scriptElement);
 		}
 	}
 
-	return {
-		track: track,
-		loadTrackingPlugin: loadTrackingPlugin
-	};
+	track.track = track;
+	track.loadTrackingPlugin = loadTrackingPlugin;
+	track.pluginURL = jwplayerPluginUrl;
+
+	return track; // TODO remove in ADEN-6836
 });

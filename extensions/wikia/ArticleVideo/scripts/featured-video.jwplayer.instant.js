@@ -82,6 +82,7 @@ require([
 	}
 
 	function setupPlayer() {
+		featuredVideoMoatTracking.loadTrackingPlugin();
 		win.wikiaJWPlayer('featured-video__player', {
 			tracking: {
 				track: function (data) {
@@ -113,8 +114,6 @@ require([
 			},
 			lang: videoDetails.lang
 		}, onPlayerReady);
-
-		featuredVideoMoatTracking.loadTrackingPlugin();
 	}
 
 	if (a9 && adContext.get('bidders.a9Video')) {
