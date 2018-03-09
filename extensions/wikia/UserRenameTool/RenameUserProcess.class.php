@@ -181,15 +181,15 @@ class RenameUserProcess {
 
 		// Phalanx test
 
-		$warning = self::testBlock( $oun );
-		if ( !empty( $warning ) ) {
-			$this->addError( $warning );
+		$error = self::testBlock( $oun );
+		if ( !empty( $error ) ) {
+			$this->addError( $error );
 			return false;
 		}
 
-		$warning = self::testBlock( $nun );
-		if ( !empty( $warning ) ) {
-			$this->addError( $warning );
+		$error = self::testBlock( $nun );
+		if ( !empty( $error ) ) {
+			$this->addError( $error );
 			return false;
 		}
 
