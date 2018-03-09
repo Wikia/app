@@ -293,7 +293,10 @@ $config['adengine2_pr3b1d_js'] = [
 		// IL recovery
 		'//extensions/wikia/ARecoveryEngine/js/InstartLogic/recovery.js',
 
-		'//extensions/wikia/AdEngine/js/wrappers/prebid.js'
+		'//extensions/wikia/AdEngine/js/wrappers/prebid.js',
+
+		// prebid library
+		'#group_pr3b1d_prod_js'
 	],
 ];
 

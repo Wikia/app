@@ -1,23 +1,19 @@
 /*global define*/
 define('ext.wikia.adEngine.lookup.prebid', [
-	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker',
 	'ext.wikia.adEngine.lookup.prebid.adaptersPricesTracker',
 	'ext.wikia.adEngine.lookup.prebid.adaptersRegistry',
 	'ext.wikia.adEngine.lookup.prebid.prebidHelper',
 	'ext.wikia.adEngine.lookup.prebid.prebidSettings',
 	'ext.wikia.adEngine.lookup.lookupFactory',
-	'wikia.document',
 	'wikia.window'
 ], function (
-	adContext,
 	performanceTracker,
 	pricesTracker,
 	adaptersRegistry,
 	helper,
 	settings,
 	factory,
-	doc,
 	win
 ) {
 	'use strict';
@@ -32,19 +28,9 @@ define('ext.wikia.adEngine.lookup.prebid', [
 	}
 
 	function call(skin, onResponse) {
-		var prebid, node;
-
 		if (!prebidLoaded) {
-			prebid = doc.createElement('script');
-			node = doc.getElementsByTagName('script')[0];
-
 			adaptersRegistry.setupCustomAdapters();
 			adaptersRegistry.registerAliases();
-
-			prebid.async = true;
-			prebid.type = 'text/javascript';
-			prebid.src = adContext.getContext().opts.prebidBidderUrl || '//acdn.adnxs.com/prebid/prebid.js';
-			node.parentNode.insertBefore(prebid, node);
 		}
 
 		biddersPerformanceMap = performanceTracker.setupPerformanceMap(skin);
