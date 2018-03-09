@@ -70,38 +70,68 @@ describe('ext.wikia.adEngine.lookup.prebid', function () {
 			adBlockDetection: {
 				addOnBlockingCallback: noop
 			},
+			bidResponses: {
+				TOP_LEADERBOARD: {
+					bids: [
+						{
+							bidder: 'bidder_1',
+							cpm: 10,
+							timeToRespond: 200,
+							adserverTargeting: {
+								hb_bidder: 'bidder_1'
+							}
+						},
+						{
+							bidder: 'bidder_2',
+							cpm: 15,
+							timeToRespond: 100,
+							adserverTargeting: {
+								hb_bidder: 'bidder_2'
+							}
+						}
+					]
+				}
+			},
 			win: {
 				pbjs: {
 					que: [],
 					requestBids: function () {
-					}
+					},
+					getBidResponses: function (slotName) {
+						return mocks.bidResponses;
+					},
 				}
 			},
 			adaptersPricesTracker: {},
+			adaptersPriorities: {
+				bidder_1: 1,
+				bidder_2: 0
+			},
 			adaptersRegistry: {
 				setupCustomAdapters: noop,
-				registerAliases: noop
+				registerAliases: noop,
+				getPriorities: function () {
+					return mocks.adaptersPriorities;
+				}
 			},
 			prebidHelper: {
 				setupAdUnits: function () {
 					return [
 						{
-							TOP_LEADERBOARD: {
-								sizes: [
-									[728, 90],
-									[970, 250]
-								],
-								placementId: '5823300'
-							}
+							code: 'TOP_LEADERBOARD',
+							sizes: [
+								[728, 90],
+								[970, 250]
+							],
+							placementId: '5823300'
 						},
 						{
-							TOP_RIGHT_BOXAD: {
-								sizes: [
-									[300, 250],
-									[300, 600]
-								],
-								placementId: '5823309'
-							}
+							code: 'TOP_RIGHT_BOXAD',
+							sizes: [
+								[300, 250],
+								[300, 600]
+							],
+							placementId: '5823309'
 						}
 					];
 				}
@@ -168,9 +198,17 @@ describe('ext.wikia.adEngine.lookup.prebid', function () {
 			src: mocks.opts.prebidBidderUrl
 		};
 
-		prebid.call('oasis', function () {
-		});
+		prebid.call('oasis', function () {});
 		expect(mocks.win.pbjs.que.push).toHaveBeenCalled();
 		expect(insertBefore).toHaveBeenCalledWith(predidScriptExpectedNode, createNode());
+	});
+
+	it('Prebid auction is performed and the best bid is returned', function () {
+		prebid.call();
+		expect(prebid.getSlotParams('TOP_LEADERBOARD').hb_bidder).toEqual('bidder_2');
+		mocks.bidResponses.TOP_LEADERBOARD.bids[1].cpm = 10;
+		expect(prebid.getSlotParams('TOP_LEADERBOARD').hb_bidder).toEqual('bidder_1');
+		mocks.adaptersPriorities.bidder_2 = 1;
+		expect(prebid.getSlotParams('TOP_LEADERBOARD').hb_bidder).toEqual('bidder_2');
 	});
 });
