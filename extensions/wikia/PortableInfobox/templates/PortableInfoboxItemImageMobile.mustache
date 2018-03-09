@@ -2,15 +2,16 @@
 	<figure class="article-media-thumbnail" data-component="article-media-thumbnail" data-attrs="{{dataAttrs}}" data-file="{{fileName}}">
 		<a href="{{url}}">
 			<img class="article-media-placeholder lazyload"
-				src="data:image/svg+xml;charset=utf-8,%3Csvg xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg' viewBox%3D'0 0 {{width}} {{height}}'%2F%3E"
+				src="data:image/svg+xml;charset=utf-8,%3Csvg xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg' viewBox%3D'0 0 {{originalWidth}} {{originalHeight}}'%2F%3E"
 				data-src="{{thumbnail}}"
 				data-srcset="{{thumbnail}}, {{thumbnail2x}} 2x"
+				data-sizes="auto"
 				alt="{{title}}"
-				{{#width}} width="{{width}}"{{/width}}
-				{{#height}} height="{{height}}"{{/height}} />
+				{{#originalWidth}} width="{{originalWidth}}"{{/originalWidth}}
+				{{#originalHeight}} height="{{originalHeight}}"{{/originalHeight}} />
 			<noscript>
-				<img src="{{url}}" alt="{{alt}}"{{#width}}
-				     width="{{width}}"{{/width}}{{#height}} height="{{height}}"{{/height}} />
+				<img src="{{url}}" alt="{{alt}}"{{#originalWidth}}
+				     width="{{originalWidth}}"{{/originalWidth}}{{#originalHeight}} height="{{originalHeight}}"{{/originalHeight}} />
 			</noscript>
 			{{#isVideo}}
 				<div class="video-icon-container">
