@@ -176,8 +176,7 @@ class RenameUserProcess {
 			}
 
 			// SUS-4301 | check for emojis in user name
-			$conflicts = $oNewSpoofUser->isLegal();
-			if ( !empty( $conflicts ) ) {
+			if ( $oNewSpoofUser->isLegal() === false ) {
 				$this->addError( wfMessage( 'userrenametool-error-antispoof-conflict', $nun ) );
 				return false;
 			}
