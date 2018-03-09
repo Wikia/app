@@ -145,11 +145,11 @@ class ArticleVideoContext {
 
 		if ( $wgWikiaEnvironment === WIKIA_ENV_DEV ) {
 			if ( $wgWikiaDatacenter === WIKIA_DC_POZ ) {
-				//$playlist = self::RECOMMENDED_VIDEO_MAPPINGS_POZ_DEV[$wgCityId][$pageId];
-				$playlist = self::RECOMMENDED_VIDEO_MAPPINGS_POZ_DEV[509][509];
+				//$playlist = self::RECOMMENDED_VIDEO_MAPPINGS_POZ_DEV[$wgCityId][$pageId] ?? '';
+				$playlist = self::RECOMMENDED_VIDEO_MAPPINGS_POZ_DEV[509][509] ?? '';
 			}
 		} else {
-			$playlist = self::RECOMMENDED_VIDEO_MAPPINGS_PROD[$wgCityId][$pageId];
+			$playlist = self::RECOMMENDED_VIDEO_MAPPINGS_PROD[$wgCityId][$pageId] ?? '';
 		}
 
 		return $playlist;
