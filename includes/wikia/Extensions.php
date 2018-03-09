@@ -156,7 +156,7 @@ if ( ! empty( $wgEnableLyricWikiExt ) ) {
 	require_once "$LW/lw_impliedRedirects.php";
 	# Turn off subpages on the main namespace (otherwise every AC/DC song links back to "AC"), etc.
 	$wgNamespacesWithSubpages[ NS_MAIN ] = false;
-        
+
 	require_once "$LW/LyricFind/LyricFind.setup.php";
 }
 /**
@@ -1640,6 +1640,9 @@ $wgPreferenceServiceRead = true;
 /**
  * Enable the Content Review extension
  */
+// Load classes that should always be available
+include "$IP/extensions/wikia/ContentReview/ContentReviewShared.setup.php";
+
 if ( !empty( $wgUseSiteJs ) && !empty( $wgEnableContentReviewExt ) ) {
 	include( "$IP/extensions/wikia/ContentReview/ContentReview.setup.php" );
 
@@ -1647,6 +1650,8 @@ if ( !empty( $wgUseSiteJs ) && !empty( $wgEnableContentReviewExt ) ) {
 		include( "$IP/extensions/wikia/ContentReview/ContentReviewSpecialPage.setup.php" );
 	}
 }
+
+include "$IP/extensions/wikia/ContentReview/ImportJS.setup.php";
 
 /**
  * Parser tags which are replacing verbatim tags
@@ -1661,10 +1666,6 @@ if ( !empty( $wgEnableGoogleFormTagExt ) ) {
 
 if ( !empty( $wgEnablePolldaddyTagExt ) ) {
 	include "$IP/extensions/wikia/PolldaddyTag/PolldaddyTag.setup.php";
-}
-
-if ( !empty( $wgEnablePollSnackTagExt ) ) {
-	include "$IP/extensions/wikia/PollSnackTag/PollSnackTag.setup.php";
 }
 
 if ( !empty( $wgEnableSoundCloudTagExt ) ) {
@@ -1778,6 +1779,10 @@ if ( !empty( $wgEnablePlaybuzzTagExt ) ) {
 
 if ( !empty( $wgEnableGoogleAmp ) ) {
     include "$IP/extensions/wikia/GoogleAmp/GoogleAmp.setup.php";
+}
+
+if ( !empty( $wgEnableOpenXSPC ) ) {
+	include "$IP/extensions/wikia/Spotlights/Spotlights.setup.php";
 }
 
 include "$IP/extensions/wikia/JWPlayerTag/JWPlayerTag.setup.php";

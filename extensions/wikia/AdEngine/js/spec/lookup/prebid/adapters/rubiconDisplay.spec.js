@@ -19,18 +19,16 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.rubiconDisplay', function ()
 				return false;
 			}
 		},
-		adLogicZoneParams: {
-			getLanguage: function () {
-				return 'en';
-			},
-			getName: function () {
-				return 'test';
-			},
-			getPageType: function () {
-				return 'article';
-			},
-			getSite: function () {
-				return 'life';
+		adaptersHelper: {
+			getTargeting: function () {
+				return {
+					pos: ['TOP_LEADERBOARD'],
+					src: ['gpt'],
+					s0: ['life'],
+					s1: ['test'],
+					s2: ['article'],
+					lang: ['en']
+				}
 			}
 		},
 		log: function () { }
@@ -42,7 +40,7 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.rubiconDisplay', function ()
 		return modules['ext.wikia.adEngine.lookup.prebid.adapters.rubiconDisplay'](
 			mocks.adContext,
 			mocks.slotsContext,
-			mocks.adLogicZoneParams,
+			mocks.adaptersHelper,
 			mocks.instartLogic,
 			mocks.log
 		);
@@ -84,7 +82,7 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.rubiconDisplay', function ()
 		var bidder = getBidder();
 		expect(bidder.prepareAdUnit('TOP_LEADERBOARD', {
 			sizes: [[728, 90], [970, 250]],
-			targeting: {loc: 'top'},
+			targeting: {loc: ['top']},
 			position: 'atf',
 			siteId: 41686,
 			zoneId: 175094
@@ -102,13 +100,13 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.rubiconDisplay', function ()
 						position: 'atf',
 						keywords: ['rp.fastlane'],
 						inventory: {
-							loc: 'top',
-							pos: 'TOP_LEADERBOARD',
-							src: 'gpt',
-							s0: 'life',
-							s1: 'test',
-							s2: 'article',
-							lang: 'en'
+							loc: ['top'],
+							pos: ['TOP_LEADERBOARD'],
+							src: ['gpt'],
+							s0: ['life'],
+							s1: ['test'],
+							s2: ['article'],
+							lang: ['en']
 						}
 					}
 				}

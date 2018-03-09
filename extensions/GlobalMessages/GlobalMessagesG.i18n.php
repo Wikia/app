@@ -1534,6 +1534,8 @@ $messages['de'] = array(
 	'group-fandom-editor-member' => 'News and Stories Wordpress access',
 	'group-global-discussions-moderator' => 'Globaler Diskussions-Moderator',
 	'group-global-discussions-moderator-member' => 'Globaler Diskussions-Moderator',
+	'group-content-volunteer' => 'Content-Volunteers',
+	'group-content-volunteer-member' => 'Content-Volunteer',
 );
 
 $messages['de-formal'] = array(
@@ -1792,8 +1794,8 @@ $messages['es'] = array(
 	'group-fandom-editor-member' => 'News and Stories Wordpress access',
 	'group-global-discussions-moderator' => 'Moderador global de discusiones',
 	'group-global-discussions-moderator-member' => 'Moderador global de discusiones',
-	'group-content-volunteer' => 'Voluntarios de Contenido',
-	'group-content-volunteer-member' => 'Voluntario de Contenido',
+	'group-content-volunteer' => 'Voluntario de contenido',
+	'group-content-volunteer-member' => 'Voluntario de contenido',
 );
 
 $messages['et'] = array(
@@ -2102,6 +2104,8 @@ $messages['fr'] = array(
 	'group-fandom-editor-member' => 'News and Stories Wordpress access',
 	'group-global-discussions-moderator' => 'Modérateur global de discussions',
 	'group-global-discussions-moderator-member' => 'Modérateur global de discussions',
+	'group-content-volunteer' => 'Créateurs de contenu bénévoles',
+	'group-content-volunteer-member' => 'Créateur de contenu bénévole',
 );
 
 $messages['frc'] = array(
@@ -5271,7 +5275,7 @@ $messages['pl'] = array(
 	'group-global-discussions-moderator' => 'Globalni moderatorzy Dyskusji',
 	'group-global-discussions-moderator-member' => 'globalny moderator Dyskusji',
 	'group-content-volunteer' => 'Wolontariusze treści',
-	'group-content-volunteer-member' => 'Wolontariusz treści',
+	'group-content-volunteer-member' => 'wolontariusz treści',
 );
 
 $messages['pms'] = array(
@@ -5697,12 +5701,12 @@ $messages['ru'] = array(
 	'group-bureaucrat.css' => '/* Размещённый здесь CSS будет применяться только для бюрократов */',
 	'group-content-moderator' => 'Модераторы контента',
 	'group-content-moderator-member' => 'Модератор контента',
-	'group-helper' => 'Помощники Фэндома',
-	'group-helper-member' => 'Помощник Фэндома',
-	'group-staff' => 'Сотрудники Фэндома',
-	'group-staff-member' => 'Сотрудник Фэндома',
-	'group-util' => 'Утилиты Фэндома',
-	'group-util-member' => 'Утилита Фэндома',
+	'group-helper' => 'Помощники ФЭНДОМА',
+	'group-helper-member' => 'Помощник ФЭНДОМА',
+	'group-staff' => 'Сотрудники ФЭНДОМА',
+	'group-staff-member' => 'Сотрудник ФЭНДОМА',
+	'group-util' => 'FANDOM Utilities',
+	'group-util-member' => 'FANDOM Utilities',
 	'googlesearch' => '<form method="get" action="//www.google.com/search" id="googlesearch">
 	<input type="hidden" name="domains" value="{{SERVER}}" />
 	<input type="hidden" name="num" value="50" />
@@ -5736,8 +5740,10 @@ $messages['ru'] = array(
 	'grouppage-voldev' => 'w:c:dev:Разработчики_Волонтеры',
 	'group-fandom-editor' => 'News and Stories Wordpress access',
 	'group-fandom-editor-member' => 'News and Stories Wordpress access',
-	'group-global-discussions-moderator' => 'Модератор Обсуждений Фэндома',
-	'group-global-discussions-moderator-member' => 'Модератор Обсуждений Фэндома',
+	'group-global-discussions-moderator' => 'Модераторы Обсуждений ФЭНДОМА',
+	'group-global-discussions-moderator-member' => 'Модератор Обсуждений ФЭНДОМА',
+	'group-content-volunteer' => 'Content Volunteers',
+	'group-content-volunteer-member' => 'Content Volunteer',
 );
 
 $messages['rue'] = array(
@@ -7433,10 +7439,10 @@ $messages['zea'] = array(
 
 $messages['zh-hans'] = array(
 	'go' => '进入',
-	'gotaccount' => '已经拥有账户？请$1。',
-	'gotaccountlink' => '登录',
+	'gotaccount' => '已有帐户？请$1。',
+	'gotaccountlink' => '登入',
 	'guesstimezone' => '从浏览器填写',
-	'gender-unknown' => '不指明',
+	'gender-unknown' => '保密',
 	'gender-male' => '男',
 	'gender-female' => '女',
 	'group' => '用户组：',
@@ -7455,7 +7461,7 @@ $messages['zh-hans'] = array(
 	'group-suppress-member' => '监督员',
 	'grouppage-user' => '{{ns:project}}:用户',
 	'grouppage-autoconfirmed' => '{{ns:project}}:自动确认用户',
-	'grouppage-bot' => '{{ns:project}}:机器人',
+	'grouppage-bot' => 'Help:机器人',
 	'grouppage-sysop' => '{{ns:project}}:管理员',
 	'grouppage-bureaucrat' => '{{ns:project}}:行政员',
 	'grouppage-suppress' => '{{ns:project}}:监督员',
@@ -7491,21 +7497,21 @@ $messages['zh-hans'] = array(
 	'group-vstf' => 'VSTF',
 	'group-vstf-member' => 'VSTF',
 	'grouppage-vstf' => 'w:Wikia:SpamTaskForce',
-	'grouppage-helper' => 'Help:Helper Group',
+	'grouppage-helper' => 'Help:志愿者和助手',
 	'grouppage-staff' => 'wikia:Community_Central:Staff',
 	'grouppage-util' => 'wikia:Community_Central:Staff',
 	'group-reviewer' => '图片审核员',
 	'group-reviewer-member' => '图片审核员',
 	'grouppage-reviewer' => 'wikia:Community_Central:Image_review',
-	'group-vanguard' => 'Vanguards',
-	'group-vanguard-member' => 'Vanguard',
+	'group-vanguard' => '先锋',
+	'group-vanguard-member' => '先锋',
 	'group-voldev' => '志愿开发者',
 	'group-voldev-member' => '志愿开发者',
 	'grouppage-voldev' => 'w:c:dev:Volunteer_Developers',
 	'group-fandom-editor' => 'News and Stories Wordpress access',
 	'group-fandom-editor-member' => 'News and Stories Wordpress access',
-	'group-global-discussions-moderator' => '全网话题版主',
-	'group-global-discussions-moderator-member' => '全网话题版主',
+	'group-global-discussions-moderator' => '全站话题版主',
+	'group-global-discussions-moderator-member' => '全站话题版主',
 	'group-content-volunteer' => '内容志愿者',
 	'group-content-volunteer-member' => '内容志愿者',
 );
@@ -7559,7 +7565,7 @@ $messages['zh-hant'] = array(
 	<input type="radio" name="sitesearch" id="gWWW" value="" /><label for="gWWW">WWW</label>
   </div>
 </form>',
-	'group-autoconfirmed.css' => '/* 這裡的CSS只會影響自動確認的用戶 */',
+	'group-autoconfirmed.css' => '/* 這裡的CSS只會影響自動確認用戶 */',
 	'group-bot.css' => '/* 這裡的CSS只會影響機器人帳號 */',
 	'group-sysop.css' => '/* 這裡的CSS只會影響管理員 */',
 	'group-bureaucrat.css' => '/* 這裡的CSS只會影響行政員 */',
@@ -7573,8 +7579,8 @@ $messages['zh-hant'] = array(
 	'grouppage-helper' => 'Help:Volunteers and Helpers',
 	'grouppage-staff' => 'w:c:zh.community:Community_Central:Staff',
 	'grouppage-util' => 'w:c:zh.community:Community_Central:Staff',
-	'group-reviewer' => '圖像審核員',
-	'group-reviewer-member' => '圖像審核員',
+	'group-reviewer' => '圖片審核員',
+	'group-reviewer-member' => '圖片審核員',
 	'grouppage-reviewer' => 'w:c:zh.community:Help:用戶權限',
 	'group-vanguard' => '先鋒',
 	'group-vanguard-member' => '先鋒',

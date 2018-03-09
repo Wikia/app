@@ -141,7 +141,13 @@ $Factory.VariableCallback = {
 				deferRequestBy: 0
 			});
 		});
-        $Factory.Busy(0);
+		mw.loader.using('ext.wikia.wikiFactory', function () {
+			require(['ext.wikia.wikiFactory.variableManager'], function (variableManager) {
+				variableManager();
+			});
+
+			$Factory.Busy(0);
+		});
     },
     failure: function( aData ) {
         $().log( "failure in VariableCallback" );
@@ -463,82 +469,6 @@ $Factory.Variable.clear = function ( e ) {
 };
 
 // submit form with new variable data
-
-$Factory.Variable.post = function (form, mode) {
-    if (form == null) {
-        form = "wf-variable-form";
-   }
-
-   $Factory.Busy(1);
-   var params = $("#" + form).serialize();
-
-	params += "&token=" + encodeURIComponent($Factory.token);
-
-	$.ajax({
-		type:"POST",
-		dataType: "json",
-		url: ajaxpath,
-		data: "action=ajax&rs=" + mode + "&" + params,
-		success: $Factory.ReplaceCallback.success,
-		error:  $Factory.ReplaceCallback.failure,
-		timeout: 50000
-   });
-}
-
-
-$Factory.Variable.submit = function (form, mode) {
-	$Factory.Variable.post(form, 'axWFactorySaveVariable');
-	return false;
-};
-
-
-//submit form with new variable data
-$Factory.Variable.remove_submit = function ( confirm, form ) {
-	if ( ( confirm == true ) && !window.confirm('Are You sure?') ) {
-		return false;
-	}
-	$Factory.Variable.post(form, 'axWFactoryRemoveVariable');
-	return false;
-};
-
-$Factory.Variable.tagCheck = function ( submitType ) {
-	$( '#wf-tag-parse' ).empty();
-	var tagName = $('#tagName').val();
-	if ( tagName == '' ) {
-		if( submitType == 'remove' ) {
-			$Factory.Variable.remove_submit(true);
-		}
-		else {
-			$Factory.Variable.submit();
-		}
-	}
-	else {
-		$.ajax({
-	 	  	type:"POST",
-	 	  	dataType: "json",
-	 	  	url: ajaxpath,
-			data: "action=ajax&rs=axWFactoryTagCheck&tagName="+tagName+"&token="+encodeURIComponent($Factory.token),
-			success: function( oResponse ) {
-				var data = oResponse;
-				if( data.wikiCount == 0 ) {
-					$( '#wf-tag-parse' ).get("<span style=\"color: red; font-weight: bold;\">tag doesn't exists</span>");
-				}
-				else {
-					if( !window.confirm('This change will apply to all "'+tagName+'" tagged wikis ('+data.wikiCount+' in total). Are you really, really sure?') ) {
-						return false;
-					}
-					if( submitType == 'remove' ) {
-						$Factory.Variable.remove_submit(false);
-					}
-					else {
-						$Factory.Variable.submit();
-					}
-				}
-			},
-			timeout: 50000
-		});
-	}
-};
 
 $Factory.Variable.close_submit = function (opt) {
 	$Factory.Busy(1);

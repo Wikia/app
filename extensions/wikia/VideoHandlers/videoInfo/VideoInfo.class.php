@@ -13,7 +13,6 @@ class VideoInfo extends WikiaModel {
 	protected $addedBy = 0;
 	protected $duration = 0;
 	protected $removed = 0;
-	protected $featured = 0;
 
 	protected static $fields = array(
 		'videoTitle',
@@ -23,7 +22,6 @@ class VideoInfo extends WikiaModel {
 		'addedBy',
 		'duration',
 		'removed',
-		'featured',
 	);
 
 	public function __construct( $data = array() ) {
@@ -131,14 +129,6 @@ class VideoInfo extends WikiaModel {
 	}
 
 	/**
-	 * Check if it is featured video
-	 * @return boolean
-	 */
-	public function isFeatured() {
-		return ( $this->featured == 1 );
-	}
-
-	/**
 	 * Update data in the database
 	 * @return boolean - Returns true if rows were updated, false if no rows were updated
 	 */
@@ -158,7 +148,6 @@ class VideoInfo extends WikiaModel {
 					'added_by' => $this->addedBy,
 					'duration' => $this->duration,
 					'removed' => $this->removed,
-					'featured' => $this->featured,
 				),
 				array( 'video_title' => $this->videoTitle ),
 				__METHOD__
@@ -203,10 +192,8 @@ class VideoInfo extends WikiaModel {
 					'added_by' => $this->addedBy,
 					'duration' => $this->duration,
 					'removed' => $this->removed,
-					'featured' => $this->featured,
 				),
-				__METHOD__,
-				'IGNORE'
+				__METHOD__
 			);
 
 			$affected = $db->affectedRows() > 0;
@@ -265,7 +252,15 @@ class VideoInfo extends WikiaModel {
 
 			$row = $db->selectRow(
 				'video_info',
-				'*',
+				[
+					"video_title",
+					"video_id",
+					"provider",
+					"added_at",
+					"added_by",
+					"duration",
+					"removed",
+				],
 				array( 'video_title' => $videoTitle ),
 				__METHOD__
 			);
@@ -296,7 +291,6 @@ class VideoInfo extends WikiaModel {
 			'addedBy' => $row->added_by,
 			'duration' => $row->duration,
 			'removed' => $row->removed,
-			'featured' => $row->featured,
 		);
 
 		$class = get_class();

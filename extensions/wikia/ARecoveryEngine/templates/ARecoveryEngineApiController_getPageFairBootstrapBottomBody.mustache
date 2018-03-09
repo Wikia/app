@@ -9,7 +9,7 @@
 		var context = adContext.getContext();
 
 		if (context.opts.pageFairRecovery === true) {
-			var adonis = win.adonis || {};
+			var adonis = win.adonis = win.adonis || {};
 
 			adonis.transport = 'https://www.adumen.com/http';
 			adonis.od = function(detectionStatus) {

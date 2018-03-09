@@ -2,10 +2,10 @@
 define('ext.wikia.adEngine.lookup.prebid.adapters.rubiconDisplay', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.context.slotsContext',
-	'ext.wikia.adEngine.utils.adLogicZoneParams',
+	'ext.wikia.adEngine.lookup.prebid.adaptersHelper',
 	'ext.wikia.aRecoveryEngine.instartLogic.recovery',
 	'wikia.log'
-], function (adContext, slotsContext, adLogicZoneParams, instartLogic, log) {
+], function (adContext, slotsContext, adaptersHelper, instartLogic, log) {
 	'use strict';
 
 	var bidderName = 'rubicon_display',
@@ -18,28 +18,28 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.rubiconDisplay', [
 			oasis: {
 				TOP_LEADERBOARD: {
 					sizes: [[728, 90], [970, 250]],
-					targeting: {loc: 'top'},
+					targeting: {loc: ['top']},
 					position: 'atf',
 					siteId: 148804,
 					zoneId: 704672
 				},
 				TOP_RIGHT_BOXAD: {
 					sizes: [[300, 250], [300, 600]],
-					targeting: {loc: 'top'},
+					targeting: {loc: ['top']},
 					position: 'atf',
 					siteId: 148804,
 					zoneId: 704672
 				},
 				INCONTENT_BOXAD_1: {
 					sizes: [[160, 600], [300, 600], [300, 250]],
-					targeting: {loc: 'hivi'},
+					targeting: {loc: ['hivi']},
 					position: 'btf',
 					siteId: 148804,
 					zoneId: 704676
 				},
 				BOTTOM_LEADERBOARD: {
 					sizes: [[728, 90], [970, 250]],
-					targeting: {loc: 'footer'},
+					targeting: {loc: ['footer']},
 					position: 'btf',
 					siteId: 148804,
 					zoneId: 704674
@@ -71,26 +71,12 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.rubiconDisplay', [
 		return adContext.getContext();
 	}
 
-	function getTargeting(slotName, skin) {
-		var provider = skin === 'oasis' ? 'gpt' : 'mobile',
-			s1 = getAdContext().targeting.wikiIsTop1000 ? adLogicZoneParams.getName() : 'not a top1k wiki';
-
-		return {
-			pos: slotName,
-			src: provider,
-			s0: adLogicZoneParams.getSite(),
-			s1: s1,
-			s2: adLogicZoneParams.getPageType(),
-			lang: adLogicZoneParams.getLanguage()
-		};
-	}
-
 	function isEnabled() {
 		return getAdContext().bidders.rubiconDisplay && !instartLogic.isBlocking();
 	}
 
 	function prepareAdUnit(slotName, config, skin) {
-		var targeting = getTargeting(slotName, skin),
+		var targeting = adaptersHelper.getTargeting(slotName, skin),
 			adUnit,
 			bidParams;
 
