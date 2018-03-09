@@ -8,7 +8,7 @@ class ArticleAsJson {
 		'imageMaxWidth' => false
 	];
 
-	const CACHE_VERSION = 3.13;
+	const CACHE_VERSION = 3.14;
 
 	const ICON_MAX_SIZE = 48;
 	// Line height in Mercury
@@ -283,8 +283,8 @@ class ArticleAsJson {
 
 			$caption = $frameParams['caption'] ?? null;
 			$media = self::createMediaObject( $details, $title->getText(), $caption, $linkHref );
-			$media['srcset'] = self::getSrcset( $media['url'], intval($media['width']), intval($media['height']));
-			$media['thumbnail'] = self::getThumbnailUrlForWidth( $media['url'], $media['width'], $media['height'], 340);
+			$media['srcset'] = self::getSrcset( $media['url'], intval( $media['width'] ) );
+			$media['thumbnail'] = self::getThumbnailUrlForWidth( $media['url'], 340 );
 
 			self::$media[] = $media;
 
@@ -298,27 +298,23 @@ class ArticleAsJson {
 		return true;
 	}
 
-	private static function getSrcset(string $url, int $originalWidth, int $originalHeight): string {
+	private static function getSrcset( string $url, int $originalWidth ): string {
 		$widths = [ 284, 340, 732, 985 ];
 		$srcSetItems = [];
 
-		foreach( $widths as $width ) {
+		foreach ( $widths as $width ) {
 			if ( $width <= $originalWidth ) {
-				$thumb = self::getThumbnailUrlForWidth( $url, $originalWidth, $originalHeight, $width );
+				$thumb = self::getThumbnailUrlForWidth( $url, $width );
 				$srcSetItems[] = "${thumb} ${width}w";
 			}
 		}
 
-		return implode( ',', $srcSetItems);
+		return implode( ',', $srcSetItems );
 	}
 
-	private static function getThumbnailUrlForWidth( string $url, int $originalWidth, int $originalHeight, int $requestedWidth ) {
-		$ratio =  $originalHeight / $originalWidth;
-
+	private static function getThumbnailUrlForWidth( string $url, int $requestedWidth ) {
 		return VignetteRequest::fromUrl( $url )
-			->thumbnailDown()
-			->width( $requestedWidth )
-			->height( round($requestedWidth * $ratio) )
+			->scaleToWidth( $requestedWidth )
 			->url();
 	}
 
