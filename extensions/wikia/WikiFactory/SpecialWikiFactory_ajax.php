@@ -635,38 +635,40 @@ function axWFactoryClusterSetReadOnly() : AjaxResponse {
 			'error' =>  'We only support internal POST requests'
 		]) );
 	}
-
-	if ( !hash_equals( $wgTheSchwartzSecretToken, $request->getVal('token') ) ) {
+	else if ( !hash_equals( $wgTheSchwartzSecretToken, $request->getVal('token') ) ) {
 		$resp->setResponseCode(403); // forbidden
 		$resp->addText( json_encode( [
 			'error' =>  'Invalid token provided'
 		]) );
 	}
+	else {
+		// which cluster do we want modify and whether to set or remove read-only flag
+		$cluster = $request->getVal( 'cluster' );
+		$readOnly = $request->getInt( 'readonly' ) === 1;
 
-	// which cluster do we want modify and whether to set or remove read-only flag
-	$cluster = $request->getVal('cluster' );
-	$readOnly = $request->getInt('readonly' ) === 1;
+		$msg =
+			sprintf( 'Putting %s cluster %s', $cluster,
+				$readOnly ? 'into read-only mode' : 'back into write-read mode' );
 
-	$msg = sprintf( 'Putting %s cluster %s',
-		$cluster,
-		$readOnly ? 'into read-only mode' : 'back into write-read mode'
-	);
+		// perform WikiFactory changes on behalf of FANDOMbot
+		global $wgUser;
+		$wgUser = User::newFromName( Wikia::BOT_USER );
 
-	// perform WikiFactory changes on behalf of FANDOMbot
-	global $wgUser;
-	$wgUser = User::newFromName( Wikia::BOT_USER );
+		if ( $readOnly ) {
+			$ret =
+				WikiFactory::setVarByName( 'wgReadOnlyCluster', Wikia::COMMUNITY_WIKI_ID, $cluster,
+					$msg );
+		} else {
+			$ret =
+				WikiFactory::removeVarByName( 'wgReadOnlyCluster', Wikia::COMMUNITY_WIKI_ID, $msg );
+		}
 
-	if ( $readOnly ) {
-		$ret = WikiFactory::setVarByName( 'wgReadOnlyCluster', Wikia::COMMUNITY_WIKI_ID, $cluster, $msg );
-	} else {
-		$ret = WikiFactory::removeVarByName( 'wgReadOnlyCluster', Wikia::COMMUNITY_WIKI_ID, $msg );
+		$resp->setResponseCode( $ret ? 200 : 500 );
+		$resp->addText( json_encode( [
+			'ok' => $ret,
+			'msg' => $msg
+		] ) );
 	}
-
-	$resp->setResponseCode( $ret ? 200 : 500 );
-	$resp->addText( json_encode( [
-		'ok' => $ret,
-		'msg' =>  $msg
-	]) );
 
 	$resp->setContentType( 'application/json; charset=utf-8' );
 	return $resp;
