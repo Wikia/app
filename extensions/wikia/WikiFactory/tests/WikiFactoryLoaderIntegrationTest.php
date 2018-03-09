@@ -16,12 +16,13 @@ class WikiFactoryLoaderIntegrationTest extends WikiaDatabaseTest {
 	 *
 	 * @param int $expectedCityId
 	 * @param array $server
-	 * @param array $queryParams
+	 * @param array $requestParams
 	 */
 	public function testWikiLoadedWhenDomainExists(
-		int $expectedCityId, array $server, array $queryParams
+		int $expectedCityId, array $server, array $requestParams
 	) {
-		$wikiFactoryLoader = new WikiFactoryLoader( $server, $queryParams );
+		$getParams = $requestParams;
+		$wikiFactoryLoader = new WikiFactoryLoader( $server, $requestParams, $getParams );
 		$cityId = $wikiFactoryLoader->execute();
 
 		$this->assertEquals( $expectedCityId, $cityId );
@@ -44,7 +45,9 @@ class WikiFactoryLoaderIntegrationTest extends WikiaDatabaseTest {
 	 * @param array $env
 	 */
 	public function testLoadExistingWikiFromEnvironmentServerIdOrDbName( int $expectedCityId, array $env ) {
-		$wikiFactoryLoader = new WikiFactoryLoader( [], [], $env );
+		$requestParams = [];
+		$getParams = [];
+		$wikiFactoryLoader = new WikiFactoryLoader( [], $requestParams, $getParams, $env );
 		$cityId = $wikiFactoryLoader->execute();
 
 		$this->assertEquals( $expectedCityId, $cityId );
@@ -63,15 +66,15 @@ class WikiFactoryLoaderIntegrationTest extends WikiaDatabaseTest {
 	 *
 	 * @param string $expectedRedirect
 	 * @param array $server
-	 * @param array $queryParams
+	 * @param array $requestParams
 	 */
 	public function testRedirectsToPrimaryDomainWhenAlternativeDomainUsed(
-		string $expectedRedirect, array $server, array $queryParams
+		string $expectedRedirect, array $server, array $requestParams
 	) {
 		$this->mockGlobalVariable( 'wgWikiaEnvironment', WIKIA_ENV_PROD );
 		$this->mockGlobalVariable( 'wgDevelEnvironment', false );
-
-		$wikiFactoryLoader = new WikiFactoryLoader( $server, $queryParams, [], [ 'wikicities.com' ] );
+		$getParams = $requestParams;
+		$wikiFactoryLoader = new WikiFactoryLoader( $server, $requestParams, $getParams, [], [ 'wikicities.com' ] );
 		$result = $wikiFactoryLoader->execute();
 
 		$headers = xdebug_get_headers();
@@ -97,12 +100,13 @@ class WikiFactoryLoaderIntegrationTest extends WikiaDatabaseTest {
 	 * @preserveGlobalState disabled
 	 *
 	 * @param array $server
-	 * @param array $queryParams
+	 * @param array $requestParams
 	 */
 	public function testRedirectsToNotValidPageWhenNoEntryForDomain(
-		array $server, array $queryParams
+		array $server, array $requestParams
 	) {
-		$wikiFactoryLoader = new WikiFactoryLoader( $server, $queryParams );
+		$getParams = $requestParams;
+		$wikiFactoryLoader = new WikiFactoryLoader( $server, $requestParams, $getParams );
 		$result = $wikiFactoryLoader->execute();
 
 		$headers = xdebug_get_headers();
@@ -124,12 +128,13 @@ class WikiFactoryLoaderIntegrationTest extends WikiaDatabaseTest {
 	 * @preserveGlobalState disabled
 	 *
 	 * @param array $server
-	 * @param array $queryParams
+	 * @param array $requestParams
 	 */
 	public function testReturnsFalseAndRedirectsWhenWikiIsMarkedForClosing(
-		array $server, array $queryParams
+		array $server, array $requestParams
 	) {
-		$wikiFactoryLoader = new WikiFactoryLoader( $server, $queryParams );
+		$getParams = $requestParams;
+		$wikiFactoryLoader = new WikiFactoryLoader( $server, $requestParams, $getParams );
 		$result = $wikiFactoryLoader->execute();
 
 		$headers = xdebug_get_headers();
@@ -150,10 +155,11 @@ class WikiFactoryLoaderIntegrationTest extends WikiaDatabaseTest {
 	 * @preserveGlobalState disabled
 	 *
 	 * @param array $server
-	 * @param array $queryParams
+	 * @param array $requestParams
 	 */
-	public function testReturnsFalseAndRedirectsWhenWikiIsDisabled( array $server, array $queryParams ) {
-		$wikiFactoryLoader = new WikiFactoryLoader( $server, $queryParams );
+	public function testReturnsFalseAndRedirectsWhenWikiIsDisabled( array $server, array $requestParams ) {
+		$getParams = $requestParams;
+		$wikiFactoryLoader = new WikiFactoryLoader( $server, $requestParams, $getParams );
 		$result = $wikiFactoryLoader->execute();
 
 		$headers = xdebug_get_headers();
@@ -177,12 +183,13 @@ class WikiFactoryLoaderIntegrationTest extends WikiaDatabaseTest {
 	 *
 	 * @param string $expectedRedirectUrl
 	 * @param array $server
-	 * @param array $queryParams
+	 * @param array $requestParams
 	 */
 	public function testReturnsFalseAndRedirectsWhenWikiIsFunctioningAsARedirect(
-		string $expectedRedirectUrl, array $server, array $queryParams
+		string $expectedRedirectUrl, array $server, array $requestParams
 	) {
-		$wikiFactoryLoader = new WikiFactoryLoader( $server, $queryParams );
+		$getParams = $requestParams;
+		$wikiFactoryLoader = new WikiFactoryLoader( $server, $requestParams, $getParams );
 		$result = $wikiFactoryLoader->execute();
 
 		$headers = xdebug_get_headers();
@@ -205,7 +212,9 @@ class WikiFactoryLoaderIntegrationTest extends WikiaDatabaseTest {
 	 * @param array $env
 	 */
 	public function testWikiIdZeroWhenIdDbNameProvidedAndWikiDoesNotExist( array $env ) {
-		$wikiFactoryLoader = new WikiFactoryLoader( [], [], $env );
+		$requestParams = [];
+		$getParams = [];
+		$wikiFactoryLoader = new WikiFactoryLoader( [], $requestParams, $getParams, $env );
 		$result = $wikiFactoryLoader->execute();
 
 		$this->assertEquals( 0, $result );
@@ -225,7 +234,9 @@ class WikiFactoryLoaderIntegrationTest extends WikiaDatabaseTest {
 	public function testWikiIdLoadedWhenIdDbNameProvidedAndWikiIsMarkedForClosingIsDisabledOrIsRedirect(
 		int $expectedCityId, array $env
 	) {
-		$wikiFactoryLoader = new WikiFactoryLoader( [], [], $env );
+		$requestParams = [];
+		$getParams = [];
+		$wikiFactoryLoader = new WikiFactoryLoader( [], $requestParams, $getParams, $env );
 		$result = $wikiFactoryLoader->execute();
 
 		$this->assertEquals( $expectedCityId, $result );
@@ -248,7 +259,9 @@ class WikiFactoryLoaderIntegrationTest extends WikiaDatabaseTest {
 	 * @param array $server
 	 */
 	public function testRequestInfoOverridesServerIdOverridesDbName( int $expectedCityId, array $env, array $server ) {
-		$wikiFactoryLoader = new WikiFactoryLoader( $server, [], $env );
+		$requestParams = [];
+		$getParams = [];
+		$wikiFactoryLoader = new WikiFactoryLoader( $server, $requestParams, $getParams, $env );
 		$result = $wikiFactoryLoader->execute();
 
 		$this->assertEquals( $expectedCityId, $result );
@@ -264,7 +277,15 @@ class WikiFactoryLoaderIntegrationTest extends WikiaDatabaseTest {
 		$this->expectException( InvalidArgumentException::class );
 		$this->expectExceptionMessage( "Cannot tell which wiki it is (neither SERVER_NAME, SERVER_ID nor SERVER_DBNAME is defined)" );
 
-		new WikiFactoryLoader( [], [] );
+		new WikiFactoryLoader( [] );
+	}
+
+	public function testLangPathIsRemovedFromParams() {
+		$requestParams = [ 'langpath' => 'pl' ];
+		$getParams = [ 'langpath' => 'pl' ];
+		new WikiFactoryLoader( [ 'SERVER_NAME' => 'poznan.wikia.com' ], $requestParams, $getParams, [ 'SERVER_ID' => 1 ] );
+		$this->assertArrayNotHasKey( 'langpath', $requestParams );
+		$this->assertArrayNotHasKey( 'langpath', $getParams );
 	}
 
 	protected function tearDown() {
