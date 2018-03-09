@@ -174,6 +174,13 @@ class RenameUserProcess {
 				$this->addError( wfMessage( 'userrenametool-error-antispoof-conflict', $nun ) );
 				return false;
 			}
+
+			// SUS-4301 | check for emojis in user name
+			$conflicts = $oNewSpoofUser->isLegal();
+			if ( !empty( $conflicts ) ) {
+				$this->addError( wfMessage( 'userrenametool-error-antispoof-conflict', $nun ) );
+				return false;
+			}
 		} else {
 			$this->addError( wfMessage( 'userrenametool-error-antispoof-notinstalled' ) );
 			return false;
