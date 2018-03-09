@@ -74,12 +74,13 @@ class WikiFactoryLoader {
 	 * @author Krzysztof Krzyżaniak <eloy@wikia-inc.com>
 	 *
 	 * @param array $server
-	 * @param array $queryParams
+	 * @param array $requestParams
+	 * @param array $getParams
 	 * @param array $environment
 	 * @param array $wikiFactoryDomains
 	 */
 	public function __construct(
-		array $server = [], array $queryParams = [], array $environment = [],
+		array $server = [], array &$requestParams = [], array &$getParams = [], array $environment = [],
 		array $wikiFactoryDomains = []
 	) {
 		global $wgDevelEnvironment;
@@ -107,13 +108,20 @@ class WikiFactoryLoader {
 			// normal HTTP request
 			$this->mServerName = strtolower( $server['SERVER_NAME'] );
 
-			if ( isset( $queryParams['langpath'] ) && $queryParams['langpath'] !== 'en' ) {
-				$langCode = $queryParams['langpath'];
-				$languages = Language::getLanguageNames();
+			if ( isset( $requestParams['langpath'] ) ) {
+				if ( $requestParams['langpath'] !== 'en' ) {
+					$langCode = $requestParams['langpath'];
+					$languages = Language::getLanguageNames();
 
-				if ( isset( $languages[$langCode] ) ) {
-					$this->langCode = $langCode;
+					if ( isset( $languages[$langCode] ) ) {
+						$this->langCode = $langCode;
+					}
 				}
+
+				// unset the parameter so langpath is not visible later on
+				// otherwise it would get appended to url in several places when we create urls
+				unset( $requestParams['langpath'] );
+				unset( $getParams['langpath'] );
 			}
 
 			$this->mCityID = false;
@@ -427,15 +435,8 @@ class WikiFactoryLoader {
 			$redirectUrl = WikiFactory::getLocalEnvURL( $this->mCityUrl );
 			$target = rtrim( $redirectUrl, '/' ) . '/' . $this->pathParams;
 
-			$queryParams = array_filter(
-				$_GET,
-				function ($key) {
-					return $key !== 'langpath';
-				},
-				ARRAY_FILTER_USE_KEY
-			);
-			if ( !empty( $queryParams ) ) {
-				$target .= '?' . http_build_query( $queryParams );
+			if ( !empty( $_GET ) ) {
+				$target .= '?' . http_build_query( $_GET );
 			}
 
 			header( "X-Redirected-By-WF: NotPrimary" );
