@@ -150,7 +150,7 @@ class RenameUserProcess {
 	 *
 	 * @return bool True if all prerequisites are met
 	 */
-	protected function setup() {
+	public function setup() {
 		global $wgContLang, $wgCapitalLinks;
 
 		// Sanitize input data
@@ -171,22 +171,33 @@ class RenameUserProcess {
 			$oNewSpoofUser = new SpoofUser( $nun );
 			$conflicts = $oNewSpoofUser->getConflicts();
 			if ( !empty( $conflicts ) ) {
-				$this->addWarning( wfMessage( 'userrenametool-error-antispoof-conflict', $nun ) );
+				$this->addError( wfMessage( 'userrenametool-error-antispoof-conflict', $nun ) );
+				return false;
+			}
+
+			// SUS-4301 | check for emojis in user name
+			$conflicts = $oNewSpoofUser->isLegal();
+			if ( !empty( $conflicts ) ) {
+				$this->addError( wfMessage( 'userrenametool-error-antispoof-conflict', $nun ) );
+				return false;
 			}
 		} else {
 			$this->addError( wfMessage( 'userrenametool-error-antispoof-notinstalled' ) );
+			return false;
 		}
 
 		// Phalanx test
 
-		$warning = self::testBlock( $oun );
-		if ( !empty( $warning ) ) {
-			$this->addWarning( $warning );
+		$error = self::testBlock( $oun );
+		if ( !empty( $error ) ) {
+			$this->addError( $error );
+			return false;
 		}
 
-		$warning = self::testBlock( $nun );
-		if ( !empty( $warning ) ) {
-			$this->addWarning( $warning );
+		$error = self::testBlock( $nun );
+		if ( !empty( $error ) ) {
+			$this->addError( $error );
+			return false;
 		}
 
 		// Invalid old user name entered
@@ -589,7 +600,7 @@ class RenameUserProcess {
 	private static function testBlock( $text ) {
 		wfProfileIn( __METHOD__ );
 
-		if ( !class_exists( 'PhalanxService' ) ) {
+		if ( !class_exists( 'PhalanxServiceFactory' ) ) {
 			wfProfileOut( __METHOD__ );
 			return '';
 		}
