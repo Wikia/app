@@ -18,9 +18,11 @@ class RenameUserSetupChecksTest extends WikiaBaseTest {
 			'getConflicts' => $expectedResult ? [] : [ 'foo' ]
 		]);
 
-		$this->mockClassWithMethods(DefaultPhalanxService::class, [
+		$phalanxService = $this->mockClassWithMethods(DefaultPhalanxService::class, [
 			'doMatch' => []
 		]);
+
+		$this->mockStaticMethod( PhalanxServiceFactory::class, 'getServiceInstance', $phalanxService );
 
 		// perform initial checks for user rename process
 		$this->assertEquals( $expectedResult, $process->setup() );
