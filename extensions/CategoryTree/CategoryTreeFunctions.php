@@ -432,12 +432,12 @@ class CategoryTree {
 		if ( !$allowMissing && !$title->getArticleID() ) {
 			$html .= Html::openElement( 'span', array( 'class' => 'CategoryTreeNotice' ) );
 			if ( $parser ) {
-				$html .= $parser->recursiveTagParse( wfMsgNoTrans( 'categorytree-not-found', $category ) );
+				$html .= $parser->recursiveTagParse( wfMessage( 'categorytree-not-found', $category )->inContentLanguage()->plain() );
 			} else {
-				$html .= wfMsgExt( 'categorytree-not-found', 'parseinline', htmlspecialchars( $category ) );
+				$html .= wfMessage( 'categorytree-not-found', $category )->inContentLanguage()->parse();
 			}
 			$html .= Html::closeElement( 'span' );
-			}
+		}
 		else {
 			if ( !$hideroot ) {
 				$html .= $this->renderNode( $title, $depth, $wgCategoryTreeDynamicTag );
