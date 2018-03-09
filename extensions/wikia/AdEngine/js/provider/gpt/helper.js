@@ -147,6 +147,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 			}
 
 			if (
+				(slotName === 'TOP_LEADERBOARD' || slotName === 'MOBILE_TOP_LEADERBOARD') &&
 				geo.isProperGeo(instantGlobals.wgAdDriverLBScrollExperimentCountires) &&
 				instantGlobals.wgAdDriverLBScrollExperimentBucket > 0
 			) {
