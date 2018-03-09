@@ -952,6 +952,7 @@ $config['mercury_ads_js'] = [
 	],
 ];
 
+// TODO remove this group and include file directly after ADEN-6797 release
 $config['pr3b1d_prod_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [
