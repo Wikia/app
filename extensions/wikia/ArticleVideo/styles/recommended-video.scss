@@ -12,7 +12,7 @@
 	justify-content: center;
 	left: 0;
 	transform: translate(0, 230px);
-	padding: 17px 0;
+	padding: 15px 0;
 	position: fixed;
 	right: 0;
 	transition: 0.2s transform ease-in;
@@ -35,19 +35,41 @@
 	}
 
 	&.expanded {
-		height: 519px;
+		height: auto;
 
-		.article-recommended-videos {
-			flex-direction: column;
+		.actual-video {
+			flex: 0;
+			min-width: 678px;
+			order: 1;
+			width: 678px;
+
+			h3 {
+				font-size: 24px;
+				margin-bottom: 26px;
+				margin-top: 24px;
+			}
 		}
 
-		.article-recommended-video {
+		.side-playlist {
+			display: flex;
+		}
+
+		.video-placeholder {
+			display: none;
+		}
+
+		.side-playlist .video-placeholder {
+			display: flex;
+		}
+
+		.side-playlist .article-recommended-video {
 			display: flex;
 			flex-grow: 1;
 			width: auto;
 		}
 
 		.article-recommended-video-placeholder {
+			min-width: 122px;
 			width: 122px;
 		}
 	}
@@ -80,11 +102,29 @@
 	h2 {
 		align-self: flex-start;
 		color: #000;
+		font-size: 14px;
 		margin-bottom: 16px;
 		text-transform: uppercase;
 
 		strong {
 			font-weight: bold;
+		}
+	}
+
+	.side-playlist {
+		display: none;
+		flex-direction: column;
+		margin-left: 47px;
+		order: 2;
+
+		h3 {
+			margin-left: 12px;
+			margin-top: 0;
+		}
+
+		.video-placeholder {
+			align-items: center;
+			margin-bottom: 18px;
 		}
 	}
 }
@@ -111,9 +151,10 @@
 }
 
 .article-recommended-video {
-	flex-shrink: 0;
+	flex: 1;
 	display: inline-block;
-	width: 200px;
+	margin-right: 16px;
+	min-width: 200px;
 
 	img {
 		height: auto;
@@ -128,16 +169,24 @@
 	}
 
 	&:not(:first-child) {
-		h3 {
+		.video-title {
 			margin-top: 6px;
 		}
 	}
 }
 
-.article-recommended-video:not(:last-child) {
-	margin-right: 16px;
-}
+@for $i from 1 through 5 {
+	.article-recommended-video:nth-child(#{$i}) {
+		order: #{$i};
+	}
 
-.article-recommended-video:first-child .article-recommended-video-placeholder {
-	display: none;
+	.plays-video-#{$i} {
+		.video-placeholder:nth-child(#{$i}) {
+			display: none;
+		}
+
+		.actual-video {
+			order: #{$i}
+		}
+	}
 }

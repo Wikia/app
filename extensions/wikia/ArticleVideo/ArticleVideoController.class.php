@@ -80,39 +80,13 @@ class ArticleVideoController extends WikiaController {
 	public function recommendedVideo() {
 		$articleId = $this->wg->out->getTitle()->getArticleID();
 
-		$this->setVal(
-			'videos',
-			[
-				[
-					'mediaId' => 'G7C6VCox',
-					'image' => 'https://cdn.jwplayer.com/thumbs/G7C6VCox-720.jpg',
-					'title' => 'Tommy Wiseau Opens Our Minds'
-				],
-				[
-					'mediaId' => 'neFGosRg',
-					'image' => 'https://cdn.jwplayer.com/thumbs/G7C6VCox-720.jpg',
-					'title' => 'Tommy Wiseau Opens Our Minds'
-				],
-				[
-					'mediaId' => 'Tj3xIreL',
-					'image' => 'https://cdn.jwplayer.com/thumbs/G7C6VCox-720.jpg',
-					'title' => 'Tommy Wiseau Opens Our Minds'
-				],
-				[
-					'mediaId' => 'vzr3a1Fq',
-					'image' => 'https://cdn.jwplayer.com/thumbs/G7C6VCox-720.jpg',
-					'title' => 'Tommy Wiseau Opens Our Minds'
-				],
-				[
-					'mediaId' => 'C7B9bKGa',
-					'image' => 'https://cdn.jwplayer.com/thumbs/G7C6VCox-720.jpg',
-					'title' => 'Tommy Wiseau Opens Our Minds'
-				],
-			]
-		);
-
 		if ( empty( ArticleVideoContext::isRecommendedVideoAvailable( $articleId ) ) ) {
 			$this->skipRendering();
+		} else {
+			$this->setVal(
+				'playlistId',
+				ArticleVideoContext::getRecommendedVideoPlaylistId( $articleId )
+			);
 		}
 	}
 }
