@@ -229,7 +229,6 @@ class PermissionsConfiguration {
 		'removeavatar',
 		'renameuser',
 		'userrollback',
-		'specialvideohandler',
 		'wdacreview',
 		'WhereIsExtension',
 		'smwallowaskpage',

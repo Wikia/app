@@ -94,19 +94,19 @@ class WikiaFilePage extends ImagePage {
 
 	/**
 	 * Display info about the video below the video player: provider, views, expiration date (if any)
+	 * @param WikiaLocalFileShared $file
+	 * @return string
 	 */
-	public function getVideoInfoLine( $file ) {
+	public function getVideoInfoLine( WikiaLocalFile $file ) {
 		wfProfileIn( __METHOD__ );
 
 		$app = F::app();
 
 		$captionDetails = array(
-			'expireDate' => $file->getExpirationDate(),
 			'provider' => $file->getProviderName(),
 			'providerUrl' => $file->getProviderHomeUrl(),
 			'detailUrl' => $file->getProviderDetailUrl(),
 			'views' => MediaQueryService::getTotalVideoViewsByTitle( $file->getTitle()->getDBKey() ),
-			'regionalRestrictions' => $file->getRegionalRestrictions(),
 		);
 
 		$caption = $app->renderView( 'FilePageController', 'videoCaption', $captionDetails );

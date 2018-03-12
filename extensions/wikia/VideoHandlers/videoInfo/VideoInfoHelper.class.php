@@ -9,10 +9,9 @@ class VideoInfoHelper extends WikiaModel {
 	/**
 	 * get video data from title
 	 * @param Title|string $title
-	 * @param boolean $premiumOnly
 	 * @return array|null  $video
 	 */
-	public function getVideoDataFromTitle( $title, $premiumOnly = false ) {
+	public function getVideoDataFromTitle( $title ) {
 		wfProfileIn( __METHOD__ );
 
 		if ( is_string($title) ) {
@@ -20,7 +19,7 @@ class VideoInfoHelper extends WikiaModel {
 		}
 
 		$file = wfFindFile( $title );
-		$video = $this->getVideoDataFromFile( $file, $premiumOnly );
+		$video = $this->getVideoDataFromFile( $file );
 
 		wfProfileOut( __METHOD__ );
 
@@ -31,62 +30,46 @@ class VideoInfoHelper extends WikiaModel {
 	 * This method pulls the data needed for a VideoInfo object from an existing file when the data does not exist
 	 * in the video_info table.  This is used in the case where video_info data wasn't created when the video uploaded.
 	 * @param File $file - The file object to get video info for
-	 * @param boolean $premiumOnly - If true will exit immediately if $file is a local file
 	 * @return array|null - An array of data suitable for passing to the VideoInfo constructor
 	 */
-	public function getVideoDataFromFile( $file, $premiumOnly = false ) {
-		wfProfileIn( __METHOD__ );
+	public function getVideoDataFromFile( $file ) {
+		if ( $file instanceof File && $file->exists() && $file->isLocal() && WikiaFileHelper::isFileTypeVideo( $file ) ) {
+			$fileMetadata = $file->getMetadata();
+			$userId = $file->getUser( 'id' );
+			$addedAt = ( $file->getTimestamp() ) ? $file->getTimestamp() : wfTimestamp( TS_MW );
 
-		$video = null;
-
-		if ( $file instanceof File && $file->exists() && WikiaFileHelper::isFileTypeVideo($file) ) {
-			if ( !($premiumOnly && $file->isLocal()) ) {
-				$fileMetadata = $file->getMetadata();
-				$userId = $file->getUser( 'id' );
-				$addedAt = ( $file->getTimestamp() ) ? $file->getTimestamp() : wfTimestamp( TS_MW );
-
-				$duration = 0;
-				$hdfile = 0;
-				$videoId = '';
-				if ( $fileMetadata ) {
-					$fileMetadata = unserialize( $fileMetadata );
-					if ( array_key_exists('duration', $fileMetadata) ) {
-						$duration = $fileMetadata['duration'];
-					}
-					if ( array_key_exists('hd', $fileMetadata) ) {
-						$hdfile = ( $fileMetadata['hd'] ) ? 1 : 0;
-					}
-					if ( array_key_exists( 'videoId', $fileMetadata ) ) {
-						$videoId = $fileMetadata['videoId'];
-					}
+			$duration = 0;
+			$videoId = '';
+			if ( $fileMetadata ) {
+				$fileMetadata = unserialize( $fileMetadata );
+				if ( array_key_exists( 'duration', $fileMetadata ) ) {
+					$duration = $fileMetadata['duration'];
 				}
 
-				$premium = ( $file->isLocal() ) ? 0 : 1 ;
-				$video = array(
-					'videoTitle' => $file->getName(),
-					'videoId' => $videoId,
-					'provider' => $file->minor_mime,
-					'addedAt' => $addedAt,
-					'addedBy' => $userId,
-					'duration' => $duration,
-					'premium' => $premium,
-					'hdfile' => $hdfile,
-				);
+				if ( array_key_exists( 'videoId', $fileMetadata ) ) {
+					$videoId = $fileMetadata['videoId'];
+				}
 			}
+
+			return [
+				'videoTitle' => $file->getName(),
+				'videoId' => $videoId,
+				'provider' => $file->minor_mime,
+				'addedAt' => $addedAt,
+				'addedBy' => $userId,
+				'duration' => $duration,
+			];
 		}
 
-		wfProfileOut( __METHOD__ );
-
-		return $video;
+		return [];
 	}
 
 	/**
 	 * Get a VideoInfo object given a Title object
 	 * @param Title|string $title
-	 * @param boolean $premiumOnly
 	 * @return VideoInfo|null $videoInfo
 	 */
-	public function getVideoInfoFromTitle( $title, $premiumOnly = false ) {
+	public function getVideoInfoFromTitle( $title ) {
 		wfProfileIn( __METHOD__ );
 
 		// Attempt to retrieve this information from the video_info table first
@@ -94,7 +77,7 @@ class VideoInfoHelper extends WikiaModel {
 
 		// If its not in the DB, recreate it from existing file data
 		if ( empty($videoInfo) ) {
-			$videoData = $this->getVideoDataFromTitle( $title, $premiumOnly );
+			$videoData = $this->getVideoDataFromTitle( $title );
 			if ( !empty($videoData) ) {
 				$videoInfo = new VideoInfo( $videoData );
 			}
@@ -231,30 +214,17 @@ class VideoInfoHelper extends WikiaModel {
 	}
 
 	/**
-	 * Fetch the list of local (e.g. non-premium) videos from this wiki
+	 * Fetch the list of local videos from this wiki
 	 * @return array $titles
 	 */
 	public static function getLocalVideoTitles() {
-		wfProfileIn( __METHOD__ );
-
 		$db = wfGetDB( DB_SLAVE );
 
-		$res = $db->select(
-			array( 'video_info' ),
-			array( 'video_title' ),
-			array( 'premium' => 0 ),
+		return $db->selectFieldValues(
+			'video_info',
+			'video_title',
 			__METHOD__
 		);
-
-		$titles = array();
-		while ( $row = $db->fetchObject( $res ) ) {
-			$titles[] = $row->video_title;
-		}
-		$db->freeResult( $res );
-
-		wfProfileOut( __METHOD__ );
-
-		return $titles;
 	}
 
 }
