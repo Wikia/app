@@ -125,6 +125,7 @@ define('wikia.krux', [
 	}
 
 	function sendEvent(eventId, data) {
+		debugger;
 		if (!kruxLoaded) {
 			return false;
 		}
