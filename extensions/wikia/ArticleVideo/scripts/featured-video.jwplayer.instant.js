@@ -54,7 +54,7 @@ require([
 		win.dispatchEvent(new CustomEvent('wikia.jwplayer.instanceReady', {detail: playerInstance}));
 
 		featuredVideoAds(playerInstance, bidParams, slotTargeting);
-		featuredVideoMoatTracking(playerInstance);
+		featuredVideoMoatTracking.track(playerInstance);
 
 		playerInstance.on('autoplayToggle', function (data) {
 			featuredVideoCookieService.setAutoplay(data.enabled ? '1' : '0');
@@ -83,6 +83,7 @@ require([
 	}
 
 	function setupPlayer() {
+		featuredVideoMoatTracking.loadTrackingPlugin();
 		win.wikiaJWPlayer('featured-video__player', {
 			tracking: {
 				track: function (data) {
