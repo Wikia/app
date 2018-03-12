@@ -46,3 +46,6 @@ $specialPageAliases = array(
 	'Shortpages'                => array( 'አጫጭር_ገጾች' ),
 );
 
+$pluralRules = [
+	"i = 0 or n = 1",
+];

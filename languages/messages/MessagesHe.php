@@ -351,3 +351,8 @@ $namespaceGenderAliases = array(
 	NS_USER_TALK => array( 'male' => 'שיחת_משתמש', 'female' => 'שיחת_משתמשת' ),
 );
 
+$pluralRules = [
+	"i = 1 and v = 0",
+	"i = 2 and v = 0",
+	"v = 0 and n != 0..10 and n % 10 = 0",
+];

@@ -38,3 +38,6 @@ $magicWords = array(
 	'currenthour'           => array( '1', 'IRI_BJALE', 'CURRENTHOUR' ),
 );
 
+$pluralRules = [
+	"n = 0..1",
+];

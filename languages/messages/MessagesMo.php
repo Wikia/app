@@ -20,3 +20,7 @@ $specialPageAliases = array(
 	'Recentchanges'             => array( 'Модификэрьреченте' ),
 );
 
+$pluralRules = [
+	"i = 1 and v = 0",
+	"v != 0 or n = 0 or n != 1 and n % 100 = 1..19",
+];

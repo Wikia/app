@@ -9,3 +9,6 @@
  * @author Paa.kwesi
  */
 
+$pluralRules = [
+	"n = 0..1",
+];

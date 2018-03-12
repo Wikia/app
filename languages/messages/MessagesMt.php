@@ -271,3 +271,8 @@ $magicWords = array(
 	'formatdate'              => array( '0', 'formatdata', 'dataformat', 'formatdate', 'dateformat' ),
 );
 
+$pluralRules = [
+	"n = 1",
+	"n = 0 or n % 100 = 2..10",
+	"n % 100 = 11..19",
+];

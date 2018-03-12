@@ -182,3 +182,8 @@ $dateFormats = array(
 $fallback8bitEncoding = "iso-8859-2";
 $separatorTransformTable = array( ',' => '.', '.' => ',' );
 
+$pluralRules = [
+	"v = 0 and i % 100 = 1",
+	"v = 0 and i % 100 = 2",
+	"v = 0 and i % 100 = 3..4 or v != 0",
+];

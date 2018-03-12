@@ -35,3 +35,6 @@ $namespaceAliases = array(
 	'Amyannan_n_talγa' => NS_TEMPLATE_TALK,
 );
 
+$pluralRules = [
+	"i = 0,1",
+];

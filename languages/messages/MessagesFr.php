@@ -357,3 +357,6 @@ $specialPageAliases = array(
 );
 
 $separatorTransformTable = array( ',' => "\xc2\xa0", '.' => ',' );
+$pluralRules = [
+	"i = 0,1",
+];

@@ -307,3 +307,6 @@ $magicWords = array(
 	'protectionlevel'         => array( '1', 'NIVELDEPROTECAO', 'NÍVELDEPROTEÇÃO', 'PROTECTIONLEVEL' ),
 );
 
+$pluralRules = [
+	"i = 1 and v = 0 or i = 0 and t = 1",
+];

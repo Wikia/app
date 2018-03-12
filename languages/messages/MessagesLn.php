@@ -19,3 +19,6 @@ $linkPrefixExtension = true;
 # Same as the French (bug 8485)
 $separatorTransformTable = array( ',' => "\xc2\xa0", '.' => ',' );
 
+$pluralRules = [
+	"n = 0..1",
+];

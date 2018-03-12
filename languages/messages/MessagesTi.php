@@ -9,3 +9,6 @@
  * @author Teak
  */
 
+$pluralRules = [
+	"n = 0..1",
+];

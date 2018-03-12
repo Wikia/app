@@ -216,3 +216,6 @@ $specialPageAliases = array(
 	'Withoutinterwiki'          => array( 'Tsy_misy_interwiki' ),
 );
 
+$pluralRules = [
+	"n = 0..1",
+];

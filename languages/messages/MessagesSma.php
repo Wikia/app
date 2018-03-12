@@ -10,3 +10,7 @@
  * @author Urhixidur
  */
 
+$pluralRules = [
+	"n = 1",
+	"n = 2",
+];

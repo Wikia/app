@@ -91,3 +91,9 @@ $namespaceAliases = array(
 	'Rang' => NS_CATEGORY
 );
 
+$pluralRules = [
+	"n = 1",
+	"n = 2",
+	"n = 3..6",
+	"n = 7..10",
+];

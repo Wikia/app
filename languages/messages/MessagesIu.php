@@ -11,3 +11,7 @@
  */
 
 $fallback = 'ike-cans';
+$pluralRules = [
+	"n = 1",
+	"n = 2",
+];

@@ -319,3 +319,6 @@ $linkTrail = "/^([\xE0\xA4\x80-\xE0\xA5\xA3\xE0\xA5\xB1-\xE0\xA5\xBF\xEF\xBB\xBF
 
 $digitGroupingPattern = "##,##,###";
 
+$pluralRules = [
+	"i = 0 or n = 1",
+];

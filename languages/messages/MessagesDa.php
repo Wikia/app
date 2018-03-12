@@ -184,3 +184,6 @@ $dateFormats = array(
 	'ymd both' => 'Y M j, H:i'
 );
 
+$pluralRules = [
+	"n = 1 or t != 0 and i = 0,1",
+];

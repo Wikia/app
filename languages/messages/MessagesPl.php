@@ -291,3 +291,9 @@ $magicWords = array(
 	'url_path'                => array( '0', 'ŚCIEŻKA', 'PATH' ),
 	'url_query'               => array( '0', 'ZAPYTANIE', 'QUERY' ),
 );
+
+$pluralRules = [
+	'i = 1 and v = 0',
+	'v = 0 and i % 10 = 2..4 and i % 100 != 12..14',
+	'v = 0 and i != 1 and i % 10 = 0..1 or v = 0 and i % 10 = 5..9 or v = 0 and i % 100 = 12..14',
+];

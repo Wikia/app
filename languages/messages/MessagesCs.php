@@ -353,3 +353,8 @@ $specialPageAliases = array(
 	'Withoutinterwiki'          => array( 'Bez_interwiki', 'Stránky_bez_interwiki_odkazů' ),
 );
 
+$pluralRules = [
+	"i = 1 and v = 0",
+	"i = 2..4 and v = 0",
+	"v != 0",
+];

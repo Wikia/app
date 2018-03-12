@@ -175,3 +175,8 @@ $dateFormats = array(
 	'ISO 8601 both' => 'xnY-xnm-xnd"T"xnH:xni:xns',
 );
 
+$pluralRules = [
+	"n % 10 = 1 and n % 100 != 11..19",
+	"n % 10 = 2..9 and n % 100 != 11..19",
+	"f != 0",
+];

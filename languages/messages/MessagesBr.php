@@ -177,3 +177,9 @@ $dateFormats = array(
 $separatorTransformTable = array( ',' => "\xc2\xa0", '.' => ',' );
 $linkTrail = "/^((?:c\'h|C\'H|C\'h|c’h|C’H|C’h|[a-zA-ZàâçéèêîôûäëïöüùñÇÉÂÊÎÔÛÄËÏÖÜÀÈÙÑ])+)(.*)$/sDu";
 
+$pluralRules = [
+	"n % 10 = 1 and n % 100 != 11,71,91",
+	"n % 10 = 2 and n % 100 != 12,72,92",
+	"n % 10 = 3..4,9 and n % 100 != 10..19,70..79,90..99",
+	"n != 0 and n % 1000000 = 0",
+];

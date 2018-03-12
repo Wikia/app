@@ -454,3 +454,10 @@ $imageFiles = array(
 	'button-nowiki'   => 'ar/button_nowiki.png',
 );
 
+$pluralRules = [
+	"n = 0",
+	"n = 1",
+	"n = 2",
+	"n % 100 = 3..10",
+	"n % 100 = 11..99",
+];

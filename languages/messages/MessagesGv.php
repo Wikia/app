@@ -31,3 +31,8 @@ $namespaceNames = array(
 	NS_CATEGORY_TALK    => 'Resooney_ronney',
 );
 
+$pluralRules = [
+	"n % 10 = 1",
+	"n % 10 = 2",
+	"n % 100 = 0,20,40,60",
+];

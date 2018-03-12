@@ -428,3 +428,6 @@ $imageFiles = array(
 	'button-nowiki'   => 'fa/button_nowiki.png',
 );
 
+$pluralRules = [
+	"i = 0 or n = 1",
+];

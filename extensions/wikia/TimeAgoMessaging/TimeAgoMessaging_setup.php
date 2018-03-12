@@ -27,8 +27,23 @@ $dir = dirname(__FILE__);
 // i18n
 $wgExtensionMessagesFiles['TimeAgoMessaging'] = "{$dir}/TimeAgoMessaging.i18n.php";
 
-// hooks
-$wgHooks['MakeGlobalVariablesScript'][] = 'TimeAgoMessaging::onMakeGlobalVariablesScript';
+$wgResourceModules['ext.wikia.TimeAgoMessaging'] = [
+	'messages' => [
+		'timeago-year',
+		'timeago-month',
+		'timeago-day',
+		'timeago-hour',
+		'timeago-minute',
+		'timeago-second',
+		'timeago-day-from-now',
+		'timeago-hour-from-now',
+		'timeago-minute-from-now',
+		'timeago-month-from-now',
+		'timeago-second-from-now',
+	],
+];
+
+$wgHooks['BeforePageDisplay'][] = 'TimeAgoMessaging::onBeforePageDisplay';
 
 // classes
 $wgAutoloadClasses['TimeAgoMessaging'] = "{$dir}/TimeAgoMessaging.class.php";

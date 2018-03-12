@@ -280,3 +280,8 @@ $separatorTransformTable = array(
 
 $linkTrail = '/^([a-záäčďéíľĺňóôŕšťúýž]+)(.*)$/sDu';
 
+$pluralRules = [
+	"i = 1 and v = 0",
+	"i = 2..4 and v = 0",
+	"v != 0",
+];

@@ -48,3 +48,7 @@ $namespaceNames = array(
 );
 $separatorTransformTable = array( ',' => "\xc2\xa0", '.' => ',' );
 
+$pluralRules = [
+	"n % 10 = 0 or n % 100 = 11..19 or v = 2 and f % 100 = 11..19",
+	"n % 10 = 1 and n % 100 != 11 or v = 2 and f % 10 = 1 and f % 100 != 11 or v != 2 and f % 10 = 1",
+];

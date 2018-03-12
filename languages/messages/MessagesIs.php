@@ -228,3 +228,6 @@ $separatorTransformTable = array( ',' => '.', '.' => ',' );
 $linkPrefixExtension = true;
 $linkTrail = '/^([áðéíóúýþæöa-z-–]+)(.*)$/sDu';
 
+$pluralRules = [
+	"t = 0 and i % 10 = 1 and i % 100 != 11 or t != 0",
+];

@@ -90,7 +90,7 @@ class LocalisationCache {
 		'dateFormats', 'datePreferences', 'datePreferenceMigrationMap',
 		'defaultDateFormat', 'extraUserToggles', 'specialPageAliases',
 		'imageFiles', 'preloadedMessages', 'namespaceGenderAliases',
-		'digitGroupingPattern'
+		'digitGroupingPattern', 'pluralRules'
 	);
 
 	/**

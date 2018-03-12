@@ -87,3 +87,7 @@ $specialPageAliases = array(
 	'Watchlist'                 => array( 'Rol_golyas' ),
 );
 
+$pluralRules = [
+	"n = 1",
+	"n = 2",
+];

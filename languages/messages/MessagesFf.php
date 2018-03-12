@@ -10,3 +10,6 @@
 
 $fallback = 'fr';
 
+$pluralRules = [
+	"i = 0,1",
+];
