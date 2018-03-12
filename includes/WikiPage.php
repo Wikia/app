@@ -1363,7 +1363,16 @@ class WikiPage extends Page implements IDBAccessObject {
 
 			if ( $changed ) {
 				$dbw->begin(__METHOD__);
-				$revisionId = $revision->insertOn( $dbw );
+
+				try {
+					$revisionId = $revision->insertOn( $dbw );
+				} catch ( DBError $error ) {
+					$dbw->rollback( __METHOD__ );
+					$status->fatal( 'databaseerror' );
+
+					wfProfileOut( __METHOD__ );
+					return $status;
+				}
 
 				# Update page
 				#
@@ -1472,7 +1481,16 @@ class WikiPage extends Page implements IDBAccessObject {
 				'user_text'  => $user->getName(),
 				'timestamp'  => $now
 			) );
-			$revisionId = $revision->insertOn( $dbw );
+
+			try {
+				$revisionId = $revision->insertOn( $dbw );
+			} catch ( DBError $error ) {
+				$dbw->rollback( __METHOD__ );
+				$status->fatal( 'databaseerror' );
+
+				wfProfileOut( __METHOD__ );
+				return $status;
+			}
 
 			# Update the page record with revision data
 			$this->updateRevisionOn( $dbw, $revision, 0 );
