@@ -6,71 +6,55 @@ class TimeAgoMessaging {
 	const TTL = 86400;
 
 	/**
-	 * Add inline JS with i18n messages for jquery.timeago.js
+	 * @return bool
 	 */
-	public static function onMakeGlobalVariablesScript(Array &$vars) {
-		$vars['wgTimeAgoi18n'] = self::getMessages();
+	public static function onMakeGlobalVariablesScript() {
+		global $wgOut, $wgUser;
+		$language = $wgUser->getGlobalPreference( 'language' );
+		$timeagolang = self::getLocalizeFileName( $language );
+		if ( $timeagolang != null && $timeagolang != '' ) {
+			$wgOut->addScriptFile( '/resources/wikia/libraries/jquery/timeago/locales/jquery.timeago.' .
+								   $timeagolang . '.js' );
+		}
 		return true;
 	}
 
-	/**
-	 * Get timeago messages (for user language)
-	 */
-	private static function getMessages() {
-		/* @var $wgLang Language */
-		global $wgLang, $wgMemc;
-		wfProfileIn(__METHOD__);
-
-		$lang = $wgLang->getCode();
-		$memcKey = wfMemcKey('timeago', 'i18n', $lang, self::VERSION);
-
-		$messages = $wgMemc->get($memcKey);
-
-		if (empty($messages)) {
-			wfDebug(__METHOD__ . ": lang '{$lang}'\n");
-
-			$messages = array();
-			$keys = array(
-				'year',
-				'month',
-				'day',
-				'hour',
-				'minute',
-				'second',
-			);
-			// message names suffixes to iterate over (BugId:30226
-			$suffixes = array(
-				'', // handling the past
-				'-from-now' // handling the future
-			);
-
-			foreach($suffixes as $suffix) {
-				// get singular and plural form
-				foreach($keys as $key) {
-					$msgName = "timeago-{$key}{$suffix}";
-
-					$singular = wfMsgExt($msgName, array('parsemag'), 1);
-					$plural = str_replace('2', '%d', wfMsgExt($msgName, array('parsemag'),  2));
-
-					$messages[$key . $suffix] = $singular;
-					$messages[$key . 's' . $suffix] = $plural;
-
-					// TODO: handle cases like "2 godziny" vs "5 godzin" (pl)
-					/*
-					$plural2 = str_replace('5', '%d', wfMsgExt("timeago-{$key}", array('parsemag'), 5));
-					if ($plural != $plural2) {
-						$messages["{$key}s2"] = $plural2;
-					}
-					*/
-				}
-			}
-
-			unset($messages['second']);
-
-			$wgMemc->set($memcKey, $messages, self::TTL);
+	private static function getLocalizeFileName( $language ) {
+		$supportedLanguages = [
+			'af',
+			'ar',
+			'bg',
+			'ca',
+			'cs',
+			'de',
+			'es',
+			'eu',
+			'fa',
+			'fi',
+			'fr',
+			'gl',
+			'hu',
+			'it',
+			'ja',
+			'ko',
+			'mk',
+			'nl',
+			'pl',
+			'pt',
+			'ro',
+			'ru',
+			'sv',
+			'tl',
+			'uk',
+			'vi',
+			'zh-hans',
+			'zh-hant',
+		];
+		if ( in_array( $language, $supportedLanguages ) ) {
+			return $language;
 		}
 
-		wfProfileOut(__METHOD__);
-		return $messages;
+		//fallback to english
+		return '';
 	}
 }
