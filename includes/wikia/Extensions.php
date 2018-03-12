@@ -1745,10 +1745,6 @@ if (!empty($wgFandomCreatorCommunityId)) {
 	include "$IP/extensions/wikia/FandomCreator/FandomCreator.setup.php";
 }
 
-if ( !empty( $wgEnableAppPromoLandingExt ) ) {
-	include "$IP/extensions/wikia/AppPromoLanding/AppPromoLanding_setup.php";
-}
-
 /**
  * @name $wgEnableNewAuthModal
  * Enables new popup-based authentication
