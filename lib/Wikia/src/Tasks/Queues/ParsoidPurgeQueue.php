@@ -12,8 +12,7 @@ namespace Wikia\Tasks\Queues;
 class ParsoidPurgeQueue extends Queue {
 	const NAME = 'ParsoidPurgeQueue';
 
-	public function __construct() {
-		$this->name = 'parsoid_purge';
-		$this->routingKey = 'mediawiki.parsoid_purge';
+	public function name() {
+		return 'parsoid_purge';
 	}
-} 
+}

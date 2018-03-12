@@ -42,7 +42,7 @@ class EdgeCachePurger extends BaseTask {
 		( new AsyncCeleryTask() )
 			->taskType( self::TASK_NAME )
 			->setArgs( $this->urls, $this->keys, $this->service )
-			->setPriority( PurgeQueue::NAME ) // use PurgeQueue queue
+			->setQueueName( PurgeQueue::NAME ) // use PurgeQueue queue
 			->queue();
 	}
 }

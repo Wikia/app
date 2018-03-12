@@ -180,7 +180,7 @@ abstract class BaseTask {
 			$taskList->wikiId( $wikiId );
 
 			if ( $this->queueName ) {
-				$taskList->setPriority( $this->queueName );
+				$taskList->setQueueName( $this->queueName );
 			}
 
 			if ( $this->dupCheck ) {
@@ -352,15 +352,15 @@ abstract class BaseTask {
 	 * @return $this
 	 */
 	public function prioritize() {
-		return $this->setPriority( PriorityQueue::NAME );
+		return $this->setQueueName( PriorityQueue::NAME );
 	}
 
 	/**
-	 * @see AsyncTaskList::setPriority
+	 * @see AsyncTaskList::setQueueName
 	 * @param $queueName
 	 * @return $this
 	 */
-	public function setPriority( $queueName ) {
+	public function setQueueName( $queueName ) {
 		$this->queueName = $queueName;
 		return $this;
 	}
@@ -390,10 +390,11 @@ abstract class BaseTask {
 	 * queue a set of BaseTask objects
 	 *
 	 * @param BaseTask[] $tasks
-	 * @param string $priority which queue to add this task list to
+	 * @param string $queueName which queue to add this task list to
 	 * @return array task ids
+	 * @throws \PhpAmqpLib\Exception\AMQPExceptionInterface
 	 */
-	public static function batch( array $tasks, $priority = null ) {
+	public static function batch( array $tasks, $queueName = null ) {
 		if ( count( $tasks ) === 0 ) {
 			\Wikia\Logger\WikiaLogger::instance()->error( 'BaseTask::batch', [
 				'exception' => new \Exception('Tasks list is empty')
@@ -414,7 +415,7 @@ abstract class BaseTask {
 			'backtrace' => new \Exception()
 		] );
 
-		return AsyncTaskList::batch( $taskLists, $priority );
+		return AsyncTaskList::batch( $taskLists, $queueName );
 	}
 
 	public static function newLocalTask(): BaseTask {

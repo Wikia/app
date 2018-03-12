@@ -23,7 +23,7 @@ class ParsoidCacheUpdateTask extends BaseTask {
 			list( $start, $end ) = $batch;
 			$task = (new ParsoidCacheUpdateTask())->title($this->title);
 			$taskLists[ ] = ( new AsyncTaskList() )
-				->setPriority(ParsoidPurgePriorityQueue::NAME)
+				->setQueueName(ParsoidPurgePriorityQueue::NAME)
 				->wikiId($wgCityId)
 				->add( $task->call( 'onDependencyChange', $table, $start, $end ) );
 		}

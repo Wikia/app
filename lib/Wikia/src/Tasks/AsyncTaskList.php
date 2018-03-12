@@ -73,7 +73,7 @@ class AsyncTaskList {
 	 * @return $this
 	 */
 	public function prioritize() {
-		return $this->setPriority( PriorityQueue::NAME );
+		return $this->setQueueName( PriorityQueue::NAME );
 	}
 
 	/**
@@ -82,7 +82,7 @@ class AsyncTaskList {
 	 * @param string $queue which queue to add this task list to
 	 * @return $this
 	 */
-	public function setPriority( $queue ) {
+	public function setQueueName( $queue ) {
 		switch ( $queue ) {
 			case PriorityQueue::NAME:
 				$queue = new PriorityQueue();
@@ -291,7 +291,7 @@ class AsyncTaskList {
 		}
 
 		if ( is_string( $priority ) ) {
-			$this->setPriority( $priority );
+			$this->setQueueName( $priority );
 		}
 
 		$id = $this->generateId();
@@ -415,12 +415,11 @@ class AsyncTaskList {
 	 * send a group of AsyncTaskList objects to the broker
 	 *
 	 * @param array $taskLists AsyncTaskList objects to insert into the queue
-	 * @param string $priority which queue to add this task list to
+	 * @param string $queueName which queue to add this task list to
 	 * @return array list of task ids
-	 * @throws \PhpAmqpLib\Exception\AMQPRuntimeException
-	 * @throws \PhpAmqpLib\Exception\AMQPTimeoutException
+	 * @throws AMQPExceptionInterface
 	 */
-	public static function batch( $taskLists, $priority = null ) {
+	public static function batch( $taskLists, $queueName = null ) {
 		$logError = function( \Exception $e ) {
 			WikiaLogger::instance()->error( 'AsyncTaskList::batch', [
 				'exception' => $e,
@@ -442,7 +441,7 @@ class AsyncTaskList {
 
 		foreach ( $taskLists as $task ) {
 			/** @var AsyncTaskList $task */
-			$ids [] = $task->queue( $channel, $priority );
+			$ids [] = $task->queue( $channel, $queueName );
 		}
 
 		try {

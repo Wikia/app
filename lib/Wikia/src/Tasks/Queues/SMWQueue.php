@@ -13,8 +13,7 @@ namespace Wikia\Tasks\Queues;
 class SMWQueue extends Queue {
 	const NAME = 'SMWQueue';
 
-	public function __construct() {
-		$this->name = 'mediawiki_smw';
-		$this->routingKey = 'mediawiki.smw';
+	public function name() {
+		return 'mediawiki_smw';
 	}
 }
