@@ -1599,14 +1599,6 @@ $config['achievements_js'] = [
 	],
 ];
 
-/* AppPromo Landing Screen */
-$config['app_promo_landing_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => [
-		'//extensions/wikia/AppPromoLanding/js/appPromoLanding.js',
-	],
-];
-
 /* Special:Videos */
 $config['special_videos_js'] = [
 	'type' => AssetsManager::TYPE_JS,
