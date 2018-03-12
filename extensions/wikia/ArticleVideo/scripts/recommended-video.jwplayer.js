@@ -80,7 +80,6 @@ require([
 	}
 
 	function playItem(data) {
-		debugger;
 		currentItemNumber = data.index + 1;
 
 		$unit
