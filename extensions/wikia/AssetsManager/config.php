@@ -1433,23 +1433,6 @@ $config['wampage_js'] = [
 	],
 ];
 
-/** WikiaSearch **/
-$config['wikiasearch_js_wikiamobile'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => 'wikiamobile',
-	'assets' => [
-		'//extensions/wikia/Search/js/WikiaSearch.wikiamobile.js',
-	],
-];
-
-$config['wikiasearch_scss_wikiamobile'] = [
-	'type' => AssetsManager::TYPE_SCSS,
-	'skin' => 'wikiamobile',
-	'assets' => [
-		'//extensions/wikia/Search/css/WikiaSearch.wikiamobile.scss',
-	],
-];
-
 /** Places **/
 $config['places_js'] = [
 	'skin' => [ 'oasis', 'monobook', 'wikiamobile' ],

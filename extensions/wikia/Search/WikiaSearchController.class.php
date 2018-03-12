@@ -685,10 +685,6 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		if ( $skin instanceof SkinOasis ) {
 			$this->response->addAsset( 'extensions/wikia/Search/css/WikiaSearch.scss' );
 		}
-		if ( $skin instanceof SkinWikiaMobile ) {
-			WikiaLogger::instance()->info( 'SUS-4233 - Mobile search has been rendered' );
-			$this->overrideTemplate( 'WikiaMobileIndex' );
-		}
 
 		return true;
 	}
