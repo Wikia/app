@@ -19,7 +19,7 @@ require([
 		currentItemNumber = 1,
 		isExpanded = false;
 
-	function onScroll() {
+	function reveal() {
 		var scrollTop = $(window).scrollTop();
 
 		if (scrollTop > windowHeight * 1.5) {
@@ -30,7 +30,12 @@ require([
 				onPlayerReady
 			);
 
-			document.removeEventListener('scroll', onScroll);
+			tracker.track({
+				category: 'recommended-video',
+				trackingMethod: 'both',
+				action: tracker.ACTIONS.VIEW,
+				label: 'recommended-video-revealed'
+			});
 		}
 	}
 
@@ -42,12 +47,13 @@ require([
 			}
 		}).done(function (assets) {
 			renderView(assets.mustache[0]);
-			document.addEventListener('scroll', onScroll);
+			window.setTimeout(reveal, 5000);
 		});
 	}
 
 	function renderView(view) {
-		var playlist = recommendedVideoData.playlist.forEach(function (video, index) {
+		// This is needed in order to access item index in mustache
+		recommendedVideoData.playlist.forEach(function (video, index) {
 			video.index = index;
 
 			return video;
@@ -74,6 +80,7 @@ require([
 	}
 
 	function playItem(data) {
+		debugger;
 		currentItemNumber = data.index + 1;
 
 		$unit
@@ -81,6 +88,13 @@ require([
 			.addClass('plays-video-' + currentItemNumber);
 
 		$actualVideo.find('h3').html(data.item.title);
+
+		tracker.track({
+			category: 'recommended-video',
+			trackingMethod: 'both',
+			action: tracker.ACTIONS.VIEW,
+			label: 'playlist-item-start'
+		});
 	}
 
 	function init() {
@@ -110,6 +124,13 @@ require([
 
 		$unit.find('.video-placeholder').on('click', function () {
 			playExpandedItem($(this).data('index'));
+
+			tracker.track({
+				category: 'recommended-video',
+				trackingMethod: 'both',
+				action: tracker.ACTIONS.CLICK,
+				label: 'playlist-item-click'
+			});
 		});
 
 		playerInstance.on('play', function (data) {
@@ -171,6 +192,13 @@ require([
 			$unit.addClass('expanded');
 
 			isExpanded = true;
+
+			tracker.track({
+				category: 'recommended-video',
+				trackingMethod: 'both',
+				action: tracker.ACTIONS.VIEW,
+				label: 'recommended-video-expanded'
+			});
 		}
 	}
 
