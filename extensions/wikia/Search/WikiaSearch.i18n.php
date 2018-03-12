@@ -140,6 +140,9 @@ $messages['de'] = array(
 	'wikiasearch2-video-results' => "Videos für '$1'",
 	'wikiasearch2-choose-category' => 'Kategorie auswählen',
 	'wikiasearch2-filter-category' => 'Kategorie',
+	'wikiamobile-wikiasearch2-next' => 'Nächste',
+	'wikiamobile-wikiasearch2-prev' => 'Vorherige',
+	'wikiamobile-wikiasearch2-count-of-results' => '$1-$2 von $3 {{PLURAL:$3|Ergebnis|Ergebnisse}}',
 );
 
 $messages['de-formal'] = array(
@@ -233,6 +236,9 @@ $messages['es'] = array(
 	'wikiasearch2-video-results' => "Videos de '$1'",
 	'wikiasearch2-choose-category' => 'Elegir categoría',
 	'wikiasearch2-filter-category' => 'Categoría',
+	'wikiamobile-wikiasearch2-next' => 'Siguiente',
+	'wikiamobile-wikiasearch2-prev' => 'Anterior',
+	'wikiamobile-wikiasearch2-count-of-results' => '$1-$2 of $3 {{PLURAL:$1|resultado|resultados}}',
 );
 
 $messages['et'] = array(
@@ -298,6 +304,9 @@ $messages['fr'] = array(
 	'wikiasearch2-video-results' => "Vidéos pour '$1'",
 	'wikiasearch2-choose-category' => 'Choisissez une catégorie',
 	'wikiasearch2-filter-category' => 'Catégorie',
+	'wikiamobile-wikiasearch2-next' => 'Suivant',
+	'wikiamobile-wikiasearch2-prev' => 'Précédent',
+	'wikiamobile-wikiasearch2-count-of-results' => '$1-$2 de $3 {{PLURAL:$3|résultat|résultats}}',
 );
 
 $messages['gd'] = array(
@@ -386,6 +395,9 @@ $messages['it'] = array(
 	'wikiasearch2-video-results' => 'Video per "$1"',
 	'wikiasearch2-choose-category' => 'Seleziona una categoria',
 	'wikiasearch2-filter-category' => 'Categoria',
+	'wikiamobile-wikiasearch2-next' => 'Avanti',
+	'wikiamobile-wikiasearch2-prev' => 'Indietro',
+	'wikiamobile-wikiasearch2-count-of-results' => '$1-$2 di $3 {{PLURAL:$3|risultato|risultati}}',
 );
 
 $messages['ja'] = array(
@@ -434,6 +446,9 @@ $messages['ja'] = array(
 	'wikiasearch2-video-results' => '「$1」の動画',
 	'wikiasearch2-choose-category' => 'Choose Category',
 	'wikiasearch2-filter-category' => 'カテゴリ',
+	'wikiamobile-wikiasearch2-next' => '次へ',
+	'wikiamobile-wikiasearch2-prev' => '戻る',
+	'wikiamobile-wikiasearch2-count-of-results' => '$1～$2/$3{{PLURAL:$3|件|件}}',
 );
 
 $messages['jam'] = array(
@@ -618,6 +633,9 @@ $messages['pl'] = array(
 	'wikiasearch2-videos' => '$1 {{PLURAL:$2|film|filmy|filmów}}',
 	'wikiasearch2-choose-category' => 'Wybierz kategorię',
 	'wikiasearch2-filter-category' => 'Kategoria',
+	'wikiamobile-wikiasearch2-next' => 'Dalej',
+	'wikiamobile-wikiasearch2-prev' => 'Wstecz',
+	'wikiamobile-wikiasearch2-count-of-results' => '$1-$2 z $3 {{PLURAL:$3|wyniku|wyników}}',
 );
 
 $messages['pms'] = array(
@@ -672,6 +690,9 @@ $messages['pt'] = array(
 	'wikiasearch2-video-results' => "Vídeos para '$1'",
 	'wikiasearch2-choose-category' => 'Escolher categoria',
 	'wikiasearch2-filter-category' => 'Categoria',
+	'wikiamobile-wikiasearch2-next' => 'Próximo',
+	'wikiamobile-wikiasearch2-prev' => 'Anterior',
+	'wikiamobile-wikiasearch2-count-of-results' => '$1-$2 de $ 3 {{PLURAL:$3|resultado|resultados}}',
 );
 
 $messages['ro'] = array(
@@ -723,6 +744,9 @@ $messages['ru'] = array(
 	'wikiasearch2-video-results' => 'Видео для «$1»',
 	'wikiasearch2-choose-category' => 'Выберите категорию',
 	'wikiasearch2-filter-category' => 'Категории',
+	'wikiamobile-wikiasearch2-next' => 'Следующая',
+	'wikiamobile-wikiasearch2-prev' => 'Предыдущая',
+	'wikiamobile-wikiasearch2-count-of-results' => '$1-$2 из $3 {{PLURAL:$3|результата|результатов}}',
 );
 
 $messages['sr-ec'] = array(
@@ -831,6 +855,9 @@ $messages['zh-hans'] = array(
 	'wikiasearch2-video-results' => '关于"$1"的视频',
 	'wikiasearch2-choose-category' => '选择分类',
 	'wikiasearch2-filter-category' => '分类',
+	'wikiamobile-wikiasearch2-next' => '下一页',
+	'wikiamobile-wikiasearch2-prev' => '上一页',
+	'wikiamobile-wikiasearch2-count-of-results' => '$3{{PLURAL:$3|项结果|项结果}}中的$1- $2',
 );
 
 $messages['zh-hant'] = array(
@@ -879,5 +906,8 @@ $messages['zh-hant'] = array(
 	'wikiasearch2-video-results' => '關於「$1」的影片',
 	'wikiasearch2-choose-category' => '選擇分類',
 	'wikiasearch2-filter-category' => '分類',
+	'wikiamobile-wikiasearch2-next' => '下一頁',
+	'wikiamobile-wikiasearch2-prev' => '上一頁',
+	'wikiamobile-wikiasearch2-count-of-results' => '$3{{PLURAL:$3|項結果|項結果}}中的$1- $2',
 );
 
