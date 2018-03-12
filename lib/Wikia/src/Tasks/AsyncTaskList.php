@@ -22,6 +22,7 @@ use Wikia\Tasks\Queues\ParsoidPurgeQueue;
 use Wikia\Tasks\Queues\PriorityQueue;
 use Wikia\Tasks\Queues\PurgeQueue;
 use Wikia\Tasks\Queues\Queue;
+use Wikia\Tasks\Queues\RefreshTemplateLinksQueue;
 use Wikia\Tasks\Queues\SMWQueue;
 use Wikia\Tasks\Tasks\BaseTask;
 use Wikia\Tracer\WikiaTracer;
@@ -98,6 +99,9 @@ class AsyncTaskList {
 				break;
 			case PurgeQueue::NAME:
 				$queue = new PurgeQueue();
+				break;
+			case RefreshTemplateLinksQueue::NAME:
+				$queue = new RefreshTemplateLinksQueue();
 				break;
 			default:
 				$queue = new Queue();

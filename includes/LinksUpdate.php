@@ -285,6 +285,7 @@ class LinksUpdate {
 			$task->title( $this->mTitle );
 			$task->wikiId( $wgCityId );
 			$task->call( 'refreshTemplateLinks', $start, $end, wfTimestampNow() );
+			$task->setQueueName( \Wikia\Tasks\Queues\RefreshTemplateLinksQueue::NAME );
 			$task->queue();
 
 			Wikia\Logger\WikiaLogger::instance()->info( 'LinksUpdate::queueRefreshTasks', [

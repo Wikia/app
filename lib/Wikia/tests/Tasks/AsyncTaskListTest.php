@@ -7,6 +7,7 @@ use Wikia\Tasks\Queues\ParsoidPurgeQueue;
 use Wikia\Tasks\Queues\PriorityQueue;
 use Wikia\Tasks\Queues\PurgeQueue;
 use Wikia\Tasks\Queues\Queue;
+use Wikia\Tasks\Queues\RefreshTemplateLinksQueue;
 use Wikia\Tasks\Queues\SMWQueue;
 
 class AsyncTaskListTest extends TestCase {
@@ -38,6 +39,7 @@ class AsyncTaskListTest extends TestCase {
 		yield [ PriorityQueue::NAME, PriorityQueue::class ];
 		yield [ ParsoidPurgeQueue::NAME, ParsoidPurgeQueue::class ];
 		yield [ ParsoidPurgePriorityQueue::NAME, ParsoidPurgePriorityQueue::class ];
+		yield [ RefreshTemplateLinksQueue::NAME, RefreshTemplateLinksQueue::class ];
 	}
 
 	public function testPrioritize() {
