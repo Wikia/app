@@ -48,6 +48,8 @@ class RemoveClassificationForClosedWikis extends Maintenance {
 			}
 		}
 
+		$this->bulkProcessCurrentBatch( $logFile, $batch );
+
 		fclose( $inputFile );
 		fclose( $logFile );
 
