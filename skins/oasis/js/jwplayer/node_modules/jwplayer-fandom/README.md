@@ -66,6 +66,8 @@ Id of DOM element where the player should be placed
   // set language for captions, must map captions' label, defaults to user browser language
   // set to 'false' to turn them off completely
   selectedCaptionsLanguage: string,
+  // when player is <= 250px, we show only unmute, play/pause and position bar.
+  showSmallPlayerControls: true,
   // if settings is not defined or all show* properties are set to false, settings icon doesn't appear
   settings: {
     // set to true when you want to give user option to enable/disable autoplay

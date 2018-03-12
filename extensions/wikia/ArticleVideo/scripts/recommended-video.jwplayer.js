@@ -15,7 +15,9 @@ require([
 		recommendedVideoElementId = 'recommendedVideo',
 		recommendedVideoData = null,
 		player = null,
-		$actualVideo = null;
+		$actualVideo = null,
+		currentItemNumber = 1,
+		isExpanded = false;
 
 	function onScroll() {
 		var scrollTop = $(window).scrollTop();
@@ -36,7 +38,7 @@ require([
 		loader({
 			type: loader.MULTI,
 			resources: {
-				mustache: 'extensions/wikia/ArticleVideo/templates/ArticleVideo_recommendedVideos.mustache',
+				mustache: 'extensions/wikia/ArticleVideo/templates/ArticleVideo_recommendedVideos.mustache'
 			}
 		}).done(function (assets) {
 			renderView(assets.mustache[0]);
@@ -45,6 +47,11 @@ require([
 	}
 
 	function renderView(view) {
+		var playlist = recommendedVideoData.playlist.forEach(function (video, index) {
+			video.index = index;
+
+			return video;
+		});
 		$unit.find('.article-recommended-videos').html(
 			mustache.render(view, {
 				playlist: recommendedVideoData.playlist,
@@ -67,11 +74,11 @@ require([
 	}
 
 	function playItem(data) {
-		var itemNumber = data.index + 1;
+		currentItemNumber = data.index + 1;
 
 		$unit
 			.removeClass('plays-video-1 plays-video-2 plays-video-3 plays-video-4 plays-video-5')
-			.addClass('plays-video-' + itemNumber);
+			.addClass('plays-video-' + currentItemNumber);
 
 		$actualVideo.find('h3').html(data.item.title);
 	}
@@ -96,6 +103,31 @@ require([
 
 	function bindPlayerEvents(playerInstance) {
 		playerInstance.on('playlistItem', playItem);
+
+		playerInstance.once('mute', function () {
+			playExpandedItem(currentItemNumber - 1);
+		});
+
+		$unit.find('.video-placeholder').on('click', function () {
+			playExpandedItem($(this).data('index'));
+		});
+
+		playerInstance.on('play', function (data) {
+			if (data.playReason === 'interaction') {
+				playExpandedItem(currentItemNumber - 1);
+			}
+		});
+	}
+
+	function playExpandedItem(index) {
+		var currentIndex = player.getPlaylistItem().index;
+
+		if (currentIndex !== index) {
+			player.playlistItem(index);
+		}
+
+		expand();
+		player.getContainer().classList.remove('wikia-jw-small-player-controls');
 	}
 
 	function getPlayerSetup(jwVideoData) {
@@ -112,12 +144,14 @@ require([
 				showQuality: true,
 				showCaptions: true
 			},
+			showSmallPlayerControls: true,
 			videoDetails: {
 				description: jwVideoData.description,
 				title: jwVideoData.title,
 				playlist: jwVideoData.playlist
 			},
-			playerUrl: 'https://content.jwplatform.com/libraries/h6Nc84Oe.js'
+			playerUrl: 'https://content.jwplatform.com/libraries/h6Nc84Oe.js',
+			repeat: true
 		};
 	}
 
@@ -132,8 +166,12 @@ require([
 		return $.get(jwPlaylistDataUrl + mediaId);
 	}
 
-	function expand(videoContainer) {
-		$unit.addClass('expanded');
+	function expand() {
+		if (!isExpanded) {
+			$unit.addClass('expanded');
+
+			isExpanded = true;
+		}
 	}
 
 	init();

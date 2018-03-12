@@ -1,4 +1,4 @@
-<div class="article-recommended-video-unit plays-video-1 expanded" data-playlist-id="<?= $playlistId ?>">
+<div class="article-recommended-video-unit plays-video-1" data-playlist-id="<?= $playlistId ?>">
 	<a class="article-recommended-video-unit__close-button">
 		<?= DesignSystemHelper::renderSvg('wds-icons-cross', 'wds-icon wds-icon-tiny' ); ?>
 	</a>

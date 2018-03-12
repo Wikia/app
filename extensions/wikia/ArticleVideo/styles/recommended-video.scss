@@ -11,11 +11,12 @@
 	height: 230px;
 	justify-content: center;
 	left: 0;
-	transform: translate(0, 1000px);
+	min-width: 718px;
 	padding: 15px 0;
 	position: fixed;
 	right: 0;
-	transition: 0.2s transform ease-in;
+	transform: translate(0, 1000px);
+	transition: 0.3s transform ease-in;
 	z-index: 9999999999999999;
 
 	&__close-button {
@@ -45,6 +46,7 @@
 
 			h3 {
 				font-size: 24px;
+				font-weight: 500;
 				margin-bottom: 26px;
 				margin-top: 24px;
 			}
@@ -127,6 +129,13 @@
 		.video-placeholder {
 			align-items: center;
 			margin-bottom: 18px;
+		}
+
+		svg {
+			height: 30px;
+			left: calc(50% - 15px);
+			width: 30px;
+			top: calc(50% - 15px);
 		}
 	}
 }
