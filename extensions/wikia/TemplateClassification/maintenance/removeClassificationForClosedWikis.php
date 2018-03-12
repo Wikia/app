@@ -19,17 +19,21 @@ class RemoveClassificationForClosedWikis extends Maintenance {
 
 		$this->mDescription = 'Removes template classification data for closed wikis';
 		$this->addOption( 'wiki-ids', 'Path to a file containing wiki IDs to process delimited by newline', true, true );
+		$this->addOption( 'stale-ids', 'File to log stale IDs to', true, true );
 		$this->addOption( 'dry-run', 'Dry-run mode, do not actually remove any data' );
 	}
 
 	public function execute() {
 		$fileName = $this->getOption( 'wiki-ids' );
+		$logName = $this->getOption( 'stale-ids' );
 
 		if ( $this->hasOption( 'dry-run' ) ) {
 			$this->output( "Dry-run mode, no changes will be made!\n" );
 		}
 
 		$inputFile = fopen( $fileName, 'r' );
+		$logFile = fopen( $logName, 'w' );
+
 		$batch = [];
 		$count = 0;
 
@@ -38,18 +42,19 @@ class RemoveClassificationForClosedWikis extends Maintenance {
 			$count++;
 
 			if ( $count % 500 === 0 ) {
-				$this->bulkProcessCurrentBatch( $batch );
+				$this->bulkProcessCurrentBatch( $logFile, $batch );
 
 				$batch = [];
 			}
 		}
 
 		fclose( $inputFile );
+		fclose( $logFile );
 
 		$this->output( "Deleted classification data for {$this->staleIdsCount} wikis out of $count total.\n" );
 	}
 
-	private function bulkProcessCurrentBatch( array &$wikiIds ) {
+	private function bulkProcessCurrentBatch( &$logFile, array &$wikiIds ) {
 		$dryRunMode = $this->hasOption( 'dry-run' );
 		$validIds = $this->readConnection()->selectFieldValues( 'city_list', 'city_id', [ 'city_id' => $wikiIds ], __METHOD__ );
 
@@ -57,6 +62,8 @@ class RemoveClassificationForClosedWikis extends Maintenance {
 			if ( !$dryRunMode ) {
 				$this->getClassificationService()->deleteTemplateInformationForWiki( $staleId );
 			}
+
+			fwrite( $logFile, "$staleId\n" );
 
 			$this->staleIdsCount++;
 		}
