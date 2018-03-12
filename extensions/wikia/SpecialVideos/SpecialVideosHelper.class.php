@@ -49,13 +49,12 @@ class SpecialVideosHelper extends WikiaModel {
 	/**
 	 * get list of videos
 	 * @param integer $page
-	 * @param string $filter [all/premium]
 	 * @param array $providers
 	 * @param string $category
 	 * @param array $options
 	 * @return array $videos
 	 */
-	public function getVideos( $page, $filter = 'all', $providers = [], $category = '', $options = [] ) {
+	public function getVideos( $page, $providers = [], $category = '', $options = [] ) {
 		wfProfileIn( __METHOD__ );
 
 		if ( $this->app->checkSkin( 'wikiamobile' ) ) {

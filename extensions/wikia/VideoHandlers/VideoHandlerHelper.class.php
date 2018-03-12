@@ -316,7 +316,6 @@ class VideoHandlerHelper extends WikiaModel {
 				'embedUrl'             => $file->getHandler()->getEmbedUrl(),
 				'videoId'              => $file->getVideoId(),
 				'thumbnail'            => $thumbnail,
-				'regionalRestrictions' => $file->getRegionalRestrictions()
 			);
 		} else {
 			Wikia::Log( __METHOD__, false, "No file found for '".$videoInfo['title']."'" );

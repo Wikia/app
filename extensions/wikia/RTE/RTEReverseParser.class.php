@@ -549,9 +549,11 @@ class RTEReverseParser {
 				'#',
 				'=',
 		);
-		foreach ( $lineInitialTokens as $token ) {
-			if ( preg_match( "/^{$token}/is", $textContent ) ) {
-				$beforeText = "\n";
+		if ( in_array( $node->nodeName, HtmlHelper::BLOCK_ELEMENTS ) ) {
+			foreach ( $lineInitialTokens as $token ) {
+				if ( preg_match( "/^{$token}/is", $textContent ) ) {
+					$beforeText = "\n";
+				}
 			}
 		}
 

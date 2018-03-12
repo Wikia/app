@@ -609,6 +609,69 @@ function axWFactoryFilterVariables() {
 	return $resp;
 }
 
+/**
+ * Provides an API for putting specific DB clusters in read-only mode (and back into R&W).
+ *
+ * You need to:
+ *  - send an internal POST HTTP request
+ *  - provide a valid Schwartz token
+ *  - provide "cluster" and "readonly" request parameter
+ *
+ * @author macbre
+ *
+ * @see SUS-3873
+ * @see https://wikia-inc.atlassian.net/wiki/spaces/SUS/pages/154632320/How+to+make+a+single+cluster+read-only
+ */
+function axWFactoryClusterSetReadOnly() : AjaxResponse {
+	global $wgTheSchwartzSecretToken;
+	$request = RequestContext::getMain()->getRequest();
+
+	$resp = new AjaxResponse();
+
+	// we only support internal requests with a proper token
+	if ( !$request->wasPosted() || !$request->isWikiaInternalRequest() ) {
+		$resp->setResponseCode( 400 ); // bad request
+		$resp->addText( json_encode( [
+			'error' =>  'We only support internal POST requests'
+		]) );
+	}
+	else if ( !hash_equals( $wgTheSchwartzSecretToken, $request->getVal('token') ) ) {
+		$resp->setResponseCode( 403 ); // forbidden
+		$resp->addText( json_encode( [
+			'error' =>  'Invalid token provided'
+		]) );
+	}
+	else {
+		// which cluster do we want modify and whether to set or remove read-only flag
+		$cluster = $request->getVal( 'cluster' );
+		$readOnly = $request->getInt( 'readonly' ) === 1;
+
+		$msg = sprintf( 'Putting %s cluster %s', $cluster,
+				$readOnly ? 'into read-only mode' : 'back into write-read mode' );
+
+		// perform WikiFactory changes on behalf of FANDOMbot
+		global $wgUser;
+		$wgUser = User::newFromName( Wikia::BOT_USER );
+
+		if ( $readOnly ) {
+			$ret = WikiFactory::setVarByName( 'wgReadOnlyCluster', Wikia::COMMUNITY_WIKI_ID,
+				$cluster, $msg );
+		} else {
+			$ret = WikiFactory::removeVarByName( 'wgReadOnlyCluster', Wikia::COMMUNITY_WIKI_ID,
+				$msg );
+		}
+
+		$resp->setResponseCode( $ret ? 200 : 500 );
+		$resp->addText( json_encode( [
+			'ok' => $ret,
+			'msg' => $msg
+		] ) );
+	}
+
+	$resp->setContentType( 'application/json; charset=utf-8' );
+	return $resp;
+}
+
 global $wgAjaxExportList;
 $wgAjaxExportList[] = "axWFactoryGetVariable";
 $wgAjaxExportList[] = "axWFactoryChangeVariable";
@@ -618,3 +681,4 @@ $wgAjaxExportList[] = "axWFactoryDomainCRUD";
 $wgAjaxExportList[] = "axWFactoryDomainQuery";
 $wgAjaxExportList[] = "axWFactoryClearCache";
 $wgAjaxExportList[] = "axWFactoryTagCheck";
+$wgAjaxExportList[] = "axWFactoryClusterSetReadOnly";

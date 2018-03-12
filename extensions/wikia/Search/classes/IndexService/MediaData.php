@@ -48,7 +48,6 @@ class MediaData extends AbstractService {
 				$videoMetadataMapper = [
 					'provider' => 'video_provider_s',
 					'videoId' => 'video_id_s',
-					'altVideoId' => 'video_altid_s',
 					'aspectRatio' => 'video_aspectratio_s'
 				];
 
@@ -61,15 +60,7 @@ class MediaData extends AbstractService {
 				if ( isset( $metadata['duration'] ) ) {
 					$results['video_duration_i'] = (int) $metadata['duration'];
 				}
-				if ( isset( $metadata['hd'] ) ) {
-					$results['video_hd_b'] = empty( $metadata['hd'] ) ? 'false' : 'true';
-				}
-				if ( isset( $metadata['genres'] ) ) {
-					$results['video_genres_txt'] = preg_split( '/, ?/', $metadata['genres'] );
-				}
-				if ( isset( $metadata['actors'] ) ) {
-					$results['video_actors_txt'] = preg_split( '/, ?/', $metadata['actors'] );
-				}
+
 				if ( isset( $metadata['keywords'] ) ) {
 					$results['video_keywords_txt'] = explode( ', ', $metadata['keywords'] );
 				}
