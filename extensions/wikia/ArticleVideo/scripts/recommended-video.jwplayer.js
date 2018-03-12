@@ -134,7 +134,7 @@ require([
 		return {
 			autoplay: true,
 			tracking: {
-				category: 'article-recommended-video',
+				category: 'recommended-video',
 				track: function (data) {
 					tracker.track(data);
 				}
