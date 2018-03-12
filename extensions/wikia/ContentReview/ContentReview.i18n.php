@@ -213,7 +213,7 @@ $messages['es'] = array(
 	'content-review-status-rejected' => 'Rechazado',
 	'content-review-status-live' => 'Activo',
 	'content-review-status-autoapproved' => 'Auto-aprobado',
-	'content-review-rejection-explanation' => '== $1==
+	'content-review-rejection-explanation' => '== $1== 
 El cambio recientemente presentado a esta página de JavaScript (revisión [$2 $3]) fue rechazado por el proceso de revisión de FANDOM. Por favor, asegúrate de que cumple con las [[w:c:comunidad:Ayuda:Proceso de revisión de JavaScript|directrices de personalización de JavaScript]]. --~~~~',
 	'content-review-status-link-text' => 'Estado de la revisión',
 	'content-review-rejection-explanation-title' => 'El cambio de script $1 presentado ha sido rechazado',
@@ -242,7 +242,7 @@ Utiliza esta página para personalizar los cargos que aparecen en los perfiles d
  * EjemploNombredeusuario | Aprendiz, Novato
  * EjemploNombredeusuario2 | Gurú
 ----
-
+ 
 ',
 );
 
@@ -670,7 +670,7 @@ $messages['ru'] = array(
 	'content-review-module-jspages' => 'Все страницы с JavaScript',
 	'content-review-special-js-description' => 'На этой странице указан текущий [[Справка:Проверка JavaScript|статус проверки JS]] для всех страниц с общим JS на этой вики.',
 	'content-review-special-js-importjs-description' => 'Примечание. Вы можете добавлять и удалять локальные скрипты без проверки с помощью страницы [[MediaWiki:ImportJS]].',
-	'content-review-importjs-description' => 'С помощью этой страницы вы можете с лёгкостью добавлять скрипты:
+	'content-review-importjs-description' => 'С помощью этой страницы вы можете с лёгкостью добавлять скрипты: 
 * с локального сообщества путём добавления названия страницы — например MyScript.js
 * с dev.wikia.com при помощи добавления названия страницы с префиксом dev — например dev:Code.js
 Названия не должны содержать префикс «MediaWiki». Указывайте название каждого отдельного скрипта новой строкой.
@@ -734,7 +734,7 @@ JavaScript页面最近提交的变更请求(版本[$2 $3]) 未通过FANDOM审核
 	'content-review-special-js-description' => '此页面列出这个社区当前Mediawiki命名空间脚本的[[Help:JavaScript review process|审核状态]]。',
 	'content-review-special-js-importjs-description' => '注意：通过[[MediaWiki:ImportJS]]，您可以不需要经过审查流程就可以添加和删除来自本地以及dev.wikia.com的脚本导入。',
 	'content-review-importjs-description' => '在这里，您可以通过以下途径轻松地导入脚本:
-* 在您的本地社区通过文章名称进行导入 - 例如：MyScript.js
+* 在您的本地社区通过文章名称进行导入 - 例如：MyScript.js 
 * 从dev.wikia.com通过文章名称，前缀"dev:"进行导入 - 例如：dev:Code.js
 名称不应包含MediaWiki命名空间前缀。请在新的一行上逐个输入脚本。请点击[[Help:Including additional CSS and JS|帮助页]]了解详细信息。
 ----',
@@ -744,11 +744,11 @@ JavaScript页面最近提交的变更请求(版本[$2 $3]) 未通过FANDOM审核
 	'content-review-status-escalated' => '已送出审查',
 	'content-review-profile-tags-description' => '若要使用此功能，您必须从dev.wikia.com导入[[w:c:dev:ProfileTags|ProfileTags.js]]。[[w:c:dev:ProfileTags|点击这里了解更多]]。
 
-使用此页可以自定义出现在用户设定界面上的标签。使用"|"分隔用户名和标签。若要为用户显示多个标签，请用逗号分隔每个标签名称。您可以在新的一行上写每个用户名。
+使用此页可以自定义出现在用户设定界面上的标签。使用"|"分隔用户名和标签。若要为用户显示多个标签，请用逗号分隔每个标签名称。您可以在新的一行上写每个用户名。     
 
-例如:
-
-用户名例子 |见习，新手
+例如: 
+    
+用户名例子 |见习，新手 
 用户名例子2 | 大师
 ----',
 );

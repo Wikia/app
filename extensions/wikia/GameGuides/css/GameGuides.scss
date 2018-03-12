@@ -1,15 +1,3 @@
-@font-face {
-	font-family: 'GGSerif';
-	src: local('Droid Serif'), local('DroidSerif'), url(extensions/wikia/GameGuides/fonts/DroidSerif.ttf) format('truetype');
-	font-weight: 400;
-}
-
-//@font-face {
-//	font-family: 'Roboto-Thin';
-//	//src: local('Roboto Thin'), local('RobotoThin'), url(extensions/wikia/GameGuides/fonts/RobotoThin.ttf), url(file:///android_asset/fonts/RobotoThin.ttf) format('truetype');
-//	font-weight: 100;
-//}
-
 @import "../../WikiaMobile/css/variables";
 
 //dependencies
@@ -65,7 +53,7 @@ html {
 	}
 
 	&.serif {
-		font-family: Palatino, "GGSerif", "Palatino Linotype", "Palatino LT STD", "Book Antiqua", Georgia, serif;
+		font-family: Palatino, "Palatino Linotype", "Palatino LT STD", "Book Antiqua", Georgia, serif;
 	}
 
 	&.full {

@@ -80,9 +80,15 @@ define('wikia.krux', [
 
 	function getParams(n) {
 		var k = 'kx' + n;
-		if (win.localStorage) {
-			return win.localStorage[k] || '';
-		} else {
+
+		// Some browsers throw an exception when trying to check `window.localStorage` value when LS is disabled
+		try {
+			if (win.localStorage) {
+				return win.localStorage[k] || '';
+			} else {
+				return '';
+			}
+		} catch (e) {
 			return '';
 		}
 	}
