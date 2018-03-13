@@ -169,7 +169,6 @@ class PermissionsConfiguration {
 		'createnewwiki',
 		'createwikilimitsexempt',  // user not bound by creation throttle
 		'finishcreate',
-		'devboxpanel',
 		'dmcarequestmanagement',
 		'editaccount',
 		'emailsstorage',
