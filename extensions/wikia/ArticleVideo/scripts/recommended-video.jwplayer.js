@@ -9,6 +9,7 @@ require([
 
 	var jwPlaylistDataUrl = 'https://cdn.jwplayer.com/v2/playlists/',
 		$unit = $('.article-recommended-video-unit'),
+		scrollBreakpoint = 100,
 		recommendedVideoElementId = 'recommendedVideo',
 		recommendedVideoData = null,
 		player = null,
@@ -17,19 +18,31 @@ require([
 		isExpanded = false;
 
 	function reveal() {
-		$unit.addClass('is-revealed');
-		window.wikiaJWPlayer(
-			recommendedVideoElementId,
-			getPlayerSetup(recommendedVideoData),
-			onPlayerReady
-		);
+		var scrollTop = $(window).scrollTop();
 
-		tracker.track({
-			category: 'recommended-video',
-			trackingMethod: 'both',
-			action: tracker.ACTIONS.VIEW,
-			label: 'recommended-video-revealed'
-		});
+		if (scrollTop > scrollBreakpoint) {
+			$unit.addClass('is-revealed');
+			window.wikiaJWPlayer(
+				recommendedVideoElementId,
+				getPlayerSetup(recommendedVideoData),
+				onPlayerReady
+			);
+
+			tracker.track({
+				category: 'recommended-video',
+				trackingMethod: 'both',
+				action: tracker.ACTIONS.VIEW,
+				label: 'recommended-video-revealed'
+			});
+		}
+	}
+
+	function onScroll() {
+		var scrollTop = $(window).scrollTop();
+
+		if (scrollTop > scrollBreakpoint) {
+			window.setTimeout(reveal, 5000);
+		}
 	}
 
 	function loadAssets() {
@@ -40,7 +53,7 @@ require([
 			}
 		}).done(function (assets) {
 			renderView(assets.mustache[0]);
-			window.setTimeout(reveal, 5000);
+			window.document.addEventListener('scroll', onScroll);
 		});
 	}
 
