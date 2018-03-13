@@ -9,6 +9,10 @@ const {
 } = universalAdPackage;
 
 export const getConfig = () => ({
+	autoPlayAllowed: true,
+	defaultStateAllowed: true,
+	fullscreenAllowed: true,
+	stickinessAllowed: true,
 	adSlot: null,
 	slotParams: null,
 	updateNavbarOnScroll: null,
