@@ -8,16 +8,15 @@
 	box-sizing: border-box;
 	display: flex;
 	font-size: 14px;
-	height: 230px;
 	justify-content: center;
 	left: 0;
 	min-width: 718px;
-	padding: 15px 0;
+	padding: 15px 0 40px;
 	position: fixed;
 	right: 0;
 	transform: translate(0, 1000px);
 	transition: 0.3s transform ease-in;
-	z-index: 9999999999999999;
+	z-index: 10000;
 
 	&__close-button {
 		align-items: center;
@@ -144,6 +143,11 @@
 	display: flex;
 	overflow: auto;
 	width: 100%;
+
+	.actual-video {
+		background: #fff;
+		height: auto;
+	}
 }
 
 .article-recommended-video-placeholder {
@@ -162,10 +166,17 @@
 }
 
 .article-recommended-video {
+	cursor: pointer;
 	flex: 1;
 	display: inline-block;
 	margin-right: 16px;
 	min-width: 200px;
+
+	&:not(.actual-video):hover {
+		h3 {
+			text-decoration: underline;
+		}
+	}
 
 	img {
 		height: auto;
@@ -200,4 +211,9 @@
 			order: #{$i}
 		}
 	}
+}
+
+// ToDo when productizing: Figure out better way to make WikiaBar work with the unit
+.article-recommended-video-unit + #WikiaBar {
+	z-index: 10001;
 }

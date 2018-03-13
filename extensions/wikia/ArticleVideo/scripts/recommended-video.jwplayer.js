@@ -171,7 +171,8 @@ require([
 				playlist: jwVideoData.playlist
 			},
 			playerUrl: 'https://content.jwplatform.com/libraries/h6Nc84Oe.js',
-			repeat: true
+			repeat: true,
+			mute: true
 		};
 	}
 
