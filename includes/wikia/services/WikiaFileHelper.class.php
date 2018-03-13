@@ -256,7 +256,6 @@ class WikiaFileHelper {
 			'mediaType' => '',
 			'mime' => '',
 			'videoEmbedCode' => '',
-			'playerAsset' => '',
 			'imageUrl' => '',
 			'fileUrl' => '',
 			'rawImageUrl' => '',
@@ -281,6 +280,7 @@ class WikiaFileHelper {
 			$file = self::getFileFromTitle( $fileTitle, true );
 
 			if ( !empty( $file ) ) {
+				/** @var WikiaLocalFile|WikiaLocalFileShared $file */
 				$config = self::getMediaDetailConfig( $config );
 
 				$data['exists'] = true;
@@ -302,7 +302,6 @@ class WikiaFileHelper {
 						'isInline' => !empty( $config['isInline'] ),
 					];
 					$data['videoEmbedCode'] = $file->getEmbedCode( $width, $options );
-					$data['playerAsset'] = $file->getPlayerAssetUrl();
 					$data['videoViews'] = MediaQueryService::getTotalVideoViewsByTitle( $fileTitle->getDBKey() );
 					$data['providerName'] = $file->getProviderName();
 					$data['duration'] = $file->getMetadataDuration();

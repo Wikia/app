@@ -86,7 +86,7 @@ class SpecialVideosSpecialController extends WikiaSpecialPageController {
 
 		// get videos
 		$helper = new SpecialVideosHelper();
-		$videos = $helper->getVideos( $page, 'all', $providers, $category, [
+		$videos = $helper->getVideos( $page, $providers, $category, [
 			'getThumbnail' => true
 		] );
 
@@ -142,7 +142,7 @@ class SpecialVideosSpecialController extends WikiaSpecialPageController {
 		$options = ['getThumbnail'=> $getThumbnail ];
 
 		$helper = new SpecialVideosHelper();
-		$videos = $helper->getVideos( $page, 'all', $providers, $category, $options );
+		$videos = $helper->getVideos( $page, $providers, $category, $options );
 
 		$this->videos = $videos;
 	}

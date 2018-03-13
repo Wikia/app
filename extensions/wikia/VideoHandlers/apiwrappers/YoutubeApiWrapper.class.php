@@ -150,15 +150,6 @@ class YoutubeApiWrapper extends ApiWrapper {
 	}
 
 	/**
-	 * Is resolution of 720 or higher available
-	 * @return boolean
-	 */
-	protected function isHdAvailable() {
-		return !empty( $this->interfaceObj['contentDetails']['definition'] )
-			&& ( $this->interfaceObj['contentDetails']['definition'] == 'hd' );
-	}
-
-	/**
 	 * Can video be embedded
 	 * Youtube video can always be embedded because we ask for embeddable ones via API
 	 * @return boolean
