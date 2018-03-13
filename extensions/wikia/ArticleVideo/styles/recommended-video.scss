@@ -213,3 +213,7 @@
 .article-recommended-video-unit + #WikiaBar {
 	z-index: 10001;
 }
+
+.article-recommended-video-unit:not(.is-expanded) .jw-text-track-container {
+	display: none;
+}

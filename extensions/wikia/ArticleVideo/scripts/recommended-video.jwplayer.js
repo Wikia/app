@@ -8,7 +8,6 @@ require([
 	'use strict';
 
 	var jwPlaylistDataUrl = 'https://cdn.jwplayer.com/v2/playlists/',
-		scrollRevealBreakpoint =  1.5 * Math.max(document.documentElement.clientHeight, window.innerHeight || 0),
 		$unit = $('.article-recommended-video-unit'),
 		recommendedVideoElementId = 'recommendedVideo',
 		recommendedVideoData = null,
@@ -18,23 +17,19 @@ require([
 		isExpanded = false;
 
 	function reveal() {
-		var scrollTop = $(window).scrollTop();
+		$unit.addClass('is-revealed');
+		window.wikiaJWPlayer(
+			recommendedVideoElementId,
+			getPlayerSetup(recommendedVideoData),
+			onPlayerReady
+		);
 
-		if (scrollTop > scrollRevealBreakpoint) {
-			$unit.addClass('is-revealed');
-			window.wikiaJWPlayer(
-				recommendedVideoElementId,
-				getPlayerSetup(recommendedVideoData),
-				onPlayerReady
-			);
-
-			tracker.track({
-				category: 'recommended-video',
-				trackingMethod: 'both',
-				action: tracker.ACTIONS.VIEW,
-				label: 'recommended-video-revealed'
-			});
-		}
+		tracker.track({
+			category: 'recommended-video',
+			trackingMethod: 'both',
+			action: tracker.ACTIONS.VIEW,
+			label: 'recommended-video-revealed'
+		});
 	}
 
 	function loadAssets() {
