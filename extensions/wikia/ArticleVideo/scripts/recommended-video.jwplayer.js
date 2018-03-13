@@ -7,11 +7,9 @@ require([
 ], function ($, tracker, featuredVideoCookieService, loader, mustache) {
 	'use strict';
 
-	var recommendedVideoSelector = '.article-recommended-video .video',
-		jwPlaylistDataUrl = 'https://cdn.jwplayer.com/v2/playlists/',
+	var jwPlaylistDataUrl = 'https://cdn.jwplayer.com/v2/playlists/',
 		scrollRevealBreakpoint =  1.5 * Math.max(document.documentElement.clientHeight, window.innerHeight || 0),
 		$unit = $('.article-recommended-video-unit'),
-		currentVideo = null,
 		recommendedVideoElementId = 'recommendedVideo',
 		recommendedVideoData = null,
 		player = null,
