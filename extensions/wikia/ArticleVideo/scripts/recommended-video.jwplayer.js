@@ -9,7 +9,7 @@ require([
 
 	var recommendedVideoSelector = '.article-recommended-video .video',
 		jwPlaylistDataUrl = 'https://cdn.jwplayer.com/v2/playlists/',
-		windowHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0),
+		scrollRevealBreakpoint =  1.5 * Math.max(document.documentElement.clientHeight, window.innerHeight || 0),
 		$unit = $('.article-recommended-video-unit'),
 		currentVideo = null,
 		recommendedVideoElementId = 'recommendedVideo',
@@ -22,7 +22,7 @@ require([
 	function reveal() {
 		var scrollTop = $(window).scrollTop();
 
-		if (scrollTop > windowHeight * 1.5) {
+		if (scrollTop > scrollRevealBreakpoint) {
 			$unit.addClass('is-revealed');
 			window.wikiaJWPlayer(
 				recommendedVideoElementId,
