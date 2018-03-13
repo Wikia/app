@@ -8,7 +8,7 @@ class ArticleAsJson {
 		'imageMaxWidth' => false
 	];
 
-	const CACHE_VERSION = 3.16;
+	const CACHE_VERSION = 3.17;
 
 	const ICON_MAX_SIZE = 48;
 	// Line height in Mercury
@@ -238,7 +238,7 @@ class ArticleAsJson {
 			self::$media[] = $mediaObj;
 			$dataAttrs = $mediaObj;
 
-			if ($details['context'] == 'infobox-hero-image') {
+			if ( $details['context'] == 'infobox-hero-image' && empty( self::$heroImage ) ) {
 				self::$heroImage = $mediaObj;
 			}
 			$ref = count( self::$media ) - 1;
@@ -387,7 +387,7 @@ class ArticleAsJson {
 					'content' => $text,
 					'media' => self::$media,
 					'users' => self::$users,
-					'heroImage' => empty(self::$heroImage) ? null : self::$heroImage
+					'heroImage' => empty( self::$heroImage ) ? null : self::$heroImage
 				]
 			);
 		}
