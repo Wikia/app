@@ -1117,7 +1117,7 @@ abstract class Maintenance {
 	 */
 	private function lockSearchindex( &$db ) {
 		$write = []; # array( 'searchindex' ); - Wikia change, there's no searchindex per-wiki table anymore
-		$read = array( 'page', 'revision', 'text', 'interwiki', 'l10n_cache' );
+		$read = array( 'page', 'revision', 'text', 'interwiki' );
 		$db->lockTables( $read, $write, __CLASS__ . '::' . __METHOD__ );
 	}
 
