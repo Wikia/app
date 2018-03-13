@@ -593,9 +593,6 @@ CREATE TABLE /*_*/ipblocks (
   -- If set to 1, block applies only to logged-out users
   ipb_anon_only bool NOT NULL default 0,
 
-  -- Block prevents account creation from matching IP addresses
-  ipb_create_account bool NOT NULL default 1,
-
   -- Block triggers autoblocks
   ipb_enable_autoblock bool NOT NULL default '1',
 
