@@ -1,7 +1,6 @@
 import { universalAdPackage } from '@wikia/ad-products';
 import { context, scrollListener, slotTweaker, utils } from '@wikia/ad-engine';
-import autobind from 'core-decorators/es/autobind';
-import { pinNavbar, navBarElement, navBarStickClass, isElementInViewport } from './navbar-updater';
+import { pinNavbar, navBarElement, isElementInViewport } from './navbar-updater';
 
 const {
 	CSS_CLASSNAME_STICKY_BFAA,
@@ -16,7 +15,8 @@ export const getConfig = () => ({
 
 	slotsToEnable: [
 		'BOTTOM_LEADERBOARD',
-		'INCONTENT_BOXAD_1'
+		'INCONTENT_BOXAD_1',
+		'TOP_RIGHT_BOXAD'
 	],
 
 	onInit(adSlot, params) {
