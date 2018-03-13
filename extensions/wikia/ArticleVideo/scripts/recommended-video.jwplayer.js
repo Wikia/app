@@ -23,7 +23,7 @@ require([
 		var scrollTop = $(window).scrollTop();
 
 		if (scrollTop > windowHeight * 1.5) {
-			$unit.addClass('revealed');
+			$unit.addClass('is-revealed');
 			window.wikiaJWPlayer(
 				recommendedVideoElementId,
 				getPlayerSetup(recommendedVideoData),
@@ -55,8 +55,6 @@ require([
 		// This is needed in order to access item index in mustache
 		recommendedVideoData.playlist.forEach(function (video, index) {
 			video.index = index;
-
-			return video;
 		});
 		$unit.find('.article-recommended-videos').html(
 			mustache.render(view, {
@@ -76,7 +74,7 @@ require([
 	}
 
 	function onCloseClicked() {
-		$unit.removeClass('revealed');
+		$unit.removeClass('is-revealed');
 	}
 
 	function playItem(data) {
@@ -97,7 +95,7 @@ require([
 	}
 
 	function init() {
-		if ($unit && window.wikiaJWPlayer) {
+		if ($unit.length && window.wikiaJWPlayer) {
 			setupPlayer();
 		}
 
@@ -105,10 +103,6 @@ require([
 	}
 
 	function onPlayerReady(playerInstance) {
-		playerInstance.on('captionsSelected', function (data) {
-			featuredVideoCookieService.setCaptions(data.selectedLang);
-		});
-
 		player = playerInstance;
 
 		bindPlayerEvents(playerInstance);
@@ -121,6 +115,16 @@ require([
 			playExpandedItem(currentItemNumber - 1);
 		});
 
+		playerInstance.on('play', function (data) {
+			if (data.playReason === 'interaction') {
+				playExpandedItem(currentItemNumber - 1);
+			}
+		});
+
+		playerInstance.on('captionsSelected', function (data) {
+			featuredVideoCookieService.setCaptions(data.selectedLang);
+		});
+
 		$unit.find('.video-placeholder').on('click', function () {
 			playExpandedItem($(this).data('index'));
 
@@ -130,12 +134,6 @@ require([
 				action: tracker.ACTIONS.CLICK,
 				label: 'playlist-item-click'
 			});
-		});
-
-		playerInstance.on('play', function (data) {
-			if (data.playReason === 'interaction') {
-				playExpandedItem(currentItemNumber - 1);
-			}
 		});
 	}
 
@@ -189,7 +187,7 @@ require([
 
 	function expand() {
 		if (!isExpanded) {
-			$unit.addClass('expanded');
+			$unit.addClass('is-expanded');
 
 			isExpanded = true;
 

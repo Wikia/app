@@ -78,7 +78,7 @@ class ArticleVideoController extends WikiaController {
 	}
 
 	public function recommendedVideo() {
-		$articleId = $this->wg->out->getTitle()->getArticleID();
+		$articleId = RequestContext::getMain()->getTitle()->getArticleID();
 
 		if ( empty( ArticleVideoContext::isRecommendedVideoAvailable( $articleId ) ) ) {
 			$this->skipRendering();

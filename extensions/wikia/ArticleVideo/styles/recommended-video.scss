@@ -30,11 +30,11 @@
 		width: 24px;
 	}
 
-	&.revealed {
+	&.is-revealed {
 		transform: translate(0, 0);
 	}
 
-	&.expanded {
+	&.is-expanded {
 		height: auto;
 
 		.actual-video {
@@ -131,10 +131,8 @@
 		}
 
 		svg {
-			height: 30px;
-			left: calc(50% - 15px);
-			width: 30px;
-			top: calc(50% - 15px);
+			left: calc(50% - 18px);
+			top: calc(50% - 18px);
 		}
 	}
 }
@@ -157,11 +155,9 @@
 
 	svg {
 		fill: #fff;
-		height: 60px;
-		left: calc(50% - 30px);
+		left: calc(50% - 36px);
 		position: absolute;
-		top: calc(50% - 30px);
-		width: 60px;
+		top: calc(50% - 36px);
 	}
 }
 
