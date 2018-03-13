@@ -5,8 +5,6 @@
  */
 class FilePageHooks extends WikiaObject{
 
-	const VIDEO_WIKI = 298117;
-
 	/**
 	 * Determine which FilePage to show based on skin and File type (image/video)
 	 *
@@ -81,7 +79,6 @@ class FilePageHooks extends WikiaObject{
 
 	/**
 	 * Add "replace" button to File pages
-	 * Add "remove" action to MenuButtons on premium video file pages
 	 * This button will remove a video from a wiki but keep it on the Video Wiki.
 	 */
 	static public function onSkinTemplateNavigation( $skin, &$tabs ) {
@@ -112,11 +109,6 @@ class FilePageHooks extends WikiaObject{
 					'href' => $href,
 				);
 			}
-		}
-
-		// Ignore Video Wiki videos beyond this point
-		if ( $app->wg->CityId == self::VIDEO_WIKI ) {
-			return true;
 		}
 
 		if ( WikiaFileHelper::isFileTypeVideo( $title ) ) {

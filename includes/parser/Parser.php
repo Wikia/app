@@ -4098,17 +4098,25 @@ class Parser {
 	}
 
 	/**
+	 * Wikia change - use a memcache instead of per-wiki transcache table which had its limitations:
+	 *
+	 *  - there was no garbage collection mechanism
+	 *  - long content was causing DB errors (BLOB column was apparently too short)
+	 *  - responses for the same URLs where cached separately on each wiki
+	 *
+	 * @see SUS-3754
+	 *
 	 * @param $url string
-	 * @return Mixed|String
+	 * @return string
 	 */
-	function fetchScaryTemplateMaybeFromCache( $url ) {
-		global $wgTranscludeCacheExpiry;
-		$dbr = wfGetDB( DB_SLAVE );
-		$tsCond = $dbr->timestamp( time() - $wgTranscludeCacheExpiry );
-		$obj = $dbr->selectRow( 'transcache', array('tc_time', 'tc_contents' ),
-				array( 'tc_url' => $url, "tc_time >= " . $dbr->addQuotes( $tsCond ) ) );
-		if ( $obj ) {
-			return $obj->tc_contents;
+	private function fetchScaryTemplateMaybeFromCache( $url ) {
+		global $wgTranscludeCacheExpiry, $wgMemc;
+
+		$key = wfSharedMemcKey( __METHOD__, md5( $url ) );
+		$content = $wgMemc->get( $key );
+
+		if ( is_string( $content ) ) {
+			return $content;
 		}
 
 		$text = Http::get( $url );
@@ -4124,18 +4132,7 @@ class Parser {
 			return wfMsgForContent( 'scarytranscludefailed', $url );
 		}
 
-		# wikia start
-		if ( wfReadOnly() ) {
-			return wfReadOnlyReason();
-		}
-		# wikia end
-
-		$dbw = wfGetDB( DB_MASTER );
-		$dbw->replace( 'transcache', array('tc_url'), array(
-			'tc_url' => $url,
-			'tc_time' => $dbw->timestamp( time() ),
-			'tc_contents' => $text)
-		);
+		$wgMemc->set( $key, $text, $wgTranscludeCacheExpiry );
 		return $text;
 	}
 
