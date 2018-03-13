@@ -34,7 +34,19 @@
 					</div>
 				{{/isVideo}}
 			</a>
-			{{#caption}}<figcaption class="pi-item-spacing pi-caption">{{{caption}}}</figcaption>{{/caption}}
+			{{#caption}}<figcaption class="pi-hero-title-wrapper pi-item-spacing"><h3 class="pi-hero-caption">{{{caption}}}</h3></figcaption>{{/caption}}
+			<div class="image-collection-actions">
+				{{^isFirst}}
+					<button class="action-previous">
+						{{{menuControlIcon}}}
+					</button>
+				{{/isFirst}}
+				{{^isLast}}
+					<button class="action-next">
+						{{{menuControlIcon}}}
+					</button>
+				{{/isLast}}
+			</div>
 		</figure>
 	{{/images}}
 </div>

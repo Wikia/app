@@ -99,10 +99,12 @@ class PortableInfoboxImagesHelper {
 		);
 
 		$images[0]['isFirst'] = true;
+		$images[count($images) - 1]['isLast'] = true;
 		return [
 			'images' => $images,
 			'firstImage' => $images[0],
-			'dataAttrs' => json_encode( $dataAttrs )
+			'dataAttrs' => json_encode( $dataAttrs ),
+			'menuControlIcon' => \DesignSystemHelper::renderSvg('wds-icons-menu-control', 'wds-icon')
 		];
 	}
 
