@@ -22,15 +22,18 @@ use \Wikia\Logger\WikiaLogger;
  */
 class MigrateCustomJsToHttps extends Maintenance {
 
-	protected $saveChanges  = false;
-	protected $fh;	// handle to the output csv file
+	protected $saveChanges = false;
+	protected $processNonVignette = false;
+	protected $fh; // handle to the output csv file
 	private $contentReview;
+	private $currentLine;
 
 	public function __construct() {
 		parent::__construct();
 		$this->mDescription = 'Migrates image urls in custom JS assets to HTTPS';
 		$this->addOption( 'saveChanges', 'Edit articles for real.', false, false, 'd' );
 		$this->addOption( 'file', 'CSV file where to save values that are going to be altered', false, true, 'f' );
+		$this->addOption( 'process-non-vignette', 'Process local URLs and other non-Fandom image URLs.', false, false, 'i' );
 	}
 
 	public function __destruct()  {
@@ -47,7 +50,7 @@ class MigrateCustomJsToHttps extends Maintenance {
 		if ( $oldValue !== $newValue ) {
 			if ( $this->fh ) {
 				fputcsv( $this->fh,
-					[ $wgCityId, $this->currentTitle->getDBkey(), $description, $oldValue, $newValue ] );
+					[ $wgCityId, $this->currentTitle->getDBkey(), $description, $oldValue, $newValue, $this->currentLine ] );
 			}
 		}
 	}
@@ -150,17 +153,6 @@ class MigrateCustomJsToHttps extends Maintenance {
 	private $currentHost = null;
 
 	/**
-	 * True if the url point to currently processed wiki.
-	 */
-	private function isCurrentWikiUrl( $url ) {
-		global $wgServer;
-		if ( !$this->currentHost ) {
-			$this->currentHost = parse_url( $wgServer, PHP_URL_HOST );
-		}
-		return parse_url( $url, PHP_URL_HOST ) === $this->currentHost;
-	}
-
-	/**
 	 * Removes the host part of the url leaving only the path.
 	 */
 	private function stripProtocolAndHost( $url ) {
@@ -171,18 +163,6 @@ class MigrateCustomJsToHttps extends Maintenance {
 		return $parsedUrl[ 'path' ] .
 			( ( isset( $parsedUrl[ 'query' ] ) ) ? '?' . $parsedUrl[ 'query' ] : '' ) .
 			( ( isset( $parsedUrl[ 'fragment' ] ) ) ? '#' . $parsedUrl[ 'fragment' ] : '' );
-	}
-
-	/**
-	 * Fixes wiki urls according to our guidelines:
-	 * - urls to current wiki should be local, without protocol or host
-	 * - urls to other wiki should be protocol-relative.
-	 */
-	private function fixWikiUrl( $url ) {
-		if ( $this->isWikiaComSubdomainUrl( $url ) && $this->isHttpUrl( $url ) ) {
-			$url = wfProtocolUrlToRelative( $url );
-		}
-		return $url;
 	}
 
 	/**
@@ -211,15 +191,19 @@ class MigrateCustomJsToHttps extends Maintenance {
 		if ( $this->isLocalUrl( $url ) ) {
 			//$this->output( "Skipping local link {$url}\n" );
 		} elseif ( $this->isThirdPartyUrl( $url ) ) {
-			if ( $this->isHttpUrl( $url ) ) {
+			if ( $this->isHttpUrl( $url ) && $this->processNonVignette ) {
 				$url = $this->upgradeThirdPartyUrl( $url );
 			}
 		} elseif ( $this->isWikiaImageUrl( $url ) ) {
-			$url = $this->forceWikiaImageOverHttps( $url );
-			$this->logUrlChange( 'Replaced vignette url', $originalUrl, $url );
+			if ( !$this->processNonVignette ) {
+				$url = $this->forceWikiaImageOverHttps( $url );
+				$this->logUrlChange( 'Replaced vignette url', $originalUrl, $url );
+			}
 		} elseif ( $this->isWikiaComSubdomainUrl( $url ) ) {
-			$url = $this->fixWikiUrl( $url );
-			$this->logUrlChange( 'Converted wiki url to protocol/host relative', $originalUrl, $url );
+			if ( $this->isHttpUrl( $url ) && $this->processNonVignette ) {
+				$url = wfProtocolUrlToRelative( $url );
+				$this->logUrlChange( 'Converted wiki url to protocol/host relative', $originalUrl, $url );
+			}
 		} else {
 			$this->output( "Don't know to handle {$url}\n" );
 		}
@@ -248,6 +232,7 @@ class MigrateCustomJsToHttps extends Maintenance {
 	public function updateJSContent( $text ) {
 		$lines = explode( "\n", $text );
 		foreach ( $lines as $index => $line ) {
+			$this->currentLine = $line;
 			// Try to skip the most common comment patterns
 			if ( !preg_match( '/^(\s*\*|\s*\/\/\s+)/', $line ) ) {
 				$lines[$index] = preg_replace_callback( '/(https?:\/\/[a-zA-Z0-9\\.]+)/i', [ $this, 'makeUrlHttpsComatible' ], $line );
@@ -281,7 +266,7 @@ class MigrateCustomJsToHttps extends Maintenance {
 					// autoapprove can be set by using wpApprove parameter.
 					// if the current JS revision is not approved yet, do not autoapprove JS changes!
 					$latestReviewedID = $this->contentReview->getReviewedRevisionId( $title->getArticleID(), $wgCityId );
-					if ( $revId === $latestReviewedID ) {
+					if ( !$this->processNonVignette && $revId === $latestReviewedID ) {
 						$this->output( "Auto-approving change\n" );
 						$wgRequest->setVal( 'wpApprove', '1' );
 					}
@@ -290,12 +275,13 @@ class MigrateCustomJsToHttps extends Maintenance {
 					$editPage->summary = $this->getEditSummary();
 					$editPage->textbox1 = $updatedText;
 					$editPage->minoredit = true;
+					$editPage->starttime = wfTimestampNow();
 					$result = [];
 					$status = $editPage->internalAttemptSave( $result, /* bot */ true );
 					if ( $status->isGood() ) {
 						$this->output( "Saved updated JS file\n" );
 					} else {
-						$this->error( "Failed to save JS file!\n" );
+						$this->error( "Failed to save JS file: {$status->value}!\n" );
 					}
 					$wgRequest->setVal( 'wpApprove', false );
 				}
@@ -306,12 +292,18 @@ class MigrateCustomJsToHttps extends Maintenance {
 	}
 
 	public function execute() {
-		global $wgUser, $wgCityId;
+		global $wgUser, $wgCityId, $wgUseSiteJs;
+
+		// Skip any wiki that doesn't use JS
+		if ( empty( $wgUseSiteJs ) ) {
+			return;
+		}
 
 		$wgUser = User::newFromName( Wikia::BOT_USER ); // Make changes as FANDOMbot
 		$this->contentReview = new Wikia\ContentReview\Helper();
 
 		$this->saveChanges = $this->hasOption( 'saveChanges' );
+		$this->processNonVignette = $this->hasOption( 'process-non-vignette' );
 		$fileName = $this->getOption( 'file', false );
 		if ( $fileName ) {
 			$this->fh = fopen( $fileName, "a" );
