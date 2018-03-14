@@ -66,24 +66,6 @@ class LogPage {
 	}
 
 	/**
-	 * Wikia change
-	 * Set the type of this log page
-	 * @param string $type one of '', 'block', 'protect', 'rights', 'delete', 'upload', 'move'
-	 */
-	public function setType( string $type ) {
-		$this->type = $type;
-	}
-
-	/**
-	 * Wikia change
-	 * Set if this log entry should show in Recent Changes
-	 * @param bool $updateRecentChanges
-	 */
-	public function setUpdateRecentChanges( bool $updateRecentChanges ) {
-		$this->updateRecentChanges = $updateRecentChanges;
-	}
-
-	/**
 	 * @return bool|int|null
 	 * @throws MWException if this log entry would be attributed to anon user
 	 */

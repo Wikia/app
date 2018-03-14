@@ -296,12 +296,13 @@ class MigrateCustomCssToHttps extends Maintenance {
 					$editPage->summary = $this->getEditSummary();
 					$editPage->textbox1 = $updatedText;
 					$editPage->minoredit = true;
+					$editPage->starttime = wfTimestampNow();
 					$result = [];
 					$status = $editPage->internalAttemptSave( $result, /* bot */ true );
 					if ( $status->isGood() ) {
 						$this->output( "Saved updated CSS file\n" );
 					} else {
-						$this->error( "Failed to save CSS file!\n" );
+						$this->error( "Failed to save CSS file: {$status->value}!\n" );
 					}
 				}
 				return true;

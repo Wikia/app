@@ -44,14 +44,12 @@ class VideoHandlerController extends WikiaController {
 					$error = wfMessage( 'videohandler-error-video-no-exist' )->inContentLanguage()->text();
 				} else {
 					$videoId = $file->getVideoId();
-					$assetUrl = $file->getPlayerAssetUrl();
 					$options = [
 						'autoplay' => $autoplay,
 						'isAjax' => true,
 					];
 					$embedCode = $file->getEmbedCode( $width, $options );
 					$this->setVal( 'videoId', $videoId );
-					$this->setVal( 'asset', $assetUrl );
 					$this->setVal( 'embedCode', $embedCode );
 					/**
 					 * This data is being queried by GameGuides that store html in local storage

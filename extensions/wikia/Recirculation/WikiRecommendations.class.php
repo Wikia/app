@@ -29,9 +29,9 @@ class WikiRecommendations {
 				'url' => 'http://wrinkle-in-time.wikia.com/wiki/Wrinkle_in_Time_Wiki'
 			],
 			[
-				'thumbnailUrl' => 'https://vignette.wikia.nocookie.net/redsparrow/images/c/ce/Red-sparrow-1.jpg/revision/latest?cb=20180226181940',
-				'title' => 'Red Sparrow Wiki',
-				'url' => 'http://redsparrow.wikia.com/wiki/Red_Sparrow_Wiki'
+				'thumbnailUrl' => 'https://vignette.wikia.nocookie.net/final-space/images/5/59/Mooncake_%28TBS_Version%29.PNG/revision/latest?cb=20180124033725',
+				'title' => 'Final Space Wiki',
+				'url' => 'http://final-space.wikia.com/wiki/Final_Space_Wiki'
 			],
 			[
 				'thumbnailUrl' => 'https://vignette.wikia.nocookie.net/readyplayerone/images/b/ba/Ready-player-one.jpg/revision/latest?cb=20180208214114',

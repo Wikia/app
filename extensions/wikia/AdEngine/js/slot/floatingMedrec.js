@@ -81,11 +81,9 @@ define('ext.wikia.adEngine.slot.floatingMedrec', [
 			recirculationElement.style.display = 'none';
 		}
 
-		function refreshAd() {
-			return new Promise(function (resolve, reject) {
-				viewabilityHandler.refreshOnView(slotName, 0, {
-					onSuccess: resolve
-				});
+		function refreshAd(onSuccess) {
+			viewabilityHandler.refreshOnView(slotName, 0, {
+				onSuccess: onSuccess
 			});
 		}
 
@@ -98,8 +96,7 @@ define('ext.wikia.adEngine.slot.floatingMedrec', [
 					showRecirculation();
 				} else {
 					log(['swapRecirculationAndAd', 'Show ad, hide recirculation '], 'debug', logGroup);
-					refreshAd()
-						.then(hideRecirculation);
+					refreshAd(hideRecirculation);
 				}
 
 				refreshInfo.adVisible = !refreshInfo.adVisible;

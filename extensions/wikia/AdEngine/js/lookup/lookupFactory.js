@@ -5,9 +5,9 @@ define('ext.wikia.adEngine.lookup.lookupFactory', [
 	'ext.wikia.aRecoveryEngine.adBlockDetection',
 	'wikia.lazyqueue',
 	'wikia.log',
-	'wikia.promise',
-	require.optional('ext.wikia.adEngine.mobile.mercuryListener')
-], function (adContext, adTracker, adBlockDetection, lazyQueue, log, Promise, mercuryListener) {
+	require.optional('ext.wikia.adEngine.mobile.mercuryListener'),
+	require.optional('wikia.promise')
+], function (adContext, adTracker, adBlockDetection, lazyQueue, log, mercuryListener, Promise) {
 	'use strict';
 
 	function create(module) {
@@ -133,6 +133,30 @@ define('ext.wikia.adEngine.lookup.lookupFactory', [
 			}, milisToTimeout);
 		}
 
+		function waitForResponseCallbacks(onSuccess, onTimeout, millisToTimeout) {
+			var resolved = false,
+				timeoutId;
+
+			if (hasResponse()) {
+				onSuccess();
+			} else {
+				timeoutId = setTimeout(function () {
+					onTimeout();
+					resolved = true;
+				}, millisToTimeout);
+
+				addResponseListener(function () {
+					if (!resolved) {
+						onSuccess();
+
+						if (timeoutId) {
+							clearTimeout(timeoutId);
+						}
+					}
+				});
+			}
+		}
+
 		resetState();
 
 		if (mercuryListener) {
@@ -149,7 +173,9 @@ define('ext.wikia.adEngine.lookup.lookupFactory', [
 			isSlotSupported: isSlotSupported,
 			trackState: trackState,
 			wasCalled: wasCalled,
-			waitForResponse: waitForResponse
+			// TODO: ADEN-6812 remove waitForResponse
+			waitForResponse: waitForResponse,
+			waitForResponseCallbacks: waitForResponseCallbacks
 		};
 	}
 

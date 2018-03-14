@@ -71,6 +71,7 @@ define('ext.wikia.adEngine.tracking.adInfoTracker',  [
 			'bidder_13': transformBidderPrice('onemobile'),
 			'bidder_14': transformBidderPrice('pubmatic'),
 			'bidder_15': transformBidderPrice('beachfront'),
+			'bidder_16': transformBidderPrice('appnexusWebAds'),
 			'product_chosen': creative.adProduct || 'unknown',
 			'product_lineitem_id': creative.lineItemId || '',
 			'creative_id': creative.creativeId || '',
