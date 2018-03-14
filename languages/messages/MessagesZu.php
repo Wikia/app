@@ -11,4 +11,4 @@
 
 $pluralRules = [
 	"i = 0 or n = 1",
-]
+];
