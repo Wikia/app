@@ -58,7 +58,7 @@ class TemplateClassificationService extends ContextSource {
 	 * @throws Exception
 	 * @throws \Swagger\Client\ApiException
 	 */
-	public function getType( $wikiId, $pageId ) {
+	public function getType( int $wikiId, int $pageId ) {
 		if ( !isset( $this->cache[$wikiId][$pageId] ) ) {
 			$templateType = self::TEMPLATE_UNCLASSIFIED;
 
@@ -90,7 +90,7 @@ class TemplateClassificationService extends ContextSource {
 	 * @throws Exception
 	 * @throws \Swagger\Client\ApiException
 	 */
-	public function getDetails( $wikiId, $pageId ) {
+	public function getDetails( int $wikiId, int $pageId ): array {
 		$templateDetails = [];
 
 		$providers = $this->getApiClient()->getTemplateDetails( $wikiId, $pageId );
@@ -113,7 +113,7 @@ class TemplateClassificationService extends ContextSource {
 	 * @throws Exception
 	 * @throws \Swagger\Client\ApiException
 	 */
-	public function classifyTemplate( $wikiId, $pageId, $templateType, $origin, $provider ) {
+	public function classifyTemplate( int $wikiId, int $pageId, string $templateType, string $origin, string $provider ) {
 		$details = [
 			'provider' => $provider,
 			'origin' => $origin,
@@ -132,7 +132,7 @@ class TemplateClassificationService extends ContextSource {
 	 * @throws Exception
 	 * @throws \Swagger\Client\ApiException
 	 */
-	public function getTemplatesOnWiki( $wikiId ) {
+	public function getTemplatesOnWiki( int $wikiId ): array {
 		$templateTypes = [];
 
 		$types = $this->getApiClient()->getTemplateTypesOnWiki( $wikiId );
@@ -142,6 +142,27 @@ class TemplateClassificationService extends ContextSource {
 		}
 
 		return $templateTypes;
+	}
+
+	/**
+	 * Delete classification data for a single template on a given wiki
+	 *
+	 * @param int $wikiId
+	 * @param int $pageId
+	 * @throws \Swagger\Client\ApiException
+	 */
+	public function deleteTemplateInformation( int $wikiId, int $pageId ) {
+		$this->getApiClient()->deleteTemplateInformation( $wikiId, $pageId );
+	}
+
+	/**
+	 * Delete classification data for all templates on a given wiki
+	 *
+	 * @param int $wikiId
+	 * @throws \Swagger\Client\ApiException
+	 */
+	public function deleteTemplateInformationForWiki( int $wikiId ) {
+		$this->getApiClient()->deleteTemplateInformationForWiki( $wikiId );
 	}
 
 	/**

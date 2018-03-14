@@ -44,9 +44,6 @@ $messages['en'] = array(
 	'wikiasearch2-top-module-title' => 'Top pages',
 	'wikiasearch2-fandom-stories-title' => 'Related {{PLURAL:$1|Story|Stories}}',
 	'wikiasearch2-fandom-stories-view-more' => 'View More Stories',
-	'wikiamobile-wikiasearch2-next' => 'Next',
-	'wikiamobile-wikiasearch2-prev' => 'Previous',
-	'wikiamobile-wikiasearch2-count-of-results' => '$1-$2 of $3 {{PLURAL:$3|result|results}}',
 	'wikiasearch2-video-results' => "Videos for '$1'",
 );
 
@@ -59,9 +56,6 @@ $messages['qqq'] = array(
 	'wikiasearch2-results-redirected-from' => 'Caption for search results that are from redirects',
 	'wikiasearch2-enable-go-search' => 'Preferences setting next to a checkbox which asks you whether you want to enable Go-Search (going directly to a page title match in search) or not. Default = off',
 	'wikiasearch2-search-ads-header' => 'Heading displayed above search advertisements.',
-	'wikiamobile-wikiasearch2-next' => 'Message is used to go to next result page',
-	'wikiamobile-wikiasearch2-prev' => 'Message is used to go to previous result page',
-	'wikiamobile-wikiasearch2-count-of-results' => 'Message uses to show start number of first and last result shown on current page and numbet of total results',
 	'wikiasearch2-tabs-articles' => 'Name of a tab with articles. This tab is displayed in the right column on search page',
 	'wikiasearch2-tabs-photos-and-videos' => 'Name of a tab with photos and videos. This tab is displayed in the right column on search page',
 	'wikiasearch2-users' => 'Name of a tab with users. This tab is displayed in the right column on search page',
@@ -143,12 +137,12 @@ $messages['de'] = array(
 	'wikiasearch2-top-module-title' => 'Top-Seiten',
 	'wikiasearch2-fandom-stories-title' => 'Ähnliche {{PLURAL:$1|Story|Storys}}',
 	'wikiasearch2-fandom-stories-view-more' => 'Weitere Storys',
-	'wikiamobile-wikiasearch2-next' => 'Nächste',
-	'wikiamobile-wikiasearch2-prev' => 'Vorherige',
-	'wikiamobile-wikiasearch2-count-of-results' => '$1-$2 von $3 {{PLURAL:$3|Ergebnis|Ergebnisse}}',
 	'wikiasearch2-video-results' => "Videos für '$1'",
 	'wikiasearch2-choose-category' => 'Kategorie auswählen',
 	'wikiasearch2-filter-category' => 'Kategorie',
+	'wikiamobile-wikiasearch2-next' => 'Nächste',
+	'wikiamobile-wikiasearch2-prev' => 'Vorherige',
+	'wikiamobile-wikiasearch2-count-of-results' => '$1-$2 von $3 {{PLURAL:$3|Ergebnis|Ergebnisse}}',
 );
 
 $messages['de-formal'] = array(
@@ -239,12 +233,12 @@ $messages['es'] = array(
 	'wikiasearch2-top-module-title' => 'Páginas top',
 	'wikiasearch2-fandom-stories-title' => 'Relacionado con {{PLURAL:$1|historia|historias}}',
 	'wikiasearch2-fandom-stories-view-more' => 'Ver más historias',
-	'wikiamobile-wikiasearch2-next' => 'Siguiente',
-	'wikiamobile-wikiasearch2-prev' => 'Anterior',
-	'wikiamobile-wikiasearch2-count-of-results' => '$1-$2 of $3 {{PLURAL:$1|resultado|resultados}}',
 	'wikiasearch2-video-results' => "Videos de '$1'",
 	'wikiasearch2-choose-category' => 'Elegir categoría',
 	'wikiasearch2-filter-category' => 'Categoría',
+	'wikiamobile-wikiasearch2-next' => 'Siguiente',
+	'wikiamobile-wikiasearch2-prev' => 'Anterior',
+	'wikiamobile-wikiasearch2-count-of-results' => '$1-$2 of $3 {{PLURAL:$1|resultado|resultados}}',
 );
 
 $messages['et'] = array(
@@ -307,12 +301,12 @@ $messages['fr'] = array(
 	'wikiasearch2-top-module-title' => 'Pages les plus visitées',
 	'wikiasearch2-fandom-stories-title' => '{{PLURAL:$1|Article|Articles}} à ce sujet',
 	'wikiasearch2-fandom-stories-view-more' => "Voir plus d'articles",
-	'wikiamobile-wikiasearch2-next' => 'Suivant',
-	'wikiamobile-wikiasearch2-prev' => 'Précédent',
-	'wikiamobile-wikiasearch2-count-of-results' => '$1-$2 de $3 {{PLURAL:$3|résultat|résultats}}',
 	'wikiasearch2-video-results' => "Vidéos pour '$1'",
 	'wikiasearch2-choose-category' => 'Choisissez une catégorie',
 	'wikiasearch2-filter-category' => 'Catégorie',
+	'wikiamobile-wikiasearch2-next' => 'Suivant',
+	'wikiamobile-wikiasearch2-prev' => 'Précédent',
+	'wikiamobile-wikiasearch2-count-of-results' => '$1-$2 de $3 {{PLURAL:$3|résultat|résultats}}',
 );
 
 $messages['gd'] = array(
@@ -398,12 +392,12 @@ $messages['it'] = array(
 	'wikiasearch2-top-module-title' => 'Pagine migliori',
 	'wikiasearch2-fandom-stories-title' => '{{PLURAL:$1|Storia correlata|Storie correlate}}',
 	'wikiasearch2-fandom-stories-view-more' => 'Visualizza altre storie',
-	'wikiamobile-wikiasearch2-next' => 'Avanti',
-	'wikiamobile-wikiasearch2-prev' => 'Indietro',
-	'wikiamobile-wikiasearch2-count-of-results' => '$1-$2 di $3 {{PLURAL:$3|risultato|risultati}}',
 	'wikiasearch2-video-results' => 'Video per "$1"',
 	'wikiasearch2-choose-category' => 'Seleziona una categoria',
 	'wikiasearch2-filter-category' => 'Categoria',
+	'wikiamobile-wikiasearch2-next' => 'Avanti',
+	'wikiamobile-wikiasearch2-prev' => 'Indietro',
+	'wikiamobile-wikiasearch2-count-of-results' => '$1-$2 di $3 {{PLURAL:$3|risultato|risultati}}',
 );
 
 $messages['ja'] = array(
@@ -449,12 +443,12 @@ $messages['ja'] = array(
 	'wikiasearch2-top-module-title' => '上位ページ',
 	'wikiasearch2-fandom-stories-title' => '関連{{PLURAL:$1|ストーリー|ストーリー}}',
 	'wikiasearch2-fandom-stories-view-more' => 'ストーリーをもっと見る',
-	'wikiamobile-wikiasearch2-next' => '次へ',
-	'wikiamobile-wikiasearch2-prev' => '戻る',
-	'wikiamobile-wikiasearch2-count-of-results' => '$1～$2/$3{{PLURAL:$3|件|件}}',
 	'wikiasearch2-video-results' => '「$1」の動画',
 	'wikiasearch2-choose-category' => 'Choose Category',
 	'wikiasearch2-filter-category' => 'カテゴリ',
+	'wikiamobile-wikiasearch2-next' => '次へ',
+	'wikiamobile-wikiasearch2-prev' => '戻る',
+	'wikiamobile-wikiasearch2-count-of-results' => '$1～$2/$3{{PLURAL:$3|件|件}}',
 );
 
 $messages['jam'] = array(
@@ -464,8 +458,6 @@ $messages['ko'] = array(
 	'wikiasearch2-global-search-headline' => '위키아 산하 위키 찾기',
 	'wikiasearch2-page-title-no-query-interwiki' => '위키아에서 찾기',
 	'wikiasearch2-search-all-wikia' => '위키아 전체에서 찾기',
-	'wikiamobile-wikiasearch2-next' => '다음',
-	'wikiamobile-wikiasearch2-prev' => '이전',
 	'wikiasearch2-advanced-search' => '다음 설정된 이름공간에서 찾기',
 	'wikiasearch2-advanced-select-all' => '모두 선택',
 	'wikiasearch2-enable-go-search' => '검색하고자 하는 항목과 일치하는 이름을 가진 문서가 있으면 검색할 때 그 문서로 바로 이동 (넘겨주기 문서 포함)',
@@ -636,14 +628,14 @@ $messages['pl'] = array(
 	'wikiasearch2-top-module-title' => 'Najpopularniejsze strony',
 	'wikiasearch2-fandom-stories-title' => '{{PLURAL:$1|Powiązana Wieść|Powiązane Wieści}}',
 	'wikiasearch2-fandom-stories-view-more' => 'Zobacz więcej wieści z Fandomu',
-	'wikiamobile-wikiasearch2-next' => 'Dalej',
-	'wikiamobile-wikiasearch2-prev' => 'Wstecz',
-	'wikiamobile-wikiasearch2-count-of-results' => '$1-$2 z $3 {{PLURAL:$3|wyniku|wyników}}',
 	'wikiasearch2-video-results' => 'Filmy dla „$1”',
 	'wikiasearch2-images' => '$1 {{PLURAL:$2|obraz|obrazy|obrazów}}',
 	'wikiasearch2-videos' => '$1 {{PLURAL:$2|film|filmy|filmów}}',
 	'wikiasearch2-choose-category' => 'Wybierz kategorię',
 	'wikiasearch2-filter-category' => 'Kategoria',
+	'wikiamobile-wikiasearch2-next' => 'Dalej',
+	'wikiamobile-wikiasearch2-prev' => 'Wstecz',
+	'wikiamobile-wikiasearch2-count-of-results' => '$1-$2 z $3 {{PLURAL:$3|wyniku|wyników}}',
 );
 
 $messages['pms'] = array(
@@ -695,12 +687,12 @@ $messages['pt'] = array(
 	'wikiasearch2-top-module-title' => 'Páginas em alta',
 	'wikiasearch2-fandom-stories-title' => '{{PLURAL:$1|História|Histórias}} relacionadas',
 	'wikiasearch2-fandom-stories-view-more' => 'Visualizar mais histórias',
-	'wikiamobile-wikiasearch2-next' => 'Próximo',
-	'wikiamobile-wikiasearch2-prev' => 'Anterior',
-	'wikiamobile-wikiasearch2-count-of-results' => '$1-$2 de $ 3 {{PLURAL:$3|resultado|resultados}}',
 	'wikiasearch2-video-results' => "Vídeos para '$1'",
 	'wikiasearch2-choose-category' => 'Escolher categoria',
 	'wikiasearch2-filter-category' => 'Categoria',
+	'wikiamobile-wikiasearch2-next' => 'Próximo',
+	'wikiamobile-wikiasearch2-prev' => 'Anterior',
+	'wikiamobile-wikiasearch2-count-of-results' => '$1-$2 de $ 3 {{PLURAL:$3|resultado|resultados}}',
 );
 
 $messages['ro'] = array(
@@ -749,12 +741,12 @@ $messages['ru'] = array(
 	'wikiasearch2-top-module-title' => 'Лучшие статьи',
 	'wikiasearch2-fandom-stories-title' => '{{PLURAL:$1|Близкая по теме статья|Близкие по теме статьи|Близких по теме статей}}',
 	'wikiasearch2-fandom-stories-view-more' => 'Показать больше статей',
-	'wikiamobile-wikiasearch2-next' => 'Следующая',
-	'wikiamobile-wikiasearch2-prev' => 'Предыдущая',
-	'wikiamobile-wikiasearch2-count-of-results' => '$1-$2 из $3 {{PLURAL:$3|результата|результатов}}',
 	'wikiasearch2-video-results' => 'Видео для «$1»',
 	'wikiasearch2-choose-category' => 'Выберите категорию',
 	'wikiasearch2-filter-category' => 'Категории',
+	'wikiamobile-wikiasearch2-next' => 'Следующая',
+	'wikiamobile-wikiasearch2-prev' => 'Предыдущая',
+	'wikiamobile-wikiasearch2-count-of-results' => '$1-$2 из $3 {{PLURAL:$3|результата|результатов}}',
 );
 
 $messages['sr-ec'] = array(
@@ -860,12 +852,12 @@ $messages['zh-hans'] = array(
 	'wikiasearch2-top-module-title' => '热门页面',
 	'wikiasearch2-fandom-stories-title' => '其他{{PLURAL:$1|故事|故事}}',
 	'wikiasearch2-fandom-stories-view-more' => '阅读更多故事',
-	'wikiamobile-wikiasearch2-next' => '下一页',
-	'wikiamobile-wikiasearch2-prev' => '上一页',
-	'wikiamobile-wikiasearch2-count-of-results' => '$3{{PLURAL:$3|项结果|项结果}}中的$1- $2',
 	'wikiasearch2-video-results' => '关于"$1"的视频',
 	'wikiasearch2-choose-category' => '选择分类',
 	'wikiasearch2-filter-category' => '分类',
+	'wikiamobile-wikiasearch2-next' => '下一页',
+	'wikiamobile-wikiasearch2-prev' => '上一页',
+	'wikiamobile-wikiasearch2-count-of-results' => '$3{{PLURAL:$3|项结果|项结果}}中的$1- $2',
 );
 
 $messages['zh-hant'] = array(
@@ -911,11 +903,11 @@ $messages['zh-hant'] = array(
 	'wikiasearch2-top-module-title' => '熱門頁面',
 	'wikiasearch2-fandom-stories-title' => '相關的{{PLURAL:$1|故事|故事}}',
 	'wikiasearch2-fandom-stories-view-more' => '閱讀更多故事',
-	'wikiamobile-wikiasearch2-next' => '下一頁',
-	'wikiamobile-wikiasearch2-prev' => '上一頁',
-	'wikiamobile-wikiasearch2-count-of-results' => '$3{{PLURAL:$3|項結果|項結果}}中的$1- $2',
 	'wikiasearch2-video-results' => '關於「$1」的影片',
 	'wikiasearch2-choose-category' => '選擇分類',
 	'wikiasearch2-filter-category' => '分類',
+	'wikiamobile-wikiasearch2-next' => '下一頁',
+	'wikiamobile-wikiasearch2-prev' => '上一頁',
+	'wikiamobile-wikiasearch2-count-of-results' => '$3{{PLURAL:$3|項結果|項結果}}中的$1- $2',
 );
 

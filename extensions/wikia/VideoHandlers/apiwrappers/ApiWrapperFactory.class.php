@@ -22,26 +22,6 @@ class ApiWrapperFactory {
 	}
 
 	/**
-	 * Get provider name from id
-	 * @param int $id
-	 * @return mixed provider name or null
-	 */
-	public function getProviderNameFromId($id) {
-
-		wfProfileIn( __METHOD__ );
-
-		$providerMap = F::app()->wg->videoMigrationProviderMap;
-		if (!empty($providerMap[$id])) {
-
-			wfProfileOut( __METHOD__ );
-			return strtolower($providerMap[$id]);
-		}
-
-		wfProfileOut( __METHOD__ );
-		return null;
-	}
-
-	/**
 	 * @param $url
 	 * @return bool|null|ApiWrapper
 	 * @throws WikiaException
