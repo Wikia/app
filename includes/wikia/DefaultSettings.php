@@ -1249,6 +1249,13 @@ $wgAdDriverBeachfrontBidderCountries = null;
 $wgAdDriverBottomLeaderBoardOnMobileCountries = null;
 
 /**
+ * @name $wgAdDriverBottomLeaderBoardMegaCountries
+ * List of countries where BOTTOM_LEADERBOARD ad slot mega is enabled.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverBottomLeaderBoardMegaCountries = null;
+
+/**
  * @name $wgAdDriverIndexExchangeBidderCountries
  * List of countries where indexExchange bidding platform is enabled.
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.

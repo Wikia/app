@@ -9,7 +9,8 @@ define('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', [
 
 	var dfpId = '5441',
 		megaSlots = [
-			'INVISIBLE_SKIN'
+			'INVISIBLE_SKIN',
+			//ToDo: BLB Mega global - 'BOTTOM_LEADERBOARD'
 		],
 		context;
 
@@ -106,9 +107,9 @@ define('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', [
 	}
 
 	function isMegaSlot(slotName) {
-		return megaSlots.indexOf(slotName) !== -1 ||
-				// TODO move BLB to megaSlots in ADEN-6779
-			(getContextTargeting().skin === 'mercury' && slotName === 'BOTTOM_LEADERBOARD');
+		return slotName === 'BOTTOM_LEADERBOARD' ?
+			getContextTargeting().skin === 'mercury' || context.opts.isBLBMegaEnabled :
+			megaSlots.indexOf(slotName) !== -1;
 	}
 
 	adContext.addCallback(function () {

@@ -48,6 +48,7 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverBabRecoveryCountries';
 		$vars[] = 'wgAdDriverBeachfrontBidderCountries';
 		$vars[] = 'wgAdDriverBottomLeaderBoardOnMobileCountries';
+		$vars[] = 'wgAdDriverBottomLeaderBoardMegaCountries';
 		$vars[] = 'wgAdDriverDelayCountries';
 		$vars[] = 'wgAdDriverDelayTimeout';
 		$vars[] = 'wgAdDriverDisableSraCountries';
@@ -120,6 +121,7 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverVideoMoatTrackingCountries';
 		$vars[] = 'wgAdDriverVideoMoatTrackingSampling';
 		$vars[] = 'wgAdDriverVideoPostrollCountries';
+		$vars[] = 'wgAdDriverBottomLeaderBoardMegaCountries';
 
 		// news&stories variables only
 		$vars[] = 'wgAdDriverF2BabDetectionCountries';
