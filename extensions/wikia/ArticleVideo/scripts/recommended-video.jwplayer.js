@@ -81,6 +81,13 @@ require([
 
 	function onCloseClicked() {
 		$unit.removeClass('is-revealed');
+
+		tracker.track({
+			category: 'recommended-video',
+			trackingMethod: 'both',
+			action: tracker.ACTIONS.CLICK,
+			label: 'close-click'
+		});
 	}
 
 	function playItem(data) {
@@ -151,7 +158,6 @@ require([
 		}
 
 		expand();
-		player.getContainer().classList.remove('wikia-jw-small-player-controls');
 	}
 
 	function getPlayerSetup(jwVideoData) {
@@ -203,6 +209,11 @@ require([
 				action: tracker.ACTIONS.VIEW,
 				label: 'recommended-video-expanded'
 			});
+
+			// Needed to trigger jwplayer breakpoint change
+			setTimeout(function () {
+				player.resize();
+			}, 100);
 		}
 	}
 
