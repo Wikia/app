@@ -16,11 +16,12 @@ require([
 		$actualVideo = null,
 		currentItemNumber = 1,
 		isExpanded = false,
-		isAutoplay = true,
+		isAutoplay = false,
 		initialPlay = true;
 
 	function reveal() {
 		$unit.addClass('is-revealed');
+		!isAutoplay && $unit.addClass('is-click-to-play');
 		window.wikiaJWPlayer(
 			recommendedVideoElementId,
 			getPlayerSetup(recommendedVideoData),
@@ -160,7 +161,7 @@ require([
 	function playExpandedItem(index) {
 		var currentIndex = player.getPlaylistItem().index;
 
-		if (currentIndex !== index) {
+		if (!isAutoplay || currentIndex !== index) {
 			player.playlistItem(index);
 			player.play();
 		}

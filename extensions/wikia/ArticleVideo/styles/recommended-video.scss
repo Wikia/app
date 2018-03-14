@@ -28,6 +28,10 @@
 		right: 10px;
 		top: 10px;
 		width: 24px;
+
+		.wds-icon {
+			fill: initial;
+		}
 	}
 
 	&.is-revealed {
@@ -175,6 +179,10 @@
 		position: absolute;
 		top: calc(50% - 36px);
 	}
+}
+
+.is-click-to-play .article-recommended-video img {
+	opacity: 1;
 }
 
 .article-recommended-video {
