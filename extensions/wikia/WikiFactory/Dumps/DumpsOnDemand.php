@@ -106,16 +106,6 @@ class DumpsOnDemand {
 	/**
 	 * @static
 	 * @access public
-	 * @deprecated
-	 */
-	static public function sendMail( $sDbName = null, $iCityId = null, $bHidden = false, $bClose = false ) {
-		trigger_error( sprintf( 'Using of deprecated method %s.', __METHOD__ ) , E_USER_WARNING );
-		self::queueDump( $iCityId, $bHidden, $bClose );
-	}
-
-	/**
-	 * @static
-	 * @access public
 	 */
 	static public function queueDump( $iCityId = null, $bHidden = false, $bClose = false ) {
 		global $wgCityId, $wgUser;
