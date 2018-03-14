@@ -17,7 +17,7 @@ $messages['qqq'] = array(
 
 $messages['de'] = array(
 	'emailext-categoryadd-subject' => 'Auf {{SITENAME}} wurde $1 zu $2 hinzugefügt!',
-	'emailext-categoryadd-details' => 'Auf [{{SERVERCANONICAL}} {{SITENAME}}] wurde [$1 $2] zu [$3 $4] hinzugefügt.',
+	'emailext-categoryadd-details' => 'Auf [{{SERVER}} {{SITENAME}}] wurde [$1 $2] zu [$3 $4] hinzugefügt.',
 	'emailext-categoryadd-footer-1' => 'Alle Seiten in [$1 $2] ansehen.',
 	'emailext-categoryadd-see-article' => 'Artikel ansehen',
 	'emailext-categoryadd-see-all-pages' => 'Sieh dir unter [$1 $2] alle Seiten an.',
@@ -25,7 +25,7 @@ $messages['de'] = array(
 
 $messages['es'] = array(
 	'emailext-categoryadd-subject' => 'Se ha añadido una página a $1 en la categoría $2 en {{SITENAME}}!',
-	'emailext-categoryadd-details' => 'Se ha añadido [$1 $2] a [$3 $4] en [{{SERVERCANONICAL}} {{SITENAME}}].',
+	'emailext-categoryadd-details' => 'Se ha añadido [$1 $2] a [$3 $4] en [{{SERVER}} {{SITENAME}}].',
 	'emailext-categoryadd-footer-1' => 'Ver todas las páginas en [$1 $2].',
 	'emailext-categoryadd-see-article' => 'Ver artículo',
 	'emailext-categoryadd-see-all-pages' => 'Ver todas las páginas en [$1 $2].',
@@ -72,7 +72,7 @@ $messages['nl'] = array(
 
 $messages['pl'] = array(
 	'emailext-categoryadd-subject' => '$1 została dodana do kategorii $2 na {{SITENAME}}!',
-	'emailext-categoryadd-details' => '[$1 $2] została dodana do kategorii [$3 $4] na [{{SERVERCANONICAL}} {{SITENAME}}].',
+	'emailext-categoryadd-details' => '[$1 $2] została dodana do kategorii [$3 $4] na [{{SERVER}} {{SITENAME}}].',
 	'emailext-categoryadd-footer-1' => 'Zobacz wszystkie strony w kategorii [$1 $2].',
 	'emailext-categoryadd-see-article' => 'Zobacz artykuł',
 	'emailext-categoryadd-see-all-pages' => 'Zobacz wszystkie strony w kategorii [$1 $2].',
@@ -88,7 +88,7 @@ $messages['pt'] = array(
 
 $messages['ru'] = array(
 	'emailext-categoryadd-subject' => 'Страница $1 на {{SITENAME}} была добавлена в категорию $2!',
-	'emailext-categoryadd-details' => 'Страница [$1 $2] была добавлена в категорию [$3 $4] на [{{SERVERCANONICAL}} {{SITENAME}}].',
+	'emailext-categoryadd-details' => 'Страница [$1 $2] была добавлена в категорию [$3 $4] на [{{SERVER}} {{SITENAME}}].',
 	'emailext-categoryadd-footer-1' => 'Посмотреть все страницы данной категории — [$1 $2].',
 	'emailext-categoryadd-see-article' => 'Просмотреть статью',
 	'emailext-categoryadd-see-all-pages' => 'Посмотреть все страницы в категории [$1 $2].',

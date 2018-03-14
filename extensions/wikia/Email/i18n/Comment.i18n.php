@@ -31,8 +31,8 @@ $messages['de'] = array(
 $messages['es'] = array(
 	'emailext-articlecomment-subject' => '¡La gente habla acerca de $1 en {{SITENAME}}!',
 	'emailext-blogcomment-subject' => '¡La gente habla acerca de la entrada de blog $1 en {{SITENAME}}!',
-	'emailext-articlecomment-summary' => '¡La gente habla acerca de [$1 $2] en [{{SERVERCANONICAL}} {{SITENAME}}]!',
-	'emailext-blogcomment-summary' => '¡La gente habla acerca de la entrada de blog [$1 $2] en [{{SERVERCANONICAL}} {{SITENAME}}]!',
+	'emailext-articlecomment-summary' => '¡La gente habla acerca de [$1 $2] en [{{SERVER}} {{SITENAME}}]!',
+	'emailext-blogcomment-summary' => '¡La gente habla acerca de la entrada de blog [$1 $2] en [{{SERVER}} {{SITENAME}}]!',
 	'emailext-comment-link-label' => 'Ver este comentario',
 	'emailext-comment-view-all' => '[$1 Ver todos los comentarios]',
 );
@@ -76,8 +76,8 @@ $messages['ko'] = array(
 $messages['nl'] = array(
 	'emailext-articlecomment-subject' => 'Op {{SITENAME}} hebben ze het over $1!',
 	'emailext-blogcomment-subject' => 'Op {{SITENAME}} hebben ze het over de $1 post!',
-	'emailext-articlecomment-summary' => 'Op [{{SERVERCANONICAL}} {{SITENAME}}] hebben ze het over [$1 $2]!',
-	'emailext-blogcomment-summary' => 'Op [{{SERVERCANONICAL}} {{SITENAME}}] hebben ze het over de [$1 $2] post!',
+	'emailext-articlecomment-summary' => 'Op [{{SERVER}} {{SITENAME}}] hebben ze het over [$1 $2]!',
+	'emailext-blogcomment-summary' => 'Op [{{SERVER}} {{SITENAME}}] hebben ze het over de [$1 $2] post!',
 	'emailext-comment-link-label' => 'Deze reactie bekijken',
 	'emailext-comment-view-all' => '[$1 Alle reacties bekijken]',
 );
@@ -103,8 +103,8 @@ $messages['pt'] = array(
 $messages['ru'] = array(
 	'emailext-articlecomment-subject' => 'Участники обсуждают «$1» на {{SITENAME}}!',
 	'emailext-blogcomment-subject' => 'Участники обсуждают запись «$1» на {{SITENAME}}!',
-	'emailext-articlecomment-summary' => 'Участники обсуждают «[$1 $2]» на [{{SERVERCANONICAL}} {{SITENAME}}]!',
-	'emailext-blogcomment-summary' => 'Участники обсуждают запись «[$1 $2]» на [{{SERVERCANONICAL}} {{SITENAME}}]!',
+	'emailext-articlecomment-summary' => 'Участники обсуждают «[$1 $2]» на [{{SERVER}} {{SITENAME}}]!',
+	'emailext-blogcomment-summary' => 'Участники обсуждают запись «[$1 $2]» на [{{SERVER}} {{SITENAME}}]!',
 	'emailext-comment-link-label' => 'Посмотреть комментарий',
 	'emailext-comment-view-all' => '[$1 Посмотреть все комментарии]',
 );

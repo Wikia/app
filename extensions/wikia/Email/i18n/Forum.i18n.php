@@ -42,7 +42,7 @@ $messages['es'] = array(
 	'emailext-forum-reply-summary' => '[$2 $1] en [{{SERVERCANONICAL}} {{SITENAME}}] tiene respuestas nuevas.',
 	'emailext-forum-reply-link-label' => 'Leer la respuesta',
 	'emailext-forum-reply-view-all' => '[$1 Ver la discusión completa.]',
-	'emailext-forumreply-unfollow-text' => '¿Ya no tienes interés en recibir estas actualizaciones? Haz clic [$1 aquí] para dejar de seguir [$2 esta] discusión sobre [{{SERVERCANONICAL}} {{SITENAME}}].',
+	'emailext-forumreply-unfollow-text' => '¿Ya no tienes interés en recibir estas actualizaciones? Haz clic [$1 aquí] para dejar de seguir [$2 esta] discusión sobre [{{SERVER}} {{SITENAME}}].',
 );
 
 $messages['fr'] = array(
