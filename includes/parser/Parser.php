@@ -3235,6 +3235,8 @@ class Parser {
 				return $wgSitename;
 			case 'server':
 				return wfProtocolUrlToRelative( $wgServer );
+			case 'servercanonical':
+				return $wgServer;
 			case 'servername':
 				$serverParts = wfParseUrl( $wgServer );
 				return $serverParts && isset( $serverParts['host'] ) ? $serverParts['host'] : wfProtocolUrlToRelative( $wgServer );
