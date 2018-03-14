@@ -429,18 +429,13 @@ class WikiFactoryLoader {
 			$redirectUrl = WikiFactory::getLocalEnvURL( $this->mCityUrl );
 			$target = rtrim( $redirectUrl, '/' ) . '/' . $this->pathParams;
 
-			$localArticlePathClean = str_replace('$1', '', $wgArticlePath );
-			if ( startsWith( $this->pathParams,  ltrim( $localArticlePathClean, '/' ) ) ) {
+			$queryParams = $_GET;
+			$localArticlePathClean = str_replace( '$1', '', $wgArticlePath );
+			if ( !empty( $localArticlePathClean ) &&
+				!empty( $queryParams['title'] ) &&
+				startsWith( $this->pathParams,  ltrim( $localArticlePathClean, '/' ) ) ) {
 				// skip the 'title' which is part of the $target, but append remaining parameters
-				$queryParams = array_filter(
-					$_GET,
-					function ($key) {
-						return $key !== 'title';
-					},
-					ARRAY_FILTER_USE_KEY
-				);
-			} else {
-				$queryParams = $_GET;
+				unset( $queryParams['title'] );
 			}
 
 			if ( !empty( $queryParams ) ) {
