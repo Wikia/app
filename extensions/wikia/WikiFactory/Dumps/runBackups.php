@@ -26,8 +26,7 @@ require_once(__DIR__ .'/../../../../maintenance/commandLine.inc');
  */
 function runBackups( $from, $to, $full, $options ) {
 
-	global $IP, $wgWikiaLocalSettingsPath, $wgMaxShellTime,
-		$wgMaxShellFileSize, $wgDumpsDisabledWikis;
+	global $wgMaxShellTime, $wgMaxShellFileSize, $wgDumpsDisabledWikis;
 
 	$range = array();
 
@@ -215,6 +214,8 @@ function getDirectory( $database, $hide = false, $use_temp = false ) {
 
 	return $directory;
 }
+
+$wgAutoloadClasses[ "DumpsOnDemand" ] = __DIR__ . '/Dumps/DumpsOnDemand.php';
 
 /**
  * main part
