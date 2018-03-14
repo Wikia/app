@@ -215,6 +215,10 @@
 	.plays-video-#{$i} {
 		.video-placeholder:nth-child(#{$i}) {
 			display: none;
+
+			img {
+				border: 3px solid #00d6d6;
+			}
 		}
 
 		.actual-video {
