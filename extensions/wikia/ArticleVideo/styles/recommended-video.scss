@@ -122,18 +122,19 @@
 	.side-playlist {
 		display: none;
 		flex-direction: column;
-		margin-left: 47px;
+		margin-left: 30px;
 		order: 2;
 
 		h3 {
-			font-size: 16px;
+			font-size: 14px;
+			line-height: 20px;
 			margin-left: 12px;
 			margin-top: 0;
 		}
 
 		.video-placeholder {
 			align-items: center;
-			margin-bottom: 18px;
+			margin-bottom: 12px;
 		}
 
 		svg {
