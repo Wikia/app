@@ -83,15 +83,6 @@ $wgAutoloadClasses['WikiaSkin'] = $IP . '/includes/wikia/nirvana/WikiaSkin.class
 $wgAutoloadClasses['WikiaSkinTemplate'] = $IP . '/includes/wikia/nirvana/WikiaSkinTemplate.class.php';
 $wgAutoloadClasses['WikiaAccessRules'] = $IP . '/includes/wikia/nirvana/WikiaAccessRules.class.php';
 
-// unit tests related classes
-$wgAutoloadClasses['WikiaBaseTest'] = $IP . '/includes/wikia/tests/core/WikiaBaseTest.class.php';
-$wgAutoloadClasses['WikiaDatabaseTest'] = $IP . '/includes/wikia/tests/core/WikiaDatabaseTest.php';
-$wgAutoloadClasses['HttpIntegrationTest'] = "$IP/includes/wikia/tests/core/HttpIntegrationTest.php";
-$wgAutoloadClasses['WikiaMockProxy'] = $IP . '/includes/wikia/tests/core/WikiaMockProxy.class.php';
-$wgAutoloadClasses['WikiaMockProxyAction'] = $IP . '/includes/wikia/tests/core/WikiaMockProxyAction.class.php';
-$wgAutoloadClasses['WikiaMockProxyInvocation'] = $IP . '/includes/wikia/tests/core/WikiaMockProxyInvocation.class.php';
-$wgAutoloadClasses['MockGlobalVariableTrait'] = $IP . '/includes/wikia/tests/core/MockGlobalVariableTrait.php';
-
 /**
  * Exceptions
  */
@@ -149,7 +140,6 @@ $wgAutoloadClasses['MoviesApiController'] = "{$IP}/includes/wikia/api/MoviesApiC
 $wgAutoloadClasses['DWDimensionApiController'] = "{$IP}/includes/wikia/api/DWDimensionApiController.class.php";
 $wgAutoloadClasses['DWDimensionApiControllerSQL'] = "{$IP}/includes/wikia/api/DWDimensionApiControllerSQL.class.php";
 $wgAutoloadClasses['InfoboxApiController'] = "{$IP}/includes/wikia/api/InfoboxApiController.class.php";
-$wgAutoloadClasses['LogEventsApiController'] = "{$IP}/includes/wikia/api/LogEventsApiController.class.php";
 $wgAutoloadClasses['TemplateClassificationApiController'] = "{$IP}/includes/wikia/api/TemplateClassificationApiController.class.php";
 $wgExtensionMessagesFiles['WikiaApi'] = "{$IP}/includes/wikia/api/WikiaApi.i18n.php";
 
@@ -1225,6 +1215,13 @@ $wgAdDriverAolOneMobileBidderCountries = null;
 $wgAdDriverAppNexusBidderCountries = null;
 
 /**
+ * @name $wgAdDriverAppNexusWebAdsBidderCountries
+ * List of countries where appnexus via WebAds bidding platform is enabled.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverAppNexusWebAdsBidderCountries = null;
+
+/**
  * @name $wgAdDriverUseAudienceNetworkBidder
  * Enables Facebook Audience Network bidding platform.
  */
@@ -1389,21 +1386,6 @@ $wgAdDriverSrcPremiumCountries = [];
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverKILOCountries = null;
-
-/**
- * @name $wgAdDriverLBScrollExperimentCountires
- * Enables experiment that sends scrolltop position keyval to DFP for TLB requests
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverLBScrollExperimentCountires = null;
-
-/**
- * @name $wgAdDriverLBScrollExperimentBucket
- * Bucket size for experiment enabled in $wgAdDriverLBScrollExperimentCountires
- * eg for 50, available values: 0, 50, 100, 150, 200, 250, 300...
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverLBScrollExperimentBucket = null;
 
 /**
  * @name $wgAdDriverMEGACountries

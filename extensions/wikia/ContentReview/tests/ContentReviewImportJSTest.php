@@ -12,7 +12,9 @@ class ContentReviewImportJSTest extends WikiaBaseTest {
 	 * @param Array $scripts
 	 * @param Array $expectedScripts
 	 */
-	public function testPrepareImportsScript( $scripts, $expectedScripts ) {
+	public function testPrepareImportsScript( $scripts, $expectedScripts, $jsEnabled ) {
+		$this->mockGlobalVariable( 'wgUseSiteJs', $jsEnabled );
+
 		$imports = ( new Wikia\ContentReview\ImportJS() )->prepareImports( $scripts );
 
 		$this->assertEquals( $imports, $expectedScripts );
@@ -22,48 +24,74 @@ class ContentReviewImportJSTest extends WikiaBaseTest {
 		return [
 			[
 				['Script.js'],
-				['Script.js']
+				['Script.js'],
+				true,
 			],
 			[
 				['   Script.js', ' MyScript2.js   '],
-				['Script.js', 'MyScript2.js']
+				['Script.js', 'MyScript2.js'],
+				true,
 			],
 			[
 				['Script'],
-				[]
+				[],
+				true,
 			],
 			[
 				['dev:Script.js'],
-				['external:dev:Script.js']
+				['external:dev:Script.js'],
+				true,
 			],
 			[
 				['dev:MediaWiki:Script.js'],
-				[]
+				[],
+				true,
 			],
 			[
 				['devfake:Script.js'],
-				[]
+				[],
+				true,
 			],
 			[
 				[':Script.js'],
-				[]
+				[],
+				true,
 			],
 			[
 				['MediaWiki:Script.js'],
-				[]
+				[],
+				true,
 			],
 			[
 				['Script.js', 'MyScript2.js', 'dev:Code.js'],
-				['Script.js', 'MyScript2.js', 'external:dev:Code.js']
+				['Script.js', 'MyScript2.js', 'external:dev:Code.js'],
+				true,
 			],
 			[
 				['Script.js', 'MyScript2js', 'dev:Code.js'],
-				['Script.js', 'external:dev:Code.js']
+				['Script.js', 'external:dev:Code.js'],
+				true,
 			],
 			[
 				['Script.js', 'MyScript2.js', 'fake:Code.js'],
-				['Script.js', 'MyScript2.js']
-			]
+				['Script.js', 'MyScript2.js'],
+				true,
+			],
+			[
+				['Script.js', 'MyScript2.js', 'fake:Code.js', 'dev:Code.js'],
+				['external:dev:Code.js'],
+				false,
+			],
+			[
+				['Script.js'],
+				[],
+				false,
+			],
+			[
+				['dev:Script.js'],
+				['external:dev:Script.js'],
+				false,
+			],
 		];
 	}
 

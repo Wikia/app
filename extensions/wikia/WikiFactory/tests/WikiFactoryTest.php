@@ -275,39 +275,23 @@ class WikiFactoryTest extends WikiaBaseTest {
 		$this->assertEquals( 5.234, WikiFactory::renderValue( $variable ) );
 	}
 
-	public function testRenderValueOfArrayVariable() {
+	/**
+	 * @dataProvider provideArrayVariables
+	 *
+	 * @param array $value
+	 * @param string $expected
+	 */
+	public function testRenderValueOfArrayVariable( array $value, string $expected ) {
 		$variable = new stdClass();
-		$variable->cv_value = serialize( array( "a", "b", "c" ) );
+		$variable->cv_value = serialize( $value );
 		$variable->cv_variable_type = "array";
 
-		$this->assertEquals( '[&quot;a&quot;,&quot;b&quot;,&quot;c&quot;]', WikiFactory::renderValue( $variable ) );
+		$this->assertJsonStringEqualsJsonString( $expected, WikiFactory::renderValue( $variable ) );
 	}
 
-	public function testRenderValueOfAssociativeArrayVariable() {
-		$variable = new stdClass();
-		$variable->cv_value = serialize( array( "foo" => "bar", "0" => "c" ) );
-		$variable->cv_variable_type = "array";
-		$expectedRender = <<<EOT
-array (
-  'foo' =&gt; 'bar',
-  0 =&gt; 'c',
-)
-EOT;
-
-		$this->assertEquals( $expectedRender, WikiFactory::renderValue( $variable ) );
-	}
-
-	public function testRenderValueOfAssociativeArrayVariable2() {
-		$variable = new stdClass();
-		$variable->cv_value = serialize( array( 1 => "foo", 15 => "bar" ) );
-		$variable->cv_variable_type = "array";
-		$expectedRender = <<<EOT
-array (
-  1 =&gt; 'foo',
-  15 =&gt; 'bar',
-)
-EOT;
-
-		$this->assertEquals( $expectedRender, WikiFactory::renderValue( $variable ) );
+	public function provideArrayVariables() {
+		yield [ [ "a", "b", "c" ], '["a","b","c"]' ];
+		yield [ [ "foo" => "bar", "0" => "c" ], '{"foo":"bar","0":"c"}' ];
+		yield [ [ 1 => 'foo', 15 => 'bar' ], '{"1":"foo","15":"bar"}' ];
 	}
 }

@@ -52,7 +52,7 @@ class TemplateDraftHelper {
 	 * @throws MWException
 	 */
 	public static function getParentTitle( Title $title ) {
-		return Title::newFromText( $title->getBaseText(), NS_TEMPLATE );
+		return Title::newFromText( $title->getParentText(), NS_TEMPLATE );
 	}
 
 	/**

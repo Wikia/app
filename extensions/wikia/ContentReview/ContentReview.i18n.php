@@ -3,6 +3,7 @@ $messages = array();
 
 $messages['en'] = array(
 	'content-review-desc' => 'This extension creates a process by which community JavaScript is manually reviewed before it goes live for visitors.',
+	'content-review-importjs-desc' => 'This extension allows importing reviewed JS from other wikis using the MediaWiki page [[MediaWiki:ImportJS]].',
 	'right-content-review' => 'Allows access to content review tools',
 	'right-content-review-test-mode' => 'Allows access to content review testing environment',
 	'group-content-reviewer' => 'Content Reviewers',
@@ -67,6 +68,7 @@ Examples:
 
 $messages['qqq'] = array(
 	'content-review-desc' => '{{desc}}',
+	'content-review-importjs-desc' => '{{desc}}',
 	'content-review-module-title' => 'Title of a the right rail module with information on a page status.',
 	'content-review-module-header-latest' => 'Header of a section of the right rail module with information on the latest revision submitted for a review.',
 	'content-review-module-header-last' => 'Header of a section of the right rail module with information on the last reviewed revision.',
@@ -605,10 +607,10 @@ A recente alteração enviada para esta página JavaScript (revisão [$2 $3]) fo
 	'content-review-module-jspages' => 'Todas as páginas JS',
 	'content-review-special-js-description' => 'Esta página indica o atual [[w:c:pt.community:Ajuda:Processo de revisão de JavaScript|status de revisão]] dos scripts namespace MediaWiki nesta comunidade.',
 	'content-review-special-js-importjs-description' => 'Nota: você pode adicionar e remover os scripts importados local e dev.wikia.com sem o processo de revisão em [[MediaWiki:ImportJS]].',
-	'content-review-importjs-description' => 'Aqui, você pode importar scripts facilmente: 
-* da sua wiki local pelo nome do artigo - por exemplo, MyScript.js 
-* de dev.wikia.com pelo nome do artigo, precedido por "dev:"- por exemplo, dev:Code.js 
-Nomes não devem conter o prefixo de namespace MediaWiki. Escreva cada script em uma nova linha. Veja [[w:c:comunidade:Ajuda:Incluindo CSS e JS adicionais]] para obter mais informações. 
+	'content-review-importjs-description' => 'Aqui, você pode importar scripts facilmente:
+* da sua wiki local pelo nome do artigo - por exemplo, MyScript.js
+* de dev.wikia.com pelo nome do artigo, precedido por "dev:"- por exemplo, dev:Code.js
+Nomes não devem conter o prefixo de namespace MediaWiki. Escreva cada script em uma nova linha. Veja [[w:c:comunidade:Ajuda:Incluindo CSS e JS adicionais]] para obter mais informações.
 ----
 ',
 	'right-content-review' => 'Permite o acesso a ferramentas de revisão de conteúdo',

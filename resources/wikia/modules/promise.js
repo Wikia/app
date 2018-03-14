@@ -4,7 +4,7 @@
 define('wikia.promise', ['wikia.window'], function (win) {
 	'use strict';
 
-	var P = win.Promise;
+	var P = win.Promise || {};
 
 	/**
 	 * Constructor for promise with timeout

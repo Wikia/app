@@ -1,6 +1,0 @@
-{
-  "packagePath": "Swagger",
-  "srcBasePath": "src",
-  "modelPackage": "Swagger\\Client\\ContentEntity\\Models",
-  "apiPackage": "Swagger\\Client\\ContentEntity\\Api"
-}

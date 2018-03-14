@@ -315,29 +315,12 @@ class FilePageController extends WikiaController {
 			$provider = array_pop( $providerName );
 		}
 
-		$expireDate = $this->getVal( 'expireDate', '' );
-		if ( !empty( $expireDate ) ) {
-			$date = $this->wg->Lang->date( $expireDate );
-			$expireDate = wfMessage( 'video-page-expires', $date )->escaped();
-		}
-
-		// Get restricted country list
-		$regionalRestrictions = $this->getVal( 'regionalRestrictions', '' );
-		if ( !empty( $regionalRestrictions ) ) {
-			// Create a list of restrictions to pass to the front end
-			$regionalRestrictions = json_encode( explode( ',', str_replace( ', ', ',', $regionalRestrictions ) ) );
-		}
-
 		// Assemble provider link
 		$providerUrl = $this->getVal( 'providerUrl' );
 		$providerLink = Html::element( 'a', [ 'href' => $providerUrl, 'target' => '_blank' ], ucwords( $provider ) );
 		$providerPhrase = wfMessage( 'video-page-from-provider' )->rawParams( $providerLink )->escaped();
-		if ( $expireDate ) {
-			$providerPhrase .= "<span class='expire-date'>$expireDate</span>";
-		}
 
 		$this->providerPhrase = $providerPhrase;
-		$this->regionalRestrictions = $regionalRestrictions;
 
 		wfProfileOut( __METHOD__ );
 	}

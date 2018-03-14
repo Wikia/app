@@ -112,7 +112,6 @@ $config['adengine2_desktop_js'] = [
 		'#group_adengine2_porvata_js',
 		'#group_adengine2_rabbit_desktop_js',
 		'#group_adengine2_video_ui_js',
-		'//extensions/wikia/AdEngine/js/video/uapVideo.js',
 		'//extensions/wikia/AdEngine/js/video/videoSettings.js',
 		'//extensions/wikia/ARecoveryEngine/js/adBlockDetection.js',
 		'//extensions/wikia/ARecoveryEngine/js/adBlockRecovery.js',
@@ -251,7 +250,8 @@ $config['adengine2_top_js'] = [
 		'//extensions/wikia/ARecoveryEngine/js/PageFair/recovery.js',
 		'//resources/wikia/modules/browserDetect.js',
 		'//resources/wikia/modules/krux.js',
-		'//resources/wikia/modules/promise.js',
+		// TODO ADEN-6812 remove promise.js after ADEN-6624 is live
+		'//resources/wikia/modules/promise.js'
 	],
 ];
 
@@ -279,6 +279,7 @@ $config['adengine2_pr3b1d_js'] = [
 		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/aol.js',
 		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/appnexus.js',
 		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/appnexusAst.js',
+		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/appnexusWebAds.js',
 		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/appnexusPlacements.js',
 		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/audienceNetwork.js',
 		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/beachfront.js',
@@ -938,7 +939,6 @@ $config['mercury_ads_js'] = [
 		'#group_adengine2_playwire_js',
 		'#group_adengine2_porvata_js',
 		'#group_adengine2_video_ui_js',
-		'//extensions/wikia/AdEngine/js/video/uapVideo.js',
 		'//extensions/wikia/AdEngine/js/video/videoSettings.js',
 		'//resources/wikia/modules/abTest.js',
 		'//resources/wikia/modules/krux.js',
@@ -1434,23 +1434,6 @@ $config['wampage_js'] = [
 	],
 ];
 
-/** WikiaSearch **/
-$config['wikiasearch_js_wikiamobile'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => 'wikiamobile',
-	'assets' => [
-		'//extensions/wikia/Search/js/WikiaSearch.wikiamobile.js',
-	],
-];
-
-$config['wikiasearch_scss_wikiamobile'] = [
-	'type' => AssetsManager::TYPE_SCSS,
-	'skin' => 'wikiamobile',
-	'assets' => [
-		'//extensions/wikia/Search/css/WikiaSearch.wikiamobile.scss',
-	],
-];
-
 /** Places **/
 $config['places_js'] = [
 	'skin' => [ 'oasis', 'monobook', 'wikiamobile' ],
@@ -1597,14 +1580,6 @@ $config['achievements_js'] = [
 	'assets' => [
 		'//resources/wikia/libraries/bootstrap/popover.js',
 		'//skins/oasis/js/Achievements.js',
-	],
-];
-
-/* AppPromo Landing Screen */
-$config['app_promo_landing_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => [
-		'//extensions/wikia/AppPromoLanding/js/appPromoLanding.js',
 	],
 ];
 
