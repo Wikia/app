@@ -216,7 +216,7 @@ function getDirectory( $database, $hide = false, $use_temp = false ) {
 }
 
 // SUS-4313 | make this dependency obvious
-$wgAutoloadClasses[ "DumpsOnDemand" ] = __DIR__ . '/Dumps/DumpsOnDemand.php';
+$wgAutoloadClasses[ "DumpsOnDemand" ] = __DIR__ . '/DumpsOnDemand.php';
 
 /**
  * main part
