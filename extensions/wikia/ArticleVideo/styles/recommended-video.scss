@@ -149,6 +149,7 @@
 
 	.actual-video {
 		background: #fff;
+		display: none;
 		height: auto;
 
 		.jwplayer {
@@ -217,6 +218,7 @@
 		}
 
 		.actual-video {
+			display: inline-block;
 			order: #{$i}
 		}
 	}

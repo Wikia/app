@@ -15,26 +15,24 @@ require([
 		player = null,
 		$actualVideo = null,
 		currentItemNumber = 1,
-		isExpanded = false;
+		isExpanded = false,
+		isAutoplay = true,
+		initialPlay = true;
 
 	function reveal() {
-		var scrollTop = $(window).scrollTop();
+		$unit.addClass('is-revealed');
+		window.wikiaJWPlayer(
+			recommendedVideoElementId,
+			getPlayerSetup(recommendedVideoData),
+			onPlayerReady
+		);
 
-		if (scrollTop > scrollBreakpoint) {
-			$unit.addClass('is-revealed');
-			window.wikiaJWPlayer(
-				recommendedVideoElementId,
-				getPlayerSetup(recommendedVideoData),
-				onPlayerReady
-			);
-
-			tracker.track({
-				category: 'recommended-video',
-				trackingMethod: 'both',
-				action: tracker.ACTIONS.VIEW,
-				label: 'recommended-video-revealed'
-			});
-		}
+		tracker.track({
+			category: 'recommended-video',
+			trackingMethod: 'both',
+			action: tracker.ACTIONS.VIEW,
+			label: 'recommended-video-revealed'
+		});
 	}
 
 	function onScroll() {
@@ -42,6 +40,7 @@ require([
 
 		if (scrollTop > scrollBreakpoint) {
 			window.setTimeout(reveal, 5000);
+			window.document.removeEventListener('scroll', onScroll);
 		}
 	}
 
@@ -91,6 +90,10 @@ require([
 	}
 
 	function playItem(data) {
+		if (initialPlay && !isAutoplay) {
+			initialPlay = false;
+			return;
+		}
 		currentItemNumber = data.index + 1;
 
 		$unit
@@ -119,6 +122,10 @@ require([
 		player = playerInstance;
 
 		bindPlayerEvents(playerInstance);
+
+		if (isAutoplay) {
+			$unit.addClass('plays-video-1');
+		}
 	}
 
 	function bindPlayerEvents(playerInstance) {
@@ -155,6 +162,7 @@ require([
 
 		if (currentIndex !== index) {
 			player.playlistItem(index);
+			player.play();
 		}
 
 		expand();
@@ -162,7 +170,7 @@ require([
 
 	function getPlayerSetup(jwVideoData) {
 		return {
-			autoplay: true,
+			autoplay: isAutoplay,
 			tracking: {
 				category: 'recommended-video',
 				track: function (data) {
