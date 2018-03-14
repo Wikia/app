@@ -1080,10 +1080,11 @@ class AbuseFilter {
 				// Mark with a tag on recentchanges.
 				global $wgUser;
 
-				$actionID = implode( '-', array(
-						$title->getPrefixedText(), $wgUser->getName(),
-							$vars->getVar( 'ACTION' )->toString()
-					) );
+				$UserIdOrIp =
+					$wgUser->isLoggedIn()
+						? $wgUser->getId()
+						: IP::sanitizeIP( $wgUser->getRequest()->getIP() );
+				$actionID =	self::getActionId( $title, $UserIdOrIp, $vars->getVar( 'ACTION' )->toString() );
 
 				AbuseFilter::$tagsToSet[$actionID] = $parameters;
 				break;
@@ -1746,5 +1747,13 @@ class AbuseFilter {
 			array( 'af_id' => $filterID ),
 			__METHOD__
 		);
+	}
+
+	static function getActionId( Title $title, $userIdOrIp, $action ) {
+		return implode( '-', [
+			$title->getPrefixedText(),
+			$userIdOrIp,
+			$action,
+		] );
 	}
 }
