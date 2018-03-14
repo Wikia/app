@@ -217,7 +217,7 @@ class WikiFactoryLoader {
 	 */
 	public function execute() {
 		global $wgCityId, $wgDevelEnvironment,
-			$wgDBservers, $wgLBFactoryConf, $wgDBserver, $wgContLang, $wgWikiaBaseDomain;
+			$wgDBservers, $wgLBFactoryConf, $wgDBserver, $wgContLang, $wgWikiaBaseDomain, $wgArticlePath;
 
 		wfProfileIn(__METHOD__);
 
@@ -429,14 +429,20 @@ class WikiFactoryLoader {
 			$redirectUrl = WikiFactory::getLocalEnvURL( $this->mCityUrl );
 			$target = rtrim( $redirectUrl, '/' ) . '/' . $this->pathParams;
 
-			// skip the 'title' which is part of the $target, but append remaining parameters
-			$queryParams = array_filter(
-				$_GET,
-				function ($key) {
-					return $key !== 'title';
-				},
-				ARRAY_FILTER_USE_KEY
-			);
+			$localArticlePathClean = str_replace('$1', '', $wgArticlePath );
+			if ( startsWith( $this->pathParams,  ltrim( $localArticlePathClean, '/' ) ) ) {
+				// skip the 'title' which is part of the $target, but append remaining parameters
+				$queryParams = array_filter(
+					$_GET,
+					function ($key) {
+						return $key !== 'title';
+					},
+					ARRAY_FILTER_USE_KEY
+				);
+			} else {
+				$queryParams = $_GET;
+			}
+
 			if ( !empty( $queryParams ) ) {
 				$target .= '?' . http_build_query( $queryParams );
 			}
