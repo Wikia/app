@@ -69,7 +69,7 @@ class PortableInfoboxImagesHelper {
 			'originalWidth' => $dataAttrs['width'] ?? '',
 			'thumbnail' => $thumbnail->getUrl(),
 			'thumbnail2x' => $thumbnail2x->getUrl(),
-			'key' => urlencode( $data['key'] ),
+			'key' => urlencode( $data['key'] ?? '' ),
 			'media-type' => isset( $data['isVideo'] ) && $data['isVideo'] ? 'video' : 'image',
 			'fileName' => $dataAttrs['fileName'] ?? '',
 			'dataAttrs' => json_encode( $dataAttrs ),
