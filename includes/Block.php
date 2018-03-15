@@ -445,8 +445,7 @@ class Block {
 		$dbw->insert(
 			'ipblocks',
 			$row,
-			__METHOD__,
-			array( 'IGNORE' )
+			__METHOD__
 		);
 		$affected = $dbw->affectedRows();
 		$this->mId = $dbw->insertId();
