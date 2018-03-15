@@ -16,7 +16,7 @@ require([
 		$actualVideo = null,
 		currentItemNumber = 1,
 		isExpanded = false,
-		isAutoplay = false,
+		isAutoplay = true,
 		initialPlay = true;
 
 	function reveal() {
@@ -218,6 +218,8 @@ require([
 				action: tracker.ACTIONS.VIEW,
 				label: 'expanded'
 			});
+
+			player.setMute(false);
 
 			// Needed to trigger jwplayer breakpoint change
 			setTimeout(function () {
