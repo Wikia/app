@@ -378,6 +378,11 @@ class CloseWikiMaintenance {
 			$this->log( "List of files in {$directory} is empty" );
 			throw new WikiaException( "List of files in {$directory} is empty" );
 		}
+
+		// SUS-4325 | CloseWikiMaintenance should remove directories with images after tar file is created
+		$this->log( "Removing '{$directory}' directory" );
+		wfRecursiveRemoveDir( $directory );
+
 		return $result;
 	}
 
