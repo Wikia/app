@@ -294,7 +294,10 @@ $config['adengine2_pr3b1d_js'] = [
 		// IL recovery
 		'//extensions/wikia/ARecoveryEngine/js/InstartLogic/recovery.js',
 
-		'//extensions/wikia/AdEngine/js/wrappers/prebid.js'
+		'//extensions/wikia/AdEngine/js/wrappers/prebid.js',
+
+		// prebid library
+		'#group_pr3b1d_prod_js'
 	],
 ];
 
@@ -949,6 +952,7 @@ $config['mercury_ads_js'] = [
 	],
 ];
 
+// TODO remove this group and include file directly after ADEN-6797 release
 $config['pr3b1d_prod_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [
