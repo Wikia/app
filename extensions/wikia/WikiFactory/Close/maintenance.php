@@ -169,7 +169,7 @@ class CloseWikiMaintenance {
 				if( $dbname && $folder ) {
 					$this->log( "Dumping images on remote host" );
 					try {
-						$source = $this->tarFiles( $folder, $dbname, $cityid );
+						$source = $this->tarFiles( $dbname, $cityid );
 
 						if( is_string( $source ) ) {
 							$retval = DumpsOnDemand::putToAmazonS3( $source, !$hide,  MimeMagic::singleton()->guessMimeType( $source ) );
@@ -310,14 +310,13 @@ class CloseWikiMaintenance {
 	 *
 	 * @access public
 	 *
-	 * @param string $uploadDirectory path to images
 	 * @param string $dbname database name
 	 * @param int $cityid city ID
 	 *
 	 * @return string path to created archive or false if there are no files to backup (S3 bucket does not exist / is empty)
 	 * @throws WikiaException thrown on failed backups
 	 */
-	private function tarFiles( $directory, $dbname, $cityid ) {
+	private function tarFiles( $dbname, $cityid ) {
 		$wgUploadPath = WikiFactory::getVarValueByName( 'wgUploadPath', $cityid );
 
 		// check that S3 bucket for this wiki exists (PLATFORM-1199)
@@ -371,7 +370,12 @@ class CloseWikiMaintenance {
 
 		if( is_array( $files ) && count( $files ) ) {
 			$this->log( sprintf( "Packing %d files from {$directory} to {$tarfile}", count( $files ) ) );
-			$tar->create( $files );
+			$res = $tar->create( $files );
+
+			if ( $res !== true ) {
+				throw new WikiaException( "Archive_Tar::create failed" );
+			}
+
 			$result = $tarfile;
 		}
 		else {
