@@ -6,37 +6,6 @@
 
 
 --
--- Table structure for table `__cu_changes`
---
-
-DROP TABLE IF EXISTS `__cu_changes`;
-CREATE TABLE `__cu_changes` (
-  `cuc_id` int(11) NOT NULL AUTO_INCREMENT,
-  `cuc_namespace` int(11) NOT NULL DEFAULT '0',
-  `cuc_title` varchar(255) CHARACTER SET latin1 COLLATE latin1_bin NOT NULL DEFAULT '',
-  `cuc_user` int(11) NOT NULL DEFAULT '0',
-  `cuc_user_text` varchar(255) NOT NULL DEFAULT '',
-  `cuc_actiontext` varchar(255) CHARACTER SET latin1 COLLATE latin1_bin NOT NULL DEFAULT '',
-  `cuc_comment` varchar(255) CHARACTER SET latin1 COLLATE latin1_bin NOT NULL DEFAULT '',
-  `cuc_minor` tinyint(1) NOT NULL DEFAULT '0',
-  `cuc_page_id` int(10) unsigned NOT NULL DEFAULT '0',
-  `cuc_this_oldid` int(10) unsigned NOT NULL DEFAULT '0',
-  `cuc_last_oldid` int(10) unsigned NOT NULL DEFAULT '0',
-  `cuc_type` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `cuc_timestamp` char(14) NOT NULL DEFAULT '',
-  `cuc_ip` varchar(255) DEFAULT '',
-  `cuc_ip_hex` varchar(255) DEFAULT NULL,
-  `cuc_xff` varchar(255) CHARACTER SET latin1 COLLATE latin1_bin DEFAULT '',
-  `cuc_xff_hex` varchar(255) DEFAULT NULL,
-  `cuc_agent` varchar(255) CHARACTER SET latin1 COLLATE latin1_bin DEFAULT NULL,
-  PRIMARY KEY (`cuc_id`),
-  KEY `cuc_ip_hex_time` (`cuc_ip_hex`,`cuc_timestamp`),
-  KEY `cuc_user_ip_time` (`cuc_user`,`cuc_ip`,`cuc_timestamp`),
-  KEY `cuc_xff_hex_time` (`cuc_xff_hex`,`cuc_timestamp`),
-  KEY `cuc_timestamp` (`cuc_timestamp`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
 -- Table structure for table `city_domains`
 --
 
@@ -128,4 +97,4 @@ CREATE TABLE `wikia_tasks` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
--- Dump completed on 2018-03-07  9:05:23
+-- Dump completed on 2018-03-15 15:22:11
