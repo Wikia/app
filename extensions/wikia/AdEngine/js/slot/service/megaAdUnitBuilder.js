@@ -10,9 +10,15 @@ define('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', [
 	var dfpId = '5441',
 		megaSlots = [
 			'INVISIBLE_SKIN',
-			//ToDo: BLB Mega global - 'BOTTOM_LEADERBOARD'
+			//ToDo ADEN-6864: Go global
+			//'BOTTOM_LEADERBOARD'
 		],
 		context;
+
+	//ToDo ADEN-6864: Go global
+	if (getContextTargeting().skin === 'mercury' || adContext.get('opts.isBLBMegaEnabled')) {
+		megaSlots.push('BOTTOM_LEADERBOARD');
+	}
 
 	function getContextTargeting() {
 		if (!context) {
@@ -107,9 +113,7 @@ define('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', [
 	}
 
 	function isMegaSlot(slotName) {
-		return slotName === 'BOTTOM_LEADERBOARD' ?
-			getContextTargeting().skin === 'mercury' || context.opts.isBLBMegaEnabled :
-			megaSlots.indexOf(slotName) !== -1;
+		return megaSlots.indexOf(slotName) !== -1;
 	}
 
 	adContext.addCallback(function () {
