@@ -216,7 +216,7 @@ require([
 				category: 'recommended-video',
 				trackingMethod: 'both',
 				action: tracker.ACTIONS.VIEW,
-				label: 'recommended-video-expanded'
+				label: 'expanded'
 			});
 
 			// Needed to trigger jwplayer breakpoint change
