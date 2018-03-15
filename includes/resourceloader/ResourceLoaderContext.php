@@ -248,7 +248,7 @@ class ResourceLoaderContext {
 	public function getHash() {
 		if ( !isset( $this->hash ) ) {
 			$this->hash = implode( '|', array(
-				$this->getLanguage(), $this->getDirection(), $this->skin, $this->user,
+				$this->getLanguage(), $this->skin, $this->user,
 				$this->debug, $this->only, $this->version,
 				// Wikia - change begin - @author: wladek
 				serialize($this->sassParams)
