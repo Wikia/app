@@ -47,17 +47,6 @@ describe('ext.wikia.adEngine.lookup.prebid', function () {
 					return 'en';
 				}
 			},
-			doc: {
-				node: {
-					parentNode: {
-						insertBefore: noop
-					}
-				},
-				createElement: createNode,
-				getElementsByTagName: function () {
-					return [createNode()];
-				}
-			},
 			lazyQueue: {
 				makeQueue: function (queue, callback) {
 					queue.push = function () {
@@ -148,14 +137,6 @@ describe('ext.wikia.adEngine.lookup.prebid', function () {
 	function noop() {
 	}
 
-	function createNode() {
-		return {
-			parentNode: {
-				insertBefore: insertBefore
-			}
-		}
-	}
-
 	function getFactory() {
 		return modules['ext.wikia.adEngine.lookup.lookupFactory'](
 			mocks.adContext,
@@ -168,14 +149,12 @@ describe('ext.wikia.adEngine.lookup.prebid', function () {
 
 	function getPrebid() {
 		return modules['ext.wikia.adEngine.lookup.prebid'](
-			mocks.adContext,
 			mocks.adaptersPerformanceTracker,
 			mocks.adaptersPricesTracker,
 			mocks.adaptersRegistry,
 			mocks.prebidHelper,
 			mocks.prebidSettings,
 			getFactory(),
-			mocks.doc,
 			mocks.win
 		);
 	}
@@ -190,17 +169,9 @@ describe('ext.wikia.adEngine.lookup.prebid', function () {
 		spyOn(mocks.win.pbjs.que, 'push');
 	});
 
-	it('Prebid script is appended to DOM and ad slots are pushed', function () {
-		var predidScriptExpectedNode = {
-			parentNode: {insertBefore: insertBefore},
-			async: true,
-			type: 'text/javascript',
-			src: mocks.opts.prebidBidderUrl
-		};
-
+	it('Ad slots are pushed', function () {
 		prebid.call('oasis', function () {});
 		expect(mocks.win.pbjs.que.push).toHaveBeenCalled();
-		expect(insertBefore).toHaveBeenCalledWith(predidScriptExpectedNode, createNode());
 	});
 
 	it('Prebid auction is performed and the best bid is returned', function () {

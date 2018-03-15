@@ -4,12 +4,12 @@ $messages = array();
 $messages['en'] = array(
 	'emailext-wallmessage-owned-subject' => 'You have a new message on {{SITENAME}}: $1',
 	'emailext-wallmessage-following-subject' => '$1 has a new message on {{SITENAME}}: $2',
-	'emailext-wallmessage-owned-summary' => 'You have a new message on [{{SERVER}} {{SITENAME}}]: [$1 $2]',
-	'emailext-wallmessage-following-summary' => '$1 has a new message on [{{SERVER}} {{SITENAME}}]: [$2 $3]',
+	'emailext-wallmessage-owned-summary' => 'You have a new message on [{{SERVERCANONICAL}} {{SITENAME}}]: [$1 $2]',
+	'emailext-wallmessage-following-summary' => '$1 has a new message on [{{SERVERCANONICAL}} {{SITENAME}}]: [$2 $3]',
 	'emailext-wallmessage-full-conversation' => 'Full conversation',
 	'emailext-wallmessage-recent-messages' => '[$1 All recent messages on $2]',
 	'emailext-wallmessage-reply-subject' => 'There is a new reply to $1 on {{SITENAME}}',
-	'emailext-wallmessage-reply-summary' => 'There is a new reply to [$1 $2] on [{{SERVER}} {{SITENAME}}]',
+	'emailext-wallmessage-reply-summary' => 'There is a new reply to [$1 $2] on [{{SERVERCANONICAL}} {{SITENAME}}]',
 );
 
 $messages['qqq'] = array(
@@ -59,45 +59,45 @@ $messages['fr'] = array(
 $messages['it'] = array(
 	'emailext-wallmessage-owned-subject' => 'Hai un nuovo messaggio in {{SITENAME}}: $1',
 	'emailext-wallmessage-following-subject' => '$1 ha un nuovo messaggio in {{SITENAME}}: $2',
-	'emailext-wallmessage-owned-summary' => 'Hai un nuovo messaggio in [{{SERVER}} {{SITENAME}}]: [$1 $2]',
-	'emailext-wallmessage-following-summary' => '$1 ha un nuovo messaggio in [{{SERVER}} {{SITENAME}}]: [$2 $3]',
+	'emailext-wallmessage-owned-summary' => 'Hai un nuovo messaggio in [{{SERVERCANONICAL}} {{SITENAME}}]: [$1 $2]',
+	'emailext-wallmessage-following-summary' => '$1 ha un nuovo messaggio in [{{SERVERCANONICAL}} {{SITENAME}}]: [$2 $3]',
 	'emailext-wallmessage-full-conversation' => 'Conversazione completa',
 	'emailext-wallmessage-recent-messages' => '[$1 Tutti i messaggi recenti in $2]',
 	'emailext-wallmessage-reply-subject' => "C'è una nuova risposta a $1 in {{SITENAME}}",
-	'emailext-wallmessage-reply-summary' => "C'è una nuova risposta a [$1 $2] in [{{SERVER}} {{SITENAME}}]",
+	'emailext-wallmessage-reply-summary' => "C'è una nuova risposta a [$1 $2] in [{{SERVERCANONICAL}} {{SITENAME}}]",
 );
 
 $messages['ja'] = array(
 	'emailext-wallmessage-owned-subject' => '{{SITENAME}}に新しいメッセージがあります：$1',
 	'emailext-wallmessage-following-subject' => '{{SITENAME}}で$1さんに新しいメッセージがあります：$2',
-	'emailext-wallmessage-owned-summary' => '[{{SERVER}} {{SITENAME}}]に新しいメッセージがあります：[$1 $2]',
-	'emailext-wallmessage-following-summary' => '[{{SERVER}} {{SITENAME}}]で$1さんに新しいメッセージがあります：[$2 $3]',
+	'emailext-wallmessage-owned-summary' => '[{{SERVERCANONICAL}} {{SITENAME}}]に新しいメッセージがあります：[$1 $2]',
+	'emailext-wallmessage-following-summary' => '[{{SERVERCANONICAL}} {{SITENAME}}]で$1さんに新しいメッセージがあります：[$2 $3]',
 	'emailext-wallmessage-full-conversation' => 'スレッド全体を見る',
 	'emailext-wallmessage-recent-messages' => '[$1 $2の最近のメッセージをすべて見る]',
 	'emailext-wallmessage-reply-subject' => '{{SITENAME}}の$1に新しい返信があります',
-	'emailext-wallmessage-reply-summary' => '[{{SERVER}} {{SITENAME}}]の[$1 $2]に新しい返信があります',
+	'emailext-wallmessage-reply-summary' => '[{{SERVERCANONICAL}} {{SITENAME}}]の[$1 $2]に新しい返信があります',
 );
 
 $messages['ko'] = array(
 	'emailext-wallmessage-following-subject' => '$1 님이 {{SITENAME}}에서 $2 님에게 메시지를 남겼습니다',
-	'emailext-wallmessage-following-summary' => "'''[$1 $2] 님이 [{{SERVER}} {{SITENAME}}]에서 $3 님에게 메시지를 남겼습니다.'''",
+	'emailext-wallmessage-following-summary' => "'''[$1 $2] 님이 [{{SERVERCANONICAL}} {{SITENAME}}]에서 $3 님에게 메시지를 남겼습니다.'''",
 	'emailext-wallmessage-full-conversation' => '대화 내역 보기',
 	'emailext-wallmessage-owned-subject' => '$1 님이 {{SITENAME}}에서 귀하에게 메시지를 남겼습니다',
-	'emailext-wallmessage-owned-summary' => "'''[$1 $2] 님이 [{{SERVER}} {{SITENAME}}]에서 귀하에게 메시지를 남겼습니다.'''",
+	'emailext-wallmessage-owned-summary' => "'''[$1 $2] 님이 [{{SERVERCANONICAL}} {{SITENAME}}]에서 귀하에게 메시지를 남겼습니다.'''",
 	'emailext-wallmessage-recent-messages' => '[$1 $2의 모든 최근 메시지 보기]',
 	'emailext-wallmessage-reply-subject' => '{{SITENAME}}의 $1 메시지에 새 댓글이 달렸습니다',
-	'emailext-wallmessage-reply-summary' => "'''[{{SERVER}} {{SITENAME}}]의 [$1 $2] 메시지에 새 댓글이 달렸습니다.'''",
+	'emailext-wallmessage-reply-summary' => "'''[{{SERVERCANONICAL}} {{SITENAME}}]의 [$1 $2] 메시지에 새 댓글이 달렸습니다.'''",
 );
 
 $messages['nl'] = array(
 	'emailext-wallmessage-owned-subject' => 'You have a new message on {{SITENAME}}: $1',
 	'emailext-wallmessage-following-subject' => '$1 has a new message on {{SITENAME}}: $2',
-	'emailext-wallmessage-owned-summary' => 'You have a new message on [{{SERVER}} {{SITENAME}}]: [$1 $2]',
-	'emailext-wallmessage-following-summary' => '$1 has a new message on [{{SERVER}} {{SITENAME}}]: [$2 $3]',
+	'emailext-wallmessage-owned-summary' => 'You have a new message on [{{SERVERCANONICAL}} {{SITENAME}}]: [$1 $2]',
+	'emailext-wallmessage-following-summary' => '$1 has a new message on [{{SERVERCANONICAL}} {{SITENAME}}]: [$2 $3]',
 	'emailext-wallmessage-full-conversation' => 'Volledige conversatie',
 	'emailext-wallmessage-recent-messages' => '[$1 All recent messages on $2]',
 	'emailext-wallmessage-reply-subject' => 'There is a new reply to $1 on {{SITENAME}}',
-	'emailext-wallmessage-reply-summary' => 'There is a new reply to [$1 $2] on [{{SERVER}} {{SITENAME}}]',
+	'emailext-wallmessage-reply-summary' => 'There is a new reply to [$1 $2] on [{{SERVERCANONICAL}} {{SITENAME}}]',
 );
 
 $messages['pl'] = array(
