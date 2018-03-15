@@ -65,6 +65,7 @@ class WikiFactoryLoaderIntegrationTest extends WikiaDatabaseTest {
 	public function testRedirectsToPrimaryDomainWhenAlternativeDomainUsed(
 		string $expectedRedirect, array $server
 	) {
+		$this->mockGlobalVariable( 'wgWikiaEnvironment', WIKIA_ENV_PROD );
 		$this->mockGlobalVariable( 'wgDevelEnvironment', false );
 
 		$wikiFactoryLoader = new WikiFactoryLoader( $server, [], [ 'wikicities.com' ] );

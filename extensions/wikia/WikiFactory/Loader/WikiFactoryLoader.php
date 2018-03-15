@@ -217,7 +217,7 @@ class WikiFactoryLoader {
 	 */
 	public function execute() {
 		global $wgCityId, $wgDevelEnvironment,
-			$wgDBservers, $wgLBFactoryConf, $wgDBserver, $wgContLang, $wgWikiaBaseDomain;
+			$wgDBservers, $wgLBFactoryConf, $wgDBserver, $wgContLang, $wgWikiaBaseDomain, $wgArticlePath;
 
 		wfProfileIn(__METHOD__);
 
@@ -418,7 +418,7 @@ class WikiFactoryLoader {
 
 		// check if domain from browser is different than main domain for wiki
 		$cond1 = !empty( $this->mServerName ) &&
-				 ( strtolower( $url['host'] ) != $this->mServerName || $url['path'] !== "/{$this->langCode}" );
+				 ( strtolower( $url['host'] ) != $this->mServerName || rtrim( $url['path'], '/' ) !== rtrim( "/{$this->langCode}", '/' ) );
 
 		/**
 		 * check if not additional domain was used (then we redirect anyway)
@@ -426,16 +426,18 @@ class WikiFactoryLoader {
 		$cond2 = $this->mAlternativeDomainUsed && ( $url['host'] != $this->mOldServerName );
 
 		if( ( $cond1 || $cond2 ) && empty( $wgDevelEnvironment ) ) {
-			$target = rtrim( $this->mCityUrl, '/' ) . '/' . $this->pathParams;
+			$redirectUrl = WikiFactory::getLocalEnvURL( $this->mCityUrl );
+			$target = rtrim( $redirectUrl, '/' ) . '/' . $this->pathParams;
 
-			// skip the 'title' which is part of the $target, but append remaining parameters
-			$queryParams = array_filter(
-				$_GET,
-				function ($key) {
-					return $key !== 'title';
-				},
-				ARRAY_FILTER_USE_KEY
-			);
+			$queryParams = $_GET;
+			$localArticlePathClean = str_replace( '$1', '', $wgArticlePath );
+			if ( !empty( $localArticlePathClean ) &&
+				!empty( $queryParams['title'] ) &&
+				startsWith( $this->pathParams,  ltrim( $localArticlePathClean, '/' ) ) ) {
+				// skip the 'title' which is part of the $target, but append remaining parameters
+				unset( $queryParams['title'] );
+			}
+
 			if ( !empty( $queryParams ) ) {
 				$target .= '?' . http_build_query( $queryParams );
 			}
