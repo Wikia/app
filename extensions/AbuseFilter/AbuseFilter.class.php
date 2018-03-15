@@ -1080,11 +1080,11 @@ class AbuseFilter {
 				// Mark with a tag on recentchanges.
 				global $wgUser;
 
-				$UserIdOrIp =
+				$userIdOrIp =
 					$wgUser->isLoggedIn()
 						? $wgUser->getId()
 						: IP::sanitizeIP( $wgUser->getRequest()->getIP() );
-				$actionID =	self::getActionId( $title, $UserIdOrIp, $vars->getVar( 'ACTION' )->toString() );
+				$actionID =	self::getActionId( $title, $userIdOrIp, $vars->getVar( 'ACTION' )->toString() );
 
 				AbuseFilter::$tagsToSet[$actionID] = $parameters;
 				break;
