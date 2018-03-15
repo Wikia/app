@@ -16,7 +16,7 @@ require([
 		$actualVideo = null,
 		currentItemNumber = 1,
 		isExpanded = false,
-		isAutoplay = true,
+		isAutoplay = false,
 		initialPlay = true;
 
 	function reveal() {
