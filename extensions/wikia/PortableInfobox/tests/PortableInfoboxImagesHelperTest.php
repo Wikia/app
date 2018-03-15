@@ -117,6 +117,7 @@ class PortableInfoboxImagesHelperTest extends WikiaBaseTest {
 			'thumbnail2x' => null,
 			'key' => '',
 			'media-type' => 'image',
+			'mercuryComponentAttrs' => '{"itemContext":"portable-infobox","ref":null}',
 			'width' => $resultDimensions[ 'width' ],
 			'height' => $resultDimensions[ 'height' ]
 		];

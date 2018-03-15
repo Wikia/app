@@ -553,6 +553,10 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 						'thumbnail2x' => 'http://image2x.jpg',
 						'media-type' => 'image',
 						'isVideo' => false,
+						'mercuryComponentAttrs' => json_encode( [
+								'itemContext' => 'portable-infobox',
+								'ref' => 1
+						] )
 					]
 				]
 			],
@@ -605,6 +609,10 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 						'thumbnail2x' => 'thumbnail2x.jpg',
 						'isVideo' => false,
 						'media-type' => 'image',
+						'mercuryComponentAttrs' => json_encode( [
+							'itemContext' => 'portable-infobox',
+							'ref' => 44
+						] )
 					]
 				]
 			],
@@ -709,6 +717,10 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 						'thumbnail2x' => 'thumbnail2x.jpg',
 						'isVideo' => false,
 						'media-type' => 'image',
+						'mercuryComponentAttrs' => json_encode( [
+							'itemContext' => 'portable-infobox',
+							'ref' => 44
+						] )
 					]
 				]
 			],
@@ -813,6 +825,10 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 						'thumbnail2x' => 'thumbnail2x.jpg',
 						'isVideo' => false,
 						'media-type' => 'image',
+						'mercuryComponentAttrs' => json_encode( [
+							'itemContext' => 'portable-infobox',
+							'ref' => 44
+						] )
 					]
 				]
 			]

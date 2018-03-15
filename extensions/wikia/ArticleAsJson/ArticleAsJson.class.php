@@ -1,14 +1,18 @@
 <?php
 
 class ArticleAsJson {
+	// TODO: remove it and all usages with XW-4719
+	const SIMPLYFY_RENDERING_QP = 'simplifyRendering';
+	const SIMPLYFY_RENDERING_QP_VALUE = 'true';
+
 	static $media = [ ];
 	static $users = [ ];
-	static $heroImage = [ ];
+	static $heroImage = null;
 	static $mediaDetailConfig = [
 		'imageMaxWidth' => false
 	];
 
-	const CACHE_VERSION = 3.17;
+	const CACHE_VERSION = 3.19;
 
 	const ICON_MAX_SIZE = 48;
 	// Line height in Mercury
@@ -23,6 +27,10 @@ class ArticleAsJson {
 	const MEDIA_ICON_TEMPLATE = 'extensions/wikia/ArticleAsJson/templates/media-icon.mustache';
 	const MEDIA_THUMBNAIL_TEMPLATE = 'extensions/wikia/ArticleAsJson/templates/media-thumbnail.mustache';
 	const MEDIA_GALLERY_TEMPLATE = 'extensions/wikia/ArticleAsJson/templates/media-gallery.mustache';
+
+	// TODO: remove these, all usages and mentioned templates with XW-4719
+	const MEDIA_THUMBNAIL_TEMPLATE_OLD = 'extensions/wikia/ArticleAsJson/templates/media-thumbnail-old.mustache';
+	const MEDIA_GALLERY_TEMPLATE_OLD = 'extensions/wikia/ArticleAsJson/templates/media-gallery-old.mustache';
 
 	private static function renderIcon( $media ) {
 		$scaledSize = self::scaleIconSize( $media['height'], $media['width'] );
@@ -53,29 +61,95 @@ class ArticleAsJson {
 		);
 	}
 
+	// TODO: remove it and all usages with XW-4719
+	public static function simplifyRendering(): bool {
+		return RequestContext::getMain()->getRequest()->getVal(self::SIMPLYFY_RENDERING_QP, "false") === self::SIMPLYFY_RENDERING_QP_VALUE;
+	}
+
 	private static function renderImage( $media, $id ) {
-		return self::removeNewLines(
-			\MustacheService::getInstance()->render(
-				self::MEDIA_THUMBNAIL_TEMPLATE,
-				[
-					'media' => $media,
-					'mediaAttrs' => json_encode( $media ),
-				]
-			)
-		);
+		if ( self::simplifyRendering() ) {
+			return self::removeNewLines(
+				\MustacheService::getInstance()->render(
+					self::MEDIA_THUMBNAIL_TEMPLATE,
+					[
+						'media' => $media,
+						'mediaAttrs' => json_encode( $media ),
+					]
+				)
+			);
+		} else {
+			return self::removeNewLines(
+				\MustacheService::getInstance()->render(
+					self::MEDIA_THUMBNAIL_TEMPLATE_OLD,
+					[
+						'mediaAttrs' => json_encode( [ 'ref' => $id ] ),
+						'media' => $media,
+						'width' => $media['width'],
+						'height' => $media['height'],
+						'url' => $media['url'],
+						'title' => $media['title'],
+						'fileUrl' => $media['fileUrl'],
+						'caption' => $media['caption'] ?? '',
+						'href' => $media['href'],
+						'isLinkedByUser' => $media['isLinkedByUser'],
+						/**
+						 * data-ref has to be set for now because it's read in
+						 * extensions/wikia/PortableInfobox/services/Parser/Nodes/NodeImage.php:getGalleryData
+						 * and in
+						 * extensions/wikia/PortableInfobox/services/Parser/Nodes/NodeImage.php:getTabberData.
+						 * Base on presence of data-ref element is classified as an image
+						 * - without that service would return null
+						 *
+						 * @TODO XW-1460 fix the regex and remove this attribute
+						 */
+						'ref' => $id
+					]
+				)
+			);
+		}
+
 	}
 
 	private static function renderGallery( $media, $id, $hasLinkedImages ) {
-		return self::removeNewLines(
-			\MustacheService::getInstance()->render(
-				self::MEDIA_GALLERY_TEMPLATE,
-				[
-					'galleryAttrs' => json_encode( $media ),
-					'hasLinkedImages' => $hasLinkedImages,
-					'media' => $media
-				]
-			)
-		);
+		if ( self::simplifyRendering() ) {
+			return self::removeNewLines(
+				\MustacheService::getInstance()->render(
+					self::MEDIA_GALLERY_TEMPLATE,
+					[
+						'galleryAttrs' => json_encode( $media ),
+						'hasLinkedImages' => $hasLinkedImages,
+						'media' => $media
+					]
+				)
+			);
+		} else {
+			return self::removeNewLines(
+				\MustacheService::getInstance()->render(
+					self::MEDIA_GALLERY_TEMPLATE_OLD,
+					[
+						'galleryAttrs' => json_encode( [ 'ref' => $id ] ),
+						/**    +                    'hasLinkedImages' => $hasLinkedImages,
+						 * data-ref has to be set for now because it's read in
+						 * extensions/wikia/PortableInfobox/services/Parser/Nodes/NodeImage.php::getGalleryData
+						 * and in
+						 * extensions/wikia/PortableInfobox/services/Parser/Nodes/NodeImage.php::getTabberData
+						 * Base on presence of data-ref element is classified as an image
+						 * - without that service would return null
+						 *
+						 * !!! Important note - data-ref inside template has ' instead of "
+						 * because this is how regex in
+						 * extensions/wikia/PortableInfobox/services/Parser/Nodes/NodeImage.php::getGalleryData
+						 * works
+						 *
+						 * @TODO XW-1460 fix the regex and remove this attribute
+						 */
+						'ref' => $id,
+						'media' => $media,
+						'hasLinkedImages' => $hasLinkedImages
+					]
+				)
+			);
+		}
 	}
 
 	private static function removeNewLines( $string ) {
@@ -332,6 +406,10 @@ class ArticleAsJson {
 			) {
 				$confstr .= ':collapsibleSections';
 			}
+
+			if ( self::simplifyRendering() ) {
+				$confstr .= ':simplifyRendering';
+			}
 		}
 
 		return true;
@@ -387,7 +465,7 @@ class ArticleAsJson {
 					'content' => $text,
 					'media' => self::$media,
 					'users' => self::$users,
-					'heroImage' => empty( self::$heroImage ) ? null : self::$heroImage
+					'heroImage' => self::$heroImage
 				]
 			);
 		}

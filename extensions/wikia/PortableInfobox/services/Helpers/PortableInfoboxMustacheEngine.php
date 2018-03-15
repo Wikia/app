@@ -14,6 +14,7 @@ class PortableInfoboxMustacheEngine {
 		'header' => 'PortableInfoboxItemHeader.mustache',
 		'image' => 'PortableInfoboxItemImage.mustache',
 		'image-mobile' => 'PortableInfoboxItemImageMobile.mustache',
+		'image-mobile-old' => 'PortableInfoboxItemImageMobileOld.mustache', // TODO: remove it and all usages with XW-4719
 		'image-mobile-wikiamobile' => 'PortableInfoboxItemImageMobileWikiaMobile.mustache',
 		'data' => 'PortableInfoboxItemData.mustache',
 		'group' => 'PortableInfoboxItemGroup.mustache',
@@ -21,9 +22,11 @@ class PortableInfoboxMustacheEngine {
 		'horizontal-group-content' => 'PortableInfoboxHorizontalGroupContent.mustache',
 		'navigation' => 'PortableInfoboxItemNavigation.mustache',
 		'hero-mobile' => 'PortableInfoboxItemHeroMobile.mustache',
+		'hero-mobile-old' => 'PortableInfoboxItemHeroMobileOld.mustache', //// TODO: remove it and all usages with XW-4719
 		'hero-mobile-wikiamobile' => 'PortableInfoboxItemHeroMobileWikiaMobile.mustache',
 		'image-collection' => 'PortableInfoboxItemImageCollection.mustache',
 		'image-collection-mobile' => 'PortableInfoboxItemImageCollectionMobile.mustache',
+		'image-collection-mobile-old' => 'PortableInfoboxItemImageCollectionMobileOld.mustache', // TODO: remove it and all usages with XW-4719
 		'image-collection-mobile-wikiamobile' => 'PortableInfoboxItemImageCollectionMobileWikiaMobile.mustache'
 	];
 	protected $templateEngine;
