@@ -147,7 +147,7 @@ class ContentReviewDiffPage extends \ContextSource {
 	private function getNotices() {
 		$notices = [];
 		// Warn on references to plain HTTP
-		if ( strpos( $this->diffEngine->mNewRev->getText( \Revision::FOR_THIS_USER ), 'http://' ) !== false ) {
+		if ( stripos( $this->diffEngine->mNewRev->getText( \Revision::FOR_THIS_USER ), 'http://' ) !== false ) {
 			$notices[] = [
 				'text' => $this->msg( 'content-review-diff-notice-http' )->plain(),
 				'icon' => \DesignSystemHelper::renderSvg( 'wds-icons-alert', 'wds-icon' ),
