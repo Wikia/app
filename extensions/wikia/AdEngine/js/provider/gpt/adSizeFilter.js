@@ -74,7 +74,6 @@ define('ext.wikia.adEngine.provider.gpt.adSizeFilter', [
 			case slotName === 'INCONTENT_BOXAD_1' && context.targeting.hasFeaturedVideo:
 				return [[300, 250]];
 			case slotName === 'BOTTOM_LEADERBOARD':
-			case slotName === 'MOBILE_BOTTOM_LEADERBOARD':
 				return getBottomLeaderboardSizes(slotSizes);
 			default:
 				return slotSizes;

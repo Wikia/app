@@ -135,37 +135,27 @@ describe('ext.wikia.adEngine.provider.gpt.adSizeFilter', function () {
 		expect(getModule().filter('BOTTOM_LEADERBOARD', sizesIn)).toEqual(sizesOut);
 	});
 
-	it('Doesn\'t return 2x2 size of MOBILE_BOTTOM_LEADERBOARD when there is no UAP', function () {
-		var sizesIn = [[300, 50], [300, 250], [2, 2]],
-			sizesOut = [[300, 50], [300, 250]];
-
-		expect(getModule().filter('MOBILE_BOTTOM_LEADERBOARD', sizesIn)).toEqual(sizesOut);
-	});
-
-	it('Returns only 2x2 size of MOBILE_BOTTOM_LEADERBOARD when there is UAP', function () {
-		mocks.win.ads.context.targeting.skin = 'mercury';
-		spyOn(mocks.uapContext, 'isUapLoaded').and.returnValue(true);
-		var sizesIn = [[300, 50], [300, 250], [2, 2]],
-			sizesOut = [[2, 2]];
-
-		expect(getModule().filter('MOBILE_BOTTOM_LEADERBOARD', sizesIn)).toEqual(sizesOut);
-	});
-
-	it('Doesn\'t return 2x2 size of BOTTOM_LEADERBOARD on mobile when there is no UAP', function () {
-		mocks.win.ads.context.targeting.skin = 'mercury';
-
+	it('Doesn\'t return 2x2 size of BOTTOM_LEADERBOARD when there is no UAP', function () {
 		var sizesIn = [[300, 50], [300, 250], [2, 2]],
 			sizesOut = [[300, 50], [300, 250]];
 
 		expect(getModule().filter('BOTTOM_LEADERBOARD', sizesIn)).toEqual(sizesOut);
 	});
 
-	it('Returns only 2x2 size of BOTTOM_LEADERBOARD on mobile when there is UAP', function () {
+	it('Returns only 2x2 size of mobile BOTTOM_LEADERBOARD when there is UAP', function () {
 		mocks.win.ads.context.targeting.skin = 'mercury';
 		spyOn(mocks.uapContext, 'isUapLoaded').and.returnValue(true);
-
 		var sizesIn = [[300, 50], [300, 250], [2, 2]],
 			sizesOut = [[2, 2]];
+
+		expect(getModule().filter('BOTTOM_LEADERBOARD', sizesIn)).toEqual(sizesOut);
+	});
+
+	it('Doesn\'t return 2x2 size of mobile BOTTOM_LEADERBOARD when there is no UAP', function () {
+		mocks.win.ads.context.targeting.skin = 'mercury';
+
+		var sizesIn = [[300, 50], [300, 250], [2, 2]],
+			sizesOut = [[300, 50], [300, 250]];
 
 		expect(getModule().filter('BOTTOM_LEADERBOARD', sizesIn)).toEqual(sizesOut);
 	});
