@@ -29,7 +29,7 @@ require([
 		);
 
 		tracker.track({
-			category: 'recommended-video',
+			category: 'related-video-module',
 			trackingMethod: 'both',
 			action: tracker.ACTIONS.VIEW,
 			label: 'recommended-video-revealed'
@@ -83,7 +83,7 @@ require([
 		$unit.removeClass('is-revealed');
 
 		tracker.track({
-			category: 'recommended-video',
+			category: 'related-video-module',
 			trackingMethod: 'both',
 			action: tracker.ACTIONS.CLICK,
 			label: 'close-click'
@@ -104,7 +104,7 @@ require([
 		$actualVideo.find('h3').html(data.item.title);
 
 		tracker.track({
-			category: 'recommended-video',
+			category: 'related-video-module',
 			trackingMethod: 'both',
 			action: tracker.ACTIONS.VIEW,
 			label: 'playlist-item-start'
@@ -150,7 +150,7 @@ require([
 			playExpandedItem($(this).data('index'));
 
 			tracker.track({
-				category: 'recommended-video',
+				category: 'related-video-module',
 				trackingMethod: 'both',
 				action: tracker.ACTIONS.CLICK,
 				label: 'playlist-item-click'
@@ -161,7 +161,7 @@ require([
 			playExpandedItem(currentItemNumber - 1);
 
 			tracker.track({
-				category: 'recommended-video',
+				category: 'related-video-module',
 				trackingMethod: 'both',
 				action: tracker.ACTIONS.CLICK,
 				label: 'playlist-item-click'
@@ -184,7 +184,7 @@ require([
 		return {
 			autoplay: isAutoplay,
 			tracking: {
-				category: 'recommended-video',
+				category: 'related-video-module',
 				track: function (data) {
 					tracker.track(data);
 				}
@@ -224,7 +224,7 @@ require([
 			isExpanded = true;
 
 			tracker.track({
-				category: 'recommended-video',
+				category: 'related-video-module',
 				trackingMethod: 'both',
 				action: tracker.ACTIONS.VIEW,
 				label: 'expanded'
