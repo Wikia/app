@@ -40,7 +40,7 @@ class SimpleCloseWikiMaintenance {
 	 * @access public
 	 */
 	public function execute() {
-		global $wgUploadDirectory, $wgDBname;
+		global $wgUploadDirectory;
 
 		if ( !isset( $this->mOptions['wiki_id'] ) ) {
 			echo "Wiki Id is not valid";
@@ -52,7 +52,7 @@ class SimpleCloseWikiMaintenance {
 		$dbr = WikiFactory::db( DB_SLAVE );
 		$row = $dbr->selectRow(
 			array( "city_list" ),
-			array( "city_id", "city_flags", "city_dbname", "city_url", "city_public" ),
+			array( "city_id", "city_flags", "city_dbname", "city_cluster", "city_url", "city_public" ),
 			$where,
 			__METHOD__
 		);
@@ -65,8 +65,8 @@ class SimpleCloseWikiMaintenance {
 			$xdumpok  = true;
 			$newFlags = 0;
 			$dbname   = $row->city_dbname;
+			$cluster  = $row->city_cluster;
 			$folder   = WikiFactory::getVarValueByName( "wgUploadDirectory", $row->city_id );
-			$cluster  = WikiFactory::getVarValueByName( "wgDBcluster", $row->city_id );
 
 			/**
 			 * safety check, if city_dbname is not unique die with message
