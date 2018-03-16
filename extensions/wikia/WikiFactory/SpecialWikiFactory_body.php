@@ -18,6 +18,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
  */
 class WikiFactoryPage extends SpecialPage {
 
+	/* @var object $mWiki a row from city_list table */
 	private $mWiki, $mTitle, $mDomain, $mTab, $mVariableName, $mTags, $mSearchTag;
 	public $mStatuses = array(-2 => 'spam', -1=> 'disabled*', "disabled", "enabled", "redirected" );
 	private $mTagWikiIds = array();
@@ -321,7 +322,6 @@ class WikiFactoryPage extends SpecialPage {
 			"info"        => $info,
 			"title"       => $this->mTitle,
 			"groups"      => WikiFactory::getGroups(),
-			"cluster"     => WikiFactory::getVarValueByName( "wgDBcluster", $this->mWiki->city_id ),
 			"domains"     => WikiFactory::getDomains( $this->mWiki->city_id ),
 			"protected"   => WikiFactory::getFlags ( $this->mWiki->city_id ) & WikiFactory::FLAG_PROTECTED,
 			"statuses"    => $this->mStatuses,

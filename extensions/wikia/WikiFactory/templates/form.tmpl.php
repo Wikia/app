@@ -517,7 +517,7 @@ $(function() {
 			<tr>
 				<td><?php echo $wiki->city_id ?></td>
 				<td><?php echo $wiki->city_dbname ?></td>
-				<td><?php echo empty( $cluster ) ? "c1<acronym title='default'>*</acronym>" : $cluster ?></td>
+				<td><?php echo $wiki->city_cluster ?></td>
 				<td><?php echo $wiki->city_lang ?></td>
 				<td><?php
 					$wgHub = WikiFactory::getCategory( $wiki->city_id );
