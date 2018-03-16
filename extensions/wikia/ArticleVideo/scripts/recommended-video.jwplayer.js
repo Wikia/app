@@ -40,7 +40,7 @@ require([
 		var scrollTop = $(window).scrollTop();
 
 		if (scrollTop > scrollBreakpoint) {
-			window.setTimeout(reveal, 5000);
+			window.setTimeout(reveal, 3000);
 			window.document.removeEventListener('scroll', onScroll);
 		}
 	}
