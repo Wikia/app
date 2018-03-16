@@ -122,7 +122,7 @@ class ArticleAsJson {
 							'galleryAttrs' => json_encode( $media ),
 							'media' => $media,
 							'downloadIcon' => DesignSystemHelper::renderSvg( 'wds-icons-download', 'wds-icon' ),
-							'viewMoreLabel' => wfMessage('communitypage-view-more')->escaped(),
+							'viewMoreLabel' => wfMessage('communitypage-view-more')->escaped(), // TODO:  XW-4793
 							'linkedGalleryViewMoreVisible' => $hasLinkedImages && count($media) > 4
 						]
 					)
