@@ -12,7 +12,7 @@ class ArticleAsJson {
 		'imageMaxWidth' => false
 	];
 
-	const CACHE_VERSION = 3.23;
+	const CACHE_VERSION = 3.24;
 
 	const ICON_MAX_SIZE = 48;
 	// Line height in Mercury
