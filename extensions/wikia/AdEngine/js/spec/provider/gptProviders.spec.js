@@ -148,7 +148,7 @@ describe('ext.wikia.adEngine.provider.*', function () {
 
 	it('directGpt: Push ad with specific slot sizes', function () {
 		var expectedSizes = {
-			BOTTOM_LEADERBOARD: '728x90,970x250',
+			BOTTOM_LEADERBOARD: '3x3,728x90,970x250',
 			INCONTENT_BOXAD_1: '120x600,160x600,300x250,300x600',
 			INCONTENT_PLAYER: '1x1',
 			INVISIBLE_HIGH_IMPACT_2: 'out-of-page',

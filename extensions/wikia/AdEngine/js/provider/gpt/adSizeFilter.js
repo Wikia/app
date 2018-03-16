@@ -48,6 +48,17 @@ define('ext.wikia.adEngine.provider.gpt.adSizeFilter', [
 		});
 	}
 
+	function getBottomLeaderboardSizes(slotSizes) {
+		var isUapLoaded = uapContext.isUapLoaded(),
+			skin = getAdContext().targeting.skin;
+
+		if (isUapLoaded) {
+			return skin === 'oasis' ? [[728, 90], [3, 3]] : [[2, 2]];
+		}
+
+		return removeUAPFromSlotSizes(slotSizes);
+	}
+
 	function filterSizes(slotName, slotSizes) {
 		log(['filterSizes', slotName, slotSizes], 'debug', logGroup);
 
@@ -60,13 +71,11 @@ define('ext.wikia.adEngine.provider.gpt.adSizeFilter', [
 				return getNewSizes(slotSizes, doc.documentElement.offsetWidth, [[728, 90]]);
 			case slotName === 'INVISIBLE_SKIN':
 				return doc.documentElement.offsetWidth >= minSkinWidth ? slotSizes : [[1, 1]];
-			case slotName === 'BOTTOM_LEADERBOARD' && context.targeting.skin === 'oasis':
-				return getNewSizes(slotSizes, doc.getElementById('WikiaFooter').offsetWidth, [[728, 90]]);
 			case slotName === 'INCONTENT_BOXAD_1' && context.targeting.hasFeaturedVideo:
 				return [[300, 250]];
-			case slotName === 'MOBILE_BOTTOM_LEADERBOARD' ||
-				(slotName === 'BOTTOM_LEADERBOARD' && context.targeting.skin === 'mercury'):
-				return uapContext.isUapLoaded() ? [[2, 2]] : removeUAPFromSlotSizes(slotSizes);
+			case slotName === 'BOTTOM_LEADERBOARD':
+			case slotName === 'MOBILE_BOTTOM_LEADERBOARD':
+				return getBottomLeaderboardSizes(slotSizes);
 			default:
 				return slotSizes;
 		}
