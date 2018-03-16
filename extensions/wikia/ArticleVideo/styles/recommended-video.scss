@@ -53,6 +53,7 @@
 				font-weight: 500;
 				margin-bottom: 26px;
 				margin-top: 24px;
+				text-decoration: none;
 			}
 
 			.jwplayer {
@@ -192,7 +193,7 @@
 	margin-right: 16px;
 	min-width: 200px;
 
-	&:not(.actual-video):hover {
+	&:hover {
 		h3 {
 			text-decoration: underline;
 		}

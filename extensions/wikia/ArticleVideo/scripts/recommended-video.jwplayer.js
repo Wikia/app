@@ -156,6 +156,17 @@ require([
 				label: 'playlist-item-click'
 			});
 		});
+
+		$unit.find('.article-recommended-video-title').on('click', function () {
+			playExpandedItem(currentItemNumber - 1);
+
+			tracker.track({
+				category: 'recommended-video',
+				trackingMethod: 'both',
+				action: tracker.ACTIONS.CLICK,
+				label: 'playlist-item-click'
+			});
+		});
 	}
 
 	function playExpandedItem(index) {
