@@ -841,39 +841,6 @@ class WikiFactoryPage extends SpecialPage {
 	}
 
 	/**
-	 * Quick form for choosing which variable to change.
-	 *
-	 * @author Sean Colombo
-	 * @access private
-	 *
-	 * @param varOverrides array - associative array of values to put into the template.  These are assumed
-	 *                             to have been loaded as a form re-initialization and are given precedence
-	 *                             over the defaults.
-	 *
-	 * @return HTML to be rendered.
-	 */
-	private function chooseVariableToChange($varOverrides = array()) {
-		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
-
-		$vars = array(
-			//"tab"         => $this->mTab,
-			"hub"         => WikiFactoryHub::getInstance(),
-			"wiki"        => $this->mWiki,
-			"title"       => $this->mTitle,
-			"groups"      => WikiFactory::getGroups(),
-			"cluster"     => WikiFactory::getVarValueByName( "wgDBcluster", $this->mWiki->city_id ),
-			"domains"     => WikiFactory::getDomains( $this->mWiki->city_id ),
-			"statuses" 	  => $this->mStatuses,
-			"variables"   => WikiFactory::getVariables(),
-			"variableName"=> $this->mVariableName,
-		);
-		$vars = array_merge($vars, $varOverrides);
-		$oTmpl->set_vars( $vars );
-
-		return $oTmpl->render( "form-variables" );
-	}
-
-	/**
 	 * If there was a post to the add variable form, this will process it.
 	 *
 	 * @author Sean Colombo
