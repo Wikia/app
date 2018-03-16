@@ -12,7 +12,7 @@ class ArticleAsJson {
 		'imageMaxWidth' => false
 	];
 
-	const CACHE_VERSION = 3.19;
+	const CACHE_VERSION = 3.23;
 
 	const ICON_MAX_SIZE = 48;
 	// Line height in Mercury
@@ -74,6 +74,7 @@ class ArticleAsJson {
 					[
 						'media' => $media,
 						'mediaAttrs' => json_encode( $media ),
+						'downloadIcon' => DesignSystemHelper::renderSvg( 'wds-icons-download', 'wds-icon' )
 					]
 				)
 			);
@@ -118,7 +119,8 @@ class ArticleAsJson {
 					[
 						'galleryAttrs' => json_encode( $media ),
 						'hasLinkedImages' => $hasLinkedImages,
-						'media' => $media
+						'media' => $media,
+						'downloadIcon' => DesignSystemHelper::renderSvg( 'wds-icons-download', 'wds-icon' )
 					]
 				)
 			);
@@ -191,7 +193,8 @@ class ArticleAsJson {
 			'title' => $imageName,
 			'user' => $details['userName'],
 			'mime' => $details['mime'],
-			'isVideo' => $details['mediaType'] === 'video'
+			'isVideo' => $details['mediaType'] === 'video',
+			'isOgg' => $details['mime'] === 'application/ogg'
 		];
 
 		// Only images are allowed to be linked by user
