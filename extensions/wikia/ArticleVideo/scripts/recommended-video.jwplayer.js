@@ -82,12 +82,9 @@ require([
 	function onCloseClicked() {
 		$unit.removeClass('is-revealed');
 
-		tracker.track({
-			category: 'related-video-module',
-			trackingMethod: 'both',
-			action: tracker.ACTIONS.CLICK,
-			label: 'close-click'
-		});
+		setTimeout(function () {
+			$unit.remove();
+		}.bind(this), 300);
 	}
 
 	function playItem(data) {
