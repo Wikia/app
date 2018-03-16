@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Redirects users from the old MW email confirm page to the new Mercury email confirmation flow
+ */
 class SpecialWikiaConfirmEmailRedirect extends AbstractAuthPageRedirect {
 	public function __construct( string $name = 'WikiaConfirmEmail' ) {
 		parent::__construct( $name );

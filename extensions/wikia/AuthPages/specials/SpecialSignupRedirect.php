@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Used as a linkable shortcut, redirects users to login or registration flow
+ */
 class SpecialSignupRedirect extends RedirectSpecialPage {
 	function __construct( string $name = 'Signup' ) {
 		parent::__construct( $name );
