@@ -12,7 +12,7 @@ class ArticleAsJson {
 		'imageMaxWidth' => false
 	];
 
-	const CACHE_VERSION = 3.24;
+	const CACHE_VERSION = 3.25;
 
 	const ICON_MAX_SIZE = 48;
 	// Line height in Mercury
@@ -27,6 +27,7 @@ class ArticleAsJson {
 	const MEDIA_ICON_TEMPLATE = 'extensions/wikia/ArticleAsJson/templates/media-icon.mustache';
 	const MEDIA_THUMBNAIL_TEMPLATE = 'extensions/wikia/ArticleAsJson/templates/media-thumbnail.mustache';
 	const MEDIA_GALLERY_TEMPLATE = 'extensions/wikia/ArticleAsJson/templates/media-gallery.mustache';
+	const MEDIA_LINKED_GALLERY_TEMPLATE = 'extensions/wikia/ArticleAsJson/templates/media-linked-gallery.mustache';
 
 	// TODO: remove these, all usages and mentioned templates with XW-4719
 	const MEDIA_THUMBNAIL_TEMPLATE_OLD = 'extensions/wikia/ArticleAsJson/templates/media-thumbnail-old.mustache';
@@ -113,17 +114,31 @@ class ArticleAsJson {
 
 	private static function renderGallery( $media, $id, $hasLinkedImages ) {
 		if ( self::simplifyRendering() ) {
-			return self::removeNewLines(
-				\MustacheService::getInstance()->render(
-					self::MEDIA_GALLERY_TEMPLATE,
-					[
-						'galleryAttrs' => json_encode( $media ),
-						'hasLinkedImages' => $hasLinkedImages,
-						'media' => $media,
-						'downloadIcon' => DesignSystemHelper::renderSvg( 'wds-icons-download', 'wds-icon' )
-					]
-				)
-			);
+			if ( $hasLinkedImages ) {
+				return self::removeNewLines(
+					\MustacheService::getInstance()->render(
+						self::MEDIA_LINKED_GALLERY_TEMPLATE,
+						[
+							'galleryAttrs' => json_encode( $media ),
+							'media' => $media,
+							'downloadIcon' => DesignSystemHelper::renderSvg( 'wds-icons-download', 'wds-icon' ),
+							'viewMoreLabel' => wfMessage('communitypage-view-more')->escaped(),
+							'linkedGalleryViewMoreVisible' => $hasLinkedImages && count($media) > 4
+						]
+					)
+				);
+			} else {
+				return self::removeNewLines(
+					\MustacheService::getInstance()->render(
+						self::MEDIA_GALLERY_TEMPLATE,
+						[
+							'galleryAttrs' => json_encode( $media ),
+							'media' => $media,
+							'downloadIcon' => DesignSystemHelper::renderSvg( 'wds-icons-download', 'wds-icon' ),
+						]
+					)
+				);
+			}
 		} else {
 			return self::removeNewLines(
 				\MustacheService::getInstance()->render(
