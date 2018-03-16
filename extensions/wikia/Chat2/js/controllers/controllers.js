@@ -44,41 +44,51 @@ var NodeChatSocketWrapper = $.createClass(Observable, {
 				this.socket.removeAllListeners('connect_failed');
 			}
 		}
-		this.authRequestWithMW(function (data) {
-			this.log('Authenticating using MediaWiki: ' + data);
 
-			var socket = io.connect(url, {
-					'force new connection': true,
-					'try multiple transports': true,
-					'connect timeout': false,
-					'query': data,
-					'max reconnection attempts': 8,
-					'reconnect': true
-				});
+		var query = {
+			name: wgUserName,
+			key: window.wgChatKey,
+			roomId: this.roomId,
+		};
 
-			// set up socket events
-			// @see https://socket.io/docs/server-api/#event-disconnect
-			socket.on('message', this.proxy(this.onMsgReceived, this));
+		this.log('Authenticating using MediaWiki: ' + JSON.stringify(query));
 
-			socket.on('connect', this.proxy(function () {
-				this.log('Connected to Chat server at ' + url);
-				this.onConnect(socket);
-			}, this));
-
-			// SUS-2245: when re-connections limit is reached reload the page.
-			socket.on('reconnecting', this.proxy(function (attemptNumber) {
-				this.log('reconnecting: attempt #' + attemptNumber);
-
-				if (attemptNumber > window.wgChatReconnectMaxTries) {
-					this.log('reconnect_attempt: limit reached, reload the page');
-					window.location.reload();
+		var socket = io.connect(url, {
+				forceNew: true,
+				query: query,
+				reconnectionAttempts: 8,
+				reconnection: true,
+				transportOptions: {
+					polling: {
+						extraHeaders: {
+							'X-Chat-ServerId': this.wikiId
+						}
+					}
 				}
-			}, this));
+			});
 
-			socket.on('error', this.proxy(function (err) {
-				this.log('socket.onerror: ' + err + ' - ' + err.code);
-			}, this));
-		});
+		// set up socket events
+		// @see https://socket.io/docs/server-api/#event-disconnect
+		socket.on('message', this.proxy(this.onMsgReceived, this));
+
+		socket.on('connect', this.proxy(function () {
+			this.log('Connected to Chat server at ' + url);
+			this.onConnect(socket);
+		}, this));
+
+		// SUS-2245: when re-connections limit is reached reload the page.
+		socket.on('reconnecting', this.proxy(function (attemptNumber) {
+			this.log('reconnecting: attempt #' + attemptNumber);
+
+			if (attemptNumber > window.wgChatReconnectMaxTries) {
+				this.log('reconnect_attempt: limit reached, reload the page');
+				window.location.reload();
+			}
+		}, this));
+
+		socket.on('error', this.proxy(function (err) {
+			this.log('socket.onerror: ' + err + ' - ' + err.code);
+		}, this));
 	},
 
 	onConnect: function (socket) {
@@ -91,10 +101,6 @@ var NodeChatSocketWrapper = $.createClass(Observable, {
 				this.socket.send(InitqueryCommand.xport());
 			}, this), 500);
 		}
-	},
-
-	authRequestWithMW: function (callback) {
-		this.proxy(callback, this)('name=' + encodeURIComponent(wgUserName) + '&key=' + window.wgChatKey + '&roomId=' + this.roomId + '&serverId=' + this.wikiId );
 	},
 
 
