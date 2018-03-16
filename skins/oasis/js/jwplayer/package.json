@@ -2,6 +2,6 @@
   "name": "wikia-article-video-ext",
   "scripts": {},
   "dependencies": {
-    "jwplayer-fandom": "github:Wikia/jwplayer-fandom#b583698da4dbc3f5086b7ca799a34388daafa72b"
+    "jwplayer-fandom": "1.3.1"
   }
 }
