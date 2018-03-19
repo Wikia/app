@@ -201,23 +201,24 @@ class FounderProgressBarHooks {
 		global $wgExternalSharedDB, $wgMemc;
 		wfProfileIn(__METHOD__);
 
-		try {
-			// Records go into global wikicities table
-			$dbw = wfGetDB( DB_MASTER, [], $wgExternalSharedDB );
+		$rows = [];
 
-			foreach ( FounderProgressBarController::$tasks as $task_id ) {
-				if ( $task_id < FounderProgressBarController::REGULAR_TASK_MAX_ID ) {
-					$dbw->insert(
-						'founder_progress_bar_tasks',
-						[
-							'wiki_id' => $wiki_id,
-							'task_id' => $task_id
-						],
-						__METHOD__
-					);
-				}
+		foreach ( FounderProgressBarController::$tasks as $task_id ) {
+			if ( $task_id < FounderProgressBarController::REGULAR_TASK_MAX_ID ) {
+				$rows[] = [
+					'wiki_id' => $wiki_id,
+					'task_id' => $task_id
+				];
 			}
-			$dbw->commit();
+		}
+
+		try {
+			if ( !empty( $rows ) ) {
+				// Records go into global wikicities table
+				$dbw = wfGetDB( DB_MASTER, [], $wgExternalSharedDB );
+				$dbw->insert( 'founder_progress_bar_tasks', $rows, __METHOD__ );
+				$dbw->commit();
+			}
 		}
 		catch ( DBError $ex ) {
 			// SUS-4322 | DBError exceptions are logged by default
