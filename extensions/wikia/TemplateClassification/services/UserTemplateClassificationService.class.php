@@ -110,7 +110,7 @@ class UserTemplateClassificationService extends TemplateClassificationService {
 	 * @param string $provider
 	 * @throws ApiException
 	 */
-	public function classifyTemplate( $wikiId, $pageId, $templateType, $origin, $provider = self::USER_PROVIDER ) {
+	public function classifyTemplate( int $wikiId, int $pageId, string $templateType, string $origin, string $provider = self::USER_PROVIDER ) {
 		$this->checkTemplateType( $templateType );
 
 		$oldType = $this->getType( $wikiId, $pageId );
