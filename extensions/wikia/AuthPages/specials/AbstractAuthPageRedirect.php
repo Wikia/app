@@ -54,6 +54,7 @@ abstract class AbstractAuthPageRedirect extends SpecialPage {
 	private function isInvalidLoginRedirect( $title ): bool {
 		return (
 			!$title instanceof Title ||
+			$title->isExternal() ||
 			$title->isSpecial( 'Userlogout' ) ||
 			$title->isSpecial( 'Signup' ) ||
 			$title->isSpecial( 'Connect' ) ||
