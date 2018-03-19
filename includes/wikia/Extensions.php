@@ -1791,4 +1791,4 @@ include "$IP/extensions/wikia/HTTPSOptIn/HTTPSOptIn.setup.php";
 include "$IP/extensions/wikia/Search/WikiaSearch.setup.php";
 
 // Mercury auth pages related functionality - redirects, email confirmation.
-include_once "$IP/extensions/wikia/AuthPages/AuthPages.setup.php";
+include "$IP/extensions/wikia/AuthPages/AuthPages.setup.php";
