@@ -1854,6 +1854,12 @@ $wgWikiaBaseDomainRegex = '(wikia\\.com|wikia-staging\\.com|wikia-dev\\.(com|us|
 $wgEnableOpenXSPC = true;
 
 /**
+ * Whether to use utf8mb4 connection charset when connecting to this wiki database.
+ * Defaults to {@code false}.
+ */
+$wgUseUnicode = false;
+
+/**
  * Enable recovery
  * It should be always included even if recovery is disabled as we use Recovery classes outside the module
  */

@@ -54,7 +54,7 @@ class DatabaseMysqli extends DatabaseMysqlBase {
 	 * @throws DBConnectionError
 	 */
 	protected function mysqlConnect( $realServer ) {
-		global $wgDBmysql5;
+		global $wgDBmysql5, $wgUseUnicode;
 
 		# Fail now
 		# Otherwise we get a suppressed fatal error, which is very hard to track down
@@ -98,6 +98,9 @@ class DatabaseMysqli extends DatabaseMysqlBase {
 			// Tell the server we're communicating with it in UTF-8.
 			// This may engage various charset conversions.
 			$mysqli->options( MYSQLI_SET_CHARSET_NAME, 'utf8' );
+		} elseif ( $wgUseUnicode ) {
+			// SUS-4335: this is temporary, needs a better place
+			$mysqli->options( MYSQLI_SET_CHARSET_NAME, 'utf8mb4' );
 		} else {
 			# <Wikia>
 			# Wikia databases use latin1 charset
