@@ -1,4 +1,4 @@
-<figure class="article-media-thumbnail{{#isOgg}} is-ogg{{/isOgg}}"{{#mediaAttr}} data-attrs="{{mediaAttr}}"{{/mediaAttr}} data-ref="{{galleryRef}}" data-file="{{fileName}}">
+<figure class="article-media-thumbnail{{#isOgg}} is-ogg{{/isOgg}}"{{#mediaAttr}} data-attrs="{{mediaAttr}}"{{/mediaAttr}} data-ref="{{galleryRef}}" data-file="{{fileName}}"{{#isLinkedByUser}} data-linkedbyuser="true"{{/isLinkedByUser}}>
 	{{#isOgg}}
 		<a href="{{url}}">{{{downloadIcon}}}</a>
 	{{/isOgg}}
@@ -11,6 +11,9 @@
 				data-src="{{thumbnailUrl}}"
 				width="195"
 				height="195">
+			{{#isLinkedByUser}}
+				{{{chevronIcon}}}
+			{{/isLinkedByUser}}
 			<noscript>
 				<img src="{{thumbnailUrl}}" alt="{{title}}" width="195" height="195">
 			</noscript>

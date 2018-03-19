@@ -12,7 +12,7 @@ class ArticleAsJson {
 		'imageMaxWidth' => false
 	];
 
-	const CACHE_VERSION = 3.25;
+	const CACHE_VERSION = 3.26;
 
 	const ICON_MAX_SIZE = 48;
 	// Line height in Mercury
@@ -75,7 +75,8 @@ class ArticleAsJson {
 					[
 						'media' => $media,
 						'mediaAttrs' => json_encode( $media ),
-						'downloadIcon' => DesignSystemHelper::renderSvg( 'wds-icons-download', 'wds-icon' )
+						'downloadIcon' => DesignSystemHelper::renderSvg( 'wds-icons-download', 'wds-icon' ),
+						'chevronIcon' => DesignSystemHelper::renderSvg('wds-icons-menu-control-tiny', 'wds-icon wds-icon-tiny chevron')
 					]
 				)
 			);
@@ -123,7 +124,8 @@ class ArticleAsJson {
 							'media' => $media,
 							'downloadIcon' => DesignSystemHelper::renderSvg( 'wds-icons-download', 'wds-icon' ),
 							'viewMoreLabel' => wfMessage('communitypage-view-more')->escaped(), // TODO:  XW-4793
-							'linkedGalleryViewMoreVisible' => $hasLinkedImages && count($media) > 4
+							'linkedGalleryViewMoreVisible' => $hasLinkedImages && count($media) > 4,
+							'chevronIcon' => DesignSystemHelper::renderSvg('wds-icons-menu-control-tiny', 'wds-icon wds-icon-tiny chevron')
 						]
 					)
 				);

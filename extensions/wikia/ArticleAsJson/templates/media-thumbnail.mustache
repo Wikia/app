@@ -1,4 +1,4 @@
-<figure class="article-media-thumbnail{{#media.isOgg}} is-ogg{{/media.isOgg}}"{{#mediaAttrs}} data-attrs="{{mediaAttrs}}"{{/mediaAttrs}} data-file="{{media.fileName}}">
+<figure class="article-media-thumbnail{{#media.isOgg}} is-ogg{{/media.isOgg}}"{{#mediaAttrs}} data-attrs="{{mediaAttrs}}"{{/mediaAttrs}} data-file="{{media.fileName}}"{{#media.isLinkedByUser}} data-linkedbyuser="true"{{/media.isLinkedByUser}}>
 	{{#media.isOgg}}
 		<a href="{{media.url}}">{{{downloadIcon}}}</a>
 	{{/media.isOgg}}
@@ -13,6 +13,9 @@
 			     alt="{{media.title}}"
 				{{#media.width}} width="{{media.width}}"{{/media.width}}
 				{{#media.height}} height="{{media.height}}"{{/media.height}}>
+			{{#media.isLinkedByUser}}
+				{{{chevronIcon}}}
+			{{/media.isLinkedByUser}}
 			<noscript>
 				<img srcset="{{media.srcset}}" alt="{{media.title}}"{{#media.width}} width="{{media.width}}"{{/media.width}}{{#media.height}} height="{{media.height}}"{{/media.height}}>
 			</noscript>
