@@ -83,7 +83,7 @@ class Track {
 			'cd14' => isset( $adContext[ 'opts' ][ 'showAds' ] ) ? 'Yes' : 'No',
 			'cd15' => WikiaPageType::isCorporatePage(),
 			'cd17' => implode( ',', $hubFactory->getWikiVertical( $wgCityId ) ),
-			'cd18' => implode( ',', $hubFactory->getWikiCategories( $wgCityId ) ),
+			'cd18' => implode( ',', $hubFactory->getWikiCategoryNames( $wgCityId ) ),
 			'cd19' => WikiaPageType::getArticleType(),
 			'cd21' => $wgTitle->getArticleID(),
 			'cd25' => $wgTitle->getNamespace(),
