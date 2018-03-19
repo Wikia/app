@@ -224,7 +224,7 @@ class WikiFactoryHub extends WikiaModel {
 
 		// query instead of lookup in AllCategories list
 		$categories = (new WikiaSQL())
-			->SELECT( "*" )
+			->SELECT( "cat_id", "cat_name", "cat_url", "cat_short", "cat_deprecated", "cat_active", "id", "city_id" )
 			->FROM( "city_cats" )
 			->JOIN ( "city_cat_mapping" )->USING( "cat_id" )
 			->WHERE( "city_id ")->EQUAL_TO( $city_id )
