@@ -207,9 +207,14 @@ class FounderProgressBarHooks {
 
 			foreach ( FounderProgressBarController::$tasks as $task_id ) {
 				if ( $task_id < FounderProgressBarController::REGULAR_TASK_MAX_ID ) {
-					$sql = sprintf( "INSERT INTO founder_progress_bar_tasks SET wiki_id=%d, task_id=%d",
-							$wiki_id, $task_id );
-					$dbw->query( $sql, __METHOD__ );
+					$dbw->insert(
+						'founder_progress_bar_tasks',
+						[
+							'wiki_id' => $wiki_id,
+							'task_id' => $task_id
+						],
+						__METHOD__
+					);
 				}
 			}
 			$dbw->commit();
