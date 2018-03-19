@@ -26,7 +26,7 @@ class EmailConfirmationControllerIntegrationTest extends WikiaDatabaseTest {
 	}
 
 	public function testGetRequestIsRejected() {
-		$this->requestContext->setRequest( new FauxRequest( [ 'code' => static::VALID_EMAIL_TOKEN ] ) );
+		$this->requestContext->setRequest( new FauxRequest( [ 'token' => static::VALID_EMAIL_TOKEN ] ) );
 		$this->requestContext->setUser( User::newFromId( static::VALID_EMAIL_TOKEN_USER_ID ) );
 
 		$this->emailConfirmationController->postEmailConfirmation();
@@ -37,8 +37,15 @@ class EmailConfirmationControllerIntegrationTest extends WikiaDatabaseTest {
 			$this->emailConfirmationController->getResponse()->getFormat()
 		);
 
-		$this->assertFalse( $this->requestContext->getUser()->isEmailConfirmed() );
-		$this->assertTrue( $this->requestContext->getUser()->isEmailConfirmationPending() );
+		$this->assertFalse(
+			$this->requestContext->getUser()->isEmailConfirmed(),
+			'User\'s email should not have been confirmed'
+		);
+
+		$this->assertTrue(
+			$this->requestContext->getUser()->isEmailConfirmationPending(),
+			'User\'s email confirmation should still be pending'
+		);
 	}
 
 	public function testTokenParameterIsRequired() {
@@ -53,15 +60,22 @@ class EmailConfirmationControllerIntegrationTest extends WikiaDatabaseTest {
 			$this->emailConfirmationController->getResponse()->getFormat()
 		);
 
-		$this->assertFalse( $this->requestContext->getUser()->isEmailConfirmed() );
-		$this->assertTrue( $this->requestContext->getUser()->isEmailConfirmationPending() );
+		$this->assertFalse(
+			$this->requestContext->getUser()->isEmailConfirmed(),
+			'User\'s email should not have been confirmed'
+		);
+
+		$this->assertTrue(
+			$this->requestContext->getUser()->isEmailConfirmationPending(),
+			'User\'s email confirmation should still be pending'
+		);
 
 		$this->assertEquals( static::EMAIL_TO_CONFIRM, $this->requestContext->getUser()->getNewEmail() );
 		$this->assertEmpty( $this->requestContext->getUser()->getEmail() );
 	}
 
 	public function testTokenMustExist() {
-		$this->requestContext->setRequest( new FauxRequest( [ 'code' => 'ojej123' ], true ) );
+		$this->requestContext->setRequest( new FauxRequest( [ 'token' => 'ojej123' ], true ) );
 		$this->requestContext->setUser( User::newFromId( static::VALID_EMAIL_TOKEN_USER_ID ) );
 
 		$this->emailConfirmationController->postEmailConfirmation();
@@ -72,15 +86,22 @@ class EmailConfirmationControllerIntegrationTest extends WikiaDatabaseTest {
 			$this->emailConfirmationController->getResponse()->getFormat()
 		);
 
-		$this->assertFalse( $this->requestContext->getUser()->isEmailConfirmed() );
-		$this->assertTrue( $this->requestContext->getUser()->isEmailConfirmationPending() );
+		$this->assertFalse(
+			$this->requestContext->getUser()->isEmailConfirmed(),
+			'User\'s email should not have been confirmed'
+		);
+
+		$this->assertTrue(
+			$this->requestContext->getUser()->isEmailConfirmationPending(),
+			'User\'s email confirmation should still be pending'
+		);
 
 		$this->assertEquals( static::EMAIL_TO_CONFIRM, $this->requestContext->getUser()->getNewEmail() );
 		$this->assertEmpty( $this->requestContext->getUser()->getEmail() );
 	}
 
 	public function testTokenMustBeValidForCurrentUser() {
-		$this->requestContext->setRequest( new FauxRequest( [ 'code' => static::VALID_EMAIL_TOKEN_USER_ID ], true ) );
+		$this->requestContext->setRequest( new FauxRequest( [ 'token' => static::VALID_EMAIL_TOKEN ], true ) );
 		$this->requestContext->setUser( User::newFromId( static::OTHER_USER_ID ) );
 
 		$this->emailConfirmationController->postEmailConfirmation();
@@ -90,28 +111,29 @@ class EmailConfirmationControllerIntegrationTest extends WikiaDatabaseTest {
 			WikiaResponse::FORMAT_JSON,
 			$this->emailConfirmationController->getResponse()->getFormat()
 		);
-
-		$this->assertFalse( $this->requestContext->getUser()->isEmailConfirmed() );
-		$this->assertTrue( $this->requestContext->getUser()->isEmailConfirmationPending() );
-
-		$this->assertEquals( static::EMAIL_TO_CONFIRM, $this->requestContext->getUser()->getNewEmail() );
-		$this->assertEmpty( $this->requestContext->getUser()->getEmail() );
 	}
 
 	public function testEmailIsConfirmedWhenValidTokenPostedForUser() {
-		$this->requestContext->setRequest( new FauxRequest( [ 'code' => static::VALID_EMAIL_TOKEN_USER_ID ], true ) );
+		$this->requestContext->setRequest( new FauxRequest( [ 'token' => static::VALID_EMAIL_TOKEN ], true ) );
 		$this->requestContext->setUser( User::newFromId( static::VALID_EMAIL_TOKEN_USER_ID ) );
 
 		$this->emailConfirmationController->postEmailConfirmation();
 
-		$this->assertEquals( 404, $this->emailConfirmationController->getResponse()->getCode() );
+		$this->assertEquals( 200, $this->emailConfirmationController->getResponse()->getCode() );
 		$this->assertEquals(
 			WikiaResponse::FORMAT_JSON,
 			$this->emailConfirmationController->getResponse()->getFormat()
 		);
 
-		$this->assertTrue( $this->requestContext->getUser()->isEmailConfirmed() );
-		$this->assertFalse( $this->requestContext->getUser()->isEmailConfirmationPending() );
+		$this->assertTrue(
+			$this->requestContext->getUser()->isEmailConfirmed(),
+			'User\'s email should have been confirmed'
+		);
+
+		$this->assertFalse(
+			$this->requestContext->getUser()->isEmailConfirmationPending(),
+			'User\'s email confirmation should no longer be pending'
+		);
 
 		$this->assertEmpty( $this->requestContext->getUser()->getNewEmail() );
 		$this->assertEquals( static::EMAIL_TO_CONFIRM, $this->requestContext->getUser()->getEmail() );

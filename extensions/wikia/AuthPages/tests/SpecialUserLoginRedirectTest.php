@@ -3,7 +3,7 @@
 class SpecialUserLoginRedirectTest extends AbstractAuthPageRedirectTest {
 	
 	protected function getTestSubject(): SpecialPage {
-		return new specialPage();
+		return new SpecialUserLoginRedirect();
 	}
 
 	/**
