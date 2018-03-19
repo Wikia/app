@@ -86,7 +86,7 @@ class WikiFactoryPage extends SpecialPage {
 		}
 		else {
 			$subpage = ( $subpage == "/" ) ? null : $subpage;
-			$oWiki = $this->getWikiData( $subpage );
+			$oWiki = $subpage ? $this->getWikiData( $subpage ) : false;
 
 			if( !isset( $oWiki->city_id )) {
 				$this->doWikiSelector();
