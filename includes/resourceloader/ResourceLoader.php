@@ -725,11 +725,6 @@ class ResourceLoader {
 			'exception' => $e
 		] );
 
-		// SUS-1900: emit a proper HTTP error code indicating that something went wrong
-		HttpStatus::header( 500 );
-		header( "X-MediaWiki-Exception: 1" );
-		header( "Content-Type: text/plain; charset=utf-8" );
-
 		if ( $wgShowExceptionDetails ) {
 			return $this->makeComment( $e->__toString() );
 		} else {

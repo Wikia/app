@@ -237,8 +237,12 @@ class TorBlock {
 			return true; // No groups to promote to anyway
 		}
 
-		$age = time() - wfTimestampOrNull( TS_UNIX, $user->getRegistration() );
 		global $wgTorAutoConfirmAge, $wgTorAutoConfirmCount;
+		if ( $wgTorAutoConfirmAge == 0 && $wgTorAutoConfirmCount == 0 && $user->isLoggedIn() ) {
+			return true;
+		}
+
+		$age = time() - wfTimestampOrNull( TS_UNIX, $user->getRegistration() );
 
 		if ($age >= $wgTorAutoConfirmAge && $user->getEditCount() >= $wgTorAutoConfirmCount) {
 			return true; // Does match requirements. Don't bother checking if we're an exit node.
