@@ -59,13 +59,13 @@ class UserTemplateClassificationService extends TemplateClassificationService {
 	 * Fallback to the Unclassified string if a received type is not supported by
 	 * the user-facing tools.
 	 *
-	 * @param $wikiId
-	 * @param $pageId
+	 * @param int $wikiId
+	 * @param int $pageId
 	 * @return string template type
 	 * @throws Exception
 	 * @throws \Swagger\Client\ApiException
 	 */
-	public function getType( $wikiId, $pageId ) {
+	public function getType( int $wikiId, int $pageId ) {
 		return $this->mapType( parent::getType( $wikiId, $pageId ) );
 	}
 
