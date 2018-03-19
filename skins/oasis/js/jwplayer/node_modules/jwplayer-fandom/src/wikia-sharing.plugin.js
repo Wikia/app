@@ -1,6 +1,3 @@
-var isActiveClass = 'is-active',
-	domParser = new DOMParser();
-
 function wikiaJWPlayerSharingPlugin(player, config, div) {
 	this.player = player;
 	this.container = div;
@@ -9,7 +6,8 @@ function wikiaJWPlayerSharingPlugin(player, config, div) {
 	this.config = config;
 	this.documentClickHandler = this.documentClickHandler.bind(this);
 
-	this.container.classList.add('wikia-jw-sharing__plugin');
+	this.container.classList.add('wikia-jw__plugin');
+	this.wikiaSharingElement.classList.add('wikia-jw');
 	this.wikiaSharingElement.classList.add('wikia-jw-sharing');
 	this.addSharingContent(this.wikiaSharingElement);
 	this.container.appendChild(this.wikiaSharingElement);
@@ -45,13 +43,13 @@ wikiaJWPlayerSharingPlugin.prototype.addButton = function () {
 	sharingIcon.classList.add('jw-svg-icon');
 	sharingIcon.classList.add('jw-svg-icon-wikia-sharing');
 
-	this.player.addButton(sharingIcon.outerHTML, this.config.i18n.sharing, function () {
+	this.player.addButton(sharingIcon.outerHTML, this.config.i18n.sharing, function (evt) {
 		if (!this.wikiaSharingElement.style.display) {
-			this.open();
+			this.open(evt.currentTarget);
 		} else {
 			this.close();
 		}
-	}.bind(this), this.buttonID, 'wikia-jw-sharing-button');
+	}.bind(this), this.buttonID, 'wikia-jw-button');
 };
 
 wikiaJWPlayerSharingPlugin.prototype.removeButton = function () {
@@ -62,19 +60,23 @@ wikiaJWPlayerSharingPlugin.prototype.removeButton = function () {
  * closes sharing menu
  */
 wikiaJWPlayerSharingPlugin.prototype.close = function () {
+	var playerContainer = this.player.getContainer();
+
 	this.container.style.display = null;
-	this.player.getContainer().classList.remove('wikia-jw-sharing-open');
+	playerContainer.classList.remove('wikia-jw-open');
+	playerContainer.querySelector('.wikia-jw-button__open').classList.remove('wikia-jw-button__open');
 };
 
 /**
  * opens sharing menu
  */
-wikiaJWPlayerSharingPlugin.prototype.open = function () {
+wikiaJWPlayerSharingPlugin.prototype.open = function (button) {
 	this.wikiaSharingElement.innerHTML = '';
 	this.wikiaSharingElement.appendChild(this.createSharingListElement());
 	showElement(this.container);
 	this.player.trigger('wikiaShareMenuExpanded');
-	this.player.getContainer().classList.add('wikia-jw-sharing-open');
+	this.player.getContainer().classList.add('wikia-jw-open');
+	button.classList.add('wikia-jw-button__open');
 };
 
 /**
@@ -95,6 +97,7 @@ wikiaJWPlayerSharingPlugin.prototype.show = function () {
 };
 
 wikiaJWPlayerSharingPlugin.prototype.addSharingContent = function (div) {
+	div.classList.add('wikia-jw');
 	div.classList.add('wikia-jw-sharing');
 	div.classList.remove('jw-reset');
 	div.classList.remove('jw-plugin');
@@ -105,7 +108,7 @@ wikiaJWPlayerSharingPlugin.prototype.addSharingContent = function (div) {
 wikiaJWPlayerSharingPlugin.prototype.createSharingListElement = function () {
 	var sharingList = document.createElement('ul');
 
-	sharingList.className = 'wikia-jw-sharing__list wds-list';
+	sharingList.className = 'wikia-jw__list wds-list';
 
 	var userLang = this.getUserLang(),
 		socialNetworks = this.socialNetworks[userLang];
@@ -189,7 +192,8 @@ wikiaJWPlayerSharingPlugin.prototype.socialNetworks = {
 };
 
 wikiaJWPlayerSharingPlugin.prototype.getVideoPageUrl = function () {
-	return 'https://fandom.wikia.com/video/' + this.player.getPlaylistItem().mediaId;
+	console.log(this.player.getPlaylistItem());
+	return 'https://fandom.wikia.com/video/' + this.player.getPlaylistItem().mediaid;
 };
 
 wikiaJWPlayerSharingPlugin.prototype.getVideoTitle = function () {

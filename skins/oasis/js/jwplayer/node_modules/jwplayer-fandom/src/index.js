@@ -13,7 +13,10 @@ window.wikiaJWPlayer = function (elementId, options, callback) {
 
 		script.onload = function () {
 			wikiaJWPlayerSettingsPlugin.register();
-			wikiaJWPlayerSharingPlugin.register();
+
+			if (options.sharing) {
+				wikiaJWPlayerSharingPlugin.register();
+			}
 
 			if (options.showSmallPlayerControls) {
 				wikiaJWPlayerSmallPlayerControls.register();
