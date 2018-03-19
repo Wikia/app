@@ -21,3 +21,5 @@ $GLOBALS['wgSpecialPages']['WikiaConfirmEmail'] = 'SpecialWikiaConfirmEmailRedir
 $GLOBALS['wgSpecialPages']['Userlogout'] = 'UserLogoutSpecialController';
 
 $GLOBALS['wgHooks']['BeforePageDisplay'][] = 'AuthPagesHooks::onBeforePageDisplay';
+
+$GLOBALS['wgExtensionMessagesFiles']['AuthPages'] = __DIR__ . '/AuthPages.alias.php';
