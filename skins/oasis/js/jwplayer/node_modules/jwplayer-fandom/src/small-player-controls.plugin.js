@@ -31,8 +31,11 @@ wikiaJWPlayerSmallPlayerControls.prototype.readyHandler = function () {
 	}
 };
 
-wikiaJWPlayerSmallPlayerControls.prototype.unmuteHandler = function () {
-	this.player.setMute(false);
+// If click target is on play/pause button, don't unmute.
+wikiaJWPlayerSmallPlayerControls.prototype.unmuteHandler = function (event) {
+	if (event.currentTarget.contains(event.target)) {
+		this.player.setMute(false);
+	}
 };
 
 wikiaJWPlayerSmallPlayerControls.prototype.pauseHandler = function () {
