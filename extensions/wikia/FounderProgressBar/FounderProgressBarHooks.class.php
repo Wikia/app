@@ -198,24 +198,29 @@ class FounderProgressBarHooks {
 
 	// Initialize a scratch record for each of the initial available tasks
 	public static function initRecords($wiki_id) {
+		global $wgExternalSharedDB, $wgMemc;
 		wfProfileIn(__METHOD__);
 
-		// Records go into global wikicites table
-		$app = F::app();
-		$dbw = wfGetDB(DB_MASTER, array(), $app->wg->ExternalSharedDB);
+		try {
+			// Records go into global wikicities table
+			$dbw = wfGetDB( DB_MASTER, [], $wgExternalSharedDB );
 
-		foreach(FounderProgressBarController::$tasks as $task_id) {
-			if($task_id < FounderProgressBarController::REGULAR_TASK_MAX_ID) {
-				$sql = "INSERT IGNORE INTO founder_progress_bar_tasks SET wiki_id=$wiki_id, task_id=$task_id";
-				$dbw->query ($sql, __METHOD__);
+			foreach ( FounderProgressBarController::$tasks as $task_id ) {
+				if ( $task_id < FounderProgressBarController::REGULAR_TASK_MAX_ID ) {
+					$sql = sprintf( "INSERT INTO founder_progress_bar_tasks SET wiki_id=%d, task_id=%d",
+							$wiki_id, $task_id );
+					$dbw->query( $sql, __METHOD__ );
+				}
 			}
+			$dbw->commit();
 		}
-		$dbw->commit();
+		catch ( DBError $ex ) {
+			// SUS-4322 | DBError exceptions are logged by default
+		}
 
 		// also clear out any lingering memcache keys
-		$memc = $app->wg->Memc;
-		$memc->delete(wfMemcKey('FounderLongTaskList'));
-		$memc->delete(wfMemcKey('FounderTasksComplete'));
+		$wgMemc->delete(wfMemcKey('FounderLongTaskList'));
+		$wgMemc->delete(wfMemcKey('FounderTasksComplete'));
 
 		wfProfileOut(__METHOD__);
 	}
