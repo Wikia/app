@@ -64,8 +64,7 @@ define('ext.wikia.adEngine.provider.gpt.adSizeFilter', [
 				return getNewSizes(slotSizes, doc.getElementById('WikiaFooter').offsetWidth, [[728, 90]]);
 			case slotName === 'INCONTENT_BOXAD_1' && context.targeting.hasFeaturedVideo:
 				return [[300, 250]];
-			case slotName === 'MOBILE_BOTTOM_LEADERBOARD' ||
-				(slotName === 'BOTTOM_LEADERBOARD' && context.targeting.skin === 'mercury'):
+			case slotName === 'BOTTOM_LEADERBOARD' && context.targeting.skin === 'mercury':
 				return uapContext.isUapLoaded() ? [[2, 2]] : removeUAPFromSlotSizes(slotSizes);
 			default:
 				return slotSizes;

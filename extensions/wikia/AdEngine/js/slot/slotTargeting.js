@@ -33,8 +33,7 @@ define('ext.wikia.adEngine.slot.slotTargeting', [
 
 			MOBILE_TOP_LEADERBOARD: 'l',
 			MOBILE_IN_CONTENT: 'i',
-			MOBILE_PREFOOTER: 'p',
-			MOBILE_BOTTOM_LEADERBOARD: 'b'
+			MOBILE_PREFOOTER: 'p'
 		},
 		videoBidders = {
 			appnexusAst: 'aa',

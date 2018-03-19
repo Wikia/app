@@ -18,7 +18,11 @@ describe('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', function () {
 			},
 			adContext: {
 				addCallback: noop,
-				getContext: noop
+				getContext: noop,
+				get: function (path) {
+					path = path.split('.');
+					return this.getContext()[path[0]][path[1]];
+				}
 			},
 			slotsContext: {
 				isApplicable: noop
@@ -229,16 +233,22 @@ describe('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', function () {
 	});
 
 	it('Should extract slot name from ad unit', function () {
+		mockContext({}, {});
+
 		expect(getModule().getShortSlotName('/5441/wka2a.OTHER/bottom_leaderboard/tablet/oasis-home/_godofwar-gaming'))
 			.toBe('BOTTOM_LEADERBOARD');
 	});
 
 	it('Should keep slotName untouched if passed ad unit is not valid', function () {
+		mockContext({}, {});
+
 		expect(getModule().getShortSlotName('/5441/wka.life/_project43//article/playwire/TOP_LEADERBOARD'))
 			.toBe('/5441/wka.life/_project43//article/playwire/TOP_LEADERBOARD');
 	});
 
 	it('Should keep slotName untouched if passed slotName is not an ad unit', function () {
+		mockContext({}, {});
+
 		expect(getModule().getShortSlotName('TOP_LEADERBOARD')).toBe('TOP_LEADERBOARD');
 	});
 
@@ -256,6 +266,8 @@ describe('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', function () {
 
 	testCasesForValidation.forEach(function (testCase) {
 		it('Should validate given ad unit', function () {
+			mockContext({}, {});
+
 			expect(getModule().isValid(testCase.adUnit)).toBe(testCase.valid);
 		});
 	});
