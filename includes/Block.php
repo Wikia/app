@@ -442,17 +442,22 @@ class Block {
 		$row = $this->getDatabaseArray();
 		$row['ipb_id'] = $dbw->nextSequenceValue("ipblocks_ipb_id_seq");
 
-		$dbw->insert(
-			'ipblocks',
-			$row,
-			__METHOD__
-		);
-		$affected = $dbw->affectedRows();
-		$this->mId = $dbw->insertId();
+		try {
+			$dbw->insert(
+				'ipblocks',
+				$row,
+				__METHOD__
+			);
+			$affected = $dbw->affectedRows();
+			$this->mId = $dbw->insertId();
 
-		if ( $affected ) {
-			$auto_ipd_ids = $this->doRetroactiveAutoblock();
-			return array( 'id' => $this->mId, 'autoIds' => $auto_ipd_ids );
+			if ( $affected ) {
+				$auto_ipd_ids = $this->doRetroactiveAutoblock();
+				return array( 'id' => $this->mId, 'autoIds' => $auto_ipd_ids );
+			}
+		}
+		catch ( DBError $ex ) {
+			// DBError constructor will log this exception
 		}
 
 		return false;
