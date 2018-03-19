@@ -455,8 +455,7 @@ class Block {
 				$auto_ipd_ids = $this->doRetroactiveAutoblock();
 				return array( 'id' => $this->mId, 'autoIds' => $auto_ipd_ids );
 			}
-		}
-		catch ( DBError $ex ) {
+		} catch ( DBError $ex ) {
 			// DBError constructor will log this exception
 		}
 
