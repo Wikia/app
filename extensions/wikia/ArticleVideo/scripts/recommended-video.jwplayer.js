@@ -150,7 +150,7 @@ require([
 				category: 'related-video-module',
 				trackingMethod: 'both',
 				action: tracker.ACTIONS.CLICK,
-				label: 'playlist-item-click'
+				label: 'playlist-item'
 			});
 		});
 
@@ -161,7 +161,7 @@ require([
 				category: 'related-video-module',
 				trackingMethod: 'both',
 				action: tracker.ACTIONS.CLICK,
-				label: 'playlist-item-click'
+				label: 'playlist-item'
 			});
 		});
 	}
