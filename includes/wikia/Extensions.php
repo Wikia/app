@@ -386,7 +386,7 @@ if ( defined( 'REBUILD_LOCALISATION_CACHE_IN_PROGRESS' ) || !empty($wgEnableSema
 
 	# Function to switch on Semantic MediaWiki. This function must be called in
 	# LocalSettings.php after including SMW_Settings.php.
-	enableSemantics(preg_replace('/^http:\/\//', '', $wgServer));
+	enableSemantics(preg_replace('/^https?:\/\//', '', $wgServer));
 
 	$smwgNamespacesWithSemanticLinks[NS_USER] = false;
 	$smwgShowFactbox = SMW_FACTBOX_NONEMPTY;
