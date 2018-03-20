@@ -701,6 +701,10 @@ $wgSharedKeyPrefix = "wikicities"; // default value for shared key prefix, @see 
 $wgPortabilityDB = 'portability_db';
 $wgForceMasterDatabase = false;  // true only during wiki creation process
 
+$wgUtf8Databases = [
+	//$wgExternalDatawareDB
+];
+
 /**
  * $wgSharedTables may be customized with a list of tables to share in the shared
  * datbase. However it is advised to limit what tables you do share as many of

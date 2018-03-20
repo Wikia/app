@@ -9,6 +9,7 @@
  */
 
 use Wikia\Logger\WikiaLogger;
+use Wikia\Util\GlobalStateWrapper;
 use Wikia\Util\Statistics\BernoulliTrial;
 
 /** Number of times to re-try an operation in case of deadlock */
@@ -603,7 +604,7 @@ abstract class DatabaseBase implements DatabaseType {
 	 * @param array $params Parameters passed from DatabaseBase::factory()
 	 */
 	function __construct( $params = null ) {
-		global $wgDBprefix, $wgCommandLineMode;
+		global $wgDBprefix, $wgCommandLineMode, $wgUtf8Databases;
 
 		if ( is_array( $params ) ) { // MW 1.22
 			$server = $params['host'];
@@ -641,7 +642,15 @@ abstract class DatabaseBase implements DatabaseType {
 		}
 
 		if ( $user ) {
-			$this->open( $server, $user, $password, $dbName );
+			// Wikia change SUS-1941
+			$wrapper = new GlobalStateWrapper( [
+				'wgDBmysql5' => in_array($dbName, $wgUtf8Databases, true)
+			] );
+
+			$wrapper->wrap( function () use ( $server, $user, $password, $dbName ) {
+				$this->open( $server, $user, $password, $dbName );
+			} );
+			// Wikia change end
 		}
 	}
 
