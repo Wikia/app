@@ -66,11 +66,7 @@ class WikiFactoryPage extends SpecialPage {
 		$wgOut->setRobotpolicy( 'noindex,nofollow' );
 		$wgOut->setArticleRelated( false );
 
-		if ( in_array( strtolower($subpage), array( "metrics", "metrics/main", "metrics/monthly", "metrics/daily" ) ) ) {
-			$oAWCMetrics = new WikiMetrics();
-			$oAWCMetrics->show( $subpage );
-		}
-		elseif ( strpos( $subpage, "short.stats" ) === 0 ) {
+		if ( strpos( $subpage, "short.stats" ) === 0 ) {
 			$subpageOptions = explode( '/', $subpage );
 			$lang = isset( $subpageOptions[1] ) ? $subpageOptions[1] : null;
 			$wgOut->addHTML( $this->shortStats( $lang ) );
