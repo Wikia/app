@@ -3,10 +3,7 @@
 namespace Wikia\RobotsTxt;
 
 class RobotsTxt {
-
-	private $allowed = [];
-	private $blockedRobots = [];
-	private $disallowed = [];
+	private $robots = [];
 	private $sitemap;
 
 	/**
@@ -41,14 +38,39 @@ class RobotsTxt {
 	}
 
 	/**
+	 * Create robot entry and add it to robots list
+	 * 
+	 * @param Robot $robot
+	 * @return Robot
+	 */
+	public function addRobot ( Robot $robot ) {
+		$ua = $robot->getUserAgent();
+
+		if ( isset( $this->robots[ $ua ] ) ) {
+			throw new Exception( 'Robot with given user agent already exists.' );
+		} else {
+			return ( $this->robots[ $ua ] = $robot );
+		}
+	}
+
+	/**
+	 * Return robot with given User-agent (if exists)
+	 * 
+	 * @param string $ua User-agent
+	 * @return Robot
+	 */
+	public function getRobot( $ua ) {
+		return $this->robots[ $ua ] || null;
+	}
+
+	/**
 	 * Get robots.txt contents as array of lines
 	 *
 	 * @return array
 	 */
 	public function getContents() {
 		return array_merge(
-			$this->getBlockedRobotsSection(),
-			$this->getAllowDisallowSection(),
+			$this->getRobotsSection(),
 			$this->getSitemapSection()
 		);
 	}
@@ -63,51 +85,14 @@ class RobotsTxt {
 	}
 
 	// Private methods follow:
+	private function getRobotsSection() {
+		$lines = [];
 
-	private function getAllowDisallowSection() {
-
-		$allowSection = array_map(
-			function ( $prefix ) {
-				return 'Allow: ' . $prefix;
-			},
-			$this->allowed
-		);
-
-		$disallowSection = array_map(
-			function ( $prefix ) {
-				return 'Disallow: ' . $prefix;
-			},
-			$this->disallowed
-		);
-
-		$noIndexSection = array_map(
-			function ( $prefix ) {
-				return 'Noindex: ' . $prefix;
-			},
-			$this->disallowed
-		);
-
-		if ( count( $allowSection ) || count( $disallowSection ) ) {
-			return array_merge(
-				[ 'User-agent: *' ],
-				$allowSection,
-				$noIndexSection,
-				$disallowSection,
-				[ '' ]
-			);
+		foreach ( $this->robots as $robot ) {
+			$lines = array_merge( $lines, $robot->getContent() );
 		}
 
-		return [];
-	}
-
-	private function getBlockedRobotsSection() {
-		$r = [];
-		foreach ( $this->blockedRobots as $robot ) {
-			$r[] = 'User-agent: ' . $robot;
-			$r[] = 'Disallow: /';
-			$r[] = '';
-		}
-		return $r;
+		return $lines;
 	}
 
 	private function getSitemapSection() {
