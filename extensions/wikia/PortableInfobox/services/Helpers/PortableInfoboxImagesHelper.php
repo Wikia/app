@@ -72,11 +72,7 @@ class PortableInfoboxImagesHelper {
 			'key' => urlencode( $data['key'] ?? '' ),
 			'media-type' => isset( $data['isVideo'] ) && $data['isVideo'] ? 'video' : 'image',
 			'fileName' => $dataAttrs['fileName'] ?? '',
-			'dataAttrs' => json_encode( $dataAttrs ),
-			'mercuryComponentAttrs' => json_encode( [   // TODO: remove it and all usages with XW-4719
-					'itemContext' => 'portable-infobox',
-					'ref' => $ref
-			] )
+			'dataAttrs' => json_encode( $dataAttrs )
 		] );
 	}
 
@@ -85,17 +81,6 @@ class PortableInfoboxImagesHelper {
 	 * @return array
 	 */
 	public function extendImageCollectionData( $images ) {
-		// TODO: remove it and all usages with XW-4719
-		$mercuryComponentAttrs = [
-			'refs' => array_map(
-				function ( $image ) {
-					return $image['ref'];
-				},
-				$images
-			)
-		];
-
-
 		$dataAttrs = array_map(
 			function ( $image ) {
 				return json_decode( $image['dataAttrs'] );
@@ -119,7 +104,6 @@ class PortableInfoboxImagesHelper {
 			'images' => $images,
 			'firstImage' => $images[0],
 			'dataAttrs' => json_encode( $dataAttrs ),
-			'mercuryComponentAttrs' => json_encode( $mercuryComponentAttrs ), // TODO: remove it and all usages with XW-4719
 			'menuControlIcon' => \DesignSystemHelper::renderSvg('wds-icons-menu-control', 'wds-icon')
 		];
 	}
