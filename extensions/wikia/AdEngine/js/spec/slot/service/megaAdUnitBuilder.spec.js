@@ -17,8 +17,13 @@ describe('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', function () {
 				isMobile: noop
 			},
 			adContext: {
+				get: noop,
 				addCallback: noop,
-				getContext: noop
+				getContext: function () {
+					return {
+						targeting: {}
+					};
+				}
 			},
 			slotsContext: {
 				isApplicable: noop
@@ -267,7 +272,8 @@ describe('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', function () {
 
 	it('isMegaSlot returns true for BOTTOM_LEADERBOARD on Oasis', function () {
 		mockContext({ skin: 'oasis' }, { isBLBMegaEnabled: true });
-		expect(getModule().isMegaSlot('BOTTOM_LEADERBOARD')).toBeTruthy();
+		// expect(getModule().isMegaSlot('BOTTOM_LEADERBOARD')).toBeTruthy(); //ToDo ADEN-6864: Go global
+		expect(getModule().isMegaSlot('BOTTOM_LEADERBOARD')).toBeFalsy();
 	});
 
 	it('isMegaSlot returns false for BOTTOM_LEADERBOARD on Mercury', function () {
