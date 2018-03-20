@@ -1309,7 +1309,7 @@ class WikiFactory {
 	 * @param bool $master
 	 * @return object|false: database row with wiki params
 	 */
-	static public function getWikiByID( $id, $master = false ) {
+	static public function getWikiByID( int $id, $master = false ) {
 
 		if ( ! static::isUsed() ) {
 			Wikia::log( __METHOD__, "", "WikiFactory is not used." );
