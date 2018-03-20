@@ -63,8 +63,8 @@ class PortableInfoboxImagesHelper {
 
 		return array_merge( $data, [
 			'ref' => $ref,
-			'height' => $imgTagDimensions['height'],
-			'width' => $imgTagDimensions['width'],
+			'height' => intval( $imgTagDimensions['height'] ),
+			'width' => intval( $imgTagDimensions['width'] ),
 			'originalHeight' => $dataAttrs['height'] ?? '',
 			'originalWidth' => $dataAttrs['width'] ?? '',
 			'thumbnail' => $thumbnail->getUrl(),
