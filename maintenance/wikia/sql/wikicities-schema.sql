@@ -297,7 +297,7 @@ CREATE TABLE `dumps` (
   `dump_requested` datetime NOT NULL,
   `dump_completed` datetime DEFAULT NULL,
   `dump_hold` enum('N','Y') DEFAULT 'N',
-  `dump_errors` text,
+  `dump_errors` datetime DEFAULT NULL,
   `dump_compression` enum('gzip','7zip') NOT NULL DEFAULT 'gzip',
   PRIMARY KEY (`id`),
   KEY `dumps_ibfk_1` (`dump_wiki_id`),
@@ -665,4 +665,4 @@ CREATE TABLE `wikia_tasks_log` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
--- Dump completed on 2018-03-20 10:32:21
+-- Dump completed on 2018-03-20 11:15:00
