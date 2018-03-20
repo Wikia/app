@@ -74,6 +74,7 @@ class WikiFactory {
 	const DOMAINCACHE   = "/tmp/wikifactory/domains.ser";
 	const CACHEDIR      = "/tmp/wikifactory/wikis";
 	const WIKIA_TOP_DOMAIN = '.wikia.com';
+	const DOMAIN_PROTOCOL = "http";
 
 	// Community Central's city_id in wikicities.city_list.
 	const COMMUNITY_CENTRAL = 177;
@@ -401,16 +402,20 @@ class WikiFactory {
 			Wikia::log( __METHOD__, "", "WikiFactory is not used." );
 			return false;
 		}
-
-		if ( 'http://' != strpos($domain, 0, 7) ) {
-			$domain = 'http://' . $domain;
-		}
-
-		$retVal = WikiFactory::setVarByName("wgServer", $city_id, $domain, $reason);
+		$newWgServer = WikiFactory::addProtocolIfNotExists( $domain );
+		$retVal = WikiFactory::setVarByName( "wgServer", $city_id, $newWgServer, $reason );
 
 		static::clearDomainCache( $city_id );
 
 		return $retVal;
+	}
+
+	private static function addProtocolIfNotExists( $domain ) {
+		if ( !preg_match( "^https?:\/\/", $domain, $matches ) ) {
+			$domain = static::DOMAIN_PROTOCOL . '://' . $domain;
+		}
+
+		return $domain;
 	}
 
 	/**

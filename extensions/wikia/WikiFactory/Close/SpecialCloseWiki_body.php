@@ -230,8 +230,10 @@ class CloseWikiPage extends SpecialPage {
 	}
 
 	private function prefixMainDomain( $cityId ) {
-		$mainDomain = substr( WikiFactory::getVarValueByName("wgServer", $cityId), 7 );
-		if(!empty($mainDomain)) {
+		//local prefix to not accidentally mix it with global wgServer
+		$localWgServer = WikiFactory::getVarValueByName( "wgServer", $cityId );
+		if ( preg_match( "^https?:\/\/", $localWgServer, $matches ) ) {
+			$mainDomain = $matches[1];
 			$index = null;
 			do {
 				$prefixedDomain = self::CLOSED_WIKI_DOMAIN_PREFIX . ( !empty($index) ? $index : '' ) . "." . $mainDomain;
