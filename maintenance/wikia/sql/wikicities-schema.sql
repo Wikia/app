@@ -289,8 +289,8 @@ DROP TABLE IF EXISTS `dumps`;
 CREATE TABLE `dumps` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `dump_wiki_id` int(9) NOT NULL,
-  `dump_wiki_dbname` varchar(64) NOT NULL,
-  `dump_wiki_url` varchar(255) NOT NULL,
+  `dump_wiki_dbname` varchar(64) DEFAULT NULL,
+  `dump_wiki_url` varchar(255) DEFAULT NULL,
   `dump_user_id` int(9) DEFAULT '0',
   `dump_hidden` enum('N','Y') DEFAULT 'N',
   `dump_closed` enum('N','Y') DEFAULT 'N',
@@ -391,11 +391,11 @@ CREATE TABLE `messages_text` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Table structure for table `page`
+-- Table structure for table `page_to_be_removed`
 --
 
-DROP TABLE IF EXISTS `page`;
-CREATE TABLE `page` (
+DROP TABLE IF EXISTS `page_to_be_removed`;
+CREATE TABLE `page_to_be_removed` (
   `page_id` int(8) unsigned NOT NULL AUTO_INCREMENT,
   `page_namespace` int(11) NOT NULL,
   `page_title` varchar(255) CHARACTER SET latin1 COLLATE latin1_bin NOT NULL,
@@ -451,11 +451,11 @@ CREATE TABLE `phalanx` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Table structure for table `revision`
+-- Table structure for table `revision_to_be_removed`
 --
 
-DROP TABLE IF EXISTS `revision`;
-CREATE TABLE `revision` (
+DROP TABLE IF EXISTS `revision_to_be_removed`;
+CREATE TABLE `revision_to_be_removed` (
   `rev_id` int(8) unsigned NOT NULL AUTO_INCREMENT,
   `rev_page` int(8) unsigned NOT NULL,
   `rev_comment` tinyblob NOT NULL,
@@ -509,11 +509,11 @@ CREATE TABLE `spoofuser` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Table structure for table `text`
+-- Table structure for table `text_to_be_removed`
 --
 
-DROP TABLE IF EXISTS `text`;
-CREATE TABLE `text` (
+DROP TABLE IF EXISTS `text_to_be_removed`;
+CREATE TABLE `text_to_be_removed` (
   `old_id` int(8) unsigned NOT NULL AUTO_INCREMENT,
   `old_namespace` tinyint(2) unsigned NOT NULL DEFAULT '0',
   `old_title` varchar(255) CHARACTER SET latin1 COLLATE latin1_bin NOT NULL DEFAULT '',
@@ -665,4 +665,4 @@ CREATE TABLE `wikia_tasks_log` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
--- Dump completed on 2018-01-09 10:57:28
+-- Dump completed on 2018-03-20 10:32:21
