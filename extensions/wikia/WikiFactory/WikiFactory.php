@@ -411,7 +411,7 @@ class WikiFactory {
 	}
 
 	private static function addProtocolIfNotExists( $domain ) {
-		if ( !preg_match( "^https?:\/\/", $domain, $matches ) ) {
+		if ( !preg_match( "^https?:\/\/", $domain ) ) {
 			$domain = static::DOMAIN_PROTOCOL . '://' . $domain;
 		}
 
