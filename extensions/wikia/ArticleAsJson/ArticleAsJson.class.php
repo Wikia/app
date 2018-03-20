@@ -29,10 +29,6 @@ class ArticleAsJson {
 	const MEDIA_GALLERY_TEMPLATE = 'extensions/wikia/ArticleAsJson/templates/media-gallery.mustache';
 	const MEDIA_LINKED_GALLERY_TEMPLATE = 'extensions/wikia/ArticleAsJson/templates/media-linked-gallery.mustache';
 
-	// TODO: remove these, all usages and mentioned templates with XW-4719
-	const MEDIA_THUMBNAIL_TEMPLATE_OLD = 'extensions/wikia/ArticleAsJson/templates/media-thumbnail-old.mustache';
-	const MEDIA_GALLERY_TEMPLATE_OLD = 'extensions/wikia/ArticleAsJson/templates/media-gallery-old.mustache';
-
 	private static function renderIcon( $media ) {
 		$scaledSize = self::scaleIconSize( $media['height'], $media['width'] );
 
@@ -67,105 +63,44 @@ class ArticleAsJson {
 		return RequestContext::getMain()->getRequest()->getVal(self::SIMPLYFY_RENDERING_QP, "false") === self::SIMPLYFY_RENDERING_QP_VALUE;
 	}
 
-	private static function renderImage( $media, $id ) {
-		if ( self::simplifyRendering() ) {
-			return self::removeNewLines(
-				\MustacheService::getInstance()->render(
-					self::MEDIA_THUMBNAIL_TEMPLATE,
-					[
-						'media' => $media,
-						'mediaAttrs' => json_encode( $media ),
-						'downloadIcon' => DesignSystemHelper::renderSvg( 'wds-icons-download', 'wds-icon' ),
-						'chevronIcon' => DesignSystemHelper::renderSvg('wds-icons-menu-control-tiny', 'wds-icon wds-icon-tiny chevron'),
-						'hasFigcaption' => !empty( $media['caption'] ) || ( !empty( $media['title'] ) && ( $media['isVideo'] || $media['isOgg'] ) )
-					]
-				)
-			);
-		} else {
-			return self::removeNewLines(
-				\MustacheService::getInstance()->render(
-					self::MEDIA_THUMBNAIL_TEMPLATE_OLD,
-					[
-						'mediaAttrs' => json_encode( [ 'ref' => $id ] ),
-						'media' => $media,
-						'width' => $media['width'],
-						'height' => $media['height'],
-						'url' => $media['url'],
-						'title' => $media['title'],
-						'fileUrl' => $media['fileUrl'],
-						'caption' => $media['caption'] ?? '',
-						'href' => $media['href'],
-						'isLinkedByUser' => $media['isLinkedByUser'],
-						/**
-						 * data-ref has to be set for now because it's read in
-						 * extensions/wikia/PortableInfobox/services/Parser/Nodes/NodeImage.php:getGalleryData
-						 * and in
-						 * extensions/wikia/PortableInfobox/services/Parser/Nodes/NodeImage.php:getTabberData.
-						 * Base on presence of data-ref element is classified as an image
-						 * - without that service would return null
-						 *
-						 * @TODO XW-1460 fix the regex and remove this attribute
-						 */
-						'ref' => $id
-					]
-				)
-			);
-		}
-
+	private static function renderImage( $media ) {
+		return self::removeNewLines(
+			\MustacheService::getInstance()->render(
+				self::MEDIA_THUMBNAIL_TEMPLATE,
+				[
+					'media' => $media,
+					'mediaAttrs' => json_encode( $media ),
+					'downloadIcon' => DesignSystemHelper::renderSvg( 'wds-icons-download', 'wds-icon' ),
+					'chevronIcon' => DesignSystemHelper::renderSvg('wds-icons-menu-control-tiny', 'wds-icon wds-icon-tiny chevron'),
+					'hasFigcaption' => !empty( $media['caption'] ) || ( !empty( $media['title'] ) && ( $media['isVideo'] || $media['isOgg'] ) )
+				]
+			)
+		);
 	}
 
-	private static function renderGallery( $media, $id, $hasLinkedImages ) {
-		if ( self::simplifyRendering() ) {
-			if ( $hasLinkedImages ) {
-				return self::removeNewLines(
-					\MustacheService::getInstance()->render(
-						self::MEDIA_LINKED_GALLERY_TEMPLATE,
-						[
-							'galleryAttrs' => json_encode( $media ),
-							'media' => $media,
-							'downloadIcon' => DesignSystemHelper::renderSvg( 'wds-icons-download', 'wds-icon' ),
-							'viewMoreLabel' => wfMessage('communitypage-view-more')->escaped(), // TODO:  XW-4793
-							'linkedGalleryViewMoreVisible' => $hasLinkedImages && count($media) > 4,
-							'chevronIcon' => DesignSystemHelper::renderSvg('wds-icons-menu-control-tiny', 'wds-icon wds-icon-tiny chevron')
-						]
-					)
-				);
-			} else {
-				return self::removeNewLines(
-					\MustacheService::getInstance()->render(
-						self::MEDIA_GALLERY_TEMPLATE,
-						[
-							'galleryAttrs' => json_encode( $media ),
-							'media' => $media,
-							'downloadIcon' => DesignSystemHelper::renderSvg( 'wds-icons-download', 'wds-icon' ),
-						]
-					)
-				);
-			}
+	private static function renderGallery( $media, $hasLinkedImages ) {
+		if ( $hasLinkedImages ) {
+			return self::removeNewLines(
+				\MustacheService::getInstance()->render(
+					self::MEDIA_LINKED_GALLERY_TEMPLATE,
+					[
+						'galleryAttrs' => json_encode( $media ),
+						'media' => $media,
+						'downloadIcon' => DesignSystemHelper::renderSvg( 'wds-icons-download', 'wds-icon' ),
+						'viewMoreLabel' => wfMessage('communitypage-view-more')->escaped(), // TODO:  XW-4793
+						'linkedGalleryViewMoreVisible' => $hasLinkedImages && count($media) > 4,
+						'chevronIcon' => DesignSystemHelper::renderSvg('wds-icons-menu-control-tiny', 'wds-icon wds-icon-tiny chevron')
+					]
+				)
+			);
 		} else {
 			return self::removeNewLines(
 				\MustacheService::getInstance()->render(
-					self::MEDIA_GALLERY_TEMPLATE_OLD,
+					self::MEDIA_GALLERY_TEMPLATE,
 					[
-						'galleryAttrs' => json_encode( [ 'ref' => $id ] ),
-						/**    +                    'hasLinkedImages' => $hasLinkedImages,
-						 * data-ref has to be set for now because it's read in
-						 * extensions/wikia/PortableInfobox/services/Parser/Nodes/NodeImage.php::getGalleryData
-						 * and in
-						 * extensions/wikia/PortableInfobox/services/Parser/Nodes/NodeImage.php::getTabberData
-						 * Base on presence of data-ref element is classified as an image
-						 * - without that service would return null
-						 *
-						 * !!! Important note - data-ref inside template has ' instead of "
-						 * because this is how regex in
-						 * extensions/wikia/PortableInfobox/services/Parser/Nodes/NodeImage.php::getGalleryData
-						 * works
-						 *
-						 * @TODO XW-1460 fix the regex and remove this attribute
-						 */
-						'ref' => $id,
+						'galleryAttrs' => json_encode( $media ),
 						'media' => $media,
-						'hasLinkedImages' => $hasLinkedImages
+						'downloadIcon' => DesignSystemHelper::renderSvg( 'wds-icons-download', 'wds-icon' ),
 					]
 				)
 			);
@@ -193,11 +128,11 @@ class ArticleAsJson {
 				$hasLinkedImages = true;
 			}
 
-			return self::renderGallery( $media, $id, $hasLinkedImages );
+			return self::renderGallery( $media, $hasLinkedImages );
 		} else if ( $media['context'] === self::MEDIA_CONTEXT_ICON ) {
 			return self::renderIcon( $media );
 		} else {
-			return self::renderImage( $media, $id );
+			return self::renderImage( $media );
 		}
 	}
 
