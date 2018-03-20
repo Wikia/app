@@ -2999,6 +2999,41 @@ class MediaWikiServiceTest extends BaseTest
 
 	/**
 	 * @group Slow
+	 * @slowExecutionTime 0.09036 ms
+	 * @covers Wikia\Search\MediaWikiService::getHostName
+	 */
+	public function testGetHostName() {
+		$testWgServer = "http://test.wikia.com";
+		$expectedDomain = "test.wikia.com";
+		$service =
+			$this->getMockBuilder( 'Wikia\Search\MediaWikiService' )
+				->setMethods( [ 'getGlobal' ] )
+				->getMock();
+		$service->expects( $this->once() )
+			->method( 'getGlobal' )
+			->with( 'Server' )
+			->will( $this->returnValue( $testWgServer ) );
+
+		$this->assertEquals( $expectedDomain, $service->getHostName() );
+	}
+
+	public function testGetHostNameWithHttps() {
+		$testWgServer = "https://test.wikia.com";
+		$expectedDomain = "test.wikia.com";
+		$service =
+			$this->getMockBuilder( 'Wikia\Search\MediaWikiService' )
+				->setMethods( [ 'getGlobal' ] )
+				->getMock();
+		$service->expects( $this->once() )
+			->method( 'getGlobal' )
+			->with( 'Server' )
+			->will( $this->returnValue( $testWgServer ) );
+
+		$this->assertEquals( $expectedDomain, $service->getHostName() );
+	}
+
+	/**
+	 * @group Slow
 	 * @slowExecutionTime 0.0917 ms
 	 * @covers Wikia\Search\MediaWikiService::isPageIdMainPage
 	 */

@@ -232,7 +232,7 @@ class CloseWikiPage extends SpecialPage {
 	private function prefixMainDomain( $cityId ) {
 		//local prefix to not accidentally mix it with global wgServer
 		$localWgServer = WikiFactory::getVarValueByName( "wgServer", $cityId );
-		if ( preg_match( "^https?:\/\/", $localWgServer, $matches ) ) {
+		if ( preg_match( "/^https?:\/\/(.*)/", $localWgServer, $matches ) ) {
 			$mainDomain = $matches[1];
 			$index = null;
 			do {

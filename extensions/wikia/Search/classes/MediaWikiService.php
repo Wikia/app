@@ -950,7 +950,7 @@ class MediaWikiService {
 	 * @return string
 	 */
 	public function getHostName() {
-		preg_match( "^https?:\/\/", $this->getGlobal( 'Server' ), $matches );
+		preg_match( "/^https?:\/\/(.*)/", $this->getGlobal( 'Server' ), $matches );
 
 		return $matches[1];
 	}
