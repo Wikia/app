@@ -2999,19 +2999,6 @@ class MediaWikiServiceTest extends BaseTest
 
 	/**
 	 * @group Slow
-	 * @slowExecutionTime 0.09036 ms
-	 * @covers Wikia\Search\MediaWikiService::getHostName
-	 */
-	public function testGetHostName() {
-		$service = (new MediaWikiService);
-		$this->assertEquals(
-				substr( $service->getGlobal( 'Server' ), 7 ),
-				$service->getHostName()
-		);
-	}
-
-	/**
-	 * @group Slow
 	 * @slowExecutionTime 0.0917 ms
 	 * @covers Wikia\Search\MediaWikiService::isPageIdMainPage
 	 */
