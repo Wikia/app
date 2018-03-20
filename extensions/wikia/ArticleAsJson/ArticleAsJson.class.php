@@ -1,10 +1,6 @@
 <?php
 
 class ArticleAsJson {
-	// TODO: remove it and all usages with XW-4719
-	const SIMPLYFY_RENDERING_QP = 'simplifyRendering';
-	const SIMPLYFY_RENDERING_QP_VALUE = 'true';
-
 	static $media = [ ];
 	static $users = [ ];
 	static $heroImage = null;
@@ -56,11 +52,6 @@ class ArticleAsJson {
 				]
 			)
 		);
-	}
-
-	// TODO: remove it and all usages with XW-4719
-	public static function simplifyRendering(): bool {
-		return RequestContext::getMain()->getRequest()->getVal(self::SIMPLYFY_RENDERING_QP, "false") === self::SIMPLYFY_RENDERING_QP_VALUE;
 	}
 
 	private static function renderImage( $media ) {
@@ -361,10 +352,6 @@ class ArticleAsJson {
 				->getVal( 'collapsibleSections' ) )
 			) {
 				$confstr .= ':collapsibleSections';
-			}
-
-			if ( self::simplifyRendering() ) {
-				$confstr .= ':simplifyRendering';
 			}
 		}
 
