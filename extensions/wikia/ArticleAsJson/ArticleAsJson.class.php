@@ -2,13 +2,12 @@
 
 class ArticleAsJson {
 	static $media = [ ];
-	static $users = [ ];
 	static $heroImage = null;
 	static $mediaDetailConfig = [
 		'imageMaxWidth' => false
 	];
 
-	const CACHE_VERSION = 3.28;
+	const CACHE_VERSION = 3.29;
 
 	const ICON_MAX_SIZE = 48;
 	// Line height in Mercury
@@ -103,8 +102,6 @@ class ArticleAsJson {
 	}
 
 	private static function createMarker( $media, $isGallery = false ) {
-		$id = count( self::$media ) - 1;
-
 		if ( $isGallery ) {
 			$hasLinkedImages = false;
 
@@ -182,16 +179,6 @@ class ArticleAsJson {
 		return $media;
 	}
 
-	private static function addUserObj( $details ) {
-		$userTitle = Title::newFromText( $details['userName'], NS_USER );
-
-		self::$users[$details['userName']] = [
-			'id' => (int) $details['userId'],
-			'avatar' => $details['userThumbUrl'],
-			'url' => $userTitle instanceof Title ? $userTitle->getLocalURL() : ''
-		];
-	}
-
 	public static function onGalleryBeforeProduceHTML( $data, &$out ) {
 		global $wgArticleAsJson;
 
@@ -230,8 +217,6 @@ class ArticleAsJson {
 					->url();
 
 				$media[] = $mediaObj;
-
-				self::addUserObj( $details );
 			}
 
 			self::$media[] = $media;
@@ -309,8 +294,6 @@ class ArticleAsJson {
 
 			self::$media[] = $media;
 
-			self::addUserObj( $details );
-
 			$res = self::createMarker( $media );
 
 			return false;
@@ -362,41 +345,6 @@ class ArticleAsJson {
 		global $wgArticleAsJson;
 
 		if ( $wgArticleAsJson && !is_null( $parser->getRevisionId() ) ) {
-
-			$userName = $parser->getRevisionUser();
-
-			if ( !empty( $userName ) ) {
-				if ( User::isIP( $userName ) ) {
-
-					self::addUserObj(
-						[
-							'userId' => 0,
-							'userName' => $userName,
-							'userThumbUrl' => AvatarService::getAvatarUrl(
-								$userName,
-								AvatarService::AVATAR_SIZE_MEDIUM
-							),
-							'userPageUrl' => Title::newFromText( $userName )->getLocalURL()
-						]
-					);
-				} else {
-					$user = User::newFromName( $userName );
-					if ( $user instanceof User ) {
-						self::addUserObj(
-							[
-								'userId' => $user->getId(),
-								'userName' => $user->getName(),
-								'userThumbUrl' => AvatarService::getAvatarUrl(
-									$user,
-									AvatarService::AVATAR_SIZE_MEDIUM
-								),
-								'userPageUrl' => $user->getUserPage()->getLocalURL()
-							]
-						);
-					}
-				}
-			}
-
 			foreach ( self::$media as &$media ) {
 				self::linkifyMediaCaption( $parser, $media );
 			}
@@ -406,8 +354,6 @@ class ArticleAsJson {
 			$text = json_encode(
 				[
 					'content' => $text,
-					'media' => self::$media,
-					'users' => self::$users,
 					'heroImage' => self::$heroImage
 				]
 			);
