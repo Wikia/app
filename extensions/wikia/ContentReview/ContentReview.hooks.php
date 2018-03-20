@@ -69,13 +69,13 @@ class Hooks {
 
 	/**
 	 * Initiates a diff page Content Review controller and renders a reviewer's toolbar.
-	 * @param $diffEngine
+	 * @param \DifferenceEngine $diffEngine
 	 * @param \OutputPage $output
 	 * @return bool
 	 */
-	public function onArticleContentOnDiff( $diffEngine, \OutputPage $output ) {
+	public function onArticleContentOnDiff( \DifferenceEngine $diffEngine, \OutputPage $output ) {
 		$title = $output->getTitle();
-		$diffPage = new ContentReviewDiffPage( $title );
+		$diffPage = new ContentReviewDiffPage( $title, $diffEngine );
 
 		if ( $diffPage->shouldDisplayToolbar() ) {
 			$diffPage->addToolbarToOutput( $output );

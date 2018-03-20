@@ -16,7 +16,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.appnexusWebAds',[
 		slots = {
 			oasis: {
 				INCONTENT_BOXAD_1: {
-					placementId: '11283988',
+					placementId: '12939349',
 					sizes: [
 						[300, 600],
 						[300, 250],

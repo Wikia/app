@@ -224,7 +224,7 @@ class WikiFactoryHub extends WikiaModel {
 
 		// query instead of lookup in AllCategories list
 		$categories = (new WikiaSQL())
-			->SELECT( "*" )
+			->SELECT( "cat_id", "cat_short" )
 			->FROM( "city_cats" )
 			->JOIN ( "city_cat_mapping" )->USING( "cat_id" )
 			->WHERE( "city_id ")->EQUAL_TO( $city_id )
@@ -243,7 +243,7 @@ class WikiFactoryHub extends WikiaModel {
 	 *
 	 * @param Int $cityId CityId
 	 * @param Int $active Active status of categories to return
-	 * @return array Array of wiki category names
+	 * @return string[] Array of wiki category names
 	 */
 	public function getWikiCategoryNames( $cityId, $active = 1 ) {
 		$wikiCategoryNames = [];
