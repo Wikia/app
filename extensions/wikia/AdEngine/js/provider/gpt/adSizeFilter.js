@@ -1,10 +1,10 @@
 /*global define, require*/
 define('ext.wikia.adEngine.provider.gpt.adSizeFilter', [
-	'ext.wikia.adEngine.context.uapContext',
+	'ext.wikia.adEngine.bridge',
 	'wikia.document',
 	'wikia.log',
 	'wikia.window'
-], function (uapContext, doc, log, win) {
+], function (bridge, doc, log, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.gpt.adSizeFilter',
@@ -49,10 +49,9 @@ define('ext.wikia.adEngine.provider.gpt.adSizeFilter', [
 	}
 
 	function getBottomLeaderboardSizes(slotSizes) {
-		var isUapLoaded = uapContext.isUapLoaded(),
-			skin = getAdContext().targeting.skin;
+		var skin = getAdContext().targeting.skin;
 
-		if (isUapLoaded) {
+		if (bridge.universalAdPackage.isFanTakeoverLoaded()) {
 			return skin === 'oasis' ? [[728, 90], [3, 3]] : [[2, 2]];
 		}
 
