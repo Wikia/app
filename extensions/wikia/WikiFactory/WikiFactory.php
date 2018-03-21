@@ -1848,53 +1848,6 @@ class WikiFactory {
 	}
 
 	/**
-	 * getFileCachePath
-	 *
-	 * build path to file based on id of wikia
-	 *
-	 *
-	 * @author eloy@wikia
-	 * @access public
-	 * @static
-	 *
-	 * @param integer	$city_id	identifier from city_list
-	 *
-	 * @return string: path to file or null if id is not a number
-	 */
-	static public function getFileCachePath( $city_id ) {
-		if ( is_null( $city_id ) || empty( $city_id ) ) {
-			return null;
-		}
-		wfProfileIn( __METHOD__ );
-
-		$intid = $city_id;
-		$strid = (string)$intid;
-		$path = "";
-		if ( $intid < 10 ) {
-			$path = sprintf( "%s/%d.ser", static::CACHEDIR, $intid );
-		}
-		elseif ( $intid < 100 ) {
-			$path = sprintf(
-				"%s/%s/%d.ser",
-				static::CACHEDIR,
-				substr($strid, 0, 1),
-				$intid
-			);
-		}
-		else {
-			$path = sprintf(
-				"%s/%s/%s/%d.ser",
-				static::CACHEDIR,
-				substr($strid, 0, 1),
-				substr($strid, 0, 2),
-				$intid
-			);
-		}
-		wfProfileOut( __METHOD__ );
-		return $path;
-	}
-
-	/**
 	 * setPublicStatus
 	 *
 	 * method for changing city_public value in city_list table
