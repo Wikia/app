@@ -20,6 +20,17 @@ require([
 		initialPlay = true;
 
 	function reveal() {
+		tracker.track({
+			category: 'related-video-module',
+			trackingMethod: 'both',
+			action: tracker.ACTIONS.IMPRESSION,
+			label: 'reveal-point'
+		});
+
+		//Remove the early return when //XW-4771 AA test is over
+		return;
+
+		/* Uncomment when the XW-4771 AA test is over
 		$unit.addClass('is-revealed');
 		!isAutoplay && $unit.addClass('is-click-to-play');
 		window.wikiaJWPlayer(
@@ -32,8 +43,9 @@ require([
 			category: 'related-video-module',
 			trackingMethod: 'both',
 			action: tracker.ACTIONS.VIEW,
-			label: 'recommended-video-revealed'
+			label: 'revealed'
 		});
+	    */
 	}
 
 	function onScroll() {
