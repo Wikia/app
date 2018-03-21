@@ -12,8 +12,8 @@ define('ext.wikia.adEngine.provider.remnantGptMobile', [
 		'RemnantGptMobile',
 		'mobile_remnant',
 		{
-			MOBILE_TOP_LEADERBOARD:     {size: '300x50,320x50,320x100,320x480,2x2'},
-			BOTTOM_LEADERBOARD:         {size: '320x50,300x250,300x50,2x2', pos: ['BOTTOM_LEADERBOARD', 'MOBILE_PREFOOTER']},
+			MOBILE_TOP_LEADERBOARD:     {size: '300x50,320x50,320x100,320x480'},
+			BOTTOM_LEADERBOARD:         {size: '320x50,300x250,300x50', pos: ['BOTTOM_LEADERBOARD', 'MOBILE_PREFOOTER']},
 			MOBILE_IN_CONTENT:          {size: '320x50,300x250,300x50,320x480'},
 			MOBILE_PREFOOTER:           {size: '320x50,300x250,300x50'}
 		},

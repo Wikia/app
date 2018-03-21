@@ -148,7 +148,7 @@ describe('ext.wikia.adEngine.provider.*', function () {
 
 	it('directGpt: Push ad with specific slot sizes', function () {
 		var expectedSizes = {
-			BOTTOM_LEADERBOARD: '728x90,970x250',
+			BOTTOM_LEADERBOARD: '3x3,728x90,970x250',
 			INCONTENT_BOXAD_1: '120x600,160x600,300x250,300x600',
 			INCONTENT_PLAYER: '1x1',
 			INVISIBLE_HIGH_IMPACT_2: 'out-of-page',
@@ -167,7 +167,7 @@ describe('ext.wikia.adEngine.provider.*', function () {
 			INCONTENT_PLAYER: '1x1',
 			INVISIBLE_HIGH_IMPACT_2: 'out-of-page',
 			INVISIBLE_SKIN: '1000x1000,1x1',
-			TOP_LEADERBOARD: '3x3,728x90,1030x130,1030x65,1030x250,970x365,970x250,970x90,970x66,970x180,980x150',
+			TOP_LEADERBOARD: '728x90,1030x130,1030x65,1030x250,970x365,970x250,970x90,970x66,970x180,980x150',
 			TOP_RIGHT_BOXAD: '300x250,300x600,300x1050'
 		};
 
@@ -190,7 +190,7 @@ describe('ext.wikia.adEngine.provider.*', function () {
 		var expectedSizes = {
 			INVISIBLE_HIGH_IMPACT: null,
 			INVISIBLE_HIGH_IMPACT_2: null,
-			MOBILE_TOP_LEADERBOARD: '300x50,320x50,320x100,320x480,2x2',
+			MOBILE_TOP_LEADERBOARD: '300x50,320x50,320x100,320x480',
 			MOBILE_IN_CONTENT: '320x50,300x250,300x50,320x480',
 			MOBILE_PREFOOTER: '320x50,300x250,300x50'
 		};
