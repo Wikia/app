@@ -98,7 +98,7 @@ class CloseWikiMaintenance {
 		$dbr = WikiFactory::db( DB_SLAVE );
 		$sth = $dbr->select(
 			array( "city_list" ),
-			array( "city_id", "city_flags", "city_dbname", "city_url", "city_public" ),
+			array( "city_id", "city_flags", "city_dbname", "city_cluster", "city_url", "city_public" ),
 			$where,
 			__METHOD__,
 			$opts
@@ -123,8 +123,8 @@ class CloseWikiMaintenance {
 			$newFlags = 0;
 			$dbname   = $row->city_dbname;
 			$cityid   = intval( $row->city_id );
+			$cluster  = $row->city_cluster;
 			$folder   = WikiFactory::getVarValueByName( "wgUploadDirectory", $cityid );
-			$cluster  = WikiFactory::getVarValueByName( "wgDBcluster", $cityid );
 
 			/**
 			 * safety check, if city_dbname is not unique die with message

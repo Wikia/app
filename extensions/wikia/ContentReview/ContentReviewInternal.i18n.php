@@ -43,8 +43,9 @@ $messages['en'] = [
 	'content-review-diff-toolbar-title' => 'Revision review',
 	'content-review-diff-toolbar-talkpage' => 'Talk page',
 	'content-review-diff-toolbar-guidelines' => 'Reviewer guidelines',
-	'content-review-diff-toolbar-guidelines-url' => 'http://dev.wikia.com/wiki/Help:JavaScript_review_guidelines',
+	'content-review-diff-toolbar-guidelines-url' => '//dev.wikia.com/wiki/Help:JavaScript_review_guidelines',
 	'content-review-diff-hidden' => 'Since no revision of this page has been approved yet, the diff is hidden. Please review the changes based on the latest revision state below.',
+	'content-review-diff-notice-http' => 'The script contains a reference to plain "http://". Please verify this is HTTPS compliant.',
 
 	'content-review-feedback-link-text' => 'Provide feedback',
 	'content-review-edit-page-checkbox-label' => 'Automatically approve the changes',
@@ -91,6 +92,7 @@ $messages['qqq'] = [
 	'content-review-diff-toolbar-guidelines' => 'A text of a link to a page with guidelines for reviewers.',
 	'content-review-diff-toolbar-guidelines-url' => 'A URL of a page with guidelines for reviewers.',
 	'content-review-diff-hidden' => 'A message shown to a reviewer if he is reviewing a page that does not have an initial revision. In this case the regular diff view is hidden and replaced by this message to focus them on an actual content that they review.',
+	'content-review-diff-notice-http' => 'Message shown below the toolbar when a script contains a reference to a plain HTTP URL.',
 
 	'content-review-feedback-link-text' => 'Text on a link for providing feedback on script change being reviewed',
 
