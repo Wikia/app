@@ -125,6 +125,7 @@ define('wikia.articleVideo.featuredVideo.ads', [
 			});
 		} else {
 			trackingParams.adProduct = 'featured-video-no-ad';
+			fvLagger.markAsReady();
 		}
 
 		adsTracking(player, trackingParams);
