@@ -27,9 +27,21 @@ require([
 			width: 320,
 			height: 180,
 			modelName: 'ns',
+			title: 'recirculation-fandom-title',
 			opts: {
 				resultType: 'cross-domain',
 				domainType: 'fandom.wikia.com'
+			}
+		},
+		internationalRailRecirculation = {
+			max: 5,
+			widget: 'wikia-rail-i18n',
+			width: 320,
+			height: 180,
+			modelName: 'wiki',
+			title: 'recirculation-trending',
+			opts: {
+				rule_language : window.wgContentLanguage
 			}
 		},
 		mixedContentFooter = {
@@ -56,19 +68,21 @@ require([
 			}
 		};
 
-	function prepareEnglishRecirculation () {
+	function prepareRailRecirculation(options) {
 		// prepare & render right rail recirculation module
-		liftigniter.prepare(railRecirculation).done(function (data) {
+		liftigniter.prepare(options).done(function (data) {
 			require(['ext.wikia.recirculation.views.premiumRail'], function (viewFactory) {
 				var view = viewFactory();
-				view.render(data)
+				view.render(data, options.title)
 					.then(view.setupTracking())
 					.then(function () {
-						liftigniter.setupTracking(view.itemsSelector, railRecirculation);
+						liftigniter.setupTracking(view.itemsSelector, options);
 					});
 			});
 		});
+	}
 
+	function prepareEnglishRecirculation () {
 		// prepare & render mixed content footer module
 		var mixedContentFooterData = [
 			liftigniter.prepare(mixedContentFooter.nsItems),
@@ -92,6 +106,8 @@ require([
 	}
 
 	function prepareInternationalRecirculation () {
+		prepareRailRecirculation(internationalRailRecirculation);
+
 		var mixedContentFooterData = [
 			liftigniter.prepare(mixedContentFooter.wikiItems),
 			discussions.prepare()
@@ -113,11 +129,18 @@ require([
 
 	if (window.wgContentLanguage === 'en') {
 		prepareEnglishRecirculation();
+		prepareRailRecirculation(railRecirculation);
 
 		// fetch data for all recirculation modules
 		liftigniter.fetch('ns');
 	} else {
 		prepareInternationalRecirculation();
+
+		if (window.wgContentLanguage === 'de') {
+			prepareRailRecirculation(internationalRailRecirculation);
+			liftigniter.fetch('wiki');
+		}
+
 		if (videosModule) {
 			videosModule('#recirculation-rail');
 		}
@@ -134,7 +157,6 @@ require([
 			liftigniter.fetch('wiki');
 			discussions.fetch();
 			window.removeEventListener('scroll', lazyLoadHandler);
-
 		}
 	});
 
