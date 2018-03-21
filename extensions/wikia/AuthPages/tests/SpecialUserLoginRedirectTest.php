@@ -7,21 +7,27 @@ class SpecialUserLoginRedirectTest extends AbstractAuthPageRedirectTest {
 	}
 
 	/**
-	 * @dataProvider provideForgotPasswordTypes
-	 * @param string $forgotPasswordType
+	 * @dataProvider provideMercuryEndpointRedirectData
+	 *
+	 * @param string $param
+	 * @param string $expectedEndpoint
 	 */
-	public function testRedirectToForgotPasswordPageWhenTypeGiven( string $forgotPasswordType ) {
-		$this->setupRequest( [ 'type' => $forgotPasswordType ] );
+	public function testRedirectToSupportedMercuryEndpoints( string $param, string $expectedEndpoint ) {
+		$this->setupRequest( [ 'type' => $param ] );
 
 		$this->specialPage->execute();
 
-		$this->assertStringStartsWith( '/forgot-password', $this->requestContext->getOutput()->getRedirect() );
+		$this->assertStringStartsWith( $expectedEndpoint, $this->requestContext->getOutput()->getRedirect() );
 	}
 
-	public function provideForgotPasswordTypes() {
-		yield [ 'forgotPassword' ];
-		yield [ 'forgotpassword' ];
-		yield [ 'ForgotPassword' ];
+	public function provideMercuryEndpointRedirectData() {
+		yield [ 'forgotPassword', '/forgot-password' ];
+		yield [ 'forgotpassword', '/forgot-password' ];
+		yield [ 'ForgotPassword', '/forgot-password' ];
+
+		yield [ 'signup', '/signup' ];
+		yield [ 'Signup', '/signup' ];
+		yield [ 'signUp', '/signup' ];
 	}
 
 	public function testRedirectToLoginPageWhenTypeNotGiven() {
