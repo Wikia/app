@@ -6,35 +6,8 @@ class RobotsTxt {
 	private $robots = [];
 	private $sitemap;
 
-	/**
-	 * Allow specific paths
-	 *
-	 * It emits the Allow directives
-	 *
-	 * @param string[] $paths path prefixes to allow (some robots accept wildcards)
-	 */
-	public function addAllowedPaths( array $paths ) {
-		$this->allowed = array_merge( $this->allowed, $paths );
-	}
-
-	/**
-	 * Disallow specific robots to crawl all the pages
-	 *
-	 * @param string[] $robots User-agent (fragment) of the robot (or an array of such)
-	 */
-	public function addBlockedRobots( array $robots ) {
-		$this->blockedRobots = array_merge( $this->blockedRobots, $robots );
-	}
-
-	/**
-	 * Disallow specific paths
-	 *
-	 * It emits both the Disallow and Noindex directive for each path
-	 *
-	 * @param string[] $paths path prefixes to block (some robots accept wildcards)
-	 */
-	public function addDisallowedPaths( array $paths ) {
-		$this->disallowed = array_merge( $this->disallowed, $paths );
+	public function createRobot( $ua ) {
+		return new Robot( $ua );
 	}
 
 	/**
@@ -43,7 +16,7 @@ class RobotsTxt {
 	 * @param Robot $robot
 	 * @return Robot
 	 */
-	public function addRobot ( Robot $robot ) {
+	public function addRobot ( $robot ) {
 		$ua = $robot->getUserAgent();
 
 		if ( isset( $this->robots[ $ua ] ) ) {

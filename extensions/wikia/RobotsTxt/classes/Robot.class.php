@@ -56,7 +56,8 @@ class Robot {
 	 */
 	public function block() {
 		$this->allowed = [];
-		$this->disallowed = [ '/' ];
+		$this->disallowed = [];
+		$this->disallowPaths( [ '/' ] );
 	}
 
 	/**

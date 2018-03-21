@@ -7,4 +7,5 @@ $wgAutoloadClasses['Wikia\RobotsTxt\PathBuilder'] =  __DIR__ . '/classes/PathBui
 $wgAutoloadClasses['Wikia\RobotsTxt\WikiaRobots'] =  __DIR__ . '/classes/WikiaRobots.class.php';
 
 // for unit tests
+$wgAutoloadClasses['RobotMock'] =  __DIR__ . '/tests/RobotMock.php';
 $wgAutoloadClasses['RobotsTxtMock'] =  __DIR__ . '/tests/RobotsTxtMock.php';

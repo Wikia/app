@@ -153,7 +153,7 @@ class WikiaRobots {
 		       $wgSitemapXmlExposeInRobots,
 			   $wgServer;
 			   
-		$wildcardRobot = new Robot( '*' );
+		$wildcardRobot = $robots->createRobot( '*' );
 		$robots->addRobot( $wildcardRobot );
 
 		if ( !$this->accessAllowed || !empty( $wgRobotsTxtBlockedWiki ) ) {
@@ -193,7 +193,7 @@ class WikiaRobots {
 		}
 
 		// Wikia ADEN-6827 Allow Grapshot to index the content
-		$robots->addRobot( new Robot( 'grapeshot' ) );
+		$robots->addRobot( $robots->createRobot( 'grapeshot' ) );
 
 		return $robots;
 	}

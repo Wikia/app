@@ -78,12 +78,13 @@ class WikiaRobotsTest extends WikiaBaseTest {
 		$path = '/path/for/ns/' . $ns;
 		$isAllowed = false;
 		$isDisallowed = false;
-		foreach ( $robotsTxtSpy->spiedAllowedPaths as $paths ) {
+		$spiedWildcardRobot = $robotsTxtSpy->spiedRobots[ '*' ];
+		foreach ( $spiedWildcardRobot->spiedAllowed as $paths ) {
 			if ( in_array( $path, $paths ) ) {
 				$isAllowed = true;
 			}
 		}
-		foreach ( $robotsTxtSpy->spiedDisallowedPaths as $paths ) {
+		foreach ( $spiedWildcardRobot->spiedDisallowed as $paths ) {
 			if ( in_array( $path, $paths ) ) {
 				$isDisallowed = true;
 			}
@@ -95,12 +96,13 @@ class WikiaRobotsTest extends WikiaBaseTest {
 		$path = '/path/for/page/' . $page;
 		$isAllowed = false;
 		$isDisallowed = false;
-		foreach ( $robotsTxtSpy->spiedAllowedPaths as $paths ) {
+		$spiedWildcardRobot = $robotsTxtSpy->spiedRobots[ '*' ];
+		foreach ( $spiedWildcardRobot->spiedAllowed as $paths ) {
 			if ( in_array( $path, $paths ) ) {
 				$isAllowed = true;
 			}
 		}
-		foreach ( $robotsTxtSpy->spiedDisallowedPaths as $paths ) {
+		foreach ( $spiedWildcardRobot->spiedDisallowed as $paths ) {
 			if ( in_array( $path, $paths ) ) {
 				$isDisallowed = true;
 			}
@@ -118,10 +120,11 @@ class WikiaRobotsTest extends WikiaBaseTest {
 		$this->mockGlobalVariable( 'wgRobotsTxtBlockedWiki', false );
 
 		$robotsTxtMock = $this->getWikiaRobotsTxt();
+		$spiedWildcardRobot = $robotsTxtMock->spiedRobots[ '*' ];
 
-		$this->assertEquals( $robotsTxtMock->spiedDisallowedPaths, [ [ '/' ] ] );
-		$this->assertEquals( $robotsTxtMock->spiedAllowedPaths, [] );
-		$this->assertEquals( $robotsTxtMock->spiedBlockedRobots, [] );
+		$this->assertEquals( $spiedWildcardRobot->spiedDisallowed, [ [ '/' ] ] );
+		$this->assertEquals( $spiedWildcardRobot->spiedAllowed, [] );
+		$this->assertEquals( $spiedWildcardRobot->getUserAgent(), '*' );
 		$this->assertEquals( $robotsTxtMock->spiedSitemap, [] );
 	}
 
@@ -264,10 +267,11 @@ class WikiaRobotsTest extends WikiaBaseTest {
 		$this->mockGlobalVariable( 'wgRobotsTxtBlockedWiki', $mockWgRobotsTxtBlockedWiki );
 
 		$robotsTxtMock = $this->getWikiaRobotsTxt();
+		$spiedWildcardRobot = $robotsTxtMock->spiedRobots[ '*' ];
 
-		$this->assertEquals( $robotsTxtMock->spiedDisallowedPaths, [ [ '/' ] ] );
-		$this->assertEquals( $robotsTxtMock->spiedAllowedPaths, [] );
-		$this->assertEquals( $robotsTxtMock->spiedBlockedRobots, [] );
+		$this->assertEquals( $spiedWildcardRobot->spiedDisallowed, [ [ '/' ] ] );
+		$this->assertEquals( $spiedWildcardRobot->spiedAllowed, [] );
+		$this->assertEquals( $spiedWildcardRobot->getUserAgent(), '*' );
 		$this->assertEquals( $robotsTxtMock->spiedSitemap, [] );
 	}
 
