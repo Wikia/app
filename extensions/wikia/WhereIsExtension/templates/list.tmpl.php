@@ -25,7 +25,7 @@ select {
 </style>
 
 <div id="busyDiv" style="display: none;">
-	<img src="http://images.wikia.com/common/progress_bar.gif" width="100" height="9" alt="Wait..." border="0" />'
+	<img src="<?= $wgStylePath ?>/common/images/ajax.gif" alt="Wait..." border="0" />'
 </div>
 <?php if( !empty( $tagResultInfo ) ): ?>
 	<div class="successbox" "style="margin: 0;margin-bottom: 1em;">
