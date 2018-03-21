@@ -798,29 +798,6 @@ class WikiFactory {
 						__METHOD__ );
 					break;
 
-				case "wgDBname":
-					#--- city_dbname
-					$dbw->update(
-						static::table("city_list"),
-						[ "city_dbname" => $value ],
-						[ "city_id" => $city_id ],
-						__METHOD__ );
-					break;
-
-				case "wgDBcluster":
-					/**
-					 * city_cluster
-					 *
-					 * city_cluster = null for first cluster
-					 * @todo handle deleting values of this variable
-					 */
-					$dbw->update(
-						static::table("city_list"),
-						[ "city_cluster" => $value ],
-						[ "city_id" => $city_id ],
-						__METHOD__ );
-					break;
-
 				case 'wgMetaNamespace':
 				case 'wgMetaNamespaceTalk':
 					#--- these cannot contain spaces!
