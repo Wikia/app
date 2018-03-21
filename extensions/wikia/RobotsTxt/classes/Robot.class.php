@@ -38,6 +38,7 @@ class Robot {
 	 */
 	public function allowPaths( array $paths ) {
 		$this->allowed = array_merge( $this->allowed, $paths );
+		$this->disallowed = array_diff( $this->disallowed, $paths );
 	}
 
 	/**
@@ -49,6 +50,7 @@ class Robot {
 	 */
 	public function disallowPaths( array $paths ) {
 		$this->disallowed = array_merge( $this->disallowed, $paths );
+		$this->allowed = array_diff( $this->allowed, $paths );
 	}
 
 	/**
