@@ -109,7 +109,6 @@ class RobotsTxtTest extends WikiaBaseTest {
 		$this->assertEquals(
 			[
 				'User-agent: Robot1',
-				'Noindex: /',
 				'Disallow: /',
 				'',
 				'User-agent: Robot2',

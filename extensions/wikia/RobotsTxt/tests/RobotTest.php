@@ -68,6 +68,27 @@ class RobotTest extends WikiaBaseTest {
 		$this->assertEquals( $expectedContents, $robot->getContent() );
 	}
 
+	/**
+	 * Test robot blocking
+	 *
+	 * @covers       Robot::block
+	 * @covers       Robot::getContent
+	 */
+	public function testRobotBlocking() {
+		$robot = new Robot( '*' );
+
+		$robot->block();
+
+		$this->assertEquals(
+			[
+				'User-agent: *',
+				'Disallow: /',
+				''
+			],
+			$robot->getContent()
+		);
+	}
+
 	public function dataProviderClassApi() {
 		return [
 			// Empty
@@ -171,7 +192,6 @@ class RobotTest extends WikiaBaseTest {
 		$this->assertEquals(
 			[
 				'User-agent: RobotXYZ',
-				'Noindex: /',
 				'Disallow: /',
 				''
 			],

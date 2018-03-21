@@ -83,7 +83,7 @@ class Robot {
 			function ( $prefix ) {
 				return 'Noindex: ' . $prefix;
 			},
-			$this->disallowed
+			( count( $this->disallowed ) === 1 && $this->disallowed[0] === '/' ) ? [] : $this->disallowed
 		);
 
 		if ( count( $allowSection ) || count( $disallowSection ) ) {
