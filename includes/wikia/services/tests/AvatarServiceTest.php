@@ -230,7 +230,7 @@ class AvatarServiceTest extends WikiaBaseTest {
 			[
 				'http://vignette.wikia-dev.com/messaging/images/1/19/Avatar.jpg/revision/latest/scale-to-width-down/150',
 				150,
-				'http://vignette.wikia-dev.com/messaging/images/1/19/Avatar.jpg/revision/latest/scale-to-width-down/150'
+				'http://vignette.wikia-dev.com/messaging/images/1/19/Avatar.jpg/revision/latest/scale-to-width-down/150?format=jpg'
 			],
 			[
 				'http://vignette.wikia-dev.com/messaging/images/1/19/Avatar.jpg/revision/latest/scale-to-width-down/150',
