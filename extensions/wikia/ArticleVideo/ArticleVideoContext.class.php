@@ -18,6 +18,9 @@ class ArticleVideoContext {
 	const RECOMMENDED_VIDEO_MAPPINGS_PROD = [
 		509 => [
 			509 => '1Dw2sjAj',
+		],
+		1265146 => [
+			340 => '1Dw2sjAj',
 		]
 	];
 
