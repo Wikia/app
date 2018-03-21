@@ -242,6 +242,11 @@ class AvatarServiceTest extends WikiaBaseTest {
 				150,
 				'http://vignette.wikia-dev.com/a05b75cd-a3de-41f3-8c1c-064e366c086b/scale-to-width-down/150'
 			],
+			[
+				'http://vignette.wikia-dev.com/a05b75cd-a3de-41f3-8c1c-064e366c086b/scale-to-width-down/150',
+				16,
+				'http://vignette.wikia-dev.com/a05b75cd-a3de-41f3-8c1c-064e366c086b/scale-to-width-down/16'
+			],
 		];
 	}
 }
