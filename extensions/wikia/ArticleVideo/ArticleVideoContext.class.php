@@ -45,16 +45,30 @@ class ArticleVideoContext {
 				$logger->error( self::ARTICLE_VIDEO_ERROR_MESSAGE );
 			}
 
-			$details = json_decode(
-				Http::get(
-					'https://cdn.jwplayer.com/v2/media/' . $videoData['mediaId'],
-					1
-				),
-				true
+			$jwPlayerRequest = Http::get(
+				'https://cdn.jwplayer.com/v2/media/' . $videoData['mediaId'],
+				2,
+				[ 'returnInstance' => true ]
 			);
 
-			if ( empty( $details ) || empty( $details['playlist'] ) || empty( $details['playlist'][0] ) ) {
-				$logger->error( self::JWPLAYER_API_ERROR_MESSAGE );
+			$isOK = $jwPlayerRequest->status->isOK();
+			$memCacheKey = wfMemcKey( 'featured-video', $wg->cityId, $pageId );
+
+			$content = $jwPlayerRequest->getContent();
+
+			if ( !$isOK ) {
+				$content = F::app()->wg->Memc->get( $memCacheKey );
+			} else {
+				F::app()->wg->Memc->set( $memCacheKey, $content );
+			}
+
+			$details = json_decode( $content, true );
+
+			if ( empty( $details ) || empty( $details['playlist'] ) ||
+			     empty( $details['playlist'][0] )
+			) {
+				$logger->error( self::JWPLAYER_API_ERROR_MESSAGE,
+					[ 'isOK' => $isOK, 'statusCode' => $jwPlayerRequest->getStatus(), 'content' => $content ] );
 			} else {
 				$videoData = array_merge( $videoData, $details );
 

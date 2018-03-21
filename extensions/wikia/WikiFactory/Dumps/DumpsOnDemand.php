@@ -104,48 +104,45 @@ class DumpsOnDemand {
 	}
 
 	/**
-	 * @static
-	 * @access public
+	 * @param int $iCityId
+	 * @param bool $bHidden
+	 * @param bool $bClose
+	 * @throws Wikia\Util\AssertionException
 	 */
-	static public function queueDump( $iCityId = null, $bHidden = false, $bClose = false ) {
-		global $wgCityId, $wgUser;
+	static public function queueDump( int $iCityId, bool $bHidden = false, bool $bClose = false ) {
+		global $wgUser;
 
-			if ( is_null( $iCityId ) ) {
-				$iCityId = $wgCityId;
-			}
+		$oWiki = WikiFactory::getWikiByID( $iCityId );
 
-			$oWiki = WikiFactory::getWikiByID( $iCityId );
+		\Wikia\Util\Assert::true(
+			is_object( $oWiki ),
+			sprintf( 'No such wiki. city_id: %d.', $iCityId )
+		);
 
-			if ( !is_object( $oWiki ) ) {
-				trigger_error( sprintf( '%s terminated. No such wiki (city_id: %d.', __METHOD__, $iCityId ) , E_USER_WARNING );
-				return null;
-			}
+		$aData = [
+			'dump_wiki_id'   => $iCityId,
+			'dump_user_id'   => $wgUser->getId(),
+			'dump_requested' => wfTimestampNow()
+		];
 
-			$aData = [
-				'dump_wiki_id'	  => $iCityId,
-				'dump_wiki_dbname'  => $oWiki->city_dbname,
-				'dump_wiki_url'	 => $oWiki->city_url,
-				'dump_user_id' => $wgUser->getId(),
-				'dump_requested'	=> wfTimestampNow()
-			];
+		if ( $bHidden ) {
+			$aData['dump_hidden'] = 'Y';
+		}
 
-			if ( $bHidden ) {
-				$aData['dump_hidden'] = 'Y';
-			}
+		if ( $bClose ) {
+			$aData['dump_closed'] = 'Y';
+		}
 
-			if ( $bClose ) {
-				$aData['dump_closed'] = 'Y';
-			}
+		$oDB = wfGetDB( DB_MASTER, array(), 'wikicities' );
+		$oDB->insert( 'dumps', $aData, __METHOD__ );
+		$oDB->update(
+				'city_list',
+				array( 'city_lastdump_timestamp' => wfTimestampNow() ),
+				array( 'city_id' => $iCityId ),
+				__METHOD__
+		);
 
-			$oDB = wfGetDB( DB_MASTER, array(), 'wikicities' );
-			$oDB->insert( 'dumps', $aData, __METHOD__ );
-			$oDB->update(
-					'city_list',
-					array( 'city_lastdump_timestamp' => wfTimestampNow() ),
-					array( 'city_id' => $iCityId ),
-					__METHOD__
-			);
-			WikiFactory::clearCache( $iCityId );
+		WikiFactory::clearCache( $iCityId );
 	}
 
 	static public function getPath( $sName ) {
