@@ -9,15 +9,14 @@ define('ext.wikia.adEngine.video.player.porvata.googleIma', [
 	var imaLibraryUrl = '//imasdk.googleapis.com/js/sdkloader/ima3.js',
 		logGroup = 'ext.wikia.adEngine.video.player.porvata.googleIma';
 
-	function load() {
+	function load(onLoad) {
 		if (win.google && win.google.ima) {
-			return new Promise(function (resolve) {
-				log('Google IMA library already loaded', log.levels.info, logGroup);
-				resolve();
-			});
+			log('Google IMA library already loaded', log.levels.info, logGroup);
+			onLoad();
+			return;
 		}
 
-		return scriptLoader.loadScript(imaLibraryUrl);
+		return scriptLoader.loadScript(imaLibraryUrl, {onLoad: onLoad});
 	}
 
 	function getPlayer(videoSettings) {

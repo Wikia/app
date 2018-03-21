@@ -12,7 +12,7 @@ class WallHistory extends WikiaModel {
 	 * Events of message creation, edit, delete and restore are stored in wall_history table.
 	 *
 	 * - Messages deleted using MediaWiki flow are removed from the table.
-	 * - Messages deleted via Wall flow are marked by setting deleted_or_removed to 1 (its used by Forum activity module only)
+	 * - Messages deleted via Wall flow are marked as deleted in comments_index table
 	 *
 	 * @param int $type one of WH_* defines
 	 * @param WallNotificationAdminEntity $feed
@@ -95,7 +95,6 @@ class WallHistory extends WikiaModel {
 			$user->getName(),
 			$feed->isReply(),
 			$data->title_id,
-			$data->article_title_ns,
 			$data->parent_id,
 			$feed->threadTitleFull,
 			$action,
@@ -123,32 +122,20 @@ class WallHistory extends WikiaModel {
 			'',
 			$data->is_reply,
 			$data->message_id,
-			$title->getNamespace(),
 			$data->parent_id,
 			$data->title,
 			$action,
 			$data->reason,
 			null
 		);
-
-
-		$this->getDB( DB_MASTER )->update(
-			'wall_history',
-			[ 'deleted_or_removed' => ( $action == WH_DELETE || $action == WH_REMOVE ) ? 1: 0 ],
-			[
-				'comment_id' => $data->message_id
-			],
-			__METHOD__
-		);
 	}
 
-	private function internalAdd( $parentPageId, $postUserId, $postUserName, $isReply, $commentId, $ns, $parentCommentId, $metatitle, $action, $reason, $revId ) {
+	private function internalAdd( $parentPageId, $postUserId, $postUserName, $isReply, $commentId, $parentCommentId, $metatitle, $action, $reason, $revId ) {
 		$this->getDB( DB_MASTER )->insert(
 			'wall_history',
 			[
 				'parent_page_id' => $parentPageId,
 				'post_user_id' => $postUserId,
-				'post_ns' => MWNamespace::getSubject( $ns ),
 				'post_user_ip_bin' => ( intval( $postUserId ) === 0 ? inet_pton( $postUserName ) : null ),
 				'is_reply' => $isReply,
 				'comment_id' => $commentId,

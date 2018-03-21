@@ -65,7 +65,7 @@ function wfArticleMetaDescription( OutputPage $out, string &$text ): bool {
 	}
 
 	if ( $sMessage == null || wfEmptyMsg( 'Description' ) ) {
-		$DESC_LENGTH = 100;
+		$DESC_LENGTH = 300;
 		$article = new Article( $title );
 		$articleService = new ArticleService( $article );
 		$description = $articleService->getTextSnippet( $DESC_LENGTH );

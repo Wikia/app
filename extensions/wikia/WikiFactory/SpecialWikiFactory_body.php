@@ -18,6 +18,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
  */
 class WikiFactoryPage extends SpecialPage {
 
+	/* @var object $mWiki a row from city_list table */
 	private $mWiki, $mTitle, $mDomain, $mTab, $mVariableName, $mTags, $mSearchTag;
 	public $mStatuses = array(-2 => 'spam', -1=> 'disabled*', "disabled", "enabled", "redirected" );
 	private $mTagWikiIds = array();
@@ -65,11 +66,7 @@ class WikiFactoryPage extends SpecialPage {
 		$wgOut->setRobotpolicy( 'noindex,nofollow' );
 		$wgOut->setArticleRelated( false );
 
-		if ( in_array( strtolower($subpage), array( "metrics", "metrics/main", "metrics/monthly", "metrics/daily" ) ) ) {
-			$oAWCMetrics = new WikiMetrics();
-			$oAWCMetrics->show( $subpage );
-		}
-		elseif ( strpos( $subpage, "short.stats" ) === 0 ) {
+		if ( strpos( $subpage, "short.stats" ) === 0 ) {
 			$subpageOptions = explode( '/', $subpage );
 			$lang = isset( $subpageOptions[1] ) ? $subpageOptions[1] : null;
 			$wgOut->addHTML( $this->shortStats( $lang ) );
@@ -86,7 +83,7 @@ class WikiFactoryPage extends SpecialPage {
 		}
 		else {
 			$subpage = ( $subpage == "/" ) ? null : $subpage;
-			$oWiki = $this->getWikiData( $subpage );
+			$oWiki = $subpage ? $this->getWikiData( $subpage ) : false;
 
 			if( !isset( $oWiki->city_id )) {
 				$this->doWikiSelector();
@@ -321,7 +318,6 @@ class WikiFactoryPage extends SpecialPage {
 			"info"        => $info,
 			"title"       => $this->mTitle,
 			"groups"      => WikiFactory::getGroups(),
-			"cluster"     => WikiFactory::getVarValueByName( "wgDBcluster", $this->mWiki->city_id ),
 			"domains"     => WikiFactory::getDomains( $this->mWiki->city_id ),
 			"protected"   => WikiFactory::getFlags ( $this->mWiki->city_id ) & WikiFactory::FLAG_PROTECTED,
 			"statuses"    => $this->mStatuses,
@@ -424,7 +420,7 @@ class WikiFactoryPage extends SpecialPage {
 				$vars[ "EZSharedUpload" ][ "remote" ] = array(
 					"wikiId" => $ezsuRemoteWikiId,
 					"wgServer" => WikiFactory::getVarValueByName( "wgServer", $ezsuRemoteWikiId ),
-					"wgDBname" => WikiFactory::getVarValueByName( "wgDBname", $ezsuRemoteWikiId ),
+					"wgDBname" => WikiFactory::getWikiByID( $ezsuRemoteWikiId )->city_dbname,
 					"wgUploadDirectory" => WikiFactory::getVarValueByName( "wgUploadDirectory", $ezsuRemoteWikiId ),
 					"wgUploadPath" => WikiFactory::getVarValueByName( "wgUploadPath", $ezsuRemoteWikiId ),
 					"baseUrl" => WikiFactory::getVarValueByName( "wgServer", $ezsuRemoteWikiId ) . WikiFactory::getVarValueByName( "wgScriptPath", $ezsuRemoteWikiId ) . str_replace( '$1', 'File:', WikiFactory::getVarValueByName( "wgArticlePath", $ezsuRemoteWikiId ) )
@@ -467,7 +463,7 @@ class WikiFactoryPage extends SpecialPage {
 		$remoteWikiId = $request->getVal('ezsuWikiId');
 		if(!empty($remoteWikiId)) {
 			$remoteWikiData = array(
-				"wgDBname" => WikiFactory::getVarValueByName( "wgDBname", $remoteWikiId ),
+				"wgDBname" => WikiFactory::getWikiByID( $remoteWikiId )->city_dbname,
 				"wgUploadDirectory" => WikiFactory::getVarValueByName( "wgUploadDirectory", $remoteWikiId ),
 				"wgUploadPath" => WikiFactory::getVarValueByName( "wgUploadPath", $remoteWikiId ),
 				"baseUrl" => WikiFactory::getVarValueByName( "wgServer", $remoteWikiId ) . WikiFactory::getVarValueByName( "wgScriptPath", $remoteWikiId ) . str_replace( '$1', 'File:', WikiFactory::getVarValueByName( "wgArticlePath", $remoteWikiId ) )
@@ -838,39 +834,6 @@ class WikiFactoryPage extends SpecialPage {
 		$oTmpl->set_vars( $vars );
 
 		return $oTmpl->render( "add-variable" );
-	}
-
-	/**
-	 * Quick form for choosing which variable to change.
-	 *
-	 * @author Sean Colombo
-	 * @access private
-	 *
-	 * @param varOverrides array - associative array of values to put into the template.  These are assumed
-	 *                             to have been loaded as a form re-initialization and are given precedence
-	 *                             over the defaults.
-	 *
-	 * @return HTML to be rendered.
-	 */
-	private function chooseVariableToChange($varOverrides = array()) {
-		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
-
-		$vars = array(
-			//"tab"         => $this->mTab,
-			"hub"         => WikiFactoryHub::getInstance(),
-			"wiki"        => $this->mWiki,
-			"title"       => $this->mTitle,
-			"groups"      => WikiFactory::getGroups(),
-			"cluster"     => WikiFactory::getVarValueByName( "wgDBcluster", $this->mWiki->city_id ),
-			"domains"     => WikiFactory::getDomains( $this->mWiki->city_id ),
-			"statuses" 	  => $this->mStatuses,
-			"variables"   => WikiFactory::getVariables(),
-			"variableName"=> $this->mVariableName,
-		);
-		$vars = array_merge($vars, $varOverrides);
-		$oTmpl->set_vars( $vars );
-
-		return $oTmpl->render( "form-variables" );
 	}
 
 	/**

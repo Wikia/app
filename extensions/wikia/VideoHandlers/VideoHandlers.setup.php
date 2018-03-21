@@ -67,7 +67,6 @@ $wgAutoloadClasses[ 'WikiaForeignDBViaLBRepo' ] = $dir . '/filerepo/WikiaForeign
 $wgAutoloadClasses[ 'WikiaLocalFile' ] = $dir . '/filerepo/WikiaLocalFile.class.php';
 $wgAutoloadClasses[ 'WikiaLocalFileShared'] = $dir . '/filerepo/WikiaLocalFileShared.class.php';
 $wgAutoloadClasses[ 'WikiaLocalRepo' ] = $dir . '/filerepo/WikiaLocalRepo.class.php';
-$wgAutoloadClasses[ 'WikiaNoArticleLocalFile' ] = $dir . '/filerepo/WikiaNoArticleLocalFile.class.php';
 
 // handler
 $wgAutoloadClasses[ 'VideoHandler'] = 		$dir . '/handlers/VideoHandler.class.php' ;

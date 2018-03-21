@@ -193,8 +193,7 @@ class VideoInfo extends WikiaModel {
 					'duration' => $this->duration,
 					'removed' => $this->removed,
 				),
-				__METHOD__,
-				'IGNORE'
+				__METHOD__
 			);
 
 			$affected = $db->affectedRows() > 0;
@@ -253,7 +252,15 @@ class VideoInfo extends WikiaModel {
 
 			$row = $db->selectRow(
 				'video_info',
-				'*',
+				[
+					"video_title",
+					"video_id",
+					"provider",
+					"added_at",
+					"added_by",
+					"duration",
+					"removed",
+				],
 				array( 'video_title' => $videoTitle ),
 				__METHOD__
 			);

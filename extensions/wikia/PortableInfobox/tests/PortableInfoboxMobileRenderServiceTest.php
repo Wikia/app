@@ -554,8 +554,8 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 						'media-type' => 'image',
 						'isVideo' => false,
 						'mercuryComponentAttrs' => json_encode( [
-							'itemContext' => 'portable-infobox',
-							'ref' => 1
+								'itemContext' => 'portable-infobox',
+								'ref' => 1
 						] )
 					]
 				]

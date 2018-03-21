@@ -593,9 +593,6 @@ CREATE TABLE /*_*/ipblocks (
   -- If set to 1, block applies only to logged-out users
   ipb_anon_only bool NOT NULL default 0,
 
-  -- Block prevents account creation from matching IP addresses
-  ipb_create_account bool NOT NULL default 1,
-
   -- Block triggers autoblocks
   ipb_enable_autoblock bool NOT NULL default '1',
 
@@ -985,19 +982,6 @@ CREATE TABLE /*_*/querycache (
 
 CREATE UNIQUE INDEX /*i*/qc_type_value_ns_title ON /*_*/querycache (qc_type,qc_value,qc_namespace,qc_title);
 
-
---
--- Cache of interwiki transclusion
---
-CREATE TABLE /*_*/transcache (
-  tc_url varbinary(255) NOT NULL,
-  tc_contents text,
-  tc_time binary(14) NOT NULL
-) /*$wgDBTableOptions*/;
-
-CREATE UNIQUE INDEX /*i*/tc_url_idx ON /*_*/transcache (tc_url);
-
-
 CREATE TABLE /*_*/logging (
   -- Log ID, for referring to this specific log entry, probably for deletion and such.
   log_id int unsigned NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -1184,17 +1168,6 @@ CREATE INDEX /*i*/change_tag_tag_id ON /*_*/change_tag (ct_tag,ct_rc_id,ct_rev_i
 CREATE TABLE /*_*/valid_tag (
   vt_tag varchar(255) NOT NULL PRIMARY KEY
 ) /*$wgDBTableOptions*/;
-
--- Table for storing localisation data
-CREATE TABLE /*_*/l10n_cache (
-  -- Language code
-  lc_lang varbinary(32) NOT NULL,
-  -- Cache key
-  lc_key varchar(255) NOT NULL,
-  -- Value
-  lc_value mediumblob NOT NULL
-) /*$wgDBTableOptions*/;
-CREATE INDEX /*i*/lc_lang_key ON /*_*/l10n_cache (lc_lang, lc_key);
 
 -- Table for storing JSON message blobs for the resource loader
 CREATE TABLE /*_*/msg_resource (

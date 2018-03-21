@@ -217,7 +217,7 @@ class WikiFactoryLoader {
 	 */
 	public function execute() {
 		global $wgCityId, $wgDevelEnvironment,
-			$wgDBservers, $wgLBFactoryConf, $wgDBserver, $wgContLang, $wgWikiaBaseDomain;
+			$wgDBservers, $wgLBFactoryConf, $wgDBserver, $wgContLang, $wgWikiaBaseDomain, $wgArticlePath;
 
 		wfProfileIn(__METHOD__);
 
@@ -252,7 +252,7 @@ class WikiFactoryLoader {
 			 * (domain), $this->mCityId is unknown (set to false in constructor)
 			 */
 			wfProfileIn( __METHOD__."-domaincache" );
-			$key = WikiFactory::getDomainKey( $this->mServerName . '/' . $this->langCode );
+			$key = WikiFactory::getDomainKey( rtrim( $this->mServerName . '/' . $this->langCode, '/' ) );
 			$this->mDomain = $oMemc->get( $key );
 			$this->mDomain = isset( $this->mDomain["id"] ) ? $this->mDomain : array ();
 			$this->debug( "reading from cache, key {$key}" );
@@ -307,17 +307,10 @@ class WikiFactoryLoader {
 				// request from HTTPD case.
 				// We only know server name so we have to ask city_domains table
 
-				if ( $this->langCode ) {
-					$where = [
-						'city_domains.city_id = city_list.city_id',
-						'city_domains.city_domain' => $this->mServerName . '/' . $this->langCode
-					];
-				} else {
-					$where = [
-						'city_domains.city_id = city_list.city_id',
-						'city_domains.city_domain' => $this->mServerName
-					];
-				}
+				$where = [
+					'city_domains.city_id = city_list.city_id',
+					'city_domains.city_domain' => rtrim( $this->mServerName . '/' . $this->langCode, '/' )
+				];
 
 				$oRow = $dbr->selectRow(
 					array(
@@ -360,7 +353,7 @@ class WikiFactoryLoader {
 				 * store value in cache
 				 */
 				$oMemc->set(
-					WikiFactory::getDomainKey( $this->mServerName ),
+					WikiFactory::getDomainKey( rtrim( $this->mServerName . '/' . $this->langCode, '/' ) ),
 					$this->mDomain,
 					$this->mExpireDomainCacheTimeout
 				);
@@ -425,7 +418,7 @@ class WikiFactoryLoader {
 
 		// check if domain from browser is different than main domain for wiki
 		$cond1 = !empty( $this->mServerName ) &&
-				 ( strtolower( $url['host'] ) != $this->mServerName || $url['path'] !== "/{$this->langCode}" );
+				 ( strtolower( $url['host'] ) != $this->mServerName || rtrim( $url['path'], '/' ) !== rtrim( "/{$this->langCode}", '/' ) );
 
 		/**
 		 * check if not additional domain was used (then we redirect anyway)
@@ -433,10 +426,20 @@ class WikiFactoryLoader {
 		$cond2 = $this->mAlternativeDomainUsed && ( $url['host'] != $this->mOldServerName );
 
 		if( ( $cond1 || $cond2 ) && empty( $wgDevelEnvironment ) ) {
-			$target = rtrim( $this->mCityUrl, '/' ) . '/' . $this->pathParams;
+			$redirectUrl = WikiFactory::getLocalEnvURL( $this->mCityUrl );
+			$target = rtrim( $redirectUrl, '/' ) . '/' . $this->pathParams;
 
-			if ( !empty( $_GET ) ) {
-				$target .= '?' . http_build_query( $_GET );
+			$queryParams = $_GET;
+			$localArticlePathClean = str_replace( '$1', '', $wgArticlePath );
+			if ( !empty( $localArticlePathClean ) &&
+				!empty( $queryParams['title'] ) &&
+				startsWith( $this->pathParams,  ltrim( $localArticlePathClean, '/' ) ) ) {
+				// skip the 'title' which is part of the $target, but append remaining parameters
+				unset( $queryParams['title'] );
+			}
+
+			if ( !empty( $queryParams ) ) {
+				$target .= '?' . http_build_query( $queryParams );
 			}
 
 			header( "X-Redirected-By-WF: NotPrimary" );

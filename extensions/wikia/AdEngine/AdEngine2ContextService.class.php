@@ -47,6 +47,7 @@ class AdEngine2ContextService {
 					'pageFairDetectionUrl' => $pageFairDetectionUrl,
 					'pageFairRecovery' => ARecoveryModule::isPageFairRecoveryEnabled(),
 					'instartLogicRecovery' => ARecoveryModule::isInstartLogicRecoveryEnabled(),
+					// TODO remove after ADEN-6797 release
 					'prebidBidderUrl' => $prebidBidderUrl,
 					'isAdTestWiki' => $wg->AdDriverIsAdTestWiki,
 					'cdnApiUrl' => $wg->wgCdnApiUrl

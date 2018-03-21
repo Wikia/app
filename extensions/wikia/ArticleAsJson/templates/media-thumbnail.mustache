@@ -1,13 +1,50 @@
-<figure class="article-media-thumbnail"{{#mediaAttrs}} data-component="article-media-thumbnail" data-attrs="{{mediaAttrs}}"{{/mediaAttrs}} data-ref="{{ref}}">
-	<a href="{{href}}">
-		<img class="article-media-placeholder"
-			src="data:image/svg+xml;charset=utf-8,%3Csvg xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg' viewBox%3D'0 0 {{width}} {{height}}'%2F%3E"
-			alt="{{title}}"
-			{{#width}} width="{{width}}"{{/width}}
-			{{#height}} height="{{height}}"{{/height}}>
-		<noscript>
-			<img src="{{url}}" alt="{{title}}"{{#width}} width="{{width}}"{{/width}}{{#height}} height="{{height}}"{{/height}}>
-		</noscript>
-	</a>
-	{{#caption}}<figcaption>{{{caption}}}</figcaption>{{/caption}}
+<figure class="article-media-thumbnail{{#media.isOgg}} is-ogg{{/media.isOgg}}{{#media.isVideo}} article-video{{/media.isVideo}}"{{#mediaAttrs}} data-attrs="{{mediaAttrs}}"{{/mediaAttrs}} data-file="{{media.fileName}}"{{#media.isLinkedByUser}} data-linkedbyuser="true"{{/media.isLinkedByUser}}>
+	{{#media.isOgg}}
+		<a href="{{media.url}}">{{{downloadIcon}}}</a>
+	{{/media.isOgg}}
+
+	{{^media.isOgg}}
+		<a href="{{media.href}}">
+			<img class="article-media-placeholder lazyload"
+			     src="data:image/svg+xml;charset=utf-8,%3Csvg xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg' viewBox%3D'0 0 {{media.width}} {{media.height}}'%2F%3E"
+			     data-src="{{media.thumbnail}}"
+			     data-srcset="{{media.srcset}}"
+			     data-sizes="auto"
+			     alt="{{media.title}}"
+				{{#media.width}} width="{{media.width}}"{{/media.width}}
+				{{#media.height}} height="{{media.height}}"{{/media.height}}>
+			<noscript>
+				<img srcset="{{media.srcset}}" alt="{{media.title}}"{{#media.width}} width="{{media.width}}"{{/media.width}}{{#media.height}} height="{{media.height}}"{{/media.height}}>
+			</noscript>
+			{{#media.isVideo}}
+				<div class="video-icon-container">
+					<svg class="wds-player-icon-play-medium" viewBox="0 0 180 180">
+						<g fill="none" fill-rule="evenodd">
+							<g opacity=".9" transform="rotate(90 75 90)">
+								<g fill="#000" filter="url(#a)"><rect id="b" width="150" height="150" rx="75"></rect></g>
+								<g fill="#FFF"><rect id="b" width="150" height="150" rx="75"></rect></g>
+							</g>
+							<path fill="#00D6D6" fill-rule="nonzero" d="M80.87 58.006l34.32 25.523c3.052 2.27 3.722 6.633 1.496 9.746a6.91 6.91 0 0 1-1.497 1.527l-34.32 25.523c-3.053 2.27-7.33 1.586-9.558-1.527A7.07 7.07 0 0 1 70 114.69V63.643c0-3.854 3.063-6.977 6.84-6.977 1.45 0 2.86.47 4.03 1.34z"></path>
+						</g>
+					</svg>
+				</div>
+			{{/media.isVideo}}
+		</a>
+	{{/media.isOgg}}
+
+	{{#hasFigcaption}}
+		<figcaption>
+			{{#media.caption}}
+				{{{media.caption}}}
+			{{/media.caption}}
+			{{#media.title}}
+				{{#media.isOgg}}
+					{{media.title}}
+				{{/media.isOgg}}
+				{{#media.isVideo}}
+					{{media.title}}
+				{{/media.isVideo}}
+			{{/media.title}}
+		</figcaption>
+	{{/hasFigcaption}}
 </figure>

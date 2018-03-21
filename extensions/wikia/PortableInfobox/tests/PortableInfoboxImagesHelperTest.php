@@ -119,7 +119,11 @@ class PortableInfoboxImagesHelperTest extends WikiaBaseTest {
 			'media-type' => 'image',
 			'mercuryComponentAttrs' => '{"itemContext":"portable-infobox","ref":null}',
 			'width' => $resultDimensions[ 'width' ],
-			'height' => $resultDimensions[ 'height' ]
+			'height' => $resultDimensions[ 'height' ],
+			'originalHeight' => '',
+			'originalWidth' => '',
+			'fileName' => '',
+			'dataAttrs' => '[]'
 		];
 		$thumb = $this->getMockBuilder( 'ThumbnailImage' )
 			->disableOriginalConstructor()

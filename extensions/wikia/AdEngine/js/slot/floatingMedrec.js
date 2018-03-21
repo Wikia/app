@@ -1,7 +1,7 @@
 /*global define Promise*/
 define('ext.wikia.adEngine.slot.floatingMedrec', [
 	'ext.wikia.adEngine.adContext',
-	'ext.wikia.adEngine.context.uapContext',
+	'ext.wikia.adEngine.bridge',
 	'ext.wikia.adEngine.slot.service.viewabilityHandler',
 	'wikia.document',
 	'wikia.log',
@@ -9,7 +9,7 @@ define('ext.wikia.adEngine.slot.floatingMedrec', [
 	'wikia.window'
 ], function (
 	adContext,
-	uapContext,
+	bridge,
 	viewabilityHandler,
 	doc,
 	log,
@@ -57,7 +57,7 @@ define('ext.wikia.adEngine.slot.floatingMedrec', [
 
 		function isUAPFloatingMedrecVisible() {
 			var isAdVisible = refreshInfo.adVisible && refreshInfo.refreshNumber !== 0;
-			return uapContext.isUapLoaded() && isAdVisible;
+			return bridge.universalAdPackage.isFanTakeoverLoaded() && isAdVisible;
 		}
 
 		function shouldSwitchModules(currentHeightPosition) {
@@ -81,11 +81,9 @@ define('ext.wikia.adEngine.slot.floatingMedrec', [
 			recirculationElement.style.display = 'none';
 		}
 
-		function refreshAd() {
-			return new Promise(function (resolve, reject) {
-				viewabilityHandler.refreshOnView(slotName, 0, {
-					onSuccess: resolve
-				});
+		function refreshAd(onSuccess) {
+			viewabilityHandler.refreshOnView(slotName, 0, {
+				onSuccess: onSuccess
 			});
 		}
 
@@ -98,8 +96,7 @@ define('ext.wikia.adEngine.slot.floatingMedrec', [
 					showRecirculation();
 				} else {
 					log(['swapRecirculationAndAd', 'Show ad, hide recirculation '], 'debug', logGroup);
-					refreshAd()
-						.then(hideRecirculation);
+					refreshAd(hideRecirculation);
 				}
 
 				refreshInfo.adVisible = !refreshInfo.adVisible;

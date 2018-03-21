@@ -1,13 +1,18 @@
 <?php
 
 class ArticleAsJson {
+	// TODO: remove it and all usages with XW-4719
+	const SIMPLYFY_RENDERING_QP = 'simplifyRendering';
+	const SIMPLYFY_RENDERING_QP_VALUE = 'true';
+
 	static $media = [ ];
 	static $users = [ ];
+	static $heroImage = null;
 	static $mediaDetailConfig = [
 		'imageMaxWidth' => false
 	];
 
-	const CACHE_VERSION = 1;
+	const CACHE_VERSION = 3.28;
 
 	const ICON_MAX_SIZE = 48;
 	// Line height in Mercury
@@ -22,6 +27,11 @@ class ArticleAsJson {
 	const MEDIA_ICON_TEMPLATE = 'extensions/wikia/ArticleAsJson/templates/media-icon.mustache';
 	const MEDIA_THUMBNAIL_TEMPLATE = 'extensions/wikia/ArticleAsJson/templates/media-thumbnail.mustache';
 	const MEDIA_GALLERY_TEMPLATE = 'extensions/wikia/ArticleAsJson/templates/media-gallery.mustache';
+	const MEDIA_LINKED_GALLERY_TEMPLATE = 'extensions/wikia/ArticleAsJson/templates/media-linked-gallery.mustache';
+
+	// TODO: remove these, all usages and mentioned templates with XW-4719
+	const MEDIA_THUMBNAIL_TEMPLATE_OLD = 'extensions/wikia/ArticleAsJson/templates/media-thumbnail-old.mustache';
+	const MEDIA_GALLERY_TEMPLATE_OLD = 'extensions/wikia/ArticleAsJson/templates/media-gallery-old.mustache';
 
 	private static function renderIcon( $media ) {
 		$scaledSize = self::scaleIconSize( $media['height'], $media['width'] );
@@ -52,64 +62,114 @@ class ArticleAsJson {
 		);
 	}
 
+	// TODO: remove it and all usages with XW-4719
+	public static function simplifyRendering(): bool {
+		return RequestContext::getMain()->getRequest()->getVal(self::SIMPLYFY_RENDERING_QP, "false") === self::SIMPLYFY_RENDERING_QP_VALUE;
+	}
+
 	private static function renderImage( $media, $id ) {
-		return self::removeNewLines(
-			\MustacheService::getInstance()->render(
-				self::MEDIA_THUMBNAIL_TEMPLATE,
-				[
-					'mediaAttrs' => json_encode( [ 'ref' => $id ] ),
-					'media' => $media,
-					'width' => $media['width'],
-					'height' => $media['height'],
-					'url' => $media['url'],
-					'title' => $media['title'],
-					'fileUrl' => $media['fileUrl'],
-					'caption' => $media['caption'] ?? '',
-					'href' => $media['href'],
-					'isLinkedByUser' => $media['isLinkedByUser'],
-					/**
-					 * data-ref has to be set for now because it's read in
-					 * extensions/wikia/PortableInfobox/services/Parser/Nodes/NodeImage.php:getGalleryData
-					 * and in
-					 * extensions/wikia/PortableInfobox/services/Parser/Nodes/NodeImage.php:getTabberData.
-					 * Base on presence of data-ref element is classified as an image
-					 * - without that service would return null
-					 *
-					 * @TODO XW-1460 fix the regex and remove this attribute
-					 */
-					'ref' => $id
-				]
-			)
-		);
+		if ( self::simplifyRendering() ) {
+			return self::removeNewLines(
+				\MustacheService::getInstance()->render(
+					self::MEDIA_THUMBNAIL_TEMPLATE,
+					[
+						'media' => $media,
+						'mediaAttrs' => json_encode( $media ),
+						'downloadIcon' => DesignSystemHelper::renderSvg( 'wds-icons-download', 'wds-icon' ),
+						'chevronIcon' => DesignSystemHelper::renderSvg('wds-icons-menu-control-tiny', 'wds-icon wds-icon-tiny chevron'),
+						'hasFigcaption' => !empty( $media['caption'] ) || ( !empty( $media['title'] ) && ( $media['isVideo'] || $media['isOgg'] ) )
+					]
+				)
+			);
+		} else {
+			return self::removeNewLines(
+				\MustacheService::getInstance()->render(
+					self::MEDIA_THUMBNAIL_TEMPLATE_OLD,
+					[
+						'mediaAttrs' => json_encode( [ 'ref' => $id ] ),
+						'media' => $media,
+						'width' => $media['width'],
+						'height' => $media['height'],
+						'url' => $media['url'],
+						'title' => $media['title'],
+						'fileUrl' => $media['fileUrl'],
+						'caption' => $media['caption'] ?? '',
+						'href' => $media['href'],
+						'isLinkedByUser' => $media['isLinkedByUser'],
+						/**
+						 * data-ref has to be set for now because it's read in
+						 * extensions/wikia/PortableInfobox/services/Parser/Nodes/NodeImage.php:getGalleryData
+						 * and in
+						 * extensions/wikia/PortableInfobox/services/Parser/Nodes/NodeImage.php:getTabberData.
+						 * Base on presence of data-ref element is classified as an image
+						 * - without that service would return null
+						 *
+						 * @TODO XW-1460 fix the regex and remove this attribute
+						 */
+						'ref' => $id
+					]
+				)
+			);
+		}
+
 	}
 
 	private static function renderGallery( $media, $id, $hasLinkedImages ) {
-		return self::removeNewLines(
-			\MustacheService::getInstance()->render(
-				self::MEDIA_GALLERY_TEMPLATE,
-				[
-					'galleryAttrs' => json_encode( [ 'ref' => $id ] ),
-					/**
-					 * data-ref has to be set for now because it's read in
-					 * extensions/wikia/PortableInfobox/services/Parser/Nodes/NodeImage.php::getGalleryData
-					 * and in
-					 * extensions/wikia/PortableInfobox/services/Parser/Nodes/NodeImage.php::getTabberData
-					 * Base on presence of data-ref element is classified as an image
-					 * - without that service would return null
-					 *
-					 * !!! Important note - data-ref inside template has ' instead of "
-					 * because this is how regex in
-					 * extensions/wikia/PortableInfobox/services/Parser/Nodes/NodeImage.php::getGalleryData
-					 * works
-					 *
-					 * @TODO XW-1460 fix the regex and remove this attribute
-					 */
-					'ref' => $id,
-					'media' => $media,
-					'hasLinkedImages' => $hasLinkedImages
-				]
-			)
-		);
+		if ( self::simplifyRendering() ) {
+			if ( $hasLinkedImages ) {
+				return self::removeNewLines(
+					\MustacheService::getInstance()->render(
+						self::MEDIA_LINKED_GALLERY_TEMPLATE,
+						[
+							'galleryAttrs' => json_encode( $media ),
+							'media' => $media,
+							'downloadIcon' => DesignSystemHelper::renderSvg( 'wds-icons-download', 'wds-icon' ),
+							'viewMoreLabel' => wfMessage('communitypage-view-more')->escaped(), // TODO:  XW-4793
+							'linkedGalleryViewMoreVisible' => $hasLinkedImages && count($media) > 4,
+							'chevronIcon' => DesignSystemHelper::renderSvg('wds-icons-menu-control-tiny', 'wds-icon wds-icon-tiny chevron')
+						]
+					)
+				);
+			} else {
+				return self::removeNewLines(
+					\MustacheService::getInstance()->render(
+						self::MEDIA_GALLERY_TEMPLATE,
+						[
+							'galleryAttrs' => json_encode( $media ),
+							'media' => $media,
+							'downloadIcon' => DesignSystemHelper::renderSvg( 'wds-icons-download', 'wds-icon' ),
+						]
+					)
+				);
+			}
+		} else {
+			return self::removeNewLines(
+				\MustacheService::getInstance()->render(
+					self::MEDIA_GALLERY_TEMPLATE_OLD,
+					[
+						'galleryAttrs' => json_encode( [ 'ref' => $id ] ),
+						/**    +                    'hasLinkedImages' => $hasLinkedImages,
+						 * data-ref has to be set for now because it's read in
+						 * extensions/wikia/PortableInfobox/services/Parser/Nodes/NodeImage.php::getGalleryData
+						 * and in
+						 * extensions/wikia/PortableInfobox/services/Parser/Nodes/NodeImage.php::getTabberData
+						 * Base on presence of data-ref element is classified as an image
+						 * - without that service would return null
+						 *
+						 * !!! Important note - data-ref inside template has ' instead of "
+						 * because this is how regex in
+						 * extensions/wikia/PortableInfobox/services/Parser/Nodes/NodeImage.php::getGalleryData
+						 * works
+						 *
+						 * @TODO XW-1460 fix the regex and remove this attribute
+						 */
+						'ref' => $id,
+						'media' => $media,
+						'hasLinkedImages' => $hasLinkedImages
+					]
+				)
+			);
+		}
 	}
 
 	private static function removeNewLines( $string ) {
@@ -147,15 +207,16 @@ class ArticleAsJson {
 			'type' => $details['mediaType'],
 			'url' => $details['rawImageUrl'],
 			'fileUrl' => $details['fileUrl'],
+			'fileName' => str_replace( ' ', '_', $imageName),
 			'title' => $imageName,
 			'user' => $details['userName'],
-			'mime' => $details['mime']
+			'mime' => $details['mime'],
+			'isVideo' => $details['mediaType'] === 'video',
+			'isOgg' => $details['mime'] === 'application/ogg'
 		];
 
 		// Only images are allowed to be linked by user
 		if ( is_string( $link ) && $link !== '' && $media['type'] === 'image' ) {
-			// TODO remove after XW-2653 is released
-			$media['link'] = $link;
 			$media['href'] = $link;
 			$media['isLinkedByUser'] = true;
 		} else {
@@ -214,7 +275,7 @@ class ArticleAsJson {
 			$title = F::app()->wg->Title;
 			$media = [ ];
 
-			foreach ( $data['images'] as $image ) {
+			foreach ( $data['images'] as $index => $image ) {
 				$details = self::getMediaDetailWithSizeFallback(
 					Title::newFromText( $image['name'], NS_FILE ),
 					self::$mediaDetailConfig
@@ -233,7 +294,16 @@ class ArticleAsJson {
 				}
 
 				$linkHref = isset( $image['linkhref'] ) ? $image['linkhref'] : null;
-				$media[] = self::createMediaObject( $details, $image['name'], $caption, $linkHref );
+				$mediaObj = self::createMediaObject( $details, $image['name'], $caption, $linkHref );
+				$mediaObj['mediaAttr'] = json_encode( $mediaObj );
+				$mediaObj['galleryRef'] = $index;
+				$mediaObj['thumbnailUrl'] = VignetteRequest::fromUrl( $mediaObj['url'] )
+					->zoomCrop()
+					->width( 195 )
+					->height( 195 )
+					->url();
+
+				$media[] = $mediaObj;
 
 				self::addUserObj( $details );
 			}
@@ -254,12 +324,18 @@ class ArticleAsJson {
 		return true;
 	}
 
-	public static function onExtendPortableInfoboxImageData( $data, &$ref ) {
+	public static function onExtendPortableInfoboxImageData( $data, &$ref, &$dataAttrs ) {
 		$title = Title::newFromText( $data['name'] );
 		if ( $title ) {
 			$details = self::getMediaDetailWithSizeFallback( $title, self::$mediaDetailConfig );
 			$details['context'] = $data['context'];
-			self::$media[] = self::createMediaObject( $details, $title->getText(), $data['caption'] );
+			$mediaObj = self::createMediaObject( $details, $title->getText(), $data['caption'] );
+			self::$media[] = $mediaObj;
+			$dataAttrs = $mediaObj;
+
+			if ( $details['context'] == 'infobox-hero-image' && empty( self::$heroImage ) ) {
+				self::$heroImage = $mediaObj;
+			}
 			$ref = count( self::$media ) - 1;
 		}
 
@@ -302,6 +378,9 @@ class ArticleAsJson {
 
 			$caption = $frameParams['caption'] ?? null;
 			$media = self::createMediaObject( $details, $title->getText(), $caption, $linkHref );
+			$media['srcset'] = self::getSrcset( $media['url'], intval( $media['width'] ) );
+			$media['thumbnail'] = self::getThumbnailUrlForWidth( $media['url'], 340 );
+
 			self::$media[] = $media;
 
 			self::addUserObj( $details );
@@ -312,6 +391,26 @@ class ArticleAsJson {
 		}
 
 		return true;
+	}
+
+	private static function getSrcset( string $url, int $originalWidth ): string {
+		$widths = [ 284, 340, 732, 985 ];
+		$srcSetItems = [];
+
+		foreach ( $widths as $width ) {
+			if ( $width <= $originalWidth ) {
+				$thumb = self::getThumbnailUrlForWidth( $url, $width );
+				$srcSetItems[] = "${thumb} ${width}w";
+			}
+		}
+
+		return implode( ',', $srcSetItems );
+	}
+
+	private static function getThumbnailUrlForWidth( string $url, int $requestedWidth ) {
+		return VignetteRequest::fromUrl( $url )
+			->scaleToWidth( $requestedWidth )
+			->url();
 	}
 
 	public static function onPageRenderingHash( &$confstr ) {
@@ -327,6 +426,10 @@ class ArticleAsJson {
 				->getVal( 'collapsibleSections' ) )
 			) {
 				$confstr .= ':collapsibleSections';
+			}
+
+			if ( self::simplifyRendering() ) {
+				$confstr .= ':simplifyRendering';
 			}
 		}
 
@@ -382,7 +485,8 @@ class ArticleAsJson {
 				[
 					'content' => $text,
 					'media' => self::$media,
-					'users' => self::$users
+					'users' => self::$users,
+					'heroImage' => self::$heroImage
 				]
 			);
 		}

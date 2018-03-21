@@ -104,58 +104,45 @@ class DumpsOnDemand {
 	}
 
 	/**
-	 * @static
-	 * @access public
-	 * @deprecated
+	 * @param int $iCityId
+	 * @param bool $bHidden
+	 * @param bool $bClose
+	 * @throws Wikia\Util\AssertionException
 	 */
-	static public function sendMail( $sDbName = null, $iCityId = null, $bHidden = false, $bClose = false ) {
-		trigger_error( sprintf( 'Using of deprecated method %s.', __METHOD__ ) , E_USER_WARNING );
-		self::queueDump( $iCityId, $bHidden, $bClose );
-	}
+	static public function queueDump( int $iCityId, bool $bHidden = false, bool $bClose = false ) {
+		global $wgUser;
 
-	/**
-	 * @static
-	 * @access public
-	 */
-	static public function queueDump( $iCityId = null, $bHidden = false, $bClose = false ) {
-		global $wgCityId, $wgUser;
+		$oWiki = WikiFactory::getWikiByID( $iCityId );
 
-			if ( is_null( $iCityId ) ) {
-				$iCityId = $wgCityId;
-			}
+		\Wikia\Util\Assert::true(
+			is_object( $oWiki ),
+			sprintf( 'No such wiki. city_id: %d.', $iCityId )
+		);
 
-			$oWiki = WikiFactory::getWikiByID( $iCityId );
+		$aData = [
+			'dump_wiki_id'   => $iCityId,
+			'dump_user_id'   => $wgUser->getId(),
+			'dump_requested' => wfTimestampNow()
+		];
 
-			if ( !is_object( $oWiki ) ) {
-				trigger_error( sprintf( '%s terminated. No such wiki (city_id: %d.', __METHOD__, $iCityId ) , E_USER_WARNING );
-				return null;
-			}
+		if ( $bHidden ) {
+			$aData['dump_hidden'] = 'Y';
+		}
 
-			$aData = [
-				'dump_wiki_id'	  => $iCityId,
-				'dump_wiki_dbname'  => $oWiki->city_dbname,
-				'dump_wiki_url'	 => $oWiki->city_url,
-				'dump_user_id' => $wgUser->getId(),
-				'dump_requested'	=> wfTimestampNow()
-			];
+		if ( $bClose ) {
+			$aData['dump_closed'] = 'Y';
+		}
 
-			if ( $bHidden ) {
-				$aData['dump_hidden'] = 'Y';
-			}
+		$oDB = wfGetDB( DB_MASTER, array(), 'wikicities' );
+		$oDB->insert( 'dumps', $aData, __METHOD__ );
+		$oDB->update(
+				'city_list',
+				array( 'city_lastdump_timestamp' => wfTimestampNow() ),
+				array( 'city_id' => $iCityId ),
+				__METHOD__
+		);
 
-			if ( $bClose ) {
-				$aData['dump_closed'] = 'Y';
-			}
-
-			$oDB = wfGetDB( DB_MASTER, array(), 'wikicities' );
-			$oDB->insert( 'dumps', $aData, __METHOD__ );
-			$oDB->update(
-					'city_list',
-					array( 'city_lastdump_timestamp' => wfTimestampNow() ),
-					array( 'city_id' => $iCityId ),
-					__METHOD__
-			);
-			WikiFactory::clearCache( $iCityId );
+		WikiFactory::clearCache( $iCityId );
 	}
 
 	static public function getPath( $sName ) {

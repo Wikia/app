@@ -156,7 +156,7 @@ if ( ! empty( $wgEnableLyricWikiExt ) ) {
 	require_once "$LW/lw_impliedRedirects.php";
 	# Turn off subpages on the main namespace (otherwise every AC/DC song links back to "AC"), etc.
 	$wgNamespacesWithSubpages[ NS_MAIN ] = false;
-        
+
 	require_once "$LW/LyricFind/LyricFind.setup.php";
 }
 /**
@@ -386,7 +386,7 @@ if ( defined( 'REBUILD_LOCALISATION_CACHE_IN_PROGRESS' ) || !empty($wgEnableSema
 
 	# Function to switch on Semantic MediaWiki. This function must be called in
 	# LocalSettings.php after including SMW_Settings.php.
-	enableSemantics(preg_replace('/^http:\/\//', '', $wgServer));
+	enableSemantics(preg_replace('/^https?:\/\//', '', $wgServer));
 
 	$smwgNamespacesWithSemanticLinks[NS_USER] = false;
 	$smwgShowFactbox = SMW_FACTBOX_NONEMPTY;
@@ -1640,6 +1640,9 @@ $wgPreferenceServiceRead = true;
 /**
  * Enable the Content Review extension
  */
+// Load classes that should always be available
+include "$IP/extensions/wikia/ContentReview/ContentReviewShared.setup.php";
+
 if ( !empty( $wgUseSiteJs ) && !empty( $wgEnableContentReviewExt ) ) {
 	include( "$IP/extensions/wikia/ContentReview/ContentReview.setup.php" );
 
@@ -1647,6 +1650,8 @@ if ( !empty( $wgUseSiteJs ) && !empty( $wgEnableContentReviewExt ) ) {
 		include( "$IP/extensions/wikia/ContentReview/ContentReviewSpecialPage.setup.php" );
 	}
 }
+
+include "$IP/extensions/wikia/ContentReview/ImportJS.setup.php";
 
 /**
  * Parser tags which are replacing verbatim tags
@@ -1740,10 +1745,6 @@ if (!empty($wgFandomCreatorCommunityId)) {
 	include "$IP/extensions/wikia/FandomCreator/FandomCreator.setup.php";
 }
 
-if ( !empty( $wgEnableAppPromoLandingExt ) ) {
-	include "$IP/extensions/wikia/AppPromoLanding/AppPromoLanding_setup.php";
-}
-
 /**
  * @name $wgEnableNewAuthModal
  * Enables new popup-based authentication
@@ -1788,3 +1789,6 @@ include "$IP/extensions/wikia/HTTPSOptIn/HTTPSOptIn.setup.php";
 
 // Search should be enabled globally, always
 include "$IP/extensions/wikia/Search/WikiaSearch.setup.php";
+
+// Mercury auth pages related functionality - redirects, email confirmation.
+include "$IP/extensions/wikia/AuthPages/AuthPages.setup.php";

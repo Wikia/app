@@ -542,6 +542,44 @@ class WikiFactory {
 	}
 
 	/**
+	 * @param $varId
+	 * @param $cityId
+	 * @param $value
+	 * @param null $reason
+	 * @return bool
+	 * @throws WikiFactoryDuplicateWgServer
+	 * @throws WikiFactoryVariableParseException
+	 */
+	static public function validateAndSetVarById( $varId, $cityId, $value, $reason = null ) {
+		global $wgWikicitiesReadOnly;
+
+		if ( !static::isUsed() ) {
+			Wikia::log( __METHOD__, "", "WikiFactory is not used." );
+			return false;
+		}
+
+		if ( $wgWikicitiesReadOnly ) {
+			Wikia::log( __METHOD__, "", "wgWikicitiesReadOnly mode. Skipping update.");
+			return false;
+		}
+
+		if ( empty( $varId ) || empty( $cityId ) ) {
+			return false;
+		}
+
+		$variable = static::loadVariableFromDB( $varId, false, $cityId );
+
+		if ( $variable ) {
+			$wikiFactoryVariableParser = new WikiFactoryVariableParser( $variable->cv_variable_type );
+			$value = $wikiFactoryVariableParser->transformValue( $value );
+
+			return static::setVarById( $varId, $cityId, $value, $reason );
+		}
+
+		return false;
+	}
+
+	/**
 	 * setVarById
 	 *
 	 * used for saving new variable value, logging changes and update city_list
@@ -760,29 +798,6 @@ class WikiFactory {
 						__METHOD__ );
 					break;
 
-				case "wgDBname":
-					#--- city_dbname
-					$dbw->update(
-						static::table("city_list"),
-						[ "city_dbname" => $value ],
-						[ "city_id" => $city_id ],
-						__METHOD__ );
-					break;
-
-				case "wgDBcluster":
-					/**
-					 * city_cluster
-					 *
-					 * city_cluster = null for first cluster
-					 * @todo handle deleting values of this variable
-					 */
-					$dbw->update(
-						static::table("city_list"),
-						[ "city_cluster" => $value ],
-						[ "city_id" => $city_id ],
-						__METHOD__ );
-					break;
-
 				case 'wgMetaNamespace':
 				case 'wgMetaNamespaceTalk':
 					#--- these cannot contain spaces!
@@ -811,16 +826,11 @@ class WikiFactory {
 			global $wgMemc;
 			$variable->cv_value = serialize( $value );
 			$wgMemc->set(  static::getVarValueKey( $city_id, $variable->cv_id ), $variable, WikiaResponse::CACHE_STANDARD );
-		}
-		catch ( DBQueryError $e ) {
+		} catch ( DBQueryError $e ) {
 			Wikia::log( __METHOD__, "", "Database error, cannot write variable." );
 			$dbw->rollback();
 			$bStatus = false;
-			// rethrowing here does not seem to be right. Callers expect success or failure
-			// as result value, not DBQueryError exception
-			// throw $e;
 		}
-
 
 		wfProfileOut( __METHOD__ );
 		return $bStatus;
@@ -1276,7 +1286,7 @@ class WikiFactory {
 	 * @param bool $master
 	 * @return object|false: database row with wiki params
 	 */
-	static public function getWikiByID( $id, $master = false ) {
+	static public function getWikiByID( int $id, $master = false ) {
 
 		if ( ! static::isUsed() ) {
 			Wikia::log( __METHOD__, "", "WikiFactory is not used." );
@@ -1835,53 +1845,6 @@ class WikiFactory {
 			}
 		}
 		return $retVal;
-	}
-
-	/**
-	 * getFileCachePath
-	 *
-	 * build path to file based on id of wikia
-	 *
-	 *
-	 * @author eloy@wikia
-	 * @access public
-	 * @static
-	 *
-	 * @param integer	$city_id	identifier from city_list
-	 *
-	 * @return string: path to file or null if id is not a number
-	 */
-	static public function getFileCachePath( $city_id ) {
-		if ( is_null( $city_id ) || empty( $city_id ) ) {
-			return null;
-		}
-		wfProfileIn( __METHOD__ );
-
-		$intid = $city_id;
-		$strid = (string)$intid;
-		$path = "";
-		if ( $intid < 10 ) {
-			$path = sprintf( "%s/%d.ser", static::CACHEDIR, $intid );
-		}
-		elseif ( $intid < 100 ) {
-			$path = sprintf(
-				"%s/%s/%d.ser",
-				static::CACHEDIR,
-				substr($strid, 0, 1),
-				$intid
-			);
-		}
-		else {
-			$path = sprintf(
-				"%s/%s/%s/%d.ser",
-				static::CACHEDIR,
-				substr($strid, 0, 1),
-				substr($strid, 0, 2),
-				$intid
-			);
-		}
-		wfProfileOut( __METHOD__ );
-		return $path;
 	}
 
 	/**
@@ -3402,8 +3365,8 @@ class WikiFactory {
 		if ( !isset( $variable->cv_value ) ) {
 			return "";
 		}
-		$value = static::parseValue( unserialize( $variable->cv_value, [ 'allowed_classes' => false ] ), $variable->cv_variable_type );
-		return htmlspecialchars( $value );
+
+		return static::parseValue( unserialize( $variable->cv_value, [ 'allowed_classes' => false ] ), $variable->cv_variable_type );
 	}
 
 	/**
@@ -3419,17 +3382,14 @@ class WikiFactory {
 	 */
 	static private function parseValue( $value, $type ) {
 		if ( $type == "string" || $type == "integer"  ) {
-			return $value;
+			return htmlspecialchars( $value );
 		}
 
-		if ( $type == "array" ) {
-			$json = json_encode ( $value );
-			if ( !preg_match_all( "/\".*\":/U", $json ) ) {
-				return $json;
-			}
+		if ( $type == "array" || $type == "struct" || $type == "hash" ) {
+			return json_encode( $value, JSON_PRETTY_PRINT );
 		}
 
-		return var_export( $value, true );
+		return htmlspecialchars( var_export( $value, true ) );
 	}
 
 	/**

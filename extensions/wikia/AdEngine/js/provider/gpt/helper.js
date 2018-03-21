@@ -16,10 +16,8 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	'ext.wikia.aRecoveryEngine.adBlockRecovery',
 	'ext.wikia.adEngine.slotTweaker',
 	'wikia.document',
-	'wikia.geo',
 	'wikia.instantGlobals',
 	'wikia.log',
-	'wikia.window',
 	require.optional('ext.wikia.adEngine.ml.rabbit'),
 	require.optional('ext.wikia.adEngine.provider.gpt.sraHelper'),
 	require.optional('ext.wikia.aRecoveryEngine.instartLogic.recovery'),
@@ -40,10 +38,8 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	adBlockRecovery,
 	slotTweaker,
 	doc,
-	geo,
 	instantGlobals,
 	log,
-	win,
 	rabbit,
 	sraHelper,
 	instartLogic,
@@ -144,13 +140,6 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 			abId = slotTargeting.getAbTestId(slotTargetingData);
 			if (abId) {
 				slotTargetingData.abi = abId;
-			}
-
-			if (
-				geo.isProperGeo(instantGlobals.wgAdDriverLBScrollExperimentCountires) &&
-				instantGlobals.wgAdDriverLBScrollExperimentBucket > 0
-			) {
-				slotTargetingData.scrolltop = 'top_' + Math.floor(win.scrollY / instantGlobals.wgAdDriverLBScrollExperimentBucket) * instantGlobals.wgAdDriverLBScrollExperimentBucket;
 			}
 		}
 

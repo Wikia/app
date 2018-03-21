@@ -47,6 +47,8 @@ describe('ext.createNewWiki.helper', function () {
 			}
 		];
 
+		window.wgScriptPath = '';
+
 		testCases.forEach(function (testCase) {
 			var queryStringMock = {
 					setVal: function () {

@@ -44,3 +44,5 @@ tests/build
 tests/coverage
 
 /HeadlessChrome_*
+
+lib/Swagger/swagger-codegen-cli.jar
