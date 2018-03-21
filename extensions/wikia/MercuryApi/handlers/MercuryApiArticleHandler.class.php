@@ -14,11 +14,6 @@ class MercuryApiArticleHandler {
 		$data['topContributors'] = self::getTopContributorsDetails(
 			self::getTopContributorsPerArticle( $mercuryApiModel, $article )
 		);
-		$relatedPages = self::getRelatedPages( $article );
-
-		if ( !empty( $relatedPages ) ) {
-			$data['relatedPages'] = $relatedPages;
-		}
 
 		return $data;
 	}
@@ -146,21 +141,5 @@ class MercuryApiArticleHandler {
 			$article->getID(),
 			self::NUMBER_CONTRIBUTORS
 		);
-	}
-
-	/**
-	 * @desc Returns related pages
-	 *
-	 * @param Article $article
-	 * @param int $limit
-	 *
-	 * @return mixed
-	 */
-	public static function getRelatedPages( Article $article, $limit = 6 ) {
-		if ( class_exists( 'RelatedPages' ) ) {
-			return RelatedPages::getInstance()->get( $article->getID(), $limit );
-		} else {
-			return false;
-		}
 	}
 }
