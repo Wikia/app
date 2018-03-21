@@ -226,6 +226,22 @@ class AvatarServiceTest extends WikiaBaseTest {
 				16,
 				'http://vignette.wikia-dev.com/messaging/images/e/e5/Avatar4.jpg/revision/latest/scale-to-width-down/16'
 			],
+			# SUS-4181 | URLs with width provided
+			[
+				'http://vignette.wikia-dev.com/messaging/images/1/19/Avatar.jpg/revision/latest/scale-to-width-down/150',
+				150,
+				'http://vignette.wikia-dev.com/messaging/images/1/19/Avatar.jpg/revision/latest/scale-to-width-down/150'
+			],
+			[
+				'http://vignette.wikia-dev.com/messaging/images/1/19/Avatar.jpg/revision/latest/scale-to-width-down/150',
+				16,
+				'http://vignette.wikia-dev.com/messaging/images/1/19/Avatar.jpg/revision/latest/scale-to-width-down/16'
+			],
+			[
+				'http://vignette.wikia-dev.com/a05b75cd-a3de-41f3-8c1c-064e366c086b/scale-to-width-down/150',
+				150,
+				'http://vignette.wikia-dev.com/a05b75cd-a3de-41f3-8c1c-064e366c086b/scale-to-width-down/150'
+			],
 		];
 	}
 }
