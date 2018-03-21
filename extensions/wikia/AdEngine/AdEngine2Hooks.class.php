@@ -55,6 +55,7 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverEvolve2Countries';
 		$vars[] = 'wgAdDriverFMRLogisticRegressionRabbitCountries';
 		$vars[] = 'wgAdDriverFMRPassiveAggressiveClassifierRabbitCountries';
+		$vars[] = 'wgAdDriverFVDelayCountries';
 		$vars[] = 'wgAdDriverFVMidrollCountries';
 		$vars[] = 'wgAdDriverFVPostrollCountries';
 		$vars[] = 'wgAdDriverHighImpactSlotCountries';

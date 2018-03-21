@@ -17,7 +17,7 @@ define('wikia.articleVideo.featuredVideo.lagger', [
 	}
 
 	function isEnabled() {
-		return adContext.get('targeting.hasFeaturedVideo');
+		return adContext.get('opts.isFVDelayEnabled') && adContext.get('targeting.hasFeaturedVideo');
 	}
 
 	function markAsReady() {
