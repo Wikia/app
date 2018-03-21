@@ -7,9 +7,11 @@ describe('ext.wikia.adEngine.provider.gpt.adSizeFilter', function () {
 	}
 
 	var mocks = {
-		uapContext: {
-			isUapLoaded: function () {
-				return false;
+		bridge: {
+			universalAdPackage: {
+				isFanTakeoverLoaded: function () {
+					return false;
+				}
 			}
 		},
 		abTest: {
@@ -49,7 +51,7 @@ describe('ext.wikia.adEngine.provider.gpt.adSizeFilter', function () {
 
 	function getModule() {
 		return modules['ext.wikia.adEngine.provider.gpt.adSizeFilter'](
-			mocks.uapContext,
+			mocks.bridge,
 			mocks.getDocument(),
 			mocks.log,
 			mocks.win
@@ -119,36 +121,43 @@ describe('ext.wikia.adEngine.provider.gpt.adSizeFilter', function () {
 		expect(getModule().filter('INVISIBLE_SKIN', sizesIn)).toEqual(sizesOut);
 	});
 
-	it('Doesn\'t return 2x2 size of MOBILE_BOTTOM_LEADERBOARD when there is no UAP', function () {
-		var sizesIn = [[300, 50], [300, 250], [2, 2]],
-			sizesOut = [[300, 50], [300, 250]];
+	it('Returns only 728x90 and 3x3 size of BOTTOM_LEADERBOARD when there is UAP', function () {
+		mocks.win.ads.context.targeting.skin = 'oasis';
+		spyOn(mocks.bridge.universalAdPackage, 'isFanTakeoverLoaded').and.returnValue(true);
+		var sizesIn = [[728, 90], [970, 250], [3, 3]],
+			sizesOut = [[728, 90], [3, 3]];
 
-		expect(getModule().filter('MOBILE_BOTTOM_LEADERBOARD', sizesIn)).toEqual(sizesOut);
+		expect(getModule().filter('BOTTOM_LEADERBOARD', sizesIn)).toEqual(sizesOut);
 	});
 
-	it('Returns only 2x2 size of MOBILE_BOTTOM_LEADERBOARD when there is UAP', function () {
-		spyOn(mocks.uapContext, 'isUapLoaded').and.returnValue(true);
-		var sizesIn = [[300, 50], [300, 250], [2, 2]],
-			sizesOut = [[2, 2]];
+	it('Doesn\'t return 3x3 size of BOTTOM_LEADERBOARD when there is no UAP', function () {
+		var sizesIn = [[728, 90], [970, 250], [3, 3]],
+			sizesOut = [[728, 90], [970, 250]];
 
-		expect(getModule().filter('MOBILE_BOTTOM_LEADERBOARD', sizesIn)).toEqual(sizesOut);
+		expect(getModule().filter('BOTTOM_LEADERBOARD', sizesIn)).toEqual(sizesOut);
 	});
 
-	it('Doesn\'t return 2x2 size of BOTTOM_LEADERBOARD on mobile when there is no UAP', function () {
-		mocks.win.ads.context.targeting.skin = 'mercury';
-
+	it('Doesn\'t return 2x2 size of BOTTOM_LEADERBOARD when there is no UAP', function () {
 		var sizesIn = [[300, 50], [300, 250], [2, 2]],
 			sizesOut = [[300, 50], [300, 250]];
 
 		expect(getModule().filter('BOTTOM_LEADERBOARD', sizesIn)).toEqual(sizesOut);
 	});
 
-	it('Returns only 2x2 size of BOTTOM_LEADERBOARD on mobile when there is UAP', function () {
+	it('Returns only 2x2 size of mobile BOTTOM_LEADERBOARD when there is UAP', function () {
 		mocks.win.ads.context.targeting.skin = 'mercury';
-		spyOn(mocks.uapContext, 'isUapLoaded').and.returnValue(true);
-
+		spyOn(mocks.bridge.universalAdPackage, 'isFanTakeoverLoaded').and.returnValue(true);
 		var sizesIn = [[300, 50], [300, 250], [2, 2]],
 			sizesOut = [[2, 2]];
+
+		expect(getModule().filter('BOTTOM_LEADERBOARD', sizesIn)).toEqual(sizesOut);
+	});
+
+	it('Doesn\'t return 2x2 size of mobile BOTTOM_LEADERBOARD when there is no UAP', function () {
+		mocks.win.ads.context.targeting.skin = 'mercury';
+
+		var sizesIn = [[300, 50], [300, 250], [2, 2]],
+			sizesOut = [[300, 50], [300, 250]];
 
 		expect(getModule().filter('BOTTOM_LEADERBOARD', sizesIn)).toEqual(sizesOut);
 	});
