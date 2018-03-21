@@ -1,21 +1,11 @@
 <?php
 
 class RobotsTxtMock extends \Wikia\RobotsTxt\RobotsTxt {
-	public $spiedAllowedPaths = [];
-	public $spiedDisallowedPaths = [];
+	public $spiedRobots = [];
 	public $spiedSitemap = [];
-	public $spiedBlockedRobots = [];
 
-	public function addAllowedPaths( array $paths ) {
-		$this->spiedAllowedPaths[] = $paths;
-	}
-
-	public function addDisallowedPaths( array $paths ) {
-		$this->spiedDisallowedPaths[] = $paths;
-	}
-
-	public function addBlockedRobots( array $robots ) {
-		$this->spiedBlockedRobots[] = $robots;
+	public function addRobot( Robot $robot ) {
+		$this->$spiedRobots[] = $robot;
 	}
 
 	public function getContents() {

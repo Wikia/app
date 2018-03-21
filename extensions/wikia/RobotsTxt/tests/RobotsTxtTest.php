@@ -1,5 +1,6 @@
 <?php
 
+use Wikia\RobotsTxt\Robot;
 use Wikia\RobotsTxt\RobotsTxt;
 
 class RobotsTxtTest extends WikiaBaseTest {
@@ -13,55 +14,24 @@ class RobotsTxtTest extends WikiaBaseTest {
 	/**
 	 * Test Wikia\RobotsTxt\RobotsTxt API
 	 *
-	 * @covers       addAllowedPaths::addAllowPaths
-	 * @covers       RobotsTxtBuilder::allowDisallowPaths
-	 * @covers       RobotsTxtBuilder::addBlockedRobots
-	 * @covers       RobotsTxtBuilder::getContents
+	 * @covers       RobotsTxt::addRobot
 	 * @dataProvider dataProviderClassApi
 	 *
 	 * @param string[]|null $allowPaths argument passed to $robots->allowPaths (null for don't call it)
 	 * @param string[]|null $disallowPaths argument passed to $robots->disallowPaths (null for don't call it)
-	 * @param string[]|null $blockRobots argument passed to $robots->blockRobots (null for don't call it)
 	 * @param string[] $expectedContents expected $robots->getContents()
 	 */
-	public function testClassApi( $allowPaths, $disallowPaths, $blockRobots, $expectedContents ) {
+	public function testClassApi( $allowPaths, $disallowPaths, $expectedContents ) {
 		$robots = new RobotsTxt();
-		if ( !is_null( $allowPaths ) ) {
-			$robots->addAllowedPaths( $allowPaths );
-		}
-		if ( !is_null( $disallowPaths ) ) {
-			$robots->addDisallowedPaths( $disallowPaths );
-		}
-		if ( !is_null( $blockRobots ) ) {
-			$robots->addBlockedRobots( $blockRobots );
-		}
-		$this->assertEquals( $expectedContents, $robots->getContents() );
-	}
+		$robot = new Robot( '*' );
 
-	/**
-	 * Test Wikia\RobotsTxt\RobotsTxt API, other method call order
-	 *
-	 * @covers       addAllowedPaths::addAllowPaths
-	 * @covers       RobotsTxtBuilder::allowDisallowPaths
-	 * @covers       RobotsTxtBuilder::addBlockedRobots
-	 * @covers       RobotsTxtBuilder::getContents
-	 * @dataProvider dataProviderClassApi
-	 *
-	 * @param string[]|null $allowPaths argument passed to $robots->allowPaths (null for don't call it)
-	 * @param string[]|null $disallowPaths argument passed to $robots->disallowPaths (null for don't call it)
-	 * @param string[]|null $blockRobots argument passed to $robots->blockRobots (null for don't call it)
-	 * @param string[] $expectedContents expected $robots->getContents()
-	 */
-	public function testClassApiTwistedOrder( $allowPaths, $disallowPaths, $blockRobots, $expectedContents ) {
-		$robots = new RobotsTxt();
-		if ( !is_null( $disallowPaths ) ) {
-			$robots->addDisallowedPaths( $disallowPaths );
-		}
-		if ( !is_null( $blockRobots ) ) {
-			$robots->addBlockedRobots( $blockRobots );
-		}
+		$robots->addRobot( $robot );
+
 		if ( !is_null( $allowPaths ) ) {
-			$robots->addAllowedPaths( $allowPaths );
+			$robot->allowPaths( $allowPaths );
+		}
+		if ( !is_null( $disallowPaths ) ) {
+			$robot->disallowPaths( $disallowPaths );
 		}
 		$this->assertEquals( $expectedContents, $robots->getContents() );
 	}
@@ -69,24 +39,14 @@ class RobotsTxtTest extends WikiaBaseTest {
 	public function dataProviderClassApi() {
 		return [
 			// Empty
-			[ null, null, null, [] ],
-			[ [], [], [], [] ],
+			[ null, null, [ 'User-agent: *' , 'Disallow: ', '' ] ],
+			[ [], [], [ 'User-agent: *' , 'Disallow: ', '' ] ],
 
 			// Non-empty:
 			[
 				[ '/abc', '/def' ],
 				[ '/xyz', '/123' ],
-				[ 'Nasty-bot', 'Another-bot', 'My-bot' ],
 				[
-					'User-agent: Nasty-bot',
-					'Disallow: /',
-					'',
-					'User-agent: Another-bot',
-					'Disallow: /',
-					'',
-					'User-agent: My-bot',
-					'Disallow: /',
-					'',
 					'User-agent: *',
 					'Allow: /abc',
 					'Allow: /def',
@@ -111,11 +71,7 @@ class RobotsTxtTest extends WikiaBaseTest {
 					'Japanese chars: サイトマップ',
 					'encoded Japanese chars: %E3%82%B5',
 				],
-				[ 'ąśćbot' ],
 				[
-					'User-agent: ąśćbot',
-					'Disallow: /',
-					'',
 					'User-agent: *',
 					'Allow: /abc',
 					'Allow: /abc?query=def',
@@ -137,56 +93,27 @@ class RobotsTxtTest extends WikiaBaseTest {
 	/**
 	 * Test the methods called more times
 	 *
-	 * @covers       addAllowedPaths::addAllowPaths
+	 * @covers       RobotsTxt::addRobot
 	 */
 	public function testAllowPathsCalledTwice() {
 		$robots = new RobotsTxt();
 
-		$robots->addAllowedPaths( [ '/abc', '/def' ] );
-		$robots->addBlockedRobots( [ 'Robot1', 'Robot2' ] );
-		$robots->addDisallowedPaths( [ '/efg', '/hij' ] );
+		$robot1 = new Robot( 'Robot1' );
+		$robot1->block();
+		$robot2 = new Robot( 'Robot2' );
+		$robot2->allowPaths( [ '/abc' ] );
 
-		$robots->addAllowedPaths( [ '/pqr' ] );
-		$robots->addDisallowedPaths( [ '/tuv' ] );
-		$robots->addBlockedRobots( [ 'Single Robot' ] );
-
-		$robots->addBlockedRobots( [ 'Robot3', 'Robot4' ] );
-		$robots->addAllowedPaths( [ '/xyz', '/123' ] );
-		$robots->addDisallowedPaths( [ '/456', '/789' ] );
+		$robots->addRobot( $robot1 );
+		$robots->addRobot( $robot2 );
 
 		$this->assertEquals(
 			[
 				'User-agent: Robot1',
+				'Noindex: /',
 				'Disallow: /',
 				'',
 				'User-agent: Robot2',
-				'Disallow: /',
-				'',
-				'User-agent: Single Robot',
-				'Disallow: /',
-				'',
-				'User-agent: Robot3',
-				'Disallow: /',
-				'',
-				'User-agent: Robot4',
-				'Disallow: /',
-				'',
-				'User-agent: *',
 				'Allow: /abc',
-				'Allow: /def',
-				'Allow: /pqr',
-				'Allow: /xyz',
-				'Allow: /123',
-				'Noindex: /efg',
-				'Noindex: /hij',
-				'Noindex: /tuv',
-				'Noindex: /456',
-				'Noindex: /789',
-				'Disallow: /efg',
-				'Disallow: /hij',
-				'Disallow: /tuv',
-				'Disallow: /456',
-				'Disallow: /789',
 				'',
 			],
 			$robots->getContents()
@@ -215,20 +142,24 @@ class RobotsTxtTest extends WikiaBaseTest {
 	 */
 	public function testSitemapWithOtherMethods() {
 		$robots = new RobotsTxt();
-		$robots->addAllowedPaths( [ '/abc' ] );
+
+		$robot = new Robot( 'Robot1' );
+		$robot->allowPaths( [ '/abc' ] );
+		$robot->disallowPaths( [ '/def' ] );
+		
+		$robots->addRobot( $robot );
+		$robots->addRobot( new Robot( 'Robot2' ) );
 		$robots->setSitemap( 'http://www.my-site.com/sitemap.xml' );
-		$robots->addDisallowedPaths( [ '/def' ] );
-		$robots->addBlockedRobots( [ 'my-robot' ] );
 
 		$this->assertEquals(
 			[
-				'User-agent: my-robot',
-				'Disallow: /',
-				'',
-				'User-agent: *',
+				'User-agent: Robot1',
 				'Allow: /abc',
 				'Noindex: /def',
 				'Disallow: /def',
+				'',
+				'User-agent: Robot2',
+				'Disallow: ',
 				'',
 				'Sitemap: http://www.my-site.com/sitemap.xml',
 			],
