@@ -21,12 +21,11 @@ describe('ext.wikia.adEngine.provider.btfBlocker', function () {
 			register: noop
 		},
 		methodCalledInsideFillInSlot: noop,
-		uapContext: {
-			isUapLoaded: function () {
-				return false;
-			},
-			isRoadblockLoaded: function () {
-				return false;
+		bridge: {
+			universalAdPackage: {
+				isFanTakeoverLoaded: function () {
+					return false;
+				}
 			}
 		},
 		win: {
@@ -43,7 +42,7 @@ describe('ext.wikia.adEngine.provider.btfBlocker', function () {
 	function getBtfBlocker() {
 		return modules['ext.wikia.adEngine.provider.btfBlocker'](
 			mocks.adContext,
-			mocks.uapContext,
+			mocks.bridge,
 			mocks.messageListener,
 			modules['wikia.lazyqueue'](),
 			mocks.log,
@@ -214,7 +213,7 @@ describe('ext.wikia.adEngine.provider.btfBlocker', function () {
 		fillInSlot(getFakeSlot('ATF_SLOT'));
 		mocks.win.ads.runtime.disableBtf = true;
 		mocks.win.ads.runtime.unblockHighlyViewableSlots = true;
-		spyOn(mocks.uapContext, 'isUapLoaded').and.returnValue(true);
+		spyOn(mocks.bridge.universalAdPackage, 'isFanTakeoverLoaded').and.returnValue(true);
 		fillInSlot(getFakeSlot('HIVI_BTF_SLOT'));
 		fillInSlot(btfSlot);
 		fillInSlot(getFakeSlot('INVISIBLE_HIGH_IMPACT_2'));
