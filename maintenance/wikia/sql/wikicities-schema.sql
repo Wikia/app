@@ -289,8 +289,6 @@ DROP TABLE IF EXISTS `dumps`;
 CREATE TABLE `dumps` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `dump_wiki_id` int(9) NOT NULL,
-  `dump_wiki_dbname` varchar(64) DEFAULT NULL,
-  `dump_wiki_url` varchar(255) DEFAULT NULL,
   `dump_user_id` int(9) DEFAULT '0',
   `dump_hidden` enum('N','Y') DEFAULT 'N',
   `dump_closed` enum('N','Y') DEFAULT 'N',
@@ -304,7 +302,7 @@ CREATE TABLE `dumps` (
   KEY `dumps_dump_requested_idx` (`dump_requested`),
   KEY `dumps_dump_completed_hold_idx` (`dump_completed`,`dump_hold`),
   CONSTRAINT `dumps_ibfk_1` FOREIGN KEY (`dump_wiki_id`) REFERENCES `city_list` (`city_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Table structure for table `founder_emails_event`
@@ -665,4 +663,4 @@ CREATE TABLE `wikia_tasks_log` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
--- Dump completed on 2018-03-20 11:15:00
+-- Dump completed on 2018-03-21 14:03:02
