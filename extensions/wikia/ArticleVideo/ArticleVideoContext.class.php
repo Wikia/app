@@ -156,6 +156,6 @@ class ArticleVideoContext {
 	}
 
 	public static function isRecommendedVideoAvailable( int $pageId ): bool {
-		return !empty( self::getRecommendedVideoPlaylistId( $pageId ) );
+		return !F::app()->wg->user->isLoggedIn() && !empty( self::getRecommendedVideoPlaylistId( $pageId ) );
 	}
 }
