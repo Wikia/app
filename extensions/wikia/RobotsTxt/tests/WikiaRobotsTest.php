@@ -49,10 +49,8 @@ class WikiaRobotsTest extends WikiaBaseTest {
 	 *
 	 * You can inspect its members
 	 *
-	 * spiedAllowedPaths -- array of params passed to addAllowedPaths: one item per method call
-	 * spiedDisallowedPaths -- array of params passed to addDisallowedPaths: one item per method call
+	 * spiedRobots -- array of robots passed to addRobot
 	 * spiedSitemap -- array of params passed to setSitemap: one item per method call
-	 * spiedBlockedRobots -- array of params passed to addBlockedRobots: one item per method call
 	 *
 	 * @return RobotsTxtMock
 	 */
