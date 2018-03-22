@@ -109,7 +109,7 @@ class WatchedItem {
 		try {
 			// SUS-4321 | This **used** INSERT IGNORE to avoid overwriting the notification
 			// timestamp if there's already an entry for this page
-			$dbw->insert( 'watchlist', $rows, __METHOD__ );
+			$dbw->upsert( 'watchlist', $rows, [], [ "wl_notificationtimestamp = VALUES(wl_notificationtimestamp)" ], __METHOD__ );
 		} catch ( DBError $ex ) {
 			// SUS-4321 | DBError logs exceptions to elk
 			return false;
