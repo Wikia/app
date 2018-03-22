@@ -57,11 +57,8 @@ class LBFactory_Wikia extends LBFactory_Multi {
 		}
 		else {
 			// this is a foreign db that either has a cluster defined in WikiFactory...
-			$city_id = WikiFactory::DBtoID( $wiki );
-			$section = WikiFactory::getWikiByID( $city_id )->city_cluster;
-			if ( empty( $section ) ) {
-				$section = 'central';
-			}
+			$wikiInfo = WikiFactory::getWikiByDB( $dbName );
+			$section = $wikiInfo->city_cluster ?? 'central';
 		}
 		$this->lastSection = $section;
 		$this->lastWiki = $wiki;
