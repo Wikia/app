@@ -5,7 +5,8 @@
 			"Farras",
 			"Irwangatot",
 			"IvanLanin",
-			"Rex"
+			"Rex",
+			"Kenrick95"
 		]
 	},
 	"semanticforms-desc": "Formulir untuk menambahkan dan menyunting data semantik",
@@ -58,7 +59,6 @@
 	"sf_forminputs_values": "Set nilai masukan ini, dipisahkan oleh koma",
 	"sf_forminputs_list": "Tandai masukan ini menyimpan daftar nilai",
 	"sf_forminputs_delimiter": "Pembatas antara nilai bidang, jika masukan ini menyimpan daftar nilai berbagai bidang",
-	"sf_forminputs_remoteautocompletion": "Gunakan pelengkapan otomatis jarak jauh",
 	"sf_forminputs_existingvaluesonly": "Hanya izinkan nilai yang sudah ada dalam daftar",
 	"sf_forminputs_showonselect": "Elemen halaman yang ditampilkan hanya jika nilai tertentu dipilih (contoh: \"nilai1=>div1;nilai2=>div2\")",
 	"sf_forminputs_listboxsize": "Tinggi kotak daftar ini, dalam baris",
@@ -134,6 +134,7 @@
 	"sf_bad_email_error": "harus memiliki format alamat surel yang benar",
 	"sf_bad_number_error": "harus berupa angka",
 	"sf_bad_date_error": "harus berupa tanggal",
+	"sf_pipe_error": "\"|\" tidak diizinkan, kecuali dalam pemanggilan templat dan fungsi parser.",
 	"uploadwindow": "Jendela pengunggahan",
 	"sf_deletionlog": "Log penghapusan",
 	"sf_property_isproperty": "Ini adalah properti bertipe $1",
@@ -147,5 +148,10 @@
 	"sf_category_desc": "Ini adalah kategori $1.",
 	"sf_blank_namespace": "Utama",
 	"right-viewedittab": "Lihat tab \"Sunting\" untuk menyunting halaman dengan formulir",
-	"right-editrestrictedfields": "Sunting kolom formulir terbatas"
+	"right-editrestrictedfields": "Sunting kolom formulir terbatas",
+	"sf-datepicker-close": "Penutup",
+	"sf-datepicker-prev": "Sebelumnya",
+	"sf-datepicker-next": "Selanjutnya",
+	"sf-datepicker-today": "Hari ini",
+	"sf-regexp-wrongformat": "Format salah."
 }

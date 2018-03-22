@@ -239,7 +239,6 @@ $magicWords = array(
 	'numberofusers'          => array( 1,    'NUMBEROFUSERS'          ),
 	'numberofactiveusers'    => array( 1,    'NUMBEROFACTIVEUSERS'    ),
 	'numberofedits'          => array( 1,    'NUMBEROFEDITS'          ),
-	'numberofviews'          => array( 1,    'NUMBEROFVIEWS'          ),
 	'pagename'               => array( 1,    'PAGENAME'               ),
 	'pagenamee'              => array( 1,    'PAGENAMEE'              ),
 	'namespace'              => array( 1,    'NAMESPACE'              ),
@@ -292,6 +291,7 @@ $magicWords = array(
 	'localurle'              => array( 0,    'LOCALURLE:'             ),
 	'articlepath'            => array( 0,	 'ARTICLEPATH'            ),
 	'server'                 => array( 0,    'SERVER'                 ),
+	'servercanonical'        => array( 0,    'SERVERCANONICAL'        ),
 	'servername'             => array( 0,    'SERVERNAME'             ),
 	'scriptpath'             => array( 0,    'SCRIPTPATH'             ),
 	'stylepath'              => array( 0,    'STYLEPATH'              ),
@@ -356,6 +356,10 @@ $magicWords = array(
 	'url_query'              => array( 0,    'QUERY' ),
 	'defaultsort_noerror'    => array( 0,    'noerror' ),
 	'defaultsort_noreplace'  => array( 0,    'noreplace' ),
+	'pagesincategory_all'    => array( 0,    'all' ),
+	'pagesincategory_pages'  => array( 0,    'pages' ),
+	'pagesincategory_subcats' => array( 0,   'subcats' ),
+	'pagesincategory_files'  => array( 0,    'files' ),
 );
 
 /**

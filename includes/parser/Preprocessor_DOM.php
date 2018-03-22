@@ -239,7 +239,6 @@ class Preprocessor_DOM implements Preprocessor {
 				'max' => 2
 			);
 			$RTE_flags = $flags;
-			$ignoredTags = $ignoredElements = array();
 		}
 		if(!empty($wgRTETemplateParams)) {
 			$rules['{']['min'] = 3;
@@ -483,7 +482,15 @@ class Preprocessor_DOM implements Preprocessor {
 					continue;
 				}
 
-				$accum .= '<ext>';
+				// FANDOM change - XW-4380: store wikitext for extension tags
+				$extAttrs = '';
+				if ( $wgRTEParserEnabled ) {
+					$wikiTextIdx = RTEData::put( 'wikitext', substr( $text, $tagStartPos, $i - $tagStartPos ) );
+					$extAttrs = " _rte_wikitextidx=\"$wikiTextIdx\"";
+				}
+
+				$accum .= "<ext$extAttrs>";
+				// end FANDOM change
 				if ( $attrEnd <= $attrStart ) {
 					$attr = '';
 				} else {
@@ -493,15 +500,6 @@ class Preprocessor_DOM implements Preprocessor {
 					// Note that the attr element contains the whitespace between name and attribute,
 					// this is necessary for precise reconstruction during pre-save transform.
 					'<attr>' . htmlspecialchars( $attr ) . '</attr>';
-
-				# RTE (Rich Text Editor) - begin
-				# @author: Inez Korczyński
-				global $wgRTEParserEnabled;
-				if(!empty($wgRTEParserEnabled)) {
-					$accum .= '<inner>' . RTEMarker::generate(RTEMarker::EXT_WIKITEXT, RTEData::put('wikitext', substr( $text, $tagStartPos, $i - $tagStartPos ))) . '</inner>';
-					$inner = null;
-				}
-				# RTE - end
 
 				if ( $inner !== null ) {
 					$accum .= '<inner>' . htmlspecialchars( $inner ) . '</inner>';
@@ -669,7 +667,7 @@ class Preprocessor_DOM implements Preprocessor {
 						if($name === null) {
 							$dataIdx = RTEData::put('wikitext', $element);
 							$element = '[[' . RTEMarker::generate(RTEMarker::INTERNAL_WIKITEXT, $dataIdx) . substr($element, 2);
-						} else {
+						} elseif ( preg_match( $this->parser->mExtLinkBracketedRegex, $element ) ) {
 							$dataIdx = RTEData::put('wikitext', $element);
 							$element .= RTEMarker::generate(RTEMarker::EXTERNAL_WIKITEXT, $dataIdx);
 						}
@@ -699,7 +697,13 @@ class Preprocessor_DOM implements Preprocessor {
 							$openIdx = $openAt[0];
 							$closeIdx = $closeAt[count($closeAt)-1];
 							$openAt = $closeAt = array();
-							$attr .= ' _rte_wikitextidx="'.RTEData::put('wikitext', substr($text, $openIdx-$count, $closeIdx-$openIdx+2*$count)).'"';
+
+							$start = $openIdx - $count;
+							$length = $closeIdx - $openIdx + 2 * $count;
+
+							$attr .= ' _rte_wikitextidx="'
+								. RTEData::put( 'wikitext', substr( $text, $start, $length ) )
+								. '"';
 						}
 					}
 					# RTE - end
@@ -1167,32 +1171,100 @@ class PPFrame_DOM implements PPFrame {
 					$title = $titles->item( 0 );
 					$parts = $xpath->query( 'part', $contextNode );
 
-					# RTE (Rich Text Editor) - begin
+					# RTE (Rich Text Editor)
 					# @author: Inez Korczyński
 					global $wgRTEParserEnabled;
-					if(!empty($wgRTEParserEnabled)) {
-						$dataIdx = RTEData::put('placeholder', array(
-							'type' => 'double-brackets',
-							'wikitextIdx' => $contextNode->getAttribute('_rte_wikitextidx'),
-							'lineStart' => $contextNode->getAttribute('lineStart'),
-							'title' => $title->textContent));
-						$out .= RTEMarker::generate(RTEMarker::PLACEHOLDER, $dataIdx);
+
+					if ( $flags & PPFrame::NO_TEMPLATES ) {
+						$newIterator = $this->virtualBracketedImplode( '{{', '|', '}}', $title, $parts );
 					} else {
-						if ( $flags & PPFrame::NO_TEMPLATES ) {
-							$newIterator = $this->virtualBracketedImplode( '{{', '|', '}}', $title, $parts );
-						} else {
-							$lineStart = $contextNode->getAttribute( 'lineStart' );
-							$params = array(
-								'title' => new PPNode_DOM( $title ),
-								'parts' => new PPNode_DOM( $parts ),
-								'lineStart' => $lineStart );
-							$ret = $this->parser->braceSubstitution( $params, $this );
-							if ( isset( $ret['object'] ) ) {
-								$newIterator = $ret['object'];
+						$lineStart = $contextNode->getAttribute( 'lineStart' );
+
+						$params = array(
+							'title' => new PPNode_DOM( $title ),
+							'parts' => new PPNode_DOM( $parts ),
+							'lineStart' => $lineStart );
+
+						// FANDOM change - XW-4380: Disable RTE parser during brace substitution
+						$wasRteParserEnabled = $wgRTEParserEnabled;
+						$wgRTEParserEnabled = false;
+						$ret = $this->parser->braceSubstitution( $params, $this );
+						$wgRTEParserEnabled = $wasRteParserEnabled;
+						// end FANDOM change
+
+						if ( isset( $ret['object'] ) ) {
+							$newIterator = $ret['object'];
+						} elseif ( $wgRTEParserEnabled ) {
+							// FANDOM change start - XW-4380: in RTE mark templates contenteditable="false"
+							$wikiTextIdx = $contextNode->getAttribute( '_rte_wikitextidx' );
+							$rteData = [
+								'type' => 'double-brackets',
+								'wikitext' => RTEData::get( 'wikitext', intval( $wikiTextIdx ) ),
+								'lineStart' => $contextNode->getAttribute( 'lineStart' ),
+								'title' => $title->textContent,
+								'placeholder' => 1
+							];
+
+							$attributes = [
+								'class' => "placeholder placeholder-double-brackets",
+								'data-rte-instance' => RTE::getInstanceId(),
+								'data-rte-meta' => RTEReverseParser::encodeRTEData( $rteData ),
+								'type' => 'double-brackets',
+								'contenteditable' => 'false',
+							];
+
+							$err = '';
+							// If content of a template contains not valid html, then append empty placeholder, which
+							// will result in green puzzle displayed. Otherwise, wrap template in block or inline template
+							$placeholderTag = $this->getPlaceholderTagName( $ret['text'] );
+							if ( MWTidy::checkErrors($ret['text'], $err) === false ) {
+								$out .= Html::rawElement( $placeholderTag, $attributes, "&#x0200B;&#x0200B;");
 							} else {
-								$out .= $ret['text'];
+								if ( $placeholderTag === 'span' ) {
+									// wrap content of inline template with non-width spaces to prevent CKE from modifying
+									// dom structure
+									$content = "&#x0200B;" . trim( $ret['text'], "\n" ) . "&#x0200B;";
+								} else if ( $placeholderTag === 'tr' ) {
+									// XW-4742: indicates that during reverse parsing |- should not be added at the beginning
+									// of row since template contains it already
+									$rteData['template-only'] = true;
+									$attributes['data-rte-meta'] = RTEReverseParser::encodeRTEData( $rteData );
+									$content = '&#x0200B;&#x0200B;';
+								} else {
+									$content = "&#x0200B;" . PHP_EOL . $ret['text'];
+									// XW-4609: if template contains list items, placeholder's closing div should be in
+									// the new line to not mess with list html
+									if ( preg_match( '/^\s*[\*#:;]/m', $content ) ) {
+										$content .= PHP_EOL;
+									}
+
+									$content .=  "&#x0200B;";
+
+									if ( !empty( $contextNode->nextSibling ) &&
+										$contextNode->nextSibling->nodeName === '#text' ) {
+										$rteData['spacesafter'] = substr($contextNode->nextSibling->nodeValue, 0,
+											strlen( $contextNode->nextSibling->nodeValue ) - strlen( ltrim(  $contextNode->nextSibling->nodeValue, "\t " ) )
+										);
+										$attributes['data-rte-meta'] = RTEReverseParser::encodeRTEData( $rteData );
+									}
+								}
+
+								if ($placeholderTag === 'tr') {
+									// XW-4742: for the case when whole table row is defined inside template, we need to insert
+									// fake row with fake invisible content to make it appear in the output html
+									// this fake stuff will be ommited in reverse parsing. Inserting simple <tr> with
+									// all the placeholder's attributes is not enough since tables are processed later
+									// by parser and it would be treated as regular cell content
+									$out .= '|-' . Html::rawElement( 'span', $attributes, $content ) . PHP_EOL
+										. '| data-rte-filler="true" |' . '<span class="placeholder placeholder placeholder-double-brackets">&#x0200B;&#x0200B;</span>';
+								} else {
+									$out .= Html::rawElement( $placeholderTag, $attributes, $content );
+								}
 							}
+						} else {
+							$out .= $ret['text'];
 						}
+						// end FANDOM change
 					}
 					# RTE - end
 
@@ -1203,33 +1275,19 @@ class PPFrame_DOM implements PPFrame {
 					$title = $titles->item( 0 );
 					$parts = $xpath->query( 'part', $contextNode );
 
-					# RTE (Rich Text Editor) - begin
-					# @author: Wladyslaw Bodzek
-					global $wgRTEParserEnabled;
-					if ( !empty($wgRTEParserEnabled) ) {
-						//var_dump($contextNode->getAttribute('_rte_wikitextidx'));
-						$dataIdx = RTEData::put('placeholder', array(
-							'type' => 'tplarg',
-							'wikitextIdx' => $contextNode->getAttribute('_rte_wikitextidx'),
-							'lineStart' => $contextNode->getAttribute('lineStart'),
-							'title' => $title->textContent));
-						$out .= RTEMarker::generate(RTEMarker::PLACEHOLDER, $dataIdx);
+					if ( $flags & PPFrame::NO_ARGS ) {
+						$newIterator = $this->virtualBracketedImplode( '{{{', '|', '}}}', $title, $parts );
 					} else {
-						if ( $flags & PPFrame::NO_ARGS ) {
-							$newIterator = $this->virtualBracketedImplode( '{{{', '|', '}}}', $title, $parts );
+						$params = array(
+							'title' => new PPNode_DOM( $title ),
+							'parts' => new PPNode_DOM( $parts ) );
+						$ret = $this->parser->argSubstitution( $params, $this );
+						if ( isset( $ret['object'] ) ) {
+							$newIterator = $ret['object'];
 						} else {
-							$params = array(
-								'title' => new PPNode_DOM( $title ),
-								'parts' => new PPNode_DOM( $parts ) );
-							$ret = $this->parser->argSubstitution( $params, $this );
-							if ( isset( $ret['object'] ) ) {
-								$newIterator = $ret['object'];
-							} else {
-								$out .= $ret['text'];
-							}
+							$out .= $ret['text'];
 						}
 					}
-					# RTE - end
 				} elseif ( $contextNode->nodeName == 'comment' ) {
 					# HTML-style comment
 					# Remove it in HTML, pre+remove and STRIP_COMMENTS modes
@@ -1240,7 +1298,7 @@ class PPFrame_DOM implements PPFrame {
 						# RTE (Rich Text Editor) - begin
 						# @author: Inez Korczyński
 						global $wgRTEParserEnabled;
-						if(!empty($wgRTEParserEnabled)) {
+						if ( !empty( $wgRTEParserEnabled ) ) {
 							if(strlen($out) === 0 || substr($out, -1) == "\n") {
 								if(substr($contextNode->textContent, -1) == "\n") {
 									$add = "\n";
@@ -1289,14 +1347,57 @@ class PPFrame_DOM implements PPFrame {
 					$attrs = $xpath->query( 'attr', $contextNode );
 					$inners = $xpath->query( 'inner', $contextNode );
 					$closes = $xpath->query( 'close', $contextNode );
+					$nameNode = $names->item( 0 );
 					$params = array(
-						'name' => new PPNode_DOM( $names->item( 0 ) ),
+						'name' => new PPNode_DOM( $nameNode ),
 						'attr' => $attrs->length > 0 ? new PPNode_DOM( $attrs->item( 0 ) ) : null,
 						'inner' => $inners->length > 0 ? new PPNode_DOM( $inners->item( 0 ) ) : null,
 						'close' => $closes->length > 0 ? new PPNode_DOM( $closes->item( 0 ) ) : null,
+						'wikitextIdx' => $contextNode->getAttribute( '_rte_wikitextidx' )
 					);
-					$out .= $this->parser->extensionSubstitution( $params, $this );
+
+					// FANDOM change - XW-4380: wrap extension tags in a placeholder
+					$tagMarker = $this->parser->extensionSubstitution( $params, $this );
+					global $wgRTEParserEnabled;
+					if ( $wgRTEParserEnabled && !in_array( $nameNode->nodeValue, RTEParser::CUSTOM_PLACEHOLDER_TAG ) ) {
+						if ( in_array( $nameNode->nodeValue,
+							[ 'mainpage-leftcolumn-start', 'mainpage-rightcolumn-start' ]) ) {
+							RTE::edgeCasesPush('MAINPAGE');
+						}
+
+						$wikiTextIdx = $contextNode->getAttribute( '_rte_wikitextidx' );
+
+						$rteData = [
+							'type' => 'ext',
+							'wikitext' => RTEData::get( 'wikitext', intval( $wikiTextIdx ) ),
+							'lineStart' => $contextNode->getAttribute( 'lineStart' ),
+							'placeholder' => 1,
+							'extName' => $nameNode->nodeValue
+						];
+
+						// append a zero-width space
+						// this prevents extension tags at the end of lines from interfering with formatting
+						$tagMarker .= "&#x0200B;";
+
+						// some extensions render only inline htlm tags, so they should be wrapped in inline wrapper
+						// to not break paragraphs
+						$wrapperTagName = in_array($nameNode->nodeValue, RTEParser::INLINE_EXT_TAGS) ? 'span' : 'div';
+						$out .= Html::rawElement(
+							$wrapperTagName,
+							[
+								'data-rte-instance' => RTE::getInstanceId(),
+								'data-rte-meta' => RTEReverseParser::encodeRTEData( $rteData ),
+								'class' => "placeholder placeholder-ext",
+								'type' => 'ext',
+								'contenteditable' => 'false',
+							],
+							$tagMarker
+						);
+					}  else {
+						$out .= $tagMarker;
+					}
 					$RTEext_1 = true;
+					// end FANDOM change
 				} elseif ( $contextNode->nodeName == 'h' ) {
 					# Heading
 					$s = $this->expand( $contextNode->childNodes, $flags );
@@ -1349,6 +1450,62 @@ class PPFrame_DOM implements PPFrame {
 		--$expansionDepth;
 		wfProfileOut( __METHOD__ );
 		return $outStack[0];
+	}
+
+	/**
+	 * In order to properly display a template inside an editor we need to know if it should be displayed
+	 * inside block or inline-block element
+	 *
+	 * We could not find a better way than parsing the template and searching for any block elements or extension tags
+	 * inside
+	 *
+	 * @param $text string wikitext
+	 * @param bool $linestart
+	 *
+	 * @return string tagName div or span
+	 */
+	function getPlaceholderTagName( string $text ): string {
+		if ( substr( $text, 0, 2) === '|-' ) {
+			// XW-4742: template defines table row
+			return 'tr';
+		}
+
+		$html = $this->parser->internalParse( $text, false );
+		$html = $this->parser->doBlockLevels( $html, false);
+
+		// $html returned above, if $text consists only from plain text, is wrapped in <p></p> which should not be
+		// the reason to treat whole template as block element
+		$html = preg_replace('/^<p>/', '', $html);
+		$html = preg_replace('/<\/p>$/', '', $html);
+
+		$blockElements = preg_match( '/<(' . implode( '|', HtmlHelper::BLOCK_ELEMENTS ) . ')[^>]*>/', $html );;
+		$markerMatches = [];
+		preg_match_all(
+			'/' . Parser::MARKER_PREFIX . '[^\\x7f]*' . Parser::MARKER_SUFFIX . '/',
+			$html,
+			$markerMatches
+		);
+		$markerMatches = array_filter(
+			$markerMatches[0],
+			function ( $marker ) {
+				// RTEParser::INLINE_EXT_TAGS are considered as ones that do not render using block elements
+				foreach ( RTEParser::INLINE_EXT_TAGS as $tag ) {
+					if ( strpos( $marker, "-${tag}-" ) ) {
+						return false;
+					}
+				}
+
+				return true;
+			}
+		);
+
+		if ( $blockElements || $markerMatches ) {
+			$tagName = 'div';
+		} else {
+			$tagName = 'span';
+		}
+
+		return $tagName;
 	}
 
 	/**
@@ -1630,7 +1787,7 @@ class PPTemplateFrame_DOM extends PPFrame_DOM {
 		return $arguments;
 	}
 
-	function getNumberedArgument( $index ) {
+	private function getNumberedArgument( $index ) {
 		if ( !isset( $this->numberedArgs[$index] ) ) {
 			return false;
 		}
@@ -1641,7 +1798,7 @@ class PPTemplateFrame_DOM extends PPFrame_DOM {
 		return $this->numberedExpansionCache[$index];
 	}
 
-	function getNamedArgument( $name ) {
+	private function getNamedArgument( $name ) {
 		if ( !isset( $this->namedArgs[$name] ) ) {
 			return false;
 		}
@@ -1654,10 +1811,19 @@ class PPTemplateFrame_DOM extends PPFrame_DOM {
 	}
 
 	function getArgument( $name ) {
+		global $wgRTEParserEnabled;
+
 		$text = $this->getNumberedArgument( $name );
 		if ( $text === false ) {
 			$text = $this->getNamedArgument( $name );
 		}
+
+		// FANDOM change - XW-4380: Remove internal link markers from template arguments
+		if ( !empty( $wgRTEParserEnabled ) ) {
+			RTEData::removeInternalLinkMarkersFromText( $text );
+		}
+		// end FANDOM change
+
 		return $text;
 	}
 

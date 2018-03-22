@@ -30,7 +30,7 @@ class NodeNavigationTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * @dataProvider testIsEmptyDataProvider
+	 * @dataProvider isEmptyDataProvider
 	 */
 	public function testIsEmpty( $string, $expectedOutput ) {
 		$xml = simplexml_load_string( $string );
@@ -39,7 +39,7 @@ class NodeNavigationTest extends WikiaBaseTest {
 		$this->assertTrue( $node->isEmpty( $data ) == $expectedOutput );
 	}
 
-	public function testIsEmptyDataProvider() {
+	public function isEmptyDataProvider() {
 		return [
 			[
 				'string' => '<navigation>goodnight</navigation>',

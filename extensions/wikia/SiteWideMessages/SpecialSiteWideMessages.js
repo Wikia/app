@@ -34,10 +34,11 @@
 	function SWMAjaxDismiss( e ) {
 		e.preventDefault();
 		var	id = e.data.id,
-			ajaxUrl = wgServer + wgScript + "?title=" + wgPageName + "&action=ajax&rs=SiteWideMessagesAjaxDismiss&rsargs[]=" + id,
-			request = $.get(ajaxUrl,function(data){
-				$("#msg_"+id).remove();
-			});
+			ajaxUrl = mw.util.wikiScript() + "?title=" + encodeURIComponent(mw.config.get('wgPageName')) + "&action=ajax&rs=SiteWideMessagesAjaxDismiss&rsargs[]=" + id;
+
+		$.get(ajaxUrl,function(){
+			$("#msg_"+id).remove();
+		});
 
 		track({
 			action: Wikia.Tracker.ACTIONS.CLICK_LINK_BUTTON,

@@ -67,10 +67,17 @@ class UploadStashCleanup extends Maintenance {
 		// UploadStash's own methods means it's less likely to fall accidentally
 		// out-of-date someday
 		$stash = new UploadStash( $repo );
-
 		foreach( $keys as $key ) {
 			try {
-				$stash->getFile( $key, true );
+				try {
+					$stash->getFile( $key, true );
+				} catch ( UploadStashFileDoesntExistException $ex ) {
+					/*
+					 * When the metadata is there but the file itself doesn't exist, it is safe
+					 * to proceed - the removeFileNoAuth method will remove the db entry and skip
+					 * the physical file removal.
+					 */
+				}
 				$stash->removeFileNoAuth( $key );
 			} catch ( UploadStashBadPathException $ex ) {
 				$this->output( "Failed removing stashed upload with key: $key\n"  );

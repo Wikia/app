@@ -44,21 +44,19 @@ class VideoHandlerController extends WikiaController {
 					$error = wfMessage( 'videohandler-error-video-no-exist' )->inContentLanguage()->text();
 				} else {
 					$videoId = $file->getVideoId();
-					$assetUrl = $file->getPlayerAssetUrl();
 					$options = [
 						'autoplay' => $autoplay,
 						'isAjax' => true,
 					];
 					$embedCode = $file->getEmbedCode( $width, $options );
 					$this->setVal( 'videoId', $videoId );
-					$this->setVal( 'asset', $assetUrl );
 					$this->setVal( 'embedCode', $embedCode );
 					/**
 					 * This data is being queried by GameGuides that store html in local storage
 					 * Therefore we have to allow for accessing this API, from ie. file://
 					 */
 					(new CrossOriginResourceSharingHeaderHelper())
-						->setAllowOrigin( [ '*' ] )
+						->setAllowAllOrigins()
 						->setAllowMethod( [ 'GET' ] )
 						->setHeaders($this->response);
 				}
@@ -67,39 +65,6 @@ class VideoHandlerController extends WikiaController {
 
 		if ( !empty( $error ) ) {
 			$this->setVal( 'error', $error );
-		}
-
-		$this->response->setFormat( 'json' );
-	}
-
-	/**
-	 * Get the embed code for the given title from the video wiki, rather than the local wiki.  This is
-	 * useful when a video of the same name from youtube (or other non-premium provider) exists on the local wiki
-	 * and we want to show the equivalent video from the video wiki.  See also getEmbedCode in this controller.
-	 *
-	 * @requestParam string fileTitle The title of the video to find the embed code for
-	 * @requestParam int width The desired width of video playback to return with the embed code
-	 * @requestParam boolean autoplay Whether the video should play immediately on page load
-	 * @responseParam string videoId A unique identifier for the video title given
-	 * @responseParam string asset A URL for the video
-	 * @responseParam string embedCode The HTML to embed on the page to play the video given by fileTitle
-	 */
-	public function getPremiumEmbedCode( ) {
-		// Pass through all the same parameters
-		$params = array(
-			'controller' => __CLASS__,
-			'method'     => 'getEmbedCode',
-			'fileTitle'  => $this->getVal( 'fileTitle', '' ),
-			'width'      => $this->getVal( 'width', '' ),
-			'autoplay'   => $this->getVal( 'autoplay', false ),
-		);
-
-		// Call out to the getEmbedCode method in the context of the Video Wiki (WikiaVideoRepoDBName)
-		$response = ApiService::foreignCall( F::app()->wg->WikiaVideoRepoDBName, $params, ApiService::WIKIA, true );
-
-		// Map the foreign call response back to our response
-		foreach ( $response as $key => $val ) {
-			$this->setVal( $key, $val );
 		}
 
 		$this->response->setFormat( 'json' );
@@ -185,7 +150,7 @@ class VideoHandlerController extends WikiaController {
 				if ( $status->isOK() ) {
 					$oldimage = null;
 					$user = $this->wg->User;
-					wfRunHooks( 'FileDeleteComplete', array( &$file, &$oldimage, &$page, &$user, &$reason ) );
+					Hooks::run( 'FileDeleteComplete', array( &$file, &$oldimage, &$page, &$user, &$reason ) );
 				} else if ( !empty($error) ) {
 					$error = $status->getMessage();
 				}
@@ -194,7 +159,7 @@ class VideoHandlerController extends WikiaController {
 				if ( $title->exists() ) {
 					$article = Article::newFromID( $title->getArticleID() );
 				} else {
-					$botUser = User::newFromName( 'WikiaBot' );
+					$botUser = User::newFromName( Wikia::BOT_USER );
 					$flags = EDIT_NEW | EDIT_SUPPRESS_RC | EDIT_FORCE_BOT;
 
 					// @FIXME Set $article here after calling addCategoryVideos so that the doDeleteArticle call below works properly
@@ -284,10 +249,11 @@ class VideoHandlerController extends WikiaController {
 			return $videos;
 		};
 
-		// Call the generator, caching the result, or not caching if we get null from the $dataGenerator
+		// Call the generator, caching the result, or caching it for only 5 seconds if we get null from the $dataGenerator
+		// (in case of some failure)
 		$videos = WikiaDataAccess::cacheWithOptions( $memcKey, $dataGenerator, [
 			'cacheTTL' => WikiaResponse::CACHE_STANDARD,
-			'negativeCacheTTL' => 0,
+			'negativeCacheTTL' => 5,
 		] );
 
 		// If file title was passed in as a string, return single associative array.
@@ -349,7 +315,6 @@ class VideoHandlerController extends WikiaController {
 
 		$mediaService = new \MediaQueryService();
 		$videoList = $mediaService->getVideoList(
-			$params['filter'],
 			$params['limit'],
 			$params['page'],
 			$params['providers'],

@@ -7,45 +7,6 @@ class PlacesHooks {
 		self::$modelToSave = $model;
 	}
 
-	static public function onPageHeaderIndexExtraButtons( $response ){
-		$app = F::app();
-		$extraButtons = $response->getVal('extraButtons');
-
-		if (	( $app->wg->title->getNamespace() == NS_CATEGORY ) &&
-			$app->wg->user->isAllowed('places-enable-category-geolocation') ){
-
-			$isGeotaggingEnabled =
-				PlaceCategory::newFromTitle($app->wg->title->getFullText() )->isGeoTaggingEnabled();
-
-			$commonClasses = 'secondary geoEnableButton';
-			$extraButtons[] = F::app()->renderView( 'MenuButton',
-				'Index',
-				array(
-					'action' => array(
-						"href" => "#",
-						"text" => wfMsg('places-category-switch')
-					),
-					'class' =>  !$isGeotaggingEnabled ? $commonClasses.' disabled': $commonClasses,
-					'name' => 'places-category-switch-on'
-				)
-			);
-			$extraButtons[] = F::app()->renderView('MenuButton',
-				'Index',
-				array(
-					'action' => array(
-						"href" => "#",
-						"text" => wfMsg('places-category-switch-off')
-					),
-					'class' => $isGeotaggingEnabled ? $commonClasses.' disabled': $commonClasses,
-					'name' => 'places-category-switch-off'
-				)
-			);
-		}
-		$response->setVal('extraButtons', $extraButtons);
-
-		return true;
-	}
-
 	static public function onParserFirstCallInit( Parser $parser ){
 		$parser->setHook( 'place', 'PlacesParserHookHandler::renderPlaceTag' );
 		$parser->setHook( 'places', 'PlacesParserHookHandler::renderPlacesTag' );
@@ -67,16 +28,14 @@ class PlacesHooks {
 			}
 		}
 
-		if ( ( $title instanceof Title ) && ( $title->getNamespace() == NS_CATEGORY ) ){
-			$out->addScript( '<script src="' . F::app()->wg->extensionsPath . '/wikia/Places/js/GeoEnableButton.js"></script>' );
-			$out->addStyle( AssetsManager::getInstance()->getSassCommonURL( 'extensions/wikia/Places/css/GeoEnableButton.scss' ) );
-		}
-
 		wfProfileOut( __METHOD__ );
 		return true;
 	}
 
-	static public function onArticleSaveComplete( &$article, &$user, $text, $summary, $minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId ){
+	static public function onArticleSaveComplete(
+		WikiPage $article, User $user, $text, $summary, $minoredit, $watchthis,
+		$sectionanchor, $flags, $revision, Status &$status, $baseRevId
+	): bool {
  		wfProfileIn( __METHOD__ );
 
 		wfDebug( __METHOD__ . "\n" );
@@ -104,12 +63,9 @@ class PlacesHooks {
  	}
 
 	static public function onRTEUseDefaultPlaceholder( $name, $params, $frame, $wikitextIdx ) {
-		if ( $name !== 'place' ) {
-			return true;
-		} else {
+		if ( $name === 'place' ) {
 			// store metadata index to be used when rendering placeholder for RTE
 			PlacesParserHookHandler::$lastWikitextId = $wikitextIdx;
-			return false;
 		}
 	}
 
@@ -133,12 +89,16 @@ class PlacesHooks {
 
 	/**
 	 * Prepends the geolocation button for adding coordinates to a page
+	 * @param OutputPage $out
+	 * @param string $text
+	 * @return bool
 	 */
-	static public function onOutputPageBeforeHTML( &$out, &$text ){
-		$app = F::app();
-		if ( $app->wg->request->getVal('action', 'view') == true ) {
-			$text = $app->sendRequest( 'Places', 'getGeolocationButton' )->toString() . $text;
+	static public function onOutputPageBeforeHTML( OutputPage $out, string &$text ): bool {
+
+		if ( $out->getRequest()->getVal('action', 'view') == true ) {
+			$text = F::app()->sendRequest( 'Places', 'getGeolocationButton' )->toString() . $text;
 		}
-		return $out;
+
+		return true;
 	}
 }

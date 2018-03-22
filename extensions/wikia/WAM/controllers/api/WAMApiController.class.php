@@ -9,6 +9,8 @@
  */
 
 class WAMApiController extends WikiaApiController {
+	use Wikia\Logger\Loggable;
+
 	const DEFAULT_PAGE_SIZE = 20;
 	const MAX_PAGE_SIZE = 20;
 	const DEFAULT_AVATAR_SIZE = 28;
@@ -99,7 +101,7 @@ class WAMApiController extends WikiaApiController {
 				return $wamIndex;
 			}
 		);
-		
+
 		if (!$this->request->isInternal() && empty($wamIndex['wam_index'])) {
 			$wamIndex['wam_index'] = (object)$wamIndex['wam_index'];
 		}
@@ -108,7 +110,8 @@ class WAMApiController extends WikiaApiController {
 			[
 				'wam_index' => $wamIndex[ 'wam_index' ],
 				'wam_results_total' => $wamIndex[ 'wam_results_total' ],
-				'wam_index_date' => $wamIndex[ 'wam_index_date' ]
+				'wam_index_date' => $wamIndex[ 'wam_index_date' ],
+				'wam_actual_date' => $options[ 'currentTimestamp' ]
 			],
 			[ 'urlFields' => [ 'avatarUrl', 'userPageUrl', 'userContributionsUrl' ] ],
 			self::WAM_RESPONSE_CACHE_VALIDITY
@@ -136,10 +139,10 @@ class WAMApiController extends WikiaApiController {
 		$wamDay = $this->request->getVal( 'wam_day', null );
 		$wamDates = $this->getMinMaxWamIndexDateInternal();
 
-		if ( empty( $wamDay ) ) {
+		if ( empty( $wamDay ) || $wamDay > $wamDates[ 'max_date' ] ) {
 			$wamDay = $wamDates[ 'max_date' ];
-		} elseif ( $wamDay > $wamDates[ 'max_date' ] || $wamDay < $wamDates[ 'min_date' ] ) {
-			throw new OutOfRangeApiException( 'wam_day', $wamDates[ 'min_date' ], $wamDates[ 'max_date' ] );
+		} elseif ( $wamDay < $wamDates[ 'min_date' ] ) {
+			$wamDay = $wamDates[ 'min_date' ];
 		}
 
 		$wamService = new WAMService();
@@ -198,8 +201,22 @@ class WAMApiController extends WikiaApiController {
 			$options['currentTimestamp'] = $wamDates['max_date'];
 			$options['previousTimestamp'] = $options['currentTimestamp'] - 60 * 60 * 24;
 		} else {
-			if($options['currentTimestamp'] > $wamDates['max_date'] || $options['currentTimestamp'] < $wamDates['min_date']) {
-				throw new OutOfRangeApiException('currentTimestamp', $wamDates['min_date'], $wamDates['max_date']);
+			if($options['currentTimestamp'] > $wamDates['max_date']) {
+				$options['currentTimestamp'] = $wamDates['max_date'];
+
+				$this->warning( __METHOD__ . " - current timestamp over maximum", [
+					'wam_last_entry_date' => wfTimestamp( TS_DB, $wamDates['max_date'] ), // e.g. 2016-11-01 00:00:00
+					'wam_requested_entry_date' => wfTimestamp( TS_DB, $options['currentTimestamp'] ),
+					'exception' => new Exception(),
+				] );
+			} else if($options['currentTimestamp'] < $wamDates['min_date']) {
+				$options['currentTimestamp'] = $wamDates['min_date'];
+
+				$this->warning( __METHOD__ . " - current timestamp below minimum", [
+					'wam_first_entry_date' => wfTimestamp( TS_DB, $wamDates['min_date'] ), // e.g. 2016-11-01 00:00:00
+					'wam_requested_entry_date' => wfTimestamp( TS_DB, $options['currentTimestamp'] ),
+					'exception' => new Exception(),
+				] );
 			}
 
 			if(empty($options['previousTimestamp'])) {

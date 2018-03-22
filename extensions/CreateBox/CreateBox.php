@@ -129,11 +129,21 @@ ENDFORM;
 }
 
 function acRedirect( $title, $action ) {
-	global $wgRequest, $wgOut;
-	$query = "action={$action}"
-		. '&preload=' . $wgRequest->getVal( 'preload' )
-		. '&editintro=' . $wgRequest->getVal( 'editintro' )
-		. '&section=' . $wgRequest->getVal( 'section' );
+	global $wgRequest, $wgOut, $wgEnableFlowTracking;
+
+	$queryData = [
+		'action' => $action,
+		'preload' => $wgRequest->getVal( 'preload' ),
+		'editintro' => $wgRequest->getVal( 'editintro' ),
+		'section' => $wgRequest->getVal( 'section' ),
+	];
+
+	if( !empty( $wgEnableFlowTracking ) ) {
+		$queryData['flow'] = FlowTrackingHooks::CREATE_PAGE_CREATE_BOX;
+	}
+
+	$query = http_build_query($queryData);
+
 	$wgOut->setSquidMaxage( 1200 );
 	$wgOut->redirect( $title->getFullURL( $query ), '301' );
 }

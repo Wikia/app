@@ -133,12 +133,10 @@ END;
 		if ( $page_title->exists() ) {
 			// It exists - see if page is a redirect; if
 			// it is, edit the target page instead.
-			$article = new Article( $page_title, 0 );
-			$article->loadContent();
-			$redirect_title = Title::newFromRedirect( $article->fetchContent() );
-			if ( $redirect_title != null ) {
-				$page_title = $redirect_title;
-				$page_name = SFUtils::titleURLString( $redirect_title );
+			$content = WikiPage::factory( $page_title ); # Wikia change - SUS-1271 / use MW1.19 compatible call
+			if ( $content && $content->getRedirectTarget() ) {
+				$page_title = $content->getRedirectTarget();
+				$page_name = SFUtils::titleURLString( $page_title );
 			}
 			// HACK - if this is the default form for
 			// this page, send to the regular 'formedit'
@@ -160,8 +158,8 @@ END;
 			}
 		} else {
 			$redirect_url = self::getFormEditURL( $form_name, $page_name );
-			// Of all the request values, send on to 'FormEdit'
-			// only 'preload' and specific form fields - we can
+			// Of all the request values, send on to 'FormEdit' only
+			// 'preload', 'returnto', and specific form fields - we can
 			// identify the latter because they show up as arrays.
 			foreach ( $_REQUEST as $key => $val ) {
 				if ( is_array( $val ) ) {
@@ -172,7 +170,7 @@ END;
 					// thing.
 					$wrapperArray = array( $key => $val );
 					$redirect_url .= urldecode( http_build_query( $wrapperArray ) );
-				} elseif ( $key == 'preload' ) {
+				} elseif ( $key == 'preload' || $key == 'returnto' ) {
 					$redirect_url .= ( strpos( $redirect_url, '?' ) > - 1 ) ? '&' : '?';
 					$redirect_url .= "$key=$val";
 				}

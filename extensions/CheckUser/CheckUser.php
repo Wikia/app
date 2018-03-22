@@ -52,7 +52,6 @@ $wgCheckUserForceSummary = false;
 # Recent changes data hook
 $wgHooks['RecentChange_save'][] = 'CheckUserHooks::updateCheckUserData';
 $wgHooks['EmailUser'][] = 'CheckUserHooks::updateCUEmailData';
-$wgHooks['User::mailPasswordInternal'][] = 'CheckUserHooks::updateCUPasswordResetData';
 $wgHooks['AuthPluginAutoCreate'][] = 'CheckUserHooks::onAuthPluginAutoCreate';
 $wgHooks['AddNewAccount'][] = 'CheckUserHooks::onAddNewAccount';
 $wgHooks['LoggableUserIPData'][] = 'CheckUserHooks::onLoggableUserIPData';
@@ -66,9 +65,6 @@ $wgHooks['ContributionsToolLinks'][] = 'CheckUserHooks::loadCheckUserLink';
 
 # Take over autoblocking
 $wgHooks['PerformRetroactiveAutoblock'][] = 'CheckUserHooks::doRetroactiveAutoblock';
-
-# Register tables that need to be updated when a user is renamed
-$wgHooks['UserRename::Local'][] = 'CheckUserHooks::onUserRenameLocal';
 
 $wgResourceModules['ext.checkUser'] = array(
 	'scripts'       => 'checkuser.js',

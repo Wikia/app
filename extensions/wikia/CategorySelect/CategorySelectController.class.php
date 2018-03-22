@@ -20,7 +20,7 @@ class CategorySelectController extends WikiaController {
 		wfProfileIn( __METHOD__ );
 
 		// Template rendering cancelled by hook
-		if ( !wfRunHooks( 'CategorySelectArticlePage' ) ) {
+		if ( !Hooks::run( 'CategorySelectArticlePage' ) ) {
 			wfProfileOut( __METHOD__ );
 			return false;
 		}
@@ -63,6 +63,10 @@ class CategorySelectController extends WikiaController {
 	public function categories() {
 		wfProfileIn( __METHOD__ );
 
+		if ( !$this->request->isInternal() ) {
+			throw new UnauthorizedException();
+		}
+
 		$categories = $this->request->getVal( 'categories', array() );
 		$data = array();
 
@@ -99,6 +103,10 @@ class CategorySelectController extends WikiaController {
 	 * The template for a category in the category list.
 	 */
 	public function category() {
+		if ( !$this->request->isInternal() ) {
+			throw new UnauthorizedException();
+		}
+
 		$this->response->setVal( 'blankImageUrl', $this->wg->BlankImgUrl );
 		$this->response->setVal( 'edit', wfMessage( 'categoryselect-category-edit' )->text() );
 		$this->response->setVal( 'link', $this->request->getVal( 'link', '' ) );
@@ -248,7 +256,7 @@ class CategorySelectController extends WikiaController {
 					$response[ 'html' ] = $this->app->renderView( 'CategorySelectController', 'categories', array(
 						'categories' => $categories
 					));
-					wfRunHooks( 'CategorySelectSave', array( $title, $newCategories ) );
+					Hooks::run( 'CategorySelectSave', array( $title, $newCategories ) );
 					break;
 
 				case EditPage::AS_SPAM_ERROR:

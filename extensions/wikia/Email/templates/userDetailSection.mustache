@@ -1,5 +1,5 @@
-<tr>
-	<td valign="top">
+<tr class="avatar">
+	<td>
 		<div class="avatar-wrapper">
 			{{# editorProfilePage}}
 			<a href="{{editorProfilePage}}">
@@ -11,20 +11,20 @@
 		</div>
 	</td>
 	<td class="widest">
-		<div class="message">
-			<p>
-				{{# editorProfilePage}}
-				<a class="username" href="{{editorProfilePage}}">
-					{{/ editorProfilePage}}
-					{{editorUserName}}
-					{{# editorProfilePage}}
-				</a>
-				{{/ editorProfilePage}}
-			</p>
-			{{# detailsHeader}}
+		{{# editorProfilePage}}
+		<a class="username" href="{{editorProfilePage}}">
+			{{/ editorProfilePage}}
+			{{editorUserName}}
+			{{# editorProfilePage}}
+		</a>
+		{{/ editorProfilePage}}
+	</td>
+</tr>
+<tr>
+	<td colspan="2">
+		{{# detailsHeader}}
 			<p><strong>{{detailsHeader}}</strong></p>
-			{{/ detailsHeader}}
-			<p>{{{details}}}</p>
-		</div>
+		{{/ detailsHeader}}
+		<p>{{{details}}}</p>
 	</td>
 </tr>

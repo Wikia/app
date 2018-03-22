@@ -107,9 +107,11 @@ class ApiAccessService {
 		}
 		return $result;
 	}
+
+	/**
+	 * @return bool
+	 */
 	protected function isCorporateWiki() {
-		global $wgEnableWikiaHomePageExt;
-		return !empty($wgEnableWikiaHomePageExt);
+		return WikiaPageType::isCorporatePage();
 	}
-	
 }

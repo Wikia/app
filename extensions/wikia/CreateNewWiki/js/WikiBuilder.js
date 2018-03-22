@@ -1,6 +1,6 @@
 /*global WikiBuilderCfg, ThemeDesigner */
 
-define('ext.createNewWiki.builder', ['ext.createNewWiki.helper'], function (helper) {
+define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'], function (helper, tracker) {
 	'use strict';
 
 	var wntimer = false,
@@ -17,18 +17,19 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper'], function (help
 		$descWikiWrapper,
 		$authWrapper,
 		$themWikiWrapper,
-		$progress,
 		steps,
 		wikiName,
-		wikiNameStatus,
+		wikiNameLabel,
 		wikiNameError,
 		wikiDomain,
+		wikiDomainLabel,
 		wikiDomainError,
-		wikiDomainStatus,
 		wikiDomainCountry,
-		nameWikiSubmitError,
 		wikiLanguage,
+		wikiLanguageList,
 		wikiVertical,
+		wikiVerticalList,
+		wikiVerticalError,
 		wikiAllAges,
 		allAgesDiv,
 		descWikiSubmitError,
@@ -40,7 +41,12 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper'], function (help
 		userAuth,
 		errorModalHeader,
 		errorModalMessage,
-		isUserLoggedIn = window.wgUserName !== null;
+		isUserLoggedIn = window.wgUserName !== null,
+		track = tracker.buildTrackingFunction({
+			action: tracker.ACTIONS.CLICK,
+			category: 'create-new-wiki',
+			trackingMethod: 'analytics'
+		});
 
 	function init() {
 		var pane;
@@ -48,6 +54,7 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper'], function (help
 		cacheSelectors();
 		checkNextButtonStep1();
 		bindEventHandlers();
+		initFloatingLabelsPosition();
 
 		// Set current step on page load
 		if (WikiBuilderCfg.currentstep) {
@@ -57,14 +64,15 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper'], function (help
 			pane.show();
 		}
 
-		$('.tooltip-icon').tooltip();
-
 		// onload stuff
 		wikiName.focus();
 		if (wikiName.val() || wikiDomain.val()) {
 			checkDomain();
 			checkWikiName();
 		}
+
+		// added like this, instead of in stylesheet, so it won't override overflow property globally
+		$('#WikiaArticle').css('overflow', 'visible');
 	}
 
 	function cacheSelectors() {
@@ -73,18 +81,19 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper'], function (help
 		$descWikiWrapper = $('#DescWiki');
 		$authWrapper = $('#UserAuth');
 		$themWikiWrapper = $('#ThemeWiki');
-		$progress = $('#StepsIndicator');
 		steps = wb.find('.steps .step');
 		wikiName = $nameWikiWrapper.find('input[name=wiki-name]');
-		wikiNameStatus = $nameWikiWrapper.find('.wiki-name-status-icon');
+		wikiNameLabel = $nameWikiWrapper.find('label[for=wiki-name]');
 		wikiNameError = $nameWikiWrapper.find('.wiki-name-error');
 		wikiDomain = $nameWikiWrapper.find('input[name=wiki-domain]');
+		wikiDomainLabel = $nameWikiWrapper.find('label[for=wiki-domain]');
 		wikiDomainError = $nameWikiWrapper.find('.wiki-domain-error');
-		wikiDomainStatus = $nameWikiWrapper.find('.domain-status-icon');
 		wikiDomainCountry = $nameWikiWrapper.find('.domain-country');
-		nameWikiSubmitError = $nameWikiWrapper.find('.submit-error');
-		wikiLanguage = $nameWikiWrapper.find('select[name=wiki-language]');
-		wikiVertical = $descWikiWrapper.find('select[name=wiki-vertical]');
+		wikiLanguage = $nameWikiWrapper.find('input[name=wiki-language]');
+		wikiLanguageList = $nameWikiWrapper.find('.wiki-language-dropdown');
+		wikiVertical = $descWikiWrapper.find('input[name=wiki-vertical]');
+		wikiVerticalList = $descWikiWrapper.find('.wiki-vertical-dropdown');
+		wikiVerticalError = $descWikiWrapper.find('.wiki-vertical-error');
 		wikiAllAges = $descWikiWrapper.find('input[name=all-ages]');
 		allAgesDiv = $('#all-ages-div');
 		descWikiSubmitError = $descWikiWrapper.find('.submit-error');
@@ -97,16 +106,39 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper'], function (help
 		$nameWikiWrapper.find('input.next').click(onNameWikiWrapperClick);
 		wikiDomain.keyup(onWikiDomainKeyUp);
 		wikiName.keyup(onWikiNameKeyUp);
+		wikiName.on('focus', onWikiNameFocus);
+		wikiName.on('blur', onWikiNameBlur);
+		wikiDomain.on('focus', onWikiDomainFocus);
+		wikiDomain.on('blur', onWikiDomainBlur);
 		wikiLanguage.bind('change', onWikiLanguageChange);
-		$('#ChangeLang').click(onChangeLangClick);
+		wikiLanguageList.bind('click', onWikiLanguageListClick);
 		wb.find('nav .back').bind('click', onNavBackClick);
 		descWikiNext.click(onDescWikiNextClick);
 		$('#Description').placeholder();
 		$themWikiWrapper.find('nav .next').click(onThemeNavNextClick);
 		wikiVertical.on('change', onWikiVerticalChange);
+		wikiVerticalList.bind('click', onWikiVerticalListClick);
+		$descWikiWrapper.find('#all-ages-div input').bind('change', onIntendedForKidsCheckboxChange);
+	}
+
+	function initFloatingLabelsPosition() {
+		wikiNameLabel.css('left', wikiName.position().left);
+		wikiDomainLabel.css('left', wikiDomain.position().left);
+
+		if (wikiName.val()) {
+			wikiNameLabel.addClass('active').css('left', 0);
+		}
+
+		if (wikiDomain.val()) {
+			wikiDomainLabel.addClass('active').css('left', 0);
+		}
 	}
 
 	function onThemeNavNextClick() {
+		track({
+			action: tracker.ACTIONS.SUBMIT,
+			label: 'theme-selection-submitted'
+		});
 		saveState(ThemeDesigner.settings, function () {
 			gotoMainPage();
 		});
@@ -117,7 +149,7 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper'], function (help
 			descriptionVal;
 
 		descWikiNext.attr('disabled', true);
-		val = wikiVertical.find('option:selected').val();
+		val = wikiVertical.val();
 
 		if (val !== '-1' /* yes, it is a string */ ) {
 			descriptionVal = $('#Description').val();
@@ -129,47 +161,69 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper'], function (help
 				},
 				callback: function (res) {
 					// check phalanx result
-					if (res.msgHeader) {
-						$.showModal(res.msgHeader, res.msgBody);
+					if (res.statusHeader) {
+						track({
+							action: tracker.ACTIONS.ERROR,
+							label: 'wiki-description-validation-error'
+						});
+						$.showModal(res.statusHeader, res.statusMsg);
 						descWikiNext.attr('disabled', false);
 					} else {
+						var descriptionLabel = (descriptionVal === WikiBuilderCfg.descriptionplaceholder) ?
+							'wiki-description-submitted-empty' :
+							'wiki-description-submitted';
+
+						track({
+							action: tracker.ACTIONS.SUBMIT,
+							label: descriptionLabel
+						});
+
 						// call create wiki ajax
 						saveState({
 							wikiDescription: (descriptionVal === WikiBuilderCfg.descriptionplaceholder ?
 								'' : descriptionVal)
 						}, function () {
 							createWiki();
-							transition('DescWiki', true, '+');
+							transition('DescWiki', true);
 						});
 					}
-				}
+				},
+				onErrorCallback: generateAjaxErrorMsg
 			});
 		} else {
-			descWikiSubmitError
-				.show()
-				.html(WikiBuilderCfg['desc-wiki-submit-error'])
-				.delay(3000)
-				.fadeOut();
-
+			track({
+				action: tracker.ACTIONS.ERROR,
+				label: 'vertical-not-selected-error'
+			});
 			descWikiNext.attr('disabled', false);
+
+			addWikiVerticalError(WikiBuilderCfg['desc-wiki-submit-error']);
 		}
 	}
 
 	function onWikiVerticalChange () {
-		var $this = $(this),
-			selectedValue = $this.val(),
-			selectedOption,
+		var selectedOption = $(this),
+			selectedValue = selectedOption.val(),
 			selectedShort,
 			categoriesSets = $('.categories-sets'),
 			newCategoriesSetId,
-			duplicate;
+			duplicate,
+			nextButton = nextButtons.eq(1);
 
 		if (selectedValue === '-1' /* yes, it is a string */ ) {
+			track({
+				label: 'vertical-unselected'
+			});
 			categoriesSets.hide();
+
+			nextButton.attr('disabled', true);
+			addWikiVerticalError(WikiBuilderCfg['desc-wiki-submit-error']);
 		} else {
+			track({
+				label: 'vertical-selected'
+			});
 			categoriesSets.show();
 
-			selectedOption = $this.find('option:selected');
 			selectedShort = selectedOption.data('short');
 			newCategoriesSetId = selectedOption.data('categoriesset');
 
@@ -189,37 +243,63 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper'], function (help
 				.find('[data-short="' + selectedShort + '"]');
 			if (duplicate) {
 				duplicate.attr('checked', false);
-				hiddenDuplicate = duplicate.parent().hide();
+				hiddenDuplicate = duplicate.closest('label').hide();
 			}
+			$descWikiWrapper.find('label input[type="checkbox"]').change(onCategorySelection);
+
+			nextButton.attr('disabled', false);
+			removeWikiVerticalError();
 		}
 	}
 
+	function onWikiVerticalListClick(e) {
+		var li = $(e.target),
+			input = $descWikiWrapper.find('input[name=wiki-vertical]');
+
+		$descWikiWrapper.find('.wds-dropdown').removeClass('wds-is-active');
+		input.data({ short: li.data('short'), categoriesset: li.data('categoriesset') });
+		input.val(li.attr('id')).change();
+		$descWikiWrapper.find('.default-value').text(li.text());
+	}
+
+	function onCategorySelection() {
+		track({
+			label: 'category-checkbox-clicked'
+		});
+	}
+
+	function onIntendedForKidsCheckboxChange() {
+		track({
+			label: 'intended-for-kids-checkbox-clicked'
+		});
+	}
+
 	function onNavBackClick() {
+		track({
+			label: 'description-back-button-clicked'
+		});
+
 		var id = $(this).closest('.step').attr('id');
 
 		if (id === 'DescWiki') {
-			transition('DescWiki', false, '-');
+			transition('DescWiki', false);
 			if ($authWrapper.length) {
 				userAuth.loginAjaxForm.retrieveLoginToken({
 					clearCache: true
 				});
 				userAuth.loginAjaxForm.submitButton.removeAttr('disabled');
 			}
-		} else {
-			transition(id, false, '-');
-		}
-	}
 
-	function onChangeLangClick(e) {
-		e.preventDefault();
-		$nameWikiWrapper.find('.language-default').hide();
-		$nameWikiWrapper.find('.language-choice').show();
+			removeWikiVerticalError();
+		} else {
+			transition(id, false);
+		}
 	}
 
 	function onWikiLanguageChange() {
 		checkWikiName();
 		checkDomain();
-		var selected = wikiLanguage.find('option:selected').val();
+		var selected = $(this).val();
 
 		if (selected && selected !== window.wgLangAllAgesOpt) {
 			wikiDomainCountry.html(selected + '.');
@@ -229,6 +309,22 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper'], function (help
 			allAgesDiv.show();
 		}
 
+		if (!wikiDomainLabel.hasClass('active')) {
+			wikiDomainLabel.css('left', wikiDomain.position().left);
+		}
+
+		track({
+			label: 'language-changed'
+		});
+	}
+
+	function onWikiLanguageListClick(e) {
+		var li = $(e.target);
+		if (!li.hasClass('spacer')) {
+			$nameWikiWrapper.find('.wds-dropdown').removeClass('wds-is-active');
+			$nameWikiWrapper.find('input[name=wiki-language]').val(li.attr('id')).change();
+			$nameWikiWrapper.find('.default-value').text(li.text().split(':')[1]);
+		}
 	}
 
 	function onWikiNameKeyUp() {
@@ -237,12 +333,30 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper'], function (help
 		nameAjax = true;
 		checkNextButtonStep1();
 		name = helper.sanitizeWikiName($(this).val());
+		if (name) {
+			wikiDomainLabel.addClass('active').css('left', 0);
+		} else {
+			wikiDomainLabel.removeClass('active').css('left', wikiDomain.position().left);
+		}
 
 		wikiDomain.val(name.toLowerCase()).trigger('keyup');
 		if (wntimer) {
 			clearTimeout(wntimer);
 		}
 		wntimer = setTimeout(checkWikiName, 500);
+	}
+
+	function onWikiNameFocus() {
+		wikiNameLabel.addClass('active').css('left', 0);
+	}
+
+	function onWikiNameBlur(e) {
+		if (e.target.value.trim().length === 0) {
+			wikiNameLabel.removeClass('active').css('left', wikiName.position().left);
+			if (!wikiDomain.val().trim().length) {
+				wikiDomainLabel.removeClass('active').css('left', wikiDomain.position().left);
+			}
+		}
 	}
 
 	function onWikiDomainKeyUp() {
@@ -254,18 +368,33 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper'], function (help
 		wdtimer = setTimeout(checkDomain, 500);
 	}
 
+	function onWikiDomainFocus() {
+		wikiDomainLabel.addClass('active').css('left', 0);
+	}
+
+	function onWikiDomainBlur(e) {
+		if (e.target.value.trim().length === 0) {
+			wikiDomainLabel.removeClass('active').css('left', wikiDomain.position().left);
+		}
+	}
+
 	function onNameWikiWrapperClick () {
-		var wikiNameVal, wikiDomainVal, wikiLanguageVal;
+		var wikiNameVal = wikiName.val(),
+			wikiDomainVal = wikiDomain.val(),
+			wikiLanguageVal;
 
 		if (isNameWikiSubmitError()) {
-			nameWikiSubmitError
-				.show()
-				.html(WikiBuilderCfg['name-wiki-submit-error'])
-				.delay(3000)
-				.fadeOut();
+			track({
+				action: tracker.ACTIONS.ERROR,
+				label: 'wiki-name-submit-error'
+			});
+			if (wikiNameVal.length === 0) {
+				addWikiNameError(WikiBuilderCfg['name-wiki-submit-error']);
+			}
+			if (wikiDomainVal.length === 0) {
+				addWikiDomainError(WikiBuilderCfg['name-wiki-submit-error']);
+			}
 		} else {
-			wikiNameVal = wikiName.val();
-			wikiDomainVal = wikiDomain.val();
 			wikiLanguageVal = wikiLanguage.find('option:selected').val();
 
 			saveState({
@@ -277,14 +406,22 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper'], function (help
 			if (isUserLoggedIn) {
 				onAuthSuccess();
 			} else {
+				track({
+					action: tracker.ACTIONS.IMPRESSION,
+					label: 'login-modal-shown'
+				});
 				helper.login(onAuthSuccess, helper.getLoginRedirectURL(wikiNameVal, wikiDomainVal, wikiLanguageVal));
 			}
+			track({
+				action: tracker.ACTIONS.SUCCESS,
+				label: 'wiki-name-submitted'
+			});
 		}
 	}
 
 	function onAuthSuccess() {
 		isUserLoggedIn = true;
-		transition('NameWiki', true, '+');
+		transition('NameWiki', true);
 	}
 
 	function checkWikiName () {
@@ -305,9 +442,9 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper'], function (help
 					if (res) {
 						var response = res.res;
 						if (response) {
-							wikiNameError.html(response);
+							addWikiNameError(response);
 						} else {
-							wikiNameError.html('');
+							removeWikiNameError();
 						}
 						nameAjax = false;
 						checkNextButtonStep1();
@@ -315,19 +452,20 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper'], function (help
 				}
 			});
 		} else {
-			showIcon(wikiNameStatus, '');
-			wikiNameError.html('');
+			removeWikiNameError();
 		}
 	}
 
 	function checkDomain() {
 		var wd = wikiDomain.val(),
-			lang = wikiLanguage.val();
+			lang = wikiLanguage.val(),
+			throbberWrapper = $nameWikiWrapper.find('.controls');
 
 		if (wd) {
+			throbberWrapper.startThrobbing();
+
 			wd = wd.toLowerCase();
 			wikiDomain.val(wd);
-			showIcon(wikiDomainStatus, 'spinner');
 			domainAjax = true;
 			checkNextButtonStep1();
 
@@ -343,21 +481,19 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper'], function (help
 						var response = res.res;
 
 						if (response) {
-							wikiDomainError.html(response);
-							showIcon(wikiDomainStatus, '');
+							addWikiDomainError(response);
 						} else {
-							wikiDomainError.html('');
-							showIcon(wikiDomainStatus, 'ok');
+							removeWikiDomainError();
 						}
 
 						domainAjax = false;
 						checkNextButtonStep1();
+						throbberWrapper.stopThrobbing();
 					}
 				}
 			});
 		} else {
-			wikiDomainError.html('');
-			showIcon(wikiDomainStatus, '');
+			removeWikiDomainError();
 		}
 	}
 
@@ -379,38 +515,31 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper'], function (help
 	function checkNextButtonStep1() {
 		var nextButton = nextButtons.eq(0);
 
-		isNameWikiSubmitError() ? nextButton.removeClass('enabled') : nextButton.addClass('enabled');
-	}
-
-	function showIcon(el, art) {
-		if (art) {
-			var markup = '<img src="';
-			if (art === 'spinner') {
-				markup += window.stylepath + '/common/images/ajax.gif';
-			} else if (art === 'ok') {
-				markup += window.wgExtensionsPath + '/wikia/CreateNewWiki/images/check.png';
-			}
-			markup += '">';
-			$(el).html(markup);
+		if (isNameWikiSubmitError()) {
+			nextButton.removeClass('enabled').attr('disabled', true);
 		} else {
-			$(el).html('');
+			nextButton.addClass('enabled').attr('disabled', false);
 		}
 	}
 
-	function transition(from, next, dot) {
+	function showSpinnerIcon(el) {
+		$(el).html('<img src="' + window.stylepath + '/common/images/ajax.gif' + '">');
+	}
+
+	function transition(from, next) {
 		var f = $('#' + from),
 			t = (next ? f.next() : f.prev()),
 			op = t.css('position'),
-			th, tw;
+			stepsWrapper = wb.find('.steps'),
+			th;
 
 		t.css('position', 'absolute');
-		th = t.height();
-		tw = t.width();
+		th = t.height() + wb.outerHeight() - stepsWrapper.height();
 		t.css('position', op);
+		stepsWrapper.css({'border-bottom-style': 'none'});
 
 		wb.animate({
-			height: th,
-			width: tw
+			height: th
 		}, function () {
 			t.animate({
 				'opacity': 'show'
@@ -418,14 +547,8 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper'], function (help
 				queue: false,
 				duration: 250
 			});
-			if (dot) {
-				if (dot === '+') {
-					$progress.find('.step.active').last().next().addClass('active');
-				} else if (dot === '-') {
-					$progress.find('.step.active').last().removeClass('active');
-				}
-			}
 			wb.height('auto');
+			stepsWrapper.css({'border-bottom-style': 'solid'});
 		});
 		f.animate({
 			'opacity': 'hide'
@@ -464,7 +587,7 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper'], function (help
 		} else if (retryGoto < 300) {
 			if (!finishSpinner.data('spinning')) {
 				finishSpinner.data('spinning', 'true');
-				showIcon(finishSpinner, 'spinner');
+				showSpinnerIcon(finishSpinner);
 			}
 			retryGoto++;
 			setTimeout(gotoMainPage, 200);
@@ -472,17 +595,19 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper'], function (help
 	}
 
 	function createWiki() {
-		var throbberWrapper = $themWikiWrapper.find('.next-controls'),
-			verticalOption = wikiVertical.find('option:selected'),
-			categories = [];
+		var throbberWrapper = $themWikiWrapper.find('.controls'),
+			categories = [],
+			descriptionVal;
 
 		throbberWrapper.startThrobbing();
 
-		$('#categories-set-' + verticalOption.data('categoriesset') + ' :checked').each(function () {
+		$('#categories-set-' + wikiVertical.data('categoriesset') + ' :checked').each(function () {
 			categories.push($(this).val());
 		});
 
-		$.get('/api.php', {
+		descriptionVal = $('#Description').val();
+
+		$.get(mw.util.wikiScript('api'), {
 			action: 'query',
 			uiprop: 'preferencestoken',
 			meta: 'userinfo',
@@ -504,15 +629,17 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper'], function (help
 					data: {
 						wName: wikiName.val(),
 						wDomain: wikiDomain.val(),
-						wLanguage: wikiLanguage.find('option:selected').val(),
-						wVertical: verticalOption.val(),
+						wLanguage: wikiLanguage.val(),
+						wVertical: wikiVertical.val(),
 						wCategories: categories,
-						wAllAges: wikiAllAges.is(':checked') ? wikiAllAges.val() : null
+						wAllAges: wikiAllAges.is(':checked') ? wikiAllAges.val() : null,
+						wDescription: descriptionVal
 					},
 					token: preferencesToken
 				},
 				callback: function (res) {
 					throbberWrapper.stopThrobbing();
+					throbberWrapper.removeClass('creating-wiki');
 					cityId = res.cityId;
 					createStatus = res.status;
 					createStatusMessage = res.statusMsg;
@@ -521,9 +648,8 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper'], function (help
 						res.finishCreateUrl);
 
 					// unblock "Next" button (BugId:51519)
-					$themWikiWrapper.find('.next-controls input').
-					attr('disabled', false).
-					addClass('enabled'); // for QA with love
+					// for QA with love
+					$themWikiWrapper.find('.controls input').attr('disabled', false).addClass('enabled');
 				},
 				onErrorCallback: generateAjaxErrorMsg
 			});
@@ -544,6 +670,40 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper'], function (help
 		}
 
 		$.showModal(errorModalHeader, errorModalMessage);
+	}
+
+	function addWikiNameError(message) {
+		wikiName.addClass('input-error');
+		wikiNameLabel.addClass('label-error');
+		wikiNameError.html(message);
+	}
+
+	function removeWikiNameError() {
+		wikiName.removeClass('input-error');
+		wikiNameLabel.removeClass('label-error');
+		wikiNameError.html('');
+	}
+
+	function addWikiDomainError(message) {
+		wikiDomain.addClass('input-error');
+		wikiDomainLabel.addClass('label-error');
+		wikiDomainError.html(message);
+	}
+
+	function removeWikiDomainError() {
+		wikiDomain.removeClass('input-error');
+		wikiDomainLabel.removeClass('label-error');
+		wikiDomainError.html('');
+	}
+
+	function addWikiVerticalError(message) {
+		wikiVerticalList.parent().addClass('input-error');
+		wikiVerticalError.html(message);
+	}
+
+	function removeWikiVerticalError() {
+		wikiVerticalList.parent().removeClass('input-error');
+		wikiVerticalError.html('');
 	}
 
 	return {

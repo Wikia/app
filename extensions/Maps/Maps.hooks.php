@@ -5,9 +5,6 @@
  *
  * @since 0.7
  *
- * @file Maps.hooks.php
- * @ingroup Maps
- *
  * @licence GNU GPL v2+
  * @author Jeroen De Dauw < jeroendedauw@gmail.com >
  */
@@ -22,8 +19,10 @@ final class MapsHooks {
 	 *
 	 * @return boolean
 	 */
-	public static function addToAdminLinks( ALTree &$admin_links_tree ) {
-		$displaying_data_section = $admin_links_tree->getSection( wfMsg( 'smw_adminlinks_displayingdata' ) );
+	public static function addToAdminLinks( ALTree $admin_links_tree ) {
+		$displaying_data_section = $admin_links_tree->getSection(
+			wfMessage( 'smw_adminlinks_displayingdata' )->text()
+		);
 
 		// Escape if SMW hasn't added links.
 		if ( is_null( $displaying_data_section ) ) {
@@ -32,57 +31,10 @@ final class MapsHooks {
 
 		$smw_docu_row = $displaying_data_section->getRow( 'smw' );
 
-		$maps_docu_label = wfMsg( 'adminlinks_documentation', 'Maps' );
-		$smw_docu_row->addItem( AlItem::newFromExternalLink( 'http://mapping.referata.com/wiki/Maps', $maps_docu_label ) );
-
-		return true;
-	}
-
-	/**
-	 * Hook to add PHPUnit test cases.
-	 * @see https://www.mediawiki.org/wiki/Manual:Hooks/UnitTestsList
-	 *
-	 * @since 0.7
-	 *
-	 * @param array &$files
-	 *
-	 * @return boolean
-	 */
-	public static function registerUnitTests( array &$files ) {
-		// @codeCoverageIgnoreStart
-		$testFiles = array(
-			'parserhooks/Coordinates',
-			'parserhooks/DisplayMap',
-			'parserhooks/Distance',
-			'parserhooks/Finddestination',
-			'parserhooks/Geocode',
-			'parserhooks/Geodistance',
-			'parserhooks/MapsDoc',
-
-			'MapsCoordinateParser',
-			'MapsDistanceParser',
+		$maps_docu_label = wfMessage( 'adminlinks_documentation', 'Maps' )->text();
+		$smw_docu_row->addItem(
+			AlItem::newFromExternalLink( 'https://www.semantic-mediawiki.org/wiki/Extension:Maps', $maps_docu_label )
 		);
-
-		foreach ( $testFiles as $file ) {
-			$files[] = __DIR__ . '/tests/phpunit/' . $file . 'Test.php';
-		}
-
-		return true;
-		// @codeCoverageIgnoreEnd
-	}
-
-	/**
-	 * Intercept pages in the Layer namespace to handle them correctly.
-	 *
-	 * @param $title: Title
-	 * @param $article: Article or null
-	 *
-	 * @return boolean
-	 */
-	public static function onArticleFromTitle( Title &$title, /* Article */ &$article ) {
-		if ( $title->getNamespace() == Maps_NS_LAYER ) {
-			$article = new MapsLayerPage( $title );
-		}
 
 		return true;
 	}
@@ -91,31 +43,37 @@ final class MapsHooks {
 	 * Adds global JavaScript variables.
 	 *
 	 * @since 1.0
+	 * @see http://www.mediawiki.org/wiki/Manual:Hooks/MakeGlobalVariablesScript
 	 *
-	 * @param array &$vars
+	 * @param array &$vars Variables to be added into the output
+	 * @param OutputPage $outputPage OutputPage instance calling the hook
 	 *
-	 * @return boolean
+	 * @return boolean true in all cases
 	 */
-	public static function onMakeGlobalVariablesScript( array &$vars ) {
+	public static function onMakeGlobalVariablesScript( array &$vars, OutputPage $outputPage ) {
 		global $egMapsGlobalJSVars;
 
 		$vars['egMapsDebugJS'] = $GLOBALS['egMapsDebugJS'];
+		$vars['egMapsAvailableServices'] = $GLOBALS['egMapsAvailableServices'];
 
 		$vars += $egMapsGlobalJSVars;
 
 		return true;
 	}
 
-	/**
-	 * @since 0.7
-	 *
-	 * @param array $list
-	 *
-	 * @return boolean
-	 */
-	public static function onCanonicalNamespaces( array &$list ) {
-		$list[Maps_NS_LAYER] = 'Layer';
-		$list[Maps_NS_LAYER_TALK] = 'Layer_talk';
-		return true;
+	public static function onOutputPageParserOutput( OutputPage $out, ParserOutput $parserOutput ) {
+		if ( !isset( $parserOutput->mapsMappingServices ) ) {
+			return;
+		}
+
+		/** @var MapsMappingService $service */
+		foreach ( $parserOutput->mapsMappingServices as $service ) {
+			$html = $service->getDependencyHtml();
+
+			if ( $html ) {
+				$out->addHTML( $html );
+			}
+		}
 	}
+
 }

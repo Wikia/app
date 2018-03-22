@@ -1,0 +1,23 @@
+.featured-video.is-collapsed {
+	// do not show title when video is collapsed in idle state
+	.jw-state-idle .jw-title {
+		display: none;
+	}
+
+	// do not show title when video is collapsed
+	.jw-title {
+		display: none;
+	}
+
+	.wikia-jw__plugin,
+	.wikia-jw--button {
+		display: none !important;
+	}
+
+	// if both .is-collapsed & is-collapsed-ready are added it means animation is in progress and we do not want to show controls
+	&.is-collapsed-ready {
+		.jw-controls > div {
+			display: none;
+		}
+	}
+}

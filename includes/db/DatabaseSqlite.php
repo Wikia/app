@@ -594,7 +594,7 @@ class DatabaseSqlite extends DatabaseBase {
 	/**
 	 * @return string wikitext of a link to the server software's web site
 	 */
-	public static function getSoftwareLink() {
+	public function getSoftwareLink() {
 		return "[http://sqlite.org/ SQLite]";
 	}
 
@@ -785,6 +785,13 @@ class DatabaseSqlite extends DatabaseBase {
 	 */
 	function buildConcat( $stringList ) {
 		return '(' . implode( ') || (', $stringList ) . ')';
+	}
+
+	public function buildGroupConcatField(
+		$delim, $table, $field, $conds = '', $join_conds = array()
+	) {
+		$fld = "group_concat($field," . $this->addQuotes( $delim ) . ')';
+		return '(' . $this->selectSQLText( $table, $fld, $conds, null, array(), $join_conds ) . ')';
 	}
 
 	/**

@@ -15,18 +15,18 @@
  *
  * SERVER_ID=177 php runBackups.php  --both --db=wikicities -- generate full & current
  * 	backups for city_dbname = wikicities
+ *
+ * This script is executed by /extensions/wikia/WikiFactory/Dumps/maintenance/DumpsOnDemandCron.php
  */
-ini_set( "include_path", dirname(__FILE__)."/../../../../maintenance/" );
-require_once('commandLine.inc');
 
+require_once(__DIR__ .'/../../../../maintenance/commandLine.inc');
 
 /**
  * run backup for range of wikis
  */
 function runBackups( $from, $to, $full, $options ) {
 
-	global $IP, $wgWikiaLocalSettingsPath, $wgWikiaAdminSettingsPath,
-		$wgMaxShellTime, $wgMaxShellFileSize, $wgDumpsDisabledWikis;
+	global $wgMaxShellTime, $wgMaxShellFileSize, $wgDumpsDisabledWikis;
 
 	$range = array();
 
@@ -131,7 +131,7 @@ function runBackups( $from, $to, $full, $options ) {
  * @param array $args optional extra arguments for dumpBackup.php
  */
 function doDumpBackup( $row, $path, array $args = [] ) {
-	global $IP, $wgWikiaLocalSettingsPath, $wgWikiaAdminSettingsPath, $options;
+	global $IP, $wgWikiaLocalSettingsPath, $options;
 	$logger = Wikia\Logger\WikiaLogger::instance();
 
 	$time = wfTime();
@@ -143,14 +143,13 @@ function doDumpBackup( $row, $path, array $args = [] ) {
 		"php -d display_errors=1",
 		"{$IP}/maintenance/dumpBackup.php",
 		"--conf {$wgWikiaLocalSettingsPath}",
-		"--aconf {$wgWikiaAdminSettingsPath}",
 		"--xml",
 		"--quiet",
 		"--server=$server",
 		"--output=".DumpsOnDemand::DEFAULT_COMPRESSION_FORMAT.":{$path}"
 	], $args ) );
 
-	// redirect stderr to stdout, so it becames a part of $output
+	// redirect stderr to stdout, so it becomes a part of $output
 	$cmd .= ' 2>&1';
 
 	Wikia::log( __METHOD__, "info", "{$row->city_id} {$row->city_dbname} command: {$cmd}", true, true);
@@ -159,9 +158,12 @@ function doDumpBackup( $row, $path, array $args = [] ) {
 	$time = Wikia::timeDuration( wfTime() - $time );
 
 	Wikia::log( __METHOD__, "info", "{$row->city_id} {$row->city_dbname} status: {$status}, time: {$time}", true, true);
+	Wikia::log( __METHOD__, "info", $output, true, true);
 
 	if ( $status === 0 ) {
 		if ( isset( $options['s3'] ) ) {
+			Wikia\Util\Assert::true( file_exists( $path ), __FUNCTION__ . ': Dump file does not exist' );
+
 			$res = DumpsOnDemand::putToAmazonS3( $path, !isset( $options[ "hide" ] ),  MimeMagic::singleton()->guessMimeType( $path ) );
 			unlink( $path );
 
@@ -179,6 +181,7 @@ function doDumpBackup( $row, $path, array $args = [] ) {
 		$logger->error( __METHOD__ . '::dumpBackup', [
 			'exception' => new Exception( $cmd, $status ),
 			'row' => (array) $row,
+			'output' => $output
 		]);
 
 		exit( 2 );
@@ -211,6 +214,9 @@ function getDirectory( $database, $hide = false, $use_temp = false ) {
 
 	return $directory;
 }
+
+// SUS-4313 | make this dependency obvious
+$wgAutoloadClasses[ "DumpsOnDemand" ] = __DIR__ . '/DumpsOnDemand.php';
 
 /**
  * main part

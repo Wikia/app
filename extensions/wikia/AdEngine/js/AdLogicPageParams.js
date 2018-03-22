@@ -2,7 +2,6 @@
 /*global define, require*/
 define('ext.wikia.adEngine.adLogicPageParams', [
 	'ext.wikia.adEngine.adContext',
-	'ext.wikia.adEngine.adLogicPageViewCounter',
 	'ext.wikia.adEngine.utils.adLogicZoneParams',
 	'wikia.document',
 	'wikia.geo',
@@ -11,13 +10,12 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 	'wikia.window',
 	require.optional('wikia.abTest'),
 	require.optional('wikia.krux')
-], function (adContext, pvCounter, zoneParams, doc, geo, loc, log, win, abTest, krux) {
+], function (adContext, zoneParams, doc, geo, loc, log, win, abTest, krux) {
 	'use strict';
 
 	var context = {},
 		logGroup = 'ext.wikia.adEngine.adLogicPageParams',
-		runtimeParams = {},
-		skin = adContext.getContext().targeting.skin;
+		runtimeParams = {};
 
 	function updateContext() {
 		context = adContext.getContext();
@@ -35,15 +33,6 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 		}
 
 		return ab;
-	}
-
-	/**
-	 * Get the AbPerformanceTesting experiment name
-	 *
-	 * @returns {string}
-	 */
-	function getPerformanceAb() {
-		return win.wgABPerformanceTest;
 	}
 
 	/**
@@ -127,7 +116,7 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 
 		hostnameMatch = refHostname === loc.hostname;
 
-		if (hostnameMatch && ref.indexOf('search=') > -1) {
+		if (hostnameMatch && (ref.indexOf('search=') > -1 || ref.indexOf('query=') > -1)) {
 			return 'wiki_search';
 		}
 		if (hostnameMatch) {
@@ -136,7 +125,7 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 
 		hostnameMatch = wikiDomainsRegex.test(refHostname);
 
-		if (hostnameMatch && ref.indexOf('search=') > -1) {
+		if (hostnameMatch && (ref.indexOf('search=') > -1 || ref.indexOf('query=') > -1 || ref.indexOf('s=') > -1)) {
 			return 'wikia_search';
 		}
 
@@ -166,8 +155,7 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 		log('getPageLevelParams', 9, logGroup);
 
 		var params,
-			targeting = context.targeting,
-			pvs = pvCounter.get();
+			targeting = context.targeting;
 
 		options = options || {};
 
@@ -179,7 +167,6 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 			s2: zoneParams.getPageType(),
 			ab: getAb(),
 			ar: getAspectRatio(),
-			perfab: getPerformanceAb(),
 			artid: targeting.pageArticleId && targeting.pageArticleId.toString(),
 			cat: zoneParams.getPageCategories(),
 			dmn: zoneParams.getDomain(),
@@ -192,8 +179,8 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 			geo: geo.getCountryCode() || 'none'
 		};
 
-		if (pvs) {
-			params.pv = pvs.toString();
+		if (win.pvNumber) {
+			params.pv = win.pvNumber.toString();
 		}
 
 		if (options.includeRawDbName) {
@@ -214,10 +201,6 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 
 		log(params, 9, logGroup);
 		return params;
-	}
-
-	if (skin && skin !== 'mercury') {
-		pvCounter.increment();
 	}
 
 	updateContext();

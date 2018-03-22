@@ -73,7 +73,7 @@ class UnconvertedInfoboxesPage extends PageQueryPage {
 			$num = $dbw->affectedRows();
 		}
 
-		wfRunHooks( 'UnconvertedInfoboxesQueryRecached', [ 'count' => $num ] );
+		Hooks::run( 'UnconvertedInfoboxesQueryRecached', [ 'count' => $num ] );
 
 		return $num;
 	}
@@ -89,8 +89,16 @@ class UnconvertedInfoboxesPage extends PageQueryPage {
 	public function reallyDoQuery( $limit = false, $offset = false ) {
 		global $wgCityId;
 
-		$tcs = new UserTemplateClassificationService();
-		$recognizedTemplates = $tcs->getTemplatesOnWiki( $wgCityId );
+		try {
+			$tcs = new UserTemplateClassificationService();
+			$recognizedTemplates = $tcs->getTemplatesOnWiki( $wgCityId );
+		}
+		catch ( Swagger\Client\ApiException $e ) {
+			Wikia\Logger\WikiaLogger::instance()->error( __METHOD__ , [
+				'exception' => $e
+			]);
+			return [];
+		}
 
 		$nonportableInfoboxes = [];
 
@@ -107,7 +115,7 @@ class UnconvertedInfoboxesPage extends PageQueryPage {
 						$this->getName(),
 						count( $links ),
 						NS_TEMPLATE,
-						$title->getDBkey(),
+						$title->getPrefixedDBkey(),
 					];
 				}
 			}

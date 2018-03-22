@@ -5,22 +5,15 @@ class MercuryApiArticleHandler {
 	const NUMBER_CONTRIBUTORS = 5;
 
 	/**
-	 * @param WikiaRequest $request
 	 * @param MercuryApi $mercuryApiModel
 	 * @param Article $article
+	 *
 	 * @return array
 	 */
-	public static function getArticleData( WikiaRequest $request, MercuryApi $mercuryApiModel, Article $article ) {
-		$data['details'] = self::getArticleDetails( $article );
-		$data['article'] = self::getArticleJson( $request, $article );
+	public static function getArticleData( MercuryApi $mercuryApiModel, Article $article ) {
 		$data['topContributors'] = self::getTopContributorsDetails(
 			self::getTopContributorsPerArticle( $mercuryApiModel, $article )
 		);
-		$relatedPages = self::getRelatedPages( $article );
-
-		if ( !empty( $relatedPages ) ) {
-			$data['relatedPages'] = $relatedPages;
-		}
 
 		return $data;
 	}
@@ -29,13 +22,13 @@ class MercuryApiArticleHandler {
 	 * @desc returns article details
 	 *
 	 * @param Article $article
+	 *
 	 * @return mixed
 	 */
 	public static function getArticleDetails( Article $article ) {
 		$articleId = $article->getID();
-		$articleDetails = F::app()
-			->sendRequest( 'ArticlesApi', 'getDetails', [ 'ids' => $articleId ] )
-			->getData()['items'][$articleId];
+		$articleDetails = F::app()->sendRequest( 'ArticlesApi', 'getDetails', [ 'ids' => $articleId ] )->getData(
+			)['items'][$articleId];
 
 		$articleDetails['abstract'] = htmlspecialchars( $articleDetails['abstract'] );
 		$articleDetails['description'] = htmlspecialchars( self::getArticleDescription( $article ) );
@@ -50,6 +43,7 @@ class MercuryApiArticleHandler {
 	 *
 	 * @param Article $article
 	 * @param int $descLength
+	 *
 	 * @return string
 	 * @throws WikiaException
 	 */
@@ -78,6 +72,7 @@ class MercuryApiArticleHandler {
 	 *
 	 * @param WikiaRequest $request
 	 * @param Article $article
+	 *
 	 * @return array
 	 */
 	public static function getArticleJson( WikiaRequest $request, Article $article ) {
@@ -95,24 +90,41 @@ class MercuryApiArticleHandler {
 		)->getData();
 	}
 
+	public static function getFeaturedVideoDetails( Title $title ): array {
+		$featuredVideo = ArticleVideoContext::getFeaturedVideoData( $title->getArticleID() );
+
+		if ( !empty( $featuredVideo ) ) {
+			$featuredVideoData['provider'] = 'jwplayer';
+			$featuredVideoData['embed']['provider'] = 'jwplayer';
+			$featuredVideoData['embed']['jsParams']['videoId'] = $featuredVideo['mediaId'];
+			$featuredVideoData['embed']['jsParams']['playlist'] = $featuredVideo['playlist'];
+			$featuredVideoData['embed']['jsParams']['recommendedVideoPlaylist'] = $featuredVideo['recommendedVideoPlaylist'];
+			$featuredVideoData['metadata'] = $featuredVideo['metadata'];
+
+			return $featuredVideoData;
+		}
+
+		return [];
+	}
+
 	/**
 	 * @desc returns top contributors user details
 	 *
 	 * @param array $ids
+	 *
 	 * @return mixed
 	 */
 	public static function getTopContributorsDetails( Array $ids ) {
 		if ( empty( $ids ) ) {
-			return [ ];
+			return [];
 		}
 
 		try {
-			return F::app()->sendRequest( 'UserApi', 'getDetails', [ 'ids' => implode( ',', $ids ) ] )
-				->getData()['items'];
+			return F::app()->sendRequest( 'UserApi', 'getDetails', [ 'ids' => implode( ',', $ids ) ] )->getData()['items'];
 		} catch ( NotFoundApiException $e ) {
 			// getDetails throws NotFoundApiException when no contributors are found
 			// and we want the article even if we don't have the contributors
-			return [ ];
+			return [];
 		}
 	}
 
@@ -121,27 +133,13 @@ class MercuryApiArticleHandler {
 	 *
 	 * @param MercuryApi $mercuryApiModel
 	 * @param Article $article
+	 *
 	 * @return int[]
 	 */
-	private static function getTopContributorsPerArticle(MercuryApi $mercuryApiModel, Article $article) {
+	private static function getTopContributorsPerArticle( MercuryApi $mercuryApiModel, Article $article ) {
 		return $mercuryApiModel->topContributorsPerArticle(
 			$article->getID(),
 			self::NUMBER_CONTRIBUTORS
 		);
-	}
-
-	/**
-	 * @desc Returns related pages
-	 *
-	 * @param Article $article
-	 * @param int $limit
-	 * @return mixed
-	 */
-	public static function getRelatedPages( Article $article, $limit = 6 ) {
-		if ( class_exists( 'RelatedPages' ) ) {
-			return RelatedPages::getInstance()->get( $article->getID(), $limit );
-		} else {
-			return false;
-		}
 	}
 }

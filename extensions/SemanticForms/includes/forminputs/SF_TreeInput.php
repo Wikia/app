@@ -75,7 +75,7 @@ class SFTreeInput extends SFFormInput {
 			$delimiter = ',';
 		}
 
-		$cur_values = SFUtils::getValuesArray( $cur_value, $delimiter );
+		$cur_values = SFValuesUtils::getValuesArray( $cur_value, $delimiter );
 		if ( array_key_exists( 'height', $other_args ) ) {
 			$height = $other_args['height'];
 		} else {
@@ -88,7 +88,7 @@ class SFTreeInput extends SFFormInput {
 		}
 
 		$dummy_str = "REPLACE THIS TEXT";
-		$text = '<div id="' . $input_name . 'treeinput" style="height: ' . $height . 'px; width: ' . $width . 'px;">';
+		$text = '<div class="sfTreeInput" id="' . $input_name . 'treeinput" style="height: ' . $height . 'px; width: ' . $width . 'px;">';
 
 		if ( array_key_exists( 'depth', $other_args ) ) {
 			$depth = $other_args['depth'];
@@ -154,13 +154,11 @@ class SFTreeInput extends SFFormInput {
 
 		$input_id = "input_$sfgFieldNum";
 		// HTML IDs can't contain spaces.
-		$key_id = str_replace( ' ', '-', "$key_prefix$index" );
+		$key_id = str_replace( ' ', '-', "$key_prefix-$index" );
 		$dataItems = array();
 		$li_data = "";
-		$input_data = "";
 		if ( in_array( $node->title, $current_selection ) ) {
 			$li_data .= 'class="selected" ';
-			$input_data .= 'checked="checked"';
 		}
 
 		if ( $depth > 0 ) {
@@ -180,8 +178,15 @@ class SFTreeInput extends SFFormInput {
 			} else {
 				$inputName = $input_name;
 			}
-			$text .= "<input type=\"$inputType\" tabindex=\"$sfgTabIndex\" name=\"" . $inputName .
-				"\" value=\"" . $node->title . "\" id=\"chb-$key_id\" $input_data class=\"hidden\" />";
+			$nodeAttribs = array(
+				'tabindex' => $sfgTabIndex,
+				'id' => "chb-$key_id",
+				'class' => 'hidden'
+			);
+			if ( in_array( $node->title, $current_selection ) ) {
+				$nodeAttribs['checked'] = true;
+			}
+			$text .= Html::input( $inputName, $node->title, $inputType, $nodeAttribs );
 			$text .= $node->title . "\n";
 		}
 		if ( array_key_exists( 'children', $node ) ) {

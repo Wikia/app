@@ -1,31 +1,31 @@
 {{#threads}}
-	<div class="embeddable-discussions-post-detail {{columnsDetailsClass}}">
+	<div class="embeddable-discussions-post-detail {{isDeleted}} {{isReported}} {{columnsDetailsClass}}">
 		<div class="embeddable-discussions-side-spaced">
 			<a href="{{link}}" class="embeddable-discussions-fill-div"></a>
 			<div id="post-{{id}}" class="embeddable-discussions-header-container">
 				<div class="avatar-container">
 					{{#authorAvatar}}
 						<a href="/wiki/User:{{author}}">
-							<img src="{{authorAvatar}}" class="avatar" alt="{{author}}" width="42px" height="42px">
+							<img src="{{authorAvatar}}" class="avatar" alt="{{author}}">
 						</a>
 					{{/authorAvatar}}
 					{{^authorAvatar}}
-						<div class="logged-avatar-placeholder"></div>
+						<div class="embeddable-discussions-default-avatar"></div>
 					{{/authorAvatar}}
 				</div>
 				<div class="avatar-details">
 					<a class="avatar-username" href="/wiki/User:{{author}}">
 						{{author}}
 					</a>
-					<span class="embeddable-discussions-timestamp">
+					<span class="embeddable-discussions-timestamp" title="{{timestamp}}">
 						• {{createdAt}}
 					</span>
 				</div>
 			</div>
-			<div class="embeddable-discussions-title">
+			<div class="embeddable-discussions-title {{isDeleted}}">
 				{{title}}
 			</div>
-			<div class="embeddable-discussions-content">
+			<div class="embeddable-discussions-content {{isDeleted}} clamp">
 				{{content}}
 			</div>
 			<div class="embeddable-discussions-forum">
@@ -33,41 +33,41 @@
 			</div>
 			<div class="embeddable-discussions-post-counters">
 				<span class="embeddable-discussions-post-counter">
-					<svg class="embeddable-discussions-upvote-icon-tiny"></svg>
+					<img class="svg embeddable-discussions-upvote-icon-tiny" src="{{upvoteTinyIconSrc}}" width="14"
+						 height="16">
 					{{upvoteCount}}
 				</span>
 				<span class="embeddable-discussions-post-counter">
-					<svg class="embeddable-discussions-reply-icon-tiny"></svg>
+					<img class="svg embeddable-discussions-reply-icon-tiny" src="{{replyTinyIconSrc}}" width="14"
+						 height="16">
 					{{commentCount}}
 				</span>
 			</div>
 		</div>
 		<div>
 			<ul class="embeddable-discussions-post-actions">
-				<li class="small-4 large-4 embeddable-discussions-upvote-area">
+				<li class="embeddable-discussions-upvote-area">
 					{{#hasUpvoted}}
 						<a href="{{upvoteUrl}}" class="upvote" data-id="{{firstPostId}}" data-hasUpvoted="1">
-							<svg class="embeddable-discussions-upvote-icon-active"></svg>
+							<img class="svg embeddable-discussions-upvote-icon-active" src="{{upvoteIconSrc}}"
+								 width="24" height="22">
 							{{upvoteText}}
 						</a>
 					{{/hasUpvoted}}
 					{{^hasUpvoted}}
 						<a href="{{upvoteUrl}}" class="upvote" data-id="{{firstPostId}}" data-hasUpvoted="0">
-							<svg class="embeddable-discussions-upvote-icon"></svg>
+							<img class="svg embeddable-discussions-upvote-icon" src="{{upvoteIconSrc}}" width="24"
+								 height="22">
 							{{upvoteText}}
 						</a>
 					{{/hasUpvoted}}
 				</li>
-				<li class="small-4 large-4 embeddable-discussions-replies-area">
+				<li class="embeddable-action-gap"></li>
+				<li class="embeddable-discussions-replies-area">
 					<a href="{{link}}">
-						<svg class="embeddable-discussions-reply-icon"></svg>
+						<img class="svg embeddable-discussions-reply-icon" src="{{replyIconSrc}}" width="24"
+							 height="22">
 						{{replyText}}
-					</a>
-				</li>
-				<li class="small-4 large-4 embeddable-discussions-share-area">
-					<a href="#" class="share" data-link="{{shareUrl}}" data-title="{{title}}">
-						<svg class="embeddable-discussions-share-icon"></svg>
-						{{shareText}}
 					</a>
 				</li>
 			</ul>

@@ -1,27 +1,16 @@
-# Diff
+# sebastian/diff
 
 Diff implementation for PHP, factored out of PHPUnit into a stand-alone component.
 
 ## Installation
 
-You can use [Composer](http://getcomposer.org/) or the [PEAR Installer](http://pear.php.net/manual/en/guide.users.commandline.cli.php) to download and install this package as well as its dependencies.
+You can add this library as a local, per-project dependency to your project using [Composer](https://getcomposer.org/):
 
-### Composer
+    composer require sebastian/diff
 
-To add this package as a local, per-project dependency to your project, simply add a dependency on `sebastian/diff` to your project's `composer.json` file. Here is a minimal example of a `composer.json` file that just defines a dependency on Diff:
+If you only need this library during development, for instance to run your project's test suite, then you should add it as a development-time dependency:
 
-    {
-        "require": {
-            "sebastian/diff": "*"
-        }
-    }
-
-### PEAR Installer
-
-The following two commands (which you may have to run as `root`) are all that is required to install this package using the PEAR Installer:
-
-    pear config-set auto_discover 1
-    pear install pear.phpunit.de/Diff
+    composer require --dev sebastian/diff
 
 ### Usage
 

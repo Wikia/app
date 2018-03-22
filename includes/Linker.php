@@ -180,10 +180,12 @@ class Linker {
 		// method call for the rest of this request
 		static $linkCache = array();
 		$key = serialize( array( $target->getDBkey(), $target->getNamespace(), $target->getFragment(), $target->getInterwiki(), $html, $customAttribs, $query, $options ) );
+		// SUS-3114: Support GlobalTitle links, else they are incorrectly cached
+		$wikiId = $target instanceof GlobalTitle ? $target->getCityId() : $GLOBALS['wgCityId'];
 
-		if ( array_key_exists($key, $linkCache) ) {
+		if ( isset( $linkCache[$wikiId][$key] ) ) {
 			wfProfileOut( __METHOD__ );
-			return $linkCache[$key];
+			return $linkCache[$wikiId][$key];
 		}
 		/* Wikia change - end */
 
@@ -191,7 +193,7 @@ class Linker {
 
 		$ret = null;
 		wfProfileIn(__METHOD__.'-hooks');
-		if ( !wfRunHooks( 'LinkBegin', array( $dummy, $target, &$html,
+		if ( !Hooks::run( 'LinkBegin', array( $dummy, $target, &$html,
 		&$customAttribs, &$query, &$options, &$ret ) ) ) {
 			wfProfileOut(__METHOD__.'-hooks');
 			wfProfileOut( __METHOD__ );
@@ -199,8 +201,13 @@ class Linker {
 		}
 		wfProfileOut(__METHOD__.'-hooks');
 
-		# Normalize the Title if it's a special page
-		$target = self::normaliseSpecialPage( $target );
+		// Wikia change
+		// SUS-698: Don't normalise GlobalTitle references to special pages
+		// this returns a local title, and the link works fine without calling this
+		if ( !( $target instanceof GlobalTitle ) ) {
+			# Normalize the Title if it's a special page
+			$target = self::normaliseSpecialPage( $target );
+		}
 
 		# If we don't know whether the page exists, let's find out.
 		wfProfileIn( __METHOD__ . '-checkPageExistence' );
@@ -235,7 +242,7 @@ class Linker {
 
 		$ret = null;
 		wfProfileIn(__METHOD__.'-hooks');
-		if ( wfRunHooks( 'LinkEnd', array( $dummy, $target, $options, &$html, &$attribs, &$ret ) ) ) {
+		if ( Hooks::run( 'LinkEnd', array( $dummy, $target, $options, &$html, &$attribs, &$ret ) ) ) {
 			wfProfileOut(__METHOD__.'-hooks');
 			$ret = Html::rawElement( 'a', $attribs, $html );
 		} else {
@@ -243,7 +250,7 @@ class Linker {
 		}
 
 		/* Wikia change begin - @author: garth */
-		$linkCache[$key] = $ret;
+		$linkCache[$wikiId][$key] = $ret;
 		/* Wikia change - end */
 
 		wfProfileOut( __METHOD__ );
@@ -493,7 +500,7 @@ class Linker {
 			$alt = self::fnamePart( $url );
 		}
 		$img = '';
-		$success = wfRunHooks( 'LinkerMakeExternalImage', array( &$url, &$alt, &$img ) );
+		$success = Hooks::run( 'LinkerMakeExternalImage', array( &$url, &$alt, &$img ) );
 		if ( !$success ) {
 			wfDebug( "Hook LinkerMakeExternalImage changed the output of external image with url {$url} and alt text {$alt} to {$img}\n", true );
 			return $img;
@@ -541,7 +548,7 @@ class Linker {
 	{
 		$res = null;
 		$dummy = new DummyLinker;
-		if ( !wfRunHooks( 'ImageBeforeProduceHTML', array( &$dummy, &$title,
+		if ( !Hooks::run( 'ImageBeforeProduceHTML', array( &$dummy, &$title,
 			&$file, &$frameParams, &$handlerParams, &$time, &$res ) ) ) {
 			return $res;
 		}
@@ -692,7 +699,7 @@ class Linker {
 		/* Wikia change begin - @author: Federico "Lox" Lucignano */
 		if ( F::app()->checkSkin( 'wikiamobile' ) ) {
 			/* Give extensions the ability to add HTML to full size unframed images */
-			wfRunHooks( 'ImageAfterProduceHTML', array( $frameParams, $thumb, $origHTML, &$s ) );
+			Hooks::run( 'ImageAfterProduceHTML', array( $frameParams, $thumb, $origHTML, &$s ) );
 		}
 		/* Wikia change end */
 
@@ -746,7 +753,7 @@ class Linker {
 	 * @param $manualthumb String
 	 * @return mixed
 	 */
-	public static function makeThumbLinkObj( Title $title, $file, $label = '', $alt,
+	public static function makeThumbLinkObj( Title $title, $file, $label = '', $alt = '',
 		$align = 'right', $params = array(), $framed = false , $manualthumb = "" )
 	{
 		$frameParams = array(
@@ -816,7 +823,7 @@ class Linker {
 				$srcWidth = $file->getWidth( $page );
 
 				/* Wikia change start - Jakub */
-				F::app()->runHook( 'LinkerMakeThumbLink2FileOriginalSize', array( $file, &$srcWidth ) );
+				Hooks::run( 'LinkerMakeThumbLink2FileOriginalSize', [ $file, &$srcWidth ] );
 				/* Wikia change end */
 
 				if ( $srcWidth && !$file->mustRender() && $hp['width'] > $srcWidth ) {
@@ -875,7 +882,7 @@ class Linker {
 
 		if ( $isMobile ) {
 			// Hook only used for mobile now
-			wfRunHooks( 'ThumbnailAfterProduceHTML', array( $frameParams, $thumb, $origHTML, &$origHTML ) );
+			Hooks::run( 'ThumbnailAfterProduceHTML', array( $frameParams, $thumb, $origHTML, &$origHTML ) );
 		} else {
 			// Render with controller for desktop
 			$params['html'] = $origHTML;
@@ -1053,7 +1060,7 @@ class Linker {
 			$text = htmlspecialchars( $text );
 		}
 		$link = '';
-		$success = wfRunHooks( 'LinkerMakeExternalLink',
+		$success = Hooks::run( 'LinkerMakeExternalLink',
 			array( &$url, &$text, &$link, &$attribs, $linktype ) );
 		if ( !$success ) {
 			wfDebug( "Hook LinkerMakeExternalLink changed the output of link with url {$url} and text {$text} to {$link}\n", true );
@@ -1067,7 +1074,7 @@ class Linker {
 	 * Make user link (or user contributions for unregistered users)
 	 * @param $userId   Integer: user id in database.
 	 * @param $userName String: user name in database.
-	 * @param $altUserName String: text to display instead of the user name (optional)
+	 * @param $altUserName string|bool text to display instead of the user name (optional)
 	 * @return String: HTML fragment
 	 * @since 1.19 Method exists for a long time. $displayText was added in 1.19.
 	 */
@@ -1112,7 +1119,8 @@ class Linker {
 			// check if the user has an edit
 			$attribs = array();
 			if ( $redContribsWhenNoEdits ) {
-				$count = !is_null( $edits ) ? $edits : User::edits( $userId );
+				$user = User::newFromId( $userId );
+				$count = !is_null( $edits ) || !$user ? $edits : $user->getEditCount();
 				if ( $count == 0 ) {
 					$attribs['class'] = 'new';
 				}
@@ -1129,7 +1137,7 @@ class Linker {
 			$items[] = self::emailLink( $userId, $userText );
 		}
 
-		wfRunHooks( 'UserToolLinksEdit', array( $userId, $userText, &$items ) );
+		Hooks::run( 'UserToolLinksEdit', array( $userId, $userText, &$items ) );
 
 		if ( $items ) {
 			return ' <span class="mw-usertoollinks">(' . $wgLang->pipeList( $items ) . ')</span>';
@@ -1164,7 +1172,7 @@ class Linker {
 			$userText = $userText->getName();
 		}
 
-		wfRunHooks('LinkerUserTalkLinkAfter', array($userId, $userText, &$userTalkLink));
+		Hooks::run('LinkerUserTalkLinkAfter', array($userId, $userText, &$userTalkLink));
 		/** End of Wikia change */
 
 		return $userTalkLink;
@@ -1251,6 +1259,7 @@ class Linker {
 	 * @param $comment String
 	 * @param $title Mixed: Title object (to generate link to the section in autocomment) or null
 	 * @param $local Boolean: whether section links should refer to local page
+	 * @return string
 	 */
 	public static function formatComment( $comment, $title = null, $local = false ) {
 		wfProfileIn( __METHOD__ );
@@ -1673,7 +1682,7 @@ class Linker {
 			. "</ul>\n</td></tr></table>\n";
 
 		/* Create new entry point for JS generated TOC */
-		wfRunHooks('Linker::overwriteTOC', [ &$title, &$toc ]);
+		Hooks::run('Linker::overwriteTOC', [ &$title, &$toc ]);
 
 		return $toc;
 
@@ -1712,30 +1721,32 @@ class Linker {
 	/**
 	 * Create a headline for content
 	 *
-	 * @param $level Integer: the level of the headline (1-6)
-	 * @param $attribs String: any attributes for the headline, starting with
+	 * @param integer $level the level of the headline (1-6)
+	 * @param string $attribs any attributes for the headline, starting with
 	 *                 a space and ending with '>'
 	 *                 This *must* be at least '>' for no attribs
-	 * @param $anchor String: the anchor to give the headline (the bit after the #)
-	 * @param $html String: html for the text of the header
-	 * @param $link String: HTML to add for the section edit link
-	 * @param $legacyAnchor Mixed: a second, optional anchor to give for
+	 * @param string $anchor The anchor to give the headline (the bit after the #)
+	 * @param string $html HTML for the text of the header
+	 * @param string $link HTML to add for the section edit link
+	 * @param string|bool $fallbackAnchor A second, optional anchor to give for
 	 *   backward compatibility (false to omit)
 	 *
 	 * @return String: HTML headline
 	 */
-	public static function makeHeadline( $level, $attribs, $anchor, $html, $link, $legacyAnchor = false ) {
+	public static function makeHeadline( $level, $attribs, $anchor, $html, $link, $fallbackAnchor = false ) {
+		$anchorEscaped = htmlspecialchars( $anchor );
 		$ret = "<h$level$attribs"
 			. $link
-			. " <span class=\"mw-headline\" id=\"$anchor\">$html</span>"
+			. " <span class=\"mw-headline\" id=\"$anchorEscaped\">$html</span>"
 			. "</h$level>";
-		if ( $legacyAnchor !== false ) {
-			$ret = "<div id=\"$legacyAnchor\"></div>$ret";
+		if ( $fallbackAnchor !== false && $fallbackAnchor !== $anchor ) {
+			$fallbackAnchor = htmlspecialchars( $fallbackAnchor );
+			$ret = "<div id=\"$fallbackAnchor\"></div>$ret";
 		}
 
 		/* Wikia change begin - @author: Macbre */
 		$skin = RequestContext::getMain()->getSkin();
-		wfRunHooks( 'MakeHeadline', array( $skin, $level, $attribs, $anchor, $html, $link, $legacyAnchor, &$ret ) );
+		Hooks::run( 'MakeHeadline', array( $skin, $level, $attribs, $anchor, $html, $link, $fallbackAnchor, &$ret ) );
 		/* Wikia change end */
 
 		return $ret;
@@ -1787,11 +1798,15 @@ class Linker {
 	public static function buildRollbackLink( $rev ) {
 		global $wgRequest, $wgUser;
 		$title = $rev->getTitle();
-		$query = array(
+		// SUS-812: use user name lookup to determine link target
+		$userName = User::getUsername( $rev->getUser(), $rev->getUserText() );
+
+		$query = [
 			'action' => 'rollback',
-			'from' => $rev->getUserText(),
-			'token' => $wgUser->getEditToken( [ $title->getPrefixedText(), $rev->getUserText() ] ),
-		);
+			'from' => $userName,
+			'token' => $wgUser->getEditToken( [ $title->getPrefixedText(), $userName ] ),
+		];
+
 		if ( $wgRequest->getBool( 'bot' ) ) {
 			$query['bot'] = '1';
 			$query['hidediff'] = '1'; // bug 15999

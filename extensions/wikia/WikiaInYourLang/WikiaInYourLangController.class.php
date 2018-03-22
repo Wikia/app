@@ -52,13 +52,14 @@ class WikiaInYourLangController extends WikiaController {
 			$sNativeWikiDomain = $this->getNativeWikiDomain( $sWikiDomain, $sTargetLanguage );
 			$this->response->setVal( 'nativeDomain', $sNativeWikiDomain );
 			$oNativeWiki = $this->getNativeWikiByDomain( $sNativeWikiDomain );
-			$this->response->setVal( 'linkAddress', $oNativeWiki->city_url );
 
 			/**
 			 * If a wikia is found - send a response with its url and sitename.
 			 * Send success=false otherwise.
 			 */
 			if ( is_object( $oNativeWiki ) ) {
+				$this->response->setVal( 'linkAddress', $oNativeWiki->city_url );
+
 				/**
 				 * Check for false-positives - see CE-1216
 				 * Per request we should unify dialects like pt and pt-br
@@ -94,6 +95,7 @@ class WikiaInYourLangController extends WikiaController {
 		/**
 		 * Cache the response for a day
 		 */
+		$this->response->setCachePolicy( WikiaResponse::CACHE_PUBLIC );
 		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
 
 		wfProfileOut( __METHOD__ );
@@ -113,17 +115,17 @@ class WikiaInYourLangController extends WikiaController {
 
 		if ( isset( $aParsed['host'] ) ) {
 			$sHost = $aParsed['host'];
-			$regExp = "/(sandbox.{3}\.|preview\.|verify\.)?(([a-z]{2,3}|[a-z]{2}\-[a-z]{2})\.)?([^\.]+\.)([^\.]+\.)(.*)/i";
+			$sHost = preg_replace( '/\.((?:sandbox-.+?|preview|verify)\.)?wikia\.com/i', '.wikia.com', $sHost );
+			$regExp = '/(([a-z]{2,3}|[a-z]{2}\-[a-z]{2})\.)?([^\.]+\.)([^\.]+\.)(.*)/i';
 			/**
 			 * preg_match returns similar array as a third parameter:
 			 * [
 			 *  0 => sandbox-s3.zh.example.wikia.com,
-			 *  1 => (sandbox-s3. | preview. | verify. | empty)
-			 *  2 => (zh. | empty),
-			 *  3 => (zh | empty),
-			 *  4 => example.
-			 *  5 => ( wikia | adamk)
-			 *  6 => (com | wikia-dev.com)
+			 *  1 => (zh. | empty),
+			 *  2 => (zh | empty),
+			 *  3 => example.
+			 *  4 => ( wikia | adamk)
+			 *  5 => (com | wikia-dev.com)
 			 * ]
 			 * [4] is a domain without the language prefix
 			 * @var Array
@@ -135,7 +137,7 @@ class WikiaInYourLangController extends WikiaController {
 			 * This allows the extension to work on devboxes
 			 */
 			if ( $iMatchesCount == 1 ) {
-				$sWikiDomain = $aMatches[4] . self::WIKIAINYOURLANG_WIKIA_DOMAIN;
+				$sWikiDomain = $aMatches[3] . self::WIKIAINYOURLANG_WIKIA_DOMAIN;
 			}
 		}
 
@@ -240,7 +242,9 @@ class WikiaInYourLangController extends WikiaController {
 
 		if ( $sArticleTitle !== false ) {
 			$sArticleTitle = str_replace( ' ', '_', $sArticleTitle );
-			list($sArticleTitle, $sArticleAnchor) = explode('#', $sArticleTitle);
+			// `#` is not included in some titles, which breaks string splitting
+			// so we want to make sure there are exactly 2 items in array
+			list($sArticleTitle, $sArticleAnchor) = array_pad( explode( '#', $sArticleTitle, 2 ), 2, '' );
 			$title = GlobalTitle::newFromText( $sArticleTitle, NS_MAIN, $cityId );
 
 			if ( !is_null( $title ) && $title->exists() ) {

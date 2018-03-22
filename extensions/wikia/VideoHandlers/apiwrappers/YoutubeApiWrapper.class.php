@@ -28,9 +28,7 @@ class YoutubeApiWrapper extends ApiWrapper {
 			$id = $aData['v'];
 		}
 
-		if ( empty( $id ) ) {
-			$parsedUrl = parse_url( $url );
-
+		if ( empty( $id ) && isset( $parsedUrl['path'] ) ) {
 			$aExploded = explode( '/', $parsedUrl['path'] );
 			$id = array_pop( $aExploded );
 		}
@@ -152,15 +150,6 @@ class YoutubeApiWrapper extends ApiWrapper {
 	}
 
 	/**
-	 * Is resolution of 720 or higher available
-	 * @return boolean
-	 */
-	protected function isHdAvailable() {
-		return !empty( $this->interfaceObj['contentDetails']['definition'] )
-			&& ( $this->interfaceObj['contentDetails']['definition'] == 'hd' );
-	}
-
-	/**
 	 * Can video be embedded
 	 * Youtube video can always be embedded because we ask for embeddable ones via API
 	 * @return boolean
@@ -192,9 +181,7 @@ class YoutubeApiWrapper extends ApiWrapper {
 	protected function checkForResponseErrors( $status, $content, $apiUrl ) {
 		wfProfileIn( __METHOD__ );
 
-		$code = $content['error']['code'];
-
-		if ( $code == 400 ) {
+		if ( isset( $content['error']['code'] ) && $content['error']['code'] === 400 ) {
 			wfProfileOut( __METHOD__ );
 			WikiaLogger::instance()->error( 'Youtube API call  returns 400', [
 				'content' => $content

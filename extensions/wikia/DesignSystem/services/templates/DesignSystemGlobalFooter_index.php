@@ -1,28 +1,18 @@
-<footer class="wds-global-footer <?= isset( $model['international_header'] ) ? 'wds-is-international' : 'wds-is-en' ?>">
-	<?php if ( isset ( $model['international_header'] ) ) : ?>
-		<div class="wds-global-footer__header-wrapper">
-			<h2 class="wds-global-footer__header">
-				<?= DesignSystemHelper::getSvg(
-					$model['international_header']['header']['image'],
-					'wds-global-footer__wikia-logo wds-is-large'
+<footer class="wds-global-footer">
+	<?php if ( isset ( $model['header'] ) ) : ?>
+		<h2 class="wds-global-footer__header">
+			<a href="<?= Sanitizer::encodeAttribute( $model['header']['href'] ); ?>"
+			   data-tracking-label="<?= Sanitizer::encodeAttribute( $model['header']['tracking_label'] ) ?>"
+			   title="<?= DesignSystemHelper::renderText( $model['header']['title'] ); ?>">
+				<?= DesignSystemHelper::renderApiImage(
+					$model['header']['image-data'],
+					'wds-global-footer__header-logo',
+					DesignSystemHelper::renderText( $model['header']['title'] )
 				) ?>
-				<span class="wds-global-footer__home-of-fandom"><?= DesignSystemHelper::renderText(
-						$model['international_header']['header']['subtitle']
-					) ?></span>
-			</h2>
-		</div>
+			</a>
+		</h2>
 	<?php endif; ?>
 	<div class="wds-global-footer__main">
-		<?php if ( isset( $model['fandom']['header'] ) ) : ?>
-			<?= $app->renderView(
-				'DesignSystemGlobalFooterService',
-				'imageHeader',
-				[
-					'model' => $model['fandom']['header'],
-					'section' => 'fandom'
-				]
-			); ?>
-		<?php endif; ?>
 		<div class="wds-global-footer__fandom-sections">
 			<?= $app->renderView(
 				'DesignSystemGlobalFooterService',
@@ -43,16 +33,6 @@
 				]
 			); ?>
 		</div>
-		<?php if ( isset ( $model['wikia']['header'] ) ) : ?>
-			<?= $app->renderView(
-				'DesignSystemGlobalFooterService',
-				'imageHeader',
-				[
-					'model' => $model['wikia']['header'],
-					'section' => 'wikia'
-				]
-			); ?>
-		<? endif; ?>
 		<div class="wds-global-footer__wikia-sections">
 			<?= $app->renderView(
 				'DesignSystemGlobalFooterService',

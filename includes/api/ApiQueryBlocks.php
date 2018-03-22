@@ -23,7 +23,6 @@
  *
  * @file
  */
-use Wikia\Util\PerformanceProfilers\UsernameUseProfiler;
 
 /**
  * Query module to enumerate all user blocks
@@ -43,7 +42,6 @@ class ApiQueryBlocks extends ApiQueryBase {
 
 	public function execute() {
 		global $wgContLang;
-		$usernameUseProfiler = new UsernameUseProfiler( __CLASS__, __METHOD__ );
 
 		$params = $this->extractRequestParams();
 		$this->requireMaxOneParameter( $params, 'users', 'ip' );
@@ -67,13 +65,13 @@ class ApiQueryBlocks extends ApiQueryBase {
 
 		$this->addFieldsIf ( 'ipb_id', $fld_id );
 		$this->addFieldsIf( array( 'ipb_address', 'ipb_user' ), $fld_user || $fld_userid );
-		$this->addFieldsIf( 'ipb_by_text', $fld_by );
+		$this->addFieldsIf( 'ipb_by', $fld_by );
 		$this->addFieldsIf( 'ipb_by', $fld_byid );
 		$this->addFieldsIf( 'ipb_timestamp', $fld_timestamp );
 		$this->addFieldsIf( 'ipb_expiry', $fld_expiry );
 		$this->addFieldsIf( 'ipb_reason', $fld_reason );
 		$this->addFieldsIf( array( 'ipb_range_start', 'ipb_range_end' ), $fld_range );
-		$this->addFieldsIf( array( 'ipb_anon_only', 'ipb_create_account', 'ipb_enable_autoblock',
+		$this->addFieldsIf( array( 'ipb_anon_only', 'ipb_enable_autoblock',
 									'ipb_block_email', 'ipb_deleted', 'ipb_allow_usertalk' ),
 							$fld_flags );
 
@@ -156,13 +154,16 @@ class ApiQueryBlocks extends ApiQueryBase {
 				$block['id'] = $row->ipb_id;
 			}
 			if ( $fld_user && !$row->ipb_auto ) {
-				$block['user'] = $row->ipb_address;
+				// SUS-805 User name lookup for block target
+				$block['user'] = User::getUsername( $row->ipb_user, $row->ipb_address );
 			}
 			if ( $fld_userid && !$row->ipb_auto ) {
 				$block['userid'] = $row->ipb_user;
 			}
 			if ( $fld_by ) {
-				$block['by'] = $row->ipb_by_text;
+				// SUS-805: The block author will always be a registered user
+				$blockAuthor = User::newFromId( $row->ipb_by );
+				$block['by'] = $blockAuthor->getName();
 			}
 			if ( $fld_byid ) {
 				$block['byid'] = $row->ipb_by;
@@ -188,9 +189,7 @@ class ApiQueryBlocks extends ApiQueryBase {
 				if ( $row->ipb_anon_only ) {
 					$block['anononly'] = '';
 				}
-				if ( $row->ipb_create_account ) {
-					$block['nocreate'] = '';
-				}
+
 				if ( $row->ipb_enable_autoblock ) {
 					$block['autoblock'] = '';
 				}
@@ -211,7 +210,6 @@ class ApiQueryBlocks extends ApiQueryBase {
 			}
 		}
 		$result->setIndexedTagName_internal( array( 'query', $this->getModuleName() ), 'block' );
-		$usernameUseProfiler->end();
 	}
 
 	protected function prepareUsername( $user ) {

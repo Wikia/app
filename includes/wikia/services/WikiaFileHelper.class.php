@@ -3,7 +3,7 @@
 /**
  * Helper service to maintain new video logic / old video logic
  */
-class WikiaFileHelper extends Service {
+class WikiaFileHelper {
 
 	const maxWideoWidth = 1200;
 
@@ -192,22 +192,6 @@ class WikiaFileHelper extends Service {
 	}
 
 	/**
-	 * Can WikiaVideo extension be used to ingest video
-	 * @return boolean
-	 */
-	public static function useWikiaVideoExtForIngestion() {
-		return !empty(F::app()->wg->ingestVideosUseWikiaVideoExt);
-	}
-
-	/**
-	 * Can VideoHandlers extensions be used to ingest video
-	 * @return boolean
-	 */
-	public static function useVideoHandlersExtForIngestion() {
-		return !empty( F::app()->wg->ingestVideosUseVideoHandlersExt );
-	}
-
-	/**
 	 * Can VideoHandlers extension be used to embed video
 	 * @return boolean
 	 */
@@ -223,16 +207,6 @@ class WikiaFileHelper extends Service {
 	 */
 	public static function isUrlMatchThisWiki( $url ) {
 		return stripos( $url, F::app()->wg->server ) !== false;
-	}
-
-	/**
-	 * Could the given URL exist on the Wikia video repository? Does not
-	 * actually check if video exists.
-	 * @param string $url
-	 * @return boolean
-	 */
-	public static function isUrlMatchWikiaVideoRepo( $url ) {
-		return stripos( $url, F::app()->wg->wikiaVideoRepoPath ) !== false;
 	}
 
 	/**
@@ -280,8 +254,8 @@ class WikiaFileHelper extends Service {
 	public static function getMediaDetail( $fileTitle, $config = array() ) {
 		$data = array(
 			'mediaType' => '',
+			'mime' => '',
 			'videoEmbedCode' => '',
-			'playerAsset' => '',
 			'imageUrl' => '',
 			'fileUrl' => '',
 			'rawImageUrl' => '',
@@ -306,10 +280,12 @@ class WikiaFileHelper extends Service {
 			$file = self::getFileFromTitle( $fileTitle, true );
 
 			if ( !empty( $file ) ) {
+				/** @var WikiaLocalFile|WikiaLocalFileShared $file */
 				$config = self::getMediaDetailConfig( $config );
 
 				$data['exists'] = true;
 				$data['mediaType'] = self::isFileTypeVideo( $file ) ? 'video' : 'image';
+				$data['mime'] = $file->getMimeType();
 
 				$width = (int) $file->getWidth();
 				$height = (int) $file->getHeight();
@@ -326,17 +302,11 @@ class WikiaFileHelper extends Service {
 						'isInline' => !empty( $config['isInline'] ),
 					];
 					$data['videoEmbedCode'] = $file->getEmbedCode( $width, $options );
-					$data['playerAsset'] = $file->getPlayerAssetUrl();
 					$data['videoViews'] = MediaQueryService::getTotalVideoViewsByTitle( $fileTitle->getDBKey() );
 					$data['providerName'] = $file->getProviderName();
 					$data['duration'] = $file->getMetadataDuration();
 					$data['isAdded'] = self::isAdded( $file );
 					$mediaPage = self::getMediaPage( $fileTitle );
-
-					// Extra height is needed for lightbox when more elements must be fitted
-					if ( strtolower( $data['providerName'] ) == 'crunchyroll' ) {
-						$data['extraHeight'] = CrunchyrollVideoHandler::CRUNCHYROLL_WIDGET_HEIGHT_PX;
-					}
 				} else {
 					$width = !empty( $config[ 'imageMaxWidth' ] ) ? min( $config[ 'imageMaxWidth' ], $width ) : $width;
 					$mediaPage = new ImagePage( $fileTitle );
@@ -349,12 +319,7 @@ class WikiaFileHelper extends Service {
 				$mediaQuery =  new ArticlesUsingMediaQuery( $fileTitle );
 				$articleList = $mediaQuery->getArticleList();
 
-				if ( $data['isAdded'] ) {
-					$data['fileUrl'] = $fileTitle->getFullUrl();
-				} else {
-					$data['fileUrl'] = self::getFullUrlPremiumVideo( $fileTitle->getDBkey() );
-				}
-
+				$data['fileUrl'] = $fileTitle->getFullUrl();
 				$data['imageUrl'] = $thumb->getUrl();
 				$data['rawImageUrl'] = $file->getUrl();
 				$data['userId'] = $user->getId();
@@ -559,7 +524,7 @@ class WikiaFileHelper extends Service {
 	 *
 	 * @param Title|string $title
 	 * @param bool $force
-	 * @return File|null $file
+	 * @return File|WikiaLocalFileShared|null $file
 	 */
 	public static function getVideoFileFromTitle( &$title, $force = false ) {
 		$file = self::getFileFromTitle( $title, $force );
@@ -596,34 +561,9 @@ class WikiaFileHelper extends Service {
 			$repo = $file->getRepo();
 			// When repo is an instance of ForeignAPIRepo
 			// file comes from MediaWiki and isn't stored on any wikia.
-			return !( $repo instanceof ForeignAPIRepo ||
-				F::app()->wg->WikiaVideoRepoDBName == $repo->getWiki() &&
-				empty( VideoInfo::newFromTitle( $file->getTitle()->getDBkey() ) ) );
+			return !( $repo instanceof ForeignAPIRepo );
 		}
 		return true;
-	}
-
-	/**
-	 * Get full url for premium video
-	 * @param string $fileTitle
-	 * @return string $fullUrl
-	 */
-	public static function getFullUrlPremiumVideo( $fileTitle ) {
-		return self::getFullUrlFromDBName( $fileTitle, F::app()->wg->WikiaVideoRepoDBName );
-	}
-
-	/**
-	 * Get full url from dbname
-	 * @param string $fileTitle
-	 * @param string $dbName
-	 * @return string $fullUrl
-	 */
-	public static function getFullUrlFromDBName( $fileTitle, $dbName ) {
-		$wikiId = WikiFactory::DBtoID( $dbName );
-		$globalTitle = GlobalTitle::newFromText( $fileTitle, NS_FILE, $wikiId );
-		$fullUrl = $globalTitle->getFullURL();
-
-		return $fullUrl;
 	}
 
 	/**
@@ -635,7 +575,10 @@ class WikiaFileHelper extends Service {
 	public static function getByUserMsg( $userName, $addedAt ) {
 		// get link to user page
 		$link = AvatarService::renderLink( $userName );
-		$addedBy = wfMessage( 'thumbnails-added-by', $link, wfTimeFormatAgo( $addedAt, false ) )->text();
+		$addedBy = wfMessage( 'thumbnails-added-by' )
+			->rawParams( $link )
+			->params( wfTimeFormatAgo( $addedAt, false ) )
+			->escaped();
 
 		return $addedBy;
 	}
@@ -653,10 +596,9 @@ class WikiaFileHelper extends Service {
 	 *
 	 * @param File $file
 	 * @param int $dimension
-	 * @param bool $useWebP
 	 * @return string The URL of the image
 	 */
-	public static function getSquaredThumbnailUrl( File $file, $dimension, $useWebP = false ) {
+	public static function getSquaredThumbnailUrl( File $file, $dimension ) {
 		// Create a new url generator
 		$gen = $file->getUrlGenerator();
 
@@ -680,10 +622,6 @@ class WikiaFileHelper extends Service {
 				// Landscape mode, crop in the middle
 				$gen->zoomCrop();
 			}
-		}
-
-		if ( $useWebP ) {
-			$gen->webp();
 		}
 
 		$url = $gen->width( $dimension )->height( $dimension )->url();

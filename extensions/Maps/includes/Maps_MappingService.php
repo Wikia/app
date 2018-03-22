@@ -6,18 +6,13 @@
  *
  * @since 0.6.3
  *
- * @file Maps_MappingService.php
- * @ingroup Maps
- *
  * @licence GNU GPL v2+
  * @author Jeroen De Dauw < jeroendedauw@gmail.com >
  */
-abstract class MapsMappingService implements iMappingService {
+abstract class MapsMappingService {
 
 	/**
 	 * The internal name of the service.
-	 *
-	 * @since 0.6.3
 	 *
 	 * @var string
 	 */
@@ -26,16 +21,12 @@ abstract class MapsMappingService implements iMappingService {
 	/**
 	 * A list of aliases for the internal name.
 	 *
-	 * @since 0.6.3
-	 *
 	 * @var array
 	 */
 	protected $aliases;
 
 	/**
 	 * A list of features that support the service, used for validation and defaulting.
-	 *
-	 * @since 0.6.3
 	 *
 	 * @var array
 	 */
@@ -44,46 +35,34 @@ abstract class MapsMappingService implements iMappingService {
 	/**
 	 * A list of names of resource modules to add.
 	 *
-	 * @since 0.7.3
-	 *
 	 * @var array
 	 */
-	protected $resourceModules = array();
+	protected $resourceModules = [];
 
 	/**
 	 * A list of dependencies (header items) that have been added.
 	 *
-	 * @since 0.6.3
-	 *
 	 * @var array
 	 */
-	private $addedDependencies = array();
+	private $addedDependencies = [];
 
 	/**
 	 * A list of dependencies (header items) that need to be added.
 	 *
-	 * @since 0.6.3
-	 *
 	 * @var array
 	 */
-	private $dependencies = array();
+	private $dependencies = [];
 
 	/**
-	 * Constructor. Creates a new instance of MapsMappingService.
-	 *
-	 * @since 0.6.3
-	 *
 	 * @param string $serviceName
 	 * @param array $aliases
 	 */
-	public function __construct( $serviceName, array $aliases = array() ) {
+	public function __construct( $serviceName, array $aliases = [] ) {
 		$this->serviceName = $serviceName;
 		$this->aliases = $aliases;
 	}
 
 	/**
-	 * @see iMappingService::addParameterInfo
-	 *
 	 * @since 0.7
 	 *
 	 * @param $parameterInfo array of IParam
@@ -92,8 +71,6 @@ abstract class MapsMappingService implements iMappingService {
 	}
 
 	/**
-	 * @see iMappingService::addFeature
-	 *
 	 * @since 0.6.3
 	 */
 	public function addFeature( $featureName, $handlingClass ) {
@@ -101,51 +78,28 @@ abstract class MapsMappingService implements iMappingService {
 	}
 
 	/**
-	 * @see iMappingService::addDependencies
-	 *
-	 * @since 0.6.3
+	 * @since 5.2.0
+	 * @param ParserOutput $parserOutput
 	 */
-	public final function addDependencies( &$parserOrOut ) {
+	public final function addDependencies( ParserOutput $parserOutput ) {
 		$dependencies = $this->getDependencyHtml();
 
 		// Only add a head item when there are dependencies.
-		if ( $parserOrOut instanceof Parser ) {
-			if ( $dependencies ) {
-				$parserOrOut->getOutput()->addHeadItem( $dependencies );
-			}
-
-			$parserOrOut->getOutput()->addModules( $this->getResourceModules() );
+		if ( $dependencies ) {
+			$parserOutput->addHeadItem( $dependencies );
 		}
-		elseif ( $parserOrOut instanceof OutputPage ) {
-			if ( $dependencies ) {
-				$parserOrOut->addHeadItem( md5( $dependencies ), $dependencies );
-			}
 
-			$parserOrOut->addModules( $this->getResourceModules() );
-		}
-	}
-	
-	/**
-	 * Returns a list of all config variables that should be passed to the JS.
-	 * 
-	 * @since 1.0.1
-	 * 
-	 * @return array
-	 */
-	public function getConfigVariables() {
-		return array();
+		$parserOutput->addModules( $this->getResourceModules() );
 	}
 
 	/**
-	 * @see iMappingService::getDependencyHtml
-	 *
 	 * @since 0.6.3
 	 */
 	public final function getDependencyHtml() {
 		$allDependencies = array_merge( $this->getDependencies(), $this->dependencies );
-		$dependencies = array();
+		$dependencies = [];
 
-		// Only add dependnecies that have not yet been added.
+		// Only add dependencies that have not yet been added.
 		foreach ( $allDependencies as $dependency ) {
 			if ( !in_array( $dependency, $this->addedDependencies ) ) {
 				$dependencies[] = $dependency;
@@ -154,7 +108,7 @@ abstract class MapsMappingService implements iMappingService {
 		}
 
 		// If there are dependencies, put them all together in a string, otherwise return false.
-		return count( $dependencies ) > 0 ? implode( '', $dependencies ) : false;
+		return $dependencies !== [] ? implode( '', $dependencies ) : false;
 	}
 
 	/**
@@ -165,58 +119,7 @@ abstract class MapsMappingService implements iMappingService {
 	 * @return array
 	 */
 	protected function getDependencies() {
-		return array();
-	}
-
-	/**
-	 * @see iMappingService::getName
-	 *
-	 * @since 0.6.3
-	 */
-	public function getName() {
-		return $this->serviceName;
-	}
-
-	/**
-	 * @see iMappingService::getFeature
-	 *
-	 * @since 0.6.3
-	 */
-	public function getFeature( $featureName ) {
-		return array_key_exists( $featureName, $this->features ) ? $this->features[$featureName] : false;
-	}
-
-	/**
-	 * @see iMappingService::getFeatureInstance
-	 *
-	 * @since 0.6.6
-	 */
-	public function getFeatureInstance( $featureName ) {
-		$className = $this->getFeature( $featureName );
-
-		if ( $className === false || !class_exists( $className ) ) {
-			throw new MWException( 'Could not create a mapping feature class instance' );
-		}
-
-		return new $className( $this );
-	}
-
-	/**
-	 * @see iMappingService::getAliases
-	 *
-	 * @since 0.6.3
-	 */
-	public function getAliases() {
-		return $this->aliases;
-	}
-
-	/**
-	 * @see iMappingService::hasAlias
-	 *
-	 * @since 0.6.3
-	 */
-	public function hasAlias( $alias ) {
-		return in_array( $alias, $this->aliases );
+		return [];
 	}
 
 	/**
@@ -231,6 +134,58 @@ abstract class MapsMappingService implements iMappingService {
 	}
 
 	/**
+	 * Returns a list of all config variables that should be passed to the JS.
+	 *
+	 * @since 1.0.1
+	 *
+	 * @return array
+	 */
+	public function getConfigVariables() {
+		return [];
+	}
+
+	/**
+	 * @since 0.6.3
+	 */
+	public function getName() {
+		return $this->serviceName;
+	}
+
+	/**
+	 * @since 0.6.6
+	 */
+	public function getFeatureInstance( $featureName ) {
+		$className = $this->getFeature( $featureName );
+
+		if ( $className === false || !class_exists( $className ) ) {
+			throw new MWException( 'Could not create a mapping feature class instance' );
+		}
+
+		return new $className( $this );
+	}
+
+	/**
+	 * @since 0.6.3
+	 */
+	public function getFeature( $featureName ) {
+		return array_key_exists( $featureName, $this->features ) ? $this->features[$featureName] : false;
+	}
+
+	/**
+	 * @since 0.6.3
+	 */
+	public function getAliases() {
+		return $this->aliases;
+	}
+
+	/**
+	 * @since 0.6.3
+	 */
+	public function hasAlias( $alias ) {
+		return in_array( $alias, $this->aliases );
+	}
+
+	/**
 	 * Add one or more names of resource modules that should be loaded.
 	 *
 	 * @since 0.7.3
@@ -242,21 +197,30 @@ abstract class MapsMappingService implements iMappingService {
 	}
 
 	/**
-	 * @see iMappingService::addDependency
-	 *
-	 * @since 0.6.3
+	 * @param array $dependencies
 	 */
-	public final function addDependency( $dependencyHtml ) {
+	public function addHtmlDependencies( array $dependencies ) {
+		foreach ( $dependencies as $dependency ) {
+			$this->addHtmlDependency( $dependency );
+		}
+	}
+
+	/**
+	 * @since 0.6.3
+	 *
+	 * @param $dependencyHtml
+	 */
+	public final function addHtmlDependency( $dependencyHtml ) {
 		$this->dependencies[] = $dependencyHtml;
 	}
 
 	/**
-	 * @see iMappingService::getEarthZoom
-	 *
 	 * @since 1.0
 	 */
 	public function getEarthZoom() {
 		return 1;
 	}
+
+	public abstract function getMapId( $increment = true );
 
 }

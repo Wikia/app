@@ -2,7 +2,9 @@
 	"@metadata": {
 		"authors": [
 			"Domas",
-			"Pofka"
+			"Pofka",
+			"Hugo.arg",
+			"Zygimantus"
 		]
 	},
 	"createproperty": "Sukurti savybę",
@@ -57,6 +59,7 @@
 	"sf_createcategory_name": "Vardas:",
 	"sf_createcategory_defaultform": "Pagrindinė forma:",
 	"sf_createcategory_makesubcategory": "Padaryti kaip subkategoriją kitai kategorijai (nebūtina):",
+	"createclass": "Sukurti klasę",
 	"formstart": "Sukurti puslapį naudojant formą",
 	"sf_formstart_badform": "Klaida: nerastas naudojantis formą $1 puslapis",
 	"sf_formstart_docu": "Įveskite puslapio vardą, kurį redaguosite su forma „$1“. Jeigu puslapis tokiu vardu egzistuoja, būsite nukreiptas į šio puslapio redagavimo formą. Kitu atveju, būsite nukreiptas į naujo puslapio kūrimo formą.",
@@ -68,7 +71,7 @@
 	"sf_formedit_altforms": "Sukurti puslapį galite naudodami vieną iš šių formų:",
 	"sf_formedit_altformsonly": "Pasirinkite vieną iš šių formų puslapio sukūrimui:",
 	"sf_viewform": "Rodyti formą",
-	"sf_editsource": "Redaguoti kodą",
+	"sf_editsource": "Keisti pirminį tekstą",
 	"sf_formedit_edittitle": "Redaguoti $1: $2",
 	"sf_formedit_formwarning": "Dėmesio: Šis puslapis <a href=\"$1\">jau yra</a>, bet jis nenaudoja šios formos.",
 	"sf_formedit_remove": "Pašalinti",

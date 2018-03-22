@@ -2,7 +2,6 @@ describe("LyricFind.Tracker", function () {
 	'use strict';
 
 	var windowMock = {
-			wgServer: 'http://localhost',
 			wgScriptPath: ''
 		},
 		tracker = modules.LyricFindTracker(windowMock, jQuery);
@@ -24,7 +23,7 @@ describe("LyricFind.Tracker", function () {
 		expect(px instanceof Image).toBe(true);
 
 		expect(px.src).toContain([
-			windowMock.wgServer + windowMock.wgScriptPath + '/wikia.php?controller=LyricFind&method=track',
+			windowMock.wgScriptPath + '/wikia.php?controller=LyricFind&method=track',
 			'title=' + encodeURIComponent(title),
 			'amgid=' + amgId,
 			'gracenoteid=' + gracenoteId,

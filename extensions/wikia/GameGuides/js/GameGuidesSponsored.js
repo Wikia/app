@@ -12,7 +12,6 @@ $(function () {
 			orphanedVideo = msg( 'wikiagameguides-sponsored-orphaned-video' ),
 			sure = msg( 'wikiagameguides-sponsored-delete-videos-are-you-sure' ),
 			videoDoesNotExist = msg( 'wikiagameguides-sponsored-video-does-not-exist' ),
-			videoIsNotOoyala = msg( 'wikiagameguides-sponsored-video-is-not-ooyala' ),
 			addCategory = d.getElementById( 'addCategory' ),
 			addTag = d.getElementById( 'addTag' ),
 			$save = $( d.getElementById( 'save' ) ),
@@ -23,7 +22,7 @@ $(function () {
 			setup = function ( elem ) {
 				(elem || $ul.find( '.video-name' )
 					).autocomplete( {
-					serviceUrl: window.wgServer + window.wgScript,
+					serviceUrl: window.wgScript,
 					params: {
 						action: 'ajax',
 						rs: 'getLinkSuggest',
@@ -191,7 +190,7 @@ $(function () {
 											.addClass( 'error' )
 											.popover( 'destroy' )
 											.popover({
-												content: err[file] === 1 ? videoDoesNotExist : videoIsNotOoyala
+												content: err[file] === 1 ? videoDoesNotExist : ''
 											});
 
 										return false;

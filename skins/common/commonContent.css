@@ -33,9 +33,6 @@
 	padding: 0;
 	text-align: left;
 }
-.TOC_hide #toctitle + ul {
-	display: none;
-}
 #toc ul ul,
 .toc ul ul {
 	margin: 0 0 0 2em;

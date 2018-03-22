@@ -2,7 +2,6 @@
 @import "skins/shared/mixins/box-shadow";
 @import "skins/shared/mixins/clearfix";
 
-@import "ChatSprite";
 
 .UserStatsMenu {
 	background: $color-page;
@@ -48,7 +47,6 @@
 
 			li {
 				color: $color-links;
-				cursor: pointer;
 				margin: 0;
 				padding: 5px 10px;
 				line-height: 16px;
@@ -56,87 +54,27 @@
 
 				a {
 					color: $color-links;
+					display: block;
 					&:hover {
 						text-decoration: none;
 					}
-				}
-
-				.icon {
-					@include sprite-Chat-base;
-					display: inline-block;
-					height: 18px;
-					opacity: .4;
-					width: 19px;
 				}
 
 				.label {
 					padding-left: 5px;
 				}
 
-				&.message-wall .icon,
-				&.talk-page .icon {
-					@include sprite-Chat('menu-message_wall' + $sprite-normal);
-				}
-
-				&.contribs .icon {
-					@include sprite-Chat('menu-contributions' + $sprite-normal);
-				}
-
-				&.private .icon {
-					@include sprite-Chat('menu-private_message' + $sprite-normal);
-				}
-
-				&.private-block .icon {
-					@include sprite-Chat('menu-private_message_block' + $sprite-normal);
-				}
-
-				&.give-chat-mod .icon {
-					@include sprite-Chat('menu-chat_mod' + $sprite-normal);
-				}
-
-				&.kick .icon {
-					@include sprite-Chat('menu-kick' + $sprite-normal);
-				}
-
-				&.ban .icon {
-					@include sprite-Chat('menu-ban' + $sprite-normal);
-				}
-
 				&:hover {
 					background-color: $color-menu-highlight;
+				}
 
-					.icon {
-						opacity: .7;
-					}
+				&.private {
+					cursor: pointer;
+				}
 
-					&.message-wall .icon,
-					&.talk-page .icon {
-						@include sprite-Chat('menu-message_wall' + $sprite-hover);
-					}
-
-					&.contribs .icon {
-						@include sprite-Chat('menu-contributions' + $sprite-hover);
-					}
-
-					&.private .icon {
-						@include sprite-Chat('menu-private_message' + $sprite-hover);
-					}
-
-					&.private-block .icon {
-						@include sprite-Chat('menu-private_message_block' + $sprite-hover);
-					}
-
-					&.give-chat-mod .icon {
-						@include sprite-Chat('menu-chat_mod' + $sprite-hover);
-					}
-
-					&.kick .icon {
-						@include sprite-Chat('menu-kick' + $sprite-hover);
-					}
-
-					&.ban .icon {
-						@include sprite-Chat('menu-ban' + $sprite-hover);
-					}
+				svg{
+					display: inline-block;
+					vertical-align: middle;
 				}
 			}
 		}

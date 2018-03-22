@@ -34,11 +34,11 @@ abstract class WatchedPageController extends EmailController {
 
 		$this->assertValidParams();
 
-		$this->currentRevId = $this->getVal('currentRevId');
+		$this->currentRevId = $this->getVal( 'currentRevId' );
 		if ( empty( $this->currentRevId ) ) {
 			$this->currentRevId = $this->title->getLatestRevID( \Title::GAID_FOR_UPDATE );
 		}
-		$this->previousRevId = $this->getVal('previousRevId');
+		$this->previousRevId = $this->getVal( 'previousRevId' );
 		if ( empty( $this->previousRevId ) ) {
 			$this->previousRevId = $this->title->getPreviousRevisionID( $this->currentRevId, \Title::GAID_FOR_UPDATE );
 		}
@@ -347,7 +347,7 @@ class WatchedPageRenamedController extends WatchedPageController {
 	 * @param $title
 	 * @return String
 	 */
-	protected function getAllChangesText( $title ) {
+	protected function getAllChangesText( \Title $title ) {
 		return parent::getAllChangesText( $this->newTitle );
 	}
 }

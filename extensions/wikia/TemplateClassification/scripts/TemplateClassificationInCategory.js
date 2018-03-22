@@ -82,6 +82,7 @@ define('TemplateClassificationInCategory',
 
 				mw.messages.set(res.messages);
 
+				// TODO fix while working on MAIN-10625
 				$hintTooltip = $('#WikiaPageHeader').children('.wikia-menu-button')
 					.tooltip({
 						placement: 'in right',

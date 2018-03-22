@@ -100,7 +100,7 @@ class ApiQueryWatchlist extends ApiQueryGeneratorBase {
 			$this->addFieldsIf( array( 'rc_type', 'rc_params', 'rc_logid', 'rc_log_type', 'rc_log_action', 'rc_last_oldid' ), $this->fld_wikiamode );
 			$this->addFieldsIf( array( 'rc_new', 'rc_minor', 'rc_bot' ), $this->fld_flags );
 			$this->addFieldsIf( 'rc_user', $this->fld_user || $this->fld_userid );
-			$this->addFieldsIf( 'rc_user_text', $this->fld_user );
+			$this->addFieldsIf( 'rc_ip_bin', $this->fld_user );
 			$this->addFieldsIf( 'rc_comment', $this->fld_comment || $this->fld_parsedcomment );
 			$this->addFieldsIf( 'rc_patrolled', $this->fld_patrol );
 			$this->addFieldsIf( array( 'rc_old_len', 'rc_new_len' ), $this->fld_sizes );
@@ -186,10 +186,10 @@ class ApiQueryWatchlist extends ApiQueryGeneratorBase {
 			$this->dieUsage( 'user and excludeuser cannot be used together', 'user-excludeuser' );
 		}
 		if ( !is_null( $params['user'] ) ) {
-			$this->addWhereFld( 'rc_user_text', $params['user'] );
+			$this->addWhereFld( 'rc_user', User::newFromName( $params['user'] )->getId() );
 		}
 		if ( !is_null( $params['excludeuser'] ) ) {
-			$this->addWhere( 'rc_user_text != ' . $db->addQuotes( $params['excludeuser'] ) );
+			$this->addWhere( 'rc_user != ' . User::newFromName( $params['excludeuser'] )->getId() );
 		}
 
 		// This is an index optimization for mysql, as done in the Special:Watchlist page
@@ -270,7 +270,8 @@ class ApiQueryWatchlist extends ApiQueryGeneratorBase {
 		if ( $this->fld_user || $this->fld_userid ) {
 
 			if ( $this->fld_user ) {
-				$vals['user'] = $row->rc_user_text;
+				$userIp = RecentChange::extractUserIpFromRow( $row );
+				$vals['user'] = User::getUsername( $row->rc_user, $userIp );
 			}
 
 			if ( $this->fld_userid ) {

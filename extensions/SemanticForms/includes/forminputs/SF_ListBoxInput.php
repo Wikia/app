@@ -44,7 +44,7 @@ class SFListBoxInput extends SFMultiEnumInput {
 		} else {
 			$delimiter = ',';
 		}
-		$cur_values = SFUtils::getValuesArray( $this->mCurrentValue, $delimiter );
+		$cur_values = SFValuesUtils::getValuesArray( $this->mCurrentValue, $delimiter );
 		$className .= ' sfShowIfSelected';
 
 		if ( ( $possible_values = $this->mOtherArgs['possible_values'] ) == null ) {

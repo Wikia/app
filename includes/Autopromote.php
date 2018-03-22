@@ -22,7 +22,7 @@ class Autopromote {
 			}
 		}
 
-		wfRunHooks( 'GetAutoPromoteGroups', array( $user, &$promote ) );
+		Hooks::run( 'GetAutoPromoteGroups', array( $user, &$promote ) );
 
 		return $promote;
 	}
@@ -95,12 +95,13 @@ class Autopromote {
 	 * APCOND_AGE.  Other types will throw an exception if no extension evalu-
 	 * ates them.
 	 *
-	 * @param $cond Array: A condition, which must not contain other conditions
+	 * @param $cond array: A condition, which must not contain other conditions
 	 * @param $user User The user to check the condition against
 	 * @return bool Whether the condition is true for the user
+	 * @throws MWException
 	 */
 	private static function checkCondition( $cond, User $user ) {
-		global $wgEmailAuthentication, $wgEnableEditCountLocal;
+		global $wgEmailAuthentication;
 		if ( count( $cond ) < 1 ) {
 			return false;
 		}
@@ -116,12 +117,19 @@ class Autopromote {
 				}
 				return false;
 			case APCOND_EDITCOUNT:
-				if ( !empty($wgEnableEditCountLocal) ) {
-					return $user->getEditCountLocal() >= $cond[1];
-				} else {
-					return $user->getEditCount() >= $cond[1];
+				// Wikia change
+				// SUS-1290: If edit count condition is 0 skip edit count lookup
+				if ( $cond[1] === 0 ) {
+					return true;
 				}
+
+				return $user->getEditCount() >= $cond[1];
 			case APCOND_AGE:
+				// Wikia change
+				// If age condition is 0 skip check
+				if ( $cond[1] === 0 ) {
+					return true;
+				}
 				$age = time() - wfTimestampOrNull( TS_UNIX, $user->getRegistration() );
 				return $age >= $cond[1];
 			case APCOND_AGE_FROM_EDIT:
@@ -140,7 +148,7 @@ class Autopromote {
 				return in_array( 'bot', User::getGroupPermissions( $user->getGroups() ) );
 			default:
 				$result = null;
-				wfRunHooks( 'AutopromoteCondition', array( $cond[0], array_slice( $cond, 1 ), $user, &$result ) );
+				Hooks::run( 'AutopromoteCondition', array( $cond[0], array_slice( $cond, 1 ), $user, &$result ) );
 				if ( $result === null ) {
 					throw new MWException( "Unrecognized condition {$cond[0]} for autopromotion!" );
 				}

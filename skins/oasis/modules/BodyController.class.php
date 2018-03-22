@@ -111,12 +111,17 @@ class BodyController extends WikiaController {
 		// perform namespace and special page check
 		$isUserPage = in_array( $wg->Title->getNamespace(), self::getUserPagesNamespaces() );
 
-		$ret = ( $isUserPage && !$wg->Title->isSubpage() )
-			|| $wg->Title->isSpecial( 'Following' )
-			|| $wg->Title->isSpecial( 'Contributions' )
-			|| $wg->Title->isSpecial( 'UserActivity' )
-			|| ( defined( 'NS_BLOG_LISTING' ) && $wg->Title->getNamespace() == NS_BLOG_LISTING )
-			|| ( defined( 'NS_BLOG_ARTICLE' ) && $wg->Title->getNamespace() == NS_BLOG_ARTICLE );
+		$ret =
+			( $isUserPage && !$wg->Title->isSubpage() ) ||
+			$wg->Title->isSpecial( 'Following' ) ||
+			$wg->Title->isSpecial( 'Contributions' ) ||
+			$wg->Title->isSpecial( 'UserActivity' ) ||
+			(
+				defined( 'NS_BLOG_ARTICLE' ) &&
+				$wg->Title->getNamespace() == NS_BLOG_ARTICLE &&
+				// show user pages header only on user blog listing
+		        !$wg->Title->isSubpage()
+			);
 
 		return $ret;
 	}
@@ -141,16 +146,18 @@ class BodyController extends WikiaController {
 	}
 
 	public function getRailModuleList() {
-		$namespace = $this->wg->Title->getNamespace();
+		$title = $this->getContext()->getTitle();
+		$user = $this->getContext()->getUser();
+
+		$namespace = $title->getNamespace();
 		$subjectNamespace = MWNamespace::getSubject( $namespace );
 
 		$railModuleList = [ ];
 
-		$latestActivityKey = $this->wg->User->isAnon() ? 1250 : 1300;
-		$huluVideoPanelKey = $this->wg->User->isAnon() ? 1390 : 1280;
+		$latestActivityKey = $user->isAnon() ? 1250 : 1300;
 
 		// Forum Extension
-		if ( $this->wg->EnableForumExt && ForumHelper::isForum() ) {
+		if ( $this->wg->EnableForumExt && ForumHelper::isForum() && !BodyController::isEditPage() ) {
 			$railModuleList = [
 				1202 => [ 'Forum', 'forumRelatedThreads', null ],
 				1201 => [ 'Forum', 'forumActivityModule', null ],
@@ -158,55 +165,37 @@ class BodyController extends WikiaController {
 			];
 
 			// Include additional modules from other extensions (like chat)
-			wfRunHooks( 'GetRailModuleList', [ &$railModuleList ] );
+			Hooks::run( 'GetRailModuleList', [ &$railModuleList ] );
 			return $railModuleList;
 		}
 
 		if ( $namespace == NS_SPECIAL ) {
-			if ( WikiaPageType::isSearch() ) {
-				if ( empty( $this->wg->EnableWikiaHomePageExt ) ) {
-					$railModuleList = [
-						$latestActivityKey => [ 'LatestActivity', 'Index', null ],
-					];
-
-					if ( empty( $this->wg->EnableWikiAnswers ) ) {
-						if ( $this->wg->EnableHuluVideoPanel ) {
-							$railModuleList[$huluVideoPanelKey] = [ 'HuluVideoPanel', 'Index', null ];
-						}
-					}
-				}
-			} else if ( $this->wg->Title->isSpecial( 'Leaderboard' ) ) {
+			if ( WikiaPageType::isSearch() || $title->isSpecial( 'ThemeDesignerPreview' ) ) {
+				$railModuleList = [
+					$latestActivityKey => [ 'LatestActivity', 'Index', null ],
+				];
+			} else if ( $title->isSpecial( 'Leaderboard' ) ) {
 				$railModuleList = [
 					$latestActivityKey => [ 'LatestActivity', 'Index', null ],
 					1290               => [ 'LatestEarnedBadges', 'Index', null ],
 				];
-			} else if ( $this->wg->Title->isSpecial( 'WikiActivity' ) ) {
+			} else if ( $title->isSpecial( 'WikiActivity' ) ) {
 				$railModuleList = [
 					1102 => [ 'HotSpots', 'Index', null ],
 					1101 => [ 'CommunityCorner', 'Index', null ],
 				];
-			} else if ( $this->wg->Title->isSpecial( 'Following' ) || $this->wg->Title->isSpecial( 'Contributions' ) ) {
+			} else if ( $title->isSpecial( 'Following' ) || $title->isSpecial( 'Contributions' ) ) {
 				// intentional nothing here
-			} else if ( $this->wg->Title->isSpecial( 'ThemeDesignerPreview' ) ) {
-				$railModuleList = [
-					$latestActivityKey => [ 'LatestActivity', 'Index', null ],
-				];
-
-				if ( empty( $this->wg->EnableWikiAnswers ) ) {
-					if ( $this->wg->EnableHuluVideoPanel ) {
-						$railModuleList[$huluVideoPanelKey] = [ 'HuluVideoPanel', 'Index', null ];
-					}
-				}
 			} else {
 				// don't show any module for MW core special pages
 				$railModuleList = [ ];
-				wfRunHooks( 'GetRailModuleSpecialPageList', [ &$railModuleList ] );
+				Hooks::run( 'GetRailModuleSpecialPageList', [ &$railModuleList ] );
 				return $railModuleList;
 			}
 		}
 
 		// Content, category and forum namespaces.  FB:1280 Added file,video,mw,template
-		if ( $this->wg->Title->isSubpage() && $this->wg->Title->getNamespace() == NS_USER ||
+		if ( $title->isSubpage() && $title->getNamespace() == NS_USER ||
 			in_array( $subjectNamespace, [ NS_CATEGORY, NS_CATEGORY_TALK, NS_FORUM, NS_PROJECT, NS_FILE, NS_MEDIAWIKI, NS_TEMPLATE, NS_HELP ] ) ||
 			in_array( $subjectNamespace, $this->wg->ContentNamespaces ) ||
 			array_key_exists( $subjectNamespace, $this->wg->ExtraNamespaces )
@@ -214,17 +203,11 @@ class BodyController extends WikiaController {
 			// add any content page related rail modules here
 
 			$railModuleList[$latestActivityKey] = [ 'LatestActivity', 'Index', null ];
-
-			if ( empty( $this->wg->EnableWikiAnswers ) ) {
-				if ( $this->wg->EnableHuluVideoPanel ) {
-					$railModuleList[$huluVideoPanelKey] = [ 'HuluVideoPanel', 'Index', null ];
-				}
-			}
 		}
 
 		// User page namespaces
-		if ( in_array( $this->wg->Title->getNamespace(), self::getUserPagesNamespaces() ) ) {
-			$page_owner = User::newFromName( $this->wg->Title->getText() );
+		if ( in_array( $title->getNamespace(), self::getUserPagesNamespaces() ) ) {
+			$page_owner = User::newFromName( $title->getText() );
 
 			if ( $page_owner ) {
 				if ( !$page_owner->getGlobalPreference( 'hidefollowedpages' ) ) {
@@ -242,16 +225,9 @@ class BodyController extends WikiaController {
 		}
 
 		//  No rail on main page or edit page for oasis skin
-		// except &action=history of wall
-		if ( !empty( $this->wg->EnableWallEngine ) ) {
-			$isEditPage = !WallHelper::isWallNamespace( $namespace ) && BodyController::isEditPage() || $this->wg->Request->getVal( 'diff' );
-		} else {
-			$isEditPage = BodyController::isEditPage();
-		}
-
-		if ( $isEditPage || WikiaPageType::isMainPage() ) {
+		if ( BodyController::isEditPage() || WikiaPageType::isMainPage() ) {
 			$modules = [ ];
-			wfRunHooks( 'GetEditPageRailModuleList', [ &$modules ] );
+			Hooks::run( 'GetEditPageRailModuleList', [ &$modules ] );
 			return $modules;
 		}
 		// No modules on Custom namespaces, unless they are in the ContentNamespaces list, those get the content rail
@@ -259,15 +235,13 @@ class BodyController extends WikiaController {
 			return [ ];
 		}
 		// If the entire page is non readable due to permissions, don't display the rail either RT#75600
-		if ( !$this->wg->Title->userCan( 'read' ) ) {
+		if ( !$title->userCan( 'read' ) ) {
 			return [ ];
 		}
 
 		$railModuleList[1440] = [ 'Ad', 'Index', [ 'slotName' => 'TOP_RIGHT_BOXAD' ] ];
-		$railModuleList[1435] = [ 'AdEmptyContainer', 'Index', [ 'slotName' => 'NATIVE_TABOOLA_RAIL' ] ];
-		$railModuleList[1100] = [ 'Ad', 'Index', [ 'slotName' => 'LEFT_SKYSCRAPER_2' ] ];
 
-		wfRunHooks( 'GetRailModuleList', [ &$railModuleList ] );
+		Hooks::run( 'GetRailModuleList', [ &$railModuleList ] );
 
 		return $railModuleList;
 	}
@@ -285,6 +259,7 @@ class BodyController extends WikiaController {
 		// Replaces ContentDisplayModule->index()
 		$this->bodytext = $this->app->getSkinTemplateObj()->data['bodytext'];
 
+		$this->isEditPage = self::isEditPage();
 		$this->railModuleList = $this->getRailModuleList();
 		// this hook allows adding extra HTML just after <body> opening tag
 		// append your content to $html variable instead of echoing
@@ -292,61 +267,45 @@ class BodyController extends WikiaController {
 		$skin = RequestContext::getMain()->getSkin();
 
 		$afterBodyHtml = '';
-		wfRunHooks( 'GetHTMLAfterBody', [ $skin, &$afterBodyHtml ] );
+		Hooks::run( 'GetHTMLAfterBody', [ $skin, &$afterBodyHtml ] );
 		$this->afterBodyHtml = $afterBodyHtml;
 
 		$beforeWikiaPageHtml = '';
-		wfRunHooks( 'GetHTMLBeforeWikiaPage', [ &$beforeWikiaPageHtml ] );
+		Hooks::run( 'GetHTMLBeforeWikiaPage', [ &$beforeWikiaPageHtml ] );
 		$this->beforeWikiaPageHtml = $beforeWikiaPageHtml;
 
 
 		// this hook is needed for SMW's factbox
 		$afterContentHookText = '';
-		wfRunHooks( 'SkinAfterContent', [ &$afterContentHookText ] );
+		Hooks::run( 'SkinAfterContent', [ &$afterContentHookText ] );
 		$this->afterContentHookText = $afterContentHookText;
 
+		$this->headerModuleName = null;
 		$this->headerModuleAction = 'Index';
 		$this->headerModuleParams = [ 'showSearchBox' => false ];
 
 		// show user pages header on this page?
 		if ( self::showUserPagesHeader() ) {
 			$this->headerModuleName = 'UserPagesHeader';
-			// is this page a blog post?
-			if ( self::isBlogPost() ) {
-				$this->headerModuleAction = 'BlogPost';
-			} // is this page a blog listing?
-			else if ( self::isBlogListing() ) {
-				$this->headerModuleAction = 'BlogListing';
-			}
-			// show corporate header on this page?
-		} else if ( WikiaPageType::isCorporatePage() || WikiaPageType::isWikiaHub() ) {
-			$this->headerModuleName = 'PageHeader';
-
-			if ( self::isEditPage() ) {
-				$this->headerModuleAction = 'EditPage';
-			} else {
-				$this->headerModuleAction = 'Corporate';
-			}
-
-			if ( WikiaPageType::isWikiaHubMain() ) {
-				$this->headerModuleAction = 'Hubs';
-			} elseif ( WikiaPageType::isMainPage() ) {
-				$this->wg->SuppressFooter = true;
-				$this->wg->SuppressArticleCategories = true;
-				$this->wg->SuppressPageHeader = true;
-				$this->wg->SuppressWikiHeader = true;
-				$this->wg->SuppressSlider = true;
-			}
-		} else {
-			$this->headerModuleName = 'PageHeader';
-			if ( self::isEditPage() ) {
-				$this->headerModuleAction = 'EditPage';
-			}
+		// show corporate header on this page?
+		} else if (
+			( WikiaPageType::isCorporatePage() || WikiaPageType::isWikiaHub() ) &&
+			!WikiaPageType::isWikiaHubMain() &&
+			WikiaPageType::isMainPage()
+		) {
+			$this->wg->SuppressFooter = true;
+			$this->wg->SuppressArticleCategories = true;
+			$this->wg->SuppressPageHeader = true;
+			$this->wg->SuppressCommunityHeader = true;
+			$this->wg->SuppressSlider = true;
 		}
 
 		// Display chromed header on Special:AdminDashboard
-		if ( $this->wg->Title->isSpecial( 'AdminDashboard' ) && $this->wg->User->isAllowed( 'admindashboard' ) ) {
-			$this->headerModuleName = null;
+		if (
+			$this->wg->EnableAdminDashboardExt &&
+			$this->wg->Title->isSpecial( 'AdminDashboard' ) &&
+			$this->wg->User->isAllowed( 'admindashboard' )
+		) {
 			$this->displayAdminDashboard = true;
 		} else {
 			$this->displayAdminDashboard = false;
@@ -380,15 +339,9 @@ class BodyController extends WikiaController {
 			OasisController::addBodyClass( 'oasis-responsive' );
 		}
 
-		// if we are on a special search page, pull in the css file and don't render a header
+		// if we are on a special search page, pull in the css file
 		if ( $this->wg->Title && $this->wg->Title->isSpecial( 'Search' ) && !$this->wg->WikiaSearchIsDefault ) {
 			$this->wg->Out->addStyle( AssetsManager::getInstance()->getSassCommonURL( "skins/oasis/css/modules/SpecialSearch.scss" ) );
-			$this->headerModuleName = null;
-		}
-
-		// Inter-wiki search
-		if ( $this->wg->Title && ( $this->wg->Title->isSpecial( 'WikiaSearch' ) || ( $this->wg->Title->isSpecial( 'Search' ) && $this->wg->WikiaSearchIsDefault ) ) ) {
-			$this->headerModuleName = null;
 		}
 
 		// load CSS for Special:Preferences
@@ -414,25 +367,6 @@ class BodyController extends WikiaController {
 		// VOLDEV-125: Fix Special:AllMessages colors on dark wikis
 		if ( !empty( $this->wg->Title ) && $this->wg->Title->isSpecial( 'Allmessages' ) && SassUtil::isThemeDark() ) {
 			$this->wg->Out->addStyle( AssetsManager::getInstance()->getSassCommonURL( 'skins/oasis/css/modules/SpecialAllMessages.scss' ) );
-		}
-
-		// Forum Extension
-		if ( !empty( $this->wg->EnableForumExt ) && ForumHelper::isForum() ) {
-			$this->wg->SuppressPageHeader = true;
-		}
-
-		// MonetizationModule Extension
-		if ( !empty( $this->wg->EnableMonetizationModuleExt ) ) {
-			if ( empty( $this->wg->AdDriverUseMonetizationService ) ) {
-				$this->monetizationModules = $this->sendRequest( 'MonetizationModule', 'index' )->getData()['data'];
-				$this->headerModuleParams['monetizationModules'] = $this->monetizationModules;
-			} else {
-				$this->monetizationModules = [
-					MonetizationModuleHelper::SLOT_TYPE_IN_CONTENT     => $this->app->renderView( 'Ad', 'Index', [ 'slotName' => 'MON_IN_CONTENT' ] ),
-					MonetizationModuleHelper::SLOT_TYPE_BELOW_CATEGORY => $this->app->renderView( 'Ad', 'Index', [ 'slotName' => 'MON_BELOW_CATEGORY' ] ),
-				];
-			}
-			$this->bodytext = MonetizationModuleHelper::insertIncontentUnit( $this->bodytext, $this->monetizationModules );
 		}
 
 		$namespace = $this->wg->Title->getNamespace();

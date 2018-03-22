@@ -11,7 +11,7 @@ class ConfigureWikiFactory extends Task {
 	const DEFAULT_WIKI_LOGO = '$wgUploadPath/b/bc/Wiki.png';
 	const SANITIZED_BUCKET_NAME_MAXIMUM_LENGTH = 55;
 	const IMGROOT = "/images/";
-	const IMAGEURL = "http://images.wikia.com/";
+	const IMAGEURL = "https://images.wikia.com/";
 
 	public $imagesURL;
 	public $imagesDir;
@@ -65,12 +65,10 @@ class ConfigureWikiFactory extends Task {
 			'wgLogo' => self::DEFAULT_WIKI_LOGO,
 			'wgUploadPath' => $imagesURL,
 			'wgUploadDirectory' => $imagesDir,
-			'wgDBname' => $dbName,
 			'wgLocalInterwiki' => $siteName,
 			'wgLanguageCode' => $language,
 			'wgServer' => rtrim( $url, "/" ),
 			'wgEnableSectionEdit' => true,
-			'wgEnableSwiftFileBackend' => true,
 			'wgOasisLoadCommonCSS' => true,
 			'wgEnablePortableInfoboxEuropaTheme' => true
 		];
@@ -81,12 +79,16 @@ class ConfigureWikiFactory extends Task {
 			$wikiFactoryVariables['wgMetaNamespace'] = str_replace( [ ':', ' ' ], [ '', '_' ], $siteName );
 		}
 
-		wfGetLBFactory()->sectionsByDB[$dbName] = $wikiFactoryVariables['wgDBcluster'] = \F::app()->wg->CreateDatabaseActiveCluster;
-
+		wfGetLBFactory()->sectionsByDB[$dbName] = \F::app()->wg->CreateDatabaseActiveCluster;
 
 		return $wikiFactoryVariables;
 	}
 
+	/**
+	 * @param \DatabaseBase $sharedDBW
+	 * @param $wikiFactoryVariables
+	 * @return array
+	 */
 	public function getVariablesFromDB( $sharedDBW, $wikiFactoryVariables ) {
 		wfProfileIn( __METHOD__ );
 
@@ -109,6 +111,12 @@ class ConfigureWikiFactory extends Task {
 		return $wikiFactoryVarsFromDB;
 	}
 
+	/**
+	 * @param \DatabaseBase $sharedDBW
+	 * @param $cityId
+	 * @param $wikiFactoryVariablesFromDB
+	 * @param $wikiFactoryVariables
+	 */
 	private function setVariables( $sharedDBW, $cityId, $wikiFactoryVariablesFromDB, $wikiFactoryVariables ) {
 		wfProfileIn( __METHOD__ );
 		foreach ( $wikiFactoryVariables as $variable => $value ) {

@@ -13,7 +13,9 @@ class TorBlock {
 	 * @param $result
 	 * @return bool
 	 */
-	public static function onGetUserPermissionsErrorsExpensive( &$title, &$user, $action, &$result ) {
+	public static function onGetUserPermissionsErrorsExpensive(
+		Title $title, User $user, string $action, &$result
+	): bool {
 		global $wgTorAllowedActions;
 		if (in_array( $action, $wgTorAllowedActions)) {
 			return true;
@@ -90,7 +92,7 @@ class TorBlock {
 		return true;
 	}
 
-	public static function onAbuseFilterFilterAction( &$vars, $title ) {
+	public static function onAbuseFilterFilterAction( $vars, $title ): bool {
 		$vars->setVar( 'tor_exit_node', self::isExitNode() ? 1 : 0 );
 		return true;
 	}
@@ -203,7 +205,7 @@ class TorBlock {
 	 * @param $user User
 	 * @return bool
 	 */
-	public static function onGetBlockedStatus( &$user ) {
+	public static function onGetBlockedStatus( User $user ): bool {
 		global $wgTorDisableAdminBlocks;
 		if ( $wgTorDisableAdminBlocks && self::isExitNode() && $user->mBlock && $user->mBlock->getType() != Block::TYPE_USER ) {
 			wfDebug( "User using Tor node. Disabling IP block as it was probably targetted at the tor node." );
@@ -215,7 +217,7 @@ class TorBlock {
 		return true;
 	}
 
-	public static function onAbortAutoblock( $autoblockip, &$block ) {
+	public static function onAbortAutoblock( $autoblockip, Block $block ): bool {
 		return !self::isExitNode( $autoblockip );
 	}
 
@@ -235,8 +237,12 @@ class TorBlock {
 			return true; // No groups to promote to anyway
 		}
 
-		$age = time() - wfTimestampOrNull( TS_UNIX, $user->getRegistration() );
 		global $wgTorAutoConfirmAge, $wgTorAutoConfirmCount;
+		if ( $wgTorAutoConfirmAge == 0 && $wgTorAutoConfirmCount == 0 && $user->isLoggedIn() ) {
+			return true;
+		}
+
+		$age = time() - wfTimestampOrNull( TS_UNIX, $user->getRegistration() );
 
 		if ($age >= $wgTorAutoConfirmAge && $user->getEditCount() >= $wgTorAutoConfirmCount) {
 			return true; // Does match requirements. Don't bother checking if we're an exit node.

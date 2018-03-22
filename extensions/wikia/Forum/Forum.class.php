@@ -1,11 +1,10 @@
 <?php
-use Wikia\Logger\WikiaLogger;
 
 /**
  * Forum
  * @author Kyle Florence, Saipetch Kongkatong, Tomasz Odrobny
  */
-class Forum extends Walls {
+class Forum extends WikiaObject {
 
 	const ACTIVE_DAYS = 7;
 	const BOARD_MAX_NUMBER = 50;
@@ -26,44 +25,76 @@ class Forum extends Walls {
 	const LEN_TOO_BIG_ERR = -1;
 	const LEN_TOO_SMALL_ERR = -2;
 
-	public function getBoardList( $db = DB_SLAVE ) {
-		$titlesBatch = TitleBatch::newFromConds( [ ],
-			[ 'page.page_namespace' => NS_WIKIA_FORUM_BOARD ],
+	/**
+	 * Returns list of ForumBoardInfo ordered by order index
+	 *
+	 * @param int $dbType
+	 * @return array array of serialized ForumBoardInfo
+	 */
+	public function getBoardList( int $dbType = DB_SLAVE ): array {
+		$db = wfGetDB( $dbType );
+
+		$result = $db->select(
+			[ 'page', 'page_wikia_props'],
+			// SUS-2519: Only load the fields we actually use
+			// This allows the query planner to use proper index for page table
+			[ 'page.page_id AS page_id', 'page_title', 'page_namespace', 'propname', 'props' ],
+			[
+				// SUS-2519: Order of conditions matter.
+				// First reduce the list to Forum Boards only to reduce the number of rows scanned.
+				'page_namespace' => NS_WIKIA_FORUM_BOARD,
+				'propname = ' . $db->addQuotes( WPP_WALL_ORDER_INDEX ) . ' OR propname IS NULL'
+			],
 			__METHOD__,
-			[ 'ORDER BY' => 'page_title' ],
-			$db
+			[],
+			[ 'page_wikia_props' => [ 'LEFT JOIN', 'page.page_id = page_wikia_props.page_id' ] ]
 		);
 
-		$orderIndexes = $titlesBatch->getWikiaProperties( WPP_WALL_ORDER_INDEX, $db );
-		foreach ( $titlesBatch->getArticleIds() as $id ) {
-			if ( !isset( $orderIndexes[ $id ] ) ) {
-				$orderIndexes[ $id ] = $id;
-			}
-		}
+		$boardInfoByOrderIndex = [];
 
-		$boards = [ ];
-		arsort( $orderIndexes );
-		foreach ( array_keys( $orderIndexes ) as $pageId ) {
-			/** @var Title $title */
-			$title = $titlesBatch->getById( $pageId );
+		foreach ( $result as $row ) {
+			$boardTitle = Title::newFromRow( $row );
 
-			if ( empty( $title ) ) {
-				WikiaLogger::instance()->error( "Expecting title got null", [ "pageId" => $pageId ] );
+			$board = ForumBoard::newFromTitle( $boardTitle );
+			$boardInfo = $board->getBoardInfo()->toArray();
+
+			// SUS-2519: if there is no explicit sorting info present, then use page ID
+			if ( empty( $row->props ) ) {
+				$boardInfoByOrderIndex[$row->page_id] = $boardInfo;
 				continue;
 			}
 
-			/** @var $board ForumBoard */
-			$board = ForumBoard::newFromTitle( $title );
+			$orderIndex = wfUnserializeProp( $row->propname, $row->props );
 
-			$boardInfo = $board->getBoardInfo();
-			$boardInfo['id'] = $title->getArticleID();
-			$boardInfo['name'] = $title->getText();
-			$boardInfo['description'] = $board->getDescriptionWithoutTemplates();
-			$boardInfo['url'] = $title->getFullURL();
-			$boards[] = $boardInfo;
+			// IRIS-1493: Sorting info may be duplicated - if this is the case, then use page ID
+			if ( isset( $boardInfoByOrderIndex[$orderIndex] ) ) {
+				$boardInfoByOrderIndex[$row->page_id] = $boardInfo;
+				continue;
+			}
+
+			$boardInfoByOrderIndex[$orderIndex] = $boardInfo;
 		}
 
-		return $boards;
+		krsort( $boardInfoByOrderIndex );
+
+		return $boardInfoByOrderIndex;
+	}
+
+	/**
+	 * Return list of existing Forum Board titles, without extra board information
+	 * @return TitleArray
+	 */
+	public function getBoardTitles(): TitleArray {
+		$db = wfGetDB( DB_SLAVE );
+
+		$result = $db->select(
+			'page',
+			[ 'page_id', 'page_title', 'page_namespace' ],
+			[ 'page_namespace' => NS_WIKIA_FORUM_BOARD ],
+			__METHOD__
+		);
+
+		return TitleArray::newFromResult( $result );
 	}
 
 	/**
@@ -85,7 +116,7 @@ class Forum extends Walls {
 		);
 
 		wfProfileOut( __METHOD__ );
-		return $result['cnt'];
+		return $result[ 'cnt' ];
 	}
 
 	/**
@@ -236,7 +267,7 @@ class Forum extends Walls {
 
 	/**
 	 *  create or edit board, if $board = null then we are creating new one
-	 * @param ForumBoard $board
+	 * @param ForumBoard|null $board
 	 * @param $titletext
 	 * @param $body
 	 * @param bool $bot
@@ -244,10 +275,7 @@ class Forum extends Walls {
 	 * @throws MWException
 	 */
 	protected function createOrEditBoard( $board, $titletext, $body, $bot = false ) {
-		$id = null;
-		if ( !empty( $board ) ) {
-			$id = $board->getId();
-		}
+		$id = ( $board instanceof ForumBoard ) ? $board->getId() : null;
 
 		if (
 			self::LEN_OK !== $this->validateLength( $titletext, 'title' ) ||
@@ -287,6 +315,11 @@ class Forum extends Walls {
 
 		Forum::$allowToEditBoard = false;
 
+		// clear the cache only when we're editing an existing board
+		if ( $board instanceof ForumBoard ) {
+			$board->clearCacheBoardInfo();
+		}
+
 		return $retval;
 	}
 
@@ -299,8 +332,8 @@ class Forum extends Walls {
 	 * @return int
 	 */
 	public function getLengthLimits( $type, $field ) {
-		return ( isset( $this->fieldsLengths[$field] ) && isset( $this->fieldsLengths[$field][$type] ) ) ?
-			(int) $this->fieldsLengths[$field][$type] :
+		return ( isset( $this->fieldsLengths[ $field ] ) && isset( $this->fieldsLengths[ $field ][ $type ] ) ) ?
+			(int)$this->fieldsLengths[ $field ][ $type ] :
 			0;
 	}
 

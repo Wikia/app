@@ -1,32 +1,22 @@
 @import 'skins/shared/color';
+@import 'skins/shared/mixins/flexbox';
 
-.page-share-container {
-	//Without height ul element is expanded on IE11
-	height: 30px;
+.page-share-modal-dialog {
+	section {
+		@include align-items(center);
+		@include flexbox();
+		@include justify-content(center);
+	}
+
+	footer {
+		display: none;
+	}
 }
 
 .page-share-toolbar {
-	//Without height ul element is expanded on IE11
-	height: 30px;
-	line-height: 20px;
-	white-space: nowrap;
+	@include flexbox();
 
-	li {
-		display: inline;
-	}
-
-	svg {
-		fill: $color-links;
-		margin-left: 2px;
-		width: 24px;
-	}
-
-	a {
-		opacity: .7;
-
-		&:hover {
-			opacity: 1;
-			text-decoration: none;
-		}
+	li:not(:last-child) {
+		margin-right: 6px;
 	}
 }

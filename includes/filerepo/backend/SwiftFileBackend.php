@@ -6,6 +6,8 @@
  * @author Aaron Schulz
  */
 
+use Wikia\Logger\WikiaLogger;
+
 /**
  * Class for an OpenStack Swift based file backend.
  *
@@ -268,7 +270,7 @@ class SwiftFileBackend extends FileBackendStore {
 			$this->logException( $e, __METHOD__, $params );
 		}
 
-		wfRunHooks( 'SwiftFileBackend::doStoreInternal', array( $params, &$status ) );
+		Hooks::run( 'SwiftFileBackend::doStoreInternal', array( $params, &$status ) );
 
 		return $status;
 	}
@@ -329,7 +331,7 @@ class SwiftFileBackend extends FileBackendStore {
 			$this->logException( $e, __METHOD__, $params );
 		}
 		
-		wfRunHooks( 'SwiftFileBackend::doCopyInternal', array( $params, &$status ) );
+		Hooks::run( 'SwiftFileBackend::doCopyInternal', array( $params, &$status ) );
 
 		return $status;
 	}
@@ -366,7 +368,7 @@ class SwiftFileBackend extends FileBackendStore {
 			$this->logException( $e, __METHOD__, $params );
 		}
 
-		wfRunHooks( 'SwiftFileBackend::doDeleteInternal', array( $params, &$status ) );
+		Hooks::run( 'SwiftFileBackend::doDeleteInternal', array( $params, &$status ) );
 		
 		return $status;
 	}
@@ -571,7 +573,15 @@ class SwiftFileBackend extends FileBackendStore {
 			return true; //nothing to do
 		}
 		wfProfileIn( __METHOD__ );
-		trigger_error( "$path was not stored with SHA-1 metadata.", E_USER_WARNING );
+
+		WikiaLogger::instance()->warning(
+			__METHOD__ . ' - file was not stored with SHA-1 metadata',
+			[
+				'path' => $path,
+				'object' => $obj->container->name
+			]
+		);
+
 		$status = Status::newGood();
 		$scopeLockS = $this->getScopedFileLocks( array( $path ), LockManager::LOCK_UW, $status );
 		if ( $status->isOK() ) {
@@ -586,7 +596,15 @@ class SwiftFileBackend extends FileBackendStore {
 				}
 			}
 		}
-		trigger_error( "Unable to set SHA-1 metadata for $path", E_USER_WARNING );
+
+		WikiaLogger::instance()->warning(
+			__METHOD__ . ' - unable to set SHA-1 metadata',
+			[
+				'path' => $path,
+				'object' => $obj->container->name
+			]
+		);
+
 		$obj->setMetadataValues( array( 'Sha1base36' => false ) );
 		wfProfileOut( __METHOD__ );
 		return false; // failed

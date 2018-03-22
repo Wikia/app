@@ -14,13 +14,6 @@ select {
 	height: 35px;
 }
 
-.AccountNavigation .UserLoginDropdown .WikiaForm {
-	input[type=text],
-	input[type=password] {
-		height: 30px;
-	}
-}
-
 .WikiaSignup select {
 	width: 103px;
 }
@@ -38,11 +31,4 @@ td.mw-input,
 
 td.mw-label {
 	vertical-align: middle;
-}
-
-// Play buttons should always show on touch-enabled devices
-.video-thumbnail.hide-play {
-	.play-circle {
-		display: block;
-	}
 }

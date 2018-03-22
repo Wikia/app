@@ -17,7 +17,7 @@ define('wikia.pageShare', [
 	 *
 	 * @param {Event} event
 	 */
-	function shareLinkClick(event) {
+	function shareLinkClickHandler(event) {
 		event.stopPropagation();
 		event.preventDefault();
 
@@ -31,19 +31,18 @@ define('wikia.pageShare', [
 		win.open(url, title, 'width=' + w + ',height=' + h);
 	}
 
-	function appendShareIcons(data) {
+	function prepareSocialLinks(data) {
 		if (data.socialIcons) {
 			var url = encodeURIComponent(win.location.origin + win.location.pathname),
 				title = encodeURIComponent(win.document.title),
 				description = encodeURIComponent($('meta[property="og:description"]').attr('content'));
 
-			$('#PageShareContainer')
-				.html(data.socialIcons
-					.replace(/\$url/g, url)
-					.replace(/\$title/g, title)
-					.replace(/\$description/g, description)
-				)
-				.on('click', '.page-share a', shareLinkClick);
+			data.socialIcons = data.socialIcons
+				.replace(/\$url/g, url)
+				.replace(/\$title/g, title)
+				.replace(/\$description/g, description);
+
+			return data;
 		}
 	}
 
@@ -51,20 +50,20 @@ define('wikia.pageShare', [
 		var mCacheQueryStringParam = $.getUrlVar('mcache'),
 			requestData = {
 				lang: getShareLang($.getUrlVar('uselang')),
-				isTouchScreen: win.Wikia.isTouchScreen() ? 1 : 0
+				isTouchScreen: win.Wikia.isTouchScreen() ? 1 : 0,
+				title: win.wgPageName
 			};
 
 		if (mCacheQueryStringParam) {
 			requestData.mcache = mCacheQueryStringParam;
 		}
 
-		$.nirvana.sendRequest({
+		return $.nirvana.sendRequest({
 			type: 'GET',
 			controller: 'PageShare',
 			method: 'getShareIcons',
-			data: requestData,
-			callback: appendShareIcons
-		});
+			data: requestData
+		}).then(prepareSocialLinks);
 	}
 
 	/**
@@ -102,6 +101,7 @@ define('wikia.pageShare', [
 
 	return {
 		loadShareIcons: loadShareIcons,
-		getShareLang: getShareLang
+		getShareLang: getShareLang,
+		shareLinkClickHandler: shareLinkClickHandler
 	};
 });

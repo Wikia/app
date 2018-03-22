@@ -36,6 +36,9 @@ class ApiQueryRevisions extends ApiQueryBase {
 	private $diffto, $difftotext, $expandTemplates, $generateXML, $section,
 		$token, $parseContent;
 
+	/** @var array $userNames map of user IDs to user names */
+	private $userNames = [];
+
 	public function __construct( $query, $moduleName ) {
 		parent::__construct( $query, $moduleName, 'rv' );
 	}
@@ -64,7 +67,7 @@ class ApiQueryRevisions extends ApiQueryBase {
 		$this->tokenFunctions = array(
 			'rollback' => array( 'ApiQueryRevisions', 'getRollbackToken' )
 		);
-		wfRunHooks( 'APIQueryRevisionsTokens', array( &$this->tokenFunctions ) );
+		Hooks::run( 'APIQueryRevisionsTokens', array( &$this->tokenFunctions ) );
 		return $this->tokenFunctions;
 	}
 
@@ -176,9 +179,8 @@ class ApiQueryRevisions extends ApiQueryBase {
 
 		if ( isset( $prop['tags'] ) ) {
 			$this->fld_tags = true;
-			$this->addTables( 'tag_summary' );
-			$this->addJoinConds( array( 'tag_summary' => array( 'LEFT JOIN', array( 'rev_id=ts_rev_id' ) ) ) );
-			$this->addFields( 'ts_tags' );
+			$tsTags = ChangeTags::buildTsTagsGroupConcatField( 'rev_id' );
+			$this->addFields( $tsTags );
 		}
 
 		if ( !is_null( $params['tag'] ) ) {
@@ -278,10 +280,29 @@ class ApiQueryRevisions extends ApiQueryBase {
 			$this->addWhereFld( 'rev_page', reset( $ids ) );
 
 			if ( !is_null( $params['user'] ) ) {
-				$this->addWhereFld( 'rev_user_text', $params['user'] );
+				// SUS-3118: Resolve registered user names to user ID and query based on that
+				$isAnon = IP::isIPAddress( $params['user'] );
+				$userId = User::idFromName( $params['user'] );
+
+				if ( !$userId && !$isAnon ) {
+					$this->dieUsage( 'nonexistent user', 'baduser' );
+				} elseif ( $userId ) {
+					$this->addWhereFld( 'rev_user', $userId );
+				} elseif ( $isAnon ) {
+					$this->addWhereFld( 'rev_user_text', $params['user'] );
+				}
 			} elseif ( !is_null( $params['excludeuser'] ) ) {
-				$this->addWhere( 'rev_user_text != ' .
-					$db->addQuotes( $params['excludeuser'] ) );
+				// SUS-3118: Resolve registered user names to user ID and query based on that
+				$isAnon = IP::isIPAddress( $params['excludeuser'] );
+				$userId = User::idFromName( $params['excludeuser'] );
+
+				if ( !$userId && !$isAnon ) {
+					$this->dieUsage( 'nonexistent user', 'baduser' );
+				} elseif ( $userId ) {
+					$this->addWhere( 'rev_user != ' . $db->addQuotes( $userId ) );
+				} elseif ( $isAnon ) {
+					$this->addWhere( 'rev_user_text != ' . $db->addQuotes( $params['excludeuser'] ) );
+				}
 			}
 			if ( !is_null( $params['user'] ) || !is_null( $params['excludeuser'] ) ) {
 				// Paranoia: avoid brute force searches (bug 17342)
@@ -349,6 +370,22 @@ class ApiQueryRevisions extends ApiQueryBase {
 		$count = 0;
 		$res = $this->select( __METHOD__ );
 
+		// SUS-3118: Issue a single bulk query for user name info if needed
+		if ( $this->fld_user ) {
+			$userIds = [];
+			foreach ( $res as $row ) {
+				if ( $row->rev_user ) {
+					$userIds[] = $row->rev_user;
+				}
+			}
+			$res->rewind();
+
+			$this->userNames = User::whoAre( $userIds );
+
+			// SUS-3723 | do not cache "A FANDOM user" message for anons
+			unset( $this->userNames[0] );
+		}
+
 		foreach ( $res as $row ) {
 			if ( ++ $count > $limit ) {
 				// We've reached the one extra which shows that there are additional pages to be had. Stop here...
@@ -395,16 +432,18 @@ class ApiQueryRevisions extends ApiQueryBase {
 			if ( $revision->isDeleted( Revision::DELETED_USER ) ) {
 				$vals['userhidden'] = '';
 			} else {
-				if ( $this->fld_user ) {
-					$vals['user'] = $revision->getUserText();
-				}
-				$userid = $revision->getUser();
-				if ( !$userid ) {
+				$userId = $revision->getUser();
+				if ( !$userId ) {
 					$vals['anon'] = '';
 				}
 
 				if ( $this->fld_userid ) {
-					$vals['userid'] = $userid;
+					$vals['userid'] = $userId;
+				}
+
+				// SUS-3118: Use user name lookup to display user name of registered users
+				if ( $this->fld_user ) {
+					$vals['user'] = $this->userNames[$userId] ?? $revision->getUserText();
 				}
 			}
 		}

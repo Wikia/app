@@ -4,15 +4,15 @@ $messages = array();
 $messages['en'] = array(
 	'realmap-deprecated-info' => 'Real world maps have been discontinued by Wikia. For more information, see: $1',
 	'returnto' => 'Return to $1.',
-	'redirectedfrom' => '(Redirected from $1)',
+	'redirectedfrom' => 'Redirected from $1',
 	'redirectpagesub' => 'Redirect page',
 	'retrievedfrom' => 'Retrieved from "$1"',
 	'restorelink' => '{{PLURAL:$1|one deleted edit|$1 deleted edits}}',
 	'red-link-title' => '$1 (page does not exist)',
 	'readonly' => 'Database locked',
-	'readonlytext' => 'The database is currently locked to new entries and other modifications, probably for routine database maintenance, after which it will be back to normal.
+	'readonlytext' => 'The database is currently locked.
 
-The administrator who locked it offered this explanation: $1',
+$1',
 	'readonly_lag' => 'The database has been automatically locked while the slave database servers catch up to the master',
 	'remembermypassword' => 'Remember my login on this computer',
 	'resetpass' => 'Change password',
@@ -31,7 +31,6 @@ Now logging you in...',
 You may have already successfully changed your password or requested a new temporary password.',
 	'resetpass-temp-password' => 'Temporary password:',
 	'readonlywarning' => "'''Warning: The database has been locked for maintenance, so you will not be able to save your edits right now.'''
-You may wish to cut-n-paste the text into a text file and save it for later.
 
 The administrator who locked it offered this explanation: $1",
 	'recreate-moveddeleted-warn' => "'''Warning: You are recreating a page that was previously deleted.'''
@@ -182,6 +181,7 @@ Please check the logs.',
 	'right-editusercssjs' => "Edit other users' CSS and JavaScript files",
 	'right-editusercss' => "Edit other users' CSS files",
 	'right-edituserjs' => "Edit other users' JavaScript files",
+	'right-hideblockername' => 'Not have their user name show up in block notices',
 	'right-rollback' => 'Quickly rollback the edits of the last user who edited a particular page',
 	'right-markbotedits' => 'Mark rolled-back edits as bot edits',
 	'right-noratelimit' => 'Not be affected by rate limits',
@@ -211,25 +211,19 @@ Please check the logs.',
 	'recentchanges' => 'Recent changes',
 	'recentchanges-url' => 'Special:RecentChanges',
 	'recentchanges-legend' => 'Recent changes options',
-	'recentchangestext' => '<div style="border:solid 3px #e9e9e9; margin-bottom:0.3em;">
-<div style="padding-left:0.5em; padding-right:0.5em;">
-This special page lets you track the most recent changes to the wiki.
-
-See also: [[Special:Newpages|New pages]] – [[Special:Newimages|New files]] – [[Special:Log|Logs]] – [[Special:Activeusers|Active users]] – [[Special:Listusers/sysop|Admins]]
-</div>
-</div>',
+	'recentchangestext' => '<div id="wikia-mediawiki-recentchangestext" style="border:2px solid #e9e9e9; margin-bottom:0.3em; padding:0.2em 0.5em;"><span style="float:left;">[[Special:NewPages|New pages]] – [[Special:NewImages|New files]] – [[Special:Log|Logs]] – [[Special:Insights|Insights]]</span><span style="float:right;">[[Help:Recent changes]]</span><div style="clear:both;"></div></div>',
 	'recentchanges-feed-description' => 'Track the most recent changes to the wiki in this feed.',
 	'recentchanges-label-newpage' => 'This edit created a new page',
 	'recentchanges-label-minor' => 'This is a minor edit',
 	'recentchanges-label-bot' => 'This edit was performed by a bot',
 	'recentchanges-label-unpatrolled' => 'This edit has not yet been patrolled',
-	'rcnote' => "Below {{PLURAL:$1|is '''1''' change|are the last '''$1''' changes}} in the last {{PLURAL:$2|day|'''$2''' days}}, as of $5, $4.",
+	'rcnote' => '<div style="margin-top: -20px;" class="emptymwmsg mediawiki_rcnote"></div>',
 	'rcnotefrom' => "Below are the changes since '''$2''' (up to '''$1''' shown).",
 	'rclistfrom' => 'Show new changes starting from $1',
 	'rcshowhideminor' => '$1 minor edits',
 	'rcshowhidebots' => '$1 bots',
-	'rcshowhideliu' => '$1 logged-in users',
-	'rcshowhideanons' => '$1 anonymous users',
+	'rcshowhideliu' => '$1 users',
+	'rcshowhideanons' => '$1 anons',
 	'rcshowhidepatr' => '$1 patrolled edits',
 	'rcshowhidemine' => '$1 my edits',
 	'rclinks' => 'Show last $1 changes in last $2 days<br />$3',
@@ -263,7 +257,7 @@ Pages on [[Special:Watchlist|your watchlist]] are '''bold'''.",
 	'rollback_short' => 'Rollback',
 	'rollbacklink' => 'rollback',
 	'rollbackfailed' => 'Rollback failed',
-	'revertpage' => 'Reverted edits by [[Special:Contributions/$2|$2]] ([[User talk:$2|talk]]) to last revision by [[User:$1|$1]]',
+	'revertpage' => 'Reverted edits by [[Special:Contributions/$2|$2]] ([[User talk:$2|talk]]) to last version by $1',
 	'revertpage-nouser' => 'Reverted edits by (username removed) to last revision by [[User:$1|$1]]',
 	'rollback-success' => 'Reverted edits by $1;
 changed back to last revision by $2.',
@@ -297,34 +291,19 @@ changed back to last revision by $2.',
 	'revdelete-hid' => 'hid $1',
 	'revdelete-unhid' => 'unhid $1',
 	'revdelete-log-message' => '$1 for $2 {{PLURAL:$2|revision|revisions}}',
-	'reconfirmemail_subject' => 'Welcome to Wikia!',
+	'reconfirmemail_subject' => 'Please reconfirm your Wikia account',
 	'reconfirmemail_body' => 'Hi $2,
 
-Thank you for updating the email address associated with your Wikia account.
+Thanks for updating the email address on your Wikia account. Please take a minute to confirm this is the correct email address by clicking here: $3
 
-Before our system can send you any mail you have opted to receive, you
-must confirm your email address.
+Thanks!
 
-Click on the link below or paste it into your browser:
+- Wikia Community Support
 
-$3
-
-Note: This confirmation link will expire in 7 days.
-
-
-With thousands of communities on Wikia, there are many ways to have fun
-here. Spend some time getting to know Wikia by visiting the home page
-(www.wikia.com), taking a tutorial at
-http://www.wikia.com/wiki/Help:Tutorial_1 , reading interesting and cool
-pages, writing content on your favorite subjects, or meeting other
-members of the community.
-
-We look forward to seeing you on Wikia!
-
-The Wikia Community Team
-www.wikia.com
-',
-	'rcshowhideenhanced' => '$1 enhanced recent changes',
+___________________________________________
+* Find help and advice on Community Central: http://community.wikia.com
+* Want to receive fewer messages from us? You can unsubscribe or change your email preferences here: http://community.wikia.com/Special:Preferences',
+	'rcshowhideenhanced' => '$1 grouped recent changes',
 	'refreshpage' => 'Reload page to activate this widget',
 	'requestcreatewiki' => 'Submit Request',
 	'right_now' => 'Right Now<br />people are...',
@@ -356,7 +335,7 @@ www.wikia.com
 	'related_wiki' => 'Add bulleted links here to display wiki related to this one in the related wiki [[Special:Widgets|widget]].
 
 * [{{FULLURL:MediaWiki:Related wiki}} No related wiki have been selected yet.]',
-	'registerintro-title' => 'When you create an account on Wikia, you become a part of the community!',
+	'registerintro-title' => 'When you create an account on FANDOM, you become a part of the community!',
 	'registerintro-text' => 'You get credit for all your contributions, and you can also create your own user profile, watchlist your favorite pages, and get access to all kinds of neat tools.',
 	'rcshowhidelogs' => '$1 logs',
 );
@@ -548,6 +527,7 @@ Basic right to create pages. The right to edit discussion/talk pages is {{msg|ri
 Basic right to create discussion/talk pages. The right to edit other pages is {{msg|right-createpage|pl=yes}}.',
 	'right-createaccount' => '{{doc-right}}
 The right to [[Special:CreateAccount|create a user account]].',
+	'right-hideblockername' => '{{doc-right}}',
 	'right-minoredit' => '{{doc-right}}
 The right to use the "This is a minor edit" checkbox. See {{msg|minoredit|pl=yes}} for the message used for that checkbox.',
 	'right-move' => '{{doc-right}}
@@ -766,6 +746,7 @@ In other cases the message {{msg-mw|revertpage}} is used.',
 	'recentchangesall' => '{{Identical|All}}',
 	'recentchanges-on-wikia-title' => "A legend of a fieldset that contains a message to users about recent changes across the wikia's platform.",
 	'recentchanges-on-wikia-content' => "A content of a message to users about recent changes across the wikia's platform.",
+	'registerintro-title' => 'Missing documentation',
 );
 
 $messages['ab'] = array(
@@ -779,7 +760,7 @@ $messages['ab'] = array(
 
 $messages['ace'] = array(
 	'returnto' => 'Gisa u $1.',
-	'redirectedfrom' => '(Geupeupinah nibak $1)',
+	'redirectedfrom' => 'Geupeupinah nibak $1',
 	'redirectpagesub' => 'Ôn peupinah',
 	'retrievedfrom' => 'Meurumpok nibak "$1"',
 	'red-link-title' => '$1 (ôn goh na)',
@@ -830,7 +811,7 @@ Nyoë pat nakeuh log seunampôh nibak ôn nyoë:",
 
 $messages['af'] = array(
 	'returnto' => 'Keer terug na $1.',
-	'redirectedfrom' => '(Aangestuur vanaf $1)',
+	'redirectedfrom' => 'Aangestuur vanaf $1',
 	'redirectpagesub' => 'Aanstuurblad',
 	'retrievedfrom' => 'Ontsluit van "$1"',
 	'restorelink' => '{{PLURAL:$1|die geskrapte wysiging|$1 geskrapte wysigings}}',
@@ -1105,7 +1086,7 @@ $messages['ak'] = array(
 
 $messages['aln'] = array(
 	'returnto' => 'Kthehu te $1.',
-	'redirectedfrom' => '(Përcjellë nga $1)',
+	'redirectedfrom' => 'Përcjellë nga $1',
 	'redirectpagesub' => 'Faqe përcjellëse',
 	'retrievedfrom' => 'Marrë nga "$1"',
 	'restorelink' => '{{PLURAL:$1|nji redaktim i fshimë|$1 redaktime të fshime}}',
@@ -1256,7 +1237,7 @@ Faqet në [[Special:Watchlist|listën tuej të mbikëqyrjes]] janë '''të theks
 
 $messages['als'] = array(
 	'returnto' => 'Kthehu te $1.',
-	'redirectedfrom' => '(Përcjellë nga $1)',
+	'redirectedfrom' => 'Përcjellë nga $1',
 	'redirectpagesub' => 'Faqe përcjellëse',
 	'retrievedfrom' => 'Marrë nga "$1"',
 	'restorelink' => '{{PLURAL:$1|nji redaktim i fshimë|$1 redaktime të fshime}}',
@@ -1407,7 +1388,7 @@ Faqet në [[Special:Watchlist|listën tuej të mbikëqyrjes]] janë '''të theks
 
 $messages['am'] = array(
 	'returnto' => '(ወደ $1 ለመመለስ)',
-	'redirectedfrom' => '(ከ$1 የተዛወረ)',
+	'redirectedfrom' => 'ከ$1 የተዛወረ',
 	'redirectpagesub' => 'መምሪያ መንገድ',
 	'retrievedfrom' => 'ከ «$1» የተወሰደ',
 	'restorelink' => '{{PLURAL:$1|የጠፋ ዕትም|$1 የጠፉት ዕትሞች}}',
@@ -1547,7 +1528,7 @@ $messages['am'] = array(
 
 $messages['an'] = array(
 	'returnto' => 'Tornar ta $1.',
-	'redirectedfrom' => '(Reendrezato dende $1)',
+	'redirectedfrom' => 'Reendrezato dende $1',
 	'redirectpagesub' => 'Pachina reendrezata',
 	'retrievedfrom' => 'Obtenito de "$1"',
 	'restorelink' => '{{PLURAL:$1|una edición borrata|$1 edicions borratas}}',
@@ -1783,7 +1764,7 @@ No tien acceso a ell.',
 	'rollback_short' => 'Revertir',
 	'rollbacklink' => 'revertir',
 	'rollbackfailed' => "No s'ha puesto revertir",
-	'revertpage' => "S'han revertito as edicions de [[Special:Contributions/$2|$2]] ([[User talk:$2|Descusión]]); tornando t'a zaguera versión editada por [[User:$1|$1]]",
+	'revertpage' => "S'han revertito as edicions de [[Special:Contributions/$2|$2]] ([[User talk:$2|Descusión]]); tornando t'a zaguera versión editada por $1",
 	'revertpage-nouser' => "S'han revertito as edicions feitas por (nombre d'usuario eliminato) a la zaguera versión feita por [[User:$1|$1]]",
 	'rollback-success' => "Revertidas as edicions de $1; s'ha retornato t'a zaguer versión de $2.",
 	'restriction-type' => 'Premiso:',
@@ -1813,7 +1794,7 @@ No tien acceso a ell.',
 
 $messages['ang'] = array(
 	'returnto' => 'Ȝā eft tō $1',
-	'redirectedfrom' => '(Edlǣded fram $1)',
+	'redirectedfrom' => 'Edlǣded fram $1',
 	'redirectpagesub' => 'Edlǣdsīde',
 	'retrievedfrom' => 'Fram "$1" beȝieten',
 	'restorelink' => '{{PLURAL:$1|ān āfeorsed ādiht|$1 āfeorsed ādihtas}}',
@@ -1876,7 +1857,7 @@ $messages['ang'] = array(
 	'rollback_short' => 'Edhƿeorfan',
 	'rollbacklink' => 'Edhƿeorfan',
 	'rollbackfailed' => 'Edhƿeorf misfangen',
-	'revertpage' => 'Ācierde ādihtunga fram [[Special:Contributions/$2|$2]] ([[User talk:$2|Gesprec]]); wendede on bæc tō ǣrran fadunge fram [[User:$1|$1]]',
+	'revertpage' => 'Ācierde ādihtunga fram [[Special:Contributions/$2|$2]] ([[User talk:$2|Gesprec]]); wendede on bæc tō ǣrran fadunge fram $1',
 	'restriction-type' => 'Þafung:',
 	'restriction-level' => 'Ȝehæftes emnet:',
 	'restriction-edit' => 'Ādihtan',
@@ -1891,7 +1872,7 @@ $messages['ang'] = array(
 
 $messages['anp'] = array(
 	'returnto' => 'लौटॊ $1.',
-	'redirectedfrom' => '($1 सॆं भेजनॊ गेलॊ)',
+	'redirectedfrom' => '$1 सॆं भेजनॊ गेलॊ',
 	'redirectpagesub' => 'पुन: निर्देशित पन्ना',
 	'retrievedfrom' => '"$1" सॆं लेलॊ गेलॊ',
 	'red-link-title' => '$1 (पृष्ठ मौजूद नै छै)',
@@ -1926,7 +1907,7 @@ $messages['anp'] = array(
 	'rollback_short' => 'पूर्ववत करॊ',
 	'rollbacklink' => 'वापस लॆ',
 	'rollbackfailed' => 'पूर्ववत स्थिति निष्फल',
-	'revertpage' => '[[Special:Contributions/$2|$2]] ([[User talk:$2|Talk]]) केरॊ संपादनॊ कॆ हटायकॆ [[User:$1|$1]] के आखिरी अवतरण कॆ पूर्ववत करलॊ गेलै.',
+	'revertpage' => '[[Special:Contributions/$2|$2]] ([[User talk:$2|Talk]]) केरॊ संपादनॊ कॆ हटायकॆ $1 के आखिरी अवतरण कॆ पूर्ववत करलॊ गेलै.',
 	'revertpage-nouser' => '(प्रयोक्ता नाम हटैलॊ गेलॊ छै) द्वारा करलॊ संपादन कॆ वापस पुरानॊ स्थिति मॆं लाना कॆ ऐकरॊ पहले केरॊ [[User:$1|$1]] द्वारा बनैलॊ संस्करण कॆ फिर सॆं ताज़ा संस्करण बनाबॊ.',
 	'rollback-success' => '$1 केरॊ संपादन हटाबॊ;
 $2 द्वारा संपादित आखिरी अवतरण कॆ पुनर्स्थापित करलॊ गेलै.',
@@ -1944,7 +1925,7 @@ $2 द्वारा संपादित आखिरी अवतरण क�
 
 $messages['ar'] = array(
 	'returnto' => 'ارجع إلى $1.',
-	'redirectedfrom' => '(تم التحويل من $1)',
+	'redirectedfrom' => 'تم التحويل من $1',
 	'redirectpagesub' => 'صفحة تحويل',
 	'retrievedfrom' => 'تم الاسترجاع من "$1"',
 	'restorelink' => '{{PLURAL:$1|$1 تعديل محذوف|تعديلا واحدا محذوفا|تعديلين محذوفين|$1 تعديلات محذوفة|$1 تعديلا محذوفا|$1 تعديلا محذوفا}}',
@@ -2183,7 +2164,7 @@ $1",
 	'rollback_short' => 'استرجع',
 	'rollbacklink' => 'استرجع',
 	'rollbackfailed' => 'لم ينجح الاسترجاع',
-	'revertpage' => 'استرجع التعديلات بواسطة [[Special:Contributions/$2|$2]] ([[User talk:$2|نقاش]]) حتى آخر نسخة بواسطة [[User:$1|$1]]',
+	'revertpage' => 'استرجع التعديلات بواسطة [[Special:Contributions/$2|$2]] ([[User talk:$2|نقاش]]) حتى آخر نسخة بواسطة $1',
 	'revertpage-nouser' => 'استرجع التعديلات بواسطة (أزيل اسم المستخدم) حتى آخر نسخة بواسطة [[User:$1|$1]]',
 	'rollback-success' => 'استرجع تعديلات $1؛
 استرجع حتى آخر نسخة بواسطة $2.',
@@ -2214,7 +2195,7 @@ $1",
 
 $messages['arc'] = array(
 	'returnto' => 'ܕܥܘܪ ܠ$1.',
-	'redirectedfrom' => '(ܨܝܒ ܡܢ $1)',
+	'redirectedfrom' => 'ܨܝܒ ܡܢ $1',
 	'redirectpagesub' => 'ܦܐܬܐ ܕܨܘܝܒܐ',
 	'restorelink' => '{{PLURAL:$1|ܚܕ ܫܘܚܠܦܐ ܫܝܦܐ|$1 ܫܘܚܠܦ̈ܐ ܫܝܦ̈ܐ}}',
 	'red-link-title' => '$1 (ܦܐܬܐ ܗܕܐ ܠܝܬ)',
@@ -2310,7 +2291,7 @@ $messages['arc'] = array(
 
 $messages['arn'] = array(
 	'returnto' => 'Amutun $1 püle.',
-	'redirectedfrom' => '(Wüñogünegey $1 mew)',
+	'redirectedfrom' => 'Wüñogünegey $1 mew',
 	'redirectpagesub' => 'Wüñongünenielu wülngiñ',
 	'retrievedfrom' => 'Nentungey "$1" mew',
 	'restorelink' => '{{PLURAL:$1|kiñe wirin ñamümgün|$1 wirin ñamümün}}',
@@ -2377,7 +2358,7 @@ Nagpüle wirintukuy chumngely tüfachi wülngiñ liftungey kam nengümngey.",
 
 $messages['ary'] = array(
 	'returnto' => 'Rjeĝ le $1',
-	'redirectedfrom' => '(Ṫḫowwlaṫ men $1)',
+	'redirectedfrom' => 'Ṫḫowwlaṫ men $1',
 	'redirectpagesub' => 'Ṣefḫa dyal ṫ-ṫeḫwil',
 	'retrievedfrom' => 'Mrejjĝa men "$1"',
 	'restorelink' => '{{PLURAL:$1|wahd taadil tmsh|$1 taadilat tmshat}}',
@@ -2578,7 +2559,7 @@ $1",
 
 $messages['arz'] = array(
 	'returnto' => 'ارجع ل $1.',
-	'redirectedfrom' => '(تحويل من $1)',
+	'redirectedfrom' => 'تحويل من $1',
 	'redirectpagesub' => 'صفحة تحويل',
 	'retrievedfrom' => 'اتجابت من "$1"',
 	'restorelink' => '{{PLURAL:$1|تعديل واحد ملغي|تعديلين ملغيين|$1 تعديلات ملغية|$1 تعديل ملغي|$1 تعديل ملغي}}',
@@ -2807,7 +2788,7 @@ $1",
 	'rollback_short' => 'إرجع لـ ورا',
 	'rollbacklink' => 'ترجيع',
 	'rollbackfailed' => 'الترجيع ما نفعش',
-	'revertpage' => 'استرجع التعديلات بتاعة [[Special:Contributions/$2|$2]] ([[User talk:$2|مناقشة]]) لآخر نسخة بتاعة [[User:$1|$1]]',
+	'revertpage' => 'استرجع التعديلات بتاعة [[Special:Contributions/$2|$2]] ([[User talk:$2|مناقشة]]) لآخر نسخة بتاعة $1',
 	'revertpage-nouser' => 'استرجع التعديلات بتاعه (اسم اليوزر اتمسح) لغايه آخر نسخه بتاعه [[User:$1|$1]]',
 	'rollback-success' => 'استرجع تعديلات $1؛
 استرجع لآخر نسخة بواسطة $2.',
@@ -2832,7 +2813,7 @@ $1",
 
 $messages['as'] = array(
 	'returnto' => '$1 লৈ ঘূৰি যাওক ।',
-	'redirectedfrom' => '($1 ৰ পৰা পুনঃনিৰ্দেশিত)',
+	'redirectedfrom' => '$1 ৰ পৰা পুনঃনিৰ্দেশিত',
 	'redirectpagesub' => 'পুনঃনিৰ্দেশিত পৃষ্ঠা',
 	'retrievedfrom' => '"$1" -ৰ পৰা সংকলিত',
 	'restorelink' => '{{PLURAL:$1| এটা বিলুপ্ত সম্পাদনা|$1 টা বিলুপ্ত সম্পাদনা}}',
@@ -3071,7 +3052,7 @@ $1",
 	'rollback_short' => 'পূৰ্ববৎ কৰক',
 	'rollbacklink' => 'পূৰ্ববৎ কৰক',
 	'rollbackfailed' => 'পূৰ্ববৎ ব্যৰ্থ',
-	'revertpage' => '[[Special:Contributions/$2|$2]] ([[User talk:$2|কথা-বতৰা]])ৰ সম্পাদনাসমূহ [[User:$1|$1]]য়ে কৰা শেষ সংশোধনলৈ ঘূৰাই নিয়া হৈছে ।',
+	'revertpage' => '[[Special:Contributions/$2|$2]] ([[User talk:$2|কথা-বতৰা]])ৰ সম্পাদনাসমূহ $1য়ে কৰা শেষ সংশোধনলৈ ঘূৰাই নিয়া হৈছে ।',
 	'revertpage-nouser' => '(সদস্যনাম বিলোপিত) য়ে কৰা সম্পাদনা [[User:$1|$1]] য়ে কৰা শেষ সংশোধনীলৈ ঘূৰাই নিয়া হৈছে ।',
 	'rollback-success' => '$1 ৰ সম্পাদনাসমূহ পূৰ্বৰ অৱস্থালৈ ঘূৰাই নিয়া হৈছে;
 পৃষ্ঠাখন $2 য়ে কৰা শেষ সংশোধনীলৈ ঘূৰাই নিয়া হৈছে ।',
@@ -3102,7 +3083,7 @@ $1",
 
 $messages['ast'] = array(
 	'returnto' => 'Tornar a $1.',
-	'redirectedfrom' => '(Redirixío dende $1)',
+	'redirectedfrom' => 'Redirixío dende $1',
 	'redirectpagesub' => 'Páxina de redireición',
 	'retrievedfrom' => 'Sacáu de "$1"',
 	'restorelink' => '{{PLURAL:$1|una edición desaniciada|$1 ediciones desaniciaes}}',
@@ -3342,7 +3323,7 @@ Comprueba los rexistros, por favor.",
 	'rollback_short' => 'Revertir',
 	'rollbacklink' => 'revertir',
 	'rollbackfailed' => 'Falló la reversión',
-	'revertpage' => 'Revertíes les ediciones de [[Special:Contributions/$2|$2]] ([[User talk:$2|alderique]]) hasta la cabera versión de [[User:$1|$1]]',
+	'revertpage' => 'Revertíes les ediciones de [[Special:Contributions/$2|$2]] ([[User talk:$2|alderique]]) hasta la cabera versión de $1',
 	'revertpage-nouser' => "Revertíes les ediciones de (nome d'usuariu desaniciáu) a la cabera revisión de [[User:$1|$1]]",
 	'rollback-success' => 'Revertíes les ediciones de $1; camudáu a la última versión de $2.',
 	'restriction-type' => 'Permisu:',
@@ -3385,7 +3366,7 @@ $messages['av'] = array(
 
 $messages['avk'] = array(
 	'returnto' => 'Dimgrablera va $1 bu.',
-	'redirectedfrom' => '(Graskan mal $1)',
+	'redirectedfrom' => 'Graskan mal $1',
 	'redirectpagesub' => 'Bugraskara',
 	'retrievedfrom' => 'Dimnarin mal « $1 »',
 	'restorelink' => '{{PLURAL:$1|1|$1}} sulayan betaks',
@@ -3540,7 +3521,7 @@ Bu koe [[Special:Watchlist|rinafi suzdasiki]] tid '''vastaakorafu'''.",
 	'rollback_short' => 'Nabildara',
 	'rollbacklink' => 'nabildara',
 	'rollbackfailed' => 'Rodjeyesa nabildara',
-	'revertpage' => 'Dimplekuyun betakseem ke [[Special:Contributions/$2|$2]] ([[User talk:$2|Prilara]]); dim ironokaf siatos ke [[User:$1|$1]]',
+	'revertpage' => 'Dimplekuyun betakseem ke [[Special:Contributions/$2|$2]] ([[User talk:$2|Prilara]]); dim ironokaf siatos ke $1',
 	'rollback-success' => 'Dimplekun betaks yo gan $1; dimpira ko ironokaf siatos ke $2.',
 	'restriction-type' => 'Rictara :',
 	'restriction-level' => 'Irutareka :',
@@ -3565,7 +3546,7 @@ $messages['ay'] = array(
 
 $messages['az'] = array(
 	'returnto' => '$1 səhifəsinə qayıt.',
-	'redirectedfrom' => '($1 səhifəsindən yönləndirilmişdir)',
+	'redirectedfrom' => '$1 səhifəsindən yönləndirilmişdir',
 	'redirectpagesub' => 'Yönləndirmə səhifəsi',
 	'retrievedfrom' => 'Mənbə — "$1"',
 	'restorelink' => '{{PLURAL:$1|bir silinmiş redaktəyə|$1 silinmiş redaktəyə}}',
@@ -3753,7 +3734,7 @@ $1",
 	'rollback_short' => 'əvvəlki halına qaytar',
 	'rollbacklink' => 'əvvəlki halına qaytar',
 	'rollbackfailed' => 'Geri qaytarma uğursuzdur',
-	'revertpage' => '[[Special:Contributions/$2|$2]] ([[User talk:$2|Müzakirə]]) tərəfindən edilmiş dəyişikliklər [[User:$1|$1]] tərəfindən edilmiş dəyişikliklərə qaytarıldı.',
+	'revertpage' => '[[Special:Contributions/$2|$2]] ([[User talk:$2|Müzakirə]]) tərəfindən edilmiş dəyişikliklər $1 tərəfindən edilmiş dəyişikliklərə qaytarıldı.',
 	'revertpage-nouser' => '(istifadəçi adı çıxarılmış) tərəfindən edilən dəyişikliklər [[User:$1|$1]] tərəfindən edilən son dəyişikliyə geri alındı',
 	'rollback-success' => '$1 tərəfindən edilmiş redaktələr geri qaytarıldı; $2 tərəfindən yaradılmış son versiya bərpa olundu.',
 	'restriction-type' => 'Hüquqlar:',
@@ -3783,7 +3764,7 @@ $1",
 
 $messages['ba'] = array(
 	'returnto' => '$1 битенә ҡайтыу.',
-	'redirectedfrom' => '($1 битенән йүнәлтелде)',
+	'redirectedfrom' => '$1 битенән йүнәлтелде',
 	'redirectpagesub' => 'Йүнәлтеү бите',
 	'retrievedfrom' => 'Сығанағы — «$1»',
 	'restorelink' => '{{PLURAL:$1|1 юйылған үҙгәртеүҙе|$1 юйылған үҙгәртеүҙе}}',
@@ -4021,7 +4002,7 @@ $1",
 	'rollback_short' => 'Кире ҡайтарырға',
 	'rollbacklink' => 'кире алырға',
 	'rollbackfailed' => 'Кире ҡайтарырғанда барлыҡҡа килгән хата',
-	'revertpage' => '[[Special:Contributions/$2|$2]] ([[User talk:$2|фекер алышыу]]) уҙгәртеүҙәре [[User:$1|$1]] өлгөһөнә ҡайтарылды',
+	'revertpage' => '[[Special:Contributions/$2|$2]] ([[User talk:$2|фекер алышыу]]) уҙгәртеүҙәре $1 өлгөһөнә ҡайтарылды',
 	'revertpage-nouser' => '(Ҡатнашыусының исеме юйылған) уҙгәртеүҙәре [[User:$1|$1]] өлгөһөнә ҡайтарылды',
 	'rollback-success' => '$1 уҙгәртеүҙәре кире алдынды;
 $2 өлгөһөнә ҡайтыу.',
@@ -4052,7 +4033,7 @@ $2 өлгөһөнә ҡайтыу.',
 
 $messages['bar'] = array(
 	'returnto' => 'Zruck zua da Seiten $1.',
-	'redirectedfrom' => '(Weidergloatt voh $1)',
+	'redirectedfrom' => 'Weidergloatt voh $1',
 	'redirectpagesub' => 'Weiderloatung',
 	'retrievedfrom' => 'Voh „$1“',
 	'restorelink' => '$1 gléschde {{PLURAL:$1|Versión|Versiónen}}',
@@ -4139,7 +4120,7 @@ Details stehen im [{{fullurl:{{#Special:Log}}/suppress|page={{FULLPAGENAMEE}}}} 
 
 $messages['bat-smg'] = array(
 	'returnto' => 'Zruck zua da Seiten $1.',
-	'redirectedfrom' => '(Weidergloatt voh $1)',
+	'redirectedfrom' => 'Weidergloatt voh $1',
 	'redirectpagesub' => 'Weiderloatung',
 	'retrievedfrom' => 'Voh „$1“',
 	'restorelink' => '$1 gléschde {{PLURAL:$1|Versión|Versiónen}}',
@@ -4226,7 +4207,7 @@ Details stehen im [{{fullurl:{{#Special:Log}}/suppress|page={{FULLPAGENAMEE}}}} 
 
 $messages['bcc'] = array(
 	'returnto' => 'تررگ به $1.',
-	'redirectedfrom' => '(غیر مستقیم بوتگ چه $1)',
+	'redirectedfrom' => 'غیر مستقیم بوتگ چه $1',
 	'redirectpagesub' => 'صفحه غیر مستقیم',
 	'retrievedfrom' => 'درگیجگ بیت چه  "$1"',
 	'restorelink' => '{{PLURAL:$1|یک حذف اصلاح|$1 حذف اصلاح}}',
@@ -4415,7 +4396,7 @@ $messages['bcc'] = array(
 	'rollback_short' => 'پشتررگ',
 	'rollbacklink' => 'عقب ترگ',
 	'rollbackfailed' => 'پشتررگ پروشت',
-	'revertpage' => 'ترینت اصلاحات توسط  [[Special:Contributions/$2|$2]] ([[User talk:$2|گپ کن]])په آهری بازبینی گون [[User:$1|$1]]',
+	'revertpage' => 'ترینت اصلاحات توسط  [[Special:Contributions/$2|$2]] ([[User talk:$2|گپ کن]])په آهری بازبینی گون $1',
 	'rollback-success' => 'اصلاحات ترینگ بوتت گون $1;
 په آهری نسخه ترینگ بوتنت گون $2.',
 	'restriction-type' => 'اجازت',
@@ -4439,7 +4420,7 @@ $messages['bcc'] = array(
 
 $messages['bcl'] = array(
 	'returnto' => 'Magbwelta sa $1.',
-	'redirectedfrom' => '(Piglikay halì sa $1)',
+	'redirectedfrom' => 'Piglikay halì sa $1',
 	'redirectpagesub' => 'Ilikáy an pahina',
 	'retrievedfrom' => 'Pigkua sa "$1"',
 	'restorelink' => '{{PLURAL:$1|sarong pinarang paghirá|$1 na pinarang paghirá}}',
@@ -4540,7 +4521,7 @@ An ibang mga administrador sa ining wiki pwede pang maghiling kan mga nakatagong
 	'rollback_short' => 'pabalík',
 	'rollbacklink' => 'pabalikón',
 	'rollbackfailed' => 'Prakaso an pagbalík',
-	'revertpage' => 'Binawî na mga paghirá kan [[Special:Contributions/$2|$2]] ([[User talk:$2|Magtaram]]); pigbalik sa dating bersyón ni [[User:$1|$1]]',
+	'revertpage' => 'Binawî na mga paghirá kan [[Special:Contributions/$2|$2]] ([[User talk:$2|Magtaram]]); pigbalik sa dating bersyón ni $1',
 	'rollback-success' => 'Binawî na mga paghirá ni $1; pigbalik sa dating bersyón ni $2.',
 	'restriction-type' => 'Permiso:',
 	'restriction-level' => 'Tanggá nin restriksyon:',
@@ -4560,7 +4541,7 @@ An ibang mga administrador sa ining wiki pwede pang maghiling kan mga nakatagong
 
 $messages['be'] = array(
 	'returnto' => 'Вярнуцца да $1.',
-	'redirectedfrom' => '(Пасля перасылкі з $1)',
+	'redirectedfrom' => 'Пасля перасылкі з $1',
 	'redirectpagesub' => 'Старонка-перасылка',
 	'retrievedfrom' => 'Узята з "$1"',
 	'restorelink' => '{{PLURAL:$1|адна сцёртая праўка|$1 сцёртых правак}}',
@@ -4796,7 +4777,7 @@ $1",
 	'rollback_short' => 'Адкат',
 	'rollbacklink' => 'адкат',
 	'rollbackfailed' => 'Не ўдалося адкаціць',
-	'revertpage' => 'Праўкі аўтарства [[Special:Contributions/$2|$2]] ([[User talk:$2|размова]]) адкочаныя; вернута апошняя версія аўтарства [[User:$1|$1]]',
+	'revertpage' => 'Праўкі аўтарства [[Special:Contributions/$2|$2]] ([[User talk:$2|размова]]) адкочаныя; вернута апошняя версія аўтарства $1',
 	'revertpage-nouser' => 'Праўкі (імя ўдзельніка выдалена) адкочаны да версіі [[User:$1|$1]]',
 	'rollback-success' => 'Адкочаны праўкі $1; вернута апошняя версія $2.',
 	'restriction-type' => 'Дазвол:',
@@ -4826,7 +4807,7 @@ $1",
 
 $messages['be-tarask'] = array(
 	'returnto' => 'Вярнуцца да старонкі $1.',
-	'redirectedfrom' => '(Перанакіравана з $1)',
+	'redirectedfrom' => 'Перанакіравана з $1',
 	'redirectpagesub' => 'Старонка-перанакіраваньне',
 	'retrievedfrom' => 'Атрымана з «$1»',
 	'restorelink' => '$1 {{PLURAL:$1|выдаленую зьмену|выдаленыя зьмены|выдаленых зьменаў}}',
@@ -5063,7 +5044,7 @@ $1",
 	'rollback_short' => 'Адкат',
 	'rollbacklink' => 'адкат',
 	'rollbackfailed' => 'Памылка адкату',
-	'revertpage' => 'Рэдагаваньні [[Special:Contributions/$2|$2]] ([[User talk:$2|гутаркі]]) скасаваныя да папярэдняй вэрсіі [[User:$1|$1]]',
+	'revertpage' => 'Рэдагаваньні [[Special:Contributions/$2|$2]] ([[User talk:$2|гутаркі]]) скасаваныя да папярэдняй вэрсіі $1',
 	'revertpage-nouser' => 'Рэдагаваньні (імя ўдзельніка выдаленае) скасаваныя да папярэдняй вэрсіі [[User:$1|$1]]',
 	'rollback-success' => 'Адмененыя рэдагаваньні $1;
 вернутая папярэдняя вэрсія $2.',
@@ -5094,7 +5075,7 @@ $1",
 
 $messages['be-x-old'] = array(
 	'returnto' => 'Вярнуцца да старонкі $1.',
-	'redirectedfrom' => '(Перанакіравана з $1)',
+	'redirectedfrom' => 'Перанакіравана з $1',
 	'redirectpagesub' => 'Старонка-перанакіраваньне',
 	'retrievedfrom' => 'Атрымана з «$1»',
 	'restorelink' => '$1 {{PLURAL:$1|выдаленую зьмену|выдаленыя зьмены|выдаленых зьменаў}}',
@@ -5331,7 +5312,7 @@ $1",
 	'rollback_short' => 'Адкат',
 	'rollbacklink' => 'адкат',
 	'rollbackfailed' => 'Памылка адкату',
-	'revertpage' => 'Рэдагаваньні [[Special:Contributions/$2|$2]] ([[User talk:$2|гутаркі]]) скасаваныя да папярэдняй вэрсіі [[User:$1|$1]]',
+	'revertpage' => 'Рэдагаваньні [[Special:Contributions/$2|$2]] ([[User talk:$2|гутаркі]]) скасаваныя да папярэдняй вэрсіі $1',
 	'revertpage-nouser' => 'Рэдагаваньні (імя ўдзельніка выдаленае) скасаваныя да папярэдняй вэрсіі [[User:$1|$1]]',
 	'rollback-success' => 'Адмененыя рэдагаваньні $1;
 вернутая папярэдняя вэрсія $2.',
@@ -5362,7 +5343,7 @@ $1",
 
 $messages['bg'] = array(
 	'returnto' => 'Обратно към $1.',
-	'redirectedfrom' => '(пренасочване от $1)',
+	'redirectedfrom' => 'пренасочване от $1',
 	'redirectpagesub' => 'Пренасочваща страница',
 	'retrievedfrom' => 'Взето от „$1“.',
 	'restorelink' => '{{PLURAL:$1|една изтрита редакция|$1 изтрити редакции}}',
@@ -5605,7 +5586,7 @@ $1",
 	'rollback_short' => 'Отмяна',
 	'rollbacklink' => 'отмяна',
 	'rollbackfailed' => 'Отмяната не сполучи',
-	'revertpage' => 'Премахване на [[Special:Contributions/$2|редакции на $2]] ([[User talk:$2|беседа]]); възвръщане към последната версия на [[User:$1|$1]]',
+	'revertpage' => 'Премахване на [[Special:Contributions/$2|редакции на $2]] ([[User talk:$2|беседа]]); възвръщане към последната версия на $1',
 	'revertpage-nouser' => 'Премахнати редакции на (отстранено потребителско име) и връщане към последната версия на [[User:$1|$1]]',
 	'rollback-success' => 'Отменени редакции на $1; възвръщане към последната версия на $2.',
 	'restriction-type' => 'Състояние на защитата:',
@@ -5629,7 +5610,7 @@ $1",
 
 $messages['bh'] = array(
 	'returnto' => 'Обратно към $1.',
-	'redirectedfrom' => '(пренасочване от $1)',
+	'redirectedfrom' => 'пренасочване от $1',
 	'redirectpagesub' => 'Пренасочваща страница',
 	'retrievedfrom' => 'Взето от „$1“.',
 	'restorelink' => '{{PLURAL:$1|една изтрита редакция|$1 изтрити редакции}}',
@@ -5872,7 +5853,7 @@ $1",
 	'rollback_short' => 'Отмяна',
 	'rollbacklink' => 'отмяна',
 	'rollbackfailed' => 'Отмяната не сполучи',
-	'revertpage' => 'Премахване на [[Special:Contributions/$2|редакции на $2]] ([[User talk:$2|беседа]]); възвръщане към последната версия на [[User:$1|$1]]',
+	'revertpage' => 'Премахване на [[Special:Contributions/$2|редакции на $2]] ([[User talk:$2|беседа]]); възвръщане към последната версия на $1',
 	'revertpage-nouser' => 'Премахнати редакции на (отстранено потребителско име) и връщане към последната версия на [[User:$1|$1]]',
 	'rollback-success' => 'Отменени редакции на $1; възвръщане към последната версия на $2.',
 	'restriction-type' => 'Състояние на защитата:',
@@ -5896,7 +5877,7 @@ $1",
 
 $messages['bho'] = array(
 	'returnto' => 'जाईं $1 पर।',
-	'redirectedfrom' => '($1 द्वारा पुन: निर्देशित)',
+	'redirectedfrom' => '$1 द्वारा पुन: निर्देशित',
 	'redirectpagesub' => 'पुन: निर्देशित पन्ना',
 	'retrievedfrom' => '"$1" से लियल गईल',
 	'red-link-title' => '$1 (पन्ना मौजूद नईखे)।',
@@ -5933,7 +5914,7 @@ $messages['bi'] = array(
 
 $messages['bjn'] = array(
 	'returnto' => 'Bulik ka $1.',
-	'redirectedfrom' => '(Diugahakan matan $1)',
+	'redirectedfrom' => 'Diugahakan matan $1',
 	'redirectpagesub' => 'Tungkaran paugahan',
 	'retrievedfrom' => 'Dijumput matan "$1"',
 	'restorelink' => '$1 {{PLURAL:$1|babakan|babakan}} nang sudah dihapus',
@@ -6172,7 +6153,7 @@ Tutungkaran dalam [[Special:Watchlist|daptar itihan Pian]] ditandai '''kandal'''
 	'rollback_short' => 'Gulung-bulik',
 	'rollbacklink' => 'bulikakan',
 	'rollbackfailed' => 'Guling-bulik luput',
-	'revertpage' => '←Babakan [[Special:Contributions/$2|$2]] ([[User talk:$2|pandir]]) dibulikakan ka ralatan tauncit ulih [[User:$1|$1]]',
+	'revertpage' => '←Babakan [[Special:Contributions/$2|$2]] ([[User talk:$2|pandir]]) dibulikakan ka ralatan tauncit ulih $1',
 	'revertpage-nouser' => 'Pambulikan babakan ulih (pamuruk dihapus) ka babakan tauncit ulih [[User:$1|$1]]',
 	'rollback-success' => 'Pambalikakan babakab ulih $1;
 diubah bulik ka ralatan tauncit ulih $2.',
@@ -6207,7 +6188,7 @@ $messages['bm'] = array(
 
 $messages['bn'] = array(
 	'returnto' => '$1 শিরোনামের পাতায় ফেরত যান।',
-	'redirectedfrom' => '($1 থেকে ঘুরে এসেছে)',
+	'redirectedfrom' => '$1 থেকে ঘুরে এসেছে',
 	'redirectpagesub' => 'পুনর্নির্দেশ পাতা',
 	'retrievedfrom' => "'$1' থেকে আনীত",
 	'restorelink' => '{{PLURAL:$1|একটি মুছে ফেলা সম্পাদনা|$1টি মুছে ফেলা সম্পাদনা}}',
@@ -6396,7 +6377,7 @@ $messages['bn'] = array(
 	'rollback_short' => 'ফিরিয়ে নিন',
 	'rollbacklink' => 'পুনর্বহাল',
 	'rollbackfailed' => 'রোলব্যাক ব্যর্থ',
-	'revertpage' => '[[Special:Contributions/$2|$2]] ([[User talk:$2|আলাপ]]) এর সম্পাদিত সংস্করণ হতে [[User:$1|$1]] এর সম্পাদিত সর্বশেষ সংস্করণে ফেরত যাওয়া হয়েছে।',
+	'revertpage' => '[[Special:Contributions/$2|$2]] ([[User talk:$2|আলাপ]]) এর সম্পাদিত সংস্করণ হতে $1 এর সম্পাদিত সর্বশেষ সংস্করণে ফেরত যাওয়া হয়েছে।',
 	'revertpage-nouser' => '(ব্যবহারকারী নাম অপসারিত) কর্তৃক সম্পাদিত সম্পাদনাটি বাতিলপূর্বক [[User:$1|$1]]-এর সর্বশেষ সম্পাদনায় ফেরত যাওয়া হয়েছে।',
 	'rollback-success' => '$1-এর সম্পাদনাগুলি পূর্বাবস্থায় ফিরিয়ে নেওয়া হয়েছে; $2-এর করা শেষ সংস্করণে পাতাটি ফেরত নেওয়া হয়েছে।',
 	'restriction-type' => 'অনুমতি:',
@@ -6480,7 +6461,7 @@ $messages['bo'] = array(
 
 $messages['bpy'] = array(
 	'returnto' => '$1-ত আলথকে যাগা।',
-	'redirectedfrom' => '($1 -ত্ত পাকদিয়া আহিল)',
+	'redirectedfrom' => '$1 -ত্ত পাকদিয়া আহিল',
 	'redirectpagesub' => 'কুইপা পাতা',
 	'retrievedfrom' => "'$1' -ত্ত আনানি অসে",
 	'restorelink' => '{{PLURAL:$1|পতা আহান পুসিসি|$1হান পতা পুসিসি}}',
@@ -6584,7 +6565,7 @@ $messages['bpy'] = array(
 
 $messages['bqi'] = array(
 	'returnto' => 'بازگشت به $1.',
-	'redirectedfrom' => '(تصحیح مجدداز$1)',
+	'redirectedfrom' => 'تصحیح مجدداز$1',
 	'redirectpagesub' => 'صفحه تصحیح وهدایت مجدد',
 	'retrievedfrom' => 'بازیافت از"$1"',
 	'restorelink' => '{{PLURAL:$1|پاک کردن یه اصلاح|$1 پاک کردن اصلاحات}}',
@@ -6624,7 +6605,7 @@ $messages['bqi'] = array(
 
 $messages['br'] = array(
 	'returnto' => "Distreiñ d'ar bajenn $1.",
-	'redirectedfrom' => '(Adkaset eus $1)',
+	'redirectedfrom' => 'Adkaset eus $1',
 	'redirectpagesub' => 'Pajenn adkas',
 	'retrievedfrom' => 'Adtapet diwar « $1 »',
 	'restorelink' => "{{PLURAL:$1|ur c'hemm diverket|$1 kemm diverket}}",
@@ -6859,7 +6840,7 @@ E '''tev''' emañ ar pajennoù zo war ho [[Special:Watchlist|roll evezhiañ]].",
 	'rollback_short' => 'Disteuler',
 	'rollbacklink' => 'disteuler',
 	'rollbackfailed' => "C'hwitet eo bet an distaoladenn",
-	'revertpage' => "Kemmoù distaolet gant [[Special:Contributions/$2|$2]] ([[User talk:$2|Kaozeal]]); adlakaet d'ar stumm diwezhañ a-gent gant [[User:$1|$1]]",
+	'revertpage' => "Kemmoù distaolet gant [[Special:Contributions/$2|$2]] ([[User talk:$2|Kaozeal]]); adlakaet d'ar stumm diwezhañ a-gent gant $1",
 	'revertpage-nouser' => "Disteuler kemmoù (anv implijer distaolet) ha distreiñ d'ar stumm diwezhañ gant [[User:$1|$1]]",
 	'rollback-success' => 'Disteuler kemmoù $1; distreiñ da stumm diwezhañ $2.',
 	'restriction-type' => 'Aotre',
@@ -6889,7 +6870,7 @@ E '''tev''' emañ ar pajennoù zo war ho [[Special:Watchlist|roll evezhiañ]].",
 
 $messages['brh'] = array(
 	'returnto' => '$1 á aŕseng.',
-	'redirectedfrom' => '($1 án aŕsok)',
+	'redirectedfrom' => '$1 án aŕsok',
 	'redirectpagesub' => 'Aŕsengoká panna',
 	'retrievedfrom' => '"$1" án alok',
 	'red-link-title' => '$1 (panna káŧum án aff)',
@@ -6931,7 +6912,7 @@ $messages['brh'] = array(
 
 $messages['bs'] = array(
 	'returnto' => 'Povratak na $1.',
-	'redirectedfrom' => '(Preusmjereno sa $1)',
+	'redirectedfrom' => 'Preusmjereno sa $1',
 	'redirectpagesub' => 'Preusmjeri stranicu',
 	'retrievedfrom' => 'Dobavljeno iz "$1"',
 	'restorelink' => '{{PLURAL:$1|$1 izbrisana izmjena|$1 izbrisanih izmjena}}',
@@ -7168,7 +7149,7 @@ Stranice koje su na vašem [[Special:Watchlist|spisku praćenja]] su '''podeblja
 	'rollback_short' => 'Vrati',
 	'rollbacklink' => 'vrati',
 	'rollbackfailed' => 'Vraćanje nije uspjelo',
-	'revertpage' => 'Vraćene izmjene [[Special:Contributions/$2|$2]] ([[User talk:$2|razgovor]]) na posljednju izmjenu korisnika [[User:$1|$1]]',
+	'revertpage' => 'Vraćene izmjene [[Special:Contributions/$2|$2]] ([[User talk:$2|razgovor]]) na posljednju izmjenu korisnika $1',
 	'revertpage-nouser' => 'Vraćene izmjene korisnika (korisničko ime uklonjeno) na posljednju reviziju koju je načinio [[User:$1|$1]]',
 	'rollback-success' => 'Poništene izmjene korisnika $1;
 vraćeno na posljednju verziju koju je sačuvao $2.',
@@ -7199,7 +7180,7 @@ vraćeno na posljednju verziju koju je sačuvao $2.',
 
 $messages['bug'] = array(
 	'returnto' => 'Lisu ri $1.',
-	'redirectedfrom' => '(Riredirect polé $1)',
+	'redirectedfrom' => 'Riredirect polé $1',
 	'redirectpagesub' => 'Leppa redirect',
 	'readonly' => 'Databése rikonci',
 	'rev-deleted-comment' => '(komentar ripeddé)',
@@ -7226,7 +7207,7 @@ $messages['bug'] = array(
 
 $messages['ca'] = array(
 	'returnto' => 'Torna cap a $1.',
-	'redirectedfrom' => "(S'ha redirigit des de: $1)",
+	'redirectedfrom' => "S'ha redirigit des de: $1",
 	'redirectpagesub' => 'Pàgina de redirecció',
 	'retrievedfrom' => 'Obtingut de «$1»',
 	'restorelink' => '{{PLURAL:$1|una versió esborrada|$1 versions esborrades}}',
@@ -7466,7 +7447,7 @@ Les pàgines de la vostra [[Special:Watchlist|llista de seguiment]] apareixen en
 	'rollback_short' => 'Revoca',
 	'rollbacklink' => 'Reverteix',
 	'rollbackfailed' => "No s'ha pogut revocar",
-	'revertpage' => "Revertides les edicions de [[Special:Contributions/$2|$2]] ([[User talk:$2|discussió]]). S'ha recuperat la darrera versió de l'usuari [[User:$1|$1]]",
+	'revertpage' => "Revertides les edicions de [[Special:Contributions/$2|$2]] ([[User talk:$2|discussió]]). S'ha recuperat la darrera versió de l'usuari $1",
 	'revertpage-nouser' => "Desfetes les edicions de (nom d'usuari eliminat) a l'última revisió feta per [[User:$1|$1]]",
 	'rollback-success' => "Edicions revertides de $1; s'ha canviat a la darrera versió de $2.",
 	'restriction-type' => 'Permís:',
@@ -7509,7 +7490,7 @@ $messages['cbk-zam'] = array(
 
 $messages['cdo'] = array(
 	'returnto' => 'Duōng kó̤ $1.',
-	'redirectedfrom' => '(Iù $1 dêng-hióng lì gì)',
+	'redirectedfrom' => 'Iù $1 dêng-hióng lì gì',
 	'redirectpagesub' => 'Dṳ̀ng-sĭng dêng-hióng hiĕk',
 	'restorelink' => '{{PLURAL:$1|Ék|$1}} bĭk ké̤ṳk chēng lâi gì siŭ-gāi',
 	'readonly' => 'Só-gé̤ṳ-kó ké̤ṳk sō̤ kī',
@@ -7548,7 +7529,7 @@ Nṳ̄ găi-dŏng sṳ̆-liòng lâ, sié lŏ̤h piĕng-cĭk ciā hiĕk-miêng �
 	'rollback_short' => 'Duōng',
 	'rollbacklink' => 'duōng',
 	'rollbackfailed' => 'Duōng mâ̤ kó̤',
-	'revertpage' => '[[Special:Contributions/$2|$2]] ([[User talk:$2|Talk]]) sū có̤ gì siŭ-gāi duōng kó̤ [[User:$1|$1]] gì sèng 1 bĭk bēng-buōng',
+	'revertpage' => '[[Special:Contributions/$2|$2]] ([[User talk:$2|Talk]]) sū có̤ gì siŭ-gāi duōng kó̤ $1 gì sèng 1 bĭk bēng-buōng',
 	'restriction-type' => 'Guòng-âing:',
 	'restriction-level' => 'Âing-cié dēng-gék:',
 	'restriction-edit' => 'Siŭ-gāi',
@@ -7561,7 +7542,7 @@ Nṳ̄ găi-dŏng sṳ̆-liòng lâ, sié lŏ̤h piĕng-cĭk ciā hiĕk-miêng �
 
 $messages['ce'] = array(
 	'returnto' => 'Юхагlо оцу агlоне $1.',
-	'redirectedfrom' => '(Дlасахьажийна кху $1)',
+	'redirectedfrom' => 'Дlасахьажийна кху $1',
 	'redirectpagesub' => 'Агlо-дlасахьажайар',
 	'retrievedfrom' => 'Хьост — «$1»',
 	'restorelink' => '{{PLURAL:$1|$1 дlайайина йолу нисйинарг|$1 дlайайина йолу нисйинарш|$1 дlайайина йолу нисйинарш}}',
@@ -7622,7 +7603,7 @@ $messages['ce'] = array(
 	'randomredirect' => 'Ца хууш нисделла дIасахьажор',
 	'removedwatchtext' => 'Агlо «[[:$1]]» дlаяккхина йара хьан [[Special:Watchlist|тергаме могlам юкъар]].',
 	'rollbacklink' => 'йухаяккха',
-	'revertpage' => 'Нисдарш [[Special:Contributions/$2|$2]] ([[User talk:$2|дийцаре]]) йуха йаьхна башхаллийн [[User:$1|$1]]',
+	'revertpage' => 'Нисдарш [[Special:Contributions/$2|$2]] ([[User talk:$2|дийцаре]]) йуха йаьхна башхаллийн $1',
 	'restriction-type' => 'Бакъо:',
 	'restriction-level' => 'Тlевитарна локхалла:',
 	'restriction-upload' => 'Чуйолуш',
@@ -7632,7 +7613,7 @@ $messages['ce'] = array(
 
 $messages['ceb'] = array(
 	'returnto' => 'Balik sa $1.',
-	'redirectedfrom' => '(Naredirek gikan sa $1)',
+	'redirectedfrom' => 'Naredirek gikan sa $1',
 	'redirectpagesub' => 'Panid sa redirekta',
 	'retrievedfrom' => 'Gikuha gikan sa "$1"',
 	'restorelink' => '{{PLURAL:$1|usa ka napapas nga pag-usab|$1 mga napapas nga pag-usab}}',
@@ -7749,7 +7730,7 @@ Ang mga panid sa [[Special:Watchlist|imong gibantayan]] '''nakalugom'''.",
 
 $messages['ch'] = array(
 	'returnto' => 'Hånao tåtte para $1.',
-	'redirectedfrom' => '(Madirihi ginen $1)',
+	'redirectedfrom' => 'Madirihi ginen $1',
 	'redirectpagesub' => "Na'dirihi i påhina",
 	'retrievedfrom' => 'Ginen "$1"',
 	'restorelink' => '{{PLURAL:$1|unu na tinilaika mafnas|$1 na tinilaika siha manmafnas}}',
@@ -7829,7 +7810,7 @@ $messages['chr'] = array(
 
 $messages['ckb'] = array(
 	'returnto' => 'بگەڕێوە بۆ $1.',
-	'redirectedfrom' => '(ڕەوانەکراوە لە $1 ەوە)',
+	'redirectedfrom' => 'ڕەوانەکراوە لە $1 ەوە',
 	'redirectpagesub' => 'پەڕەی ڕەوانەکردن',
 	'retrievedfrom' => 'وەرگیراو لە «$1»',
 	'restorelink' => '{{PLURAL:$1|گۆڕانکاریی سڕاو|$1 یەک گۆڕانکاریی سڕاو}}',
@@ -8061,7 +8042,7 @@ $1",
 	'rollback_short' => 'گەڕاندنەوە',
 	'rollbacklink' => 'گەڕاندنەوە',
 	'rollbackfailed' => 'گەڕاندنەوە سەرکەوتوو نەبوو',
-	'revertpage' => 'گەڕاندنەوەی دەستکارییەکان لەلایەن [[Special:Contributions/$2|$2]] ([[User talk:$2|لێدوان]]) بۆ دوایین دەستکاریی [[User:$1|$1]]',
+	'revertpage' => 'گەڕاندنەوەی دەستکارییەکان لەلایەن [[Special:Contributions/$2|$2]] ([[User talk:$2|لێدوان]]) بۆ دوایین دەستکاریی $1',
 	'rollback-success' => 'دەستکارییەکانی $1 وەرگێرایەوە؛<br />
 گۆڕدرا بۆ دوایین دەستکاریی $2.',
 	'restriction-type' => 'ئیزن:',
@@ -8107,7 +8088,7 @@ $messages['co'] = array(
 
 $messages['cps'] = array(
 	'returnto' => 'Balik sa $1.',
-	'redirectedfrom' => '(Gindirekta liwat halin sa $1)',
+	'redirectedfrom' => 'Gindirekta liwat halin sa $1',
 	'redirectpagesub' => 'Pahina sang pagdirekta',
 	'retrievedfrom' => 'Nakuha halin sa "$1"',
 	'restorelink' => '{{PLURAL:$1|isa ka|$1}} pinanas nga ginbag-o',
@@ -8166,7 +8147,7 @@ Naghatag sang mini nga rason ang tagadumala nga nagkandado sini: $1',
 
 $messages['crh'] = array(
 	'returnto' => 'Balik sa $1.',
-	'redirectedfrom' => '(Gindirekta liwat halin sa $1)',
+	'redirectedfrom' => 'Gindirekta liwat halin sa $1',
 	'redirectpagesub' => 'Pahina sang pagdirekta',
 	'retrievedfrom' => 'Nakuha halin sa "$1"',
 	'restorelink' => '{{PLURAL:$1|isa ka|$1}} pinanas nga ginbag-o',
@@ -8225,7 +8206,7 @@ Naghatag sang mini nga rason ang tagadumala nga nagkandado sini: $1',
 
 $messages['crh-cyrl'] = array(
 	'returnto' => '$1.',
-	'redirectedfrom' => '($1 саифесинден ёлланды)',
+	'redirectedfrom' => '$1 саифесинден ёлланды',
 	'redirectpagesub' => 'Ёллама саифеси',
 	'retrievedfrom' => 'Менба – "$1"',
 	'restorelink' => 'ёкъ этильген {{PLURAL:$1|1|$1}} денъишмеси',
@@ -8319,7 +8300,7 @@ $messages['crh-cyrl'] = array(
 	'rollback_short' => 'кери ал',
 	'rollbacklink' => 'эски алына кетир',
 	'rollbackfailed' => 'кери алув мувафакъиетсиз',
-	'revertpage' => '[[Special:Contributions/$2|$2]] ([[User talk:$2|музакере]]) тарафындан япылгъан денъишмелер кери алынып, [[User:$1|$1]] тарафындан денъиштирильген эвельки версия кери кетирильди.',
+	'revertpage' => '[[Special:Contributions/$2|$2]] ([[User talk:$2|музакере]]) тарафындан япылгъан денъишмелер кери алынып, $1 тарафындан денъиштирильген эвельки версия кери кетирильди.',
 	'restriction-type' => 'Рухсети:',
 	'restriction-level' => 'Рухсет севиеси:',
 	'restriction-edit' => 'Денъиштир',
@@ -8332,7 +8313,7 @@ $messages['crh-cyrl'] = array(
 
 $messages['crh-latn'] = array(
 	'returnto' => '$1.',
-	'redirectedfrom' => '($1 saifesinden yollandı)',
+	'redirectedfrom' => '$1 saifesinden yollandı',
 	'redirectpagesub' => 'Yollama saifesi',
 	'retrievedfrom' => 'Menba – "$1"',
 	'restorelink' => 'yoq etilgen {{PLURAL:$1|1|$1}} deñişmesi',
@@ -8426,7 +8407,7 @@ Saifeniñ yoq etilüv ve avuştırıluv qaydları mında berilgen:",
 	'rollback_short' => 'keri al',
 	'rollbacklink' => 'eski alına ketir',
 	'rollbackfailed' => 'keri aluv muvafaqiyetsiz',
-	'revertpage' => '[[Special:Contributions/$2|$2]] ([[User talk:$2|muzakere]]) tarafından yapılğan deñişmeler keri alınıp, [[User:$1|$1]] tarafından deñiştirilgen evelki versiya keri ketirildi.',
+	'revertpage' => '[[Special:Contributions/$2|$2]] ([[User talk:$2|muzakere]]) tarafından yapılğan deñişmeler keri alınıp, $1 tarafından deñiştirilgen evelki versiya keri ketirildi.',
 	'restriction-type' => 'Ruhseti:',
 	'restriction-level' => 'Ruhset seviyesi:',
 	'restriction-edit' => 'Deñiştir',
@@ -8439,7 +8420,7 @@ Saifeniñ yoq etilüv ve avuştırıluv qaydları mında berilgen:",
 
 $messages['cs'] = array(
 	'returnto' => 'Návrat na stránku „$1“.',
-	'redirectedfrom' => '(Přesměrováno z $1)',
+	'redirectedfrom' => 'Přesměrováno z $1',
 	'redirectpagesub' => 'Přesměrování',
 	'retrievedfrom' => 'Citováno z „$1“',
 	'restorelink' => '{{PLURAL:$1|smazanou editaci|$1 smazané editace|$1 smazaných editací}}',
@@ -8679,7 +8660,7 @@ $3',
 	'rollback_short' => 'Vrátit zpět',
 	'rollbacklink' => 'vrácení zpět',
 	'rollbackfailed' => 'Nešlo vrátit zpět',
-	'revertpage' => 'Editace uživatele „[[Special:Contributions/$2|$2]]“ ([[User talk:$2|diskuse]]) vráceny do předchozího stavu, jehož autorem je „[[User:$1|$1]]“',
+	'revertpage' => 'Editace uživatele „[[Special:Contributions/$2|$2]]“ ([[User talk:$2|diskuse]]) vráceny do předchozího stavu, jehož autorem je „$1“',
 	'revertpage-nouser' => 'Editace uživatele (uživatelské jméno skryto) vráceny do předchozího stavu, jehož autorem je „[[User:$1|$1]]“',
 	'rollback-success' => 'Editace uživatele $1 byla vrácena na poslední verzi od uživatele $2.',
 	'restriction-type' => 'Omezení:',
@@ -8709,7 +8690,7 @@ $3',
 
 $messages['csb'] = array(
 	'returnto' => 'Nazôd do starnë $1.',
-	'redirectedfrom' => '(Przeczerowóné z $1)',
+	'redirectedfrom' => 'Przeczerowóné z $1',
 	'redirectpagesub' => 'Przeczerëjë starnã',
 	'retrievedfrom' => 'Z "$1"',
 	'restorelink' => '{{PLURAL:$1|jednô rëmniãtô wersëjô|$1 rëmniãté wersëje|$1 rëmniãtich wersëjów}}',
@@ -8799,7 +8780,7 @@ Starnë z [[Special:Watchlist|lëstë ùzérónëch artiklów]] są '''pògrëbi
 );
 
 $messages['cu'] = array(
-	'redirectedfrom' => '(прѣнаправлѥниѥ отъ ⁖ $1 ⁖)',
+	'redirectedfrom' => 'прѣнаправлѥниѥ отъ ⁖ $1 ⁖',
 	'redirectpagesub' => 'прѣнаправлѥниѥ',
 	'retrievedfrom' => 'поѩто иꙁ ⁖ $1 ⁖',
 	'red-link-title' => '$1 (си страницѧ нѣстъ)',
@@ -8842,7 +8823,7 @@ $messages['cu'] = array(
 
 $messages['cv'] = array(
 	'returnto' => '$1 страницăна таврăн.',
-	'redirectedfrom' => '($1 çинчен куçарнă)',
+	'redirectedfrom' => '$1 çинчен куçарнă',
 	'redirectpagesub' => 'Куçаракан страница',
 	'retrievedfrom' => 'Çăлкуç — «$1»',
 	'restorelink' => '$1 кăларса пăрахнă тӳрлетĕве',
@@ -8906,7 +8887,7 @@ $1',
 
 $messages['cy'] = array(
 	'returnto' => 'Dychwelyd at $1.',
-	'redirectedfrom' => '(Ailgyfeiriad oddi wrth $1)',
+	'redirectedfrom' => 'Ailgyfeiriad oddi wrth $1',
 	'redirectpagesub' => 'Tudalen ailgyfeirio',
 	'retrievedfrom' => 'Wedi dod o "$1"',
 	'restorelink' => "$1 {{PLURAL:$1|golygiad sydd wedi'i ddileu|golygiad sydd wedi'i ddileu|olygiad sydd wedi'u dileu|golygiad sydd wedi'u dileu|golygiad sydd wedi'u dileu|golygiad sydd wedi'u dileu}}",
@@ -9141,7 +9122,7 @@ Edrychwch ar y logiau er mwyn cael rhagor o wybodaeth.",
 	'rollback_short' => 'Gwrthdroi',
 	'rollbacklink' => 'gwrthdroi',
 	'rollbackfailed' => 'Methodd y gwrthdroi',
-	'revertpage' => 'Wedi gwrthdroi golygiadau gan [[Special:Contributions/$2|$2]] ([[User talk:$2|Sgwrs]]); wedi adfer y golygiad diweddaraf gan [[User:$1|$1]]',
+	'revertpage' => 'Wedi gwrthdroi golygiadau gan [[Special:Contributions/$2|$2]] ([[User talk:$2|Sgwrs]]); wedi adfer y golygiad diweddaraf gan $1',
 	'revertpage-nouser' => 'Wedi gwrthdroi golygiadau gan (enw wedi ei guddio); wedi adfer y golygiad diweddaraf gan [[User:$1|$1]]',
 	'rollback-success' => "Gwrthdrowyd y golygiadau gan $1;
 wedi gwrthdroi i'r golygiad olaf gan $2.",
@@ -9172,7 +9153,7 @@ wedi gwrthdroi i'r golygiad olaf gan $2.",
 
 $messages['da'] = array(
 	'returnto' => 'Tilbage til $1.',
-	'redirectedfrom' => '(Omdirigeret fra $1)',
+	'redirectedfrom' => 'Omdirigeret fra $1',
 	'redirectpagesub' => 'Omdirigering',
 	'retrievedfrom' => 'Hentet fra "$1"',
 	'restorelink' => '{{PLURAL:$1|en slettet ændring|$1 slettede ændringer}}',
@@ -9407,7 +9388,7 @@ Se venligst loglisterne.',
 	'rollback_short' => 'Fjern redigering',
 	'rollbacklink' => 'rul tilbage',
 	'rollbackfailed' => 'Kunne ikke fjerne redigeringen',
-	'revertpage' => 'Gendannelse til seneste version ved [[User:$1|$1]], fjerner ændringer fra [[Special:Contributions/$2|$2]] ([[User talk:$2|diskussion]])',
+	'revertpage' => 'Gendannelse til seneste version ved $1, fjerner ændringer fra [[Special:Contributions/$2|$2]] ([[User talk:$2|diskussion]])',
 	'revertpage-nouser' => 'Gendannet til seneste version af [[User:$1|$1]], ændringer fra (brugernavn fjernet) fjernet',
 	'rollback-success' => 'Ændringerne fra $1 er fjernet,
 og den seneste version af $2 er gendannet.',
@@ -9452,11 +9433,11 @@ Grund der Sperrung: $1',
 	'remembermypassword' => 'Mit diesem Browser dauerhaft angemeldet bleiben (maximal $1 {{PLURAL:$1|Tag|Tage}})',
 	'resetpass' => 'Passwort ändern',
 	'resetpass_announce' => 'Anmeldung mit dem per E-Mail zugesandten Code. Um die Anmeldung abzuschließen, musst du jetzt ein neues Passwort wählen.',
-	'resetpass_text' => '<!-- Ergänze den Text hier -->',
+	'resetpass_text' => '<!-- Hier Text einfügen -->',
 	'resetpass_header' => 'Passwort ändern',
 	'retypenew' => 'Neues Passwort (nochmal):',
 	'resetpass_submit' => 'Ändern und anmelden',
-	'resetpass_success' => 'Dein Passwort wurde erfolgreich geändert. Es folgt die Anmeldung …',
+	'resetpass_success' => 'Dein Passwort wurde erfolgreich geändert. Es folgt die Anmeldung…',
 	'resetpass_forbidden' => 'Das Passwort kann nicht geändert werden.',
 	'resetpass-no-info' => 'Du musst dich anmelden, um auf diese Seite direkt zuzugreifen.',
 	'resetpass-submit-loggedin' => 'Passwort ändern',
@@ -9634,13 +9615,7 @@ Bitte prüfe die Logbücher.',
 	'rightsnone' => '(–)',
 	'recentchanges' => 'Letzte Änderungen',
 	'recentchanges-legend' => 'Anzeigeoptionen',
-	'recentchangestext' => "<div style='border:solid 3px #e9e9e9; margin-bottom:0.3em;'>
-<div style='padding-left:0.5em; padding-right:0.5em;'>
-Auf dieser Spezialseite kannst Du die '''letzten Änderungen''' in diesem Wiki nachvollziehen.
-
-'''Organisatorisches:''' [[Spezial:Newpages|Neue Seiten]] – [[Spezial:Newimages|Neue Dateien]] – [[Spezial:Log|Logbücher]] – [[Spezial:Activeusers|Aktive Benutzer]] – [[Spezial:Listusers/sysop|Admins]]
-</div>
-</div>",
+	'recentchangestext' => '<div id="wikia-mediawiki-recentchangestext" style="border:2px solid #e9e9e9; margin-bottom:0.3em; padding:0.2em 0.5em;"><span style="float:left;">[[Special:NewPages|Neue Seiten]] – [[Special:NewImages|Neue Bilder]] – [[Special:Log|Logbücher]] – [[Special:Insights|Insights]]</span><span style="float:right;">[[Hilfe:Letzte_Änderungen|Letzte Änderungen]]</span><div style="clear:both;"></div></div>',
 	'recentchanges-feed-description' => 'Verfolge mit diesem Feed die letzten Änderungen in {{SITENAME}}.',
 	'recentchanges-label-newpage' => 'Neue Seite',
 	'recentchanges-label-minor' => 'Kleine Änderung',
@@ -9683,7 +9658,7 @@ Stand: $4, $5 Uhr.",
 	'rollback_short' => 'Zurücksetzen',
 	'rollbacklink' => 'Zurücksetzen',
 	'rollbackfailed' => 'Zurücksetzen gescheitert',
-	'revertpage' => 'Änderungen von [[Special:Contributions/$2|$2]] ([[User talk:$2|Diskussion]]) wurden auf die letzte Version von [[User:$1|$1]] zurückgesetzt',
+	'revertpage' => 'Änderungen von [[Special:Contributions/$2|$2]] ([[User talk:$2|Diskussion]] | [[Special:Block/$2|Blockieren]]) rückgängig gemacht und letzte Version von [[User:$1|$1]] wiederhergestellt',
 	'revertpage-nouser' => 'Änderungen von (Benutzername entfernt) rückgängig gemacht und letzte Version von [[User:$1|$1]] wiederhergestellt',
 	'rollback-success' => 'Die Änderungen von $1 wurden rückgängig gemacht und die letzte Version von $2 wurde wiederhergestellt.',
 	'restriction-type' => 'Schutzstatus:',
@@ -9715,6 +9690,71 @@ Stand: $4, $5 Uhr.",
 	'review_reason_3' => 'Bewertungsgrund 3',
 	'review_reason_4' => 'Bewertungsgrund 4',
 	'review_reason_5' => 'Bewertungsgrund 5',
+	'revision-info-current' => '-',
+	'revision-nav' => '($1) $2{{int:pipe-separator}}$3 ($4){{int:pipe-separator}}$5 ($6)',
+	'right-editmyoptions' => 'Kann eigene Einstellungen bearbeiten',
+	'right-loggedin' => 'Markiert Benutzer als angemeldet',
+	'right-mcachepurge' => 'Kontrolliert Memcached-Verhalten über Aufrufparameter',
+	'right-emailconfirmed' => 'E-Mail-Adresse des Benutzers wurde bestätigt',
+	'right-runjob' => 'Lässt Auftrag aus der Job-Queue über die Programmierschnittstelle ablaufen',
+	'recentchanges-url' => 'Special:RecentChanges',
+	'rc-old-title' => 'Ursprünglich als "$1" erstellt',
+	'randompage-url' => 'Special:Random',
+	'rfcurl' => '//tools.ietf.org/html/rfc$1',
+	'revdelete-logentry' => 'änderte Sichtbarkeit von "[[$1]]"',
+	'revdelete-content' => 'Inhalt',
+	'revdelete-summary' => 'Zusammenfassung',
+	'revdelete-uname' => 'Benutzername',
+	'revdelete-hid' => 'versteckte $1',
+	'revdelete-unhid' => 'unhid $1',
+	'revdelete-log-message' => '$1 for $2 {{PLURAL:$2|revision|revisions}}',
+	'reconfirmemail_subject' => 'Willkommen bei Wikia!',
+	'reconfirmemail_body' => 'Hallo $2,
+
+Vielen Dank für das Aktualisieren deiner E-Mail-Adresse, die du für dein Wikia-Benutzerkonto verwendest.
+
+Bevor wir dir weitere Nachrichten schicken können, musst du zunächst deine E-Mail-Adresse bestätigen.
+
+Klicke auf diesen Link oder gib ihn in deinem Browser ein:
+
+$3
+
+Hinweis: Dieser Link wird nach sieben Tagen ungültig.
+
+Wir freuen uns darauf, dass du weiterhin ein Teil von Wikia bist!
+
+Das Wikia Community-Team
+de.wikia.com',
+	'rcshowhideenhanced' => 'Erweiterte Darstellung $1',
+	'refreshpage' => 'Seite erneut laden, um das Widget zu aktivieren',
+	'requestcreatewiki' => 'Antrag abschicken',
+	'right_now' => 'Gerade im Moment<br />sind Menschen dabei...',
+	'return_to_article' => 'Zurück zum Artikel',
+	'return_to_talk' => 'Zurück zur Diskussion',
+	'return_to_user' => 'Zurück zur Benutzerseite',
+	'return_to_user_talk' => 'Zurück zur Diskussion',
+	'return_to_project' => 'Zurück zur Projektseite',
+	'return_to_project_talk' => 'Zurück zur Diskussion',
+	'return_to_image' => 'Zurück zur Bildbeschreibungsseite',
+	'return_to_image_talk' => 'Zurück zur Diskussion',
+	'return_to_mediawiki' => 'Zurück zur Nachrichtenseite',
+	'return_to_mediawiki_talk' => 'Zurück zur Diskussion',
+	'return_to_template' => 'Zurück zur Vorlagenseite',
+	'return_to_template_talk' => 'Zurück zur Diskussion',
+	'return_to_help' => 'Zurück zur Hilfe-Seite',
+	'return_to_help_talk' => 'Zurück zur Diskussion',
+	'return_to_category' => 'Zurück zur Kategorie-Seite',
+	'return_to_category_talk' => 'Zurück zur Diskussion',
+	'return_to_forum' => 'Zurück zum Forum',
+	'return_to_forum_talk' => 'Zurück zur Diskussion',
+	'return_to_special' => 'Zurück zur Spezialseite',
+	'related_wiki' => 'Füge hier Links im Listenformat ein um ähnliche Wikis zu diesem im "Related Wikis" [[Special:Widgets|Widget]] anzuzeigen.
+
+* [{{FULLURL:MediaWiki:Related wiki}} Bisher wurde kein ähnliches Wiki eingetragen.]',
+	'registerintro-title' => 'Sobald du bei FANDOM ein Konto erstellt hast, bist du Teil der Community!',
+	'registerintro-text' => 'Alle deine Beiträge werden dir zugeordnet und du kannst dein eigenes Benutzerprofil erstellen, interessante Artikel beobachen und hast du Zugriff auf weitere nützliche Tools.',
+	'rcshowhidelogs' => 'Logbücher $1',
+	'right-hideblockername' => 'Verhindert, dass der Benutzername in Sperrbenachrichtigungen angezeigt wird',
 );
 
 $messages['de-ch'] = array(
@@ -9785,7 +9825,7 @@ Seiten auf Ihrer [[Special:Watchlist|Beobachtungsliste]] sind '''fett''' dargest
 
 $messages['de-weigsbrag'] = array(
 	'returnto' => 'Surüg su Seid $1.',
-	'redirectedfrom' => '(Weidleid won $1)',
+	'redirectedfrom' => 'Weidleid won $1',
 	'redirectpagesub' => 'Weidleid',
 	'retrievedfrom' => 'Won dose „$1“',
 	'restorelink' => '$1 {{PLURAL:$1|gelöschdes Wersion|gelöschdes Wersiones}}',
@@ -9972,7 +10012,7 @@ Näheres Angabes su Löschworgang und eines Begründ gön wend in dose [{{fullur
 
 $messages['diq'] = array(
 	'returnto' => 'Peyser şo $1.',
-	'redirectedfrom' => '($1 ra neqıl bi)',
+	'redirectedfrom' => '$1 ra neqıl bi',
 	'redirectpagesub' => 'Pela berdışi',
 	'retrievedfrom' => '"$1" ra ard',
 	'restorelink' => '{{PLURAL:$1|yew vurnayışo esterıte|$1 vurnayışê esterıtey}}',
@@ -10201,7 +10241,7 @@ rocaneyan kontrol bıkere.',
 	'rollback_short' => 'Peyser bia',
 	'rollbacklink' => 'peyser bia',
 	'rollbackfailed' => 'Peyserardış nêbi',
-	'revertpage' => 'hetê [[Special:Contributions/$2|$2]] ([[User talk:$2|Talk]]) ra vurnayiş biyo u ney vurnayişi tepiya geriyayo u no [[User:$1|$1]] kes o ke cuwa ver revizyon kerdo revizyonê no kesi tepiya anciyayo.',
+	'revertpage' => 'hetê [[Special:Contributions/$2|$2]] ([[User talk:$2|Talk]]) ra vurnayiş biyo u ney vurnayişi tepiya geriyayo u no $1 kes o ke cuwa ver revizyon kerdo revizyonê no kesi tepiya anciyayo.',
 	'revertpage-nouser' => '(nameyê karberi veteyo) no keso ke vuriyayiş kerdo vuriyayişê no kesi hetê no [[User:$1|$1]] kesi ra tepiya anciyayo',
 	'rollback-success' => 'vurnayişê no kesi $1 tepiya geriyayo u hetê no
 $2 kesi ra cıwa ver o ke revizyon biyo no revizyon tepiya anciyayo.',
@@ -10228,7 +10268,7 @@ $2 kesi ra cıwa ver o ke revizyon biyo no revizyon tepiya anciyayo.',
 
 $messages['dsb'] = array(
 	'returnto' => 'Slědk k bokoju $1.',
-	'redirectedfrom' => '(pósrědnjone z boka „$1”)',
+	'redirectedfrom' => 'pósrědnjone z boka „$1”',
 	'redirectpagesub' => 'Dalejpósrědnjenje',
 	'retrievedfrom' => 'Z {{GRAMMAR:genitiw|$1}}',
 	'restorelink' => '{{PLURAL:$1|1 wulašowana wersija|$1 wulašowanej wersiji|$1 wulašowane wersije}}',
@@ -10464,7 +10504,7 @@ Boki na [[Special:Watchlist|wobglědowańce]] su '''tucne'''.",
 	'rollback_short' => 'anulěrowaś',
 	'rollbacklink' => 'anulěrowaś',
 	'rollbackfailed' => 'Slědkwześe njejo se raźiło.',
-	'revertpage' => 'Změny wužywarja [[Special:Contributions/$2|$2]] ([[User talk:$2|Diskusija]]) su se wótwrośili a slědna wersija wužywarja [[User:$1|$1]] jo se wótnowiła.',
+	'revertpage' => 'Změny wužywarja [[Special:Contributions/$2|$2]] ([[User talk:$2|Diskusija]]) su se wótwrośili a slědna wersija wužywarja $1 jo se wótnowiła.',
 	'revertpage-nouser' => 'Jo změny wót (wužywarske mě wótpórane) na slědnu wersiju wót [[User:$1|$1]] slědk stajił',
 	'rollback-success' => 'Změny wót $1 su se slědk wzeli a slědna wersija wót $2 jo zasej se nawrośiła.',
 	'restriction-type' => 'Status šćita',
@@ -10494,7 +10534,7 @@ Boki na [[Special:Watchlist|wobglědowańce]] su '''tucne'''.",
 
 $messages['dtp'] = array(
 	'returnto' => 'Gumuli hilo $1.',
-	'redirectedfrom' => '(Pinotilombus mantad $1)',
+	'redirectedfrom' => 'Pinotilombus mantad $1',
 	'redirectpagesub' => 'Bolikon pinotilombus',
 	'retrievedfrom' => 'Naanu mantad "$1"',
 	'restorelink' => '{{PLURAL:$1|iso niditan pinugas|$1 niniditan nopinpugasan}}',
@@ -10636,7 +10676,7 @@ Bobolikon id [[Special:Watchlist|lis pintangannu]] nopo nga '''pinakapal'''.",
 
 $messages['dv'] = array(
 	'returnto' => 'އަނބުރާ $1 އަށް ވަޑައިގަންނަވާ!',
-	'redirectedfrom' => '(މިސްރާބުކުރެވުނީ $1 އިން)',
+	'redirectedfrom' => 'މިސްރާބުކުރެވުނީ $1 އިން',
 	'redirectpagesub' => 'ޞަފްޙާގެ މިސްރާބު އައުކުރައްވާ',
 	'recentchanges' => 'ފަހު ބަދަލުތައް',
 	'recentchangestext' => 'މި ވިކިޕީޑިޔާ އަށް ގެނެވިފައިވާ އެންމެ ފަހުގެ ބަދަލުތައް މި ޞަފްހާ އިން ބައްލަވާ!',
@@ -10649,7 +10689,7 @@ $messages['dv'] = array(
 
 $messages['dz'] = array(
 	'returnto' => '$1 ལུ་ལོག།',
-	'redirectedfrom' => '($1 ལས་ ལོག་བཏང་ཡོདཔ་)',
+	'redirectedfrom' => '$1 ལས་ ལོག་བཏང་ཡོདཔ་',
 	'redirectpagesub' => 'ཤོག་ལེབ་སླར་ལོག་འབད།',
 	'retrievedfrom' => '"$1" ལས་ སླར་འདྲེན་འབད་ཡོདཔ།',
 	'remembermypassword' => 'གློག་རིག་དེ་གུར་ ངེ་གི་ནང་བསྐྱོད་སེམས་ཁར་བཞག (for a maximum of $1 {{PLURAL:$1|day|days}})',
@@ -10691,7 +10731,7 @@ $messages['dz'] = array(
 
 $messages['ee'] = array(
 	'returnto' => 'Gbugbɔ yi $1.',
-	'redirectedfrom' => '(Woɖo wò ɖe afii tso $1)',
+	'redirectedfrom' => 'Woɖo wò ɖe afii tso $1',
 	'retrievedfrom' => 'Nuŋɔŋlɔ sia tso "$1"',
 	'red-link-title' => '$1 (womeŋlɔ axa sia haɖeke o)',
 	'remembermypassword' => 'Ɖo ŋku nyeƒe dzesi ŋkɔ dzi le mɔ sia dzi (vaseɖe {{PLURAL:$1|ŋkeke|ŋkeke}} $1 megbe)',
@@ -10728,7 +10768,7 @@ $messages['ee'] = array(
 
 $messages['el'] = array(
 	'returnto' => 'Επιστροφή στη σελίδα $1.',
-	'redirectedfrom' => '(Ανακατεύθυνση από $1)',
+	'redirectedfrom' => 'Ανακατεύθυνση από $1',
 	'redirectpagesub' => 'Σελίδα ανακατεύθυνσης',
 	'retrievedfrom' => 'Ανακτήθηκε από το "$1".',
 	'restorelink' => '{{PLURAL:$1|μίας διαγραμμένης επεξεργασίας|$1 διαγραμμένων επεξεργασιών}}',
@@ -10998,7 +11038,7 @@ $messages['eml'] = array(
 
 $messages['eo'] = array(
 	'returnto' => 'Reiri al $1.',
-	'redirectedfrom' => '(Alidirektita el $1)',
+	'redirectedfrom' => 'Alidirektita el $1',
 	'redirectpagesub' => 'Alidirektilo',
 	'retrievedfrom' => 'Elŝutita el  "$1"',
 	'restorelink' => '{{PLURAL:$1|unu forigitan version|$1 forigitajn versiojn}}',
@@ -11240,7 +11280,7 @@ Paĝoj en [[Special:Watchlist|via atentaro]] estas '''grasaj'''.",
 	'rollback_short' => 'Malfari',
 	'rollbacklink' => 'malfari',
 	'rollbackfailed' => 'Malfaro malsukcesis',
-	'revertpage' => 'Malfaris redaktojn de [[Special:Contributions/$2|$2]] ([[User talk:$2|diskuto]]) al la lasta versio de [[User:$1|$1]]',
+	'revertpage' => 'Malfaris redaktojn de [[Special:Contributions/$2|$2]] ([[User talk:$2|diskuto]]) al la lasta versio de $1',
 	'revertpage-nouser' => 'Restarigita redaktoj de (salutnomo forigita) al lasta revizio de [[User:$1|$1]]',
 	'rollback-success' => 'Restaris redaktojn de $1; ŝanĝis al lasta versio de $2.',
 	'restriction-type' => 'Permeso:',
@@ -11269,24 +11309,23 @@ Paĝoj en [[Special:Watchlist|via atentaro]] estas '''grasaj'''.",
 );
 
 $messages['es'] = array(
-	'realmap-deprecated-info' => 'Mapas del mundo real han sido descontinuados por Wikia. Para obtener más información, revisa: $1',
+	'realmap-deprecated-info' => 'Mapas del mundo real han sido descontinuados por Fandom. Para obtener más información, revisa: $1',
 	'returnto' => 'Volver a $1.',
 	'redirectedfrom' => '(Redirigido desde $1)',
 	'redirectpagesub' => 'Página redirigida',
 	'retrievedfrom' => 'Obtenido de «$1»',
 	'restorelink' => '{{PLURAL:$1|una edición borrada|$1 ediciones borradas}}',
 	'red-link-title' => '$1 (la página no existe)',
-	'readonly' => 'Base de datos bloqueada',
-	'readonlytext' => 'La base de datos no permite nuevas entradas u otras modificaciones de forma temporal, probablemente por mantenimiento rutinario, tras lo cual volverá a la normalidad.
+	'readonly' => 'Base de datos cerrada',
+	'readonlytext' => 'La base de datos se encuentra cerrada.
 
-La explicación dada por el administrador que la bloqueó fue: $1',
-	'readonly_lag' => 'La base de datos se ha bloqueado temporalmente mientras los servidores se sincronizan.',
-	'remembermypassword' => 'Mantenerme conectado en este navegador (hasta $1 {{PLURAL:$1|día|días}})',
-	'resetpass' => 'Cambiar la contraseña',
-	'resetpass_announce' => 'Has iniciado sesión con una contraseña temporal que fue enviada por correo electrónico.
-Por favor, introduce una nueva contraseña aquí:',
-	'resetpass_text' => '<!-- Añada texto aquí -->',
-	'resetpass_header' => 'Cambiar la contraseña de la cuenta',
+$1',
+	'readonly_lag' => 'La base de datos se ha cerrado temporalmente mientras los servidores se sincronizan',
+	'remembermypassword' => 'Mantenerme conectado en este navegador',
+	'resetpass' => 'Cambiar contraseña',
+	'resetpass_announce' => 'Parece que utilizaste una contraseña temporal. Elige aquí una nueva contraseña para continuar la sesión.',
+	'resetpass_text' => '<!-- Añade texto aquí -->',
+	'resetpass_header' => 'Cambia tu contraseña',
 	'retypenew' => 'Confirmar la contraseña nueva:',
 	'resetpass_submit' => 'Establecer contraseña e iniciar sesión',
 	'resetpass_success' => 'La contraseña ha sido cambiada con éxito.
@@ -11298,20 +11337,20 @@ Iniciando sesión...',
 	'resetpass-wrong-oldpass' => 'La contraseña antigua no es correcta.
 Puede que ya hayas cambiado la contraseña o que hayas pedido una temporal.',
 	'resetpass-temp-password' => 'Contraseña temporal:',
-	'readonlywarning' => "'''Aviso: La base de datos ha sido bloqueada por cuestiones de mantenimiento, así que no podrás guardar tus modificaciones en este momento.
+	'readonlywarning' => "'''Aviso: La base de datos ha sido cerrada por mantenimiento, así que no podrás guardar tus modificaciones en este momento.
 Puedes copiar y pegar el texto en un archivo y guardarlo para más tarde.'''
 
-El administrador que la bloqueó dio esta explicación: $1",
+El administrador que la cerró dio esta explicación: $1",
 	'recreate-moveddeleted-warn' => "'''Atención: estás volviendo a crear una página que ha sido borrada anteriormente.'''
 
 Deberías considerar si es apropiado continuar editando esta página.
 El registro de borrado y traslados para esta página están provistos aquí por conveniencia:",
 	'revisionasof' => 'Revisión de $1',
 	'revision-info' => 'Revisión a fecha de $1; $2',
-	'rev-deleted-comment' => '(resumen de edición eliminado)',
-	'rev-deleted-user' => '(nombre de usuario eliminado)',
-	'rev-deleted-event' => '(entrada borrada)',
-	'rev-deleted-user-contribs' => '[nombre de usuario o dirección IP eliminada - edición ocultada de la lista de contribuciones]',
+	'rev-deleted-comment' => '(resumen de edición borrado)',
+	'rev-deleted-user' => '(nombre de usuario borrado)',
+	'rev-deleted-event' => '(acción de registro borrada)',
+	'rev-deleted-user-contribs' => '[nombre de usuario o dirección IP borrada - edición ocultada de la lista de contribuciones]',
 	'rev-deleted-text-permission' => "Esta revisión de la página ha sido '''borrada'''.
 Puede haber detalles en el [{{fullurl:{{#Special:Log}}/delete|page={{FULLPAGENAMEE}}}} registro de borrados].",
 	'rev-deleted-text-unhide' => "Esta revisión de la página ha sido '''borrada'''.
@@ -11319,7 +11358,7 @@ Puede haber más detalles en el [{{fullurl:{{#Special:Log}}/delete|page={{FULLPA
 Como administrador todavía puedes [$1 ver esta revisión] si así lo deseas.",
 	'rev-suppressed-text-unhide' => "Esta revisión de la página ha sido '''suprimida'''.
 Puede haber más detalles en el [{{fullurl:{{#Special:Log}}/suppress|page={{FULLPAGENAMEE}}}} registro de supresiones].
-Como administrador podrá seguir [$1 viendo esta revisión] si desea continuar.",
+Como administrador todavía puedes [$1 ver esta revisión] si así lo deseas.",
 	'rev-deleted-text-view' => "Esta revisión de la página ha sido '''borrada'''.
 Aún tiene la posibilidad de verla; puede ampliar los detalles en el [{{fullurl:{{#Special:Log}}/delete|page={{FULLPAGENAMEE}}}} registro de borrados].",
 	'rev-suppressed-text-view' => "Esta revisión de la página ha sido '''suprimida'''.
@@ -11346,7 +11385,7 @@ Aún tiene la posibilidad de verla; puede ampliar los detalles en el [{{fullurl:
 	'revdelete-nologtype-text' => 'No has especificado ningún nombre para ejecutar esta acción.',
 	'revdelete-nologid-title' => 'Entrada de registro inválida',
 	'revdelete-nologid-text' => 'Tampoco has especificado un objetivo de eventos para ejecutar esta función o la entrada especificada no existe.',
-	'revdelete-no-file' => 'El fichero especificado no existe.',
+	'revdelete-no-file' => 'El archivo especificado no existe.',
 	'revdelete-show-file-confirm' => '¿Realmente deseas ver la revisión borrada del archivo "<nowiki>$1</nowiki>" del $2 a las $3?',
 	'revdelete-show-file-submit' => 'Sí',
 	'revdelete-selected' => "'''{{PLURAL:$2|Revisión seleccionada|Revisiones seleccionadas}} de [[:$1]]:'''",
@@ -11362,13 +11401,13 @@ Otros administradores de {{SITENAME}} aún podrán acceder al contenido oculto y
 	'revdelete-hide-image' => 'Ocultar el contenido del archivo',
 	'revdelete-hide-name' => 'Ocultar acción y objetivo',
 	'revdelete-hide-comment' => 'Ocultar el resumen de edición',
-	'revdelete-hide-user' => 'Ocultar el nombre/IP del editor',
+	'revdelete-hide-user' => 'Ocultar el nombre de usuario/IP del editor',
 	'revdelete-hide-restricted' => 'Suprimir datos a los administradores así como al resto',
 	'revdelete-radio-same' => '(no cambiar)',
 	'revdelete-radio-set' => 'Sí',
 	'revdelete-radio-unset' => 'No',
 	'revdelete-suppress' => 'Suprimir datos a los administradores así como al resto',
-	'revdelete-unsuppress' => 'Eliminar restricciones de revisiones restauradas',
+	'revdelete-unsuppress' => 'Borrar restricciones de revisiones restauradas',
 	'revdelete-log' => 'Motivo:',
 	'revdelete-submit' => 'Aplicar a {{PLURAL:$1|la revisión seleccionada|las revisiones seleccionadas}}',
 	'revdelete-success' => "'''La visibilidad de revisiones ha sido cambiada correctamente.'''",
@@ -11387,13 +11426,13 @@ No tiene acceso a él.',
 	'revdelete-no-change' => "'''Atención:''' la revisión de fecha $1 a las $2 ya tiene las restricciones de visibilidad solicitadas.",
 	'revdelete-concurrent-change' => 'Error modificando el objeto de fecha $2, $1: su estado parece haber sido cambiado por alguien más cuando tratabas de modificarlo. Por favor verifica los registros.',
 	'revdelete-only-restricted' => 'Error ocultando el item de fecha $2, $1: no puedes suprimir elementos de vista de los administradores sin seleccionar asímismo una de las otras opciones de visibilidad.',
-	'revdelete-reason-dropdown' => '*Razones de borrado comunes
+	'revdelete-reason-dropdown' => '*Motivos de borrado comunes
 ** Violación a los derechos de autor
 ** Información personal inapropiada
 ** Información potencialmente injuriosa o calumniante',
-	'revdelete-otherreason' => 'Otra/adicional razón:',
-	'revdelete-reasonotherlist' => 'Otra razón',
-	'revdelete-edit-reasonlist' => 'Editar razones de borrado',
+	'revdelete-otherreason' => 'Otro motivo:',
+	'revdelete-reasonotherlist' => 'Otro motivo',
+	'revdelete-edit-reasonlist' => 'Edita los motivos del borrado',
 	'revdelete-offender' => 'Autor de revisión:',
 	'revertmerge' => 'Deshacer fusión',
 	'resetprefs' => 'Limpiar cambios sin guardar',
@@ -11401,23 +11440,23 @@ No tiene acceso a él.',
 	'rows' => 'Filas:',
 	'resultsperpage' => 'Resultados por página:',
 	'recentchangesdays' => 'Días a mostrar en cambios recientes:',
-	'recentchangesdays-max' => '(máximo {{PLURAL:$1|un día|$1 días}})',
-	'recentchangescount' => 'Número de ediciones a mostrar de manera predeterminada:',
+	'recentchangesdays-max' => 'Máximo $1 {{PLURAL:$1|día|días}}',
+	'recentchangescount' => 'Número de ediciones a mostrar por defecto:',
 	'right-read' => 'Leer páginas',
 	'right-edit' => 'Editar páginas',
 	'right-createpage' => 'Crear páginas que no sean páginas de discusión',
 	'right-createtalk' => 'Crear páginas de discusión',
 	'right-createaccount' => 'Crear cuentas de usuario nuevas',
 	'right-minoredit' => 'Marcar ediciones como «menores»',
-	'right-move' => 'Trasladar páginas',
-	'right-move-subpages' => 'Trasladar páginas con sus subpáginas',
+	'right-move' => 'Mover páginas',
+	'right-move-subpages' => 'Mover páginas con sus subpáginas',
 	'right-move-rootuserpages' => 'Mover páginas del usuario raíz',
 	'right-movefile' => 'Mover archivos',
-	'right-suppressredirect' => 'No crear redirecciones de las páginas fuente  al trasladar páginas',
+	'right-suppressredirect' => 'No crear redirecciones de las páginas fuente al trasladar páginas',
 	'right-upload' => 'Subir archivos',
-	'right-reupload' => 'Subir una nueva versión de un archivo existente',
-	'right-reupload-own' => 'Subir una nueva versión de un archivo creado por uno mismo',
-	'right-reupload-shared' => 'Sobreescribir localmente ficheros del repositorio multimedia',
+	'right-reupload' => 'Reemplazar archivos existentes',
+	'right-reupload-own' => 'Reemplazar archivos existentes subidos por uno mismo',
+	'right-reupload-shared' => 'Reemplazar archivos existentes en el repositorio multimedia local',
 	'right-upload_by_url' => 'Subir un archivo a traves de un URL',
 	'right-purge' => 'Purgar la caché en el servidor sin tener que dar confirmación',
 	'right-autoconfirmed' => 'Editar páginas semiprotegidas',
@@ -11435,7 +11474,7 @@ No tiene acceso a él.',
 	'right-suppressrevision' => 'Revisar y restaurar revisiones escondidas por administradores',
 	'right-suppressionlog' => 'Ver registros privados',
 	'right-block' => 'Bloquear a otros usuarios para que no editen',
-	'right-blockemail' => 'Bloquear a un usuario para que no pueda mandar correos electrónicos',
+	'right-blockemail' => 'Bloquear a un usuario para que no puedan mandar correos electrónicos',
 	'right-hideuser' => 'Bloquear un nombre de usuario, haciéndolo invisible',
 	'right-ipblock-exempt' => 'Pasar por encima de bloqueos de IPs, auto-bloqueos y bloqueos de rangos.',
 	'right-proxyunbannable' => 'Pasar por encima de bloqueos automáticos de proxies',
@@ -11447,21 +11486,21 @@ No tiene acceso a él.',
 	'right-editusercss' => 'Editar las páginas de CSS de otros usuarios',
 	'right-edituserjs' => 'Editar las páginas de JS de otros usuarios',
 	'right-rollback' => 'Revertir rápidamente las ediciones del último usuario que modificó una página en particular',
-	'right-markbotedits' => 'Marcar ediciones deshechas como ediciones de un bot',
+	'right-markbotedits' => 'Marcar ediciones revertidas como ediciones de un bot',
 	'right-noratelimit' => 'No afectado por límites de frecuencia',
-	'right-import' => 'Importar páginas desde otras wikis',
+	'right-import' => 'Importar páginas desde otros wikis',
 	'right-importupload' => 'Importar páginas de un archivo subido',
 	'right-patrol' => 'Marcar ediciones de otros como patrulladas',
-	'right-autopatrol' => 'Marcar como patrulladas sus ediciones automáticamente',
+	'right-autopatrol' => 'Marcar automáticamente como patrulladas las ediciones de uno',
 	'right-patrolmarks' => 'Ver las marcas de patrullaje de cambios recientes',
 	'right-unwatchedpages' => 'Ver una lista de páginas no vigiladas',
 	'right-mergehistory' => 'Fusionar historiales',
-	'right-userrights' => 'Modificar todos los derechos de usuario',
-	'right-userrights-interwiki' => 'Modificar los derechos de usuarios en otros wikis',
-	'right-siteadmin' => 'Bloquear y desbloquear la base de datos',
-	'right-override-export-depth' => 'Exporta páginas incluyendo aquellas enlazadas hasta una profundidad de 5',
+	'right-userrights' => 'Editar todos los derechos de usuario',
+	'right-userrights-interwiki' => 'Editar los derechos de usuarios en otros wikis',
+	'right-siteadmin' => 'Cerrar y reabrir la base de datos',
+	'right-override-export-depth' => 'Exportar páginas incluyendo aquellas enlazadas hasta una profundidad de 5',
 	'right-sendemail' => 'Enviar un correo electrónico a otros usuarios',
-	'right-passwordreset' => 'Ver os correos electrónicos de restablecimiento de contraseñas',
+	'right-passwordreset' => 'Ver los correos electrónicos de restablecimiento de contraseñas',
 	'rightslog' => 'Cambios de perfil de usuario',
 	'rightslogtext' => 'Este es un registro de cambios en los permisos de usuarios.',
 	'rightslogentry' => 'modificó los grupos a los que pertenece $1: de $2 a $3',
@@ -11469,13 +11508,13 @@ No tiene acceso a él.',
 	'rightsnone' => '(ninguno)',
 	'recentchanges' => 'Cambios recientes',
 	'recentchanges-legend' => 'Opciones sobre cambios recientes',
-	'recentchangestext' => 'Realiza un seguimiento de los cambios más recientes en el wiki en esta página.',
+	'recentchangestext' => '<div id="wikia-mediawiki-recentchangestext" style="border:2px solid #e9e9e9; margin-bottom:0.3em; padding:0.2em 0.5em;"><span style="float:left;">[[{{#Special:Newpages}}|{{int:Newpages}}]] – [[{{#Special:Newimages}}|Archivos nuevos]] – [[{{#Special:Log}}|Registros]] – [[{{#Special:Insights}}|Sugerencias]]</span><span style="float:right;">[[Ayuda:Cambios recientes]]</span><div style="clear:both;"></div></div>',
 	'recentchanges-feed-description' => 'Realiza un seguimiento de los cambios más recientes en el wiki en este canal.',
 	'recentchanges-label-newpage' => 'Esta edición creó una nueva página',
 	'recentchanges-label-minor' => 'Esta es una edición menor',
-	'recentchanges-label-bot' => 'Esta edición fue realizada por un robot',
+	'recentchanges-label-bot' => 'Esta edición fue realizada por un bot',
 	'recentchanges-label-unpatrolled' => 'Esta edición todavía no se ha patrullado',
-	'rcnote' => "Debajo {{PLURAL:$1|hay '''1''' cambio efectuado|están los últimos '''$1''' cambios efectuados}} en  {{PLURAL:$2|el último día|los últimos '''$2''' días}}, hasta el $4, $5.",
+	'rcnote' => '<div style="margin-top: -20px;" class="emptymwmsg mediawiki_rcnote"></div>',
 	'rcnotefrom' => 'A continuación se muestran los cambios desde <b>$2</b> (hasta <b>$1</b>).',
 	'rclistfrom' => 'Mostrar nuevos cambios desde $1',
 	'rcshowhideminor' => '$1 ediciones menores',
@@ -11495,28 +11534,28 @@ No tiene acceso a él.',
 	'recentchangeslinked-toolbox' => 'Cambios relacionados',
 	'recentchangeslinked-title' => 'Cambios relacionados con «$1»',
 	'recentchangeslinked-noresult' => 'No hubo cambios en las páginas enlazadas durante el periodo indicado.',
-	'recentchangeslinked-summary' => "Esta página es una lista de los últimos cambios en las páginas enlazadas desde una página (o en las pertenecientes a una categoría). Las páginas que están en tu [[Special:Watchlist|lista de seguimiento]] aparecen en '''negrita'''.",
+	'recentchangeslinked-summary' => "Esta página es una lista de los últimos cambios en las páginas enlazadas desde una página (o en las pertenecientes a una categoría). Las páginas que están en tu [[{{#Special:Watchlist}}|lista de seguimiento]] aparecen en '''negrita'''.",
 	'recentchangeslinked-page' => 'Nombre de la página:',
-	'recentchangeslinked-to' => 'Muestra los cambios recientes en lugar de la página indicada',
+	'recentchangeslinked-to' => 'Mostrar los cambios recientes en lugar de la página indicada',
 	'reuploaddesc' => 'Regresar al formulario para subir.',
 	'randompage' => 'Página aleatoria',
 	'randompage-nopages' => 'No hay páginas en los siguientes {{PLURAL:$2|espacio de nombre|espacios de nombre}}: $1.',
 	'randomredirect' => 'Ir a una redirección cualquiera',
 	'randomredirect-nopages' => 'No hay redirecciones en el espacio de nombres «$1».',
-	'removewatch' => 'Quitar de la lista de seguimiento',
-	'removedwatchtext' => 'La página «[[:$1]]» ha sido eliminada de tu [[Special:Watchlist|lista de seguimiento]].',
+	'removewatch' => 'Borrar de la lista de seguimiento',
+	'removedwatchtext' => 'La página «[[:$1]]» ha sido borrada de tu [[Special:Watchlist|lista de seguimiento]].',
 	'reverted' => 'Revertido a una revisión anterior',
 	'rollback' => 'Revertir ediciones',
 	'rollback_short' => 'Revertir',
 	'rollbacklink' => 'revertir',
 	'rollbackfailed' => 'No se pudo revertir',
-	'revertpage' => 'Revertidos los cambios de [[Special:Contributions/$2|$2]] ([[User talk:$2|disc.]]) a la última edición de [[User:$1|$1]]',
-	'revertpage-nouser' => 'Revertidas ediciones hechas por (nombre de usuario eliminado) a la última revisión hecha por [[User:$1|$1]]',
+	'revertpage' => 'Revertidos las ediciones de [[Special:Contributions/$2|$2]] ([[User talk:$2|disc]] | [[Special:Block/$2|bloquear]]) a la última edición de [[User:$1|$1]]',
+	'revertpage-nouser' => 'Revertidas las ediciones hechas por (nombre de usuario eliminado) a la última revisión hecha por [[User:$1|$1]]',
 	'rollback-success' => 'Revertidas las ediciones de $1; recuperada la última versión de $2.',
 	'restriction-type' => 'Permiso:',
 	'restriction-level' => 'Nivel de restricción:',
 	'restriction-edit' => 'Editar',
-	'restriction-move' => 'Pueden trasladar',
+	'restriction-move' => 'Mover',
 	'restriction-create' => 'Crear',
 	'restriction-upload' => 'Subir',
 	'restriction-level-sysop' => 'completamente protegida',
@@ -11525,8 +11564,8 @@ No tiene acceso a él.',
 	'reblock-logentry' => 'cambió el bloqueo para  [[$1]] con una caducidad de $2 $3',
 	'range_block_disabled' => 'La facultad de administrador de crear bloqueos por rangos está deshabilitada.',
 	'revertmove' => 'revertir',
-	'rcpatroldisabled' => 'Revisión de los Cambios Recientes deshabilitada',
-	'rcpatroldisabledtext' => 'La capacidad de revisar los Cambios Recientes está deshabilitada en este momento.',
+	'rcpatroldisabled' => 'La capacidad de revisar los Cambios recientes está deshabilitada',
+	'rcpatroldisabledtext' => 'La capacidad de revisar los Cambios recientes está deshabilitada en este momento.',
 	'recreate' => 'Crear de nuevo',
 	'revdelete-content-hid' => 'contenido oculto',
 	'revdelete-summary-hid' => 'resumen de edición oculto',
@@ -11535,18 +11574,77 @@ No tiene acceso a él.',
 	'revdelete-summary-unhid' => 'resumen de edición mostrado',
 	'revdelete-uname-unhid' => 'nombre de usuario mostrado',
 	'revdelete-restricted' => 'restricciones para administradores aplicadas',
-	'revdelete-unrestricted' => 'restricciones para administradores eliminadas',
-	'rate_it' => 'Puntúalo:',
-	'review_reason_1' => 'Primera razón para esta revisión',
-	'review_reason_2' => 'Segunda razón para esta revisión',
-	'review_reason_3' => 'Tercera razón para esta revisión',
-	'review_reason_4' => 'Cuarta razón para esta revisión',
-	'review_reason_5' => 'Quinta razón para esta revisión',
+	'revdelete-unrestricted' => 'restricciones para administradores borradas',
+	'rate_it' => 'Califícalo:',
+	'review_reason_1' => 'Primer motivo para esta revisión',
+	'review_reason_2' => 'Segund motivo para esta revisión',
+	'review_reason_3' => 'Tercer motivo para esta revisión',
+	'review_reason_4' => 'Cuarto motivo para esta revisión',
+	'review_reason_5' => 'Quinto motivo para esta revisión',
+	'revision-info-current' => '-',
+	'revision-nav' => '($1) $2{{int:pipe-separator}}$3 ($4){{int:pipe-separator}}$5 ($6)',
+	'right-editmyoptions' => 'Puedes editar tus propias preferencias',
+	'right-loggedin' => 'Notificar a usuarios que han ingresado a una cuenta',
+	'right-mcachepurge' => 'Control del comportamiento de memcached a través de parámetros pedidos',
+	'right-emailconfirmed' => 'Usuario ha sido confirmado a través del correo electrónico',
+	'right-runjob' => 'Ejecutar de la cola de trabajos a través de API',
+	'recentchanges-url' => 'Especial:Cambios Recientes',
+	'rc-change-size' => '$1',
+	'rc-old-title' => 'creada originalmente como "$1"',
+	'randompage-url' => 'Special:Random',
+	'rfcurl' => '//tools.ietf.org/html/rfc$1',
+	'revdelete-logentry' => 'cambió revisión de visibilidad en "[[$1]]"',
+	'revdelete-content' => 'contenido',
+	'revdelete-summary' => 'editar resumen',
+	'revdelete-uname' => 'nombre de usuario',
+	'revdelete-hid' => 'ocultó $1',
+	'revdelete-unhid' => 'dejó de ocultar $1',
+	'revdelete-log-message' => '$1 para $2 {{PLURAL:$2|revisión|revisiones}}',
+	'reconfirmemail_subject' => 'Por favor, confirma de nuevo tu cuenta de Fandom',
+	'reconfirmemail_body' => 'Hola $2,
+
+Gracias por actualizar tu dirección de email en tu cuenta de Wikia Por favor, confirma que esta es la dirección de correo electrónico correcta haciendo clic en el siguiente enlace, solo te tomará un minuto: $3
+
+¡Gracias!
+- Equipo comunitario de Wikia
+
+___________________________________________
+* Si necesitas ayuda o consejos, visita nuestra comunidad central http://comunidad.wikia.com
+* ¿Quieres dejar de recibir estos mensajes? Puedes darte de baja en el servicio de emails desde tus preferencias aquí: http://comunidad.wikia.com/Especial:Preferencias',
+	'rcshowhideenhanced' => '$1 cambios recientes agrupados',
+	'refreshpage' => 'Recarga la página para activar este widget',
+	'requestcreatewiki' => 'Presentar solicitud',
+	'right_now' => 'Ahora<br />las personas estan...',
+	'return_to_article' => 'Volver a la página',
+	'return_to_talk' => 'Volver a la discusión',
+	'return_to_user' => 'Volver a la página de usuario',
+	'return_to_user_talk' => 'Volver a la discusión',
+	'return_to_project' => 'Volver a la página protegida',
+	'return_to_project_talk' => 'Volver a la discusión',
+	'return_to_image' => 'Volver a la página de imagen',
+	'return_to_image_talk' => 'Volver a la discusión',
+	'return_to_mediawiki' => 'Volver a la página de mensaje',
+	'return_to_mediawiki_talk' => 'Volver a la discusión',
+	'return_to_template' => 'Volver a la página de plantilla',
+	'return_to_template_talk' => 'Volver a la discusión',
+	'return_to_help' => 'Volver a la página de ayuda',
+	'return_to_help_talk' => 'Volver a la discusión',
+	'return_to_category' => 'Volver a la página de categoría',
+	'return_to_category_talk' => 'Volver a la discusión',
+	'return_to_forum' => 'Volver a la página de foro',
+	'return_to_forum_talk' => 'Volver a la discusión',
+	'return_to_special' => 'Volver a la página especial',
+	'related_wiki' => 'Añadir enlaces aquí para mostrar wiki relacionados a este en el [[{{#Special:Widgets|widget}}]] del wiki relacionado. 
+* [{{FULLURL:MediaWiki:Related wiki}} todavía no ha sido seleccionado wiki relacionado.]',
+	'registerintro-title' => '¡Cuando creas una cuenta en FANDOM, te conviertes en parte de la comunidad!',
+	'registerintro-text' => 'Dale crédito a todas tus contribuciones, y también podrás crear tu propio perfil de usuario, lista de seguimiento con tus páginas favoritas y tendrás acceso a una gran variedad de herramientas continuamente actualizadas.',
+	'rcshowhidelogs' => '$1 registros',
+	'right-hideblockername' => 'No mostrar nombre de usuario en avisos de bloqueo',
 );
 
 $messages['et'] = array(
 	'returnto' => 'Naase lehele $1',
-	'redirectedfrom' => '(Ümber suunatud leheküljelt $1)',
+	'redirectedfrom' => 'Ümber suunatud leheküljelt $1',
 	'redirectpagesub' => 'Ümbersuunamisleht',
 	'retrievedfrom' => 'Välja otsitud andmebaasist "$1"',
 	'restorelink' => '{{PLURAL:$1|üht|$1}} kustutatud versiooni',
@@ -11785,7 +11883,7 @@ Sinu [[Special:Watchlist|jälgimisloendi]] leheküljed on  '''rasvaselt''' esile
 	'rollback_short' => 'Tühista',
 	'rollbacklink' => 'tühista',
 	'rollbackfailed' => 'Muudatuste tühistamine ebaõnnestus',
-	'revertpage' => 'Tühistati kasutaja [[Special:Contributions/$2|$2]] ([[User talk:$2|arutelu]]) tehtud muudatused ja pöörduti tagasi viimasele muudatusele, mille tegi [[User:$1|$1]].',
+	'revertpage' => 'Tühistati kasutaja [[Special:Contributions/$2|$2]] ([[User talk:$2|arutelu]]) tehtud muudatused ja pöörduti tagasi viimasele muudatusele, mille tegi $1.',
 	'revertpage-nouser' => 'Tühistati eemaldatud nimega kasutaja tehtud muudatused ja pöörduti tagasi viimasele muudatusele, mille tegi [[User:$1|$1]].',
 	'rollback-success' => 'Tühistati $1 muudatus;
 pöörduti tagasi viimasele muudatusele, mille tegi $2.',
@@ -11816,7 +11914,7 @@ pöörduti tagasi viimasele muudatusele, mille tegi $2.',
 
 $messages['eu'] = array(
 	'returnto' => '$1(e)ra itzuli.',
-	'redirectedfrom' => '($1(e)tik birzuzenduta)',
+	'redirectedfrom' => '$1(e)tik birzuzenduta',
 	'redirectpagesub' => 'Birzuzenketa orrialdea',
 	'retrievedfrom' => '"$1"(e)tik jasota',
 	'restorelink' => '{{PLURAL:$1|ezabatutako aldaketa bat|ezabatutako $1 aldaketa}}',
@@ -12048,7 +12146,7 @@ Begira itzazu erregistroak.',
 	'rollback_short' => 'Desegin',
 	'rollbacklink' => 'desegin',
 	'rollbackfailed' => 'Desegiteak huts egin dud',
-	'revertpage' => '[[Special:Contributions/$2|$2]] ([[User talk:$2|talk]]) wikilariaren aldaketak deseginda, edukia [[User:$1|$1]] wikilariaren azken bertsiora itzuli da.',
+	'revertpage' => '[[Special:Contributions/$2|$2]] ([[User talk:$2|talk]]) wikilariaren aldaketak deseginda, edukia $1 wikilariaren azken bertsiora itzuli da.',
 	'rollback-success' => '$1 wikilariaren aldaketak deseginda,
 edukia $2 wikilariaren azken bertsiora itzuli da.',
 	'restriction-type' => 'Baimena:',
@@ -12072,7 +12170,7 @@ edukia $2 wikilariaren azken bertsiora itzuli da.',
 
 $messages['ext'] = array(
 	'returnto' => 'Gorvel a $1.',
-	'redirectedfrom' => '(Rederihiu dendi $1)',
+	'redirectedfrom' => 'Rederihiu dendi $1',
 	'redirectpagesub' => 'Rederihil páhina',
 	'retrievedfrom' => 'Arrecuperau dendi "$1"',
 	'restorelink' => '{{PLURAL:$1|una eición esborrá|$1 eicionis esborrás}}',
@@ -12211,7 +12309,7 @@ Las páhinas de la tu [[Special:Watchlist|lista e seguimientu]] están en '''neg
 	'rollback_short' => 'Revertil',
 	'rollbacklink' => 'revertil',
 	'rollbackfailed' => 'Marru revirtiendu',
-	'revertpage' => 'Án siu revertias las eicionis de [[Special:Contributions/$2|$2]] ([[User talk:$2|Caraba]]); chambau a la úrtima velsión de [[User:$1|$1]]',
+	'revertpage' => 'Án siu revertias las eicionis de [[Special:Contributions/$2|$2]] ([[User talk:$2|Caraba]]); chambau a la úrtima velsión de $1',
 	'rollback-success' => 'Revertias las eicionis de $1; chambau a la úrtima velsión de $2.',
 	'restriction-type' => 'Premisus:',
 	'restriction-level' => 'Nivel de restrición:',
@@ -12233,7 +12331,7 @@ Las páhinas de la tu [[Special:Watchlist|lista e seguimientu]] están en '''neg
 
 $messages['fa'] = array(
 	'returnto' => 'بازگشت به $1.',
-	'redirectedfrom' => '(تغییرمسیر از $1)',
+	'redirectedfrom' => 'تغییرمسیر از $1',
 	'redirectpagesub' => 'صفحهٔ تغییرمسیر',
 	'retrievedfrom' => 'برگرفته از «$1»',
 	'restorelink' => '{{PLURAL:$1|یک|$1}} ویرایش حذف‌شده',
@@ -12429,13 +12527,13 @@ $1",
 	'rightsnone' => '(هیچ)',
 	'recentchanges' => 'تغییرات اخیر',
 	'recentchanges-legend' => 'گزینه‌های تغییرات اخیر',
-	'recentchangestext' => 'آخرین تغییرات ویکی را در این صفحه پی‌گیری کنید.',
+	'recentchangestext' => '<div id="wikia-mediawiki-recentchangestext" style="border:2px solid #e9e9e9; margin-bottom:0.3em; padding:0.2em 0.5em;"><span style="float:right;">[[ویژه:صفحه‌های تازه|صفحه‌های تازه]] – [[ویژه:تصاویر جدید|تصاویر جدید]] – [[ویژه:سیاهه‌ها|سیاهه‌ها]]</span><span style="float:left;">[[راهنما:Recent changes|راهنما:تغییرات اخیر]]</span><div style="clear:both;"></div></div>',
 	'recentchanges-feed-description' => 'آخرین تغییرات ویکی را در این خوراک پی‌گیری کنید.',
 	'recentchanges-label-newpage' => 'این ویرایش صفحه‌ای جدید ایجاد کرد',
 	'recentchanges-label-minor' => 'این ویرایش جزئی‌است',
 	'recentchanges-label-bot' => 'این ویرایش را یک ربات انجام داده‌است',
 	'recentchanges-label-unpatrolled' => 'این ویرایش هنوز گشت‌زنی نشده‌است',
-	'rcnote' => "در زیر {{PLURAL:$1|'''۱''' تغییر|آخرین '''$1''' تغییر}} در آخرین {{PLURAL:$2|روز|'''$2''' روز}} را، تا $4 ساعت $5 می‌بینید.",
+	'rcnote' => '<div style="margin-top: -20px;" class="emptymwmsg mediawiki_rcnote"></div>',
 	'rcnotefrom' => 'در زیر تغییرات از تاریخ <b>$2</b> آمده‌اند (تا <b>$1</b> مورد نشان داده می‌شود).',
 	'rclistfrom' => 'نمایش تغییرات جدید با شروع از $1',
 	'rcshowhideminor' => '$1 ویرایش‌های جزئی',
@@ -12471,7 +12569,7 @@ $1",
 	'rollback_short' => 'واگردانی',
 	'rollbacklink' => 'واگردانی',
 	'rollbackfailed' => 'واگردانی نشد',
-	'revertpage' => 'ویرایش [[Special:Contributions/$2|$2]] ([[User talk:$2|بحث]]) به آخرین تغییری که [[User:$1|$1]] انجام داده بود واگردانده شد',
+	'revertpage' => 'ویرایش [[Special:Contributions/$2|$2]] ([[User talk:$2|بحث]]) به آخرین تغییری که $1 انجام داده بود واگردانده شد',
 	'revertpage-nouser' => 'ویرایش‌های انجام‌شده توسط (نام کاربری حذف شده‌است) به آخرین ویرایش [[User:$1|$1]] واگردانی شد.',
 	'rollback-success' => 'ویرایش‌های $1 واگردانی شد؛
 صفحه به آخرین ویرایش $2 برگردانده شد.',
@@ -12498,6 +12596,9 @@ $1",
 	'revdelete-uname-unhid' => 'نام کاربری را پنهان کرد',
 	'revdelete-restricted' => 'مدیران را محدود کرد',
 	'revdelete-unrestricted' => 'محدودیت مدیران را لغو کرد',
+	'randompage-url' => 'ویژه:صفحه_تصادفی',
+	'rcshowhideenhanced' => '$1 تغییرات اخیر گسترش‌یافته',
+	'recentchanges-url' => 'ویژه:تغییرات_اخیر',
 );
 
 $messages['ff'] = array(
@@ -12698,7 +12799,7 @@ Sinulla ei ole oikeutta siihen.',
 	'rightsnone' => '(ei oikeuksia)',
 	'recentchanges' => 'Tuoreet muutokset',
 	'recentchanges-legend' => 'Tuoreiden muutosten asetukset',
-	'recentchangestext' => 'Tällä sivulla voi seurata tuoreita {{GRAMMAR:illative|{{SITENAME}}}} tehtyjä muutoksia.',
+	'recentchangestext' => '<div id="wikia-mediawiki-recentchangestext" style="border:2px solid #e9e9e9; margin-bottom:0.3em; padding:0.2em 0.5em;"><span style="float:left;">[[Special:NewPages|Uudet sivut]] – [[Special:NewImages|Uudet tiedostot]] – [[Special:Log|Lokit]]</span><span style="float:right;">[[:w:c:fi:Ohje:Tuoreet muutokset|Ohje:Tuoreet muutokset]]</span><div style="clear:both;"></div></div>',
 	'recentchanges-feed-description' => 'Tällä sivulla voi seurata tuoreita {{GRAMMAR:illative|{{SITENAME}}}} tehtyjä muutoksia.',
 	'recentchanges-label-newpage' => 'Tämä muutos loi uuden sivun',
 	'recentchanges-label-minor' => 'Tämä on pieni muutos',
@@ -12739,7 +12840,7 @@ Sinulla ei ole oikeutta siihen.',
 	'rollback_short' => 'Palautus',
 	'rollbacklink' => 'palauta',
 	'rollbackfailed' => 'Palautus epäonnistui',
-	'revertpage' => 'Käyttäjän [[Special:Contributions/$2|$2]] ([[User talk:$2|keskustelu]]) muokkaukset kumottiin ja sivu palautettiin viimeisimpään käyttäjän [[User:$1|$1]] tekemään versioon.',
+	'revertpage' => 'Käyttäjän [[Special:Contributions/$2|$2]] ([[User talk:$2|keskustelu]]) muokkaukset kumottiin ja sivu palautettiin viimeisimpään käyttäjän $1 tekemään versioon.',
 	'revertpage-nouser' => 'Käyttäjän (käyttäjänimi poistettu) muokkaukset kumottiin ja sivu palautettiin viimeisimpään käyttäjän [[User:$1|$1]] tekemään versioon.',
 	'rollback-success' => 'Käyttäjän $1 tekemät muokkaukset kumottiin ja sivu palautettiin käyttäjän $2 versioon.',
 	'restriction-type' => 'Rajoitus',
@@ -12771,6 +12872,32 @@ Sinulla ei ole oikeutta siihen.',
 	'review_reason_3' => 'Arvostelun syy 3',
 	'review_reason_4' => 'Arvostelun syy 4',
 	'review_reason_5' => 'Arvostelun syy 5',
+	'registerintro-title' => 'Kun luot Wikia käyttäjän, sinusta tulee osa yhteisöä!',
+	'refreshpage' => 'Lataa sivu uudestaan aktivoidaksesi tämän vekottimen',
+	'registerintro-text' => 'Saat kunniaa kaikista artikkeleistasi, ja voit myös tehdä oman käyttäjä sivun, tarkkailulistan lempisivuistasi, ja pääset kaikenlaisiin hienoihin työkaluihin käsiksi.',
+	'related_wiki' => 'Lisää asteriskein linkkejä tähän näyttääksesi aiheeseen liittyviä wikejä [[Special:Widgets|samankaltaiset wikit-vekottimessa]].
+
+* [{{FULLURL:MediaWiki:Related wiki}} Aiheeseen liittyviä wikejä ei ole valittu.]',
+	'return_to_article' => 'Palaa artikkeliin',
+	'return_to_category' => 'Palaa luokkasivulle',
+	'return_to_category_talk' => 'Palaa keskusteluun',
+	'return_to_forum' => 'Palaa foorumisivulle',
+	'return_to_forum_talk' => 'Palaa keskusteluun',
+	'return_to_help' => 'Palaa ohjesivulle',
+	'return_to_help_talk' => 'Palaa keskusteluun',
+	'return_to_image' => 'Palaa kuvan kuvaussivulle',
+	'return_to_image_talk' => 'Palaa keskusteluun',
+	'return_to_mediawiki' => 'Palaa järjestelmäviestin sivulle',
+	'return_to_mediawiki_talk' => 'Palaa keskusteluun',
+	'return_to_project' => 'Palaa projektisivulle',
+	'return_to_project_talk' => 'Palaa keskusteluun',
+	'return_to_special' => 'Palaa toimintosivulle',
+	'return_to_talk' => 'Palaa keskusteluun',
+	'return_to_template' => 'Palaa mallineen sivulle',
+	'return_to_template_talk' => 'Palaa keskusteluun',
+	'return_to_user' => 'Palaa käyttäjäsivulle',
+	'return_to_user_talk' => 'Palaa keskusteluun',
+	'right_now' => 'Juuri nyt<br />ihmiset ovat...',
 );
 
 $messages['fiu-vro'] = array(
@@ -13007,7 +13134,7 @@ Sinulla ei ole oikeutta siihen.',
 	'rollback_short' => 'Palautus',
 	'rollbacklink' => 'palauta',
 	'rollbackfailed' => 'Palautus epäonnistui',
-	'revertpage' => 'Käyttäjän [[Special:Contributions/$2|$2]] ([[User talk:$2|keskustelu]]) muokkaukset kumottiin ja sivu palautettiin viimeisimpään käyttäjän [[User:$1|$1]] tekemään versioon.',
+	'revertpage' => 'Käyttäjän [[Special:Contributions/$2|$2]] ([[User talk:$2|keskustelu]]) muokkaukset kumottiin ja sivu palautettiin viimeisimpään käyttäjän $1 tekemään versioon.',
 	'revertpage-nouser' => 'Käyttäjän (käyttäjänimi poistettu) muokkaukset kumottiin ja sivu palautettiin viimeisimpään käyttäjän [[User:$1|$1]] tekemään versioon.',
 	'rollback-success' => 'Käyttäjän $1 tekemät muokkaukset kumottiin ja sivu palautettiin käyttäjän $2 versioon.',
 	'restriction-type' => 'Rajoitus',
@@ -13054,7 +13181,7 @@ $messages['fj'] = array(
 
 $messages['fo'] = array(
 	'returnto' => 'Vend aftur til $1.',
-	'redirectedfrom' => '(Ávíst frá $1)',
+	'redirectedfrom' => 'Ávíst frá $1',
 	'redirectpagesub' => 'Ávísingarsíða',
 	'retrievedfrom' => 'Heinta frá "$1"',
 	'restorelink' => '{{PLURAL:$1|strikaða rætting|$1 strikaðar rættingar}}',
@@ -13217,7 +13344,7 @@ Síður á [[Special:Watchlist|tínum eftiransingarlista]] eru skrivaðar við '
 );
 
 $messages['fr'] = array(
-	'realmap-deprecated-info' => 'Les cartes du monde réel ont été retirées par Wikia. Pour plus d’informations, voir: $1',
+	'realmap-deprecated-info' => 'Les cartes du monde réel ont été retirées par Wikia. Pour plus d’informations, voir : $1',
 	'returnto' => 'Revenir à la page $1.',
 	'redirectedfrom' => '(Redirigé depuis $1)',
 	'redirectpagesub' => 'Page de redirection',
@@ -13229,9 +13356,9 @@ $messages['fr'] = array(
 
 L’administrateur ayant verrouillé la base de données a fourni l’explication suivante :<br />$1',
 	'readonly_lag' => 'La base de données a été automatiquement verrouillée pendant que les serveurs secondaires rattrapent leur retard sur le serveur principal.',
-	'remembermypassword' => 'Me reconnecter automatiquement aux prochaines visites avec ce navigateur (au maximum $1 {{PLURAL:$1|jour|jours}})',
+	'remembermypassword' => 'Me reconnecter automatiquement aux prochaines visites',
 	'resetpass' => 'Changer de mot de passe',
-	'resetpass_announce' => 'Vous vous êtes enregistré{{GENDER:||e|(e)}} avec un mot de passe temporaire envoyé par courriel. Pour terminer l’enregistrement, vous devez entrer un nouveau mot de passe ici :',
+	'resetpass_announce' => 'Vous vous êtes enregistré{{GENDER:||e|(e)}} avec un mot de passe temporaire envoyé par e-mail. Pour terminer l’enregistrement, vous devez saisir un nouveau mot de passe ici :',
 	'resetpass_text' => '<!-- Ajoutez le texte ici -->',
 	'resetpass_header' => 'Changer le mot de passe du compte',
 	'retypenew' => 'Confirmer le nouveau mot de passe :',
@@ -13253,10 +13380,10 @@ L’administrateur ayant verrouillé la base de données a donné l’explicatio
 Assurez-vous qu’il est pertinent de poursuivre les modifications sur cette page. Le journal des suppressions et des déplacements est affiché ci-dessous :",
 	'revisionasof' => 'Version du $1',
 	'revision-info' => 'Version du $1 par $2',
-	'rev-deleted-comment' => "(résumé d'édition enlevé)",
-	'rev-deleted-user' => '(nom d’utilisateur supprimé)',
-	'rev-deleted-event' => '(entrée supprimée)',
-	'rev-deleted-user-contribs' => '[nom d’utilisateur ou adresse IP supprimée - modification cachée sur les contributions]',
+	'rev-deleted-comment' => '(résumé de modification retiré)',
+	'rev-deleted-user' => '(nom d’utilisateur retiré)',
+	'rev-deleted-event' => '(entrée retirée)',
+	'rev-deleted-user-contribs' => '[nom d’utilisateur ou adresse IP retiré - modification masquée sur les contributions]',
 	'rev-deleted-text-permission' => "Cette version de la page a été '''effacée'''.
 Des détails sont disponibles dans le [{{fullurl:{{#Special:Log}}/delete|page={{FULLPAGENAMEE}}}} journal des effacements].",
 	'rev-deleted-text-unhide' => "Cette version de la page a été '''effacée'''.
@@ -13311,7 +13438,7 @@ Les autres administrateurs de {{SITENAME}} pourront toujours accéder au contenu
 	'revdelete-radio-same' => '(ne pas changer)',
 	'revdelete-radio-set' => 'Oui',
 	'revdelete-radio-unset' => 'Non',
-	'revdelete-suppress' => 'Cacher les données également pour les administrateurs',
+	'revdelete-suppress' => 'Masquer également les données pour les administrateurs',
 	'revdelete-unsuppress' => 'Enlever les restrictions sur les versions restaurées',
 	'revdelete-log' => 'Motif :',
 	'revdelete-submit' => 'Appliquer {{PLURAL:$1|à la révision sélectionnée|aux révisions sélectionnées}}',
@@ -13380,7 +13507,7 @@ Vérifiez les journaux.',
 	'right-suppressrevision' => 'Examiner et restaurer les versions masquées aux administrateurs',
 	'right-suppressionlog' => 'Voir les journaux privés',
 	'right-block' => 'Bloquer en écriture d’autres utilisateurs',
-	'right-blockemail' => 'Empêcher un utilisateur d’envoyer des courriels',
+	'right-blockemail' => 'Empêcher un utilisateur d’envoyer des e-mails',
 	'right-hideuser' => 'Bloquer un utilisateur en masquant son nom au public',
 	'right-ipblock-exempt' => 'Ne pas être affecté par les IP bloquées, les blocages automatiques et les blocages de plages d’IP',
 	'right-proxyunbannable' => 'Ne pas être affecté par les blocages automatiques de serveurs mandataires',
@@ -13405,8 +13532,8 @@ Vérifiez les journaux.',
 	'right-userrights-interwiki' => 'Modifier les droits d’utilisateurs qui sont sur un autre wiki',
 	'right-siteadmin' => 'Verrouiller ou déverrouiller la base de données',
 	'right-override-export-depth' => 'Exporter les pages en incluant les pages liées jusqu’à une profondeur de 5 niveaux',
-	'right-sendemail' => 'Envoyer un courriel aux autres utilisateurs',
-	'right-passwordreset' => 'Voir les courriels de réinitialisation des mots de passe',
+	'right-sendemail' => 'Envoyer un e-mail aux autres utilisateurs',
+	'right-passwordreset' => 'Voir les e-mails de réinitialisation des mots de passe',
 	'rightslog' => 'Journal des modifications de droits d’utilisateurs',
 	'rightslogtext' => 'Voici l’historique des modifications des droits des utilisateurs.',
 	'rightslogentry' => 'a modifié les droits de l’utilisateur « $1 » de $2 à $3',
@@ -13414,7 +13541,7 @@ Vérifiez les journaux.',
 	'rightsnone' => '(aucun)',
 	'recentchanges' => 'Modifications récentes',
 	'recentchanges-legend' => 'Options des modifications récentes',
-	'recentchangestext' => 'Piste les changements les plus récents du wiki sur cette page.',
+	'recentchangestext' => '<div id="wikia-mediawiki-recentchangestext" style="border:2px solid #e9e9e9; margin-bottom:0.3em; padding:0.2em 0.5em;"><span style="float:left;">[[Special:NewPages|Nouvelles pages]] – [[Special:NewImages|Nouveaux fichiers]] – [[Special:Log|Journaux]] – [[Special:Statistics|Statistiques]]</span><span style="float:right;">[[w:c:communaute:Aide:Modifications récentes|Aide:Modifications récentes]]</span><div style="clear:both;"></div></div>',
 	'recentchanges-feed-description' => 'Suivre les dernières modifications de ce wiki dans un flux.',
 	'recentchanges-label-newpage' => 'Cette modification a créé une nouvelle page',
 	'recentchanges-label-minor' => 'Cette modification est mineure',
@@ -13474,12 +13601,12 @@ rétablissement de la dernière version par $2.',
 	'rcpatroldisabled' => 'La fonction de relecture des modifications récentes n’est pas activée.',
 	'rcpatroldisabledtext' => 'La fonctionnalité de relecture des modifications récentes est actuellement désactivée.',
 	'recreate' => 'Recréer',
-	'revdelete-content-hid' => 'contenu caché',
-	'revdelete-summary-hid' => 'modifier le résumé caché',
-	'revdelete-uname-hid' => "nom d'utilisateur caché",
-	'revdelete-content-unhid' => 'contenu démasqué',
-	'revdelete-summary-unhid' => 'modifier le résumé démasqué',
-	'revdelete-uname-unhid' => "nom d'utilisateur démasqué",
+	'revdelete-content-hid' => 'contenu masqué',
+	'revdelete-summary-hid' => 'résumé de modification masqué',
+	'revdelete-uname-hid' => 'nom d’utilisateur masqué',
+	'revdelete-content-unhid' => 'contenu affiché',
+	'revdelete-summary-unhid' => 'résumé de modification affiché',
+	'revdelete-uname-unhid' => 'nom d’utilisateur affiché',
 	'revdelete-restricted' => 'a appliqué les restrictions aux administrateurs',
 	'revdelete-unrestricted' => 'restrictions retirées pour les administrateurs',
 	'rate_it' => 'Notez-le:',
@@ -13488,11 +13615,87 @@ rétablissement de la dernière version par $2.',
 	'review_reason_3' => 'Motif de révision n° 3',
 	'review_reason_4' => 'Motif de révision n° 4',
 	'review_reason_5' => 'Motif de révision n° 5',
+	'revision-info-current' => '-',
+	'revision-nav' => '($1) $2{{int:pipe-separator}}$3 ($4){{int:pipe-separator}}$5 ($6)',
+	'right-editmyoptions' => 'Modifier ses propres préférences',
+	'right-loggedin' => "Indiquer que l'utilisateur est connecté à un compte",
+	'right-mcachepurge' => 'Contrôler le comportement de la mémoire cache via des paramètres de requête',
+	'right-emailconfirmed' => "Adresse e-mail de l'utilisateur confirmée",
+	'right-runjob' => "Exécuter une tâche de la file d'attente par API",
+	'recentchanges-url' => 'Special:RecentChanges',
+	'rc-change-size' => '$1',
+	'rc-old-title' => 'créé sous le titre d\'origine "$1"',
+	'randompage-url' => 'Special:Random',
+	'rfcurl' => '//tools.ietf.org/html/rfc$1',
+	'revdelete-logentry' => 'a modifié la visibilité de la révision de « [[$1]] »',
+	'revdelete-content' => 'contenu',
+	'revdelete-summary' => 'résumé de modification',
+	'revdelete-uname' => 'nom d’utilisateur',
+	'revdelete-hid' => 'a masqué $1',
+	'revdelete-unhid' => 'a révélé $1',
+	'revdelete-log-message' => '$1 pour $2 version{{PLURAL:$2||s}}',
+	'reconfirmemail_subject' => 'Welcome to Wikia!',
+	'reconfirmemail_body' => 'Hi $2,
+
+Thank you for updating the email address associated with your Wikia account.
+
+Before our system can send you any mail you have opted to receive, you
+must confirm your email address.
+
+Click on the link below or paste it into your browser:
+
+$3
+
+Note: This confirmation link will expire in 7 days.
+
+
+With thousands of communities on Wikia, there are many ways to have fun
+here. Spend some time getting to know Wikia by visiting the home page
+(www.wikia.com), taking a tutorial at
+http://www.wikia.com/wiki/Help:Tutorial_1 , reading interesting and cool
+pages, writing content on your favorite subjects, or meeting other
+members of the community.
+
+We look forward to seeing you on Wikia!
+
+The Wikia Community Team
+www.wikia.com
+',
+	'rcshowhideenhanced' => '$1 les modifications récentes organisées',
+	'refreshpage' => 'Recharger la page pour activer ce widget',
+	'requestcreatewiki' => 'Soumettre la demande',
+	'right_now' => 'Right Now<br />people are...',
+	'return_to_article' => 'Retour à la page',
+	'return_to_talk' => 'Retour à la discussion',
+	'return_to_user' => 'Retour à la page utilisateur',
+	'return_to_user_talk' => 'Retour à la discussion',
+	'return_to_project' => 'Retour à la page de projet',
+	'return_to_project_talk' => 'Retour à la discussion',
+	'return_to_image' => "Retour à la page d'image",
+	'return_to_image_talk' => 'Retour à la discussion',
+	'return_to_mediawiki' => 'Retour à la page de message',
+	'return_to_mediawiki_talk' => 'Retour à la discussion',
+	'return_to_template' => 'Retour à la page de modèle',
+	'return_to_template_talk' => 'Retour à la discussion',
+	'return_to_help' => "Retour à la page d'aide",
+	'return_to_help_talk' => 'Retour à la discussion',
+	'return_to_category' => 'Retour à la page de catégorie',
+	'return_to_category_talk' => 'Retour à la discussion',
+	'return_to_forum' => 'Retour à la page de forum',
+	'return_to_forum_talk' => 'Retour à la discussion',
+	'return_to_special' => 'Retour à la page spéciale',
+	'related_wiki' => 'Add bulleted links here to display wiki related to this one in the related wiki [[Special:Widgets|widget]].
+
+* [{{FULLURL:MediaWiki:Related wiki}} No related wiki have been selected yet.]',
+	'registerintro-title' => 'Lorsque vous créez un compte sur FANDOM, vous devenez membre de la communauté !',
+	'registerintro-text' => "Vous comptabilisez toutes vos contributions et vous pouvez créer votre propre profil utilisateur, liste de suivi de vos pages favorites et avoir accès à toute sorte d'outils sympas. Vos contributions sont davantage prises au sérieux.",
+	'rcshowhidelogs' => '$1 les journaux',
+	'right-hideblockername' => "Ne pas afficher leur nom d'utilisateur dans les avis de blocage",
 );
 
 $messages['frc'] = array(
 	'returnto' => 'Retourner back à la page $1.',
-	'redirectedfrom' => '(Envoyé ici de la page $1)',
+	'redirectedfrom' => 'Envoyé ici de la page $1',
 	'redirectpagesub' => 'Page de redirection',
 	'retrievedfrom' => 'Pris de "$1"',
 	'restorelink' => '{{PLURAL:$1|1 changement ôté|$1 changements ôtés}}',
@@ -13545,11 +13748,28 @@ Des autres administrateurs sus ce wiki ont la permission de voir et de rétablir
 	'recentchanges' => 'Changements récent',
 	'rcshowhidepatr' => '$1 les modifications patrouillés',
 	'randompage' => 'Page au hasard',
+	'recentchangestext' => '<span style="float:right;"><small>\'\'[[MediaWiki:Recentchangestext|Regarder ce modèle]]\'\'</small></span>
+Trouvez les changements les plus récents du wiki sur cette page.
+
+{| class="plainlinks" style="background: transparent; margin-left:0.5em; margin-bottom:0.5em;" cellpadding="0" cellspacing="0"
+|-valign="top"
+|align="right"|\'\'\'Opérations&nbsp;:&nbsp;\'\'\'
+|align="left" |[[Special:Newpages|Nouvelles pages]] - [[Special:Newimages|Nouveaux fichiers]] - [[Special:Log/delete|Suppressions]] - [[Special:Log/move|Déplacements]] - [[Special:Log/upload|Importations]] - [[Special:Log/block|Blocages]] - [[Special:Log|plus des logs...]]
+|-valign="top"
+|align="right"|\'\'\'Pages speciales&nbsp;:&nbsp;\'\'\'
+|align="left" |[[Special:Wantedpages|Pages les plus demandées]] - [[Special:Longpages|Pages longues]] - [[Special:Uncategorizedimages|Images sans catégorie]] - [[Special:Uncategorizedpages|Pages sans catégorie]] - [[Special:Specialpages|toutes les pages spéciales...]]
+|-valign="top"
+|align="right"|\'\'\'Trouver des utilisateurs&nbsp;:&nbsp;\'\'\'
+|align="left" |[[Special:Listusers/sysop|Administrateurs]] - [[Special:Listusers/helper|Helpers]] - [[Special:Listusers/staff|Wikia Staff]] - [[Special:Listusers|Plus des utilisateurs...]]
+|-valign="top"
+|align="right"|\'\'\'Autres&nbsp;:&nbsp;\'\'\'
+|align="left" |[[Special:Statistics|Statistiques]] - [http://irc.wikia.com/ Canaux d\'IRC]
+|}',
 );
 
 $messages['frp'] = array(
 	'returnto' => 'Tornar a la pâge $1.',
-	'redirectedfrom' => '(Redirigiê dês $1)',
+	'redirectedfrom' => 'Redirigiê dês $1',
 	'redirectpagesub' => 'Pâge de redirèccion',
 	'retrievedfrom' => 'Rècupèrâ de « $1 »',
 	'restorelink' => '{{PLURAL:$1|yon changement suprimâ|$1 changements suprimâs}}',
@@ -13790,7 +14010,7 @@ Les pâges de voutra [[Special:Watchlist|lista de survelyence]] sont '''en grâs
 	'rollback_short' => 'Rèvocar',
 	'rollbacklink' => 'rèvocar',
 	'rollbackfailed' => 'La rèvocacion at pas reussia',
-	'revertpage' => 'Rèvocacion des changements a [[Special:Contributions/$2|$2]] ([[User talk:$2|Discutar]]) de vers la dèrriére vèrsion a [[User:$1|$1]]',
+	'revertpage' => 'Rèvocacion des changements a [[Special:Contributions/$2|$2]] ([[User talk:$2|Discutar]]) de vers la dèrriére vèrsion a $1',
 	'revertpage-nouser' => 'Rèvocacion des changements per (nom d’usanciér suprimâ) a la dèrriére vèrsion per [[User:$1|$1]]',
 	'rollback-success' => 'Rèvocacion des changements fêts per $1 ;
 rètablissement de la dèrriére vèrsion per $2.',
@@ -13821,7 +14041,7 @@ rètablissement de la dèrriére vèrsion per $2.',
 
 $messages['frr'] = array(
 	'returnto' => 'Tubääg tu jü side $1.',
-	'redirectedfrom' => '(Widerliidjet foon $1)',
+	'redirectedfrom' => 'Widerliidjet foon $1',
 	'redirectpagesub' => 'Widerliidjing',
 	'retrievedfrom' => 'Foon „$1“',
 	'restorelink' => '$1 {{PLURAL:$1|sträägen Färsjoon|sträägene Färsjoone}}',
@@ -13969,7 +14189,7 @@ Dü heest deeraw nåån tugraawe.',
 
 $messages['fur'] = array(
 	'returnto' => 'Torne a $1.',
-	'redirectedfrom' => '(Inviât ca di $1)',
+	'redirectedfrom' => 'Inviât ca di $1',
 	'redirectpagesub' => 'Pagjine di redirezion',
 	'retrievedfrom' => 'Cjapât fûr di $1',
 	'restorelink' => '{{PLURAL:$1|une modifiche eliminade|$1 modifichis eliminadis}}',
@@ -14057,7 +14277,7 @@ Ve ca par comoditât la liste des eliminazions e dai moviments par cheste pagjin
 
 $messages['fy'] = array(
 	'returnto' => 'Werom nei "$1".',
-	'redirectedfrom' => '(Trochwiisd fan "$1")',
+	'redirectedfrom' => 'Trochwiisd fan "$1"',
 	'redirectpagesub' => 'Trochferwiis-side',
 	'retrievedfrom' => 'Untfongen fan "$1"',
 	'restorelink' => '$1 wiske {{PLURAL:$1|ferzje|ferzjes}}',
@@ -14232,7 +14452,7 @@ Oare behearders fan {{SITENAME}} kinne de ferburgen ynhâld benaderje en it fuor
 	'rollback_short' => 'Werom sette',
 	'rollbacklink' => 'feroaring werom sette',
 	'rollbackfailed' => 'Feroaring werom sette net slagge',
-	'revertpage' => 'Bewurkings fan [[Special:Contributions/$2|$2]] ([[User talk:$2|Oerlis]]) werom set ta de ferzje fan [[User:$1|$1]]',
+	'revertpage' => 'Bewurkings fan [[Special:Contributions/$2|$2]] ([[User talk:$2|Oerlis]]) werom set ta de ferzje fan $1',
 	'rollback-success' => 'Feroarings werom set fan $1; werom set nei de lêste ferzje fan $2.',
 	'restriction-type' => 'Permisje:',
 	'restriction-level' => 'Skoattel nivo:',
@@ -14250,7 +14470,7 @@ Oare behearders fan {{SITENAME}} kinne de ferburgen ynhâld benaderje en it fuor
 
 $messages['ga'] = array(
 	'returnto' => 'Fill ar ais go $1.',
-	'redirectedfrom' => '(Athsheolta ó $1)',
+	'redirectedfrom' => 'Athsheolta ó $1',
 	'redirectpagesub' => 'Lch athdhírithe',
 	'retrievedfrom' => 'Aisghabháil ó "$1"',
 	'restorelink' => '{{PLURAL:$1|athrú scriosta amháin|$1 athruithe scriosta}}',
@@ -14344,7 +14564,7 @@ Tá na leathanaigh ar do [[Special:Watchlist|liosta faire]] i '''gcló trom'''."
 	'rollback_short' => 'Roll siar',
 	'rollbacklink' => 'roll siar',
 	'rollbackfailed' => 'Theip an rolladh siar',
-	'revertpage' => 'Cealaíodh athruithe [[Special:Contributions/$2|$2]] ([[User talk:$2|Plé]]); ar ais chuig leagan le [[User:$1|$1]]',
+	'revertpage' => 'Cealaíodh athruithe [[Special:Contributions/$2|$2]] ([[User talk:$2|Plé]]); ar ais chuig leagan le $1',
 	'restriction-type' => 'Ceadúnas:',
 	'restriction-level' => 'Leibhéal srianadh:',
 	'restriction-create' => 'Cruthaigh',
@@ -14359,7 +14579,7 @@ Tá na leathanaigh ar do [[Special:Watchlist|liosta faire]] i '''gcló trom'''."
 
 $messages['gag'] = array(
 	'returnto' => '$1 dön.',
-	'redirectedfrom' => '($1 sayfasınnan yönnendirildi)',
+	'redirectedfrom' => '$1 sayfasınnan yönnendirildi',
 	'redirectpagesub' => 'Yönnendirme sayfası',
 	'retrievedfrom' => 'Alındı "$1"dän',
 	'restorelink' => 'silinmiş $1 diişmäk',
@@ -14522,7 +14742,7 @@ $messages['gan-hans'] = array(
 	'rollback_short' => '还原',
 	'rollbacklink' => '还原',
 	'rollbackfailed' => '还原失败',
-	'revertpage' => '返回由[[Special:Contributions/$2|$2]] （[[User talk:$2|对话]]）𠮶编辑；恢复到[[User:$1|$1]]𠮶最末一只版本',
+	'revertpage' => '返回由[[Special:Contributions/$2|$2]] （[[User talk:$2|对话]]）𠮶编辑；恢复到$1𠮶最末一只版本',
 	'rollback-success' => '返回由$1𠮶编辑；恢复到$2𠮶最末一只版本。',
 	'restriction-type' => '权限:',
 	'restriction-level' => '限制级别:',
@@ -14647,7 +14867,7 @@ $messages['gan-hant'] = array(
 	'rollback_short' => '還原',
 	'rollbacklink' => '還原',
 	'rollbackfailed' => '還原失敗',
-	'revertpage' => '返回由[[Special:Contributions/$2|$2]] （[[User talk:$2|對話]]）嗰編輯；恢復到[[User:$1|$1]]嗰最末一隻版本',
+	'revertpage' => '返回由[[Special:Contributions/$2|$2]] （[[User talk:$2|對話]]）嗰編輯；恢復到$1嗰最末一隻版本',
 	'rollback-success' => '返回由$1嗰編輯；恢復到$2嗰最末一隻版本。',
 	'restriction-type' => '許可權:',
 	'restriction-level' => '限制級別:',
@@ -14666,7 +14886,7 @@ $messages['gan-hant'] = array(
 
 $messages['gd'] = array(
 	'returnto' => 'Till dhan duilleag a leanas: $1',
-	'redirectedfrom' => '(Air ath-sheòladh o $1)',
+	'redirectedfrom' => 'Air ath-sheòladh o $1',
 	'redirectpagesub' => 'Ath-sheòl an duilleag',
 	'retrievedfrom' => 'Air a tharraing à "$1"',
 	'restorelink' => '{{PLURAL:$1|aon deasachadh|$1 dheasachadh|$1 deasachadh|$1 dheasachadh|$1 deasachaidhean|$1 deasachadh}} a chaidh a sguabadh às',
@@ -14739,7 +14959,7 @@ Tha duilleagan air [[Special:Watchlist|do chlàr-faire]] ann an litrichean '''tr
 	'removedwatchtext' => 'Chaidh an duilleag "[[:$1]]" a thoirt air falbh o [[Special:Watchlist|do chlàr-faire]].',
 	'reverted' => 'Air aiseag gu tionndadh nas sine',
 	'rollbacklink' => 'roilig air ais',
-	'revertpage' => 'Deasachaidhean a chaidh a thilleadh le [[Special:Contributions/$2|$2]] ([[User talk:$2|talk]]) dhan mhùthadh mu dheireadh le [[User:$1|$1]]',
+	'revertpage' => 'Deasachaidhean a chaidh a thilleadh le [[Special:Contributions/$2|$2]] ([[User talk:$2|talk]]) dhan mhùthadh mu dheireadh le $1',
 	'restriction-type' => 'Cead:',
 	'restriction-level' => 'Ìre bacaidh:',
 	'revertmove' => 'till',
@@ -14747,7 +14967,7 @@ Tha duilleagan air [[Special:Watchlist|do chlàr-faire]] ann an litrichean '''tr
 
 $messages['gl'] = array(
 	'returnto' => 'Volver a "$1".',
-	'redirectedfrom' => '(Redirixido desde "$1")',
+	'redirectedfrom' => 'Redirixido desde "$1"',
 	'redirectpagesub' => 'Páxina de redirección',
 	'retrievedfrom' => 'Traído desde "$1"',
 	'restorelink' => '{{PLURAL:$1|unha edición borrada|$1 edicións borradas}}',
@@ -14985,7 +15205,7 @@ As páxinas da súa [[Special:Watchlist|lista de vixilancia]] aparecen en '''neg
 	'rollback_short' => 'Reverter',
 	'rollbacklink' => 'reverter',
 	'rollbackfailed' => 'Houbo un fallo ao reverter as edicións',
-	'revertpage' => 'Desfixéronse as edicións de [[Special:Contributions/$2|$2]] ([[User talk:$2|conversa]]); cambiado á última versión feita por [[User:$1|$1]]',
+	'revertpage' => 'Desfixéronse as edicións de [[Special:Contributions/$2|$2]] ([[User talk:$2|conversa]]); cambiado á última versión feita por $1',
 	'revertpage-nouser' => 'Desfixéronse as edicións de (nome eliminado); cambiado á última versión feita por [[User:$1|$1]]',
 	'rollback-success' => 'Desfixéronse as edicións de $1;
 volveuse á última edición, feita por $2.',
@@ -15020,7 +15240,7 @@ $messages['glk'] = array(
 );
 
 $messages['gn'] = array(
-	'redirectedfrom' => '(Oñembohapejeýva $1)',
+	'redirectedfrom' => 'Oñembohapejeýva $1',
 	'restorelink' => '$1 ediciones borradas',
 	'red-link-title' => '$1 (ndaipóri ko togue)',
 	'remembermypassword' => "Aipota chemomandu'ajepi amba'apo jave (for a maximum of $1 {{PLURAL:$1|day|days}})",
@@ -15044,7 +15264,7 @@ $messages['gn'] = array(
 
 $messages['got'] = array(
 	'returnto' => '𐌲𐌰𐍅𐌰𐌽𐌳𐌾𐌰𐌽 𐌰𐍄 $1.',
-	'redirectedfrom' => '(Náuþjan framis $1)',
+	'redirectedfrom' => 'Náuþjan framis $1',
 	'redirectpagesub' => '𐍄𐌰𐌹𐌺𐌾𐌰𐍃𐌴𐌹𐌳𐍉',
 	'retrievedfrom' => 'Niman fram "$1"',
 	'revisionasof' => '𐌲𐌰𐌼𐌴𐌻𐌹𐌳𐍉 𐌿𐍃 $1',
@@ -15070,7 +15290,7 @@ $messages['got'] = array(
 
 $messages['grc'] = array(
 	'returnto' => 'Ἐπανιέναι εἰς $1.',
-	'redirectedfrom' => '(Ἀποσταλτὸν ἀπὸ $1)',
+	'redirectedfrom' => 'Ἀποσταλτὸν ἀπὸ $1',
 	'redirectpagesub' => 'Ἐπανάγειν δέλτον',
 	'retrievedfrom' => 'Ἀνακτηθεῖσα ὑπὸ "$1"',
 	'restorelink' => '{{PLURAL:$1|μία διαγεγραμμένη μεταγραφή|$1 διαγεγραμμέναι μεταγραφαί}}',
@@ -15263,7 +15483,7 @@ $1",
 	'rollback_short' => 'Ἀναστροφή',
 	'rollbacklink' => 'ἀναστροφή',
 	'rollbackfailed' => 'Ἀναστροφὴ μὴ ἐπιτυχής',
-	'revertpage' => 'Ἐπαναφέρειν μεταγραφὰς ὑπὸ [[Special:Contributions/$2|$2]] ([[User talk:$2|Talk]]) εἰς τὴν ἐσχάτην ἔκδοσιν ὑπὸ [[User:$1|$1]]',
+	'revertpage' => 'Ἐπαναφέρειν μεταγραφὰς ὑπὸ [[Special:Contributions/$2|$2]] ([[User talk:$2|Talk]]) εἰς τὴν ἐσχάτην ἔκδοσιν ὑπὸ $1',
 	'rollback-success' => 'Ἀναστρέφειν μεταγραφὰς ὑπὸ $1;
 ἐπαναφορὰ εἰς τὴν προτέραν ἔκδοσιν ὑπὸ $2.',
 	'restriction-type' => 'Ἐξουσία:',
@@ -15285,7 +15505,7 @@ $1",
 
 $messages['gsw'] = array(
 	'returnto' => 'Zruck zur Syte $1.',
-	'redirectedfrom' => '(Witergleitet vun $1)',
+	'redirectedfrom' => 'Witergleitet vun $1',
 	'redirectpagesub' => 'Umgleiteti Syte',
 	'retrievedfrom' => 'Vun "$1"',
 	'restorelink' => '{{PLURAL:$1|gleschti Änderig|$1 gleschti Ändrige}}',
@@ -15521,7 +15741,7 @@ Sytene, wo zu dyre [[Special:Watchlist|Beobachtigslischte]] ghöre, erschyne '''
 	'rollback_short' => 'Zrucksetze',
 	'rollbacklink' => 'Zrüggsetze',
 	'rollbackfailed' => 'S Zrucksetze het nit funktioniert',
-	'revertpage' => 'Ruckgängig gmacht zue dr letschte Änderig vo [[Special:Contributions/$2|$2]] ([[User talk:$2|Diskussion]]) mit de letzte Version vo [[User:$1|$1]] widerhergstellt',
+	'revertpage' => 'Ruckgängig gmacht zue dr letschte Änderig vo [[Special:Contributions/$2|$2]] ([[User talk:$2|Diskussion]]) mit de letzte Version vo $1 widerhergstellt',
 	'revertpage-nouser' => 'Bearbeitige ruckgängig gmacht vu (Benutzername uusegnuu), letschti Fassig vu [[User:$1|$1]] widerhärgstellt',
 	'rollback-success' => 'D Änderige vu $1 sin ruckgängig gmacht wore un di letscht Version vu $2 isch widerhärgstellt wore.',
 	'restriction-type' => 'Schutzstatus',
@@ -15551,7 +15771,7 @@ Sytene, wo zu dyre [[Special:Watchlist|Beobachtigslischte]] ghöre, erschyne '''
 
 $messages['gu'] = array(
 	'returnto' => '$1 પર પાછા જાઓ.',
-	'redirectedfrom' => '($1 થી અહીં વાળેલું)',
+	'redirectedfrom' => '$1 થી અહીં વાળેલું',
 	'redirectpagesub' => 'પાનું અન્યત્ર વાળો',
 	'retrievedfrom' => '"$1"થી લીધેલું',
 	'restorelink' => '{{PLURAL:$1|એક ભુસીનાખેલો ફેરફાર|$1 ભુસીનાખેલા ફેરફારો}}',
@@ -15791,7 +16011,7 @@ $1",
 	'rollback_short' => 'ઉલટાવો',
 	'rollbacklink' => 'પાછું વાળો',
 	'rollbackfailed' => 'ઉલટાવવું નિષ્ફળ',
-	'revertpage' => '[[Special:Contributions/$2|$2]] ([[User talk:$2|talk]])દ્વારા ફેરફરોને  [[User:$1|$1]] દ્વારા કરેલા છેલ્લા સુધારા સુધી ઉલટાવાયા.',
+	'revertpage' => '[[Special:Contributions/$2|$2]] ([[User talk:$2|talk]])દ્વારા ફેરફરોને  $1 દ્વારા કરેલા છેલ્લા સુધારા સુધી ઉલટાવાયા.',
 	'revertpage-nouser' => ' (સભ્ય નામ હટાવ્યું) દ્વારા થયેલ ફેરફારને  [[User:$1|$1]]ના દ્વારા થયેલ છેલ્લા પુનરાવર્તન પર પાછા લઇ જવાયા',
 	'rollback-success' => '$1 દ્વારા થયેલા ફેરફારો ઉલટાવાયા
 તેને $2 દ્વારા થયેલ સંપાદન સુધી લઇ જવાયું',
@@ -15822,7 +16042,7 @@ $1",
 
 $messages['gv'] = array(
 	'returnto' => 'Goll er ash gys $1.',
-	'redirectedfrom' => '(Aa-enmyssit ass $1)',
+	'redirectedfrom' => 'Aa-enmyssit ass $1',
 	'redirectpagesub' => 'Duillag aa-enmys',
 	'retrievedfrom' => 'Feddynit ass "$1"',
 	'red-link-title' => '$1 (cha nel y duillag shoh ayn)',
@@ -15896,7 +16116,7 @@ Ta duillagyn er [[Special:Watchlist|dty rolley arrey]] ayns '''clou trome'''.",
 
 $messages['ha'] = array(
 	'returnto' => 'Koma $1',
-	'redirectedfrom' => '(an turo daga $1)',
+	'redirectedfrom' => 'an turo daga $1',
 	'redirectpagesub' => 'Shafin turawa',
 	'retrievedfrom' => 'Daga "$1"',
 	'red-link-title' => '$1 (babu wannan shafi)',
@@ -16033,7 +16253,7 @@ Chhai [[Special:Watchlist|ngì-ke kam-sṳ lie̍t-péu]] chûng ke ya̍p fi hié
 	'rollback_short' => 'Fî-fu̍k',
 	'rollbacklink' => 'fî-fu̍k',
 	'rollbackfailed' => 'Mò-fap fî-fu̍k',
-	'revertpage' => 'Fî-fu̍k yù [[Special:Contributions/$2|$2]] （[[User talk:$2|tui-fa]]） ke phiên-cho; kiên-kói fì-fu̍k [[User:$1|$1]] ke chui-heu yit-ke pán-pún',
+	'revertpage' => 'Fî-fu̍k yù [[Special:Contributions/$2|$2]] （[[User talk:$2|tui-fa]]） ke phiên-cho; kiên-kói fì-fu̍k $1 ke chui-heu yit-ke pán-pún',
 	'restriction-type' => 'Khièn-han:',
 	'restriction-level' => 'Han-chṳ khi̍p-phe̍t:',
 	'restriction-edit' => 'Phiên-siá',
@@ -16053,7 +16273,7 @@ Chhai [[Special:Watchlist|ngì-ke kam-sṳ lie̍t-péu]] chûng ke ya̍p fi hié
 
 $messages['haw'] = array(
 	'returnto' => 'Ho‘i iā $1.',
-	'redirectedfrom' => '(Hoʻoili mai $1)',
+	'redirectedfrom' => 'Hoʻoili mai $1',
 	'redirectpagesub' => '‘Ao‘ao e alaka‘i ai',
 	'retrievedfrom' => 'Kiʻi ʻia mai "$1"',
 	'restorelink' => '{{PLURAL:$1|kekahi ho‘opololei kāpae|nā ho‘opololei kāpae $1}}',
@@ -16089,7 +16309,7 @@ $messages['haw'] = array(
 
 $messages['he'] = array(
 	'returnto' => 'חזרה לדף $1.',
-	'redirectedfrom' => '(הופנה מהדף $1)',
+	'redirectedfrom' => 'הופנה מהדף $1',
 	'redirectpagesub' => 'דף הפניה',
 	'retrievedfrom' => 'מקור: $1',
 	'restorelink' => '{{PLURAL:$1|גרסה מחוקה אחת|$1 גרסאות מחוקות}}',
@@ -16330,7 +16550,7 @@ $1",
 	'rollback_short' => 'שחזור',
 	'rollbacklink' => 'שחזור',
 	'rollbackfailed' => 'השחזור נכשל',
-	'revertpage' => 'שוחזר מעריכות של [[Special:Contributions/$2|$2]] ([[User talk:$2|שיחה]]) לעריכה האחרונה של [[User:$1|$1]]',
+	'revertpage' => 'שוחזר מעריכות של [[Special:Contributions/$2|$2]] ([[User talk:$2|שיחה]]) לעריכה האחרונה של $1',
 	'revertpage-nouser' => 'שוחזר מעריכות של (שם המשתמש הוסר) לעריכה האחרונה של [[User:$1|$1]]',
 	'rollback-success' => 'שוחזר מעריכה של $1 לעריכה האחרונה של $2',
 	'restriction-type' => 'הרשאה:',
@@ -16361,7 +16581,7 @@ $1",
 
 $messages['hi'] = array(
 	'returnto' => 'लौटें $1.',
-	'redirectedfrom' => '($1 से भेजा गया)',
+	'redirectedfrom' => '$1 से भेजा गया',
 	'redirectpagesub' => 'पुनर्निर्देश पृष्ठ',
 	'retrievedfrom' => '"$1" से लिया गया',
 	'restorelink' => '{{PLURAL:$1|एक हटाया हुआ|$1 हटाये हुए}} बदलाव',
@@ -16606,7 +16826,7 @@ $messages['hi'] = array(
 	'rollback_short' => 'पूर्ववत करें',
 	'rollbacklink' => 'वापस लें',
 	'rollbackfailed' => 'पूर्ववत नहीं कर सकें',
-	'revertpage' => '[[Special:Contributions/$2|$2]] ([[User talk:$2|Talk]]) के संपादनोंको हटाकर [[User:$1|$1]] के आखिरी अवतरण को पूर्ववत किया',
+	'revertpage' => '[[Special:Contributions/$2|$2]] ([[User talk:$2|Talk]]) के संपादनोंको हटाकर $1 के आखिरी अवतरण को पूर्ववत किया',
 	'revertpage-nouser' => '(प्रयोक्ता नाम हटाया गया है) द्वारा किए गए संपादन को वापस पुरानी स्थिति में ला कर इसके पहले के [[User:$1|$1]] द्वारा बने संस्करण को फिर से ताज़ा संस्करण बनाएँ।',
 	'rollback-success' => '$1 के संपादन हटायें;
 $2 द्वारा संपादित आखिरी अवतरण को पुनर्स्थापित किया।',
@@ -16630,7 +16850,7 @@ $2 द्वारा संपादित आखिरी अवतरण क�
 
 $messages['hif'] = array(
 	'returnto' => 'लौटें $1.',
-	'redirectedfrom' => '($1 से भेजा गया)',
+	'redirectedfrom' => '$1 से भेजा गया',
 	'redirectpagesub' => 'पुनर्निर्देश पृष्ठ',
 	'retrievedfrom' => '"$1" से लिया गया',
 	'restorelink' => '{{PLURAL:$1|एक हटाया हुआ|$1 हटाये हुए}} बदलाव',
@@ -16875,7 +17095,7 @@ $messages['hif'] = array(
 	'rollback_short' => 'पूर्ववत करें',
 	'rollbacklink' => 'वापस लें',
 	'rollbackfailed' => 'पूर्ववत नहीं कर सकें',
-	'revertpage' => '[[Special:Contributions/$2|$2]] ([[User talk:$2|Talk]]) के संपादनोंको हटाकर [[User:$1|$1]] के आखिरी अवतरण को पूर्ववत किया',
+	'revertpage' => '[[Special:Contributions/$2|$2]] ([[User talk:$2|Talk]]) के संपादनोंको हटाकर $1 के आखिरी अवतरण को पूर्ववत किया',
 	'revertpage-nouser' => '(प्रयोक्ता नाम हटाया गया है) द्वारा किए गए संपादन को वापस पुरानी स्थिति में ला कर इसके पहले के [[User:$1|$1]] द्वारा बने संस्करण को फिर से ताज़ा संस्करण बनाएँ।',
 	'rollback-success' => '$1 के संपादन हटायें;
 $2 द्वारा संपादित आखिरी अवतरण को पुनर्स्थापित किया।',
@@ -16899,7 +17119,7 @@ $2 द्वारा संपादित आखिरी अवतरण क�
 
 $messages['hif-latn'] = array(
 	'returnto' => '$1 pe lauto.',
-	'redirectedfrom' => '($1 se bheja gais)',
+	'redirectedfrom' => '$1 se bheja gais',
 	'redirectpagesub' => 'Panna ke redirect karo',
 	'retrievedfrom' => '"$1" se lawa gais hae',
 	'restorelink' => '{{PLURAL:$1|ek mitawal badlao|$1 mitawal badlao}}',
@@ -17148,7 +17368,7 @@ Panna jon [[Special:Watchlist|aap ke dhyan suchi]] me hae  '''mota''' kara gais 
 	'rollback_short' => 'Pahile jaise karo',
 	'rollbacklink' => 'pahile jaise karo',
 	'rollbackfailed' => 'Pahile jaise kare ke kosis safal nai bhais',
-	'revertpage' => '[[Special:Contributions/$2|$2]] ([[User talk:$2|Talk]]) ke badlao ke [[User:$1|$1]] ke aakhri badlao ke jaise kar dewa gais hai.',
+	'revertpage' => '[[Special:Contributions/$2|$2]] ([[User talk:$2|Talk]]) ke badlao ke $1 ke aakhri badlao ke jaise kar dewa gais hai.',
 	'revertpage-nouser' => '(sadasya ke namm ke hatae dewa gais hae) se karaa gais badlao ke  [[User:$1|$1]] ke badlao ke rakam kar dewa gais hae.',
 	'rollback-success' => '$1 ke badlao ke pahile jaise kar dewa gais hai;
 badal ke $2 ke aakhri version kar dewa gais hai.',
@@ -17172,7 +17392,7 @@ badal ke $2 ke aakhri version kar dewa gais hai.',
 
 $messages['hil'] = array(
 	'returnto' => 'Balik sa $1.',
-	'redirectedfrom' => '(Gindirek liwat halin $1)',
+	'redirectedfrom' => 'Gindirek liwat halin $1',
 	'redirectpagesub' => 'I-direktahon ang pahina',
 	'retrievedfrom' => 'Ginkuha halin sa "$1"',
 	'restorelink' => '{{PLURAL:$1|isa ka ginpanas nga pag-ilis|$1 ka ginpanas nga pag-ilis}}',
@@ -17345,7 +17565,7 @@ Mga Pahina sa [[Special:Watchlist|imo lista-lantaw]] ay '''dukot'''.",
 
 $messages['hr'] = array(
 	'returnto' => 'Vrati se na $1.',
-	'redirectedfrom' => '(Preusmjereno s $1)',
+	'redirectedfrom' => 'Preusmjereno s $1',
 	'redirectpagesub' => 'Preusmjeravanje',
 	'retrievedfrom' => 'Dobavljeno iz "$1"',
 	'restorelink' => '{{PLURAL:$1|$1 pobrisanu izmjenu|$1 pobrisane izmjene|$1 pobrisanih izmjena}}',
@@ -17614,7 +17834,7 @@ Provjerite evidencije.',
 
 $messages['hsb'] = array(
 	'returnto' => 'Wróćo k stronje $1.',
-	'redirectedfrom' => '(ze strony $1 sposrědkowany)',
+	'redirectedfrom' => 'ze strony $1 sposrědkowany',
 	'redirectpagesub' => 'Daleposrědkowanje',
 	'retrievedfrom' => 'Z "$1"',
 	'restorelink' => '{{PLURAL:$1|1 wušmórnjenu wersiju|$1 wušmórnjenej wersiji|$1 wušmórnjene wersije|$1 wušmórnjenych wersijow}}',
@@ -17851,7 +18071,7 @@ Strony na [[Special:Watchlist|wobkedźbowankach]] su '''tučne'''.",
 	'rollback_short' => 'Cofnyć',
 	'rollbacklink' => 'Cofnyć',
 	'rollbackfailed' => 'Cofnjenje njeporadźiło',
-	'revertpage' => 'Změny [[Special:Contributions/$2|$2]] ([[User talk:$2|Diskusija]]) cofnjene a nawróćene k poslednjej wersiji wužiwarja [[User:$1|$1]]',
+	'revertpage' => 'Změny [[Special:Contributions/$2|$2]] ([[User talk:$2|Diskusija]]) cofnjene a nawróćene k poslednjej wersiji wužiwarja $1',
 	'revertpage-nouser' => 'Staji změny wot (wužiwarske mjeno wotstronjene) na předchadnu wersiju wot [[User:$1|$1]] wróćo',
 	'rollback-success' => 'Změny wužiwarja $1 cofnjene; wróćo na wersiju wužiwarja $2.',
 	'restriction-type' => 'Škitowy status',
@@ -17881,7 +18101,7 @@ Strony na [[Special:Watchlist|wobkedźbowankach]] su '''tučne'''.",
 
 $messages['ht'] = array(
 	'returnto' => 'Ritounen nan paj $1.',
-	'redirectedfrom' => '(Redirije depi $1)',
+	'redirectedfrom' => 'Redirije depi $1',
 	'redirectpagesub' => 'Paj pou redireksyon',
 	'retrievedfrom' => 'Rekipere depi « $1 »',
 	'restorelink' => '{{PLURAL:$1|yon revizion efase|$1 revizion efase yo}}',
@@ -17974,7 +18194,7 @@ Mande ou byen si ou ap byen fè kreye li ankò.  Gade jounal paj sa a pou konnen
 
 $messages['hu'] = array(
 	'returnto' => 'Vissza a(z) $1 laphoz.',
-	'redirectedfrom' => '($1 szócikkből átirányítva)',
+	'redirectedfrom' => '$1 szócikkből átirányítva',
 	'redirectpagesub' => 'Átirányító lap',
 	'retrievedfrom' => 'A lap eredeti címe: „$1”',
 	'restorelink' => '{{PLURAL:$1|Egy|$1}} törölt szerkesztés',
@@ -18209,7 +18429,7 @@ A [[Special:Watchlist|figyelőlistádon]] szereplő lapok '''félkövérrel''' v
 	'rollback_short' => 'Visszaállítás',
 	'rollbacklink' => 'visszaállítás',
 	'rollbackfailed' => 'A visszaállítás nem sikerült',
-	'revertpage' => 'Visszaállítottam a lap korábbi változatát: [[Special:Contributions/$2|$2]]  ([[User talk:$2|vita]]) szerkesztéséről [[User:$1|$1]] szerkesztésére',
+	'revertpage' => 'Visszaállítottam a lap korábbi változatát: [[Special:Contributions/$2|$2]]  ([[User talk:$2|vita]]) szerkesztéséről $1 szerkesztésére',
 	'revertpage-nouser' => 'Visszaállítottam a lap korábbi változatát (szerkesztőnév eltávolítva) szerkesztéséről [[User:$1|$1]] szerkesztésére',
 	'rollback-success' => '$1 szerkesztéseit visszaállítottam $2 utolsó változatára.',
 	'restriction-type' => 'Engedély:',
@@ -18239,7 +18459,7 @@ A [[Special:Watchlist|figyelőlistádon]] szereplő lapok '''félkövérrel''' v
 
 $messages['hy'] = array(
 	'returnto' => 'Վերադառնալ $1։',
-	'redirectedfrom' => '(Վերահղված է $1-ից)',
+	'redirectedfrom' => 'Վերահղված է $1-ից',
 	'redirectpagesub' => 'Վերահղման էջ',
 	'retrievedfrom' => 'Ստացված է «$1» էջից',
 	'restorelink' => '{{PLURAL:$1|մեկ ջնջված խմբագրում|$1 ջնջված խմբագրում}}',
@@ -18366,7 +18586,7 @@ $1',
 	'rollback_short' => 'Հետ գլորել',
 	'rollbacklink' => 'հետ գլորել',
 	'rollbackfailed' => 'Հետ գլորումը ձախողվեց',
-	'revertpage' => '[[Special:Contributions/$2|$2]] ([[User talk:$2|քննարկում]]) մասնակցի խմբագրումները հետ են շրջվել [[User:$1|$1]] մասնակցի վերջին տարբերակին։',
+	'revertpage' => '[[Special:Contributions/$2|$2]] ([[User talk:$2|քննարկում]]) մասնակցի խմբագրումները հետ են շրջվել $1 մասնակցի վերջին տարբերակին։',
 	'rollback-success' => 'Հետ են շրջվել $1 մասնակցի խմբագրումները. վերադարձվել է $2 մասնակցի վերջին տարբերակին։',
 	'restriction-type' => 'Իրավունքներ.',
 	'restriction-level' => 'Սահմանափակման մակարդակ.',
@@ -18386,7 +18606,7 @@ $1',
 
 $messages['ia'] = array(
 	'returnto' => 'Retornar a $1.',
-	'redirectedfrom' => '(Redirigite ab $1)',
+	'redirectedfrom' => 'Redirigite ab $1',
 	'redirectpagesub' => 'Pagina de redirection',
 	'retrievedfrom' => 'Obtenite de "$1"',
 	'restorelink' => '{{PLURAL:$1|un modification|$1 modificationes}} delite',
@@ -18626,7 +18846,7 @@ Le paginas presente in [[Special:Watchlist|tu observatorio]] appare in litteras 
 	'rollback_short' => 'Revocar',
 	'rollbacklink' => 'revocar',
 	'rollbackfailed' => 'Revocation fallite',
-	'revertpage' => 'Reverteva modificationes per [[Special:Contributions/$2|$2]] ([[User talk:$2|Discussion]]) al ultime version per [[User:$1|$1]]',
+	'revertpage' => 'Reverteva modificationes per [[Special:Contributions/$2|$2]] ([[User talk:$2|Discussion]]) al ultime version per $1',
 	'revertpage-nouser' => 'Reverteva modificationes per (nomine de usator removite) al ultime version per [[User:$1|$1]]',
 	'rollback-success' => 'Revocava modificationes per $1;
 retornava al version per $2.',
@@ -18657,7 +18877,7 @@ retornava al version per $2.',
 
 $messages['id'] = array(
 	'returnto' => 'Kembali ke $1.',
-	'redirectedfrom' => '(Dialihkan dari $1)',
+	'redirectedfrom' => 'Dialihkan dari $1',
 	'redirectpagesub' => 'Halaman pengalihan',
 	'retrievedfrom' => 'Diperoleh dari "$1"',
 	'restorelink' => '$1 {{PLURAL:$1|suntingan|suntingan}} yang telah dihapus',
@@ -18892,7 +19112,7 @@ Silakan periksa catatan log.',
 	'rollback_short' => 'Kembalikan',
 	'rollbacklink' => 'kembalikan',
 	'rollbackfailed' => 'Pengembalian gagal dilakukan',
-	'revertpage' => '←Suntingan [[Special:Contributions/$2|$2]] ([[User talk:$2|bicara]]) dikembalikan ke versi terakhir oleh [[User:$1|$1]]',
+	'revertpage' => '←Suntingan [[Special:Contributions/$2|$2]] ([[User talk:$2|bicara]]) dikembalikan ke versi terakhir oleh $1',
 	'revertpage-nouser' => 'Pengembalian suntingan oleh (pengguna dihapus) ke suntingan terakhir oleh [[User:$1|$1]]',
 	'rollback-success' => 'Pengembalian suntingan oleh $1; dikembalikan ke versi terakhir oleh $2.',
 	'restriction-type' => 'Perlindungan:',
@@ -18922,7 +19142,7 @@ Silakan periksa catatan log.',
 
 $messages['ie'] = array(
 	'returnto' => 'Retornar a $1.',
-	'redirectedfrom' => '(Redirectet de $1)',
+	'redirectedfrom' => 'Redirectet de $1',
 	'redirectpagesub' => 'Págine de redirecterion',
 	'retrievedfrom' => 'Recuperat de "$1"',
 	'red-link-title' => '$1 (págine ne existe)',
@@ -18980,7 +19200,7 @@ Págines in [[Special:Watchlist|tui liste de págines vigilat]] es '''nigri'''."
 
 $messages['ig'] = array(
 	'returnto' => 'Ganata na $1.',
-	'redirectedfrom' => '(Kufùrù shi $1)',
+	'redirectedfrom' => 'Kufùrù shi $1',
 	'redirectpagesub' => 'Kufù ebe ihü nka na ga',
 	'retrievedfrom' => "Wefụtàrà ya shí ''$1''",
 	'restorelink' => '{{PLURAL:$1|orü otụ bakashịrị|orü $1 bakashịrị}}',
@@ -19073,7 +19293,7 @@ Ihü nọr na [[Special:Watchlist|ndétu ihe Í ne lé]] di na mkpụrụ edemed
 );
 
 $messages['ike-cans'] = array(
-	'redirectedfrom' => '(ᖃᓂᖓᓂ ᑲᒪᒋᔭᖅ ᐋᓯᑦ ᓇᑭᑦ $1)',
+	'redirectedfrom' => 'ᖃᓂᖓᓂ ᑲᒪᒋᔭᖅ ᐋᓯᑦ ᓇᑭᑦ $1',
 	'redirectpagesub' => 'ᖃᓂᖓᓂ ᑲᒪᒋᔭᖅ ᐋᓯᑦ ᓇᑭᑦ ᒪᑉᐱᑕᖅ',
 	'remembermypassword' => 'ᐃᖅᑑ ᐅᐃᑭᐱᑎᐊ ᐊᑎᖅ ᖃᑯᒍᖅ ᐊᑐᐃᓐᓇᓯᕗᖅ ᐅᕙᓗᒪᔪᖅ ᖃᕆᑕᐅᔭᖅ (for a maximum of $1 {{PLURAL:$1|day|days}})',
 	'recentchanges' => 'ᐱᒋᕗᖅ ᐊᓯᐊᙳᑐᖅ',
@@ -19087,7 +19307,7 @@ $messages['ike-cans'] = array(
 );
 
 $messages['ike-latn'] = array(
-	'redirectedfrom' => '(qaningani kamagijaq aasit nakit $1)',
+	'redirectedfrom' => 'qaningani kamagijaq aasit nakit $1',
 	'redirectpagesub' => 'aningani kamagijaq aasit nakit mappitaq',
 	'remembermypassword' => 'iqtuu uikipitia atiq qakakuq atuinnasivuq uvalumajuq qaritaujaq (for a maximum of $1 {{PLURAL:$1|day|days}})',
 	'recentchanges' => 'pigivuq asianngutuq',
@@ -19103,7 +19323,7 @@ $messages['ike-latn'] = array(
 
 $messages['ilo'] = array(
 	'returnto' => 'Agsubli idiay $1.',
-	'redirectedfrom' => '(Naibaw-ing manipud idiay $1)',
+	'redirectedfrom' => 'Naibaw-ing manipud idiay $1',
 	'redirectpagesub' => 'Ibaw-ing ti panid',
 	'retrievedfrom' => 'Naala manipud iti "$1"',
 	'restorelink' => '{{PLURAL:$1|maysa a naikkat a naurnos|$1 dagiti naikkat a naurnos}}',
@@ -19344,7 +19564,7 @@ Dagiti panid iti [[Special:Watchlist|listaan ti bambantayam]] ket '''napuskol'''
 	'rollback_short' => 'Isubli',
 	'rollbacklink' => 'isubli',
 	'rollbackfailed' => 'Napaay ti panangisubli',
-	'revertpage' => 'Insubli ti pinagurnos ni [[Special:Contributions/$2|$2]] ([[User talk:$2|pagtutungtongan]]), naisubli iti kaudian a pinagbaliw ni [[User:$1|$1]]',
+	'revertpage' => 'Insubli ti pinagurnos ni [[Special:Contributions/$2|$2]] ([[User talk:$2|pagtutungtongan]]), naisubli iti kaudian a pinagbaliw ni $1',
 	'revertpage-nouser' => 'Insubli ti pinagurnos ni (naikkat ti nagan ti agar-aramat) iti kinaudi a pinagbaliw ni [[User:$1|$1]]',
 	'rollback-success' => 'Naibabawi dagiti panag-urnos ni $1;
 naisubli manen iti naudi a panagbaliw ni $2.',
@@ -19375,7 +19595,7 @@ naisubli manen iti naudi a panagbaliw ni $2.',
 
 $messages['inh'] = array(
 	'returnto' => '$1 оагӀув тӀа юхавалар',
-	'redirectedfrom' => '($1 тӀера хьадейта да)',
+	'redirectedfrom' => '$1 тӀера хьадейта да',
 	'redirectpagesub' => 'ДӀа-хьа дайта оагӀув',
 	'retrievedfrom' => '"$1" ГӀувам',
 	'restorelink' => '{{PLURAL:$1|дӀаяккха хувцам|$1 дӀаяккха хувцамаш}}',
@@ -19449,7 +19669,7 @@ $messages['inh'] = array(
 
 $messages['io'] = array(
 	'returnto' => 'Retrovenar a $1.',
-	'redirectedfrom' => '(Ridirektita de $1)',
+	'redirectedfrom' => 'Ridirektita de $1',
 	'redirectpagesub' => 'Ridirektanta pagino',
 	'retrievedfrom' => 'Obtenita de "$1"',
 	'restorelink' => '{{PLURAL:$1|1 redakto efacita|$1 redakti efacita}}',
@@ -19532,7 +19752,7 @@ Pagini en [[Special:Watchlist|vua surveryo-listo]] esas '''dika'''.",
 	'rollback_short' => 'Retrorular',
 	'rollbacklink' => 'retrorulez',
 	'rollbackfailed' => 'Retrorular ne sucesis',
-	'revertpage' => 'Desfacita redakti da [[Special:Contributions/$2|$2]] ([[User talk:$2|Debato]]) e rekuperita la lasta redakto da [[User:$1|$1]]',
+	'revertpage' => 'Desfacita redakti da [[Special:Contributions/$2|$2]] ([[User talk:$2|Debato]]) e rekuperita la lasta redakto da $1',
 	'rollback-success' => 'Desfacis redakti da $1;
 restauris ad lasta versiono da $2.',
 	'restriction-type' => 'Permiso:',
@@ -19546,7 +19766,7 @@ restauris ad lasta versiono da $2.',
 
 $messages['is'] = array(
 	'returnto' => 'Aftur á: $1.',
-	'redirectedfrom' => '(Tilvísað frá $1)',
+	'redirectedfrom' => 'Tilvísað frá $1',
 	'redirectpagesub' => 'Tilvísunarsíða',
 	'retrievedfrom' => 'Sótt frá „$1“',
 	'restorelink' => '{{PLURAL:$1|eina eydda breytingu|$1 eyddar breytingar}}',
@@ -19774,7 +19994,7 @@ Síður á [[Special:Watchlist|vaktlistanum þínum]] eru '''feitletraðar'''.",
 	'rollback_short' => 'Taka aftur',
 	'rollbacklink' => 'taka aftur',
 	'rollbackfailed' => 'Mistókst að taka aftur',
-	'revertpage' => 'Tók aftur breytingar [[Special:Contributions/$2|$2]] ([[User talk:$2|spjall]]), breytt til síðustu útgáfu [[User:$1|$1]]',
+	'revertpage' => 'Tók aftur breytingar [[Special:Contributions/$2|$2]] ([[User talk:$2|spjall]]), breytt til síðustu útgáfu $1',
 	'revertpage-nouser' => 'Tók aftur breytingar (notendanafn fjarlægt) til síðustu útgáfu [[User:$1|$1]]',
 	'rollback-success' => 'Tók til baka breytingar eftir $1; núverandi $2.',
 	'restriction-type' => 'Réttindi:',
@@ -19809,97 +20029,99 @@ Síður á [[Special:Watchlist|vaktlistanum þínum]] eru '''feitletraðar'''.",
 );
 
 $messages['it'] = array(
-	'realmap-deprecated-info' => 'Le mappe del mondo reale sono state interrotte da Wikia. Per ulteriori informazioni, vedere: $1',
+	'realmap-deprecated-info' => 'Le mappe del mondo reale non sono più supportate. Per ulteriori informazioni, vedere: $1',
 	'returnto' => 'Torna a $1.',
-	'redirectedfrom' => '(Reindirizzamento da <b>$1</b>)',
+	'redirectedfrom' => '(Reindirizzato da $1)',
 	'redirectpagesub' => 'Pagina di reindirizzamento',
 	'retrievedfrom' => 'Estratto da "$1"',
 	'restorelink' => '{{PLURAL:$1|una modifica cancellata|$1 modifiche cancellate}}',
 	'red-link-title' => '$1 (la pagina non esiste)',
 	'readonly' => 'Database bloccato',
-	'readonlytext' => "In questo momento il database è bloccato e non sono possibili aggiunte o modifiche alle pagine. Il blocco è di solito legato a operazioni di manutenzione ordinaria, al termine delle quali il database è di nuovo accessibile.
+	'readonlytext' => 'Il database è per il momento bloccato.
 
-L'amministratore di sistema che ha imposto il blocco ha fornito questa spiegazione: $1",
+$1',
 	'readonly_lag' => 'Il database è stato bloccato automaticamente per consentire ai server con i database slave di sincronizzarsi con il master',
-	'remembermypassword' => 'Ricorda la password su questo computer (per un massimo di $1 {{PLURAL:$1|giorno|giorni}})',
+	'remembermypassword' => 'Ricorda la password su questo computer',
 	'resetpass' => 'Cambia la password',
-	'resetpass_announce' => "L'accesso è stato effettuato con un codice temporaneo, inviato via e-mail. Per completare l'accesso è necessario impostare una nuova password:",
-	'resetpass_text' => '<!-- Aggiungere il testo qui -->',
+	'resetpass_announce' => 'Sembra che tu abbia usato una password temporanea. Scegli qui una nuova password per continuare con il login.',
+	'resetpass_text' => '<!-- Aggiungere qui il testo -->',
 	'resetpass_header' => "Cambia la password dell'account",
 	'retypenew' => 'Riscrivi la nuova password:',
-	'resetpass_submit' => 'Imposta la password e accedi al sito',
-	'resetpass_success' => 'La password è stata modificata. Accesso in corso...',
+	'resetpass_submit' => 'Imposta la password e accedi',
+	'resetpass_success' => 'La password è stata modificata con successo!
+Accesso in corso...',
 	'resetpass_forbidden' => 'Non è possibile modificare le password',
-	'resetpass-no-info' => "Devi aver effettuato l'accesso per accedere a questa pagina direttamente.",
+	'resetpass-no-info' => "Devi effettuare l'accesso per accedere direttamente a questa pagina.",
 	'resetpass-submit-loggedin' => 'Cambia password',
 	'resetpass-submit-cancel' => 'Annulla',
 	'resetpass-wrong-oldpass' => 'Password temporanea o corrente non valida.
-La password potrebbe essere stata già cambiata, oppure potrebbe essere stata richiesta una nuova password temporanea.',
+La password potrebbe essere già stata cambiata oppure potrebbe essere stata richiesta una nuova password temporanea.',
 	'resetpass-temp-password' => 'Password temporanea:',
-	'readonlywarning' => "'''ATTENZIONE: Il database è stato bloccato per manutenzione, è quindi impossibile salvare le modifiche in questo momento. Per non perderle, è possibile copiare quanto inserito finora nella casella di modifica, incollarlo in un programma di elaborazione testi e salvarlo in attesa dello sblocco del database.'''
+	'readonlywarning' => "'''Attenzione: Il database è stato bloccato per manutenzione, quindi è impossibile salvare le modifiche in questo momento.'''
 
 L'amministratore che ha bloccato il database ha fornito questa spiegazione: $1",
 	'recreate-moveddeleted-warn' => "'''Attenzione: si sta per ricreare una pagina già cancellata in passato.'''
 
 Accertarsi che sia davvero opportuno continuare a modificare questa pagina.
 L'elenco delle relative cancellazioni e degli spostamenti viene riportato di seguito per comodità:",
-	'revisionasof' => 'Versione delle $1',
-	'revision-info' => 'Versione delle $1, autore: $2',
-	'rev-deleted-comment' => '(Oggetto della modifica rimosso)',
+	'revisionasof' => 'Revisione delle $1',
+	'revision-info' => 'Revisione delle $1 da parte di $2',
+	'rev-deleted-comment' => '(oggetto della modifica rimosso)',
 	'rev-deleted-user' => '(nome utente rimosso)',
 	'rev-deleted-event' => '(azione del log rimossa)',
-	'rev-deleted-user-contribs' => '[nome utente o indirizzo IP rimosso - edit nascosto dalla cronologia]',
-	'rev-deleted-text-permission' => "Questa versione della pagina è stata '''cancellata'''.
-Consultare il [{{fullurl:{{#Special:Log}}/delete|page={{PAGENAMEE}}}} log delle cancellazioni] per ulteriori dettagli.",
-	'rev-deleted-text-unhide' => "Questa versione della pagina è stata '''cancellata'''.
-Consultare il [{{fullurl:{{#Special:Log}}/delete|page={{PAGENAMEE}}}} log delle cancellazioni] per ulteriori dettagli.
-Agli amministratori è ancora consentito [$1 visualizzare questa versione] se necessario.",
-	'rev-suppressed-text-unhide' => "Questa versione della pagina è stata '''rimossa'''.
-Consultare il [{{fullurl:{{#Special:Log}}/suppress|page={{PAGENAMEE}}}} log di rimozione] per ulteriori dettagli.
-Agli amministratori è ancora consentito [$1 visualizzare questa versione] se necessario.",
-	'rev-deleted-text-view' => "Questa versione della pagina è stata '''cancellata'''.
-Gli amministratori possono ancora visualizzarla; consultare il [{{fullurl:{{#Special:Log}}/delete|page={{FULLPAGENAMEE}}}} log delle cancellazioni] per ulteriori dettagli.",
-	'rev-suppressed-text-view' => "Questa versione della pagina è stata '''rimossa'''.
-Gli amministratori possono ancora visualizzarla; consultare il [{{fullurl:{{#Special:Log}}/suppress|page={{FULLPAGENAMEE}}}} log di rimozione] per ulteriori dettagli.",
-	'rev-deleted-no-diff' => "Non è possibile visualizzare questo confronto tra versioni perché una delle revisioni è stata '''cancellata'''.
+	'rev-deleted-user-contribs' => '[nome utente o indirizzo IP rimosso - modifica nascosta dai contributi]',
+	'rev-deleted-text-permission' => "Questa revisione della pagina è stata '''cancellata'''.
 Consultare il [{{fullurl:{{#Special:Log}}/delete|page={{FULLPAGENAMEE}}}} log delle cancellazioni] per ulteriori dettagli.",
-	'rev-suppressed-no-diff' => "Non è possibile visualizzare questo confronto tra versioni perché una delle revisioni è stata '''cancellata'''.",
-	'rev-deleted-unhide-diff' => "Una delle revisioni di questo confronto tra versioni è stata '''cancellata'''.
-Consultare il [{{fullurl:{{#Special:Log}}/delete|page={{PAGENAMEE}}}} log delle cancellazioni] per ulteriori dettagli.
-Agli amministratori è ancora consentito [$1 visualizzare il confronto] se necessario.",
-	'rev-suppressed-unhide-diff' => "Una delle revisioni di questo confronto di versioni è stata '''rimossa'''.
-Potrebbero esserci dettagli nel [{{fullurl:{{#Special:Log}}/suppress|page={{FULLPAGENAMEE}}}} log delle rimozioni].
-In quanto amministratore puoi ancora [$1 visualizzare questo confronto di versioni], se vuoi procedere.",
-	'rev-deleted-diff-view' => "Una delle revisioni di questo confronto di versioni è stata '''cancellata'''.
-In quanto amministratore, puoi visualizzare questo confronto di versioni; potrebbero esserci dettagli nel [{{fullurl:{{#Special:Log}}/delete|page={{FULLPAGENAMEE}}}} log delle cancellazioni].",
-	'rev-suppressed-diff-view' => "Una delle revisioni di questo confronto di versioni è stata '''rimossa'''.
-In quanto amministratore puoi visualizzare questo confronto di versioni; potrebbero esserci dettagli nel [{{fullurl:{{#Special:Log}}/suppress|page={{FULLPAGENAMEE}}}} log delle rimozioni].",
+	'rev-deleted-text-unhide' => "Questa revisione della pagina è stata '''cancellata'''.
+Consultare il [{{fullurl:{{#Special:Log}}/delete|page={{FULLPAGENAMEE}}}} log delle cancellazioni] per ulteriori dettagli.
+Puoi ancora [$1 visualizzare questa revisione] se lo desideri.",
+	'rev-suppressed-text-unhide' => "Questa revisione della pagina è stata '''nascosta'''.
+Consultare il [{{fullurl:{{#Special:Log}}/suppress|page={{FULLPAGENAMEE}}}} log delle soppressioni] per ulteriori dettagli.
+Puoi ancora [$1 visualizzare questa revisione] se lo desideri.",
+	'rev-deleted-text-view' => "Questa versione della pagina è stata '''cancellata'''.
+Puoi ancora visualizzarla; consultare il [{{fullurl:{{#Special:Log}}/delete|page={{FULLPAGENAMEE}}}} log delle cancellazioni] per ulteriori dettagli.",
+	'rev-suppressed-text-view' => "Questa versione della pagina è stata '''nascosta'''.
+Puoi ancora visualizzarla; consultare il [{{fullurl:{{#Special:Log}}/suppress|page={{FULLPAGENAMEE}}}} log delle soppressioni] per ulteriori dettagli.",
+	'rev-deleted-no-diff' => "Non è possibile visualizzare questo confronto tra revisioni perché una di esse è stata '''cancellata'''.
+Consultare il [{{fullurl:{{#Special:Log}}/delete|page={{FULLPAGENAMEE}}}} log delle cancellazioni] per ulteriori dettagli.",
+	'rev-suppressed-no-diff' => "Non è possibile visualizzare questo confronto tra revisioni perché una di esse è stata '''cancellata'''.",
+	'rev-deleted-unhide-diff' => "Una delle revisioni di questo confronto è stata '''cancellata'''.
+Consultare il [{{fullurl:{{#Special:Log}}/delete|page={{FULLPAGENAMEE}}}} log delle cancellazioni] per ulteriori dettagli.
+Puoi ancora [$1 visualizzare il confronto] se lo desideri.",
+	'rev-suppressed-unhide-diff' => "Una delle revisioni di questo confronto è stata '''nascosta'''.
+Consultare il [{{fullurl:{{#Special:Log}}/suppress|page={{FULLPAGENAMEE}}}} log delle soppressioni] per ulteriori dettagli.
+Puoi ancora [$1 visualizzare il confronto] se lo desideri.",
+	'rev-deleted-diff-view' => "Una delle revisioni di questo confronto è stata '''cancellata'''.
+Puoi ancora visualizzare questo confronto; consultare il [{{fullurl:{{#Special:Log}}/delete|page={{FULLPAGENAMEE}}}} log delle cancellazioni] per ulteriori dettagli.",
+	'rev-suppressed-diff-view' => "Una delle revisioni di questo confronto è stata '''nascosta'''.
+Puoi ancora visualizzare questo confronto; consultare il [{{fullurl:{{#Special:Log}}/suppress|page={{FULLPAGENAMEE}}}} log delle soppressioni] per ulteriori dettagli.",
 	'rev-delundel' => 'mostra/nascondi',
 	'rev-showdeleted' => 'mostra',
-	'revisiondelete' => 'Cancella o ripristina versioni',
-	'revdelete-nooldid-title' => 'Versione non specificata',
-	'revdelete-nooldid-text' => 'Non è stata specificata alcuna versione della pagina su cui eseguire questa funzione, la versione specificata non esiste oppure si sta tentando di nascondere la versione attuale.',
+	'revisiondelete' => 'Cancella o ripristina revisioni',
+	'revdelete-nooldid-title' => 'Revisione specificata non valida',
+	'revdelete-nooldid-text' => 'Non è stata specificata alcuna revisione della pagina su cui eseguire questa funzione, la revisione specificata non esiste oppure si sta tentando di nascondere la revisione attuale.',
 	'revdelete-nologtype-title' => 'Nessun tipo di registro specificato',
 	'revdelete-nologtype-text' => "Non è stato specificato alcun tipo di registro su cui eseguire l'azione.",
-	'revdelete-nologid-title' => 'Errore di indicazione del log',
-	'revdelete-nologid-text' => 'Non è stato specificato un evento del registro su cui eseguire questa funzione oppure il log non esiste.',
+	'revdelete-nologid-title' => 'Voce di registro non valida',
+	'revdelete-nologid-text' => 'Non è stato specificato un evento del registro su cui eseguire questa funzione oppure la voce specificata non esiste.',
 	'revdelete-no-file' => 'Il file specificato non esiste.',
-	'revdelete-show-file-confirm' => 'Si desidera visualizzare la versione cancellata del file "<nowiki>$1</nowiki>" del $2 alle $3?',
+	'revdelete-show-file-confirm' => 'Sei sicuro di voler visualizzare la revisione cancellata del file "<nowiki>$1</nowiki>" delle $3 del $2?',
 	'revdelete-show-file-submit' => 'Sì',
-	'revdelete-selected' => "'''{{PLURAL:$2|Versione selezionata|Versioni selezionate}} di [[:$1]]:'''",
-	'revdelete-text' => "'''Le versioni cancellate restano visibili nella cronologia della pagina, mentre il testo contenuto non è accessibile al pubblico.'''
-Gli altri amministratori di {{SITENAME}} potranno accedere comunque ai contenuti nascosti e ripristinarli attraverso questa stessa interfaccia, se non sono state impostate altre limitazioni in fase di installazione del sito.",
-	'revdelete-confirm' => 'Per favore conferma che questo è quanto intendi fare, che sei consapevole delle conseguenze, e che stai facendo questo nel rispetto delle [[{{MediaWiki:Policy-url}}|linee guida]].',
-	'revdelete-suppress-text' => "La rimozione deve essere utilizzata '''unicamente''' nei seguenti casi:
+	'revdelete-selected' => "'''{{PLURAL:$2|Revisione selezionata|Revisioni selezionate}} di [[:$1]]:'''",
+	'revdelete-text' => "'''Le revisioni cancellate e le azioni resteranno visibili nella cronologia e nei registi, mentre i loro contenuti non sarà accessibile al pubblico.'''
+Gli altri amministratori di {{SITENAME}} potranno accedere comunque ai contenuti nascosti e ripristinarli attraverso questa stessa interfaccia, a meno che non siano state impostate altre limitazioni.",
+	'revdelete-confirm' => 'Per favore, conferma che questo è quello che intendi fare, che sei consapevole delle conseguenze e che stai facendo questo nel rispetto delle [[{{MediaWiki:Policy-url}}|linee guida]].',
+	'revdelete-suppress-text' => "La soppressione delle revisioni deve essere utilizzata '''unicamente''' nei seguenti casi:
+* Informazioni potenzialmente diffamatorie
 * Dati personali inopportuni
 *: ''indirizzi, numeri di telefono, codici fiscali, ecc.''",
-	'revdelete-legend' => 'Imposta le seguenti limitazioni sulle versioni cancellate:',
-	'revdelete-hide-text' => 'Nascondi il testo della versione',
+	'revdelete-legend' => 'Imposta restrizioni per la visibilità',
+	'revdelete-hide-text' => 'Nascondi il testo della revisione',
 	'revdelete-hide-image' => 'Nascondi i contenuti del file',
 	'revdelete-hide-name' => 'Nascondi azione e oggetto della stessa',
-	'revdelete-hide-comment' => "Nascondi l'oggetto della modifica o la motivazione dell'azione",
-	'revdelete-hide-user' => "Nascondi il nome o l'indirizzo IP dell'autore",
-	'revdelete-hide-restricted' => 'Nascondi le informazioni indicate anche agli amministratori',
+	'revdelete-hide-comment' => 'Nascondi il riepilogo della modifica',
+	'revdelete-hide-user' => "Nascondi il nome o l'indirizzo IP dell'utente",
+	'revdelete-hide-restricted' => 'Nascondi le informazioni anche agli amministratori',
 	'revdelete-radio-same' => '(non cambiare)',
 	'revdelete-radio-set' => 'Sì',
 	'revdelete-radio-unset' => 'No',
@@ -19908,7 +20130,7 @@ Gli altri amministratori di {{SITENAME}} potranno accedere comunque ai contenuti
 	'revdelete-log' => 'Motivo:',
 	'revdelete-submit' => 'Applica {{PLURAL:$1|alla revisione selezionata|alle revisioni selezionate}}',
 	'revdelete-success' => "'''Visibilità della revisione aggiornata correttamente.'''",
-	'revdelete-failure' => "'''La visibilità della versione non può essere aggiornata:'''
+	'revdelete-failure' => "'''Non è stato possibile aggiornare la visibilità della revisione:'''
 $1",
 	'revdel-restore' => 'cambia la visibilità',
 	'revdel-restore-deleted' => 'revisioni cancellate',
@@ -19920,20 +20142,21 @@ $1",
 	'revdelete-no-change' => "'''Attenzione:''' l'oggetto con data $1 $2 aveva già le impostazioni di visibilità richieste.",
 	'revdelete-concurrent-change' => "Impossibile modificare l'oggetto con data $1 $2 in quanto il suo stato è stato modificato da un altro utente mentre se ne tentava la modifica.",
 	'revdelete-only-restricted' => "Errore nel nascondere l'oggetto datato $1, $2: non è possibile nascondere gli oggetti alla vista degli amministratori senza selezionare almeno un'altra delle opzioni di rimozione.",
-	'revdelete-reason-dropdown' => '*Motivazioni più comuni per la cancellazione
+	'revdelete-reason-dropdown' => '* Motivazioni più comuni per la cancellazione
 ** Violazione di copyright
-** Informazioni personali inappropriate',
+** Informazioni personali inappropriate
+** Informazioni potenzialmente diffamatorie',
 	'revdelete-otherreason' => 'Altra motivazione o motivazione aggiuntiva:',
 	'revdelete-reasonotherlist' => 'Altra motivazione',
 	'revdelete-edit-reasonlist' => 'Modifica le motivazioni per la cancellazione',
-	'revdelete-offender' => 'Autore della versione:',
-	'revertmerge' => 'Annulla unioni',
-	'resetprefs' => 'Reimposta le preferenze',
+	'revdelete-offender' => 'Autore della revisione:',
+	'revertmerge' => 'Annulla unione',
+	'resetprefs' => 'Annulla modifiche non salvate',
 	'restoreprefs' => 'Ripristina le impostazioni predefinite',
 	'rows' => 'Righe:',
-	'resultsperpage' => 'Numero di risultati per pagina:',
-	'recentchangesdays' => 'Numero di giorni da mostrare nelle ultime modifiche:',
-	'recentchangesdays-max' => '(massimo $1 {{PLURAL:$1|giorno|giorni}})',
+	'resultsperpage' => 'Risultati per pagina:',
+	'recentchangesdays' => 'Giorni da mostrare nelle ultime modifiche:',
+	'recentchangesdays-max' => 'Massimo $1 {{PLURAL:$1|giorno|giorni}}',
 	'recentchangescount' => 'Numero di modifiche da mostrare per default:',
 	'right-read' => 'Legge pagine',
 	'right-edit' => 'Modifica pagine',
@@ -20001,13 +20224,13 @@ $1",
 	'rightsnone' => '(nessuno)',
 	'recentchanges' => 'Ultime modifiche',
 	'recentchanges-legend' => 'Opzioni ultime modifiche',
-	'recentchangestext' => 'Questa pagina presenta le modifiche più recenti ai contenuti del sito.',
-	'recentchanges-feed-description' => 'Questo feed riporta le modifiche più recenti ai contenuti del sito.',
+	'recentchangestext' => '<div id="wikia-mediawiki-recentchangestext" style="border:2px solid #e9e9e9; margin-bottom:0.3em; padding:0.2em 0.5em;"><span style="float:left;">[[Special:NewPages|Nuove pagine]] - [[Special:NewImages|Nuove immagini]] - [[Special:Log|Registri]] - [[Special:Insights|Consigli]]</span><span style="float:right;">[[w:it:Aiuto:Ultime modifiche|Aiuto:Ultime modifiche]]</span><div style="clear:both;"></div></div>',
+	'recentchanges-feed-description' => 'Questo feed riporta le modifiche più recenti alla wiki.',
 	'recentchanges-label-newpage' => 'Questa modifica ha creato una nuova pagina',
 	'recentchanges-label-minor' => 'Questa è una modifica minore',
 	'recentchanges-label-bot' => 'Questa modifica è stata effettuata da un bot',
 	'recentchanges-label-unpatrolled' => 'Questa modifica non è stata ancora verificata',
-	'rcnote' => "Di seguito {{PLURAL:$1|è elencata la modifica più recente apportata|sono elencate le '''$1''' modifiche più recenti apportate}} al sito {{PLURAL:$2|nelle ultime 24 ore|negli scorsi '''$2''' giorni}}; i dati sono aggiornati alle $5 del $4.",
+	'rcnote' => '<div style="margin-top: -20px;" class="emptymwmsg mediawiki_rcnote"></div>',
 	'rcnotefrom' => "Di seguito sono elencate le modifiche apportate a partire da '''$2''' (fino a '''$1''').",
 	'rclistfrom' => 'Mostra le modifiche apportate a partire da $1',
 	'rcshowhideminor' => '$1 le modifiche minori',
@@ -20019,7 +20242,7 @@ $1",
 	'rclinks' => 'Mostra le $1 modifiche più recenti apportate negli ultimi $2 giorni<br />$3',
 	'rc_categories' => 'Limita alle categorie (separate da "|")',
 	'rc_categories_any' => 'Qualsiasi',
-	'rc-change-size-new' => '$1 {{PLURAL:$1|byte|byte}} dopo la modifica',
+	'rc-change-size-new' => '$1 byte dopo la modifica',
 	'rc-enhanced-expand' => 'Mostra dettagli (richiede JavaScript)',
 	'rc-enhanced-hide' => 'Nascondi dettagli',
 	'recentchangeslinked' => 'Modifiche correlate',
@@ -20046,15 +20269,15 @@ Le pagine contenute nella propria lista degli [[Special:Watchlist|Osservati spec
 	'revertpage' => 'Annullate le modifiche di [[Special:Contributions/$2|$2]] ([[User talk:$2|discussione]]), riportata alla versione precedente di [[User:$1|$1]]',
 	'revertpage-nouser' => 'Annullate le modifiche di (nome utente rimosso), riportata alla versione precedente di [[User:$1|$1]]',
 	'rollback-success' => "Annullate le modifiche di $1; pagina riportata all'ultima versione di $2.",
-	'restriction-type' => 'Permesso',
-	'restriction-level' => 'Livello di restrizione',
+	'restriction-type' => 'Permesso di:',
+	'restriction-level' => 'Livello di restrizione:',
 	'restriction-edit' => 'Modifica',
 	'restriction-move' => 'Spostamento',
 	'restriction-create' => 'Creazione',
-	'restriction-upload' => 'Carica',
+	'restriction-upload' => 'Caricamento',
 	'restriction-level-sysop' => 'protetta',
 	'restriction-level-autoconfirmed' => 'semi-protetta',
-	'restriction-level-all' => 'tutti i livelli',
+	'restriction-level-all' => 'qualsiasi livello',
 	'reblock-logentry' => 'ha cambiato le impostazioni del blocco per [[$1]] con una scadenza di $2 $3',
 	'range_block_disabled' => 'La possibilità di bloccare intervalli di indirizzi IP non è attiva al momento.',
 	'revertmove' => 'ripristina',
@@ -20069,11 +20292,93 @@ Le pagine contenute nella propria lista degli [[Special:Watchlist|Osservati spec
 	'revdelete-uname-unhid' => 'nome utente ripristinato',
 	'revdelete-restricted' => 'limitazioni ai soli amministratori attivate',
 	'revdelete-unrestricted' => 'limitazioni ai soli amministratori rimosse',
+	'revision-info-current' => '-',
+	'revision-nav' => '($1) $2{{int:pipe-separator}}$3 ($4){{int:pipe-separator}}$5 ($6)',
+	'right-editmyoptions' => 'Puoi modificare le tue preferenze',
+	'right-loggedin' => "Contrassegna l'utente come avente eseguito l'accesso ad un account",
+	'right-mcachepurge' => 'Controlla comportamento memcached tramite i parametri di richiesta',
+	'right-emailconfirmed' => "L'utente è stata confermato per e-mail",
+	'right-runjob' => 'Esegui lavoro dalla coda dei lavori tramite API',
+	'recentchanges-url' => 'Special:RecentChanges',
+	'rc-change-size' => '$1',
+	'rc-old-title' => 'creato in origine come "$1"',
+	'randompage-url' => 'Speciale:PaginaCasuale',
+	'rfcurl' => '//tools.ietf.org/html/rfc$1',
+	'revdelete-logentry' => 'modificata la visibilità di revisione di "[[$1]]"',
+	'revdelete-content' => 'contenuto',
+	'revdelete-summary' => 'riassunto delle modifiche',
+	'revdelete-uname' => 'nome utente',
+	'revdelete-hid' => 'hid $1',
+	'revdelete-unhid' => 'unhid $1',
+	'revdelete-log-message' => '$1 per $2 {{PLURAL:$2|revisione|revisioni}}',
+	'reconfirmemail_subject' => 'Welcome to Wikia!',
+	'reconfirmemail_body' => 'Hi $2,
+
+Thank you for updating the email address associated with your Wikia account.
+
+Before our system can send you any mail you have opted to receive, you
+must confirm your email address.
+
+Click on the link below or paste it into your browser:
+
+$3
+
+Note: This confirmation link will expire in 7 days.
+
+
+With thousands of communities on Wikia, there are many ways to have fun
+here. Spend some time getting to know Wikia by visiting the home page
+(www.wikia.com), taking a tutorial at
+http://www.wikia.com/wiki/Help:Tutorial_1 , reading interesting and cool
+pages, writing content on your favorite subjects, or meeting other
+members of the community.
+
+We look forward to seeing you on Wikia!
+
+The Wikia Community Team
+www.wikia.com
+',
+	'rcshowhideenhanced' => '$1 enhanced recent changes',
+	'refreshpage' => 'Ricarica la pagina per attivare questo widget',
+	'requestcreatewiki' => 'Invia richiesta',
+	'right_now' => 'Al momento<br />persone stanno...',
+	'return_to_article' => 'Torna alla pagina',
+	'return_to_talk' => 'Torna alla discussione',
+	'return_to_user' => 'Torna alla pagina utente',
+	'return_to_user_talk' => 'Torna alla discussione',
+	'return_to_project' => 'Torna alla pagina del progetto',
+	'return_to_project_talk' => 'Torna alla discussione',
+	'return_to_image' => 'Torna alla pagina delle immagini',
+	'return_to_image_talk' => 'Torna alla discussione',
+	'return_to_mediawiki' => 'Torna alla pagina del messaggio',
+	'return_to_mediawiki_talk' => 'Torna alla discussione',
+	'return_to_template' => 'Torna alla pagina del template',
+	'return_to_template_talk' => 'Torna alla discussione',
+	'return_to_help' => 'Torna alla pagina della Guida',
+	'return_to_help_talk' => 'Torna alla discussione',
+	'return_to_category' => 'Torna alla pagina della categoria',
+	'return_to_category_talk' => 'Torna alla discussione',
+	'return_to_forum' => 'Torna alla pagina del forum',
+	'return_to_forum_talk' => 'Torna alla discussione',
+	'return_to_special' => 'Torna alla pagina speciale',
+	'rate_it' => 'Valuta questa pagina:',
+	'review_reason_1' => 'Scrivi una recensione su motivo 1',
+	'review_reason_2' => 'Scrivi una recensione su motivo 2',
+	'review_reason_3' => 'Scrivi una recensione su motivo 3',
+	'review_reason_4' => 'Scrivi una recensione su motivo 4',
+	'review_reason_5' => 'Scrivi una recensione su motivo 5',
+	'related_wiki' => 'Aggiungi link puntati qui per visualizzare la wiki correlata alla presente nella wiki correlata [[Special:Widget|widget]].
+
+* [{{FULLURL:MediaWiki:Related wiki}} Non è stata ancora selezionata alcuna wiki correlata.]',
+	'registerintro-title' => 'Quando crei un account su FANDOM, diventi parte della comunità!',
+	'registerintro-text' => 'Ricevi il riconoscimento per tutte le tue collaborazioni, crea il tuo profilo utente personale, segui gli sviluppi delle tue pagine preferite e utilizza tutti i pratici strumenti disponibili.',
+	'rcshowhidelogs' => '$1 registri',
+	'right-hideblockername' => "Non hanno il loro nome utente visualizzato nell'avviso di blocco",
 );
 
 $messages['iu'] = array(
 	'returnto' => 'Torna a $1.',
-	'redirectedfrom' => '(Reindirizzamento da <b>$1</b>)',
+	'redirectedfrom' => 'Reindirizzamento da <b>$1</b>',
 	'redirectpagesub' => 'Pagina di reindirizzamento',
 	'retrievedfrom' => 'Estratto da "$1"',
 	'restorelink' => '{{PLURAL:$1|una modifica cancellata|$1 modifiche cancellate}}',
@@ -20305,7 +20610,7 @@ Le pagine contenute nella propria lista degli [[Special:Watchlist|Osservati spec
 	'rollback_short' => 'Rollback',
 	'rollbacklink' => 'rollback',
 	'rollbackfailed' => 'Rollback fallito',
-	'revertpage' => 'Annullate le modifiche di [[Special:Contributions/$2|$2]] ([[User talk:$2|discussione]]), riportata alla versione precedente di [[User:$1|$1]]',
+	'revertpage' => 'Annullate le modifiche di [[Special:Contributions/$2|$2]] ([[User talk:$2|discussione]]), riportata alla versione precedente di $1',
 	'revertpage-nouser' => 'Annullate le modifiche di (nome utente rimosso), riportata alla versione precedente di [[User:$1|$1]]',
 	'rollback-success' => "Annullate le modifiche di $1; pagina riportata all'ultima versione di $2.",
 	'restriction-type' => 'Permesso',
@@ -20334,7 +20639,7 @@ Le pagine contenute nella propria lista degli [[Special:Watchlist|Osservati spec
 );
 
 $messages['ja'] = array(
-	'realmap-deprecated-info' => '実際の場所を表示するマップの作成および提供はWikiaにて廃止されました。詳しくはこちらをご覧ください: $1',
+	'realmap-deprecated-info' => '実際の場所を表示するマップの作成および提供は廃止されました。詳しくはこちらをご覧ください: $1',
 	'returnto' => '$1に戻る。',
 	'redirectedfrom' => '（$1から転送）',
 	'redirectpagesub' => '転送ページ',
@@ -20433,7 +20738,7 @@ $messages['ja'] = array(
 	'revdelete-radio-set' => 'はい',
 	'revdelete-radio-unset' => 'いいえ',
 	'revdelete-suppress' => '他の利用者と同様に管理者からもデータを隠す',
-	'revdelete-unsuppress' => '復元版に対する制限を除去',
+	'revdelete-unsuppress' => '復元されたリビジョンに対する制限を解除',
 	'revdelete-log' => '理由：',
 	'revdelete-submit' => '選択した{{PLURAL:$1|版}}に適用',
 	'revdelete-success' => "'''版の閲覧レベルを更新しました。'''",
@@ -20479,8 +20784,8 @@ $1",
 	'recentchangescount' => '既定で表示する件数：',
 	'right-read' => 'ページの閲覧',
 	'right-edit' => 'ページの編集',
-	'right-createpage' => '（議論ページでない）ページの作成',
-	'right-createtalk' => '議論ページの作成',
+	'right-createpage' => '(トークページ以外の) ページの作成',
+	'right-createtalk' => 'トークページの作成',
 	'right-createaccount' => '新しい利用者アカウントの作成',
 	'right-minoredit' => '細部の編集の印づけ',
 	'right-move' => 'ページの移動',
@@ -20496,7 +20801,7 @@ $1",
 	'right-purge' => '確認を省略してサイトのキャッシュを破棄',
 	'right-autoconfirmed' => '半保護されたページの編集',
 	'right-bot' => '自動処理として認識',
-	'right-nominornewtalk' => '議論ページへ細部の編集をしたときに、新しいメッセージのお知らせを表示しない',
+	'right-nominornewtalk' => '会話ページへ細部の編集が行われた際の「新しいメッセージのお知らせ」の非表示',
 	'right-apihighlimits' => 'API要求でより高い制限値の使用',
 	'right-writeapi' => '書き込みAPIの使用',
 	'right-delete' => 'ページの削除',
@@ -20536,20 +20841,20 @@ $1",
 	'right-override-export-depth' => 'リンク先ページを5階層まで含めて書き出す',
 	'right-sendemail' => '他の利用者へ電子メールを送る',
 	'right-passwordreset' => 'パスワード再設定メールを閲覧する',
-	'rightslog' => '利用者権限変更記録',
+	'rightslog' => 'ユーザー権限変更記録',
 	'rightslogtext' => '以下は利用者権限の変更記録です。',
 	'rightslogentry' => '$1の所属グループを$2から$3へ変更しました',
 	'rightslogentry-autopromote' => '$2 から $3 に自動的に昇格',
 	'rightsnone' => '（なし）',
 	'recentchanges' => '最近の更新',
 	'recentchanges-legend' => '最近の更新のオプション',
-	'recentchangestext' => 'このウィキにおける最近の更新はこのページから確認できます。',
+	'recentchangestext' => '<div id="wikia-mediawiki-recentchangestext" style="border:2px solid #e9e9e9; margin-bottom:0.3em; padding:0.2em 0.5em;"><span style="float:left;">[[Special:NewPages|新しいページ]] – [[Special:NewImages|新着画像]] – [[Special:Log|公開記録]] – [[Special:Insights|インサイト]]</span><span style="float:right;">[[ヘルプ:最近の更新]]</span><div style="clear:both;"></div></div>',
 	'recentchanges-feed-description' => 'このフィードでそのウィキへの最近の更新を追跡。',
 	'recentchanges-label-newpage' => 'この編集で新しいページが作成されました',
 	'recentchanges-label-minor' => 'これは細部の編集です',
 	'recentchanges-label-bot' => 'この編集はボットによって行われました',
 	'recentchanges-label-unpatrolled' => 'この編集はまだ巡回されていません',
-	'rcnote' => "$4 $5までの{{PLURAL:$2|'''1'''日|'''$2'''日間}}になされた'''$1'''件の変更は以下のとおりです。",
+	'rcnote' => '以下は $3 までの <strong>$2</strong> 日間に編集された <strong>$1</strong> ページです（<strong>{{int:newpageletter}}</strong>=新規項目、<strong>{{int:minoreditletter}}</strong>=細部の編集、<strong>{{int:boteditletter}}</strong>=ボットの編集、日時はオプションで未設定ならUTC）',
 	'rcnotefrom' => "以下は、'''$2'''以降の更新です（最大'''$1'''件）。",
 	'rclistfrom' => '$1以降の更新を表示する',
 	'rcshowhideminor' => '細部の編集を$1',
@@ -20633,16 +20938,50 @@ $2による最後の版へ変更されました。',
 	'return_to_forum_talk' => '議論のページに戻る',
 	'return_to_special' => '特別ページに戻る',
 	'rate_it' => '評価する:',
-	'review_reason_1' => 'Review reason 1',
-	'review_reason_2' => 'Review reason 2',
-	'review_reason_3' => 'Review reason 3',
-	'review_reason_4' => 'Review reason 4',
-	'review_reason_5' => 'Review reason 5',
+	'review_reason_1' => '審査理由1',
+	'review_reason_2' => '審査理由2',
+	'review_reason_3' => '審査理由3',
+	'review_reason_4' => '審査理由4',
+	'review_reason_5' => '審査理由5',
+	'revision-info-current' => '-',
+	'revision-nav' => '($1) $2{{int:pipe-separator}}$3 ($4){{int:pipe-separator}}$5 ($6)',
+	'right-editmyoptions' => '自分の設定を編集できる',
+	'right-loggedin' => 'アカウントにログイン済みとしてユーザーにフラグを付ける',
+	'right-mcachepurge' => 'リクエスト・パラメータ経由でmemcachedの動作を制御する',
+	'right-emailconfirmed' => 'ユーザーはメール確認済みです',
+	'right-runjob' => 'API経由でジョブ・キューからジョブを実行する',
+	'recentchanges-url' => 'Special:RecentChanges',
+	'rc-change-size' => '$1',
+	'rc-old-title' => '作成時の元のタイトルは「$1」でした',
+	'randompage-url' => 'Special:Random',
+	'rfcurl' => '//tools.ietf.org/html/rfc$1',
+	'revdelete-logentry' => 'さんが「[[$1]]」の閲覧可能な版を変更しました',
+	'reconfirmemail_subject' => 'ウィキアへようこそ！',
+	'reconfirmemail_body' => 'こんにちは $2 さん
+
+ウィキア・アカウントの電子メールアドレスの更新ありがとうございます。お手数ですがこちらをクリックして電子メールアドレスの確認をお願いします: $3
+
+ありがとうございます！
+
+- ウィキア・コミュニティ・サポート
+
+___________________________________________
+* コミュニティでヘルプとアドバイスを探す: http://ja.community.wikia.com
+* 私たちが送信するメッセージを減らしたいですか？ こちらで定期購読を中止するか電子メールの設定を変更することができます : http://ja.community.wikia.com/Special:Preferences',
+	'rcshowhideenhanced' => '拡張された最近更新したページを$1',
+	'refreshpage' => 'このウィジェットを有効にするにはページの再読み込みを行う必要があります。',
+	'related_wiki' => 'Add bulleted links here to display wiki related to this one in the related wiki [[Special:Widgets|widget]].
+
+* [{{FULLURL:MediaWiki:Related wiki}} No related wiki have been selected yet.]',
+	'registerintro-title' => 'FANDOMでアカウントを作成すると、コミュニティの一員になります',
+	'registerintro-text' => 'あなたが行う全ての投稿にクレジットがつけられ、プロフィールの作成・気に入ったページのウォッチ・様々なツールの利用ができるようになります。',
+	'rcshowhidelogs' => 'ログを$1',
+	'right-hideblockername' => 'ブロック通知にユーザー名を表示させない',
 );
 
 $messages['jam'] = array(
 	'returnto' => 'Ritoern a $1',
-	'redirectedfrom' => '(Riidirek frahn $1)',
+	'redirectedfrom' => 'Riidirek frahn $1',
 	'redirectpagesub' => 'Riidirek piej',
 	'retrievedfrom' => 'Richriiv frahn "$1"',
 	'restorelink' => '{{PLURAL:$1|wan diliitid edit|$1 diliitid edit}}',
@@ -20718,7 +21057,7 @@ $messages['jbo'] = array(
 
 $messages['jut'] = array(
 	'returnto' => 'Tilbage til $1.',
-	'redirectedfrom' => '(Åmstyret frå $1)',
+	'redirectedfrom' => 'Åmstyret frå $1',
 	'redirectpagesub' => 'Åmstyrenge',
 	'retrievedfrom' => 'Hæntet frå "$1"',
 	'restorelink' => '{{PLURAL:$1|en slettet ændrenge|$1 slettede ændrenger}}',
@@ -20766,7 +21105,7 @@ denne side er vest nedenfør:",
 
 $messages['jv'] = array(
 	'returnto' => 'Bali menyang $1.',
-	'redirectedfrom' => '(Dialihkan dari $1)',
+	'redirectedfrom' => 'Dialihkan dari $1',
 	'redirectpagesub' => 'Kaca pangalihan',
 	'retrievedfrom' => 'Sumber artikel iki saka kaca situs web: "$1"',
 	'restorelink' => '$1 {{PLURAL:$1|suntingan|suntingan}} sing wis kabusak',
@@ -20997,7 +21336,7 @@ Mangga priksa cathetan log.',
 	'rollback_short' => 'Balèkna',
 	'rollbacklink' => 'balèaké',
 	'rollbackfailed' => 'Pambalèkan gagal dilakoni',
-	'revertpage' => 'Suntingan [[Special:Contributions/$2|$2]] ([[User talk:$2|dhiskusi]]) dipunwangsulaken dhateng ing vèrsi pungkasan déning [[User:$1|$1]]',
+	'revertpage' => 'Suntingan [[Special:Contributions/$2|$2]] ([[User talk:$2|dhiskusi]]) dipunwangsulaken dhateng ing vèrsi pungkasan déning $1',
 	'rollback-success' => 'Suntingan dibalèkaké déning $1;
 diowahi bali menyang vèrsi pungkasan déning $2.',
 	'restriction-type' => 'Pangreksan:',
@@ -21020,7 +21359,7 @@ diowahi bali menyang vèrsi pungkasan déning $2.',
 
 $messages['ka'] = array(
 	'returnto' => 'დაბრუნდი $1-ზე.',
-	'redirectedfrom' => '(გადმომისამართდა $1-დან)',
+	'redirectedfrom' => 'გადმომისამართდა $1-დან',
 	'redirectpagesub' => 'გადამისამართება გვერდზე',
 	'retrievedfrom' => 'მოძიებულია "$1"-დან',
 	'restorelink' => '{{PLURAL:$1|ერთი წაშლილი რედაქტირება|$1 წაშლილი რედაქტირება}}',
@@ -21272,7 +21611,7 @@ $1",
 	'rollback_short' => 'სწრაფი გაუქმება',
 	'rollbacklink' => 'სწრაფი გაუქმება',
 	'rollbackfailed' => 'შეცდომა გაუქმებისას',
-	'revertpage' => '[[Special:Contributions/$2|$2]]-ის რედაქტირება გაუქმდა; აღდგა ბოლოს [[User:$1|$1]]-ის მიერ რედაქტირებული ვერსია',
+	'revertpage' => '[[Special:Contributions/$2|$2]]-ის რედაქტირება გაუქმდა; აღდგა ბოლოს $1-ის მიერ რედაქტირებული ვერსია',
 	'revertpage-nouser' => 'გაუქმდა (მომხმარებლის სახელი წაიშალა) მომხმარებელ [[User:$1|$1]] ბოლო რედაქტირეაზე.',
 	'rollback-success' => 'გაუქმდა შესწორება $1; დაბრუნება ვერსიაზე $2.',
 	'restriction-type' => 'უფლება',
@@ -21295,7 +21634,7 @@ $1",
 
 $messages['kaa'] = array(
 	'returnto' => '$1 betine qaytıw.',
-	'redirectedfrom' => "($1 degennen burılg'an)",
+	'redirectedfrom' => "$1 degennen burılg'an",
 	'redirectpagesub' => 'Burıwshı bet',
 	'retrievedfrom' => '"$1" saytınan alıng\'an',
 	'restorelink' => "{{PLURAL:$1|bir o'shirilgen o'zgeris|$1 o'shirilgen o'zgeris}}",
@@ -21451,7 +21790,7 @@ Qolaylıq ushın to'mende o'shiriw jurnalı keltirilgen:",
 
 $messages['kab'] = array(
 	'returnto' => 'Uɣal ar $1.',
-	'redirectedfrom' => '(Yettusmimeḍ seg $1)',
+	'redirectedfrom' => 'Yettusmimeḍ seg $1',
 	'redirectpagesub' => 'Asebter usemmimeḍ',
 	'retrievedfrom' => 'Yettwaddem seg "$1"',
 	'restorelink' => '{{PLURAL:$1|Yiwen abeddel yettumḥan|$1 Ibeddlen yettumḥan}}',
@@ -21535,7 +21874,7 @@ Inedbalen wiyaḍ deg wiki-yagi zemren ad ẓren imuren i yettwafren u zemren a 
 	'randomredirect' => 'Asemmimeḍ menwala',
 	'removedwatchtext' => 'Asebter "[[:$1]]" yettwakkes seg wumuɣ n uɛessi inek.',
 	'reverted' => 'Asuɣal i tasiwel taqdimt',
-	'revertpage' => 'Yessuɣal ibeddlen n [[Special:Contributions/$2|$2]] ([[User talk:$2|Meslay]]); yettubeddel ɣer tasiwelt taneggarut n [[User:$1|$1]]',
+	'revertpage' => 'Yessuɣal ibeddlen n [[Special:Contributions/$2|$2]] ([[User talk:$2|Meslay]]); yettubeddel ɣer tasiwelt taneggarut n $1',
 	'restriction-type' => 'Turagt',
 	'restriction-edit' => 'Beddel',
 	'restriction-move' => 'Smimeḍ',
@@ -21547,7 +21886,7 @@ Inedbalen wiyaḍ deg wiki-yagi zemren ad ẓren imuren i yettwafren u zemren a 
 
 $messages['kbd'] = array(
 	'returnto' => 'Uɣal ar $1.',
-	'redirectedfrom' => '(Yettusmimeḍ seg $1)',
+	'redirectedfrom' => 'Yettusmimeḍ seg $1',
 	'redirectpagesub' => 'Asebter usemmimeḍ',
 	'retrievedfrom' => 'Yettwaddem seg "$1"',
 	'restorelink' => '{{PLURAL:$1|Yiwen abeddel yettumḥan|$1 Ibeddlen yettumḥan}}',
@@ -21631,7 +21970,7 @@ Inedbalen wiyaḍ deg wiki-yagi zemren ad ẓren imuren i yettwafren u zemren a 
 	'randomredirect' => 'Asemmimeḍ menwala',
 	'removedwatchtext' => 'Asebter "[[:$1]]" yettwakkes seg wumuɣ n uɛessi inek.',
 	'reverted' => 'Asuɣal i tasiwel taqdimt',
-	'revertpage' => 'Yessuɣal ibeddlen n [[Special:Contributions/$2|$2]] ([[User talk:$2|Meslay]]); yettubeddel ɣer tasiwelt taneggarut n [[User:$1|$1]]',
+	'revertpage' => 'Yessuɣal ibeddlen n [[Special:Contributions/$2|$2]] ([[User talk:$2|Meslay]]); yettubeddel ɣer tasiwelt taneggarut n $1',
 	'restriction-type' => 'Turagt',
 	'restriction-edit' => 'Beddel',
 	'restriction-move' => 'Smimeḍ',
@@ -21643,7 +21982,7 @@ Inedbalen wiyaḍ deg wiki-yagi zemren ad ẓren imuren i yettwafren u zemren a 
 
 $messages['kbd-cyrl'] = array(
 	'returnto' => '$1 напэкӀуэцӀым гъэзэжын.',
-	'redirectedfrom' => '($1 мыбы къыхэкIащ)',
+	'redirectedfrom' => '$1 мыбы къыхэкIащ',
 	'redirectpagesub' => 'НапэкӀуэцӀ-егъэкӀуэкӀа',
 	'retrievedfrom' => 'Къыздырахар: "$1"',
 	'restorelink' => '{{PLURAL:$1|$1 гъэтэрэзыгъуэ ихар|$1 гъэтэрэзыгъуэ ихахэр|$1 гъэтэрэзыгъуэ ихыжахэр}}',
@@ -21799,7 +22138,7 @@ $1",
 
 $messages['kg'] = array(
 	'returnto' => 'Vutukila $1',
-	'redirectedfrom' => '(Balulama tuka $1)',
+	'redirectedfrom' => 'Balulama tuka $1',
 	'retrievedfrom' => 'Receptum de "$1"',
 	'red-link-title' => '$1 (mukanda kele ve)',
 	'recentchanges' => 'Bansoba ya yimpa',
@@ -21888,7 +22227,7 @@ $1 (صفحہ موجود نیکی)',
 
 $messages['kiu'] = array(
 	'returnto' => 'Peyser so $1.',
-	'redirectedfrom' => '($1 ra ard)',
+	'redirectedfrom' => '$1 ra ard',
 	'redirectpagesub' => 'Pela ardene',
 	'retrievedfrom' => '"$1" ra ard',
 	'restorelink' => '{{PLURAL:$1|jü vurnaiso esterıte|$1 vurnaisê esterıtey}}',
@@ -22030,7 +22369,7 @@ Eke şertê ilawekerdey ke niyê ro, idarekerê bini {{SITENAME}} de nêşikinê
 
 $messages['kk-arab'] = array(
 	'returnto' => '$1 دەگەنگە قايتا كەلۋ.',
-	'redirectedfrom' => '($1 بەتىنەن ايداتىلعان)',
+	'redirectedfrom' => '$1 بەتىنەن ايداتىلعان',
 	'redirectpagesub' => 'ايداتۋ بەتى',
 	'retrievedfrom' => '«$1» بەتىنەن الىنعان',
 	'restorelink' => 'جويىلعان $1 وڭدەمەنى',
@@ -22185,7 +22524,7 @@ $messages['kk-arab'] = array(
 	'rollback_short' => 'شەگىندىرۋ',
 	'rollbacklink' => 'شەگىندىرۋ',
 	'rollbackfailed' => 'شەگىندىرۋ ٴساتسىز ٴبىتتى',
-	'revertpage' => '[[{{#special:Contributions}}/$2|$2]] ([[{{ns:user_talk}}:$2|تالقىلاۋى]]) وڭدەمەلەرىنەن [[{{ns:user}}:$1|$1]] سوڭعى نۇسقاسىنا قايتاردى',
+	'revertpage' => '[[{{#special:Contributions}}/$2|$2]] ([[{{ns:user_talk}}:$2|تالقىلاۋى]]) وڭدەمەلەرىنەن $1 سوڭعى نۇسقاسىنا قايتاردى',
 	'rollback-success' => '$1 وڭدەمەلەرىنەن قايتارعان;
 $2 سوڭعى نۇسقاسىنا وزگەرتتى.',
 	'restriction-type' => 'رۇقساتى:',
@@ -22208,7 +22547,7 @@ $2 سوڭعى نۇسقاسىنا وزگەرتتى.',
 
 $messages['kk-cn'] = array(
 	'returnto' => '$1 دەگەنگە قايتا كەلۋ.',
-	'redirectedfrom' => '($1 بەتىنەن ايداتىلعان)',
+	'redirectedfrom' => '$1 بەتىنەن ايداتىلعان',
 	'redirectpagesub' => 'ايداتۋ بەتى',
 	'retrievedfrom' => '«$1» بەتىنەن الىنعان',
 	'restorelink' => 'جويىلعان $1 وڭدەمەنى',
@@ -22363,7 +22702,7 @@ $messages['kk-cn'] = array(
 	'rollback_short' => 'شەگىندىرۋ',
 	'rollbacklink' => 'شەگىندىرۋ',
 	'rollbackfailed' => 'شەگىندىرۋ ٴساتسىز ٴبىتتى',
-	'revertpage' => '[[{{#special:Contributions}}/$2|$2]] ([[{{ns:user_talk}}:$2|تالقىلاۋى]]) وڭدەمەلەرىنەن [[{{ns:user}}:$1|$1]] سوڭعى نۇسقاسىنا قايتاردى',
+	'revertpage' => '[[{{#special:Contributions}}/$2|$2]] ([[{{ns:user_talk}}:$2|تالقىلاۋى]]) وڭدەمەلەرىنەن $1 سوڭعى نۇسقاسىنا قايتاردى',
 	'rollback-success' => '$1 وڭدەمەلەرىنەن قايتارعان;
 $2 سوڭعى نۇسقاسىنا وزگەرتتى.',
 	'restriction-type' => 'رۇقساتى:',
@@ -22386,7 +22725,7 @@ $2 سوڭعى نۇسقاسىنا وزگەرتتى.',
 
 $messages['kk-cyrl'] = array(
 	'returnto' => '$1 дегенге қайта келу.',
-	'redirectedfrom' => '($1 бетінен айдатылған)',
+	'redirectedfrom' => '$1 бетінен айдатылған',
 	'redirectpagesub' => 'Айдату беті',
 	'retrievedfrom' => '«$1» бетінен алынған',
 	'restorelink' => 'Жойылған $1 өңдемені',
@@ -22545,7 +22884,7 @@ $messages['kk-cyrl'] = array(
 	'rollback_short' => 'Шегіндіру',
 	'rollbacklink' => 'шегіндіру',
 	'rollbackfailed' => 'Шегіндіру сәтсіз бітті',
-	'revertpage' => '[[{{#special:Contributions}}/$2|$2]] ([[{{ns:user_talk}}:$2|талқылауы]]) өңдемелерінен [[{{ns:user}}:$1|$1]] соңғы нұсқасына қайтарды',
+	'revertpage' => '[[{{#special:Contributions}}/$2|$2]] ([[{{ns:user_talk}}:$2|талқылауы]]) өңдемелерінен $1 соңғы нұсқасына қайтарды',
 	'rollback-success' => '$1 өңдемелерінен қайтарған;
 $2 соңғы нұсқасына өзгертті.',
 	'restriction-type' => 'Рұқсаты:',
@@ -22568,7 +22907,7 @@ $2 соңғы нұсқасына өзгертті.',
 
 $messages['kk-kz'] = array(
 	'returnto' => '$1 дегенге қайта келу.',
-	'redirectedfrom' => '($1 бетінен айдатылған)',
+	'redirectedfrom' => '$1 бетінен айдатылған',
 	'redirectpagesub' => 'Айдату беті',
 	'retrievedfrom' => '«$1» бетінен алынған',
 	'restorelink' => 'Жойылған $1 өңдемені',
@@ -22727,7 +23066,7 @@ $messages['kk-kz'] = array(
 	'rollback_short' => 'Шегіндіру',
 	'rollbacklink' => 'шегіндіру',
 	'rollbackfailed' => 'Шегіндіру сәтсіз бітті',
-	'revertpage' => '[[{{#special:Contributions}}/$2|$2]] ([[{{ns:user_talk}}:$2|талқылауы]]) өңдемелерінен [[{{ns:user}}:$1|$1]] соңғы нұсқасына қайтарды',
+	'revertpage' => '[[{{#special:Contributions}}/$2|$2]] ([[{{ns:user_talk}}:$2|талқылауы]]) өңдемелерінен $1 соңғы нұсқасына қайтарды',
 	'rollback-success' => '$1 өңдемелерінен қайтарған;
 $2 соңғы нұсқасына өзгертті.',
 	'restriction-type' => 'Рұқсаты:',
@@ -22750,7 +23089,7 @@ $2 соңғы нұсқасына өзгертті.',
 
 $messages['kk-latn'] = array(
 	'returnto' => '$1 degenge qaýta kelw.',
-	'redirectedfrom' => '($1 betinen aýdatılğan)',
+	'redirectedfrom' => '$1 betinen aýdatılğan',
 	'redirectpagesub' => 'Aýdatw beti',
 	'retrievedfrom' => '«$1» betinen alınğan',
 	'restorelink' => 'Joýılğan $1 öñdemeni',
@@ -22905,7 +23244,7 @@ keltirilgen tüzetw joq, ne ağımdıq tüzetwdi jasırw üşin ärekettenip kö
 	'rollback_short' => 'Şegindirw',
 	'rollbacklink' => 'şegindirw',
 	'rollbackfailed' => 'Şegindirw sätsiz bitti',
-	'revertpage' => '[[{{#special:Contributions}}/$2|$2]] ([[{{ns:user_talk}}:$2|talqılawı]]) öñdemelerinen [[{{ns:user}}:$1|$1]] soñğı nusqasına qaýtardı',
+	'revertpage' => '[[{{#special:Contributions}}/$2|$2]] ([[{{ns:user_talk}}:$2|talqılawı]]) öñdemelerinen $1 soñğı nusqasına qaýtardı',
 	'rollback-success' => '$1 öñdemelerinen qaýtarğan;
 $2 soñğı nusqasına özgertti.',
 	'restriction-type' => 'Ruqsatı:',
@@ -22928,7 +23267,7 @@ $2 soñğı nusqasına özgertti.',
 
 $messages['kk-tr'] = array(
 	'returnto' => '$1 degenge qaýta kelw.',
-	'redirectedfrom' => '($1 betinen aýdatılğan)',
+	'redirectedfrom' => '$1 betinen aýdatılğan',
 	'redirectpagesub' => 'Aýdatw beti',
 	'retrievedfrom' => '«$1» betinen alınğan',
 	'restorelink' => 'Joýılğan $1 öñdemeni',
@@ -23083,7 +23422,7 @@ keltirilgen tüzetw joq, ne ağımdıq tüzetwdi jasırw üşin ärekettenip kö
 	'rollback_short' => 'Şegindirw',
 	'rollbacklink' => 'şegindirw',
 	'rollbackfailed' => 'Şegindirw sätsiz bitti',
-	'revertpage' => '[[{{#special:Contributions}}/$2|$2]] ([[{{ns:user_talk}}:$2|talqılawı]]) öñdemelerinen [[{{ns:user}}:$1|$1]] soñğı nusqasına qaýtardı',
+	'revertpage' => '[[{{#special:Contributions}}/$2|$2]] ([[{{ns:user_talk}}:$2|talqılawı]]) öñdemelerinen $1 soñğı nusqasına qaýtardı',
 	'rollback-success' => '$1 öñdemelerinen qaýtarğan;
 $2 soñğı nusqasına özgertti.',
 	'restriction-type' => 'Ruqsatı:',
@@ -23106,7 +23445,7 @@ $2 soñğı nusqasına özgertti.',
 
 $messages['kl'] = array(
 	'returnto' => '$1 -mut uterit',
-	'redirectedfrom' => '($1-mit nuunneq)',
+	'redirectedfrom' => '$1-mit nuunneq',
 	'retrievedfrom' => 'Uannga aaneqartoq "$1"',
 	'red-link-title' => '$1 (Qupperneq suli allaffigineqanngilaq)',
 	'remembermypassword' => 'Iserfiga tullissaanut eqqaamalara (for a maximum of $1 {{PLURAL:$1|day|days}})',
@@ -23130,12 +23469,12 @@ $messages['kl'] = array(
 	'recentchangeslinked-feed' => 'Allannguutit naleqqiussat',
 	'recentchangeslinked-toolbox' => 'Allannguutit naleqqiussat',
 	'randompage' => 'Nalaatsornermi qupperneq',
-	'revertpage' => 'Inisseqqiineq [[User:$1|$1]]-meersoq, peerneqarpoq [[Special:Contributions/$2|$2]] ([[User talk:$2|diskussion]])-meersoq',
+	'revertpage' => 'Inisseqqiineq $1-meersoq, peerneqarpoq [[Special:Contributions/$2|$2]] ([[User talk:$2|diskussion]])-meersoq',
 );
 
 $messages['km'] = array(
 	'returnto' => 'ត្រឡប់ទៅ $1 វិញ ។',
-	'redirectedfrom' => '(ត្រូវបានបញ្ជូនបន្តពី $1)',
+	'redirectedfrom' => 'ត្រូវបានបញ្ជូនបន្តពី $1',
 	'redirectpagesub' => 'ទំព័របញ្ជូនបន្ត',
 	'retrievedfrom' => 'បានពី "$1"',
 	'restorelink' => '{{PLURAL:$1|កំណែប្រែមួយត្រូវបានលុបចោល|កំណែប្រែចំនួន $1 ត្រូវបានលុបចោល}}',
@@ -23356,7 +23695,7 @@ $1",
 	'rollback_short' => 'ត្រឡប់',
 	'rollbacklink' => 'ត្រឡប់',
 	'rollbackfailed' => 'ការ​ត្រឡប់​ក្រោយមិនបានសំរេច',
-	'revertpage' => 'បានត្រឡប់កំណែប្រែដោយ[[Special:Contributions/$2|$2]] ([[User talk:$2|Talk]]) ទៅកំណែប្រែចុងក្រោយដោយ [[User:$1|$1]]',
+	'revertpage' => 'បានត្រឡប់កំណែប្រែដោយ[[Special:Contributions/$2|$2]] ([[User talk:$2|Talk]]) ទៅកំណែប្រែចុងក្រោយដោយ $1',
 	'rollback-success' => 'កំណែ​ដែល​ត្រូវ​បាន​ត្រឡប់​ដោយ​ $1។
 បាន​ផ្លាស់​ប្ដូរ​ទៅ​កំណែ​ចុង​ក្រោយ​វិញ​ដោយ $2។',
 	'restriction-type' => 'ការអនុញ្ញាត៖',
@@ -23377,7 +23716,7 @@ $1",
 
 $messages['kn'] = array(
 	'returnto' => '$1 ಗೆ ಹಿಂತಿರುಗಿ.',
-	'redirectedfrom' => '($1 ಇಂದ ಪುನರ್ನಿರ್ದೇಶಿತ)',
+	'redirectedfrom' => '$1 ಇಂದ ಪುನರ್ನಿರ್ದೇಶಿತ',
 	'redirectpagesub' => 'ಪುನರ್ನಿರ್ದೇಶನ ಪುಟ',
 	'retrievedfrom' => '"$1" ಇಂದ ಪಡೆಯಲ್ಪಟ್ಟಿದೆ',
 	'restorelink' => '{{PLURAL:$1|೧ ಅಳಿಸಲ್ಪಟ್ಟ ಸಂಪಾದನೆ|$1 ಅಳಿಸಲ್ಪಟ್ಟ ಸಂಪಾದನೆಗಳು}}',
@@ -23508,7 +23847,7 @@ $messages['kn'] = array(
 
 $messages['ko'] = array(
 	'returnto' => '$1(으)로 돌아갑니다.',
-	'redirectedfrom' => '($1에서 넘어옴)',
+	'redirectedfrom' => '$1에서 넘어옴',
 	'redirectpagesub' => '넘겨주기 문서',
 	'retrievedfrom' => '원본 주소 ‘$1’',
 	'restorelink' => '삭제된 편집 $1 개',
@@ -23734,9 +24073,9 @@ $1",
 	'recentchangeslinked-page' => '문서 이름:',
 	'recentchangeslinked-to' => '여기를 가리키는 문서의 최근 바뀜',
 	'reuploaddesc' => '올리기를 취소하고 올리기 양식으로 돌아가기',
-	'randompage' => '임의 문서로',
+	'randompage' => '임의 문서 보기',
 	'randompage-nopages' => '{{PLURAL:$2|다음}} 이름공간에는 문서가 없습니다: $1',
-	'randomredirect' => '임의 넘겨주기 문서로',
+	'randomredirect' => '임의 넘겨주기 문서 보기',
 	'randomredirect-nopages' => '"$1" 이름공간에서 해당하는 넘겨주기 문서가 없습니다.',
 	'removewatch' => '주시문서 목록에서 제거',
 	'removedwatchtext' => '"[[:$1]]" 문서를 [[Special:Watchlist|주시문서 목록]]에서 뺐습니다.',
@@ -23745,7 +24084,7 @@ $1",
 	'rollback_short' => '되돌리기',
 	'rollbacklink' => '되돌리기',
 	'rollbackfailed' => '되돌리기 실패',
-	'revertpage' => '[[Special:Contributions/$2|$2]]([[User talk:$2|토론]])의 편집을 [[User:$1|$1]]의 마지막 버전으로 되돌림',
+	'revertpage' => '[[Special:Contributions/$2|$2]]([[User talk:$2|토론]])의 편집을 $1의 마지막 버전으로 되돌림',
 	'revertpage-nouser' => '(계정 이름 삭제됨)의 편집을 [[User:$1|$1]]의 마지막 편집으로 되돌림',
 	'rollback-success' => '$1의 편집을 $2의 마지막 버전으로 되돌렸습니다.',
 	'restriction-type' => '권한:',
@@ -23771,11 +24110,47 @@ $1",
 	'revdelete-uname-unhid' => '계정 이름 숨김 해제됨',
 	'revdelete-restricted' => '관리자에게 제한을 적용함',
 	'revdelete-unrestricted' => '관리자에 대한 제한을 해제함',
+	'registerintro-title' => '위키아에서 계정을 만드시면, 당신도 공동체의 일원이 됩니다!',
+	'rate_it' => '별점 주기:',
+	'rcshowhideenhanced' => '확장된 최근 바뀜 기능을 $1',
+	'rcshowhidelogs' => '기록을 $1',
+	'reconfirmemail_body' => '안녕하세요, $2 님.
+
+방금 막 귀하의 위키아 이메일 주소를 변경하신 것을 확인했습니다. 이 이메일 주소가 맞다면 다음 링크를 클릭해 인증해 주세요: $3
+
+감사합니다!
+
+- 위키아 커뮤니티 지원팀
+
+___________________________________________
+* 위키아 중앙 커뮤니티에서 도움을 구하실 수 있습니다: http://ko.community.wikia.com
+* 알림을 받고 싶지 않으신가요? 이곳에서 알림 설정을 변경하실 수 있습니다: http://ko.community.wikia.com/특수기능:환경설정',
+	'reconfirmemail_subject' => '위키아 계정을 다시 인증해 주세요',
+	'registerintro-text' => '당신의 기여를 쌓을 수 있으며, 프로필을 만드시거나, 관심 있는 문서를 주시하거나, 멋진 문서 도구들과 함께하실 수 있습니다',
+	'return_to_article' => '문서로 돌아가기',
+	'return_to_category' => '분류로 돌아가기',
+	'return_to_category_talk' => '토론 문서로 돌아가기',
+	'return_to_forum' => '포럼 문서로 돌아가기',
+	'return_to_forum_talk' => '토론 문서로 돌아가기',
+	'return_to_help' => '도움말 문서로 돌아가기',
+	'return_to_help_talk' => '토론 문서로 돌아가기',
+	'return_to_image' => '파일로 돌아가기',
+	'return_to_image_talk' => '토론 문서로 돌아가기',
+	'return_to_mediawiki' => '시스템 메시지로 돌아가기',
+	'return_to_mediawiki_talk' => '토론 문서로 돌아가기',
+	'return_to_project' => '프로젝트 문서로 돌아가기',
+	'return_to_project_talk' => '토론 문서로 돌아가기',
+	'return_to_special' => '특수 문서로 돌아가기',
+	'return_to_talk' => '토론 문서로 돌아가기',
+	'return_to_template' => '틀로 돌아가기',
+	'return_to_template_talk' => '토론 문서로 돌아가기',
+	'return_to_user' => '사용자 문서로 돌아가기',
+	'return_to_user_talk' => '토론 문서로 돌아가기',
 );
 
 $messages['ko-kp'] = array(
 	'returnto' => '$1(으)로 돌아갑니다.',
-	'redirectedfrom' => '($1에서 넘어옴)',
+	'redirectedfrom' => '$1에서 넘어옴',
 	'redirectpagesub' => '넘겨주기 문서',
 	'retrievedfrom' => '원본 주소 ‘$1’',
 	'restorelink' => '삭제된 편집 $1 개',
@@ -24012,7 +24387,7 @@ $1",
 	'rollback_short' => '되돌리기',
 	'rollbacklink' => '되돌리기',
 	'rollbackfailed' => '되돌리기 실패',
-	'revertpage' => '[[Special:Contributions/$2|$2]]([[User talk:$2|토론]])의 편집을 [[User:$1|$1]]의 마지막 버전으로 되돌림',
+	'revertpage' => '[[Special:Contributions/$2|$2]]([[User talk:$2|토론]])의 편집을 $1의 마지막 버전으로 되돌림',
 	'revertpage-nouser' => '(계정 이름 삭제됨)의 편집을 [[User:$1|$1]]의 마지막 편집으로 되돌림',
 	'rollback-success' => '$1의 편집을 $2의 마지막 버전으로 되돌렸습니다.',
 	'restriction-type' => '권한:',
@@ -24042,7 +24417,7 @@ $1",
 
 $messages['koi'] = array(
 	'returnto' => 'Бертны $1-öдз.',
-	'redirectedfrom' => '(Вештöм татчö  $1 вылiсь)',
+	'redirectedfrom' => 'Вештöм татчö  $1 вылiсь',
 	'redirectpagesub' => 'Мöдлаö иньдöтан листбок',
 	'retrievedfrom' => 'Öшмöс "$1"',
 	'red-link-title' => '$1 (листбокыс абу на)',
@@ -24086,7 +24461,7 @@ $messages['koi'] = array(
 
 $messages['krc'] = array(
 	'returnto' => '«$1» бетге къайт',
-	'redirectedfrom' => '(«$1» бетден джиберилгенди)',
+	'redirectedfrom' => '«$1» бетден джиберилгенди',
 	'redirectpagesub' => 'Башха бетге джибериучю бет',
 	'retrievedfrom' => 'Чыкъгъаны — «$1»',
 	'restorelink' => 'кетерилген {{PLURAL:$1|1|$1}} тюрлендириу',
@@ -24319,7 +24694,7 @@ $1",
 	'rollback_short' => 'Ызына ал',
 	'rollbacklink' => 'ызына къайтарыу',
 	'rollbackfailed' => 'Ызына алыу джетишимсизди',
-	'revertpage' => '[[Special:Contributions/$2|$2]] ([[User talk:$2|сюзюу]]) къошулуучуну тюрлендириулери кетерилиб, [[User:$1|$1]] къошулуучуну версиясы къайтарылды.',
+	'revertpage' => '[[Special:Contributions/$2|$2]] ([[User talk:$2|сюзюу]]) къошулуучуну тюрлендириулери кетерилиб, $1 къошулуучуну версиясы къайтарылды.',
 	'revertpage-nouser' => 'Тюрлендириуле (къошулуучуну аты кетерилгенди) [[User:$1|$1]] къошулуучуну версиясына къайтарылдыла',
 	'rollback-success' => '$1 этген тюрлендириуле ызына алыныб;
 $2 тюрлендирген алгъаракъ версиясына къайтылды.',
@@ -24384,7 +24759,7 @@ $messages['ks-deva'] = array(
 
 $messages['ksh'] = array(
 	'returnto' => 'Jangk widder noh: „$1“.',
-	'redirectedfrom' => '(Ömjeleit vun $1)',
+	'redirectedfrom' => 'Ömjeleit vun $1',
 	'redirectpagesub' => 'Ömleitungssigg',
 	'retrievedfrom' => 'Di Sigg heh stamp vun „$1“.',
 	'restorelink' => '{{PLURAL:$1|eijn fottjeschmesse Änderung|$1 fottjeschmesse Änderunge|keij fottjeschmesse Änderunge}}',
@@ -24622,7 +24997,7 @@ Sigge uß Dinge [[Special:Watchlist|Opaßleß]] sin '''fett''' jeschrevve.",
 	'rollback_short' => 'Zeröcknemme',
 	'rollbacklink' => 'All dem Letzte sing Änderunge zeröckdriehe',
 	'rollbackfailed' => 'Dat Zeröcknemme jingk scheiv',
-	'revertpage' => 'Änderunge vun däm Metmaacher „[[Special:Contributions/$2|$2]]“ ([[User talk:$2|däm sing Klaafsigg]]) fottjeschmesse, un doför de letzte Version vum „[[User:$1|$1]]“ widder zeröckjehollt',
+	'revertpage' => 'Änderunge vun däm Metmaacher „[[Special:Contributions/$2|$2]]“ ([[User talk:$2|däm sing Klaafsigg]]) fottjeschmesse, un doför de letzte Version vum „$1“ widder zeröckjehollt',
 	'revertpage-nouser' => 'Änderunge vun enem Metmaacher, däm singe Name vershtoche es, retuur jemaat op de letzte Version vum [[User:$1|$1]]',
 	'rollback-success' => 'De Änderungen vum $1 zeröckjenumme, un dobei de letzte Version vum $2 widder jehollt.',
 	'restriction-type' => 'jespecht es:',
@@ -24652,7 +25027,7 @@ Sigge uß Dinge [[Special:Watchlist|Opaßleß]] sin '''fett''' jeschrevve.",
 
 $messages['ku'] = array(
 	'returnto' => 'Jangk widder noh: „$1“.',
-	'redirectedfrom' => '(Ömjeleit vun $1)',
+	'redirectedfrom' => 'Ömjeleit vun $1',
 	'redirectpagesub' => 'Ömleitungssigg',
 	'retrievedfrom' => 'Di Sigg heh stamp vun „$1“.',
 	'restorelink' => '{{PLURAL:$1|eijn fottjeschmesse Änderung|$1 fottjeschmesse Änderunge|keij fottjeschmesse Änderunge}}',
@@ -24890,7 +25265,7 @@ Sigge uß Dinge [[Special:Watchlist|Opaßleß]] sin '''fett''' jeschrevve.",
 	'rollback_short' => 'Zeröcknemme',
 	'rollbacklink' => 'All dem Letzte sing Änderunge zeröckdriehe',
 	'rollbackfailed' => 'Dat Zeröcknemme jingk scheiv',
-	'revertpage' => 'Änderunge vun däm Metmaacher „[[Special:Contributions/$2|$2]]“ ([[User talk:$2|däm sing Klaafsigg]]) fottjeschmesse, un doför de letzte Version vum „[[User:$1|$1]]“ widder zeröckjehollt',
+	'revertpage' => 'Änderunge vun däm Metmaacher „[[Special:Contributions/$2|$2]]“ ([[User talk:$2|däm sing Klaafsigg]]) fottjeschmesse, un doför de letzte Version vum „$1“ widder zeröckjehollt',
 	'revertpage-nouser' => 'Änderunge vun enem Metmaacher, däm singe Name vershtoche es, retuur jemaat op de letzte Version vum [[User:$1|$1]]',
 	'rollback-success' => 'De Änderungen vum $1 zeröckjenumme, un dobei de letzte Version vum $2 widder jehollt.',
 	'restriction-type' => 'jespecht es:',
@@ -24924,7 +25299,7 @@ $messages['ku-arab'] = array(
 
 $messages['ku-latn'] = array(
 	'returnto' => 'Bizîvire $1.',
-	'redirectedfrom' => '(ji $1 hate beralîkirin)',
+	'redirectedfrom' => 'ji $1 hate beralîkirin',
 	'redirectpagesub' => 'Rûpelê beralî bike',
 	'retrievedfrom' => 'Ji "$1" hatiye standin.',
 	'restorelink' => '{{PLURAL:$1|guherandineke|$1 guherandinên}} jêbirî',
@@ -25052,7 +25427,7 @@ $messages['kv'] = array(
 
 $messages['kw'] = array(
 	'returnto' => 'Dewheles dhe $1.',
-	'redirectedfrom' => '(Daswedyes dhort $1)',
+	'redirectedfrom' => 'Daswedyes dhort $1',
 	'redirectpagesub' => 'Folen daswedyans',
 	'retrievedfrom' => 'Daskevys dhort "$1"',
 	'restorelink' => '{{PLURAL:$1|udn janj dileys|$1 chanj dileys}}',
@@ -25109,7 +25484,7 @@ En '''tew''' ew folednow eus war agas [[Special:Watchlist|rol golyas]].",
 
 $messages['ky'] = array(
 	'returnto' => '$1 барагына кайт.',
-	'redirectedfrom' => '($1 барагындан багытталды)',
+	'redirectedfrom' => '$1 барагындан багытталды',
 	'retrievedfrom' => '"$1" булагындан алынды',
 	'red-link-title' => '$1 (мындай барак жок)',
 	'remembermypassword' => 'Бул браузерде каттоо жазуумду эсте тут (эң көп $1 {{PLURAL:$1|күн|күн}})',
@@ -25161,7 +25536,7 @@ $messages['ky'] = array(
 
 $messages['la'] = array(
 	'returnto' => 'Redire ad $1.',
-	'redirectedfrom' => '(Redirectum de $1)',
+	'redirectedfrom' => 'Redirectum de $1',
 	'redirectpagesub' => 'Pagina redirectionis',
 	'retrievedfrom' => 'Receptum de "$1"',
 	'restorelink' => '{{PLURAL:$1|unam emendationem deletam|$1 emendationes deletas}}',
@@ -25286,7 +25661,7 @@ Tibi oportet meditari utrum hanc paginam creare tamen convenit. Commodule notati
 	'rollback_short' => 'Reverti',
 	'rollbacklink' => 'reverti',
 	'rollbackfailed' => 'Reversum defecit',
-	'revertpage' => 'Reverti recensiones ab usore [[Special:Contributions/$2|$2]] ([[User talk:$2|Disputatio]]) ad emendationem proximam ab [[User:$1|$1]]',
+	'revertpage' => 'Reverti recensiones ab usore [[Special:Contributions/$2|$2]] ([[User talk:$2|Disputatio]]) ad emendationem proximam ab $1',
 	'rollback-success' => 'Reverti recensiones ab usore $1
 ad emendationem proximam ab $2.',
 	'restriction-type' => 'Permissus:',
@@ -25305,7 +25680,7 @@ ad emendationem proximam ab $2.',
 
 $messages['lad'] = array(
 	'returnto' => 'Tornar a $1.',
-	'redirectedfrom' => '(Redirigido desde $1)',
+	'redirectedfrom' => 'Redirigido desde $1',
 	'redirectpagesub' => 'Hoja redirigida',
 	'retrievedfrom' => 'Tomado del addresso "$1"',
 	'red-link-title' => '$1 (esta hoja no egziste)',
@@ -25362,7 +25737,7 @@ Las hojas en tu [[Special:Watchlist|lista de akavidamiento]] son escritas '''con
 
 $messages['lb'] = array(
 	'returnto' => 'Zréck op $1.',
-	'redirectedfrom' => '(Virugeleet vu(n) $1)',
+	'redirectedfrom' => 'Virugeleet vu(n) $1',
 	'redirectpagesub' => 'Viruleedungssäit',
 	'retrievedfrom' => 'Vun „$1“',
 	'restorelink' => '$1 geläscht {{PLURAL:$1|Versioun|Versiounen}}',
@@ -25600,7 +25975,7 @@ Säite vun [[Special:Watchlist|Ärer Iwwerwaachungslëscht]] si '''fett''' gesch
 	'rollback_short' => 'Zrécksetzen',
 	'rollbacklink' => 'Zrécksetzen',
 	'rollbackfailed' => 'Zrécksetzen huet net geklappt',
-	'revertpage' => 'Ännerunge vum [[Special:Contributions/$2|$2]] ([[User talk:$2|Diskussioun]]) zréckgesat op déi lescht Versioun vum [[User:$1|$1]]',
+	'revertpage' => 'Ännerunge vum [[Special:Contributions/$2|$2]] ([[User talk:$2|Diskussioun]]) zréckgesat op déi lescht Versioun vum $1',
 	'revertpage-nouser' => 'Zréckgesaten Ännerungen vum (Benotzernummewechgeholl) op déilescht Versioun vum [[User:$1|$1]]',
 	'rollback-success' => "D'Ännerunge vum $1 goufen zréckgesat op déi lescht Versioun vum $2.",
 	'restriction-type' => 'Berechtigung:',
@@ -25634,7 +26009,7 @@ $messages['lbe'] = array(
 
 $messages['lez'] = array(
 	'returnto' => '$1 ччиниз элкъвена хтун',
-	'redirectedfrom' => '($1-кай рахкъурнава )',
+	'redirectedfrom' => '$1-кай рахкъурнава ',
 	'redirectpagesub' => 'Рахкъурунин ччин',
 	'retrievedfrom' => 'Чешне "$1" я',
 	'red-link-title' => '$1 (ихьтин ччин авайд туш)',
@@ -25702,7 +26077,7 @@ $messages['lez'] = array(
 
 $messages['lfn'] = array(
 	'returnto' => 'Restora a $1.',
-	'redirectedfrom' => '(Redirijeda de $1)',
+	'redirectedfrom' => 'Redirijeda de $1',
 	'redirectpagesub' => 'Redireta la paje',
 	'retrievedfrom' => 'Retraeda de "$1"',
 	'red-link-title' => '$1 (paje no esiste)',
@@ -25753,7 +26128,7 @@ Pajes a [[Special:Watchlist|tu lista de pajes oservada]] es en leteras '''forte'
 
 $messages['lg'] = array(
 	'returnto' => 'Dda ku $1.',
-	'redirectedfrom' => '(Oleetedwa wano okuva ku $1)',
+	'redirectedfrom' => 'Oleetedwa wano okuva ku $1',
 	'redirectpagesub' => 'Olupapula luno lukutwalabutwazi ku lunnaalwo',
 	'retrievedfrom' => 'Bino bigyidwa ku "$1"',
 	'restorelink' => '{{PLURAL:$1|oluwandika olwagyibwawo olumu|empandika ezagyibwawo $1}}',
@@ -25834,7 +26209,7 @@ Ebifa ku kugyibwawo kw'olupapula luno bye bino:",
 
 $messages['li'] = array(
 	'returnto' => 'Truuk nao $1.',
-	'redirectedfrom' => '(Doorverweze van $1)',
+	'redirectedfrom' => 'Doorverweze van $1',
 	'redirectpagesub' => 'Doorverwiespazjena',
 	'retrievedfrom' => 'Aafkómstig van "$1"',
 	'restorelink' => '{{PLURAL:$1|ein eweggesjafde versie|$1 eweggesjafde versies}}',
@@ -26072,7 +26447,7 @@ Controleer de logbeuk.",
 	'rollback_short' => 'Trökdrèjje',
 	'rollbacklink' => 'Trökdrieje',
 	'rollbackfailed' => 'Ongedaon make van wieziginge mislùk.',
-	'revertpage' => 'Wieziginge door [[Special:Contributions/$2|$2]] ([[User talk:$2|Euverlik]]) trukgedriejd tot de lètste versie door [[User:$1|$1]]',
+	'revertpage' => 'Wieziginge door [[Special:Contributions/$2|$2]] ([[User talk:$2|Euverlik]]) trukgedriejd tot de lètste versie door $1',
 	'revertpage-nouser' => 'Wieziginge door (gwösdje gebroeker) trögkgezadj nao bie [[User:$1|$1]]',
 	'rollback-success' => 'Wieziginge door $1 trökgedrèjd; letste versie van $2 hersteld.',
 	'restriction-type' => 'Rech:',
@@ -26102,7 +26477,7 @@ Controleer de logbeuk.",
 
 $messages['lij'] = array(
 	'returnto' => 'Tornâ a $1.',
-	'redirectedfrom' => '(Rediritto da $1)',
+	'redirectedfrom' => 'Rediritto da $1',
 	'redirectpagesub' => 'Paggina de rindirissamento',
 	'retrievedfrom' => 'Estræto da "$1"',
 	'red-link-title' => '$1 (ancon da scrîve)',
@@ -26158,7 +26533,7 @@ E pàgine che t'æ in oservaçion inti [[Special:Watchlist|oservæ speciâli]] s
 	'randomredirect' => 'Ûn rindirissamento a brettîo',
 	'removedwatchtext' => 'A paggina "[[:$1]]" a l\'è stæta scassâa da-a têu lista in osservaçion.',
 	'rollbacklink' => 'rollback',
-	'revertpage' => 'E modificaçioin de [[Special:Contributions/$2|$2]] ([[User talk:$2|Ciæti]]) son stæte eliminæ; riportæ a verscion de primma de [[User:$1|$1]]',
+	'revertpage' => 'E modificaçioin de [[Special:Contributions/$2|$2]] ([[User talk:$2|Ciæti]]) son stæte eliminæ; riportæ a verscion de primma de $1',
 	'restriction-type' => 'Permisso',
 	'restriction-level' => 'Livello de restrission',
 	'restriction-edit' => 'Cangia',
@@ -26169,7 +26544,7 @@ E pàgine che t'æ in oservaçion inti [[Special:Watchlist|oservæ speciâli]] s
 
 $messages['liv'] = array(
 	'returnto' => 'Li tāgiž līed $1 jūrõ.',
-	'redirectedfrom' => '(Jeddõpēḑõn sōtõd līedstõ $1)',
+	'redirectedfrom' => 'Jeddõpēḑõn sōtõd līedstõ $1',
 	'redirectpagesub' => 'Jeddõpēḑõn sōtimiz lēḑ',
 	'retrievedfrom' => 'Ulzõ vȯtštõd "$1"',
 	'red-link-title' => '$1 äb ūo vel kēratõd',
@@ -26221,7 +26596,7 @@ Mõtlõgid, kas līed ūtstõ lūomi um jõvā mõtk. Līed jedmõlizt jarā ki�
 
 $messages['lmo'] = array(
 	'returnto' => 'Turna indré a $1.',
-	'redirectedfrom' => '(Rimandaa da $1)',
+	'redirectedfrom' => 'Rimandaa da $1',
 	'redirectpagesub' => 'Pagina de redirezión',
 	'retrievedfrom' => 'Utegnüü de "$1"',
 	'restorelink' => '{{PLURAL:$1|1 mudifega scancelada|$1 mudifegh scancelaa}}',
@@ -26292,7 +26667,7 @@ I paginn dent in [[Special:Watchlist|la lista ch'it ten-e sot euj]] i resten mar
 
 $messages['ln'] = array(
 	'returnto' => 'Kozóngisa na $1.',
-	'redirectedfrom' => '(Eyendísí útá $1)',
+	'redirectedfrom' => 'Eyendísí útá $1',
 	'redirectpagesub' => 'Lonkásá la boyendisi',
 	'retrievedfrom' => 'Ezwámí úta «$1»',
 	'red-link-title' => '$1 (lonkásá  ezalí tɛ̂)',
@@ -26332,7 +26707,7 @@ $messages['ln'] = array(
 
 $messages['lo'] = array(
 	'returnto' => 'ກັບໄປ  $1.',
-	'redirectedfrom' => '(ໂອນມາຈາກ $1)',
+	'redirectedfrom' => 'ໂອນມາຈາກ $1',
 	'redirectpagesub' => 'ໜ້າໂອນ',
 	'retrievedfrom' => 'ຖອນມາຈາກ "$1"',
 	'red-link-title' => '$1 (ຍັງບໍ່ໄດ້ສ້າງ)',
@@ -26377,7 +26752,7 @@ $messages['lo'] = array(
 
 $messages['loz'] = array(
 	'returnto' => 'Kutezi $1.',
-	'redirectedfrom' => '(Petulo abezi di $1)',
+	'redirectedfrom' => 'Petulo abezi di $1',
 	'redirectpagesub' => 'Petulo abezi',
 	'retrievedfrom' => 'Bulukezi ye ng\'i di "$1"',
 	'restorelink' => '{{PLURAL:$1|1 afi bye sa afi kulobala|$1 afina bye sa afi kulobala}}',
@@ -26438,7 +26813,7 @@ Desu dafi kulobala di petulo sa gi di informasi:",
 
 $messages['lt'] = array(
 	'returnto' => 'Grįžti į $1.',
-	'redirectedfrom' => '(Nukreipta iš $1)',
+	'redirectedfrom' => 'Nukreipta iš $1',
 	'redirectpagesub' => 'Nukreipimo puslapis',
 	'retrievedfrom' => 'Gauta iš „$1“',
 	'restorelink' => '$1 {{PLURAL:$1|ištrintą keitimą|ištrintus keitimus|ištrintų keitimų}}',
@@ -26678,7 +27053,7 @@ Puslapiai iš jūsų [[Special:Watchlist|stebimųjų sąrašo]] yra '''paryškin
 	'rollback_short' => 'Atmesti',
 	'rollbacklink' => 'atmesti',
 	'rollbackfailed' => 'Atmetimas nepavyko',
-	'revertpage' => 'Atmestas [[Special:Contributions/$2|$2]] ([[User talk:$2|Aptarimas]]) pakeitimas; sugrąžinta naudotojo [[User:$1|$1]] versija',
+	'revertpage' => 'Atmestas [[Special:Contributions/$2|$2]] ([[User talk:$2|Aptarimas]]) pakeitimas; sugrąžinta naudotojo $1 versija',
 	'revertpage-nouser' => 'Atmesti (naudotojo vardas pašalintas) pakeitimai, grąžinta prieš tai buvusi [[User:$1|$1]] versija',
 	'rollback-success' => 'Atmesti $1 pakeitimai;
 grąžinta prieš tai buvusi $2 versija.',
@@ -26703,7 +27078,7 @@ grąžinta prieš tai buvusi $2 versija.',
 
 $messages['ltg'] = array(
 	'returnto' => 'Grīztīs da puslopys $1.',
-	'redirectedfrom' => '(Puoradresēts nu $1)',
+	'redirectedfrom' => 'Puoradresēts nu $1',
 	'redirectpagesub' => 'Puoradresiešonys puslopa',
 	'retrievedfrom' => 'Atdabuot nu "$1"',
 	'red-link-title' => '$1 (itaidys puslopys navā)',
@@ -26754,7 +27129,7 @@ Lopys, kas ir tovā [[Special:Watchlist|puorraugamūs rokstu sarokstā]] ir '''r
 
 $messages['lv'] = array(
 	'returnto' => 'Atgriezties: $1.',
-	'redirectedfrom' => '(Pāradresēts no $1)',
+	'redirectedfrom' => 'Pāradresēts no $1',
 	'redirectpagesub' => 'Pāradresācijas lapa',
 	'retrievedfrom' => 'Saturs iegūts no "$1"',
 	'restorelink' => '$1 {{PLURAL:$1|dzēsto versiju|dzēstās versijas}}',
@@ -26940,7 +27315,7 @@ Lapas, kas ir tavā [[Special:Watchlist|uzraugāmo rakstu sarakstā]] ir '''trek
 	'rollback_short' => 'Novērst',
 	'rollbacklink' => 'novērst',
 	'rollbackfailed' => 'Novēršana neizdevās',
-	'revertpage' => 'Novērsu izmaiņas, ko izdarīja [[Special:Contributions/$2|$2]] ([[User talk:$2|Diskusija]]), atjaunoju versiju, ko saglabāja [[User:$1|$1]]',
+	'revertpage' => 'Novērsu izmaiņas, ko izdarīja [[Special:Contributions/$2|$2]] ([[User talk:$2|Diskusija]]), atjaunoju versiju, ko saglabāja $1',
 	'revertpage-nouser' => 'Novērsu (lietotājvārds slēpts) izmaiņas, atjaunoju [[User:$1|$1]] versiju.',
 	'rollback-success' => 'Tika novērstas $1 izdarītās izmaiņas;
 un tika atjaunota iepriekšējā versija, kuru bija izveidojis $2.',
@@ -27182,7 +27557,7 @@ $1",
 	'rollback_short' => '正',
 	'rollbacklink' => '正',
 	'rollbackfailed' => '未能反正',
-	'revertpage' => '去[[Special:Contributions/$2|$2]]之作（欲言之，可至[[User talk:$2|此]]）為[[User:$1|$1]]之本耳',
+	'revertpage' => '去[[Special:Contributions/$2|$2]]之作（欲言之，可至[[User talk:$2|此]]）為$1之本耳',
 	'revertpage-nouser' => '去（刪簿）之作為[[User:$1|$1]]之本耳',
 	'rollback-success' => '去$1之作，復為$2之本耳。',
 	'restriction-type' => '准',
@@ -27206,7 +27581,7 @@ $1",
 
 $messages['lzz'] = array(
 	'returnto' => '$1 butʼkʼaşa goikti.',
-	'redirectedfrom' => '($1 butʼkʼaşen moxtu)',
+	'redirectedfrom' => '$1 butʼkʼaşen moxtu',
 	'redirectpagesub' => 'Redirektʼiş butʼkʼa',
 	'retrievedfrom' => '"$1" adresişen eizdinu',
 	'red-link-title' => '$1 (Ak butʼkʼa va ren)',
@@ -27249,7 +27624,7 @@ $messages['lzz'] = array(
 
 $messages['mai'] = array(
 	'returnto' => '$1 पर घुरु।',
-	'redirectedfrom' => '(एतयसँ बहटारल $1)',
+	'redirectedfrom' => 'एतयसँ बहटारल $1',
 	'redirectpagesub' => 'पन्नाकेँ पठाउ',
 	'retrievedfrom' => 'प्राप्ति स्थल "$1"',
 	'restorelink' => '{{PLURAL:$1|एकटा मेटाएल सम्पादन|$1 मेटाएल सम्पादन सभ}}',
@@ -27490,7 +27865,7 @@ $messages['mai'] = array(
 	'rollback_short' => 'प्रत्यावर्तन',
 	'rollbacklink' => 'प्रत्यावर्तन',
 	'rollbackfailed' => 'प्रत्यावर्तन असफल',
-	'revertpage' => 'सम्पादन आपस कएल गेल [[Special:Contributions/$2|$2]] ([[User talk:$2|talk]]) सँ अन्तिम संशोधन धरि एकरा द्वारा [[User:$1|$1]]।',
+	'revertpage' => 'सम्पादन आपस कएल गेल [[Special:Contributions/$2|$2]] ([[User talk:$2|talk]]) सँ अन्तिम संशोधन धरि एकरा द्वारा $1।',
 	'revertpage-nouser' => '(प्रयोक्ताक नाम हटा देल गेल अछि) द्वारा केल गेल संपादनकेँ फेरसँ पुरान स्थितिमे आनि कऽ एकर पहिलुक [[User:$1|$1]] सँ बनल संस्करणकेँ फेरसँ ताजा संस्करण बनाऊ।',
 	'rollback-success' => '$1 केर संपादन हटाऊ.
 $2 केर संपादित आखिरी अवतरण क पुनर्स्थापित करल गेल.',
@@ -27521,7 +27896,7 @@ $2 केर संपादित आखिरी अवतरण क पुन
 
 $messages['map-bms'] = array(
 	'returnto' => 'Bali maring $1.',
-	'redirectedfrom' => '(Dialihna sekang $1)',
+	'redirectedfrom' => 'Dialihna sekang $1',
 	'redirectpagesub' => 'Kaca pangalihan',
 	'retrievedfrom' => 'Ditampa sekang "$1"',
 	'restorelink' => '{{PLURAL:$1|siji suntingan|$1 suntingan}} sing wis dibusak',
@@ -27717,7 +28092,7 @@ Kaca-kaca sing mlebu [[Special:Watchlist|pangawasane Rika]] ditandani ''kandel''
 	'rollback_short' => 'Balèkna',
 	'rollbacklink' => 'balekna',
 	'rollbackfailed' => 'Pambalèkan gagal dilakoni',
-	'revertpage' => 'Suntingane [[Special:Contributions/$2|$2]] ([[User talk:$2|dhiskusi]]) dibalekna maring vèrsi pungkasan sekang [[User:$1|$1]]',
+	'revertpage' => 'Suntingane [[Special:Contributions/$2|$2]] ([[User talk:$2|dhiskusi]]) dibalekna maring vèrsi pungkasan sekang $1',
 	'revertpage-nouser' => 'Mbalekna suntingan sekang (jeneng panganggo dibusek) ming revisi pungkasan sekang [[User:$1|$1]]',
 	'rollback-success' => 'Mbalekna suntingane $1;
 dibalekna ming revisi pungkasan sekang $2.',
@@ -27726,7 +28101,7 @@ dibalekna ming revisi pungkasan sekang $2.',
 
 $messages['mdf'] = array(
 	'returnto' => 'Мърдамс $1-с.',
-	'redirectedfrom' => '(Шашфтф $1ста)',
+	'redirectedfrom' => 'Шашфтф $1ста',
 	'redirectpagesub' => 'Шашфтф лопа',
 	'retrievedfrom' => '"$1"ста сявф',
 	'restorelink' => '{{PLURAL:$1|нардаф петнема|$1 нардаф петнемат}}',
@@ -27892,7 +28267,7 @@ $messages['mdf'] = array(
 	'rollback_short' => 'Потафтома',
 	'rollbacklink' => 'потафтомс',
 	'rollbackfailed' => 'Потафтомась изь лисе',
-	'revertpage' => 'Петнематнень мърдафтозь [[Special:Contributions/$2|$2]] ([[User talk:$2|Корхнема]]) сядынгольдень верзиес мърдафтозе [[User:$1|$1]]',
+	'revertpage' => 'Петнематнень мърдафтозь [[Special:Contributions/$2|$2]] ([[User talk:$2|Корхнема]]) сядынгольдень верзиес мърдафтозе $1',
 	'rollback-success' => 'Петнематнень мърдафтозе $1; сядынгольдень верзиес мърдафтозе $2.',
 	'restriction-type' => 'Мярьговома:',
 	'restriction-level' => 'Пякстама вийсь:',
@@ -27915,7 +28290,7 @@ $messages['mdf'] = array(
 
 $messages['mg'] = array(
 	'returnto' => "Hiverina any amin'ny $1.",
-	'redirectedfrom' => "(tonga teto avy amin'ny $1)",
+	'redirectedfrom' => "tonga teto avy amin'ny $1",
 	'redirectpagesub' => 'Pejy fihodinana',
 	'retrievedfrom' => 'Hita tao amin\'ny "$1"',
 	'restorelink' => 'ny fanovàna voafafa $1{{PLURAL:}}',
@@ -28151,7 +28526,7 @@ Jereo ny laogy.",
 	'rollback_short' => 'Aza ovaina indray',
 	'rollbacklink' => 'foano',
 	'rollbackfailed' => "Tsy voaverina amin'ny teo aloha",
-	'revertpage' => "Voafafa ny fanovana ny [[Special:Contributions/$2|$2]] ([[User talk:$2|Dinika]]); voaverina amin'ny votoatiny teo aloha nataon'i [[User:$1|$1]]",
+	'revertpage' => "Voafafa ny fanovana ny [[Special:Contributions/$2|$2]] ([[User talk:$2|Dinika]]); voaverina amin'ny votoatiny teo aloha nataon'i $1",
 	'revertpage-nouser' => "Manala ny fanovana (nataon'ny anaram-pikambana nesorina), miverina any amin'ny santiona farany nataon'i  [[User:$1|$1]]",
 	'rollback-success' => "Fanalàna ny fanovana nataon'i $1 ;
 miverina any amin'ny santiôna farany nataon'i $2.",
@@ -28176,7 +28551,7 @@ miverina any amin'ny santiôna farany nataon'i $2.",
 
 $messages['mhr'] = array(
 	'returnto' => '$1 деке пӧртылаш.',
-	'redirectedfrom' => '(Колтымо $1 гыч)',
+	'redirectedfrom' => 'Колтымо $1 гыч',
 	'redirectpagesub' => 'Вес вереш колтышо лаштык',
 	'retrievedfrom' => 'Налме вер — "$1"',
 	'red-link-title' => '$1 (тыгай лаштык уке)',
@@ -28243,7 +28618,7 @@ $messages['mi'] = array(
 
 $messages['min'] = array(
 	'returnto' => 'Baliak ka $1',
-	'redirectedfrom' => '(Dialiahkan dari $1)',
+	'redirectedfrom' => 'Dialiahkan dari $1',
 	'redirectpagesub' => 'Laman pengalihan',
 	'retrievedfrom' => 'Diperoleh dari "$1"',
 	'restorelink' => 'Caliak {{PLURAL:$1|ciek suntiangan|$1 suntiangan}} nan dihapuih',
@@ -28320,7 +28695,7 @@ Laman pado [[Special:Watchlist|Senarai pantauan]] ditandoi '''cetak taba'''.",
 
 $messages['mk'] = array(
 	'returnto' => 'Назад на $1.',
-	'redirectedfrom' => '(Пренасочено од $1)',
+	'redirectedfrom' => 'Пренасочено од $1',
 	'redirectpagesub' => 'Страница за пренасочување',
 	'retrievedfrom' => 'Преземено од „$1“',
 	'restorelink' => '{{PLURAL:$1|едно избришано уредување|$1 избришани уредувања}}',
@@ -28553,7 +28928,7 @@ $1",
 	'rollback_short' => 'Врати',
 	'rollbacklink' => 'Врати',
 	'rollbackfailed' => 'Неуспешно враќање',
-	'revertpage' => 'Отстрането уредувањето на [[Special:Contributions/$2|$2]] ([[User talk:$2|разговор]]), вратено на последната верзија на [[User:$1|$1]]',
+	'revertpage' => 'Отстрането уредувањето на [[Special:Contributions/$2|$2]] ([[User talk:$2|разговор]]), вратено на последната верзија на $1',
 	'revertpage-nouser' => 'Вратени уредувања на (избришано корисничко име) на последната ревизија од [[User:$1|$1]]',
 	'rollback-success' => 'Откажани уредувањата на $1; вратено на последната верзија на $2.',
 	'restriction-type' => 'Дозвола:',
@@ -28583,7 +28958,7 @@ $1",
 
 $messages['ml'] = array(
 	'returnto' => '$1 എന്ന താളിലേക്ക് തിരിച്ചുപോവുക.',
-	'redirectedfrom' => '($1 എന്ന താളിൽ നിന്നും തിരിച്ചുവിട്ടതു പ്രകാരം)',
+	'redirectedfrom' => '$1 എന്ന താളിൽ നിന്നും തിരിച്ചുവിട്ടതു പ്രകാരം',
 	'redirectpagesub' => 'തിരിച്ചുവിടൽ താൾ',
 	'retrievedfrom' => '"$1" എന്ന താളിൽനിന്നു ശേഖരിച്ചത്',
 	'restorelink' => '{{PLURAL:$1|നീക്കംചെയ്ത ഒരു തിരുത്തൽ|നീക്കംചെയ്ത $1 തിരുത്തലുകൾ}}',
@@ -28819,7 +29194,7 @@ $1",
 	'rollback_short' => 'റോൾബാക്ക്',
 	'rollbacklink' => 'റോൾബാക്ക്',
 	'rollbackfailed' => 'റോൾബാക്ക് പരാജയപ്പെട്ടു',
-	'revertpage' => '[[Special:Contributions/$2|$2]] ([[User talk:$2|സംവാദം]]) നടത്തിയ തിരുത്തലുകൾ നീക്കം ചെയ്തിരിക്കുന്നു; നിലവിലുള്ള പതിപ്പ് [[User:$1|$1]] സൃഷ്ടിച്ചതാണ്',
+	'revertpage' => '[[Special:Contributions/$2|$2]] ([[User talk:$2|സംവാദം]]) നടത്തിയ തിരുത്തലുകൾ നീക്കം ചെയ്തിരിക്കുന്നു; നിലവിലുള്ള പതിപ്പ് $1 സൃഷ്ടിച്ചതാണ്',
 	'revertpage-nouser' => '(ഉപയോക്തൃനാമം നീക്കിയിരിക്കുന്നു) നടത്തിയ തിരുത്തലുകൾ [[User:$1|$1]] സൃഷ്ടിച്ച അവസാന പതിപ്പിലേയ്ക്ക് മുൻപ്രാപനം ചെയ്തിരിക്കുന്നു',
 	'rollback-success' => '$1 ചെയ്ത തിരുത്തൽ തിരസ്ക്കരിച്ചിരിക്കുന്നു; $2 ചെയ്ത തൊട്ടു മുൻപത്തെ പതിപ്പിലേക്ക് സേവ് ചെയ്യുന്നു.',
 	'restriction-type' => 'അനുമതി:',
@@ -28849,7 +29224,7 @@ $1",
 
 $messages['mn'] = array(
 	'returnto' => '$1 руу буцах.',
-	'redirectedfrom' => '($1-с чиглүүлэгдэв)',
+	'redirectedfrom' => '$1-с чиглүүлэгдэв',
 	'redirectpagesub' => 'Хуудсыг чиглүүлэх',
 	'retrievedfrom' => '"$1" хуудаснаас авсан',
 	'restorelink' => '{{PLURAL:$1|арилгасан засвар|арилгасан $1 засварууд}}',
@@ -29088,7 +29463,7 @@ $1",
 	'rollback_short' => 'Буцаах',
 	'rollbacklink' => 'буцаах',
 	'rollbackfailed' => 'Буцааж чадсангүй',
-	'revertpage' => '[[Special:Contributions/$2|$2]] ([[User talk:$2|яриа]])-н хийсэн засваруудыг [[User:$1|$1]]-ий хийсэн сүүлийн засварт буцаан шилжүүллээ.',
+	'revertpage' => '[[Special:Contributions/$2|$2]] ([[User talk:$2|яриа]])-н хийсэн засваруудыг $1-ий хийсэн сүүлийн засварт буцаан шилжүүллээ.',
 	'revertpage-nouser' => '(Хэрэглэгийн нэрийг устгасан)-н хийсэн засварыг [[User:$1|$1]]-н сүүлийн засвар руу буцаав',
 	'rollback-success' => '$1-н өөрчлөлтүүдийг $2-н үйлдсэн сүүлийн хувилбар руу буцаалаа.',
 	'restriction-type' => 'Зөвшөөрөл:',
@@ -29112,7 +29487,7 @@ $1",
 
 $messages['mo'] = array(
 	'returnto' => 'Ынапой ла $1.',
-	'redirectedfrom' => '(Редирекционат де ла $1)',
+	'redirectedfrom' => 'Редирекционат де ла $1',
 	'redirectpagesub' => 'Паӂинэ де редирекционаре',
 	'retrievedfrom' => 'Адус де ла «$1»',
 	'red-link-title' => '$1 (паӂина ну егзистэ)',
@@ -29149,7 +29524,7 @@ $messages['mo'] = array(
 
 $messages['mr'] = array(
 	'returnto' => '$1 कडे परत चला.',
-	'redirectedfrom' => '($1 पासून पुनर्निर्देशित)',
+	'redirectedfrom' => '$1 पासून पुनर्निर्देशित',
 	'redirectpagesub' => 'पुनर्निर्देशनाचे पान',
 	'retrievedfrom' => '"$1" पासून मिळविले',
 	'restorelink' => '{{PLURAL:$1|एक वगळलेले संपादन|$1 वगळलेली संपादने}}',
@@ -29389,7 +29764,7 @@ $1",
 	'rollback_short' => 'द्रुतमाघार',
 	'rollbacklink' => 'द्रुतमाघार',
 	'rollbackfailed' => 'द्रूतमाघार फसली',
-	'revertpage' => '[[Special:Contributions/$2|$2]] ([[User talk:$2|चर्चा]]) यांनी केलेले बदल [[User:$1|$1]] यांच्या आवृत्तीकडे पूर्वपदास नेले.',
+	'revertpage' => '[[Special:Contributions/$2|$2]] ([[User talk:$2|चर्चा]]) यांनी केलेले बदल $1 यांच्या आवृत्तीकडे पूर्वपदास नेले.',
 	'revertpage-nouser' => '(सदस्यनाम काढून टाकले) यांचे बदल उलटवुन [[User:$1|$1]] यांच्या मागील आवृत्तीस न्या.',
 	'rollback-success' => '$1 ने उलटवलेली संपादने;$2 च्या आवृत्तीस परत नेली.',
 	'restriction-type' => 'परवानगी:',
@@ -29419,7 +29794,7 @@ $1",
 
 $messages['mrj'] = array(
 	'returnto' => 'Мӹнгеш ӹлӹштӓшӹш $1.',
-	'redirectedfrom' => '($1 гӹц колтымы)',
+	'redirectedfrom' => '$1 гӹц колтымы',
 	'redirectpagesub' => 'Вес вӓр гӹц колтымы ӹлӹштӓш',
 	'retrievedfrom' => 'Кышец нӓлмӹ «$1»',
 	'red-link-title' => '$1 (техень ӹлӹштӓш уке)',
@@ -29458,7 +29833,7 @@ $messages['mrj'] = array(
 
 $messages['ms'] = array(
 	'returnto' => 'Kembali ke $1.',
-	'redirectedfrom' => '(Dilencongkan dari $1)',
+	'redirectedfrom' => 'Dilencongkan dari $1',
 	'redirectpagesub' => 'Laman lencongan',
 	'retrievedfrom' => 'Diambil daripada "$1"',
 	'restorelink' => '{{PLURAL:$1|satu|$1}} suntingan dihapuskan',
@@ -29696,7 +30071,7 @@ Mohon semak log.',
 	'rollback_short' => 'Undur',
 	'rollbacklink' => 'undur',
 	'rollbackfailed' => 'Pengunduran gagal',
-	'revertpage' => 'Membalikkan suntingan oleh [[Special:Contributions/$2|$2]] ([[User talk:$2|Perbincangan]]) kepada versi terakhir oleh [[User:$1|$1]]',
+	'revertpage' => 'Membalikkan suntingan oleh [[Special:Contributions/$2|$2]] ([[User talk:$2|Perbincangan]]) kepada versi terakhir oleh $1',
 	'revertpage-nouser' => 'Membalikkan suntingan oleh (nama pengguna dibuang) kepada semakan terakhir oleh [[User:$1|$1]]',
 	'rollback-success' => 'Membalikkan suntingan oleh $1 kepada versi terakhir oleh $2.',
 	'restriction-type' => 'Keizinan:',
@@ -29726,7 +30101,7 @@ Mohon semak log.',
 
 $messages['mt'] = array(
 	'returnto' => "Erġa' lura lejn $1.",
-	'redirectedfrom' => '(Riindirizzat minn $1)',
+	'redirectedfrom' => 'Riindirizzat minn $1',
 	'redirectpagesub' => "Paġna ta' rindirizz",
 	'retrievedfrom' => 'Miġjub minn "$1"',
 	'restorelink' => '{{PLURAL:$1|waħda mill-modifiki mħassra|$1 modifiki mħassra}}',
@@ -29957,7 +30332,7 @@ $1",
 	'rollback_short' => 'Rollback',
 	'rollbacklink' => 'rollback',
 	'rollbackfailed' => 'Rollback ma ħadmitx',
-	'revertpage' => "Modifiki mneħħa minn [[Special:Contributions/$2|$2]] ([[User talk:$2|Talk]]) għall-aħħar verżjoni ta' [[User:$1|$1]]",
+	'revertpage' => "Modifiki mneħħa minn [[Special:Contributions/$2|$2]] ([[User talk:$2|Talk]]) għall-aħħar verżjoni ta' $1",
 	'revertpage-nouser' => "Modifiki annullati minn (isem tal-utent imneħħi) għall-aħħar reviżjoni ta' [[User:$1|$1]]",
 	'rollback-success' => "Modifiki mneħħa ta' $1;
 Modifikata lura għall-aħħar verżjoni ta' $2.",
@@ -29982,7 +30357,7 @@ Modifikata lura għall-aħħar verżjoni ta' $2.",
 
 $messages['mwl'] = array(
 	'returnto' => 'Retornar pa $1.',
-	'redirectedfrom' => '(Ancaminamiento de <b>$1</b>)',
+	'redirectedfrom' => 'Ancaminamiento de <b>$1</b>',
 	'redirectpagesub' => 'Páigina de ancaminamiento',
 	'retrievedfrom' => 'Sacado an "$1"',
 	'restorelink' => '{{PLURAL:$1|ua eidiçon apagada|$1 eidiçones apagadas}}',
@@ -30044,7 +30419,7 @@ Páiginas que steian ne ls [[Special:Watchlist|tous begiados]] son amostradas an
 
 $messages['my'] = array(
 	'returnto' => '$1 သို့ ပြန်သွားရန်။',
-	'redirectedfrom' => '($1 မှ ပြန်ညွှန်းထားသည်)',
+	'redirectedfrom' => '$1 မှ ပြန်ညွှန်းထားသည်',
 	'redirectpagesub' => 'ပြန်ညွှန်းသော စာမျက်နှာ',
 	'retrievedfrom' => '"$1" မှ ရယူရန်',
 	'restorelink' => '{{PLURAL:$1|ဖျက်လိုက်သည့်တည်းဖြတ်မှုတစ်ခု|ဖျက်လိုက်သည့် တည်းဖြတ်မှု $1 ခု}}',
@@ -30198,7 +30573,7 @@ $messages['my'] = array(
 
 $messages['myv'] = array(
 	'returnto' => 'Велявтомс $1 лопантень.',
-	'redirectedfrom' => '(Ютавтозь $1 вельде)',
+	'redirectedfrom' => 'Ютавтозь $1 вельде',
 	'redirectpagesub' => 'Лиясто ютавтозь лопа',
 	'retrievedfrom' => 'Лисмапрясь "$1"-сто',
 	'restorelink' => '{{PLURAL:$1|нардазь вейке витнема-петнема|нардазь $1 витнемат-петнемат}}',
@@ -30332,7 +30707,7 @@ $messages['myv'] = array(
 
 $messages['mzn'] = array(
 	'returnto' => 'بردگستن تا $1',
-	'redirectedfrom' => '($1 جه بموئه)',
+	'redirectedfrom' => '$1 جه بموئه',
 	'redirectpagesub' => 'گجگی‌بَیتـِن',
 	'retrievedfrom' => '"$1" جه بیته بیّه',
 	'restorelink' => '{{PLURAL:$1|$1|$1}} دچی‌ین پاک بیّه',
@@ -30369,7 +30744,7 @@ $messages['mzn'] = array(
 	'rollback' => 'دچی‌یه‌ئون ره واچی‌ین',
 	'rollback_short' => 'واچی‌ین',
 	'rollbacklink' => 'واچی‌ین',
-	'revertpage' => '"چـیـزونی که [[Special:Contributions/$2|$2]] ([[User talk:$2|Talk]]) دأچـیـه ده‌گـه‌ره‌س بـأیـه هـأمونـتـایی که [[User:$1|$1]] ای وألگ ده‌لـه، پـایـانی بـار هـه‌کـارده"',
+	'revertpage' => '"چـیـزونی که [[Special:Contributions/$2|$2]] ([[User talk:$2|Talk]]) دأچـیـه ده‌گـه‌ره‌س بـأیـه هـأمونـتـایی که $1 ای وألگ ده‌لـه، پـایـانی بـار هـه‌کـارده"',
 	'revertpage-nouser' => '"چیزونی که (ونـه کـاروری نـوم پـاک بَیّه) دچی‌یه دگـاردسته بیّه همونتایی که [[User:$1|$1]] آخرسری دچی‌ین دلـه هاکرده"',
 	'rollback-success' => 'چیزونی که $1 دچی‌ین دگاردسته بیّه همونتایی که $2 آخرسری دچی‌ین دلـه هاکرده',
 	'restriction-edit' => 'دچی‌ین',
@@ -30384,7 +30759,7 @@ $messages['na'] = array(
 
 $messages['nah'] = array(
 	'returnto' => 'Timocuepāz īhuīc $1.',
-	'redirectedfrom' => '(Ōmotlacuep īhuīcpa $1)',
+	'redirectedfrom' => 'Ōmotlacuep īhuīcpa $1',
 	'redirectpagesub' => 'Ōmotlacuep zāzanilli',
 	'retrievedfrom' => 'Īhuīcpa "$1"',
 	'restorelink' => '{{PLURAL:$1|cē tlapatlaliztli polotic|$1 tlapatlaliztli polotic}}',
@@ -30476,7 +30851,7 @@ $messages['nah'] = array(
 
 $messages['nan'] = array(
 	'returnto' => 'Tò-tńg khì $1.',
-	'redirectedfrom' => '(Tùi $1 choán--lâi)',
+	'redirectedfrom' => 'Tùi $1 choán--lâi',
 	'redirectpagesub' => 'Choán-ia̍h',
 	'retrievedfrom' => 'Lâi-goân: "$1"',
 	'restorelink' => '{{PLURAL:$1|chi̍t ê thâi-tiàu ê pian-chi̍p|$1 thâi-tiàu ê pian-chi̍p}}',
@@ -30711,7 +31086,7 @@ $1",
 	'rollback_short' => 'Ká tńg khì',
 	'rollbacklink' => 'ká tńg khì',
 	'rollbackfailed' => 'Ká bē tńg khì',
-	'revertpage' => '回轉[[Special:Contributions/$2|$2]]（[[User talk:$2|對話]]）的編輯到頂一个[[User:$1|$1]]的修訂版本',
+	'revertpage' => '回轉[[Special:Contributions/$2|$2]]（[[User talk:$2|對話]]）的編輯到頂一个$1的修訂版本',
 	'revertpage-nouser' => '回轉（無用者名）的編輯到頂一个[[User:$1|$1]]的修訂版本',
 	'rollback-success' => '回轉$1的編輯，
 轉轉去頂一个$2的修訂版本。',
@@ -30732,7 +31107,7 @@ $1",
 
 $messages['nap'] = array(
 	'returnto' => 'Torna a $1.',
-	'redirectedfrom' => "(Redirect 'a $1)",
+	'redirectedfrom' => "Redirect 'a $1",
 	'remembermypassword' => 'Allicuordate d"a password (for a maximum of $1 {{PLURAL:$1|day|days}})',
 	'rev-delundel' => 'faje vedé/annascunne',
 	'rightsnone' => '(nisciuno)',
@@ -30753,12 +31128,12 @@ $messages['nap'] = array(
 	'randompage' => 'Na paggena qualsiase',
 	'randompage-nopages' => 'Nessuna pagina nel namespace selezionato.',
 	'rollback' => "Ausa na revizione 'e primma",
-	'revertpage' => "Cangiaje 'e cagnamiénte 'e [[Special:Contributions/$2|$2]] ([[User talk:$2|discussione]]), cu â verzione 'e pprimma 'e  [[User:$1|$1]]",
+	'revertpage' => "Cangiaje 'e cagnamiénte 'e [[Special:Contributions/$2|$2]] ([[User talk:$2|discussione]]), cu â verzione 'e pprimma 'e  $1",
 );
 
 $messages['nb'] = array(
 	'returnto' => 'Tilbake til $1.',
-	'redirectedfrom' => '(Omdirigert fra $1)',
+	'redirectedfrom' => 'Omdirigert fra $1',
 	'redirectpagesub' => 'Omdirigeringsside',
 	'retrievedfrom' => 'Hentet fra «$1»',
 	'restorelink' => '{{PLURAL:$1|én slettet revisjon|$1 slettede revisjoner}}',
@@ -30998,7 +31373,7 @@ Sider på [[Special:Watchlist|overvåkningslisten din]] er i '''fet skrift'''.",
 	'rollback_short' => 'Tilbakestill',
 	'rollbacklink' => 'tilbakestill',
 	'rollbackfailed' => 'Kunne ikke tilbakestille',
-	'revertpage' => 'Tilbakestilte endring av [[Special:Contributions/$2|$2]] ([[User talk:$2|diskusjon]]) til siste versjon av [[User:$1|$1]]',
+	'revertpage' => 'Tilbakestilte endring av [[Special:Contributions/$2|$2]] ([[User talk:$2|diskusjon]]) til siste versjon av $1',
 	'revertpage-nouser' => 'Tilbakestilte endringer av (fjernet brukernavn) til siste versjon av [[User:$1|$1]]',
 	'rollback-success' => 'Tilbakestilte endringer av $1; endret til siste versjon av $2.',
 	'restriction-type' => 'Tillatelse:',
@@ -31028,7 +31403,7 @@ Sider på [[Special:Watchlist|overvåkningslisten din]] er i '''fet skrift'''.",
 
 $messages['nds'] = array(
 	'returnto' => 'Trüch to $1.',
-	'redirectedfrom' => '(wiederwiest vun $1)',
+	'redirectedfrom' => 'wiederwiest vun $1',
 	'redirectpagesub' => 'Redirectsiet',
 	'retrievedfrom' => 'Vun „$1“',
 	'restorelink' => '{{PLURAL:$1|ene löschte Version|$1 löschte Versionen}}',
@@ -31227,7 +31602,7 @@ $1",
 	'rollback_short' => 'Trüchnehmen',
 	'rollbacklink' => 'Trüchnehmen',
 	'rollbackfailed' => 'Trüchnahm hett kenen Spood',
-	'revertpage' => 'Ännern vun [[Special:Contributions/$2|$2]] ([[User talk:$2|Diskuschoon]]) rut un de Version vun [[User:$1]] wedderhaalt',
+	'revertpage' => 'Ännern vun [[Special:Contributions/$2|$2]] ([[User talk:$2|Diskuschoon]]) rut un de Version vun $1 wedderhaalt',
 	'rollback-success' => 'Ännern vun $1 trüchsett op letzte Version vun $2.',
 	'restriction-type' => 'Schuulstatus',
 	'restriction-level' => 'Schuulhööchd',
@@ -31250,7 +31625,7 @@ $1",
 
 $messages['nds-nl'] = array(
 	'returnto' => 'Weerumme naor $1.',
-	'redirectedfrom' => '(deurestuurd vanaof "$1")',
+	'redirectedfrom' => 'deurestuurd vanaof "$1"',
 	'redirectpagesub' => 'Deurstuurpagina',
 	'retrievedfrom' => 'Van "$1"',
 	'restorelink' => '{{PLURAL:$1|versie die vortedaon is|versies die vortedaon bin}}',
@@ -31486,7 +31861,7 @@ Kiek de logboeken nao.',
 	'rollbacklink' => 'Weerummedreien',
 	'rollbackfailed' => 'Wieziging herstellen is mislokt',
 	'revertpage' => 'Wiezigingen deur [[Special:Contributions/$2|$2]] hersteld tot de versie nao de leste wieziging deur $1',
-	'revertpage-nouser' => 'Wiezigingen deur (gebrukersnaam vortedaon) weerummedreid naor de leste versie deur [[User:$1|$1]]',
+	'revertpage-nouser' => 'Wiezigingen deur (gebrukersnaam vortedaon) weerummedreid naor de leste versie deur $1',
 	'rollback-success' => 'Wiezigingen van $1; weerummedreid naor de leste versie van $2.',
 	'restriction-type' => 'Toegang',
 	'restriction-level' => 'Beveiligingsnivo',
@@ -31515,7 +31890,7 @@ Kiek de logboeken nao.',
 
 $messages['ne'] = array(
 	'returnto' => '$1 मा फर्कनुहोस् ।',
-	'redirectedfrom' => '($1 बाट पठाइएको)',
+	'redirectedfrom' => '$1 बाट पठाइएको',
 	'redirectpagesub' => 'रिडाइरेक्ट पृष्ठ',
 	'retrievedfrom' => ' "$1" बाट निकालिएको',
 	'restorelink' => '{{PLURAL:$1|एक मेटिएको सम्पादन |$1 मेटिएका सम्पादनहरू}}',
@@ -31751,29 +32126,29 @@ De beheerder heeft de volgende reden opgegeven: $1',
 	'readonly_lag' => 'De database is automatisch vergrendeld terwijl de ondergeschikte databaseservers synchroniseren met de hoofdserver.',
 	'remembermypassword' => 'Aanmeldgegevens onthouden (maximaal $1 {{PLURAL:$1|dag|dagen}})',
 	'resetpass' => 'Wachtwoord wijzigen',
-	'resetpass_announce' => 'U bent aangemeld met een tijdelijke code die u per e-mail is toegezonden.
+	'resetpass_announce' => 'Je bent aangemeld met een tijdelijke code die je per e-mail is toegezonden.
 Voer een nieuw wachtwoord in om het aanmelden te voltooien:',
 	'resetpass_text' => '<!-- Voeg hier tekst toe -->',
 	'resetpass_header' => 'Wachtwoord wijzigen',
 	'retypenew' => 'Herhaling nieuwe wachtwoord:',
 	'resetpass_submit' => 'Wachtwoord instellen en aanmelden',
-	'resetpass_success' => 'Uw wachtwoord is gewijzigd.
+	'resetpass_success' => 'Je wachtwoord is gewijzigd.
 Bezig met aanmelden…',
 	'resetpass_forbidden' => 'Wachtwoorden kunnen niet gewijzigd worden',
-	'resetpass-no-info' => 'U dient aangemeld zijn voordat u deze pagina kunt gebruiken.',
+	'resetpass-no-info' => 'Je dient aangemeld zijn voordat je deze pagina kunt gebruiken.',
 	'resetpass-submit-loggedin' => 'Wachtwoord wijzigen',
 	'resetpass-submit-cancel' => 'Annuleren',
 	'resetpass-wrong-oldpass' => 'Het huidige of tijdelijke wachtwoord is ongeldig.
-Mogelijk hebt u uw wachtwoord al gewijzigd of een nieuw tijdelijk wachtwoord aangevraagd.',
+Mogelijk heb je je wachtwoord al gewijzigd of een nieuw tijdelijk wachtwoord aangevraagd.',
 	'resetpass-temp-password' => 'Tijdelijk wachtwoord:',
-	'readonlywarning' => "'''Waarschuwing: de database is geblokkeerd voor bewerkingen, waarschijnlijk voor regulier databaseonderhoud, dus u kunt deze nu niet opslaan.'''
-Het is misschien verstandig om uw tekst tijdelijk in een tekstbestand op te slaan om dit te bewaren voor wanneer de blokkering van de database opgeheven is.
+	'readonlywarning' => "'''WAARSCHUWING: De database is geblokkeerd voor bewerkingen, waarschijnlijk voor regulier databaseonderhoud, dus je kunt deze nu niet opslaan.
+Het is misschien verstandig om je tekst tijdelijk in een tekstbestand op te slaan om dit te bewaren voor wanneer de blokkering van de database opgeheven is.'''
 
 Een beheerder heeft de database geblokkeerd om de volgende reden: $1",
-	'recreate-moveddeleted-warn' => "'''Waarschuwing: u bent bezig met het aanmaken van een pagina die in het verleden verwijderd is.'''
+	'recreate-moveddeleted-warn' => "'''Waarschuwing: je bent bezig met het aanmaken van een pagina die in het verleden verwijderd is.'''
 
-Overweeg of het terecht is dat u verder werkt aan deze pagina.
-Voor uw gemak staan hieronder het verwijderingslogboek en het hernoemingslogboek voor deze pagina:",
+Overweeg of het terecht is dat je verder werkt aan deze pagina.
+Voor je gemak staan hieronder het verwijderingslogboek en het hernoemingslogboek voor deze pagina:",
 	'revisionasof' => 'Versie van $2 om $3',
 	'revision-info' => 'Versie door $2 op $4 om $5',
 	'rev-deleted-comment' => '(bewerkingssamenvatting verwijderd)',
@@ -31782,45 +32157,47 @@ Voor uw gemak staan hieronder het verwijderingslogboek en het hernoemingslogboek
 	'rev-deleted-user-contribs' => '[gebruikersnaam of IP-adres verwijderd - bewerking verborgen in bijdragen]',
 	'rev-deleted-text-permission' => "Deze bewerking is '''verwijderd'''.
 Er kunnen details aanwezig zijn in het [{{fullurl:{{#Special:Log}}/delete|page={{FULLPAGENAMEE}}}} verwijderingslogboek].",
-	'rev-deleted-text-unhide' => "Deze paginaversie is '''verwijderd'''.
-Er kunnen details te vinden zijn in het [{{fullurl:{{#Special:Log}}/delete|page={{FULLPAGENAMEE}}}} verwijderingslogboek].
-Als u wilt kunt u [$1 deze versie bekijken].",
+	'rev-deleted-text-unhide' => "Deze versie van de pagina is '''verwijderd'''.
+Achtergronden zijn mogelijk te vinden in het [{{fullurl:{{#Special:Log}}/delete|page={{FULLPAGENAMEE}}}} verwijderingslogboek].
+Als beheerder kun je  [$1 deze versie bekijken] als je wil.",
 	'rev-suppressed-text-unhide' => "Deze paginaversie is '''onderdrukt'''.
-Er kunnen details te vinden zijn in het [{{fullurl:{{#Special:Log}}/suppress|page={{FULLPAGENAMEE}}}} logboek onderdrukte versies].
-Als u wilt kunt u [$1 deze versie bekijken].",
-	'rev-deleted-text-view' => "Deze paginaversie is '''verwijderd'''.
-U kunt deze bekijken; er kunnen details te vinden zijn in het [{{fullurl:{{#Special:Log}}/delete|page={{FULLPAGENAMEE}}}} verwijderingslogboek].",
+Achtergronden zijn mogelijk te vinden in het [{{fullurl:{{#Special:Log}}/suppress|page={{FULLPAGENAMEE}}}} logboek onderdrukte versies].
+Als beheerder kun je [$1 de verschillen bekijken] als je wil.",
+	'rev-deleted-text-view' => "Deze bewerking is '''verwijderd'''.
+Als beheerder kun je deze zien;
+er kunnen details aanwezig zijn in het [{{fullurl:{{#Special:Log}}/delete|page={{FULLPAGENAMEE}}}} verwijderingslogboek].",
 	'rev-suppressed-text-view' => "Deze paginaversie is '''onderdrukt'''.
-U kunt deze bekijken; er kunnen details te vinden zijn in het [{{fullurl:{{#Special:Log}}/suppress|page={{FULLPAGENAMEE}}}} logboek onderdrukte versies].",
-	'rev-deleted-no-diff' => "U kunt de verschillen niet bekijken, omdat een van de versies is '''verwijderd'''.
+Als beheerder kun je deze bekijken;
+achtergronden zijn mogelijk te vinden in het [{{fullurl:{{#Special:Log}}/suppress|page={{FULLPAGENAMEE}}}} logboek onderdrukte versies].",
+	'rev-deleted-no-diff' => "Je kunt de verschillen niet bekijken, omdat een van de versies is '''verwijderd'''.
 Achtergronden zijn mogelijk te vinden in het [{{fullurl:{{#Special:Log}}/delete|page={{FULLPAGENAMEE}}}} verwijderingslogboek].",
-	'rev-suppressed-no-diff' => "U kunt de verschillen niet bekijken, omdat een van de versies is '''verwijderd'''.",
-	'rev-deleted-unhide-diff' => "Een van de bewerkingen voor de verschillen die u hebt opgevraagd is '''verwijderd'''.
-Er kunnen details te vinden zijn in het [{{fullurl:{{#Special:Log}}/delete|page={{FULLPAGENAMEE}}}} verwijderingslogboek].
-Als u wilt kunt u [$1 de verschillen bekijken].",
+	'rev-suppressed-no-diff' => "Je kunt de verschillen niet bekijken, omdat een van de versies is '''verwijderd'''.",
+	'rev-deleted-unhide-diff' => "Een van de bewerkingen voor de verschillen die je hebt opgevraagd is '''verwijderd'''.
+Achtergronden zijn mogelijk te vinden in het [{{fullurl:{{#Special:Log}}/delete|page={{FULLPAGENAMEE}}}} verwijderingslogboek].
+Als beheerder kun je [$1 de verschillen bekijken] als je wil.",
 	'rev-suppressed-unhide-diff' => "Een van de versies in deze verschillen is '''onderdrukt'''.
-Er kunnen details te vinden zijn in het [{{fullurl:{{#Special:Log}}/suppress|page={{FULLPAGENAMEE}}}} verbergingslogboek].
-Als u wilt kunt u [$1 deze versie bekijken].",
-	'rev-deleted-diff-view' => "Een van de versies voor de verschillen die u hebt opgevraagd, is '''verwijderd'''.
-U kunt deze verschillen bekijken. Er kunnen details te vinden zijn in het [{{fullurl:{{#Special:Log}}/delete|page={{FULLPAGENAMEE}}}} verwijderlogboek].",
-	'rev-suppressed-diff-view' => "Een van de bewerkingen voor de verschillen die u hebt opgevraagd, is '''onderdrukt'''.
-U kunt deze verschillen bekijken. Er kunnen details te vinden zijn in het [{{fullurl:{{#Special:Log}}/suppress|page={{FULLPAGENAMEE}}}} verbergingslogboek].",
+Achtergronden zijn mogelijk te vinden in het [{{fullurl:{{#Special:Log}}/suppress|page={{FULLPAGENAMEE}}}} verbergingslogboek].
+Als beheerder kunt je [$1 deze versie bekijken] als je wil.",
+	'rev-deleted-diff-view' => "Een van de bewerkingen voor de verschillen die je hebt opgevraagd, is '''verwijderd'''.
+Als beheerder kunt je deze verschillen bekijken. Mogelijk zijn details zichtbaar in het [{{fullurl:{{#Special:Log}}/delete|page={{FULLPAGENAMEE}}}} verwijderlogboek].",
+	'rev-suppressed-diff-view' => "Een van de bewerkingen voor de verschillen die je hebt opgevraagd, is '''onderdrukt'''.
+Als beheerder kun je deze verschillen bekijken. Mogelijk zijn details zichtbaar in het [{{fullurl:{{#Special:Log}}/suppress|page={{FULLPAGENAMEE}}}} verbergingslogboek].",
 	'rev-delundel' => 'weergeven/verbergen',
 	'rev-showdeleted' => 'weergeven',
 	'revisiondelete' => 'Versies verwijderen of terugplaatsen',
 	'revdelete-nooldid-title' => 'Ongeldige doelversie',
-	'revdelete-nooldid-text' => 'U hebt geen doelversie(s) voor deze handeling opgegeven, de aangegeven versie bestaat niet of u probeert de laatste versie te verbergen.',
+	'revdelete-nooldid-text' => 'Je hebt geen doelversie(s) voor deze handeling opgegeven, de aangegeven versie bestaat niet of je probeert de laatste versie te verbergen.',
 	'revdelete-nologtype-title' => 'Er is geen logboektype opgegeven',
-	'revdelete-nologtype-text' => 'U hebt geen logboektype opgegeven om deze handeling op uit te voeren.',
+	'revdelete-nologtype-text' => 'Je hebt geen logboektype opgegeven om deze handeling op uit te voeren.',
 	'revdelete-nologid-title' => 'Ongeldige logboekregel',
-	'revdelete-nologid-text' => 'U hebt ofwel geen doellogboekregel opgegeven of de aangegeven logboekregel bestaat niet.',
+	'revdelete-nologid-text' => 'Je hebt ofwel geen doellogboekregel opgegeven of de aangegeven logboekregel bestaat niet.',
 	'revdelete-no-file' => 'Het aangegeven bestand bestaat niet.',
-	'revdelete-show-file-confirm' => 'Weet u zeker dat u de verwijderde versie van het bestand "<nowiki>$1</nowiki>" van $2 om $3 wilt bekijken?',
+	'revdelete-show-file-confirm' => 'Weet je zeker dat u de verwijderde versie van het bestand "<nowiki>$1</nowiki>" van $2 om $3 wilt bekijken?',
 	'revdelete-show-file-submit' => 'Ja',
 	'revdelete-selected' => "'''Geselecteerde {{PLURAL:$2|bewerking|bewerkingen}} van [[:$1]]:'''",
 	'revdelete-text' => "'''Verwijderde bewerkingen zijn zichtbaar in de geschiedenis en logboeken, maar delen van de inhoud zijn niet langer publiek toegankelijk.'''
 Andere beheerders van {{SITENAME}} kunnen de verborgen inhoud benaderen en de verwijdering ongedaan maken met behulp van dit formulier, tenzij er aanvullende beperkingen gelden die zijn ingesteld door de systeembeheerder.",
-	'revdelete-confirm' => 'Bevestig dat u dit wilde doen, dat u de consequenties begrijpt en dat u dit doet in overeenstemming met het geldende [[{{MediaWiki:Policy-url}}|beleid]].',
+	'revdelete-confirm' => 'Bevestig dat je dit wilde doen, dat je de consequenties begrijpt en dat je dit doet in overeenstemming met het geldende [[{{MediaWiki:Policy-url}}|beleid]].',
 	'revdelete-suppress-text' => "Versies verbergen dient '''alleen''' gebruikt te worden in de volgende gevallen:
 * Ongepaste persoonlijke informatie
 *: ''woonadres, telefoonnummers, Burger Service Nummers, enzovoort.''",
@@ -31847,14 +32224,14 @@ $1",
 	'revdelete-hide-current' => 'Er is een fout opgetreden bij het verbergen van het object van $1 om $2 uur: dit is de huidige versie.
 Deze versie kan niet verborgen worden.',
 	'revdelete-show-no-access' => 'Er is een fout opgetreden bij het weergeven van het object van $1 om $2 uur: dit object is gemarkeerd als "beschermd".
-U hebt geen toegang tot dit object.',
+Je hebt geen toegang tot dit object.',
 	'revdelete-modify-no-access' => 'Er is een fout opgetreden bij het wijzigen van het object van $1 om $2 uur: dit object is gemarkeerd als "beschermd".
-U hebt geen toegang tot dit object.',
+Je hebt geen toegang tot dit object.',
 	'revdelete-modify-missing' => 'Er is een fout opgetreden bij het wijzigen van versienummer $1: het komt niet voor in de database!',
 	'revdelete-no-change' => "'''Waarschuwing:''' het object van $1 om $2 uur had al de aangegeven zichtbaarheidsinstellingen.",
 	'revdelete-concurrent-change' => 'Er is een fout opgetreden bij het wijzigen van het object van $1 om $2 uur: de status is inmiddels gewijzigd door iemand anders.
 Controleer de logboeken.',
-	'revdelete-only-restricted' => 'Er is een fout opgetreden bij het verbergen van het item van $1, $2: u kunt geen items onderdrukken uit het zicht van beheerders zonder ook een van de andere zichtbaarheidsopties te selecteren.',
+	'revdelete-only-restricted' => 'Er is een fout opgetreden bij het verbergen van het item van $1, $2: je kunt geen items onderdrukken uit het zicht van beheerders zonder ook een van de andere zichtbaarheidsopties te selecteren.',
 	'revdelete-reason-dropdown' => '* Veel voorkomende redenen voor verwijderen
 ** Auteursrechtenschending
 ** Onbetamelijke persoonlijke gegevens
@@ -31964,7 +32341,7 @@ Controleer de logboeken.',
 	'recentchangeslinked-title' => 'Wijzigingen verwant aan "$1"',
 	'recentchangeslinked-noresult' => "Er zijn in de opgegeven periode geen bewerkingen geweest op de pagina's waarheen vanaf hier verwezen wordt.",
 	'recentchangeslinked-summary' => "Deze speciale pagina geeft de laatste bewerkingen weer op pagina's waarheen verwezen wordt vanaf een aangegeven pagina of vanuit pagina's in een aangegeven pagina een categorie.
-Pagina's die op [[Special:Watchlist|uw volglijst]] staan worden '''vet''' weergegeven.",
+Pagina's die op [[Special:Watchlist|je volglijst]] staan worden '''vet''' weergegeven.",
 	'recentchangeslinked-page' => 'Paginanaam:',
 	'recentchangeslinked-to' => "Wijzigingen aan pagina's met verwijzingen naar deze pagina bekijken",
 	'reuploaddesc' => 'Upload annuleren en terugkeren naar het uploadformulier',
@@ -31973,7 +32350,7 @@ Pagina's die op [[Special:Watchlist|uw volglijst]] staan worden '''vet''' weerge
 	'randomredirect' => 'Willekeurige doorverwijzing',
 	'randomredirect-nopages' => 'Er zijn geen doorverwijzingen in de naamruimte "$1".',
 	'removewatch' => 'Verwijderen uit volglijst',
-	'removedwatchtext' => 'De pagina "[[:$1]]" is van [[Special:Watchlist|uw volglijst]] verwijderd.',
+	'removedwatchtext' => 'De pagina "[[:$1]]" is van [[Special:Watchlist|je volglijst]] verwijderd.',
 	'reverted' => 'Eerdere versie hersteld',
 	'rollback' => 'Wijzigingen ongedaan maken',
 	'rollback_short' => 'Terugdraaien',
@@ -32006,6 +32383,89 @@ De laatste versie van $2 is hersteld.',
 	'revdelete-uname-unhid' => 'gebruikersnaam zichtbaar gemaakt',
 	'revdelete-restricted' => 'heeft beperkingen aan beheerders opgelegd',
 	'revdelete-unrestricted' => 'heeft beperkingen voor beheerders opgeheven',
+	'realmap-deprecated-info' => 'Real world maps have been discontinued by Wikia. For more information, see: $1',
+	'revision-info-current' => '-',
+	'revision-nav' => '($1) $2{{int:pipe-separator}}$3 ($4){{int:pipe-separator}}$5 ($6)',
+	'right-editmyoptions' => 'Can edit your own preferences',
+	'right-loggedin' => 'Flags user as being logged in to an account',
+	'right-mcachepurge' => 'Control memcached behaviour via request parameters',
+	'right-emailconfirmed' => 'User has been email confirmed',
+	'right-runjob' => 'Run job from the job queue via API',
+	'recentchanges-url' => 'Special:RecentChanges',
+	'rc-change-size' => '$1',
+	'rc-old-title' => 'originally created as "$1"',
+	'randompage-url' => 'Special:Random',
+	'rfcurl' => '//tools.ietf.org/html/rfc$1',
+	'revdelete-logentry' => 'changed revision visibility of "[[$1]]"',
+	'revdelete-content' => 'content',
+	'revdelete-summary' => 'edit summary',
+	'revdelete-uname' => 'username',
+	'revdelete-hid' => 'hid $1',
+	'revdelete-unhid' => 'unhid $1',
+	'revdelete-log-message' => '$1 for $2 {{PLURAL:$2|revision|revisions}}',
+	'reconfirmemail_subject' => 'Welcome to Wikia!',
+	'reconfirmemail_body' => 'Hi $2,
+
+Thank you for updating the email address associated with your Wikia account.
+
+Before our system can send you any mail you have opted to receive, you
+must confirm your email address.
+
+Click on the link below or paste it into your browser:
+
+$3
+
+Note: This confirmation link will expire in 7 days.
+
+
+With thousands of communities on Wikia, there are many ways to have fun
+here. Spend some time getting to know Wikia by visiting the home page
+(www.wikia.com), taking a tutorial at
+http://www.wikia.com/wiki/Help:Tutorial_1 , reading interesting and cool
+pages, writing content on your favorite subjects, or meeting other
+members of the community.
+
+We look forward to seeing you on Wikia!
+
+The Wikia Community Team
+www.wikia.com
+',
+	'rcshowhideenhanced' => '$1 enhanced recent changes',
+	'refreshpage' => 'Reload page to activate this widget',
+	'requestcreatewiki' => 'Submit Request',
+	'right_now' => 'Right Now<br />people are...',
+	'return_to_article' => 'Return to page',
+	'return_to_talk' => 'Return to discussion',
+	'return_to_user' => 'Return to user page',
+	'return_to_user_talk' => 'Return to discussion',
+	'return_to_project' => 'Return to project page',
+	'return_to_project_talk' => 'Return to discussion',
+	'return_to_image' => 'Return to image page',
+	'return_to_image_talk' => 'Return to discussion',
+	'return_to_mediawiki' => 'Return to message page',
+	'return_to_mediawiki_talk' => 'Return to discussion',
+	'return_to_template' => 'Return to template page',
+	'return_to_template_talk' => 'Return to discussion',
+	'return_to_help' => 'Return to help page',
+	'return_to_help_talk' => 'Return to discussion',
+	'return_to_category' => 'Return to category page',
+	'return_to_category_talk' => 'Return to discussion',
+	'return_to_forum' => 'Return to forum page',
+	'return_to_forum_talk' => 'Return to discussion',
+	'return_to_special' => 'Return to special page',
+	'rate_it' => 'Rate this page:',
+	'review_reason_1' => 'Review reason 1',
+	'review_reason_2' => 'Review reason 2',
+	'review_reason_3' => 'Review reason 3',
+	'review_reason_4' => 'Review reason 4',
+	'review_reason_5' => 'Review reason 5',
+	'related_wiki' => 'Add bulleted links here to display wiki related to this one in the related wiki [[Special:Widgets|widget]].
+
+* [{{FULLURL:MediaWiki:Related wiki}} No related wiki have been selected yet.]',
+	'registerintro-title' => 'When you create an account on FANDOM, you become a part of the community!',
+	'registerintro-text' => 'You get credit for all your contributions, and you can also create your own user profile, watchlist your favorite pages, and get access to all kinds of neat tools.',
+	'rcshowhidelogs' => '$1 logs',
+	'right-hideblockername' => 'Not have their user name show up in block notices',
 );
 
 $messages['nl-informal'] = array(
@@ -32066,7 +32526,7 @@ Pagina's die op [[Special:Watchlist|je volglijst]] staan worden '''vet''' weerge
 
 $messages['nn'] = array(
 	'returnto' => 'Attende til $1.',
-	'redirectedfrom' => '(Omdirigert frå $1)',
+	'redirectedfrom' => 'Omdirigert frå $1',
 	'redirectpagesub' => 'Omdirigeringsside',
 	'retrievedfrom' => 'Henta frå «$1»',
 	'restorelink' => '{{PLURAL:$1|Éin sletta versjon|$1 sletta versjonar}}',
@@ -32301,7 +32761,7 @@ Sjekk gjerne loggføringa.',
 	'rollback_short' => 'Rull attende',
 	'rollbacklink' => 'rull attende',
 	'rollbackfailed' => 'Kunne ikkje rulle attende',
-	'revertpage' => 'Attenderulla endring gjort av [[Special:Contributions/$2|$2]] ([[User talk:$2|diskusjon]]) til tidlegare versjon endra av [[User:$1|$1]]',
+	'revertpage' => 'Attenderulla endring gjort av [[Special:Contributions/$2|$2]] ([[User talk:$2|diskusjon]]) til tidlegare versjon endra av $1',
 	'revertpage-nouser' => 'Tilbakestilte endringar av (brukarnamn fjerna) til den siste versjonen av [[User:$1|$1]]',
 	'rollback-success' => 'Rulla attende endringane av $1, tilbake til siste versjon av $2.',
 	'restriction-type' => 'Tilgang:',
@@ -32327,7 +32787,7 @@ Sjekk gjerne loggføringa.',
 
 $messages['no'] = array(
 	'returnto' => 'Attende til $1.',
-	'redirectedfrom' => '(Omdirigert frå $1)',
+	'redirectedfrom' => 'Omdirigert frå $1',
 	'redirectpagesub' => 'Omdirigeringsside',
 	'retrievedfrom' => 'Henta frå «$1»',
 	'restorelink' => '{{PLURAL:$1|Éin sletta versjon|$1 sletta versjonar}}',
@@ -32562,7 +33022,7 @@ Sjekk gjerne loggføringa.',
 	'rollback_short' => 'Rull attende',
 	'rollbacklink' => 'rull attende',
 	'rollbackfailed' => 'Kunne ikkje rulle attende',
-	'revertpage' => 'Attenderulla endring gjort av [[Special:Contributions/$2|$2]] ([[User talk:$2|diskusjon]]) til tidlegare versjon endra av [[User:$1|$1]]',
+	'revertpage' => 'Attenderulla endring gjort av [[Special:Contributions/$2|$2]] ([[User talk:$2|diskusjon]]) til tidlegare versjon endra av $1',
 	'revertpage-nouser' => 'Tilbakestilte endringar av (brukarnamn fjerna) til den siste versjonen av [[User:$1|$1]]',
 	'rollback-success' => 'Rulla attende endringane av $1, tilbake til siste versjon av $2.',
 	'restriction-type' => 'Tilgang:',
@@ -32590,6 +33050,58 @@ Sjekk gjerne loggføringa.',
 	'review_reason_3' => 'Anmeld grunn 3',
 	'review_reason_4' => 'Anmeld grunn 4',
 	'review_reason_5' => 'Anmeld grunn 5',
+	'registerintro-title' => 'Når du oppretter en bruker hos Wikia blir du en del av fellesskapet!',
+	'rcshowhideenhanced' => '$1 utdypende siste endringer',
+	'rcshowhidelogs' => '$1 logger',
+	'reconfirmemail_body' => 'Hei $2,
+
+Takk for at du oppdaterte e-postadressen tilhørende din Wikia-bruker.
+
+Før systemet vårt kan sende deg e-post du har bedt om å motta, må du bekrefte e-postadressen.
+
+Trykk på lenken under eller lim den inn i nettleseren din:
+
+$3
+
+Merknad: Denne bekreftelseslenken vil utgå etter syv dager.
+
+Med tusen av fellesskap på Wikia, er det mange måter å ha det gøy på. 
+Bruk litt tid på å bli kjent med Wikia ved å besøke hjemmesiden 
+(www.wikia.com), og gå gjennom læringsprogrammet vårt på
+http://www.wikia.com/wiki/Help:Tutorial_1 , les interessante og 
+kule artikler, skriv om favorittemnene dine, eller møt andre
+medlemmer av fellesskapet. 
+
+Vi ser frem til å treffe deg på Wikia!
+
+The Wikia Community Teamet
+www.wikia.com',
+	'reconfirmemail_subject' => 'Velkommen til Wikia!',
+	'refreshpage' => 'Oppdater siden for å aktivere denne widgeten',
+	'registerintro-text' => 'Du får anerkjennelse for alle bidrag, og du kan også opprette en egen brukerprofil, overvåke yndlingssidene dine, og få tilgang til alle slags nyttige verktøy.',
+	'related_wiki' => 'Legg til oppslagslenker her for å vise wikier beslektet med denne i beslektede wikier [[Special:Widgets|widgeten]].
+
+* [{{FULLURL:MediaWiki:Related wiki}} Ingen beslektede wikier har blitt valgt ennå.]',
+	'requestcreatewiki' => 'Send forespørsel',
+	'return_to_article' => 'Tilbake til artikkel',
+	'return_to_category' => 'Tilbake til kategoriside',
+	'return_to_category_talk' => 'Tilbake til diskusjon',
+	'return_to_forum' => 'Tilbake til forumside',
+	'return_to_help' => 'Tilbake til hjelpside',
+	'return_to_help_talk' => 'Tilbake til diskusjon',
+	'return_to_image' => 'Tilbake til bildeside',
+	'return_to_image_talk' => 'Tilbake til diskusjon',
+	'return_to_mediawiki' => 'Tilbake til beskjedside',
+	'return_to_mediawiki_talk' => 'Tilbake til diskusjon',
+	'return_to_project' => 'Tilbake til prosjektside',
+	'return_to_project_talk' => 'Tilbake til diskusjon',
+	'return_to_special' => 'Tilbake til spesialside',
+	'return_to_talk' => 'Tilbake til diskusjon',
+	'return_to_template' => 'Tilbake til malside',
+	'return_to_template_talk' => 'Tilbake til diskusjon',
+	'return_to_user' => 'Tilbake til brukerside',
+	'return_to_user_talk' => 'Tilbake til diskusjon',
+	'right_now' => 'Akkurat nå<br />gjør folk...',
 );
 
 $messages['nov'] = array(
@@ -32607,12 +33119,12 @@ $messages['nov'] = array(
 	'recentchangeslinked-feed' => 'Afini chanjos',
 	'recentchangeslinked-toolbox' => 'Afini chanjos',
 	'randompage' => 'Arbitriari pagine',
-	'revertpage' => 'Riverted modifikos da [[Special:Contributions/$2|$2]] ([[User talk:$2|Talk]]); restaurad lasti versione da [[User:$1|$1]]',
+	'revertpage' => 'Riverted modifikos da [[Special:Contributions/$2|$2]] ([[User talk:$2|Talk]]); restaurad lasti versione da $1',
 );
 
 $messages['nso'] = array(
 	'returnto' => 'Boela go $1.',
-	'redirectedfrom' => "(''Redirect'' go tšwa $1)",
+	'redirectedfrom' => "''Redirect'' go tšwa $1",
 	'redirectpagesub' => "''Redirect'' letlakala",
 	'retrievedfrom' => 'Le tšwa go "$1"',
 	'restorelink' => '{{PLURAL:$1|e tee phetogo ye phumutšwego|phetogo tše $1 tše phumutšwego}}',
@@ -32677,7 +33189,7 @@ Matlakala ago ba [[Special:Watchlist|lenanong la gago la matlakala ditlhapetšo]
 );
 
 $messages['nv'] = array(
-	'redirectedfrom' => '("$1"dę́ę́ʼ)',
+	'redirectedfrom' => '"$1"dę́ę́ʼ',
 	'redirectpagesub' => 'dah astsihígíí',
 	'retrievedfrom' => '"$1" bitsʼą́ą́dę́ę́ʼ',
 	'red-link-title' => '$1 (ádin)',
@@ -32706,7 +33218,7 @@ $messages['ny'] = array(
 
 $messages['oc'] = array(
 	'returnto' => 'Tornar a la pagina $1.',
-	'redirectedfrom' => '(Redirigit dempuèi $1)',
+	'redirectedfrom' => 'Redirigit dempuèi $1',
 	'redirectpagesub' => 'Pagina de redireccion',
 	'retrievedfrom' => 'Recuperada de « $1 »',
 	'restorelink' => '{{PLURAL:$1|una edicion escafada|$1 edicions escafadas}}',
@@ -32939,7 +33451,7 @@ Verificatz los jornals.",
 	'rollback_short' => 'Anullar',
 	'rollbacklink' => 'anullar',
 	'rollbackfailed' => "L'anullacion a pas capitat",
-	'revertpage' => 'Anullacion de las modificacions de [[Special:Contributions/$2|$2]] ([[User talk:$2|Discussion]]) cap a la darrièra version de [[User:$1|$1]]',
+	'revertpage' => 'Anullacion de las modificacions de [[Special:Contributions/$2|$2]] ([[User talk:$2|Discussion]]) cap a la darrièra version de $1',
 	'revertpage-nouser' => 'Revocacion de las modificacions per (nom d’utilizaire suprimit) a la darrièra version per [[User:$1|$1]]',
 	'rollback-success' => 'Anullacion de las modificacions de $1 ; retorn a la version de $2.',
 	'restriction-type' => 'Permission :',
@@ -32963,7 +33475,7 @@ Verificatz los jornals.",
 
 $messages['or'] = array(
 	'returnto' => '$1କୁ ଫେରିଯାନ୍ତୁ ।',
-	'redirectedfrom' => '($1 ରୁ ଲେଉଟି ଆସିଛି)',
+	'redirectedfrom' => '$1 ରୁ ଲେଉଟି ଆସିଛି',
 	'redirectpagesub' => 'ଆଉଥରେ ଫେରିବା ପୃଷ୍ଠା',
 	'retrievedfrom' => '"$1" ରୁ ଅଣାଯାଇଅଛି',
 	'restorelink' => '{{PLURAL:$1|ଗୋଟିଏ ଲିଭାଯାଇଥିବା ବଦଳ|$1ଟି ଲିଭାଯାଇଥିବା ବଦଳ}}',
@@ -33201,7 +33713,7 @@ $1",
 	'rollback_short' => 'ପୁରାପୁରି ପଛକୁ ଫେରିଯିବେ',
 	'rollbacklink' => 'ପୁରାପୁରି ପଛକୁ ଫେରିଯିବେ',
 	'rollbackfailed' => 'ପୁରାପୁରି ପଛକୁ ଫେରିବା ବିଫଳ ହେଲା',
-	'revertpage' => '[[Special:Contributions/$2|$2]] ([[User talk:$2|ଆଲୋଚନା]])ଙ୍କ ଦେଇ କରାଯାଇଥିବା ବଦଳକୁ [[User:$1|$1]]ଙ୍କ ଦେଇ କରାଯାଇଥିବା ଶେଷ ବଦଳକୁ ଫେରାଇ ଦିଆଗଲା',
+	'revertpage' => '[[Special:Contributions/$2|$2]] ([[User talk:$2|ଆଲୋଚନା]])ଙ୍କ ଦେଇ କରାଯାଇଥିବା ବଦଳକୁ $1ଙ୍କ ଦେଇ କରାଯାଇଥିବା ଶେଷ ବଦଳକୁ ଫେରାଇ ଦିଆଗଲା',
 	'revertpage-nouser' => '(ଇଉଜର ନାମ ବାହାର କରିଦିଆଯାଇଅଛି)ଙ୍କ ଦେଇ କରାଯାଇଥିବା ବଦଳକୁ [[User:$1|$1]]ଙ୍କ ଦେଇ କରାଯାଇଥିବା ଶେଷ ବଦଳକୁ ଲେଉଟାଇଦିଆଗଲା',
 	'rollback-success' => '$1ଙ୍କ ଦେଇ ହୋଇଥିବା ସମ୍ପାଦନାକୁ ପୁରାପୁରି ପଛକୁ ଲେଉଟାଇ ଦିଆଗଲା;
 $2ଙ୍କ ଦେଇ ଶେଷଥର ହୋଇଥିବା ସଂସ୍କରଣକୁ ବଦଳାଇ ଦିଆଗଲା ।',
@@ -33232,7 +33744,7 @@ $2ଙ୍କ ଦେଇ ଶେଷଥର ହୋଇଥିବା ସଂସ୍କର�
 
 $messages['os'] = array(
 	'returnto' => 'Фæстæмæ $1 фарсмæ.',
-	'redirectedfrom' => '(Ацы статьяйæ æрвыст: «$1»)',
+	'redirectedfrom' => 'Ацы статьяйæ æрвыст: «$1»',
 	'redirectpagesub' => 'Рарвысты фарс',
 	'retrievedfrom' => 'Ратæдзæн: «$1»',
 	'red-link-title' => '$1 (фыст нæу)',
@@ -33306,7 +33818,7 @@ $3',
 
 $messages['pa'] = array(
 	'returnto' => '$1 ਤੇ ਵਾਪਸ ਜਾਓ',
-	'redirectedfrom' => '($1 ਤੋਂ ਰੀ-ਡਿਰੈਕਟ)',
+	'redirectedfrom' => '$1 ਤੋਂ ਰੀ-ਡਿਰੈਕਟ',
 	'redirectpagesub' => 'ਰੀ-ਡਿਰੈਕਟ ਪੇਜ',
 	'retrievedfrom' => '"$1" ਤੋਂ ਲਿਆ',
 	'red-link-title' => '$1 (ਇਸ ਨਾਂ ਦਾ ਪੇਜ ਨਹੀਂ ਹੈ)',
@@ -33398,7 +33910,7 @@ $messages['pag'] = array(
 
 $messages['pam'] = array(
 	'returnto' => 'Magbalik king $1.',
-	'redirectedfrom' => '(Miyalis direksiun manibat king $1)',
+	'redirectedfrom' => 'Miyalis direksiun manibat king $1',
 	'redirectpagesub' => 'Bulung ning pamanaliling direksiun (redirect)',
 	'retrievedfrom' => 'Mekua ya king "$1"',
 	'restorelink' => '{{PLURAL:$1|metung a edit a mebura|$1 edit a mebura}}',
@@ -33554,7 +34066,7 @@ king kekang watchlist (tala da reng babanten).",
 	'rollbacklink' => 'i-urung',
 	'rollbackfailed' => 'E melaus ing pamanurung',
 	'revertpage' => 'Miurung la reng in-edit nang [[Special:Contributions/$2|$2]] ([[User talk:$2|Pamisabi-sabi]]);
-binalik neng [[User:$1|$1]] king tauling bersion',
+binalik neng $1 king tauling bersion',
 	'rollback-success' => 'Deng edit nang $1 a miurung;
 binalik nong $2 king sadiang bersion.',
 	'restriction-type' => 'Paintulut:',
@@ -33577,7 +34089,7 @@ binalik nong $2 king sadiang bersion.',
 
 $messages['pap'] = array(
 	'returnto' => 'Bai bèk $1.',
-	'redirectedfrom' => '(Bo a yega akinan pa via di e página $1)',
+	'redirectedfrom' => 'Bo a yega akinan pa via di e página $1',
 	'redirectpagesub' => 'Página ku ta sirbi komo portal',
 	'remembermypassword' => 'Kordá mi (for a maximum of $1 {{PLURAL:$1|day|days}})',
 	'recentchanges' => 'Kambionan resien',
@@ -33591,7 +34103,7 @@ $messages['pap'] = array(
 
 $messages['pcd'] = array(
 	'returnto' => 'Értrouve $1.',
-	'redirectedfrom' => '(Érdirection édpis $1)',
+	'redirectedfrom' => 'Érdirection édpis $1',
 	'redirectpagesub' => 'Pache érdérivée',
 	'retrievedfrom' => 'Érprind din  "$1"',
 	'restorelink' => '{{PLURAL:$1|eune édition défacée|$1 chés éditions défacées}}',
@@ -33635,7 +34147,7 @@ $messages['pcd'] = array(
 
 $messages['pdc'] = array(
 	'returnto' => 'Zerick zum Blatt $1.',
-	'redirectedfrom' => '(Weiterleitung vun $1)',
+	'redirectedfrom' => 'Weiterleitung vun $1',
 	'redirectpagesub' => 'Weiderleiding',
 	'retrievedfrom' => 'Vun „$1“',
 	'red-link-title' => '$1 (Blatt gebt es net)',
@@ -33695,7 +34207,7 @@ $messages['pdc'] = array(
 
 $messages['pdt'] = array(
 	'returnto' => 'Trigj no $1.',
-	'redirectedfrom' => '(wieda jeleidt von $1)',
+	'redirectedfrom' => 'wieda jeleidt von $1',
 	'redirectpagesub' => 'Sied tom Wiedaleide',
 	'retrievedfrom' => 'Von "$1"',
 	'red-link-title' => '$1 (Sied noch nich jemoakt)',
@@ -33726,7 +34238,7 @@ $messages['pdt'] = array(
 
 $messages['pfl'] = array(
 	'returnto' => 'Zrick zu $1.',
-	'redirectedfrom' => '(Wairrerglaidet vun $1)',
+	'redirectedfrom' => 'Wairrerglaidet vun $1',
 	'redirectpagesub' => 'Wairerlaidungssaid',
 	'retrievedfrom' => 'Vun "$1"',
 	'red-link-title' => '$1 (Said gebbt s nid)',
@@ -33791,21 +34303,21 @@ $messages['pl'] = array(
 
 Administrator, który zablokował bazę, podał następujące wyjaśnienie: $1',
 	'readonly_lag' => 'Baza danych została automatycznie zablokowana na czas potrzebny do wykonania synchronizacji zmian między serwerem głównym i serwerami pośredniczącymi.',
-	'remembermypassword' => 'Zapamiętaj moje hasło na tym komputerze (maksymalnie przez $1 {{PLURAL:$1|dzień|dni}})',
+	'remembermypassword' => 'Zapamiętaj moje hasło na tym komputerze',
 	'resetpass' => 'Zmień hasło',
-	'resetpass_announce' => '{{GENDER:|Zalogowałeś|Zalogowałaś}} się, wykorzystując tymczasowe hasło otrzymane poprzez e‐mail.
+	'resetpass_announce' => '{{GENDER:|Zalogowałeś się|Zalogowałaś się|Zalogowano}} wykorzystując tymczasowe hasło otrzymane poprzez e‐mail.
 Aby zakończyć proces logowania, musisz ustawić nowe hasło:',
 	'resetpass_text' => '<!-- Dodaj tekst -->',
 	'resetpass_header' => 'Zmień hasło dla swojego konta',
 	'retypenew' => 'Powtórz nowe hasło',
 	'resetpass_submit' => 'Ustaw hasło i zaloguj się',
-	'resetpass_success' => 'Twoje hasło zostało pomyślnie zmienione! Trwa logowanie...',
+	'resetpass_success' => 'Twoje hasło zostało pomyślnie zmienione! Trwa logowanie…',
 	'resetpass_forbidden' => 'Hasła nie mogą zostać zmienione',
 	'resetpass-no-info' => 'Musisz być zalogowany, by uzyskać bezpośredni dostęp do tej strony.',
 	'resetpass-submit-loggedin' => 'Zmień hasło',
 	'resetpass-submit-cancel' => 'Anuluj',
 	'resetpass-wrong-oldpass' => 'Nieprawidłowe tymczasowe lub aktualne hasło.
-Być może właśnie zmienił{{GENDER:|eś|aś|eś(‐aś)}} swoje hasło lub poprosił{{GENDER:|eś|aś|eś(‐aś)}} o nowe tymczasowe hasło.',
+Być może właśnie {{GENDER:|zmieniłeś|zmieniłaś|zmieniłeś(‐aś)}} swoje hasło lub {{GENDER:|poprosiłeś|poprosiłaś|poprosiłeś(‐aś)}} o nowe tymczasowe hasło.',
 	'resetpass-temp-password' => 'Tymczasowe hasło:',
 	'readonlywarning' => "'''Uwaga! Baza danych została zablokowana do celów administracyjnych. W tej chwili nie można zapisać nowej wersji strony. Zapisz jej treść do pliku, używając wytnij i wklej, aby zachować na później.'''
 
@@ -33852,16 +34364,16 @@ Jeśli chcesz możesz zobaczyć porównanie. Szczegóły mogą znajdować się w
 	'revdelete-nooldid-text' => 'Nie wybrano wersji, na których ma zostać wykonana ta operacja,
 wybrana wersja nie istnieje lub próbowano ukryć wersję bieżącą.',
 	'revdelete-nologtype-title' => 'Brak typu rejestru',
-	'revdelete-nologtype-text' => 'Nie określ{{GENDER:|iłeś|iłaś|ono}} rodzaju rejestru do przeprowadzenia tej operacji.',
+	'revdelete-nologtype-text' => 'Nie {{GENDER:|określiłeś|określiłaś|określono}} rodzaju rejestru do przeprowadzenia tej operacji.',
 	'revdelete-nologid-title' => 'Nieprawidłowy wpis w rejestrze',
-	'revdelete-nologid-text' => 'Nie określ{{GENDER:|iłeś|iłaś|ono}} wpisu w rejestrze do przeprowadzenia operacji albo wybrany wpis nie istnieje.',
+	'revdelete-nologid-text' => 'Nie {{GENDER:|określiłeś|określiłaś|określono}} wpisu w rejestrze do przeprowadzenia operacji albo wybrany wpis nie istnieje.',
 	'revdelete-no-file' => 'Wybrany plik nie istnieje.',
 	'revdelete-show-file-confirm' => 'Czy jesteś pewien, że chcesz zobaczyć usuniętą wersję pliku „<nowiki>$1</nowiki>” z $2 o $3?',
 	'revdelete-show-file-submit' => 'Tak',
 	'revdelete-selected' => "'''{{PLURAL:$2|Zaznaczona wersja|Zaznaczone wersje}} strony [[:$1]]:'''",
 	'revdelete-text' => "'''Usunięte wersje i czynności będą nadal widoczne w historii strony i rejestrach, ale ich treść nie będzie publicznie dostępna.'''
 Inni administratorzy {{GRAMMAR:D.lp|{{SITENAME}}}} nadal będą mieć dostęp do ukrytych treści oraz będą mogli je odtworzyć używając standardowych mechanizmów, chyba że nałożono dodatkowe ograniczenia.",
-	'revdelete-confirm' => 'Potwierdzić, że chcesz to zrobić, rozumiesz konsekwencje oraz że robisz to zgodnie z [[{{MediaWiki:Policy-url}}|zasadami]].',
+	'revdelete-confirm' => 'Potwierdzić, że chcesz to zrobić, rozumiesz konsekwencje oraz że robisz to zgodnie z zasadami.',
 	'revdelete-suppress-text' => "Ukrywanie powinno być używane '''wyłącznie''' w sytuacji:
 * Ujawnienie danych osobowych
 *: ''adres domowy, numer telefonu, numer PESEL itp''",
@@ -33945,7 +34457,7 @@ Proszę sprawdzić rejestr operacji.',
 	'right-deletedtext' => 'Podgląd usuniętego tekstu i zmian pomiędzy usuniętymi wersjami',
 	'right-browsearchive' => 'Przeszukiwanie usuniętych stron',
 	'right-undelete' => 'Odtwarzanie usuniętych stron',
-	'right-suppressrevision' => 'Podgląd i odtwarzanie wersji ukrytych przed Administratorami',
+	'right-suppressrevision' => 'Podgląd i odtwarzanie wersji ukrytych przed administratorami',
 	'right-suppressionlog' => 'Podgląd rejestru ukrywania',
 	'right-block' => 'Blokowanie użytkownikom możliwości edycji',
 	'right-blockemail' => 'Blokowanie wysyłania wiadomości przez użytkownika',
@@ -33982,7 +34494,34 @@ Proszę sprawdzić rejestr operacji.',
 	'rightsnone' => 'brak',
 	'recentchanges' => 'Ostatnie zmiany',
 	'recentchanges-legend' => 'Opcje ostatnich zmian',
-	'recentchangestext' => 'Ta strona przedstawia historię ostatnich zmian w tej wiki.',
+	'recentchangestext' => '<div style="border: 3px solid rgba(127, 127, 127, .25);padding:.2em .5em;"><span style="float:right;font-size:smaller;">\'\'[[MediaWiki:Recentchangestext|zobacz tę stronę]]\'\'</span>
+Ta strona przedstawia historię [[w:pl:Pomoc:Ostatnie zmiany|ostatnich zmian]] na tej wiki.
+{| style="width:100%;"
+! style="width:1px;text-align:right;white-space:nowrap;vertical-align:text-top;" | Strony :
+| [[Special:NewPages|Nowe]] <b>&middot;</b> [[Special:WantedPages|Potrzebne]] <b>&middot;</b> [[Special:LonelyPages|Porzucone]] <b>&middot;</b> [[Special:UncategorizedPages|Nieskategoryzowane]] <b>&middot;</b> [[Special:DeadendPages|Bez linków]] <b>&middot;</b> <small>[[Special:AllPages|wszystkie...]]</small>
+|-
+! style="text-align:right;white-space:nowrap;vertical-align:text-top;" | Szablony :
+| [[Special:WantedTemplates|Potrzebne]] <b>&middot;</b> [[Special:UnusedTemplates|Nieużywane]] <b>&middot;</b> [[Special:UncategorizedTemplates|Nieskategoryzowane]] <b>&middot;</b> <small>[{{fullurl:Special:AllPages|namespace=10}} wszystkie...]</small>
+|-
+! style="text-align:right;white-space:nowrap;vertical-align:text-top;" | Kategorie :
+| [[Special:CategoryTree|Drzewo kategorii]] <b>&middot;</b> [[Special:WantedCategories|Potrzebne]] <b>&middot;</b> [[Special:UnusedCategories|Nieużywane]] <b>&middot;</b> [[Special:UncategorizedCategories|Nieskategoryzowane]] <b>&middot;</b> <small>[[Special:Categories|wszystkie...]]</small>
+|-
+! style="text-align:right;white-space:nowrap;vertical-align:text-top;" | Pliki :
+| [[Special:NewFiles|Nowe]] <b>&middot;</b> [[Special:WantedFiles|Potrzebne]] <b>&middot;</b> [[Special:UnusedFiles|Nieużywane]] <b>&middot;</b> [[Special:UncategorizedFiles|Nieskategoryzowane]] <b>&middot;</b> <small>[[Special:ListFiles|wszystkie...]]</small>
+|-
+! style="text-align:right;white-space:nowrap;vertical-align:text-top;" | Rejestry :
+| [[Special:Log/block|Blokady]] <b>&middot;</b> [[Special:Log/move|Przeniesione]] <b>&middot;</b> [[Special:Log/upload|Przesłane]] <b>&middot;</b> [[Special:Log/delete|Usunięte]] <b>&middot;</b> [[Special:Log/protect|Zabezpieczone]] <b>&middot;</b> <small>[[Special:Log|więcej...]]</small>
+|-
+! style="text-align:right;white-space:nowrap;vertical-align:text-top;" | Strony specjalne :
+| [[Special:Insights|Podpowiedzi]] <b>&middot;</b> [[Special:ListRedirects|Przekierowania]] <small>([[Special:DoubleRedirects|podwójne]], [[Special:BrokenRedirects|zerwane]])</small> <b>&middot;</b> [[Special:AllMessages|Komunikaty]] <b>&middot;</b> [[Special:Statistics|Statystyki]] <b>&middot;</b> <small>[[Special:SpecialPages|wszystkie...]]</small>
+|-
+! style="text-align:right;white-space:nowrap;vertical-align:text-top;" | Użytkownicy :
+| [[Special:ListUsers/sysop|{{int:group-sysop}}]] <b>&middot;</b> [[Special:ListUsers/bureaucrat|{{int:group-bureaucrat}}]] <b>&middot;</b> [[Special:ListUsers/helper|{{int:group-helper}}]] <b>&middot;</b> [[Special:ListUsers/vstf|{{int:group-vstf}}]] <b>&middot;</b> [[Special:ListUsers/staff|{{int:group-staff}}]] <b>&middot;</b> <small>[[Special:ListUsers|wszyscy...]]</small>
+|-
+! style="text-align:right;white-space:nowrap;vertical-align:text-top;" | Pomoc :
+| [[w:c:spolecznosc:Pomoc:Podstawy|Podstawy]] <b>&middot;</b> [[w:c:spolecznosc:Pomoc:Edycja|Edycja]] <b>&middot;</b> [[w:c:spolecznosc:Pomoc:Administracja|Administracja]] <b>&middot;</b> [[w:c:spolecznosc:Pomoc:Zaawansowane narzędzia|Zaawansowane narzędzia]] <b>&middot;</b> <small>[[w:c:spolecznosc:Pomoc:Zawartość|więcej...]]</small>
+|}
+<div style="text-align:center;margin:.2em 2px 0px;padding-top:.2em;border-top:1px dotted rgba(127, 127, 127, .25);"><small>Szukasz pomocy? Odwiedź [[w:c:spolecznosc|Centrum Społeczności]]!</small></div></div>',
 	'recentchanges-feed-description' => 'Obserwuj najświeższe zmiany w tej wiki.',
 	'recentchanges-label-newpage' => 'W tej edycji utworzono nową stronę',
 	'recentchanges-label-minor' => 'To jest drobna zmiana',
@@ -34001,7 +34540,7 @@ Proszę sprawdzić rejestr operacji.',
 	'rc_categories' => 'Ogranicz do kategorii (oddzielaj za pomocą „|”)',
 	'rc_categories_any' => 'Wszystkie',
 	'rc-change-size-new' => '$1 {{PLURAL:$1|bajt|bajty|bajtów}} po zmianie',
-	'rc-enhanced-expand' => 'Pokaż szczegóły (wymagana JavaScript)',
+	'rc-enhanced-expand' => 'Pokaż szczegóły (wymagany JavaScript)',
 	'rc-enhanced-hide' => 'Ukryj szczegóły',
 	'recentchangeslinked' => 'Zmiany w dolinkowanych',
 	'recentchangeslinked-feed' => 'Zmiany w dolinkowanych',
@@ -34018,7 +34557,7 @@ Strony z [[Special:Watchlist|listy obserwowanych]] są '''wytłuszczone'''.",
 	'randomredirect' => 'Losowe przekierowanie',
 	'randomredirect-nopages' => 'Brak jakichkolwiek przekierowań w przestrzeni nazw „$1”.',
 	'removewatch' => 'Usuń z listy obserwowanych',
-	'removedwatchtext' => 'Strona „[[:$1]]” została usunięta z Twojej [[Special:Watchlist|listy obserwowanych]].',
+	'removedwatchtext' => 'Strona „[[:$1]]” została usunięta z twojej [[Special:Watchlist|listy obserwowanych]].',
 	'reverted' => 'Przywrócono poprzednią wersję',
 	'rollback' => 'Cofnij edycję',
 	'rollback_short' => 'Cofnij',
@@ -34028,8 +34567,8 @@ Strony z [[Special:Watchlist|listy obserwowanych]] są '''wytłuszczone'''.",
 	'revertpage-nouser' => 'Wycofano edycje (nazwa użytkownika usunięta). Autor przywróconej wersji to [[User:$1|$1]].',
 	'rollback-success' => 'Wycofano edycje użytkownika $1.
 Przywrócono ostatnią wersję autorstwa $2.',
-	'restriction-type' => 'Ograniczenia',
-	'restriction-level' => 'Poziom',
+	'restriction-type' => 'Ograniczenia:',
+	'restriction-level' => 'Stopień:',
 	'restriction-edit' => 'edytowanie',
 	'restriction-move' => 'przenoszenie',
 	'restriction-create' => 'tworzenie',
@@ -34051,12 +34590,70 @@ Przywrócono ostatnią wersję autorstwa $2.',
 	'revdelete-uname-unhid' => 'wycofano ukrycie nazwy użytkownika',
 	'refreshpage' => 'Zawartość będzie widoczna po odświeżeniu strony',
 	'rate_it' => 'Oceń ten artykuł:',
-	'rcshowhidelogs' => '$1 logi',
+	'rcshowhidelogs' => '$1 rejestry',
+	'revision-info-current' => '-',
+	'revision-nav' => '($1) $2{{int:pipe-separator}}$3 ($4){{int:pipe-separator}}$5 ($6)',
+	'right-editmyoptions' => 'Możesz edytować swoje ustawienia',
+	'right-loggedin' => 'Oznacza użytkownika, jako zalogowanego na konto',
+	'right-mcachepurge' => 'Kontroluj zachowanie memcached przez parametry żądania',
+	'right-emailconfirmed' => 'Użytkownik został potwierdzony e-mailem',
+	'right-runjob' => 'Uruchomić zadanie z kolejki zadań przez interfejs API',
+	'recentchanges-url' => 'Special:RecentChanges',
+	'rc-change-size' => '$1',
+	'rc-old-title' => 'pierwotnie utworzono jako „$1”',
+	'randompage-url' => 'Special:Random',
+	'rfcurl' => '//tools.ietf.org/html/rfc$1',
+	'revdelete-logentry' => 'zmieniono widoczność wersji „[[$1]]”',
+	'reconfirmemail_subject' => 'Witamy w FANDOMIE!',
+	'reconfirmemail_body' => 'Hej, $2.
+
+Dziękujemy za zaktualizowanie adresu e-mail połączonego z Twoim kontem na FANDOMIE. Kliknij poniższy link, aby potwierdzić adres:
+
+$3
+
+– Wsparcie Społeczności FANDOMU
+
+___________________________________________
+* Aby uzyskać dodatkową pomoc od społeczności Wikii, odwiedź http://spolecznosc.wikia.com
+* W celu zmiany ustawień powiadomień e-mail, odwiedź http://spolecznosc.wikia.com/wiki/Special:Preferences',
+	'rcshowhideenhanced' => '$1 zaawansowane ostatnie zmiany',
+	'requestcreatewiki' => 'Prześlij prośbę',
+	'right_now' => 'Teraz<br />ludzie są...',
+	'return_to_article' => 'Powrót do strony',
+	'return_to_talk' => 'Powrót do dyskusji',
+	'return_to_user' => 'Powrót do strony użytkownika',
+	'return_to_user_talk' => 'Powrót do dyskusji',
+	'return_to_project' => 'Powrót do strony projektu',
+	'return_to_project_talk' => 'Powrót do dyskusji',
+	'return_to_image' => 'Powrót do strony obrazu',
+	'return_to_image_talk' => 'Powrót do dyskusji',
+	'return_to_mediawiki' => 'Powrót do strony wiadomości',
+	'return_to_mediawiki_talk' => 'Powrót do dyskusji',
+	'return_to_template' => 'Powrót do strony szablonu',
+	'return_to_template_talk' => 'Powrót do dyskusji',
+	'return_to_help' => 'Powrót do strony pomocy',
+	'return_to_help_talk' => 'Powrót do dyskusji',
+	'return_to_category' => 'Powrót do strony kategorii',
+	'return_to_category_talk' => 'Powrót do dyskusji',
+	'return_to_forum' => 'Powrót do strony forum',
+	'return_to_forum_talk' => 'Powrót do dyskusji',
+	'return_to_special' => 'Powrót do strony specjalnej',
+	'review_reason_1' => 'Powód sprawdzenia 1',
+	'review_reason_2' => 'Powód sprawdzenia 2',
+	'review_reason_3' => 'Powód sprawdzenia 3',
+	'review_reason_4' => 'Powód sprawdzenia 4',
+	'review_reason_5' => 'Powód sprawdzenia 5',
+	'related_wiki' => 'Dodaj tutaj wypunktowane linki, aby wyświetlać wiki powiązane z tą w [[Special:Widgets|widgecie]] powiązane wiki.
+
+* [{{FULLURL:MediaWiki:Related wiki}} Nie wybrano jeszcze żadnych powiązanych wiki.]',
+	'registerintro-title' => 'Tworząc konto na portalu FANDOM stajesz się częścią społeczności!',
+	'registerintro-text' => 'Otrzymujesz punkty za edytowanie, możesz stworzyć swój własny profil użytkownika, obserwować swoje ulubione strony i uzyskać dostęp do wszelkiego rodzaju ciekawych narzędzi.',
+	'right-hideblockername' => 'Nie pokazywać nazwy użytkownika w komunikatach o blokadzie',
 );
 
 $messages['pms'] = array(
 	'returnto' => 'Torna andré a $1.',
-	'redirectedfrom' => '(Ridiression da $1)',
+	'redirectedfrom' => 'Ridiression da $1',
 	'redirectpagesub' => 'Pàgina ëd ridiression',
 	'retrievedfrom' => 'Pijàit da  "$1"',
 	'restorelink' => '{{PLURAL:$1|na modìfica scancelà|$1 modìfiche scancelà}}',
@@ -34292,7 +34889,7 @@ Le pàgine dzora a [[Special:Watchlist|la lista ëd lòn ch'as ten sot-euj]] a r
 	'rollback_short' => 'Ripristiné',
 	'rollbacklink' => "ripristiné j'archivi",
 	'rollbackfailed' => "A l'é pa podusse ripristiné",
-	'revertpage' => "Gavà via le modìfiche ëd [[Special:Contributions/$2|$2]] ([[User talk:$2|Talk]]); ël contnù a l'é stàit tirà andarè a l'ùltima version dl'utent [[User:$1|$1]]",
+	'revertpage' => "Gavà via le modìfiche ëd [[Special:Contributions/$2|$2]] ([[User talk:$2|Talk]]); ël contnù a l'é stàit tirà andarè a l'ùltima version dl'utent $1",
 	'revertpage-nouser' => "Révoca dle modìfiche da part ëd (stranòm gavà) a l'ùltima version ëd [[User:$1|$1]]",
 	'rollback-success' => "Modìfiche anulà da $1; tirà andré a l'ùltima version da $2.",
 	'restriction-type' => 'Përmess',
@@ -34322,7 +34919,7 @@ Le pàgine dzora a [[Special:Watchlist|la lista ëd lòn ch'as ten sot-euj]] a r
 
 $messages['pnb'] = array(
 	'returnto' => 'واپس $1 چلو',
-	'redirectedfrom' => '(لیایا گیا $1)',
+	'redirectedfrom' => 'لیایا گیا $1',
 	'redirectpagesub' => 'صفحہ ریڈائریکٹ کرو',
 	'retrievedfrom' => 'توں لیا "$1"',
 	'restorelink' => '{{PLURAL:$1|اک مٹائی گئی تبدیلی|$1 مٹائیاں گئیاں تبدیلیاں}}',
@@ -34559,7 +35156,7 @@ $1",
 	'rollback_short' => 'واپس کرو',
 	'rollbacklink' => 'واپس',
 	'rollbackfailed' => 'واپس کرن ناکام',
-	'revertpage' => 'پلٹائیاں گیاں تبدیلیاں [[Special:Contributions/$2|$2]] ([[User talk:$2|گل بات]]) [[User:$1|$1]] دی آخری ریوین تک',
+	'revertpage' => 'پلٹائیاں گیاں تبدیلیاں [[Special:Contributions/$2|$2]] ([[User talk:$2|گل بات]]) $1 دی آخری ریوین تک',
 	'revertpage-nouser' => 'بدلیاں گیاں تبدیلیاں (ورتن ناں ہٹادتا گیا) واپس آخری ریوین تک [[User:$1|$1]]',
 	'rollback-success' => '$1 دیاں بدلیاں گیاں تبدیلیاں؛
 $2 نے آخری ریوین تک واپس کیتا۔',
@@ -34590,7 +35187,7 @@ $2 نے آخری ریوین تک واپس کیتا۔',
 
 $messages['pnt'] = array(
 	'returnto' => 'Επιστροφήν σο $1.',
-	'redirectedfrom' => '(Έρτεν ασό $1)',
+	'redirectedfrom' => 'Έρτεν ασό $1',
 	'redirectpagesub' => 'Σελίδαν διπλού σύνδεσμονος',
 	'retrievedfrom' => 'Ασο "$1"',
 	'red-link-title' => "$1 ('κ εγράφτεν ακόμαν)",
@@ -34680,7 +35277,7 @@ $messages['pnt'] = array(
 
 $messages['prg'] = array(
 	'returnto' => 'Etwartinnais si en pāusan $1.',
-	'redirectedfrom' => '(Prawestan iz $1)',
+	'redirectedfrom' => 'Prawestan iz $1',
 	'redirectpagesub' => 'Prawesnas pāusan',
 	'retrievedfrom' => 'Aps: "$1"',
 	'restorelink' => '$1 {{PLURAL:$1|āupausintan wersiōnin|āupausintans wersiōnins}}',
@@ -34849,7 +35446,7 @@ Pāusai iz [[Special:Watchlist|nadirītan listin]] ast pastarīntan.',
 	'rollback_short' => 'Etwārtai wartinnais',
 	'rollbacklink' => 'etwārtai wartinnais',
 	'rollbackfailed' => 'Kitawīdisnas etwārtai wartīnsna ni izpalla',
-	'revertpage' => 'Etwārtai wartinnā di redigīsenins stesse tērpautajan [[Special:Contributions/$2|$2]] ([[User talk:$2|diskusiōni]]). Etwārtai wartīntas wersiōnis autōrs ast [[User:$1|$1]]',
+	'revertpage' => 'Etwārtai wartinnā di redigīsenins stesse tērpautajan [[Special:Contributions/$2|$2]] ([[User talk:$2|diskusiōni]]). Etwārtai wartīntas wersiōnis autōrs ast $1',
 	'rollback-success' => 'Naikinnā di redigīsenins stesse(s) $1.
 Etwārtai wartinnā di panzdauman wersiōnin, kawīdse autōrs ast $2.',
 	'restriction-type' => 'Preiwērpsenis:',
@@ -34873,7 +35470,7 @@ Etwārtai wartinnā di panzdauman wersiōnin, kawīdse autōrs ast $2.',
 
 $messages['ps'] = array(
 	'returnto' => 'بېرته $1 ته وګرځه.',
-	'redirectedfrom' => '(له $1 نه مخ ګرځېدلی)',
+	'redirectedfrom' => 'له $1 نه مخ ګرځېدلی',
 	'redirectpagesub' => 'د مخ ګرځونې مخ',
 	'retrievedfrom' => '"$1" نه اخيستل شوی',
 	'restorelink' => '{{PLURAL:$1|يو ړنګ شوی سمون|$1 ړنګ شوي سمونونه}}',
@@ -35020,282 +35617,6 @@ $messages['ps'] = array(
 );
 
 $messages['pt'] = array(
-	'returnto' => 'Voltar para $1.',
-	'redirectedfrom' => '(Redireccionado de $1)',
-	'redirectpagesub' => 'Página de redireccionamento',
-	'retrievedfrom' => 'Obtida de "$1"',
-	'restorelink' => '{{PLURAL:$1|uma edição eliminada|$1 edições eliminadas}}',
-	'red-link-title' => '$1 (página não existe)',
-	'readonly' => 'Base de dados bloqueada (limitada a leituras)',
-	'readonlytext' => 'A base de dados está bloqueada para impedir a inserção e modificação de dados, provavelmente para uma manutenção de rotina, após a qual a situação será normalizada.
-
-O administrador que a bloqueou deu a seguinte explicação: $1',
-	'readonly_lag' => 'A base de dados foi automaticamente bloqueada enquanto os servidores secundários se sincronizam com o primário',
-	'remembermypassword' => 'Recordar os meus dados neste computador (no máximo, por $1 {{PLURAL:$1|dia|dias}})',
-	'resetpass' => 'Alterar palavra-chave',
-	'resetpass_announce' => 'Autenticou-se usando uma palavra-chave temporária enviada por correio electrónico.
-Para prosseguir, será necessário definir uma nova palavra-chave.',
-	'resetpass_text' => '<!-- Adicionar texto aqui -->',
-	'resetpass_header' => 'Alterar palavra-chave da conta',
-	'retypenew' => 'Repita a palavra-chave nova:',
-	'resetpass_submit' => 'Definir palavra-chave e entrar',
-	'resetpass_success' => 'Sua palavra-chave foi alterada com sucesso! Autenticando-se...',
-	'resetpass_forbidden' => 'Não é possível alterar palavras-chave',
-	'resetpass-no-info' => 'Precisa estar autenticado para aceder directamente a esta página.',
-	'resetpass-submit-loggedin' => 'Alterar palavra-chave',
-	'resetpass-submit-cancel' => 'Cancelar',
-	'resetpass-wrong-oldpass' => 'Palavra-chave temporária ou actual inválida.
-Pode ter já alterado com sucesso a sua palavra-chave ou solicitado uma nova palavra-chave temporária.',
-	'resetpass-temp-password' => 'Palavra-chave temporária:',
-	'readonlywarning' => "'''Aviso: A base de dados foi bloqueada para manutenção, pelo que não poderá gravar a sua edição neste momento.'''
-Pode, no entanto, copiar o seu texto para um editor externo e guardá-lo para posterior submissão.
-
-O administrador que bloqueou a base de dados forneceu a seguinte explicação: $1",
-	'recreate-moveddeleted-warn' => "'''Aviso: Está a recriar uma página anteriormente eliminada.'''
-
-Verifique se é apropriado continuar a editar esta página.
-Para sua conveniência, é apresentado de seguida o registo de eliminação e de movimento da página:",
-	'revisionasof' => 'Revisão das $1',
-	'revision-info' => 'Revisão das $1 por $2',
-	'rev-deleted-comment' => '(resumo da edição suprimido)',
-	'rev-deleted-user' => '(nome de utilizador removido)',
-	'rev-deleted-event' => '(entrada removida)',
-	'rev-deleted-user-contribs' => '[nome de utilizador ou IP removido - edição ocultada das contribuições]',
-	'rev-deleted-text-permission' => "Esta revisão de página foi '''eliminada'''.
-Podem existir mais detalhes no [{{fullurl:{{#Special:Log}}/delete|page={{FULLPAGENAMEE}}}} registo de eliminações].",
-	'rev-deleted-text-unhide' => "Esta revisão de página foi '''eliminada'''.
-Podem existir mais detalhes no [{{fullurl:{{#Special:Log}}/delete|page={{FULLPAGENAMEE}}}} registo de eliminações].
-Pode mesmo assim [$1 ver esta edição] se deseja prosseguir.",
-	'rev-suppressed-text-unhide' => "Esta revisão de página foi '''suprimida'''.
-Podem existir mais detalhes no [{{fullurl:{{#Special:Log}}/suppress|page={{FULLPAGENAMEE}}}} registo de supressões].
-Pode mesmo assim [$1 ver esta revisão] se deseja prosseguir.",
-	'rev-deleted-text-view' => "Esta revisão de página foi '''eliminada'''.
-Você pode vê-la; podem existir mais detalhes no [{{fullurl:{{#Special:Log}}/delete|page={{FULLPAGENAMEE}}}} registo de eliminações].",
-	'rev-suppressed-text-view' => "Esta revisão de página foi '''suprimida'''.
-Você pode vê-la; podem existir mais detalhes no [{{fullurl:{{#Special:Log}}/suppress|page={{FULLPAGENAMEE}}}} registo de supressões].",
-	'rev-deleted-no-diff' => "Não pode ver esta diferença entre revisões porque uma das revisões foi '''eliminada'''.
-Podem existir mais detalhes no [{{fullurl:{{#Special:Log}}/delete|page={{FULLPAGENAMEE}}}} registo de eliminações].",
-	'rev-suppressed-no-diff' => "Não pode ver esta diferença entre versões porque uma das revisões foi '''eliminada'''.",
-	'rev-deleted-unhide-diff' => "Uma das revisões desta diferença entre revisões foi '''eliminada'''.
-Podem existir mais detalhes no [{{fullurl:{{#Special:Log}}/delete|page={{FULLPAGENAMEE}}}} registo de eliminações].
-Pode mesmo assim [$1 ver estas diferenças] se deseja prosseguir.",
-	'rev-suppressed-unhide-diff' => "Uma das revisões desta diferença entre revisões foi '''suprimida'''.
-Podem existir mais detalhes no [{{fullurl:{{#Special:Log}}/suppress|page={{FULLPAGENAMEE}}}} registo de supressões].
-Pode mesmo assim [$1 ver estas diferenças] se deseja prosseguir.",
-	'rev-deleted-diff-view' => "Uma das revisões desta diferença entre revisões foi '''eliminada'''.
-Você pode ver a diferença entre revisões; podem existir mais detalhes no [{{fullurl:{{#Special:Log}}/delete|page={{FULLPAGENAMEE}}}} registo de eliminações].",
-	'rev-suppressed-diff-view' => "Uma das revisões desta diferença entre revisões foi '''suprimida'''.
-Você pode ver a diferença entre revisões; podem existir mais detalhes no [{{fullurl:{{#Special:Log}}/suppress|page={{FULLPAGENAMEE}}}} registo de supressões].",
-	'rev-delundel' => 'mostrar/esconder',
-	'rev-showdeleted' => 'mostrar',
-	'revisiondelete' => 'Eliminar/restaurar edições',
-	'revdelete-nooldid-title' => 'Edição de destino inválida',
-	'revdelete-nooldid-text' => 'Ocorreu uma das seguintes: não especificou a revisão (ou revisões) de destino para realizar esta função, a revisão que especificou não existe, ou está tentando ocultar a revisão actual.',
-	'revdelete-nologtype-title' => 'Tipo de registo não especificado',
-	'revdelete-nologtype-text' => 'Não especificou um tipo de registo sobre o qual será executada esta operação.',
-	'revdelete-nologid-title' => 'Entrada de registo inválida',
-	'revdelete-nologid-text' => 'Ou não especificou um evento do registo sobre o qual executar esta função, ou a entrada que especificou não existe.',
-	'revdelete-no-file' => 'O ficheiro especificado não existe.',
-	'revdelete-show-file-confirm' => 'Tem a certeza de que quer ver uma revisão eliminada do ficheiro "<nowiki>$1</nowiki>" de $2 às $3?',
-	'revdelete-show-file-submit' => 'Sim',
-	'revdelete-selected' => "'''{{PLURAL:$2|Edição seleccionada|Edições seleccionadas}} de [[:$1]]:'''",
-	'revdelete-text' => "'''Edições e eventos eliminados continuarão a aparecer no histórico e registos da página, mas partes do seu conteúdo estarão inacessíveis ao público.'''
-Outros administradores da {{SITENAME}} continuarão a poder aceder ao conteúdo escondido e podem restaurá-lo novamente através desta mesma interface, a menos que restrições adicionais sejam definidas.",
-	'revdelete-confirm' => 'Por favor confirme que pretende executar esta operação, que compreende as suas consequências e que o faz em concordância com as [[{{MediaWiki:Policy-url}}|políticas e recomendações]].',
-	'revdelete-suppress-text' => "A supressão '''só''' deverá ser usada nos seguintes casos:
-* Informação potencialmente caluniosa, difamatória ou injuriosa
-* Informação pessoal imprópria
-*: ''endereços de domicílio e números de telefone, números da segurança social, etc''",
-	'revdelete-legend' => 'Definir restrições de visibilidade',
-	'revdelete-hide-text' => 'Ocultar texto da edição',
-	'revdelete-hide-image' => 'Ocultar conteúdo do ficheiro',
-	'revdelete-hide-name' => 'Ocultar operação e destino',
-	'revdelete-hide-comment' => 'Ocultar resumo da edição',
-	'revdelete-hide-user' => 'Ocultar nome de utilizador/IP',
-	'revdelete-hide-restricted' => 'Ocultar dados dos administradores e de todos os outros',
-	'revdelete-radio-same' => '(manter)',
-	'revdelete-radio-set' => 'Sim',
-	'revdelete-radio-unset' => 'Não',
-	'revdelete-suppress' => 'Ocultar dados dos administradores e de todos os outros',
-	'revdelete-unsuppress' => 'Remover restrições das revisões restauradas',
-	'revdelete-log' => 'Motivo:',
-	'revdelete-submit' => 'Aplicar {{PLURAL:$1|à revisão seleccionada|às revisões seleccionadas}}',
-	'revdelete-success' => "'''A visibilidade da revisão foi actualizada.'''",
-	'revdelete-failure' => "'''A visibilidade da revisão não foi actualizada:'''
-$1",
-	'revdel-restore' => 'Alterar visibilidade',
-	'revdel-restore-deleted' => 'revisões eliminadas',
-	'revdel-restore-visible' => 'revisões visíveis',
-	'revdelete-hide-current' => 'Erro ao ocultar o item datado de $2, $1: esta é a revisão actual.
-Não pode ser ocultada.',
-	'revdelete-show-no-access' => 'Erro ao mostrar o item datado de $2, $1: este item foi marcado como "restrito".
-Não tem acesso.',
-	'revdelete-modify-no-access' => 'Erro ao modificar o item datado de $2, $1: este item foi marcado como "restrito".
-Não tem acesso.',
-	'revdelete-modify-missing' => 'Erro ao modificar o item ID $1: não existe na base de dados!',
-	'revdelete-no-change' => "'''Aviso:''' a revisão com data de $2, $1 já tem as configurações de visibilidade solicitadas.",
-	'revdelete-concurrent-change' => 'Erro ao modificar o item com data/hora $2, $1: o seu estado parece ter sido alterado por outra pessoa enquanto você tentava modificá-lo.
-Verifique os registos, por favor.',
-	'revdelete-only-restricted' => 'Erro ao ocultar o item de $2 às $1: não pode impedir que os itens sejam vistos pelos administradores sem seleccionar também uma das outras opções de visibilidade.',
-	'revdelete-reason-dropdown' => '*Razões comuns para eliminação
-** Violação de direitos de autor
-** Informações pessoais inapropriadas
-** Informações potencialmente difamatórias',
-	'revdelete-otherreason' => 'Outro/motivo adicional:',
-	'revdelete-reasonotherlist' => 'Outro motivo',
-	'revdelete-edit-reasonlist' => 'Editar motivos de eliminação',
-	'revdelete-offender' => 'Autor da revisão:',
-	'revertmerge' => 'Desfazer fusão',
-	'resetprefs' => 'Eliminar as alterações que não foram gravadas',
-	'restoreprefs' => 'Repor todas as configurações padrão',
-	'rows' => 'Linhas:',
-	'resultsperpage' => 'Resultados por página:',
-	'recentchangesdays' => 'Dias a apresentar nas mudanças recentes:',
-	'recentchangesdays-max' => '(máximo: $1 {{PLURAL:$1|dia|dias}})',
-	'recentchangescount' => 'Número de edições a apresentar por omissão:',
-	'right-read' => 'Ler páginas',
-	'right-edit' => 'Editar páginas',
-	'right-createpage' => 'Criar páginas (que não sejam páginas de discussão)',
-	'right-createtalk' => 'Criar páginas de discussão',
-	'right-createaccount' => 'Criar novas contas de utilizador',
-	'right-minoredit' => 'Marcar edições como menores',
-	'right-move' => 'Mover páginas',
-	'right-move-subpages' => 'Mover páginas com as suas subpáginas',
-	'right-move-rootuserpages' => 'Mover páginas raiz de utilizadores',
-	'right-movefile' => 'Mover ficheiros',
-	'right-suppressredirect' => 'Não criar um redireccionamento do nome antigo quando uma página é movida',
-	'right-upload' => 'Carregar ficheiros',
-	'right-reupload' => 'Sobrescrever um ficheiro existente',
-	'right-reupload-own' => 'Sobrescrever um ficheiro existente carregado pelo mesmo utilizador',
-	'right-reupload-shared' => 'Sobrescrever localmente ficheiros no repositório partilhado de imagens',
-	'right-upload_by_url' => 'Carregar um ficheiro de um endereço URL',
-	'right-purge' => "Purgar a ''cache'' de uma página no servidor sem confirmação",
-	'right-autoconfirmed' => 'Editar páginas semi-protegidas',
-	'right-bot' => 'Ser tratado como um processo automatizado',
-	'right-nominornewtalk' => 'Não despoletar o aviso de mensagens novas ao fazer edições menores a páginas de discussão',
-	'right-apihighlimits' => "Usar limites superiores nas consultas ''(queries)'' via API",
-	'right-writeapi' => 'Usar a API de escrita',
-	'right-delete' => 'Eliminar páginas',
-	'right-bigdelete' => 'Eliminar páginas com histórico grande',
-	'right-deleterevision' => 'Eliminar e restaurar edições específicas de páginas',
-	'right-deletedhistory' => 'Ver entradas de histórico eliminadas, sem o texto associado',
-	'right-deletedtext' => 'Ver texto eliminado e mudanças entre revisões eliminadas',
-	'right-browsearchive' => 'Pesquisar páginas eliminadas',
-	'right-undelete' => 'Restaurar uma página',
-	'right-suppressrevision' => 'Rever e restaurar revisões ocultadas dos administradores',
-	'right-suppressionlog' => 'Ver registos privados',
-	'right-block' => 'Impedir outros utilizadores de editarem',
-	'right-blockemail' => 'Impedir um utilizador de enviar correio electrónico',
-	'right-hideuser' => 'Bloquear um nome de utilizador, escondendo-o do público',
-	'right-ipblock-exempt' => 'Contornar bloqueios de IP, bloqueios automáticos e bloqueios de gamas de IPs',
-	'right-proxyunbannable' => 'Contornar bloqueios automáticos de proxies',
-	'right-unblockself' => 'Desbloquearem-se a si próprios',
-	'right-protect' => 'Mudar níveis de protecção e editar páginas protegidas',
-	'right-editprotected' => 'Editar páginas protegidas (sem protecção em cascata)',
-	'right-editinterface' => 'Editar a interface de utilizador',
-	'right-editusercssjs' => 'Editar os ficheiros CSS e JS de outros utilizadores',
-	'right-editusercss' => 'Editar os ficheiros CSS de outros utilizadores',
-	'right-edituserjs' => 'Editar os ficheiros JS de outros utilizadores',
-	'right-rollback' => 'Reverter rapidamente as edições do último utilizador que editou uma página em particular',
-	'right-markbotedits' => 'Marcar edições revertidas como edições de bot',
-	'right-noratelimit' => 'Não ser afectado pelos limites de velocidade de operação',
-	'right-import' => 'Importar páginas de outras wikis',
-	'right-importupload' => 'Importar páginas de um ficheiro xml',
-	'right-patrol' => 'Marcar edições de outros utilizadores como patrulhadas',
-	'right-autopatrol' => 'Ter edições automaticamente marcadas como patrulhadas',
-	'right-patrolmarks' => 'Usar funcionalidades de patrulhagem das mudanças recentes',
-	'right-unwatchedpages' => 'Ver uma lista de páginas não vigiadas',
-	'right-mergehistory' => 'Fundir o histórico de edições de páginas',
-	'right-userrights' => 'Editar todos os privilégios de utilizador',
-	'right-userrights-interwiki' => 'Editar privilégios de utilizadores noutras wikis',
-	'right-siteadmin' => 'Bloquear e desbloquear a base de dados',
-	'right-override-export-depth' => 'Exportar páginas incluindo páginas ligadas até uma profundidade de 5',
-	'right-sendemail' => 'Enviar correio electrónico a outros utilizadores',
-	'right-passwordreset' => 'Ver emails de reposição de palavras-chave',
-	'rightslog' => 'Registo de privilégios de utilizador',
-	'rightslogtext' => 'Este é um registo de mudanças nos privilégios dos utilizadores.',
-	'rightslogentry' => 'alterou grupos de $1 (de $2 para $3)',
-	'rightslogentry-autopromote' => 'foi automaticamente promovido de $2 para $3',
-	'rightsnone' => '(nenhum)',
-	'recentchanges' => 'Mudanças recentes',
-	'recentchanges-legend' => 'Opções das mudanças recentes',
-	'recentchangestext' => 'Acompanhe nesta página as mudanças mais recentes da wiki.',
-	'recentchanges-feed-description' => "Acompanhe neste ''feed'' as mudanças mais recentes da wiki.",
-	'recentchanges-label-newpage' => 'Esta edição criou uma página nova',
-	'recentchanges-label-minor' => 'Esta é uma edição menor',
-	'recentchanges-label-bot' => 'Esta edição foi feita por um robô',
-	'recentchanges-label-unpatrolled' => 'Esta edição ainda não foi patrulhada',
-	'rcnote' => "A seguir {{PLURAL:$1|está listada '''uma''' alteração ocorrida|estão listadas '''$1''' alterações ocorridas}} {{PLURAL:$2|no último dia|nos últimos '''$2''' dias}}, a partir das $5 de $4.",
-	'rcnotefrom' => 'Abaixo estão as mudanças desde <b>$2</b> (mostradas até <b>$1</b>).',
-	'rclistfrom' => 'Mostrar as novas mudanças a partir das $1',
-	'rcshowhideminor' => '$1 edições menores',
-	'rcshowhidebots' => '$1 robôs',
-	'rcshowhideliu' => '$1 utilizadores registados',
-	'rcshowhideanons' => '$1 utilizadores anónimos',
-	'rcshowhidepatr' => '$1 edições patrulhadas',
-	'rcshowhidemine' => '$1 as minhas edições',
-	'rclinks' => 'Mostrar as últimas $1 mudanças nos últimos $2 dias<br />$3',
-	'rc_categories' => 'Limitar às categorias (separar com "|")',
-	'rc_categories_any' => 'Qualquer',
-	'rc-enhanced-expand' => 'Mostrar detalhes (requer JavaScript)',
-	'rc-enhanced-hide' => 'Esconder detalhes',
-	'recentchangeslinked' => 'Alterações relacionadas',
-	'recentchangeslinked-feed' => 'Alterações relacionadas',
-	'recentchangeslinked-toolbox' => 'Alterações relacionadas',
-	'recentchangeslinked-title' => 'Alterações relacionadas com "$1"',
-	'recentchangeslinked-noresult' => 'Não ocorreram alterações em páginas para as quais a página fornecida contém links, no intervalo de tempo escolhido.',
-	'recentchangeslinked-summary' => "Lista das mudanças recentes a todas as páginas para as quais a página fornecida contém links (ou de todas as que pertencem à categoria fornecida).
-As suas [[Special:Watchlist|páginas vigiadas]] aparecem a '''negrito'''.",
-	'recentchangeslinked-page' => 'Nome da página:',
-	'recentchangeslinked-to' => 'Inversamente, mostrar mudanças às páginas que contêm links para esta',
-	'reuploaddesc' => 'Cancelar o envio e voltar ao formulário de carregamento',
-	'randompage' => 'Página aleatória',
-	'randompage-nopages' => 'Não há páginas {{PLURAL:$2|no seguinte espaço nominal|nos seguintes espaços nominais}}: $1.',
-	'randomredirect' => 'Redireccionamento aleatório',
-	'randomredirect-nopages' => 'Não há redireccionamentos no espaço nominal "$1".',
-	'removewatch' => 'Remover das páginas vigiadas',
-	'removedwatchtext' => 'A página "[[:$1]]" foi removida da sua lista de [[Special:Watchlist|páginas vigiadas]].',
-	'reverted' => 'Revertido para versão anterior',
-	'rollback' => 'Reverter edições',
-	'rollback_short' => 'Voltar',
-	'rollbacklink' => 'voltar',
-	'rollbackfailed' => 'A reversão falhou',
-	'revertpage' => 'Foram revertidas as edições de [[Special:Contributions/$2|$2]] ([[User talk:$2|disc]]) para a última versão por [[User:$1|$1]]',
-	'revertpage-nouser' => 'Revertidas as edições de (nome de utilizador removido) para a última revisão por [[User:$1|$1]]',
-	'rollback-success' => 'Foram revertidas as edições de $1, com o conteúdo passando a estar como na última edição de $2.',
-	'restriction-type' => 'Permissão:',
-	'restriction-level' => 'Nível de restrição:',
-	'restriction-edit' => 'Editar',
-	'restriction-move' => 'Mover',
-	'restriction-create' => 'Criar',
-	'restriction-upload' => 'Carregar',
-	'restriction-level-sysop' => 'totalmente protegida',
-	'restriction-level-autoconfirmed' => 'semi-protegida',
-	'restriction-level-all' => 'qualquer nível',
-	'reblock-logentry' => 'modificou parâmetros de bloqueio de [[$1]] $3. O bloqueio expira em $2.',
-	'range_block_disabled' => 'A funcionalidade de administrador para o bloqueio de gamas de IPs está desactivada.',
-	'revertmove' => 'reverter',
-	'rcpatroldisabled' => 'Edições patrulhadas nas Mudanças Recentes desactivadas',
-	'rcpatroldisabledtext' => 'A funcionalidade de edições patrulhadas nas Mudanças Recentes está actualmente desactivada.',
-	'recreate' => 'Recriar',
-	'revdelete-content-hid' => 'conteúdo oculto',
-	'revdelete-summary-hid' => 'editar sumário oculto',
-	'revdelete-uname-hid' => 'utilizador oculto',
-	'revdelete-content-unhid' => 'conteúdo não oculto',
-	'revdelete-summary-unhid' => 'editar sumário não oculto',
-	'revdelete-uname-unhid' => 'utilizador não oculto',
-	'revdelete-restricted' => 'restrições a administradores aplicadas',
-	'revdelete-unrestricted' => 'restrições a administradores removidas',
-	'rate_it' => 'Dê nota:',
-	'review_reason_1' => 'Motivo revisão 1',
-	'review_reason_2' => 'Motivo revisão 2',
-	'review_reason_3' => 'Motivo revisão 3',
-	'review_reason_4' => 'Motivo revisão 4',
-	'review_reason_5' => 'Motivo revisão 5',
-);
-
-$messages['pt-br'] = array(
-	'realmap-deprecated-info' => 'Os mapas do mundo foram suspensos pela Wikia. Para obter mais informações, consulte: $1',
 	'returnto' => 'Retornar para $1.',
 	'redirectedfrom' => '(Redirecionado de $1)',
 	'redirectpagesub' => 'Página de redirecionamento',
@@ -35332,40 +35653,40 @@ Considere se é realmente adequado continuar editando esta página.
 Os registros de eliminação e de movimentação desta página são exibidos a seguir, para sua comodidade:",
 	'revisionasof' => 'Edição das $1',
 	'revision-info' => 'Edição feita às $1 por $2',
-	'rev-deleted-comment' => '(resumo da edição suprimido)',
+	'rev-deleted-comment' => '(resumo da edição removido)',
 	'rev-deleted-user' => '(nome de usuário removido)',
 	'rev-deleted-event' => '(entrada removida)',
 	'rev-deleted-user-contribs' => '[nome de usuário ou endereço de IP eliminado - edição ocultada das contribuições]',
-	'rev-deleted-text-permission' => "Esta revisão desta página foi '''eliminada'''.
-Podem existir mais detalhes no [{{fullurl:{{#Special:Log}}/delete|page={{FULLPAGENAMEE}}}} registro de eliminações].",
-	'rev-deleted-text-unhide' => "Esta revisão desta página foi '''removida'''.
-Poderá haver detalhes no [{{fullurl:{{#Special:Log}}/delete|page={{FULLPAGENAMEE}}}} registro de eliminação].
+	'rev-deleted-text-permission' => "A revisão desta página foi '''eliminada'''.
+Mais detalhes no [{{fullurl:{{#Special:Log}}/delete|page={{FULLPAGENAMEE}}}} registro de eliminações].",
+	'rev-deleted-text-unhide' => "A revisão desta página foi '''removida'''.
+Mais detalhes no [{{fullurl:{{#Special:Log}}/delete|page={{FULLPAGENAMEE}}}} registro de eliminação].
 Você ainda pode [$1 ver esta revisão] se deseja prosseguir.",
 	'rev-suppressed-text-unhide' => "Esta revisão desta página foi '''removida'''.
 Poderá haver detalhes no [{{fullurl:{{#Special:Log}}/suppress|page={{FULLPAGENAMEE}}}} registro de eliminação].
 Você ainda pode [$1 ver esta revisão] se deseja prosseguir.",
 	'rev-deleted-text-view' => "A revisão desta página foi '''eliminada'''.
-Você pode visualizá-la; pode haver detalhes no [{{fullurl:{{#Special:Log}}/delete|page={{FULLPAGENAMEE}}}} registro de eliminação].",
+Você pode visualizá-la; mais detalhes no [{{fullurl:{{#Special:Log}}/delete|page={{FULLPAGENAMEE}}}} registro de eliminação].",
 	'rev-suppressed-text-view' => "A revisão desta página foi '''eliminada'''.
 Você pode visualizá-la; podem existir mais detalhes no [{{fullurl:{{#Special:Log}}/suppress|page={{FULLPAGENAMEE}}}} registro de eliminação].",
 	'rev-deleted-no-diff' => "Você não pode ver estas diferenças porque uma das revisões foi '''eliminada'''.
-Poderá haver detalhes no [{{fullurl:{{#Special:Log}}/delete|page={{FULLPAGENAMEE}}}} registro de eliminação].",
-	'rev-suppressed-no-diff' => "Você não pode ver esta comparação porque uma das revisões foi '''eliminada'''.",
-	'rev-deleted-unhide-diff' => "Uma das revisões desta diferença entre revisões foi '''eliminada'''.
-Podem existir mais detalhes no [{{fullurl:{{#Special:Log}}/delete|page={{FULLPAGENAMEE}}}} registo de eliminações].
-Pode mesmo assim [$1 ver estas diferenças] se deseja prosseguir.",
-	'rev-suppressed-unhide-diff' => "Uma das revisões desta diferença entre revisões foi '''suprimida'''.
-Podem existir mais detalhes no [{{fullurl:{{#Special:Log}}/suppress|page={{FULLPAGENAMEE}}}} registo de supressões].
-Pode mesmo assim [$1 ver estas diferenças] se deseja prosseguir.",
-	'rev-deleted-diff-view' => "Uma das revisões desta diferença entre revisões foi '''eliminada'''.
-Você pode ver a diferença entre revisões; podem existir mais detalhes no [{{fullurl:{{#Special:Log}}/delete|page={{FULLPAGENAMEE}}}} registo de eliminações].",
-	'rev-suppressed-diff-view' => "Uma das revisões desta comparação foi '''suprimida''''.
-Você pode ver esta comparação; detalhes podem ser encontradas no [{{fullurl:{{#Special:Log}}/suppress|page={{FULLPAGENAMEE}}}} registro de supressão].",
+Mais detalhes no [{{fullurl:{{#Special:Log}}/delete|page={{FULLPAGENAMEE}}}} registro de eliminação].",
+	'rev-suppressed-no-diff' => "Você não pode ver esta alteração porque uma das revisões foi '''eliminada'''.",
+	'rev-deleted-unhide-diff' => "Uma das revisões desta alteração foi '''eliminada'''.
+Mais detalhes no [{{fullurl:{{#Special:Log}}/delete|page={{FULLPAGENAMEE}}}} registo de eliminações].
+Você pode [$1 ver estas diferenças] se deseja prosseguir.",
+	'rev-suppressed-unhide-diff' => "Uma das revisões desta alteração foi '''suprimida'''.
+Mais detalhes no [{{fullurl:{{#Special:Log}}/suppress|page={{FULLPAGENAMEE}}}} registo de supressões].
+Você pode [$1 ver estas diferenças] se deseja prosseguir.",
+	'rev-deleted-diff-view' => "Uma das revisões desta alteração foi '''eliminada'''.
+Você pode ver esta altearação; mais detalhes no [{{fullurl:{{#Special:Log}}/delete|page={{FULLPAGENAMEE}}}} registo de eliminações].",
+	'rev-suppressed-diff-view' => "Uma das revisões desta alteração foi '''suprimida''''.
+Você pode ver esta alteração; mais detalhes em [{{fullurl:{{#Special:Log}}/suppress|page={{FULLPAGENAMEE}}}} registro de supressão].",
 	'rev-delundel' => 'exibir/ocultar',
 	'rev-showdeleted' => 'exibir',
 	'revisiondelete' => 'Eliminar/restaurar edições',
 	'revdelete-nooldid-title' => 'Nenhuma revisão selecionada',
-	'revdelete-nooldid-text' => 'Você ou não especificou uma(s) edição(ões) de destino, a edição especificada não existe ou, ainda, você está tentando ocultar a edição atual.',
+	'revdelete-nooldid-text' => 'Você não especificou uma(s) edição(ões) de destino ou, a edição especificada não existe ou, ainda, você está tentando ocultar a edição atual.',
 	'revdelete-nologtype-title' => 'Tipo de registro não especificado',
 	'revdelete-nologtype-text' => 'Você não especificou um tipo de registro sobre o qual executar esta ação.',
 	'revdelete-nologid-title' => 'Entrada de registro inválida',
@@ -35378,11 +35699,12 @@ Você pode ver esta comparação; detalhes podem ser encontradas no [{{fullurl:{
 Outros administradores no {{SITENAME}} continuarão podendo acessar ao conteúdo escondido e restaurá-lo através desta mesma ''interface'', a menos que uma restrição adicional seja definida.",
 	'revdelete-confirm' => 'Por favor confirme que pretende executar esta acção, que compreende as suas consequências e que o faz em concordância com as [[{{MediaWiki:Policy-url}}|políticas e recomendações]].',
 	'revdelete-suppress-text' => "A supressão deverá ser usada '''apenas''' para os seguintes casos:
+*informação potencialmente difamatória
 * Informação pessoal inapropriada
 *: ''endereços de domicílio e números de telefone, números da segurança social, etc''",
 	'revdelete-legend' => 'Definir restrições de visualização',
 	'revdelete-hide-text' => 'Ocultar texto da edição',
-	'revdelete-hide-image' => 'Ocultar conteúdos do arquivo',
+	'revdelete-hide-image' => 'Ocultar conteúdo do arquivo',
 	'revdelete-hide-name' => 'Ocultar ação e alvo',
 	'revdelete-hide-comment' => 'Ocultar o sumário de edição',
 	'revdelete-hide-user' => 'Ocultar nome de usuário/IP do editor',
@@ -35393,15 +35715,15 @@ Outros administradores no {{SITENAME}} continuarão podendo acessar ao conteúdo
 	'revdelete-suppress' => 'Suprimir dados de administradores, bem como de outros',
 	'revdelete-unsuppress' => 'Remover restrições das edições restauradas',
 	'revdelete-log' => 'Motivo:',
-	'revdelete-submit' => 'Aplicar {{PLURAL:$1|à revisão selecionada|à revisões selecionadas}}',
+	'revdelete-submit' => 'Aplicar {{PLURAL:$1|à revisão selecionada|às revisões selecionadas}}',
 	'revdelete-success' => "'''A visibilidade da revisão foi definida com sucesso.'''",
 	'revdelete-failure' => "'''A visibilidade da revisão não foi atualizada:'''
 $1",
 	'revdel-restore' => 'alterar visibilidade',
 	'revdel-restore-deleted' => 'edições eliminadas',
-	'revdel-restore-visible' => 'edições visíveis',
+	'revdel-restore-visible' => 'revisões visíveis',
 	'revdelete-hide-current' => 'Erro ao ocultar o item datado de $2, $1: esta é a revisão atual.
-Não pode ser ocultada.',
+Não pode ser ocultado.',
 	'revdelete-show-no-access' => 'Erro ao mostrar o item datado de $2, $1: este item foi marcado como "restrito".
 Você não tem acesso a ele.',
 	'revdelete-modify-no-access' => 'Erro ao modificar o item datado de $2, $1: este item foi marcado como "restrito".
@@ -35415,7 +35737,7 @@ Por favor, verifique os registos.',
 ** Violação de direitos autorais
 ** Informação pessoal inapropriada
 ** Informação potencialmente difamatória',
-	'revdelete-otherreason' => 'Outro motivo/motivo adicional:',
+	'revdelete-otherreason' => 'Motivo Adicional:',
 	'revdelete-reasonotherlist' => 'Outro motivo',
 	'revdelete-edit-reasonlist' => 'Editar motivos de eliminação',
 	'revdelete-offender' => 'Autor da revisão:',
@@ -35425,7 +35747,7 @@ Por favor, verifique os registos.',
 	'rows' => 'Linhas:',
 	'resultsperpage' => 'Resultados por página:',
 	'recentchangesdays' => 'Dias a serem exibidos nas Mudanças recentes:',
-	'recentchangesdays-max' => '(máximo: $1 {{PLURAL:$1|dia|dias}})',
+	'recentchangesdays-max' => 'Máximo $1 {{PLURAL:$1|dia|dias}})',
 	'recentchangescount' => 'Número de edições a serem exibidas por padrão:',
 	'right-read' => 'Ler páginas',
 	'right-edit' => 'Editar páginas',
@@ -35443,10 +35765,10 @@ Por favor, verifique os registos.',
 	'right-reupload-own' => 'Sobrescrever um arquivo existente enviado pelo mesmo usuário',
 	'right-reupload-shared' => 'Sobrescrever localmente arquivos no repositório partilhado de mídias',
 	'right-upload_by_url' => 'Enviar um arquivo por um URL',
-	'right-purge' => 'Carregar a cache de uma página no site sem página de confirmação',
+	'right-purge' => 'Carregar o cache de uma página no site sem página de confirmação',
 	'right-autoconfirmed' => 'Editar páginas semi-protegidas',
 	'right-bot' => 'Ser tratado como um processo automatizado',
-	'right-nominornewtalk' => 'Não ter o aviso de novas mensagens despoletado quando são feitas edições menores a páginas de discussão',
+	'right-nominornewtalk' => 'Não ter o aviso de novas mensagens ativado quando são feitas edições menores a páginas de discussão',
 	'right-apihighlimits' => 'Usar limites superiores em consultas (queries) via API',
 	'right-writeapi' => 'Uso da API de escrita',
 	'right-delete' => 'Eliminar páginas',
@@ -35473,27 +35795,27 @@ Por favor, verifique os registos.',
 	'right-rollback' => 'Reverter rapidamente o último usuário que editou uma página em particular',
 	'right-markbotedits' => 'Marcar edições revertidas como edições de bot',
 	'right-noratelimit' => 'Não afetado pelos limites de velocidade de operação',
-	'right-import' => 'Importar páginas de outros wikis',
+	'right-import' => 'Importar páginas de outras wikis',
 	'right-importupload' => 'Importar páginas de um arquivo carregado',
 	'right-patrol' => 'Marcar edições como patrulhadas',
 	'right-autopatrol' => 'Ter edições automaticamente marcadas como patrulhadas',
-	'right-patrolmarks' => 'Usar funcionalidades de patrulhagem das mudanças recentes',
+	'right-patrolmarks' => 'Ver funcionalidades de patrulhagem das mudanças recentes',
 	'right-unwatchedpages' => 'Ver uma lista de páginas não vigiadas',
 	'right-mergehistory' => 'Fundir o histórico de páginas',
 	'right-userrights' => 'Editar todos os direitos de usuário',
-	'right-userrights-interwiki' => 'Editar direitos de usuário de usuários outros sites wiki',
+	'right-userrights-interwiki' => 'Editar direitos de usuários de outras wikis',
 	'right-siteadmin' => 'Bloquear e desbloquear o banco de dados',
 	'right-override-export-depth' => 'Exportar páginas incluindo páginas ligadas até uma profundidade de 5',
 	'right-sendemail' => 'Enviar email a outros usuários',
 	'right-passwordreset' => 'Ver todos os e-mails de reposição de senhas',
-	'rightslog' => 'Registro de privilégios de usuário',
-	'rightslogtext' => 'Este é um registro de mudanças nos privilégios de usuários.',
+	'rightslog' => 'Registro de direitos de usuário',
+	'rightslogtext' => 'Este é um registro de mudanças nos direitos de usuários.',
 	'rightslogentry' => 'alterou os grupos de privilégios {{GENDER:$1|do usuário|da usuária|de usuário para}} $1 (de $2 para $3)',
 	'rightslogentry-autopromote' => 'foi automaticamente promovido de $2 para $3',
 	'rightsnone' => '(nenhum)',
 	'recentchanges' => 'Mudanças recentes',
 	'recentchanges-legend' => 'Opções das mudanças recentes',
-	'recentchanges-summary' => 'Acompanhe nesta página as mudanças mais recentes deste wiki.',
+	'recentchangestext' => '<div id="wikia-mediawiki-recentchangestext" style="border:2px solid #e9e9e9; margin-bottom:0.3em; padding:0.2em 0.5em;"> <span style="float:left;"> [[Special:NewPages|Novas páginas]] – [[Special:NewImages|Novos arquivos]] – [[Special:Log|Logs]] – [[Special:Insights|Insights]]</span> <span style="float:right;"> [[Ajuda:mudanças recentes]]</span> <div style="clear:both;"></div></div>',
 	'recentchanges-feed-description' => 'Acompanhe neste feed as mudanças mais recentes do wiki.',
 	'recentchanges-label-newpage' => 'Esta edição criou uma nova página',
 	'recentchanges-label-minor' => 'Esta é uma edição menor',
@@ -35501,7 +35823,7 @@ Por favor, verifique os registos.',
 	'recentchanges-label-unpatrolled' => 'Esta edição ainda não foi patrulhada',
 	'rcnote' => "A seguir {{PLURAL:$1|está listada '''uma''' alteração ocorrida|estão listadas '''$1''' alterações ocorridas}} {{PLURAL:$2|no último dia|nos últimos '''$2''' dias}}, a partir das $5 de $4.",
 	'rcnotefrom' => "Seguem as alterações desde as '''$4''' de '''$3''' (limitadas a '''$1''').",
-	'rclistfrom' => 'Mostrar as novas alterações a partir das $1',
+	'rclistfrom' => 'Mostrar as novas alterações a partir de $1',
 	'rcshowhideminor' => '$1 edições menores',
 	'rcshowhidebots' => '$1 bots',
 	'rcshowhideliu' => '$1 usuários registrados',
@@ -35511,10 +35833,8 @@ Por favor, verifique os registos.',
 	'rclinks' => 'Exibir as $1 alterações recentes feitas nos últimos $2 dias<br />$3',
 	'rc_categories' => 'Limite para categorias (separar com "|")',
 	'rc_categories_any' => 'Qualquer',
-	'rc-change-size-new' => '$1 {{PLURAL:$1|byte|bytes}} após alterações',
 	'rc-enhanced-expand' => 'Exibir detalhes (requer JavaScript)',
 	'rc-enhanced-hide' => 'Ocultar detalhes',
-	'rc-old-title' => 'criado originalmente como "$1"',
 	'recentchangeslinked' => 'Alterações relacionadas',
 	'recentchangeslinked-feed' => 'Alterações relacionadas',
 	'recentchangeslinked-toolbox' => 'Alterações relacionadas',
@@ -35560,13 +35880,82 @@ Páginas de sua [[Special:Watchlist|lista de páginas vigiadas]] são exibidas e
 	'revdelete-content-unhid' => 'conteúdo não oculto',
 	'revdelete-summary-unhid' => 'sumário de edição não oculto',
 	'revdelete-uname-unhid' => 'nome de usuário não oculto',
-	'revdelete-restricted' => 'restrições a administradores aplicadas',
+	'revdelete-restricted' => 'restrições a administradores, aplicadas',
 	'revdelete-unrestricted' => 'restrições a administradores removidas',
+	'rate_it' => 'Classifique esta página:',
+	'review_reason_1' => 'Motivo de revisão 1',
+	'review_reason_2' => 'Motivo de revisão 2',
+	'review_reason_3' => 'Motivo de revisão 3',
+	'review_reason_4' => 'Motivo de revisão 4',
+	'review_reason_5' => 'Motivo de revisão 5',
+	'realmap-deprecated-info' => 'Os mapas do mundo foram suspensos pela Wikia. Para obter mais informações, consulte: $1',
+	'revision-info-current' => '-',
+	'revision-nav' => '($1) $2{{int:pipe-separator}}$ 3 ($4) {{int:pipe-separator}}$5 ($6)',
+	'right-editmyoptions' => 'Pode editar suas próprias preferências',
+	'right-loggedin' => 'Sinaliza o usuário como conectado a uma conta',
+	'right-mcachepurge' => 'Controle do comportamento de memcached através de parâmetros de solicitação',
+	'right-emailconfirmed' => 'Usuário confirmado por e-mail',
+	'right-runjob' => 'Executar o trabalho da fila de trabalho via API',
+	'recentchanges-url' => 'Special:RecentChanges',
+	'rc-change-size' => '$1',
+	'rc-change-size-new' => '$1 {{PLURAL:$1|byte|bytes}} após alterações',
+	'rc-old-title' => 'criado originalmente como "$1"',
+	'randompage-url' => 'Especial:Aleatório',
+	'rfcurl' => '//tools.ietf.org/html/rfc$1',
+	'revdelete-logentry' => 'visibilidade de revisão de "[[$1]]" alterada',
+	'revdelete-content' => 'conteúdo',
+	'revdelete-summary' => 'editar resumo',
+	'revdelete-uname' => 'nome de usuário',
+	'revdelete-hid' => 'ocultou $1',
+	'revdelete-unhid' => 'deixou de ocultar $1',
+	'revdelete-log-message' => '$1 para $2 {{PLURAL:$2|revisão|revisões}}',
+	'reconfirmemail_subject' => 'Bem vindo/a à Wikia!',
+	'reconfirmemail_body' => 'Hi $2,
+
+Thanks for updating the email address on your Wikia account. Please take a minute to confirm this is the correct email address by clicking here: $3
+
+Thanks!
+
+- Wikia Community Support
+
+___________________________________________
+* Find help and advice on Community Central: http://community.wikia.com
+* Want to receive fewer messages from us? You can unsubscribe or change your email preferences here: http://community.wikia.com/Special:Preferences',
+	'rcshowhideenhanced' => '$1 mudanças recentes destacadas',
+	'refreshpage' => 'Recarregue a página para ativar este widget',
+	'requestcreatewiki' => 'Enviar solicitação',
+	'right_now' => 'Right Now<br />people are...',
+	'return_to_article' => 'Voltar à página',
+	'return_to_talk' => 'Voltar à discussão',
+	'return_to_user' => 'Voltar à página de usuário',
+	'return_to_user_talk' => 'Voltar à discussão',
+	'return_to_project' => 'Voltar à página do projeto',
+	'return_to_project_talk' => 'Voltar à discussão',
+	'return_to_image' => 'Voltar à página de imagem',
+	'return_to_image_talk' => 'Voltar à discussão',
+	'return_to_mediawiki' => 'Voltar à página de mensagens',
+	'return_to_mediawiki_talk' => 'Voltar à discussão',
+	'return_to_template' => 'Voltar à página de predefinições',
+	'return_to_template_talk' => 'Voltar à discussão',
+	'return_to_help' => 'Voltar à página de ajuda',
+	'return_to_help_talk' => 'Voltar à discussão',
+	'return_to_category' => 'Voltar à página de categoria',
+	'return_to_category_talk' => 'Voltar à discussão',
+	'return_to_forum' => 'Voltar à página do fórum',
+	'return_to_forum_talk' => 'Voltar à discussão',
+	'return_to_special' => 'Voltar à página especial',
+	'related_wiki' => 'Add bulleted links here to display wiki related to this one in the related wiki [[Special:Widgets|widget]].
+
+* [{{FULLURL:MediaWiki:Related wiki}} No related wiki have been selected yet.]',
+	'registerintro-title' => 'Quando você cria uma conta no FANDOM, você se torna parte da comunidade!',
+	'registerintro-text' => 'Você recebe crédito por todas as suas contribuições e também pode criar seu próprio perfil de usuário, marcar suas páginas favoritas e obter acesso a todos os tipos de ferramentas interessantes.',
+	'rcshowhidelogs' => '$1 registros',
+	'right-hideblockername' => 'Não exibir o nome do usuário em notificações de bloqueio',
 );
 
 $messages['qu'] = array(
 	'returnto' => '$1-man kutimuy.',
-	'redirectedfrom' => '($1-manta pusampusqa)',
+	'redirectedfrom' => '$1-manta pusampusqa',
 	'redirectpagesub' => "Pusampusqa p'anqa",
 	'retrievedfrom' => '"$1" p\'anqamanta chaskisqa (Qhichwa / Quechua)',
 	'restorelink' => '{{PLURAL:$1|qullusqa hukchasqa|$1 qullusqa hukchasqa}}',
@@ -35804,7 +36193,7 @@ Ama hina kaspa, hallch'akunapi qhaway.",
 	'rollback_short' => 'Kutichiy',
 	'rollbacklink' => 'Kutichiy',
 	'rollbackfailed' => 'Manam kutichiyta atinchu',
-	'revertpage' => '[[Special:Contributions/$2|$2]] ([[User talk:$2|rimachina]]) sutiyuq ruraqpa hukchasqankunaqa kutichisqam [[User:$1|$1]]-pa ñawpaq hukchasqanman',
+	'revertpage' => '[[Special:Contributions/$2|$2]] ([[User talk:$2|rimachina]]) sutiyuq ruraqpa hukchasqankunaqa kutichisqam $1-pa ñawpaq hukchasqanman',
 	'revertpage-nouser' => "Ruraqpa hukchasqankunaqa (sutinqa qichusqam) kutichisqañam [[User:$1|$1]]-pa ñawpaq llamk'apusqanta paqarichispa",
 	'rollback-success' => "$1-pa hukchasqankunaqa kutichisqañam $2-pa ñawpaq llamk'apusqanta paqarichispa.",
 	'restriction-type' => 'Saqillay:',
@@ -35834,7 +36223,7 @@ Ama hina kaspa, hallch'akunapi qhaway.",
 
 $messages['qug'] = array(
 	'returnto' => '$1-man tikramuna.',
-	'redirectedfrom' => '($1-manta pushashka)',
+	'redirectedfrom' => '$1-manta pushashka',
 	'redirectpagesub' => 'pushashka panka',
 	'retrievedfrom' => '$1 pankamanta hapishka',
 	'restorelink' => '{{PLURAL:$1|shuk pichashka killkayta|$1 pichashka killkaykunata}} rikuna',
@@ -35888,7 +36277,7 @@ Uraypi apakunakunapa pichanakunapa kamuta rikuchiwanchik:",
 
 $messages['rgn'] = array(
 	'returnto' => 'Torna indrì a $1.',
-	'redirectedfrom' => '(Ri-direziòn da <b>$1</b>)',
+	'redirectedfrom' => 'Ri-direziòn da <b>$1</b>',
 	'redirectpagesub' => "Pàgina d're-indirezzament",
 	'retrievedfrom' => 'Tiré fora da "$1"',
 	'red-link-title' => "Ciò! $1 (sta pàgina la n'esèst incora)",
@@ -35926,7 +36315,7 @@ Al pàgin int'la lèsta dal [[Special:Watchlist|pàgin tnudi sot occ]] l' è scr
 
 $messages['rif'] = array(
 	'returnto' => 'Dwl ghar $1.',
-	'redirectedfrom' => '(Itwasnnmd-d zi $1)',
+	'redirectedfrom' => 'Itwasnnmd-d zi $1',
 	'redirectpagesub' => 'Tasna n (Redirect)',
 	'retrievedfrom' => 'Itwarr-d zi "$1"',
 	'red-link-title' => '$1 (tasna ur telli)',
@@ -35971,7 +36360,7 @@ Tasniwin di [[Special:Watchlist|your watchlist]] d '''tizurarin'''.",
 
 $messages['rm'] = array(
 	'returnto' => 'Enavos tar $1.',
-	'redirectedfrom' => '(renvià da $1)',
+	'redirectedfrom' => 'renvià da $1',
 	'redirectpagesub' => "questa pagina renviescha tar in'auter artitgel",
 	'retrievedfrom' => 'Da "$1"',
 	'restorelink' => '{{PLURAL:$1|ina modificaziun stizzada|$1 modificaziuns stizzadas}}',
@@ -36219,7 +36608,7 @@ $messages['rmy'] = array(
 
 $messages['ro'] = array(
 	'returnto' => 'Înapoi la $1.',
-	'redirectedfrom' => '(Redirecționat de la $1)',
+	'redirectedfrom' => 'Redirecționat de la $1',
 	'redirectpagesub' => 'Pagină de redirecționare',
 	'retrievedfrom' => 'Adus de la „$1”',
 	'restorelink' => '{{PLURAL:$1|o modificare ștearsă|$1 modificări șterse|$1 de modificări șterse}}',
@@ -36458,7 +36847,7 @@ Paginile pe care le [[Special:Watchlist|urmăriți]] apar în '''aldine'''.",
 	'rollback_short' => 'Revenire',
 	'rollbacklink' => 'revenire',
 	'rollbackfailed' => 'Revenirea nu s-a putut face',
-	'revertpage' => 'Anularea modificărilor efectuate de către [[Special:Contributions/$2|$2]] ([[User talk:$2|discuție]]) și revenire la ultima versiune de către [[User:$1|$1]]',
+	'revertpage' => 'Anularea modificărilor efectuate de către [[Special:Contributions/$2|$2]] ([[User talk:$2|discuție]]) și revenire la ultima versiune de către $1',
 	'revertpage-nouser' => 'Anularea modificărilor efectuate de (nume de utilizator șters) și revenirea la ultima modificare de către [[User:$1|$1]]',
 	'rollback-success' => 'Anularea modificărilor făcute de $1;
 revenire la ultima versiune de $2.',
@@ -36506,7 +36895,7 @@ $messages['roa-rup'] = array(
 
 $messages['roa-tara'] = array(
 	'returnto' => 'Tuerne a $1.',
-	'redirectedfrom' => '(Riderette da $1)',
+	'redirectedfrom' => 'Riderette da $1',
 	'redirectpagesub' => 'Pàgene de redirezione',
 	'retrievedfrom' => 'Pigghjete da "$1"',
 	'restorelink' => "{{PLURAL:$1|'nu cangiamende scangellete|$1 cangiaminde scangellete}}",
@@ -36745,7 +37134,7 @@ Pàggene sus 'a [[Special:Watchlist|le Pàggene condrollete]] sonde in '''grasce
 	'rollback_short' => 'Annulle',
 	'rollbacklink' => "annulle 'u cangiaminde",
 	'rollbackfailed' => 'Annullamende fallite',
-	'revertpage' => "Cangiaminde annullate da [[Special:Contributions/$2|$2]] ([[User talk:$2|Talk]]) a l'urtema versione da [[User:$1|$1]]",
+	'revertpage' => "Cangiaminde annullate da [[Special:Contributions/$2|$2]] ([[User talk:$2|Talk]]) a l'urtema versione da $1",
 	'revertpage-nouser' => "Le cangiaminde annullate ba (nome utende luate) a l'urtema revisione da [[User:$1|$1]]",
 	'rollback-success' => "Cangiaminde annullate da $1;
 turnate rete a l'urtema versione da $2.",
@@ -36777,32 +37166,32 @@ turnate rete a l'urtema versione da $2.",
 $messages['ru'] = array(
 	'realmap-deprecated-info' => 'Создание физических карт мира больше не поддерживается на Викия. Узнайте больше здесь: $1',
 	'returnto' => 'Возврат к странице $1.',
-	'redirectedfrom' => '(перенаправлено с «$1»)',
+	'redirectedfrom' => '(Перенаправлено с «$1»)',
 	'redirectpagesub' => 'Страница-перенаправление',
-	'retrievedfrom' => 'Источник — «$1»',
+	'retrievedfrom' => 'Получено из «$1»',
 	'restorelink' => '{{PLURAL:$1|$1 удалённую правку|$1 удалённые правки|$1 удалённых правок}}',
 	'red-link-title' => '$1 (страница не существует)',
-	'readonly' => 'Запись в базу данных заблокирована',
-	'readonlytext' => 'Добавление новых статей и другие изменения базы данных сейчас заблокированы: вероятно, в связи с плановым обслуживанием.
-Заблокировавший оператор оставил следующее разъяснение: $1.',
-	'readonly_lag' => 'База данных автоматически заблокирована от изменений на время, пока вторичные сервера базы данных не синхронизируются с первичным.',
-	'remembermypassword' => 'Помнить мою учётную запись на этом компьютере (не более $1 {{PLURAL:$1|дня|дней|дней}})',
+	'readonly' => 'База данных заблокирована',
+	'readonlytext' => 'В настоящее время база данных заблокирована.
+
+$1',
+	'readonly_lag' => 'База данных автоматически заблокирована, пока вторичные сервера базы данных не синхронизируются с первичным.',
+	'remembermypassword' => 'Помнить мою учётную запись на этом компьютере',
 	'resetpass' => 'Изменение пароля',
-	'resetpass_announce' => 'Вы представились с помощью временного пароля, полученного по электронной почте. Для завершения входа в систему, вы должны установить новый пароль.',
+	'resetpass_announce' => 'Вы представились с помощью временного пароля. Для завершения входа в систему, вы должны установить новый пароль.',
 	'resetpass_text' => '<!-- Добавьте сюда текст -->',
 	'resetpass_header' => 'Изменение пароля учётной записи',
-	'retypenew' => 'Повторите ввод нового пароля:',
+	'retypenew' => 'Повторите новый пароль:',
 	'resetpass_submit' => 'Установить пароль и представиться',
 	'resetpass_success' => 'Ваш пароль был успешно изменён! Выполняется вход в систему…',
 	'resetpass_forbidden' => 'Пароль не может быть изменён',
-	'resetpass-no-info' => 'Чтобы обращаться непосредственно к этой странице, вам следует представиться системе.',
+	'resetpass-no-info' => 'Чтобы получить доступ к этой странице, вам следует представиться системе.',
 	'resetpass-submit-loggedin' => 'Изменить пароль',
 	'resetpass-submit-cancel' => 'Отмена',
 	'resetpass-wrong-oldpass' => 'Неправильный временный или текущий пароль.
-Возможно, вы уже успешно изменили пароль, или запросили новый временный пароль.',
+Возможно, вы уже успешно изменили пароль или запросили новый временный пароль.',
 	'resetpass-temp-password' => 'Временный пароль:',
 	'readonlywarning' => "'''Предупреждение. База данных заблокирована в связи с процедурами обслуживания, поэтому вы не можете записать ваши изменения прямо сейчас.'''
-Возможно, вам следует сохранить текст в файл, чтобы воспользоваться этим текстом позже.
 
 Администратор, заблокировавший базу данных, оставил следующее объяснение: $1",
 	'recreate-moveddeleted-warn' => "'''Внимание. Вы пытаетесь воссоздать страницу, которая ранее удалялась.'''
@@ -36812,8 +37201,8 @@ $messages['ru'] = array(
 	'revisionasof' => 'Версия $1',
 	'revision-info' => 'Версия от $1; $2',
 	'rev-deleted-comment' => '(описание правки удалено)',
-	'rev-deleted-user' => '(имя автора стёрто)',
-	'rev-deleted-event' => '(запись удалена)',
+	'rev-deleted-user' => '(имя автора удалено)',
+	'rev-deleted-event' => '(запись в журнале удалена)',
 	'rev-deleted-user-contribs' => '[имя участника или IP-адрес удалены — правка скрыта со страницы вклада]',
 	'rev-deleted-text-permission' => "Эта версия страницы была '''удалена'''.
 Возможно, объяснения даны в [{{fullurl:{{#Special:Log}}/delete|page={{FULLPAGENAMEE}}}} журнале удалений].",
@@ -36826,7 +37215,7 @@ $messages['ru'] = array(
 	'rev-deleted-text-view' => "Эта версия страницы была '''удалена'''.
 Вы можете просмотреть её. Объяснения удаления приведены в [{{fullurl:{{#Special:Log}}/delete|page={{FULLPAGENAMEE}}}} журнале удалений].",
 	'rev-suppressed-text-view' => "Эта версия страницы была '''скрыта'''.
-Вы можете просмотреть её. Объяснения удаления приведены в [{{fullurl:{{#Special:Log}}/suppress|page={{FULLPAGENAMEE}}}} журнале сокрытий].",
+Вы можете просмотреть её. Объяснения приведены в [{{fullurl:{{#Special:Log}}/suppress|page={{FULLPAGENAMEE}}}} журнале сокрытий].",
 	'rev-deleted-no-diff' => "Вы не можете просмотреть эту разницу версий, так как одна из версий страницы была '''удалена'''.
 Возможно, подробности можно найти в [{{fullurl:{{#Special:Log}}/delete|page={{FULLPAGENAMEE}}}} журнале удалений].",
 	'rev-suppressed-no-diff' => "Вы не можете просмотреть различия между этими версиями страницы, так как одна из них была '''удалена'''.",
@@ -36844,10 +37233,10 @@ $messages['ru'] = array(
 	'rev-showdeleted' => 'показать',
 	'revisiondelete' => 'Удалить / восстановить версии страницы',
 	'revdelete-nooldid-title' => 'Не задана целевая версия',
-	'revdelete-nooldid-text' => 'Вы не задали целевую версию (или версии) для выполнения этой функции.',
+	'revdelete-nooldid-text' => 'Вы не задали целевую версию (или версии) для выполнения этой функции, целевой версии не существует или вы пытаетесь скрыть последнюю версию страницы.',
 	'revdelete-nologtype-title' => 'Не указан тип журнала',
 	'revdelete-nologtype-text' => 'Вы не указали тип журнала, в котором следует выполнить действие.',
-	'revdelete-nologid-title' => 'Ошибочная запись журнала',
+	'revdelete-nologid-title' => 'Ошибочная запись в журнале',
 	'revdelete-nologid-text' => 'Вы не указали целевую запись журнала для выполнения действия или указанной записи не существует.',
 	'revdelete-no-file' => 'Указанный файл не существует.',
 	'revdelete-show-file-confirm' => 'Вы уверены, что вы хотите просмотреть удалённую версию файла «<nowiki>$1</nowiki>» от $2, $3?',
@@ -36857,15 +37246,15 @@ $messages['ru'] = array(
 Администраторы проекта {{SITENAME}} будут иметь доступ к скрытому содержанию и смогут восстановить его через этот же интерфейс, за исключением случаев, когда установлено дополнительное ограничение.",
 	'revdelete-confirm' => 'Пожалуйста, подтвердите, что вы действительно желаете совершить это действие, осознаёте последствия, делаете это в соответствии с [[{{MediaWiki:Policy-url}}|правилами]].',
 	'revdelete-suppress-text' => "Сокрытие может производиться '''только''' в следующих случаях:
-
+* Потенциальная клевета
 * Неуместная личная информация
 *: ''домашний адрес, номера телефонов, номер паспорта и т. д.''",
 	'revdelete-legend' => 'Установить ограничения:',
-	'revdelete-hide-text' => 'Скрыть текст этой версии страницы',
+	'revdelete-hide-text' => 'Скрыть текст версии страницы',
 	'revdelete-hide-image' => 'Скрыть содержимое файла',
 	'revdelete-hide-name' => 'Скрыть действие и его объект',
-	'revdelete-hide-comment' => 'Скрыть описание изменений',
-	'revdelete-hide-user' => 'Скрыть имя автора',
+	'revdelete-hide-comment' => 'Скрыть описание правок',
+	'revdelete-hide-user' => 'Скрыть имя участника/IP-адрес',
 	'revdelete-hide-restricted' => 'Скрыть данные также и от администраторов',
 	'revdelete-radio-same' => '(не изменять)',
 	'revdelete-radio-set' => 'Да',
@@ -36882,7 +37271,7 @@ $1",
 	'revdel-restore-visible' => 'видимые версии',
 	'revdelete-hide-current' => 'Ошибка скрытия записи от $2, $1: это текущая версия.
 Она не может быть скрыта.',
-	'revdelete-show-no-access' => 'Ошибка раскрытия записи от $2, $1: эта запись отмечена как «ограниченная».
+	'revdelete-show-no-access' => 'Ошибка открытия записи от $2, $1: эта запись отмечена как «ограниченная».
 У вас нет доступа к ней.',
 	'revdelete-modify-no-access' => 'Ошибка изменения записи от $2, $1: эта запись отмечена как «ограниченная».
 У вас нет доступа к ней.',
@@ -36893,128 +37282,129 @@ $1",
 	'revdelete-only-restricted' => 'Ошибка сокрытия записи от $2 $1: вы не можете скрыть запись от просмотра администраторами без выбора одной из других настроек сокрытия.',
 	'revdelete-reason-dropdown' => '* Стандартные причины удаления
 ** Нарушение авторских прав
-** Неуместные личные сведения',
+** Неуместные личные сведения
+** Потенциальная клевета',
 	'revdelete-otherreason' => 'Другая/дополнительная причина:',
 	'revdelete-reasonotherlist' => 'Другая причина',
 	'revdelete-edit-reasonlist' => 'Править список причин',
 	'revdelete-offender' => 'Автор версии страницы:',
 	'revertmerge' => 'Разделить',
-	'resetprefs' => 'Сбросить',
+	'resetprefs' => 'Очистить несохраненные изменения',
 	'restoreprefs' => 'Восстановить настройки по умолчанию',
 	'rows' => 'Строк:',
 	'resultsperpage' => 'Количество найденных записей на страницу:',
 	'recentchangesdays' => 'Количество дней, за которые показывать свежие правки:',
-	'recentchangesdays-max' => '(не более $1 {{PLURAL:$1|дня|дней|дней}})',
+	'recentchangesdays-max' => 'Не более $1 {{PLURAL:$1|дня|дней|дней}}',
 	'recentchangescount' => 'Количество правок, отображаемое по умолчанию:',
-	'right-read' => 'просмотр страниц',
-	'right-edit' => 'правка страниц',
-	'right-createpage' => 'создание страниц (не являющихся обсуждениями)',
-	'right-createtalk' => 'создание страниц обсуждений',
-	'right-createaccount' => 'создание новых учётных записей участников',
-	'right-minoredit' => 'простановка отметки «малое изменение»',
-	'right-move' => 'переименование страниц',
-	'right-move-subpages' => 'переименование страниц с их подстраницами',
-	'right-move-rootuserpages' => 'переименование корневых страниц участников',
-	'right-movefile' => 'переименование файлов',
-	'right-suppressredirect' => 'не создаётся перенаправление со старого имени при переименовании страницы',
-	'right-upload' => 'загрузка файлов',
-	'right-reupload' => 'запись файлов поверх существующих',
-	'right-reupload-own' => 'перезапись файлов тем же участником',
-	'right-reupload-shared' => 'подмена файлов из общих хранилищ локальными',
-	'right-upload_by_url' => 'загрузка файлов с адреса URL',
-	'right-purge' => 'очистка кеша страниц без страницы подтверждения',
-	'right-autoconfirmed' => 'правка частично защищённых страниц',
-	'right-bot' => 'считаться автоматическим процессом',
-	'right-nominornewtalk' => 'отсутствие малых правок на страницах обсуждений включает режим новых сообщений',
-	'right-apihighlimits' => 'меньше ограничений на выполнение API-запросов',
-	'right-writeapi' => 'использование API для записи',
-	'right-delete' => 'удаление страниц',
-	'right-bigdelete' => 'удаление страниц с длинными историями изменений',
-	'right-deleterevision' => 'удаление и восстановление конкретных версий страниц',
-	'right-deletedhistory' => 'просмотр истории удалённых страниц без доступа к удалённому тексту',
-	'right-deletedtext' => 'просмотр удалённого текста и изменений между удалёнными версиями страниц',
-	'right-browsearchive' => 'поиск удалённых страниц',
-	'right-undelete' => 'восстановление страниц',
-	'right-suppressrevision' => 'просмотр и восстановление скрытых от администраторов версий страниц',
-	'right-suppressionlog' => 'просмотр частных журналов',
-	'right-block' => 'установка запрета на редактирование другим участникам',
-	'right-blockemail' => 'установка запрета на отправку электронной почты',
-	'right-hideuser' => 'запрет имени участника и его сокрытие',
+	'right-read' => 'Просмотр страниц',
+	'right-edit' => 'Редактирование страниц',
+	'right-createpage' => 'Создание страниц (не являющихся обсуждениями)',
+	'right-createtalk' => 'Создание страниц обсуждений',
+	'right-createaccount' => 'Создание новых учётных записей',
+	'right-minoredit' => 'Простановка отметки «малая правка»',
+	'right-move' => 'Переименование страниц',
+	'right-move-subpages' => 'Переименование страниц с их подстраницами',
+	'right-move-rootuserpages' => 'Переименование корневых страниц участников',
+	'right-movefile' => 'Переименование файлов',
+	'right-suppressredirect' => 'Не создаётся перенаправление со старого имени при переименовании страницы',
+	'right-upload' => 'Загрузка файлов',
+	'right-reupload' => 'Запись файлов поверх существующих',
+	'right-reupload-own' => 'Перезапись файлов тем же участником',
+	'right-reupload-shared' => 'Замена файлов из общих хранилищ локальными',
+	'right-upload_by_url' => 'Загрузка файлов с URL-адреса',
+	'right-purge' => 'Очистка кеша страниц без подтверждения',
+	'right-autoconfirmed' => 'Правка частично защищённых страниц',
+	'right-bot' => 'Считаться автоматическим процессом',
+	'right-nominornewtalk' => 'Участники не получают сообщений, если правка на странице обсуждения отмечена как «малая правка»',
+	'right-apihighlimits' => 'Меньше ограничений на выполнение API-запросов',
+	'right-writeapi' => 'Использование записи API',
+	'right-delete' => 'Удаление страниц',
+	'right-bigdelete' => 'Удаление страниц с длинными историями изменений',
+	'right-deleterevision' => 'Удаление и восстановление конкретных версий страниц',
+	'right-deletedhistory' => 'Просмотр истории удалённых страниц, без доступа к удалённому тексту',
+	'right-deletedtext' => 'Просмотр удалённого текста и изменений между удалёнными версиями страниц',
+	'right-browsearchive' => 'Поиск удалённых страниц',
+	'right-undelete' => 'Восстановление страниц',
+	'right-suppressrevision' => 'Просмотр и восстановление скрытых от администраторов версий страниц',
+	'right-suppressionlog' => 'Просмотр частных журналов',
+	'right-block' => 'Блокировка редактирования другими участниками',
+	'right-blockemail' => 'Блокировка на отправку электронной почты',
+	'right-hideuser' => 'Блокировка имени участника и его сокрытие',
 	'right-ipblock-exempt' => 'обход блокировок по IP, автоблокировок и блокировок диапазонов',
-	'right-proxyunbannable' => 'обход автоматической блокировки прокси',
-	'right-unblockself' => 'разблокирование себя самого',
-	'right-protect' => 'изменение уровня защиты страниц и правка защищённых страниц',
-	'right-editprotected' => 'правка защищённых страниц (без каскадной защиты)',
-	'right-editinterface' => 'изменение пользовательского интерфейса',
-	'right-editusercssjs' => 'правка CSS- и JS-файлов других участников',
-	'right-editusercss' => 'правка CSS-файлов других участников',
-	'right-edituserjs' => 'правка JavaScript-файлов других участников',
-	'right-rollback' => 'быстрый откат правок последнего участника на некоторой странице',
-	'right-markbotedits' => 'отметка откатываемых правок как правок бота',
-	'right-noratelimit' => 'нет ограничений по скорости',
-	'right-import' => 'импорт страниц из других вики',
-	'right-importupload' => 'импорт страниц через загрузку файлов',
-	'right-patrol' => 'отметка правок как отпатрулированных',
-	'right-autopatrol' => 'правки автоматически отмечаются как патрулированные',
-	'right-patrolmarks' => 'просмотр отметок о патрулировании в свежих правках',
-	'right-unwatchedpages' => 'просмотр списка ненаблюдаемых страниц',
-	'right-mergehistory' => 'объединение историй страниц',
-	'right-userrights' => 'изменение прав всех участников',
-	'right-userrights-interwiki' => 'изменение прав участников на других вики-сайтах',
-	'right-siteadmin' => 'блокировка и разблокировка базы данных',
-	'right-override-export-depth' => 'экспортирование страниц, включая связанные страницы с глубиной до 5',
-	'right-sendemail' => 'отправлять электронную почту другим участникам',
-	'right-passwordreset' => 'просмотр электронных писем с изменением пароля',
-	'rightslog' => 'Журнал прав участника',
-	'rightslogtext' => 'Это журнал изменений прав участника.',
-	'rightslogentry' => 'изменил членство в группах для $1 с $2 на $3',
+	'right-proxyunbannable' => 'Обход автоматической блокировки прокси',
+	'right-unblockself' => 'Разблокирование себя самого',
+	'right-protect' => 'Изменение уровня защиты страниц и правка защищённых страниц',
+	'right-editprotected' => 'Правка защищённых страниц (без каскадной защиты)',
+	'right-editinterface' => 'Правка пользовательского интерфейса',
+	'right-editusercssjs' => 'Правка CSS- и JS-файлов других участников',
+	'right-editusercss' => 'Правка CSS-файлов других участников',
+	'right-edituserjs' => 'Правка JavaScript-файлов других участников',
+	'right-rollback' => 'Быстрый откат правок последнего участника на странице',
+	'right-markbotedits' => 'Отметка откатываемых правок как правок бота',
+	'right-noratelimit' => 'Нет ограничений по скорости',
+	'right-import' => 'Импорт страниц из других вики',
+	'right-importupload' => 'Импорт страниц через загрузку файлов',
+	'right-patrol' => 'Отметка правок других участников как отпатрулированных',
+	'right-autopatrol' => 'Правки участника автоматически отмечаются как патрулированные',
+	'right-patrolmarks' => 'Просмотр отметок о патрулировании в свежих правках',
+	'right-unwatchedpages' => 'Просмотр списка неотслеживаемыхстраниц',
+	'right-mergehistory' => 'Объединение историй страниц',
+	'right-userrights' => 'Изменение всех прав участника',
+	'right-userrights-interwiki' => 'Изменение прав участников на других википроектах',
+	'right-siteadmin' => 'Блокировка и разблокировка базы данных',
+	'right-override-export-depth' => 'Экспортирование страниц, включая связанные страницы с глубиной до 5',
+	'right-sendemail' => 'Отправка электронной почты другим участникам',
+	'right-passwordreset' => 'Просмотр электронных писем с изменением пароля',
+	'rightslog' => 'Журнал прав участников',
+	'rightslogtext' => 'Это журнал изменений прав участников.',
+	'rightslogentry' => 'изменил права $1 с $2 на $3',
 	'rightslogentry-autopromote' => 'был автоматически переведён из $2 в $3',
 	'rightsnone' => '(нет)',
 	'recentchanges' => 'Свежие правки',
 	'recentchanges-legend' => 'Настройки свежих правок',
-	'recentchangestext' => 'Ниже в хронологическом порядке перечислены последние изменения на страницах {{grammar:genitive|{{SITENAME}}}}.',
-	'recentchanges-feed-description' => 'Отслеживать последние изменения в вики в этом потоке.',
-	'recentchanges-label-newpage' => 'Этой правкой была создана новая страница.',
-	'recentchanges-label-minor' => 'Это незначительное изменение',
+	'recentchangestext' => '<div id="wikia-mediawiki-recentchangestext" style="border:2px solid #e9e9e9; margin-bottom:0.3em; padding:0.2em 0.5em;"><span style="float:left;">Ниже в хронологическом порядке идёт список \'\'\'свежих правок\'\'\' на этой вики.<br>[[Special:Newpages|Новые страницы]] – [[Special:NewFiles|Новые файлы]] – [[Special:Log|Журналы]] – [[Special:Insights|Исследования]]</span><span style="float:right;">[[Справка:Свежие правки]]</span><div style="clear:both;"></div></div>',
+	'recentchanges-feed-description' => 'Отслеживать свежие правки вики в этой ленте.',
+	'recentchanges-label-newpage' => 'Этой правкой создана новая страница',
+	'recentchanges-label-minor' => 'Это малая правка',
 	'recentchanges-label-bot' => 'Эта правка сделана ботом',
 	'recentchanges-label-unpatrolled' => 'Эту правку ещё не отпатрулировали',
-	'rcnote' => "{{PLURAL:$1|Последнее '''$1''' изменение|Последние '''$1''' изменения|Последние '''$1''' изменений}} за '''$2''' {{PLURAL:$2|день|дня|дней}}, на момент времени $5 $4.",
-	'rcnotefrom' => 'Ниже перечислены изменения с <strong>$2</strong> (по <strong>$1</strong>).',
-	'rclistfrom' => 'Показать изменения с $1.',
+	'rcnote' => '<div style="margin-top: -20px;" class="emptymwmsg mediawiki_rcnote"></div>',
+	'rcnotefrom' => "Ниже перечислены изменения с '''$2''' (по '''$1''').",
+	'rclistfrom' => 'Показать новые правки начиная с $1',
 	'rcshowhideminor' => '$1 малые правки',
 	'rcshowhidebots' => '$1 ботов',
-	'rcshowhideliu' => '$1 представившихся участников',
-	'rcshowhideanons' => '$1 непредставившихся',
+	'rcshowhideliu' => '$1 участников',
+	'rcshowhideanons' => '$1 анонимов',
 	'rcshowhidepatr' => '$1 проверенные правки',
-	'rcshowhidemine' => '$1 свои правки',
+	'rcshowhidemine' => '$1 мои правки',
 	'rclinks' => 'Показать последние $1 изменений за $2 дней<br />$3',
 	'rc_categories' => 'Только из категорий (разделитель «|»)',
 	'rc_categories_any' => 'Любой',
-	'rc-change-size-new' => 'Размер после изменения: {{PLURAL:$1|байт|байта|байт}}',
+	'rc-change-size-new' => 'Размер после правки: $1 {{PLURAL:$1|байт|байта|байт}}',
 	'rc-enhanced-expand' => 'Показать подробности (используется JavaScript)',
 	'rc-enhanced-hide' => 'Скрыть подробности',
 	'recentchangeslinked' => 'Связанные правки',
 	'recentchangeslinked-feed' => 'Связанные правки',
 	'recentchangeslinked-toolbox' => 'Связанные правки',
 	'recentchangeslinked-title' => 'Связанные правки для «$1»',
-	'recentchangeslinked-noresult' => 'На связанных страницах не было изменений за указанный период.',
-	'recentchangeslinked-summary' => "Это список недавних изменений в страницах, на которые ссылается указанная страница (или входящих в указанную категорию).
-Страницы, входящие в [[Special:Watchlist|ваш список наблюдения]] '''выделены'''.",
+	'recentchangeslinked-noresult' => 'На связанных страницах не было правок за указанный период.',
+	'recentchangeslinked-summary' => "Это список недавних правок на страницах, на которые ссылается указанная страница (или входящих в указанную категорию).
+Страницы, входящие в [[Special:Watchlist|ваш список наблюдения]], '''выделены'''.",
 	'recentchangeslinked-page' => 'Название страницы:',
-	'recentchangeslinked-to' => 'Наоборот, показать изменения на страницах, которые ссылаются на указанную страницу',
-	'reuploaddesc' => 'Вернуться к форме загрузки',
-	'randompage' => 'Случайная статья',
-	'randompage-nopages' => 'В {{PLURAL:$2|следующем пространстве имён отсутствуют страницы|следующих пространствах имён нет страниц}}: $1.',
+	'recentchangeslinked-to' => 'Наоборот, показать правки на страницах, которые ссылаются на указанную страницу',
+	'reuploaddesc' => 'Отменит загрузку и вернуться к форме загрузки',
+	'randompage' => 'Случайная страница',
+	'randompage-nopages' => 'В {{PLURAL:$2|отслеживаемом пространстве имён отсутствуют страницы|отслеживаемых пространствах имён нет страниц}}: $1.',
 	'randomredirect' => 'Случайное перенаправление',
 	'randomredirect-nopages' => 'Пространство имён «$1» не содержит перенаправлений.',
 	'removewatch' => 'Удалить из списка наблюдения',
 	'removedwatchtext' => 'Страница «[[:$1]]» была удалена из вашего [[Special:Watchlist|списка наблюдения]].',
 	'reverted' => 'Откачено к ранней версии',
-	'rollback' => 'Откатить изменения',
+	'rollback' => 'Откатить правки',
 	'rollback_short' => 'Откат',
 	'rollbacklink' => 'откатить',
 	'rollbackfailed' => 'Ошибка при совершении отката',
-	'revertpage' => 'Откат правок [[Special:Contributions/$2|$2]] ([[User talk:$2|обсуждение]]) к версии [[User:$1|$1]]',
+	'revertpage' => 'Откат правок [[Special:Contributions/$2|$2]] ([[User talk:$2|обсуждение]] | [[Special:Block/$2|block]]) к версии [[User:$1|$1]]',
 	'revertpage-nouser' => 'Правки (имя участника удалено) откачены к версии [[User:$1|$1]]',
 	'rollback-success' => 'Откачены правки $1; возврат к версии $2.',
 	'restriction-type' => 'Права:',
@@ -37029,28 +37419,104 @@ $1",
 	'reblock-logentry' => 'изменил настройки блокировки для [[$1]], истекает $2 $3',
 	'range_block_disabled' => 'Администраторам запрещено блокировать диапазоны.',
 	'revertmove' => 'возврат',
-	'rcpatroldisabled' => 'Патрулирование последних изменений запрещено',
-	'rcpatroldisabledtext' => 'Возможность патрулирования последних изменений в настоящее время отключена.',
+	'rcpatroldisabled' => 'Патрулирование свежих правок отключено',
+	'rcpatroldisabledtext' => 'Возможность патрулирования свежих правок в настоящее время отключена.',
 	'recreate' => 'Создать заново',
 	'revdelete-content-hid' => 'содержание скрыто',
 	'revdelete-summary-hid' => 'описание правки скрыто',
 	'revdelete-uname-hid' => 'имя участника скрыто',
-	'revdelete-content-unhid' => 'содержание раскрыто',
-	'revdelete-summary-unhid' => 'описание правки открыто',
-	'revdelete-uname-unhid' => 'имя участника раскрыто',
+	'revdelete-content-unhid' => 'содержание показано',
+	'revdelete-summary-unhid' => 'описание правки показано',
+	'revdelete-uname-unhid' => 'имя участника показано',
 	'revdelete-restricted' => 'ограничения применяются к администраторам',
 	'revdelete-unrestricted' => 'ограничения сняты для администраторов',
-	'rate_it' => 'Оцените:',
-	'review_reason_1' => 'рассмотрите рассуждают 1',
-	'review_reason_2' => 'рассмотрите рассуждают 2',
-	'review_reason_3' => 'рассмотрите рассуждают 3',
-	'review_reason_4' => 'рассмотрите рассуждают 4',
-	'review_reason_5' => 'рассмотрите рассуждают 5',
+	'rate_it' => 'Оцените эту страницу:',
+	'review_reason_1' => 'Причина отзыва 1',
+	'review_reason_2' => 'Причина отзыва 2',
+	'review_reason_3' => 'Причина отзыва 3',
+	'review_reason_4' => 'Причина отзыва 4',
+	'review_reason_5' => 'Причина отзыва 5',
+	'revision-info-current' => '-',
+	'revision-nav' => '($1) $2{{int:pipe-separator}}$3 ($4){{int:pipe-separator}}$5 ($6)',
+	'right-editmyoptions' => 'Может менять свой настройки',
+	'right-loggedin' => 'Помечает, что участник в системе',
+	'right-mcachepurge' => 'Контроль поведения кеша памяти через параметры запроса',
+	'right-emailconfirmed' => 'Участник подтвердил свою электронную почту',
+	'right-runjob' => 'Запустить задание из очереди заданий через API',
+	'recentchanges-url' => 'Special:RecentChanges',
+	'rc-change-size' => '$1',
+	'rc-old-title' => 'первоначальное название: "$1"',
+	'randompage-url' => 'Special:Random',
+	'rfcurl' => '//tools.ietf.org/html/rfc$1',
+	'revdelete-logentry' => 'изменено отображение версии страницы "[[$1]]"',
+	'revdelete-content' => 'содержимое',
+	'revdelete-summary' => 'описание правки',
+	'revdelete-uname' => 'имя участника',
+	'revdelete-hid' => 'скрыть $1',
+	'revdelete-unhid' => 'показать $1',
+	'revdelete-log-message' => '$1 для $2 {{PLURAL:$2|версии|версий}}',
+	'reconfirmemail_subject' => 'Пожалуйста, ещё раз подтвердите ваш аккаунт',
+	'reconfirmemail_body' => 'Hi $2,
+
+Thank you for updating the email address associated with your Wikia account.
+
+Before our system can send you any mail you have opted to receive, you
+must confirm your email address.
+
+Click on the link below or paste it into your browser:
+
+$3
+
+Note: This confirmation link will expire in 7 days.
+
+
+With thousands of communities on Wikia, there are many ways to have fun
+here. Spend some time getting to know Wikia by visiting the home page
+(www.wikia.com), taking a tutorial at
+http://www.wikia.com/wiki/Help:Tutorial_1 , reading interesting and cool
+pages, writing content on your favorite subjects, or meeting other
+members of the community.
+
+We look forward to seeing you on Wikia!
+
+The Wikia Community Team
+www.wikia.com
+',
+	'rcshowhideenhanced' => '$1 короткий список правок',
+	'refreshpage' => 'Reload page to activate this widget',
+	'requestcreatewiki' => 'Отправить запрос',
+	'right_now' => 'Right Now<br />people are...',
+	'return_to_article' => 'Вернуться к странице',
+	'return_to_talk' => 'Вернуться к обсуждению',
+	'return_to_user' => 'Вернуться к странице участника',
+	'return_to_user_talk' => 'Вернуться к обсуждению',
+	'return_to_project' => 'Вернуться к странице проекта',
+	'return_to_project_talk' => 'Вернуться к обсуждению',
+	'return_to_image' => 'Вернуться к странице изображения',
+	'return_to_image_talk' => 'Вернуться к обсуждению',
+	'return_to_mediawiki' => 'Вернуться к странице сообщения',
+	'return_to_mediawiki_talk' => 'Вернуться к обсуждению',
+	'return_to_template' => 'Вернуться к странице шаблона',
+	'return_to_template_talk' => 'Вернуться к обсуждению',
+	'return_to_help' => 'Вернуться к странице справки',
+	'return_to_help_talk' => 'Вернуться к обсуждению',
+	'return_to_category' => 'Вернуться к странице категории',
+	'return_to_category_talk' => 'Вернуться к обсуждению',
+	'return_to_forum' => 'Вернуться к странице форума',
+	'return_to_forum_talk' => 'Вернуться к обсуждению',
+	'return_to_special' => 'Вернуться к служебной странице',
+	'related_wiki' => 'Добавьте список ссылок, чтобы отобразить близкие по теме вики в [[Special:Widgets|виджете]] "Близкие по теме вики".
+
+ * [{{FULLURL:MediaWiki:Related wiki}} Близкие по теме вики не выбраны.]',
+	'registerintro-title' => 'Когда вы создадите учётную запись на Фэндоме, вы станите частью сообщества!',
+	'registerintro-text' => 'Вы будете указаны как автор своих правок, а также сможете создать свой профиль участника, просматривать любимые страницы и пользоваться всеми полезными инструментами.',
+	'rcshowhidelogs' => '$1 журналы',
+	'right-hideblockername' => 'Не отображать их имена в уведомлениях о блокировке',
 );
 
 $messages['rue'] = array(
 	'returnto' => 'Навернутя до сторінкы «$1».',
-	'redirectedfrom' => '(Напрямленый з $1)',
+	'redirectedfrom' => 'Напрямленый з $1',
 	'redirectpagesub' => 'Сторінка-напрямлїня',
 	'retrievedfrom' => 'Обтримане з "$1"',
 	'restorelink' => '{{PLURAL:$1|змазанов едітаціёв|$1 змазаны едітації|$1 змазаных едітацій}}',
@@ -37287,7 +37753,7 @@ $1",
 	'rollback_short' => 'Вернути назад',
 	'rollbacklink' => 'вернути назад',
 	'rollbackfailed' => 'Не годно было ся вернути назад',
-	'revertpage' => 'Едітованя хоснователя „[[Special:Contributions/$2|$2]]“ ([[User talk:$2|діскузія]]) вернуты до минулого ставу, котрого автором є „[[User:$1|$1]]“',
+	'revertpage' => 'Едітованя хоснователя „[[Special:Contributions/$2|$2]]“ ([[User talk:$2|діскузія]]) вернуты до минулого ставу, котрого автором є „$1“',
 	'revertpage-nouser' => 'Едітованя хоснователя (мено хоснователя є сховане) вернуты до минулого ставу, котрого автором є „[[User:$1|$1]]“',
 	'rollback-success' => 'Едітованя хоснователя $1 было вернуте на остатню ревізію од хоснователя $2.',
 	'restriction-type' => 'Права',
@@ -37333,7 +37799,7 @@ $messages['ruq'] = array(
 );
 
 $messages['ruq-cyrl'] = array(
-	'redirectedfrom' => '(Редирецћионат де ла $1)',
+	'redirectedfrom' => 'Редирецћионат де ла $1',
 	'retrievedfrom' => 'адусе де "$1"',
 	'revisionasof' => 'Верцион де дата $1',
 	'recentchanges' => 'шумбајрае рецентае',
@@ -37354,7 +37820,7 @@ $3',
 );
 
 $messages['ruq-latn'] = array(
-	'redirectedfrom' => '(Redirecţionat de la $1)',
+	'redirectedfrom' => 'Redirecţionat de la $1',
 	'retrievedfrom' => 'Aduse de "$1"',
 	'revisionasof' => 'Vercion de data $1',
 	'recentchanges' => 'şumbărae recentae',
@@ -37376,7 +37842,7 @@ $3',
 
 $messages['sa'] = array(
 	'returnto' => '$1 इत्येतद् प्रति निवर्तताम्।',
-	'redirectedfrom' => '($1 इत्यस्मात् पुनर्निर्दिष्टम्)',
+	'redirectedfrom' => '$1 इत्यस्मात् पुनर्निर्दिष्टम्',
 	'redirectpagesub' => 'अनुप्रेषण-पृष्ठम्',
 	'retrievedfrom' => '"$1" इत्यस्माद् उद्धृतम्',
 	'restorelink' => '{{PLURAL:$1|एकम् अपाकृतं संपादनम्  |$1 अपाकृतानि संपादनानि}}',
@@ -37493,7 +37959,7 @@ $messages['sa'] = array(
 
 $messages['sah'] = array(
 	'returnto' => 'Төттөрү $1 сирэйгэ.',
-	'redirectedfrom' => '(Мантан: $1  көстө)',
+	'redirectedfrom' => 'Мантан: $1  көстө',
 	'redirectpagesub' => 'Утаарар сирэй',
 	'retrievedfrom' => '"$1" -н кэллэ',
 	'restorelink' => '{{PLURAL:$1|биир сотторуллубут көннөрүү|$1 сотторуллубут көннөрүүлэр}}',
@@ -37732,7 +38198,7 @@ $1",
 	'rollback_short' => 'Төннөрүү',
 	'rollbacklink' => 'төннөр',
 	'rollbackfailed' => 'Төннөрөргө моһуок үөскээтэ',
-	'revertpage' => '([[User talk:$2|Ырытыы]]) көннөрүүлэрэ: [[Special:Contributions/$2|$2]] бу торумҥа: [[User:$1|$1]] төннөрүлүннүлэр',
+	'revertpage' => '([[User talk:$2|Ырытыы]]) көннөрүүлэрэ: [[Special:Contributions/$2|$2]] бу торумҥа: $1 төннөрүлүннүлэр',
 	'revertpage-nouser' => 'Бу киһи (аата көстүбэт) уларытыылара бу киһи барылыгар төннөрүлүннүлэр [[User:$1|$1]]',
 	'rollback-success' => '$1 көннөрүүлэр бу торумҥа төннөрүлүннүлэр: $2.',
 	'restriction-type' => 'Маны оҥорор кыахтааххын:',
@@ -37762,7 +38228,7 @@ $1",
 
 $messages['sc'] = array(
 	'returnto' => 'Torra a $1.',
-	'redirectedfrom' => '(Reindiritzadu dae $1)',
+	'redirectedfrom' => 'Reindiritzadu dae $1',
 	'redirectpagesub' => 'Pàgina de reindiritzadura',
 	'retrievedfrom' => 'Bogau dae  "$1"',
 	'restorelink' => '{{PLURAL:$1|unu acontzu burradu|$1 acontzos burrados}}',
@@ -37847,7 +38313,7 @@ Is pàginas de sa [[Special:Watchlist|watchlist tua]] sunt in '''grassu'''.",
 	'rollback' => 'Annudda is acontzos',
 	'rollbacklink' => 'rollback',
 	'rollbackfailed' => 'Rollback faddidu',
-	'revertpage' => 'Burradas is mudàntzias de [[Special:Contributions/$2|$2]] ([[User talk:$2|cuntierras]]), torrada a sa versione cabudiana de [[User:$1|$1]]',
+	'revertpage' => 'Burradas is mudàntzias de [[Special:Contributions/$2|$2]] ([[User talk:$2|cuntierras]]), torrada a sa versione cabudiana de $1',
 	'restriction-type' => 'Permissu:',
 	'restriction-level' => 'Livellu de restritzioni:',
 	'restriction-edit' => 'Acontzadura',
@@ -37862,7 +38328,7 @@ Is pàginas de sa [[Special:Watchlist|watchlist tua]] sunt in '''grassu'''.",
 
 $messages['scn'] = array(
 	'returnto' => 'Ritorna a $1.',
-	'redirectedfrom' => '(Rinnirizzata di $1)',
+	'redirectedfrom' => 'Rinnirizzata di $1',
 	'redirectpagesub' => 'Pàggina di rinnirizzamentu',
 	'retrievedfrom' => 'Estrattu di "$1"',
 	'restorelink' => '{{PLURAL:$1|nu canciamentu annullatu|$1 canciamenti annullati}}',
@@ -38068,7 +38534,7 @@ Cuntrolla lu log.",
 	'rollback_short' => "Canciu n'arreri",
 	'rollbacklink' => "canciu n'arreri",
 	'rollbackfailed' => "Canciu 'n arreri fallitu",
-	'revertpage' => "Canciu narrè di [[Special:Contributions/$2|$2]] ([[User talk:$2|Discussioni]]) cu l'ùrtima virsioni di [[User:$1|$1]]",
+	'revertpage' => "Canciu narrè di [[Special:Contributions/$2|$2]] ([[User talk:$2|Discussioni]]) cu l'ùrtima virsioni di $1",
 	'rollback-success' => 'Annullati li canciamenti di $1; ritornata â virsioni pricidenti di $2.',
 	'restriction-type' => 'Pirmissu',
 	'restriction-level' => 'Liveddu di ristrizzioni:',
@@ -38091,7 +38557,7 @@ Cuntrolla lu log.",
 
 $messages['sco'] = array(
 	'returnto' => 'Return tae $1.',
-	'redirectedfrom' => '(Reguidit frae $1)',
+	'redirectedfrom' => 'Reguidit frae $1',
 	'redirectpagesub' => 'Redirect page',
 	'retrievedfrom' => 'Taen frae "$1"',
 	'restorelink' => '{{PLURAL:$1|one delete edit|$1 delete edits}}',
@@ -38179,7 +38645,7 @@ Pages on [[Special:Watchlist|your watchleet]] are '''bold'''.",
 	'rollback_short' => 'Rowback',
 	'rollbacklink' => 'rowback',
 	'rollbackfailed' => 'Rowback failed',
-	'revertpage' => 'Revertit edit o [[Special:Contributions/$2|$2]] ([[User talk:$2|Talk]]), chynged back tae last version bi [[User:$1|$1]]',
+	'revertpage' => 'Revertit edit o [[Special:Contributions/$2|$2]] ([[User talk:$2|Talk]]), chynged back tae last version bi $1',
 	'restriction-edit' => 'Edit',
 	'restriction-move' => 'Flit',
 	'restriction-create' => 'Mak',
@@ -38191,7 +38657,7 @@ Pages on [[Special:Watchlist|your watchleet]] are '''bold'''.",
 
 $messages['sd'] = array(
 	'returnto' => '$1 ڏانهن وَرو.',
-	'redirectedfrom' => '($1 کان چوريل)',
+	'redirectedfrom' => '$1 کان چوريل',
 	'redirectpagesub' => 'چوريل صفحو',
 	'retrievedfrom' => '"$1" تان ورتل',
 	'red-link-title' => '$1 (اڃا لکيل ناهي)',
@@ -38235,7 +38701,7 @@ $messages['sd'] = array(
 
 $messages['sdc'] = array(
 	'returnto' => 'Turra a $1.',
-	'redirectedfrom' => '(Rinviu da $1)',
+	'redirectedfrom' => 'Rinviu da $1',
 	'redirectpagesub' => 'Pàgina di rinviu',
 	'retrievedfrom' => 'Buggaddu da "$1"',
 	'restorelink' => '{{PLURAL:$1|una mudìfigga canzilladda|$1 mudìfigghi canzilladdi}}',
@@ -38431,7 +38897,7 @@ Eará bajasdoallit sáhtet lohkat čihkojuvvon sisdoalu ja máhcahit dan.",
 	'rollback_short' => 'Máhcaheapmi',
 	'rollbacklink' => 'máhcat',
 	'rollbackfailed' => 'Máhccan ii lihkosmuvvan',
-	'revertpage' => 'Geavaheaddji [[Special:Contributions/$2|$2]] ([[User_talk:$2|ságastallan]]) rievdadusat sihkkojuvvui ja siidu máhcahuvvui veršuvdnii, man geavaheaddji [[User:$1|$1]] lei dahkan.',
+	'revertpage' => 'Geavaheaddji [[Special:Contributions/$2|$2]] ([[User_talk:$2|ságastallan]]) rievdadusat sihkkojuvvui ja siidu máhcahuvvui veršuvdnii, man geavaheaddji $1 lei dahkan.',
 	'rollback-success' => 'Rievdadusat, maid geavaheaddji ”$1” lei dahkan, sihkojuvvui ja artihkal máhcaduvvui veršuvdnii, man geavaheaddji $2 lei dahkan.',
 	'restriction-type' => 'Rádjehus',
 	'restriction-level' => 'Suodjálus',
@@ -38446,7 +38912,7 @@ Eará bajasdoallit sáhtet lohkat čihkojuvvon sisdoalu ja máhcahit dan.",
 
 $messages['sei'] = array(
 	'returnto' => 'Jumpöx $1.',
-	'redirectedfrom' => '(Meniitomöxde $1)',
+	'redirectedfrom' => 'Meniitomöxde $1',
 	'redirectpagesub' => 'Meniitomöx páhina',
 	'retrievedfrom' => 'Paluatlde "$1"',
 	'restorelink' => '{{PLURAL:$1|1 ticpatlöx delatöx|$1 ticpatlöx delatöx}}',
@@ -38522,7 +38988,7 @@ $messages['sg'] = array(
 
 $messages['sgs'] = array(
 	'returnto' => 'Grīžtė i $1.',
-	'redirectedfrom' => '(Nokreipta ėš $1)',
+	'redirectedfrom' => 'Nokreipta ėš $1',
 	'redirectpagesub' => 'Nokreipėma poslapis',
 	'retrievedfrom' => 'Gautė ėš „$1“',
 	'restorelink' => '$1 {{PLURAL:$1|ėštrinta keitėma|ėštrintos keitėmos|ėštrintū keitėmu}}',
@@ -38613,7 +39079,7 @@ Kėtė admėnėstratuorē šėtom pruojekte vėsdar galės pasėiktė pasliepta 
 	'rollback_short' => 'Atmestė',
 	'rollbacklink' => 'atmestė',
 	'rollbackfailed' => 'Atmetims napavīka',
-	'revertpage' => 'Atmests [[Special:Contributions/$2|$2]] ([[User talk:$2|Aptarėms]]) pakeitėms; sogrōžėnta nauduotuojė [[User:$1|$1]] versėjė',
+	'revertpage' => 'Atmests [[Special:Contributions/$2|$2]] ([[User talk:$2|Aptarėms]]) pakeitėms; sogrōžėnta nauduotuojė $1 versėjė',
 	'rollback-success' => 'Atmestė $1 keitėmā; grōžėnta i paskotėne $2 versėje.',
 	'restriction-type' => 'Laidėms:',
 	'restriction-level' => 'Aprėbuojėma līgis:',
@@ -38631,7 +39097,7 @@ Kėtė admėnėstratuorē šėtom pruojekte vėsdar galės pasėiktė pasliepta 
 
 $messages['sh'] = array(
 	'returnto' => 'Povratak na $1.',
-	'redirectedfrom' => '(Preusmjereno sa $1)',
+	'redirectedfrom' => 'Preusmjereno sa $1',
 	'redirectpagesub' => 'Preusmjeri stranicu',
 	'retrievedfrom' => 'Dobavljeno iz "$1"',
 	'restorelink' => '{{PLURAL:$1|$1 izbrisana izmjena|$1 izbrisanih izmjena}}',
@@ -38870,7 +39336,7 @@ Stranice koje su na vašem [[Special:Watchlist|spisku praćenja]] su '''podeblja
 	'rollback_short' => 'Vrati',
 	'rollbacklink' => 'vrati',
 	'rollbackfailed' => 'Vraćanje nije uspjelo',
-	'revertpage' => 'Vraćene izmjene [[Special:Contributions/$2|$2]] ([[User talk:$2|razgovor]]) na posljednju izmjenu korisnika [[User:$1|$1]]',
+	'revertpage' => 'Vraćene izmjene [[Special:Contributions/$2|$2]] ([[User talk:$2|razgovor]]) na posljednju izmjenu korisnika $1',
 	'revertpage-nouser' => 'Vraćene izmjene korisnika (korisničko ime uklonjeno) na posljednju reviziju koju je načinio [[User:$1|$1]]',
 	'rollback-success' => 'Poništene izmjene korisnika $1;
 vraćeno na posljednju verziju koju je snimio $2.',
@@ -38901,7 +39367,7 @@ vraćeno na posljednju verziju koju je snimio $2.',
 
 $messages['shi'] = array(
 	'returnto' => 'Urri s $1.',
-	'redirectedfrom' => '(Tmmuttid z $1)',
+	'redirectedfrom' => 'Tmmuttid z $1',
 	'redirectpagesub' => 'Tasna n-usmmattay',
 	'retrievedfrom' => 'Yurrid z "$1"',
 	'restorelink' => '{{PLURAL:$1|Ambddel lli imḥin|imbddel lli imḥin}}',
@@ -38985,7 +39451,7 @@ Mel imbddeln z tisniwin li ittuyzdayni bla tasna li trit.',
 
 $messages['si'] = array(
 	'returnto' => '$1 ට නැවත යන්න.',
-	'redirectedfrom' => '($1 වෙතින් යළි-යොමු කරන ලදි)',
+	'redirectedfrom' => '$1 වෙතින් යළි-යොමු කරන ලදි',
 	'redirectpagesub' => 'පිටුව යළි-යොමු කරන්න',
 	'retrievedfrom' => '"$1" වෙතින් නැවත ලබාගන්නා ලදි',
 	'restorelink' => 'මකා දමනු ලැබූ {{PLURAL:$1| එක් සංස්කරණයක්| සංස්කරණ $1  ක්}}',
@@ -39224,7 +39690,7 @@ $1",
 	'rollback_short' => 'පුනරාවර්තනය',
 	'rollbacklink' => 'ප්‍රතිවර්තනය',
 	'rollbackfailed' => 'පුනරාවර්තනය අසාර්ථකයි',
-	'revertpage' => '[[Special:Contributions/$2|$2]] ([[User talk:$2|සාකච්ඡාව]]) ගේ සංස්කරණයන්  [[User:$1|$1]] ගේ අවසන් අනුවාදය වෙත ප්‍රතිවර්තනය කෙරිණි',
+	'revertpage' => '[[Special:Contributions/$2|$2]] ([[User talk:$2|සාකච්ඡාව]]) ගේ සංස්කරණයන්  $1 ගේ අවසන් අනුවාදය වෙත ප්‍රතිවර්තනය කෙරිණි',
 	'revertpage-nouser' => '(පරිශිලක නම ඉවත් කිරීමෙන්) සංස්කරණයන්  [[User:$1|$1]] මඟින් කළ අවසන් සංශෝධනයට ප්‍රතිවර්තනය කෙරිණි',
 	'rollback-success' => ' $1 විසින් සිදුකල සංස්කරණයන් ප්‍රතිවර්තනය කරන ලදි;
 $2 ගේ අවසන් අනුවාදය වෙතට යළි වෙනස් කරන ලදි .',
@@ -39255,7 +39721,7 @@ $2 ගේ අවසන් අනුවාදය වෙතට යළි වෙන
 
 $messages['sk'] = array(
 	'returnto' => 'Späť na $1.',
-	'redirectedfrom' => '(Presmerované z $1)',
+	'redirectedfrom' => 'Presmerované z $1',
 	'redirectpagesub' => 'Presmerovacia stránka',
 	'retrievedfrom' => 'Zdroj: „$1“',
 	'restorelink' => '{{PLURAL:$1|jednu zmazanú úpravu|$1 zmazané úpravy|$1 zmazaných úprav}}',
@@ -39525,7 +39991,7 @@ Stránky, ktoré sa nachádzajú vo vašom [[Special:Watchlist|zozname sledovan�
 
 $messages['sl'] = array(
 	'returnto' => 'Vrnite se na $1.',
-	'redirectedfrom' => '(Preusmerjeno z $1)',
+	'redirectedfrom' => 'Preusmerjeno z $1',
 	'redirectpagesub' => 'Preusmeritvena stran',
 	'retrievedfrom' => 'Vzpostavljeno iz »$1«',
 	'restorelink' => '$1 {{PLURAL:$1|izbrisano redakcijo|izbrisani redakciji|izbrisane redakcije|izbrisanih redakcij}}',
@@ -39764,7 +40230,7 @@ Strani iz [[Special:Watchlist|vašega spiska nadzorov]] so '''odebeljene'''.",
 	'rollback_short' => 'Vrni',
 	'rollbacklink' => 'vrni',
 	'rollbackfailed' => 'Vrnitev ni uspela',
-	'revertpage' => 'vrnitev sprememb uporabnika [[Special:Contributions/$2|$2]] ([[User talk:$2|pogovor]]) na zadnje urejanje uporabnika [[User:$1|$1]]',
+	'revertpage' => 'vrnitev sprememb uporabnika [[Special:Contributions/$2|$2]] ([[User talk:$2|pogovor]]) na zadnje urejanje uporabnika $1',
 	'revertpage-nouser' => 'vrnitev sprememb (uporabniško ime odstranjeno) na  zadnje urejanje uporabnika [[User:$1|$1]]',
 	'rollback-success' => 'Razveljavljene spremembe uporabnika $1;
 vrnjeno na urejanje uporabnika $2.',
@@ -39801,7 +40267,7 @@ vrnjeno na urejanje uporabnika $2.',
 
 $messages['sli'] = array(
 	'returnto' => 'Zurück zur Seite $1.',
-	'redirectedfrom' => '(Weitergeleitet vo $1)',
+	'redirectedfrom' => 'Weitergeleitet vo $1',
 	'retrievedfrom' => 'voo "$1"',
 	'restorelink' => '$1 {{PLURAL:$1|gelöschte Version|gelöschte Versiona}}',
 	'red-link-title' => '$1 (Seite ies nich doo)',
@@ -39975,7 +40441,7 @@ $1",
 	'rollback_short' => 'Zerrickesetza',
 	'rollbacklink' => 'Zerrickesetza',
 	'rollbackfailed' => 'Zerrickesetza gescheitert',
-	'revertpage' => 'Änderunga vu [[Special:Contributions/$2|$2]] ([[User talk:$2|Dischkur]]) rickgängig gemacht und letzte Version vu [[User:$1|$1]] wiederhergestellt',
+	'revertpage' => 'Änderunga vu [[Special:Contributions/$2|$2]] ([[User talk:$2|Dischkur]]) rickgängig gemacht und letzte Version vu $1 wiederhergestellt',
 	'rollback-success' => 'De Änderunga vu $1 wurden rickgängig gemacht und de letzte Version vu $2 wurde wiederhergestellt.',
 	'restriction-type' => 'Schutzstatus',
 	'restriction-level' => 'Schutzhiehe',
@@ -40005,7 +40471,7 @@ $messages['sm'] = array(
 
 $messages['sma'] = array(
 	'returnto' => 'Bååstide gåajkoe $1.',
-	'redirectedfrom' => '(Bïjre-dirisjovne raejeste $1)',
+	'redirectedfrom' => 'Bïjre-dirisjovne raejeste $1',
 	'redirectpagesub' => 'Bïjre-dirisjovne bielie',
 	'retrievedfrom' => 'Raejeste "$1" vïedtjeme',
 	'readonly' => 'Daatabaase steegkeldahkesne',
@@ -40081,7 +40547,7 @@ $messages['so'] = array(
 
 $messages['sq'] = array(
 	'returnto' => 'Kthehuni tek $1',
-	'redirectedfrom' => '(Përcjellë nga $1)',
+	'redirectedfrom' => 'Përcjellë nga $1',
 	'redirectpagesub' => 'Faqe përcjellëse',
 	'retrievedfrom' => 'Marrë nga "$1"',
 	'restorelink' => '{{PLURAL:$1|një redaktim i fshirë|$1 redaktime të fshira}}',
@@ -40317,7 +40783,7 @@ Faqet [[Special:Watchlist|nën mbikqyrjen tuaj]] duken të '''theksuara'''.",
 	'rollback_short' => 'Riktheje',
 	'rollbacklink' => 'riktheje',
 	'rollbackfailed' => 'Rikthimi dështoi',
-	'revertpage' => 'Ndryshimet e [[Special:Contributions/$2|$2]] ([[User talk:$2|diskutimet]]) u kthyen mbrapsht, artikulli tani ndodhet në versionin e fundit nga [[User:$1|$1]].',
+	'revertpage' => 'Ndryshimet e [[Special:Contributions/$2|$2]] ([[User talk:$2|diskutimet]]) u kthyen mbrapsht, artikulli tani ndodhet në versionin e fundit nga $1.',
 	'revertpage-nouser' => 'U rikthyen redaktimet nga (përdoruesi i larguar) në versionin e fundit nga [[User:$1|$1]]',
 	'rollback-success' => 'Ndryshimet e $1 u kthyen mbrapsh; artikulli ndodhet tek verzioni i $2.',
 	'restriction-type' => 'Lejet:',
@@ -40343,294 +40809,11 @@ Faqet [[Special:Watchlist|nën mbikqyrjen tuaj]] duken të '''theksuara'''.",
 	'revdelete-uname-unhid' => 'emri i përdoruesit jo i fshehur',
 	'revdelete-restricted' => 'u vendosën kufizime për administruesit',
 	'revdelete-unrestricted' => 'u hoqën kufizimet për administruesit',
-);
-
-$messages['sr'] = array(
-	'returnto' => 'Kthehuni tek $1',
-	'redirectedfrom' => '(Përcjellë nga $1)',
-	'redirectpagesub' => 'Faqe përcjellëse',
-	'retrievedfrom' => 'Marrë nga "$1"',
-	'restorelink' => '{{PLURAL:$1|një redaktim i fshirë|$1 redaktime të fshira}}',
-	'red-link-title' => '$1 (faqja nuk ekziston)',
-	'readonly' => 'Databaza e kyçur',
-	'readonlytext' => 'Databaza është për momentin e kyçur, nuk lejohen ndryshime ose modifikime, ndoshta për shkak të rutinës së mirëmbajtjes. Pas përfundimit të mirëmbajtjes databaza do të hapet përsëri.
-
-Administratori që e kyçi dha këtë arsye: $1',
-	'readonly_lag' => "Databaza është kyçur automatikisht për t'i dhënë kohë serverëve databazë slave që të arrijnë në një nivel me serverin databazë master",
-	'remembermypassword' => 'Mbaj mënd fjalëkalimin tim për tërë vizitat e ardhshme (për një kohë maksimale prej $1 {{PLURAL:$1|dite|ditësh}})',
-	'resetpass' => 'Ndrysho fjalëkalimin',
-	'resetpass_announce' => 'Ju keni hyrë me një kod të përkohshëm.
-Për të hyrë tërësisht duhet të vendosni një fjalëkalim të ri këtu:',
-	'resetpass_header' => 'Ndrysho fjalëkalimin e llogarisë',
-	'retypenew' => 'I riu përsëri',
-	'resetpass_submit' => 'Ndrysho fjalëkalimin dhe hyni brenda',
-	'resetpass_success' => 'Fjalëkalimi juaj është ndryshuar me sukses! Mund të hyni brenda...',
-	'resetpass_forbidden' => 'Fjalëkalimet nuk mund të ndryshohen',
-	'resetpass-no-info' => 'Duhet të jeni i kyçur që të keni qasje direkte në këtë faqe.',
-	'resetpass-submit-loggedin' => 'Ndrysho fjalëkalimin',
-	'resetpass-submit-cancel' => 'Anulo',
-	'resetpass-wrong-oldpass' => 'Fjalëkalimi momental ose i përkohshëm nuk është i vlefshëm. Ndoshta tanimë me sukses keni ndërruar fjalëkalimin, ose keni kërkuar fjalëkalim të përkohshëm.',
-	'resetpass-temp-password' => 'Fjalëkalimi i përkohshëm:',
-	'readonlywarning' => "'''Kujdes: Baza e të dhënave është mbyllur për mirëmbajtje, prandaj ju nuk do të mund të ruani redaktimin tuaj për momentin.'''
-Ju mund të kopjoni tekstin dhe ta ruani për më vonë në një dokument tjetër.'''
-
-Administruesi që e bllokoi ka dhënë këtë sqarim: $1.",
-	'recreate-moveddeleted-warn' => "'''Kujdes: Po rikrijoni një faqe që është grisur më parë.'''
-
-Mendohuni nëse dëshironi të vazhdoni me veprimin tuaj në këtë faqe.
-Regjistri i grisjes për këtë faqe jepet më poshtë:",
-	'revisionasof' => 'Versioni i $1',
-	'revision-info' => 'Versioni më $1 nga $2',
-	'rev-deleted-comment' => '(Edit përmbledhje larguar)',
-	'rev-deleted-user' => '(përdoruesi u largua)',
-	'rev-deleted-event' => '(veprimi në regjistër është hequr)',
-	'rev-deleted-user-contribs' => '[Përdoruesi ose adresa IP u hoq - redaktimet e  fshehura nga kontribuesit]',
-	'rev-deleted-text-permission' => "Versioni i kësaj faqeje është '''fshirë'''.
-Detajet mund të gjenden tek [{{fullurl:{{#Special:Log}}/delete={{FULLPAGENAME}}}} regjistri i grisjeve].",
-	'rev-deleted-text-unhide' => "Ky version i faqes është '''grisur'''.
-Detajet mund të gjenden tek [{{fullurl:{{#Special:Log}}/delete|page={{FULLPAGENAME}}}} regjistri i grisjeve].
-Ju akoma mund ta [$1 shikoni këtë version] nëse doni të vazhdoni.",
-	'rev-suppressed-text-unhide' => "Ky version i faqes është '''grisur'''.
-Detajet mund të gjenden tek [{{fullurl:{{#Special:Log}}/delete|page={{FULLPAGENAME}}}} regjistri i grisjeve].
-Ju akoma mund ta [$1 shikoni këtë version] nëse doni të vazhdoni.",
-	'rev-deleted-text-view' => "Ky version i faqes është '''grisur'''.
-Ju mund ta shikoni; detajet mund të gjenden te [{{fullurl:{{#Special:Log}}/suppress|page={{FULLPAGENAMEE}}}} regjistri i grisjeve].",
-	'rev-suppressed-text-view' => "Ky version i faqes është '''shtypur'''.
-Ju mund ta shikoni; detajet mund të gjenden te [{{fullurl:{{#Special:Log}}/suppress|page={{FULLPAGENAMEE}}}} regjistri i shtypjeve].",
-	'rev-deleted-no-diff' => "Ju nuk mund ta shikoni këtë ndryshim sepse një nga versionet është '''fshirë'''.
-Detajet mund të gjenden tek [{{fullurl:{{#Special:Log}}/delete={{FULLPAGENAME}}}} regjistri i grisjeve].",
-	'rev-suppressed-no-diff' => "Ju nuk mund ta shikoni këtë ndryshim sepse një nga versionet është '''grisur'''.",
-	'rev-deleted-unhide-diff' => "Një nga versionet e këtij ndryshimi është '''grisur'''.
-Detajet mund të gjenden tek [{{fullurl:{{#Special:Log}}/delete|page={{FULLPAGENAME}}}} regjistri i grisjeve].
-Ju akoma mund ta [$1 shikoni këtë version] nëse doni të vazhdoni.",
-	'rev-suppressed-unhide-diff' => "Një nga versionet e këtij ndryshimi është '''shtypur'''.
-Detajet mund të gjenden tek [{{fullurl:{{#Special:Log}}/suppress|page={{FULLPAGENAME}}}} regjistri i shtypjeve].
-Ju akoma mund ta [$1 shikoni këtë version] nëse doni të vazhdoni.",
-	'rev-deleted-diff-view' => "Një nga versionet e këtij ndryshimi është '''grisur'''.
-Ju mund ta shikoni këtë ndryshim; detajet mund të gjenden te [{{fullurl:{{#Special:Log}}/delete|page={{FULLPAGENAMEE}}}} regjistri i grisjeve].",
-	'rev-suppressed-diff-view' => "Një nga versionet e këtij ndryshimi është '''shtypur'''.
-Ju mund ta shikoni këtë ndryshim; detajet mund të gjenden te [{{fullurl:{{#Special:Log}}/suppress|page={{FULLPAGENAMEE}}}} regjistri i shtypjeve].",
-	'rev-delundel' => 'trego/fshih',
-	'rev-showdeleted' => 'Trego',
-	'revisiondelete' => 'Shlyj/Reparo versionet',
-	'revdelete-nooldid-title' => 'Version i dëshiruar i pavfleshëm',
-	'revdelete-nooldid-text' => 'Ose nuk keni përcaktuar një version(e) të dëshiruar për veprimin, ose versioni nuk ekziston, ose po mundoheni të fshihni versionin e tanishëm.',
-	'revdelete-nologtype-title' => 'Nuk është dhënë asnjë lloj i të dhënave',
-	'revdelete-nologtype-text' => 'Nuk keni caktuar llojin e të dhënave për të realizuar veprimin.',
-	'revdelete-nologid-title' => 'Regjistër i pavlefshëm',
-	'revdelete-nologid-text' => 'Ju ose nuk keni specifikuar një ngjarje target kyçje për të kryer këtë funksion ose hyrja e specifikuar nuk ekziston.',
-	'revdelete-no-file' => 'Skeda e dhënë nuk ekziston.',
-	'revdelete-show-file-confirm' => 'Jeni i/e sigurt se dëshironi të shikoni një version të grisur të skedës "<nowiki>$1</nowiki>" nga $2 tek $3?',
-	'revdelete-show-file-submit' => 'Po',
-	'revdelete-selected' => "'''{{PLURAL:$2|Versioni i zgjedhur i|Versionet e zgjedhura të}} [[:$1]]:'''",
-	'revdelete-text' => "'''Përmbajtja dhe pjesët e tjera nuk janë të dukshme për të gjithë, por figurojnë në historikun e versioneve.''' Administratorët munden përmbajtjen e larguar ta shikojnë dhe restaurojnë, përveç në rastet kur një gjë e tillë është ndaluar ekstra.",
-	'revdelete-confirm' => 'Ju lutem konfirmoni që keni ndër mënd ta bëni këtë, që i kuptoni pasojat, dhe që ju po veproni në përputhje me [[{{MediaWiki:Policy-url}}|politiken]].',
-	'revdelete-suppress-text' => "Shuarje duhet'''vetëm'''të përdoret për rastet e mëposhtme:
- * Potencialisht e informacionit shpifës
- * Informacion i pa kriter personal
- *: Adresat në shtëpi''dhe numrat e telefonit, numrat e sigurimeve shoqërore, etj''",
-	'revdelete-legend' => 'Vendosni kufizimet për versionin:',
-	'revdelete-hide-text' => 'Fshihe tekstin e versionit',
-	'revdelete-hide-image' => 'Fshih përmbajtjen skedës',
-	'revdelete-hide-name' => 'Fshihe veprimin dhe shënjestrën',
-	'revdelete-hide-comment' => 'fshih komentin e redaktimit',
-	'revdelete-hide-user' => 'Fshihe emrin/IP-në të redaktuesit',
-	'revdelete-hide-restricted' => 'Ndalo të dhëna nga administrues si dhe të tjerë',
-	'revdelete-radio-same' => '(Mos ndryshoni)',
-	'revdelete-radio-set' => 'Po',
-	'revdelete-radio-unset' => 'Jo',
-	'revdelete-suppress' => 'Ndalo të dhëna nga administrues si dhe të tjerë',
-	'revdelete-unsuppress' => 'Hiq kufizimet nga versionet e restauruara',
-	'revdelete-log' => 'Arsyeja:',
-	'revdelete-submit' => 'Aplikoni tek {{PLURAL:$1|revision|versionet}} e zgjedhura',
-	'revdelete-success' => "'''Dukshmëria e versioneve u vendos me sukses.'''",
-	'revdelete-failure' => "' ' 'Dukshmëria e rivizionit nuk mund të përditëohet\"
-\$1",
-	'revdel-restore' => 'Ndrysho dukshmërinë',
-	'revdel-restore-deleted' => 'fshij rivizonet',
-	'revdel-restore-visible' => 'rivizionet e dukshme',
-	'revdelete-hide-current' => 'Gabim në fshehje të pikës me datë $2, $1: ky është rivizioni i tanishëm.
-Nuk mund të fshihet',
-	'revdelete-show-no-access' => 'Gabim gjatë shfaqjes së artikullit të datës $2, $1: ky artikull ka qenë i shënuar si "i kufizuar".
-Ju nuk keni akses.',
-	'revdelete-modify-no-access' => 'Gabim gjatë modifikimit të artikullit të datës $2, $1: ky artikull ka qenë i shënuar si "i kufizuar".
-Ju nuk keni akses.',
-	'revdelete-modify-missing' => 'Gabim gjatë modifikimit të artikullit ID $1: ai nuk është në bazën e të dhënave!',
-	'revdelete-no-change' => "'''Kujdes:''' artikulli i datës $2, $1 e ka kërkesën e parametrit të dukshmërisë.",
-	'revdelete-concurrent-change' => 'Gabim gjatë modifikimit të artikullit të datës $2, $1: statusi i tij duket të jetë ndryshuar nga dikush tjetër kur ju po provonit ta modifikonit.
-Ju lutemi kontrolloni regjistrat.',
-	'revdelete-only-restricted' => 'Gabim gjatë fshehjes së artikullit të datës $2, $1: ju nuk mund të fshihni artikuj nga pamja e administratorëve pa zgjedhur gjithashtu një nga opsionet e tjera të dukshmërisë.',
-	'revdelete-reason-dropdown' => '* Arsye grisjeje e përbashkët
-** Shkelje të të drejtave të autorit
-** Informacion pa  kriter personal
-** Potencialisht informacion shfipës',
-	'revdelete-otherreason' => 'Arsye tjetër/shtesë:',
-	'revdelete-reasonotherlist' => 'Arsye tjetër',
-	'revdelete-edit-reasonlist' => 'Arsye grisjeje për redaktimet',
-	'revdelete-offender' => 'Versioni i autorit',
-	'revertmerge' => 'Ndaj',
-	'resetprefs' => 'Rikthe parapëlqimet',
-	'restoreprefs' => 'Rikthe të gjitha të dhënat e mëparshme',
-	'rows' => 'Rreshta:',
-	'resultsperpage' => 'Sa përputhje të tregohen për faqe:',
-	'recentchangesdays' => 'Numri i ditëve të treguara në ndryshime së fundmi:',
-	'recentchangesdays-max' => '(maksimum $1 {{PLURAL:$1|dit|ditë}})',
-	'recentchangescount' => 'Numri i redaktimeve për të treguar:',
-	'right-read' => 'Lexo faqe',
-	'right-edit' => 'Redakto faqet',
-	'right-createpage' => 'Hap faqe (që nuk janë faqe diskutimi)',
-	'right-createtalk' => 'Hap faqe diskutimi',
-	'right-createaccount' => 'Hap llogari të re',
-	'right-minoredit' => 'Shëno redaktimet si të vogla',
-	'right-move' => 'Lëviz faqet',
-	'right-move-subpages' => 'Lëviz faqet me nënfaqet e tyre',
-	'right-move-rootuserpages' => 'Lëviz burimin e faqes së përdoruesit',
-	'right-movefile' => 'Lëviz skedarët',
-	'right-suppressredirect' => 'Mos krijo zhvendosje nga emri i vjetër kur lëvizë një faqe',
-	'right-upload' => 'Ngarko skedarë',
-	'right-reupload' => 'Ringarko skedën ekzistuese',
-	'right-reupload-own' => 'Ringarko skedën ekzistuese të ngarkuar vetë',
-	'right-reupload-shared' => 'Mos pranoni skeda në media magazinën e përbashkët në nivel lokal',
-	'right-upload_by_url' => 'Ngarko skedë nga ndonjë URL',
-	'right-purge' => 'Pastro "cache" e site-it për një faqe pa konfirmim',
-	'right-autoconfirmed' => 'Redakto faqet gjysmë të mbrojtura',
-	'right-bot' => 'Trajtohu si një proces automatik',
-	'right-nominornewtalk' => 'Nuk kanë redaktimet e vogla për faqet e diskutimit të shkaktuar mesazhe të reja e shpejtë',
-	'right-apihighlimits' => 'Vendosni kufijtë më të lartë në pyetjet API',
-	'right-writeapi' => 'Përdorimi i shkrimit API',
-	'right-delete' => 'Gris faqet',
-	'right-bigdelete' => 'Gris faqet me histori të gjata',
-	'right-deleterevision' => 'Grisi dhe riktheji revizionet specifike të faqeve',
-	'right-deletedhistory' => 'Shiko shënimet e grisura të historikut, pa tekstet e tyre të shoqëruara',
-	'right-deletedtext' => 'Shiko tekstin dhe ndryshimet e grisura ndërmjet versioneve të grisura',
-	'right-browsearchive' => 'Kërko faqe të grisura',
-	'right-undelete' => 'Rikthe faqen',
-	'right-suppressrevision' => 'Rishiko dhe rikthe versionet e fshehura nga administratorët',
-	'right-suppressionlog' => 'Shiko hyrjet private',
-	'right-block' => 'Blloko përdoruesit tjerë nga editimi',
-	'right-blockemail' => 'Blloko përdoruesin që të mos dërgojë postë elektronike',
-	'right-hideuser' => 'Blloko përdorues, duke fshehur nga publiku',
-	'right-ipblock-exempt' => 'Anashkalo bllokimet e IP-ve, auto-bllokimet dhe linjën e bllokimeve',
-	'right-proxyunbannable' => 'Anashkalo bllokimet automatike të ndërmjetësve',
-	'right-unblockself' => 'Zhblloko veten',
-	'right-protect' => 'Ndrysho nivelin mbrojtës dhe redakto faqet e mbrojtura',
-	'right-editprotected' => 'Redakto faqet e mbrojtura (pa ndryshuar mbrojtjen)',
-	'right-editinterface' => 'Ndrysho parapamjen e përdoruesit',
-	'right-editusercssjs' => 'Redakto skedat CSS dhe JS të përdoruesve tjerë',
-	'right-editusercss' => 'Redakto skedat CSS të përdoruesve tjerë',
-	'right-edituserjs' => 'Redakto skedat JS të përdoruesve tjerë',
-	'right-rollback' => 'Rikthen shpejt redaktimet  e pedaktuesit të fundit',
-	'right-markbotedits' => 'Shëno rikthimet si redaktime robotësh',
-	'right-noratelimit' => 'Mos u prek nga kufizimet e vlerësimit',
-	'right-import' => 'Importo faqe nga wiki tjera',
-	'right-importupload' => 'Importo faqet nga një ngarkim skede',
-	'right-patrol' => 'Shëno redaktimin e tjerëve si të patrulluar',
-	'right-autopatrol' => 'A e vet redaktimet e shënuar automatikisht patrulluar',
-	'right-patrolmarks' => 'Shiko ndryshimet e fundit shënon patrullë',
-	'right-unwatchedpages' => 'Shiko listën e faqeve të pa vëzhguara',
-	'right-mergehistory' => 'Bashko historinë e faqeve',
-	'right-userrights' => 'Redakto të gjitha të drejtat e përdoruesit',
-	'right-userrights-interwiki' => 'Ndrysho të drejtat e përdoruesve në wiki të tjera',
-	'right-siteadmin' => 'Mbyll ose hap bazën e të dhënave',
-	'right-override-export-depth' => 'Eksoprto faqet duke përfshirë e lidhura deri në një thellësi prej 5',
-	'right-sendemail' => 'Dërgo e-mail tek përdoruesit e tjerë',
-	'right-passwordreset' => 'Shiko e-mail-et e rivendosjes së fjalëkalimit',
-	'rightslog' => 'Regjistri i privilegjeve të përdoruesit',
-	'rightslogtext' => 'Ky është një regjistër për ndryshimet e privilegjeve të përdoruesit.',
-	'rightslogentry' => 'u ndryshua anëtarësimi i grupit për $1 nga $2 tek $3',
-	'rightslogentry-autopromote' => 'automatikisht u rrit në datyrë nga $2 në $3',
-	'rightsnone' => '(asgjë)',
-	'recentchanges' => 'Ndryshimet e fundit',
-	'recentchanges-legend' => 'Zgjedhjet e ndryshimeve momentale',
-	'recentchangestext' => 'Ndiqni ndryshime së fundmi tek kjo faqe.',
-	'recentchanges-feed-description' => 'Ndjek ndryshimet më të fundit në wiki tek kjo fushë.',
-	'recentchanges-label-newpage' => 'Ky redaktim krijoi një faqe të re',
-	'recentchanges-label-minor' => 'Ky është një editim i vogël',
-	'recentchanges-label-bot' => 'Ky editim është kryer nga një bot',
-	'recentchanges-label-unpatrolled' => 'Ky editim ende nuk është patrolluar',
-	'rcnote' => "Më poshtë {{PLURAL:$1|është '''1''' ndryshim| janë '''$1''' ndryshime}} së fundmi gjatë <strong>$2</strong> ditëve sipas të dhënave nga $4, $5.",
-	'rcnotefrom' => 'Më poshtë janë ndryshime së fundmi nga <b>$2</b> (treguar deri në <b>$1</b>).',
-	'rclistfrom' => 'Tregon ndryshime së fundmi duke filluar nga $1',
-	'rcshowhideminor' => '$1 redaktimet e vogla',
-	'rcshowhidebots' => '$1 robotët',
-	'rcshowhideliu' => '$1 përdoruesit e regjistruar',
-	'rcshowhideanons' => '$1 përdoruesit anonim',
-	'rcshowhidepatr' => '$1 redaktime të patrulluara',
-	'rcshowhidemine' => '$1 redaktimet e mia',
-	'rclinks' => 'Trego $1 ndryshime gjatë $2 ditëve<br />$3',
-	'rc_categories' => 'Kufizimi i kategorive (të ndara me "|")',
-	'rc_categories_any' => 'Të gjitha',
-	'rc-enhanced-expand' => 'Trego detajet (kërkon JavaScript)',
-	'rc-enhanced-hide' => 'Fshih detajet',
-	'recentchangeslinked' => 'Ndryshime të ndërvarura',
-	'recentchangeslinked-feed' => 'Ndryshime të ndërvarura',
-	'recentchangeslinked-toolbox' => 'Ndryshime të ndërvarura',
-	'recentchangeslinked-title' => 'Ndryshime që kanë lidhje me "$1"',
-	'recentchangeslinked-noresult' => 'Nuk ka pasur ndryshime tek faqet e lidhura gjatë kohës së dhënë.',
-	'recentchangeslinked-summary' => "Kjo është një listë e ndryshimeve së fundmi të faqeve të lidhura nga faqja e dhënë (ose bëjnë pjesë tek kategoria e dhënë).
-Faqet [[Special:Watchlist|nën mbikqyrjen tuaj]] duken të '''theksuara'''.",
-	'recentchangeslinked-page' => 'Emri i faqes:',
-	'recentchangeslinked-to' => 'Trego ndryshimet e faqeve që lidhen tek faqja e dhënë',
-	'reuploaddesc' => 'Kthehu tek formulari i dhënies.',
-	'randompage' => 'Faqe e rastit',
-	'randompage-nopages' => 'Nuk ka faqe në {{PLURLA:$2|hapësirën|hapësirat}} në vijim: $1',
-	'randomredirect' => 'Përcjellim i rastit',
-	'randomredirect-nopages' => 'Nuk ka përcjellim në "$1".',
-	'removewatch' => 'Largo nga lista mbikqyrëse',
-	'removedwatchtext' => 'Faqja "[[:$1]]" është hequr nga [[Special:Watchlist|lista mbikqyrëse e juaj]].',
-	'reverted' => 'Kthehu tek një version i vjetër',
-	'rollback' => 'Riktheji mbrapsh redaktimet',
-	'rollback_short' => 'Riktheje',
-	'rollbacklink' => 'riktheje',
-	'rollbackfailed' => 'Rikthimi dështoi',
-	'revertpage' => 'Ndryshimet e [[Special:Contributions/$2|$2]] ([[User talk:$2|diskutimet]]) u kthyen mbrapsht, artikulli tani ndodhet në versionin e fundit nga [[User:$1|$1]].',
-	'revertpage-nouser' => 'U rikthyen redaktimet nga (përdoruesi i larguar) në versionin e fundit nga [[User:$1|$1]]',
-	'rollback-success' => 'Ndryshimet e $1 u kthyen mbrapsh; artikulli ndodhet tek verzioni i $2.',
-	'restriction-type' => 'Lejet:',
-	'restriction-level' => 'Mbrojtjet:',
-	'restriction-edit' => 'Redaktimi',
-	'restriction-move' => 'Zhvendosja',
-	'restriction-create' => 'Krijo',
-	'restriction-upload' => 'Ngarko',
-	'restriction-level-sysop' => 'mbrojtje e plotë',
-	'restriction-level-autoconfirmed' => 'gjysëm mbrojtje',
-	'restriction-level-all' => 'çdo nivel',
-	'reblock-logentry' => 'ndryshoi parametrat e bllokimit për [[$1]] me një kohë prej $2 $3',
-	'range_block_disabled' => 'Mundësia e administruesve për të bllokuar me shtrirje është çaktivizuar.',
-	'revertmove' => 'ktheje',
-	'rcpatroldisabled' => 'Kontrollimi i ndryshimeve së fundmi është bllokuar',
-	'rcpatroldisabledtext' => 'Kontrollimi i ndryshimeve së fundmi nuk është i mundshëm për momentin.',
-	'recreate' => 'Rikrijo',
-	'revdelete-content-hid' => 'përmbajtja u fsheh',
-	'revdelete-summary-hid' => 'redaktimi i përmbledhjes i fshehur',
-	'revdelete-uname-hid' => 'emri i përdoruesit i fshehur',
-	'revdelete-content-unhid' => 'përmbajtje jo e fshehur',
-	'revdelete-summary-unhid' => 'redaktimi i përmbledhjes jo i fshehur',
-	'revdelete-uname-unhid' => 'emri i përdoruesit jo i fshehur',
-	'revdelete-restricted' => 'u vendosën kufizime për administruesit',
-	'revdelete-unrestricted' => 'u hoqën kufizimet për administruesit',
-	'return_to_article' => 'povratak na artikal',
-	'return_to_talk' => 'povratak na diskusiju',
-	'return_to_user' => 'Povratak na korisnicku stranu',
-	'return_to_project' => 'povratak na projekt stranu',
-	'return_to_image' => 'povratak na sliku',
-	'return_to_message' => 'povratak na poruke',
-	'return_to_template' => 'povratak na šablon',
-	'return_to_help' => 'povratak na pomoćnu stranu',
-	'return_to_category' => 'povratak na kategorije',
-	'return_to_forum' => 'povratak na forum stranu',
-	'return_to_special' => 'povratak na specijalnu stranu',
-	'rate_it' => 'Ocenite:',
-	'review_reason_1' => 'Razlog ispravke 1',
-	'review_reason_2' => 'Razlog ispravke 2',
-	'review_reason_3' => 'Razlog ispravke 3',
-	'review_reason_4' => 'Razlog ispravke 4',
-	'review_reason_5' => 'Razlog ispravke 5',
 );
 
 $messages['sr-ec'] = array(
 	'returnto' => 'Назад на $1.',
-	'redirectedfrom' => '(преусмерено са $1)',
+	'redirectedfrom' => 'преусмерено са $1',
 	'redirectpagesub' => 'Преусмерење',
 	'retrievedfrom' => 'Преузето из „$1“',
 	'restorelink' => '{{PLURAL:$1|обрисану измену|$1 обрисане измене|$1 обрисаних измена}}',
@@ -40872,7 +41055,7 @@ $1",
 	'rollback_short' => 'Врати',
 	'rollbacklink' => 'врати',
 	'rollbackfailed' => 'Неуспешно враћање',
-	'revertpage' => 'Враћене су измене {{GENDER:$2|корисника|кориснице|корисника}} [[Special:Contributions/$2|$2]] ([[User talk:$2|разговор]]) на последњу измену члана [[User:$1|$1]]',
+	'revertpage' => 'Враћене су измене {{GENDER:$2|корисника|кориснице|корисника}} [[Special:Contributions/$2|$2]] ([[User talk:$2|разговор]]) на последњу измену члана $1',
 	'revertpage-nouser' => 'Враћене су измене корисника (корисничко име је уклоњено) на последњу измену члана [[User:$1|$1]]',
 	'rollback-success' => 'Враћене су измене {{GENDER:$1|корисника|кориснице|корисника}} $1
 на последњу измену {{GENDER:$2|корисника|кориснице|корисника}} $2.',
@@ -40903,7 +41086,7 @@ $1",
 
 $messages['sr-el'] = array(
 	'returnto' => 'Povratak na $1.',
-	'redirectedfrom' => '(Preusmereno sa $1)',
+	'redirectedfrom' => 'Preusmereno sa $1',
 	'redirectpagesub' => 'Stranica preusmerenja',
 	'retrievedfrom' => 'Dobavljeno iz "$1"',
 	'restorelink' => '{{PLURAL:$1|jedna obrisana izmena|$1 obrisane izmene|$1 obrisanih izmena}}',
@@ -41130,7 +41313,7 @@ Stranice sa [[Special:Watchlist|vašeg spiska nadgledanja]] su '''podebljane'''.
 	'rollback_short' => 'Vrati',
 	'rollbacklink' => 'vrati',
 	'rollbackfailed' => 'Vraćanje nije uspelo',
-	'revertpage' => 'Vraćene izmene od [[{{ns:special}}:Contributions/$2|$2]] ([[User_talk:$2|razgovor]]) na poslednju izmenu od korisnika [[User:$1|$1]]',
+	'revertpage' => 'Vraćene izmene od [[{{ns:special}}:Contributions/$2|$2]] ([[User_talk:$2|razgovor]]) na poslednju izmenu od korisnika $1',
 	'rollback-success' => 'Vraćene izmene od strane $1; na poslednju izmenu od strane $2.',
 	'restriction-type' => 'Ovlašćenje:',
 	'restriction-level' => 'Nivo zaštite:',
@@ -41152,7 +41335,7 @@ Stranice sa [[Special:Watchlist|vašeg spiska nadgledanja]] su '''podebljane'''.
 
 $messages['srn'] = array(
 	'returnto' => 'Drai baka go na $1.',
-	'redirectedfrom' => '(Seni komopo fu $1)',
+	'redirectedfrom' => 'Seni komopo fu $1',
 	'redirectpagesub' => 'Seni doro papira',
 	'retrievedfrom' => 'Teki baka fu "$1"',
 	'restorelink' => '$1 taki de ben puru',
@@ -41211,7 +41394,7 @@ Papira ini [[Special:Watchlist|yu Tan Luku réy]] '''fatu'''.",
 
 $messages['ss'] = array(
 	'returnto' => 'Buyela ku $1.',
-	'redirectedfrom' => '(Utfunyelelwe likhasi $1)',
+	'redirectedfrom' => 'Utfunyelelwe likhasi $1',
 	'redirectpagesub' => 'Likhasi lekutfumela',
 	'retrievedfrom' => 'Kutsatfwe ku "$1"',
 	'restriction-edit' => 'Hlela',
@@ -41229,7 +41412,7 @@ $messages['st'] = array(
 
 $messages['stq'] = array(
 	'returnto' => 'Tourääch tou Siede $1.',
-	'redirectedfrom' => '(Fäärelaited fon $1)',
+	'redirectedfrom' => 'Fäärelaited fon $1',
 	'redirectpagesub' => 'Fäärelaitenge',
 	'retrievedfrom' => 'Fon "$1"',
 	'restorelink' => '{{PLURAL:$1|1 läskede Beoarbaidengsfoargang|$1 läskede Beoarbaidengsfoargange}}',
@@ -41464,7 +41647,7 @@ Wröigje do Logbouke.',
 	'rollback_short' => 'Touräächsätte',
 	'rollbacklink' => 'touräächsätte',
 	'rollbackfailed' => 'Touräächsätten misglukked',
-	'revertpage' => 'Tounichte moakede Beoarbaidengen fon [[Special:Contributions/$2|$2]] ([[User talk:$2|Talk]]) tou ju lääste Version fon [[User:$1|$1]]',
+	'revertpage' => 'Tounichte moakede Beoarbaidengen fon [[Special:Contributions/$2|$2]] ([[User talk:$2|Talk]]) tou ju lääste Version fon $1',
 	'revertpage-nouser' => 'Annerengen fon (Benutsernoome wächhoald) touräächtroald un lääste Version fon [[User:$1|$1]] wier häärstoald',
 	'rollback-success' => 'Do Annerengen fon $1 wuuden tourääch annerd un ju lääste Version fon $2 wuude wier moaked.',
 	'restriction-type' => 'Skutsstoatus',
@@ -41488,7 +41671,7 @@ Wröigje do Logbouke.',
 
 $messages['su'] = array(
 	'returnto' => 'Balik deui ka $1.',
-	'redirectedfrom' => '(dipindahkeun ti $1)',
+	'redirectedfrom' => 'dipindahkeun ti $1',
 	'redirectpagesub' => 'Kaca alihan',
 	'retrievedfrom' => 'Disalin ti "$1"',
 	'restorelink' => '$1 {{PLURAL:$1|éditan|éditan}} dihapus',
@@ -41724,15 +41907,15 @@ Anjeun teu diwenangkeun asup.',
 
 $messages['sv'] = array(
 	'returnto' => 'Tillbaka till $1.',
-	'redirectedfrom' => '(Omdirigerad från $1)',
+	'redirectedfrom' => 'Omdirigerad från $1',
 	'redirectpagesub' => 'Omdirigeringssida',
 	'retrievedfrom' => 'Hämtad från "$1"',
 	'restorelink' => '{{PLURAL:$1|en raderad version|$1 raderade versioner}}',
 	'red-link-title' => '$1 (sidan existerar inte)',
 	'readonly' => 'Databasen är skrivskyddad',
-	'readonlytext' => 'Databasen är tillfälligt låst för nya inlägg och andra modifieringar, förmodligen på grund av rutinmässigt underhåll, efter vilket den kommer den att återgå till normalläge.
+	'readonlytext' => 'Databasen är tillfälligt låst.
 
-Den administratör som låste den har angivit följande förklaring: $1',
+$1',
 	'readonly_lag' => 'Databasen har automatiskt skrivskyddats medan slavdatabasservrarna synkroniseras med huvudservern.',
 	'remembermypassword' => 'Spara min inloggning på den här datorn (i max $1 {{PLURAL:$1|dygn|dygn}})',
 	'resetpass' => 'Ändra lösenord',
@@ -41922,7 +42105,7 @@ Vänligen kontrollera loggarna.',
 	'rightsnone' => '(inga)',
 	'recentchanges' => 'Senaste ändringarna',
 	'recentchanges-legend' => 'Alternativ för senaste ändringarna',
-	'recentchangestext' => 'Följ de senaste ändringarna i wikin på denna sida.',
+	'recentchangestext' => '<div id="wikia-mediawiki-recentchangestext" style="border:2px solid #e9e9e9; margin-bottom:0.3em; padding:0.2em 0.5em;"><span style="float:left;">[[Special:NewPages|Nya sidor]] – [[Special:NewImages|Nya filer]] – [[Special:Log|Loggar]]</span><span style="float:right;">[[Help:Recent changes|Hjälp:Senaste ändringar]]</span><div style="clear:both;"></div></div>',
 	'recentchanges-feed-description' => 'Följ de senaste ändringarna i wikin genom den här matningen.',
 	'recentchanges-label-newpage' => 'Denna redigering skapade en ny sida',
 	'recentchanges-label-minor' => 'Detta är en mindre ändring',
@@ -41930,14 +42113,14 @@ Vänligen kontrollera loggarna.',
 	'recentchanges-label-unpatrolled' => 'Denna redigering har inte blivit kontrollerad ännu',
 	'rcnote' => "Nedan visas {{PLURAL:$1|'''1''' ändring|de senaste '''$1''' ändringarna}} från {{PLURAL:$2|det senaste dygnet|de senaste '''$2''' dygnen}}, per $4, kl. $5.",
 	'rcnotefrom' => "Nedan visas ändringar sedan '''$2''' (upp till '''$1''' visas).",
-	'rclistfrom' => 'Visa ändringar efter $1',
+	'rclistfrom' => '<div style="float:right; font-size: 70%; position: absolute; right: 5px; bottom: 0px;">Visa förändringar sedan $1</div>',
 	'rcshowhideminor' => '$1 mindre ändringar',
 	'rcshowhidebots' => '$1 robotar',
 	'rcshowhideliu' => '$1 inloggade användare',
 	'rcshowhideanons' => '$1 oinloggade användare',
 	'rcshowhidepatr' => '$1 kontrollerade redigeringar',
 	'rcshowhidemine' => '$1 mina ändringar',
-	'rclinks' => 'Visa senaste $1 ändringar under de senaste $2 dygnen<br />$3',
+	'rclinks' => 'Visa senaste $1 ändringar under de senaste $2 dagar<br />$3',
 	'rc_categories' => 'Begränsa till följande kategorier (separera med "|")',
 	'rc_categories_any' => 'Vilken som helst',
 	'rc-change-size-new' => '$1 {{PLURAL:$1|byte|bytes}} efter ändring',
@@ -41964,7 +42147,7 @@ Sidor på [[Special:Watchlist|din bevakningslista]] är markerade med '''fetstil
 	'rollback_short' => 'Återställning',
 	'rollbacklink' => 'rulla tillbaka',
 	'rollbackfailed' => 'Tillbakarullning misslyckades',
-	'revertpage' => 'Återställde redigeringar av  [[Special:Contributions/$2|$2]] ([[User talk:$2|användardiskussion]]) till senaste versionen av [[User:$1|$1]]',
+	'revertpage' => 'Återställde redigeringar av [[Special:Contributions/$2|$2]] ([[User talk:$2|användardiskussion]]) till senaste versionen av $1',
 	'revertpage-nouser' => 'Återställda redigeringar av (användarnamn borttaget) till senaste version av [[User:$1|$1]]',
 	'rollback-success' => 'Återställde ändringar av $1;
 ändrade tillbaka till senaste version av $2.',
@@ -41997,11 +42180,26 @@ Sidor på [[Special:Watchlist|din bevakningslista]] är markerade med '''fetstil
 	'review_reason_3' => 'Anmälningsanledning 3',
 	'review_reason_4' => 'Anmälningsanledning 4',
 	'review_reason_5' => 'Anmälningsanledning 5',
+	'registerintro-title' => 'När du skapar ett konto på Wikia blir du en del av gemenskapet!',
+	'rcshowhideenhanced' => '$1 avancerad senaste ändringar',
+	'recentchanges-url' => 'Special:SenasteÄndringar',
+	'reconfirmemail_body' => 'Hej $2,
+
+Tack för att uppdatera e-postadressen för Wikia konto. Bekräfta detta är rätt e-postadress genom att klicka på denna länk:
+$3
+
+
+Vi ser fram emot att träffa er på Wikia!
+
+Wikia Community Team
+www.wikia.com',
+	'reconfirmemail_subject' => 'Vänligen bekräfta ditt Wikia konto',
+	'registerintro-text' => 'Du får kredit för alla era bidrag, och du kan också skapa din egen profil, övervakningslista dina favoritsidor, och få tillgång till alla typer av snyggt verktyg.',
 );
 
 $messages['sw'] = array(
 	'returnto' => 'Rudia $1.',
-	'redirectedfrom' => '(Elekezwa kutoka $1)',
+	'redirectedfrom' => 'Elekezwa kutoka $1',
 	'redirectpagesub' => 'Ukurasa wa kuelekeza',
 	'retrievedfrom' => 'Rudishwa kutoka "$1"',
 	'restorelink' => '{{PLURAL:$1|sahihisho lililofutwa moja|masahihisho yaliyofutwa $1}}',
@@ -42198,7 +42396,7 @@ Haliwezi kufichwa.',
 	'rollback_short' => 'Rejesha',
 	'rollbacklink' => 'rejesha',
 	'rollbackfailed' => 'Haikufaulu kurejesha',
-	'revertpage' => 'Masahihisho aliyefanya [[Special:Contributions/$2|$2]] ([[User talk:$2|Majadiliano]]) yalirejeshwa hadi sahihisho la mwisho na [[User:$1|$1]]',
+	'revertpage' => 'Masahihisho aliyefanya [[Special:Contributions/$2|$2]] ([[User talk:$2|Majadiliano]]) yalirejeshwa hadi sahihisho la mwisho na $1',
 	'revertpage-nouser' => 'Masahihisho ya mtumiaji (jina lake limefichwa) yamerudishwa hadi pitio la mwisho lililotengenezwa na [[User:$1|$1]].',
 	'rollback-success' => 'Masahihisho aliyeyafanya $1 yalirejeshwa hadi kufika sahihisho la mwisho aliyefanya $2.',
 	'restriction-type' => 'Ruhusa:',
@@ -42218,7 +42416,7 @@ Haliwezi kufichwa.',
 
 $messages['szl'] = array(
 	'returnto' => 'Nazod do zajty $1.',
-	'redirectedfrom' => '(Punkńyńto s $1)',
+	'redirectedfrom' => 'Punkńyńto s $1',
 	'redirectpagesub' => 'Zajta překerowujůnco',
 	'retrievedfrom' => 'Zdrzůdło "$1"',
 	'restorelink' => '{{PLURAL:$1|jedna wyćepano wersyjo|$1 wyćepane wersyje|$1 wyćepanych wersyjůw}}',
@@ -42409,7 +42607,7 @@ Zajty z [[Special:Watchlist|pozůrlisty]] sům '''rube'''",
 	'rollback_short' => 'Cofej',
 	'rollbacklink' => 'cofej',
 	'rollbackfailed' => 'Ńy idźe wycofać sprowjyńo',
-	'revertpage' => 'Wycofano sprowjyńe użytkowńika [[Special:Contributions/$2|$2]] ([[User talk:$2|godka]]). Autor prziwrůcůnej wersyji to [[User:$1|$1]].',
+	'revertpage' => 'Wycofano sprowjyńe użytkowńika [[Special:Contributions/$2|$2]] ([[User talk:$2|godka]]). Autor prziwrůcůnej wersyji to $1.',
 	'rollback-success' => 'Wycofano sprowjyńa užytkowńika $1.
 Přiwrůcůno uostatńo wersyja autorstwa  $2.',
 	'restriction-type' => 'Pozwolyńy:',
@@ -42433,7 +42631,7 @@ Přiwrůcůno uostatńo wersyja autorstwa  $2.',
 
 $messages['ta'] = array(
 	'returnto' => '$1 பக்கத்துக்குத் திரும்பு.',
-	'redirectedfrom' => '($1 இலிருந்து வழிமாற்றப்பட்டது)',
+	'redirectedfrom' => '$1 இலிருந்து வழிமாற்றப்பட்டது',
 	'redirectpagesub' => 'பக்கவழிமாற்றுப் பக்கம்',
 	'retrievedfrom' => '"$1" இருந்து மீள்விக்கப்பட்டது',
 	'restorelink' => '{{PLURAL:$1|ஒரு நீக்கப்பட்ட தொகுப்பை|$1 நீக்கப்பட்ட தொகுப்புகளை}}',
@@ -42669,7 +42867,7 @@ $1",
 	'rollback_short' => 'முன்நிலையாக்கு',
 	'rollbacklink' => 'முன்நிலையாக்கு',
 	'rollbackfailed' => 'முன்நிலையாக்கம் தோல்வி',
-	'revertpage' => '[[Special:Contributions/$2|$2]] ([[User talk:$2|பேச்சு]]) செய்தத் தொகுப்புகள் நீக்கப்பட்டு [[User:$1|$1]] இன் பதிப்புக்கு முன்நிலையாக்கப்பட்டது',
+	'revertpage' => '[[Special:Contributions/$2|$2]] ([[User talk:$2|பேச்சு]]) செய்தத் தொகுப்புகள் நீக்கப்பட்டு $1 இன் பதிப்புக்கு முன்நிலையாக்கப்பட்டது',
 	'revertpage-nouser' => '(பயனர் பெயர் நீக்கப்பட்டது) செய்த தொகுப்புகளை இல்லாது செய்து, [[User:$1|$1]] கடைசியாகச் செய்த திருத்தத்துக்கு மாற்றப்பட்டது',
 	'rollback-success' => '$1 செய்தத் தொகுப்புகள் நீக்கப்பட்டு $2 இன் பதிப்புக்கு முன்நிலையாக்கப்பட்டது.',
 	'restriction-type' => 'அனுமதி:',
@@ -42698,7 +42896,7 @@ $1",
 
 $messages['tcy'] = array(
 	'returnto' => '$1 ಗ್ ಪಿರ ಪೋಲೆ.',
-	'redirectedfrom' => '($1 ರ್ದ್ ಪುನರ್ನಿರ್ದೇಶಿತ)',
+	'redirectedfrom' => '$1 ರ್ದ್ ಪುನರ್ನಿರ್ದೇಶಿತ',
 	'redirectpagesub' => 'ಪುನರ್ನಿರ್ದೇಶನ ಪುಟ',
 	'retrievedfrom' => '"$1" ರ್ದ್ ದೆತ್ತಿನಂಚಿನ',
 	'restorelink' => '{{PLURAL:$1|1 ಡಿಲೀಟ್ ಆತಿನ ಸಂಪಾದನೆ|$1 ಡಿಲೀಟ್ ಆತಿನ ಸಂಪಾದನೆಲು}}',
@@ -42769,7 +42967,7 @@ $messages['tcy'] = array(
 
 $messages['te'] = array(
 	'returnto' => 'తిరిగి $1కి.',
-	'redirectedfrom' => '($1 నుండి మళ్ళించబడింది)',
+	'redirectedfrom' => '$1 నుండి మళ్ళించబడింది',
 	'redirectpagesub' => 'దారిమార్పు పుట',
 	'retrievedfrom' => '"$1" నుండి వెలికితీశారు',
 	'restorelink' => '{{PLURAL:$1|ఒక తొలగించిన మార్పు|$1 తొలగించిన మార్పులు}}',
@@ -43002,7 +43200,7 @@ $1",
 	'rollback_short' => 'రద్దుచేయి',
 	'rollbacklink' => 'రద్దుచేయి',
 	'rollbackfailed' => 'రద్దుచేయటం విఫలమైంది',
-	'revertpage' => '[[Special:Contributions/$2|$2]] ([[User talk:$2|చర్చ]]) చేసిన మార్పులను [[User:$1|$1]] యొక్క చివరి కూర్పు వరకు తిప్పికొట్టారు.',
+	'revertpage' => '[[Special:Contributions/$2|$2]] ([[User talk:$2|చర్చ]]) చేసిన మార్పులను $1 యొక్క చివరి కూర్పు వరకు తిప్పికొట్టారు.',
 	'revertpage-nouser' => '(తొలగించిన వాడుకరిపేరు) చేసిన మార్పులను [[User:$1|$1]] యొక్క చివరి కూర్పుకి తిప్పికొట్టారు',
 	'rollback-success' => '$1 చేసిన దిద్దుబాట్లను వెనక్కు తీసుకెళ్ళాం; తిరిగి $2 చేసిన చివరి కూర్పుకు మార్చాం.',
 	'restriction-type' => 'అనుమతి:',
@@ -43125,7 +43323,7 @@ $messages['tg'] = array(
 
 $messages['tg-cyrl'] = array(
 	'returnto' => 'Бозгашт ба $1.',
-	'redirectedfrom' => '(Тағйири масир аз $1)',
+	'redirectedfrom' => 'Тағйири масир аз $1',
 	'redirectpagesub' => 'Саҳифаи равонакунӣ',
 	'retrievedfrom' => 'Баргирифта аз "$1"',
 	'restorelink' => '{{PLURAL:$1|вироиши ҳазфшуда|$1 вироишоти ҳазфшудаҳо}}',
@@ -43271,7 +43469,7 @@ $messages['tg-cyrl'] = array(
 	'rollback_short' => 'Вогард',
 	'rollbacklink' => 'вогардони',
 	'rollbackfailed' => 'Вогардони нашуд',
-	'revertpage' => 'Вироиши [[Special:Contributions/$2|$2]] ([[User talk:$2|Баҳс]]) вогардонида шуд ба охирин тағйире, ки [[User:$1|$1]] анҷом дода буд',
+	'revertpage' => 'Вироиши [[Special:Contributions/$2|$2]] ([[User talk:$2|Баҳс]]) вогардонида шуд ба охирин тағйире, ки $1 анҷом дода буд',
 	'rollback-success' => 'Вироишҳои $1 вогардонӣ шуд; саҳифа ба вироиши $2 баргардонида шуд.',
 	'restriction-type' => 'Дастраси:',
 	'restriction-level' => 'Сатҳи маҳдудият:',
@@ -43292,7 +43490,7 @@ $messages['tg-cyrl'] = array(
 
 $messages['tg-latn'] = array(
 	'returnto' => 'Bozgaşt ba $1.',
-	'redirectedfrom' => '(Taƣjiri masir az $1)',
+	'redirectedfrom' => 'Taƣjiri masir az $1',
 	'redirectpagesub' => 'Sahifai ravonakunī',
 	'retrievedfrom' => 'Bargirifta az "$1"',
 	'restorelink' => '{{PLURAL:$1|viroişi hazfşuda|$1 viroişoti hazfşudaho}}',
@@ -43423,7 +43621,7 @@ Sahifahoi dar [[Special:Watchlist|fehristi nazaroti şumo]] buda  '''purrang''' 
 	'rollback_short' => 'Vogard',
 	'rollbacklink' => 'vogardoni',
 	'rollbackfailed' => 'Vogardoni naşud',
-	'revertpage' => 'Viroişi [[Special:Contributions/$2|$2]] ([[User talk:$2|Bahs]]) vogardonida şud ba oxirin taƣjire, ki [[User:$1|$1]] ançom doda bud',
+	'revertpage' => 'Viroişi [[Special:Contributions/$2|$2]] ([[User talk:$2|Bahs]]) vogardonida şud ba oxirin taƣjire, ki $1 ançom doda bud',
 	'rollback-success' => 'Viroişhoi $1 vogardonī şud; sahifa ba viroişi $2 bargardonida şud.',
 	'restriction-type' => 'Dastrasi:',
 	'restriction-level' => 'Sathi mahdudijat:',
@@ -43444,7 +43642,7 @@ Sahifahoi dar [[Special:Watchlist|fehristi nazaroti şumo]] buda  '''purrang''' 
 
 $messages['th'] = array(
 	'returnto' => 'กลับไป $1',
-	'redirectedfrom' => '(เปลี่ยนทางจาก $1)',
+	'redirectedfrom' => 'เปลี่ยนทางจาก $1',
 	'redirectpagesub' => 'หน้าเปลี่ยนทาง',
 	'retrievedfrom' => 'รับข้อมูลจาก "$1"',
 	'restorelink' => '{{PLURAL:$1|1 การแก้ไขที่ถูกลบ|$1 การแก้ไขที่ถูกลบ}}',
@@ -43677,7 +43875,7 @@ $1",
 	'rollback_short' => 'ถอยกลับฉุกเฉิน',
 	'rollbacklink' => 'ย้อนกลับฉุกเฉิน',
 	'rollbackfailed' => 'ย้อนไม่สำเร็จ',
-	'revertpage' => 'ย้อนการแก้ไขของ [[Special:Contributions/$2|$2]] ([[User talk:$2|Talk]]) ไปยังรุ่นของ [[User:$1|$1]]',
+	'revertpage' => 'ย้อนการแก้ไขของ [[Special:Contributions/$2|$2]] ([[User talk:$2|Talk]]) ไปยังรุ่นของ $1',
 	'revertpage-nouser' => 'ย้อนการแก้ไขโดย (ชื่อผู้ใช้ถูกลบออก) ไปยังรุ่นล่าสุดโดย [[User:$1|$1]]',
 	'rollback-success' => 'ย้อนรุ่นที่แก้ไขโดย $1 ไปยังรุ่นล่าสุดที่แก้ไขโดย $2 แล้ว',
 	'restriction-type' => 'อนุญาต',
@@ -43701,7 +43899,7 @@ $1",
 
 $messages['tk'] = array(
 	'returnto' => '$1.',
-	'redirectedfrom' => '($1 sahypasyndan gönükdirildi)',
+	'redirectedfrom' => '$1 sahypasyndan gönükdirildi',
 	'redirectpagesub' => 'Gönükdirme sahypasy',
 	'retrievedfrom' => '"$1" adresinden alyndy.',
 	'restorelink' => '{{PLURAL:$1|bir öçürilen özgerdişi|$1 öçürilen özgerdişi}}',
@@ -43935,7 +44133,7 @@ Oňa baryp bilmeýärsiňiz.',
 	'rollback_short' => 'Öňki katdyna getir',
 	'rollbacklink' => 'öňki katdyna getir',
 	'rollbackfailed' => 'Öňki katdyna getirmeklik şowsuz',
-	'revertpage' => '[[Special:Contributions/$2|$2]] ([[User talk:$2|Çekişme]]) tarapyndan edilen özgerdişler [[User:$1|$1]] tarapyndan redaktirlenen soňky wersiýasyna yzyna getirildi.',
+	'revertpage' => '[[Special:Contributions/$2|$2]] ([[User talk:$2|Çekişme]]) tarapyndan edilen özgerdişler $1 tarapyndan redaktirlenen soňky wersiýasyna yzyna getirildi.',
 	'revertpage-nouser' => '(ulanyjy ady aýyrylan) tarapyndan edilen özgerdişler [[User:$1|$1]] tarapyndan redaktirlenen soňky wersiýasyna yzyna getirildi.',
 	'rollback-success' => '$1 tarapyndan edilen özgerdişler yzyna getirildi;
 $2 tarapyndan edilen soňky wersiýa gaýdyp gelindi.',
@@ -43960,7 +44158,7 @@ $2 tarapyndan edilen soňky wersiýa gaýdyp gelindi.',
 
 $messages['tl'] = array(
 	'returnto' => 'Bumalik sa $1.',
-	'redirectedfrom' => '(Ikinarga mula sa $1)',
+	'redirectedfrom' => 'Ikinarga mula sa $1',
 	'redirectpagesub' => 'Pahina ng pagkarga',
 	'retrievedfrom' => 'Ikinuha mula sa "$1"',
 	'restorelink' => '{{PLURAL:$1|isang binurang pagbabagp|$1 binurang pagbabago}}',
@@ -44194,7 +44392,7 @@ Pakitingnan ang mga talaan.',
 	'rollback_short' => 'Pagulunging pabalik sa (mas) dati',
 	'rollbacklink' => 'pagulunging pabalik sa (mas) dati',
 	'rollbackfailed' => 'Nabigo ang pagpapagulong na pabalik sa (mas) dati',
-	'revertpage' => 'Ibinalik ang mga pagbabago ni [[Special:Contributions/$2|$2]] ([[User talk:$2|Usapan]]) patungo sa huling rebisyon ni [[User:$1|$1]]',
+	'revertpage' => 'Ibinalik ang mga pagbabago ni [[Special:Contributions/$2|$2]] ([[User talk:$2|Usapan]]) patungo sa huling rebisyon ni $1',
 	'revertpage-nouser' => 'Ibinalik ang mga pagbabago ni (tinanggal ang bansag) patungo sa huling rebisyon ni [[User:$1|$1]]',
 	'rollback-success' => 'Ibinalik ang mga pagbabago ni $1; ibinalik sa huling bersyon ni $2.',
 	'restriction-type' => 'Pahintulot:',
@@ -44227,7 +44425,7 @@ $messages['tn'] = array(
 
 $messages['to'] = array(
 	'returnto' => 'Foki ki he $1',
-	'redirectedfrom' => '(Kuo leʻei mei $1)',
+	'redirectedfrom' => 'Kuo leʻei mei $1',
 	'redirectpagesub' => 'Peesi leʻei',
 	'restorelink' => 'ko e fatu ʻosi tāmateʻi ʻe $1',
 	'red-link-title' => '$1 (ʻoku ʻikai moʻui ʻa e pēsí)',
@@ -44291,7 +44489,7 @@ Ko e ʻuhinga loka ko e $1 ia.",
 );
 
 $messages['tokipona'] = array(
-	'redirectedfrom' => '(tan $1)',
+	'redirectedfrom' => 'tan $1',
 	'retrievedfrom' => 'tan $1',
 	'recentchanges' => 'lipu seme li ante?',
 	'recentchangeslinked' => 'ante sama',
@@ -44302,7 +44500,7 @@ $messages['tokipona'] = array(
 
 $messages['tpi'] = array(
 	'returnto' => 'Go bek long $1',
-	'redirectedfrom' => '(Nupela rot i pinis long $1)',
+	'redirectedfrom' => 'Nupela rot i pinis long $1',
 	'redirectpagesub' => 'Nupela rot',
 	'retrievedfrom' => 'Ikam long "$1"',
 	'restorelink' => '{{PLURAL:$1|wanpela senis i raus pinis|$1 senis i raus pinis}}',
@@ -44345,7 +44543,7 @@ $messages['tpi'] = array(
 
 $messages['tr'] = array(
 	'returnto' => '$1 sayfasına dön.',
-	'redirectedfrom' => '($1 sayfasından yönlendirildi)',
+	'redirectedfrom' => '$1 sayfasından yönlendirildi',
 	'redirectpagesub' => 'Yönlendirme sayfası',
 	'retrievedfrom' => '"$1" adresinden alındı.',
 	'restorelink' => '{{PLURAL:$1|bir silinmiş değişikliği|$1 silinmiş değişikliği}}',
@@ -44581,7 +44779,7 @@ Lütfen günlükleri kontrol edin.',
 	'rollback_short' => 'geri al',
 	'rollbacklink' => 'geridöndür',
 	'rollbackfailed' => 'geri alma işlemi başarısız',
-	'revertpage' => '[[Special:Contributions/$2|$2]] [[User talk:$2|mesaj]] tarafından yapılan değişiklikler geri alınarak, [[User:$1|$1]] tarafından değiştirilmiş önceki sürüm geri getirildi.',
+	'revertpage' => '[[Special:Contributions/$2|$2]] [[User talk:$2|mesaj]] tarafından yapılan değişiklikler geri alınarak, $1 tarafından değiştirilmiş önceki sürüm geri getirildi.',
 	'revertpage-nouser' => '(kullanıcı adı çıkarılmış) tarafından yapılan değişiklikler [[User:$1|$1]] tarafından yapılan son revizyona geri alındı',
 	'rollback-success' => '$1 tarafından yapılan değişiklikler geri alınarak;
 $2 tarafından değiştirilmiş önceki sürüme geri dönüldü.',
@@ -44634,7 +44832,7 @@ $messages['ts'] = array(
 
 $messages['tt-cyrl'] = array(
 	'returnto' => '$1 битенә кайту.',
-	'redirectedfrom' => '($1 битеннән юнәлтелде)',
+	'redirectedfrom' => '$1 битеннән юнәлтелде',
 	'redirectpagesub' => 'Башка биткә юнәлтү бите',
 	'retrievedfrom' => 'Чыганагы — "$1"',
 	'restorelink' => '{{PLURAL:$1|1 бетерелгән үзгәртүне|$1 бетерелгән үзгәртүне}}',
@@ -44782,7 +44980,7 @@ $1',
 	'removedwatchtext' => '«[[:$1]]» бите [[Special:Watchlist|сезнең күзәтү исемлегеннән]] бетерелде.',
 	'rollback_short' => 'Кире кайтару',
 	'rollbacklink' => 'кире кайтару',
-	'revertpage' => '[[Special:Contributions/$2|$2]] үзгәртүләре ([[User talk:$2|бәхәс]])  [[User:$1|$1]] юрамасына кадәр кире кайтарылды',
+	'revertpage' => '[[Special:Contributions/$2|$2]] үзгәртүләре ([[User talk:$2|бәхәс]]) $1 юрамасына кадәр кире кайтарылды',
 	'restriction-type' => 'Рөхсәт:',
 	'restriction-level' => 'Мөмкинлек дәрәҗәсе:',
 	'restriction-edit' => 'Үзгәртү',
@@ -44799,7 +44997,7 @@ $1',
 
 $messages['tt-latn'] = array(
 	'returnto' => '$1 bitenä qaytu.',
-	'redirectedfrom' => '($1 bitennän yünältelde)',
+	'redirectedfrom' => '$1 bitennän yünältelde',
 	'redirectpagesub' => 'Başqa bitkä yünältü bite',
 	'retrievedfrom' => 'Çığanağı — "$1"',
 	'restorelink' => '{{PLURAL:$1|1 beterelgän üzgärtüne|$1 beterelgän üzgärtüne}}',
@@ -44937,7 +45135,7 @@ Sez idaräçe bulu säbäple, [$1 yäşerelgän yuramanı qarıy alasız]",
 	'reverted' => 'Aldağı yuramanı qaytart',
 	'rollback_short' => 'Kire qaytaru',
 	'rollbacklink' => 'kire qaytaru',
-	'revertpage' => '[[Special:Contributions/$2|$2]] üzgärtüläre ([[User talk:$2|bäxäs]])  [[User:$1|$1]] yuramasına kire qaytarıldı',
+	'revertpage' => '[[Special:Contributions/$2|$2]] üzgärtüläre ([[User talk:$2|bäxäs]]) $1 yuramasına kire qaytarıldı',
 	'restriction-type' => 'Röxsät:',
 	'restriction-level' => 'Mömkinlek däräcäse:',
 	'restriction-edit' => 'Üzgärtü',
@@ -45031,7 +45229,7 @@ $messages['ug'] = array(
 
 $messages['ug-arab'] = array(
 	'returnto' => '$1 غا قايت.',
-	'redirectedfrom' => '(قايتا نىشان بەلگىلەش ئورنى $1)',
+	'redirectedfrom' => 'قايتا نىشان بەلگىلەش ئورنى $1',
 	'redirectpagesub' => 'قايتا نىشان بەلگىلەنگەن بەت',
 	'retrievedfrom' => '"$1" دىن ئېرىشكەن',
 	'restorelink' => '{{PLURAL:$1|بىر ئۆچۈرۈلگەن نەشرى|$1 ئۆچۈرۈلگەن نەشرى}}',
@@ -45266,7 +45464,7 @@ $1",
 	'rollback_short' => 'ئەسلىگە قايتۇر',
 	'rollbacklink' => 'ئەسلىگە قايتۇر',
 	'rollbackfailed' => 'ئەسلىگە قايتۇرۇش مەغلۇپ بولدى',
-	'revertpage' => ' [[Special:Contributions/$2|$2]] ([[User talk:$2|مۇنازىرە]]) نىڭ تەھرىرىدىن ئاخىرقى تۈزىتىلگەن نەشرى [[User:$1|$1]] غا ئەسلىگە كەلتۈرىدۇ.',
+	'revertpage' => ' [[Special:Contributions/$2|$2]] ([[User talk:$2|مۇنازىرە]]) نىڭ تەھرىرىدىن ئاخىرقى تۈزىتىلگەن نەشرى $1 غا ئەسلىگە كەلتۈرىدۇ.',
 	'revertpage-nouser' => '(چىقىرىۋېتىلگەن ئىشلەتكۈچى)نىڭ تەھرىرىدىن [[User:$1|$1]] نىڭ ئاخىرقى تۈزىتىلگەن نەشرىگە ئەاسلىگە كەلتۈرۈلدى',
 	'rollback-success' => '$1 نىڭ تەھرىرى ئەسلىگە كەلتۈرۈلدى؛
 $2 نىڭ ئاخىرقى تۈزىتىلگەن نەشرىگە ئۆزگەرتىلدى.',
@@ -45303,7 +45501,7 @@ $messages['ug-latn'] = array(
 
 $messages['uk'] = array(
 	'returnto' => 'Повернення до сторінки «$1».',
-	'redirectedfrom' => '(Перенаправлено з $1)',
+	'redirectedfrom' => 'Перенаправлено з $1',
 	'redirectpagesub' => 'Сторінка-перенаправлення',
 	'retrievedfrom' => 'Отримано з $1',
 	'restorelink' => '$1 {{PLURAL:$1|вилучене редагування|вилучених редагування|вилучених редагувань}}',
@@ -45544,7 +45742,7 @@ $1",
 	'rollback_short' => 'Відкинути',
 	'rollbacklink' => 'відкинути',
 	'rollbackfailed' => 'Відкинути зміни не вдалося',
-	'revertpage' => 'Редагування користувача [[Special:Contributions/$2|$2]] ([[User talk:$2|обговорення]]) відкинуті до версії користувача [[User:$1|$1]]',
+	'revertpage' => 'Редагування користувача [[Special:Contributions/$2|$2]] ([[User talk:$2|обговорення]]) відкинуті до версії користувача $1',
 	'revertpage-nouser' => "Відкинуто редагування (ім'я користувача приховано) до зробленого [[User:$1|$1]]",
 	'rollback-success' => 'Відкинуті редагування користувача $1; повернення до версії користувача $2.',
 	'restriction-type' => 'Права:',
@@ -45580,7 +45778,7 @@ $1",
 
 $messages['ur'] = array(
 	'returnto' => 'واپس $1۔',
-	'redirectedfrom' => '($1 سے پلٹایا گیا)',
+	'redirectedfrom' => '$1 سے پلٹایا گیا',
 	'redirectpagesub' => 'لوٹایا گیا صفحہ',
 	'retrievedfrom' => '‘‘$1’’ مستعادہ منجانب',
 	'restorelink' => '{{PLURAL:$1|ایک ترمیم حذف ہوچکی|$1 ترامیم حذف ہوچکیں}}',
@@ -45682,7 +45880,7 @@ $messages['ur'] = array(
 
 $messages['uz'] = array(
 	'returnto' => '$1 sahifasiga qaytish.',
-	'redirectedfrom' => '($1dan yoʻnaltirildi)',
+	'redirectedfrom' => '$1dan yoʻnaltirildi',
 	'redirectpagesub' => 'Yoʻnaltiruvchi sahifa',
 	'retrievedfrom' => ' "$1" dan olindi',
 	'red-link-title' => '$1 (sahifa yaratilmagan)',
@@ -45719,7 +45917,7 @@ Qulaylik uchun quyida yoʻqotilish qaydlari keltirilgan:",
 
 $messages['val'] = array(
 	'returnto' => 'Torna cap a $1.',
-	'redirectedfrom' => "(S'ha redirigit des de $1)",
+	'redirectedfrom' => "S'ha redirigit des de $1",
 	'redirectpagesub' => 'Pàgina de redireccionament',
 	'retrievedfrom' => 'Obtingut de "$1"',
 	'restorelink' => '{{PLURAL:$1|una versió borrada|$1 versions borrades}}',
@@ -45810,7 +46008,7 @@ Atres administradors de la uep basada en wiki encara podrien accedir al contingu
 	'rollback_short' => 'Revoca',
 	'rollbacklink' => 'Revertix',
 	'rollbackfailed' => "No s'ha pogut revocar",
-	'revertpage' => "Revertides les edicions de [[Special:Contributions/$2|$2]] ([[User talk:$2|discussió]]); s'ha recuperat la última versió de [[User:$1|$1]]",
+	'revertpage' => "Revertides les edicions de [[Special:Contributions/$2|$2]] ([[User talk:$2|discussió]]); s'ha recuperat la última versió de $1",
 	'restriction-edit' => 'Edita',
 	'restriction-move' => 'Renomena',
 	'restriction-level-sysop' => 'protegida',
@@ -45826,7 +46024,7 @@ Atres administradors de la uep basada en wiki encara podrien accedir al contingu
 
 $messages['vec'] = array(
 	'returnto' => 'Torna a $1.',
-	'redirectedfrom' => '(Rimando da <b>$1</b>)',
+	'redirectedfrom' => 'Rimando da <b>$1</b>',
 	'redirectpagesub' => 'Pagina de rimando',
 	'retrievedfrom' => 'Cavà fora da "$1"',
 	'restorelink' => '{{PLURAL:$1|un canbiamento scanselà|$1 canbiamenti scanselà}}',
@@ -46060,7 +46258,7 @@ Le pagine [[Special:Watchlist|tegnùe d'ocio]] le xe in '''grosso'''.",
 	'rollback_short' => 'Rollback',
 	'rollbacklink' => 'rollback',
 	'rollbackfailed' => 'Ripristino mìa riussìo',
-	'revertpage' => 'Anułàe łe modifeghe de [[Special:Contributions/$2|$2]] ([[User talk:$2|discussion]]), riportà a ła version de prima de [[User:$1|$1]]',
+	'revertpage' => 'Anułàe łe modifeghe de [[Special:Contributions/$2|$2]] ([[User talk:$2|discussion]]), riportà a ła version de prima de $1',
 	'revertpage-nouser' => 'Anulà le modìfeghe de (nome utente cavà), riportà a la version precedente de [[User:$1|$1]]',
 	'rollback-success' => 'Anulà le modifiche de $1; riportà a la version precedente de $2.',
 	'restriction-type' => 'Parmesso:',
@@ -46084,7 +46282,7 @@ Le pagine [[Special:Watchlist|tegnùe d'ocio]] le xe in '''grosso'''.",
 
 $messages['vep'] = array(
 	'returnto' => 'Pörttas lehtpolele $1.',
-	'redirectedfrom' => '(Oigetud lehtpolelpäi $1)',
+	'redirectedfrom' => 'Oigetud lehtpolelpäi $1',
 	'redirectpagesub' => "Oigendai lehtpol'",
 	'retrievedfrom' => 'Purde - "$1"',
 	'restorelink' => '{{PLURAL:$1|čutud redakcii|$1 čutud redakcijad}}',
@@ -46278,7 +46476,7 @@ Tö ei voigoi kävutada sidä.',
 	'rollback_short' => 'Endištuz',
 	'rollbacklink' => 'Endištada',
 	'rollbackfailed' => 'Endištuz om keskustadud petusen tagut.',
-	'revertpage' => 'Kävutajan [[Special:Contributions/$2|$2]] ([[User talk:$2|Lodud]]) tožetused oma endištadud edeližhe versijahasai (avtor: [[User:$1|$1]])',
+	'revertpage' => 'Kävutajan [[Special:Contributions/$2|$2]] ([[User talk:$2|Lodud]]) tožetused oma endištadud edeližhe versijahasai (avtor: $1)',
 	'rollback-success' => '$1-kävutajan toižetused oma endištadud $2-kävutajan versijahasai.',
 	'restriction-type' => 'Oiktused:',
 	'restriction-level' => 'Tulendan laskendpind:',
@@ -46301,7 +46499,7 @@ Tö ei voigoi kävutada sidä.',
 
 $messages['vi'] = array(
 	'returnto' => 'Quay lại $1.',
-	'redirectedfrom' => '(đổi hướng từ $1)',
+	'redirectedfrom' => 'đổi hướng từ $1',
 	'redirectpagesub' => 'Trang đổi hướng',
 	'retrievedfrom' => 'Lấy từ “$1”',
 	'restorelink' => '{{PLURAL:$1|một|$1}} sửa đổi đã xóa',
@@ -46540,7 +46738,7 @@ Các trang trong [[Special:Watchlist|danh sách bạn theo dõi]] được '''t�
 	'rollback_short' => 'Lùi tất cả',
 	'rollbacklink' => 'lùi tất cả',
 	'rollbackfailed' => 'Lùi sửa đổi không thành công',
-	'revertpage' => 'Đã hủy sửa đổi của [[Special:Contributions/$2|$2]] ([[User talk:$2|Thảo luận]]) quay về phiên bản của [[User:$1|$1]]',
+	'revertpage' => 'Đã hủy sửa đổi của [[Special:Contributions/$2|$2]] ([[User talk:$2|Thảo luận]]) quay về phiên bản của $1',
 	'revertpage-nouser' => 'Lùi sửa đổi của (tên người dùng đã xóa) quay lại phiên bản cuối của [[User:$1|$1]]',
 	'rollback-success' => 'Đã hủy sửa đổi của $1;
 quay về phiên bản cuối của $2.',
@@ -46576,7 +46774,7 @@ $messages['vls'] = array(
 
 $messages['vmf'] = array(
 	'returnto' => 'Dsrig dsur sajdn $1.',
-	'redirectedfrom' => '(Wajdagschigd fo $1)',
+	'redirectedfrom' => 'Wajdagschigd fo $1',
 	'redirectpagesub' => 'Wajdalajdungs-sajdn',
 	'retrievedfrom' => 'Fon „$1“ ghold',
 	'restorelink' => '$1 {{PLURAL:$1|gleschde wärsjoon|gleschde wärsjoon}}',
@@ -46628,7 +46826,7 @@ Gschbärd is se desdâweechn: $1",
 
 $messages['vo'] = array(
 	'returnto' => 'Geikön lü $1.',
-	'redirectedfrom' => '(Pelüodükon de pad: $1)',
+	'redirectedfrom' => 'Pelüodükon de pad: $1',
 	'redirectpagesub' => 'Lüodükömapad',
 	'retrievedfrom' => 'Pekopiedon se „$1“',
 	'restorelink' => '{{PLURAL:$1|redakama bal|redakamas $1}}',
@@ -46822,7 +47020,7 @@ Pads [[Special:Watchlist|galädaliseda olik]] '''pakazetons'''.",
 	'rollback_short' => 'Sädunön vali',
 	'rollbacklink' => 'sädunön vali',
 	'rollbackfailed' => 'Sädunam no eplöpon',
-	'revertpage' => 'Redakams ela [[Special:Contributions/$2|$2]] ([[User talk:$2|Bespik]]) pegeükons ad fomam ma redakam lätik gebana: [[User:$1|$1]]',
+	'revertpage' => 'Redakams ela [[Special:Contributions/$2|$2]] ([[User talk:$2|Bespik]]) pegeükons ad fomam ma redakam lätik gebana: $1',
 	'rollback-success' => 'Redakams gebana: $1 pesädunons; pad pevotükon ad fomam lätik fa geban: $2.',
 	'restriction-type' => 'Däl:',
 	'restriction-level' => 'Miedükamanivod:',
@@ -46850,7 +47048,7 @@ Pads [[Special:Watchlist|galädaliseda olik]] '''pakazetons'''.",
 
 $messages['vot'] = array(
 	'returnto' => 'Mee takaz tšüľľelle $1.',
-	'redirectedfrom' => '(Mešaitõttu tšüľľeltä $1)',
+	'redirectedfrom' => 'Mešaitõttu tšüľľeltä $1',
 	'redirectpagesub' => 'Mešaituztšültši',
 	'retrievedfrom' => 'Jältšinnü adresissa "$1"',
 	'red-link-title' => '$1 (tšültšiä ebõõ)',
@@ -46888,7 +47086,7 @@ Tšüľľed, kummad õmad teďďellä [[Special:Watchlist|kattsõspiizgalla]] on
 
 $messages['vro'] = array(
 	'returnto' => 'Tagasi lehe manoq $1.',
-	'redirectedfrom' => '(Ümbre saadõt artiklist $1)',
+	'redirectedfrom' => 'Ümbre saadõt artiklist $1',
 	'redirectpagesub' => 'Ümbresaatmislehekülg',
 	'retrievedfrom' => 'Vällä otsit teedüskogost "$1"',
 	'restorelink' => '{{PLURAL:$1|üts kistutõt muutminõ|$1 kustutõdut muutmist}}',
@@ -47033,7 +47231,7 @@ Lisateedüst või ollaq [{{fullurl:{{#Special:Log}}/suppress|page={{FULLPAGENAME
 	'rollback_short' => 'Võtaq tagasi',
 	'rollbacklink' => 'võtaq tagasi vana kujo',
 	'rollbackfailed' => 'Muutmiisi tagasivõtminõ lää-s kõrda',
-	'revertpage' => 'Pruukja [[Special:Contributions/$2|$2]] ([[User_talk:$2|arotus]]) toimõndusõq pöörediq tagasi ja leht panti tagasi pruukja [[User:$1|$1]] tettü kujo pääle.',
+	'revertpage' => 'Pruukja [[Special:Contributions/$2|$2]] ([[User_talk:$2|arotus]]) toimõndusõq pöörediq tagasi ja leht panti tagasi pruukja $1 tettü kujo pääle.',
 	'restriction-type' => 'Luba',
 	'restriction-level' => 'Piirdmisastõq',
 	'restriction-edit' => 'Toimõndus',
@@ -47050,7 +47248,7 @@ Lisateedüst või ollaq [{{fullurl:{{#Special:Log}}/suppress|page={{FULLPAGENAME
 
 $messages['wa'] = array(
 	'returnto' => 'Rivni al pådje «$1».',
-	'redirectedfrom' => '(Redjiblé di $1)',
+	'redirectedfrom' => 'Redjiblé di $1',
 	'redirectpagesub' => 'Pådje di redjiblaedje',
 	'retrievedfrom' => 'Prin del pådje «$1»',
 	'restorelink' => '{{PLURAL:$1|on candjmint disfacé|$1 candjmints disfacés}}',
@@ -47114,7 +47312,7 @@ Les ôtes manaedjeus so ç' wiki ci pôront todi vey li contnou catchî eyet l' 
 	'randomredirect' => "Redjiblaedje a l' astcheyance",
 	'removedwatchtext' => 'Li pådje «[[:$1]]» a stî bodjeye foû di vosse djivêye des pådjes a shuve.',
 	'reverted' => 'Rimetou ene modêye di dvant',
-	'revertpage' => 'Disfwait li candjmint da [[Special:Contributions/$2|$2]] ([[User talk:$2|copene]]); li dierin candjmint est asteure da [[User:$1|$1]]',
+	'revertpage' => 'Disfwait li candjmint da [[Special:Contributions/$2|$2]] ([[User talk:$2|copene]]); li dierin candjmint est asteure da $1',
 	'restriction-edit' => 'Candjî',
 	'restriction-move' => 'Displaecî',
 	'range_block_disabled' => "Li possibilité po les manaedjeus di bloker des fortchetes d' adresses IP a stî dismetowe.",
@@ -47124,7 +47322,7 @@ Les ôtes manaedjeus so ç' wiki ci pôront todi vey li contnou catchî eyet l' 
 
 $messages['war'] = array(
 	'returnto' => 'Balik ngadto ha $1.',
-	'redirectedfrom' => '(Ginredirekta tikang ha $1)',
+	'redirectedfrom' => 'Ginredirekta tikang ha $1',
 	'redirectpagesub' => 'Redirek nga pakli',
 	'retrievedfrom' => 'Ginkuha tikang ha "$1"',
 	'restorelink' => '{{PLURAL:$1|usa nga ginpara nga pagliwat|$1 ka ginpara nga mga pagliwat}}',
@@ -47218,7 +47416,7 @@ Mga pakli ha [[Special:Watchlist|imo angay timan-an]] in naka-'''bold'''.",
 
 $messages['wo'] = array(
 	'returnto' => 'Dellu ci wii xët $1.',
-	'redirectedfrom' => '(Yoonalaat gu jóge $1)',
+	'redirectedfrom' => 'Yoonalaat gu jóge $1',
 	'redirectpagesub' => 'Xëtu yoonalaat',
 	'retrievedfrom' => 'Ci « $1 » lañ ko jële',
 	'restorelink' => '{{PLURAL:$1|1 coppite lañ far |$1 ciy coppite lañ far}}',
@@ -47418,7 +47616,7 @@ Xoolal jaar-jaar yi.',
 	'rollback_short' => 'Loppanti',
 	'rollbacklink' => 'delloowaat',
 	'rollbackfailed' => 'Loppanti gi antuwul',
-	'revertpage' => 'Loppantig coppite gu [[Special:Contributions/$2|$2]] ([[User talk:$2|Waxtaan]]) dello ko ci sumb mu [[User:$1|$1]]',
+	'revertpage' => 'Loppantig coppite gu [[Special:Contributions/$2|$2]] ([[User talk:$2|Waxtaan]]) dello ko ci sumb mu $1',
 	'rollback-success' => 'Ki loppanti mooy $1 ;
 Ki ko dello ci sumb mu mujj mi mooy $2.',
 	'restriction-type' => 'Sañ-sañ:',
@@ -47595,7 +47793,7 @@ $1",
 	'rollback_short' => '恢复',
 	'rollbacklink' => '恢复',
 	'rollbackfailed' => '恢复失败',
-	'revertpage' => '恢复[[Special:Contributions/$2|$2]] （[[User talk:$2|讲张]]）个改动；恢复到[[User:$1|$1]]个上一版本',
+	'revertpage' => '恢复[[Special:Contributions/$2|$2]] （[[User talk:$2|讲张]]）个改动；恢复到$1个上一版本',
 	'restriction-type' => '权限：',
 	'restriction-level' => '限制级别：',
 	'restriction-edit' => '编辑',
@@ -47607,7 +47805,7 @@ $1",
 
 $messages['xal'] = array(
 	'returnto' => '«$1» тал хәрү ирх.',
-	'redirectedfrom' => '($1 гидг һазрас авч одсмн)',
+	'redirectedfrom' => '$1 гидг һазрас авч одсмн',
 	'redirectpagesub' => 'Авч оддг халх',
 	'retrievedfrom' => '"$1" гидг халхас йовулсн',
 	'restorelink' => '{{PLURAL:$1|$1 һарһсн сольлһн|$1 һарһсн сольлһн}}',
@@ -47680,7 +47878,7 @@ $messages['xh'] = array(
 
 $messages['xmf'] = array(
 	'returnto' => 'დირთი $1-შა',
-	'redirectedfrom' => '(გინოწურაფილი რე $1-შე)',
+	'redirectedfrom' => 'გინოწურაფილი რე $1-შე',
 	'redirectpagesub' => 'ხასჷლაშა გინოწურაფა',
 	'retrievedfrom' => 'გორილ რე "$1"-იშე',
 	'red-link-title' => '$1 (ხასჷლა ვა რე)',
@@ -47735,7 +47933,7 @@ $messages['xmf'] = array(
 
 $messages['yi'] = array(
 	'returnto' => 'צוריקקערן צו $1.',
-	'redirectedfrom' => '(אַריבערגעפֿירט פון $1)',
+	'redirectedfrom' => 'אַריבערגעפֿירט פון $1',
 	'redirectpagesub' => 'ווייטערפירן בלאט',
 	'retrievedfrom' => 'גענומען פֿון "$1"',
 	'restorelink' => '{{PLURAL:$1|איין געמעקטע ענדערונג|$1 געמעקטע ענדערונגען}}',
@@ -47965,7 +48163,7 @@ $1",
 	'rollback_short' => 'צוריקדרייען',
 	'rollbacklink' => 'צוריקדרייען',
 	'rollbackfailed' => 'צוריקדרייען דורכגעפֿאַלן',
-	'revertpage' => 'רעדאַקטירונגען פֿון  [[Special:Contributions/$2|$2]] צוריקגענומען ([[User talk:$2|רעדן]])  צו דער לעצטער ווערסיע פֿון [[User:$1|$1]]',
+	'revertpage' => 'רעדאַקטירונגען פֿון  [[Special:Contributions/$2|$2]] צוריקגענומען ([[User talk:$2|רעדן]])  צו דער לעצטער ווערסיע פֿון $1',
 	'revertpage-nouser' => 'צוריקגעשטעלט רעדאַקטירונגען פֿון (באַניצער־נאָמען אַראָפגענומען) צו לעצטער רעוויזיע פֿון [[User:$1|$1]]',
 	'rollback-success' => 'צוריקגעדרייט רעדאַקטירונגען פֿון $1 צו דער לעצטע ווערסיע פֿון $2',
 	'restriction-type' => 'ערלויבניש:',
@@ -47989,7 +48187,7 @@ $1",
 
 $messages['yo'] = array(
 	'returnto' => 'Padà sí $1.',
-	'redirectedfrom' => '(Àtúnjúwe láti $1)',
+	'redirectedfrom' => 'Àtúnjúwe láti $1',
 	'redirectpagesub' => 'Ojúewé àtúnjúwe',
 	'retrievedfrom' => 'Jẹ́ kíkójáde láti "$1"',
 	'restorelink' => '{{PLURAL:$1|àtúnṣe ajẹ́píparẹ́ kan|àwọn àtúnṣe ajẹ́píparẹ́ $1}}',
@@ -48179,7 +48377,7 @@ Gẹ́gẹ́ bíi olùmójútó ẹ ṣì le wo ìyàtọ̀ yìí; ẹ̀kúnrẹ
 
 $messages['yue'] = array(
 	'returnto' => '返去$1 。',
-	'redirectedfrom' => '(由$1跳轉過來)',
+	'redirectedfrom' => '由$1跳轉過來',
 	'redirectpagesub' => '跳轉頁',
 	'retrievedfrom' => '由 "$1" 收',
 	'restorelink' => '$1次已刪除嘅編輯',
@@ -48411,7 +48609,7 @@ $1",
 	'rollback_short' => '反轉',
 	'rollbacklink' => '反轉',
 	'rollbackfailed' => '反轉唔到',
-	'revertpage' => '已經反轉由[[Special:Contributions/$2|$2]]（[[User talk:$2|對話]]）所寫嘅編輯到[[User:$1|$1]]嘅最後修訂。',
+	'revertpage' => '已經反轉由[[Special:Contributions/$2|$2]]（[[User talk:$2|對話]]）所寫嘅編輯到$1嘅最後修訂。',
 	'revertpage-nouser' => '已經反轉由（刪咗用戶名）所寫嘅編輯到[[User:$1|$1]]所寫嘅最後修訂。',
 	'rollback-success' => '已經反轉由$1所寫嘅編輯；恢復到$2嘅最後修訂。',
 	'restriction-type' => '許可:',
@@ -48443,7 +48641,7 @@ $messages['za'] = array(
 
 $messages['zea'] = array(
 	'returnto' => 'Trug nae $1.',
-	'redirectedfrom' => '(Deurverwezen vanaf $1)',
+	'redirectedfrom' => 'Deurverwezen vanaf $1',
 	'redirectpagesub' => 'Deurverwiespagina',
 	'retrievedfrom' => 'Truggeplekt van "$1"',
 	'restorelink' => '$1 verwiederde {{PLURAL:$1|versie|versies}}',
@@ -48543,7 +48741,7 @@ Pagina's die op [[Special:Watchlist|je volglieste]] staen wòdde '''vet''' weerg
 	'reuploaddesc' => "Upload annuleern en teruggaene ni 't uploadformelier",
 	'randompage' => 'Bladzie op goed geluk',
 	'rollbacklink' => 'terugdraejen',
-	'revertpage' => 'Wiezigingen deur [[Special:Contributions/$2|$2]] ([[User talk:$2|Overleg]]) teruggedraoid nae de lèste versie van [[User:$1|$1]]',
+	'revertpage' => 'Wiezigingen deur [[Special:Contributions/$2|$2]] ([[User talk:$2|Overleg]]) teruggedraoid nae de lèste versie van $1',
 	'revertmove' => 'terugdraejen',
 	'revdelete-restricted' => 'ei beperkiengen an beheêrders opeleid',
 	'revdelete-unrestricted' => 'ei beperkiengen voe beheêrders opeheven',
@@ -48558,17 +48756,16 @@ $messages['zh-hans'] = array(
 	'restorelink' => '$1个被删除的编辑',
 	'red-link-title' => '$1（尚未撰写）',
 	'readonly' => '数据库被锁定',
-	'readonlytext' => '数据库目前禁止输入新内容及更改，
-这很可能是由于数据库正在维修，完成后即可恢复。
+	'readonlytext' => '数据库当前不可用。
 
-管理员有如下解释：$1',
+$1',
 	'readonly_lag' => '从数据库服务器正在从主服务器上更新，数据库已被自动锁定',
-	'remembermypassword' => '在此浏览器上保留我的登录信息（最长$1{{PLURAL:$1|日|日}}）',
+	'remembermypassword' => '在此浏览器上保留我的登录信息',
 	'resetpass' => '更改密码',
-	'resetpass_announce' => '您是通过发送到电子邮箱的临时密码登录的。要完成登录，请设定一个新的密码：',
+	'resetpass_announce' => '您是通过发送到电子邮箱的临时密码登录的。要完成登录，请设定一个新的密码。',
 	'resetpass_text' => '<!-- 在这里添加文字 -->',
-	'resetpass_header' => '更改账户密码',
-	'retypenew' => '确认密码：',
+	'resetpass_header' => '更改帐户密码',
+	'retypenew' => '再次输入新密码：',
 	'resetpass_submit' => '设定密码并登录',
 	'resetpass_success' => '您已经修改了您的密码！正在为您登录……',
 	'resetpass_forbidden' => '无法更改密码',
@@ -48589,7 +48786,7 @@ $messages['zh-hans'] = array(
 	'rev-deleted-user' => '（用户名已移除）',
 	'rev-deleted-event' => '（日志动作已移除）',
 	'rev-deleted-user-contribs' => '[用户名或IP地址已移除 - 从贡献中隐藏编辑]',
-	'rev-deleted-text-permission' => "本页面版本已被'''删除'''。详情请见[{{fullurl:{{#Special:Log}}/delete|page={{PAGENAMEE}}}} 删除日志]。",
+	'rev-deleted-text-permission' => "本页面版本已被'''删除'''。详情请见[{{fullurl:{{#Special:Log}}/delete|page={{FULLPAGENAMEE}} 删除日志]。",
 	'rev-deleted-text-unhide' => "本页面版本已被'''删除'''。详情请见[{{fullurl:{{#Special:Log}}/delete|page={{FULLPAGENAMEE}}}} 删除日志]。如果你想继续操作，你仍然可以[$1 查看本版本]。",
 	'rev-suppressed-text-unhide' => "该页面修订已经被'''监督隐藏'''。在[{{fullurl:{{#Special:Log}}/suppress|page={{FULLPAGENAMEE}}}} 监督日志]中可以找到详细的信息。如果您想继续的话，您可以仍然[$1 去查看这次修订]。",
 	'rev-deleted-text-view' => "该页面修订已经被'''删除'''。您可以查看它。在[{{fullurl:{{#Special:Log}}/delete|page={{FULLPAGENAMEE}}}} 删除日志]中可以找到详细的信息。",
@@ -48615,11 +48812,12 @@ $messages['zh-hans'] = array(
 	'revdelete-no-file' => '指定的文件不存在。',
 	'revdelete-show-file-confirm' => '你是否真的要查看文件“<nowiki>$1</nowiki>”在$2 $3时的已删除修订？',
 	'revdelete-show-file-submit' => '是',
-	'revdelete-selected' => "'''选取'''[[:$1]]'''的$2次修订：'''",
+	'revdelete-selected' => "'''选取'''[[:$1]]'''的修订：'''",
 	'revdelete-text' => "'''删除的修订仍将显示在页面历史中, 但它们的文本内容已不能被公众访问。'''
 在{{SITENAME}}的其他管理员将仍能访问隐藏的内容并通过与此相同的界面恢复删除，除非站点工作者进行了一些附加的限制。",
 	'revdelete-confirm' => '请确认您肯定去做的话，您就要明白到后果，以及这个程序符合[[{{MediaWiki:Policy-url}}|政策]]。',
 	'revdelete-suppress-text' => "'''只有'''出现以下的情况下才应阻止访问：
+* 类似诽谤的信息
 * 不合适的个人信息
 *: ''家庭地址、电话号码、身份证号码等。''",
 	'revdelete-legend' => '设置可见性之限制',
@@ -48651,7 +48849,8 @@ $1",
 	'revdelete-only-restricted' => '在隐藏$1 $2的项目时发生错误：您不能在选择了另一可见性选项后废止管理员查看该项目。',
 	'revdelete-reason-dropdown' => '*常用删除理由
 ** 侵犯版权
-** 不合适的个人资料',
+** 不合适的个人资料
+** 潜在的诽谤性信息',
 	'revdelete-otherreason' => '其他/附加原因：',
 	'revdelete-reasonotherlist' => '其他原因',
 	'revdelete-edit-reasonlist' => '编辑删除埋由',
@@ -48668,7 +48867,7 @@ $1",
 	'right-edit' => '编辑页面',
 	'right-createpage' => '创建页面（非讨论页面）',
 	'right-createtalk' => '创建讨论页面',
-	'right-createaccount' => '创建新用户账户',
+	'right-createaccount' => '创建新用户帐户',
 	'right-minoredit' => '标记小编辑',
 	'right-move' => '移动页面',
 	'right-move-subpages' => '移动页面及其子页面',
@@ -48678,7 +48877,7 @@ $1",
 	'right-upload' => '上传文件',
 	'right-reupload' => '覆盖已有文件',
 	'right-reupload-own' => '覆盖由同一位上传的文件',
-	'right-reupload-shared' => '于本地无视共用媒体文件库上的文件',
+	'right-reupload-shared' => '于本地覆盖共用媒体文件库上的文件',
 	'right-upload_by_url' => '由一个URL上传文件',
 	'right-purge' => '不需要确认之下清除网站快取',
 	'right-autoconfirmed' => '编辑半保护页面',
@@ -48712,8 +48911,8 @@ $1",
 	'right-noratelimit' => '没有使用频率限制',
 	'right-import' => '由其它wiki中导入页面',
 	'right-importupload' => '由文件上传中导入页面',
-	'right-patrol' => '标示其它编辑作已巡查的',
-	'right-autopatrol' => '将自己的编辑自动标示为已巡查的',
+	'right-patrol' => '标示其它人的编辑为已巡查',
+	'right-autopatrol' => '将自己的编辑自动标示为已巡查',
 	'right-patrolmarks' => '查看最近巡查标记更改',
 	'right-unwatchedpages' => '查看未监视页面列表',
 	'right-mergehistory' => '合并页面历史',
@@ -48726,17 +48925,17 @@ $1",
 	'rightslog' => '用户权限日志',
 	'rightslogtext' => '以下记录了用户权限的更改记录。',
 	'rightslogentry' => '将 $1 的权限从 $2 改为 $3',
-	'rightslogentry-autopromote' => '自动晋升从 $2 到 $3',
+	'rightslogentry-autopromote' => '自动晋升 $2 到 $3',
 	'rightsnone' => '（无）',
 	'recentchanges' => '最近更改',
 	'recentchanges-legend' => '最近更改选项',
-	'recentchangestext' => '本页面跟踪本wiki的最近更改。',
+	'recentchangestext' => '<div id="wikia-mediawiki-recentchangestext" style="border:2px solid #e9e9e9; margin-bottom:0.3em; padding:0.2em 0.5em;"><span style="float:left;">[[Special:NewPages|新页面]] – [[Special:NewImages|新文件]] – [[Special:Log|历史记录]] – [[Special:Insights|问题文章页面]]</span><span style="float:right;">[[Help:Recent changes|帮助：最近变化]]</span><div style="clear:both;"></div></div>',
 	'recentchanges-feed-description' => '跟踪订阅本wiki的最近更改。',
 	'recentchanges-label-newpage' => '这次编辑建立了一个新页面',
 	'recentchanges-label-minor' => '这是一个小编辑',
 	'recentchanges-label-bot' => '这次编辑是由机器人进行',
 	'recentchanges-label-unpatrolled' => '这次编辑尚未巡查过',
-	'rcnote' => "以下是截至$4 $5在最近'''$2'''天内的最近'''$1'''次更改。",
+	'rcnote' => '<div style="margin-top: -20px;" class="emptymwmsg mediawiki_rcnote"></div>',
 	'rcnotefrom' => "以下是自'''$2'''起的更改（最多显示'''$1'''项）。",
 	'rclistfrom' => '显示自$1起的新更改',
 	'rcshowhideminor' => '$1小编辑',
@@ -48756,7 +48955,8 @@ $1",
 	'recentchangeslinked-toolbox' => '链出更改',
 	'recentchangeslinked-title' => '对于“$1”有关的链出更改',
 	'recentchangeslinked-noresult' => '在这一段时间中链接的页面并无更改。',
-	'recentchangeslinked-summary' => "这一个特殊页面列示''由''所给出的一个页面之链接到页面的最近更改（或者是对于指定分类的成员）。
+	'recentchangeslinked-summary' => "
+这一个特殊页面列表列出特定页面（或者是对于指定分类中的所有页面）连结的所有页面的最近修改。
 在[[Special:Watchlist|您的监视列表]]中的页面会以'''粗体'''显示。",
 	'recentchangeslinked-page' => '页面名称：',
 	'recentchangeslinked-to' => '显示链到所给出的页面',
@@ -48798,6 +48998,80 @@ $1",
 	'revdelete-uname-unhid' => '恢复用户名',
 	'revdelete-restricted' => '已将限制应用到管理员',
 	'revdelete-unrestricted' => '已移除对管理员的限制',
+	'revision-info-current' => '-',
+	'revision-nav' => '($1) $2{{int:pipe-separator}}$3 ($4){{int:pipe-separator}}$5 ($6)',
+	'right-editmyoptions' => '允许编辑你的个人偏好设置',
+	'right-loggedin' => '标记用户为已登入帐户的用户',
+	'right-mcachepurge' => '通过申请参数控制高速缓存行为',
+	'right-emailconfirmed' => '用户已通过电子邮件确认',
+	'right-runjob' => '通过API从工作队列中运行',
+	'recentchanges-url' => 'Special:RecentChanges',
+	'rc-change-size' => '$1',
+	'rc-old-title' => '最初创建为"$1"',
+	'randompage-url' => 'Special:Random',
+	'rfcurl' => '//tools.ietf.org/html/rfc$1',
+	'revdelete-logentry' => '更改"[[$1]]"的修订版本可见性',
+	'revdelete-content' => '内容',
+	'revdelete-summary' => '编辑摘要',
+	'revdelete-uname' => '用户名',
+	'revdelete-hid' => '隐藏$1',
+	'revdelete-unhid' => '不隐藏$1',
+	'revdelete-log-message' => '对$2个{{PLURAL:$2|版本|版本}}$1',
+	'reconfirmemail_subject' => '请重新认证你的FANDOM帐户',
+	'reconfirmemail_body' => '$2 您好,
+
+谢谢您更新了Wikia帐号连结的电子邮件信箱。
+
+在我们的系统寄发任何您所选择的通知电子邮件之前，您需要再确认您的电子邮件信箱。
+
+点击以下链接或将网址贴到您的浏览器上： 
+
+$3
+
+注意: 这个确认链接会在7天之后失效。
+
+
+Wikia有成千上万的社区，在这里有很多方式可以找到乐趣。建议您可以访问我们的首页（zh.wikia.com） 看看有些什么有趣的社区和内容，您可以在您喜好的主题撰写文章，也可以和其他社区用户交流。
+
+我们期待在Wikia见到您！ 
+
+Wikia 社区团队',
+	'rcshowhideenhanced' => '$1 折页式显示模式',
+	'refreshpage' => '加载页面后激活这个小部件',
+	'requestcreatewiki' => '提交请求',
+	'right_now' => 'Right Now<br />people are...',
+	'return_to_article' => '返回页面',
+	'return_to_talk' => '返回到讨论',
+	'return_to_user' => '返回到用户页面',
+	'return_to_user_talk' => '返回到讨论',
+	'return_to_project' => '返回到项目页',
+	'return_to_project_talk' => '返回到讨论',
+	'return_to_image' => '返回到图像页面',
+	'return_to_image_talk' => '返回到讨论',
+	'return_to_mediawiki' => '返回到消息页面',
+	'return_to_mediawiki_talk' => '返回到讨论',
+	'return_to_template' => '返回到模版页',
+	'return_to_template_talk' => '返回到讨论',
+	'return_to_help' => '返回到帮助页',
+	'return_to_help_talk' => '返回到讨论',
+	'return_to_category' => '返回到分类页面',
+	'return_to_category_talk' => '返回到讨论',
+	'return_to_forum' => '返回到论坛页面',
+	'return_to_forum_talk' => '返回到讨论',
+	'return_to_special' => '返回到特殊页',
+	'rate_it' => '评价这个页面：',
+	'review_reason_1' => '审核原因1',
+	'review_reason_2' => '审核原因2',
+	'review_reason_3' => '审核原因3',
+	'review_reason_4' => '审核原因4',
+	'review_reason_5' => '审核原因5',
+	'related_wiki' => 'Add bulleted links here to display wiki related to this one in the related wiki [[Special:Widgets|widget]].
+
+* [{{FULLURL:MediaWiki:Related wiki}} No related wiki have been selected yet.]',
+	'registerintro-title' => '当你在FANDOM上创建帐户时，你就成为了社区的一员！',
+	'registerintro-text' => '你的贡献将得到认可！你还可以创建个人用户主页，关注你最喜欢的页面，以及使用各种实用的工具。',
+	'rcshowhidelogs' => '$1个记录',
+	'right-hideblockername' => '在封禁通知中不显示用户名。',
 );
 
 $messages['zh-hant'] = array(
@@ -48806,86 +49080,86 @@ $messages['zh-hant'] = array(
 	'redirectpagesub' => '重定向頁面',
 	'retrievedfrom' => '取自「$1」',
 	'restorelink' => '$1個被刪除的版本',
-	'red-link-title' => '$1 （頁面未存在）',
-	'readonly' => '資料庫禁止訪問',
-	'readonlytext' => '資料庫目前禁止輸入新內容及更改，
-這很可能是由於資料庫正在維修，之後即可恢復。
-管理員有如下解釋: $1',
+	'red-link-title' => '$1 （頁面不存在）',
+	'readonly' => '資料庫被鎖定',
+	'readonlytext' => '資料庫目前禁止輸入新內容及更改。 
+
+$1',
 	'readonly_lag' => '附屬資料庫伺服器正在將快取更新到主伺服器，資料庫已被自動鎖定',
-	'remembermypassword' => '在這個瀏覽器上記住我的登入資訊（可維持 $1 {{PLURAL:$1|天|天}}）',
+	'remembermypassword' => '在這個瀏覽器上記住我的登入資訊',
 	'resetpass' => '更改密碼',
-	'resetpass_announce' => '您是透過一個臨時的發送到郵件中的代碼登入的。要完成登入，您必須在這裡設定一個新密碼:',
+	'resetpass_announce' => '您是透過一個臨時發送的密碼登入的。要繼續登入，請在這裡設定一個新密碼。',
 	'resetpass_text' => '<!-- 在此處加入文字 -->',
-	'resetpass_header' => '更改賬戶密碼',
-	'retypenew' => '確認密碼:',
+	'resetpass_header' => '更改帳號密碼',
+	'retypenew' => '確認密碼：',
 	'resetpass_submit' => '設定密碼並登入',
-	'resetpass_success' => '您的密碼已經被成功更改！
+	'resetpass_success' => '您的密碼已經成功更改！
 現在正為您登入...',
 	'resetpass_forbidden' => '無法更改密碼',
-	'resetpass-no-info' => '您必須登入後直接進入這個頁面。',
+	'resetpass-no-info' => '您必須登入後才能直接進入這個頁面。',
 	'resetpass-submit-loggedin' => '更改密碼',
 	'resetpass-submit-cancel' => '取消',
-	'resetpass-wrong-oldpass' => '無效的臨時或現有的密碼。
+	'resetpass-wrong-oldpass' => '無效的臨時或當前密碼。
 您可能已成功地更改了您的密碼，或者已經請求一個新的臨時密碼。',
-	'resetpass-temp-password' => '臨時密碼:',
-	'readonlywarning' => "'''警告: 資料庫被鎖定以進行維護，所以您目前將無法保存您的修改。'''您或許希望先將本段文字複製並保存到文字檔案，然後等一會兒再修改。
+	'resetpass-temp-password' => '臨時密碼：',
+	'readonlywarning' => "'''警告: 資料庫被鎖定以進行維護，所以您目前將無法保存您的修改。'''
 
 鎖定資料庫的管理員有如下解釋：$1",
-	'recreate-moveddeleted-warn' => "'''警告: {{GENDER:|你|妳|你}}現在重新建立一個先前曾經刪除過的頁面。'''
+	'recreate-moveddeleted-warn' => "'''警告: 你現在正要重新建立一個先前曾經刪除過的頁面。'''
 
-{{GENDER:|你|妳|你}}應該要考慮一下繼續編輯這一個頁面是否合適。
-為方便起見，這一個頁面的刪除記錄已經在下面提供:",
+你應該要考慮一下繼續編輯這一個頁面是否合適。
+為方便起見，這一個頁面的刪除或移動記錄已經提供在下面：",
 	'revisionasof' => '在$1所做的修訂版本',
 	'revision-info' => '在$1由$2所做的修訂版本',
-	'rev-deleted-comment' => '（編輯摘要已除）',
+	'rev-deleted-comment' => '（編輯摘要已移除）',
 	'rev-deleted-user' => '（用戶名已移除）',
-	'rev-deleted-event' => '（日誌已除）',
+	'rev-deleted-event' => '（日誌已移除）',
 	'rev-deleted-user-contribs' => '[用戶名或IP地址已移除 - 從貢獻中隱藏編輯]',
 	'rev-deleted-text-permission' => "該頁面修訂已被'''刪除'''。
 在[{{fullurl:{{#Special:Log}}/delete|page={{PAGENAMEE}}}} 刪除日誌]中可以找到詳細的訊息。",
-	'rev-deleted-text-unhide' => "本頁面版本已被'''刪除'''。詳情請見[{{fullurl:{{#Special:Log}}/delete|page={{FULLPAGENAMEE}}}} 刪除日誌]。如果你想繼續操作，你仍然可以[$1 查看本版本]。",
-	'rev-suppressed-text-unhide' => "該頁面修訂已經被'''監督隱藏'''。在[{{fullurl:{{#Special:Log}}/suppress|page={{FULLPAGENAMEE}}}} 監督日誌]中可以找到詳細的信息。如果您想繼續的話，您可以仍然[$1 去查看這次修訂]。",
-	'rev-deleted-text-view' => "該頁面修訂已經被'''刪除'''。您可以查看它。在[{{fullurl:{{#Special:Log}}/delete|page={{FULLPAGENAMEE}}}} 刪除日誌]中可以找到詳細的信息。",
-	'rev-suppressed-text-view' => "該頁面修訂已經被'''監督隱藏'''。您可以查看它。在[{{fullurl:{{#Special:Log}}/suppress|page={{FULLPAGENAMEE}}}} 監督日誌]中可以找到詳細的信息。",
-	'rev-deleted-no-diff' => "因為其中一次修訂已被'''刪除'''，您不可以檢視這個差異。
+	'rev-deleted-text-unhide' => "本頁面版本已被'''刪除'''。詳情請見[{{fullurl:{{#Special:Log}}/delete|page={{FULLPAGENAMEE}}}} 刪除日誌]。如果你想繼續，你仍然可以[$1 查看本版本]。",
+	'rev-suppressed-text-unhide' => "該頁面修訂已經被'''監督隱藏'''。在[{{fullurl:{{#Special:Log}}/suppress|page={{FULLPAGENAMEE}}}} 監督日誌]中可以找到詳細的訊息。如果您想繼續的話，您可以仍然[$1 去查看這次修訂]。",
+	'rev-deleted-text-view' => "該頁面修訂已經被'''刪除'''。您可以查看它。在[{{fullurl:{{#Special:Log}}/delete|page={{FULLPAGENAMEE}}}} 刪除日誌]中可以找到詳細的訊息。",
+	'rev-suppressed-text-view' => "該頁面修訂已經被'''監督隱藏'''。您可以查看它。在[{{fullurl:{{#Special:Log}}/suppress|page={{FULLPAGENAMEE}}}} 監督日誌]中可以找到詳細的訊息。",
+	'rev-deleted-no-diff' => "因為其中一次修訂已被'''刪除'''，您無法查看這個版本差異。
 在[{{fullurl:{{#Special:Log}}/delete|page={{FULLPAGENAMEE}}}} 刪除日誌]中可以找到更多的資料。",
-	'rev-suppressed-no-diff' => "該頁面的其中一次修訂已經被'''刪除'''，你不可以查看這次的修訂。",
-	'rev-deleted-unhide-diff' => "該差異對比其中的一個修訂版本已經被'''刪除'''。在[{{fullurl:{{#Special:Log}}/delete|page={{FULLPAGENAMEE}}}} 刪除日誌]中可以找到更多的信息。如果您想繼續的話，您仍然可以[$1 查看這次修訂]。",
-	'rev-suppressed-unhide-diff' => "該頁面的其中一次修訂已經被'''監督隱藏'''。
-在[{{fullurl:{{#Special:Log}}/suppress|page={{FULLPAGENAMEE}}}} 監督日誌]中可以找到更多的資料。如果您想繼續的話，您可以仍然[$1 去查看這次修訂]。",
-	'rev-deleted-diff-view' => "差異對比中的一次修訂已被'''刪除'''。您可以對比此差異。詳細信息可在[{{fullurl:{{#Special:Log}}/delete|page={{FULLPAGENAMEE}}}} 刪除日誌]中找到。",
-	'rev-suppressed-diff-view' => "差異對比中的一次修訂已被'''監督隱藏'''。您可以對比此差異。詳細信息可在[{{fullurl:{{#Special:Log}}/suppress|page={{FULLPAGENAMEE}}}} 監督日誌]中找到。",
+	'rev-suppressed-no-diff' => "因為其中一次修訂已經被'''刪除'''，你無法查看這次的修訂版本差異。",
+	'rev-deleted-unhide-diff' => "該差異對比的其中一個修訂版本已經被'「刪除」。在[{{fullurl:{{#Special:Log}}/delete|page={{FULLPAGENAMEE}}}} 刪除日誌]中可以找到更多的訊息。如果您想繼續的話，您仍然可以[$1 查看這次修訂差異]。",
+	'rev-suppressed-unhide-diff' => '該頁面版本差異的其中一次修訂已經被「監督隱藏」。
+在[{{fullurl:{{#Special:Log}}/suppress|page={{FULLPAGENAMEE}}}} 監督日誌]中可以找到更多的資料。如果您想繼續的話，您可以仍然[$1 去查看這次修訂差異]。',
+	'rev-deleted-diff-view' => "差異對比中的一次修訂已被'''刪除'''。您仍可以查看此差異對比。詳細訊息可在[{{fullurl:{{#Special:Log}}/delete|page={{FULLPAGENAMEE}}}} 刪除日誌]中找到。",
+	'rev-suppressed-diff-view' => '差異對比中的一次修訂已被「監督隱藏」。您仍可以對比此差異。詳細訊息可在[{{fullurl:{{#Special:Log}}/suppress|page={{FULLPAGENAMEE}}}} 監督日誌]中找到。',
 	'rev-delundel' => '顯示/隱藏',
 	'rev-showdeleted' => '顯示',
-	'revisiondelete' => '刪除/恢復刪除修訂',
+	'revisiondelete' => '刪除/恢復刪除 修訂',
 	'revdelete-nooldid-title' => '無效的目標修訂',
-	'revdelete-nooldid-text' => '您尚未指定一個目標修訂去進行這個功能、
-所指定的修訂不存在，或者您嘗試去隱藏現時的修訂。',
+	'revdelete-nooldid-text' => '您尚未指定一個目標修訂去進行這個功能、所指定的修訂不存在，或者您嘗試去隱藏的是最新的修訂版本。',
 	'revdelete-nologtype-title' => '沒有給出日誌類型',
-	'revdelete-nologtype-text' => '您尚未指定一種日誌類型去做這個動作。',
+	'revdelete-nologtype-text' => '您尚未指定一種日誌類型來進行這個操作。',
 	'revdelete-nologid-title' => '無效的日誌項目',
-	'revdelete-nologid-text' => '您尚未指定一個目標日誌項目去進行這個動作或指定的項目不存在。',
+	'revdelete-nologid-text' => '您尚未指定一個目標日誌項目去進行這個操作或指定的項目不存在。',
 	'revdelete-no-file' => '指定的檔案不存在。',
-	'revdelete-show-file-confirm' => '{{GENDER:|你|妳|你}}是否真的是想去檢視於$2 $3刪除 "$1" 的檔案修訂？',
+	'revdelete-show-file-confirm' => '你是否真的想檢視於$2 $3刪除的檔案"$1" 的修訂版本？',
 	'revdelete-show-file-submit' => '是',
-	'revdelete-selected' => "'''選取[[:$1]]的$2次修訂:'''",
+	'revdelete-selected' => "'''選取[[:$1]]的修訂：'''",
 	'revdelete-text' => "'''刪除的修訂仍將顯示在頁面歷史中, 但它們的文字內容已不能被公眾訪問。'''
-在{{SITENAME}}的其他管理員將仍能訪問隱藏的內容並透過與此相同的介面恢復刪除，除非網站工作者進行了一些附加的限制。",
-	'revdelete-confirm' => '請確認您肯定去做的話，您就要明白到後果，以及這個程序符合[[{{MediaWiki:Policy-url}}|政策]]。',
-	'revdelete-suppress-text' => "壓制'''只'''應在以下的情況下進行:
+在{{SITENAME}}的其他管理員將仍能訪問隱藏的內容並透過與此相同的介面恢復刪除，除非再進行附加的限制。",
+	'revdelete-confirm' => '請確認您要這樣操作，您已了解到可能的後果，以及這個操作符合[[{{MediaWiki:Policy-url}}|政策]]。',
+	'revdelete-suppress-text' => "監督隱藏內容'''只'''應在以下的情況下進行：
+* 可能造成誹謗的資訊
 * 不合適的個人資料
-*: ''住家地址、電話號碼、社群保安號碼等。''",
-	'revdelete-legend' => '設定可見性之限制',
+*: ''住家地址、電話號碼、身分證號碼等。''",
+	'revdelete-legend' => '設定限制可見性',
 	'revdelete-hide-text' => '隱藏修訂文字',
 	'revdelete-hide-image' => '隱藏檔案內容',
 	'revdelete-hide-name' => '隱藏動作和目標',
 	'revdelete-hide-comment' => '隱藏編輯摘要',
 	'revdelete-hide-user' => '隱藏編輯者的用戶名/IP地址',
-	'revdelete-hide-restricted' => '同時廢止由操作員以及其他用戶的資料',
+	'revdelete-hide-restricted' => '同時阻止由管理員和其他用戶查看的資料',
 	'revdelete-radio-same' => '(勿更改)',
 	'revdelete-radio-set' => '是',
 	'revdelete-radio-unset' => '否',
-	'revdelete-suppress' => '同時廢止由操作員以及其他用戶的資料',
+	'revdelete-suppress' => '同時阻止由管理員以及其他用戶查看的資料',
 	'revdelete-unsuppress' => '在已恢復的修訂中移除限制',
 	'revdelete-log' => '理由：',
 	'revdelete-submit' => '應用於選取的{{PLURAL:$1|修訂}}',
@@ -48895,16 +49169,17 @@ $1",
 	'revdel-restore' => '更改可見性',
 	'revdel-restore-deleted' => '已刪除的修訂版本',
 	'revdel-restore-visible' => '可見的修訂版本',
-	'revdelete-hide-current' => '正在隱藏於$1 $2之項目錯誤：這個是現時的修訂，不可以隱藏。',
-	'revdelete-show-no-access' => '正在顯示於$1 $2之項目錯誤：這個項目已經標示為"已限制"，您對它並無通行權。',
-	'revdelete-modify-no-access' => '正在更改於$1 $2之項目錯誤：這個項目已經標示為"已限制"，您對它並無通行權。',
-	'revdelete-modify-missing' => '正在更改項目ID $1錯誤：它在資料庫中遺失！',
+	'revdelete-hide-current' => '隱藏 $1 $2 之項目時發生錯誤：這個是最新的修訂版本，不可以隱藏。',
+	'revdelete-show-no-access' => '要顯示$1 $2的項目時發生錯誤：這個項目已經標示為"已限制"，您無權限看到它。',
+	'revdelete-modify-no-access' => '更改$1 $2的項目發生錯誤：這個項目已經標示為"限制"，您沒有修改的權限。',
+	'revdelete-modify-missing' => '更改項目ID $1時發生錯誤：它在資料庫中遺失！',
 	'revdelete-no-change' => '警告：於$1 $2之項目已經請求了可見性的設定。',
-	'revdelete-concurrent-change' => '正在更改於$1 $2之項目錯誤：當我們嘗試更改它的設定時，已經被另一些人更改過。請檢查紀錄。',
+	'revdelete-concurrent-change' => '在更改$1 $2的項目時發生錯誤：當我們嘗試更改它的設定時，已經被另一些人更改過。請檢查日誌。',
 	'revdelete-only-restricted' => '在隱藏$1 $2的項目時發生錯誤：您不能在選擇了另一可見性選項後廢止管理員查看該項目。',
 	'revdelete-reason-dropdown' => '*常用刪除理由
 ** 侵犯版權
-** 不合適的個人資料',
+** 不合適的個人資料
+** 可能造成誹謗的內容',
 	'revdelete-otherreason' => '其它／附加的理由：',
 	'revdelete-reasonotherlist' => '其它理由',
 	'revdelete-edit-reasonlist' => '編輯刪除埋由',
@@ -48912,17 +49187,17 @@ $1",
 	'revertmerge' => '解除合併',
 	'resetprefs' => '清除未保存的更改',
 	'restoreprefs' => '恢復所有預設設定',
-	'rows' => '列:',
+	'rows' => '横列：',
 	'resultsperpage' => '每頁顯示連結數',
-	'recentchangesdays' => '最近更改中的顯示日數:',
-	'recentchangesdays-max' => '最多$1{{PLURAL:$1|天}}',
+	'recentchangesdays' => '最近更改中的顯示日數：',
+	'recentchangesdays-max' => '最多$1天',
 	'recentchangescount' => '預設顯示的編輯數：',
 	'right-read' => '閱讀頁面',
 	'right-edit' => '編輯頁面',
 	'right-createpage' => '建立頁面（不含討論頁面）',
 	'right-createtalk' => '建立討論頁面',
-	'right-createaccount' => '創建新用戶賬戶',
-	'right-minoredit' => '標示作小編輯',
+	'right-createaccount' => '創建新帳號',
+	'right-minoredit' => '標示為小編輯',
 	'right-move' => '移動頁面',
 	'right-move-subpages' => '移動頁面跟它的子頁面',
 	'right-move-rootuserpages' => '移動根用戶頁面',
@@ -48930,48 +49205,48 @@ $1",
 	'right-suppressredirect' => '當移動頁面時不建立來源頁面之重定向',
 	'right-upload' => '上傳檔案',
 	'right-reupload' => '覆蓋現有的檔案',
-	'right-reupload-own' => '覆蓋由同一位上載的檔案',
-	'right-reupload-shared' => '於本地無視共用媒體檔案庫上的檔案',
+	'right-reupload-own' => '覆蓋由自己上載的檔案',
+	'right-reupload-shared' => '於本地覆蓋共用媒體檔案庫上的檔案',
 	'right-upload_by_url' => '由一個URL上載檔案',
 	'right-purge' => '不需要確認之下清除網站快取',
 	'right-autoconfirmed' => '編輯半保護頁面',
 	'right-bot' => '視為一個自動程序',
-	'right-nominornewtalk' => '小編輯不引發新訊息提示',
+	'right-nominornewtalk' => '對討論頁的小編輯不引發新訊息提示',
 	'right-apihighlimits' => '在API查詢中使用更高的上限',
 	'right-writeapi' => '使用API編寫',
 	'right-delete' => '刪除頁面',
 	'right-bigdelete' => '刪除大量歷史之頁面',
-	'right-deleterevision' => '刪除及同反刪除頁面中的指定修訂',
+	'right-deleterevision' => '刪除及恢復頁面中的指定修訂',
 	'right-deletedhistory' => '檢視已刪除之歷史項目，不含關聯的文本',
-	'right-deletedtext' => '檢視已刪除修訂中之已刪除的字以及更改',
+	'right-deletedtext' => '檢視已刪除修訂中之已刪除的文字以及更改',
 	'right-browsearchive' => '搜尋已刪除之頁面',
-	'right-undelete' => '反刪除頁面',
-	'right-suppressrevision' => '檢視及恢復由操作員隱藏之修訂',
+	'right-undelete' => '恢復刪除頁面',
+	'right-suppressrevision' => '檢視及恢復由管理員隱藏之修訂',
 	'right-suppressionlog' => '檢視私人的日誌',
 	'right-block' => '封鎖其他用戶防止編輯',
 	'right-blockemail' => '封鎖用戶不可發電郵',
 	'right-hideuser' => '封鎖用戶名，對公眾隱藏',
-	'right-ipblock-exempt' => '繞過IP封鎖、自動封鎖以及範圍封鎖',
-	'right-proxyunbannable' => '繞過Proxy的自動封鎖',
-	'right-unblockself' => '自我解除封鎖',
+	'right-ipblock-exempt' => '繞過IP封禁、自動封禁以及區段封標',
+	'right-proxyunbannable' => '繞過Proxy的自動封禁',
+	'right-unblockself' => '自我解除封禁',
 	'right-protect' => '更改保護等級以及編輯保護頁面',
 	'right-editprotected' => '編輯保護頁面（無連鎖保護）',
 	'right-editinterface' => '編輯用戶界面',
 	'right-editusercssjs' => '編輯其他用戶的CSS和JavaScript檔案',
 	'right-editusercss' => '編輯其他用戶的CSS檔案',
 	'right-edituserjs' => '編輯其他用戶的JavaScript檔案',
-	'right-rollback' => '快速復原上位用戶對某一頁面之編輯',
-	'right-markbotedits' => '標示復原編輯作機械人編輯',
+	'right-rollback' => '快速回退上位用戶對某一頁面之編輯',
+	'right-markbotedits' => '將回退編輯標示為機器人編輯',
 	'right-noratelimit' => '沒有使用頻率限制',
-	'right-import' => '由其它wiki中匯入頁面',
+	'right-import' => '由其它Wiki中匯入頁面',
 	'right-importupload' => '由檔案上載中匯入頁面',
-	'right-patrol' => '標示其它的編輯作已巡查的',
-	'right-autopatrol' => '將自己的編輯自動標示為已巡查的',
+	'right-patrol' => '標示其它人的編輯為已巡查',
+	'right-autopatrol' => '將自己的編輯自動標示為已巡查',
 	'right-patrolmarks' => '檢視最近巡查標記更改',
 	'right-unwatchedpages' => '檢視未監視之頁面',
 	'right-mergehistory' => '合併頁面歷史',
 	'right-userrights' => '編輯所有用戶的權限',
-	'right-userrights-interwiki' => '編輯在其它wiki上的用戶權限',
+	'right-userrights-interwiki' => '編輯在其它Wiki上的用戶權限',
 	'right-siteadmin' => '鎖定和解除鎖定資料庫',
 	'right-override-export-depth' => '匯出含有五層深度連結頁面之頁面',
 	'right-sendemail' => '發電子郵件給其他用戶',
@@ -48981,16 +49256,16 @@ $1",
 	'rightslogentry' => '將 $1 的權限從 $2 改為 $3',
 	'rightslogentry-autopromote' => '自動由$2晉升至$3',
 	'rightsnone' => '無',
-	'recentchanges' => '近期變動',
+	'recentchanges' => '最近更改',
 	'recentchanges-legend' => '最近更改選項',
-	'recentchangestext' => '跟蹤這個wiki上的最新更改。',
-	'recentchanges-feed-description' => '追蹤此訂閱在 wiki 上的最近更改。',
+	'recentchangestext' => '<div id="wikia-mediawiki-recentchangestext" style="border:2px solid #e9e9e9; margin-bottom:0.3em; padding:0.2em 0.5em;"><span style="float:left;">[[Special:NewPages|新頁面]] – [[Special:NewImages|新檔案]] – [[Special:Log|日誌]] – [[Special:Insights|問題頁面列表]]</span><span style="float:right;">[[Help:Recent changes|幫助:最近更改]]</span><div style="clear:both;"></div></div>',
+	'recentchanges-feed-description' => '追蹤訂閱在此Wiki 上的最近更改。',
 	'recentchanges-label-newpage' => '這次編輯建立了一個新頁面',
 	'recentchanges-label-minor' => '這是一個小編輯',
 	'recentchanges-label-bot' => '這次編輯是由機器人進行',
 	'recentchanges-label-unpatrolled' => '這次編輯尚未巡查過',
-	'rcnote' => "以下是在$4 $5，最近 '''$2''' 天內的 '''$1''' 次最近更改記錄。",
-	'rcnotefrom' => "下面是自'''$2'''（最多顯示'''$1'''）:",
+	'rcnote' => '<div style="margin-top: -20px;" class="emptymwmsg mediawiki_rcnote"></div>',
+	'rcnotefrom' => "下面是自'''$2'''以來的更改（最多顯示'''$1'''）:",
 	'rclistfrom' => '顯示自$1以來的新更改',
 	'rcshowhideminor' => '$1小編輯',
 	'rcshowhidebots' => '$1機器人的編輯',
@@ -48999,38 +49274,38 @@ $1",
 	'rcshowhidepatr' => '$1巡查過的編輯',
 	'rcshowhidemine' => '$1我的編輯',
 	'rclinks' => '顯示最近$2天內最新的$1次改動。<br />$3',
-	'rc_categories' => '分類界限（以"|"分割）',
+	'rc_categories' => '分類限制（以"|"分割）',
 	'rc_categories_any' => '任意',
-	'rc-change-size-new' => '更改後$1字節',
+	'rc-change-size-new' => '更改後為$1字節',
 	'rc-enhanced-expand' => '顯示細節 （需要 JavaScript）',
 	'rc-enhanced-hide' => '隱藏細節',
 	'recentchangeslinked' => '連出更改',
 	'recentchangeslinked-feed' => '連出更改',
 	'recentchangeslinked-toolbox' => '連出更改',
-	'recentchangeslinked-title' => '對於「$1」有關的連出更改',
+	'recentchangeslinked-title' => '與「$1」有關的連出更改',
 	'recentchangeslinked-noresult' => '在這一段時間中連結的頁面並無更改。',
-	'recentchangeslinked-summary' => "這一個特殊頁面列示''由''所給出的一個頁面之連結到頁面的最近更改（或者是對於指定分類的成員）。
+	'recentchangeslinked-summary' => "這一個特殊頁面列表列出特定頁面（或者是對於指定分類中的所有頁面）連結的所有頁面的最近修改。
 在[[Special:Watchlist|您的監視列表]]中的頁面會以'''粗體'''顯示。",
-	'recentchangeslinked-page' => '頁面名稱:',
-	'recentchangeslinked-to' => '顯示連到所給出的頁面',
+	'recentchangeslinked-page' => '頁面名稱：',
+	'recentchangeslinked-to' => '顯示連到所指定頁面的頁面的更改',
 	'reuploaddesc' => '取消上載並返回上載表單',
 	'randompage' => '隨機頁面',
-	'randompage-nopages' => '在以下的{{PLURAL:$2|名字空間}}中沒有頁面：$1',
+	'randompage-nopages' => '在以下的{{PLURAL:$2|命名空間}}中沒有頁面：$1',
 	'randomredirect' => '隨機重定向頁面',
-	'randomredirect-nopages' => '在 "$1" 名字空間中沒有重定向頁面。',
+	'randomredirect-nopages' => '在 "$1" 命名空間中沒有重定向頁面。',
 	'removewatch' => '停止監視',
 	'removedwatchtext' => '[[:$1]]已經從[[Special:Watchlist|您的監視頁面]]中移除。',
-	'reverted' => '恢復到早期版本',
-	'rollback' => '恢復編輯',
-	'rollback_short' => '恢復',
-	'rollbacklink' => '恢復',
-	'rollbackfailed' => '無法恢復',
+	'reverted' => '恢復到較早的版本',
+	'rollback' => '回退編輯',
+	'rollback_short' => '回退',
+	'rollbacklink' => '回退',
+	'rollbackfailed' => '無法回退',
 	'revertpage' => '已恢復由[[Special:Contributions/$2|$2]]（[[User talk:$2|對話]]）的編輯至[[User:$1|$1]]的最後一個修訂版本',
 	'revertpage-nouser' => '恢復由（移除了的用戶名）的編輯到[[User:$1|$1]]的最後一個修訂版本',
 	'rollback-success' => '已恢復$1的編輯；
 更改回$2的最後修訂版本。',
-	'restriction-type' => '權限:',
-	'restriction-level' => '限制級別:',
+	'restriction-type' => '權限：',
+	'restriction-level' => '限制級別：',
 	'restriction-edit' => '編輯',
 	'restriction-move' => '移動',
 	'restriction-create' => '建立',
@@ -49038,11 +49313,11 @@ $1",
 	'restriction-level-sysop' => '全保護',
 	'restriction-level-autoconfirmed' => '半保護',
 	'restriction-level-all' => '任何級別',
-	'reblock-logentry' => '更改[[$1]]的封禁設定時間 $2 $3',
-	'range_block_disabled' => '只有管理員才能創建禁止查封的範圍。',
+	'reblock-logentry' => '更改[[$1]]的封禁終止時間為 $2 $3',
+	'range_block_disabled' => '管理員執行區段封禁的權限已關閉。',
 	'revertmove' => '恢復該移動',
-	'rcpatroldisabled' => '最新更改檢查被關閉',
-	'rcpatroldisabledtext' => '最新更改檢查的功能目前已關閉。',
+	'rcpatroldisabled' => '最新更改巡查關閉',
+	'rcpatroldisabledtext' => '最新更改巡查的功能目前已關閉。',
 	'recreate' => '重建',
 	'revdelete-content-hid' => '隱藏內容',
 	'revdelete-summary-hid' => '隱藏編輯摘要',
@@ -49050,187 +49325,83 @@ $1",
 	'revdelete-content-unhid' => '恢復內容',
 	'revdelete-summary-unhid' => '恢復編輯摘要',
 	'revdelete-uname-unhid' => '恢復用戶名',
-	'revdelete-restricted' => '已應用限制至操作員',
-	'revdelete-unrestricted' => '已移除對於操作員的限制',
-);
+	'revdelete-restricted' => '已執行限制至管理員',
+	'revdelete-unrestricted' => '已移除對於管理員的限制',
+	'registerintro-title' => '當你在FANDOM上創建帳號時，你就成為了社群的一份子！',
+	'rcshowhideenhanced' => '$1 折頁式顯示模式',
+	'reconfirmemail_body' => '$2 您好,
 
-$messages['zh-hk'] = array(
-	'red-link-title' => '$1 (頁面不存在)',
-	'rev-deleted-comment' => '（註釋已除）',
-	'rev-deleted-event' => '（日誌已除）',
-	'revdelete-suppress-text' => "壓制'''只'''應用於以下的情況:
-* 不合適的個人資料
-*: ''地址、電話號碼、身份證號碼等。''",
-	'recentchanges-label-bot' => '這次編輯是由機械人進行',
-	'rcshowhidebots' => '$1機械人的編輯',
-);
+謝謝您更新了Wikia帳號連結的電子郵件信箱。
 
-$messages['zh-min-nan'] = array(
-	'red-link-title' => '$1 (頁面不存在)',
-	'rev-deleted-comment' => '（註釋已除）',
-	'rev-deleted-event' => '（日誌已除）',
-	'revdelete-suppress-text' => "壓制'''只'''應用於以下的情況:
-* 不合適的個人資料
-*: ''地址、電話號碼、身份證號碼等。''",
-	'recentchanges-label-bot' => '這次編輯是由機械人進行',
-	'rcshowhidebots' => '$1機械人的編輯',
-);
+在我們的系統寄發任何您所選擇的通知電子郵件之前，您需要再確認您的電子郵件信箱。
 
-$messages['zh-mo'] = array(
-	'red-link-title' => '$1 (頁面不存在)',
-	'rev-deleted-comment' => '（註釋已除）',
-	'rev-deleted-event' => '（日誌已除）',
-	'revdelete-suppress-text' => "壓制'''只'''應用於以下的情況:
-* 不合適的個人資料
-*: ''地址、電話號碼、身份證號碼等。''",
-	'recentchanges-label-bot' => '這次編輯是由機械人進行',
-	'rcshowhidebots' => '$1機械人的編輯',
-);
+點擊以下鏈接或將網址貼到您的瀏覽器上： 
 
-$messages['zh-my'] = array(
-	'red-link-title' => '$1 (頁面不存在)',
-	'rev-deleted-comment' => '（註釋已除）',
-	'rev-deleted-event' => '（日誌已除）',
-	'revdelete-suppress-text' => "壓制'''只'''應用於以下的情況:
-* 不合適的個人資料
-*: ''地址、電話號碼、身份證號碼等。''",
-	'recentchanges-label-bot' => '這次編輯是由機械人進行',
-	'rcshowhidebots' => '$1機械人的編輯',
-);
+$3
 
-$messages['zh-tw'] = array(
-	'realmap-deprecated-info' => 'Wikia已經不再支援世界地圖功能。 有關更多資訊，請參見: $1',
-	'red-link-title' => '$1 (頁面不存在)',
-	'readonlytext' => '資料庫目前禁止輸入新內容及更改，
-這很可能是由於資料庫正在維修，之後即可復原。
-管理員有如下解釋:
-<p>$1</p>',
-	'resetpass' => '更換密碼',
-	'resetpass_announce' => '您是透過臨時發送到郵件中的代碼登入的。要完成登入，您必須在這裡設定一個新密碼:',
-	'resetpass_header' => '更換帳號密碼',
-	'resetpass_success' => '您的密碼已經被成功更改﹗現下正為您登入...',
-	'resetpass_forbidden' => '無法更改密碼',
-	'recreate-moveddeleted-warn' => "'''警告: 你現在重新建立一個先前曾經刪除過的頁面。'''
+注意: 這個確認鏈接會在7天之後失效。
 
-你應該要考慮一下繼續編輯這一個頁面是否合適。
-為方便起見，這一個頁面的刪除記錄已經在下面提供:",
-	'rev-deleted-user' => '(使用者名已移除)',
-	'rev-deleted-event' => '(項目已移除)',
-	'rev-deleted-text-permission' => '該頁面修訂已經被從公共文件中移除。
-在[{{fullurl:{{#Special:Log}}/suppress|page={{PAGENAMEE}}}} 刪除日誌]中您可能會檢視到詳細的訊息。',
-	'rev-deleted-text-view' => '該頁面修訂已經被從公共文件中移除。作為此網站的管理員，您可以檢視它；
-在[{{fullurl:{{#Special:Log}}/suppress|page={{FULLPAGENAMEE}}}} 刪除日誌]中您可能會檢視到詳細的訊息。',
-	'revisiondelete' => '刪除/復原刪除修訂',
-	'revdelete-nooldid-title' => '沒有目標修訂',
-	'revdelete-nooldid-text' => '您沒有指定此操作的目標修訂。',
-	'revdelete-text' => "'''刪除的修訂仍將顯示在修訂記錄中, 但它們的文字內容已不能被公眾訪問。'''
 
-在此網站的其他管理員將仍能訪問隱藏的內容並透過與此相同的介面復原刪除，除非網站工作者進行了一些附加的限制。",
-	'revdelete-legend' => '設定修訂限制:',
-	'revdelete-hide-user' => '隱藏編輯者的使用者名/IP',
-	'revdelete-hide-restricted' => '將此限制同樣應用於管理員',
-	'revdelete-suppress' => '同時壓制由操作員以及其他使用者的資料',
-	'revdelete-unsuppress' => '在已復原的修訂中移除限制',
-	'revdelete-success' => '修訂的可見性已經成功設定。',
-	'resetprefs' => '重設參數',
-	'recentchangesdays' => '近期變動中的顯示日數:',
-	'recentchangescount' => '近期變動中的編輯數:',
-	'rightslog' => '使用者權限日誌',
-	'rightslogtext' => '以下記錄了使用者權限的更改記錄。',
-	'recentchanges' => '近期變動',
-	'recentchanges-feed-description' => '跟蹤此訂閱在 wiki 上的近期變動。',
-	'rcnotefrom' => '下面是自<b>$2</b>(最多顯示<b>$1</b>):',
-	'rcshowhideminor' => '$1細微修改',
-	'rcshowhidebots' => '$1機器人的編輯',
-	'rcshowhideliu' => '$1具名使用者的編輯',
-	'rcshowhideanons' => '$1匿名使用者的編輯',
-	'rcshowhidepatr' => ' $1檢查過的編輯',
-	'recentchangeslinked' => '相關頁面修訂記錄',
-	'recentchangeslinked-feed' => '相關頁面修訂記錄',
-	'recentchangeslinked-toolbox' => '相關頁面修訂記錄',
-	'recentchangeslinked-title' => '$1 內連結頁面的修訂記錄',
-	'recentchangeslinked-summary' => "這一個特殊頁面列示這一頁連出頁面的近期變動。在您監視列表中的頁面會以'''粗體'''表示。",
-	'reuploaddesc' => '返回上載表單。',
-	'randompage-nopages' => '在這個名字空間中沒有頁面。',
-	'randomredirect-nopages' => '在這個名字空間中沒有重定向頁面。',
-	'removedwatchtext' => '頁面「[[:$1]]」已經從您的監視頁面中移除。',
-	'reverted' => '復原到早期版本',
-	'rollback' => '復原',
-	'rollback_short' => '復原',
-	'rollbacklink' => '復原',
-	'rollbackfailed' => '無法復原',
-	'revertpage' => '復原由[[Special:Contributions/$2|$2]] ([[User talk:$2|對話]])的編輯；更改回[[User:$1|$1]]的最後一個版本',
-	'rollback-success' => '復原由$1的編輯；更改回$2的最後一個版本。',
-	'range_block_disabled' => '只有管理員才能建立禁止封鎖的範圍。',
-	'revertmove' => '復原該移動',
-	'rate_it' => '打分數:',
-);
+Wikia有成千上萬的社區，在這裡有很多方式可以找到樂趣。建議您可以訪問我們的首頁（zh-tw.wikia.com） 看看有些什麼有趣的社區和內容，您可以在您喜好的主題撰寫文章，也可以和其他社區用戶交流。
 
-$messages['zh-yue'] = array(
-	'red-link-title' => '$1 (頁面不存在)',
-	'readonlytext' => '資料庫目前禁止輸入新內容及更改，
-這很可能是由於資料庫正在維修，之後即可復原。
-管理員有如下解釋:
-<p>$1</p>',
-	'resetpass' => '更換密碼',
-	'resetpass_announce' => '您是透過臨時發送到郵件中的代碼登入的。要完成登入，您必須在這裡設定一個新密碼:',
-	'resetpass_header' => '更換帳號密碼',
-	'resetpass_success' => '您的密碼已經被成功更改﹗現下正為您登入...',
-	'resetpass_forbidden' => '無法更改密碼',
-	'recreate-moveddeleted-warn' => "'''警告: 你現在重新建立一個先前曾經刪除過的頁面。'''
+我們期待在Wikia見到您！ 
 
-你應該要考慮一下繼續編輯這一個頁面是否合適。
-為方便起見，這一個頁面的刪除記錄已經在下面提供:",
-	'rev-deleted-user' => '(使用者名已移除)',
-	'rev-deleted-event' => '(項目已移除)',
-	'rev-deleted-text-permission' => '該頁面修訂已經被從公共文件中移除。
-在[{{fullurl:{{#Special:Log}}/suppress|page={{PAGENAMEE}}}} 刪除日誌]中您可能會檢視到詳細的訊息。',
-	'rev-deleted-text-view' => '該頁面修訂已經被從公共文件中移除。作為此網站的管理員，您可以檢視它；
-在[{{fullurl:{{#Special:Log}}/suppress|page={{FULLPAGENAMEE}}}} 刪除日誌]中您可能會檢視到詳細的訊息。',
-	'revisiondelete' => '刪除/復原刪除修訂',
-	'revdelete-nooldid-title' => '沒有目標修訂',
-	'revdelete-nooldid-text' => '您沒有指定此操作的目標修訂。',
-	'revdelete-text' => "'''刪除的修訂仍將顯示在修訂記錄中, 但它們的文字內容已不能被公眾訪問。'''
+Wikia 社區團隊',
+	'reconfirmemail_subject' => '請重新認證你的FANDOM帳號',
+	'realmap-deprecated-info' => 'FANDOM已經不再支援世界地圖功能。 有關更多資訊，請參見: $1',
+	'revision-info-current' => '-',
+	'revision-nav' => '($1) $2{{int:pipe-separator}}$3 ($4){{int:pipe-separator}}$5 ($6)',
+	'right-hideblockername' => '在封禁通知中不顯示用戶名。',
+	'right-editmyoptions' => '可以編輯您自己的偏好設定',
+	'right-loggedin' => '標記用戶為已登入帳戶的用戶',
+	'right-mcachepurge' => '通過申請參數控制memcached行為',
+	'right-emailconfirmed' => '用戶已通過電子郵件認證',
+	'right-runjob' => '通過API從工作列中運行作業',
+	'recentchanges-url' => 'Special:RecentChanges',
+	'rc-change-size' => '$1',
+	'rc-old-title' => '最初創建為"$1"',
+	'randompage-url' => 'Special:Random',
+	'rfcurl' => '//tools.ietf.org/html/rfc$1',
+	'revdelete-logentry' => '更改修訂"[[$1]]"的公開程度。',
+	'revdelete-content' => '內容',
+	'revdelete-summary' => '編輯摘要',
+	'revdelete-uname' => '用戶名',
+	'revdelete-hid' => '隱藏$1',
+	'revdelete-unhid' => '公開$1',
+	'revdelete-log-message' => '$1 $2個{{PLURAL:$2|修訂|修訂}}',
+	'refreshpage' => '載入頁面以啟動這個小插件',
+	'requestcreatewiki' => '提交請求',
+	'right_now' => 'Right Now<br />people are...',
+	'return_to_article' => '返回到頁面',
+	'return_to_talk' => '返回到討論',
+	'return_to_user' => '返回到用戶頁面',
+	'return_to_user_talk' => '返回到討論',
+	'return_to_project' => '返回到計畫頁面',
+	'return_to_project_talk' => '返回到討論',
+	'return_to_image' => '返回到圖像頁面',
+	'return_to_image_talk' => '返回到討論',
+	'return_to_mediawiki' => '返回到訊息頁面',
+	'return_to_mediawiki_talk' => '返回到討論',
+	'return_to_template' => '返回到模板頁',
+	'return_to_template_talk' => '返回到討論',
+	'return_to_help' => '返回到幫助頁',
+	'return_to_help_talk' => '返回到討論',
+	'return_to_category' => '返回到分類頁面',
+	'return_to_category_talk' => '返回到討論',
+	'return_to_forum' => '返回到論壇頁',
+	'return_to_forum_talk' => '返回到討論',
+	'return_to_special' => '返回到特殊頁',
+	'rate_it' => '評價這個頁面：',
+	'review_reason_1' => '審核原因1',
+	'review_reason_2' => '審核原因2',
+	'review_reason_3' => '審核原因3',
+	'review_reason_4' => '審核原因4',
+	'review_reason_5' => '審核原因5',
+	'related_wiki' => 'Add bulleted links here to display wiki related to this one in the related wiki [[Special:Widgets|widget]].
 
-在此網站的其他管理員將仍能訪問隱藏的內容並透過與此相同的介面復原刪除，除非網站工作者進行了一些附加的限制。",
-	'revdelete-legend' => '設定修訂限制:',
-	'revdelete-hide-user' => '隱藏編輯者的使用者名/IP',
-	'revdelete-hide-restricted' => '將此限制同樣應用於管理員',
-	'revdelete-suppress' => '同時壓制由操作員以及其他使用者的資料',
-	'revdelete-unsuppress' => '在已復原的修訂中移除限制',
-	'revdelete-success' => '修訂的可見性已經成功設定。',
-	'resetprefs' => '重設參數',
-	'recentchangesdays' => '近期變動中的顯示日數:',
-	'recentchangescount' => '近期變動中的編輯數:',
-	'rightslog' => '使用者權限日誌',
-	'rightslogtext' => '以下記錄了使用者權限的更改記錄。',
-	'recentchanges' => '近期變動',
-	'recentchanges-feed-description' => '跟蹤此訂閱在 wiki 上的近期變動。',
-	'rcnotefrom' => '下面是自<b>$2</b>(最多顯示<b>$1</b>):',
-	'rcshowhideminor' => '$1細微修改',
-	'rcshowhidebots' => '$1機器人的編輯',
-	'rcshowhideliu' => '$1具名使用者的編輯',
-	'rcshowhideanons' => '$1匿名使用者的編輯',
-	'rcshowhidepatr' => ' $1檢查過的編輯',
-	'recentchangeslinked' => '相關頁面修訂記錄',
-	'recentchangeslinked-feed' => '相關頁面修訂記錄',
-	'recentchangeslinked-toolbox' => '相關頁面修訂記錄',
-	'recentchangeslinked-title' => '$1 內連結頁面的修訂記錄',
-	'recentchangeslinked-summary' => "這一個特殊頁面列示這一頁連出頁面的近期變動。在您監視列表中的頁面會以'''粗體'''表示。",
-	'reuploaddesc' => '返回上載表單。',
-	'randompage-nopages' => '在這個名字空間中沒有頁面。',
-	'randomredirect-nopages' => '在這個名字空間中沒有重定向頁面。',
-	'removedwatchtext' => '頁面「[[:$1]]」已經從您的監視頁面中移除。',
-	'reverted' => '復原到早期版本',
-	'rollback' => '復原',
-	'rollback_short' => '復原',
-	'rollbacklink' => '復原',
-	'rollbackfailed' => '無法復原',
-	'revertpage' => '復原由[[Special:Contributions/$2|$2]] ([[User talk:$2|對話]])的編輯；更改回[[User:$1|$1]]的最後一個版本',
-	'rollback-success' => '復原由$1的編輯；更改回$2的最後一個版本。',
-	'range_block_disabled' => '只有管理員才能建立禁止封鎖的範圍。',
-	'revertmove' => '復原該移動',
-	'rate_it' => '打分數:',
+* [{{FULLURL:MediaWiki:Related wiki}} No related wiki have been selected yet.]',
+	'registerintro-text' => '你的貢獻將得到認可！你還可以創建個人頁面，關注你最喜歡的頁面，以及使用各種實用的工具。',
+	'rcshowhidelogs' => '$1項日誌',
 );
 
 $messages['zu'] = array(

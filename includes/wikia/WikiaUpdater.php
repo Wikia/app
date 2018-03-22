@@ -35,12 +35,22 @@ class WikiaUpdater {
 			array( 'addTable', 'wall_related_pages', $ext_dir . '/wikia/Wall/sql/wall_related_pages.sql', true ),
 			# fields
 			array( 'addField', 'watchlist', 'wl_wikia_addedtimestamp', $dir . 'patch-watchlist-improvements.sql', true ),
+			array( 'modifyField', 'recentchanges', 'rc_ip', $dir . 'patch-rc_ip-varbinary.sql', true ),
+			array( 'addField', 'recentchanges', 'rc_ip_bin',$dir . 'patch-rc_ip_bin.sql', true ), // SUS-3079
+			// SUS-805
+			array( 'dropField', 'ipblocks', 'ipb_by_text', $dir . 'patch-drop-ipb_by_text.sql', true ),
 
 			# indexes
 			array( 'addIndex', 'archive', 'page_revision', $dir. 'patch-index-archive-page_revision.sql', true ),
 
+			# indexes drop
+			array( 'dropIndex', 'ach_user_badges', 'id',  $dir . 'patch-ach-user-badges-drop-id.sql', true ), // SUS-3097
+			array( 'dropIndex', 'ach_user_badges', 'notified_id',  $dir . 'patch-ach-user-badges-drop-notified_id.sql', true ), // SUS-3097
+			array( 'dropIndex', 'ach_custom_badges', 'id',  $dir . 'patch-ach_custom_badges-drop-id.sql', true ), // SUS-3098
+			array( 'dropIndex', 'wall_related_pages', 'comment_id_idx',  $dir . 'patch-wall_related_pages-drop-comment_id_idx.sql', true ), // SUS-3096
+			array( 'dropIndex', 'wall_related_pages', 'page_id_idx_2',  $dir . 'patch-wall_related_pages-drop-page_id_idx_2.sql', true ), // SUS-3096
+
 			# functions
-			array( 'WikiaUpdater::do_page_vote_unique_update' ),
 			array( 'WikiaUpdater::do_page_wikia_props_update' ),
 			array( 'WikiaUpdater::do_drop_table', 'imagetags' ),
 			array( 'WikiaUpdater::do_drop_table', 'send_queue' ),
@@ -48,6 +58,7 @@ class WikiaUpdater {
 			array( 'WikiaUpdater::do_drop_table', 'validate' ),
 			array( 'WikiaUpdater::do_drop_table', 'cur' ),
 			array( 'WikiaUpdater::do_drop_table', 'searchindex', !empty( $wgCityId ) ),
+			array( 'WikiaUpdater::do_drop_table', 'spam_regex' ),
 			array( 'WikiaUpdater::do_drop_table', 'page_stats' ),
 			array( 'WikiaUpdater::do_drop_table', 'user_board' ),
 			array( 'WikiaUpdater::do_drop_table', 'user_points_monthly' ),
@@ -57,13 +68,30 @@ class WikiaUpdater {
 			array( 'WikiaUpdater::do_drop_table', 'user_register_track' ),
 			array( 'WikiaUpdater::do_drop_table', 'user_board' ),
 			array( 'WikiaUpdater::do_drop_table', 'watchlist_old' ),
+			array( 'WikiaUpdater::do_drop_table', 'hidden' ), // SUS-2401
 			array( 'WikiaUpdater::do_clean_math_table' ),
-			array( 'WikiaUpdater::do_transcache_update' )
+			array( 'WikiaUpdater::do_wall_history_ipv6_update' ), // SUS-2257
+			array( 'WikiaUpdater::doLoggingTableUserCleanup' ), // SUS-3222
+			array( 'WikiaUpdater::migrateRecentChangesIpData' ), // SUS-3079
+			array( 'dropField', 'interwiki', 'iw_api', $dir . 'patch-drop-iw_api.sql', true ),
+			array( 'dropField', 'interwiki', 'iw_wikiid', $dir . 'patch-drop-wikiid.sql', true ),
+			array( 'dropField', 'cu_changes', 'cuc_user_text', $ext_dir . '/CheckUser/patch-cu_changes.sql', true ), // SUS-3080
+			array( 'WikiaUpdater::do_drop_table', 'tag_summary' ), // SUS-3066
+			array( 'WikiaUpdater::do_drop_table', 'sitemap_blobs' ), // SUS-3589
+			array( 'WikiaUpdater::do_clean_video_info_table' ), // SUS-3862
+			array( 'WikiaUpdater::removeUnusedGroups' ), // SUS-4169
+			array( 'WikiaUpdater::do_drop_table', 'objectcache' ), // SUS-4171
+			array( 'WikiaUpdater::doPageVoteCleanup' ), // SUS-3390 / SUS-4252
+			array( 'addIndex', 'page_vote', 'article_user_idx', $dir. 'patch-index-page_vote.sql', true ), // SUS-3390
 		);
 
 		if ( $wgDBname === $wgExternalSharedDB ) {
 			$wikia_update[] = array( 'addTable', 'city_list', $dir . 'wf/patch-create-city_list.sql', true );
 			$wikia_update[] = array( 'addTable', 'city_list', $dir . 'wf/patch-create-city_cats.sql', true );
+		} else {
+			// run these updates on per-wiki databases only
+			$wikia_update[] = array( 'WikiaUpdater::do_drop_table', 'ach_ranking_snapshots' ); // SUS-3592
+			$wikia_update[] = array( 'WikiaUpdater::do_drop_table', 'spoofuser' ); // SUS-3590
 		}
 
 		foreach ( $wikia_update as $update ) {
@@ -84,19 +112,6 @@ class WikiaUpdater {
 		if ( $db->tableExists( $table ) ) {
 			$updater->output( "...dropping $table table... " );
 			$db->dropTable( $table, __METHOD__ );
-			$updater->output( "ok\n" );
-		}
-	}
-
-	public static function do_page_vote_unique_update( DatabaseUpdater $updater ) {
-		$db = $updater->getDB();
-		$dir = self::get_patch_dir();
-		$updater->output( "Checking wikia page_vote table...\n" );
-		if( $updater->getDB()->indexExists( 'page_vote', 'unique_vote' ) ) {
-			$updater->output( "...page_vote unique key already set.\n" );
-		} else {
-			$updater->output( "Making page_vote unique key... " );
-			$db->sourceFile( $dir . 'patch-page_vote_unique_vote.sql' );
 			$updater->output( "ok\n" );
 		}
 	}
@@ -134,39 +149,204 @@ class WikiaUpdater {
 		}
 	}
 
-	public static function do_transcache_update( DatabaseUpdater $updater ) {
+	/**
+	 * @author Mix <mix@fandom.com>
+	 */
+	public static function do_wall_history_ipv6_update( DatabaseUpdater $updater ) {
 		$db = $updater->getDB();
-		$transcache = $db->tableName( 'transcache' );
-		$res = $db->query( "SHOW COLUMNS FROM transcache" );
-		$columns = array(
-			'tc_contents' => array(
-				'old' => 'text',
-				'new' => 'blob'
-			),
-			'tc_url'      => array(
-				'old' => 'varchar(255)',
-				'new' => 'varbinary(255)'
-			)
+		$table = 'wall_history';
+		$old_column = 'post_user_ip';
+		$new_column = 'post_user_ip_bin';
+
+		$updater->output( sprintf( "starting %s...\n", __METHOD__ ) );
+
+		if ( ! $db->tableExists( $table ) ) {
+			$updater->output( "$table does not exist, skipping $table update.\n" );
+			return false;
+		}
+
+		if ( ! $db->fieldInfo( $table, $old_column ) ) {
+			$updater->output( "$table has already been migrated, skipping the update.\n" );
+			return false;
+		}
+
+		if ( ! $db->fieldInfo( $table, $new_column ) ) {
+			$updater->output( "adding $new_column in $table...\n" );
+			$db->query( sprintf( 'ALTER TABLE %s ADD COLUMN %s VARBINARY(16) DEFAULT NULL AFTER %s', $table, $new_column, $old_column), __METHOD__ );
+		} else {
+			$updater->output( "$new_column already exists in $table but it is OK...\n" );
+		}
+
+		$updater->output( "migrating data from $old_column to $new_column...\n" );
+		$db->query(
+			sprintf( 'UPDATE %s SET %s = INET6_ATON(INET_NTOA(%s)) WHERE %s IS NULL AND %s IS NOT NULL;',
+				$table, $new_column, $old_column, $new_column, $old_column),
+			__METHOD__
 		);
-		$patch = array();
-		while ( $row = $db->fetchObject( $res ) ) {
-			if ( !$row ) continue;
-			$column = !empty( $columns[ $row->Field ] ) ? $columns[ $row->Field ] : '';
 
-			if ( $column && $columns[ $row->Field ]['old'] == $row->Type ) {
-				$patch[] = sprintf( "MODIFY %s %s", $row->Field, $columns[ $row->Field ]['new'] );
-			} else {
-				$updater->output( "...{$row->Field} is up-to-date.\n" );
-			}
+		$updater->output( "dropping $old_column in $table...\n" );
+		$db->query( sprintf( 'ALTER TABLE %s DROP COLUMN %s', $table, $old_column ), __METHOD__ );
+
+		$updater->output( "done.\n" );
+	}
+
+	public static function doLoggingTableUserCleanup( DatabaseUpdater $databaseUpdater ) {
+		$databaseConnection = $databaseUpdater->getDB();
+
+		if ( !$databaseConnection->fieldExists( 'logging', 'log_user_text', __METHOD__ ) ) {
+			$databaseUpdater->output( "logging.log_user_text column does not exist.\n" );
+			return;
 		}
 
-		if ( !empty( $patch ) ) {
-			$db->query( sprintf( "ALTER TABLE transcache %s", implode( ",", $patch ) ), __METHOD__ );
-			$updater->output( "... altered to binary.\n" );
+		$databaseUpdater->output( 'Migrating legacy chat ban log entries... ' );
+
+		// Attribute old chat ban log entries to FANDOMbot
+		$databaseConnection->update(
+			'logging',
+			[ 'log_user' => 32794352 ],
+			[
+				'log_user' => 0,
+				'log_type' => 'chatban'
+			],
+			__METHOD__
+		);
+
+		$databaseUpdater->output( "done.\n" );
+		$databaseUpdater->output( 'Deleting log entries attributed to anons... ' );
+
+		$databaseConnection->delete( 'logging', [ 'log_user' => 0 ], __METHOD__ );
+
+		$databaseUpdater->output( "done.\n" );
+		$databaseUpdater->output( 'Dropping logging.log_user_text column... ' );
+
+		$databaseConnection->query( 'ALTER TABLE logging DROP COLUMN log_user_text', __METHOD__ );
+
+		$databaseUpdater->output( "done.\n" );
+
+		wfWaitForSlaves();
+	}
+
+	public static function do_clean_video_info_table( DatabaseUpdater $databaseUpdater ) {
+		$dbw = $databaseUpdater->getDB();
+		$databaseUpdater->output( 'Removing video_info rows for premium video providers... ' );
+
+		$dbw->delete( 'video_info', [ 'premium' => 1 ], __METHOD__ );
+
+		$databaseUpdater->output( "done.\n" );
+		wfWaitForSlaves();
+	}
+
+	/**
+	 * Removes the following entries from per-wiki "page_vote" table:
+	 *  - those for anons (user_id = 0) // see SUS-2754 for more details
+	 *  - those that refer to non-forum pages (page_ns <> 2001)
+	 *  - those that refer to no longer existing pages (join with "page" table)
+	 *
+	 * @param DatabaseUpdater $databaseUpdater
+	 */
+	public static function doPageVoteCleanup( DatabaseUpdater $databaseUpdater ) {
+		$dbw = $databaseUpdater->getDB();
+
+		// SUS-2754
+		$databaseUpdater->output( 'Removing page_vote rows for anons... ' );
+		$dbw->delete( 'page_vote', [ 'user_id' => 0 ], __METHOD__ );
+		$affectedRows = $dbw->affectedRows();
+
+		$databaseUpdater->output( "done - {$affectedRows} rows affected\n" );
+
+		// so that GROUP_CONCAT below will return all values
+		$dbw->query('SET SESSION group_concat_max_len = 100000', __METHOD__);
+
+		// SUS-3390
+		$databaseUpdater->output( 'Removing page_vote rows for non-forum pages... ' );
+
+		$ids = $dbw->selectField(
+			['page_vote', 'page'],
+			'GROUP_CONCAT(DISTINCT(page_id))',
+			[
+				'page.page_id = article_id',
+				'page_namespace <> 2001'
+			],
+			__METHOD__
+		);
+
+		$dbw->delete( 'page_vote', [ 'article_id' => explode( ',', $ids ) ], __METHOD__ );
+		$affectedRows = $dbw->affectedRows();
+
+		$databaseUpdater->output( "done - {$affectedRows} rows affected\n" );
+
+		// SUS-4252
+		$databaseUpdater->output( 'Removing page_vote rows for no longer existing pages... ' );
+
+		$row = $dbw->selectRow(
+			['page_vote', 'page'],
+			'GROUP_CONCAT(DISTINCT(article_id)) AS ids',
+			[
+				'page_namespace is null'
+			],
+			__METHOD__,
+			[],
+			[
+				'page' => [ 'LEFT JOIN', 'page.page_id = page_vote.article_id' ]
+			]
+		);
+
+		$dbw->delete( 'page_vote', [ 'article_id' => explode( ',', $row->ids ) ], __METHOD__ );
+		$affectedRows = $dbw->affectedRows();
+
+		$databaseUpdater->output( "done - {$affectedRows} rows affected\n" );
+		wfWaitForSlaves();
+	}
+
+	public static function migrateRecentChangesIpData( DatabaseUpdater $databaseUpdater ) {
+		$databaseConnection = $databaseUpdater->getDB();
+
+		if ( !$databaseConnection->fieldExists( 'recentchanges', 'rc_ip', __METHOD__ ) ) {
+			$databaseUpdater->output( "recentchanges.rc_ip column already migrated.\n" );
+			return;
 		}
-		else {
-			$updater->output( "... transcache table is up-to-date.\n" );
-		}
+
+		$patchDir = static::get_patch_dir();
+
+		$databaseUpdater->output( 'Migrating rc_ip column to VARBINARY(16) rc_ip_bin... ' );
+		$databaseConnection->sourceFile( $patchDir . 'patch-populate-rc_ip_bin.sql' );
+		$databaseUpdater->output( "done.\n" );
+
+		$databaseUpdater->output( 'Dropping rc_ip index... ' );
+		$databaseConnection->query( 'ALTER TABLE recentchanges DROP INDEX rc_ip' );
+		$databaseUpdater->output( "done.\n" );
+
+		$databaseUpdater->output( 'Dropping rc_user_text index... ' );
+		$databaseConnection->query( 'ALTER TABLE recentchanges DROP INDEX rc_user_text' );
+		$databaseUpdater->output( "done.\n" );
+
+		$databaseUpdater->output( 'Dropping rc_ns_usertext index... ' );
+		$databaseConnection->query( 'ALTER TABLE recentchanges DROP INDEX rc_ns_usertext' );
+		$databaseUpdater->output( "done.\n" );
+
+		$databaseUpdater->output( 'Dropping rc_ip column... ' );
+		$databaseConnection->query( 'ALTER TABLE recentchanges DROP COLUMN rc_ip' );
+		$databaseUpdater->output( "done.\n" );
+
+		$databaseUpdater->output( 'Adding default empty value to rc_user_text column... ' );
+		$databaseConnection->sourceFile( $patchDir . 'patch-rc_user_text-default.sql' );
+		$databaseUpdater->output( "done.\n" );
+		
+		wfWaitForSlaves();
+	}
+
+	public static function removeUnusedGroups( DatabaseUpdater $databaseUpdater ) {
+		global $IP;
+
+		$databaseUpdater->output( "Cleaning up after unused user groups...\n" );
+
+		// this will instantiate and run the script in the context of the current update process
+		$worker = $databaseUpdater->maintenance->runChild(
+			'RemoveUnusedGroups',
+			"$IP/maintenance/wikia/removeUnusedGroups.php"
+		);
+
+		$worker->execute();
 	}
 
 	/**

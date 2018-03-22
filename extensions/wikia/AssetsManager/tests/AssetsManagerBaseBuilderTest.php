@@ -17,22 +17,13 @@ function foo() {
 JS;
 
 	/**
-	 * @param $useYui
 	 * @throws Exception
-	 * @dataProvider minifyDataProvider
 	 */
-	public function testMinify($useYui) {
-		$compressed = AssetsManagerBaseBuilder::minifyJS( self::JS_CODE, $useYui );
+	public function testMinify() {
+		$compressed = AssetsManagerBaseBuilder::minifyJS( self::JS_CODE );
 
 		$this->assertNotContains( 'Hello', $compressed );
 		$this->assertNotContains( 'comment', $compressed );
 		$this->assertContains( 'function foo', $compressed );
-	}
-
-	public function minifyDataProvider() {
-		return [
-			'jsmin' => [ false ],
-			'yui' => [ true ],
-		];
 	}
 }

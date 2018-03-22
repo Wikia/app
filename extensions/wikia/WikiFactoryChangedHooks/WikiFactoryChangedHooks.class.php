@@ -43,11 +43,12 @@ Class WikiFactoryChangedHooks {
 				}
 			}
 
-			$user = User::newFromId($wiki->city_founding_user);
+			$user = User::newFromId( $wiki->city_founding_user );
 			$user->load();
 
-			$achService = new AchAwardingService($city_id);
-			$achService->awardCustomNotInTrackBadge($user, BADGE_CREATOR);
+			// SUS-3256: run this for the target wiki, not Community Central
+			$achService = new AchAwardingService( $wiki->city_dbname );
+			$achService->awardCustomNotInTrackBadge( $user, BADGE_CREATOR );
 		}
 
 		wfProfileOut(__METHOD__);

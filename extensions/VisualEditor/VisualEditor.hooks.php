@@ -24,17 +24,6 @@ class VisualEditorHooks {
 		return $wgEnableVisualEditorUI && self::isAvailable( $skin );
 	}
 
-	public static function onSetup() {
-		// This prevents VisualEditor from being run in environments that don't
-		// have the dependent code in core; this should be updated as a part of
-		// when additional dependencies are created and pushed into MediaWiki's
-		// core. The most direct effect of this is to avoid confusing any third
-		// parties who attempt to install VisualEditor onto non-alpha wikis, as
-		// this should have no impact on deploying to Wikimedia's wiki cluster;
-		// is fine for release tarballs because 1.22wmf11 < 1.22alpha < 1.22.0.
-		wfUseMW( '1.25wmf13' );
-	}
-
 	/**
 	 * Adds VisualEditor JS to the output.
 	 *
@@ -44,121 +33,12 @@ class VisualEditorHooks {
 	 * @param Skin $skin
 	 * @return boolean
 	 */
-	public static function onBeforePageDisplay( OutputPage &$output, Skin &$skin ) {
+	public static function onBeforePageDisplay( OutputPage $output, Skin $skin ): bool {
 		// Wikia change
 		if ( self::isAvailable( $skin ) ) {
 			$output->addModules( array( 'ext.visualEditor.wikia.viewPageTarget.init' ) );
 		}
-		//$output->addModules( array( 'ext.visualEditor.viewPageTarget.init' ) );
-		//$output->addModuleStyles( array( 'ext.visualEditor.viewPageTarget.noscript' ) );
-		return true;
-	}
 
-	/**
-	 * Convert the content model of messages that are actually JSON to JSON.
-	 * This only affects validation and UI when saving and editing, not
-	 * loading the content.
-	 *
-	 * @param Title $title
-	 * @param string $model
-	 * @return bool
-	 */
-	public static function onContentHandlerDefaultModelFor( Title $title, &$model ) {
-		$messages = array(
-			'Visualeditor-cite-tool-definition.json',
-			'Visualeditor-specialcharinspector-characterlist-insert'
-		);
-
-		if ( $title->inNamespace( NS_MEDIAWIKI ) && in_array( $title->getText(), $messages ) ) {
-			$model = CONTENT_MODEL_JSON;
-		}
-
-		return true;
-	}
-
-	/**
-	 * Changes the Edit tab and adds the VisualEditor tab.
-	 *
-	 * This is attached to the MediaWiki 'SkinTemplateNavigation' hook.
-	 *
-	 * @param SkinTemplate $skin
-	 * @param array $links Navigation links
-	 * @return boolean
-	 */
-	public static function onSkinTemplateNavigation( SkinTemplate &$skin, array &$links ) {
-		// Only do this if the user has VE enabled
-		if ( !self::isVisible( $skin ) ) {
-			return true;
-		}
-
-		$config = ConfigFactory::getDefaultInstance()->makeConfig( 'visualeditor' );
-
-		if ( !isset( $links['views']['edit'] ) ) {
-			// There's no edit link, nothing to do
-			return true;
-		}
-		$title = $skin->getRelevantTitle();
-		if ( defined( 'EP_NS' ) && $title->inNamespace( EP_NS ) ) {
-			return true;
-		}
-		$tabMessages = $config->get( 'VisualEditorTabMessages' );
-		// Rebuild the $links['views'] array and inject the VisualEditor tab before or after
-		// the edit tab as appropriate. We have to rebuild the array because PHP doesn't allow
-		// us to splice into the middle of an associative array.
-		$newViews = array();
-		foreach ( $links['views'] as $action => $data ) {
-			if ( $action === 'edit' ) {
-				// Build the VisualEditor tab
-				$existing = $title->exists() || (
-					$title->inNamespace( NS_MEDIAWIKI ) &&
-					$title->getDefaultMessageText() !== false
-				);
-				$action = $existing ? 'edit' : 'create';
-				$veParams = $skin->editUrlOptions();
-				unset( $veParams['action'] ); // Remove action=edit
-				$veParams['veaction'] = 'edit'; // Set veaction=edit
-				$veTabMessage = $tabMessages[$action];
-				$veTabText = $veTabMessage === null ? $data['text'] :
-					$skin->msg( $veTabMessage )->text();
-				$veTab = array(
-					'href' => $title->getLocalURL( $veParams ),
-					'text' => $veTabText,
-					'primary' => true,
-					'class' => '',
-				);
-
-				// Alter the edit tab
-				$editTab = $data;
-				if (
-					$title->inNamespace( NS_FILE ) &&
-					WikiPage::factory( $title ) instanceof WikiFilePage &&
-					!WikiPage::factory( $title )->isLocal()
-				) {
-					$editTabMessage = $tabMessages[$action . 'localdescriptionsource'];
-				} else {
-					$editTabMessage = $tabMessages[$action . 'source'];
-				}
-
-				if ( $editTabMessage !== null ) {
-					$editTab['text'] = $skin->msg( $editTabMessage )->text();
-				}
-
-				// Inject the VE tab before or after the edit tab
-				if ( $config->get( 'VisualEditorTabPosition' ) === 'before' ) {
-					$editTab['class'] .= ' collapsible';
-					$newViews['ve-edit'] = $veTab;
-					$newViews['edit'] = $editTab;
-				} else {
-					$veTab['class'] .= ' collapsible';
-					$newViews['edit'] = $editTab;
-					$newViews['ve-edit'] = $veTab;
-				}
-			} else {
-				// Just pass through
-				$newViews[$action] = $data;
-			}
-		}
-		$links['views'] = $newViews;
 		return true;
 	}
 
@@ -279,111 +159,6 @@ class VisualEditorHooks {
 		return true;
 	}
 
-	/**
-	 * Convert a namespace index to the local text for display to the user.
-	 *
-	 * @param $nsIndex int
-	 * @return string
-	 */
-	private static function convertNs( $nsIndex ) {
-		global $wgLang;
-		if ( $nsIndex ) {
-			return $wgLang->convertNamespace( $nsIndex );
-		} else {
-			return wfMessage( 'blanknamespace' )->text();
-		}
-	}
-
-	public static function onGetPreferences( User $user, array &$preferences ) {
-		global $wgLang;
-		if ( !class_exists( 'BetaFeatures' ) ) {
-			$namespaces = ConfigFactory::getDefaultInstance()
-				->makeConfig( 'visualeditor' )
-				->get( 'VisualEditorNamespaces' );
-
-			$preferences['visualeditor-enable'] = array(
-				'type' => 'toggle',
-				'label-message' => array(
-					'visualeditor-preference-enable',
-					$wgLang->commaList( array_map(
-						array( 'self', 'convertNs' ),
-						$namespaces
-					) ),
-					count( $namespaces )
-				),
-				'section' => 'editing/editor'
-			);
-		}
-		$preferences['visualeditor-betatempdisable'] = array(
-			'type' => 'toggle',
-			'label-message' => 'visualeditor-preference-betatempdisable',
-			'section' => 'editing/editor'
-		);
-		$preferences['visualeditor-hidebetawelcome'] = array(
-			'type' => 'api'
-		);
-		return true;
-	}
-
-	public static function onGetBetaPreferences( User $user, array &$preferences ) {
-		$coreConfig = RequestContext::getMain()->getConfig();
-		$iconpath = $coreConfig->get( 'ExtensionAssetsPath' ) . "/VisualEditor";
-
-		$veConfig = ConfigFactory::getDefaultInstance()->makeConfig( 'visualeditor' );
-		$preferences['visualeditor-enable'] = array(
-			'version' => '1.0',
-			'label-message' => 'visualeditor-preference-core-label',
-			'desc-message' => 'visualeditor-preference-core-description',
-			'screenshot' => array(
-				'ltr' => "$iconpath/betafeatures-icon-VisualEditor-ltr.svg",
-				'rtl' => "$iconpath/betafeatures-icon-VisualEditor-rtl.svg",
-			),
-			'info-message' => 'visualeditor-preference-core-info-link',
-			'discussion-message' => 'visualeditor-preference-core-discussion-link',
-			'requirements' => array(
-				'javascript' => true,
-				'blacklist' => $veConfig->get( 'VisualEditorBrowserBlacklist' ),
-				'skins' => $veConfig->get( 'VisualEditorSupportedSkins' ),
-			)
-		);
-
-		$preferences['visualeditor-enable-language'] = array(
-			'version' => '1.0',
-			'label-message' => 'visualeditor-preference-language-label',
-			'desc-message' => 'visualeditor-preference-language-description',
-			'screenshot' => array(
-				'ltr' => "$iconpath/betafeatures-icon-VisualEditor-language-ltr.svg",
-				'rtl' => "$iconpath/betafeatures-icon-VisualEditor-language-rtl.svg",
-			),
-			'info-message' => 'visualeditor-preference-language-info-link',
-			'discussion-message' => 'visualeditor-preference-language-discussion-link',
-			'requirements' => array(
-				'betafeatures' => array(
-					'visualeditor-enable',
-				),
-			),
-		);
-
-/* Disabling Beta Features option for generic content for now
-		$preferences['visualeditor-enable-mwalienextension'] = array(
-			'version' => '1.0',
-			'label-message' => 'visualeditor-preference-mwalienextension-label',
-			'desc-message' => 'visualeditor-preference-mwalienextension-description',
-			'screenshot' => array(
-				'ltr' => "$iconpath/betafeatures-icon-VisualEditor-alien-ltr.svg",
-				'rtl' => "$iconpath/betafeatures-icon-VisualEditor-alien-rtl.svg",
-			),
-			'info-message' => 'visualeditor-preference-mwalienextension-info-link',
-			'discussion-message' => 'visualeditor-preference-mwalienextension-discussion-link',
-			'requirements' => array(
-				'betafeatures' => array(
-					'visualeditor-enable',
-				),
-			),
-		);
-*/
-	}
-
 	public static function onListDefinedTags( &$tags ) {
 		$tags[] = 'visualeditor';
 		$tags[] = 'visualeditor-needcheck';
@@ -450,8 +225,7 @@ class VisualEditorHooks {
 	 * @param ResourceLoader $resourceLoader
 	 * @return boolean true
 	 */
-	public static function onResourceLoaderRegisterModules( ResourceLoader &$resourceLoader ) {
-		global $wgResourceModules;
+	public static function onResourceLoaderRegisterModules( ResourceLoader $resourceLoader ): bool {
 
 		$veResourceTemplate = ConfigFactory::getDefaultInstance()
 			->makeConfig( 'visualeditor')->get( 'VisualEditorResourceTemplate' );
@@ -506,7 +280,7 @@ class VisualEditorHooks {
 
 	public static function onResourceLoaderTestModules(
 		array &$testModules,
-		ResourceLoader &$resourceLoader
+		ResourceLoader $resourceLoader
 	) {
 		$testModules['qunit']['ext.visualEditor.test'] = array(
 			'styles' => array(
@@ -586,33 +360,6 @@ class VisualEditorHooks {
 				// FIXME: these work in VE core but break in VE-MW, so not running most of them for now
 				'lib/ve/tests/ce/ve.ce.TestRunner.js',
 				'lib/ve/tests/ce/ve.ce.imetests.test.js',
-				//'lib/ve/tests/ce/imetests/backspace-chromium-ubuntu-none.js',
-				//'lib/ve/tests/ce/imetests/backspace-firefox-ubuntu-none.js',
-				//'lib/ve/tests/ce/imetests/backspace-ie-win-none.js',
-				/*
-				'lib/ve/tests/ce/imetests/input-chrome-win-chinese-traditional-handwriting.js',
-				'lib/ve/tests/ce/imetests/input-chrome-win-greek.js',
-				'lib/ve/tests/ce/imetests/input-chrome-win-welsh.js',
-				'lib/ve/tests/ce/imetests/input-chromium-ubuntu-ibus-chinese-cantonese.js',
-				'lib/ve/tests/ce/imetests/input-chromium-ubuntu-ibus-japanese-anthy-' .
-					'-hiraganaonly.js',
-				'lib/ve/tests/ce/imetests/input-chromium-ubuntu-ibus-korean-korean.js',
-				'lib/ve/tests/ce/imetests/input-chromium-ubuntu-ibus-malayalam-swanalekha.js',
-				'lib/ve/tests/ce/imetests/input-firefox-ubuntu-ibus-chinese-cantonese.js',
-				'lib/ve/tests/ce/imetests/input-firefox-ubuntu-ibus-japanese-anthy--hiraganaonly.js',
-				'lib/ve/tests/ce/imetests/input-firefox-ubuntu-ibus-korean-korean.js',
-				'lib/ve/tests/ce/imetests/input-firefox-ubuntu-ibus-malayalam.swanalekha.js',
-				'lib/ve/tests/ce/imetests/input-firefox-win-chinese-traditional-handwriting.js',
-				'lib/ve/tests/ce/imetests/input-firefox-win-greek.js',
-				'lib/ve/tests/ce/imetests/input-firefox-win-welsh.js',
-				'lib/ve/tests/ce/imetests/input-ie-win-chinese-traditional-handwriting.js',
-				'lib/ve/tests/ce/imetests/input-ie-win-greek.js',
-				'lib/ve/tests/ce/imetests/input-ie-win-korean.js',
-				'lib/ve/tests/ce/imetests/input-ie-win-welsh.js',
-				'lib/ve/tests/ce/imetests/leftarrow-chromium-ubuntu-none.js',
-				'lib/ve/tests/ce/imetests/leftarrow-firefox-ubuntu-none.js',
-				'lib/ve/tests/ce/imetests/leftarrow-ie-win-none.js',
-				*/
 			),
 			'dependencies' => array(
 				'unicodejs',

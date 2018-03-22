@@ -26,7 +26,7 @@
 	"sf_formedit_createtitle": "$1 aldatu: $2",
 	"sf_editsource": "Aldatu iturburu kodea",
 	"sf_formedit_edittitle": "$1 aldatu: $2",
-	"sf_formedit_remove": "Kendu",
+	"sf_formedit_remove": "Instantzia hau kendu",
 	"sf_formedit_addanother": "Beste bat gehitu",
 	"sf_deletionlog": "Ezabaketa erregistroa",
 	"sf_form_freetextlabel": "Testu askea",

@@ -29,6 +29,7 @@
 						</div>
 						<div>
 							<span id="validateMessage"></span>
+							<span id="formValidateMessage-filter"><?= wfMessage( 'phalanx-required-filter' )->escaped(); ?></span>
 						</div>
 						<!-- Format -->
 						<div class="clearfix">
@@ -44,7 +45,7 @@
 							</label>
 
 							<label for="wpPhalanxFormatExact">
-								<input type="checkbox" name="wpPhalanxFormatExact" value="1" <? if ( !empty( $data['exact'] ) ): ?>checked="checked" <? endif; ?>/>
+								<input type="checkbox" name="wpPhalanxFormatExact" value="1" checked="checked" />
 								<?= wfMessage( 'phalanx-format-exact' )->escaped() ?>
 							</label>
 						</div>
@@ -101,6 +102,8 @@
 <?php
 						}
 ?>
+						</div>
+						<span id="formValidateMessage-type"><?= wfMessage( 'phalanx-required-type' )->escaped(); ?></span>
 					</div>
 					<!-- Reason -->
 					<div id="phalanx-block-optionals" class="clearfix">
@@ -114,9 +117,9 @@
 						</div>
 						<div class="clearfix">
 							<label for="wpPhalanxLanguages" class="left"><?= wfMessage( 'phalanx-label-lang' )->escaped() ?></label>
-							<select name="wpPhalanxLanguages" id="wpPhalanxLanguages" class="blue" >
-								<? foreach ($languages as $k => $v) { ?>
-									<option <?=($k == $data['lang']) ? "selected" : ""?> value="<?=$k?>"><?=$v?></option>
+							<select name="wpPhalanxLanguages" id="wpPhalanxLanguages" class="blue">
+								<? foreach ( $languages as $k => $v ) { ?>
+									<option <?= ( $k == $data['lang'] ) ? "selected" : "" ?> value="<?= $k ?>"><?= $v ?></option>
 								<? } ?>
 							</select>
 						</div>

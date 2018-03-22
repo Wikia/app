@@ -82,6 +82,7 @@ ve.init.mw.ViewPageTarget = function VeInitMwViewPageTarget() {
 		saveErrorAbuseFilter: 'onSaveErrorAbuseFilter',
 		saveErrorNewUser: 'onSaveErrorNewUser',
 		saveErrorCaptcha: 'onSaveErrorCaptcha',
+		saveErrorReadOnly: 'onSaveErrorReadOnly',
 		saveErrorUnknown: 'onSaveErrorUnknown',
 		saveErrorPageDeleted: 'onSaveErrorPageDeleted',
 		loadError: 'onLoadError',
@@ -191,7 +192,6 @@ ve.init.mw.ViewPageTarget.prototype.verifyPopState = function ( popState ) {
  * @inheritdoc
  */
 ve.init.mw.ViewPageTarget.prototype.setupToolbar = function ( surface ) {
-	var $firstHeading;
 	// Parent method
 	ve.init.mw.Target.prototype.setupToolbar.call( this, surface );
 
@@ -206,13 +206,6 @@ ve.init.mw.ViewPageTarget.prototype.setupToolbar = function ( surface ) {
 
 	this.getToolbar().$element
 		.addClass( 've-init-mw-viewPageTarget-toolbar' );
-
-	// Wikia change - #WikiaPageHeader instead of #firstHeading and after instead of before
-	// Move the toolbar to before #firstHeading if it exists
-	$firstHeading = $( '#WikiaPageHeader' );
-	if ( $firstHeading.length ) {
-		this.getToolbar().$element.insertAfter( $firstHeading );
-	}
 
 	this.getToolbar().$bar.slideDown( 'fast', function () {
 		// Check the surface wasn't torn down while the toolbar was animating
@@ -321,7 +314,7 @@ ve.init.mw.ViewPageTarget.prototype.deactivate = function ( noDialog, trackMecha
  * @param {string} [trackMechanism] Abort mechanism; used for event tracking if present
  */
 ve.init.mw.ViewPageTarget.prototype.cancel = function ( trackMechanism ) {
-	var abortType, promises = [];
+	var abortType;
 
 	// Event tracking
 	if ( trackMechanism ) {
@@ -341,6 +334,12 @@ ve.init.mw.ViewPageTarget.prototype.cancel = function ( trackMechanism ) {
 			mechanism: trackMechanism
 		} );
 	}
+
+	this.updatePageOnCancel();
+};
+
+ve.init.mw.ViewPageTarget.prototype.updatePageOnCancel = function () {
+	var promises = [];
 
 	this.deactivating = true;
 	// User interface changes
@@ -475,7 +474,6 @@ ve.init.mw.ViewPageTarget.prototype.afterHideSpinner = function ( surfaceReadyTi
 	this.hidePageContent();
 
 	this.toolbar.initialize();
-	this.surface.getFocusWidget().$element.show();
 
 	this.surface.getView().focus();
 
@@ -559,10 +557,10 @@ ve.init.mw.ViewPageTarget.prototype.onSave = function (
 ) {
 	var newUrlParams, watchChecked;
 	this.saveDeferred.resolve();
-	if ( !this.pageExists || this.restoring ) {
+	if ( this.shouldReloadPageAfterSave() ) {
 		// This is a page creation or restoration, refresh the page
 		this.tearDownBeforeUnloadHandler();
-		newUrlParams = newid === undefined ? {} : { venotify: this.restoring ? 'restored' : 'created' };
+		newUrlParams = newid === undefined ? {} : { venotify: this.getVeNotifyAfterSave() };
 
 		if ( isRedirect ) {
 			newUrlParams.redirect = 'no';
@@ -614,6 +612,20 @@ ve.init.mw.ViewPageTarget.prototype.onSave = function (
 				message: ve.msg( 'postedit-confirmation-saved', mw.user )
 			} );
 		}
+	}
+};
+
+ve.init.mw.ViewPageTarget.prototype.shouldReloadPageAfterSave = function () {
+	return Boolean( !this.pageExists || this.restoring );
+};
+
+ve.init.mw.ViewPageTarget.prototype.getVeNotifyAfterSave = function () {
+	if ( this.restoring ) {
+		return 'restored';
+	} else if ( this.pageExists ) {
+		return 'saved';
+	} else {
+		return 'created';
 	}
 };
 
@@ -751,6 +763,17 @@ ve.init.mw.ViewPageTarget.prototype.onSaveErrorUnknown = function ( editApi, dat
 		) ),
 		false // prevents reapply
 	);
+};
+
+/**
+ * Update save dialog message if database is in read-only state
+ *
+ * @method
+ * @param {Object} editApi
+ * @param {Object} data
+ */
+ve.init.mw.ViewPageTarget.prototype.onSaveErrorReadOnly = function ( editApi, data ) {
+	this.showSaveError( $( $.parseHTML( mw.message( 'readonlywarning', data.error.readonlyreason ).parse() ) ), true, true );
 };
 
 /**

@@ -25,6 +25,12 @@ html>body #Wall .new-reply .speech-bubble-avatar { *position: absolute; *left:-9
 }
 
 .Wall {
+
+	/* overrides /resources/jquery/jquery.makeCollapsible.css */
+	li .mw-collapsible-toggle {
+		float: right;
+	}
+
 	&.Board {
 		.deleteorremove-infobox {
 			margin-left: 75px;
@@ -113,13 +119,14 @@ html>body #Wall .new-reply .speech-bubble-avatar { *position: absolute; *left:-9
 		}
 		.stafflogo {
 			background: none no-repeat scroll 0 0 transparent;
-			background: url("/extensions/wikia/StaffSig/images/WikiaStaff.png"); /* $wgCdnStylePath */
+			background: url("/extensions/wikia/DesignSystem/bower_components/design-system/dist/svg/wds-company-logo-fandom.svg"); /* $wgResourceBasePath */
+			background-size: 100% 100%;
 			bottom: -1px;
 			display: inline-block;
-			height: 12px;
+			height: 0.9em;
 			margin: 0;
 			padding: 0;
-			width: 41px;
+			width: 5em;
 			position: relative;
 		}
 	}
@@ -330,6 +337,7 @@ html>body #Wall .new-reply .speech-bubble-avatar { *position: absolute; *left:-9
 				height: 19px;
 				left: -204px;
 				line-height: 19px;
+				max-width: 200px;
 				position: absolute;
 				text-align: center;
 				top: 4px;
@@ -351,7 +359,6 @@ html>body #Wall .new-reply .speech-bubble-avatar { *position: absolute; *left:-9
 		}
 		.speech-bubble-buttons {
 			@include clearfix;
-			display: none;
 		}
 	}
 
@@ -443,7 +450,7 @@ html>body #Wall .new-reply .speech-bubble-avatar { *position: absolute; *left:-9
 	}
 
 	.loadingAjax {
-		background: url(/skins/common/images/ajax.gif) 0 2px; /* $wgCdnStylePath */
+		background: url(/skins/common/images/ajax.gif) 0 2px; /* $wgResourceBasePath */
 		display: none;
 		float: right;
 		height: 20px;
@@ -491,9 +498,9 @@ html>body #Wall .new-reply .speech-bubble-avatar { *position: absolute; *left:-9
 		top: -5px;
 		img {
 			@if $is-dark-wiki {
-				background-image: url("/extensions/wikia/Wall/images/kudo_20x20_white.png");	/* $wgCdnStylePath */
+				background-image: url("/extensions/wikia/Wall/images/kudo_20x20_white.png");	/* $wgResourceBasePath */
 			} @else {
-				background-image: url("/extensions/wikia/Wall/images/kudo_20x20.png");	/* $wgCdnStylePath */
+				background-image: url("/extensions/wikia/Wall/images/kudo_20x20.png");	/* $wgResourceBasePath */
 			}
 			cursor: pointer;
 			opacity: .2;
@@ -566,12 +573,12 @@ html>body #Wall .new-reply .speech-bubble-avatar { *position: absolute; *left:-9
 	.tools {
 		font-size: 11px;
 		.sprite.edit-pencil {
-			background: url(/skins/common/images/common/pencil.png) no-repeat 0 0; /* $wgCdnStylePath */
+			background: url(/skins/common/images/common/pencil.png) no-repeat 0 0; /* $wgResourceBasePath */
 			height: 18px;
 			width: 12px;
 		}
 		.sprite-small.delete {
-			background: url(/skins/common/images/common/trashcan.png) no-repeat 0 0; /* $wgCdnStylePath */
+			background: url(/skins/common/images/common/trashcan.png) no-repeat 0 0; /* $wgResourceBasePath */
 			height: 18px;
 			width: 12px;
 		}

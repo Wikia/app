@@ -9,7 +9,7 @@ CategoryAutoComplete = {
 		CategoryAutoComplete.searchForm = $('#'+CategoryAutoComplete.FORM_ID);
 		CategoryAutoComplete.searchFields = CategoryAutoComplete.searchForm.find('input[placeholder]');
 
-		// RT #141437 - hide HOME_TOP_RIGHT_BOXAD when showing search suggestions
+		// RT #141437 - hide TOP_RIGHT_BOXAD when showing search suggestions
 		CategoryAutoComplete.ads = $("[id$='TOP_RIGHT_BOXAD']");
 
 		CategoryAutoComplete.searchFields.bind({
@@ -38,7 +38,7 @@ CategoryAutoComplete = {
 		$.loadJQueryAutocomplete(function() {
 			CategoryAutoComplete.searchFields.each(function(){
 				$(this).autocomplete({
-					serviceUrl: wgServer + wgScriptPath + "/api.php" + '?action=opensearch',
+					serviceUrl: wgScriptPath + "/api.php" + '?action=opensearch',
 					appendTo: $(this).parent('.autoCompleteWrapper'),
 					deferRequestBy: 250,
 					maxHeight: 1000,

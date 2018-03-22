@@ -3,7 +3,7 @@
 	'use strict';
 
 	var links = document.querySelectorAll('a:not(.external):not(.extiw)'),
-		host = window.wgServer.replace(/^http\:\/\//, ''),
+		host = window.wgServer.replace(/^https?\:\/\//, ''),
 		i = links.length,
 		namespaces = window.wgNamespaceIds,
 		regExpNamespace = new RegExp(window.wgArticlePath.replace('$1', '([^:]*)')),
@@ -25,7 +25,7 @@
 		link = links[i];
 		path = link.pathname || link.href;
 		parent = link.parentElement;
-		notAllowed = ((link.host && link.host !== host) || path === '/wikia.php') &&
+		notAllowed = ((link.host && link.host !== host) || path === window.wgScriptPath + '/wikia.php') &&
 			parent.className.indexOf('thumb') === -1;
 
 		if(!notAllowed && path.indexOf(':') > -1) {
@@ -62,7 +62,7 @@
 				title = t.title.replace(/ /g, '_');
 			}else{
 				//links in ie. images do not have title attribute
-				title = t.pathname.replace('/wiki/', '');
+				title = t.pathname.replace(window.wgScriptPath + '/wiki/', '');
 			}
 
 			if(title.indexOf(':') > -1) {

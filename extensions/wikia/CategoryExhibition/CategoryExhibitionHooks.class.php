@@ -74,8 +74,12 @@ class CategoryExhibitionHooks {
 
 	/**
 	 * Hook entry for removing the magic words from displayed text
+	 * @param Parser $parser
+	 * @param string $text
+	 * @param $strip_state
+	 * @return bool
 	 */
-	static public function onInternalParseBeforeLinks( &$parser, &$text, &$strip_state ) {
+	static public function onInternalParseBeforeLinks( Parser $parser, string &$text, &$strip_state ): bool {
 		global $wgRTEParserEnabled;
 		if ( empty( $wgRTEParserEnabled ) ) {
 			MagicWord::get( 'CATEXHIBITION_DISABLED' )->matchAndRemove( $text );
@@ -85,8 +89,24 @@ class CategoryExhibitionHooks {
 
 	/**
 	 * Hook entry when article is change
+	 * @param WikiPage $article
+	 * @param User $user
+	 * @param $text
+	 * @param $summary
+	 * @param $minoredit
+	 * @param $watchthis
+	 * @param $sectionanchor
+	 * @param $flags
+	 * @param Revision $revision
+	 * @param Status $status
+	 * @param $baseRevId
+	 * @param $redirect
+	 * @return bool
 	 */
-	static public function onArticleSaveComplete( &$article, &$user, $text, $summary, $minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId, &$redirect ) {
+	static public function onArticleSaveComplete(
+		WikiPage $article, User $user, $text, $summary, $minoredit, $watchthis, $sectionanchor,
+		$flags, Revision $revision, Status &$status, $baseRevId, &$redirect
+	): bool {
 		$title = $article->getTitle();
 
 		$cacheHelper = new CategoryExhibitionCacheHelper();

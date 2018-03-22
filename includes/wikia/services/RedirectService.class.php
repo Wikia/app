@@ -22,7 +22,7 @@
  * 				);
  */
 
-class RedirectService extends WikiaService {
+class RedirectService {
 
 	const DEFAULT_HTTP_STATUS = 301;
 
@@ -63,7 +63,7 @@ class RedirectService extends WikiaService {
 	 *
 	 * If page type is set, it expects multidimensional array with page type on first level
 	 *
-	 * @return Array with redirects
+	 * @return array with redirects
 	 */
 	public function getRedirects() {
 		if ( empty( $this->redirects ) ) {
@@ -107,8 +107,6 @@ class RedirectService extends WikiaService {
 	/**
 	 * Redirect to new page, if it's found in redirects mapping array
 	 * Redirection is made with given HTTP status code
-	 *
-	 * @param Title $title
 	 */
 	public function redirectIfURLExists() {
 		global $wgOut;

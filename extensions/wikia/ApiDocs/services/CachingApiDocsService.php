@@ -20,7 +20,7 @@ class CachingApiDocsService implements IApiDocsService {
 	private $cacheTime = 43200; // 60 * 60 * 12
 
 	/**
-	 * @var int|string cache buster for caching docs service. set it $wgCacheBuster for example.
+	 * @var int|string cache buster for caching docs service. set it $wgStyleVersion for example.
 	 */
 	private $cacheBuster;
 

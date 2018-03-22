@@ -1,0 +1,119 @@
+.wds-button {
+	$button-squished-padding-horizontal: 12px;
+	$line-height: 1.3em;
+
+	@include button-theming($wds-color-link, $wds-color-white);
+
+	align-items: center;
+	border-style: solid;
+	border-width: $wds-button-border-width;
+	box-sizing: content-box;
+	cursor: default;
+	display: inline-flex;
+	font-size: $wds-typescale-size-minus-2;
+	font-weight: 600;
+	justify-content: center;
+	letter-spacing: .15px;
+	line-height: $line-height;
+	margin: 0;
+	min-height: $wds-icon-small-size;
+	outline: none;
+	padding: 14px $wds-button-padding-horizontal;
+	text-decoration: none;
+	text-transform: uppercase;
+	transition-duration: $wds-button-transition-duration;
+	transition-property: background-color, border-color, color;
+	vertical-align: top;
+	-webkit-appearance: none;
+	-webkit-border-radius: 0;
+
+	@at-root button#{&}, a#{&} {
+		cursor: pointer;
+	}
+
+	&:disabled {
+		@include is-disabled();
+	}
+
+	&:focus:not(:disabled),
+	&:hover:not(:disabled),
+	&:active,
+	&.wds-is-active {
+		text-decoration: none;
+	}
+
+	&.wds-is-squished {
+		font-size: $wds-typescale-size-minus-3;
+		padding: 7px $button-squished-padding-horizontal;
+
+		.wds-dropdown__toggle {
+			height: 13px;
+		}
+	}
+
+	&.wds-is-stretched {
+		padding: 28px 18px 27px;
+	}
+
+	&.wds-is-full-width {
+		display: flex;
+	}
+
+	&.wds-is-square {
+		@include square(45px);
+
+		align-items: center;
+		display: inline-flex;
+		justify-content: center;
+		padding: 0;
+	}
+
+	&.wds-is-text {
+		border: 0;
+	}
+
+	.wds-icon:first-child {
+		align-self: center;
+		pointer-events: none;
+
+		&:not(:only-child) {
+			margin-right: $wds-button-padding-horizontal / 2;
+		}
+	}
+
+	.wds-list {
+		color: $wds-color-black;
+		font-weight: normal;
+		letter-spacing: normal;
+		text-transform: none;
+		text-align: left;
+	}
+
+	.wds-dropdown__content {
+		top: calc(100% + 1px);
+	}
+
+	$social-colors: (
+		facebook: $wds-color-social-facebook,
+		googleplus: $wds-color-social-googleplus,
+		line: $wds-color-social-line,
+		linkedin: $wds-color-social-linkedin,
+		instagram: $wds-color-social-instagram,
+		meneame: $wds-color-social-meneame,
+		nk: $wds-color-social-nk,
+		odnoklassniki: $wds-color-social-odnoklassniki,
+		reddit: $wds-color-social-reddit,
+		tumblr: $wds-color-social-tumblr,
+		twitter: $wds-color-social-twitter,
+		vkontakte: $wds-color-social-vkontakte,
+		wykop: $wds-color-social-wykop,
+		weibo: $wds-color-social-weibo,
+		youtube: $wds-color-social-youtube
+	);
+
+	@each $social-name, $social-color in $social-colors {
+		&.wds-is-#{$social-name}-color {
+			@include button-theming($social-color, $wds-color-white);
+		}
+	}
+}

@@ -31,6 +31,29 @@ class UserIdentityBoxTest extends WikiaBaseTest {
 		$this->assertEquals($expectedResult, $userIdentityBox->checkIfDisplayZeroStates($data));
 	}
 
+	public function testClearMastheadContents() {
+		/** @var PHPUnit_Framework_MockObject_MockObject|User $userMock */
+		$userMock = $this->getMockBuilder( User::class )
+			->setMethods( [ 'saveSettings' ] )
+			->getMock();
+
+		$userMock->expects( $this->once() )
+			->method( 'saveSettings' )
+			->with();
+
+		$userIdentityBox = new UserIdentityBox( $userMock );
+		$userIdentityBox->clearMastheadContents();
+
+		foreach ( $userIdentityBox->optionsArray as $option ) {
+			if ( $option === 'gender' || $option === 'birthday' ) {
+				$option = UserIdentityBox::USER_PROPERTIES_PREFIX . $option;
+			}
+			$this->assertEquals( null, $userMock->getGlobalAttribute( $option ), 'clearMastheadContents should reset all user profile attributes' );
+		}
+
+		$this->assertEquals( null, $userMock->getRealName(), 'clearMastheadContents should reset user\'s real name' );
+	}
+
 	/**
 	 * @brief data provider for UserIdentityBoxTest::testCheckIfDisplayZeroStates()
 	 *
@@ -159,7 +182,7 @@ class UserIdentityBoxTest extends WikiaBaseTest {
 	 * @desc Tests if UserIdentityBox::getTopWikis delegates pulling wikis to FavoriteWikisModel
 	 */
 	public function testGetTopWikis() {
-		$userMock = $this->getMock( 'User' );
+		$userMock = $this->getMock( 'User', [ 'getOption' ] );
 
 		$favoriteWikisModelMock = $this->getMock(
 			'FavoriteWikisModel',
@@ -172,9 +195,7 @@ class UserIdentityBoxTest extends WikiaBaseTest {
 		$userIdentityBoxMock = $this->getMock(
 			'UserIdentityBox',
 			[ 'getFavoriteWikisModel' ],
-			[ $userMock ],
-			'',
-			false
+			[ $userMock ]
 		);
 		$userIdentityBoxMock->expects( $this->once() )
 			->method( 'getFavoriteWikisModel' )
@@ -185,7 +206,8 @@ class UserIdentityBoxTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * @dataProvider testSaveUserData_spamFilterProvider
+	 * @dataProvider saveUserDataSpamFilterProvider
+	 * @group Broken
 	 */
 	public function testSaveUserData_spamFilter($userData) {
 		$userMock =  $this->getMock( 'User', [ 'setOption' ] );
@@ -231,7 +253,7 @@ class UserIdentityBoxTest extends WikiaBaseTest {
 		$userIdentityBoxMock->saveUserData($userData);
 	}
 
-	public function testSaveUserData_spamFilterProvider() {
+	public function saveUserDataSpamFilterProvider() {
 		return array(
 			array(
 				array(

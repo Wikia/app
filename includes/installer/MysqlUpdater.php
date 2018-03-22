@@ -21,27 +21,24 @@ class MysqlUpdater extends DatabaseUpdater {
 			array( 'addField', 'ipblocks',      'ipb_expiry',       'patch-ipb_expiry.sql' ),
 			array( 'doInterwikiUpdate' ),
 			array( 'doIndexUpdate' ),
-			array( 'addTable', 'hitcounter',                        'patch-hitcounter.sql' ),
 			array( 'addField', 'recentchanges', 'rc_type',          'patch-rc_type.sql' ),
 
 			// 1.3
-			array( 'addField', 'user',          'user_real_name',   'patch-user-realname.sql' ),
+			# array( 'addField', 'user',          'user_real_name',   'patch-user-realname.sql' ),
 			array( 'addTable', 'querycache',                        'patch-querycache.sql' ),
-			array( 'addTable', 'objectcache',                       'patch-objectcache.sql' ),
 			array( 'addTable', 'categorylinks',                     'patch-categorylinks.sql' ),
 			array( 'doOldLinksUpdate' ),
 			array( 'doFixAncientImagelinks' ),
-			array( 'addField', 'recentchanges', 'rc_ip',            'patch-rc_ip.sql' ),
 
 			// 1.4
 			array( 'addIndex', 'image',         'PRIMARY',          'patch-image_name_primary.sql' ),
 			array( 'addField', 'recentchanges', 'rc_id',            'patch-rc_id.sql' ),
 			array( 'addField', 'recentchanges', 'rc_patrolled',     'patch-rc-patrol.sql' ),
 			array( 'addTable', 'logging',                           'patch-logging.sql' ),
-			array( 'addField', 'user',          'user_token',       'patch-user_token.sql' ),
+			# array( 'addField', 'user',          'user_token',       'patch-user_token.sql' ),
 			array( 'addField', 'watchlist',     'wl_notificationtimestamp', 'patch-email-notification.sql' ),
 			array( 'doWatchlistUpdate' ),
-			array( 'dropField', 'user',         'user_emailauthenticationtimestamp', 'patch-email-authentication.sql' ),
+			# array( 'dropField', 'user',         'user_emailauthenticationtimestamp', 'patch-email-authentication.sql' ),
 
 			// 1.5
 			array( 'doSchemaRestructuring' ),
@@ -54,17 +51,16 @@ class MysqlUpdater extends DatabaseUpdater {
 			array( 'addField', 'revision',      'rev_deleted',      'patch-rev_deleted.sql' ),
 			array( 'addField', 'image',         'img_width',        'patch-img_width.sql' ),
 			array( 'addField', 'image',         'img_metadata',     'patch-img_metadata.sql' ),
-			array( 'addField', 'user',          'user_email_token', 'patch-user_email_token.sql' ),
+			# array( 'addField', 'user',          'user_email_token', 'patch-user_email_token.sql' ),
 			array( 'addField', 'archive',       'ar_text_id',       'patch-archive-text_id.sql' ),
 			array( 'doNamespaceSize' ),
 			array( 'addField', 'image',         'img_media_type',   'patch-img_media_type.sql' ),
 			array( 'doPagelinksUpdate' ),
 			array( 'dropField', 'image',        'img_type',         'patch-drop_img_type.sql' ),
-			array( 'doUserUniqueUpdate' ),
-			array( 'doUserGroupsUpdate' ),
+			#array( 'doUserUniqueUpdate' ),
+			#array( 'doUserGroupsUpdate' ),
 			array( 'addField', 'site_stats',    'ss_total_pages',   'patch-ss_total_articles.sql' ),
 			array( 'addTable', 'user_newtalk',                      'patch-usernewtalk2.sql' ),
-			array( 'addTable', 'transcache',                        'patch-transcache.sql' ),
 			array( 'addField', 'interwiki',     'iw_trans',         'patch-interwiki-trans.sql' ),
 
 			// 1.6
@@ -72,26 +68,23 @@ class MysqlUpdater extends DatabaseUpdater {
 			array( 'addIndex', 'logging',         'times',            'patch-logging-times-index.sql' ),
 			array( 'addField', 'ipblocks',        'ipb_range_start',  'patch-ipb_range_start.sql' ),
 			array( 'doPageRandomUpdate' ),
-			array( 'addField', 'user',            'user_registration', 'patch-user_registration.sql' ),
+			#array( 'addField', 'user',            'user_registration', 'patch-user_registration.sql' ),
 			array( 'doTemplatelinksUpdate' ),
 			array( 'addTable', 'externallinks',                       'patch-externallinks.sql' ),
-			array( 'addTable', 'job',                                 'patch-job.sql' ),
+			#array( 'addTable', 'job',                                 'patch-job.sql' ),
 			array( 'addField', 'site_stats',      'ss_images',        'patch-ss_images.sql' ),
 			array( 'addTable', 'langlinks',                           'patch-langlinks.sql' ),
 			array( 'addTable', 'querycache_info',                     'patch-querycacheinfo.sql' ),
 			array( 'addTable', 'filearchive',                         'patch-filearchive.sql' ),
 			array( 'addField', 'ipblocks',        'ipb_anon_only',    'patch-ipb_anon_only.sql' ),
-			array( 'addIndex', 'recentchanges',   'rc_ns_usertext',   'patch-recentchanges-utindex.sql' ),
-			array( 'addIndex', 'recentchanges',   'rc_user_text',     'patch-rc_user_text-index.sql' ),
 
 			// 1.9
-			array( 'addField', 'user',          'user_newpass_time', 'patch-user_newpass_time.sql' ),
 			array( 'addTable', 'redirect',                           'patch-redirect.sql' ),
 			array( 'addTable', 'querycachetwo',                      'patch-querycachetwo.sql' ),
 			array( 'addField', 'ipblocks',      'ipb_enable_autoblock', 'patch-ipb_optional_autoblock.sql' ),
 			array( 'doBacklinkingIndicesUpdate' ),
 			array( 'addField', 'recentchanges', 'rc_old_len',        'patch-rc_len.sql' ),
-			array( 'addField', 'user',          'user_editcount',    'patch-user_editcount.sql' ),
+			#array( 'addField', 'user',          'user_editcount',    'patch-user_editcount.sql' ),
 
 			// 1.10
 			array( 'doRestrictionsUpdate' ),
@@ -120,7 +113,6 @@ class MysqlUpdater extends DatabaseUpdater {
 			array( 'addTable', 'protected_titles',                  'patch-protected_titles.sql' ),
 
 			// 1.13
-			array( 'addField', 'ipblocks',      'ipb_by_text',      'patch-ipb_by_text.sql' ),
 			array( 'addTable', 'page_props',                        'patch-page_props.sql' ),
 			array( 'addTable', 'updatelog',                         'patch-updatelog.sql' ),
 			array( 'addTable', 'category',                          'patch-category.sql' ),
@@ -140,29 +132,22 @@ class MysqlUpdater extends DatabaseUpdater {
 			// 1.15
 			array( 'doUniquePlTlIl' ),
 			array( 'addTable', 'change_tag',                        'patch-change_tag.sql' ),
-			array( 'addTable', 'tag_summary',                       'patch-change_tag.sql' ),
-			array( 'addTable', 'valid_tag',                         'patch-change_tag.sql' ),
+			#array( 'addTable', 'tag_summary',                       'patch-change_tag.sql' ), # SUS-3066
+			#array( 'addTable', 'valid_tag',                         'patch-change_tag.sql' ), # SUS-3066
 
 			// 1.16
-			array( 'addTable', 'user_properties',                   'patch-user_properties.sql' ),
+			# array( 'addTable', 'user_properties',                   'patch-user_properties.sql' ),
 			array( 'addTable', 'log_search',                        'patch-log_search.sql' ),
-			array( 'addField', 'logging',       'log_user_text',    'patch-log_user_text.sql' ),
-			array( 'doLogUsertextPopulation' ), # listed separately from the previous update because 1.16 was released without this update
 			array( 'doLogSearchPopulation' ),
-			array( 'addTable', 'l10n_cache',                        'patch-l10n_cache.sql' ),
-			array( 'addTable', 'external_user',                     'patch-external_user.sql' ),
 			array( 'addIndex', 'log_search',    'ls_field_val',     'patch-log_search-rename-index.sql' ),
 			array( 'addIndex', 'change_tag',    'change_tag_rc_tag', 'patch-change_tag-indexes.sql' ),
 			array( 'addField', 'redirect',      'rd_interwiki',     'patch-rd_interwiki.sql' ),
-			array( 'doUpdateTranscacheField' ),
-			array( 'renameEuWikiId' ),
 			array( 'doUpdateMimeMinorField' ),
 
 			// 1.17
 			array( 'addTable', 'iwlinks',                           'patch-iwlinks.sql' ),
 			array( 'addIndex', 'iwlinks', 'iwl_prefix_title_from',  'patch-rename-iwl_prefix.sql' ),
 			array( 'addField', 'updatelog',     'ul_value',         'patch-ul_value.sql' ),
-			array( 'addField', 'interwiki',     'iw_api',           'patch-iw_api_and_wikiid.sql' ),
 			array( 'dropIndex', 'iwlinks',      'iwl_prefix',       'patch-kill-iwl_prefix.sql' ),
 			array( 'dropIndex', 'iwlinks',      'iwl_prefix_from_title', 'patch-kill-iwl_pft.sql' ),
 			array( 'addField', 'categorylinks', 'cl_collation',     'patch-categorylinks-better-collation.sql' ),
@@ -176,8 +161,8 @@ class MysqlUpdater extends DatabaseUpdater {
 
 			// 1.18
 			array( 'doUserNewTalkTimestampNotNull' ),
-			array( 'addIndex', 'user',          'user_email',       'patch-user_email_index.sql' ),
-			array( 'modifyField', 'user_properties', 'up_property', 'patch-up_property.sql' ),
+			#array( 'addIndex', 'user',          'user_email',       'patch-user_email_index.sql' ),
+			#array( 'modifyField', 'user_properties', 'up_property', 'patch-up_property.sql' ),
 			array( 'addTable', 'uploadstash',                       'patch-uploadstash.sql' ),
 			array( 'addTable', 'user_former_groups',                'patch-user_former_groups.sql'),
 
@@ -190,8 +175,19 @@ class MysqlUpdater extends DatabaseUpdater {
 			array( 'addIndex', 'page', 'page_redirect_namespace_len', 'patch-page_redirect_namespace_len.sql' ),
 			array( 'modifyField', 'user_groups', 'ug_group', 'patch-ug_group-length-increase.sql' ),
 			array( 'addField',	'uploadstash',	'us_chunk_inx',		'patch-uploadstash_chunk.sql' ),
-			array( 'addfield', 'job',           'job_timestamp',    'patch-jobs-add-timestamp.sql' ),
+			#array( 'addfield', 'job',           'job_timestamp',    'patch-jobs-add-timestamp.sql' ),
 			array( 'modifyField', 'user_former_groups', 'ufg_group', 'patch-ufg_group-length-increase.sql' ),
+
+			// backports
+
+			// 1.25 / SUS-2651
+			array( 'dropTable', 'hitcounter' ),
+			array( 'dropField', 'site_stats', 'ss_total_views', 'patch-drop-ss_total_views.sql' ),
+			array( 'dropField', 'page', 'page_counter', 'patch-drop-page_counter.sql' ),
+
+			// 1.28 / SUS-2741
+			[ 'addField', 'change_tag', 'ct_id', 'patch-change_tag-ct_id.sql' ],
+			[ 'addField', 'tag_summary', 'ts_id', 'patch-tag_summary-ts_id.sql' ],
 		);
 	}
 
@@ -389,7 +385,6 @@ class MysqlUpdater extends DatabaseUpdater {
 			page_namespace int NOT NULL,
 			page_title varchar(255) binary NOT NULL,
 			page_restrictions tinyblob NOT NULL,
-			page_counter bigint(20) unsigned NOT NULL default '0',
 			page_is_redirect tinyint(1) unsigned NOT NULL default '0',
 			page_is_new tinyint(1) unsigned NOT NULL default '0',
 			page_random real unsigned NOT NULL,
@@ -459,9 +454,9 @@ class MysqlUpdater extends DatabaseUpdater {
 
 		$this->output( wfTimestamp( TS_DB ) );
 		$this->output( "......Setting up page table.\n" );
-		$this->db->query( "INSERT INTO $page (page_id, page_namespace, page_title, page_restrictions, page_counter,
+		$this->db->query( "INSERT INTO $page (page_id, page_namespace, page_title, page_restrictions,
 			page_is_redirect, page_is_new, page_random, page_touched, page_latest, page_len)
-			SELECT cur_id, cur_namespace, cur_title, cur_restrictions, cur_counter, cur_is_redirect, cur_is_new,
+			SELECT cur_id, cur_namespace, cur_title, cur_restrictions, cur_is_redirect, cur_is_new,
 				cur_random, cur_touched, rev_id, LENGTH(cur_text)
 			FROM $cur,$revision
 			WHERE cur_id=rev_page AND rev_timestamp=cur_timestamp AND rev_id > {$maxold}", __METHOD__ );
@@ -789,17 +784,6 @@ class MysqlUpdater extends DatabaseUpdater {
 
 		$this->output( "Making pl_namespace, tl_namespace and il_to indices UNIQUE... " );
 		$this->applyPatch( 'patch-pl-tl-il-unique.sql' );
-		$this->output( "done.\n" );
-	}
-
-	protected function renameEuWikiId() {
-		if ( $this->db->fieldExists( 'external_user', 'eu_local_id', __METHOD__ ) ) {
-			$this->output( "...eu_wiki_id already renamed to eu_local_id.\n" );
-			return;
-		}
-
-		$this->output( "Renaming eu_wiki_id -> eu_local_id... " );
-		$this->applyPatch( 'patch-eu_local_id.sql' );
 		$this->output( "done.\n" );
 	}
 

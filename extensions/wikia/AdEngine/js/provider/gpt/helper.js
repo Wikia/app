@@ -1,155 +1,215 @@
 /*global define, setTimeout, require*/
 /*jshint maxlen:125, camelcase:false, maxdepth:7*/
 define('ext.wikia.adEngine.provider.gpt.helper', [
-	'wikia.log',
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adLogicPageParams',
+	'ext.wikia.adEngine.context.uapContext',
 	'ext.wikia.adEngine.provider.gpt.adDetect',
 	'ext.wikia.adEngine.provider.gpt.adElement',
 	'ext.wikia.adEngine.provider.gpt.googleTag',
+	'ext.wikia.adEngine.provider.gpt.googleSlots',
+	'ext.wikia.adEngine.provider.gpt.targeting',
+	'ext.wikia.adEngine.slot.service.passbackHandler',
+	'ext.wikia.adEngine.slot.service.srcProvider',
 	'ext.wikia.adEngine.slot.slotTargeting',
-	'ext.wikia.adEngine.uapContext',
-	'ext.wikia.aRecoveryEngine.recovery.helper',
+	'ext.wikia.aRecoveryEngine.adBlockDetection',
+	'ext.wikia.aRecoveryEngine.adBlockRecovery',
 	'ext.wikia.adEngine.slotTweaker',
+	'wikia.document',
+	'wikia.instantGlobals',
+	'wikia.log',
+	require.optional('ext.wikia.adEngine.ml.rabbit'),
 	require.optional('ext.wikia.adEngine.provider.gpt.sraHelper'),
-	require.optional('ext.wikia.adEngine.slot.scrollHandler')
+	require.optional('ext.wikia.aRecoveryEngine.instartLogic.recovery'),
+	require.optional('ext.wikia.aRecoveryEngine.pageFair.recovery')
 ], function (
-	log,
 	adContext,
 	adLogicPageParams,
+	uapContext,
 	adDetect,
 	AdElement,
-	GoogleTag,
+	googleTag,
+	googleSlots,
+	gptTargeting,
+	passbackHandler,
+	srcProvider,
 	slotTargeting,
-	uapContext,
-	recoveryHelper,
+	adBlockDetection,
+	adBlockRecovery,
 	slotTweaker,
+	doc,
+	instantGlobals,
+	log,
+	rabbit,
 	sraHelper,
-	scrollHandler
+	instartLogic,
+	pageFair
 ) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.gpt.helper',
-		googleApi = new GoogleTag(),
 		hiddenSlots = [
-			'INCONTENT_LEADERBOARD'
+			'INCONTENT_PLAYER'
 		];
 
 	function isHiddenOnStart(slotName) {
 		return hiddenSlots.indexOf(slotName) !== -1;
 	}
 
+	function isRecoverableByIL() {
+		return instartLogic && instartLogic.isEnabled() && instartLogic.isBlocking();
+	}
+
 	/**
 	 * Push ad to queue and flush if it should be
 	 *
-	 * @param {Object}   slot               - slot (ext.wikia.adEngine.slot.adSlot::create instance)
-	 * @param {string}   slotPath           - slot path
-	 * @param {Object}   slotTargetingData  - slot targeting details
-	 * @param {Object}   extra              - optional parameters
-	 * @param {boolean}  extra.sraEnabled   - whether to use Single Request Architecture
-	 * @param {string}   extra.forcedAdType - ad type for callbacks info
+	 * @param {Object}  slot                   - slot (ext.wikia.adEngine.slot.adSlot::create instance)
+	 * @param {string}  slotPath               - slot path
+	 * @param {Object}  slotTargetingData      - slot targeting details
+	 * @param {Object}  extra                  - optional parameters
+	 * @param {boolean} extra.sraEnabled       - whether to use Single Request Architecture
+	 * @param {string}  extra.forcedAdType     - ad type for callbacks info
+	 * @param {bool}    extra.isInstartLogicRecoverable - true if currently processed slot is recovered by IL
+	 * @param {bool}    extra.isPageFairRecoverable - true if currently processed slot is recovered by PF
 	 */
 	function pushAd(slot, slotPath, slotTargetingData, extra) {
 		extra = extra || {};
 		var element,
-			recoverableSlots = extra.recoverableSlots || [],
-			shouldPushRecoverableAd = recoveryHelper.isBlocking() &&
-				recoveryHelper.isRecoverable(slot.name, recoverableSlots),
-			shouldPush = !recoveryHelper.isBlocking() || shouldPushRecoverableAd,
+			isBlocking = adBlockDetection.isBlocking(),
+			isRecoveryEnabled = adBlockRecovery.isEnabled(),
+			adIsRecoverable = extra.isPageFairRecoverable || extra.isInstartLogicRecoverable,
+			adShouldBeRecovered = isRecoveryEnabled && isBlocking && adIsRecoverable,
+			shouldPush = !isBlocking || adShouldBeRecovered,
+			slotName = slot.name,
 			uapId = uapContext.getUapId();
 
-		log(['shouldPush',
-			slot.name,
-			recoveryHelper.isBlocking(),
-			recoverableSlots,
-			recoveryHelper.isRecoverable(slot.name, recoverableSlots)], 'debug', logGroup);
+		log(['isRecoveryEnabled, isBlocking, adIsRecoverable',
+			slot.name, isRecoveryEnabled, isBlocking, adIsRecoverable], log.levels.debug, logGroup);
 
-		slotTargetingData = JSON.parse(JSON.stringify(slotTargetingData)); // copy value
+		// copy value
+		slotTargetingData = JSON.parse(JSON.stringify(slotTargetingData));
 
-		if (isHiddenOnStart(slot.name)) {
-			slotTweaker.hide(slot.name);
+		if (isHiddenOnStart(slotName)) {
+			slotTweaker.hide(slotName);
 			slot.pre('success', function () {
-				slotTweaker.show(slot.name);
+				slotTweaker.show(slotName);
 			});
 		}
 
 		setAdditionalTargeting(slotTargetingData);
 
-		element = new AdElement(slot.name, slotPath, slotTargetingData);
+		element = new AdElement(slotName, slotPath, slotTargetingData);
+
+		if (pageFair && extra.isPageFairRecoverable) {
+			log(['Adding adonis-marker to slot', slot], log.levels.debug, logGroup);
+
+			pageFair.addMarker(element.node);
+		}
 
 		function queueAd() {
-			log(['queueAd', slot.name, element], 'debug', logGroup);
+			log(['queueAd', slotName, element], log.levels.debug, logGroup);
 			slot.container.appendChild(element.getNode());
 
-			googleApi.addSlot(element);
+			googleTag.addSlot(element);
 		}
 
 		function setAdditionalTargeting(slotTargetingData) {
-			if (scrollHandler) {
-				var count = scrollHandler.getReloadedViewCount(slot.name);
-				if (count !== null) {
-					slotTargetingData.rv = count.toString();
-				}
+			var abId,
+			    rabbitResults = rabbit && rabbit.getResults(instantGlobals.wgAdDriverRabbitTargetingKeyValues);
+
+			if (isRecoverableByIL()) {
+				slotTargetingData.requestSource = 'instartLogic';
 			}
 
-			if (shouldPushRecoverableAd) {
-				slotTargetingData.src = 'rec';
+			if (slotTargetingData.src) {
+				slotTargetingData.src = srcProvider.get(slotTargetingData.src, extra);
 			}
 
-			slotTargetingData.wsi = slotTargeting.getWikiaSlotId(slot.name, slotTargetingData.src);
+			if (rabbitResults && rabbitResults.length) {
+				slotTargetingData.rabbit = rabbitResults;
+			}
+
+			slotTargetingData.passback = passbackHandler.get(slotName) || 'none';
+			slotTargetingData.wsi = slotTargeting.getWikiaSlotId(slotName, slotTargetingData.src);
 			slotTargetingData.uap = uapId ? uapId.toString() : 'none';
+			slotTargetingData.outstream = slotTargeting.getOutstreamData() || 'none';
+			if (adContext.get('targeting.skin') === 'oasis') {
+				slotTargetingData.rail = doc.body.scrollWidth <= 1023 ? '0' : '1';
+			}
+
+			abId = slotTargeting.getAbTestId(slotTargetingData);
+			if (abId) {
+				slotTargetingData.abi = abId;
+			}
 		}
 
 		function onAdLoadCallback(slotElementId, gptEvent, iframe) {
 			// IE doesn't allow us to inspect GPT iframe at this point.
 			// Let's launch our callback in a setTimeout instead.
 			setTimeout(function () {
-				log(['onAdLoadCallback', slotElementId], 'info', logGroup);
+				log(['onAdLoadCallback', slotElementId], log.levels.info, logGroup);
 				adDetect.onAdLoad(slot, gptEvent, iframe, extra.forcedAdType);
 			}, 0);
 		}
 
 		function gptCallback(gptEvent) {
-			log(['gptCallback', element.getId(), gptEvent], 'info', logGroup);
+			log(['gptCallback', element.getId(), gptEvent], log.levels.info, logGroup);
 			element.updateDataParams(gptEvent);
-			googleApi.onAdLoad(slot.name, element, gptEvent, onAdLoadCallback);
+			googleTag.onAdLoad(slotName, element, gptEvent, onAdLoadCallback);
 		}
 
-		if (!googleApi.isInitialized()) {
-			googleApi.init();
-			googleApi.setPageLevelParams(adLogicPageParams.getPageLevelParams());
+		if (!googleTag.isInitialized()) {
+			googleTag.init();
+			googleTag.setPageLevelParams(adLogicPageParams.getPageLevelParams());
 		}
 
 		if (!shouldPush) {
-			log(['Push blocked', slot.name], 'debug', logGroup);
-			slotTweaker.removeDefaultHeight(slot.name);
+			log(['Push blocked', slotName], log.levels.debug, logGroup);
+			slot.collapse();
 			return;
 		}
 
-		log(['pushAd', slot.name], 'info', logGroup);
+		log(['pushAd', slotName, slotTargetingData], log.levels.info, logGroup);
 		if (!slotTargetingData.flushOnly) {
-			googleApi.registerCallback(element.getId(), gptCallback);
-			googleApi.push(queueAd);
+			slot.pre('renderEnded', gptCallback);
+			googleTag.push(queueAd);
 		}
 
-		if (!sraHelper || !extra.sraEnabled || sraHelper.shouldFlush(slot.name)) {
-			log('flushing', 'debug', logGroup);
-			googleApi.flush();
+		if (!sraHelper || !extra.sraEnabled || sraHelper.shouldFlush(slotName)) {
+			log('flushing', log.levels.debug, logGroup);
+			googleTag.flush();
 		}
 
 		if (slotTargetingData.flushOnly) {
+			log(['flushOnly - success', slotName], log.levels.debug, logGroup);
 			slot.success();
 		}
 	}
 
+	function refreshSlot(slotName) {
+		var slot = googleSlots.getSlotByName(slotName),
+			targeting;
+
+		if (slot) {
+			log(['Refresh slot', slotName, slot], log.levels.debug, logGroup);
+			targeting = gptTargeting.getSlotLevelTargeting(slotName);
+			targeting.uap = uapContext.getUapId().toString();
+			AdElement.configureSlot(slot, targeting);
+			googleTag.refreshSlot(slot);
+		} else {
+			log(['Refresh slot', slotName, 'does not exist'], log.levels.debug, logGroup);
+		}
+	}
+
 	adContext.addCallback(function () {
-		if (googleApi.isInitialized()) {
-			googleApi.setPageLevelParams(adLogicPageParams.getPageLevelParams());
+		if (googleTag.isInitialized()) {
+			googleTag.setPageLevelParams(adLogicPageParams.getPageLevelParams());
 			uapContext.reset();
 		}
 	});
 
 	return {
+		refreshSlot: refreshSlot,
 		pushAd: pushAd
 	};
 });

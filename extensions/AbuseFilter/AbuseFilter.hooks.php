@@ -100,7 +100,9 @@ class AbuseFilterHooks {
 		return $filter_result == '' || $filter_result === true;
 	}
 
-	public static function onArticleDelete( &$article, &$user, &$reason, &$error ) {
+	public static function onArticleDelete(
+		WikiPage $article, User $user, $reason, &$error
+	): bool {
 		$vars = new AbuseFilterVariableHolder;
 
 		global $wgUser;
@@ -140,16 +142,15 @@ class AbuseFilterHooks {
 		return $filter_result == '' || $filter_result === true;
 	}
 
-	public static function onRecentChangeSave( $recentChange ) {
+	public static function onRecentChangeSave( RecentChange $recentChange ) {
 		$title = Title::makeTitle(
 			$recentChange->mAttribs['rc_namespace'],
 			$recentChange->mAttribs['rc_title']
 		);
 		$action = $recentChange->mAttribs['rc_log_type'] ?
 			$recentChange->mAttribs['rc_log_type'] : 'edit';
-		$actionID = implode( '-', array(
-				$title->getPrefixedText(), $recentChange->mAttribs['rc_user_text'], $action
-			) );
+		$userIdOrIp = $recentChange->mAttribs['rc_user'] ?: $recentChange->getUserIp();
+		$actionID = AbuseFilter::getActionId($title, $userIdOrIp, $action);
 
 		if ( !empty( AbuseFilter::$tagsToSet[$actionID] )
 			&& count( $tags = AbuseFilter::$tagsToSet[$actionID] ) )
@@ -208,6 +209,7 @@ class AbuseFilterHooks {
 			$updater->addExtensionUpdate( array( 'addField', 'abuse_filter', 'af_global', "$dir/db_patches/patch-global_filters.sql", true ) );
 			if ( $updater->getDB()->getType() == 'mysql' ) {
 				$updater->addExtensionUpdate( array( 'addIndex', 'abuse_filter_log', 'filter_timestamp', "$dir/db_patches/patch-fix-indexes.sql", true ) );
+				$updater->addExtensionUpdate( array( 'modifyField', 'abuse_filter_log', 'afl_namespace', "$dir/db_patches/patch-afl-namespace_int.sql", true ) );
 			} else {
 				$updater->addExtensionUpdate( array( 'addIndex', 'abuse_filter_log', 'afl_filter_timestamp', "$dir/db_patches/patch-fix-indexes.sqlite.sql", true ) );
 			}
@@ -235,12 +237,9 @@ class AbuseFilterHooks {
 				# Increment site_stats.ss_users
 				$ssu = new SiteStatsUpdate( 0, 0, 0, 0, 1 );
 				$ssu->doUpdate();
-			} else {
-				// Sorry dude, we need this account.
-				$user->setPassword( null );
-				$user->setEmail( null );
-				$user->saveSettings();
 			}
+			// Wikia change - no action needed if user exists
+
 			$updater->insertUpdateRow( 'create abusefilter-blocker-user' );
 			# Promote user so it doesn't look too crazy.
 			$user->addGroup( 'sysop' );
@@ -309,50 +308,12 @@ class AbuseFilterHooks {
 	}
 
 	/**
-	 * Register tables that need to be updated when a user is renamed
+	 * Register tables that need to be updated when an IP address has to be removed from database
 	 *
-	 * @param DatabaseBase $dbw
-	 * @param int $userId
-	 * @param string $oldUsername
-	 * @param string $newUsername
-	 * @param UserRenameProcess $process
-	 * @param int $wgCityId
 	 * @param array $tasks
 	 * @return bool
 	 */
-	public static function onUserRenameLocal( $dbw, $userId, $oldUsername, $newUsername, $process, $wgCityId, array &$tasks ) {
-		$tasks[] = array(
-			'table' => 'abuse_filter',
-			'userid_column' => 'af_user',
-			'username_column' => 'af_user_text',
-		);
-		$tasks[] = array(
-			'table' => 'abuse_filter_log',
-			'userid_column' => 'afl_user',
-			'username_column' => 'afl_user_text',
-		);
-		$tasks[] = array(
-			'table' => 'abuse_filter_history',
-			'userid_column' => 'afh_user',
-			'username_column' => 'afh_user_text',
-		);
-
-		return true;
-	}
-
-	/**
-	 * Register tables that need to be updated when a user is renamed by IP
-	 *
-	 * @param DatabaseBase $dbw
-	 * @param int $userId
-	 * @param string $oldUsername
-	 * @param string $newUsername
-	 * @param UserRenameProcess $process
-	 * @param int $wgCityId
-	 * @param array $tasks
-	 * @return bool
-	 */
-	public static function onUserRenameLocalIP( $dbw, $userId, $oldUsername, $newUsername, $process, $wgCityId, array &$tasks ) {
+	public static function onUserRenameLocalIP( array &$tasks ) {
 		$tasks[] = array(
 			'table' => 'abuse_filter_log',
 			'userid_column' => 'afl_user',

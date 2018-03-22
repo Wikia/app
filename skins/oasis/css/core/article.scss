@@ -286,7 +286,7 @@
 	// FIXME: anyone still using gopher?
 	a.external, a[href^='gopher://'] {
 		&:after {
-			background-image: url('/skins/shared/images/sprite.png');	/* $wgCdnStylePath */
+			background-image: url('/skins/shared/images/sprite.png');	/* $wgResourceBasePath */
 			background-position: -1198px 0;
 			background-repeat: no-repeat;
 			content: '';
@@ -410,25 +410,7 @@
 	}
 
 	//diff page
-	td.diff-context {
-		background-color: $color-diff-context;
-		color: $color-diff-text;
-	}
-
-	td.diff-deletedline,
-	td.diff-addedline {
-		color: $color-diff-text;
-	}
-
-	.diffchange-inline {
-		color: $color-diffchange-text;
-	}
-
-	table.diff, td.diff-otitle, td.diff-ntitle {
-		background-color: $color-page;
-	}
-
-  	// BugId:9262
+	// BugId:9262
 	.diff-article-content body.mainpage & {
 		margin-right: 0;
 	}
@@ -603,13 +585,9 @@
 	}
 }
 
-.TOC_hide #toctitle + ul {
-	display: none;
-}
-
 // Needed for article comments lazy loading
 .WikiaArticleComments.loading {
-	background: url('/skins/common/images/ajax.gif') no-repeat 50% 50%; /* $wgCdnStylePath */
+	background: url('/skins/common/images/ajax.gif') no-repeat 50% 50%; /* $wgResourceBasePath */
 	border-top: 1px solid $color-page;
 	height: 16px;
 	margin: 10px;

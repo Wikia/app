@@ -28,11 +28,9 @@ function HomePageListAjax() {
 	}
 }
 
-function wfHomePageList() {
-	global $wgParser;
-
-	$wgParser->setHook("homepage_new_questions", array("HomePageList", "homepage_new_questions_tag"));
-	$wgParser->setHook("homepage_recently_answered_questions", array("HomePageList", "homepage_recently_answered_questions_tag"));
+function wfHomePageList( Parser $parser ): bool {
+	$parser->setHook( "homepage_new_questions", [ "HomePageList", "homepage_new_questions_tag" ] );
+	$parser->setHook( "homepage_recently_answered_questions", [ "HomePageList", "homepage_recently_answered_questions_tag" ] );
 
 	return true;
 }
@@ -96,7 +94,7 @@ class HomePageList {
 					if ( !is_null($oQuestion) && !$oQuestion->badWordsTest() && !$oQuestion->filterWordsTest() ) {
 						$text = $page["title"] . "?";
 						$timestamp = $page["timestamp"];
-						$html .= "<li><a href=\"/wiki/" . urlencode($url) . "\">" . htmlspecialchars(Answer::s2q($text)) . "</a></li>";
+						$html .= $this->createLinkListElement($page["title"], $text);
 
 						if (empty($timestamp1)) $timestamp1 = $timestamp;
 					}
@@ -197,7 +195,7 @@ class HomePageList {
 						$oQuestion = new DefaultQuestion($url);
 						if ( !is_null($oQuestion) && !$oQuestion->badWordsTest() && !$oQuestion->filterWordsTest() ) {
 							$text = $page["title"] . "?";
-							$html .= "<li><a href=\"/wiki/" . urlencode($url) . "\">" . htmlspecialchars(Answer::s2q($text)) . "</a></li>";
+							$html .= $this->createLinkListElement($page["title"], $text);
 						}
 					}
 				}
@@ -268,7 +266,7 @@ class HomePageList {
 					$oQuestion = new DefaultQuestion($url);
 					if ( !is_null($oQuestion) && !$oQuestion->badWordsTest() && !$oQuestion->filterWordsTest() ) {
 						$text = $page["title"] . "?";
-						$html .= "<li><a href=\"/wiki/" . htmlspecialchars($url) . "\">" . htmlspecialchars(Answer::s2q($text)) . "</a></li>";
+						$html .= $this->createLinkListElement($page["title"], $text);
 					}
 				}
 			}
@@ -278,5 +276,20 @@ class HomePageList {
 
 		wfProfileOut(__METHOD__);
 		return $html;
+	}
+
+	/**
+	 * @param string $pageTitle
+	 * @param string $text
+	 * @return string
+	 */
+	private function createLinkListElement( $pageTitle, $text ): string {
+		$title = Title::newFromText( $pageTitle );
+		if ( $title ) {
+			return "<li><a href=\"" . urlencode( $title->getLocalURL() ) . "\">" .
+				   htmlspecialchars( Answer::s2q( $text ) ) . "</a></li>";
+		} else {
+			return "";
+		}
 	}
 }

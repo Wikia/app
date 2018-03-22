@@ -22,5 +22,10 @@
 	"sf_blank_error": "mag nie leeg wees nie",
 	"sf_bad_date_error": "moet 'n geldige datum wees",
 	"sf_deletionlog": "Skraplogboek",
-	"sf_form_freetextlabel": "Vrye teks"
+	"sf_form_freetextlabel": "Vrye teks",
+	"sf-datepicker-close": "Sluit",
+	"sf-datepicker-prev": "Vorige",
+	"sf-datepicker-next": "Volgende",
+	"sf-datepicker-today": "Vandag",
+	"sf-regexp-wrongformat": "Verkeerde formaat."
 }

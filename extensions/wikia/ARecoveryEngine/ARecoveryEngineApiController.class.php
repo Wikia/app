@@ -4,29 +4,29 @@ class ARecoveryEngineApiController extends WikiaController {
 	const DEFAULT_TEMPLATE_ENGINE = WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
 	const MAX_EVENT_INTERVAL = 900;
 
-	public function getDelivery() {
-		$resourceLoader = new ResourceLoaderAdEngineSourcePointCSDelivery();
-		$resourceLoaderContext = new ResourceLoaderContext( new ResourceLoader(), new FauxRequest() );
-		$source = $resourceLoader->getScript( $resourceLoaderContext );
-
-		$this->response->setContentType( 'text/javascript; charset=utf-8' );
-		$this->response->setBody( $source );
-		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
+	public function getPageFairBootstrapHead() {
+		$resourceLoader = new ResourceLoaderAdEnginePageFairRecoveryModule();
+		$this->response->getView()->setTemplate( 'ARecoveryEngineApiController', 'getPageFairBootstrap' );
+		$this->response->setVal( 'code', $resourceLoader->getScriptObserver() );
+		$this->response->setVal( 'methodName', 'runPFCodeHead' );
 	}
 
-	public function getSourcePointStatus() {
-		$this->response->setContentType( 'text/javascript; charset=utf-8' );
-		$wgGlobalEnableSourcePoint = WikiFactory::getVarValueByName( 'wgGlobalEnableSourcePoint', Wikia::COMMUNITY_WIKI_ID );
-		$this->response->setBody( 'window.wikiaSourcePointStatus = ' . ( $wgGlobalEnableSourcePoint ? 'true;' : 'false;' ) );
-		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD, WikiaResponse::CACHE_DISABLED );
+	public function getPageFairBootstrapTopBody() {
+		$resourceLoader = new ResourceLoaderAdEnginePageFairRecoveryModule();
+		$this->response->getView()->setTemplate( 'ARecoveryEngineApiController', 'getPageFairBootstrap' );
+		$this->response->setVal( 'code', $resourceLoader->getScriptWrapper() );
+		$this->response->setVal( 'methodName', 'runPFCodeTopBody' );
 	}
 
-	public function getBootstrap() {
-		$resourceLoader = new ResourceLoaderAdEngineSourcePointCSBootstrap();
+	public function getPageFairBootstrapBottomBody() {
+		$resourceLoader = new ResourceLoaderAdEnginePageFairRecoveryModule();
+		$this->response->setVal( 'code', $resourceLoader->getScriptLoader() );
+	}
+
+	public function getInstartLogicBootstrap() {
+		$resourceLoader = new ResourceLoaderAdEngineInstartLogicModule();
 		$resourceLoaderContext = new ResourceLoaderContext( new ResourceLoader(), new FauxRequest() );
 		$this->response->setVal( 'code', $resourceLoader->getScript( $resourceLoaderContext ) );
-		$this->response->setVal( 'domain', F::app()->wg->server );
-		$this->response->setVal( 'cs_endpoint', ResourceLoaderAdEngineSourcePointCSDelivery::CS_ENDPOINT );
 	}
 
 	public function getLogInfo() {
@@ -37,5 +37,14 @@ class ARecoveryEngineApiController extends WikiaController {
 		$this->response->setContentType( 'text/javascript; charset=utf-8' );
 		$this->response->setBody( 'var arecoveryEngineLogInfoStatus=1;' );
 		$this->response->setCacheValidity( self::MAX_EVENT_INTERVAL );
+	}
+
+	private function loadScript(\ResourceLoaderModule $resourceLoader) {
+		$resourceLoaderContext = new ResourceLoaderContext( new ResourceLoader(), new FauxRequest() );
+		$source = $resourceLoader->getScript( $resourceLoaderContext );
+
+		$this->response->setContentType( 'text/javascript; charset=utf-8' );
+		$this->response->setBody( $source );
+		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
 	}
 }

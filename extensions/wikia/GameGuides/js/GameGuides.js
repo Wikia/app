@@ -3,7 +3,7 @@
 	'use strict';
 
 	var links = document.querySelectorAll('a:not(.external):not(.extiw)'),
-		host = window.wgServer.replace(/^http\:\/\//, ''),
+		host = window.wgServer.replace(/^https?\:\/\//, ''),
 		i = links.length,
 		namespaces = window.wgNamespaceIds,
 		regExpNamespace = new RegExp(window.wgArticlePath.replace('$1', '([^:]*)')),
@@ -70,7 +70,6 @@
 				namespace = namespaces[split.shift().toLowerCase()];
 
 				if(namespace) {
-					title = split.join(':');
 					ns = namespace;
 				}
 			}

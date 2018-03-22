@@ -1,0 +1,157 @@
+.wds-community-header {
+	-moz-osx-font-smoothing: grayscale;
+	-webkit-font-smoothing: antialiased;
+	background-position: right center;
+	background-repeat: no-repeat;
+	background-size: contain;
+	height: $wds-community-header-background-height;
+	position: relative;
+	z-index: 1;
+
+	@media #{$wds-breakpoint-l-down} {
+		height: $wds-community-header-background-height-small-breakpoint;
+	}
+
+	&::before {
+		content: '';
+		display: block;
+		height: 100%;
+		position: absolute;
+		width: 100%;
+		z-index: -1;
+	}
+
+	&__wordmark {
+		float: left;
+		height: 65px;
+		margin: 20px 0 20px 20px;
+		max-width: 250px;
+		width: auto;
+
+		img {
+			height: auto;
+			max-height: 100%;
+			max-width: 100%;
+			width: auto;
+		}
+
+		@media #{$wds-breakpoint-l-down} {
+			height: 49px;
+			margin-bottom: 0;
+			max-width: 175px;
+		}
+	}
+
+	&__top-container {
+		display: flex;
+		height: 59px;
+
+		@media #{$wds-breakpoint-l-down} {
+			height: 69px;
+		}
+	}
+
+	&__sitename {
+		flex: 1;
+		font-size: $wds-typescale-size-plus-3;
+		font-weight: 600;
+		line-height: 1;
+		margin: 25px 0 0 18px;
+		overflow: hidden;
+
+		a {
+			text-decoration: none;
+
+			@media #{$wds-breakpoint-xl-up} {
+				display: inline-block;
+				height: 100%;
+				// Safari cut bottom of letter, line-height set to 1.2 fixed it
+				line-height: 1.2;
+				text-decoration: none;
+			}
+		}
+
+		@media #{$wds-breakpoint-l-down} {
+			font-size: $wds-typescale-size-plus-2;
+			margin-top: 20px;
+			max-height: 3*$wds-typescale-size-plus-2;
+			white-space: normal;
+			word-wrap: break-word;
+		}
+
+		@media #{$wds-breakpoint-xl-up} {
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
+	}
+
+	&__counter {
+		font-weight: 600;
+		text-align: right;
+		margin: 17px 0 20px 20px;
+
+		@media #{$wds-breakpoint-l-down} {
+			margin-top: 22px;
+		}
+	}
+
+	&__counter-value {
+		display: block;
+		font-size: $wds-typescale-size-plus-2;
+		line-height: 1;
+
+		@media #{$wds-breakpoint-l-down} {
+			font-size: $wds-typescale-size-plus-1;
+		}
+	}
+
+	&__counter-label {
+		display: block;
+		font-size: $wds-typescale-size-minus-2;
+		line-height: 1;
+		margin-top: 3px;
+		text-transform: uppercase;
+
+		@media #{$wds-breakpoint-l-down} {
+			font-size: $wds-typescale-size-minus-3;
+		}
+	}
+
+	&__wiki-buttons {
+		margin: 20px 20px auto 15px;
+
+		.wds-dropdown__toggle {
+			padding: 7px 3px;
+		}
+	}
+
+	&__local-navigation {
+		display: flex;
+		height: 46px;
+		padding-left: 6px;
+
+		a[href="#"] {
+			cursor: default;
+		}
+
+		.wds-dropdown__toggle-chevron {
+			opacity: .5;
+		}
+
+		.wds-dropdown:hover {
+			.wds-dropdown__toggle-chevron {
+				opacity: 1;
+			}
+		}
+
+		@media #{$wds-breakpoint-l-down} {
+			clear: both;
+		}
+
+		@media #{$wds-breakpoint-m-down} {
+			.wds-tabs__tab-label {
+				font-size: $wds-typescale-size-minus-3;
+			}
+		}
+	}
+}

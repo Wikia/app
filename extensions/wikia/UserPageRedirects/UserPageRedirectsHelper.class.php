@@ -68,7 +68,7 @@ class UserPageRedirectsHelper {
 				break;
 		}
 
-		if( !wfRunHooks( 'UserPageRedirectsBeforeRedirect', array( &$title ) ) ) {
+		if( !Hooks::run( 'UserPageRedirectsBeforeRedirect', array( &$title ) ) ) {
 			wfProfileOut(__METHOD__);
 			return true;
 		}

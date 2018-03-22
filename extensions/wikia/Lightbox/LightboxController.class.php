@@ -23,11 +23,8 @@ class LightboxController extends WikiaController {
 	 * get lightbox modal content mustache template
 	 */
 	public function lightboxModalContent() {
-		// TODO: refactor this to AdEngine2Controller.php
-		$showAds = $this->wg->ShowAds;
-		$this->showAdModalInterstitial = $showAds && $this->wg->ShowAdModalInterstitial;
-
 		// set cache control to 1 day
+		$this->response->setCachePolicy( WikiaResponse::CACHE_PUBLIC );
 		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
 	}
 
@@ -39,6 +36,7 @@ class LightboxController extends WikiaController {
 		}
 
 		// set cache control to 1 day
+		$this->response->setCachePolicy( WikiaResponse::CACHE_PUBLIC );
 		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
 	}
 
@@ -205,7 +203,6 @@ class LightboxController extends WikiaController {
 		$this->fileTitle = $title->getText();
 		$this->mediaType = $data['mediaType'];
 		$this->videoEmbedCode = $data['videoEmbedCode'];
-		$this->playerAsset = $data['playerAsset'];
 		$this->imageUrl = $data['imageUrl'];
 		$this->fileUrl = $data['fileUrl'];
 		$this->rawImageUrl = $data['rawImageUrl'];
@@ -260,12 +257,7 @@ class LightboxController extends WikiaController {
 				$articleTitleText = $articleTitleObj->getText();
 			}
 
-			// check if the file is added to the wiki
-			if ( WikiaFileHelper::isAdded( $file ) ) {
-				$fileUrl = $fileTitleObj->getFullURL();
-			} else {
-				$fileUrl = WikiaFileHelper::getFullUrlPremiumVideo( $fileTitleObj->getDBkey() );
-			}
+			$fileUrl = $fileTitleObj->getFullURL();
 
 			// determine share url
 			$sharingNamespaces = array(

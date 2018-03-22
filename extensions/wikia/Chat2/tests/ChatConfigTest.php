@@ -7,7 +7,7 @@ class ChatConfigTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * @dataProvider testGetPublicHostDataProvider
+	 * @dataProvider getPublicHostDataProvider
 	 */
 	public function testGetPublicHost( $environment, $wgChatPublicHostOverride, $expected ) {
 		$this->mockGlobalVariable( 'wgChatPublicHost', 'chat.wikia-services.com:80' );
@@ -19,7 +19,7 @@ class ChatConfigTest extends WikiaBaseTest {
 		$this->assertEquals( $expected, $chatConfig );
 	}
 
-	public function testGetPublicHostDataProvider() {
+	public function getPublicHostDataProvider() {
 		return [
 			[
 				'environment' => 'dev',
@@ -67,7 +67,7 @@ class ChatConfigTest extends WikiaBaseTest {
 	/**
 	 * @dataProvider testGetApiServerDataProvider
 	 */
-	public function testGetApiServer( $wgChatPrivateServerOverride, $expected ) {
+	public function getApiServer( $wgChatPrivateServerOverride, $expected ) {
 		$this->mockGlobalVariable( 'wgChatPrivateServerOverride', $wgChatPrivateServerOverride );
 
 		$consulHosts = [
@@ -95,7 +95,7 @@ class ChatConfigTest extends WikiaBaseTest {
 		$this->assertContains( $server, $expected );
 	}
 
-	public function testGetApiServerDataProvider() {
+	public function getApiServerDataProvider() {
 		return [
 			[
 				'wgChatPrivateServerOverride' => '',

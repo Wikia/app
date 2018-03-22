@@ -4,14 +4,19 @@ define('GlobalShortcutsSuggestions',
 		'use strict';
 
 		function GlobalShortcutsSuggestions($el, closeCb) {
+			var deferred = jQuery.Deferred();
 			this.$el = $el;
 			this.closeCb = closeCb;
 
 			require(['devbridge.autocomplete'], function (Autocomplete) {
 				$.fn.suggestionsAutocomplete = Autocomplete.autocomplete;
 
-				this.init();
+				this.init().done(function() {
+					deferred.resolve();
+				});
 			}.bind(this));
+
+			return deferred.promise();
 		}
 
 		GlobalShortcutsSuggestions.prototype.close = function () {
@@ -41,7 +46,7 @@ define('GlobalShortcutsSuggestions',
 			var autocompleteReEscape = new RegExp('(\\' + ['/', '.', '*', '+', '?', '|', '(', ')',
 					'[', ']', '{', '}', '\\'].join('|\\') + ')', 'gi');
 
-			this.suggestionsAsync().done(function (suggestions) {
+			return this.suggestionsAsync().done(function (suggestions) {
 				this.$el.suggestionsAutocomplete({
 					lookup: suggestions,
 					onSelect: function (suggestion) {
@@ -71,9 +76,6 @@ define('GlobalShortcutsSuggestions',
 					skipBadQueries: true,
 					autoSelectFirst: true
 				});
-
-				this.$el.focus();
-
 			}.bind(this));
 
 		};

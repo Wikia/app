@@ -1,4 +1,5 @@
 <?php
+use \Wikia\TemplateClassification\UnusedTemplates\Handler;
 
 class UnusedTemplatesHandlerTest extends WikiaBaseTest {
 
@@ -31,22 +32,15 @@ class UnusedTemplatesHandlerTest extends WikiaBaseTest {
 	 * early and return `false` if no valid pageIds are generated from the results.
 	 */
 	public function testMarkAsUnusedFromResultsInvalidData() {
-		$resultsMock = $this->getMock( 'ResultWrapper' );
+		$resultsMock = new FakeResultWrapper( [] );
 
-		$dbMock = $this->getDatabaseMock([ 'begin' ] );
+		$dbMock = $this->getDatabaseMock( [ 'begin', 'update' ] );
 		$dbMock->expects( $this->never() )
 			->method( 'begin' );
 
-		$handlerMock = $this->getMock( 'Wikia\TemplateClassification\UnusedTemplates\Handler', [
-			'markAllAsUsed',
-			'getInsertRowsFromResults',
-		] );
+		$handler = new Handler();
 
-		$handlerMock->expects( $this->once() )
-			->method( 'getInsertRowsFromResults' )
-			->willReturn( [] );
-
-		$this->assertFalse( $handlerMock->markAsUnusedFromResults( $resultsMock, $dbMock ) );
+		$this->assertFalse( $handler->markAsUnusedFromResults( $resultsMock, $dbMock ) );
 	}
 
 	/**

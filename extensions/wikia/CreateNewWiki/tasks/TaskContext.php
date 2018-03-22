@@ -71,8 +71,29 @@ class TaskContext {
 		] );
 	}
 
-	public function getAllProperties() {
-		return get_object_vars( $this );
+	/**
+	 * @return string[][]
+	 */
+	public function getLoggerContext() {
+		$context = [
+			'dbName'        => $this->dbName,
+			'language'      => $this->language,
+			'cityId'        => $this->cityId,
+			'wikiName'      => $this->wikiName,
+			'siteName'      => $this->siteName,
+			'url'           => $this->url,
+			'domain'        => $this->domain,
+			'inputDomain'   => $this->inputDomain,
+			'inputWikiName' => $this->inputWikiName,
+			'vertical'      => $this->vertical,
+			'categories'    => $this->categories,
+		];
+		if ( $this->founder instanceof User ) {
+			$context['founderName'] = $this->founder->getName();
+			$context['founderId'] = $this->founder->getId();
+		}
+
+		return $context;
 	}
 
 	public function getInputWikiName() {
@@ -129,6 +150,11 @@ class TaskContext {
 		$this->wikiDBW = $dbw;
 	}
 
+	/**
+	 * Return a connection to "wikicities" shared database
+	 *
+	 * @return \DatabaseBase
+	 */
 	public function getSharedDBW() {
 		return $this->sharedDBW;
 	}

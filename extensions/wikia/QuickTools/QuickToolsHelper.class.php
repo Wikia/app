@@ -5,19 +5,25 @@ class QuickToolsHelper extends ContextSource {
 	/**
 	 * Get all pages that should be rolled back for a given user
 	 *
-	 * @param  string $user A name to check against rev_user_text
+	 * @param  string $userName A name to check against rev_user_text
 	 * @param  string $time Timestamp to revert since
-	 * @return Array  An array of page titles to revert
+	 * @return Title[]  An array of page titles to revert
 	 */
-	public function getRollbackTitles( $user, $time ) {
+	public function getRollbackTitles( $userName, $time ) {
 		$dbr = wfGetDB( DB_SLAVE );
-
 		$titles = [];
 		$where = [
 			'rev_page = page_id',
 			'page_latest = rev_id',
-			'rev_user_text' => $user,
 		];
+
+		// SUS-807
+		$userId = User::idFromName( $userName );
+		if ( $userId ) {
+			$where['rev_user'] = $userId;
+		} else {
+			$where['rev_user_text'] = $userName;
+		}
 
 		if ( $time !== '' ) {
 			$time = $dbr->addQuotes( $time );
@@ -69,12 +75,10 @@ class QuickToolsHelper extends ContextSource {
 		// find the newest edit done by other user
 		$revertRevId = $this->getRevertId( $pageId, $user, $time );
 
-		$result = false;
-
 		if ( $revertRevId && $rollback ) { // found an edit by other user - reverting
-			$result = $this->doRollback( $article, $revertRevId, $summary, $markBot );
+			return $this->doRollback( $article, $revertRevId, $summary, $markBot );
 		} elseif ( !$revertRevId && $delete ) { // no edits by other users - deleting page
-			$result = $this->doDelete( $article, $summary );
+			return $this->doDelete( $article, $summary );
 		}
 
 		return false;
@@ -96,7 +100,7 @@ class QuickToolsHelper extends ContextSource {
 		if ( $this->getUser()->isAllowed( 'bot' ) || $markBot ) {
 			$flags |= EDIT_FORCE_BOT;
 		}
-		$status = $article->doEdit( $text, $summary, $flags );
+		$status = $article->doEdit( $text, $summary, $flags, false, $this->getUser() );
 
 		return $status->isOK();
 	}
@@ -133,9 +137,10 @@ class QuickToolsHelper extends ContextSource {
 	 */
 	private function getRevertId( $pageId, $userName, $time ) {
 		$dbr = wfGetDB( DB_SLAVE );
+
 		$res = $dbr->select(
 			'revision',
-			[ 'rev_id', 'rev_user_text', 'rev_timestamp' ],
+			[ 'rev_id', 'rev_user', 'rev_user_text', 'rev_timestamp' ],
 			[
 				'rev_page' => $pageId,
 			],
@@ -145,16 +150,22 @@ class QuickToolsHelper extends ContextSource {
 			]
 		);
 
+		$userId = User::idFromName( $userName );
+
 		// Find the newest edit done by another user
 		$revertRevId = false;
 
 		foreach ( $res as $row ) {
-			if ( $row->rev_user_text !== $userName || ( $time !== '' && $row->rev_timestamp < $time ) ) {
+			if ( $this->isOtherUser( $row, $userId, $userName ) || ( $time !== '' && $row->rev_timestamp < $time )	) {
 				$revertRevId = $row->rev_id;
 				break;
 			}
 		}
 
 		return $revertRevId;
+	}
+
+	private function isOtherUser( $row, $userId, $userName ) {
+		return $row->rev_user != $userId || ( !$userId && $row->rev_user_text != $userName );
 	}
 }

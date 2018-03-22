@@ -1,22 +1,44 @@
-( function ( window ) {
+( function ( window, document ) {
 	'use strict';
 	var _kiq = [],
-		createCookie;
+		createCookie,
+		setABTestProperties;
 
 	createCookie = function(cookieName) {
-		var cookieValue = cookieName + '=true;path=/;domain=';
-		if (window.location.host.indexOf('wikia-dev')) {
-			cookieValue += '.wikia-dev.com';
+		var cookieValue = cookieName + '=true;path=/;domain=',
+			hostName = window.location.host,
+			devDomainIndex = hostName.indexOf('wikia-dev');
+		if (devDomainIndex > -1) {
+			cookieValue += '.' + hostName.substr(devDomainIndex);
 		} else {
 			cookieValue += '.wikia.com';
 		}
 		document.cookie = cookieValue;
 	};
 
-	setTimeout(function(){
-		var d = document, f = d.getElementsByTagName('script')[0], s = d.createElement('script'); s.type = 'text/javascript';
-		s.async = true; s.src = window.wgQualarooUrl; f.parentNode.insertBefore(s, f);
-	}, 1);
+	setABTestProperties = function () {
+		var ABTestPrefix = 'ABTest_',
+			ABTestProperties = {},
+			isAnyABTestActive = false;
+
+		Wikia.AbTest.getExperiments().forEach(function (experiment) {
+			if (experiment.group) {
+				ABTestProperties[ABTestPrefix + experiment.name] = experiment.group.name;
+				isAnyABTestActive = true;
+			}
+		});
+
+		if (isAnyABTestActive) {
+			_kiq.push(['set', ABTestProperties]);
+		}
+	};
+
+	function loadQualaroo () {
+		setTimeout(function(){
+			var d = document, f = d.getElementsByTagName('script')[0], s = d.createElement('script'); s.type = 'text/javascript';
+			s.async = true; s.src = window.wgQualarooUrl; f.parentNode.insertBefore(s, f);
+		}, 1);
+	}
 
 	if (window.wgUser) {
 		_kiq.push(['identify', window.wgUser]);
@@ -34,9 +56,6 @@
 		// all verticals
 		'fullVerticalName': window.fullVerticalName,
 		'visitorType': window.visitorType,
-		'isPowerUserAdmin': !!window.wikiaIsPowerUserAdmin,
-		'isPowerUserFrequent': !!window.wikiaIsPowerUserFrequent,
-		'isPowerUserLifetime': !!window.wikiaIsPowerUserLifetime,
 		'isLoggedIn': !!window.wgUserName,
 		'cpBenefitsModalShown': document.cookie.indexOf('cpBenefitsModalShown') > -1,
 		'isContributor': window.isContributor,
@@ -68,5 +87,9 @@
 		createCookie('qualaroo_survey_submission');
 	});
 
+	loadQualaroo();
+
+	setABTestProperties();
+
 	window._kiq = _kiq;
-})( window );
+})( window, document );

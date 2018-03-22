@@ -17,7 +17,7 @@ class WikiaMobileHooks {
 	 * @param $strip_state
 	 * @return bool
 	 */
-	static public function onParserBeforeStrip( &$parser, &$text, &$strip_state ) {
+	static public function onParserBeforeStrip( Parser $parser, string &$text, &$strip_state ): bool {
 		global $wgWikiaMobileDisableMediaGrouping;
 		wfProfileIn( __METHOD__ );
 
@@ -118,7 +118,7 @@ class WikiaMobileHooks {
 	 * @param $text String
 	 * @return bool
 	 */
-	static public function onParserAfterTidy( &$parser, &$text ){
+	static public function onParserAfterTidy( Parser $parser, string &$text ): bool {
 		wfProfileIn( __METHOD__ );
 
 		if ( F::app()->checkSkin( 'wikiamobile' ) ) {
@@ -163,13 +163,28 @@ class WikiaMobileHooks {
 
 		if ( F::app()->checkSkin( 'wikiamobile', $skin ) ) {
 			//retrieve section index from mw:editsection tag
-			preg_match( '#section="(.*?)"#', $link, $matches );
+			$section = preg_match( '#section="(.*?)"#', $link, $matches ) ? $matches[1] : '';
 			if ( $wgArticleAsJson || F::app()->wg->User->isAnon() ) {
 				$link = '';
 			}
 			//remove bold, italics, underline and anchor tags from section headings (also optimizes output size)
 			$text = preg_replace( '/<\/?(b|u|i|a|em|strong){1}(\s+[^>]*)*>/im', '', $text );
-			$ret = "<h{$level} id='{$anchor}' section='{$matches[1]}' {$attribs}{$text}{$link}</h{$level}>";
+			$chevron = '';
+			// this is pseudo-versioning query param for collapsible sections (XW-4393)
+			// should be removed after all App caches are invalidated
+			if ( !empty( RequestContext::getMain()
+				->getRequest()
+				->getVal( 'collapsibleSections' ) )
+			) {
+				// if h2 and mobile-wiki
+				if ( $level == 2 && $wgArticleAsJson ) {
+					$text = '<div class="section-header-label">' . $text . '</div>';
+					$chevron =
+						'<svg class="wds-icon wds-icon-small chevron" viewBox="0 0 18 18" width="18" height="18"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#wds-icons-menu-control-small"></use></svg>';
+					$attribs = 'aria-controls="' . $anchor . '-collapsible-section"' . $attribs;
+				}
+			}
+			$ret = "<h{$level} id='{$anchor}' section='{$section}' {$attribs}{$text}{$link}{$chevron}</h{$level}>";
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -226,7 +241,7 @@ class WikiaMobileHooks {
 	 * @return bool
 	 */
 
-	static public function onCategoryPageView( CategoryPage &$categoryPage ) {
+	static public function onCategoryPageView( CategoryPage $categoryPage ): bool {
 		wfProfileIn( __METHOD__ );
 
 		$app = F::app();
@@ -269,7 +284,7 @@ class WikiaMobileHooks {
 	 * @param WikiPage $page
 	 * @return bool
 	 */
-	static public function onArticlePurge( WikiPage &$page ) {
+	static public function onArticlePurge( WikiPage $page ): bool {
 		wfProfileIn( __METHOD__ );
 
 		$title = $page->getTitle();
@@ -337,14 +352,14 @@ class WikiaMobileHooks {
 	 * @param $skin Skin
 	 * @return bool
 	 */
-	static public function onBeforePageDisplay( &$out, &$skin ){
+	static public function onBeforePageDisplay( OutputPage $out, Skin $skin ): bool {
 		wfProfileIn( __METHOD__ );
 		$app = F::app();
 
 		if( $app->checkSkin( 'wikiamobile', $skin ) && WikiaMobileErrorService::$displayErrorPage == true ) {
 			$out->clearHTML();
 
-			$out->addHTML( $app->renderView( 'WikiaMobileErrorService', 'pageNotFound', array( 'out' => &$out) ) );
+			$out->addHTML( $app->renderView( 'WikiaMobileErrorService', 'pageNotFound', [ 'out' => $out ] ) );
 
 			wfProfileOut( __METHOD__ );
 			return false;
@@ -387,29 +402,6 @@ class WikiaMobileHooks {
 		//remove inline styling to avoid weird results and optimize the output size
 		$attributesToStrip = [ 'style', 'color', 'bgcolor', 'border', 'align', 'cellspacing', 'cellpadding', 'hspace', 'vspace' ];
 		$text = HtmlHelper::stripAttributes( $text, $attributesToStrip );
-
-		//Remove "In other languages" section from starwars wikis that looks like this:
-		//
-		//<div id="p-lang" class="portlet">
-		//<div>In other languages</div>
-		//<div class="pBody">
-		//<ul>
-		//<li class="interwiki-bg plainlinks" title="bg:Чубака"><a class="text" href=" [...]</ul>
-		//</div>
-		//</div>
-		//
-		//There's code in Mercury to generate the section based on links from Lilly
-
-		if ( F::app()->wg->EnableLillyExt ) {
-			$regex = '<div id="p-lang" class="portlet">\s*' .
-				'<div>[^<>]*</div>\s*' .
-				'<div class="pBody">\s*' .
-				'<ul>\s*' .
-				'([^<>]+|<li\s[^<>]*>|</li>|<a\s[^<>]*>|</a>)*</ul>\s*' .
-				'</div>\s*' .
-				'</div>';
-			$text = preg_replace( ":$regex:im", '', $text );
-		}
 
 		//don't let the article content be an empty space
 		$text = trim( $text );

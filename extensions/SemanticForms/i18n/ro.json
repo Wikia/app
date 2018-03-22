@@ -91,5 +91,6 @@
 	"right-viewedittab": "Vizualizează fila „{{int:edit}}” pentru paginile ce pot fi modificate printr-un formular",
 	"right-editrestrictedfields": "Modifică câmpuri restricționate ale formularelor",
 	"action-editrestrictedfields": "modificați câmpuri restricționate ale formuarelor",
-	"action-viewedittab": "vizualizați fila „{{int:edit}}” pentru paginile ce pot fi modificate printr-un formular"
+	"action-viewedittab": "vizualizați fila „{{int:edit}}” pentru paginile ce pot fi modificate printr-un formular",
+	"sf-datepicker-today": "Astăzi"
 }

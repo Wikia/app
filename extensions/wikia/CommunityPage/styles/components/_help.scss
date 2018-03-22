@@ -1,0 +1,73 @@
+@import 'skins/shared/color';
+@import 'skins/shared/mixins/flexbox';
+@import 'variables';
+
+$small-icon-size: 18px;
+$big-icon-size: 30px;
+$help-module-title-padding: 4px;
+$help-module-title-text-width: 133px;
+$help-link-line-height: 14px;
+$policy-link-title-padding-top: 2px;
+
+.community-page-help-module {
+	&.community-page-module-box {
+		padding: $content-spacing-large $content-spacing-regular;
+	}
+
+	.community-page-module-section-title {
+		@include flexbox();
+
+		svg {
+			@include flex-shrink(0);
+
+			fill: $color-alternate-text;
+			height: $big-icon-size;
+			width: $big-icon-size;
+			margin: auto 0;
+		}
+	}
+
+	.community-page-policy-link {
+		@include align-items(flex-start);
+		@include flexbox();
+
+		border-top: 1px solid $color-page-border;
+		font-size: $wds-typescale-size-minus-1;
+		line-height: $help-link-line-height;
+		margin-top: $content-spacing-small-plus;
+		padding-top: $content-spacing-regular;
+
+		svg {
+			@include flex-shrink(0);
+
+			fill: $color-links;
+			height: auto;
+			width: $small-icon-size;
+		}
+
+		span {
+			padding-top: $policy-link-title-padding-top;
+		}
+	}
+
+	.community-page-help-module-policy-title {
+		margin-left: $content-spacing-small;
+	}
+
+	.community-page-help-module-title {
+		margin: auto 0 auto $content-spacing-small;
+		max-width: $help-module-title-text-width;
+	}
+
+	.community-page-help-module-links {
+		@include flexbox();
+		@include flex-direction(column);
+
+		font-size: $wds-typescale-size-minus-1;
+		line-height: $help-link-line-height;
+
+		a {
+			padding: $content-spacing-xsmall 0 $content-spacing-small 0;
+		}
+	}
+}

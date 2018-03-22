@@ -9,58 +9,83 @@ describe('Method ext.wikia.adEngine.lookup.services', function () {
 	}
 
 	mocks = {
-		amazon: {
+		adContext: {
+			getContext: function() {
+				return { targeting: { skin: 'oasis' } };
+			}
+		},
+		a9: {
 			trackState: noop,
 			wasCalled: noop,
-			getSlotParams: noop
+			getSlotParams: noop,
+			getName: function () { return 'a9'; },
+			hasResponse: function () { return true; }
 		},
 		log: noop,
-		oxBidder: {
+		prebid: {
 			trackState: noop,
 			wasCalled: noop,
-			getSlotParams: noop
+			getSlotParams: noop,
+			getBestSlotPrice: function() { return { aol: '0.00' }; },
+			getName: function () { return 'prebid'; },
+			hasResponse: function () { return true; }
 		},
 		window: {}
 	};
 
-	it('extends slot targeting for Amazon', function () {
+	it('extends slot targeting for A9', function () {
 		var lookup = modules['ext.wikia.adEngine.lookup.services'](
+				mocks.adContext,
 				mocks.log,
-				mocks.amazon
+				undefined,
+				mocks.a9
+			),
+			slotTargetingMock = {
+				a: 'b'
+			},
+			expectedSlotTargeting = {
+				a: 'b',
+				amznbid: 'bid',
+				amzniid: 'iid',
+				amznsz: 'sz',
+				amznp: 'p',
+				bid: 'xx9xx'
+			};
+
+		spyOn(mocks.a9, 'trackState');
+		spyOn(mocks.a9, 'wasCalled').and.returnValue(true);
+		spyOn(mocks.a9, 'getSlotParams').and.returnValue({
+			amznbid: 'bid',
+			amzniid: 'iid',
+			amznsz: 'sz',
+			amznp: 'p'
+		});
+
+		lookup.extendSlotTargeting('TOP_LEADERBOARD', slotTargetingMock, 'RemnantGpt');
+		expect(slotTargetingMock).toEqual(expectedSlotTargeting);
+		expect(mocks.a9.trackState).toHaveBeenCalled();
+	});
+
+	it('extends slot targeting for Prebid.js', function () {
+		var lookup = modules['ext.wikia.adEngine.lookup.services'](
+			mocks.adContext,
+			mocks.log,
+			mocks.prebid
 			),
 			slotTargetingMock = {a: 'b'},
 			expectedSlotTargeting = {
 				a: 'b',
-				amznslots: ['a1x6p5', 'a3x2p9', 'a7x9p5']
+				prebidslots: ['pa1s', 'pa2s', 'pa3s'],
+				bid: 'xxxxP'
 			};
 
-		spyOn(mocks.amazon, 'trackState');
-		spyOn(mocks.amazon, 'wasCalled').and.returnValue(true);
-		spyOn(mocks.amazon, 'getSlotParams').and.returnValue({amznslots: ['a1x6p5', 'a3x2p9', 'a7x9p5']});
-
-		lookup.extendSlotTargeting('TOP_LEADERBOARD', slotTargetingMock, 'RemnantGpt');
-		expect(slotTargetingMock).toEqual(expectedSlotTargeting);
-		expect(mocks.amazon.trackState).toHaveBeenCalled();
-	});
-
-	it('extends slot targeting for OpenX', function () {
-		var lookup = modules['ext.wikia.adEngine.lookup.services'](
-			mocks.log,
-			undefined,
-			mocks.oxBidder
-		),
-		slotTargetingMock = {a: 'b'},
-			expectedSlotTargeting = {
-				a: 'b',
-				oxslots: ['ox1x6p5', 'ox3x2p9', 'ox7x9p5']
-			};
-
-		spyOn(mocks.oxBidder, 'trackState');
-		spyOn(mocks.oxBidder, 'wasCalled').and.returnValue(true);
-		spyOn(mocks.oxBidder, 'getSlotParams').and.returnValue({oxslots: ['ox1x6p5', 'ox3x2p9', 'ox7x9p5']});
+		spyOn(mocks.prebid, 'trackState');
+		spyOn(mocks.prebid, 'wasCalled').and.returnValue(true);
+		spyOn(mocks.prebid, 'getSlotParams').and.returnValue({prebidslots: ['pa1s', 'pa2s', 'pa3s']});
 
 		lookup.extendSlotTargeting('TOP_LEADERBOARD', slotTargetingMock, 'DirectGpt');
 		expect(slotTargetingMock).toEqual(expectedSlotTargeting);
-		expect(mocks.oxBidder.trackState).toHaveBeenCalled();
+		expect(mocks.prebid.trackState).toHaveBeenCalled();
 	});
+
 });

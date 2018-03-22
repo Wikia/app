@@ -13,6 +13,11 @@ class PortableInfoboxBuilderServiceTest extends WikiaBaseTest {
 		$this->builderService = new PortableInfoboxBuilderService();
 	}
 
+	protected function tearDown() {
+		parent::tearDown();
+		libxml_clear_errors();
+	}
+
 	/**
 	 * @dataProvider dataTranslationsDataProvider
 	 */
@@ -47,7 +52,10 @@ class PortableInfoboxBuilderServiceTest extends WikiaBaseTest {
 		$builderServiceMock = $this->getMockBuilder( 'PortableInfoboxBuilderService' )
 			->setMethods( [ 'isSupportedMarkup' ] )
 			->getMock();
-		$builderServiceMock->method( 'isSupportedMarkup' )->willReturn( $isSupportedMarkupReturnValue );
+		$builderServiceMock
+			->expects( $this->any() )
+			->method( 'isSupportedMarkup' )
+			->willReturn( $isSupportedMarkupReturnValue );
 
 		$this->assertEquals( $expected, $builderServiceMock->isValidInfoboxArray( $array ), $message );
 	}
@@ -159,7 +167,7 @@ class PortableInfoboxBuilderServiceTest extends WikiaBaseTest {
 
 	public function markupSupportDataProvider() {
 		return [
-			[ "", false ],
+			[ "", false, "empty text should not be supported" ],
 			[ '<infobox/>', true, "empty infobox should be supported" ],
 			[ '<infobox></infobox>', true, "empty infobox should be supported" ],
 			[ 'Invalid text detected <^', false, "non-xml should not be supported" ],

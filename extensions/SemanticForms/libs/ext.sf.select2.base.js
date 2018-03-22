@@ -1,16 +1,16 @@
 /*
-* ext.sf.select2.base.js
-*
-* Base class to handle autocomplete
-* for various input types using Select2 JS library
-*
-* @file
-*
-*
-* @licence GNU GPL v2+
-* @author Jatin Mehta
-*
-*/
+ * ext.sf.select2.base.js
+ *
+ * Base class to handle autocomplete
+ * for various input types using Select2 JS library
+ *
+ * @file
+ *
+ *
+ * @licence GNU GPL v2+
+ * @author Jatin Mehta
+ *
+ */
 
 ( function ( $, mw, sf ) {
 	'use strict';
@@ -122,8 +122,8 @@
 			var sfgDependentFields = mw.config.get( 'sfgDependentFields' );
 			for ( var i = 0; i < sfgDependentFields.length; i++ ) {
 				var dependentFieldPair = sfgDependentFields[i];
-				if ( dependentFieldPair[1] == name ) {
-					 return dependentFieldPair[0];
+				if ( dependentFieldPair[1] === name ) {
+					return dependentFieldPair[0];
 				}
 			}
 			return null;
@@ -145,7 +145,7 @@
 			var sfgDependentFields = mw.config.get( 'sfgDependentFields' );
 			for ( var i = 0; i < sfgDependentFields.length; i++ ) {
 				var dependentFieldPair = sfgDependentFields[i];
-				if ( dependentFieldPair[0] == name ) {
+				if ( dependentFieldPair[0] === name ) {
 					dependent_on_me.push(dependentFieldPair[1]);
 				}
 			}
@@ -195,7 +195,8 @@
 				base_element = $('[name ="' + dep_on + '" ]');
 			}
 			dep_field_opts.base_value = base_element.val();
-			dep_field_opts.base_prop = base_element.attr( "autocompletesettings" );
+			dep_field_opts.base_prop = mw.config.get( 'sfgFieldProperties' )[dep_on] ||
+				base_element.attr( "autocompletesettings" );
 			dep_field_opts.prop = $(input_id).attr( "autocompletesettings" ).split( "," )[0];
 
 			return dep_field_opts;
@@ -251,11 +252,11 @@
 			var start = no_diac_text.toUpperCase().indexOf(term.toUpperCase());
 			if (start !== 0 && !mw.config.get( 'sfgAutocompleteOnAllChars' )) {
 				start = no_diac_text.toUpperCase().indexOf(" " + term.toUpperCase());
-				if ( start != -1 ) {
+				if ( start !== -1 ) {
 					start = start + 1;
 				}
 			}
-			if ( start != -1 ) {
+			if ( start !== -1 ) {
 				markup += text.substr(0, start) +
 				'<span class="select2-match">' +
 				text.substr(start,term.length) +
@@ -268,4 +269,4 @@
 			return markup;
 		},
 	};
-} )( jQuery, mediaWiki, semanticforms );
+}( jQuery, mediaWiki, semanticforms ) );

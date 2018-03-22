@@ -89,32 +89,9 @@ $config['MiniEditor'] = array(
 	'scss'   => "$IP/extensions/wikia/MiniEditor/css/mixins/_sprite-MiniEditor.scss"
 );
 
-$config['Chat2'] = array(
-	'name'   => 'Chat',
-	'source' => "$IP/extensions/wikia/Chat2/images/sprite-Chat/",
-	'sprite' => "$IP/extensions/wikia/Chat2/images/sprite-Chat.png",
-	'scss'   => "$IP/extensions/wikia/Chat2/css/mixins/_sprite-Chat.scss"
-);
-
 $config['Lightbox'] = array(
 	'name'   => 'Lightbox',
 	'source' => "$IP/extensions/wikia/Lightbox/images/sprite-Lightbox/",
 	'sprite' => "$IP/extensions/wikia/Lightbox/images/sprite-Lightbox.png",
 	'scss'   => "$IP/extensions/wikia/Lightbox/styles/mixins/_sprite-Lightbox.scss"
-);
-
-$config['VideoPageTool'] = array(
-	'name'   => 'VideoPageTool',
-	'source' => "$IP/extensions/wikia/VideoPageTool/images/sprite-VideoPageTool/",
-	'sprite' => "$IP/extensions/wikia/VideoPageTool/images/sprite-VideoPageTool.png",
-	'scss'   => "$IP/extensions/wikia/VideoPageTool/css/mixins/_sprite-VideoPageTool.scss"
-
-);
-
-$config['MonetizationModule'] = array(
-	'name'   => 'monetization-module',
-	'source' => "$IP/extensions/wikia/MonetizationModule/images/sprite-monetization-module/",
-	'sprite' => "$IP/extensions/wikia/MonetizationModule/images/sprite-monetization-module.png",
-	'scss'   => "$IP/extensions/wikia/MonetizationModule/styles/mixins/_sprite-monetization-module.scss"
-
 );

@@ -286,11 +286,6 @@ class ThumbnailHelper extends WikiaModel {
 			$linkClasses[] = 'lightbox';
 		}
 
-		// Hide the play button
-		if ( !empty( $options['hidePlayButton'] ) ) {
-			$linkClasses[] = 'hide-play';
-		}
-
 		// Check for fluid
 		if ( ! empty( $options[ 'fluid' ] ) ) {
 			$linkClasses[] = 'fluid';
@@ -412,8 +407,8 @@ class ThumbnailHelper extends WikiaModel {
 	}
 
 	/**
-	 * Set urls to be used for <picture> tags. Sets both thumbnails in the original format (jpeg, png, etc),
-	 * and WebP to be used if the browser supports it.
+	 * Set urls to be used for <picture> tags.
+	 *
 	 * @param WikiaController $controller
 	 * @param MediaTransformOutput $thumb
 	 */
@@ -421,17 +416,12 @@ class ThumbnailHelper extends WikiaModel {
 		$file = $thumb->file;
 		$fullSizeDimension = max( $thumb->getWidth(), $thumb->getHeight() );
 		$smallSizeDimension = $fullSizeDimension * self::SMALL_THUMB_SIZE;
-		$useWebP = true;
 
-		// get small images (original and WebP)
+		// get small image
 		$controller->smallUrl = WikiaFileHelper::getSquaredThumbnailUrl( $file, $smallSizeDimension );
-		$controller->smallUrlWebP = WikiaFileHelper::getSquaredThumbnailUrl( $file, $smallSizeDimension, $useWebP );
 
 		// Set the breakpoint used by the <picture> tag to determine which image to load
 		$controller->breakPoint = self::MEDIUM_BREAKPOINT;
-
-		// get full size WebP image
-		$controller->imgSrcWebP = WikiaFileHelper::getSquaredThumbnailUrl( $file, $fullSizeDimension, $useWebP );
 
 		// Let image template know to use <picture> tag instead of <img> tag
 		$controller->usePictureTag = true;

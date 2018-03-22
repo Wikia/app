@@ -85,6 +85,13 @@ class SFPageSchemas extends PSExtensionHandler {
 	public static function createSchemaXMLFromForm() {
 		global $wgRequest;
 
+		// Quick check: if the "form name" field hasn't been sent,
+		// it means the main "Form" checkbox wasn't selected; don't
+		// create any XML if so.
+		if ( !$wgRequest->getCheck( 'sf_form_name') ) {
+			return '';
+		}
+
 		$formName = null;
 		$xml = '';
 		$isStandardInputsOpen = false;
@@ -366,28 +373,10 @@ class SFPageSchemas extends PSExtensionHandler {
 		$text .= "</p>";
 		$text .= "</div>\n";
 
+		global $wgOut;
 		// Separately, add Javascript for getting the checkbox to
 		// hide certain fields.
-		$jsText = <<<END
-<script type="text/javascript">
-jQuery.fn.toggleFormDataDisplay = function() {
-	if (jQuery(this).is(":checked")) {
-		jQuery('#sf-page-name-formula').css('display', 'none');
-		jQuery('#sf-edit-title').css('display', 'block');
-	} else {
-		jQuery('#sf-page-name-formula').css('display', 'block');
-		jQuery('#sf-edit-title').css('display', 'none');
-	}
-}
-jQuery('#sf-two-step-process').toggleFormDataDisplay();
-jQuery('#sf-two-step-process').click( function() {
-	jQuery(this).toggleFormDataDisplay();
-} );
-</script>
-
-END;
-		global $wgOut;
-		$wgOut->addScript( $jsText );
+		$wgOut->addModules( array( 'ext.semanticforms.SF_PageSchemas' ) );
 
 		return array( $text, $hasExistingValues );
 	}
@@ -556,7 +545,7 @@ END;
 		foreach ( $fieldsInfo as $i => $psField ) {
 			$fieldFormArray = $psField->getObject( 'semanticforms_FormInput' );
 			if ( !is_null( $fieldFormArray ) ) {
-				$formField = SFFormField::create( $i, $template_fields[$i] );
+				$formField = SFFormField::create( $template_fields[$i] );
 				foreach ( $fieldFormArray as $var => $val ) {
 					if ( $var == 'InputType' ) {
 						$formField->setInputType( $val );

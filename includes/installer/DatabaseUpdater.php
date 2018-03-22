@@ -66,7 +66,7 @@ abstract class DatabaseUpdater {
 		$this->maintenance->setDB( $db );
 		$this->initOldGlobals();
 		$this->loadExtensions();
-		wfRunHooks( 'LoadExtensionSchemaUpdates', array( $this ) );
+		Hooks::run( 'LoadExtensionSchemaUpdates', array( $this ) );
 	}
 
 	/**
@@ -255,8 +255,6 @@ abstract class DatabaseUpdater {
 		}
 
 		if ( isset( $what['purge'] ) ) {
-			$this->purgeCache();
-
 			if ( $wgLocalisationCacheConf['manualRecache'] ) {
 				$this->rebuildLocalisationCache();
 			}
@@ -500,7 +498,11 @@ abstract class DatabaseUpdater {
 	 * @param $fullpath Boolean: Whether to treat $patch path as a relative or not
 	 */
 	protected function dropIndex( $table, $index, $patch, $fullpath = false ) {
-		if ( $this->db->indexExists( $table, $index, __METHOD__ ) ) {
+		# Wikia - prevent "SHOW INDEX FROM" from reporting DB error when a table does not exist
+		if ( !$this->db->tableExists( $table, __METHOD__ ) ) {
+			$this->output( "...$table table doesn't exist.\n" );
+		}
+		elseif ( $this->db->indexExists( $table, $index, __METHOD__ ) ) {
 			$this->output( "Dropping $index index from table $table... " );
 			$this->applyPatch( $patch, $fullpath );
 			$this->output( "done.\n" );
@@ -510,14 +512,26 @@ abstract class DatabaseUpdater {
 	}
 
 	/**
+	 * If the specified table exists, drop it, or execute the
+	 * patch if one is provided.
+	 *
+	 * Public @since 1.20
+	 *
 	 * @param $table string
-	 * @param $patch string
+	 * @param $patch string|bool
 	 * @param $fullpath bool
 	 */
-	protected function dropTable( $table, $patch, $fullpath = false ) {
+	public function dropTable( $table, $patch = false, $fullpath = false ) {
 		if ( $this->db->tableExists( $table, __METHOD__ ) ) {
-			$this->output( "Dropping table $table... " );
-			$this->applyPatch( $patch, $fullpath );
+			$this->output( "Dropping table $table ..." );
+
+			if ( $patch === false ) {
+				$this->db->dropTable( $table, __METHOD__ );
+			}
+			else {
+				$this->applyPatch( $patch, $fullpath );
+			}
+
 			$this->output( "done.\n" );
 		} else {
 			$this->output( "...$table doesn't exist.\n" );
@@ -549,17 +563,6 @@ abstract class DatabaseUpdater {
 	}
 
 	/**
-	 * Purge the objectcache table
-	 */
-	protected function purgeCache() {
-		# We can't guarantee that the user will be able to use TRUNCATE,
-		# but we know that DELETE is available to us
-		$this->output( "Purging caches..." );
-		$this->db->delete( 'objectcache', '*', __METHOD__ );
-		$this->output( "done.\n" );
-	}
-
-	/**
 	 * Check the site_stats table is not properly populated.
 	 */
 	protected function checkStats() {
@@ -585,7 +588,7 @@ abstract class DatabaseUpdater {
 		$activeUsers = $this->db->selectField( 'site_stats', 'ss_active_users', false, __METHOD__ );
 		if ( $activeUsers == -1 ) {
 			$activeUsers = $this->db->selectField( 'recentchanges',
-				'COUNT( DISTINCT rc_user_text )',
+				'COUNT( DISTINCT rc_user )',
 				array( 'rc_user != 0', 'rc_bot' => 0, "rc_log_type != 'newusers'" ), __METHOD__
 			);
 			$this->db->update( 'site_stats',
@@ -594,22 +597,6 @@ abstract class DatabaseUpdater {
 			);
 		}
 		$this->output( "...ss_active_users user count set...\n" );
-	}
-
-	/**
-	 * Populates the log_user_text field in the logging table
-	 */
-	protected function doLogUsertextPopulation() {
-		if ( !$this->updateRowExists( 'populate log_usertext' ) ) {
-			$this->output(
-			"Populating log_user_text field, printing progress markers. For large\n" .
-			"databases, you may want to hit Ctrl-C and do this manually with\n" .
-			"maintenance/populateLogUsertext.php.\n" );
-
-			$task = $this->maintenance->runChild( 'PopulateLogUsertext' );
-			$task->execute();
-			$this->output( "done.\n" );
-		}
 	}
 
 	/**
@@ -626,20 +613,6 @@ abstract class DatabaseUpdater {
 			$task->execute();
 			$this->output( "done.\n" );
 		}
-	}
-
-	/**
-	 * Updates the timestamps in the transcache table
-	 */
-	protected function doUpdateTranscacheField() {
-		if ( $this->updateRowExists( 'convert transcache field' ) ) {
-			$this->output( "...transcache tc_time already converted.\n" );
-			return;
-		}
-
-		$this->output( "Converting tc_time from UNIX epoch to MediaWiki timestamp... " );
-		$this->applyPatch( 'patch-tc-timestamp.sql' );
-		$this->output( "done.\n" );
 	}
 
 	/**

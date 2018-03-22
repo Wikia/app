@@ -8,7 +8,7 @@ These buttons are used everywhere on our wikis.
 a.wikia-button,
 .wikia-single-button a,
 .wikia-menu-button,
-input[type="submit"],
+input[type="submit"]:not(.wds-button),
 input[type="reset"],
 input[type="button"],
 .button,

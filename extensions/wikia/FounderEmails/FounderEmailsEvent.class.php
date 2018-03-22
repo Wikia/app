@@ -109,16 +109,17 @@ abstract class FounderEmailsEvent {
 		return true;
 	}
 
-	public function create() {
+	public function create( $wikiId = null ) {
 		global $wgWikicitiesReadOnly, $wgExternalSharedDB, $wgCityId;
 
 		wfProfileIn( __METHOD__ );
 		if ( !$wgWikicitiesReadOnly ) {
+			$wikiId = empty( $wikiId ) ? $wgCityId : $wikiId;
 			$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
 			$dbw->insert(
 				"founder_emails_event",
 				array(
-					"feev_wiki_id" => $wgCityId,
+					"feev_wiki_id" => $wikiId,
 					"feev_timestamp" => wfTimestampNow(),
 					"feev_type" => $this->getType(),
 					"feev_data" => serialize( $this->getData() )

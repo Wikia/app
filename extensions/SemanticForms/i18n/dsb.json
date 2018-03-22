@@ -173,5 +173,10 @@
 	"right-viewedittab": "Rejtark \"{{int:edit}}\" za boki, kótarež su wobźěłujobne pśez formular, se woglědaś",
 	"right-editrestrictedfields": "Wobgranicowane formularne póla wobźěłaś",
 	"right-createclass": "Nowe semantiske klase napóraś",
-	"action-createclass": "nowe semantiske klase napóraś"
+	"action-createclass": "nowe semantiske klase napóraś",
+	"sf-datepicker-close": "Zacyniś",
+	"sf-datepicker-prev": "Pjerwjejšny",
+	"sf-datepicker-next": "Pśiducy",
+	"sf-datepicker-today": "Źinsa",
+	"sf-regexp-wrongformat": "Wopacny format"
 }

@@ -13,65 +13,6 @@ class VideoEmbedToolController extends WikiaController {
 	}
 
 	/**
-	 * Looks for videos related to the current article
-	 *
-	 * Example of use:
-	 *
-	 *   http://harrypotter.jacek.wikia-dev.com/wikia.php?controller=VideoEmbedTool&method=getSuggestedVideos&svStart=0&svSize=5&articleId=15&format=json
-	 *
-	 * @requestParam svStart - offset
-	 * @requestParam svSize - limit
-	 * @requestParam trimTitle - Whether to trim the video title returned (boolean 1 or 0)
-	 * @requestParam articleId - the suggestions should be related to this article
-	 *
-	 * @responseParam searchQuery
-	 * @responseParam caption - Video caption
-	 * @responseParam totalItemCount - Number of items available
-	 * @responseParam nextStartFrom - The index for the next page of videos
-	 * @responseParam currentSetItemCount - Number of items returned in the current page
-	 * @responseParam items - Array of video suggestions
-	 * @responseParam addMessage - A translated 'Add Video' message
-	 */
-	public function getSuggestedVideos() {
-		if ( $this->wg->VETEnableSuggestions != true ) {
-			// Return empty set if wgVETEnableSuggestions is not enabled
-			$result = [
-				'caption' => wfMessage( 'vet-suggestions' )->plain(),
-				'totalItemCount' => 0,
-				'currentSetItemCount' => 0,
-				'items' => []
-			];
-			$this->response->setData( $result );
-		} else {
-			$request = $this->getRequest();
-			$service = new VideoEmbedToolSearchService();
-			$service->setStart( $request->getInt( 'svStart', 0 ) )
-			        ->setLimit( $request->getInt( 'svSize', 20 ) )
-			        ->setTrimTitle( $this->request->getInt( 'trimTitle', 0 ) );
-
-			// Only get suggestions if we have an article
-			$articleId = $this->request->getInt('articleId', 0 );
-			if ( $articleId > 0 ) {
-				$response = $service->getSuggestionsForArticleId( $articleId );
-
-				$result = [
-						'searchQuery' => $service->getSuggestionQuery(),
-						'caption' => wfMessage( 'vet-suggestions' )->plain(),
-						'totalItemCount' => $response['totalItemCount'],
-						'nextStartFrom' => $response['nextStartFrom'],
-						'currentSetItemCount' => count($response['items']),
-						'items' => $response['items'],
-						'addMessage' => wfMessage('vet-add-from-preview')->plain()
-				];
-			} else {
-				$result = [ 'items' => [] ];
-			}
-
-			$this->response->setData( $result );
-		}
-	}
-
-	/**
 	 * Looks for videos related to a search phrase
 	 *
 	 * Example of use:
@@ -154,6 +95,15 @@ class VideoEmbedToolController extends WikiaController {
 	 * @responseParam string errMsg
 	*/
 	public function editDescription() {
+		$this->response->setFormat( 'json' );
+
+		try {
+			$this->checkWriteRequest();
+		} catch ( BadRequestException $e ) {
+			$this->setTokenMismatchError();
+			return;
+		}
+
 		$title = urldecode( $this->request->getVal('title') );
 		$title = Title::newFromText($title, NS_FILE);
 

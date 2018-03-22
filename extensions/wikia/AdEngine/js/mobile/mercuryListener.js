@@ -7,7 +7,10 @@ define('ext.wikia.adEngine.mobile.mercuryListener', [
 
 	var logGroup = 'ext.wikia.adEngine.mobile.mercuryListener',
 		onLoadQueue = [],
-		onPageChangeCallbacks = [];
+		onPageChangeCallbacks = [],
+		onEveryPageChangeCallbacks = [],
+		afterPageWithAdsRenderCallbacks = [],
+		onMenuOpenCallbacks = [];
 
 	function onLoad(callback) {
 		onLoadQueue.push(callback);
@@ -17,18 +20,57 @@ define('ext.wikia.adEngine.mobile.mercuryListener', [
 		onPageChangeCallbacks.push(callback);
 	}
 
+	function onEveryPageChange(callback) {
+		onEveryPageChangeCallbacks.push(callback);
+	}
+
+	function onMenuOpen(callback) {
+		onMenuOpenCallbacks.push(callback);
+	}
+
+	function afterPageWithAdsRender(callback) {
+		afterPageWithAdsRenderCallbacks.push(callback);
+	}
+
 	function startOnLoadQueue() {
 		log('startOnLoadQueue', 'info', logGroup);
 		onLoadQueue.start();
 	}
 
 	function runOnPageChangeCallbacks() {
+		clearOnMenuOpenCallbacks();
+
 		var callback;
 		log(['runOnPageChangeCallbacks', onPageChangeCallbacks.length], 'info', logGroup);
+
 		while (onPageChangeCallbacks.length) {
 			callback = onPageChangeCallbacks.shift();
 			callback();
 		}
+
+		log(['runOnEveryPageChangeCallbacks', onEveryPageChangeCallbacks.length], 'info', logGroup);
+		onEveryPageChangeCallbacks.forEach(function(callback) {
+			callback();
+		});
+	}
+
+	function runAfterPageWithAdsRenderCallbacks() {
+		log(['runAfterPageWithAdsRenderCallbacks', afterPageWithAdsRenderCallbacks.length], 'info', logGroup);
+		afterPageWithAdsRenderCallbacks.forEach(function(callback) {
+			callback();
+		});
+	}
+
+	function runOnMenuOpenCallbacks() {
+		log(['runOnMenuOpenCallbacks', onMenuOpenCallbacks.length], 'info', logGroup);
+		onMenuOpenCallbacks.forEach(function(callback) {
+			callback();
+		});
+	}
+
+	function clearOnMenuOpenCallbacks() {
+		log('clearOnMenuOpenCallbacks', 'info', logGroup);
+		onMenuOpenCallbacks = [];
 	}
 
 	lazyQueue.makeQueue(onLoadQueue, function (callback) {
@@ -36,9 +78,14 @@ define('ext.wikia.adEngine.mobile.mercuryListener', [
 	});
 
 	return {
+		afterPageWithAdsRender: afterPageWithAdsRender,
+		onEveryPageChange: onEveryPageChange,
 		onLoad: onLoad,
 		onPageChange: onPageChange,
-		startOnLoadQueue: startOnLoadQueue,
-		runOnPageChangeCallbacks: runOnPageChangeCallbacks
+		onMenuOpen: onMenuOpen,
+		runOnMenuOpenCallbacks: runOnMenuOpenCallbacks,
+		runAfterPageWithAdsRenderCallbacks: runAfterPageWithAdsRenderCallbacks,
+		runOnPageChangeCallbacks: runOnPageChangeCallbacks,
+		startOnLoadQueue: startOnLoadQueue
 	};
 });

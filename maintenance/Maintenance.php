@@ -589,8 +589,8 @@ abstract class Maintenance {
 	 * $mArgs becomes a zero-based array containing the non-option arguments
 	 *
 	 * @param $self String The name of the script, if any
-	 * @param $opts Array An array of options, in form of key=>value
-	 * @param $args Array An array of command line arguments
+	 * @param $opts array An array of options, in form of key=>value
+	 * @param $args array An array of command line arguments
 	 */
 	public function loadParamsAndArgs( $self = null, $opts = null, $args = null ) {
 		# If we were given opts or args, set those and return early
@@ -1098,12 +1098,8 @@ abstract class Maintenance {
 	 *
 	 * @return DatabaseBase
 	 */
-	protected function &getDB( $db, $groups = array(), $wiki = false ) {
-		if ( is_null( $this->mDb ) ) {
-			return wfGetDB( $db, $groups, $wiki );
-		} else {
-			return $this->mDb;
-		}
+	protected function getDB( $db, $groups = array(), $wiki = false ) {
+		return $this->mDb ?? wfGetDB( $db, $groups, $wiki );
 	}
 
 	/**
@@ -1117,17 +1113,17 @@ abstract class Maintenance {
 
 	/**
 	 * Lock the search index
-	 * @param &$db Database object
+	 * @param &$db DatabaseBase object
 	 */
 	private function lockSearchindex( &$db ) {
-		$write = array( 'searchindex' );
-		$read = array( 'page', 'revision', 'text', 'interwiki', 'l10n_cache' );
+		$write = []; # array( 'searchindex' ); - Wikia change, there's no searchindex per-wiki table anymore
+		$read = array( 'page', 'revision', 'text', 'interwiki' );
 		$db->lockTables( $read, $write, __CLASS__ . '::' . __METHOD__ );
 	}
 
 	/**
 	 * Unlock the tables
-	 * @param &$db Database object
+	 * @param &$db DatabaseBase object
 	 */
 	private function unlockSearchindex( &$db ) {
 		$db->unlockTables(  __CLASS__ . '::' . __METHOD__ );
@@ -1136,7 +1132,7 @@ abstract class Maintenance {
 	/**
 	 * Unlock and lock again
 	 * Since the lock is low-priority, queued reads will be able to complete
-	 * @param &$db Database object
+	 * @param &$db DatabaseBase object
 	 */
 	private function relockSearchindex( &$db ) {
 		$this->unlockSearchindex( $db );
@@ -1184,7 +1180,7 @@ abstract class Maintenance {
 
 	/**
 	 * Update the searchindex table for a given pageid
-	 * @param $dbw Database: a database write handle
+	 * @param $dbw DatabaseBase: a database write handle
 	 * @param $pageId Integer: the page ID to update.
 	 * @return null|string
 	 */

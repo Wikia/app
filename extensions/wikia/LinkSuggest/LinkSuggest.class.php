@@ -1,6 +1,6 @@
 <?php
 
-use \Wikia\Measurements\Time as T;
+use Wikia\Measurements\Time as T;
 
 /**
  * LinkSuggest main class
@@ -66,7 +66,8 @@ class LinkSuggest {
 			$key = wfMemcKey( __METHOD__, md5( $query.'_'.$request->getText('format').$request->getText('nospecial', '') ) );
 		}
 
-		if (strlen($query) < 3) {
+		// use mb_strlen to test string length accurately
+		if ( mb_strlen( $query ) < 3 ) {
 			// enforce minimum character limit on server side
 			$out = self::getEmptyResponse($request->getText('format'));
 		} else if ($cached = $wgMemc->get($key)) {
@@ -152,7 +153,7 @@ class LinkSuggest {
 				'qc_namespace = page_namespace',
 				'page_is_redirect = 0',
 				'qc_type' => 'Mostlinked',
-				"(qc_title LIKE '{$query}%' or LOWER(qc_title) LIKE '{$queryLower}%')",
+				"(convert(binary convert(qc_title using latin1) using utf8) LIKE convert(binary convert('{$query}%' using latin1) using utf8))",
 				'qc_namespace' => $namespaces
 			),
 			__METHOD__,
@@ -172,19 +173,42 @@ class LinkSuggest {
 			 * It uses fact that page titles can't start with lowercase letter.
 			 */
 			$pageTitlePrefilter = "";
-			if( strlen($queryLower) >= 2 ) {
-				$pageTitlePrefilter = "(
-							( page_title " . $db->buildLike(strtoupper($queryLower[0]) . strtolower($queryLower[1]) , $db->anyString() ) . " ) OR
-							( page_title " . $db->buildLike(strtoupper($queryLower[0]) . strtoupper($queryLower[1]) , $db->anyString() ) . " ) ) AND ";
-			} else if( strlen($queryLower) >= 1 ) {
-				$pageTitlePrefilter = "( page_title " . $db->buildLike(strtoupper($queryLower[0]) , $db->anyString() ) . " ) AND ";
+
+			// use mb_substring to get the first & second chars
+			// in case of multi-byte
+			$firstChar = mb_substr($queryLower, 0, 1);
+			$secondChar = mb_substr($queryLower, 1, 1);
+
+			if( mb_strlen( $queryLower ) >= 2 ) {
+				if ( LinkSuggest::containsMultibyteCharacters( $firstChar . $secondChar ) ) {
+					$pageTitlePrefilter = "(
+						( convert(binary convert(page_title using latin1) using utf8) LIKE convert(binary '" . strtoupper( $firstChar ) . strtolower( $secondChar ) . "%' using utf8)) ) OR
+						( convert(binary convert(page_title using latin1) using utf8) LIKE convert(binary '" . strtoupper( $firstChar ) . strtoupper( $secondChar )  . "%' using utf8) ) AND ";
+				} else {
+					$pageTitlePrefilter = "(
+						( convert(binary convert(page_title using latin1) using utf8) " . $db->buildLike( strtoupper( $firstChar ) . strtolower( $secondChar ) , $db->anyString() ) . " ) OR
+						( convert(binary convert(page_title using latin1) using utf8) " . $db->buildLike( strtoupper( $firstChar ) . strtoupper( $secondChar ) , $db->anyString() ) . " ) ) AND ";
+				}
+			} else if( mb_strlen($queryLower) >= 1 ) {
+				if ( LinkSuggest::containsMultibyteCharacters( $firstChar ) ) {
+					$pageTitlePrefilter = "( convert(binary convert(page_title using latin1) using utf8) LIKE convert(binary '" . $firstChar . "%' using utf8) ) AND ";
+				} else {
+					$pageTitlePrefilter = "( convert(binary convert(page_title using latin1) using utf8) " . $db->buildLike(strtoupper( $firstChar ) , $db->anyString() ) . " ) AND ";
+				}
 			}
+
+			if ( LinkSuggest::containsMultibyteCharacters( $queryLower ) ) {
+				$pageTitleLikeClause = "convert(binary '{$queryLower}%' using utf8)";
+			} else {
+				$pageTitleLikeClause = "'{$queryLower}%'";
+			}
+
 			// TODO: use $db->select helper method
 			$sql = "SELECT page_len, page_id, page_title, rd_title, page_namespace, rd_namespace, page_is_redirect
 						FROM page
 						LEFT JOIN redirect ON page_is_redirect = 1 AND page_id = rd_from
 						LEFT JOIN querycache ON qc_title = page_title AND qc_type = 'BrokenRedirects'
-						WHERE  {$pageTitlePrefilter} {$pageNamespaceClause} (LOWER(page_title) LIKE '{$queryLower}%')
+						WHERE  {$pageTitlePrefilter} {$pageNamespaceClause} (convert(binary convert(page_title using latin1) using utf8) LIKE {$pageTitleLikeClause} )
 							AND qc_type IS NULL
 						LIMIT ".($wgLinkSuggestLimit * 3); // we fetch 3 times more results to leave out redirects to the same page
 
@@ -278,6 +302,17 @@ class LinkSuggest {
 	}
 
 	/**
+	 * helper function to determine if given string contains multibyte characters
+	 *
+	 * @param String $string
+	 *
+	 * @return bool
+	 */
+	static function containsMultibyteCharacters( $string ) {
+		return mb_strlen ( $string ) != strlen( $string );
+	}
+
+	/**
 	 *
 	 * helper function for return empty response
 	 *
@@ -329,7 +364,8 @@ class LinkSuggest {
 		global $wgLinkSuggestLimit;
 		while(($row = $db->fetchObject($res)) && count($results) < $wgLinkSuggestLimit ) {
 
-			if (strtolower($row->page_title) == $query) {
+			// SUS-846: Ensure we only have one exact match, to prevent overwriting it and losing the suggestion
+			if ( is_null( $exactMatchRow ) && strtolower( $row->page_title ) == $query ) {
 				$exactMatchRow = $row;
 				continue;
 			}

@@ -321,9 +321,9 @@ function axWFactorySubmitChangeVariable() {
 
 function axWFactoryDomainCRUD($type="add") {
     global $wgRequest, $wgUser, $wgExternalSharedDB, $wgOut;
-    $sDomain = $wgRequest->getVal("domain");
+    $sDomain = htmlspecialchars( $wgRequest->getVal("domain") );
     $city_id = $wgRequest->getVal("cityid");
-    $reason  = $wgRequest->getVal("reason");
+    $reason  = htmlspecialchars( $wgRequest->getVal("reason") );
 
 	// this request needs to be a POST and has a valid token passed (PLATFORM-1476)
 	axWFactoryValidateRequest( $wgRequest, $wgUser, __METHOD__ );
@@ -360,7 +360,7 @@ function axWFactoryDomainCRUD($type="add") {
 			}
 			break;
         case "change":
-            $sNewDomain = $wgRequest->getVal("newdomain");
+            $sNewDomain = htmlspecialchars( $wgRequest->getVal("newdomain") );
             #--- first, check if domain is not used
             $oRes = $dbw->select(
                 "city_domains",
@@ -506,153 +506,6 @@ function axWFactoryClearCache()
 }
 
 /**
- * axWFactorySaveVariable
- *
- * ajax method, save variable from form
- *
- * @author Krzysztof Krzyżaniak (eloy) <eloy@wikia-inc.com>
- * @access public
- *
- * @return string encoded in JSON format
- */
-function axWFactorySaveVariable() {
-	global $wgUser, $wgRequest;
-
-	$error     = 0;
-	$return    = "";
-
-	// this request needs to be a POST and has a valid token passed (PLATFORM-1476)
-	axWFactoryValidateRequest( $wgRequest, $wgUser, __METHOD__ );
-
-	if ( ! $wgUser->isAllowed('wikifactory') ) {
-		$error++;
-		$return = Wikia::errormsg( "You are not allowed to change variable value" );
-	}
-	else {
-		$cv_id				= $wgRequest->getVal( 'varId' );
-		$city_id			= $wgRequest->getVal( 'cityid' );
-		$cv_name			= $wgRequest->getVal( 'varName' );
-		$cv_value			= $wgRequest->getVal( 'varValue' );
-		$cv_variable_type	= $wgRequest->getVal( 'varType' );
-		$reason				= $wgRequest->getVal( 'reason', null );
-		$tag_name = $wgRequest->getVal( 'tagName' );
-		$tag_wiki_count = 0;
-		$form_id = $wgRequest->getVal("formId", null);
-
-		#--- check if variable is valid
-		switch ( $cv_variable_type ) {
-			case "boolean":
-				if ((bool)$cv_value != $cv_value) {
-					$error++;
-					$return = Wikia::errormsg("Syntax error: value is not boolean. Variable not saved.");
-				}
-				else {
-					$return = Wikia::successmsg( "Parse OK, variable saved" );
-					$cv_value = (bool)$cv_value;
-				}
-			break;
-			case "integer":
-				if ((int)$cv_value != $cv_value) {
-					$error++;
-					$return = Wikia::errormsg( "Syntax error: value is not integer. Variable not saved." );
-				}
-				else {
-					$return = Wikia::successmsg( "Parse OK, variable saved." );
-					$cv_value = (int)$cv_value;
-				}
-			break;
-			case "string":
-				$return = Wikia::successmsg( "Parse OK, variable saved." );
-			break;
-			default:
-				$tEval = "\$__var_value = $cv_value;";
-				/**
-				 * catch parse errors
-				 */
-				ob_start();
-				if( eval( $tEval ) === FALSE ) {
-					$error++;
-					$return = Wikia::errormsg( "Syntax error, value is not valid PHP structure. Variable not saved." );
-				}
-				else {
-					$cv_value = $__var_value;
-					/**
-					 * now check if it's actually array when we want array)
-					 */
-					if( in_array( $cv_variable_type, array( "array", "struct", "hash" ) ) ) {
-						if( is_array( $cv_value ) ) {
-							$return = Wikia::successmsg( "Syntax OK (array), variable saved." );
-						}
-						else {
-							$error++;
-							$return = Wikia::errormsg( "Syntax error: value is not array. Variable not saved." );
-						}
-					}
-					else {
-						$return = Wikia::successmsg( "Parse OK, variable saved." );
-					}
-				}
-				ob_end_clean(); #--- puts parse error to /dev/null
-		}
-
-                if( empty( $error ) ) {
-                    $varInfo = WikiFactory::getVarById($cv_id, $city_id);
-                    if($varInfo->cv_is_unique) {
-                        $wikis = WikiFactory::getCityIDsFromVarValue( $cv_id, $cv_value, '=');
-                        $count = count($wikis);
-                        if( (($count == 1) && ($wikis[0] != $city_id)) || ($count > 1) ) {
-                            $return = Wikia::errormsg( "Value of this variable need to be unique." );
-                            $error++;
-                        }
-                    }
-                }
-
-		wfRunHooks('WikiFactoryVarSave::AfterErrorDetection',array($cv_id,$city_id,$cv_name,$cv_value,&$return,&$error));
-
-
-		# Save to DB, but only if no errors occurred
-		if ( empty( $error ) ) {
-			if( ! WikiFactory::setVarByID( $cv_id, $city_id, $cv_value, $reason ) ) {
-				$error++;
-				$return = Wikia::errormsg( "Variable not saved because of problems with database. Try again." );
-			} else {
-				/* the one "set" that used this is now disabled, so disabling the call until needed again
-				$tied = WikiFactory::getTiedVariables( $cv_name );
-				if( $tied ) {
-					$return .= Wikia::successmsg(
-						" This variable is tied with others. Check: ". implode(", ", $tied )
-					);
-				}
-				*/
-				if ( !empty( $tag_name ) ) {
-					// apply changes to all wikis with given tag
-					$tagsQuery = new WikiFactoryTagsQuery( $tag_name );
-					foreach ( $tagsQuery->doQuery() as $tagged_wiki_id ) {
-						if ( WikiFactory::setVarByID( $cv_id, $tagged_wiki_id, $cv_value, $reason ) ) {
-							$tag_wiki_count++;
-						}
-					}
-					$return .= Wikia::successmsg(" ({$tag_wiki_count} wikis affected)");
-				}
-			}
-		}
-
-	}
-
-	if (empty($form_id)) $div_name = "wf-variable-parse"; else $div_name = "wf-variable-parse-{$form_id}";
-
-	return json_encode(
-		array(
-			"div-body" => $return,
-			"is-error" => $error,
-			"tag-name" => $tag_name,
-			"tag-wikis" => $tag_wiki_count,
-			"div-name" => $div_name,
-		)
-	);
-}
-
-/**
  * axWFactoryDomainQuery
  *
  * used in autocompletion
@@ -757,237 +610,67 @@ function axWFactoryFilterVariables() {
 }
 
 /**
- * axWFactoryRemoveVariable
+ * Provides an API for putting specific DB clusters in read-only mode (and back into R&W).
  *
- * Ajax call, remove
+ * You need to:
+ *  - send an internal POST HTTP request
+ *  - provide a valid Schwartz token
+ *  - provide "cluster" and "readonly" request parameter
  *
- * @access public
- * @author eloy@wikia
+ * @author macbre
  *
- * @return string: json string with array of variables
+ * @see SUS-3873
+ * @see https://wikia-inc.atlassian.net/wiki/spaces/SUS/pages/154632320/How+to+make+a+single+cluster+read-only
  */
-function axWFactoryRemoveVariable( ) {
-	global $wgUser, $wgRequest;
+function axWFactoryClusterSetReadOnly() : AjaxResponse {
+	global $wgTheSchwartzSecretToken;
+	$request = RequestContext::getMain()->getRequest();
 
-	$error     = 0;
-	$return    = "";
+	$resp = new AjaxResponse();
 
-	// this request needs to be a POST and has a valid token passed (PLATFORM-1476)
-	axWFactoryValidateRequest( $wgRequest, $wgUser, __METHOD__ );
-
-	if ( ! $wgUser->isAllowed('wikifactory') ) {
-		$error++;
-		$return = Wikia::errormsg( "You are not allowed to change variable value" );
+	// we only support internal requests with a proper token
+	if ( !$request->wasPosted() || !$request->isWikiaInternalRequest() ) {
+		$resp->setResponseCode( 400 ); // bad request
+		$resp->addText( json_encode( [
+			'error' =>  'We only support internal POST requests'
+		]) );
+	}
+	else if ( !hash_equals( $wgTheSchwartzSecretToken, $request->getVal('token') ) ) {
+		$resp->setResponseCode( 403 ); // forbidden
+		$resp->addText( json_encode( [
+			'error' =>  'Invalid token provided'
+		]) );
 	}
 	else {
-		$cv_id    = $wgRequest->getVal( 'varId' );
-		$city_id  = $wgRequest->getVal( 'cityid' );
-		$tag_name = $wgRequest->getVal( 'tagName' );
-		$tag_wiki_count = 0;
-		$form_id = $wgRequest->getVal("formId", null);
-		$reason = $wgRequest->getVal("reason", null);
+		// which cluster do we want modify and whether to set or remove read-only flag
+		$cluster = $request->getVal( 'cluster' );
+		$readOnly = $request->getInt( 'readonly' ) === 1;
 
-		if( ! WikiFactory::removeVarById( $cv_id, $city_id, $reason ) ) {
-			$error++;
-			$return = Wikia::errormsg( "Variable not removed because of problems with database. Try again." );
+		$msg = sprintf( 'Putting %s cluster %s', $cluster,
+				$readOnly ? 'into read-only mode' : 'back into write-read mode' );
+
+		// perform WikiFactory changes on behalf of FANDOMbot
+		global $wgUser;
+		$wgUser = User::newFromName( Wikia::BOT_USER );
+
+		if ( $readOnly ) {
+			$ret = WikiFactory::setVarByName( 'wgReadOnlyCluster', Wikia::COMMUNITY_WIKI_ID,
+				$cluster, $msg );
 		} else {
-			$return = Wikia::successmsg( " Value of variable was removed ");
-			if ( !empty( $tag_name ) ) {
-				// apply changes to all wikis with given tag
-				$tagsQuery = new WikiFactoryTagsQuery( $tag_name );
-				foreach ( $tagsQuery->doQuery() as $tagged_wiki_id ) {
-					if ( WikiFactory::removeVarByID( $cv_id, $tagged_wiki_id ) ) {
-						$tag_wiki_count++;
-					}
-				}
-				$return .= Wikia::successmsg(" ({$tag_wiki_count} wikis affected)");
-			}
-
+			$ret = WikiFactory::removeVarByName( 'wgReadOnlyCluster', Wikia::COMMUNITY_WIKI_ID,
+				$msg );
 		}
+
+		$resp->setResponseCode( $ret ? 200 : 500 );
+		$resp->addText( json_encode( [
+			'ok' => $ret,
+			'msg' => $msg
+		] ) );
 	}
 
-	if (empty($form_id)) $div_name = "wf-variable-parse"; else $div_name = "wf-variable-parse-{$form_id}";
-
-	return json_encode(
-		array(
-			"div-body" => $return,
-			"is-error" => $error,
-			"tag-name" => $tag_name,
-			"tag-wikis" => $tag_wiki_count,
-			"div-name" => $div_name,
-		)
-	);
+	$resp->setContentType( 'application/json; charset=utf-8' );
+	return $resp;
 }
-
-/**
- * axAWCMetrics
- *
- * Ajax call, return filtered list of all wikis with some metrics data
- *
- * @access public
- * @author moli@wikia
- *
- * @return string: json string
- */
-function axAWCMetrics() {
-	global $wgUser, $wgRequest;
-
-	if ( wfReadOnly() ) {
-		return;
-	}
-
-	if ( !$wgUser->isAllowed('wikifactory') ) {
-		return "";
-	}
-
-	if( $wgUser->isBlocked() ) {
-		return "";
-	}
-
-	$limit = $wgRequest->getVal('awc-limit', WikiMetrics::LIMIT);
-	$offset = $wgRequest->getVal('awc-offset', 0);
-	$loop = $wgRequest->getVal('awc-loop', 1);
-
-	$aResponse = array();
-	#'nbr_records' => 0, 'limit' => $limit, 'page' => $page, 'order' => $order, 'desc' => $desc);
-
-	$OAWCMetrics = new WikiMetrics();
-	$OAWCMetrics->getRequestParams();
-	list ($res, $count) = $OAWCMetrics->getMainStatsRecords();
-
-	$result = array(
-		'sEcho' => intval($loop),
-		'iTotalRecords' => count($res),
-		'iTotalDisplayRecords' => $count,
-		'sColumns' => 'id,active,wikiid,title,url,db,lang,created,founder,users,regusers,articles,edits,images,pviews,close'
-	);
-	$rows = array();
-	$loop = 1;
-	if ( !empty($res) ) {
-		foreach ( $res as $row ) {
-			$rows[] = array(
-				$loop + $offset, // Id
-				$row['public'],
-				$row['id'],
-				$row['title'],
-				$row['url'], //url
-				$row['db'], //dbname
-				$row['lang'], // lang,
-				$row['created'], // created,
-				$row['founderUrl'] . "<br />" . $row['founderEmail'], //founder,
-				intval($row['all_users']),
-				intval($row['content_users']),
-				intval($row['articles']),
-				intval($row['edits']),
-				intval($row['images']),
-				$row['pageviews_txt'],
-				$row['id']
-			);
-			$loop++;
-		}
-	}
-	$result['aaData'] = $rows;
-
-	return json_encode($result);
-}
-
-/**
- * axAWCMetricsCategory
- *
- * Ajax call, return # of Wikis per hubs per month
- *
- * @access public
- * @author moli@wikia
- *
- * @return string: json string
- */
-function axAWCMetricsCategory() {
-	global $wgUser, $wgRequest;
-
-	if ( wfReadOnly() ) {
-		return;
-	}
-
-	if ( !in_array('staff', $wgUser->getGroups()) ) {
-		return "";
-	}
-
-	if( $wgUser->isBlocked() ) {
-		return "";
-	}
-
-	$limit = $wgRequest->getVal('awc-limit', WikiMetrics::LIMIT);
-	$offset = $wgRequest->getVal('awc-offset', 0);
-	$loop = $wgRequest->getVal('awc-loop', 1);
-
-	$OAWCMetrics = new WikiMetrics();
-	$OAWCMetrics->getRequestParams();
-	list ($res, $count, $categories) = $OAWCMetrics->getCategoriesRecords();
-
-	$result = array(
-		'sEcho' => intval($loop),
-		'iTotalRecords' => count($res),
-		'iTotalDisplayRecords' => $count
-	);
-	$rows = array();
-	$loop = 1;
-	if ( !empty($res) ) {
-		foreach ( $res as $date => $row ) {
-			$record = array( $date );
-
-			foreach ( $categories as $id => $cat_name ) {
-				$record[] = isset($row['hubs'][$id]['count']) ? intval($row['hubs'][$id]['count']) : 0;
-			}
-
-			$record[] = $row['count'];
-
-			$rows[] = $record;
-			$loop++;
-		}
-	}
-	$result['aaData'] = $rows;
-
-	return json_encode($result);
-}
-
-/**
- * axAWCMetrics
- *
- * Ajax call, return filtered list of all wikis with some metrics data
- *
- * @access public
- * @author moli@wikia
- *
- * @return string: json string
- */
-function axAWCMetricsAllWikis() {
-	global $wgUser, $wgRequest;
-
-	if ( wfReadOnly() ) {
-		return;
-	}
-
-	if ( !in_array('staff', $wgUser->getGroups()) ) {
-		return "";
-	}
-
-	if( $wgUser->isBlocked() ) {
-		return "";
-	}
-
-	$aResponse = array('nbr_records' => 0, 'data' => '');
-
-	$OAWCMetrics = new WikiMetrics();
-	$res = $OAWCMetrics->getFilteredWikis();
-
-	if ( !empty($res) ) {
-		$aResponse['data'] = $res;
-		$aResponse['nbr_records'] = count($res);
-	}
-
-	return json_encode($aResponse);
-}
-
 
 global $wgAjaxExportList;
 $wgAjaxExportList[] = "axWFactoryGetVariable";
@@ -997,9 +680,5 @@ $wgAjaxExportList[] = "axWFactoryFilterVariables";
 $wgAjaxExportList[] = "axWFactoryDomainCRUD";
 $wgAjaxExportList[] = "axWFactoryDomainQuery";
 $wgAjaxExportList[] = "axWFactoryClearCache";
-$wgAjaxExportList[] = "axWFactorySaveVariable";
-$wgAjaxExportList[] = "axAWCMetrics";
-$wgAjaxExportList[] = "axAWCMetricsCategory";
-$wgAjaxExportList[] = "axAWCMetricsAllWikis";
-$wgAjaxExportList[] = "axWFactoryRemoveVariable";
 $wgAjaxExportList[] = "axWFactoryTagCheck";
+$wgAjaxExportList[] = "axWFactoryClusterSetReadOnly";

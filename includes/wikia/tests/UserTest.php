@@ -1,12 +1,11 @@
 <?php
 
-use Wikia\DependencyInjection\Injector;
-use Wikia\DependencyInjection\InjectorBuilder;
+use Wikia\Factory\ServiceFactory;
+use Wikia\Service\User\Permissions\PermissionsService;
 use Wikia\Service\User\Preferences\PreferenceService;
 use Wikia\Service\User\Attributes\UserAttributes;
-use Wikia\Service\User\Attributes\AttributeService;
 use Wikia\Domain\User\Preferences\UserPreferences;
-use Wikia\Service\User\Preferences\Migration\PreferenceScopeService;
+use Wikia\Service\Helios\HeliosClient;
 
 class UserTest extends WikiaBaseTest {
 
@@ -15,52 +14,37 @@ class UserTest extends WikiaBaseTest {
 	const SOME_PREF = 'somepref';
 	const SOME_VALUE = 'somevalue';
 
-	protected $injector;
 	protected $userPreferenceServiceMock;
-	protected $userAttributeServiceMock;
 	protected $userAttributesMock;
+	protected $userPermissionsMock;
+	protected $heliosClientMock;
 
 	/** @var User */
 	protected $testUser;
 
-	protected static $currentInjector;
-
-	public static function setUpBeforeClass() {
-		self::$currentInjector = Injector::getInjector();
-	}
-
 	public function setUp() {
 		parent::setUp();
-		$this->setupAndInjectUserPreferenceServiceMock();
+		$this->setupAndInjectServiceMocks();
 
 		$this->testUser = User::newFromId( self::TEST_USER_ID );
 	}
 
 	public static function tearDownAfterClass() {
-		Injector::setInjector( self::$currentInjector );
+		ServiceFactory::clearState();
 	}
 
-	private function setupAndInjectUserPreferenceServiceMock() {
-		global $wgGlobalUserPreferenceWhiteList, $wgLocalUserPreferenceWhiteList;
+	private function setupAndInjectServiceMocks() {
+		$this->userPreferenceServiceMock = $this->createMock( PreferenceService::class );
+		$this->userAttributesMock = $this->createMock( UserAttributes::class );
+		$this->userPermissionsMock = $this->createMock( PermissionsService::class );
+		$this->heliosClientMock = $this->createMock( HeliosClient::class );
 
-		$this->userPreferenceServiceMock = $this->getMock( PreferenceService::class,
-			['getGlobalPreference', 'getPreferences', 'setPreferences', 'setGlobalPreference', 'deleteGlobalPreference',
-			'getLocalPreference', 'setLocalPreference', 'deleteLocalPreference', 'save', 'getGlobalDefault', 'deleteFromCache',
-			'deleteAllPreferences', 'findWikisWithLocalPreferenceValue', 'findUsersWithGlobalPreferenceValue'] );
+		$serviceFactory = ServiceFactory::instance();
 
-		$this->userAttributeServiceMock = $this->getMock( AttributeService::class );
-		$this->userAttributesMock = $this->getMockBuilder( UserAttributes::class )
-			->disableOriginalConstructor()
-			->getMock();
-
-		$container = ( new InjectorBuilder() )
-			->bind( PreferenceService::class )->to( $this->userPreferenceServiceMock )
-			->bind( AttributeService::class )->to( $this->userAttributeServiceMock )
-			->bind( PreferenceScopeService::GLOBAL_SCOPE_PREFS )->to( $wgGlobalUserPreferenceWhiteList )
-			->bind( PreferenceScopeService::LOCAL_SCOPE_PREFS )->to( $wgLocalUserPreferenceWhiteList )
-			->bind( UserAttributes::class )->to( $this->userAttributesMock )
-			->build();
-		Injector::setInjector( $container );
+		$serviceFactory->heliosFactory()->setHeliosClient( $this->heliosClientMock );
+		$serviceFactory->attributesFactory()->setUserAttributes( $this->userAttributesMock );
+		$serviceFactory->preferencesFactory()->setPreferenceService( $this->userPreferenceServiceMock );
+		$serviceFactory->permissionsFactory()->setPermissionsService( $this->userPermissionsMock );
 	}
 
 
@@ -172,10 +156,72 @@ class UserTest extends WikiaBaseTest {
 			->with( $this->testUser->getId() )
 			->willReturn( $preferences );
 
+		$this->userAttributesMock->expects( $this->once() )
+			->method( 'getAttributes' )
+			->with( $this->testUser->getId() )
+			->willReturn( [] );
+
 		$options = $this->testUser->getOptions();
 
 		$this->assertEquals( "pl", $options[ "language" ] );
 		$this->assertEquals( "someLocalWikia1Value", $options[ "someLocalWikia1Pref" ] );
 		$this->assertArrayNotHasKey( "someLocalWikia2Pref", $options );
+	}
+
+	public function testGetUsernameShouldReturnAnonNameForUserIdZero() {
+		$this->assertEquals( 'anonName', User::getUsername( 0, 'anonName' ) );
+	}
+
+	public function testGetUsernameShouldReturnNameFromWhoIsIfLookupIsEnabled() {
+		$this->mockStaticMethod( 'User', 'whoIs', 'NameFromUserTable' );
+		$this->assertEquals( 'NameFromUserTable', User::getUsername( 123, 'notFromUserTableName' ) );
+	}
+
+	public function testGetUsernameShouldReturnFalseIfUserIsNotFound() {
+		$this->mockStaticMethod( 'User', 'whoIs', false );
+		$this->assertEquals( false, User::getUsername( 123, 'someName' ) );
+	}
+
+	public function testNewFromTokenAuthorizationGranted() {
+		$webRequestMock = $this->getMock( 'WebRequest', [ 'getCookie', 'getHeader' ] );
+		$webRequestMock->expects( $this->once() )
+			->method( 'getCookie' )
+			->willReturn( 'qi8H8R7OM4xMUNMPuRAZxlY' );
+
+		$userInfo = new StdClass;
+		$userInfo->user_id = 1;
+
+		$this->heliosClientMock->expects( $this->once() )
+			->method( 'info' )
+			->with( 'qi8H8R7OM4xMUNMPuRAZxlY' )
+			->willReturn( $userInfo );
+
+		$userMock = $this->getMockBuilder( 'User' )
+			->setMethods( [ 'getGlobalFlag' ] )
+			->getMock();
+		$userMock->expects( $this->once() )
+			->method( 'getGlobalFlag' )
+			->with( $this->equalTo( 'disabled' ) )
+			->will( $this->returnValue( false ) );
+
+		$this->mockClass( 'User', $userMock );
+
+		$this->assertEquals( User::newFromToken( $webRequestMock ), User::newFromId( 1 ) );
+	}
+
+	public function testNewFromTokenAuthorizationDeclined() {
+		$webRequestMock = $this->getMock( 'WebRequest', [ 'getCookie', 'getHeader' ] );
+		$webRequestMock->expects( $this->once() )
+			->method( 'getCookie' )
+			->willReturn( 'qi8H8R7OM4xMUNMPuRAZxlY' );
+
+		$userInfo = new StdClass;
+
+		$this->heliosClientMock->expects( $this->once() )
+			->method( 'info' )
+			->with( 'qi8H8R7OM4xMUNMPuRAZxlY' )
+			->willReturn( $userInfo );
+
+		$this->assertEquals( User::newFromToken( $webRequestMock ), new User );
 	}
 }

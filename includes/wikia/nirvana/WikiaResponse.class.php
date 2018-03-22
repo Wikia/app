@@ -20,6 +20,7 @@ class WikiaResponse {
 	const RESPONSE_CODE_CREATED = 201;
 	const RESPONSE_CODE_INTERNAL_SERVER_ERROR  = 500;
 	const RESPONSE_CODE_ERROR = 501;
+	const RESPONSE_CODE_SERVICE_UNAVAILABLE = 503;
 	const RESPONSE_CODE_BAD_REQUEST = 400;
 	const RESPONSE_CODE_FORBIDDEN = 403;
 	const RESPONSE_CODE_NOT_FOUND = 404;
@@ -27,7 +28,7 @@ class WikiaResponse {
 	/**
 	 * Output formats
 	 */
-	const FORMAT_RAW = 'raw';
+	const FORMAT_RAW = 'raw';	// deprecated (PLATFORM-2770)
 	const FORMAT_HTML = 'html';
 	const FORMAT_JSON = 'json';
 	const FORMAT_JSONP = 'jsonp';
@@ -49,13 +50,14 @@ class WikiaResponse {
 	const CACHE_SHORT = 10800; // 3 hours
 	const CACHE_VERY_SHORT = 300; // 5 minutes
 
+	const CACHE_PRIVATE = 'private';
+	const CACHE_PUBLIC = 'public';
+	const CACHE_ANON_PUBLIC_USER_PRIVATE = 'anon-public-user-private';
+
 	/**
 	 * Caching policy
 	 */
-	private $cachingPolicy = 'public';
-
-	const CACHE_PRIVATE = 'private';
-	const CACHE_PUBLIC = 'public';
+	private $cachingPolicy = self::CACHE_ANON_PUBLIC_USER_PRIVATE;
 
 	/**
 	 * View object
@@ -265,9 +267,14 @@ class WikiaResponse {
 	}
 
 	public function setFormat( $value ) {
-		if ( $value == self::FORMAT_HTML || $value == self::FORMAT_JSON || $value == self::FORMAT_RAW || $value == self::FORMAT_JSONP ) {
+		$value = strtolower( $value );
+		if ( in_array( $value, [ self::FORMAT_HTML, self::FORMAT_JSON, self::FORMAT_JSONP ] ) ) {
 			$this->format = $value;
 		} else {
+			\Wikia\Logger\WikiaLogger::instance()->warning( 'Invalid format passed to WikiaResponse', [
+				'format' => $value,
+				'exception' => new Exception()
+			] );
 			$this->format = self::FORMAT_INVALID;
 		}
 	}
@@ -295,8 +302,21 @@ class WikiaResponse {
 	 *
 	 * @param string $policy caching policy (either private or public)
 	 */
-	public function setCachePolicy($policy) {
-		$this->cachingPolicy = $policy === self::CACHE_PRIVATE ? self::CACHE_PRIVATE : self::CACHE_PUBLIC;
+	public function setCachePolicy( $policy ) {
+		if ( !in_array( $policy, [
+				self::CACHE_PRIVATE,
+				self::CACHE_PUBLIC,
+				self::CACHE_ANON_PUBLIC_USER_PRIVATE,
+			] )
+		) {
+			\Wikia\Logger\WikiaLogger::instance()->error( 'Invalid cache policy provided', [
+				'policy' => $policy,
+				'exception' => new Exception(),
+			] );
+			return;
+		}
+
+		$this->cachingPolicy = $policy;
 	}
 
 	/**
@@ -316,9 +336,19 @@ class WikiaResponse {
 		if ($browserTTL === false) {
 			$browserTTL = $varnishTTL;
 		}
+		$browserPolicy = self::CACHE_PUBLIC;
 
 		switch($this->cachingPolicy) {
 			case self::CACHE_PUBLIC:
+			case self::CACHE_ANON_PUBLIC_USER_PRIVATE:
+				$output = RequestContext::getMain()->getOutput();
+				if ( $this->cachingPolicy === self::CACHE_ANON_PUBLIC_USER_PRIVATE &&
+					$output->haveCacheVaryCookies()
+				) {
+					$this->setHeader( 'Cache-Control', 'private, s-maxage=0' );
+					break;
+				}
+
 				// Varnish caches for 5 seconds when Apache sends Cache-Control: public, s-maxage=0
 				// perform this logic here
 				if ( $varnishTTL === self::CACHE_DISABLED ) {
@@ -329,13 +359,14 @@ class WikiaResponse {
 				break;
 
 			case self::CACHE_PRIVATE:
-				$this->setHeader('Cache-Control', sprintf('private, s-maxage=%d', $varnishTTL));
+				$browserPolicy = self::CACHE_PRIVATE;
+				$this->setHeader( 'Cache-Control', 'private, s-maxage=0' );
 				break;
 		}
 
 		// cache on client side
 		if ($browserTTL > 0) {
-			$this->setHeader('X-Pass-Cache-Control', sprintf('%s, max-age=%d', $this->cachingPolicy, $browserTTL));
+			$this->setHeader( 'X-Pass-Cache-Control', sprintf( '%s, max-age=%d', $browserPolicy, $browserTTL ) );
 		}
 	}
 
@@ -447,18 +478,31 @@ class WikiaResponse {
 
 	public function sendHeaders() {
 		if ( !$this->hasContentType() ) {
-			if ( ( $this->getFormat() == WikiaResponse::FORMAT_JSON ) ) {
+			if ( ( $this->getFormat() === WikiaResponse::FORMAT_JSON ) ) {
 				$this->setContentType( 'application/json; charset=utf-8' );
-			} else if ( $this->getFormat() == WikiaResponse::FORMAT_JSONP ) {
+			} elseif ( $this->getFormat() === WikiaResponse::FORMAT_JSONP ) {
 				$this->setContentType( 'text/javascript; charset=utf-8' );
-			} else if ( $this->getFormat() == WikiaResponse::FORMAT_HTML ) {
+			} elseif ( $this->getFormat() === WikiaResponse::FORMAT_HTML ) {
 				$this->setContentType( 'text/html; charset=utf-8' );
+			} elseif ( $this->getFormat() === WikiaResponse::FORMAT_INVALID ) {
+				$this->setContentType( 'application/json; charset=utf-8' );
+				$this->setCode( WikiaResponse::RESPONSE_CODE_BAD_REQUEST );
 			}
 		}
 
 		foreach ( $this->getHeaders() as $header ) {
 			$this->sendHeader( ( $header['name'] . ': ' . $header['value'] ), $header['replace']);
 		}
+
+		// Make sure we vary on Cookie if we have a different cache between anonymous
+		// and logged-in users
+		if ( $this->isCaching() &&
+			$this->cachingPolicy === self::CACHE_ANON_PUBLIC_USER_PRIVATE
+		) {
+			$output = RequestContext::getMain()->getOutput();
+			$this->sendHeader( $output->getVaryHeader(), true );
+		}
+
 
 		if ( !empty( $this->code ) ) {
 			$msg = '';

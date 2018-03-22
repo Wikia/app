@@ -58,6 +58,9 @@ class EmailNotification {
 
 	private $composedCommon = false;
 
+	/** @var \Wikia\Logger\WikiaLogger */
+	private $logger;
+
 	/**
 	 * @param User $editor
 	 * @param Title $title
@@ -79,6 +82,36 @@ class EmailNotification {
 		$this->previousRevId = $previousRevId;
 		$this->action = $action;
 		$this->otherParam = $otherParam;
+		$this->logger = \Wikia\Logger\WikiaLogger::instance();
+	}
+
+	public function addCommonDetails( $details ) {
+		return array_merge( $details, [
+			'class' => __CLASS__,
+			'editorId' => $this->editor->getId(),
+			'editorUsername' => $this->editor->getName(),
+			'editorEmail' => $this->editor->getEmail(),
+			'url' => $this->title->getFullURL(),
+			'title' => $this->title->getFullText(),
+			'summary' => $this->summary,
+			'action' => $this->action,
+			'isMinorEdit' => ( $this->minorEdit ? 'yes' : 'no' )
+		] );
+	}
+
+	public function logIgnore( $reason, array $details = []  ) {
+		$details['processAction'] = 'ignore';
+		$this->logger->info( $reason, $this->addCommonDetails( $details ) );
+	}
+
+	public function logStep( $reason, array $details = [] ) {
+		$details['processAction'] = 'step';
+		$this->logger->debug( $reason, $this->addCommonDetails( $details ) );
+	}
+
+	public function logError( $reason ) {
+		$details['processAction'] = 'error';
+		$this->logger->error( $reason, $this->addCommonDetails( $details ) );
 	}
 
 	/**
@@ -90,17 +123,22 @@ class EmailNotification {
 	 * @param array $watchers If a list of watchers is passed, use these rather than querying the DB
 	 */
 	public function notifyOnPageChange( array $watchers = [] ) {
+		$this->logStep( "Notifying for page change", [
+			"watcherCount" => count( $watchers )
+		] );
 
 		if ( $this->title->getNamespace() < 0 ) {
+			$this->logIgnore( "Bad namespace" );
 			return;
 		}
 
-		if ( !wfRunHooks( 'AllowNotifyOnPageChange', [ $this->editor, $this->title ] ) ) {
+		if ( !Hooks::run( 'AllowNotifyOnPageChange', [ $this->editor, $this->title ] ) ) {
+			$this->logIgnore( "Hook AllowNotifyOnPageChange declined notification" );
 			return;
 		}
 
 		if ( ( $this->isArticleComment() || $this->isBlogComment() ) && $this->previousRevId !== 0 ) {
-			// Ignore edited or deleted comments
+			$this->logIgnore( "Ignore edited or deleted comments" );
 			return;
 		}
 
@@ -110,17 +148,23 @@ class EmailNotification {
 
 			if ( empty( $watchers ) ) {
 				$watchers = $this->getWatchersToNotify( $notificationTimeoutSql );
+				$this->logStep( "Updated watchers", [
+					"watcherCount" => count( $watchers )
+				] );
 			}
 
 			if ( $watchers ) {
 				$this->updateWatchedItem( $watchers );
 			}
-			wfRunHooks( 'NotifyOnSubPageChange', [ $watchers, $this->title, $this->editor, $notificationTimeoutSql ] );
+			Hooks::run( 'NotifyOnSubPageChange', [ $watchers, $this->title, $this->editor, $notificationTimeoutSql ] );
 		}
 
-		if ( $this->shouldSendEmail( $watchers ) ) {
-			$this->actuallyNotifyOnPageChange( $watchers );
+		if ( !$this->shouldSendEmail( $watchers ) ) {
+			$this->logIgnore( "Determined nobody wants to be notified" );
+			return;
 		}
+
+		$this->actuallyNotifyOnPageChange( $watchers );
 	}
 
 	/**
@@ -148,7 +192,7 @@ class EmailNotification {
 			[
 				'wl_title' => $this->title->getDBkey(),
 				'wl_namespace' => $this->title->getNamespace(),
-				'wl_user != ' . intval( $this->editor->getID() ),
+				'wl_user != ' . intval( $this->editor->getId() ),
 				$notificationTimeoutSql
 			],
 			__METHOD__
@@ -164,6 +208,8 @@ class EmailNotification {
 
 	/**
 	 * Update wl_notificationtimestamp for all watching users except the editor
+	 *
+	 * @param array $watchers
 	 */
 	private function updateWatchedItem( array $watchers ) {
 		$wl = WatchedItem::fromUserTitle( $this->editor, $this->title );
@@ -181,10 +227,12 @@ class EmailNotification {
 		if ( $this->thereAreUsersWatchingPage( $watchers ) ) {
 			return true;
 		}
+		$this->logStep( "No users are watching current page" );
 
 		if ( $this->isUserTalkPage() && $this->canSendUserTalkEmail() ) {
 			return true;
 		}
+		$this->logStep( "Current page is not a talk page or talk email not allowed" );
 
 		return false;
 	}
@@ -266,43 +314,92 @@ class EmailNotification {
 
 		$this->setReplyToAndFromAddresses();
 
-		# The following code is only run, if several conditions are met:
-		# 1. EmailNotification for pages (other than user_talk pages) must be enabled
-		# 2. minor edits (changes) are only regarded if the global flag indicates so
-		if ( !$this->isMinorEdit() || ( $this->notifyUsersOnMinorEdits() && $this->editorWantsToNotifyOnMinorEdits() ) ) {
+		if ( !$this->editIsSignificant() ) {
+			$this->logIgnore( "Edit is not significant" );
+			$this->emailUsersNotifiedOnAllChanges();
+			return;
+		}
 
-			$userTalkId = 0;
-			if ( $this->isUserTalkPage() && $this->canSendUserTalkEmail() ) {
-				$targetUser = User::newFromName( $this->title->getText() );
-				$this->compose( $targetUser );
-				$userTalkId = $targetUser->getId();
+		$talkUserId = 0;
+		if ( $this->isUserTalkPage() && $this->canSendUserTalkEmail() ) {
+			$targetUser = User::newFromName( $this->title->getText() );
+			$this->compose( $targetUser );
+			$talkUserId = $targetUser->getId();
 
-				// Send mail to user when comment on his user talk has been added
-				$fakeUser = null;
-				wfRunHooks( 'UserMailer::NotifyUser', [ $this->title, &$fakeUser ] );
-				if ( $fakeUser instanceof User && $fakeUser->getGlobalPreference( 'enotifusertalkpages' ) && $fakeUser->isEmailConfirmed() ) {
-					$this->compose( $fakeUser );
-				}
+			// Send mail to user when comment on his user talk has been added
+			$fakeUser = null;
+			Hooks::run( 'UserMailer::NotifyUser', [ $this->title, &$fakeUser ] );
+			if ( $fakeUser instanceof User ) {
+				$this->logStep( "Sending email to owner of talk page/comment ");
+				$this->compose( $fakeUser );
+			} else {
+				$this->logIgnore( "Owner of talk page/comment could not be verified");
 			}
+		}
 
-			if ( F::app()->wg->EnotifWatchlist ) {
-				// Send updates to watchers other than the current editor
-				$userArray = UserArray::newFromIDs( $watchers );
+		if ( F::app()->wg->EnotifWatchlist ) {
+			// Send updates to watchers other than the current editor
+			$userArray = UserArray::newFromIDs( $watchers );
 
-				/* @var $watchingUser User */
-				foreach ( $userArray as $watchingUser ) {
-					if ( $watchingUser->getGlobalPreference( 'enotifwatchlistpages' ) &&
-						( !$this->isMinorEdit() || $watchingUser->getGlobalPreference( 'enotifminoredits' ) ) &&
-						$watchingUser->isEmailConfirmed() &&
-						$watchingUser->getID() != $userTalkId &&
-						!(bool)$watchingUser->getGlobalPreference( 'unsubscribed' ) )
-					{
-						$this->compose( $watchingUser );
-					}
+			/** @var User $watchingUser */
+			foreach ( $userArray as $watchingUser ) {
+				if ( $this->canSendEmailToWatcher( $watchingUser, $talkUserId ) ) {
+					$this->logStep( "Sending email to watcher", [
+						"targetUserId" => $watchingUser->getId(),
+						"targetUser" => $watchingUser->getName(),
+						"targetUserEmail" => $watchingUser->getEmail(),
+					] );
+					$this->compose( $watchingUser );
+				} else {
+					$this->logIgnore( "Watcher does not want or cannot receive this email", [
+						"targetUserId" => $watchingUser->getId(),
+						"targetUser" => $watchingUser->getName(),
+						"targetUserEmail" => $watchingUser->getEmail(),
+						"targetUserEmailConfirmed" => ( $watchingUser->isEmailConfirmed()
+						    ? 'yes' : 'no'
+					    )
+					] );
 				}
 			}
 		}
-		$this->emailUsersNotifiedOnAllChanges();
+	}
+
+	/**
+	 * Returns whether the current edit is significant.  This is defined as either not a minor
+	 * edit, or if it is a minor edit, that users want minor edits and the editor wants to
+	 * share minor edits.
+	 *
+	 * return bool
+	 */
+	private function editIsSignificant() {
+		return (
+			!$this->isMinorEdit() ||
+			(
+				$this->notifyUsersOnMinorEdits() &&
+				$this->editorWantsToNotifyOnMinorEdits()
+			)
+		);
+	}
+
+	/**
+	 * Determine if we should send an email to this particular watcher
+	 *
+	 * @param User $watcher
+	 * @param $talkUserId
+	 *
+	 * @return bool
+	 */
+	private function canSendEmailToWatcher( User $watcher, $talkUserId ) {
+		return (
+			$watcher->getGlobalPreference( 'enotifwatchlistpages' ) &&
+			(
+				!$this->isMinorEdit() ||
+				$watcher->getGlobalPreference( 'enotifminoredits' )
+			) &&
+			$watcher->isEmailConfirmed() &&
+			$watcher->getId() != $talkUserId &&
+			!(bool)$watcher->getGlobalPreference( 'unsubscribed' )
+		);
 	}
 
 	private function setReplyToAndFromAddresses() {
@@ -333,7 +430,12 @@ class EmailNotification {
 			if ( $this->editor->getName() == $name ) {
 				continue;
 			}
+
 			$user = User::newFromName( $name );
+			$this->logStep( "User notified of all changes", [
+				"userName" => $name,
+			    "userEmail" => $user->getEmail(),
+			] );
 			$this->compose( $user );
 		}
 	}
@@ -346,9 +448,10 @@ class EmailNotification {
 		$this->composedCommon = true;
 
 		$action = strtolower( $this->action );
-		$subject = wfMessage( 'enotif_subject_' . $action )->inContentLanguage()->text();
-		if ( wfEmptyMsg( 'enotif_subject_' . $action, $subject ) ) {
+		if ( wfEmptyMsg( 'enotif_subject_' . $action ) ) {
 			$subject = wfMessage( 'enotif_subject' )->inContentLanguage()->text();
+		} else {
+			$subject = wfMessage( 'enotif_subject_' . $action )->inContentLanguage()->text();
 		}
 		list ( $body, $bodyHTML ) = wfMsgHTMLwithLanguageAndAlternative(
 			'enotif_body' . ( $action == '' ? '' : ( '_' . $action ) ),
@@ -375,13 +478,13 @@ class EmailNotification {
 		$keys['$CHANGEDORCREATED'] = wfMessage( 'created' )->inContentLanguage()->plain();
 
 		$keys['$PAGETITLE'] = $this->title->getPrefixedText();
-		$keys['$PAGETITLE_URL'] = $this->title->getCanonicalUrl( 's=wl' );
+		$keys['$PAGETITLE_URL'] = $this->title->getCanonicalURL( 's=wl' );
 		$keys['$PAGEMINOREDIT'] = $this->minorEdit ? wfMessage( 'minoredit' )->inContentLanguage()->plain() : '';
-		$keys['$UNWATCHURL'] = $this->title->getCanonicalUrl( 'action=unwatch' );
+		$keys['$UNWATCHURL'] = $this->title->getCanonicalURL( 'action=unwatch' );
 
 		$keys['$ACTION'] = $this->action;
 		// Hook registered in FollowHelper -- used for blogposts and categoryAdd
-		wfRunHooks( 'MailNotifyBuildKeys', [ &$keys, $this->action, $this->otherParam ] );
+		Hooks::run( 'MailNotifyBuildKeys', [ &$keys, $this->action, $this->otherParam ] );
 
 		if ( $this->editor->isAnon() ) {
 			# real anon (user:xxx.xxx.xxx.xxx)
@@ -390,10 +493,10 @@ class EmailNotification {
 		} else {
 			$keys['$PAGEEDITOR'] = F::app()->wg->EnotifUseRealName ? $this->editor->getRealName() : $this->editor->getName();
 			$emailPage = SpecialPage::getSafeTitleFor( 'Emailuser', $this->editor->getName() );
-			$keys['$PAGEEDITOR_EMAIL'] = $emailPage->getCanonicalUrl();
+			$keys['$PAGEEDITOR_EMAIL'] = $emailPage->getCanonicalURL();
 		}
 
-		$keys['$PAGEEDITOR_WIKI'] = $this->editor->getUserPage()->getCanonicalUrl();
+		$keys['$PAGEEDITOR_WIKI'] = $this->editor->getUserPage()->getCanonicalURL();
 
 		$summary = $this->summary == '' ? wfMessage( 'enotif_no_summary' )->inContentLanguage()->plain() : '"' . $this->summary . '"';
 
@@ -402,17 +505,14 @@ class EmailNotification {
 		// Now build message's subject and body
 		// ArticleComment -- updates subject and $keys['$PAGEEDITOR'] if anon editor
 		// EmailTemplatesHooksHelper -- updates subject if blogpost
-		// TopListHelper -- updates subject if title is toplist
-		wfRunHooks( 'ComposeCommonSubjectMail', [ $this->title, &$keys, &$subject, $this->editor ] );
+		Hooks::run( 'ComposeCommonSubjectMail', [ $this->title, &$keys, &$subject, $this->editor ] );
 		$subject = strtr( $subject, $keys );
 		$subject = MessageCache::singleton()->transform( $subject, false, null, $this->title );
 		$this->subject = strtr( $subject, $postTransformKeys );
 
 		// ArticleComment -- updates body and $keys['$PAGEEDITOR'] if anon editor
-		// EmailTemplatesHooksHelper -- changes body to blog post. EmailTemplates only enabled on community and messaging so this tranforms
 		//     any watched page email coming from Community to a blog post (I think)
-		// TopListHelper -- updates body if title is toplist
-		wfRunHooks( 'ComposeCommonBodyMail', [ $this->title, &$keys, &$body, $this->editor, &$bodyHTML, &$postTransformKeys ] );
+		Hooks::run( 'ComposeCommonBodyMail', [ $this->title, &$keys, &$body, $this->editor, &$bodyHTML, &$postTransformKeys ] );
 		$body = strtr( $body, $keys );
 		$body = MessageCache::singleton()->transform( $body, false, null, $this->title );
 		$this->body = wordwrap( strtr( $body, $postTransformKeys ), 72 );
@@ -453,7 +553,7 @@ class EmailNotification {
 			}
 		}
 
-		wfRunHooks( 'NotifyOnPageChangeComplete', [ $this->title, $this->timestamp, &$user ] );
+		Hooks::run( 'NotifyOnPageChangeComplete', [ $this->title, $this->timestamp, &$user ] );
 	}
 
 	private function getEmailExtensionController() {
@@ -465,29 +565,29 @@ class EmailNotification {
 		$controller = false;
 
 		if ( $this->isArticlePageEditOrCreatedPage() ) {
-			$controller = 'Email\Controller\WatchedPageEditedOrCreated';
+			$controller = Email\Controller\WatchedPageEditedOrCreatedController::class;
 		} elseif ( $this->isArticlePageRenamed() ) {
-			$controller = 'Email\Controller\WatchedPageRenamed';
+			$controller = Email\Controller\WatchedPageRenamedController::class;
 		} elseif ( $this->isArticlePageProtected() ) {
-			$controller = 'Email\Controller\WatchedPageProtected';
+			$controller = Email\Controller\WatchedPageProtectedController::class;
 		} elseif ( $this->isArticlePageUnprotected() ) {
-			$controller = 'Email\Controller\WatchedPageUnprotected';
+			$controller = Email\Controller\WatchedPageUnprotectedController::class;
 		} elseif ( $this->isArticlePageDeleted() ) {
-			$controller = 'Email\Controller\WatchedPageDeleted';
+			$controller = Email\Controller\WatchedPageDeletedController::class;
 		} elseif ( $this->isArticlePageRestored() ) {
-			$controller = 'Email\Controller\WatchedPageRestored';
+			$controller = Email\Controller\WatchedPageRestoredController::class;
 		} elseif ( $this->isArticleComment() ) {
-			$controller = 'Email\Controller\ArticleComment';
+			$controller = Email\Controller\ArticleCommentController::class;
 		} elseif ( $this->isBlogComment() ) {
-			$controller = 'Email\Controller\BlogComment';
+			$controller = Email\Controller\BlogCommentController::class;
 		} elseif ( $this->isListBlogPost() ) {
-			$controller = 'Email\Controller\ListBlogPost';
+			$controller = Email\Controller\ListBlogPostController::class;
 		} elseif ( $this->isUserBlogPost() ) {
-			$controller = 'Email\Controller\UserBlogPost';
+			$controller = Email\Controller\UserBlogPostController::class;
 		} elseif ( $this->isCategoryAdd() ) {
-			$controller = 'Email\Controller\CategoryAdd';
+			$controller = Email\Controller\CategoryAddController::class;
 		} elseif ( $this->isUserRightsChange() ) {
-			$controller = 'Email\Controller\UserRightsChanged';
+			$controller = Email\Controller\UserRightsChangedController::class;
 		}
 
 		return $controller;
@@ -501,29 +601,32 @@ class EmailNotification {
 	private function sendUsingEmailExtension( \User $user ) {
 		$controller = $this->getEmailExtensionController();
 
-		if ( !empty( $controller ) ) {
-			$childArticleID = '';
-			if ( !empty( $this->otherParam['childTitle'] ) ) {
-				/** @var Title $childTitleObj */
-				$childTitleObj = $this->otherParam['childTitle'];
-				$childArticleID = $childTitleObj->getArticleID();
-			}
-
-			$params = [
-				'targetUser' => $user->getName(),
-				'pageTitle' => $this->title->getText(),
-				'namespace' => $this->title->getNamespace(),
-				'summary' => $this->summary,
-				'currentRevId' => $this->currentRevId,
-				'previousRevId' => $this->previousRevId,
-				'replyToAddress' => $this->replyto,
-				'fromAddress' => $this->from->address,
-				'fromName' => $this->from->name,
-				'childArticleID' => $childArticleID,
-			];
-
-			F::app()->sendRequest( $controller, 'handle', $params );
+		if ( empty( $controller ) ) {
+			$this->logError( "Could not find email controller for this notification" );
+			return;
 		}
+
+		$childArticleID = '';
+		if ( !empty( $this->otherParam['childTitle'] ) ) {
+			/** @var Title $childTitleObj */
+			$childTitleObj = $this->otherParam['childTitle'];
+			$childArticleID = $childTitleObj->getArticleID();
+		}
+
+		$params = [
+			'targetUser' => $user->getName(),
+			'pageTitle' => $this->title->getText(),
+			'namespace' => $this->title->getNamespace(),
+			'summary' => $this->summary,
+			'currentRevId' => $this->currentRevId,
+			'previousRevId' => $this->previousRevId,
+			'replyToAddress' => $this->replyto,
+			'fromAddress' => $this->from->address,
+			'fromName' => $this->from->name,
+			'childArticleID' => $childArticleID,
+		];
+
+		F::app()->sendRequest( $controller, 'handle', $params );
 	}
 	/**
 	 * Returns whether the email notification is for a watched article page which has been edited,
@@ -587,30 +690,28 @@ class EmailNotification {
 		// its not a blog.
 		return (
 			( $this->action === ArticleComment::LOG_ACTION_COMMENT ) &&
-			( $this->title->getNamespace() != NS_BLOG_ARTICLE )
+			( defined( 'NS_BLOG_ARTICLE' ) && !$this->title->inNamespace( NS_BLOG_ARTICLE ) )
 		);
 	}
 
 	private function isBlogComment() {
 		return (
 			( $this->action === ArticleComment::LOG_ACTION_COMMENT ) &&
-			( $this->title->getNamespace() == NS_BLOG_ARTICLE )
+			( defined( 'NS_BLOG_ARTICLE' ) && $this->title->inNamespace(  NS_BLOG_ARTICLE ) )
 		);
 	}
 
 	private function isUserBlogPost() {
-		$ns = $this->title->getNamespace();
 		return (
 			( $this->action === FollowHelper::LOG_ACTION_BLOG_POST ) &&
-			( $ns == NS_BLOG_ARTICLE )
+			( defined( 'NS_BLOG_ARTICLE' ) && $this->title->inNamespace( NS_BLOG_ARTICLE ) )
 		);
 	}
 
 	private function isListBlogPost() {
-		$ns = $this->title->getNamespace();
 		return (
 			( $this->action === FollowHelper::LOG_ACTION_BLOG_POST ) &&
-			( $ns == NS_BLOG_LISTING )
+			( defined( 'NS_BLOG_LISTING' ) && $this->title->inNamespace( NS_BLOG_LISTING ) )
 		);
 	}
 

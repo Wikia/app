@@ -1,8 +1,10 @@
 <?php
+use PHPUnit\Framework\TestCase;
+
 /**
  * @ingroup mwabstract
  */
-class WikiaResponseTest extends PHPUnit_Framework_TestCase {
+class WikiaResponseTest extends TestCase {
 
 	const TEST_HEADER_NAME = 'X-WikiaResponseTest';
 	const TEST_HEADER_VALUE1 = 'TestValue1';
@@ -16,7 +18,11 @@ class WikiaResponseTest extends PHPUnit_Framework_TestCase {
 	protected $object = null;
 
 	protected function setUp() {
-		$this->object = $this->getMock( 'WikiaResponse', array( 'sendHeader' ), array( 'html' ) );
+		$this->object = $this->getMockBuilder( WikiaResponse::class )
+			->setMethods( [ 'sendHeader' ] )
+			->setConstructorArgs( [ 'html' ] )
+			->getMock();
+
 	}
 
 	public function settingHeadersDataProvider() {
@@ -64,7 +70,7 @@ class WikiaResponseTest extends PHPUnit_Framework_TestCase {
 			}
 		}
 
-		// there is one additional header to be send, content-type
+		// there is one additional header to be sent, content-type
 		$headersNum = $replace ? 2 : $headersNum + 1;
 
 		$this->object->expects( $this->exactly( $headersNum ))->method( 'sendHeader' );
@@ -75,7 +81,7 @@ class WikiaResponseTest extends PHPUnit_Framework_TestCase {
 	 * By default we send content-type header, plus response code in this test
 	 */
 	public function testSettingResponseCode() {
-		$this->object->expects( $this->exactly(2) )->method( 'sendHeader' );
+		$this->object->expects( $this->exactly( 2 ) )->method( 'sendHeader' );
 		$this->object->setCode(200);
 		$this->object->sendHeaders();
 	}
@@ -129,32 +135,36 @@ class WikiaResponseTest extends PHPUnit_Framework_TestCase {
 	 * @dataProvider formatDataProvider
 	 */
 	public function testView( $format ) {
-		$this->object->setFormat( $format );
-		$this->object->getView()->setTemplatePath( dirname( __FILE__ ) . '/_fixtures/TestTemplate.php' );
-		$this->object->setVal( self::TEST_VAL_NAME, self::TEST_VAL_VALUE );
-		if( $format == 'json' ) {
-			$this->object->setException( new WikiaException('TestException') );
-		}
-
-		$this->object->sendHeaders();
+		$response = new WikiaResponse( $format );
+		$response->getView()->setTemplatePath( dirname( __FILE__ ) . '/_fixtures/TestTemplate.php' );
+		$response->setVal( self::TEST_VAL_NAME, self::TEST_VAL_VALUE );
 
 		ob_start();
-		print $this->object;
+		$response->render();
 		$buffer = ob_get_contents();
 		ob_end_clean();
 
-		if( $format == 'html' ) {
-			$this->assertEquals( self::TEST_VAL_VALUE, $buffer );
+		switch ( $format ) {
+			case WikiaResponse::FORMAT_HTML:
+				$this->assertEquals( self::TEST_VAL_VALUE, $buffer );
+				break;
+			case WikiaResponse::FORMAT_JSON:
+				$expectedJson = json_encode( [ static::TEST_VAL_NAME => static::TEST_VAL_VALUE ] );
+				$this->assertJsonStringEqualsJsonString( $expectedJson, $buffer );
+				break;
+			case WikiaResponse::FORMAT_INVALID:
+			default:
+				$this->fail( 'Invalid output format given to WikiaResponse' );
 		}
 	}
 
 	public function testViewDefaultRender() {
 		$this->object->setView( (new WikiaView) );
-		$this->object->setFormat( 'raw' );
+		$this->object->setFormat( 'json' );
 
 		$output = $this->object->getView()->render( $this->object );
 
-		$this->assertStringStartsWith( '<pre>', $output );
+		$this->assertStringStartsWith( '[]', $output );
 	}
 
 	/**

@@ -3,26 +3,6 @@
 class WallRelatedPages extends WikiaModel {
 
 	/**
-	 * Create table if it dosen't exists
-	 */
-	function createTable() {
-		wfProfileIn( __METHOD__ );
-		$dir = dirname( __FILE__ );
-
-		if ( !wfReadOnly() ) {
-			$db = wfGetDB( DB_MASTER );
-			if ( !$db->tableExists( 'wall_related_pages' ) ) {
-				$db->sourceFile( $dir . '/sql/wall_related_pages.sql' );
-				wfProfileOut( __METHOD__ );
-				return true;
-			}
-		}
-
-		wfProfileOut( __METHOD__ );
-		return false;
-	}
-
-	/**
 	 * set last update use for ordering on aritcle page
 	 *
 	 */
@@ -46,8 +26,6 @@ class WallRelatedPages extends WikiaModel {
 	function set( $messageId, $pages = [ ] ) {
 		wfProfileIn( __METHOD__ );
 		$db = wfGetDB( DB_MASTER );
-
-		$this->createTable();
 
 		$db->begin();
 		$db->delete( 'wall_related_pages', [
@@ -115,21 +93,12 @@ class WallRelatedPages extends WikiaModel {
 	 * @param array $messageId
 	 */
 
-	function getMessagesRelatedArticleIds( $messageIds, $orderBy = 'order_index', $db = DB_SLAVE ) {
+	function getMessagesRelatedArticleIds( $messageIds, $orderBy = 'order_index', $dbType = DB_SLAVE ) {
 		wfProfileIn( __METHOD__ );
 		$pageIds = [ ];
 
 		// Loading from cache
-		$db = wfGetDB( $db );
-
-		if ( ! $db->tableExists( 'wall_related_pages' ) && wfReadOnly() ) {
-			wfProfileOut( __METHOD__ );
-			return [ ];
-		}
-
-		if ( $this->createTable() ) {
-			$db = wfGetDB( $db );
-		}
+		$db = wfGetDB( $dbType );
 
 		$result = $db->select(
 			[ 'wall_related_pages' ],
@@ -206,8 +175,7 @@ class WallRelatedPages extends WikiaModel {
 			$row['displayName'] = $wallMessage->getUserDisplayName();
 			$row['userName'] = $wallMessage->getUser()->getName();
 			$row['userUrl'] = $wallMessage->getUserWallUrl();
-			$strippedText = $helper->strip_wikitext( $wallMessage->getRawText(), $wallMessage->getTitle() );
-			$row['messageBody'] = $helper->shortenText( $strippedText );
+			$row['messageBody'] = $helper->getMessageSnippet( $wallMessage );
 			$row['timeStamp'] = $wallMessage->getCreateTime();
 
 			$row['replies'] = [ ];
@@ -220,12 +188,11 @@ class WallRelatedPages extends WikiaModel {
 				$update[] = $reply->getCreateTime( TS_UNIX );
 
 				if ( !$reply->isRemove() && !$reply->isAdminDelete() ) {
-					$strippedText = $helper->strip_wikitext( $reply->getRawText(), $reply->getTitle() );
 					$replyRow = [
 						'displayName' =>  $reply->getUserDisplayName(),
 						'userName' => $reply->getUser()->getName(),
 						'userUrl' => $reply->getUserWallUrl(),
-						'messageBody' => $helper->shortenText( $strippedText ),
+						'messageBody' => $helper->getMessageSnippet( $reply ),
 						'timeStamp' => $reply->getCreateTime()
 					];
 					$row['replies'][] = $replyRow;
@@ -264,15 +231,6 @@ class WallRelatedPages extends WikiaModel {
 
 		// Loading from cache
 		$db = wfGetDB( DB_SLAVE );
-
-	    if ( ! $db->tableExists( 'wall_related_pages' ) && wfReadOnly() ) {
-			wfProfileOut( __METHOD__ );
-			return [ ];
-		}
-
-		if ( $this->createTable() ) {
-			$db = wfGetDB( DB_MASTER );
-		}
 
 		// Loading from cache
 		$result = $db->select(

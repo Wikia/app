@@ -1,0 +1,15 @@
+{
+	"@metadata": {
+		"authors": [
+			"Basharh"
+		]
+	},
+	"maps_map": "ܨܘܪܬ ܥܠܡܐ",
+	"maps-layer-property": "ܕܝܠܝܬܐ",
+	"maps-layer-value": "ܛܝܡܐ",
+	"maps-layer-errors": "ܦܘܕ̈ܐ",
+	"maps-abb-north": "ܓܪܒܝܐ",
+	"maps-abb-east": "ܡܕܢܚܐ",
+	"maps-abb-south": "ܬܝܡܢܐ",
+	"maps-abb-west": "ܡܥܪܒܐ"
+}

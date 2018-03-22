@@ -5,7 +5,6 @@
  * @file
  * @ingroup FileAbstraction
  */
-use Wikia\Util\PerformanceProfilers\UsernameUseProfiler;
 
 /**
  * Bump this number when serialized cache records may be incompatible.
@@ -237,15 +236,6 @@ class LocalFile extends File {
 			}
 		}
 
-		/* Wikia change begin */
-		// If there's no timestamp with this file don't cache it, its a soon
-		// to be uploaded file that hasn't been fully saved yet.
-		if ( empty($cache['timestamp']) ) {
-			$wgMemc->delete( $key );
-			return;
-		}
-		/* Wikia change end */
-
 		$wgMemc->set( $key, $cache, 60 * 60 * 24 * 7 ); // A week
 	}
 
@@ -350,6 +340,12 @@ class LocalFile extends File {
 		foreach ( $array as $name => $value ) {
 			$this->$name = $value;
 		}
+
+		/* Wikia change begin */
+		if ( array_key_exists( 'user', $array ) ) {
+			$this->user_text = User::getUsername( $array['user'], $array['user_text'] );
+		}
+		/* Wikia change end */
 
 		$this->fileExists = true;
 		$this->maybeUpgradeRow();
@@ -541,15 +537,18 @@ class LocalFile extends File {
 	 * Returns ID or name of user who uploaded the file
 	 *
 	 * @param $type string 'text' or 'id'
+	 * @return string|null
 	 */
 	function getUser( $type = 'text' ) {
 		$this->load();
 
 		if ( $type == 'text' ) {
-			return $this->user_text;
+			return User::getUsername((int) $this->user, (string) $this->user_text); // SUS-808
 		} elseif ( $type == 'id' ) {
 			return $this->user;
 		}
+
+		return null;
 	}
 
 	/**
@@ -711,7 +710,7 @@ class LocalFile extends File {
 		// Wikia change - begin
 		// @author macbre / BAC-1206
 		$urls = array( $this->getURL() );
-		wfRunHooks( 'LocalFilePurgeCacheUrls', [ $this, &$urls ] );
+		Hooks::run( 'LocalFilePurgeCacheUrls', [ $this, &$urls ] );
 
 		SquidUpdate::purge( $urls );
 		// Wikia change - end
@@ -729,7 +728,7 @@ class LocalFile extends File {
 		$this->purgeThumbList( $dir, $files );
 
 		// Purge any custom thumbnail caches
-		wfRunHooks( 'LocalFilePurgeThumbnails', array( $this, $archiveName ) );
+		Hooks::run( 'LocalFilePurgeThumbnails', array( $this, $archiveName ) );
 
 		// Purge the squid
 		if ( $wgUseSquid ) {
@@ -762,7 +761,7 @@ class LocalFile extends File {
 		$this->purgeThumbList( $dir, $files );
 
 		// Purge any custom thumbnail caches
-		wfRunHooks( 'LocalFilePurgeThumbnails', array( $this, false ) );
+		Hooks::run( 'LocalFilePurgeThumbnails', array( $this, false ) );
 
 		// Purge the squid
 		if ( $wgUseSquid ) {
@@ -771,7 +770,7 @@ class LocalFile extends File {
 				$urls[] = $this->getThumbUrl( $file );
 			}
 
-			wfRunHooks( 'LocalFilePurgeThumbnailsUrls', [ $this, &$urls ] ); // Wikia change - BAC-1206
+			Hooks::run( 'LocalFilePurgeThumbnailsUrls', [ $this, &$urls ] ); // Wikia change - BAC-1206
 			SquidUpdate::purge( $urls );
 		}
 	}
@@ -844,8 +843,14 @@ class LocalFile extends File {
 		$opts['ORDER BY'] = "oi_timestamp $order";
 		$opts['USE INDEX'] = array( 'oldimage' => 'oi_name_timestamp' );
 
-		wfRunHooks( 'LocalFile::getHistory', array( &$this, &$tables, &$fields,
-			&$conds, &$opts, &$join_conds ) );
+		Hooks::run( 'LocalFile::getHistory', [
+			$this,
+			&$tables,
+			&$fields,
+			&$conds,
+			&$opts,
+			&$join_conds,
+		] );
 
 		$res = $dbr->select( $tables, $fields, $conds, __METHOD__, $opts, $join_conds );
 		$r = array();
@@ -1045,7 +1050,7 @@ class LocalFile extends File {
 				'img_timestamp'   => $timestamp,
 				'img_description' => $comment,
 				'img_user'        => $user->getId(),
-				'img_user_text'   => $user->getName(),
+				'img_user_text'   => $user->isAnon() ? $user->getName() : '', // SUS-3086
 				'img_metadata'    => $this->metadata,
 				'img_sha1'        => $this->sha1
 			),
@@ -1062,7 +1067,6 @@ class LocalFile extends File {
 				#throw new MWException( "Empty oi_archive_name. Database and storage out of sync?" );
 				Wikia::logBacktrace(__METHOD__ . "::oi_archive_name - [{$this->getName()}]"); // Wikia change (BAC-1068)
 			}
-			$usernameUseProfiler = new UsernameUseProfiler( __CLASS__, __METHOD__ );
 			$reupload = true;
 			# Collision, this is an update of a file
 			# Insert previous contents into oldimage
@@ -1101,7 +1105,7 @@ class LocalFile extends File {
 					'img_timestamp'   => $timestamp,
 					'img_description' => $comment,
 					'img_user'        => $user->getId(),
-					'img_user_text'   => $user->getName(),
+					'img_user_text'   => $user->isAnon() ? $user->getName() : '', // SUS-3086
 					'img_metadata'    => $this->metadata,
 					'img_sha1'        => $this->sha1
 				),
@@ -1109,7 +1113,6 @@ class LocalFile extends File {
 				__METHOD__
 			);
 
-			$usernameUseProfiler->end();
 		}
 
 		$descTitle = $this->getTitle();
@@ -1133,7 +1136,7 @@ class LocalFile extends File {
 			if (!is_null($nullRevision)) {
 				$nullRevision->insertOn( $dbw );
 
-				wfRunHooks( 'NewRevisionFromEditComplete', array( $wikiPage, $nullRevision, $latest, $user ) );
+				Hooks::run( 'NewRevisionFromEditComplete', array( $wikiPage, $nullRevision, $latest, $user ) );
 				$wikiPage->updateRevisionOn( $dbw, $nullRevision );
 			}
 			else {
@@ -1196,7 +1199,7 @@ class LocalFile extends File {
 		}
 
 		# Hooks, hooks, the magic of hooks...
-		wfRunHooks( 'FileUpload', array( $this, $reupload, $descTitle->exists() ) );
+		Hooks::run( 'FileUpload', array( $this, $reupload, $descTitle->exists() ) );
 
 		# Invalidate cache for all pages using this file
 		// Wikia change begin @author Scott Rabin (srabin@wikia-inc.com)
@@ -1896,7 +1899,7 @@ class LocalFileDeleteBatch {
 				$urlRel = str_replace( '%2F', '/', rawurlencode( $srcRel ) );
 				$urls[] = $this->file->repo->getZoneUrl( 'public' ) . '/' . $urlRel;
 			}
-			wfRunHooks( 'LocalFileExecuteUrls', [ $this->file, &$urls ] ); // Wikia change - BAC-1206
+			Hooks::run( 'LocalFileExecuteUrls', [ $this->file, &$urls ] ); // Wikia change - BAC-1206
 			SquidUpdate::purge( $urls );
 		}
 
@@ -1984,7 +1987,6 @@ class LocalFileRestoreBatch {
 	 */
 	function execute() {
 		global $wgLang;
-		$usernameUseProfiler = new UsernameUseProfiler( __CLASS__, __METHOD__ );
 
 		if ( !$this->all && !$this->ids ) {
 			// Do nothing
@@ -2205,7 +2207,6 @@ class LocalFileRestoreBatch {
 		}
 
 		$this->file->unlock();
-		$usernameUseProfiler->end();
 		return $status;
 	}
 

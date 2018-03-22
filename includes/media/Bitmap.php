@@ -42,7 +42,7 @@ class BitmapHandler extends ImageHandler {
 
 		# Check if the file is smaller than the maximum image area for thumbnailing
 		$checkImageAreaHookResult = null;
-		wfRunHooks( 'BitmapHandlerCheckImageArea', array( $image, &$params, &$checkImageAreaHookResult ) );
+		Hooks::run( 'BitmapHandlerCheckImageArea', array( $image, &$params, &$checkImageAreaHookResult ) );
 		if ( is_null( $checkImageAreaHookResult ) ) {
 			global $wgMaxImageArea;
 
@@ -167,7 +167,7 @@ class BitmapHandler extends ImageHandler {
 
 		# Try a hook
 		$mto = null;
-		wfRunHooks( 'BitmapHandlerTransform', array( $this, $image, &$scalerParams, &$mto ) );
+		Hooks::run( 'BitmapHandlerTransform', array( $this, $image, &$scalerParams, &$mto ) );
 		if ( !is_null( $mto ) ) {
 			wfDebug( __METHOD__ . ": Hook to BitmapHandlerTransform created an mto\n" );
 			$scaler = 'hookaborted';

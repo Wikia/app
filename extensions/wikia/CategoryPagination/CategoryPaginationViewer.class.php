@@ -65,20 +65,20 @@ class CategoryPaginationViewer extends CategoryViewer {
 		 * @see answerCategoryOtherSection
 		 */
 		$answersSection = '';
-		wfRunHooks( 'CategoryViewer::getOtherSection', [ &$this, &$answersSection ] );
+		Hooks::run( 'CategoryViewer::getOtherSection', [ $this, &$answersSection ] );
 
 		/**
 		 * Hook for category galleries to add the top pages at the top
 		 * @see CategoryGalleriesHelper::onCategoryPageGetCategoryTop
 		 */
 		$categoryGallery = '';
-		wfRunHooks( 'CategoryPage::getCategoryTop', [ $this, &$categoryGallery ] );
+		Hooks::run( 'CategoryPage::getCategoryTop', [ $this, &$categoryGallery ] );
 
 		// Render
 		$this->getOutput()->addHeadItem( 'Paginator', $this->getPaginationHeadItem() );
 		$tpl = new EasyTemplate( __DIR__ . '/templates' );
 		$tpl->set_vars( [
-			'aswersSection' => $answersSection,
+			'answersSection' => $answersSection,
 			'categoryGallery' => $categoryGallery,
 			'content' => $this->content,
 			'counts' => $this->counts,
@@ -115,7 +115,7 @@ class CategoryPaginationViewer extends CategoryViewer {
 		// Get pages
 		$this->processSection( self::TYPE_PAGE, function ( $title, $humanSortkey, $row ) {
 			/** @see answerAddCategoryPage */
-			if ( wfRunHooks( 'CategoryViewer::addPage', array( &$this, &$title, &$row, $humanSortkey ) ) ) {
+			if ( Hooks::run( 'CategoryViewer::addPage', [ $this, $title, &$row, $humanSortkey ] ) ) {
 				$this->addPage( $title, $humanSortkey, $row->page_len, $row->page_is_redirect );
 				return true;
 			}
@@ -171,7 +171,7 @@ class CategoryPaginationViewer extends CategoryViewer {
 		 * Hook for Wall to remove wall pages from category listing
 		 * @see WallHooksHelper::onBeforeCategoryData
 		 */
-		wfRunHooks( 'CategoryViewer::beforeCategoryData', array( &$conds ) );
+		Hooks::run( 'CategoryViewer::beforeCategoryData', array( &$conds ) );
 
 		$dbr = wfGetDB( DB_SLAVE, 'category' );
 		$result = $dbr->select(

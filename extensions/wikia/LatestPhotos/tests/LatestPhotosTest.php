@@ -5,15 +5,15 @@ class LatestPhotosTest extends WikiaBaseTest {
 	const FILENAME = 'LatestPhotosTest.jpg';
 	const PREFIX = 'QAImage';
 
-	public function setUp() {
+	protected function setUp() {
 		$this->setupFile = __DIR__ . '/../LatestPhotos.setup.php';
 		parent::setUp();
 	}
 
 	/**
 	 * @dataProvider getTemplateDataDataProvider
-	 * @param Array $element
-	 * @param Array $expectedResult
+	 * @param array $element
+	 * @param array $expectedResult
 	 */
 	public function testGetTemplateData($element, $expectedResult) {
 		$latestPhotosHelper = new LatestPhotosHelper();
@@ -35,8 +35,8 @@ class LatestPhotosTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * @dataProvider testGetImageDataCorrectElementDataProvider
-	 * @param Array $element
+	 * @dataProvider getImageDataCorrectElementDataProvider
+	 * @param array $element
 	 * @param String $firstKey
 	 * @param String $secondKey
 	 */
@@ -52,23 +52,23 @@ class LatestPhotosTest extends WikiaBaseTest {
 		$this->assertArrayHasKey($secondKey, $result);
 	}
 
-	public function testGetImageDataCorrectElementDataProvider() {
+	public function getImageDataCorrectElementDataProvider() {
 		return [
 			[['title' => 'foo'], 'url', 'file']
 		];
 	}
 
 	/**
-	 * @dataProvider testGetImageDataWrongElementDataProvider
-	 * @param Array $element
-	 * @param Array $result
+	 * @dataProvider getImageDataWrongElementDataProvider
+	 * @param array $element
+	 * @param array $result
 	 */
 	public function testGetImageDataWrongElement($element, $result) {
 		$latestPhotoHelper = new LatestPhotosHelper();
 		$this->assertEquals($latestPhotoHelper->getImageData($element), $result);
 	}
 
-	public function testGetImageDataWrongElementDataProvider() {
+	public function getImageDataWrongElementDataProvider() {
 		return [
 			[['foo' => 'bar'], []]
 		];

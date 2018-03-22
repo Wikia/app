@@ -11,11 +11,10 @@
  */
 abstract class WikiaDispatchableObject extends WikiaObject {
 	const DEFAULT_TEMPLATE_ENGINE = WikiaResponse::TEMPLATE_ENGINE_PHP;
-	const NIRVANA_API_PATH = '/wikia.php';
 
 	/**
 	 * Mediawiki RequestContext object
-	 * @var $context RequestContext
+	 * @var IContextSource $context
 	 */
 	protected $context = null;
 
@@ -137,7 +136,7 @@ abstract class WikiaDispatchableObject extends WikiaObject {
 	/**
 	 * Convenience method for setting a value on the response object
 	 * @param string $key
-	 * @param string $value
+	 * @param mixed $value
 	 */
 	protected function setVal($key, $value) {
 		$this->response->setVal($key, $value);
@@ -157,10 +156,10 @@ abstract class WikiaDispatchableObject extends WikiaObject {
 
 	/**
 	 * set context
-	 * @param RequestContext $context
+	 * @param IContextSource $context
 	 */
 
-	public function setContext(RequestContext $context) {
+	public function setContext( IContextSource $context ) {
 		$this->context = $context;
 	}
 
@@ -301,7 +300,7 @@ abstract class WikiaDispatchableObject extends WikiaObject {
 			$baseParams = array_merge( $baseParams, $params );
 		}
 
-		return wfAppendQuery( self::NIRVANA_API_PATH, $baseParams );
+		return wfScript( 'wikia' ) . '?' . http_build_query( $baseParams );
 	}
 
 	/**
@@ -316,7 +315,7 @@ abstract class WikiaDispatchableObject extends WikiaObject {
 	 */
 	public static function getFullUrl( $method, $params = null, $format = null ) {
 		$app = F::app();
-		return wfExpandUrl( $app->wg->Server . $app->wg->ScriptPath . self::getLocalUrl( $method, $params, $format ) );
+		return wfExpandUrl( $app->wg->Server . self::getLocalUrl( $method, $params, $format ) );
 	}
 
 	/**
@@ -331,7 +330,7 @@ abstract class WikiaDispatchableObject extends WikiaObject {
 	 */
 	public static function getNoCookieUrl( $method, $params = null, $format = null ) {
 		$app = F::app();
-		return wfExpandUrl( $app->wg->CdnApiUrl . $app->wg->ScriptPath . self::getLocalUrl( $method, $params, $format ) );
+		return wfExpandUrl( $app->wg->CdnApiUrl . self::getLocalUrl( $method, $params, $format ) );
 	}
 
 

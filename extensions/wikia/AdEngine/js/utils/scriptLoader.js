@@ -1,24 +1,38 @@
+/*global define, Promise*/
 define('ext.wikia.adEngine.utils.scriptLoader', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adTracker',
 	'wikia.document',
-	'wikia.log'
-], function (adContext, adTracker, doc, log) {
+], function (adContext, adTracker, doc) {
 	'use strict';
 
-	var logGroup = 'ext.wikia.adEngine.utils.scriptLoader';
-
-	function loadAsync(src, node, type) {
-		return loadScript(src, node, type, true);
-	}
-
-	function loadScript(src, node, type, isAsync) {
+	function createScript(src, type, isAsync, node) {
 		var script = doc.createElement('script');
+
+		node = node || doc.body.lastChild;
 		script.async = isAsync || true;
 		script.type = type || 'text/javascript';
 		script.src = src;
 		node.parentNode.insertBefore(script, node);
-		log(['Script loaded', src], 'debug', logGroup);
+
+		return script;
+	}
+
+	function loadAsync(src, options) {
+		options = options || {};
+		options.isAsync = true;
+
+		return loadScript(src, options);
+	}
+
+	function loadScript(src, options) {
+		options = options || {};
+
+		var script = createScript(src, options.type, options.isAsync, options.node);
+
+		script.onload = options.onLoad;
+		script.onerror = options.onError;
+
 		return script;
 	}
 

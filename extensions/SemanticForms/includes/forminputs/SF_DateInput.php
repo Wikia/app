@@ -73,40 +73,7 @@ class SFDateInput extends SFFormInput {
 			return array( $year, $month, $day );
 		}
 
-		if ( class_exists( 'SMWTimeValue' ) ) {
-			return self::parseDateSMW( $date );
-		} else {
-			return self::parseDateNonSMW( $date );
-		}
-	}
-
-	static function parseDateSMW( $date ) {
-		$actual_date = new SMWTimeValue( '_dat' );
-		$actual_date->setUserValue( $date );
-		$year = $actual_date->getYear();
-		// TODO - the code to convert from negative to BC notation
-		// should be in SMW itself.
-		if ( $year < 0 ) {
-			$year = ( $year * - 1 + 1 ) . ' BC';
-		}
-		// Use precision of the date to determine whether we should
-		// also set the month and day.
-		if ( method_exists( $actual_date->getDataItem(), 'getPrecision' ) ) {
-			$precision = $actual_date->getDataItem()->getPrecision();
-			if ( $precision > SMWDITime::PREC_Y ) {
-				$month = $actual_date->getMonth();
-			}
-			if ( $precision > SMWDITime::PREC_YM ) {
-				$day = $actual_date->getDay();
-			}
-		} else {
-			// There's some sort of error - make everything blank.
-			$year = null;
-		}
-		return array( $year, $month, $day );
-	}
-
-	static function parseDateNonSMW( $date ) {
+		// All other dates.
 		if ( ctype_digit( $date ) ) {
 			return array( $date, null, null );
 		}

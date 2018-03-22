@@ -63,15 +63,12 @@ class ApiQueryLogEvents extends ApiQueryBase {
 		}
 
 		// Order is significant here
-		$this->addTables( array( 'logging', 'user', 'page' ) );
+		$this->addTables( array( 'logging', 'page' ) );
 		$this->addOption( 'STRAIGHT_JOIN' );
+		// SUS-2779
 		$this->addJoinConds( array(
-			'user' => array( 'JOIN',
-				'user_id=log_user' ),
 			'page' => array( 'LEFT JOIN',
-				array(	'log_namespace=page_namespace',
-					'log_title=page_title' ) ) ) );
-		$index = array( 'logging' => 'times' ); // default, may change
+				array(	'log_namespace=page_namespace', 'log_title=page_title' ) ) ) );
 
 		$this->addFields( array(
 			'log_type',
@@ -81,24 +78,20 @@ class ApiQueryLogEvents extends ApiQueryBase {
 		) );
 
 		$this->addFieldsIf( array( 'log_id', 'page_id' ), $this->fld_ids );
-		$this->addFieldsIf( array( 'log_user', 'user_name' ), $this->fld_user );
-		$this->addFieldsIf( 'user_id', $this->fld_userid );
+		$this->addFieldsIf( array( 'log_user' ), $this->fld_user );
 		$this->addFieldsIf( array( 'log_namespace', 'log_title' ), $this->fld_title || $this->fld_parsedcomment );
 		$this->addFieldsIf( 'log_comment', $this->fld_comment || $this->fld_parsedcomment );
 		$this->addFieldsIf( 'log_params', $this->fld_details );
 
 		if ( $this->fld_tags ) {
-			$this->addTables( 'tag_summary' );
-			$this->addJoinConds( array( 'tag_summary' => array( 'LEFT JOIN', 'log_id=ts_log_id' ) ) );
-			$this->addFields( 'ts_tags' );
+			$tsTags = ChangeTags::buildTsTagsGroupConcatField( 'log_id' );
+			$this->addFields( $tsTags );
 		}
 
 		if ( !is_null( $params['tag'] ) ) {
 			$this->addTables( 'change_tag' );
 			$this->addJoinConds( array( 'change_tag' => array( 'INNER JOIN', array( 'log_id=ct_log_id' ) ) ) );
 			$this->addWhereFld( 'ct_tag', $params['tag'] );
-			global $wgOldChangeTagsIndex;
-			$index['change_tag'] = $wgOldChangeTagsIndex ? 'ct_tag' : 'change_tag_tag_id';
 		}
 
 		if ( !is_null( $params['action'] ) ) {
@@ -107,7 +100,6 @@ class ApiQueryLogEvents extends ApiQueryBase {
 			$this->addWhereFld( 'log_action', $action );
 		} elseif ( !is_null( $params['type'] ) ) {
 			$this->addWhereFld( 'log_type', $params['type'] );
-			$index['logging'] = 'type_time';
 		}
 
 		$this->addTimestampWhereRange( 'log_timestamp', $params['dir'], $params['start'], $params['end'] );
@@ -122,7 +114,6 @@ class ApiQueryLogEvents extends ApiQueryBase {
 				$this->dieUsage( "User name $user not found", 'param_user' );
 			}
 			$this->addWhereFld( 'log_user', $userid );
-			$index['logging'] = 'user_time';
 		}
 
 		$title = $params['title'];
@@ -133,9 +124,6 @@ class ApiQueryLogEvents extends ApiQueryBase {
 			}
 			$this->addWhereFld( 'log_namespace', $titleObj->getNamespace() );
 			$this->addWhereFld( 'log_title', $titleObj->getDBkey() );
-
-			// Use the title index in preference to the user index if there is a conflict
-			$index['logging'] = is_null( $user ) ? 'page_time' : array( 'page_time', 'user_time' );
 		}
 
 		$prefix = $params['prefix'];
@@ -154,8 +142,6 @@ class ApiQueryLogEvents extends ApiQueryBase {
 			$this->addWhere( 'log_title ' . $db->buildLike( $title->getDBkey(), $db->anyString() ) );
 		}
 
-		$this->addOption( 'USE INDEX', $index );
-
 		// Paranoia: avoid brute force searches (bug 17342)
 		if ( !is_null( $title ) ) {
 			$this->addWhere( $db->bitAnd( 'log_deleted', LogPage::DELETED_ACTION ) . ' = 0' );
@@ -167,11 +153,32 @@ class ApiQueryLogEvents extends ApiQueryBase {
 		$count = 0;
 		$res = $this->select( __METHOD__ );
 		$result = $this->getResult();
+
+		// SUS-2779
+		$userIds = $this->getFieldFromResults( $res, 'log_user' );
+		$userNames = User::whoAre( $userIds );
+
 		foreach ( $res as $row ) {
 			if ( ++ $count > $limit ) {
 				// We've reached the one extra which shows that there are additional pages to be had. Stop here...
 				$this->setContinueEnumParameter( 'start', wfTimestamp( TS_ISO_8601, $row->log_timestamp ) );
 				break;
+			}
+
+			// SUS-2779
+			if ( $this->fld_userid ) {
+				$row->user_id = $row->log_user;
+			}
+
+			if ( $this->fld_user ) {
+				if ( isset( $userNames[$row->log_user] ) ) {
+					$row->user_name = $userNames[$row->log_user];
+				} else {
+					$row->user_name = 'unknown';
+					\Wikia\Logger\WikiaLogger::instance()
+						->warning( "User not found by a given ID",
+							[ 'user_id' => $row->log_user ] );
+				}
 			}
 
 			$vals = $this->extractRowInfo( $row );
@@ -478,5 +485,16 @@ class ApiQueryLogEvents extends ApiQueryBase {
 
 	public function getVersion() {
 		return __CLASS__ . ': $Id$';
+	}
+
+	private function getFieldFromResults( $res, $fieldName ) {
+		$userIds = [];
+		foreach ( $res as $row ) {
+			if ( isset($row->{ $fieldName }) ) {
+				$userIds[] = $row->{ $fieldName };
+			}
+		}
+
+		return $userIds;
 	}
 }

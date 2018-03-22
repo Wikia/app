@@ -1,0 +1,15 @@
+{
+	"@metadata": {
+		"authors": [
+			"Haqmar",
+			"Вильданова Гюзель"
+		]
+	},
+	"maps-leaflet-par-defzoom": "Карталағы күҙәтеүҙе артырыуҙың кимәлен көйләргә мөмкинлек бирә",
+	"mapeditor-form-title": "Үҙгәртеү мәғлүмәттәре",
+	"mapeditor-link-title-switcher-link-text": "Һылтанма",
+	"mapeditor-form-field-title": "Исем",
+	"mapeditor-form-field-text": "Текст",
+	"mapeditor-form-field-link": "Һылтанма",
+	"mapeditor-form-field-group": "Төркөм"
+}

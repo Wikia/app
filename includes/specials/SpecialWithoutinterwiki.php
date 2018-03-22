@@ -81,8 +81,7 @@ class WithoutInterwikiPage extends PageQueryPage {
 		$query = array (
 			'tables' => array ( 'page', 'langlinks' ),
 			'fields' => array ( 'page_namespace AS namespace',
-					'page_title AS title',
-					'page_title AS value' ),
+					'page_title AS title' ),
 			'conds' => array ( 'll_title IS NULL',
 					'page_namespace' => MWNamespace::getContentNamespaces(),
 					'page_is_redirect' => 0 ),

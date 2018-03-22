@@ -23,7 +23,6 @@
  *
  * @file
  */
-use Wikia\Util\PerformanceProfilers\UsernameUseProfiler;
 
 /**
  * Query module to enumerate all deleted revisions.
@@ -42,7 +41,6 @@ class ApiQueryDeletedrevs extends ApiQueryBase {
 		if ( !$user->isAllowed( 'deletedhistory' ) ) {
 			$this->dieUsage( 'You don\'t have permission to view deleted revision information', 'permissiondenied' );
 		}
-		$usernameUseProfiler = new UsernameUseProfiler( __CLASS__, __METHOD__ );
 
 		$db = $this->getDB();
 		$params = $this->extractRequestParams( false );
@@ -104,7 +102,7 @@ class ApiQueryDeletedrevs extends ApiQueryBase {
 
 		$this->addFieldsIf( 'ar_parent_id', $fld_parentid );
 		$this->addFieldsIf( 'ar_rev_id', $fld_revid );
-		$this->addFieldsIf( 'ar_user_text', $fld_user );
+		$this->addFieldsIf( [ 'ar_user', 'ar_user_text' ], $fld_user );
 		$this->addFieldsIf( 'ar_user', $fld_userid );
 		$this->addFieldsIf( 'ar_comment', $fld_comment || $fld_parsedcomment );
 		$this->addFieldsIf( 'ar_minor_edit', $fld_minor );
@@ -222,7 +220,7 @@ class ApiQueryDeletedrevs extends ApiQueryBase {
 				$rev['parentid'] = intval( $row->ar_parent_id );
 			}
 			if ( $fld_user ) {
-				$rev['user'] = $row->ar_user_text;
+				$rev[ 'user' ] = User::getUsername( $row->ar_user, $row->ar_user_text );
 			}
 			if ( $fld_userid ) {
 				$rev['userid'] = $row->ar_user;
@@ -280,7 +278,6 @@ class ApiQueryDeletedrevs extends ApiQueryBase {
 			}
 		}
 		$result->setIndexedTagName_internal( array( 'query', $this->getModuleName() ), 'page' );
-		$usernameUseProfiler->end();
 	}
 
 	public function getAllowedParams() {

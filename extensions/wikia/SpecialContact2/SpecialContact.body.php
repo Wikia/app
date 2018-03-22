@@ -5,7 +5,7 @@
  * @subpackage SpecialPage
  */
 class ContactForm extends SpecialPage {
-	const WIKIA_SUPPORT_EMAIL = 'support@wikia-inc.com';
+	const WIKIA_SUPPORT_EMAIL = 'support@fandom.com';
 
 	var $mUserName, $mPassword, $mRetype, $mReturnto, $mCookieCheck;
 	var $mAction, $mCreateaccount, $mCreateaccountMail, $mMailmypassword;
@@ -84,6 +84,11 @@ class ContactForm extends SpecialPage {
 		if ( $par === 'close-account' && $this->isCloseMyAccountSupported() ) {
 			$closeAccountTitle = SpecialPage::getTitleFor( 'CloseMyAccount' );
 			$out->redirect( $closeAccountTitle->getFullURL() );
+		}
+		
+		if ( $par === 'rename-account' && $this->isRenameAccountSupported() ) {
+			$renameAccountTitle = SpecialPage::getTitleFor( 'UserRenameTool' );
+			$out->redirect( $renameAccountTitle->getFullURL() );
 		}
 
 		$out->addStyle( AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/SpecialContact2/SpecialContact.scss'));
@@ -252,7 +257,7 @@ class ContactForm extends SpecialPage {
 		global $wgLanguageCode, $wgServer;
 
 		// If not configured, fall back to a default just in case.
-		$wgSpecialContactEmail = ( empty( $wgSpecialContactEmail ) ? "community@wikia.com" : $wgSpecialContactEmail );
+		$wgSpecialContactEmail = ( empty( $wgSpecialContactEmail ) ? "community@fandom.com" : $wgSpecialContactEmail );
 
 		$user = $this->getUser();
 		$output = $this->getOutput();
@@ -740,7 +745,7 @@ class ContactForm extends SpecialPage {
 		$result = wfValidateUserName( $userName );
 		if ( $result === true ) {
 			$msgKey = '';
-			if ( !wfRunHooks( 'cxValidateUserName', array( $userName, &$msgKey ) ) ) {
+			if ( !Hooks::run( 'cxValidateUserName', array( $userName, &$msgKey ) ) ) {
 				$result = $msgKey;
 			}
 		}
@@ -773,5 +778,10 @@ class ContactForm extends SpecialPage {
 		global $wgContLang, $wgEnableCloseMyAccountExt, $wgSupportedCloseMyAccountLang;
 		return !empty( $wgEnableCloseMyAccountExt )
 				&& in_array( $wgContLang->getCode(), $wgSupportedCloseMyAccountLang );
+	}
+	
+	private function isRenameAccountSupported() {
+		global $wgEnableUserRenameToolExt;
+		return !empty( $wgEnableUserRenameToolExt );
 	}
 }

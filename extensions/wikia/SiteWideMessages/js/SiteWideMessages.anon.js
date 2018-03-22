@@ -7,7 +7,10 @@
 				controller: 'SiteWideMessagesController',
 				method: 'getAnonMessages',
 				format: 'json',
-				type: 'GET'
+				type: 'GET',
+				data: {
+					articleId: wgArticleId,
+				}
 			}).done($.proxy(this.handleMessages, this));
 		},
 

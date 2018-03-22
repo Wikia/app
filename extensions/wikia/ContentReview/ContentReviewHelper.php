@@ -12,6 +12,7 @@ class Helper extends \ContextSource {
 	const CONTENT_REVIEW_MEMC_VER = '1.0';
 	const CONTENT_REVIEW_REVIEWED_KEY = 'reviewed-js-pages';
 	const CONTENT_REVIEW_CURRENT_KEY = 'current-js-pages';
+	const CONTENT_REVIEW_TEST_MODE_KEY = 'contentReviewTestMode';
 	const JS_FILE_EXTENSION = '.js';
 
 	const DEV_WIKI_ID = 7931;
@@ -141,7 +142,7 @@ class Helper extends \ContextSource {
 	 * @return array|mixed
 	 */
 	public function getContentReviewTestModeWikis() {
-		$key = \ContentReviewApiController::CONTENT_REVIEW_TEST_MODE_KEY;
+		$key = self::CONTENT_REVIEW_TEST_MODE_KEY;
 		$wikiIds = $this->getRequest()->getSessionData( $key );
 
 		if ( !empty( $wikiIds ) ) {
@@ -163,7 +164,7 @@ class Helper extends \ContextSource {
 		if ( !in_array( $wikiId, $wikiIds ) ) {
 			$wikiIds[] = $wikiId;
 			$this->getRequest()->setSessionData(
-				\ContentReviewApiController::CONTENT_REVIEW_TEST_MODE_KEY,
+				self::CONTENT_REVIEW_TEST_MODE_KEY,
 				serialize( $wikiIds )
 			);
 		}
@@ -180,7 +181,7 @@ class Helper extends \ContextSource {
 		if ( $wikiKey !== false ) {
 			unset( $wikiIds[$wikiKey] );
 			$this->getRequest()->setSessionData(
-				\ContentReviewApiController::CONTENT_REVIEW_TEST_MODE_KEY,
+				self::CONTENT_REVIEW_TEST_MODE_KEY,
 				serialize( $wikiIds )
 			);
 		}

@@ -22,11 +22,12 @@ class AssetsConfig {
 
 	public static function getRTEAssets() {
 		global $IP;
+
 		$path = "extensions/wikia/RTE";
-		$files = array(
-			// CK core entry point
-			$path . '/ckeditor/_source/core/ckeditor_base.js',
-		);
+			
+		//CK core entry point
+		$files = [ $path . '/ckeditor/ckeditor.js' ];
+
 
 		$input = file_get_contents( $IP . '/' . $path . '/ckeditor/ckeditor.wikia.pack' );
 		$input = substr( $input, strpos( $input, 'files :' ) + 7 );
@@ -39,7 +40,6 @@ class AssetsConfig {
 				$files[] = $path . '/ckeditor/' . $name;
 			}
 		}
-
 		return $files;
 	}
 
@@ -62,8 +62,8 @@ class AssetsConfig {
 
 		if ( !empty( $wgUseJQueryFromCDN ) && empty( $params['noexternals'] ) ) {
 			$url = $minify
-				? '#external_http://ajax.googleapis.com/ajax/libs/jquery/' . static::JQUERY_VERSION . '/jquery.min.js'
-				: '#external_http://ajax.googleapis.com/ajax/libs/jquery/' . static::JQUERY_VERSION . '/jquery.js';
+				? '#external_https://ajax.googleapis.com/ajax/libs/jquery/' . static::JQUERY_VERSION . '/jquery.min.js'
+				: '#external_https://ajax.googleapis.com/ajax/libs/jquery/' . static::JQUERY_VERSION . '/jquery.js';
 		} else {
 			$url = 'resources/jquery/jquery-' . static::JQUERY_VERSION . '.js';
 		}

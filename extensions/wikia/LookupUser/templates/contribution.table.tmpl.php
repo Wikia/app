@@ -1,6 +1,6 @@
 <script type="text/javascript" charset="utf-8">
 $(document).ready(function() {
-	var baseurl = wgScript + "?action=ajax&rs=LookupContribsAjax::axData&lookupUser=1";
+	var baseurl = mw.util.wikiScript() + "?action=ajax&rs=LookupContribsAjax::axData&lookupUser=1";
 	var username = '<?= Xml::escapeJsString( $username ) ?>';
 
 	if ( !username ) {
@@ -37,12 +37,16 @@ $(document).ready(function() {
 			{ sName: "url" },
 			{ sName: "lastedit" },
 			{ sName: "edits" },
+			{ sName: "posts" },
+			{ sName: "lastpost" },
 			{ sName: "userrights" },
 			{ sName: "blocked" }
 		],
 		aoColumnDefs: [
 			{ bVisible: false, aTargets: [0], bSortable: true },
-			{ bVisible: true,  aTargets: [1], bSortable: true },
+			{ bVisible: true,  aTargets: [1], bSortable: true, 'fnRender': function (oObj) {
+				return mw.html.escape(oObj.aData[1]);
+			} },
 			{
 				fnRender: function ( oObj ) {
 					var row = '<span class="lc-row"><a href="' + mw.html.escape( oObj.aData[2] ) + '">' + mw.html.escape( oObj.aData[2] ) + '</a></span>';
@@ -57,7 +61,9 @@ $(document).ready(function() {
 			{ bVisible: true, aTargets: [3], bSortable: true },
 			{ bVisible: true, aTargets: [4], bSortable: true },
 			{ bVisible: true, aTargets: [5], bSortable: false },
-			{ bVisible: true, aTargets: [6], bSortable: false }
+			{ bVisible: true, aTargets: [6], bSortable: false },
+			{ bVisible: true, aTargets: [7], bSortable: false },
+			{ bVisible: true, aTargets: [8], bSortable: false }
 		],
 		bProcessing: true,
 		bServerSide: true,
@@ -142,7 +148,7 @@ $(document).ready(function() {
 									username: username,
 									id: wikiId,
 								},
-								url: wgScript + "?action=ajax&rs=LookupUserPage::requestApiAboutUser",
+								url: mw.util.wikiScript() + "?action=ajax&rs=LookupUserPage::requestApiAboutUser",
 								success: function(res) {
 									var blockedInfo = $('.user-blocked-placeholder-' + wikiId);
 
@@ -218,10 +224,12 @@ $(document).ready(function() {
 	<thead>
 		<tr>
 			<th width="2%">#</th>
-			<th width="25%"><?= wfMessage( 'lookupuser-table-title' )->escaped() ?></th>
-			<th width="20%"><?= wfMessage( 'lookupuser-table-url' )->escaped() ?></th>
+			<th width="20%"><?= wfMessage( 'lookupuser-table-title' )->escaped() ?></th>
+			<th width="15%"><?= wfMessage( 'lookupuser-table-url' )->escaped() ?></th>
 			<th width="20%"><?= wfMessage( 'lookupuser-table-lastedited' )->escaped() ?></th>
 			<th width="15%"><?= wfMessage( 'lookupuser-table-editcount' )->escaped() ?></th>
+			<th width="5%"><?= wfMessage( 'lookupuser-table-posts' )->escaped() ?></th>
+			<th width="5%"><?= wfMessage( 'lookupuser-table-last-post' )->escaped() ?></th>
 			<th width="15%"><?= wfMessage( 'lookupuser-table-userrights' )->escaped() ?></th>
 			<th width="3%"><?= wfMessage( 'lookupuser-table-blocked' )->escaped() ?></th>
 		</tr>
@@ -234,10 +242,12 @@ $(document).ready(function() {
 	<tfoot>
 		<tr>
 			<th width="2%">#</th>
-			<th width="25%"><?= wfMessage( 'lookupuser-table-title' )->escaped() ?></th>
-			<th width="20%"><?= wfMessage( 'lookupuser-table-url' )->escaped() ?></th>
+			<th width="20%"><?= wfMessage( 'lookupuser-table-title' )->escaped() ?></th>
+			<th width="15%"><?= wfMessage( 'lookupuser-table-url' )->escaped() ?></th>
 			<th width="20%"><?= wfMessage( 'lookupuser-table-lastedited' )->escaped() ?></th>
 			<th width="15%"><?= wfMessage( 'lookupuser-table-editcount' )->escaped() ?></th>
+			<th width="5%"><?= wfMessage( 'lookupuser-table-posts' )->escaped() ?></th>
+			<th width="5%"><?= wfMessage( 'lookupuser-table-last-post' )->escaped() ?></th>
 			<th width="15%"><?= wfMessage( 'lookupuser-table-userrights' )->escaped() ?></th>
 			<th width="3%"><?= wfMessage( 'lookupuser-table-blocked' )->escaped() ?></th>
 		</tr>

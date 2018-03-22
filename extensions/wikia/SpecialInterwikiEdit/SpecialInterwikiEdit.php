@@ -370,7 +370,7 @@ function wfSIWEEditInterwiki(){
 	if ($from) $from = "WHERE iw_prefix like '". $db->escapeLike($from) . "%'";
 	$result = $db->query("SELECT * FROM `$wikiaDB`.`interwiki` $from;");
 
-	$ret .= "<p><select multiple='multiple' onchange='updateForm( this.value );'>\n";
+	$ret .= "<p><select size='20' multiple='multiple' onchange='updateForm( this.value );'>\n";
 	while( $dbObject = $db->fetchObject($result)){
 	        $ret .= "<option id='{$dbObject->iw_prefix}'>{$dbObject->iw_prefix}|{$dbObject->iw_url}|{$dbObject->iw_local}|{$dbObject->iw_trans}</option>\n";
 	}

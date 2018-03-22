@@ -1,0 +1,83 @@
+@import 'skins/shared/color';
+@import 'skins/shared/mixins/flexbox';
+
+$recirculation-thumbnail-margin: 6px;
+$recirculation-thumbnail-size: 20px;
+
+.WikiaRail .premium-recirculation-rail {
+	.placeholder-thumbnail {
+		background-color: $color-article-thumb-background;
+		background-image: url('/extensions/wikia/Recirculation/images/brackets.svg'); /* $wgResourceBasePath */
+		background-position: center;
+		background-repeat: no-repeat;
+		background-size: contain;
+		display: block;
+		position: relative;
+
+		&::before {
+			content: '';
+			display: block;
+			padding-top: 56.25%;
+		}
+
+		img {
+			bottom: 0;
+			left: 0;
+			position: absolute;
+			right: 0;
+			top: 0;
+		}
+	}
+
+	.recirculation-sponsored-footer {
+		font-size: 12px;
+		font-style: italic;
+		font-weight: bold;
+		opacity: 0.5;
+		padding-top: 3px;
+	}
+
+	.item {
+		margin: 0 6px 16px;
+
+		&.is-video .image-thumbnail::after {
+			bottom: $recirculation-thumbnail-margin;
+			height: $recirculation-thumbnail-size;
+			right: $recirculation-thumbnail-margin;
+			width: $recirculation-thumbnail-size;
+		}
+	}
+
+	.image-thumbnail {
+		@include flex(0 0 94px);
+	}
+
+	.content {
+		font-size: 12px;
+		margin-left: 12px;
+		margin-top: 3px;
+	}
+
+	.video-icon-container {
+		@include flexbox();
+		@include align-items(center);
+		@include justify-content(center);
+
+		height: 100%;
+		left: 0;
+		position: absolute;
+		top: 0;
+		width: 100%;
+	}
+
+	a {
+		@include flexbox();
+		@include align-items(flex-start);
+		color: $color-text;
+
+		&:hover {
+			color: $color-links;
+			text-decoration: none;
+		}
+	}
+}

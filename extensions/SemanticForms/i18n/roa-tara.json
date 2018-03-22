@@ -51,5 +51,11 @@
 	"sf_formedit_none": "Ninde",
 	"sf_formedit_saveandcontinueediting": "Reggìstre e condinue",
 	"sf-autoedit-wait": "Aspitte...",
-	"sf_blank_namespace": "Prengepàle"
+	"sf_blank_namespace": "Prengepàle",
+	"sf-datepicker-close": "Chiude",
+	"sf-datepicker-prev": "Precedende",
+	"sf-datepicker-next": "Prossime",
+	"sf-datepicker-today": "Osce",
+	"sf-regexp-wrongformat": "Formate sbagliate",
+	"sf-regexp-baseprefix": "Prefisse pe le parametre d'u tipe de base."
 }

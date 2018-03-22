@@ -14,7 +14,8 @@ class ListusersHooks {
 	 *
 	 * @author      Piotr Molski <moli@wikia-inc.com>
 	 * @version     1.0.0
-	 * @param       Array   $list
+	 * @param       array   $list
+	 * @return bool
 	 */
 	public static function Activeusers( &$list ) {
 		wfProfileIn( __METHOD__ );
@@ -23,25 +24,30 @@ class ListusersHooks {
 		return true;
 	}
 
-	/**
-	 * update list users table on user right change
-	 *
-	 * @author      Piotr Molski <moli@wikia-inc.com>
-	 * @version     1.0.0
-	 * @param       User    $user object
-	 * @param       Array   $addgroup - selected groups for user
-	 * @param       Array   $removegroup - disabled groups for user
-	 */
-	static public function updateUserRights( &$user, $addgroup, $removegroup ) {
-		global $wgCityId, $wgDevelEnvironment;
-		wfProfileIn( __METHOD__ );
-		if ( empty($wgDevelEnvironment) ) {
-			$data = new ListusersData($wgCityId, 0);
-			if ( is_object($data) ) {
-				$data->updateUserGroups( $user, $addgroup, $removegroup );
-			}
+
+	static public function updateUserRights( User $user ) {
+		$listUsersUpdate = new ListUsersUpdate();
+		$listUsersUpdate->setUserId( $user->getId() );
+		$listUsersUpdate->setUserGroups( $user->getGroups() );
+
+		$task = UpdateListUsersTask::newLocalTask();
+		$task->call( 'updateUserGroups', $listUsersUpdate );
+		$task->queue();
+	}
+
+	public static function doEditUpdate( WikiPage $wikiPage, Revision $revision, $baseRevId, User $user ) {
+		if ( $user->isAnon() ) {
+			return;
 		}
-		wfProfileOut( __METHOD__ );
-		return true;
+
+		$editUpdate = new ListUsersEditUpdate();
+		$editUpdate->setUserId( $user->getId() );
+		$editUpdate->setUserGroups( $user->getGroups() );
+		$editUpdate->setLatestRevisionId( $revision->getId() );
+		$editUpdate->setLatestRevisionTimestamp( $revision->getTimestamp() );
+
+		$task = UpdateListUsersTask::newLocalTask();
+		$task->call( 'updateEditInformation', $editUpdate );
+		$task->queue();
 	}
 }

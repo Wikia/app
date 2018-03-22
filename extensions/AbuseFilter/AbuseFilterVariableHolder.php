@@ -314,22 +314,8 @@ class AFComputedVariable {
 					break;
 				}
 
-				$dbr = wfGetDB( DB_SLAVE );
-				$res = $dbr->select( 'revision',
-					'DISTINCT rev_user_text',
-					array(
-						'rev_page' => $title->getArticleId(),
-						'rev_timestamp<' . $dbr->addQuotes( $dbr->timestamp( $cutOff ) )
-					),
-					__METHOD__,
-					array( 'ORDER BY' => 'rev_timestamp DESC', 'LIMIT' => 10 )
-				);
-
-				$users = array();
-				foreach( $res as $row ) {
-					$users[] = $row->rev_user_text;
-				}
-				$result = $users;
+				// SUS-807
+				$result = $this->getRecentAuthorsNames( $title->getArticleId(), $cutOff );
 				break;
 			case 'get-page-restrictions':
 				$action = $parameters['action'];
@@ -402,7 +388,7 @@ class AFComputedVariable {
 				}
 				break;
 			default:
-				if ( wfRunHooks( 'AbuseFilter-computeVariable',
+				if ( Hooks::run( 'AbuseFilter-computeVariable',
 									array( $this->mMethod, $vars ) ) ) {
 					throw new AFPException( 'Unknown variable compute type ' . $this->mMethod );
 				}
@@ -410,5 +396,41 @@ class AFComputedVariable {
 
 		return $result instanceof AFPData
 			? $result : AFPData::newFromPHPVar( $result );
+	}
+
+	private function getRecentAuthorsNames( $articleId, $cutOff ): array {
+		$dbr = wfGetDB( DB_SLAVE );
+		$res = $dbr->select( 'revision', 'DISTINCT rev_user, rev_user_text', [
+			'rev_page' => $articleId,
+			'rev_timestamp<' . $dbr->addQuotes( $dbr->timestamp( $cutOff ) ),
+		], __METHOD__, [ 'ORDER BY' => 'rev_timestamp DESC', 'LIMIT' => 10 ] );
+
+		return $this->getUsernamesFromResults( $res );
+	}
+
+	private function getUsernamesFromResults( ResultWrapper $res ): array {
+		$names = User::whoAre( $this->getUsersIds( $res ) );
+		$res->rewind();
+		$users = [];
+		foreach ( $res as $row ) {
+			$users[] = $row->rev_user && isset( $names[$row->rev_user] ) ?
+				$names[$row->rev_user] : $row->rev_user_text;
+		}
+
+		$res->rewind();
+
+		return $users;
+	}
+
+	private function getUsersIds( ResultWrapper $res ): array {
+		$ids = [];
+
+		foreach ( $res as $row ) {
+			if ( $row->rev_user ) {
+				$ids[] = $row->rev_user;
+			}
+		}
+
+		return $ids;
 	}
 }

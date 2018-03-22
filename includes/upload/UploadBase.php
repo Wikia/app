@@ -169,7 +169,8 @@ abstract class UploadBase {
 	 * @param $tempPath string the temporary path
 	 * @param $fileSize int the file size
 	 * @param $removeTempFile bool (false) remove the temporary file?
-	 * @return null
+	 *
+	 * @throws MWException
 	 */
 	public function initializePathInfo( $name, $tempPath, $fileSize, $removeTempFile = false ) {
 		$this->mDesiredDestName = $name;
@@ -270,7 +271,7 @@ abstract class UploadBase {
 		}
 
 		$error = '';
-		if( !wfRunHooks( 'UploadVerification',
+		if( !Hooks::run( 'UploadVerification',
 				array( $this->mDestName, $this->mTempPath, &$error ) ) ) {
 			return array( 'status' => self::HOOK_ABORTED, 'error' => $error );
 		}
@@ -299,6 +300,7 @@ abstract class UploadBase {
 			}
 			return $result;
 		}
+
 		$this->mDestName = $this->getLocalFile()->getName();
 
 		return true;
@@ -375,7 +377,7 @@ abstract class UploadBase {
 			}
 		}
 
-		wfRunHooks( 'UploadVerifyFile', array( $this, $mime, &$status ) );
+		Hooks::run( 'UploadVerifyFile', array( $this, $mime, &$status ) );
 		if ( $status !== true ) {
 			wfProfileOut( __METHOD__ );
 			return $status;
@@ -611,6 +613,12 @@ abstract class UploadBase {
 	 * @return Status indicating the whether the upload succeeded.
 	 */
 	public function performUpload( $comment, $pageText, $watch, $user ) {
+		$msg = '';
+
+		if ( !Hooks::run( 'FileUploadSummaryCheck', [ $comment, &$msg, true ] ) ) {
+			return Status::newFatal( 'validator-fatal-error', $msg );
+		}
+
 		$status = $this->getLocalFile()->upload(
 			$this->mTempPath,
 			$comment,
@@ -626,7 +634,7 @@ abstract class UploadBase {
 				$user->addWatch( $this->getLocalFile()->getTitle() );
 			}
 
-			wfRunHooks( 'UploadComplete', array( &$this ) );
+			Hooks::run( 'UploadComplete', [ $this ] );
 		}
 
 		return $status;
@@ -1052,7 +1060,10 @@ abstract class UploadBase {
 		$check = new XmlTypeCheck(
 			$filename,
 			array( $this, 'checkSvgScriptCallback' ),
-			array( 'processing_instruction_handler' => 'UploadBase::checkSvgPICallback' )
+			array(
+				'processing_instruction_handler' => 'UploadBase::checkSvgPICallback',
+				'external_dtd_handler' => 'UploadBase::checkSvgExternalDTD',
+			)
 		);
 		if ( $check->wellFormed !== true ) {
 			// Invalid xml (bug 58553)
@@ -1119,6 +1130,34 @@ abstract class UploadBase {
 			}
 		}
 
+		return false;
+	}
+
+	/**
+	 * Verify that DTD urls referenced are only the standard dtds
+	 *
+	 * Browsers seem to ignore external dtds. However just to be on the
+	 * safe side, only allow dtds from the svg standard.
+	 *
+	 * @param string $type PUBLIC or SYSTEM
+	 * @param string $publicId The well-known public identifier for the dtd
+	 * @param string $systemId The url for the external dtd
+	 */
+	public static function checkSvgExternalDTD( $type, $publicId, $systemId ) {
+		// This doesn't include the XHTML+MathML+SVG doctype since we don't
+		// allow XHTML anyways.
+		$allowedDTDs = array(
+			'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd',
+			'http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd',
+			'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11-basic.dtd',
+			'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11-tiny.dtd'
+		);
+		if ( $type !== 'PUBLIC'
+			|| !in_array( $systemId, $allowedDTDs )
+			|| strpos( $publicId, "-//W3C//" ) !== 0
+		) {
+			return array( 'upload-scripted-dtd' );
+		}
 		return false;
 	}
 

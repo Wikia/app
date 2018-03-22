@@ -337,6 +337,11 @@ class SpecialAllpages extends IncludableSpecialPage {
 			if( $res->numRows() > 0 ) {
 				$out = Xml::openElement( 'table', array( 'class' => 'mw-allpages-table-chunk' ) );
 				while( ( $n < $this->maxPerPage ) && ( $s = $res->fetchObject() ) ) {
+					/** Wikia change begin, @see LocalSitemapSpecialPage */
+					if ( $s->page_is_redirect && isset( $this->skipRedirects ) && $this->including() ) {
+						continue;
+					}
+					/* Wikia change end */
 					$t = Title::newFromRow( $s );
 					if( $t ) {
 						$link = ( $s->page_is_redirect ? '<div class="allpagesredirect">' : '' ) .

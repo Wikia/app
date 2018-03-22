@@ -42,11 +42,6 @@
 				Lightbox.current.thumbs = [];
 				Lightbox.current.thumbTypesAdded = [];
 				Lightbox.to = LightboxLoader.cache.to;
-				// Reset Ad Flags
-				Lightbox.ads.adMediaProgress = [];
-				Lightbox.ads.adMediaShown = 0;
-				Lightbox.ads.adMediaShownSinceLastAd = 0;
-				Lightbox.ads.adIsShowing = false;
 				// Re-show box ad
 				LightboxLoader.pageAds.css('visibility', 'visible');
 				// Reset tracking
@@ -140,7 +135,7 @@
 					}
 
 					// Display video inline, don't open lightbox
-					isVideo = $this.children('.play-circle').length;
+					isVideo = $this.children('.thumbnail-play-icon-container').length;
 					if (
 						isVideo &&
 						$thumb.width() >= self.videoThumbWidthThreshold &&
@@ -398,12 +393,12 @@
 		inlineVideoTrackingTimeout: 0,
 		// @param data - any extra params we want to pass to internal tracking
 		// Don't add willy nilly though... check with Jonathan.
-		track: function (action, label, value, data, method) {
+		track: function (action, label, value, data) {
 			Wikia.Tracker.track({
 				action: action,
 				category: 'lightbox',
 				label: label || '',
-				trackingMethod: method || 'internal',
+				trackingMethod: 'analytics',
 				value: value || 0
 			}, data);
 		},

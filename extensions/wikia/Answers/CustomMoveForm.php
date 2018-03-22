@@ -13,7 +13,7 @@ class CustomMovePageForm extends MovePageForm{
 	 *    OutputPage::wrapWikiMsg().
 	 */
 	function showForm( $err ) {
-		global $wgOut, $wgUser, $wgFixDoubleRedirects;
+		global $wgOut, $wgUser;
 
 		$skin = $this->getSkin();
 		$oldTitleLink = $skin->makeLinkObj( $this->oldTitle );
@@ -62,17 +62,6 @@ class CustomMovePageForm extends MovePageForm{
 		$oldTalk = $this->oldTitle->getTalkPage();
 		$considerTalk = ( !$this->oldTitle->isTalkPage() && $oldTalk->exists() );
 
-		$dbr = wfGetDB( DB_SLAVE );
-		if ( $wgFixDoubleRedirects ) {
-			$hasRedirects = $dbr->selectField( 'redirect', '1',
-				array(
-					'rd_namespace' => $this->oldTitle->getNamespace(),
-					'rd_title' => $this->oldTitle->getDBkey(),
-				) , __METHOD__ );
-		} else {
-			$hasRedirects = false;
-		}
-
 		if ( $considerTalk ) {
 			$wgOut->addWikiMsg( 'movepagetalktext' );
 		}
@@ -94,7 +83,7 @@ class CustomMovePageForm extends MovePageForm{
 		$wgOut->addHTML(
 			 Xml::openElement( 'form', array( 'onsubmit' => 'this.wpNewTitle.value=this.wpNewTitle.value.replace(/\?/g,\'\')', 'method' => 'post', 'action' => $titleObj->getLocalURL( 'action=submit' ), 'id' => 'movepage' ) )
 		);
-		wfRunHooks( 'ArticleMoveForm', array( &$wgOut ) );
+		Hooks::run( 'ArticleMoveForm', array( &$wgOut ) );
 		$wgOut->addHTML(
 			 //Xml::openElement( 'fieldset' ) .
 			 //Xml::element( 'legend', null, wfMsg( 'move-page-legend' ) ) .
@@ -128,18 +117,6 @@ class CustomMovePageForm extends MovePageForm{
 					<td class='mw-input' >" .
 						Xml::checkLabel( wfMsg( 'move-leave-redirect' ), 'wpLeaveRedirect',
 							'wpLeaveRedirect', $this->leaveRedirect ) .
-					"</td>
-				</tr>"
-			);
-		}
-
-		if ( $hasRedirects ) {
-			$wgOut->addHTML( "
-				<tr>
-					<td></td>
-					<td class='mw-input' >" .
-						Xml::checkLabel( wfMsg( 'fix-double-redirects' ), 'wpFixRedirects',
-							'wpFixRedirects', $this->fixRedirects ) .
 					"</td>
 				</tr>"
 			);

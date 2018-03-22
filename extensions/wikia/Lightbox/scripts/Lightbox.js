@@ -23,7 +23,17 @@
 
 		// Carousel vars
 		// overlay for thumb images
-		thumbPlayButton: '<span class="play-circle"></span>',
+		thumbPlayButton: '<span class="thumbnail-play-icon-container">' +
+			'<svg class="thumbnail-play-icon" viewBox="0 0 180 180" width="100%" height="100%">' +
+				'<g fill="none" fill-rule="evenodd">' +
+					'<g opacity=".9" transform="rotate(90 75 90)">' +
+						'<g fill="#000" filter="url(#a)"><rect id="b" width="150" height="150" rx="75"></rect></g>' +
+						'<g fill="#FFF"><rect id="b" width="150" height="150" rx="75"></rect></g>' +
+					'</g>' +
+					'<path fill="#00D6D6" fill-rule="nonzero" d="M80.87 58.006l34.32 25.523c3.052 2.27 3.722 6.633 1.496 9.746a6.91 6.91 0 0 1-1.497 1.527l-34.32 25.523c-3.053 2.27-7.33 1.586-9.558-1.527A7.07 7.07 0 0 1 70 114.69V63.643c0-3.854 3.063-6.977 6.84-6.977 1.45 0 2.86.47 4.03 1.34z"></path>' +
+				'</g>' +
+			'</svg>' +
+		'</span>',
 		videoWrapperClass: 'video-thumbnail xxsmall',
 
 		// Number of thumbs to load at a time.  Must be at least 9 (i.e. number of items in carousel)
@@ -37,7 +47,10 @@
 		makeLightbox: function (params) {
 			var trackingObj, clickSource, trackingTitle;
 
-			// Allow other extensions to react when a Lightbox is opened.  Used in FilePage and VideoPageTool
+			// Clear the statically-added blackout
+			$('.lightbox-beforejs-blackout').remove();
+
+			// Allow other extensions to react when a Lightbox is opened.  Used in FilePage
 			$(window).trigger('lightboxOpened');
 
 			// if we don't have latest photos in the DOM, request them from back end
@@ -230,22 +243,17 @@
 					return;
 				}
 
-				// If an ad is showing, we want to show the current index, not move on
-				if (Lightbox.ads.adIsShowing) {
-					Lightbox.ads.reset();
-				} else {
-					if (target.is('#LightboxNext')) {
+				if (target.is('#LightboxNext')) {
+					Lightbox.current.index++;
+					// Don't stop on placeholder
+					if (Lightbox.current.index === Lightbox.current.placeholderIdx) {
 						Lightbox.current.index++;
-						// Don't stop on placeholder
-						if (Lightbox.current.index === Lightbox.current.placeholderIdx) {
-							Lightbox.current.index++;
-						}
-					} else {
+					}
+				} else {
+					Lightbox.current.index--;
+					// Don't stop on placeholder
+					if (Lightbox.current.index === Lightbox.current.placeholderIdx) {
 						Lightbox.current.index--;
-						// Don't stop on placeholder
-						if (Lightbox.current.index === Lightbox.current.placeholderIdx) {
-							Lightbox.current.index--;
-						}
 					}
 				}
 
@@ -261,7 +269,7 @@
 				var input = elem.hide().next('input').show();
 
 				input.autocomplete({
-					serviceUrl: window.wgServer + window.wgScript + '?action=ajax&rs=getLinkSuggest&format=json',
+					serviceUrl: window.wgScript + '?action=ajax&rs=getLinkSuggest&format=json',
 					onSelect: function (value, data, event) {
 						var valueEncoded = encodeURIComponent(value.replace(/ /g, '_')),
 							// slashes can't be urlencoded because they break routing
@@ -528,128 +536,6 @@
 
 			}
 		},
-		ads: {
-			// preload ad after this number of unique images/videos are shown
-			adMediaCountPreload: 2,
-			// show an ad after this number of unique images/videos are shown
-			adMediaCount: 2,
-			// array of media titles shown for tracking unique views
-			adMediaProgress: [],
-			// how many items where shown since showing last ad
-			adMediaShownSinceLastAd: 0,
-			// is an ad already loaded?
-			adWasPreloaded: false,
-			// are we showing an ad right now?
-			adIsShowing: false,
-			// how many times an ad have already been shown?
-			adWasShownTimes: 0,
-			// how many times at maximum ad should be shown?
-			adShowMaxTimes: window.wgShowAdModalInterstitialTimes,
-
-			getSlotName: function () {
-				if (this.adWasShownTimes) {
-					return 'MODAL_INTERSTITIAL_' + this.adWasShownTimes;
-				}
-				return 'MODAL_INTERSTITIAL';
-			},
-			// should user see ads?
-			showAds: function () {
-				var showAds = window.ads && window.ads.context &&
-					window.ads.context.opts && window.ads.context.opts.showAds;
-
-				return !!(
-					showAds &&
-					(Geo.getCountryCode() === 'US' || Geo.getCountryCode() === 'GB') &&
-					$('#' + this.getSlotName()).length
-				);
-			},
-			preloadAds: function () {
-				if (!this.adWasPreloaded) {
-					this.adWasPreloaded = true;
-					window.adslots2.push(this.getSlotName());
-				}
-			},
-			// Determine if we should show an ad
-			showAd: function (key, type) {
-				// Already shown?
-				if (!this.showAds() || this.adWasShownTimes >= this.adShowMaxTimes) {
-					return false;
-				}
-
-				var countToShow = this.adMediaCount,
-					countToLoad = this.adMediaCountPreload,
-					progress = this.adMediaProgress;
-
-				if (progress.indexOf(key) < 0) {
-					if (type !== 'video') {
-						// No ads for video content
-						if (this.adMediaShownSinceLastAd >= countToLoad) {
-							this.preloadAds();
-						}
-						if (this.adMediaShownSinceLastAd >= countToShow) {
-							this.updateLightbox();
-							return true;
-						}
-						this.adMediaShownSinceLastAd += 1;
-					}
-					progress.push(key);
-				}
-
-				// Not showing an ad.
-				return false;
-			},
-			// Display the ad
-			updateLightbox: function () {
-				Lightbox.openModal.media.html('').hide();
-
-				// Show special header for ads
-				Lightbox.renderAdHeader();
-
-				// For interstitial ads, always show the overlay
-				Lightbox.showOverlay();
-
-				// Show the ad
-				$('#' + this.getSlotName()).show();
-
-				Lightbox.openModal.progress.addClass('invisible');
-
-				// Don't show active thumbnail
-				Lightbox.openModal.carousel.find('.active').removeClass('active');
-
-				// Set lightbox css
-				var css = {
-					height: LightboxLoader.lightboxSettings.height
-				};
-
-				// don't change top offset if the screen is shorter than the min modal height
-				if (!Lightbox.shortScreen) {
-					css.top = Lightbox.getDefaultTopOffset();
-				}
-
-				// Resize modal
-				Lightbox.openModal.css(css);
-
-				// Set flag to indicate we're showing an ad (for arrow click handler)
-				this.adIsShowing = true;
-
-				// remove '?file=' from URL
-				Lightbox.updateUrlState(true);
-			},
-			// Remove showing ad flag
-			reset: function () {
-				var $oldSlot = $('#' + this.getSlotName()).html('').hide();
-
-				this.adIsShowing = false;
-				this.adWasPreloaded = false;
-				this.adWasShownTimes += 1;
-				this.adMediaShownSinceLastAd = 0;
-
-				$oldSlot.attr('id', this.getSlotName());
-
-				Lightbox.openModal.media.show();
-				Lightbox.openModal.progress.removeClass('invisible');
-			}
-		},
 		error: {
 			updateLightbox: function () {
 				// Set lightbox css
@@ -712,13 +598,6 @@
 					.prepend($(Lightbox.openModal.closeButton).clone(true, true)); // clone close button into header
 			});
 		},
-		// Render special header for ads
-		renderAdHeader: function () {
-			var headerAdTemplate = Lightbox.openModal.headerAdTemplate.html();
-			Lightbox.openModal.header
-				.html(headerAdTemplate)
-				.prepend($(Lightbox.openModal.closeButton).clone(true, true)); // clone close button into header
-		},
 		showOverlay: function () {
 			clearTimeout(Lightbox.eventTimers.overlay);
 			var overlay = Lightbox.openModal;
@@ -731,11 +610,6 @@
 
 			// Don't enable hover show/hide for touch screens
 			if (Wikia.isTouchScreen()) {
-				return;
-			}
-
-			// If an interstitial ad is being shown, do not hideOverlay
-			if (Lightbox.ads.adIsShowing) {
 				return;
 			}
 
@@ -757,11 +631,6 @@
 			// If a video uses a timeout for tracking, clear it
 			if (LightboxLoader.videoInstance) {
 				LightboxLoader.videoInstance.clearTimeoutTrack();
-			}
-
-			// This is where ad UI may interrupt the flow
-			if (Lightbox.ads.showAd(key, type)) {
-				return;
 			}
 
 			LightboxLoader.getMediaDetail({
@@ -930,10 +799,6 @@
 
 				idx = $this.index();
 				mediaArr = Lightbox.current.thumbs;
-
-				if (Lightbox.ads.adIsShowing) {
-					Lightbox.ads.reset();
-				}
 
 				Lightbox.current.index = idx;
 				if (idx > -1 && idx < mediaArr.length) {

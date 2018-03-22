@@ -1,15 +1,17 @@
 <?php
 
 use Wikia\Util\GlobalStateWrapper;
+use PHPUnit\Framework\TestCase;
 
-class FileNamespaceSanitizeHelperTest extends WikiaBaseTest {
+class FileNamespaceSanitizeHelperTest extends TestCase {
+	/** @var FileNamespaceSanitizeHelper $fileNamespaceSanitizeHelper */
 	private $fileNamespaceSanitizeHelper;
 
-	public function setUp() {
-		require_once( __DIR__ . '/../FileNamespaceSanitizeHelper.php' );
+	protected function setUp() {
+		require_once __DIR__ . '/../FileNamespaceSanitizeHelper.php';
 		parent::setUp();
 
-		$class = new ReflectionClass("FileNamespaceSanitizeHelper");
+		$class = new ReflectionClass( FileNamespaceSanitizeHelper::class );
 		$instance = $class->getProperty('instance');
 		$instance->setAccessible(true);
 		$filePrefixRegex = $class->getProperty('filePrefixRegex');
@@ -26,7 +28,7 @@ class FileNamespaceSanitizeHelperTest extends WikiaBaseTest {
 	 * @param $fileNamespaceAlias
 	 * @param $expectedOutput
 	 * @param $description
-	 * @dataProvider testSanitizeImageFilenameDataProvider
+	 * @dataProvider sanitizeImageFilenameDataProvider
 	 */
 	public function testSanitizeImageFilename( $inputFileName, $contentLanguageCode, $fileNamespaceAlias, $expectedOutput, $description ) {
 		$language = new \Language();
@@ -48,7 +50,7 @@ class FileNamespaceSanitizeHelperTest extends WikiaBaseTest {
 		$this->assertEquals( $expectedOutput, $actualOutput, $description );
 	}
 
-	public function testSanitizeImageFilenameDataProvider() {
+	public function sanitizeImageFilenameDataProvider() {
 		return [
 			[
 				'filename.jpg',
@@ -239,7 +241,7 @@ class FileNamespaceSanitizeHelperTest extends WikiaBaseTest {
 			[
 				'[[Tập tin:Naruto-Opening01_222.jpg|200px]]',
 				'vi',
-				null,
+				'Tập_tin',
 				'Naruto-Opening01_222.jpg',
 				'File namespace that include a space'
 			],
@@ -300,7 +302,7 @@ class FileNamespaceSanitizeHelperTest extends WikiaBaseTest {
 	 * @param $contentLanguageCode
 	 * @param $expectedOutput
 	 *
-	 * @dataProvider testStripFilesFromWikitextDataProvider
+	 * @dataProvider stripFilesFromWikitextDataProvider
 	 */
 	public function testStripFilesFromWikitext( $wikitext, $contentLanguageCode, $expectedOutput ) {
 		$language = new \Language();
@@ -311,7 +313,7 @@ class FileNamespaceSanitizeHelperTest extends WikiaBaseTest {
 		$this->assertEquals( $expectedOutput, $actualOutput );
 	}
 
-	public function testStripFilesFromWikitextDataProvider() {
+	public function stripFilesFromWikitextDataProvider() {
 		return [
 			[
 				'[[File:image.jpg|300px|lorem ipsum]]His clothes are not the same as they were in The Sims 2.',
@@ -341,7 +343,7 @@ class FileNamespaceSanitizeHelperTest extends WikiaBaseTest {
 	 * @param $lang
 	 * @param $expectedOutput
 	 *
-	 * @dataProvider testGetCleanFileMarkersFromWikitextDataProvider
+	 * @dataProvider getCleanFileMarkersFromWikitextDataProvider
 	 */
 	public function testGetCleanFileMarkersFromWikitext( $wikitext, $lang, $expectedOutput ) {
 		$language = new \Language();
@@ -351,7 +353,7 @@ class FileNamespaceSanitizeHelperTest extends WikiaBaseTest {
 		$this->assertEquals( $expectedOutput, $actualOutput );
 	}
 
-	public function testGetCleanFileMarkersFromWikitextDataProvider() {
+	public function getCleanFileMarkersFromWikitextDataProvider() {
 		return [
 			[
 				'His clothes are not the same as they were in The Sims 2.',
@@ -389,7 +391,7 @@ class FileNamespaceSanitizeHelperTest extends WikiaBaseTest {
 	* @param $wikitext
 	* @param $expectedOutput
 	*
-	* @dataProvider testRemoveImageParamsDataProvider
+	* @dataProvider removeImageParamsDataProvider
 	*/
 	public function testRemoveImageParams( $wikitext, $expectedOutput ) {
 		$actualOutput = $this->fileNamespaceSanitizeHelper->removeImageParams( $wikitext );
@@ -397,7 +399,7 @@ class FileNamespaceSanitizeHelperTest extends WikiaBaseTest {
 		$this->assertEquals( $expectedOutput, $actualOutput );
 	}
 
-	public function testRemoveImageParamsDataProvider() {
+	public function removeImageParamsDataProvider() {
 		return [
 			[
 				'File:image.jpg|300px|lorem ipsum',

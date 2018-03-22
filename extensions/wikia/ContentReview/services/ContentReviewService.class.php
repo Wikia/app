@@ -8,14 +8,15 @@
 
 namespace Wikia\ContentReview;
 
-use Wikia\ContentReview\Integrations\SlackIntegration,
-	Wikia\ContentReview\Models\ReviewModel,
-	Wikia\ContentReview\Models\ReviewLogModel,
-	Wikia\ContentReview\Models\CurrentRevisionModel;
+use Wikia\ContentReview\Integrations\SlackIntegration;
+use Wikia\ContentReview\Models\ReviewModel;
+use Wikia\ContentReview\Models\ReviewLogModel;
+use Wikia\ContentReview\Models\CurrentRevisionModel;
+use Wikia\Logger\Loggable;
 
-class ContentReviewService extends \WikiaService {
+class ContentReviewService {
 
-	use \Wikia\Logger\Loggable;
+	use Loggable;
 
 	/**
 	 * This is a shortcut method for the users entitled to be reviewers. Instead of submitting a revision
@@ -29,7 +30,9 @@ class ContentReviewService extends \WikiaService {
 	 * @throws \FluentSql\Exception\SqlException
 	 */
 	public function automaticallyApproveRevision( \User $user, $wikiId, $pageId, $revisionId ) {
-		if ( !$user->isAllowed( 'content-review' ) ) {
+		global $wgAutoapproveJS;
+
+		if ( !$user->isAllowed( 'content-review' ) && !$wgAutoapproveJS ) {
 			throw new \PermissionsException( 'content-review' );
 		}
 

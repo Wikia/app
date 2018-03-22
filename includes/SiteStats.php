@@ -73,11 +73,16 @@ class SiteStats {
 	}
 
 	/**
+	 * Return the total number of page views. Except we don't track those anymore.
+	 * Stop calling this function, it will be removed some time in the future. It's
+	 * kept here simply to prevent fatal errors.
+	 *
+	 * @deprecated since 1.25
 	 * @return int
 	 */
 	static function views() {
-		self::load();
-		return self::$row->ss_total_views;
+		wfDeprecated( __METHOD__, '1.25' );
+		return 0;
 	}
 
 	/**
@@ -157,23 +162,8 @@ class SiteStats {
 	 * @return int
 	 */
 	static function jobs() {
-		if ( !isset( self::$jobs ) ) {
-			// wikia change start, eloy
-			global $wgMemc;
-			$key = wfMemcKey( 'SiteStats', 'jobs' );
-			self::$jobs = $wgMemc->get( $key );
-			if ( !self::$jobs ) {
-			// wikia change end
-				$dbr = wfGetDB( DB_SLAVE );
-				self::$jobs = $dbr->estimateRowCount( 'job' );
-				/* Zero rows still do single row read for row that doesn't exist, but people are annoyed by that */
-				if ( self::$jobs == 1 ) {
-					self::$jobs = 0;
-				}
-				$wgMemc->set( $key, self::$jobs, 3600 );
-			}
-		}
-		return self::$jobs;
+		// SUS-3471 | Wikia change - we no longer use MediaWiki-based jobs dispatcher
+		return 0;
 	}
 
 	/**
@@ -234,7 +224,7 @@ class SiteStatsInit {
 	private $db, $dbshared;
 
 	// Various stats
-	private $mEdits, $mArticles, $mPages, $mUsers, $mViews, $mFiles = 0;
+	private $mEdits, $mArticles, $mPages, $mUsers, $mFiles = 0;
 
 	/**
 	 * Constructor
@@ -319,15 +309,6 @@ class SiteStatsInit {
 	}
 
 	/**
-	 * Count views
-	 * @return Integer
-	 */
-	public function views() {
-		$this->mViews = $this->db->selectField( 'page', 'SUM(page_counter)', '', __METHOD__ );
-		return $this->mViews;
-	}
-
-	/**
 	 * Count total files
 	 * @return Integer
 	 */
@@ -345,11 +326,10 @@ class SiteStatsInit {
 	 * - DatabaseBase: database connection to use
 	 * @param $options Array of options, may contain the following values
 	 * - update Boolean: whether to update the current stats (true) or write fresh (false) (default: false)
-	 * - views Boolean: when true, do not update the number of page views (default: true)
 	 * - activeUsers Boolean: whether to update the number of active users (default: false)
 	 */
 	public static function doAllAndCommit( $database = false, array $options = array() ) {
-		$options += array( 'update' => false, 'views' => true, 'activeUsers' => false );
+		$options += array( 'update' => false, 'activeUsers' => false );
 
 		// Grab the object and count everything
 		$counter = new SiteStatsInit( $database );
@@ -359,11 +339,6 @@ class SiteStatsInit {
 		$counter->pages();
 		$counter->users();
 		$counter->files();
-
-		// Only do views if we don't want to not count them
-		if( $options['views'] ) {
-			$counter->views();
-		}
 
 		// Update/refresh
 		if( $options['update'] ) {
@@ -394,10 +369,10 @@ class SiteStatsInit {
 	 * the new values.
 	 */
 	public function refresh() {
-		list( $values, $conds, $views ) = $this->getDbParams();
+		list( $values, $conds ) = $this->getDbParams();
 		$dbw = wfGetDB( DB_MASTER );
 		$dbw->delete( 'site_stats', $conds, __METHOD__ );
-		$dbw->insert( 'site_stats', array_merge( $values, $conds, $views ), __METHOD__ );
+		$dbw->insert( 'site_stats', array_merge( $values, $conds ), __METHOD__ );
 
 		SiteStats::invalidateCache(); // Wikia change
 	}
@@ -415,7 +390,6 @@ class SiteStatsInit {
 			'ss_images' => $this->mFiles
 		);
 		$conds = array( 'ss_row_id' => 1 );
-		$views = array( 'ss_total_views' => $this->mViews );
-		return array( $values, $conds, $views );
+		return array( $values, $conds );
 	}
 }

@@ -2,6 +2,7 @@
 
 namespace Wikia\Persistence\User\Preferences;
 
+use PHPUnit\Framework\TestCase;
 use Swagger\Client\ApiException;
 use Swagger\Client\User\Preferences\Api\ReverseLookupApi;
 use Swagger\Client\User\Preferences\Api\UserPreferencesApi;
@@ -14,11 +15,11 @@ use Wikia\Domain\User\Preferences\UserPreferences;
 use Wikia\Service\Swagger\ApiProvider;
 use Wikia\Service\UnauthorizedException;
 
-class PreferencePersistenceSwaggerServiceTest extends \PHPUnit_Framework_TestCase {
+class PreferencePersistenceSwaggerServiceTest extends TestCase {
 
 	protected $userId = 1;
 
-	/** @var PreferencePersistenceSwaggerService */
+	/** @var PreferencePersistence */
 	protected $persistence;
 
 	/** @var \PHPUnit_Framework_MockObject_MockObject */
@@ -45,14 +46,14 @@ class PreferencePersistenceSwaggerServiceTest extends \PHPUnit_Framework_TestCas
 			->getMock();
 		$this->apiProvider->expects( $this->any() )
 			->method( 'getAuthenticatedApi' )
-			->with( PreferencePersistenceSwaggerService::SERVICE_NAME, $this->userId, UserPreferencesApi::class )
+			->with( PreferencePersistence::SERVICE_NAME, $this->userId, UserPreferencesApi::class )
 			->willReturn( $this->userPreferencesApi );
 		$this->apiProvider->expects( $this->any() )
 			->method( 'getApi' )
-			->with( PreferencePersistenceSwaggerService::SERVICE_NAME, ReverseLookupApi::class )
+			->with( PreferencePersistence::SERVICE_NAME, ReverseLookupApi::class )
 			->willReturn( $this->reverseLookupApi );
 
-		$this->persistence = new PreferencePersistenceSwaggerService( $this->apiProvider );
+		$this->persistence = new PreferencePersistence( $this->apiProvider );
 	}
 
 	public function testGetSuccess() {

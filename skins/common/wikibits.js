@@ -79,6 +79,14 @@ window.forceReviewedContent = function( url ) {
 	return url;
 };
 
+function maybeMakeProtocolRelative(url) {
+	var domainRegex = new RegExp('^http:\\/\\/[^\\.]+\\.' + mw.config.get('wgWikiaBaseDomainRegex'));
+	if (domainRegex.test(url)) {
+		return url.replace(/^http:\/\//, '//');
+	}
+	return url;
+}
+
 window.importScript = function( page ) {
 	var uri = mw.config.get( 'wgScript' ) + '?title=' +
 		mw.util.wikiUrlencode( page ) +
@@ -88,7 +96,7 @@ window.importScript = function( page ) {
 
 window.loadedScripts = {}; // included-scripts tracker
 window.importScriptURI = function( url ) {
-	url = forceReviewedContent( url );
+	url = maybeMakeProtocolRelative(forceReviewedContent(url));
 
 	if ( loadedScripts[url] ) {
 		return null;
@@ -109,7 +117,7 @@ window.importStylesheetURI = function( url, media ) {
 	var l = document.createElement( 'link' );
 	l.type = 'text/css';
 	l.rel = 'stylesheet';
-	l.href = url;
+	l.href = maybeMakeProtocolRelative(url);
 	if( media ) {
 		l.media = media;
 	}
@@ -720,7 +728,7 @@ if (skin != 'monaco' && skin != 'oasis') {
 window.importScriptPage = function( page, server ) {
 	var url = '/index.php?title=' + encodeURIComponent(page.replace(/ /g,'_')).replace('%2F','/').replace('%3A',':') + '&action=raw&ctype=text/javascript';
 	if( typeof server == "string" ) {
-		if( server.indexOf( '://' ) == -1 ) url = 'http://' + server + '.wikia.com' + url;
+		if( server.indexOf( '://' ) == -1  && server.substring( 0, 2 ) !== '//' ) url = 'http://' + server + '.' + mw.config.get('wgWikiaBaseDomain') + url;
 		else url = server + url;
 	}
 	return importScriptURI(url);
@@ -729,7 +737,7 @@ window.importScriptPage = function( page, server ) {
 window.importStylesheetPage= function( page, server ) {
 	var url = '/index.php?title=' + encodeURIComponent(page.replace(/ /g,'_')).replace('%2F','/').replace('%3A',':') + '&action=raw&ctype=text/css';
 	if( typeof server == "string" ) {
-		if( server.indexOf( '://' ) == -1 ) url = 'http://' + server + '.wikia.com' + url;
+		if( server.indexOf( '://' ) == -1 && server.substring( 0, 2 ) !== '//' ) url = 'http://' + server + '.' + mw.config.get('wgWikiaBaseDomain') + url;
 		else url = server + url;
 	}
 	return importStylesheetURI(url);

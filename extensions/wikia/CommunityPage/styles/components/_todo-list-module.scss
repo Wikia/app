@@ -1,33 +1,37 @@
+@import 'variables';
 @import 'skins/shared/color';
-@import 'skins/oasis/css/core/breakpoints-variables';
 @import 'skins/shared/mixins/flexbox';
 
 $edit-icon-size: 16px;
-$edit-pen-url: '/extensions/wikia/CommunityPage/images/edit-pen-gray.svg';
+$module-header-line-height: 28px;
 
 .community-page-todo-list-module {
+	box-sizing: border-box;
 	margin-bottom: 34px;
+	padding-right: $content-spacing-small;
+
+	.community-page-todo-list-module-header-wrapper {
+		line-height: $module-header-line-height;
+		margin-bottom: $content-spacing-small;
+	}
 
 	.community-page-todo-list-module-header {
-		float: left;
-		font-size: 24px;
+		display: inline-block;
+		font-size: $wds-typescale-size-plus-2;
 		font-weight: bold;
-		line-height: 28px;
-		margin: 0 0 12px;
+		padding-right: 32px;
 	}
 
 	.community-page-todo-list-module-edit {
-		float: left;
-		font-size: 16px;
-		line-height: 28px;
-		padding-left: 32px;
+		display: inline-block;
+		font-size: $wds-typescale-size-base;
 	}
 
 	.community-page-todo-list-module-edit-icon {
-		background: url($edit-pen-url) no-repeat left center;
+		fill: $wds-color-light-gray;
 		float: left;
-		height: 28px;
-		margin-right: 6px;
+		height: $module-header-line-height;
+		margin-right: $content-spacing-xxsmall;
 		width: $edit-icon-size;
 	}
 
@@ -35,20 +39,31 @@ $edit-pen-url: '/extensions/wikia/CommunityPage/images/edit-pen-gray.svg';
 		clear: both;
 	}
 
-	.community-page-todo-list-module-content {
-		border-style: solid;
+	.community-page-todo-list-module-content,
+	.community-page-todo-list-module-zerostate {
 		border-left: thick solid $color-buttons;
-		margin-top: 10px;
-		max-height: 500px;
-		overflow: auto;
-		padding: 0 10px;
+		clear: both;
+		margin-top: $content-spacing-xsmall;
+	}
+
+	.community-page-todo-list-module-content {
+		padding: 0 $content-spacing-xsmall;
 	}
 
 	.community-page-todo-list-module-zerostate {
-		border-style: solid;
-		border-left: thick solid $color-buttons;
 		font-weight: bold;
-		margin-top: 10px;
-		padding: 5px 10px;
+		padding: $content-spacing-xxsmall $content-spacing-xsmall;
+	}
+}
+
+@media #{$breakpoint-medium-up} {
+	.community-page-todo-list-module {
+		padding-right: $content-spacing-regular;
+	}
+}
+
+@media #{$breakpoint-small-plus} {
+	.community-page-todo-list-module {
+		padding-right: $content-spacing-xsmall;
 	}
 }

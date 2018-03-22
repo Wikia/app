@@ -1,11 +1,12 @@
 <?php
-$messages = array();
+/** Internationalization file for /extensions/wikia/WikiaIrcGateway/WikiaIrcGateway extension. */
+$messages = [];
 
-$messages['en'] = array(
+$messages['en'] = [
 	'ircgate-desc' => 'Lets users insert IRC login form on any page',
 	'ircgate-username' => 'Username:',
-	'ircgate-channel'  => 'Channel:',
-	'ircgate-channellist' => '* #wikia
+	'ircgate-channel' => 'Channel:',
+	'ircgate-channellist' => '* ##wikia
 *group: International
 * #wikia-de
 * #wikia-es
@@ -14,579 +15,391 @@ $messages['en'] = array(
 * #wikia-pl
 * #wikia-pt
 * #wikia-ru
-*group-end
-*group: Off topic
-* #wikia-social
-* #wikia-overflow
-*group-end'
-);
+*group-end',
+];
 
-/** Message documentation (Message documentation)
- * @author EugeneZelenko
- */
-$messages['qqq'] = array(
+$messages['qqq'] = [
 	'ircgate-desc' => '{{desc}}',
 	'ircgate-username' => '{{Identical|Username}}',
-);
+];
 
-/** Afrikaans (Afrikaans)
- * @author Naudefj
- */
-$messages['af'] = array(
+$messages['af'] = [
 	'ircgate-username' => 'Gebruikersnaam:',
 	'ircgate-channel' => 'Kanaal:',
-);
+];
 
-/** Old English (Ænglisc)
- * @author Espreon
- * @author Gott wisst
- */
-$messages['ang'] = array(
+$messages['ang'] = [
 	'ircgate-username' => 'Brūcendnama:',
 	'ircgate-channel' => 'Weg:',
-);
+];
 
-/** Arabic (العربية)
- * @author Achraf94
- * @author OsamaK
- */
-$messages['ar'] = array(
+$messages['ar'] = [
 	'ircgate-username' => 'اسم المستخدم:',
 	'ircgate-channel' => 'القناة :',
-);
+];
 
-/** Asturian (asturianu)
- * @author Xuacu
- */
-$messages['ast'] = array(
-	'ircgate-username' => "Nome d'usuariu:",
+$messages['ast'] = [
+	'ircgate-username' => 'Nome d\'usuariu:',
 	'ircgate-channel' => 'Canal:',
-);
+];
 
-/** Azerbaijani (azərbaycanca)
- * @author AZISS
- * @author Cekli829
- */
-$messages['az'] = array(
+$messages['az'] = [
 	'ircgate-username' => 'İstifadəçi adı:',
 	'ircgate-channel' => 'Kanal:',
-);
+];
 
-/** Bashkir (башҡортса)
- * @author Comp1089
- */
-$messages['ba'] = array(
+$messages['ba'] = [
 	'ircgate-username' => 'Ҡулланыусы исеме:',
 	'ircgate-channel' => 'Канал:',
-);
+];
 
-/** Bavarian (Boarisch)
- * @author Mucalexx
- */
-$messages['bar'] = array(
+$messages['bar'] = [
 	'ircgate-username' => 'Benutzernaum:',
 	'ircgate-channel' => 'Chat-Kanoi:',
-);
+];
 
-/** Belarusian (Taraškievica orthography) (беларуская (тарашкевіца)‎)
- * @author Jim-by
- */
-$messages['be-tarask'] = array(
+$messages['be-tarask'] = [
 	'ircgate-username' => 'Імя ўдзельніка:',
 	'ircgate-channel' => 'Канал:',
-);
+];
 
-/** Bulgarian (български)
- * @author DCLXVI
- */
-$messages['bg'] = array(
+$messages['bg'] = [
 	'ircgate-username' => 'Потребителско име:',
 	'ircgate-channel' => 'Канал:',
-);
+];
 
-/** Banjar (Bahasa Banjar)
- * @author Ezagren
- */
-$messages['bjn'] = array(
+$messages['bjn'] = [
 	'ircgate-username' => 'Ngaran pamuruk:',
-);
+];
 
-/** Breton (brezhoneg)
- * @author Y-M D
- */
-$messages['br'] = array(
+$messages['br'] = [
 	'ircgate-username' => 'Anv implijer :',
 	'ircgate-channel' => 'Kanol :',
-);
+];
 
-/** Catalan (català)
- * @author Paucabot
- */
-$messages['ca'] = array(
-	'ircgate-username' => "Nom d'usuari:",
+$messages['ca'] = [
+	'ircgate-username' => 'Nom d\'usuari:',
 	'ircgate-channel' => 'Canal:',
-);
+];
 
-/** Czech (čeština)
- * @author Mr. Richard Bolla
- */
-$messages['cs'] = array(
+$messages['cs'] = [
 	'ircgate-username' => 'Uživatelské jméno:',
 	'ircgate-channel' => 'Kanál:',
-);
+];
 
-/** Welsh (Cymraeg)
- * @author Lloffiwr
- */
-$messages['cy'] = array(
+$messages['cy'] = [
 	'ircgate-username' => 'Enw defnyddiwr:',
 	'ircgate-channel' => 'Sianel:',
-);
+];
 
-/** German (Deutsch)
- * @author Claudia Hattitten
- * @author LWChris
- * @author Metalhead64
- */
-$messages['de'] = array(
+$messages['de'] = [
 	'ircgate-desc' => 'Ermöglicht Benutzern das Einfügen eines IRC-Anmeldeformulars auf einer beliebigen Seite',
 	'ircgate-username' => 'Benutzername:',
 	'ircgate-channel' => 'Chat-Kanal:',
-);
+];
 
-/** Zazaki (Zazaki)
- * @author Erdemaslancan
- */
-$messages['diq'] = array(
+$messages['diq'] = [
 	'ircgate-username' => 'Nameyê karberi:',
 	'ircgate-channel' => 'Kenal:',
-);
+];
 
-/** Spanish (español)
- * @author VegaDark
- */
-$messages['es'] = array(
+$messages['es'] = [
 	'ircgate-desc' => 'Permite a los usuarios insertar un formulario de inicio de sesión de IRC en cualquier página',
 	'ircgate-username' => 'Nombre de usuario:',
 	'ircgate-channel' => 'Canal:',
-);
+	'ircgate-channellist' => '*group: General
+* #wikia-es
+* ##wikia
+* #wikia-vstf
+*group-end
+*group: Canales hispanos
+* #dragonball-es
+* #gta-es
+* #inciclopedia
+* #pkmn
+* #ssbb-es
+* #starwars-es
+* #wikia-animalcrossing-es
+* #wikia-bleach-es
+* #wikia-burijji
+* #wikia-digimon-es
+* #wikia-dofus-es
+* #wikia-driver
+* #wikia-es-todoanime
+* #wikia-evangelion
+* #wikia-eyeshield21-es
+* #wikia-harrypotter-es
+* #wikia-harvestmoon-es
+* #wikia-jewelpet-es
+* #wikia-kid-vs-kat
+* #wikia-kirby-es
+* #wikia-lego-es
+* #wikia-marvel
+* #wikia-mermaidmelody-es
+* #wikia-naruto-es
+* #wikia-onepiece-es
+* #wikia-protegidos
+* #wikia-seriesspain
+* #wikia-southpark-es
+* #wikia-transformice-es
+* #wikia-wcw
+* #wikidex
+* #yu-gi-oh-es 
+*group-end',
+];
 
-/** Basque (euskara)
- * @author An13sa
- */
-$messages['eu'] = array(
+$messages['eu'] = [
 	'ircgate-username' => 'Lankide izena:',
 	'ircgate-channel' => 'Kanala:',
-);
+];
 
-/** Persian (فارسی)
- * @author Ebraminio
- */
-$messages['fa'] = array(
+$messages['fa'] = [
 	'ircgate-username' => 'نام کاربری:',
 	'ircgate-channel' => 'کانال:',
-);
+];
 
-/** Finnish (suomi)
- * @author Ilkea
- * @author Silvonen
- */
-$messages['fi'] = array(
+$messages['fi'] = [
 	'ircgate-username' => 'Käyttäjänimi:',
 	'ircgate-channel' => 'Kanava:',
-);
+];
 
-/** French (français)
- * @author Gomoko
- * @author Peter17
- */
-$messages['fr'] = array(
+$messages['fr'] = [
 	'ircgate-desc' => 'Laisse les utilisateurs insérer un formulaire de connexion IRC sur n’importe quelle page',
 	'ircgate-username' => 'Nom d’utilisateur :',
 	'ircgate-channel' => 'Canal :',
-);
+];
 
-/** Western Frisian (Frysk)
- * @author Robin0van0der0vliet
- */
-$messages['fy'] = array(
+$messages['fy'] = [
 	'ircgate-username' => 'Brûkersnamme:',
-);
+];
 
-/** Galician (galego)
- * @author Toliño
- */
-$messages['gl'] = array(
+$messages['gl'] = [
 	'ircgate-username' => 'Nome de usuario:',
 	'ircgate-channel' => 'Canle:',
-);
+];
 
-/** Hebrew (עברית)
- * @author שומבלע
- */
-$messages['he'] = array(
+$messages['he'] = [
 	'ircgate-username' => 'שם משתמש:',
 	'ircgate-channel' => 'ערוץ:',
-);
+];
 
-/** Upper Sorbian (hornjoserbsce)
- * @author Michawiki
- */
-$messages['hsb'] = array(
+$messages['hsb'] = [
 	'ircgate-username' => 'Wužiwarske mjeno:',
 	'ircgate-channel' => 'Kanal:',
-);
+];
 
-/** Hungarian (magyar)
- * @author Glanthor Reviol
- */
-$messages['hu'] = array(
+$messages['hu'] = [
 	'ircgate-username' => 'Felhasználónév:',
 	'ircgate-channel' => 'Csatorna:',
-);
+];
 
-/** Interlingua (interlingua)
- * @author McDutchie
- */
-$messages['ia'] = array(
+$messages['ia'] = [
 	'ircgate-username' => 'Nomine de usator:',
 	'ircgate-channel' => 'Canal:',
-);
+];
 
-/** Indonesian (Bahasa Indonesia)
- * @author Bennylin
- */
-$messages['id'] = array(
+$messages['id'] = [
 	'ircgate-username' => 'Nama pengguna:',
 	'ircgate-channel' => 'Saluran:',
-);
+];
 
-/** Igbo (Igbo)
- * @author Ukabia
- */
-$messages['ig'] = array(
-	'ircgate-username' => "Áhà ọ'bànifé:",
+$messages['ig'] = [
+	'ircgate-username' => 'Áhà ọ\'bànifé:',
 	'ircgate-channel' => 'Nchȯúzọr:',
-);
+];
 
-/** Italian (italiano)
- * @author Civvì
- */
-$messages['it'] = array(
+$messages['it'] = [
 	'ircgate-username' => 'Nome utente:',
 	'ircgate-channel' => 'Canale:',
-);
+];
 
-/** Japanese (日本語)
- * @author Fryed-peach
- * @author Hosiryuhosi
- */
-$messages['ja'] = array(
+$messages['ja'] = [
 	'ircgate-username' => '利用者名:',
 	'ircgate-channel' => 'チャンネル:',
-);
+];
 
-/** Kannada (ಕನ್ನಡ)
- * @author Nayvik
- */
-$messages['kn'] = array(
+$messages['kn'] = [
 	'ircgate-username' => 'ಬಳಕೆದಾರ ಹೆಸರು:',
 	'ircgate-channel' => 'ಚಾನೆಲ್:',
-);
+];
 
-/** Korean (한국어)
- * @author Miri-Nae
- * @author 아라
- */
-$messages['ko'] = array(
+$messages['ko'] = [
 	'ircgate-username' => '사용자 이름:',
 	'ircgate-channel' => '채널:',
-);
+];
 
-/** Colognian (Ripoarisch)
- * @author Purodha
- */
-$messages['ksh'] = array(
+$messages['ksh'] = [
 	'ircgate-username' => 'Metmaacher_Naame:',
 	'ircgate-channel' => 'Kanaal:',
-);
+];
 
-/** Kurdish (Latin script) (Kurdî (latînî)‎)
- * @author George Animal
- */
-$messages['ku-latn'] = array(
+$messages['ku-latn'] = [
 	'ircgate-username' => 'Navê bikarhêner:',
 	'ircgate-channel' => 'Kanal:',
-);
+];
 
-/** Luxembourgish (Lëtzebuergesch)
- * @author Robby
- */
-$messages['lb'] = array(
+$messages['lb'] = [
 	'ircgate-username' => 'Benotzernumm:',
-);
+];
 
-/** Lingala (lingála)
- * @author Eruedin
- * @author Moyogo
- */
-$messages['ln'] = array(
+$messages['ln'] = [
 	'ircgate-username' => 'Nkómbó ya mosáleli:',
 	'ircgate-channel' => 'Lileko:',
-);
+];
 
-/** Northern Luri (لوری مینجایی)
- * @author Mogoeilor
- */
-$messages['lrc'] = array(
+$messages['lrc'] = [
 	'ircgate-channel' => 'كانال:',
-);
+];
 
-/** Latvian (latviešu)
- * @author Xil
- */
-$messages['lv'] = array(
+$messages['lv'] = [
 	'ircgate-username' => 'Lietotājvārds:',
 	'ircgate-channel' => 'Kanāls:',
-);
+];
 
-/** Macedonian (македонски)
- * @author Bjankuloski06
- */
-$messages['mk'] = array(
+$messages['mk'] = [
 	'ircgate-username' => 'Корисничко име:',
 	'ircgate-channel' => 'Канал:',
-);
+];
 
-/** Mongolian (монгол)
- * @author Chinneeb
- */
-$messages['mn'] = array(
+$messages['mn'] = [
 	'ircgate-username' => 'Хэрэглэгчийн нэр:',
-);
+];
 
-/** Malay (Bahasa Melayu)
- * @author Anakmalaysia
- */
-$messages['ms'] = array(
+$messages['ms'] = [
 	'ircgate-desc' => 'Membolehkan pengguna untuk menyertakan borang log masuk IRC pada sebarang laman',
 	'ircgate-username' => 'Nama pengguna:',
 	'ircgate-channel' => 'Saluran:',
-);
+];
 
-/** Burmese (မြန်မာဘာသာ)
- * @author Erikoo
- */
-$messages['my'] = array(
+$messages['my'] = [
 	'ircgate-username' => 'အသုံးပြုသူအမည် :',
-);
+];
 
-/** Norwegian Bokmål (norsk bokmål)
- * @author Nghtwlkr
- */
-$messages['nb'] = array(
+$messages['nb'] = [
 	'ircgate-username' => 'Brukernavn:',
 	'ircgate-channel' => 'Kanal:',
-);
+];
 
-/** Nepali (नेपाली)
- * @author RajeshPandey
- */
-$messages['ne'] = array(
+$messages['ne'] = [
 	'ircgate-username' => 'प्रयोगकर्ता-नाम:',
 	'ircgate-channel' => 'च्यानल',
-);
+];
 
-/** Dutch (Nederlands)
- * @author Siebrand
- */
-$messages['nl'] = array(
+$messages['nl'] = [
 	'ircgate-username' => 'Gebruikersnaam:',
 	'ircgate-channel' => 'Kanaal:',
-);
+];
 
-/** Occitan (occitan)
- * @author Cedric31
- */
-$messages['oc'] = array(
-	'ircgate-username' => "Nom de l'utilizaire :",
+$messages['oc'] = [
+	'ircgate-username' => 'Nom de l\'utilizaire :',
 	'ircgate-channel' => 'Canal :',
-);
+];
 
-/** Pennsylvania German (Deitsch)
- * @author Xqt
- */
-$messages['pdc'] = array(
+$messages['pdc'] = [
 	'ircgate-username' => 'Yuuser-Naame:',
 	'ircgate-channel' => 'Channel:',
-);
+];
 
-/** Polish (polski)
- * @author Sovq
- * @author Sp5uhe
- * @author VerMa
- */
-$messages['pl'] = array(
+$messages['pl'] = [
 	'ircgate-desc' => 'Pozwala użytkownikom na wstawianie formularza logującego do IRC na dowolnej stronie',
 	'ircgate-username' => 'Nazwa użytkownika:',
 	'ircgate-channel' => 'Kanał:',
-);
+];
 
-/** Piedmontese (Piemontèis)
- * @author Dragonòt
- */
-$messages['pms'] = array(
+$messages['pms'] = [
 	'ircgate-username' => 'Nòm utent:',
 	'ircgate-channel' => 'Canal:',
-);
+];
 
-/** Pashto (پښتو)
- * @author Ahmed-Najib-Biabani-Ibrahimkhel
- */
-$messages['ps'] = array(
+$messages['ps'] = [
 	'ircgate-username' => 'کارن-نوم:',
 	'ircgate-channel' => 'کانال:',
-);
+];
 
-/** Portuguese (português)
- * @author Hamilton Abreu
- */
-$messages['pt'] = array(
+$messages['pt'] = [
 	'ircgate-username' => 'Utilizador:',
 	'ircgate-channel' => 'Canal:',
-);
+];
 
-/** Brazilian Portuguese (português do Brasil)
- * @author Daemorris
- */
-$messages['pt-br'] = array(
+$messages['pt-br'] = [
 	'ircgate-username' => 'Nome de usuário:',
 	'ircgate-channel' => 'Canal:',
-);
+];
 
-/** tarandíne (tarandíne)
- * @author Joetaras
- */
-$messages['roa-tara'] = array(
-	'ircgate-desc' => "Face 'nzerì a l'utinde 'u module pe trasè cu IRC da ogne pàgene.",
-	'ircgate-username' => "Nome de l'utende:",
+$messages['roa-tara'] = [
+	'ircgate-desc' => 'Face \'nzerì a l\'utinde \'u module pe trasè cu IRC da ogne pàgene.',
+	'ircgate-username' => 'Nome de l\'utende:',
 	'ircgate-channel' => 'Canale:',
-);
+];
 
-/** Russian (русский)
- * @author Lockal
- */
-$messages['ru'] = array(
+$messages['ru'] = [
 	'ircgate-username' => 'Имя пользователя:',
 	'ircgate-channel' => 'Канал:',
-);
+];
 
-/** Sinhala (සිංහල)
- */
-$messages['si'] = array(
+$messages['si'] = [
 	'ircgate-username' => 'පරිශීලක-නාමය:',
 	'ircgate-channel' => 'චැනලය:',
-);
+];
 
-/** Somali (Soomaaliga)
- * @author Abshirdheere
- */
-$messages['so'] = array(
+$messages['so'] = [
 	'ircgate-username' => 'Magaca gudagalka:',
 	'ircgate-channel' => 'Kanaal',
-);
+];
 
-/** Serbian (Cyrillic script) (српски (ћирилица)‎)
- * @author Rancher
- * @author Verlor
- */
-$messages['sr-ec'] = array(
+$messages['sr-ec'] = [
 	'ircgate-username' => 'Корисничко име:',
 	'ircgate-channel' => 'Канал:',
-);
+];
 
-/** Swedish (svenska)
- * @author Tobulos1
- * @author WikiPhoenix
- */
-$messages['sv'] = array(
+$messages['sv'] = [
 	'ircgate-desc' => 'Låter användare infoga IRC-inloggningsformulär på valfri sida',
 	'ircgate-username' => 'Användarnamn:',
 	'ircgate-channel' => 'Kanal:',
-);
+];
 
-/** Telugu (తెలుగు)
- * @author Veeven
- */
-$messages['te'] = array(
+$messages['te'] = [
 	'ircgate-username' => 'వాడుకరి పేరు:',
-);
+];
 
-/** Tetum (tetun)
- * @author MF-Warburg
- */
-$messages['tet'] = array(
-	'ircgate-username' => "Naran uza-na'in:",
-);
+$messages['tet'] = [
+	'ircgate-username' => 'Naran uza-na\'in:',
+];
 
-/** Tagalog (Tagalog)
- * @author AnakngAraw
- */
-$messages['tl'] = array(
+$messages['tl'] = [
 	'ircgate-username' => 'Pangalan ng tagagamit:',
 	'ircgate-channel' => 'Bangbang:',
-);
+];
 
-/** Turkish (Türkçe)
- * @author Joseph
- */
-$messages['tr'] = array(
+$messages['tr'] = [
 	'ircgate-username' => 'Kullanıcı adı:',
 	'ircgate-channel' => 'Kanal:',
-);
+];
 
-/** Tatar (Cyrillic script) (татарча)
- * @author Ajdar
- */
-$messages['tt-cyrl'] = array(
+$messages['tt-cyrl'] = [
 	'ircgate-username' => 'Кулланучы исеме:',
 	'ircgate-channel' => 'Канал:',
-);
+];
 
-/** Ukrainian (українська)
- * @author Капитан Джон Шепард
- * @author Тест
- */
-$messages['uk'] = array(
+$messages['uk'] = [
 	'ircgate-desc' => 'Дозволяє користувачам вставляти IRC форму входу на будь-які сторінці',
-	'ircgate-username' => "Ім'я користувача:",
+	'ircgate-username' => 'Ім\'я користувача:',
 	'ircgate-channel' => 'Канал:',
-);
+];
 
-/** Vietnamese (Tiếng Việt)
- * @author Dinhxuanduyet
- * @author Xiao Qiao
- * @author XiaoQiaoGrace
- */
-$messages['vi'] = array(
+$messages['vi'] = [
 	'ircgate-desc' => 'Cho phép người dùng nhúng khung đăng nhập IRC vào bất kỳ trang nào',
 	'ircgate-username' => 'Tên đăng nhập:',
 	'ircgate-channel' => 'Kênh:',
-);
+];
 
-/** Simplified Chinese (中文（简体）‎)
- * @author Gaoxuewei
- * @author Yfdyh000
- */
-$messages['zh-hans'] = array(
+$messages['zh-hans'] = [
 	'ircgate-desc' => '让用户在任何页面上插入IRC登录',
 	'ircgate-username' => '用户名：',
 	'ircgate-channel' => '频道：',
-);
+];
 
-/** Traditional Chinese (中文（繁體）‎)
- * @author Liuxinyu970226
- */
-$messages['zh-hant'] = array(
+$messages['zh-hant'] = [
 	'ircgate-username' => '使用者名稱：',
-);
+];
+

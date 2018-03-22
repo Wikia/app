@@ -1,21 +1,26 @@
 <?php
-require_once( $IP . '/extensions/wikia/CommunityPage/models/CommunityPageSpecialUsersModel.class.php' );
+use PHPUnit\Framework\TestCase;
 
-class CommunityPageSpecialUsersModelTest extends WikiaBaseTest {
+class CommunityPageSpecialUsersModelTest extends TestCase {
+
+	protected function setUp() {
+		parent::setUp();
+		require_once __DIR__ . '/../models/CommunityPageSpecialUsersModel.class.php';
+	}
+
 	/**
 	 * @param int $userId
 	 * @param array $admins
 	 * @param boolean $expectedResult
 	 *
-	 * @dataProvider testIsAdminDataProvider
+	 * @dataProvider isAdminDataProvider
 	 */
 	public function testIsAdmin( $userId, $admins, $expectedResult ) {
-		$mockUser = $this->getMock( 'User' );
-		$model = new CommunityPageSpecialUsersModel( $mockUser );
+		$model = new CommunityPageSpecialUsersModel();
 		$this->assertEquals( $expectedResult, $model->isAdmin( $userId, $admins ) );
 	}
 
-	public function testIsAdminDataProvider() {
+	public function isAdminDataProvider() {
 		return [
 			[ 1, [ 1, 2, 3 ] , true ],
 			[ 1, [ 2, 3 ] , false ],

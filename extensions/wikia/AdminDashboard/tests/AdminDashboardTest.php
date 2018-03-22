@@ -212,27 +212,6 @@
 			}
 		}
 
-		/**
-		 * @dataProvider shortenNumberDecoratorDataProvider
-		 * @group UsingDB
-		 */
-		public function testShortenNumberDecorator($number,$expected) {
-			$result = QuickStatsController::shortenNumberDecorator($number);
-			$this->assertEquals($expected, $result);
-		}
-
-		public function shortenNumberDecoratorDataProvider() {
-				return array(
-					array(1234,'1,234'), // note: this only works for EN
-					array(56000,'56K'),
-					array(56710,'56.7K'),
-					array(56756,'56.8K'),
-					array(56900,'56.9K'),
-					array(56990,'57K'),
-					array(123456789,'123.5M')
-				);
-		}
-
 		protected static function getFetchObjResult($key, $cnt, $date=null) {
 			$obj = new stdClass();
 			$obj->date = $date;

@@ -5,6 +5,29 @@
  * @file
  */
 class ChangeTags {
+	// SUS-2752 temporary begin
+
+	const API_EDIT_TAG = 'apiedit';
+	const CATEGORYSELECT_EDIT_TAG = 'categoryselect';
+	const GALLERY_EDIT_TAG = 'gallery';
+	const ROLLBACK_TAG = 'rollback';
+	const RTE_SOURCE_MODE = 'source';
+	const RTE_WYSIWYG_MODE = 'wysiwyg';
+	const RTE_SOURCE_MODE_TAG = 'rte-source';
+	const RTE_WYSIWYG_MODE_TAG = 'rte-wysiwyg';
+	const SOURCE_EDIT_TAG = 'sourceedit';
+
+	static $tagBlacklist = [
+		self::API_EDIT_TAG,
+		self::CATEGORYSELECT_EDIT_TAG,
+		self::GALLERY_EDIT_TAG,
+		self::ROLLBACK_TAG,
+		self::RTE_SOURCE_MODE_TAG,
+		self::RTE_WYSIWYG_MODE_TAG,
+		self::SOURCE_EDIT_TAG
+	];
+
+	// SUS-2752 temporary end
 
 	/**
 	 * Creates HTML for the given tags
@@ -26,7 +49,10 @@ class ChangeTags {
 
 		$tags = explode( ',', $tags );
 
-		wfRunHooks( 'FormatSummaryRow', [ &$tags ] );
+		Hooks::run( 'FormatSummaryRow', [ &$tags ] );
+
+		// SUS-2752: Temporarily keep edit tags hidden until cleanup
+		$tags = array_diff( $tags, static::$tagBlacklist );
 
 		if( !$tags )
 			return array( '', array() );
@@ -100,28 +126,7 @@ class ChangeTags {
 			$rev_id = $dbr->selectField( 'recentchanges', 'rc_this_oldid', array( 'rc_id' => $rc_id ), __METHOD__ );
 		}
 
-		$tsConds = array_filter( array( 'ts_rc_id' => $rc_id, 'ts_rev_id' => $rev_id, 'ts_log_id' => $log_id ) );
-
-		## Update the summary row.
-		$prevTags = $dbr->selectField( 'tag_summary', 'ts_tags', $tsConds, __METHOD__ );
-		$prevTags = $prevTags ? $prevTags : '';
-		$prevTags = array_filter( explode( ',', $prevTags ) );
-		$newTags = array_unique( array_merge( $prevTags, $tags ) );
-		sort( $prevTags );
-		sort( $newTags );
-
-		if ( $prevTags == $newTags ) {
-			// No change.
-			return false;
-		}
-
 		$dbw = wfGetDB( DB_MASTER );
-		$dbw->replace(
-			'tag_summary',
-			array( 'ts_rev_id', 'ts_rc_id', 'ts_log_id' ),
-			array_filter( array_merge( $tsConds, array( 'ts_tags' => implode( ',', $newTags ) ) ) ),
-			__METHOD__
-		);
 
 		// Insert the tags rows.
 		$tagsRows = array();
@@ -137,7 +142,8 @@ class ChangeTags {
 			);
 		}
 
-		$dbw->insert( 'change_tag', $tagsRows, __METHOD__, array( 'IGNORE' ) );
+		// SUS-3798 | Wikia change - remove an evil IGNORE flag
+		$dbw->insert( 'change_tag', $tagsRows, __METHOD__ );
 
 		return true;
 	}
@@ -176,10 +182,8 @@ class ChangeTags {
 			throw new MWException( 'Unable to determine appropriate JOIN condition for tagging.' );
 		}
 
-		// JOIN on tag_summary
-		$tables[] = 'tag_summary';
-		$join_conds['tag_summary'] = array( 'LEFT JOIN', "ts_$join_cond=$join_cond" );
-		$fields[] = 'ts_tags';
+		// SUS-2741: ported from MW 1.23, adjusted for compatibility
+		$fields[] = static::buildTsTagsGroupConcatField( $join_cond );
 
 		if( $wgUseTagFilter && $filter_tag ) {
 			// Somebody wants to filter on a tag.
@@ -194,6 +198,12 @@ class ChangeTags {
 			$join_conds['change_tag'] = array( 'INNER JOIN', "ct_$join_cond=$join_cond" );
 			$conds['ct_tag'] = $filter_tag;
 		}
+	}
+
+	public static function buildTsTagsGroupConcatField( string $joinFieldName ) {
+		return wfGetDB( DB_SLAVE )->buildGroupConcatField(
+				',', 'change_tag', 'ct_tag', "ct_$joinFieldName=$joinFieldName"
+			) . ' AS ts_tags';
 	}
 
 	/**
@@ -257,7 +267,7 @@ class ChangeTags {
 			$emptyTags[] = $row->vt_tag;
 		}
 
-		wfRunHooks( 'ListDefinedTags', array( &$emptyTags ) );
+		Hooks::run( 'ListDefinedTags', array( &$emptyTags ) );
 
 		$emptyTags = array_filter( array_unique( $emptyTags ) );
 

@@ -1,0 +1,44 @@
+{
+    "authors": [
+        {
+            "email": "chuck@horde.org",
+            "name": "Chuck Hagenbuch",
+            "role": "Lead"
+        },
+        {
+            "email": "richard@phpguru.org",
+            "name": "Richard Heyes",
+            "role": "Developer"
+        },
+        {
+            "email": "alec@alec.pl",
+            "name": "Aleksander Machniak",
+            "role": "Developer"
+        }
+    ],
+    "autoload": {
+        "classmap": [
+            "Mail2.php", "Mail2"
+        ]
+    },
+    "autoload-dev": {
+        "classmap": [ "tests" ]
+    },
+    "description": "More info available on: http://pear.php.net/package/Mail2",
+    "include-path": [
+        "./"
+    ],
+    "license": "BSD-2-Clause",
+    "name": "pear/mail2",
+    "support": {
+        "issues": "http://pear.php.net/bugs/search.php?cmd=display&package_name[]=Mail2",
+        "source": "https://github.com/pear/Mail2"
+    },
+    "type": "library",
+    "require-dev": {
+        "phpunit/phpunit": "*"
+    },
+    "suggest": {
+        "pear/net_smtp": "Install optionally via your project's composer.json"
+    }
+}

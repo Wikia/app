@@ -28,6 +28,7 @@ $wgAutoloadClasses['LightboxHooks'] =  $dir . 'LightboxHooks.class.php';
 
 // hooks
 $wgHooks['MakeGlobalVariablesScript'][] = 'LightboxHooks::onMakeGlobalVariablesScript';
+$wgHooks['GetHTMLAfterBody'][] = 'LightboxHooks::onGetHTMLAfterBody';
 
 // i18n mapping
 $wgExtensionMessagesFiles['Lightbox'] = $dir . 'Lightbox.i18n.php';

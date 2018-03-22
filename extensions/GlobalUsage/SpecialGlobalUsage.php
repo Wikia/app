@@ -139,7 +139,7 @@ class SpecialGlobalUsage extends SpecialPage {
 
 		/* Wikia change begin */
 		$link = null;
-		wfRunHooks( 'GlobalUsageFormatItemWikiLink', array( $item, $page, &$link ) );
+		Hooks::run( 'GlobalUsageFormatItemWikiLink', array( $item, $page, &$link ) );
 		if ( is_null($link) ) {
 			$link = WikiMap::makeForeignLink( $item['wiki'], $page,
 				str_replace( '_', ' ', $page ) );

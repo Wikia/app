@@ -18,10 +18,6 @@ if ( !in_array( 'ogv', $wgFileExtensions ) ) {
 if ( !in_array( 'oga', $wgFileExtensions ) ) {
 	$wgFileExtensions[] = 'oga';
 }
-ini_set( 'include_path',
-	"$oggDir/PEAR/File_Ogg" .
-	PATH_SEPARATOR .
-	ini_get( 'include_path' ) );
 
 // Bump this when updating OggPlayer.js to help update caches
 $wgOggScriptVersion = '12';
@@ -67,20 +63,4 @@ $wgFFmpegLocation = '/usr/bin/ffmpeg';
  */
 $wgOggThumbLocation = false;
 
-/**
- * Filename or URL path to the Cortado Java player applet.
- *
- * If no path is included, the path to this extension's
- * directory will be used by default -- this should work
- * on most local installations.
- *
- * You may need to include a full URL here if $wgUploadPath
- * specifies a host different from where the wiki pages are
- * served -- the applet .jar file must come from the same host
- * as the uploaded media files or Java security rules will
- * prevent the applet from loading them.
- */
-$wgCortadoJarFile = "cortado-ovt-stripped-0.5.1.jar";
-
 /******************* CONFIGURATION ENDS HERE **********************/
-

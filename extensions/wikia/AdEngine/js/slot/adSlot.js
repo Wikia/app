@@ -1,38 +1,71 @@
-/*global define*/
-define('ext.wikia.adEngine.slot.adSlot', [], function () {
+/*global define, require*/
+define('ext.wikia.adEngine.slot.adSlot', [
+	'ext.wikia.adEngine.slot.adUnitBuilder',
+	'ext.wikia.adEngine.slot.service.megaAdUnitBuilder',
+	'wikia.document',
+	'wikia.log'
+], function (adUnitBuilder, megaAdUnitBuilder, doc, log) {
 	'use strict';
 
+	var logGroup = 'ext.wikia.adEngine.slot.adSlot';
+
 	function create(name, container, callbacks) {
-		var slot = {
+
+		function registerHook(name) {
+			return function (adInfo) {
+				if (typeof callbacks[name] === 'function') {
+					return callbacks[name](adInfo);
+				}
+			};
+		}
+
+		return {
 			name: name,
-			container: container
+			container: container,
+			isViewed: false,
+			enabled: true,
+			isEnabled: registerHook('isEnabled'),
+			disable: registerHook('disable'),
+			enable: registerHook('enable'),
+			collapse: registerHook('collapse'),
+			hop: registerHook('hop'),
+			renderEnded: registerHook('renderEnded'),
+			success: registerHook('success'),
+			viewed: registerHook('viewed')
 		};
-
-		slot.success = function (adInfo) {
-			if (typeof callbacks.success === 'function') {
-				callbacks.success(adInfo);
-			}
-		};
-		slot.collapse = function (adInfo) {
-			if (typeof callbacks.collapse === 'function') {
-				callbacks.collapse(adInfo);
-			}
-		};
-		slot.hop = function (adInfo) {
-			if (typeof callbacks.hop === 'function') {
-				callbacks.hop(adInfo);
-			}
-		};
-
-		return slot;
 	}
 
 	function getShortSlotName(slotName) {
-		return slotName.replace(/^.*\/([^\/]*)$/, '$1');
+		if (megaAdUnitBuilder.isValid(slotName)) {
+			return megaAdUnitBuilder.getShortSlotName(slotName);
+		}
+
+		return adUnitBuilder.getShortSlotName(slotName);
+	}
+
+	function getIframe(slotName) {
+		var cssSelector = '#' + slotName + ' > .provider-container:not(.hidden) div[id*="_container_"] > iframe',
+			iframe = doc.querySelector(cssSelector);
+
+		log(['getIframe', slotName, iframe && iframe.id], log.levels.debug, logGroup);
+
+		return iframe;
+	}
+
+	function getProviderContainer(slotName) {
+		var slotContainer = doc.getElementById(slotName);
+
+		if (slotContainer) {
+			return slotContainer.lastElementChild || null;
+		}
+
+		return null;
 	}
 
 	return {
 		create: create,
+		getIframe: getIframe,
+		getProviderContainer: getProviderContainer,
 		getShortSlotName: getShortSlotName
 	};
 });

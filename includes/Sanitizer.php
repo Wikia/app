@@ -429,7 +429,7 @@ class Sanitizer {
 		 * @author Federico "Lox" Lucignano <federico(at)wikia-inc.com>
 		 * Allow modifying list of tags to avoid stripping
 		 */
-		wfRunHooks( 'SanitizerTagsLists', array( &$extratags, &$removetags ) );
+		Hooks::run( 'SanitizerTagsLists', array( &$extratags, &$removetags ) );
 		/** Wikia change end **/
 
 		# Populate $htmlpairs and $htmlelements with the $extratags and $removetags arrays
@@ -725,7 +725,7 @@ class Sanitizer {
 					$value = "{$value}px";
 				}
 			}
-			
+
 			/* Wikia change */
 			/* bugId::34438 mirror table alignment behavior as it would be in HTML4 */
 			if ($attribute === 'align' && $element === 'table') {
@@ -812,6 +812,16 @@ class Sanitizer {
 			if ( !($wgHtml5 && preg_match( '/^data-/i', $attribute )) && !isset( $whitelist[$attribute] ) ) {
 				continue;
 			}
+
+			// FANDOM change - XW-4380: allow boolean values for contenteditable attribute in HTML5 mode
+			if ( $wgHtml5 && $attribute === 'contenteditable' ) {
+				if ( $value === 'true' || $value === 'false' ) {
+					$out[$attribute] = $value;
+				}
+
+				continue;
+			}
+			// end FANDOM change
 
 			# Strip javascript "expression" from stylesheets.
 			# http://msdn.microsoft.com/workshop/author/dhtml/overview/recalc.asp
@@ -1007,6 +1017,7 @@ class Sanitizer {
 				| url\s*\(
 				| image\s*\(
 				| image-set\s*\(
+				| attr\s*\([^)]+[\s,]+url
 			!ix', $value ) ) {
 			return '/* insecure input */';
 		}
@@ -1098,14 +1109,16 @@ class Sanitizer {
 			$attribs[] = "$encAttribute=\"$encValue\"";
 		}
 
+
 		# RTE (Rich Text Editor) - begin
 		# @author: Inez Korczyński
 		global $wgRTEParserEnabled;
-		if(!empty($wgRTEParserEnabled)) {
-			if(strpos($text, "\x7f") !== false) {
+		if ( !empty( $wgRTEParserEnabled ) && !isset( $stripped['contenteditable'] ) ) {
+			if ( strpos( $text, "\x7f" ) !== false ) {
 				RTE::$edgeCases[] = 'COMPLEX.08';
 			}
-			$attribs[] = RTEParser::encodeAttributesStr($text);
+			
+			$attribs[] = RTEParser::encodeAttributesStr( $text );
 		}
 		# RTE - end
 
@@ -1115,7 +1128,7 @@ class Sanitizer {
 	/**
 	 * Encode an attribute value for HTML output.
 	 * @param $text String
-	 * @return HTML-encoded text fragment
+	 * @return String HTML-encoded text fragment
 	 */
 	static function encodeAttribute( $text ) {
 		$encValue = htmlspecialchars( $text, ENT_QUOTES );
@@ -1603,6 +1616,12 @@ class Sanitizer {
 			) );
 		}
 
+		// FANDOM change - XW-4380: allow contenteditable attribute in HTML5 mode
+		if ( $wgHtml5 ) {
+			$common[] = 'contenteditable';
+		}
+		// end FANDOM change
+
 		if ( $wgHtml5 && $wgAllowMicrodataAttributes ) {
 			# add HTML5 microdata tages as pecified by http://www.whatwg.org/specs/web-apps/current-work/multipage/microdata.html#the-microdata-model
 			$common = array_merge( $common, array(
@@ -1764,7 +1783,7 @@ class Sanitizer {
 		 * @author Federico "Lox" Lucignano <federico(at)wikia-inc.com>
 		 * Allow modifying list of attributes to avoid stripping
 		 */
-		wfRunHooks( 'SanitizerAttributesSetup', array( &$whitelist ) );
+		Hooks::run( 'SanitizerAttributesSetup', array( &$whitelist ) );
 		/** Wikia change end **/
 
 		return $whitelist;
@@ -1894,7 +1913,7 @@ class Sanitizer {
 	 */
 	public static function validateEmail( $addr ) {
 		$result = null;
-		if( !wfRunHooks( 'isValidEmailAddr', array( $addr, &$result ) ) ) {
+		if( !Hooks::run( 'isValidEmailAddr', array( $addr, &$result ) ) ) {
 			return $result;
 		}
 

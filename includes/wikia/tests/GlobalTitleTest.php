@@ -4,7 +4,7 @@
  * @group GlobalTitle
  */
 class GlobalTitleTest extends WikiaBaseTest {
-	function setUp() {
+	protected function setUp() {
 		parent::setUp();
 
 		$this->disableMemCache();
@@ -14,12 +14,20 @@ class GlobalTitleTest extends WikiaBaseTest {
 			->willReturnMap( [
 				// basically all tests where GlobalTitle::load() is executed
 				[ 'wgServer', 177, 'http://community.wikia.com' ],
-				[ 'wgServer', 113, 'http://en.memory-alpha.org' ],
-				[ 'wgServer', 490, 'http://www.wowwiki.com' ],
+				[ 'wgServer', 113, 'http://memory-alpha.wikia.com' ],
+				[ 'wgServer', 490, 'http://wowwiki.wikia.com' ],
 				[ 'wgServer', 1686, 'http://spolecznosc.wikia.com' ],
-				/** @see testUrlsMainNSonWoW **/
-				[ 'wgArticlePath', 490, '/$1' ],
-				[ 'wgExtraNamespacesLocal', 490, [ 116 => 'Portal' ] ],
+				[ 'wgServer', 165, 'http://firefly.wikia.com' ],
+				[ 'wgLanguageCode', 177, 'en' ],
+				[ 'wgLanguageCode', 113, 'en' ],
+				[ 'wgLanguageCode', 490, 'en' ],
+				[ 'wgLanguageCode', 1686, 'pl' ],
+				[ 'wgLanguageCode', 165, 'en' ],
+				[ 'wgExtraNamespacesLocal', 177, false, [], [] ],
+				[ 'wgExtraNamespacesLocal', 113, false, [], [] ],
+				[ 'wgExtraNamespacesLocal', 490, false, [], [ 116 => 'Portal' ] ],
+				[ 'wgExtraNamespacesLocal', 1686, false, [], [] ],
+				[ 'wgExtraNamespacesLocal', 165, false, [], [] ],
 			] );
 	}
 
@@ -51,7 +59,7 @@ class GlobalTitleTest extends WikiaBaseTest {
 		$this->mockProdEnv();
 
 		$title = GlobalTitle::newFromText( "Timeline", NS_MAIN, 113 ); # memory-alpha
-		$expectedUrl = "http://en.memory-alpha.org/wiki/Timeline";
+		$expectedUrl = "http://memory-alpha.wikia.com/wiki/Timeline";
 		$this->assertEquals( $expectedUrl, $title->getFullURL() );
 	}
 
@@ -59,12 +67,12 @@ class GlobalTitleTest extends WikiaBaseTest {
 		$this->mockProdEnv();
 
 		$title = GlobalTitle::newFromText( "Main", 116, 490); # wowwiki
-		$expectedUrl = "http://www.wowwiki.com/Portal:Main";
+		$expectedUrl = "http://wowwiki.wikia.com/wiki/Portal:Main";
 		$this->assertEquals( $expectedUrl, $title->getFullURL() );
 	}
 
 	/**
-	 * @dataProvider testUrlsSpacesProvider
+	 * @dataProvider urlsSpacesProvider
 	 */
 	function testUrlsSpaces( $environment, $title, $namespace, $city_id, $expectedUrl ) {
 		$this->mockEnvironment( $environment );
@@ -76,8 +84,24 @@ class GlobalTitleTest extends WikiaBaseTest {
 	function testUrlsSpecialNS() {
 		$this->mockProdEnv();
 
-		$title = GlobalTitle::newFromText( "WikiFactory", NS_SPECIAL, 1686 ); # pl.wikia.com
-		$expectedUrl = "http://spolecznosc.wikia.com/wiki/Special:WikiFactory";
+		$title = GlobalTitle::newFromText( 'WikiFactory', NS_SPECIAL, 1686 ); # pl.wikia.com
+		$expectedUrl = 'http://spolecznosc.wikia.com/wiki/Specjalna:WikiFactory';
+		$this->assertEquals( $expectedUrl, $title->getFullURL() );
+	}
+
+	function testUrlsLocalizedNS() {
+		$this->mockProdEnv();
+
+		$title = GlobalTitle::newFromText( 'Test', NS_USER, 1686 ); # pl.wikia.com
+		$expectedUrl = 'http://spolecznosc.wikia.com/wiki/U%C5%BCytkownik:Test';
+		$this->assertEquals( $expectedUrl, $title->getFullURL() );
+	}
+
+	function testUrlsLocalizedSpecialPage() {
+		$this->mockProdEnv();
+
+		$title = GlobalTitle::newFromText( 'Search', NS_SPECIAL, 1686 ); # pl.wikia.com
+		$expectedUrl = 'http://spolecznosc.wikia.com/wiki/Specjalna:Szukaj';
 		$this->assertEquals( $expectedUrl, $title->getFullURL() );
 	}
 
@@ -104,6 +128,32 @@ class GlobalTitleTest extends WikiaBaseTest {
 	}
 
 	/**
+	 * @dataProvider mainPageDataProvider
+	 */
+	function testNewMainPageUrls( $mediaWikiMainpageContent, $exists, $availableNamespaces, $expectedNamespace, $expectedText ) {
+		$this->mockProdEnv();
+
+		$globalTitleMock = $this->getMockBuilder( 'GlobalTitle' )->setMethods( [
+			'getContent',
+			'exists',
+			'loadNamespaceNames',
+			'loadAll',
+		    'getNsText'
+		] )->getMock();
+		$globalTitleMock->expects( $this->any() )->method( 'loadNamespaceNames' )->willReturn( $availableNamespaces );
+		$globalTitleMock->expects( $this->any() )->method( 'loadAll' )->willReturn( null );
+		$globalTitleMock->expects( $this->any() )->method( 'getNsText' )->willReturn( $expectedNamespace );
+		$globalTitleMock->expects( $this->any() )->method( 'exists' )->willReturn( $exists );
+		$globalTitleMock->expects( $this->any() )->method( 'getContent' )->willReturn( $mediaWikiMainpageContent );
+		$this->mockClass( GlobalTitle::class, $globalTitleMock );
+
+		$title = GlobalTitle::newMainPage( 177 ); // community.wikia.com
+
+		$this->assertEquals( $title->getNamespace(), $expectedNamespace );
+		$this->assertEquals( $title->getText(), $expectedText );
+	}
+
+	/**
 	 * @dataProvider stripArticlePathDataProvider
 	 */
 	public function testStripArticlePath( $path, $articlePath, $expResult ) {
@@ -112,13 +162,24 @@ class GlobalTitleTest extends WikiaBaseTest {
 		$this->assertEquals( GlobalTitle::stripArticlePath( $path, $articlePath ), $expResult );
 	}
 
-	public function testUrlsSpacesProvider() {
+	/**
+	 * @dataProvider httpsUrlsProvider
+	 */
+	public function testHTTPSUrls( $cityId, $requestProtocol, $expectedUrl ) {
+		$this->mockProdEnv();
+		$this->mockStaticMethod( 'WebRequest', 'detectProtocol', $requestProtocol );
+
+		$fullUrl = GlobalTitle::newFromText( 'Test', NS_MAIN, $cityId )->getFullURL();
+		$this->assertEquals( $fullUrl, $expectedUrl );
+	}
+
+	public function urlsSpacesProvider() {
 		return [
-			[ WIKIA_ENV_DEV, 'Test Ze Spacjami', NS_TALK, 177, 'http://community.' . self::MOCK_DEV_NAME . '.wikia-dev.com/wiki/Talk:Test_Ze_Spacjami' ],
+			[ WIKIA_ENV_DEV, 'Test Ze Spacjami', NS_TALK, 177, 'http://community.' . self::MOCK_DEV_NAME . '.wikia-dev.us/wiki/Talk:Test_Ze_Spacjami' ],
 			[ WIKIA_ENV_PROD, 'Test Ze Spacjami', NS_TALK, 177, 'http://community.wikia.com/wiki/Talk:Test_Ze_Spacjami' ],
-			[ WIKIA_ENV_PREVIEW, 'Test Ze Spacjami', NS_TALK, 177, 'http://preview.community.wikia.com/wiki/Talk:Test_Ze_Spacjami' ],
-			[ WIKIA_ENV_VERIFY, 'Test Ze Spacjami', NS_TALK, 177, 'http://verify.community.wikia.com/wiki/Talk:Test_Ze_Spacjami' ],
-			[ WIKIA_ENV_SANDBOX, 'Test Ze Spacjami', NS_TALK, 177, 'http://sandbox-s1.community.wikia.com/wiki/Talk:Test_Ze_Spacjami' ],
+			[ WIKIA_ENV_PREVIEW, 'Test Ze Spacjami', NS_TALK, 177, 'http://community.preview.wikia.com/wiki/Talk:Test_Ze_Spacjami' ],
+			[ WIKIA_ENV_VERIFY, 'Test Ze Spacjami', NS_TALK, 177, 'http://community.verify.wikia.com/wiki/Talk:Test_Ze_Spacjami' ],
+			[ WIKIA_ENV_SANDBOX, 'Test Ze Spacjami', NS_TALK, 177, 'http://community.sandbox-s1.wikia.com/wiki/Talk:Test_Ze_Spacjami' ],
 			[ WIKIA_ENV_STAGING, 'Test Ze Spacjami', NS_TALK, 177, 'http://community.wikia-staging.com/wiki/Talk:Test_Ze_Spacjami' ],
 		];
 	}
@@ -142,6 +203,51 @@ class GlobalTitleTest extends WikiaBaseTest {
 			['/Aspatria_-_Bedford_Point_Expressway/subpage','/$1','Aspatria_-_Bedford_Point_Expressway/subpage'],
 			['/wiki/Manhattan_Research,_Inc./subpage','/wiki/$1','Manhattan_Research,_Inc./subpage'],
 			['/wiki/Ludovic_Hindman/subpage','/wiki/$1','Ludovic_Hindman/subpage'],
+		];
+	}
+
+	public function mainPageDataProvider() {
+		return [
+			[
+				'Whatever',
+				true,
+				[],
+				false,
+				'Whatever',
+			],
+			[
+				'Namespace:Test',
+				true,
+				[ '1' => 'Namespace' ],
+				1,
+				'Test',
+			],
+			[
+				'Namespace with spaces:Test',
+				true,
+				[ '1' => 'Namespace_with_spaces' ],
+				1,
+				'Test',
+			],
+			[
+				'Namespaces_with_underlines:Test',
+				true,
+				[ 2 => 'Namespaces_with_underlines' ],
+				2,
+				'Test',
+			],
+			[ 'Notexists', false, [], false, 'Main Page' ],
+		];
+	}
+
+	public function httpsUrlsProvider() {
+		return [
+			[ 177, 'http', 'http://community.wikia.com/wiki/Test' ],
+			[ 177, 'https', 'https://community.wikia.com/wiki/Test' ],
+			[ 165, 'http', 'http://firefly.wikia.com/wiki/Test' ],
+			[ 165, 'https', 'https://firefly.wikia.com/wiki/Test' ],
+			[ 5931, 'http', 'http://ja.starwars.wikia.com/wiki/Test' ],
+			[ 5931, 'https', 'http://ja.starwars.wikia.com/wiki/Test' ],
 		];
 	}
 }

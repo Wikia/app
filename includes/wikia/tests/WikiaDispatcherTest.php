@@ -17,12 +17,11 @@ class WikiaDispatcherTest extends WikiaBaseTest {
 		parent::setUp();
 	}
 
+	/**
+	 * @expectedException ControllerNotFoundException
+	 */
 	public function testDispatchUnknownOrEmptyController() {
-		$app = $this->getMock( 'WikiaApp', array( 'runFunction' ) );
-		$app->expects( $this->any() )
-		    ->method( 'runFunction' )
-		    ->will( $this->returnValue( true ) );
-
+		$app = F::app();
 		$response = $this->object->dispatch( $app, new WikiaRequest($_POST + $_GET) );
 
 		$this->assertTrue($response->hasException());
@@ -34,17 +33,13 @@ class WikiaDispatcherTest extends WikiaBaseTest {
 		$this->assertTrue($response->hasException());
 		$this->assertInstanceOf( 'ControllerNotFoundException', $response->getException());
 		$this->assertEquals(WikiaResponse::RESPONSE_CODE_NOT_FOUND, $response->getCode());
-		
+
 		$request->setInternal(true);
-		$this->setExpectedException('ControllerNotFoundException');
-		$response = $this->object->dispatch( $app, $request );
+		$this->object->dispatch( $app, $request );
 	}
 
 	public function testDispatchUnknownMethod() {
-		$app = $this->getMock( 'WikiaApp', array( 'runFunction' ) );
-		$app->expects( $this->any() )
-		    ->method( 'runFunction' )
-		    ->will( $this->returnValue( true ) );
+		$app = F::app();
 
 		$response = $this->object->dispatch( $app, new WikiaRequest( array( 'controller' => 'Test', 'method' => 'nonExistentMethod' ) ) );	
 		$this->assertTrue($response->hasException());

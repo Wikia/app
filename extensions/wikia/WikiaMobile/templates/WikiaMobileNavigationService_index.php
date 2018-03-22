@@ -1,7 +1,6 @@
 <?php
 /**
  * @var $wg WikiaGlobalRegistry
- * @var $wf WikiaFunctionWrapper
  * @var $searchPage Bool
  * @var $wordmarkType String
  * @var $wordmarkUrl String

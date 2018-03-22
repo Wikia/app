@@ -44,7 +44,7 @@ describe('ext.wikia.adEngine.template.playwire', function () {
 			container: {}
 		});
 
-		expect(mocks.player.inject.calls.mostRecent().args[0]).toEqual('//foo.url');
+		expect(mocks.player.inject.calls.mostRecent().args[0].configUrl).toEqual('//foo.url');
 	});
 
 	it('Show with custom config url', function () {
@@ -57,6 +57,6 @@ describe('ext.wikia.adEngine.template.playwire', function () {
 			container: {}
 		});
 
-		expect(mocks.player.inject.calls.mostRecent().args[0]).toEqual('//foo.bar');
+		expect(mocks.player.inject.calls.mostRecent().args[0].configUrl).toEqual('//foo.bar');
 	});
 });

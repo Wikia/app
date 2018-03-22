@@ -14,20 +14,20 @@
  * @cfg {number} [size] Media thumbnail size
  */
 ve.ui.WikiaVideoOptionWidget = function VeUiWikiaVideoOptionWidget( config ) {
-	var $icon, $duration;
+	var $duration;
 
 	// Parent constructor
 	ve.ui.WikiaVideoOptionWidget.super.call( this, config );
 
 	// Initialization
-	$icon = this.$( '<span>' )
-		.addClass( 've-ui-wikiaVideoOptionWidget-icon' );
+	this.previewButton.setIcon('preview-video');
+
 	$duration = this.$( '<span>' )
 		.addClass( 've-ui-wikiaVideoOptionWidget-duration' )
 		.text( this.constructor.static.formatDuration( this.data.duration ) );
 
 	// DOM changes
-	this.$element.append( $icon, $duration );
+	this.previewButton.$element.prepend( $duration );
 };
 
 /* Inheritance */

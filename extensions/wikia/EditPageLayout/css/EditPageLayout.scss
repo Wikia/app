@@ -59,13 +59,6 @@ body {
 	float: none;
 }
 
-// remove global header shadow
-.WikiaHeader {
-	nav:before {
-		background: none;
-	}
-}
-
 .EditPage {
 	@include clearfix;
 	background: $color-epl-page-secondary;
@@ -213,18 +206,10 @@ body {
 
 	#diff {
 		@include bodytext;
-		background-color: $color-epl-header-secondary;
+		background-color: $color-page;
 		border: 1px solid $color-page-border;
 		margin: 10px 0;
 		padding: 5px;
-
-		table {
-			.diff-addedline,
-			.diff-context,
-			.diff-deletedline {
-				color: $color-epl-notices-color;
-			}
-		}
 	}
 
 	#myedit {
@@ -294,7 +279,7 @@ body {
 			}
 
 			.loading-throbber {
-				background: $color-page url('/skins/common/images/ajax.gif') no-repeat 50% 50%; /* $wgCdnStylePath */
+				background: $color-page url('/skins/common/images/ajax.gif') no-repeat 50% 50%; /* $wgResourceBasePath */
 				height: 16px;
 				width: 16px;
 			}
@@ -340,7 +325,7 @@ body {
 				padding: 10px;
 				position: relative;
 
-				.banner-notifications-wrapper {
+				.wds-banner-notification__container {
 					// FB#48494 - change nav2 error styling for modal preview
 					width: auto;
 				}

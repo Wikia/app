@@ -13,17 +13,47 @@ class Hooks {
 	 * Register hooks for the extension
 	 */
 	public static function register() {
-		$hooks = new self();
-		\Hooks::register( 'BeforePageDisplay', [ $hooks, 'onBeforePageDisplay' ] );
-		\Hooks::register( 'PageHeaderPageTypePrepared', [ $hooks, 'onPageHeaderPageTypePrepared' ] );
-		\Hooks::register( 'QueryPageUseResultsBeforeRecache', [ $hooks, 'onQueryPageUseResultsBeforeRecache' ] );
+
+		\Hooks::register( 'BeforePageDisplay', 'Wikia\\TemplateClassification\\Hooks::onBeforePageDisplay' );
+		\Hooks::register( 'PageHeaderPageTypePrepared', 'Wikia\\TemplateClassification\\Hooks::onPageHeaderPageTypePrepared' );
+		\Hooks::register( 'QueryPageUseResultsBeforeRecache', 'Wikia\\TemplateClassification\\Hooks::onQueryPageUseResultsBeforeRecache' );
 		/* Edit page hooks */
-		\Hooks::register( 'ArticleSaveComplete', [ $hooks, 'onArticleSaveComplete' ] );
-		\Hooks::register( 'EditPage::showEditForm:fields', [ $hooks, 'onEditPageShowEditFormFields' ] );
-		\Hooks::register( 'EditPageLayoutExecute', [ $hooks, 'onEditPageLayoutExecute' ] );
-		\Hooks::register( 'EditPageMakeGlobalVariablesScript', [ $hooks, 'onEditPageMakeGlobalVariablesScript' ] );
-		\Hooks::register( 'SkinTemplateNavigation', [ $hooks, 'onSkinTemplateNavigation' ] );
-		\Hooks::register( 'PageHeaderDropdownActions', [ $hooks, 'onPageHeaderDropdownActions' ] );
+		\Hooks::register( 'ArticleSaveComplete', 'Wikia\\TemplateClassification\\Hooks::onArticleSaveComplete' );
+		\Hooks::register( 'EditPage::showEditForm:fields', 'Wikia\\TemplateClassification\\Hooks::onEditPageShowEditFormFields' );
+		\Hooks::register( 'EditPageLayoutExecute', 'Wikia\\TemplateClassification\\Hooks::onEditPageLayoutExecute' );
+		\Hooks::register( 'EditPageMakeGlobalVariablesScript', 'Wikia\\TemplateClassification\\Hooks::onEditPageMakeGlobalVariablesScript' );
+		\Hooks::register( 'SkinTemplateNavigation', 'Wikia\\TemplateClassification\\Hooks::onSkinTemplateNavigation' );
+		\Hooks::register( 'PageHeaderDropdownActions', 'Wikia\\TemplateClassification\\Hooks::onPageHeaderDropdownActions' );
+
+		\Hooks::register( 'ArticleDeleteComplete', 'Wikia\\TemplateClassification\\Hooks::onArticleDeleteComplete' );
+		\Hooks::register( 'WikiFactoryDoCloseWiki', 'Wikia\\TemplateClassification\\Hooks::onWikiFactoryDoCloseWiki' );
+	}
+
+	/**
+	 * When a template is deleted from the wiki, delete its classification data from TCS
+	 *
+	 * @param \WikiPage $page
+	 * @param \User $user
+	 * @param string $reason
+	 * @param int $pageId
+	 * @throws ApiException
+	 */
+	public static function onArticleDeleteComplete( \WikiPage $page, \User $user, string $reason, int $pageId ) {
+		global $wgCityId;
+
+		if ( $page->getTitle()->inNamespace( NS_TEMPLATE ) ) {
+			( new \TemplateClassificationService() )->deleteTemplateInformation( $wgCityId, $pageId );
+		}
+	}
+
+	/**
+	 * When a wiki is closed, delete all of its template classification data from TCS
+	 *
+	 * @param $wiki
+	 * @throws ApiException
+	 */
+	public static function onWikiFactoryDoCloseWiki( $wiki ) {
+		( new \TemplateClassificationService() )->deleteTemplateInformationForWiki( $wiki->city_id );
 	}
 
 	/**
@@ -35,8 +65,8 @@ class Hooks {
 	 * @param \User $user
 	 * @return bool
 	 */
-	public function onArticleSaveComplete( \WikiPage $article, \User $user, $text, $summary,
-		$minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId
+	public static function onArticleSaveComplete( \WikiPage $article, \User $user, $text, $summary,
+		$minoredit, $watchthis, $sectionanchor, $flags, $revision, &$status, $baseRevId
 	) {
 		global $wgCityId;
 
@@ -51,6 +81,7 @@ class Hooks {
 		if ( empty( $typeNew )
 			 || $typeNew === \TemplateClassificationService::NOT_AVAILABLE
 			 || $typeNew === $typeCurrent
+			 || $user->isAnon()
 		) {
 			return true;
 		}
@@ -77,12 +108,12 @@ class Hooks {
 	 * @param array $aVars
 	 * @return bool
 	 */
-	public function onEditPageMakeGlobalVariablesScript( array &$aVars ) {
+	public static function onEditPageMakeGlobalVariablesScript( array &$aVars ) {
 		$context = \RequestContext::getMain();
 		$title = $context->getTitle();
 		// Enable TemplateClassificationEditorPlugin
 		if ( ( new Permissions() )->shouldDisplayEntryPoint( $context->getUser(), $title )
-			 && $this->isEditPage()
+			 && static::isEditPage()
 		) {
 			$aVars[ 'enableTemplateClassificationEditorPlugin' ] = true;
 		}
@@ -95,14 +126,14 @@ class Hooks {
 	 * @param \OutputPage $out
 	 * @return bool
 	 */
-	public function onEditPageShowEditFormFields( \EditPage $editPage, \OutputPage $out ) {
+	public static function onEditPageShowEditFormFields( \EditPage $editPage, \OutputPage $out ) {
 		global $wgCityId;
 
 		$context = \RequestContext::getMain();
 		$title = $context->getTitle();
 
 		if ( ( new Permissions() )->shouldDisplayEntryPoint( $context->getUser(), $title ) ) {
-			$types = $this->getTemplateTypeForEdit( $editPage->getTitle(), $wgCityId );
+			$types = static::getTemplateTypeForEdit( $editPage->getTitle(), $wgCityId );
 
 			$out->addHTML( \Html::hidden( 'templateClassificationTypeCurrent', $types[ 'current' ],
 				[ 'autocomplete' => 'off' ] ) );
@@ -111,7 +142,7 @@ class Hooks {
 
 			// add additional class to body for new templates in order to hide editor while template classification
 			// modal is visible and builder is available
-			if ( $this->shouldHideEditorForInfoboxBuilder( $context, $types ) ) {
+			if ( static::shouldHideEditorForInfoboxBuilder( $context, $types ) ) {
 				\OasisController::addBodyClass( self::TC_BODY_CLASS_NAME );
 			}
 		}
@@ -127,24 +158,24 @@ class Hooks {
 	 *
 	 * @return true
 	 */
-	public function onBeforePageDisplay( \OutputPage $out, \Skin $skin ) {
+	public static function onBeforePageDisplay( \OutputPage $out, \Skin $skin ) {
 		global $wgEnableGlobalShortcutsExt;
 		$title = $out->getTitle();
 		$user = $skin->getUser();
 		$permissions = new Permissions();
 
 		if ( $permissions->shouldDisplayEntryPoint( $user, $title ) ) {
-			if ( $title->exists() && !$this->isEditPage() ) {
+			if ( $title->exists() && !static::isEditPage() ) {
 				\Wikia::addAssetsToOutput( 'template_classification_in_view_js' );
 				\Wikia::addAssetsToOutput( 'template_classification_scss' );
 				if ( !empty( $wgEnableGlobalShortcutsExt ) && Helper::shouldDisplayGlobalShortcuts() ) {
 					\Wikia::addAssetsToOutput( 'template_classification_globalshortcuts_js' );
 				}
-			} elseif ( $this->isEditPage() ) {
+			} elseif ( static::isEditPage() ) {
 				\Wikia::addAssetsToOutput( 'template_classification_in_edit_js' );
 				\Wikia::addAssetsToOutput( 'template_classification_scss' );
 
-				wfRunHooks( 'TemplateClassificationHooks::afterEditPageAssets' );
+				\Hooks::run( 'TemplateClassificationHooks::afterEditPageAssets' );
 			}
 		} elseif ( $permissions->shouldDisplayBulkActions( $user, $title ) ) {
 			\Wikia::addAssetsToOutput( 'template_classification_in_category_js' );
@@ -158,20 +189,23 @@ class Hooks {
 	}
 
 	/**
-	 * @param \PageHeaderController $pageHeaderController
 	 * @param \Title $title
+	 * @param string $pageType
+	 *
 	 * @return bool
 	 */
-	public function onPageHeaderPageTypePrepared( \PageHeaderController $pageHeaderController, \Title $title ) {
+	public static function onPageHeaderPageTypePrepared( \Title $title, string &$pageType ) {
 		global $wgCityId;
 
-		$user = $pageHeaderController->getContext()->getUser();
+		$user = \RequestContext::getMain()->getUser();
+
 		if ( $title->inNamespace( NS_TEMPLATE ) && $title->exists() ) {
 			$view = new View();
-			$pageHeaderController->pageType = $view->renderTemplateType(
-				$wgCityId, $title, $user, $pageHeaderController->pageType
+			$pageType = $view->renderTemplateType(
+				$wgCityId, $title, $user, $pageType
 			);
 		}
+
 		return true;
 	}
 
@@ -180,9 +214,9 @@ class Hooks {
 	 * @param $results
 	 * @return bool
 	 */
-	public function onQueryPageUseResultsBeforeRecache( \QueryPage $queryPage, \DatabaseBase $db, $results ) {
+	public static function onQueryPageUseResultsBeforeRecache( \QueryPage $queryPage, \DatabaseBase $db, $results ) {
 		if ( $queryPage->getName() === \UnusedtemplatesPage::UNUSED_TEMPLATES_PAGE_NAME ) {
-			$handler = $this->getUnusedTemplatesHandler();
+			$handler = static::getUnusedTemplatesHandler();
 			if ( $results instanceof \ResultWrapper ) {
 				$handler->markAsUnusedFromResults( $results );
 				$db->dataSeek( $results, 0 );    // CE-3024: reset cursor because hook caller needs the results also
@@ -197,7 +231,7 @@ class Hooks {
 	 * @param \EditPageLayoutController $editPage
 	 * @return bool
 	 */
-	public function onEditPageLayoutExecute( \EditPageLayoutController $editPage ) {
+	public static function onEditPageLayoutExecute( \EditPageLayoutController $editPage ) {
 		global $wgCityId;
 
 		$user = $editPage->getContext()->getUser();
@@ -213,11 +247,11 @@ class Hooks {
 	/**
 	 * @return Handler
 	 */
-	protected function getUnusedTemplatesHandler() {
+	protected static function getUnusedTemplatesHandler() {
 		return new Handler();
 	}
 
-	private function isEditPage() {
+	private static function isEditPage() {
 		return \RequestContext::getMain()->getRequest()->getVal( 'action' ) === 'edit';
 	}
 
@@ -228,7 +262,7 @@ class Hooks {
 	 * @param int $wikiaId
 	 * @return array
 	 */
-	private function getTemplateTypeForEdit( \Title $title, $wikiaId ) {
+	private static function getTemplateTypeForEdit( \Title $title, $wikiaId ) {
 		global $wgEnableTemplateDraftExt;
 
 		$types = [
@@ -263,7 +297,7 @@ class Hooks {
 	 * @param $links
 	 * @return bool
 	 */
-	public function onSkinTemplateNavigation( \Skin $skin, &$links ) {
+	public static function onSkinTemplateNavigation( \Skin $skin, &$links ) {
 		if ( ( new Permissions() )->shouldDisplayBulkActions( $skin->getUser(), $skin->getTitle() ) ) {
 			$links[ 'views' ][ 'bulk-classification' ] = [
 				'href' => '#',
@@ -282,7 +316,7 @@ class Hooks {
 	 * @param array $actions
 	 * @return bool
 	 */
-	public function onPageHeaderDropdownActions( array &$actions ) {
+	public static function onPageHeaderDropdownActions( array &$actions ) {
 		$actions[] = 'bulk-classification';
 
 		return true;
@@ -293,7 +327,7 @@ class Hooks {
 	 * @param $types
 	 * @return bool
 	 */
-	private function shouldHideEditorForInfoboxBuilder( \RequestContext $context, $types ) {
+	private static function shouldHideEditorForInfoboxBuilder( \RequestContext $context, $types ) {
 		global $wgEnablePortableInfoboxBuilderExt;
 
 		return $wgEnablePortableInfoboxBuilderExt

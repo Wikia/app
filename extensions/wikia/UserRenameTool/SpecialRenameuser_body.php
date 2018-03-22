@@ -10,7 +10,6 @@ if ( !defined( 'MEDIAWIKI' ) ) {
  * user accounts
  */
 class SpecialRenameuser extends SpecialPage {
-
 	/**
 	 * Constructor
 	 */
@@ -32,99 +31,186 @@ class SpecialRenameuser extends SpecialPage {
 		$this->setHeaders();
 		$this->checkPermissions();
 
-		$out = $this->getOutput();
-		$this->getOutput()->addScript(
-			Html::linkedScript(
-				AssetsManager::getInstance()->getOneCommonURL( '/extensions/wikia/UserRenameTool/js/NewUsernameUrlEncoder.js' )
-			)
-		);
+		$usernameParam = $this->getRequest()->getText( 'username', $par );
+
+		// SUS-3549: normalize the user name
+		// make the first letter uppercase, replace underscores with spaces
+		$usernameParam = User::getCanonicalName( $usernameParam );
+
+		$username = User::isValidUsername( $usernameParam ) ? $usernameParam : null;
+		$requestorUser = $this->getUser();
+		$canRenameAnotherUser = $requestorUser->isAllowed( 'renameanotheruser' );
+
+		if ( $requestorUser->isAnon() || !$requestorUser->isAllowed( 'renameuser' ) ) {
+			throw new PermissionsError( 'renameuser' );
+		}
+
+		if ( $username && !$canRenameAnotherUser ) {
+			throw new PermissionsError( 'renameanotheruser' );
+		}
 
 		if ( wfReadOnly() || !$wgStatsDBEnabled ) {
-			$out->readOnlyPage();
+			$this->getOutput()->readOnlyPage();
+
 			return;
 		}
 
-		// Get the request data
-		$request = $this->getRequest();
-		$oldUsername = $request->getText( 'oldusername', $par );
-		$newUsername = $request->getText( 'newusername' );
-		$reason = $request->getText( 'reason' );
-		$token = $this->getUser()->getEditToken();
-		$notifyRenamed = $request->getBool( 'notify_renamed', false );
-		$confirmAction = false;
-
-		if ( $request->wasPosted() && $request->getInt( 'confirmaction' ) ) {
-			$confirmAction = true;
+		if ( \RenameUserProcess::canUserChangeUsername( $requestorUser ) ) {
+			$this->renderForm( $username );
+		} else {
+			$this->renderDisallow();
 		}
-
-		$warnings = [];
-		$errors = [];
-		$info = [];
-
-		if ( $this->validRenameRequest() ) {
-			$process = new RenameUserProcess( $oldUsername, $newUsername, $confirmAction, $reason, $notifyRenamed );
-			$status = $process->run();
-			$warnings = $process->getWarnings();
-			$errors = $process->getErrors();
-			if ( $status ) {
-				$info[] = $this->msg( 'userrenametool-info-in-progress' )->inContentLanguage()->escaped();
-			}
-		}
-
-		$showConfirm = ( empty( $errors ) && empty( $info ) );
-
-		// note: errors and info beyond this point are non-blocking
-
-		if ( !empty( $oldUsername ) ) {
-			$oldUser = User::newFromName( $oldUsername );
-			if ( $oldUser->getGlobalFlag( 'requested-rename', 0 ) ) {
-				$info[] = $this->msg( 'userrenametool-requested-rename', $oldUsername )->escaped();
-			} else {
-				$errors[] = $this->msg( 'userrenametool-did-not-request-rename', $oldUsername )->escaped();
-			}
-			if ( $oldUser->getGlobalFlag( 'wasRenamed', 0 ) ) {
-				$errors[] = $this->msg( 'userrenametool-previously-renamed', $oldUsername )->escaped();
-			}
-		}
-
-		$template = new EasyTemplate( __DIR__ . '/templates/' );
-		$template->set_vars(
-			[
-				"submitUrl"     	=> $this->getTitle()->getLocalURL(),
-				"oldusername"   	=> $oldUsername,
-				"oldusername_hsc"	=> htmlspecialchars( $oldUsername ),
-				"newusername"   	=> $newUsername,
-				"newusername_hsc"	=> htmlspecialchars( $newUsername ),
-				"reason"        	=> $reason,
-				"move_allowed"  	=> $this->getUser()->isAllowed( 'move' ),
-				"confirmaction" 	=> $confirmAction,
-				"warnings"      	=> $warnings,
-				"errors"        	=> $errors,
-				"infos"         	=> $info,
-				"show_confirm"  	=> $showConfirm,
-				"token"         	=> $token,
-				"notify_renamed" 	=> $notifyRenamed,
-			]
-		);
-
-		$text = $template->render( "rename-form" );
-		$out->addHTML( $text );
 
 		return;
 	}
 
-	private function validRenameRequest() {
+	private static function validateData( array $data, User $user, bool $selfRename = true ) {
+		global $wgMaxNameChars;
+
+		$errorList = [];
+		$newUsername = $data['newUsername'];
+
+		if ( $data['token'] === '' ) {
+			$errorList[] = 'userrenametool-error-token-not-exists';
+		}
+
+		if ( $newUsername === '' ) {
+			$errorList[] = 'userrenametool-error-no-username';
+		}
+
+		if ( $newUsername !== $data['newUsernameRepeat' ] ) {
+			$errorList[] = 'userrenametool-error-not-repeated-correctly';
+		}
+
+		if ( !\User::isValidUserName( $newUsername ) ) {
+			$errorList[] = 'userrenametool-error-non-alphanumeric';
+		}
+
+		if ( mb_strlen( $newUsername ) > $wgMaxNameChars ) {
+			$errorList[] = 'userrenametool-error-too-long';
+		}
+
+		if ( $data['understandConsequences'] !== 'true' ) {
+			$errorList[] = 'userrenametool-error-consequences';
+		}
+
+		if ( !$user->matchEditToken( $data['token'] ) ) {
+			$errorList[] = 'userrenametool-error-token-not-match';
+		}
+
+		if ( $selfRename && !$user->checkPassword( $data['password'] )->success() ) {
+			$errorList[] = 'userrenametool-error-password-not-match';
+		}
+
+		if ( $selfRename && !$user->isEmailConfirmed() ) {
+			$errorList[] = 'userrenametool-error-email-not-confirmed';
+		}
+
+		if ( !\RenameUserProcess::canUserChangeUsername( $user ) ) {
+			$errorList[] = 'userrenametool-error-alreadyrenamed';
+		}
+
+		return $errorList;
+	}
+
+	/**
+	 * @param string|null $oldUsername
+	 */
+	private function renderForm( $oldUsername = null ) {
+		global $wgMaxNameChars;
+
+		$errors = [];
+		$infos = [];
+		$warnings = [];
+		$showConfirm = false;
+		$showForm = true;
+		$requestorUser = $this->getUser();
+		$canonicalNewUsername = '';
+		$out = $this->getOutput();
+		$request = $this->getRequest();
+		$requestData = $this->getData();
+		$newUsername = $requestData['newUsername'];
+		$isConfirmed = ( $requestData['isConfirmed'] === 'true' );
+
+		if ( is_null( $oldUsername ) ) {
+			$oldUsername = $requestorUser->getName();
+			$selfRename = true;
+		}
+		else {
+			// SUS-3547: staff mode, we want to rename a different user, not ourselves
+			$selfRename = $requestorUser->getName() === $oldUsername;
+		}
+
+		if ( $request->wasPosted() ) {
+			$errors = $this->parseMessages( self::validateData( $requestData, $requestorUser, $selfRename ) );
+			$canonicalNewUsername = \User::getCanonicalName( $newUsername, 'creatable' );
+
+			if ( empty( $errors ) && $isConfirmed ) {
+				$process = new RenameUserProcess( $oldUsername, $canonicalNewUsername, true );
+				$status = $process->run();
+				$warnings = $process->getWarnings();
+				$errors = $process->getErrors();
+
+				if ( $status ) {
+					$infos[] =
+						$this->msg( 'userrenametool-info-in-progress' )
+							->inContentLanguage()->escaped();
+					$showForm = false;
+				}
+			}
+
+			$showConfirm = ( !$isConfirmed && empty( $errors ) && empty( $info ) );
+		}
+
+		$template = new EasyTemplate( __DIR__ . '/templates/' );
+		$template->set_vars( array_merge(
+			array_map( 'htmlspecialchars', $requestData ),
+			[
+				'submitUrl' => $this->getTitle($selfRename ? false : $oldUsername )->getLocalURL(),
+				'token' => $requestorUser->getEditToken(),
+				'maxUsernameLength' => $wgMaxNameChars,
+				'showForm' => $showForm,
+				'oldUsername' => $oldUsername,
+				'selfRename' => $selfRename,
+				'errors' => array_merge( $errors, $warnings ),
+				'infos' => $infos
+			]
+		) );
+
+		$out->addModules( 'ext.renameuser.modal' );
+		$out->addJsConfigVars( [
+			'renameUser' => [
+				'showConfirm' => $showConfirm,
+				'oldUsername' => $oldUsername,
+				'newUsername' => $canonicalNewUsername
+			]
+		] );
+		$out->addHTML( $template->render( 'rename-form' ) );
+	}
+
+	private function renderDisallow() {
+		$template = new EasyTemplate( __DIR__ . '/templates/' );
+		$this->getOutput()->addHTML( $template->render( 'rename-disallowed' ) );
+	}
+
+	private function parseMessages( array $messageNames ) {
+		return array_map( function ( $label ) {
+			return $this->msg( $label )->inContentLanguage();
+		}, $messageNames );
+	}
+
+	private function getData() {
+		$fields = ['newUsername', 'newUsernameRepeat', 'password', 'understandConsequences', 'token', 'isConfirmed'];
+		$data = [];
 		$request = $this->getRequest();
 
-		if ( !$request->wasPosted() ) {
-			return false;
+		foreach ( $fields as $field ) {
+			$data[$field] = $request->getText( $field );
 		}
 
-		$token = $request->getText( 'token' );
-		if ( $token === '' ) {
-			return false;
-		}
+		$data['newUsername'] = ucfirst( $data['newUsername'] );
+		$data['newUsernameRepeat'] = ucfirst( $data['newUsernameRepeat'] );
 
-		return $this->getUser()->matchEditToken( $token );
+		return $data;
 	}
 }

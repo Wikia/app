@@ -37,9 +37,6 @@
 		margin: 0;
 		padding: 12px 0;
 		position: relative;
-		&:first-child {
-			border-top: 1px dotted $color-alternate-text;
-		}
 	}
 
 	.boards {

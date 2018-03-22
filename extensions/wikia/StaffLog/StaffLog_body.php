@@ -1,29 +1,28 @@
 <?php
 
-class StaffLog extends SpecialPage
-{
-	var $request;
+class StaffLog extends SpecialPage {
+	private $request;
 	private $aTypes = array( 'piggyback', 'wikifactor' );
 
 	function __construct(){
-		global $wgRequest;
-		$this->request = &$wgRequest;
 		parent::__construct( "stafflog","stafflog");
+
+		$this->request = $this->getContext()->getRequest();
 		$this->aTypes = array(
 			'' => '',
 			'block' => wfMessage( 'stafflog-filter-type-block' )->text(),
 			'piggyback' => wfMessage( 'stafflog-filter-type-piggyback' )->text(),
 			'renameuser' => wfMessage( 'stafflog-filter-type-renameuser' )->text(),
+			'coppatool' => wfMessage( 'stafflog-filter-type-coppa' )->text(),
 			'wikifactor' => wfMessage( 'stafflog-filter-type-wikifactory' )->text()
 		);
 	}
 
 
 	function execute( $par ){
-		global $wgOut, $wgUser;
 		$this->setHeaders();
 
-		if( !$wgUser->isAllowed( 'stafflog' ) ) {
+		if( !$this->getContext()->getUser()->isAllowed( 'stafflog' ) ) {
 			throw new PermissionsError( 'stafflog' );
 		}
 
@@ -37,7 +36,7 @@ class StaffLog extends SpecialPage
 
 		$sTypesDropDown .= Xml::closeElement( 'select' );
 
-		$wgOut->addHTML(
+		$this->getOutput()->addHTML(
 			Xml::openElement( 'form', array( 'method' => 'get', 'action' => $this->getTitle()->getLocalURL() ) ) .
 				Xml::openElement( 'fieldset' ) .
 				Xml::element( 'legend', null, wfMsg( 'stafflog-filter-label' ), false ) .
@@ -65,10 +64,16 @@ class StaffLog extends SpecialPage
 
 class StaffLoggerPager extends ReverseChronologicalPager {
 
+	public $mDb, $mOffset;
+	private $aConds;
+
+	/**
+	 * @param string $from
+	 */
 	function __construct( $from ) {
 		global $wgExternalDatawareDB;
 		parent::__construct();
-		$this->mDb = wfGetDB( DB_MASTER, array(), $wgExternalDatawareDB );
+		$this->mDb = wfGetDB( DB_SLAVE, [], $wgExternalDatawareDB );
 		$from = str_replace( ' ', '_', $from );
 		if( $from !== '' ) {
 			global $wgCapitalLinks, $wgContLang;
@@ -88,7 +93,8 @@ class StaffLoggerPager extends ReverseChronologicalPager {
 
 		$sUser = $this->mRequest->getText( 'user', '' );
 		if ( !empty( $sUser ) ) {
-			$this->aConds['slog_user_name'] = $sUser;
+			$userid = User::idFromName( $sUser );
+			$this->aConds['slog_user'] = $userid;
 		}
 	}
 
@@ -115,7 +121,6 @@ class StaffLoggerPager extends ReverseChronologicalPager {
 	}
 
 	function getIndexField() {
-#		return array( 'abc' => 'cat_title', 'count' => 'cat_pages' );
 		return 'slog_timestamp';
 	}
 
@@ -124,13 +129,8 @@ class StaffLoggerPager extends ReverseChronologicalPager {
 		unset( $this->mDefaultQuery['from'] );
 		return $this->mDefaultQuery;
 	}
-#	protected function getOrderTypeMessages() {
-#		return array( 'abc' => 'special-categories-sort-abc',
-#			'count' => 'special-categories-sort-count' );
-#	}
 
 	protected function getDefaultDirections() {
-#		return array( 'abc' => false, 'count' => true );
 		return false;
 	}
 
@@ -145,7 +145,7 @@ class StaffLoggerPager extends ReverseChronologicalPager {
 
 	function formatRow($result) {
 		global $wgLang;
-		$linker = $this->getSkin();
+		/* @var Language $wgLang */
 		$time = $wgLang->timeanddate( wfTimestamp(TS_MW, $result->slog_timestamp), true );
 		/* switch for different type of log message */
 		switch ($result->slog_type)
@@ -159,8 +159,8 @@ class StaffLoggerPager extends ReverseChronologicalPager {
 				}
 				$out = wfMessage( 'stafflog-blockmsg' ,
 					array($time,
-						$linker->userLink($result->slog_user, $result->slog_user_name),
-						$linker->userLink($result->slog_userdst, $result->slog_user_namedst),
+						Linker::userLink($result->slog_user, User::getUsername( $result->slog_user, $result->slog_user_name ) ),
+						Linker::userLink($result->slog_userdst, User::getUsername( $result->slog_userdst, $result->slog_user_namedst ) ),
 						$siteurl,
 						strlen($result->slog_comment) > 0 ? $result->slog_comment:"-" ))->text();
 				break;
@@ -168,23 +168,22 @@ class StaffLoggerPager extends ReverseChronologicalPager {
 				$msg = $result->slog_action == "login" ? "stafflog-piggybackloginmsg" : "stafflog-piggybacklogoutmsg";
 				$out = wfMessage( $msg,
 					array($time,
-						$linker->userLink($result->slog_user, $result->slog_user_name),
-						$linker->userLink($result->slog_userdst, $result->slog_user_namedst)))->text();
+						Linker::userLink($result->slog_user, User::getUsername( $result->slog_user, $result->slog_user_name ) ),
+						Linker::userLink($result->slog_userdst, User::getUsername($result->slog_userdst, $result->slog_user_namedst ) )
+					)
+				)->text();
 				break;
 			case 'wikifactor':
 				$out = $time . ' ' . $result->slog_comment;
 				break;
 			default:
 				$out = "";
-				wfRunHooks('StaffLog::formatRow',array($result->slog_type,$result,$time,$linker,&$out));
+
+				// TODO: used by UserRenameToolStaffLogFormatRow only, remove when we get rid of Special:RenameUser
+				Hooks::run('StaffLog::formatRow',array($result->slog_type,$result,$time,&$out));
 				break;
 		}
 
-		/*		$title = Title::makeTitle( NS_CATEGORY, $result->cat_title );
-				$titleText = $this->getSkin()->makeLinkObj( $title, htmlspecialchars( $title->getText() ) );
-				$count = wfMsgExt( 'nmembers', array( 'parsemag', 'escape' ),
-						$wgLang->formatNum( $result->cat_pages ) ); */
-		//;
 		return Xml::tags('li', null, $out) . "\n";
 	}
 }

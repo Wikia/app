@@ -5,7 +5,7 @@
  * @author Jeroen De Dauw <jeroendedauw at gmail dot com>
  */
 
-(function( $ ) {
+( function ( $, mw ) {
 	var _this = this;
 
 	this.getPreviewImage = function( args, callback ) {
@@ -23,7 +23,7 @@
 				if ( data.query && data.query.pages ) {
 					var pages = data.query.pages;
 
-					for ( var p = 0; p < pages.length; p++ ) {
+					for ( var p in pages ) { // object, not an array
 						var info = pages[p].imageinfo;
 						for ( var i = 0; i < info.length; i++ ) {
 							callback( info[i].thumburl );
@@ -63,4 +63,4 @@
 			$input.change( showPreview );
 		} );
 	} );
-})( jQuery );
+}( jQuery, mediaWiki ) );

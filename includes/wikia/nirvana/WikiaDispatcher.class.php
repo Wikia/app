@@ -228,7 +228,7 @@ class WikiaDispatcher {
 				}
 
 				// keep the AfterExecute hooks for now, refactor later using "after" dispatching
-				$app->runHook( ( "{$controllerName}{$hookMethod}AfterExecute" ), array( &$controller, &$params ) );
+				Hooks::run( ( "{$controllerName}{$hookMethod}AfterExecute" ), [ $controller, $params ] );
 
 				wfProfileOut($profilename);
 
@@ -260,12 +260,13 @@ class WikiaDispatcher {
 
 				$response->setException($e);
 
+				$controllerClassName = $controllerClassName ?? $controllerName ?? '';
 				Wikia\Logger\WikiaLogger::instance()->error(
 					__METHOD__ . " - {$controllerClassName} controller dispatch exception",
 					[
 						'exception' => $e,
 						'controller_name' => $controllerClassName,
-						'method_name' => $method
+						'method_name' => isset( $method ) ? $method : ''
 					]
 				);
 

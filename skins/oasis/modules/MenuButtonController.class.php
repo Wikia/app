@@ -5,7 +5,7 @@
  * @author Maciej Brencz
  */
 
-class MenuButtonController extends WikiaController {
+class MenuButtonController extends WikiaService {
 
 	const ADD_ICON = 1;
 	const EDIT_ICON = 2;
@@ -168,7 +168,7 @@ class MenuButtonController extends WikiaController {
 	/**
 	 * @param extraReturntoquery is a string which will be urlencoded and appended to the returntoquery. eg: "action=edit".
 	 */
-	public function createLoginURL($extraReturntoquery='') {
+	private function createLoginURL( $extraReturntoquery = '' ) {
 		global $wgTitle;
 
 		/** create login URL **/

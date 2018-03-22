@@ -135,7 +135,7 @@ class NewWikisPage extends AlphabeticPager {
 	function getQueryInfo() {
 		$query = array(
 			'tables' => array( 'city_list' ),
-			'fields' => array('city_list.city_id', 'city_dbname', 'city_url', 'city_title', 'city_lang', 'city_created', 'city_founding_ip'),
+			'fields' => array('city_list.city_id', 'city_dbname', 'city_url', 'city_title', 'city_lang', 'city_created', 'city_founding_ip_bin'),
 			'options' => array(),
 			'conds' => array(),
 			'join_conds' => array(),
@@ -172,6 +172,7 @@ class NewWikisPage extends AlphabeticPager {
 	function reallyDoQuery( $offset, $limit, $descending ) {
 		$fname = __METHOD__ . ' (' . get_class( $this ) . ')';
 		$info = $this->getQueryInfo();
+
 		$tables = $info['tables'];
 		$fields = $info['fields'];
 		$conds = isset( $info['conds'] ) ? $info['conds'] : array();
@@ -195,17 +196,17 @@ class NewWikisPage extends AlphabeticPager {
 	function formatRow( $row ) {
 		global $wgLang;
 
-		$name = Xml::tags( 'a', array( 'href' => $row->city_url ), $row->city_title );
+		$name = Xml::element( 'a', array( 'href' => $row->city_url ), $row->city_title );
 		if ($this->more_details) {
 			$cuTitle = GlobalTitle::newFromText( 'CheckUser', NS_SPECIAL, $row->city_id );
-			$userLink = Xml::tags(
+			$userLink = Xml::element(
 				'a',
 				array( 'href' => $cuTitle->getFullURL( 'user=' . urlencode( $row->user_name ) ) ),
 				$row->user_name
 			);
 			$emailLink = $this->linker->link(
 				Title::newFromText( 'LookupUser', NS_SPECIAL ),
-				$row->user_email,
+				htmlspecialchars( $row->user_email ),
 				array(),
 				'target=' . urlencode( $row->user_email )
 			);
@@ -213,12 +214,12 @@ class NewWikisPage extends AlphabeticPager {
 			$detail = "$row->city_lang, $row->city_created, FounderName:$userLink, Email:$emailLink, Confirm:$confirm";
 
 			//FB#11896
-			if( !empty( $row->city_founding_ip ) ) {
+			if( !empty( $row->city_founding_ip_bin ) ) {
 				$ipMlLink = $this->linker->link(
 					Title::newFromText( 'MultiLookup', NS_SPECIAL ),
-					long2ip( $row->city_founding_ip ),
+					htmlspecialchars( inet_ntop( $row->city_founding_ip_bin ) ),
 					array(),
-					'target=' . urlencode( long2ip( $row->city_founding_ip ) )
+					'target=' . urlencode( inet_ntop( $row->city_founding_ip_bin ) )
 				);
 				$detail .= ", IP:$ipMlLink";
 			}
@@ -238,9 +239,11 @@ class NewWikisPage extends AlphabeticPager {
 	}
 
 	function getPageHeader() {
-		global $wgScript, $wgRequest;
+		global $wgScript;
 		$self = $this->getTitle();
-		$this->getLangs();
+		$this->mTopLanguages = WikiaLanguage::getSupportedLanguages();
+		$this->mLanguages = WikiaLanguage::getRequestSupportedLanguages();
+		asort($this->mLanguages);
 
 		$hubs = WikiFactoryHub::getInstance();
 		// fixme, this logic (and the form) need to be split into Verticals and Categories
@@ -302,16 +305,5 @@ class NewWikisPage extends AlphabeticPager {
 	function getDefaultQuery() {
 		$query = parent::getDefaultQuery();
 		return $query;
-	}
-
-	private function getLangs() {
-		$this->mTopLanguages = explode(',', wfMsg('autocreatewiki-language-top-list'));
-		$this->mLanguages = Language::getLanguageNames();
-		$filter_languages = explode(',', wfMsg('requestwiki-filter-language'));
-		foreach ($filter_languages as $key) {
-			unset($this->mLanguages[$key]);
-		}
-		asort($this->mLanguages);
-		return count($this->mLanguages);
 	}
 }

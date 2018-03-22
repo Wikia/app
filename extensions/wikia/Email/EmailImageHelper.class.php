@@ -13,17 +13,22 @@ class ImageHelper {
 	const ICON_CACHE_TTL = 86400;
 
 	static public $icons = [
-		'Wikia',
-		'Comics',
-		'Games',
-		'Movies',
-		'Lifestyle',
-		'Music',
-		'Books',
-		'TV',
-		'Twitter',
-		'Facebook',
-		'YouTube',
+		'FandomTopBar' => [
+			'name' => 'Top-Bar-2x',
+			'extension' => 'png'
+		],
+		'FandomLogoHeader' => [
+			'name' => 'Hero-Logo-v3',
+			'extension' => 'png'
+		],
+		'FandomLogoFooter' => [
+			'name' => 'Footer-logo-v3',
+			'extension' => 'png'
+		],
+		'Wikia' => [
+			'name' => 'Wikia',
+			'extension' => 'gif'
+		]
 	];
 
 	/**
@@ -34,9 +39,9 @@ class ImageHelper {
 	public static function getIconInfo() {
 		$info = [];
 
-		foreach ( self::$icons as $name ) {
-			$fileInfo = self::getFileInfo( $name . '.gif' );
-			$info[$name] = $fileInfo;
+		foreach ( self::$icons as $key => $icon ) {
+			$fileInfo = self::getFileInfo( $icon['name'] . '.' . $icon['extension'] );
+			$info[$key] = $fileInfo;
 		}
 
 		return $info;

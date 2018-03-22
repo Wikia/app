@@ -85,7 +85,12 @@ class AbuseFilterViewTestBatch extends AbuseFilterView {
 		}
 		$dbr = wfGetDB( DB_SLAVE );
 
-		$conds = array( 'rc_user_text' => $this->mTestUser );
+		// SUS-812: handle anon cases (IP address provided) and account names (user name provided)
+		if ( IP::isIPAddress( $this->mTestUser ) ) {
+			$conds = [ 'rc_ip_bin' => inet_pton( $this->mTestUser )];
+		} else {
+			$conds = [ 'rc_user' => User::idFromName( $this->mTestUser ) ];
+		}
 
 		if ( $this->mTestPeriodStart ) {
 			$conds[] = 'rc_timestamp >= ' .

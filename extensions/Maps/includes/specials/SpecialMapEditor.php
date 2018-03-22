@@ -5,14 +5,11 @@
  *
  * @since 2.0
  *
- * @file
- * @ingroup Maps
- *
  * @licence GNU GPL v2+
  * @author Kim Eik
  * @author Jeroen De Dauw < jeroendedauw@gmail.com >
  */
-class SpecialMapEditor extends SpecialPage{
+class SpecialMapEditor extends SpecialPage {
 
 	/**
 	 * @see SpecialPage::__construct
@@ -35,14 +32,16 @@ class SpecialMapEditor extends SpecialPage{
 
 		$outputPage = $this->getOutput();
 
-		$outputPage->addHtml( MapsGoogleMaps3::getApiScript(
-			$this->getLanguage()->getCode(),
-			array( 'libraries' => 'drawing' )
-		) );
+		$outputPage->addHtml(
+			MapsGoogleMaps3::getApiScript(
+				$this->getLanguage()->getCode(),
+				[ 'libraries' => 'drawing' ]
+			)
+		);
 
 		$outputPage->addModules( 'mapeditor' );
-        $editor = new MapEditor( $this->getAttribs() );
-		$html = $editor->getEditorHtml();
+		$editorHtml = new MapEditorHtml( $this->getAttribs() );
+		$html = $editorHtml->getEditorHtml();
 		$outputPage->addHTML( $html );
 	}
 
@@ -51,11 +50,14 @@ class SpecialMapEditor extends SpecialPage{
 	 *
 	 * @return array
 	 */
-	protected function getAttribs(){
-		return array(
-            'id' => 'map-canvas',
-            'context' => 'SpecialMapEditor'
-        );
+	protected function getAttribs() {
+		return [
+			'id' => 'map-canvas',
+			'context' => 'SpecialMapEditor'
+		];
 	}
 
+	protected function getGroupName() {
+		return 'maps';
+	}
 }

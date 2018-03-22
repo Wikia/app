@@ -21,11 +21,11 @@ class MediaWikiParserService implements ExternalParser {
 	 */
 	public function parseRecursive( $wikitext ) {
 		wfProfileIn( __METHOD__ );
-		if ( in_array( substr( $wikitext, 0, 1 ), [ '*', '#' ] ) ) {
-			//fix for first item list elements
-			$wikitext = "\n" . $wikitext;
-		}
 		$parsed = $this->parser->internalParse( $wikitext, false, $this->frame );
+		if ( in_array( substr( $parsed, 0, 1 ), [ '*', '#' ] ) ) {
+			//fix for first item list elements
+			$parsed = "\n" . $parsed;
+		}
 		$output = $this->parser->doBlockLevels( $parsed, false );
 		$ready = $this->parser->mStripState->unstripBoth( $output );
 		$this->parser->replaceLinkHolders( $ready );

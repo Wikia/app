@@ -41,7 +41,7 @@ class CreateBlogPage extends SpecialCustomEditPage {
 	}
 
 	protected function afterArticleInitialize( $mode, $title, $article ) {
-		wfRunHooks( 'BlogArticleInitialized', array( $this, $mode ) );
+		Hooks::run( 'BlogArticleInitialized', array( $this, $mode ) );
 
 		if ( $mode == self::MODE_EDIT ) {
 			$aPageProps = BlogArticle::getProps( $article->getId() );

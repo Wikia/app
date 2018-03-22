@@ -63,5 +63,9 @@
 	"sf_bad_date_error": "கண்டிப்பாக செல்லத்தக்க தேதியாக இருக்க வேண்டும்",
 	"sf-preview-header": "படிவ முன்தோற்றம்",
 	"sf_blank_namespace": "முதன்மையானது",
-	"sf-maps-enteraddress": "இங்கு முகவரியை உள்ளிடவும்"
+	"sf-maps-enteraddress": "இங்கு முகவரியை உள்ளிடவும்",
+	"sf-datepicker-close": "மூடுக",
+	"sf-datepicker-prev": "முந்தைய",
+	"sf-datepicker-next": "அடுத்தது",
+	"sf-datepicker-today": "இன்று"
 }

@@ -3,7 +3,7 @@
 /**
  * Main Category Gallery class
  */
-class CategoryDataService extends Service {
+class CategoryDataService {
 
 	/**
 	 * @param string $sCategoryDBKey

@@ -138,6 +138,8 @@ class RTEReverseParser {
 
 		wfSuppressWarnings();
 
+		$oldDisable = libxml_disable_entity_loader( true );
+
 		if ($parseAsXML) {
 			// form proper XML string
 			$html = str_replace('&', '&amp;', $html);
@@ -162,6 +164,8 @@ class RTEReverseParser {
 				$ret = $this->dom->getElementsByTagName('body')->item(0);
 			}
 		}
+
+		libxml_disable_entity_loader( $oldDisable );
 
 		wfRestoreWarnings();
 
@@ -305,7 +309,7 @@ class RTEReverseParser {
 			case 'i':
 
 			// strike/underline
-			case 'strike':
+			case 's':
 			case 'u':
 
 			// indexes
@@ -407,15 +411,46 @@ class RTEReverseParser {
 			}
 		}
 
-		$out = $data['wikitext'];
+		$out = $data['wikitext'] ?? '';
 
 		// extra fixes for different types of placeholders
-		if (isset($data['type'])) {
-			switch($data['type']) {
+		if ( isset( $data['type'] ) ) {
+			switch ( $data['type'] ) {
+				// templates and extension tags which are wrapped in <div> needs to have additional newline at the end
+				case 'double-brackets':
+				case 'ext':
+					if ( $node->nodeName === 'div' && !empty( $data['spacesafter'] ) ) {
+						$out = $out . $data['spacesafter'];
+					}
+					if ( $node->nodeName === 'div' &&
+						!self::isFirstChild( $node ) &&
+						!self::previousSiblingIs( $node, [ 'h1', 'h2', 'h3', 'h4', 'h5', 'h6' ] ) &&
+						!self::isChildOf($node, 'li') &&
+						!self::isChildOf($node, 'dd') &&
+						!self::isChildOf($node, 'dt')
+					) {
+						$out = "\n{$out}";
+
+						if ( self::nextSiblingIs($node, 'p') ) {
+							$out = "{$out}\n";
+						}
+					} elseif ( $node->nodeName === 'tr' ) {
+						if ( !empty( $data['template-only'] ) ) {
+							// XW-4742: case when whole table row is defined within template
+							$out = "\n{$out}";
+						} else {
+							// case when table row attributes are defined in template
+							$out = "|-{$out}{$textContent}";
+						}
+					} elseif ( $node->nodeName === 'table' ) {
+						// case when table attributes are defined in template
+						$out = "{|{$out}\n{$textContent}\n|}\n";
+					}
+					break;
 				case 'comment':
 					// FIXME: dirty fix for RT #83859
 					// assuming here that comments in wysiyg mode must be placed at the beginning of new line
-					if (self::isChildOf($node->parentNode, 'div')) {
+					if ( self::isChildOf( $node->parentNode, 'div' ) ) {
 						$out = "\n{$out}";
 					}
 					break;
@@ -444,8 +479,7 @@ class RTEReverseParser {
 			if ($parentWasHtml) {
 				// nested HTML
 				$prefix = "\n";
-			}
-			else {
+			} else {
 				// only add line break if there's no empty line before and previous sibling was not a tag
 				if ( self::getEmptyLinesBefore($node) == 0
 					&& !self::isFirstChild($node)
@@ -502,6 +536,9 @@ class RTEReverseParser {
 					$beforeText = "\n";
 				}
 			}
+		// ignore errors displayed by extension tags
+		} elseif ( $node->nodeName === 'strong' && $node->getAttribute( 'class' ) === 'error' ) {
+			return '';
 		}
 
 		// fix for wikitext that is context-sensitive
@@ -512,9 +549,11 @@ class RTEReverseParser {
 				'#',
 				'=',
 		);
-		foreach ( $lineInitialTokens as $token ) {
-			if ( preg_match( "/^{$token}/is", $textContent ) ) {
-				$beforeText = "\n";
+		if ( in_array( $node->nodeName, HtmlHelper::BLOCK_ELEMENTS ) ) {
+			foreach ( $lineInitialTokens as $token ) {
+				if ( preg_match( "/^{$token}/is", $textContent ) ) {
+					$beforeText = "\n";
+				}
 			}
 		}
 
@@ -869,13 +908,13 @@ class RTEReverseParser {
 				// [[<current_page_name>/foo|/foo]] -> [[/foo]]
 				global $wgTitle;
 				$pageName = $wgTitle->getPrefixedText();
-				if ($data['link'] == $pageName . $textContentOriginal) {
+				if (isset($data['link']) && $data['link'] == $pageName . $textContentOriginal) {
 					$data['link'] = $textContent;
 				}
 
 				// support [[/foo/]] (RT #56095) and [[Page/foo|foo]] (RT #143377)
 				// both are giving the same entries in $data - detect them using original wikitext
-				if ($data['link'] == "{$pageName}/{$textContentOriginal}") {
+				if (isset($data['link']) && $data['link'] == "{$pageName}/{$textContentOriginal}") {
 
 					// keep [[/foo/]] links (RT #56095)
 					if (strpos($data['wikitext'], '|') === false) {
@@ -886,11 +925,11 @@ class RTEReverseParser {
 					}
 				}
 
-				$out .= $data['link'];
+				$out .= $data['link'] ?? '';
 
 				// check for possible trail
 				// [[foo|foos]] -> [[foo]]s
-				if ( (strlen($textContentOriginal) > strlen($data['link'])) ) {
+				if ( isset($data['link']) && (strlen($textContentOriginal) > strlen($data['link'])) ) {
 					if (substr($textContentOriginal, 0, strlen($data['link'])) == $data['link']) {
 						$possibleTrail = substr($textContentOriginal, strlen($data['link']));
 						// check against trail valid characters regexp
@@ -902,7 +941,7 @@ class RTEReverseParser {
 				}
 
 				// link description after pipe
-				if ( ($trail === false) && ($data['link'] != $textContentOriginal) ) {
+				if ( ($trail === false) && isset($data['link']) && ($data['link'] != $textContentOriginal) ) {
 					$out .= "|{$textContent}";
 				}
 
@@ -995,7 +1034,7 @@ class RTEReverseParser {
 
 		switch($node->nodeName) {
 			case 'u':
-			case 'strike':
+			case 's':
 			case 'sup':
 			case 'sub':
 				$attributes = self::getAttributesStr($node);
@@ -1111,6 +1150,10 @@ class RTEReverseParser {
 					$out = "\n{$out}";
 				}
 
+				if ( self::previousSiblingIs( $node, 'div' ) ) {
+					$out = "\n{$out}";
+				}
+
 				// bugfix: fogbugz BugID 11537
 				// losing newline before : and * following h[1-6] or div
 				if(self::wasHtml($node->previousSibling)) {
@@ -1196,6 +1239,9 @@ class RTEReverseParser {
 				}
 				else {
 					$out = "{$out}\n";
+				}
+				if ( self::previousSiblingIs( $node, 'div' ) ) {
+					$out = "\n{$out}";
 				}
 
 				$out = $this->fixForTableCell($node, $out);
@@ -1311,10 +1357,15 @@ class RTEReverseParser {
 
 			$out = $this->fixForTableCell($node, $out);
 
-			if (self::isChildOf($node, 'div')) {
-				if (self::isFirstChild($node) /* RT#38254 */ || self::previousSiblingIs($node, 'center') /* BugId:4748 */) {
+			if (self::previousSiblingIs($node, 'div')
+				|| (
+					self::isChildOf($node, 'div') && (
+						self::isFirstChild($node) /* RT#38254 */ ||
+						self::previousSiblingIs($node, 'center')  /* BugId:4748 */
+					)
+				)
+			) {
 					$out = "\n{$out}";
-				}
 			}
 		}
 		else {
@@ -1416,6 +1467,11 @@ class RTEReverseParser {
 
 			case 'th':
 			case 'td':
+				if ( strpos( $attributes, 'data-rte-filler="true"' ) !== false ) {
+					// XW-4742: fake cell added to handle rows defined inside template, do not add anything
+					break;
+				}
+
 				$out = '';
 				$char = ($node->nodeName == 'td') ? '|' : '!';
 
@@ -1520,7 +1576,7 @@ class RTEReverseParser {
 					case 'i':
 					case 'u':
 					case 's':
-					case 'strike':
+					case 's':
 						// if next element is text node, don't add line break (refs RT #34043)
 						// if next element is <br />, don't add line break (refs RT #38257)
 						// if next element is <sup> or <sub>, don't add line break (ref RT #67354)
@@ -2020,7 +2076,7 @@ class RTEReverseParser {
 
 		$ret = false;
 
-		if (strpos($data['link'], ':') !== false) {
+		if (isset($data['link']) && strpos($data['link'], ':') !== false) {
 			// get localised names of namespaces and cache them
 			global $wgContLang;
 			static $namespaces = false;

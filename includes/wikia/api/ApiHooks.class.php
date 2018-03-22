@@ -73,9 +73,10 @@ class ApiHooks {
 	 * @param $baseRevId
 	 * @return bool
 	 */
-	public static function onArticleSaveComplete( WikiPage $wikiPage, User $user, $text, $summary, $minoredit,
-												  $watchthis, $sectionanchor, &$flags, $revision, &$status,
-												  $baseRevId ) {
+	public static function onArticleSaveComplete(
+		WikiPage $wikiPage, User $user, $text, $summary, $minoredit, $watchthis, $sectionanchor,
+		$flags, $revision, Status &$status, $baseRevId
+	): bool {
 		ArticlesApiController::purgeCache( $wikiPage->getTitle()->getArticleID() );
 		ArticlesApiController::purgeMethods( [
 			[ 'getAsJson', ['id' => $wikiPage->getId()] ],
@@ -108,7 +109,9 @@ class ApiHooks {
 	 * @param $newid
 	 * @return bool
 	 */
-	public static function onTitleMoveComplete( Title &$title, Title &$newtitle, User &$user, $oldid, $newid ) {
+	public static function onTitleMoveComplete(
+		Title $title, Title $newtitle, User $user, $oldid, $newid
+	): bool {
 		ArticlesApiController::purgeCache( $newtitle->getArticleID() );
 		ArticlesApiController::purgeMethods([
 			[ 'getAsJson', ['id' => $title->getArticleID()] ],

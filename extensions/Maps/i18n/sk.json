@@ -1,0 +1,19 @@
+{
+	"@metadata": {
+		"authors": [
+			"Helix84",
+			"Macofe"
+		]
+	},
+	"maps-desc": "Umožňuje vkladať dynamické mapy do wiki stránok, geokódovať adresy a ďalšie geografické operácie",
+	"maps_map": "Mapa",
+	"maps-abb-north": "S",
+	"maps-abb-east": "V",
+	"maps-abb-south": "J",
+	"maps-abb-west": "Z",
+	"maps-latitude": "Zem. dĺžka:",
+	"maps-longitude": "Zem. šírka:",
+	"maps_coordinates_missing": "Neboli poskytnuté žiadne súradnice.",
+	"maps_geocoding_failed": "Nebolo možné určiť súradnice {{PLURAL:$2|nasledovnej adresy|nasledovných adries}}: $1.",
+	"maps_geocoding_failed_for": "Nebolo možné určiť súradnice {{PLURAL:$2|nasledovnej adresy|nasledovných adries}} a {{PLURAL:$2|bola vynechaná|boli vynechané}} z mapy: $1."
+}

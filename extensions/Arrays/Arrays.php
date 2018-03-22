@@ -77,8 +77,10 @@ class ExtArrays {
 	 * Sets up parser functions
 	 *
 	 * @since 2.0
+	 * @param Parser $parser
+	 * @return bool
 	 */
-	public static function init( Parser &$parser ) {
+	public static function init( Parser $parser ): bool {
 		global $egArraysCompatibilityMode;
 		/*
 		 * store for arrays per Parser object. This will solve several bugs related to
@@ -117,7 +119,7 @@ class ExtArrays {
 
 		return true;
 	}
-	private static function initFunction( Parser &$parser, $name, $flags = 0 ) {
+	private static function initFunction( Parser $parser, $name, $flags = 0 ) {
 		// all parser functions with prefix:
 		$prefix = ( $flags & SFH_OBJECT_ARGS ) ? 'pfObj_' : 'pf_';
 		$functionCallback = array( __CLASS__, $prefix . $name );
@@ -159,7 +161,7 @@ class ExtArrays {
 	* see also: http://us2.php.net/manual/en/function.preg-split.php
 	*/
 	static function pf_arraydefine(
-			Parser &$parser,
+			Parser $parser,
 			$arrayId,
 			$value = null,
 			$delimiter = '/\s*,\s*/',
@@ -170,7 +172,6 @@ class ExtArrays {
 		}
 
 		$out = '';
-		$array = array();
 		$trimDone = false; // whether or not we can be sure that all array elements are trimmed
 
 		// normalize
@@ -211,28 +212,6 @@ class ExtArrays {
 				// unique like the parser function would do it
 				$array = self::array_unique( $array );
 			}
-
-			/**
-			 * @ToDo:
-			 * The 'empty' option was introduced in r81676 but actually breaks old functionality since it will remove
-			 * all empty elements by default.
-			 * 'unique' already allows to remove all empty elements but it will also remove al duplicates, there should
-			 * be a more intelligent alternative to 'unique' which allows both, to preserve or remove empty elements
-			 * independent from removing duplicate values.
-			 */
-			/*
-			// remove all empty '' elements if option is NOT set
-			if( ! array_key_exists( 'empty', $arrayOptions ) ) {
-				$values = array(); // temp array so we won't have gaps (don't use unset!)
-				foreach ( $array as $key => $value ) {
-					if( $value !== '' ) {
-						$values[] = $elem;
-					}
-				}
-				$array = $values;
-				unset( $values );
-			}
-			 */
 
             // sort array if the option is set
 			if( array_key_exists( 'sort', $arrayOptions ) ) {
@@ -278,7 +257,7 @@ class ExtArrays {
 	*    {{#arrayprint:b|<br/>|@@@|{{f.tag{{f.print.vbar}}prop{{f.print.vbar}}@@@}} }}   -- embed template function
 	*    {{#arrayprint:b|<br/>|@@@|[[name::@@@]]}}   -- make SMW links
 	*/
-	static function pfObj_arrayprint( Parser &$parser, PPFrame $frame, $args ) {
+	static function pfObj_arrayprint( Parser $parser, PPFrame $frame, $args ) {
 		global $egArraysCompatibilityMode, $egArraysExpansionEscapeTemplates;
 		
 		// Get Parameters
@@ -382,7 +361,7 @@ class ExtArrays {
 	* usage:
 	*   {{#arrayindex:arrayid|index}}
 	*/
-	static function pfObj_arrayindex( Parser &$parser, PPFrame $frame, $args ) {
+	static function pfObj_arrayindex( Parser $parser, PPFrame $frame, $args ) {
 		global $egArraysCompatibilityMode;
 
 		// Get Parameters
@@ -427,7 +406,7 @@ class ExtArrays {
 	*
 	*   See: http://www.php.net/manual/en/function.count.php
 	*/
-	static function pf_arraysize( Parser &$parser, $arrayId ) {
+	static function pf_arraysize( Parser $parser, $arrayId ) {
 		$store = self::get( $parser );
 
 		if( ! $store->arrayExists( $arrayId ) ) {
@@ -449,7 +428,7 @@ class ExtArrays {
 	*   See: http://www.php.net/manual/en/function.array-search.php
 	*   note it is extended to support regular expression match and index
 	*/
-	static function pfObj_arraysearch( Parser &$parser, PPFrame $frame, $args ) {
+	static function pfObj_arraysearch( Parser $parser, PPFrame $frame, $args ) {
 		// Get Parameters
 		$arrayId = trim( $frame->expand( $args[0] ) );
 		$index = isset( $args[2] ) ? trim( $frame->expand( $args[2] ) ) : 0;
@@ -510,7 +489,7 @@ class ExtArrays {
 	* "needle" can be a regular expression or a string search value. If "needle" is a regular expression, "transform" can contain
 	* "$n" where "n" stands for a number to access a variable from the regex result.
 	*/
-	static function pfObj_arraysearcharray( Parser &$parser, PPFrame $frame, $args ) {
+	static function pfObj_arraysearcharray( Parser $parser, PPFrame $frame, $args ) {
 		$store = self::get( $parser );
 		
 		// get first two parameters
@@ -609,7 +588,7 @@ class ExtArrays {
 	*    extract a slice from an  array
 	*    see: http://www.php.net/manual/en/function.array-slice.php
 	*/
-	static function pf_arrayslice( Parser &$parser, $arrayId_new, $arrayId = null , $offset = 0, $length = null ) {
+	static function pf_arrayslice( Parser $parser, $arrayId_new, $arrayId = null , $offset = 0, $length = null ) {
 		$store = self::get( $parser );
 		if( $arrayId === null ) {
 			global $egArraysCompatibilityMode;
@@ -652,7 +631,7 @@ class ExtArrays {
 	*    {{#arrayreset:}}
 	*    {{#arrayreset:arrayid1,arrayid2,...arrayidn}}
 	*/
-	static function pfObj_arrayreset( Parser &$parser, PPFrame $frame, $args) {
+	static function pfObj_arrayreset( Parser $parser, PPFrame $frame, $args) {
 		global $egArraysCompatibilityMode;
 
 		if( $egArraysCompatibilityMode && count( $args ) == 1 ) {
@@ -690,7 +669,7 @@ class ExtArrays {
 	 *
 	 *   see: http://www.php.net/manual/en/function.array-unique.php
 	 */
-	static function pf_arrayunique( Parser &$parser, $arrayId ) {
+	static function pf_arrayunique( Parser $parser, $arrayId ) {
 		$store = self::get( $parser );
 
 		if( $store->arrayExists( $arrayId ) ) {
@@ -717,7 +696,7 @@ class ExtArrays {
 	 *        http://www.php.net/manual/en/function.shuffle.php
 	 *        http://us3.php.net/manual/en/function.array-reverse.php
 	 */
-	static function pf_arraysort( Parser &$parser, $arrayId , $sort = 'none' ) {
+	static function pf_arraysort( Parser $parser, $arrayId , $sort = 'none' ) {
 		$store = self::get( $parser );
 
 		$array = $store->getArray( $arrayId );
@@ -745,7 +724,7 @@ class ExtArrays {
 	 *    {{#arraymerge:arrayid_new |array1 |array2 |... |array n}}
 	 *    See: http://www.php.net/manual/en/function.array-merge.php
 	 */
-	static function pfObj_arraymerge( &$parser, $frame, $args) {
+	static function pfObj_arraymerge( Parser $parser, $frame, $args) {
 		self::get( $parser )->multiArrayOperation( $frame, $args, __FUNCTION__, false );
 		return '';
 	}
@@ -761,7 +740,7 @@ class ExtArrays {
 	 *    Set operation, {red, white} = {red, white} union {red}
 	 *    Similar to arraymerge but with unique values. This union works on values.
 	 */
-	static function pfObj_arrayunion( &$parser, $frame, $args) {
+	static function pfObj_arrayunion( Parser $parser, $frame, $args) {
 		self::get( $parser )->multiArrayOperation( $frame, $args, __FUNCTION__, false );
 		return '';
 	}
@@ -777,7 +756,7 @@ class ExtArrays {
 	 *    Set operation, {red} = {red, white} intersect {red,black}
 	 *    See: http://www.php.net/manual/en/function.array-intersect.php
 	 */
-	static function pfObj_arrayintersect( &$parser, $frame, $args) {
+	static function pfObj_arrayintersect( Parser $parser, $frame, $args) {
 		self::get( $parser )->multiArrayOperation( $frame, $args, __FUNCTION__, false );
 		return '';
 	}
@@ -794,7 +773,7 @@ class ExtArrays {
 	 *    Set operation, {white} = {red, white} - {red}
 	 *    See: http://www.php.net/manual/en/function.array-diff.php
 	 */
-	static function pfObj_arraydiff( &$parser, $frame, $args) {
+	static function pfObj_arraydiff( Parser $parser, $frame, $args) {
 		self::get( $parser )->multiArrayOperation( $frame, $args, __FUNCTION__, false );
 		return '';
 	}
@@ -1015,7 +994,7 @@ class ExtArrays {
 	# Used Hooks #
 	##############
 
-	static function onParserClearState( Parser &$parser ) {
+	static function onParserClearState( Parser $parser ) {
 		// remove all arrays to avoid conflicts with job queue or Special:Import or SMW semantic updates
 		$parser->mExtArrays = new self();
 		return true;
@@ -1038,11 +1017,11 @@ class ExtArrays {
 	 *
 	 * @since 2.0
 	 *
-	 * @param Parser &$parser
+	 * @param Parser $parser
 	 *
 	 * @return ExtArrays by reference so we still have the right object after 'ParserClearState'
 	 */
-	public static function &get( Parser &$parser ) {
+	public static function &get( Parser $parser ) {
 		return $parser->mExtArrays;
 	}
 

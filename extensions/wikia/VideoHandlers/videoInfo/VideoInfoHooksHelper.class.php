@@ -52,108 +52,6 @@ class VideoInfoHooksHelper {
 		$mediaService = new MediaQueryService();
 		$mediaService->clearCacheTotalVideos();
 
-		if ( !$file->isLocal() ) {
-			$mediaService->clearCacheTotalPremiumVideos();
-		}
-
-		if ( !empty( F::app()->wg->UseVideoVerticalFilters ) ) {
-			VideoInfoHooksHelper::clearCategories( $file->getTitle() );
-		}
-
-		return true;
-	}
-
-	/**
-	 * Hook: add premium video and clear cache (video embed tool, video service)
-	 * @param Title $title
-	 * @return true
-	 */
-	public static function onAddPremiumVideo( $title ) {
-
-		if ( $title instanceof Title ) {
-			$videoInfoHelper = new VideoInfoHelper();
-			$videoInfo = $videoInfoHelper->getVideoInfoFromTitle( $title, true );
-			if ( !empty($videoInfo) ) {
-				// Sometimes videoInfo doesn't reflect what's actually in the video_info table
-				// so make sure the removed flag is cleared
-				$videoInfo->restoreVideo();
-
-				$affected = $videoInfo->addPremiumVideo( F::app()->wg->User->getId() );
-
-				if ( $affected ) {
-					# Add a log entry
-					$log = new LogPage( 'upload' );
-					$comment = wfMessage('videohandler-log-add-video')->plain();
-					$log->addEntry( 'upload', $title, $comment, array(), F::app()->wg->User );
-
-					$mediaService = new MediaQueryService();
-					$mediaService->clearCacheTotalVideos();
-					$mediaService->clearCacheTotalPremiumVideos();
-				}
-			}
-		}
-
-		return true;
-	}
-
-	/**
-	 * Hook: remove premium video and clear cache
-	 * @param Title $title
-	 * @return true
-	 */
-	public static function onRemovePremiumVideo( $title ) {
-
-		if ( $title instanceof Title ) {
-			$videoInfo = VideoInfo::newFromTitle( $title->getDBKey() );
-			if ( !empty( $videoInfo ) && $videoInfo->isPremium() ) {
-				$videoInfo->deleteVideo();
-
-				// clear cache
-				$mediaService = new MediaQueryService();
-				$mediaService->clearCacheTotalVideos();
-				$mediaService->clearCacheTotalPremiumVideos();
-			}
-		}
-
-		return true;
-	}
-
-	/**
-	 * Hook: add premium video and clear cache (editor - source mode)
-	 * @param Article $article
-	 * @param User $user
-	 * @param $text
-	 * @param $summary
-	 * @param $minoredit
-	 * @param $watchthis
-	 * @param $sectionanchor
-	 * @param $flags
-	 * @param $revision
-	 * @param $status
-	 * @param $baseRevId
-	 * @return true
-	 */
-	public static function onArticleSaveComplete(&$article, &$user, $text, $summary, $minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId) {
-
-		$insertedImages = Wikia::getVar( 'imageInserts' );
-
-		$affected = false;
-		$userId = $user->getId();
-		$videoInfoHelper = new VideoInfoHelper();
-		foreach( $insertedImages as $img ) {
-			$videoInfo = $videoInfoHelper->getVideoInfoFromTitle( $img['il_to'], true );
-			if ( !empty($videoInfo) ) {
-				$affected = ( $affected || $videoInfo->addPremiumVideo( $userId ) );
-			}
-		}
-
-		// clear cache if premium video is added
-		if ( $affected ) {
-			$mediaService = new MediaQueryService();
-			$mediaService->clearCacheTotalVideos();
-			$mediaService->clearCacheTotalPremiumVideos();
-		}
-
 		return true;
 	}
 
@@ -211,75 +109,15 @@ class VideoInfoHooksHelper {
 	 * @param $form
 	 * @param Title $oldTitle
 	 * @param Title $newTitle
-	 * @return true
+	 * @return bool true
 	 */
-	public static function onFileRenameComplete( &$form , &$oldTitle , &$newTitle ) {
+	public static function onFileRenameComplete( MovePageForm $form , Title &$oldTitle , Title &$newTitle ): bool {
 
 		$videoInfoHelper = new VideoInfoHelper();
 		$affected = $videoInfoHelper->renameVideo( $oldTitle, $newTitle );
 		if ( $affected ) {
 			$mediaService = new MediaQueryService();
 			$mediaService->clearCacheTotalVideos();
-		}
-
-		return true;
-	}
-
-	/**
-	 * Hook: delete premium video and clear cache when the file page is deleted
-	 * @param WikiPage $wikiPage
-	 * @param User $user
-	 * @param string $reason
-	 * @param integer $pageId
-	 * @return true
-	 */
-	public static function onArticleDeleteComplete( &$wikiPage, &$user, $reason, $pageId  ) {
-
-		$title = $wikiPage->getTitle();
-		if ( $title instanceof Title && $title->getNamespace() == NS_FILE ) {
-			$videoInfo = VideoInfo::newFromTitle( $title->getDBKey() );
-			if ( empty($videoInfo) ) {
-				$affected = false;
-
-				// add removed video
-				$videoInfoHelper = new VideoInfoHelper();
-				$videoInfo = $videoInfoHelper->getVideoInfoFromTitle( $title, true );
-				if ( !empty($videoInfo) ) {
-					$videoInfo->setRemoved();
-					$affected = $videoInfo->addPremiumVideo( $user->getId() );
-				}
-			} else {
-				// set removed video
-				$affected = $videoInfo->removeVideo();
-			}
-
-			if ( $affected ) {
-				$mediaService = new MediaQueryService();
-				$mediaService->clearCacheTotalVideos();
-				$mediaService->clearCacheTotalPremiumVideos();
-			}
-		}
-
-		return true;
-	}
-
-	/**
-	 * Hook: restore premium video and clear cache when the file page is undeleted
-	 * @param Title $title
-	 * @param User $user
-	 * @param string $reason
-	 * @return true
-	 */
-	public static function onUndeleteComplete( &$title, &$user, $reason ) {
-
-		if ( $title instanceof Title && $title->getNamespace() == NS_FILE ) {
-			$videoInfoHelper = new VideoInfoHelper();
-			$affected = $videoInfoHelper->restorePremiumVideo( $title, $user->getId() );
-			if ( $affected ) {
-				$mediaService = new MediaQueryService();
-				$mediaService->clearCacheTotalVideos();
-				$mediaService->clearCacheTotalPremiumVideos();
-			}
 		}
 
 		return true;
@@ -339,82 +177,6 @@ class VideoInfoHooksHelper {
 		}
 
 		return true;
-	}
-
-	/**
-	 * Hook: Clear total videos by category cache when video is deleted, after checking if it was associated with
-	 * one of the categories filtered in Special Videos.
-	 * @param $wikiPage
-	 * @param User $user
-	 * @param $reason
-	 * @param $error
-	 * @return true
-	 */
-	public static function onArticleDelete( &$wikiPage, User &$user, &$reason, &$error ) {
-
-		$title = $wikiPage->getTitle();
-
-		if ( $title instanceof Title && WikiaFileHelper::isFileTypeVideo( $title ) ) {
-			VideoInfoHooksHelper::clearCategories( $title );
-		}
-
-		return true;
-	}
-
-	/**
-	 * Hook: Clear total videos by category cache when video is updated, after checking if it was associated with
-	 * one of the categories filtered in Special Videos.
-	 * @param $article
-	 * @param $sectionanchor
-	 * @param $extraq
-	 * @return true
-	 */
-	public static function onArticleUpdateBeforeRedirect( $article, &$sectionanchor, &$extraq ) {
-
-		$title = $article->getTitle();
-
-		if ( $title instanceof Title && WikiaFileHelper::isFileTypeVideo( $title ) ) {
-			VideoInfoHooksHelper::clearCategories( $title );
-		}
-
-		return true;
-	}
-
-	/**
-	 * Clear total videos by category cache when video categories are added via the Category Select extension,
-	 * after checking if it was associated with one of the categories filtered in Special Videos.
-	 * @param $title
-	 * @param $categories
-	 * @return true
-	 */
-	public static function onCategorySelectSave( $title, $categories ) {
-
-		if ( $title instanceof Title && WikiaFileHelper::isFileTypeVideo( $title ) ) {
-			VideoInfoHooksHelper::clearCategories( $title );
-		}
-
-		return true;
-	}
-
-	/**
-	 * Get all categories associated with a given video, compare them with the categories we're using as filters
-	 * on the Special:Videos page, and clear the cache for total videos in categories which match.
-	 * @param $title
-	 * @param null||array $categories
-	 */
-	private static function clearCategories( $title, $categories = null ) {
-		if ( is_null( $categories ) ) {
-			$categories = array_map(
-				function( $category ) { return explode( ":", $category )[1]; },
-				array_keys( $title->getParentCategories() ) );
-		}
-
-		$helper = new MediaQueryService();
-		foreach ( $categories as $category ) {
-			if ( in_array( $category, SpecialVideosHelper::$verticalCategoryFilters ) ) {
-				$helper->clearCacheTotalVideosByCategory( $category );
-			}
-		}
 	}
 
 }

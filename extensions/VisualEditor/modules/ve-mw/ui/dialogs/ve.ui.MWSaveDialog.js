@@ -114,7 +114,7 @@ ve.ui.MWSaveDialog.prototype.setDiffAndReview = function ( content ) {
  * @inheritdoc
  */
 ve.ui.MWSaveDialog.prototype.pushPending = function () {
-	this.getActions().setAbilities( { review: false } );
+	this.getActions().setAbilities( { review: false, save: false } );
 	return ve.ui.MWSaveDialog.super.prototype.pushPending.call( this );
 };
 
@@ -124,7 +124,7 @@ ve.ui.MWSaveDialog.prototype.pushPending = function () {
 ve.ui.MWSaveDialog.prototype.popPending = function () {
 	var ret = ve.ui.MWSaveDialog.super.prototype.popPending.call( this );
 	if ( !this.isPending() ) {
-		this.getActions().setAbilities( { review: true } );
+		this.getActions().setAbilities( { review: true, save: true } );
 	}
 	return ret;
 };
@@ -388,19 +388,14 @@ ve.ui.MWSaveDialog.prototype.initialize = function () {
 	);
 	this.$saveMessages = this.$( '<div>' );
 	this.$saveActions = this.$( '<div>' );
-	this.$saveFoot = this.$( '<div>' ).addClass( 've-ui-mwSaveDialog-foot' ).append(
-		this.$( '<p>' ).addClass( 've-ui-mwSaveDialog-license' )
-			.html( ve.init.platform.getParsedMessage( 'copyrightwarning' ) )
-			.find( 'a' ).attr( 'target', '_blank' ).end()
-	);
-	this.savePanel.$element.append(
+
+	this.savePanel.$element.append( [
 		this.$editSummaryLabel,
 		this.editSummaryInput.$element,
 		this.$saveOptions,
 		this.$saveMessages,
-		this.$saveActions,
-		this.$saveFoot
-	);
+		this.$saveActions
+	] );
 
 	// Review panel
 	this.reviewPanel = new OO.ui.PanelLayout( { $: this.$, scrollable: true } );
@@ -464,7 +459,7 @@ ve.ui.MWSaveDialog.prototype.getSetupProcess = function ( data ) {
 			this.clearAllMessages();
 			this.swapPanel( 'save' );
 			// Update save button label
-			this.actions.forEach( { actions: 'save' }, function ( action ) {
+			this.getActions().forEach( { actions: 'save' }, function ( action ) {
 				action.setLabel(
 					ve.msg(
 						// TODO: Actually populate this.resotring with information, right now it is

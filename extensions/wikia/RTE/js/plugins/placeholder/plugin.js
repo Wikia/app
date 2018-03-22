@@ -22,6 +22,18 @@ CKEDITOR.plugins.add('rte-placeholder',
 			// get all placeholders (template / magic words / double underscores / broken image links)
 			var placeholders = RTE.tools.getPlaceholders();
 
+			// if placeholder does not have content, render green puzzle
+			placeholders.each(function (p) {
+				var $placeholder = $(placeholders.get(p));
+
+				// to check if content of placeholder is empty we need to get rid of non-width spaces (replace does not
+				// change the original string
+				if ( ['DIV', 'SPAN'].includes($placeholder.prop('tagName')) && $.trim($placeholder.html().replace(/[\u200B]*/, '')) === '') {
+					// empty gif in scr
+					$placeholder.html('<img class="empty-placeholder" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7">');
+				}
+			});
+
 			// regenerate preview and template info
 			placeholders.removeData('preview').removeData('info');
 
@@ -38,9 +50,6 @@ CKEDITOR.plugins.add('rte-placeholder',
 			return;
 		}
 
-		var chevron = '<img class="chevron chevronBackground" src="'+wgBlankImgUrl+'" />'
-			+'<img class="chevron" src="'+wgBlankImgUrl+'" />';
-
 		// get node in which preview is / will be stored
 		var preview = placeholder.data('preview');
 
@@ -48,12 +57,12 @@ CKEDITOR.plugins.add('rte-placeholder',
 		if (typeof preview == 'undefined') {
 			// create preview node
 			preview = $('<div>').addClass('RTEPlaceholderPreview RTEPlaceholderPreviewLoading');
-			preview.html(chevron + '<div class="RTEPlaceholderPreviewInner">&nbsp;</div>');
+			preview.html('<div class="RTEPlaceholderPreviewInner">&nbsp;</div>');
 
 			// setup events
-			preview.bind('mouseover', function() {
+			preview.bind('mouseover', function(event) {
 				// don't hide this preview
-				self.showPreview(placeholder);
+				self.showPreview(placeholder, event);
 			});
 
 			preview.bind('mouseout', function() {
@@ -74,11 +83,7 @@ CKEDITOR.plugins.add('rte-placeholder',
 				// different look for different types
 				var title, intro;
 				var className = 'RTEPlaceholderPreviewOther';
-				var preformattedCode = true;
 				var isEditable = false;
-
-				// encode HTML inside wikisyntax
-				var code = data.wikitext.replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
 				// messages
 				var lang = RTE.getInstance().lang.hoverPreview;
@@ -90,10 +95,6 @@ CKEDITOR.plugins.add('rte-placeholder',
 						title = info.title.replace(/_/g, ' ').replace(/^Template:/, window.RTEMessages.template + ':');
 						intro = info.exists ? lang.template.intro : lang.template.notExisting;
 
-						// show wikitext, if template does not exist
-						code = info.exists ? info.html : data.wikitext;
-						preformattedCode = !info.exists;
-
 						// is this template editable?
 						isEditable = (typeof info.availableParams != 'undefined' && info.availableParams.length);
 						break;
@@ -101,9 +102,6 @@ CKEDITOR.plugins.add('rte-placeholder',
 					case 'comment':
 						title = lang.comment.title;
 						intro = lang.comment.intro;
-
-						// exclude comment beginning and end markers
-						code = data.wikitext.replace(/^<!--\s+/, '').replace(/\s+-->$/, '');
 
 						isEditable = true;
 						break;
@@ -117,7 +115,10 @@ CKEDITOR.plugins.add('rte-placeholder',
 
 						intro = lang.media.notExisting;
 						break;
-
+					case 'ext':
+						title = data.extName;
+						intro = lang.codedElement.intro;
+						break;
 					default:
 						title = lang.codedElement.title;
 						intro = lang.codedElement.intro;
@@ -128,14 +129,6 @@ CKEDITOR.plugins.add('rte-placeholder',
 				if (title.length > 40) {
 					title = title.substr(0, 40) + RTEMessages.ellipsis;
 				}
-
-				// for IE replace \n with <br />
-				if (preformattedCode && CKEDITOR.env.ie) {
-					code = code.replace(/\n/g, '<br />');
-				}
-
-				// placeholder intro
-				var intro = '<div class="RTEPlaceholderPreviewIntro">' + intro + '</div>';
 
 				// render [edit] / [delete] buttons
 				var tools = '',
@@ -153,22 +146,13 @@ CKEDITOR.plugins.add('rte-placeholder',
 				//
 				// render HTML
 				//
-				var html = chevron;
-
 				// preview "header"
-				html += '<div class="RTEPlaceholderPreviewInner ' + className + '">';
+				var html = '<div class="RTEPlaceholderPreviewInner ' + className + '">';
+
 				html += '<div class="RTEPlaceholderPreviewTitleBar color1"><span />' + title + '</div>';
 
-				// second line
-				html += intro;
-
-				// preview content
-				html += '<div class="RTEPlaceholderPreviewCode ' +
-					(preformattedCode ? 'RTEPlaceholderPreviewPreformatted ' : '') +
-					'reset">' + code + '</div>';
-
 				// [edit] / [delete]
-				html += '<div class="RTEPlaceholderPreviewTools neutral">' + tools + '</div>';
+				html += '<div class="RTEPlaceholderPreviewTools">' + tools + '</div>';
 
 				html += '</div>';
 
@@ -177,7 +161,12 @@ CKEDITOR.plugins.add('rte-placeholder',
 
 				// handle clicks on [delete] button
 				preview.find('.RTEPlaceholderPreviewToolsDelete').bind('click', function(ev) {
-					self.track( 'button-delete' );
+					var trackingLabel = 'button-delete';
+					if (info.templateType) {
+						trackingLabel += '-' + info.templateType;
+					}
+
+					self.track( trackingLabel );
 
 					RTE.tools.confirm(title, lang.confirmDelete, function() {
 						RTE.tools.removeElement(placeholder);
@@ -196,7 +185,12 @@ CKEDITOR.plugins.add('rte-placeholder',
 						// hide preview
 						preview.hide();
 
-						self.track( 'button-edit' );
+						var trackingLabel = 'button-edit';
+						if (info.templateType) {
+							trackingLabel += '-' + info.templateType;
+						}
+
+						self.track( trackingLabel );
 
 						// call editor for this type of placeholder
 						$(placeholder).trigger('edit');
@@ -238,26 +232,16 @@ CKEDITOR.plugins.add('rte-placeholder',
 	},
 
 	// show preview popup
-	showPreview: function(placeholder) {
+	showPreview: function(placeholder, event) {
 		var preview = this.getPreview(placeholder);
 
 		// position preview node
-		var position = RTE.tools.getPlaceholderPosition(placeholder);
-		var tempTop,
-			freeBottomSpace = $(RTE.getInstance().getThemeSpace('contents').$).height() - position.top;
-		if (freeBottomSpace <= preview.height()) {
-			tempTop = position.top - preview.height() - placeholder.height();
-			preview.addClass('bottom');
-
-		} else {
-			tempTop = position.top + placeholder.height() + 6;
-			preview.removeClass('bottom');
+		if (!preview.is(':visible')) {
+			preview.css({
+				'left': event.clientX + 'px',
+				'top': event.clientY + 'px'
+			});
 		}
-
-		preview.css({
-			'left': position.left + 'px',
-			'top': parseInt(tempTop) + 'px'
-		});
 
 		// hide remaining previews
 		this.previews.children().not(preview).each(function() {
@@ -328,8 +312,8 @@ CKEDITOR.plugins.add('rte-placeholder',
 		// unbind previous events
 		placeholder.unbind('.placeholder');
 
-		placeholder.bind('mouseover.placeholder', function() {
-			self.showPreview($(this));
+		placeholder.bind('mouseover.placeholder', function(event) {
+			self.showPreview($(this), event);
 		});
 
 		placeholder.bind('mouseout.placeholder', function() {
@@ -403,9 +387,10 @@ CKEDITOR.plugins.add('rte-placeholder',
 				//RTE.log([x, y]);
 
 				// calculate editarea size
-				var editarea = $('#cke_contents_wpTextbox1');
-				var maxX = parseInt(editarea.offset().left) + editarea.width();
-				var maxY = parseInt(editarea.offset().top) + editarea.height();
+				var editArea = document.getElementById('cke_1_contents'),
+					editAreaBounds = editArea.getBoundingClientRect();
+				var maxX = editAreaBounds.x + editAreaBounds.width;
+				var maxY = editAreaBounds.y + editAreaBounds.height;
 
 				//RTE.log([maxX, maxY]);
 

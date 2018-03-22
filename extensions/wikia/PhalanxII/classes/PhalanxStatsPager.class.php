@@ -3,12 +3,15 @@ class PhalanxStatsPager extends PhalanxPager {
 	public $qCond = 'ps_blocker_id';
 	public $pInx = 'blockId';
 
-	public function __construct( $id ) {
-		global $wgSpecialsDB;
+	protected $id;
+	public $mDb;
 
+	public function __construct( int $id ) {
 		parent::__construct();
-		$this->id = (int) $id;
-		$this->mDb = wfGetDB( DB_SLAVE, array(), $wgSpecialsDB );
+
+		$this->id = $id;
+		$this->mDb = $this->getDatabase( DB_SLAVE );
+
 		if ( !empty( $this->pInx ) ) {
 			$this->mDefaultQuery[$this->pInx] = $this->id;
 		}
@@ -45,19 +48,32 @@ class PhalanxStatsPager extends PhalanxPager {
 	}
 
 	function formatRow( $row ) {
-		$type = implode( ", ", Phalanx::getTypeNames( $row->ps_blocker_hit ?? $row->ps_blocker_type ) );
-		$username = $row->ps_blocked_user;
+		$blocker = $row->ps_blocker_hit ?: $row->ps_blocker_type;
+		$type = implode( ', ', Phalanx::getTypeNames( $blocker ) );
 		$timestamp = $this->getLanguage()->timeanddate( $row->ps_timestamp );
-		$oWiki = WikiFactory::getWikiByID( $row->ps_wiki_id );
-		$url = $row->ps_referrer ?? '';
-		$url = ( empty( $url ) && isset( $oWiki ) ) ? $oWiki->city_url : $url;
+
+		// SUS-3443: we either store (user ID, "") or (0, IP address) pair
+		$username = User::getUsername( (int) $row->ps_blocked_user_id, $row->ps_blocked_user );
+
+		$url = $row->ps_referrer ?: '';
+		if ( empty( $url ) ) {
+			$wiki = WikiFactory::getWikiByID( $row->ps_wiki_id );
+			if ( $wiki ) {
+				$url = $wiki->city_url;
+			}
+		}
 
 		// SUS-184: Render usernames containing spaces correctly
-		$encUserName = str_replace(' ', '_', $username );
+		$encUserName = str_replace( ' ', '_', $username );
 
-		$specialContributionsURL = GlobalTitle::newFromText( 'Contributions', NS_SPECIAL, $row->ps_wiki_id )->getFullURL();
+		$specialContributions = GlobalTitle::newFromText(
+			'Contributions',
+			NS_SPECIAL,
+			$row->ps_wiki_id
+		);
 
-		if ( !empty( $specialContributionsURL ) ) {
+		if ( $specialContributions->getServer() ) {
+			$specialContributionsURL = $specialContributions->getFullURL();
 			$username = '[' . $specialContributionsURL . '/' . $encUserName . ' ' . $username . ']';
 		}
 
@@ -66,5 +82,29 @@ class PhalanxStatsPager extends PhalanxPager {
 		$html .= Html::closeElement( 'li' );
 
 		return $html;
+	}
+
+	/**
+	 * Get connection to Phalanx Stats table on specials DB
+	 *
+	 * Phalanx stats table is encoded in utf-8, while in most cases MW communicates with
+	 * databases using latin1, so sometimes we get strings in wrong encoding.
+	 * The only way to force utf-8 communication (adding SET NAMES utf8) is setting
+	 * global variable wgDBmysql5.
+	 *
+	 * @see https://github.com/Wikia/app/blob/dev/includes/db/DatabaseMysqlBase.php#L113
+	 *
+	 * @param int $dbType master or slave
+	 * @return DatabaseBase
+	 */
+	protected function getDatabase( int $dbType = DB_SLAVE ): DatabaseBase {
+		$wrapper = new Wikia\Util\GlobalStateWrapper( [
+			'wgDBmysql5' => true
+		] );
+
+		return $wrapper->wrap( function () use ( $dbType ) {
+			global $wgSpecialsDB;
+			return wfGetDB( $dbType, [], $wgSpecialsDB );
+		} );
 	}
 }

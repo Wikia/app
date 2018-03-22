@@ -11,10 +11,6 @@
 -- superior resiliency against crashes and ability to read
 -- during writes (and write during reads!)
 --
--- Only the 'searchindex' table requires MyISAM due to the
--- requirement for fulltext index support, which is missing
--- from InnoDB.
---
 --
 -- The MySQL table backend for MediaWiki currently uses
 -- 14-character BINARY or VARBINARY fields to store timestamps.
@@ -36,103 +32,6 @@
 -- updates manually, you will need to manually insert the
 -- table prefix if any when running these scripts.
 --
-
-
---
--- The user table contains basic account information,
--- authentication keys, etc.
---
--- Some multi-wiki sites may share a single central user table
--- between separate wikis using the $wgSharedDB setting.
---
--- Note that when a external authentication plugin is used,
--- user table entries still need to be created to store
--- preferences and to key tracking information in the other
--- tables.
---
-CREATE TABLE /*_*/user (
-  user_id int unsigned NOT NULL PRIMARY KEY AUTO_INCREMENT,
-
-  -- Usernames must be unique, must not be in the form of
-  -- an IP address. _Shouldn't_ allow slashes or case
-  -- conflicts. Spaces are allowed, and are _not_ converted
-  -- to underscores like titles. See the User::newFromName() for
-  -- the specific tests that usernames have to pass.
-  user_name varchar(255) binary NOT NULL default '',
-
-  -- Optional 'real name' to be displayed in credit listings
-  user_real_name varchar(255) binary NOT NULL default '',
-
-  -- Password hashes, see User::crypt() and User::comparePasswords()
-  -- in User.php for the algorithm
-  user_password tinyblob NOT NULL,
-
-  -- When using 'mail me a new password', a random
-  -- password is generated and the hash stored here.
-  -- The previous password is left in place until
-  -- someone actually logs in with the new password,
-  -- at which point the hash is moved to user_password
-  -- and the old password is invalidated.
-  user_newpassword tinyblob NOT NULL,
-
-  -- Timestamp of the last time when a new password was
-  -- sent, for throttling and expiring purposes
-  -- Emailed passwords will expire $wgNewPasswordExpiry
-  -- (a week) after being set. If user_newpass_time is NULL
-  -- (eg. created by mail) it doesn't expire.
-  user_newpass_time binary(14),
-
-  -- Note: email should be restricted, not public info.
-  -- Same with passwords.
-  user_email tinytext NOT NULL,
-
-  -- This is a timestamp which is updated when a user
-  -- logs in, logs out, changes preferences, or performs
-  -- some other action requiring HTML cache invalidation
-  -- to ensure that the UI is updated.
-  user_touched binary(14) NOT NULL default '',
-
-  -- A pseudorandomly generated value that is stored in
-  -- a cookie when the "remember password" feature is
-  -- used (previously, a hash of the password was used, but
-  -- this was vulnerable to cookie-stealing attacks)
-  user_token binary(32) NOT NULL default '',
-
-  -- Initially NULL; when a user's e-mail address has been
-  -- validated by returning with a mailed token, this is
-  -- set to the current timestamp.
-  user_email_authenticated binary(14),
-
-  -- Randomly generated token created when the e-mail address
-  -- is set and a confirmation test mail sent.
-  user_email_token binary(32),
-
-  -- Expiration date for the user_email_token
-  user_email_token_expires binary(14),
-
-  -- Timestamp of account registration.
-  -- Accounts predating this schema addition may contain NULL.
-  user_registration binary(14),
-
-  -- Count of edits and edit-like actions.
-  --
-  -- *NOT* intended to be an accurate copy of COUNT(*) WHERE rev_user=user_id
-  -- May contain NULL for old accounts if batch-update scripts haven't been
-  -- run, as well as listing deleted edits and other myriad ways it could be
-  -- out of sync.
-  --
-  -- Meant primarily for heuristic checks to give an impression of whether
-  -- the account has been used much.
-  --
-  user_editcount int,
-
-  user_birthdate date default NULL
-) /*$wgDBTableOptions*/;
-
-CREATE UNIQUE INDEX /*i*/user_name ON /*_*/user (user_name);
-CREATE INDEX /*i*/user_email_token ON /*_*/user (user_email_token);
-CREATE INDEX /*i*/user_email ON /*_*/user (user_email(50));
-
 
 --
 -- User permissions have been broken out to a separate table;
@@ -189,30 +88,6 @@ CREATE TABLE /*_*/user_newtalk (
 CREATE INDEX /*i*/un_user_id ON /*_*/user_newtalk (user_id);
 CREATE INDEX /*i*/un_user_ip ON /*_*/user_newtalk (user_ip);
 
-
---
--- User preferences and perhaps other fun stuff. :)
--- Replaces the old user.user_options blob, with a couple nice properties:
---
--- 1) We only store non-default settings, so changes to the defauls
---    are now reflected for everybody, not just new accounts.
--- 2) We can more easily do bulk lookups, statistics, or modifications of
---    saved options since it's a sane table structure.
---
-CREATE TABLE /*_*/user_properties (
-  -- Foreign key to user.user_id
-  up_user int NOT NULL,
-
-  -- Name of the option being saved. This is indexed for bulk lookup.
-  up_property varbinary(255) NOT NULL,
-
-  -- Property value as a string.
-  up_value blob
-) /*$wgDBTableOptions*/;
-
-CREATE UNIQUE INDEX /*i*/user_properties_user_property ON /*_*/user_properties (up_user,up_property);
-CREATE INDEX /*i*/user_properties_property ON /*_*/user_properties (up_property);
-
 --
 -- Core of the wiki: each page has an entry here which identifies
 -- it by title and contains some essential metadata.
@@ -225,7 +100,8 @@ CREATE TABLE /*_*/page (
   -- A page name is broken into a namespace and a title.
   -- The namespace keys are UI-language-independent constants,
   -- defined in includes/Defines.php
-  page_namespace int NOT NULL,
+  -- SUS-3535: page namespaces can not be negative
+  page_namespace int unsigned NOT NULL,
 
   -- The rest of the title, as text.
   -- Spaces are transformed into underscores in title storage.
@@ -234,9 +110,6 @@ CREATE TABLE /*_*/page (
   -- Comma-separated set of permission keys indicating who
   -- can move or edit the page.
   page_restrictions tinyblob NOT NULL,
-
-  -- Number of times this page has been viewed.
-  page_counter bigint unsigned NOT NULL default 0,
 
   -- 1 indicates the article is a redirect.
   page_is_redirect tinyint unsigned NOT NULL default 0,
@@ -268,6 +141,9 @@ CREATE UNIQUE INDEX /*i*/name_title ON /*_*/page (page_namespace,page_title);
 CREATE INDEX /*i*/page_random ON /*_*/page (page_random);
 CREATE INDEX /*i*/page_len ON /*_*/page (page_len);
 CREATE INDEX /*i*/page_redirect_namespace_len ON /*_*/page (page_is_redirect, page_namespace, page_len);
+
+-- SUS-1928
+CREATE INDEX /*i*/page_ns_latest_idx ON /*_*/page (page_namespace, page_latest);
 
 --
 -- Every edit of a page creates also a revision row.
@@ -613,20 +489,6 @@ CREATE INDEX /*i*/el_index ON /*_*/externallinks (el_index(60));
 
 
 --
--- Track external user accounts, if ExternalAuth is used
---
-CREATE TABLE /*_*/external_user (
-  -- Foreign key to user_id
-  eu_local_id int unsigned NOT NULL PRIMARY KEY,
-
-  -- Some opaque identifier provided by the external database
-  eu_external_id varchar(255) binary NOT NULL
-) /*$wgDBTableOptions*/;
-
-CREATE UNIQUE INDEX /*i*/eu_external_id ON /*_*/external_user (eu_external_id);
-
-
---
 -- Track interlanguage links
 --
 CREATE TABLE /*_*/langlinks (
@@ -670,9 +532,6 @@ CREATE TABLE /*_*/site_stats (
   -- The single row should contain 1 here.
   ss_row_id int unsigned NOT NULL,
 
-  -- Total number of page views, if hit counters are enabled.
-  ss_total_views bigint unsigned default 0,
-
   -- Total number of edits performed.
   ss_total_edits bigint unsigned default 0,
 
@@ -702,19 +561,6 @@ CREATE TABLE /*_*/site_stats (
 -- Pointless index to assuage developer superstitions
 CREATE UNIQUE INDEX /*i*/ss_row_id ON /*_*/site_stats (ss_row_id);
 
-
---
--- Stores an ID for every time any article is visited;
--- depending on $wgHitcounterUpdateFreq, it is
--- periodically cleared and the page_counter column
--- in the page table updated for all the articles
--- that have been visited.)
---
-CREATE TABLE /*_*/hitcounter (
-  hc_id int unsigned NOT NULL
-) ENGINE=HEAP MAX_ROWS=25000;
-
-
 --
 -- The internet is full of jerks, alas. Sometimes it's handy
 -- to block a vandal or troll account.
@@ -732,9 +578,6 @@ CREATE TABLE /*_*/ipblocks (
   -- User ID who made the block.
   ipb_by int unsigned NOT NULL default 0,
 
-  -- User name of blocker
-  ipb_by_text varchar(255) binary NOT NULL default '',
-
   -- Text comment made by blocker.
   ipb_reason tinyblob NOT NULL,
 
@@ -749,9 +592,6 @@ CREATE TABLE /*_*/ipblocks (
 
   -- If set to 1, block applies only to logged-out users
   ipb_anon_only bool NOT NULL default 0,
-
-  -- Block prevents account creation from matching IP addresses
-  ipb_create_account bool NOT NULL default 1,
 
   -- Block triggers autoblocks
   ipb_enable_autoblock bool NOT NULL default '1',
@@ -778,7 +618,7 @@ CREATE TABLE /*_*/ipblocks (
 
 -- Unique index to support "user already blocked" messages
 -- Any new options which prevent collisions should be included
-CREATE UNIQUE INDEX /*i*/ipb_address ON /*_*/ipblocks (ipb_address(255), ipb_user, ipb_auto, ipb_anon_only);
+CREATE UNIQUE INDEX /*i*/ipb_address_unique ON /*_*/ipblocks (ipb_address(255), ipb_user, ipb_auto);
 
 CREATE INDEX /*i*/ipb_user ON /*_*/ipblocks (ipb_user);
 CREATE INDEX /*i*/ipb_range ON /*_*/ipblocks (ipb_range_start(8), ipb_range_end(8));
@@ -1009,7 +849,8 @@ CREATE TABLE /*_*/recentchanges (
 
   -- As in revision
   rc_user int unsigned NOT NULL default 0,
-  rc_user_text varchar(255) binary NOT NULL,
+  -- SUS-3079: Placeholder empty value until migration
+  rc_user_text VARCHAR(255) BINARY NOT NULL DEFAULT '',
 
   -- When pages are renamed, their RC entries do _not_ change.
   rc_namespace int NOT NULL default 0,
@@ -1051,9 +892,8 @@ CREATE TABLE /*_*/recentchanges (
   -- A value of 1 indicates the page has been reviewed.
   rc_patrolled tinyint unsigned NOT NULL default 0,
 
-  -- Recorded IP address the edit was made from, if the
-  -- $wgPutIPinRC option is enabled.
-  rc_ip varbinary(40) NOT NULL default '',
+  -- SUS-3079: IP address the edit was made from, in binary format
+  rc_ip_bin VARBINARY(16) NOT NULL DEFAULT '',
 
   -- Text length in characters before
   -- and after the edit
@@ -1077,9 +917,7 @@ CREATE INDEX /*i*/rc_timestamp ON /*_*/recentchanges (rc_timestamp);
 CREATE INDEX /*i*/rc_namespace_title ON /*_*/recentchanges (rc_namespace, rc_title);
 CREATE INDEX /*i*/rc_cur_id ON /*_*/recentchanges (rc_cur_id);
 CREATE INDEX /*i*/new_name_timestamp ON /*_*/recentchanges (rc_new,rc_namespace,rc_timestamp);
-CREATE INDEX /*i*/rc_ip ON /*_*/recentchanges (rc_ip);
-CREATE INDEX /*i*/rc_ns_usertext ON /*_*/recentchanges (rc_namespace, rc_user_text);
-CREATE INDEX /*i*/rc_user_text ON /*_*/recentchanges (rc_user_text, rc_timestamp);
+CREATE INDEX /*i*/rc_ip_bin ON /*_*/recentchanges (rc_ip_bin, rc_timestamp);
 
 
 CREATE TABLE /*_*/watchlist (
@@ -1114,12 +952,6 @@ CREATE TABLE /*_*/interwiki (
   -- insertion.
   iw_url blob NOT NULL,
 
-  -- The URL of the file api.php
-  iw_api blob NOT NULL,
-
-  -- The name of the database (for a connection to be established with wfGetLB( 'wikiid' ))
-  iw_wikiid varchar(64) NOT NULL,
-
   -- A boolean value indicating whether the wiki is in this project
   -- (used, for example, to detect redirect loops)
   iw_local bool NOT NULL,
@@ -1150,29 +982,6 @@ CREATE TABLE /*_*/querycache (
 
 CREATE UNIQUE INDEX /*i*/qc_type_value_ns_title ON /*_*/querycache (qc_type,qc_value,qc_namespace,qc_title);
 
---
--- For a few generic cache operations if not using Memcached
---
-CREATE TABLE /*_*/objectcache (
-  keyname varbinary(255) NOT NULL default '' PRIMARY KEY,
-  value mediumblob,
-  exptime datetime
-) /*$wgDBTableOptions*/;
-CREATE INDEX /*i*/exptime ON /*_*/objectcache (exptime);
-
-
---
--- Cache of interwiki transclusion
---
-CREATE TABLE /*_*/transcache (
-  tc_url varbinary(255) NOT NULL,
-  tc_contents text,
-  tc_time binary(14) NOT NULL
-) /*$wgDBTableOptions*/;
-
-CREATE UNIQUE INDEX /*i*/tc_url_idx ON /*_*/transcache (tc_url);
-
-
 CREATE TABLE /*_*/logging (
   -- Log ID, for referring to this specific log entry, probably for deletion and such.
   log_id int unsigned NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -1188,9 +997,6 @@ CREATE TABLE /*_*/logging (
 
   -- The user who performed this action; key to user_id
   log_user int unsigned NOT NULL default 0,
-
-  -- Name of the user who performed this action
-  log_user_text varchar(255) binary NOT NULL default '',
 
   -- Key to the page affected. Where a user is the target,
   -- this will point to the user page.
@@ -1227,33 +1033,6 @@ CREATE TABLE /*_*/log_search (
 ) /*$wgDBTableOptions*/;
 CREATE UNIQUE INDEX /*i*/ls_field_val ON /*_*/log_search (ls_field,ls_value,ls_log_id);
 CREATE INDEX /*i*/ls_log_id ON /*_*/log_search (ls_log_id);
-
-
--- Jobs performed by parallel apache threads or a command-line daemon
-CREATE TABLE /*_*/job (
-  job_id int unsigned NOT NULL PRIMARY KEY AUTO_INCREMENT,
-
-  -- Command name
-  -- Limited to 60 to prevent key length overflow
-  job_cmd varbinary(60) NOT NULL default '',
-
-  -- Namespace and title to act on
-  -- Should be 0 and '' if the command does not operate on a title
-  job_namespace int NOT NULL,
-  job_title varchar(255) binary NOT NULL,
-
-  -- Timestamp of when the job was inserted
-  -- NULL for jobs added before addition of the timestamp
-  job_timestamp varbinary(14) NULL default NULL,
-
-  -- Any other parameters to the command
-  -- Stored as a PHP serialized array, or an empty string if there are no parameters
-  job_params blob NOT NULL
-) /*$wgDBTableOptions*/;
-
-CREATE INDEX /*i*/job_cmd ON /*_*/job (job_cmd, job_namespace, job_title, job_params(128));
-CREATE INDEX /*i*/job_timestamp ON /*_*/job(job_timestamp);
-
 
 -- Details of updates to cached special pages
 CREATE TABLE /*_*/querycache_info (
@@ -1366,6 +1145,7 @@ CREATE TABLE /*_*/updatelog (
 
 -- A table to track tags for revisions, logs and recent changes.
 CREATE TABLE /*_*/change_tag (
+  ct_id int unsigned NOT NULL PRIMARY KEY AUTO_INCREMENT,
   -- RCID for the change
   ct_rc_id int NULL,
   -- LOGID for the change
@@ -1385,38 +1165,9 @@ CREATE UNIQUE INDEX /*i*/change_tag_rev_tag ON /*_*/change_tag (ct_rev_id,ct_tag
 CREATE INDEX /*i*/change_tag_tag_id ON /*_*/change_tag (ct_tag,ct_rc_id,ct_rev_id,ct_log_id);
 
 
--- Rollup table to pull a LIST of tags simply without ugly GROUP_CONCAT
--- that only works on MySQL 4.1+
-CREATE TABLE /*_*/tag_summary (
-  -- RCID for the change
-  ts_rc_id int NULL,
-  -- LOGID for the change
-  ts_log_id int NULL,
-  -- REVID for the change
-  ts_rev_id int NULL,
-  -- Comma-separated list of tags
-  ts_tags blob NOT NULL
-) /*$wgDBTableOptions*/;
-
-CREATE UNIQUE INDEX /*i*/tag_summary_rc_id ON /*_*/tag_summary (ts_rc_id);
-CREATE UNIQUE INDEX /*i*/tag_summary_log_id ON /*_*/tag_summary (ts_log_id);
-CREATE UNIQUE INDEX /*i*/tag_summary_rev_id ON /*_*/tag_summary (ts_rev_id);
-
-
 CREATE TABLE /*_*/valid_tag (
   vt_tag varchar(255) NOT NULL PRIMARY KEY
 ) /*$wgDBTableOptions*/;
-
--- Table for storing localisation data
-CREATE TABLE /*_*/l10n_cache (
-  -- Language code
-  lc_lang varbinary(32) NOT NULL,
-  -- Cache key
-  lc_key varchar(255) NOT NULL,
-  -- Value
-  lc_value mediumblob NOT NULL
-) /*$wgDBTableOptions*/;
-CREATE INDEX /*i*/lc_lang_key ON /*_*/l10n_cache (lc_lang, lc_key);
 
 -- Table for storing JSON message blobs for the resource loader
 CREATE TABLE /*_*/msg_resource (

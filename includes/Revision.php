@@ -1,5 +1,4 @@
 <?php
-use Wikia\Util\PerformanceProfilers\UsernameUseProfiler;
 
 /**
  * @todo document
@@ -21,6 +20,11 @@ class Revision implements IDBAccessObject {
 	protected $mTextRow;
 	protected $mTitle;
 	protected $mCurrent;
+
+	/**
+	 * SUS-3466: Maximum possible length of revision summary in bytes.
+	 */
+	const REVISION_SUMMARY_MAX_LENGTH = 255;
 
 	// Revision deletion constants
 	const DELETED_TEXT = 1;
@@ -63,7 +67,7 @@ class Revision implements IDBAccessObject {
 	 * @param $flags Integer Bitfield (optional)
 	 * @return Revision or null
 	 */
-	public static function newFromTitle( $title, $id = 0, $flags = null ) {
+	public static function newFromTitle( $title, $id = 0, $flags = 0 ) {
 		$conds = array(
 			'page_namespace' => $title->getNamespace(),
 			'page_title' 	 => $title->getDBkey()
@@ -71,13 +75,13 @@ class Revision implements IDBAccessObject {
 		if ( $id ) {
 			// Use the specified ID
 			$conds['rev_id'] = $id;
+			return self::newFromConds( $conds, (int)$flags );
 		} else {
 			// Use a join to get the latest revision
 			$conds[] = 'rev_id=page_latest';
-			// Callers assume this will be up-to-date
-			$flags = is_int( $flags ) ? $flags : self::READ_LATEST; // b/c
+			$db = wfGetDB( ( $flags & self::READ_LATEST ) ? DB_MASTER : DB_SLAVE );
+			return self::loadFromConds( $db, $conds, $flags );
 		}
-		return self::newFromConds( $conds, (int)$flags );
 	}
 
 	/**
@@ -116,13 +120,12 @@ class Revision implements IDBAccessObject {
 	 * @return Revision
 	 */
 	public static function newFromArchiveRow( $row, $overrides = array() ) {
-		$usernameUseProfiler = new UsernameUseProfiler( __CLASS__, __METHOD__ );
 		$attribs = $overrides + array(
 			'page'       => isset( $row->ar_page_id ) ? $row->ar_page_id : null,
 			'id'         => isset( $row->ar_rev_id ) ? $row->ar_rev_id : null,
 			'comment'    => $row->ar_comment,
 			'user'       => $row->ar_user,
-			'user_text'  => $row->ar_user_text,
+			'user_text' => User::getUsername( $row->ar_user, $row->ar_user_text ),
 			'timestamp'  => $row->ar_timestamp,
 			'minor_edit' => $row->ar_minor_edit,
 			'text_id'    => isset( $row->ar_text_id ) ? $row->ar_text_id : null,
@@ -137,7 +140,6 @@ class Revision implements IDBAccessObject {
 				throw new MWException( 'Unable to load text from archive row (possibly bug 22624)' );
 			}
 		}
-		$usernameUseProfiler->end();
 		return new self( $attribs );
 	}
 
@@ -285,33 +287,13 @@ class Revision implements IDBAccessObject {
 	 * @return Revision or null
 	 */
 	private static function loadFromConds( $db, $conditions, $flags = 0 ) {
-		$res = self::fetchFromConds( $db, $conditions, $flags );
-		if( $res ) {
-			$row = $res->fetchObject();
-			if( $row ) {
-				$ret = new Revision( $row );
-				return $ret;
-			}
-		}
-		$ret = null;
-		return $ret;
-	}
+		$row = self::fetchFromConds( $db, $conditions, $flags );
 
-	/**
-	 * Return a wrapper for a series of database rows to
-	 * fetch all of a given page's revisions in turn.
-	 * Each row can be fed to the constructor to get objects.
-	 *
-	 * @param $title Title
-	 * @return ResultWrapper
-	 */
-	public static function fetchRevision( $title ) {
-		return self::fetchFromConds(
-			wfGetDB( DB_SLAVE ),
-			array( 'rev_id=page_latest',
-				   'page_namespace' => $title->getNamespace(),
-				   'page_title'     => $title->getDBkey() )
-		);
+		if ( $row ) {
+			return new Revision( $row );
+		}
+
+		return null;
 	}
 
 	/**
@@ -322,25 +304,26 @@ class Revision implements IDBAccessObject {
 	 * @param $db DatabaseBase
 	 * @param $conditions Array
 	 * @param $flags integer (optional)
-	 * @return ResultWrapper
+	 * @return object
 	 */
 	private static function fetchFromConds( $db, $conditions, $flags = 0 ) {
+		// SUS-2779
 		$fields = array_merge(
 			self::selectFields(),
-			self::selectPageFields(),
-			self::selectUserFields()
+			self::selectPageFields()
 		);
 		$options = array( 'LIMIT' => 1 );
 		if ( ( $flags & self::READ_LOCKING ) == self::READ_LOCKING ) {
 			$options[] = 'LOCK IN SHARE MODE';
 		}
-		return $db->select(
-			array( 'revision', 'page', 'user' ),
+
+		return $db->selectRow(
+			array( 'revision', 'page' ),
 			$fields,
 			$conditions,
 			__METHOD__,
 			$options,
-			array( 'page' => self::pageJoinCond(), 'user' => self::userJoinCond() )
+			array( 'page' => self::pageJoinCond() )
 		);
 	}
 
@@ -623,7 +606,7 @@ class Revision implements IDBAccessObject {
 	 *      Revision::RAW              get the ID regardless of permissions
 	 * @param $user User object to check for, only if FOR_THIS_USER is passed
 	 *              to the $audience parameter
-	 * @return Integer
+	 * @return int
 	 */
 	public function getUser( $audience = self::FOR_PUBLIC, User $user = null ) {
 		if( $audience == self::FOR_PUBLIC && $this->isDeleted( self::DELETED_USER ) ) {
@@ -638,7 +621,7 @@ class Revision implements IDBAccessObject {
 	/**
 	 * Fetch revision's user id without regard for the current user's permissions
 	 *
-	 * @return String
+	 * @return int
 	 */
 	public function getRawUser() {
 		return $this->mUser;
@@ -673,7 +656,7 @@ class Revision implements IDBAccessObject {
 	 * @return String
 	 */
 	public function getRawUserText() {
-		if ( $this->mUserText === null ) {
+		if ( $this->mUserText === null || $this->mUserText === '' /* SUS-3459 */ ) {
 			$this->mUserText = User::whoIs( $this->mUser ); // load on demand
 			if ( $this->mUserText === false ) {
 				# This shouldn't happen, but it can if the wiki was recovered
@@ -721,27 +704,6 @@ class Revision implements IDBAccessObject {
 	 */
 	public function isMinor() {
 		return (bool)$this->mMinorEdit;
-	}
-
-	/**
-	 * @return Integer rcid of the unpatrolled row, zero if there isn't one
-	 */
-	public function isUnpatrolled() {
-		if( $this->mUnpatrolled !== null ) {
-			return $this->mUnpatrolled;
-		}
-		$dbr = wfGetDB( DB_SLAVE );
-		$this->mUnpatrolled = $dbr->selectField( 'recentchanges',
-			'rc_id',
-			array( // Add redundant user,timestamp condition so we can use the existing index
-				'rc_user_text'  => $this->getRawUserText(),
-				'rc_timestamp'  => $dbr->timestamp( $this->getTimestamp() ),
-				'rc_this_oldid' => $this->getId(),
-				'rc_patrolled'  => 0
-			),
-			__METHOD__
-		);
-		return (int)$this->mUnpatrolled;
 	}
 
 	/**
@@ -1036,7 +998,8 @@ class Revision implements IDBAccessObject {
 			$this->mTextId = $dbw->insertId();
 		}
 
-		if ( $this->mComment === null ) $this->mComment = "";
+		// SUS-3466: Truncate edit summaries before insert to prevent database error
+		$this->mComment = substr( $this->mComment ?? '', 0, static::REVISION_SUMMARY_MAX_LENGTH );
 
 		# Record the edit in revisions
 		$rev_id = isset( $this->mId )
@@ -1050,7 +1013,7 @@ class Revision implements IDBAccessObject {
 				'rev_comment'    => $this->mComment,
 				'rev_minor_edit' => $this->mMinorEdit ? 1 : 0,
 				'rev_user'       => $this->mUser,
-				'rev_user_text'  => $this->mUserText,
+				'rev_user_text'  => $this->getRawUser() === 0 ? $this->mUserText : '', // SUS-3078
 				'rev_timestamp'  => $dbw->timestamp( $this->mTimestamp ),
 				'rev_deleted'    => $this->mDeleted,
 				'rev_len'        => $this->mSize,
@@ -1065,7 +1028,7 @@ class Revision implements IDBAccessObject {
 
 		$this->mId = !is_null( $rev_id ) ? $rev_id : $dbw->insertId();
 
-		wfRunHooks( 'RevisionInsertComplete', array( &$this, $data, $flags ) );
+		Hooks::run( 'RevisionInsertComplete', [ $this, $data, $flags ] );
 
 		wfProfileOut( __METHOD__ );
 		return $this->mId;

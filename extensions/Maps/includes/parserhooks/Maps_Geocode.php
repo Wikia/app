@@ -1,161 +1,131 @@
 <?php
 
+use DataValues\Geo\Formatters\GeoCoordinateFormatter;
+use Jeroen\SimpleGeocoder\Geocoder;
+use ValueFormatters\FormatterOptions;
+
 /**
  * Class for the 'geocode' parser hooks, which can turn
  * human readable locations into sets of coordinates.
- * 
+ *
  * @since 0.7
- * 
- * @file Maps_Geocode.php
- * @ingroup Maps
  *
  * @licence GNU GPL v2+
  * @author Jeroen De Dauw < jeroendedauw@gmail.com >
  */
 class MapsGeocode extends ParserHook {
+
+	private $geocoder;
+
+	public function __construct( Geocoder $geocoder = null ) {
+		$this->geocoder = $geocoder ?? \Maps\MapsFactory::newDefault()->newGeocoder();
+		parent::__construct();
+	}
+
 	/**
-	 * No LSB in pre-5.3 PHP *sigh*.
-	 * This is to be refactored as soon as php >=5.3 becomes acceptable.
-	 */	
-	public static function staticInit( Parser &$parser ) {
-		$instance = new self;
-		return $instance->init( $parser );
-	}	
-	
+	 * Renders and returns the output.
+	 *
+	 * @see ParserHook::render
+	 *
+	 * @since 0.7
+	 *
+	 * @param array $parameters
+	 *
+	 * @return string
+	 */
+	public function render( array $parameters ) {
+		$coordinates = $this->geocoder->geocode( $parameters['location'] );
+
+		if ( $coordinates === null ) {
+			return 'Geocoding failed'; // TODO: i18n
+		}
+
+		return $this->newCoordinateFormatter( $parameters )->format( $coordinates );
+	}
+
+	private function newCoordinateFormatter( array $parameters ) {
+		return new GeoCoordinateFormatter(
+			new FormatterOptions(
+				[
+					GeoCoordinateFormatter::OPT_FORMAT => $parameters['format'],
+					GeoCoordinateFormatter::OPT_DIRECTIONAL => $parameters['directional'],
+					GeoCoordinateFormatter::OPT_PRECISION => 1 / 360000
+				]
+			)
+		);
+	}
+
+	/**
+	 * @see ParserHook::getMessage()
+	 *
+	 * @since 1.0
+	 */
+	public function getMessage() {
+		return 'maps-geocode-description';
+	}
+
 	/**
 	 * Gets the name of the parser hook.
+	 *
 	 * @see ParserHook::getName
-	 * 
+	 *
 	 * @since 0.7
-	 * 
+	 *
 	 * @return string
 	 */
 	protected function getName() {
 		return 'geocode';
 	}
-	
+
 	/**
 	 * Returns an array containing the parameter info.
+	 *
 	 * @see ParserHook::getParameterInfo
-	 * 
+	 *
 	 * @since 0.7
-	 * 
+	 *
 	 * @return array
 	 */
 	protected function getParameterInfo( $type ) {
-		global $egMapsAvailableGeoServices, $egMapsAvailableCoordNotations;
-		global $egMapsDefaultGeoService, $egMapsCoordinateNotation;
-		global $egMapsAllowCoordsGeocoding, $egMapsCoordinateDirectional;
-		
-		$params = array();
-		
-		$params['location'] = new Parameter( 'location' );
-		$params['location']->addDependencies( 'mappingservice', 'geoservice' );
-		$params['location']->addCriteria( new CriterionIsLocation() );	
-		$params['location']->setMessage( 'maps-geocode-par-location' );
-		
-		$params['mappingservice'] = new Parameter(
-			'mappingservice', 
-			Parameter::TYPE_STRING,
-			'', // TODO
-			array(),
-			array(
-				new CriterionInArray( MapsMappingServices::getAllServiceValues() ),
-			)
-		);
-		$params['mappingservice']->addManipulations( new ParamManipulationFunctions( 'strtolower' ) );
-		$params['mappingservice']->setMessage( 'maps-geocode-par-mappingservice' );
-		
-		$params['geoservice'] = new Parameter(
-			'geoservice', 
-			Parameter::TYPE_STRING,
-			$egMapsDefaultGeoService,
-			array( 'service' ),
-			array(
-				new CriterionInArray( $egMapsAvailableGeoServices ),
-			)
-		);	
-		$params['geoservice']->addManipulations( new ParamManipulationFunctions( 'strtolower' ) );	
-		$params['geoservice']->setMessage( 'maps-geocode-par-geoservice' );
-		
-		$params['allowcoordinates'] = new Parameter(
-			'allowcoordinates', 
-			Parameter::TYPE_BOOLEAN,
-			$egMapsAllowCoordsGeocoding
-		);
-		$params['allowcoordinates']->setMessage( 'maps-geocode-par-allowcoordinates' );
-		
-		$params['format'] = new Parameter(
-			'format',
-			Parameter::TYPE_STRING,
-			$egMapsCoordinateNotation,
-			array( 'notation' ),
-			array(
-				new CriterionInArray( $egMapsAvailableCoordNotations ),
-			)	
-		);
-		$params['format']->addManipulations( new ParamManipulationFunctions( 'strtolower' ) );		
-		$params['format']->setMessage( 'maps-geocode-par-format' );
-		
-		$params['directional'] = new Parameter(
-			'directional',
-			Parameter::TYPE_BOOLEAN,
-			$egMapsCoordinateDirectional			
-		);		
-		$params['directional']->setMessage( 'maps-geocode-par-directional' );
-		
+		global $egMapsAvailableCoordNotations;
+		global $egMapsCoordinateNotation;
+		global $egMapsCoordinateDirectional;
+
+		$params = [];
+
+		$params['location'] = [
+			'type' => 'string',
+			'message' => 'maps-geocode-par-location',
+		];
+
+		$params['format'] = [
+			'default' => $egMapsCoordinateNotation,
+			'values' => $egMapsAvailableCoordNotations,
+			'aliases' => 'notation',
+			'tolower' => true,
+			'message' => 'maps-geocode-par-format',
+		];
+
+		$params['directional'] = [
+			'type' => 'boolean',
+			'default' => $egMapsCoordinateDirectional,
+			'message' => 'maps-geocode-par-directional',
+		];
+
 		return $params;
 	}
-	
+
 	/**
 	 * Returns the list of default parameters.
+	 *
 	 * @see ParserHook::getDefaultParameters
-	 * 
+	 *
 	 * @since 0.7
-	 * 
+	 *
 	 * @return array
 	 */
 	protected function getDefaultParameters( $type ) {
-		return array( 'location', 'geoservice', 'mappingservice' );
-	}	
-	
-	/**
-	 * Renders and returns the output.
-	 * @see ParserHook::render
-	 * 
-	 * @since 0.7
-	 * 
-	 * @param array $parameters
-	 * 
-	 * @return string
-	 */
-	public function render( array $parameters ) {
-		if ( MapsGeocoders::canGeocode() ) {
-			$geovalues = MapsGeocoders::attemptToGeocodeToString(
-				$parameters['location'],
-				$parameters['geoservice'],
-				$parameters['mappingservice'],
-				$parameters['allowcoordinates'],
-				$parameters['format'],
-				$parameters['directional']
-			);
-			
-			$output = $geovalues ? $geovalues : '';
-		}
-		else {
-			$output = htmlspecialchars( wfMsg( 'maps-geocoder-not-available' ) );
-		}
-
-		return $output;		
+		return [ 'location' ];
 	}
 
-	/**
-	 * @see ParserHook::getMessage()
-	 * 
-	 * @since 1.0
-	 */
-	public function getMessage() {
-		return 'maps-geocode-description';
-	}		
-	
 }

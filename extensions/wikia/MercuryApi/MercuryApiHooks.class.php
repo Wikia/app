@@ -2,6 +2,8 @@
 
 class MercuryApiHooks {
 
+	private static $mobileHiddenSectionOpened = false;
+
 	/**
 	 * @desc Get number of user's contribution from DB
 	 *
@@ -22,19 +24,9 @@ class MercuryApiHooks {
 	 *
 	 * @param WikiPage $wikiPage
 	 * @param User $user
-	 * @param $text
-	 * @param $summary
-	 * @param $minoredit
-	 * @param $watchthis
-	 * @param $sectionanchor
-	 * @param $flags
-	 * @param $revision
-	 * @param $status
-	 * @param $baseRevId
 	 * @return bool
 	 */
-	public static function onArticleSaveComplete( WikiPage $wikiPage, User $user, $text, $summary, $minoredit, $watchthis,
-												  $sectionanchor, &$flags, $revision, &$status, $baseRevId ) {
+	public static function onArticleSaveComplete( WikiPage $wikiPage, User $user ) {
 		if ( !$user->isAnon() ) {
 			$articleId = $wikiPage->getId();
 			if ( $articleId ) {
@@ -55,6 +47,22 @@ class MercuryApiHooks {
 				}
 			}
 		}
+		return true;
+	}
+
+	/**
+	 * @param $categoryInserts
+	 * @param $categoryDeletes
+	 * @return bool
+	 */
+	static public function onAfterCategoriesUpdate( $categoryInserts, $categoryDeletes ) {
+		$categories = $categoryInserts + $categoryDeletes;
+
+		foreach ( array_keys( $categories ) as $categoryName ) {
+			$categoryTitle = Title::newFromText( $categoryName, NS_CATEGORY );
+			MercuryApiCategoryCacheHelper::setTouched( $categoryTitle->getDBkey() );
+		}
+
 		return true;
 	}
 
@@ -110,7 +118,7 @@ class MercuryApiHooks {
 		WikiaDataAccess::cachePurge( MercuryApiMainPageHandler::curatedContentDataMemcKey() );
 
 		foreach ( $sections as $section ) {
-			$sectionLabel = $section['label'];
+			$sectionLabel = $section['label'] ?? "";
 
 			if ( empty( $sectionLabel ) || !empty( $section['featured'] ) ) {
 				continue;
@@ -137,5 +145,52 @@ class MercuryApiHooks {
 	 */
 	private static function encodeURIQueryParam( $str ) {
 		return strtr( rawurlencode( $str ), [ '%21' => '!', '%27' => "'", '%28' => '(', '%29' => ')', '%2A' => '*' ] );
+	}
+
+	/**
+	 * @desc Adds <section class="mobile-hidden"></section> wrapper for sections
+	 * @param $skin
+	 * @param $level
+	 * @param $attribs
+	 * @param $anchor
+	 * @param $text
+	 * @param $link
+	 * @param $legacyAnchor
+	 * @param $ret
+	 */
+	public static function onMakeHeadline( $skin, $level, $attribs, $anchor, $text, $link, $legacyAnchor, &$ret ){
+		global $wgArticleAsJson;
+
+		// this is pseudo-versioning query param for collapsible sections (XW-4393)
+		// should be removed after all App caches are invalidated
+		if ( !empty( RequestContext::getMain()->getRequest()->getVal( 'collapsibleSections' ) ) &&
+		     $wgArticleAsJson && $level == 2
+		) {
+			if ( self::$mobileHiddenSectionOpened ) {
+				$ret = '</section>' . $ret;
+			} else {
+				self::$mobileHiddenSectionOpened = true;
+			}
+			$id = "{$anchor}-collapsible-section";
+			$ret .= '<section id="' . $id .
+			        '" aria-pressed="false" aria-expanded="false" class="mobile-hidden">';
+		}
+	}
+
+	/**
+	 * @desc Closes last section
+	 * @param Parser $parser
+	 * @param $text
+	 */
+	public static function onParserBeforeTidy( Parser $parser, &$text ) {
+		global $wgArticleAsJson;
+
+		// this is pseudo-versioning query param for collapsible sections (XW-4393)
+		// should be removed after all App caches are invalidated
+		if ( !empty( RequestContext::getMain()->getRequest()->getVal( 'collapsibleSections' ) ) &&
+		     $wgArticleAsJson && self::$mobileHiddenSectionOpened
+		) {
+			$text .= '</section>';
+		}
 	}
 }

@@ -14,8 +14,10 @@ class WikisApiController extends WikiaApiController {
 	const PARAMETER_KEYWORD = 'string';
 	const PARAMETER_LANGUAGES = 'lang';
 	const PARAMETER_WIKI_IDS = 'ids';
-	const CACHE_1_DAY = 86400;//1 day
-	const CACHE_1_WEEK = 604800;//1 day
+	/** 1 day cache time */
+	const CACHE_1_DAY = 86400;
+	/** 1 week cache time */
+	const CACHE_1_WEEK = 604800;
 	const MEMC_NAME = 'SharedWikiApiData:';
 	const LANGUAGES_LIMIT = 10;
 	const DEFAULT_TOP_EDITORS_NUMBER = 10;
@@ -25,7 +27,6 @@ class WikisApiController extends WikiaApiController {
 	const CACHE_VERSION = 3;
 	const WORDMARK = 'Wiki-wordmark.png';
 	const MAX_WIKIS = 250;
-	private static $flagsBlacklist = array( 'blocked', 'promoted' );
 
 	private $keys;
 	private $service;
@@ -39,7 +40,7 @@ class WikisApiController extends WikiaApiController {
 	public function __construct(){
 		parent::__construct();
 		$this->cors = new CrossOriginResourceSharingHeaderHelper();
-		$this->cors->readConfig();
+		$this->cors->allowWhitelistedOrigins();
 	}
 
 	/**
@@ -155,7 +156,7 @@ class WikisApiController extends WikiaApiController {
 	/**
 	 * Gets the information about wikis
 	 *
-	 * @requestParam array $ids The list of wiki ids that will be fetched
+	 * @requestParam array $ids The list of wiki ids that will be fetched - returns at most 250 results
 	 * @requestParam int $height [OPTIONAL] Thumbnail height in pixels
 	 * @requestParam int $width [OPTIONAL] Thumbnail width in pixels
 	 * @requestParam int $snippet [OPTIONAL] Maximum number of words returned in description
@@ -174,15 +175,15 @@ class WikisApiController extends WikiaApiController {
 
 		$this->setOutputFieldType( "items", self::OUTPUT_FIELD_TYPE_OBJECT );
 		$ids = $this->request->getVal( self::PARAMETER_WIKI_IDS, null );
-		if ( !empty( $ids ) ) {
-			$ids = explode( ',', $ids );
-		} else {
+		if ( empty( $ids ) ) {
 			throw new MissingParameterApiException( self::PARAMETER_WIKI_IDS );
 		}
 
+		$idList = $this->getArrayParameter( $ids, static::MAX_WIKIS );
+
 		$params = $this->getDetailsParams();
 		$items = array();
-		foreach ( $ids as $wikiId ) {
+		foreach ( $idList as $wikiId ) {
 			$details = $this->getWikiDetailsService()
 				->getWikiDetails( $wikiId, $params[ 'imageWidth' ], $params[ 'imageHeight' ], $params[ 'length' ] );
 			if ( !empty( $details ) ) {
@@ -215,14 +216,20 @@ class WikisApiController extends WikiaApiController {
 	 */
 	public function getWikiData() {
 		wfProfileIn( __METHOD__ );
-		$ids = $this->request->getArray( 'ids' );
+		$ids = $this->request->getVal( static::PARAMETER_WIKI_IDS );
 		$imageWidth = $this->request->getInt( 'width', static::DEFAULT_WIDTH );
 		$imageHeight = $this->request->getInt( 'height', static::DEFAULT_HEIGHT );
 		$length = $this->request->getVal( 'snippet', static::DEFAULT_SNIPPET_LENGTH );
 
+		if ( empty( $ids ) ) {
+			throw new MissingParameterApiException( static::PARAMETER_WIKI_IDS );
+		}
+
+		$idList = $this->getArrayParameter( $ids, static::MAX_WIKIS );
+
 		$items = array();
-		$service = new WikiService();
-		foreach ( $ids as $wikiId ) {
+		$service = $this->getWikiService();
+		foreach ( $idList as $wikiId ) {
 			if ( ( $cached = $this->getFromCacheWiki( $wikiId, __METHOD__ ) ) !== false ) {
 				//get from cache
 				$wikiInfo = $cached;
@@ -230,7 +237,7 @@ class WikisApiController extends WikiaApiController {
 				//get data providers
 				$wikiObj = WikiFactory::getWikiByID( $wikiId );
 				$wikiStats = $service->getSiteStats( $wikiId );
-				$topUsers = $service->getTopEditors( $wikiId, static::DEFAULT_TOP_EDITORS_NUMBER, true );
+				$topUsers = $service->getTopEditors( $wikiId, static::DEFAULT_TOP_EDITORS_NUMBER );
 
 				$wikiInfo = array(
 					'id' => (int) $wikiId,
@@ -255,6 +262,29 @@ class WikisApiController extends WikiaApiController {
 
 		$this->response->setVal( 'items', $items );
 		wfProfileOut( __METHOD__ );
+	}
+
+	/**
+	 * Get the value of an array request parameter passed as CSV without performing
+	 * a potentially expensive explode+count of all items.
+	 *
+	 * @param string $paramValue
+	 * @param int $maxCount
+	 * @return array
+	 */
+	protected function getArrayParameter( $paramValue, $maxCount ) {
+		$paramValue = strtok( $paramValue, ',' );
+		$values = [];
+		$count = 0;
+
+		while ( $paramValue !== false && $count < $maxCount ) {
+			$values[] = $paramValue;
+			$paramValue = strtok( ',' );
+
+			$count++;
+		}
+
+		return $values;
 	}
 
 	protected function getNonCommercialWikis() {
@@ -293,9 +323,9 @@ class WikisApiController extends WikiaApiController {
 
 	protected function getDetailsParams() {
 		return [
-			'imageWidth' => $this->request->getVal( 'width', null ),
+			'imageWidth'  => $this->request->getVal( 'width', null ),
 			'imageHeight' => $this->request->getVal( 'height', null ),
-			'length' => $this->request->getVal( 'snippet', static::DEFAULT_SNIPPET_LENGTH )
+			'length'      => $this->request->getVal( 'snippet', static::DEFAULT_SNIPPET_LENGTH ),
 		];
 	}
 

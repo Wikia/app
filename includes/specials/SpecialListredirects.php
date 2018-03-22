@@ -43,7 +43,6 @@ class ListredirectsPage extends QueryPage {
 			'tables' => array( 'p1' => 'page', 'redirect', 'p2' => 'page' ),
 			'fields' => array( 'p1.page_namespace AS namespace',
 					'p1.page_title AS title',
-					'p1.page_title AS value',
 					'rd_namespace',
 					'rd_title',
 					'rd_fragment',
@@ -57,7 +56,8 @@ class ListredirectsPage extends QueryPage {
 					'p2.page_title=rd_title' ) ) )
 		);
 
-		wfRunHooks( 'ListredirectsPage::getQueryInfo', array( &$this, &$query ) );
+		Hooks::run( 'ListredirectsPage::getQueryInfo', [ $this, &$query ] );
+
 		return $query;
 	}
 

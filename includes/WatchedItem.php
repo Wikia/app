@@ -152,7 +152,7 @@ class WatchedItem {
 
 		// No errors, update the global_watchlist table.
 		if ( $dbw->affectedRows() ) {
-			wfRunHooks( 'WatchedItem::updateWatch', array ( $this, $this->userID ) );
+			Hooks::run( 'WatchedItem::updateWatch', array ( $this, $this->userID ) );
 		}
 
 		return $success;
@@ -182,7 +182,7 @@ class WatchedItem {
 		);
 		$dbw->commit();
 
-		wfRunHooks( 'WatchedItem::updateWatch', array ( $this, $watchers, $ts ) );
+		Hooks::run( 'WatchedItem::updateWatch', array ( $this, $watchers, $ts ) );
 
 		return true;
 	}
@@ -246,7 +246,7 @@ class WatchedItem {
 		# some other DBMSes, mostly due to poor simulation by us
 		$dbw->replace( 'watchlist', array( array( 'wl_user', 'wl_namespace', 'wl_title' ) ), $values, __METHOD__ );
 
-		wfRunHooks( 'WatchedItem::replaceWatch', [ $oldTitle, $newTitle ] );
+		Hooks::run( 'WatchedItem::replaceWatch', [ $oldTitle, $newTitle ] );
 
 		return true;
 	}

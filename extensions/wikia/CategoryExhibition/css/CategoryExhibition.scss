@@ -1,7 +1,6 @@
 @import "skins/shared/mixins/box-shadow";
 @import "skins/shared/mixins/clearfix";
 @import "skins/shared/color";
-@import "extensions/wikia/TopLists/css/mixins";
 
 $color: #000; // was removed from /skins/shared/mixins/box-shadow
 
@@ -22,10 +21,6 @@ $color-inctive-button: mix($color-page, #000, 60%);
 
 @if lightness($color-page) < 80 {
 	$color: lighten($color, 20%);
-}
-
-#toplists-loading-screen {
-	@include blockInput;
 }
 
 .category-gallery-form {
@@ -209,7 +204,7 @@ $color-inctive-button: mix($color-page, #000, 60%);
 		padding: $thumb-border-top $thumb-border-right $thumb-border-bottom $thumb-border-left;
 		width: $thumb-size-width;
 		height: $thumb-size-height;
-		background-image: url('/extensions/wikia/CategoryExhibition/img/Icon_category_content.png'); /* $wgCdnStylePath */
+		background-image: url('/extensions/wikia/CategoryExhibition/img/Icon_category_content.png'); /* $wgResourceBasePath */
 		background-repeat: no-repeat;
 		background-position: center;
 	}
@@ -326,7 +321,7 @@ $color-inctive-button: mix($color-page, #000, 60%);
 		padding: $thumb-border-top $thumb-border-right $thumb-border-bottom $thumb-border-left;
 		width: $thumb-size-width;
 		height: $thumb-size-height;
-		background-image: url('/extensions/wikia/CategoryExhibition/img/Icon_category_content.png'); /* $wgCdnStylePath */
+		background-image: url('/extensions/wikia/CategoryExhibition/img/Icon_category_content.png'); /* $wgResourceBasePath */
 		background-repeat: no-repeat;
 		background-position: center;
 	}

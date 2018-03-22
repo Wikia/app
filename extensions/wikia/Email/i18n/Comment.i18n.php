@@ -4,8 +4,8 @@ $messages = array();
 $messages['en'] = array(
 	'emailext-articlecomment-subject' => 'People are talking about $1 on {{SITENAME}}!',
 	'emailext-blogcomment-subject' => 'People are talking about the $1 post on {{SITENAME}}!',
-	'emailext-articlecomment-summary' => 'People are talking about [$1 $2] on [{{SERVER}} {{SITENAME}}]!',
-	'emailext-blogcomment-summary' => 'People are talking about the [$1 $2] post on [{{SERVER}} {{SITENAME}}]!',
+	'emailext-articlecomment-summary' => 'People are talking about [$1 $2] on [{{SERVERCANONICAL}} {{SITENAME}}]!',
+	'emailext-blogcomment-summary' => 'People are talking about the [$1 $2] post on [{{SERVERCANONICAL}} {{SITENAME}}]!',
 	'emailext-comment-link-label' => 'See this comment',
 	'emailext-comment-view-all' => '[$1 View all comments]',
 );
@@ -22,8 +22,8 @@ $messages['qqq'] = array(
 $messages['de'] = array(
 	'emailext-articlecomment-subject' => 'Auf {{SITENAME}} wird über $1 diskutiert!',
 	'emailext-blogcomment-subject' => 'Auf {{SITENAME}} wird über den Beitrag $1 diskutiert!',
-	'emailext-articlecomment-summary' => 'Auf [{{SERVER}} {{SITENAME}}] wird über [$1 $2] diskutiert!',
-	'emailext-blogcomment-summary' => 'Auf [{{SERVER}} {{SITENAME}}] wird über den Beitrag [$1 $2] diskutiert!',
+	'emailext-articlecomment-summary' => 'Auf [{{SERVERCANONICAL}} {{SITENAME}}] wird über [$1 $2] diskutiert!',
+	'emailext-blogcomment-summary' => 'Auf [{{SERVERCANONICAL}} {{SITENAME}}] wird über den Beitrag [$1 $2] diskutiert!',
 	'emailext-comment-link-label' => 'Diesen Kommentar ansehen',
 	'emailext-comment-view-all' => '[$1 Alle Kommentare ansehen]',
 );
@@ -40,8 +40,8 @@ $messages['es'] = array(
 $messages['fr'] = array(
 	'emailext-articlecomment-subject' => 'Des personnes parlent de $1 sur {{SITENAME}} !',
 	'emailext-blogcomment-subject' => 'Des personnes parlent du billet de blog $1 sur {{SITENAME}} !',
-	'emailext-articlecomment-summary' => 'Des personnes parlent de [$1 $2] sur [{{SERVER}} {{SITENAME}}] !',
-	'emailext-blogcomment-summary' => 'Des personnes parlent du billet de blog [$1 $2] sur [{{SERVER}} {{SITENAME}}] !',
+	'emailext-articlecomment-summary' => 'Des personnes parlent de [$1 $2] sur [{{SERVERCANONICAL}} {{SITENAME}}] !',
+	'emailext-blogcomment-summary' => 'Des personnes parlent du billet de blog [$1 $2] sur [{{SERVERCANONICAL}} {{SITENAME}}] !',
 	'emailext-comment-link-label' => 'Voir ce commentaire',
 	'emailext-comment-view-all' => '[$1 Voir tous les commentaires]',
 );
@@ -49,8 +49,8 @@ $messages['fr'] = array(
 $messages['it'] = array(
 	'emailext-articlecomment-subject' => 'Ci sono nuovi commenti riguardanti $1 nella {{SITENAME}}!',
 	'emailext-blogcomment-subject' => 'Ci sono nuovi commenti riguardanti il post $1 nella {{SITENAME}}!',
-	'emailext-articlecomment-summary' => 'Ci sono nuovi commenti riguardanti [$1 $2] nella [{{SERVER}} {{SITENAME}}]!',
-	'emailext-blogcomment-summary' => 'Ci sono nuovi commenti riguardanti il post [$1 $2] nella [{{SERVER}} {{SITENAME}}]!',
+	'emailext-articlecomment-summary' => 'Ci sono nuovi commenti riguardanti [$1 $2] nella [{{SERVERCANONICAL}} {{SITENAME}}]!',
+	'emailext-blogcomment-summary' => 'Ci sono nuovi commenti riguardanti il post [$1 $2] nella [{{SERVERCANONICAL}} {{SITENAME}}]!',
 	'emailext-comment-link-label' => 'Vedi questo commento',
 	'emailext-comment-view-all' => '[$1 Vedi tutti i commenti]',
 );
@@ -58,26 +58,35 @@ $messages['it'] = array(
 $messages['ja'] = array(
 	'emailext-articlecomment-subject' => '{{SITENAME}}の$1にコメントが追加されました。',
 	'emailext-blogcomment-subject' => '{{SITENAME}}の$1の投稿にコメントが追加されました。',
-	'emailext-articlecomment-summary' => '[{{SERVER}} {{SITENAME}}]の[$1 $2]にコメントが追加されました。',
-	'emailext-blogcomment-summary' => '[{{SERVER}} {{SITENAME}}]の[$1 $2]の投稿にコメントが追加されました。',
+	'emailext-articlecomment-summary' => '[{{SERVERCANONICAL}} {{SITENAME}}]の[$1 $2]にコメントが追加されました。',
+	'emailext-blogcomment-summary' => '[{{SERVERCANONICAL}} {{SITENAME}}]の[$1 $2]の投稿にコメントが追加されました。',
 	'emailext-comment-link-label' => 'コメントを見る',
 	'emailext-comment-view-all' => '[$1 すべてのコメントを表示]',
 );
 
+$messages['ko'] = array(
+	'emailext-articlecomment-subject' => '사람들이 {{SITENAME}}의 $1 문서에 대한 얘기를 나누고 있습니다!',
+	'emailext-articlecomment-summary' => '사람들이 [{{SERVERCANONICAL}} {{SITENAME}}]의 [$1 $2] 문서에 대한 얘기를 나누고 있습니다!',
+	'emailext-blogcomment-subject' => '사람들이 {{SITENAME}}의 $1 글에 대한 얘기를 나누고 있습니다!',
+	'emailext-blogcomment-summary' => '사람들이 [{{SERVERCANONICAL}} {{SITENAME}}]의 [$1 $2] 글에 대한 얘기를 나누고 있습니다!',
+	'emailext-comment-link-label' => '해당 댓글 보기',
+	'emailext-comment-view-all' => '[$1 모든 댓글 보기]',
+);
+
 $messages['nl'] = array(
-	'emailext-articlecomment-subject' => 'People are talking about $1 on {{SITENAME}}!',
-	'emailext-blogcomment-subject' => 'People are talking about the $1 post on {{SITENAME}}!',
-	'emailext-articlecomment-summary' => 'People are talking about [$1 $2] on [{{SERVER}} {{SITENAME}}]!',
-	'emailext-blogcomment-summary' => 'People are talking about the [$1 $2] post on [{{SERVER}} {{SITENAME}}]!',
-	'emailext-comment-link-label' => 'See this comment',
-	'emailext-comment-view-all' => '[$1 View all comments]',
+	'emailext-articlecomment-subject' => 'Op {{SITENAME}} hebben ze het over $1!',
+	'emailext-blogcomment-subject' => 'Op {{SITENAME}} hebben ze het over de $1 post!',
+	'emailext-articlecomment-summary' => 'Op [{{SERVER}} {{SITENAME}}] hebben ze het over [$1 $2]!',
+	'emailext-blogcomment-summary' => 'Op [{{SERVER}} {{SITENAME}}] hebben ze het over de [$1 $2] post!',
+	'emailext-comment-link-label' => 'Deze reactie bekijken',
+	'emailext-comment-view-all' => '[$1 Alle reacties bekijken]',
 );
 
 $messages['pl'] = array(
 	'emailext-articlecomment-subject' => 'Ludzie komentują $1 na {{SITENAME}}!',
 	'emailext-blogcomment-subject' => 'Ludzie komentują post $1 na {{SITENAME}}!',
-	'emailext-articlecomment-summary' => 'Ludzie komentują [$1 $2] na [{{SERVER}} {{SITENAME}}]!',
-	'emailext-blogcomment-summary' => 'Ludzie komentują post [$1 $2] na [{{SERVER}} {{SITENAME}}]!',
+	'emailext-articlecomment-summary' => 'Ludzie komentują [$1 $2] na [{{SERVERCANONICAL}} {{SITENAME}}]!',
+	'emailext-blogcomment-summary' => 'Ludzie komentują post [$1 $2] na [{{SERVERCANONICAL}} {{SITENAME}}]!',
 	'emailext-comment-link-label' => 'Zobacz komentarz',
 	'emailext-comment-view-all' => '[$1 Zobacz wszystkie komentarze]',
 );
@@ -85,8 +94,8 @@ $messages['pl'] = array(
 $messages['pt'] = array(
 	'emailext-articlecomment-subject' => 'As pessoas estão falando sobre $1 na {{SITENAME}}!',
 	'emailext-blogcomment-subject' => 'As pessoas estão falando sobre o post do blog $1 na {{SITENAME}}!',
-	'emailext-articlecomment-summary' => 'As pessoas estão falando sobre [$1 $2] na [{{SERVER}} {{SITENAME}}]!',
-	'emailext-blogcomment-summary' => 'As pessoas estão falando sobre o post do blog [$1 $2] na [{{SERVER}} {{SITENAME}}]!',
+	'emailext-articlecomment-summary' => 'As pessoas estão falando sobre [$1 $2] na [{{SERVERCANONICAL}} {{SITENAME}}]!',
+	'emailext-blogcomment-summary' => 'As pessoas estão falando sobre o post do blog [$1 $2] na [{{SERVERCANONICAL}} {{SITENAME}}]!',
 	'emailext-comment-link-label' => 'Veja este comentário',
 	'emailext-comment-view-all' => '[$1 Ver todos os comentários]',
 );
@@ -114,15 +123,6 @@ $messages['zh-hant'] = array(
 	'emailext-blogcomment-subject' => '有人在討論{{SITENAME}}上名為$1的網誌！',
 	'emailext-articlecomment-summary' => '有人在討論發佈在{{SITENAME}}上標題為$1的文章！',
 	'emailext-blogcomment-summary' => '有人在討論{{SITENAME}}上名為$1的網誌！',
-	'emailext-comment-link-label' => '查看評論',
-	'emailext-comment-view-all' => '[$1 查看所有評論]',
-);
-
-$messages['zh-tw'] = array(
-	'emailext-articlecomment-subject' => '大家都在談論發佈發佈在{{SITENAME}}上標題為$1的文章！',
-	'emailext-blogcomment-subject' => '大家都在談論發佈在{{SITENAME}}上名為$1的部落格！',
-	'emailext-articlecomment-summary' => '大家都在談論發佈發佈在[{{SERVER}} {{SITENAME}}]上標題為[$1 $2]的文章！',
-	'emailext-blogcomment-summary' => '大家都在談論發佈在[{{SERVER}} {{SITENAME}}]上名為[$1 $2]的部落格！',
 	'emailext-comment-link-label' => '查看評論',
 	'emailext-comment-view-all' => '[$1 查看所有評論]',
 );

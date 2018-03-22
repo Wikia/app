@@ -65,16 +65,29 @@ describe('ext.wikia.adEngine.lookup.prebid.prebidHelper', function () {
 						return true;
 					}
 				}
-			]
+			],
+			adaptersRegistry: {
+				getAdapters: function() {}
+			},
+			instartLogic: {
+				isBlocking: function() {
+					return false;
+				}
+			}
 		};
 
 	function getPrebidHelper() {
-		return modules['ext.wikia.adEngine.lookup.prebid.prebidHelper']();
+		spyOn(mocks.adaptersRegistry, 'getAdapters').and.returnValue(mocks.adapters);
+
+		return modules['ext.wikia.adEngine.lookup.prebid.prebidHelper'](
+			mocks.adaptersRegistry,
+			mocks.instartLogic
+		);
 	}
 
 	it('SetupAdUnits returns data in correct shape', function () {
 		var prebidHelper = getPrebidHelper(),
-			result = prebidHelper.setupAdUnits(mocks.adapters);
+			result = prebidHelper.setupAdUnits();
 
 		expect(result).toEqual([{
 			code: 'TOP_LEADERBOARD',

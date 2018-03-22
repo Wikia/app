@@ -40,11 +40,8 @@ $wgAjaxExportList[] = 'SiteWideMessagesAjaxDismiss';
 
 if ( empty( $wgSWMSupportedLanguages ) ) $wgSWMSupportedLanguages = array( 'en' );
 
-//Register special page
-if (!function_exists('extAddSpecialPage')) {
-	require("$IP/extensions/ExtensionFunctions.php");
-}
-extAddSpecialPage(dirname(__FILE__) . '/SpecialSiteWideMessages_body.php', 'SiteWideMessages', 'SiteWideMessages');
+$wgAutoloadClasses['SiteWideMessages'] = __DIR__ . '/SpecialSiteWideMessages_body.php';
+$wgSpecialPages['SiteWideMessages'] = 'SiteWideMessages';
 $wgSpecialPageGroups['SiteWideMessages'] = 'wikia';
 
 $wgAutoloadClasses['SiteWideMessagesController'] =  __DIR__ . '/SiteWideMessagesController.class.php';
@@ -60,16 +57,12 @@ $wgResourceModules['ext.siteWideMessages.anon'] = array(
  *
  */
 function SiteWideMessagesInit() {
-	global $wgSharedDB, $wgDontWantShared;
-	//Include files ONLY when SharedDB is defined and desired.
-	if (isset($wgSharedDB) && empty($wgDontWantShared)) {
-		global $wgHooks;
-		$wgHooks['WikiFactoryPublicStatusChange'][] = 'SiteWideMessagesPublicStatusChange';
-		$wgHooks['SiteNoticeAfter'][] = 'SiteWideMessagesSiteNoticeAfter';
+	global $wgHooks;
+	$wgHooks['WikiFactoryPublicStatusChange'][] = 'SiteWideMessagesPublicStatusChange';
+	$wgHooks['SiteNoticeAfter'][] = 'SiteWideMessagesSiteNoticeAfter';
 
-		// macbre: notifications for Oasis
-		$wgHooks['SkinTemplateOutputPageBeforeExec'][] = 'SiteWideMessagesAddNotifications';
-	}
+	// macbre: notifications for Oasis
+	$wgHooks['SkinTemplateOutputPageBeforeExec'][] = 'SiteWideMessagesAddNotifications';
 }
 
 /**
@@ -132,31 +125,36 @@ function SiteWideMessagesSiteNoticeAfter( &$siteNotice ) {
  * Show notification (in Oasis)
  *
  * @author macbre
+ * @param Skin $skin
+ * @param QuickTemplate $tpl
+ * @return bool
  */
-function SiteWideMessagesAddNotifications(&$skim, &$tpl) {
-	global $wgOut, $wgUser, $wgExtensionsPath;
+function SiteWideMessagesAddNotifications( Skin $skin, QuickTemplate $tpl ): bool {
+	global $wgExtensionsPath;
 	wfProfileIn(__METHOD__);
 
-	if ( F::app()->checkSkin( 'oasis' ) ) {
+	if ( $skin->getSkinName() === 'oasis' ) {
 		// Add site wide notifications that haven't been dismissed
-		if ( !$wgUser->isLoggedIn() ) {
-			$wgOut->addModuleScripts( 'ext.siteWideMessages.anon' );
+		if ( !$skin->getUser()->isLoggedIn() ) {
+			$skin->getOutput()->addModuleScripts( 'ext.siteWideMessages.anon' );
 			wfProfileOut( __METHOD__ );
 			return true;
 		}
 
-		$msgs = SiteWideMessages::getAllUserMessages( $wgUser, false, false );
+		$msgs = SiteWideMessages::getAllUserMessages( $skin->getUser(), false, false );
 
 		if ( !empty( $msgs ) ) {
 			wfProfileIn( __METHOD__ . '::parse' );
+			$out = $skin->getOutput();
+
 			foreach ( $msgs as &$data ) {
-				$data['text'] = $wgOut->parse( $data['text'] );
+				$data['text'] = $out->parse( $data['text'] );
 			}
 			wfProfileOut( __METHOD__ . '::parse' );
 
-			wfRunHooks( 'SiteWideMessagesNotification', array( $msgs ) );
+			Hooks::run( 'SiteWideMessagesNotification', [ $msgs, $skin ] );
 
-			$wgOut->addScript( "<script type=\"text/javascript\" src=\"{$wgExtensionsPath}/wikia/SiteWideMessages/js/SiteWideMessages.tracking.js\"></script>" );
+			$out->addScript( "<script type=\"text/javascript\" src=\"{$wgExtensionsPath}/wikia/SiteWideMessages/js/SiteWideMessages.tracking.js\"></script>" );
 		}
 	}
 
@@ -172,15 +170,5 @@ function SiteWideMessagesPublicStatusChange($city_public, $city_id, $reason = ''
 	if ($city_public == 0 || $city_public == 2) {
 		SiteWideMessages::deleteMessagesOnWiki($city_id);
 	}
-	return true;
-}
-
-$wgHooks['UserRename::Global'][] = "SiteWideMessagesUserRenameGlobal";
-
-function SiteWideMessagesUserRenameGlobal( $dbw, $uid, $oldusername, $newusername, $process, &$tasks ) {
-	$tasks[] = array(
-		'table' => 'messages_text',
-		'username_column' => 'msg_recipient_name',
-	);
 	return true;
 }

@@ -219,7 +219,6 @@ class DataFeedProvider {
 			|| ( $res['ns'] == NS_TEMPLATE && $this->proxyType == self::WATCHLIST_FEED )
 			|| ( $res['ns'] == NS_MEDIAWIKI && $this->proxyType == self::WATCHLIST_FEED )
 			|| ( $res['ns'] == NS_IMAGE && $this->proxyType == self::WATCHLIST_FEED )
-			|| ( defined( 'NS_TOPLIST' ) && $res['ns'] == NS_TOPLIST )
 		) {
 			$item['title'] = $res['title'];
 			$item['url'] = $title->getLocalURL();
@@ -230,7 +229,7 @@ class DataFeedProvider {
 				if ( isset( $res['rc_params']['summary'] ) ) {
 					$item['comment'] = $res['rc_params']['summary'];
 				}
-			} elseif ( $res['comment'] != '' && ( defined( 'NS_TOPLIST' ) ? $res['ns'] != NS_TOPLIST : true ) ) {
+			} elseif ( $res['comment'] != '' ) {
 				$item['comment'] = $res['comment'];
 			}
 
@@ -293,14 +292,11 @@ class DataFeedProvider {
 				$item['title'] = $res['title'];
 				$item['url'] = Title::newFromText( $title->getBaseText(), NS_BLOG_ARTICLE )->getLocalURL();
 			}
-		} elseif ( defined( 'NS_TOPLIST' ) && $res['ns'] == NS_TOPLIST ) {
-			if ( $this->proxyType == self::ACTIVITY_FEED && !stripos( $res['title'], 'toplist-item' ) ) {
-				$item['title'] = $res['title'];
-				$item['url'] = Title::newFromText( $title->getBaseText(), NS_TOPLIST )->getLocalURL();
-				$res['comment'] = ''; // suppressing needless details
-				$res['rc_params'] = '';
-			}
-		} elseif ( !empty( $wgWallNS ) && in_array( MWNamespace::getSubject( $res['ns'] ), $wgWallNS ) && $this->proxyType == self::ACTIVITY_FEED ) {
+		} elseif (
+			!empty( $wgWallNS ) &&
+			in_array( MWNamespace::getSubject( $res['ns'] ), $wgWallNS ) &&
+			MWNamespace::isTalk( $res['ns'] ) &&
+			$this->proxyType == self::ACTIVITY_FEED ) {
 			$wh = ( new WallHelper );
 			$item = $wh->wikiActivityFilterMessageWall( $title, $res );
 		}

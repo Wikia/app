@@ -7,25 +7,21 @@ class AchRankingService {
 		$this->mRecentAwardedUsers = null;
 	}
 
-	static public function getRankingCacheKey($limit = null, $compareToSnapshot = null){
+	static public function getRankingCacheKey( int $limit ) {
 		$params = array( 'Achievements', 'Ranking', 'default' );
 
 		if ( !empty( $limit ) ) {
 			$params[] = "limit{$limit}";
 		}
 
-		if ( $compareToSnapshot == true ) {
-			$params[] = "compareToSnapshot";
-		}
-
 		return call_user_func_array( 'wfMemcKey', $params );
 	}
 
-	public function getUsersRanking($limit = 1000, $compareToSnapshot = false) {
+	public function getUsersRanking( int $limit = 1000 ) {
 		wfProfileIn(__METHOD__);
 
 		global $wgMemc;
-		$cacheKey = self::getRankingCacheKey( $limit, $compareToSnapshot );
+		$cacheKey = self::getRankingCacheKey( $limit );
 		$ranking = $wgMemc->get( $cacheKey );
 
 		// We do not flush cache when condition changed. See MAIN-5571
@@ -40,11 +36,9 @@ class AchRankingService {
 			$dbr = wfGetDB(DB_SLAVE);
 
 			$res = $dbr->select('ach_user_score', 'user_id, score', $where, __METHOD__, $rules);
-			$rankingSnapshot = ($compareToSnapshot) ? $this->loadFromSnapshot() : null;
 			$position = 0;
 			$counter = 1;
 			$prevScore = -1;
-			$prevPosition = -1;
 
 			while ( $row = $dbr->fetchObject( $res ) ) {
 				$user = User::newFromId($row->user_id);
@@ -55,7 +49,7 @@ class AchRankingService {
 						$position = $counter;
 					}
 
-					$ranking[] = new AchRankedUser($user, $row->score, $position, ($rankingSnapshot != null && isset($rankingSnapshot[$user->getId()])) ? $rankingSnapshot[$user->getId()] : null);
+					$ranking[] = new AchRankedUser( $user, $row->score, $position );
 
 					$counter++;
 					$prevScore = $row->score;
@@ -104,30 +98,6 @@ class AchRankingService {
 			return false;
 	}
 
-	function serialize(){
-	    $ranking = $this->getUsersRanking();
-
-	    $result = array();
-
-	    foreach($ranking as $position => $user) {
-		$result[$user->getId()] = $position;
-	    }
-
-	    return serialize($result);
-	}
-
-	function loadFromSnapshot() {
-	    global $wgCityId;
-
-	    $dbr = WikiFactory::db( DB_SLAVE );
-
-	    $res = $dbr->select('ach_ranking_snapshots', array('data'), array('wiki_id' => $wgCityId));
-
-	    if($row = $dbr->fetchObject($res)) return unserialize($row->data);
-
-	    return null;
-	}
-
 	/**
 	* Returns the list of recently awarded badges for the current wiki and specified level
 	*
@@ -163,8 +133,12 @@ class AchRankingService {
 		while(($row = $dbr->fetchObject($res)) && (count($badges) <= $limit)) {
 			$user = User::newFromId($row->user_id);
 
-			if( $user && AchAwardingService::canEarnBadges( $user ) ) {
-				$badges[] = array('user' => $user, 'badge' => new AchBadge($row->badge_type_id, $row->badge_lap, $row->badge_level), 'date' => $row->date);
+			if ( $user && AchAwardingService::canEarnBadges( $user ) ) {
+				$badges[] = [
+					'user' => $this->getUsernameAndProfileUrl( $user ),
+					'badge' => new AchBadge( $row->badge_type_id, $row->badge_lap, $row->badge_level ),
+					'date' => $row->date
+				];
 			}
 		}
 
@@ -173,5 +147,18 @@ class AchRankingService {
 		wfProfileOut(__METHOD__);
 
 		return $badges;
+	}
+
+	/**
+	 * Get the user's profileUrl and username.
+	 *
+	 * Previously we were passing the entire user object, but
+	 * that was exposing private user data. See MAIN-9412.
+	 */
+	private function getUsernameAndProfileUrl( User $user ) : array {
+		return [
+			'profileUrl' => $user->getUserPage()->getLocalURL(),
+			'userName' => $user->getName()
+		];
 	}
 }

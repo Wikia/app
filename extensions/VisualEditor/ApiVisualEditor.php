@@ -17,7 +17,8 @@ class ApiVisualEditor extends ApiBase {
 	 * @return String
 	 */
 	protected function getApiSource() {
-		return wfExpandUrl( wfScript( 'api' ) );
+		// Make sure Parsoid is requesting MediaWiki over HTTP internally for now (PLATFORM-3363)
+		return wfHttpsToHttp( wfExpandUrl( wfScript( 'api' ) ) );
 	}
 
 	/**
@@ -371,26 +372,18 @@ class ApiVisualEditor extends ApiBase {
 				RequestContext::getMain()->setTitle( $page );
 				// Wikia change
 				$notices = array();
-				$anoneditwarning = false;
 				$anoneditwarningMessage = $this->msg( 'VisualEditor-anoneditwarning' );
+
 				if ( $user->isAnon() && $anoneditwarningMessage->exists() ) {
 					$notices[] = $anoneditwarningMessage->parseAsBlock();
-					$anoneditwarning = true;
 				}
-				/*
-				$notices = $page->getEditNotices();
-				if ( $user->isAnon() ) {
-					$notices[] = $this->msg(
-						'anoneditwarning',
-						// Log-in link
-						'{{fullurl:Special:UserLogin|returnto={{FULLPAGENAMEE}}}}',
-						// Sign-up link
-						'{{fullurl:Special:UserLogin/signup|returnto={{FULLPAGENAMEE}}}}'
-					)->parseAsBlock();
-				}
-				*/
+
 				if ( $parsed && $parsed['restoring'] ) {
 					$notices[] = $this->msg( 'editingold' )->parseAsBlock();
+				}
+
+				if ( wfReadOnly() ) {
+					$notices[] = $this->msg( 'readonlywarning', wfReadOnlyReason() );
 				}
 
 				// Creating new page
@@ -467,19 +460,6 @@ class ApiVisualEditor extends ApiBase {
 					// Some upstream code is deleted from here, more information:
 					// https://github.com/Wikia/app/commit/d54b481d3f6e5b092b212a2c98b2cb5452bee26c
 					// https://github.com/Wikia/app/commit/681e7437078206460f7c0cb1837095e656d8ba85
-				}
-
-				if ( class_exists( 'GlobalBlocking' ) ) {
-					$error = GlobalBlocking::getUserBlockErrors(
-						$user,
-						$this->getRequest()->getIP()
-					);
-					if ( count( $error ) ) {
-						$notices[] = call_user_func_array(
-							array( $this, 'msg' ),
-							$error
-						)->parseAsBlock();
-					}
 				}
 
 				// HACK: Build a fake EditPage so we can get checkboxes from it
@@ -670,7 +650,7 @@ class ApiVisualEditor extends ApiBase {
 	}
 
 	public function isWriteMode() {
-		return true;
+		return false;
 	}
 
 	/**

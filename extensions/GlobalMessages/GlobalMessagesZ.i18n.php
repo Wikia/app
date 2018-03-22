@@ -1,10 +1,4 @@
 <?php
-/**
- * Internationalisation file for extension GlobalMessages.
- *
- * @file
- * @ingroup Extensions
- */
 $messages = array();
 
 $messages['en'] = array(
@@ -14,6 +8,9 @@ $messages['en'] = array(
 It cannot be properly checked for security.',
 	'zip-unsupported' => 'The file is a ZIP file which uses ZIP features not supported by MediaWiki.
 It cannot be properly checked for security.',
+);
+
+$messages['qqq'] = array(
 );
 
 $messages['af'] = array(
@@ -606,15 +603,6 @@ $messages['ps'] = array(
 );
 
 $messages['pt'] = array(
-	'zip-file-open-error' => 'Foi encontrado um erro ao abrir o ficheiro ZIP para verificação.',
-	'zip-wrong-format' => 'O ficheiro especificado não é um ficheiro ZIP.',
-	'zip-bad' => 'O ficheiro ZIP encontra-se corrompido ou não é legível.
-A sua segurança não pode ser devidamente verificada.',
-	'zip-unsupported' => 'Este ficheiro ZIP usa funcionalidades ZIP não suportadas pelo MediaWiki.
-A sua segurança não pode ser devidamente verificada.',
-);
-
-$messages['pt-br'] = array(
 	'zip-file-open-error' => 'Foi encontrado um erro ao abrir o arquivo ZIP para verificação.',
 	'zip-wrong-format' => 'O arquivo especificado não é um arquivo ZIP.',
 	'zip-bad' => 'O arquivo ZIP se encontra corrompido ou não é legível.
@@ -714,15 +702,6 @@ Ni mogoče ustrezno preveriti njene varnosti.',
 );
 
 $messages['sq'] = array(
-	'zip-file-open-error' => 'Një gabim është hasur gjatë hapjes së dokumentit për ZIP kontrollimin.',
-	'zip-wrong-format' => 'Dokumenti i specifikuar nuk ishte ZIP dokument.',
-	'zip-bad' => 'Dokumenti është i korruptuar ose përndryshe dokument ZIP i palexueshëm.
-Ajo nuk mund të kontrollohet siç duhet për sigurinë',
-	'zip-unsupported' => 'Dokumenti është ZIP format i cili përdorë ZIP karakteristikat që nuk mbështeten nga MediaWiki.
-Ajo nuk mund të kontrollohet siç duhet për sigurinë.',
-);
-
-$messages['sr'] = array(
 	'zip-file-open-error' => 'Një gabim është hasur gjatë hapjes së dokumentit për ZIP kontrollimin.',
 	'zip-wrong-format' => 'Dokumenti i specifikuar nuk ishte ZIP dokument.',
 	'zip-bad' => 'Dokumenti është i korruptuar ose përndryshe dokument ZIP i palexueshëm.

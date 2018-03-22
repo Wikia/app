@@ -82,7 +82,7 @@ class ChangesList extends ContextSource {
 		$user = $context->getUser();
 		$sk = $context->getSkin();
 		$list = null;
-		if( wfRunHooks( 'FetchChangesList', array( $user, &$sk, &$list ) ) ) {
+		if( Hooks::run( 'FetchChangesList', array( $user, &$sk, &$list ) ) ) {
 			$new = $context->getRequest()->getBool( 'enhanced', $user->getGlobalPreference( 'usenewrc' ) );
 			return $new ? new EnhancedChangesList( $context ) : new OldChangesList( $context );
 		} else {
@@ -299,7 +299,7 @@ class ChangesList extends ContextSource {
 		);
 
 		$s .= '(' . $diffLink . $this->message['pipe-separator'] . $histLink . ') . . ';
-		wfRunHooks( 'ChangesListInsertDiffHist', array($this, &$diffLink, &$histLink, &$s, $rc, $unpatrolled) );
+		Hooks::run( 'ChangesListInsertDiffHist', array($this, &$diffLink, &$histLink, &$s, $rc, $unpatrolled) );
 		/** End of Wikia change */
 	}
 
@@ -335,7 +335,7 @@ class ChangesList extends ContextSource {
 		$articlelink .= $this->getLanguage()->getDirMark();
 
 		/** Start of Wikia change @author nAndy */
-		wfRunHooks( 'ChangesListInsertArticleLink',
+		Hooks::run( 'ChangesListInsertArticleLink',
 			array($this, &$articlelink, &$s, $rc, $unpatrolled, $watched) );
 		/** End of Wikia change */
 
@@ -358,13 +358,19 @@ class ChangesList extends ContextSource {
 	 * @param &$rc RecentChange
 	 */
 	public function insertUserRelatedLinks( &$s, &$rc ) {
-		if( $this->isDeleted( $rc, Revision::DELETED_USER ) ) {
-			$s .= ' <span class="history-deleted">' . wfMsgHtml( 'rev-deleted-user' ) . '</span>';
-		} else {
-			$s .= $this->getLanguage()->getDirMark() . Linker::userLink( $rc->mAttribs['rc_user'],
-				$rc->mAttribs['rc_user_text'] );
-			$s .= Linker::userToolLinks( $rc->mAttribs['rc_user'], $rc->mAttribs['rc_user_text'] );
+		if ( $this->isDeleted( $rc, Revision::DELETED_USER ) ) {
+			$s .= ' <span class="history-deleted">' . $this->msg( 'rev-deleted-user' )->escaped() . '</span>';
+			return;
 		}
+
+		# Wikia change - SUS-3241
+		# use either rc_user or rc_ip_bin for handling logged-in / anon entries in recentchanges table
+		$userId = (int) $rc->getAttribute('rc_user');
+		$userName = (string) User::getUsername( $userId, $rc->getUserIp() );
+
+		$s .= $this->getLanguage()->getDirMark();
+		$s .= Linker::userLink( $userId, $userName );
+		$s .= Linker::userToolLinks( $userId, $userName );
 	}
 
 	/**
@@ -380,7 +386,7 @@ class ChangesList extends ContextSource {
 		// Start of Wikia change - @author nAndy
 		// modified for MW1.19 by macbre
 		$s = $formatter->getActionText() . " $mark" . $formatter->getComment();
-		wfRunHooks( 'ChangesListInsertLogEntry', array($this, $rc, &$s, $formatter, &$mark) );
+		Hooks::run( 'ChangesListInsertLogEntry', array($this, $rc, &$s, $formatter, &$mark) );
 
 		return $s;
 		// End of Wikia change
@@ -403,7 +409,7 @@ class ChangesList extends ContextSource {
 
 		// Start of Wikia change - @author nAndy
 		// modified for MW1.19 by macbre
-		wfRunHooks( 'ChangesListInsertComment', array($this, $rc, &$comment) );
+		Hooks::run( 'ChangesListInsertComment', array($this, $rc, &$comment) );
 		// End of Wikia change
 
 		return $comment;
@@ -488,14 +494,14 @@ class ChangesList extends ContextSource {
 				$rev = new Revision( array(
 					'id'        => $rc->mAttribs['rc_this_oldid'],
 					'user'      => $rc->mAttribs['rc_user'],
-					'user_text' => $rc->mAttribs['rc_user_text'],
+					'user_text' => $rc->getUserIp(),
 					'deleted'   => $rc->mAttribs['rc_deleted']
 				) );
 				$rev->setTitle( $page );
 
 				/** Start of Wikia change @author nAndy */
-				$rollbackLink = Linker::generateRollback( $rev, $this->getContext() );
-				wfRunHooks( 'ChangesListInsertRollback', array($this, &$s, &$rollbackLink, $rc) );
+				$rollbackLink = Linker::generateRollback( $rev );
+				Hooks::run( 'ChangesListInsertRollback', array($this, &$s, &$rollbackLink, $rc) );
 
 				$s .= ' '.$rollbackLink;
 				/*End of Wikia change*/
@@ -593,7 +599,7 @@ class OldChangesList extends ChangesList {
 				),
 				''
 			);
-			wfRunHooks( 'ChangesListInsertFlags', array($this, &$flags, $rc) );
+			Hooks::run( 'ChangesListInsertFlags', array($this, &$flags, $rc) );
 			$s .= $flags.' ';
 			/** End of Wikia change */
 
@@ -637,7 +643,7 @@ class OldChangesList extends ChangesList {
 		}
 
 		/** Start of Wikia change @author nAndy */
-		if( wfRunHooks( 'OldChangesListRecentChangesLine', array($this, &$s, $rc) ) ) {
+		if( Hooks::run( 'OldChangesListRecentChangesLine', array($this, &$s, $rc) ) ) {
 			wfProfileOut( __METHOD__ );
 			return "$dateheader<li class=\"".implode( ' ', $classes )."\">".$s."</li>\n";
 		} else {
@@ -773,7 +779,7 @@ class EnhancedChangesList extends ChangesList {
 				$secureName = SpecialPage::getTitleFor( 'Log', $logType )->getPrefixedDBkey();
 			}
 			// Start of Wikia change - @author unknown
-			wfRunHooks( 'ChangesListMakeSecureName', array($this, &$secureName, $rc) );
+			Hooks::run( 'ChangesListMakeSecureName', array($this, &$secureName, $rc) );
 			// End of Wikia change
 			if( !isset( $this->rc_cache[$secureName] ) ) {
 				$this->rc_cache[$secureName] = array();
@@ -787,16 +793,28 @@ class EnhancedChangesList extends ChangesList {
 		return $ret;
 	}
 
+	/**
+	 * @param RecentChange $rc
+	 * @param $unpatrolled
+	 * @param $counter
+	 * @return array|bool|Object
+	 */
 	public function lineLinksCache($rc, $unpatrolled, $counter) {
 		wfProfileIn( __METHOD__ );
 		global $wgMemc;
 
-		$memcKey = wfMemcKey( __METHOD__, $rc->mAttribs['rc_id'], $unpatrolled, $this->getLanguage()->getCode(), $counter);
+		$memcKey = wfMemcKey( __METHOD__, $rc->mAttribs['rc_id'], $unpatrolled, $this->getLanguage()->getCode(), $counter, 'v2');
 		$out = $wgMemc->get($memcKey);
+
+		# Wikia change - SUS-3241
+		# use either rc_user or rc_ip_bin for handling logged-in / anon entries in recentchanges table
+		$userId = (int) $rc->getAttribute('rc_user');
+		$userName = (string) User::getUsername( $userId, $rc->getUserIp() );
+
 		if(!empty($out)) {
 			// wikia change start (BAC-492)
-			$out['usertalklink'] = $this->isDeleted($rc, Revision::DELETED_USER) ?
-				null : Linker::userToolLinks($rc->mAttribs['rc_user'], $rc->mAttribs['rc_user_text']);
+			$out['usertalklink'] = $this->isDeleted( $rc, Revision::DELETED_USER ) ?
+				null : Linker::userToolLinks( $userId, $userName );
 			// wikia change end
 			wfProfileOut( __METHOD__ );
 			return $out;
@@ -808,8 +826,10 @@ class EnhancedChangesList extends ChangesList {
 			$out['userlink'] = ' <span class="history-deleted">' . wfMsgHtml( 'rev-deleted-user' ) . '</span>';
 			$out['usertalklink'] = null;
 		} else {
-			$out['userlink'] = Linker::userLink( $rc->mAttribs['rc_user'], $rc->mAttribs['rc_user_text'] );
-			$out['usertalklink'] = Linker::userToolLinks( $rc->mAttribs['rc_user'], $rc->mAttribs['rc_user_text'] );
+			# Wikia change
+			$out['userlink'] = Linker::userLink( $userId, $userName );
+			$out['usertalklink'] = Linker::userToolLinks( $userId, $userName );
+			# Wikia change - end
 		}
 		
 		$out['clink'] = Linker::linkKnown( $rc->getTitle() );
@@ -1048,7 +1068,7 @@ class EnhancedChangesList extends ChangesList {
 		$r .= $this->numberofWatchingusers($block[0]->numberofWatchingusers);
 
 		// Start of Wikia change - @author unknown
-		wfRunHooks( 'ChangesListHeaderBlockGroup', array($this, &$r, &$block) );
+		Hooks::run( 'ChangesListHeaderBlockGroup', array($this, &$r, &$block) );
 		// End of Wikia change
 
 		# Sub-entries
@@ -1089,7 +1109,7 @@ class EnhancedChangesList extends ChangesList {
 					$link = '';
 					// Start of Wikia change
 
-					wfRunHooks( 'ChangesListItemGroupRegular', array(&$link, &$rcObj) );
+					Hooks::run( 'ChangesListItemGroupRegular', array(&$link, &$rcObj) );
 					// End of Wikia change
 
 					if(empty($link)) {

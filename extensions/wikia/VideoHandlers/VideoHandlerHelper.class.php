@@ -316,38 +316,10 @@ class VideoHandlerHelper extends WikiaModel {
 				'embedUrl'             => $file->getHandler()->getEmbedUrl(),
 				'videoId'              => $file->getVideoId(),
 				'thumbnail'            => $thumbnail,
-				'regionalRestrictions' => $file->getRegionalRestrictions()
 			);
 		} else {
 			Wikia::Log( __METHOD__, false, "No file found for '".$videoInfo['title']."'" );
 		}
-
-		wfProfileOut( __METHOD__ );
-
-		return $videoDetail;
-	}
-
-	/**
-	 * Same as 'VideoHandlerHelper::getVideoDetail' but retrieves information from an external wiki
-	 * Typically used to get premium video info from video.wikia.com when on another wiki.
-	 * @param string $dbName - The DB name of the wiki that should be used to find video details
-	 * @param array|string $title - The list of title of the video to get details for
-	 * @param array $videoOptions
-	 *   [ array( 'thumbWidth' => int, 'thumbHeight' => int, 'postedInArticles' => int, 'getThumbnail' => bool, 'thumbOptions' => array ) ]
-	 * @return array - As associative array of video information
-	 */
-	public function getVideoDetailFromWiki( $dbName, $title, $videoOptions ) {
-		wfProfileIn( __METHOD__ );
-
-		$params = [
-			'controller'   => 'VideoHandler',
-			'method'       => 'getVideoDetail',
-			'fileTitle'    => $title,
-			'videoOptions' => $videoOptions,
-		];
-
-		$response = ApiService::foreignCall( $dbName, $params, ApiService::WIKIA );
-		$videoDetail = empty( $response['detail'] ) ? [] : $response['detail'];
 
 		wfProfileOut( __METHOD__ );
 
@@ -491,25 +463,5 @@ class VideoHandlerHelper extends WikiaModel {
 		wfProfileOut( __METHOD__ );
 
 		return $status;
-	}
-
-	/**
-	 * Check if video's provider is supported base on its URL.
-	 * Logic is partially ported from ApiWrapperFactory::getApiWrapper method.
-	 * @param $url
-	 * @return bool
-	 */
-	public function isVideoProviderSupported( $url ) {
-		global $wgVideoMigrationProviderMap;
-
-		$parsed = parse_url( strtolower( $url ), PHP_URL_HOST );
-
-		foreach( $wgVideoMigrationProviderMap as $name ) {
-			$className = $name . 'ApiWrapper';
-			if ( class_exists( $className ) && $className::isMatchingHostname( $parsed ) ) {
-				return true;
-			}
-		}
-		return false;
 	}
 }

@@ -13,9 +13,10 @@ $color-body: get_command_line_param('color-body', $color-body-default);
 $color-body-middle: get_command_line_param('color-body-middle', $color-body); // default: same as color-body
 $color-page: get_command_line_param('color-page', $color-white); // default: white
 $color-buttons: get_command_line_param('color-buttons', $color-links-default); // default: blue
+$color-community-header: get_command_line_param('color-community-header', $color-buttons); // default: blue as for buttons
 $color-links: get_command_line_param('color-links', $color-links-default); // default: blue
 $color-header: get_command_line_param('color-header', $color-header-default);
-$background-image: get_command_line_param('background-image', 'http://images1.wikia.nocookie.net/__cb21710/common/skins/oasis/images/themes/oasis.png'); // TODO: USE THE wgCdnStylePath VAR INSTEAD OF HARDCODING.
+$background-image: get_command_line_param('background-image', '/skins/oasis/images/themes/oasis.png'); /* wgResourceBasePath */
 $page-opacity: get_command_line_param('page-opacity', 100) / 100;	// default: 1
 
 
@@ -119,7 +120,7 @@ $color-page-shadow: #333;
 // Buttons
 $color-button-highlight: lighten($color-buttons, 10%);
 $color-button-text: $color-white;
-@if lightness($color-buttons) > 55 {
+@if lightness($color-buttons) > 49 {
 	$color-button-text: $color-black;
 }
 $color-secondary-button-highlight: mix($color-page, $color-white, 94%);
@@ -188,14 +189,37 @@ $color-pagehistory: darken($color-page, 5%);
 @if $is-dark-wiki {
 	$color-pagehistory: lighten($color-page, 15%);
 }
-$color-diff-context: darken($color-page, 5%);
-@if $is-dark-wiki {
-	$color-diff-context: lighten($color-page, 15%);
-}
 $color-diff-text: darken($color-text-dark, 5%);
-$color-diffchange-text: $color-diff-text;
 @if $is-dark-wiki {
 	$color-diff-text: lighten($color-text-light, 15%);
+}
+$color-diffchange-text: $color-diff-text;
+
+$color-diff-context: darken($color-page, 3%);
+@if $is-dark-wiki {
+	$color-diff-context: lighten($color-page, 5%);
+}
+$color-diff-context-border: #e6e6e6;
+@if $is-dark-wiki {
+	$color-diff-context-border: #444;
+}
+
+$color-diff-addedline-border: #a3d3ff;
+@if $is-dark-wiki {
+	$color-diff-addedline-border: #293e4f;
+}
+$color-diff-deletedline-border: #ffe49c;
+@if $is-dark-wiki {
+	$color-diff-deletedline-border: #964c4c;
+}
+
+$color-diff-addedline-diffchange: #d8ecff;
+@if $is-dark-wiki {
+	$color-diff-addedline-diffchange: #293e4f;
+}
+$color-diff-deletedline-diffchange: #feeec8;
+@if $is-dark-wiki {
+	$color-diff-deletedline-diffchange: #964c4c;
 }
 
 // Vertical colors

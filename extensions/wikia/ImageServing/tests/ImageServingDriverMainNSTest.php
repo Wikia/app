@@ -17,6 +17,8 @@ class ImageServingDriverMainNSTest extends WikiaBaseTest {
 			->setUpImageIndex( [ $id => [ $imgName ] ] )
 			->setUpImagesPopularity( [ $imgName => 1 ] )
 			->setUpLoadImageMetadata( [ [ [ $imgName ], [ $imgName => $this->getDetails( $imgName ) ] ] ] )
+			->setUpInfoboxImages( [] )
+			->setUpGetRevId( 0 )
 			->getDriver();
 
 		$driver->setArticles( [ $id => null ] );
@@ -32,7 +34,9 @@ class ImageServingDriverMainNSTest extends WikiaBaseTest {
 		$driver = $this->setUpMock()
 			->setUpImageIndex( [ ] )
 			->setUpLoadImageMetadata( [ [ [ $imgName ], [ $imgName => $this->getDetails( $imgName ) ] ] ] )
+			->setUpImagesPopularity( [] )
 			->setUpInfoboxImages( [ $imgName ] )
+			->setUpGetRevId( 0 )
 			->getDriver();
 
 		$driver->setArticles( [ $id => null ] );
@@ -52,6 +56,7 @@ class ImageServingDriverMainNSTest extends WikiaBaseTest {
 			->setUpLoadImageMetadata( [ [ [ $infoboxImage ], [ $infoboxImage => $this->getDetails( $infoboxImage ) ] ],
 										[ [ $other ], [ $other => $this->getDetails( $other ) ] ] ] )
 			->setUpInfoboxImages( [ $infoboxImage ] )
+			->setUpGetRevId( 0 )
 			->getDriver();
 
 		$driver->setArticles( [ $id => null ] );
@@ -75,7 +80,7 @@ class ImageServingDriverMainNSTest extends WikiaBaseTest {
 
 		$this->driver = $this->getMockBuilder( 'ImageServingDriverMainNS' )
 			->setConstructorArgs( [ null, $isMock ] )
-			->setMethods( [ 'getImageIndex', 'getImagesPopularity', 'loadImagesMetadata', 'getInfoboxImagesForId' ] )
+			->setMethods( [ 'getImageIndex', 'getImagesPopularity', 'loadImagesMetadata', 'getInfoboxImagesForId', 'getRevId' ] )
 			->getMock();
 
 		return $this;
@@ -109,6 +114,14 @@ class ImageServingDriverMainNSTest extends WikiaBaseTest {
 		$this->driver->expects( $this->any() )
 			->method( 'loadImagesMetadata' )
 			->will( $this->returnValueMap( $returns ) );
+
+		return $this;
+	}
+
+	protected function setUpGetRevId( $returns ) {
+		$this->driver->expects( $this->any() )
+			->method( 'getRevId' )
+			->will( $this->returnValue( $returns ) );
 
 		return $this;
 	}

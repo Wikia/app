@@ -12,9 +12,9 @@ class AlterTableMaintenance extends Maintenance {
 	const ALTER_QUERY = 'ALTER TABLE page_wikia_props DROP PRIMARY KEY, ADD INDEX page_id (`page_id`), ADD INDEX propname (`propname`)';
 
 	public function execute() {
-		global $wgDBname, $wgDBCluster;
+		global $wgDBname, $wgDBcluster;
 
-		$this->output("Altering indices on {$wgDBname} ({$wgDBCluster})...");
+		$this->output("Altering indices on {$wgDBname} ({$wgDBcluster})...");
 		$dbw = $this->getDB( DB_MASTER );
 
 		$then = microtime( true );
@@ -25,7 +25,7 @@ class AlterTableMaintenance extends Maintenance {
 		wfWaitForSlaves();
 
 		Wikia\Logger\WikiaLogger::instance()->info( __METHOD__, [
-			'cluster' => $wgDBCluster,
+			'cluster' => $wgDBcluster,
 			'took' => round($took, 6),
 		] );
 

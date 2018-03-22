@@ -95,5 +95,10 @@
 	"sf_category_hasdefaultform": "Ceta catègorie utilise lo formulèro « $1 ».",
 	"sf_category_desc": "O est la catègorie « $1 ».",
 	"sf_blank_namespace": "Principâl",
-	"right-editrestrictedfields": "Changiér los champs rètrents des formulèros"
+	"right-editrestrictedfields": "Changiér los champs rètrents des formulèros",
+	"sf-datepicker-close": "Cllôre",
+	"sf-datepicker-prev": "Devant",
+	"sf-datepicker-next": "Aprés",
+	"sf-datepicker-today": "Houé",
+	"sf-regexp-wrongformat": "Crouyo format."
 }

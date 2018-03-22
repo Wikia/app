@@ -1,11 +1,14 @@
 {
 	"@metadata": {
 		"authors": [
-			"Dbc334"
+			"Dbc334",
+			"Eleassar"
 		]
 	},
 	"sf_createtemplate_connectingproperty": "Ime lastnosti za povezovanje polj te predloge s preostalo stranjo:",
 	"sf_createform_add": "Dodaj",
+	"sf_createform_pagesection": "Razdelek strani:",
 	"formedit": "Uredi z obrazcem",
+	"sf-formedit-donotuseform": "Ustvarite stran brez obrazca.",
 	"right-viewedittab": "Ogled zavihka »{{int:edit}}« za strani, ki jih lahko urejate z obrazcem"
 }

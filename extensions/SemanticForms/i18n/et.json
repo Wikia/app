@@ -70,5 +70,9 @@
 	"sf-preview-header": "Vormi eelvaade",
 	"sf_form_freetextlabel": "Vaba tekst",
 	"sf_category_desc": "See on $1 kategooria.",
-	"sf_blank_namespace": "Põhinimeruum"
+	"sf_blank_namespace": "Põhinimeruum",
+	"sf-datepicker-close": "Sule",
+	"sf-datepicker-prev": "Eelmine",
+	"sf-datepicker-next": "Järgmine",
+	"sf-datepicker-today": "Täna"
 }

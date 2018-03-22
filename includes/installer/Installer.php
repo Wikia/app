@@ -606,7 +606,6 @@ abstract class Installer {
 		}
 		$status->value->insert( 'site_stats', array(
 			'ss_row_id' => 1,
-			'ss_total_views' => 0,
 			'ss_total_edits' => 0,
 			'ss_good_articles' => 0,
 			'ss_total_pages' => 0,
@@ -1468,7 +1467,7 @@ abstract class Installer {
 			return Status::newFatal( 'config-admin-error-user', $name );
 		}
 
-		if ( $user->idForName() == 0 ) {
+		if ( empty( $user->getId() ) ) {
 			$user->addToDatabase();
 
 			try {

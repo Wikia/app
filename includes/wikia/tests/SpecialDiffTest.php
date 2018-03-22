@@ -24,11 +24,13 @@ class SpecialDiffTest extends WikiaBaseTest {
 		$this->assertEquals( $redirectURL, $redirectedTo );
 	}
 
+	/**
+	 * @expectedException ErrorPageError
+	 */
 	public function testSpecialDiffInvalidInput() {
 		$context = new RequestContext();
 		$title = SpecialPage::getTitleFor( 'Diff' );
 
-		$this->setExpectedException( ErrorPageError::class );
 		SpecialPageFactory::executePath( $title, $context );
 	}
 

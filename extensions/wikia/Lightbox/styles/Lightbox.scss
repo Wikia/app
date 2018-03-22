@@ -5,7 +5,6 @@
 @import "skins/shared/mixins/transition";
 @import "skins/shared/color";
 @import "mixins/sprite-Lightbox";
-@import "extensions/wikia/VideoHandlers/css/crunchyrollWidget";
 
 $lightbox-overlay-show-duration: 200ms;
 $lightbox-overlay-hide-duration: 600ms;
@@ -49,8 +48,7 @@ $color-lightbox-border: mix($color-page-border, $color-page, 75%);
 		.lightbox-arrows,
 		.LightboxHeader,
 		.LightboxCarousel,
-		.media,
-		.modal_interstitial {
+		.media {
 			display: none;
 		}
 	}
@@ -399,16 +397,6 @@ $color-lightbox-border: mix($color-page-border, $color-page, 75%);
 		}
 	}
 
-	.modal_interstitial {
-		height: 100%;
-		> div {
-			padding-bottom: 30px;
-		}
-		.wikia-ad {
-			position: relative;
-		}
-	}
-
 	.LightboxHeader {
 		box-sizing: border-box;
 		border-bottom: 1px solid $color-lightbox-border;
@@ -545,8 +533,4 @@ $color-lightbox-border: mix($color-page-border, $color-page, 75%);
 // Error template styles
 .modalWrapper .modalToolbar .close {
 	margin: 0;
-}
-
-.modalWrapper .media {
-	@include crunchyrollWidget;
 }

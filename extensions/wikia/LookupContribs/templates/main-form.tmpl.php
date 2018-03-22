@@ -15,7 +15,7 @@ function lcShowDetails(dbname, mode) {
 }
 
 $(document).ready(function() {
-	var baseurl = wgScript + "?action=ajax&rs=LookupContribsAjax::axData";
+	var baseurl = mw.util.wikiScript() + "?action=ajax&rs=LookupContribsAjax::axData";
 	var username = '<?= Xml::escapeJsString( $username ) ?>';
 
 	if ( !username ) {
@@ -50,12 +50,15 @@ $(document).ready(function() {
 			{ "sName": "title" },
 			{ "sName": "url" },
 			{ "sName": "lastedit" },
+			{ "sName": "edits" },
 			{ "sName": "options" }
 		],
 		"aoColumnDefs": [
 			{ "bVisible": false,  "aTargets": [ 0 ], "bSortable" : false },
 			{ "bVisible": false,  "aTargets": [ 1 ], "bSortable" : false },
-			{ "bVisible": true,  "aTargets": [ 2 ], "bSortable" : true, "sClass": "lc-datetime" },
+			{ "bVisible": true,  "aTargets": [ 2 ], "bSortable" : true, "sClass": "lc-datetime", 'fnRender': function (oObj) {
+				return mw.html.escape(oObj.aData[2]);
+			} },
 			{
 				"fnRender": function ( oObj ) {
 					var row = '<span class="lc-row"><a href="' + mw.html.escape(oObj.aData[3])+ '">' + mw.html.escape(oObj.aData[3]) + '</a></span>';
@@ -78,9 +81,10 @@ $(document).ready(function() {
 					row += '</div>';
 					return row;
 				},
-				"aTargets": [ 5 ],
+				"aTargets": [ 6 ],
 				"bSortable" : false
-			}
+			},
+			{ "sClass": "lc-datetime", "aTargets": [ 5 ], "bSortable" : true, "bVisible": true }
 		],
 		"bProcessing": true,
 		"bServerSide": true,
@@ -174,6 +178,7 @@ $(document).ready(function() {
 			<th width="35%"><?= wfMessage( 'lookupcontribswikititle' )->escaped() ?></th>
 			<th width="20%"><?= wfMessage( 'lookupcontribswikiurl' )->escaped() ?></th>
 			<th width="20%"><?= wfMessage( 'lookupcontribslastedited' )->escaped() ?></th>
+			<th width="20%"><?= wfMessage( 'lookupcontribslastedits' )->escaped() ?></th>
 			<th width="20%"><?= wfMessage( 'lookupcontribscontribtitleforuser' )->escaped() ?></th>
 		</tr>
 	</thead>
@@ -189,6 +194,7 @@ $(document).ready(function() {
 			<th width="35%"><?= wfMessage( 'lookupcontribswikititle' )->escaped() ?></th>
 			<th width="20%"><?= wfMessage( 'lookupcontribswikiurl' )->escaped() ?></th>
 			<th width="20%"><?= wfMessage( 'lookupcontribslastedited' )->escaped() ?></th>
+			<th width="20%"><?= wfMessage( 'lookupcontribslastedits' )->escaped() ?></th>
 			<th width="20%"><?= wfMessage( 'lookupcontribscontribtitleforuser' )->escaped() ?></th>
 		</tr>
 	</tfoot>

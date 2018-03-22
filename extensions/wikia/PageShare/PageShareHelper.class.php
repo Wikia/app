@@ -3,23 +3,6 @@ class PageShareHelper {
 
 	const SHARE_DEFAULT_LANGUAGE = 'en';
 
-	private static function readIcon( $fileName ) {
-		$fullName = realpath( __DIR__ . '/icons/' . $fileName . '.svg' );
-		if ( is_readable( $fullName ) ) {
-			return file_get_contents( $fullName );
-		} else {
-			return false;
-		}
-	}
-
-	public static function getIcon( $service ) {
-		$icon = self::readIcon( $service );
-		if ( !$icon ) {
-			$icon = self::readIcon( 'share' );
-		}
-		return $icon;
-	}
-
 	/**
 	 * Get language for Page Share service.
 	 * Language code is sent from the client side. If it's empty, the default (en) is returned.

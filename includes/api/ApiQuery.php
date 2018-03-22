@@ -265,7 +265,7 @@ class ApiQuery extends ApiBase {
 			$module->setupLogContext($params); // Wikia Change
 			$module->profileIn();
 			$module->execute();
-			wfRunHooks( 'APIQueryAfterExecute', array( &$module ) );
+			Hooks::run( 'APIQueryAfterExecute', array( &$module ) );
 			$module->profileOut();
 			$module->destroyLogContext(); // Wikia Change
 		}
@@ -514,6 +514,7 @@ class ApiQuery extends ApiBase {
 			// Raw formatter will handle this
 			$result->addValue( null, 'text', $exportxml );
 			$result->addValue( null, 'mime', 'text/xml' );
+			$result->addValue( null, 'filename', 'export.xml', ApiResult::NO_SIZE_CHECK );
 		} else {
 			$r = array();
 			ApiResult::setContent( $r, $exportxml );
@@ -564,7 +565,7 @@ class ApiQuery extends ApiBase {
 		// populate resultPageSet with the generator output
 		$generator->profileIn();
 		$generator->executeGenerator( $resultPageSet );
-		wfRunHooks( 'APIQueryGeneratorAfterExecute', array( &$generator, &$resultPageSet ) );
+		Hooks::run( 'APIQueryGeneratorAfterExecute', array( &$generator, &$resultPageSet ) );
 		$resultPageSet->finishPageSetGeneration();
 		$generator->profileOut();
 

@@ -9,6 +9,13 @@ class UserTemplateClassificationService extends TemplateClassificationService {
 	const CLASSIFY_TEMPLATE_EXCEPTION_MESSAGE = 'Bad request. Template type %s is not valid.';
 	const CLASSIFY_TEMPLATE_EXCEPTION_CODE = 400;
 
+	/** @var Logger $logger */
+	private $logger;
+
+	public function __construct() {
+		$this->logger = new Logger();
+	}
+
 	/**
 	 * Allowed types of templates stored in an array to make a validation process easier.
 	 *
@@ -43,17 +50,22 @@ class UserTemplateClassificationService extends TemplateClassificationService {
 		self::TEMPLATE_CUSTOM_INFOBOX,
 	];
 
+	public function setContext( IContextSource $context ) {
+		parent::setContext( $context );
+		$this->logger->setContext( $context );
+	}
+
 	/**
 	 * Fallback to the Unclassified string if a received type is not supported by
 	 * the user-facing tools.
 	 *
-	 * @param $wikiId
-	 * @param $pageId
+	 * @param int $wikiId
+	 * @param int $pageId
 	 * @return string template type
 	 * @throws Exception
 	 * @throws \Swagger\Client\ApiException
 	 */
-	public function getType( $wikiId, $pageId ) {
+	public function getType( int $wikiId, int $pageId ) {
 		return $this->mapType( parent::getType( $wikiId, $pageId ) );
 	}
 
@@ -98,18 +110,18 @@ class UserTemplateClassificationService extends TemplateClassificationService {
 	 * @param string $provider
 	 * @throws ApiException
 	 */
-	public function classifyTemplate( $wikiId, $pageId, $templateType, $origin, $provider = self::USER_PROVIDER ) {
+	public function classifyTemplate( int $wikiId, int $pageId, string $templateType, string $origin, string $provider = self::USER_PROVIDER ) {
 		$this->checkTemplateType( $templateType );
 
 		$oldType = $this->getType( $wikiId, $pageId );
 
 		parent::classifyTemplate( $wikiId, $pageId, $templateType, $origin, $provider );
 
-		( new Logger() )->logClassificationChange( $pageId, $templateType, $oldType );
+		$this->logger->logClassificationChange( $pageId, $templateType, $oldType );
 
 		$title = Title::newFromID( $pageId );
 		if ( $title instanceof Title ) {
-			wfRunHooks( 'UserTemplateClassification::TemplateClassified', [ $pageId, $title, $templateType ] );
+			Hooks::run( 'UserTemplateClassification::TemplateClassified', [ $pageId, $title, $templateType ] );
 		}
 	}
 

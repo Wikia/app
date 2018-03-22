@@ -6,7 +6,7 @@ var UploadPhotos = {
 	status: false,
 	libinit: false,
 	init: function() {
-		$(".mw-special-Images").on('click', '.upphotos', $.proxy(this.loginBeforeShowDialog, this));
+		$('#page-header-add-new-photo').on('click', $.proxy(this.loginBeforeShowDialog, this));
 		if (Wikia.Querystring().getVal('modal') === 'UploadImage') {
 			this.loginBeforeShowDialog();
 		}
@@ -67,6 +67,9 @@ var UploadPhotos = {
 				UploadPhotos.dfcache = {};
 				UploadPhotos.wpLicense = $('#wpLicense');
 				UploadPhotos.wpLicenseTarget = $('#mw-license-preview');
+
+				var editToken = mw.user.tokens.get('editToken');
+				UploadPhotos.d.find('#upload-photos-token').val(editToken);
 
 				// event handlers
 				UploadPhotos.filepath.change(UploadPhotos.filePathSet);

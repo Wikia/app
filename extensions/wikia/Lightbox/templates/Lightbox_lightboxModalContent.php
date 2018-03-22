@@ -11,14 +11,6 @@
 		<span id="LightboxPrevious" class="arrow previous"></span>
 	</div>
 
-	<? if($showAdModalInterstitial) { ?>
-		<div class="modal_interstitial ad-centered-wrapper">
-			<div>
-				<div id="MODAL_INTERSTITIAL" class="wikia-ad noprint"></div>
-			</div>
-		</div>
-	<? } ?>
-
 	<div id="LightboxCarousel" class="LightboxCarousel">
 		<div id="LightboxCarouselInner" class="LightboxCarouselInner">
 			<div class="content">

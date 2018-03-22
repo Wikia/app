@@ -11,16 +11,16 @@
 @import "skins/oasis/css/core/reset";
 @import "skins/oasis/css/core/typography";
 @import "extensions/wikia/WikiaStyleGuide/css/Form";
+@import "extensions/wikia/DesignSystem/bower_components/design-system/dist/scss/wds-variables/index";
 
 @import "ChatColor";
 @import "ChatModal";
-@import "ChatSprite";
 @import "UserStatsMenu";
 
 body {
 	background: $color-body;
 	color: $color-text;
-	font-family: Helvetica, Arial, sans-serif;
+	font-family: $wds-font-family;
 	font-size: 13px;
 	height: 100%;
 	margin: 0;
@@ -98,6 +98,7 @@ a {
 	height: 40px;
 	margin: 10px;
 	position: relative;
+
 	.User {
 		border-left: 1px solid $color-page-border;
 		height: 26px;
@@ -107,18 +108,26 @@ a {
 		right: 0;
 		top: 5px;
 		width: 113px;
+
 		img {
 			vertical-align: middle;
 		}
+
 		.username {
 			font-weight: bold;
+
+			.badge {
+				top: 0;
+			}
 		}
+
 		&.chat-mod, &.staff {
 			.username:after {
 				top: 1px;
 			}
 		}
 	}
+
 	.private {
 		font-size: 16px;
 		font-weight: bold;
@@ -131,20 +140,24 @@ a {
 	font-size: 11px;
 	padding: 7px 5px 7px 32px;
 	position: relative;
+
 	&.away {
 		color: $color-chat-gray;
+
 		.status {
 			display: inline;
 		}
 	}
+
 	img {
 		border: 1px solid $color-page-border;
 		height: 22px;
-		position: absolute;
 		left: 5px;
+		position: absolute;
 		vertical-align: middle;
 		width: 22px;
 	}
+
 	.username {
 		display: block;
 		margin-right: 15px;
@@ -152,30 +165,23 @@ a {
 		text-overflow: ellipsis;
 		white-space: nowrap;
 
-		&:after {
-			content: '';
-			height: 15px;
+		.badge {
+			height: 18px;
 			position: absolute;
 			right: 5px;
 			top: 5px;
-			width: 15px;
+			width: 18px;
 		}
 	}
-	&.chat-mod .username:after, &.staff .username:after {
-		@include sprite-Chat-base;
-	}
-	&.chat-mod .username:after {
-		@include sprite-Chat('icon-chat_mod');
-	}
-	&.staff .username:after {
-		@include sprite-Chat('icon-staff' + $sprite-normal, 14px, 14px);
-	}
+
 	.details {
 		font-size: 11px;
 	}
+
 	.status {
 		display: none;
 	}
+
 	.UserStatsMenu {
 		display: none;
 	}
@@ -249,6 +255,7 @@ a {
 	}
 	.message {
 		white-space: pre-line;
+		word-wrap: break-word;
 	}
 	.me-message {
 		color: $color-chat-gray;
@@ -321,14 +328,14 @@ a {
 	top: 0;
 	width: 150px;
 	.User {
-		padding-left: 47px;
+		padding-left: 37px;
 		min-height: 22px;
 		&:hover {
 			background: $color-menu-highlight;
 			cursor: pointer;
 		}
 		img {
-			left: 20px;
+			left: 5px;
 		}
 	}
 	h1 {

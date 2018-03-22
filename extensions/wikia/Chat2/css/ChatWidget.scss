@@ -3,9 +3,10 @@
 @import "skins/shared/mixins/arrow";
 @import "skins/shared/mixins/box-shadow";
 @import "skins/shared/mixins/clearfix";
+@import "skins/shared/mixins/flexbox";
+@import 'extensions/wikia/DesignSystem/bower_components/design-system/dist/scss/wds-variables/index';
 
 @import "ChatColor";
-@import "ChatSprite";
 @import "UserStatsMenu";
 
 body.skin-monobook .ChatWidget,
@@ -14,67 +15,69 @@ body.skin-oasis .ChatMonobookWidget {
 }
 
 .chat-join {
-	button:before {
-		@include sprite-Chat-full('icon-chat_bubble');
-		content: "";
+	button .icon {
 		display: inline-block;
-		height: 15px;
+		height: 17px;
 		margin-right: 5px;
 		vertical-align: middle;
 		width: 17px;
+
+		svg {
+			fill: #fff;
+		}
 	}
 }
 
-.ChatModule {
+.WikiaRail .chat-module, .chat-module.ChatWidget {
+
 	.chat-contents {
 		position: relative;
 
 		&.chat-room-empty {
-			.avatar {
-				opacity: .5;
+			.wds-avatar {
+				opacity: .65;
+			}
+		}
+	}
+
+	.chat-details {
+		@include align-items(center);
+		@include flexbox();
+
+		.avatars {
+			@include align-items(center);
+			@include flexbox();
+			@include flex(1);
+
+			.wds-avatar-stack {
+				margin: 0;
+				max-width: 120px;
+
+				a {
+					height: 32px;
+				}
+
+				.wds-avatar {
+					border-color: $color-page-border;
+				}
 			}
 
-			.chat-total {
-				display: none;
-			}
+			.more-users-count {
+				font-weight: bold;
+				margin-left: 6px;
 
-			&.chat-user-anonymous {
-				.chat-whos-here {
-					display: none;
+				&:hover {
+					color: rgba($color-links, .75);
+					text-decoration: none;
 				}
 			}
 		}
 	}
 
-	h2.chat-headline {
-		@include clearfix;
-		border: 0;
-		font-size: 17px;
-		font-weight: bold;
-		margin: 0;
-
-		span {
-			float: left;
-		}
-
-		.chat-total {
-			background-color: $color-chat-live;
-			border-radius: 15px;
-			color: $color-button-text;
-			display: inline-block;
-			font-size: 12px;
-			font-weight: normal;
-			line-height: 14px;
-			margin: 2px 0 0 8px;
-			padding: 1px 4px;
-		}
-	}
-
-	.chat-name {
-		font-size: 12px;
-		line-height: 21px;
-		margin: 0;
-		padding: 0;
+	.more {
+		font-size: $wds-typescale-size-minus-2;
+		font-weight: normal;
+		margin-top: 16px;
 	}
 
 	.chat-join {
@@ -83,104 +86,19 @@ body.skin-oasis .ChatMonobookWidget {
 		right: 0;
 	}
 
-	.chat-whos-here {
-		@include clearfix;
-		border: 1px solid $color-page-border;
-		margin: 10px 0;
-		padding: 5px;
-		position: relative;
-
-		.arrow-left,
-		.arrow-right {
-			cursor: pointer;
-			line-height: 34px;
-			position: absolute;
-
-			&.disabled {
-				cursor: auto;
-				opacity: .5;
-			}
-		}
-
-		.arrow-left {
-			left: 0;
-			padding-left: 10px;
-
-			img {
-				@include arrow(6px, $color-chat-live, 'left');
-			}
-		}
-
-		.arrow-right {
-			right: 0;
-			padding-right: 10px;
-
-			img {
-				@include arrow(6px, $color-chat-live, 'right');
-			}
-		}
-
-		.carousel-container {
-			height: 34px;
-			left: 21px;
-			overflow: hidden;
-			position: relative;
-			width: 244px;
-			& > div {
-				position: relative;
-			}
-			ul {
-				@include clearfix;
-				list-style: none;
-				margin: 0;
-				position: absolute;
-			}
-			li {
-				float: left;
-				margin: 0 8px 0 0;
-			}
-		}
-		@if ($responsive-or-breakpoints-layout-enabled) {
-			.carousel-container {
-				left: 19px;
-				width: 218px;
-
-				li {
-					margin-right: 12px;
-				}
-			}
-		}
-
-		.avatar {
-			border: 1px solid $color-chat-avatar-border;
-			vertical-align: middle;
-		}
-	}
-
-	&.module h3 {
-		font-size: 13px;
-		padding: 0;
+	html[lang^='zh'] & .wds-is-squished {
+		font-size: 12px;
+		font-weight: 400;
+		padding: 9px 12px 8px;
 	}
 }
 
 // Note: a lot of this is borrowed from .WikiaRail .module
 .ChatWidget {
 	@include clearfix;
-	@include box-shadow(0px, 2px, 5px, darken($color-page,12%));
-	background: $color-page;
-	border: 1px solid $color-page-border;
-	clear: both;
-	display: inline-block;
-	@if lightness($color-page) < 50 {
-		@include box-shadow(0px, 2px, 5px, darken($color-page,7%));
-		background: $color-module-background;
-		border: 1px solid $color-page-border;
-	}
-	margin: 0 auto;
-	margin-bottom: 10px;
-	padding: 16px 8px 8px;
+	margin: 0 auto 30px;
 	position: relative;
-	width: 284px;
+	width: 300px;
 	word-wrap: break-word;
 
 	// use full width on main pages using grid (BugId:51408 and DAR-2321)
@@ -189,19 +107,32 @@ body.skin-oasis .ChatMonobookWidget {
 		display: block;
 		width: auto;
 	}
+
+	h2.chat-headline {
+		margin-bottom: 16px;
+		font-size: $wds-typescale-size-base;
+		font-weight: bold;
+		padding-left: 2px;
+	}
+
+	.more {
+		line-height: 16px;
+	}
+
+	.more-users-count {
+		font-size: $wds-typescale-size-minus-2;
+	}
+
+	.wds-button {
+		@include button-theming($color-buttons, $color-button-text);
+
+		&.wds-is-secondary {
+			margin-left: 12px;
+		}
+	}
 }
 
 // don't show the chat module if the content hasn't been rendered yet
 .ChatModuleUninitialized .chat-contents {
 	visibility: hidden;
-}
-
-/* IE7 hackery */
-.WikiaRail {
-	*position: relative;
-	*z-index: 1;
-}
-.ChatModule {
-	*position: relative;
-	*z-index: 1;
 }

@@ -317,7 +317,7 @@ var WikiaFooterApp = {
 		},
 
 		load: function( html ) {
-			this.el.children( 'li' ).not( '.loadtime' ).remove();
+			this.el.children( 'li' ).remove();
 			this.el.prepend( $( html ) );
 			this.initialize();
 		}

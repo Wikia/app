@@ -6,11 +6,13 @@
 
 QUnit.module( 've.init.Platform' );
 
-QUnit.asyncTest( 'messages', 4, function ( assert ) {
-	var platform = ve.init.platform;
+QUnit.test( 'messages', function ( assert ) {
+	var platform = ve.init.platform,
+		done = assert.async();
 
 	platform.getInitializedPromise().done( function () {
-		QUnit.start();
+		assert.expect( 4 );
+
 		assert.ok(
 			/^<?platformtest-foo\>?$/.test( platform.getMessage( 'platformtest-foo' ) ),
 			'return plain key as fallback, possibly wrapped in brackets'
@@ -37,14 +39,18 @@ QUnit.asyncTest( 'messages', 4, function ( assert ) {
 			/^<?platformtest-quux\>?$/.test( platform.getMessage( 'platformtest-quux' ) ),
 			'return plain key as fallback, possibly wrapped in brackets (after set up)'
 		);
+
+		done();
 	} );
 } );
 
-QUnit.asyncTest( 'parsedMessage', 3, function ( assert ) {
-	var platform = ve.init.platform;
+QUnit.test( 'parsedMessage', function ( assert ) {
+	var platform = ve.init.platform,
+		done = assert.async();
 
 	platform.getInitializedPromise().done( function () {
-		QUnit.start();
+		assert.expect( 3 );
+
 		assert.ok(
 			/^(&lt;)?platformtest-quux(&gt;)?$/.test( platform.getParsedMessage( 'platformtest-quux' ) ),
 			'any brackets in fallbacks are HTML-escaped'
@@ -70,5 +76,7 @@ QUnit.asyncTest( 'parsedMessage', 3, function ( assert ) {
 			'Lorem &lt;&amp;&gt; Ipsum: $1',
 			'fall back to html-escaped version of plain message, no $# replacements'
 		);
+
+		done();
 	} );
 } );

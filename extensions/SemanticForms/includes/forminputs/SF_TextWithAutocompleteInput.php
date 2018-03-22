@@ -62,12 +62,7 @@ class SFTextWithAutocompleteInput extends SFTextInput {
 
 
 	public static function getAutocompletionTypeAndSource( &$field_args ) {
-		if ( array_key_exists( 'cargo field', $field_args ) ) {
-			$fieldName = $field_args['cargo field'];
-			$tableName = $field_args['cargo table'];
-			$autocompletionSource = "$tableName|$fieldName";
-			$autocompleteFieldType = 'cargo field';
-		} elseif ( array_key_exists( 'values from property', $field_args ) ) {
+		if ( array_key_exists( 'values from property', $field_args ) ) {
 			$autocompletionSource = $field_args['values from property'];
 			$autocompleteFieldType = 'property';
 		} elseif ( array_key_exists( 'values from category', $field_args ) ) {
@@ -82,8 +77,6 @@ class SFTextWithAutocompleteInput extends SFTextInput {
 		} elseif ( array_key_exists( 'values from url', $field_args ) ) {
 			$autocompleteFieldType = 'external_url';
 			$autocompletionSource = $field_args['values from url'];
-			// Autocompletion from URL is always done remotely.
-			$field_args['remote autocompletion'] = true;
 		} elseif ( array_key_exists( 'values', $field_args ) ) {
 			global $sfgFieldNum;
 			$autocompleteFieldType = 'values';
@@ -93,6 +86,11 @@ class SFTextWithAutocompleteInput extends SFTextInput {
 			$autocompletionSource = $field_args['autocompletion source'];
 		} elseif ( array_key_exists( 'full_cargo_field', $field_args ) ) {
 			$autocompletionSource = $field_args['full_cargo_field'];
+			$autocompleteFieldType = 'cargo field';
+		} elseif ( array_key_exists( 'cargo field', $field_args ) ) {
+			$fieldName = $field_args['cargo field'];
+			$tableName = $field_args['cargo table'];
+			$autocompletionSource = "$tableName|$fieldName";
 			$autocompleteFieldType = 'cargo field';
 		} elseif ( array_key_exists( 'semantic_property', $field_args ) ) {
 			$autocompletionSource = $field_args['semantic_property'];
@@ -132,8 +130,8 @@ class SFTextWithAutocompleteInput extends SFTextInput {
 		}
 
 		$remoteDataType = null;
-		if ( array_key_exists( 'remote autocompletion', $field_args ) &&
-				$field_args['remote autocompletion'] == true ) {
+		if ( $autocompleteFieldType == 'external_url' ) {
+			// Autocompletion from URL is always done remotely.
 			$remoteDataType = $autocompleteFieldType;
 		} elseif ( $autocompletionSource !== '' ) {
 			// @TODO - that count() check shouldn't be necessary
@@ -143,26 +141,19 @@ class SFTextWithAutocompleteInput extends SFTextInput {
 			} elseif ( $autocompleteFieldType == 'values' ) {
 				$autocompleteValues = explode( ',', $field_args['values'] );
 			} else {
-				$autocompleteValues = SFUtils::getAutocompleteValues( $autocompletionSource, $autocompleteFieldType );
+				$autocompleteValues = SFValuesUtils::getAutocompleteValues( $autocompletionSource, $autocompleteFieldType );
 			}
 			if( count($autocompleteValues) > $sfgMaxLocalAutocompleteValues &&
 			$autocompleteFieldType != 'values' && !array_key_exists( 'values dependent on', $field_args ) && !array_key_exists( 'mapping template', $field_args ) ) {
 				$remoteDataType = $autocompleteFieldType;
+			} else {
+				$sfgAutocompleteValues[$autocompleteSettings] = $autocompleteValues;
 			}
-			$sfgAutocompleteValues[$autocompleteSettings] = $autocompleteValues;
 		}
 		return array( $autocompleteSettings, $remoteDataType, $delimiter );
 	}
 
 	public static function getHTML( $cur_value, $input_name, $is_mandatory, $is_disabled, $other_args ) {
-		// Backwards compatibility, for pre-SF-2.1 forms:
-		// if 'no autocomplete' was specified, switch to SFTextInput.
-		if ( array_key_exists( 'no autocomplete', $other_args ) &&
-				$other_args['no autocomplete'] == true ) {
-			unset( $other_args['autocompletion source'] );
-			return SFTextInput::getHTML( $cur_value, $input_name, $is_mandatory, $is_disabled, $other_args );
-		}
-
 		global $sfgTabIndex, $sfgFieldNum;
 
 		list( $autocompleteSettings, $remoteDataType, $delimiter ) = self::setAutocompleteValues( $other_args );
@@ -235,11 +226,6 @@ class SFTextWithAutocompleteInput extends SFTextInput {
 			'name' => 'values from url',
 			'type' => 'string',
 			'description' => wfMessage( 'sf_forminputs_valuesfromurl' )->text()
-		);
-		$params[] = array(
-			'name' => 'remote autocompletion',
-			'type' => 'boolean',
-			'description' => wfMessage( 'sf_forminputs_remoteautocompletion' )->text()
 		);
 		$params[] = array(
 			'name' => 'list',

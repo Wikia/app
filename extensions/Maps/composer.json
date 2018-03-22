@@ -1,0 +1,85 @@
+{
+	"name": "mediawiki/maps",
+	"type": "mediawiki-extension",
+	"description": "Adds various mapping features to MediaWiki",
+	"keywords": [
+		"MediaWiki",
+		"Semantic MediaWiki",
+		"Maps",
+		"Semantic Maps",
+		"Google Maps",
+		"OpenLayers",
+		"OSM",
+		"Leaflet",
+		"Geocode",
+		"Geocoding",
+		"OpenStreetMap"
+	],
+	"homepage": "https://github.com/JeroenDeDauw/Maps",
+	"license": "GPL-2.0-or-later",
+	"authors": [
+		{
+			"name": "Jeroen De Dauw",
+			"email": "jeroendedauw@gmail.com",
+			"homepage": "https://www.entropywins.wtf",
+			"role": "Creator and lead developer"
+		}
+	],
+	"support": {
+		"email": "semediawiki-user@lists.sourceforge.net",
+		"irc": "irc://irc.freenode.net/mediawiki",
+		"source": "https://github.com/JeroenDeDauw/Maps"
+	},
+	"require": {
+		"php": ">=7.0",
+		"composer/installers": "^1.0.1",
+		"mediawiki/validator": "~2.2",
+		"data-values/geo": "~2.0",
+		"jeroen/file-fetcher": "~4.2",
+		"jeroen/simple-cache": "~2.0",
+		"jeroen/simple-geocoder": "@dev"
+	},
+	"require-dev": {
+		"data-values/common": "~0.3.1"
+	},
+	"autoload": {
+		"files" : [
+			"Maps.php"
+		],
+		"psr-4": {
+			"Maps\\": "src/"
+		},
+		"classmap": [
+			"includes/",
+			"Maps.hooks.php",
+			"SemanticMaps/src/",
+			"SemanticMaps/SemanticMaps.hooks.php"
+		]
+	},
+	"autoload-dev": {
+		"psr-4": {
+			"Maps\\Tests\\TestDoubles\\": "tests/TestDoubles/"
+		},
+		"classmap": [
+			"tests/Unit/Elements/",
+			"tests/Integration/parserhooks/ParserHookTest.php"
+		]
+	},
+	"extra": {
+		"branch-alias": {
+			"dev-master": "5.2.x-dev"
+		}
+	},
+	"replace": {
+		"mediawiki/semantic-maps": "*"
+	},
+	"suggest": {
+		"mediawiki/semantic-media-wiki": "Add, edit, aggregate and visualize structured coordinate data stored with Semantic MediaWiki"
+	},
+	"config": {
+		"process-timeout": 0
+	},
+	"scripts":{
+		"ci": "php ../../tests/phpunit/phpunit.php -c phpunit.xml.dist"
+	}
+}

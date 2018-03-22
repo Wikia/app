@@ -49,7 +49,7 @@ class ApprovedraftAction extends FormlessAction {
 			$redirectTitle = $title;
 		} elseif ( !$title->exists() ) {
 
-			$this->addBannerNotificationMessage( 'templatedraft-approval-no-page-error' );
+			$this->addBannerNotificationMessage( 'templatedraft-approval-no-page-error', true );
 			$redirectTitle = $title;
 
 		} elseif ( !TemplateDraftHelper::isTitleDraft( $title ) ) {
@@ -136,11 +136,15 @@ class ApprovedraftAction extends FormlessAction {
 	/**
 	 * Show a friendly error message to a user after redirect
 	 */
-	private function addBannerNotificationMessage( $messageName ) {
-		BannerNotificationsController::addConfirmation(
-			wfMessage( $messageName )->escaped(),
-			BannerNotificationsController::CONFIRMATION_ERROR
-		);
+	private function addBannerNotificationMessage( $messageName, $parse = false ) {
+		$message = wfMessage( $messageName );
+		if ( $parse ) {
+			$message = $message->parse();
+		} else {
+			$message = $message->escaped();
+		}
+		BannerNotificationsController::addConfirmation( $message,
+			BannerNotificationsController::CONFIRMATION_ERROR );
 	}
 
 }

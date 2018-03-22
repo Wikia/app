@@ -19,7 +19,6 @@ $wgAutoloadClasses['UserContributionsProvider'] = $dir.'data/UserContributionsPr
 $wgAutoloadClasses['FeedRenderer'] = $dir.'renderers/FeedRenderer.php';
 $wgAutoloadClasses['ActivityFeedRenderer'] = $dir.'renderers/ActivityFeedRenderer.php';
 $wgAutoloadClasses['ActivityFeedForAnonsRenderer'] = $dir.'renderers/ActivityFeedForAnonsRenderer.php';
-$wgAutoloadClasses['WatchlistFeedRenderer'] = $dir.'renderers/WatchlistRenderer.php';
 
 $wgAutoloadClasses['HotSpotsRenderer'] = $dir.'renderers/HotSpotsRenderer.php';
 $wgAutoloadClasses['UserContributionsRenderer'] = $dir.'renderers/UserContributionsRenderer.php';

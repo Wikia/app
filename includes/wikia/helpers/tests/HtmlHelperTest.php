@@ -1,14 +1,15 @@
 <?php
+use PHPUnit\Framework\TestCase;
 
-class HtmlHelperTest extends WikiaBaseTest {
+class HtmlHelperTest extends TestCase {
 
-	public function setUp() {
-		require_once( __DIR__ . '/../HtmlHelper.class.php' );
+	protected function setUp() {
+		require_once __DIR__ . '/../HtmlHelper.class.php';
 		parent::setUp();
 	}
 
 	/**
-	 * @dataProvider testStripAttributesDataProvider
+	 * @dataProvider stripAttributesDataProvider
 	 */
 	public function testStripAttributes( $html, $attribs, $expectedResult ) {
 		$this->assertEquals(
@@ -22,7 +23,7 @@ class HtmlHelperTest extends WikiaBaseTest {
 	 *
 	 * @return array
 	 */
-	public function testStripAttributesDataProvider() {
+	public function stripAttributesDataProvider() {
 		return [
 			[
 				'<a style="color: black">text</a>',
@@ -116,6 +117,33 @@ class HtmlHelperTest extends WikiaBaseTest {
 				'1',
 				'test<a>simple</a>',
 				'Should leave text node untouched'
+			]
+		];
+	}
+
+	/**
+	 * @dataProvider renameNodeProvider
+	 */
+	public function testRenameNode( $html, $id, $expected, $message ) {
+		$document = HtmlHelper::createDOMDocumentFromText( $html );
+		HtmlHelper::renameNode( $document->getElementById( $id ), 'span' );
+
+		$this->assertEquals( $expected, HtmlHelper::getBodyHtml( $document ), $message );
+	}
+
+	public function renameNodeProvider() {
+		return [
+			[
+				'html' => '<p id="rename"><a href="http://example.com"></a></p>',
+				'id' => 'rename',
+				'expected' => '<span id="rename"><a href="http://example.com"></a></span>',
+				'message' => 'top level is not renamed'
+			],
+			[
+				'html' => '<div><h2 id="rename"><a href="http://example.com"></a></h2></p>',
+				'id' => 'rename',
+				'expected' => '<div><span id="rename"><a href="http://example.com"></a></span></div>',
+				'message' => 'nested node is not renamed'
 			]
 		];
 	}

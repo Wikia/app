@@ -1,7 +1,6 @@
 <?php
 
-use Wikia\DependencyInjection\Injector;
-use Wikia\Service\User\Preferences\PreferenceService;
+use Wikia\Factory\ServiceFactory;
 
 class FounderEmails {
 	static private $instance = null;
@@ -52,8 +51,7 @@ class FounderEmails {
 	 */
 
 	public function getWikisWithFounderPreference( $preferenceName ) {
-		/** @var PreferenceService $preferenceService */
-		$preferenceService = Injector::getInjector()->get( PreferenceService::class );
+		$preferenceService = ServiceFactory::instance()->preferencesFactory()->preferenceService();
 		return $preferenceService->findWikisWithLocalPreferenceValue( $preferenceName, "1" );
 	}
 
@@ -143,12 +141,6 @@ class FounderEmails {
 			// If we are in digest mode, grey out the individual email options
 			$disableEmailPrefs = $wgUser->getLocalPreference( 'founderemails-complete-digest', $wgCityId );
 
-			$defaultPreferences["adoptionmails-label-$wgCityId"] = array(
-				'type' => 'info',
-				'label' => '',
-				'help' => wfMsg( 'wikiadoption-pref-label', $wgSitename ),
-				'section' => $section,
-			);
 			$defaultPreferences["founderemails-joins-$wgCityId"] = array(
 				'type' => 'toggle',
 				'label-message' => array( 'founderemails-pref-joins' . $prefVersion, $wgSitename ),
@@ -215,96 +207,18 @@ class FounderEmails {
 	}
 
 	public function getDailyEdits ( $cityID, /*Y-m-d*/ $day = null ) {
-		global $wgStatsDB, $wgStatsDBEnabled;
+		global $wgDWStatsDB;
 
-		$edits = 0;
-		if ( !empty( $wgStatsDBEnabled ) ) {
-			$today = ( empty( $day ) ) ? date( 'Y-m-d', strtotime( '-1 day' ) ) : $day;
+		$today = ( empty( $day ) ) ? date( 'Y-m-d', strtotime( '-1 day' ) ) : $day;
 
-			$db = wfGetDB( DB_SLAVE, array(), $wgStatsDB );
+		$db = wfGetDB( DB_SLAVE, array(), $wgDWStatsDB );
 
-			$oRow = $db->selectRow(
-				array( 'events' ),
-				array( 'count(0) as cnt' ),
-				array(  " rev_timestamp between '$today 00:00:00' and '$today 23:59:59' ", 'wiki_id' => $cityID ),
-				__METHOD__
-			);
-
-			$edits = isset( $oRow->cnt ) ? $oRow->cnt : 0;
-		}
-
-		return $edits;
-	}
-
-	public function getUserEdits ( $cityID, $day = null ) {
-		$userEdits = [];
-		$today = ( empty( $day ) ) ? date( 'Ymd', strtotime( '-1 day' ) ) : str_replace( "-", "", $day );
-
-		$dbname = WikiFactory::IDtoDB( $cityID );
-
-		if ( empty( $dbname ) ) {
-			return 0;
-		}
-
-		$db = wfGetDB( DB_SLAVE, 'vslow', $dbname );
-		$oRes = $db->select(
-			[ 'revision' ],
-			[ 'rev_user', 'min(rev_timestamp) as min_ts' ],
-			[ 'rev_user > 0' ],
-			__METHOD__,
-			[
-				'GROUP BY' => 'rev_user',
-				'HAVING' => "min(rev_timestamp)" . $db->buildLike( $today, $db->anyString() )
-			]
+		return $db->selectField(
+			array( 'rollup_wiki_user_events' ),
+			array( 'sum(edits) as cnt' ),
+			array( "time_id = '$today 00:00:00'", 'wiki_id' => $cityID, 'period_id' => DataMartService::PERIOD_ID_DAILY ),
+			__METHOD__
 		);
-
-		while ( $oRow = $db->fetchObject ( $oRes ) ) {
-			$userEdits[ $oRow->rev_user ] = $oRow->min_ts;
-		}
-		$db->freeResult( $oRes );
-
-		return $userEdits;
-	}
-
-	public function getJoinedUsers ( $cityID, $day = null ) {
-		global $wgSpecialsDB;
-
-		$userJoined = [];
-		$today = empty( $day ) ? date( 'Y-m-d', strtotime( '-1 day' ) ) : $day;
-
-		$db = wfGetDB( DB_SLAVE, array(), $wgSpecialsDB );
-		$oRes = $db->select(
-			[ 'user_login_history' ],
-			[ 'user_id', 'min(ulh_timestamp) as min_ts' ],
-			[
-				'city_id' => $cityID,
-				'user_id > 0'
-			],
-			__METHOD__,
-			array( 'GROUP BY' => 'user_id', 'HAVING' => "min(ulh_timestamp)" .  $db->buildLike( $today, $db->anyString() ) )
-		);
-
-		while ( $oRow = $db->fetchObject ( $oRes ) ) {
-			$userJoined[ $oRow->user_id ] = $oRow->min_ts;
-		}
-		$db->freeResult( $oRes );
-
-		return $userJoined;
-	}
-
-	public function getNewUsers( $cityId, $day = null ) {
-		$editUsers = $this->getUserEdits( $cityId, $day );
-		$addUsers = $this->getJoinedUsers( $cityId, $day );
-
-		if ( empty( $editUsers ) ) {
-			$result = count( $addUsers );
-		} elseif ( empty ( $addUsers ) ) {
-			$result = count ( $editUsers );
-		} else {
-			$result = count( $editUsers + $addUsers );
-		}
-
-		return $result;
 	}
 
 	/**

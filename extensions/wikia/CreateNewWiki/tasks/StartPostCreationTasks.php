@@ -31,7 +31,8 @@ class StartPostCreationTasks extends Task {
 			->add($creationTask->call('maintenance', rtrim( $this->taskContext->getURL(), "/" ) ) )
 			->queue();
 
-		wfRunHooks( "AfterWikiCreated", [ $this->taskContext->getCityId(), $this->taskContext->getStarterDb() ] );
+		\Hooks::run( "AfterWikiCreated", [ $this->taskContext->getCityId(),
+										   $this->taskContext->getStarterDb() ] );
 
 		return TaskResult::createForSuccess( [ 'task_id' => $taskId ] );
 	}

@@ -74,7 +74,7 @@ div.response_headers {
 div.response_throbber{
 	width:24px;
 	height:24px;
-	background:url('/extensions/wikia/ApiDocs/files/loading2.gif') no-repeat; /* $wgCdnStylePath */
+	background:url('/extensions/wikia/ApiDocs/files/loading2.gif') no-repeat; /* $wgResourceBasePath */
 	position:relative;
 	top:5px;
 	left:5px;

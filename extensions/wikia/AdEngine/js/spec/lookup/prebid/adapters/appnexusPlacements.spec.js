@@ -1,3 +1,4 @@
+/*global describe, expect, it, modules*/
 describe('ext.wikia.adEngine.lookup.prebid.adapters.appnexusPlacements', function () {
 	'use strict';
 
@@ -12,95 +13,74 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.appnexusPlacements', functio
 				mappedVerticalName: ''
 			}
 		},
-		instantGlobals: {
-			dev: {
-				wgAdDriverAppNexusBidderPlacementsConfig: {
-					mercury: {
-						entertainment: "9412980",
-						gaming: "9412981",
-						lifestyle: "9412982",
-						other: "9412982"
-					},
-					oasis: {
-						entertainment: '9412971',
-						gaming: '9412972',
-						lifestyle: '9412973',
-						other: '9412973'
-					}
-				}
-			},
-			prod: {
-				wgAdDriverAppNexusBidderPlacementsConfig: {
-					mercury: {
-						entertainment: '9412992',
-						gaming: '9412993',
-						lifestyle: '9412994',
-						other: '9412994'
-					}
-				},
-				oasis: {
-					entertainment: '9412983',
-					gaming: '9412984',
-					lifestyle: '9412985',
-					other: '9412985'
-				}
-			}
-		}
+		log: function() {}
 	}, testCases = [
 		{
-			vertical: 'lifestyle',
+			vertical: 'life',
 			skin: 'mercury',
-			env: 'prod',
-			expected: '9412994'
+			expected: 'string'
 		}, {
-			vertical: 'gaming',
-			skin: 'mercury',
-			env: 'dev',
-			expected: '9412981'
+			skin: 'oasis',
+			pos: 'atf',
+			expected: 'string'
 		}, {
-			vertical: 'entertainment',
+			vertical: 'ent',
 			skin: 'mercury',
-			env: 'prod',
-			expected: '9412992'
+			expected: 'string'
 		}, {
 			vertical: 'other',
 			skin: 'mercury',
-			env: 'prod',
-			expected: '9412994'
+			expected: 'string'
 		}, {
-			vertical: 'lifestyle',
 			skin: 'oasis',
-			env: 'dev',
-			expected: '9412973'
+			pos: 'atf',
+			expected: 'string'
 		}, {
-			vertical: 'gaming',
 			skin: 'oasis',
-			env: 'dev',
-			expected: '9412972'
+			pos: 'btf',
+			expected: 'string'
 		}, {
-			vertical: 'entertainment',
 			skin: 'oasis',
-			env: 'dev',
-			expected: '9412971'
+			pos: 'btf',
+			isRecovering: false,
+			expected: 'string'
+		}, {
+			skin: 'oasis',
+			pos: 'atf',
+			isRecovering: true,
+			expected: 'string'
+		}, {
+			skin: 'oasis',
+			pos: 'hivi',
+			isRecovering: true,
+			expected: 'string'
+		}, {
+			skin: 'oasis',
+			pos: 'atf',
+			expected: 'string'
 		}
 	];
 
-	function getModule(vertical, env) {
+	function getModule(vertical) {
 		mocks.context.targeting.mappedVerticalName = vertical;
 
 		return modules['ext.wikia.adEngine.lookup.prebid.adapters.appnexusPlacements'](
 			mocks.adContext,
-			mocks.instantGlobals[env]
+			mocks.log
 		);
 	}
 
-
 	testCases.forEach(function (testCase) {
-		it('expected placementId is returned for skin/vertical combination ', function () {
-			var appNexusPlacements = getModule(testCase.vertical, testCase.env),
-				result = appNexusPlacements.getPlacement(testCase.skin);
+		var testCaseName = [
+				testCase.skin,
+				testCase.vertical ? testCase.vertical : 'no-vertical'
+		];
 
-			expect(result).toEqual(testCase.expected);
+		it('returns expected placementId for ' + testCaseName.join(':'), function () {
+			var appNexusPlacements = getModule(testCase.vertical),
+				resultType = typeof appNexusPlacements.getPlacement(testCase.skin, testCase.pos, testCase.isRecovering);
+
+			expect(resultType).toEqual(testCase.expected);
 		});
 	});
 })

@@ -9,27 +9,22 @@ class LookupContribsPage extends SpecialPage {
 	 */
 	function  __construct() {
 		parent::__construct( "LookupContribs"  /*class*/, 'lookupcontribs' /*restriction*/ );
+
+		$this->mTitle = Title::makeTitle( NS_SPECIAL, 'LookupContribs' );
 	}
 
 	public function execute( $subpage ) {
 		global $wgOut, $wgRequest, $wgExtensionsPath, $wgJsMimeType, $wgResourceBasePath, $wgUser;
 
-		if ( $wgUser->isBlocked() ) {
-			throw new UserBlockedError( $this->getUser()->mBlock );
-		}
-		if ( wfReadOnly() ) {
-			$wgOut->readOnlyPage();
-			return;
-		}
-		if ( !$wgUser->isAllowed( 'lookupcontribs' ) ) {
-			$this->displayRestrictionError();
-			return;
-		}
+		$this->setHeaders();
+		// SUS-288: Check permissions before checking for block
+		$this->checkPermissions();
+		$this->checkReadOnly();
+		$this->checkIfUserIsBlocked();
 
 		/**
 		 * initial output
 		 */
-		$this->mTitle = Title::makeTitle( NS_SPECIAL, 'LookupContribs' );
 		$this->mUsername = $wgRequest->getVal ( 'target', $subpage );
 		$this->mMode = $wgRequest->getVal ( 'mode' );
 		$this->mView = $wgRequest->getVal ( 'view' );

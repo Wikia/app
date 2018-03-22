@@ -208,6 +208,6 @@
 	context.Wikia.Cache = cache( context );
 
 	if ( context.define && context.define.amd ) {
-		context.define( 'wikia.cache', [ 'wikia.window', 'wikia.localStorage' ], cache );
+		context.define( 'wikia.cache', [ 'wikia.window' ], cache );
 	}
 }( this ) );

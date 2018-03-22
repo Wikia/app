@@ -84,10 +84,13 @@ class WikiaPhotoGallery extends ImageGallery {
 	 * @var string play button html
 	 * @todo refactor this extension so it's easier to insert a template instead of hard coded strings
 	 */
-	private $videoPlayButton = '<span class="play-circle"></span>';
+	private $videoPlayButton;
 
 	function __construct() {
 		parent::__construct();
+		$this->videoPlayButton = '<span class="thumbnail-play-icon-container">'
+			. DesignSystemHelper::renderSvg('wds-player-icon-play', 'thumbnail-play-icon')
+			. '</span>';
 
 		$this->mData = array(
 			'externalImages' => array(),
@@ -166,7 +169,7 @@ class WikiaPhotoGallery extends ImageGallery {
 	 *
 	 * @param $parser Parser
 	 */
-	public function recordParserOption( &$parser ) {
+	public function recordParserOption( Parser $parser ) {
 		if ( $this->mType == self::WIKIA_PHOTO_SLIDER ) {
 			/**
 			 * because slider tag contains elements of interface we need to
@@ -382,8 +385,9 @@ class WikiaPhotoGallery extends ImageGallery {
 
 	/**
 	 * Parse content of <gallery> tag (add images with captions and links provided)
+	 * @param Parser|null $parser
 	 */
-	public function parse( &$parser = null ) {
+	public function parse( Parser $parser = null ) {
 		wfProfileIn( __METHOD__ );
 
 		// use images passed inside <gallery> tag
@@ -561,7 +565,7 @@ class WikiaPhotoGallery extends ImageGallery {
 
 		wfProfileIn( __METHOD__ );
 
-		if ( !wfRunHooks( 'GalleryBeforeProduceHTML', array( $this->mData, &$out ) ) ) {
+		if ( !Hooks::run( 'GalleryBeforeProduceHTML', array( $this->mData, &$out ) ) ) {
 			wfProfileOut( __METHOD__ );
 
 			return $out;
@@ -932,7 +936,7 @@ class WikiaPhotoGallery extends ImageGallery {
 				}
 			}
 
-			wfRunHooks( 'GalleryBeforeRenderImage', array( &$image ) );
+			Hooks::run( 'GalleryBeforeRenderImage', array( &$image ) );
 
 			// see Image SEO project
 			$wrapperId = preg_replace( '/[^a-z0-9_]/i', '-', Sanitizer::escapeId( $image['linkTitle'] ) );
@@ -960,13 +964,13 @@ class WikiaPhotoGallery extends ImageGallery {
 
 				# margin calculation for image positioning
 
-				if ( $thumbParams['height'] > $image['height'] ) {
+				if ( isset( $thumbParams['height'] ) && $thumbParams['height'] > $image['height'] ) {
 					$tempTopMargin = -1 * ( $thumbParams['height'] - $image['height'] ) / 2;
 				} else {
 					unset ( $tempTopMargin );
 				}
 
-				if ( $thumbParams['width'] > $image['width'] ) {
+				if ( isset( $thumbParams['width'] ) && $thumbParams['width'] > $image['width'] ) {
 					$tempLeftMargin = -1 * ( $thumbParams['width'] - $image['width'] ) / 2;
 				} else {
 					unset ( $tempLeftMargin );
@@ -990,11 +994,6 @@ class WikiaPhotoGallery extends ImageGallery {
 			if ( !empty( $image['thumbnail'] ) ) {
 				if ( $isVideo ) {
 					$thumbHtml = '';
-					$duration = $fileObject->getMetadataDuration();
-					if ( !empty( $duration ) ) {
-						$duration = WikiaFileHelper::formatDuration( $duration );
-						$thumbHtml .= '<span class="duration">' . $duration . '</span>';
-					}
 					$playButtonSize = ThumbnailHelper::getThumbnailSize( $image['width'] );
 					$thumbHtml .= $this->videoPlayButton;
 					$linkAttribs['class'] .= ' video video-thumbnail ' . $playButtonSize;
@@ -1202,11 +1201,7 @@ class WikiaPhotoGallery extends ImageGallery {
 				$text = $pair[1];
 				$link = $pair[2];
 
-				# Give extensions a chance to select the file revision for us
-				$time = $descQuery = false;
-				wfRunHooks( 'BeforeGalleryFindFile', array( &$this, &$nt, &$time, &$descQuery ) );
-
-				$img = wfFindFile( $nt, $time );
+				$img = wfFindFile( $nt );
 
 				if ( WikiaFileHelper::isFileTypeVideo( $img ) ) {
 					continue;
@@ -1460,14 +1455,12 @@ class WikiaPhotoGallery extends ImageGallery {
 			$link = $pair[2];
 			$linkText = $this->mData['images'][$p]['linktext'];
 			$shortText = $this->mData['images'][$p]['shorttext'];
-			$time = $descQuery = false;
 
 			// parse link (RT #142515)
 			$linkAttribs = $this->parseLink( $nt->getLocalUrl(), $nt->getText(), $link );
 
-			wfRunHooks( 'BeforeGalleryFindFile', array( &$this, &$nt, &$time, &$descQuery ) );
 
-			$file = wfFindFile( $nt, $time );
+			$file = wfFindFile( $nt );
 			if ( $file instanceof File && ( $nt->getNamespace() == NS_FILE ) ) {
 				list( $adjWidth, $adjHeight ) = $this->fitWithin( $file, $imagesDimensions );
 
@@ -1687,25 +1680,11 @@ class WikiaPhotoGallery extends ImageGallery {
 	 * @return String
 	 */
 	public function resizeURL( File $file, array $box ) {
-		global $wgEnableVignette;
-
 		list( $adjWidth, $_ ) = $this->fitWithin( $file, $box );
 
-		if ( $wgEnableVignette ) {
-			$resizeUrl = $file->getUrlGenerator()
-				->scaleToWidth( $adjWidth )
-				->url();
-		} else {
-			$append = '';
-			$mime = strtolower( $file->getMimeType() );
-			if ( $mime == 'image/svg+xml' || $mime == 'image/svg' ) {
-				$append = '.png';
-			}
-
-			$resizeUrl = wfReplaceImageServer( $file->getThumbUrl( $adjWidth . 'px-' . $file->getName() . $append ) );
-		}
-
-		return $resizeUrl;
+		return $file->getUrlGenerator()
+			->scaleToWidth( $adjWidth )
+			->url();
 	}
 
 	/**
@@ -1719,58 +1698,25 @@ class WikiaPhotoGallery extends ImageGallery {
 	 * @return String
 	 */
 	private function cropURL( File $file, array $box ) {
-		global $wgEnableVignette;
-
-		if ( $wgEnableVignette ) {
-			$cropUrl = $file->getUrlGenerator()
-				->zoomCropDown()
-				->width( $box['w'] )
-				->height( $box['h'] )
-				->url();
-		} else {
-			list( $adjWidth, $adjHeight ) = $this->fitClosest( $file, $box );
-
-			$height = $file->getHeight();
-			$width = $file->getWidth();
-
-			if ( $adjHeight == $box['h'] ) {
-				$width = $box['w'] * ( $file->getHeight() / $box['h'] );
-			}
-
-			if ( $adjWidth == $box['w'] ) {
-				$height = $box['h'] * ( $file->getWidth() / $box['w'] );
-			}
-
-			$cropStr = sprintf( "%dpx-0,%d,0,%d", $adjWidth, $width, $height );
-			$append = '';
-			$mime = strtolower( $file->getMimeType() );
-			if ( $mime == 'image/svg+xml' || $mime == 'image/svg' ) {
-				$append = '.png';
-			}
-
-			$cropUrl = wfReplaceImageServer( $file->getThumbUrl( $cropStr . '-' . $file->getName() . $append ) );
-		}
-
-		return $cropUrl;
+		return $file->getUrlGenerator()
+			->zoomCropDown()
+			->width( $box['w'] )
+			->height( $box['h'] )
+			->url();
 	}
-
 
 	/**
 	 * Get object for given image (and call hook)
 	 *
 	 * @param Title $nt Title object for the image
 	 *
-	 * @return LocalFile|Bool
+	 * @return File
 	 */
 	private function getImage( $nt ) {
 		wfProfileIn( __METHOD__ );
 
-		// Give extensions a chance to select the file revision for us
-		$time = $descQuery = false;
-		wfRunHooks( 'BeforeGalleryFindFile', array( &$this, &$nt, &$time, &$descQuery ) );
-
 		// Render image thumbnail
-		$img = wfFindFile( $nt, $time );
+		$img = wfFindFile( $nt );
 
 		wfProfileOut( __METHOD__ );
 		return $img;

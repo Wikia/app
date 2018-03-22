@@ -17,10 +17,12 @@ class Custom404PageHooks {
 	 * @return bool
 	 */
 	static public function onBeforeDisplayNoArticleText( Article $article ) {
+		global $wgJsMimeType, $wgExtensionsPath;
 
 		$title = $article->getTitle();
 
-		if ( $article->getOldID() || !$title || !$title->isContentPage() ) {
+		// SUS-1275: handle NS_MAIN pages only, we do not want to query solr with all available namespaces
+		if ( $article->getOldID() || !$title || !$title->inNamespace( NS_MAIN ) ) {
 			// MW will treat those cases specially, don't try to direct users to other pages
 			return true;
 		}
@@ -40,8 +42,8 @@ class Custom404PageHooks {
 		$text = '<div class="noarticletext">' . PHP_EOL . $text . PHP_EOL . '</div>';
 
 		$wgOut = $article->getContext()->getOutput();
+		$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"$wgExtensionsPath/wikia/Custom404Page/scripts/Custom404Page.tracking.js\"></script>" );
 		$wgOut->addWikiText( $text );
-		$wgOut->setStatusCode( 200 );
 		$wgOut->setRobotPolicy( 'noindex,follow' );
 
 		return false;

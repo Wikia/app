@@ -117,7 +117,7 @@ class ChillingEffectsClient {
 	 * Send notice data to the ChillingEffects API.
 	 *
 	 * @param  array         $noticeData The notice data to send to the CE API.
-	 * @return MWHttpRequest             Instance of the executed request.
+	 * @return \MWHttpRequest             Instance of the executed request.
 	 */
 	public function sendNotice( array $noticeData ) {
 		$requestData = [

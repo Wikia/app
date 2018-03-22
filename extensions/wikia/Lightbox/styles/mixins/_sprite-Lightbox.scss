@@ -2,7 +2,7 @@
 // @autosprite-start
 @mixin sprite-Lightbox-base() {
 	background-color: transparent;
-	background-image: url('/extensions/wikia/Lightbox/images/sprite-Lightbox.png'); /* wgCdnStylePath */
+	background-image: url('/extensions/wikia/Lightbox/images/sprite-Lightbox.png'); /* wgResourceBasePath */
 	background-repeat: no-repeat;
 }
 @mixin sprite-Lightbox($imageName,$width: 0,$height: 0,$offset-x: 0,$offset-y: 0) {

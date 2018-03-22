@@ -2,20 +2,34 @@
 @import "layout";
 @import "skins/shared/mixins/box-shadow";
 @import "skins/shared/mixins/clearfix";
+@import 'skins/shared/mixins/flexbox';
 @import "skins/shared/mixins/gradient";
+@import 'extensions/wikia/DesignSystem/bower_components/design-system/dist/scss/wds-variables/index';
+@import 'extensions/wikia/DesignSystem/bower_components/design-system/dist/scss/wds-mixins/index';
+
+.full-screen-page {
+	&,
+	body,
+	.WikiaSiteWrapper {
+		height: 100%;
+	}
+
+	#mw-content-text,
+	.WikiaArticle,
+	.WikiaPage,
+	.WikiaPageContentWrapper,
+	.WikiaSiteWrapper {
+		@include flexbox();
+		@include flex-direction(column);
+		@include flex(1);
+	}
+}
 
 .WikiaPage {
 	border: 1px solid $color-page-border;
 	margin: 0 auto;
 	/* temp grid transition code - integrate into main, then remove after grid is fully rolled out */
 	&.WikiaGrid {
-		.WikiaSearchHeader {
-			width: 330px;
-		}
-		.WikiaPageHeader {
-			margin-left: 0;
-			margin-right: 0;
-		}
 		.WikiaArticle {
 			padding: 0;
 		}
@@ -24,7 +38,7 @@
 	position: relative;
 	width: $width-outside;
 	z-index: 3;
-	>h1:first-child {
+	> h1:first-child {
 		display: none;
 	}
 	.WikiaPageBackground {
@@ -38,19 +52,19 @@
 	}
 	.WikiaPageContentWrapper {
 		@include clearfix;
+		@include flexbox();
+		@include flex-wrap(wrap);
+		@include justify-content(space-between);
 		position: relative;
 	}
 }
 
 // Change z-indexes for proper stacking with VisualEditor focus mode
 .ve .WikiaPage {
-	z-index: auto;
+	z-index: $zTop;
 }
 
-
-
 .WikiaMainContent {
-	float: left;
 	position: relative;
 	width: $width-outside - 320px;
 	z-index: 1;
@@ -86,30 +100,22 @@
 	padding: 10px;
 }
 
-#WikiaArticleBottomAd {
-	@include clearfix;
-	margin: 50px 10px 35px;
+.wikia-rail-inner {
+	width: 100%;
 }
-
-/* temp transition code until grid is fully rolled out, remove and integrate after transition */
-.WikiaPage.WikiaGrid #WikiaArticleBottomAd {
-    clear: both;
-    margin: 0;
-}
-/* end temp transistion code */
 
 .WikiaRail {
-	float: right;
 	padding: 0 $width-gutter;
 	width: $width-rail;
 	&.grid-2 {
 		padding: 0;
 	}
 	.loading {
-		background: url(/skins/common/images/ajax.gif) no-repeat 50% 50%; /* $wgCdnStylePath */
+		background: url(/skins/common/images/ajax.gif) no-repeat 50% 50%; /* $wgResourceBasePath */
 		height: 48px;
 		margin: 10px;
 		padding-top: 10px;
+		width: 100%;
 	}
 
 	.module {
@@ -120,7 +126,7 @@
 			background: $color-module-background;
 			border: 1px solid $color-page-border;
 		}
-		margin-bottom: 10px;
+		margin-bottom: 30px;
 		padding: 20px 15px 15px;
 		position: relative;
 		word-wrap: break-word;
@@ -194,6 +200,37 @@
 			border-top-color: $color-text;
 		}
 	}
+
+	.rail-module {
+		margin: 0 10px 30px;
+
+		h2 {
+			border-bottom: 1px solid $color-page-border;
+			font-size: $wds-typescale-size-base;
+			font-weight: bold;
+			min-height: 30px;
+			margin-bottom: 16px;
+			padding-left: 2px;
+
+			&.has-icon {
+				@include flexbox();
+				@include align-items(center);
+
+				svg {
+					fill: rgba($color-text, .75);
+					margin-right: 7px;
+				}
+			}
+		}
+
+		.wds-button {
+			@include button-theming($color-buttons, $color-button-text);
+
+			&.wds-is-secondary {
+				margin-left: 12px;
+			}
+		}
+	}
 }
 
 .tally {
@@ -218,49 +255,42 @@
 	}
 }
 
-.WikiaActivityModule {
-	h1.activity-heading {
-		margin-bottom: 0;
-	}
-	ul {
-		list-style: none;
-		margin: 10px 0;
-	}
-	li {
-		font-size: 12px;
-		padding: 6px 3px 6px 30px;
-		position: relative;
+.WikiaRail .activity-module {
+
+	.activity-item {
+		padding: 6px 0;
 
 		&:first-child {
-			border: 0;
+			padding-top: 0;
+		}
+	}
+
+	.page-title {
+		color: $color-links;
+		font-size: $wds-typescale-size-minus-1;
+		margin-bottom: 2px;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+
+	.edit-info {
+		color: rgba($color-text, .75);
+		font-size: $wds-typescale-size-minus-2;
+		max-height: 16px;
+
+		.edit-info-user {
+			color: rgba($color-text, .75);
+			display: inline-block;
+			max-width: 150px;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
 		}
 
-		em {
-			font-size: 14px;
-			line-height: 17px;
+		.edit-info-time {
+			vertical-align: top;
 		}
-	}
-	.sprite {
-		position: absolute;
-		left: 3px;
-		top: 8px;
-	}
-	.edited-by {
-		font-size: 11px;
-		margin-top: 2px;
-		a {
-			color: $color-links;
-			font-size: 11px;
-		}
-	}
-	a {
-		font-weight: normal;
-	}
-	.page-title {
-		font-size: 14px;
-	}
-	.more {
-		font-weight: bold;
 	}
 }
 
@@ -292,7 +322,7 @@
 }
 
 .wikiaThrobber {
-	background: url("/skins/common/images/ajax.gif") no-repeat scroll center $color-page;/* $wgCdnStylePath */
+	background: url("/skins/common/images/ajax.gif") no-repeat scroll center $color-page; /* $wgResourceBasePath */
 	height: 100%;
 	left: 0;
 	opacity: .75;

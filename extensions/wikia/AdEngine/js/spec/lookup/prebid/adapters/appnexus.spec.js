@@ -1,3 +1,4 @@
+/*global describe, expect, it, jasmine, modules*/
 describe('ext.wikia.adEngine.lookup.prebid.adapters.appnexus', function () {
 	'use strict';
 
@@ -12,14 +13,24 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.appnexus', function () {
 			getPlacement: function () {
 				return '123';
 			}
-		}
+		},
+		slotsContext: {
+			filterSlotMap: function (map) {
+				return map;
+			}
+		},
+		log: function() {}
 	};
+
+	mocks.log.levels = {};
 
 	function getAppNexus() {
 		return modules['ext.wikia.adEngine.lookup.prebid.adapters.appnexus'](
+			mocks.slotsContext,
 			mocks.appNexusPlacements,
 			mocks.geo,
-			mocks.instantGlobals
+			mocks.instantGlobals,
+			mocks.log
 		);
 	}
 

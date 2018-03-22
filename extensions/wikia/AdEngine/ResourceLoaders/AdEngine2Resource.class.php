@@ -7,6 +7,7 @@ class AdEngine2Resource {
 		global $wgResourceModules;
 
 		$keys = [
+			new \DateTime( '-2 day' ),
 			new \DateTime( 'yesterday' ),
 			new \DateTime( 'now' ),
 			new \DateTime( 'tomorrow' )

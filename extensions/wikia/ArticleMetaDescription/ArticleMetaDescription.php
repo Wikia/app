@@ -35,10 +35,8 @@ $wgHooks['OutputPageBeforeHTML'][] = 'wfArticleMetaDescription';
  * @param string $text
  * @return bool
  */
-function wfArticleMetaDescription( &$out, &$text ) {
+function wfArticleMetaDescription( OutputPage $out, string &$text ): bool {
 	wfProfileIn( __METHOD__ );
-
-	$wg = F::app()->wg;
 
 	// Whether the description has already been added
 	static $addedToPage = false;
@@ -51,12 +49,14 @@ function wfArticleMetaDescription( &$out, &$text ) {
 		return true;
 	}
 
+	$title = $out->getTitle();
+
 	$sMessage = null;
 	$sMainPage = wfMessage( 'Mainpage' )->inContentLanguage()->text();
 	if ( strpos( $sMainPage, ':' ) !== false ) {
-	    $sTitle = $wg->Title->getFullText();
+	    $sTitle = $title->getFullText();
 	} else {
-	    $sTitle = $wg->Title->getText();
+	    $sTitle = $title->getText();
 	}
 
 	if ( strcmp( $sTitle, $sMainPage ) == 0 ) {
@@ -64,9 +64,9 @@ function wfArticleMetaDescription( &$out, &$text ) {
 		$sMessage = wfMessage( 'Description' )->text();
 	}
 
-	if ( ( $sMessage == null ) || wfEmptyMsg( 'Description', $sMessage ) ) {
-		$DESC_LENGTH = 100;
-		$article = new Article( $wg->Title );
+	if ( $sMessage == null || wfEmptyMsg( 'Description' ) ) {
+		$DESC_LENGTH = 300;
+		$article = new Article( $title );
 		$articleService = new ArticleService( $article );
 		$description = $articleService->getTextSnippet( $DESC_LENGTH );
 	} else {

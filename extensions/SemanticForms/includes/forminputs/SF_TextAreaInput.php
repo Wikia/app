@@ -19,6 +19,12 @@ class SFTextAreaInput extends SFFormInput {
         public static function getDefaultCargoTypes() {
                 return array( 'Text' => array() );
         }
+
+        public static function getDefaultCargoTypeLists() {
+                return array(
+                        'Text' => array( 'field_type' => 'text', 'is_list' => 'true' )
+                );
+        }
 	
 	/**
 	 * Constructor for the SFTextAreaInput class.
@@ -242,6 +248,12 @@ class SFTextAreaInput extends SFFormInput {
 
 		$text = Html::element( 'textarea', $textarea_attrs, $this->mCurrentValue );
 		$spanClass = 'inputSpan';
+		if ( $this->mInputName == 'sf_free_text' ) {
+			$spanClass .= ' freeText';
+		}
+		if ( array_key_exists( 'isSection', $this->mOtherArgs ) ) {
+			$spanClass .= ' pageSection';
+		}
 		if ( $this->mIsMandatory ) {
 			$spanClass .= ' mandatoryFieldSpan';
 		}

@@ -5,18 +5,15 @@
 @import "skins/shared/color";
 @import "skins/oasis/css/core/layout";
 @import "skins/shared/mixins/bodytext";
-@import "../ckeditor/_source/skins/wikia/panel";
+@import "../ckeditor/skins/wikia/panel";
 
-html.cke_skin_wikia_container {
+html.cke_panel_container {
 	visibility: visible;
+	background-color: $color-page;
 }
 
 .cke_panel_grouptitle {
 	display: none;
-}
-
-body.cke_panel_frame {
-	background-color: $color-page;
 }
 
 ul.cke_panel_list {

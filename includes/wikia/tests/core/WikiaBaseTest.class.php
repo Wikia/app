@@ -1,6 +1,7 @@
 <?php
 
 use \Wikia\Util\GlobalStateWrapper;
+use PHPUnit\Framework\TestCase;
 
 /**
  * WikiaBaseTest class - part of Wikia UnitTest Framework - W(U)TF
@@ -19,13 +20,15 @@ use \Wikia\Util\GlobalStateWrapper;
  *    parent::setUp();
  * }
  */
-abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
+abstract class WikiaBaseTest extends TestCase {
+	use MockGlobalVariableTrait;
+
 	const MOCK_DEV_NAME = 'mockdevname';
 
 	protected static $alternativeConstructors = [
 		'Article' => [ 'newFromID', 'newFromTitle', 'newFromWikiPage' ],
 		'Title' => [ 'newFromDBkey', 'newFromText', 'newFromURL', 'newFromID', 'newFromRow' ],
-		'User' => [ 'newFromName', 'newFromId', 'newFromSession', 'newFromRow' ],
+		'User' => [ 'newFromName', 'newFromId', 'newFromToken', 'newFromRow' ],
 	];
 
 
@@ -35,47 +38,10 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 	protected $app = null;
 
 	/** @var array */
-	private $mockedGlobalVariables = array();
-	/** @var array */
 	private $mockedMessages = array();
 	/** @var WikiaMockProxy */
 	private $mockProxy = null;
 	private $mockMessageCacheGet = null;
-
-	private static $testRunTime = 0;
-	private static $numberSlowTests = 0;
-
-	/**
-	 * Print out currently run test
-	 */
-	public static function setUpBeforeClass() {
-		global $wgAnnotateTestSpeed;
-
-		error_reporting(E_ALL);
-		$testClass = get_called_class();
-		echo "\nRunning '{$testClass}'...";
-
-		self::$testRunTime = microtime( true );
-		self::$numberSlowTests = 0;
-
-		if ($wgAnnotateTestSpeed) {
-			WikiaTestSpeedAnnotator::initialize();
-		}
-	}
-
-	/**
-	 * Print out time it took to run all tests from current test class
-	 */
-	public static function tearDownAfterClass() {
-		global $wgAnnotateTestSpeed;
-
-		$time = round( ( microtime( true ) - self::$testRunTime ) * 1000, 2 );
-		echo "done in {$time} ms [" . self::$numberSlowTests . ' slow tests]';
-
-		if ($wgAnnotateTestSpeed) {
-			WikiaTestSpeedAnnotator::execute();
-		}
-	}
 
 	protected function setUp() {
 		$this->startTime = microtime(true);
@@ -97,8 +63,6 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 	}
 
 	protected function tearDown() {
-		global $wgAnnotateTestSpeed;
-
 		$this->unsetGlobals();
 		$this->unsetMessages();
 		if ( $this->mockProxy === null ) {
@@ -106,15 +70,45 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 		}
 		$this->mockProxy->disable();
 		$this->mockProxy = null;
+	}
 
-		if ( WikiaTestSpeedAnnotator::isMarkedAsSlow($this->getAnnotations() ) ) {
-			self::$numberSlowTests++;
+	/**
+	 * Ugly hack
+	 *
+	 * @deprecated use getMockBuilder() or createMock() instead
+	 * @param $originalClassName
+	 * @param array $methods
+	 * @param array $arguments
+	 * @param string $mockClassName
+	 * @param bool $callOriginalConstructor
+	 * @param bool $callOriginalClone
+	 * @param bool $callAutoload
+	 * @param bool $cloneArguments
+	 * @return PHPUnit_Framework_MockObject_MockObject
+	 */
+	protected function getMock( $originalClassName, $methods = [], array $arguments = [], $mockClassName = '', $callOriginalConstructor = true, $callOriginalClone = true, $callAutoload = true, $cloneArguments = true ) {
+		$mockBuilder = $this->getMockBuilder( $originalClassName )
+			->setMethods( $methods )
+			->setConstructorArgs( $arguments )
+			->setMockClassName( $mockClassName );
+
+		if ( !$callOriginalConstructor ) {
+			$mockBuilder = $mockBuilder->disableOriginalConstructor();
 		}
 
-		if ($wgAnnotateTestSpeed) {
-			WikiaTestSpeedAnnotator::add(get_class($this), $this->getName(false), microtime(true) - $this->startTime,
-				$this->getAnnotations());
+		if ( !$callOriginalClone ) {
+			$mockBuilder = $mockBuilder->disableOriginalClone();
 		}
+
+		if ( !$callAutoload ) {
+			$mockBuilder = $mockBuilder->disableAutoload();
+		}
+
+		if ( !$cloneArguments ) {
+			$mockBuilder = $mockBuilder->disableArgumentCloning();
+		}
+
+		return $mockBuilder->getMock();
 	}
 
 	/**
@@ -176,23 +170,6 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * @param $className
-	 * @param array $methods
-	 * @return PHPUnit_Framework_MockObject_MockObject
-	 */
-	protected function getMockWithMethods($className, Array $methods = array()) {
-		$mock = $this->getMock($className, array_keys($methods));
-
-		foreach($methods as $methodName => $retVal) {
-			$mock->expects( $this->any() )
-				->method( $methodName )
-				->will( $this->returnValue( ( is_null( $retVal ) ) ? $mock : $retVal) );
-		}
-
-		return $mock;
-	}
-
-	/**
 	 * Create mocked object of a given class with list of methods and values they return provided
 	 *
 	 * @param string $className name of the class to be mocked
@@ -201,7 +178,7 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 	 * @return PHPUnit_Framework_MockObject_MockObject mocked object
 	 */
 	protected function mockClassWithMethods($className, Array $methods = array(), $staticConstructor = '') {
-		$mock = $this->getMockWithMethods($className,$methods);
+		$mock = $this->createConfiguredMock( $className, $methods );
 
 		$this->mockClass($className, $mock, ($staticConstructor !== '') ? $staticConstructor : null);
 
@@ -254,24 +231,6 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * Mock global ($wg...) variable.
-	 *
-	 * @param $globalName string name of global variable (e.g. wgCity - WITH wg prefix)
-	 * @param $returnValue mixed value variable should be set to
-	 */
-	protected function mockGlobalVariable( $globalName, $returnValue ) {
-		if ( !empty($this->mockedGlobalVariables[$globalName] ) ) {
-			// revert changes done by previous variable mock
-			$this->mockedGlobalVariables[$globalName]->disable();
-		}
-
-		$mock = new WikiaGlobalVariableMock($globalName,$returnValue);
-		$mock->enable();
-
-		$this->mockedGlobalVariables[$globalName] = $mock;
-	}
-
-	/**
 	 * Mock global (wf...) function.
 	 *
 	 * @param $functionName string Global function name (including "wf" prefix)
@@ -297,16 +256,13 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 	/**
 	 * Mock given message
 	 *
-	 * @param $messageKey
-	 * @param $messageContent string
-	 * @return PHPUnit_Framework_MockObject_MockObject
+	 * @param string $messageKey
+	 * @param string $messageContent
+	 * @param string $langCode
 	 */
-	protected function mockMessage($messageKey, $messageContent) {
-		$mock = $this->getMessageMock( $messageKey );
-		$mock->expects( $this->any() )
-			->method( 'get' )
-			->will( $this->returnValue( $messageContent ) );
-		return $mock;
+	protected function mockMessage($messageKey, $messageContent, $langCode = 'en') {
+		MessageCache::singleton()->mExtensionMessages[$langCode][lcfirst( $messageKey )] =
+			$messageContent;
 	}
 
 	/**
@@ -316,24 +272,10 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 	 * @return PHPUnit_Framework_MockObject_MockObject
 	 */
 	protected function getDatabaseMock( $methods = [] ) {
-		return $this->getMock( 'DatabaseMysqli', $methods );
-	}
-
-	/**
-	 * Get a PHPUnit mock associated with class constructor
-	 *
-	 * Note: Use method name "__construct" when setting up expect rules.
-	 * Note: You cannot write assert rules on constructor parameters
-	 * due to technical limitations.
-	 *
-	 * @param $className string Class name
-	 * @return PHPUnit_Framework_MockObject_MockObject Mock
-	 */
-	protected function getConstructorMock( $className ) {
-		$mock = $this->getMock( 'stdClass', array( '__construct' ) );
-		$this->getMockProxy()->getClassConstructor($className)
-			->willCall(array($mock,'__construct'));
-		return $mock;
+		return
+			$this->getMockBuilder( DatabaseMysqli::class )
+				->setMethods( $methods )
+				->getMock();
 	}
 
 	/**
@@ -344,7 +286,11 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 	 */
 	protected function getGlobalFunctionMock( $functionName ) {
 		list($namespace,$baseName) = WikiaMockProxy::parseGlobalFunctionName( $functionName );
-		$mock = $this->getMock( 'stdClass', array( $baseName ) );
+		$mock =
+			$this->getMockBuilder( stdClass::class )
+				->setMethods( [ $baseName ] )
+				->getMock();
+
 		$this->getMockProxy()->getGlobalFunction($functionName)
 			->willCall(array($mock,$baseName));
 		return $mock;
@@ -359,7 +305,11 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 	 */
 	protected function getStaticMethodMock( $className, $methodName ) {
 		is_callable( "{$className}::{$methodName}" ); // autoload
-		$mock = $this->getMock( 'stdClass', array( $methodName ) );
+		$mock =
+			$this->getMockBuilder( stdClass::class )
+				->setMethods( [ $methodName ] )
+				->getMock();
+
 		$this->getMockProxy()->getStaticMethod($className,$methodName)
 			->willCall(array($mock,$methodName));
 		return $mock;
@@ -374,7 +324,11 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 	 */
 	protected function getMethodMock( $className, $methodName ) {
 		is_callable( "{$className}::{$methodName}" ); // autoload
-		$mock = $this->getMock( 'stdClass', array( $methodName ) );
+		$mock =
+			$this->getMockBuilder( stdClass::class )
+				->setMethods( [ $methodName ] )
+				->getMock();
+
 		$this->getMockProxy()->getMethod($className,$methodName)
 			->willCall(array($mock,$methodName));
 		return $mock;
@@ -389,7 +343,10 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 				->will( $this->returnCallback( array( $this, '__retrieveMessageMock' ) ) );
 		}
 
-		$mock = $this->getMock( 'stdClass', array( 'get' ) );
+		$mock =
+			$this->getMockBuilder( stdClass::class )
+				->setMethods( [ 'get' ] )
+				->getMock();
 		$this->mockedMessages[$messageKey] = $mock;
 		return $mock;
 	}
@@ -436,14 +393,6 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 		return WikiaMockProxyAction::currentInvocation();
 	}
 
-	private function unsetGlobals() {
-		/** @var $mock WikiaGlobalVariableMock */
-		foreach ($this->mockedGlobalVariables as $globalName => $mock) {
-			$mock->disable();
-		}
-		$this->mockedGlobals = array();
-	}
-
 	private function unsetMessages() {
 		$this->mockedMessages = array();
 	}
@@ -466,48 +415,10 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * Mark this test as skipped. Puts extra information in the logs.
-	 *
-	 * @param string $message
-	 */
-	public static function markTestSkipped($message = '') {
-		$backtrace = wfDebugBacktrace(3);
-		$entry = $backtrace[1];
-
-		Wikia::log(wfFormatStackFrame($entry), false, "marked as skipped - $message");
-        parent::markTestSkipped($message);
-    }
-
-	/**
-	 * Mark this test as incomplete. Puts extra information in the logs.
-	 *
-	 * @param string $message
-	 */
-	public static function markTestIncomplete($message = '') {
-		Wikia::log(__METHOD__, '', $message);
-		parent::markTestIncomplete($message);
-	}
-
-	/**
-	 * @return PHPUnit_Framework_MockObject_MockObject
-	 */
-	private function getMemCacheMock() {
-		$wgMemcMock = $this->getMockBuilder( 'MWMemcached' )
-			->disableOriginalConstructor()
-			->setMethods( [ 'get' ] )
-			->getMock();
-		$wgMemcMock->expects( $this->any() )
-			->method( 'get' )
-			->willReturn( null );
-
-		return $wgMemcMock;
-	}
-
-	/**
 	 * Mocks global $wgMemc->get() so it always returns null
 	 */
 	protected function disableMemCache() {
-		$this->mockGlobalVariable( 'wgMemc', $this->getMemCacheMock() );
+		$this->mockGlobalVariable( 'wgMemc', new EmptyBagOStuff() );
 	}
 
 	/**
@@ -520,7 +431,7 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 	 */
 	protected function memCacheDisabledSection( callable $callback ) {
 		$globalState = new GlobalStateWrapper( [
-			'wgMemc' => $this->getMemCacheMock()
+			'wgMemc' => new EmptyBagOStuff()
 		] );
 
 		return $globalState->wrap( $callback );
@@ -528,7 +439,6 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 
 	protected function mockPreviewEnv() {
 		$this->mockGlobalVariable( 'wgDevelEnvironment', false );
-		$this->mockGlobalVariable( 'wgStagingEnvironment', true );
 		$this->mockGlobalVariable( 'wgWikiaEnvironment', WIKIA_ENV_PREVIEW );
 	}
 
@@ -540,19 +450,16 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 
 	protected function mockVerifyEnv() {
 		$this->mockGlobalVariable( 'wgDevelEnvironment', false );
-		$this->mockGlobalVariable( 'wgStagingEnvironment', true );
 		$this->mockGlobalVariable( 'wgWikiaEnvironment', WIKIA_ENV_VERIFY );
 	}
 
 	protected function mockStableEnv() {
 		$this->mockGlobalVariable( 'wgDevelEnvironment', false );
-		$this->mockGlobalVariable( 'wgStagingEnvironment', true );
 		$this->mockGlobalVariable( 'wgWikiaEnvironment', WIKIA_ENV_STABLE );
 	}
 
 	protected function mockSandboxEnv() {
 		$this->mockGlobalVariable( 'wgDevelEnvironment', false );
-		$this->mockGlobalVariable( 'wgStagingEnvironment', false );
 		$this->mockGlobalVariable( 'wgWikiaEnvironment', WIKIA_ENV_SANDBOX );
 		$this->getStaticMethodMock( 'WikiFactory', 'getExternalHostName' )
 			->expects( $this->any() )
@@ -568,6 +475,7 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 
 	protected function mockDevEnv() {
 		$this->mockGlobalVariable( 'wgDevelEnvironmentName', self::MOCK_DEV_NAME );
+		$this->mockGlobalVariable( 'wgDevDomain', self::MOCK_DEV_NAME . '.wikia-dev.us' );
 		$this->getStaticMethodMock( 'WikiFactory', 'getExternalHostName' )
 			->expects( $this->any() )
 			->method( 'getExternalHostName' )

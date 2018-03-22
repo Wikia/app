@@ -82,7 +82,7 @@ class SetWikiFactoryVariable extends Maintenance {
 		}
 
 		if ( !empty( $wikiId ) ) {
-			$wikiIds = [ $wikiId ];
+			$wikiIds = explode(',', $wikiId);
 		} else if ( !empty( $file ) ) {
 			$wikiIds = file( $file );
 		} else {
@@ -113,7 +113,7 @@ class SetWikiFactoryVariable extends Maintenance {
 		}
 
 		$wg = F::app()->wg;
-		$wg->User = User::newFromName( 'WikiaBot' );
+		$wg->User = User::newFromName( Wikia::BOT_USER );
 		$wg->User->load();
 
 		$cnt = 0;

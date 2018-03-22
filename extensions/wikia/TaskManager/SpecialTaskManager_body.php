@@ -44,17 +44,11 @@ class TaskManagerPage extends SpecialPage {
 	public function execute( $subpage ) {
 		global $wgUser, $wgOut, $wgRequest, $wgWikiaBatchTasks;
 
-		if ( $wgUser->isBlocked() ) {
-			throw new UserBlockedError( $this->getUser()->mBlock );
-		}
-		if ( wfReadOnly() ) {
-			$wgOut->readOnlyPage();
-			return;
-		}
-		if ( !$wgUser->isAllowed( 'taskmanager' ) ) {
-			$this->displayRestrictionError();
-			return;
-		}
+		$this->setHeaders();
+		// SUS-288: Check permissions before checking for block
+		$this->checkPermissions();
+		$this->checkReadOnly();
+		$this->checkIfUserIsBlocked();
 
 		$wgOut->setPageTitle( wfMsg('taskmanager_title') );
 		$wgOut->setRobotpolicy( 'noindex,nofollow' );
@@ -278,7 +272,7 @@ class TaskManagerPage extends SpecialPage {
 	 *
 	 * @access private
 	 *
-	 * @return nothing
+	 * @return void
      */
 	private function loadTaskForm() {
 		global $wgUser;
@@ -295,6 +289,7 @@ class TaskManagerPage extends SpecialPage {
 		if( is_array( $wgWikiaBatchTasks )) {
 			foreach( $wgWikiaBatchTasks as $type => $class ) {
 				$oObject = new $class;
+				/* @var $oObject BatchTask */
 				if( $oObject->isVisible() === true ) {
 					$aTypes[$type] = $class;
 				}

@@ -72,7 +72,7 @@ class FollowModel {
 	 *
 	 * @return Array $namespaces
 	 */
-	private function prepareNamespaces( $namespace_head ) {
+	private static function prepareNamespaces( $namespace_head ) {
 		global $wgContentNamespaces, $wgEnableBlogArticles, $wgEnableForumExt;
 		wfProfileIn( __METHOD__ );
 		$namespaces = static::$defaultNamespaces;
@@ -113,7 +113,7 @@ class FollowModel {
 	 *
 	 * @return Array
 	 */
-	private function getWatchListArray( $user_id, $from, $limit, $show_deleted_pages, $namespaces ) {
+	private static function getWatchListArray( $user_id, $from, $limit, $show_deleted_pages, $namespaces ) {
 		global $wgServer, $wgScript, $wgContentNamespaces;
 		wfProfileIn( __METHOD__ );
 
@@ -188,7 +188,7 @@ class FollowModel {
 	 *
 	 * @return array
 	 */
-	private function getWatchListCount( $user_id, $limit, $namespaces, $watchedPages ) {
+	private static function getWatchListCount( $user_id, $limit, $namespaces, $watchedPages ) {
 		wfProfileIn( __METHOD__ );
 		$db = wfGetDB( DB_SLAVE );
 		$namespaces_keys = array_keys( $namespaces );

@@ -1,5 +1,4 @@
 <?php
-use Wikia\Util\PerformanceProfilers\UsernameUseProfiler;
 
 /**
  * Blocks and bans object
@@ -21,7 +20,11 @@ use Wikia\Util\PerformanceProfilers\UsernameUseProfiler;
  *
  * @file
  */
+
+use Wikia\Service\User\Permissions\PermissionsServiceAccessor;
+
 class Block {
+	use PermissionsServiceAccessor;
 	/* public*/ var $mReason, $mTimestamp, $mAuto, $mExpiry, $mHideName;
 
 	protected
@@ -29,8 +32,7 @@ class Block {
 		$mFromMaster,
 
 		$mBlockEmail,
-		$mDisableUsertalk,
-		$mCreateAccount;
+		$mDisableUsertalk;
 
 	/// @var User|String
 	protected $target;
@@ -85,7 +87,6 @@ class Block {
 		$this->mTimestamp = wfTimestamp( TS_MW, $timestamp );
 		$this->mAuto = $auto;
 		$this->isHardblock( !$anonOnly );
-		$this->prevents( 'createaccount', $createAccount );
 		if ( $expiry == 'infinity' || $expiry == wfGetDB( DB_SLAVE )->getInfinity() ) {
 			$this->mExpiry = 'infinity';
 		} else {
@@ -149,7 +150,6 @@ class Block {
 			&& $this->type == $block->type
 			&& $this->mAuto == $block->mAuto
 			&& $this->isHardblock() == $block->isHardblock()
-			&& $this->prevents( 'createaccount' ) == $block->prevents( 'createaccount' )
 			&& $this->mExpiry == $block->mExpiry
 			&& $this->isAutoblocking() == $block->isAutoblocking()
 			&& $this->mHideName == $block->mHideName
@@ -204,12 +204,18 @@ class Block {
 	 *     3) An autoblock on the given IP
 	 * @param $vagueTarget User|String also search for blocks affecting this target.  Doesn't
 	 *     make any sense to use TYPE_AUTO / TYPE_ID here. Leave blank to skip IP lookups.
-	 * @return Bool whether a relevant block was found
+	 * @return bool whether a relevant block was found
+	 * @throws MWException
 	 */
 	protected function newLoad( $vagueTarget = null ) {
 		$db = wfGetDB( $this->mFromMaster ? DB_MASTER : DB_SLAVE );
 
-		if( $this->type !== null ){
+
+		if ( $this->type === Block::TYPE_USER && $this->target->isLoggedIn() ) {
+			$conds = [
+				'ipb_user' => $this->target->getId()
+			];
+		} elseif ( $this->type !== null ) {
 			$conds = array(
 				'ipb_address' => array( (string)$this->target ),
 			);
@@ -223,8 +229,8 @@ class Block {
 			list( $target, $type ) = self::parseTarget( $vagueTarget );
 			switch( $type ) {
 				case self::TYPE_USER:
-					# Slightly wierd, but who are we to argue?
-					$conds['ipb_address'][] = (string)$target;
+					// SUS-805: Query blocks by user ID for registered users
+					$conds['ipb_user'][] = $target->getId();
 					break;
 
 				case self::TYPE_IP:
@@ -355,13 +361,13 @@ class Block {
 	 * @param $row ResultWrapper: a row from the ipblocks table
 	 */
 	protected function initFromRow( $row ) {
-		$usernameUseProfiler = new UsernameUseProfiler( __CLASS__, __METHOD__ );
-		$this->setTarget( $row->ipb_address );
-		if ( $row->ipb_by ) { // local user
-			$this->setBlocker( User::newFromID( $row->ipb_by ) );
-		} else { // foreign user
-			$this->setBlocker( $row->ipb_by_text );
+		// SUS-805: Use user name lookup for registered users
+		if ( $row->ipb_user ) {
+			$this->setTarget( User::newFromId( $row->ipb_user ) );
+		} else {
+			$this->setTarget( $row->ipb_address );
 		}
+		$this->setBlocker( User::newFromID( $row->ipb_by ) );
 
 		$this->mReason = $row->ipb_reason;
 		$this->mTimestamp = wfTimestamp( TS_MW, $row->ipb_timestamp );
@@ -380,10 +386,8 @@ class Block {
 		$this->isHardblock( !$row->ipb_anon_only );
 		$this->isAutoblocking( $row->ipb_enable_autoblock );
 
-		$this->prevents( 'createaccount', $row->ipb_create_account );
 		$this->prevents( 'sendemail', $row->ipb_block_email );
 		$this->prevents( 'editownusertalk', !$row->ipb_allow_usertalk );
-		$usernameUseProfiler->end();
 	}
 
 	/**
@@ -438,18 +442,21 @@ class Block {
 		$row = $this->getDatabaseArray();
 		$row['ipb_id'] = $dbw->nextSequenceValue("ipblocks_ipb_id_seq");
 
-		$dbw->insert(
-			'ipblocks',
-			$row,
-			__METHOD__,
-			array( 'IGNORE' )
-		);
-		$affected = $dbw->affectedRows();
-		$this->mId = $dbw->insertId();
+		try {
+			$dbw->insert(
+				'ipblocks',
+				$row,
+				__METHOD__
+			);
+			$affected = $dbw->affectedRows();
+			$this->mId = $dbw->insertId();
 
-		if ( $affected ) {
-			$auto_ipd_ids = $this->doRetroactiveAutoblock();
-			return array( 'id' => $this->mId, 'autoIds' => $auto_ipd_ids );
+			if ( $affected ) {
+				$auto_ipd_ids = $this->doRetroactiveAutoblock();
+				return array( 'id' => $this->mId, 'autoIds' => $auto_ipd_ids );
+			}
+		} catch ( DBError $ex ) {
+			// DBError constructor will log this exception
 		}
 
 		return false;
@@ -491,12 +498,10 @@ class Block {
 			'ipb_address'          => (string)$this->target,
 			'ipb_user'             => $this->target instanceof User ? $this->target->getID() : 0,
 			'ipb_by'               => $this->getBy(),
-			'ipb_by_text'          => $this->getByName(),
 			'ipb_reason'           => $this->mReason,
 			'ipb_timestamp'        => $db->timestamp( $this->mTimestamp ),
 			'ipb_auto'             => $this->mAuto,
 			'ipb_anon_only'        => !$this->isHardblock(),
-			'ipb_create_account'   => $this->prevents( 'createaccount' ),
 			'ipb_enable_autoblock' => $this->isAutoblocking(),
 			'ipb_expiry'           => $expiry,
 			'ipb_range_start'      => $this->getRangeStart(),
@@ -521,7 +526,7 @@ class Block {
 		if ( $this->isAutoblocking() && $this->getType() == self::TYPE_USER ) {
 			wfDebug( "Doing retroactive autoblocks for " . $this->getTarget() . "\n" );
 
-			$continue = wfRunHooks(
+			$continue = Hooks::run(
 				'PerformRetroactiveAutoblock', array( $this, &$blockIds ) );
 
 			if ( $continue ) {
@@ -536,31 +541,31 @@ class Block {
 	 * blocked by this Block. This will use the recentchanges table.
 	 *
 	 * @param Block $block
-	 * @param Array &$blockIds
-	 * @return Array: block IDs of retroactive autoblocks made
+	 * @param int[] &$blockIds
 	 */
 	protected static function defaultRetroactiveAutoblock( Block $block, array &$blockIds ) {
+		// SUS-3079: Target is not a registered user, there is nothing to autoblock
+		if ( !( $block->getTarget() instanceof User ) ) {
+			return;
+		}
+
 		$dbr = wfGetDB( DB_SLAVE );
 
-		$options = array( 'ORDER BY' => 'rc_timestamp DESC' );
-		$conds = array( 'rc_user_text' => (string)$block->getTarget() );
+		$options = [ 'ORDER BY' => 'rc_timestamp DESC' ];
+		$conds = [ 'rc_user' => $block->getTarget()->getId() ];
 
 		// Just the last IP used.
-		$options['LIMIT'] = 1;
+		$row = $dbr->selectRow( 'recentchanges', 'rc_ip_bin', $conds, __METHOD__, $options );
 
-		$res = $dbr->select( 'recentchanges', array( 'rc_ip' ), $conds,
-			__METHOD__ ,  $options );
+		if ( !$row ) {
+			return;
+		}
 
-		if ( !$dbr->numRows( $res ) ) {
-			# No results, don't autoblock anything
-			wfDebug( "No IP found to retroactively autoblock\n" );
-		} else {
-			foreach ( $res as $row ) {
-				if ( $row->rc_ip ) {
-					$id = $block->doAutoblock( $row->rc_ip );
-					if ( $id ) $blockIds[] = $id;
-				}
-			}
+		$userIp = RecentChange::extractUserIpFromRow( $row );
+		$autoBlockId = $block->doAutoblock( $userIp );
+
+		if ( $autoBlockId ) {
+			$blockIds[] = $autoBlockId;
 		}
 	}
 
@@ -639,7 +644,7 @@ class Block {
 		}
 
 		# Allow hooks to cancel the autoblock.
-		if ( !wfRunHooks( 'AbortAutoblock', array( $autoblockIP, &$this ) ) ) {
+		if ( !Hooks::run( 'AbortAutoblock', [ $autoblockIP, $this ] ) ) {
 			wfDebug( "Autoblock aborted by hook.\n" );
 			return false;
 		}
@@ -670,7 +675,6 @@ class Block {
 		$timestamp = wfTimestampNow();
 		$autoblock->mTimestamp = $timestamp;
 		$autoblock->mAuto = 1;
-		$autoblock->prevents( 'createaccount', $this->prevents( 'createaccount' ) );
 		# Continue suppressing the name if needed
 		$autoblock->mHideName = $this->mHideName;
 		$autoblock->prevents( 'editownusertalk', $this->prevents( 'editownusertalk' ) );
@@ -879,9 +883,6 @@ class Block {
 				# For now... <evil laugh>
 				return true;
 
-			case 'createaccount':
-				return wfSetVar( $this->mCreateAccount, $x );
-
 			case 'sendemail':
 				return wfSetVar( $this->mBlockEmail, $x );
 
@@ -964,10 +965,16 @@ class Block {
 	 * Purge expired blocks from the ipblocks table
 	 */
 	public static function purgeExpired() {
+		global $wgCityId;
+
 		if ( !wfReadOnly() ) {
-			$dbw = wfGetDB( DB_MASTER );
-			$dbw->delete( 'ipblocks',
-				array( 'ipb_expiry < ' . $dbw->addQuotes( $dbw->timestamp() ) ), __METHOD__ );
+			// Wikia change - begin
+			// @see SUS-2147
+			$task = new Wikia\Tasks\Tasks\BlockPurgeExpiredTask();
+			$task->wikiId( $wgCityId );
+			$task->call( 'purgeExpired' );
+			$task->queue();
+			// Wikia change - end
 		}
 	}
 
@@ -1221,12 +1228,43 @@ class Block {
 	}
 
 	/**
-	 * @author Krzysztof Krzyżaniak (eloy) <eloy@wikia-inc.com>
-	 * wikia change for Phalanx
-	 *
-	 * @param $blockEmail boolean
+	 * Wikia change
+	 * SUS-288: Hide blocker name from logs and error pages if the block was made by staff/VSTF
+	 * @return bool Whether to hide the blocker's user name
 	 */
-	public function setCreateAccount( $createAccount ) {
-		$this->mCreateAccount = $createAccount;
+	public function shouldHideBlockerName() {
+		$blocker = ( $this->blocker instanceof User ) ? $this->blocker : User::newFromName( $this->blocker );
+
+		if ( $blocker instanceof User ) {
+			$this->blocker = $blocker;
+			return $this->permissionsService()->hasPermission( $blocker, 'hideblockername' );
+		}
+
+		return false;
+	}
+
+	/**
+	 * SUS-288: Return the group name that should be shown instead of user name if the blocker name is hidden
+	 * (i.e. if the block was made by staff/VSTF)
+	 * @return string Group name text that will be parsed and output on the error page
+	 */
+	public function getGroupNameForHiddenBlocker() {
+		/** @var User $blockerUser */
+		$blockerUser = $this->getBlocker();
+		$permissionsService = $this->permissionsService();
+
+		// Get the global groups of this user that have 'hideblockername' permission
+		$groups = array_intersect(
+			$permissionsService->getExplicitGlobalGroups( $blockerUser ),
+			$permissionsService->getConfiguration()->getGroupsWithPermission( 'hideblockername' )
+		);
+
+		// Select the group name to show in the block message
+		if ( count( $groups ) ) {
+			$group = array_shift( $groups );
+			return User::getGroupName( $group );
+		}
+
+		return '';
 	}
 }

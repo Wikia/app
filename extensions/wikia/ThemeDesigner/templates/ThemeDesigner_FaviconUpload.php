@@ -1,1 +1,5 @@
-<?= json_encode(array('faviconImageUrl' => $faviconImageUrl, 'faviconImageName' => $faviconImageName, 'errors' => $errors)) ?>
+<?= json_encode( [
+	'faviconImageUrl' => $faviconImageUrl,
+	'faviconImageName' => $faviconImageName,
+	'errors' => $errors ]
+) ?>

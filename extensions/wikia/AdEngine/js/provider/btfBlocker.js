@@ -1,11 +1,12 @@
 /*global define*/
 define('ext.wikia.adEngine.provider.btfBlocker', [
 	'ext.wikia.adEngine.adContext',
-	'ext.wikia.aRecoveryEngine.recovery.helper',
+	'ext.wikia.adEngine.bridge',
+	'ext.wikia.adEngine.messageListener',
 	'wikia.lazyqueue',
 	'wikia.log',
 	'wikia.window'
-], function (adContext, recoveryHelper, lazyQueue, log, win) {
+], function (adContext, bridge, messageListener, lazyQueue, log, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.btfBlocker',
@@ -14,34 +15,67 @@ define('ext.wikia.adEngine.provider.btfBlocker', [
 	win.ads = win.ads || {};
 	win.ads.runtime = win.ads.runtime || {};
 	win.ads.runtime.disableBtf = false;
+	win.ads.runtime.unblockHighlyViewableSlots = false;
 
-	function decorate(atfSlots, fillInSlot) {
-		var btfQueue = [],
-			btfQueueStarted = false,
-			pendingAtfSlots = []; // ATF slots pending for response
+	messageListener.register({dataKey: 'disableBtf', infinite: true}, function (msg) {
+		win.ads.runtime.disableBtf = Boolean(msg.disableBtf);
+	});
+
+	function unblock(slotName) {
+		log(['unblocking', slotName], log.levels.info, logGroup);
+		unblockedSlots.push(slotName);
+	}
+
+	function isBTFDisabledByCreative() {
+		return win.ads.runtime.disableBtf;
+	}
+
+	var btfQueue = [],
+		btfQueueStarted = false,
+		pendingAtfSlots = []; // ATF slots pending for response
+	var fillInSlotCallbacks = {};
+
+	function decorate(fillInSlot, config) {
 
 		// Update state on each pv on Mercury
-		adContext.addCallback(function() {
+		adContext.addCallback(function () {
 			btfQueue = [];
 			btfQueueStarted = false;
 			pendingAtfSlots = [];
 			win.ads.runtime.disableBtf = false;
+			win.ads.runtime.unblockHighlyViewableSlots = false;
 			unblockedSlots = [];
 		});
 
-		function processBtfSlot(slot) {
-			log(['processBtfSlot', slot.name], 'debug', logGroup);
+		// as soon as we know that user has adblock, unblock BTF slots
+		win.addEventListener('wikia.blocking', startBtfQueue);
 
-			if (unblockedSlots.indexOf(slot.name) > -1 || !win.ads.runtime.disableBtf) {
-				fillInSlot(slot);
+		function processBtfSlot(slot) {
+
+			if (bridge.universalAdPackage.isFanTakeoverLoaded() && slot.name === 'INVISIBLE_HIGH_IMPACT_2') {
+				log(['IHI2 disabled when UAP on page'], log.levels.info, logGroup);
 				return;
 			}
 
-			slot.collapse({adType: 'blocked'});
+			if (win.ads.runtime.unblockHighlyViewableSlots && config.highlyViewableSlots) {
+				log(['Unblocking HiVi slots', slot.name], log.levels.info, logGroup);
+				config.highlyViewableSlots.map(unblock);
+			}
+
+			if (unblockedSlots.indexOf(slot.name) > -1 || !isBTFDisabledByCreative()) {
+				log(['Filling slot', slot.name], log.levels.info, logGroup);
+				fillInSlotCallbacks[slot.name](slot);
+				return;
+			}
+
+			log(['Collapsing slot', slot.name], log.levels.info, logGroup);
+			if (slot.collapse) {
+				slot.collapse({adType: 'blocked'});
+			}
 		}
 
 		function startBtfQueue() {
-			log('startBtfQueue', 'debug', logGroup);
+			log('startBtfQueue', log.levels.info.debug, logGroup);
 
 			if (btfQueueStarted) {
 				return;
@@ -54,7 +88,7 @@ define('ext.wikia.adEngine.provider.btfBlocker', [
 		}
 
 		function onSlotResponse(slotName) {
-			log(['onSlotResponse', slotName], 'debug', logGroup);
+			log(['onSlotResponse', slotName], log.levels.info.debug, logGroup);
 
 			// Remove slot from pendingAtfSlots
 			var index = pendingAtfSlots.indexOf(slotName);
@@ -63,49 +97,52 @@ define('ext.wikia.adEngine.provider.btfBlocker', [
 				pendingAtfSlots.splice(index, 1);
 
 				// If pendingAtfSlots is empty, start BTF slots
+				log(['remove from pendingAtfSlots', pendingAtfSlots, slotName], log.levels.debug, logGroup);
 				if (pendingAtfSlots.length === 0) {
 					startBtfQueue();
 				}
 			}
+		}
 
-			if (recoveryHelper.isBlocking()) {
-				startBtfQueue();
-			}
+		function shouldDelaySlotFillIn(slotName) {
+			var shouldDelay = adContext.getContext().opts.delayBtf;
+
+			log(['shouldDelaySlotFillIn', shouldDelay, slotName], log.levels.debug, logGroup);
+
+			return shouldDelay;
 		}
 
 		function fillInSlotWithDelay(slot) {
-			log(['fillInSlotWithDelay', slot.name], 'debug', logGroup);
+			log(['fillInSlotWithDelay', slot.name], log.levels.info.debug, logGroup);
 
 			function fillInSlotOnResponse() {
-				onSlotResponse(slot.name, fillInSlot);
+				onSlotResponse(slot.name);
 			}
 
-			if (!adContext.getContext().opts.delayBtf) {
+			if (!shouldDelaySlotFillIn(slot.name)) {
 				fillInSlot(slot);
 				return;
 			}
 
 			// For the above the fold slot:
-			if (atfSlots.indexOf(slot.name) > -1) {
+			if (config && config.atfSlots && config.atfSlots.indexOf(slot.name) > -1) {
 				pendingAtfSlots.push(slot.name);
 
-				slot.pre('success', fillInSlotOnResponse);
+				slot.pre('renderEnded', fillInSlotOnResponse);
 				slot.pre('collapse', fillInSlotOnResponse);
 				slot.pre('hop', fillInSlotOnResponse);
+				slot.pre('success', fillInSlotOnResponse);
 
 				fillInSlot(slot);
 				return;
 			}
 
 			// For the below the fold slot:
+			fillInSlotCallbacks[slot.name] = fillInSlot;
 			btfQueue.push(slot);
 		}
 
 		return fillInSlotWithDelay;
-	}
-
-	function unblock(slotName) {
-		unblockedSlots.push(slotName);
 	}
 
 	return {

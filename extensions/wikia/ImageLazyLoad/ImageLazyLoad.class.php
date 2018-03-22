@@ -10,24 +10,21 @@ class ImageLazyLoad  {
 	const LAZY_IMAGE_CLASSES = 'lzy lzyPlcHld';
 	const IMG_ONLOAD = "if(typeof ImgLzy==='object'){ImgLzy.load(this)}";
 
-	private static $isWikiaMobile = null;
 	private static $enabled = null;
 
-	public static function isEnabled() {
+	private static function isEnabled(): bool {
 		if ( is_null( self::$enabled ) ) {
-			$app = F::app();
-			self::$enabled = false;
-
-			if ( self::$isWikiaMobile === null ) {
-				self::$isWikiaMobile = $app->checkSkin( 'wikiamobile' );
-			}
-
-			if ( !self::$isWikiaMobile && empty( $app->wg->RTEParserEnabled ) ) {
-				self::$enabled = true;
-			}
+			self::$enabled = !F::app()->checkSkin( 'wikiamobile' );
 		}
 
 		return self::$enabled;
+	}
+
+	/**
+	 * Disable image loading for the scope of the current request
+	 */
+	public static function disable() {
+		self::$enabled = false;
 	}
 
 	public static function onThumbnailImageHTML( $options, $linkAttribs, $attribs, $file, &$html ) {
@@ -61,9 +58,9 @@ class ImageLazyLoad  {
 	}
 
 	public static function onGalleryBeforeRenderImage( &$image ) {
-		global $wgRTEParserEnabled, $wgParser;
+		global $wgParser;
 
-		if ( self::isEnabled() && empty( $wgRTEParserEnabled ) ) {
+		if ( self::isEnabled() ) {
 
 			// Don't lazy-load data elements
 			if ( startsWith( $image[ 'thumbnail' ], 'data:' ) ) {
@@ -90,14 +87,14 @@ class ImageLazyLoad  {
 
 	}
 
-	public static function onParserClearState( &$parser ) {
+	public static function onParserClearState( Parser $parser ) {
 		if ( !empty( $parser->lazyLoadedImagesCount ) ) {
 			$parser->lazyLoadedImagesCount = 0;
 		}
 		return true;
 	}
 
-	public static function onBeforePageDisplay( OutputPage &$out, &$skin ) {
+	public static function onBeforePageDisplay( OutputPage $out, Skin $skin ): bool {
 		global $wgExtensionsPath;
 		if ( self::isEnabled() ) {
 			$out->addHtml( '<noscript><link rel="stylesheet" href="' . $wgExtensionsPath . '/wikia/ImageLazyLoad/css/ImageLazyLoadNoScript.css" /></noscript>' );
@@ -106,34 +103,10 @@ class ImageLazyLoad  {
 	}
 
 	/**
-	 * Add wgEnableWebPSupportStats and wgEnableWebPThumbnails global JS variables
-	 *
-	 * wgEnableWebPSupportStats: report WebP support when enabled
-	 * wgEnableWebPThumbnails: request WebP thumbnails if enabled (and supported by the browser)
-	 *
-	 * @param array $vars JS variables
-	 * @return bool true
-	 */
-	public static function onMakeGlobalVariablesScript( Array &$vars ) {
-		global $wgEnableWebPSupportStats, $wgEnableWebPThumbnails;
-
-		if ( self::isEnabled() ) {
-			if ( !empty( $wgEnableWebPSupportStats ) ) {
-				$vars['wgEnableWebPSupportStats'] = true;
-			}
-
-			if ( !empty( $wgEnableWebPThumbnails ) ) {
-				$vars['wgEnableWebPThumbnails'] = true;
-			}
-		}
-		return true;
-	}
-
-	/**
 	 * Update thumbnail img attributes when lazy loading
-	 * @param WikiaController $controller
+	 * @param WikiaDispatchableObject $controller
 	 */
-	public static function setLazyLoadingAttribs( WikiaController $controller ) {
+	public static function setLazyLoadingAttribs( WikiaDispatchableObject $controller ) {
 		$controller->onLoad = self::IMG_ONLOAD;
 		$controller->imgClass = array_merge( $controller->imgClass, explode( ' ', self::LAZY_IMAGE_CLASSES ) );
 		$controller->dataSrc = $controller->imgSrc;
@@ -142,21 +115,20 @@ class ImageLazyLoad  {
 
 	/**
 	 * Check whether or not the image is valid for lazy loading
-	 * @global boolean $wgRTEParserEnabled
-	 * @global type $wgParser
 	 * @param string $imgSrc
 	 * @return boolean
 	 */
 	public static function isValidLazyLoadedImage( $imgSrc ) {
-		global $wgRTEParserEnabled, $wgParser;
+		global $wgParser;
 
-		if ( self::isEnabled() && empty( $wgRTEParserEnabled ) ) {
+		if ( self::isEnabled() ) {
 			// Don't lazy-load data elements
 			if ( startsWith( $imgSrc, 'data:' ) ) {
 				return false;
 			}
 
-			if ( !empty( $wgParser ) ) {
+			// Use empty as wgParser is wrapped with StubObject so the object may not be initized yet.
+			if ( !empty( $wgParser ) && !empty( $wgParser->mIsMainParse ) ) {
 				if ( empty( $wgParser->lazyLoadedImagesCount ) ) {
 					$wgParser->lazyLoadedImagesCount = 0;
 				}

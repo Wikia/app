@@ -103,7 +103,7 @@ class LinksUpdate {
 
 		$this->mRecursive = $recursive;
 
-		wfRunHooks( 'LinksUpdateConstructed', array( &$this ) );
+		Hooks::run( 'LinksUpdateConstructed', [ $this ] );
 	}
 
 	/**
@@ -112,13 +112,13 @@ class LinksUpdate {
 	public function doUpdate() {
 		global $wgUseDumbLinkUpdate;
 
-		wfRunHooks( 'LinksUpdate', array( &$this ) );
+		Hooks::run( 'LinksUpdate', [ $this ] );
 		if ( $wgUseDumbLinkUpdate ) {
 			$this->doDumbUpdate();
 		} else {
 			$this->doIncrementalUpdate();
 		}
-		wfRunHooks( 'LinksUpdateComplete', array( &$this ) );
+		Hooks::run( 'LinksUpdateComplete', [ $this ] );
 	}
 
 	protected function doIncrementalUpdate() {
@@ -191,7 +191,7 @@ class LinksUpdate {
 		/* Wikia change end */
 		$this->updateCategoryCounts( $categoryInserts, $categoryDeletes );
 
-		wfRunHooks( 'AfterCategoriesUpdate', array( $categoryInserts, $categoryDeletes, $this->mTitle ) );
+		Hooks::run( 'AfterCategoriesUpdate', array( $categoryInserts, $categoryDeletes, $this->mTitle ) );
 
 		Wikia::setVar('categoryInserts', $categoryInserts);
 
@@ -284,7 +284,7 @@ class LinksUpdate {
 			$task = new BatchRefreshLinksForTemplate();
 			$task->title( $this->mTitle );
 			$task->wikiId( $wgCityId );
-			$task->call( 'refreshTemplateLinks', $start, $end );
+			$task->call( 'refreshTemplateLinks', $start, $end, wfTimestampNow() );
 			$task->queue();
 
 			Wikia\Logger\WikiaLogger::instance()->info( 'LinksUpdate::queueRefreshTasks', [
@@ -508,7 +508,7 @@ class LinksUpdate {
 
 		}
 
-		wfRunHooks( 'LinksUpdateInsertTemplates', [ $this->mId, $arr ] );
+		Hooks::run( 'LinksUpdateInsertTemplates', [ $this->mId, $arr ] );
 
 		return $arr;
 	}

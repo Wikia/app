@@ -3,10 +3,6 @@ class VideoHandlerHooks {
 
 	const VIDEO_WIKI = 298117;
 
-	static public function WikiaVideo_isMovable( $result, $index ) {
-		return true;
-	}
-
 	static public function WikiaVideoParserBeforeStrip( $parser, &$text, $strip_state ) {
 
 		global $wgWikiaVideoGalleryId, $wgRTEParserEnabled;
@@ -69,7 +65,7 @@ class VideoHandlerHooks {
 			'backend' => 'local-backend',
 		);
 
-		wfRunHooks( 'AfterSetupLocalFileRepo', [&$wgLocalFileRepo] );
+		Hooks::run( 'AfterSetupLocalFileRepo', [&$wgLocalFileRepo] );
 		return true;
 	}
 
@@ -84,8 +80,8 @@ class VideoHandlerHooks {
 	 * @param Parser $parser
 	 * @return bool
 	 */
-	static public function initParserHook( &$parser ) {
-		$parser->setHook('videogallery', array($parser, 'renderImageGallery'));
+	static public function initParserHook( Parser $parser ): bool {
+		$parser->setHook( 'videogallery', [ 'CoreTagHooks', 'gallery' ] );
 		return true;
 	}
 
@@ -142,7 +138,7 @@ class VideoHandlerHooks {
 		return false;
 	}
 
-	static public function convertOldInterwikiToNewInterwiki( &$parser, &$text ) {
+	static public function convertOldInterwikiToNewInterwiki( Parser $parser, string &$text ): bool {
 		global $wgRTEParserEnabled;
 		if ( $wgRTEParserEnabled ) {
 			return true;

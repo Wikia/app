@@ -4,23 +4,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 }
 
 class AntiSpoofHooks {
-	/**
-	 * @param $updater DatabaseUpdater
-	 * @return bool
-	 */
-	public static function asUpdateSchema( $updater = null ) {
-		if ( $updater === null ) {
-			global $wgExtNewTables, $wgDBtype;
-			$wgExtNewTables[] = array(
-				'spoofuser',
-				dirname( __FILE__ ) . '/sql/patch-antispoof.' . $wgDBtype . '.sql', true );
-		} else {
-			$updater->addExtensionUpdate( array( 'addTable', 'spoofuser',
-				dirname( __FILE__ ) . '/sql/patch-antispoof.' . $updater->getDB()->getType() . '.sql', true ) );
-		}
-		return true;
-	}
-
+	
 	/**
 	 * @param $name string Username
 	 * @return SpoofUser
@@ -85,7 +69,7 @@ class AntiSpoofHooks {
 	 * @param $template UsercreateTemplate
 	 * @return bool
 	 */
-	public static function asUserCreateFormHook( &$template ) {
+	public static function asUserCreateFormHook( UsercreateTemplate $template ): bool {
 		global $wgRequest, $wgAntiSpoofAccounts, $wgUser;
 
 		if ( $wgAntiSpoofAccounts && $wgUser->isAllowed( 'override-antispoof' ) ) {

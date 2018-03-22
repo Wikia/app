@@ -280,7 +280,6 @@ class OutputPage extends ContextSource {
 		if( $responsecode == '301' ) {
 			$this->setSquidMaxage( 1200 );
 		}
-		# end wikia change
 	}
 
 	/**
@@ -681,7 +680,7 @@ class OutputPage extends ContextSource {
 			'user' => $this->getUser()->getTouched(),
 			'epoch' => $wgCacheEpoch
 		);
-		wfRunHooks( 'OutputPageCheckLastModified', array( &$modifiedTimes ) );
+		Hooks::run( 'OutputPageCheckLastModified', array( &$modifiedTimes ) );
 
 		$maxModified = max( $modifiedTimes );
 		$this->mLastModified = wfTimestamp( TS_RFC2822, $maxModified );
@@ -1221,7 +1220,7 @@ class OutputPage extends ContextSource {
 		}
 
 		# Add the remaining categories to the skin
-		if ( wfRunHooks( 'OutputPageMakeCategoryLinks', array( &$this, $categories, &$this->mCategoryLinks ) ) ) {
+		if ( Hooks::run( 'OutputPageMakeCategoryLinks', [ $this, $categories, &$this->mCategoryLinks ] ) ) {
 			foreach ( $categories as $category => $type ) {
 				$origcategory = $category;
 				$title = Title::makeTitleSafe( NS_CATEGORY, $category );
@@ -1641,7 +1640,7 @@ class OutputPage extends ContextSource {
 			}
 		}
 
-		wfRunHooks( 'OutputPageParserOutput', array( &$this, $parserOutput ) );
+		Hooks::run( 'OutputPageParserOutput', [ $this, $parserOutput ] );
 	}
 
 	/**
@@ -1653,7 +1652,7 @@ class OutputPage extends ContextSource {
 		$this->addParserOutputNoText( $parserOutput );
 		$text = $parserOutput->getText();
 
-		wfRunHooks( 'OutputPageBeforeHTML', array( &$this, &$text ) );
+		Hooks::run( 'OutputPageBeforeHTML', [ $this, &$text ] );
 
 		$this->addHTML( $text );
 	}
@@ -1768,11 +1767,12 @@ class OutputPage extends ContextSource {
 				array(
 					"{$wgCookiePrefix}Token",
 					"{$wgCookiePrefix}LoggedOut",
-					session_name()
+					session_name(),
+					'access_token',
 				),
 				$wgCacheVaryCookies
 			);
-			wfRunHooks( 'GetCacheVaryCookies', array( $this, &$cookies ) );
+			Hooks::run( 'GetCacheVaryCookies', array( $this, &$cookies ) );
 		}
 		return $cookies;
 	}
@@ -2072,7 +2072,7 @@ class OutputPage extends ContextSource {
 			$redirect = $this->mRedirect;
 			$code = $this->mRedirectCode;
 
-			if( wfRunHooks( "BeforePageRedirect", array( $this, &$redirect, &$code ) ) ) {
+			if( Hooks::run( "BeforePageRedirect", array( $this, &$redirect, &$code ) ) ) {
 				if( $code == '301' || $code == '303' ) {
 					if( !$wgDebugRedirects ) {
 						$message = HttpStatus::getMessage( $code );
@@ -2084,6 +2084,10 @@ class OutputPage extends ContextSource {
 					$this->addVaryHeader( 'X-Forwarded-Proto' );
 				}
 				$this->sendCacheControl();
+
+				// SUS-4175 | make the source of the redirect more obvious
+				$response->header( 'X-Redirected-By: mw-OutputPage::redirect' );
+				# end wikia change
 
 				$response->header( "Content-Type: text/html; charset=utf-8" );
 				if( $wgDebugRedirects ) {
@@ -2126,14 +2130,14 @@ class OutputPage extends ContextSource {
 
 			// Hook that allows last minute changes to the output page, e.g.
 			// adding of CSS or Javascript by extensions.
-			wfRunHooks( 'BeforePageDisplay', array( &$this, &$sk ) );
+			Hooks::run( 'BeforePageDisplay', [ $this, $sk ] );
 
 			wfProfileIn( 'Output-skin' );
 			$sk->outputPage();
 			wfProfileOut( 'Output-skin' );
 		}
 
-		wfRunHooks( 'BeforeSendCacheControl', array( &$this ) ); // Wikia change
+		Hooks::run( 'BeforeSendCacheControl', [ $this ] ); // Wikia change
 
 		$this->sendCacheControl();
 		ob_end_flush();
@@ -2331,7 +2335,7 @@ class OutputPage extends ContextSource {
 
 		# Wikia change - begin
 		# @author macbre
-		wfRunHooks( 'AfterFormatPermissionsErrorMessage', array( &$errors, $action ) );
+		Hooks::run( 'AfterFormatPermissionsErrorMessage', array( &$errors, $action ) );
 		# Wikia change - end
 
 		if ( count( $errors ) > 1 ) {
@@ -2596,7 +2600,7 @@ $templates
 		$bodyAttrs['class'] .= ' action-' . Sanitizer::escapeClass( Action::getActionName( $this->getContext() ) );
 
 		$sk->addToBodyAttributes( $this, $bodyAttrs ); // Allow skins to add body attributes they need
-		wfRunHooks( 'OutputPageBodyAttributes', array( $this, $sk, &$bodyAttrs ) );
+		Hooks::run( 'OutputPageBodyAttributes', array( $this, $sk, &$bodyAttrs ) );
 
 		$ret .= Html::openElement( 'body', $bodyAttrs ) . "\n";
 
@@ -2625,16 +2629,14 @@ $templates
 		}
 
 		MWDebug::addModules( $this );
-		$skin = $this->getSkin();
 
 		// Add various resources if required
 		if ( $wgUseAjax ) {
 			# macbre: following files are part of merged JS for following skins - don't load them from here
-			$skinName = get_class( $skin );
 
 			$this->addModules( 'mediawiki.legacy.ajax' );
 
-			wfRunHooks( 'AjaxAddScript', array( &$this ) );
+			Hooks::run( 'AjaxAddScript', [ $this ] );
 
 
 			if( $wgAjaxWatch && $this->getUser()->isLoggedIn() ) {
@@ -2899,7 +2901,7 @@ $templates
 
 		/* Wikia change begin - @author: Macbre */
 		/* allow old skins to inject JS code before files from MW core (BugId:960) */
-		wfRunHooks('SkinGetHeadScripts', array(&$scripts));
+		Hooks::run('SkinGetHeadScripts', array(&$scripts));
 		/* Wikia change end */
 
 		return $scripts;
@@ -3111,7 +3113,7 @@ $templates
 		// Use the 'ResourceLoaderGetConfigVars' hook if the variable is not
 		// page-dependant but site-wide (without state).
 		// Alternatively, you may want to use OutputPage->addJsConfigVars() instead.
-		wfRunHooks( 'MakeGlobalVariablesScript', array( &$vars, $this ) );
+		Hooks::run( 'MakeGlobalVariablesScript', array( &$vars, $this ) );
 
 		// Merge in variables from addJsConfigVars last
 		return array_merge( $vars, $this->mJsConfigVars );
@@ -3258,10 +3260,10 @@ $templates
 		# apple-touch-icon is specified first to avoid this.
 		if ( $wgAppleTouchIcon !== false ) {
 			// Wikia change begin - @author: macbre
-			$appleTouchIcon = wfReplaceImageServer($wgAppleTouchIcon, SassUtil::getCacheBuster());
-			// Wikia change end
+			$appleTouchIcon = Wikia::getWikiLogoMetadata();
 
-			$tags[] = Html::element( 'link', array( 'rel' => 'apple-touch-icon', 'href' => $appleTouchIcon ) );
+			$tags[] = Html::element( 'link', array( 'rel' => 'apple-touch-icon', 'href' => $appleTouchIcon['url'], 'sizes' => $appleTouchIcon['size'] ) );
+			// Wikia change end
 		}
 
 		$tags[] = Html::element( 'link', array( 'rel' => 'shortcut icon', 'href' => Wikia::getFaviconFullUrl() ) );

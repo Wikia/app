@@ -1,0 +1,170 @@
+page:
+  -
+    page_id: 1
+    page_namespace: 0
+    page_title: TestArticleOne
+    page_restrictions: ''
+    page_random: 0
+    page_latest: 1
+    page_len: 0
+  -
+    page_id: 2
+    page_namespace: 0
+    page_title: TestArticle2
+    page_restrictions: ''
+    page_random: 0
+    page_latest: 6
+    page_len: 0
+  -
+    page_id: 3
+    page_namespace: 0
+    page_title: TestArticle3
+    page_restrictions: ''
+    page_random: 0
+    page_latest: 3
+    page_len: 0
+  -
+    page_id: 4
+    page_namespace: 1
+    page_title: TestTalkPage
+    page_restrictions: ''
+    page_random: 0
+    page_latest: 4
+    page_len: 0
+  -
+    page_id: 5
+    page_namespace: 0
+    page_title: TestAnonArticle
+    page_restrictions: ''
+    page_random: 0
+    page_latest: 5
+    page_len: 0
+revision:
+  -
+    rev_id: 1
+    rev_page: 1
+    rev_text_id: 1
+    rev_comment: ''
+    rev_user: 1
+    rev_user_text: 188.146.144.183
+    rev_timestamp: 20090101000000
+  -
+    rev_id: 2
+    rev_page: 2
+    rev_parent_id: 0
+    rev_text_id: 2
+    rev_comment: ''
+    rev_user: 2
+    rev_user_text: ''
+    rev_timestamp: 20110101000000
+  -
+    rev_id: 3
+    rev_page: 3
+    rev_text_id: 3
+    rev_comment: ''
+    rev_user: 2
+    rev_user_text: ''
+    rev_timestamp: 20130101000000
+  -
+    rev_id: 4
+    rev_page: 4
+    rev_text_id: 4
+    rev_comment: ''
+    rev_user: 1
+    rev_user_text: ''
+    rev_timestamp: 20130101000000
+  -
+    rev_id: 5
+    rev_page: 5
+    rev_text_id: 5
+    rev_comment: ''
+    rev_user: 0
+    rev_user_text: '8.8.8.8'
+    rev_timestamp: 20130101000000
+  -
+    rev_id: 6
+    rev_page: 2
+    rev_parent_id: 0
+    rev_text_id: 6
+    rev_comment: ''
+    rev_user: 1
+    rev_user_text: ''
+    rev_timestamp: 20120101000000
+text:
+  -
+    old_id: 1
+    old_text: Lorem ipsum
+    old_flags: ''
+  -
+    old_id: 2
+    old_text: RevisionToRevertTo
+    old_flags: ''
+  -
+    old_id: 3
+    old_text: Asdf
+    old_flags: ''
+  -
+    old_id: 4
+    old_text: UserComment
+    old_flags: ''
+  -
+    old_id: 5
+    old_text: Blablabla
+    old_flags: ''
+  -
+    old_id: 6
+    old_text: RevisionToRevert
+    old_flags: ''
+user:
+  -
+    user_id: 1
+    user_name: 'TargetUser'
+    user_real_name: ''
+    user_email: 'kossuth.lajos@lajoskossuth.hu'
+    user_touched: '20110101000000'
+    user_token: 'loremipsum'
+    user_email_authenticated: '20101102000000'
+    user_email_token: 'dolorsitamet'
+    user_email_token_expires: '20120301120000'
+    user_registration: '20090604060000'
+    user_editcount: 2500
+    user_birthdate:
+  -
+    user_id: 2
+    user_name: 'UnrelatedUser'
+    user_real_name: ''
+    user_email: 'ferencjozsef@kuk.hu'
+    user_touched: '20110101000000'
+    user_token: 'loremipsum'
+    user_email_authenticated: '20101102000000'
+    user_email_token: 'dolorsitamet'
+    user_email_token_expires: '20120301120000'
+    user_registration: '20090604060000'
+    user_editcount: 2500
+    user_birthdate:
+  -
+    user_id: 3
+    user_name: 'UserWithNoEdits'
+    user_real_name: ''
+    user_email: 'stachu.jones@poznan.pl'
+    user_touched: '20110101000000'
+    user_token: 'loremipsum'
+    user_email_authenticated: '20101102000000'
+    user_email_token: 'dolorsitamet'
+    user_email_token_expires: '20120301120000'
+    user_registration: '20090604060000'
+    user_editcount: 2500
+    user_birthdate:
+  -
+    user_id: 4
+    user_name: 'AdminUser'
+    user_real_name: ''
+    user_email: 'admin@example.com'
+    user_touched: '20110101000000'
+    user_token: 'loremipsum'
+    user_email_authenticated: '20101102000000'
+    user_email_token: 'dolorsitamet'
+    user_email_token_expires: '20120301120000'
+    user_registration: '20090604060000'
+    user_editcount: 2500
+    user_birthdate:

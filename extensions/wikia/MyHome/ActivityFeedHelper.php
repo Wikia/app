@@ -183,17 +183,17 @@ class ActivityFeedHelper {
 		return true;
 	}
 
-	static function onArticleSaveComplete(&$article, &$user, $text, $summary, $minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId) {
+	static function onArticleSaveComplete( WikiPage $article, User $user, $text, $summary, $minoredit, $watchthis, $sectionanchor, $flags, $revision, Status &$status, $baseRevId) {
 		self::purgeCommunityWidgetInVarnish($article->mTitle);
 		return true;
 	}
 
-	static function onArticleDeleteComplete(&$article, &$user, $reason, $id) {
+	static function onArticleDeleteComplete( WikiPage $article, User $user, $reason, $id ): bool {
 		self::purgeCommunityWidgetInVarnish($article->mTitle);
 		return true;
 	}
 
-	static function onTitleMoveComplete(&$title, &$newtitle, &$user, $oldid, $newid) {
+	static function onTitleMoveComplete( Title $title, Title $newtitle, User $user, $oldid, $newid ): bool {
 		self::purgeCommunityWidgetInVarnish($newtitle);
 		return true;
 	}
@@ -262,7 +262,6 @@ function CommunityWidgetAjax() {
 	global $wgRequest, $wgLang, $wgLanguageCode, $wgContentNamespaces;
 	wfProfileIn(__METHOD__);
 
-	//this should be the same as in /extensions/wikia/WidgetFramework/Widgets/WidgetCommunity/WidgetCommunity.php
 	$parameters = array(
 		'type' => 'widget',
 		'maxElements' => 5,

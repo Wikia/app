@@ -64,7 +64,7 @@ class ResourceLoaderUserModule extends ResourceLoaderGlobalWikiModule {
 				unset( $pages[$excludepage] );
 			}
 
-			wfRunHooks( 'ResourceLoaderUserModule::getPages', array( $this, $context, $userpage, &$pages ) );
+			Hooks::run( 'ResourceLoaderUserModule::getPages', array( $this, $context, $userpage, &$pages ) );
 
 			return $pages;
 		}

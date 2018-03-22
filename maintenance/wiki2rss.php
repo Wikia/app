@@ -100,8 +100,8 @@ class BackupReader {
 		 } 
 		}
 		
-		$html =  preg_replace("'<a href=\"http:\/\/(.*?)nofollow\">'si",'<a href="AYEXTHREFLINK">',$html); //replace links
-		$html =  preg_replace("'<a href=\"http:\/\/\"/index.php(.*?)\">'si",'<a href="AYINTHREFLINK">',$html); //replace links		
+		$html =  preg_replace("'<a href=\"https?:\/\/(.*?)nofollow\">'si",'<a href="AYEXTHREFLINK">',$html); //replace links
+		$html =  preg_replace("'<a href=\"https?:\/\/\"/index.php(.*?)\">'si",'<a href="AYINTHREFLINK">',$html); //replace links
 		$html =  preg_replace("'<script(.*?)</script>'si",'',$html); //replace links
 		
 		$html = str_replace('</p><p><br />','',$html);
@@ -197,9 +197,8 @@ class BackupReader {
 		$source = new ImportStreamSource( $handle );
 		$importer = new WikiImporter( $source );
 
-		$importer->setPageCallback( array( &$this, 'reportPage' ) );
-		$this->importCallback =  $importer->setRevisionCallback(
-			array( &$this, 'handleRevision' ) );
+		$importer->setPageCallback( [ $this, 'reportPage' ] );
+		$this->importCallback = $importer->setRevisionCallback( [ $this, 'handleRevision' ] );
 
 		return $importer->doImport();
 	}

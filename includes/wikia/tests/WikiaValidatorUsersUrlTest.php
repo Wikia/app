@@ -1,12 +1,16 @@
 <?php
 
-class WikiaValidatorUsersUrlTest extends PHPUnit_Framework_TestCase {
+use PHPUnit\Framework\TestCase;
+
+class WikiaValidatorUsersUrlTest extends TestCase {
 
 	/* @var $validator WikiaValidatorUsersUrlTest */
 	private $validator;
 
 	protected function setUp () {
-		$this->validator = $this->getMock('WikiaValidatorUsersUrl', array('getUserNameFromUrl'));
+		$this->validator = $this->getMockBuilder( WikiaValidatorUsersUrl::class )
+			->setMethods( [ 'getUserNameFromUrl' ] )
+			->getMock();
 	}
 
 	/**
@@ -16,8 +20,7 @@ class WikiaValidatorUsersUrlTest extends PHPUnit_Framework_TestCase {
 		$this->validator
 			->expects($this->any())
 			->method('getUserNameFromUrl')
-			// TODO uncoment line below after we update phpunit: https://github.com/sgronblo/phpunit-mock-objects/commit/c9810f6437b60571b046cfedca1f5a20d2493582
-			//->with($this->equalTo($url))
+			->with($this->equalTo($url))
 			->will($this->returnValue($userName));
 
 		$result = $this->validator->isValid($url);

@@ -59,6 +59,7 @@ $wgAutoloadLocalClasses = array(
 	'DoubleReplacer' => 'includes/StringUtils.php',
 	'DummyLinker' => 'includes/Linker.php',
 	'Dump7ZipOutput' => 'includes/Export.php',
+	'DumpBzOutput' => 'includes/Export.php', # Wikia change
 	'DumpBZip2Output' => 'includes/Export.php',
 	'DumpFileOutput' => 'includes/Export.php',
 	'DumpFilter' => 'includes/Export.php',
@@ -79,7 +80,6 @@ $wgAutoloadLocalClasses = array(
 	'ExternalStore' => 'includes/ExternalStore.php',
 	'ExternalStoreDB' => 'includes/ExternalStoreDB.php',
 	'ExternalStoreHttp' => 'includes/ExternalStoreHttp.php',
-	'ExternalUser' => 'includes/ExternalUser.php',
 	'FakeTitle' => 'includes/FakeTitle.php',
 	'Fallback' => 'includes/Fallback.php',
 	'FatalError' => 'includes/Exception.php',
@@ -135,7 +135,6 @@ $wgAutoloadLocalClasses = array(
 	'IP' => 'includes/IP.php',
 	'LCStore_Accel' => 'includes/LocalisationCache.php',
 	'LCStore_CDB' => 'includes/LocalisationCache.php',
-	'LCStore_DB' => 'includes/LocalisationCache.php',
 	'LCStore_Null' => 'includes/LocalisationCache.php',
 	'License' => 'includes/Licenses.php',
 	'Licenses' => 'includes/Licenses.php',
@@ -231,7 +230,6 @@ $wgAutoloadLocalClasses = array(
 	'UserBlockedError' => 'includes/Exception.php',
 	'UserMailer' => 'includes/UserMailer.php',
 	'UserRightsProxy' => 'includes/UserRightsProxy.php',
-	'ViewCountUpdate' => 'includes/ViewCountUpdate.php',
 	'WantedQueryPage' => 'includes/QueryPage.php',
 	'WatchedItem' => 'includes/WatchedItem.php',
 	'WebRequest' => 'includes/WebRequest.php',
@@ -309,7 +307,6 @@ $wgAutoloadLocalClasses = array(
 	'ApiImport' => 'includes/api/ApiImport.php',
 	'ApiImportReporter' => 'includes/api/ApiImport.php',
 	'ApiLogin' => 'includes/api/ApiLogin.php',
-	'ApiLogout' => 'includes/api/ApiLogout.php',
 	'ApiMain' => 'includes/api/ApiMain.php',
 	'ApiMove' => 'includes/api/ApiMove.php',
 	'ApiOpenSearch' => 'includes/api/ApiOpenSearch.php',
@@ -424,6 +421,7 @@ $wgAutoloadLocalClasses = array(
 	'Field' => 'includes/db/DatabaseUtility.php',
 	'IBM_DB2Blob' => 'includes/db/DatabaseIbm_db2.php',
 	'IBM_DB2Field' => 'includes/db/DatabaseIbm_db2.php',
+	'InMemorySqliteDatabase' => 'includes/db/InMemorySqliteDatabase.php',
 	'LBFactory' => 'includes/db/LBFactory.php',
 	'LBFactory_Multi' => 'includes/db/LBFactory_Multi.php',
 	'LBFactory_Simple' => 'includes/db/LBFactory.php',
@@ -463,11 +461,6 @@ $wgAutoloadLocalClasses = array(
 	'UnifiedDiffFormatter' => 'includes/diff/DairikiDiff.php',
 	'WikiDiff3' => 'includes/diff/WikiDiff3.php',
 	'WordLevelDiff' => 'includes/diff/DairikiDiff.php',
-
-	# includes/extauth
-	'ExternalUser_Hardcoded' => 'includes/extauth/Hardcoded.php',
-	'ExternalUser_MediaWiki' => 'includes/extauth/MediaWiki.php',
-	'ExternalUser_vB' => 'includes/extauth/vB.php',
 
 	# includes/filerepo
 	'FileRepo' => 'includes/filerepo/FileRepo.php',
@@ -563,7 +556,6 @@ $wgAutoloadLocalClasses = array(
 	'WebInstallerPage' => 'includes/installer/WebInstallerPage.php',
 
 	# includes/job
-	'DoubleRedirectJob' => 'includes/job/DoubleRedirectJob.php',
 	'Job' => 'includes/job/JobQueue.php',
 
 	# includes/json
@@ -638,17 +630,16 @@ $wgAutoloadLocalClasses = array(
 	'EmptyBagOStuff' => 'includes/objectcache/EmptyBagOStuff.php',
 	'FakeMemCachedClient' => 'includes/objectcache/EmptyBagOStuff.php',
 	'HashBagOStuff' => 'includes/objectcache/HashBagOStuff.php',
-	'MediaWikiBagOStuff' => 'includes/objectcache/SqlBagOStuff.php',
 	'MemCachedClientforWiki' => 'includes/objectcache/MemcachedClient.php',
 	'MemcachedPhpBagOStuff' => 'includes/objectcache/MemcachedPhpBagOStuff.php',
 	'MultiWriteBagOStuff' => 'includes/objectcache/MultiWriteBagOStuff.php',
 	'MWMemcached' => 'includes/objectcache/MemcachedClient.php',
 	'ObjectCache' => 'includes/objectcache/ObjectCache.php',
-	'SqlBagOStuff' => 'includes/objectcache/SqlBagOStuff.php',
 	'WinCacheBagOStuff' => 'includes/objectcache/WinCacheBagOStuff.php',
 	'XCacheBagOStuff' => 'includes/objectcache/XCacheBagOStuff.php',
 
 	# includes/parser
+	'AbstractInvokableParserHook' => 'includes/parser/AbstractInvokableParserHook.php',
 	'CacheTime' => 'includes/parser/ParserOutput.php',
 	'CoreLinkFunctions' => 'includes/parser/CoreLinkFunctions.php',
 	'CoreParserFunctions' => 'includes/parser/CoreParserFunctions.php',
@@ -805,7 +796,6 @@ $wgAutoloadLocalClasses = array(
 	'MovePageForm' => 'includes/specials/SpecialMovepage.php',
 	'NewPagesPager' => 'includes/specials/SpecialNewpages.php',
 	'PageArchive' => 'includes/specials/SpecialUndelete.php',
-	'PopularPagesPage' => 'includes/specials/SpecialPopularpages.php',
 	'Randompage' => 'includes/specials/SpecialRandompage.php',
 	'RandomPage' => 'includes/specials/SpecialRandompage.php',
 	'ShortPagesPage' => 'includes/specials/SpecialShortpages.php',
@@ -913,6 +903,7 @@ $wgAutoloadLocalClasses = array(
 	'FakeConverter' => 'languages/Language.php',
 	'Language' => 'languages/Language.php',
 	'LanguageConverter' => 'languages/LanguageConverter.php',
+	'WikiaLanguage' => 'languages/WikiaLanguage.php',
 
 	# maintenance
 	'ConvertLinks' => 'maintenance/convertLinks.php',
@@ -948,27 +939,6 @@ $wgAutoloadLocalClasses = array(
 	# maintenance/term
 	'AnsiTermColorer'  => 'maintenance/term/MWTerm.php',
 	'DummyTermColorer' => 'maintenance/term/MWTerm.php',
-
-	# tests
-	'DbTestPreviewer' => 'tests/testHelpers.inc',
-	'DbTestRecorder' => 'tests/testHelpers.inc',
-	'TestFileIterator' => 'tests/testHelpers.inc',
-	'TestRecorder' => 'tests/testHelpers.inc',
-
-	# tests/parser
-	'ParserTest' => 'tests/parser/parserTest.inc',
-	'ParserTestParserHook' => 'tests/parser/parserTestsParserHook.php',
-	'ParserTestStaticParserHook' => 'tests/parser/parserTestsStaticParserHook.php',
-
-	# tests/selenium
-	'Selenium' => 'tests/selenium/Selenium.php',
-	'SeleniumLoader' => 'tests/selenium/SeleniumLoader.php',
-	'SeleniumTestCase' => 'tests/selenium/SeleniumTestCase.php',
-	'SeleniumTestConsoleLogger' => 'tests/selenium/SeleniumTestConsoleLogger.php',
-	'SeleniumTestHTMLLogger' => 'tests/selenium/SeleniumTestHTMLLogger.php',
-	'SeleniumTestListener' => 'tests/selenium/SeleniumTestListener.php',
-	'SeleniumTestSuite' => 'tests/selenium/SeleniumTestSuite.php',
-	'SeleniumConfig' => 'tests/selenium/SeleniumConfig.php',
 );
 
 

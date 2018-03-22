@@ -1,4 +1,5 @@
 <?php
+/** Internationalization file for /extensions/wikia/UserTools/UserTools extension. */
 $messages = [];
 
 $messages['de'] = [
@@ -116,7 +117,7 @@ $messages['en'] = [
 
 $messages['az'] = [
 	'user-tools-edit-cancel' => 'İmtina',
-	'user-tools-edit-save' => 'Qeyd et'
+	'user-tools-edit-save' => 'Qeyd et',
 ];
 
 $messages['bg'] = [
@@ -196,6 +197,7 @@ $messages['fr'] = [
 	'user-tools-edit-hide-tools' => 'Masquer les outils',
 	'user-tools-edit-toolbar-list' => 'Liste de la barre d’outils',
 	'user-tools-edit-reset-defaults' => 'réinitialiser',
+	'user-tools-desc' => 'Personnalisation des outils utilisateur activée dans la barre d\'outils utilisateur et la navigation de l\'article',
 ];
 
 $messages['gl'] = [
@@ -259,12 +261,12 @@ $messages['ia'] = [
 ];
 
 $messages['ku-latn'] = [
-	'user-tools-edit-cancel' => 'Betal bike'
+	'user-tools-edit-cancel' => 'Betal bike',
 ];
 
 $messages['lb'] = [
 	'user-tools-edit-cancel' => 'Ofbriechen',
-	'user-tools-edit-save' => 'Späicheren'
+	'user-tools-edit-save' => 'Späicheren',
 ];
 
 $messages['lt'] = [
@@ -358,12 +360,12 @@ $messages['nl'] = [
 
 $messages['pfl'] = [
 	'user-tools-edit-cancel' => 'Uffhere',
-	'user-tools-edit-save' => 'Schbaischare'
+	'user-tools-edit-save' => 'Schbaischare',
 ];
 
 $messages['ps'] = [
 	'user-tools-edit-cancel' => 'ناګارل',
-	'user-tools-edit-save' => 'خوندي کول'
+	'user-tools-edit-save' => 'خوندي کول',
 ];
 
 $messages['pt'] = [
@@ -494,7 +496,7 @@ $messages['zh-hans'] = [
 	'user-tools-edit-cancel' => '取消',
 	'user-tools-edit-save' => '保存',
 	'user-tools-edit-rename' => '重命名项目',
-	'user-tools-edit-title' => '自定义工具栏'
+	'user-tools-edit-title' => '自定义工具栏',
 ];
 
 $messages['zh-hant'] = [
@@ -526,7 +528,7 @@ $messages['zh-tw'] = [
 ];
 
 $messages['tl'] = [
-	'user-tools-edit-title' => 'Ipasadya ang Halang na Pangkasangkapan'
+	'user-tools-edit-title' => 'Ipasadya ang Halang na Pangkasangkapan',
 ];
 
 $messages['ca'] = [
@@ -543,3 +545,4 @@ $messages['zh'] = [
 	'user-tools-edit-toolbar-list' => '工具栏列表',
 	'user-tools-edit-reset-defaults' => '设置为默认',
 ];
+

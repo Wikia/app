@@ -32,7 +32,7 @@ class MyHome {
 
 		// If we have existing data packed into rc_params, make sure it is preserved.
 		if(isset($rc->mAttribs['rc_params'])){
-			$unpackedData = self::unpackData($rc->mAttribs['rc_params']);
+			$unpackedData = static::unpackData($rc->mAttribs['rc_params']);
 			if(is_array($unpackedData)){
 				foreach($unpackedData as $key=>$val){
 					// Give preference to the data array that was passed into the function.
@@ -66,9 +66,9 @@ class MyHome {
 				}
 
 				// section edit: store section name and modified summary
-				if (self::$editedSectionName !== false) {
+				if (static::$editedSectionName !== false) {
 					// store section name
-					$data['sectionName'] = self::$editedSectionName;
+					$data['sectionName'] = static::$editedSectionName;
 
 					// edit summary
 					$comment = trim($rc->getAttribute('rc_comment'));
@@ -111,12 +111,9 @@ class MyHome {
 				break;
 		}
 
-		//allow to alter $data by other extensions (eg. Article Comments)
-		wfRunHooks('MyHome:BeforeStoreInRC', array(&$rc, &$data));
-
 		// encode data to be stored in rc_params
 		if (!empty($data)) {
-			$rc->mAttribs['rc_params'] = self::packData($data);
+			$rc->mAttribs['rc_params'] = static::packData($data);
 		}
 
 		Wikia::setVar('rc', $rc);
@@ -140,13 +137,13 @@ class MyHome {
 		global $wgParser;
 
 		// make sure to properly init this variable
-		self::$editedSectionName = false;
+		static::$editedSectionName = false;
 
 		// check for section edit
 		if (is_numeric($section)) {
 			$hasmatch = preg_match( "/^ *([=]{1,6})(.*?)(\\1) *\\n/i", $editor->textbox1, $matches );
 
-			if ( $hasmatch and strlen($matches[2]) > 0 ) {
+			if ( $hasmatch && strlen($matches[2]) > 0 ) {
 				// this will be saved in recentchanges table in MyHome::storeInRecentChanges
 				self::$editedSectionName = $wgParser->stripSectionName($matches[2]);
 			}
@@ -166,30 +163,19 @@ class MyHome {
 	public static function getInitialMainPage(Title &$title) {
 		wfProfileIn(__METHOD__);
 
-		global $wgUser, $wgTitle, $wgRequest, $wgEnableWikiaHomePageExt;
+		global $wgUser, $wgTitle, $wgRequest;
 
 		// dirty hack to make skin chooser work ($wgTitle is not set at this point yet)
 		$wgTitle = Title::newMainPage();
 
-		// do not redirect for skins different then Oasis or logged-in requests driven by RandomWiki (FB#1033)
+		// do not redirect for skins different then Oasis (FB#1033)
 		if(get_class(RequestContext::getMain()->getSkin()) != 'SkinOasis' || ( $wgUser->isLoggedIn() && $wgRequest->getVal( 'redirect' ) == 'no' ) ) {
 			wfProfileOut(__METHOD__);
 			return true;
 		}
 
-		//user must be logged in and have redirect enabled;
-		//this is not used for Corporate Sites where Wikia Visualization is enabled
-		if( $wgUser->isLoggedIn() && empty($wgEnableWikiaHomePageExt) ) {
-			$value = $wgUser->getGlobalPreference(UserPreferencesV2::LANDING_PAGE_PROP_NAME);
-			switch($value) {
-				case UserPreferencesV2::LANDING_PAGE_WIKI_ACTIVITY:
-					$title = SpecialPage::getTitleFor('WikiActivity');
-					break;
-				case UserPreferencesV2::LANDING_PAGE_RECENT_CHANGES:
-					$title = SpecialPage::getTitleFor('RecentChanges');
-					break;
-			}
-		}
+		//user must be logged in and have redirect enabled
+		$title = UserService::getMainPage($wgUser);
 
 		wfProfileOut(__METHOD__);
 		return true;
@@ -221,7 +207,7 @@ class MyHome {
 
 		// update if necessary
 		if (count($rc_data) > 0) {
-			self::storeAdditionalRcData($rc_data);
+			static::storeAdditionalRcData($rc_data);
 		}
 
 		wfProfileOut(__METHOD__);
@@ -248,7 +234,7 @@ class MyHome {
 			$rc_id = $rc->getAttribute('rc_id');
 			$rc_log_type = $rc->getAttribute('rc_log_type');
 
-			if ( !in_array( $rc_log_type, self::$additionalRcDataBlacklist ) ) {
+			if ( !in_array( $rc_log_type, static::$additionalRcDataBlacklist ) ) {
 				$dbw = wfGetDB( DB_MASTER );
 				$dbw->update('recentchanges',
 					array(
@@ -275,7 +261,7 @@ class MyHome {
 		$packed = json_encode($data);
 
 		// store encoded data with our custom prefix
-		return self::CUSTOM_DATA_PREFIX . $packed;
+		return static::CUSTOM_DATA_PREFIX . $packed;
 	}
 
 	/**
@@ -293,15 +279,15 @@ class MyHome {
 		}
 
 		// try to get our custom prefix
-		$prefix = substr($field, 0, strlen(self::CUSTOM_DATA_PREFIX));
+		$prefix = substr($field, 0, strlen(static::CUSTOM_DATA_PREFIX));
 
-		if ($prefix != self::CUSTOM_DATA_PREFIX) {
+		if ($prefix != static::CUSTOM_DATA_PREFIX) {
 			wfProfileOut(__METHOD__);
 			return null;
 		}
 
 		// get encoded data
-		$field = substr($field, strlen(self::CUSTOM_DATA_PREFIX));
+		$field = substr($field, strlen(static::CUSTOM_DATA_PREFIX));
 
 		// and try to unpack it
 		try {
@@ -366,16 +352,12 @@ class MyHome {
 	 * @author Maciej Brencz <macbre@wikia-inc.com>
 	 */
 	public static function getDefaultView() {
-		wfProfileIn(__METHOD__);
-
-		global $wgUser;
-		$defaultView = $wgUser->getGlobalPreference('myhomedefaultview');
+		$defaultView = RequestContext::getMain()->getUser()->getGlobalPreference('myhomedefaultview');
 
 		if (empty($defaultView)) {
 			$defaultView = 'activity';
 		}
 
-		wfProfileOut(__METHOD__);
 		return $defaultView;
 	}
 
@@ -435,8 +417,10 @@ class MyHome {
 	 * Hook that's called when a RecentChange is saved.  This prevents any problems from race-conditions between
 	 * the creation of a RecentChange and the awarding of its corresponding Achievement (they occur on the same
 	 * page-load, but one isn't guaranteed to be before the other).
+	 * @param RecentChange $rc
+	 * @return bool
 	 */
-	public static function savingAnRc(&$rc){
+	public static function savingAnRc( RecentChange $rc ): bool {
 		global $wgAchievementToAddToRc, $wgWikiaForceAIAFdebug;
 		wfProfileIn( __METHOD__ );
 
@@ -455,8 +439,10 @@ class MyHome {
 
 	/**
 	 * Called upon the successful save of a RecentChange.
+	 * @param RecentChange $rc
+	 * @return bool
 	 */
-	public static function savedAnRc(&$rc){
+	public static function savedAnRc( RecentChange $rc ): bool {
 		global $wgARecentChangeHasBeenSaved, $wgWikiaForceAIAFdebug;
 		wfProfileIn( __METHOD__ );
 
@@ -474,7 +460,7 @@ class MyHome {
 	}
 
 	public static function onRevisionInsertComplete() {
-		Wikia::purgeSurrogateKey( self::getWikiActivitySurrogateKey() );
+		Wikia::purgeSurrogateKey( static::getWikiActivitySurrogateKey() );
 
 		return true;
 	}

@@ -1,7 +1,11 @@
 <?php
-require_once( $IP . '/extensions/wikia/CuratedContent/CuratedContentValidator.class.php' );
 
 class CuratedContentValidatorTest extends WikiaBaseTest {
+
+	protected function setUp() {
+		$this->setupFile = __DIR__ . '/../CuratedContent.setup.php';
+		parent::setUp();
+	}
 
 	/**
 	 * @param array $item
@@ -51,12 +55,6 @@ class CuratedContentValidatorTest extends WikiaBaseTest {
 			], [
 				['article_id' => 9, 'image_id' => 9, 'label' => 'foo', 'type' => 'video', 'video_info' => [
 						'provider' => 'youtube'
-					]
-				],
-				[],
-			], [
-				['article_id' => 9, 'image_id' => 9, 'label' => 'foo', 'type' => 'video', 'video_info' => [
-						'provider' => 'ooyalaFoo'
 					]
 				],
 				[],
@@ -326,7 +324,7 @@ class CuratedContentValidatorTest extends WikiaBaseTest {
 	public function areLabelsUniqueDataProvider() {
 		return [
 			[
-				['foo', 'bar', 0, false, ''],
+				['foo', 'bar', 0, ''],
 				true
 			],
 			[

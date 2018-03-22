@@ -46,8 +46,8 @@ class AssetsManager {
 	 */
 	public static function getInstance() {
 		if( self::$mInstance == false ) {
-			global $wgCdnStylePath, $wgStyleVersion, $wgAllInOne, $wgRequest;
-			self::$mInstance = new AssetsManager($wgCdnStylePath, $wgStyleVersion, $wgRequest->getBool('allinone', $wgAllInOne), $wgRequest->getBool('allinone', $wgAllInOne));
+			global $wgResourceBasePath, $wgStyleVersion, $wgAllInOne, $wgRequest;
+			self::$mInstance = new AssetsManager($wgResourceBasePath, $wgStyleVersion, $wgRequest->getBool('allinone', $wgAllInOne), $wgRequest->getBool('allinone', $wgAllInOne));
 		}
 		return self::$mInstance;
 	}
@@ -220,9 +220,6 @@ class AssetsManager {
 
 		$url = $prefix . $this->getAMLocalURL( 'sass', $scssFilePath, $params );
 
-		// apply domain sharding
-		$url = wfReplaceAssetServer( $url );
-
 		wfProfileOut( __METHOD__ );
 		return $url;
 	}
@@ -270,7 +267,7 @@ class AssetsManager {
 			 * for urls in dev, where a url looks like:
 			 * http://i(1-9).nelson.wikia-dev.com/__am/sass/options/path/to/file.scss
 			 */
-			$regex = '/^(https?):\/\/(i[0-9]+\.([a-z0-9]+))\.wikia-dev.com\/(.*)$/';
+			$regex = '/^(https?):\/\/(i[0-9]+\.[a-z0-9]+)\.wikia-dev.(pl|us|com)\/(.*)$/';
 		}
 
 		$urls = (array) $urls;
@@ -426,8 +423,6 @@ class AssetsManager {
 			// in varnish (BugId: 33905)
 			$url = $this->mCommonHost . $this->getOneLocalURL($filePath, $minify);
 		}
-		// apply domain sharding
-		$url = wfReplaceAssetServer( $url );
 
 		return $url;
 	}
@@ -479,9 +474,6 @@ class AssetsManager {
 			if ( !$isEmpty ) {
 				$url = $prefix . $this->getAMLocalURL('group', $groupName, $params);
 
-				// apply domain sharding
-				$url = wfReplaceAssetServer( $url );
-
 				$URLs[] = $url;
 			}
 		} else {
@@ -496,8 +488,6 @@ class AssetsManager {
 					// in varnish (BugId: 33905)
 					$url = $this->getOneCommonURL($asset,$minify);
 				}
-				// apply domain sharding
-				$url = wfReplaceAssetServer( $url );
 
 				$URLs[] = $url;
 			}
@@ -781,7 +771,6 @@ class AssetsManager {
 				$map = [
 					[ $wgExtensionsPath, 'extensions/' ],
 					[ $wgStylePath, 'skins/' ],
-					// $wgResourceBasePath = $wgCdnStylePath (there's no /resources in it)
 					[ $wgResourceBasePath . '/resources', 'resources/' ],
 				];
 			}

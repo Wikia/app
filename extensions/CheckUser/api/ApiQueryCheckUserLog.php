@@ -23,14 +23,20 @@ class ApiQueryCheckUserLog extends ApiQueryBase {
 		$this->addTables( 'cu_log' );
 		$this->addOption( 'LIMIT', $limit + 1 );
 		$this->addTimestampWhereRange( 'cul_timestamp', 'older', $from, $to );
-		$this->addFields( array( 
-			'cul_timestamp', 'cul_user_text', 'cul_reason', 'cul_type', 'cul_target_text' ) );
+		$this->addFields( array(
+			'cul_timestamp', 'cul_user', 'cul_user_text',
+			'cul_reason', 'cul_type', 'cul_target_id', 'cul_target_text') );
 
 		if ( isset( $user ) ) {
-			$this->addWhereFld( 'cul_user_text', $user );
+			$this->addWhereFld( 'cul_user', User::idFromName( $user ) );
 		}
 		if ( isset( $target ) ) {
-			$this->addWhereFld( 'cul_target_text', $target );
+			$targetId = User::idFromName( $target );
+			if ( $targetId ) {
+				$this->addWhereFld( 'cul_target_id', $targetId );
+			} else {
+				$this->addWhereFld( 'cul_target_text', $target );
+			}
 		}
 
 		$res = $this->select( __METHOD__ );
@@ -40,10 +46,10 @@ class ApiQueryCheckUserLog extends ApiQueryBase {
 		foreach ( $res as $row ) {
 			$log[] = array(
 				'timestamp' => wfTimestamp( TS_ISO_8601, $row->cul_timestamp ),
-				'checkuser' => $row->cul_user_text,
+				'checkuser' => User::getUsername( $row->cul_user, $row->cul_user_text ),
 				'type'      => $row->cul_type,
 				'reason'    => $row->cul_reason,
-				'target'    => $row->cul_target_text,
+				'target'    => User::getUsername( $row->cul_target_id, $row->cul_target_text ),
 			);
 		}
 

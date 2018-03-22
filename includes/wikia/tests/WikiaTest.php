@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * @group WikiaTest
+ */
 class WikiaTest extends WikiaBaseTest {
 
 	public function setUp() {
@@ -8,106 +11,135 @@ class WikiaTest extends WikiaBaseTest {
 		parent::setUp();
 	}
 
+	/**
+	 * @param array $fileMockData
+	 * @param string $expectedUrl
+	 * @param string $expectedSize
+	 *
+	 * @dataProvider getWikiLogoMetadataDataProvider
+	 */
+	public function testGetWikiLogoMetadata( $fileMockData, $expectedUrl, $expectedSize ) {
+		$fileMock = $this->createConfiguredMock( LocalFile::class, $fileMockData );
+
+		$this->mockGlobalFunction( 'wfLocalFile', $fileMock );
+		$this->mockGlobalVariable( 'wgResourceBasePath', 'http://wikia.net/__cb123' );
+
+		$logoData = Wikia::getWikiLogoMetadata();
+
+		$this->assertEquals( $expectedUrl, $logoData['url'] );
+		$this->assertEquals( $expectedSize, $logoData['size'] );
+	}
+
+	public function getWikiLogoMetadataDataProvider() {
+		return [
+			[
+				'fileMockData' => [
+					'exists' => false,
+				],
+				// see wgResourceBasePath mock above
+				'expectedUrl' => 'http://wikia.net/__cb123/skins/common/images/wiki.png',
+				'expectedSize' => '155x155',
+			],
+			[
+				'fileMockData' => [
+					'exists' => true,
+					'getUrl' => '/foo.png',
+					'getWidth' => 42,
+					'getHeight' => 32,
+				],
+				'expectedUrl' => '/foo.png',
+				'expectedSize' => '42x32',
+			],
+		];
+	}
+
 	public function testOnSkinTemplateOutputPageBeforeExec_setsNoIndexNoFollowBecauseHeaders() {
-		$this->mockGlobalVariable('wgDevelEnvironment', false);
-		$this->mockGlobalVariable('wgStagingEnvironment', false);
+		$this->mockProdEnv();
 
-		$requestMock = $this->getRequestMock( 'externaltest' );
-		$outMock = $this->getOutputpageMock( 'once' );
-		$skinMock = $this->getSkinTemplateMock( $requestMock, $outMock );
-		$templateMock = $this->getTemplateMock();
+		$request = new FauxRequest();
+		$request->setHeader( 'X-Staging', 'externaltest' );
 
-		Wikia::onSkinTemplateOutputPageBeforeExec( $skinMock, $templateMock );
+		$context = new RequestContext();
+		$context->setTitle( new Title() );
+		$context->setRequest( $request );
+
+		$skinTemplate = new SkinTemplate();
+		$quickTemplate = new OasisTemplate();
+
+		$skinTemplate->thisquery = 'foo';
+		$skinTemplate->setContext( $context );
+
+		Wikia::onSkinTemplateOutputPageBeforeExec( $skinTemplate, $quickTemplate );
+
+		$this->assertContains(
+			'<meta name="robots" content="noindex,nofollow" />',
+			$context->getOutput()->getHeadLinks()
+		);
+		$this->assertEquals( 'foo', $quickTemplate->get( 'thisquery' ) );
 	}
 
 	public function testOnSkinTemplateOutputPageBeforeExec_setsNoIndexNoFollowBecauseDevbox() {
-		$this->mockGlobalVariable('wgDevelEnvironment', true);
-		$this->mockGlobalVariable('wgStagingEnvironment', false);
+		$this->mockDevEnv();
 
-		$requestMock = $this->getRequestMock( '' );
-		$outMock = $this->getOutputpageMock( 'once' );
-		$skinMock = $this->getSkinTemplateMock( $requestMock, $outMock );
-		$templateMock = $this->getTemplateMock();
+		$context = new RequestContext();
+		$context->setTitle( new Title() );
+		$context->setRequest( new FauxRequest() );
 
-		Wikia::onSkinTemplateOutputPageBeforeExec( $skinMock, $templateMock );
+		$skinTemplate = new SkinTemplate();
+		$quickTemplate = new OasisTemplate();
+
+		$skinTemplate->thisquery = 'foo';
+		$skinTemplate->setContext( $context );
+
+		Wikia::onSkinTemplateOutputPageBeforeExec( $skinTemplate, $quickTemplate );
+
+		$this->assertContains(
+			'<meta name="robots" content="noindex,nofollow" />',
+			$context->getOutput()->getHeadLinks()
+		);
+		$this->assertEquals( 'foo', $quickTemplate->get( 'thisquery' ) );
 	}
 
 	public function testOnSkinTemplateOutputPageBeforeExec_setsNoIndexNoFollowBecauseStaging() {
-		$this->mockGlobalVariable('wgDevelEnvironment', false);
-		$this->mockGlobalVariable('wgStagingEnvironment', true);
+		$this->mockStagingEnv();
 
-		$requestMock = $this->getRequestMock( '' );
-		$outMock = $this->getOutputpageMock( 'once' );
-		$skinMock = $this->getSkinTemplateMock( $requestMock, $outMock );
-		$templateMock = $this->getTemplateMock();
+		$context = new RequestContext();
+		$context->setTitle( new Title() );
+		$context->setRequest( new FauxRequest() );
 
-		Wikia::onSkinTemplateOutputPageBeforeExec( $skinMock, $templateMock );
+		$skinTemplate = new SkinTemplate();
+		$quickTemplate = new OasisTemplate();
+
+		$skinTemplate->thisquery = 'foo';
+		$skinTemplate->setContext( $context );
+
+		Wikia::onSkinTemplateOutputPageBeforeExec( $skinTemplate, $quickTemplate );
+
+		$this->assertContains(
+			'<meta name="robots" content="noindex,nofollow" />',
+			$context->getOutput()->getHeadLinks()
+		);
 	}
 
 	public function testOnSkinTemplateOutputPageBeforeExec_doesNotSetNoIndexNoFollow() {
-		$this->mockGlobalVariable('wgDevelEnvironment', false);
-		$this->mockGlobalVariable('wgStagingEnvironment', false);
-		$requestMock = $this->getRequestMock( '' );
-		$outMock = $this->getOutputpageMock( 'never' );
-		$skinMock = $this->getSkinTemplateMock( $requestMock, $outMock );
-		$templateMock = $this->getTemplateMock();
+		$this->mockProdEnv();
 
-		Wikia::onSkinTemplateOutputPageBeforeExec( $skinMock, $templateMock );
-	}
+		$context = new RequestContext();
+		$context->setTitle( new Title() );
+		$context->setRequest( new FauxRequest() );
 
-	private function getSkinTemplateMock( $request, $output ) {
-		$skinMock = $this->getMockBuilder( 'SkinTemplate' )
-			->disableOriginalConstructor()
-			->setMethods( [ 'getRequest', 'getOutput', 'getTitle', 'outputPage', 'setupSkinUserCss' ] )
-			->getMock();
-		$skinMock->expects( $this->once() )
-			->method('getRequest')
-			->willReturn( $request );
-		$skinMock->expects( $this->any() )
-			->method('getOutput')
-			->willReturn( $output );
-		$skinMock->expects( $this->once() )
-			->method('getTitle')
-			->willReturn(
-				$this->getMockBuilder('Title')
-					->disableOriginalConstructor()
-					->getMock()
-			);
+		$skinTemplate = new SkinTemplate();
+		$quickTemplate = new OasisTemplate();
 
-		$skinMock->expects( $this->any() )
-			->method('outputPage');
-		$skinMock->expects( $this->any() )
-			->method('setupSkinUserCss');
+		$skinTemplate->thisquery = 'foo';
+		$skinTemplate->setContext( $context );
 
-		return $skinMock;
-	}
+		Wikia::onSkinTemplateOutputPageBeforeExec( $skinTemplate, $quickTemplate );
 
-	private function getRequestMock( $headerValue ) {
-		$requestMock = $this->getMockBuilder( 'WebRequest' )
-			->disableOriginalConstructor()
-			->setMethods( [ 'getHeader' ] )
-			->getMock();
-		$requestMock->expects( $this->once() )
-			->method( 'getHeader' )
-			->willReturn( $headerValue );
-
-		return $requestMock;
-	}
-
-	private function getOutputpageMock( $expects ) {
-		$outMock = $this->getMockBuilder('OutputPage')
-			->disableOriginalConstructor()
-			->setMethods( [ 'setRobotPolicy' ] )
-			->getMock();
-		$outMock->expects( $this->$expects() )
-			->method( 'setRobotPolicy' );
-
-		return $outMock;
-	}
-
-	private function getTemplateMock() {
-		return $this->getMockBuilder( 'QuickTemplate' )
-			->disableOriginalConstructor()
-			->getMock();
+		$this->assertNotContains(
+			'<meta name="robots" content="noindex,nofollow" />',
+			$context->getOutput()->getHeadLinks()
+		);
+		$this->assertEquals( 'foo', $quickTemplate->get( 'thisquery' ) );
 	}
 }

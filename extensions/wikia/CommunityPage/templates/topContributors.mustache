@@ -1,30 +1,15 @@
 <section class="community-page-contributors-module-section">
-	<h2>{{topContribsHeaderText}}</h2>
-	{{#isAnon}}
-		<div class="community-page-anon-text">
-			{{{anonText}}}
-		</div>
-	{{/isAnon}}
-	{{^isAnon}}
-	<div class="user-details">
-		<div class="avatar-container">
-			{{{userAvatar}}}
-		</div>
-		<div class="community-page-rank">
-			<span>{{userRank}} <small>/ {{weeklyEditorCount}}</small></span>
-			<span class="community-page-subtle">{{yourRankText}}</span>
-		</div>
-		<div class="user-contrib-count">
-			<span>{{userContribCount}}</span>
-			<span class="community-page-subtle">{{userContributionsText}}</span>
-		</div>
-	</div>
-	{{/isAnon}}
-	<ul class="reset top-contributors">
+	<div class="community-page-module-section-title">{{topContributorsHeaderText}}</div>
+	<div class="top-contributors">
 		{{#contributors}}
-			<li class="community-page-contributors-list-item">
-				<div class="avatar-container">
-					<a data-tracking="top-contributors-user-avatar" href="{{profilePage}}">{{{avatar}}}</a>
+			<div class="community-page-contributors-list-item">
+				<div class="user-avatar-wrapper">
+					<div class="badge-container" title="{{badge.badgeText}}">{{{badge.badgeMarkup}}}</div>
+					<div class="avatar-container">
+						<a data-tracking="top-contributors-user-avatar" href="{{profilePage}}" title="{{userName}}">
+							{{{avatar}}}
+						</a>
+					</div>
 				</div>
 				<div class="community-page-contributor-rank">
 					{{count}}.
@@ -33,12 +18,12 @@
 					<a data-tracking="top-contributors-user" href="{{profilePage}}">{{userName}}</a>
 					<span class="community-page-subtle">{{contributionsText}}</span>
 				</div>
-			</li>
+			</div>
 		{{/contributors}}
 		{{^contributors}}
 			<div class="community-page-zero">
 				{{noContribsText}}
 			</div>
 		{{/contributors}}
-	</ul>
+	</div>
 </section>

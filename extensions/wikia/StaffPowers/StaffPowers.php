@@ -37,6 +37,6 @@ function efPowersMakeUnblockable( $block, $user ) {
 	$wgMessageCache->addMessages( array( 'hookaborted' => $replacement ) );
 	*/
 
-	wfRunHooks('BlockIpStaffPowersCancel', array($block, $user));
+	Hooks::run('BlockIpStaffPowersCancel', array($block, $user));
 	return false;
 }

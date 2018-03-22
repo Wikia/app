@@ -112,10 +112,10 @@ define('wikia.vet', [
 			controller: 'VideoEmbedTool',
 			method: 'editDescription',
 			type: 'POST',
-			format: 'json',
 			data: {
 				title: $('#VideoEmbedName').val(),
-				description: description
+				description: description,
+				token: mw.user.tokens.get('editToken')
 			}
 		}).done(function (json) {
 			var extraData, caption;
@@ -603,9 +603,7 @@ define('wikia.vet', [
 			$.extend(this.searchCachedStuff, searchSettings);
 
 			// load mustache as deferred object and then make request for suggestions
-			$.when(
-				$.loadMustache()
-			).done($.proxy(this.fetchSuggestions, this));
+			$.loadMustache();
 
 			// cache selectors
 			this.cachedSelectors = {
@@ -618,16 +616,10 @@ define('wikia.vet', [
 				resultCaption: $('#VET-carousel-wrapper > p.results strong'),
 				backToSuggestions: $('#VET-carousel-wrapper > a.back-link'),
 				closePreviewBtn: $('#VET-preview-close'),
-				positionOptions: $('#VideoEmbedLayoutRow'),
-				searchDropDown: $('#VET-search-dropdown')
+				positionOptions: $('#VideoEmbedLayoutRow')
 			};
 
-			// set search type to local if premium disabled
-			if (this.cachedSelectors.searchDropDown.attr('data-selected') === 'local') {
-				this.searchCachedStuff.searchType = 'local';
-			} else {
-				this.searchCachedStuff.searchType = 'premium';
-			}
+			this.searchCachedStuff.searchType = 'local';
 
 			// attach handlers - add video button
 			this.cachedSelectors.carousel.on('click', 'li > a', function (event) {
@@ -754,7 +746,7 @@ define('wikia.vet', [
 			// attach handler - submit display options tab
 			$videoEmbedDetails.on('submit', '#VET-display-options', function (event) {
 				event.preventDefault();
-				insertFinalVideo(event, 'details');
+				insertFinalVideo(event);
 			});
 			$videoEmbedDetails.on('submit', '#VET-display-options-update', function (event) {
 				event.preventDefault();
@@ -764,26 +756,6 @@ define('wikia.vet', [
 				});
 
 				doEditVideo();
-			});
-
-			// create dropdown for search filters
-			this.cachedSelectors.searchDropDown.wikiaDropdown({
-				onChange: function (e, $target) {
-					var currSort = this.$selectedItemsList.text(),
-						newSort = $target.text(),
-						sort;
-
-					if (currSort !== newSort) {
-						sort = $target.data('sort');
-						tracking({
-							label: 'dropdown-search-filter-' + sort
-						});
-						self.searchCachedStuff.searchType = sort;
-						self.searchCachedStuff.currentKeywords = '';
-						self.cachedSelectors.closePreviewBtn.click();
-						$('#VET-search-submit').click();
-					}
-				}
 			});
 
 			$('#vet-see-all').on('click', function () {
@@ -853,12 +825,7 @@ define('wikia.vet', [
 					}
 
 					if (itemsShown * 2 > totalItems - indexEnd) {
-						// depends on fetch mode send request to different controller
-						if (!self.searchCachedStuff.inSearchMode) {
-							self.fetchSuggestions();
-						} else {
-							self.fetchSearch();
-						}
+						self.fetchSearch();
 					}
 					previousIndexStart = indexStart;
 				}
@@ -933,59 +900,6 @@ define('wikia.vet', [
 				this.cachedSelectors.resultCaption.text(txt);
 			} else {
 				this.cachedSelectors.resultCaption.text(this.cachedResultCaption);
-			}
-		},
-
-		// METHOD: fetch part of suggestions
-		fetchSuggestions: function () {
-
-			var self = this,
-				// index - start fetching from item number...
-				svStart = this.suggestionsCachedStuff.fetchedResoultsCount,
-				// number of requested items
-				svSize = 20;
-
-			if (this.canFatch === true) {
-				this.canFatch = false; // fetching in progress
-
-				this.carouselMode = 'suggestion';
-
-				this.requestInProgress = $.nirvana.sendRequest({
-					controller: 'VideoEmbedToolController',
-					method: 'getSuggestedVideos',
-					type: 'get',
-					data: {
-						svStart: svStart,
-						svSize: svSize,
-						articleId: window.wgArticleId
-					},
-					callback: function (data) {
-						var i,
-							items = data.items,
-							length = items.length;
-
-						if (length > 0) {
-							tracking({
-								label: 'suggestions-loaded-' + data.searchQuery
-							});
-
-							self.trimTitles(data);
-							self.addSuggestions(data);
-
-							// update results counter
-							self.suggestionsCachedStuff.fetchedResoultsCount = data.nextStartFrom;
-							self.suggestionsCachedStuff.suggestionQuery = data.searchQuery;
-
-							// cache fetched items
-							for (i = 0; i < length; i += 1) {
-								self.suggestionsCachedStuff.cashedSuggestions.push(items[i]);
-							}
-
-							self.isCarouselCheck();
-							self.canFatch = true;
-						}
-					}
-				});
 			}
 		},
 

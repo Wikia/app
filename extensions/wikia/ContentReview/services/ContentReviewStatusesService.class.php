@@ -4,7 +4,7 @@ namespace Wikia\ContentReview;
 
 use Wikia\ContentReview\Models\ReviewModel;
 
-class ContentReviewStatusesService extends \WikiaService {
+class ContentReviewStatusesService {
 
 	const 	STATUS_NONE = 'none',
 			STATUS_LIVE = 'live',
@@ -313,7 +313,7 @@ class ContentReviewStatusesService extends \WikiaService {
 	private function createRevisionTalkpageLink( \Title $title ) {
 		return \Html::element(
 			'a',
-			[ 'href' => $title->getTalkPage() ],
+			[ 'href' => $title->getTalkPage()->getLocalURL() ],
 			wfMessage( 'content-review-rejection-reason-link' )->escaped()
 		);
 	}

@@ -1,5 +1,4 @@
 <?php
-use Wikia\Util\PerformanceProfilers\UsernameUseProfiler;
 
 if (!defined('MEDIAWIKI')) die();
 
@@ -141,7 +140,7 @@ class Editcount extends SpecialPage {
 					array( 'GROUP BY' => 'page_namespace' )
 				);
 
-				while( $row = $dbr->fetchObject( $res ) ) {
+				foreach( $res as $row ) {
 					$nscount[$row->page_namespace] = $row->count;
 				}
 			} else {
@@ -171,31 +170,26 @@ class Editcount extends SpecialPage {
 	 */
 	function editsArchived( $uid ) {
 		global $wgMemc;
-		$usernameUseProfiler = new UsernameUseProfiler( __CLASS__, __METHOD__ );
 		$key = wfMemcKey( 'archivedCount', $uid );
 		$arcount = $wgMemc->get($key);
 
 		if ( empty($arcount) ) {
-			$userName = User::newFromId( $uid )->getName();
 			$dbr =& wfGetDB( DB_SLAVE );
 			$arcount = $dbr->selectField(
-				array( 'archive' ),
-				array( 'COUNT(*) as count' ),
-				array(
-					'ar_user_text' => $userName
-				),
+				[ 'archive' ],
+				[ 'COUNT(*) as count' ],
+				[ 'ar_user' => $uid ],
 				__METHOD__
 			);
 
 			$wgMemc->set( $key, $arcount, self::CACHE_TIME );
 		}
-		$usernameUseProfiler->end();
 
 		return $arcount;
 	}
 
 	function editsByNsAll( $uid ) {
-		global $wgStatsDB, $wgStatsDBEnabled, $wgMemc;
+		global $wgDWStatsDB, $wgMemc;
 
 		$key = wfSharedMemcKey( 'namespaceCountAllWikis', $uid );
 		$keyTimestamp = wfMemcKey( 'namespaceCountTimestamp', $uid );
@@ -204,26 +198,17 @@ class Editcount extends SpecialPage {
 
 		if ( empty($nscount) ) {
 			$nscount = array();
-			if ( !empty( $wgStatsDBEnabled ) ) {
-				$dbs = wfGetDB(DB_SLAVE, array(), $wgStatsDB);
-				$res = $dbs->select(
-					array( 'events' ),
-					array( 'page_ns as namespace', 'count(page_ns) as count' ),
-					array(
-						'user_id' => $uid,
-						' ( event_type = 1 ) or ( event_type = 2 ) '
-					),
-					__METHOD__,
-					array (
-						'GROUP BY' => 'page_ns',
-						'ORDER BY' => 'null'
-					)
-				);
+			$dbs = wfGetDB( DB_SLAVE, array(), $wgDWStatsDB );
+			$res = $dbs->select(
+				array( 'rollup_wiki_namespace_user_events' ),
+				array( 'namespace_id as namespace', 'sum(edits) as count' ),
+				array( 'user_id' => $uid, 'period_id' => DataMartService::PERIOD_ID_DAILY ),
+				__METHOD__,
+				array ( 'GROUP BY' => 'namespace_id' )
+			);
 
-				while( $row = $dbs->fetchObject( $res ) ) {
-					$nscount[$row->namespace] = $row->count;
-				}
-				$dbs->freeResult( $res );
+			while( $row = $dbs->fetchObject( $res ) ) {
+				$nscount[$row->namespace] = $row->count;
 			}
 			$wgMemc->set( $key, $nscount, self::CACHE_TIME );
 			$this->refreshTimestamps['allWikias'] = time()+self::CACHE_TIME;

@@ -1,6 +1,12 @@
 <?php
 
 class ThemeSettings {
+	const IMAGES = [
+		'background',
+		'community-header-background',
+		'favicon',
+		'wordmark'
+	];
 
 	const WikiFactorySettings = 'wgOasisThemeSettings';
 
@@ -11,21 +17,40 @@ class ThemeSettings {
 	const MIN_WIDTH_FOR_SPLIT = 1030;
 	const MIN_WIDTH_FOR_NO_SPLIT = 2000;
 
+	// Keep in sync with $wds-community-header-background-height-small-breakpoint
+	const COMMUNITY_HEADER_BACKGROUND_HEIGHT = 115;
+	// Keep in sync with $wds-community-header-background-width-small-breakpoint
+	const COMMUNITY_HEADER_BACKGROUND_WIDTH = 471;
+
 	const WordmarkImageName = 'Wiki-wordmark.png';
 	const BackgroundImageName = 'Wiki-background';
+	const CommunityHeaderBackgroundImageName = 'Community-header-background';
 	const FaviconImageName = 'Favicon.ico';
+
+	private $cityId;
 
 	private $defaultSettings;
 
-	function __construct() {
-		global $wgOasisThemes, $wgSitename, $wgAdminSkin;
+	/** @var ThemeSettingsPersistence $themeSettingsPersistence */
+	private $themeSettingsPersistence;
 
-		$themeName = 'oasis';
+	function __construct( $cityId = null ) {
+		global $wgCityId, $wgOasisThemes;
+
+		if ( empty( $cityId ) ) {
+			$cityId = $wgCityId;
+		}
+
+		$this->cityId = $cityId;
+
+		$wgSitename = WikiFactory::getVarValueByName( 'wgSitename', $cityId );
+		$wgAdminSkin = WikiFactory::getVarValueByName( 'wgAdminSkin', $cityId );
 
 		$adminSkin = explode( '-', $wgAdminSkin );
+		$themeName = 'oasis';
 
 		if ( count( $adminSkin ) == 2 ) {
-			$transition = array(
+			$transition = [
 				'sky' => 'oasis',
 				'sapphire' => 'oasis',
 				'spring' => 'jade',
@@ -33,7 +58,7 @@ class ThemeSettings {
 				'obsession' => 'carbon',
 				'moonlight' => 'bluesteel',
 				'beach' => 'creamsicle',
-			);
+			];
 
 			if ( isset( $transition[$adminSkin[1]] ) ) {
 				$themeName = $transition[$adminSkin[1]];
@@ -43,6 +68,7 @@ class ThemeSettings {
 		// colors
 		$this->defaultSettings = $wgOasisThemes[$themeName];
 		$this->defaultSettings['theme'] = $themeName;
+		$this->defaultSettings['color-body-middle'] = $this->defaultSettings['color-body'];
 
 		// wordmark
 		$this->defaultSettings['wordmark-text'] = $wgSitename;
@@ -53,47 +79,57 @@ class ThemeSettings {
 		$this->defaultSettings['wordmark-image-name'] = '';
 		$this->defaultSettings['wordmark-type'] = "text";
 
-		// main page banner
-		$this->defaultSettings['banner-image-url'] = '';
-		$this->defaultSettings['banner-image-name'] = '';
-
 		// background
 		$this->defaultSettings['background-image'] = '';
 		$this->defaultSettings['background-image-height'] = null;
 		$this->defaultSettings['background-image-name'] = '';
 		$this->defaultSettings['background-image-width'] = null;
-		$this->defaultSettings['background-image-revision'] = false; // what is this?
 		$this->defaultSettings['background-tiled'] = false;
 		$this->defaultSettings['background-fixed'] = false;
 		$this->defaultSettings['background-dynamic'] = true;
+
+		//community header background
+		$this->defaultSettings['community-header-background-image'] = '';
+		$this->defaultSettings['community-header-background-image-name'] = '';
+
+		//favicon
+		$this->defaultSettings['favicon-image-name'] = '';
+
+		$this->themeSettingsPersistence = new ThemeSettingsPersistence( $this );
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getCityId() {
+		return $this->cityId;
 	}
 
 	public function getSettings() {
-		$settings = $this->defaultSettings;
-		if ( !empty( $GLOBALS[self::WikiFactorySettings] ) ) {
-			$settings = array_merge( $settings, $GLOBALS[self::WikiFactorySettings] );
-			$colorKeys = array( "color-body", "color-page", "color-buttons", "color-links", "color-header" );
+		$wikiFactorySettings = $this->themeSettingsPersistence->getSettings();
 
-			// if any of the user set colors are invalid, use default
-			foreach ( $colorKeys as $colorKey ) {
-				if ( !ThemeDesignerHelper::isValidColor( $settings[$colorKey] ) ) {
-					$settings = $this->defaultSettings;
-					break;
-				}
+		if ( empty( $wikiFactorySettings ) ) {
+			return $this->defaultSettings;
+		}
+
+		$settings = array_merge( $this->defaultSettings, $wikiFactorySettings );
+
+		// if user didn't define community header background color, but defined buttons color, we use buttons color
+		// as default for community header background
+		if (
+			!isset( $wikiFactorySettings["color-community-header"] ) &&
+			isset( $wikiFactorySettings["color-buttons"]
+			)
+		) {
+			$settings["color-community-header"] = $settings["color-buttons"];
+		}
+
+		// if any of the user set colors are invalid, use default
+		foreach ( ThemeDesignerHelper::getColorVars() as $colorKey => $defaultValue ) {
+			if ( !ThemeDesignerHelper::isValidColor( $settings[$colorKey] ) ) {
+				$settings = $this->defaultSettings;
+				break;
 			}
-
-		}
-		// special check for color-body-middle
-		if ( !isset( $settings['color-body-middle'] ) || !ThemeDesignerHelper::isValidColor( $settings["color-body-middle"] ) ) {
-			$settings["color-body-middle"] = $settings["color-body"];
-		}
-
-		// add variables that might not be saved already in WF
-		if ( !isset( $settings['background-fixed'] ) ) {
-			$settings['background-fixed'] = false;
-		}
-		if ( !isset( $settings['page-opacity'] ) ) {
-			$settings['page-opacity'] = 100;
 		}
 
 		return $settings;
@@ -101,163 +137,106 @@ class ThemeSettings {
 
 	public function getFreshURL( $name, $definedName ) {
 		$title = Title::newFromText( $definedName, NS_FILE );
+
 		if ( $definedName != $name ) {
 			$file = OldLocalFile::newFromArchiveName( $title, RepoGroup::singleton()->getLocalRepo(), $name );
-			return wfReplaceImageServer( $file->getUrl() );
 		} else {
 			$file = new LocalFile( $title, RepoGroup::singleton()->getLocalRepo() );
-			return wfReplaceImageServer( $file->getUrl() );
 		}
+
+		return wfReplaceImageServer( $file->getUrl() );
 	}
 
 	public function getHistory() {
-		if ( !empty( $GLOBALS[self::WikiFactoryHistory] ) ) {
-			$history = $GLOBALS[self::WikiFactoryHistory];
+		$wikiFactoryHistory = WikiFactory::getVarValueByName(
+			self::WikiFactoryHistory,
+			$this->cityId
+		);
+
+		if ( !empty( $wikiFactoryHistory ) ) {
+			$history = $wikiFactoryHistory;
 			foreach ( $history as &$entry ) {
 				$entry['settings'] = array_merge( $this->defaultSettings, $entry['settings'] );
 			}
 		} else {
-			$history = array();
+			$history = [];
 		}
 
 		foreach ( $history as $key => $val ) {
-			$history[$key]['settings']['background-image'] = $this->getFreshURL( $val['settings']['background-image-name'], ThemeSettings::BackgroundImageName );
+			if ( !empty( $val['settings']['background-image-name'] ) ) {
+				$val['settings']['background-image'] = $this->getFreshURL(
+					$val['settings']['background-image-name'],
+					ThemeSettings::BackgroundImageName
+				);
+			}
+
+			if ( !empty( $val['settings']['community-header-background-image-name'] ) ) {
+				$val['settings']['community-header-background-image'] = $this->getFreshURL(
+					$val['settings']['community-header-background-image-name'],
+					ThemeSettings::CommunityHeaderBackgroundImageName
+				);
+			}
 		}
 
 		return $history;
 	}
 
-	public function saveSettings( $settings, $cityId = null ) {
-		global $wgCityId, $wgUser;
-		$cityId = empty( $cityId ) ? $wgCityId : $cityId;
+	public function saveSettings( $settings ) {
+		// SUS-2942: unset unknown properties
+		foreach ( $settings as $key => $value ) {
+			if ( !array_key_exists( $key, $this->defaultSettings ) ) {
+				unset( $settings[$key] );
+			}
+		}
+
+		if ( !empty( $settings['wordmark-font'] ) ) {
+			$settings['wordmark-font'] = $this->escapeInput( $settings['wordmark-font'] );
+		}
+
+		if ( !empty( $settings['wordmark-font-size'] ) ) {
+			$settings['wordmark-font-size'] = $this->escapeInput( $settings['wordmark-font-size'] );
+		}
+
+		if ( !empty( $settings['wordmark-type'] ) ) {
+			$settings['wordmark-type'] = $this->escapeInput( $settings['wordmark-type'] );
+		}
+
+		// SUS-2942: validate user-provided opacity value
+		if ( !empty( $settings['page-opacity'] ) ) {
+			$settings['page-opacity'] = max( intval( $settings['page-opacity'] ), 50 );
+		}
 
 		// Verify wordmark length ( CONN-116 )
-		if ( !empty( $settings[ 'wordmark-text' ] ) ) {
-			$settings[ 'wordmark-text' ] = trim( $settings[ 'wordmark-text' ] );
+		if ( !empty( $settings['wordmark-text'] ) ) {
+			$settings['wordmark-text'] = $this->escapeInput( trim( $settings['wordmark-text'] ) );
 		}
 
-		if ( empty( $settings[ 'wordmark-text' ] ) ) {
+		if ( empty( $settings['wordmark-text'] ) ) {
 			// Do not save wordmark if its empty.
-			unset( $settings[ 'wordmark-text' ] );
-		} else {
-			if ( mb_strlen( $settings[ 'wordmark-text' ] ) > 50 ) {
-				$settings[ 'wordmark-text' ] = mb_substr( $settings[ 'wordmark-text' ], 0, 50 );
-			}
-		}
-
-		if ( isset( $settings['favicon-image-name'] ) && strpos( $settings['favicon-image-name'], 'Temp_file_' ) === 0 ) {
-			$temp_file = new LocalFile( Title::newFromText( $settings['favicon-image-name'], 6 ), RepoGroup::singleton()->getLocalRepo() );
-			$file = new LocalFile( Title::newFromText( self::FaviconImageName, 6 ), RepoGroup::singleton()->getLocalRepo() );
-			$file->upload( $temp_file->getPath(), '', '' );
-			$temp_file->delete( '' );
-			Wikia::invalidateFavicon();
-
-			$settings['favicon-image-url'] = $file->getURL();
-			$settings['favicon-image-name'] = $file->getName();
-
-			$file->repo->forceMaster();
-			$history = $file->getHistory( 1 );
-			if ( count( $history ) == 1 ) {
-				$oldFaviconFile = array( 'url' => $history[0]->getURL(), 'name' => $history[0]->getArchiveName() );
-			}
-		}
-
-		if ( isset( $settings['wordmark-image-name'] ) && strpos( $settings['wordmark-image-name'], 'Temp_file_' ) === 0 ) {
-			$temp_file = new LocalFile( Title::newFromText( $settings['wordmark-image-name'], 6 ), RepoGroup::singleton()->getLocalRepo() );
-			$file = new LocalFile( Title::newFromText( self::WordmarkImageName, 6 ), RepoGroup::singleton()->getLocalRepo() );
-			$file->upload( $temp_file->getPath(), '', '' );
-			$temp_file->delete( '' );
-
-			$settings['wordmark-image-url'] = $file->getURL();
-			$settings['wordmark-image-name'] = $file->getName();
-
-			$file->repo->forceMaster();
-			$history = $file->getHistory( 1 );
-			if ( count( $history ) == 1 ) {
-				$oldFile = array( 'url' => $history[0]->getURL(), 'name' => $history[0]->getArchiveName() );
-			}
-		}
-
-		if ( isset( $settings['background-image-name'] ) && strpos( $settings['background-image-name'], 'Temp_file_' ) === 0 ) {
-			$temp_file = new LocalFile( Title::newFromText( $settings['background-image-name'], 6 ), RepoGroup::singleton()->getLocalRepo() );
-			$file = new LocalFile( Title::newFromText( self::BackgroundImageName, 6 ), RepoGroup::singleton()->getLocalRepo() );
-			$file->upload( $temp_file->getPath(), '', '' );
-			$temp_file->delete( '' );
-
-			$settings['background-image'] = $file->getURL();
-			$settings['background-image-name'] = $file->getName();
-			$settings['background-image-width'] = $file->getWidth();
-			$settings['background-image-height'] = $file->getHeight();
-
-			$imageServing = new ImageServing( null, 120, array( "w" => "120", "h" => "65" ) );
-			$settings['user-background-image'] = $file->getURL();
-			$settings['user-background-image-thumb'] = wfReplaceImageServer( $file->getThumbUrl( $imageServing->getCut( $file->getWidth(), $file->getHeight(), "origin" ) . "-" . $file->getName() ) );
-
- 			$file->repo->forceMaster();
-			$history = $file->getHistory( 1 );
-			if ( count( $history ) == 1 ) {
-				$oldBackgroundFile = array( 'url' => $history[0]->getURL(), 'name' => $history[0]->getArchiveName() );
-			}
-		}
-
-		$reason = wfMsg( 'themedesigner-reason', $wgUser->getName() );
-
-		// update history
-		if ( !empty( $GLOBALS[self::WikiFactoryHistory] ) ) {
-			$history = $GLOBALS[self::WikiFactoryHistory];
-			$lastItem = end( $history );
-			$revisionId = intval( $lastItem['revision'] ) + 1;
-		} else {
-			$history = array();
-			$revisionId = 1;
+			unset( $settings['wordmark-text'] );
+		} elseif ( mb_strlen( $settings['wordmark-text'] ) > 50 ) {
+			$settings['wordmark-text'] = mb_substr( $settings['wordmark-text'], 0, 50 );
 		}
 
 		// #140758 - Jakub
 		// validation
 		// default color values
 		foreach ( ThemeDesignerHelper::getColorVars() as $sColorVar => $sDefaultValue ) {
-			if ( !isset( $settings[ $sColorVar ] ) || !ThemeDesignerHelper::isValidColor( $settings[ $sColorVar ] ) ) {
-				$settings[ $sColorVar ] = $sDefaultValue;
+			if ( !isset( $settings[$sColorVar] ) || !ThemeDesignerHelper::isValidColor( $settings[$sColorVar] ) ) {
+				$settings[$sColorVar] = $sDefaultValue;
 			}
 		}
 
-		// update WF variable with current theme settings
-		WikiFactory::setVarByName( self::WikiFactorySettings, $cityId, $settings, $reason );
+		$this->themeSettingsPersistence->saveSettings( $settings );
+	}
 
-		// add entry
-		$history[] = array(
-			'settings' => $settings,
-			'author' => $wgUser->getName(),
-			'timestamp' =>  wfTimestampNow(),
-			'revision' => $revisionId,
-		);
-
-		// limit history size to last 10 changes
-		$history = array_slice( $history, -self::HistoryItemsLimit );
-
-		if ( count( $history ) > 1 ) {
-			for ( $i = 0; $i < count( $history ) - 1; $i++ ) {
-				if ( isset( $oldFaviconFile ) && isset( $history[$i]['settings']['favicon-image-name'] ) ) {
-					if ( $history[$i]['settings']['favicon-image-name'] == self::FaviconImageName ) {
-						$history[$i]['settings']['favicon-image-name'] = $oldFaviconFile['name'];
-						$history[$i]['settings']['favicon-image-url'] = $oldFaviconFile['url'];
-					}
-				}
-				if ( isset( $oldFile ) && isset( $history[$i]['settings']['wordmark-image-name'] ) ) {
-					if ( $history[$i]['settings']['wordmark-image-name'] == self::WordmarkImageName ) {
-						$history[$i]['settings']['wordmark-image-name'] = $oldFile['name'];
-						$history[$i]['settings']['wordmark-image-url'] = $oldFile['url'];
-					}
-				}
-				if ( isset( $oldBackgroundFile ) && isset( $history[$i]['settings']['background-image-name'] ) ) {
-					if ( $history[$i]['settings']['background-image-name'] == self::BackgroundImageName ) {
-						$history[$i]['settings']['background-image-name'] = $oldBackgroundFile['name'];
-					}
-				}
-			}
-		}
-
-		WikiFactory::setVarByName( self::WikiFactoryHistory, $cityId, $history, $reason );
+	/**
+	 * Return escaped version of provided text, while avoiding double escaping it
+	 * @param string $text
+	 * @return string
+	 */
+	private function escapeInput( string $text ) {
+		return htmlspecialchars( Sanitizer::decodeCharReferences( $text ), ENT_QUOTES );
 	}
 
 	/**
@@ -272,7 +251,10 @@ class ThemeSettings {
 	 * @return string wordmark URL or empty string if not found
 	 */
 	public function getWordmarkUrl() {
-		global $wgUploadPath;
+		$wgUploadPath = WikiFactory::getVarValueByName(
+			'wgUploadPath',
+			$this->cityId
+		);
 
 		$wordmarkUrl = $this->getSettings()['wordmark-image-url'];
 
@@ -304,10 +286,46 @@ class ThemeSettings {
 	 * @author macbre
 	 * @return string background URL or empty string if not found
 	 */
-	public function getBackgroundUrl() {
-		global $wgUploadPath;
+	public function getBackgroundUrl(): string {
+		return $this->getVignetteUrl( $this->getSettings()['background-image'] );
+	}
 
-		$backgroundUrl = $this->getSettings()['background-image'];
+	/**
+	 * Get community header background full, up-to-date URL
+	 *
+	 * This method returns URL based on "community-header-background-image"
+	 *
+	 * @return string background URL or empty string if not found
+	 */
+	public function getCommunityHeaderBackgroundUrl(): string {
+		$thumbnailUrl = '';
+		$originalUrl = $this->getSettings()['community-header-background-image'];
+
+		try {
+			if ( VignetteRequest::isVignetteUrl( $originalUrl ) ) {
+				$thumbnailUrl = VignetteRequest::fromUrl( $originalUrl )
+					->zoomCrop()
+					->width( self::COMMUNITY_HEADER_BACKGROUND_WIDTH )
+					->height( self::COMMUNITY_HEADER_BACKGROUND_HEIGHT )
+					->url();
+			}
+		} catch ( InvalidArgumentException $e ) {
+			\Wikia\Logger\WikiaLogger::instance()
+				->warning("Wrong url to community-header-background-image", [ 'originalUrl' => $originalUrl ] );
+		}
+
+		return $thumbnailUrl;
+	}
+
+	/**
+	 * @param string $backgroundUrl
+	 * @return string
+	 */
+	private function getVignetteUrl( string $backgroundUrl ): string {
+		$wgUploadPath = WikiFactory::getVarValueByName(
+			'wgUploadPath',
+			$this->cityId
+		);
 
 		if ( !VignetteRequest::isVignetteUrl( $backgroundUrl ) ) {
 			if ( empty( $backgroundUrl ) ) {
@@ -324,7 +342,7 @@ class ThemeSettings {
 				);
 			}
 
-			$backgroundUrl = wfReplaceImageServer( $backgroundUrl, SassUtil::getCacheBuster() );
+			return wfReplaceImageServer( $backgroundUrl, SassUtil::getCacheBuster() );
 		}
 
 		return $backgroundUrl;

@@ -1,28 +1,29 @@
 <?php
 
 class NodeImageSanitizerTest extends WikiaBaseTest {
+	/** @var NodeImageSanitizer $sanitizer */
 	private $sanitizer;
 
 	protected function setUp() {
 		$this->setupFile = dirname( __FILE__ ) . '/../../PortableInfobox.setup.php';
 
-		$this->sanitizer = SanitizerBuilder::createFromType('image');
+		$this->sanitizer = SanitizerBuilder::createFromType( 'image' );
 		parent::setUp();
 	}
 
 	/**
 	 * @param $data
 	 * @param $expected
-	 * @dataProvider testSanitizeDataProvider
+	 * @dataProvider sanitizeDataProvider
 	 */
-	function testSanitize( $data, $expected ) {
+	public function testSanitize( $data, $expected ) {
 		$this->assertEquals(
 			$expected,
 			$this->sanitizer->sanitize( $data )
 		);
 	}
 
-	function testSanitizeDataProvider() {
+	public function sanitizeDataProvider() {
 		return [
 			[
 				[ 'caption' => 'Test <a>Title with</a> <span><small>small</small></span> tag, span tag and <img src="sfefes"/>tag' ],
@@ -33,7 +34,7 @@ class NodeImageSanitizerTest extends WikiaBaseTest {
 				[ 'caption' => '' ],
 			],
 			[
-				[ 'caption' => '<figure class="article-thumb tright show-info-icon" style="width: 335px"> 	<a 	href="http://mediawiki119.marzjan.wikia-dev.com/wiki/File:AMERICA%27S_TEST_KITCHEN_SEASON_9" 	class="video video-thumbnail image lightbox medium " 	 	 itemprop=\'video\' itemscope itemtype="http://schema.org/VideoObject" 	><img src="http://vignette-poz.wikia-dev.com//images/6/6e/AMERICA%27S_TEST_KITCHEN_SEASON_9/revision/latest/scale-to-width-down/335?cb=20130904003328" 	 alt="AMERICA&#039;S TEST KITCHEN SEASON 9"  	class="thumbimage " 	 	data-video-key="AMERICA&#039;S_TEST_KITCHEN_SEASON_9" 	data-video-name="AMERICA&#039;S TEST KITCHEN SEASON 9" 	 	 width="335"  	 height="187"  	 itemprop="thumbnail"  	 	 	><span class="duration" itemprop="duration">01:00</span><span class="play-circle"></span><meta itemprop="duration" content="PT01M00S"></a>  	<figcaption> 		 			<a href="/wiki/File:AMERICA%27S_TEST_KITCHEN_SEASON_9" class="sprite info-icon"></a> 		 		 			<p class="title">AMERICA&#039;S TEST KITCHEN SEASON 9</p> 		 		 	</figcaption> </figure>' ],
+				[ 'caption' => '<figure class="article-thumb tright show-info-icon" style="width: 335px"> 	<a 	href="http://mediawiki119.marzjan.wikia-dev.com/wiki/File:AMERICA%27S_TEST_KITCHEN_SEASON_9" 	class="video video-thumbnail image lightbox medium " 	 	 itemprop=\'video\' itemscope itemtype="http://schema.org/VideoObject" 	><img src="http://vignette-poz.wikia-dev.com//images/6/6e/AMERICA%27S_TEST_KITCHEN_SEASON_9/revision/latest/scale-to-width-down/335?cb=20130904003328" 	 alt="AMERICA&#039;S TEST KITCHEN SEASON 9"  	class="thumbimage " 	 	data-video-key="AMERICA&#039;S_TEST_KITCHEN_SEASON_9" 	data-video-name="AMERICA&#039;S TEST KITCHEN SEASON 9" 	 	 width="335"  	 height="187"  	 itemprop="thumbnail"  	 	 	><meta itemprop="duration" content="PT01M00S"></a>  	<figcaption> 		 			<a href="/wiki/File:AMERICA%27S_TEST_KITCHEN_SEASON_9" class="sprite info-icon"></a> 		 		 			<p class="title">AMERICA&#039;S TEST KITCHEN SEASON 9</p> 		 		 	</figcaption> </figure>' ],
 				[ 'caption' => 'AMERICA&#039;S TEST KITCHEN SEASON 9' ]
 			],
 			[
@@ -67,6 +68,18 @@ class NodeImageSanitizerTest extends WikiaBaseTest {
 			[
 				[ 'caption' => '<a href="/wiki/User:Idradm" class="new" title="User:Idradm (page does not exist)">Idradm</a> (<a href="/wiki/User_talk:Idradm" title="User talk:Idradm (page does not exist)">talk</a>) 15:34, January 4, 2016 (UTC)' ],
 				[ 'caption' => '<a href="/wiki/User:Idradm" class="new" title="User:Idradm (page does not exist)">Idradm</a> (<a href="/wiki/User_talk:Idradm" title="User talk:Idradm (page does not exist)">talk</a>) 15:34, January 4, 2016 (UTC)' ]
+			],
+			[
+				[ 'images' => [
+					[ 'caption' => 'Test <a>Title with</a> <span><small>small</small></span> tag, span tag and <img src="sfefes"/>tag' ],
+					[ 'caption' => '' ],
+					[ 'caption' => 'test' ]
+				] ],
+				[ 'images' => [
+					[ 'caption' => 'Test <a>Title with</a> small tag, span tag and tag' ],
+					[ 'caption' => '' ],
+					[ 'caption' => 'test' ]
+				] ]
 			]
 		];
 	}

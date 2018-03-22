@@ -17,6 +17,7 @@ Each service should have a `settings.json` file associated with it indicating pa
 The `packagePath`, `srcBasePath`, and prefix `Swagger\Client\` should be consistent across all settings files so code will end up in this directory.
 
 ## Generating Code
+**Note: must use `swagger-codegen` version 2.2.1.**
 Follow the instructions on the [swagger-codegen](https://github.com/swagger-api/swagger-codegen) repo to get a local generator compiled, then run
 (from `lib/Swagger`):
 

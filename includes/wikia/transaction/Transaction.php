@@ -40,7 +40,6 @@ class Transaction {
 	const PARAM_WIKI = 'wiki';
 	const PARAM_DPL = 'dpl';
 	const PARAM_SEMANTIC_MEDIAWIKI = 'semantic_mediawiki';
-	const PARAM_AB_PERFORMANCE_TEST = 'perf_test';
 	const PARAM_MAINTENANCE_SCRIPT = 'maintenance_script';
 
 	const PSEUDO_PARAM_TYPE = 'type';
@@ -57,7 +56,6 @@ class Transaction {
 	const EVENT_USER_PREFERENCES = 'user_preferences';
 	const EVENT_USER_PREFERENCES_COUNTERS = "user_preferences_counters";
 	const EVENT_USER_ATTRIBUTES = 'user_attributes';
-	const EVENT_USER_AUTH = 'user_auth';
 
 	/**
 	 * Returns TransactionTrace singleton instance
@@ -71,7 +69,6 @@ class Transaction {
 			$instance = new TransactionTrace( array(
 				// plugins
 				new TransactionTraceNewrelic(),
-				new TransactionTraceScribe(),
 			) );
 			$instance->set( self::PARAM_ENVIRONMENT, $wgWikiaEnvironment );
 			$instance->set( self::PARAM_HOSTNAME, wfHostname() );

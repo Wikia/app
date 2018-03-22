@@ -1,76 +1,87 @@
 /*global define*/
 define('ext.wikia.adEngine.lookup.prebid', [
-	'ext.wikia.adEngine.adContext',
-	'ext.wikia.adEngine.lookup.prebid.adapters.appnexus',
-	'ext.wikia.adEngine.lookup.prebid.adapters.indexExchange',
+	'ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker',
+	'ext.wikia.adEngine.lookup.prebid.adaptersPricesTracker',
+	'ext.wikia.adEngine.lookup.prebid.adaptersRegistry',
 	'ext.wikia.adEngine.lookup.prebid.prebidHelper',
+	'ext.wikia.adEngine.lookup.prebid.prebidSettings',
 	'ext.wikia.adEngine.lookup.lookupFactory',
-	'wikia.document',
 	'wikia.window'
-], function (adContext, appnexus, index, helper, factory, doc, win) {
+], function (
+	performanceTracker,
+	pricesTracker,
+	adaptersRegistry,
+	helper,
+	settings,
+	factory,
+	win
+) {
 	'use strict';
+	var adUnits = [],
+		biddersPerformanceMap = {},
+		prebidLoaded = false;
 
-	var adapters = [
-			appnexus,
-			index
-		],
-		adUnits = [],
-		priceMap = {},
-		bidderKey = 'hb_bidder',
-		bidKey = 'hb_pb',
-		sizeKey = 'hb_size';
+	function removeAdUnits() {
+		(win.pbjs.adUnits || []).forEach(function (adUnit) {
+			win.pbjs.removeAdUnit(adUnit.code);
+		});
+	}
 
 	function call(skin, onResponse) {
-		var prebid = doc.createElement('script'),
-			node = doc.getElementsByTagName('script')[0];
+		if (!prebidLoaded) {
+			adaptersRegistry.setupCustomAdapters();
+			adaptersRegistry.registerAliases();
+		}
 
-		adUnits = helper.setupAdUnits(adapters, skin);
+		biddersPerformanceMap = performanceTracker.setupPerformanceMap(skin);
+		adUnits = helper.setupAdUnits(skin);
+
+		if (win.pbjs) {
+			win.pbjs._bidsReceived = [];
+		}
 
 		if (adUnits.length > 0) {
-			win.pbjs = win.pbjs || {};
-			win.pbjs.que = win.pbjs.que || [];
 
-			prebid.async = true;
-			prebid.type = 'text/javascript';
-			prebid.src = adContext.getContext().opts.prebidBidderUrl || '//acdn.adnxs.com/prebid/prebid.js';
-
-			node.parentNode.insertBefore(prebid, node);
+			if (!prebidLoaded) {
+				win.pbjs.que.push(function () {
+					win.pbjs.bidderSettings = settings.create();
+				});
+			}
 
 			win.pbjs.que.push(function () {
-				win.pbjs.addAdUnits(adUnits);
-
+				removeAdUnits();
 				win.pbjs.requestBids({
+					adUnits: adUnits,
 					bidsBackHandler: onResponse
 				});
 			});
 		}
-	}
 
-	function encodeParamsForTracking(params) {
-		if (params[bidderKey] && params[sizeKey] && params[bidKey]) {
-			return [params[bidderKey], params[sizeKey], params[bidKey]].join(';');
-		}
-
-		return '';
+		prebidLoaded = true;
 	}
 
 	function calculatePrices() {
-		var slotName,
-			slots = {};
-
-		if (win.pbjs && typeof win.pbjs.getAdserverTargeting === 'function') {
-			slots = win.pbjs.getAdserverTargeting();
-		}
-
-		for (slotName in slots) {
-			if (slots.hasOwnProperty(slotName)) {
-				priceMap[slotName] = encodeParamsForTracking(slots[slotName]);
-			}
-		}
+		biddersPerformanceMap = performanceTracker.updatePerformanceMap(biddersPerformanceMap);
 	}
 
-	function getPrices() {
-		return priceMap;
+	function trackAdaptersOnLookupEnd() {
+		var adapters = adaptersRegistry.getAdapters();
+
+		biddersPerformanceMap = performanceTracker.updatePerformanceMap(biddersPerformanceMap);
+
+		adapters.forEach(function (adapter) {
+			performanceTracker.trackBidderOnLookupEnd(adapter, biddersPerformanceMap);
+		});
+	}
+
+	function trackAdaptersSlotState(providerName, slotName) {
+		var adapters = adaptersRegistry.getAdapters();
+
+		biddersPerformanceMap = performanceTracker.updatePerformanceMap(biddersPerformanceMap);
+
+		adapters.forEach(function (adapter) {
+			performanceTracker.trackBidderSlotState(adapter, slotName, providerName, biddersPerformanceMap);
+		});
 	}
 
 	function isSlotSupported(slotName) {
@@ -80,13 +91,40 @@ define('ext.wikia.adEngine.lookup.prebid', [
 	}
 
 	function getSlotParams(slotName) {
-		var params;
+		var slotParams;
 
-		if (win.pbjs && typeof win.pbjs.getAdserverTargetingForAdUnitCode === 'function') {
-			params = win.pbjs.getAdserverTargetingForAdUnitCode(slotName) || {};
+		if (win.pbjs && typeof win.pbjs.getBidResponses === 'function') {
+			var params = win.pbjs.getBidResponses(slotName) || {};
+
+			if (params && params[slotName] && params[slotName].bids && params[slotName].bids.length) {
+				var bidParams,
+					priorities = adaptersRegistry.getPriorities();
+
+				params[slotName].bids.forEach(function (param) {
+					if (!bidParams) {
+						bidParams = param;
+					} else {
+						if (bidParams.cpm === param.cpm) {
+							if (priorities[bidParams.bidder] === priorities[param.bidder]) {
+								bidParams = bidParams.timeToRespond > param.timeToRespond ? param : bidParams;
+							} else {
+								bidParams = priorities[bidParams.bidder] < priorities[param.bidder] ? param : bidParams;
+							}
+						} else {
+							bidParams = bidParams.cpm < param.cpm ? param : bidParams;
+						}
+					}
+				});
+
+				slotParams = bidParams.adserverTargeting;
+			}
 		}
 
-		return params || {};
+		return slotParams || {};
+	}
+
+	function getBestSlotPrice(slotName) {
+		return pricesTracker.getSlotBestPrice(slotName);
 	}
 
 	return factory.create({
@@ -94,9 +132,10 @@ define('ext.wikia.adEngine.lookup.prebid', [
 		name: 'prebid',
 		call: call,
 		calculatePrices: calculatePrices,
-		getPrices: getPrices,
 		isSlotSupported: isSlotSupported,
-		encodeParamsForTracking: encodeParamsForTracking,
-		getSlotParams: getSlotParams
+		getSlotParams: getSlotParams,
+		getBestSlotPrice: getBestSlotPrice,
+		trackAdaptersOnLookupEnd: trackAdaptersOnLookupEnd,
+		trackAdaptersSlotState: trackAdaptersSlotState
 	});
 });

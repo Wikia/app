@@ -50,7 +50,6 @@ class ApiMain extends ApiBase {
 	 */
 	private static $Modules = array(
 		'login' => 'ApiLogin',
-		'logout' => 'ApiLogout',
 		'query' => 'ApiQuery',
 		'expandtemplates' => 'ApiExpandTemplates',
 		'parse' => 'ApiParse',
@@ -134,6 +133,12 @@ class ApiMain extends ApiBase {
 
 	private $mCacheMode = 'private';
 	private $mCacheControl = array();
+
+	/**
+	 * Wikia change - fix visualeditor api permissions
+	 * @var bool $shouldCheckWriteApiPermission
+	 */
+	private $shouldCheckWriteApiPermission = true;
 
 	/**
 	 * Constructs an instance of ApiMain that utilizes the module and format specified by $request.
@@ -406,7 +411,7 @@ class ApiMain extends ApiBase {
 		global $wgUseXVO, $wgVaryOnXFP;
 		$response = $this->getRequest()->response();
 
-		wfRunHooks( 'ApiMainBeforeSendCacheHeaders', [ $response ] ); # Wikia change
+		Hooks::run( 'ApiMainBeforeSendCacheHeaders', [ $response ] ); # Wikia change
 
 		if ( $this->mCacheMode == 'private' ) {
 			$response->header( 'Cache-Control: private' );
@@ -625,10 +630,13 @@ class ApiMain extends ApiBase {
 	/**
 	 * Check the max lag if necessary
 	 * @param $module ApiBase object: Api module being used
-	 * @param $params Array an array containing the request parameters.
+	 * @param $params array an array containing the request parameters.
 	 * @return boolean True on success, false should exit immediately
 	 */
 	protected function checkMaxLag( $module, $params ) {
+		# Wikia change - SUS-3221 | Consul health checks make sure that we only have healthy slaves serving traffic
+		return true;
+		/**
 		if ( $module->shouldCheckMaxlag() && isset( $params['maxlag'] ) ) {
 			// Check for maxlag
 			global $wgShowHostnames;
@@ -649,6 +657,14 @@ class ApiMain extends ApiBase {
 			}
 		}
 		return true;
+		**/
+	}
+
+	/**
+	 * @param bool $shouldCheckWriteApiPermission
+	 */
+	public function setShouldCheckWriteApiPermission( bool $shouldCheckWriteApiPermission ) {
+		$this->shouldCheckWriteApiPermission = $shouldCheckWriteApiPermission;
 	}
 
 	/**
@@ -671,7 +687,7 @@ class ApiMain extends ApiBase {
 			if ( !$this->mEnableWrite ) {
 				$this->dieUsageMsg( 'writedisabled' );
 			}
-			if ( !$user->isAllowed( 'writeapi' ) ) {
+			if ( $this->shouldCheckWriteApiPermission && !$user->isAllowed( 'writeapi' ) ) {
 				$this->dieUsageMsg( 'writerequired' );
 			}
 			if ( wfReadOnly() ) {
@@ -725,7 +741,7 @@ class ApiMain extends ApiBase {
 		// Execute
 		$module->profileIn();
 		$module->execute();
-		wfRunHooks( 'APIAfterExecute', array( &$module ) );
+		Hooks::run( 'APIAfterExecute', array( &$module ) );
 		$module->profileOut();
 
 		$module->destroyLogContext(); // Wikia Change

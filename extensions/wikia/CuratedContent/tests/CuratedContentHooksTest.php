@@ -2,6 +2,11 @@
 
 class CuratedContentHooksTest extends WikiaBaseTest {
 
+	protected function setUp() {
+		$this->setupFile = __DIR__ . '/../CuratedContent.setup.php';
+		parent::setUp();
+	}
+
 	/**
 	 * @dataProvider urlsDataProvider
 	 */

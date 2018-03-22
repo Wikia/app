@@ -1,0 +1,14 @@
+{
+	"@metadata": {
+		"authors": [
+			"HalanTul"
+		]
+	},
+	"validator-warning": "Болҕой: $1",
+	"validator-error": "Алҕас: $1",
+	"validator-fatal-error": "Бөдөҥ алҕас: $1",
+	"validator-type-boolean": "сөп/суох",
+	"validator-type-char": "бэлиэ",
+	"validator-type-title": "аат",
+	"validator-type-string-list": "тиэкис тиһилигэ"
+}

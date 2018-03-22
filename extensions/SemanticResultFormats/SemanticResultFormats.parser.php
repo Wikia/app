@@ -33,20 +33,22 @@
  */
 class SRFParserFunctions {
 
-	static function registerFunctions( &$parser ) {
+	static function registerFunctions( Parser $parser ) {
 		$parser->setFunctionHook( 'calendarstartdate', array( 'SRFParserFunctions', 'runCalendarStartDate' ) );
 		$parser->setFunctionHook( 'calendarenddate', array( 'SRFParserFunctions', 'runCalendarEndDate' ) );
 		return true;
 	}
 
-	static function runCalendarStartDate( &$parser, $calendar_type = 'month', $calendar_start_day = null, $calendar_days = 7, $default_year = null, $default_month = null, $default_day = null ) {
+	static function runCalendarStartDate( Parser $parser, $calendar_type = 'month',
+										  $calendar_start_day	= null, $calendar_days = 7, $default_year = null, $default_month = null, $default_day = null ) {
 		if ( $calendar_type == '' ) $calendar_type = 'month';
 		list( $lower_date, $upper_date, $query_date ) =
 			SRFParserFunctions::getBoundaryDates( $calendar_type, $calendar_start_day, $calendar_days, $default_year, $default_month, $default_day );
 		return date( "Y", $lower_date ) . '-' . date( "m", $lower_date ) . '-' . date( "d", $lower_date );
 	}
 
-	static function runCalendarEndDate( &$parser, $calendar_type = 'month', $calendar_start_day = null, $calendar_days = 7, $default_year = null, $default_month = null, $default_day = null ) {
+	static function runCalendarEndDate( Parser $parser, $calendar_type = 'month',
+										$calendar_start_day =	null, $calendar_days = 7, $default_year = null, $default_month = null, $default_day = null ) {
 		if ( $calendar_type == '' ) $calendar_type = 'month';
 		list( $lower_date, $upper_date, $query_date ) =
 			SRFParserFunctions::getBoundaryDates( $calendar_type, $calendar_start_day, $calendar_days, $default_year, $default_month, $default_day );

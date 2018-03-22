@@ -1,14 +1,8 @@
-/*global beforeEach, describe, it, modules, expect, spyOn*/
+/*global beforeEach, describe, it, modules, expect*/
 describe('ext.wikia.recirculation.tracker', function () {
 	'use strict';
-	function noop() {}
 
 	var mocks = {
-			abTest: {
-				getGroup: function() {
-					return 'GROUP_1';
-				}
-			},
 			wikiaTracker: {
 				ACTIONS: {
 					CLICK: 'click',
@@ -20,8 +14,7 @@ describe('ext.wikia.recirculation.tracker', function () {
 
 	function getTracker() {
 		return modules['ext.wikia.recirculation.tracker'](
-			mocks.wikiaTracker,
-			mocks.abTest
+			mocks.wikiaTracker
 		);
 	}
 
@@ -29,26 +22,26 @@ describe('ext.wikia.recirculation.tracker', function () {
 		spyOn(mocks.wikiaTracker, 'track');
 	});
 
-	describe('trackVerboseClick', function() {
+	describe('trackImpression', function() {
 		it('Calls the track method with the proper parameters', function() {
-			getTracker().trackVerboseClick('RECIRCULATION', 'Link');
-			expect(mocks.wikiaTracker.track).toHaveBeenCalledWith({
-				action: 'click',
-				category: 'recirculation',
-				trackingMethod: 'analytics',
-				label: 'RECIRCULATION=GROUP_1=Link'
-			});
-		});
-	});
-
-	describe('trackVerboseImpression', function() {
-		it('Calls the track method with the proper parameters', function() {
-			getTracker().trackVerboseImpression('RECIRCULATION', 'Link');
+			getTracker().trackImpression('test-label');
 			expect(mocks.wikiaTracker.track).toHaveBeenCalledWith({
 				action: 'impression',
 				category: 'recirculation',
 				trackingMethod: 'analytics',
-				label: 'RECIRCULATION=GROUP_1=Link'
+				label: 'test-label'
+			});
+		});
+	});
+
+	describe('trackClick', function() {
+		it('Calls the track method with the proper parameters', function() {
+			getTracker().trackClick('test-label');
+			expect(mocks.wikiaTracker.track).toHaveBeenCalledWith({
+				action: 'click',
+				category: 'recirculation',
+				trackingMethod: 'analytics',
+				label: 'test-label'
 			});
 		});
 	});

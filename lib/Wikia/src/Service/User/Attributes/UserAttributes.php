@@ -2,7 +2,6 @@
 
 namespace Wikia\Service\User\Attributes;
 
-use Doctrine\Common\Cache\CacheProvider;
 use Wikia\Domain\User\Attribute;
 use Wikia\Logger\Loggable;
 
@@ -10,15 +9,9 @@ class UserAttributes {
 
 	use Loggable;
 
-	const DEFAULT_ATTRIBUTES = "user_attributes_default_attributes";
-	const CACHE_PROVIDER = "user_attributes_cache_provider";
-
 	// Attributes which the service returns, but treats as immutable and therefore we
 	// shouldn't attempt to save as the service will return a 403.
 	const READ_ONLY_ATTRIBUTES = [ 'username' ];
-
-	/** @var CacheProvider */
-	private $cache;
 
 	/** @var AttributeService */
 	private $attributeService;
@@ -29,21 +22,12 @@ class UserAttributes {
 	/** @var string[string] */
 	private $defaultAttributes;
 
-	const CACHE_TTL = 300; // 5 minute
-
 	/**
-	 * @Inject({
-	 *    Wikia\Service\User\Attributes\AttributeService::class,
-	 * 	  Wikia\Service\User\Attributes\UserAttributes::CACHE_PROVIDER,
-	 *    Wikia\Service\User\Attributes\UserAttributes::DEFAULT_ATTRIBUTES
-	 * })
 	 * @param AttributeService $attributeService
-	 * @param CacheProvider $cache,
 	 * @param string[string] $defaultAttributes
 	 */
-	public function __construct( AttributeService $attributeService, CacheProvider $cache, $defaultAttributes ) {
+	public function __construct( AttributeService $attributeService, $defaultAttributes ) {
 		$this->attributeService = $attributeService;
-		$this->cache = $cache;
 		$this->defaultAttributes = $defaultAttributes;
 		$this->attributes = [];
 	}
@@ -78,28 +62,16 @@ class UserAttributes {
 			return $this->attributes[$userId];
 		}
 
-		$attributes = $this->loadFromMemcache( $userId );
-		if ( $attributes === false ) {
-			$attributes = [];
-			/** @var Attribute $attribute */
-			foreach ( $this->attributeService->get( $userId ) as $attribute ) {
-				$attributes[$attribute->getName()] = $attribute->getValue();
-			};
-			$this->logAttributeServiceRequest( $userId );
-			$this->setInMemcache( $userId, $attributes );
+		$attributes = [];
+		/** @var Attribute $attribute */
+		foreach ( $this->attributeService->get( $userId ) as $attribute ) {
+			$attributes[$attribute->getName()] = $attribute->getValue();
 		}
+		$this->logAttributeServiceRequest( $userId );
 
 		$this->attributes[$userId] = $attributes;
 
 		return $attributes;
-	}
-
-	private function loadFromMemcache( $userId ) {
-		return $this->cache->fetch( $userId );
-	}
-
-	private function setInMemcache( $userId, $attributes ) {
-		$this->cache->save( $userId, $attributes, self::CACHE_TTL );
 	}
 
 	/**
@@ -138,8 +110,6 @@ class UserAttributes {
 				$this->deleteFromService( $userId, new Attribute( $name, $value ) );
 			}
 		}
-
-		$this->setInMemcache( $userId, $savedAttributes );
 	}
 
 	private function isReadOnlyAttribute( $name ) {
@@ -167,11 +137,12 @@ class UserAttributes {
 	 * @param $value
 	 * @return bool
 	 */
-	private function attributeShouldBeSaved( $name, $value ) {
-		return (
-			( is_null( $this->defaultAttributes[$name] ) ) && !( $value === false || is_null( $value ) ) ||
-			$value != $this->defaultAttributes[$name]
-		);
+	private function attributeShouldBeSaved( $name, $value ): bool {
+		if ( !isset( $this->defaultAttributes[$name] ) ) {
+			return $value !== false && $value !== null;
+		}
+
+		return $value !== $this->defaultAttributes[$name];
 	}
 
 	private function attributeShouldBeDeleted( $name, $value ) {
@@ -203,7 +174,6 @@ class UserAttributes {
 
 		$this->deleteFromService( $userId, $attribute );
 		$this->deleteFromInstanceCache( $userId, $attribute );
-		$this->setInMemcache( $userId, $this->attributes[$userId] );
 	}
 
 	private function deleteFromService( $userId, Attribute $attribute ) {
@@ -215,7 +185,6 @@ class UserAttributes {
 	}
 
 	public function clearCache( $userId ) {
-		$this->cache->delete( $userId );
 		unset( $this->attributes[$userId] );
 	}
 

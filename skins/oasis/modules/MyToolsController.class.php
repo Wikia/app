@@ -101,7 +101,7 @@ class MyToolsController extends WikiaController {
 			);
 		}
 
-		wfRunHooks('MyTools::getDefaultTools', array(&$out));
+		Hooks::run('MyTools::getDefaultTools', array(&$out));
 
 		return $out;
 	}
@@ -139,7 +139,7 @@ class MyToolsController extends WikiaController {
 
 		$toolsNames = $this->getAllToolsNames();
 
-		wfRunHooks('MyTools::getAllToolsNames', array(&$toolsNames));
+		Hooks::run('MyTools::getAllToolsNames', array(&$toolsNames));
 
 		$tools = array();
 

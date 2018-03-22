@@ -2,8 +2,8 @@
 $messages = array();
 
 $messages['en'] = array(
-	'emailext-weeklydigest-subject' => "See what's new on your favorite Wikia pages this week",
-	'emailext-weeklydigest-summary' => 'Since your last visit, Wikia Community members have made improvements to pages that you follow.',
+	'emailext-weeklydigest-subject' => "See what's new with your favorite communities this week",
+	'emailext-weeklydigest-summary' => 'Since your last visit, FANDOM users have made changes to pages that you follow. Check them out:',
 );
 
 $messages['qqq'] = array(
@@ -12,62 +12,62 @@ $messages['qqq'] = array(
 );
 
 $messages['de'] = array(
-	'emailext-weeklydigest-subject' => 'Hier kannst du sehen, welche Neuigkeiten es diese Woche auf deinen Lieblingsseiten bei Wikia gegeben hat.',
-	'emailext-weeklydigest-summary' => 'Seit deinem letzten Besuch wurden Seiten, denen du folgst, von Mitglieder der Wikia-Community verbessert.',
+	'emailext-weeklydigest-subject' => 'Das gibt es Neues diese Woche auf deinen Lieblingsseiten bei Fandom',
+	'emailext-weeklydigest-summary' => 'Seit deinem letzten Besuch haben FANDOM-Benutzer Änderungen an Seiten vorgenommen, denen du folgst. Hier kannst du die Änderungen ansehen:',
 );
 
 $messages['es'] = array(
-	'emailext-weeklydigest-subject' => 'Mira lo que hay de nuevo esta semana en tus páginas favoritas de Wikia',
-	'emailext-weeklydigest-summary' => 'Desde tu última visita, los miembros de la comunidad de Wikia han hecho mejoras a las páginas que sigues.',
+	'emailext-weeklydigest-subject' => 'Mira lo que hay de nuevo esta semana en tus comunidades favoritas',
+	'emailext-weeklydigest-summary' => 'Desde tu última visita, los usuarios de FANDOM han realizado cambios en páginas que sigues. Échales un vistazo:',
 );
 
 $messages['fr'] = array(
-	'emailext-weeklydigest-subject' => 'Voir les mises à jour de vos pages Wikia favorites de cette semaine',
-	'emailext-weeklydigest-summary' => 'Des membres de la communauté Wikia ont apporté des améliorations à certaines pages que vous suivez depuis votre dernière visite.',
+	'emailext-weeklydigest-subject' => 'Voir les mises à jour de vos communautés favorites de cette semaine',
+	'emailext-weeklydigest-summary' => 'Depuis votre dernière visite, les utilisateurs de FANDOM ont apporté des changements aux pages que vous suivez :',
 );
 
 $messages['it'] = array(
-	'emailext-weeklydigest-subject' => "Vedi cosa c'è di nuovo questa settimana sulle tue pagine preferite di Wikia",
-	'emailext-weeklydigest-summary' => 'Dalla tua ultima visita, i membri della Comunità di Wikia hanno fatto delle modifiche alle pagine che segui.',
+	'emailext-weeklydigest-subject' => "Scopri cosa c'è di nuovo questa settimana nelle tue comunità favorite",
+	'emailext-weeklydigest-summary' => "Dalla tua ultima visita, degli utenti FANDOM hanno apportato delle modifiche alle pagine da te seguite. Dacci un'occhiata:",
 );
 
 $messages['ja'] = array(
-	'emailext-weeklydigest-subject' => 'お気に入りのウィキアページの今週の更新をチェック',
-	'emailext-weeklydigest-summary' => '前回の閲覧後に、ウィキアのコミュニティ・メンバーによりフォロー中のページに改良が加えられました。チェックしてみましょう！',
+	'emailext-weeklydigest-subject' => 'お気に入りのFANDOMコミュニティの更新情報',
+	'emailext-weeklydigest-summary' => 'あなたがフォローしているページに変更が加えられました。チェックしてみましょう！',
+);
+
+$messages['ko'] = array(
+	'emailext-weeklydigest-subject' => '이번 주에는 주시 중인 팬덤 문서에 무슨 일이 있었을까요?',
+	'emailext-weeklydigest-summary' => '팬덤 커뮤니티 회원들이 귀하가 주시 중인 문서들을 더욱 발전시켰습니다. 자세히 확인해 보세요.',
 );
 
 $messages['nl'] = array(
-	'emailext-weeklydigest-subject' => "See what's new on your favorite Wikia pages this week",
-	'emailext-weeklydigest-summary' => "Since you're last visit, Wikia Community members have made improvements to pages that you follow.",
+	'emailext-weeklydigest-subject' => "See what's new with your favorite communities this week",
+	'emailext-weeklydigest-summary' => 'Since your last visit, FANDOM users have made changes to pages that you follow. Check them out:',
 );
 
 $messages['pl'] = array(
-	'emailext-weeklydigest-subject' => 'Zobacz, co nowego wydarzyło się w tym tygodniu na Twoich ulubionych stronach portalu Wikia',
-	'emailext-weeklydigest-summary' => 'Od ostatniej Twojej wizyty, członkowie społeczności Wikia ulepszyli strony, które śledzisz.',
+	'emailext-weeklydigest-subject' => 'Zobacz, co nowego wydarzyło się w tym tygodniu na Twoich ulubionych społecznościach',
+	'emailext-weeklydigest-summary' => 'Od Twojej ostatniej wizyty, użytkownicy Fandomu wprowadzili zmiany na stronach, które obserwujesz. Zobacz, co się zmieniło:',
 );
 
 $messages['pt'] = array(
-	'emailext-weeklydigest-subject' => 'Veja o que há de novo em suas páginas favoritas da Wikia esta semana',
-	'emailext-weeklydigest-summary' => 'Desde sua última visita, membros da Comunidade Wikia aprimoraram as páginas que você segue.',
+	'emailext-weeklydigest-subject' => 'Veja o que há de novo em suas comunidades favoritas esta semana',
+	'emailext-weeklydigest-summary' => 'Desde sua última visita, os usuários do FANDOM fizeram alterações em páginas que você segue. Confira:',
 );
 
 $messages['ru'] = array(
-	'emailext-weeklydigest-subject' => 'Что нового на ваших любимых страницах Викия на этой неделе',
-	'emailext-weeklydigest-summary' => 'С момента вашего последнего посещения Викия участники сообщества сделали отслеживаемые вами страницы ещё лучше.',
+	'emailext-weeklydigest-subject' => 'Узнайте, что нового на ваших любимых сообществах Фэндома на этой неделе',
+	'emailext-weeklydigest-summary' => 'С момента вашего последнего посещения Фэндома участники внесли изменения в страницы, которые вы отслеживаете. Посмотрите:',
 );
 
 $messages['zh-hans'] = array(
-	'emailext-weeklydigest-subject' => '看看您最喜欢的维基页面上本周有什么新内容',
-	'emailext-weeklydigest-summary' => '在您上次访问之后，Wikia社区成员对您关注的页面做了改进。',
+	'emailext-weeklydigest-subject' => '看看您最喜欢的社区本周都有哪些新内容',
+	'emailext-weeklydigest-summary' => '自您上次访问之后，FANDOM用户已对您关注的页面进行了一些更改。赶快去查看一下吧︰',
 );
 
 $messages['zh-hant'] = array(
-	'emailext-weeklydigest-subject' => '看看維基頁面本周新内容',
-	'emailext-weeklydigest-summary' => '自您上次訪問之後，Wikia社區成員對您所關注的頁面做了改進。',
-);
-
-$messages['zh-tw'] = array(
-	'emailext-weeklydigest-subject' => '看看維基頁面本周的新内容',
-	'emailext-weeklydigest-summary' => '自你上次訪問之後，Wikia社區成員對你關注的頁面做了改進。',
+	'emailext-weeklydigest-subject' => '看看您喜歡的社區這週有什麼新內容',
+	'emailext-weeklydigest-summary' => '自您上次訪問之後，有FANDOM用戶已對您關注的頁面進行了許多更改。趕快去看一下吧︰',
 );
 

@@ -7,7 +7,7 @@ abstract class UserArray implements Iterator {
 	 */
 	static function newFromResult( $res ) {
 		$userArray = null;
-		if ( !wfRunHooks( 'UserArrayFromResult', array( &$userArray, $res ) ) ) {
+		if ( !Hooks::run( 'UserArrayFromResult', array( &$userArray, $res ) ) ) {
 			return null;
 		}
 		if ( $userArray === null ) {
@@ -21,13 +21,14 @@ abstract class UserArray implements Iterator {
 	 * @return UserArrayFromResult
 	 */
 	static function newFromIDs( $ids ) {
+	    global $wgExternalSharedDB;
 		$ids = array_map( 'intval', (array)$ids ); // paranoia
 		if ( !$ids ) {
 			// Database::select() doesn't like empty arrays
 			return new ArrayIterator(array());
 		}
-		$dbr = wfGetDB( DB_SLAVE );
-		$res = $dbr->select( 'user', '*', array( 'user_id' => $ids ),
+		$dbr = wfGetDB( DB_SLAVE, [], $wgExternalSharedDB );
+		$res = $dbr->select( '`user`', '*', array( 'user_id' => $ids ),
 			__METHOD__ );
 		return self::newFromResult( $res );
 	}
@@ -66,7 +67,10 @@ class UserArrayFromResult extends UserArray {
 		if ( $row === false ) {
 			$this->current = false;
 		} else {
-			$this->current = User::newFromRow( $row );
+			// SUS-3528
+			$this->current = $row->user_id > 0
+				? User::newFromId( $row->user_id )
+				: User::newFromRow( $row );
 		}
 	}
 

@@ -1,10 +1,4 @@
 <?php
-/**
- * Internationalisation file for extension GlobalMessages.
- *
- * @file
- * @ingroup Extensions
- */
 $messages = array();
 
 $messages['en'] = array(
@@ -14,7 +8,7 @@ $messages['en'] = array(
 	'delete' => 'Delete',
 	'deletethispage' => 'Delete this page',
 	'disclaimers' => 'Disclaimers',
-	'disclaimerpage' => 'Project:General disclaimer',
+	'disclaimerpage' => '{{#ifexist:Project:General disclaimer|Project:General disclaimer| }}',
 	'databaseerror' => 'Database error',
 	'dberrortext' => 'A database query syntax error has occurred.
 This may indicate a bug in the software.
@@ -27,7 +21,9 @@ The last attempted database query was:
 "$1"
 from within function "$2".
 Database returned error "$3: $4"',
-	'directorycreateerror' => 'Could not create directory "$1".',
+	'directorycreateerror' => 'Could not create directory "$1".
+<br/>
+Please report the above error [[Special:Contact/bug|using this form]]',
 	'deletedhist' => 'Deleted history',
 	'difference' => '(Difference between revisions)',
 	'difference-multipage' => '(Difference between pages)',
@@ -58,24 +54,40 @@ It now redirects to [[$2]].',
 	'deadendpages' => 'Dead-end pages',
 	'deadendpages-summary' => '',
 	'deadendpagestext' => 'The following pages do not link to other pages in {{SITENAME}}.',
-	'deletedcontributions' => 'Deleted user contributions',
+	'deletedcontributions' => 'Deleted contributions',
 	'deletedcontributions-title' => 'Deleted user contributions',
-	'defemailsubject' => '{{SITENAME}} e-mail from user "$1"',
+	'defemailsubject' => 'You have a new email from a user at {{SITENAME}}',
 	'deletepage' => 'Delete page',
 	'delete-confirm' => 'Delete "$1"',
 	'delete-legend' => 'Delete',
-	'deletedtext' => '"$1" has been deleted.
-See $2 for a record of recent deletions.',
+	'deletedtext' => "'''\"\$1\" has been deleted!'''
+
+* Please note, some pages may still [[Special:WhatLinksHere/\$1|link to this page]].
+* You can continue to view the deleted page [[Special:Undelete/\$1|here]].
+* See the \$2 for a record of recent deletions.
+
+{{#ifeq:{{FULLPAGENAME}}|{{TALKPAGENAME}}||{{#ifeq:{{SUBJECTSPACE}}|User||{{#ifexist:{{TALKPAGENAME}}|
+<br />
+This page also has a '''[[{{TALKPAGENAME}}|talk page]]''' (<small class=\"plainlinks\">[{{fullurl:{{TALKPAGENAMEE}}|action=delete&wpReason=Talk+page+of+a+deleted+page}} delete]</small>). You may wish to delete that as well.
+|}}}}}}",
 	'dellogpage' => 'Deletion log',
-	'dellogpagetext' => 'Below is a list of the most recent deletions.',
+	'dellogpagetext' => "Below is a list of the most recent deletions. If you don't agree with a deletion or think that a page was valid content, contact the [[Project:Administrators|administrator]] who deleted it.",
 	'deletionlog' => 'deletion log',
 	'deletecomment' => 'Reason:',
 	'deleteotherreason' => 'Other/additional reason:',
 	'deletereasonotherlist' => 'Other reason',
-	'deletereason-dropdown' => '*Common delete reasons
-** Author request
+	'deletereason-dropdown' => '*Vandalism and problems
 ** Copyright violation
-** Vandalism',
+** Spam
+** Vandalism
+*Maintenance
+** Author request
+** Housekeeping
+** Marked for deletion
+*Redirects
+** Broken redirect
+** Unused redirect
+** Redirect left from pagemove',
 	'delete-edit-reasonlist' => 'Edit deletion reasons',
 	'delete-toobig' => 'This page has a large edit history, over $1 {{PLURAL:$1|revision|revisions}}.
 Deletion of such pages has been restricted to prevent accidental disruption of {{SITENAME}}.',
@@ -94,7 +106,9 @@ Do you want to delete it to make way for the move?',
 	'deletedrevision' => 'Deleted old revision $1',
 	'days-abbrev' => '$1d',
 	'days' => '{{PLURAL:$1|$1 day|$1 days}}',
-	'deletedwhileediting' => "'''Warning''': This page was deleted after you started editing!",
+	'deletedwhileediting' => '<div id="mw-deletedwhileediting" class="plainlinks" style="margin: 0 0 1em; padding-left: .5em; border: solid #aaaaaa 1px">
+<span style="color: red">\'\'\'Warning\'\'\'</span>: an administrator deleted this page since you started editing it. You might want to check the [{{fullurl:Special:Log/delete|page={{FULLPAGENAMEE}}}} deletion log] to see why.
+</div>',
 	'descending_abbrev' => 'desc',
 	'duplicate-defaultsort' => '\'\'\'Warning:\'\'\' Default sort key "$2" overrides earlier default sort key "$1".',
 	'dberr-header' => 'This wiki has a problem',
@@ -3564,7 +3578,7 @@ $messages['de'] = array(
 	'delete' => 'Löschen',
 	'deletethispage' => 'Diese Seite löschen',
 	'disclaimers' => 'Impressum',
-	'disclaimerpage' => 'Project:Impressum',
+	'disclaimerpage' => '{{ns:project}}:Lizenzbestimmungen',
 	'databaseerror' => 'Datenbankfehler',
 	'dberrortext' => 'Es ist ein Datenbankfehler aufgetreten.
 Der Grund kann ein Programmierfehler sein.
@@ -3605,11 +3619,13 @@ Jede Zeile enthält Links zur ersten und zweiten Weiterleitung sowie dem Ziel de
 	'deadendpagestext' => 'Die folgenden Seiten verweisen nicht auf andere Seiten von {{SITENAME}}.',
 	'deletedcontributions' => 'Gelöschte Beiträge',
 	'deletedcontributions-title' => 'Gelöschte Beiträge',
-	'defemailsubject' => '{{SITENAME}} - E-Mail von Benutzer „$1“',
+	'defemailsubject' => '[{{SITENAME}}-E-Mail]',
 	'deletepage' => 'Seite löschen',
 	'delete-confirm' => 'Löschen von „$1“',
 	'delete-legend' => 'Löschen',
-	'deletedtext' => '„$1“ wurde gelöscht. Im $2 findest du eine Liste der letzten Löschungen.',
+	'deletedtext' => '„<nowiki>$1</nowiki>“ wurde gelöscht. Im $2 findest du eine Liste der letzten Löschungen.
+
+Je nach Grund für die Löschung ist es vielleicht auch sinnvoll, alle [[Special:WhatLinksHere/$1|Links auf diese Seite]] zu entfernen. Achte auch darauf ob die gelöschte Seite eine dazugehörige Diskussionsseite hatte.',
 	'dellogpage' => 'Lösch-Logbuch',
 	'dellogpagetext' => 'Dies ist das Logbuch der gelöschten Seiten und Dateien.',
 	'deletionlog' => 'Lösch-Logbuch',
@@ -3619,7 +3635,15 @@ Jede Zeile enthält Links zur ersten und zweiten Weiterleitung sowie dem Ziel de
 	'deletereason-dropdown' => '* Allgemeine Löschgründe
 ** Wunsch des Autors
 ** Urheberrechtsverletzung
-** Vandalismus',
+** Offensiv/Angriffe auf andere Benutzer oder Menschen
+* Inhaltsbezogen
+** Inhalt ist nicht im Wiki erwünscht
+** Löschantrag
+** Spam
+** Vandalismus
+* Seitenspezifisch
+** Existiert bereits
+** Falsche Schreibweise',
 	'delete-edit-reasonlist' => 'Löschgründe bearbeiten',
 	'delete-toobig' => 'Diese Seite hat mit mehr als $1 {{PLURAL:$1|Version|Versionen}} eine sehr lange Versionsgeschichte. Das Löschen solcher Seiten wurde eingeschränkt, um eine versehentliche Überlastung der Server zu verhindern.',
 	'delete-warning-toobig' => 'Diese Seite hat mit mehr als $1 {{PLURAL:$1|Version|Versionen}} eine sehr lange Versionsgeschichte. Das Löschen kann zu Störungen im Datenbankbetrieb führen.',
@@ -3646,6 +3670,15 @@ Im [{{fullurl:{{#special:Log}}|type=delete&page={{FULLPAGENAMEE}}}} Lösch-Logbu
 	'dberr-outofdate' => 'Beachte, dass der Suchindex unserer Inhalte bei Google veraltet sein kann.',
 	'dberr-cachederror' => 'Folgendes ist eine Kopie des Caches der angeforderten Seite und kann veraltet sein.',
 	'discuss' => 'Diskussion',
+	'defaultskin1' => 'Die Admins dieses Wikis haben <b>$1</b> als Standard-Skin gewählt.',
+	'defaultskin2' => 'Die Admins dieses Wikis haben <b>$1</b> als Standard-Skin gewählt. Klicke <a href="$2">hier</a> um den Quellcode zu sehen.',
+	'defaultskin3' => 'Die Admins dieses Wikis haben keinen Standard-Skin gewählt. Benutzt wird der Standard-Skin von Wikia: <b>$1</b>.',
+	'defaultskin_choose' => 'Setze das Standard-Farbschema für dieses Wiki:',
+	'deletedarticle' => '"[[$1]]" gelöscht',
+	'disambiguations-summary' => '',
+	'doubleredirects-summary' => '',
+	'deadendpages-summary' => '',
+	'days-abbrev' => '$1d',
 );
 
 $messages['de-at'] = array(
@@ -4055,7 +4088,7 @@ $messages['el'] = array(
 	'datedefault' => 'Χωρίς προτίμηση',
 	'defaultns' => 'Ειδάλλως αναζήτηση σε αυτές τις περιοχές ονομάτων:',
 	'default' => 'προεπιλογή',
-	'diff' => "'διαφορά'",
+	'diff' => 'διαφορά',
 	'destfilename' => 'Όνομα αρχείου προορισμού:',
 	'duplicatesoffile' => '{{PLURAL:$1|Το ακόλουθο αρχείο είναι διπλότυπο|Τα $1 ακόλουθα αρχεία είναι διπλότυπα}} αυτού του αρχείου ([[Special:FileDuplicateSearch/$2|περισσότερες λεπτομέρειες]]):',
 	'download' => 'λήψη',
@@ -4240,11 +4273,13 @@ La última consulta a la base de datos que se intentó fue:
 «$1»
 desde la función «$2».
 Base de datos retornó error «$3: $4».',
-	'directorycreateerror' => 'No se pudo crear el directorio «$1».',
+	'directorycreateerror' => 'No se pudo crear el directorio "$1".
+<br/>
+Por favor, reporta el error anterior a través de [[Special:Contact/bug|este formulario]].',
 	'deletedhist' => 'Historial borrado',
 	'difference' => '(Diferencias entre revisiones)',
 	'difference-multipage' => '(Diferencia entre las páginas)',
-	'diff-multi' => '(No se {{PLURAL:$1|muestra una edición intermedia realizada|muestran $1 ediciones intermedias realizadas}} por {{PLURAL:$2|un usuario|$2 usuarios}})',
+	'diff-multi' => '({{plural:$1|Una edición intermedia no se muestra|$1 ediciones intermedias no se muestran}}.)',
 	'diff-multi-manyusers' => '(No se {{PLURAL:$1|muestra una edición intermedia|muestran $1 ediciones intermedias}} de {{PLURAL:$2|un usuario|$2 usuarios}})',
 	'datedefault' => 'Sin preferencia',
 	'defaultns' => 'Buscar en estos espacios de nombres por defecto:',
@@ -4255,28 +4290,32 @@ Base de datos retornó error «$3: $4».',
 	'download' => 'descargar',
 	'disambiguations' => 'Páginas que enlazan con páginas de desambiguación',
 	'disambiguationspage' => 'Template:Desambiguación',
-	'disambiguations-text' => "Las siguientes páginas enlazan con una '''página de desambiguación'''.
-En lugar de ello deberían enlazar con  el tema apropiado.<br />
-Una página es considerada página de desambiguación si utiliza la plantilla que está enlazada desde [[MediaWiki:Disambiguationspage]].",
+	'disambiguations-text' => "Las siguientes páginas enlazan a una '''página de desambiguación'''. En lugar de ello deberían enlazar con el tema apropiado.<br />Una página es considerada página de desambiguación si utiliza la plantilla que está enlazada desde [[MediaWiki:disambiguationspage]].",
 	'doubleredirects' => 'Redirecciones dobles',
-	'doubleredirectstext' => 'Esta página contiene una lista de páginas que redirigen a otras páginas de redirección.
-Cada fila contiene enlaces a la segunda y tercera redirección, así como la primera línea de la segunda redirección, en la que usualmente se encontrará el artículo «real» al que la primera redirección debería apuntar.
-Las entradas <del>tachadas</del> han sido resueltas.',
+	'doubleredirectstext' => '<b>Atención:</b> Esta lista puede contener enlaces falsos. Esto quiere decir normalmente que hay texto adicional con enlaces bajo el primer #REDIRECT.<br /> Cada fila contiene enlaces al segundo y tercer redirect, así como la primera línea del segundo redirect, en la que normalmente se encontrará el artículo "real" al que el primer redirect debería apuntar.',
 	'double-redirect-fixed-move' => '[[$1]] ha sido trasladado, ahora es una redirección a [[$2]]',
 	'double-redirect-fixed-maintenance' => 'Corrigiendo la doble redirección desde [[$1]] a [[$2]].',
 	'double-redirect-fixer' => 'Corrector de redirecciones',
 	'deadendpages' => 'Páginas sin salida',
-	'deadendpagestext' => 'Las siguientes páginas no enlazan a otras páginas de {{SITENAME}}.',
-	'deletedcontributions' => 'Contribuciones borradas de usuario',
+	'deadendpagestext' => 'Las siguientes páginas no enlazan a otras páginas en este wiki.',
+	'deletedcontributions' => 'Contribuciones de usuario borradas',
 	'deletedcontributions-title' => 'Contribuciones borradas de usuario',
-	'defemailsubject' => 'Correo de {{SITENAME}} para el usuario $1',
+	'defemailsubject' => 'Has recibido un email desde {{SITENAME}}',
 	'deletepage' => 'Borrar esta página',
 	'delete-confirm' => 'Borrar «$1»',
 	'delete-legend' => 'Borrar',
-	'deletedtext' => '«$1» ha sido borrado.
-Véase $2 para un registro de los borrados recientes.',
+	'deletedtext' => "'''\"\$1\" ha sido borrado!'''
+
+* Ten en cuenta que otras páginas pueden seguir [[Special:WhatLinksHere/\$1|enlazando a esta página]].
+* Puedes seguir viendo la página borrada [[Special:Undelete/\$1|aquí]].
+* Visita \$2 para un registro de borrados recientes.
+
+{{#ifeq:{{FULLPAGENAME}}|{{TALKPAGENAME}}||{{#ifeq:{{SUBJECTSPACE}}|User||{{#ifexist:{{TALKPAGENAME}}|
+<br />
+Esta página tiene también una '''[[{{TALKPAGENAME}}|página de discusión]]''' (<small class=\"plainlinks\">[{{fullurl:{{TALKPAGENAMEE}}|action=edit}} editar], [{{fullurl:{{TALKPAGENAMEE}}|action=delete&wpReason=Página+de+discusión+de+un+borrado}} delete]</small>). Quizás quieras borrarla también.
+|}}}}}}",
 	'dellogpage' => 'Registro de borrados',
-	'dellogpagetext' => 'A continuación se muestra una lista de los borrados más recientes.',
+	'dellogpagetext' => 'Abajo hay una lista de los borrados más recientes.',
 	'deletionlog' => 'registro de borrados',
 	'deletecomment' => 'Motivo:',
 	'deleteotherreason' => 'Otro motivo:',
@@ -4289,7 +4328,7 @@ Véase $2 para un registro de los borrados recientes.',
 	'delete-toobig' => 'Esta página tiene un historial muy grande, con más de $1 {{PLURAL:$1|revisión|revisiones}}. Borrar este tipo de páginas ha sido restringido para prevenir posibles problemas en {{SITENAME}}.',
 	'delete-warning-toobig' => 'Esta página tiene un historial de más de $1 {{PLURAL:$1|revisión|revisiones}}. Eliminarla puede perturbar las operaciones de la base de datos de {{SITENAME}}. Ten cuidado al borrar.',
 	'databasenotlocked' => 'La base de datos no está bloqueada.',
-	'delete_and_move' => 'Borrar y trasladar',
+	'delete_and_move' => 'Borrar y renombrar',
 	'delete_and_move_text' => '==Se necesita borrado==
 
 La página de destino ("[[:$1]]") ya existe. ¿Quiere borrarla para permitir al traslado?',
@@ -4302,7 +4341,7 @@ La página de destino ("[[:$1]]") ya existe. ¿Quiere borrarla para permitir al 
 	'deletedwhileediting' => "'''Aviso''': ¡Esta página fue borrada después de que usted empezara a editar!",
 	'descending_abbrev' => 'desc',
 	'duplicate-defaultsort' => "'''Atención:''' La clave de ordenamiento predeterminada «$2» anula la clave de ordenamiento anterior «$1».",
-	'dberr-header' => 'Este wiki tiene un problema',
+	'dberr-header' => 'Este wiki tiene problemas',
 	'dberr-problems' => 'Lo sentimos.
 Este sitio está experimentando dificultades técnicas.',
 	'dberr-again' => 'Prueba a recargar dentro de unos minutos.',
@@ -4311,6 +4350,15 @@ Este sitio está experimentando dificultades técnicas.',
 	'dberr-outofdate' => 'Ten en cuenta que su índice de nuestro contenido puede estar desactualizado.',
 	'dberr-cachederror' => 'La siguiente es una página guardada de la página solicitada, y puede no estar actualizada.',
 	'discuss' => 'Discusión',
+	'defaultskin1' => 'Los administradores de este wiki han elegido <b>$1</b> como piel predeterminada',
+	'defaultskin2' => 'Los administradores de este wiki han elegido <b>$1</b> como piel predeterminada. Haz clic <a href="$2">here</a> para ver el código.',
+	'defaultskin3' => 'Los administradores de este wiki no han elegido una piel predeterminada. Utilizando la predeterminada de Wikia: <b>$1</b>.',
+	'defaultskin_choose' => 'Configurar la piel predeterminada para este wiki:',
+	'disambiguations-summary' => '',
+	'doubleredirects-summary' => '',
+	'deadendpages-summary' => '',
+	'days-abbrev' => '$1d',
+	'deletedarticle' => 'deleted "[[$1]]"',
 );
 
 $messages['et'] = array(
@@ -4623,7 +4671,7 @@ $messages['fa'] = array(
 	'deadendpagestext' => 'صفحه‌های زیر به هیچ صفحهٔ دیگری در {{SITENAME}} پیوند ندارند.',
 	'deletedcontributions' => 'مشارکت‌های حذف‌شده',
 	'deletedcontributions-title' => 'مشارکت‌های حذف‌شده',
-	'defemailsubject' => 'پست الکترونیکی {{SITENAME}} از طرف کاربر «$1»',
+	'defemailsubject' => 'شما پست‌الکترونیکی جدیدی از طرف کاربر {{SITENAME}} دارید',
 	'deletepage' => 'حذف صفحه',
 	'delete-confirm' => 'حذف «$1»',
 	'delete-legend' => 'حذف',
@@ -4639,7 +4687,9 @@ $messages['fa'] = array(
 	'deletereason-dropdown' => '*دلایل متداول حذف
 ** درخواست کاربر
 ** نقض حق تکثیر
-** خرابکاری',
+** خرابکاری
+**توهین
+**هرزنویسی',
 	'delete-edit-reasonlist' => 'ویرایش دلایل حذف',
 	'delete-toobig' => 'این صفحه تاریخچهٔ ویرایشی بزرگی دارد، که شامل بیش از $1 {{PLURAL:$1|نسخه|نسخه}} است.
 به منظور جلوگیری از اختلال ناخواسته در {{SITENAME}} حذف این گونه صفحه‌ها محدود شده‌است.',
@@ -4711,14 +4761,22 @@ Jokaisella rivillä on linkit ensimmäiseen ja toiseen ohjaukseen sekä toisen o
 	'double-redirect-fixer' => 'Ohjausten korjaaja',
 	'deadendpages' => 'Sivut, joilla ei ole linkkejä',
 	'deadendpagestext' => 'Seuraavat sivut eivät linkitä muihin sivuihin wikissä.',
-	'deletedcontributions' => 'Poistetut muokkaukset',
+	'deletedcontributions' => 'Käyttäjän poistetut muokkaukset',
 	'deletedcontributions-title' => 'Poistetut muokkaukset',
 	'defemailsubject' => 'Sähköpostia käyttäjältä $1 sivustolta {{SITENAME}}',
 	'deletepage' => 'Poista sivu',
 	'delete-confirm' => 'Sivun ”$1” poistaminen',
 	'delete-legend' => 'Sivun poisto',
-	'deletedtext' => '”$1” on poistettu.
-Sivulla $2 on lista viimeaikaisista poistoista.',
+	'deletedtext' => "'''\"\$1\" on poistettu!'''
+
+* Ole hyvä ja muista, että jotkut sivut saattavat [[Special:WhatLinksHere/\$1|linkittää tähän sivuun]].
+* Voit jatkaa poistetun sivun katsomista [[Special:Undelete/\$1|täällä]].
+* Katso \$2 saadaksesi tiedon tuoreista poistoista.
+
+{{#ifeq:{{FULLPAGENAME}}|{{TALKPAGENAME}}||{{#ifeq:{{SUBJECTSPACE}}|User||{{#ifexist:{{TALKPAGENAME}}|
+<br />
+Tällä sivulla on myös '''[[{{TALKPAGENAME}}|keskustelusivu]]''' (<small class=\"plainlinks\">[{{fullurl:{{TALKPAGENAMEE}}|action=delete&wpReason=Poistetun+sivun+keskustelusivu}} poista]</small>). Voit halutessasi poistaa senkin.
+|}}}}}}",
 	'dellogpage' => 'Poistoloki',
 	'dellogpagetext' => 'Alla on loki viimeisimmistä poistoista.',
 	'deletionlog' => 'poistoloki',
@@ -4752,6 +4810,10 @@ Sivulla $2 on lista viimeaikaisista poistoista.',
 	'dberr-outofdate' => 'Googlen indeksi ei välttämättä ole ajan tasalla.',
 	'dberr-cachederror' => 'Alla on välimuistissa oleva sivun versio, joka ei välttämättä ole ajan tasalla.',
 	'discuss' => 'Keskustele',
+	'defaultskin1' => 'Tämän wikin ylläpitäjät ovat valinneet: <b>{{GRAMMAR:genitive|$1}}</b> oletusulkoasuksi.',
+	'defaultskin2' => 'Tämän wikin ylläpitäjät ovat valinneet: <b>{{GRAMMAR:genitive|$1}}</b> oletusulkoasuksi. Klikkaa <a href="$2">tästä</a> nähdäksesi koodin.',
+	'defaultskin3' => 'Tämän wikin ylläpitäjät eivät ole valinneet oletusulkoasua. Käytetään Wikian oletusta: <b>$1</b>.',
+	'defaultskin_choose' => 'Aseta tämän wikin oletusteema:',
 );
 
 $messages['fiu-vro'] = array(
@@ -4949,7 +5011,7 @@ Les entrées <del>barrées</del> ont été résolues.',
 	'deadendpagestext' => 'Les pages suivantes ne contiennent aucun lien vers d’autres pages du wiki.',
 	'deletedcontributions' => 'Contributions supprimées',
 	'deletedcontributions-title' => 'Contributions supprimées',
-	'defemailsubject' => '{{SITENAME}} Courriel de l’utilisateur « $1 »',
+	'defemailsubject' => '{{SITENAME}} E-mail de l’utilisateur « $1 »',
 	'deletepage' => 'Supprimer la page',
 	'delete-confirm' => 'Supprimer « $1 »',
 	'delete-legend' => 'Supprimer',
@@ -4993,6 +5055,15 @@ La page de destination « [[:$1]] » existe déjà.
 	'dberr-outofdate' => 'Notez que leurs index de notre contenu peuvent être dépassés.',
 	'dberr-cachederror' => 'Ceci est une copie cachée de la page demandée et peut être dépassée.',
 	'discuss' => 'Discuter',
+	'defaultskin_choose' => 'Choisir le thème par défaut pour ce wiki :',
+	'disambiguations-summary' => '',
+	'doubleredirects-summary' => '',
+	'deadendpages-summary' => '',
+	'days-abbrev' => '$1d',
+	'deletedarticle' => 'deleted "[[$1]]"',
+	'defaultskin1' => 'The admins for this wiki have chosen: <b>$1</b> as the default skin.',
+	'defaultskin2' => 'The admins for this wiki have chosen: <b>$1</b> as the default skin. Click <a href="$2">here</a> to see the code.',
+	'defaultskin3' => 'The admins for this wiki have not chosen a default skin. Using the Wikia default: <b>$1</b>.',
 );
 
 $messages['frc'] = array(
@@ -7498,6 +7569,16 @@ La pagina specificata come destinazione "[[:$1]]" esiste già. Vuoi cancellarla 
 	'dberr-usegoogle' => 'Puoi provare a cercare su Google nel frattempo.',
 	'dberr-outofdate' => 'Nota che la loro indicizzazione dei nostri contenuti potrebbe non essere aggiornata.',
 	'dberr-cachederror' => 'Quella che segue è una copia cache della pagina richiesta, e potrebbe non essere aggiornata.',
+	'disambiguations-summary' => '',
+	'doubleredirects-summary' => '',
+	'deadendpages-summary' => '',
+	'days-abbrev' => '$1d',
+	'deletedarticle' => 'deleted "[[$1]]"',
+	'defaultskin1' => 'The admins for this wiki have chosen: <b>$1</b> as the default skin.',
+	'defaultskin2' => 'The admins for this wiki have chosen: <b>$1</b> as the default skin. Click <a href="$2">here</a> to see the code.',
+	'defaultskin3' => 'The admins for this wiki have not chosen a default skin. Using the Wikia default: <b>$1</b>.',
+	'defaultskin_choose' => 'Set the default theme for this wiki: ',
+	'discuss' => 'Discuss this page',
 );
 
 $messages['iu'] = array(
@@ -7619,7 +7700,7 @@ $messages['ja'] = array(
 	'defaultns' => 'その他の場合、次の名前空間でのみ検索する：',
 	'default' => '既定',
 	'diff' => '差分',
-	'destfilename' => '登録するファイル名：',
+	'destfilename' => '掲載するファイル名',
 	'duplicatesoffile' => '以下の$1ファイルが、このファイルと内容が同一です（[[Special:FileDuplicateSearch/$2|詳細]]）：',
 	'download' => 'ダウンロード',
 	'disambiguations' => '曖昧さ回避ページにリンクしているページ',
@@ -7637,9 +7718,9 @@ $messages['ja'] = array(
 	'double-redirect-fixer' => '転送修正係',
 	'deadendpages' => '行き止まりページ',
 	'deadendpagestext' => '以下のページは、{{SITENAME}}の他のページにリンクしていません。',
-	'deletedcontributions' => '利用者の削除された投稿',
+	'deletedcontributions' => '削除された記事を含む投稿履歴',
 	'deletedcontributions-title' => '利用者の削除された投稿',
-	'defemailsubject' => '利用者「$1」からの {{SITENAME}} 電子メール',
+	'defemailsubject' => '{{SITENAME}} のユーザーからの新着メール',
 	'deletepage' => 'ページを削除',
 	'delete-confirm' => '「$1」の削除',
 	'delete-legend' => '削除',
@@ -7654,7 +7735,19 @@ $messages['ja'] = array(
 	'deletereason-dropdown' => '*よくある削除理由
 ** 投稿者依頼
 ** 著作権侵害
-** 荒らし',
+** 荒らし
+* ヴァンダリズムと問題
+** 著作権侵害
+** スパム
+** ヴァンダリズム
+* メンテナンス
+** 作者による依頼
+** ハウスキーピング
+** 削除マーク
+* リダイレクト
+** 壊れたリダイレクト
+** 未使用のリダイレクト
+** ページ移動によるリダイレクトの残骸',
 	'delete-edit-reasonlist' => '削除理由を編集する',
 	'delete-toobig' => 'このページには、$1版より多い編集履歴があります。
 このようなページの削除は、{{SITENAME}}の偶発的な問題を避けるため、制限されています。',
@@ -7684,6 +7777,15 @@ $messages['ja'] = array(
 	'dberr-outofdate' => 'それらが収集した内容は古い可能性があることに注意してください。',
 	'dberr-cachederror' => 'これは要求されたページをキャッシュした複製であり、古くなっている可能性があります。',
 	'discuss' => 'このページについて話し合う',
+	'defaultskin1' => 'このウィキの管理者による設定:<b>$1</b>が現在のデフォルトの外装です。',
+	'defaultskin2' => 'このウィキの管理者による設定:<b>$1</b>が現在のデフォルトの外装です。<a href="$2">ここ</a>をクリックすると、スタイルシートのコードを見ることが出来ます。',
+	'defaultskin3' => 'このウィキの管理者は、デフォルトの外装を選択していません。デフォルトを使う場合は、<b>$1</b>になります。',
+	'defaultskin_choose' => 'このウィキのデフォルトの外装:',
+	'disambiguations-summary' => '',
+	'doubleredirects-summary' => '',
+	'deadendpages-summary' => '',
+	'days-abbrev' => '$1d',
+	'deletedarticle' => 'deleted "[[$1]]"',
 );
 
 $messages['jam'] = array(
@@ -8888,7 +8990,7 @@ $messages['ko'] = array(
 	'destfilename' => '파일의 새 이름:',
 	'duplicatesoffile' => '다음 파일 $1개가 이 파일과 중복됩니다 ([[Special:FileDuplicateSearch/$2|자세한 정보]]):',
 	'download' => '다운로드',
-	'disambiguations' => '동음이의 문서를 가리키는 문서 목록',
+	'disambiguations' => '동음이의어를 가리키는 문서 목록',
 	'disambiguationspage' => 'Template:Disambig',
 	'disambiguations-text' => "다음의 문서들은 '''동음이의 문서'''를 가리키고 있습니다.
 그 링크를 다른 적절한 문서로 연결해 주어야 합니다.<br />
@@ -8946,6 +9048,10 @@ $messages['ko'] = array(
 	'dberr-usegoogle' => '그 동안 구글을 통해 검색할 수도 있습니다.',
 	'dberr-outofdate' => '참고로, 구글의 내용 개요는 오래된 것일 수도 있습니다.',
 	'dberr-cachederror' => '다음은 요청한 문서의 캐시된 복사본이며, 최신이 아닐 수도 있습니다.',
+	'defaultskin1' => '이 위키의 관리자가 설정한 이 위키의 기본 테마는 <b>$1</b>입니다.',
+	'defaultskin2' => '이 위키의 관리자가 설정한 이 위키의 기본 테마는 <b>$1</b>입니다. <a href="$2">여기</a>를 클릭하시면 소스를 보실 수 있습니다.',
+	'defaultskin3' => '이 위키의 관리자가 이 위키의 기본 테마를 설정하지 않아 기본값으로 위키아의 기본 스킨이 적용되어 있습니다. 위키아의 기본 스킨은 <b>$1</b>입니다.',
+	'defaultskin_choose' => '이 위키의 기본 테마:',
 );
 
 $messages['ko-kp'] = array(
@@ -12000,24 +12106,33 @@ Wees voorzichtig.',
 	'delete_and_move' => 'Verwijderen en hernoemen',
 	'delete_and_move_text' => '==Verwijdering nodig==
 Onder de naam "[[:$1]]" bestaat al een pagina.
-Wilt u deze verwijderen om plaats te maken voor de te hernoemen pagina?',
+Wil je deze verwijderen om plaats te maken voor de te hernoemen pagina?',
 	'delete_and_move_confirm' => 'Ja, de pagina verwijderen',
 	'delete_and_move_reason' => 'Verwijderd in verband met hernoeming van "[[$1]]"',
 	'djvu_page_error' => 'DjVu-pagina buiten bereik',
 	'djvu_no_xml' => 'De XML voor het DjVu-bestand kon niet opgehaald worden',
 	'deletedrevision' => 'De oude versie $1 is verwijderd',
 	'days' => '{{PLURAL:$1|$1 dag|$1 dagen}}',
-	'deletedwhileediting' => "'''Let op''': deze pagina is verwijderd terwijl u bezig was met uw bewerking!",
+	'deletedwhileediting' => "'''Let op''': deze pagina is verwijderd terwijl je bezig was met je bewerking!",
 	'descending_abbrev' => 'afl.',
 	'duplicate-defaultsort' => 'Waarschuwing: De standaardsortering "$2" krijgt voorrang voor de sortering "$1".',
 	'dberr-header' => 'Deze wiki heeft een probleem',
 	'dberr-problems' => 'Onze excuses. Deze site ondervindt op het moment technische problemen.',
 	'dberr-again' => 'Wacht een aantal minuten en probeer het daarna opnieuw.',
 	'dberr-info' => '(Kan geen verbinding maken met de databaseserver: $1)',
-	'dberr-usegoogle' => 'Wellicht kunt u in de tussentijd zoeken via Google.',
+	'dberr-usegoogle' => 'Wellicht kun je in de tussentijd zoeken via Google.',
 	'dberr-outofdate' => "Let op: hun indexen van onze pagina's zijn wellicht niet recent.",
 	'dberr-cachederror' => 'Deze pagina is een kopie uit de cache en is wellicht niet de meest recente versie.',
 	'discuss' => 'Overleg',
+	'disambiguations-summary' => '',
+	'doubleredirects-summary' => '',
+	'deadendpages-summary' => '',
+	'days-abbrev' => '$1d',
+	'deletedarticle' => 'deleted "[[$1]]"',
+	'defaultskin1' => 'The admins for this wiki have chosen: <b>$1</b> as the default skin.',
+	'defaultskin2' => 'The admins for this wiki have chosen: <b>$1</b> as the default skin. Click <a href="$2">here</a> to see the code.',
+	'defaultskin3' => 'The admins for this wiki have not chosen a default skin. Using the Wikia default: <b>$1</b>.',
+	'defaultskin_choose' => 'Set the default theme for this wiki: ',
 );
 
 $messages['nl-informal'] = array(
@@ -12183,6 +12298,10 @@ Målsida «[[:$1]]» finst allereie. Vil du slette ho for å gje rom for flyttin
 	'dberr-outofdate' => 'Merk at versjonane deira av innhaldet vårt kan vera forelda.',
 	'dberr-cachederror' => 'Fylgjande er ein mellomlagra kopi av den etterspurde sida, og er, kan henda, ikkje den siste versjonen av ho.',
 	'discuss' => 'Diskuter',
+	'defaultskin1' => 'Ledelsen for denne wikien har valgt: <b>$1</b> som standardutseende.',
+	'defaultskin2' => 'Ledelsen for denne wikien har valgt: <b>$1</b> som standardutseende. Trykk <a href="$2">her</a> for å se koden.',
+	'defaultskin3' => 'Ledelsen for denne wikien har ikke valgt et standardutseende. Bruker Wikiastandarden: <b>$1</b>.',
+	'defaultskin_choose' => 'Velg standardutseende for denne wikien:',
 );
 
 $messages['nov'] = array(
@@ -12713,7 +12832,8 @@ Baza danych zgłosiła błąd „$3: $4”',
 	'duplicatesoffile' => '{{PLURAL:$1|Następujący plik jest kopią|Następujące pliki są kopiami}} pliku ([[Special:FileDuplicateSearch/$2|więcej informacji]]):',
 	'download' => 'pobierz',
 	'disambiguations' => 'Strony linkujące do stron ujednoznaczniających',
-	'disambiguationspage' => 'Template:disambig',
+	'disambiguationspage' => '* Template:disambig
+* Template:ujednoznacznienie',
 	'disambiguations-text' => "Poniższe strony odwołują się do '''stron ujednoznaczniających''',
 a powinny odwoływać się bezpośrednio do stron treści.<br />
 Strona uznawana jest za ujednoznaczniającą, jeśli zawiera szablon linkowany przez stronę [[MediaWiki:Disambiguationspage]]",
@@ -12743,7 +12863,9 @@ Zobacz na stronie $2 rejestr ostatnio wykonanych usunięć.',
 	'deletereason-dropdown' => '* Najczęstsze powody usunięcia
 ** Prośba autora
 ** Naruszenie praw autorskich
-** Wandalizm',
+** Wandalizm
+** Niepotrzebna strona
+** Zbędne przekierowanie',
 	'delete-edit-reasonlist' => 'Edytuj listę przyczyn usunięcia',
 	'delete-toobig' => 'Ta strona ma bardzo długą historię edycji, ponad $1 {{PLURAL:$1|zmianę|zmiany|zmian}}.
 Usunięcie jej mogłoby spowodować zakłócenia w pracy {{GRAMMAR:D.lp|{{SITENAME}}}} i dlatego zostało ograniczone.',
@@ -12771,6 +12893,15 @@ Czy chcesz ją usunąć, by zrobić miejsce dla przenoszonej strony?',
 	'dberr-outofdate' => 'Uwaga – indeksy zawartości serwisu mogą być nieaktualne.',
 	'dberr-cachederror' => 'Strona została pobrana z pamięci podręcznej i może być nieaktualna.',
 	'discuss' => 'Dyskutuj',
+	'deletedarticle' => 'usunięto [[$1]]',
+	'disambiguations-summary' => '',
+	'doubleredirects-summary' => '',
+	'deadendpages-summary' => '',
+	'days-abbrev' => '$1d',
+	'defaultskin1' => 'The admins for this wiki have chosen: <b>$1</b> as the default skin.',
+	'defaultskin2' => 'The admins for this wiki have chosen: <b>$1</b> as the default skin. Click <a href="$2">here</a> to see the code.',
+	'defaultskin3' => 'The admins for this wiki have not chosen a default skin. Using the Wikia default: <b>$1</b>.',
+	'defaultskin_choose' => 'Set the default theme for this wiki: ',
 );
 
 $messages['pms'] = array(
@@ -13138,101 +13269,6 @@ $messages['ps'] = array(
 );
 
 $messages['pt'] = array(
-	'december' => 'Dezembro',
-	'december-gen' => 'Dezembro',
-	'dec' => 'Dez.',
-	'delete' => 'Eliminar',
-	'deletethispage' => 'Eliminar esta página',
-	'disclaimers' => 'Exoneração de responsabilidade',
-	'disclaimerpage' => 'Project:Aviso_geral',
-	'databaseerror' => 'Erro na base de dados',
-	'dberrortext' => 'Ocorreu um erro sintáctico na pesquisa à base de dados.
-Isto pode indicar um defeito neste programa.
-A última tentativa de consulta à base de dados foi:
-<blockquote><tt>$1</tt></blockquote>
-na função "<tt>$2</tt>".
-A base de dados devolveu o erro "<tt>$3: $4</tt>".',
-	'dberrortextcl' => 'Ocorreu um erro sintáctico na pesquisa à base de dados.
-A última tentativa de consulta à base de dados foi:
-"$1"
-na função "$2".
-A base de dados devolveu o erro "$3: $4"',
-	'directorycreateerror' => 'Não foi possível criar o directório "$1".',
-	'deletedhist' => 'Histórico de eliminações',
-	'difference' => '(Diferença entre edições)',
-	'difference-multipage' => '(Diferenças entre páginas)',
-	'diff-multi' => '({{PLURAL:$1|Uma edição intermédia|$1 edições intermédias}} de {{PLURAL:$2|um utilizador|$2 utilizadores}} {{PLURAL:$1|não apresentada|não apresentadas}})',
-	'diff-multi-manyusers' => '({{PLURAL:$1|Uma edição intermédia|$1 edições intermédias}} de mais de {{PLURAL:$2|um utilizador|$2 utilizadores}} não {{PLURAL:$1|apresentada|apresentadas}})',
-	'datedefault' => 'Sem preferência',
-	'defaultns' => 'Por omissão, pesquisar nestes espaços nominais:',
-	'default' => 'padrão',
-	'diff' => 'dif',
-	'destfilename' => 'Nome do ficheiro de destino:',
-	'duplicatesoffile' => '{{PLURAL:$1|O seguinte ficheiro é duplicado|Os seguintes $1 ficheiros são duplicados}} deste ficheiro ([[Special:FileDuplicateSearch/$2|mais detalhes]]):',
-	'download' => 'download',
-	'disambiguations' => 'Páginas com ligações para páginas de desambiguação',
-	'disambiguationspage' => 'Template:disambig',
-	'disambiguations-text' => 'As páginas abaixo contêm links para uma página de desambiguação.
-Estes links deviam ser desambiguados, apontando-os para a página apropriada.<br />
-Considera-se que uma página é de desambiguação se nela for utilizada uma predefinição que esteja definida em [[MediaWiki:Disambiguationspage]].',
-	'doubleredirects' => 'Redireccionamentos duplos',
-	'doubleredirectstext' => 'Esta página lista todas as páginas que redireccionam para outras páginas de redireccionamento.
-Cada linha contém links para o primeiro e segundo redireccionamentos, bem como o destino do segundo redireccionamento, geralmente contendo a verdadeira página de destino, que devia ser o destino do primeiro redireccionamento.
-<del>Entradas cortadas</del> já foram solucionadas.',
-	'double-redirect-fixed-move' => '[[$1]] foi movido.
-Agora redirecciona para [[$2]].',
-	'double-redirect-fixed-maintenance' => 'A corrigir redireccionamento duplo de [[$1]] para [[$2]].',
-	'double-redirect-fixer' => 'Corrector de redireccionamentos',
-	'deadendpages' => 'Páginas sem saída',
-	'deadendpagestext' => 'As seguintes páginas não contêm links para outras páginas na {{SITENAME}}.',
-	'deletedcontributions' => 'Edições eliminadas',
-	'deletedcontributions-title' => 'Edições eliminadas',
-	'defemailsubject' => '{{SITENAME}} e-mail do usuário "$1"',
-	'deletepage' => 'Eliminar página',
-	'delete-confirm' => 'Eliminar "$1"',
-	'delete-legend' => 'Eliminar',
-	'deletedtext' => '"$1" foi eliminada.
-Consulte $2 para um registo de eliminações recentes.',
-	'dellogpage' => 'Registo de eliminações',
-	'dellogpagetext' => 'Abaixo uma lista das eliminações mais recentes.',
-	'deletionlog' => 'registo de eliminações',
-	'deletecomment' => 'Motivo:',
-	'deleteotherreason' => 'Outro/motivo adicional:',
-	'deletereasonotherlist' => 'Outro motivo',
-	'deletereason-dropdown' => '* Motivos de eliminação comuns
-** Pedido do autor
-** Violação de direitos de autor
-** Vandalismo',
-	'delete-edit-reasonlist' => 'Editar motivos de eliminação',
-	'delete-toobig' => 'Esta página tem um histórico longo, com mais de $1 {{PLURAL:$1|edição|edições}}.
-A eliminação de páginas como esta foi restringida na {{SITENAME}}, para evitar problemas acidentais.',
-	'delete-warning-toobig' => 'Esta página tem um histórico de edições longo, com mais de $1 {{PLURAL:$1|edição|edições}}.
-Eliminá-la poderá causar problemas na base de dados da {{SITENAME}};
-prossiga com precaução.',
-	'databasenotlocked' => 'A base de dados não está bloqueada.',
-	'delete_and_move' => 'Eliminar e mover',
-	'delete_and_move_text' => '==Eliminação necessária==
-A página de destino ("[[:$1]]") já existe. Deseja eliminá-la de modo a poder mover?',
-	'delete_and_move_confirm' => 'Sim, eliminar a página',
-	'delete_and_move_reason' => 'Eliminada para poder mover "[[$1]]" para este título',
-	'djvu_page_error' => 'página DjVu inacessível',
-	'djvu_no_xml' => 'Não foi possível aceder ao XML para o ficheiro DjVU',
-	'deletedrevision' => 'Apagou a versão antiga $1',
-	'days' => '{{PLURAL:$1|um dia|$1 dias}}',
-	'deletedwhileediting' => "'''Aviso''': Esta página foi eliminada após ter começado a editá-la!",
-	'descending_abbrev' => 'desc',
-	'duplicate-defaultsort' => 'Aviso: A chave de ordenação padrão "$2" sobrepõe-se à anterior chave de ordenação padrão "$1".',
-	'dberr-header' => 'Esta wiki tem um problema',
-	'dberr-problems' => 'Desculpe! Este site está a experienciar dificuldades técnicas.',
-	'dberr-again' => 'Experimente esperar uns minutos e actualizar.',
-	'dberr-info' => '(Não foi possível contactar o servidor da base de dados: $1)',
-	'dberr-usegoogle' => 'Pode tentar pesquisar no Google entretanto.',
-	'dberr-outofdate' => 'Note que os seus índices relativos ao nosso conteúdo podem estar desactualizados.',
-	'dberr-cachederror' => 'A seguinte página é uma cópia em cache da página pedida e pode não estar actualizada.',
-	'discuss' => 'Discussão',
-);
-
-$messages['pt-br'] = array(
 	'december' => 'dezembro',
 	'december-gen' => 'dezembro',
 	'dec' => 'dez.',
@@ -13253,10 +13289,8 @@ A última tentativa de busca no banco de dados foi:
 na função "$2".
 O banco de dados retornou o erro "$3: $4".',
 	'directorycreateerror' => 'Não foi possível criar o diretório "$1".',
-	'defaultmessagetext' => 'Texto da mensagem padrão',
 	'deletedhist' => 'Histórico de eliminações',
-	'difference-title' => 'Mudanças entre as edições de "$1"',
-	'difference-title-multipage' => 'Mudanças entre as páginas "$1" e "$2"',
+	'difference' => '(Difference between revisions)',
 	'difference-multipage' => '(Diferenças entre páginas)',
 	'diff-multi' => '({{PLURAL:$1|Uma edição intermediária|$1 edições intermediárias}} de {{PLURAL:$2|um usuário|$2 usuários}} {{PLURAL:$1|não apresentada|não apresentadas}})',
 	'diff-multi-manyusers' => '({{PLURAL:$1|Uma edição intermediária|$1 edições intermediárias}} de mais de {{PLURAL:$2|um usuário|$2 usuário}} não {{PLURAL:$1|apresentada|apresentadas}})',
@@ -13286,8 +13320,20 @@ Entradas <del>riscadas</del> foram resolvidas.',
 	'deletepage' => 'Eliminar página',
 	'delete-confirm' => 'Eliminar "$1"',
 	'delete-legend' => 'Eliminar',
-	'deletedtext' => '"$1" foi eliminada.
-Consulte $2 para um registro de eliminações recentes.',
+	'deletedtext' => '"<nowiki>$1</nowiki>" foi eliminada.
+Consulte $2 para um registro de eliminações recentes.
+
+
+\'\'\'"$1" foi apagada.!\'\'\'
+
+* Por favor, atente que algumas paginas ainda podem [[Special:WhatLinksHere/$1|ligar a esta pagina]].
+* Voce pode ver a pagina apagada [[Special:Undelete/$1|aqui]].
+* Veja  $2 para um registro de eliminações recentes.
+
+{{#ifeq:{{FULLPAGENAME}}|{{TALKPAGENAME}}||{{#ifeq:{{SUBJECTSPACE}}|Usuario||{{#ifexist:{{TALKPAGENAME}}|
+<br />
+Esta pagina tambem tem uma \'\'\'[[{{TALKPAGENAME}}|pagina de discussão]]\'\'\' (<small class="plainlinks">[{{fullurl:{{TALKPAGENAMEE}}|action=delete&wpReason=Talk+page+of+a+deleted+page}} delete]</small>). Voce pode preferir apaga-la tambem.
+|}}}}}}',
 	'dellogpage' => 'Registro de eliminação',
 	'dellogpagetext' => 'Abaixo uma lista das eliminações mais recentes.',
 	'deletionlog' => 'registro de eliminação',
@@ -13297,7 +13343,14 @@ Consulte $2 para um registro de eliminações recentes.',
 	'deletereason-dropdown' => '* Motivos de eliminação comuns
 ** Pedido do autor
 ** Violação de direitos de autor
-** Vandalismo',
+** Vandalismo
+** SPAM 
+** Texto sem sentido
+** Duplicado
+** Obscenidade / Cconteudo inapropriado
+** O texto não é uma pergunta
+** Redirecionamento desnecessário
+** Atentado ortográfico',
 	'delete-edit-reasonlist' => 'Editar motivos de eliminação',
 	'delete-toobig' => 'Esta página possui um longo histórico de edições, com mais de $1 {{PLURAL:$1|edição|edições}}.
 A eliminação de tais páginas foi restrita, a fim de se evitarem problemas acidentais em {{SITENAME}}.',
@@ -13324,15 +13377,16 @@ A página de destino ("[[:$1]]") já existe. Deseja eliminá-la de modo a poder 
 	'dberr-usegoogle' => 'Você pode tentar pesquisar no Google entretanto.',
 	'dberr-outofdate' => 'Note que os seus índices relativos ao nosso conteúdo podem estar desatualizados.',
 	'dberr-cachederror' => 'A seguinte página é uma cópia em cache da página pedida e pode não ser atual.',
-	'duration-seconds' => '$1 {{PLURAL:$1|segundo|segundos}}',
-	'duration-minutes' => '$1 {{PLURAL:$1|minuto|minutos}}',
-	'duration-hours' => '$1 {{PLURAL:$1|hora|horas}}',
-	'duration-days' => '$1 {{PLURAL:$1|dia|dias}}',
-	'duration-weeks' => '$1 {{PLURAL:$1|semana|semanas}}',
-	'duration-years' => '$1 {{PLURAL:$1|ano|anos}}',
-	'duration-decades' => '$1 {{PLURAL:$1|década|décadas}}',
-	'duration-centuries' => '$1 {{PLURAL:$1|século|séculos}}',
-	'duration-millennia' => '$1 {{PLURAL:$1|milênio|milênios}}',
+	'discuss' => 'Discuss this page',
+	'disambiguations-summary' => '',
+	'doubleredirects-summary' => '',
+	'deadendpages-summary' => '',
+	'days-abbrev' => '$1d',
+	'deletedarticle' => 'deleted "[[$1]]"',
+	'defaultskin1' => 'The admins for this wiki have chosen: <b>$1</b> as the default skin.',
+	'defaultskin2' => 'The admins for this wiki have chosen: <b>$1</b> as the default skin. Click <a href="$2">here</a> to see the code.',
+	'defaultskin3' => 'The admins for this wiki have not chosen a default skin. Using the Wikia default: <b>$1</b>.',
+	'defaultskin_choose' => 'Set the default theme for this wiki: ',
 );
 
 $messages['qu'] = array(
@@ -13890,6 +13944,14 @@ $messages['ru'] = array(
 	'dberr-outofdate' => 'Но имейте в виду, что его индекс может оказаться устаревшим.',
 	'dberr-cachederror' => 'Ниже представлена закэшированная версия запрашиваемой страницы, возможно, она не отражает последних изменений.',
 	'discuss' => 'Обсудить',
+	'defaultskin_choose' => 'Установка оформления по-умолчанию:',
+	'disambiguations-summary' => '',
+	'doubleredirects-summary' => '',
+	'deadendpages-summary' => '',
+	'deletedarticle' => 'deleted "[[$1]]"',
+	'defaultskin1' => 'The admins for this wiki have chosen: <b>$1</b> as the default skin.',
+	'defaultskin2' => 'The admins for this wiki have chosen: <b>$1</b> as the default skin. Click <a href="$2">here</a> to see the code.',
+	'defaultskin3' => 'The admins for this wiki have not chosen a default skin. Using the Wikia default: <b>$1</b>.',
 );
 
 $messages['rue'] = array(
@@ -15183,103 +15245,6 @@ Kjo faqe është duke përjetuar vështirësi teknike.',
 	'dberr-cachederror' => 'Kjo është një kopje e faqes së kërkuar dhe mund të jetë e vjetëruar.',
 );
 
-$messages['sr'] = array(
-	'december' => 'dhjetor',
-	'december-gen' => 'dhjetor',
-	'dec' => 'Dhje',
-	'delete' => 'Grise',
-	'deletethispage' => 'Grise këtë faqe',
-	'disclaimers' => 'Shfajësimet',
-	'disclaimerpage' => 'Project:Shfajësimet e përgjithshme',
-	'databaseerror' => 'Gabim në databazë',
-	'dberrortext' => 'Ka ndodhur një gabim me pyetjen e regjistrit.
-Kjo mund të ndodhi n.q.s. pyetja nuk është e vlehshme,
-ose mund të jetë një yçkël e softuerit.
-Pyetja e fundit që i keni bërë regjistrit ishte:
-<blockquote><tt>$1</tt></blockquote>
-nga funksioni "<tt>$2</tt>".
-MySQL kthehu gabimin "<tt>$3: $4</tt>".',
-	'dberrortextcl' => 'Ka ndodhur një gabim me sintaksën query në databazë.
-Query e fundit që i keni bërë regjistrit ishte:
-"$1"
-nga funksioni "$2".
-MySQL kthehu gabimin "$3: $4".',
-	'directorycreateerror' => 'I pamundur krijimi i direktorisë "$1".',
-	'deletedhist' => 'Historiku i grisjeve',
-	'difference' => '(Ndryshime midis versioneve)',
-	'difference-multipage' => '(Ndryshimi midis faqeve)',
-	'diff-multi' => '({{PLURAL:$1|Një version i ndërmjetshëm|$1 versione të ndërmjetshme}} nga {{PLURAL:$2|një përdorues|$2 përdorues}} i/të pashfaqur)',
-	'diff-multi-manyusers' => '({{PLURAL:$1|Një versioni i ndërmjetshëm|$1 versione të ndërmjetshme}} nga më shumë se $2 {{PLURAL:$2|përdorues|përdorues}} i/të pashfaqur)',
-	'datedefault' => 'Parazgjedhje',
-	'defaultns' => 'Kërko automatikisht vetëm në këto hapësira:',
-	'default' => 'parazgjedhje',
-	'diff' => 'ndrysh',
-	'destfilename' => 'Emri mbas dhënies:',
-	'duplicatesoffile' => 'Në vijim {{PLURAL:$1|skeda është identike|$1 janë idnetike}} me këtë skedë
-([[Special:FileDuplicateSearch/$2|më shumë detaje]]):',
-	'download' => 'shkarkim',
-	'disambiguations' => 'Faqet që lidhen te faqet kthjelluese',
-	'disambiguationspage' => 'Template:Kthjellim',
-	'disambiguations-text' => "Faqet e mëposhtme lidhen tek një '''faqe kthjelluese'''.
-Ato duhet të kenë lidhje të drejtpërdrejtë tek artikujt e nevojshëm.<br />
-Një faqe trajtohet si faqe kthjelluese nëse përdor stampat e lidhura nga [[MediaWiki:Disambiguationspage]]",
-	'doubleredirects' => 'Përcjellime dopjo',
-	'doubleredirectstext' => "Kjo faqe liston faqet përcjellëse tek faqet e tjera përcjellëse.
-Secili rresht përmban lidhjet tek përcjellimi i parë dhe përcjellimi i dytë, gjithashtu synimin e përcjellimit të dytë, që është zakonisht faqja synuese '''e vërtetë''', që faqja w parë duhej të ishte përcjellëse e kësaj faqeje.
-<del>Kalimet nga</del> hyrjet janë zgjidhur.",
-	'double-redirect-fixed-move' => '[[$1]] u zhvendos, tani është gjendet në [[$2]]',
-	'double-redirect-fixed-maintenance' => 'Duke zgjidhur përcjellimin e dyfishtë nga [[$1]] tek [[$2]].',
-	'double-redirect-fixer' => 'Rregullues zhvendosjesh',
-	'deadendpages' => 'Artikuj pa rrugëdalje',
-	'deadendpagestext' => 'Artikujt në vijim nuk kanë asnjë lidhje me artikuj e tjerë në këtë wiki.',
-	'deletedcontributions' => 'Kontribute të grisura',
-	'deletedcontributions-title' => 'Kontribute të grisura',
-	'defemailsubject' => '{{SITENAME}} posta elektronike nga përdoruesi "$1"',
-	'deletepage' => 'Grise faqen',
-	'delete-confirm' => 'Grise "$1"',
-	'delete-legend' => 'Grise',
-	'deletedtext' => '"$1" është grisur nga regjistri. Shikoni $2 për një pasqyrë të grisjeve së fundmi.',
-	'dellogpage' => 'Regjistri i grisjeve',
-	'dellogpagetext' => 'Më poshtë është një listë e grisjeve më të fundit.',
-	'deletionlog' => 'regjistrin e grisjeve',
-	'deletecomment' => 'Arsyeja:',
-	'deleteotherreason' => 'Arsye tjetër:',
-	'deletereasonotherlist' => 'Arsyeja tjetër',
-	'deletereason-dropdown' => '*Arsye për grisje:
-** Pa të drejtë autori
-** Kërkesë nga autori
-** Vandalizëm',
-	'delete-edit-reasonlist' => 'Ndrysho arsyet e grisjes',
-	'delete-toobig' => 'Kjo faqe ka një historik të madh redaktimesh, më shumë se $1 {{PLURAL:$1|version|versione}}.
-Grisja e faqeve të tilla ka qenë kufizuar për të parandaluar përçarjen aksidentale të {{SITENAME}}.',
-	'delete-warning-toobig' => 'Kjo faqe ka një historik të madh redaktimesh, më shumë se $1 {{PLURAL:$1|version|versione}}.
-Grisja e saj mund të ndërpresë operacionet e bazës së të dhënave të {{SITENAME}};
-vazhdoni me kujdes.',
-	'databasenotlocked' => 'Regjistri nuk është bllokuar.',
-	'delete_and_move' => 'Grise dhe zhvendose',
-	'delete_and_move_text' => '==Nevojitet grisje==
-
-Faqja "[[:$1]]" ekziston, dëshironi ta grisni për të mundësuar zhvendosjen?',
-	'delete_and_move_confirm' => 'Po, grise faqen',
-	'delete_and_move_reason' => 'U gris për të liruar vendin për përcjellim të "[[$1]]"',
-	'djvu_page_error' => 'Faqja DjVu jashtë renditjes',
-	'djvu_no_xml' => 'Nuk mund të gjendet XML për skedën DjVu',
-	'deletedrevision' => 'Gris versionin e vjetër $1',
-	'days' => '{{PLURAL:$1|$1 ditë|$1 ditë}}',
-	'deletedwhileediting' => 'Kujdes! Kjo faqe është grisur pasi keni filluar redaktimin!',
-	'descending_abbrev' => 'zbritje',
-	'duplicate-defaultsort' => '\'\'\'Kujdes:\'\'\' Renditja kryesore e çelësit "$2" refuzon renditjen e mëparshme kryesore të çelësit "$1".',
-	'dberr-header' => 'Kjo wiki ka një problem',
-	'dberr-problems' => 'Na vjen keq!
-Kjo faqe është duke përjetuar vështirësi teknike.',
-	'dberr-again' => 'Pritni disa minuta dhe provoni të ringarkoni faqen.',
-	'dberr-info' => '(Nuk mund të lidhet me serverin bazë e të dhënave : $1)',
-	'dberr-usegoogle' => 'Ju mund të provoni të kërkoni përmes Googles në ndërkohë.',
-	'dberr-outofdate' => 'Vini re se indekset e tyre të përmbajtjes tona mund të jetë e vjetëruar.',
-	'dberr-cachederror' => 'Kjo është një kopje e faqes së kërkuar dhe mund të jetë e vjetëruar.',
-	'discuss' => 'Diskutujte',
-);
-
 $messages['sr-ec'] = array(
 	'december' => 'децембар',
 	'december-gen' => 'децембра',
@@ -15742,10 +15707,18 @@ En sida anses vara en förgreningssida om den inkluderar en mall som länkas til
 	'deletepage' => 'Ta bort sida',
 	'delete-confirm' => 'Radera "$1"',
 	'delete-legend' => 'Radera',
-	'deletedtext' => '"$1" har tagits bort.
-Se $2 för noteringar om de senaste raderingarna.',
+	'deletedtext' => "'''\"\$1\" har tagits bort!'''
+
+* Observera kan vissa sidor länkar fortfarande [[Special:WhatLinksHere/\$1|till den här sidan]].
+* Du kan fortsätta att visa den borttagna sidan [[Special:Undelete/\$1|här]].
+* Se \$2 för en information om nyligen borttagna.
+
+{{#ifeq:{{FULLPAGENAME}}|{{TALKPAGENAME}}||{{#ifeq:{{SUBJECTSPACE}}|Användare||{{#ifexist:{{TALKPAGENAME}}|
+<br />
+Sidan har även en '''[[{{TALKPAGENAME}}|diskussionsida]]''' (<small class=\"plainlinks\">[{{fullurl:{{TALKPAGENAMEE}}|action=delete&wpReason=Talk+page+of+a+deleted+page}} delete]</small>). Du kanske vill ta bort det också.
+|}}}}}}",
 	'dellogpage' => 'Raderingslogg',
-	'dellogpagetext' => 'Nedan listas de senaste raderingarna.',
+	'dellogpagetext' => 'Nedan är en lista över de senaste raderingar. Om du inte håller med en radering eller tror att en sida var giltigt innehåll, kontakta [[Project:Administrators|administratören]] som tog bort det.',
 	'deletionlog' => 'raderingsloggen',
 	'deletecomment' => 'Anledning:',
 	'deleteotherreason' => 'Annan/ytterligare anledning:',
@@ -15767,7 +15740,9 @@ Den titel du vill flytta sidan till, "[[:$1]]", finns redan. Vill du radera den 
 	'djvu_no_xml' => 'Kan inte hämta DjVu-filens XML',
 	'deletedrevision' => 'Raderade gammal sidversion $1',
 	'days' => '{{PLURAL:$1|$1 dag|$1 dagar}}',
-	'deletedwhileediting' => "'''Varning''': Denna sida raderades efter att du började redigera!",
+	'deletedwhileediting' => '<div id="mw-deletedwhileediting" class="plainlinks" style="margin: 0 0 1em; padding-left: .5em; border: solid #aaaaaa 1px">
+<span style="color: red">\'\'\'Varning\'\'\'</span>: en administratör raderade den här sidan sedan du började redigera den. Du kanske vill kontrollera [{{fullurl:Special:Log/delete|page={{FULLPAGENAMEE}}}} raderingsloggen] att se varför.
+</div>',
 	'descending_abbrev' => 'fallande',
 	'duplicate-defaultsort' => 'Varning: Standardsorteringsnyckeln "$2" tar över från den tidigare standardsorteringsnyckeln "$1".',
 	'dberr-header' => 'Den här wikin har ett problem',
@@ -18331,7 +18306,7 @@ $messages['zh-hans'] = array(
 	'deadendpagestext' => '以下页面没有链接到{{SITENAME}}中的其它页面。',
 	'deletedcontributions' => '已删除的用户贡献',
 	'deletedcontributions-title' => '已删除的用户贡献',
-	'defemailsubject' => "{{SITENAME}} 来自用户''$1''的电子邮件",
+	'defemailsubject' => '来自{{SITENAME}} 的用户 "$1" 的电子邮件',
 	'deletepage' => '删除页面',
 	'delete-confirm' => '删除“$1”',
 	'delete-legend' => '删除',
@@ -18371,6 +18346,16 @@ $messages['zh-hans'] = array(
 	'dberr-usegoogle' => '在此期间您可以尝试用Google来搜索。',
 	'dberr-outofdate' => '须注意他们索引出来的内容可能不是最新的。',
 	'dberr-cachederror' => '这是所请求页面的缓存副本，可能不是最新的。',
+	'defaultskin_choose' => '设定此站预设皮肤:',
+	'discuss' => '讨论这个页面',
+	'disambiguations-summary' => '',
+	'doubleredirects-summary' => '',
+	'deadendpages-summary' => '',
+	'days-abbrev' => '$1d',
+	'deletedarticle' => 'deleted "[[$1]]"',
+	'defaultskin1' => 'The admins for this wiki have chosen: <b>$1</b> as the default skin.',
+	'defaultskin2' => 'The admins for this wiki have chosen: <b>$1</b> as the default skin. Click <a href="$2">here</a> to see the code.',
+	'defaultskin3' => 'The admins for this wiki have not chosen a default skin. Using the Wikia default: <b>$1</b>.',
 );
 
 $messages['zh-hant'] = array(
@@ -18425,7 +18410,7 @@ Template:消除歧義',
 	'deadendpagestext' => '以下頁面沒有連結到{{SITENAME}}中的其它頁面。',
 	'deletedcontributions' => '已刪除的用戶貢獻',
 	'deletedcontributions-title' => '已刪除的用戶貢獻',
-	'defemailsubject' => '{{SITENAME}}用戶 $1 發送電子郵件',
+	'defemailsubject' => '來自{{SITENAME}} 的用戶 "$1" 的電子郵件',
 	'deletepage' => '刪除頁面',
 	'delete-confirm' => '刪除「$1」',
 	'delete-legend' => '刪除',
@@ -18465,62 +18450,16 @@ Template:消除歧義',
 	'dberr-usegoogle' => '在現階段您可以嘗試透過 Google 搜尋。',
 	'dberr-outofdate' => '留意他們索引出來之內容可能不是最新的。',
 	'dberr-cachederror' => '這個是所要求出來的快取複本，可能不是最新的。',
-);
-
-$messages['zh-hk'] = array(
-	'december' => '十二月',
-);
-
-$messages['zh-min-nan'] = array(
-	'december' => '十二月',
-);
-
-$messages['zh-mo'] = array(
-	'december' => '十二月',
-);
-
-$messages['zh-my'] = array(
-	'december' => '十二月',
-);
-
-$messages['zh-tw'] = array(
-	'december' => '十二月',
-	'december-gen' => '十二月',
-	'dec' => '12月',
-	'delete' => '刪除',
-	'disclaimers' => '免責聲明',
-	'defaultns' => '預設搜尋的名字空間',
-	'disambiguations' => '消歧義',
-	'disambiguations-text' => '以下的頁面都有到<b>消歧義頁</b>的鏈接,
-但它們應該是連到適當的標題。<br />
-個頁面會被視為消含糊頁如果它是連自[[MediaWiki:Disambiguationspage]]。',
-	'deadendpagestext' => '以下頁面沒有連結到這個wiki中的其它頁面。',
-	'deletedtext' => '「$1」已經被刪除。
-最近刪除的紀錄請參見$2。',
-	'dellogpagetext' => '以下是最近刪除的紀錄列表。
-所有的時間都是使用伺服器時間。',
-	'deletecomment' => '原因：',
-	'discuss' => '討論',
-);
-
-$messages['zh-yue'] = array(
-	'december' => '十二月',
-	'december-gen' => '十二月',
-	'dec' => '12月',
-	'delete' => '刪除',
-	'disclaimers' => '免責聲明',
-	'defaultns' => '預設搜尋的名字空間',
-	'disambiguations' => '消歧義',
-	'disambiguations-text' => '以下的頁面都有到<b>消歧義頁</b>的鏈接,
-但它們應該是連到適當的標題。<br />
-個頁面會被視為消含糊頁如果它是連自[[MediaWiki:Disambiguationspage]]。',
-	'deadendpagestext' => '以下頁面沒有連結到這個wiki中的其它頁面。',
-	'deletedtext' => '「$1」已經被刪除。
-最近刪除的紀錄請參見$2。',
-	'dellogpagetext' => '以下是最近刪除的紀錄列表。
-所有的時間都是使用伺服器時間。',
-	'deletecomment' => '原因：',
-	'discuss' => '討論',
+	'defaultskin_choose' => '設定此站預設面板:',
+	'discuss' => '討論這個頁面',
+	'disambiguations-summary' => '',
+	'doubleredirects-summary' => '',
+	'deadendpages-summary' => '',
+	'days-abbrev' => '$1d',
+	'deletedarticle' => 'deleted "[[$1]]"',
+	'defaultskin1' => 'The admins for this wiki have chosen: <b>$1</b> as the default skin.',
+	'defaultskin2' => 'The admins for this wiki have chosen: <b>$1</b> as the default skin. Click <a href="$2">here</a> to see the code.',
+	'defaultskin3' => 'The admins for this wiki have not chosen a default skin. Using the Wikia default: <b>$1</b>.',
 );
 
 $messages['zu'] = array(

@@ -16,98 +16,126 @@
  *     require_once("$IP/extensions/wikia/InterwikiDispatcher/SpecialInterwikiDispatcher.php");
  */
 
-if (!defined('MEDIAWIKI')) {
+if ( !defined( 'MEDIAWIKI' ) ) {
 	echo "This is MediaWiki extension named InterwikiDispatcher.\n";
-	exit(1) ;
+	exit( 1 );
 }
 
 class InterwikiDispatcher extends UnlistedSpecialPage {
 	const IS_WIKI_EXISTS_CACHE_TTL = 10800;
+	const SUPPORTED_IW_PREFIXES = [ 'w', 'wikia', 'wikicities' ];
+
 	/**
 	 * contructor
 	 */
-	function  __construct() {
-		parent::__construct('InterwikiDispatcher' /*class*/);
+	function __construct() {
+		parent::__construct( 'InterwikiDispatcher' /*class*/ );
 	}
 
-	function execute($subpage) {
+	function execute( $subpage ) {
 		global $wgOut, $wgRequest, $wgNotAValidWikia, $IP;
 
 		$redirect = $wgNotAValidWikia;
-		$wikia = $wgRequest->getText('wikia');
-		$art = $wgRequest->getText('article');
+		$wikia = $wgRequest->getText( 'wikia' );
+		$art = $wgRequest->getText( 'article' );
 
-		if (!empty($wikia)) {
+		if ( !empty( $wikia ) ) {
 			// The code in NotAValidWikiaArticle.class.php will drop the ".interwiki" pseudo-TLD
 			// When constructing the search query
 			$redirect .= '?from=' . rawurlencode( $wikia . '.interwiki' );
-			$iCityId = self::isWikiExists($wikia);
-			if ($iCityId) {	//wiki exists
-				$redirect = self::getCityUrl($iCityId);
-				if (empty($art)) {	//no article set - redir to the main page
+			$iCityId = self::isWikiExists( $wikia );
+			if ( $iCityId ) {    //wiki exists
+				$redirect = self::getCityUrl( $iCityId );
+				if ( empty( $art ) ) {    //no article set - redir to the main page
 					$output = null;
-					exec ("'echo Title::newMainPage();' | SERVER_ID={$iCityId} php $IP/maintenance/eval.php --conf /usr/wikia/docroot/wiki.factory/LocalSettings.php", $output);
-					if (count($output)) {
+					exec(
+						"'echo Title::newMainPage();' | SERVER_ID={$iCityId} php $IP/maintenance/eval.php --conf /usr/wikia/docroot/wiki.factory/LocalSettings.php",
+						$output
+					);
+					if ( count( $output ) ) {
 						$redirect .= '/index.php?title=' . $output[0];
 					}
-				} else {	//article provided
+				} else {    //article provided
 					$redirect .= '/index.php?title=' . $art;
 				}
 			}
 		}
 //		$wgOut->SetPageTitle(wfMsg('interwikidispatcher'));
-		$wgOut->redirect($redirect, 301);
+		$wgOut->redirect( $redirect, 301 );
 	}
 
-	private static function isWikiExists($sName) {
+	private static function isWikiExists( $sName ) {
 		global $wgExternalSharedDB, $wgMemc;
 
 		$cacheKey = wfSharedMemcKey( __METHOD__ . ':' . $sName );
 
 		$cachedValue = $wgMemc->get( $cacheKey );
-		if( is_numeric( $cachedValue ) ) {
-			if ($cachedValue > 0) {
+		if ( is_numeric( $cachedValue ) ) {
+			if ( $cachedValue > 0 ) {
 				return $cachedValue;
 			} else {
 				return false;
 			}
 		}
 
-		$DBr = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
+		$DBr = wfGetDB( DB_SLAVE, [], $wgExternalSharedDB );
 		$dbResult = $DBr->Query(
-			  'SELECT city_id'
-			. ' FROM city_domains'
-			. ' WHERE city_domain = ' . $DBr->AddQuotes("$sName.wikia.com")
-			. ' LIMIT 1'
-			. ';'
-			, __METHOD__
+			'SELECT city_id' .
+			' FROM city_domains' .
+			' WHERE city_domain = ' .
+			$DBr->AddQuotes( "$sName.wikia.com" ) .
+			' LIMIT 1' .
+			';',
+			__METHOD__
 		);
 
-		if ($row = $DBr->FetchObject($dbResult)) {
-			$DBr->FreeResult($dbResult);
+		if ( $row = $DBr->FetchObject( $dbResult ) ) {
+			$DBr->FreeResult( $dbResult );
 			$wgMemc->set( $cacheKey, intval( $row->city_id ), self::IS_WIKI_EXISTS_CACHE_TTL );
+
 			return intval( $row->city_id );
-		}
-		else {
-			$DBr->FreeResult($dbResult);
+		} else {
+			$DBr->FreeResult( $dbResult );
 			$wgMemc->set( $cacheKey, 0, self::IS_WIKI_EXISTS_CACHE_TTL );
+
 			return false;
 		}
 	}
 
-	private static function getCityUrl($iCityId) {
-		return WikiFactory::getVarValueByName('wgServer', $iCityId);
+	private static function getCityUrl( $iCityId ) {
+		return WikiFactory::getVarValueByName( 'wgServer', $iCityId );
 	}
 
-	public static function getInterWikiaURL(Title &$title, &$url, $query) {
-		global $wgArticlePath, $wgScriptPath;
+	/**
+	 * checks if prefix given as parameter is supported by InterwikiDispatcher
+	 *
+	 * @param string $prefix
+	 *
+	 * @return bool
+	 */
+	public static function isSupportedPrefix( string $prefix ): bool {
+		return in_array( $prefix, self::SUPPORTED_IW_PREFIXES );
+	}
 
-		if (in_array($title->mInterwiki, array('w', 'wikia', 'wikicities'))) {
-			$aLinkParts = explode(':', $title->getFullText());
-			if ($aLinkParts[1] == 'c') {
-				$iCityId = self::isWikiExists($aLinkParts[2]);
-				if ($iCityId) {
-					$sArticlePath = WikiFactory::getVarValueByName('wgArticlePath', $iCityId);
+
+	/**
+	 * converts interwiki name (i.e. w:c:muppet:elmo) to url (http://muppet.wikia.com/wiki/Elmo)
+	 * TODO: This method does not respect environment, always returns url to production
+	 * TODO: This method does not respect custom prefixes (set in interwiki table in given wiki db)
+	 *
+	 * @param Title $title
+	 *
+	 * @return string, url if could convert, empty string otherwise
+	 */
+	public static function getInterWikiaURL( Title $title ): string {
+		$url = '';
+
+		if ( self::isSupportedPrefix( $title->mInterwiki ) ) {
+			$aLinkParts = explode( ':', $title->getFullText() );
+			if ( $aLinkParts[1] == 'c' ) {
+				$iCityId = self::isWikiExists( $aLinkParts[2] );
+				if ( $iCityId ) {
+					$sArticlePath = WikiFactory::getVarValueByName( 'wgArticlePath', $iCityId );
 
 					//I've replaced wgArticlePath to hardcoded value in order to fix FogBug:3066
 					//This is a persistent issue with getting default value of variable that is not set in WikiFactory
@@ -116,32 +144,49 @@ class InterwikiDispatcher extends UnlistedSpecialPage {
 					//anyway - current value in CommonSettings.php for wgArticlePath is '/wiki/$1' that's why this hardcoded
 					//fix will work.. for now.. it would be nice to introduce some function to get REAL DEFAULT VALUE for any variable
 					//Marooned
-					$sArticlePath = !empty($sArticlePath) ? $sArticlePath : '/wiki/$1'; //$wgArticlePath;
+					$sArticlePath = !empty( $sArticlePath ) ? $sArticlePath : '/wiki/$1'; //$wgArticlePath;
 
 					/* $wgScriptPath is already included in city_url
 					$sScriptPath = WikiFactory::getVarValueByName('wgScriptPath', $iCityId);
 					$sScriptPath = !empty($sScriptPath) ? $sScriptPath : $wgScriptPath;
 					*/
 
-					if (!empty($sArticlePath)) {
+					if ( !empty( $sArticlePath ) ) {
 						$sArticleTitle = '';
-						for($i = 3; $i < count($aLinkParts); $i++) {
-							$sArticleTitle .= (!empty($sArticleTitle) ? ':' : '') . $aLinkParts[$i];
+						for ( $i = 3; $i < count( $aLinkParts ); $i++ ) {
+							$sArticleTitle .= ( !empty( $sArticleTitle ) ? ':' : '' ) . $aLinkParts[$i];
 						}
 
 						//RT#54264,#41254
-						$sArticleTitle = str_replace(' ', '_', $sArticleTitle);
-						$sArticleTitle = wfUrlencode($sArticleTitle);
+						$sArticleTitle = str_replace( ' ', '_', $sArticleTitle );
+						$sArticleTitle = wfUrlencode( $sArticleTitle );
 
-						$sCityUrl = self::getCityUrl($iCityId);
-						if (!empty($sCityUrl)) {
-							$url = str_replace( '$1', $sArticleTitle, $sArticlePath);
+						$sCityUrl = self::getCityUrl( $iCityId );
+						if ( !empty( $sCityUrl ) ) {
+							$url = str_replace( '$1', $sArticleTitle, $sArticlePath );
 							$url = $sCityUrl . $url;
 						}
 					}
 				}
 			}
 		}
+
+		return $url;
+	}
+
+	/**
+	 * hook run by Title::getFullURL()
+	 *
+	 * @param Title $title
+	 * @param $url
+	 * @param $query
+	 *
+	 * @return bool
+	 */
+	public static function getInterWikiaURLHook( Title $title, &$url, $query ): bool {
+		$interwikiUrl = self::getInterWikiaURL( $title );
+		$url = empty( $interwikiUrl ) ? $url : $interwikiUrl;
+
 		return true;
 	}
 }

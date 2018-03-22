@@ -8,7 +8,6 @@ class MediaQueryServiceTest extends WikiaBaseTest {
 		try {		
 			$service = new MediaQueryService();
 			$list = $service->getVideoList(
-				'all',			// filter
 				1,			// limit
 				1, 			// page
 				['testProvider'],	// providers
@@ -20,7 +19,8 @@ class MediaQueryServiceTest extends WikiaBaseTest {
 			$this->assertEquals( $e->getMessage(), "\$sort was none of '"
 				. MediaQueryService::SORT_RECENT_FIRST . "', '"
 				. MediaQueryService::SORT_POPULAR_FIRST . "', '"
-				. MediaQueryService::SORT_TRENDING_FIRST . "'."
+				. MediaQueryService::SORT_TRENDING_FIRST . "', '"
+				. MediaQueryService::SORT_TRENDING_FIRST_LEGACY . "'."
 			);
 			return;
 		}
@@ -34,7 +34,6 @@ class MediaQueryServiceTest extends WikiaBaseTest {
 	public function testGetVideoListGeneral() {
 		$service = new MediaQueryService();
 		$list = $service->getVideoList(
-			'all',			// filter
 			1,			// limit
 			1, 			// page
 			[],			// providers

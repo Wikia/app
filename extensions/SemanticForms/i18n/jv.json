@@ -2,7 +2,8 @@
 	"@metadata": {
 		"authors": [
 			"Meursault2004",
-			"Pras"
+			"Pras",
+			"NoiX180"
 		]
 	},
 	"sf_createproperty_propname": "Jeneng sifat/properti:",
@@ -14,7 +15,7 @@
 	"sf_createtemplate_namelabel": "Jeneng cithakan:",
 	"sf_createtemplate_fieldname": "Jeneng lapangan:",
 	"sf_createtemplate_semanticproperty": "Sifat sémantik:",
-	"sf_createtemplate_aggregationlabel": "Irah-irahan kanggo daftar:",
+	"sf_createtemplate_aggregationlabel": "Sesirah pratélan:",
 	"sf_createtemplate_standardformat": "Baku",
 	"sf_createtemplate_deletefield": "Busak",
 	"forms": "Formulir-formulir",
@@ -32,8 +33,8 @@
 	"createcategory": "Gawé kategori",
 	"sf_createcategory_name": "Jeneng kategori:",
 	"sf_createcategory_defaultform": "Formulir baku:",
-	"sf_editsource": "Sunting sumber",
-	"sf_formedit_edittitle": "Sunting $1: $2",
+	"sf_editsource": "Besut sumber",
+	"sf_formedit_edittitle": "Besut $1: $2",
 	"sf_formedit_remove": "Busak",
 	"sf_formedit_addanother": "Tambah liyané",
 	"sf_formedit_none": "Ora ana",
@@ -41,9 +42,9 @@
 	"sf_bad_email_error": "kudu duwé format alamat e-mail sing absah",
 	"sf_bad_number_error": "kudu angka sing absah",
 	"sf_bad_date_error": "kudu tanggal sing absah",
-	"sf_template_docufooter": "Suntingen kacané kanggo ndeleng tèks cithakan.",
+	"sf_template_docufooter": "Besut kaca nedya ndeleng tulisaning cithakan.",
 	"sf_form_freetextlabel": "Tèks bébas",
 	"sf_category_hasdefaultform": "Kategori iki nganggo formulir $1.",
 	"sf_category_desc": "Iki kategori $1",
-	"sf_blank_namespace": "Utama"
+	"sf_blank_namespace": "Pokok"
 }

@@ -12,11 +12,15 @@ class DesignSystemHooks {
 	 * @return bool true
 	 */
 	public static function onBeforePageDisplay( $out, $skin ) {
-
-		if ( F::app()->checkSkin( 'oasis', $skin ) ) {
+		if ( F::app()->checkSkin( [ 'oasis', 'monobook' ], $skin ) ) {
 			\Wikia::addAssetsToOutput( 'design_system_scss' );
+
+			if ( F::app()->wg->User->isLoggedIn() ) {
+				\Wikia::addAssetsToOutput( 'design_system_user_scss' );
+			}
 		}
 
+		$out->addModules( 'ext.designSystem' );
 		return true;
 	}
 }

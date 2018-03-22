@@ -1,7 +1,7 @@
 <?php
 
 class RecirculationApiController extends WikiaApiController {
-	const ALLOWED_TYPES = ['recent_popular', 'vertical', 'community', 'curated', 'hero', 'category', 'latest'];
+	const ALLOWED_TYPES = ['recent_popular', 'vertical', 'community', 'curated', 'hero', 'category', 'latest', 'posts', 'all'];
 	const FANDOM_LIMIT = 5;
 
 	/**
@@ -9,14 +9,14 @@ class RecirculationApiController extends WikiaApiController {
 	 */
 	protected $cors;
 
-	public function __construct(){
+	public function __construct() {
 		parent::__construct();
 		$this->cors = new CrossOriginResourceSharingHeaderHelper();
-		$this->cors->setAllowOrigin( [ '*' ] );
+		$this->cors->setAllowAllOrigins();
 	}
 
 	public function getFandomPosts() {
-		$this->cors->setHeaders($this->response);
+		$this->cors->setHeaders( $this->response );
 
 		$type = $this->getParamType();
 		$cityId = $this->getParamCityId();
@@ -40,56 +40,29 @@ class RecirculationApiController extends WikiaApiController {
 			$posts = array_slice( array_merge( $posts, $ds->getPosts( 'recent_popular', $limit ) ), 0, $limit );
 		}
 
-		$this->response->setCacheValidity( WikiaResponse::CACHE_VERY_SHORT );
+		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
 		$this->response->setData( [
 			'title' => $title,
 			'posts' => $posts,
 		] );
 	}
 
-	public function getCakeRelatedContent() {
-		$this->cors->setHeaders($this->response);
-
-		$target = trim($this->request->getVal('relatedTo'));
-		if (empty($target)) {
-			throw new InvalidParameterApiException('relatedTo');
-		}
-
-		$limit = trim($this->request->getVal('limit'));
-		$ignore = trim($this->request->getVal('ignore'));
-
-		$this->response->setCacheValidity(WikiaResponse::CACHE_VERY_SHORT);
-		$this->response->setData([
-				'title' => wfMessage( 'recirculation-fandom-subtitle' )->plain(),
-				'items' => (new CakeRelatedContentService())->getContentRelatedTo($target, $this->wg->sitename, $limit, $ignore),
-		]);
-	}
-
-	public function getAllPosts() {
-		$this->cors->setHeaders($this->response);
+	public function getDiscussions() {
+		$this->cors->setHeaders( $this->response );
 
 		$cityId = $this->getParamCityId();
+		$type = $this->getParamType();
 
-		$parselyDataService = new ParselyDataService( $cityId );
-		$fandom = [
-			'title' => wfMessage( 'recirculation-fandom-title' )->plain(),
-			'items' => $parselyDataService->getPosts( 'recent_popular', 12 )
-		];
-
-		$discussionsData = [];
-		if ( RecirculationHooks::canShowDiscussions( $cityId ) ) {
-			$discussionsDataService = new DiscussionsDataService( $cityId );
-			$discussionsData = $discussionsDataService->getData();
-			$discussionsData['title'] = wfMessage( 'recirculation-discussion-title' )->plain();
-			$discussionsData['linkText'] = wfMessage( 'recirculation-discussion-link-text' )->plain();
+		if ( !RecirculationHooks::canShowDiscussions( $cityId ) ) {
+			return;
 		}
 
+		$dataService = new DiscussionsDataService( $cityId );
+
+		$data = $dataService->getData( $type );
+
 		$this->response->setCacheValidity( WikiaResponse::CACHE_VERY_SHORT );
-		$this->response->setData( [
-			'title' => wfMessage( 'recirculation-impact-footer-title' )->plain(),
-			'fandom' => $fandom,
-			'discussions' => $discussionsData,
-		] );
+		$this->response->setData( $data );
 	}
 
 	private function getParamCityId() {

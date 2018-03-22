@@ -1,0 +1,57 @@
+@import'../wds-functions/index';
+
+@mixin button-theming($color-primary, $color-primary-text, $color-secondary: "") {
+	$color-primary-active: lighten($color-primary, 20%);
+	@if lightness($color-primary) > 49 {
+		$color-primary-active: darken($color-primary, 20%);
+	}
+
+	@if $color-secondary == "" {
+		$color-secondary: $color-primary;
+	}
+
+	$color-secondary-active: lighten($color-secondary, 20%);
+	@if lightness($color-secondary) > 49 {
+		$color-secondary-active: darken($color-secondary, 20%);
+	}
+
+	background-color: $color-primary;
+	border-color: $color-primary;
+	color: $color-primary-text;
+
+	&:focus:not(:disabled),
+	&:hover:not(:disabled),
+	&:active,
+	&.wds-is-active {
+		background-color: $color-primary-active;
+		border-color: $color-primary-active;
+	}
+
+	&.wds-is-secondary {
+		background-color: transparent;
+		border-color: $color-secondary;
+		color: $color-secondary;
+
+		&:focus:not(:disabled),
+		&:hover:not(:disabled),
+		&:active,
+		&.wds-is-active {
+			background-color: transparent;
+			border-color: $color-secondary-active;
+			color: $color-secondary-active;
+		}
+	}
+
+	&.wds-is-text {
+		background-color: transparent;
+		color: $color-secondary;
+
+		&:focus:not(:disabled),
+		&:hover:not(:disabled),
+		&:active,
+		&.wds-is-active {
+			background-color: transparent;
+			color: $color-secondary-active;
+		}
+	}
+}

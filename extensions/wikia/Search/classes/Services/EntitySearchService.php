@@ -7,14 +7,14 @@ use Wikia\Search\Query\Select;
 use Wikia\Search\QueryService\Factory;
 use WikiFactory;
 
-class EntitySearchService {
+class EntitySearchService extends AbstractSearchService {
 	const WORDS_QUERY_LIMIT = 10;
 	const WIKIA_URL_REGEXP = '~^(http(s?)://)(([^\.]+)\.wikia\.com)~';
 
 	/** @var \Solarium_Client client */
 	protected $client;
 	protected $categories;
-	protected $filters = [ ];
+	protected $filters = [];
 	protected $hosts;
 	protected $hubs;
 	protected $ids;
@@ -35,6 +35,7 @@ class EntitySearchService {
 		if ( empty( $this->blacklist ) ) {
 			$this->blacklist = new BlacklistFilter( $this->getCore() );
 		}
+
 		return $this->blacklist;
 	}
 
@@ -120,6 +121,7 @@ class EntitySearchService {
 	 */
 	public function setIds( $ids ) {
 		$this->ids = $ids;
+
 		return $this;
 	}
 
@@ -156,6 +158,7 @@ class EntitySearchService {
 
 	public function setLang( $lang ) {
 		$this->lang = $lang;
+
 		return $this;
 	}
 
@@ -165,6 +168,7 @@ class EntitySearchService {
 
 	public function setQuality( $quality ) {
 		$this->quality = $quality;
+
 		return $this;
 	}
 
@@ -174,6 +178,7 @@ class EntitySearchService {
 
 	public function setWikiId( $wikiId ) {
 		$this->wikiId = $wikiId;
+
 		return $this;
 	}
 
@@ -194,18 +199,10 @@ class EntitySearchService {
 	}
 
 
-	protected function prepareQuery( $query ) {
+	protected function prepareQuery( string $query ) {
 		$select = $this->getSelect();
 
 		return $select;
-	}
-
-	/**
-	 * @param Solarium_Result_Select $response Search response
-	 * @return mixed
-	 */
-	protected function consumeResponse( $response ) {
-		return $response;
 	}
 
 	protected function getConfig() {
@@ -226,6 +223,7 @@ class EntitySearchService {
 
 	protected function sanitizeQuery( $query ) {
 		$select = new Select( $query );
+
 		return $select->getSolrQuery( static::WORDS_QUERY_LIMIT );
 	}
 
@@ -234,14 +232,7 @@ class EntitySearchService {
 	}
 
 	public function replaceHostUrl( $url ) {
-		global $wgStagingEnvironment, $wgDevelEnvironment;
-		if ( $wgStagingEnvironment || $wgDevelEnvironment ) {
-			return preg_replace_callback( self::WIKIA_URL_REGEXP, array( $this, 'replaceHost' ), $url );
-		}
-		return $url;
+		return WikiFactory::getLocalEnvURL( $url );
 	}
 
-	protected function replaceHost( $details ) {
-		return $details[1] . WikiFactory::getCurrentStagingHost( $details[4], $details[3] );
-	}
 }

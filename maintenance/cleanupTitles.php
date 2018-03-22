@@ -75,9 +75,8 @@ class TitleCleanup extends TableCleanup {
 
 	protected function moveIllegalPage( $row ) {
 		$legal = 'A-Za-z0-9_/\\\\-';
-		$legalized = preg_replace_callback( "!([^$legal])!",
-			array( &$this, 'hexChar' ),
-			$row->page_title );
+		$legalized =
+			preg_replace_callback( "!([^$legal])!", [ $this, 'hexChar' ], $row->page_title );
 		if ( $legalized == '.' ) $legalized = '(dot)';
 		if ( $legalized == '_' ) $legalized = '(space)';
 		$legalized = 'Broken/' . $legalized;

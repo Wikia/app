@@ -1,0 +1,25 @@
+{
+	"@metadata": {
+		"authors": [
+			"Veeven"
+		]
+	},
+	"maps_map": "పటం",
+	"maps-others": "ఇతరాలు",
+	"maps-layer-property": "లక్షణం",
+	"maps-layer-value": "విలువ",
+	"maps-layer-errors": "పొరపాట్లు",
+	"maps-abb-north": "ఉ",
+	"maps-abb-east": "తూ",
+	"maps-abb-south": "ద",
+	"maps-abb-west": "ప",
+	"maps-latitude": "అక్షాంశం:",
+	"maps-longitude": "రేఖాంశం:",
+	"specialpages-group-maps": "పటములు",
+	"mapeditor-none-text": "ఏమీలేదు",
+	"mapeditor-link-title-switcher-link-text": "లంకె",
+	"mapeditor-form-field-title": "శీర్షిక",
+	"mapeditor-form-field-text": "పాఠ్యం",
+	"mapeditor-form-field-link": "లంకె",
+	"mapeditor-form-field-icon": "ప్రతీకం"
+}

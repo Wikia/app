@@ -28,6 +28,10 @@ $color-user-profile-gradient-bottom: desaturate(darken($color-menu-highlight, 5%
 	@if $page-opacity == 1 {
 		@include linear-gradient($color-user-profile-gradient-bottom, top, $color-page, 0%, $color-user-profile-gradient-bottom, 100%);
 	}
+
+	padding-top: 20px;
+	width: 100%;
+
 	&.WikiaBlogPostHeader, &.WikiaBlogListingHeader {
 		background: transparent;
 		padding: 0 10px 6px;
@@ -101,7 +105,7 @@ $color-user-profile-gradient-bottom: desaturate(darken($color-menu-highlight, 5%
 		position: relative;
 
 		&:hover {
-			#userIdentityBoxEdit {
+			.user-identity-box-edit {
 				display: block;
 			}
 		}
@@ -146,6 +150,18 @@ $color-user-profile-gradient-bottom: desaturate(darken($color-menu-highlight, 5%
 			span {
 				color: $color-user-profile-masthead-aka;
 				margin: 0 1px 0 6px;
+			}
+		}
+		.bio {
+			max-height: 100px;
+			overflow: hidden;
+		}
+
+		.bio-toggle {
+			display: none;
+			margin-top: 10px;
+			span {
+				cursor: pointer;
 			}
 		}
 	}
@@ -195,6 +211,16 @@ $color-user-profile-gradient-bottom: desaturate(darken($color-menu-highlight, 5%
 		}
 	}
 
+	.contributions-details {
+		a {
+			color: $color-text;
+
+			&:hover {
+				color: $color-links;
+			}
+		}
+	}
+
 	.links {
 		@include clearfix;
 		li {
@@ -203,7 +229,7 @@ $color-user-profile-gradient-bottom: desaturate(darken($color-menu-highlight, 5%
 		}
 		.icon {
 			border-radius: 50px;
-			background: $color-links url(/extensions/wikia/UserProfilePageV3/images/UPP-sprite.png); /* $wgCdnStylePath */
+			background: $color-links url(/extensions/wikia/UserProfilePageV3/images/UPP-sprite.png); /* $wgResourceBasePath */
 			height: 17px;
 			position: relative;
 			top: .3em;
@@ -276,18 +302,20 @@ $color-user-profile-gradient-bottom: desaturate(darken($color-menu-highlight, 5%
 			padding-bottom: 10px;
 		}
 
-		#userIdentityBoxEdit {
+		.user-identity-box-edit {
 			display: block;
 		}
 	}
 }
 
-#userIdentityBoxEdit {
+.user-identity-box-edit {
+	cursor: pointer;
 	display: none;
 	margin-top: 10px;
 	position: absolute;
 	right: 10px;
-	img {
+	list-style: none;
+	svg {
 		position: relative;
 		top: 2px;
 	}

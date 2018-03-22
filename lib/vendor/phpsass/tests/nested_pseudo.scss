@@ -1,7 +1,0 @@
-// Covers issue #13
-div {
-	:first-child,
-	h1 + * {
-		border: 0;
-	}
-}

@@ -1,18 +1,25 @@
+@import 'extensions/wikia/AdEngine/js/build/bridge.scss';
 @import 'skins/shared/color';
+@import 'skins/shared/mixins/transition';
 @import 'layout';
 @import 'responsive-variables';
 @import 'breakpoints-variables';
 @import 'skins/shared/mixins/clearfix';
+@import 'skins/shared/mixins/flexbox';
 @import 'skins/shared/mixins/gradient';
+@import 'skins/shared/mixins/sticky';
 @import 'skins/shared/mixins/transform';
 @import 'ads-floor';
 @import 'ads-in-content';
 @import 'ads-interstitial';
 @import 'ads-invisible-high-impact';
-@import 'extensions/wikia/GlobalNavigation/styles/GlobalNavigationVariables.scss';
+@import 'ads-mixin';
+@import 'ads-porvata';
 
 $wikia-top-ads-index: 2;
-$taboola-small-breakpoint: "#{$screen} and (max-width: 420px)";
+$uap-video-animation-duration: 0.4s;
+$navbar-size-for-sticky-element: 65px;
+$global-navigation-and-sitewide-messages-index: 5000101;
 
 /** Hide invisible slots and 1x1 iframes **/
 #INVISIBLE_SKIN,
@@ -31,16 +38,18 @@ $taboola-small-breakpoint: "#{$screen} and (max-width: 420px)";
 	text-align: center;
 	width: $width-outside;
 	z-index: $wikia-top-ads-index;
+
 	.WikiaTopAdsInner {
 		@include clearfix;
-		display: inline-block;
-		> div {
-			float: right;
-		}
+		display: flex;
+		flex-direction: row-reverse;
+		justify-content: center;
 	}
+
 	.standard-leaderboard {
 		max-width: 728px;
 	}
+
 	.wikia-ad {
 		> img {
 			float: right; /* invisible tracking pixel is taking up height for some reason.  taking it out of the flow for now */
@@ -48,70 +57,93 @@ $taboola-small-breakpoint: "#{$screen} and (max-width: 420px)";
 	}
 }
 
-.bfaa-template {
-	.WikiaTopAds {
-		margin-top: 0;
-		padding: 0 0 $global-navigation-height 0;
+.has-bfaa .WikiaTopAds {
+	z-index: $global-navigation-and-sitewide-messages-index;
+}
+
+.wikia-ad:not(#INVISIBLE_HIGH_IMPACT_2) .provider-container {
+	position: relative;
+}
+
+.wikia-ad {
+	&.slot-animation {
+		@include transition(max-height, 1.6s, ease, 0);
+		overflow: hidden;
+	}
+
+	&.slot-responsive {
 		width: 100%;
 
-		&.bfaa-pinned-nav {
-			padding: 0;
+		.provider-container iframe {
+			@include absolute-fill();
 		}
+	}
+}
+
+.has-bfaa {
+	.wds-community-header {
+		margin-top: 20px;
+	}
+}
+
+.bfaa-template {
+	&.WikiaSiteWrapper {
+		@include flexbox();
+		@include flex-direction(column);
+	}
+
+	.WikiaTopAds {
+		@include order(-1);
+		margin-top: 0;
+		padding: 0;
+		width: 100%;
+		z-index: $global-navigation-and-sitewide-messages-index;
 	}
 
 	.WikiaTopAdsInner {
 		width: 100%;
 	}
 
-	#HOME_TOP_LEADERBOARD, #TOP_LEADERBOARD, #CORP_TOP_LEADERBOARD, #HUB_TOP_LEADERBOARD {
+	#TOP_LEADERBOARD {
+		@include transition(height, $uap-video-animation-duration, ease, 0);
+		background: $color-black;
 		max-width: none;
+		overflow: hidden;
 		width: 100%;
 
-		> div {
-			position: relative;
+		video {
+			height: auto;
+			width: 100%;
+		}
 
-			iframe {
-				height: 100%;
-				left: 0;
-				position: absolute;
-				width: 100%;
-				top: 0;
-			}
+		.mobile-porvata .video-player > iframe {
+			// Hide Learn more text
+			z-index: -1;
 		}
 	}
+
+	.wds-community-header {
+		margin-top: 20px;
+	}
 }
 
-.bfab-template > div {
+.bfab-template {
 	position: relative;
-	width: 100%;
 
-	iframe {
-		height: 100%;
-		left: 0;
-		position: absolute;
-		width: 100%;
-		top: 0;
+	.mobile-porvata .video-player > iframe {
+		// Hide Learn more text
+		z-index: -1;
 	}
 }
 
-#TOP_BUTTON_WIDE {
-	margin-right: 10px;
-}
-
-@media screen and (max-width: 1063px) {
-	#TOP_BUTTON_WIDE {
-		display: none;
-	}
-}
-
-#LEFT_SKYSCRAPER_2, #LEFT_SKYSCRAPER_3, #HOME_TOP_LEADERBOARD, #TOP_LEADERBOARD, #CORP_TOP_LEADERBOARD, #HUB_TOP_LEADERBOARD {
+#TOP_LEADERBOARD {
 	> div {
 		margin-left: auto;
 		margin-right: auto;
 	}
 }
 
-#HOME_TOP_LEADERBOARD, #TOP_LEADERBOARD, #CORP_TOP_LEADERBOARD, #HUB_TOP_LEADERBOARD {
+#TOP_LEADERBOARD {
 	&.default-height {
 		height: 90px;
 	}
@@ -147,72 +179,14 @@ $taboola-small-breakpoint: "#{$screen} and (max-width: 420px)";
 			width: $page-width-large;
 		}
 	}
-
-	@media #{$taboola-small-breakpoint} {
-		#TOP_LEADERBOARD_AB {
-			width: auto;
-		}
-	}
-}
-
-/** Skyscrapers **/
-@media #{$breakpoint-small-plus-up} {
-	#WikiaRail.left-skyscraper-3-present {
-		padding-bottom: 660px;
-	}
-}
-
-#INCONTENT_LEADERBOARD {
-	text-align: center;
-	> div {
-		margin-left: auto;
-		margin-right: auto;
-	}
-}
-
-#INCONTENT_WRAPPER {
-	text-align: center;
-}
-
-#INCONTENT_LEADERBOARD {
-	display: inline-block;
-}
-
-#INCONTENT_LEADERBOARD:before {
-	color: $color-text;
-	content: attr(data-label);
-	display: block;
-	font-size: 0.625rem;
-	line-height: 0.75rem;
-	padding-bottom: 6px;
-	padding-top: 6px;
-	text-align: left;
-	text-transform: uppercase;
-}
-
-#INCONTENT_LEADERBOARD.hide-label:before {
-	display: none;
-}
-
-#LEFT_SKYSCRAPER_2 {
-	margin-bottom: 10px;
-	font-size: 0;
-	text-align: center;
-	> div, > iframe {
-		display: inline-block;
-	}
-}
-
-#LEFT_SKYSCRAPER_3 {
-	clear: both;
-	position: absolute;
-	right: 0;
-	text-align: center;
-	top: -600px;
-	width: 300px;
 }
 
 #BOTTOM_LEADERBOARD {
+	&.bfab-template {
+		@include transition(height, $uap-video-animation-duration, ease, 0);
+		background: $color-black;
+	}
+
 	overflow: hidden;
 	margin: 0 0 23px 0;
 	text-align: center;
@@ -228,16 +202,8 @@ $taboola-small-breakpoint: "#{$screen} and (max-width: 420px)";
 	display: none;
 }
 
-#HOME_TOP_RIGHT_BOXAD {
-	margin-bottom: 10px;
-	position: relative;
-	width: 300px;
-	z-index: 100;
-}
-
 /* grid layout transition temp code.  remove and integrate into main code after transition is complete */
 .WikiaGrid {
-	#HOME_TOP_RIGHT_BOXAD,
 	#TOP_RIGHT_BOXAD {
 		background-color: mix($color-page, $color-page-opposite, 95%);
 		padding: 15px;
@@ -252,40 +218,12 @@ $taboola-small-breakpoint: "#{$screen} and (max-width: 420px)";
 	}
 }
 
-#TOP_RIGHT_BOXAD, #CORP_TOP_RIGHT_BOXAD {
+#TOP_RIGHT_BOXAD {
 	margin-bottom: 10px;
 	z-index: 100;
-}
-
-#CORP_TOP_RIGHT_BOXAD.default-height, #HOME_TOP_RIGHT_BOXAD.default-height, #TOP_RIGHT_BOXAD.default-height {
-	height: 250px;
-}
-
-#PREFOOTER_LEFT_BOXAD, #PREFOOTER_MIDDLE_BOXAD, #PREFOOTER_RIGHT_BOXAD {
-	float: left;
-	margin: 0 30px 0 0;
 
 	&.default-height {
 		height: 250px;
-	}
-}
-
-/** Spotlights **/
-#SPOTLIGHT_GLOBALNAV_1, #SPOTLIGHT_GLOBALNAV_2, #SPOTLIGHT_GLOBALNAV_3 {
-	width: 269px;
-	&.SPOTLIGHT_GLOBALNAV {
-		width: 255px;
-	}
-}
-
-// changes for $wgEnableSpotlightsV2
-.GlobalNavigation {
-	.subnav {
-		.SPOTLIGHT_GLOBALNAV {
-			left: 10px;
-			margin-top: 17px;
-			position: relative;
-		}
 	}
 }
 
@@ -331,22 +269,6 @@ body > a > img[src$="noad.gif"] {
 	z-index: 0;
 }
 
-/** Exitstitial ad */
-#ExitstitialInfobox {
-	p {
-		border-bottom: 1px solid #ccc;
-		padding-bottom: 5px;
-	}
-	.close-exitstitial-ad {
-		font-size: 120%;
-		text-align: center;
-	}
-	.ad-centered-wrapper {
-		height: 400px;
-		margin-bottom: 20px;
-	}
-}
-
 .ad-centered-wrapper {
 	display: table;
 	margin-left: auto;
@@ -362,7 +284,11 @@ body > a > img[src$="noad.gif"] {
 
 // Floating medrec
 #WikiaAdInContentPlaceHolder {
-	position: absolute;
+	// TODO ADEN-5234 Remove @media after finieshed ABTest. position should be still there
+	@media #{$breakpoint-small-plus-up} {
+		position: absolute;
+	}
+
 	#INCONTENT_BOXAD_1 {
 		position: relative;
 		text-align: center;
@@ -370,51 +296,12 @@ body > a > img[src$="noad.gif"] {
 	}
 }
 
-#NATIVE_TABOOLA_ARTICLE {
-	max-width: 700px;
-}
+#WikiaAdInContentPlaceHolder.rail-sticky-module {
+	@include sticky();
+	top: $navbar-size-for-sticky-element;
 
-#NATIVE_TABOOLA_ARTICLE, #NATIVE_TABOOLA_RAIL, #TOP_LEADERBOARD_AB, #RECIRCULATION_RAIL {
-	.trc_rbox_header .trc_rbox_header_span {
-		color: $color-page-opposite;
-	}
-	.trc_header_ext, .trc-widget-footer {
-		.logoDiv a span {
-			color: $color-links;
-		}
-	}
-	.trc_rbox_div .video-label-box .video-title {
-		color: $color-text;
-	}
-	.trc_rbox_div .video-label-box .branding {
-		color: $color-alternate-text;
-	}
-}
-
-#REVCONTENT_ABOVE_ARTICLE, #REVCONTENT_RIGHT_RAIL, #REVCONTENT_BELOW_ARTICLE {
-	.row-item h3 {
-		color: $color-page-opposite;
-	}
-
-	.rc-headline {
-		color: darken($color-page-opposite, 20%) !important;
-	}
-
-	.rc-provider, .rc-branding-label {
-		color: $color-alternate-text;
-	}
-}
-
-.wikia-ad-interactive-map {
-	height: 50px;
-	position: absolute;
-	right: 10px;
-	top: 10px;
-	width: 320px;
-
-	& > iframe {
-		width: 320px;
-		height: 50px;
+	@media #{$breakpoint-below-small-plus} {
+		position: static;
 	}
 }
 
@@ -433,10 +320,6 @@ body > a > img[src$="noad.gif"] {
 	}
 }
 
-//@TODO remove .oasis-responsive after deprecating responsive (July 2015)
-.oasis-breakpoints, .oasis-responsive {
-	#WikiaArticleBottomAd {
-		clear: both;
-		margin: 0;
-	}
+#WikiaArticleMsg {
+	display: none;
 }

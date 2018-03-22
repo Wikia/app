@@ -1,60 +1,93 @@
 /*global require*/
 require([
+	'ext.wikia.adEngine.bridge',
 	'ext.wikia.adEngine.adContext',
-	'ext.wikia.adEngine.lookup.amazonMatch',
-	'ext.wikia.adEngine.lookup.openXBidder',
+	'ext.wikia.adEngine.adLogicPageParams',
+	'ext.wikia.adEngine.adTracker',
+	'ext.wikia.adEngine.babDetection',
+	'ext.wikia.adEngine.slot.service.stateMonitor',
+	'ext.wikia.adEngine.lookup.a9',
 	'ext.wikia.adEngine.lookup.prebid',
-	'ext.wikia.adEngine.lookup.rubicon.rubiconFastlane',
 	'ext.wikia.adEngine.customAdsLoader',
 	'ext.wikia.adEngine.messageListener',
 	'ext.wikia.adEngine.mobile.mercuryListener',
-	'ext.wikia.adEngine.slot.scrollHandler',
-	'ext.wikia.adEngine.provider.yavliTag',
+	'ext.wikia.adEngine.provider.btfBlocker',
+	'ext.wikia.adEngine.slot.service.actionHandler',
+	'ext.wikia.adEngine.slot.service.slotRegistry',
+	'ext.wikia.adEngine.tracking.adInfoListener',
 	'wikia.geo',
 	'wikia.instantGlobals',
 	'wikia.window'
 ], function (
+	adEngineBridge,
 	adContext,
-	amazon,
-	oxBidder,
+	pageLevelParams,
+	adTracker,
+	babDetection,
+	slotStateMonitor,
+	a9,
 	prebid,
-	rubiconFastlane,
 	customAdsLoader,
 	messageListener,
 	mercuryListener,
-	scrollHandler,
-	yavliTag,
+	btfBlocker,
+	actionHandler,
+	slotRegistry,
+	adInfoListener,
 	geo,
 	instantGlobals,
 	win
 ) {
 	'use strict';
 
+	var context = adContext.getContext();
+
 	messageListener.init();
-	scrollHandler.init('mercury');
 
 	// Custom ads (skins, footer, etc)
-	win.loadCustomAd = customAdsLoader.loadCustomAd;
+	adContext.addCallback(function () {
+		adEngineBridge.init(
+			adTracker,
+			geo,
+			slotRegistry,
+			mercuryListener,
+			pageLevelParams.getPageLevelParams(),
+			adContext,
+			btfBlocker,
+			'mercury'
+		);
+	});
+	win.loadCustomAd = adEngineBridge.loadCustomAd(customAdsLoader.loadCustomAd);
 
-	if (geo.isProperGeo(instantGlobals.wgAmazonMatchCountriesMobile)) {
-		amazon.call();
+	function callBiddersOnConsecutivePageView() {
+		if (geo.isProperGeo(instantGlobals.wgAdDriverPrebidBidderCountries)) {
+			prebid.call();
+		}
+
+		if (geo.isProperGeo(instantGlobals.wgAdDriverA9BidderCountries)) {
+			a9.call();
+		}
 	}
 
 	mercuryListener.onLoad(function () {
-		if (geo.isProperGeo(instantGlobals.wgAdDriverRubiconFastlaneCountries)) {
-			rubiconFastlane.call();
-		}
-
-		if (geo.isProperGeo(instantGlobals.wgAdDriverOpenXBidderCountries)) {
-			oxBidder.call();
+		if (geo.isProperGeo(instantGlobals.wgAdDriverA9BidderCountries)) {
+			a9.call();
 		}
 
 		if (geo.isProperGeo(instantGlobals.wgAdDriverPrebidBidderCountries)) {
 			prebid.call();
 		}
 
-		if (adContext.getContext().opts.yavli) {
-			yavliTag.add();
-		}
+		adInfoListener.run();
+		slotStateMonitor.run();
+		actionHandler.registerMessageListener();
+
+		window.addEventListener('adengine.emitter', function (event) {
+			adEngineBridge.passSlotEvent(event.detail.slotName, event.detail.eventName);
+		});
+	});
+
+	mercuryListener.afterPageWithAdsRender(function () {
+		callBiddersOnConsecutivePageView();
 	});
 });

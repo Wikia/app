@@ -44,8 +44,7 @@ class UnusedtemplatesPage extends QueryPage {
 		return array (
 			'tables' => array ( 'page', 'templatelinks' ),
 			'fields' => array ( 'page_namespace AS namespace',
-					'page_title AS title',
-					'page_title AS value' ),
+					'page_title AS title' ),
 			'conds' => array ( 'page_namespace' => NS_TEMPLATE,
 					'tl_from IS NULL',
 					'page_is_redirect' => 0 ),
@@ -53,6 +52,10 @@ class UnusedtemplatesPage extends QueryPage {
 				'LEFT JOIN', array ( 'tl_title = page_title',
 					'tl_namespace = page_namespace' ) ) )
 		);
+	}
+
+	function getOrderFields() {
+		return [ 'title' ];
 	}
 
 	/**

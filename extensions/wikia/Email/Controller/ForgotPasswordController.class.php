@@ -32,8 +32,8 @@ class ForgotPasswordController extends EmailController {
 	public function initEmail() {
 		$this->tempPass = $this->request->getVal( 'tempPass' );
 
-		if ( empty($this->tempPass) ) {
-			throw new Fatal('Required temporary password has been left empty');
+		if ( empty( $this->tempPass ) ) {
+			throw new Fatal( 'Required temporary password has been left empty' );
 		}
 	}
 

@@ -53,12 +53,6 @@ $color-divider: mix($color-page, $color-text, 80%);
             margin-top: 20px;
         }
 
-        .activity-heading {
-            font-size: 24px;
-            font-weight: bold;
-            margin-bottom: 20px;
-        }
-
         .edited-by {
             font-size: 12px;
             font-weight: normal;
@@ -146,7 +140,7 @@ $color-divider: mix($color-page, $color-text, 80%);
 
     // TODO: remove when chat will be ready to be pushed to prod together with other rail changes
     &.new-chat {
-        .ChatModule {
+        .chat-module {
             @include wikia-rail-element;
 
             a:hover {

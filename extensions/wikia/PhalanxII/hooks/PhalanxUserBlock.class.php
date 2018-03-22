@@ -9,7 +9,7 @@
 class PhalanxUserBlock extends WikiaObject {
 	private static $typeBlock = null;
 	private static $checkEmail = false;
-	function __construct(){
+	function __construct() {
 		parent::__construct();
 	}
 
@@ -37,7 +37,7 @@ class PhalanxUserBlock extends WikiaObject {
 		$phalanxModel->setShouldLogInStats( $shouldLogBlockInStats );
 
 		$ret = $phalanxModel->match_user();
-		if ( $ret !== false ){
+		if ( $ret !== false ) {
 			if ( self::$checkEmail === true ) {
 				$ret = $phalanxModel->match_email();
 				if ( $ret === false ) {
@@ -48,7 +48,7 @@ class PhalanxUserBlock extends WikiaObject {
 
 		if ( $ret === false ) {
 			$user = $phalanxModel->userBlock( $user->isAnon() ? 'ip' : 'exact' )->getUser();
-			self::$typeBlock = (empty( self::$typeBlock ) ) ? 'user' : self::$typeBlock;
+			self::$typeBlock = ( empty( self::$typeBlock ) ) ? 'user' : self::$typeBlock;
 		}
 		wfProfileOut( __METHOD__ );
 		return $ret;
@@ -58,8 +58,11 @@ class PhalanxUserBlock extends WikiaObject {
 	 * hook
 	 *
 	 * @static
+	 * @param User $user
+	 * @param bool $canSend
+	 * @return bool
 	 */
-	static public function userCanSendEmail( &$user, &$canSend ) {
+	static public function userCanSendEmail( User $user, bool &$canSend ): bool {
 		$canSend = self::blockCheck( $user );
 		return true;
 	}
@@ -76,10 +79,10 @@ class PhalanxUserBlock extends WikiaObject {
 		$ret = self::blockCheck( $user );
 
 		if ( $ret === false ) {
-			$abortError = wfMsg( ( self::$typeBlock == 'email' )
+			$abortError = wfMessage( ( self::$typeBlock == 'email' )
 				? 'phalanx-email-block-new-account'
 				: 'phalanx-user-block-new-account'
-			);
+			)->text();
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -99,7 +102,7 @@ class PhalanxUserBlock extends WikiaObject {
 			$ret = self::blockCheck( $user );
 
 			if ( $ret === false ) {
-				$abortError = wfMsg( 'phalanx-user-block-new-account' );
+				$abortError = wfMessage( 'phalanx-user-block-new-account' )->text();
 			}
 		}
 		else {

@@ -91,9 +91,11 @@ class SpecialWatchlist extends SpecialPage {
 			return;
 		}
 
-		if( ( $wgEnotifWatchlist || $wgShowUpdatedMarker ) && $request->getVal( 'reset' ) &&
-			$request->wasPosted() )
-		{
+		if ( ( $wgEnotifWatchlist || $wgShowUpdatedMarker )
+			&& $request->getVal( 'reset' )
+			&& $request->wasPosted()
+			&& $user->matchEditToken( $request->getVal( 'token' ) )
+		) {
 			$user->clearAllNotifications();
 			$output->redirect( $this->getTitle()->getFullUrl() );
 			return;
@@ -118,7 +120,7 @@ class SpecialWatchlist extends SpecialPage {
 		/* ?     */ 'invert'    => false,
 		);
 		$this->customFilters = array();
-		wfRunHooks( 'SpecialWatchlistFilters', array( $this, &$this->customFilters ) );
+		Hooks::run( 'SpecialWatchlistFilters', array( $this, &$this->customFilters ) );
 		foreach( $this->customFilters as $key => $params ) {
 			$defaults[$key] = $params['msg'];
 		}
@@ -254,6 +256,7 @@ class SpecialWatchlist extends SpecialPage {
 						'id' => 'mw-watchlist-resetbutton' ) ) .
 					$this->msg( 'wlheader-showupdated' )->parse() . ' ' .
 					Xml::submitButton( $this->msg( 'enotif_reset' )->text(), array( 'name' => 'dummy' ) ) .
+					Html::hidden( 'token', $user->getEditToken() ) .
 					Html::hidden( 'reset', 'all' ) .
 					Xml::closeElement( 'form' );
 		}
@@ -299,7 +302,7 @@ class SpecialWatchlist extends SpecialPage {
 
 
 		ChangeTags::modifyDisplayQuery( $tables, $fields, $conds, $join_conds, $options, '' );
-		wfRunHooks('SpecialWatchlistQuery', array(&$conds,&$tables,&$join_conds,&$fields) );
+		Hooks::run('SpecialWatchlistQuery', array(&$conds,&$tables,&$join_conds,&$fields) );
 
 		$res = $dbr->select( $tables, $fields, $conds, __METHOD__, $options, $join_conds );
 		$numRows = $dbr->numRows( $res );
@@ -369,7 +372,9 @@ class SpecialWatchlist extends SpecialPage {
 		/* Do link batch query */
 		$linkBatch = new LinkBatch;
 		foreach ( $res as $row ) {
-			$userNameUnderscored = str_replace( ' ', '_', $row->rc_user_text );
+			$userIp = RecentChange::extractUserIpFromRow( $row );
+			$userNameUnderscored = str_replace( ' ', '_', User::getUsername( $row->rc_user, $userIp )
+			); // SUS-812
 			if ( $row->rc_user != 0 ) {
 				$linkBatch->add( NS_USER, $userNameUnderscored );
 			}

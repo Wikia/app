@@ -253,7 +253,7 @@ class ImageGallery {
 				if ( $this->mParser instanceof Parser ) {
 					# Give extensions a chance to select the file revision for us
 					$options = array();
-					wfRunHooks( 'BeforeParserFetchFileAndTitle',
+					Hooks::run( 'BeforeParserFetchFileAndTitle',
 						array( $this->mParser, $nt, &$options, &$descQuery ) );
 					# Fetch and register the file (file title may be different via hooks)
 					list( $img, $nt ) = $this->mParser->fetchFileAndTitle( $nt, $options );

@@ -11,7 +11,6 @@ $wgExtensionCredits['other'][] = [
 $wgAutoloadClasses['ParselyDataService'] =  __DIR__ . '/services/ParselyDataService.class.php';
 $wgAutoloadClasses['FandomDataService'] =  __DIR__ . '/services/FandomDataService.class.php';
 $wgAutoloadClasses['DiscussionsDataService'] =  __DIR__ . '/services/DiscussionsDataService.class.php';
-$wgAutoloadClasses['CakeRelatedContentService'] =  __DIR__ . '/services/CakeRelatedContentService.php';
 $wgAutoloadClasses['CuratedContentService'] =  __DIR__ . '/services/CuratedContentService.class.php';
 
 $wgAutoloadClasses['RecirculationController'] =  __DIR__ . '/RecirculationController.class.php';
@@ -19,9 +18,9 @@ $wgAutoloadClasses['RecirculationApiController'] =  __DIR__ . '/RecirculationApi
 $wgAutoloadClasses['RecirculationHooks'] =  __DIR__ . '/RecirculationHooks.class.php';
 
 $wgAutoloadClasses['RecirculationContent'] =  __DIR__ . '/RecirculationContent.php';
+$wgAutoloadClasses['WikiRecommendations'] =  __DIR__ . '/WikiRecommendations.class.php';
 
 // Hooks
-$wgHooks['GetRailModuleList'][] = 'RecirculationHooks::onGetRailModuleList';
 $wgHooks['OasisSkinAssetGroups'][] = 'RecirculationHooks::onOasisSkinAssetGroups';
 $wgHooks['BeforePageDisplay'][] = 'RecirculationHooks::onBeforePageDisplay';
 

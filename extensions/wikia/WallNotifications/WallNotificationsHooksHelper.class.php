@@ -4,14 +4,16 @@ class WallNotificationsHooksHelper {
 	/**
 	 * @brief Adds Wall Notifications script to Monobook pages
 	 *
+	 * @param Skin $skin
+	 * @param string $text
 	 * @return boolean
 	 *
 	 * @author Liz Lee
 	 */
-	static public function onSkinAfterBottomScripts( Skin $skin, &$text ) {
-		global $wgUser, $wgJsMimeType, $wgResourceBasePath, $wgExtensionsPath;
+	static public function onSkinAfterBottomScripts( Skin $skin, string &$text ): bool {
+		global $wgJsMimeType, $wgResourceBasePath, $wgExtensionsPath;
 
-		if ( $wgUser instanceof User && $wgUser->isLoggedIn() && $skin->getSkinName() == 'monobook' ) {
+		if ( $skin->getUser()->isLoggedIn() && $skin->getSkinName() == 'monobook' ) {
 			$text .= "<script type=\"{$wgJsMimeType}\" src=\"{$wgResourceBasePath}/resources/wikia/libraries/jquery/timeago/jquery.timeago.js\"></script>\n" .
 				"<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/WallNotifications/scripts/WallNotifications.js\"></script>\n";
 		}
@@ -22,12 +24,14 @@ class WallNotificationsHooksHelper {
 	/**
 	 * @brief Add notification dropdown to right corner for monobook
 	 *
+	 * @param array $personalUrls
+	 * @param Title $title
 	 * @return true
 	 *
 	 * @author Tomasz Odrobny
 	 * @author Piotrek Bablok
 	 */
-	static public function onPersonalUrls( &$personalUrls, &$title ) {
+	static public function onPersonalUrls( array &$personalUrls, Title $title ) {
 		global $wgUser, $wgEnableWallExt, $wgEnableForumExt, $wgOut;
 
 		if ( $wgUser instanceof User && $wgUser->isLoggedIn() ) {

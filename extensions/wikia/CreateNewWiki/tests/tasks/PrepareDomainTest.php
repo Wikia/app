@@ -10,18 +10,10 @@ class PrepareDomainTest extends \WikiaBaseTest {
 		$this->setupFile = dirname( __FILE__ ) . '/../../CreateNewWiki_setup.php';
 		parent::setUp();
 
-		$this->taskContextMock = $this->getMock(
-			'\Wikia\CreateNewWiki\Tasks\TaskContext',
-			[ 'setSiteName', 'setWikiName', 'setDomain', 'setUrl', 'getInputWikiName', 'getInputDomain', 'getLanguage', 'setInputDomain' ]
-		);
-		$this->mockClass( 'TaskContext', $this->taskContextMock );
-
-		$this->mockStaticMethod( '\Wikia\CreateNewWiki\Tasks\TaskResult', 'createForSuccess', 'ok' );
-		$this->mockStaticMethod( '\Wikia\CreateNewWiki\Tasks\TaskResult', 'createForError', 'error' );
-	}
-
-	public function tearDown() {
-		parent::tearDown();
+		$this->taskContextMock = $this->getMockBuilder( TaskContext::class )
+			->disableOriginalConstructor()
+            ->setMethods( [ 'setSiteName', 'setWikiName', 'setDomain', 'setUrl', 'getInputWikiName', 'getInputDomain', 'getLanguage', 'setInputDomain' ] )
+			->getMock();
 	}
 
 	/**
@@ -87,45 +79,51 @@ class PrepareDomainTest extends \WikiaBaseTest {
 			->expects( $this->once() )
 			->method( 'setUrl' );
 
+		/** @var PrepareDomain $prepareDomainTask */
 		$prepareDomainTask = $this->getMockBuilder( '\Wikia\CreateNewWiki\Tasks\PrepareDomain' )
 			->enableOriginalConstructor()
 			->setConstructorArgs( [ $this->taskContextMock ] )
-			->setMethods( [ 'getDomain', 'getSiteName' ] )
+			->setMethods( [ 'getSiteName' ] )
 			->getMock();
 
 		$result = $prepareDomainTask->prepare();
 
-		$this->assertEquals( $result, 'ok' );
+		$this->assertTrue( $result->isOk() );
 	}
 
 	/**
 	 * @dataProvider checkDataProvider
 	 * @param $errorMessage
-	 * @param $expected
+	 * @param $shouldSucceed
 	 */
-	public function testCheck( $errorMessage, $expected ) {
+	public function testCheck( $errorMessage, $shouldSucceed ) {
 		$this->mockStaticMethod( '\CreateWikiChecks', 'checkDomainIsCorrect', $errorMessage );
 
 		$prepareDomainTask = new PrepareDomain( $this->taskContextMock );
 
 		$result = $prepareDomainTask->check();
 
-		$this->assertEquals( $result, $expected );
+		if ( $shouldSucceed ) {
+			$this->assertTrue( $result->isOk() );
+		} else {
+			$this->assertFalse( $result->isOk() );
+		}
 	}
 
 	public function checkDataProvider() {
 		return [
-			[ null, 'ok' ],
-			[ 'an error occured', 'error' ]
+			[ null, true ],
+			[ 'an error occured', false ]
 		];
 	}
 
 	/**
 	 * @dataProvider runDataProvider
 	 * @param $status
-	 * @param $expected
+	 * @param $shouldSucceed
 	 */
-	public function testRun( $status, $expected ) {
+	public function testRun( $status, $shouldSucceed ) {
+		/** @var PrepareDomain $prepareDomainTask */
 		$prepareDomainTask = $this->getMockBuilder( '\Wikia\CreateNewWiki\Tasks\PrepareDomain' )
 			->enableOriginalConstructor()
 			->setConstructorArgs( [ $this->taskContextMock ] )
@@ -139,13 +137,17 @@ class PrepareDomainTest extends \WikiaBaseTest {
 
 		$result = $prepareDomainTask->run();
 
-		$this->assertEquals( $result, $expected );
+		if ( $shouldSucceed ) {
+			$this->assertTrue( $result->isOk() );
+		} else {
+			$this->assertFalse( $result->isOk() );
+		}
 	}
 
 	public function runDataProvider() {
 		return [
-			[ true, 'ok' ],
-			[ false, 'error' ]
+			[ true, true ],
+			[ false, false ]
 		];
 	}
 }

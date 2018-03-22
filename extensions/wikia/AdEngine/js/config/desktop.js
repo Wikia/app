@@ -11,12 +11,8 @@ define('ext.wikia.adEngine.config.desktop', [
 	// adProviders
 	'ext.wikia.adEngine.provider.directGpt',
 	'ext.wikia.adEngine.provider.evolve2',
-	'ext.wikia.adEngine.provider.monetizationService',
 	'ext.wikia.adEngine.provider.remnantGpt',
-	'ext.wikia.adEngine.provider.rubiconFastlane',
-	'ext.wikia.adEngine.provider.turtle',
-	require.optional('ext.wikia.adEngine.provider.taboola'),
-	require.optional('ext.wikia.adEngine.provider.revcontent')
+	'ext.wikia.adEngine.provider.turtle'
 ], function (
 	// regular dependencies
 	log,
@@ -29,12 +25,8 @@ define('ext.wikia.adEngine.config.desktop', [
 	// AdProviders
 	adProviderDirectGpt,
 	adProviderEvolve2,
-	adProviderMonetizationService,
 	adProviderRemnantGpt,
-	adProviderRubiconFastlane,
-	adProviderTurtle,
-	adProviderTaboola,
-	adProviderRevcontent
+	adProviderTurtle
 ) {
 	'use strict';
 
@@ -43,7 +35,6 @@ define('ext.wikia.adEngine.config.desktop', [
 		gptEnabled = !instantGlobals.wgSitewideDisableGpt,
 		forcedProviders = {
 			evolve2:  [adProviderEvolve2],
-			rpfl:     [adProviderRubiconFastlane],
 			turtle:   [adProviderTurtle]
 		};
 
@@ -68,25 +59,6 @@ define('ext.wikia.adEngine.config.desktop', [
 			return forcedProviders[context.forcedProvider];
 		}
 
-		// Taboola
-		if (context.providers.taboola && adProviderTaboola && adProviderTaboola.canHandleSlot(slotName)) {
-			return [adProviderTaboola];
-		}
-
-		// Revcontent
-		if (adProviderRevcontent && context.providers.revcontent && adProviderRevcontent.canHandleSlot(slotName)) {
-			return [adProviderRevcontent];
-		}
-
-		// MonetizationService
-		if (context.providers.monetizationService && adProviderMonetizationService.canHandleSlot(slotName)) {
-			if (instantGlobals.wgSitewideDisableMonetizationService) {
-				log('MonetizationService disabled by DR. No ads', 'warn', logGroup);
-				return [];
-			}
-			return [adProviderMonetizationService];
-		}
-
 		// First provider: Turtle, Evolve or Direct GPT?
 		if (context.providers.turtle && adProviderTurtle.canHandleSlot(slotName)) {
 			providerList.push(adProviderTurtle);
@@ -94,16 +66,15 @@ define('ext.wikia.adEngine.config.desktop', [
 			providerList.push(adProviderEvolve2);
 		} else if (gptEnabled) {
 			providerList.push(adProviderDirectGpt);
+
+			if (context.opts.premiumOnly) {
+				return providerList;
+			}
 		}
 
 		// Second provider: Remnant GPT
 		if (gptEnabled) {
 			providerList.push(adProviderRemnantGpt);
-		}
-
-		// Last resort provider: RubiconFastlane
-		if (context.providers.rubiconFastlane && adProviderRubiconFastlane.canHandleSlot(slotName)) {
-			providerList.push(adProviderRubiconFastlane);
 		}
 
 		return providerList;

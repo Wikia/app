@@ -34,9 +34,9 @@ ve.ui.WikiaMediaOptionWidget = function VeUiWikiaMediaOptionWidget( config ) {
 	this.$previewIcon = this.$( '<span>' );
 	this.$previewText = this.$( '<span>' );
 	// TODO: Presence of checkbox perhaps should depend on the configuration
-	this.check = new OO.ui.ButtonWidget( {
+	this.previewButton = new OO.ui.ButtonWidget( {
 		$: this.$,
-		icon: 'unchecked',
+		icon: 'preview-photo',
 		frameless: true
 	} );
 
@@ -44,8 +44,8 @@ ve.ui.WikiaMediaOptionWidget = function VeUiWikiaMediaOptionWidget( config ) {
 	this.$image
 		.load( this.onThumbnailLoad.bind( this ) )
 		.error(this.onThumbnailError.bind( this ) );
-	this.check.on( 'click', function () {
-		this.emit( 'check', this );
+	this.previewButton.on( 'click', function () {
+		this.emit( 'preview', this );
 	}.bind( this ) );
 	this.$metaData.on( 'mousedown', function ( event ) {
 		this.emit( 'metadata', this, event );
@@ -58,7 +58,7 @@ ve.ui.WikiaMediaOptionWidget = function VeUiWikiaMediaOptionWidget( config ) {
 	this.loadThumbnail();
 	this.setLabel( this.mwTitle );
 	this.$label.attr( 'title', this.mwTitle );
-	this.check.$element.addClass( 've-ui-wikiaMediaOptionWidget-check' );
+	this.previewButton.$element.addClass( 've-ui-wikiaMediaOptionWidget-previewButton' );
 	this.$previewIcon.addClass( 've-ui-wikiaMediaOptionWidget-preview-icon' );
 	this.$previewText.addClass( 've-ui-wikiaMediaOptionWidget-preview-text' );
 	this.$preview
@@ -71,7 +71,7 @@ ve.ui.WikiaMediaOptionWidget = function VeUiWikiaMediaOptionWidget( config ) {
 	this.$element
 		.addClass( 've-ui-mwMediaResultWidget ve-ui-texture-pending ' + this.data.type )
 		.css( { width: this.size, height: this.size } )
-		.prepend( this.$thumb, this.check.$element );
+		.prepend( this.$thumb, this.previewButton.$element );
 };
 
 /* Inheritance */
@@ -84,8 +84,6 @@ ve.ui.WikiaMediaOptionWidget.newFromData = function ( config ) {
 			return new ve.ui.WikiaPhotoOptionWidget( config );
 		case 'video':
 			return new ve.ui.WikiaVideoOptionWidget( config );
-		case 'map':
-			return new ve.ui.WikiaMapOptionWidget( config );
 		default:
 			throw new Error( 'Uknown type: ' + config.data.type );
 	}
@@ -164,7 +162,6 @@ ve.ui.WikiaMediaOptionWidget.prototype.onThumbnailError =
  * @param {boolean} checked Should the item be checked?
  */
 ve.ui.WikiaMediaOptionWidget.prototype.setChecked = function ( checked ) {
-	this.check.setIcon( checked ? 'checked' : 'unchecked' );
 	if ( checked ) {
 		this.$element.addClass( 've-ui-wikiaMediaOptionWidget-selected' );
 	} else {

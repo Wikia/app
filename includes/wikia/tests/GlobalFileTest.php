@@ -14,16 +14,15 @@ class GlobalFileTest extends WikiaBaseTest {
 	const DEFAULT_CB = 123456789;
 	const TIMESTAMP = '20111213221639';
 
-	public function setUp() {
+	protected function setUp() {
 		parent::setUp();
 
 		// assume we're in production environment
 		$this->mockGlobalVariable('wgDevelEnvironment', false);
 		$this->mockGlobalVariable('wgDevBoxImageServerOverride', false);
-		$this->mockGlobalVariable('wgEnableVignette', false);
 
 		$this->mockGlobalVariable('wgImagesDomainSharding', 'images%s.wikia.nocookie.net');
-		$this->mockGlobalVariable('wgCdnStylePath', sprintf('http://slot1.images.wikia.nocookie.net/__cb%s/common', self::DEFAULT_CB));
+		$this->mockGlobalVariable('wgResourceBasePath', sprintf('https://slot1.images.wikia.nocookie.net/__cb%s/common', self::DEFAULT_CB));
 	}
 
 	private function getSelectRowMock() {
@@ -39,16 +38,16 @@ class GlobalFileTest extends WikiaBaseTest {
 		$this->getSelectRowMock()
 			->expects( $this->any() )
 			->method( 'selectRow' )
-			->will( $this->returnCallback( function( $table, $vars, $conds, $fname ) use ($row) {
+			->will( $this->returnCallback( function( $table, $vars, $conds, $fname ) use ( $row, $cityId ) {
 				if ( $fname == 'GlobalFile::loadData' ) {
 					return $row;
 				} else { // don't mess with WikiFactory accessing database
-					return $this->getCurrentInvocation()->callOriginal();
+					return WikiFactory::IDtoDB( $cityId );
 				}
 			}));
 
 		$this->mockGlobalVariable('wgCityId', $cityId);
-		$this->mockGlobalVariable('wgUploadPath', "http://images.wikia.com/{$path}/images");
+		$this->mockGlobalVariable('wgUploadPath', "https://images.wikia.com/{$path}/images");
 
 		$file = GlobalFile::newFromText('Gzik.jpg', $cityId);
 		$title = $file->getTitle();
@@ -60,7 +59,7 @@ class GlobalFileTest extends WikiaBaseTest {
 		$this->assertEquals($url, $file->getUrl());
 
 		if ($file->exists()) {
-			$this->assertContains("/{$path}/images/thumb/0/06/Gzik.jpg/{$crop}", $file->getCrop(200, 200));
+			$this->assertContains("/window-crop/width/200/", $file->getCrop(200, 200));
 		}
 
 		// metadata
@@ -87,7 +86,7 @@ class GlobalFileTest extends WikiaBaseTest {
 				'height' => 450,
 				'crop' => '200px-76%2C527%2C0%2C450-Gzik.jpg',
 				'mime' => 'image/jpeg',
-				'url' => 'http://images3.wikia.nocookie.net/__cb' . self::TIMESTAMP . '/poznan/pl/images/0/06/Gzik.jpg',
+				'url' => 'https://images.wikia.nocookie.net/__cb' . self::TIMESTAMP . '/poznan/pl/images/0/06/Gzik.jpg',
 			],
 			// existing image from Muppet wiki
 			[
@@ -105,7 +104,7 @@ class GlobalFileTest extends WikiaBaseTest {
 				'height' => 300,
 				'crop' => '200px-0%2C301%2C0%2C300-Gzik.jpg',
 				'mime' => 'image/png',
-				'url' => 'http://images4.wikia.nocookie.net/__cb' . self::TIMESTAMP . '/muppet/images/0/06/Gzik.jpg',
+				'url' => 'https://images.wikia.nocookie.net/__cb' . self::TIMESTAMP . '/muppet/images/0/06/Gzik.jpg',
 			],
 			// not existing image from Poznań wiki
 			[
@@ -117,20 +116,20 @@ class GlobalFileTest extends WikiaBaseTest {
 				'height' => null,
 				'crop' => null,
 				'mime' => null,
-				'url' => 'http://images3.wikia.nocookie.net/__cb' . self::DEFAULT_CB . '/poznan/pl/images/0/06/Gzik.jpg', // contains default CB
+				'url' => 'https://images.wikia.nocookie.net/__cb' . self::DEFAULT_CB . '/poznan/pl/images/0/06/Gzik.jpg', // contains default CB
 			]
 		];
 	}
 
 	/**
-	 * @dataProvider testNewFromTextDbNameMatchProvider
+	 * @dataProvider newFromTextDbNameMatchProvider
 	 * @group UsingDB
 	 */
 	public function testNewFromTextDbNameMatch($row, $cityId) {
 		$this->getSelectRowMock()
 			->expects( $this->any() )
 			->method( 'selectRow' )
-			->will( $this->returnCallback( function( $table, $vars, $conds, $fname ) use ($row) {
+			->will( $this->returnCallback( function( $table, $vars, $conds, $fname ) use ( $row, $cityId ) {
 				if ( $fname == 'GlobalFile::loadData' ) {
 					if ( $conds['img_name'] == $row->img_name ) {
 						return $row;
@@ -138,7 +137,7 @@ class GlobalFileTest extends WikiaBaseTest {
 						return false;
 					}
 				} else { // don't mess with WikiFactory accessing database
-					return $this->getCurrentInvocation()->callOriginal();
+					return WikiFactory::IDtoDB( $cityId );
 				}
 			}));
 
@@ -154,7 +153,7 @@ class GlobalFileTest extends WikiaBaseTest {
 		$this->assertFalse( $file3->exists() );
 	}
 
-	public function testNewFromTextDbNameMatchProvider() {
+	public function newFromTextDbNameMatchProvider() {
 		return [
 			[
 				'row' => (object) [

@@ -35,7 +35,7 @@ class ApiQueryContributions extends ApiQueryBase {
 		parent::__construct( $query, $moduleName, 'uc' );
 	}
 
-	private $params, $prefixMode, $userprefix, $multiUserMode, $usernames;
+	private $params, $username, $userId, $userIp;
 	private $fld_ids = false, $fld_title = false, $fld_timestamp = false,
 			$fld_comment = false, $fld_parsedcomment = false, $fld_flags = false,
 			$fld_patrolled = false, $fld_tags = false, $fld_size = false;
@@ -59,26 +59,8 @@ class ApiQueryContributions extends ApiQueryBase {
 		// TODO: if the query is going only against the revision table, should this be done?
 		$this->selectNamedDB( 'contributions', DB_SLAVE, 'contributions' );
 
-		if ( isset( $this->params['userprefix'] ) ) {
-			$this->prefixMode = true;
-			$this->multiUserMode = true;
-			$this->userprefix = $this->params['userprefix'];
-		} else {
-			$this->usernames = array();
-			if ( !is_array( $this->params['user'] ) ) {
-				$this->params['user'] = array( $this->params['user'] );
-			}
-			if ( !count( $this->params['user'] ) ) {
-				$this->dieUsage( 'User parameter may not be empty.', 'param_user' );
-			}
-			foreach ( $this->params['user'] as $u ) {
-				$this->prepareUsername( $u );
-			}
-			$this->prefixMode = false;
-			$this->multiUserMode = ( count( $this->params['user'] ) > 1 );
-		}
-
-		$this->prepareQuery();
+		list( $userIds, $ips ) = $this->prepareUsername( $this->params['user'] );
+		$this->prepareQuery( $userIds, $ips );
 
 		// Do the actual query.
 		$res = $this->select( __METHOD__ );
@@ -90,23 +72,14 @@ class ApiQueryContributions extends ApiQueryBase {
 		// Fetch each row
 		foreach ( $res as $row ) {
 			if ( ++ $count > $limit ) {
-				// We've reached the one extra which shows that there are additional pages to be had. Stop here...
-				if ( $this->multiUserMode ) {
-					$this->setContinueEnumParameter( 'continue', $this->continueStr( $row ) );
-				} else {
-					$this->setContinueEnumParameter( 'start', wfTimestamp( TS_ISO_8601, $row->rev_timestamp ) );
-				}
+				$this->setContinueEnumParameter( 'start', wfTimestamp( TS_ISO_8601, $row->rev_timestamp ) );
 				break;
 			}
 
 			$vals = $this->extractRowInfo( $row );
-			$fit = $this->getResult()->addValue( array( 'query', $this->getModuleName() ), null, $vals );
+			$fit = $this->getResult()->addValue( [ 'query', $this->getModuleName() ], null, $vals );
 			if ( !$fit ) {
-				if ( $this->multiUserMode ) {
-					$this->setContinueEnumParameter( 'continue', $this->continueStr( $row ) );
-				} else {
-					$this->setContinueEnumParameter( 'start', wfTimestamp( TS_ISO_8601, $row->rev_timestamp ) );
-				}
+				$this->setContinueEnumParameter( 'start', wfTimestamp( TS_ISO_8601, $row->rev_timestamp ) );
 				break;
 			}
 		}
@@ -115,30 +88,69 @@ class ApiQueryContributions extends ApiQueryBase {
 	}
 
 	/**
-	 * Validate the 'user' parameter and set the value to compare
-	 * against `revision`.`rev_user_text`
-	 *
-	 * @param $user string
+	 * Convert a list of user names and IP addresses to look up into a list of user IDs and IPs
+	 * @param string[] $user
+	 * @return array
 	 */
 	private function prepareUsername( $user ) {
-		if ( !is_null( $user ) && $user !== '' ) {
-			$name = User::isIP( $user )
-				? $user
-				: User::getCanonicalName( $user, 'valid' );
-			if ( $name === false ) {
-				$this->dieUsage( "User name {$user} is not valid", 'param_user' );
-			} else {
-				$this->usernames[] = $name;
+		$ips = [];
+		$userNames = [];
+
+		foreach ( array_unique( $user ) as $entry ) {
+			if ( IP::isIPAddress( $entry ) ) {
+				$ips[] = $entry;
+				continue;
 			}
-		} else {
-			$this->dieUsage( 'User parameter may not be empty', 'param_user' );
+
+			if ( User::getCanonicalName( $entry ) ) {
+				$userNames[] = $entry;
+				continue;
+			}
+
+			$this->dieUsage( "User name $entry is not valid", 'param_user' );
 		}
+
+		$userIds = $this->resolveUserNames( $userNames );
+
+		if ( empty( $userIds ) && empty( $ips ) ) {
+			$this->dieUsage( "No valid user names provided", 'param_user' );
+		}
+
+		return [ $userIds, $ips ];
+	}
+
+	/**
+	 * Resolve a set of user names to their corresponding user IDs
+	 * @param string[] $userNames
+	 * @return int[] user IDs
+	 */
+	private function resolveUserNames( array $userNames ): array {
+		global $wgExternalSharedDB;
+
+		if ( empty( $userNames ) ) {
+			return [];
+		}
+
+		// Leverage cache if only one user name was provided (most common scenario)
+		if ( count( $userNames ) === 1 ) {
+			$userId = User::idFromName( $userNames[0] );
+			return $userId ? [ $userId ] : [];
+		}
+
+		$dbr = wfGetDB( DB_SLAVE, [], $wgExternalSharedDB );
+		return $dbr->selectFieldValues(
+			'`user`',
+			'user_id',
+			[ 'user_name' => array_unique( $userNames ) ],
+			__METHOD__ );
 	}
 
 	/**
 	 * Prepares the query and returns the limit of rows requested
+	 * @param int[] $userIds
+	 * @param string[] $ips
 	 */
-	private function prepareQuery() {
+	private function prepareQuery( array $userIds, array $ips ) {
 		// We're after the revision table, and the corresponding page
 		// row for anything we retrieve. We may also need the
 		// recentchanges row and/or tag summary row.
@@ -146,38 +158,27 @@ class ApiQueryContributions extends ApiQueryBase {
 		$tables = array( 'page', 'revision' ); // Order may change
 		$this->addWhere( 'page_id=rev_page' );
 
-		// Handle continue parameter
-		if ( $this->multiUserMode && !is_null( $this->params['continue'] ) ) {
-			$continue = explode( '|', $this->params['continue'] );
-			if ( count( $continue ) != 2 ) {
-				$this->dieUsage( 'Invalid continue param. You should pass the original ' .
-					'value returned by the previous query', '_badcontinue' );
-			}
-			$encUser = $this->getDB()->strencode( $continue[0] );
-			$encTS = wfTimestamp( TS_MW, $continue[1] );
-			$op = ( $this->params['dir'] == 'older' ? '<' : '>' );
-			$this->addWhere(
-				"rev_user_text $op '$encUser' OR " .
-				"(rev_user_text = '$encUser' AND " .
-				"rev_timestamp $op= '$encTS')"
-			);
-		}
-
 		if ( !$user->isAllowed( 'hideuser' ) ) {
 			$this->addWhere( $this->getDB()->bitAnd( 'rev_deleted', Revision::DELETED_USER ) . ' = 0' );
 		}
-		// We only want pages by the specified users.
-		if ( $this->prefixMode ) {
-			$this->addWhere( 'rev_user_text' . $this->getDB()->buildLike( $this->userprefix, $this->getDB()->anyString() ) );
-		} else {
-			$this->addWhereFld( 'rev_user_text', $this->usernames );
+
+		// SUS-3140: different field needs to be queried for user IDs and anon IPs
+		if ( !empty( $userIds ) && !empty( $ips ) ) {
+			$userIdList = $this->getDB()->makeList( $userIds );
+			$ipList = $this->getDB()->makeList( $ips );
+
+			$this->addWhere( "(rev_user IN ($userIdList) OR (rev_user = 0 AND rev_user_text IN ($ipList)))" );
+		} elseif ( empty( $userIds ) ) {
+			$ipList = $this->getDB()->makeList( $ips );
+
+			$this->addWhere( "rev_user = 0 AND rev_user_text IN ($ipList)" );
+		} elseif ( empty( $ips ) ) {
+			$userIdList = $this->getDB()->makeList( $userIds );
+
+			$this->addWhere( "rev_user IN ($userIdList)" );
 		}
+
 		// ... and in the specified timeframe.
-		// Ensure the same sort order for rev_user_text and rev_timestamp
-		// so our query is indexed
-		if ( $this->multiUserMode ) {
-			$this->addWhereRange( 'rev_user_text', $this->params['dir'], null, null );
-		}
 		$this->addTimestampWhereRange( 'rev_timestamp',
 			$this->params['dir'], $this->params['start'], $this->params['end'] );
 		$this->addWhereFld( 'page_namespace', $this->params['namespace'] );
@@ -196,7 +197,6 @@ class ApiQueryContributions extends ApiQueryBase {
 			$this->addWhereIf( 'rc_patrolled != 0', isset( $show['patrolled'] ) );
 		}
 		$this->addOption( 'LIMIT', $this->params['limit'] + 1 );
-		$index = array( 'revision' => 'usertext_timestamp' );
 
 		// Mandatory fields: timestamp allows request continuation
 		// ns+title checks if the user has access rights for this page
@@ -217,22 +217,20 @@ class ApiQueryContributions extends ApiQueryBase {
 			}
 
 			// Use a redundant join condition on both
-			// timestamp and ID so we can use the timestamp
-			// index
-			$index['recentchanges'] = 'rc_user_text';
+			// timestamp and ID so we can use the timestamp index
 			if ( isset( $show['patrolled'] ) || isset( $show['!patrolled'] ) ) {
 				// Put the tables in the right order for
 				// STRAIGHT_JOIN
 				$tables = array( 'revision', 'recentchanges', 'page' );
 				$this->addOption( 'STRAIGHT_JOIN' );
-				$this->addWhere( 'rc_user_text=rev_user_text' );
+				$this->addWhere( '((rc_user != 0 AND rc_user=rev_user) OR rc_ip_bin=INET6_ATON(rev_user_text))' );
 				$this->addWhere( 'rc_timestamp=rev_timestamp' );
 				$this->addWhere( 'rc_this_oldid=rev_id' );
 			} else {
 				$tables[] = 'recentchanges';
 				$this->addJoinConds( array( 'recentchanges' => array(
 					'LEFT JOIN', array(
-						'rc_user_text=rev_user_text',
+						'(rc_user != 0 AND rc_user=rev_user) OR rc_ip_bin=INET6_ATON(rev_user_text)',
 						'rc_timestamp=rev_timestamp',
 						'rc_this_oldid=rev_id' ) ) ) );
 			}
@@ -249,24 +247,25 @@ class ApiQueryContributions extends ApiQueryBase {
 		$this->addFieldsIf( 'rc_patrolled', $this->fld_patrolled );
 
 		if ( $this->fld_tags ) {
-			$this->addTables( 'tag_summary' );
-			$this->addJoinConds( array( 'tag_summary' => array( 'LEFT JOIN', array( 'rev_id=ts_rev_id' ) ) ) );
-			$this->addFields( 'ts_tags' );
+			$tsTags = ChangeTags::buildTsTagsGroupConcatField( 'rev_id' );
+			$this->addFields( $tsTags );
 		}
 
 		if ( isset( $this->params['tag'] ) ) {
+			// SUS-3140: Optimize tag condition
+			// JOINing on tag will allow the query planner to use change_tag_rev_tag index
+			$tag = $this->getDB()->addQuotes( $this->params['tag'] );
+
 			$this->addTables( 'change_tag' );
-			$this->addJoinConds( array( 'change_tag' => array( 'INNER JOIN', array( 'rev_id=ct_rev_id' ) ) ) );
-			$this->addWhereFld( 'ct_tag', $this->params['tag'] );
-			global $wgOldChangeTagsIndex;
-			$index['change_tag'] = $wgOldChangeTagsIndex ? 'ct_tag' : 'change_tag_tag_id';
+			$this->addJoinConds( [
+				'change_tag' => [ 'INNER JOIN', [ "ct_tag = $tag AND rev_id=ct_rev_id" ] ]
+			] );
 		}
 
 		if ( $this->params['toponly'] ) {
 			$this->addWhere( 'rev_id = page_latest' );
 		}
 
-		$this->addOption( 'USE INDEX', $index );
 		/* Wikia change begin - @author: Marooned */
 		/* Add revision parent id to make diff link in MyHome and to see if current revision was the first one */
 		$this->addFieldsIf('rev_parent_id', $this->fld_wikiamode);
@@ -280,17 +279,16 @@ class ApiQueryContributions extends ApiQueryBase {
 	 * @return array
 	 */
 	private function extractRowInfo( $row ) {
-		$vals = array();
+		$vals = [];
 
 		$vals['userid'] = $row->rev_user;
-		$vals['user'] = $row->rev_user_text;
+		$vals['user'] = User::getUsername( $row->rev_user, $row->rev_user_text );
 		if ( $row->rev_deleted & Revision::DELETED_USER ) {
 			$vals['userhidden'] = '';
 		}
 		if ( $this->fld_ids ) {
 			$vals['pageid'] = intval( $row->rev_page );
 			$vals['revid'] = intval( $row->rev_id );
-			// $vals['textid'] = intval( $row->rev_text_id ); // todo: Should this field be exposed?
 		}
 
 		$title = Title::makeTitle( $row->page_namespace, $row->page_title );
@@ -357,11 +355,6 @@ class ApiQueryContributions extends ApiQueryBase {
 		return $vals;
 	}
 
-	private function continueStr( $row ) {
-		return $row->rev_user_text . '|' .
-			wfTimestamp( TS_ISO_8601, $row->rev_timestamp );
-	}
-
 	public function getCacheMode( $params ) {
 		// This module provides access to deleted revisions and patrol flags if
 		// the requester is logged in
@@ -383,11 +376,10 @@ class ApiQueryContributions extends ApiQueryBase {
 			'end' => array(
 				ApiBase::PARAM_TYPE => 'timestamp'
 			),
-			'continue' => null,
 			'user' => array(
-				ApiBase::PARAM_ISMULTI => true
+				ApiBase::PARAM_ISMULTI => true,
+				ApiBase::PARAM_REQUIRED => true,
 			),
-			'userprefix' => null,
 			'dir' => array(
 				ApiBase::PARAM_DFLT => 'older',
 				ApiBase::PARAM_TYPE => array(
@@ -436,9 +428,7 @@ class ApiQueryContributions extends ApiQueryBase {
 			'limit' => 'The maximum number of contributions to return',
 			'start' => 'The start timestamp to return from',
 			'end' => 'The end timestamp to return to',
-			'continue' => 'When more results are available, use this to continue',
 			'user' => 'The users to retrieve contributions for',
-			'userprefix' => "Retrieve contibutions for all users whose names begin with this value. Overrides {$p}user",
 			'dir' => $this->getDirectionDescription( $p ),
 			'namespace' => 'Only list contributions in these namespaces',
 			'prop' => array(
@@ -466,7 +456,6 @@ class ApiQueryContributions extends ApiQueryBase {
 
 	public function getPossibleErrors() {
 		return array_merge( parent::getPossibleErrors(), array(
-			array( 'code' => 'param_user', 'info' => 'User parameter may not be empty.' ),
 			array( 'code' => 'param_user', 'info' => 'User name user is not valid' ),
 			array( 'show' ),
 			array( 'code' => 'permissiondenied', 'info' => 'You need the patrol right to request the patrolled flag' ),
@@ -475,8 +464,7 @@ class ApiQueryContributions extends ApiQueryBase {
 
 	public function getExamples() {
 		return array(
-			'api.php?action=query&list=usercontribs&ucuser=YurikBot',
-			'api.php?action=query&list=usercontribs&ucuserprefix=217.121.114.',
+			'api.php?action=query&list=usercontribs&ucuser=YurikBot'
 		);
 	}
 

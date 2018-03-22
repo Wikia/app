@@ -6,13 +6,17 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname(dirname($vendorDir));
 
 return array(
-    'Symfony\\Component\\Yaml\\' => array($vendorDir . '/symfony/yaml'),
     'Symfony\\Component\\CssSelector\\' => array($vendorDir . '/symfony/css-selector'),
-    'Psr\\Log\\' => array($vendorDir . '/psr/log'),
-    'ProxyManager\\' => array($vendorDir . '/ocramius/proxy-manager/src'),
-    'PhpAmqpLib' => array($vendorDir . '/videlalvaro/php-amqplib'),
+    'Solarium_' => array($baseDir . '/lib/vendor/Solarium'),
+    'Prophecy\\' => array($vendorDir . '/phpspec/prophecy/src'),
+    'PEAR' => array($vendorDir . '/pear/pear_exception'),
+    'Net' => array($vendorDir . '/pear/net_socket', $vendorDir . '/wikia/net_smtp2', $vendorDir . '/wikia/net_socket2'),
+    'Mail' => array($vendorDir . '/pear/mail_mime'),
+    'File' => array($vendorDir . '/wikia/file_ogg'),
+    'Evenement' => array($vendorDir . '/evenement/evenement/src'),
     'Doctrine\\Common\\Lexer\\' => array($vendorDir . '/doctrine/lexer/lib'),
-    'Doctrine\\Common\\Cache\\' => array($vendorDir . '/doctrine/cache/lib'),
-    'Doctrine\\Common\\Annotations\\' => array($vendorDir . '/doctrine/annotations/lib'),
-    '' => array($vendorDir . '/cssjanus/cssjanus/src'),
+    'DataValues\\' => array($vendorDir . '/data-values/data-values/src'),
+    'Console' => array($vendorDir . '/pear/console_getopt'),
+    'Archive_Tar' => array($vendorDir . '/pear/archive_tar'),
+    '' => array($vendorDir . '/cssjanus/cssjanus/src', $vendorDir . '/pear/pear-core-minimal/src'),
 );

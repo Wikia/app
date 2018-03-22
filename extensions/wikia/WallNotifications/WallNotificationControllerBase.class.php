@@ -1,9 +1,7 @@
 <?php
 
-abstract class WallNotificationControllerBase extends WikiaController {
-	public function __construct() {
-		parent::__construct();
-	}
+abstract class WallNotificationControllerBase extends WikiaService {
+	const NOTIFICATION_TITLE_LIMIT = 48;
 
 	public function Index() {
 		global $wgUser, $wgEnableWallExt, $wgEnableForumExt;
@@ -23,29 +21,15 @@ abstract class WallNotificationControllerBase extends WikiaController {
 		return $username;
 	}
 
-	public function checkTopic() {
-		// force json format
-		$this->getResponse()->setFormat( 'json' );
-
-		$result = false;
-
-		$topic = $this->getRequest()->getVal( 'query' );
-		if ( !empty( $topic ) ) {
-			/** @var $title title */
-			$title = Title::newFromText( $topic );
-
-			if ( $title instanceof Title ) {
-				$result = (bool)$title->exists();
-			}
-		}
-
-		$this->response->setVal( 'exists', $result );
-	}
-
 	public function Update() {
-		global $wgUser, $wgEnableWallExt, $wgEnableForumExt;
+		global $wgEnableWallExt, $wgEnableForumExt;
 
 		wfProfileIn( __METHOD__ );
+
+		if ( !$this->getContext()->getUser()->isLoggedIn() ) {
+			$this->skipRendering();
+			return;
+		}
 
 		$this->response->setVal( 'alwaysGrouped', empty( $wgEnableWallExt ) && empty( $wgEnableForumExt ) );
 		$this->response->setVal( 'notificationKey', $this->request->getVal( 'notificationKey' ) );
@@ -56,22 +40,6 @@ abstract class WallNotificationControllerBase extends WikiaController {
 
 		$unreadCount = $this->request->getVal( 'count' );
 		$this->response->setVal( 'count', $unreadCount );
-
-		$this->response->setVal( 'user', $wgUser );
-
-		wfProfileOut( __METHOD__ );
-	}
-
-	public function updateWiki() {
-		global $wgUser;
-
-		wfProfileIn( __METHOD__ );
-
-		$all = $this->request->getVal( 'notifications' );
-
-		$this->response->setVal( 'user', $wgUser );
-		$this->response->setVal( 'unread', $all[ 'unread' ] );
-		$this->response->setVal( 'read', $all[ 'read' ] );
 
 		wfProfileOut( __METHOD__ );
 	}
@@ -122,8 +90,14 @@ abstract class WallNotificationControllerBase extends WikiaController {
 		}
 
 		$msg = "";
-		wfRunHooks( 'NotificationGetNotificationMessage', [
-			&$this, &$msg, $firstEntity->isMain(), $data, $authors, $userCount, $wg->User->getName()
+		Hooks::run( 'NotificationGetNotificationMessage', [
+			$this,
+			&$msg,
+			$firstEntity->isMain(),
+			$data,
+			$authors,
+			$userCount,
+			$wg->User->getName(),
 		] );
 
 		if ( empty( $msg ) ) {
@@ -148,8 +122,8 @@ abstract class WallNotificationControllerBase extends WikiaController {
 		// array) instead of the most recent so that they start reading where the left off. See bugid 64560.
 		$oldestEntity = end( $notify[ 'grouped' ] );
 		$url = empty( $oldestEntity->data->url ) ? '' : $oldestEntity->data->url;
-		$title = $this->getTitle( $data->thread_title );
-		$this->response->setVal( 'url', $this->fixNotificationURL( $url ) );
+		$title = $this->shortenTitle( $data->thread_title ?? '' );
+		$this->response->setVal( 'url', WikiFactory::getLocalEnvURL( $url ) );
 		$this->response->setVal( 'authors', array_reverse( $authors ) );
 		$this->response->setVal( 'title', $title );
 		$this->response->setVal( 'iso_timestamp', wfTimestamp( TS_ISO_8601, $data->timestamp ) );
@@ -170,7 +144,7 @@ abstract class WallNotificationControllerBase extends WikiaController {
 		if ( $authoruser instanceof User && $authoruser->getId() > 0 ) {
 			$displayname = $authoruser->getName();
 		} else {
-			$displayname = wfMessage( 'oasis-anon-user' )->text();
+			$displayname = wfMessage( 'oasis-anon-user' )->escaped();
 		}
 
 		$wall_displayname = $walluser->getName();
@@ -183,23 +157,23 @@ abstract class WallNotificationControllerBase extends WikiaController {
 
 		if ( $data->type == 'OWNER' ) {
 			if ( !$data->is_reply ) {
-				$msg = wfMessage( 'wn-owner-thread-deleted' )->text();
+				$msg = wfMessage( 'wn-owner-thread-deleted' )->escaped();
 			} else {
-				$msg = wfMessage( 'wn-owner-reply-deleted' )->text();
+				$msg = wfMessage( 'wn-owner-reply-deleted' )->escaped();
 			}
 		} else {
 			if ( !$data->is_reply ) {
-				$msg = wfMessage( 'wn-admin-thread-deleted', [ $wall_displayname ] )->text();
+				$msg = wfMessage( 'wn-admin-thread-deleted', [ $wall_displayname ] )->escaped();
 			} else {
-				$msg = wfMessage( 'wn-admin-reply-deleted', [ $wall_displayname ] )->text();
+				$msg = wfMessage( 'wn-admin-reply-deleted', [ $wall_displayname ] )->escaped();
 			}
 		}
 
-		$this->response->setVal( 'url', $this->fixNotificationURL( $data->url ) );
+		$this->response->setVal( 'url', WikiFactory::getLocalEnvURL( $data->url ) );
 		$this->response->setVal( 'msg', $msg );
 		$this->response->setVal( 'authors', $authors );
 		$this->response->setVal( 'iso_timestamp', wfTimestamp( TS_ISO_8601, $data->timestamp ) );
-		$this->response->setVal( 'title', $this->getTitle( $data->title ) );
+		$this->response->setVal( 'title', $this->shortenTitle( $data->title ?? '' ) );
 	}
 
 	protected function getNotificationMessage( $isMain, $data, $authors, $userCount, $myName ) {
@@ -252,27 +226,12 @@ abstract class WallNotificationControllerBase extends WikiaController {
 		return $msg;
 	}
 
-	protected function fixNotificationURL( $url ) {
-		global $wgStagingList;
-		$hostOn = getHostPrefix();
-
-		$hosts = $wgStagingList;
-		foreach ( $hosts as $host ) {
-			$prefix = 'http://' . $host . '.';
-			if ( strpos( $url, $prefix ) !== false ) {
-				if ( empty( $hostOn ) ) {
-					return str_replace( $prefix, 'http://', $url );
-				} else {
-					return str_replace( $prefix, 'http://' . $hostOn . '.', $url );
-				}
-			}
-		}
-
-		if ( !empty( $hostOn ) ) {
-			return str_replace( 'http://', 'http://' . $hostOn . '.', $url );
-		}
-
-		return $url;
+	/**
+	 * @param string $title
+	 * @return string
+	 */
+	protected function shortenTitle( string $title ): string {
+		return WallHelper::shortenText( $this->getContext()->getLanguage(), $title, static::NOTIFICATION_TITLE_LIMIT );
 	}
 
 	/**
@@ -290,12 +249,6 @@ abstract class WallNotificationControllerBase extends WikiaController {
 	 * @return bool
 	 */
 	protected abstract function areNotificationsSuppressedByExtensions();
-
-	/**
-	 * @param string $title
-	 * @return string
-	 */
-	protected abstract function getTitle( $title );
 
 	/**
 	 * @param bool $unread

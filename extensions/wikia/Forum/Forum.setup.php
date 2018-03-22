@@ -7,7 +7,7 @@
  *
  */
 
-$wgExtensionCredits['specialpage'][] = [
+$GLOBALS['wgExtensionCredits']['specialpage'][] = [
 	'name' => 'Forum',
 	'author' => [ 'Hyun Lim', 'Kyle Florence', 'Saipetch Kongkatong', 'Tomasz Odrobny' ],
 	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/Forum',
@@ -17,85 +17,89 @@ $wgExtensionCredits['specialpage'][] = [
 $dir = __DIR__ . '/';
 
 // classes
-$wgAutoloadClasses['ForumSpecialController'] =  $dir . 'ForumSpecialController.class.php' ;
-$wgAutoloadClasses['ForumHooksHelper'] =  $dir . 'ForumHooksHelper.class.php' ;
-$wgAutoloadClasses['ForumController'] =  $dir . 'ForumController.class.php' ;
-$wgAutoloadClasses['ForumNotificationPlugin'] =  $dir . 'ForumNotificationPlugin.class.php' ;
-$wgAutoloadClasses['Forum'] =  $dir . 'Forum.class.php' ;
-$wgAutoloadClasses['ForumBoard'] =  $dir . 'ForumBoard.class.php' ;
-$wgAutoloadClasses['ForumHelper'] =  $dir . 'ForumHelper.class.php' ;
-$wgAutoloadClasses['ForumExternalController'] =  $dir . 'ForumExternalController.class.php' ;
-$wgAutoloadClasses['RelatedForumDiscussionController'] =  $dir . 'RelatedForumDiscussionController.class.php' ;
+$GLOBALS['wgAutoloadClasses']['ForumSpecialController'] =  $dir . 'ForumSpecialController.class.php' ;
+$GLOBALS['wgAutoloadClasses']['ForumHooksHelper'] =  $dir . 'ForumHooksHelper.class.php' ;
+$GLOBALS['wgAutoloadClasses']['ForumController'] =  $dir . 'ForumController.class.php' ;
+$GLOBALS['wgAutoloadClasses']['ForumNotificationPlugin'] =  $dir . 'ForumNotificationPlugin.class.php' ;
+$GLOBALS['wgAutoloadClasses']['Forum'] =  $dir . 'Forum.class.php' ;
+$GLOBALS['wgAutoloadClasses']['ForumBoard'] =  $dir . 'ForumBoard.class.php' ;
+$GLOBALS['wgAutoloadClasses']['ForumBoardInfo'] =  $dir . 'ForumBoardInfo.class.php' ;
+$GLOBALS['wgAutoloadClasses']['ForumPostInfo'] =  $dir . 'ForumPostInfo.class.php' ;
+$GLOBALS['wgAutoloadClasses']['ForumHelper'] =  $dir . 'ForumHelper.class.php' ;
+$GLOBALS['wgAutoloadClasses']['ForumExternalController'] =  $dir . 'ForumExternalController.class.php' ;
+$GLOBALS['wgAutoloadClasses']['RelatedForumDiscussionController'] =  $dir . 'RelatedForumDiscussionController.class.php' ;
+$GLOBALS['wgAutoloadClasses']['ThreadWatchlistDeleteUpdate'] = $dir . 'ThreadWatchlistDeleteUpdate.php';
+
+$GLOBALS['wgAutoloadClasses']['ForumActivityService'] = __DIR__ . '/ForumActivityService.php';
+$GLOBALS['wgAutoloadClasses']['CachedForumActivityService'] = __DIR__ . '/CachedForumActivityService.php';
+$GLOBALS['wgAutoloadClasses']['DatabaseForumActivityService'] = __DIR__ . '/DatabaseForumActivityService.php';
 
 // i18n mapping
-$wgExtensionMessagesFiles['Forum'] = $dir . 'Forum.i18n.php' ;
-$wgExtensionMessagesFiles['ForumAliases'] = $dir . 'Forum.alias.php';
+$GLOBALS['wgExtensionMessagesFiles']['Forum'] = $dir . 'Forum.i18n.php' ;
+$GLOBALS['wgExtensionMessagesFiles']['ForumAliases'] = $dir . 'Forum.alias.php';
 
 // special pages
-$wgSpecialPages['Forum'] =  'ForumSpecialController';
+$GLOBALS['wgSpecialPages']['Forum'] =  'ForumSpecialController';
 
 // hooks
-$wgHooks['AfterWallWikiActivityFilter'][] = 'ForumHooksHelper::onAfterWallWikiActivityFilter';
-$wgHooks['WallContributionsLine'][] = 'ForumHooksHelper::onWallContributionsLine';
-$wgHooks['getUserPermissionsErrors'][] = 'ForumHooksHelper::getUserPermissionsErrors';
-$wgHooks['WallRecentchangesMessagePrefix'][] = 'ForumHooksHelper::onWallRecentchangesMessagePrefix';
-$wgHooks['WallThreadHeader'][] = 'ForumHooksHelper::onWallThreadHeader';
-$wgHooks['WallMessageGetWallOwnerName'][] = 'ForumHooksHelper::onWallMessageGetWallOwnerName';
+$GLOBALS['wgHooks']['AfterWallWikiActivityFilter'][] = 'ForumHooksHelper::onAfterWallWikiActivityFilter';
+$GLOBALS['wgHooks']['WallContributionsLine'][] = 'ForumHooksHelper::onWallContributionsLine';
+$GLOBALS['wgHooks']['getUserPermissionsErrors'][] = 'ForumHooksHelper::getUserPermissionsErrors';
+$GLOBALS['wgHooks']['WallRecentchangesMessagePrefix'][] = 'ForumHooksHelper::onWallRecentchangesMessagePrefix';
+$GLOBALS['wgHooks']['WallThreadHeader'][] = 'ForumHooksHelper::onWallThreadHeader';
+$GLOBALS['wgHooks']['WallMessageGetWallOwnerName'][] = 'ForumHooksHelper::onWallMessageGetWallOwnerName';
 
-$wgHooks['WallHistoryThreadHeader'][] = 'ForumHooksHelper::onWallHistoryThreadHeader';
-$wgHooks['WallHistoryHeader'][] = 'ForumHooksHelper::onWallHistoryHeader';
+$GLOBALS['wgHooks']['WallHistoryThreadHeader'][] = 'ForumHooksHelper::onWallHistoryThreadHeader';
+$GLOBALS['wgHooks']['WallHistoryHeader'][] = 'ForumHooksHelper::onWallHistoryHeader';
 
-$wgHooks['WallHeader'][] = 'ForumHooksHelper::onWallHeader';
-$wgHooks['WallNewMessage'][] = 'ForumHooksHelper::onWallNewMessage';
-$wgHooks['ArticleInsertComplete'][] = 'ForumHooksHelper::onArticleInsertComplete';
-$wgHooks['WallBeforeRenderThread'][] = 'ForumHooksHelper::onWallBeforeRenderThread';
-$wgHooks['AfterBuildNewMessageAndPost'][] = 'ForumHooksHelper::onAfterBuildNewMessageAndPost';
-$wgHooks['WallMessageDeleted'][] = 'ForumHooksHelper::onWallMessageDeleted';
-$wgHooks['ContributionsLineEnding'][] = 'ForumHooksHelper::onContributionsLineEnding';
-$wgHooks['OasisAddPageDeletedConfirmationMessage'][] = 'ForumHooksHelper::onOasisAddPageDeletedConfirmationMessage';
-$wgHooks['FilePageImageUsageSingleLink'][] = 'ForumHooksHelper::onFilePageImageUsageSingleLink';
+$GLOBALS['wgHooks']['WallHeader'][] = 'ForumHooksHelper::onWallHeader';
+$GLOBALS['wgHooks']['WallNewMessage'][] = 'ForumHooksHelper::onWallNewMessage';
+$GLOBALS['wgHooks']['WallBeforeRenderThread'][] = 'ForumHooksHelper::onWallBeforeRenderThread';
+$GLOBALS['wgHooks']['AfterBuildNewMessageAndPost'][] = 'ForumHooksHelper::onAfterBuildNewMessageAndPost';
+$GLOBALS['wgHooks']['WallMessageDeleted'][] = 'ForumHooksHelper::onWallMessageDeleted';
+$GLOBALS['wgHooks']['ContributionsLineEnding'][] = 'ForumHooksHelper::onContributionsLineEnding';
+$GLOBALS['wgHooks']['OasisAddPageDeletedConfirmationMessage'][] = 'ForumHooksHelper::onOasisAddPageDeletedConfirmationMessage';
+$GLOBALS['wgHooks']['FilePageImageUsageSingleLink'][] = 'ForumHooksHelper::onFilePageImageUsageSingleLink';
+$GLOBALS['wgHooks']['AfterPageHeaderPageSubtitle'][] = 'ForumHooksHelper::onAfterPageHeaderPageSubtitle';
+$GLOBALS['wgHooks']['PageHeaderActionButtonShouldDisplay'][] = 'ForumHooksHelper::onPageHeaderActionButtonShouldDisplay';
 
 // notification hooks
-$wgHooks['NotificationGetNotificationMessage'][] = 'ForumNotificationPlugin::onGetNotificationMessage';
-
-// old forum archive
-$wgHooks['getUserPermissionsErrors'][] = 'ForumHooksHelper::onGetUserPermissionsErrors';
-$wgHooks['PageHeaderIndexAfterActionButtonPrepared'][] = 'ForumHooksHelper::onPageHeaderIndexAfterActionButtonPrepared';
-$wgHooks['ArticleViewHeader'][] = 'ForumHooksHelper::onArticleViewHeader';
-
-// make sure that when an article is deleted, if it has a comments_index,
-// that record is properly marked as deleted. this needs to happen within
-// the transaction in  WikiPage::doDeleteArticleReal which is why it's being hooked
-// here and not in ArticleDeleteComplete
-$wgHooks['ArticleDoDeleteArticleBeforeLogEntry'][] = 'ForumHooksHelper::onArticleDoDeleteArticleBeforeLogEntry';
-
+$GLOBALS['wgHooks']['NotificationGetNotificationMessage'][] = 'ForumNotificationPlugin::onGetNotificationMessage';
 
 // forum discussion on article
 // It need to be first one !!!
-array_splice( $wgHooks['OutputPageBeforeHTML'], 0, 0, 'ForumHooksHelper::onOutputPageBeforeHTML' );
+array_splice( $GLOBALS['wgHooks']['OutputPageBeforeHTML'], 0, 0, 'ForumHooksHelper::onOutputPageBeforeHTML' );
 
-$wgHooks['WallAction'][] = 'ForumHooksHelper::onWallAction';
-$wgHooks['WallBeforeStoreRelatedTopicsInDB'][] = 'ForumHooksHelper::onWallStoreRelatedTopicsInDB';
-$wgHooks['WallAfterStoreRelatedTopicsInDB'][] = 'ForumHooksHelper::onWallStoreRelatedTopicsInDB';
+$GLOBALS['wgHooks']['WallAction'][] = 'ForumHooksHelper::onWallAction';
+$GLOBALS['wgHooks']['WallBeforeStoreRelatedTopicsInDB'][] = 'ForumHooksHelper::onWallStoreRelatedTopicsInDB';
+$GLOBALS['wgHooks']['WallAfterStoreRelatedTopicsInDB'][] = 'ForumHooksHelper::onWallStoreRelatedTopicsInDB';
 
-$wgHooks['ArticleFromTitle'][] = 'ForumHooksHelper::onArticleFromTitle';
-$wgHooks['ArticleRobotPolicy'][] = 'ForumHooksHelper::onArticleRobotPolicy';
+$GLOBALS['wgHooks']['ArticleFromTitle'][] = 'ForumHooksHelper::onArticleFromTitle';
 
 // For activity module tag
-$wgHooks['ParserFirstCallInit'][] = 'ForumHooksHelper::onParserFirstCallInit';
+$GLOBALS['wgHooks']['ParserFirstCallInit'][] = 'ForumHooksHelper::onParserFirstCallInit';
 
 // Hook for topic red links
-$wgHooks['LinkBegin'][] = 'ForumHooksHelper::onLinkBegin';
+$GLOBALS['wgHooks']['LinkBegin'][] = 'ForumHooksHelper::onLinkBegin';
 
 // Fix URLs of thread pages when purging them.
-$wgHooks['TitleGetSquidURLs'][] = 'ForumHooksHelper::onTitleGetSquidURLs';
-$wgHooks['ArticleCommentGetSquidURLs'][] = 'ForumHooksHelper::onArticleCommentGetSquidURLs';
+$GLOBALS['wgHooks']['TitleGetSquidURLs'][] = 'ForumHooksHelper::onTitleGetSquidURLs';
+$GLOBALS['wgHooks']['ArticleCommentGetSquidURLs'][] = 'ForumHooksHelper::onArticleCommentGetSquidURLs';
+
+// SUS-1196: Invalidate "Forum Activity" rail module when deleting a thread via Nuke / Quick Tools
+$GLOBALS['wgHooks']['ArticleDeleteComplete'][] = 'ForumHooksHelper::onArticleDeleteComplete';
+
+// SUS-260: Prevent moving pages within, into or out of Forum namespaces
+$GLOBALS['wgHooks']['MWNamespace:isMovable'][] = 'ForumHooksHelper::onNamespaceIsMovable';
+
+$GLOBALS['wgHooks']['AfterPageHeaderButtons'][] = 'ForumHooksHelper::onAfterPageHeaderButtons';
 
 include ( $dir . '/Forum.namespace.setup.php' );
 
 // add this namespace to list of wall namespaces
-$app->registerNamespaceControler( NS_WIKIA_FORUM_BOARD, 'ForumController', 'board', true );
-$app->registerNamespaceControler( NS_WIKIA_FORUM_TOPIC_BOARD, 'ForumController', 'board', true );
+$app->registerNamespaceController( NS_WIKIA_FORUM_BOARD, 'ForumController', 'board', true );
+$app->registerNamespaceController( NS_WIKIA_FORUM_TOPIC_BOARD, 'ForumController', 'board',
+	true );
 
 JSMessages::registerPackage( 'Forum', [
 	'back',

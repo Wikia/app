@@ -9,6 +9,12 @@ var fs = require('fs'),
 			sitename: '$1',
 			vertical: '$2',
 			license: '$3'
+		},
+		'global-navigation-search-placeholder-in-wiki': {
+			sitename: '$1'
+		},
+		'global-footer-copyright-wikia': {
+			date: '$1'
 		}
 	};
 
@@ -37,15 +43,14 @@ var languages = fs.readdirSync(rootDir).filter(function (file) {
 languages.forEach(function (lang) {
 	var i18n = require(rootDir + '/' + lang + '/' + filename);
 
-	// Oasis uses zh for simplified Chinese, while the DS uses zh for traditional
-	// so we need to correct the lang code here so the Oasis fallbacks take effect
+	// zh in DS is zh-hans in Oasis
 	if (lang === 'zh') {
-		lang = 'zh-hant';
+		lang = 'zh-hans';
 	}
 
 	Object.keys(messageParamsMapping).forEach(function (key) {
 		if (i18n.hasOwnProperty(key)) {
-			i18n[key] = i18n[key].replace(/__([a-z0-9]+)__/gi, function (match, param) {
+			i18n[key] = i18n[key].replace(/{(\w+)}/g, function (match, param) {
 				return messageParamsMapping[key][param];
 			});
 		}

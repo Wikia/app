@@ -1,4 +1,5 @@
 <?php
+
 $wgExtensionCredits['other'][] = array(
 	'name' => 'Rich Text Editor (Wysiwyg)',
 	'description' => 'CKeditor integration for MediaWiki',
@@ -7,19 +8,19 @@ $wgExtensionCredits['other'][] = array(
 	'author' => array('Inez Korczyński', 'Maciej Brencz')
 );
 
-$dir = dirname(__FILE__);
-
 // autoloaded classes
-$wgAutoloadClasses['RTE'] = "$dir/RTE.class.php";
-$wgAutoloadClasses['RTEAjax'] = "$dir/RTEAjax.class.php";
-$wgAutoloadClasses['RTEData'] = "$dir/RTEData.class.php";
-$wgAutoloadClasses['RTELang'] = "$dir/RTELang.class.php";
-$wgAutoloadClasses['RTELinkerHooks'] = "$dir/RTELinkerHooks.class.php";
-$wgAutoloadClasses['RTEMagicWord'] = "$dir/RTEMagicWord.class.php";
-$wgAutoloadClasses['RTEMarker'] = "$dir/RTEMarker.class.php";
-$wgAutoloadClasses['RTEParser'] = "$dir/RTEParser.class.php";
-$wgAutoloadClasses['RTEReverseParser'] = "$dir/RTEReverseParser.class.php";
-$wgAutoloadClasses['RTEController'] = "$dir/RTEController.class.php";
+$wgAutoloadClasses['RTE'] = __DIR__ . '/RTE.class.php';
+$wgAutoloadClasses['RTEAjax'] = __DIR__ . '/RTEAjax.class.php';
+$wgAutoloadClasses['RTEData'] = __DIR__ . '/RTEData.class.php';
+$wgAutoloadClasses['RTELang'] = __DIR__ . '/RTELang.class.php';
+$wgAutoloadClasses['RTELinkerHooks'] = __DIR__ . '/RTELinkerHooks.class.php';
+$wgAutoloadClasses['RTEMagicWord'] = __DIR__ . '/RTEMagicWord.class.php';
+$wgAutoloadClasses['RTEMarker'] = __DIR__ . '/RTEMarker.class.php';
+$wgAutoloadClasses['RTEParser'] = __DIR__ . '/RTEParser.class.php';
+$wgAutoloadClasses['RTEReverseParser'] = __DIR__ . '/RTEReverseParser.class.php';
+$wgAutoloadClasses['RTEController'] = __DIR__ . '/RTEController.class.php';
+$wgAutoloadClasses['RTEParserCache'] = __DIR__ . '/RTEParserCache.php';
+$wgAutoloadClasses['RTEParsePoolWork'] = __DIR__ . '/RTEParsePoolWork.php';
 
 // hooks
 $wgHooks['EditPage::showEditForm:initial'][] = 'RTE::init';
@@ -43,9 +44,11 @@ $wgHooks['EditPage::getContent::end'][] = 'RTEMagicWord::checkEditPageContent';
 $wgHooks['MakeHeadline'][] = 'RTELinkerHooks::onMakeHeadline';
 $wgHooks['LinkEnd'][] = 'RTELinkerHooks::onLinkEnd';
 $wgHooks['LinkerMakeExternalLink'][] = 'RTELinkerHooks::onLinkerMakeExternalLink';
+$wgHooks['WikiaSkinTopScripts'][] = 'addGlobalJsVariables';
+
 
 // i18n
-$wgExtensionMessagesFiles['RTE'] = $dir.'/i18n/RTE.i18n.php';
+$wgExtensionMessagesFiles['RTE'] = __DIR__ . '/i18n/RTE.i18n.php';
 
 // Ajax dispatcher
 $wgAjaxExportList[] = 'RTEAjax';
@@ -55,17 +58,17 @@ function RTEAjax() {
 
 	$ret = false;
 
-	$method = $wgRequest->getVal('method', false);
+	$method = $wgRequest->getVal( 'method', false );
 
-	if ($method && method_exists('RTEAjax', $method)) {
+	if ($method && method_exists( 'RTEAjax', $method )) {
 
 		$data = RTEAjax::$method();
 
-		if (is_array($data)) {
-			$json = json_encode($data);
+		if (is_array( $data )) {
+			$json = json_encode( $data );
 
-			$response = new AjaxResponse($json);
-			$response->setContentType('application/json; charset=utf-8');
+			$response = new AjaxResponse( $json );
+			$response->setContentType( 'application/json; charset=utf-8' );
 			$ret = $response;
 		}
 		else {
@@ -75,4 +78,20 @@ function RTEAjax() {
 
 	wfProfileOut(__METHOD__);
 	return $ret;
+}
+
+/**
+ * MW1.19 - ResourceLoaderStartUpModule class adds more variables
+ * @param array $vars JS variables to be added at the bottom of the page
+ * @param OutputPage $out
+ * @return bool return true - it's a hook
+ */
+function addGlobalJsVariables( Array &$vars, &$scripts ) {
+	wfProfileIn( __METHOD__ );
+
+	$vars['wgEnablePortableInfoboxEuropaTheme'] = F::app()->wg->EnablePortableInfoboxEuropaTheme;
+
+	wfProfileOut( __METHOD__ );
+
+	return true;
 }

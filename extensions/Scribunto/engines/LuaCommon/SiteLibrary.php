@@ -17,7 +17,7 @@ class Scribunto_LuaSiteLibrary extends Scribunto_LuaLibraryBase {
 		);
 		$info = array(
 			'siteName' => $GLOBALS['wgSitename'],
-			'server' => $GLOBALS['wgServer'],
+			'server' => wfProtocolUrlToRelative( $GLOBALS['wgServer'] ),
 			'scriptPath' => $GLOBALS['wgScriptPath'],
 			'stylePath' => $GLOBALS['wgStylePath'],
 			'currentVersion' => SpecialVersion::getVersion(),
@@ -79,15 +79,12 @@ class Scribunto_LuaSiteLibrary extends Scribunto_LuaLibraryBase {
 	}
 
 	public function loadSiteStats() {
-		global $wgDisableCounters;
-
 		self::$siteStatsLoaded = true;
 		return array( array(
 			'pages' => (int)SiteStats::pages(),
 			'articles' => (int)SiteStats::articles(),
 			'files' => (int)SiteStats::images(),
 			'edits' => (int)SiteStats::edits(),
-			'views' => $wgDisableCounters ? null : (int)SiteStats::views(),
 			'users' => (int)SiteStats::users(),
 			'activeUsers' => (int)SiteStats::activeUsers(),
 		) );

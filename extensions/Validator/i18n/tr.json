@@ -1,0 +1,20 @@
+{
+	"@metadata": {
+		"authors": [
+			"Erdemaslancan",
+			"Vito Genovese",
+			"Stultiwikia"
+		]
+	},
+	"validator_error_unknown_argument": "$1, geçerli bir parametre değildir.",
+	"validator-describe-aliases": "$2 Eşdeş: $1",
+	"validator-describe-required": "gerekli",
+	"validator-describe-header-parameter": "Parametre",
+	"validator-describe-header-aliases": "Eşdeşler",
+	"validator-describe-header-type": "Tür",
+	"validator_error_empty_argument": "$1 parametresi boş bir değere sahip olamaz.",
+	"validator_error_must_be_number": "$1 parametresi sadece sayı olabilir.",
+	"validator_error_must_be_integer": "$1 parametresi sadece bir tamsayı olabilir",
+	"validator_list_error_empty_argument": "$1 parametresi boş değerleri kabul etmemektedir.",
+	"validator_list_error_must_be_number": "$1 parametresi sadece sayı içerebilir."
+}

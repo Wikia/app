@@ -45,7 +45,7 @@
 
     if (!("Timeline" in window)) {
         //scriptURLs.push("http://api.simile-widgets.org/timeline/2.3.1/timeline-api.js?bundle=true");
-        scriptURLs.push(wgServer + wgScriptPath + "/extensions/SemanticResultFormats/formats/Exhibit/timeline/api/timeline-api.js?bundle=true");
+        scriptURLs.push(wgScriptPath + "/extensions/SemanticResultFormats/formats/Exhibit/timeline/api/timeline-api.js?bundle=true");
     }
 
     if (Exhibit.TimeExtension.params.bundle) {

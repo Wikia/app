@@ -35,7 +35,10 @@ return array(
 	'jquery' => array(
 		// Wikia change - begin
 		'skinScripts' => [
-			'default' => 'resources/jquery/jquery-' . AssetsConfig::JQUERY_VERSION . '.js',
+			'default' => [
+				'resources/jquery/jquery-' . AssetsConfig::JQUERY_VERSION . '.js',
+				'resources/wikia/modules/disable-amd-jquery.js',
+			],
 		],
 		// Wikia change - end
 		'debugRaw' => false,
@@ -539,7 +542,10 @@ return array(
 	),
 	'mediawiki.Title' => array(
 		'scripts' => 'resources/mediawiki/mediawiki.Title.js',
-		'dependencies' => 'mediawiki.util',
+		'dependencies' => array(
+			'jquery.byteLength',
+			'mediawiki.util',
+		),
 	),
 	'mediawiki.Uri' => array(
 		'scripts' => 'resources/mediawiki/mediawiki.Uri.js',
@@ -578,7 +584,7 @@ return array(
 		'group' => 'mediawiki.action.history',
 	),
 	'mediawiki.action.history.diff' => array(
-		'styles' => 'resources/mediawiki.action/mediawiki.action.history.diff.css',
+		'styles' => 'resources/mediawiki.action/mediawiki.action.history.diff.scss',
 		'group' => 'mediawiki.action.history',
 	),
 	'mediawiki.action.view.dblClickEdit' => array(

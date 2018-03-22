@@ -10,9 +10,13 @@ class FounderProgressBarHooks {
 	/**
 	 * @desc Counts actions involve adding or editing articles
 	 *
-	 * @param Article $article
+	 * @param WikiPage $article
+	 * @return bool
 	 */
-	public static function onArticleSaveComplete (&$article, &$user, $text, $summary, $minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId) {
+	public static function onArticleSaveComplete(
+		WikiPage $article, User $user, $text, $summary, $minoredit, $watchthis, $sectionanchor,
+		$flags, $revision, Status $status, $baseRevId
+	): bool {
 
 		// Quick exit if we are already done with Founder Progress Bar (memcache key set for 30 days)
 		if (self::allTasksComplete()) {
@@ -36,10 +40,6 @@ class FounderProgressBarHooks {
 			// if blogpost
 			if ($app->wg->EnableBlogArticles && $title->getNamespace() == NS_BLOG_ARTICLE) {
 				$app->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FounderProgressBarController::$tasks['FT_BLOGPOST_ADD']));
-			}
-			// if topten list
-			if ($app->wg->EnableTopListsExt && $title->getNamespace() == NS_TOPLIST) {
-				$app->sendRequest('FounderProgressBar', 'doTask', array('task_id' => FounderProgressBarController::$tasks['FT_TOPTENLIST_ADD']));
 			}
 
 			// edit profile page X
@@ -109,9 +109,10 @@ class FounderProgressBarHooks {
 	 * @desc Counts the following actions
 	 *
 	 * Adding a photo
-	 *
+	 * @param UploadBase $image
+	 * @return bool
 	 */
-	public static function onUploadComplete (&$image) {
+	public static function onUploadComplete ( UploadBase $image ): bool {
 		// Quick exit if tasks are all completed
 		if (self::allTasksComplete()) {
 			return true;
@@ -197,24 +198,35 @@ class FounderProgressBarHooks {
 
 	// Initialize a scratch record for each of the initial available tasks
 	public static function initRecords($wiki_id) {
+		global $wgExternalSharedDB, $wgMemc;
 		wfProfileIn(__METHOD__);
 
-		// Records go into global wikicites table
-		$app = F::app();
-		$dbw = wfGetDB(DB_MASTER, array(), $app->wg->ExternalSharedDB);
+		$rows = [];
 
-		foreach(FounderProgressBarController::$tasks as $task_id) {
-			if($task_id < FounderProgressBarController::REGULAR_TASK_MAX_ID) {
-				$sql = "INSERT IGNORE INTO founder_progress_bar_tasks SET wiki_id=$wiki_id, task_id=$task_id";
-				$dbw->query ($sql, __METHOD__);
+		foreach ( FounderProgressBarController::$tasks as $task_id ) {
+			if ( $task_id < FounderProgressBarController::REGULAR_TASK_MAX_ID ) {
+				$rows[] = [
+					'wiki_id' => $wiki_id,
+					'task_id' => $task_id
+				];
 			}
 		}
-		$dbw->commit();
+
+		try {
+			if ( !empty( $rows ) ) {
+				// Records go into global wikicities table
+				$dbw = wfGetDB( DB_MASTER, [], $wgExternalSharedDB );
+				$dbw->insert( 'founder_progress_bar_tasks', $rows, __METHOD__ );
+				$dbw->commit();
+			}
+		}
+		catch ( DBError $ex ) {
+			// SUS-4322 | DBError exceptions are logged by default
+		}
 
 		// also clear out any lingering memcache keys
-		$memc = $app->wg->Memc;
-		$memc->delete(wfMemcKey('FounderLongTaskList'));
-		$memc->delete(wfMemcKey('FounderTasksComplete'));
+		$wgMemc->delete(wfMemcKey('FounderLongTaskList'));
+		$wgMemc->delete(wfMemcKey('FounderTasksComplete'));
 
 		wfProfileOut(__METHOD__);
 	}

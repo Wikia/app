@@ -4,7 +4,7 @@
 // DISCUSSIONS
 $recirculation-discussion-height: 348px;
 $recirculation-discussion-small-font-size: 12px;
-$recirculation-discussion-small-font-color: #999999;
+$recirculation-discussion-small-font-color: #999;
 
 body.ve .discussion-module {
 	display: none;
@@ -16,9 +16,9 @@ body.ve .discussion-module {
 	position: relative;
 
 	.subtext {
+		color: $recirculation-discussion-small-font-color;
 		font-size: $recirculation-discussion-small-font-size;
 		font-weight: bold;
-		color: $recirculation-discussion-small-font-color;
 	}
 
 	.discussion-title {
@@ -26,10 +26,10 @@ body.ve .discussion-module {
 	}
 
 	.discussion-link {
+		display: block;
 		position: absolute;
 		right: 0;
 		top: 20px;
-		display: block;
 
 		svg {
 			vertical-align: baseline;
@@ -76,6 +76,7 @@ $recirculation-discussion-thread-padding: 10px;
 
 	.discussion-thread {
 		border: 1px solid $recirculation-discussion-thread-border-color-light;
+		cursor: pointer;
 		font-size: $recirculation-discussion-thread-font-size;
 		height: $recirculation-discussion-thread-featured-height;
 		line-height: $recirculation-discussion-thread-line-height;
@@ -83,7 +84,6 @@ $recirculation-discussion-thread-padding: 10px;
 		padding: $recirculation-discussion-thread-padding $recirculation-discussion-thread-side-padding;
 		position: relative;
 		width: 49%;
-		cursor: pointer;
 
 		.discussion-content {
 			max-height: 55px;
@@ -105,7 +105,7 @@ $recirculation-discussion-thread-padding: 10px;
 		}
 
 		.discussion-content {
-			margin-top: 0.3em;
+			margin-top: .3em;
 		}
 	}
 }
@@ -125,7 +125,7 @@ $recirculation-discussion-avatar-size: 30px;
 
 	h4 {
 		color: $color-links;
-		margin: 0 6px 0;
+		margin: 0 6px;
 		max-width: 56%;
 		overflow: hidden;
 		text-overflow: ellipsis;
@@ -137,6 +137,7 @@ $recirculation-discussion-avatar-size: 30px;
 		border-radius: $recirculation-discussion-avatar-size / 2;
 		box-sizing: border-box;
 		height: $recirculation-discussion-avatar-size;
+		overflow: hidden;
 		width: $recirculation-discussion-avatar-size;
 	}
 }
@@ -169,8 +170,8 @@ $recirculation-discussion-icon-background-dark: #262626;
 
 	.discussion-icon {
 		fill: $recirculation-discussion-small-font-color;
-		width: $recirculation-discussion-icon-size;
 		height: $recirculation-discussion-icon-size;
+		width: $recirculation-discussion-icon-size;
 	}
 
 	.upvote-icon-background {

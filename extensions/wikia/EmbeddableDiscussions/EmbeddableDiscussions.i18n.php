@@ -17,6 +17,11 @@ $messages['en'] = array(
 	'embeddable-discussions-loading' => 'Loading Discussions...',
 	'embeddable-discussions-error-loading' => 'Error loading discussions',
 	'embeddable-discussions-cancel-button' => 'Cancel',
+	'embeddable-discussions-parameter-error' => "Error rendering discussions tag: '$1' is incorrect. $2",
+	'embeddable-discussions-parameter-error-range' => 'It must be an integer in the range $1 to $2.',
+	'embeddable-discussions-parameter-error-boolean' => 'It must be either true or false.',
+	'embeddable-discussions-parameter-error-category' => 'It must be a valid category id.',
+	'embeddable-discussions-timestamp-now' => 'Now',
 );
 
 $messages['qqq'] = array(
@@ -35,10 +40,15 @@ $messages['qqq'] = array(
 	'embeddable-discussions-loading' => 'Text to show when loading discussions cards (used on mobile only)',
 	'embeddable-discussions-error-loading' => 'Error message to show if loading of discussions items failed',
 	'embeddable-discussions-cancel-button' => 'Text for Share modal cancel button',
+	'embeddable-discussions-parameter-error' => 'Error message to show when an incorrect parameter is given. $1 is the parameter name. $2 is the error message',
+	'embeddable-discussions-parameter-error-range' => 'Supplemental error message for numerical parameters.',
+	'embeddable-discussions-parameter-error-boolean' => 'Supplemental error message for boolean parameters. "true" and "false" should be verbatim, not translated.',
+	'embeddable-discussions-parameter-error-category' => 'Supplemental error message for showing when an incorrect category paremeter was given.',
+	'embeddable-discussions-timestamp-now' => 'Text to show for a timestamp less than one minute old (now)',
 );
 
 $messages['de'] = array(
-	'embeddable-discussions-upvote' => 'Abstimmen',
+	'embeddable-discussions-upvote' => 'Zustimmen',
 	'embeddable-discussions-reply' => 'Antworten',
 	'embeddable-discussions-share' => 'Teilen',
 	'embeddable-discussions-show-trending' => 'Beliebte Diskussionen',
@@ -53,6 +63,11 @@ $messages['de'] = array(
 	'embeddable-discussions-share-heading' => 'Beitrag Teilen',
 	'embeddable-discussions-error-loading' => 'Fehler beim Laden von Diskussionen',
 	'embeddable-discussions-cancel-button' => 'Abbrechen',
+	'embeddable-discussions-parameter-error' => "Fehler beim Rendern des Diskussionen-Tags: '$1' ist falsch. $2",
+	'embeddable-discussions-parameter-error-range' => 'Es muss eine ganze Zahl zwischen $1 und $2 eingegeben werden.',
+	'embeddable-discussions-parameter-error-boolean' => 'Die Angabe muss entweder true oder false sein.',
+	'embeddable-discussions-parameter-error-category' => 'Es wird ein gültiger Kategorie-Name benötigt.',
+	'embeddable-discussions-timestamp-now' => 'Gerade eben',
 );
 
 $messages['es'] = array(
@@ -63,7 +78,7 @@ $messages['es'] = array(
 	'embeddable-discussions-show-latest' => 'Últimas Discusiones',
 	'embeddable-discussions-show-all' => 'Ver todas →',
 	'embeddable-discussions-zero' => 'No hay entradas todavía.',
-	'embeddable-discussions-zero-detail' => '¡Empieza la discusión, crea la primera entrada ahora!',
+	'embeddable-discussions-zero-detail' => '¡Empieza la discusión, crea la primera ahora!',
 	'embeddable-discussions-forum-name' => 'En $1',
 	'embeddable-discussions-loading' => 'Cargando discusiones...',
 	'embeddable-discussions-show-trending-in-category' => 'Discusiones en tendencia en $1',
@@ -71,6 +86,11 @@ $messages['es'] = array(
 	'embeddable-discussions-share-heading' => 'Compartir',
 	'embeddable-discussions-error-loading' => 'Error al cargar discusiones',
 	'embeddable-discussions-cancel-button' => 'Cancelar',
+	'embeddable-discussions-parameter-error' => "Error al entregar etiqueta de discusiones: '$1' es incorrecto. ",
+	'embeddable-discussions-parameter-error-range' => 'Debe ser un entero en el rango de $1 a $2.',
+	'embeddable-discussions-parameter-error-boolean' => 'Debe ser o verdadero o falso.',
+	'embeddable-discussions-parameter-error-category' => 'Debe ser un nombre de categoría válido.',
+	'embeddable-discussions-timestamp-now' => 'Ahora',
 );
 
 $messages['fr'] = array(
@@ -82,13 +102,18 @@ $messages['fr'] = array(
 	'embeddable-discussions-show-all' => 'Tout voir →',
 	'embeddable-discussions-zero' => 'Pas encore de publications.',
 	'embeddable-discussions-zero-detail' => 'Lancez la discussion en créant une publication maintenant !',
-	'embeddable-discussions-forum-name' => 'Dans 1 $',
+	'embeddable-discussions-forum-name' => 'Dans $1',
 	'embeddable-discussions-loading' => 'Chargement de Discussions...',
 	'embeddable-discussions-show-trending-in-category' => 'Discussions tendance dans $1',
 	'embeddable-discussions-show-latest-in-category' => 'Discussions récentes dans $1',
 	'embeddable-discussions-share-heading' => 'Partagez la publication',
 	'embeddable-discussions-error-loading' => 'Une erreur est survenue lors du chargement des discussions',
 	'embeddable-discussions-cancel-button' => 'Annuler',
+	'embeddable-discussions-parameter-error' => "Erreur de marquage de discussion : '$1' est incorrect. ",
+	'embeddable-discussions-parameter-error-range' => 'Vous devez utiliser un nombre entier compris entre $1 et $2.',
+	'embeddable-discussions-parameter-error-boolean' => 'La valeur doit être "true" ou "false".',
+	'embeddable-discussions-parameter-error-category' => 'Vous devez utiliser un nom de catégorie valide.',
+	'embeddable-discussions-timestamp-now' => 'Maintenant',
 );
 
 $messages['it'] = array(
@@ -99,7 +124,7 @@ $messages['it'] = array(
 	'embeddable-discussions-show-latest' => 'Ultime discussioni',
 	'embeddable-discussions-show-all' => 'Vedi tutte →',
 	'embeddable-discussions-zero' => 'Ancora nessun post.',
-	'embeddable-discussions-zero-detail' => 'Iniziare la discussione, crea adesso il primo post!',
+	'embeddable-discussions-zero-detail' => 'Inizia la discussione, crea adesso il primo post!',
 	'embeddable-discussions-forum-name' => 'In $1',
 	'embeddable-discussions-loading' => 'Caricamento delle discussioni...',
 	'embeddable-discussions-show-trending-in-category' => 'Discussioni popolari in $1',
@@ -107,24 +132,34 @@ $messages['it'] = array(
 	'embeddable-discussions-share-heading' => 'Condividi post',
 	'embeddable-discussions-error-loading' => 'Errore nel caricamento delle discussioni',
 	'embeddable-discussions-cancel-button' => 'Annulla',
+	'embeddable-discussions-parameter-error' => 'Errore di rendering del tag di Discussioni: "$1" è errato. $2',
+	'embeddable-discussions-parameter-error-range' => "Deve essere un valore intero compreso nell'intervallo tra $1 e $2.",
+	'embeddable-discussions-parameter-error-boolean' => 'Deve essere true o false.',
+	'embeddable-discussions-parameter-error-category' => 'Deve essere un ID di categoria valido.',
+	'embeddable-discussions-timestamp-now' => 'Adesso',
 );
 
 $messages['ja'] = array(
-	'embeddable-discussions-upvote' => '賛成',
+	'embeddable-discussions-upvote' => 'イイね！',
 	'embeddable-discussions-reply' => '返信',
-	'embeddable-discussions-share' => '共有',
-	'embeddable-discussions-show-trending' => '人気のトーク',
-	'embeddable-discussions-show-latest' => '最新のトーク',
+	'embeddable-discussions-share' => 'シェア',
+	'embeddable-discussions-show-trending' => 'ディスカッション',
+	'embeddable-discussions-show-latest' => '最新のディスカッション',
 	'embeddable-discussions-show-all' => 'すべて表示 →',
 	'embeddable-discussions-zero' => 'まだ投稿はありません。',
-	'embeddable-discussions-zero-detail' => '最初の投稿を作成してトークに参加してみよう！',
+	'embeddable-discussions-zero-detail' => '最初の投稿を作成して、ディスカッションに参加してみよう！',
 	'embeddable-discussions-forum-name' => '$1内',
-	'embeddable-discussions-loading' => 'トークをロードしています...',
-	'embeddable-discussions-show-trending-in-category' => '$1に関する人気のトーク',
-	'embeddable-discussions-show-latest-in-category' => '$1に関する最近のトーク',
-	'embeddable-discussions-share-heading' => '投稿を共有する',
-	'embeddable-discussions-error-loading' => 'トークの読み込みでエラーが発生しました',
+	'embeddable-discussions-loading' => 'ディスカッションを読み込んでいます...',
+	'embeddable-discussions-show-trending-in-category' => '$1に関する人気のディスカッション',
+	'embeddable-discussions-show-latest-in-category' => '$1に関する最近のディスカッション',
+	'embeddable-discussions-share-heading' => '投稿をシェアする',
+	'embeddable-discussions-error-loading' => 'ディスカッションの読み込み中にエラーが発生しました',
 	'embeddable-discussions-cancel-button' => 'キャンセル',
+	'embeddable-discussions-parameter-error' => 'ディスカッション・タグのレンダリングエラー：「$1」に間違いがあります。',
+	'embeddable-discussions-parameter-error-range' => '$1～$2の整数を指定してください。',
+	'embeddable-discussions-parameter-error-boolean' => '「true」または「false」で指定してください。',
+	'embeddable-discussions-parameter-error-category' => '有効なカテゴリ名を指定してください。',
+	'embeddable-discussions-timestamp-now' => 'たった今',
 );
 
 $messages['pl'] = array(
@@ -143,6 +178,11 @@ $messages['pl'] = array(
 	'embeddable-discussions-share-heading' => 'Udostępnij post',
 	'embeddable-discussions-error-loading' => 'Wystąpił błąd w trakcie ładowania dyskusji',
 	'embeddable-discussions-cancel-button' => 'Anuluj',
+	'embeddable-discussions-parameter-error' => 'W trakcie ładowania dyskusji wystąpił błąd. Parametr „$1” jest błędny. ',
+	'embeddable-discussions-parameter-error-range' => 'Wartość powinna być liczbą całkowitą pomiędzy $1 a $2.',
+	'embeddable-discussions-parameter-error-boolean' => 'Wprowadź wartość „true” lub „false”.',
+	'embeddable-discussions-parameter-error-category' => 'Wprowadź poprawną nazwę kategorii.',
+	'embeddable-discussions-timestamp-now' => 'Teraz',
 );
 
 $messages['pt'] = array(
@@ -151,16 +191,21 @@ $messages['pt'] = array(
 	'embeddable-discussions-share' => 'Compartilhar',
 	'embeddable-discussions-show-trending' => 'Discussões em alta',
 	'embeddable-discussions-show-latest' => 'Últimas discussões',
-	'embeddable-discussions-show-all' => 'Ver todas',
+	'embeddable-discussions-show-all' => 'Ver todas →',
 	'embeddable-discussions-zero' => 'Ainda não há posts.',
 	'embeddable-discussions-zero-detail' => 'Inicie a discussão criando o primeiro post agora!',
 	'embeddable-discussions-forum-name' => 'Em $1',
-	'embeddable-discussions-loading' => 'Carregando discussões...',
+	'embeddable-discussions-loading' => 'Carregando Discussões...',
 	'embeddable-discussions-show-trending-in-category' => 'Discussões em alta em $1',
 	'embeddable-discussions-show-latest-in-category' => 'Discussões recentes em $1',
 	'embeddable-discussions-share-heading' => 'Compartilhar post',
 	'embeddable-discussions-error-loading' => 'Erro no carregamento das discussões',
 	'embeddable-discussions-cancel-button' => 'Cancelar',
+	'embeddable-discussions-parameter-error' => "Erro ao processar a tag de discussões: '$1' está incorreto. $2",
+	'embeddable-discussions-parameter-error-range' => 'Deve ser um número inteiro na faixa de $1 a $2.',
+	'embeddable-discussions-parameter-error-boolean' => 'Deve ser verdadeiro ou falso.',
+	'embeddable-discussions-parameter-error-category' => 'Deve ser um nome de categoria válido.',
+	'embeddable-discussions-timestamp-now' => 'Agora',
 );
 
 $messages['ru'] = array(
@@ -179,6 +224,11 @@ $messages['ru'] = array(
 	'embeddable-discussions-share-heading' => 'Поделиться записью',
 	'embeddable-discussions-error-loading' => 'Ошибка при загрузке обсуждений',
 	'embeddable-discussions-cancel-button' => 'Отмена',
+	'embeddable-discussions-parameter-error' => 'Ошибка обработки тега обсуждений: параметр «$1» неверен. $2',
+	'embeddable-discussions-parameter-error-range' => 'Здесь должно быть целое число от $1 до $2.',
+	'embeddable-discussions-parameter-error-boolean' => 'Здесь должно быть значение true или false.',
+	'embeddable-discussions-parameter-error-category' => 'Здесь должен быть допустимый идентификатор категории.',
+	'embeddable-discussions-timestamp-now' => 'только что',
 );
 
 $messages['zh-hans'] = array(
@@ -197,6 +247,11 @@ $messages['zh-hans'] = array(
 	'embeddable-discussions-share-heading' => '分享帖子',
 	'embeddable-discussions-error-loading' => '讨论加载错误',
 	'embeddable-discussions-cancel-button' => '取消',
+	'embeddable-discussions-parameter-error' => "讨论标记有误：'$1'不正确。$2",
+	'embeddable-discussions-parameter-error-range' => '它必须是范围在$1和$2之间的一个整数。',
+	'embeddable-discussions-parameter-error-boolean' => '它必须是true或false。',
+	'embeddable-discussions-parameter-error-category' => '它必须是一个有效的分类名称。',
+	'embeddable-discussions-timestamp-now' => '现在',
 );
 
 $messages['zh-hant'] = array(
@@ -215,5 +270,10 @@ $messages['zh-hant'] = array(
 	'embeddable-discussions-share-heading' => '分享話題',
 	'embeddable-discussions-error-loading' => '載入討論時出錯',
 	'embeddable-discussions-cancel-button' => '取消',
+	'embeddable-discussions-parameter-error' => "討論標籤有誤：'$1'不正確。 $2",
+	'embeddable-discussions-parameter-error-range' => '它必須是範圍在$1和$2之間的一個整數。',
+	'embeddable-discussions-parameter-error-boolean' => '它必須是true或false。',
+	'embeddable-discussions-parameter-error-category' => '它必須是一個有效的分類名稱。',
+	'embeddable-discussions-timestamp-now' => '現在',
 );
 

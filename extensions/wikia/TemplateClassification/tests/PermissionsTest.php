@@ -14,20 +14,18 @@ class PermissionsTest extends WikiaBaseTest {
 	 * @param string $message
 	 */
 	public function testShouldDisplayEntryPoint( $testData, $expected, $message ) {
-		$userMock = $this->getMock( 'User', [ 'isLoggedIn' ] );
-		$userMock->expects( $this->once() )
+		$userMock = $this->createMock( User::class );
+		$userMock->expects( $this->any() )
 			->method( 'isLoggedIn' )
 			->willReturn( $testData['isLoggedIn'] );
 
-		$titleMock = $this->getMock( 'Title', [ 'userCan' ] );
+		$titleMock = $this->getMockBuilder( Title::class )
+			->setMethods( [ 'userCan' ] )
+			->getMock();
+
 		$titleMock->mNamespace = $testData['titleNamespace'];
 
-		if ( $testData['isLoggedIn'] ) {
-			$invokeUserCan = $this->atLeastOnce();
-		} else {
-			$invokeUserCan = $this->never();
-		}
-		$titleMock->expects( $invokeUserCan )
+		$titleMock->expects( $this->any() )
 			->method( 'userCan' )
 			->willReturn( $testData['canEdit'] );
 

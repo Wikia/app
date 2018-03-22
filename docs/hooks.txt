@@ -211,9 +211,9 @@ related to a particular event, like so:
 		# ...
 		function protect() {
 			global $wgUser;
-			if (wfRunHooks('ArticleProtect', array(&$this, &$wgUser))) {
+			if ( Hooks::run( 'ArticleProtect', [ $this,  $wgUser ] ) ) {
 				# protect the article
-				wfRunHooks('ArticleProtectComplete', array(&$this, &$wgUser));
+				Hooks::run( 'ArticleProtectComplete', [ $this,  $wgUser ] );
 			}
 		}
 	}
@@ -2231,6 +2231,9 @@ $text: The revision text.
 	used to post-process the results.
 &$data: Array of metadata sections (such as $data['xmp-general']) each section is an array of
 	metadata tags returned (each tag is either a value, or an array of values).
+
+'CloseAccount': Called when a FANDOM user account is closed (e.g. via Special:EditAccount).
+$user: Instance of User who is being closed.
 
 More hooks might be available but undocumented, you can execute
 ./maintenance/findhooks.php to find hidden one.

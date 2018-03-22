@@ -90,7 +90,7 @@
 	}
 	.tabs-container {
 		&:before {
-			background: url(/skins/shared/images/sprite.png) 0 -48px no-repeat; /* $wgCdnStylePath */
+			background: url(/skins/shared/images/sprite.png) 0 -48px no-repeat; /* $wgResourceBasePath */
 			bottom: 0;
 			content: " ";
 			height: 8px;

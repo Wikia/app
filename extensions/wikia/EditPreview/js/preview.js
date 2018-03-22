@@ -35,7 +35,8 @@ define('wikia.preview', [
 		previewTypes, //List of available preview options
 		currentTypeName, //Currently used preview type
 		editPageOptions, //options passed from EditPageLayout
-		previewLoaded; //a flag indicating that preview has been loaded
+		previewLoaded, //a flag indicating that preview has been loaded
+		previousType; // the previous preview type loaded if any
 
 	// show dialog for preview / show changes and scale it to fit viewport's height
 	function renderDialog(title, options, callback) {
@@ -116,6 +117,9 @@ define('wikia.preview', [
 					// get width of article Wrapper
 					// subtract scrollbar width to get correct width needed as reference point for scaling
 					articleWrapperWidth = $article.parent().width() - editPageOptions.scrollbarWidth;
+					// scale preview when opening modal
+					// scale preview when changing dropdown option is handled inside switchPreview function
+					scalePreview(previewTypes[currentTypeName].name);
 				}
 
 				if (currentTypeName) {
@@ -135,12 +139,18 @@ define('wikia.preview', [
 					addEditSummary($article, editPageOptions.width, data.summary);
 				}
 
-				// fire an event once preview is rendered
-				$(window).trigger('EditPageAfterRenderPreview', [$article]);
-
 				// fire event when new article comment is/will be added to DOM
 				mw.hook('wikipage.content').fire($article);
+			} else if (previousType === previewTypes.mobile.name) {
+				// always fire event when switching out of mobile preview
+				mw.hook('wikipage.content').fire($article);
 			}
+
+			// fire an event once preview is rendered
+			$(window).trigger('EditPageAfterRenderPreview', [$article]);
+
+			previousType = type;
+
 			//If current view is different skin, pass it to getPreviewContent
 		}, previewTypes[currentTypeName].skin);
 	}
@@ -249,9 +259,6 @@ define('wikia.preview', [
 			loadPreview(previewTypes[currentTypeName].name, true);
 
 			if (window.wgOasisResponsive || window.wgOasisBreakpoints) {
-				//scale preview when opening modal
-				//scale preview when changing dropdown option is handled inside switchPreview function
-				scalePreview(previewTypes[currentTypeName].name);
 				// adding type dropdown to preview
 				if (!previewTemplate) {
 					loader({

@@ -383,7 +383,7 @@ function albumResult($artist, $album, $year){
 					print "<hr/>Additional Info:\n";
 					print "<ul>\n";
 					foreach($result as $keyName=>$val){
-						if(0 < preg_match("/^http:\/\//", $val)){
+						if(0 < preg_match("/^https?:\/\//", $val)){
 							$val = "<a href='".str_replace(" ", "_", $val)."' title='$keyName'>$val</a>\n";
 							print "<li><strong>$keyName: </strong>$val</li>\n";
 						} else {
@@ -666,7 +666,7 @@ function albumResult($artist, $album, $year){
 								print Xml::closeElement( 'ul' );
 							print Xml::closeElement( 'strong' );
 							print Xml::closeElement( 'li' );
-						} else if(0 < preg_match("/^http:\/\//", $val)){
+						} else if(0 < preg_match("/^https?:\/\//", $val)){
 							print Xml::openElement( 'a',
 								array(
 									'href' => $val,

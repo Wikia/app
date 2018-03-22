@@ -4,8 +4,8 @@ $messages = array();
 $messages['en'] = array(
 	'emailext-blogpost-user-subject' => '$1 has written a new post: $2',
 	'emailext-blogpost-list-subject' => '$1 has written a new post on $2: $3',
-	'emailext-blogpost-user-summary' => "There is a new post on [$1 $2's blog] on [{{SERVER}} {{SITENAME}}]. Take a look!",
-	'emailext-blogpost-list-summary' => 'There is a new post on [$1 $2] on [{{SERVER}} {{SITENAME}}]. Take a look!',
+	'emailext-blogpost-user-summary' => "There is a new post on [$1 $2's blog] on [{{SERVERCANONICAL}} {{SITENAME}}]. Take a look!",
+	'emailext-blogpost-list-summary' => 'There is a new post on [$1 $2] on [{{SERVERCANONICAL}} {{SITENAME}}]. Take a look!',
 	'emailext-blogpost-link-label' => 'Read Full Post',
 	'emailext-blogpost-view-all' => "[$1 All recent blog posts on $2's blog]",
 	'emailext-blogpost-unfollow-text' => "No longer interested in receiving these updates? Click [$1 here] to unfollow $2's blog on {{SITENAME}}.",
@@ -54,8 +54,8 @@ $messages['fr'] = array(
 $messages['it'] = array(
 	'emailext-blogpost-user-subject' => '$1 ha scritto un nuovo post: $2',
 	'emailext-blogpost-list-subject' => '$1 ha scritto un nuovo post in $2: $3',
-	'emailext-blogpost-user-summary' => "C'è un nuovo post in [$1 blog di $2] su [{{SERVER}} {{SITENAME}}]. Dai un'occhiata!",
-	'emailext-blogpost-list-summary' => "C'è un nuovo post in [$1 $2] su [{{SERVER}} {{SITENAME}}]. Dai un'occhiata!",
+	'emailext-blogpost-user-summary' => "C'è un nuovo post in [$1 blog di $2] su [{{SERVERCANONICAL}} {{SITENAME}}]. Dai un'occhiata!",
+	'emailext-blogpost-list-summary' => "C'è un nuovo post in [$1 $2] su [{{SERVERCANONICAL}} {{SITENAME}}]. Dai un'occhiata!",
 	'emailext-blogpost-link-label' => 'Leggi il post completo',
 	'emailext-blogpost-view-all' => '[$1 Tutti i post recenti nel blog di $2]',
 	'emailext-blogpost-unfollow-text' => "Non t'interessa più ricevere questi aggiornamenti? Clicca [$1 qui] per smettere di seguire il blog di $2 su {{SITENAME}}.",
@@ -64,21 +64,31 @@ $messages['it'] = array(
 $messages['ja'] = array(
 	'emailext-blogpost-user-subject' => '$1さんの新しい投稿があります：$2',
 	'emailext-blogpost-list-subject' => '$2に$1さんの新しい投稿があります：$3',
-	'emailext-blogpost-user-summary' => '[{{SERVER}} {{SITENAME}}]の[$1 $2さんのブログ]に新しい投稿があります。チェックしてみましょう！',
-	'emailext-blogpost-list-summary' => '[{{SERVER}} {{SITENAME}}]の[$1 $2]に新しい投稿があります。チェックしてみましょう！',
+	'emailext-blogpost-user-summary' => '[{{SERVERCANONICAL}} {{SITENAME}}]の[$1 $2さんのブログ]に新しい投稿があります。チェックしてみましょう！',
+	'emailext-blogpost-list-summary' => '[{{SERVERCANONICAL}} {{SITENAME}}]の[$1 $2]に新しい投稿があります。チェックしてみましょう！',
 	'emailext-blogpost-link-label' => '投稿の全文を読む',
 	'emailext-blogpost-view-all' => '[$1 $2のブログの最近のブログ投稿のすべてを見る]',
 	'emailext-blogpost-unfollow-text' => 'このような更新情報の受信をご希望でない場合は、[$1 こちら]をクリックして{{SITENAME}}の$2さんのブログのフォローを解除してください。',
 );
 
+$messages['ko'] = array(
+	'emailext-blogpost-link-label' => '전체 글 읽기',
+	'emailext-blogpost-list-subject' => '$1 님이 $2에 ‘$3’ 글을 작성했습니다',
+	'emailext-blogpost-list-summary' => '[{{SERVERCANONICAL}} {{SITENAME}}]의 [$1 $2]에 새 글이 있습니다. 지금 확인해 보세요!',
+	'emailext-blogpost-unfollow-text' => '더 이상 이에 관한 이메일 알림을 받고 싶지 않으신가요? [$1 이곳]에서 {{SITENAME}}의 $2 님의 블로그를 주시 해제하실 수 있습니다.',
+	'emailext-blogpost-user-subject' => '$1 님이 ‘$2’ 글을 작성했습니다',
+	'emailext-blogpost-user-summary' => '[{{SERVERCANONICAL}} {{SITENAME}}]의 [$1 $2 님의 블로그]에 새 글이 있습니다. 지금 확인해 보세요!',
+	'emailext-blogpost-view-all' => '[$1 $2의 모든 최근 블로그 글 보기]',
+);
+
 $messages['nl'] = array(
-	'emailext-blogpost-user-subject' => '$1 has written a new post: $2',
-	'emailext-blogpost-list-subject' => '$1 has written a new post on $2: $3',
-	'emailext-blogpost-user-summary' => "There is a new post on [$1 $2's blog] on [{{SERVER}} {{SITENAME}}]. Take a look!",
-	'emailext-blogpost-list-summary' => 'There is a new post on [$1 $2] on [{{SERVER}} {{SITENAME}}]. Take a look!',
-	'emailext-blogpost-link-label' => 'Read Full Post',
-	'emailext-blogpost-view-all' => "[$1 All recent blog posts on $2's blog]",
-	'emailext-blogpost-unfollow-text' => "No longer interested in receiving these updates? Click [$1 here] to unfollow $2's blog on {{SITENAME}}.",
+	'emailext-blogpost-user-subject' => '$1 heeft een nieuw blogbericht geschreven: $2',
+	'emailext-blogpost-list-subject' => '$1 heeft een nieuw blogbericht geschreven op $2: $3',
+	'emailext-blogpost-user-summary' => 'Er is een nieuw bericht op [$1 de blog van $2] op [{{SERVER}} {{SITENAME}}]. Neem een kijkje!',
+	'emailext-blogpost-list-summary' => 'Er is een nieuw bericht op [$1 $2] op [{{SERVER}} {{SITENAME}}]. Neem een kijkje!',
+	'emailext-blogpost-link-label' => 'Volledig blogbericht lezen',
+	'emailext-blogpost-view-all' => '[$1 Alle recente blogberichten op de blog van $2]',
+	'emailext-blogpost-unfollow-text' => 'Niet meer geïnteresseerd deze updates te ontvangen? Klik [$1 hier] om de blog van $2 op {{SITENAME}} te ontvolgen.',
 );
 
 $messages['pl'] = array(
@@ -94,8 +104,8 @@ $messages['pl'] = array(
 $messages['pt'] = array(
 	'emailext-blogpost-user-subject' => '$1 escreveu um novo post: $2',
 	'emailext-blogpost-list-subject' => '$1 escreveu um novo post em $2: $3',
-	'emailext-blogpost-user-summary' => 'Há um novo post em [$1 blog de $2] na [{{SERVER}} {{SITENAME}}]. Dê uma olhada!',
-	'emailext-blogpost-list-summary' => 'Há um novo post em [$1 $2] na [{{SERVER}} {{SITENAME}}]. Dê uma olhada!',
+	'emailext-blogpost-user-summary' => 'Há um novo post em [$1 blog de $2] na [{{SERVERCANONICAL}} {{SITENAME}}]. Dê uma olhada!',
+	'emailext-blogpost-list-summary' => 'Há um novo post em [$1 $2] na [{{SERVERCANONICAL}} {{SITENAME}}]. Dê uma olhada!',
 	'emailext-blogpost-link-label' => 'Leia o post completo',
 	'emailext-blogpost-view-all' => '[$1 Todos os posts recentes no blog de $2]',
 	'emailext-blogpost-unfollow-text' => 'Você não deseja mais receber essas atualizações? Clique [$1 aqui] para deixar de seguir o blog de $2 na {{SITENAME}}.',
@@ -104,8 +114,8 @@ $messages['pt'] = array(
 $messages['ru'] = array(
 	'emailext-blogpost-user-subject' => '$1 создал(а) новую запись: $2',
 	'emailext-blogpost-list-subject' => '$1 создал(а) новую запись в $2: $3',
-	'emailext-blogpost-user-summary' => 'В блоге [$1 участника $2] на [{{SERVER}} {{SITENAME}}] появилась новая запись. Посмотрите.',
-	'emailext-blogpost-list-summary' => 'В блоге [$1 $2] на [{{SERVER}} {{SITENAME}}] появилась новая запись. Посмотрите.',
+	'emailext-blogpost-user-summary' => 'В [$1 блоге участника $2] на [{{SERVER}} {{SITENAME}}] появилась новая запись. Посмотрите.',
+	'emailext-blogpost-list-summary' => 'В блоге [$1 $2] на [{{SERVER}} {{SITENAME}}] появилась новая запись. Посмотрите!',
 	'emailext-blogpost-link-label' => 'Прочитать запись полностью',
 	'emailext-blogpost-view-all' => '[$1 Все недавние записи в блоге $2]',
 	'emailext-blogpost-unfollow-text' => 'Не хотите больше получать эти сообщения? Нажмите [$1 здесь], чтобы перестать следить за блогом участника $2 на {{SITENAME}}.',
@@ -129,15 +139,5 @@ $messages['zh-hant'] = array(
 	'emailext-blogpost-link-label' => '閱讀全文',
 	'emailext-blogpost-view-all' => '[$1 最近在$2的所有網誌文章]',
 	'emailext-blogpost-unfollow-text' => '不想再收到這類更新内容？點擊[$1 這裡]取消對{{SITENAME}}上$2頁面的關注。',
-);
-
-$messages['zh-tw'] = array(
-	'emailext-blogpost-user-subject' => '$1 撰寫了「$2」的新文章',
-	'emailext-blogpost-list-subject' => '$1在$2頁面撰寫了「$3」的新文章',
-	'emailext-blogpost-user-summary' => '在[{{SERVER}} {{SITENAME}}]網站的[$1 $2的部落格]頁面有一篇新文章。快來看看吧！',
-	'emailext-blogpost-list-summary' => '在[{{SERVER}} {{SITENAME}}]網站的 [$1 $2]頁面有一篇新文章。快來看看吧！',
-	'emailext-blogpost-link-label' => '閱讀全文',
-	'emailext-blogpost-view-all' => '[$1 最近$2的博客中的所有帖子]',
-	'emailext-blogpost-unfollow-text' => '不想再收到這類更新内容？点击[$1 這裡]取消對{{SITENAME}}上$2頁面的關注。',
 );
 

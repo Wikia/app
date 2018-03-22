@@ -57,7 +57,6 @@
 	"sf_forminputs_values": "Ar komatu atdalīta vērtību kopa šim ievades laukam",
 	"sf_forminputs_list": "Atzīmēt šo ievades lauku kā vērtību sarakstu",
 	"sf_forminputs_delimiter": "Atdalītājs starp lauka vērtībām, ja šis ievades lauks satur vērtību sarakstu",
-	"sf_forminputs_remoteautocompletion": "Izmantot attālo automātisko pabeigšanu",
 	"sf_forminputs_existingvaluesonly": "Atļaut tikai vērtības, kas ir sarakstā",
 	"sf_forminputs_showonselect": "Rādīt lapas elementus tikai, ja ir izvēlētas noteiktas vērtības (piemēram: \"vērtība1 => div1; vērtība2 => div2\")",
 	"sf_forminputs_listboxsize": "Sarakstlodziņa augstums rindās",

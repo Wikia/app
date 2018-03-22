@@ -47,7 +47,7 @@ function PiggybackGoToParent( $user, $injected_html, $oldName ) {
 	if( PBLoginForm::isPiggyback() ) {
 		$loginForm = new PBLoginForm( $wgRequest );
 		$loginForm->goToParent( $oldName );
-		wfRunHooks( 'PiggybackLogOut', array( $user, User::newFromName( $oldName ) ) );
+		Hooks::run( 'PiggybackLogOut', array( $user, User::newFromName( $oldName ) ) );
 	}
 	return true;
 }

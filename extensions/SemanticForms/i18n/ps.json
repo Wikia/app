@@ -21,6 +21,9 @@
 	"sf_createform_addtemplate": "کينډۍ ورگډول:",
 	"sf_createform_atend": "په پای کې",
 	"sf_createform_add": "ورگډول",
+	"sf_createform_addsection": "برخه ورگډول",
+	"sf_createform_before": "دمخه:",
+	"sf_createform_sectionname": "د برخې نوم",
 	"createcategory": "يوه وېشنيزه جوړول",
 	"sf_createcategory_name": "د وېشنيزې نوم:",
 	"sf_createclass_create": "جوړول",
@@ -38,5 +41,9 @@
 	"sf_form_freetextlabel": "خپلواکه متن",
 	"sf_category_desc": "همدا د $1 وېشنيزه ده.",
 	"sf_blank_namespace": "آرنی",
-	"sf-adminlinks-datastructure": "اومتوک جوړښت"
+	"sf-adminlinks-datastructure": "اومتوک جوړښت",
+	"sf-datepicker-close": "تړل",
+	"sf-datepicker-prev": "پخوانی",
+	"sf-datepicker-next": "راتلونکی",
+	"sf-datepicker-today": "نن"
 }

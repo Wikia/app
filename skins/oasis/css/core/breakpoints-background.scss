@@ -67,7 +67,7 @@ $gradient-offset: $gradient-width;
 }
 
 body.skin-oasis {
-	background: $color-body url($background-image) top $background-align repeat; /* $wgCdnStylePath */
+	background: $color-body url($background-image) top $background-align repeat; /* $wgResourceBasePath */
 
 	&.background-not-tiled {
 		background-repeat: no-repeat;
@@ -89,7 +89,7 @@ body.skin-oasis {
 		&::before {
 			background: {
 				color: transparent;
-				image: url($background-image); /* $wgCdnStylePath */
+				image: url($background-image); /* $wgResourceBasePath */
 				repeat: no-repeat;
 			}
 			content: '';
@@ -157,10 +157,6 @@ body.skin-oasis {
 				display: none;
 			}
 		}
-
-		&.ve .WikiaPage {
-			z-index: 3;
-		}
 	}
 
 	@media #{$breakpoint-small-only} {
@@ -180,5 +176,24 @@ body.skin-oasis {
 
 	@media screen and (min-width: $breakpoint-upper) {
 		@include background-max;
+	}
+}
+
+body.skin-oasis.uap-skin {
+	$uap-color: mix(white, $color-body, 15%);
+	@if (lightness($color-body) > 49) {
+		$uap-color: mix(black, $color-body, 10%);
+	}
+	background: {
+		color: $uap-color;
+		image: none;
+	}
+
+	.background-image-gradient {
+		display: none;
+	}
+
+	&::before, &::after {
+		content: none;
 	}
 }

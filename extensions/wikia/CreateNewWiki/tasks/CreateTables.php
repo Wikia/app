@@ -24,10 +24,14 @@ class CreateTables extends Task {
 			"{$IP}/maintenance/archives/wikia/patch-create-blog_listing_relation.sql",
 			"{$IP}/maintenance/archives/wikia/patch-create-page_vote.sql",
 			"{$IP}/maintenance/archives/wikia/patch-create-page_visited.sql",
+
 			//article comments list use by wall/forum
-			"{$IP}/extensions/wikia/ArticleComments/patch-create-comments_index.sql",
-			//wall history table
+			"{$IP}/extensions/wikia/Wall/sql/patch-create-comments_index.sql",
+
+			//wall tables (SUS-1556)
 			"{$IP}/extensions/wikia/Wall/sql/wall_history_local.sql",
+			"{$IP}/extensions/wikia/Wall/sql/wall_related_pages.sql",
+
 			"{$IP}/extensions/wikia/VideoHandlers/sql/video_info.sql",
 			"{$IP}/maintenance/wikia/wikia_user_properties.sql",
 		];
@@ -48,12 +52,6 @@ class CreateTables extends Task {
 	}
 
 	public function run() {
-		global $wgSharedDB;
-		$tmpSharedDB = $wgSharedDB;
-		//This is needed because otherwise the underlying tableName() function treats the "user" table as a shared table
-		//and adds a DB prefix which causes the table to be created in a wikicities_x DB instead of the newly created one
-		$wgSharedDB = $this->taskContext->getDBname();
-
 		$dbw = wfGetDB( DB_MASTER, [ ], $this->taskContext->getDBname() );
 		$this->taskContext->setWikiDBW( $dbw );
 
@@ -65,7 +63,6 @@ class CreateTables extends Task {
 				return TaskResult::createForError( "Failed to run sql script " . $file );
 			}
 		}
-		$wgSharedDB = $tmpSharedDB;
 
 		//Add stats entry
 		$this->taskContext->getWikiDBW()->insert( "site_stats", [ "ss_row_id" => "1" ], __METHOD__ );

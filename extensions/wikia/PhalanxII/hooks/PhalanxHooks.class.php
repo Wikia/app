@@ -1,11 +1,10 @@
 <?php
 
 use \Wikia\Logger\WikiaLogger;
+use Wikia\Rabbit\ConnectionBase;
 
-class PhalanxHooks extends WikiaObject {
-	function __construct() {
-		parent::__construct();
-	}
+class PhalanxHooks {
+	const ROUTING_KEY = 'onUpdate';
 
 	/**
 	 * Add a link to central:Special:Phalanx from Special:Contributions/USERNAME
@@ -13,7 +12,7 @@ class PhalanxHooks extends WikiaObject {
 	 *
 	 * @param $id Integer: user ID
 	 * @param $nt Title: user page title
-	 * @param $links Array: tool links
+	 * @param $links array: tool links
 	 * @return boolean true
 	 */
 	static public function loadLinks( $id, $nt, &$links ) {
@@ -22,17 +21,14 @@ class PhalanxHooks extends WikiaObject {
 		$user = RequestContext::getMain()->getUser();
 
 		if ( $user->isAllowed( 'phalanx' ) ) {
-			$links[] = Linker::makeKnownLinkObj(
-				GlobalTitle::newFromText( 'Phalanx', NS_SPECIAL, WikiFactory::COMMUNITY_CENTRAL ),
-				'PhalanxBlock',
-				wfArrayToCGI(
-					[
-						'type' => Phalanx::TYPE_USER,
-						'wpPhalanxCheckBlocker' => $nt->getText(),
-						'target' => $nt->getText(),
-					]
-				)
-			);
+			$phalanxTitle = GlobalTitle::newFromText( 'Phalanx', NS_SPECIAL, WikiFactory::COMMUNITY_CENTRAL );
+			$phalanxUrl = $phalanxTitle->getFullURL( [
+				'type' => Phalanx::TYPE_USER,
+				'wpPhalanxCheckBlocker' => $nt->getText(),
+				'target' => $nt->getText(),
+			] );
+
+			$links[] = Html::element( 'a', [ 'href' => $phalanxUrl ], 'PhalanxBlock' );
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -45,37 +41,32 @@ class PhalanxHooks extends WikiaObject {
 	 * @param $text string content to check for spam
 	 * @param $typeId int block type (see Phalanx::TYPE_* constants)
 	 * @param $blockData array array to be provided with matching block details (pass as a reference)
-	 * @return boolean spam check result
+	 * @return bool spam check result
 	 *
+	 * @throws WikiaException
 	 * @author macbre
 	 */
-	static public function onSpamFilterCheck($text, $typeId, &$blockData) {
+	static public function onSpamFilterCheck( $text, $typeId, &$blockData ) {
 		wfProfileIn( __METHOD__ );
 
-		if ($text === '') {
+		if ( $text === '' ) {
 			wfProfileOut( __METHOD__ );
 			return true;
 		}
 
-		if (!$typeId) {
-			$typeId = PhalanxModel::determineTypeId($text);
+		if ( !$typeId ) {
+			$typeId = PhalanxModel::determineTypeId( $text );
 		}
 
-		$model = PhalanxModel::newFromType($typeId, $text);
+		$model = PhalanxModel::newFromType( $typeId, $text );
 
-		if (is_null($model)) {
-			throw new WikiaException("Unsupported block type passed - #{$typeId}");
+		if ( is_null( $model ) ) {
+			throw new WikiaException( "Unsupported block type passed - #{$typeId}" );
 		}
 
 		// get type ID -> type mapping
-		$types = Phalanx::getAllTypeNames();
-		$ret = $model->match($types[$typeId]);
-
-		// pass matching block details
-		if ( $ret === false ) {
-			$blockData = (array) $model->getBlock();
-			wfDebug( __METHOD__ . ": spam check blocked '{$text}'\n" );
-		}
+		$types = Phalanx::getSupportedTypeNames();
+		$ret = $model->match( $types[$typeId] );
 
 		wfProfileOut( __METHOD__ );
 		return $ret;
@@ -84,66 +75,53 @@ class PhalanxHooks extends WikiaObject {
 	/**
 	 * Add/edit Phalanx block
 	 *
-	 * @param $data Array contains block information, possible keys: id, author_id, text, type, timestamp, expire, exact, regex, case, reason, lang, ip_hex
+	 * @param array $data contains block information, possible keys: id, author_id, text, 
+	 * type, timestamp, expire, exact, regex, case, reason, lang
 	 * @return int id block or false if error
 	 *
 	 * @author moli
 	 */
-	static public function onEditPhalanxBlock( &$data ) {
-		wfProfileIn( __METHOD__ );
-
-		if ( !isset( $data['id'] ) ) {
-			wfProfileOut( __METHOD__ );
-			return false;
-		}
-
+	static public function onEditPhalanxBlock( array &$data ) {
 		$phalanx = Phalanx::newFromId( $data['id'] );
 
 		foreach ( $data as $key => $val ) {
-			if ( $key == 'id' ) continue;
-
-			$phalanx[ $key ] = $val;
-		}
-
-		$typemask = $phalanx['type'];
-		if ( is_array( $phalanx['type'] ) ) {
-			$typemask = 0;
-			foreach ( $phalanx['type'] as $type ) {
-				$typemask |= $type;
+			if ( $key !== 'id' ) {
+				$phalanx[$key] = $val;
 			}
 		}
 
+		$phalanx['type'] = array_reduce( $phalanx['type'], function ( $typeMask, $type ) {
+			return $typeMask | $type;
+		}, 0 );
+
+
 		// VSTF should not be allowed to block emails in Phalanx
-		if ( ($typemask & Phalanx::TYPE_EMAIL ) && !F::app()->wg->User->isAllowed( 'phalanxemailblock' ) ) {
-			wfProfileOut( __METHOD__ );
+		if ( ( $phalanx['type'] & Phalanx::TYPE_EMAIL ) && !F::app()->wg->User->isAllowed( 'phalanxemailblock' ) ) {
 			return false;
 		}
 
 		$multitext = '';
-		if ( isset( $phalanx['multitext'] ) && !empty( $phalanx['multitext'] ) ) {
+		if ( !empty( $phalanx['multitext'] ) ) {
 			$multitext = $phalanx['multitext'];
 		}
 
 		unset( $phalanx['multitext'] );
 
-		if ( ( empty( $phalanx['text'] ) && empty( $multitext ) ) || empty( $typemask ) ) {
-			wfProfileOut( __METHOD__ );
+		if ( ( empty( $phalanx['text'] ) && empty( $multitext ) ) || empty( $phalanx['type'] ) ) {
 			return false;
 		}
 
-		$phalanx['type'] = $typemask;
-
-		if ( $phalanx['lang'] == 'all' ) {
+		// SUS-2759: If a filter is meant to apply to all languages, the p_lang field must be NULL
+		if ( $phalanx['lang'] === 'all' ) {
 			$phalanx['lang'] = null;
 		}
 
 		if ( $phalanx['expire'] === '' || is_null( $phalanx['expire'] ) ) {
 			// don't change expire
-			unset($phalanx['expire']);
-		} else if ( $phalanx['expire'] != 'infinite' ) {
+			unset( $phalanx['expire'] );
+		} elseif ( $phalanx['expire'] != 'infinite' ) {
 			$expire = strtotime( $phalanx['expire'] );
 			if ( $expire < 0 || $expire === false ) {
-				wfProfileOut( __METHOD__ );
 				return false;
 			}
 			$phalanx['expire'] = wfTimestamp( TS_MW, $expire );
@@ -154,39 +132,28 @@ class PhalanxHooks extends WikiaObject {
 		if ( empty( $multitext ) ) {
 			/* single mode - insert/update record */
 			$data['id'] = $phalanx->save();
-			$result = $data['id'] ? array( "success" => array( $data['id'] ), "failed" => 0 ) : false;
-		}
-		else {
-			/* non-empty bulk field */
-			$bulkdata = explode( "\n", $multitext );
-			if ( count($bulkdata) > 0 ) {
-				$result = array( 'success' => array(), 'failed' => 0 );
-				foreach ( $bulkdata as $bulkrow ) {
-					$bulkrow = trim($bulkrow);
-					$phalanx['id'] = null;
-					$phalanx['text'] = $bulkrow;
-
-					$data['id'] = $phalanx->save();
-					if ( $data['id'] ) {
-						$result[ 'success' ][] = $data['id'];
-					} else {
-						$result[ 'failed' ]++;
-					}
-				}
-			} else {
-				$result = false;
-			}
-		}
-
-		if ( $result !== false ) {
-			$service = new PhalanxService();
-			$ret = $service->reload( $result["success"] );
+			$blockIds = $data['id'] ? [ $data['id'] ] : false;
 		} else {
-			$ret = $result;
+			$bulkdata = explode( "\n", $multitext );
+			$targets = [];
+
+			foreach ( $bulkdata as $bulkrow ) {
+				$bulkrow = trim( $bulkrow );
+				if ( $bulkrow !== '' ) {
+					$targets[] = $bulkrow;
+				}
+			}
+
+			// SUS-1207: Insert Phalanx bulk filters in single write operation
+			$blockIds = $phalanx->insertBulkFilter( $targets );
 		}
 
-		wfProfileOut( __METHOD__ );
-		return $ret;
+		if ( !empty( $blockIds ) ) {
+			static::notifyPhalanxService( $blockIds );
+			return true;
+		}
+
+		return false;
 	}
 
 	/**
@@ -200,25 +167,29 @@ class PhalanxHooks extends WikiaObject {
 	static public function onDeletePhalanxBlock( $id ) {
 		wfProfileIn( __METHOD__ );
 
-		$phalanx = Phalanx::newFromId($id);
+		$phalanx = Phalanx::newFromId( $id );
 
 		// VSTF should not be allowed to delete email blocks in Phalanx
-		if ( ($phalanx->offsetGet( 'type' ) & Phalanx::TYPE_EMAIL ) && !F::app()->wg->User->isAllowed( 'phalanxemailblock' ) ) {
+		if ( ( $phalanx['type'] & Phalanx::TYPE_EMAIL ) && !F::app()->wg->User->isAllowed( 'phalanxemailblock' ) ) {
 			wfProfileOut( __METHOD__ );
 			return false;
 		}
 
 		$id = $phalanx->delete();
 		if ( $id ) {
-			$service = new PhalanxService();
-			$ids = array( $id );
-			$ret = $service->reload( $ids );
-		} else {
-			$ret = false;
+			static::notifyPhalanxService( [ $id ] );
+			return true;
 		}
 
 		wfProfileOut( __METHOD__ );
-		return $ret;
+		return false;
+	}
+
+	public static function notifyPhalanxService( array $changedBlockIds ) {
+		global $wgPhalanxQueue;
+
+		$rabbitConnection = new ConnectionBase( $wgPhalanxQueue );
+		$rabbitConnection->publish( self::ROUTING_KEY, implode( ",", $changedBlockIds ) );
 	}
 
 	/**
@@ -228,9 +199,9 @@ class PhalanxHooks extends WikiaObject {
 	 * @param string $action
 	 * @return bool true
 	 */
-	static public function onAfterFormatPermissionsErrorMessage( Array &$permErrors, $action) {
-		foreach($permErrors as &$error) {
-			if (isset($error[5]) && is_numeric($error[5])) {
+	static public function onAfterFormatPermissionsErrorMessage( Array &$permErrors, $action ) {
+		foreach ( $permErrors as &$error ) {
+			if ( isset( $error[5] ) && is_numeric( $error[5] ) ) {
 				$error[5] = "<big><strong>$error[5]</strong></big>";
 			}
 		}
@@ -249,7 +220,7 @@ class PhalanxHooks extends WikiaObject {
 	 * @param User $user
 	 * @return bool true
 	 */
-	static public function onGetBlockedStatus( User $user, $shouldLogBlockInStats=false, $global=true ) {
+	static public function onGetBlockedStatus( User $user, $shouldLogBlockInStats = false, $global = true ) {
 		if ( ! $global ) {
 			return true;
 		}
@@ -260,11 +231,13 @@ class PhalanxHooks extends WikiaObject {
 		$clientIPFromFastly = $wgRequest->getHeader( $wgClientIPHeader );
 
 		if ( !User::isIP( $clientIPFromFastly ) && !$wgRequest->isWikiaInternalRequest() ) {
+			$userAgent = $wgRequest->getHeader( 'User-Agent' );
 			WikiaLogger::instance()->error( 'Phalanx user IP incorrect', [
 				'ip_from_fastly' => $clientIPFromFastly,
 				'ip_from_user' => $user->getName(),
 				'ip_from_request' => $wgRequest->getIP(),
-				'user_agent' => $wgRequest->getHeader( 'User-Agent' ),
+				// SUS-2008, always log user_agent as string
+				'user_agent' => $userAgent ?: '',
 			] );
 		}
 
@@ -286,12 +259,12 @@ class PhalanxHooks extends WikiaObject {
 
 		$blockedGlobally = $user->mBlockedGlobally;
 
-		if ($blockedGlobally) {
+		if ( $blockedGlobally ) {
 			$message = wfMessage( 'phalanx-sp-contributions-blocked-globally' )->text();
-			$message = '<div class="'.LogEventsList::WARN_BOX_DIV_CLASS.'">'.$message.'</div>';
-			$out->addHTML($message);
+			$message = '<div class="' . LogEventsList::WARN_BOX_DIV_CLASS . '">' . $message . '</div>';
+			$out->addHTML( $message );
 		}
 
-		return !$blockedGlobally; //If blocked globally disable listing local log
+		return !$blockedGlobally; // If blocked globally disable listing local log
 	}
 }

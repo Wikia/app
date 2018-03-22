@@ -7,6 +7,7 @@
  * This file deals with database interface functions
  * and query specifics/optimisations
  */
+
 use Wikia\Logger\WikiaLogger;
 use Wikia\Util\Statistics\BernoulliTrial;
 
@@ -201,8 +202,8 @@ interface DatabaseType {
  */
 abstract class DatabaseBase implements DatabaseType {
 
-	// @const log 1% of queries
-	const QUERY_SAMPLE_RATE = 0.01;
+	// @const log 5% of queries (increased from 1% in SUS-2974)
+	const QUERY_SAMPLE_RATE = 0.05;
 
 	// @const log queries that took more than 15 seconds
 	const SLOW_QUERY_LOG_THRESHOLD = 15;
@@ -239,6 +240,9 @@ abstract class DatabaseBase implements DatabaseType {
 	protected $htmlErrors;
 
 	protected $delimiter = ';';
+
+	/** @var array Map of (table name => 1) for TEMPORARY tables */
+	protected $mSessionTempTables = [];
 
 # ------------------------------------------------------------------------------
 # Accessors
@@ -831,6 +835,45 @@ abstract class DatabaseBase implements DatabaseType {
 	}
 
 	/**
+	 * @param string $sql A SQL query
+	 * @return bool Whether $sql is SQL for TEMPORARY table operation
+	 */
+	protected function registerTempTableOperation( $sql ) {
+		// SUS-3246: Trim the SQL query to avoid manually crafted queries not matching
+		$sql = ltrim( $sql );
+
+		if ( preg_match(
+			'/^CREATE\s+TEMPORARY\s+TABLE\s+(?:IF\s+NOT\s+EXISTS\s+)?[`"\']?(\w+)[`"\']?/i',
+			$sql,
+			$matches
+		) ) {
+			$this->mSessionTempTables[$matches[1]] = 1;
+			return true;
+		} elseif ( preg_match(
+			'/^DROP\s+(?:TEMPORARY\s+)?TABLE\s+(?:IF\s+EXISTS\s+)?[`"\']?(\w+)[`"\']?/i',
+			$sql,
+			$matches
+		) ) {
+			$isTemp = isset( $this->mSessionTempTables[$matches[1]] );
+			unset( $this->mSessionTempTables[$matches[1]] );
+			return $isTemp;
+		} elseif ( preg_match(
+			'/^TRUNCATE\s+(?:TEMPORARY\s+)?TABLE\s+(?:IF\s+EXISTS\s+)?[`"\']?(\w+)[`"\']?/i',
+			$sql,
+			$matches
+		) ) {
+			return isset( $this->mSessionTempTables[$matches[1]] );
+		} elseif ( preg_match(
+			'/^(?:INSERT\s+(?:\w+\s+)?INTO|UPDATE|DELETE\s+FROM)\s+[`"\']?(\w+)[`"\']?/i',
+			$sql,
+			$matches
+		) ) {
+			return isset( $this->mSessionTempTables[$matches[1]] );
+		}
+		return false;
+	}
+
+	/**
 	 * Run an SQL query and return the result. Normally throws a DBQueryError
 	 * on failure. If errors are ignored, returns false instead.
 	 *
@@ -875,6 +918,8 @@ abstract class DatabaseBase implements DatabaseType {
 
 		$this->mLastQuery = $sql;
 		$is_writeable = $this->isWriteQuery( $sql );
+		$isTemporaryTableOperation = $this->registerTempTableOperation( $sql );
+
 		if ( !$this->mDoneWrites && $is_writeable ) {
 			# Set a flag indicating that writes have been done
 			wfDebug( __METHOD__ . ": Writes done: $sql\n" );
@@ -883,7 +928,7 @@ abstract class DatabaseBase implements DatabaseType {
 
 		# <Wikia>
 		global $wgDBReadOnly, $wgReadOnly;
-		if ( $is_writeable && $wgDBReadOnly ) {
+		if ( $is_writeable && !$isTemporaryTableOperation && $wgDBReadOnly ) {
 			if ( !Profiler::instance()->isStub() ) {
 				wfProfileOut( $queryProf );
 				wfProfileOut( $totalProf );
@@ -1034,6 +1079,9 @@ abstract class DatabaseBase implements DatabaseType {
 			$sql1line = str_replace( "\n", "\\n", $sql );
 			wfLogDBError( "$fname\t{$this->mServer}\t$errno\t$error\t$sql1line\n" );
 			wfDebug( "SQL ERROR: " . $error . "\n" );
+
+			// SUS-3754 | make long SQL queries fit the error message sent via UDP to Logstash
+			$sql = substr( $sql, 0, 1024 );
 			throw new DBQueryError( $this, $error, $errno, $sql, $fname );
 		}
 	}
@@ -1129,8 +1177,8 @@ abstract class DatabaseBase implements DatabaseType {
 		reset( $args );
 		$this->preparedArgs =& $args;
 
-		return preg_replace_callback( '/(\\\\[?!&]|[?!&])/',
-			array( &$this, 'fillPreparedArg' ), $preparedQuery );
+		return preg_replace_callback( '/(\\\\[?!&]|[?!&])/', [ $this, 'fillPreparedArg' ],
+			$preparedQuery );
 	}
 
 	/**
@@ -1934,6 +1982,10 @@ abstract class DatabaseBase implements DatabaseType {
 				$first = false;
 			}
 
+			if ( is_bool( $value ) ) {
+				$value = (int) $value;
+			}
+
 			if ( ( $mode == LIST_AND || $mode == LIST_OR ) && is_numeric( $field ) ) {
 				$list .= "($value)";
 			} elseif ( ( $mode == LIST_SET ) && is_numeric( $field ) ) {
@@ -2025,6 +2077,38 @@ abstract class DatabaseBase implements DatabaseType {
 	 */
 	function bitOr( $fieldLeft, $fieldRight ) {
 		return "($fieldLeft | $fieldRight)";
+	}
+
+	/**
+	 * Build a concatenation list to feed into a SQL query
+	 * @param array $stringList list of raw SQL expressions; caller is responsible for any quoting
+	 * @return String
+	 */
+	public function buildConcat( $stringList ) {
+		return 'CONCAT(' . implode( ',', $stringList ) . ')';
+	}
+
+	/**
+	 * Build a GROUP_CONCAT or equivalent statement for a query.
+	 *
+	 * This is useful for combining a field for several rows into a single string.
+	 * NULL values will not appear in the output, duplicated values will appear,
+	 * and the resulting delimiter-separated values have no defined sort order.
+	 * Code using the results may need to use the PHP unique() or sort() methods.
+	 *
+	 * @param string $delim Glue to bind the results together
+	 * @param string|array $table Table name
+	 * @param string $field Field name
+	 * @param string|array $conds Conditions
+	 * @param string|array $join_conds Join conditions
+	 * @return String SQL text
+	 * @since 1.23
+	 */
+	public function buildGroupConcatField(
+		$delim, $table, $field, $conds = '', $join_conds = array()
+	) {
+		$fld = "GROUP_CONCAT($field SEPARATOR " . $this->addQuotes( $delim ) . ')';
+		return '(' . $this->selectSQLText( $table, $fld, $conds, null, array(), $join_conds ) . ')';
 	}
 
 	/**
@@ -2123,6 +2207,12 @@ abstract class DatabaseBase implements DatabaseType {
 		 && in_array( $table, $wgSharedTables ) ) { # A shared table is selected
 			$database = $wgSharedDB;
 			$prefix   = isset( $wgSharedPrefix ) ? $wgSharedPrefix : $prefix;
+
+			// SUS-3063 | Log all cases where Database::tableName returns wikicities_cX.user
+			WikiaLogger::instance()->warning( __METHOD__ . '::addSharedPrefix', [
+				'table_name' => $table,
+				'caller' => wfGetCallerClassMethod( [ __CLASS__, DatabaseMysqlBase::class, DatabaseMysqli::class ]  ),
+			] );
 		}
 
 		# Quote the $database and $table and apply the prefix if not quoted.
@@ -2305,6 +2395,7 @@ abstract class DatabaseBase implements DatabaseType {
 
 	/**
 	 * If it's a string, adds quotes and backslashes
+	 * If it's a boolean, converts it to int
 	 * Otherwise returns as-is
 	 *
 	 * @param $s string
@@ -2314,6 +2405,8 @@ abstract class DatabaseBase implements DatabaseType {
 	function addQuotes( $s ) {
 		if ( $s === null ) {
 			return 'NULL';
+		} elseif ( is_bool( $s ) ) {
+			return (int) $s;
 		} else {
 			# This will also quote numeric values. This should be harmless,
 			# and protects against weird problems that occur when they really
@@ -2615,6 +2708,56 @@ abstract class DatabaseBase implements DatabaseType {
 		$this->query( $sql, $fname );
 	}
 
+	public function upsert( $table, array $rows, array $uniqueIndexes, array $set,
+							$fname = __METHOD__
+	) {
+		if ( !count( $rows ) ) {
+			return true; // nothing to do
+		}
+		if ( !is_array( reset( $rows ) ) ) {
+			$rows = [ $rows ];
+		}
+		if ( count( $uniqueIndexes ) ) {
+			$clauses = []; // list WHERE clauses that each identify a single row
+			foreach ( $rows as $row ) {
+				foreach ( $uniqueIndexes as $index ) {
+					$index = is_array( $index ) ? $index : [ $index ]; // columns
+					$rowKey = []; // unique key to this row
+					foreach ( $index as $column ) {
+						$rowKey[$column] = $row[$column];
+					}
+					$clauses[] = $this->makeList( $rowKey, LIST_AND );
+				}
+			}
+			$where = [ $this->makeList( $clauses, LIST_OR ) ];
+		} else {
+			$where = false;
+		}
+		$useTrx = !$this->mTrxLevel;
+		if ( $useTrx ) {
+			$this->begin( $fname );
+		}
+		try {
+			# Update any existing conflicting row(s)
+			if ( $where !== false ) {
+				$ok = $this->update( $table, $set, $where, $fname );
+			} else {
+				$ok = true;
+			}
+			# Now insert any non-conflicting row(s)
+			$ok = $this->insert( $table, $rows, $fname, [ 'IGNORE' ] ) && $ok;
+		} catch ( Exception $e ) {
+			if ( $useTrx ) {
+				$this->rollback( $fname );
+			}
+			throw $e;
+		}
+		if ( $useTrx ) {
+			$this->commit( $fname );
+		}
+		return $ok;
+	}
+
 	/**
 	 * Returns the size of a text field, or -1 for "unlimited"
 	 *
@@ -2655,16 +2798,16 @@ abstract class DatabaseBase implements DatabaseType {
 	/**
 	 * DELETE query wrapper.
 	 *
-	 * @param $table Array Table name
+	 * @param string $table Table name
 	 * @param $conds String|Array of conditions. See $conds in DatabaseBase::select() for
 	 *               the format. Use $conds == "*" to delete all rows
-	 * @param $fname String name of the calling function
+	 * @param $fname string name of the calling function
 	 *
 	 * @return bool
 	 * @throws DBUnexpectedError
 	 * @throws MWException
 	 */
-	function delete( $table, $conds, $fname = 'DatabaseBase::delete' ) {
+	function delete( string $table, $conds, $fname = 'DatabaseBase::delete' ) {
 		if ( !$conds ) {
 			throw new DBUnexpectedError( $this, 'DatabaseBase::delete() called with no conditions' );
 		}
@@ -2738,7 +2881,7 @@ abstract class DatabaseBase implements DatabaseType {
 		list( $startOpts, $useIndex, $tailOpts ) = $this->makeSelectOptions( $selectOptions );
 
 		if ( is_array( $srcTable ) ) {
-			$srcTable =  implode( ',', array_map( array( &$this, 'tableName' ), $srcTable ) );
+			$srcTable = implode( ',', array_map( [ $this, 'tableName' ], $srcTable ) );
 		} else {
 			$srcTable = $this->tableName( $srcTable );
 		}
@@ -3517,12 +3660,15 @@ abstract class DatabaseBase implements DatabaseType {
 	}
 
 	/**
-	 * Build a concatenation list to feed into a SQL query
-	 * @param $stringList Array: list of raw SQL expressions; caller is responsible for any quoting
-	 * @return String
+	 * Check to see if a named lock is available. This is non-blocking.
+	 *
+	 * @param string $lockName name of lock to poll
+	 * @param string $method name of method calling us
+	 * @return Boolean
+	 * @since 1.20
 	 */
-	function buildConcat( $stringList ) {
-		return 'CONCAT(' . implode( ',', $stringList ) . ')';
+	public function lockIsFree( $lockName, $method ) {
+		return true;
 	}
 
 	/**
@@ -3666,6 +3812,11 @@ abstract class DatabaseBase implements DatabaseType {
 		$this->logSql( $sql, $ret, $fname, microtime( true ) - $start, $isMaster );
 
 		MWDebug::queryTime( $queryId );
+
+		if ( $this->wasDeadlock() ) {
+			$this->logDeadlock();
+		}
+
 		return $ret;
 	}
 
@@ -3676,11 +3827,12 @@ abstract class DatabaseBase implements DatabaseType {
 	 * @param string $sql the query
 	 * @param ResultWrapper|mysqli_result|bool $ret database results
 	 * @param string $fname the name of the function that made this query
+	 * @param float $elapsedTime time (in seconds) it took the query to complete
 	 * @param bool $isMaster is this against the master
 	 * @return void
 	 */
 	protected function logSql( $sql, $ret, $fname, $elapsedTime, $isMaster ) {
-		global $wgDBcluster;
+		global $wgDBcluster, $wgRequest;
 
 		if ( $ret instanceof ResultWrapper ) {
 			// NOP for MySQL driver
@@ -3720,8 +3872,14 @@ abstract class DatabaseBase implements DatabaseType {
 			'exception'   => new Exception(), // log the backtrace
 		];
 
+		/* @var WebRequest $wgRequest */
+		if ( $wgRequest && $wgRequest->getVal( 'action' ) == 'delete' ) {
+			$this->getWikiaLogger()->info( "SQL (action=delete) {$sql}", $context );
+		}
+
+		// SUS-2974 | send SQL logs to a separate ES index 'mediawiki-sql'
 		if ( $this->getSampler()->shouldSample() ) {
-			$this->getWikiaLogger()->info( "SQL {$sql}", $context );
+			$this->getWikiaLogger()->defaultLogger( 'mediawiki-sql' )->info( $sql, $context );
 		}
 
 		if ( $this->isWriteQuery($sql) &&
@@ -3741,6 +3899,21 @@ abstract class DatabaseBase implements DatabaseType {
 		# e.g. queries on events_local_users via DataProvider::GetTopFiveUsers
 		if ( $elapsedTime > self::SLOW_QUERY_LOG_THRESHOLD ) {
 			$this->getWikiaLogger()->info( "Slow query {$sql}", $context );
+		}
+	}
+
+	protected function logDeadlock() {
+		$res = $this->doQuery( "SHOW ENGINE INNODB STATUS;" );
+		if ( $res && $row = $this->fetchRow( $res ) ) {
+			$statusString = $row['Status'];
+
+			if ( preg_match('/\nLATEST DETECTED DEADLOCK\n-+\n(.*?)(?:\n-+\n|$)/s', $statusString, $m) ) {
+				$deadlockDetails = $m[1];
+				$this->getWikiaLogger()->error( 'Database deadlock occurred', [
+					'latest_deadlock_details' => $deadlockDetails,
+					'exception' => new Exception(),
+				]);
+			}
 		}
 	}
 

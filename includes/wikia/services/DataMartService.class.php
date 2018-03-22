@@ -6,7 +6,7 @@
 use FluentSql\StaticSQL as sql;
 use Wikia\Logger\WikiaLogger;
 
-class DataMartService extends Service {
+class DataMartService {
 
 	const PERIOD_ID_DAILY = 1;
 	const PERIOD_ID_WEEKLY = 2;
@@ -51,20 +51,30 @@ class DataMartService extends Service {
 			}
 		}
 
-		$db = DataMartService::getDB();
-		$pageViews = ( new WikiaSQL() )->skipIf( self::isDisabled() )
-			->cacheGlobal( self::TTL )
-			->SELECT( "date_format(time_id,'%Y-%m-%d')" )->AS_( 'date' )
-				->FIELD( 'pageviews' )->AS_( 'cnt' )
-			->FROM( 'rollup_wiki_pageviews' )
-			->WHERE( 'period_id' )->EQUAL_TO( $periodId )
-				->AND_( 'wiki_id' )->EQUAL_TO( $wikiId )
-				->AND_( 'time_id' )->BETWEEN( $startDate, $endDate )
-			->runLoop( $db, function ( &$pageViews, $row ) {
-				$pageViews[$row->date] = $row->cnt;
-			} );
+		try {
+			$db = DataMartService::getDB();
+			$pageViews =
+				( new WikiaSQL() )->skipIf( self::isDisabled() )
+					->cacheGlobal( self::TTL )
+					->SELECT( "date_format(time_id,'%Y-%m-%d')" )
+					->AS_( 'date' )
+					->FIELD( 'pageviews' )
+					->AS_( 'cnt' )
+					->FROM( 'rollup_wiki_pageviews' )
+					->WHERE( 'period_id' )
+					->EQUAL_TO( $periodId )
+					->AND_( 'wiki_id' )
+					->EQUAL_TO( $wikiId )
+					->AND_( 'time_id' )
+					->BETWEEN( $startDate, $endDate )
+					->runLoop( $db, function ( &$pageViews, $row ) {
+						$pageViews[$row->date] = $row->cnt;
+					} );
 
-		return $pageViews;
+			return $pageViews;
+		} catch ( DBError $dbError ) {
+			return [];
+		}
 	}
 
 	/**
@@ -77,7 +87,7 @@ class DataMartService extends Service {
 	 */
 	protected static function getPageviewsForWikis ( $periodId, $wikis, $startDate, $endDate = null ) {
 		if ( empty( $wikis ) ) {
-			return array();
+			return [];
 		}
 
 		if ( empty( $endDate ) ) {
@@ -88,49 +98,32 @@ class DataMartService extends Service {
 			}
 		}
 
-		$db = DataMartService::getDB();
-		$pageviews = ( new WikiaSQL() )->skipIf( self::isDisabled() )
-			->cacheGlobal( self::TTL )
-			->SELECT( 'wiki_id' )
-				->FIELD( "date_format(time_id,'%Y-%m-%d')" )->AS_( 'date' )
-				->FIELD( 'pageviews' )->AS_( 'cnt' )
-			->FROM( 'rollup_wiki_pageviews' )
-			->WHERE( 'period_id' )->EQUAL_TO( $periodId )
-				->AND_( 'wiki_id' )->IN( $wikis )
-				->AND_( 'time_id' )->BETWEEN( $startDate, $endDate )
-			->runLoop( $db, function ( &$pageViews, $row ) {
-				$pageViews[$row->wiki_id][$row->date] = $row->cnt;
-				$pageViews[$row->wiki_id]['SUM'] += $row->cnt;
-			} );
+		try {
+			$db = DataMartService::getDB();
+			$pageviews =
+				( new WikiaSQL() )->skipIf( self::isDisabled() )
+					->cacheGlobal( self::TTL )
+					->SELECT( 'wiki_id' )
+					->FIELD( "date_format(time_id,'%Y-%m-%d')" )
+					->AS_( 'date' )
+					->FIELD( 'pageviews' )
+					->AS_( 'cnt' )
+					->FROM( 'rollup_wiki_pageviews' )
+					->WHERE( 'period_id' )
+					->EQUAL_TO( $periodId )
+					->AND_( 'wiki_id' )
+					->IN( $wikis )
+					->AND_( 'time_id' )
+					->BETWEEN( $startDate, $endDate )
+					->runLoop( $db, function ( &$pageViews, $row ) {
+						$pageViews[$row->wiki_id][$row->date] = $row->cnt;
+						$pageViews[$row->wiki_id]['SUM'] += $row->cnt;
+					} );
 
-		return $pageviews;
-	}
-
-	/**
-	 * get pageviews
-	 * @param array $dates ( YYYY-MM-DD, YYYY-MM-DD ... )
-	 * @return array $pageviews [ array( 'YYYY-MM-DD' => pageviews ) ]
-	 */
-	public static function getSumPageviewsMonthly ( $dates = array() ) {
-		$periodId = self::PERIOD_ID_MONTHLY;
-
-		if ( empty( $dates ) ) {
-			return array();
+			return $pageviews;
+		} catch ( DBError $dbError ) {
+			return [];
 		}
-
-		$db = DataMartService::getDB();
-		$pageviews = ( new WikiaSQL() )->skipIf( self::isDisabled() )
-			->cacheGlobal( self::TTL )
-			->SELECT( 'time_id' )
-				->SUM( 'pageviews' )->AS_( 'cnt' )
-			->FROM( 'rollup_wiki_pageviews' )
-			->WHERE( 'period_id' )->EQUAL_TO( $periodId )
-				->AND_( 'time_id' )->IN( $dates )
-			->runLoop( $db, function( &$pageViews, $row ) {
-				$pageViews[$row->time_id] = intval( $row->cnt );
-			} );
-
-		return $pageviews;
 	}
 
 	// get daily pageviews
@@ -176,126 +169,70 @@ class DataMartService extends Service {
 	 * Get top wikis by pageviews over a specified span of time, optionally filtering by
 	 * public status, language and vertical (hub)
 	 *
-	 * @param integer $periodId The interval of time to take into consideration, one of PERIOD_ID_WEEKLY,
-	 * PERIOD_ID_MONTHLY or PERIOD_ID_QUARTERLY
 	 * @param integer $limit The maximum number of results, defaults to 200
 	 * @param array $langs (optional) The language code to use as a filter (e.g. en for English), null for all (default)
 	 * @param string $hub (optional) The vertical name to use as a filter (e.g. Gaming), null for all (default)
 	 * @param integer $public (optional) Filter results by public status, one of 0, 1 or null (for both, default)
 	 * @return array $topWikis [ array( wikiId => pageviews ) ]
 	 */
-	public static function getTopWikisByPageviews ( $periodId, $limit = 200, Array $langs = [], $hub = null, $public = null ) {
-		$limitDefault = 200;
-		$limitUsed = ( $limit > $limitDefault ) ? $limit : $limitDefault;
+	public static function getTopWikisByPageviews ( $limit = 300, Array $langs = [], $hub = null, $public = null ) {
+		$limitDefault = 300;
+		$limitUsed = ( $limit < $limitDefault ) ? $limit : $limitDefault;
 
-		switch ( $periodId ) {
-			case self::PERIOD_ID_WEEKLY:
-				$field = 'pageviews_7day';
-				break;
-			case self::PERIOD_ID_QUARTERLY:
-				$field = 'pageviews_90day';
-				break;
-			case self::PERIOD_ID_MONTHLY:
-			default:
-				$field = 'pageviews_30day';
-				break;
-		}
-
-		$db = DataMartService::getDB();
-
-		$sql = ( new WikiaSQL() )->skipIf( self::isDisabled() )
-			->cacheGlobal( self::TTL )
-			->SELECT( 'r.wiki_id' )->AS_( 'id' )
-				->FIELD( $field )->AS_( 'pageviews' )
-			->FROM( 'report_wiki_recent_pageviews' )->AS_( 'r' )
-			->ORDER_BY( ['pageviews', 'desc'] )
-			->LIMIT( $limitUsed );
-
-		if ( is_integer( $public ) ) {
-			$sql
-				->JOIN( 'dimension_wikis' )->AS_( 'd' )
-					->ON( 'r.wiki_id', 'd.wiki_id' )
-				->WHERE( 'd.public' )->EQUAL_TO( $public );
-		}
-
-		if ( !empty( $langs ) ) {
-			$sql->AND_( 'r.lang' )->IN( $langs );
-		}
-
+		$categoryId = null;
 		if ( !empty( $hub ) ) {
-			$sql->AND_( 'r.hub_name' )->EQUAL_TO( $hub );
+			#external api use cases indicate that hub values passed are actually categories, not verticals,
+			#so assuming that interpretation
+			$categoryId = WikiFactoryHub::getInstance()->getCategoryByName( $hub )['id'];
 		}
 
-		$topWikis = $sql->runLoop( $db, function( &$topWikis, $row ) {
-			$topWikis[$row->id] = $row->pageviews;
-		} );
+		#Latest first day of month, but no sooner than two days before to give some space for data to arrive
+		$timeId = date( 'Y-m-01', strtotime('-2 day') );
 
-		$topWikis = array_slice( $topWikis, 0, $limit, true );
+		try {
+			$db = DataMartService::getDB();
 
-		return $topWikis;
-	}
+			$sql =
+				( new WikiaSQL() )->skipIf( self::isDisabled() )
+					->cacheGlobal( self::TTL )
+					->SELECT( 'r.wiki_id' )
+					->AS_( 'id' )
+					->FIELD( 'pageviews' )
+					->FROM( 'rollup_wiki_pageviews' )
+					->AS_( 'r' )
+					->WHERE( 'period_id' )->EQUAL_TO( DataMartService::PERIOD_ID_MONTHLY )
+					->AND_( 'time_id' )->EQUAL_TO( $timeId )
+					->ORDER_BY( [ 'pageviews', 'desc' ] )
+					->LIMIT( $limitUsed );
 
-	/**
-	 * get events by wiki Id
-	 * @param integer $periodId
-	 * @param string $startDate [YYYY-MM-DD]
-	 * @param string $endDate [YYYY-MM-DD]
-	 * @param integer $wikiId
-	 * @param string $eventType [creates/edits/deletes/undeletes]
-	 * @return array $events [ array( 'YYYY-MM-DD' => pageviews ) ]
-	 * Note: number of edits includes number of creates
-	 */
-	protected static function getEventsByWikiId ( $periodId, $startDate, $endDate = null, $wikiId = null, $eventType = null ) {
-		$app = F::app();
-
-		wfProfileIn( __METHOD__ );
-
-		if ( empty( $wikiId ) ) {
-			$wikiId = $app->wg->CityId;
-		}
-
-		if ( empty( $endDate ) ) {
-			if ( $periodId == self::PERIOD_ID_MONTHLY ) {
-				$endDate = date( 'Y-m-01' );
-			} else {
-				$endDate = date( 'Y-m-d', strtotime( '-1 day' ) );
+			if ( is_integer( $public ) ) {
+				$sql->JOIN( 'dimension_wikis' )
+					->AS_( 'd' )
+					->ON( 'r.wiki_id', 'd.wiki_id' )
+					->AND_( 'd.public' )->EQUAL_TO( $public );
 			}
-		}
 
-		$db = DataMartService::getDB();
-		$events = ( new WikiaSQL() )->skipIf( self::isDisabled() )
-			->cacheGlobal( self::TTL )
-			->SELECT( "date_format(time_id,'%Y-%m-%d')" )->AS_( 'date' )
-				->SUM( 'creates' )->AS_( 'creates' )
-				->SUM( 'edits' )->AS_( 'edits' )
-				->SUM( 'deletes' )->AS_( 'deletes' )
-				->SUM( 'undeletes' )->AS_( 'undeletes' )
-			->FROM( 'rollup_wiki_namespace_user_events' )
-			->WHERE( 'period_id' )->EQUAL_TO( $periodId )
-				->AND_( 'wiki_id' )->EQUAL_TO( $wikiId )
-				->AND_( 'time_id' )->BETWEEN( $startDate, $endDate )
-			->GROUP_BY( 'date', 'wiki_id' )
-			->runLoop( $db, function( &$events, $row ) {
-				$events[$row->date] = array(
-					'creates' => $row->creates,
-					'edits' => $row->creates + $row->edits,
-					'deletes' => $row->deletes,
-					'undeletes' => $row->undeletes,
-				);
+			if ( !empty( $categoryId ) ) {
+				$sql->JOIN( 'dimension_wiki_categories')
+					->AS_('c')
+					->ON( 'r.wiki_id', 'c.wiki_id' )
+					->AND_( 'c.category_id' )->EQUAL_TO( $categoryId );
+			}
+
+			if ( !empty( $langs ) ) {
+				$sql->AND_( 'r.lang' )->IN( $langs );
+			}
+
+			$topWikis = $sql->runLoop( $db, function ( &$topWikis, $row ) {
+				$topWikis[$row->id] = $row->pageviews;
 			} );
 
-		// get data depending on eventType
-		if ( !empty( $eventType ) ) {
-			$temp = array();
-			foreach ( $events as $date => $value ) {
-				$temp[$date] = $value[$eventType];
-			}
-			$events = $temp;
+			$topWikis = array_slice( $topWikis, 0, $limit, true );
+
+			return $topWikis;
+		} catch ( DBError $dbError ) {
+			return [];
 		}
-
-		wfProfileOut( __METHOD__ );
-
-		return $events;
 	}
 
 	/**
@@ -307,60 +244,68 @@ class DataMartService extends Service {
 	 * Note: number of edits includes number of creates
 	 */
 	public static function getUserEditsByWikiId ( $userIds, $wikiId = null ) {
-		$app = F::app();
 		$periodId = self::PERIOD_ID_WEEKLY;
 		// Every weekly rollup is made on Sundays. We need date of penultimate Sunday.
 		// We dont get penultimate date of rollup from database, becasuse of performance issue
 		$rollupDate = date( "Y-m-d", strtotime( "Sunday 1 week ago" ) );
 
-		wfProfileIn( __METHOD__ );
-
 		if ( empty( $userIds ) ) {
-			wfProfileOut( __METHOD__ );
-			return false;
+			return [];
 		}
 
 		if ( empty( $wikiId ) ) {
-			$wikiId = $app->wg->CityId;
+			global $wgCityId;
+
+			$wikiId = $wgCityId;
 		}
 
 		// this is made because memcache key has character limit and a long
 		// list of user ids can be passed so we need to have it shorter
 		$userIdsKey = self::makeUserIdsMemCacheKey( $userIds );
 
-		$events = WikiaDataAccess::cacheWithLock(
-			wfSharedMemcKey( 'datamart', 'user_edits', $wikiId, $userIdsKey, $periodId, $rollupDate ),
-			86400 /* 24 hours */,
-			function () use ( $app, $wikiId, $userIds, $periodId, $rollupDate ) {
-				$db = DataMartService::getDB();
-				$events = ( new WikiaSQL() )->skipIf( self::isDisabled() )
-					->SELECT( 'user_id' )
-						->SUM( 'creates' )->AS_( 'creates' )
-						->SUM( 'edits' )->AS_( 'edits' )
-						->SUM( 'deletes' )->AS_( 'deletes' )
-						->SUM( 'undeletes' )->AS_( 'undeletes' )
-					->FROM( 'rollup_wiki_namespace_user_events' )
-					->WHERE( 'period_id' )->EQUAL_TO( $periodId )
-						->AND_( 'wiki_id' )->EQUAL_TO( $wikiId )
-						->AND_( 'time_id' )->EQUAL_TO( $rollupDate )
-						->AND_( 'user_id' )->IN( $userIds )
-					->GROUP_BY( 'user_id' )
-					->runLoop( $db, function( &$events, $row ) {
-						$events[$row->user_id] = [
-							'creates' => $row->creates,
-							'edits' => $row->creates + $row->edits,
-							'deletes' => $row->deletes,
-							'undeletes' => $row->undeletes,
-						];
+		try {
+			$events =
+				WikiaDataAccess::cacheWithLock( wfSharedMemcKey( 'datamart', 'user_edits', $wikiId,
+					$userIdsKey, $periodId, $rollupDate ), 86400 /* 24 hours */,
+					function () use ( $wikiId, $userIds, $periodId, $rollupDate ) {
+						$db = DataMartService::getDB();
+						$events =
+							( new WikiaSQL() )->skipIf( self::isDisabled() )
+								->SELECT( 'user_id' )
+								->SUM( 'creates' )
+								->AS_( 'creates' )
+								->SUM( 'edits' )
+								->AS_( 'edits' )
+								->SUM( 'deletes' )
+								->AS_( 'deletes' )
+								->SUM( 'undeletes' )
+								->AS_( 'undeletes' )
+								->FROM( 'rollup_wiki_namespace_user_events' )
+								->WHERE( 'period_id' )
+								->EQUAL_TO( $periodId )
+								->AND_( 'wiki_id' )
+								->EQUAL_TO( $wikiId )
+								->AND_( 'time_id' )
+								->EQUAL_TO( $rollupDate )
+								->AND_( 'user_id' )
+								->IN( $userIds )
+								->GROUP_BY( 'user_id' )
+								->runLoop( $db, function ( &$events, $row ) {
+									$events[$row->user_id] = [
+										'creates' => $row->creates,
+										'edits' => $row->creates + $row->edits,
+										'deletes' => $row->deletes,
+										'undeletes' => $row->undeletes,
+									];
+								} );
+
+						return $events;
 					} );
 
-				return $events;
-			}
-		);
-
-		wfProfileOut( __METHOD__ );
-
-		return $events;
+			return $events;
+		} catch ( DBError $dbError ) {
+			return [];
+		}
 	}
 
 	private static function makeUserIdsMemCacheKey( $userIds ) {
@@ -368,72 +313,62 @@ class DataMartService extends Service {
 		return $idsKey;
 	}
 
-	// get daily edits
-	public static function getEditsDaily ( $startDate, $endDate = null, $wikiId = null ) {
-		$edits = self::getEventsByWikiId( self::PERIOD_ID_DAILY, $startDate, $endDate, $wikiId, 'edits' );
-
-		return $edits;
-	}
-
-	// get weekly edits
-	public static function getEditsWeekly ( $startDate, $endDate = null, $wikiId = null ) {
-		$edits = self::getEventsByWikiId( self::PERIOD_ID_WEEKLY, $startDate, $endDate, $wikiId, 'edits' );
-
-		return $edits;
-	}
-
-	// get monthly edits
-	public static function getEditsMonthly ( $startDate, $endDate = null, $wikiId = null ) {
-		$edits = self::getEventsByWikiId( self::PERIOD_ID_MONTHLY, $startDate, $endDate, $wikiId, 'edits' );
-
-		return $edits;
-	}
-
 	public static function findLastRollupsDate( $period_id, $numTry = 5 ) {
-		$db = DataMartService::getDB();
-		// compensation for NOW
-		$date = date( 'Y-m-d' ) . ' 00:00:01';
-		do {
-			$date = ( new WikiaSQL() )->skipIf( self::isDisabled() )
-				->SELECT( 'time_id as t' )
-				->FROM( 'rollup_wiki_article_pageviews' )
-				->WHERE( 'time_id' )->LESS_THAN( $date )
-				->ORDER_BY( 'time_id' )->DESC()
-				->LIMIT( 1 )
-				->cache( self::CACHE_TOP_ARTICLES )
-				->run( $db, function ( ResultWrapper $result ) {
-					$row = $result->fetchObject();
+		try {
+			$db = DataMartService::getDB();
+			// compensation for NOW
+			$date = date( 'Y-m-d' ) . ' 00:00:01';
+			do {
+				$date =
+					( new WikiaSQL() )->skipIf( self::isDisabled() )
+						->SELECT( 'time_id as t' )
+						->FROM( 'rollup_wiki_article_pageviews' )
+						->WHERE( 'time_id' )
+						->LESS_THAN( $date )
+						->ORDER_BY( 'time_id' )
+						->DESC()
+						->LIMIT( 1 )
+						->cache( self::CACHE_TOP_ARTICLES )
+						->run( $db, function ( ResultWrapper $result ) {
+							$row = $result->fetchObject();
 
-					if ( $row && isset( $row->t ) ) {
-						return $row->t;
-					}
+							if ( $row && isset( $row->t ) ) {
+								return $row->t;
+							}
 
-					return null;
-				} );
-			if ( !$date ) {
-				break;
-			}
+							return null;
+						} );
+				if ( !$date ) {
+					break;
+				}
 
-			$found =  ( new WikiaSQL() )->skipIf( self::isDisabled() )
-				->SELECT( '1 as c' )
-				->FROM( 'rollup_wiki_article_pageviews' )
-				->WHERE( 'time_id' )->EQUAL_TO( $date )
-				->AND_( 'period_id' )->EQUAL_TO( $period_id )
-				->LIMIT( 1 )
-				->cache( self::CACHE_TOP_ARTICLES )
-				->run( $db, function ( ResultWrapper $result ) {
-					$row = $result->fetchObject();
+				$found =
+					( new WikiaSQL() )->skipIf( self::isDisabled() )
+						->SELECT( '1 as c' )
+						->FROM( 'rollup_wiki_article_pageviews' )
+						->WHERE( 'time_id' )
+						->EQUAL_TO( $date )
+						->AND_( 'period_id' )
+						->EQUAL_TO( $period_id )
+						->LIMIT( 1 )
+						->cache( self::CACHE_TOP_ARTICLES )
+						->run( $db, function ( ResultWrapper $result ) {
+							$row = $result->fetchObject();
 
-					if ( $row && isset( $row->c ) ) {
-						return $row->c;
-					}
+							if ( $row && isset( $row->c ) ) {
+								return $row->c;
+							}
 
-					return null;
-				} );
+							return null;
+						} );
 
-			$numTry--;
-		} while ( !$found &&  $numTry > 0 );
-		return $date;
+				$numTry --;
+			} while ( !$found && $numTry > 0 );
+
+			return $date;
+		} catch ( DBError $dbError ) {
+			return false;
+		}
 	}
 
 	/**
@@ -569,7 +504,8 @@ class DataMartService extends Service {
 	 * @param integer $limit [OPTIONAL] The maximum number of items in the list, defaults to 200
 	 * @param integer $rollupDate [OPTIONAL] Rollup ID to get (instead of the recent one)
 	 *
-	 * @return Array The list, the key contains article ID's and each item as a "namespace_id" and "pageviews" key
+	 * @return array The list, the key contains article ID's and each item as a "namespace_id"
+	 * and "pageviews" key
 	 */
 	public static function getTopArticlesByPageview(
 		$wikiId,
@@ -579,36 +515,30 @@ class DataMartService extends Service {
 		$limit = 200,
 		$rollupDate = null
 	) {
-		$articles = self::doGetTopArticlesByPageview(
-			$wikiId,
-			$articleIds,
-			$namespaces,
-			$excludeNamespaces,
-			$limit,
-			$rollupDate
-		);
+		try {
+			$articles =
+				self::doGetTopArticlesByPageview( $wikiId, $articleIds, $namespaces,
+					$excludeNamespaces, $limit, $rollupDate );
 
-		if ( empty( $articles ) ) {
-			// log when the fallback takes place
-			WikiaLogger::instance()->error( __METHOD__ . ' fallback', [
-				'wiki_id' => $wikiId,
-				'rollup_date' => $rollupDate
-			] );
+			if ( empty( $articles ) ) {
+				// log when the fallback takes place
+				WikiaLogger::instance()->error( __METHOD__ . ' fallback', [
+					'wiki_id' => $wikiId,
+					'rollup_date' => $rollupDate
+				] );
 
-			$fallbackDate = self::findLastRollupsDate( self::PERIOD_ID_WEEKLY );
-			if ( $fallbackDate ) {
-				$articles = self::doGetTopArticlesByPageview(
-					$wikiId,
-					$articleIds,
-					$namespaces,
-					$excludeNamespaces,
-					$limit,
-					$fallbackDate
-				);
+				$fallbackDate = self::findLastRollupsDate( self::PERIOD_ID_WEEKLY );
+				if ( $fallbackDate ) {
+					$articles =
+						self::doGetTopArticlesByPageview( $wikiId, $articleIds, $namespaces,
+							$excludeNamespaces, $limit, $fallbackDate );
+				}
 			}
-		}
 
-		return $articles;
+			return $articles;
+		} catch ( DBError $dbError ) {
+			return [];
+		}
 	}
 
 	/**
@@ -652,7 +582,6 @@ class DataMartService extends Service {
 		// fetch the top 10 wikis on a weekly pageviews basis
 		// this has it's own cache
 		$wikis = DataMartService::getTopWikisByPageviews(
-			DataMartService::PERIOD_ID_WEEKLY,
 			self::TOP_WIKIS_FOR_HUB,
 			$langs,
 			$hub,
@@ -707,153 +636,38 @@ class DataMartService extends Service {
 	}
 
 	/**
-	 * Gets the list of top wikis for tag_id and language on a monthly pageviews basis
-	 *
-	 * @param integer $tagId A valid tag_id from city_tag_map table
-	 * @param string $startDate [YYYY-MM-DD]
-	 * @param string $endDate [YYYY-MM-DD]
-	 * @param string $langCode A valid Wiki's language code
-	 * @param integer $periodId
-	 * @param integer $limit [OPTIONAL] The maximum number of items in the list, defaults to 200
-	 *
-	 * @return Array The list, the key contains Wiki ID's and "pageviews" number
-	 */
-	public static function getTopTagsWikisByPageviews ( $tagId, $startDate, $endDate, $langCode = 'en', $periodId = null, $limit = 200 ) {
-		$app = F::app();
-
-		if ( empty( $endDate ) ) {
-			if ( $periodId == self::PERIOD_ID_MONTHLY ) {
-				$endDate = date( 'Y-m-01' );
-			} else {
-				$endDate = date( 'Y-m-d', strtotime( '-1 day' ) );
-			}
-
-		}
-
-		if ( empty( $periodId ) ) {
-			$periodId = self::PERIOD_ID_MONTHLY;
-		}
-
-		$memKey = wfSharedMemcKey( 'datamart', 'tags_top_wikis', $tagId, $periodId, $startDate, $endDate, $langCode, $limit );
-		$tagViews = $app->wg->Memc->get( $memKey );
-		if ( !is_array( $tagViews ) ) {
-			$tagViews = array();
-			if ( !self::isDisabled() ) {
-				$db = DataMartService::getDB();
-
-				$tables = array(
-					'r' => 'rollup_wiki_pageviews',
-					'c' => 'wikicities.city_tag_map',
-					'd' => 'dimension_wikis'
-				);
-				$fields = array(
-					'c.tag_id as tag_id',
-					'r.wiki_id',
-					'sum(r.pageviews) as pviews'
-				);
-				$cond = array(
-					'period_id' => $periodId,
-					'tag_id' => $tagId,
-					"time_id between '{$startDate}' AND '{$endDate}'",
-				);
-				$opts = array(
-					'GROUP BY' => 'c.tag_id, r.wiki_id',
-					'ORDER BY' => 'pviews DESC',
-					'LIMIT' => $limit
-				);
-				$join_conds = array(
-					'c' => array( 'INNER JOIN', array( 'c.city_id = r.wiki_id' ) ),
-					'd' => array( 'INNER JOIN', array( 'd.wiki_id = r.wiki_id', 'd.public = 1', "d.lang = '{$langCode}'" ) )
-				);
-
-				$result = $db->select( $tables, $fields, $cond, __METHOD__, $opts, $join_conds );
-
-				while ( $row = $db->fetchObject( $result ) ) {
-					$tagViews[$row->wiki_id] = $row->pviews;
-				}
-
-				$app->wg->Memc->set( $memKey, $tagViews, 60 * 60 * 12 );
-			}
-		}
-
-		return $tagViews;
-	}
-
-	/**
 	 * Gets page views for given articles
 	 *
 	 * @param array $articlesIds
 	 * @param datetime $timeId
+	 * @param int $wikiId
+	 * @param int $periodId
 	 * @return array
 	 */
 	public static function getPageViewsForArticles( Array $articlesIds, $timeId, $wikiId, $periodId = self::PERIOD_ID_WEEKLY ) {
-		$db = DataMartService::getDB();
+		try {
+			$db = DataMartService::getDB();
 
-		$articlePageViews = ( new WikiaSQL() )->skipIf( self::isDisabled() )
-			->SELECT( 'article_id', 'pageviews' )
-			->FROM( 'rollup_wiki_article_pageviews' )
-			->WHERE( 'article_id' )->IN( $articlesIds )
-			->AND_( 'time_id' )->EQUAL_TO( $timeId )
-			->AND_( 'wiki_id' )->EQUAL_TO( intval( $wikiId ) )
-			->AND_( 'period_id' )->EQUAL_TO( intval( $periodId ) )
-			->runLoop( $db, function( &$articlePageViews, $row ) {
-				$articlePageViews[ $row->article_id ] = $row->pageviews;
-			} );
+			$articlePageViews =
+				( new WikiaSQL() )->skipIf( self::isDisabled() )
+					->SELECT( 'article_id', 'pageviews' )
+					->FROM( 'rollup_wiki_article_pageviews' )
+					->WHERE( 'article_id' )
+					->IN( $articlesIds )
+					->AND_( 'time_id' )
+					->EQUAL_TO( $timeId )
+					->AND_( 'wiki_id' )
+					->EQUAL_TO( intval( $wikiId ) )
+					->AND_( 'period_id' )
+					->EQUAL_TO( intval( $periodId ) )
+					->runLoop( $db, function ( &$articlePageViews, $row ) {
+						$articlePageViews[$row->article_id] = $row->pageviews;
+					} );
 
-		return $articlePageViews;
-	}
-
-	public static function getWAM200Wikis() {
-		$db = DataMartService::getDB();
-
-		$wikis = ( new WikiaSQL() )->skipIf( self::isDisabled() )
-			->cacheGlobal( self::TTL )
-			->SELECT( 'wiki_id' )
-			->FROM( 'dimension_top_wikis' )
-			->ORDER_BY( 'rank' )
-			->LIMIT( 200 )
-			->runLoop( $db, function( &$wikis, $row ) {
-				$wikis[] = intval( $row->wiki_id );
-			} );
-
-		return $wikis;
-	}
-
-	/**
-	 * Returns an array of IDs of wikias ordered by WAM rank.
-	 * The default limit is 200. If 0 is provided - no limit is used.
-	 * @param int $limit Default is set as the DEFAULT_TOP_WIKIAS_LIMIT const
-	 * @param array $wikisIds Limit the range to certain wikis
-	 * @return bool|array An array of IDs or `false` on no results
-	 */
-	public function getWikisOrderByWam( $limit = self::DEFAULT_TOP_WIKIAS_LIMIT, array $wikisIds = [] ) {
-		$db = DataMartService::getDB();
-
-		$sql = ( new WikiaSQL() )->skipIf( self::isDisabled() )
-			->cacheGlobal( self::TTL )
-			->SELECT( 'wiki_id' )
-			->FROM( 'dimension_top_wikis' )
-			->ORDER_BY( 'rank' );
-
-		/**
-		 * Limit the results to certain wikias
-		 */
-		if ( !empty( $wikisIds ) ) {
-			$sql->WHERE( 'wiki_id' )->IN( $wikisIds );
+			return $articlePageViews;
+		} catch ( DBError $dbError ) {
+			return [];
 		}
-
-		/**
-		 * Limit the number of results
-		 */
-		if ( $limit > 0 ) {
-			$sql->LIMIT( (int)$limit );
-		}
-
-		$wikis = $sql->runLoop( $db, function( &$wikis, $row ) {
-			$wikis[] = (int)$row->wiki_id;
-		} );
-
-		return $wikis;
 	}
 
 	protected static function getDB() {

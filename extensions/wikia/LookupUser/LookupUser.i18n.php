@@ -1,16 +1,7 @@
 <?php
-/**
- * Internationalisation file for LookupUser extension.
- *
- * @file
- * @ingroup Extensions
- */
-
+/** Internationalization file for /extensions/wikia/LookupUser/LookupUser extension. */
 $messages = array();
 
-/** English
- * @author Tim Starling
- */
 $messages['en'] = array(
 	'lookupuser' => 'Look up user info',
 	'lookupuser-desc' => '[[Special:LookupUser|Retrieve information]] about a user such as e-mail address and ID',
@@ -31,24 +22,24 @@ $messages['en'] = array(
 	'lookupuser-info-authenticated' => 'E-mail authentication: $1',
 	'lookupuser-birthdate' => 'Date of birth: $1',
 	'lookupuser-useroptions' => 'User options:',
-	'lookupuser-foundmoreusers'    => 'Found more than one\'s user',
+	'lookupuser-foundmoreusers' => "Found more than one's user",
 	'right-lookupuser' => 'Look up user preferences',
-	'lookupuser-toollinks' => '',
+	'lookupuser-toollinks' => "[{{fullurl:Special:LookupContribs|target=$2}} LookupContribs] &nbsp;|&nbsp; [{{fullurl:Special:Phalanx|type=8&target=$2}} PhalanxBlock] &nbsp;|&nbsp;  [{{fullurl:Special:EditAccount|wpAction=displayuser&wpUserName=$2}} EditAccount] &nbsp;|&nbsp;  [{{fullurl:Special:Piggyback|target=$2}} Piggyback] &nbsp;|&nbsp;  [{{fullurl:Special:WikiFactory/Metrics|from='&founder=$2}} Wikis by this user] &nbsp;|&nbsp; [{{fullurl:Special:CoppaTool|username=$2}} COPPA tool]",
 	'lookupuser-table-title' => 'Title',
 	'lookupuser-table-url' => 'URL',
 	'lookupuser-table-lastedited' => 'Last edited',
 	'lookupuser-table-contribs' => 'contribs',
-	'lookupuser-table-recordspager' => 'Showing \'\'\'$1\'\'\' to \'\'\'$2\'\'\' of \'\'\'$3\'\'\' records.',
+	'lookupuser-table-recordspager' => "Showing '''$1''' to '''$2''' of '''$3''' records.",
 	'lookupuser-table-editcount' => 'Edits',
 	'lookupuser-table-userrights' => 'User rights',
 	'lookupuser-table-blocked' => 'Blocked',
+	'lookupuser-table-posts' => 'Posts',
+	'lookupuser-table-last-post' => 'Last post',
 	'lookupuser-admin' => 'Admin',
 	'lookupuser-bureaucrat' => 'Bureaucrat',
 	'lookupuser-chatmoderator' => 'Chat moderator',
-	'lookupuser-username-blocked-globally' => 'This username <strong>is</strong> blocked globally.',
+	'lookupuser-username-blocked-globally' => '<span style="color:red;">This username <strong>is</strong> blocked globally.</span>',
 	'lookupuser-username-not-blocked-globally' => 'This username <strong>is not</strong> blocked globally.',
-	'lookupuser-user-allowed-adoption' => 'This user is allowed to auto-adopt.',
-	'lookupuser-user-not-allowed-adoption' => 'This user is not allowed to auto-adopt.',
 	'lookupuser-founder' => 'Founder',
 	'lookupuser-table-cannot-be-displayed' => 'The contribution table cannot be displayed -- its extension seems to be disabled.',
 	'lookupuser-account-status' => 'Account Status: ',
@@ -57,14 +48,6 @@ $messages['en'] = array(
 	'action-lookupuser' => 'lookup user information',
 );
 
-/** Message documentation (Message documentation)
- * @author Bennylin
- * @author Fryed-peach
- * @author Purodha
- * @author SVG
- * @author The Evil IP address
- * @author Umherirrender
- */
 $messages['qqq'] = array(
 	'lookupuser' => 'Name of Special:LookupUser in Special:SpecialPages and title of Special:LookupUser page',
 	'lookupuser-desc' => '{{desc}}',
@@ -73,7 +56,7 @@ $messages['qqq'] = array(
 	'lookupuser-authenticated' => '{{Identical|emailauthenticated}}',
 	'lookupuser-not-authenticated' => '{{Identical|emailnotauthenticated}}',
 	'lookupuser-id' => '{{Identical|User ID}}',
-	'lookupuser-email' => 'Link to Email search on Zendesk. $1 is the user\'s email address, $2 is the URL encoded email address.',
+	'lookupuser-email' => "Link to Email search on Zendesk. $1 is the user's email address, $2 is the URL encoded email address.",
 	'lookupuser-no-email' => '{{Identical|Notprovided}}',
 	'lookupuser-email-change-requested' => 'Text shown when user is in the process of changing their email address. $1 is the email address they are changing their registered email address to.',
 	'lookupuser-realname' => 'Real name of the selected user',
@@ -86,16 +69,13 @@ $messages['qqq'] = array(
 	'lookupuser-useroptions' => 'User’s options',
 	'lookupuser-foundmoreusers' => 'Message which will be shown when more than one user is found',
 	'right-lookupuser' => '{{doc-right|lookupuser}}',
-	'lookupuser-account-status' => 'The user\'s account status',
-	'lookupuser-account-status-tempuser' => 'The status of a temporary user account that hasn\'t been confirmed yet',
+	'lookupuser-account-status' => "The user's account status",
+	'lookupuser-account-status-tempuser' => "The status of a temporary user account that hasn't been confirmed yet",
 	'lookupuser-account-status-realuser' => 'The status of a real user account',
 	'action-lookupuser' => '{{doc-action|lookupuser}}',
-	'lookupuser-username-blocked-globally' => 'Informs staff that user is globally blocked and provides a link to check block status in Phalanx.'
+	'lookupuser-username-blocked-globally' => 'Informs staff that user is globally blocked and provides a link to check block status in Phalanx.',
 );
 
-/** Afrikaans (Afrikaans)
- * @author Naudefj
- */
 $messages['af'] = array(
 	'lookupuser' => 'Kyk gebruikersinliging op',
 	'lookupuser-intro' => "Sleutel 'n gebruikersnaam in om die gebruiker se voorkeure te sien.",
@@ -109,9 +89,6 @@ $messages['af'] = array(
 	'lookupuser-useroptions' => 'Gebruikersopsies:',
 );
 
-/** Arabic (العربية)
- * @author Meno25
- */
 $messages['ar'] = array(
 	'lookupuser' => 'ابحث عن معلومات المستخدم',
 	'lookupuser-desc' => '[[Special:LookupUser|يعرض معلومات]] عن المستخدم مثل عنوان البريد الإلكتروني والرقم',
@@ -131,19 +108,11 @@ $messages['ar'] = array(
 	'right-lookupuser' => 'مطالعة تفضيلات المستخدم',
 );
 
-/** Aramaic (ܐܪܡܝܐ)
- * @author Basharh
- * @author Michaelovic
- */
 $messages['arc'] = array(
 	'lookupuser-realname' => 'ܫܡܐ ܫܪܝܪܐ: $1',
 	'lookupuser-useroptions' => 'ܓܒܝܬ̈ܐ ܕܡܦܠܚܢܐ:',
 );
 
-/** Egyptian Spoken Arabic (مصرى)
- * @author Meno25
- * @author Ouda
- */
 $messages['arz'] = array(
 	'lookupuser' => 'ابحث عن معلومات المستخدم',
 	'lookupuser-desc' => '[[Special:LookupUser|يعرض معلومات]] عن المستخدم مثل عنوان البريد الإلكترونى والرقم',
@@ -163,12 +132,6 @@ $messages['arz'] = array(
 	'right-lookupuser' => 'مطالعة تفضيلات المستخدم',
 );
 
-/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
- * @author EugeneZelenko
- * @author Jim-by
- * @author Wizardist
- * @author Zedlik
- */
 $messages['be-tarask'] = array(
 	'lookupuser' => 'Пошук зьвестак пра ўдзельніка',
 	'lookupuser-desc' => '[[Special:LookupUser|Атрыманьне зьвестак]] пра удзельнікаў, такіх, як адрас электроннай пошты і ідэнтыфікатар',
@@ -189,9 +152,6 @@ $messages['be-tarask'] = array(
 	'right-lookupuser' => 'пошук зьвестак пра удзельнікаў',
 );
 
-/** Bulgarian (Български)
- * @author DCLXVI
- */
 $messages['bg'] = array(
 	'lookupuser' => 'Извличане на потребителска информация',
 	'lookupuser-desc' => '[[Special:LookupUser|Извлича информация]] за потребител - електронна поща, потребителски номер и др.',
@@ -207,9 +167,6 @@ $messages['bg'] = array(
 	'right-lookupuser' => 'Изследване на потребителските предпочитания',
 );
 
-/** Bengali (বাংলা)
- * @author Wikitanvir
- */
 $messages['bn'] = array(
 	'lookupuser' => 'ব্যবহারকারী তথ্যাদি দেখুন',
 	'lookupuser-intro' => 'কোনো ব্যবহারকারীর পছন্দ দেখতে ঐ ব্যবহারকারীর নাম প্রবেশ করান।',
@@ -227,10 +184,6 @@ $messages['bn'] = array(
 	'right-lookupuser' => 'ব্যবহারকারীর পছন্দ দেখুন',
 );
 
-/** Breton (Brezhoneg)
- * @author Fulup
- * @author Y-M D
- */
 $messages['br'] = array(
 	'lookupuser' => 'Sellet ouzh titouroù an implijer',
 	'lookupuser-desc' => "[[Special:LookupUser|Adpakañ a ra an titouroù]] a denn d'un implijer bennak evel ar chomlec'h postel hag an niverenn ID",
@@ -251,9 +204,6 @@ $messages['br'] = array(
 	'right-lookupuser' => 'Sellet ouzh ar penndibaboù implijout',
 );
 
-/** Bosnian (Bosanski)
- * @author CERminator
- */
 $messages['bs'] = array(
 	'lookupuser' => 'Pretraga podataka o korisniku',
 	'lookupuser-desc' => '[[Special:LookupUser|Traženje podataka]] o korisniku poput e-mail adresa i ID',
@@ -273,11 +223,6 @@ $messages['bs'] = array(
 	'right-lookupuser' => 'Pretraga korisničkih postavki',
 );
 
-/** Catalan (Català)
- * @author SMP
- * @author Solde
- * @author Toniher
- */
 $messages['ca'] = array(
 	'lookupuser-no-email' => 'no proporcionat',
 	'lookupuser-realname' => 'Nom real: $1',
@@ -288,17 +233,10 @@ $messages['ca'] = array(
 	'right-lookupuser' => "Consultar les preferències d'usuari",
 );
 
-/** Chechen (Нохчийн)
- * @author Sasan700
- */
 $messages['ce'] = array(
 	'right-lookupuser' => 'лаха декъашхойн нисдарш',
 );
 
-/** Czech (Česky)
- * @author Matěj Grabovský
- * @author Mormegil
- */
 $messages['cs'] = array(
 	'lookupuser' => 'Vyhledat informace o uživateli',
 	'lookupuser-desc' => '[[Special:LookupUser|Získání informací]] o uživateli jako e-mailová adresa a ID',
@@ -318,26 +256,16 @@ $messages['cs'] = array(
 	'right-lookupuser' => 'Prohlížení nastavení jiných uživatelů',
 );
 
-/** Welsh (Cymraeg)
- * @author Lloffiwr
- */
 $messages['cy'] = array(
 	'lookupuser-email' => 'E-bost: [https://wikia.zendesk.com/search?query=type:ticket%20requester:$2 $1]',
 );
 
-/** German (Deutsch)
- * @author Kghbln
- * @author LWChris
- * @author Melancholie
- * @author SVG
- * @author Umherirrender
- */
 $messages['de'] = array(
 	'lookupuser' => 'Benutzerinformationen einsehen',
 	'lookupuser-desc' => 'Ergänzt eine [[Special:LookupUser|Spezialseite]] mit der Informationen zu einem Benutzer eingesehen werden können',
-	'lookupuser-intro' => 'Bitte einen Benutzernamen angeben, um die persönlichen Einstellungen des zugehörigen Benutzers anzusehen. Es kann auch eine E-Mail-Adresse angegeben werden, wobei dann alle Benutzerkonten angezeigt werden, die diese E-Mail-Adresse nutzen.',
+	'lookupuser-intro' => 'Bitte einen Benutzernamen angeben, um die persönlichen Informationen des zugehörigen Benutzers anzusehen. Es kann auch eine E-Mail-Adresse angegeben werden, wobei dann alle Benutzerkonten angezeigt werden, die diese E-Mail-Adresse nutzen.',
 	'lookupuser-nonexistent' => 'Fehler: Benutzer nicht vorhanden',
-	'lookupuser-authenticated' => 'E-Mail-Bestätigung: $1',
+	'lookupuser-authenticated' => 'bestätigt am $1',
 	'lookupuser-not-authenticated' => 'nicht bestätigt',
 	'lookupuser-id' => 'Benutzerkennung: <tt>#$1</tt>',
 	'lookupuser-email' => 'E-Mail-Adresse: [https://wikia.zendesk.com/search?query=type:ticket%20requester:$2 $1]',
@@ -347,14 +275,38 @@ $messages['de'] = array(
 	'lookupuser-no-registration' => 'nicht verzeichnet',
 	'lookupuser-touched' => 'Letzte Aktualisierung der Benutzerdaten: $1',
 	'lookupuser-info-authenticated' => 'E-Mail-Bestätigung: $1',
-	'lookupuser-useroptions' => 'Einstellungen des Benutzerkontos:',
+	'lookupuser-useroptions' => 'Benutzerkonto-Einstellungen:',
 	'lookupuser-foundmoreusers' => 'Es wurde mehr als ein Benutzer gefunden:',
 	'right-lookupuser' => 'Benutzereinstellungen anderer Benutzer einsehen',
+	'lookupuser-account-status-realuser' => 'Echter Benutzer',
+	'lookupuser-account-status-tempuser' => 'Temporärer Benutzer',
+	'lookupuser-account-status' => 'Kontostatus: ',
+	'lookupuser-bureaucrat' => 'Bürokrat',
+	'lookupuser-chatmoderator' => 'Chatmoderator',
+	'lookupuser-founder' => 'Gründer',
+	'lookupuser-nonexistent-id' => 'Fehler: Benutzer mit der ID #$1 existiert nicht',
+	'lookupuser-table-blocked' => 'Sperre',
+	'lookupuser-table-contribs' => 'Beiträge',
+	'lookupuser-table-editcount' => 'Anzahl',
+	'lookupuser-table-lastedited' => 'Letzter Beitrag',
+	'lookupuser-table-recordspager' => "Zeige '''$1''' bis '''$2''' von '''$3''' Einträgen",
+	'lookupuser-table-title' => 'Community',
+	'lookupuser-table-userrights' => 'Benutzerrechte',
+	'lookupuser-username-blocked-globally' => 'Dieser Benutzername <strong>ist global gesperrt</strong>.',
+	'lookupuser-username-not-blocked-globally' => 'Dieser Benutzername ist <strong>nicht</strong> global gesperrt.',
+	'lookupuser-email-change-requested' => 'Benutzer hat in den Einstellungen die Änderung der E-Mail-Adresse in $1 angefordert.',
+	'lookupuser-no-birthdate' => 'nicht verzeichnet',
+	'lookupuser-birthdate' => 'Geburtsdatum: $1',
+	'lookupuser-toollinks' => "[{{fullurl:Special:LookupContribs|target=$2}} LookupContribs] &nbsp;|&nbsp; [{{fullurl:Special:Phalanx|type=8&target=$2}} PhalanxBlock] &nbsp;|&nbsp;  [{{fullurl:Special:EditAccount|wpAction=displayuser&wpUserName=$2}} EditAccount] &nbsp;|&nbsp;  [{{fullurl:Special:Piggyback|target=$2}} Piggyback] &nbsp;|&nbsp;  [{{fullurl:Special:WikiFactory/Metrics|from='&founder=$2}} Wikis dieses Benutzers] &nbsp;|&nbsp; [{{fullurl:Special:CoppaTool|username=$2}} COPPA-Werkzeug]",
+	'lookupuser-table-url' => 'URL',
+	'lookupuser-table-posts' => 'Diskussionen',
+	'lookupuser-table-last-post' => 'Letzter Post',
+	'lookupuser-admin' => 'Admin',
+	'lookupuser-table-cannot-be-displayed' => 'Die Beitragstabelle kann nicht angezeigt werden - Ihre Erweiterung scheint deaktiviert zu sein.',
+	'action-lookupuser' => 'Benutzerinformationen einsehen',
+	'lookupuser-user-allowed-adoption' => 'Dieser Benutzer kann automatisch Wikis adoptieren.',
 );
 
-/** Lower Sorbian (Dolnoserbski)
- * @author Michawiki
- */
 $messages['dsb'] = array(
 	'lookupuser' => 'Wužywarske informacije póglědaś',
 	'lookupuser-desc' => '[[Special:LookupUser|Informacije wó wužywarju]] kaž e-mailowu adresu a ID wótwołaś',
@@ -375,12 +327,6 @@ $messages['dsb'] = array(
 	'right-lookupuser' => 'Wužywarske nastajenja se woglědaś',
 );
 
-/** Greek (Ελληνικά)
- * @author Consta
- * @author Crazymadlover
- * @author Omnipaedista
- * @author ZaDiak
- */
 $messages['el'] = array(
 	'lookupuser' => 'Αναζήτηση πληροφοριών για τον χρήστη',
 	'lookupuser-desc' => '[[Special:LookupUser|Ανάκτηση πληροφοριών]] σχετικά με ένα χρήστη σαν την ηλεκτρονική του διεύθυνση και την ταυτότητα such as e-mail address and ID',
@@ -400,9 +346,6 @@ $messages['el'] = array(
 	'right-lookupuser' => 'Δείτε τις προτιμήσεις χρήστη',
 );
 
-/** Esperanto (Esperanto)
- * @author Yekrats
- */
 $messages['eo'] = array(
 	'lookupuser' => 'Konsulti informon pri uzanto',
 	'lookupuser-desc' => '[[Special:LookupUser|Konsulti informon]] pri uzanto kiel retadreso kaj identigo',
@@ -422,50 +365,64 @@ $messages['eo'] = array(
 	'right-lookupuser' => 'Trarigardi agordojn de uzantoj',
 );
 
-/** Spanish (Español)
- * @author Crazymadlover
- * @author Imre
- */
 $messages['es'] = array(
 	'lookupuser' => 'Ver información de usuario',
-	'lookupuser-desc' => '[[Special:LookupUser|Recuperar información]] sobre un usuario tal como correo electrónico y ID',
-	'lookupuser-intro' => 'Ingrese un nombre de usuario para ver las preferencias de ese usuario.',
+	'lookupuser-desc' => '[[{{#Special:LookupUser}}|Recuperar información]] sobre un usuario tal como correo electrónico y ID',
+	'lookupuser-intro' => 'Ingresa un nombre de usuario para ver las preferencias de ese usuario.',
 	'lookupuser-nonexistent' => 'Error: Usuario no existe',
 	'lookupuser-authenticated' => 'autenticado en $1',
 	'lookupuser-not-authenticated' => 'no autenticado',
 	'lookupuser-id' => 'ID de usuario: <tt>#$1</tt>',
 	'lookupuser-email' => 'Correo electrónico: [https://wikia.zendesk.com/search?query=type:ticket%20requester:$2 $1]',
-	'lookupuser-no-email' => 'no proveído',
+	'lookupuser-no-email' => 'no proporcionada',
 	'lookupuser-realname' => 'Nombre real: $1',
 	'lookupuser-registration' => 'Fecha de registro: $1',
-	'lookupuser-no-registration' => 'no grabado',
-	'lookupuser-touched' => 'Registro de usuario tocado por último: $1',
+	'lookupuser-no-registration' => 'no grabada',
+	'lookupuser-touched' => 'Registro de usuario tocado por última vez: $1',
 	'lookupuser-info-authenticated' => 'Autenticación de correo electrónico: $1',
 	'lookupuser-useroptions' => 'Opciones de usuario:',
 	'right-lookupuser' => 'Ver preferencias de usuario',
+	'lookupuser-nonexistent-id' => 'Error: Usuario con ID #$1 no existe',
+	'lookupuser-email-change-requested' => 'Usuario solicita un cambio de correo electrónico a través de preferencias a $1.',
+	'lookupuser-no-birthdate' => 'no grabada',
+	'lookupuser-birthdate' => 'Fecha de nacimiento: $1',
+	'lookupuser-foundmoreusers' => 'Se ha encontrado más de un usuario',
+	'lookupuser-toollinks' => "[{{fullurl:Special:LookupContribs|target=$2}} LookupContribs] &nbsp;|&nbsp; [{{fullurl:Special:Phalanx|type=8&target=$2}} PhalanxBlock] &nbsp;|&nbsp;  [{{fullurl:Special:EditAccount|wpAction=displayuser&wpUserName=$2}} EditAccount] &nbsp;|&nbsp;  [{{fullurl:Special:Piggyback|target=$2}} Piggyback] &nbsp;|&nbsp;  [{{fullurl:Special:WikiFactory/Metrics|from='&founder=$2}} Wikis de este usuario] &nbsp;|&nbsp; [{{fullurl:Special:CoppaTool|username=$2}} COPPA tool]",
+	'lookupuser-table-title' => 'Título',
+	'lookupuser-table-url' => 'URL',
+	'lookupuser-table-lastedited' => 'Última edición',
+	'lookupuser-table-contribs' => 'contrib',
+	'lookupuser-table-recordspager' => "Mostrando '''$1''' a '''$2''' de '''$3''' registros.",
+	'lookupuser-table-editcount' => 'Ed.',
+	'lookupuser-table-userrights' => 'Permisos',
+	'lookupuser-table-blocked' => 'Bloqueado',
+	'lookupuser-table-posts' => 'Discusiones',
+	'lookupuser-table-last-post' => 'Última disc',
+	'lookupuser-admin' => 'Administrador',
+	'lookupuser-bureaucrat' => 'Burócrata',
+	'lookupuser-chatmoderator' => 'Moderador del chat',
+	'lookupuser-username-blocked-globally' => '<span style="color:red;">Este nombre de usuario <strong>está</strong> bloqueado globalmente.</span>',
+	'lookupuser-username-not-blocked-globally' => 'Este nombre de usuario <strong>no está</strong> bloqueado globalmente.',
+	'lookupuser-founder' => 'Fundador',
+	'lookupuser-table-cannot-be-displayed' => 'Esta tabla de contribución no puede ser mostrado, para que la extensión está deshabilitada.',
+	'lookupuser-account-status' => 'Estado de la cuenta: ',
+	'lookupuser-account-status-tempuser' => 'Usuario temporal',
+	'lookupuser-account-status-realuser' => 'Usuario real',
+	'action-lookupuser' => 'ver información de usuario',
+	'lookupuser-user-not-allowed-adoption' => 'Este usuario no puede auto-adoptar.',
+	'lookupuser-user-allowed-adoption' => 'Este usuario puede auto-adoptar.',
 );
 
-/** Estonian (Eesti)
- * @author Avjoska
- */
 $messages['et'] = array(
 	'lookupuser-realname' => 'Õige nimi: $1',
 	'lookupuser-registration' => 'Registreerimise kuupäev: $1',
 );
 
-/** Basque (Euskara)
- * @author An13sa
- */
 $messages['eu'] = array(
 	'lookupuser-realname' => 'Benetako izena: $1',
 	'lookupuser-registration' => 'Erregistratzeko unea: $1',
 );
 
-/** Persian (فارسی)
- * @author Huji
- * @author Persianizer
- * @author ZxxZxxZ
- */
 $messages['fa'] = array(
 	'lookupuser' => 'نگاه کردن به اطلاعات کاربر',
 	'lookupuser-desc' => '[[Special:LookupUser|به دست آوردن اطلاعات]] در مورد یک کاربر نظیر نشانی پست الکترونیکی و ID',
@@ -486,12 +443,6 @@ $messages['fa'] = array(
 	'right-lookupuser' => 'مراجعه به ترجیحات کاربر',
 );
 
-/** Finnish (Suomi)
- * @author Crt
- * @author Jaakonam
- * @author Nike
- * @author Tarmo
- */
 $messages['fi'] = array(
 	'lookupuser' => 'Katso käyttäjän tiedot',
 	'lookupuser-desc' => '[[Special:LookupUser|Hakee tietoja]] käyttäjästä, kuten sähköpostiosoitteen ja tunnisteen.',
@@ -511,35 +462,53 @@ $messages['fi'] = array(
 	'right-lookupuser' => 'Hakea käyttäjän asetuksia',
 );
 
-/** French (Français)
- * @author Crochet.david
- * @author Grondin
- * @author IAlex
- * @author Sherbrooke
- */
 $messages['fr'] = array(
-	'lookupuser' => 'Parcourir les informations de l’usager',
+	'lookupuser' => 'Récupérer les infos de l’utilisateur',
 	'lookupuser-desc' => 'Extrait les informations concernant un utilisateur telles qu’une adresse électronique et le numéro ID',
-	'lookupuser-intro' => 'Entrez un nom d’utilisateur pour afficher ses préférences. Une adresse de courriel peut également être utilisée et affichera tous les comptes qui utilisent cette adresse.',
+	'lookupuser-intro' => 'Saisissez un nom d’utilisateur pour afficher ses préférences.',
 	'lookupuser-nonexistent' => 'Erreur : l’utilisateur n’existe pas',
-	'lookupuser-authenticated' => 'Courriel d’identification : $1',
+	'lookupuser-authenticated' => 'vérifiée le $1',
 	'lookupuser-not-authenticated' => 'pas identifié',
 	'lookupuser-id' => 'ID de l’utilisateur : <tt>#$1</tt>',
-	'lookupuser-email' => 'Courriel : [https://wikia.zendesk.com/search?query=type:ticket%20requester:$2 $1]',
+	'lookupuser-email' => 'E-mail : <span class="plainlinks">[https://wikia.zendesk.com/search?query=type:ticket%20requester:$2 $1]</span> - <small>[[Special:LookupUser/$1|vérifier]]</small>',
 	'lookupuser-no-email' => 'non fourni',
 	'lookupuser-realname' => 'Nom réel : $1',
 	'lookupuser-registration' => 'Date d’enregistrement : $1',
 	'lookupuser-no-registration' => 'non enregistré',
 	'lookupuser-touched' => 'Enregistrement de l’utilisateur touché pour la dernière fois : $1',
-	'lookupuser-info-authenticated' => 'Authentification du courriel : $1',
+	'lookupuser-info-authenticated' => "Vérification de l'e-mail : $1",
 	'lookupuser-useroptions' => 'Options de l’utilisateur :',
 	'lookupuser-foundmoreusers' => "Plus d'un utilisateur trouvé :",
 	'right-lookupuser' => 'Visionner les préférences des utilisateurs',
+	'lookupuser-nonexistent-id' => "Erreur : aucun utilisateur avec l'ID #$1 n'existe.",
+	'lookupuser-email-change-requested' => "L'utilisateur a demandé à ce que son adresse e-mail soit remplacée par $1 via Préférences.",
+	'lookupuser-no-birthdate' => 'non enregistré',
+	'lookupuser-birthdate' => 'Date de naissance : $1',
+	'lookupuser-toollinks' => "[{{fullurl:Special:LookupContribs|target=$2}} LookupContribs] &nbsp;|&nbsp; [{{fullurl:Special:Phalanx|type=8&target=$2}} PhalanxBlock] &nbsp;|&nbsp;  [{{fullurl:Special:EditAccount|wpAction=displayuser&wpUserName=$2}} EditAccount] &nbsp;|&nbsp;  [{{fullurl:Special:Piggyback|target=$2}} Accès superposé] &nbsp;|&nbsp;  [{{fullurl:Special:WikiFactory/Metrics|from='&founder=$2}} Wikis de cet utilisateur] &nbsp;|&nbsp; [{{fullurl:Special:CoppaTool|username=$2}} Outil COPPA]",
+	'lookupuser-table-title' => 'Titre',
+	'lookupuser-table-url' => 'URL',
+	'lookupuser-table-lastedited' => 'Dernière modification',
+	'lookupuser-table-contribs' => 'contributions',
+	'lookupuser-table-recordspager' => "Affichage des enregistrements '''$1''' à '''$2''' sur '''$3'''.",
+	'lookupuser-table-editcount' => 'Modifications',
+	'lookupuser-table-userrights' => 'Droits utilisateur',
+	'lookupuser-table-blocked' => 'Bloqué',
+	'lookupuser-table-posts' => 'Publications',
+	'lookupuser-table-last-post' => 'Dernière publication',
+	'lookupuser-admin' => 'Administrateur',
+	'lookupuser-bureaucrat' => 'Bureaucrate',
+	'lookupuser-chatmoderator' => 'Modérateur du tchat',
+	'lookupuser-username-blocked-globally' => "<span style=\"color:red;\">Ce nom d'utilisateur <strong>fait l'objet</strong> d'un blocage global.</span>",
+	'lookupuser-username-not-blocked-globally' => "Ce nom d'utilisateur <strong>ne fait pas l'objet</strong> d'un blocage global.",
+	'lookupuser-founder' => 'Fondateur',
+	'lookupuser-table-cannot-be-displayed' => "Impossible d'afficher le tableau des contributions. Son extension semble désactivée.",
+	'lookupuser-account-status' => 'État du compte : ',
+	'lookupuser-account-status-tempuser' => 'Utilisateur temporaire',
+	'lookupuser-account-status-realuser' => 'Utilisateur réel',
+	'action-lookupuser' => "récupérer les informations de l'utilisateur",
+	'lookupuser-user-allowed-adoption' => 'Adoption automatique autorisée pour cet utilisateur.',
 );
 
-/** Franco-Provençal (Arpetan)
- * @author ChrisPtDe
- */
 $messages['frp'] = array(
 	'lookupuser' => 'Parcorir les enformacions a l’utilisator',
 	'lookupuser-nonexistent' => 'Èrror : l’utilisator ègziste pas',
@@ -557,11 +526,6 @@ $messages['frp'] = array(
 	'right-lookupuser' => 'Vêre les prèferences ux utilisators',
 );
 
-/** Galician (Galego)
- * @author Alma
- * @author Toliño
- * @author Xosé
- */
 $messages['gl'] = array(
 	'lookupuser' => 'Consultar a información do usuario',
 	'lookupuser-desc' => '[[Special:LookupUser|Recuperar información]] sobre un usuario como o enderezo de correo electrónico e o ID',
@@ -582,10 +546,6 @@ $messages['gl'] = array(
 	'right-lookupuser' => 'Consultar as preferencias dun usuario',
 );
 
-/** Swiss German (Alemannisch)
- * @author Als-Chlämens
- * @author Als-Holder
- */
 $messages['gsw'] = array(
 	'lookupuser' => 'Benutzerinformatione aaluege',
 	'lookupuser-desc' => '[[Special:LookupUser|Informatione]] iber Benutzer iberchu, z. B. E-Mail-Adräss oder ID.',
@@ -606,18 +566,10 @@ $messages['gsw'] = array(
 	'right-lookupuser' => 'Suech no Benutzer Yystellige',
 );
 
-/** Manx (Gaelg)
- * @author MacTire02
- */
 $messages['gv'] = array(
 	'lookupuser-realname' => 'Feer-ennym: $1',
 );
 
-/** Hebrew (עברית)
- * @author Nirofir
- * @author Rotemliss
- * @author YaronSh
- */
 $messages['he'] = array(
 	'lookupuser' => 'בדיקת נתוני משתמש',
 	'lookupuser-desc' => '[[Special:LookupUser|בדיקת נתונים]] אודות משתמש כגון כתובת הדוא"ל ומספר המשתמש',
@@ -638,9 +590,6 @@ $messages['he'] = array(
 	'right-lookupuser' => 'בדיקת העדפות משתמש',
 );
 
-/** Hindi (हिन्दी)
- * @author Kaustubh
- */
 $messages['hi'] = array(
 	'lookupuser' => 'सदस्य ज़ानकारी खोजें',
 	'lookupuser-desc' => 'एक सदस्यकी [[Special:LookupUser|अधिक ज़ानकारी खोजें]] उदा. इमेल एड्रेस और सदस्य क्रमांक',
@@ -658,10 +607,6 @@ $messages['hi'] = array(
 	'lookupuser-useroptions' => 'सदस्य विकल्प:',
 );
 
-/** Croatian (Hrvatski)
- * @author Dalibor Bosits
- * @author Ex13
- */
 $messages['hr'] = array(
 	'lookupuser' => 'Pogledaj info suradnika',
 	'lookupuser-desc' => '[[Special:LookupUser|Omogućava gledanje]] informacija o suradniku poput e-mail adrese ili ID broja',
@@ -681,9 +626,6 @@ $messages['hr'] = array(
 	'right-lookupuser' => 'Pogledaj suradničke postavke',
 );
 
-/** Upper Sorbian (Hornjoserbsce)
- * @author Michawiki
- */
 $messages['hsb'] = array(
 	'lookupuser' => 'Wužiwarske informacije sej wobhladać',
 	'lookupuser-desc' => '[[Special:LookupUser|Informacije wo wužiwarja wotwołać]], na přikład e-mejlowu adresu a ID',
@@ -704,11 +646,6 @@ $messages['hsb'] = array(
 	'right-lookupuser' => 'Wužiwarske nastajenja sej wobhladać',
 );
 
-/** Hungarian (Magyar)
- * @author Dani
- * @author Glanthor Reviol
- * @author Tgr
- */
 $messages['hu'] = array(
 	'lookupuser' => 'Felhasználói információ keresése',
 	'lookupuser-desc' => '[[Special:LookupUser|Információ lekérése]] egy adott felhasználóról, például annak e-mail címe vagy azonosítója',
@@ -728,9 +665,6 @@ $messages['hu'] = array(
 	'right-lookupuser' => 'felhasználó beállításainak megtekintése',
 );
 
-/** Interlingua (Interlingua)
- * @author McDutchie
- */
 $messages['ia'] = array(
 	'lookupuser' => 'Cercar info de usator',
 	'lookupuser-desc' => '[[Special:LookupUser|Recupera informationes]] super un usator como adresse de e-mail e numero de ID',
@@ -751,11 +685,6 @@ $messages['ia'] = array(
 	'right-lookupuser' => 'Consultar preferentias de usatores',
 );
 
-/** Indonesian (Bahasa Indonesia)
- * @author Bennylin
- * @author IvanLanin
- * @author Rex
- */
 $messages['id'] = array(
 	'lookupuser' => 'Mencari informasi pengguna',
 	'lookupuser-desc' => '[[Special:LookupUser|Menampilkan informasi]] seorang pengguna seperti alamat surel dan ID',
@@ -775,64 +704,107 @@ $messages['id'] = array(
 	'right-lookupuser' => 'Lihat preferensi pengguna',
 );
 
-/** Ido (Ido)
- * @author Malafaya
- */
 $messages['io'] = array(
 	'lookupuser-nonexistent' => 'Eroro: Uzanto ne existas',
 	'lookupuser-realname' => 'Reala nomo: $1',
 );
 
-/** Italian (Italiano)
- * @author BrokenArrow
- * @author Darth Kule
- */
 $messages['it'] = array(
-	'lookupuser' => 'Guarda informazioni utente',
-	'lookupuser-desc' => '[[Special:LookupUser|Recupera informazioni]] su un utente come indirizzo e-mail e ID',
-	'lookupuser-intro' => 'Inserisci un nome utente per visualizzarne le preferenze.',
+	'lookupuser' => 'Controlla informazioni utente',
+	'lookupuser-desc' => '[[Special:LookupUser|Recupera le informazioni]] su un utente come indirizzo e-mail e ID',
+	'lookupuser-intro' => 'Inserisci un nome utente per visualizzare le sue preferenze.',
 	'lookupuser-nonexistent' => "Errore: l'utente non esiste",
-	'lookupuser-authenticated' => 'Conferma indirizzo e-mail: $1',
-	'lookupuser-not-authenticated' => 'non confermato',
+	'lookupuser-authenticated' => 'autenticato su $1',
+	'lookupuser-not-authenticated' => 'non autenticato',
 	'lookupuser-id' => 'ID utente: <tt>#$1</tt>',
-	'lookupuser-email' => 'E-mail: [https://wikia.zendesk.com/search?query=type:ticket%20requester:$2 $1]',
+	'lookupuser-email' => 'E-mail: <span class="plainlinks">[https://wikia.zendesk.com/search?query=type:ticket%20requester:$2 $1]</span> - <small>[[Special:LookupUser/$1|controlla]]</small>',
 	'lookupuser-no-email' => 'non fornito',
-	'lookupuser-realname' => 'Nome vero: $1',
+	'lookupuser-realname' => 'Nome reale: $1',
 	'lookupuser-registration' => 'Data di registrazione: $1',
 	'lookupuser-no-registration' => 'non disponibile',
-	'lookupuser-touched' => "Ultima visita registrata dell'utente: $1",
+	'lookupuser-touched' => "Ultima modifica al registro dell'utente: $1",
 	'lookupuser-info-authenticated' => 'Autenticazione e-mail: $1',
-	'lookupuser-useroptions' => 'Opzioni utente:',
-	'right-lookupuser' => 'Consulta le preferenze utente',
+	'lookupuser-useroptions' => "Preferenze dell'utente:",
+	'right-lookupuser' => 'Controlla le preferenze utente',
+	'lookupuser-nonexistent-id' => "Errore: l'utente con ID #$1 non esiste",
+	'lookupuser-email-change-requested' => "L'utente ha richiesto di cambiare l'e-mail tramite le preferenze in $1.",
+	'lookupuser-no-birthdate' => 'non disponibile',
+	'lookupuser-birthdate' => 'Data di nascita: $1',
+	'lookupuser-foundmoreusers' => 'Trovato più di un utente',
+	'lookupuser-toollinks' => "[{{fullurl:Special:LookupContribs|target=$2}} LookupContribs] &nbsp;|&nbsp; [{{fullurl:Special:Phalanx|tipo=8&target=$2}} PhalanxBlock] &nbsp;|&nbsp;  [{{fullurl:Special:EditAccount|wpAction=displayuser&wpUserName=$2}} Modifica Account] &nbsp;|&nbsp;  [{{fullurl:Special:Piggyback|target=$2}} Piggyback] &nbsp;|&nbsp;  [{{fullurl:Special:WikiFactory/Metriche|da='&founder=$2}} Wiki create] &nbsp;|&nbsp; [{{fullurl:Special:CoppaTool|username=$2}} Strumento COPPA]",
+	'lookupuser-table-title' => 'Titolo',
+	'lookupuser-table-url' => 'URL',
+	'lookupuser-table-lastedited' => 'Ultima modifica',
+	'lookupuser-table-contribs' => 'contributi',
+	'lookupuser-table-recordspager' => "Visualizzazione da '''$1''' a '''$2''' di '''$3''' registri.",
+	'lookupuser-table-editcount' => 'Modifiche',
+	'lookupuser-table-userrights' => 'Diritti utente',
+	'lookupuser-table-blocked' => 'Bloccato',
+	'lookupuser-table-posts' => 'Post',
+	'lookupuser-table-last-post' => 'Ultimo post',
+	'lookupuser-admin' => 'Amministratore',
+	'lookupuser-bureaucrat' => 'Burocrate',
+	'lookupuser-chatmoderator' => 'Moderatore della chat',
+	'lookupuser-username-blocked-globally' => '<span style="color:red;">Questo nome utente <strong>è</strong> bloccato a livello globale.</span>',
+	'lookupuser-username-not-blocked-globally' => 'Questo nome utente <strong>non è</strong> bloccato a livello globale.',
+	'lookupuser-founder' => 'Fondatore',
+	'lookupuser-table-cannot-be-displayed' => 'Non è possibile visualizzare la tabella dei contributi -- la sua estensione sembra disattivata.',
+	'lookupuser-account-status' => "Stato dell'account: ",
+	'lookupuser-account-status-tempuser' => 'Utente temporaneo',
+	'lookupuser-account-status-realuser' => 'Utente reale',
+	'action-lookupuser' => 'controlla informazioni utente',
+	'lookupuser-user-not-allowed-adoption' => "A questo utente non è consentita l'adozione automatica.",
+	'lookupuser-user-allowed-adoption' => "A questo utente è consentita l'adozione automatica.",
 );
 
-/** Japanese (日本語)
- * @author Aotake
- * @author Fievarsty
- * @author Fryed-peach
- */
 $messages['ja'] = array(
-	'lookupuser' => '利用者情報を調査',
-	'lookupuser-desc' => '電子メールアドレスやIDなどの利用者に関する[[Special:LookupUser|情報を取得]]する',
-	'lookupuser-intro' => '利用者名を入力して、その利用者の個人設定をみることができます。',
-	'lookupuser-nonexistent' => 'エラー: 利用者は存在しません',
-	'lookupuser-authenticated' => 'Eメール確認日: $1',
+	'lookupuser' => 'ユーザーの情報を閲覧する',
+	'lookupuser-desc' => 'メールアドレスやIDなど、特定のユーザーに関する[[Special:LookupUser|情報を取得]]する',
+	'lookupuser-intro' => 'ユーザー名を入力して、そのユーザーの個人設定をみることができます。',
+	'lookupuser-nonexistent' => 'エラー: ユーザー名が見つかりません',
+	'lookupuser-authenticated' => 'メール確認日: $1',
 	'lookupuser-not-authenticated' => '確認されてません',
-	'lookupuser-id' => '利用者ID: <tt>#$1</tt>',
-	'lookupuser-email' => 'Eメール: [https://wikia.zendesk.com/search?query=type:ticket%20requester:$2 $1]',
+	'lookupuser-id' => 'ユーザーID: <tt>#$1</tt>',
+	'lookupuser-email' => 'メールアドレス: [https://wikia.zendesk.com/search?query=type:ticket%20requester:$2 $1]',
 	'lookupuser-no-email' => '提供されてません',
 	'lookupuser-realname' => '本名: $1',
 	'lookupuser-registration' => '登録日: $1',
-	'lookupuser-no-registration' => '記録がありません',
-	'lookupuser-touched' => '利用者の最終記録: $1',
-	'lookupuser-info-authenticated' => 'Eメール認証: $1',
+	'lookupuser-no-registration' => '登録がありません',
+	'lookupuser-touched' => '最終記録: $1',
+	'lookupuser-info-authenticated' => 'メール認証: $1',
 	'lookupuser-useroptions' => '利用者オプション:',
-	'right-lookupuser' => '利用者の個人設定を調べる',
+	'right-lookupuser' => 'ユーザーの個人設定を閲覧する',
+	'lookupuser-nonexistent-id' => 'エラー：ID #$1と一致するユーザーはいません',
+	'lookupuser-email-change-requested' => 'ユーザーが「個人設定」からメールアドレスの$1への変更をリクエストしました。',
+	'lookupuser-no-birthdate' => '登録がありません',
+	'lookupuser-birthdate' => '生年月日：$1',
+	'lookupuser-foundmoreusers' => '複数のユーザーが見つかりました',
+	'lookupuser-toollinks' => "[{{fullurl:Special:LookupContribs|target=$2}} LookupContribs] &nbsp;|&nbsp; [{{fullurl:Special:Phalanx|type=8&target=$2}} PhalanxBlock] &nbsp;|&nbsp;  [{{fullurl:Special:EditAccount|wpAction=displayuser&wpUserName=$2}} EditAccount] &nbsp;|&nbsp;  [{{fullurl:Special:Piggyback|target=$2}} Piggyback] &nbsp;|&nbsp;  [{{fullurl:Special:WikiFactory/Metrics|from='&founder=$2}} このユーザーのWiki] &nbsp;|&nbsp; [{{fullurl:Special:CoppaTool|username=$2}} COPPAツール]",
+	'lookupuser-table-title' => 'タイトル',
+	'lookupuser-table-url' => 'URL',
+	'lookupuser-table-lastedited' => '最終編集',
+	'lookupuser-table-contribs' => '投稿記録',
+	'lookupuser-table-recordspager' => "'''$3'''件中'''$1'''から'''$2'''件目を表示中",
+	'lookupuser-table-editcount' => '編集',
+	'lookupuser-table-userrights' => 'ユーザー権限',
+	'lookupuser-table-blocked' => 'ブロックされています',
+	'lookupuser-table-posts' => '投稿',
+	'lookupuser-table-last-post' => '最終投稿日',
+	'lookupuser-admin' => 'アドミン',
+	'lookupuser-bureaucrat' => 'ビューロクラット',
+	'lookupuser-chatmoderator' => 'チャットモデレーター',
+	'lookupuser-username-blocked-globally' => '<span style="color:red;">このユーザー名はサイト全体で<strong>ブロックされています</strong>。</span>',
+	'lookupuser-username-not-blocked-globally' => 'このユーザー名はサイト全体で<strong>ブロックされていません</strong>。',
+	'lookupuser-founder' => '設立者',
+	'lookupuser-table-cannot-be-displayed' => '投稿の表を表示できません -- 拡張機能が無効になっているようです。',
+	'lookupuser-account-status' => 'アカウントの状態：',
+	'lookupuser-account-status-tempuser' => '一時的なユーザー',
+	'lookupuser-account-status-realuser' => '本ユーザー',
+	'action-lookupuser' => 'ユーザーの情報を検索',
+	'lookupuser-user-not-allowed-adoption' => 'このユーザーは自動アダプションが許可されていません。',
+	'lookupuser-user-allowed-adoption' => 'このユーザーは自動アダプションが許可されています。',
 );
 
-/** Javanese (Basa Jawa)
- * @author Meursault2004
- */
 $messages['jv'] = array(
 	'lookupuser-nonexistent' => 'Kaluputan: Panganggo ora ana',
 	'lookupuser-authenticated' => 'Pamastèn e-mail: $1',
@@ -846,13 +818,6 @@ $messages['jv'] = array(
 	'lookupuser-useroptions' => 'Opsi panganggo:',
 );
 
-/** Khmer (ភាសាខ្មែរ)
- * @author Chhorran
- * @author Lovekhmer
- * @author Thearith
- * @author គីមស៊្រុន
- * @author វ័ណថារិទ្ធ
- */
 $messages['km'] = array(
 	'lookupuser' => 'រកមើល​ព័ត៌មាន​នៃ​អ្នកប្រើប្រាស់',
 	'lookupuser-desc' => '[[Special:LookupUser|ដកស្រង់​ព័ត៌មាន]] អំពី​អ្នកប្រើប្រាស់ ដូចជា​អាសយដ្ឋានអ៊ីមែល និង​អត្តសញ្ញាណ',
@@ -871,16 +836,28 @@ $messages['km'] = array(
 	'lookupuser-useroptions' => 'ជម្រើសនៃអ្នកប្រើប្រាស់ ៖',
 );
 
-/** Korean (한국어)
- * @author Kwj2772
- */
 $messages['ko'] = array(
 	'lookupuser-realname' => '실명: $1',
+	'lookupuser-account-status' => '계정 상태:',
+	'lookupuser-admin' => '관리자',
+	'lookupuser-birthdate' => '출생일: $1',
+	'lookupuser-bureaucrat' => '사무관',
+	'lookupuser-id' => '사용자 ID: <tt>#$1</tt>',
+	'lookupuser-info-authenticated' => '이메일 인증 날짜: $1',
+	'lookupuser-intro' => '원하는 사용자의 계정명을 입력해 자세한 정보를 열람하세요.',
+	'lookupuser-registration' => '가입 날짜: $1',
+	'lookupuser-table-blocked' => '차단 여부',
+	'lookupuser-table-editcount' => '총 편집 횟수',
+	'lookupuser-table-lastedited' => '가장 최근 편집',
+	'lookupuser-table-recordspager' => "기록 '''$3'''개 중 '''$1'''부터 '''$2'''까지 봅니다.",
+	'lookupuser-table-title' => '위키 이름',
+	'lookupuser-table-userrights' => '사용자 권한',
+	'lookupuser-touched' => '가장 최근 기록: $1',
+	'lookupuser-username-blocked-globally' => '이 사용자는 전역 차단<strong>된</strong> 사용자입니다.',
+	'lookupuser-username-not-blocked-globally' => '이 사용자는 전역 차단<strong>되지 않은</strong> 사용자입니다.',
+	'lookupuser' => '사용자 정보 열람',
 );
 
-/** Colognian (Ripoarisch)
- * @author Purodha
- */
 $messages['ksh'] = array(
 	'lookupuser' => 'Metmaacher-Enfommazjuhne zeije',
 	'lookupuser-desc' => 'Donn [[Special:LookupUser|Enfommazjuhne övver ene Metmaacher]] aanzeije, esu jet wi de <i lang="en">e-mail</i> Address udder Metmacher-Nommer.',
@@ -902,10 +879,6 @@ Jivv en Addräß för de <i lang="en">e-mail<i> aan, öm all de Metmaachere annz
 	'right-lookupuser' => 'Enem Metmaacher sing Enstellunge aankike',
 );
 
-/** Luxembourgish (Lëtzebuergesch)
- * @author Les Meloures
- * @author Robby
- */
 $messages['lb'] = array(
 	'lookupuser' => 'Benotzerinformatiounen nokucken',
 	'lookupuser-desc' => '[[Special:LookupUser|Informatioune vun engem Benotzer kréien]] wéi seng E-Mailadress a seng Idendifikatiounsnummer (ID)',
@@ -926,16 +899,10 @@ $messages['lb'] = array(
 	'right-lookupuser' => 'Benotzerastellungen nokucken',
 );
 
-/** Lingua Franca Nova (Lingua Franca Nova)
- * @author Malafaya
- */
 $messages['lfn'] = array(
 	'lookupuser-email' => 'Eposta: [https://wikia.zendesk.com/search?query=type:ticket%20requester:$2 $1]',
 );
 
-/** Lumbaart (Lumbaart)
- * @author Dakrismeno
- */
 $messages['lmo'] = array(
 	'lookupuser' => 'Varda i infurmazión del druvadur',
 	'lookupuser-intro' => 'Meta denter un suranom per vedè i sò preferenz.',
@@ -949,9 +916,54 @@ $messages['lmo'] = array(
 	'lookupuser-registration' => 'Registraa dal: $1',
 );
 
-/** Lithuanian (Lietuvių)
- * @author Tomasdd
- */
+$messages['lol'] = array(
+	'lookupuser' => 'crwdns66832:0crwdne66832:0',
+	'lookupuser-desc' => 'crwdns66833:0crwdne66833:0',
+	'lookupuser-intro' => 'crwdns66834:0crwdne66834:0',
+	'lookupuser-nonexistent' => 'crwdns66835:0crwdne66835:0',
+	'lookupuser-nonexistent-id' => 'crwdns66836:0crwdne66836:0',
+	'lookupuser-authenticated' => 'crwdns66837:0crwdne66837:0',
+	'lookupuser-not-authenticated' => 'crwdns66838:0crwdne66838:0',
+	'lookupuser-id' => 'crwdns66839:0crwdne66839:0',
+	'lookupuser-email' => 'crwdns66840:0%20crwdne66840:0',
+	'lookupuser-no-email' => 'crwdns66841:0crwdne66841:0',
+	'lookupuser-email-change-requested' => 'crwdns66842:0crwdne66842:0',
+	'lookupuser-realname' => 'crwdns66843:0crwdne66843:0',
+	'lookupuser-registration' => 'crwdns66844:0crwdne66844:0',
+	'lookupuser-no-registration' => 'crwdns66845:0crwdne66845:0',
+	'lookupuser-no-birthdate' => 'crwdns66846:0crwdne66846:0',
+	'lookupuser-touched' => 'crwdns66847:0crwdne66847:0',
+	'lookupuser-info-authenticated' => 'crwdns66848:0crwdne66848:0',
+	'lookupuser-birthdate' => 'crwdns66849:0crwdne66849:0',
+	'lookupuser-useroptions' => 'crwdns66850:0crwdne66850:0',
+	'lookupuser-foundmoreusers' => 'crwdns66851:0crwdne66851:0',
+	'right-lookupuser' => 'crwdns66852:0crwdne66852:0',
+	'lookupuser-toollinks' => 'crwdns66853:0crwdne66853:0',
+	'lookupuser-table-title' => 'crwdns66854:0crwdne66854:0',
+	'lookupuser-table-url' => 'crwdns66855:0crwdne66855:0',
+	'lookupuser-table-lastedited' => 'crwdns66856:0crwdne66856:0',
+	'lookupuser-table-contribs' => 'crwdns66857:0crwdne66857:0',
+	'lookupuser-table-recordspager' => 'crwdns66858:0crwdne66858:0',
+	'lookupuser-table-editcount' => 'crwdns66859:0crwdne66859:0',
+	'lookupuser-table-userrights' => 'crwdns66860:0crwdne66860:0',
+	'lookupuser-table-blocked' => 'crwdns66861:0crwdne66861:0',
+	'lookupuser-table-posts' => 'crwdns66862:0crwdne66862:0',
+	'lookupuser-table-last-post' => 'crwdns66863:0crwdne66863:0',
+	'lookupuser-admin' => 'crwdns66864:0crwdne66864:0',
+	'lookupuser-bureaucrat' => 'crwdns66865:0crwdne66865:0',
+	'lookupuser-chatmoderator' => 'crwdns66866:0crwdne66866:0',
+	'lookupuser-username-blocked-globally' => 'crwdns66867:0crwdne66867:0',
+	'lookupuser-username-not-blocked-globally' => 'crwdns66868:0crwdne66868:0',
+	'lookupuser-founder' => 'crwdns66871:0crwdne66871:0',
+	'lookupuser-table-cannot-be-displayed' => 'crwdns66872:0crwdne66872:0',
+	'lookupuser-account-status' => 'crwdns66873:0crwdne66873:0',
+	'lookupuser-account-status-tempuser' => 'crwdns66874:0crwdne66874:0',
+	'lookupuser-account-status-realuser' => 'crwdns66875:0crwdne66875:0',
+	'action-lookupuser' => 'crwdns66876:0crwdne66876:0',
+	'lookupuser-user-not-allowed-adoption' => 'crwdns66870:0crwdne66870:0',
+	'lookupuser-user-allowed-adoption' => 'crwdns66869:0crwdne66869:0',
+);
+
 $messages['lt'] = array(
 	'lookupuser-nonexistent' => 'Klaida: Naudotojo tokiu vardu nėra',
 	'lookupuser-id' => 'Naudotojo ID: <tt>#$1</tt>',
@@ -960,9 +972,6 @@ $messages['lt'] = array(
 	'lookupuser-no-registration' => 'įrašų nėra',
 );
 
-/** Latvian (Latviešu)
- * @author GreenZeb
- */
 $messages['lv'] = array(
 	'lookupuser' => 'Sameklēt informāciju par lietotāju',
 	'lookupuser-desc' => '[[Special:LookupUser|Iegūt informāciju]] par lietotāju (piemēram, e-pasta adresi un ID)',
@@ -982,9 +991,6 @@ $messages['lv'] = array(
 	'right-lookupuser' => 'Meklēt lietotāja uzstādījumus',
 );
 
-/** Macedonian (Македонски)
- * @author Bjankuloski06
- */
 $messages['mk'] = array(
 	'lookupuser' => 'Провери кориснички информации',
 	'lookupuser-desc' => '[[Special:LookupUser|Проверка на информации]] за корисник како е-поштенска адреса и ид. бр.',
@@ -1005,11 +1011,6 @@ $messages['mk'] = array(
 	'right-lookupuser' => 'Проверка на кориснички нагодувања',
 );
 
-/** Malayalam (മലയാളം)
- * @author Anoopan
- * @author Praveenp
- * @author Shijualex
- */
 $messages['ml'] = array(
 	'lookupuser' => 'ഉപയോക്താവിന്റെ വിവരം തിരയുക',
 	'lookupuser-desc' => 'ഒരു ഉപയോക്താവിന്റെ ഇമെയിൽ വിലാസം, ഐ.ഡി. തുടങ്ങിയ [[Special:LookupUser|വിവരങ്ങൾ ശേഖരിക്കുക]]',
@@ -1029,10 +1030,6 @@ $messages['ml'] = array(
 	'right-lookupuser' => 'ഉപയോക്തൃ ഐച്ഛികങ്ങൾ നോക്കുക',
 );
 
-/** Marathi (मराठी)
- * @author Kaustubh
- * @author Mahitgar
- */
 $messages['mr'] = array(
 	'lookupuser' => 'सदस्य माहिती शोधा',
 	'lookupuser-desc' => 'एखाद्या सदस्याची [[Special:LookupUser|अधिक माहिती मिळवा]] उदा. इमेल पत्ता व सदस्य क्रमांक',
@@ -1050,10 +1047,6 @@ $messages['mr'] = array(
 	'lookupuser-useroptions' => 'सदस्य विकल्प:',
 );
 
-/** Malay (Bahasa Melayu)
- * @author Anakmalaysia
- * @author Aviator
- */
 $messages['ms'] = array(
 	'lookupuser' => 'Dapatkan maklumat pengguna',
 	'lookupuser-desc' => '[[Special:LookupUser|Dapatkan maklumat]] mengenai seseorang pengguna sepreti alamat e-mel dan ID',
@@ -1074,26 +1067,16 @@ $messages['ms'] = array(
 	'right-lookupuser' => 'Mencari keutamaan pengguna',
 );
 
-/** Erzya (Эрзянь)
- * @author Botuzhaleny-sodamo
- */
 $messages['myv'] = array(
 	'lookupuser-realname' => 'Алкуксонь лемесь: $1',
 	'lookupuser-no-registration' => 'апак сёрмадсто',
 );
 
-/** Nahuatl (Nāhuatl)
- * @author Fluence
- */
 $messages['nah'] = array(
 	'lookupuser-id' => 'Tlatequitiltilīlli ID: <tt>#$1</tt>',
 	'lookupuser-realname' => 'Melāhuac tōcāitl: $1',
 );
 
-/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
- * @author Jon Harald Søby
- * @author Laaknor
- */
 $messages['nb'] = array(
 	'lookupuser' => 'Finn brukerinformasjon',
 	'lookupuser-desc' => '[[Special:LookupUser|Innhent informasjon]] om en bruker, som f.eks. e-postadresse og ID',
@@ -1113,11 +1096,6 @@ $messages['nb'] = array(
 	'right-lookupuser' => 'Se brukerinnstillinger',
 );
 
-/** Dutch (Nederlands)
- * @author McDutchie
- * @author SPQRobin
- * @author Siebrand
- */
 $messages['nl'] = array(
 	'lookupuser' => 'Gebruikersinformatie opzoeken',
 	'lookupuser-desc' => '[[Special:LookupUser|Informatie inzien]] van een gebruiker, zoals e-mailadres en gebruikersnummer',
@@ -1138,10 +1116,6 @@ $messages['nl'] = array(
 	'right-lookupuser' => 'Gebruikersvoorkeuren bekijken',
 );
 
-/** Norwegian Nynorsk (‪Norsk (nynorsk)‬)
- * @author Frokor
- * @author Harald Khan
- */
 $messages['nn'] = array(
 	'lookupuser' => 'Finn brukarinformasjon',
 	'lookupuser-desc' => '[[Special:LookupUser|Hent informasjon]] om ein brukar, som t.d. e-postadresse og ID',
@@ -1161,9 +1135,6 @@ $messages['nn'] = array(
 	'right-lookupuser' => 'Sjå brukarinnstillingar',
 );
 
-/** Occitan (Occitan)
- * @author Cedric31
- */
 $messages['oc'] = array(
 	'lookupuser' => "Percórrer las entresenhas a prepaus de l'utilizaire",
 	'lookupuser-desc' => 'Extracha las entresenhas concernent un utilizaire talas coma una adreça electronica e lo numèro ID',
@@ -1183,38 +1154,52 @@ $messages['oc'] = array(
 	'right-lookupuser' => 'Visionar las preferéncias dels utilizaires',
 );
 
-/** Polish (Polski)
- * @author Derbeth
- * @author Leinad
- * @author Maikking
- * @author McMonster
- * @author Sp5uhe
- * @author Woytecr
- */
 $messages['pl'] = array(
-	'lookupuser' => 'Wyszukiwanie informacji o użytkowniku',
+	'lookupuser' => 'LookupUser',
 	'lookupuser-desc' => '[[Special:LookupUser|Pobierz informacje]] dotyczące użytkownika, takie jak adres e‐mail i ID',
 	'lookupuser-intro' => 'Wprowadź nazwę użytkownika, aby zobaczyć ustawienia jego preferencji. Możesz również podać adres e‐mail co spowoduje wyświetlenie wszystkich kont do niego przypisanych.',
 	'lookupuser-nonexistent' => 'Błąd: użytkownik nie istnieje',
 	'lookupuser-authenticated' => 'uwierzytelniono $1',
 	'lookupuser-not-authenticated' => 'nie uwierzytelnione',
 	'lookupuser-id' => 'ID użytkownika: <tt>$1</tt>',
-	'lookupuser-email' => 'E‐mail: [https://wikia.zendesk.com/search?query=type:ticket%20requester:$2 $1]',
+	'lookupuser-email' => 'E‐mail: [https://wikia.zendesk.com/search?query=type:ticket%20requester:$2 $1] <small>[[Special:LookupUser/$1|więcej]]</small>',
 	'lookupuser-no-email' => 'nie podał adresu e‐mail',
-	'lookupuser-realname' => 'Imię i nazwisko $1',
-	'lookupuser-registration' => 'Zarejestrowany $1',
+	'lookupuser-realname' => 'Imię i nazwisko: $1',
+	'lookupuser-registration' => 'Zarejestrowany: $1',
 	'lookupuser-no-registration' => 'taki użytkownik nie istnieje',
-	'lookupuser-touched' => 'Ostatnią aktywność użytkownika zanotowano $1',
+	'lookupuser-touched' => 'Ostatnią aktywność użytkownika zanotowano: $1',
 	'lookupuser-info-authenticated' => 'Uwierzytelnienie e‐mailem: $1',
 	'lookupuser-useroptions' => 'Opcje użytkownika:',
 	'lookupuser-foundmoreusers' => 'Odnaleziono więcej niż jednego użytkownika:',
 	'right-lookupuser' => 'Przeglądanie ustawień preferencji użytkowników',
+	'lookupuser-account-status-realuser' => 'Prawdziwy użytkownik',
+	'lookupuser-account-status' => 'Status konta: ',
+	'lookupuser-birthdate' => 'Data urodzenia: $1',
+	'lookupuser-table-blocked' => 'Zablokowany',
+	'lookupuser-table-editcount' => 'Edycje',
+	'lookupuser-table-lastedited' => 'Ostatnia edycja',
+	'lookupuser-table-recordspager' => "Wyświetla od '''$1''' do '''$2''' z '''$3''' rekordów.",
+	'lookupuser-table-title' => 'Nazwa',
+	'lookupuser-table-userrights' => 'Grupy użytkownika',
+	'lookupuser-username-not-blocked-globally' => 'Ten użytkownik <strong>nie jest</strong> zablokowany globalnie.',
+	'lookupuser-nonexistent-id' => 'Błąd: Użytkownik o numerze ID #$1 nie istnieje',
+	'lookupuser-email-change-requested' => 'Użytkownik poprzez Ustawienia poprosił o zmianę adresu e-mail na $1.',
+	'lookupuser-no-birthdate' => 'taki użytkownik nie istnieje',
+	'lookupuser-toollinks' => "[{{fullurl:Special:LookupContribs|target=$2}} LookupContribs] &nbsp;|&nbsp; [{{fullurl:Special:Phalanx|type=8&target=$2}} PhalanxBlock] &nbsp;|&nbsp;  [{{fullurl:Special:EditAccount|wpAction=displayuser&wpUserName=$2}} EditAccount] &nbsp;|&nbsp;  [{{fullurl:Special:Piggyback|target=$2}} Piggyback] &nbsp;|&nbsp;  [{{fullurl:Special:WikiFactory/Metrics|from='&founder=$2}} Wiki tego użytkownika] &nbsp;|&nbsp; [{{fullurl:Special:CoppaTool|username=$2}} narzędzie COPPA]",
+	'lookupuser-table-url' => 'URL',
+	'lookupuser-table-contribs' => 'edycje',
+	'lookupuser-table-posts' => 'Postów',
+	'lookupuser-table-last-post' => 'Ostatni wpis',
+	'lookupuser-admin' => 'Admin',
+	'lookupuser-bureaucrat' => 'Biurokrata',
+	'lookupuser-chatmoderator' => 'Moderator czatu',
+	'lookupuser-username-blocked-globally' => '<span style="color:red;">Ta nazwa użytkownika <strong>jest</strong> zablokowana globalnie.</span>',
+	'lookupuser-founder' => 'Założyciel',
+	'lookupuser-table-cannot-be-displayed' => 'Tabela edycji nie może być wyświetlona -- jej rozszerzenie zdaje się być wyłączone.',
+	'lookupuser-account-status-tempuser' => 'Użytkownik tymczasowy',
+	'action-lookupuser' => 'wyszukaj informacje o użytkowniku',
 );
 
-/** Piedmontese (Piemontèis)
- * @author Borichèt
- * @author Dragonòt
- */
 $messages['pms'] = array(
 	'lookupuser' => 'Varda anformassion utent',
 	'lookupuser-desc' => "[[Special:LookupUser|Treuva anformassion]] an s'un utent con st'adrëssa e-mail e ID-sì",
@@ -1235,9 +1220,6 @@ $messages['pms'] = array(
 	'right-lookupuser' => 'Varda ij "mè gust" ëd l\'utent',
 );
 
-/** Pashto (پښتو)
- * @author Ahmed-Najib-Biabani-Ibrahimkhel
- */
 $messages['ps'] = array(
 	'lookupuser-nonexistent' => 'ستونزه: دا کارن نه شته',
 	'lookupuser-email' => 'برېښليک: [https://wikia.zendesk.com/search?query=type:ticket%20requester:$2 $1]',
@@ -1246,33 +1228,54 @@ $messages['ps'] = array(
 	'lookupuser-useroptions' => 'د کارن خوښنې:',
 );
 
-/** Portuguese (Português)
- * @author Hamilton Abreu
- * @author Malafaya
- */
 $messages['pt'] = array(
-	'lookupuser' => 'Procurar informação de utilizador',
-	'lookupuser-desc' => '[[Special:LookupUser|Obter informação]] sobre um utilizador tal como o correio electrónico e a identificação (ID)',
-	'lookupuser-intro' => 'Introduza um nome de utilizador para ver as preferências desse utilizador.',
-	'lookupuser-nonexistent' => 'Erro: Utilizador não existe',
+	'lookupuser' => 'Procurar informação do usuário',
+	'lookupuser-desc' => '[[Special:LookupUser|Obter informação]] sobre um usuário tal como o e-mail e ID',
+	'lookupuser-intro' => 'Introduza um nome de usuário para ver as preferências do mesmo.',
+	'lookupuser-nonexistent' => 'Erro: o usuário não existe',
 	'lookupuser-authenticated' => 'autenticado em $1',
 	'lookupuser-not-authenticated' => 'não autenticado',
-	'lookupuser-id' => 'ID de utilizador: <tt>#$1</tt>',
-	'lookupuser-email' => 'Correio electrónico: [https://wikia.zendesk.com/search?query=type:ticket%20requester:$2 $1]',
+	'lookupuser-id' => 'ID do usuário: <tt>#$1</tt>',
+	'lookupuser-email' => 'E-mail: [https://wikia.zendesk.com/search?query=type:ticket%20requester:$2 $1]',
 	'lookupuser-no-email' => 'não fornecido',
 	'lookupuser-realname' => 'Nome real: $1',
-	'lookupuser-registration' => 'Data de registo: $1',
-	'lookupuser-no-registration' => 'não registado',
-	'lookupuser-touched' => 'Registo de utilizador alterado pela última vez: $1',
-	'lookupuser-info-authenticated' => 'Autenticação do correio electrónico: $1',
-	'lookupuser-useroptions' => 'Opções do utilizador:',
-	'right-lookupuser' => 'Consultar preferências de utilizador',
+	'lookupuser-registration' => 'Data de registro: $1',
+	'lookupuser-no-registration' => 'não registrado',
+	'lookupuser-touched' => 'Registro do usuário alterado pela última vez: $1',
+	'lookupuser-info-authenticated' => 'Autenticação de e-mail: $1',
+	'lookupuser-useroptions' => 'Opções do usuário:',
+	'right-lookupuser' => 'Procurar preferências de usuário',
+	'lookupuser-nonexistent-id' => 'Erro: o usuário com ID #$1 não existe',
+	'lookupuser-email-change-requested' => 'O usuário solicitou uma alteração de e-mail para $1 em Preferências.',
+	'lookupuser-no-birthdate' => 'não registrado',
+	'lookupuser-birthdate' => 'Data de nascimento: $1',
+	'lookupuser-foundmoreusers' => 'Mais do que um usuário encontrado',
+	'lookupuser-toollinks' => "[{{fullurl:Special:LookupContribs|target=$2}} LookupContribs] &nbsp;|&nbsp; [{{fullurl:Special:Phalanx|type=8&target=$2}} PhalanxBlock] &nbsp;|&nbsp;  [{{fullurl:Special:EditAccount|wpAction=displayuser&wpUserName=$2}} EditAccount] &nbsp;|&nbsp;  [{{fullurl:Special:Piggyback|target=$2}} Piggyback] &nbsp;|&nbsp;  [{{fullurl:Special:WikiFactory/Metrics|from='&founder=$2}} Wikis deste usuário] &nbsp;|&nbsp; [{{fullurl:Special:CoppaTool|username=$2}} COPPA tool]
+ 
+Context | Edit Context",
+	'lookupuser-table-title' => 'Título',
+	'lookupuser-table-url' => 'URL',
+	'lookupuser-table-lastedited' => 'Última edição',
+	'lookupuser-table-contribs' => 'contribuições',
+	'lookupuser-table-recordspager' => "Exibindo '''$1''' a '''$2''' de '''$3''' registros.",
+	'lookupuser-table-editcount' => 'Edições',
+	'lookupuser-table-userrights' => 'Direitos do usuário',
+	'lookupuser-table-blocked' => 'Bloqueado',
+	'lookupuser-table-posts' => 'Posts',
+	'lookupuser-table-last-post' => 'Último post',
+	'lookupuser-admin' => 'Administrador',
+	'lookupuser-bureaucrat' => 'Burocrata',
+	'lookupuser-chatmoderator' => 'Moderador do chat',
+	'lookupuser-username-blocked-globally' => '<span style="color:red;"> Este nome de usuário <strong>está</strong> bloqueado globalmente.</span>',
+	'lookupuser-username-not-blocked-globally' => 'Este nome de usuário <strong>não está</strong> bloqueado globalmente.',
+	'lookupuser-founder' => 'Fundador',
+	'lookupuser-table-cannot-be-displayed' => 'A tabela de contribuição não pode ser exibida -- sua extensão parece estar desativada.',
+	'lookupuser-account-status' => 'Status da conta: ',
+	'lookupuser-account-status-tempuser' => 'Usuário temporário',
+	'lookupuser-account-status-realuser' => 'Usuário real',
+	'action-lookupuser' => 'pesquisar informações do usuário',
 );
 
-/** Brazilian Portuguese (Português do Brasil)
- * @author Eduardo.mps
- * @author Jesielt
- */
 $messages['pt-br'] = array(
 	'lookupuser' => 'Procurar informação de usuário',
 	'lookupuser-desc' => '[[Special:LookupUser|Retorna informação]] sobre um usuário tal como o endereço de email e o ID',
@@ -1292,9 +1295,6 @@ $messages['pt-br'] = array(
 	'right-lookupuser' => 'Consultar preferências de usuário',
 );
 
-/** Romanian (Română)
- * @author KlaudiuMihaila
- */
 $messages['ro'] = array(
 	'lookupuser-nonexistent' => 'Eroare: Utilizatorul nu există',
 	'lookupuser-authenticated' => 'autentificat la $1',
@@ -1306,9 +1306,6 @@ $messages['ro'] = array(
 	'lookupuser-info-authenticated' => 'Autentificare e-mail: $1',
 );
 
-/** Tarandíne (Tarandíne)
- * @author Joetaras
- */
 $messages['roa-tara'] = array(
 	'lookupuser-nonexistent' => "Errore: L'utende non g'esiste",
 	'lookupuser-authenticated' => 'autendicate sus a $1',
@@ -1322,45 +1319,60 @@ $messages['roa-tara'] = array(
 	'lookupuser-useroptions' => 'Opzione utende:',
 );
 
-/** Russian (Русский)
- * @author Adata80
- * @author Eleferen
- * @author Kaganer
- * @author Александр Сигачёв
- */
 $messages['ru'] = array(
-	'lookupuser' => 'Показать сведения об участнике',
-	'lookupuser-desc' => '[[Special:LookupUser|Получение сведений]] об участнике, таких как почтовый адрес и идентификатор',
-	'lookupuser-intro' => 'Введите имя пользователя, чтобы просмотреть его настройки. Адрес электронной почты также может быть использован, и покажет все учетные записи использующие этот почтовый ящик.',
+	'lookupuser' => 'Информация об участнике',
+	'lookupuser-desc' => '[[Special:LookupUser|Получение информации]] об участнике, таких как почтовый адрес и идентификатор',
+	'lookupuser-intro' => 'Введите имя участника или его email, чтобы увидеть информацию об участнике.',
 	'lookupuser-nonexistent' => 'Ошибка. Участника не существует',
 	'lookupuser-authenticated' => 'Аутентификация по эл. почте: $1',
 	'lookupuser-not-authenticated' => 'не аутентифицирован',
-	'lookupuser-id' => 'ID участника: <tt>#$1</tt>',
+	'lookupuser-id' => 'ID участника: <tt>$1</tt>',
 	'lookupuser-email' => 'Эл. почта: [https://wikia.zendesk.com/search?query=type:ticket%20requester:$2 $1]',
-	'lookupuser-no-email' => 'не указан',
+	'lookupuser-no-email' => 'не указана',
 	'lookupuser-realname' => 'Настоящее имя: $1',
 	'lookupuser-registration' => 'Дата регистрации: $1',
-	'lookupuser-no-registration' => 'не записана',
+	'lookupuser-no-registration' => 'не указана',
 	'lookupuser-touched' => 'Последнее обновление записи участника: $1',
-	'lookupuser-info-authenticated' => 'Аутентификация по почте: $1',
+	'lookupuser-info-authenticated' => 'Аутентификация по эл. почте: $1',
 	'lookupuser-useroptions' => 'Настройки участника:',
-	'lookupuser-foundmoreusers' => 'Найдено более одного пользователя:',
-	'right-lookupuser' => 'поиск настроек участников',
+	'lookupuser-foundmoreusers' => 'Найдено более одного участника',
+	'right-lookupuser' => 'Поиск настроек участников',
+	'lookupuser-admin' => 'Админ',
+	'lookupuser-bureaucrat' => 'Бюрократ',
+	'lookupuser-chatmoderator' => 'Модератор чата',
+	'lookupuser-founder' => 'Основатель',
+	'lookupuser-nonexistent-id' => 'Ошибка: участника с ID $1 не существует',
+	'lookupuser-table-blocked' => 'Блок',
+	'lookupuser-table-cannot-be-displayed' => 'Таблица вклада не может быть отображена -- это расширение, кажется, было отключено.',
+	'lookupuser-table-contribs' => 'вклад',
+	'lookupuser-table-editcount' => 'Правки',
+	'lookupuser-table-lastedited' => 'Последняя правка',
+	'lookupuser-table-recordspager' => "Показано с '''$1''' по '''$2''' из '''$3''' записей.",
+	'lookupuser-table-title' => 'Название вики',
+	'lookupuser-table-userrights' => 'Статус(ы)',
+	'lookupuser-username-blocked-globally' => '<span style="color:red;">Этот участник <strong></strong> заблокирован глобально.</span>',
+	'lookupuser-username-not-blocked-globally' => 'Этот участник <strong>НЕ</strong> заблокирован глобально.',
+	'lookupuser-email-change-requested' => 'Участник запросил изменение электронной почты в настройках на $1.',
+	'lookupuser-no-birthdate' => 'не указана',
+	'lookupuser-birthdate' => 'Дата рождения: $1',
+	'lookupuser-toollinks' => "[{{fullurl:Special:LookupContribs|target=$2}} Вклад участника] &nbsp;|&nbsp; [{{fullurl:Special:Phalanx|type=8&target=$2}} PhalanxBlock] &nbsp;|&nbsp;  [{{fullurl:Special:EditAccount|wpAction=displayuser&wpUserName=$2}} Править учётную запись] &nbsp;|&nbsp;  [{{fullurl:Special:Piggyback|target=$2}} Piggyback] &nbsp;|&nbsp;  [{{fullurl:Special:WikiFactory/Metrics|from='&founder=$2}} Вики участника] &nbsp;|&nbsp; [{{fullurl:Special:CoppaTool|username=$2}} COPPA]",
+	'lookupuser-table-url' => 'URL',
+	'lookupuser-table-posts' => 'Сообщений',
+	'lookupuser-table-last-post' => 'Посл. сообщение',
+	'lookupuser-account-status' => 'Статус учётной записи: ',
+	'lookupuser-account-status-tempuser' => 'Временный участник',
+	'lookupuser-account-status-realuser' => 'Реальный участник',
+	'action-lookupuser' => 'поиск информации об участнике',
+	'lookupuser-user-not-allowed-adoption' => 'Участнику запрещено автоматическое принятие вики.',
+	'lookupuser-user-allowed-adoption' => 'Участнику разрешено автоматическое принятие вики.',
 );
 
-/** Sardinian (Sardu)
- * @author Marzedu
- */
 $messages['sc'] = array(
 	'lookupuser-id' => 'ID usuàriu: <tt>#$1</tt>',
 	'lookupuser-email' => 'E-mail: [https://wikia.zendesk.com/search?query=type:ticket%20requester:$2 $1]',
 	'lookupuser-realname' => 'Nòmene beru: $1',
 );
 
-/** Sicilian (Sicilianu)
- * @author Melos
- * @author Santu
- */
 $messages['scn'] = array(
 	'lookupuser' => 'Talìa nfurmazzioni utenti',
 	'lookupuser-desc' => "[[Special:LookupUser|Ricùpira nfurmazzioni]] supra a n'utenti comu ndirizzu e-mail e ID",
@@ -1380,9 +1392,6 @@ $messages['scn'] = array(
 	'right-lookupuser' => 'Talìa li prifirenzi utenti',
 );
 
-/** Slovak (Slovenčina)
- * @author Helix84
- */
 $messages['sk'] = array(
 	'lookupuser' => 'Vyhľadať informácie o používateľovi',
 	'lookupuser-desc' => '[[Special:LookupUser|Získať informácií]] o používateľovi ako emailová adresa a ID',
@@ -1402,9 +1411,6 @@ $messages['sk'] = array(
 	'right-lookupuser' => 'Zistiť nastavenia používateľa',
 );
 
-/** Lower Silesian (Schläsch)
- * @author Schläsinger
- */
 $messages['sli'] = array(
 	'lookupuser-id' => 'Benutzer-ID: <tt>$1</tt>',
 	'lookupuser-email' => 'E-Mail: [https://wikia.zendesk.com/search?query=type:ticket%20requester:$2 $1]',
@@ -1412,11 +1418,6 @@ $messages['sli'] = array(
 	'lookupuser-realname' => 'Wirklicher Noame: $1',
 );
 
-/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
- * @author Rancher
- * @author Михајло Анђелковић
- * @author Обрадовић Горан
- */
 $messages['sr-ec'] = array(
 	'lookupuser' => 'Погледај информације о кориснику',
 	'lookupuser-nonexistent' => 'Грешка: Корисник не постоји',
@@ -1432,9 +1433,6 @@ $messages['sr-ec'] = array(
 	'lookupuser-useroptions' => 'Корисничке опције:',
 );
 
-/** Serbian (Latin script) (‪Srpski (latinica)‬)
- * @author Michaello
- */
 $messages['sr-el'] = array(
 	'lookupuser' => 'Pogledaj informacije o korisniku',
 	'lookupuser-nonexistent' => 'Greška: Korisnik ne postoji',
@@ -1450,9 +1448,6 @@ $messages['sr-el'] = array(
 	'lookupuser-useroptions' => 'Korisničke opcije:',
 );
 
-/** Seeltersk (Seeltersk)
- * @author Pyt
- */
 $messages['stq'] = array(
 	'lookupuser' => 'Benutserinformatione ienkiekje',
 	'lookupuser-desc' => '[[Special:LookupUser|Informatione]] uur Benutser kriege, as E-Mail-Adresse of ID.',
@@ -1472,11 +1467,6 @@ $messages['stq'] = array(
 	'right-lookupuser' => 'Sjuch do Benutserienstaalengen fon uur Benutsere',
 );
 
-/** Swedish (Svenska)
- * @author Boivie
- * @author M.M.S.
- * @author Najami
- */
 $messages['sv'] = array(
 	'lookupuser' => 'Kolla upp användar info',
 	'lookupuser-desc' => '[[Special:LookupUser|Hämta information]] om en användare, som t.ex. e-postadress och ID',
@@ -1496,14 +1486,10 @@ $messages['sv'] = array(
 	'right-lookupuser' => 'Kolla användarpreferenser',
 );
 
-/** Swahili (Kiswahili) */
 $messages['sw'] = array(
 	'lookupuser-realname' => 'Jina lako halisi:$1',
 );
 
-/** Telugu (తెలుగు)
- * @author Veeven
- */
 $messages['te'] = array(
 	'lookupuser' => 'వాడుకరి సమాచారంలో వెతకండి',
 	'lookupuser-intro' => 'ఒక వాడుకరి యొక్క అభిరుచులు చూడడానికి ఆ వాడుకరిపేరుని ఇవ్వండి.',
@@ -1516,9 +1502,6 @@ $messages['te'] = array(
 	'lookupuser-useroptions' => 'వాడుకరి ఎంపికలు:',
 );
 
-/** Tajik (Cyrillic script) (Тоҷикӣ)
- * @author Ibrahim
- */
 $messages['tg-cyrl'] = array(
 	'lookupuser-nonexistent' => 'Хато: Корбар вуҷуд надорад',
 	'lookupuser-email' => 'Фиристодани E-mail: [https://wikia.zendesk.com/search?query=type:ticket%20requester:$2 $1]',
@@ -1527,9 +1510,6 @@ $messages['tg-cyrl'] = array(
 	'lookupuser-registration' => 'Таърихи сабти ном: $1',
 );
 
-/** Tajik (Latin script) (tojikī)
- * @author Liangent
- */
 $messages['tg-latn'] = array(
 	'lookupuser-nonexistent' => 'Xato: Korbar vuçud nadorad',
 	'lookupuser-email' => 'Firistodani E-mail: [https://wikia.zendesk.com/search?query=type:ticket%20requester:$2 $1]',
@@ -1538,9 +1518,6 @@ $messages['tg-latn'] = array(
 	'lookupuser-registration' => "Ta'rixi sabti nom: $1",
 );
 
-/** Tagalog (Tagalog)
- * @author AnakngAraw
- */
 $messages['tl'] = array(
 	'lookupuser' => 'Hanapin at tingnan ang kabatirang pangtagagamit',
 	'lookupuser-desc' => '[[Special:LookupUser|Kuhanin ang kabatirang]] hinggil sa isang tagagamit katulad ng adres ng e-liham at ID',
@@ -1560,10 +1537,6 @@ $messages['tl'] = array(
 	'right-lookupuser' => 'Hanapin ang mga kagustuhan ng tagagamit',
 );
 
-/** Turkish (Türkçe)
- * @author Joseph
- * @author Mach
- */
 $messages['tr'] = array(
 	'lookupuser' => 'Kullanıcı bilgisine bak',
 	'lookupuser-desc' => 'Bir kullanıcı hakkında e-posta adresi ve ID gibi [[Special:LookupUser|bilgileri al]]',
@@ -1583,10 +1556,6 @@ $messages['tr'] = array(
 	'right-lookupuser' => 'Kullanıcı tercihlerine bak',
 );
 
-/** Ukrainian (Українська)
- * @author AS
- * @author Aleksandrit
- */
 $messages['uk'] = array(
 	'lookupuser' => 'Показати відомості про користувача',
 	'lookupuser-desc' => '[[Special:LookupUser|Отримання відомостей]] про користувача, таких як адреса Е-пошти та ідентифікатор',
@@ -1606,9 +1575,6 @@ $messages['uk'] = array(
 	'right-lookupuser' => 'Перегляд налаштувань користувачів',
 );
 
-/** Vèneto (Vèneto)
- * @author Candalua
- */
 $messages['vec'] = array(
 	'lookupuser' => "Varda informassion su l'utente",
 	'lookupuser-desc' => '[[Special:LookupUser|Varda le informassion]] su un utente, tipo la so identità e el so indirisso e-mail',
@@ -1628,19 +1594,12 @@ $messages['vec'] = array(
 	'right-lookupuser' => "Varda le preferense de l'utente",
 );
 
-/** Veps (Vepsan kel')
- * @author Игорь Бродский
- */
 $messages['vep'] = array(
 	'lookupuser-realname' => 'Todesine nimi: $1',
 	'lookupuser-useroptions' => 'Kävutajan järgendused:',
 	'right-lookupuser' => 'Ectä kävutajan järgendused',
 );
 
-/** Vietnamese (Tiếng Việt)
- * @author Minh Nguyen
- * @author Vinhtantran
- */
 $messages['vi'] = array(
 	'lookupuser' => 'Tra thông tin thành viên',
 	'lookupuser-desc' => '[[Special:LookupUser|Tra thông tin]] về một thành viên như địa chỉ thư điện tử và mã số',
@@ -1660,10 +1619,6 @@ $messages['vi'] = array(
 	'right-lookupuser' => 'Tra tùy chọn người dùng',
 );
 
-/** Volapük (Volapük)
- * @author Malafaya
- * @author Smeira
- */
 $messages['vo'] = array(
 	'lookupuser' => 'Sukön gebananünodis',
 	'lookupuser-intro' => 'Penolös gebananami ad logön buükamis gebana at.',
@@ -1673,49 +1628,99 @@ $messages['vo'] = array(
 	'lookupuser-registration' => 'Registaramadät: $1',
 );
 
-/** Simplified Chinese (‪中文(简体)‬)
- * @author Gzdavidwong
- * @author Hydra
- * @author Kuailong
- * @author Wrightbus
- */
 $messages['zh-hans'] = array(
 	'lookupuser' => '查询用户信息',
-	'lookupuser-desc' => '[[Special:LookupUser|检索信息]] 有关的用户 ID 的电子邮件地址等',
+	'lookupuser-desc' => '[[Special:LookupUser|检索用户相关信息]]比如ID或者电子邮件地址等',
 	'lookupuser-intro' => '输入用户名，查看该用户的参数设置',
 	'lookupuser-nonexistent' => '错误：用户不存在',
-	'lookupuser-not-authenticated' => '不进行身份验证',
+	'lookupuser-not-authenticated' => '未通过身份验证',
 	'lookupuser-id' => '用户ID: <tt>#$1</tt>',
 	'lookupuser-email' => '电邮：[https://wikia.zendesk.com/search?query=type:ticket%20requester:$2 $1]',
-	'lookupuser-no-email' => '不提供',
+	'lookupuser-no-email' => '未提供',
 	'lookupuser-realname' => '真实姓名：$1',
 	'lookupuser-registration' => '注册日期：$1',
-	'lookupuser-no-registration' => '不记录',
-	'lookupuser-touched' => '最后触及的用户记录：$1',
+	'lookupuser-no-registration' => '未记录',
+	'lookupuser-touched' => '上次用户访问时间：$1',
 	'lookupuser-info-authenticated' => '电子邮件验证：$1',
 	'lookupuser-useroptions' => '用户选项：',
 	'right-lookupuser' => '查看用户设置',
+	'lookupuser-nonexistent-id' => '错误：ID为#$1的用户不存在。',
+	'lookupuser-authenticated' => '在$1上已通过认证',
+	'lookupuser-email-change-requested' => '用户通过个人设置申请更改电子邮件地址为$1。',
+	'lookupuser-no-birthdate' => '未记录',
+	'lookupuser-birthdate' => '出生日期: $1',
+	'lookupuser-foundmoreusers' => '发现多个用户',
+	'lookupuser-toollinks' => "[{{fullurl:Special:LookupContribs|target=$2}} 查询贡献] &nbsp;|&nbsp; [{{fullurl:Special:Phalanx|type=8&target=$2}} Phalanx封禁] &nbsp;|&nbsp;  [{{fullurl:Special:EditAccount|wpAction=displayuser&wpUserName=$2}} 编辑帐户] &nbsp;|&nbsp;  [{{fullurl:Special:Piggyback|target=$2}} Piggyback] &nbsp;|&nbsp;  [{{fullurl:Special:WikiFactory/Metrics|from='&founder=$2}} 该用户创建的Wiki] &nbsp;|&nbsp; [{{fullurl:Special:CoppaTool|username=$2}} COPPA工具]",
+	'lookupuser-table-title' => '社区',
+	'lookupuser-table-url' => 'URL',
+	'lookupuser-table-lastedited' => '上次编辑',
+	'lookupuser-table-contribs' => '贡献',
+	'lookupuser-table-recordspager' => "显示'''$1'''至'''$2'''项记录，总共'''$3'''项。",
+	'lookupuser-table-editcount' => '编辑',
+	'lookupuser-table-userrights' => '用户权限',
+	'lookupuser-table-blocked' => '封禁',
+	'lookupuser-table-posts' => '帖子数',
+	'lookupuser-table-last-post' => '最后发帖',
+	'lookupuser-admin' => '管理员',
+	'lookupuser-bureaucrat' => '行政员',
+	'lookupuser-chatmoderator' => '聊天主持人',
+	'lookupuser-username-blocked-globally' => '<span style="color:red;"><strong>这个用户名已被全网封禁。</strong></span>',
+	'lookupuser-username-not-blocked-globally' => '<strong>这个用户名未被全网封禁。</strong>',
+	'lookupuser-founder' => '创始人',
+	'lookupuser-table-cannot-be-displayed' => '贡献列表无法显示—— 其扩展功能可能已被禁用。',
+	'lookupuser-account-status' => '帐户状态：',
+	'lookupuser-account-status-tempuser' => '临时用户',
+	'lookupuser-account-status-realuser' => '真实用户',
+	'action-lookupuser' => '查看用户信息',
+	'lookupuser-user-not-allowed-adoption' => '此用户帐户不允许自动领养。',
+	'lookupuser-user-allowed-adoption' => '此用户帐户允许自动领养。',
 );
 
-/** Traditional Chinese (‪中文(繁體)‬)
- * @author Gzdavidwong
- * @author Mark85296341
- * @author Wrightbus
- */
 $messages['zh-hant'] = array(
 	'lookupuser' => '查詢用戶資料',
 	'lookupuser-desc' => '[[Special:LookupUser|檢索信息]] 有關的用戶 ID 的電子郵件地址等',
 	'lookupuser-intro' => '輸入使用者名稱，檢視該用戶的偏好設定',
-	'lookupuser-nonexistent' => '錯誤：使用者不存在',
-	'lookupuser-not-authenticated' => '未驗證',
+	'lookupuser-nonexistent' => '錯誤：該用戶不存在',
+	'lookupuser-not-authenticated' => '未通過認證',
 	'lookupuser-id' => '使用者 ID：<tt>#$1</tt>',
-	'lookupuser-email' => '電郵：[https://wikia.zendesk.com/search?query=type:ticket%20requester:$2 $1]',
+	'lookupuser-email' => '電子信箱：[https://wikia.zendesk.com/search?query=type:ticket%20requester:$2 $1]',
 	'lookupuser-no-email' => '未提供',
 	'lookupuser-realname' => '真實姓名：$1',
 	'lookupuser-registration' => '註冊日期：$1',
 	'lookupuser-no-registration' => '沒有記錄',
-	'lookupuser-touched' => '最後觸及的用戶記錄：$1',
+	'lookupuser-touched' => '最近的用戶記錄：$1',
 	'lookupuser-info-authenticated' => '電子郵件驗證：$1',
-	'lookupuser-useroptions' => '使用者選擇：',
+	'lookupuser-useroptions' => '用戶選項：',
 	'right-lookupuser' => '檢視用戶設定',
+	'lookupuser-nonexistent-id' => '錯誤：ID為#$1的用戶不存在。',
+	'lookupuser-authenticated' => '在$1上已通過認證',
+	'lookupuser-email-change-requested' => '用戶透過個人設定申請更改電子郵件地址為$1。',
+	'lookupuser-no-birthdate' => '沒有記錄',
+	'lookupuser-birthdate' => '出生日期: $1',
+	'lookupuser-foundmoreusers' => '發現多個用戶',
+	'lookupuser-toollinks' => "[{{fullurl:Special:LookupContribs|target=$2}} 查詢貢獻] &nbsp;|&nbsp; [{{fullurl:Special:Phalanx|type=8&target=$2}} Phalanx封禁] &nbsp;|&nbsp; [{{fullurl:Special:EditAccount| wpAction=displayuser&wpUserName=$2}} 帳戶編輯] &nbsp;|&nbsp; [{{fullurl:Special:Piggyback|target=$2}} Piggyback] &nbsp;|&nbsp; [{{fullurl:Special:WikiFactory/Metrics|from='& founder=$2}} 這個用戶創建的Wiki] &nbsp;|&nbsp; [{{fullurl:Special:CoppaTool|username=$2}} COPPA工具]",
+	'lookupuser-table-title' => '標題',
+	'lookupuser-table-url' => 'URL',
+	'lookupuser-table-lastedited' => '上次編輯',
+	'lookupuser-table-contribs' => '貢獻',
+	'lookupuser-table-recordspager' => "顯示第 '''$1''' 至 '''$2''' 筆，共 '''$3''' 筆記錄。",
+	'lookupuser-table-editcount' => '編輯數',
+	'lookupuser-table-userrights' => '用戶權限',
+	'lookupuser-table-blocked' => '被封禁',
+	'lookupuser-table-posts' => '討論文章數',
+	'lookupuser-table-last-post' => '最後發文',
+	'lookupuser-admin' => '管理員',
+	'lookupuser-bureaucrat' => '行政員',
+	'lookupuser-chatmoderator' => '聊天主持人',
+	'lookupuser-username-blocked-globally' => '<span style="color:red;"><strong>這個用戶已被全站封禁。</strong></span>',
+	'lookupuser-username-not-blocked-globally' => '這個用戶名<strong>未</strong>被全站封禁。 ',
+	'lookupuser-founder' => '創始人',
+	'lookupuser-table-cannot-be-displayed' => '貢獻列表無法顯示—— 其擴展功能可能已被關閉。',
+	'lookupuser-account-status' => '帳號狀態：',
+	'lookupuser-account-status-tempuser' => '臨時用戶',
+	'lookupuser-account-status-realuser' => '真實用戶',
+	'action-lookupuser' => '查詢用戶資料',
+	'lookupuser-user-not-allowed-adoption' => '這個用戶不允許自動領養。',
+	'lookupuser-user-allowed-adoption' => '允許這個用戶自動領養。',
 );
+

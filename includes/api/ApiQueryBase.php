@@ -23,7 +23,6 @@
  *
  * @file
  */
-use Wikia\Util\PerformanceProfilers\UsernameUseProfiler;
 
 /**
  * This is a base class for all Query modules.
@@ -499,37 +498,6 @@ abstract class ApiQueryBase extends ApiBase {
 		}
 
 		return null;
-	}
-
-	/**
-	 * Filters hidden users (where the user doesn't have the right to view them)
-	 * Also adds relevant block information
-	 *
-	 * @param bool $showBlockInfo
-	 * @return void
-	 */
-	public function showHiddenUsersAddBlockInfo( $showBlockInfo ) {
-		$usernameUseProfiler = new UsernameUseProfiler( __CLASS__, __METHOD__ );
-		$userCanViewHiddenUsers = $this->getUser()->isAllowed( 'hideuser' );
-
-		if ( $showBlockInfo || !$userCanViewHiddenUsers ) {
-			$this->addTables( 'ipblocks' );
-			$this->addJoinConds( array(
-				'ipblocks' => array( 'LEFT JOIN', 'ipb_user=user_id' ),
-			) );
-
-			$this->addFields( 'ipb_deleted' );
-
-			if ( $showBlockInfo ) {
-				$this->addFields( array( 'ipb_reason', 'ipb_by_text', 'ipb_expiry' ) );
-			}
-
-			// Don't show hidden names
-			if ( !$userCanViewHiddenUsers ) {
-				$this->addWhere( 'ipb_deleted = 0 OR ipb_deleted IS NULL' );
-			}
-		}
-		$usernameUseProfiler->end();
 	}
 
 	/**

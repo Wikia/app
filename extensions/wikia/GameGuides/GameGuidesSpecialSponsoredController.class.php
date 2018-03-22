@@ -7,7 +7,6 @@ class GameGuidesSpecialSponsoredController extends WikiaSpecialPageController {
 
 	const TEMPLATE_ENGINE = WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
 	const VIDEO_DOES_NOT_EXIST = 1;
-	const VIDEO_IS_NOT_PROVIDED_BY_OOYALA = 2;
 
 	public function __construct() {
 		parent::__construct( 'GameGuidesSponsored', '', false );
@@ -149,22 +148,10 @@ class GameGuidesSpecialSponsoredController extends WikiaSpecialPageController {
 					if ( !empty( $title ) && $title->exists() ) {
 						$vid = wfFindFile( $title );
 
-						if ( !empty( $vid ) && $vid instanceof WikiaLocalFile ) {
-
-							$handler = $vid->getHandler();
-
-							if ( $handler instanceof OoyalaVideoHandler ) {
-								$metadata = $handler->getVideoMetadata( true );
-
-								$video['video_id'] = $metadata['videoId'];
-								$video['duration'] = WikiaFileHelper::formatDuration( $metadata['duration'] );
-								$video['video_thumb'] = WikiaFileHelper::getMediaDetail( $title )['imageUrl'];
-							} else{
-								$err[$video['video_name']] = self::VIDEO_IS_NOT_PROVIDED_BY_OOYALA;
-							}
-						} else {
-							$err[$video['video_name']] = self::VIDEO_DOES_NOT_EXIST;
+						if ( empty( $vid ) && $vid instanceof WikiaLocalFile ) {
+							$err[ $video[ 'video_name' ] ] = self::VIDEO_DOES_NOT_EXIST;
 						}
+
 					} else {
 						$err[$video['video_name']] = self::VIDEO_DOES_NOT_EXIST;
 					}
@@ -183,7 +170,7 @@ class GameGuidesSpecialSponsoredController extends WikiaSpecialPageController {
 			$this->response->setVal( 'status', $status );
 
 			if ( $status ) {
-				wfRunHooks( 'GameGuidesSponsoredVideosSave' );
+				Hooks::run( 'GameGuidesSponsoredVideosSave' );
 			}
 		}
 

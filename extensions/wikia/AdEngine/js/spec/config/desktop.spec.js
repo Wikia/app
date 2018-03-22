@@ -1,4 +1,4 @@
-/*global describe, it, expect, modules, spyOn*/
+/*global beforeEach, describe, it, expect, modules, spyOn*/
 describe('ext.wikia.adEngine.config.desktop', function () {
 	'use strict';
 
@@ -13,9 +13,7 @@ describe('ext.wikia.adEngine.config.desktop', function () {
 	var mocks = {
 			adDecoratorPageDimensions: noop,
 			getAdContextOpts: function () {
-				return {
-					showAds: true
-				};
+				return mocks.opts;
 			},
 			getAdContextTargeting: returnEmpty,
 			getAdContextProviders: returnEmpty,
@@ -36,6 +34,10 @@ describe('ext.wikia.adEngine.config.desktop', function () {
 				}
 			},
 			log: noop,
+			opts: {
+				showAds: true,
+				premiumOnly: false
+			},
 			providers: {
 				directGpt: {
 					name: 'direct'
@@ -44,20 +46,8 @@ describe('ext.wikia.adEngine.config.desktop', function () {
 					name: 'evolve2',
 					canHandleSlot: noop
 				},
-				monetizationService: {
-					name: 'monetizationService',
-					canHandleSlot: noop
-				},
 				remnantGpt: {
 					name: 'remnant'
-				},
-				rubiconFastlane: {
-					name: 'rpfl',
-					canHandleSlot: noop
-				},
-				taboola: {
-					name: 'taboola',
-					canHandleSlot: noop
 				},
 				turtle: {
 					name: 'turtle',
@@ -80,11 +70,8 @@ describe('ext.wikia.adEngine.config.desktop', function () {
 			mocks.adDecoratorPageDimensions,
 			mocks.providers.directGpt,
 			mocks.providers.evolve2,
-			mocks.providers.monetizationService,
 			mocks.providers.remnantGpt,
-			mocks.providers.rubiconFastlane,
-			mocks.providers.turtle,
-			mocks.providers.taboola
+			mocks.providers.turtle
 		);
 	}
 
@@ -97,8 +84,20 @@ describe('ext.wikia.adEngine.config.desktop', function () {
 		return providerNames.join(',');
 	}
 
+	beforeEach(function () {
+		mocks.opts = {
+			showAds: true,
+			premiumOnly: false
+		};
+	});
+
 	it('default setup: Direct, Remnant', function () {
 		expect(getProviders('foo')).toEqual('direct,remnant');
+	});
+
+	it('only direct on premium-only page', function () {
+		mocks.opts.premiumOnly = true;
+		expect(getProviders('foo')).toEqual('direct');
 	});
 
 	it('non-Evolve country, Evolve slot: Direct, Remnant', function () {
@@ -128,17 +127,6 @@ describe('ext.wikia.adEngine.config.desktop', function () {
 		expect(getProviders('foo')).toEqual('evolve2,remnant');
 	});
 
-	it('any country, Taboola on, Taboola slot: Taboola', function () {
-		spyOn(mocks, 'getAdContextProviders').and.returnValue({taboola: true});
-		spyOn(mocks.providers.taboola, 'canHandleSlot').and.returnValue(true);
-		expect(getProviders('foo')).toEqual('taboola');
-	});
-
-	it('any country, Taboola on, non Taboola slot: not Taboola', function () {
-		spyOn(mocks, 'getAdContextProviders').and.returnValue({taboola: true});
-		expect(getProviders('foo')).not.toEqual('taboola');
-	});
-
 	it('Evolve country, wgSitewideDisableGpt on: Evolve', function () {
 		spyOn(mocks.providers.evolve2, 'canHandleSlot').and.returnValue(true);
 		spyOn(mocks, 'getAdContextProviders').and.returnValue({evolve2: true});
@@ -153,17 +141,6 @@ describe('ext.wikia.adEngine.config.desktop', function () {
 		expect(getProviders('foo')).toEqual('turtle');
 	});
 
-	it('any country, Monetization Service on, Monetization Service slot', function () {
-		spyOn(mocks, 'getAdContextProviders').and.returnValue({monetizationService: true});
-		spyOn(mocks.providers.monetizationService, 'canHandleSlot').and.returnValue(true);
-		expect(getProviders('foo')).toEqual('monetizationService');
-	});
-
-	it('any country, Monetization Service on, non Monetization Service slot', function () {
-		spyOn(mocks, 'getAdContextProviders').and.returnValue({monetizationService: true});
-		expect(getProviders('foo')).not.toEqual('monetizationService');
-	});
-
 	it('returns correct providers depending on forcedProvider', function () {
 		spyOn(mocks, 'getAdContextForcedProvider');
 
@@ -171,24 +148,5 @@ describe('ext.wikia.adEngine.config.desktop', function () {
 			mocks.getAdContextForcedProvider.and.returnValue(k);
 			expect(getProviders('foo')).toEqual(forcedProvidersMap[k]);
 		});
-	});
-
-	it('RubiconFastlane country but cannot handle slot: Direct, Remnant', function () {
-		spyOn(mocks.providers.rubiconFastlane, 'canHandleSlot').and.returnValue(false);
-		spyOn(mocks, 'getAdContextProviders').and.returnValue({rubiconFastlane: true});
-		expect(getProviders('foo')).toEqual('direct,remnant');
-	});
-
-	it('RubiconFastlane country and can handle slot: Direct, Remnant, RubiconFastlane', function () {
-		spyOn(mocks.providers.rubiconFastlane, 'canHandleSlot').and.returnValue(true);
-		spyOn(mocks, 'getAdContextProviders').and.returnValue({rubiconFastlane: true});
-		expect(getProviders('foo')).toEqual('direct,remnant,rpfl');
-	});
-
-	it('RubiconFastlane country and wgSitewideDisableGpt on: just RubiconFastlane', function () {
-		spyOn(mocks.providers.rubiconFastlane, 'canHandleSlot').and.returnValue(true);
-		spyOn(mocks, 'getInstantGlobals').and.returnValue({wgSitewideDisableGpt: true});
-		spyOn(mocks, 'getAdContextProviders').and.returnValue({rubiconFastlane: true});
-		expect(getProviders('foo')).toEqual('rpfl');
 	});
 });

@@ -1,0 +1,31 @@
+pages:
+  -
+    page_wikia_id: 177
+    page_id: 1
+    page_namespace: 0
+    page_title: TestPageOne
+    page_is_content: 1
+    page_is_redirect: 0
+    page_latest: 1
+    page_last_edited: 20110101000000
+    page_created_at: 20110101000000
+  -
+    page_wikia_id: 177
+    page_id: 2
+    page_namespace: 0
+    page_title: OldTestPageTwoTitle
+    page_is_content: 0
+    page_is_redirect: 0
+    page_latest: 2
+    page_last_edited: 20120202000000
+    page_created_at: 20120202000000
+  -
+    page_wikia_id: 177
+    page_id: 3
+    page_namespace: 0
+    page_title: TestPageThree
+    page_is_content: 1
+    page_is_redirect: 0
+    page_latest: 3
+    page_last_edited: 20130303000000
+    page_created_at: 20130303000000

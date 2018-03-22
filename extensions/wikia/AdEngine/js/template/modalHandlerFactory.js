@@ -7,10 +7,11 @@ define('ext.wikia.adEngine.template.modalHandlerFactory', [
 ], function (adContext, log, MercuryHandler, OasisHandler) {
 	'use strict';
 
-	var logGroup = 'ext.wikia.adEngine.template.modalHandlerFactory',
-		skin = adContext.getContext().targeting.skin;
+	var logGroup = 'ext.wikia.adEngine.template.modalHandlerFactory';
 
 	function create() {
+		var skin = adContext.getContext().targeting.skin;
+
 		log(['create', skin], 'debug', logGroup);
 
 		switch (skin) {

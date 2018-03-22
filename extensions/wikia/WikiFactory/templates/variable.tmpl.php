@@ -73,16 +73,13 @@ Value on community (possibly default value):
 <?php if( $variable->cv_access_level > 1 ): ?>
 New value:
 <form id="wf-variable-form" name="wf-variable-form" class="wf-variable-form">
-	<input type="hidden" name="cityid" value="<?php echo $cityid ?>" />
-	<input type="hidden" name="varCityid" value="<?php echo $variable->cv_city_id ?>" />
-	<input type="hidden" name="varType" value="<?php echo $variable->cv_variable_type ?>" />
-	<input type="hidden" name="varName" value="<?php echo $variable->cv_name ?>" />
-	<input type="hidden" name="varId" value="<?php echo $variable->cv_variable_id ?>" />
+	<input type="hidden" name="wiki_id" value="<?php echo $cityid ?>" />
+	<input type="hidden" name="variable_id" value="<?php echo $variable->cv_variable_id ?>" />
 
 <?php if( $variable->cv_variable_type === "boolean" ): ?>
 
-	<select name="varValue" id="varValue">
-	<?php   if( unserialize( $variable->cv_value ) === true ): ?>
+	<select name="variable_value" id="varValue">
+	<?php   if( unserialize( $variable->cv_value, [ 'allowed_classes' => false ] ) === true ): ?>
 		<option value="1" selected="selected">true</option>
 		<option value="0">false</option>
 	<?php   else: ?>
@@ -93,20 +90,20 @@ New value:
 
 <?php elseif( $variable->cv_variable_type == "integer"): ?>
 
-	<input type="text" name="varValue" id="varValue" value="<?php echo WikiFactory::renderValue( $variable ) ?>" size="40" maxlength="255" />
+	<input type="text" name="variable_value" id="varValue" value="<?php echo WikiFactory::renderValue( $variable ) ?>" size="40" maxlength="255" />
 
 <?php elseif( $variable->cv_variable_type == "string"): ?>
 
-	<input type="text" name="varValue" id="varValue" value="<?php echo WikiFactory::renderValue( $variable ) ?>" size="100" class="input-string" /><br />
+	<input type="text" name="variable_value" id="varValue" value="<?php echo WikiFactory::renderValue( $variable ) ?>" size="100" class="input-string" /><br />
 
 <?php else: ?>
 
-	<textarea name="varValue" id="varValue"><?php echo WikiFactory::renderValue( $variable ) ?></textarea><br />
+	<textarea name="variable_value" id="varValue"><?php echo WikiFactory::renderValue( $variable ) ?></textarea><br />
 
 <?php endif ?>
 	<div class="clearfix">
 		<div class="wf-variable-form-inline-group wf-variable-form-left">
-			<label for="reason">
+			<label for="wk-reason">
 			<?= wfMessage( 'wikifactory-label-reason' )->parse(); ?></label>
 			<input type="text" id="wk-reason" name="reason" value="" size="30" />
 		</div>
@@ -116,8 +113,8 @@ New value:
 			<input type="text" name="tagName" id="tagName" value="" size="30" />
 		</div>
 	</div>
-	<br/><input type="button" id="wk-submit" name="submit" value="<?= wfMsg('wikifactory-button-saveparse'); ?>" onclick="$Factory.Variable.tagCheck();" />
-	&nbsp;<input type="button" class="wikia-button red" id="wk-submit-remove" name="remove-submit" value="Remove value" onclick="$Factory.Variable.tagCheck('remove');" /><br/>
+	<br/><input type="submit" class="wk-submit" name="submit" value="<?= wfMsg('wikifactory-button-saveparse'); ?>" />
+	&nbsp;<input type="button" class="wk-submit-remove" name="remove-submit" value="Remove value" /><br/>
 	&nbsp;<span id="wf-variable-parse">&nbsp;</span>
 	&nbsp;<span id="wf-tag-parse">&nbsp;</span>
 </form>
@@ -138,17 +135,13 @@ New value:
 <div>
 <?php if( $rel_var->cv_access_level > 1 ): ?>
 <form id="wf-variable-form-<?= $form_id ?>" name="wf-variable-form-<?= $form_id ?>" class="wf-variable-form">
-	<input type="hidden" name="formId" value="<?= $form_id ?>" />
-	<input type="hidden" name="cityid" value="<?php echo $cityid ?>" />
-	<input type="hidden" name="varCityid" value="<?php echo $rel_var->cv_city_id ?>" />
-	<input type="hidden" name="varType" value="<?php echo $rel_var->cv_variable_type ?>" />
-	<input type="hidden" name="varName" value="<?php echo $rel_var->cv_name ?>" />
-	<input type="hidden" name="varId" value="<?php echo $rel_var->cv_variable_id ?>" />
+	<input type="hidden" name="wiki_id" value="<?php echo $cityid ?>" />
+	<input type="hidden" name="variable_id" value="<?php echo $rel_var->cv_variable_id ?>" />
 
 <?php if( $rel_var->cv_variable_type === "boolean" ): ?>
 
-	<select name="varValue" id="varValue">
-	<?php   if( unserialize( $rel_var->cv_value === true ) ): ?>
+	<select name="variable_value" id="varValue">
+	<?php   if( unserialize( $rel_var->cv_value, [ 'allowed_classes' => false ] ) ): ?>
 		<option value="1" selected="selected">true</option>
 		<option value="0">false</option>
 	<?php   else: ?>
@@ -159,19 +152,19 @@ New value:
 
 <?php elseif( $rel_var->cv_variable_type == "integer"): ?>
 
-	<input type="text" name="varValue" id="varValue" value="<?php echo WikiFactory::renderValue( $rel_var ) ?>" size="40" maxlength="255" />
+	<input type="text" name="variable_value" id="varValue" value="<?php echo WikiFactory::renderValue( $rel_var ) ?>" size="40" maxlength="255" />
 
 <?php elseif( $rel_var->cv_variable_type == "string"): ?>
 
-	<input type="text" name="varValue" id="varValue" value="<?php echo WikiFactory::renderValue( $rel_var ) ?>" size="160" class="input-string" />
+	<input type="text" name="variable_value" id="varValue" value="<?php echo WikiFactory::renderValue( $rel_var ) ?>" size="160" class="input-string" />
 
 <?php else: ?>
 
-	 <textarea name="varValue" id="varValue"><?php echo WikiFactory::renderValue( $rel_var ) ?></textarea><br />
+	 <textarea name="variable_value" id="varValue"><?php echo WikiFactory::renderValue( $rel_var ) ?></textarea><br />
 
 <?php endif ?>
-	<input type="button" id="wk-submit" name="submit" value="<?= wfMsg('wikifactory-button-saveparse'); ?>" onclick="$Factory.Variable.submit($(this).parent().attr('id'));" />
-	<input type="button" id="wk-submit-remove" name="remove-submit" value="Remove value" onclick="$Factory.Variable.remove_submit(true, $(this).parent().attr('id'));" />
+	<input type="button" class="wk-submit" name="submit" value="<?= wfMsg('wikifactory-button-saveparse'); ?>" />
+	<input type="button" class="wk-submit-remove" name="remove-submit" value="Remove value" />
 	&nbsp;<span id="wf-variable-parse-<?= $form_id ?>">&nbsp;</span>
 </form>
 <?php else: ?>

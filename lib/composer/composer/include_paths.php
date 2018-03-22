@@ -6,12 +6,14 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname(dirname($vendorDir));
 
 return array(
-    $vendorDir . '/phpunit/php-text-template',
-    $vendorDir . '/phpunit/phpunit-mock-objects',
-    $vendorDir . '/phpunit/php-timer',
-    $vendorDir . '/phpunit/php-token-stream',
-    $vendorDir . '/phpunit/php-file-iterator',
-    $vendorDir . '/phpunit/php-code-coverage',
-    $vendorDir . '/phpunit/phpunit',
-    $vendorDir . '/symfony/yaml',
+    $vendorDir . '/pear/archive_tar',
+    $vendorDir . '/pear/console_getopt',
+    $vendorDir . '/pear/mail_mime',
+    $vendorDir . '/pear/net_socket',
+    $vendorDir . '/pear/pear-core-minimal/src',
+    $vendorDir . '/pear/pear_exception',
+    $vendorDir . '/wikia/file_ogg',
+    $vendorDir . '/wikia/mail2',
+    $vendorDir . '/wikia/net_smtp2',
+    $vendorDir . '/wikia/net_socket2',
 );

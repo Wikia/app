@@ -22,17 +22,14 @@ describe('ext.wikia.adEngine.adEngineRunner', function () {
 			instantGlobals: {},
 			log: noop,
 			win: {},
-			amazonMatch: {
+			a9: {
 				getName: function () {
-					return 'amazon';
-				}
-			},
-			rubiconFastlane: {
-				getName: function () {
-					return 'rubicon_fastlane';
+					return 'a9';
 				}
 			}
 		};
+
+	mocks.log.levels = {};
 
 	function getRunner(bidders) {
 		bidders = bidders || {};
@@ -42,16 +39,13 @@ describe('ext.wikia.adEngine.adEngineRunner', function () {
 			mocks.instantGlobals,
 			mocks.log,
 			mocks.win,
-			bidders.amazonMatch,
-			bidders.rubiconFastlane
+			bidders.a9
 		);
 	}
 
 	beforeEach(function () {
-		mocks.rubiconFastlane.addResponseListener = noop;
-		mocks.amazonMatch.addResponseListener = noop;
-		mocks.rubiconFastlane.wasCalled = noop;
-		mocks.amazonMatch.wasCalled = noop;
+		mocks.a9.addResponseListener = noop;
+		mocks.a9.wasCalled = noop;
 		mocks.win.setTimeout = noop;
 	});
 
@@ -75,8 +69,7 @@ describe('ext.wikia.adEngine.adEngineRunner', function () {
 
 	it('Run adEngine immediately when all bidders are disabled', function () {
 		var runner = getRunner({
-			amazonMatch: mocks.amazonMatch,
-			rubiconFastlane: mocks.rubiconFastlane
+			a9: mocks.a9
 		});
 		spyOn(mocks.adEngine, 'run');
 
@@ -87,14 +80,11 @@ describe('ext.wikia.adEngine.adEngineRunner', function () {
 
 	it('Run adEngine when all bidders responded and delay is enabled', function () {
 		var runner = getRunner({
-			amazonMatch: mocks.amazonMatch,
-			rubiconFastlane: mocks.rubiconFastlane
+			a9: mocks.a9
 		});
 		spyOn(mocks.adEngine, 'run');
-		spyOn(mocks.amazonMatch, 'wasCalled').and.returnValue(true);
-		spyOn(mocks.rubiconFastlane, 'wasCalled').and.returnValue(true);
-		spyOn(mocks.amazonMatch, 'addResponseListener').and.callFake(runCallback);
-		spyOn(mocks.rubiconFastlane, 'addResponseListener').and.callFake(runCallback);
+		spyOn(mocks.a9, 'wasCalled').and.returnValue(true);
+		spyOn(mocks.a9, 'addResponseListener').and.callFake(runCallback);
 
 		runner.run({}, [], 'queue.name', true);
 
@@ -103,13 +93,10 @@ describe('ext.wikia.adEngine.adEngineRunner', function () {
 
 	it('Run adEngine when enabled bidder responded and delay is enabled', function () {
 		var runner = getRunner({
-			amazonMatch: mocks.amazonMatch,
-			rubiconFastlane: mocks.rubiconFastlane
+			a9: mocks.a9
 		});
 		spyOn(mocks.adEngine, 'run');
-		spyOn(mocks.amazonMatch, 'wasCalled').and.returnValue(false);
-		spyOn(mocks.rubiconFastlane, 'wasCalled').and.returnValue(true);
-		spyOn(mocks.rubiconFastlane, 'addResponseListener').and.callFake(runCallback);
+		spyOn(mocks.a9, 'wasCalled').and.returnValue(false);
 
 		runner.run({}, [], 'queue.name', true);
 
@@ -118,13 +105,11 @@ describe('ext.wikia.adEngine.adEngineRunner', function () {
 
 	it('Run adEngine when enabled bidder responded and delay is enabled', function () {
 		var runner = getRunner({
-			amazonMatch: mocks.amazonMatch,
-			rubiconFastlane: mocks.rubiconFastlane
+			a9: mocks.a9
 		});
 		spyOn(mocks.adEngine, 'run');
-		spyOn(mocks.amazonMatch, 'wasCalled').and.returnValue(true);
-		spyOn(mocks.amazonMatch, 'addResponseListener').and.callFake(runCallback);
-		spyOn(mocks.rubiconFastlane, 'wasCalled').and.returnValue(false);
+		spyOn(mocks.a9, 'wasCalled').and.returnValue(true);
+		spyOn(mocks.a9, 'addResponseListener').and.callFake(runCallback);
 
 		runner.run({}, [], 'queue.name', true);
 
@@ -133,10 +118,10 @@ describe('ext.wikia.adEngine.adEngineRunner', function () {
 
 	it('Run adEngine by setTimeout when bidders not responded and delay is enabled', function () {
 		var runner = getRunner({
-			rubiconFastlane: mocks.rubiconFastlane
+			a9: mocks.a9
 		});
 		spyOn(mocks.adEngine, 'run');
-		spyOn(mocks.rubiconFastlane, 'wasCalled').and.returnValue(true);
+		spyOn(mocks.a9, 'wasCalled').and.returnValue(true);
 		spyOn(mocks.win, 'setTimeout').and.callFake(runCallback);
 
 		runner.run({}, [], 'queue.name', true);
@@ -147,10 +132,10 @@ describe('ext.wikia.adEngine.adEngineRunner', function () {
 	// Shouldn't happen, but it's needed to verify all above positive test cases
 	it('Negative test case: bidders called but not responded, setTimeout is broken and delay is enabled', function () {
 		var runner = getRunner({
-			amazonMatch: mocks.amazonMatch
+			a9: mocks.a9
 		});
 		spyOn(mocks.adEngine, 'run');
-		spyOn(mocks.amazonMatch, 'wasCalled').and.returnValue(true);
+		spyOn(mocks.a9, 'wasCalled').and.returnValue(true);
 
 		runner.run({}, [], 'queue.name', true);
 

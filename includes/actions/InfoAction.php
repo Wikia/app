@@ -46,8 +46,6 @@ class InfoAction extends FormlessAction {
 	}
 
 	public function onView() {
-		global $wgDisableCounters;
-
 		$title = $this->getTitle()->getSubjectPage();
 
 		$pageInfo = self::pageCountInfo( $title );
@@ -80,21 +78,6 @@ class InfoAction extends FormlessAction {
 					Html::element( 'td', array(), $this->msg( 'pageinfo-watchers' )->text() ) .
 					Html::element( 'td', array( 'colspan' => 2 ), $this->getLanguage()->formatNum( $pageInfo['watchers'] ) )
 				)
-			).
-			( $wgDisableCounters ? '' :
-				Html::rawElement( 'tr', array(),
-					Html::element( 'th', array( 'colspan' => 3 ), $this->msg( 'pageinfo-header-views' )->text() )
-				) .
-				Html::rawElement( 'tr', array(),
-					Html::element( 'td', array(), $this->msg( 'pageinfo-views' )->text() ) .
-					Html::element( 'td', array(), $this->getLanguage()->formatNum( $pageInfo['views'] ) ) .
-					Html::element( 'td', array(), $this->getLanguage()->formatNum( $talkInfo['views'] ) )
-				) .
-				Html::rawElement( 'tr', array(),
-					Html::element( 'td', array(), $this->msg( 'pageinfo-viewsperedit' )->text() ) .
-					Html::element( 'td', array(), $this->getLanguage()->formatNum( sprintf( '%.2f', $pageInfo['edits'] ? $pageInfo['views'] / $pageInfo['edits'] : 0 ) ) ) .
-					Html::element( 'td', array(), $this->getLanguage()->formatNum( sprintf( '%.2f', $talkInfo['edits'] ? $talkInfo['views'] / $talkInfo['edits'] : 0 ) ) )
-				)
 			)
 		);
 	}
@@ -113,35 +96,31 @@ class InfoAction extends FormlessAction {
 		$watchers = (int)$dbr->selectField(
 			'watchlist',
 			'COUNT(*)',
-			array(
+			[
 				'wl_title'     => $title->getDBkey(),
 				'wl_namespace' => $title->getNamespace()
-			),
+			],
 			__METHOD__
 		);
 
 		$edits = (int)$dbr->selectField(
 			'revision',
 			'COUNT(rev_page)',
-			array( 'rev_page' => $id ),
+			[ 'rev_page' => $id ],
 			__METHOD__
 		);
 
 		$authors = (int)$dbr->selectField(
 			'revision',
-			'COUNT(DISTINCT rev_user_text)',
-			array( 'rev_page' => $id ),
+			'COUNT(DISTINCT rev_user, rev_user_text)',
+			[ 'rev_page' => $id ],
 			__METHOD__
 		);
 
-		$views = (int)$dbr->selectField(
-			'page',
-			'page_counter',
-			array( 'page_id' => $id ),
-			__METHOD__
-		);
-
-		return array( 'watchers' => $watchers, 'edits' => $edits,
-			'authors' => $authors, 'views' => $views );
+		return [
+			'watchers' => $watchers,
+			'edits' => $edits,
+			'authors' => $authors
+		];
 	}
 }

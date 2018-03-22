@@ -1,6 +1,15 @@
-<div class="module help-module">
-	<h2>{{helpModule.title}}</h2>
-	<a data-tracking="help-page-edit-page-link" href="{{helpModule.editPageLink}}">{{helpModule.editPage}}&nbsp;&rarr;</a><br/>
-	<a data-tracking="help-page-add-links-page-link" href="{{helpModule.addLinksPageLink}}">{{helpModule.addLinks}}&nbsp;&rarr;</a><br/>
-	<a data-tracking="help-page-add-new-page-link" href="{{helpModule.addNewPageLink}}">{{helpModule.addNewPage}}&nbsp;&rarr;</a>
+<div class="community-page-help-module community-page-module community-page-module-box">
+	<div class="community-page-module-section-title">
+		{{{helpModule.titleIcon}}}
+		<span class="community-page-help-module-title">{{helpModule.title}}</span>
+	</div>
+	<div class="community-page-help-module-links">
+		<a data-tracking="help-page-edit-page-link" href="{{helpModule.editPageLink}}">{{helpModule.editPage}}</a>
+		<a data-tracking="help-page-add-links-page-link" href="{{helpModule.addLinksPageLink}}">{{helpModule.addLinks}}</a>
+		<a data-tracking="help-page-add-new-page-link" href="{{helpModule.addNewPageLink}}">{{helpModule.addNewPage}}</a>
+	</div>
+	<a data-tracking="help-page-policy-link" class="community-page-policy-link" href="{{helpModule.communityPolicyLink}}">
+		{{{helpModule.communityPolicyIcon}}}
+		<span class="community-page-help-module-policy-title">{{helpModule.communityPolicy}}</span>
+	</a>
 </div>

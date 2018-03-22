@@ -1,14 +1,6 @@
 <?php
 class ServiceTest extends WikiaBaseTest {
 
-	// reinitialize memcache
-	public static function setUpBeforeClass() {
-		global $wgMemc, $wgCaches;
-
-		unset($wgCaches[CACHE_MEMCACHED]);
-		$wgMemc = wfGetCache(CACHE_MEMCACHED);
-	}
-
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.35311 ms
@@ -114,5 +106,4 @@ class ServiceTest extends WikiaBaseTest {
 
 		$this->assertEquals(array('Characters', 'bar', 'test'), CategoriesService::filterOutBlacklistedCategories($categories));
 	}
-
 }

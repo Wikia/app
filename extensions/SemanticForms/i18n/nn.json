@@ -39,6 +39,7 @@
 	"sf_forms_docu": "Følgjande skjema finst på wikien.",
 	"sf_forminputs_mandatory": "Obligatorisk",
 	"sf_forminputs_restricted": "Avgrensa (berre administratorar kan endra det)",
+	"sf_forminputs_checkboxes_select_all": "Vel alle",
 	"createform": "Opprett eit skjema",
 	"sf_createform_nameinput": "Skjemanamn",
 	"sf_createform_template": "Mal:",

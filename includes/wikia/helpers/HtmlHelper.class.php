@@ -2,6 +2,46 @@
 
 class HtmlHelper {
 
+	// source: https://developer.mozilla.org/en-US/docs/Web/HTML/Block-level_elements
+	const BLOCK_ELEMENTS = [
+		'address',
+		'article',
+		'aside',
+		'blockquote',
+		'canvas',
+		'dd',
+		'div',
+		'dl',
+		'dt',
+		'fieldset',
+		'figcaption',
+		'figure',
+		'footer',
+		'form',
+		'h1',
+		'h2',
+		'h3',
+		'h4',
+		'h5',
+		'h6',
+		'header',
+		'hgroup',
+		'hr',
+		'li',
+		'main',
+		'nav',
+		'noscript',
+		'ol',
+		'output',
+		'p',
+		'pre',
+		'section',
+		'table',
+		'tfoot',
+		'ul',
+		'video',
+	];
+
 	/**
 	 * Creates properly encoded DOMDocument. Silent loadHTML errors
 	 * as libxml treats for example <figure> as invalid tag
@@ -13,8 +53,12 @@ class HtmlHelper {
 	public static function createDOMDocumentFromText( $html ) {
 		$error_setting = libxml_use_internal_errors( true );
 		$document = new DOMDocument();
-		//encode for correct load
-		$document->loadHTML( mb_convert_encoding( $html, 'HTML-ENTITIES', 'UTF-8' ) );
+
+		if ( !empty( $html ) ) {
+			//encode for correct load
+			$document->loadHTML( mb_convert_encoding( $html, 'HTML-ENTITIES', 'UTF-8' ) );
+		}
+
 		// clear user generated html parsing errors
 		libxml_clear_errors();
 		libxml_use_internal_errors( $error_setting );
@@ -115,5 +159,19 @@ class HtmlHelper {
 		unset( $dom );
 
 		return $domStripped;
+	}
+
+	public static function renameNode( DOMElement $node, string $newName ) {
+		$newnode = $node->ownerDocument->createElement($newName);
+		foreach ($node->childNodes as $child){
+			$child = $node->ownerDocument->importNode($child, true);
+			$newnode->appendChild($child);
+		}
+		foreach ($node->attributes as $attrName => $attrNode) {
+			$newnode->setAttribute($attrName, $attrNode->nodeValue);
+		}
+		$node->parentNode->replaceChild($newnode, $node);
+
+		return $newnode;
 	}
 }

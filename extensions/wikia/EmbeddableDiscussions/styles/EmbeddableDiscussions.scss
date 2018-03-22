@@ -1,36 +1,60 @@
 @import 'skins/shared/mixins/flexbox';
 @import 'skins/shared/color';
+@import 'skins/shared/functions';
 
 @import 'avatar';
+@import 'clamp';
 @import 'ShareModal';
 
-$reply-icon: '/extensions/wikia/EmbeddableDiscussions/images/reply.svg';
-$reply-icon-tiny: '/extensions/wikia/EmbeddableDiscussions/images/reply-tiny.svg';
-$upvote-icon: '/extensions/wikia/EmbeddableDiscussions/images/upvote.svg';
-$upvote-icon-active: '/extensions/wikia/EmbeddableDiscussions/images/upvote-active.svg';
-$upvote-icon-tiny: '/extensions/wikia/EmbeddableDiscussions/images/upvote-tiny.svg';
-$share-icon: '/extensions/wikia/EmbeddableDiscussions/images/share.svg';
 $plus-icon: '/extensions/wikia/EmbeddableDiscussions/images/plus-x-large.svg';
+$default-avatar-icon: '/extensions/wikia/EmbeddableDiscussions/images/icon-avatar.svg';
 
-$gray: #999;
 $card-border-color: $color-page-border;
 $container-border-color: lighten($color-page-border, 10%);
 
-$icon-size: 24px;
-$tiny-icon-size: 14px;
+$avatar-size: 30px;
 $plus-icon-size: 34px;
 
 $font-size-small: 12px;
 $font-size-regular: 14px;
 $font-size-large: 16px;
 
+$post-mark-icon-size: 12px;
+$discussion-deleted-mark-color: #ed1c24;
+$discussion-reported-mark-color: #f08a24;
+$discussion-deleted-actions-opacity: .5;
+
+$upvote-icon-activated-color: #e3bd00;
+
+$overlay-color: #fff;
+@if lightness($color-page) > 49 {
+	$overlay-color: #000;
+}
+
+$overlay-large-value: 25%;
+$overlay-small-value: 15%;
+
+@if lightness($color-page) > 10 {
+	$overlay-large-value: 6%;
+	$overlay-small-value: 3%;
+}
+
+$text-overlay-value: 40%;
+
 .embeddable-discussions-module {
+	@include flexbox();
+	@include flex-direction(column);
+
 	border: 1px solid $container-border-color;
 	margin: 0;
 	padding: 3px 21px 30px 27px;
 
 	p {
 		margin: 0;
+	}
+
+	svg {
+		vertical-align: middle;
 	}
 
 	a.embeddable-discussions-fill-div {
@@ -43,22 +67,46 @@ $font-size-large: 16px;
 		width: 100%;
 	}
 
+	.avatar {
+		height: $avatar-size;
+		width: $avatar-size;
+	}
+
 	.avatar-container {
+		height: $avatar-size;
 		position: relative;
+		width: $avatar-size;
 		z-index: 1;
 	}
 
 	.avatar-details {
+		font-size: $font-size-regular;
+		line-height: $avatar-size;
 		z-index: 1;
 	}
 
+	.clamp {
+		@include clamp(3);
+	}
+
+	.embeddable-discussions-default-avatar {
+		background: url($default-avatar-icon) no-repeat;
+		height: $avatar-size;
+		width: $avatar-size;
+	}
+
 	.embeddable-discussions-forum {
-		color: $gray;
+		color: mix($overlay-color, $color-page, $text-overlay-value);
+		font-size: $font-size-small;
 		float: left;
 	}
 
 	.embeddable-discussions-content {
 		font-size: $font-size-regular;
+
+		&.is-deleted {
+			opacity: $discussion-deleted-actions-opacity;
+		}
 	}
 
 	.embeddable-discussions-header-container {
@@ -81,94 +129,109 @@ $font-size-large: 16px;
 		@include flexbox();
 		@include align-items(center);
 		@include align-self(center);
-		@include justify-content(center);
+		@include justify-content(flex-start);
 
-		border-top: 1px solid $card-border-color;
+		border-top: 1px solid mix($overlay-color, $color-page, $overlay-large-value);
 		font-size: $font-size-small;
 		font-weight: 500;
+		height: 45px;
 		list-style: none;
 		margin: 0;
 		max-width: none;
-		padding: 6px 0;
-		width: auto;
+		padding: 0 15px;
 	}
 
 	.embeddable-discussions-post-actions li {
-		@include flexbox();
-		@include align-items(center);
-		@include align-self(center);
-		@include justify-content(center);
-
-		color: $gray;
+		color: mix($overlay-color, $color-page, $text-overlay-value);
 		cursor: pointer;
-		height: 33px;
-		line-height: 33px;
-		text-align: center;
+		overflow: hidden;
+		text-align: left;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+
+		&.is-deleted {
+			opacity: 0;
+		}
 	}
 
 	.embeddable-discussions-post-actions a {
-		@include flexbox();
-		@include align-items(center);
-		@include align-self(center);
-		@include justify-content(center);
-
-		color: $gray;
+		color: mix($overlay-color, $color-page, $text-overlay-value);
 		cursor: pointer;
 		font-size: $font-size-small;
-		font-weight: 500;
-		height: 33px;
-		line-height: 33px;
-		text-align: center;
 	}
 
 	.embeddable-discussions-post-counter {
 		padding-left: 10px;
-		vertical-align: top;
 	}
 
 	.embeddable-discussions-post-counters {
-		@include flexbox();
-		@include align-items(center);
-		@include align-self(center);
-		@include justify-content(center);
-
-		color: $gray;
+		color: mix($overlay-color, $color-page, $text-overlay-value);
 		font-size: $font-size-small;
 		justify-content: flex-end;
-		line-height: $font-size-small;
-		padding-bottom: 14px;
+		padding-bottom: 4px;
 		text-align: right;
 	}
 
 	.embeddable-discussions-post-detail {
-		border: 1px solid $card-border-color;
+        background-color: mix($overlay-color, $color-page, $overlay-small-value);
+		border: 1px solid mix($overlay-color, $color-page, $overlay-large-value);
 		margin: 0 0 20px;
 		padding: 20px 0 0;
+		position: relative;
+
+		&.is-deleted,
+		&.is-reported {
+			&::before {
+				border-color: transparent;
+				border-style: solid;
+				border-width: $post-mark-icon-size $post-mark-icon-size 0 0;
+				content: '';
+				left: 0;
+				position: absolute;
+				top: 0;
+			}
+		}
+
+		&.is-deleted {
+			&::before {
+				border-top-color: $discussion-deleted-mark-color;
+			}
+		}
+
+		&.is-reported {
+			&::before {
+				border-top-color: $discussion-reported-mark-color;
+			}
+		}
 	}
 
 	.embeddable-discussions-post-detail-columns {
-		height: 100%;
 		margin-right: 10px;
 		width: 48%;
 	}
 
+	.embeddable-discussions-post-detail-right-column {
+		width: 100%;
+	}
+
 	.embeddable-discussions-reply-icon {
-		background: url($reply-icon) no-repeat;
-		height: $icon-size;
-		width: $icon-size;
+		path {
+			fill: mix($overlay-color, $color-page, $text-overlay-value);
+		}
 	}
 
 	.embeddable-discussions-reply-icon-tiny {
-		background: url($reply-icon-tiny) no-repeat;
-		height: $tiny-icon-size;
 		margin-right: 4px;
-		width: $tiny-icon-size;
+
+		path {
+			fill: mix($overlay-color, $color-page, $text-overlay-value);
+		}
 	}
 
 	.embeddable-discussions-share-icon {
-		background: url($share-icon) no-repeat;
-		height: $icon-size;
-		width: $icon-size;
+		path {
+			fill: mix($overlay-color, $color-page, $text-overlay-value);
+		}
 	}
 
 	.embeddable-discussions-show-all {
@@ -187,6 +250,7 @@ $font-size-large: 16px;
 	.embeddable-discussions-threads {
 		clear: both;
 		padding-top: 14px;
+		position: relative;
 	}
 
 	.embeddable-discussions-threads-columns {
@@ -195,32 +259,39 @@ $font-size-large: 16px;
 	}
 
 	.embeddable-discussions-timestamp {
-		color: $gray;
+		color: mix($overlay-color, $color-page, $text-overlay-value);
+		font-size: $font-size-small;
 		padding-left: 5px;
 	}
 
 	.embeddable-discussions-title {
 		font-size: $font-size-regular;
 		font-weight: bold;
+		min-height: 22px;
+
+		&.is-deleted {
+			opacity: $discussion-deleted-actions-opacity;
+		}
 	}
 
 	.embeddable-discussions-upvote-icon {
-		background: url($upvote-icon) no-repeat;
-		height: $icon-size;
-		width: $icon-size;
+		path {
+			fill: mix($overlay-color, $color-page, $text-overlay-value);
+		}
 	}
 
 	.embeddable-discussions-upvote-icon-active {
-		background: url($upvote-icon-active) no-repeat;
-		height: $icon-size;
-		width: $icon-size;
+		path {
+			fill: $upvote-icon-activated-color;
+		}
 	}
 
 	.embeddable-discussions-upvote-icon-tiny {
-		background: url($upvote-icon-tiny) no-repeat;
 		margin-right: 4px;
-		height: $tiny-icon-size;
-		width: $tiny-icon-size;
+
+		path {
+			fill: mix($overlay-color, $color-page, $text-overlay-value);
+		}
 	}
 
 	.embeddable-discussions-zero {
@@ -244,5 +315,11 @@ $font-size-large: 16px;
 
 	.embeddable-discussions-zero-text {
 		font-size: $font-size-large;
+	}
+
+	.embeddable-action-gap {
+		flex-grow: 1;
+		max-width: 50px;
+		min-width: 20px;
 	}
 }

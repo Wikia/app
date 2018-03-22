@@ -1,17 +1,11 @@
 /*global define*/
 define('ext.wikia.adEngine.provider.directGptMobile', [
-	'ext.wikia.adEngine.provider.factory.wikiaGpt',
-	'ext.wikia.adEngine.uapContext',
-	'ext.wikia.adEngine.utils.eventDispatcher'
-], function (factory, uapContext, eventDispatcher) {
+	'ext.wikia.adEngine.adContext',
+	'ext.wikia.adEngine.slot.service.kiloAdUnitBuilder',
+	'ext.wikia.adEngine.slot.service.megaAdUnitBuilder',
+	'ext.wikia.adEngine.provider.factory.wikiaGpt'
+], function (adContext, kiloAdUnitBuilder, megaAdUnitBuilder, factory) {
 	'use strict';
-
-	// TODO: ADEN-3542
-	function dispatchNoUapEvent(slotName) {
-		if (slotName === 'MOBILE_TOP_LEADERBOARD' && uapContext.getUapId() === undefined) {
-			eventDispatcher.dispatch('wikia.not_uap');
-		}
-	}
 
 	return factory.createProvider(
 		'ext.wikia.adEngine.provider.directGptMobile',
@@ -20,23 +14,22 @@ define('ext.wikia.adEngine.provider.directGptMobile', [
 		{
 			INVISIBLE_HIGH_IMPACT:      {size: '1x1'},
 			INVISIBLE_HIGH_IMPACT_2:    {loc: 'hivi'},
-			MOBILE_TOP_LEADERBOARD:     {size: '300x50,300x250,320x50,320x100,320x480'},
-			MOBILE_BOTTOM_LEADERBOARD:  {size: '300x50,300x250,320x50,320x100,320x480'},
-			MOBILE_IN_CONTENT:          {size: '320x50,300x250,300x50,320x480'},
-			MOBILE_IN_CONTENT_EXTRA_1:  {size: '300x250'},
-			MOBILE_IN_CONTENT_EXTRA_2:  {size: '300x250'},
-			MOBILE_IN_CONTENT_EXTRA_3:  {size: '300x250'},
-			MOBILE_PREFOOTER:           {size: '320x50,300x250,300x50'}
+			MOBILE_TOP_LEADERBOARD:     {size: '300x50,320x50,320x100,320x480,2x2', loc: 'top'},
+			// TODO remove in ADEN-6719
+			MOBILE_BOTTOM_LEADERBOARD:  {size: '320x50,300x250,300x50,2x2', loc: 'footer', pos: ['MOBILE_BOTTOM_LEADERBOARD', 'BOTTOM_LEADERBOARD', 'MOBILE_PREFOOTER']},
+			// TODO remove pos attribute in ADEN-6719
+			BOTTOM_LEADERBOARD:         {size: '320x50,300x250,300x50,2x2', loc: 'footer', pos: ['BOTTOM_LEADERBOARD', 'MOBILE_BOTTOM_LEADERBOARD', 'MOBILE_PREFOOTER']},
+			MOBILE_IN_CONTENT:          {size: '320x50,300x250,300x50,320x480', loc: 'middle'},
+			MOBILE_PREFOOTER:           {size: '320x50,300x250,300x50', loc: 'footer'}
 		},
 		{
-			beforeSuccess: dispatchNoUapEvent,
-			beforeHop: dispatchNoUapEvent,
-			beforeCollapse: dispatchNoUapEvent,
+			getAdUnitBuilder: function () {
+				return adContext.getContext().opts.megaAdUnitBuilderEnabled ? megaAdUnitBuilder : kiloAdUnitBuilder;
+			},
 			atfSlots: [
-				'MOBILE_TOP_LEADERBOARD',
-				'INVISIBLE_HIGH_IMPACT',
-				'INVISIBLE_HIGH_IMPACT_2'
-			]
+				'MOBILE_TOP_LEADERBOARD'
+			],
+			testSrc: 'test'
 		}
 	);
 });

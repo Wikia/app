@@ -38,7 +38,8 @@ class ResourceLoaderStartUpModule extends ResourceLoaderModule {
 			$wgVariantArticlePath, $wgActionPaths, $wgUseAjax, $wgVersion,
 			$wgEnableAPI, $wgEnableWriteAPI, $wgDBname, $wgEnableMWSuggest,
 			$wgSitename, $wgFileExtensions, $wgExtensionAssetsPath,
-			$wgCookiePrefix, $wgResourceLoaderMaxQueryLength, $wgCommunityPageDisableTopContributors;
+			$wgCookiePrefix, $wgResourceLoaderMaxQueryLength, $wgWikiaBaseDomain,
+			$wgWikiaBaseDomainRegex;
 
 		$mainPage = Title::newMainPage();
 
@@ -98,6 +99,8 @@ class ResourceLoaderStartUpModule extends ResourceLoaderModule {
 			'wgLegalTitleChars' => Title::convertByteClassToUnicodeClass( Title::legalChars() ),
 			// Wikia - change begin - @author: wladek
 			'wgSassParams' => SassUtil::getSassSettings(),
+			'wgWikiaBaseDomain' => $wgWikiaBaseDomain,
+			'wgWikiaBaseDomainRegex' => $wgWikiaBaseDomainRegex,
 			// Wikia - change end
 		);
 
@@ -105,8 +108,8 @@ class ResourceLoaderStartUpModule extends ResourceLoaderModule {
 			$vars['wgMWSuggestTemplate'] = SearchEngine::getMWSuggestTemplate();
 		}
 
-		wfRunHooks( 'ResourceLoaderGetConfigVars', array( &$vars ) );
-		wfRunHooks( 'ResourceLoaderGetConfigVarsWithContext', array( &$vars, $context ) );
+		Hooks::run( 'ResourceLoaderGetConfigVars', array( &$vars ) );
+		Hooks::run( 'ResourceLoaderGetConfigVarsWithContext', array( &$vars, $context ) );
 
 		return $vars;
 	}
@@ -202,7 +205,7 @@ class ResourceLoaderStartUpModule extends ResourceLoaderModule {
 
 			// The core modules:
 			$modules = array( 'jquery', 'mediawiki' );
-			wfRunHooks( 'ResourceLoaderGetStartupModules', array( &$modules ) );
+			Hooks::run( 'ResourceLoaderGetStartupModules', array( &$modules ) );
 
 			// Get the latest version
 			$version = 0;

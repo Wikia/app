@@ -96,15 +96,6 @@ if ( defined( 'MW_CONFIG_CALLBACK' ) ) {
 	require( $maintenance->loadSettings() );
 }
 
-// Wikia change - begin - attach sink to the profiler (copied from WebStart.php)
-if ( $wgProfiler instanceof Profiler ) {
-	if ( empty($wgProfilerSendViaScribe) ) {
-		$sink = new ProfilerDataUdpSink();
-	} else {
-		$sink = new ProfilerDataScribeSink();
-	}
-	$wgProfiler->addSink( $sink );
-}
 Transaction::setEntryPoint(Transaction::ENTRY_POINT_MAINTENANCE);
 Transaction::setAttribute(Transaction::PARAM_MAINTENANCE_SCRIPT, $maintClass);
 // Wikia change - end
@@ -159,4 +150,4 @@ try {
 	throw $e;
 }
 
-wfRunHooks( 'RestInPeace' ); // Wikia change - @author macbre
+Hooks::run( 'RestInPeace' ); // Wikia change - @author macbre

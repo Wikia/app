@@ -134,12 +134,6 @@ class WikiaVideoAddForm extends SpecialPage {
 					return;
 				}
 
-				if ( empty( F::app()->wg->allowNonPremiumVideos ) ) {
-					$errors['videoUrl'] = wfMessage( 'videohandler-non-premium' )->parse();
-					$this->showForm( $errors );
-					return;
-				}
-
 				if ( WikiaFileHelper::useVideoHandlersExtForEmbed() ){
 					$res = null;
 					try {

@@ -917,7 +917,7 @@ function wfDebug( $text, $logonly = false ) {
 			$cache = array();
 		}
 	}
-	# if ( wfRunHooks( 'Debug', array( $text, null ) ) ) { // Wikia change - BAC-91
+	# if ( Hooks::run( 'Debug', array( $text, null ) ) ) { // Wikia change - BAC-91
 		if ( $wgDebugLogFile != '' && !$wgProfileOnly ) {
 			# Strip unprintables; they can switch terminal modes when binary data
 			# gets dumped, which is pretty annoying.
@@ -1000,7 +1000,7 @@ function wfDebugLog( $logGroup, $text, $public = true ) {
 		$time = wfTimestamp( TS_DB );
 		$wiki = wfWikiID();
 		$host = wfHostname();
-		if ( wfRunHooks( 'Debug', array( $text, $logGroup ) ) ) {
+		if ( Hooks::run( 'Debug', array( $text, $logGroup ) ) ) {
 			wfErrorLog( "$time $host $wiki: $text", $wgDebugLogGroups[$logGroup] );
 		}
 	} elseif ( $public === true ) {
@@ -1506,7 +1506,7 @@ function wfMsgReal( $key, $args, $useDB = true, $forContent = false, $transform 
 function wfMsgGetKey( $key, $useDB = true, $langCode = false, $transform = true ) {
 	wfDeprecated( __METHOD__, '1.18' );
 
-	wfRunHooks( 'NormalizeMessageKey', array( &$key, &$useDB, &$langCode, &$transform ) );
+	Hooks::run( 'NormalizeMessageKey', array( &$key, &$useDB, &$langCode, &$transform ) );
 
 	$cache = MessageCache::singleton();
 	$message = $cache->get( $key, $useDB, $langCode );
@@ -1796,7 +1796,7 @@ function wfDebugBacktrace( $limit = 0 ) {
 	}
 
 	if ( $limit && version_compare( PHP_VERSION, '5.4.0', '>=' ) ) {
-		return array_slice( debug_backtrace( DEBUG_BACKTRACE_PROVIDE_OBJECT, $limit ), 1 );
+		return array_slice( debug_backtrace( DEBUG_BACKTRACE_PROVIDE_OBJECT, $limit + 1 ), 1 );
 	} else {
 		return array_slice( debug_backtrace(), 1 );
 	}
@@ -1861,7 +1861,7 @@ function wfBacktrace( $forceCommandLineMode = false ) {
  * @return Bool|string
  */
 function wfGetCaller( $level = 2 ) {
-	$backtrace = wfDebugBacktrace( $level );
+	$backtrace = wfDebugBacktrace( $level + 1 );
 	if ( isset( $backtrace[$level] ) ) {
 		return wfFormatStackFrame( $backtrace[$level] );
 	} else {
@@ -2908,7 +2908,7 @@ function wfShellExec( $cmd, &$retval = null, $environ = array() ) {
 
 	wfInitShellLocale();
 
-	wfRunHooks( 'BeforeWfShellExec', [ &$cmd, &$environ ] ); // Wikia change
+	Hooks::run( 'BeforeWfShellExec', [ &$cmd, &$environ ] ); // Wikia change
 
 	$envcmd = '';
 	foreach( $environ as $k => $v ) {
@@ -2944,7 +2944,7 @@ function wfShellExec( $cmd, &$retval = null, $environ = array() ) {
 		$filesize = intval( $wgMaxShellFileSize );
 
 		if ( $time > 0 && $mem > 0 ) {
-			$script = "$IP/bin/ulimit4.sh";
+			$script = "$IP/includes/ulimit4.sh";
 			if ( is_executable( $script ) ) {
 				$cmd = '/bin/bash ' . escapeshellarg( $script ) . " $time $mem $filesize " . escapeshellarg( $cmd );
 			}
@@ -3016,7 +3016,7 @@ function wfShellMaintenanceCmd( $script, array $parameters = array(), array $opt
 	global $wgPhpCli;
 	// Give site config file a chance to run the script in a wrapper.
 	// The caller may likely want to call wfBasename() on $script.
-	wfRunHooks( 'wfShellMaintenanceCmd', array( &$script, &$parameters, &$options ) );
+	Hooks::run( 'wfShellMaintenanceCmd', array( &$script, &$parameters, &$options ) );
 	$cmd = isset( $options['php'] ) ? array( $options['php'] ) : array( $wgPhpCli );
 	if ( isset( $options['wrapper'] ) ) {
 		$cmd[] = $options['wrapper'];
@@ -3620,7 +3620,7 @@ function wfSplitWikiID( $wiki ) {
  *
  * @return DatabaseMysqli
  */
-function &wfGetDB( $db, $groups = array(), $wiki = false ) {
+function &wfGetDB( int $db, $groups = array(), $wiki = false ) {
 	// wikia change begin -- SMW DB separation project, @author Krzysztof Krzyżaniak (eloy)
 	global $smwgUseExternalDB, $wgDBname;
 	if( $smwgUseExternalDB === true ) {
@@ -4030,17 +4030,6 @@ function wfGetMessageCacheStorage() {
 function wfGetParserCacheStorage() {
 	global $wgParserCacheType;
 	return ObjectCache::getInstance( $wgParserCacheType );
-}
-
-/**
- * Call hook functions defined in $wgHooks
- *
- * @param $event String: event name
- * @param $args Array: parameters passed to hook functions
- * @return Boolean True if no handler aborted the hook
- */
-function wfRunHooks( $event, $args = array() ) {
-	return Hooks::run( $event, $args );
 }
 
 /**

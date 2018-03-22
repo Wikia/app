@@ -14,17 +14,6 @@ if (isset($params['exclude-group'])) {
 	}
 }
 
-$wgAnnotateTestSpeed = (getenv('ANNOTATE_TEST_SPEED') === '1');
+require_once __DIR__ . '/bootstrap.php';
 
-require_once dirname(__FILE__) . '/bootstrap.php';
-
-if (extension_loaded('xdebug')) {
-    xdebug_disable();
-}
-
-if ( !isset( $params['slow-list'] ) ) {
-	PHPUnit_TextUI_Command::main();
-} else {
-	include_once( 'SlowTestsFinder.php' );
-	SlowTestsFinder::main();
-}
+\PHPUnit\TextUI\Command::main();

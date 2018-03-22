@@ -58,15 +58,6 @@ function cleanupArticle( $rev, $regexes, $match ) {
 
 //------------------------------------------------------------------------------
 
-$username = 'Spam cleanup script';
-$wgUser = User::newFromName( $username );
-if ( $wgUser->idForName() == 0 ) {
-	// Create the user
-	$wgUser->addToDatabase();
-	$dbw = wfGetDB( DB_MASTER );
-	$dbw->update( 'user', array( 'user_password' => 'nologin' ), 
-		array( 'user_name' => $username ), $username );
-}
 
 if ( isset( $options['n'] ) ) {
 	$dryRun = true;
@@ -110,7 +101,7 @@ for ( $id=1; $id <= $maxID; $id++ ) {
 						print "\nFound spam in [[$titleText]]\n";
 					} else {
 						print "\nCleaning up links to {$matches[0]} in [[$titleText]]\n";
-						$match = str_replace('http://', '', $matches[0] );
+						$match = preg_replace( '!^https?://!', '', $matches[0] );
 						cleanupArticle( $revision, $regexes, $match );
 					}
 				}

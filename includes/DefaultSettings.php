@@ -149,7 +149,6 @@ $wgLoadScript = false;
  * The URL path of the skins directory. Will default to "{$wgScriptPath}/skins" in Setup.php
  */
 $wgStylePath = false;
-$wgStyleSheetPath = &$wgStylePath;
 
 /**
  * The URL path of the skins directory. Should not point to an external domain.
@@ -424,11 +423,11 @@ $wgUpdateCompatibleMetadata = false;
  */
 $wgUseSharedUploads = false;
 /** Full path on the web server where shared uploads can be found */
-$wgSharedUploadPath = "http://commons.wikimedia.org/shared/images";
+$wgSharedUploadPath = null;
 /** Fetch commons image description pages and display them on the local wiki? */
 $wgFetchCommonsDescriptions = false;
 /** Path on the file system where shared uploads can be found. */
-$wgSharedUploadDirectory = "/var/www/wiki3/images";
+$wgSharedUploadDirectory = null;
 /** DB name with metadata about shared directory. Set this to false if the uploads do not come from a wiki. */
 $wgSharedUploadDBname = false;
 /** Optional table prefix used in database. */
@@ -1068,17 +1067,6 @@ $wgEnableEmail = true;
 $wgEnableUserEmail = true;
 
 /**
- * Minimum time, in hours, which must elapse between password reminder
- * emails for a given account. This is to prevent abuse by mail flooding.
- */
-$wgPasswordReminderResendTime = 24;
-
-/**
- * The time, in seconds, when an emailed temporary password expires.
- */
-$wgNewPasswordExpiry = 3600 * 24 * 7;
-
-/**
  * The time, in seconds, when an email confirmation email expires
  */
 $wgUserEmailConfirmationTokenExpiry = 7 * 24 * 60 * 60;
@@ -1503,7 +1491,6 @@ $wgCacheDirectory = false;
  *
  *   - CACHE_ANYTHING:   Use anything, as long as it works
  *   - CACHE_NONE:       Do not cache
- *   - CACHE_DB:         Store cache objects in the DB
  *   - CACHE_MEMCACHED:  MemCached, must specify servers in $wgMemCachedServers
  *   - CACHE_ACCEL:      APC, XCache or WinCache
  *   - CACHE_DBA:        Use PHP's DBA extension to store in a DBM-style
@@ -1550,7 +1537,6 @@ $wgParserCacheType = CACHE_ANYTHING;
  */
 $wgObjectCaches = array(
 	CACHE_NONE => array( 'class' => 'EmptyBagOStuff' ),
-	CACHE_DB => array( 'class' => 'SqlBagOStuff', 'table' => 'objectcache' ),
 	CACHE_DBA => array( 'class' => 'DBABagOStuff' ),
 
 	CACHE_ANYTHING => array( 'factory' => 'ObjectCache::newAnything' ),
@@ -1904,6 +1890,7 @@ $wgDummyLanguageCodes = array(
 	'be-x-old' => 'be-tarask',
 	'bh' => 'bho',
 	'fiu-vro' => 'vro',
+	'lol' => 'lol', # Used for In Context Translations
 	'no' => 'nb',
 	'qqq' => 'qqq', # Used for message documentation.
 	'qqx' => 'qqx', # Used for viewing message keys.
@@ -3108,15 +3095,6 @@ $wgArticleCountMethod = null;
 $wgUseCommaCount = false;
 
 /**
- * wgHitcounterUpdateFreq sets how often page counters should be updated, higher
- * values are easier on the database. A value of 1 causes the counters to be
- * updated on every hit, any higher value n cause them to update *on average*
- * every n hits. Should be set to either 1 or something largish, eg 1000, for
- * maximum efficiency.
- */
-$wgHitcounterUpdateFreq = 1;
-
-/**
  * How many days user must be idle before he is considered inactive. Will affect
  * the number shown on Special:Statistics and Special:ActiveUsers special page.
  * You might want to leave this as the default value, to provide comparable
@@ -3130,9 +3108,6 @@ $wgActiveUserDays = 30;
  * @name   User accounts, authentication
  * @{
  */
-
-/** For compatibility with old installations set to false */
-$wgPasswordSalt = true;
 
 /**
  * Specifies the minimal length of a user password. If set to 0, empty pass-
@@ -3265,7 +3240,7 @@ $wgHiddenPrefs = array();
  * This is used in a regular expression character class during
  * registration (regex metacharacters like / are escaped).
  */
-$wgInvalidUsernameCharacters = '@';
+$wgInvalidUsernameCharacters = '@:';
 
 /**
  * Character used as a delimiter when testing for interwiki userrights
@@ -3277,28 +3252,6 @@ $wgInvalidUsernameCharacters = '@';
  * modify the user rights of those users via Special:UserRights
  */
 $wgUserrightsInterwikiDelimiter = '@';
-
-/**
- * Use some particular type of external authentication.  The specific
- * authentication module you use will normally require some extra settings to
- * be specified.
- *
- * null indicates no external authentication is to be used.  Otherwise,
- * $wgExternalAuthType must be the name of a non-abstract class that extends
- * ExternalUser.
- *
- * Core authentication modules can be found in includes/extauth/.
- */
-$wgExternalAuthType = null;
-
-/**
- * Configuration for the external authentication.  This may include arbitrary
- * keys that depend on the authentication mechanism.  For instance,
- * authentication against another web app might require that the database login
- * info be provided.  Check the file where your auth mechanism is defined for
- * info on what to put here.
- */
-$wgExternalAuthConf = array();
 
 /**
  * Policies for how each preference is allowed to be changed, in the presence
@@ -3357,12 +3310,19 @@ $wgSysopEmailBans = true;
  * Limits on the possible sizes of range blocks.
  *
  * CIDR notation is hard to understand, it's easy to mistakenly assume that a
- * /1 is a small range and a /31 is a large range. Setting this to half the
- * number of bits avoids such errors.
+ * /1 is a small range and a /31 is a large range. For IPv4, setting a limit of
+ * half the number of bits avoids such errors, and allows entire ISPs to be
+ * blocked using a small number of range blocks.
+ *
+ * For IPv6, RFC 3177 recommends that a /48 be allocated to every residential
+ * customer, so range blocks larger than /64 (half the number of bits) will
+ * plainly be required. RFC 4692 implies that a very large ISP may be
+ * allocated a /19 if a generous HD-Ratio of 0.8 is used, so we will use that
+ * as our limit. As of 2012, blocking the whole world would require a /4 range.
  */
 $wgBlockCIDRLimit = array(
 	'IPv4' => 16, # Blocks larger than a /16 (64k addresses) will not be allowed
-	'IPv6' => 64, # 2^64 = ~1.8x10^19 addresses
+	'IPv6' => 19,
 );
 
 /**
@@ -3947,11 +3907,6 @@ $wgStatsMethod = 'cache';
  * will be used.
  */
 $wgAggregateStatsID = false;
-
-/** Whereas to count the number of time an article is viewed.
- * Does not work if pages are cached (for example with squid).
- */
-$wgDisableCounters = false;
 
 /**
  * Set this to an integer to only do synchronous site_stats updates
@@ -4693,14 +4648,6 @@ $wgHooks = &Hooks::getHandlersArray();
 // Wikia change - end
 
 /**
- * Maps jobs to their handling classes; extensions
- * can add to this to provide custom jobs
- */
-$wgJobClasses = array(
-	'fixDoubleRedirect' => 'DoubleRedirectJob',
-);
-
-/**
 
  * Jobs that must be explicitly requested, i.e. aren't run by job runners unless special flags are set.
  *
@@ -5305,7 +5252,7 @@ $wgAjaxLicensePreview = true;
  *
  */
 $wgCrossSiteAJAXdomains = [
-	"internal.vstf.{$wgWikiaBaseDomain}", # PLATFORM-1719
+	"internal-vstf.{$wgWikiaBaseDomain}", # PLATFORM-1719
 ];
 
 /**
@@ -5384,14 +5331,6 @@ $wgHTTPProxy = false;
  * @name   Job queue
  * @{
  */
-
-/**
- * Number of jobs to perform per request. May be less than one in which case
- * jobs are performed probabalistically. If this is zero, jobs will not be done
- * during ordinary apache requests. In this case, maintenance/runJobs.php should
- * be run periodically.
- */
-$wgJobRunRate = 1;
 
 /**
  * Number of rows to update per job
@@ -5489,13 +5428,6 @@ $wgRegisterInternalExternals = false;
 $wgMaximumMovedPages = 100;
 
 /**
- * Fix double redirects after a page move.
- * Tends to conflict with page move vandalism, use only on a private wiki.
- * TODO: if this is ever set to true, make sure to migrate includes/job/DoubleRedirectJob.php over to using the new job queue system!
- */
-$wgFixDoubleRedirects = false;
-
-/**
  * Allow redirection to another page when a user logs in.
  * To enable, set to a string like 'Main Page'
  */
@@ -5533,6 +5465,11 @@ $wgSeleniumTestConfigs = array();
 $wgSeleniumConfigFile = null;
 $wgDBtestuser = ''; //db user that has permission to create and drop the test databases only
 $wgDBtestpassword = '';
+
+/**
+ * When enabled, RL will output links without the server part.
+ */
+$wgEnableLocalResourceLoaderLinks = true;
 
 /**
  * For really cool vim folding this needs to be at the end:

@@ -11,41 +11,44 @@
  *
  */
 
-if (!defined('MEDIAWIKI')){
-    echo ('THIS IS NOT VALID ENTRY POINT.'); exit (1);
+if ( !defined( 'MEDIAWIKI' ) ) {
+    echo 'THIS IS NOT VALID ENTRY POINT.';
+    exit (1);
 }
 
-$wgHooks['ParserFirstCallInit'][] = "wfGoogleDocs";
+$wgHooks['ParserFirstCallInit'][] = 'wfGoogleDocs';
 
-$wgExtensionCredits['parserhook'][] = array(
-	'name' => "GoogleDocs4MW",
-	'descriptionmsg' => "googledocs-desc",
+$wgExtensionCredits['parserhook'][] = [
+	'name' => 'GoogleDocs4MW',
+	'descriptionmsg' => 'googledocs-desc',
 	'author' => "[http://www.wikia.com/wiki/User:TOR Lucas 'TOR' Garczewski]",
 	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/GoogleDocs'
-);
+];
 
 //i18n
 $wgExtensionMessagesFiles['GoogleDocs4MW'] = __DIR__ . '/GoogleDocs.i18n.php';
 
 function wfGoogleDocs( Parser $parser ) {
-	$parser->setHook( "googlespreadsheet", "renderGoogleSpreadsheet" );
+	$parser->setHook( 'googlespreadsheet', 'renderGoogleSpreadsheet' );
 	return true;
 }
 
 function renderGoogleSpreadsheet( $input, $argv ) {
+	$height = 300;
+	$width = 500;
+	if ( !empty( $argv['height'] ) && is_numeric( $argv['height'] ) ) {
+		$height = intval( $argv['height'] );
+	}
+	if ( !empty( $argv['width'] ) && is_numeric( $argv['width'] ) ) {
+		$width = intval( $argv['width'] );
+	}
 
-	#Set default width and height
-	if (empty($argv['height'])) $argv['height'] = 300;
-	if (empty($argv['width'])) $argv['width'] = 500;
-
-	$output = "<iframe class='googlespreadsheetframe' width='".
-		htmlspecialchars($argv['width']).
-		"' height='".
-		htmlspecialchars($argv['height']).
-		"' ";
-	if (!empty($argv['style'])) $output .= "style='". htmlspecialchars($argv['style']). "' ";
-	$output .= "src='http://spreadsheets.google.com/pub?key=". htmlspecialchars($input). "&output=html&widget=true'></iframe>";
-
-	return $output;
+	return Html::element(
+		'iframe',
+		[
+			'width' => $width,
+			'height' => $height,
+			'src' => 'https://docs.google.com/spreadsheets/d/' . urlencode( $input ) . '/htmlembed?widget=true',
+		]
+	);
 }
-

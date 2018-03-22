@@ -208,6 +208,13 @@ class AbuseFilterViewExamine extends AbuseFilterView {
 }
 
 class AbuseFilterExaminePager extends ReverseChronologicalPager {
+
+	public $mChangesList, $mPage;
+
+	/**
+	 * @param SpecialPage $page
+	 * @param AbuseFilterChangesList $changesList
+	 */
 	function __construct( $page, $changesList ) {
 		parent::__construct();
 		$this->mChangesList = $changesList;
@@ -216,7 +223,14 @@ class AbuseFilterExaminePager extends ReverseChronologicalPager {
 
 	function getQueryInfo() {
 		$dbr = wfGetDB( DB_SLAVE );
-		$conds = array( 'rc_user_text' => $this->mPage->mSearchUser );
+
+		// SUS-812: handle anon cases (IP address provided) and account names (user name provided)
+		if ( IP::isIPAddress( $this->mPage->mSearchUser ) ) {
+			$conds = [ 'rc_ip_bin' => inet_pton( $this->mPage->mSearchUser ) ];
+		} else {
+			$conds = [ 'rc_user' => User::idFromName( $this->mPage->mSearchUser ) ];
+		}
+
 		$startTS = strtotime( $this->mPage->mSearchPeriodStart );
 		if ( $startTS ) {
 			$conds[] = 'rc_timestamp>=' . $dbr->addQuotes( $dbr->timestamp( $startTS ) );

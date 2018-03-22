@@ -82,7 +82,7 @@ class ParserCache {
 		// Wikia change - begin
 		// @author macbre - BAC-1227
 		$eTag = false;
-		wfRunHooks( 'ParserCacheGetETag', [ $article, $popts, &$eTag ] );
+		Hooks::run( 'ParserCacheGetETag', [ $article, $popts, &$eTag ] );
 		if ($eTag !== false) {
 			return $eTag;
 		}
@@ -212,22 +212,19 @@ class ParserCache {
 	 * @param $parserOutput ParserOutput
 	 * @param $article Page
 	 * @param $popts ParserOptions
+	 * @param $cacheTime string Time when the cache was generated
 	 */
-	public function save( ParserOutput $parserOutput, Page $article, ParserOptions $popts ) {
-
-		wfRunHooks( 'BeforeParserCacheSave', [ $parserOutput, $article ] );
-
+	public function save( ParserOutput $parserOutput, Page $article, ParserOptions $popts, $cacheTime = null ) {
 		$expire = $parserOutput->getCacheExpiry();
-
-		if( $expire > 0 ) {
-			$now = wfTimestampNow();
+		if ( $expire > 0 ) {
+			$cacheTime = $cacheTime ?: wfTimestampNow();
 
 			$optionsKey = new CacheTime;
 			$optionsKey->mUsedOptions = $parserOutput->getUsedOptions();
 			$optionsKey->updateCacheExpiry( $expire );
 
-			$optionsKey->setCacheTime( $now );
-			$parserOutput->setCacheTime( $now );
+			$optionsKey->setCacheTime( $cacheTime );
+			$parserOutput->setCacheTime( $cacheTime );
 
 			$optionsKey->setContainsOldMagic( $parserOutput->containsOldMagic() );
 

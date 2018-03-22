@@ -8,12 +8,12 @@
 abstract class WikiaSkinTemplate extends BaseTemplate {
 	protected $app = null;
 	protected $wg = null;
-	protected $wf = null;
 
-	function __construct() {
+	public function __construct() {
+		parent::__construct();
+
 		$this->app = F::app();
 		$this->wg = $this->app->wg;
-		$this->wf = $this->app->wf;
 	}
 
 	/**

@@ -42,12 +42,12 @@ class UserNameChangeController extends EmailController {
 			'editorAvatarURL' => $this->getCurrentAvatarURL(),
 			'summary' => $this->getMessage( 'emailext-usernamechange-summary' )->text(),
 			'userNameMessage' => $this->getMessage( 'emailext-usernamechange-changed',
-				$this->oldUserName, $this->newUserName )->text(),
+				$this->oldUserName, $this->newUserName )->parse(),
+			'links' => $this->generateLinks(),
 			'contentFooterMessages' => [
 				$this->getMessage( 'emailext-usernamechange-closing' )->text(),
-				$this->getMessage( 'emailext-usernamechange-signature' )->text()
 			],
-			'hasContentFooterMessages' => true
+			'signature' => $this->getMessage( 'emailext-usernamechange-signature' )->text()
 		] );
 	}
 
@@ -55,8 +55,20 @@ class UserNameChangeController extends EmailController {
 		return $this->getMessage( 'emailext-usernamechange-subject' )->text();
 	}
 
+	private function generateLinks() {
+		return [
+			[
+				'label' => $this->getMessage( 'emailext-usernamechange-profile-page' )->text(),
+				'url' => $this->targetUser->getUserPage()->getFullURL()
+			], [
+				'label' => $this->getMessage( 'emailext-usernamechange-check-out' )->text(),
+				'url' => 'http://fandom.wikia.com'
+			]
+		];
+	}
+
 	protected static function getEmailSpecificFormFields() {
-		$form = [
+		return [
 			'inputs' => [
 				[
 					'type' => 'text',
@@ -72,7 +84,5 @@ class UserNameChangeController extends EmailController {
 				],
 			]
 		];
-
-		return $form;
 	}
 }

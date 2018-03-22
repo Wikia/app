@@ -11,10 +11,6 @@ $wgExtensionMessagesFiles['WikiAnswers'] = dirname( __FILE__ ) . '/WikiAnswers.i
 
 // add CSS
 $wgHooks['BeforePageDisplay'][] = 'wfWikiAnswersAddStyle';
-// remove Follow link on the main page
-$wgHooks['FooterMenuAfterExecute'][] = 'wfWikiAnswersFooterMenu';
-// replace create-a-wiki link with a create-answers-wiki link
-$wgHooks['GlobalHeaderIndexAfterExecute'][] = 'wfWikiAnswersGlobalHeaderIndex';
 // make "rephrase" action a default
 $wgHooks['MenuButtonIndexAfterExecute'][] = 'wfWikiAnswersActionDropdown';
 // append question mark to the title
@@ -22,42 +18,30 @@ $wgHooks['OutputPageParserOutput'][] = 'wfWikiAnswersPageTitle';
 // show the answer box
 $wgHooks['OutputPageBeforeHTML'][] = 'wfWikiAnswersAnswerBox';
 
+$wgResourceModules['ext.wikiAnswers'] = [
+	'scripts' => [ 'ext.wikiAnswers.js' ],
+	'styles' => [ 'ext.wikiAnswers.css' ],
+	'dependencies' => [ 'mediawiki.api' ],
+	'messages' => [ 'ellipsis' ],
+
+	'localBasePath' => __DIR__ . '/modules',
+	'remoteExtPath' => 'wikia/WikiAnswers'
+];
+
 /**
  * @param OutputPage $out
  * @param $skin
  * @return bool
  */
-function wfWikiAnswersAddStyle( &$out, &$skin ) {
-	global $wgExtensionsPath;
-	$out->addExtensionStyle( "$wgExtensionsPath/wikia/WikiAnswers/WikiAnswers.css" );
+function wfWikiAnswersAddStyle( OutputPage $out, Skin $skin ): bool {
+	$out->addModules( 'ext.wikiAnswers' );
 	return true;
 }
 
-function wfWikiAnswersFooterMenu( &$moduleObject, &$params ) {
-	if( WikiaPageType::isMainPage() ) {
-		foreach( $moduleObject->items as $idx=>$item ) {
-			if( $item['type'] == 'follow' ) {
-				unset( $moduleObject->items[$idx] );
-				break;
-			}
-		}
-	}
-	return true;
-}
+function wfWikiAnswersActionDropdown( WikiaDispatchableObject $moduleObject, array $params ): bool {
+	$title = $moduleObject->getContext()->getTitle();
+	$answerObj = Answer::newFromTitle( $title );
 
-function wfWikiAnswersGlobalHeaderIndex( &$moduleObject, &$params) {
-	/* @var $wgLang Language */
-	global $wgLang;
-	$userlang = $wgLang->getCode();
-	$userlang = $userlang == 'en' ? '' : "?uselang=$userlang";
-	$moduleObject->createWikiUrl = "http://www.wikia.com/Special:CreateWiki$userlang";
-	$moduleObject->createWikiText = wfMsgHtml('createwikipagetitle');
-	return true;
-}
-
-function wfWikiAnswersActionDropdown( &$moduleObject, &$params) {
-	global $wgTitle;
-	$answerObj = Answer::newFromTitle( $wgTitle );
 	if( WikiaPageType::isMainPage() ) {
 		$moduleObject->action = null;
 	} elseif( $answerObj->isQuestion() && !$answerObj->isArticleAnswered() ) {
@@ -75,11 +59,12 @@ function wfWikiAnswersActionDropdown( &$moduleObject, &$params) {
  * @param ParserOutput $parserOutput
  * @return bool
  */
-function wfWikiAnswersPageTitle( &$out, $parserOutput ) {
+function wfWikiAnswersPageTitle( OutputPage $out, ParserOutput $parserOutput ): bool {
 	$answerObj = Answer::newFromTitle( $out->getTitle() );
-	if( $answerObj->isQuestion() ) {
-		$parserOutput->setTitleText( $parserOutput->getTitleText() . wfMsg('?') );
+	if ( $answerObj->isQuestion() ) {
+		$parserOutput->setTitleText( $parserOutput->getTitleText() . $out->msg( '?' )->text() );
 	}
+
 	return true;
 }
 
@@ -88,11 +73,12 @@ function wfWikiAnswersPageTitle( &$out, $parserOutput ) {
  * @param string $html
  * @return bool
  */
-function wfWikiAnswersAnswerBox( &$out, &$html ) {
+function wfWikiAnswersAnswerBox( OutputPage $out, string &$html ): bool {
 
 	$answerObj = Answer::newFromTitle( $out->getTitle() );
 	if( $answerObj->isQuestion() &&
 	    in_array( ucfirst(Answer::getSpecialCategory("unanswered")), $out->getCategories() ) ) {
+		$out->addJsConfigVars( 'wgIsUnansweredQuestion', true );
 		$html = F::app()->getView( 'WikiAnswers', 'AnswerBox' )->render();
 	}
 	return true;

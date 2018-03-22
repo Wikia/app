@@ -102,7 +102,7 @@ function createExhibit() {//overload Exhibit's autoCreate-functionality
     for(var i = 0; i < ex_linkcounter; i++){ //lenses
 		var test = document.getElementById("linkcontent"+i);
 		var newlink = document.createElement('a');
-		newlink.setAttribute('ex:href-subcontent',wgServer + wgScript + '?title={{urlenc(.' + test.innerHTML + ')}}');
+		newlink.setAttribute('ex:href-subcontent',wgScript + '?title={{urlenc(.' + test.innerHTML + ')}}');
 		newlink.setAttribute('ex:content','.' + test.innerHTML);
 		test.innerHTML = '';
 		test.appendChild(newlink);

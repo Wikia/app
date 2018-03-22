@@ -100,7 +100,7 @@ class VisualEditorDataModule extends ResourceLoaderModule {
 		// EditPage supports customisation based on title, we can't support that here
 		// since these messages are cached on a site-level. $wgTitle is likely set to null.
 		$title = Title::newFromText( 'Dwimmerlaik' );
-		wfRunHooks( 'EditPageCopyrightWarning', array( $title, &$copywarnMsg ) );
+		Hooks::run( 'EditPageCopyrightWarning', array( $title, &$copywarnMsg ) );
 
 		// Keys used in copyright warning
 		$msgKeys[] = 'copyrightpage';

@@ -104,6 +104,7 @@ class UploadStash {
 			}
 
 			// create $this->files[$key]
+
 			$this->initFile( $key );
 
 			// fetch fileprops
@@ -113,7 +114,7 @@ class UploadStash {
 
 		if ( ! $this->files[$key]->exists() ) {
 			wfDebug( __METHOD__ . " tried to get file at $key, but it doesn't exist\n" );
-			throw new UploadStashBadPathException( "path doesn't exist" );
+			throw new UploadStashFileDoesntExistException( "path doesn't exist" );
 		}
 
 		if ( !$noAuth ) {
@@ -453,7 +454,6 @@ class UploadStash {
 		}
 
 		$this->fileMetadata[$key] = (array)$row;
-
 		return true;
 	}
 
@@ -512,7 +512,6 @@ class UploadStashFile extends UnregisteredLocalFile {
 				throw new UploadStashFileNotFoundException( 'cannot find path, or not a plain file' );
 			}
 		}
-
 		parent::__construct( false, $repo, $path, false );
 
 		$this->name = basename( $this->path );
@@ -631,7 +630,7 @@ class UploadStashFile extends UnregisteredLocalFile {
 	 * @return Status: success
 	 */
 	public function remove() {
-		if ( !$this->repo->fileExists( $this->path, FileRepo::FILES_ONLY ) ) {
+		if ( !$this->exists() ) {
 			// Maybe the file's already been removed? This could totally happen in UploadBase.
 			return true;
 		}
@@ -648,6 +647,7 @@ class UploadStashFile extends UnregisteredLocalFile {
 class UploadStashNotAvailableException extends MWException {};
 class UploadStashFileNotFoundException extends MWException {};
 class UploadStashBadPathException extends MWException {};
+class UploadStashFileDoesntExistException extends UploadStashBadPathException {};
 class UploadStashFileException extends MWException {};
 class UploadStashZeroLengthFileException extends MWException {};
 class UploadStashNotLoggedInException extends MWException {};

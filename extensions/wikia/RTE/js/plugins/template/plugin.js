@@ -18,6 +18,7 @@ CKEDITOR.plugins.add('rte-template',
 			},
 
 			init : function() {
+
 				this.startGroup(editor.lang.templateDropDown.title);
 
 				// list of templates to be added to dropdown
@@ -175,128 +176,72 @@ RTE.templateEditor = {
 	// generate template wikitext from given name and list of parameters
 	generateWikitext: function(name, params) {
 		var wikitext,
-			paramsCount = 0,
-			currentData = this.placeholder ? this.placeholder.getData() : false,
-			bracketPattern = /\[\[(.*?)\]\]/g;
+			currentData = this.placeholder.getData(),
+			availableParams = RTE.tools.resolveDoubleBracketsCache[currentData.wikitext].availableParams,
+			availableUnnamedParams = availableParams.filter(function(elem) {
+				return !isNaN(elem);
+			}),
+			availableNamedParams = availableParams.filter(isNaN),
+			passedParams = RTE.tools.resolveDoubleBracketsCache[currentData.wikitext].passedParams,
+			passedUnnamedParams = [],
+			passedNamedParams = [],
+			allUnnamedParams = [],
+			templateTitle = currentData.title,
+			multiline = currentData.wikitext.indexOf("\n|") !== -1,
+			updatedParams = [],
+			glue = multiline ? "\n|" : "|";
 
-		// Check for any bracketed syntax and mark the pipes within (BugID: 2264 and 69126)
-		if ( bracketPattern.test( currentData.wikitext ) ) {
-			var	results = currentData.wikitext.match( bracketPattern ),
-				i = 0,
-				replacement;
-			for ( i = 0; i < results.length; i++ ) {
-				replacement = results[i].replace( /\|/g, '\x7f' );
-				currentData.wikitext = currentData.wikitext.replace( results[i], replacement );
+			if (passedParams) {
+				passedUnnamedParams = Object.keys(passedParams).filter(function(elem) {
+					return !isNaN(elem);
+				}).map(Number);
+				passedNamedParams = Object.keys(passedParams).filter(isNaN);
 			}
-		}
+			allUnnamedParams = availableUnnamedParams.concat(passedUnnamedParams);
 
-		// "parse" current wikitext
-		var wikitextParts = currentData.wikitext.
-			substring(2, currentData.wikitext.length - 2).				// remove {{ and }}
-			split('|');													// split by pipe
 
-		//RTE.log(currentData.wikitext); RTE.log(wikitextParts); RTE.log(params);
+		// filter duplicates
+		allUnnamedParams = allUnnamedParams.filter(function(value, index) {
+			return allUnnamedParams.indexOf(value) === index;
+		}).sort();
 
-		// parts of new wikitext (first one is template name from current wikitext)
-		var partsStack = [wikitextParts.shift()];
-
-		// counter for unnamed parameters
-		var unnamedCounter = 0;
-
-		// set to true if line break is found in partTail
-		var lineBreakInTail = false;
-
-		// if there's currently no param, add new line after each part of the template
-		if (wikitextParts.length == 0) {
-			partsStack = [name + "\n"];
-			lineBreakInTail = true;
-		}
-
-		// parse and update each part (handle existing params)
-		$.each(wikitextParts, function(i, part) {
-			var parsedPart = part.match(/([^=]+)( *\= *)(.*)(\n?)/); //RTE.log(parsedPart);
-
-			// param name    = value (named parameter)
-			if (parsedPart) {
-				var partName = $.trim(parsedPart[1]);
-				var partSeparator = parsedPart[2];
-				var partValue = parsedPart[3];
-				var partTail = parsedPart[4];
-
-				if (partTail != '') {
-					lineBreakInTail = true;
-				}
-
-				// update this part with new value
-				if (typeof params[partName] != 'undefined') {
-					partsStack.push(parsedPart[1] + partSeparator + params[partName] + partTail);
-					delete params[partName];
-				}
-			}
-			// foo bar (unnamed parameter)
-			else {
-				parsedPart = part.match(/(.*)(\n?)/); //RTE.log(part); RTE.log(parsedPart);
-
-				var partName = ++unnamedCounter;
-				var partValue = parsedPart[1];
-				var partTail = parsedPart[2];
-
-				if (partTail != '') {
-					lineBreakInTail = true;
-				}
-
-				// update this part with new value (numbered param)
-				if (typeof params[partName] != 'undefined') {
-					partsStack.push(params[partName] + partTail);
-				}
-				else if ($.trim(partValue)) {
-					partsStack.push(partValue + partTail);
-				}
-				else {
-					// add empty unnamed param to stack, don't add line break (RT #93340)
-					partsStack.push('');
-				}
-
-				delete params[partName];
-			}
-		});
-
-		// add new params
-		$.each(params, function(key, value) {
-			if (typeof value == 'undefined') {
-				return;
-			}
-
-			// unnamed param (add even if empty)
-			if (parseInt(key) && parseInt(key) == key) {
-				// for unnamed params don't add line break (RT #93340)
-				partsStack.push(value != '' ? value : '');
-
-				// remove line break from template name (RT #93340)
-				if (wikitextParts.length == 0) {
-					partsStack[0] = $.trim(partsStack[0]);
-				}
-			}
-			// named param
-			else {
-				if (value != '') {
-					partsStack.push(key + ' = ' + value + (lineBreakInTail ? '\n' : ''));
+		// sorted unnamed parameters goes first
+		allUnnamedParams.forEach(function(paramKey) {
+			if (params[paramKey] !== "" && typeof params[paramKey] !== 'undefined' ) {
+				updatedParams.push(params[paramKey]);
+			} else {
+				if (typeof passedParams !== 'undefined' && passedParams[paramKey] !== "" && typeof passedParams[paramKey] !== 'undefined' ) {
+					updatedParams.push(passedParams[paramKey]);
 				}
 			}
 		});
 
-		//RTE.log(partsStack);
+		// then named parameters, order is not crucial
+		availableNamedParams.forEach(function(paramKey) {
+			if (params[paramKey] !== "" && typeof params[paramKey] !== 'undefined') {
+				updatedParams.push(paramKey + " = " + params[paramKey]);
+			}
+		});
+
+		// XW-4540: save named parameters that are not yet supported by template but were passed in template invocation
+		// (unnamed were handled before)
+		if (passedParams) {
+			passedNamedParams.forEach(function (key) {
+				if (!params.hasOwnProperty(key)) {
+					updatedParams.push(key + " = " + passedParams[key]);
+				}
+			});
+		}
 
 		// generate new wikitext
-		wikitext = '{{';
-		wikitext += partsStack.
-			join('|').					// join template params
-			replace('\x7f', '|').		// replace pipe markers
-			replace(/[\n|]+$/g, '').	// remove trailing pipes
-			replace(/\n+$/g, '');		// remove trailing line breaks
+		wikitext = '{{' + templateTitle;
+		if (updatedParams.length > 0) {
+			wikitext += "|" + updatedParams.join(glue);
+			if (multiline) {
+				wikitext += "\n";
+			}
+		}
 		wikitext += '}}';
-
-		$().log(currentData.wikitext, 'RTE: old wikitext'); $().log(wikitext, 'RTE: new wikitext');
 
 		return wikitext;
 	},
@@ -408,6 +353,15 @@ RTE.templateEditor = {
 				// show dialog footer - buttons
 				$('.templateEditorDialog').find('.cke_dialog_footer').show();
 
+				var $chooseAnotherTemplateButton = $('.cke_dialog_choose_another_tpl' );
+
+				//hide the 'Choose another template' button if the template is an infobox
+				if (info.html.search( 'infobox' ) === -1 ) {
+					$chooseAnotherTemplateButton.css('visibility', 'visible');
+				} else {
+					$chooseAnotherTemplateButton.css('visibility', 'hidden');
+				}
+
 				// template name (with localised namespace - RT #3808 - and spaces instead of underscores)
 				var templateName = info.title.replace(/_/g, ' ');
 				templateName = templateName.replace(/^Template:/, window.RTEMessages.template + ':');
@@ -429,7 +383,7 @@ RTE.templateEditor = {
 					value = value.replace(/&/g, '&amp;');
 
 					// show different message for unnamed template parameters (#1 / foo)
-					var keyLabel = !!parseInt(key) ? ('#' + parseInt(i+1)) : key;
+					var keyLabel = !!parseInt(key) ? ('#' + key) : key;
 
 					// render key - value pair
 					html += '<dt><label for="templateEditorParameter' + i + '">' + keyLabel  + '</label></dt>';
@@ -523,21 +477,28 @@ RTE.templateEditor = {
 		RTE.log('storing modified template data');
 		RTE.log(this.data);
 
-		// store saved meta data
-		this.placeholder.setData(RTE.templateEditor.data);
+		RTE.tools.parseRTE(this.data.wikitext, function(html) {
+			// store saved meta data
+			this.placeholder.setData(RTE.templateEditor.data);
+			// regenerate template preview and data
+			this.placeholder.removeData('preview');
+			this.placeholder.removeData('info');
 
-		// regenerate template preview and data
-		this.placeholder.removeData('preview');
-		this.placeholder.removeData('info');
+			if (this.placeholder.parent().exists()) {
+				// If placeholder has a parent = it's already inserted in the article
+				// So we are editing, not creating. Thus, replacing the existing article element
+				// With it's edited version (but keeping the placeholder).
+				// If html consists of multiple nodes at the top level, $(html).html() returns only inner html of first node
+				// so as long as placeholder is first node, it should work
+				this.placeholder.html($(html).html());
+			} else {
+				RTE.tools.insertElement(html);
+			}
 
-		// add placeholder to editor, if needed
-		if (!this.placeholder.parent().exists()) {
-			RTE.tools.insertElement(this.placeholder);
-		}
-
-		// cleanup
-		this.placeholder = false;
-		this.data = {};
+			// cleanup
+			this.placeholder = false;
+			this.data = {};
+		}.bind(this));
 	},
 
 	// show template editor
@@ -549,6 +510,7 @@ RTE.templateEditor = {
 
 		// open template editor
 		RTE.getInstance().openDialog('rte-template');
+
 	},
 
 	// create new template placeholder (and maybe show template editor for it)

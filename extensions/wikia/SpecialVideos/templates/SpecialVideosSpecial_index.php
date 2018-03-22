@@ -15,17 +15,17 @@
 			<?= $video['thumbnail'] ?>
 			<div class="info">
 				<p class="title">
-					<a href="<?= $video['fileUrl'] ?>" title="<?= $video['title'] ?>"><?= $video['title'] ?></a>
+					<a href="<?= Sanitizer::encodeAttribute( $video['fileUrl'] ); ?>" title="<?= Sanitizer::encodeAttribute( $video['title'] ); ?>"><?= htmlspecialchars( $video['title'] ); ?></a>
 				</p>
 				<p class="by-views">
 					<?= $video['byUserMsg'] ?>
 				</p>
 				<div class="posted-in">
 					<? if ( count($video['truncatedList']) ): ?>
-						<?= wfMessage('specialvideos-posted-in-label')->plain() ?>
+						<?= wfMessage( 'specialvideos-posted-in-label' )->escaped(); ?>
 						<ul>
 							<? foreach( $video['truncatedList'] as $article ): ?>
-								<li><a href="<?= $article['url'] ?>"><?= $article['titleText'] ?></a></li>
+								<li><a href="<?= Sanitizer::encodeAttribute( $article['url'] ); ?>"><?= htmlspecialchars( $article['titleText'] ); ?></a></li>
 							<? endforeach; ?>
 						</ul>
 					<? endif; ?>
@@ -33,7 +33,7 @@
 			</div>
 			<? if($isRemovalAllowed): ?>
 				<a class="remove">
-					<img class="sprite trash" src="<?= wfBlankImgUrl() ?>" title="<?= wfMsg('specialvideos-remove-modal-title') ?>">
+					<?= DesignSystemHelper::renderSvg('wds-icons-trash-small', 'wds-icon wds-icon-small'); ?>
 				</a>
 			<? endif; ?>
 		</li>
@@ -47,10 +47,10 @@
 		<? if ($showAddVideoBtn): ?>
 			<li class="add-video">
 				<div class="add-video-placeholder addVideo"></div>
-					<p><a href="#" class="addVideo"><?= wfMessage('special-videos-add-video')->text(); ?></a></p>
+					<p><a href="#" class="addVideo"><?= wfMessage('special-videos-add-video' )->escaped(); ?></a></p>
 			</li>
 		<? endif; ?>
 		<?php endif; ?>
 </ul>
 <?= $pagination ?>
-<div class="errorWhileLoading messageHolder"><?=wfMsg('videos-error-while-loading');?></div>
+<div class="errorWhileLoading messageHolder"><?=wfMessage( 'videos-error-while-loading' )->escaped(); ?></div>

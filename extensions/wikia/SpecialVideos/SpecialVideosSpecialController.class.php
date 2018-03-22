@@ -25,7 +25,7 @@ class SpecialVideosSpecialController extends WikiaSpecialPageController {
 	 * @responseParam string message
 	 */
 	public function index() {
-		$this->wg->SupressPageSubtitle = true;
+		$this->wg->SuppressPageSubtitle = true;
 
 		$scriptsStr = 'special_videos_js';
 		$stylesStr = 'special_videos_css';
@@ -58,7 +58,7 @@ class SpecialVideosSpecialController extends WikiaSpecialPageController {
 		// Add meta description tag to HTML source
 		$this->getContext()->getOutput()->addMeta( 'description', $helper->getMetaTagDescription() );
 
-		$page = $this->request->getVal( 'page', 1 );
+		$page = $this->request->getInt( 'page', 1 );
 		$category = $this->request->getVal( 'category', '' );
 		// Filter on a comma separated list of providers if given.
 		$providers = $this->request->getVal( 'provider', '' );
@@ -85,13 +85,10 @@ class SpecialVideosSpecialController extends WikiaSpecialPageController {
 		$addVideo = 1;
 
 		// get videos
-		$params = [
-			'page' => $page,
-			'category' => $category,
-			'provider' => $providers,
-		];
-		$response = $this->sendSelfRequest( 'getVideos', $params );
-		$videos = $response->getVal( 'videos', [] );
+		$helper = new SpecialVideosHelper();
+		$videos = $helper->getVideos( $page, $providers, $category, [
+			'getThumbnail' => true
+		] );
 
 		$message = '';
 		$paginationBar = '';
@@ -102,7 +99,11 @@ class SpecialVideosSpecialController extends WikiaSpecialPageController {
 				$this->loadMore = wfMessage( 'specialvideos-btn-load-more' )->text();
 			}
 		} else {
-			$pagination = $helper->getPagination( $params, $addVideo );
+			$pagination = $helper->getPagination( [
+				'page' => $page,
+				'category' => $category,
+				'provider' => $providers
+			], $addVideo );
 			$paginationBar = $pagination[ 'body' ];
 			$this->wg->Out->addHeadItem( 'Pagination', $pagination[ 'head' ] );
 		}
@@ -131,7 +132,9 @@ class SpecialVideosSpecialController extends WikiaSpecialPageController {
 	 * @responseParam array videos - list of videos
 	 */
 	public function getVideos() {
-		$page = $this->request->getVal( 'page', 1 );
+		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
+
+		$page = $this->request->getInt( 'page', 1 );
 		$category = $this->request->getVal( 'category', '' );
 		$providers = $this->request->getVal( 'provider', '' );
 		$getThumbnail = $this->request->getVal( 'getThumbnail', true );
@@ -139,7 +142,7 @@ class SpecialVideosSpecialController extends WikiaSpecialPageController {
 		$options = ['getThumbnail'=> $getThumbnail ];
 
 		$helper = new SpecialVideosHelper();
-		$videos = $helper->getVideos( $page, 'all', $providers, $category, $options );
+		$videos = $helper->getVideos( $page, $providers, $category, $options );
 
 		$this->videos = $videos;
 	}

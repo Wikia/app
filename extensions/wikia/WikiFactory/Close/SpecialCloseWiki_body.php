@@ -202,9 +202,7 @@ class CloseWikiPage extends SpecialPage {
 		$valid = true;
 		$newWiki = 0;
 		if ( isset($this->mRedirect) && !empty($this->mRedirect) ) {
-			if ('http://' == substr($this->mRedirect, 0, 7)) {
-				$this->mRedirect = str_replace('http://', '', $this->mRedirect);
-			}
+			$this->mRedirect = preg_replace( '!^https?://!', '', $this->mRedirect );
 			Wikia::log( __METHOD__, "check domain {$this->mRedirect}" );
 			$city_id = WikiFactory::DomainToID( trim( $this->mRedirect ) );
 			if( !$city_id ) {
@@ -227,37 +225,6 @@ class CloseWikiPage extends SpecialPage {
 			 */
 			if ( !empty($this->mWikis) ) {
 				$this->doClose($newWiki);
-			}
-		}
-	}
-
-	/**
-	 * @access private
-	 */
-	private function moveOldDomains($wikiaId, $newWikiaId = null, $remove = 0) {
-		global $wgExternalArchiveDB;
-
-		$aDomainsToMove = WikiFactory::getDomains( $wikiaId );
-
-		if ( !empty($aDomainsToMove) ) {
-			#-- connect to dataware;
-			$dbs = wfGetDB( DB_MASTER, array(), $wgExternalArchiveDB );
-			if (!is_null($dbs)) {
-				#-- save domains in archive DB
-				$dbs->begin();
-				foreach ($aDomainsToMove as $domain) {
-					$dbs->insert(
-						"city_domains",
-						array(
-							"city_id" => $wikiaId,
-							"city_domain" => $domain,
-							"city_timestamp" => wfTimestampNow(),
-							"city_new_id" => $newWikiaId,
-						),
-						__METHOD__
-					);
-				}
-				$dbs->commit();
 			}
 		}
 	}
@@ -299,7 +266,6 @@ class CloseWikiPage extends SpecialPage {
 				$message = wfMsgExt( 'closewiki-wiki-closed', array('parse'), $wiki->city_title, $wiki->city_url );
 				if ( !empty($newWiki) ) {
 					Wikia::log( __METHOD__,  " ... and redirecting to: {$this->mRedirect} (id: {$newWiki})" );
-					$this->moveOldDomains( $wiki->city_id, $newWiki );
 
 					#-- add "old" prefix to main domain and set is as primary
 					$prefixedDomain = $this->prefixMainDomain( $wiki->city_id );
@@ -360,7 +326,7 @@ class CloseWikiPage extends SpecialPage {
 		$aHookParams = [
 			'city_id' => $wiki->city_id,
 		];
-		wfRunHooks( 'WikiFactoryWikiClosed', array( $aHookParams ) );
+		Hooks::run( 'WikiFactoryWikiClosed', array( $aHookParams ) );
 		wfProfileOut( __METHOD__ );
 	}
 

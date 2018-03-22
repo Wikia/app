@@ -22,11 +22,9 @@ $wgExtensionCredits['other'][] = array(
 // by wgOut->getPageTitle() after that hook is called.
 $wgHooks['BeforePageDisplay'][] = 'lyricsH1_onBeforePageDisplay';
 
-function lyricsH1_onBeforePageDisplay( OutputPage &$out, Skin &$skin ) {
-	global $wgTitle;
-
+function lyricsH1_onBeforePageDisplay( OutputPage $out, Skin $skin ) {
 	// lyrics pages will only be in the main namespace after the merge
-	if($wgTitle->getNamespace() == NS_MAIN){
+	if ( $out->getTitle()->inNamespace( NS_MAIN ) ) {
 		$origTitle = $out->getPageTitle();
 		if((0 == preg_match("/\([12][0-9]{3}\)$/", $origTitle)) // make sure this is not an album page
 			&& (0 < preg_match("/.+:+/", $origTitle))){

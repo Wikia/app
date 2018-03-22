@@ -18,8 +18,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 	exit( 1 );
 }
 
-use Wikia\DependencyInjection\Injector;
-use Wikia\Service\Helios\HeliosClient;
+use Wikia\Factory\ServiceFactory;
 
 class EditAccount extends SpecialPage {
 	/** @var User */
@@ -38,7 +37,9 @@ class EditAccount extends SpecialPage {
 	/**
 	 * Show the special page
 	 *
-	 * @param $par Mixed: parameter passed to the page or null
+	 * @param String $par
+	 * @throws PermissionsError
+	 * @throws UserBlockedError
 	 */
 	public function execute( $par ) {
 
@@ -93,7 +94,7 @@ class EditAccount extends SpecialPage {
 				//
 				// 2) and copy the data from the shared to the local database
 				$oUser = User::newFromName( $userName );
-				wfRunHooks( 'UserNameLoadFromId', array( $userName, &$oUser, true ) );
+				Hooks::run( 'UserNameLoadFromId', array( $userName, &$oUser, true ) );
 
 				$id = 0;
 				$this->mUser = $oUser;
@@ -151,6 +152,10 @@ class EditAccount extends SpecialPage {
 				$this->mStatus = $this->setRealName( $newRealName, $changeReason );
 				$template = 'displayuser';
 				break;
+			case 'fan-contributor':
+				$this->mStatus = $this->addFanContributor();
+				$template = 'displayuser';
+				break;
 			case 'logout':
 				$this->mStatus = $this->logOut();
 				$template = 'displayuser';
@@ -177,10 +182,6 @@ class EditAccount extends SpecialPage {
 				$this->mStatus = $this->clearClosureRequest();
 				$template = 'displayuser';
 				break;
-			case 'toggleadopter':
-				$this->mStatus = $this->toggleAdopterStatus();
-				$template = 'displayuser';
-				break;
 			case 'displayuser':
 				$template = 'displayuser';
 				break;
@@ -191,31 +192,32 @@ class EditAccount extends SpecialPage {
 		$output->setPageTitle( $this->msg( 'editaccount-title' )->plain() );
 
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
-		$oTmpl->set_Vars( array(
-				'status'	=> $this->mStatus,
-				'statusMsg' => $this->mStatusMsg,
-				'statusMsg2' => $this->mStatusMsg2,
-				'user'	  => $userName,
-				'userEmail' => null,
-				'userRealName' => null,
-				'userEncoded' => urlencode( $userName ),
-				'user_hsc' => htmlspecialchars( $userName ),
-				'userId'  => null,
-				'userReg' => null,
-				'isUnsub' => null,
-				'isDisabled' => null,
-				'isAdopter' => null,
-				'returnURL' => $this->getTitle()->getFullURL(),
-				'logLink' => Linker::linkKnown(
-					SpecialPage::getTitleFor( 'Log', 'editaccnt' ),
-					$this->msg( 'editaccount-log' )->escaped()
-				),
-				'userStatus' => null,
-				'emailStatus' => null,
-				'disabled' => null,
-				'changeEmailRequested' => null,
-				'editToken' => $user->getEditToken(),
-			) );
+		$oTmpl->set_Vars( [
+			'status'	=> $this->mStatus,
+			'statusMsg' => $this->mStatusMsg,
+			'statusMsg2' => $this->mStatusMsg2,
+			'user'	  => $userName,
+			'userEmail' => null,
+			'userRealName' => null,
+			'userEncoded' => urlencode( $userName ),
+			'user_hsc' => htmlspecialchars( $userName ),
+			'userId'  => null,
+			'userReg' => null,
+			'isUnsub' => null,
+			'isDisabled' => null,
+			'isAdopter' => null,
+			'isFanContributor' => null,
+			'returnURL' => $this->getTitle()->getFullURL(),
+			'logLink' => Linker::linkKnown(
+				SpecialPage::getTitleFor( 'Log', 'editaccnt' ),
+				$this->msg( 'editaccount-log' )->escaped()
+			),
+			'userStatus' => null,
+			'emailStatus' => null,
+			'disabled' => null,
+			'changeEmailRequested' => null,
+			'editToken' => $user->getEditToken(),
+		] );
 
 		if( is_object( $this->mUser ) ) {
 			$userStatus = wfMsg( 'editaccount-status-realuser' );
@@ -227,24 +229,24 @@ class EditAccount extends SpecialPage {
 
 			// emailStatus is the status of the email in the "Set new email address" field
 			$emailStatus = ( $this->mUser->isEmailConfirmed() ) ? wfMsg('editaccount-status-confirmed') : wfMsg('editaccount-status-unconfirmed') ;
-			$oTmpl->set_Vars( array(
-					'userEmail' => $this->mUser->getEmail(),
-					'userRealName' => $this->mUser->getRealName(),
-					'userId'  => $this->mUser->getID(),
-					'userReg' => date( 'r', strtotime( $this->mUser->getRegistration() ) ),
-					'isUnsub' => $this->mUser->getGlobalPreference('unsubscribed'),
-					'isDisabled' => $this->mUser->getGlobalFlag('disabled'),
-					'isClosureRequested' => $this->isClosureRequested(),
-					'isAdopter' => $this->mUser->getGlobalFlag('AllowAdoption', 1 ),
-					'userStatus' => $userStatus,
-					'emailStatus' => $emailStatus,
-					'changeEmailRequested' => $changeEmailRequested,
-					'mailLogLink' => Linker::linkKnown(
-						SpecialPage::getTitleFor( 'EditAccount', 'log' ),
-						"Mail change log",	// TODO: i18n this
-						array(),			// attribs
-						array('user_id' => $this->mUser->getID())),
-				) );
+			$oTmpl->set_Vars( [
+				'userEmail' => $this->mUser->getEmail(),
+				'userRealName' => $this->mUser->getRealName(),
+				'userId'  => $this->mUser->getID(),
+				'userReg' => date( 'r', strtotime( $this->mUser->getRegistration() ) ),
+				'isUnsub' => $this->mUser->getGlobalPreference('unsubscribed'),
+				'isDisabled' => $this->mUser->getGlobalFlag('disabled'),
+				'isClosureRequested' => $this->isClosureRequested(),
+				'isFanContributor' => $this->isFanContributor(),
+				'userStatus' => $userStatus,
+				'emailStatus' => $emailStatus,
+				'changeEmailRequested' => $changeEmailRequested,
+				'mailLogLink' => Linker::linkKnown(
+					SpecialPage::getTitleFor( 'EditAccount', 'log' ),
+					"Mail change log",	// TODO: i18n this
+					array(),			// attribs
+					array('user_id' => $this->mUser->getID())),
+			] );
 		}
 
 		// HTML output
@@ -410,10 +412,14 @@ class EditAccount extends SpecialPage {
 		}
 
 		// close account and invalidate cache + cluster data
-		Wikia::invalidateUser( $user, true, $keepEmail, true );
+		try {
+			Wikia::invalidateUser( $user, true, $keepEmail, true );
+		} catch ( PasswordError $e ) {
+			$mStatusMsg = wfMessage( 'editaccount-error-close', $user->mName )->plain();
+			return false;
+		}
 
-		// if they are connected from facebook, disconnect them
-		self::disconnectFromFacebook( $user );
+		Hooks::run( 'CloseAccount', [ $user ] );
 
 		if ( $user->getEmail() == '' ) {
 			$title = Title::newFromText( 'EditAccount', NS_SPECIAL );
@@ -424,8 +430,13 @@ class EditAccount extends SpecialPage {
 			// All clear!
 			$mStatusMsg = wfMessage( 'editaccount-success-close', $user->mName )->plain();
 
-			/** @var HeliosClient $heliosClient */
-			$heliosClient = Injector::getInjector()->get(HeliosClient::class);
+			$serviceFactory = ServiceFactory::instance();
+			$externalAuthFactory = $serviceFactory->externalAuthFactory();
+
+			$externalAuthFactory->facebookService()->unlinkAccount( $user );
+			$externalAuthFactory->googleService()->unlinkAccount( $user );
+
+			$heliosClient = $serviceFactory->heliosFactory()->heliosClient();
 			$heliosClient->forceLogout($user->getId());
 
 			return true;
@@ -438,31 +449,13 @@ class EditAccount extends SpecialPage {
 	}
 
 	/**
-	 * Make sure a wikia user account is disconnected from their facebook account.
-	 *
-	 * @param  User $user The user account to disconnect
-	 */
-	public static function disconnectFromFacebook( User $user ) {
-		if ( !empty( F::app()->wg->EnableFacebookClientExt ) ) {
-			FacebookMapModel::deleteFromWikiaID( $user->getId() );
-		}
-	}
-
-	/**
 	 * Clears the magic unsub bit
 	 *
 	 * @return Boolean: true
 	 */
 	function clearUnsubscribe() {
-		global $wgExternalAuthType;
 		$this->mUser->setGlobalPreference( 'unsubscribed', null );
 		$this->mUser->saveSettings();
-
-		// delete the record from all the secondary clusters
-		if ( $wgExternalAuthType == 'ExternalUser_Wikia' ) {
-			$userId = $this->mUser->getId();
-			ExternalUser_Wikia::removeFromSecondaryClusters( $userId );
-		}
 
 		$this->mStatusMsg = wfMsg( 'editaccount-success-unsub', $this->mUser->mName );
 
@@ -481,15 +474,6 @@ class EditAccount extends SpecialPage {
 		$this->mUser->saveSettings();
 
 		$this->mStatusMsg = wfMsg( 'editaccount-success-disable', $this->mUser->mName );
-
-		return true;
-	}
-
-	function toggleAdopterStatus() {
-		$this->mUser->setGlobalFlag( 'AllowAdoption', (int) !$this->mUser->getGlobalFlag( 'AllowAdoption', 1 ) );
-		$this->mUser->saveSettings();
-
-		$this->mStatusMsg = wfMsg( 'editaccount-success-toggleadopt', $this->mUser->mName );
 
 		return true;
 	}
@@ -534,7 +518,7 @@ class EditAccount extends SpecialPage {
 		// wfGenerateToken() returns a 32 char hex string, which will almost always satisfy the digit/letter but not always.
 		// This suffix shouldn't reduce the entropy of the intentionally scrambled password.
 		$REQUIRED_CHARS = "A1a";
-		return (wfGenerateToken() . $REQUIRED_CHARS);
+		return ( wfGenerateToken() . $REQUIRED_CHARS );
 	}
 
 	public function displayLogData() {
@@ -544,8 +528,8 @@ class EditAccount extends SpecialPage {
 		$user_name = "Not found";
 		$rows = [];
 
-		if ( $wgExternalSharedDB && $user_id ) {
-			$user_name = User::newFromID($user_id);
+		if ( $user_id ) {
+			$user_name = User::newFromID( $user_id );
 
 			$dbr = wfGetDB ( DB_SLAVE, array(), $wgExternalSharedDB );
 			$res = $dbr->select (
@@ -556,7 +540,7 @@ class EditAccount extends SpecialPage {
 				["ORDER BY" => "changed_at DESC"]	// options
 				);
 			while ( $row = $dbr->fetchObject( $res ) ) {
-				$row->changed_by_name = User::newFromId($row->changed_by_id);
+				$row->changed_by_name = User::newFromId( $row->changed_by_id );
 				$rows[] = $row;
 			}
 		}
@@ -567,17 +551,15 @@ class EditAccount extends SpecialPage {
 			'userName' => $user_name,
 			'returnURL' => $this->getTitle()->getFullURL(),
 			'rows' => $rows
-			]
-		);
+		] );
 
-		$wgOut->addHTML( $oTmpl->render( "changelog" ) );
+		$wgOut->addHTML( $oTmpl->render( 'changelog' ) );
 	}
 
 	private function logOut() {
 		$ok = false;
 		try {
-			/** @var HeliosClient $heliosClient */
-			$heliosClient = Injector::getInjector()->get(HeliosClient::class);
+			$heliosClient = ServiceFactory::instance()->heliosFactory()->heliosClient();
 			$response = $heliosClient->forceLogout($this->mUser->getId());
 
 			// successful logout returns 204 No Content and forceLogout() returns null
@@ -596,5 +578,56 @@ class EditAccount extends SpecialPage {
 		}
 
 		return $ok;
+	}
+
+	private function addFanContributor() {
+		global $wgWordpressAPIUser, $wgWordpressAPIPassword, $wgDevelEnvironment;
+
+		$baseUrl = !empty( $wgDevelEnvironment ) ?
+			'http://preview.fandom.wikia.com' :
+			'http://fandom.wikia.com';
+		$url = $baseUrl . '/api/create_user/';
+
+		$fields = [
+			'wp_login' => $this->mUser->getName(),
+			'wp_email' => $this->mUser->getEmail(),
+			'fandom_id' => $this->mUser->getId(),
+		];
+
+		$ch = curl_init();
+
+		curl_setopt( $ch, CURLOPT_URL, $url );
+		curl_setopt( $ch, CURLOPT_USERPWD, $wgWordpressAPIUser . ':' . $wgWordpressAPIPassword );
+		curl_setopt( $ch, CURLOPT_POSTFIELDS, $fields );
+		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+
+		$result = json_decode( curl_exec( $ch ), true );
+		curl_close( $ch );
+
+		if (
+			$result === false ||
+			empty( $result['success'] ) ||
+			empty( $result['data']['wp_user_id'] )
+		) {
+			if ( !empty( $result['data'][0]['message'] ) ) {
+				$this->mStatusMsg = $result['data'][0]['message'];
+				return false;
+			}
+			$this->mStatusMsg = $this->msg( 'unknown-error' )->escaped();
+			return false;
+		}
+
+		$wordpressId = $result['data']['wp_user_id'];
+		$this->mUser->setGlobalAttribute( 'wordpressId', $wordpressId );
+		$this->mUser->saveSettings();
+		$this->mStatusMsg = $this->msg( 'editaccount-success-fan-contributor', $this->mUser->getName() );
+
+		return true;
+	}
+
+	private function isFanContributor() {
+		$wordpressId = $this->mUser->getGlobalAttribute( 'wordpressId', 0 );
+
+		return $wordpressId > 0;
 	}
 }

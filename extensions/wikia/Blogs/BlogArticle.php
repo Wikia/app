@@ -299,8 +299,7 @@ class BlogArticle extends Article {
 	 *
 	 */
 	static public function getPropsList() {
-		$replace = array( 'voting' => WPP_BLOGS_VOTING, 'commenting' => WPP_BLOGS_COMMENTING );
-		return $replace;
+		return [ 'commenting' => WPP_BLOGS_COMMENTING ];
 	}
 
 	/**
@@ -427,94 +426,6 @@ class BlogArticle extends Article {
 	}
 
 	/**
-	 * write additinonal checkboxes on editpage
-	 *
-	 * @param $EditPage
-	 * @param $checkboxes
-	 *
-	 * @return bool
-	 */
-	static public function editPageCheckboxes( &$EditPage, &$checkboxes ) {
-		if ( $EditPage->mTitle->getNamespace() != NS_BLOG_ARTICLE ) {
-			return true;
-		}
-		wfProfileIn( __METHOD__ );
-		Wikia::log( __METHOD__ );
-
-		$output = array();
-		if ( $EditPage->mTitle->mArticleID ) {
-			$props = self::getProps( $EditPage->mTitle->mArticleID );
-			$output["voting"] = Xml::checkLabel(
-				wfMsg( "blog-voting-label" ),
-				"wpVoting",
-				"wpVoting",
-				isset( $props["voting"] ) && $props[ "voting" ] == 1
-			);
-			$output["commenting"] = Xml::checkLabel(
-				wfMsg( "blog-comments-label" ),
-				"wpCommenting",
-				"wpCommenting",
-				isset( $props["commenting"] ) && $props[ "commenting"] == 1
-			);
-		}
-		$checkboxes += $output;
-		wfProfileOut( __METHOD__ );
-		return true;
-	}
-
-	/**
-	 * store properties for updated article
-	 *
-	 * @param $LinksUpdate
-	 *
-	 * @return bool
-	 */
-	static public function linksUpdate( &$LinksUpdate ) {
-
-		$namespace = $LinksUpdate->mTitle->getNamespace();
-		if ( !in_array( $namespace, array( NS_BLOG_ARTICLE, NS_BLOG_ARTICLE_TALK ) ) ) {
-			return true;
-		}
-
-		wfProfileIn( __METHOD__ );
-		global $wgRequest;
-
-		/**
-		 * restore/change properties for blog article
-		 */
-		$pageId = $LinksUpdate->mTitle->getArticleId();
-		$keep   = array();
-
-		if ( $wgRequest->wasPosted() ) {
-			$keep[ "voting" ]     = $wgRequest->getVal( "wpVoting", 0 );
-			$keep[ "commenting" ] = $wgRequest->getVal( "wpCommenting", 0 );
-		} else {
-			/**
-			 * read current values from database
-			 */
-			$props = self::getProps( $pageId );
-			switch( $namespace ) {
-				case NS_BLOG_ARTICLE:
-					$keep[ "voting" ]     = isset( $props["voting"] ) ? $props["voting"] : 0;
-					$keep[ "commenting" ] = isset( $props["commenting"] ) ? $props["commenting"] : 0;
-					break;
-
-				case NS_BLOG_ARTICLE_TALK:
-					$keep[ "hiddencomm" ] = isset( $props["hiddencomm"] ) ? $props["hiddencomm"] : 0;
-					break;
-			}
-		}
-
-		if ( $pageId ) {
-			$LinksUpdate->mProperties += $keep;
-		}
-
-		wfProfileOut( __METHOD__ );
-
-		return true;
-	}
-
-	/**
 	 * An instance version of getOwner that assumes the owner of the current BlogArticle
 	 * is what's wanted.
 	 *
@@ -579,7 +490,7 @@ class BlogArticle extends Article {
 		$results = [];
 
 		// VOLDEV-96: Do not credit edits to localhost
-		$wikiaUser = User::newFromName( 'Wikia' );
+		$wikiaUser = User::newFromName( Wikia::USER );
 
 		/**
 		 * create Blog:Recent posts page if not exists

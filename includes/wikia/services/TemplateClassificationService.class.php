@@ -3,10 +3,9 @@
 use Swagger\Client\TemplateClassification\Storage\Api\TCSApi;
 use Swagger\Client\TemplateClassification\Storage\Models\TemplateTypeHolder;
 use Swagger\Client\TemplateClassification\Storage\Models\TemplateTypeProvider;
-use Wikia\DependencyInjection\Injector;
-use Wikia\Service\Swagger\ApiProvider;
+use Wikia\Factory\ServiceFactory;
 
-class TemplateClassificationService {
+class TemplateClassificationService extends ContextSource {
 
 	const SERVICE_NAME = 'template-classification-storage';
 
@@ -31,8 +30,22 @@ class TemplateClassificationService {
 
 	const NOT_AVAILABLE = 'not-available';
 
+	private $queryTimeout = 1;
+
 	private $apiClient = null;
 	private $cache = [];
+
+
+	public function __construct() {
+		global $wgWikiaEnvironment;
+
+		// FIXME: more generic solution needed here.
+		// Since we have master dev db in reston, request to template-classification-storage service in POZ takes longer
+		// than one second when classifying template
+		if ($wgWikiaEnvironment === WIKIA_ENV_DEV) {
+			$this->queryTimeout = 10;
+		}
+	}
 
 	/**
 	 * Get template type
@@ -45,7 +58,7 @@ class TemplateClassificationService {
 	 * @throws Exception
 	 * @throws \Swagger\Client\ApiException
 	 */
-	public function getType( $wikiId, $pageId ) {
+	public function getType( int $wikiId, int $pageId ) {
 		if ( !isset( $this->cache[$wikiId][$pageId] ) ) {
 			$templateType = self::TEMPLATE_UNCLASSIFIED;
 
@@ -77,7 +90,7 @@ class TemplateClassificationService {
 	 * @throws Exception
 	 * @throws \Swagger\Client\ApiException
 	 */
-	public function getDetails( $wikiId, $pageId ) {
+	public function getDetails( int $wikiId, int $pageId ): array {
 		$templateDetails = [];
 
 		$providers = $this->getApiClient()->getTemplateDetails( $wikiId, $pageId );
@@ -100,7 +113,7 @@ class TemplateClassificationService {
 	 * @throws Exception
 	 * @throws \Swagger\Client\ApiException
 	 */
-	public function classifyTemplate( $wikiId, $pageId, $templateType, $origin, $provider ) {
+	public function classifyTemplate( int $wikiId, int $pageId, string $templateType, string $origin, string $provider ) {
 		$details = [
 			'provider' => $provider,
 			'origin' => $origin,
@@ -119,7 +132,7 @@ class TemplateClassificationService {
 	 * @throws Exception
 	 * @throws \Swagger\Client\ApiException
 	 */
-	public function getTemplatesOnWiki( $wikiId ) {
+	public function getTemplatesOnWiki( int $wikiId ): array {
 		$templateTypes = [];
 
 		$types = $this->getApiClient()->getTemplateTypesOnWiki( $wikiId );
@@ -129,6 +142,27 @@ class TemplateClassificationService {
 		}
 
 		return $templateTypes;
+	}
+
+	/**
+	 * Delete classification data for a single template on a given wiki
+	 *
+	 * @param int $wikiId
+	 * @param int $pageId
+	 * @throws \Swagger\Client\ApiException
+	 */
+	public function deleteTemplateInformation( int $wikiId, int $pageId ) {
+		$this->getApiClient()->deleteTemplateInformation( $wikiId, $pageId );
+	}
+
+	/**
+	 * Delete classification data for all templates on a given wiki
+	 *
+	 * @param int $wikiId
+	 * @throws \Swagger\Client\ApiException
+	 */
+	public function deleteTemplateInformationForWiki( int $wikiId ) {
+		$this->getApiClient()->deleteTemplateInformationForWiki( $wikiId );
 	}
 
 	/**
@@ -184,8 +218,7 @@ class TemplateClassificationService {
 	 * @return TCSApi
 	 */
 	private function createApiClient() {
-		/** @var ApiProvider $apiProvider */
-		$apiProvider = Injector::getInjector()->get(ApiProvider::class);
+		$apiProvider = ServiceFactory::instance()->providerFactory()->apiProvider();
 		$api = $apiProvider->getApi( self::SERVICE_NAME, TCSApi::class );
 
 		// default CURLOPT_TIMEOUT for API client is set to 0 which means no timeout.
@@ -193,7 +226,7 @@ class TemplateClassificationService {
 		// cURL function is allowed to execute not longer than 1 second
 		$api->getApiClient()
 				->getConfig()
-				->setCurlTimeout(1);
+				->setCurlTimeout($this->queryTimeout);
 
 		return $api;
 	}

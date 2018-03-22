@@ -1,0 +1,15 @@
+<div class="mcf-card mcf-card-wiki-articles">
+	<header class="mcf-card-wiki-articles__header"{{#communityHeaderBackground}} style="background-image: url({{communityHeaderBackground}});"{{/communityHeaderBackground}}>
+	<span class="mcf-card-wiki-articles__header-text">{{{recirculationArticlesMore}}}</span>
+	</header>
+	<ul class="mcf-card-wiki-articles__list">
+		{{#wikiArticles}}
+			<li class="mcf-card-wiki-articles__item">
+				<a href="{{url}}" class="mcf-card-wiki-articles__item-link" data-tracking="more-wiki-{{index}}" title="{{title}}">
+					<span class="mcf-card-wiki-articles__circle">{{index}}</span>
+					<span class="mcf-card-wiki-articles__title">{{title}}</span>
+				</a>
+			</li>
+		{{/wikiArticles}}
+	</ul>
+</div>

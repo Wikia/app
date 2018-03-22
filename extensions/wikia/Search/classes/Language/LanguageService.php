@@ -7,6 +7,7 @@ namespace Wikia\Search\Language;
 
 /**
  * Provides helper functions
+ *
  * @package Search
  * @subpackage Language
  */
@@ -17,6 +18,7 @@ class LanguageService {
 
 	/**
 	 * A string representation of language code
+	 *
 	 * @var string
 	 */
 	protected $lang;
@@ -39,7 +41,7 @@ class LanguageService {
 	/**
 	 * @param $lang string
 	 */
-	public function setLanguageCode($lang) {
+	public function setLanguageCode( $lang ) {
 		$this->lang = $lang;
 	}
 

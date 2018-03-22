@@ -225,16 +225,10 @@ class TemplatesSpecialController extends WikiaSpecialPageController {
 		if ( $revision instanceof Revision ) {
 			$data['timestamp'] = $this->wg->Lang->date( $revision->getTimestamp() );
 
-			$user = $revision->getUserText();
+			$userName = $revision->getUserText();
 
-			if ( $revision->getUser() ) {
-				$userpage = Title::newFromText( $user, NS_USER )->getFullURL();
-			} else {
-				$userpage = SpecialPage::getTitleFor( 'Contributions', $user )->getFullUrl();
-			}
-
-			$data['username'] = $user;
-			$data['userpage'] = $userpage;
+			$data['username'] = $userName;
+			$data['userpage'] = Linker::userLink( $revision->getUser(), $userName);
 		}
 
 		return $data;

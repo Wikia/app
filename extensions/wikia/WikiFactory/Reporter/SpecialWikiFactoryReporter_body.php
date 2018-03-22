@@ -106,7 +106,7 @@ class WikiFactoryReporter extends SpecialPage
 		while ($row = $dbr->fetchObject($res))
 		{
 			$city_id = $row->city_id;
-			$cv_value = unserialize($row->cv_value);
+			$cv_value = unserialize( $row->cv_value, [ 'allowed_classes' => false ] );
 			$nom_value = $cv_value;
 			if (is_array($cv_value))
 			{
@@ -122,7 +122,7 @@ class WikiFactoryReporter extends SpecialPage
 				#$cv_value = 'Error. Not an array?!?';
 			}
 
-			if (preg_match('/http:\/\/([\w\.\-]+)\//', $row->city_url, $matches))
+			if (preg_match('/https?:\/\/([\w\.\-]+)\//', $row->city_url, $matches))
 			{
 				$city_url = str_ireplace('.wikia.com', '', $matches[1]);
 			} else

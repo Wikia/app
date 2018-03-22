@@ -11,7 +11,7 @@
 
 /* generic stuff */
 .WikiaPhotoGalleryProgress {
-	background: transparent url(http://images.wikia.com/common/skins/common/images/ajax.gif) no-repeat 50% 50%;
+	background: transparent url(https://images.wikia.nocookie.net/common/skins/common/images/ajax.gif) no-repeat 50% 50%;
 }
 
 img.WikiaPhotoGalleryProgress {
@@ -791,6 +791,8 @@ p.SliderLink {
 }
 
 /* Hack to position the play circle in slider preview. */
-#WikiaPhotoGallerySliderEditorPreview .play-circle {
+#WikiaPhotoGallerySliderEditorPreview .thumbnail-play-icon-container {
+	height: auto;
 	top: 80px;
+	width: auto;
 }

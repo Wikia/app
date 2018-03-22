@@ -110,7 +110,7 @@ class BackupDumper {
 			require_once( $file );
 		}
 		$register = array( $class, 'register' );
-		call_user_func_array( $register, array( &$this ) );
+		call_user_func_array( $register, [ $this ] );
 	}
 
 	/**

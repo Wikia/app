@@ -27,6 +27,8 @@ function efHideTagsSetup(Parser $parser) {
 	$parser->setHook( 'rhtml', 'efHideTags' );
 	$parser->setHook( 'pageby', 'efHideTags' );
 	$parser->setHook( 'pageTools', 'efHideTags' );
+	$parser->setHook( 'imap', 'efHideTags' );
+	$parser->setHook( 'widget', 'efHideTags' );
 	/* copy above line and change tag name to hide additional tags */
 
 	$parser->setHook( 'loggedin', 'efJustPrintTags' );

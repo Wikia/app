@@ -187,7 +187,7 @@ class SpecialChangeEmail extends UnlistedSpecialPage {
 			return false;
 		}
 
-		if ( !$user->checkTemporaryPassword( $pass ) && !$user->checkPassword( $pass ) ) {
+		if ( !$user->checkPassword( $pass )->success() ) {
 			$this->error( 'wrongpassword' );
 			return false;
 		}

@@ -1,4 +1,5 @@
 <?php
+
 use Wikia\Logger\WikiaLogger;
 
 /**
@@ -19,8 +20,6 @@ class VideoFileUploader {
 
 	protected $sTargetTitle;
 	protected $sDescription;
-	protected $bUndercover;
-	protected $aOverrideMetadata;
 	protected $sExternalUrl;
 	protected $sVideoId;
 	protected $sProvider;
@@ -30,28 +29,13 @@ class VideoFileUploader {
 		$this->sTargetTitle = $sTitle;
 	}
 	public function setDescription( $sDescription )          { $this->sDescription = $sDescription; }
-	public function hideAction( )                            { $this->bUndercover = true; }
-	public function overrideMetadata( $aMetadata = array() ) { $this->aOverrideMetadata = $aMetadata; }
 	public function setExternalUrl( $sUrl )                  { $this->sExternalUrl = $sUrl; }
 	public function setProvider( $sProvider )                { $this->sProvider = $sProvider; }
 	public function setVideoId( $sVideoId )                  { $this->sVideoId = $sVideoId; }
 
-	public function setProviderFromId( $iProviderId ) {
-		wfProfileIn( __METHOD__ );
-		$sProvider = ApiWrapperFactory::getInstance()->getProviderNameFromId( $iProviderId );
-		if ( empty( $sProvider ) ) {
-			wfProfileOut( __METHOD__ );
-			throw new Exception( 'No provider name mapped to ' . $iProviderId );
-		}
-		wfProfileOut( __METHOD__ );
-		$this->sProvider = $sProvider;
-	}
-
 	public function __construct( ) {
 		$this->sTargetTitle = '';
 		$this->sDescription = '';
-		$this->bUndercover = false;
-		$this->aOverrideMetadata = array();
 		$this->sExternalUrl = null;
 		$this->sVideoId = '';
 		$this->sProvider = '';
@@ -66,8 +50,10 @@ class VideoFileUploader {
 			'wpUploadFileURL' => $urlFrom
 		);
 
+		$request = new FauxRequest( $data, true );
+
 		$upload = (new UploadFromUrl); /* @var $upload UploadFromUrl */
-		$upload->initializeFromRequest( new FauxRequest( $data, true ) );
+		$upload->initializeFromRequest( $request );
 		wfProfileOut( __METHOD__ );
 		return $upload;
 	}
@@ -103,7 +89,6 @@ class VideoFileUploader {
 		} else {
 			WikiaLogger::instance()->error( 'Api wrapper corrupted', [
 				'targetFile' => $this->sTargetTitle,
-				'overrideMetadata' => $this->aOverrideMetadata,
 				'externalURL' => $this->sExternalUrl,
 				'videoID' => $this->sVideoId,
 				'provider' => $this->sProvider,
@@ -143,10 +128,8 @@ class VideoFileUploader {
 			}
 		}
 
-		$class = !empty( $this->bUndercover ) ? 'WikiaNoArticleLocalFile' : 'WikiaLocalFile';
-
-		/** @var WikiaLocalFile $file */
-		$file = new $class(
+		/** @var WikiaLocalFile|WikiaLocalFileShared $file */
+		$file = new WikiaLocalFile(
 				$oTitle,
 				RepoGroup::singleton()->getLocalRepo()
 		);
@@ -154,12 +137,6 @@ class VideoFileUploader {
 		/* override thumbnail metadata with video metadata */
 		$file->forceMime( $this->getApiWrapper()->getMimeType() );
 		$file->setVideoId( $this->getVideoId() );
-
-		/* ingestion video won't be able to load anything so we need to spoon feed it the correct data */
-		if ( $this->getApiWrapper()->isIngestion() ) {
-			$file->forceMetadata( serialize( $this->getNormalizedMetadata() ) );
-		}
-
 
 		$forceMime = $file->forceMime;
 
@@ -180,24 +157,14 @@ class VideoFileUploader {
 			File::DELETE_SOURCE
 		);
 
-		wfRunHooks('AfterVideoFileUploaderUpload', array($file, $result));
+		Hooks::run('AfterVideoFileUploaderUpload', array($file, $result));
+
+		// SUS-1195: make sure the file cache is up to date shortly after the video upload
+		if ( $result->isOK() ) {
+			$file->saveToCache();
+		}
 
 		return $result;
-	}
-
-	/**
-	 * Get the normalized composed version of ApiWrapper metadata
-	 *
-	 * @return string
-	 */
-	public function getNormalizedMetadata() {
-		$metadata = $this->getApiWrapper()->getMetadata();
-
-		// Flatten metadata, normalize it, and restore in original structure
-		$metadata = json_encode( $metadata );
-		$metadata = \UtfNormal::toNFC( $metadata );
-
-		return json_decode( $metadata, true );
 	}
 
 	/**
@@ -215,16 +182,10 @@ class VideoFileUploader {
 	 * @return string
 	 */
 	public function getSanitizedTitleText() {
-		$isIngestion = $this->getApiWrapper()->isIngestion();
 		// Create a reference to article that will contain uploaded file
 		$titleText = $this->getDestinationTitle();
-		if ( !$isIngestion ) {
-			// only sanitize name for external uploads
-			// video ingestion handles sanitization by itself
-			$titleText = self::sanitizeTitle( $titleText );
-		}
 
-		return $titleText;
+		return self::sanitizeTitle( $titleText );
 	}
 
 	/**
@@ -276,7 +237,7 @@ class VideoFileUploader {
 
 		// If uploading the actual thumbnail fails, load a default thumbnail
 		if ( empty($upload) ) {
-			$upload = $this->uploadThumbnailFromUrl( LegacyVideoApiWrapper::$THUMBNAIL_URL );
+			$upload = $this->uploadThumbnailFromUrl( LegacyVideoApiWrapper::getLegacyThumbnailUrl() );
 			$this->scheduleJob( $delayIndex );
 		}
 
@@ -303,7 +264,7 @@ class VideoFileUploader {
 			$task = ( new UpdateThumbnailTask() )->wikiId( F::app()->wg->CityId );
 			$task->delay( $delay );
 			$task->dupCheck();
-			$task->call( 'retryThumbUpload', $this->getDestinationTitle(), $delayIndex, $provider, $this->sVideoId );
+			$task->call( 'retryThumbUpload', $this->getDestinationTitle(), $delayIndex, $provider );
 			$task->queue();
 		}
 	}
@@ -401,8 +362,7 @@ class VideoFileUploader {
 
 			$class = ucfirst( $apiWrapperPrefix ) . 'ApiWrapper';
 			$this->oApiWrapper = new $class(
-					$this->sVideoId,
-					$this->aOverrideMetadata
+					$this->sVideoId
 			);
 		}
 		wfProfileOut( __METHOD__ );
@@ -487,34 +447,6 @@ class VideoFileUploader {
 		return $oTitle;
 	}
 
-
-	/**
-	 * Create a video using LocalFile framework
-	 * @param string $provider provider whose API will be used to fetch video data
-	 * @param string $videoId id of video, assigned by provider
-	 * @param Title $title Title object stemming from name of video
-	 * @param string $description description of video
-	 * @param boolean $undercover upload a video without creating the associated article
-	 * @param array $overrideMetadata one or more metadata fields that override API response
-	 * @return FileRepoStatus On success, the value member contains the
-	 *     archive name, or an empty string if it was a new file.
-	 */
-	public static function uploadVideo( $provider, $videoId, &$title, $description=null, $undercover=false, $overrideMetadata=array() ) {
-
-		wfProfileIn( __METHOD__ );
-		$oUploader = new self();
-		$oUploader->setProvider( $provider );
-		$oUploader->setVideoId( $videoId );
-		$oUploader->setDescription( $description );
-		if ( !empty( $undercover ) ) $oUploader->hideAction();
-		$oUploader->overrideMetadata( $overrideMetadata );
-
-		$r = $oUploader->upload( $title );
-		wfProfileOut( __METHOD__ );
-		return $r;
-
-	}
-
 	/**
 	 * Translate URL to Title object.  Can transparently upload new video if it doesn't exist
 	 * @param string $url
@@ -544,6 +476,13 @@ class VideoFileUploader {
 				return $oTitle;
 			}
 		}
+
+		\Wikia\Logger\WikiaLogger::instance()->error( __METHOD__ . ' - video upload failed', [
+			'video_url' => (string) $url,
+			'provider_name' => (string) $oUploader->sProvider,
+			'upload_status' => isset( $status ) ? $status : Status::newFatal( 'api-wrapper-not-found' )
+		] );
+
 		wfProfileOut( __METHOD__ );
 		return null;
 	}
@@ -572,23 +511,6 @@ class VideoFileUploader {
 
 		wfProfileOut( __METHOD__ );
 
-		return trim($sTitle);
-
-		/*
-		// remove all characters that are not alphanumeric.
-		$sanitized = preg_replace( '/[^[:alnum:]]{1,}/', $replaceChar, $titleText );
-
-		return $sanitized;
-		*/
-	}
-
-	public static function hasForbiddenCharacters( $text ) {
-		foreach ( self::$ILLEGAL_TITLE_CHARS as $illegalChar ) {
-			if ( strpos($text, $illegalChar) !== FALSE ) {
-				return true;
-			}
-		}
-
-		return false;
+		return trim( $sTitle );
 	}
 }

@@ -582,6 +582,18 @@ class SpecialPage {
 	}
 
 	/**
+	 * Wikia change
+	 * SUS-288: Helper function to determine if the current user is blocked
+	 * @throws UserBlockedError
+	 */
+	public function checkIfUserIsBlocked() {
+		$user = $this->getUser();
+		if ( $user->isBlocked() ) {
+			throw new UserBlockedError( $user->mBlock );
+		}
+	}
+
+	/**
 	 * Sets headers - this should be called from the execute() method of all derived classes!
 	 */
 	function setHeaders() {
@@ -838,7 +850,7 @@ abstract class FormSpecialPage extends SpecialPage {
 		$this->alterForm( $form );
 
 		// Give hooks a chance to alter the form, adding extra fields or text etc
-		wfRunHooks( "Special{$this->getName()}BeforeFormDisplay", array( &$form ) );
+		Hooks::run( "Special{$this->getName()}BeforeFormDisplay", array( &$form ) );
 
 		return $form;
 	}

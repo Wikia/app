@@ -10,8 +10,9 @@ class SearchCores {
 	// list all common field ids that can be shared across cores
 	const F_WIKI_ID = 'wikiId';
 	const F_WIKI_HOST = 'wikiHost';
+
 	public static function getCoreFieldNames( $core ) {
-		$core_opt = [ ];
+		$core_opt = [];
 		switch ( $core ) {
 			case static::CORE_XWIKI:
 				$core_opt[self::F_WIKI_ID] = 'id';
@@ -21,6 +22,7 @@ class SearchCores {
 				$core_opt[self::F_WIKI_ID] = 'wid';
 				$core_opt[self::F_WIKI_HOST] = 'host';
 		}
+
 		return $core_opt;
 	}
 }

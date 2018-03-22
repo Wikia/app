@@ -49,7 +49,7 @@ function GetLinksArrayFromMessage( $messagename ) { // feel free to suggest bett
 					$text = $line[1];
 				if ( wfEmptyMsg( $line[0], $link ) )
 					$link = $line[0];
-					if ( preg_match( '/^(?:' . wfUrlProtocols() . ')/', $link ) ) {
+				if ( preg_match( '/^(?:' . wfUrlProtocols() . ')/', $link ) ) {
 					$href = $link;
 				} else {
 					$title = Title::newFromText( $link );
@@ -104,95 +104,42 @@ function print_pre( $param, $return = 0 )
  *
  * @author Inez Korczyński <inez@wikia-inc.com>
  *
- * @param String $url -- old url
- * @param String $timestamp -- last change timestamp
+ * @param string $url -- old url
+ * @param string|false $timestamp -- last change timestamp
  *
- * @return String -- new url
+ * @return string -- new url
  */
 function wfReplaceImageServer( $url, $timestamp = false ) {
 	$wg = F::app()->wg;
-
-	// Override image server location for Wikia development environment
-	// This setting should be images.developerName.wikia-dev.com or perhaps "localhost"
-	// FIXME: This needs to be removed. It should be encapsulated in the URL generation.
-	$overrideServer = !empty( $wg->DevBoxImageServerOverride ) && !$wg->EnableVignette;
-	if ( $overrideServer ) {
-		$url = preg_replace( "/\\/\\/(.*?)wikia-dev\\.com\\/(.*)/", "//{$wg->DevBoxImageServerOverride}/$2", $url );
-	}
+	global $wgWikiaNocookieDomain, $wgMedusaHostPrefix, $wgResourceBasePath;
 
 	wfDebug( __METHOD__ . ": requested url $url\n" );
-	if ( substr( strtolower( $url ), -4 ) != '.ogg' && isset( $wg->ImagesServers ) && is_int( $wg->ImagesServers ) ) {
-		if ( strlen( $url ) > 7 && substr( $url, 0, 7 ) == 'http://' ) {
-			$hash = sha1( $url );
-			$inthash = ord ( $hash );
-
-			$serverNo = $inthash % ( $wg->ImagesServers -1 );
-			$serverNo++;
-
-			// If there is no timestamp, use the cache-busting number from wgCdnStylePath.
+	if ( substr( strtolower( $url ), -4 ) != '.ogg' ) {
+		$url = str_replace( 'http://', 'https://',
+			str_replace( "//{$wgMedusaHostPrefix}images", '//' . str_replace( '.', '-', $wgMedusaHostPrefix ) . 'images', $url ) );
+		if ( strlen( $url ) > 8 && substr ( $url, 0, 8 ) == "https://" ) {
+			// If there is no timestamp, use the cache-busting number from wgResourceBasePath.
 			if ( $timestamp == "" ) {
 				$matches = array();
 				// @TODO: consider using wgStyleVersion
-				if ( 0 < preg_match( "/\/__cb([0-9]+)/i", $wg->CdnStylePath, $matches ) ) {
+				if ( 0 < preg_match( "/\/__cb([0-9]+)/i", $wgResourceBasePath, $matches ) ) {
 					$timestamp = $matches[1];
 				} else {
 					// This results in no caching of the image.  Bad bad bad, but the best way to fail.
-					Wikia::log( __METHOD__, "", "BAD FOR CACHING!: There is a call to " . __METHOD__ . " without a timestamp and we could not parse a fallback cache-busting number out of wgCdnStylePath.  This means the '{$url}' image won't be cacheable!" );
+					Wikia::log( __METHOD__, "", "BAD FOR CACHING!: There is a call to " . __METHOD__ . " without a timestamp and we could not parse a fallback cache-busting number out of wgResourceBasePath.  This means the '{$url}' image won't be cacheable!" );
 					$timestamp = rand( 0, 1000 );
 				}
 			}
 
-			// NOTE: This should be the only use of the cache-buster which does not use $wg->CdnStylePath.
+			// NOTE: This should be the only use of the cache-buster which does not use $wgResourceBasePath
 			// RT#98969 if the url already has a cb value, don't add another one...
 			$cb = ( $timestamp != '' && strpos( $url, "__cb" ) === false ) ? "__cb{$timestamp}/" : '';
 
-			if ( $overrideServer ) {
-				// Dev boxes
-				// TODO: support domains sharding on devboxes
-				$url = str_replace( 'http://images.wikia.com/', sprintf( "http://{$wg->DevBoxImageServerOverride}/%s", $cb ), $url );
-			} else {
-				// Production
-				$url = str_replace( 'http://images.wikia.com/', sprintf( "http://{$wg->ImagesDomainSharding}/%s", $serverNo, $cb ), $url );
-			}
+			// Production
+			$nocookieDomainEscaped = preg_quote($wgWikiaNocookieDomain);
+			$url = preg_replace( "#https://images.wikia.(?:com|{$nocookieDomainEscaped})/#", sprintf( "https://images.{$wgWikiaNocookieDomain}/%s", $cb ), $url );
 		}
-	} else if ( $overrideServer ) {
-		$url = str_replace( 'http://images.wikia.com/', "http://{$wg->DevBoxImageServerOverride}/", $url );
 	}
-
-	return $url;
-}
-
-/**
- * Returns a link to the same asset after applying domain sharding
- *
- * @see wfReplaceImageServer
- * @author Władysław Bodzek
- * @param $url string URL to an asset
- * @return string URL after applying domain sharding
- */
-function wfReplaceAssetServer( $url ) {
-	global $wgImagesServers, $wgDevelEnvironment;
-
-	$matches = array();
-
-	if ( preg_match( "#^(?<a>(https?:)?//(slot[0-9]+\\.)?images)(?<b>\\.wikia\\.nocookie\\.net/.*)\$#", $url, $matches ) ) {
-		$hash = sha1( $url );
-		$inthash = ord( $hash );
-
-		$serverNo = $inthash % ( $wgImagesServers -1 );
-		$serverNo++;
-
-		$url = $matches['a'] . ( $serverNo ) . $matches['b'];
-	} elseif ( !empty( $wgDevelEnvironment ) && preg_match( '/^((https?:)?\/\/)(([a-z0-9]+)\.wikia-dev\.com\/(.*))$/', $url, $matches ) ) {
-		$hash = sha1( $url );
-		$inthash = ord( $hash );
-
-		$serverNo = $inthash % ( $wgImagesServers -1 );
-		$serverNo++;
-
-		$url = "{$matches[1]}i{$serverNo}.{$matches[3]}";
-	}
-
 	return $url;
 }
 
@@ -562,53 +509,6 @@ function wfWaitForSlavesExt( $maxLag, $cluster = null ) {
 	}
 }
 
-/**
- * wfGetCurrentUrl
- *
- * Get full url for request, used when $wgTitle is not available yet
- * based on code from marco panichi
- *
- * @author Krzysztof Krzyżaniak <eloy@wikia-inc.com>
- * @access public
- *
- * @param boolean $s_string default false -- return url as string not array
- *
- * @return array	parts of current url
- */
-function wfGetCurrentUrl( $as_string = false ) {
-	$uri = $_SERVER['REQUEST_URI'];
-
-	/**
-	 * sometimes $uri contain whole url, not only last part
-	 */
-	if ( !preg_match( '!^https?://!', $uri ) ) {
-		$uri = isset( $_SERVER[ "SERVER_NAME" ] )
-			? "http://" . $_SERVER[ "SERVER_NAME" ] . $uri
-			: "http://localhost" . $uri;
-	}
-	$arr = parse_url( $uri );
-
-	/**
-	 * host
-	 */
-	$arr[ "host" ] = $_SERVER['SERVER_NAME'];
-
-	/**
-	 * scheme
-	 */
-	$server_prt = explode( '/', $_SERVER['SERVER_PROTOCOL'] );
-	$arr[ "scheme" ] = strtolower( $server_prt[0] );
-
-	/**
-	 * full url
-	 */
-	$arr[ "url" ] = $arr[ "scheme" ] . '://' . $arr[ "host" ] . $arr[ "path" ];
-	$arr[ "url" ] = isset( $arr[ "query" ] ) ? $arr[ "url" ] . "?" . $arr[ "query" ] : $arr[ "url" ];
-
-	return ( $as_string ) ? $arr[ "url" ]: $arr ;
-}
-
-
 function getMenuHelper( $name, $limit = 7 ) {
 	global $wgMemc;
 	wfProfileIn( __METHOD__ );
@@ -655,26 +555,6 @@ function getMenuHelper( $name, $limit = 7 ) {
  */
 function isMsgEmpty( $key ) {
 	return wfEmptyMsg( $key, trim( wfMsg( $key ) ) );
-}
-
-/**
- * Get a list of language names available for wiki request
- * (possibly filter some)
- *
- * @author nef@wikia-inc.com
- * @return array
- *
- * @see Language::getLanguageNames()
- * @see RT#11870
- */
-function wfGetFixedLanguageNames() {
-	$languages = Language::getLanguageNames();
-
-	$filter_languages = explode( ',', wfMsgForContent( 'requestwiki-filter-language' ) );
-	foreach ( $filter_languages as $key ) {
-		unset( $languages[$key] );
-	}
-	return $languages;
 }
 
 /**
@@ -824,7 +704,7 @@ function wfMsgHTMLwithLanguage( $key, $lang, $options = array(), $params = array
  */
 function wfMsgHTMLwithLanguageAndAlternative( $key, $keyAlternative, $lang, $options = array(), $params = array(), $wantHTML = true ) {
 	// inserted here for external i18n add-on, adjust params if needed
-	wfRunHooks( 'MsgHTMLwithLanguageAndAlternativeBefore' );
+	Hooks::run( 'MsgHTMLwithLanguageAndAlternativeBefore' );
 
 	list ( $msgPlainMain, $msgRichMain, $msgPlainMainFallback, $msgRichMainFallback ) = wfMsgHTMLwithLanguage( $key, $lang, $options, $params, $wantHTML );
 	list ( $msgPlainAlter, $msgRichAlter, $msgPlainAlterFallback, $msgRichAlterFallback ) = wfMsgHTMLwithLanguage( $keyAlternative, $lang, $options, $params, $wantHTML );
@@ -1061,9 +941,9 @@ function wfLoadExtensionNamespaces( $extensionName, $nsList ) {
  * @author uberfuzzy
  * @return string
  */
-function wfGenerateUnsubToken( $email, $timestamp ) {
+function wfGenerateUnsubToken( $email ) {
 	global $wgUnsubscribeSalt;
-	$token = sha1( $timestamp . $email . $wgUnsubscribeSalt );
+	$token = sha1( $email . $wgUnsubscribeSalt );
 	return $token;
 }
 
@@ -1434,28 +1314,6 @@ function wfGetBeaconId() {
 }
 
 /**
- * Allow to find what staging machine we are on
- *
- * @author Tomasz Odrobny <tomek@wikia-inc.com>
- */
-function getHostPrefix() {
-	global $wgStagingList, $wgServer;
-	static $cache;
-	if ( !empty( $cache ) ) {
-		return $cache;
-	}
-	$hosts = $wgStagingList;
-	foreach ( $hosts as $host ) {
-		$prefix = 'http://' . $host . '.';
-		if ( strpos( $wgServer, $prefix )  !== false ) {
-			$cache = $host;
-			return  $host;
-		}
-	}
-	return null;
-}
-
-/**
  * Defines error handler to log backtrace for PHP (catchable) fatal errors
  *
  * @author Maciej Brencz <macbre@wikia-inc.com>
@@ -1480,7 +1338,7 @@ function wfGetNamespaces() {
 	global $wgContLang;
 
 	$namespaces = $wgContLang->getFormattedNamespaces();
-	wfRunHooks( 'XmlNamespaceSelectorAfterGetFormattedNamespaces', array( &$namespaces ) );
+	Hooks::run( 'XmlNamespaceSelectorAfterGetFormattedNamespaces', array( &$namespaces ) );
 
 	return $namespaces;
 }
@@ -1680,4 +1538,49 @@ function wfGetValueExcerpt( $value ) {
 	}
 
 	return "[" . implode( ':', $parts ) . "]";
+}
+
+/**
+ * @param string $url the url to convert to protocol relative
+ * @return string
+ */
+function wfProtocolUrlToRelative( $url ) {
+	$pos = strpos( $url, '://' );
+	if ( $pos > 0 ) {
+		$url = substr_replace( $url, '', 0, $pos+1 );
+	}
+
+	return $url;
+}
+
+function wfHttpToHttps( $url ) {
+	return preg_replace( '/^http:\/\//', 'https://', $url );
+}
+
+function wfHttpsToHttp( $url ) {
+	return preg_replace( '/^https:\/\//', 'http://', $url );
+}
+
+function wfHttpsAllowedForURL( $url ): bool {
+	global $wgWikiaBaseDomain, $wgDevDomain, $wgWikiaEnvironment;
+	$parsedURL = parse_url( $url );
+	if ( $parsedURL === false ) {
+		return false;
+	}
+
+	$host = $parsedURL['host'];
+	if ( !empty( $wgDevDomain ) ) {
+		$server = str_replace( ".{$wgDevDomain}", '', $host );
+	} elseif ( $wgWikiaEnvironment !== WIKIA_ENV_PROD ) {
+		$server = preg_replace(
+			'/\\.(stable|preview|verify|sandbox-[a-z0-9]+)\\.' . preg_quote( $wgWikiaBaseDomain ) . '$/',
+			'',
+			$host
+		);
+	} else {
+		$server = str_replace( ".{$wgWikiaBaseDomain}", '', $host );
+	}
+
+	// Only allow single subdomain wikis through
+	return substr_count( $server, '.' ) === 0;
 }

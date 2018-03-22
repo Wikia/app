@@ -62,9 +62,12 @@ class WikiaPhotoGalleryHelper {
 
 	/**
 	 * Allow this extension to use its own "parser" for <gallery> tag content
+	 * @param Parser $parser
+	 * @param WikiaPhotoGallery $ig
+	 * @return bool false
 	 */
-	static public function beforeRenderImageGallery(&$parser, &$ig) {
-		$ig->parse($parser);
+	static public function beforeRenderImageGallery( Parser $parser, WikiaPhotoGallery $ig ): bool {
+		$ig->parse( $parser );
 		// by returning false we're telling MW parser to return gallery's HTML immediatelly
 		return false;
 	}
@@ -73,16 +76,9 @@ class WikiaPhotoGalleryHelper {
 	 * Skip rendering of RTE placeholders for <gallery> and generate our own
 	 */
 	static public function useDefaultRTEPlaceholder($name, $params, $frame, $wikitextIdx) {
-		$name = strtolower($name);
-
-		if ($name == 'gallery') {
+		// generate custom placeholder for <gallery> tag
+		if ( $name == 'gallery' ) {
 			self::$mWikitextIdx = $wikitextIdx;
-
-			// generate custom placeholder for <gallery> tag
-			return false;
-		}
-		else {
-			return true;
 		}
 	}
 
@@ -184,7 +180,7 @@ class WikiaPhotoGalleryHelper {
 	/**
 	 * Parse given link and return link tag attributes
 	 */
-	static public function parseLink(&$parser, $url, $text, $link) {
+	static public function parseLink( $parser, $url, $text, $link ) {
 		// fallback: link to image page + lightbox
 		$linkAttribs = array(
 			'class' => 'image lightbox',
@@ -192,8 +188,13 @@ class WikiaPhotoGalleryHelper {
 			'title' => $text,
 		);
 
+		// MAIN-11034: $parser can be empty here, just return
+		if ( !( $parser instanceof Parser ) ) {
+			return $linkAttribs;
+		}
+
 		// detect internal / external links (|links= param)
-		if ($link != '') {
+		if ( $link != '' ) {
 			$chars = Parser::EXT_LINK_URL_CLASS;
 			$prots = $parser->mUrlProtocols;
 
@@ -662,7 +663,9 @@ class WikiaPhotoGalleryHelper {
 			$image['videoPlayButton'] = false;
 			if( WikiaFileHelper::isFileTypeVideo($img) ) {
 				// Get play button overlay for video thumb
-				$image['videoPlayButton'] = '<span class="play-circle"></span>';
+				$image['videoPlayButton'] = '<span class="thumbnail-play-icon-container">'
+					. DesignSystemHelper::renderSvg('wds-player-icon-play', 'thumbnail-play-icon')
+					. '</span>';
 			}
 
 			//need to use parse() - see RT#44270

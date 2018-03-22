@@ -20,7 +20,6 @@
  * @file
  * @ingroup SpecialPage
  */
-use Wikia\Util\PerformanceProfilers\UsernameUseProfiler;
 
 /**
  * Used to show archived pages and eventually restore them.
@@ -386,14 +385,14 @@ class PageArchive {
 
 		/* Wikia change begin - @author: Andrzej 'nAndy' Lukaszewski */
 		$hookAddedLogEntry = false;
-		wfRunHooks('PageArchiveUndeleteBeforeLogEntry', array(&$this, &$log, &$this->title, $reason, &$hookAddedLogEntry));
+		Hooks::run( 'PageArchiveUndeleteBeforeLogEntry', [ $this, &$log, &$this->title, $reason, &$hookAddedLogEntry ] );
 		if( !$hookAddedLogEntry ) {
 			//if hook above didn't log anything log it as default
 			$log->addEntry( 'restore', $this->title, $reason );
 		}
 		/* Wikia change end */
 
-		wfRunHooks( 'UndeleteComplete', array(&$this->title, &$wgUser, $reason ) );
+		Hooks::run( 'UndeleteComplete', [ $this->title, $wgUser, $reason ] );
 
 		return array( $textRestored, $filesRestored, $reason );
 	}
@@ -452,26 +451,6 @@ class PageArchive {
 			$previousTimestamp = 0;
 		}
 
-		// Wikia change - begin -@author: wladek
-		$beforeRevisionCount = !empty($pageId) ? $dbw->selectField('revision','count(*)',[
-			'rev_page' => $page->page_id,
-		],__METHOD__) : 0;
-		$beforeArchiveCount = $dbw->selectField('archive','count(*)',[
-			'ar_namespace' => $this->title->getNamespace(),
-			'ar_title'     => $this->title->getDBkey(),
-		],__METHOD__);
-		\Wikia\Logger\WikiaLogger::instance()->debug(
-			'RevisionAudit - before undelete revisions',[
-				'exception' => new Exception(),
-				'page_namespace' => $this->title->getNamespace(),
-				'page_title' => $this->title->getDBkey(),
-				'page_id' => !empty($pageId) ? $pageId : 0,
-				'rev_count_before' => $beforeRevisionCount,
-				'ar_count_before' => $beforeArchiveCount,
-			]
-		);
-		// Wikia change - end
-
 		if( $restoreAll ) {
 			$oldones = '1 = 1'; # All revisions...
 		} else {
@@ -517,6 +496,7 @@ class PageArchive {
 
 		$ret->seek( $rev_count - 1 ); // move to last
 		$row = $ret->fetchObject(); // get newest archived rev
+		$oldPageId = (int)$row->ar_page_id; // pass this to ArticleUndelete hook
 		$ret->seek( 0 ); // move back
 
 		if( $makepage ) {
@@ -571,7 +551,7 @@ class PageArchive {
 			$revision->insertOn( $dbw );
 			$restored++;
 
-			wfRunHooks( 'ArticleRevisionUndeleted', array( &$this->title, $revision, $row->ar_page_id ) );
+			Hooks::run( 'ArticleRevisionUndeleted', [ $this->title, $revision, $row->ar_page_id ] );
 		}
 		# Now that it's safely stored, take it out of the archive
 		$dbw->delete( 'archive',
@@ -580,28 +560,6 @@ class PageArchive {
 				'ar_title' => $this->title->getDBkey(),
 				$oldones ),
 			__METHOD__ );
-
-		// Wikia change - begin -@author: wladek
-		$afterRevisionCount = $dbw->selectField('revision','count(*)',[
-			'rev_page' => $pageId,
-		],__METHOD__);
-		$afterArchiveCount = $dbw->selectField('archive','count(*)',[
-			'ar_namespace' => $this->title->getNamespace(),
-			'ar_title'     => $this->title->getDBkey(),
-		],__METHOD__);
-		\Wikia\Logger\WikiaLogger::instance()->debug(
-			'RevisionAudit - after undelete revisions',[
-				'exception' => new Exception(),
-				'page_namespace' => $this->title->getNamespace(),
-				'page_title' => $this->title->getDBkey(),
-				'page_id' => !empty($pageId) ? $pageId : 0,
-				'rev_count_before' => $beforeRevisionCount,
-				'ar_count_before' => $beforeArchiveCount,
-				'rev_count_after' => $afterRevisionCount,
-				'ar_count_after' => $afterArchiveCount,
-			]
-		);
-		// Wikia change - end
 
 		// Was anything restored at all?
 		if ( $restored == 0 ) {
@@ -615,14 +573,17 @@ class PageArchive {
 		$created = (bool)$newid;
 
 		// Attach the latest revision to the page...
-		$wasnew = $article->updateIfNewerOn( $dbw, $revision, $previousRevId );
+		$wasnew = $article->updateIfNewerOn( $dbw, $revision );
 		if ( $created || $wasnew ) {
 			// Update site stats, link tables, etc
 			$user = User::newFromName( $revision->getRawUserText(), false );
 			$article->doEditUpdates( $revision, $user, array( 'created' => $created, 'oldcountable' => $oldcountable ) );
+
+			// SUS-3496: add useful hook that receives revision info
+			Hooks::run( 'ArticleUndeleteComplete', [ $article, $revision ] );
 		}
 
-		wfRunHooks( 'ArticleUndelete', array( &$this->title, $created, $comment ) );
+		Hooks::run( 'ArticleUndelete', [ $this->title, $created, $comment, $oldPageId, $pageId ] );
 
 		if( $this->title->getNamespace() == NS_FILE ) {
 			// Wikia change begin @author Scott Rabin (srabin@wikia-inc.com)
@@ -849,7 +810,7 @@ class SpecialUndelete extends SpecialPage {
 
 		$archive = new PageArchive( $this->mTargetObj );
 
-		wfRunHooks( 'UndeleteForm::showRevision', array( &$archive, $this->mTargetObj ) );
+		Hooks::run( 'UndeleteForm::showRevision', array( &$archive, $this->mTargetObj ) );
 
 		$rev = $archive->getRevision( $timestamp );
 
@@ -917,7 +878,7 @@ class SpecialUndelete extends SpecialPage {
 
 		$out->addHTML( $this->msg( 'undelete-revision' )->rawParams( $link )->params(
 			$time )->rawParams( $userLink )->params( $d, $t )->parse() . '</div>' );
-		wfRunHooks( 'UndeleteShowRevision', array( $this->mTargetObj, $rev ) );
+		Hooks::run( 'UndeleteShowRevision', array( $this->mTargetObj, $rev ) );
 
 		if( $this->mPreview ) {
 			// Hide [edit]s
@@ -1087,7 +1048,6 @@ class SpecialUndelete extends SpecialPage {
 	}
 
 	private function showHistory() {
-		$usernameUseProfiler = new UsernameUseProfiler( __CLASS__, __METHOD__ );
 		$out = $this->getOutput();
 		if( $this->mAllowed ) {
 			$out->addModules( 'mediawiki.special.undelete' );
@@ -1099,7 +1059,7 @@ class SpecialUndelete extends SpecialPage {
 
 		$archive = new PageArchive( $this->mTargetObj );
 
-		wfRunHooks( 'UndeleteForm::showHistory', array( &$archive, $this->mTargetObj ) );
+		Hooks::run( 'UndeleteForm::showHistory', array( &$archive, $this->mTargetObj ) );
 
 		/*
 		$text = $archive->getLastRevisionText();
@@ -1128,18 +1088,22 @@ class SpecialUndelete extends SpecialPage {
 		if( $haveRevisions ) {
 			$batch = new LinkBatch();
 			foreach ( $revisions as $row ) {
-				$batch->addObj( Title::makeTitleSafe( NS_USER, $row->ar_user_text ) );
-				$batch->addObj( Title::makeTitleSafe( NS_USER_TALK, $row->ar_user_text ) );
+				$username = User::getUsername( $row->ar_user, $row->ar_user_text );
+				$batch->addObj( Title::makeTitleSafe( NS_USER, $username ) );
+				$batch->addObj( Title::makeTitleSafe( NS_USER_TALK, $username ) );
 			}
 			$batch->execute();
 			$revisions->seek( 0 );
 		}
 		if( $haveFiles ) {
 			$batch = new LinkBatch();
+			/* Wikia change begin */
 			foreach ( $files as $row ) {
-				$batch->addObj( Title::makeTitleSafe( NS_USER, $row->fa_user_text ) );
-				$batch->addObj( Title::makeTitleSafe( NS_USER_TALK, $row->fa_user_text ) );
+				$userName = User::getUsername( $row->fa_user, $row->fa_user_text );
+				$batch->addObj( Title::makeTitleSafe( NS_USER, $userName ) );
+				$batch->addObj( Title::makeTitleSafe( NS_USER_TALK, $userName ) );
 			}
+			/* Wikia change end */
 			$batch->execute();
 			$files->seek( 0 );
 		}
@@ -1240,7 +1204,6 @@ class SpecialUndelete extends SpecialPage {
 			$misc .= Xml::closeElement( 'form' );
 			$out->addHTML( $misc );
 		}
-		$usernameUseProfiler->end();
 		return true;
 	}
 
@@ -1460,14 +1423,14 @@ class SpecialUndelete extends SpecialPage {
 		}
 
 		# <Wikia> - use Phalanx to check recovered page title
-		if ( !wfRunHooks( 'CreatePageTitleCheck', array( $this->mTargetObj, false ) ) ) {
+		if ( !Hooks::run( 'CreatePageTitleCheck', array( $this->mTargetObj, false ) ) ) {
 			throw new ErrorPageError( 'undelete-error', 'spamprotectiontext' );
 		}
 		# </Wikia>
 
 		$out = $this->getOutput();
 		$archive = new PageArchive( $this->mTargetObj );
-		wfRunHooks( 'UndeleteForm::undelete', array( &$archive, $this->mTargetObj ) );
+		Hooks::run( 'UndeleteForm::undelete', array( &$archive, $this->mTargetObj ) );
 		$ok = $archive->undelete(
 			$this->mTargetTimestamp,
 			$this->mComment,
@@ -1476,7 +1439,7 @@ class SpecialUndelete extends SpecialPage {
 
 		if( is_array( $ok ) ) {
 			if ( $ok[1] ) { // Undeleted file count
-				wfRunHooks( 'FileUndeleteComplete', array(
+				Hooks::run( 'FileUndeleteComplete', array(
 					$this->mTargetObj, $this->mFileVersions,
 					$this->getUser(), $this->mComment ) );
 			}

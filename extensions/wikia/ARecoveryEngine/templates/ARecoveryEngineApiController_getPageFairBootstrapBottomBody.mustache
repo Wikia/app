@@ -1,0 +1,32 @@
+<script type="text/javascript">
+	require([
+		'ext.wikia.adEngine.adContext',
+		'ext.wikia.adEngine.provider.gpt.googleTag',
+		'ext.wikia.adEngine.utils.eventDispatcher',
+		'wikia.instantGlobals',
+		'wikia.window'
+	], function (adContext, googleTag, eventDispatcher, instantGlobals, win) {
+		var context = adContext.getContext();
+
+		if (context.opts.pageFairRecovery === true) {
+			var adonis = win.adonis = win.adonis || {};
+
+			adonis.transport = 'https://www.adumen.com/http';
+			adonis.od = function(detectionStatus) {
+				var eventName = 'wikia.not_blocking';
+
+				if (detectionStatus) {
+					// the ATF slots are already defined so we need to update their targeting
+					googleTag.updateTargetingForBlockedTraffic();
+					eventName = 'wikia.blocking';
+				}
+				win.ads.runtime = win.ads.runtime || {};
+				win.ads.runtime.pf = win.ads.runtime.pf || {};
+				win.ads.runtime.pf.recovering = detectionStatus;
+				eventDispatcher.dispatch(eventName);
+			};
+
+			{{{code}}}
+		}
+	});
+</script>

@@ -1,59 +1,33 @@
 <?php
-/**
- * Internationalisation file for Unsubscribe extension.
- *
- * @file
- * @ingroup Extensions
- */
+/** Internationalization file for /extensions/wikia/SpecialUnsubscribe/Unsubscribe extension. */
+$messages = [];
 
-$messages = array();
-
-/** English
- * @author 
- */
-$messages['en'] = array(
+$messages['en'] = [
 	'unsubscribe' => 'Unsubscribe',
-	'unsubscribe-desc' => 'Single email unbsubscribe point',
-
+	'unsubscribe-desc' => 'Single email unsubscribe point',
 	'unsubscribe-badaccess' => 'Sorry, this page cannot be used directly. Please follow the link from your e-mail.',
 	'unsubscribe-badtoken' => 'Sorry, there was a problem with the security token.',
 	'unsubscribe-bademail' => 'Sorry, there was a problem with the e-mail.',
-	'unsubscribe-badtime' => 'Sorry, the link has expired. Please use a link that is less then 7 days old.',
-
-	#user info list
+	'unsubscribe-badtime' => 'Sorry, the link has expired. Please use a link that is less than 7 days old.',
 	'unsubscribe-nousers' => 'No users found with that e-mail address.',
-	#'unsubscribe-already' => 'Already unsubscribed', 
 	'unsubscribe-noconfusers' => 'No confirmed users found with that e-mail address.',
-
-	#confirm form
 	'unsubscribe-confirm-legend' => 'Confirm',
 	'unsubscribe-confirm-text' => 'Unsubscribe all accounts with <code>$1</code>?',
-	'unsubscribe-confirm-button' => "Yes, I'm sure",
-	
-	#working page
+	'unsubscribe-confirm-button' => 'Yes, I\'m sure',
 	'unsubscribe-working' => 'Unsubscribing $1 {{PLURAL:$1|account|accounts}} for $2',
 	'unsubscribe-working-problem' => 'problem loading user info for: $1',
 	'unsubscribe-working-done' => 'Complete.',
-
-	#preferences changes
 	'unsubscribe-preferences-toggle' => 'Unsubscribe from all emails from Wikia (deselect this to access the options below)',
 	'unsubscribe-preferences-notice' => 'Emails have been disabled for your account. Visit the User Profile tab to re-enable them.',
-);
+];
 
-/** Message documentation (Message documentation)
- * @author HvW
- * @author Shirayuki
- */
-$messages['qqq'] = array(
+$messages['qqq'] = [
 	'unsubscribe-desc' => '{{desc}}',
 	'unsubscribe-working-done' => '{{Identical|Complete}}',
 	'unsubscribe-preferences-toggle' => 'zugehörige Adresse: http://de.wikia.com/Spezial:Einstellungen',
-);
+];
 
-/** Arabic (العربية)
- * @author Achraf94
- */
-$messages['ar'] = array(
+$messages['ar'] = [
 	'unsubscribe' => 'ألغِ الاشتراك',
 	'unsubscribe-badaccess' => 'عذراً، لا يمكن استخدام هذه الصفحة مباشرة. الرجاء اتباع الرابط من البريد الإلكتروني الخاص بك.',
 	'unsubscribe-badtoken' => 'آسف، كانت هناك مشكلة مع رمز الأمان.',
@@ -69,70 +43,50 @@ $messages['ar'] = array(
 	'unsubscribe-working-done' => 'انتهيت.',
 	'unsubscribe-preferences-toggle' => 'إلغاء الاشتراك من جميع رسائل البريد الإلكتروني من ويكيا (إلغاء تحديد لهذا الوصول في الخيارات أدناه)',
 	'unsubscribe-preferences-notice' => 'لقد تم تعطيل رسائل البريد الإلكتروني للحساب الخاص بك. قم بزيارة قسم تفضيلات الصفحة الشخصية للمستخدم لإعادة تمكينها.',
-);
+];
 
-/** Azerbaijani (azərbaycanca)
- * @author Cekli829
- */
-$messages['az'] = array(
+$messages['az'] = [
 	'unsubscribe-confirm-legend' => 'Təsdiq et',
-);
+];
 
-/** Bulgarian (български)
- * @author DCLXVI
- */
-$messages['bg'] = array(
+$messages['bg'] = [
 	'unsubscribe-confirm-legend' => 'Потвърждаване',
-);
+];
 
-/** Breton (brezhoneg)
- * @author Fohanno
- * @author Y-M D
- */
-$messages['br'] = array(
+$messages['br'] = [
 	'unsubscribe' => 'Digoumanantiñ',
 	'unsubscribe-badtoken' => 'Digarezit, ur gudenn zo bet gant ar jedouer surentez.',
 	'unsubscribe-bademail' => 'Digarezit, ur gudenn zo bet gant ar postel.',
-	'unsubscribe-nousers' => "N'eus bet kavet implijer ebet gant ar chomlec'h postel-se.",
-	'unsubscribe-noconfusers' => "N'eus bet kavet implijer kadarnaet ebet gant ar chomlec'h postel-se.",
+	'unsubscribe-nousers' => 'N\'eus bet kavet implijer ebet gant ar chomlec\'h postel-se.',
+	'unsubscribe-noconfusers' => 'N\'eus bet kavet implijer kadarnaet ebet gant ar chomlec\'h postel-se.',
 	'unsubscribe-confirm-legend' => 'Kadarnaat',
-	'unsubscribe-confirm-text' => "Digoumannantiñ an holl gontoù gant ar c'hod <code>$1</code> ?",
+	'unsubscribe-confirm-text' => 'Digoumannantiñ an holl gontoù gant ar c\'hod <code>$1</code> ?',
 	'unsubscribe-confirm-button' => 'Ya, sur on',
 	'unsubscribe-working-problem' => 'Diaesterioù o kargañ titouroù evit : $1',
 	'unsubscribe-working-done' => 'Graet.',
-);
+];
 
-/** Catalan (català)
- * @author Light of Cosmos
- * @author Unapersona
- */
-$messages['ca'] = array(
+$messages['ca'] = [
 	'unsubscribe' => 'Donar-se de baixa',
-	'unsubscribe-badaccess' => "Ho sentim, però aquesta pàgina no pot ser utilitzada directament. Si us plau, seguiu l'enllaç des de l'adreça d'e-mail.",
-	'unsubscribe-bademail' => "Ho sentim, hi havia un problema amb l'e-mail.",
-	'unsubscribe-nousers' => "No s'han trobat usuaris amb aquesta adreça electrònica.",
-	'unsubscribe-noconfusers' => "No s'han trobat usuaris confirmats amb aquesta adreça electrònica.",
+	'unsubscribe-badaccess' => 'Ho sentim, però aquesta pàgina no pot ser utilitzada directament. Si us plau, seguiu l\'enllaç des de l\'adreça d\'e-mail.',
+	'unsubscribe-bademail' => 'Ho sentim, hi havia un problema amb l\'e-mail.',
+	'unsubscribe-nousers' => 'No s\'han trobat usuaris amb aquesta adreça electrònica.',
+	'unsubscribe-noconfusers' => 'No s\'han trobat usuaris confirmats amb aquesta adreça electrònica.',
 	'unsubscribe-confirm-legend' => 'Confirmar',
 	'unsubscribe-confirm-text' => 'Donar de baixa tots els comptes amb <code>$1</code>?',
-	'unsubscribe-confirm-button' => "Sí, n'estic segur.",
+	'unsubscribe-confirm-button' => 'Sí, n\'estic segur.',
 	'unsubscribe-working' => 'Sonant de baixa $1 {{PLURAL:$1|compte|comptes}} per $2',
-	'unsubscribe-working-problem' => "problema carregant la informació d'usuari per: $1",
+	'unsubscribe-working-problem' => 'problema carregant la informació d\'usuari per: $1',
 	'unsubscribe-working-done' => 'Complet.',
 	'unsubscribe-preferences-toggle' => 'Donar-se de baixa de tots els correus electrònics de Wikia (desmarqueu per accedir a les opcions de sota)',
-	'unsubscribe-preferences-notice' => "Els missatges de correu electrònic han estat inhabilitades per al vostre compte. Vés a la pestanya del Perfil d'Usuari per a activar-les.",
-);
+	'unsubscribe-preferences-notice' => 'Els missatges de correu electrònic han estat inhabilitades per al vostre compte. Vés a la pestanya del Perfil d\'Usuari per a activar-les.',
+];
 
-/** Chechen (нохчийн)
- * @author Умар
- */
-$messages['ce'] = array(
+$messages['ce'] = [
 	'unsubscribe-working-done' => 'Кийчча ю.',
-);
+];
 
-/** Czech (čeština)
- * @author Dontlietome7
- */
-$messages['cs'] = array(
+$messages['cs'] = [
 	'unsubscribe' => 'Odhlásit',
 	'unsubscribe-badaccess' => 'Tuto stránku nelze použít přímo. Prosím klepněte na odkaz v e-mailu.',
 	'unsubscribe-badtoken' => 'Je nám líto, ale došlo k potížím se zabezpečením.',
@@ -146,20 +100,15 @@ $messages['cs'] = array(
 	'unsubscribe-working' => 'Odhlašování $1 {{PLURAL:$1|účtu|účtů}} pro $2',
 	'unsubscribe-working-problem' => 'problém načítání informací uživatele pro: $1',
 	'unsubscribe-working-done' => 'Hotovo.',
-);
+];
 
-/** German (Deutsch)
- * @author HvW
- * @author LWChris
- * @author Metalhead64
- */
-$messages['de'] = array(
+$messages['de'] = [
 	'unsubscribe' => 'Abonnement beenden',
 	'unsubscribe-desc' => 'Einfacher E-Mail-Abbestellungspunkt',
-	'unsubscribe-badaccess' => 'Sorry, diese Seite kann leider nicht direkt verwendet werden. Bitte verwende den Link aus deiner E-Mail.',
-	'unsubscribe-badtoken' => 'Sorry, es gab ein Problem mit dem Security Token.',
-	'unsubscribe-bademail' => 'Sorry, es gab ein Problem mit der E-Mail.',
-	'unsubscribe-badtime' => 'Sorry, der Link ist leider nicht mehr gültig. Bitte benutze einen Link, der weniger als 7 Tage alt ist.',
+	'unsubscribe-badaccess' => 'Entschuldige, diese Seite kann leider nicht direkt verwendet werden. Bitte verwende den Link aus deiner E-Mail.',
+	'unsubscribe-badtoken' => 'Entschuldige, es gab ein Problem mit dem Security Token.',
+	'unsubscribe-bademail' => 'Entschuldige, es gab ein Problem mit der E-Mail.',
+	'unsubscribe-badtime' => 'Entschuldige, der Link ist leider nicht mehr gültig. Bitte benutze einen Link, der weniger als 7 Tage alt ist.',
 	'unsubscribe-nousers' => 'Keine Benutzer mit dieser E-Mail-Adresse gefunden.',
 	'unsubscribe-noconfusers' => 'Keine bestätigten Benutzer mit dieser E-Mail-Adresse gefunden.',
 	'unsubscribe-confirm-legend' => 'Bestätigen',
@@ -168,27 +117,18 @@ $messages['de'] = array(
 	'unsubscribe-working' => 'Trage $1 {{PLURAL:$1|Konto|Konten}} für $2 aus',
 	'unsubscribe-working-problem' => 'Problem beim Laden der Benutzer-Informationen für: $1',
 	'unsubscribe-working-done' => 'Fertig.',
-	'unsubscribe-preferences-toggle' => 'Alle E-Mails von Wikia abbestellen (Haken entfernen, um aus den weiteren Optionen auszuwählen)',
-	'unsubscribe-preferences-notice' => 'E-Mails wurden für Ihr Benutzerkonto deaktiviert. Gehen Sie zur Benutzerdaten-Seite, um sie wieder zu aktivieren.',
-);
+	'unsubscribe-preferences-toggle' => 'Keine E-Mails von Wikia empfangen (ausschalten, um die weiteren Optionen zu aktivieren)',
+	'unsubscribe-preferences-notice' => 'Für dein Benutzerkonto wurde der E-Mail-Versand deaktiviert. Im Benutzerdaten-Reiter kannst du sie wieder aktivieren.',
+];
 
-/** Zazaki (Zazaki)
- * @author Erdemaslancan
- * @author Mirzali
- */
-$messages['diq'] = array(
+$messages['diq'] = [
 	'unsubscribe' => 'Abonin ra bıvıci',
 	'unsubscribe-confirm-legend' => 'Tesdiq ke',
 	'unsubscribe-confirm-button' => 'E, Me emel ke',
 	'unsubscribe-working-done' => 'Temamyayo',
-);
+];
 
-/** Spanish (español)
- * @author Bola
- * @author VegaDark
- * @author Vivaelcelta
- */
-$messages['es'] = array(
+$messages['es'] = [
 	'unsubscribe' => 'Darse de baja',
 	'unsubscribe-desc' => 'Un solo correo electrónico para darse de baja',
 	'unsubscribe-badaccess' => 'Lo sentimos, esta página no puede ser usada directamente. Por favor sigue el enlace desde tu correo electrónico.',
@@ -203,42 +143,28 @@ $messages['es'] = array(
 	'unsubscribe-working' => 'Dar de baja $1 {{PLURAL:$1|cuenta|cuentas}} por $2',
 	'unsubscribe-working-problem' => 'problema cargando información del usuario para: $1',
 	'unsubscribe-working-done' => 'Completado.',
-	'unsubscribe-preferences-toggle' => 'Darme de baja de todos los correos de Wikia (deselecciona esta opción para acceder a las opciones de abajo)',
-	'unsubscribe-preferences-notice' => 'Los correos electrónicos han sido deshabilitados para tu cuenta. Visita la pestaña de tu perfil para reactivarlos.',
-);
+	'unsubscribe-preferences-toggle' => 'Cancelar envío de emails de Wikia (deselecciona esto para acceder al resto de opciones)',
+	'unsubscribe-preferences-notice' => 'Los emails han sido desactivados para tu cuenta. Visita la pestaña "Personal" para reactivarlos.',
+];
 
-/** Basque (euskara)
- * @author Subi
- */
-$messages['eu'] = array(
+$messages['eu'] = [
 	'unsubscribe' => 'Harpidetza kendu',
 	'unsubscribe-confirm-button' => 'Bai, ziur nago',
-);
+];
 
-/** Persian (فارسی)
- * @author Mjbmr
- * @author Reza1615
- */
-$messages['fa'] = array(
+$messages['fa'] = [
 	'unsubscribe' => 'لغو اشتراک',
 	'unsubscribe-confirm-legend' => 'تأیید',
 	'unsubscribe-confirm-button' => 'بله، من مطمئن هستم',
 	'unsubscribe-working-done' => 'کامل.',
-);
+];
 
-/** Finnish (suomi)
- * @author Silvonen
- * @author Tofu II
- */
-$messages['fi'] = array(
+$messages['fi'] = [
 	'unsubscribe-confirm-legend' => 'Vahvista',
 	'unsubscribe-working-done' => 'Valmis.',
-);
+];
 
-/** Faroese (føroyskt)
- * @author EileenSanda
- */
-$messages['fo'] = array(
+$messages['fo'] = [
 	'unsubscribe' => 'Frámelda hald',
 	'unsubscribe-badaccess' => 'Tíverri kann henda síðan ikki brúkast beinleiðis. Vinarliga fylg leinkjuni í tínum teldubrævi.',
 	'unsubscribe-badtoken' => 'Tíverri var tað ein trupulleiki við trygdarlyklinum.',
@@ -249,18 +175,14 @@ $messages['fo'] = array(
 	'unsubscribe-confirm-legend' => 'Vátta',
 	'unsubscribe-confirm-text' => 'Frámelda hald til allar kontur við <code>$1</code>?',
 	'unsubscribe-confirm-button' => 'Ja, eg eri sikkur',
-);
+];
 
-/** French (français)
- * @author Gomoko
- * @author Wyz
- */
-$messages['fr'] = array(
+$messages['fr'] = [
 	'unsubscribe' => 'Se désabonner',
-	'unsubscribe-desc' => 'Point unique de désinscription des courriels',
-	'unsubscribe-badaccess' => 'Désolé, cette page ne peut pas être utilisée directement. Veuillez suivre le lien qui se trouve dans votre courriel.',
+	'unsubscribe-desc' => 'Point unique de désinscription des e-mails',
+	'unsubscribe-badaccess' => 'Désolé, cette page ne peut pas être utilisée directement. Veuillez suivre le lien qui se trouve dans votre e-mail.',
 	'unsubscribe-badtoken' => 'Désolé, il y a eu un problème avec le jeton de sécurité.',
-	'unsubscribe-bademail' => 'Désolé, il y a eu un problème avec le courriel.',
+	'unsubscribe-bademail' => 'Désolé, il y a eu un problème avec l\'e-mail.',
 	'unsubscribe-badtime' => 'Désolé, le lien a expiré. Veuillez utiliser un lien qui date de moins de 7 jours.',
 	'unsubscribe-nousers' => 'Aucun utilisateur trouvé à cette adresse de messagerie.',
 	'unsubscribe-noconfusers' => 'Aucun utilisateur confirmé trouvé à cette adresse de messagerie.',
@@ -270,14 +192,11 @@ $messages['fr'] = array(
 	'unsubscribe-working' => 'Désabonnement de $1 {{PLURAL:$1|compte|comptes}} pour $2',
 	'unsubscribe-working-problem' => 'problème au chargement des informations de l’utilisateur : $1',
 	'unsubscribe-working-done' => 'Terminé.',
-	'unsubscribe-preferences-toggle' => 'Se désabonner de tous les courriels de Wikia (décochez ceci pour accéder aux options ci-dessous)',
-	'unsubscribe-preferences-notice' => 'Les courriels ont été désactivés pour votre compte. Aller sur l’onglet de profil utilisateur pour les réactiver.',
-);
+	'unsubscribe-preferences-toggle' => 'Se désabonner de tous les e-mails de Wikia (décochez ceci pour accéder aux options ci-dessous)',
+	'unsubscribe-preferences-notice' => 'Les e-mails ont été désactivés pour votre compte. Aller sur l’onglet de profil utilisateur pour les réactiver.',
+];
 
-/** Galician (galego)
- * @author Toliño
- */
-$messages['gl'] = array(
+$messages['gl'] = [
 	'unsubscribe' => 'Cancelar a subscrición',
 	'unsubscribe-badaccess' => 'Sentímolo, esta páxina non se pode empregar directamente. Siga a ligazón que se atopa no seu correo electrónico.',
 	'unsubscribe-badtoken' => 'Sentímolo, houbo un problema co pase de seguridade.',
@@ -293,14 +212,9 @@ $messages['gl'] = array(
 	'unsubscribe-working-done' => 'Completo.',
 	'unsubscribe-preferences-toggle' => 'Cancelar a subscrición de todos os correos electrónicos de Wikia (desmarque isto para acceder ás opcións embaixo)',
 	'unsubscribe-preferences-notice' => 'Os correos electrónicos desactiváronse para a súa conta. Visite a lapela de perfil de usuario para reactivalos.',
-);
+];
 
-/** Hungarian (magyar)
- * @author Dani
- * @author Dj
- * @author TK-999
- */
-$messages['hu'] = array(
+$messages['hu'] = [
 	'unsubscribe' => 'Leiratkozás',
 	'unsubscribe-badaccess' => 'Sajnáljuk, ez a lap nem érhető el közvetlenül. Kérlek, használd az e-mailben küldött hivatkozást.',
 	'unsubscribe-badtoken' => 'Sajnáljuk, de probléma történt a biztonsági tokennel.',
@@ -315,12 +229,9 @@ $messages['hu'] = array(
 	'unsubscribe-working-done' => 'Kész.',
 	'unsubscribe-preferences-toggle' => 'Leiratkozás az összes Wikia e-mailról (töröld a lenti beállítások eléréséhez)',
 	'unsubscribe-preferences-notice' => 'A felhasználói fiókodnak szánt e-mailek le lettek tiltva. Bekapcsolásukhoz látogass el a "Felhasználói profil" fülre.',
-);
+];
 
-/** Interlingua (interlingua)
- * @author McDutchie
- */
-$messages['ia'] = array(
+$messages['ia'] = [
 	'unsubscribe' => 'Cancellar subscription',
 	'unsubscribe-badaccess' => 'Nos regretta que iste pagina non pote esser usate directemente.
 Per favor seque le ligamine ab tu e-mail.',
@@ -337,39 +248,33 @@ Per favor seque le ligamine ab tu e-mail.',
 	'unsubscribe-working-done' => 'Complete.',
 	'unsubscribe-preferences-toggle' => 'Cancellar subscription a tote le e-mail de Wikia (dismarca isto pro acceder al optiones hic infra)',
 	'unsubscribe-preferences-notice' => 'Le invio de e-mail ha essite disactivate pro tu conto. Visita le scheda "Profilo de usator" pro reactivar lo.',
-);
+];
 
-/** Italian (italiano)
- * @author Minerva Titani
- */
-$messages['it'] = array(
+$messages['it'] = [
 	'unsubscribe-preferences-toggle' => 'Disattiva la ricezione di tutte le mail da Wikia (deseleziona per accedere alle opzioni sottostanti)',
 	'unsubscribe-preferences-notice' => 'Le email sono state disattivate per il tuo account. Accedi alla scheda "Profilo" per riattivarle.',
-);
+];
 
-/** Japanese (日本語)
- * @author Shirayuki
- */
-$messages['ja'] = array(
+$messages['ja'] = [
 	'unsubscribe-confirm-legend' => '確認',
 	'unsubscribe-working-done' => '完了しました。',
-);
+];
 
-/** Korean (한국어)
- * @author Cafeinlove
- * @author Miri-Nae
- * @author 아라
- */
-$messages['ko'] = array(
+$messages['ko'] = [
 	'unsubscribe-confirm-legend' => '확인',
 	'unsubscribe-confirm-text' => '<code>$1</code>로 보내는 모든 알림을 받지 않으시겠습니까?',
 	'unsubscribe-confirm-button' => '확인',
-);
+	'unsubscribe-badaccess' => '죄송합니다. 이 문서에는 직접 접근하실 수 없습니다. 이메일에 있는 링크를 사용하여 접속해주세요.',
+	'unsubscribe-bademail' => '죄송합니다. 이메일에 문제가 있어 이 기능을 사용하실 수 없습니다.',
+	'unsubscribe-badtime' => '죄송합니다. 이 링크는 기한이 만료되었습니다. 발급받은 지 7일 이내의 링크만 사용하실 수 있습니다.',
+	'unsubscribe-badtoken' => '죄송합니다. 보안 토큰에 문제가 발생하여 이 기능을 사용하실 수 없습니다.',
+	'unsubscribe-noconfusers' => '주어진 이메일 주소로 등록된 계정이 없습니다.',
+	'unsubscribe-nousers' => '주어진 이메일 주소로 등록된 계정이 없습니다.',
+	'unsubscribe-preferences-toggle' => '위키아에서 보내는 이메일 모두 받지 않기 (선택시 아래에 있는 모든 옵션들 무시)',
+	'unsubscribe' => '구독 해지',
+];
 
-/** Colognian (Ripoarisch)
- * @author Purodha
- */
-$messages['ksh'] = array(
+$messages['ksh'] = [
 	'unsubscribe' => 'Nimmieh Aboneere',
 	'unsubscribe-badaccess' => 'Leider kam_mer heh di eSigg nit tiräk bruche. Nemm dä Lengk uß dä <i lang="en">e-mail</i> aan Desch.',
 	'unsubscribe-badtoken' => 'Leider johv_et e Probleem met Dingem Schlößel.',
@@ -385,33 +290,24 @@ $messages['ksh'] = array(
 	'unsubscribe-working-done' => 'Fäädesch.',
 	'unsubscribe-preferences-toggle' => 'Donn Desch vun alle <i lang="en">e-mails</i> vun Wikia afmälde (Donn dat heh nit ußwähle, öm aan di ander Müjjeleschkeite onge draan ze kumme)',
 	'unsubscribe-preferences-notice' => 'För Desch sin <i lang="en">e-mails</i> afjeschalldt. Jangk op Ding Enschtällonge, döh kanns De se widder aanschallde.',
-);
+];
 
-/** Luxembourgish (Lëtzebuergesch)
- * @author Robby
- */
-$messages['lb'] = array(
+$messages['lb'] = [
 	'unsubscribe-confirm-legend' => 'Confirméieren',
 	'unsubscribe-confirm-button' => 'Jo, ech si sécher',
 	'unsubscribe-working-done' => 'Fäerdeg.',
-);
+];
 
-/** Latvian (latviešu)
- * @author Admresdeserv.
- */
-$messages['lv'] = array(
+$messages['lv'] = [
 	'unsubscribe' => 'Atcelt abonēšanu',
 	'unsubscribe-bademail' => 'Atvainojiet, radās problēma ar e-pastu.',
 	'unsubscribe-confirm-legend' => 'Apstiprināt',
 	'unsubscribe-confirm-text' => 'Atrakstīt visus kontus ar <code>$1</code> ?',
 	'unsubscribe-confirm-button' => 'Jā, es esmu pārliecināts.',
 	'unsubscribe-working-done' => 'Pabeigts!',
-);
+];
 
-/** Macedonian (македонски)
- * @author Bjankuloski06
- */
-$messages['mk'] = array(
+$messages['mk'] = [
 	'unsubscribe' => 'Отпиши',
 	'unsubscribe-badaccess' => 'За жал, оваа страница не може да се користи непосредно. Стиснете на врската наведена во пораката што ви ја испративме по е-пошта.',
 	'unsubscribe-badtoken' => 'За жал, се појави проблем со безбедносната шифра.',
@@ -427,12 +323,9 @@ $messages['mk'] = array(
 	'unsubscribe-working-done' => 'Готово.',
 	'unsubscribe-preferences-toggle' => 'Откажи претплата на е-пошта од Викија (отшиклирајте го ова за да дојдете до можностите подолу)',
 	'unsubscribe-preferences-notice' => 'Пораките по е-пошта се оневозможени за вашата сметка. Појдете на јазичето „Кориснички профил“ за да ги овозможите повторно.',
-);
+];
 
-/** Malay (Bahasa Melayu)
- * @author Anakmalaysia
- */
-$messages['ms'] = array(
+$messages['ms'] = [
 	'unsubscribe' => 'Berhenti melanggan',
 	'unsubscribe-desc' => 'Pusat sehenti untuk membatalkan langganan emel',
 	'unsubscribe-badaccess' => 'Maaf, laman ini tidak boleh digunakan secara terus. Sila ikuti pautan dari e-mel anda.',
@@ -449,19 +342,13 @@ $messages['ms'] = array(
 	'unsubscribe-working-done' => 'Selesai.',
 	'unsubscribe-preferences-toggle' => 'Berhenti melanggan semua e-mel dari Wikia (nyahpilih ini untuk mengakses pilihan di bawah)',
 	'unsubscribe-preferences-notice' => 'E-mel telah dimatikan untuk akaun anda. Pergi ke tab Profil Pengguna untuk menghidupkannya semula.',
-);
+];
 
-/** Burmese (မြန်မာဘာသာ)
- * @author Erikoo
- */
-$messages['my'] = array(
+$messages['my'] = [
 	'unsubscribe-confirm-legend' => 'အတည်ပြု',
-);
+];
 
-/** Norwegian Bokmål (norsk bokmål)
- * @author Audun
- */
-$messages['nb'] = array(
+$messages['nb'] = [
 	'unsubscribe' => 'Avbryt abonnement',
 	'unsubscribe-badaccess' => 'Beklager, denne siden kan ikke brukes direkte. Vennligst følg lenken fra e-posten din.',
 	'unsubscribe-badtoken' => 'Beklager, det oppstod et problem med sikkerhetskoden.',
@@ -477,14 +364,11 @@ $messages['nb'] = array(
 	'unsubscribe-working-done' => 'Fullført.',
 	'unsubscribe-preferences-toggle' => 'Avslutt abonnementet på all e-post fra Wikia (sjekk av denne for å få tilgang til alternativene under)',
 	'unsubscribe-preferences-notice' => 'E-post har blitt deaktivert for kontoen din. Besøk Brukerprofil-fanen for å aktivere dem igjen.',
-);
+];
 
-/** Dutch (Nederlands)
- * @author Siebrand
- */
-$messages['nl'] = array(
+$messages['nl'] = [
 	'unsubscribe' => 'Uitschrijven',
-	'unsubscribe-badaccess' => 'Deze pagina kan niet direct benaderd worden. Volg de koppeling in uw e-mail.',
+	'unsubscribe-badaccess' => 'Deze pagina kan niet direct benaderd worden. Volg alsjeblieft de verwijzing in je e-mail.',
 	'unsubscribe-badtoken' => 'Er is een probleem met het beveiligingstoken.',
 	'unsubscribe-bademail' => 'Er is een probleem met het e-mailbericht.',
 	'unsubscribe-badtime' => 'De koppeling is verlopen. Gebruik een koppeling die maximaal zeven dagen oud is.',
@@ -498,26 +382,20 @@ $messages['nl'] = array(
 	'unsubscribe-working-done' => 'Voltooid.',
 	'unsubscribe-preferences-toggle' => 'Afmelden voor alle e-mails van Wikia (vink dit uit dit voor toegang tot de instellingen hieronder)',
 	'unsubscribe-preferences-notice' => 'E-mails zijn uitgeschakeld voor uw gebruiker. Ga naar het gebruikersprofiel om e-mailberichten opnieuw in te schakelen.',
-);
+];
 
-/** Nederlands (informeel)‎ (Nederlands (informeel)‎)
- * @author Siebrand
- */
-$messages['nl-informal'] = array(
+$messages['nl-informal'] = [
 	'unsubscribe-badaccess' => 'Deze pagina kan niet direct benaderd worden. Volg de koppeling in je e-mail.',
-);
+];
 
-/** Occitan (occitan)
- * @author Cedric31
- */
-$messages['oc'] = array(
+$messages['oc'] = [
 	'unsubscribe' => 'Se desabonar',
 	'unsubscribe-badaccess' => 'O planhèm, aquesta pagina pòt pas èsser utilizada dirèctament. Seguissètz lo ligam que se tròba dins vòstre corrièr electronic.',
 	'unsubscribe-badtoken' => 'O planhèm, i a agut un problèma amb lo geton de seguretat.',
 	'unsubscribe-bademail' => 'O planhèm, i a agut un problèma amb lo corrièr electronic.',
 	'unsubscribe-badtime' => 'O planhèm, lo ligam a expirat. Utilizatz un ligam que data de mens de 7 jorns.',
-	'unsubscribe-nousers' => "Cap d'utilizaire pas trobat a aquela adreça de messatjariá.",
-	'unsubscribe-noconfusers' => "Cap d'utilizaire confirmat pas trobat a aquela adreça de messatjariá.",
+	'unsubscribe-nousers' => 'Cap d\'utilizaire pas trobat a aquela adreça de messatjariá.',
+	'unsubscribe-noconfusers' => 'Cap d\'utilizaire confirmat pas trobat a aquela adreça de messatjariá.',
 	'unsubscribe-confirm-legend' => 'Confirmar',
 	'unsubscribe-confirm-text' => 'Desabonar totes los comptes amb <code>$1</code> ?',
 	'unsubscribe-confirm-button' => 'Òc, ne soi segur(a).',
@@ -525,14 +403,10 @@ $messages['oc'] = array(
 	'unsubscribe-working-problem' => 'problèma al cargament de las informacions de l’utilizaire : $1',
 	'unsubscribe-working-done' => 'Acabat.',
 	'unsubscribe-preferences-toggle' => 'Se desabonar de totes los corrièrs electronics de Wikia (desmarcatz aquò per accedir a las opcions çaijós)',
-	'unsubscribe-preferences-notice' => "Los corrièrs electronics son estats desactivats per vòstre compte. Anar sus l’onglet de perfil d'utilizaire per los reactivar.",
-);
+	'unsubscribe-preferences-notice' => 'Los corrièrs electronics son estats desactivats per vòstre compte. Anar sus l’onglet de perfil d\'utilizaire per los reactivar.',
+];
 
-/** Polish (polski)
- * @author BeginaFelicysym
- * @author Sovq
- */
-$messages['pl'] = array(
+$messages['pl'] = [
 	'unsubscribe' => 'Zrezygnuj z subskrypcji',
 	'unsubscribe-badaccess' => 'Niestety, nie można wejść bezpośrednio na stronę. Prosimy skorzystać z linku z wiadomości e-mail.',
 	'unsubscribe-badtoken' => 'Przepraszamy, wystąpił problem z tokenem zabezpieczeń.',
@@ -548,44 +422,33 @@ $messages['pl'] = array(
 	'unsubscribe-working-done' => 'Ukończono.',
 	'unsubscribe-preferences-toggle' => 'Zakończyć subskrypcję wszystkich kont e-mail z Wikii (odznacz tę opcję, aby uzyskać dostęp do opcji poniżej)',
 	'unsubscribe-preferences-notice' => 'Wiadomości e-mail na to konto zostały wyłączone. Odwiedź kartę profilu użytkownika, aby włączyć je ponownie.',
-);
+];
 
-/** Piedmontese (Piemontèis)
- * @author Borichèt
- * @author Dragonòt
- */
-$messages['pms'] = array(
-	'unsubscribe' => "Scancelé l'anscrission",
-	'unsubscribe-badaccess' => "An dëspias, costa pàgina a peul pa esse dovrà diretament. Për piasì, ch'a-j vada dapress a la liura da soa pòsta eletrònica.",
+$messages['pms'] = [
+	'unsubscribe' => 'Scancelé l\'anscrission',
+	'unsubscribe-badaccess' => 'An dëspias, costa pàgina a peul pa esse dovrà diretament. Për piasì, ch\'a-j vada dapress a la liura da soa pòsta eletrònica.',
 	'unsubscribe-badtoken' => 'An dëspias, a-i é staje un problema con ël geton ëd sicurëssa.',
 	'unsubscribe-bademail' => 'An dëspias, a-i é staje un problema con la pòsta eletrònica.',
-	'unsubscribe-badtime' => "An dëspias, la liura a l'é scadùa. Për piasì, ch'a deuvra na liura che a l'abia men che 7 di.",
+	'unsubscribe-badtime' => 'An dëspias, la liura a l\'é scadùa. Për piasì, ch\'a deuvra na liura che a l\'abia men che 7 di.',
 	'unsubscribe-nousers' => 'Gnun utent trovà con costa adrëssa ëd pòsta eletrònica.',
 	'unsubscribe-noconfusers' => 'Gnun utent confirmà trovà con costa adrëssa ëd pòsta eletrònica.',
 	'unsubscribe-confirm-legend' => 'Conferma',
-	'unsubscribe-confirm-text' => "Scancelé l'anscrission ëd tùit ij cont con <code>$1</code>?",
+	'unsubscribe-confirm-text' => 'Scancelé l\'anscrission ëd tùit ij cont con <code>$1</code>?',
 	'unsubscribe-confirm-button' => 'É, i son sigur',
-	'unsubscribe-working' => "Scancelassion ëd l'anscrission ëd $1 {{PLURAL:$1|cont}} për $2",
-	'unsubscribe-working-problem' => "problema cariand j'anformassion ëd l'utent për: $1",
+	'unsubscribe-working' => 'Scancelassion ëd l\'anscrission ëd $1 {{PLURAL:$1|cont}} për $2',
+	'unsubscribe-working-problem' => 'problema cariand j\'anformassion ëd l\'utent për: $1',
 	'unsubscribe-working-done' => 'Completa.',
-	'unsubscribe-preferences-toggle' => "Scancelé l'anscrission da tùit ij mëssagi da Wikia (gavé la selession ambelessì për andé a j'opsion sì-sota)",
-	'unsubscribe-preferences-notice' => "Ij mëssagi ëd pòsta eletrònica a son ëstàit disabilità për sò cont. Ch'a vìsita la scheda dël Profil Utent për abiliteje torna.",
-);
+	'unsubscribe-preferences-toggle' => 'Scancelé l\'anscrission da tùit ij mëssagi da Wikia (gavé la selession ambelessì për andé a j\'opsion sì-sota)',
+	'unsubscribe-preferences-notice' => 'Ij mëssagi ëd pòsta eletrònica a son ëstàit disabilità për sò cont. Ch\'a vìsita la scheda dël Profil Utent për abiliteje torna.',
+];
 
-/** Pashto (پښتو)
- * @author Ahmed-Najib-Biabani-Ibrahimkhel
- */
-$messages['ps'] = array(
+$messages['ps'] = [
 	'unsubscribe-confirm-legend' => 'تاييد',
 	'unsubscribe-confirm-button' => 'هو، زه ډاډه يم',
 	'unsubscribe-working-done' => 'بشپړ.',
-);
+];
 
-/** Portuguese (português)
- * @author Hamilton Abreu
- * @author Luckas
- */
-$messages['pt'] = array(
+$messages['pt'] = [
 	'unsubscribe' => 'Anular subscrição',
 	'unsubscribe-badaccess' => 'Esta página não pode ser usada diretamente. Siga o link no seu correio eletrónico, por favor.',
 	'unsubscribe-badtoken' => 'Desculpe, ocorreu um problema com a chave de segurança.',
@@ -599,13 +462,9 @@ $messages['pt'] = array(
 	'unsubscribe-working' => 'A anular a subscrição de $1 {{PLURAL:$1|conta|contas}} para $2',
 	'unsubscribe-working-problem' => 'problema ao carregar a informação do utilizador: $1',
 	'unsubscribe-working-done' => 'Terminado.',
-);
+];
 
-/** Brazilian Portuguese (português do Brasil)
- * @author Aristóbulo
- * @author JM Pessanha
- */
-$messages['pt-br'] = array(
+$messages['pt-br'] = [
 	'unsubscribe' => 'Cancelar inscrição',
 	'unsubscribe-badaccess' => 'Desculpe, esta página não pode ser usada diretamente. Por favor, siga o link de seu e-mail.',
 	'unsubscribe-badtoken' => 'Desculpe, ocorreu um problema com o token de segurança.',
@@ -621,36 +480,28 @@ $messages['pt-br'] = array(
 	'unsubscribe-working-done' => 'Completo.',
 	'unsubscribe-preferences-toggle' => 'Cancelar a inscrição de todos os e-mails da Wikia (desmarque esta para acessar as opções abaixo)',
 	'unsubscribe-preferences-notice' => 'E-mails foram desativados para sua conta. Visite a aba Perfil de Usuário para reativá-los.',
-);
+];
 
-/** tarandíne (tarandíne)
- * @author Joetaras
- */
-$messages['roa-tara'] = array(
+$messages['roa-tara'] = [
 	'unsubscribe' => 'Scangillate',
-	'unsubscribe-desc' => "Punde de scangellazione de 'na mail singole",
-	'unsubscribe-badaccess' => "Ne despiace, sta pàgene non ge pò essere ausate direttamende. Pe piacere segue 'u collegamende da l'email toje.",
-	'unsubscribe-badtoken' => "Ne despiace, ste 'nu probbleme cu 'u gettone de securezze.",
-	'unsubscribe-bademail' => "Ne despiace, ste 'nu probbleme cu l'email.",
-	'unsubscribe-badtime' => "Ne despiace, 'u collegamende ha scadute. Pe piacere ause 'u collegamende ca tène mene de 7 sciurne.",
+	'unsubscribe-desc' => 'Punde de scangellazione de \'na mail singole',
+	'unsubscribe-badaccess' => 'Ne despiace, sta pàgene non ge pò essere ausate direttamende. Pe piacere segue \'u collegamende da l\'email toje.',
+	'unsubscribe-badtoken' => 'Ne despiace, ste \'nu probbleme cu \'u gettone de securezze.',
+	'unsubscribe-bademail' => 'Ne despiace, ste \'nu probbleme cu l\'email.',
+	'unsubscribe-badtime' => 'Ne despiace, \'u collegamende ha scadute. Pe piacere ause \'u collegamende ca tène mene de 7 sciurne.',
 	'unsubscribe-nousers' => 'Nisciune utende acchiate cu quidde indirizze email.',
 	'unsubscribe-noconfusers' => 'Nisciune utende confermatarije acchiate cu quidde indirizze email.',
 	'unsubscribe-confirm-legend' => 'Conferme',
 	'unsubscribe-confirm-text' => 'Scangelle tutte le cunde cu <code>$1</code>?',
 	'unsubscribe-confirm-button' => 'Sìne, so secure',
 	'unsubscribe-working' => 'Stoche a scangelle $1 {{PLURAL:$1|cunde}} pe $2',
-	'unsubscribe-working-problem' => "probbleme carecanne le 'mbormaziune utende pe: $1",
+	'unsubscribe-working-problem' => 'probbleme carecanne le \'mbormaziune utende pe: $1',
 	'unsubscribe-working-done' => 'Comblete.',
 	'unsubscribe-preferences-toggle' => 'Scangille da tutte le email da Uicchia (puè no scacchià quiste scenne a le opziune aqquà sotte)',
-	'unsubscribe-preferences-notice' => "Le email onne state disabbilitate pu cunde tune. Visite 'a schede Profile de l'Utende pe abbilitarle arrete.",
-);
+	'unsubscribe-preferences-notice' => 'Le email onne state disabbilitate pu cunde tune. Visite \'a schede Profile de l\'Utende pe abbilitarle arrete.',
+];
 
-/** Russian (русский)
- * @author DCamer
- * @author Kuzura
- * @author Okras
- */
-$messages['ru'] = array(
+$messages['ru'] = [
 	'unsubscribe' => 'Отписаться',
 	'unsubscribe-desc' => 'Единая точка отписки от электронных сообщений',
 	'unsubscribe-badaccess' => 'К сожалению, эта страница не может быть использована напрямую. Пожалуйста, перейдите по ссылке из вашей электронной почты.',
@@ -667,31 +518,21 @@ $messages['ru'] = array(
 	'unsubscribe-working-done' => 'Готово.',
 	'unsubscribe-preferences-toggle' => 'Отписаться от всех писем от Викия (снимите это для доступа к параметрам ниже)',
 	'unsubscribe-preferences-notice' => 'Получение писем было отключено для вашей учётной записи. Посетите вкладку Личные данные, чтобы снова включить это.',
-);
+];
 
-/** Sinhala (සිංහල)
- * @author පසිඳු කාවින්ද
- */
-$messages['si'] = array(
+$messages['si'] = [
 	'unsubscribe' => 'සාමාජිකත්වයෙන් ඉවත්වන්න',
-);
+];
 
-/** Serbian (Cyrillic script) (српски (ћирилица)‎)
- * @author Rancher
- */
-$messages['sr-ec'] = array(
+$messages['sr-ec'] = [
 	'unsubscribe' => 'Одјави ме',
 	'unsubscribe-nousers' => 'Корисник с том е-адресом није пронађен.',
 	'unsubscribe-confirm-legend' => 'Потврди',
 	'unsubscribe-confirm-button' => 'Да, сигуран/-на сам',
 	'unsubscribe-working-done' => 'Завршено.',
-);
+];
 
-/** Swedish (svenska)
- * @author Tobulos1
- * @author WikiPhoenix
- */
-$messages['sv'] = array(
+$messages['sv'] = [
 	'unsubscribe' => 'Avsluta prenumeration',
 	'unsubscribe-desc' => 'Avslutar prenumerationer på ett ställe',
 	'unsubscribe-badaccess' => 'Tyvärr kan inte denna sida användas direkt. Vänligen följ länken i din e-post.',
@@ -708,23 +549,16 @@ $messages['sv'] = array(
 	'unsubscribe-working-done' => 'Slutfört.',
 	'unsubscribe-preferences-toggle' => 'Avsluta prenumerationen från alla e-postmeddelanden från Wikia (avmarkera detta för att komma åt alternativen nedan)',
 	'unsubscribe-preferences-notice' => 'E-post har inaktiverats för ditt konto. Besök fliken Användarprofil för att återaktivera dem.',
-);
+];
 
-/** Telugu (తెలుగు)
- * @author Ravichandra
- * @author Veeven
- */
-$messages['te'] = array(
+$messages['te'] = [
 	'unsubscribe' => 'చందావిరమించు',
 	'unsubscribe-confirm-legend' => 'ధృవీకరించు',
 	'unsubscribe-confirm-button' => 'అవును, నిజమే',
 	'unsubscribe-working-done' => 'పూర్తి',
-);
+];
 
-/** Tagalog (Tagalog)
- * @author AnakngAraw
- */
-$messages['tl'] = array(
+$messages['tl'] = [
 	'unsubscribe' => 'Pahintuin na ang pagtanggap ng sipi',
 	'unsubscribe-badaccess' => 'Paumanhin, ang pahinang ito ay hindi maaaring gamitin nang tuwiran. Mangyaring sundin ang kawing magmula sa e-liham mo.',
 	'unsubscribe-badtoken' => 'Paumanhin, nagkaroon ng isang suliranin sa kahalip na pangkaligtasan.',
@@ -740,17 +574,9 @@ $messages['tl'] = array(
 	'unsubscribe-working-done' => 'Buo na.',
 	'unsubscribe-preferences-toggle' => 'Huwag nang magpasipi mula sa lahat ng mga e-liham mula sa Wikia (huwag na itong piliin upang mapuntahan ang mga mapagpipiliang nasa ibaba)',
 	'unsubscribe-preferences-notice' => 'Hindi na pinagagana ang mga e-liham para sa akawnt mo. Dalawin ang laylayan ng Balangkas-Katangian ng Tagagamit upang muling paganahin ang mga ito.',
-);
+];
 
-/** Ukrainian (українська)
- * @author Andriykopanytsia
- * @author Steve.rusyn
- * @author SteveR
- * @author Ua2004
- * @author Капитан Джон Шепард
- * @author Тест
- */
-$messages['uk'] = array(
+$messages['uk'] = [
 	'unsubscribe' => 'Відписатись',
 	'unsubscribe-desc' => 'Єдина точка відписки від електронних повідомлень',
 	'unsubscribe-badaccess' => 'На жаль, цю сторінку не можна відкрити безпосередньо. Будь ласка, перейдіть за посиланням з вашої електронної пошти.',
@@ -767,12 +593,9 @@ $messages['uk'] = array(
 	'unsubscribe-working-done' => 'Готово.',
 	'unsubscribe-preferences-toggle' => 'Відмовитися від усіх листів Вікії (зніміть цю галочку, щоб розблокувати нижчевказані опції)',
 	'unsubscribe-preferences-notice' => 'Усі електронні листи вимкнено для вашого облікового запису. Ви можете увімкнути їх будь-коли в налаштуваннях свого профілю.',
-);
+];
 
-/** Vietnamese (Tiếng Việt)
- * @author Xiao Qiao
- */
-$messages['vi'] = array(
+$messages['vi'] = [
 	'unsubscribe' => 'Hủy đăng ký',
 	'unsubscribe-badaccess' => 'Xin lỗi, trang này không thể sử dụng trực tiếp. Xin vui lòng theo các liên kết từ thư điện tử của bạn.',
 	'unsubscribe-badtoken' => 'Xin lỗi, đã có một vấn đề với mã thông báo bảo mật.',
@@ -788,15 +611,9 @@ $messages['vi'] = array(
 	'unsubscribe-working-done' => 'Hoàn thành.',
 	'unsubscribe-preferences-toggle' => 'Không nhật tất cả các email từ Wikia (bỏ chọn này để truy cập vào các tùy chọn dưới đây)',
 	'unsubscribe-preferences-notice' => 'Thư điện tử đã bị vô hiệu hóa cho tài khoản của bạn. Truy cập vào thẻ Hồ sơ người dùng để kích hoạt lại chúng.',
-);
+];
 
-/** Simplified Chinese (中文（简体）‎)
- * @author Hydra
- * @author Hzy980512
- * @author Liuxinyu970226
- * @author Yfdyh000
- */
-$messages['zh-hans'] = array(
+$messages['zh-hans'] = [
 	'unsubscribe' => '取消订阅',
 	'unsubscribe-desc' => '单封电子邮件退订点',
 	'unsubscribe-badaccess' => '抱歉，此页不能直接应用。请跟随您的电邮的链接。',
@@ -813,4 +630,5 @@ $messages['zh-hans'] = array(
 	'unsubscribe-working-done' => '完成。',
 	'unsubscribe-preferences-toggle' => '不订阅Wikia的所有邮件（取消选定这个方块才能进入下列选项）',
 	'unsubscribe-preferences-notice' => '您的账户已禁用电邮。请访问用户配置文件选项卡以从新启用。',
-);
+];
+

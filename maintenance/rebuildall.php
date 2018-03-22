@@ -30,13 +30,6 @@ class RebuildAll extends Maintenance {
 	}
 
 	public function execute() {
-		// Rebuild the text index
-		if ( wfGetDB( DB_SLAVE )->getType() != 'postgres' ) {
-			$this->output( "** Rebuilding fulltext search index (if you abort this will break searching; run this script again to fix):\n" );
-			$rebuildText = $this->runChild( 'RebuildTextIndex', 'rebuildtextindex.php' );
-			$rebuildText->execute();
-		}
-
 		// Rebuild RC
 		$this->output( "\n\n** Rebuilding recentchanges table:\n" );
 		$rebuildRC = $this->runChild( 'RebuildRecentchanges', 'rebuildrecentchanges.php' );

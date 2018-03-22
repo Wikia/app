@@ -19,9 +19,6 @@
 		<?php echo $tabs; ?>
 
 		<div class="results-wrapper grid-3 alpha">
-			<?php if ( !empty( $wikiMatch ) ):?>
-				<?=$wikiMatch?>
-			<?php endif; ?>
 			<?php if ( !empty( $results ) ): ?>
 				<?php if ( $resultsFound > 0 ): ?>
 					<p class="result-count subtle">
@@ -99,9 +96,19 @@
 			</div>
 			<div class="SearchAdsTopWrapper WikiaRail <?= !empty( $isGridLayoutEnabled ) ? 'grid-2' : '' ?> alpha">
 				<?= F::app()->renderView( 'Ad', 'Index', ['slotName' => 'TOP_RIGHT_BOXAD', 'pageTypes' => ['search']] ); ?>
-				<?= $topWikiArticles ?>
-				<?= F::app()->renderView( 'Ad', 'Index', ['slotName' => 'LEFT_SKYSCRAPER_2', 'pageTypes' => ['search']] ); ?>
-				<div id="WikiaAdInContentPlaceHolder"></div>
+				<?php if ( !empty( $wikiMatch ) ):?>
+					<?= $wikiMatch ?>
+				<?php endif; ?>
+				<?php if ( !empty( $fandomStories ) ): ?>
+					<?= F::app()->renderView( 'WikiaSearch', 'fandomStories', [
+						'stories' => $fandomStories,
+						'viewMoreLink' => $viewMoreFandomStoriesLink
+					] ); ?>
+				<?php endif ?>
+				<?php if ( !empty( $topWikiArticles ) ) : ?>
+					<?= F::app()->renderView( 'WikiaSearch', 'topWikiArticles', [ 'pages' => $topWikiArticles ] ); ?>
+				<?php endif ?>
+				<div id="WikiaAdInContentPlaceHolder" class="rail-sticky-module"></div>
 			</div>
 	</form>
 </section>

@@ -49,14 +49,6 @@ function wfJSVariablesTopScripts(Array &$vars, &$scripts) {
 		$vars['wgUserName'] = null;
 	} else {
 		$vars['wgUserName'] = $user->getName();
-
-		/*
-		 * Remove when SOC-217 ABTest is finished
-		 */
-		$vars['wgNotConfirmedEmail'] = $user->getGlobalPreference( UserLoginSpecialController::NOT_CONFIRMED_LOGIN_OPTION_NAME );
-		/*
-		 * End remove
-		 */
 	}
 	if ($out->isArticle()) {
 		$vars['wgArticleId'] = $out->getWikiPage()->getId();
@@ -86,7 +78,11 @@ function wfJSVariablesTopScripts(Array &$vars, &$scripts) {
 
 	$vars['wgTransactionContext'] = Transaction::getAttributes();
 
-	$scripts .= Html::inlineScript("var wgNow = new Date();") .	"\n";
+	$scripts .= Html::inlineScript("var wgNow = new Date();") . "\n";
+
+	// ADEN-6676
+	$instantGlobalsModule = new InstantGlobalsModule();
+	$scripts .= Html::inlineScript( JavaScriptMinifier::minify( $instantGlobalsModule->getScript() ) ) . "\n";
 
 	return true;
 }
@@ -101,7 +97,7 @@ function wfMakeGlobalVariablesScript(Array &$vars, OutputPage $out) {
 	wfProfileIn(__METHOD__);
 	global $wgMemc, $wgPrivateTracker, $wgExtensionsPath,
 		$wgArticle, $wgSitename, $wgDisableAnonymousEditing, $wgCityId,
-		$wgGroupPermissions, $wgBlankImgUrl, $wgCookieDomain, $wgCookiePath, $wgEnableNewAuthModal, $wgResourceBasePath;
+		$wgGroupPermissions, $wgBlankImgUrl, $wgEnableNewAuthModal, $wgResourceBasePath;
 
 	$skin = $out->getSkin();
 	$title = $out->getTitle();
@@ -151,10 +147,6 @@ function wfMakeGlobalVariablesScript(Array &$vars, OutputPage $out) {
 	if ( $wgDisableAnonymousEditing || $wgGroupPermissions['user']['edit'] === false ) {
 		$vars['wgDisableAnonymousEditing'] = true;
 	}
-
-	// moved from Interstitial.php
-	$vars['wgCookieDomain'] = $wgCookieDomain;
-	$vars['wgCookiePath'] = $wgCookiePath;
 
 	$vars['wgEnableNewAuthModal'] = $wgEnableNewAuthModal;
 

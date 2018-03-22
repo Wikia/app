@@ -1,0 +1,12 @@
+{
+	"@metadata": {
+		"authors": [
+			"Klenje"
+		]
+	},
+	"maps-desc": "Al furnìs la possibilitât di mostrâ i dâts de coordinadis e lis direzions geocodificadis intune mape ([http://mapping.referata.com/wiki/Maps_examples demo]).\nServizis di mapis disponibii: $1",
+	"maps_map": "Mape",
+	"maps_coordinates_missing": "Nissune coordenade furnide pe mape.",
+	"maps_geocoding_failed": "{{PLURAL:$2|La direzion ca sot no pues jessi geocodificade|Lis direzions ca sot no puedin jessi geocodificadis}}: $1.\nLa mape no pues jessi mostrade.",
+	"maps_geocoding_failed_for": "{{PLURAL:$2|La direzion|Lis direzions}} ca sot no {{PLURAL:$2|pues|puedin}} jessi {{PLURAL:$2|geocodificade|geocodificadis}} e  {{PLURAL:$2|no je mostrade|no son mostradis}} te mape:\n$1"
+}

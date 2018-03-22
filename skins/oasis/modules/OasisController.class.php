@@ -3,6 +3,7 @@
 class OasisController extends WikiaController {
 
 	private static $extraBodyClasses = [];
+	private static $extraHtmlClasses = [];
 	private static $bodyParametersArray = [];
 	private static $skinAssetGroups = [];
 
@@ -17,6 +18,19 @@ class OasisController extends WikiaController {
 
 		if(!in_array($className,self::$extraBodyClasses)) {
 			self::$extraBodyClasses[] = $className;
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * Add extra CSS classes to <html> tag
+	 * @param $className string class name
+	 * @return bool - true if class name was added, false if class name was already present
+	 */
+	public static function addHtmlClass( $className ) {
+		if ( !in_array( $className, self::$extraHtmlClasses ) ) {
+			self::$extraHtmlClasses[] = $className;
 			return true;
 		}
 		return false;
@@ -40,18 +54,17 @@ class OasisController extends WikiaController {
 		// initialize variables
 		$this->comScore = null;
 		$this->quantServe = null;
-		$this->amazonMatch = null;
+		$this->a9 = null;
+		$this->gfc = null;
 		$this->nielsen = null;
-		$this->openXBidder = null;
 		$this->prebid = null;
-		$this->rubiconFastlane = null;
-		$this->rubiconVulcan = null;
-		$this->sourcePoint = null;
+		$this->instartLogic = null;
 		$this->dynamicYield = null;
-		$this->ivw2 = null;
-		$this->ivw3 = null;
 		$this->krux = null;
-		$this->ubisoft = null;
+		$this->netzathleten = null;
+		$this->recoveryHeadBootstrapCode = null;
+		$this->recoveryTopBodyBootstrapCode = null;
+		$this->recoveryBottomBodyBootstrapCode = null;
 
 		wfProfileOut(__METHOD__);
 	}
@@ -74,8 +87,6 @@ class OasisController extends WikiaController {
 	 * at the bottom for performance reasons, but there are some exceptions for engineering reasons).
 	 *
 	 * TODO: make sure JavaScripts can be always loaded on bottom
-	 *
-	 * Note: NS_FILE pages need JS at top because AnyClips relies on jQuery.
 	 */
 	public static function JsAtBottom(){
 		global $wgTitle;
@@ -96,10 +107,11 @@ class OasisController extends WikiaController {
 	}
 
 	public function executeIndex($params) {
-		global $wgOut, $wgUser, $wgTitle, $wgRequest, $wgEnableAdminDashboardExt, $wgOasisThemeSettings,
+		global $wgOut, $wgUser, $wgOasisThemeSettings,
 		$wgWikiaMobileSmartBannerConfig;
 
 		wfProfileIn(__METHOD__);
+		$request = $this->getContext()->getRequest();
 
 		//Add Smart banner for Wikia dedicated App
 		//Or fallback to My Wikia App
@@ -109,16 +121,18 @@ class OasisController extends WikiaController {
 			!empty( $wgWikiaMobileSmartBannerConfig['meta']['apple-itunes-app'] )
 		) {
 			$appId= $wgWikiaMobileSmartBannerConfig['meta']['apple-itunes-app'];
+			// SUS-1808: Encode this URL for IE 11 and below
+			$requestUrl = Sanitizer::encodeAttribute( $request->getFullRequestURL() );
 			$wgOut->addHeadItem(
 				'Wikia App Smart Banner',
-				sprintf('<meta name="apple-itunes-app" content="%s, app-arguments=%s">', $appId, $wgRequest->getFullRequestURL())
+				sprintf('<meta name="apple-itunes-app" content="%s, app-arguments=%s">', $appId, $requestUrl )
 			);
 		} else {
 			$wgOut->addHeadItem('My Wikia Smart Banner', '<meta name="apple-itunes-app" content="app-id=623705389">');
 		}
 
 		/* set the grid if passed in, otherwise, respect the default */
-		$grid = $wgRequest->getVal('wikiagrid', '');
+		$grid = $request->getVal('wikiagrid', '');
 
 		if ( '1' === $grid ) {
 			$this->wg->OasisGrid = true;
@@ -129,19 +143,12 @@ class OasisController extends WikiaController {
 
 		$jsPackages = array();
 		$scssPackages = array();
-		$this->app->runHook(
-			'WikiaAssetsPackages',
-			array(
-				&$wgOut,
-				&$jsPackages,
-				&$scssPackages
-			)
-		);
+		Hooks::run( 'WikiaAssetsPackages', [ $wgOut, &$jsPackages, &$scssPackages ] );
 
 		$this->isUserLoggedIn = $wgUser->isLoggedIn();
 
 		// TODO: move to CreateNewWiki extension - this code should use a hook
-		$wikiWelcome = $wgRequest->getVal('wiki-welcome');
+		$wikiWelcome = $request->getVal('wiki-welcome');
 
 		if(!empty($wikiWelcome)) {
 			$wgOut->addStyle( $this->assetsManager->getSassCommonURL( 'extensions/wikia/CreateNewWiki/css/WikiWelcome.scss' ) );
@@ -197,6 +204,7 @@ class OasisController extends WikiaController {
 		$bodyClasses[] = $skin->getBodyClassForCommunity();
 
 		$this->bodyClasses = $bodyClasses;
+		$this->htmlClasses = self::$extraHtmlClasses;
 
 		if (is_array($scssPackages)) {
 			foreach ($scssPackages as $package) {
@@ -234,21 +242,20 @@ class OasisController extends WikiaController {
 		$this->loadJs();
 
 		// macbre: RT #25697 - hide Comscore & QuantServe tags on edit pages
-		if(!in_array($wgRequest->getVal('action'), array('edit', 'submit'))) {
+		if ( !in_array( $request->getVal( 'action' ), [ 'edit', 'submit' ] ) ) {
 			$this->comScore = AnalyticsEngine::track('Comscore', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->quantServe = AnalyticsEngine::track('QuantServe', AnalyticsEngine::EVENT_PAGEVIEW);
-			$this->amazonMatch = AnalyticsEngine::track('AmazonMatch', AnalyticsEngine::EVENT_PAGEVIEW);
+			$this->a9 = AnalyticsEngine::track('A9', AnalyticsEngine::EVENT_PAGEVIEW);
+			$this->gfc = AnalyticsEngine::track('GoogleFundingChoices', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->nielsen = AnalyticsEngine::track('Nielsen', AnalyticsEngine::EVENT_PAGEVIEW);
-			$this->openXBidder = AnalyticsEngine::track('OpenXBidder', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->prebid = AnalyticsEngine::track('Prebid', AnalyticsEngine::EVENT_PAGEVIEW);
-			$this->rubiconFastlane = AnalyticsEngine::track('RubiconFastlane', AnalyticsEngine::EVENT_PAGEVIEW);
-			$this->rubiconVulcan = AnalyticsEngine::track('RubiconVulcan', AnalyticsEngine::EVENT_PAGEVIEW);
-			$this->sourcePoint = ARecoveryModule::getSourcePointBootstrapCode();
+			$this->instartLogic = ARecoveryBootstrapCode::getInstartLogicBootstrapCode();
 			$this->dynamicYield = AnalyticsEngine::track('DynamicYield', AnalyticsEngine::EVENT_PAGEVIEW);
-			$this->ivw2 = AnalyticsEngine::track('IVW2', AnalyticsEngine::EVENT_PAGEVIEW);
-			$this->ivw3 = AnalyticsEngine::track('IVW3', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->krux = AnalyticsEngine::track('Krux', AnalyticsEngine::EVENT_PAGEVIEW);
-			$this->ubisoft = AnalyticsEngine::track('Ubisoft', AnalyticsEngine::EVENT_PAGEVIEW);
+			$this->netzathleten = AnalyticsEngine::track('NetzAthleten', AnalyticsEngine::EVENT_PAGEVIEW);
+			$this->recoveryHeadBootstrapCode = ARecoveryBootstrapCode::getHeadBootstrapCode();
+			$this->recoveryTopBodyBootstrapCode = ARecoveryBootstrapCode::getTopBodyBootstrapCode();
+			$this->recoveryBottomBodyBootstrapCode = ARecoveryBootstrapCode::getBottomBodyBootstrapCode();
 		}
 
 		wfProfileOut(__METHOD__);
@@ -269,7 +276,7 @@ class OasisController extends WikiaController {
 				$map = array(
 					array( $this->app->wg->ExtensionsPath, 'extensions/' ),
 					array( $this->app->wg->StylePath, 'skins/' ),
-					// $wgResourceBasePath = $wgCdnStylePath (there's no /resources in it)
+					// $wgResourceBasePath = $wgResourceBasePath (there's no /resources in it)
 					array( $this->app->wg->ResourceBasePath . '/resources', 'resources/' ),
 				);
 			}
@@ -317,7 +324,7 @@ class OasisController extends WikiaController {
 		$jsReferences = array();
 
 		$jsAssetGroups = array( 'oasis_blocking' );
-		wfRunHooks('OasisSkinAssetGroupsBlocking', array(&$jsAssetGroups));
+		Hooks::run('OasisSkinAssetGroupsBlocking', array(&$jsAssetGroups));
 		$blockingScripts = $this->assetsManager->getURL($jsAssetGroups);
 
 		foreach($blockingScripts as $blockingFile) {
@@ -359,7 +366,7 @@ class OasisController extends WikiaController {
 
 		$jsLoader = '';
 
-		wfRunHooks('OasisSkinAssetGroups', array(&$assetGroups));
+		Hooks::run('OasisSkinAssetGroups', array(&$assetGroups));
 
 		// add groups queued via OasisController::addSkinAssetGroup
 		$assetGroups = array_merge($assetGroups, self::$skinAssetGroups);

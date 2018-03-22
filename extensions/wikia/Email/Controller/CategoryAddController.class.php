@@ -109,7 +109,7 @@ class CategoryAddController extends EmailController {
 			'detailsHeader' => $this->pageAddedToCategory->getPrefixedText(),
 			'details' => $this->getDetails(),
 			'buttonLink' => $this->pageAddedToCategory->getFullURL(),
-			'buttonText' => $this->getMessage( 'emailext-categoryadd-see-article')->text(),
+			'buttonText' => $this->getMessage( 'emailext-categoryadd-see-article' )->text(),
 			'contentFooterMessages' => [
 				$this->getContentFooterMessages()
 			],

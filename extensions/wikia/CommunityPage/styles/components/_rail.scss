@@ -1,0 +1,83 @@
+@import 'skins/shared/color';
+@import 'variables';
+
+$community-page-rail-background-color: mix($color-page, #000, 96%);
+@if $is-dark-wiki {
+	$community-page-rail-background-color: mix($color-page, $wds-color-white, 96%);
+}
+$community-page-rail-module-width: 210px;
+$community-page-rail-module-spacing: 35px;
+$community-page-rail-module-spacing-left: 24px;
+$community-page-rail-spacing-small: 14px;
+$community-page-rail-spacing: 16px;
+$community-page-rail-spacing-large: 18px;
+$community-page-rail-spacing-xlarge: 20px;
+$community-page-rail-spacing-xxlarge: 80px;
+
+.community-page-rail {
+	background-color: $community-page-rail-background-color;
+	display: block;
+	padding: $community-page-rail-spacing-xxlarge 0 $community-page-rail-spacing-xlarge;
+
+	.community-page-module {
+		box-sizing: border-box;
+		font-size: $wds-typescale-size-base;
+		line-height: $module-default-line-height;
+		margin: 0 0 $community-page-rail-module-spacing $community-page-rail-module-spacing-left;
+		width: $community-page-rail-module-width;
+	}
+
+	.community-page-module-section-title {
+		border-bottom: 1px $color-page-border solid;
+		color: $color-text;
+		font-size: $wds-typescale-size-plus-1;
+		font-weight: bold;
+		line-height: $module-default-line-height;
+		margin-bottom: $community-page-rail-spacing-small;
+		padding-bottom: $community-page-rail-spacing-small;
+	}
+
+	.community-page-subtle {
+		color: $color-alternate-text;
+		display: block;
+		font-size: $wds-typescale-size-minus-2;
+	}
+
+	.community-page-module-box {
+		background-color: $color-page;
+		padding: $community-page-rail-spacing-xlarge $community-page-rail-spacing-large 0;
+
+		.community-page-module-section-title {
+			border: 0;
+			padding: 0;
+		}
+	}
+}
+
+@media #{$breakpoint-large-up} {
+	.community-page-rail {
+		margin-right: -$padding-width-large;
+		min-width: $community-page-rail-width-xbig;
+	}
+}
+
+@media #{$breakpoint-medium-only} {
+	.community-page-rail {
+		margin-right: -$padding-width-medium;
+		min-width: $community-page-rail-width-big;
+	}
+}
+
+@media #{$breakpoint-small-plus} {
+	.community-page-rail {
+		margin-right: -$padding-width-small-plus;
+		min-width: $community-page-rail-width-xsmall;
+	}
+}
+
+@media #{$breakpoint-below-small-plus} {
+	.community-page-rail {
+		margin-right: -$padding-width-small;
+		min-width: $community-page-rail-width-small;
+	}
+}

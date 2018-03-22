@@ -63,20 +63,9 @@ class SFRunQuery extends IncludableSpecialPage {
 		if ( $raw ) {
 			$wgOut->setArticleBodyOnly( true );
 		}
-		// If user already made some action, ignore the edited
-		// page and just get data from the query string.
-		if ( !$embedded && $wgRequest->getVal( 'query' ) == 'true' ) {
-			$edit_content = null;
-			$is_text_source = false;
-		} elseif ( $content != null ) {
-			$edit_content = $content;
-			$is_text_source = true;
-		} else {
-			$edit_content = null;
-			$is_text_source = true;
-		}
-		list ( $form_text, $javascript_text, $data_text, $form_page_title ) =
-			$sfgFormPrinter->formHTML( $form_definition, $form_submitted, $is_text_source, $form_title->getArticleID(), $edit_content, null, null, true, $embedded );
+
+		list ( $form_text, $data_text, $form_page_title ) =
+			$sfgFormPrinter->formHTML( $form_definition, $form_submitted, false, $form_title->getArticleID(), $content, null, null, true, $embedded );
 		$text = "";
 
 		// Get the text of the results.
@@ -149,12 +138,8 @@ END;
 
 		// Now write everything to the screen.
 		$wgOut->addHTML( $text );
-		SFUtils::addJavascriptAndCSS( $embedded ? $wgParser : null );
-		$script = "\t\t" . '<script type="text/javascript">' . "\n" . $javascript_text . '</script>' . "\n";
-		if ( $embedded ) {
-			$wgParser->getOutput()->addHeadItem( $script );
-		} else {
-			$wgOut->addScript( $script );
+		SFUtils::addFormRLModules( $embedded ? $wgParser : null );
+		if ( !$embedded ) {
 			$po = $wgParser->getOutput();
 			if ( $po ) {
 				// addParserOutputMetadata was introduced in 1.24 when addParserOutputNoText was deprecated
@@ -178,4 +163,5 @@ END;
 			}
 		}
 	}
+
 }

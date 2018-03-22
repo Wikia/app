@@ -9,7 +9,6 @@ abstract class ResourceLoaderGlobalWikiModule extends ResourceLoaderWikiModule {
 	protected function parseTitle( $titleText ) {
 		global $wgCanonicalNamespaceNames;
 
-		wfProfileIn(__METHOD__);
 		$text = $titleText;
 		$namespace = NS_MAIN;
 		foreach ($wgCanonicalNamespaceNames as $namespaceId => $namespacePrefix) {
@@ -31,7 +30,6 @@ abstract class ResourceLoaderGlobalWikiModule extends ResourceLoaderWikiModule {
 			$text = false;
 		}
 
-		wfProfileOut(__METHOD__);
 		return array( $text, $namespace );
 	}
 
@@ -43,7 +41,6 @@ abstract class ResourceLoaderGlobalWikiModule extends ResourceLoaderWikiModule {
 	 * @return Title|GlobalTitle
 	 */
 	protected function resolveRedirect( $title ) {
-		wfProfileIn(__METHOD__);
 		if ( $title instanceof GlobalTitle ) {
 			if ( $title->isRedirect() ) {
 				$target = $title->getRedirectTarget();
@@ -60,20 +57,17 @@ abstract class ResourceLoaderGlobalWikiModule extends ResourceLoaderWikiModule {
 				}
 			}
 		}
-		wfProfileOut(__METHOD__);
 		return $title;
 	}
 
 	protected function createTitle( $titleText, $options = array() ) {
 		global $wgCityId, $wgEnableContentReviewExt;
-		wfProfileIn(__METHOD__);
 		$title = null;
 
 		$realTitleText = isset($options['title']) ? $options['title'] : $titleText;
 		list( $titleText, $namespace ) = $this->parseTitle( $realTitleText );
 
 		if ( $options['type'] === 'script' && $namespace != NS_USER && !empty( $wgEnableContentReviewExt ) ) {
-			wfProfileOut(__METHOD__);
 			return $this->createScriptTitle( $titleText, $options );
 		}
 
@@ -87,7 +81,6 @@ abstract class ResourceLoaderGlobalWikiModule extends ResourceLoaderWikiModule {
 			$title = $this->resolveRedirect($title);
 		}
 
-		wfProfileOut(__METHOD__);
 		return $title;
 	}
 
@@ -111,8 +104,6 @@ abstract class ResourceLoaderGlobalWikiModule extends ResourceLoaderWikiModule {
 			$title = Title::newFromText( $titleText, NS_MEDIAWIKI );
 		}
 
-		$title = $this->resolveRedirect( $title );
-
 		return $title;
 	}
 
@@ -121,12 +112,7 @@ abstract class ResourceLoaderGlobalWikiModule extends ResourceLoaderWikiModule {
 		$content = null;
 		$revisionId = null;
 
-		wfProfileIn(__METHOD__);
-
-		if ( Wikia::isUsingSafeJs()
-			&& $options['type'] === 'script'
-			&& $title->inNamespace( NS_MEDIAWIKI )
-		) {
+		if ( $options['type'] === 'script' && $title->inNamespace( NS_MEDIAWIKI ) ) {
 			$revisionId = $this->getScriptReviewedRevisionId( $title );
 		}
 
@@ -179,16 +165,13 @@ abstract class ResourceLoaderGlobalWikiModule extends ResourceLoaderWikiModule {
 			}
 		}
 
-		wfProfileOut(__METHOD__);
 		return $content;
 	}
 
 	protected function reallyGetTitleMtimes( ResourceLoaderContext $context ) {
-		wfProfileIn(__METHOD__);
 		$dbr = $this->getDB();
 		if ( !$dbr ) {
 			// We're dealing with a subclass that doesn't have a DB
-			wfProfileOut(__METHOD__);
 			return array();
 		}
 
@@ -251,7 +234,6 @@ abstract class ResourceLoaderGlobalWikiModule extends ResourceLoaderWikiModule {
 			}
 		}
 
-		wfProfileOut(__METHOD__);
 		return $mtimes;
 	}
 

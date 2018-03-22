@@ -218,17 +218,18 @@ class TitleBatch {
 	 * @param $conds array|string Conditions
 	 * @param $fname string Function name
 	 * @param $options array Query options
+	 * @param $joinConditions array Join conditions
 	 * @param $dbType int Database connection type (doesn't support DB_SLAVE_BEFORE_MASTER)
 	 * @return TitleBatch titleBatch contains existing articles
 	 */
 	static public function newFromConds( $tables, $conds, $fname = 'TitleBatch::newFromConds',
-			$options = array(), $dbType = DB_SLAVE ) {
+			$options = [], $joinConditions = [], $dbType = DB_SLAVE ) {
 		wfProfileIn( __METHOD__ );
 
 		$tables = array_merge( array( 'page' ), (array)$tables );
 
 		$db = wfGetDB( $dbType );
-		$res = $db->select( $tables, 'page.*', $conds, $fname, $options );
+		$res = $db->select( $tables, 'page.*', $conds, $fname, $options, $joinConditions );
 		$titles = [];
 		foreach ($res as $row) {
 			$titles[] = Title::newFromRow($row);

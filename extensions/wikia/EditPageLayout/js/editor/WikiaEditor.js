@@ -704,6 +704,11 @@
 					toolbars[name].el.show();
 				}
 			}
+
+			//Ckeditor upgrade table button fix
+			$('.cke_button_table').wrap('<span class="cke_button cke_button_big"></span>');
+			$('.cke_button_addinfobox').wrap('<span class="cke_button cke_button_big"></span>');
+
 			this.editor.fire('toolbarsRendered',this.editor);
 			this.editor.fire('toolbarsResized',this.editor);
 		}
@@ -970,11 +975,13 @@
 		// in source mode, this is CKE generated textarea
 		getEditbox: function() {
 			return $(this.editor.ck.mode == 'wysiwyg' ?
-				this.editor.ck.document.getBody().$ : this.editor.ck.textarea.$);
+				this.editor.ck.document.getBody().$ : this.editor.ck.editable().$);
 		},
 
 		getEditboxWrapper: function() {
-			return $(this.editor.ck.getThemeSpace('contents').$);
+			//kacper olek edit, rte update
+			//return $(this.editor.ck.getThemeSpace('contents').$);
+			return $(this.editor.ck.ui.space('contents').$);
 		},
 
 		// Returns the original editor element that CKE has replaced
@@ -1006,7 +1013,7 @@
 		},
 
 		themeLoaded: function() {
-			this.editor.fire('editboxReady', this.editor, $(this.editor.ck.getThemeSpace('contents').$));
+			this.editor.fire('editboxReady', this.editor, $(this.editor.ck.ui.space('contents').$));
 		},
 
 		editorFocus: function() {
@@ -1077,6 +1084,9 @@
 		},
 
 		modeChanged: function( editor, mode ) {
+			//show/hide infobox button
+			mode == 'source' ? $('.RTEInfoboxButton').addClass('cke_hidden') : $('.RTEInfoboxButton').removeClass('cke_hidden');
+
 			// show/hide appropriate buttons
 			for (var name in this.modeAwareCommands) {
 				var command = this.editor.ck.getCommand(name);
@@ -1112,15 +1122,15 @@
 					el = $('#'+id);
 				if (el) {
 					el = el.parent(); // workaround stupid HTML markup
-					el.removeClass('cke_on cke_off cke_disabled');
+					el.removeClass('cke_button_on cke_button_off cke_button_disabled');
 					if (this.editor.ck.mode == 'wysiwyg') {
-						el.addClass('cke_' + (
+						el.addClass('cke_button_' + (
 							state == CKEDITOR.TRISTATE_ON ? 'on' :
 							state == CKEDITOR.TRISTATE_DISABLED ? 'disabled' :
 							'off')
 						);
 					} else {
-						el.addClass('cke_off');
+						el.addClass('cke_button_off');
 					}
 				}
 			}
@@ -1157,7 +1167,7 @@
 
 		createElement: function( name ) {
 			var ck = this.editor.ck, ui = this.editor.ck.ui, item;
-			if (ui._.items[name] && (item = ui.create(name)) ) {
+			if (ui.items[name] && (item = ui.create(name)) ) {
 				var output = [];
 				item.render(ck, output);
 				if (item.command) {

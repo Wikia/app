@@ -26,20 +26,8 @@ class CommentsLikesController extends WikiaController {
 	 * Get URL of the page comments button should be linking to
 	 */
 	private function getCommentsLink() {
-		wfProfileIn(__METHOD__);
-		global $wgTitle, $wgRequest;
-
-		$isHistory = $wgRequest->getVal('action') == 'history';
-
-		if ($this->checkArticleComments()) {
-			// link to article comments section
-			if ($this->contextTitle != $wgTitle || $isHistory) {
-				$commentsLink = $this->contextTitle->getLocalUrl() . '#WikiaArticleComments';
-			}
-			else {
-				// fix for redirected articles
-				$commentsLink = '#WikiaArticleComments';
-			}
+		if ( $this->checkArticleComments() ) {
+			$commentsLink = ArticleCommentInit::getCommentsLink( $this->contextTitle );
 		}
 		else {
 			// link to talk page
@@ -52,7 +40,6 @@ class CommentsLikesController extends WikiaController {
 			}
 		}
 
-		wfProfileOut(__METHOD__);
 		return $commentsLink;
 	}
 
@@ -75,7 +62,7 @@ class CommentsLikesController extends WikiaController {
 	 * @param Integer $count - number of comments/talk pages
 	 * @return String - formatted count
 	 */
-	private function formatCount($count) {
+	public static function formatCount($count) {
 		if ($count > 999999) {
 			return $formattedComments = wfMessage('oasis-page-header-comments-m', floor($count / 1000000))->text();
 		}
@@ -108,7 +95,7 @@ class CommentsLikesController extends WikiaController {
 			$this->comments = $data['comments'];
 
 			// format number of comments (1200 -> 1k, 9999 -> 9k, 1.300.000 -> 1M)
-			$this->formattedComments = $this->formatCount($this->comments);
+			$this->formattedComments = self::formatCount($this->comments);
 
 			$this->commentsLink = $this->getCommentsLink();
 			$this->commentsTooltip = $this->getCommentsTooltip();
@@ -137,7 +124,7 @@ class CommentsLikesController extends WikiaController {
 		$this->contextTitle = $wgTitle;
 
 		$count = $this->request->getVal('count');
-		$formattedCount = $this->formatCount($count);
+		$formattedCount = self::formatCount($count);
 		$href = $this->getCommentsLink();
 		$tooltip = $this->getCommentsTooltip();
 		$mgsKey = $this->checkArticleComments() ? 'oasis-page-header-comments' : 'oasis-page-header-talk';

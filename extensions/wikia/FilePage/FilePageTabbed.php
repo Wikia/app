@@ -72,8 +72,7 @@ class FilePageTabbed extends WikiaFilePage {
 		$app = F::App();
 		$out = $this->getContext()->getOutput();
 
-		$out->addHTML( $app->renderView( 'FilePageController', 'fileUsage', array('type' => 'local') ) );
-		$out->addHTML( $app->renderView( 'FilePageController', 'fileUsage', array('type' => 'global') ) );
+		$out->addHTML( $app->renderView( 'FilePageController', 'fileUsage' ) );
 
 		// Close div from about section (opened in imageContent)
 		$out->addHTML('</div>');
@@ -112,14 +111,6 @@ class FilePageTabbed extends WikiaFilePage {
 		$out->addHTML('</div>');
 
 		wfProfileOut( __METHOD__ );
-	}
-
-	/**
-	 * Render related pages section at the bottom of a file page
-	 */
-	protected function imageFooter() {
-		$out = $this->getContext()->getOutput();
-		$out->addHTML( F::app()->renderView( 'FilePageController', 'relatedPages', array() ) );
 	}
 
 	/**

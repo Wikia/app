@@ -17,19 +17,14 @@ class AdEngine2ContextService {
 			$adPageTypeService = new AdEngine2PageTypeService();
 			$wikiaPageType = new WikiaPageType();
 			$pageType = $wikiaPageType->getPageType();
+			$hasFeaturedVideo = !empty( $wg->EnableArticleFeaturedVideo )
+				&& ArticleVideoContext::isFeaturedVideoEmbedded( $title->getArticleID() );
+			// pages with featured video on mercury have no ATF slots
+			$delayBtf = ( $skinName === 'mercury' && $hasFeaturedVideo ) ? false : $wg->AdDriverDelayBelowTheFold;
 
-			$monetizationServiceAds = null;
-			if ( !empty( $wg->AdDriverUseMonetizationService ) && !empty( $wg->EnableMonetizationModuleExt ) ) {
-				$monetizationServiceAds = F::app()->sendRequest( 'MonetizationModule', 'index' )->getData()['data'];
-			}
-
-			$sourcePointDetectionKey = AdEngine2Resource::getKey('wikia.ext.adengine.sp.detection');
-			$sourcePointDetectionUrl = ResourceLoader::makeCustomURL( $wg->Out, [$sourcePointDetectionKey], 'scripts' );
-
-			$pageFairDetectionKey = AdEngine2Resource::getKey('wikia.ext.adengine.pf.detection');
-			$pageFairDetectionUrl = ResourceLoader::makeCustomURL( $wg->Out, [$pageFairDetectionKey], 'scripts' );
-
-			$prebidBidderUrl = AssetsManager::getInstance()->getURL( 'prebid_prod_js', $type );
+			$pageFairDetectionKey = AdEngine2Resource::getKey( 'wikia.ext.adengine.pf.detection' );
+			$pageFairDetectionUrl = ResourceLoader::makeCustomURL( $wg->Out, [ $pageFairDetectionKey ], 'scripts' );
+			$prebidBidderUrl = AssetsManager::getInstance()->getURL( 'pr3b1d_prod_js', $type );
 
 			$langCode = $title->getPageLanguage()->getCode();
 
@@ -40,22 +35,22 @@ class AdEngine2ContextService {
 			$newWikiVertical = $wikiFactoryHub->getWikiVertical( $wg->CityId );
 			$newWikiVertical = !empty($newWikiVertical['short']) ? $newWikiVertical['short'] : 'error';
 
-			$yavliKey = AdEngine2Resource::getKey('wikia.ext.adengine.yavli');
-			$yavliUrl = ResourceLoader::makeCustomURL( $wg->Out, [$yavliKey], 'scripts' );
-			return [
+
+			$context = [
 				'opts' => $this->filterOutEmptyItems( [
 					'adsInContent' => $wg->EnableAdsInContent,
-					'delayBtf' => $wg->AdDriverDelayBelowTheFold,
+					'delayBtf' => $delayBtf,
 					'enableAdsInMaps' => $wg->AdDriverEnableAdsInMaps,
 					'pageType' => $adPageTypeService->getPageType(),
-					'paidAssetDropConfig' => $wg->PaidAssetDropConfig, // @see extensions/wikia/PaidAssetDrop
 					'showAds' => $adPageTypeService->areAdsShowableOnPage(),
 					'trackSlotState' => $wg->AdDriverTrackState,
-					'sourcePointDetectionUrl' => $sourcePointDetectionUrl,
-					'sourcePointRecovery' => $skinName === 'oasis' && ARecoveryModule::isEnabled(),
-					'yavliUrl' => $yavliUrl,
 					'pageFairDetectionUrl' => $pageFairDetectionUrl,
-					'prebidBidderUrl' => $prebidBidderUrl
+					'pageFairRecovery' => ARecoveryModule::isPageFairRecoveryEnabled(),
+					'instartLogicRecovery' => ARecoveryModule::isInstartLogicRecoveryEnabled(),
+					// TODO remove after ADEN-6797 release
+					'prebidBidderUrl' => $prebidBidderUrl,
+					'isAdTestWiki' => $wg->AdDriverIsAdTestWiki,
+					'cdnApiUrl' => $wg->wgCdnApiUrl
 				] ),
 				'targeting' => $this->filterOutEmptyItems( [
 					'enableKruxTargeting' => AnalyticsProviderKrux::isEnabled(),
@@ -75,27 +70,26 @@ class AdEngine2ContextService {
 					'wikiIsTop1000' => $wg->AdDriverWikiIsTop1000,
 					'wikiLanguage' => $langCode,
 					'wikiVertical' => $newWikiVertical,
-					'newWikiCategories' => $this->getNewWikiCategories($wikiFactoryHub, $wg->CityId),
+					'newWikiCategories' => $this->getNewWikiCategories( $wikiFactoryHub, $wg->CityId ),
+					'hasPortableInfobox' => !empty( \Wikia::getProps( $title->getArticleID(), PortableInfoboxDataService::INFOBOXES_PROPERTY_NAME ) ),
+					'hasFeaturedVideo' => $hasFeaturedVideo
 				] ),
 				'providers' => $this->filterOutEmptyItems( [
 					'evolve2' => $wg->AdDriverUseEvolve2,
-					'monetizationService' => $wg->AdDriverUseMonetizationService,
-					'monetizationServiceAds' => $monetizationServiceAds,
-					'rubiconFastlane' => AnalyticsProviderRubiconFastlane::isEnabled(),
-					'taboola' => $wg->AdDriverUseTaboola && $pageType === 'article',
+					'audienceNetwork' => $wg->AdDriverUseAudienceNetworkBidder
 				] ),
 				'slots' => $this->filterOutEmptyItems( [
-					'exitstitial' => $wg->EnableOutboundScreenExt,
-					'exitstitialRedirectDelay' => $wg->OutboundScreenRedirectDelay,
 					'invisibleHighImpact' => $wg->AdDriverEnableInvisibleHighImpactSlot,
 				] ),
 				'forcedProvider' => $wg->AdDriverForcedProvider
 			];
+
+			return $context;
 		} );
 	}
 
 	private function getMappedVerticalName( $oldWikiVertical, $newWikiVertical ) {
-		if ($oldWikiVertical === 'Wikia') {
+		if ( $oldWikiVertical === 'Wikia' ) {
 			return 'wikia';
 		}
 
@@ -111,34 +105,38 @@ class AdEngine2ContextService {
 		];
 
 		$newVerticalName = strtolower( $newWikiVertical );
-		if ( !empty( $mapping[$newVerticalName] ) ) {
+		if ( !empty($mapping[$newVerticalName]) ) {
 			return $mapping[$newVerticalName];
 		}
 
 		return 'error';
 	}
 
-	private function getNewWikiCategories(WikiFactoryHub $wikiFactoryHub, $cityId) {
+	private function getNewWikiCategories( WikiFactoryHub $wikiFactoryHub, $cityId ) {
 		$oldWikiCategories = $wikiFactoryHub->getWikiCategoryNames( $cityId, false );
 		$newWikiCategories = $wikiFactoryHub->getWikiCategoryNames( $cityId, true );
 
-		if( is_array($oldWikiCategories) && is_array($newWikiCategories) ) {
-			$wikiCategories = array_merge($oldWikiCategories, $newWikiCategories);
-		} else if ( is_array($oldWikiCategories) ) {
-			$wikiCategories = $oldWikiCategories;
-		} else if ( is_array($newWikiCategories) ) {
-			$wikiCategories = $newWikiCategories;
+		if ( is_array( $oldWikiCategories ) && is_array( $newWikiCategories ) ) {
+			$wikiCategories = array_merge( $oldWikiCategories, $newWikiCategories );
 		} else {
-			$wikiCategories = [];
+			if ( is_array( $oldWikiCategories ) ) {
+				$wikiCategories = $oldWikiCategories;
+			} else {
+				if ( is_array( $newWikiCategories ) ) {
+					$wikiCategories = $newWikiCategories;
+				} else {
+					$wikiCategories = [ ];
+				}
+			}
 		}
 
-		return array_unique($wikiCategories);
+		return array_unique( $wikiCategories );
 	}
 
 	private function filterOutEmptyItems( $input ) {
-		$output = [];
+		$output = [ ];
 		foreach ( $input as $varName => $varValue ) {
-			if ( (bool) $varValue === true ) {
+			if ( (bool)$varValue === true ) {
 				$output[$varName] = $varValue;
 			}
 		}

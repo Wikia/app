@@ -216,10 +216,14 @@ class SpecialNuke extends SpecialPage {
 
 		$where = array( "(rc_new = 1) OR (rc_log_type = 'upload' AND rc_log_action = 'upload')" );
 
+		// SUS-812: handle anon cases (IP address provided) and account names (user name provided)
 		if ( $username === '' ) {
 			$what[] = 'rc_user_text';
+			$what[] = 'rc_user';
+		} elseif ( IP::isIPAddress( $username ) ) {
+			$where['rc_ip_bin'] = inet_pton( $username );
 		} else {
-			$where['rc_user_text'] = $username;
+			$where['rc_user'] = User::idFromName( $username );
 		}
 
 		$pattern = $this->getRequest()->getText( 'pattern' );
@@ -244,7 +248,7 @@ class SpecialNuke extends SpecialPage {
 		foreach ( $result as $row ) {
 			$pages[] = array(
 				Title::makeTitle( $row->rc_namespace, $row->rc_title ),
-				$username === '' ? $row->rc_user_text : false
+				$username === '' ? User::getUsername( $row->rc_user, RecentChange::extractUserIpFromRow( $row ) ) : false // SUS-812
 			);
 		}
 

@@ -18,9 +18,10 @@ class SyntaxHighlight_GeSHi {
 	 * @param string $text
 	 * @param array $args
 	 * @param Parser $parser
+	 * @param PPFrame $frame
 	 * @return string
 	 */
-	public static function parserHook( $text, $args = array(), $parser ) {
+	public static function parserHook( $text, $args = array(), $parser, $frame ) {
 		global $wgSyntaxHighlightDefaultLang, $wgUseSiteCss, $wgUseTidy;
 		wfProfileIn( __METHOD__ );
 		self::initialise();
@@ -76,8 +77,8 @@ class SyntaxHighlight_GeSHi {
 			}
 		}
 		// Starting line number
-		if( isset( $args['start'] ) ) {
-			$geshi->start_line_numbers_at( $args['start'] );
+		if ( isset( $args['start'] ) && ctype_digit( $args['start'] ) ) {
+			$geshi->start_line_numbers_at( (int)$args['start'] );
 		}
 		$geshi->set_header_type( $enclose );
 		// Strict mode
@@ -443,7 +444,7 @@ class SyntaxHighlight_GeSHi {
 	 * @param $extensionTypes
 	 * @return bool
 	 */
-	public static function hOldSpecialVersion_GeSHi( &$sp, &$extensionTypes ) {
+	public static function hOldSpecialVersion_GeSHi( $sp, &$extensionTypes ) {
 		return self::hSpecialVersion_GeSHi( $extensionTypes );
 	}
 

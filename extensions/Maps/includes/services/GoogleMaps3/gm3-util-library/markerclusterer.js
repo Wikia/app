@@ -3,7 +3,7 @@
 
 /**
  * @name MarkerClustererPlus for Google Maps V3
- * @version 2.0.9 [February 20, 2012]
+ * @version 2.1.2 [May 28, 2014]
  * @author Gary Little
  * @fileoverview
  * The library creates and manages per-zoom-level clusters for large amounts of markers.
@@ -15,14 +15,13 @@
  * >V3 MarkerClusterer</a> port by Luke Mahe. MarkerClustererPlus was created by Gary Little.
  * <p>
  * v2.0 release: MarkerClustererPlus v2.0 is backward compatible with MarkerClusterer v1.0. It
- *  adds support for the <code>ignoreHidden</code>, <code>title</code>, <code>printable</code>,
- *  <code>batchSizeIE</code>, and <code>calculator</code> properties as well as support for
- *  four more events. It also allows greater control over the styling of the text that appears
- *  on the cluster marker. The documentation has been significantly improved and the overall
- *  code has been simplified and polished. Very large numbers of markers can now be managed
- *  without causing Javascript timeout errors on Internet Explorer. Note that the name of the
- *  <code>clusterclick</code> event has been deprecated. The new name is <code>click</code>,
- *  so please change your application code now.
+ *  adds support for the <code>ignoreHidden</code>, <code>title</code>, <code>batchSizeIE</code>,
+ *  and <code>calculator</code> properties as well as support for four more events. It also allows
+ *  greater control over the styling of the text that appears on the cluster marker. The
+ *  documentation has been significantly improved and the overall code has been simplified and
+ *  polished. Very large numbers of markers can now be managed without causing Javascript timeout
+ *  errors on Internet Explorer. Note that the name of the <code>clusterclick</code> event has been
+ *  deprecated. The new name is <code>click</code>, so please change your application code now.
  */
 
 /**
@@ -47,36 +46,34 @@
  *  style the cluster icon is determined by calling the <code>calculator</code> function.
  *
  * @property {string} url The URL of the cluster icon image file. Required.
- * @property {number} height The height (in pixels) of the cluster icon. Required.
- * @property {number} width The width (in pixels) of the cluster icon. Required.
- * @property {Array} [anchor] The anchor position (in pixels) of the label text to be shown on
- *  the cluster icon, relative to the top left corner of the icon.
- *  The format is <code>[yoffset, xoffset]</code>. The <code>yoffset</code> must be positive
- *  and less than <code>height</code> and the <code>xoffset</code> must be positive and less
- *  than <code>width</code>. The default is to anchor the label text so that it is centered
- *  on the icon.
+ * @property {number} height The display height (in pixels) of the cluster icon. Required.
+ * @property {number} width The display width (in pixels) of the cluster icon. Required.
+ * @property {Array} [anchorText] The position (in pixels) from the center of the cluster icon to
+ *  where the text label is to be centered and drawn. The format is <code>[yoffset, xoffset]</code>
+ *  where <code>yoffset</code> increases as you go down from center and <code>xoffset</code>
+ *  increases to the right of center. The default is <code>[0, 0]</code>.
  * @property {Array} [anchorIcon] The anchor position (in pixels) of the cluster icon. This is the
  *  spot on the cluster icon that is to be aligned with the cluster position. The format is
  *  <code>[yoffset, xoffset]</code> where <code>yoffset</code> increases as you go down and
- *  <code>xoffset</code> increases to the right. The default anchor position is the center of the
- *  cluster icon.
+ *  <code>xoffset</code> increases to the right of the top-left corner of the icon. The default
+ *  anchor position is the center of the cluster icon.
  * @property {string} [textColor="black"] The color of the label text shown on the
  *  cluster icon.
  * @property {number} [textSize=11] The size (in pixels) of the label text shown on the
  *  cluster icon.
- * @property {number} [textDecoration="none"] The value of the CSS <code>text-decoration</code>
+ * @property {string} [textDecoration="none"] The value of the CSS <code>text-decoration</code>
  *  property for the label text shown on the cluster icon.
- * @property {number} [fontWeight="bold"] The value of the CSS <code>font-weight</code>
+ * @property {string} [fontWeight="bold"] The value of the CSS <code>font-weight</code>
  *  property for the label text shown on the cluster icon.
- * @property {number} [fontStyle="normal"] The value of the CSS <code>font-style</code>
+ * @property {string} [fontStyle="normal"] The value of the CSS <code>font-style</code>
  *  property for the label text shown on the cluster icon.
- * @property {number} [fontFamily="Arial,sans-serif"] The value of the CSS <code>font-family</code>
+ * @property {string} [fontFamily="Arial,sans-serif"] The value of the CSS <code>font-family</code>
  *  property for the label text shown on the cluster icon.
  * @property {string} [backgroundPosition="0 0"] The position of the cluster icon image
  *  within the image defined by <code>url</code>. The format is <code>"xpos ypos"</code>
  *  (the same format as for the CSS <code>background-position</code> property). You must set
  *  this property appropriately when the image defined by <code>url</code> represents a sprite
- *  containing multiple images.
+ *  containing multiple images. Note that the position <i>must</i> be specified in px units.
  */
 /**
  * @name ClusterIconInfo
@@ -86,6 +83,9 @@
  * @property {string} text The text of the label to be shown on the cluster icon.
  * @property {number} index The index plus 1 of the element in the <code>styles</code>
  *  array to be used to style the cluster icon.
+ * @property {string} title The tooltip to display when the mouse moves over the cluster icon.
+ *  If this value is <code>undefined</code> or <code>""</code>, <code>title</code> is set to the
+ *  value of the <code>title</code> property passed to the MarkerClusterer.
  */
 /**
  * A cluster icon.
@@ -101,6 +101,7 @@ function ClusterIcon(cluster, styles) {
     cluster.getMarkerClusterer().extend(ClusterIcon, google.maps.OverlayView);
 
     this.cluster_ = cluster;
+    this.className_ = cluster.getMarkerClusterer().getClusterClass();
     this.styles_ = styles;
     this.center_ = null;
     this.div_ = null;
@@ -120,6 +121,7 @@ ClusterIcon.prototype.onAdd = function () {
     var cDraggingMapByCluster;
 
     this.div_ = document.createElement("div");
+    this.div_.className = this.className_;
     if (this.visible_) {
         this.show();
     }
@@ -127,7 +129,7 @@ ClusterIcon.prototype.onAdd = function () {
     this.getPanes().overlayMouseTarget.appendChild(this.div_);
 
     // Fix for Issue 157
-    google.maps.event.addListener(this.getMap(), "bounds_changed", function () {
+    this.boundsChangedListener_ = google.maps.event.addListener(this.getMap(), "bounds_changed", function () {
         cDraggingMapByCluster = cMouseDownInCluster;
     });
 
@@ -139,6 +141,7 @@ ClusterIcon.prototype.onAdd = function () {
     google.maps.event.addDomListener(this.div_, "click", function (e) {
         cMouseDownInCluster = false;
         if (!cDraggingMapByCluster) {
+            var theBounds;
             var mz;
             var mc = cClusterIcon.cluster_.getMarkerClusterer();
             /**
@@ -155,11 +158,16 @@ ClusterIcon.prototype.onAdd = function () {
             if (mc.getZoomOnClick()) {
                 // Zoom into the cluster.
                 mz = mc.getMaxZoom();
-                mc.getMap().fitBounds(cClusterIcon.cluster_.getBounds());
-                // Don't zoom beyond the max zoom level
-                if (mz !== null && (mc.getMap().getZoom() > mz)) {
-                    mc.getMap().setZoom(mz + 1);
-                }
+                theBounds = cClusterIcon.cluster_.getBounds();
+                mc.getMap().fitBounds(theBounds);
+                // There is a fix for Issue 170 here:
+                setTimeout(function () {
+                    mc.getMap().fitBounds(theBounds);
+                    // Don't zoom beyond the max zoom level
+                    if (mz !== null && (mc.getMap().getZoom() > mz)) {
+                        mc.getMap().setZoom(mz + 1);
+                    }
+                }, 100);
             }
 
             // Prevent event propagation to the map:
@@ -200,6 +208,7 @@ ClusterIcon.prototype.onAdd = function () {
 ClusterIcon.prototype.onRemove = function () {
     if (this.div_ && this.div_.parentNode) {
         this.hide();
+        google.maps.event.removeListener(this.boundsChangedListener_);
         google.maps.event.clearInstanceListeners(this.div_);
         this.div_.parentNode.removeChild(this.div_);
         this.div_ = null;
@@ -235,15 +244,38 @@ ClusterIcon.prototype.hide = function () {
  */
 ClusterIcon.prototype.show = function () {
     if (this.div_) {
+        var img = "";
+        // NOTE: values must be specified in px units
+        var bp = this.backgroundPosition_.split(" ");
+        var spriteH = parseInt(bp[0].replace(/^\s+|\s+$/g, ""), 10);
+        var spriteV = parseInt(bp[1].replace(/^\s+|\s+$/g, ""), 10);
         var pos = this.getPosFromLatLng_(this.center_);
         this.div_.style.cssText = this.createCss(pos);
-        if (this.cluster_.printable_) {
-            // (Would like to use "width: inherit;" below, but doesn't work with MSIE)
-            this.div_.innerHTML = "<img src='" + this.url_ + "'><div style='position: absolute; top: 0px; left: 0px; width: " + this.width_ + "px;'>" + this.sums_.text + "</div>";
-        } else {
-            this.div_.innerHTML = this.sums_.text;
+        img = "<img src='" + this.url_ + "' style='position: absolute; top: " + spriteV + "px; left: " + spriteH + "px; ";
+        if (!this.cluster_.getMarkerClusterer().enableRetinaIcons_) {
+            img += "clip: rect(" + (-1 * spriteV) + "px, " + ((-1 * spriteH) + this.width_) + "px, " +
+                ((-1 * spriteV) + this.height_) + "px, " + (-1 * spriteH) + "px);";
         }
-        this.div_.title = this.cluster_.getMarkerClusterer().getTitle();
+        img += "'>";
+        this.div_.innerHTML = img + "<div style='" +
+            "position: absolute;" +
+            "top: " + this.anchorText_[0] + "px;" +
+            "left: " + this.anchorText_[1] + "px;" +
+            "color: " + this.textColor_ + ";" +
+            "font-size: " + this.textSize_ + "px;" +
+            "font-family: " + this.fontFamily_ + ";" +
+            "font-weight: " + this.fontWeight_ + ";" +
+            "font-style: " + this.fontStyle_ + ";" +
+            "text-decoration: " + this.textDecoration_ + ";" +
+            "text-align: center;" +
+            "width: " + this.width_ + "px;" +
+            "line-height:" + this.height_ + "px;" +
+            "'>" + this.sums_.text + "</div>";
+        if (typeof this.sums_.title === "undefined" || this.sums_.title === "") {
+            this.div_.title = this.cluster_.getMarkerClusterer().getTitle();
+        } else {
+            this.div_.title = this.sums_.title;
+        }
         this.div_.style.display = "";
     }
     this.visible_ = true;
@@ -263,7 +295,7 @@ ClusterIcon.prototype.useStyle = function (sums) {
     this.url_ = style.url;
     this.height_ = style.height;
     this.width_ = style.width;
-    this.anchor_ = style.anchor;
+    this.anchorText_ = style.anchorText || [0, 0];
     this.anchorIcon_ = style.anchorIcon || [parseInt(this.height_ / 2, 10), parseInt(this.width_ / 2, 10)];
     this.textColor_ = style.textColor || "black";
     this.textSize_ = style.textSize || 11;
@@ -293,38 +325,9 @@ ClusterIcon.prototype.setCenter = function (center) {
  */
 ClusterIcon.prototype.createCss = function (pos) {
     var style = [];
-    if (!this.cluster_.printable_) {
-        style.push('background-image:url(' + this.url_ + ');');
-        style.push('background-position:' + this.backgroundPosition_ + ';');
-    }
-
-    if (typeof this.anchor_ === 'object') {
-        if (typeof this.anchor_[0] === 'number' && this.anchor_[0] > 0 &&
-            this.anchor_[0] < this.height_) {
-            style.push('height:' + (this.height_ - this.anchor_[0]) +
-                'px; padding-top:' + this.anchor_[0] + 'px;');
-        } else {
-            style.push('height:' + this.height_ + 'px; line-height:' + this.height_ +
-                'px;');
-        }
-        if (typeof this.anchor_[1] === 'number' && this.anchor_[1] > 0 &&
-            this.anchor_[1] < this.width_) {
-            style.push('width:' + (this.width_ - this.anchor_[1]) +
-                'px; padding-left:' + this.anchor_[1] + 'px;');
-        } else {
-            style.push('width:' + this.width_ + 'px; text-align:center;');
-        }
-    } else {
-        style.push('height:' + this.height_ + 'px; line-height:' +
-            this.height_ + 'px; width:' + this.width_ + 'px; text-align:center;');
-    }
-
-    style.push('cursor:pointer; top:' + pos.y + 'px; left:' +
-        pos.x + 'px; color:' + this.textColor_ + '; position:absolute; font-size:' +
-        this.textSize_ + 'px; font-family:' + this.fontFamily_ + '; font-weight:' +
-        this.fontWeight_ + '; font-style:' + this.fontStyle_ + '; text-decoration:' +
-        this.textDecoration_ + ';');
-
+    style.push("cursor: pointer;");
+    style.push("position: absolute; top: " + pos.y + "px; left: " + pos.x + "px;");
+    style.push("width: " + this.width_ + "px; height: " + this.height_ + "px;");
     return style.join("");
 };
 
@@ -339,6 +342,8 @@ ClusterIcon.prototype.getPosFromLatLng_ = function (latlng) {
     var pos = this.getProjection().fromLatLngToDivPixel(latlng);
     pos.x -= this.anchorIcon_[1];
     pos.y -= this.anchorIcon_[0];
+    pos.x = parseInt(pos.x, 10);
+    pos.y = parseInt(pos.y, 10);
     return pos;
 };
 
@@ -356,7 +361,6 @@ function Cluster(mc) {
     this.gridSize_ = mc.getGridSize();
     this.minClusterSize_ = mc.getMinimumClusterSize();
     this.averageCenter_ = mc.getAverageCenter();
-    this.printable_ = mc.getPrintable();
     this.markers_ = [];
     this.center_ = null;
     this.bounds_ = null;
@@ -598,11 +602,9 @@ Cluster.prototype.isMarkerAlreadyAdded_ = function (marker) {
  *  <code>text</code> property of the result returned by the default <code>calculator</code>).
  *  If set to <code>true</code> and you change the visibility of a marker being clustered, be
  *  sure to also call <code>MarkerClusterer.repaint()</code>.
- * @property {boolean} [printable=false] Whether to make the cluster icons printable. Do not
- *  set to <code>true</code> if the <code>url</code> fields in the <code>styles</code> array
- *  refer to image sprite files.
  * @property {string} [title=""] The tooltip to display when the mouse moves over a cluster
- *  marker.
+ *  marker. (Alternatively, you can use a custom <code>calculator</code> function to specify a
+ *  different tooltip for each cluster marker.)
  * @property {function} [calculator=MarkerClusterer.CALCULATOR] The function used to determine
  *  the text to be displayed on a cluster marker and the index indicating which style to use
  *  for the cluster marker. The input parameters for the function are (1) the array of markers
@@ -615,13 +617,23 @@ Cluster.prototype.isMarkerAlreadyAdded_ = function (marker) {
  *  <code>index</code> minus 1. For example, the default <code>calculator</code> returns a
  *  <code>text</code> value of <code>"125"</code> and an <code>index</code> of <code>3</code>
  *  for a cluster icon representing 125 markers so the element used in the <code>styles</code>
- *  array is <code>2</code>.
+ *  array is <code>2</code>. A <code>calculator</code> may also return a <code>title</code>
+ *  property that contains the text of the tooltip to be used for the cluster marker. If
+ *   <code>title</code> is not defined, the tooltip is set to the value of the <code>title</code>
+ *   property for the MarkerClusterer.
+ * @property {string} [clusterClass="cluster"] The name of the CSS class defining general styles
+ *  for the cluster markers. Use this class to define CSS styles that are not set up by the code
+ *  that processes the <code>styles</code> array.
  * @property {Array} [styles] An array of {@link ClusterIconStyle} elements defining the styles
  *  of the cluster markers to be used. The element to be used to style a given cluster marker
  *  is determined by the function defined by the <code>calculator</code> property.
  *  The default is an array of {@link ClusterIconStyle} elements whose properties are derived
  *  from the values for <code>imagePath</code>, <code>imageExtension</code>, and
  *  <code>imageSizes</code>.
+ * @property {boolean} [enableRetinaIcons=false] Whether to allow the use of cluster icons that
+ * have sizes that are some multiple (typically double) of their actual display size. Icons such
+ * as these look better when viewed on high-resolution monitors such as Apple's Retina displays.
+ * Note: if this property is <code>true</code>, sprites cannot be used as cluster icons.
  * @property {number} [batchSize=MarkerClusterer.BATCH_SIZE] Set this property to the
  *  number of markers to be processed in a single batch when using a browser other than
  *  Internet Explorer (for Internet Explorer, use the batchSizeIE property instead).
@@ -685,9 +697,9 @@ function MarkerClusterer(map, opt_markers, opt_options) {
     if (opt_options.ignoreHidden !== undefined) {
         this.ignoreHidden_ = opt_options.ignoreHidden;
     }
-    this.printable_ = false;
-    if (opt_options.printable !== undefined) {
-        this.printable_ = opt_options.printable;
+    this.enableRetinaIcons_ = false;
+    if (opt_options.enableRetinaIcons !== undefined) {
+        this.enableRetinaIcons_ = opt_options.enableRetinaIcons;
     }
     this.imagePath_ = opt_options.imagePath || MarkerClusterer.IMAGE_PATH;
     this.imageExtension_ = opt_options.imageExtension || MarkerClusterer.IMAGE_EXTENSION;
@@ -695,6 +707,7 @@ function MarkerClusterer(map, opt_markers, opt_options) {
     this.calculator_ = opt_options.calculator || MarkerClusterer.CALCULATOR;
     this.batchSize_ = opt_options.batchSize || MarkerClusterer.BATCH_SIZE;
     this.batchSizeIE_ = opt_options.batchSizeIE || MarkerClusterer.BATCH_SIZE_IE;
+    this.clusterClass_ = opt_options.clusterClass || "cluster";
 
     if (navigator.userAgent.toLowerCase().indexOf("msie") !== -1) {
         // Try to avoid IE timeout when processing a huge number of markers:
@@ -728,8 +741,8 @@ MarkerClusterer.prototype.onAdd = function () {
             // zoom slider is clicked, a "zoom_changed" event is fired even though
             // the map doesn't zoom out any further. In this situation, no "idle"
             // event is triggered so the cluster markers that have been removed
-            // do not get redrawn.
-            if (this.getZoom() === 0) {
+            // do not get redrawn. Same goes for a zoom in at maxZoom.
+            if (this.getZoom() === (this.get("minZoom") || 0) || this.getZoom() === this.get("maxZoom")) {
                 google.maps.event.trigger(this, "idle");
             }
         }),
@@ -751,7 +764,9 @@ MarkerClusterer.prototype.onRemove = function () {
 
     // Put all the managed markers back on the map:
     for (i = 0; i < this.markers_.length; i++) {
-        this.markers_[i].setMap(this.activeMap_);
+        if (this.markers_[i].getMap() !== this.activeMap_) {
+            this.markers_[i].setMap(this.activeMap_);
+        }
     }
 
     // Remove all clusters:
@@ -973,6 +988,26 @@ MarkerClusterer.prototype.setIgnoreHidden = function (ignoreHidden) {
 
 
 /**
+ * Returns the value of the <code>enableRetinaIcons</code> property.
+ *
+ * @return {boolean} True if enableRetinaIcons property is set.
+ */
+MarkerClusterer.prototype.getEnableRetinaIcons = function () {
+    return this.enableRetinaIcons_;
+};
+
+
+/**
+ *  Sets the value of the <code>enableRetinaIcons</code> property.
+ *
+ *  @param {boolean} enableRetinaIcons The value of the enableRetinaIcons property.
+ */
+MarkerClusterer.prototype.setEnableRetinaIcons = function (enableRetinaIcons) {
+    this.enableRetinaIcons_ = enableRetinaIcons;
+};
+
+
+/**
  * Returns the value of the <code>imageExtension</code> property.
  *
  * @return {string} The value of the imageExtension property.
@@ -1054,26 +1089,6 @@ MarkerClusterer.prototype.setCalculator = function (calculator) {
 
 
 /**
- * Returns the value of the <code>printable</code> property.
- *
- * @return {boolean} the value of the printable property.
- */
-MarkerClusterer.prototype.getPrintable = function () {
-    return this.printable_;
-};
-
-
-/**
- * Sets the value of the <code>printable</code> property.
- *
- *  @param {boolean} printable The value of the printable property.
- */
-MarkerClusterer.prototype.setPrintable = function (printable) {
-    this.printable_ = printable;
-};
-
-
-/**
  * Returns the value of the <code>batchSizeIE</code> property.
  *
  * @return {number} the value of the batchSizeIE property.
@@ -1090,6 +1105,26 @@ MarkerClusterer.prototype.getBatchSizeIE = function () {
  */
 MarkerClusterer.prototype.setBatchSizeIE = function (batchSizeIE) {
     this.batchSizeIE_ = batchSizeIE;
+};
+
+
+/**
+ * Returns the value of the <code>clusterClass</code> property.
+ *
+ * @return {string} the value of the clusterClass property.
+ */
+MarkerClusterer.prototype.getClusterClass = function () {
+    return this.clusterClass_;
+};
+
+
+/**
+ * Sets the value of the <code>clusterClass</code> property.
+ *
+ *  @param {string} clusterClass The value of the clusterClass property.
+ */
+MarkerClusterer.prototype.setClusterClass = function (clusterClass) {
+    this.clusterClass_ = clusterClass;
 };
 
 
@@ -1156,9 +1191,11 @@ MarkerClusterer.prototype.addMarker = function (marker, opt_nodraw) {
  * @param {boolean} [opt_nodraw] Set to <code>true</code> to prevent redrawing.
  */
 MarkerClusterer.prototype.addMarkers = function (markers, opt_nodraw) {
-    var i;
-    for (i = 0; i < markers.length; i++) {
-        this.pushMarkerTo_(markers[i]);
+    var key;
+    for (key in markers) {
+        if (markers.hasOwnProperty(key)) {
+            this.pushMarkerTo_(markers[key]);
+        }
     }
     if (!opt_nodraw) {
         this.redraw_();
@@ -1380,7 +1417,7 @@ MarkerClusterer.prototype.distanceBetweenPoints_ = function (p1, p2) {
     var dLon = (p2.lng() - p1.lng()) * Math.PI / 180;
     var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
         Math.cos(p1.lat() * Math.PI / 180) * Math.cos(p2.lat() * Math.PI / 180) *
-            Math.sin(dLon / 2) * Math.sin(dLon / 2);
+        Math.sin(dLon / 2) * Math.sin(dLon / 2);
     var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
     var d = R * c;
     return d;
@@ -1535,6 +1572,7 @@ MarkerClusterer.prototype.extend = function (obj1, obj2) {
  */
 MarkerClusterer.CALCULATOR = function (markers, numStyles) {
     var index = 0;
+    var title = "";
     var count = markers.length.toString();
 
     var dv = count;
@@ -1546,7 +1584,8 @@ MarkerClusterer.CALCULATOR = function (markers, numStyles) {
     index = Math.min(index, numStyles);
     return {
         text: count,
-        index: index
+        index: index,
+        title: title
     };
 };
 
@@ -1575,7 +1614,7 @@ MarkerClusterer.BATCH_SIZE_IE = 500;
  * @type {string}
  * @constant
  */
-MarkerClusterer.IMAGE_PATH = "http://google-maps-utility-library-v3.googlecode.com/svn/trunk/markerclustererplus/images/m";
+MarkerClusterer.IMAGE_PATH = "../images/m";
 
 
 /**

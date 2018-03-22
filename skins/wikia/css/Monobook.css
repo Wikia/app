@@ -31,82 +31,6 @@ body.with-adsense #content
     display: block;
 }
 
-
-
-/* SendToAFriend & ProblemReports */
-#notifyForm
-{
-    background-color: #fff;
-    color: #000000;
-    border: solid 1px #aaaaaa;
-    font-size:12px;
-    visibility: hidden;
-    position: absolute;
-    margin-top: -250px;
-    left: -200px;
-    padding: 8px 12px 0 8px;
-}
-
-#notifyForm form
-{
-    padding: 5px 12px 12px 5px;
-}
-
-#notifyForm .articleName
-{
-  font-weight: bold;
-  font-size: 1.3em;
-  padding: 5px 0 15px 0;
-}
-
-#notifyForm label
-{
-  margin: 20px 0 2px 0;
-  display: block;
-}
-
-#notifyForm input[type="text"],
-#notifyForm textarea,
-.monotype
-{
-  width: 100%;
-  border: solid 1px #87888C;
-  background-color: #fff;
-  padding: 2px;
-}
-
-#notifyForm input.submit
-{
-  background: url('http://images.wikia.com/common/extensions/wikia/SendToAFriend/SendToAFriendSubmitBg.png');
-  border: none;
-  margin: 15px;
-  font-weight: bold;
-  width: 96px;
-  height: 26px;
-  cursor: pointer;
-}
-
-.boxHeader
-{
-	font-size: 1.3em;
-	margin-bottom: 10px;
-	border-bottom: solid 1px #aaaaaa;
-}
-
-/* hide unneeded elements */
-#notifyForm .boxHeader
-{
-  border-bottom: none;
-  cursor: default;
-}
-
-#notifyForm_c .underlay,
-#notifyForm .hd,
-#notifyForm .ft
-{
-  display: none !important;
-}
-
 /* RTL */
 body.rtl #content {
     border-right: 1px solid #aaa; /* re-add right border */
@@ -246,7 +170,7 @@ body.rtl #column-google {
 /* IE fixes */
 * html .staffSig {
 	background-image: none !important;
-	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/extensions/wikia/StaffSig/images/WikiaStaff.png', sizingMethod='scale');
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/extensions/wikia/DesignSystem/bower_components/design-system/dist/svg/wds-company-logo-fandom.svg', sizingMethod='scale');
 }
 
 /* LeanMonaco code */
@@ -304,7 +228,7 @@ body.ajax * {
 }
 .wikia-paginator ul, .wikia-paginator li {
 	list-style: none;
-	margin: 0; 
+	margin: 0;
 	padding: 0;
 }
 .wikia-paginator li {

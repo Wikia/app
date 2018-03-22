@@ -1,17 +1,44 @@
-<!-- s:<?= __FILE__ ?> -->
+<?php
+/**
+ * @var $status
+ * @var $statusMsg
+ * @var $statusMsg2
+ * @var $user
+ * @var $userEmail
+ * @var $userRealName
+ * @var $userEncoded
+ * @var $user_hsc
+ * @var $userId
+ * @var $userReg
+ * @var $isUnsub
+ * @var $isDisabled
+ * @var $isAdopter
+ * @var $isFanContributor
+ * @var $returnURL
+ * @var $logLink
+ * @var $userStatus
+ * @var $emailStatus
+ * @var $disabled
+ * @var $changeEmailRequested
+ * @var $editToken
+ * @var $mailLogLink
+ * @var $isClosureRequested
+ */
+?>
+
 <small><a href="<?php print $returnURL; ?>">Return</a>
-	<?= wfMessage( 'pipe-separator' )->escaped() . $logLink ?>
-	<?= wfMessage( 'pipe-separator' )->escaped() . $mailLogLink ?></small>
-<?php if (!is_null($status)) { ?>
-<fieldset>
-	<legend><?= wfMessage( 'editaccount-status' )->escaped(); ?></legend>
-	<?php echo $status ? Wikia::successmsg($statusMsg) : Wikia::errormsg($statusMsg) ?>
-	<?php if( !empty($statusMsg2) ){ echo Wikia::errormsg($statusMsg2); } ?>
-</fieldset>
+<?= wfMessage( 'pipe-separator' )->escaped() . $logLink ?>
+<?= wfMessage( 'pipe-separator' )->escaped() . $mailLogLink ?></small>
+<?php if ( !is_null( $status ) ) { ?>
+	<fieldset>
+		<legend><?= wfMessage( 'editaccount-status' )->escaped(); ?></legend>
+		<?php echo $status ? Wikia::successmsg( $statusMsg ) : Wikia::errormsg( $statusMsg ) ?>
+		<?php if ( !empty( $statusMsg2 ) ) { echo Wikia::errormsg( $statusMsg2 ); } ?>
+	</fieldset>
 <?php } ?>
 <fieldset>
 	<legend><?= wfMessage( 'editaccount-frame-account', $user )->escaped(); ?></legend>
-	<?php echo $userEncoded ?><br />
+	<?php echo $userEncoded ?>&nbsp;<?= wfMessage( 'editaccount-label-edit-username', $user )->parse(); ?><br />
 	ID: <?php echo $userId; ?><br />
 	Reg: <?php echo $userReg ; ?><br />
 	<?= wfMessage( 'editaccount-labal-account-status' )->escaped(); ?>: <?php echo $userStatus; ?><br />
@@ -36,12 +63,6 @@
 			<input type="text" name="wpNewRealName" value="<?= $userRealName ?>" <?= $disabled; ?> />
 		</div>
 
-		<div>
-			<input type="radio" id="wpActionToggleAdopt" name="wpAction" value="toggleadopter" />
-			<label for="wpActionToggleAdopt"><?= wfMessage( 'editaccount-label-toggleadopt' )->escaped() ?></label>
-			<span><?= ( $isAdopter ) ? wfMessage( 'editaccount-label-toggleadopt-prevent' )->escaped() : wfMessage( 'editaccount-label-toggleadopt-allow' )->escaped() ?></span>
-		</div>
-
 		<?php if( $isUnsub ) { ?>
 		<div>
 			<input type="radio" id="wpActionClearUnsub" name="wpAction" value="clearunsub" <?= $disabled; ?> />
@@ -62,6 +83,21 @@
 		<input type="hidden" name="wpToken" value="<?= htmlspecialchars( $editToken ); ?>" />
 	</form>
 
+</fieldset>
+
+<fieldset>
+	<legend><?= wfMessage( 'editaccount-frame-fan-contributor', $user )-> escaped(); ?></legend>
+	<?php if ( $isFanContributor ) : ?>
+		<p><?= wfMessage( 'editaccount-fan-contributor-exists' )->escaped(); ?></p>
+	<?php else: ?>
+		<p><?= wfMessage( 'editaccount-usage-fan-contributor' )-> escaped(); ?></p>
+		<form method="post" action="">
+			<input type="submit" value="<?= wfMessage( 'editaccount-submit-fan-contributor' )->escaped(); ?>" <?= $disabled; ?> />
+			<input type="hidden" name="wpAction" value="fan-contributor" />
+			<input type="hidden" name="wpUserName" value="<?= $user_hsc ?>" />
+			<input type="hidden" name="wpToken" value="<?= htmlspecialchars( $editToken ); ?>" />
+		</form>
+	<?php endif; ?>
 </fieldset>
 
 <fieldset>

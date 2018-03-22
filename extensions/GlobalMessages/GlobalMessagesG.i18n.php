@@ -1,10 +1,4 @@
 <?php
-/**
- * Internationalisation file for extension GlobalMessages.
- *
- * @file
- * @ingroup Extensions
- */
 $messages = array();
 
 $messages['en'] = array(
@@ -44,7 +38,7 @@ $messages['en'] = array(
 	'group-suppress-member' => '{{GENDER:$1|oversight}}',
 	'grouppage-user' => '{{ns:project}}:Users',
 	'grouppage-autoconfirmed' => '{{ns:project}}:Autoconfirmed users',
-	'grouppage-bot' => '{{ns:project}}:Bots',
+	'grouppage-bot' => 'Help:Bots',
 	'grouppage-sysop' => '{{ns:project}}:Administrators',
 	'grouppage-bureaucrat' => '{{ns:project}}:Bureaucrats',
 	'grouppage-suppress' => '{{ns:project}}:Oversight',
@@ -58,22 +52,19 @@ $messages['en'] = array(
 	'group-bureaucrat.js' => '/* Any JavaScript here will be loaded for bureaucrats only */',
 	'group-vstf' => 'VSTF',
 	'group-vstf-member' => 'VSTF',
-	'grouppage-vstf' => 'wikia:Help:SpamTaskForce',
-	'group-helper' => 'Wikia Helpers',
-	'group-helper-member' => 'Wikia Helper',
-	'grouppage-helper' => 'wikia:Help:Helper_Group',
-	'group-staff' => 'Wikia Staff',
-	'group-staff-member' => 'Wikia Staff',
+	'grouppage-vstf' => 'w:Wikia:SpamTaskForce',
+	'group-helper' => 'FANDOM Helpers',
+	'group-helper-member' => 'FANDOM Helper',
+	'grouppage-helper' => 'Help:Helper Group',
+	'group-staff' => 'FANDOM Staff',
+	'group-staff-member' => 'FANDOM Staff',
 	'grouppage-staff' => 'wikia:Community_Central:Staff',
-	'group-util' => 'Wikia Utilities',
-	'group-util-member' => 'Wikia Utilities',
+	'group-util' => 'FANDOM Utilities',
+	'group-util-member' => 'FANDOM Utilities',
 	'grouppage-util' => 'wikia:Community_Central:Staff',
 	'group-reviewer' => 'Image Reviewers',
 	'group-reviewer-member' => 'Image Reviewer',
 	'grouppage-reviewer' => 'wikia:Community_Central:Image_review',
-	'group-wikiastars' => 'Wikia Stars',
-	'group-wikiastars-member' => 'Wikia Star',
-	'grouppage-wikiastars' => 'wikia:Help:WikiaStars',
 	'group-vanguard' => 'Vanguards',
 	'group-vanguard-member' => 'Vanguard',
 	'group-voldev' => 'Volunteer Developers',
@@ -81,10 +72,12 @@ $messages['en'] = array(
 	'grouppage-voldev' => 'w:c:dev:Volunteer_Developers',
 	'group-content-moderator' => 'Content Moderators',
 	'group-content-moderator-member' => 'Content Moderator',
-	'group-fancontributor-contributor' => 'Fan Contributors',
-	'group-fancontributor-contributor-member' => 'Fan Contributor',
-	'group-fancontributor-staff' => 'Fan Contributor Staff',
-	'group-fancontributor-staff-member' => 'Fan Contributor Staff',
+	'group-content-volunteer' => 'Content Volunteers',
+	'group-content-volunteer-member' => 'Content Volunteer',
+	'group-fandom-editor' => 'News and Stories Wordpress access',
+	'group-fandom-editor-member' => 'News and Stories Wordpress access',
+	'group-global-discussions-moderator' => 'Global Discussions Moderator',
+	'group-global-discussions-moderator-member' => 'Global Discussions Moderator',
 );
 
 $messages['qqq'] = array(
@@ -132,6 +125,12 @@ $messages['qqq'] = array(
 	'group-voldev' => '{{doc-group|voldev}}',
 	'group-voldev-member' => '{{doc-group|voldev|member}}',
 	'grouppage-voldev' => '{{doc-group|voldev|page}}',
+	'group-helper' => 'Missing documentation',
+	'group-helper-member' => 'Missing documentation',
+	'group-staff' => 'Missing documentation',
+	'group-staff-member' => 'Missing documentation',
+	'group-util' => 'Missing documentation',
+	'group-util-member' => 'Missing documentation',
 );
 
 $messages['ab'] = array(
@@ -1461,8 +1460,8 @@ $messages['da'] = array(
 );
 
 $messages['de'] = array(
-	'go' => 'Ausführen',
-	'gotaccount' => "Du hast bereits ein Benutzerkonto? '''$1'''.",
+	'go' => 'Los',
+	'gotaccount' => 'Du hast bereits ein Benutzerkonto? $1.',
 	'gotaccountlink' => 'Anmelden',
 	'guesstimezone' => 'Vom Browser übernehmen',
 	'gender-unknown' => 'Nicht angegeben',
@@ -1482,22 +1481,61 @@ $messages['de'] = array(
 	'group-sysop-member' => '{{GENDER:$1|Administrator|Administratorin}}',
 	'group-bureaucrat-member' => '{{GENDER:$1|Bürokrat|Bürokratin}}',
 	'group-suppress-member' => '{{GENDER:$1|Oversighter|Oversighterin}}',
-	'grouppage-user' => '{{ns:project}}:Benutzer',
-	'grouppage-autoconfirmed' => '{{ns:project}}:Automatisch bestätigte Benutzer',
-	'grouppage-bot' => '{{ns:project}}:Bots',
-	'grouppage-sysop' => '{{ns:project}}:Administratoren',
-	'grouppage-bureaucrat' => '{{ns:project}}:Bürokraten',
-	'grouppage-suppress' => '{{ns:project}}:Oversighter',
-	'group-autoconfirmed.css' => '/* CSS an dieser Stelle wirkt sich nur auf automatisch bestätigte Benutzer aus */',
-	'group-bot.css' => '/* CSS an dieser Stelle wirkt sich nur auf Bots aus */',
-	'group-sysop.css' => '/* CSS an dieser Stelle wirkt sich nur auf Administratoren aus */',
-	'group-bureaucrat.css' => '/* Das folgende CSS wird nur für Bürokraten geladen. */',
+	'grouppage-user' => '{{ns:help}}:Benutzer',
+	'grouppage-autoconfirmed' => 'w:c:de.community:Hilfe:Bestätigte_Benutzer#Best.C3.A4tigte_Benutzer',
+	'grouppage-bot' => 'w:c:de.community:Hilfe:Bots',
+	'grouppage-sysop' => 'w:c:de.community:Hilfe:Administratoren',
+	'grouppage-bureaucrat' => 'w:c:de.community:Hilfe:Bürokraten',
+	'grouppage-suppress' => 'w:c:de.community:Hilfe:Benutzer',
+	'group-autoconfirmed.css' => '/* Dieses CSS wirkt sich nur auf automatisch bestätigte Benutzer aus */',
+	'group-bot.css' => '/* Dieses CSS wirkt sich nur auf Bots aus */',
+	'group-sysop.css' => '/* Dieses CSS wirkt sich nur auf Administratoren aus */',
+	'group-bureaucrat.css' => '/* Dieses CSS wirkt sich nur auf Bürokraten aus. */',
 	'group-autoconfirmed.js' => '/* Das folgende JavaScript wird nur für automatisch bestätigte Benutzer geladen. */',
 	'group-bot.js' => '/* Das folgende JavaScript wird nur für Bots geladen. */',
 	'group-sysop.js' => '/* Das folgende JavaScript wird nur für Administratoren geladen. */',
 	'group-bureaucrat.js' => '/* Das folgende JavaScript wird nur für Bürokraten geladen. */',
 	'group-content-moderator' => 'Inhalts-Moderatoren',
 	'group-content-moderator-member' => 'Inhalts-Moderator',
+	'group-helper' => 'FANDOM-Helfer',
+	'group-helper-member' => 'FANDOM-Helfer',
+	'group-staff' => 'FANDOM-Mitarbeiter',
+	'group-staff-member' => 'FANDOM-Mitarbeiter',
+	'group-util' => 'FANDOM-Hilfsmittel',
+	'group-util-member' => 'FANDOM-Hilfsmittel',
+	'group-reviewer-member' => 'Bilder-Prüfer',
+	'group-reviewer' => 'Bilder-Prüfer',
+	'grouppage-helper' => 'w:de:Helfer',
+	'grouppage-staff' => 'w:c:de.community:Fandom-Mitarbeiter',
+	'grouppage-util' => 'w:c:de.community:Fandom-Mitarbeiter',
+	'grouppage-vstf' => 'w:de:SpamTaskForce',
+	'googlesearch' => '<form method="get" action="//www.google.com/search" id="googlesearch">
+	<input type="hidden" name="domains" value="{{SERVER}}" />
+	<input type="hidden" name="num" value="50" />
+	<input type="hidden" name="ie" value="$2" />
+	<input type="hidden" name="oe" value="$2" />
+
+	<input type="text" name="q" size="31" maxlength="255" value="$1" />
+	<input type="submit" name="btnG" value="$3" />
+  <div>
+	<input type="radio" name="sitesearch" id="gwiki" value="{{SERVER}}" checked="checked" /><label for="gwiki">{{SITENAME}}</label>
+	<input type="radio" name="sitesearch" id="gWWW" value="" /><label for="gWWW">WWW</label>
+  </div>
+</form>',
+	'group-vstf' => 'VSTF',
+	'group-vstf-member' => 'VSTF',
+	'grouppage-reviewer' => 'wikia:Community_Central:Image_review',
+	'group-vanguard' => 'Vanguard-Mitglieder',
+	'group-vanguard-member' => 'Vanguard-Mitglied',
+	'group-voldev' => 'Volunteer Developers',
+	'group-voldev-member' => 'Volunteer Developer',
+	'grouppage-voldev' => 'w:c:dev:Volunteer_Developers',
+	'group-fandom-editor' => 'News and Stories Wordpress access',
+	'group-fandom-editor-member' => 'News and Stories Wordpress access',
+	'group-global-discussions-moderator' => 'Globaler Diskussions-Moderator',
+	'group-global-discussions-moderator-member' => 'Globaler Diskussions-Moderator',
+	'group-content-volunteer' => 'Content-Volunteers',
+	'group-content-volunteer-member' => 'Content-Volunteer',
 );
 
 $messages['de-formal'] = array(
@@ -1684,7 +1722,7 @@ $messages['eo'] = array(
 $messages['es'] = array(
 	'go' => 'Ir',
 	'gotaccount' => '¿Ya tienes una cuenta? $1.',
-	'gotaccountlink' => 'Entrar',
+	'gotaccountlink' => 'Iniciar sesión',
 	'guesstimezone' => 'Rellenar a partir de la hora del navegador',
 	'gender-unknown' => 'Sin especificar',
 	'gender-male' => 'Masculino',
@@ -1703,14 +1741,61 @@ $messages['es'] = array(
 	'group-sysop-member' => '{{GENDER:$1|administrador|administradora}}',
 	'group-bureaucrat-member' => 'burócrata',
 	'group-suppress-member' => '{{GENDER:$1|supresor|supresora}} de ediciones',
-	'grouppage-user' => '{{ns:project}}:Usuarios',
-	'grouppage-autoconfirmed' => '{{ns:project}}:Usuarios autoconfirmados',
-	'grouppage-bot' => '{{ns:project}}:Bots',
-	'grouppage-sysop' => '{{ns:project}}:Administradores',
-	'grouppage-bureaucrat' => '{{ns:project}}:Burócratas',
-	'grouppage-suppress' => '{{ns:project}}:Supresores de ediciones',
+	'grouppage-user' => 'w:c:comunidad:Ayuda:Privilegios_de_usuario',
+	'grouppage-autoconfirmed' => 'w:c:comunidad:Ayuda:Privilegios_de_usuario#Usuarios_auto-confirmados',
+	'grouppage-bot' => 'w:c:comunidad:Ayuda:Bots',
+	'grouppage-sysop' => 'w:c:comunidad:Ayuda:Privilegios_de_usuario#Administradores',
+	'grouppage-bureaucrat' => 'w:c:comunidad:Ayuda:Privilegios_de_usuario#Burócratas',
+	'grouppage-suppress' => 'w:c:comunidad:Ayuda:Privilegios_de_usuario',
 	'group-content-moderator' => 'Moderadores de contenido',
 	'group-content-moderator-member' => 'Moderador de contenido',
+	'group-helper-member' => 'Helpers de FANDOM',
+	'group-helper' => 'Helpers de FANDOM',
+	'group-staff' => 'Staff de FANDOM',
+	'group-staff-member' => 'Staff de FANDOM',
+	'group-util' => 'Utilidades de FANDOM',
+	'group-util-member' => 'Utilidades de FANDOM',
+	'group-sysop.css' => '/* Cualquier código CSS escrito aquí será cargado solamente para los administradores */',
+	'group-sysop.js' => '/* Cualquier código JavaScript escrito aquí será cargado solamente para los administradores */',
+	'group-vstf-member' => 'VSTF',
+	'grouppage-helper' => 'w:c:comunidad:Comunidad Central:Voluntarios y Helpers',
+	'grouppage-staff' => 'w:c:comunidad:Comunidad Central:Staff',
+	'grouppage-vstf' => 'w:c:comunidad:Comunidad Central:SpamTaskForce',
+	'googlesearch' => '<form method="get" action="//www.google.com/search" id="googlesearch">
+	<input type="hidden" name="domains" value="{{SERVER}}" />
+	<input type="hidden" name="num" value="50" />
+	<input type="hidden" name="ie" value="$2" />
+	<input type="hidden" name="oe" value="$2" />
+
+	<input type="text" name="q" size="31" maxlength="255" value="$1" />
+	<input type="submit" name="btnG" value="$3" />
+  <div>
+	<input type="radio" name="sitesearch" id="gwiki" value="{{SERVER}}" checked="checked" /><label for="gwiki">{{SITENAME}}</label>
+	<input type="radio" name="sitesearch" id="gWWW" value="" /><label for="gWWW">WWW</label>
+  </div>
+</form>',
+	'group-autoconfirmed.css' => '/* Cualquier código CSS escrito aquí será cargado solamente para los usuarios auto-confirmados */',
+	'group-bot.css' => '/* Cualquier código CSS escrito aquí será cargado solamente para los bots */',
+	'group-bureaucrat.css' => '/* Cualquier código CSS escrito aquí será cargado solamente para los burócratas */',
+	'group-autoconfirmed.js' => '/* Cualquier código JavaScript escrito aquí será cargado solamente para los usuarios auto-confirmados */',
+	'group-bot.js' => '/* Cualquier código JavaScript escrito aquí será cargado solamente para los bots */',
+	'group-bureaucrat.js' => '/* Cualquier código JavaScript escrito aquí será cargado solamente para los burócratas */',
+	'group-vstf' => 'VSTF',
+	'grouppage-util' => 'w:c:comunidad:Comunidad Central:Staff',
+	'group-reviewer' => 'Revisores de imagen',
+	'group-reviewer-member' => 'Revisores de imagen',
+	'grouppage-reviewer' => 'w:c:comunidad:Ayuda:Privilegios_de_usuario#Otros_grupos',
+	'group-vanguard' => 'Vanguard',
+	'group-vanguard-member' => 'Vanguard',
+	'group-voldev' => 'Desarrollador voluntario',
+	'group-voldev-member' => 'Desarrollador voluntario',
+	'grouppage-voldev' => 'w:c:dev:Volunteer_Developers',
+	'group-fandom-editor' => 'News and Stories Wordpress access',
+	'group-fandom-editor-member' => 'News and Stories Wordpress access',
+	'group-global-discussions-moderator' => 'Moderador global de discusiones',
+	'group-global-discussions-moderator-member' => 'Moderador global de discusiones',
+	'group-content-volunteer' => 'Voluntario de contenido',
+	'group-content-volunteer-member' => 'Voluntario de contenido',
 );
 
 $messages['et'] = array(
@@ -1828,6 +1913,8 @@ $messages['fa'] = array(
 	'grouppage-sysop' => '{{ns:project}}:مدیران',
 	'grouppage-bureaucrat' => '{{ns:project}}:دیوان‌سالاران',
 	'grouppage-suppress' => '{{ns:project}}:نظارت',
+	'group-helper-member' => 'یاور',
+	'grouppage-staff' => '[[w:Wikia_Staff|پرسنل ویکیا]]',
 );
 
 $messages['fi'] = array(
@@ -1866,6 +1953,9 @@ $messages['fi'] = array(
 	'group-bot.js' => '/* Tämän sivun JavaScript-koodi liitetään vain boteille */',
 	'group-sysop.js' => '/* Tämän sivun JavaScript-koodi liitetään vain ylläpitäjille */',
 	'group-bureaucrat.js' => '/* Tämän sivun JavaScript-koodi liitetään vain byrokraateille */',
+	'group-helper' => 'Apulaiset',
+	'group-helper-member' => 'Apulainen',
+	'grouppage-staff' => 'w:c:fi:Wikian henkilökunta',
 );
 
 $messages['fiu-vro'] = array(
@@ -1949,28 +2039,73 @@ $messages['fr'] = array(
 	'gender-female' => 'Féminin',
 	'group' => 'Groupe :',
 	'group-user' => 'Utilisateurs',
-	'group-autoconfirmed' => 'Utilisateurs enregistrés',
+	'group-autoconfirmed' => 'Utilisateurs auto-confirmés',
 	'group-bot' => 'Robots',
 	'group-sysop' => 'Administrateurs',
 	'group-bureaucrat' => 'Bureaucrates',
 	'group-suppress' => 'Superviseurs',
 	'group-all' => '(tous)',
 	'group-user-member' => '{{GENDER:$1|utilisateur|utilisatrice}}',
-	'group-autoconfirmed-member' => '{{GENDER:$1|utilisateur enregistré|utilisatrice enregistrée}}',
+	'group-autoconfirmed-member' => '{{GENDER:$1|utilisateur auto-confirmé|utilisatrice auto-confirmée}}',
 	'group-bot-member' => '{{GENDER:$1|robot}}',
 	'group-sysop-member' => '{{GENDER:$1|administrateur|administratrice}}',
 	'group-bureaucrat-member' => '{{GENDER:$1|bureaucrate}}',
 	'group-suppress-member' => '{{GENDER:$1|superviseur|superviseuse}}',
-	'grouppage-user' => '{{ns:project}}:Utilisateurs',
-	'grouppage-autoconfirmed' => '{{ns:project}}:Utilisateurs enregistrés',
-	'grouppage-bot' => '{{ns:project}}:Robots',
-	'grouppage-sysop' => '{{ns:project}}:Administrateurs',
-	'grouppage-bureaucrat' => '{{ns:project}}:Bureaucrates',
-	'grouppage-suppress' => '{{ns:project}}:Superviseurs',
-	'group-sysop.css' => '/* Le CSS inclus ici n’affectera que les administrateurs */',
-	'group-sysop.js' => '/* Le JavaScript inclus ici n’affectera que les administrateurs */',
+	'grouppage-user' => "w:c:communaute:Aide:Niveaux d'accès utilisateur",
+	'grouppage-autoconfirmed' => "w:c:communaute:Aide:Niveaux d'accès utilisateur#Utilisateurs auto-confirmés",
+	'grouppage-bot' => 'w:c:communaute:Aide:Robots',
+	'grouppage-sysop' => "w:c:communaute:Aide:Niveaux d'accès utilisateur#Administrateurs",
+	'grouppage-bureaucrat' => "w:c:communaute:Aide:Niveaux d'accès utilisateur#Bureaucrates",
+	'grouppage-suppress' => "w:c:communaute:Aide:Niveaux d'accès utilisateur",
+	'group-sysop.css' => "/* Le CSS placé ici n'affectera que les administrateurs */",
+	'group-sysop.js' => '/* Le JavaScript placé ici se chargera uniquement pour les administrateurs */',
 	'group-content-moderator' => 'Modérateurs de contenu',
 	'group-content-moderator-member' => 'Modérateur de contenu',
+	'group-helper' => 'Assistants de FANDOM',
+	'group-helper-member' => 'Assistant de FANDOM',
+	'group-staff' => 'Staff de FANDOM',
+	'group-staff-member' => 'Staff de FANDOM',
+	'group-util' => 'FANDOM Utilities',
+	'group-util-member' => 'FANDOM Utilities',
+	'group-autoconfirmed.css' => "/* Le CSS placé ici n'affectera que les utilisateurs auto-confirmés */",
+	'group-autoconfirmed.js' => '/* Le JavaScript placé ici se chargera uniquement pour les utilisateurs auto-confirmés */',
+	'group-bot.css' => "/* Le CSS placé ici n'affectera que les robots */",
+	'group-bot.js' => '/* Le JavaScript placé ici se chargera uniquement pour les robots */',
+	'group-bureaucrat.css' => "/* Le CSS placé ici n'affectera que les bureaucrates */",
+	'group-bureaucrat.js' => '/* Le JavaScript placé ici se chargera uniquement pour les bureaucrates */',
+	'group-reviewer-member' => '{{GENDER:$1|Vérificateur d’images|Vérificatrice d’images}}',
+	'group-reviewer' => 'Vérificateurs d’images',
+	'group-voldev-member' => 'développeur bénévole',
+	'group-voldev' => 'Développeurs bénévoles',
+	'grouppage-helper' => "w:c:communaute:Aide:Niveaux d'accès utilisateur#Assistants",
+	'grouppage-reviewer' => "w:c:communaute:Aide:Niveaux d'accès utilisateur",
+	'grouppage-staff' => "w:c:communaute:Aide:Niveaux d'accès utilisateur#Staff",
+	'grouppage-util' => 'w:c:communaute:Staff',
+	'grouppage-vstf' => "w:c:communaute:Aide:Niveaux d'accès utilisateur#VSTF",
+	'googlesearch' => '<form method="get" action="//www.google.com/search" id="googlesearch">
+	<input type="hidden" name="domains" value="{{SERVER}}" />
+	<input type="hidden" name="num" value="50" />
+	<input type="hidden" name="ie" value="$2" />
+	<input type="hidden" name="oe" value="$2" />
+
+	<input type="text" name="q" size="31" maxlength="255" value="$1" />
+	<input type="submit" name="btnG" value="$3" />
+  <div>
+	<input type="radio" name="sitesearch" id="gwiki" value="{{SERVER}}" checked="checked" /><label for="gwiki">{{SITENAME}}</label>
+	<input type="radio" name="sitesearch" id="gWWW" value="" /><label for="gWWW">WWW</label>
+  </div>
+</form>',
+	'group-vstf' => 'VSTF',
+	'group-vstf-member' => 'VSTF',
+	'group-vanguard' => 'Vanguards',
+	'group-vanguard-member' => 'Vanguard',
+	'grouppage-voldev' => 'w:c:dev:Volunteer_Developers',
+	'group-fandom-editor' => 'News and Stories Wordpress access',
+	'group-fandom-editor-member' => 'News and Stories Wordpress access',
+	'group-global-discussions-moderator' => 'Modérateur global de discussions',
+	'group-global-discussions-moderator-member' => 'Modérateur global de discussions',
+	'group-content-volunteer' => 'Créateurs de contenu bénévoles',
+	'group-content-volunteer-member' => 'Créateur de contenu bénévole',
 );
 
 $messages['frc'] = array(
@@ -2833,6 +2968,83 @@ $messages['io'] = array(
 	'grouppage-bureaucrat' => '{{ns:project}}:Burokrati',
 );
 
+$messages['iris-4622'] = array(
+	'go' => '進入',
+	'gotaccount' => '已經擁有帳號？$1。',
+	'gotaccountlink' => '登入',
+	'googlesearch' => '<form method="get" action="//www.google.com/search" id="googlesearch">
+	<input type="hidden" name="domains" value="{{SERVER}}" />
+	<input type="hidden" name="num" value="50" />
+	<input type="hidden" name="ie" value="$2" />
+	<input type="hidden" name="oe" value="$2" />
+
+	<input type="text" name="q" size="31" maxlength="255" value="$1" />
+	<input type="submit" name="btnG" value="$3" />
+  <div>
+	<input type="radio" name="sitesearch" id="gwiki" value="{{SERVER}}" checked="checked" /><label for="gwiki">{{SITENAME}}</label>
+	<input type="radio" name="sitesearch" id="gWWW" value="" /><label for="gWWW">WWW</label>
+  </div>
+</form>',
+	'guesstimezone' => '從瀏覽器填寫',
+	'gender-unknown' => '不指定',
+	'gender-male' => '男',
+	'gender-female' => '女',
+	'group' => '群組：',
+	'group-user' => '用戶',
+	'group-autoconfirmed' => '自動確認用戶',
+	'group-bot' => '機器人',
+	'group-sysop' => '管理員',
+	'group-bureaucrat' => '行政員',
+	'group-suppress' => '監督員',
+	'group-all' => '（全部）',
+	'group-user-member' => '{{GENDER:$1|用戶}}',
+	'group-autoconfirmed-member' => '自動確認用戶',
+	'group-bot-member' => '機器人',
+	'group-sysop-member' => '{{GENDER:$1|管理員}}',
+	'group-bureaucrat-member' => '行政員',
+	'group-suppress-member' => '監督員',
+	'grouppage-user' => '{{ns:project}}:用戶',
+	'grouppage-autoconfirmed' => '{{ns:project}}:自動確認用戶',
+	'grouppage-bot' => 'Help:機器人',
+	'grouppage-sysop' => '{{ns:project}}:管理員',
+	'grouppage-bureaucrat' => '{{ns:project}}:行政員',
+	'grouppage-suppress' => '{{ns:project}}:監督員',
+	'group-autoconfirmed.css' => '/* 這裡的CSS只會影響自動確認的用戶 */',
+	'group-bot.css' => '/* 這裡的CSS只會影響機器人帳號 */',
+	'group-sysop.css' => '/* 這裡的CSS只會影響管理員 */',
+	'group-bureaucrat.css' => '/* 這裡的CSS只會影響行政員 */',
+	'group-autoconfirmed.js' => '/* 這裡所有的JavaScript只對自動確認用戶載入 */',
+	'group-bot.js' => '/* 這裡所有的JavaScript只對機器人帳號載入 */',
+	'group-sysop.js' => '/* 這裡所有的JavaScript只對管理員載入 */',
+	'group-bureaucrat.js' => '/* 這裡所有的JavaScript只對行政員載入 */',
+	'group-vstf' => 'VSTF',
+	'group-vstf-member' => 'VSTF',
+	'grouppage-vstf' => 'w:c:zh.community:Help:反破壞小組',
+	'group-helper' => 'FANDOM助手',
+	'group-helper-member' => 'FANDOM助手',
+	'grouppage-helper' => 'Help:Volunteers and Helpers',
+	'group-staff' => 'FANDOM工作人員',
+	'group-staff-member' => 'FANDOM工作人員',
+	'grouppage-staff' => 'w:c:zh.community:Community_Central:Staff',
+	'group-util' => 'FANDOM Utilities',
+	'group-util-member' => 'FANDOM Utilities',
+	'grouppage-util' => 'w:c:zh.community:Community_Central:Staff',
+	'group-reviewer' => '圖像審核員',
+	'group-reviewer-member' => '圖像審核員',
+	'grouppage-reviewer' => 'w:c:zh.community:Help:用戶權限',
+	'group-vanguard' => '先鋒',
+	'group-vanguard-member' => '先鋒',
+	'group-voldev' => '志願開發者',
+	'group-voldev-member' => '志願開發者',
+	'grouppage-voldev' => 'w:c:dev:Volunteer_Developers',
+	'group-content-moderator' => '內容版主',
+	'group-content-moderator-member' => '內容版主',
+	'group-fandom-editor' => 'News and Stories Wordpress access',
+	'group-fandom-editor-member' => 'News and Stories Wordpress access',
+	'group-global-discussions-moderator' => '全站話題版主',
+	'group-global-discussions-moderator-member' => '全站話題版主',
+);
+
 $messages['is'] = array(
 	'go' => 'Áfram',
 	'gotaccount' => "Nú þegar með notandanafn? '''$1'''.",
@@ -2865,12 +3077,12 @@ $messages['is'] = array(
 
 $messages['it'] = array(
 	'go' => 'Vai',
-	'gotaccount' => "Hai già un accesso? '''$1'''.",
-	'gotaccountlink' => 'Entra',
+	'gotaccount' => 'Hai già un account? $1.',
+	'gotaccountlink' => 'Accedi',
 	'guesstimezone' => "Usa l'ora del browser",
 	'gender-unknown' => 'Non specificato',
-	'gender-male' => 'Maschile',
-	'gender-female' => 'Femminile',
+	'gender-male' => 'Maschio',
+	'gender-female' => 'Femmina',
 	'group' => 'Gruppo:',
 	'group-user' => 'Utenti',
 	'group-autoconfirmed' => 'Utenti autoconvalidati',
@@ -2878,29 +3090,68 @@ $messages['it'] = array(
 	'group-sysop' => 'Amministratori',
 	'group-bureaucrat' => 'Burocrati',
 	'group-suppress' => 'Oversight',
-	'group-all' => 'Utenti',
+	'group-all' => '(tutti)',
 	'group-user-member' => '{{GENDER:$1|utente}}',
 	'group-autoconfirmed-member' => '{{GENDER:$1|utente autoconvalidato|utente autoconvalidata|utente autoconvalidato/a}}',
 	'group-bot-member' => '{{GENDER:$1|bot}}',
 	'group-sysop-member' => '{{GENDER:$1|amministratore|amministratrice|amministratore/trice}}',
 	'group-bureaucrat-member' => '{{GENDER:$1|burocrate}}',
 	'group-suppress-member' => '{{GENDER:$1|oversight}}',
-	'grouppage-user' => '{{ns:project}}:Utenti',
-	'grouppage-autoconfirmed' => '{{ns:project}}:Utenti autoconvalidati',
-	'grouppage-bot' => '{{ns:project}}:Bot',
-	'grouppage-sysop' => '{{ns:project}}:Amministratori',
-	'grouppage-bureaucrat' => '{{ns:project}}:Burocrati',
-	'grouppage-suppress' => '{{ns:project}}:Oversight',
+	'grouppage-user' => 'w:it:Aiuto:Diritti degli utenti#Utenti registrati',
+	'grouppage-autoconfirmed' => 'w:it:Aiuto:Diritti degli utenti#Utenti autoconvalidati',
+	'grouppage-bot' => 'w:it:Aiuto:Diritti degli utenti#Bot',
+	'grouppage-sysop' => 'w:it:Aiuto:Diritti degli utenti#Amministratori',
+	'grouppage-bureaucrat' => 'w:it:Aiuto:Diritti degli utenti#Burocrati',
+	'grouppage-suppress' => 'w:it:Aiuto:Diritti degli utenti#Oversight',
 	'group-autoconfirmed.css' => '/ * Gli stili CSS inseriti qui si applicheranno solo ad utenti autoconvalidati * /',
 	'group-bot.css' => '/ * Gli stili CSS inseriti qui si applicheranno solo ai bot * /',
-	'group-sysop.css' => '/ * Gli stili CSS inseriti qui si applicheranno solo agli amministratori/sysop * /',
+	'group-sysop.css' => '/ * Gli stili CSS inseriti qui si applicheranno solo agli amministratori * /',
 	'group-bureaucrat.css' => '/ * Gli stili CSS inseriti qui si applicheranno solo ai burocrati * /',
 	'group-autoconfirmed.js' => '/ * Il codice JavaScript inserito qui viene caricato solo per gli utenti autoconvalidati * /',
 	'group-bot.js' => '/ * Il codice JavaScript inserito qui viene caricato solo per i bot * /',
-	'group-sysop.js' => '/ * Il codice JavaScript inserito qui viene caricato solo per gli amministratori/sysop * /',
+	'group-sysop.js' => '/ * Il codice JavaScript inserito qui viene caricato solo per gli amministratori * /',
 	'group-bureaucrat.js' => '/ * Il codice JavaScript inserito qui viene caricato solo per i burocrati * /',
 	'group-content-moderator' => 'Moderatori di contenuti',
 	'group-content-moderator-member' => 'Moderatore di contenuti',
+	'group-helper' => 'Helper di FANDOM',
+	'group-helper-member' => 'Helper di FANDOM',
+	'group-staff' => 'Staff di FANDOM',
+	'group-staff-member' => 'Staff di FANDOM',
+	'group-util' => 'FANDOM Utilities',
+	'group-util-member' => 'FANDOM Utilities',
+	'googlesearch' => '<form method="get" action="//www.google.com/search" id="googlesearch">
+	<input type="hidden" name="domains" value="{{SERVER}}" />
+	<input type="hidden" name="num" value="50" />
+	<input type="hidden" name="ie" value="$2" />
+	<input type="hidden" name="oe" value="$2" />
+
+	<input type="text" name="q" size="31" maxlength="255" value="$1" />
+	<input type="submit" name="btnG" value="$3" />
+  <div>
+	<input type="radio" name="sitesearch" id="gwiki" value="{{SERVER}}" checked="checked" /><label for="gwiki">{{SITENAME}}</label>
+	<input type="radio" name="sitesearch" id="gWWW" value="" /><label for="gWWW">WWW</label>
+  </div>
+</form>',
+	'group-vstf' => 'VSTF',
+	'group-vstf-member' => 'VSTF',
+	'grouppage-vstf' => 'w:it:Aiuto:Diritti degli utenti#VSTF',
+	'grouppage-helper' => 'w:it:Aiuto:Diritti degli utenti#Helper',
+	'grouppage-staff' => 'w:it:Aiuto:Diritti degli utenti#Staff',
+	'grouppage-util' => 'w:it:Aiuto:Diritti degli utenti#Utilities',
+	'group-reviewer' => 'Revisori di immagini',
+	'group-reviewer-member' => 'Revisore di immagini',
+	'grouppage-reviewer' => 'w:it:Aiuto:Diritti degli utenti#Altri',
+	'group-vanguard' => 'Vanguard',
+	'group-vanguard-member' => 'Vanguard',
+	'group-voldev' => 'Volunteer Developer',
+	'group-voldev-member' => 'Volunteer Developer',
+	'grouppage-voldev' => 'w:c:dev:Volunteer_Developers',
+	'group-fandom-editor' => 'News and Stories Wordpress access',
+	'group-fandom-editor-member' => 'News and Stories Wordpress access',
+	'group-global-discussions-moderator' => 'Moderatore globale di Discussioni',
+	'group-global-discussions-moderator-member' => 'Moderatore globale di Discussioni',
+	'group-content-volunteer' => 'Volontari per i contenuti',
+	'group-content-volunteer-member' => 'Volontario per i contenuti',
 );
 
 $messages['iu'] = array(
@@ -2944,43 +3195,82 @@ $messages['iu'] = array(
 );
 
 $messages['ja'] = array(
-	'go' => '表示',
+	'go' => '実行',
 	'gotaccount' => '既にアカウントを持っている場合、$1。',
 	'gotaccountlink' => 'ログインしてください',
 	'guesstimezone' => 'ブラウザの設定から入力',
 	'gender-unknown' => '未指定',
-	'gender-male' => '男',
-	'gender-female' => '女',
+	'gender-male' => '男性',
+	'gender-female' => '女性',
 	'group' => 'グループ：',
-	'group-user' => '利用者',
-	'group-autoconfirmed' => '自動承認された利用者',
+	'group-user' => 'ユーザー',
+	'group-autoconfirmed' => '自動承認されたユーザー',
 	'group-bot' => 'ボット',
-	'group-sysop' => '管理者',
+	'group-sysop' => 'アドミン',
 	'group-bureaucrat' => 'ビューロクラット',
 	'group-suppress' => '秘匿者',
 	'group-all' => '（全員）',
-	'group-user-member' => '{{GENDER:$1|利用者}}',
-	'group-autoconfirmed-member' => '{{GENDER:$1|自動承認された利用者}}',
+	'group-user-member' => '{{GENDER:$1|ユーザー}}',
+	'group-autoconfirmed-member' => '{{GENDER:$1|自動承認されたユーザー}',
 	'group-bot-member' => '{{GENDER:$1|ボット}}',
-	'group-sysop-member' => '{{GENDER:$1|管理者}}',
+	'group-sysop-member' => '{{GENDER:$1|アドミン}}',
 	'group-bureaucrat-member' => '{{GENDER:$1|ビューロクラット}}',
 	'group-suppress-member' => '{{GENDER:$1|秘匿者}}',
-	'grouppage-user' => '{{ns:project}}:利用者',
-	'grouppage-autoconfirmed' => '{{ns:project}}:自動承認された利用者',
-	'grouppage-bot' => '{{ns:project}}:ボット',
-	'grouppage-sysop' => '{{ns:project}}:管理者',
+	'grouppage-user' => '{{ns:project}}:ユーザー',
+	'grouppage-autoconfirmed' => '{{ns:project}}:自動承認されたユーザー',
+	'grouppage-bot' => 'ヘルプ:ボット',
+	'grouppage-sysop' => '{{ns:project}}:アドミン',
 	'grouppage-bureaucrat' => '{{ns:project}}:ビューロクラット',
 	'grouppage-suppress' => '{{ns:project}}:秘匿者',
-	'group-autoconfirmed.css' => '/* ここに記述したCSSは自動承認された利用者のみに影響します */',
+	'group-autoconfirmed.css' => '/* ここに記述したCSSは自動承認されたユーザーのみに影響します */',
 	'group-bot.css' => '/* ここに記述したCSSはボットのみに影響します */',
-	'group-sysop.css' => '/* ここに記述したCSSは管理者のみに影響します */',
+	'group-sysop.css' => '/* ここに記述したCSSはアドミンのみに影響します */',
 	'group-bureaucrat.css' => '/* ここに記述したCSSはビューロクラットのみに影響します */',
-	'group-autoconfirmed.js' => '/* ここにあるすべてのJavaScriptは、自動承認された利用者に対して読み込まれます */',
+	'group-autoconfirmed.js' => '/* ここにあるすべてのJavaScriptは、自動承認されたユーザーに対して読み込まれます */',
 	'group-bot.js' => '/* ここにあるすべてのJavaScriptは、ボットのみに対して読み込まれます */',
-	'group-sysop.js' => '/* ここにあるすべてのJavaScriptは、管理者のみに対して読み込まれます */',
+	'group-sysop.js' => '/* ここにあるすべてのJavaScriptは、アドミンのみに対して読み込まれます */',
 	'group-bureaucrat.js' => '/* ここにあるすべてのJavaScriptは、ビューロクラットのみに対して読み込まれます */',
 	'group-content-moderator' => 'コンテンツ・モデレーター',
 	'group-content-moderator-member' => 'コンテンツ・モデレーター',
+	'group-helper' => 'FANDOMヘルパー',
+	'group-helper-member' => 'FANDOMヘルパー',
+	'group-util' => 'FANDOMのユーティリティ・メンバー',
+	'group-util-member' => 'FANDOMのユーティリティ・メンバー',
+	'group-staff' => 'FANDOMスタッフ',
+	'group-staff-member' => 'FANDOMスタッフ',
+	'group-voldev-member' => 'ボランティア・デベロッパー',
+	'group-voldev' => 'ボランティア・デベロッパー',
+	'grouppage-helper' => 'W:c:ja.community:ヘルプ:ボランティアとヘルパー',
+	'grouppage-vstf' => 'w:c:ja.community:ヘルプ:スパムタスクフォース',
+	'googlesearch' => '<form method="get" action="//www.google.com/search" id="googlesearch">
+	<input type="hidden" name="domains" value="{{SERVER}}" />
+	<input type="hidden" name="num" value="50" />
+	<input type="hidden" name="ie" value="$2" />
+	<input type="hidden" name="oe" value="$2" />
+
+	<input type="text" name="q" size="31" maxlength="255" value="$1" />
+	<input type="submit" name="btnG" value="$3" />
+  <div>
+	<input type="radio" name="sitesearch" id="gwiki" value="{{SERVER}}" checked="checked" /><label for="gwiki">{{SITENAME}}</label>
+	<input type="radio" name="sitesearch" id="gWWW" value="" /><label for="gWWW">WWW</label>
+  </div>
+</form>',
+	'group-vstf' => 'VSTF',
+	'group-vstf-member' => 'VSTF',
+	'grouppage-staff' => 'wikia:コミュニティセントラル:スタッフ',
+	'grouppage-util' => 'wikia:コミュニティセントラル:スタッフ',
+	'group-reviewer' => '画像審査メンバー',
+	'group-reviewer-member' => '画像審査メンバー',
+	'grouppage-reviewer' => 'wikia:コミュニティセントラル:画像審査',
+	'group-vanguard' => 'ヴァンガード',
+	'group-vanguard-member' => 'ヴァンガードのメンバー',
+	'grouppage-voldev' => 'w:c:dev:Volunteer_Developers',
+	'group-fandom-editor' => 'News and Stories Wordpress access',
+	'group-fandom-editor-member' => 'News and Stories Wordpress access',
+	'group-global-discussions-moderator' => 'グローバル・ディスカッション・モデレーター',
+	'group-global-discussions-moderator-member' => 'グローバル・ディスカッション・モデレーター',
+	'group-content-volunteer' => 'コンテンツ・ボランティア',
+	'group-content-volunteer-member' => 'コンテンツ・ボランティア',
 );
 
 $messages['jam'] = array(
@@ -3415,6 +3705,12 @@ $messages['ko'] = array(
 	'grouppage-sysop' => '{{ns:project}}:관리자',
 	'grouppage-bureaucrat' => '{{ns:project}}:사무관',
 	'grouppage-suppress' => '{{ns:project}}:오버사이트',
+	'group-helper' => '위키아 헬퍼',
+	'group-helper-member' => '위키아 헬퍼',
+	'group-util' => '위키아 유틸리티',
+	'group-util-member' => '위키아 유틸리티',
+	'group-voldev-member' => '자원봉사 개발자',
+	'group-voldev' => '자원봉사 개발자',
 );
 
 $messages['ko-kp'] = array(
@@ -4557,7 +4853,7 @@ $messages['niu'] = array(
 
 $messages['nl'] = array(
 	'go' => 'OK',
-	'gotaccount' => 'Hebt u al een gebruikersnaam? $1.',
+	'gotaccount' => "Heb je al een gebruikersnaam? '''$1'''.",
 	'gotaccountlink' => 'Aanmelden',
 	'guesstimezone' => 'Vanuit de browser toevoegen',
 	'gender-unknown' => 'Niet aangegeven',
@@ -4593,6 +4889,43 @@ $messages['nl'] = array(
 	'group-bureaucrat.js' => '/* JavaScript die hier wordt geplaatst heeft alleen invloed op bureaucraten */',
 	'group-content-moderator' => 'Inhoudmoderatoren',
 	'group-content-moderator-member' => 'Inhoudmoderator',
+	'group-vstf' => 'VSTF',
+	'googlesearch' => '<form method="get" action="//www.google.com/search" id="googlesearch">
+	<input type="hidden" name="domains" value="{{SERVER}}" />
+	<input type="hidden" name="num" value="50" />
+	<input type="hidden" name="ie" value="$2" />
+	<input type="hidden" name="oe" value="$2" />
+
+	<input type="text" name="q" size="31" maxlength="255" value="$1" />
+	<input type="submit" name="btnG" value="$3" />
+  <div>
+	<input type="radio" name="sitesearch" id="gwiki" value="{{SERVER}}" checked="checked" /><label for="gwiki">{{SITENAME}}</label>
+	<input type="radio" name="sitesearch" id="gWWW" value="" /><label for="gWWW">WWW</label>
+  </div>
+</form>',
+	'group-vstf-member' => 'VSTF',
+	'grouppage-vstf' => 'w:Wikia:SpamTaskForce',
+	'group-helper' => 'FANDOM Helpers',
+	'group-helper-member' => 'FANDOM Helper',
+	'grouppage-helper' => 'Help:Helper Group',
+	'group-staff' => 'FANDOM Staff',
+	'group-staff-member' => 'FANDOM Staff',
+	'grouppage-staff' => 'wikia:Community_Central:Staff',
+	'group-util' => 'FANDOM Utilities',
+	'group-util-member' => 'FANDOM Utilities',
+	'grouppage-util' => 'wikia:Community_Central:Staff',
+	'group-reviewer' => 'Image Reviewers',
+	'group-reviewer-member' => 'Image Reviewer',
+	'grouppage-reviewer' => 'wikia:Community_Central:Image_review',
+	'group-vanguard' => 'Vanguards',
+	'group-vanguard-member' => 'Vanguard',
+	'group-voldev' => 'Volunteer Developers',
+	'group-voldev-member' => 'Volunteer Developer',
+	'grouppage-voldev' => 'w:c:dev:Volunteer_Developers',
+	'group-fandom-editor' => 'News and Stories Wordpress access',
+	'group-fandom-editor-member' => 'News and Stories Wordpress access',
+	'group-global-discussions-moderator' => 'Global Discussions Moderator',
+	'group-global-discussions-moderator-member' => 'Global Discussions Moderator',
 );
 
 $messages['nl-informal'] = array(
@@ -4657,6 +4990,8 @@ $messages['no'] = array(
 	'grouppage-sysop' => '{{ns:project}}:Administratorar',
 	'grouppage-bureaucrat' => '{{ns:project}}:Byråkratar',
 	'grouppage-suppress' => '{{ns:project}}:Historikkfjerning',
+	'group-helper' => 'Hjelpere',
+	'group-helper-member' => 'Hjelper',
 );
 
 $messages['nov'] = array(
@@ -4872,7 +5207,7 @@ $messages['pl'] = array(
 	'gender-unknown' => 'nie określono',
 	'gender-male' => 'mężczyzna',
 	'gender-female' => 'kobieta',
-	'group' => 'Grupa',
+	'group' => 'Grupa:',
 	'group-user' => 'Użytkownicy',
 	'group-autoconfirmed' => 'Automatycznie zatwierdzeni użytkownicy',
 	'group-bot' => 'Boty',
@@ -4882,18 +5217,65 @@ $messages['pl'] = array(
 	'group-all' => '(wszyscy)',
 	'group-user-member' => '{{GENDER:$1|użytkownik|użytkowniczka}}',
 	'group-autoconfirmed-member' => '{{GENDER:$1|automatycznie zatwierdzony użytkownik|automatycznie zatwierdzona użytkowniczka}}',
-	'group-bot-member' => '{{GENDER:$1|bot}}',
-	'group-sysop-member' => '{{GENDER:$1|administrator|administratorka}}',
-	'group-bureaucrat-member' => '{{GENDER:$1|biurokrata|biurokratka}}',
+	'group-bot-member' => 'bot',
+	'group-sysop-member' => 'administrator',
+	'group-bureaucrat-member' => 'biurokrata',
 	'group-suppress-member' => '{{GENDER:$1|rewizor|rewizorka}}',
-	'grouppage-user' => '{{ns:project}}:Użytkownicy',
-	'grouppage-autoconfirmed' => '{{ns:project}}:Automatycznie zatwierdzeni użytkownicy',
-	'grouppage-bot' => '{{ns:project}}:Boty',
+	'grouppage-user' => 'w:pl:Pomoc:Uprawnienia grup użytkowników#Zalogowani użytkownicy',
+	'grouppage-autoconfirmed' => 'w:pl:Pomoc:Uprawnienia grup użytkowników#Automatycznie zatwierdzeni użytkownicy',
+	'grouppage-bot' => 'w:pl:Pomoc:Boty',
 	'grouppage-sysop' => '{{ns:project}}:Administratorzy',
-	'grouppage-bureaucrat' => '{{ns:project}}:Biurokraci',
+	'grouppage-bureaucrat' => '{{ns:project}}:Administratorzy',
 	'grouppage-suppress' => '{{ns:project}}:Rewizorzy',
 	'group-content-moderator' => 'Moderatorzy treści',
-	'group-content-moderator-member' => 'Moderator treści',
+	'group-content-moderator-member' => 'moderator treści',
+	'group-helper' => 'Helperzy',
+	'group-helper-member' => 'helper',
+	'group-staff' => 'FANDOM Staff',
+	'group-staff-member' => 'FANDOM Staff',
+	'group-util' => 'FANDOM Utilities',
+	'group-util-member' => 'FANDOM Utilities',
+	'group-autoconfirmed.css' => '/* Umieszczony tutaj kod CSS dotyczyć będzie tylko automatycznie zatwierdzonych użytkowników */',
+	'group-autoconfirmed.js' => '/* Umieszczony tutaj kod JavaScript dotyczyć będzie tylko automatycznie zatwierdzonych użytkowników */',
+	'group-bot.css' => '/* Umieszczony tutaj kod CSS dotyczyć będzie tylko botów */',
+	'group-bot.js' => '/* Umieszczony tutaj kod JavaScript dotyczyć będzie tylko botów */',
+	'group-bureaucrat.css' => '/* Umieszczony tutaj kod CSS dotyczyć będzie tylko biurokratów */',
+	'group-bureaucrat.js' => '/* Umieszczony tutaj kod JavaScript dotyczyć będzie tylko biurokratów */',
+	'group-sysop.css' => '/* Umieszczony tutaj kod CSS dotyczyć będzie tylko administratorów */',
+	'group-sysop.js' => '/* Umieszczony tutaj kod JavaScript dotyczyć będzie tylko administratorów */',
+	'grouppage-helper' => 'w:pl:Pomoc:Helperzy',
+	'grouppage-staff' => 'w:pl:Pomoc:FANDOM Staff',
+	'grouppage-util' => 'w:pl:Pomoc:Utilities',
+	'grouppage-vstf' => 'w:pl:Pomoc:Volunteer_Spam_Task_Force',
+	'googlesearch' => '<form method="get" action="//www.google.com/search" id="googlesearch">
+	<input type="hidden" name="domains" value="{{SERVER}}" />
+	<input type="hidden" name="num" value="50" />
+	<input type="hidden" name="ie" value="$2" />
+	<input type="hidden" name="oe" value="$2" />
+
+	<input type="text" name="q" size="31" maxlength="255" value="$1" />
+	<input type="submit" name="btnG" value="$3" />
+  <div>
+	<input type="radio" name="sitesearch" id="gwiki" value="{{SERVER}}" checked="checked" /><label for="gwiki">{{SITENAME}}</label>
+	<input type="radio" name="sitesearch" id="gWWW" value="" /><label for="gWWW">WWW</label>
+  </div>
+</form>',
+	'group-vstf' => 'VSTF',
+	'group-vstf-member' => 'VSTF',
+	'group-reviewer' => 'Kontrolerzy obrazów',
+	'group-reviewer-member' => 'kontroler obrazów',
+	'grouppage-reviewer' => 'wikia:Community_Central:Image_review',
+	'group-vanguard' => 'Vanguards',
+	'group-vanguard-member' => 'vanguard',
+	'group-voldev' => 'Volunteer Developers',
+	'group-voldev-member' => 'volunteer developer',
+	'grouppage-voldev' => 'w:c:dev:Volunteer_Developers',
+	'group-fandom-editor' => 'News and Stories Wordpress access',
+	'group-fandom-editor-member' => 'News and Stories Wordpress access',
+	'group-global-discussions-moderator' => 'Globalni moderatorzy Dyskusji',
+	'group-global-discussions-moderator-member' => 'globalny moderator Dyskusji',
+	'group-content-volunteer' => 'Wolontariusze treści',
+	'group-content-volunteer-member' => 'wolontariusz treści',
 );
 
 $messages['pms'] = array(
@@ -5035,65 +5417,82 @@ $messages['ps'] = array(
 );
 
 $messages['pt'] = array(
-	'go' => 'Prosseguir',
-	'gotaccount' => "Já possui uma conta? '''$1'''.",
-	'gotaccountlink' => 'Autentique-se',
-	'guesstimezone' => 'Preencher a partir do browser',
-	'gender-unknown' => 'Não especificado',
-	'gender-male' => 'Masculino',
-	'gender-female' => 'Feminino',
-	'group' => 'Grupo:',
-	'group-user' => 'Utilizadores',
-	'group-autoconfirmed' => 'Utilizadores auto-confirmados',
-	'group-bot' => 'Robôs',
-	'group-sysop' => 'Administradores',
-	'group-bureaucrat' => 'Burocratas',
-	'group-suppress' => 'Supervisores',
-	'group-all' => '(todos)',
-	'group-user-member' => '{{GENDER:$1|utilizador|utilizadora}}',
-	'group-autoconfirmed-member' => '{{GENDER:$1|utilizador autoconfirmado|utilizadora autoconfirmada}}',
-	'group-bot-member' => 'robô',
-	'group-sysop-member' => '{{GENDER:$1|administrador|administradora}}',
-	'group-bureaucrat-member' => 'burocrata',
-	'group-suppress-member' => '{{GENDER:$1|supressor|supressora}}',
-	'grouppage-user' => '{{ns:project}}:Utilizadores',
-	'grouppage-autoconfirmed' => '{{ns:project}}:Auto-confirmados',
-	'grouppage-bot' => '{{ns:project}}:Robôs',
-	'grouppage-sysop' => '{{ns:project}}:Administradores',
-	'grouppage-bureaucrat' => '{{ns:project}}:Burocratas',
-	'grouppage-suppress' => '{{ns:project}}:Supervisores',
-	'group-content-moderator' => 'Moderadores de conteúdo',
-	'group-content-moderator-member' => 'Moderador de conteúdo',
-);
-
-$messages['pt-br'] = array(
 	'go' => 'Ir',
-	'gotaccount' => "Já possui uma conta? '''$1'''.",
-	'gotaccountlink' => 'Autenticar-se',
+	'gotaccount' => 'Já possui uma conta? $1.',
+	'gotaccountlink' => 'Iniciar sessão',
 	'guesstimezone' => 'Preencher a partir do navegador',
 	'gender-unknown' => 'Não especificado',
 	'gender-male' => 'Masculino',
 	'gender-female' => 'Feminino',
 	'group' => 'Grupo:',
 	'group-user' => 'Usuários',
-	'group-autoconfirmed' => 'Usuários auto-confirmados',
+	'group-autoconfirmed' => 'Usuários autoconfirmados',
 	'group-bot' => 'Robôs',
 	'group-sysop' => 'Administradores',
 	'group-bureaucrat' => 'Burocratas',
 	'group-suppress' => 'Oversights',
 	'group-all' => '(todos)',
-	'group-user-member' => '{{GENDER:$1|usuário|usuária}}',
-	'group-autoconfirmed-member' => '{{GENDER:$1|usuário autoconfirmado|usuária autoconfirmada}}',
-	'group-bot-member' => 'robô',
-	'group-sysop-member' => '{{GENDER:$1|administrador|administradora}}',
-	'group-bureaucrat-member' => 'burocrata',
+	'group-user-member' => '{{GENDER:$1|usuário}}',
+	'group-autoconfirmed-member' => '{{GENDER:$1|usuário autoconfirmado}}',
+	'group-bot-member' => '{{GENDER:$1|robô}}',
+	'group-sysop-member' => '{{GENDER:$1|administrador}}',
+	'group-bureaucrat-member' => '{{GENDER:$1|burocrata}}',
 	'group-suppress-member' => '{{GENDER:$1|supressor|supressora}}',
 	'grouppage-user' => '{{ns:project}}:Usuários',
-	'grouppage-autoconfirmed' => '{{ns:project}}:Auto-confirmados',
-	'grouppage-bot' => '{{ns:project}}:Robôs',
+	'grouppage-autoconfirmed' => '{{ns:project}}:Usuários autoconfirmados',
+	'grouppage-bot' => 'Ajuda:Robôs',
 	'grouppage-sysop' => '{{ns:project}}:Administradores',
 	'grouppage-bureaucrat' => '{{ns:project}}:Burocratas',
 	'grouppage-suppress' => '{{ns:project}}:Oversight',
+	'group-content-moderator' => 'Moderadores de conteúdo',
+	'group-content-moderator-member' => 'Moderador de conteúdo',
+	'group-helper' => 'Ajudantes do FANDOM',
+	'group-helper-member' => 'Ajudante do FANDOM',
+	'group-staff' => 'Staff do FANDOM',
+	'group-staff-member' => 'Staff do FANDOM',
+	'group-util' => 'Utilitários do FANDOM',
+	'group-util-member' => 'Utilitários do FANDOM',
+	'googlesearch' => '<form method="get" action="//www.google.com/search" id="googlesearch">
+	<input type="hidden" name="domains" value="{{SERVER}}" />
+	<input type="hidden" name="num" value="50" />
+	<input type="hidden" name="ie" value="$2" />
+	<input type="hidden" name="oe" value="$2" />
+
+	<input type="text" name="q" size="31" maxlength="255" value="$1" />
+	<input type="submit" name="btnG" value="$3" />
+  <div>
+	<input type="radio" name="sitesearch" id="gwiki" value="{{SERVER}}" checked="checked" /><label for="gwiki">{{SITENAME}}</label>
+	<input type="radio" name="sitesearch" id="gWWW" value="" /><label for="gWWW">WWW</label>
+  </div>
+</form>',
+	'group-autoconfirmed.css' => '/* CSS colocado aqui afetará apenas usuários autoconfirmados */',
+	'group-bot.css' => '/* CSS colocado aqui afetará apenas robôs*/',
+	'group-sysop.css' => '/* CSS colocado aqui afetará apenas sysops */',
+	'group-bureaucrat.css' => '/* CSS colocado aqui afetará apenas burocratas */',
+	'group-autoconfirmed.js' => '/* Qualquer JavaScript colocado aqui afetará apenas usuários autoconfirmados */',
+	'group-bot.js' => '/* Qualquer JavaScript aqui será carregado apenas para robôs */',
+	'group-sysop.js' => '/* Qualquer JavaScript aqui será carregado apenas para sysops */',
+	'group-bureaucrat.js' => '/* Qualquer JavaScript aqui será carregado apenas para burocratas */',
+	'group-vstf' => 'VSTF',
+	'group-vstf-member' => 'VSTF',
+	'grouppage-vstf' => 'w:Wikia:SpamTaskForce',
+	'grouppage-helper' => 'Ajuda:Grupo de ajuda',
+	'grouppage-staff' => 'wikia:CentraldaComuidade: staff',
+	'grouppage-util' => 'wikia:CentraldaComunidade:staff',
+	'group-reviewer' => 'Revisores de imagem',
+	'group-reviewer-member' => 'Revisor de imagem',
+	'grouppage-reviewer' => 'wikia:CentraldaComunidade:revisãodeimagem',
+	'group-vanguard' => 'Vanguarda',
+	'group-vanguard-member' => 'Vanguarda',
+	'group-voldev' => 'Desenvolvedores voluntários',
+	'group-voldev-member' => 'Desenvolvedor voluntário',
+	'grouppage-voldev' => 'w:c:dev:Desenvolvedores_voluntários',
+	'group-fandom-editor' => 'Acesso a histórias e notícias Wordpress',
+	'group-fandom-editor-member' => 'Acesso a histórias e notícias Wordpress',
+	'group-global-discussions-moderator' => 'Moderador global de discussões',
+	'group-global-discussions-moderator-member' => 'Moderador global de discussões',
+	'group-content-volunteer' => 'Voluntários de conteúdo',
+	'group-content-volunteer-member' => 'Voluntário de conteúdo',
 );
 
 $messages['qu'] = array(
@@ -5270,12 +5669,12 @@ $messages['roa-tara'] = array(
 
 $messages['ru'] = array(
 	'go' => 'Перейти',
-	'gotaccount' => "Вы уже зарегистрированы? '''$1'''.",
-	'gotaccountlink' => 'Представьтесь',
+	'gotaccount' => 'Уже есть учётная запись? $1.',
+	'gotaccountlink' => 'Войти',
 	'guesstimezone' => 'Заполнить из браузера',
-	'gender-unknown' => 'не указан',
-	'gender-male' => 'мужской',
-	'gender-female' => 'женский',
+	'gender-unknown' => 'Не указан',
+	'gender-male' => 'Мужской',
+	'gender-female' => 'Женский',
 	'group' => 'Группа:',
 	'group-user' => 'Участники',
 	'group-autoconfirmed' => 'Автоподтверждённые участники',
@@ -5292,16 +5691,59 @@ $messages['ru'] = array(
 	'group-suppress-member' => '{{GENDER:$1|ревизор}}',
 	'grouppage-user' => '{{ns:project}}:Участники',
 	'grouppage-autoconfirmed' => '{{ns:project}}:Автоподтверждённые участники',
-	'grouppage-bot' => '{{ns:project}}:Боты',
+	'grouppage-bot' => 'Справка:Боты',
 	'grouppage-sysop' => '{{ns:project}}:Администраторы',
 	'grouppage-bureaucrat' => '{{ns:project}}:Бюрократы',
 	'grouppage-suppress' => '{{ns:project}}:Ревизоры',
-	'group-autoconfirmed.css' => '/* Размещённый здесь CSS будет применяться для автоподтверждённых участников */',
+	'group-autoconfirmed.css' => '/* Размещённый здесь CSS будет применяться только для автоподтверждённых участников */',
 	'group-bot.css' => '/* Размещённый здесь CSS будет применяться только для ботов */',
 	'group-sysop.css' => '/* Размещённый здесь CSS будет применяться только для администраторов */',
 	'group-bureaucrat.css' => '/* Размещённый здесь CSS будет применяться только для бюрократов */',
 	'group-content-moderator' => 'Модераторы контента',
 	'group-content-moderator-member' => 'Модератор контента',
+	'group-helper' => 'Помощники ФЭНДОМА',
+	'group-helper-member' => 'Помощник ФЭНДОМА',
+	'group-staff' => 'Сотрудники ФЭНДОМА',
+	'group-staff-member' => 'Сотрудник ФЭНДОМА',
+	'group-util' => 'FANDOM Utilities',
+	'group-util-member' => 'FANDOM Utilities',
+	'googlesearch' => '<form method="get" action="//www.google.com/search" id="googlesearch">
+	<input type="hidden" name="domains" value="{{SERVER}}" />
+	<input type="hidden" name="num" value="50" />
+	<input type="hidden" name="ie" value="$2" />
+	<input type="hidden" name="oe" value="$2" />
+
+	<input type="text" name="q" size="31" maxlength="255" value="$1" />
+	<input type="submit" name="btnG" value="$3" />
+  <div>
+	<input type="radio" name="sitesearch" id="gwiki" value="{{SERVER}}" checked="checked" /><label for="gwiki">{{SITENAME}}</label>
+	<input type="radio" name="sitesearch" id="gWWW" value="" /><label for="gWWW">WWW</label>
+  </div>
+</form>',
+	'group-autoconfirmed.js' => '/* Размещенный здесь JavaScript код будет загружаться только для автоподтверждённых участников */',
+	'group-bot.js' => '/* Размещенный здесь JavaScript код будет загружаться только для ботов */',
+	'group-sysop.js' => '/* Размещенный здесь JavaScript код будет загружаться только для администраторов */',
+	'group-bureaucrat.js' => '/* Размещенный здесь JavaScript код будет загружаться только для бюрократов */',
+	'group-vstf' => 'VSTF',
+	'group-vstf-member' => 'VSTF',
+	'grouppage-vstf' => 'w:Wikia:SpamTaskForce',
+	'grouppage-helper' => 'Справка:Помощники и волонтёры',
+	'grouppage-staff' => 'wikia:Community_Central:Staff',
+	'grouppage-util' => 'wikia:Community_Central:Staff',
+	'group-reviewer' => 'Проверяющие изображения',
+	'group-reviewer-member' => 'Проверяющий изображения',
+	'grouppage-reviewer' => 'wikia:Community_Central:Image_review',
+	'group-vanguard' => 'Vanguards',
+	'group-vanguard-member' => 'Vanguard',
+	'group-voldev' => 'Разработчики-волонтёры',
+	'group-voldev-member' => 'Разработчик-волонтёр',
+	'grouppage-voldev' => 'w:c:dev:Разработчики_Волонтеры',
+	'group-fandom-editor' => 'News and Stories Wordpress access',
+	'group-fandom-editor-member' => 'News and Stories Wordpress access',
+	'group-global-discussions-moderator' => 'Модераторы Обсуждений ФЭНДОМА',
+	'group-global-discussions-moderator-member' => 'Модератор Обсуждений ФЭНДОМА',
+	'group-content-volunteer' => 'Content Volunteers',
+	'group-content-volunteer-member' => 'Content Volunteer',
 );
 
 $messages['rue'] = array(
@@ -5783,36 +6225,6 @@ $messages['sq'] = array(
 	'grouppage-suppress' => '{{ns:project}}:Kujdestari',
 );
 
-$messages['sr'] = array(
-	'go' => 'Shko',
-	'gotaccount' => "Keni një llogari? '''$1'''.",
-	'gotaccountlink' => 'Hyni',
-	'guesstimezone' => 'Gjeje nga shfletuesi',
-	'gender-unknown' => 'e pacaktuar',
-	'gender-male' => 'Mashkull',
-	'gender-female' => 'Femër',
-	'group' => 'Grupi:',
-	'group-user' => 'Përdorues',
-	'group-autoconfirmed' => 'Përdorues të vërtetuar automatikisht',
-	'group-bot' => 'Robot',
-	'group-sysop' => 'Administrues',
-	'group-bureaucrat' => 'Burokrat',
-	'group-suppress' => 'Kujdestari',
-	'group-all' => '(të gjitha)',
-	'group-user-member' => '{{GENDER:$1|përdorues|përdoruese}}',
-	'group-autoconfirmed-member' => '{{GENDER:$1|përdorues i vërtetuar automatikisht|përdoruese e vërtetuar automatikisht}}',
-	'group-bot-member' => '{{GENDER:$1|robot|robote}}',
-	'group-sysop-member' => '{{GENDER:$1|administrues|administruese}}',
-	'group-bureaucrat-member' => '{{GENDER:$1|burokrat|burokrate}}',
-	'group-suppress-member' => '{{GENDER:$1|kujdestar|kujdestare}}',
-	'grouppage-user' => '{{ns:project}}:Përdorues',
-	'grouppage-autoconfirmed' => '{{ns:project}}:Përdorues të vërtetuar automatikisht',
-	'grouppage-bot' => '{{ns:project}}:Robotë',
-	'grouppage-sysop' => '{{ns:project}}:Administruesit',
-	'grouppage-bureaucrat' => '{{ns:project}}:Burokratë',
-	'grouppage-suppress' => '{{ns:project}}:Kujdestari',
-);
-
 $messages['sr-ec'] = array(
 	'go' => 'Иди',
 	'gotaccount' => 'Већ имате налог? Идите на страницу „$1“.',
@@ -5989,7 +6401,7 @@ $messages['sv'] = array(
 	'group-user-member' => '{{GENDER:$1|användare}}',
 	'group-autoconfirmed-member' => '{{GENDER:$1|bekräftad användare}}',
 	'group-bot-member' => '{{GENDER:$1|robot}}',
-	'group-sysop-member' => '{{GENDER:$1|administratör}}',
+	'group-sysop-member' => 'Administratör',
 	'group-bureaucrat-member' => '{{GENDER:$1|byråkrat}}',
 	'group-suppress-member' => '{{GENDER:$1|censor}}',
 	'grouppage-user' => '{{ns:project}}:Användare',
@@ -6690,9 +7102,9 @@ $messages['vi'] = array(
 	'group-all' => '(tất cả)',
 	'group-user-member' => '{{GENDER:$1}}thành viên',
 	'group-autoconfirmed-member' => '{{GENDER:$1}}thành viên tự động xác nhận',
-	'group-bot-member' => '{{GENDER:$1}}bot',
+	'group-bot-member' => '{{GENDER:$1|bot}}',
 	'group-sysop-member' => '{{GENDER:$1}}bảo quản viên',
-	'group-bureaucrat-member' => '{{GENDER:$1}}hành chính viên',
+	'group-bureaucrat-member' => '{{GENDER:$1|hành chính viên}}',
 	'group-suppress-member' => '{{GENDER:$1}}giám sát viên',
 	'grouppage-user' => '{{ns:project}}:Thành viên',
 	'grouppage-autoconfirmed' => '{{ns:project}}:Thành viên tự xác nhận',
@@ -6708,6 +7120,14 @@ $messages['vi'] = array(
 	'group-bot.js' => '/* Mã JavaScript tại đây sẽ chỉ được tải cho các bot */',
 	'group-sysop.js' => '/* Mã JavaScript tại đây sẽ chỉ được tải cho các bảo quản viên */',
 	'group-bureaucrat.js' => '/* Mã JavaScript tại đây sẽ chỉ được tải cho các hành chính viên */',
+	'group-helper' => 'Hỗ trợ viên Wikia',
+	'group-helper-member' => 'Hỗ trợ viên Wikia',
+	'group-util' => 'Thỏa dụng viên Wikia',
+	'group-util-member' => 'Thỏa dụng viên Wikia',
+	'group-reviewer-member' => 'Tuần tra viên hình ảnh',
+	'group-reviewer' => 'Tuần tra viên hình ảnh',
+	'group-voldev-member' => 'Phát triển viên tình nguyện',
+	'group-voldev' => 'Phát triển viên tình nguyện',
 );
 
 $messages['vmf'] = array(
@@ -7019,10 +7439,10 @@ $messages['zea'] = array(
 
 $messages['zh-hans'] = array(
 	'go' => '进入',
-	'gotaccount' => '已经拥有账户？请$1。',
-	'gotaccountlink' => '登录',
+	'gotaccount' => '已有帐户？请$1。',
+	'gotaccountlink' => '登入',
 	'guesstimezone' => '从浏览器填写',
-	'gender-unknown' => '不指明',
+	'gender-unknown' => '保密',
 	'gender-male' => '男',
 	'gender-female' => '女',
 	'group' => '用户组：',
@@ -7041,12 +7461,59 @@ $messages['zh-hans'] = array(
 	'group-suppress-member' => '监督员',
 	'grouppage-user' => '{{ns:project}}:用户',
 	'grouppage-autoconfirmed' => '{{ns:project}}:自动确认用户',
-	'grouppage-bot' => '{{ns:project}}:机器人',
+	'grouppage-bot' => 'Help:机器人',
 	'grouppage-sysop' => '{{ns:project}}:管理员',
 	'grouppage-bureaucrat' => '{{ns:project}}:行政员',
 	'grouppage-suppress' => '{{ns:project}}:监督员',
 	'group-content-moderator' => '内容版主',
 	'group-content-moderator-member' => '内容版主',
+	'group-helper' => 'FANDOM助手',
+	'group-helper-member' => 'FANDOM助手',
+	'group-staff' => 'FANDOM员工',
+	'group-staff-member' => 'FANDOM员工',
+	'group-util' => 'FANDOM Utilities',
+	'group-util-member' => 'FANDOM Utilities',
+	'googlesearch' => '<form method="get" action="//www.google.com/search" id="googlesearch">
+	<input type="hidden" name="domains" value="{{SERVER}}" />
+	<input type="hidden" name="num" value="50" />
+	<input type="hidden" name="ie" value="$2" />
+	<input type="hidden" name="oe" value="$2" />
+
+	<input type="text" name="q" size="31" maxlength="255" value="$1" />
+	<input type="submit" name="btnG" value="$3" />
+  <div>
+	<input type="radio" name="sitesearch" id="gwiki" value="{{SERVER}}" checked="checked" /><label for="gwiki">{{SITENAME}}</label>
+	<input type="radio" name="sitesearch" id="gWWW" value="" /><label for="gWWW">WWW</label>
+  </div>
+</form>',
+	'group-autoconfirmed.css' => '/* 此处的CSS只会影响自动确认的用户 */',
+	'group-bot.css' => '/* 此处的CSS只会影响机器人帐户 */',
+	'group-sysop.css' => '/* 此处的CSS只会影响管理员 */',
+	'group-bureaucrat.css' => '/* 此处的CSS只会影响行政员 */',
+	'group-autoconfirmed.js' => '/* 这里所有的JavaScript仅对自动确认用户加载 */',
+	'group-bot.js' => '/* 这里所有的JavaScript仅对机器人用户加载 */',
+	'group-sysop.js' => '/* 这里所有的JavaScript仅对管理员加载 */',
+	'group-bureaucrat.js' => '/* 这里所有的JavaScript仅对行政员加载 */',
+	'group-vstf' => 'VSTF',
+	'group-vstf-member' => 'VSTF',
+	'grouppage-vstf' => 'w:Wikia:SpamTaskForce',
+	'grouppage-helper' => 'Help:志愿者和助手',
+	'grouppage-staff' => 'wikia:Community_Central:Staff',
+	'grouppage-util' => 'wikia:Community_Central:Staff',
+	'group-reviewer' => '图片审核员',
+	'group-reviewer-member' => '图片审核员',
+	'grouppage-reviewer' => 'wikia:Community_Central:Image_review',
+	'group-vanguard' => '先锋',
+	'group-vanguard-member' => '先锋',
+	'group-voldev' => '志愿开发者',
+	'group-voldev-member' => '志愿开发者',
+	'grouppage-voldev' => 'w:c:dev:Volunteer_Developers',
+	'group-fandom-editor' => 'News and Stories Wordpress access',
+	'group-fandom-editor-member' => 'News and Stories Wordpress access',
+	'group-global-discussions-moderator' => '全站话题版主',
+	'group-global-discussions-moderator-member' => '全站话题版主',
+	'group-content-volunteer' => '内容志愿者',
+	'group-content-volunteer-member' => '内容志愿者',
 );
 
 $messages['zh-hant'] = array(
@@ -7054,7 +7521,7 @@ $messages['zh-hant'] = array(
 	'gotaccount' => '已經擁有帳號？$1。',
 	'gotaccountlink' => '登入',
 	'guesstimezone' => '從瀏覽器填寫',
-	'gender-unknown' => '未指定',
+	'gender-unknown' => '不指定',
 	'gender-male' => '男',
 	'gender-female' => '女',
 	'group' => '群組：',
@@ -7063,7 +7530,7 @@ $messages['zh-hant'] = array(
 	'group-bot' => '機器人',
 	'group-sysop' => '管理員',
 	'group-bureaucrat' => '行政員',
-	'group-suppress' => '監督',
+	'group-suppress' => '監督員',
 	'group-all' => '（全部）',
 	'group-user-member' => '{{GENDER:$1|用戶}}',
 	'group-autoconfirmed-member' => '自動確認用戶',
@@ -7073,50 +7540,59 @@ $messages['zh-hant'] = array(
 	'group-suppress-member' => '監督員',
 	'grouppage-user' => '{{ns:project}}:用戶',
 	'grouppage-autoconfirmed' => '{{ns:project}}:自動確認用戶',
-	'grouppage-bot' => '{{ns:project}}:機器人',
+	'grouppage-bot' => 'Help:機器人',
 	'grouppage-sysop' => '{{ns:project}}:管理員',
 	'grouppage-bureaucrat' => '{{ns:project}}:行政員',
-	'grouppage-suppress' => '{{ns:project}}:監督',
+	'grouppage-suppress' => '{{ns:project}}:監督員',
 	'group-content-moderator' => '內容版主',
 	'group-content-moderator-member' => '內容版主',
-);
+	'group-helper' => 'FANDOM助手',
+	'group-helper-member' => 'FANDOM助手',
+	'group-staff' => 'FANDOM工作人員',
+	'group-staff-member' => 'FANDOM工作人員',
+	'group-util' => 'FANDOM Utilities',
+	'group-util-member' => 'FANDOM Utilities',
+	'googlesearch' => '<form method="get" action="//www.google.com/search" id="googlesearch">
+	<input type="hidden" name="domains" value="{{SERVER}}" />
+	<input type="hidden" name="num" value="50" />
+	<input type="hidden" name="ie" value="$2" />
+	<input type="hidden" name="oe" value="$2" />
 
-$messages['zh-hk'] = array(
-	'group-bot' => '機械人',
-	'group-bot-member' => '機械人',
-	'grouppage-bot' => '{{ns:project}}:機械人',
-);
-
-$messages['zh-min-nan'] = array(
-	'group-bot' => '機械人',
-	'group-bot-member' => '機械人',
-	'grouppage-bot' => '{{ns:project}}:機械人',
-);
-
-$messages['zh-mo'] = array(
-	'group-bot' => '機械人',
-	'group-bot-member' => '機械人',
-	'grouppage-bot' => '{{ns:project}}:機械人',
-);
-
-$messages['zh-my'] = array(
-	'group-bot' => '機械人',
-	'group-bot-member' => '機械人',
-	'grouppage-bot' => '{{ns:project}}:機械人',
-);
-
-$messages['zh-tw'] = array(
-	'gotaccount' => '已經擁有帳號？$1。',
-	'group-autoconfirmed' => '自動確認使用者',
-	'group-autoconfirmed-member' => '自動確認使用者',
-	'grouppage-autoconfirmed' => '{{ns:project}}:自動確認使用者',
-);
-
-$messages['zh-yue'] = array(
-	'gotaccount' => '已經擁有帳號？$1。',
-	'group-autoconfirmed' => '自動確認使用者',
-	'group-autoconfirmed-member' => '自動確認使用者',
-	'grouppage-autoconfirmed' => '{{ns:project}}:自動確認使用者',
+	<input type="text" name="q" size="31" maxlength="255" value="$1" />
+	<input type="submit" name="btnG" value="$3" />
+  <div>
+	<input type="radio" name="sitesearch" id="gwiki" value="{{SERVER}}" checked="checked" /><label for="gwiki">{{SITENAME}}</label>
+	<input type="radio" name="sitesearch" id="gWWW" value="" /><label for="gWWW">WWW</label>
+  </div>
+</form>',
+	'group-autoconfirmed.css' => '/* 這裡的CSS只會影響自動確認用戶 */',
+	'group-bot.css' => '/* 這裡的CSS只會影響機器人帳號 */',
+	'group-sysop.css' => '/* 這裡的CSS只會影響管理員 */',
+	'group-bureaucrat.css' => '/* 這裡的CSS只會影響行政員 */',
+	'group-autoconfirmed.js' => '/* 這裡所有的JavaScript只對自動確認用戶載入 */',
+	'group-bot.js' => '/* 這裡所有的JavaScript只對機器人帳號載入 */',
+	'group-sysop.js' => '/* 這裡所有的JavaScript只對管理員載入 */',
+	'group-bureaucrat.js' => '/* 這裡所有的JavaScript只對行政員載入 */',
+	'group-vstf' => 'VSTF',
+	'group-vstf-member' => 'VSTF',
+	'grouppage-vstf' => 'w:c:zh.community:Help:反破壞小組',
+	'grouppage-helper' => 'Help:Volunteers and Helpers',
+	'grouppage-staff' => 'w:c:zh.community:Community_Central:Staff',
+	'grouppage-util' => 'w:c:zh.community:Community_Central:Staff',
+	'group-reviewer' => '圖片審核員',
+	'group-reviewer-member' => '圖片審核員',
+	'grouppage-reviewer' => 'w:c:zh.community:Help:用戶權限',
+	'group-vanguard' => '先鋒',
+	'group-vanguard-member' => '先鋒',
+	'group-voldev' => '志願開發者',
+	'group-voldev-member' => '志願開發者',
+	'grouppage-voldev' => 'w:c:dev:Volunteer_Developers',
+	'group-fandom-editor' => 'News and Stories Wordpress access',
+	'group-fandom-editor-member' => 'News and Stories Wordpress access',
+	'group-global-discussions-moderator' => '全站話題版主',
+	'group-global-discussions-moderator-member' => '全站話題版主',
+	'group-content-volunteer' => '內容志願者',
+	'group-content-volunteer-member' => '內容志願者',
 );
 
 $messages['zu'] = array(

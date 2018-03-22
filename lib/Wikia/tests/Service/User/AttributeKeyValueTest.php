@@ -1,11 +1,12 @@
 <?php
 
 namespace Wikia\Service\User\Attributes;
+use PHPUnit\Framework\TestCase;
 use Wikia\Domain\User\Attribute;
 use Wikia\Persistence\User\Attributes\AttributePersistence;
 use Wikia\Service\PersistenceException;
 
-class AttributeKeyValueTest extends \PHPUnit_Framework_TestCase {
+class AttributeKeyValueTest extends TestCase {
 
 	protected $userId = 1;
 	protected $anonUserId = 0;
@@ -31,7 +32,7 @@ class AttributeKeyValueTest extends \PHPUnit_Framework_TestCase {
 			->with( $this->userId, $this->testAttribute_1 )
 			->willReturn( true );
 
-		$service = new AttributeKeyValueService( $this->persistenceMock );
+		$service = new AttributeService( $this->persistenceMock );
 		$ret = $service->set( $this->userId,  $this->testAttribute_1 );
 
 		$this->assertTrue( $ret, "the attribute was not set" );
@@ -44,7 +45,7 @@ class AttributeKeyValueTest extends \PHPUnit_Framework_TestCase {
 		$this->persistenceMock->expects( $this->exactly( 0 ) )
 			->method( 'saveAttribute' );
 
-		$service = new AttributeKeyValueService( $this->persistenceMock );
+		$service = new AttributeService( $this->persistenceMock );
 		$service->set( $this->anonUserId, $this->testAttribute_1 );
 	}
 
@@ -54,7 +55,7 @@ class AttributeKeyValueTest extends \PHPUnit_Framework_TestCase {
 			->with( $this->userId, $this->testAttribute_1 )
 			->will( $this->throwException( new PersistenceException() ) );
 
-		$service = new AttributeKeyValueService( $this->persistenceMock );
+		$service = new AttributeService( $this->persistenceMock );
 		try {
 			$service->set( $this->userId, $this->testAttribute_1 );
 		} catch ( PersistenceException $e ) {
@@ -67,7 +68,7 @@ class AttributeKeyValueTest extends \PHPUnit_Framework_TestCase {
 			->method( 'getAttributes' )
 			->with( $this->userId )
 			->will( $this->throwException( new PersistenceException() ) );
-		$service = new AttributeKeyValueService( $this->persistenceMock );
+		$service = new AttributeService( $this->persistenceMock );
 
 		try {
 			$service->get( $this->userId );
@@ -84,7 +85,7 @@ class AttributeKeyValueTest extends \PHPUnit_Framework_TestCase {
 				$this->testAttributes
 			);
 
-		$service = new AttributeKeyValueService( $this->persistenceMock );
+		$service = new AttributeService( $this->persistenceMock );
 		$attributes = $service->get( $this->userId );
 
 		$this->assertTrue( is_array( $attributes ), "expecting an array" );
@@ -97,7 +98,7 @@ class AttributeKeyValueTest extends \PHPUnit_Framework_TestCase {
 			->with( $this->userId )
 			->willReturn( true );
 
-		$service = new AttributeKeyValueService( $this->persistenceMock );
+		$service = new AttributeService( $this->persistenceMock );
 		$this->assertTrue( $service->delete( $this->userId, $this->testAttribute_1 ) );
 	}
 
@@ -108,7 +109,7 @@ class AttributeKeyValueTest extends \PHPUnit_Framework_TestCase {
 		$this->persistenceMock->expects( $this->exactly( 0 ) )
 			->method( 'deleteAttribute' );
 
-		$service = new AttributeKeyValueService( $this->persistenceMock );
+		$service = new AttributeService( $this->persistenceMock );
 		$service->delete( $this->anonUserId, $this->testAttribute_1 );
 	}
 }

@@ -1,20 +1,31 @@
 <?php
 
-use Wikia\DependencyInjection\Injector;
-use Wikia\Helios\User as HeliosUser;
-use Wikia\Service\User\Auth\CookieHelper;
-
 class Piggyback extends SpecialPage {
 	var $mAction;
+	private $logger;
 
 	function __construct() {
 		global $wgRequest;
 		parent::__construct( 'Piggyback', 'piggyback' );
 		$this->mAction = $wgRequest->getVal( 'action' );
+		$this->logger = Wikia\Logger\WikiaLogger::instance();
 	}
 
 	function execute( $par ) {
-		global $wgRequest, $wgOut, $wgUser;
+		global $wgRequest, $wgOut, $wgUser, $wgEnableMercuryPiggyback;
+
+		$this->logger->info( 'IRIS-4219 Piggyback has been rendered' );
+
+		if ( !empty( $par ) ) {
+			$this->getRequest()->setVal( 'target', $par );
+		}
+
+		if ( $wgEnableMercuryPiggyback ) {
+			$this->redirectToMercuryPiggyback( $this->getOutput(),
+				$this->getRequest()->getVal( 'target' ) );
+
+			return;
+		}
 
 		if ( !$wgUser->isAllowed( 'piggyback' ) ) {
 			throw new PermissionsError( 'piggyback' );
@@ -28,10 +39,6 @@ class Piggyback extends SpecialPage {
 			return;
 		}
 
-		if ( !empty( $par ) ) {
-			$wgRequest->setVal( 'target', $par );
-		}
-
 		$this->setHeaders();
 		$LoginForm = new PBLoginForm( $wgRequest );
 		if ( $this->mAction == 'submitlogin' && $wgRequest->wasPosted() ) {
@@ -40,13 +47,31 @@ class Piggyback extends SpecialPage {
 			$LoginForm->setDefaultTargetValue( $wgRequest->getVal( 'target' ) );
 		}
 
+
 		$LoginForm->render();
 	}
+
+	private function redirectToMercuryPiggyback( OutputPage $out, $target ) {
+		$redirectUrl = '/piggyback';
+		if ( !empty( $target ) ) {
+			$redirectUrl .= sprintf( "?target=%s", $target );
+		}
+		$out->redirect( $redirectUrl );
+		$this->clearBodyAndSetMaxCache( $out );
+	}
+
+	/**
+	 * @param OutputPage $out
+	 */
+	public function clearBodyAndSetMaxCache( OutputPage $out ) {
+		$out->setArticleBodyOnly( true );
+		$out->setSquidMaxage( WikiaResponse::CACHE_LONG );
+	}
+
 }
 
 class PBHooks {
-	public static function onLoginFormAuthenticateModifyRetval( $invoker, $username, $password, &$retVal ) {
-		global $wgEnableHeliosExt;
+	public static function onLoginFormAuthenticateModifyRetval( $invoker, $username, $password, &$retVal, $authResult ) {
 		/**
 		 * status of forbidden from authentication means that the credentials are correct, but the
 		 * user is unable to log in with those credentials (because security). In this case we should
@@ -54,9 +79,8 @@ class PBHooks {
 		 * piggyback form
 		 */
 		if ( get_class( $invoker ) == PBLoginForm::class &&
-				$wgEnableHeliosExt &&
-				HeliosUser::checkAuthenticationStatus( $username, $password, WikiaResponse::RESPONSE_CODE_FORBIDDEN ) ) {
-
+			$authResult->checkStatus( WikiaResponse::RESPONSE_CODE_FORBIDDEN )
+		) {
 			$retVal = LoginForm::SUCCESS;
 		}
 
@@ -65,8 +89,7 @@ class PBHooks {
 
 	public static function onUserSetCookies(User $user, $session, $cookies) {
 		if (PBLoginForm::isPiggyback()) {
-			/** @var CookieHelper $cookieHelper */
-			$cookieHelper = Injector::getInjector()->get(CookieHelper::class);
+			$cookieHelper = \Wikia\Factory\ServiceFactory::instance()->heliosFactory()->cookieHelper();
 			$response = RequestContext::getMain()->getRequest()->response();
 			$cookieHelper->setAuthenticationCookieWithUserId($user->getId(), $response);
 		}
@@ -84,8 +107,8 @@ class PBLoginForm extends LoginForm {
 	private $mOtherName = '';
 	private $templateData = [];
 
-	function __construct( &$request ) {
-		global $wgUser;
+	function __construct( WebRequest $request ) {
+		parent::__construct( $request );
 
 		$this->titleObj = SpecialPage::getTitleFor( 'Piggyback' );
 
@@ -96,7 +119,7 @@ class PBLoginForm extends LoginForm {
 
 		$this->mType = 'login';
 		/* fake to don't change remember password */
-		$this->mRemember = (bool) $wgUser->getGlobalPreference( 'rememberpassword' );
+		$this->mRemember = (bool) $this->getUser()->getGlobalPreference( 'rememberpassword' );
 	}
 
 	function mainLoginForm( $msg, $msgtype = 'error', $errParam = '' ) {
@@ -115,9 +138,10 @@ class PBLoginForm extends LoginForm {
 
 		$cu = User::newFromName( $this->mUsername );
 
-		if ( !$cu->checkPassword( $this->mPassword ) &&
-				!HeliosUser::checkAuthenticationStatus( $cu->getName(), $this->mPassword, WikiaResponse::RESPONSE_CODE_FORBIDDEN )) {
-
+		$authResult = $cu->checkPassword( $this->mPassword );
+		if ( !$authResult->success() &&
+			!$authResult->checkStatus( WikiaResponse::RESPONSE_CODE_FORBIDDEN )
+		) {
 			if ( $retval = '' == $this->mPassword ) {
 				$this->mainLoginForm( wfMessage( 'wrongpasswordempty' )->escaped() );
 			} else {
@@ -141,7 +165,7 @@ class PBLoginForm extends LoginForm {
 
 		$wgRequest->setSessionData( 'PgParentUser', $wgUser->getID() );
 
-		wfRunHooks( 'PiggybackLogIn', array( $wgUser, $u ) );
+		Hooks::run( 'PiggybackLogIn', array( $wgUser, $u ) );
 
 		$log = new LogPage( 'piggyback' );
 		$log->addEntry(

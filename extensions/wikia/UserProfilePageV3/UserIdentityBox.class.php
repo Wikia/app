@@ -1,6 +1,6 @@
 <?php
 
-class UserIdentityBox {
+class UserIdentityBox extends WikiaObject {
 	const CACHE_VERSION = 2;
 
 	/**
@@ -44,10 +44,9 @@ class UserIdentityBox {
 	 * @param User $user core user object
 	 */
 	public function __construct( User $user ) {
-		global $wgTitle;
-
+		parent::__construct();
 		$this->user = $user;
-		$this->title = $wgTitle;
+		$this->title = $this->wg->Title;
 		$this->favWikisModel = $this->getFavoriteWikisModel();
 
 		if ( is_null( $this->title ) ) {
@@ -77,7 +76,6 @@ class UserIdentityBox {
 
 	protected function getUserData( $dataType ) {
 		wfProfileIn( __METHOD__ );
-		global $wgCityId, $wgLang;
 
 		$userName = $this->user->getName();
 		$userId = $this->user->getId();
@@ -91,7 +89,7 @@ class UserIdentityBox {
 
 			$this->getUserTags( $data );
 		} else {
-			$wikiId = $wgCityId;
+			$wikiId = $this->wg->CityId;
 
 			if ( empty( $this->userStats ) ) {
 				/** @var $userStatsService UserStatsService */
@@ -105,7 +103,8 @@ class UserIdentityBox {
 			// data depends on which wiki it is displayed
 			$data['registration'] = $this->userStats['firstContributionTimestamp'];
 			$data['userPage'] = $this->user->getUserPage()->getFullURL();
-
+			$data['contributionsURL'] = Skin::makeSpecialUrlSubpage( 'Contributions', $userName );
+			
 			$data = call_user_func( array( $this, $dataType ), $data );
 
 			if ( !( $iEdits || $this->shouldDisplayFullMasthead() ) ) {
@@ -114,21 +113,13 @@ class UserIdentityBox {
 
 			$data = $this->getInternationalizedRegistrationDate( $wikiId, $data );
 			if ( !empty( $data['edits'] ) ) {
-				$data['edits'] = $wgLang->formatNum( $data['edits'] );
+				$data['edits'] = $this->wg->Lang->formatNum( $data['edits'] );
 			}
 
 			// other data operations
 			$this->getUserTags( $data );
 			$data = $this->extractBirthDate( $data );
 			$data['showZeroStates'] = $this->checkIfDisplayZeroStates( $data );
-		}
-
-		// Sanitize data to prevent XSS (VE-720)
-		$keysToSanitize = [ 'gender', 'location', 'name', 'occupation', 'realName', 'twitter', 'fbPage', 'website' ];
-		foreach ( $keysToSanitize as $key ) {
-			if ( !empty( $data[ $key ] ) ) {
-				$data[ $key ] = htmlspecialchars( strip_tags( $data[ $key ] ), ENT_QUOTES );
-			}
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -156,11 +147,10 @@ class UserIdentityBox {
 	}
 
 	protected function internationalizeRegistrationDate( $data ) {
-		global $wgLang;
 		wfProfileIn( __METHOD__ );
 
 		if ( !empty( $data['registration'] ) ) {
-			$data['registration'] = $wgLang->date( $data['registration'] );
+			$data['registration'] = $this->wg->Lang->date( $data['registration'] );
 		}
 		wfProfileOut( __METHOD__ );
 		return $data;
@@ -212,7 +202,7 @@ class UserIdentityBox {
 		$memcData = $wgMemc->get( $this->getMemcUserIdentityDataKey() );
 
 		if ( empty( $memcData ) ) {
-			foreach ( array( 'location', 'occupation', 'gender', 'birthday', 'website', 'twitter', 'fbPage', 'hideEditsWikis' ) as $key ) {
+			foreach ( array( 'location', 'occupation', 'gender', 'birthday', 'website', 'twitter', 'fbPage', 'hideEditsWikis', 'bio' ) as $key ) {
 				if ( $key === 'hideEditsWikis' ) {
 					// hideEditsWikis is a preference, everything else is an attribute
 					$data[$key] = $this->user->getGlobalPreference( $key );
@@ -369,9 +359,8 @@ class UserIdentityBox {
 
 		if ( true === $changed ) {
 			$this->user->setGlobalFlag( self::USER_EVER_EDITED_MASTHEAD, true );
-
 			$this->user->saveSettings();
-			$this->saveMemcUserIdentityData( $data );
+			$this->clearMemcUserIdentityData();
 
 			wfProfileOut( __METHOD__ );
 			return true;
@@ -389,10 +378,8 @@ class UserIdentityBox {
 	 * @return string Parsed HTML string
 	 */
 	public function doParserFilter( $text ) {
-		global $wgParser;
-
 		$text = str_replace( '*', '&asterix;', $text );
-		$text = $wgParser->parse( $text, $this->user->getUserPage(), new ParserOptions( $this->user ) )->getText();
+		$text = ParserPool::parse( $text, $this->user->getUserPage(), new ParserOptions( $this->user ) )->getText();
 		$text = str_replace( '&amp;asterix;', '*', $text );
 		// Encoding problems in user masthead (CONN-131)
 		$text = str_replace( '&#160;', ' ', $text );
@@ -412,7 +399,7 @@ class UserIdentityBox {
 		wfProfileIn( __METHOD__ );
 
 		$_ = array();
-		$res = wfRunHooks( 'SpamFilterCheck', array( $spamSubject, null, &$_ ) );
+		$res = Hooks::run( 'SpamFilterCheck', array( $spamSubject, null, &$_ ) );
 
 		wfProfileOut( __METHOD__ );
 		return $res;
@@ -426,9 +413,7 @@ class UserIdentityBox {
 	 * @return array
 	 */
 	private function saveMemcUserIdentityData( $data ) {
-		global $wgMemc;
-
-		foreach ( array( 'location', 'occupation', 'gender', 'birthday', 'website', 'twitter', 'fbPage', 'realName', 'topWikis', 'hideEditsWikis' ) as $property ) {
+		foreach ( array( 'location', 'occupation', 'gender', 'birthday', 'website', 'twitter', 'fbPage', 'realName', 'topWikis', 'hideEditsWikis', 'bio' ) as $property ) {
 			if ( is_object( $data ) && isset( $data->$property ) ) {
 				$memcData[$property] = $data->$property;
 			}
@@ -469,22 +454,13 @@ class UserIdentityBox {
 			}
 		}
 
-		$wgMemc->set( $this->getMemcUserIdentityDataKey(), $memcData, self::CACHE_TTL );
+		$this->wg->Memc->set( $this->getMemcUserIdentityDataKey(), $memcData, self::CACHE_TTL );
 
 		return $memcData;
 	}
 
-	/**
-	 * Gets DB object
-	 *
-	 * @return array
-	 *
-	 * @author Andrzej 'nAndy' Łukaszewski
-	 */
-	private function getDb( $type = DB_SLAVE ) {
-		global $wgSharedDB;
-
-		return wfGetDB( $type, array(), $wgSharedDB );
+	private function clearMemcUserIdentityData() {
+		$this->wg->Memc->delete( $this->getMemcUserIdentityDataKey() );
 	}
 
 	/**
@@ -496,16 +472,9 @@ class UserIdentityBox {
 	 * @author tor
 	 */
 	protected function getUserTags( &$data ) {
-		global $wgEnableTwoTagsInMasthead;
 		wfProfileIn( __METHOD__ );
 
-		if ( !empty( $wgEnableTwoTagsInMasthead ) ) {
-			/** @var $strategy UserTwoTagsStrategy */
-			$strategy = new UserTwoTagsStrategy( $this->user );
-		} else {
-			/** @var $strategy UserOneTagStrategy */
-			$strategy = new UserOneTagStrategy( $this->user );
-		}
+		$strategy = new UserTagsStrategy( $this->user );
 		$tags = $strategy->getUserTags();
 
 		$data['tags'] = $tags;
@@ -526,7 +495,7 @@ class UserIdentityBox {
 
 		$result = true;
 
-		$fieldsToCheck = [ 'location', 'occupation', 'birthday', 'gender', 'website', 'twitter', 'fbPage', 'topWikis' ];
+		$fieldsToCheck = [ 'location', 'occupation', 'birthday', 'gender', 'website', 'twitter', 'fbPage', 'topWikis', 'bio' ];
 
 		foreach ( $data as $property => $value ) {
 			if ( in_array( $property, $fieldsToCheck ) && !empty( $value ) ) {
@@ -544,8 +513,6 @@ class UserIdentityBox {
 	 * @return bool
 	 */
 	public function shouldDisplayFullMasthead() {
-		global $wgCityId;
-
 		$userId = $this->user->getId();
 		if ( empty( $this->userStats ) ) {
 			/** @var $userStatsService UserStatsService */
@@ -557,22 +524,24 @@ class UserIdentityBox {
 		$iEdits = is_null( $iEdits ) ? 0 : intval( $iEdits );
 
 		$hasUserEverEditedMastheadBefore = $this->hasUserEverEditedMasthead();
-		$hasUserEditedMastheadBeforeOnThisWiki = $this->hasUserEditedMastheadBefore( $wgCityId );
+		$hasUserEditedMastheadBeforeOnThisWiki = $this->hasUserEditedMastheadBefore( $this->wg->CityId );
 
-		if ( $hasUserEditedMastheadBeforeOnThisWiki || ( $iEdits > 0 && $hasUserEverEditedMastheadBefore ) ) {
-			return true;
-		} else {
-			return false;
-		}
+		return ( $hasUserEditedMastheadBeforeOnThisWiki || ( $iEdits > 0 && $hasUserEverEditedMastheadBefore ) );
 	}
 
 	/**
-	 * Blanks user profile data
+	 * Blanks user profile data and disables the user's account
 	 * @author grunny
 	 */
 	public function resetUserProfile() {
-		global $wgMemc;
+		Wikia::invalidateUser( $this->user );
+		$this->clearMastheadContents();
+	}
 
+	/**
+	 * Removes all content from user profile masthead and deletes user avatar
+	 */
+	public function clearMastheadContents() {
 		foreach ( $this->optionsArray as $option ) {
 			if ( $option === 'gender' || $option === 'birthday' ) {
 				$option = self::USER_PROPERTIES_PREFIX . $option;
@@ -580,14 +549,16 @@ class UserIdentityBox {
 			$this->user->setGlobalAttribute( $option, null );
 		}
 
-		Wikia::invalidateUser( $this->user );
-		$this->user->saveSettings();
-		$wgMemc->delete( $this->getMemcUserIdentityDataKey() );
+		$this->user->setRealName( '' );
 
 		// Delete both the avatar from the user's attributes (above),
 		// as well as from disk.
 		$avatarService = new UserAvatarsService( $this->user->getId() );
 		$avatarService->remove();
+
+		$this->user->saveSettings();
+
+		$this->wg->Memc->delete( $this->getMemcUserIdentityDataKey() );
 	}
 
 	/**
@@ -597,7 +568,11 @@ class UserIdentityBox {
 	 * @return array
 	 */
 	public function getTopWikis( $refreshHidden = false ) {
-		return $this->getFavoriteWikisModel()->getTopWikis( $refreshHidden );
+		if ( $this->user->getGlobalPreference( 'hideEditsWikis' ) ) {
+			return [];
+		} else {
+			return $this->getFavoriteWikisModel()->getTopWikis( $refreshHidden );
+		}
 	}
 
 	/**
@@ -617,12 +592,10 @@ class UserIdentityBox {
 	 * @return boolean
 	 */
 	public function hideWiki( $wikiId ) {
-		global $wgMemc;
-
 		$result = $this->getFavoriteWikisModel()->hideWiki( $wikiId );
 
 		if ( $result ) {
-			$memcData = $wgMemc->get( $this->getMemcUserIdentityDataKey() );
+			$memcData = $this->wg->Memc->get( $this->getMemcUserIdentityDataKey() );
 			$memcData['topWikis'] = empty( $memcData['topWikis'] ) ? [] : $memcData['topWikis'];
 			$this->saveMemcUserIdentityData( $memcData );
 		}

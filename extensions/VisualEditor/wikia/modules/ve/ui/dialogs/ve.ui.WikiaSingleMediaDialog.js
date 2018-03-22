@@ -187,10 +187,8 @@ ve.ui.WikiaSingleMediaDialog.prototype.initialize = function () {
 	} );
 	this.search.connect( this, {
 		nearingEnd: 'onSearchNearingEnd',
-		check: 'handleChoose',
-		select: 'handleChoose',
-		metadata: 'handlePreview',
-		label: 'handlePreview'
+		preview: 'handlePreview',
+		select: 'handleChoose'
 	} );
 	this.queryInput.connect( this, {
 		change: 'onQueryInputChange'

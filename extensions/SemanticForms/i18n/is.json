@@ -1,10 +1,11 @@
 {
 	"@metadata": {
 		"authors": [
-			"S.Örvarr.S"
+			"S.Örvarr.S",
+			"Snævar"
 		]
 	},
-	"sf_createproperty_propname": "Nafn:",
-	"sf_createtemplate_standardformat": "Staðlað",
-	"sf_createcategory_name": "Nafn:"
+	"sf_createproperty_propname": "Heiti eiginleika:",
+	"sf_createtemplate_standardformat": "Tafla",
+	"sf_createcategory_name": "Nafn flokks:"
 }

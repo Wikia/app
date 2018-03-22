@@ -2,9 +2,6 @@
 @import '/skins/common/shared.css';
 @import '/skins/wikia/shared.css';
 
-// CSS (needs leading slash and file extension)
-@import '/extensions/wikia/CreatePage/css/CreatePage.css';
-
 // Layout
 @import 'core/layout';
 @import 'wikiagrid';
@@ -34,8 +31,6 @@
 @import 'core/globalelements';
 @import 'core/page';
 @import 'core/CommentsLikes';
-@import 'core/WikiHeader';
-@import 'core/PageHeader';
 @import 'core/Search';
 @import 'core/article';
 @import 'core/tablepager';
@@ -58,6 +53,9 @@
 @import 'resources/wikia/libraries/bootstrap/tooltip';
 @import 'resources/wikia/libraries/bootstrap/popover';
 
+// UI Components initial scss
+@import 'resources/wikia/ui_components/modal/css/modal-initial.scss';
+
 // Extensions (only include here if used on the majority of page views!)
 @import 'extensions/wikia/WikiaLogo/styles/WikiaLogo';
 @import 'extensions/wikia/Blogs/css/oasis';
@@ -71,8 +69,9 @@
 @import 'extensions/wikia/Chat2/css/ChatWidget';
 @import 'extensions/wikia/Forum/css/RelatedForumDiscussion'; // on every article page
 @import 'extensions/wikia/TOC/css/toc';
-@import 'extensions/wikia/VideosModule/styles/VideosModule';
 @import 'extensions/wikia/MediaGallery/styles/MediaGallery'; // relies on bulky foundation mixins
+@import 'extensions/wikia/PageShare/styles/PageShare';
+@import 'extensions/wikia/CreatePage/css/CreatePage';
 
 //Site Optimizations
 @import 'extensions/wikia/Rail/styles/RailElement';

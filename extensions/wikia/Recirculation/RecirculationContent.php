@@ -20,20 +20,22 @@ class RecirculationContent implements JsonSerializable {
 		$this->data = $properties;
 	}
 
-	public function get( $property ){
+	public function get( $property ) {
 		return array_key_exists( $property, $this->data ) ? $this->data[$property] : '';
 	}
 
 	public function jsonSerialize() {
 		return (object) [
-			'url' => $this->get('url'),
-			'index' => $this->get('index'),
-			'thumbnail' => $this->get('thumbnail'),
-			'title' => $this->get('title'),
-			'pub_date' => $this->get('publishDate'),
-			'author' => $this->get('author'),
-			'source' => $this->get('source'),
-			'isVideo' => $this->get('isVideo'),
+			'url' => $this->get( 'url' ),
+			'index' => $this->get( 'index' ),
+			'thumbnail' => $this->get( 'thumbnail' ),
+			'title' => $this->get( 'title' ),
+			'pub_date' => $this->get( 'publishDate' ),
+			'author' => $this->get( 'author' ),
+			'authorIsAnon' => $this->get( 'authorIsAnon' ),
+			'source' => $this->get( 'source' ),
+			'isVideo' => $this->get( 'isVideo' ),
+			'meta' => $this->get( 'meta' ),
 		];
 	}
 }

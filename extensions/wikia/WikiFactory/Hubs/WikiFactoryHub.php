@@ -135,8 +135,6 @@ class WikiFactoryHub extends WikiaModel {
 	 *
 	 * @param $city_id
 	 * @return integer category id from city_cat_mapping table
-	 *
-	 * @deprecated Category is now an array, use getCategoryIds( $city_id )
 	 */
 
 	public function getCategoryId( $city_id ) {
@@ -213,37 +211,6 @@ class WikiFactoryHub extends WikiaModel {
 	}
 
 	/**
-	 * getCategoryIds  This is the NEW function to use
-	 *
-	 * get list of (just) category ids for given wiki
-	 *
-	 * @access public
-	 *
-	 * @param $city_id
-	 * @param int $active pass 0 if you want to get deprecated categories
-	 * @return array array of categories (empty if wiki is not in a category)
-	 */
-	public function getCategoryIds( $city_id, $active = 1 ) {
-		global $wgExternalSharedDB;
-		if( !$wgExternalSharedDB || empty($city_id) ) {
-			return array();
-		}
-
-		$categories = (new WikiaSQL())
-			->SELECT( "cat_id" )
-			->FROM( "city_cats" )
-			->JOIN ( "city_cat_mapping" )->USING( "cat_id" )
-			->WHERE( "city_id" )->EQUAL_TO( $city_id )
-			->AND_( "cat_active" )->EQUAL_TO ( $active )
-			->cache( $this->cache_ttl, wfSharedMemcKey( __METHOD__, $city_id, "$active" ) )
-			->runLoop ( $this->getSharedDB(), function ( &$result, $row ) {
-				$result[]= $row->cat_id;
-			});
-
-		return $categories;
-	}
-
-	/**
 	 * Removed getCategories() function since it was ambiguous
 	 * This function returns the list of categories AND category metadata for a wiki
 	 * get category metadata (id, name, url, short, deprecated, active) for a wiki
@@ -257,7 +224,7 @@ class WikiFactoryHub extends WikiaModel {
 
 		// query instead of lookup in AllCategories list
 		$categories = (new WikiaSQL())
-			->SELECT( "*" )
+			->SELECT( "cat_id", "cat_short" )
 			->FROM( "city_cats" )
 			->JOIN ( "city_cat_mapping" )->USING( "cat_id" )
 			->WHERE( "city_id ")->EQUAL_TO( $city_id )
@@ -276,7 +243,7 @@ class WikiFactoryHub extends WikiaModel {
 	 *
 	 * @param Int $cityId CityId
 	 * @param Int $active Active status of categories to return
-	 * @return array Array of wiki category names
+	 * @return string[] Array of wiki category names
 	 */
 	public function getWikiCategoryNames( $cityId, $active = 1 ) {
 		$wikiCategoryNames = [];
@@ -343,11 +310,7 @@ class WikiFactoryHub extends WikiaModel {
 
 	private function loadCategories() {
 
-		global $wgExternalSharedDB;
-		if( !$wgExternalSharedDB ) {
-			return array();
-		}
-
+		// TODO: add caching
 		$categories = (new WikiaSQL())
 			->SELECT()
 				->FIELD( "cat_id as id")
@@ -384,7 +347,7 @@ class WikiFactoryHub extends WikiaModel {
 	 * @param string    $reason      optional extra reason string for logging
 	 */
 
-	public function setVertical ( $city_id, $vertical_id, $reason) {
+	public function setVertical ( int $city_id, int $vertical_id, string $reason) {
 
 		( new WikiaSQL() )
 			->UPDATE( 'city_list' )
@@ -400,7 +363,7 @@ class WikiFactoryHub extends WikiaModel {
 		// I guess we should look up the name here
 		$verticals = $this->getAllVerticals();
 		$name = $verticals[$vertical_id]['name'];
-		WikiFactory::log( WikiFactory::LOG_CATEGORY, "Vertical changed to $name. $reason", $city_id );
+		WikiFactory::log( WikiFactory::LOG_CATEGORY, htmlspecialchars( "Vertical changed to $name. $reason" ), $city_id );
 	}
 
 	/**
@@ -444,7 +407,7 @@ class WikiFactoryHub extends WikiaModel {
 			$reason = " ( $reason )";
 		}
 
-		WikiFactory::log( WikiFactory::LOG_CATEGORY, "Categories changed to $message. $reason", $city_id );
+		WikiFactory::log( WikiFactory::LOG_CATEGORY, htmlspecialchars( "Categories changed to $message. $reason" ), $city_id );
 	}
 
 	// Add 1 category
@@ -485,7 +448,7 @@ class WikiFactoryHub extends WikiaModel {
 			$wgMemc->delete( wfSharedMemcKey("WikiFactoryHub:", $name, $city_id ) );
 		}
 
-		$functionNames = [ "getCategoryIds", "getWikiCategories" ];
+		$functionNames = [ "getWikiCategories" ];
 		foreach ($functionNames as $name) {
 			$wgMemc->delete( wfSharedMemcKey("WikiFactoryHub:", $name, $city_id, 0 ) );
 			$wgMemc->delete( wfSharedMemcKey("WikiFactoryHub:", $name, $city_id, 1 ) );

@@ -17,7 +17,7 @@ class CreateNewWikiControllerTest extends WikiaBaseTest {
 	 * @group hyun
 	 * @dataProvider getCreateWikiDataProvider
 	 */
-	public function testCreateWikiSuccess( $testCase, $testData ) {
+	public function testCreateWikiSuccess( $testData ) {
 		$wikiName = 'Muppet is great';
 		$wikiDomain = 'muppet';
 		$wikiLanguage = 'en';
@@ -38,7 +38,7 @@ class CreateNewWikiControllerTest extends WikiaBaseTest {
 
 		$wgDevelDomains = array();
 
-		$wgUser = $this->getMock( 'User', [ 'getId', 'isLoggedIn', 'isEmailConfirmed', 'getEditToken' ] );
+		$wgUser = $this->createMock( User::class );
 		$wgUser->expects($this->any())
 			->method('getId')
 			->will($this->returnValue(6));
@@ -48,9 +48,6 @@ class CreateNewWikiControllerTest extends WikiaBaseTest {
 		$wgUser->expects($this->any())
 			->method('isEmailConfirmed')
 			->will( $this->returnValue( $testData['userEmailConfirmed'] ) );
-		$wgUser->expects( $this->any() )
-			->method( 'getEditToken' )
-			->will( $this->returnValue( $testData['userToken'] ) );
 
 		$app = $this->getMock('WikiaApp', array('getGlobal', 'runFunction'));
 		$app->expects( $this->any() )
@@ -59,7 +56,10 @@ class CreateNewWikiControllerTest extends WikiaBaseTest {
 
 		$this->mockGlobalVariable( 'wgUser', $wgUser );
 
-		$createWiki = $this->getMock('CreateWiki', array('create', 'getWikiInfo', 'getCityId', 'getSiteName'), array(), '', false);
+		$createWiki = $this->getMockBuilder(CreateWiki::class )
+			->disableOriginalConstructor()
+			->setMethods( [ 'create', 'getWikiInfo', 'getCityId', 'getSiteName' ] )
+			->getMock();
 		$createWiki->expects($this->any())
 			->method('create');
 		$createWiki->expects($this->any())
@@ -71,6 +71,10 @@ class CreateNewWikiControllerTest extends WikiaBaseTest {
 			->method('getCityId')
 			->willReturn(99);
 
+		$createWiki->expects( $this->any() )
+			->method( 'getSiteName' )
+			->willReturn( $siteName );
+
 		$mainPageTitle = $this->getMock('GlobalTitle', array(), array(), '', false);
 		$mainPageTitle->expects($this->any())
 			->method('getFullURL')
@@ -79,14 +83,21 @@ class CreateNewWikiControllerTest extends WikiaBaseTest {
 		$this->mockClass('CreateWiki', $createWiki);
 		$this->mockClass('GlobalTitle', $mainPageTitle, 'newFromText');
 
-		$requestMock = $this->getMock( 'WikiaRequest', [ 'wasPosted' ], [ [ 'token' => $testData['requestToken'] ] ] );
-		$requestMock->expects( $this->once() )
-			->method( 'wasPosted' )
-			->will( $this->returnValue( $testData['wasPosted'] ) );
+		$requestMock = $this->getMockBuilder( WikiaRequest::class )
+			->setMethods( [ 'assertValidWriteRequest' ] )
+			->setConstructorArgs( [ [] ] )
+			->getMock();
+
+		if ( !$testData['validRequest'] ) {
+			$requestMock->expects( $this->any() )
+				->method( 'assertValidWriteRequest' )
+				->willThrowException( new BadRequestException() );
+		}
+
 		$response = new WikiaResponse( 'json', $requestMock );
 
 		if ( !empty( $testData['expectedException'] ) ) {
-			$this->setExpectedException( $testData['expectedException'] );
+			$this->expectException( $testData['expectedException'] );
 		}
 
 		$createNewWikiController = new CreateNewWikiController();
@@ -99,9 +110,9 @@ class CreateNewWikiControllerTest extends WikiaBaseTest {
 
 		$response = $createNewWikiController->getResponse();
 
-		$this->assertEquals( $testData['status'], $response->getVal( 'status' ), $testCase );
+		$this->assertEquals( $testData['status'], $response->getVal( 'status' ) );
 
-		if ( $userLoggedIn && $userEmailConfirmed ) {
+		if ( $testData['userLogged'] && $testData['userEmailConfirmed'] ) {
 			$this->assertEquals($siteName, $response->getVal('siteName'));
 			$this->assertEquals($mainPageUrl, $response->getval('finishCreateUrl'));
 		}
@@ -109,78 +120,34 @@ class CreateNewWikiControllerTest extends WikiaBaseTest {
 
 	public function getCreateWikiDataProvider() {
 		return [
-			[
-				'testCase' => 'Everything is OK',
-				'testData' => [
-					'wasPosted' => true,
-					'userToken' => '1234',
-					'requestToken' => '1234',
-					'userLogged' => true,
-					'userEmailConfirmed' => true,
-					'status' => 'ok',
-					'expectedException' => false
-				],
-			],
-			[
-				'testCase' => 'User logged-in but without confirmed e-mail',
-				'testData' => [
-					'wasPosted' => true,
-					'userToken' => '1234',
-					'requestToken' => '1234',
-					'userLogged' => true,
-					'userEmailConfirmed' => false,
-					'status' => 'error',
-					'expectedException' => false,
-				],
-			],
-			[
-				'testCase' => 'User not logged-in and therefore without confirmed e-mail',
-				'testData' => [
-					'wasPosted' => true,
-					'userToken' => '1234',
-					'requestToken' => '1234',
-					'userLogged' => false,
-					'userEmailConfirmed' => false,
-					'status' => 'error',
-					'expectedException' => false,
-				],
-			],
-			[
-				'testCase' => "Request wasn't POSTed",
-				'testData' => [
-					'wasPosted' => false,
-					'userToken' => '1234',
-					'requestToken' => '1234',
-					'userLogged' => true,
-					'userEmailConfirmed' => true,
-					'status' => null,
-					'expectedException' => 'BadRequestException',
-				],
-			],
-			[
-				'testCase' => "Invalid token provided",
-				'testData' => [
-					'wasPosted' => true,
-					'userToken' => '1234',
-					'requestToken' => '4321',
-					'userLogged' => true,
-					'userEmailConfirmed' => true,
-					'status' => null,
-					'expectedException' => 'BadRequestException',
-				],
-			],
-			[
-				'testCase' => "Request wasn't POSTed and invalid token provided",
-				'testData' => [
-					'wasPosted' => false,
-					'userToken' => '1234',
-					'requestToken' => '4321',
-					'userLogged' => true,
-					'userEmailConfirmed' => true,
-					'status' => null,
-					'expectedException' => 'BadRequestException',
-				],
-			],
+			'Everything is OK' => [ [
+				'validRequest' => true,
+				'userLogged' => true,
+				'userEmailConfirmed' => true,
+				'status' => 'ok',
+				'expectedException' => false
+			] ],
+			'User logged-in but without confirmed e-mail' => [ [
+				'validRequest' => true,
+				'userLogged' => true,
+				'userEmailConfirmed' => false,
+				'status' => 'error',
+				'expectedException' => false,
+			] ],
+			'User not logged-in and therefore without confirmed e-mail' => [ [
+				'validRequest' => true,
+				'userLogged' => false,
+				'userEmailConfirmed' => false,
+				'status' => 'error',
+				'expectedException' => false,
+			] ],
+			"Bad request" => [ [
+				'validRequest' => false,
+				'userLogged' => true,
+				'userEmailConfirmed' => true,
+				'status' => null,
+				'expectedException' => 'BadRequestException',
+			] ]
 		];
 	}
 

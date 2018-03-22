@@ -80,10 +80,17 @@ $(function () {
 					}
 
 					require([
-						'ext.wikia.adEngine.slot.floatingMedrec',
-						'wikia.window'
-					], function (floatingMedrec, win) {
-						win.wgAfterContentAndJS.push(floatingMedrec.init);
+						'wikia.window',
+						require.optional('ext.wikia.adEngine.adContext'),
+						require.optional('ext.wikia.adEngine.slot.floatingMedrec'),
+					], function (win, adContext, floatingMedrec) {
+						if (!adContext) {
+							return;
+						}
+
+						if (floatingMedrec) {
+							win.wgAfterContentAndJS.push(floatingMedrec.init);
+						}
 					});
 
 					if (window.wgEnableLightboxExt) {

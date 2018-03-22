@@ -19,7 +19,7 @@ class FollowEmailTask extends BaseTask {
 
 		$targetUser = User::newFromId( $userId );
 
-		$this->logWatchers( $watchers, $action );
+		$this->logAction( $action );
 
 		foreach ( $watchers as $titleText => $followingUsers ) {
 			$title = Title::makeTitle( $namespace, $titleText );
@@ -36,7 +36,7 @@ class FollowEmailTask extends BaseTask {
 		}
 	}
 
-	private function logWatchers( $watchers, $action ) {
+	private function logAction( $action ) {
 		if ( $action == FollowHelper::LOG_ACTION_BLOG_POST ) {
 			$msg = 'WatchlistLogs: Sending bloglisting watchlist updates';
 		} elseif ( $action == FollowHelper::LOG_ACTION_CATEGORY_ADD ) {
@@ -45,6 +45,6 @@ class FollowEmailTask extends BaseTask {
 			$msg = 'WatchlistLogs: Sending other watchlist updates';
 		}
 
-		$this->info( $msg, [ 'watchers' => $watchers, 'action' => $action ] );
+		$this->info( $msg, [ 'action' => $action ] );
 	}
 }

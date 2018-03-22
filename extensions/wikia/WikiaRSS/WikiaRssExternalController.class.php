@@ -1,71 +1,81 @@
 <?php
 class WikiaRssExternalController extends WikiaController {
 
+	const CACHE_TIME = 3600;
+
 	/**
 	 * @brief Returns status flag and data in html tags
 	 * @desc Here we use 3rd-part extension magpierss which fetches rss feeds from given url
 	 */
 	public function getRssFeeds() {
-		$this->response->setVal('status', false);
-		$options = $this->request->getVal('options', false);
-		$this->response->setCacheValidity(3600); //cache it on varnish for 1h
+		$this->response->setVal( 'status', false );
+		$options = $this->request->getVal( 'options', false );
+
+		$this->response->setCachePolicy( WikiaResponse::CACHE_PUBLIC );
+		$this->response->setCacheValidity( self::CACHE_TIME ); //cache it on varnish for 1h
 
 		//somehow empty arrays are lost
 		//we need to restore then its default values
-		foreach(array('highlight', 'filter', 'filterout') as $option) {
-			if( !isset($options[$option]) ) {
+		foreach ( [ 'highlight', 'filter', 'filterout' ] as $option ) {
+			if ( !isset( $options[$option] ) ) {
 				$options[$option] = array();
 			}
 		}
 
-		if( !empty($options) && !empty($options['url']) ) {
-			$url = html_entity_decode($options['url']);
+		if ( !empty( $options ) && !empty( $options['url'] ) ) {
+			$url = html_entity_decode( $options['url'] );
 
-			$status = null;
-			$rss = @fetch_rss($url, $status);
+			\Wikia\Logger\WikiaLogger::instance()->info(
+				__METHOD__,
+				[ 'providerUrl' => $url ]
+			);
 
-			if( !is_null($status) && $status !== 200 ) {
-				$this->response->setVal('error', wfMsg('wikia-rss-error-wrong-status-'.$status, $url));
+			$feedData = WikiaDataAccess::cacheWithLock(
+				wfSharedMemcKey( 'WikiaRss', 'feed', $url ),
+				self::CACHE_TIME,
+				function () use ( $url ) {
+					return WikiaRssHelper::getFeedData( $url );
+				}
+			);
+
+			if ( !empty( $feedData['errorMessageKey'] ) ) {
+				$this->response->setVal(
+					'error',
+					wfMessage( $feedData['errorMessageKey'], $url, $feedData['error'] )->escaped()
+				);
+
 				return;
 			}
 
-			if( !is_object($rss) || !is_array($rss->items) ) {
-				$this->response->setVal('error', wfMsg('wikia-rss-empty', $url));
-				return;
-			}
+			$rss = $feedData['rss'];
 
-			if( $rss->ERROR ) {
-				$this->response->setVal('error', wfMsg('wikia-rss-error', $url, $rss->ERROR));
-				return;
-			}
+			$short = ( $options['short'] == 'true' ) ? true : false;
+			$reverse = ( $options['reverse'] == 'true' ) ? true : false;
 
-			$short = ($options['short'] == 'true') ? true : false;
-			$reverse = ($options['reverse'] == 'true') ? true : false;
-
-			if( $reverse ) {
-				$rss->items = array_reverse($rss->items);
+			if ( $reverse ) {
+				$rss->items = array_reverse( $rss->items );
 			}
 
 			$description = false;
-			foreach( $rss->items as $item ) {
-				if( isset($item['description']) && $item['description'] ) {
+			foreach ( $rss->items as $item ) {
+				if ( isset( $item['description'] ) && $item['description'] ) {
 					$description = true;
 					break;
 				}
 			}
 
-			if( !$short && $description ) {
-				$items = $this->getFullItemList($rss->items, $options);
-				$html = $this->app->renderView('WikiaRssExternal', 'fullList', array('items' => $items));
+			if ( !$short && $description ) {
+				$items = $this->getFullItemList( $rss->items, $options );
+				$html = $this->app->renderView( 'WikiaRssExternal', 'fullList', [ 'items' => $items ] );
 			} else {
-				$items = $this->getShortItemList($rss->items, $options);
-				$html = $this->app->renderView('WikiaRssExternal', 'shortList', array('items' => $items));
+				$items = $this->getShortItemList( $rss->items, $options );
+				$html = $this->app->renderView( 'WikiaRssExternal', 'shortList', [ 'items' => $items ] );
 			}
 
-			$this->response->setVal('status', true);
-			$this->response->setVal('html', $html);
+			$this->response->setVal( 'status', true );
+			$this->response->setVal( 'html', $html );
 		} else {
-			$this->response->setVal('error', wfMsg('wikia-rss-error-invalid-options'));
+			$this->response->setVal( 'error', wfMessage( 'wikia-rss-error-invalid-options' )->escaped() );
 		}
 	}
 
@@ -86,11 +96,14 @@ class WikiaRssExternalController extends WikiaController {
 	 * @return Array
 	 */
 	private function getFullItemList($items, $options) {
+		// TODO DRY see getShortItemList()
+
 		$app = F::app();
 		$result = array();
 
 		$charset = !empty( $options['charset'] ) ? $options['charset'] : array();
-		$date = $options['dateFormat'];
+		// dateFormat is only for backwards compatibility of requests.
+		$date = $options['date'] || $options['dateFormat'];
 		$rssFilter = $options['filter'];
 		$rssFilterout = $options['filterout'];
 		$rssHighlight = $options['highlight'];
@@ -104,11 +117,12 @@ class WikiaRssExternalController extends WikiaController {
 			$d_title = true;
 
 			$href = htmlspecialchars(trim(mb_convert_encoding($item['link'],$outputEncoding,$charset)));
+			$sanitizedHref = Sanitizer::validateAttributes( [ 'href' => $href ], [ 'href' ] );
 			$title = htmlspecialchars(trim(mb_convert_encoding($item['title'],$outputEncoding,$charset)));
 
 			if( $date != 'false' && isset($item['dc']) && is_array($item['dc']) && isset($item['dc']['date']) ) {
 				$pubdate = trim(mb_convert_encoding($item['dc']['date'],$outputEncoding,$charset));
-				$pubdate = date($date, strtotime($pubdate));
+				$pubdate = $app->wg->ContLang->date( strtotime( $pubdate ), false, false );
 			} else {
 				$pubdate = false;
 			}
@@ -120,6 +134,12 @@ class WikiaRssExternalController extends WikiaController {
 			if( $item['description'] ) {
 				$text = trim(mb_convert_encoding($item['description'],$outputEncoding,$charset));
 				$text = str_replace( array("\r", "\n", "\t", '<br>'), ' ', $text );
+				$text = strip_tags( $text, '<img><a><br>' );
+
+				$globalStateWrapper = new \Wikia\Util\GlobalStateWrapper( [ 'wgAllowImageTag' => true ] );
+				$text = $globalStateWrapper->wrap( function () use ( $text ) {
+					return Sanitizer::removeHTMLtags( $text, null, [], [ 'a' ] );
+				} );
 
 				$d_text = $this->doRssFilter($text, $rssFilter );
 				$d_text = $this->doRssFilterOut($text, $rssFilterout);
@@ -133,7 +153,7 @@ class WikiaRssExternalController extends WikiaController {
 
 			if( $display ) {
 				$result[$i] = array(
-					'href' => $href,
+					'href' => isset( $sanitizedHref['href'] ) ? $sanitizedHref['href'] : '',
 					'title' => $title,
 				);
 
@@ -164,8 +184,11 @@ class WikiaRssExternalController extends WikiaController {
 		$app = F::app();
 		$result = array();
 
-		$charset = !empty( $options['charset'] ) ? $options['charset'] : array();
-		$date = $options['dateFormat'];
+		$supportedEncodings = array_map( 'strtolower', mb_list_encodings() );
+		$charset = !empty( $options['charset'] ) && in_array( strtolower( $options['charset'] ), $supportedEncodings ) ?
+			$options['charset'] : [ ];
+		// dateFormat is only for backwards compatibility of requests.
+		$date = ( $options['date'] ?? false ) || $options['dateFormat'];
 		$rssFilter = $options['filter'];
 		$rssFilterout = $options['filterout'];
 		$rssHighlight = $options['highlight'];
@@ -177,6 +200,7 @@ class WikiaRssExternalController extends WikiaController {
 
 		foreach( $items as $i => $item ) {
 			$href = htmlspecialchars( trim( mb_convert_encoding( $item['link'], $outputEncoding, $charset ) ) );
+			$sanitizedHref = Sanitizer::validateAttributes( [ 'href' => $href ], [ 'href' ] );
 			$title = htmlspecialchars( trim( mb_convert_encoding( $item['title'], $outputEncoding, $charset ) ) );
 
 			$d_title = $this->doRssFilter($title, $rssFilter) && $this->doRssFilterOut($title, $rssFilterout);
@@ -191,14 +215,14 @@ class WikiaRssExternalController extends WikiaController {
 						trim( mb_convert_encoding( $item['dc']['date'], $outputEncoding, $charset ) ) : false;
 				}
 
-				$pubdate = date($date, strtotime($pubdate));
+				$pubdate = $app->wg->ContLang->date( strtotime( $pubdate ), false, false );
 			} else {
 				$pubdate = false;
 			}
 
 			if( $d_title && !in_array( $title, $displayed ) ) {
 				$result[$i] = array(
-					'href' => $href,
+					'href' => isset( $sanitizedHref['href'] ) ? $sanitizedHref['href'] : '',
 					'title' => $title,
 					'attrTitle' => $attrTitle,
 				);

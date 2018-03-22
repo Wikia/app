@@ -1,6 +1,10 @@
 <!-- s:<?= __FILE__ ?> -->
 <div class="blog-comment">
 <?php
+    /* @var $comment mixed */
+    /* @var $canToggle boolean */
+    /* @var $canDelete boolean */
+    /* @var $canEdit boolean */
 	if( ! $comment[ "hidden" ] ):
 ?>
 	<a name="<?php echo isset( $comment["anchor"][2] ) ? $comment["anchor"][2] : "" ?>"></a>

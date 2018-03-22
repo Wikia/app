@@ -1,9 +1,10 @@
 // @autosprite-start
 @mixin sprite-edit-page-base() {
 	background-color: transparent;
-	background-image: url('/extensions/wikia/EditPageLayout/images/sprite-edit-page.png'); /* wgCdnStylePath */
+	background-image: url('/extensions/wikia/EditPageLayout/images/sprite-edit-page.png'); /* wgResourceBasePath */
 	background-repeat: no-repeat;
 }
+
 @mixin sprite-edit-page($imageName,$width: 0,$height: 0,$offset-x: 0,$offset-y: 0) {
 	$image-x: -1;
 	$image-y: -1;
@@ -415,6 +416,18 @@
 		$image-width: 18px;
 		$image-height: 14px;
 	}
+	@if $imageName == 'infobox-light' {
+		$image-x: 1784px;
+		$image-y: 0px;
+		$image-width: 20px;
+		$image-height: 24px;
+	}
+	@if $imageName == 'infobox-dark' {
+		$image-x: 1827px;
+		$image-y: 0px;
+		$image-width: 20px;
+		$image-height: 24px;
+	}
 	@if $image-x != -1 {
 		$position-x: 0px - $image-x;
 		$position-y: 0px - $image-y;
@@ -433,185 +446,194 @@
 		background-position: $position-x $position-y;
 	}
 }
+
 @mixin sprite-edit-page-full($imageName, $width: 0, $height: 0,$offset-x: 0,$offset-y: 0) {
 	@include sprite-edit-page-base;
-	@include sprite-edit-page($imageName,$width,$height,$offset-x,$offset-y);
+	@include sprite-edit-page($imageName, $width, $height, $offset-x, $offset-y);
 }
+
 @mixin sprite-edit-page-deep($width: 0,$height: 0) {
 	@include sprite-edit-page-base;
 	&.add-video-small {
-		@include sprite-edit-page('add_video_small',$width,$height);
+		@include sprite-edit-page('add_video_small', $width, $height);
 	}
 	&.addlink-dark {
-		@include sprite-edit-page('addlink-dark',$width,$height);
+		@include sprite-edit-page('addlink-dark', $width, $height);
 	}
 	&.addlink-light {
-		@include sprite-edit-page('addlink-light',$width,$height);
+		@include sprite-edit-page('addlink-light', $width, $height);
 	}
 	&.aligncenter-dark {
-		@include sprite-edit-page('aligncenter-dark',$width,$height);
+		@include sprite-edit-page('aligncenter-dark', $width, $height);
 	}
 	&.aligncenter-light {
-		@include sprite-edit-page('aligncenter-light',$width,$height);
+		@include sprite-edit-page('aligncenter-light', $width, $height);
 	}
 	&.alignleft-dark {
-		@include sprite-edit-page('alignleft-dark',$width,$height);
+		@include sprite-edit-page('alignleft-dark', $width, $height);
 	}
 	&.alignleft-light {
-		@include sprite-edit-page('alignleft-light',$width,$height);
+		@include sprite-edit-page('alignleft-light', $width, $height);
 	}
 	&.alignright-dark {
-		@include sprite-edit-page('alignright-dark',$width,$height);
+		@include sprite-edit-page('alignright-dark', $width, $height);
 	}
 	&.alignright-light {
-		@include sprite-edit-page('alignright-light',$width,$height);
+		@include sprite-edit-page('alignright-light', $width, $height);
 	}
 	&.attribution {
-		@include sprite-edit-page('attribution',$width,$height);
+		@include sprite-edit-page('attribution', $width, $height);
 	}
 	&.bold-dark {
-		@include sprite-edit-page('bold-dark',$width,$height);
+		@include sprite-edit-page('bold-dark', $width, $height);
 	}
 	&.bold-light {
-		@include sprite-edit-page('bold-light',$width,$height);
+		@include sprite-edit-page('bold-light', $width, $height);
 	}
 	&.carrot-dark {
-		@include sprite-edit-page('carrot-dark',$width,$height);
+		@include sprite-edit-page('carrot-dark', $width, $height);
 	}
 	&.carrot-light {
-		@include sprite-edit-page('carrot-light',$width,$height);
+		@include sprite-edit-page('carrot-light', $width, $height);
 	}
 	&.cc-by-new {
-		@include sprite-edit-page('cc_by_new',$width,$height);
+		@include sprite-edit-page('cc_by_new', $width, $height);
 	}
 	&.cc-logo-circle {
-		@include sprite-edit-page('cc_logo_circle',$width,$height);
+		@include sprite-edit-page('cc_logo_circle', $width, $height);
 	}
 	&.external-link {
-		@include sprite-edit-page('external_link',$width,$height);
+		@include sprite-edit-page('external_link', $width, $height);
 	}
 	&.formula {
-		@include sprite-edit-page('formula',$width,$height);
+		@include sprite-edit-page('formula', $width, $height);
 	}
 	&.gallery {
-		@include sprite-edit-page('gallery',$width,$height);
+		@include sprite-edit-page('gallery', $width, $height);
 	}
 	&.horizontal-line {
-		@include sprite-edit-page('horizontal_line',$width,$height);
+		@include sprite-edit-page('horizontal_line', $width, $height);
 	}
 	&.ignore-wikia {
-		@include sprite-edit-page('ignore_wikia',$width,$height);
+		@include sprite-edit-page('ignore_wikia', $width, $height);
 	}
 	&.indent-dark {
-		@include sprite-edit-page('indent-dark',$width,$height);
+		@include sprite-edit-page('indent-dark', $width, $height);
 	}
 	&.indent-light {
-		@include sprite-edit-page('indent-light',$width,$height);
+		@include sprite-edit-page('indent-light', $width, $height);
 	}
 	&.italic-dark {
-		@include sprite-edit-page('italic-dark',$width,$height);
+		@include sprite-edit-page('italic-dark', $width, $height);
 	}
 	&.italic-light {
-		@include sprite-edit-page('italic-light',$width,$height);
+		@include sprite-edit-page('italic-light', $width, $height);
 	}
 	&.level-2-headline {
-		@include sprite-edit-page('level_2_headline',$width,$height);
+		@include sprite-edit-page('level_2_headline', $width, $height);
 	}
 	&.minor-edit {
-		@include sprite-edit-page('minor_edit',$width,$height);
+		@include sprite-edit-page('minor_edit', $width, $height);
 	}
 	&.more {
-		@include sprite-edit-page('more',$width,$height);
+		@include sprite-edit-page('more', $width, $height);
 	}
 	&.ordered-dark {
-		@include sprite-edit-page('ordered-dark',$width,$height);
+		@include sprite-edit-page('ordered-dark', $width, $height);
 	}
 	&.ordered-light {
-		@include sprite-edit-page('ordered-light',$width,$height);
+		@include sprite-edit-page('ordered-light', $width, $height);
 	}
 	&.outdent-dark {
-		@include sprite-edit-page('outdent-dark',$width,$height);
+		@include sprite-edit-page('outdent-dark', $width, $height);
 	}
 	&.outdent-light {
-		@include sprite-edit-page('outdent-light',$width,$height);
+		@include sprite-edit-page('outdent-light', $width, $height);
 	}
 	&.pencil-small {
-		@include sprite-edit-page('pencil_small',$width,$height);
+		@include sprite-edit-page('pencil_small', $width, $height);
 	}
 	&.photo {
-		@include sprite-edit-page('photo',$width,$height);
+		@include sprite-edit-page('photo', $width, $height);
 	}
 	&.photo-small {
-		@include sprite-edit-page('photo_small',$width,$height);
+		@include sprite-edit-page('photo_small', $width, $height);
 	}
 	&.poll {
-		@include sprite-edit-page('poll',$width,$height);
+		@include sprite-edit-page('poll', $width, $height);
 	}
 	&.puzzle-piece {
-		@include sprite-edit-page('puzzle_piece',$width,$height);
+		@include sprite-edit-page('puzzle_piece', $width, $height);
 	}
 	&.quotation {
-		@include sprite-edit-page('quotation',$width,$height);
+		@include sprite-edit-page('quotation', $width, $height);
 	}
 	&.redo-dark {
-		@include sprite-edit-page('redo-dark',$width,$height);
+		@include sprite-edit-page('redo-dark', $width, $height);
 	}
 	&.redo-light {
-		@include sprite-edit-page('redo-light',$width,$height);
+		@include sprite-edit-page('redo-light', $width, $height);
 	}
 	&.share-alike {
-		@include sprite-edit-page('share_alike',$width,$height);
+		@include sprite-edit-page('share_alike', $width, $height);
 	}
 	&.signature-dark {
-		@include sprite-edit-page('signature-dark',$width,$height);
+		@include sprite-edit-page('signature-dark', $width, $height);
 	}
 	&.signature-light {
-		@include sprite-edit-page('signature-light',$width,$height);
+		@include sprite-edit-page('signature-light', $width, $height);
 	}
 	&.slider {
-		@include sprite-edit-page('slider',$width,$height);
+		@include sprite-edit-page('slider', $width, $height);
 	}
 	&.slideshow {
-		@include sprite-edit-page('slideshow',$width,$height);
+		@include sprite-edit-page('slideshow', $width, $height);
 	}
 	&.strike-dark {
-		@include sprite-edit-page('strike-dark',$width,$height);
+		@include sprite-edit-page('strike-dark', $width, $height);
 	}
 	&.strike-light {
-		@include sprite-edit-page('strike-light',$width,$height);
+		@include sprite-edit-page('strike-light', $width, $height);
 	}
 	&.switch {
-		@include sprite-edit-page('switch',$width,$height);
+		@include sprite-edit-page('switch', $width, $height);
 	}
 	&.table {
-		@include sprite-edit-page('table',$width,$height);
+		@include sprite-edit-page('table', $width, $height);
 	}
 	&.trash-small {
-		@include sprite-edit-page('trash_small',$width,$height);
+		@include sprite-edit-page('trash_small', $width, $height);
 	}
 	&.underline-dark {
-		@include sprite-edit-page('underline-dark',$width,$height);
+		@include sprite-edit-page('underline-dark', $width, $height);
 	}
 	&.underline-light {
-		@include sprite-edit-page('underline-light',$width,$height);
+		@include sprite-edit-page('underline-light', $width, $height);
 	}
 	&.undo-dark {
-		@include sprite-edit-page('undo-dark',$width,$height);
+		@include sprite-edit-page('undo-dark', $width, $height);
 	}
 	&.undo-light {
-		@include sprite-edit-page('undo-light',$width,$height);
+		@include sprite-edit-page('undo-light', $width, $height);
 	}
 	&.unordered-dark {
-		@include sprite-edit-page('unordered-dark',$width,$height);
+		@include sprite-edit-page('unordered-dark', $width, $height);
 	}
 	&.unordered-light {
-		@include sprite-edit-page('unordered-light',$width,$height);
+		@include sprite-edit-page('unordered-light', $width, $height);
 	}
 	&.video {
-		@include sprite-edit-page('video',$width,$height);
+		@include sprite-edit-page('video', $width, $height);
 	}
 	&.wikia-link {
-		@include sprite-edit-page('wikia_link',$width,$height);
+		@include sprite-edit-page('wikia_link', $width, $height);
+	}
+	&.infobox-light {
+		@include sprite-edit-page('infobox-light', $width, $height);
+	}
+	&.infobox-dark {
+		@include sprite-edit-page('infobox-dark', $width, $height);
 	}
 }
+
 // @autosprite-end

@@ -1,10 +1,4 @@
 <?php
-/**
- * Internationalisation file for extension GlobalMessages.
- *
- * @file
- * @ingroup Extensions
- */
 $messages = array();
 
 $messages['en'] = array(
@@ -19,19 +13,17 @@ $messages['en'] = array(
 	'anontalk' => 'Talk for this IP address',
 	'and' => '&#32;and',
 	'actions' => 'Actions',
-	'addsection' => '+',
+	'addsection' => 'Leave message',
 	'aboutsite' => 'About {{SITENAME}}',
 	'aboutpage' => 'Project:About',
 	'anonnotice' => '-',
 	'actionthrottled' => 'Action throttled',
-	'actionthrottledtext' => 'As an anti-spam measure, you are limited from performing this action too many times in a short space of time, and you have exceeded this limit.
-Please try again in a few minutes.',
+	'actionthrottledtext' => 'You can not perform this action right now. Please try again in a few minutes, or [[Special:Contact|contact Wikia]] if you are having difficulties.',
 	'acct_creation_throttle_hit' => 'Visitors to this wiki using your IP address have created {{PLURAL:$1|1 account|$1 accounts}} in the last day, which is the maximum allowed in this time period.
 As a result, visitors using this IP address cannot create any more accounts at the moment.',
 	'accountcreated' => 'Account created',
 	'accountcreatedtext' => 'The user account for $1 has been created.',
-	'anoneditwarning' => "'''Warning:''' You are not logged in.
-Your IP address will be recorded in this page's edit history.",
+	'anoneditwarning' => 'You are not logged in.',
 	'anonpreviewwarning' => "''You are not logged in. Saving will record your IP address in this page's edit history.''",
 	'autoblockedtext' => 'Your IP address has been automatically blocked because it was used by another user, who was blocked by $1.
 The reason given is this:
@@ -52,13 +44,18 @@ Please include all above details in any queries you make.',
 	'accmailtext' => "A randomly generated password for [[User talk:$1|$1]] has been sent to $2.
 
 The password for this new account can be changed on the ''[[Special:ChangePassword|change password]]'' page upon logging in.",
-	'anontalkpagetext' => "----''This is the discussion page for an anonymous user who has not created an account yet, or who does not use it.
-We therefore have to use the numerical IP address to identify him/her.
-Such an IP address can be shared by several users.
-If you are an anonymous user and feel that irrelevant comments have been directed at you, please [[Special:UserLogin/signup|create an account]] or [[Special:UserLogin|log in]] to avoid future confusion with other anonymous users.''",
+	'anontalkpagetext' => "<br style=\"clear:both;\" />
+----
+{| id=\"anontalktext\" class=\"plainlinks noeditsection\" style=\"font-size:90%; border: 1px solid #B8B8B8; margin:1em 1em 0em 1em; padding:0.25em 1em 0.25em 1em; clear: both;\" 
+| '''This is the discussion page for an anonymous user  who has not created an account yet or who does not use it, identified by the user's numerical [[wikipedia:IP address|IP address]].'''
+
+Some IP addresses change periodically, and may be shared by several users. If you are an anonymous user, you may [[{{ns:Special}}:Signup|create an account or log in]] to avoid future confusion with other anonymous users. Registering also hides your IP address.
+
+'''Help:''' [[Help:Why create an account?|Why create an account?]] &bull; [[Help:Create an account|How to create an account]] &bull; [http://whatismyipaddress.com/ip/\$1 WHOIS]
+|}",
 	'addsection-preload' => '',
 	'addsection-editintro' => '',
-	'allowemail' => 'Enable e-mail from other users',
+	'allowemail' => 'Enable email from other users',
 	'action-read' => 'read this page',
 	'action-edit' => 'edit this page',
 	'action-createpage' => 'create pages',
@@ -100,7 +97,6 @@ If you are an anonymous user and feel that irrelevant comments have been directe
 	'alllogstext' => 'Combined display of all available logs of {{SITENAME}}.
 You can narrow down the view by selecting a log type, the username (case-sensitive), or the affected page (also case-sensitive).',
 	'allpages' => 'All pages',
-	'allpages-summary' => '',
 	'alphaindexline' => '$1 to $2',
 	'allpagesfrom' => 'Display pages starting at:',
 	'allpagesto' => 'Display pages ending at:',
@@ -123,26 +119,22 @@ It may contain one or more characters which cannot be used in titles.',
 	'activeusers-hidesysops' => 'Hide administrators',
 	'activeusers-noresult' => 'No users found.',
 	'addwatch' => 'Add to watchlist',
-	'addedwatchtext' => "The page \"[[:\$1]]\" has been added to your [[Special:Watchlist|watchlist]].
-Future changes to this page and its associated talk page will be listed there, and the page will appear '''bolded''' in the [[Special:RecentChanges|list of recent changes]] to make it easier to pick out.",
+	'addedwatchtext' => 'The page "[[:$1]]" has been added to your [[Special:Watchlist|watchlist]].',
 	'actioncomplete' => 'Action complete',
 	'actionfailed' => 'Action failed',
-	'alreadyrolled' => 'Cannot rollback last edit of [[:$1]] by [[User:$2|$2]] ([[User talk:$2|talk]]{{int:pipe-separator}}[[Special:Contributions/$2|{{int:contribslink}}]]);
-someone else has edited or rolled back the page already.
+	'alreadyrolled' => 'Cannot roll back edit to [[:$1]] by [[User:$2|$2]] ([[User talk:$2|talk]] · [[special:blockip/$2|block]] · [[Special:Contributions/$2|contribs]]) because someone else has edited the page.
 
-The last edit to the page was by [[User:$3|$3]] ([[User talk:$3|talk]]{{int:pipe-separator}}[[Special:Contributions/$3|{{int:contribslink}}]]).',
+The last revision was by [[User:$3|$3]] ([[User talk:$3|talk]] · [[Special:Contributions/$3|contribs]]).',
 	'autoblockid' => 'Autoblock #$1',
 	'anononlyblock' => 'anon. only',
 	'autoblocker' => 'Autoblocked because your IP address has been recently used by "[[User:$1|$1]]".
 The reason given for $1\'s block is: "$2"',
-	'articleexists' => 'A page of that name already exists, or the name you have chosen is not valid.
-Please choose another name.',
+	'articleexists' => "'''The page could not be moved:''' a page of that name already exists, or the name you have chosen is not valid. Please choose another name, or ask an [[Project:Administrators|administrator]] to help you with the move.<br/>Please do not manually move the article by copying and pasting it; the page history must be moved along with the article text.",
 	'allmessages' => 'System messages',
 	'allmessagesname' => 'Name',
 	'allmessagesdefault' => 'Default message text',
 	'allmessagescurrent' => 'Current message text',
-	'allmessagestext' => 'This is a list of system messages available in the MediaWiki namespace.
-Please visit [//www.mediawiki.org/wiki/Localisation MediaWiki Localisation] and [//translatewiki.net translatewiki.net] if you wish to contribute to the generic MediaWiki localisation.',
+	'allmessagestext' => 'This is a list of system messages available in the MediaWiki namespace. For security reasons, not all MediaWiki messages are editable. (Please see [[Help:System_messages|this page]] for more information.) If there are messages you feel should be editable or need an existing message tweaked, please [[Special:Contact|let FANDOM Staff know]].',
 	'allmessagesnotsupportedDB' => "This page cannot be used because '''\$wgUseDatabaseMessages''' has been disabled.",
 	'allmessages-filter-legend' => 'Filter',
 	'allmessages-filter' => 'Filter by customisation state:',
@@ -226,7 +218,7 @@ Please visit [//www.mediawiki.org/wiki/Localisation MediaWiki Localisation] and 
 	'ago' => '$1 ago',
 	'autocomment-prefix' => '-&#32;',
 	'ascending_abbrev' => 'asc',
-	'autosumm-blank' => 'Blanked the page',
+	'autosumm-blank' => 'Removing all content from page',
 	'autosumm-replace' => 'Replaced content with "$1"',
 	'autoredircomment' => 'Redirected page to [[$1]]',
 	'autosumm-new' => 'Created page with "$1"',
@@ -251,7 +243,12 @@ Please visit [//www.mediawiki.org/wiki/Localisation MediaWiki Localisation] and 
 *205.188.208.0/23
 *205.188.112.0/20
 *205.188.146.144/30
-*207.200.112.0/21',
+*207.200.112.0/21
+*10.6.0.0/16
+*10.7.0.0/16
+*10.8.0.0/16
+*199.102.47.71
+*199.102.47.72',
 	'api-error-badaccess-groups' => 'You are not permitted to upload files to this wiki.',
 	'api-error-badtoken' => 'Internal error: Bad token.',
 	'api-error-copyuploaddisabled' => 'Uploading by URL is disabled on this server.',
@@ -290,12 +287,12 @@ Please visit [//www.mediawiki.org/wiki/Localisation MediaWiki Localisation] and 
 	'api-error-verification-error' => 'This file might be corrupt, or have the wrong extension.',
 	'adminskin_ds' => 'Default',
 	'admin_skin' => 'Admin Options',
-	'all_the_wikia' => 'All the wikia',
+	'all_the_wikia' => 'All the FANDOM',
 	'already_a_member' => 'Already a member?',
 	'add_comment' => 'Leave message',
 	'achievements-leaderboard-navigation-item' => 'Wiki Leaderboard',
-	'atom' => 'Wikia Atom',
-	'addnewtalksection-link' => 'Add new section',
+	'atom' => 'Atom',
+	'addnewtalksection-link' => 'Leave a new message',
 );
 
 $messages['qqq'] = array(
@@ -479,6 +476,7 @@ See also {{msg-mw|Anonuser}} and {{msg-mw|Siteusers}}.',
 	'autoredircomment' => 'The auto summary when making a redirect. $1 is the page where it redirects to.',
 	'autosumm-new' => 'The auto summary when creating a new page. $1 are the first X number of characters of the new page.',
 	'addnewtalksection-link' => 'Tooltip shown when hovering over the "addsection" tab (shown on talk pages).',
+	'all_the_wikia' => 'Missing documentation',
 );
 
 $messages['ab'] = array(
@@ -3636,6 +3634,7 @@ $messages['bg'] = array(
 	'api-error-uploaddisabled' => 'Достъпът за качване на файлове в това уики е прекратен.',
 	'api-error-verification-error' => 'Файлът може би е повреден или има грешно разширение.',
 	'addnewtalksection-link' => 'Започване на нов раздел',
+	'add_comment' => 'Оставяне на съобщение',
 );
 
 $messages['bh'] = array(
@@ -6334,16 +6333,26 @@ $messages['de'] = array(
 	'and' => '&#32;und',
 	'actions' => 'Aktionen',
 	'aboutsite' => 'Über {{SITENAME}}',
-	'aboutpage' => 'Project:Über',
+	'aboutpage' => '{{ns:project}}:Über_dieses_Wiki',
 	'actionthrottled' => 'Aktionsanzahl limitiert',
 	'actionthrottledtext' => 'Im Rahmen einer Anti-Spam-Maßnahme kann diese Aktion in einem kurzen Zeitabstand nur begrenzt oft ausgeführt werden. Diese Grenze hast du überschritten.
 Bitte versuche es in ein paar Minuten erneut.',
-	'acct_creation_throttle_hit' => 'Besucher dieses Wikis, die deine IP-Adresse verwenden, haben innerhalb des letzten Tages {{PLURAL:$1|1 Benutzerkonto|$1 Benutzerkonten}} erstellt, was die maximal erlaubte Anzahl in dieser Zeitperiode ist.
-
-Besucher, die diese IP-Adresse verwenden, können momentan keine Benutzerkonten mehr erstellen.',
+	'acct_creation_throttle_hit' => 'Du hast schon $1 Benutzerkonten angelegt und kannst vorerst keine weiteren mehr anlegen.',
 	'accountcreated' => 'Benutzerkonto erstellt',
-	'accountcreatedtext' => 'Das Benutzerkonto $1 wurde eingerichtet.',
-	'anoneditwarning' => "Du bearbeitest diese Seite unangemeldet. Wenn du speicherst, wird deine aktuelle IP-Adresse in der Versionsgeschichte aufgezeichnet und ist damit unwiderruflich '''öffentlich''' einsehbar.",
+	'accountcreatedtext' => 'Das Benutzerkonto $1 wurde erstellt.',
+	'anoneditwarning' => "<table align=center width=75% cellpadding=5 style=\"background: #D3E1F2; border: 1px solid #aaa; color: black;\">
+<tr>
+<td valign=\"top\" colspan=\"2\"> '''Hast du vergessen dich anzumelden?''' Ein Benutzername hilft dir dabei deine Änderungen nachzuvollziehen und mit anderen Nutzern zu kommunizieren. Wenn du dich nicht anmeldest, wird deine aktuelle IP-Adresse in der Versionsgeschichte aufgezeichnet und ist damit unwiderruflich '''öffentlich''' einsehbar.
+</td>
+</tr>
+<tr>
+<td class=\"plainlinks\" align=\"center\" rowspan=\"2\"> [{{FULLURL:Special:Userlogin}} http://images3.wikia.nocookie.net/messaging/images/f/f1/Greenbutton.png] '''[[Special:Userlogin|Hier zum Anmelden klicken]]'''
+</td>
+<td class=\"plainlinks\" align=\"left\"> [{{SERVER}}/index.php?title=Special:Userlogin&type=signup http://images3.wikia.nocookie.net/messaging/images/f/f1/Greenbutton.png] '''[{{SERVER}}/index.php?title=Special:Userlogin&type=signup Benutzerkonto erstellen]'''
+</td>
+</tr>
+</table>
+<br />",
 	'anonpreviewwarning' => "''Du bist nicht angemeldet. Beim Speichern wird deine IP-Adresse in der Versionsgeschichte aufgezeichnet.''",
 	'autoblockedtext' => "Deine IP-Adresse wurde automatisch gesperrt, da sie von einem anderen Benutzer genutzt wurde, der von $1 gesperrt wurde.
 Als Grund wurde angegeben:
@@ -6364,7 +6373,13 @@ Bitte füge alle Informationen jeder Anfrage hinzu, die du stellt.",
 	'accmailtext' => 'Ein zufällig generiertes Passwort für [[User talk:$1|$1]] wurde an $2 versandt.
 
 Das Passwort für dieses neue Benutzerkonto kann auf der Spezialseite „[[Special:ChangePassword|Passwort ändern]]“ geändert werden.',
-	'anontalkpagetext' => "----''Diese Seite dient dazu, einem nicht angemeldeten Benutzer Nachrichten zu hinterlassen. Es wird seine IP-Adresse zur Identifizierung verwendet. IP-Adressen können von mehreren Benutzern gemeinsam verwendet werden. Wenn du mit den Kommentaren auf dieser Seite nichts anfangen kannst, richten sie sich vermutlich an einen früheren Inhaber deiner IP-Adresse und du kannst sie ignorieren. Du kannst dir auch ein [[Special:UserLogin/signup|Benutzerkonto erstellen]] oder dich [[Special:UserLogin|anmelden]], um künftig Verwechslungen mit anderen anonymen Benutzern zu vermeiden.''",
+	'anontalkpagetext' => '<br style="clear:both;" />
+----
+{| id="anontalktext" class="plainlinks noeditsection" style="font-size:90%; border: 1px solid #B8B8B8; margin:1em 1em 0em 1em; padding:0.25em 1em 0.25em 1em; clear: both;" 
+| \'\'\'Diese Seite dient dazu, einem nicht angemeldeten Benutzer an seine [[wikipedia:de:IP-Adresse|IP-Adresse]] Nachrichten zu hinterlassen.\'\'\'
+
+Einige IP-Adressen wechseln dynamisch und können von mehreren Nutzern belegt werden. Falls du ein nicht-angemeldeter Nutzer bist, solltest du ein [[{{ns:Special}}:Signup|Benutzerkonto erstellen]] oder dich anmelden um nicht mit anderen Nutzern verwechselt zu werden. Nach einer Anmeldung wird deine IP-Adresse auch nicht mehr angezeigt.
+|}',
 	'allowemail' => 'E-Mail-Empfang von anderen Benutzern ermöglichen',
 	'action-read' => 'die Seite zu lesen',
 	'action-edit' => 'die Seite zu bearbeiten',
@@ -6403,20 +6418,19 @@ Das Passwort für dieses neue Benutzerkonto kann auf der Spezialseite „[[Speci
 	'action-sendemail' => 'E-Mails zu senden',
 	'ancientpages' => 'Seit längerem unbearbeitete Seiten',
 	'all-logs-page' => 'Alle öffentlichen Logbücher',
-	'alllogstext' => 'Dies ist die kombinierte Anzeige aller in {{SITENAME}} geführten Logbücher.
-Die Ausgabe kann durch die Auswahl des Logbuchtyps, des Benutzers oder des Seitentitels eingeschränkt werden (Groß-/Kleinschreibung muss beachtet werden).',
+	'alllogstext' => 'Diese Spezialseite bietet eine kombinierte Anzeige verschiedener Logbücher. Sie können nach Typ, Benutzernamen und nach betroffener Seite bzw. betroffenem Benutzer gefiltert werden.',
 	'allpages' => 'Alle Seiten',
 	'alphaindexline' => '$1 bis $2',
 	'allpagesfrom' => 'Seiten anzeigen ab:',
 	'allpagesto' => 'Seiten anzeigen bis:',
 	'allarticles' => 'Alle Seiten',
-	'allinnamespace' => 'Alle Seiten (Namensraum: $1)',
-	'allnotinnamespace' => 'Alle Seiten (nicht im $1 Namensraum)',
+	'allinnamespace' => 'Alle Seiten im Namensraum „$1“',
+	'allnotinnamespace' => 'Alle Seiten (nicht im Namensraum „$1“)',
 	'allpagesprev' => 'Vorherige',
 	'allpagesnext' => 'Nächste',
 	'allpagessubmit' => 'Anwenden',
 	'allpagesprefix' => 'Seiten anzeigen mit Präfix:',
-	'allpagesbadtitle' => 'Der eingegebene Seitenname ist ungültig: Er hat entweder ein vorangestelltes Sprach-, ein Interwiki-Kürzel oder enthält ein oder mehrere Zeichen, welche in Seitennamen nicht verwendet werden dürfen.',
+	'allpagesbadtitle' => 'Der angegeben Seitentitel war ungültig oder hatte einen Interlanguage- oder Interwiki-Präfix. Eventuell enthält er auch ein Zeichen, das nicht in einem Seitentitel verwendet werden kann.',
 	'allpages-bad-ns' => 'Der Namensraum „$1“ ist in {{SITENAME}} nicht vorhanden.',
 	'activeusers' => 'Aktive Benutzer',
 	'activeusers-intro' => 'Dies ist eine Liste von Benutzern, die innerhalb {{PLURAL:$1|des letzten Tages|der letzten $1 Tage}} Aktivitäten aufwiesen.',
@@ -6426,25 +6440,21 @@ Die Ausgabe kann durch die Auswahl des Logbuchtyps, des Benutzers oder des Seite
 	'activeusers-hidesysops' => 'Administratoren ausblenden',
 	'activeusers-noresult' => 'Keine Benutzer gefunden.',
 	'addwatch' => 'Zur Beobachtungsliste hinzufügen',
-	'addedwatchtext' => 'Die Seite „[[:$1]]“ wurde zu deiner [[Special:Watchlist|Beobachtungsliste]] hinzugefügt.
-
-Spätere Änderungen an dieser Seite und der dazugehörigen Diskussionsseite werden dort gelistet und
-in der Übersicht der [[Special:RecentChanges|letzten Änderungen]] in Fettschrift dargestellt.',
+	'addedwatchtext' => 'Die Seite „[[$1]]“ wurde zu deiner [[{{ns:special}}:Watchlist|Beobachtungsliste]] hinzugefügt.',
 	'actioncomplete' => 'Aktion beendet',
 	'actionfailed' => 'Aktion fehlgeschlagen',
-	'alreadyrolled' => 'Das Zurücksetzen der Änderungen von [[User:$2|$2]] ([[User talk:$2|Diskussion]]{{int:pipe-separator}}[[Special:Contributions/$2|{{int:contribslink}}]]) an [[:$1]] ist gescheitert, da in der Zwischenzeit ein anderer Benutzer die Seite geändert hat.
-
-Die letzte Änderung stammt von [[User:$3|$3]] ([[User talk:$3|Diskussion]]{{int:pipe-separator}}[[Special:Contributions/$3|{{int:contribslink}}]]).',
+	'alreadyrolled' => "Das Zurücksetzen der Änderungen von [[{{ns:user}}:$2|$2]] <span style='font-size: smaller'>([[{{ns:user_talk}}:$2|Diskussion]], [[{{ns:special}}:Contributions/$2|Beiträge]])</span> am Artikel [[:$1]] war nicht erfolgreich, da in der Zwischenzeit bereits ein anderer Benutzer 
+Änderungen an diesem Artikel vorgenommen hat.<br />Die letzte Änderung stammt von [[{{ns:user}}:$3|$3]] <span style='font-size: smaller'>([[{{ns:user_talk}}:$3|Diskussion]])</span>.",
 	'autoblockid' => 'Automatische Sperrung #$1',
 	'anononlyblock' => 'nur Anonyme',
 	'autoblocker' => 'Automatische Sperre, da du eine gemeinsame IP-Adresse mit [[User:$1|$1]] benutzt. Grund der Benutzersperre: „$2“.',
-	'articleexists' => 'Unter diesem Namen existiert bereits eine Seite. Bitte wähle einen anderen Namen.',
+	'articleexists' => 'Unter diesem Namen existiert bereits eine Seite.
+Bitte wähle einen anderen Titel.',
 	'allmessages' => 'MediaWiki-Systemnachrichten',
 	'allmessagesname' => 'Name',
 	'allmessagesdefault' => 'Standardtext',
 	'allmessagescurrent' => 'Aktueller Text',
-	'allmessagestext' => 'Dies ist eine Liste der MediaWiki-Systemtexte.
-Bitte besuche die Seiten [//www.mediawiki.org/wiki/Localisation MediaWiki-Lokalisierung] und [//translatewiki.net translatewiki.net], sofern du dich an der Lokalisierung von MediaWiki beteiligen möchtest.',
+	'allmessagestext' => 'Dies ist eine Liste von Systemnachrichten, die im MediaWiki-Namensraum zur Verfügung stehen. Aus Sicherheitsgründen können nicht alle MediaWiki-Nachrichten bearbeitet werden. (Auf [[w:c:de.community:Hilfe:Systemnachricht|dieser Seite]] findest du dazu weitere Informationen.) Falls du auf Nachrichten stößt, die deiner Meinung nach editierbar sein sollten oder wenn du findest, dass eine bestehende Nachricht geändert werden sollte, [[Special:Contact|informiere bitte die FANDOM-Mitarbeiter]].',
 	'allmessagesnotsupportedDB' => 'Diese Spezialseite steht nicht zur Verfügung, da sie über den Parameter <tt>$wgUseDatabaseMessages</tt> deaktiviert wurde.',
 	'allmessages-filter-legend' => 'Filter',
 	'allmessages-filter' => 'Filter für angepassten Zustand:',
@@ -6454,7 +6464,7 @@ Bitte besuche die Seiten [//www.mediawiki.org/wiki/Localisation MediaWiki-Lokali
 	'allmessages-prefix' => 'Präfixfilter:',
 	'allmessages-language' => 'Sprache:',
 	'allmessages-filter-submit' => 'Los',
-	'anonymous' => '{{PLURAL:$1|Unangemeldeter Benutzer|Unangemeldete Benutzer}} auf {{SITENAME}}',
+	'anonymous' => 'Unregistrierte(r) Benutzer',
 	'anonuser' => 'Anonymer {{SITENAME}}-Benutzer $1',
 	'anonusers' => '{{PLURAL:$2|unangemeldetem|unangemeldeten}} {{SITENAME}}-{{PLURAL:$2|Benutzer|Benutzern}} $1',
 	'ago' => 'vor $1',
@@ -6499,7 +6509,117 @@ Bitte besuche die Seiten [//www.mediawiki.org/wiki/Localisation MediaWiki-Lokali
 	'api-error-unknownerror' => 'Unbekannter Fehler: „$1“',
 	'api-error-uploaddisabled' => 'Das Hochladen ist in diesem Wiki deaktiviert.',
 	'api-error-verification-error' => 'Die hochzuladende Datei ist entweder fehlerhaft oder hat keine Dateinamenserweiterung.',
-	'addnewtalksection-link' => 'Neuen Abschnitt beginnen',
+	'addnewtalksection-link' => 'Neuen Abschnitt erstellen',
+	'all_the_wikia' => 'Überall in FANDOM',
+	'achievements-leaderboard-navigation-item' => 'Herausforderungen',
+	'add_comment' => 'Kommentieren',
+	'addsection' => 'Kommentieren',
+	'admin_skin' => 'Admin-Optionen',
+	'adminskin_ds' => 'Voreinstellung',
+	'already_a_member' => 'Bereits Wikia-Nutzer?',
+	'ancientpages-summary' => '',
+	'anonnotice' => '-',
+	'addsection-preload' => '',
+	'addsection-editintro' => '',
+	'allpages-summary' => '',
+	'activeusers-summary' => '',
+	'accesskey-pt-userpage' => '.',
+	'accesskey-pt-anonuserpage' => '.',
+	'accesskey-pt-mytalk' => 'n',
+	'accesskey-pt-anontalk' => 'n',
+	'accesskey-pt-preferences' => '',
+	'accesskey-pt-watchlist' => 'l',
+	'accesskey-pt-mycontris' => 'y',
+	'accesskey-pt-login' => 'o',
+	'accesskey-pt-anonlogin' => 'o',
+	'accesskey-pt-logout' => '',
+	'accesskey-ca-talk' => 't',
+	'accesskey-ca-edit' => 'e',
+	'accesskey-ca-addsection' => '+',
+	'accesskey-ca-viewsource' => 'e',
+	'accesskey-ca-history' => 'h',
+	'accesskey-ca-protect' => '=',
+	'accesskey-ca-unprotect' => '=',
+	'accesskey-ca-delete' => 'd',
+	'accesskey-ca-undelete' => 'd',
+	'accesskey-ca-move' => 'm',
+	'accesskey-ca-watch' => 'w',
+	'accesskey-ca-unwatch' => 'w',
+	'accesskey-search' => 'f',
+	'accesskey-search-go' => '',
+	'accesskey-search-fulltext' => '',
+	'accesskey-p-logo' => '',
+	'accesskey-n-mainpage' => 'z',
+	'accesskey-n-mainpage-description' => 'z',
+	'accesskey-n-portal' => '',
+	'accesskey-n-currentevents' => '',
+	'accesskey-n-recentchanges' => 'r',
+	'accesskey-n-randompage' => 'x',
+	'accesskey-n-help' => '',
+	'accesskey-t-whatlinkshere' => 'j',
+	'accesskey-t-recentchangeslinked' => 'k',
+	'accesskey-feed-rss' => '',
+	'accesskey-feed-atom' => '',
+	'accesskey-t-contributions' => '',
+	'accesskey-t-emailuser' => '',
+	'accesskey-t-permalink' => '',
+	'accesskey-t-print' => 'p',
+	'accesskey-t-upload' => 'u',
+	'accesskey-t-specialpages' => 'q',
+	'accesskey-ca-nstab-main' => 'c',
+	'accesskey-ca-nstab-user' => 'c',
+	'accesskey-ca-nstab-media' => 'c',
+	'accesskey-ca-nstab-special' => '',
+	'accesskey-ca-nstab-project' => 'a',
+	'accesskey-ca-nstab-image' => 'c',
+	'accesskey-ca-nstab-mediawiki' => 'c',
+	'accesskey-ca-nstab-template' => 'c',
+	'accesskey-ca-nstab-help' => 'c',
+	'accesskey-ca-nstab-category' => 'c',
+	'accesskey-minoredit' => 'i',
+	'accesskey-save' => 's',
+	'accesskey-preview' => 'p',
+	'accesskey-diff' => 'v',
+	'accesskey-compareselectedversions' => 'v',
+	'accesskey-watch' => 'w',
+	'accesskey-upload' => 's',
+	'accesskey-preferences-save' => 's',
+	'accesskey-summary' => 'b',
+	'accesskey-userrights-set' => 's',
+	'accesskey-blockip-block' => 's',
+	'accesskey-export' => 's',
+	'accesskey-import' => 's',
+	'accesskey-watchlistedit-normal-submit' => 's',
+	'accesskey-watchlistedit-raw-submit' => 's',
+	'autocomment-prefix' => '-&#32;',
+	'autoblock_whitelist' => 'AOL http://webmaster.info.aol.com/proxyinfo.html
+*64.12.96.0/19
+*149.174.160.0/20
+*152.163.240.0/21
+*152.163.248.0/22
+*152.163.252.0/23
+*152.163.96.0/22
+*152.163.100.0/23
+*195.93.32.0/22
+*195.93.48.0/22
+*195.93.64.0/19
+*195.93.96.0/19
+*195.93.16.0/20
+*198.81.0.0/22
+*198.81.16.0/20
+*198.81.8.0/23
+*202.67.64.128/25
+*205.188.192.0/20
+*205.188.208.0/23
+*205.188.112.0/20
+*205.188.146.144/30
+*207.200.112.0/21
+*10.6.0.0/16
+*10.7.0.0/16
+*10.8.0.0/16
+*199.102.47.71
+*199.102.47.72',
+	'atom' => 'Atom',
 );
 
 $messages['de-ch'] = array(
@@ -6590,7 +6710,6 @@ Gön $1 od eines won anderes [[{{MediaWiki:Grouppage-sysop}}|Adminisdradores]] g
 	'all-logs-page' => 'Ales Logbüges',
 	'alllogstext' => 'Dose eines gombinärdes Anseig won ales Logbüges sei ,wo in dose {{SITENAME}} wühr. Dose Ausgab gön durg Auswähl won dose Logbugdyb, dose Benuds od dose Seidesdid einschräng.',
 	'allpages' => 'Ales Seides',
-	'allpages-summary' => "Auw dose Schbesialseid ales Seides won dose {{SITENAME}} alwabedisches auwlisd. Bei dose Sordär suersd Sähles, dan Grosbugschdabes, Gleinbugschdabes und dan Sondseiges gom. ''A&nbsp;10'' wor dose ''AZ'' gom, dose ''Aal'' aba nag dose gom.",
 	'alphaindexline' => '$1 bis $2',
 	'allpagesfrom' => 'Seides anseig ab:',
 	'allarticles' => 'Ales Seides',
@@ -7491,13 +7610,11 @@ $messages['es'] = array(
 	'aboutsite' => 'Acerca de {{SITENAME}}',
 	'aboutpage' => 'Project:Acerca de',
 	'actionthrottled' => 'Acción bloqueada',
-	'actionthrottledtext' => "Como medida contra el ''spam'', la acción que estás realizando está limitada a un número determinado de veces en un periodo corto de tiempo, y has excedido ese límite. Por favor inténtalo de nuevo en unos minutos.",
-	'acct_creation_throttle_hit' => 'Los visitantes a este wiki usando tu dirección IP han creado {{PLURAL:$1|una cuenta|$1 cuentas}} en el último día, lo cual es lo máximo permitido en este periodo de tiempo.
-Como resultado, los visitantes usando esta dirección IP no pueden crear más cuentas en este momento.',
+	'actionthrottledtext' => 'No puede realizar esta acción ahora. Por favor, intenta nuevamente en unos minutos, o [[Especial:Contactar|contáctate con FANDOM]] si estás teniendo dificultades.',
+	'acct_creation_throttle_hit' => 'Los visitantes de este wiki, usando tu dirección IP, han creado {{PLURAL:$1| una cuenta| $1 cuentas}} en el último día, lo cual es lo máximo permitido en este periodo de tiempo. Como resultado, los visitantes usando esta dirección IP no pueden crear más cuentas en este momento.',
 	'accountcreated' => 'Cuenta creada',
 	'accountcreatedtext' => 'La cuenta de usuario para $1 ha sido creada.',
-	'anoneditwarning' => "'''Aviso:''' No has iniciado sesión con una cuenta de usuario.
-Tu dirección IP se almacenará en el historial de ediciones de la página.",
+	'anoneditwarning' => 'No has iniciado sesión con una cuenta de usuario.',
 	'anonpreviewwarning' => "''No has iniciado sesión con una cuenta de usuario. Al guardar los cambios se almacenará tu dirección IP en el historial de edición de la página.''",
 	'autoblockedtext' => "Tu dirección IP ha sido bloqueada automáticamente porque fue utilizada por otro usuario que fue bloqueado por $1.
 La razón dada es esta:
@@ -7518,10 +7635,18 @@ Por favor incluye todos los datos aquí mostrados en cualquier consulta que haga
 	'accmailtext' => 'Se ha enviado a $2 una contraseña generada aleatoriamente para [[User talk:$1|$1]].
 
 La contraseña para esta nueva cuenta puede cambiarse en [[Special:ChangePassword|la página destinada para ello]] después de haber iniciado sesión.',
-	'anontalkpagetext' => "---- ''Esta es la página de discusión de un usuario anónimo que aún no ha creado una cuenta, o no la usa. Por lo tanto, tenemos que usar su dirección IP para identificarlo. Una dirección IP puede ser compartida por varios usuarios. Si eres un usuario anónimo y crees que se han dirigido a ti con comentarios improcedentes, por favor [[Special:UserLogin/signup|crea una cuenta]] o si ya la tienes [[Special:UserLogin|identifícate]] para evitar confusiones futuras con otros usuarios anónimos.''",
-	'allowemail' => 'Aceptar correo electrónico de otros usuarios',
+	'anontalkpagetext' => "<br style=\"clear:both;\" />
+----
+{| id=\"anontalktext\" class=\"plainlinks noeditsection\" style=\"font-size:90%; border: 1px solid #B8B8B8; margin:1em 1em 0em 1em; padding:0.25em 1em 0.25em 1em; clear: both;\" 
+|  '''Esta es la página de discusión de un usuario anónimo que aún no ha creado una cuenta, o no la usa, identificado por la [[wikipedia:IP|dirección IP]].'''
+
+Algunas direcciones IP cambian periódicamente y pueden ser usadas por varios usuarios. Si eres un usuario anónimo, por favor [[Special:UserLogin/signup|crea una cuenta]] o si ya la tienes [[Special:UserLogin|identifícate]] para evitar confusiones futuras con otros usuarios anónimos. Además el ingresar con una cuenta oculta tu dirección IP.
+
+'''Ayuda:''' [[Ayuda:Crear una cuenta|¿Por qué crear una cuenta? &bull; [http://whatismyipaddress.com/ip/\$1 WHOIS]
+|}",
+	'allowemail' => 'Habilitar correo electrónico de otros usuarios',
 	'action-read' => 'leer esta página',
-	'action-edit' => 'modificar esta página',
+	'action-edit' => 'editar esta página',
 	'action-createpage' => 'crear páginas',
 	'action-createtalk' => 'crear páginas de discusión',
 	'action-createaccount' => 'crear esta cuenta de usuario',
@@ -7532,14 +7657,14 @@ La contraseña para esta nueva cuenta puede cambiarse en [[Special:ChangePasswor
 	'action-movefile' => 'mover este archivo',
 	'action-upload' => 'subir este archivo',
 	'action-reupload' => 'reemplazar este archivo existente',
-	'action-reupload-shared' => 'reemplazar este archivo existente en un depósito compartido',
+	'action-reupload-shared' => 'reemplazar este archivo existente en un repositorio compartido',
 	'action-upload_by_url' => 'subir este archivo desde una dirección URL',
 	'action-writeapi' => 'utilizar el API de escritura',
 	'action-delete' => 'borrar esta página',
 	'action-deleterevision' => 'borrar esta revisión',
 	'action-deletedhistory' => 'ver el historial borrado de esta página',
 	'action-browsearchive' => 'buscar páginas borradas',
-	'action-undelete' => 'recuperar esta página',
+	'action-undelete' => 'restaurar esta página',
 	'action-suppressrevision' => 'revisar y restaurar esta revisión escondida',
 	'action-suppressionlog' => 'ver este registro privado',
 	'action-block' => 'bloquear a este usuario para que no edite',
@@ -7551,36 +7676,36 @@ La contraseña para esta nueva cuenta puede cambiarse en [[Special:ChangePasswor
 	'action-autopatrol' => 'marcar como patrulladas tus propias ediciones',
 	'action-unwatchedpages' => 'ver la lista de páginas no vigiladas',
 	'action-mergehistory' => 'fusionar el historial de esta página',
-	'action-userrights' => 'modificar todos los derechos de usuario',
-	'action-userrights-interwiki' => 'modificar los derechos de usuarios en otros wikis',
+	'action-userrights' => 'editar todos los derechos de usuario',
+	'action-userrights-interwiki' => 'editar los derechos de usuarios en otros wikis',
 	'action-siteadmin' => 'bloquear o desbloquear la base de datos',
 	'action-sendemail' => 'enviar correos electrónicos',
-	'ancientpages' => 'Artículos más antiguos',
+	'ancientpages' => 'Páginas más antiguas',
 	'all-logs-page' => 'Todos los registros públicos',
-	'alllogstext' => 'Vista combinada de todos los registros de {{SITENAME}}.
-Puedes filtrar la vista seleccionando un tipo de registro, el nombre del usuario o la página afectada. Se distinguen mayúsculas de minúsculas.',
+	'alllogstext' => 'Vista combinada de todos los registros disponibles de {{SITENAME}}.
+Puedes filtrar la vista seleccionando un tipo de registro, el nombre del usuario o la página afectada.',
 	'allpages' => 'Todas las páginas',
 	'alphaindexline' => '$1 a $2',
 	'allpagesfrom' => 'Mostrar páginas que empiecen por:',
 	'allpagesto' => 'Mostrar páginas terminadas con:',
-	'allarticles' => 'Todos los artículos',
-	'allinnamespace' => 'Todas las páginas (espacio de nombres $1)',
-	'allnotinnamespace' => 'Todas las páginas que no están en el espacio de nombres $1',
+	'allarticles' => 'Todas las páginas',
+	'allinnamespace' => 'Todas las páginas (espacio de nombre $1)',
+	'allnotinnamespace' => 'Todas las páginas (fuera del espacio de nombre $1)',
 	'allpagesprev' => 'Anterior',
 	'allpagesnext' => 'Siguiente',
-	'allpagessubmit' => 'Mostrar',
+	'allpagessubmit' => 'Ir',
 	'allpagesprefix' => 'Mostrar páginas con el prefijo:',
 	'allpagesbadtitle' => 'El título dado era inválido o tenía un prefijo de enlace inter-idioma o inter-wiki. Puede contener uno o más caracteres que no se pueden usar en títulos.',
-	'allpages-bad-ns' => '{{SITENAME}} no tiene un espacio de nombres llamado «$1».',
+	'allpages-bad-ns' => '{{SITENAME}} no tiene el espacio de nombre "$1".',
 	'activeusers' => 'Lista de usuarios activos',
 	'activeusers-intro' => 'Esta es una lista de usuarios que han tenido alguna actividad en los últimos $1 {{PLURAL:$1|día|días}}.',
 	'activeusers-count' => '$1 {{PLURAL:$1|edición|ediciones}} en los últimos {{PLURAL:$3|día|$3 días}}',
-	'activeusers-from' => 'Mostrando a los usuarios empezando por:',
-	'activeusers-hidebots' => 'Ocultar robots',
+	'activeusers-from' => 'Mostrar usuarios que empiecen por:',
+	'activeusers-hidebots' => 'Ocultar bots',
 	'activeusers-hidesysops' => 'Ocultar administradores',
 	'activeusers-noresult' => 'No se encontraron usuarios.',
 	'addwatch' => 'Añadir a la lista de seguimiento',
-	'addedwatchtext' => "La página «[[:$1]]» ha sido añadida a tu [[Special:Watchlist|lista de seguimiento]]. Los cambios futuros en esta página y en su página de discusión asociada se indicarán ahí, y la página aparecerá '''en negritas''' en la [[Special:RecentChanges|lista de cambios recientes]] para hacerla más fácil de detectar.",
+	'addedwatchtext' => 'La página "[[:$1]]" ha sido añadida a tu [[Special:Watchlist|lista de seguimiento]].',
 	'actioncomplete' => 'Acción completada',
 	'actionfailed' => 'Acción fallida',
 	'alreadyrolled' => 'No se puede revertir la última edición de [[:$1]] hecha por [[User:$2|$2]] ([[User talk:$2|discusión]]{{int:pipe-separator}}[[Special:Contributions/$2|{{int:contribslink}}]]);
@@ -7589,15 +7714,13 @@ alguien más ya ha editado o revertido esa página.
 La última edición fue hecha por [[User:$3|$3]] ([[User talk:$3|discusión]]{{int:pipe-separator}}[[Special:Contributions/$3|{{int:contribslink}}]]).',
 	'autoblockid' => 'Bloqueo automático #$1',
 	'anononlyblock' => 'sólo anón.',
-	'autoblocker' => 'Has sido bloqueado automáticamente porque tu dirección IP ha sido usada recientemente por «[[User:$1|$1]]». La razón dada para bloquear a «[[User:$1|$1]]» fue «$2».',
-	'articleexists' => 'Ya existe una página con ese nombre, o el nombre que has escogido no es válido.
-Por favor, elige otro nombre.',
-	'allmessages' => 'Todos los mensajes de MediaWiki',
+	'autoblocker' => 'Has sido bloqueado automáticamente porque tu dirección IP ha sido usada recientemente por "[[User:$1|$1]]". La razón dada para bloquear fue "$2".',
+	'articleexists' => "'''No se pudo mover la página:''' Ya existe una página con ese nombre, o el nombre que has escogido no es válido. Por favor, elige otro nombre o pregunta a un administrador para que te ayude a moverlo.<br/>Por favor, no lo muevas manualmente; el historial debe de moverse con el artículo.",
+	'allmessages' => 'Mensajes del sistema',
 	'allmessagesname' => 'Nombre',
 	'allmessagesdefault' => 'Texto predeterminado',
 	'allmessagescurrent' => 'Texto actual',
-	'allmessagestext' => 'Esta es una lista de mensajes del sistema disponibles en el espacio de nombres MediaWiki:
-Por favor visita [//www.mediawiki.org/wiki/Localisation Localización MediaWiki] y [//translatewiki.net translatewiki.net] si deseas contribuir con la localización genérica MediaWiki.',
+	'allmessagestext' => 'Esta es una lista de mensajes del sistema en el espacio de nombres de MediaWiki. Por razones de seguridad, no todos los mensajes de MediaWiki son editables. (Por favor vea [[Ayuda:Mensajes_del_sistema|esta página]] para obtener más información.) Si hay mensajes que sientes que deben ser editables o necesitas un mensaje existente ajustado, por favor [[Especial:Contactar|avisa al staff de FANDOM]].',
 	'allmessagesnotsupportedDB' => "Esta página no está disponible porque '''\$wgUseDatabaseMessages''' está deshabilitado.",
 	'allmessages-filter-legend' => 'Filtro',
 	'allmessages-filter' => 'Filtrar por estado de personalización:',
@@ -7612,14 +7735,14 @@ Por favor visita [//www.mediawiki.org/wiki/Localisation Localización MediaWiki]
 	'anonusers' => '{{SITENAME}} {{PLURAL:$2|usuario|usuarios}} anónimos $1',
 	'ago' => 'hace $1',
 	'ascending_abbrev' => 'asc',
-	'autosumm-blank' => 'Página blanqueada',
-	'autosumm-replace' => 'Página reemplazada por «$1»',
+	'autosumm-blank' => 'Eliminar todo el contenido de la página',
+	'autosumm-replace' => 'Contenido reemplazado por «$1»',
 	'autoredircomment' => 'Página redirigida a [[$1]]',
-	'autosumm-new' => 'Página creada con «$1»',
+	'autosumm-new' => 'Página creada con "$1"',
 	'api-error-badaccess-groups' => 'No puedes cargar archivos en este wiki.',
 	'api-error-badtoken' => 'Error interno: Símbolo incorrecto.',
 	'api-error-copyuploaddisabled' => 'La subida por URL está desactivada en este servidor.',
-	'api-error-duplicate' => 'Ya existe{{PLURAL:$1| [$2 otro archivo]|[$2 n otros archivos]}} en el sitio con el mismo contenido.',
+	'api-error-duplicate' => 'Ya existe {{PLURAL:$1|[$2 otro archivo]|[$2 n otros archivos]}} en el sitio con el mismo contenido.',
 	'api-error-duplicate-archive' => 'Ya {{PLURAL:$1|existía [$2 otro archivo]|existían [$2 otros archivos]}} en el sitio con el mismo contenido, pero {{PLURAL:$1|fue|fueron}} {{PLURAL:$1|eliminado|eliminados}}.',
 	'api-error-duplicate-archive-popup-title' => '{{PLURAL:$1|Archivo|Archivos}} {{PLURAL:$1|duplicado|duplicados}} que ya se han eliminado',
 	'api-error-duplicate-popup-title' => '{{PLURAL:$1|Archivo|Archivos}} {{PLURAL:$1|duplicado|duplicados}}',
@@ -7630,7 +7753,7 @@ Por favor visita [//www.mediawiki.org/wiki/Localisation Localización MediaWiki]
 	'api-error-filename-tooshort' => 'El nombre de archivo es demasiado corto.',
 	'api-error-filetype-banned' => 'Este tipo de archivo está prohibido.',
 	'api-error-filetype-missing' => 'El archivo no tiene extensión de archivo.',
-	'api-error-hookaborted' => 'La modificación que intentaste hacer fue cancelada por un gancho de extensión.',
+	'api-error-hookaborted' => 'La modificación que intentaste hacer fue cancelada por una extensión.',
 	'api-error-http' => 'Error interno: No se puede conectar al servidor.',
 	'api-error-illegal-filename' => 'El nombre de archivo no está permitido.',
 	'api-error-internal-error' => 'Error interno: Algo salió mal al procesar tu subida en el wiki.',
@@ -7652,7 +7775,117 @@ Por favor visita [//www.mediawiki.org/wiki/Localisation Localización MediaWiki]
 	'api-error-unknownerror' => 'Error desconocido: «$1».',
 	'api-error-uploaddisabled' => 'Las subidas están desactivadas en este wiki.',
 	'api-error-verification-error' => 'Este archivo puede estar dañado, o tiene una extensión incorrecta.',
-	'addnewtalksection-link' => 'Inicie una nueva sección',
+	'addnewtalksection-link' => 'Dejar un nuevo mensaje',
+	'all_the_wikia' => 'Todo FANDOM',
+	'achievements-leaderboard-navigation-item' => 'Tabla de líderes del wiki',
+	'add_comment' => 'Dejar un mensaje',
+	'addsection' => 'Dejar un mensaje',
+	'admin_skin' => 'Opciones de administración',
+	'adminskin_ds' => 'Predeterminado',
+	'already_a_member' => '¿Ya estás registrado?',
+	'anonnotice' => '-',
+	'addsection-preload' => '',
+	'addsection-editintro' => '',
+	'ancientpages-summary' => '',
+	'allpages-summary' => '',
+	'activeusers-summary' => '',
+	'accesskey-pt-userpage' => '.',
+	'accesskey-pt-anonuserpage' => '.',
+	'accesskey-pt-mytalk' => 'n',
+	'accesskey-pt-anontalk' => 'n',
+	'accesskey-pt-preferences' => '',
+	'accesskey-pt-watchlist' => 'l',
+	'accesskey-pt-mycontris' => 'y',
+	'accesskey-pt-login' => 'o',
+	'accesskey-pt-anonlogin' => 'o',
+	'accesskey-pt-logout' => '',
+	'accesskey-ca-talk' => 't',
+	'accesskey-ca-edit' => 'e',
+	'accesskey-ca-addsection' => '+',
+	'accesskey-ca-viewsource' => 'e',
+	'accesskey-ca-history' => 'h',
+	'accesskey-ca-protect' => '=',
+	'accesskey-ca-unprotect' => '=',
+	'accesskey-ca-delete' => 'd',
+	'accesskey-ca-undelete' => 'd',
+	'accesskey-ca-move' => 'm',
+	'accesskey-ca-watch' => 'w',
+	'accesskey-ca-unwatch' => 'w',
+	'accesskey-search' => 'f',
+	'accesskey-search-go' => '',
+	'accesskey-search-fulltext' => '',
+	'accesskey-p-logo' => '',
+	'accesskey-n-mainpage' => 'z',
+	'accesskey-n-mainpage-description' => 'z',
+	'accesskey-n-portal' => '',
+	'accesskey-n-currentevents' => '',
+	'accesskey-n-recentchanges' => 'r',
+	'accesskey-n-randompage' => 'x',
+	'accesskey-n-help' => '',
+	'accesskey-t-whatlinkshere' => 'j',
+	'accesskey-t-recentchangeslinked' => 'k',
+	'accesskey-feed-rss' => '',
+	'accesskey-feed-atom' => '',
+	'accesskey-t-contributions' => '',
+	'accesskey-t-emailuser' => '',
+	'accesskey-t-permalink' => '',
+	'accesskey-t-print' => 'p',
+	'accesskey-t-upload' => 'u',
+	'accesskey-t-specialpages' => 'q',
+	'accesskey-ca-nstab-main' => 'c',
+	'accesskey-ca-nstab-user' => 'c',
+	'accesskey-ca-nstab-media' => 'c',
+	'accesskey-ca-nstab-special' => '',
+	'accesskey-ca-nstab-project' => 'a',
+	'accesskey-ca-nstab-image' => 'c',
+	'accesskey-ca-nstab-mediawiki' => 'c',
+	'accesskey-ca-nstab-template' => 'c',
+	'accesskey-ca-nstab-help' => 'c',
+	'accesskey-ca-nstab-category' => 'c',
+	'accesskey-minoredit' => 'i',
+	'accesskey-save' => 's',
+	'accesskey-preview' => 'p',
+	'accesskey-diff' => 'v',
+	'accesskey-compareselectedversions' => 'v',
+	'accesskey-watch' => 'w',
+	'accesskey-upload' => 's',
+	'accesskey-preferences-save' => 's',
+	'accesskey-summary' => 'b',
+	'accesskey-userrights-set' => 's',
+	'accesskey-blockip-block' => 's',
+	'accesskey-export' => 's',
+	'accesskey-import' => 's',
+	'accesskey-watchlistedit-normal-submit' => 's',
+	'accesskey-watchlistedit-raw-submit' => 's',
+	'autocomment-prefix' => '-&#32;',
+	'autoblock_whitelist' => 'AOL http://webmaster.info.aol.com/proxyinfo.html
+*64.12.96.0/19
+*149.174.160.0/20
+*152.163.240.0/21
+*152.163.248.0/22
+*152.163.252.0/23
+*152.163.96.0/22
+*152.163.100.0/23
+*195.93.32.0/22
+*195.93.48.0/22
+*195.93.64.0/19
+*195.93.96.0/19
+*195.93.16.0/20
+*198.81.0.0/22
+*198.81.16.0/20
+*198.81.8.0/23
+*202.67.64.128/25
+*205.188.192.0/20
+*205.188.208.0/23
+*205.188.112.0/20
+*205.188.146.144/30
+*207.200.112.0/21
+*10.6.0.0/16
+*10.7.0.0/16
+*10.8.0.0/16
+*199.102.47.71
+*199.102.47.72',
+	'atom' => 'Atom',
 );
 
 $messages['et'] = array(
@@ -8260,6 +8493,11 @@ $messages['fa'] = array(
 	'api-error-uploaddisabled' => 'بارگذاری در این ویکی غیرفعال است.',
 	'api-error-verification-error' => 'ممکن است پرونده آسیب دیده باشد، یا دارای پسوند نادرست باشد.',
 	'addnewtalksection-link' => 'یک بخش جدید ایجاد کنید',
+	'all_the_wikia' => 'کل ویکیا',
+	'add_comment' => 'شروع بحث جدید',
+	'admin_skin' => 'اختیارات مدیر',
+	'adminskin_ds' => 'پیش‌فرض',
+	'already_a_member' => 'حساب کاربری دارید؟',
 );
 
 $messages['ff'] = array(
@@ -8440,6 +8678,12 @@ Jos haluat muokata MediaWikin yleistä kotoistusta, käy [//www.mediawiki.org/wi
 	'api-error-uploaddisabled' => 'Tiedostojen tallentaminen ei ole käytössä.',
 	'api-error-verification-error' => 'Tiedosto voi olla vioittunut, tai sillä saattaa olla väärä tiedostopääte.',
 	'addnewtalksection-link' => 'Lisää uusi osio',
+	'all_the_wikia' => 'Kaikki wikiat',
+	'add_comment' => 'Jätä viesti',
+	'addsection' => 'Lisää kommentti',
+	'admin_skin' => 'Ylläpitäjän vaihtoehdot',
+	'adminskin_ds' => 'Oletus',
+	'already_a_member' => 'Jo jäsen?',
 );
 
 $messages['fiu-vro'] = array(
@@ -8760,7 +9004,7 @@ La raison invoquée est :
 
 Vous pouvez contacter $1 ou l’un des autres [[{{MediaWiki:Grouppage-sysop}}|administrateurs]] pour discuter de ce blocage.
 
-Notez que vous ne pourrez utiliser la fonctionnalité d’envoi de courriel que si vous avez une adresse de courriel validée dans vos [[Special:Preferences|préférences]] et que la fonctionnalité n’a pas été désactivée.
+Notez que vous ne pourrez utiliser la fonctionnalité d’envoi d'e-mail que si vous avez une adresse e-mail validée dans vos [[Special:Preferences|préférences]] et que la fonctionnalité n’a pas été désactivée.
 
 Votre adresse IP actuelle est $3, et le numéro de blocage est $5.
 Veuillez préciser ces indications dans toutes les requêtes que vous ferez.",
@@ -8768,7 +9012,7 @@ Veuillez préciser ces indications dans toutes les requêtes que vous ferez.",
 	'accmailtext' => "Un mot de passe généré aléatoirement pour [[User talk:$1|$1]] a été envoyé à $2.
 Le mot de passe pour ce nouveau compte peut être changé sur la page ''[[Special:ChangePassword|de changement de mot de passe]]'' après s’être connecté.",
 	'anontalkpagetext' => "---- ''Vous êtes sur la page de discussion d’un utilisateur anonyme qui n’a pas encore créé de compte ou qui n’en utilise pas. Pour cette raison, nous devons utiliser son adresse IP pour l’identifier. Une adresse IP peut être partagée par plusieurs utilisateurs. Si vous êtes un{{GENDER:||e|}} utilisat{{GENDER:|eur|rice|eur}} anonyme et si vous constatez que des commentaires qui ne vous concernent pas vous ont été adressés, vous pouvez [[Special:UserLogin/signup|créer un compte]] ou [[Special:UserLogin|vous connecter]] afin d’éviter toute confusion future avec d’autres contributeurs anonymes.''",
-	'allowemail' => 'Autoriser l’envoi de courriels venant d’autres utilisateurs',
+	'allowemail' => "Autoriser l’envoi d'e-mails provenant d’autres utilisateurs",
 	'action-read' => 'lire cette page',
 	'action-edit' => 'modifier cette page',
 	'action-createpage' => 'créer des pages',
@@ -8803,7 +9047,7 @@ Le mot de passe pour ce nouveau compte peut être changé sur la page ''[[Specia
 	'action-userrights' => 'modifier tous les droits d’utilisateur',
 	'action-userrights-interwiki' => 'modifier les droits des utilisateurs sur d’autres wikis',
 	'action-siteadmin' => 'verrouiller ou déverrouiller la base de données',
-	'action-sendemail' => 'envoyer des courriels',
+	'action-sendemail' => 'envoyer des e-mails',
 	'ancientpages' => 'Pages les plus anciennement modifiées',
 	'all-logs-page' => 'Tous les journaux publics',
 	'alllogstext' => 'Affichage combiné de tous les journaux disponibles sur {{SITENAME}}.<br />
@@ -8846,8 +9090,7 @@ Veuillez en choisir un autre.',
 	'allmessagesname' => 'Nom du message',
 	'allmessagesdefault' => 'Message par défaut',
 	'allmessagescurrent' => 'Message actuel',
-	'allmessagestext' => 'Ceci est la liste des messages disponibles dans l’espace MediaWiki.
-Veuillez visiter la [//www.mediawiki.org/wiki/Localisation Localisation de MediaWiki] et [//translatewiki.net/ translatewiki.net] si vous désirez contribuer à la localisation générique de MediaWiki.',
+	'allmessagestext' => 'Ceci est une liste de messages système disponibles dans l’espace de noms MediaWiki. Pour des raisons de sécurité, tous les messages de MediaWiki ne sont pas modifiables. (Veuillez consulter [[w:fr:Aide:Messages_système|cette page]] pour plus d’informations.) Si vous pensez que des messages devraient être modifiables ou que vous avez besoin de modifier un message existant, veuillez en [[Special:Contact|informer le staff de FANDOM]].',
 	'allmessagesnotsupportedDB' => "Cette page '''{{ns:special}}:Allmessages''' n’est pas utilisable car '''\$wgUseDatabaseMessages''' a été désactivé.",
 	'allmessages-filter-legend' => 'Filtrer',
 	'allmessages-filter' => 'Filtrer par état de modification :',
@@ -8890,7 +9133,7 @@ Veuillez visiter la [//www.mediawiki.org/wiki/Localisation Localisation de Media
 	'api-error-missingresult' => 'Erreur interne : Nous n’avons pas pu déterminer si la copie avait réussi.',
 	'api-error-mustbeloggedin' => 'Vous devez être connecté pour télécharger des fichiers.',
 	'api-error-mustbeposted' => 'Il y a un bogue dans ce logiciel ; il n’utilise pas la méthode HTTP adéquate.',
-	'api-error-noimageinfo' => 'Le téléversement a réussi, mais le serveur n’a pas donné d’informations sur le fichier.',
+	'api-error-noimageinfo' => "L'importation a réussi, mais le serveur ne nous a pas donné d’informations sur le fichier.",
 	'api-error-nomodule' => 'Erreur interne : aucun module de versement défini.',
 	'api-error-ok-but-empty' => 'Erreur interne : Le serveur n’a pas répondu.',
 	'api-error-overwrite' => 'Écraser un fichier existant n’est pas autorisé.',
@@ -8904,6 +9147,115 @@ Veuillez visiter la [//www.mediawiki.org/wiki/Localisation Localisation de Media
 	'api-error-uploaddisabled' => 'Le versement est désactivé sur ce wiki.',
 	'api-error-verification-error' => 'Ce fichier peut être corrompu, ou son extension est incorrecte.',
 	'addnewtalksection-link' => 'Commencer une nouvelle section',
+	'all_the_wikia' => 'Tout FANDOM',
+	'achievements-leaderboard-navigation-item' => 'Classement du wikia',
+	'add_comment' => 'Laisser un message',
+	'addsection' => 'Laisser un message',
+	'admin_skin' => 'Options administrateurs',
+	'adminskin_ds' => 'Par défaut',
+	'already_a_member' => 'Déjà membre ?',
+	'anonnotice' => '-',
+	'addsection-preload' => '',
+	'addsection-editintro' => '',
+	'ancientpages-summary' => '',
+	'allpages-summary' => '',
+	'activeusers-summary' => '',
+	'accesskey-pt-userpage' => '.',
+	'accesskey-pt-anonuserpage' => '.',
+	'accesskey-pt-mytalk' => 'n',
+	'accesskey-pt-anontalk' => 'n',
+	'accesskey-pt-preferences' => '',
+	'accesskey-pt-watchlist' => 'l',
+	'accesskey-pt-mycontris' => 'y',
+	'accesskey-pt-login' => 'o',
+	'accesskey-pt-anonlogin' => 'o',
+	'accesskey-pt-logout' => '',
+	'accesskey-ca-talk' => 't',
+	'accesskey-ca-edit' => 'e',
+	'accesskey-ca-addsection' => '+',
+	'accesskey-ca-viewsource' => 'e',
+	'accesskey-ca-history' => 'h',
+	'accesskey-ca-protect' => '=',
+	'accesskey-ca-unprotect' => '=',
+	'accesskey-ca-delete' => 'd',
+	'accesskey-ca-undelete' => 'd',
+	'accesskey-ca-move' => 'm',
+	'accesskey-ca-watch' => 'w',
+	'accesskey-ca-unwatch' => 'w',
+	'accesskey-search' => 'f',
+	'accesskey-search-go' => '',
+	'accesskey-search-fulltext' => '',
+	'accesskey-p-logo' => '',
+	'accesskey-n-mainpage' => 'z',
+	'accesskey-n-mainpage-description' => 'z',
+	'accesskey-n-portal' => '',
+	'accesskey-n-currentevents' => '',
+	'accesskey-n-recentchanges' => 'r',
+	'accesskey-n-randompage' => 'x',
+	'accesskey-n-help' => '',
+	'accesskey-t-whatlinkshere' => 'j',
+	'accesskey-t-recentchangeslinked' => 'k',
+	'accesskey-feed-rss' => '',
+	'accesskey-feed-atom' => '',
+	'accesskey-t-contributions' => '',
+	'accesskey-t-emailuser' => '',
+	'accesskey-t-permalink' => '',
+	'accesskey-t-print' => 'p',
+	'accesskey-t-upload' => 'u',
+	'accesskey-t-specialpages' => 'q',
+	'accesskey-ca-nstab-main' => 'c',
+	'accesskey-ca-nstab-user' => 'c',
+	'accesskey-ca-nstab-media' => 'c',
+	'accesskey-ca-nstab-special' => '',
+	'accesskey-ca-nstab-project' => 'a',
+	'accesskey-ca-nstab-image' => 'c',
+	'accesskey-ca-nstab-mediawiki' => 'c',
+	'accesskey-ca-nstab-template' => 'c',
+	'accesskey-ca-nstab-help' => 'c',
+	'accesskey-ca-nstab-category' => 'c',
+	'accesskey-minoredit' => 'i',
+	'accesskey-save' => 's',
+	'accesskey-preview' => 'p',
+	'accesskey-diff' => 'v',
+	'accesskey-compareselectedversions' => 'v',
+	'accesskey-watch' => 'w',
+	'accesskey-upload' => 's',
+	'accesskey-preferences-save' => 's',
+	'accesskey-summary' => 'b',
+	'accesskey-userrights-set' => 's',
+	'accesskey-blockip-block' => 's',
+	'accesskey-export' => 's',
+	'accesskey-import' => 's',
+	'accesskey-watchlistedit-normal-submit' => 's',
+	'accesskey-watchlistedit-raw-submit' => 's',
+	'autoblock_whitelist' => 'AOL http://webmaster.info.aol.com/proxyinfo.html
+*64.12.96.0/19
+*149.174.160.0/20
+*152.163.240.0/21
+*152.163.248.0/22
+*152.163.252.0/23
+*152.163.96.0/22
+*152.163.100.0/23
+*195.93.32.0/22
+*195.93.48.0/22
+*195.93.64.0/19
+*195.93.96.0/19
+*195.93.16.0/20
+*198.81.0.0/22
+*198.81.16.0/20
+*198.81.8.0/23
+*202.67.64.128/25
+*205.188.192.0/20
+*205.188.208.0/23
+*205.188.112.0/20
+*205.188.146.144/30
+*207.200.112.0/21
+*10.6.0.0/16
+*10.7.0.0/16
+*10.8.0.0/16
+*199.102.47.71
+*199.102.47.72',
+	'atom' => 'Atom',
 );
 
 $messages['frc'] = array(
@@ -12978,8 +13330,8 @@ $messages['it'] = array(
 	'actionthrottledtext' => "Come misura di sicurezza contro lo spam, l'esecuzione di alcune azioni è limitata a un numero massimo di volte in un determinato periodo di tempo, limite che in questo caso è stato superato. Si prega di riprovare tra qualche minuto.",
 	'acct_creation_throttle_hit' => "I visitatori del sito che usano il tuo indirizzo IP hanno creato {{PLURAL:$1|1 account|$1 account}} nell'ultimo giorno, che è il massimo consentito in questo periodo di tempo.
 Perciò, gli utenti che usano questo indirizzo IP non possono creare altri account per il momento.",
-	'accountcreated' => 'Accesso creato',
-	'accountcreatedtext' => "È stato creato un accesso per l'utente $1.",
+	'accountcreated' => 'Account creato',
+	'accountcreatedtext' => "È stato creato un account per l'utente $1.",
 	'anoneditwarning' => "'''Attenzione:''' Accesso non effettuato. Nella cronologia della pagina verrà registrato l'indirizzo IP.",
 	'anonpreviewwarning' => "''Non hai eseguito il login. Salvando il tuo indirizzo IP sarà registrato nella cronologia di questa voce.''",
 	'autoblockedtext' => "Questo indirizzo IP è stato bloccato automaticamente perché condiviso con un altro utente, a sua volta bloccato da $1.
@@ -13001,7 +13353,7 @@ Si prega di specificare tutti i dettagli qui inclusi nel compilare qualsiasi ric
 	'accmailtext' => "Una password generata casualmente per [[User talk:$1|$1]] è stata inviata a $2.
 
 La password per questo nuovo account può essere modificata all'accesso nella pagina per ''[[Special:ChangePassword|cambiare la password]]''.",
-	'anontalkpagetext' => "----''Questa è la pagina di discussione di un utente anonimo, che non ha ancora creato un accesso o comunque non lo usa. Per identificarlo è quindi necessario usare il numero del suo indirizzo IP. Gli indirizzi IP possono però essere condivisi da più utenti. Se sei un utente anonimo e ritieni che i commenti presenti in questa pagina non si riferiscano a te, [[Special:UserLogin/signup|crea un nuovo accesso]] o [[Special:UserLogin|entra con quello che già hai]] per evitare di essere confuso con altri utenti anonimi in futuro.''",
+	'anontalkpagetext' => "----''Questa è la pagina di discussione di un utente anonimo, che non ha ancora creato un account o comunque non lo usa. Per identificarlo è quindi necessario usare il numero del suo indirizzo IP. Gli indirizzi IP possono però essere condivisi da più utenti. Se sei un utente anonimo e ritieni che i commenti presenti in questa pagina non si riferiscano a te, [[Special:UserLogin/signup|crea un nuovo account]] o [[Special:UserLogin|entra con quello che già hai]] per evitare di essere confuso con altri utenti anonimi in futuro.''",
 	'allowemail' => 'Abilita la ricezione di messaggi e-mail da altri utenti',
 	'action-read' => 'leggere questa pagina',
 	'action-edit' => 'modificare questa pagina',
@@ -13081,8 +13433,7 @@ Scegliere un titolo diverso per la pagina.',
 	'allmessagesname' => 'Nome',
 	'allmessagesdefault' => 'Testo predefinito',
 	'allmessagescurrent' => 'Testo attuale',
-	'allmessagestext' => 'Questa è la lista di tutti i messaggi di sistema disponibili nel namespace MediaWiki.
-Visitare [//www.mediawiki.org/wiki/Localisation MediaWiki Localisation] e [//translatewiki.net translatewiki.net] se si desidera contribuire alla localizzazione generica di MediaWiki.',
+	'allmessagestext' => 'Questa è la lista di tutti i messaggi di sistema disponibili nel namespace MediaWiki. Per ragioni di sicurezza, non tutti i messaggi MediaWiki possono essere modificati (leggere [[w:it:Aiuto:Messaggi di sistema|questa pagina]] per maggiori informazioni). Se credi ci siano dei messaggi che debbano essere modificabili o vuoi ritoccare un messaggio esistente, [[Special:Contact|contatta lo staff di FANDOM]] per favore.',
 	'allmessagesnotsupportedDB' => "Non è possibile utilizzare questa pagina perché il flag '''\$wgUseDatabaseMessages''' non è attivo.",
 	'allmessages-filter-legend' => 'Filtro',
 	'allmessages-filter' => 'Filtra per stato di modifica:',
@@ -13138,6 +13489,116 @@ Visitare [//www.mediawiki.org/wiki/Localisation MediaWiki Localisation] e [//tra
 	'api-error-uploaddisabled' => 'Il caricamento è disabilitato su questa wiki.',
 	'api-error-verification-error' => "Questo file potrebbe essere danneggiato, o avere l'estensione sbagliata.",
 	'addnewtalksection-link' => 'Inizia una nuova sezione',
+	'all_the_wikia' => 'Tutto il FANDOM',
+	'addsection' => 'Leave message',
+	'anonnotice' => '-',
+	'addsection-preload' => '',
+	'addsection-editintro' => '',
+	'ancientpages-summary' => '',
+	'allpages-summary' => '',
+	'activeusers-summary' => '',
+	'accesskey-pt-userpage' => '.',
+	'accesskey-pt-anonuserpage' => '.',
+	'accesskey-pt-mytalk' => 'n',
+	'accesskey-pt-anontalk' => 'n',
+	'accesskey-pt-preferences' => '',
+	'accesskey-pt-watchlist' => 'l',
+	'accesskey-pt-mycontris' => 'y',
+	'accesskey-pt-login' => 'o',
+	'accesskey-pt-anonlogin' => 'o',
+	'accesskey-pt-logout' => '',
+	'accesskey-ca-talk' => 't',
+	'accesskey-ca-edit' => 'e',
+	'accesskey-ca-addsection' => '+',
+	'accesskey-ca-viewsource' => 'e',
+	'accesskey-ca-history' => 'h',
+	'accesskey-ca-protect' => '=',
+	'accesskey-ca-unprotect' => '=',
+	'accesskey-ca-delete' => 'd',
+	'accesskey-ca-undelete' => 'd',
+	'accesskey-ca-move' => 'm',
+	'accesskey-ca-watch' => 'w',
+	'accesskey-ca-unwatch' => 'w',
+	'accesskey-search' => 'f',
+	'accesskey-search-go' => '',
+	'accesskey-search-fulltext' => '',
+	'accesskey-p-logo' => '',
+	'accesskey-n-mainpage' => 'z',
+	'accesskey-n-mainpage-description' => 'z',
+	'accesskey-n-portal' => '',
+	'accesskey-n-currentevents' => '',
+	'accesskey-n-recentchanges' => 'r',
+	'accesskey-n-randompage' => 'x',
+	'accesskey-n-help' => '',
+	'accesskey-t-whatlinkshere' => 'j',
+	'accesskey-t-recentchangeslinked' => 'k',
+	'accesskey-feed-rss' => '',
+	'accesskey-feed-atom' => '',
+	'accesskey-t-contributions' => '',
+	'accesskey-t-emailuser' => '',
+	'accesskey-t-permalink' => '',
+	'accesskey-t-print' => 'p',
+	'accesskey-t-upload' => 'u',
+	'accesskey-t-specialpages' => 'q',
+	'accesskey-ca-nstab-main' => 'c',
+	'accesskey-ca-nstab-user' => 'c',
+	'accesskey-ca-nstab-media' => 'c',
+	'accesskey-ca-nstab-special' => '',
+	'accesskey-ca-nstab-project' => 'a',
+	'accesskey-ca-nstab-image' => 'c',
+	'accesskey-ca-nstab-mediawiki' => 'c',
+	'accesskey-ca-nstab-template' => 'c',
+	'accesskey-ca-nstab-help' => 'c',
+	'accesskey-ca-nstab-category' => 'c',
+	'accesskey-minoredit' => 'i',
+	'accesskey-save' => 's',
+	'accesskey-preview' => 'p',
+	'accesskey-diff' => 'v',
+	'accesskey-compareselectedversions' => 'v',
+	'accesskey-watch' => 'w',
+	'accesskey-upload' => 's',
+	'accesskey-preferences-save' => 's',
+	'accesskey-summary' => 'b',
+	'accesskey-userrights-set' => 's',
+	'accesskey-blockip-block' => 's',
+	'accesskey-export' => 's',
+	'accesskey-import' => 's',
+	'accesskey-watchlistedit-normal-submit' => 's',
+	'accesskey-watchlistedit-raw-submit' => 's',
+	'autocomment-prefix' => '-&#32;',
+	'autoblock_whitelist' => 'AOL http://webmaster.info.aol.com/proxyinfo.html
+*64.12.96.0/19
+*149.174.160.0/20
+*152.163.240.0/21
+*152.163.248.0/22
+*152.163.252.0/23
+*152.163.96.0/22
+*152.163.100.0/23
+*195.93.32.0/22
+*195.93.48.0/22
+*195.93.64.0/19
+*195.93.96.0/19
+*195.93.16.0/20
+*198.81.0.0/22
+*198.81.16.0/20
+*198.81.8.0/23
+*202.67.64.128/25
+*205.188.192.0/20
+*205.188.208.0/23
+*205.188.112.0/20
+*205.188.146.144/30
+*207.200.112.0/21
+*10.6.0.0/16
+*10.7.0.0/16
+*10.8.0.0/16
+*199.102.47.71
+*199.102.47.72',
+	'adminskin_ds' => 'Default',
+	'admin_skin' => 'Admin Options',
+	'already_a_member' => 'Already a member?',
+	'add_comment' => 'Leave message',
+	'achievements-leaderboard-navigation-item' => 'Wiki Leaderboard',
+	'atom' => 'Atom',
 );
 
 $messages['iu'] = array(
@@ -13341,8 +13802,17 @@ $messages['ja'] = array(
 そのため、現在このIPアドレスの利用者はアカウントをこれ以上作成できません。',
 	'accountcreated' => 'アカウントを作成しました',
 	'accountcreatedtext' => '利用者アカウント：$1が作成されました。',
-	'anoneditwarning' => "'''警告：'''ログインしていません。
-このまま投稿を行った場合、使用中のIPアドレスがこのページの編集履歴に記録されます。",
+	'anoneditwarning' => '<table class="plainlinks" align="center" cellpadding="5" style="width:75%; background:#D3E1F2; border:1px solid #aaa; color:#000; text-align:center;">
+<tr>
+<td rowspan="2">http://images.wikia.com/messaging/images/6/68/Login.png</td>
+<td colspan="3" style="vertical-align:top;"> \'\'\'現在ログインしておりません。\'\'\' ログインしてから編集すると、編集履歴をあとで確認することができます。ログインしない場合は、IPアドレスが履歴他に表示されることになります。</td>
+</tr>
+<tr>
+<td style="width:40%; text-align:right;"> [{{fullurl:Special:Userlogin|returnto={{FULLPAGENAMEE}}}} http://images.wikia.com/messaging/images/f/f1/Greenbutton.png] \'\'\'<span class="plainlinks>[{{fullurl:Special:Userlogin|returnto={{FULLPAGENAMEE}}}} ログインする場合はこちら]</span> \'\'\'</td>
+<td></td>
+<td style="width:40%; text-align:left;"> [{{SERVER}}/index.php?title=Special:Userlogin&type=signup http://images.wikia.com/messaging/images/f/f1/Greenbutton.png] \'\'\'[{{SERVER}}/index.php?title=Special:Userlogin&type=signup アカウントを作成する場合はこちら]\'\'\'</td>
+</tr>
+</table>',
 	'anonpreviewwarning' => "''ログインしていません。投稿を保存すると、このページの履歴に使用中のIPアドレスが記録されます。''",
 	'autoblockedtext' => "利用中のIPアドレスは、$1によって投稿をブロックされた利用者によって使用されたために自動的にブロックされています。
 理由は次の通りです。
@@ -13363,10 +13833,13 @@ $1または他の[[{{MediaWiki:Grouppage-sysop}}|管理者]]にこの件につ�
 	'accmailtext' => "[[User talk:$1|$1]]のために無作為に生成したパスワードを、$2に送信しました。
 
 この新アカウントのパスワードは、ログインした際に''[[Special:ChangePassword|パスワード変更]]''ページで変更できます。",
-	'anontalkpagetext' => "----''このページはアカウントをまだ作成していないか使用していない匿名利用者のための議論ページです。
-匿名利用者を識別するために、利用者名のかわりにIPアドレスが使用されています。
-IPアドレスは複数の利用者の間で共有されていることがあります。
-もし、自身が匿名利用者であり、自分に関係のないコメントが寄せられている考えられる場合は、[[Special:UserLogin/signup|アカウントを作成する]]か[[Special:UserLogin|ログインして]]他の匿名利用者と間違えられないようにしてください。''",
+	'anontalkpagetext' => '<br style="clear:both;" />
+----
+{| id="anontalktext" class="plainlinks noeditsection" style="font-size:90%; border: 1px solid #B8B8B8; margin:1em 1em 0em 1em; padding:0.25em 1em 0.25em 1em; clear: both;" 
+|\'\'\'これはアカウントをまだ作成していないか、あるいは使っていない匿名利用者のための会話ページです。\'\'\'
+
+{{SITENAME}}では匿名利用者の識別は利用者名のかわりにIPアドレスを用います。IPアドレスは何人かで共有されることがあります。もしも、あなたが匿名利用者で無関係なコメントがここに寄せられる場合は、[[Special:Userlogin|アカウントを作成するかログインして]]他の匿名利用者と間違えられないようにしてくださるようお願いします。詳細は、[[w:c:ja:Help:アカウントを作る理由|Help:アカウントを作る理由]]をお読みください。
+|}',
 	'allowemail' => '他の利用者からの電子メールの受信を有効化する',
 	'action-read' => 'このページの閲覧',
 	'action-edit' => 'このページの編集',
@@ -13429,8 +13902,7 @@ IPアドレスは複数の利用者の間で共有されていることがあり
 	'activeusers-hidesysops' => '管理者を隠す',
 	'activeusers-noresult' => '利用者が見つかりませんでした。',
 	'addwatch' => 'ウォッチリストに追加',
-	'addedwatchtext' => "ページ 「[[:$1]]」を[[Special:Watchlist|ウォッチリスト]]に追加しました。
-このページと付属のトークページに変更があった際には、ウォッチリストに表示されます。また、ウォッチリストに登録されているページは[[Special:RecentChanges|最近の更新の一覧]]に'''太字'''で表示され、見つけやすくなります。",
+	'addedwatchtext' => "ページ 「[[:$1]]」をあなたの[[Special:Watchlist|ウォッチリスト]]に追加しました。このページと付属のノートページに変更があった際には、ウォッチリストに表示されます。また、ウォッチリストに登録されているページは[[Special:RecentChanges|最近の更新の一覧]]に'''太字'''で表示され、見つけやすくなります。",
 	'actioncomplete' => '完了しました',
 	'actionfailed' => '操作失敗',
 	'alreadyrolled' => 'ページ[[:$1]]の[[User:$2|$2]]（[[User talk:$2|トーク]]{{int:pipe-separator}}[[Special:Contributions/$2|{{int:contribslink}}]]）による編集を巻き戻せません。
@@ -13444,11 +13916,10 @@ $1のブロックの理由は「$2」です。',
 	'articleexists' => '指定された移動先には既にページが存在するか、名前が不適切です。
 別の名前を選択してください。',
 	'allmessages' => 'システムメッセージの一覧',
-	'allmessagesname' => '名前',
+	'allmessagesname' => '名称',
 	'allmessagesdefault' => '既定のメッセージ文',
 	'allmessagescurrent' => '現在のメッセージ文',
-	'allmessagestext' => 'これはMediaWiki名前空間で利用可能なシステムメッセージの一覧です。
-一般的なMediaWikiの地域化に貢献したい場合は、[//www.mediawiki.org/wiki/Localisation MediaWikiの地域化]や[//translatewiki.net?setlang=ja translatewiki.net]を訪れてみてください。',
+	'allmessagestext' => '以下は、MediaWiki名前空間に保存されているシステムメッセージのリストです。セキュリティ対策のため、MediaWikiメッセージの中には編集できないものもあります（詳細については[[ヘルプ:システムメッセージ|こちらのページ]] をご覧ください）。編集できるべきと思うメッセージがある場合や、既存のメッセージを変更する必要がある場合は、[[Special:Contact|FANDOMスタッフまでお知らせ]]ください。',
 	'allmessagesnotsupportedDB' => "'''\$wgUseDatabaseMessages'''が無効なので、このページを使うことはできません。",
 	'allmessages-filter-legend' => '絞り込み',
 	'allmessages-filter' => '変更状態により絞り込む：',
@@ -13501,9 +13972,119 @@ $1のブロックの理由は「$2」です。',
 	'api-error-unknown-warning' => '原因不明の警告:$1',
 	'api-error-uploaddisabled' => 'このウィキではアップロードは無効になっています。',
 	'api-error-verification-error' => 'このファイルは壊れているか、間違った拡張子になっています。',
-	'all_the_wikia' => 'ウィキアの全て',
+	'all_the_wikia' => 'FANDOM全体',
 	'add_comment' => 'コメントを追加する',
 	'addnewtalksection-link' => '新しいセクションを開始する',
+	'achievements-leaderboard-navigation-item' => 'アチーブメントランキング',
+	'addsection' => 'メッセージを追加する',
+	'admin_skin' => '管理者向け設定',
+	'adminskin_ds' => '初期設定',
+	'already_a_member' => 'アカウントはお持ちですか?',
+	'anonnotice' => '-',
+	'addsection-preload' => '',
+	'addsection-editintro' => '',
+	'ancientpages-summary' => '',
+	'allpages-summary' => '',
+	'activeusers-summary' => '',
+	'accesskey-pt-userpage' => '.',
+	'accesskey-pt-anonuserpage' => '.',
+	'accesskey-pt-mytalk' => 'n',
+	'accesskey-pt-anontalk' => 'n',
+	'accesskey-pt-preferences' => '',
+	'accesskey-pt-watchlist' => 'l',
+	'accesskey-pt-mycontris' => 'y',
+	'accesskey-pt-login' => 'o',
+	'accesskey-pt-anonlogin' => 'o',
+	'accesskey-pt-logout' => '',
+	'accesskey-ca-talk' => 't',
+	'accesskey-ca-edit' => 'e',
+	'accesskey-ca-addsection' => '+',
+	'accesskey-ca-viewsource' => 'e',
+	'accesskey-ca-history' => 'h',
+	'accesskey-ca-protect' => '=',
+	'accesskey-ca-unprotect' => '=',
+	'accesskey-ca-delete' => 'd',
+	'accesskey-ca-undelete' => 'd',
+	'accesskey-ca-move' => 'm',
+	'accesskey-ca-watch' => 'w',
+	'accesskey-ca-unwatch' => 'w',
+	'accesskey-search' => 'f',
+	'accesskey-search-go' => '',
+	'accesskey-search-fulltext' => '',
+	'accesskey-p-logo' => '',
+	'accesskey-n-mainpage' => 'z',
+	'accesskey-n-mainpage-description' => 'z',
+	'accesskey-n-portal' => '',
+	'accesskey-n-currentevents' => '',
+	'accesskey-n-recentchanges' => 'r',
+	'accesskey-n-randompage' => 'x',
+	'accesskey-n-help' => '',
+	'accesskey-t-whatlinkshere' => 'j',
+	'accesskey-t-recentchangeslinked' => 'k',
+	'accesskey-feed-rss' => '',
+	'accesskey-feed-atom' => '',
+	'accesskey-t-contributions' => '',
+	'accesskey-t-emailuser' => '',
+	'accesskey-t-permalink' => '',
+	'accesskey-t-print' => 'p',
+	'accesskey-t-upload' => 'u',
+	'accesskey-t-specialpages' => 'q',
+	'accesskey-ca-nstab-main' => 'c',
+	'accesskey-ca-nstab-user' => 'c',
+	'accesskey-ca-nstab-media' => 'c',
+	'accesskey-ca-nstab-special' => '',
+	'accesskey-ca-nstab-project' => 'a',
+	'accesskey-ca-nstab-image' => 'c',
+	'accesskey-ca-nstab-mediawiki' => 'c',
+	'accesskey-ca-nstab-template' => 'c',
+	'accesskey-ca-nstab-help' => 'c',
+	'accesskey-ca-nstab-category' => 'c',
+	'accesskey-minoredit' => 'i',
+	'accesskey-save' => 's',
+	'accesskey-preview' => 'p',
+	'accesskey-diff' => 'v',
+	'accesskey-compareselectedversions' => 'v',
+	'accesskey-watch' => 'w',
+	'accesskey-upload' => 's',
+	'accesskey-preferences-save' => 's',
+	'accesskey-summary' => 'b',
+	'accesskey-userrights-set' => 's',
+	'accesskey-blockip-block' => 's',
+	'accesskey-export' => 's',
+	'accesskey-import' => 's',
+	'accesskey-watchlistedit-normal-submit' => 's',
+	'accesskey-watchlistedit-raw-submit' => 's',
+	'autocomment-prefix' => '-&#32;',
+	'autoblock_whitelist' => 'AOL http://webmaster.info.aol.com/proxyinfo.html
+*64.12.96.0/19
+*149.174.160.0/20
+*152.163.240.0/21
+*152.163.248.0/22
+*152.163.252.0/23
+*152.163.96.0/22
+*152.163.100.0/23
+*195.93.32.0/22
+*195.93.48.0/22
+*195.93.64.0/19
+*195.93.96.0/19
+*195.93.16.0/20
+*198.81.0.0/22
+*198.81.16.0/20
+*198.81.8.0/23
+*202.67.64.128/25
+*205.188.192.0/20
+*205.188.208.0/23
+*205.188.112.0/20
+*205.188.146.144/30
+*207.200.112.0/21
+*10.6.0.0/16
+*10.7.0.0/16
+*10.8.0.0/16
+*199.102.47.71
+*199.102.47.72',
+	'api-error-emptypage' => 'Creating new, empty pages is not allowed.',
+	'api-error-unknownerror' => 'Unknown error: "$1".',
+	'atom' => 'Atom',
 );
 
 $messages['jam'] = array(
@@ -15186,7 +15767,8 @@ $1 사용자가 차단된 이유는 다음과 같습니다: "$2"',
 	'allmessagesname' => '이름',
 	'allmessagesdefault' => '기본 내용',
 	'allmessagescurrent' => '현재 내용',
-	'allmessagestext' => '미디어위키 이름공간에 있는 모든 시스템 메시지의 목록입니다. 미디어위키의 번역 작업에 관심이 있으면 [//www.mediawiki.org/wiki/Localisation 미디어위키 지역화]나 [//translatewiki.net translatewiki.net]에 참가해주세요.',
+	'allmessagestext' => '미디어위키 이름공간에 있는 모든 시스템 메시지의 목록입니다. 미디어위키의 번역 작업에 관심이 있으면 [http://www.mediawiki.org/wiki/Localisation 미디어위키 지역화]나 [http://translatewiki.net translatewiki.net]에 참가해주세요.
+<div class="toc">위키아의 한국어 번역 작업이 진행중입니다. 위키아에서 사용되는 시스템 메시지는 [http://translatewiki.net translatewiki.net]에서 직접 번역하실 수 있습니다. [[w:c:ko|한국어 중앙 커뮤니티]]의 포럼에 있는 번역 커뮤니티에도 참여해주세요.</div>',
 	'allmessagesnotsupportedDB' => "'''\$wgUseDatabaseMessages'''가 해제되어 있어서 이 문서는 쓸 수 없습니다.",
 	'allmessages-filter-legend' => '필터',
 	'allmessages-filter' => '수정 상태로 거르기:',
@@ -15242,6 +15824,11 @@ $1 사용자가 차단된 이유는 다음과 같습니다: "$2"',
 	'api-error-uploaddisabled' => '이 위키에서 파일 올리기가 비활성화되어 있습니다.',
 	'api-error-verification-error' => '파일이 손상되었거나 잘못된 확장자를 사용하고 있습니다.',
 	'addnewtalksection-link' => '내용 추가하기',
+	'all_the_wikia' => '위키아 전체',
+	'achievements-leaderboard-navigation-item' => '위키 리더보드',
+	'add_comment' => '새 주제',
+	'admin_skin' => '관리자 옵션',
+	'already_a_member' => '이미 계정이 있으신가요?',
 );
 
 $messages['ko-kp'] = array(
@@ -17169,6 +17756,244 @@ $messages['lo'] = array(
 	'addnewtalksection-link' => 'ເພີ່ມ ຄຳເຫັນ ໃສ່ ການສົນທະນານີ້.',
 );
 
+$messages['lol'] = array(
+	'april' => 'crwdns27226:0crwdne27226:0',
+	'august' => 'crwdns27227:0crwdne27227:0',
+	'april-gen' => 'crwdns27228:0crwdne27228:0',
+	'august-gen' => 'crwdns27229:0crwdne27229:0',
+	'apr' => 'crwdns27230:0crwdne27230:0',
+	'aug' => 'crwdns27231:0crwdne27231:0',
+	'about' => 'crwdns27232:0crwdne27232:0',
+	'article' => 'crwdns27233:0crwdne27233:0',
+	'anontalk' => 'crwdns27234:0crwdne27234:0',
+	'and' => 'crwdns27235:0crwdne27235:0',
+	'actions' => 'crwdns27236:0crwdne27236:0',
+	'addsection' => 'crwdns48406:0crwdne48406:0',
+	'aboutsite' => 'crwdns27238:0{{SITENAME}}crwdne27238:0',
+	'aboutpage' => 'crwdns27239:0crwdne27239:0',
+	'anonnotice' => 'crwdns27240:0crwdne27240:0',
+	'actionthrottled' => 'crwdns27241:0crwdne27241:0',
+	'actionthrottledtext' => 'crwdns48407:0crwdne48407:0',
+	'acct_creation_throttle_hit' => 'crwdns27243:0{PLURAL:$1|1 account|$1 accounts}crwdne27243:0',
+	'accountcreated' => 'crwdns27244:0crwdne27244:0',
+	'accountcreatedtext' => 'crwdns27245:0crwdne27245:0',
+	'anoneditwarning' => 'crwdns48408:0crwdne48408:0',
+	'anonpreviewwarning' => 'crwdns27247:0crwdne27247:0',
+	'autoblockedtext' => 'crwdns27248:0{{MediaWiki:Grouppage-sysop}}crwdne27248:0',
+	'accmailtitle' => 'crwdns27249:0crwdne27249:0',
+	'accmailtext' => 'crwdns27250:0crwdne27250:0',
+	'anontalkpagetext' => 'crwdns48409:0{{ns:Special}}crwdne48409:0',
+	'addsection-preload' => 'crwdns27252:0crwdne27252:0',
+	'addsection-editintro' => 'crwdns27253:0crwdne27253:0',
+	'allowemail' => 'crwdns48410:0crwdne48410:0',
+	'action-read' => 'crwdns27255:0crwdne27255:0',
+	'action-edit' => 'crwdns27256:0crwdne27256:0',
+	'action-createpage' => 'crwdns27257:0crwdne27257:0',
+	'action-createtalk' => 'crwdns27258:0crwdne27258:0',
+	'action-createaccount' => 'crwdns27259:0crwdne27259:0',
+	'action-minoredit' => 'crwdns27260:0crwdne27260:0',
+	'action-move' => 'crwdns27261:0crwdne27261:0',
+	'action-move-subpages' => 'crwdns27262:0crwdne27262:0',
+	'action-move-rootuserpages' => 'crwdns27263:0crwdne27263:0',
+	'action-movefile' => 'crwdns27264:0crwdne27264:0',
+	'action-upload' => 'crwdns27265:0crwdne27265:0',
+	'action-reupload' => 'crwdns27266:0crwdne27266:0',
+	'action-reupload-shared' => 'crwdns27267:0crwdne27267:0',
+	'action-upload_by_url' => 'crwdns27268:0crwdne27268:0',
+	'action-writeapi' => 'crwdns27269:0crwdne27269:0',
+	'action-delete' => 'crwdns27270:0crwdne27270:0',
+	'action-deleterevision' => 'crwdns27271:0crwdne27271:0',
+	'action-deletedhistory' => 'crwdns27272:0crwdne27272:0',
+	'action-browsearchive' => 'crwdns27273:0crwdne27273:0',
+	'action-undelete' => 'crwdns27274:0crwdne27274:0',
+	'action-suppressrevision' => 'crwdns27275:0crwdne27275:0',
+	'action-suppressionlog' => 'crwdns27276:0crwdne27276:0',
+	'action-block' => 'crwdns27277:0crwdne27277:0',
+	'action-protect' => 'crwdns27278:0crwdne27278:0',
+	'action-rollback' => 'crwdns27279:0crwdne27279:0',
+	'action-import' => 'crwdns27280:0crwdne27280:0',
+	'action-importupload' => 'crwdns27281:0crwdne27281:0',
+	'action-patrol' => 'crwdns27282:0crwdne27282:0',
+	'action-autopatrol' => 'crwdns27283:0crwdne27283:0',
+	'action-unwatchedpages' => 'crwdns27284:0crwdne27284:0',
+	'action-mergehistory' => 'crwdns27285:0crwdne27285:0',
+	'action-userrights' => 'crwdns27286:0crwdne27286:0',
+	'action-userrights-interwiki' => 'crwdns27287:0crwdne27287:0',
+	'action-siteadmin' => 'crwdns27288:0crwdne27288:0',
+	'action-sendemail' => 'crwdns27289:0crwdne27289:0',
+	'ancientpages' => 'crwdns27290:0crwdne27290:0',
+	'ancientpages-summary' => 'crwdns27291:0crwdne27291:0',
+	'all-logs-page' => 'crwdns27292:0crwdne27292:0',
+	'alllogstext' => 'crwdns27293:0{{SITENAME}}crwdne27293:0',
+	'allpages' => 'crwdns27294:0crwdne27294:0',
+	'alphaindexline' => 'crwdns27296:0crwdne27296:0',
+	'allpagesfrom' => 'crwdns27297:0crwdne27297:0',
+	'allpagesto' => 'crwdns27298:0crwdne27298:0',
+	'allarticles' => 'crwdns27299:0crwdne27299:0',
+	'allinnamespace' => 'crwdns27300:0crwdne27300:0',
+	'allnotinnamespace' => 'crwdns27301:0crwdne27301:0',
+	'allpagesprev' => 'crwdns27302:0crwdne27302:0',
+	'allpagesnext' => 'crwdns27303:0crwdne27303:0',
+	'allpagessubmit' => 'crwdns27304:0crwdne27304:0',
+	'allpagesprefix' => 'crwdns27305:0crwdne27305:0',
+	'allpagesbadtitle' => 'crwdns27306:0crwdne27306:0',
+	'allpages-bad-ns' => 'crwdns27307:0{{SITENAME}}crwdne27307:0',
+	'activeusers' => 'crwdns27308:0crwdne27308:0',
+	'activeusers-summary' => 'crwdns27309:0crwdne27309:0',
+	'activeusers-intro' => 'crwdns27310:0{PLURAL:$1|day|days}crwdne27310:0',
+	'activeusers-count' => 'crwdns27311:0{PLURAL:$1|edit|edits}crwdnd27311:0{PLURAL:$3|day|$3 days}crwdne27311:0',
+	'activeusers-from' => 'crwdns27312:0crwdne27312:0',
+	'activeusers-hidebots' => 'crwdns27313:0crwdne27313:0',
+	'activeusers-hidesysops' => 'crwdns27314:0crwdne27314:0',
+	'activeusers-noresult' => 'crwdns27315:0crwdne27315:0',
+	'addwatch' => 'crwdns27316:0crwdne27316:0',
+	'addedwatchtext' => 'crwdns48411:0crwdne48411:0',
+	'actioncomplete' => 'crwdns27318:0crwdne27318:0',
+	'actionfailed' => 'crwdns27319:0crwdne27319:0',
+	'alreadyrolled' => 'crwdns48412:0crwdne48412:0',
+	'autoblockid' => 'crwdns27321:0crwdne27321:0',
+	'anononlyblock' => 'crwdns27322:0crwdne27322:0',
+	'autoblocker' => 'crwdns27323:0crwdne27323:0',
+	'articleexists' => 'crwdns48413:0crwdne48413:0',
+	'allmessages' => 'crwdns27325:0crwdne27325:0',
+	'allmessagesname' => 'crwdns27326:0crwdne27326:0',
+	'allmessagesdefault' => 'crwdns27327:0crwdne27327:0',
+	'allmessagescurrent' => 'crwdns27328:0crwdne27328:0',
+	'allmessagestext' => 'crwdns70363:0crwdne70363:0',
+	'allmessagesnotsupportedDB' => 'crwdns27330:0$wgUseDatabaseMessagescrwdne27330:0',
+	'allmessages-filter-legend' => 'crwdns27331:0crwdne27331:0',
+	'allmessages-filter' => 'crwdns27332:0crwdne27332:0',
+	'allmessages-filter-unmodified' => 'crwdns27333:0crwdne27333:0',
+	'allmessages-filter-all' => 'crwdns27334:0crwdne27334:0',
+	'allmessages-filter-modified' => 'crwdns27335:0crwdne27335:0',
+	'allmessages-prefix' => 'crwdns27336:0crwdne27336:0',
+	'allmessages-language' => 'crwdns27337:0crwdne27337:0',
+	'allmessages-filter-submit' => 'crwdns27338:0crwdne27338:0',
+	'accesskey-pt-userpage' => 'crwdns27339:0crwdne27339:0',
+	'accesskey-pt-anonuserpage' => 'crwdns27340:0crwdne27340:0',
+	'accesskey-pt-mytalk' => 'crwdns27341:0crwdne27341:0',
+	'accesskey-pt-anontalk' => 'crwdns27342:0crwdne27342:0',
+	'accesskey-pt-preferences' => 'crwdns27343:0crwdne27343:0',
+	'accesskey-pt-watchlist' => 'crwdns27344:0crwdne27344:0',
+	'accesskey-pt-mycontris' => 'crwdns27345:0crwdne27345:0',
+	'accesskey-pt-login' => 'crwdns27346:0crwdne27346:0',
+	'accesskey-pt-anonlogin' => 'crwdns27347:0crwdne27347:0',
+	'accesskey-pt-logout' => 'crwdns27348:0crwdne27348:0',
+	'accesskey-ca-talk' => 'crwdns27349:0crwdne27349:0',
+	'accesskey-ca-edit' => 'crwdns27350:0crwdne27350:0',
+	'accesskey-ca-addsection' => 'crwdns27351:0crwdne27351:0',
+	'accesskey-ca-viewsource' => 'crwdns27352:0crwdne27352:0',
+	'accesskey-ca-history' => 'crwdns27353:0crwdne27353:0',
+	'accesskey-ca-protect' => 'crwdns27354:0crwdne27354:0',
+	'accesskey-ca-unprotect' => 'crwdns27355:0crwdne27355:0',
+	'accesskey-ca-delete' => 'crwdns27356:0crwdne27356:0',
+	'accesskey-ca-undelete' => 'crwdns27357:0crwdne27357:0',
+	'accesskey-ca-move' => 'crwdns27358:0crwdne27358:0',
+	'accesskey-ca-watch' => 'crwdns27359:0crwdne27359:0',
+	'accesskey-ca-unwatch' => 'crwdns27360:0crwdne27360:0',
+	'accesskey-search' => 'crwdns27361:0crwdne27361:0',
+	'accesskey-search-go' => 'crwdns27362:0crwdne27362:0',
+	'accesskey-search-fulltext' => 'crwdns27363:0crwdne27363:0',
+	'accesskey-p-logo' => 'crwdns27364:0crwdne27364:0',
+	'accesskey-n-mainpage' => 'crwdns27365:0crwdne27365:0',
+	'accesskey-n-mainpage-description' => 'crwdns27366:0crwdne27366:0',
+	'accesskey-n-portal' => 'crwdns27367:0crwdne27367:0',
+	'accesskey-n-currentevents' => 'crwdns27368:0crwdne27368:0',
+	'accesskey-n-recentchanges' => 'crwdns27369:0crwdne27369:0',
+	'accesskey-n-randompage' => 'crwdns27370:0crwdne27370:0',
+	'accesskey-n-help' => 'crwdns27371:0crwdne27371:0',
+	'accesskey-t-whatlinkshere' => 'crwdns27372:0crwdne27372:0',
+	'accesskey-t-recentchangeslinked' => 'crwdns27373:0crwdne27373:0',
+	'accesskey-feed-rss' => 'crwdns27374:0crwdne27374:0',
+	'accesskey-feed-atom' => 'crwdns27375:0crwdne27375:0',
+	'accesskey-t-contributions' => 'crwdns27376:0crwdne27376:0',
+	'accesskey-t-emailuser' => 'crwdns27377:0crwdne27377:0',
+	'accesskey-t-permalink' => 'crwdns27378:0crwdne27378:0',
+	'accesskey-t-print' => 'crwdns27379:0crwdne27379:0',
+	'accesskey-t-upload' => 'crwdns27380:0crwdne27380:0',
+	'accesskey-t-specialpages' => 'crwdns27381:0crwdne27381:0',
+	'accesskey-ca-nstab-main' => 'crwdns27382:0crwdne27382:0',
+	'accesskey-ca-nstab-user' => 'crwdns27383:0crwdne27383:0',
+	'accesskey-ca-nstab-media' => 'crwdns27384:0crwdne27384:0',
+	'accesskey-ca-nstab-special' => 'crwdns27385:0crwdne27385:0',
+	'accesskey-ca-nstab-project' => 'crwdns27386:0crwdne27386:0',
+	'accesskey-ca-nstab-image' => 'crwdns27387:0crwdne27387:0',
+	'accesskey-ca-nstab-mediawiki' => 'crwdns27388:0crwdne27388:0',
+	'accesskey-ca-nstab-template' => 'crwdns27389:0crwdne27389:0',
+	'accesskey-ca-nstab-help' => 'crwdns27390:0crwdne27390:0',
+	'accesskey-ca-nstab-category' => 'crwdns27391:0crwdne27391:0',
+	'accesskey-minoredit' => 'crwdns27392:0crwdne27392:0',
+	'accesskey-save' => 'crwdns27393:0crwdne27393:0',
+	'accesskey-preview' => 'crwdns27394:0crwdne27394:0',
+	'accesskey-diff' => 'crwdns27395:0crwdne27395:0',
+	'accesskey-compareselectedversions' => 'crwdns27396:0crwdne27396:0',
+	'accesskey-watch' => 'crwdns27397:0crwdne27397:0',
+	'accesskey-upload' => 'crwdns27398:0crwdne27398:0',
+	'accesskey-preferences-save' => 'crwdns27399:0crwdne27399:0',
+	'accesskey-summary' => 'crwdns27400:0crwdne27400:0',
+	'accesskey-userrights-set' => 'crwdns27401:0crwdne27401:0',
+	'accesskey-blockip-block' => 'crwdns27402:0crwdne27402:0',
+	'accesskey-export' => 'crwdns27403:0crwdne27403:0',
+	'accesskey-import' => 'crwdns27404:0crwdne27404:0',
+	'accesskey-watchlistedit-normal-submit' => 'crwdns27405:0crwdne27405:0',
+	'accesskey-watchlistedit-raw-submit' => 'crwdns27406:0crwdne27406:0',
+	'anonymous' => 'crwdns27407:0{PLURAL:$1|user|users}crwdnd27407:0{{SITENAME}}crwdne27407:0',
+	'anonuser' => 'crwdns27408:0{{SITENAME}}crwdne27408:0',
+	'anonusers' => 'crwdns27409:0{{SITENAME}}crwdnd27409:0{PLURAL:$2|user|users}crwdne27409:0',
+	'ago' => 'crwdns27410:0crwdne27410:0',
+	'autocomment-prefix' => 'crwdns27411:0crwdne27411:0',
+	'ascending_abbrev' => 'crwdns27412:0crwdne27412:0',
+	'autosumm-blank' => 'crwdns48414:0crwdne48414:0',
+	'autosumm-replace' => 'crwdns27414:0crwdne27414:0',
+	'autoredircomment' => 'crwdns27415:0crwdne27415:0',
+	'autosumm-new' => 'crwdns27416:0crwdne27416:0',
+	'autoblock_whitelist' => 'crwdns48415:0crwdne48415:0',
+	'api-error-badaccess-groups' => 'crwdns27418:0crwdne27418:0',
+	'api-error-badtoken' => 'crwdns27419:0crwdne27419:0',
+	'api-error-copyuploaddisabled' => 'crwdns27420:0crwdne27420:0',
+	'api-error-duplicate' => 'crwdns27421:0crwdne27421:0',
+	'api-error-duplicate-archive' => 'crwdns27422:0{PLURAL:$1|it was|they were}crwdne27422:0',
+	'api-error-duplicate-archive-popup-title' => 'crwdns27423:0{PLURAL:$1|file that has|files that have}crwdne27423:0',
+	'api-error-duplicate-popup-title' => 'crwdns27424:0{PLURAL:$1|file|files}crwdne27424:0',
+	'api-error-empty-file' => 'crwdns27425:0crwdne27425:0',
+	'api-error-emptypage' => 'crwdns27426:0crwdne27426:0',
+	'api-error-fetchfileerror' => 'crwdns27427:0crwdne27427:0',
+	'api-error-file-too-large' => 'crwdns27428:0crwdne27428:0',
+	'api-error-filename-tooshort' => 'crwdns27429:0crwdne27429:0',
+	'api-error-filetype-banned' => 'crwdns27430:0crwdne27430:0',
+	'api-error-filetype-missing' => 'crwdns27431:0crwdne27431:0',
+	'api-error-hookaborted' => 'crwdns27432:0crwdne27432:0',
+	'api-error-http' => 'crwdns27433:0crwdne27433:0',
+	'api-error-illegal-filename' => 'crwdns27434:0crwdne27434:0',
+	'api-error-internal-error' => 'crwdns27435:0crwdne27435:0',
+	'api-error-invalid-file-key' => 'crwdns27436:0crwdne27436:0',
+	'api-error-missingparam' => 'crwdns27437:0crwdne27437:0',
+	'api-error-missingresult' => 'crwdns27438:0crwdne27438:0',
+	'api-error-mustbeloggedin' => 'crwdns27439:0crwdne27439:0',
+	'api-error-mustbeposted' => 'crwdns27440:0crwdne27440:0',
+	'api-error-noimageinfo' => 'crwdns27441:0crwdne27441:0',
+	'api-error-nomodule' => 'crwdns27442:0crwdne27442:0',
+	'api-error-ok-but-empty' => 'crwdns27443:0crwdne27443:0',
+	'api-error-overwrite' => 'crwdns27444:0crwdne27444:0',
+	'api-error-stashfailed' => 'crwdns27445:0crwdne27445:0',
+	'api-error-timeout' => 'crwdns27446:0crwdne27446:0',
+	'api-error-unclassified' => 'crwdns27447:0crwdne27447:0',
+	'api-error-unknown-code' => 'crwdns27448:0crwdne27448:0',
+	'api-error-unknown-error' => 'crwdns27449:0crwdne27449:0',
+	'api-error-unknown-warning' => 'crwdns27450:0crwdne27450:0',
+	'api-error-unknownerror' => 'crwdns27451:0crwdne27451:0',
+	'api-error-uploaddisabled' => 'crwdns27452:0crwdne27452:0',
+	'api-error-verification-error' => 'crwdns27453:0crwdne27453:0',
+	'adminskin_ds' => 'crwdns27454:0crwdne27454:0',
+	'admin_skin' => 'crwdns27455:0crwdne27455:0',
+	'all_the_wikia' => 'crwdns68261:0crwdne68261:0',
+	'already_a_member' => 'crwdns27457:0crwdne27457:0',
+	'add_comment' => 'crwdns27458:0crwdne27458:0',
+	'achievements-leaderboard-navigation-item' => 'crwdns27459:0crwdne27459:0',
+	'atom' => 'crwdns48417:0crwdne48417:0',
+	'addnewtalksection-link' => 'crwdns48418:0crwdne48418:0',
+);
+
 $messages['loz'] = array(
 	'april' => 'Lungu',
 	'august' => 'Muyana',
@@ -17586,13 +18411,13 @@ $messages['lzh'] = array(
 	'accountcreatedtext' => '$1簿增矣',
 	'anoneditwarning' => "'''警示：'''子未登簿，IP將誌。",
 	'anonpreviewwarning' => "''子未登簿，IP將誌。''",
-	'autoblockedtext' => "爾之IP或簿自禁，因簿先用，禁者$1也。因故：:\\'\\'$2\\'\\'
+	'autoblockedtext' => "爾之IP或簿自禁，因簿先用，禁者$1也。因故：:''$2''
 
 * 始之時為：$8
 * 終之時為：$6
 * 見禁之人：$7
 
-存惑可詢$1，或[[{{MediaWiki:Grouppage-sysop}}|有秩]]，[[Special:Preferences|簿註]]無驛則信不遣。另，子用IP $3，禁號為#$5。詢時切附之。",
+存惑可詢$1，或[[{{MediaWiki:Grouppage-sysop}}|有秩]]，[[Special:Preferences|簿註]]無驛則信不遣。另，子用IP $3，禁號為#$5。詢時切附之",
 	'accmailtitle' => '符節傳矣',
 	'accmailtext' => '"$1"符節至$2矣',
 	'anontalkpagetext' => "----''此匿論也，為未簿或不簿者設，IP俱錄以辨人焉。然IP不獨，恐生亂象，不喜惠[[Special:UserLogin/signup|增]][[Special:UserLogin|登簿]]遠之。",
@@ -18419,7 +19244,7 @@ $messages['mk'] = array(
 	'allpagessubmit' => 'Оди',
 	'allpagesprefix' => 'Прикажи страници со префикс:',
 	'allpagesbadtitle' => 'Дадениот наслов е неважечки или има меѓујазичен или интервики префикс. Може да содржи повеќе знаци кои не смеат да се користат во наслови.',
-	'allpages-bad-ns' => 'Википедија не содржи именски простор „$1“.',
+	'allpages-bad-ns' => 'Викија не содржи именски простор „$1“.',
 	'activeusers' => 'Список на активни корисници',
 	'activeusers-intro' => 'Ова е список на корисници кои биле на некој начин активни во последните $1 {{PLURAL:$1|ден|дена}}.',
 	'activeusers-count' => '$1 {{PLURAL:$1|уредување|уредувања}} {{PLURAL:$3|денес|во последните $3 дена}}',
@@ -20535,18 +21360,18 @@ $messages['nl'] = array(
 	'aboutsite' => 'Over {{SITENAME}}',
 	'aboutpage' => 'Project:Info',
 	'actionthrottled' => 'Handeling tegengehouden',
-	'actionthrottledtext' => 'Als maatregel tegen spam is het aantal keren per tijdseenheid dat u deze handeling kunt verrichten beperkt.
+	'actionthrottledtext' => 'Als maatregel tegen spam is het aantal keren per tijdseenheid dat je deze handeling kunt verrichten beperkt.
 De limiet is overschreden.
 Probeer het over een aantal minuten opnieuw.',
-	'acct_creation_throttle_hit' => 'Bezoekers van deze wiki met hetzelfde IP-adres als u hebben de afgelopen dag {{PLURAL:$1|al 1 gebruiker|al $1 gebruikers}} geregistreerd, wat het maximale aantal in deze periode is.
-Daarom kunt u als vanaf uw IP-adres op dit moment geen nieuwe gebruiker registreren.',
+	'acct_creation_throttle_hit' => 'Bezoekers van deze wiki met hetzelfde IP-adres als jij hebben de afgelopen dag {{PLURAL:$1|al 1 gebruiker|al $1 gebruikers}} geregistreerd, wat het maximale aantal in deze periode is.
+Daarom kun je als vanaf jouw IP-adres op dit moment geen nieuwe gebruiker registreren.',
 	'accountcreated' => 'Gebruiker aangemaakt',
 	'accountcreatedtext' => 'De gebruiker $1 is aangemaakt.',
-	'anoneditwarning' => "'''Waarschuwing:''' u bent niet aangemeld.
-Uw IP-adres wordt opgeslagen als u wijzigingen op deze pagina maakt.",
-	'anonpreviewwarning' => "''U bent niet aangemeld.''
-''Door uw bewerking op te slaan wordt uw IP-adres opgeslagen in de paginageschiedenis.''",
-	'autoblockedtext' => 'Uw IP-adres is automatisch geblokkeerd, omdat het is gebruikt door een andere gebruiker, die is geblokkeerd door $1.
+	'anoneditwarning' => "'''Waarschuwing:''' je bent niet aangemeld.
+Je IP-adres wordt opgeslagen als je wijzigingen op deze pagina maakt.",
+	'anonpreviewwarning' => "''Je bent niet aangemeld.''
+''Door je bewerking op te slaan wordt je IP-adres opgeslagen in de paginageschiedenis.''",
+	'autoblockedtext' => 'Je IP-adres is automatisch geblokkeerd, omdat het is gebruikt door een andere gebruiker, die is geblokkeerd door $1.
 De opgegeven reden is:
 
 :\'\'$2\'\'
@@ -20555,12 +21380,12 @@ De opgegeven reden is:
 * Einde blokkade: $6
 * Bedoeld te blokkeren: $7
 
-U kunt deze blokkade bespreken met $1 of een andere [[{{MediaWiki:Grouppage-sysop}}|beheerder]].
+Je kunt deze blokkade bespreken met $1 of een andere [[{{MediaWiki:Grouppage-sysop}}|beheerder]].
 
-U kunt geen gebruik maken van de functie "Deze gebruiker e-mailen", tenzij u een geldig e-mailadres hebt opgegeven in uw [[Special:Preferences|voorkeuren]] en het gebruik van deze functie niet is geblokkeerd.
+Je kunt geen gebruik maken van de functie "Deze gebruiker e-mailen", tenzij je een geldig e-mailadres hebt opgegeven in je [[Special:Preferences|voorkeuren]] en het gebruik van deze functie niet is geblokkeerd.
 
-Uw huidige IP-adres is $3 en het blokkadenummer is #$5.
-Vermeld alle bovenstaande gegevens als u ergens op deze blokkade reageert.',
+Je huidige IP-adres is $3 en het blokkadenummer is #$5.
+Vermeld alle bovenstaande gegevens als je ergens op deze blokkade reageert.',
 	'accmailtitle' => 'Wachtwoord verzonden.',
 	'accmailtext' => "Een willekeurig wachtwoord voor [[User talk:$1|$1]] is naar $2 gestuurd.
 
@@ -20568,8 +21393,8 @@ Het wachtwoord voor deze nieuwe gebruiker kan gewijzigd worden via de pagina ''[
 	'anontalkpagetext' => "----''Deze overlegpagina hoort bij een anonieme gebruiker die hetzij geen gebruikersnaam heeft, hetzij deze niet gebruikt.
 Daarom wordt het IP-adres ter identificatie gebruikt.
 Het is mogelijk dat meerdere personen hetzelfde IP-adres gebruiken.
-Mogelijk ontvangt u hier berichten die niet voor u bedoeld zijn.
-Als u dat wilt voorkomen, [[Special:UserLogin/signup|registreer u]] of [[Special:UserLogin|meld u aan]] om verwarring met andere anonieme gebruikers te voorkomen.''",
+Mogelijk ontvang je hier berichten die niet voor je bedoeld zijn.
+Als je dat wilt voorkomen, [[Special:UserLogin/signup|registreer je]] of [[Special:UserLogin|meld je aan]] om verwarring met andere anonieme gebruikers te voorkomen.''",
 	'allowemail' => 'E-mail van andere gebruikers toestaan',
 	'action-read' => 'deze pagina te bekijken',
 	'action-edit' => 'deze pagina te bewerken',
@@ -20609,7 +21434,7 @@ Als u dat wilt voorkomen, [[Special:UserLogin/signup|registreer u]] of [[Special
 	'ancientpages' => "Oudste pagina's",
 	'all-logs-page' => 'Alle openbare logboeken',
 	'alllogstext' => 'Dit is het gecombineerde logboek van {{SITENAME}}.
-U kunt ook kiezen voor specifieke logboeken en filteren op gebruiker (hoofdlettergevoelig) en paginanaam (hoofdlettergevoelig).',
+Je kunt ook kiezen voor specifieke logboeken en filteren op gebruiker (hoofdlettergevoelig) en paginanaam (hoofdlettergevoelig).',
 	'allpages' => "Alle pagina's",
 	'alphaindexline' => '$1 tot $2',
 	'allpagesfrom' => "Pagina's bekijken vanaf:",
@@ -20632,8 +21457,8 @@ Mogelijk bevatte de naam karakters die niet gebruikt mogen worden in paginanamen
 	'activeusers-hidesysops' => 'Beheerders verbergen',
 	'activeusers-noresult' => 'Geen actieve gebruikers gevonden.',
 	'addwatch' => 'Toevoegen aan volglijst',
-	'addedwatchtext' => "De pagina \"[[:\$1]]\" is toegevoegd aan uw [[Special:Watchlist|volglijst]].
-Toekomstige bewerkingen van deze pagina en de bijbehorende overlegpagina worden op [[Special:Watchlist|uw volglijst]] vermeld en worden '''vet''' weergegeven in de [[Special:RecentChanges|lijst van recente wijzigingen]].",
+	'addedwatchtext' => "De pagina \"[[:\$1]]\" is toegevoegd aan je [[Special:Watchlist|volglijst]].
+Toekomstige bewerkingen van deze pagina en de bijbehorende overlegpagina worden op [[Special:Watchlist|je volglijst]] vermeld en worden '''vet''' weergegeven in de [[Special:RecentChanges|lijst van recente wijzigingen]].",
 	'actioncomplete' => 'Handeling voltooid',
 	'actionfailed' => 'De handeling is mislukt.',
 	'alreadyrolled' => 'Het is niet mogelijk om de bewerking van de pagina [[:$1]] door [[User:$2|$2]] ([[User talk:$2|overleg]]{{int:pipe-separator}}[[Special:Contributions/$2|bijdragen]]) ongedaan te maken.
@@ -20649,8 +21474,7 @@ Kies een andere paginanaam.',
 	'allmessagesname' => 'Naam',
 	'allmessagesdefault' => 'Standaardinhoud',
 	'allmessagescurrent' => 'Huidige inhoud',
-	'allmessagestext' => 'Hieronder staan de systeemberichten uit de MediaWiki-naamruimte.
-Ga naar [//www.mediawiki.org/wiki/Localisation MediaWiki-lokalisatie] en [//translatewiki.net translatewiki.net] als u wilt bijdragen aan de algemene vertaling voor MediaWiki.',
+	'allmessagestext' => 'This is a list of system messages available in the MediaWiki namespace. For security reasons, not all MediaWiki messages are editable. (Please see [[Help:System_messages|this page]] for more information.) If there are messages you feel should be editable or need an existing message tweaked, please [[Special:Contact|let FANDOM Staff know]].',
 	'allmessagesnotsupportedDB' => "Deze pagina kan niet gebruikt worden, omdat '''\$wgUseDatabaseMessages''' is uitgeschakeld.",
 	'allmessages-filter-legend' => 'Filter',
 	'allmessages-filter' => 'Filteren op aangepast:',
@@ -20706,6 +21530,116 @@ Ga naar [//www.mediawiki.org/wiki/Localisation MediaWiki-lokalisatie] en [//tran
 	'api-error-uploaddisabled' => 'Uploaden is niet mogelijk in deze wiki.',
 	'api-error-verification-error' => 'Dit bestand is mogelijk beschadigd of heeft een onjuiste extensie.',
 	'addnewtalksection-link' => 'Nieuw kopje toevoegen',
+	'addsection' => 'Leave message',
+	'anonnotice' => '-',
+	'addsection-preload' => '',
+	'addsection-editintro' => '',
+	'ancientpages-summary' => '',
+	'allpages-summary' => '',
+	'activeusers-summary' => '',
+	'accesskey-pt-userpage' => '.',
+	'accesskey-pt-anonuserpage' => '.',
+	'accesskey-pt-mytalk' => 'n',
+	'accesskey-pt-anontalk' => 'n',
+	'accesskey-pt-preferences' => '',
+	'accesskey-pt-watchlist' => 'l',
+	'accesskey-pt-mycontris' => 'y',
+	'accesskey-pt-login' => 'o',
+	'accesskey-pt-anonlogin' => 'o',
+	'accesskey-pt-logout' => '',
+	'accesskey-ca-talk' => 't',
+	'accesskey-ca-edit' => 'e',
+	'accesskey-ca-addsection' => '+',
+	'accesskey-ca-viewsource' => 'e',
+	'accesskey-ca-history' => 'h',
+	'accesskey-ca-protect' => '=',
+	'accesskey-ca-unprotect' => '=',
+	'accesskey-ca-delete' => 'd',
+	'accesskey-ca-undelete' => 'd',
+	'accesskey-ca-move' => 'm',
+	'accesskey-ca-watch' => 'w',
+	'accesskey-ca-unwatch' => 'w',
+	'accesskey-search' => 'f',
+	'accesskey-search-go' => '',
+	'accesskey-search-fulltext' => '',
+	'accesskey-p-logo' => '',
+	'accesskey-n-mainpage' => 'z',
+	'accesskey-n-mainpage-description' => 'z',
+	'accesskey-n-portal' => '',
+	'accesskey-n-currentevents' => '',
+	'accesskey-n-recentchanges' => 'r',
+	'accesskey-n-randompage' => 'x',
+	'accesskey-n-help' => '',
+	'accesskey-t-whatlinkshere' => 'j',
+	'accesskey-t-recentchangeslinked' => 'k',
+	'accesskey-feed-rss' => '',
+	'accesskey-feed-atom' => '',
+	'accesskey-t-contributions' => '',
+	'accesskey-t-emailuser' => '',
+	'accesskey-t-permalink' => '',
+	'accesskey-t-print' => 'p',
+	'accesskey-t-upload' => 'u',
+	'accesskey-t-specialpages' => 'q',
+	'accesskey-ca-nstab-main' => 'c',
+	'accesskey-ca-nstab-user' => 'c',
+	'accesskey-ca-nstab-media' => 'c',
+	'accesskey-ca-nstab-special' => '',
+	'accesskey-ca-nstab-project' => 'a',
+	'accesskey-ca-nstab-image' => 'c',
+	'accesskey-ca-nstab-mediawiki' => 'c',
+	'accesskey-ca-nstab-template' => 'c',
+	'accesskey-ca-nstab-help' => 'c',
+	'accesskey-ca-nstab-category' => 'c',
+	'accesskey-minoredit' => 'i',
+	'accesskey-save' => 's',
+	'accesskey-preview' => 'p',
+	'accesskey-diff' => 'v',
+	'accesskey-compareselectedversions' => 'v',
+	'accesskey-watch' => 'w',
+	'accesskey-upload' => 's',
+	'accesskey-preferences-save' => 's',
+	'accesskey-summary' => 'b',
+	'accesskey-userrights-set' => 's',
+	'accesskey-blockip-block' => 's',
+	'accesskey-export' => 's',
+	'accesskey-import' => 's',
+	'accesskey-watchlistedit-normal-submit' => 's',
+	'accesskey-watchlistedit-raw-submit' => 's',
+	'autocomment-prefix' => '-&#32;',
+	'autoblock_whitelist' => 'AOL http://webmaster.info.aol.com/proxyinfo.html
+*64.12.96.0/19
+*149.174.160.0/20
+*152.163.240.0/21
+*152.163.248.0/22
+*152.163.252.0/23
+*152.163.96.0/22
+*152.163.100.0/23
+*195.93.32.0/22
+*195.93.48.0/22
+*195.93.64.0/19
+*195.93.96.0/19
+*195.93.16.0/20
+*198.81.0.0/22
+*198.81.16.0/20
+*198.81.8.0/23
+*202.67.64.128/25
+*205.188.192.0/20
+*205.188.208.0/23
+*205.188.112.0/20
+*205.188.146.144/30
+*207.200.112.0/21
+*10.6.0.0/16
+*10.7.0.0/16
+*10.8.0.0/16
+*199.102.47.71
+*199.102.47.72',
+	'adminskin_ds' => 'Default',
+	'admin_skin' => 'Admin Options',
+	'all_the_wikia' => 'All the FANDOM',
+	'already_a_member' => 'Already a member?',
+	'add_comment' => 'Leave message',
+	'achievements-leaderboard-navigation-item' => 'Wiki Leaderboard',
+	'atom' => 'Atom',
 );
 
 $messages['nl-informal'] = array(
@@ -21070,6 +22004,11 @@ Vitja [//www.mediawiki.org/wiki/Localisation MediaWiki Localisation] og [//trans
 	'api-error-uploaddisabled' => 'Det er ikkje høve til å lasta opp filer til wikien.',
 	'api-error-verification-error' => 'Fila kan vera øydelagd eller ha rang filending.',
 	'addnewtalksection-link' => 'Start ny seksjon',
+	'all_the_wikia' => 'Hele wikia',
+	'add_comment' => 'Legg igjen beskjed',
+	'admin_skin' => 'Administratoralternativer',
+	'adminskin_ds' => 'Standard',
+	'already_a_member' => 'Allerede medlem?',
 );
 
 $messages['nov'] = array(
@@ -21942,9 +22881,9 @@ $messages['pl'] = array(
 	'and' => '&#32;oraz',
 	'actions' => 'Działania',
 	'aboutsite' => 'O {{GRAMMAR:MS.lp|{{SITENAME}}}}',
-	'aboutpage' => 'Project:O {{GRAMMAR:MS.lp|{{SITENAME}}}}',
+	'aboutpage' => 'Project:O nas',
 	'actionthrottled' => 'Akcja wstrzymana',
-	'actionthrottledtext' => 'Mechanizm obrony przed spamem ogranicza liczbę wykonań tej czynności w jednostce czasu. Usiłowałeś przekroczyć to ograniczenie. Spróbuj jeszcze raz za kilka minut.',
+	'actionthrottledtext' => 'Nie można wykonać teraz tej akcji. Spróbuj ponownie za kilka minut lub [[Special:Contact|skontaktuj się z FANDOMEM]], jeśli masz problemy.',
 	'acct_creation_throttle_hit' => 'Z adresu IP, z którego korzystasz {{PLURAL:$1|ktoś już utworzył dziś konto|utworzono dziś $1 konta|utworzono dziś $1 kont}}, co jest maksymalną dopuszczalną liczbą w tym czasie.
 W związku z tym, osoby korzystające z tego adresu IP w chwili obecnej nie mogą założyć kolejnego.',
 	'accountcreated' => 'Konto zostało utworzone',
@@ -22054,8 +22993,7 @@ Wybierz inną nazwę.',
 	'allmessagesname' => 'Nazwa',
 	'allmessagesdefault' => 'Tekst domyślny',
 	'allmessagescurrent' => 'Tekst obecny',
-	'allmessagestext' => 'Lista wszystkich komunikatów systemowych dostępnych w przestrzeni nazw MediaWiki.
-Odwiedź [//www.mediawiki.org/wiki/Localisation Tłumaczenie MediaWiki] oraz [//translatewiki.net translatewiki.net], jeśli chcesz uczestniczyć w tłumaczeniu oprogramowania MediaWiki.',
+	'allmessagestext' => 'W tym miejscu dostępna jest lista komunikatów systemowych, które są dostępne w przestrzeni nazw MediaWiki. Ze względów bezpieczeństwa, nie wszystkie wiadomości MediaWiki są dostępne do edycji (zobacz [[w:pl:Pomoc:Komunikaty MediaWiki|tę stronę]], aby uzyskać więcej informacji). Jeśli są tu komunikaty, które uważasz, że powinny być edytowalne lub potrzebujesz dopasować istniejący komunikat, [[Special:Contact|daj znać pracownikom FANDOMU]].',
 	'allmessagesnotsupportedDB' => "Ta strona nie może być użyta, ponieważ zmienna '''\$wgUseDatabaseMessages''' jest wyłączona.",
 	'allmessages-filter-legend' => 'Filtr',
 	'allmessages-filter' => 'Filtrowanie według stanu modyfikacji:',
@@ -22071,10 +23009,10 @@ Odwiedź [//www.mediawiki.org/wiki/Localisation Tłumaczenie MediaWiki] oraz [//
 	'ago' => '$1 temu',
 	'autocomment-prefix' => '–&#32;',
 	'ascending_abbrev' => 'rosn.',
-	'autosumm-blank' => 'UWAGA! Usunięcie treści (strona pozostała pusta)!',
-	'autosumm-replace' => 'UWAGA! Zastąpienie treści hasła bardzo krótkim tekstem: „$1”',
+	'autosumm-blank' => 'UWAGA! Usunięto treść strony!',
+	'autosumm-replace' => 'UWAGA! Zastąpiono treść hasła tekstem „$1”',
 	'autoredircomment' => 'Przekierowanie do [[$1]]',
-	'autosumm-new' => 'Utworzył nową stronę „$1”',
+	'autosumm-new' => 'Dodano nową stronę „$1”',
 	'api-error-badaccess-groups' => 'Nie masz uprawnień aby przesyłać pliki do tej wiki.',
 	'api-error-badtoken' => 'Błąd wewnętrzny – żeton wykorzystywany do identyfikacji użytkownika jest nieprawidłowy.',
 	'api-error-copyuploaddisabled' => 'Przesyłanie poprzez podanie adresu URL zostało na tym serwerze wyłączone.',
@@ -22113,6 +23051,115 @@ Odwiedź [//www.mediawiki.org/wiki/Localisation Tłumaczenie MediaWiki] oraz [//
 	'api-error-verification-error' => 'Plik może być uszkodzony lub nazwa pliku ma nieprawidłowe rozszerzenie.',
 	'add_widgets' => 'Dodaj widgety',
 	'addnewtalksection-link' => 'Dodaj nowy wątek.',
+	'all_the_wikia' => 'Cały FANDOM',
+	'achievements-leaderboard-navigation-item' => 'Ranking wiki',
+	'addsection' => 'Dodaj wiadomość',
+	'adminskin_ds' => 'Domyślna',
+	'anonnotice' => '-',
+	'addsection-preload' => '',
+	'addsection-editintro' => '',
+	'ancientpages-summary' => '',
+	'allpages-summary' => '',
+	'activeusers-summary' => '',
+	'accesskey-pt-userpage' => '.',
+	'accesskey-pt-anonuserpage' => '.',
+	'accesskey-pt-mytalk' => 'n',
+	'accesskey-pt-anontalk' => 'n',
+	'accesskey-pt-preferences' => '',
+	'accesskey-pt-watchlist' => 'l',
+	'accesskey-pt-mycontris' => 'y',
+	'accesskey-pt-login' => 'o',
+	'accesskey-pt-anonlogin' => 'o',
+	'accesskey-pt-logout' => '',
+	'accesskey-ca-talk' => 't',
+	'accesskey-ca-edit' => 'e',
+	'accesskey-ca-addsection' => '+',
+	'accesskey-ca-viewsource' => 'e',
+	'accesskey-ca-history' => 'h',
+	'accesskey-ca-protect' => '=',
+	'accesskey-ca-unprotect' => '=',
+	'accesskey-ca-delete' => 'd',
+	'accesskey-ca-undelete' => 'd',
+	'accesskey-ca-move' => 'm',
+	'accesskey-ca-watch' => 'w',
+	'accesskey-ca-unwatch' => 'w',
+	'accesskey-search' => 'f',
+	'accesskey-search-go' => '',
+	'accesskey-search-fulltext' => '',
+	'accesskey-p-logo' => '',
+	'accesskey-n-mainpage' => 'z',
+	'accesskey-n-mainpage-description' => 'z',
+	'accesskey-n-portal' => '',
+	'accesskey-n-currentevents' => '',
+	'accesskey-n-recentchanges' => 'r',
+	'accesskey-n-randompage' => 'x',
+	'accesskey-n-help' => '',
+	'accesskey-t-whatlinkshere' => 'j',
+	'accesskey-t-recentchangeslinked' => 'k',
+	'accesskey-feed-rss' => '',
+	'accesskey-feed-atom' => '',
+	'accesskey-t-contributions' => '',
+	'accesskey-t-emailuser' => '',
+	'accesskey-t-permalink' => '',
+	'accesskey-t-print' => 'p',
+	'accesskey-t-upload' => 'u',
+	'accesskey-t-specialpages' => 'q',
+	'accesskey-ca-nstab-main' => 'c',
+	'accesskey-ca-nstab-user' => 'c',
+	'accesskey-ca-nstab-media' => 'c',
+	'accesskey-ca-nstab-special' => '',
+	'accesskey-ca-nstab-project' => 'a',
+	'accesskey-ca-nstab-image' => 'c',
+	'accesskey-ca-nstab-mediawiki' => 'c',
+	'accesskey-ca-nstab-template' => 'c',
+	'accesskey-ca-nstab-help' => 'c',
+	'accesskey-ca-nstab-category' => 'c',
+	'accesskey-minoredit' => 'i',
+	'accesskey-save' => 's',
+	'accesskey-preview' => 'p',
+	'accesskey-diff' => 'v',
+	'accesskey-compareselectedversions' => 'v',
+	'accesskey-watch' => 'w',
+	'accesskey-upload' => 's',
+	'accesskey-preferences-save' => 's',
+	'accesskey-summary' => 'b',
+	'accesskey-userrights-set' => 's',
+	'accesskey-blockip-block' => 's',
+	'accesskey-export' => 's',
+	'accesskey-import' => 's',
+	'accesskey-watchlistedit-normal-submit' => 's',
+	'accesskey-watchlistedit-raw-submit' => 's',
+	'autoblock_whitelist' => 'AOL http://webmaster.info.aol.com/proxyinfo.html
+*64.12.96.0/19
+*149.174.160.0/20
+*152.163.240.0/21
+*152.163.248.0/22
+*152.163.252.0/23
+*152.163.96.0/22
+*152.163.100.0/23
+*195.93.32.0/22
+*195.93.48.0/22
+*195.93.64.0/19
+*195.93.96.0/19
+*195.93.16.0/20
+*198.81.0.0/22
+*198.81.16.0/20
+*198.81.8.0/23
+*202.67.64.128/25
+*205.188.192.0/20
+*205.188.208.0/23
+*205.188.112.0/20
+*205.188.146.144/30
+*207.200.112.0/21
+*10.6.0.0/16
+*10.7.0.0/16
+*10.8.0.0/16
+*199.102.47.71
+*199.102.47.72',
+	'admin_skin' => 'Admin Options',
+	'already_a_member' => 'Already a member?',
+	'add_comment' => 'Leave message',
+	'atom' => 'Atom',
 );
 
 $messages['pms'] = array(
@@ -22800,208 +23847,25 @@ $messages['pt'] = array(
 	'august' => 'Agosto',
 	'april-gen' => 'Abril',
 	'august-gen' => 'Agosto',
-	'apr' => 'Abr.',
-	'aug' => 'Ago.',
+	'apr' => 'Abr',
+	'aug' => 'Ago',
 	'about' => 'Sobre',
 	'article' => 'Página de conteúdo',
-	'anontalk' => 'Discussão para este IP',
-	'and' => '&#32;e',
-	'actions' => 'Acções',
-	'aboutsite' => 'Sobre a {{SITENAME}}',
-	'aboutpage' => 'Project:Sobre',
-	'actionthrottled' => 'Operação limitada',
-	'actionthrottledtext' => 'Como medida anti-spam, está impedido de realizar esta operação demasiadas vezes num espaço de tempo curto e já excedeu esse limite. Tente de novo dentro de alguns minutos, por favor.',
-	'acct_creation_throttle_hit' => 'Visitantes desta wiki com o seu endereço IP criaram $1 {{PLURAL:$1|conta|contas}} no último dia, o que é o máximo permitido neste período de tempo.
-Em resultado, visitantes com este endereço IP não podem criar mais nenhuma conta neste momento.',
-	'accountcreated' => 'Conta criada',
-	'accountcreatedtext' => 'A conta de utilizador para $1 foi criada.',
-	'anoneditwarning' => "'''Aviso''': Não se encontra autenticado.
-O seu endereço IP será registado no histórico de edições desta página.",
-	'anonpreviewwarning' => "''Não está autenticado. Gravar registará o seu endereço IP no histórico de edições da página.''",
-	'autoblockedtext' => 'O seu endereço IP foi bloqueado de forma automática, uma vez que foi utilizado recentemente por outro utilizador, o qual foi bloqueado por $1.
-O motivo apresentado foi:
-
-:\'\'$2\'\'
-
-* Início do bloqueio: $8
-* Expiração do bloqueio: $6
-* Destinatário do bloqueio: $7
-
-Pode contactar $1 ou outro [[{{MediaWiki:Grouppage-sysop}}|administrador]] para discutir o bloqueio.
-
-Note que para utilizar a funcionalidade "Contactar utilizador" precisa de ter um endereço de correio electrónico válido nas suas [[Special:Preferences|preferências de utilizador]] e de não lhe ter sido bloqueado o uso desta funcionalidade.
-
-O seu endereço IP neste momento é $3 e a identificação (ID) do bloqueio é #$5.
-Inclua todos os detalhes acima em quaisquer contactos relacionados com este bloqueio, por favor.',
-	'accmailtitle' => 'Palavra-chave enviada.',
-	'accmailtext' => 'Uma palavra-chave gerada aleatoriamente para [[User talk:$1|$1]] foi enviada para $2.
-
-A palavra-chave para esta nova conta pode ser alterada na página [[Special:ChangePassword|alterar palavra-chave]] após autenticação.',
-	'anontalkpagetext' => "----''Esta é a página de discussão de um utilizador anónimo que ainda não criou uma conta ou não a utiliza, pelo que temos de utilizar o endereço IP para identificá-lo(a).
-Um endereço IP pode ser partilhado por vários utilizadores.
-Se é um utilizador anónimo e sente que lhe foram direccionados comentários irrelevantes, por favor [[Special:UserLogin/signup|crie uma conta]] ou [[Special:UserLogin|autentique-se]] para evitar futuras confusões com outros utilizadores anónimos.''",
-	'allowemail' => 'Aceitar correio electrónico de outros utilizadores',
-	'action-read' => 'ler esta página',
-	'action-edit' => 'editar esta página',
-	'action-createpage' => 'criar páginas',
-	'action-createtalk' => 'criar páginas de discussão',
-	'action-createaccount' => 'criar esta conta de utilizador',
-	'action-minoredit' => 'marcar esta edição como uma edição menor',
-	'action-move' => 'mover esta página',
-	'action-move-subpages' => 'mover esta página e as respectivas subpáginas',
-	'action-move-rootuserpages' => 'mover páginas raiz de utilizadores',
-	'action-movefile' => 'mover este ficheiro',
-	'action-upload' => 'enviar este ficheiro',
-	'action-reupload' => 'sobrepor este ficheiro existente',
-	'action-reupload-shared' => 'sobrepor este ficheiro num repositório partilhado',
-	'action-upload_by_url' => 'enviar este ficheiro através de uma URL',
-	'action-writeapi' => 'utilizar o modo de escrita da API',
-	'action-delete' => 'eliminar esta página',
-	'action-deleterevision' => 'eliminar esta edição',
-	'action-deletedhistory' => 'ver o histórico de edições eliminadas desta página',
-	'action-browsearchive' => 'pesquisar páginas eliminadas',
-	'action-undelete' => 'restaurar esta página',
-	'action-suppressrevision' => 'rever e restaurar esta edição oculta',
-	'action-suppressionlog' => 'ver este registo privado',
-	'action-block' => 'impedir este utilizador de editar',
-	'action-protect' => 'alterar os níveis de protecção desta página',
-	'action-rollback' => 'Reverter rapidamente as edições do último utilizador que editou uma dada página',
-	'action-import' => 'importar esta página a partir de outra wiki',
-	'action-importupload' => 'importar esta página a partir de um ficheiro xml',
-	'action-patrol' => 'marcar as edições de outros utilizadores como patrulhadas',
-	'action-autopatrol' => 'marcar como patrulhadas as suas próprias edições',
-	'action-unwatchedpages' => 'ver a lista de páginas não-vigiadas',
-	'action-mergehistory' => 'fundir o histórico de edições desta página',
-	'action-userrights' => 'editar os privilégios de utilizadores',
-	'action-userrights-interwiki' => 'editar privilégios de utilizadores de outras wikis',
-	'action-siteadmin' => 'bloquear ou desbloquear a base de dados',
-	'action-sendemail' => 'enviar e-mails',
-	'ancientpages' => 'Páginas mais antigas',
-	'all-logs-page' => 'Todos os registos públicos',
-	'alllogstext' => 'Apresentação combinada de todos os registos disponíveis na wiki {{SITENAME}}.
-Pode reduzir a lista escolhendo um tipo de registo, um nome de utilizador ou um título de página. Respeite maiúsculas e minúsculas.',
-	'allpages' => 'Todas as páginas',
-	'alphaindexline' => '$1 até $2',
-	'allpagesfrom' => 'Apresentar páginas desde:',
-	'allpagesto' => 'Apresentar páginas até:',
-	'allarticles' => 'Todas as páginas',
-	'allinnamespace' => 'Todas as páginas (espaço nominal $1)',
-	'allnotinnamespace' => 'Todas as páginas (excepto as do espaço nominal $1)',
-	'allpagesprev' => 'Anterior',
-	'allpagesnext' => 'Próximo',
-	'allpagessubmit' => 'Prosseguir',
-	'allpagesprefix' => 'Apresentar páginas iniciadas por:',
-	'allpagesbadtitle' => 'O título de página fornecido era inválido ou tinha um prefixo interlínguas ou interwikis.
-Talvez contenha um ou mais caracteres que não podem ser usados nos títulos.',
-	'allpages-bad-ns' => 'A {{SITENAME}} não possui o espaço nominal "$1".',
-	'activeusers' => 'Utilizadores activos',
-	'activeusers-intro' => 'Esta é uma lista dos utilizadores com qualquer tipo de actividade {{PLURAL:$1|no último dia|nos últimos $1 dias}}.',
-	'activeusers-count' => '$1 {{PLURAL:$1|edição recente|edições recentes}} {{PLURAL:$3|no último dia|nos últimos $3 dias}}',
-	'activeusers-from' => 'Mostrar utilizadores começando por:',
-	'activeusers-hidebots' => 'Esconder robôs',
-	'activeusers-hidesysops' => 'Esconder administradores',
-	'activeusers-noresult' => 'Nenhum utilizador encontrado.',
-	'addwatch' => 'Adicionar às páginas vigiadas',
-	'addedwatchtext' => "A página \"[[:\$1]]\" foi adicionada à sua lista de [[Special:Watchlist|páginas vigiadas]], onde serão indicadas quaisquer
-modificações futuras desta página e da respectiva página de discussão.
-O nome desta página passará a aparecer a '''negrito''' na lista de [[Special:RecentChanges|mudanças recentes]], para que a encontre facilmente.",
-	'actioncomplete' => 'Operação executada',
-	'actionfailed' => 'Operação falhou',
-	'alreadyrolled' => 'Não foi possível reverter as edições de [[:$1]] por [[User:$2|$2]] ([[User talk:$2|discussão]]{{int:pipe-separator}}[[Special:Contributions/$2|{{int:contribslink}}]]);
-alguém editou ou já reverteu a página.
-
-A última edição foi de [[User:$3|$3]] ([[User talk:$3|discussão]]{{int:pipe-separator}}[[Special:Contributions/$3|{{int:contribslink}}]]).',
-	'autoblockid' => 'Bloqueio automático nº$1',
-	'anononlyblock' => 'apenas anón.',
-	'autoblocker' => 'Foi automaticamente bloqueado, pois o seu endereço IP foi recentemente usado por "[[User:$1|$1]]". O motivo apresentado para o bloqueio de $1 foi: "$2".',
-	'articleexists' => 'Uma página com este nome já existe, ou o nome que escolheu é inválido.
-Escolha outro nome, por favor.',
-	'allmessages' => 'Mensagens de sistema',
-	'allmessagesname' => 'Nome',
-	'allmessagesdefault' => 'Texto padrão',
-	'allmessagescurrent' => 'Texto actual',
-	'allmessagestext' => 'Esta é a lista das mensagens de sistema disponíveis no espaço nominal MediaWiki.
-Se deseja colaborar na localização genérica do MediaWiki, visite [//www.mediawiki.org/wiki/Localisation MediaWiki Localisation] e a [//translatewiki.net translatewiki.net].',
-	'allmessagesnotsupportedDB' => "Esta página não pode ser utilizada, uma vez que '''\$wgUseDatabaseMessages''' foi desativado.",
-	'allmessages-filter-legend' => 'Filtro',
-	'allmessages-filter' => 'Filtrar pelo estado de personalização:',
-	'allmessages-filter-unmodified' => 'Não modificadas',
-	'allmessages-filter-all' => 'Todas',
-	'allmessages-filter-modified' => 'Modificadas',
-	'allmessages-prefix' => 'Filtrar pelos caracteres iniciais:',
-	'allmessages-language' => 'Língua:',
-	'allmessages-filter-submit' => 'Filtrar',
-	'anonymous' => '{{PLURAL:$1|Utilizador anónimo|Utilizadores anónimos}} da {{SITENAME}}',
-	'anonuser' => 'utilizador anónimo $1 da {{SITENAME}}',
-	'anonusers' => '{{PLURAL:$2|utilizador anónimo|utilizadores anónimos}} da {{SITENAME}} ($1)',
-	'ago' => '$1 atrás',
-	'ascending_abbrev' => 'asc',
-	'autosumm-blank' => 'Limpou toda a página',
-	'autosumm-replace' => "Página substituída por '$1'",
-	'autoredircomment' => 'Redireccionamento para [[$1]]',
-	'autosumm-new' => "Criou nova página com '$1'",
-	'api-error-badaccess-groups' => 'Não tem permissão para enviar ficheiros para esta wiki.',
-	'api-error-badtoken' => 'Erro interno: Chave incorrecta.',
-	'api-error-copyuploaddisabled' => 'O recebimento de ficheiros por URL não foi possibilitado neste servidor.',
-	'api-error-duplicate' => 'Já {{PLURAL:$1|existe [$2 outro ficheiro]|existem [$2 outros ficheiros]}} na wiki com o mesmo conteúdo.',
-	'api-error-duplicate-archive' => 'Já {{PLURAL:$1|existia no site [$2 outro ficheiro]|existiam no site [$2 alguns outros ficheiros]}} com o mesmo conteúdo, mas {{PLURAL:$1|foi|foram}} eliminados.',
-	'api-error-duplicate-archive-popup-title' => '{{PLURAL:$1|Ficheiro duplicado que já foi eliminado|Ficheiros duplicados que já foram eliminados}}',
-	'api-error-duplicate-popup-title' => '{{PLURAL:$1|Ficheiro duplicado|Ficheiros duplicados}}',
-	'api-error-empty-file' => 'O ficheiro que enviou está vazio.',
-	'api-error-fetchfileerror' => 'Erro interno: Ocorreu um problema indeterminado ao aceder ao ficheiro.',
-	'api-error-file-too-large' => 'O ficheiro que enviou era demasiado grande.',
-	'api-error-filename-tooshort' => 'O nome do ficheiro é demasiado curto.',
-	'api-error-filetype-banned' => 'Este tipo de ficheiro é proibido.',
-	'api-error-filetype-missing' => 'Falta a extensão do ficheiro.',
-	'api-error-hookaborted' => 'A modificação que tentou fazer foi abortada pelo hook de uma extensão.',
-	'api-error-http' => 'Erro interno: Ocorreu um problema na ligação ao servidor.',
-	'api-error-illegal-filename' => 'Este nome de ficheiro não é permitido.',
-	'api-error-internal-error' => 'Erro interno: Ocorreu um erro indeterminado na wiki ao processar o ficheiro que enviou.',
-	'api-error-invalid-file-key' => 'Erro interno: O ficheiro não foi encontrado no armazenamento temporário.',
-	'api-error-missingparam' => 'Erro interno: Há parâmetros em falta no pedido.',
-	'api-error-missingresult' => 'Erro interno: Não foi possível determinar se a cópia foi feita.',
-	'api-error-mustbeloggedin' => 'Tem de estar autenticado para enviar ficheiros.',
-	'api-error-mustbeposted' => 'Erro interno: O pedido necessita do HTTP POST.',
-	'api-error-noimageinfo' => 'O envio correu bem, mas o servidor não forneceu nenhuma informação sobre o ficheiro.',
-	'api-error-nomodule' => 'Erro interno: Não está definido nenhum módulo para recebimento de ficheiros.',
-	'api-error-ok-but-empty' => 'Erro interno: o servidor não respondeu.',
-	'api-error-overwrite' => 'Não é permitido sobrescrever um ficheiro existente.',
-	'api-error-stashfailed' => 'Erro interno: O servidor não conseguiu armazenar o ficheiro temporário.',
-	'api-error-timeout' => 'O servidor não respondeu no prazo esperado.',
-	'api-error-unclassified' => 'Ocorreu um erro desconhecido',
-	'api-error-unknown-code' => 'Erro desconhecido: "$1"',
-	'api-error-unknown-error' => 'Erro interno: Ocorreu um erro indeterminado ao tentar receber o ficheiro.',
-	'api-error-unknown-warning' => 'Aviso desconhecido: $1',
-	'api-error-unknownerror' => 'Erro desconhecido: "$1".',
-	'api-error-uploaddisabled' => 'Esta wiki não está configurada para poder receber ficheiros.',
-	'api-error-verification-error' => 'Este ficheiro pode estar corrompido, ou ter a extensão errada.',
-	'addnewtalksection-link' => 'Iniciar uma nova secção',
-);
-
-$messages['pt-br'] = array(
-	'april' => 'abril',
-	'august' => 'agosto',
-	'april-gen' => 'abril',
-	'august-gen' => 'agosto',
-	'apr' => 'abr.',
-	'aug' => 'ago.',
-	'about' => 'Sobre',
-	'article' => 'Página de conteúdo',
-	'anontalk' => 'Discussão para este IP',
-	'and' => '&#32;e',
+	'anontalk' => 'Discussão para este endereço de IP',
+	'and' => '&#32;and',
 	'actions' => 'Ações',
 	'aboutsite' => 'Sobre {{SITENAME}}',
-	'aboutpage' => 'Project:Sobre',
+	'aboutpage' => 'Project:About',
 	'actionthrottled' => 'Ação controlada',
 	'actionthrottledtext' => 'Como medida "anti-spam", você se encontra impedido de realizar esta operação muitas vezes em um curto espaço de tempo; você já excedeu esse limite.
 Tente novamente em alguns minutos.',
-	'acct_creation_throttle_hit' => 'Visitantes deste wiki utilizando o seu endereço IP criaram {{PLURAL:$1|1 conta|$1 contas}} no último dia, o que é o máximo permitido neste período de tempo.
-Como resultado, visitantes que usam este endereço IP não podem criar mais nenhuma conta no momento.',
+	'acct_creation_throttle_hit' => 'Visitantes deste wiki utilizando o seu endereço de IP criaram {{PLURAL:$1|1 conta|$1 contas}} no último dia, o que é o máximo permitido neste período de tempo.
+Como resultado, visitantes que usam este endereço de IP não podem criar mais nenhuma conta no momento.',
 	'accountcreated' => 'Conta criada',
 	'accountcreatedtext' => 'A conta de usuário para $1 foi criada.',
 	'anoneditwarning' => "'''Atenção''': Você não se encontra autenticado.
 O seu endereço de IP será registrado no histórico de edições desta página.",
-	'anonpreviewwarning' => "''Você não está logado. Gravar registará o seu endereço IP no histórico de edições desta página.''",
+	'anonpreviewwarning' => "''Você não está logado. Ao salvar, o seu endereço IP será registrado no histórico de edições desta página.''",
 	'autoblockedtext' => 'O seu endereço de IP foi bloqueado de forma automática, uma vez que foi utilizado recentemente por outro usuário, o qual foi bloqueado por $1.
 O motivo apresentado foi:
 
@@ -23075,12 +23939,11 @@ Você pode diminuir a lista escolhendo um tipo de registro, um nome de usuário 
 	'allpagesprefix' => 'Exibir páginas com o prefixo:',
 	'allpagesbadtitle' => 'O título de página fornecido encontrava-se inválido ou tinha um prefixo interlíngua ou inter-wiki. Ele poderá conter um ou mais caracteres que não podem ser utilizados em títulos.',
 	'allpages-bad-ns' => '{{SITENAME}} não possui o espaço nominal "$1".',
-	'allpages-hide-redirects' => 'Ocultar redirecionamentos',
 	'activeusers' => 'Lista de usuários ativos',
 	'activeusers-intro' => 'Esta é uma lista de usuários com algum tipo de atividade nos últimos $1 {{PLURAL:$1|dia|dias}}.',
 	'activeusers-count' => '$1 {{PLURAL:$1|edição|edições}} {{PLURAL:$3|no último dia|nos últimos $3 dias}}',
 	'activeusers-from' => 'Mostrar usuários começando em:',
-	'activeusers-hidebots' => 'Esconder robôs',
+	'activeusers-hidebots' => 'Esconder bots',
 	'activeusers-hidesysops' => 'Esconder administradores',
 	'activeusers-noresult' => 'Nenhum usuário encontrado.',
 	'addwatch' => 'Adicionar às páginas vigiadas',
@@ -23093,7 +23956,7 @@ alguém já editou ou reverteu a página.
 
 A última edição da página foi feita por [[User:$3|$3]] ([[User talk:$3|discussão]]{{int:pipe-separator}}[[Special:Contributions/$3|{{int:contribslink}}]]).',
 	'autoblockid' => 'Autobloqueio #$1',
-	'anononlyblock' => 'anôn. apenas',
+	'anononlyblock' => 'apenas anônimos',
 	'autoblocker' => 'Você foi automaticamente bloqueado, pois partilha um endereço de IP com "[[User:$1|$1]]". O motivo apresentado foi: "$2".',
 	'articleexists' => 'Uma página com este título já existe, ou o título que escolheu é inválido.
 Por favor, escolha outro nome.',
@@ -23101,8 +23964,7 @@ Por favor, escolha outro nome.',
 	'allmessagesname' => 'Nome',
 	'allmessagesdefault' => 'Texto padrão',
 	'allmessagescurrent' => 'Texto atual',
-	'allmessagestext' => 'Esta é uma lista de todas as mensagens de sistema disponíveis no espaço nominal {{ns:mediawiki}}.
-Acesse [//www.mediawiki.org/wiki/Localisation MediaWiki Localisation] e [//translatewiki.net translatewiki.net] caso deseje contribuir para traduções do MediaWiki feitas para uso geral.',
+	'allmessagestext' => 'Esta é uma lista de mensagens do sistema disponíveis no namespace MediaWiki. Por razões de segurança, nem todas as mensagens do MediaWiki são editáveis. (Por favor, veja [[ajuda: System_messages|esta página]] para obter mais informações.) Se houver mensagens que precisam ser editadas ou precisam de melhorias, por favor [[especial: contato |avise o staff do FANDOM]].',
 	'allmessagesnotsupportedDB' => "Esta página não pode ser utilizada, uma vez que '''\$wgUseDatabaseMessages''' foi desativado.",
 	'allmessages-filter-legend' => 'Filtro',
 	'allmessages-filter' => 'Filtrar por estado de personalização:',
@@ -23129,10 +23991,7 @@ Acesse [//www.mediawiki.org/wiki/Localisation MediaWiki Localisation] e [//trans
 	'api-error-duplicate-archive-popup-title' => 'Duplicata de {{PLURAL:$1|arquivo|arquivos}} que já {{PLURAL:$1|foi apagado|foram apagados}}',
 	'api-error-duplicate-popup-title' => '{{PLURAL:$1|Arquivo|Arquivos}} em duplicata',
 	'api-error-empty-file' => 'O arquivo que você enviou está vazio.',
-	'api-error-emptypage' => 'Não é permitido criar páginas novas vazias.',
 	'api-error-fetchfileerror' => 'Erro interno: ocorreu um problema indeterminado ao acessar o arquivo.',
-	'api-error-fileexists-forbidden' => 'Já existe um arquivo com o nome "$1". Não é possível substituí-lo.',
-	'api-error-fileexists-shared-forbidden' => 'Já existe, no repositório de arquivos partilhados, um arquivo com o nome "$1". Não é possível substituí-lo.',
 	'api-error-file-too-large' => 'O arquivo que você enviou é muito grande.',
 	'api-error-filename-tooshort' => 'O nome do arquivo é curto demais.',
 	'api-error-filetype-banned' => 'Este tipo do arquivo é proibido.',
@@ -23160,6 +24019,117 @@ Acesse [//www.mediawiki.org/wiki/Localisation MediaWiki Localisation] e [//trans
 	'api-error-uploaddisabled' => 'Este wiki está com o upload de arquivos desabilitado.',
 	'api-error-verification-error' => 'Este arquivo pode estar corrompido ou ter a extensão errada.',
 	'addnewtalksection-link' => 'Iniciar uma nova seção',
+	'all_the_wikia' => 'Todo o FANDOM',
+	'addsection' => 'Deixar mensagem',
+	'anonnotice' => '-',
+	'addsection-preload' => '',
+	'addsection-editintro' => '',
+	'ancientpages-summary' => '',
+	'allpages-summary' => '',
+	'activeusers-summary' => '',
+	'accesskey-pt-userpage' => '.',
+	'accesskey-pt-anonuserpage' => '.',
+	'accesskey-pt-mytalk' => 'n',
+	'accesskey-pt-anontalk' => 'n',
+	'accesskey-pt-preferences' => '',
+	'accesskey-pt-watchlist' => 'l',
+	'accesskey-pt-mycontris' => 'y',
+	'accesskey-pt-login' => 'o',
+	'accesskey-pt-anonlogin' => 'o',
+	'accesskey-pt-logout' => '',
+	'accesskey-ca-talk' => 't',
+	'accesskey-ca-edit' => 'e',
+	'accesskey-ca-addsection' => '+',
+	'accesskey-ca-viewsource' => 'e',
+	'accesskey-ca-history' => 'h',
+	'accesskey-ca-protect' => '=',
+	'accesskey-ca-unprotect' => '=',
+	'accesskey-ca-delete' => 'd',
+	'accesskey-ca-undelete' => 'd',
+	'accesskey-ca-move' => 'm',
+	'accesskey-ca-watch' => 'w',
+	'accesskey-ca-unwatch' => 'w',
+	'accesskey-search' => 'f',
+	'accesskey-search-go' => '',
+	'accesskey-search-fulltext' => '',
+	'accesskey-p-logo' => '',
+	'accesskey-n-mainpage' => 'z',
+	'accesskey-n-mainpage-description' => 'z',
+	'accesskey-n-portal' => '',
+	'accesskey-n-currentevents' => '',
+	'accesskey-n-recentchanges' => 'r',
+	'accesskey-n-randompage' => 'x',
+	'accesskey-n-help' => '',
+	'accesskey-t-whatlinkshere' => 'j',
+	'accesskey-t-recentchangeslinked' => 'k',
+	'accesskey-feed-rss' => '',
+	'accesskey-feed-atom' => '',
+	'accesskey-t-contributions' => '',
+	'accesskey-t-emailuser' => '',
+	'accesskey-t-permalink' => '',
+	'accesskey-t-print' => 'p',
+	'accesskey-t-upload' => 'u',
+	'accesskey-t-specialpages' => 'q',
+	'accesskey-ca-nstab-main' => 'c',
+	'accesskey-ca-nstab-user' => 'c',
+	'accesskey-ca-nstab-media' => 'c',
+	'accesskey-ca-nstab-special' => '',
+	'accesskey-ca-nstab-project' => 'a',
+	'accesskey-ca-nstab-image' => 'c',
+	'accesskey-ca-nstab-mediawiki' => 'c',
+	'accesskey-ca-nstab-template' => 'c',
+	'accesskey-ca-nstab-help' => 'c',
+	'accesskey-ca-nstab-category' => 'c',
+	'accesskey-minoredit' => 'i',
+	'accesskey-save' => 's',
+	'accesskey-preview' => 'p',
+	'accesskey-diff' => 'v',
+	'accesskey-compareselectedversions' => 'v',
+	'accesskey-watch' => 'w',
+	'accesskey-upload' => 's',
+	'accesskey-preferences-save' => 's',
+	'accesskey-summary' => 'b',
+	'accesskey-userrights-set' => 's',
+	'accesskey-blockip-block' => 's',
+	'accesskey-export' => 's',
+	'accesskey-import' => 's',
+	'accesskey-watchlistedit-normal-submit' => 's',
+	'accesskey-watchlistedit-raw-submit' => 's',
+	'autocomment-prefix' => '-&#32;',
+	'autoblock_whitelist' => 'AOL http://webmaster.info.aol.com/proxyinfo.html
+*64.12.96.0/19
+*149.174.160.0/20
+*152.163.240.0/21
+*152.163.248.0/22
+*152.163.252.0/23
+*152.163.96.0/22
+*152.163.100.0/23
+*195.93.32.0/22
+*195.93.48.0/22
+*195.93.64.0/19
+*195.93.96.0/19
+*195.93.16.0/20
+*198.81.0.0/22
+*198.81.16.0/20
+*198.81.8.0/23
+*202.67.64.128/25
+*205.188.192.0/20
+*205.188.208.0/23
+*205.188.112.0/20
+*205.188.146.144/30
+*207.200.112.0/21
+*10.6.0.0/16
+*10.7.0.0/16
+*10.8.0.0/16
+*199.102.47.71
+*199.102.47.72',
+	'api-error-emptypage' => 'Não é permitido criar páginas novas vazias.',
+	'adminskin_ds' => 'Padrão',
+	'admin_skin' => 'Opções de admin',
+	'already_a_member' => 'Já é membro?',
+	'add_comment' => 'Deixar mensagem',
+	'achievements-leaderboard-navigation-item' => 'Wiki Leaderboard',
+	'atom' => 'Atom',
 );
 
 $messages['qu'] = array(
@@ -23982,18 +24952,16 @@ $messages['ru'] = array(
 	'anoneditwarning' => "'''Внимание:''' Вы не представились системе.
 Ваш IP-адрес будет записан в историю изменений этой страницы.",
 	'anonpreviewwarning' => "''Вы не представились системе. Сохранение приведёт к записи вашего IP-адреса в историю изменений страницы.''",
-	'autoblockedtext' => 'Ваш IP-адрес автоматически заблокирован в связи с тем, что он ранее использовался кем-то из участников, заблокированных {{GENDER:$4|участником|участницей}} $1.
+	'autoblockedtext' => 'Ваш IP-адрес автоматически заблокирован в связи с тем, что он ранее использовался кем-то из участников, заблокированных {{GENDER:$4|участником|участницей}} $1. 
 Была указана следующая причина блокировки:
 
 : «$2».
 
 * Начало блокировки: $8
 * Окончание блокировки: $6
-* Цель блокировки: $7
+* Причина блокировки: $7
 
 Вы можете связаться с $1 или любым другим [[{{MediaWiki:Grouppage-sysop}}|администратором]], чтобы обсудить блокировку.
-
-Обратите внимание, что не сможете использовать функцию «письмо участнику», если в своих [[Special:Preferences|персональных настройках]] не задали или не подтвердили корректный адрес электронной почты, или если ваша блокировка включает запрет отправки писем подобным образом.
 
 Ваш IP-адрес — $3, идентификатор блокировки — #$5.
 Пожалуйста, указывайте эти сведения в любых своих обращениях.',
@@ -24084,8 +25052,7 @@ $messages['ru'] = array(
 	'allmessagesname' => 'Сообщение',
 	'allmessagesdefault' => 'Текст по умолчанию',
 	'allmessagescurrent' => 'Текущий текст',
-	'allmessagestext' => 'Это список системных сообщений, доступных в пространстве имён «MediaWiki».
-Если вы хотите внести вклад в общую локализацию MediaWiki, пожалуйста, посетите страницу [//www.mediawiki.org/wiki/Localisation описания локализации] и проект [//translatewiki.net translatewiki.net].',
+	'allmessagestext' => 'Это список системных сообщений, доступных в пространстве имён MediaWiki. В целях безопасности мы отключили редактирование некоторых сообщений MediaWiki. (Для дополнительной информации см. [[Help:System_messages|эту страницу]].) Если вы считаете, что сообщение должно редактироваться или необходимо изменить существующее сообщение, то [[Служебная:Contact|сообщите об этом сотрудникам ФЭНДОМА]].',
 	'allmessagesnotsupportedDB' => "Эта страница недоступна, так как отключена опция '''\$wgUseDatabaseMessages'''.",
 	'allmessages-filter-legend' => 'Фильтр',
 	'allmessages-filter' => 'Фильтр по статусу изменения:',
@@ -24141,6 +25108,116 @@ $messages['ru'] = array(
 	'api-error-uploaddisabled' => 'В этой вики отключена возможность загрузки файлов.',
 	'api-error-verification-error' => 'Возможно, этот файл повреждён или имеет неправильное расширение.',
 	'addnewtalksection-link' => 'Создать новый раздел',
+	'all_the_wikia' => 'Весь Фэндом',
+	'achievements-leaderboard-navigation-item' => 'Доска лидеров вики',
+	'add_comment' => 'Оставить сообщение',
+	'admin_skin' => 'настройки администратора',
+	'adminskin_ds' => 'по умолчанию',
+	'already_a_member' => 'Уже участник?',
+	'addsection' => 'Leave message',
+	'anonnotice' => '-',
+	'addsection-preload' => '',
+	'addsection-editintro' => '',
+	'ancientpages-summary' => '',
+	'allpages-summary' => '',
+	'activeusers-summary' => '',
+	'accesskey-pt-userpage' => '.',
+	'accesskey-pt-anonuserpage' => '.',
+	'accesskey-pt-mytalk' => 'n',
+	'accesskey-pt-anontalk' => 'n',
+	'accesskey-pt-preferences' => '',
+	'accesskey-pt-watchlist' => 'l',
+	'accesskey-pt-mycontris' => 'y',
+	'accesskey-pt-login' => 'o',
+	'accesskey-pt-anonlogin' => 'o',
+	'accesskey-pt-logout' => '',
+	'accesskey-ca-talk' => 't',
+	'accesskey-ca-edit' => 'e',
+	'accesskey-ca-addsection' => '+',
+	'accesskey-ca-viewsource' => 'e',
+	'accesskey-ca-history' => 'h',
+	'accesskey-ca-protect' => '=',
+	'accesskey-ca-unprotect' => '=',
+	'accesskey-ca-delete' => 'd',
+	'accesskey-ca-undelete' => 'd',
+	'accesskey-ca-move' => 'm',
+	'accesskey-ca-watch' => 'w',
+	'accesskey-ca-unwatch' => 'w',
+	'accesskey-search' => 'f',
+	'accesskey-search-go' => '',
+	'accesskey-search-fulltext' => '',
+	'accesskey-p-logo' => '',
+	'accesskey-n-mainpage' => 'z',
+	'accesskey-n-mainpage-description' => 'z',
+	'accesskey-n-portal' => '',
+	'accesskey-n-currentevents' => '',
+	'accesskey-n-recentchanges' => 'r',
+	'accesskey-n-randompage' => 'x',
+	'accesskey-n-help' => '',
+	'accesskey-t-whatlinkshere' => 'j',
+	'accesskey-t-recentchangeslinked' => 'k',
+	'accesskey-feed-rss' => '',
+	'accesskey-feed-atom' => '',
+	'accesskey-t-contributions' => '',
+	'accesskey-t-emailuser' => '',
+	'accesskey-t-permalink' => '',
+	'accesskey-t-print' => 'p',
+	'accesskey-t-upload' => 'u',
+	'accesskey-t-specialpages' => 'q',
+	'accesskey-ca-nstab-main' => 'c',
+	'accesskey-ca-nstab-user' => 'c',
+	'accesskey-ca-nstab-media' => 'c',
+	'accesskey-ca-nstab-special' => '',
+	'accesskey-ca-nstab-project' => 'a',
+	'accesskey-ca-nstab-image' => 'c',
+	'accesskey-ca-nstab-mediawiki' => 'c',
+	'accesskey-ca-nstab-template' => 'c',
+	'accesskey-ca-nstab-help' => 'c',
+	'accesskey-ca-nstab-category' => 'c',
+	'accesskey-minoredit' => 'i',
+	'accesskey-save' => 's',
+	'accesskey-preview' => 'p',
+	'accesskey-diff' => 'v',
+	'accesskey-compareselectedversions' => 'v',
+	'accesskey-watch' => 'w',
+	'accesskey-upload' => 's',
+	'accesskey-preferences-save' => 's',
+	'accesskey-summary' => 'b',
+	'accesskey-userrights-set' => 's',
+	'accesskey-blockip-block' => 's',
+	'accesskey-export' => 's',
+	'accesskey-import' => 's',
+	'accesskey-watchlistedit-normal-submit' => 's',
+	'accesskey-watchlistedit-raw-submit' => 's',
+	'autocomment-prefix' => '-&#32;',
+	'autoblock_whitelist' => 'AOL http://webmaster.info.aol.com/proxyinfo.html
+*64.12.96.0/19
+*149.174.160.0/20
+*152.163.240.0/21
+*152.163.248.0/22
+*152.163.252.0/23
+*152.163.96.0/22
+*152.163.100.0/23
+*195.93.32.0/22
+*195.93.48.0/22
+*195.93.64.0/19
+*195.93.96.0/19
+*195.93.16.0/20
+*198.81.0.0/22
+*198.81.16.0/20
+*198.81.8.0/23
+*202.67.64.128/25
+*205.188.192.0/20
+*205.188.208.0/23
+*205.188.112.0/20
+*205.188.146.144/30
+*207.200.112.0/21
+*10.6.0.0/16
+*10.7.0.0/16
+*10.8.0.0/16
+*199.102.47.71
+*199.102.47.72',
+	'atom' => 'Atom',
 );
 
 $messages['rue'] = array(
@@ -26402,189 +27479,6 @@ Ju lutemi vizitoni [//www.mediawiki.org/wiki/Localisation MediaWiki Localisation
 	'addnewtalksection-link' => 'Fillo një temë të re diskutimi.',
 );
 
-$messages['sr'] = array(
-	'april' => 'prill',
-	'august' => 'gusht',
-	'april-gen' => 'prill',
-	'august-gen' => 'gusht',
-	'apr' => 'Pri',
-	'aug' => 'Gush',
-	'about' => 'Rreth',
-	'article' => 'Artikulli',
-	'anontalk' => 'Diskutimet për këtë IP',
-	'and' => '&#32;dhe',
-	'actions' => 'Veprimet',
-	'aboutsite' => 'Rreth {{SITENAME}}',
-	'aboutpage' => 'Project:Rreth',
-	'actionthrottled' => 'Veprim u ndalua',
-	'actionthrottledtext' => 'Si masë sigurie anti-spam, është e ndaluar kryerja e shpeshtë e një veprimi brenda një hapësire kohore shumë të shkurtër. Ju kryet shumë herë të njëjtin veprim brenda një kohe shumë të shkurtër.
-Ju lutemi, provojeni përsëri pas disa minutash.',
-	'acct_creation_throttle_hit' => 'Nuk lejoheni të krijoni më llogari pasi keni krijuar {{PLURAL:$1|1|$1}}.',
-	'accountcreated' => 'Llogarija e Përdoruesit u krijua',
-	'accountcreatedtext' => 'Llogarija e Përdoruesit për $1 u krijua',
-	'anoneditwarning' => "'''Kujdes:''' Ju nuk jeni identifikuar.
-Adresa juaj IP do të regjistrohet në historinë e redaktimeve të kësaj faqeje.",
-	'anonpreviewwarning' => '"Ju nuk jeni identifikuar. Ruajtja e ndryshimeve do të bëjë që adresa juaj IP të regjistrohet në historikun e redaktimeve të kësaj faqeje."',
-	'autoblockedtext' => 'IP adresa juaj është bllokuar automatikisht sepse ishte përdorur nga një përdorues tjetër i cili ishte bllokuar nga $1.
-Arsyeja e dhënë për këtë është:
-
-:\'\'$2\'\'
-
-* Fillimi i bllokimit: $8
-* Kalimi i kohës së bllokimit: $6
-* Zgjatja e bllokimit: $7
-
-Ju mund të kontaktoni $1 ose një tjetër [[{{MediaWiki:Grouppage-sysop}}|administrues]] për ta diskutuar bllokimin.
-
-Vini re : që nuk mund ta përdorni mundësinë "dërgo porosi elektronike" përveç nëse keni një postë elektronike të vlefshme të regjistruar në [[Special:Preferences|preferencat tuaja]] dhe nuk jeni bllokuar nga përdorimi i saj.
-
-IP adresa juaj e tanishme është $3 dhe ID e bllokimit është #$5.
-Ju lutemi përfshini këto detaje në të gjitha kërkesat që i bëni.',
-	'accmailtitle' => 'Fjalëkalimi u dërgua.',
-	'accmailtext' => "Një fjalëkalim i krijuar në mënyrë të rastësishme për [[User talk:$1|$1]] u dërgua në $2.
-
-Fjalëkalimi për këtë llogari mund të ndryshohet në faqen ''[[Special:ChangePassword|ndrysho fjalëkalimin]]'' pasi të jeni identifikuar.",
-	'anontalkpagetext' => "----'' Kjo është një faqe diskutimi për një përdorues anonim i cili nuk ka krijuar akoma një llogari, ose qe nuk e përdor atë.
- Prandaj, ne duhet të përdorim adresën IP numerike për identifikimin e tij.
-Kjo adresë IP mund të përdoret nga disa përdorues.
- Në qoftë se jeni një përdorues anonim dhe mendoni se ndaj jush janë bërë komente të parëndësishme, ju lutem [[Special:UserLogin/signup|krijoni një llogari]] ose [[Special:UserLogin|identifikohuni]] për të shmangur konfuzionin në të ardhmen me përdorues të tjerë anonim .''",
-	'allowemail' => 'Lejo përdoruesit të më dërgojnë email',
-	'action-read' => 'lexo këtë faqe',
-	'action-edit' => 'redakto këtë faqe',
-	'action-createpage' => 'krijo faqe',
-	'action-createtalk' => 'krijo faqe diskutimi',
-	'action-createaccount' => 'krijo këtë llogari përdoruesi',
-	'action-minoredit' => 'shëno këtë redaktim si të vogël',
-	'action-move' => 'zhvendos këtë faqe',
-	'action-move-subpages' => 'zhvendos këtë faqe dhe nënfaqet e saj',
-	'action-move-rootuserpages' => 'lëviz rrënjët e faqeve të përdoruesve',
-	'action-movefile' => 'lëviz këtë skedë',
-	'action-upload' => 'ngarko këtë skedë',
-	'action-reupload' => 'rishkruaj këtë skedë ekzistuese',
-	'action-reupload-shared' => 'mbishkruaj këtë skedarë në një magazinë të përbashkët',
-	'action-upload_by_url' => 'ngarko këtë skedë nga një URL',
-	'action-writeapi' => 'përdor API-në e shkrimit',
-	'action-delete' => 'grise këtë faqe',
-	'action-deleterevision' => 'grise këtë revizion',
-	'action-deletedhistory' => 'shiko historinë e kësaj faqeje të grisur',
-	'action-browsearchive' => 'kërko faqe të grisura',
-	'action-undelete' => 'Restauro këtë faqe',
-	'action-suppressrevision' => 'rishiko dhe rikthe këtë revizion të fshehur',
-	'action-suppressionlog' => 'shiko këtë regjistër privat',
-	'action-block' => 'blloko përdoruesin',
-	'action-protect' => 'ndrysho nivelin e mbrojtjes për këtë faqe',
-	'action-rollback' => 'ritkthen shpejt redaktimet e përdoruesit të fundit që redaktoi një faqe të veçantë',
-	'action-import' => 'importo këtë faqe nga një wiki tjetër',
-	'action-importupload' => 'importo këtë faqe nga një ngarkim i një skedari',
-	'action-patrol' => 'shëno redaktimin e tjerëve si të patrulluar',
-	'action-autopatrol' => 'shëno redaktimet tua si të patrulluara',
-	'action-unwatchedpages' => 'shiko listën e faqeve të pa vrojtuara',
-	'action-mergehistory' => 'bashko historikun e kësaj faqeje',
-	'action-userrights' => 'ndrysho të gjitha të drejtat e përdoruesit',
-	'action-userrights-interwiki' => 'ndrysho të drejtat e përdoruesve në wiki-t tjera',
-	'action-siteadmin' => 'mbyll ose hap bazën e të dhënave',
-	'action-sendemail' => 'dërgo e-maile',
-	'ancientpages' => 'Artikuj më të vjetër',
-	'all-logs-page' => 'Të gjitha regjistrat',
-	'alllogstext' => 'Kjo faqe tregon të gjithë regjistrat e mundshëm të {{SITENAME}}.
-Ju mund të kufizoni pamje sipas tipit të regjistrit, emrit të përdoruesit (shumë i ndjeshëm), dhe faqes në çështje (edhe rastet e ndjeshme)',
-	'allpages' => 'Të gjitha faqet',
-	'alphaindexline' => '$1 deri në $2',
-	'allpagesfrom' => 'Trego faqet duke filluar nga:',
-	'allpagesto' => 'Shfaq faqet që mbarojnë në:',
-	'allarticles' => 'Të gjithë artikujt',
-	'allinnamespace' => 'Të gjitha faqet (hapësira $1)',
-	'allnotinnamespace' => 'Të gjitha faqet (jo në hapësirën $1)',
-	'allpagesprev' => 'Më para',
-	'allpagesnext' => 'Më pas',
-	'allpagessubmit' => 'Shko',
-	'allpagesprefix' => 'Trego faqet me parashtesë:',
-	'allpagesbadtitle' => 'Titulli i dhënë ishte i pavlefshë ose kishte një parashtesë ndër-gjuhe ose ndër-wiki.
-Mund të përmbajë një ose më shumë karktere të cilat nuk mund të përdoren në tituj.',
-	'allpages-bad-ns' => '{{SITENAME}} nuk ka hapësirë "$1".',
-	'activeusers' => 'Lista e përdoruesve aktivë',
-	'activeusers-intro' => 'Kjo është një listë e përdoruesve që kanë qenë aktivë për $1 {{PLURAL:$1|ditë|ditë}}.',
-	'activeusers-count' => '$1 {{PLURAL:$1|redaktim|redaktime}} në {{PLURAL:$3|ditën|$3 ditët}} e fundit',
-	'activeusers-from' => 'Trego përdoruesit duke filluar prej te:',
-	'activeusers-hidebots' => 'Fshih robotët',
-	'activeusers-hidesysops' => 'Fshih administratorët',
-	'activeusers-noresult' => 'Asnjë përdorues nuk u gjet.',
-	'addwatch' => 'Shto tek lista mbikqyrëse',
-	'addedwatchtext' => "Faqja \"[[:\$1]]\"  i është shtuar [[Special:Watchlist|listës mbikqyrëse]] tuaj. Ndryshimet e ardhshme të kësaj faqeje dhe faqes së diskutimit të saj do të jepen më poshtë, dhe emri i faqes do të duket i '''trashë''' në [[Special:RecentChanges|listën e ndryshimeve së fundmi]] për t'i dalluar më kollaj.
-
-Në qoftë se dëshironi të hiqni një faqe nga lista mbikqyrëse më vonë, shtypni \"çmbikqyre\" në tabelën e sipërme.",
-	'actioncomplete' => 'Veprimi u krye',
-	'actionfailed' => 'Veprimi dështoi',
-	'alreadyrolled' => 'Nuk mund të rikthehej redaktimi i fundit i [[:$1]] nga [[User:$2|$2]] ([[User talk:$2|diskuto]]{{int:pipe-separator}}[[Special:Contributions/$2|{{int:contribslink}}]]); dikush tjetër e ka redaktuar ose rikthyer këtë faqe tashmë.
-
-Redaktimi i fundit është bërë nga [[User:$3|$3]] ([[User talk:$3|diskuto]]{{nt:pipe-separator}}[[Special:Contributions/$3|{{int:contribslink}}]]).',
-	'autoblockid' => 'Autobllokim #$1',
-	'anononlyblock' => 'vetëm anonimët',
-	'autoblocker' => 'Bllokuar automatikisht sepse adresa juaj IP është përdorur së fundmi nga "[[User:$1|$1]]".
-Arsyeja e dhënë për bllokimin e $1 është: "$2"',
-	'articleexists' => 'Një faqe me atë titull ekziston, ose titulli që zgjodhët nuk është i saktë. Ju lutem zgjidhni një tjetër.',
-	'allmessages' => 'Mesazhet e sistemit',
-	'allmessagesname' => 'Emri',
-	'allmessagesdefault' => 'Teksti i parazgjedhur',
-	'allmessagescurrent' => 'Teksti i tanishëshm',
-	'allmessagestext' => 'Kjo është një listë e të gjitha faqeve në hapësirën MediaWiki:
-Ju lutemi vizitoni [//www.mediawiki.org/wiki/Localisation MediaWiki Localisation] dhe [//translatewiki.net translatewiki.net] nëse dëshironi të kontribuoni në lokalizimin e përgjithshëm MediaWiki',
-	'allmessagesnotsupportedDB' => "Kjo faqe nuk mund të përdoret sepse '''\$wgUseDatabaseMessages''' është çaktivizuar.",
-	'allmessages-filter-legend' => 'Filtër',
-	'allmessages-filter' => 'Filtroni nga shteti',
-	'allmessages-filter-unmodified' => 'E pandryshuar',
-	'allmessages-filter-all' => 'Të gjithë',
-	'allmessages-filter-modified' => 'E ndryshuar',
-	'allmessages-prefix' => 'Filtroni nga parashtesat:',
-	'allmessages-language' => 'Gjuha:',
-	'allmessages-filter-submit' => 'Shko',
-	'anonymous' => '{{PLURAL:$1|Përdoruesi anonim|Përdoruesit anonimë}} të {{SITENAME}}',
-	'anonuser' => 'Përdorues anonim i {{SITENAME}} $1',
-	'anonusers' => '{{SITENAME}} {{PLURAL:$2|përdoruesi anonim|përdoruesit anonimë}} $1',
-	'ago' => '$1 më parë',
-	'ascending_abbrev' => 'ngritje',
-	'autosumm-blank' => 'U boshatis faqja',
-	'autosumm-replace' => "Faqja u zëvendësua me '$1'",
-	'autoredircomment' => 'Përcjellim te [[$1]]',
-	'autosumm-new' => 'Krijoi faqen me "$1"',
-	'api-error-badaccess-groups' => 'Ju nuk lejoheni të ngarkoni skeda në këtë wiki.',
-	'api-error-badtoken' => 'Gabim i brendshëm: Shenjë e keqe.',
-	'api-error-copyuploaddisabled' => 'Ngarkimi nga URL-ja është çaktivizuar në këtë server.',
-	'api-error-duplicate' => '{{PLURAL:$1|Ekziston [$2 një skedë tjetër]|Ekzistojnë [$2 disa skeda të tjera]}} me të njëjtën përmbajtje.',
-	'api-error-duplicate-archive' => '{{Ekzistonte [$2 një skedë tjetër]|Ekzistonin [$2 disa skeda të tjera]}} me të njëjtën përmbajtje, por {{PLURAL:$1|u gris|u grisën}}.',
-	'api-error-duplicate-archive-popup-title' => 'Dublo {{PLURAL:$1|skedë|skeda}} që janë grisur tashmë',
-	'api-error-duplicate-popup-title' => 'Dublo {{PLURAL:$1|skedë|skeda}}',
-	'api-error-empty-file' => 'Skeda që paraqitët ishte bosh.',
-	'api-error-fetchfileerror' => 'Gabim i brendshëm: Diçka shkoi keq gjatë marrjes së skedës.',
-	'api-error-file-too-large' => 'Skeda që paraqitët ishte shumë e madhe.',
-	'api-error-filename-tooshort' => 'Emri i skedës është shumë i shkurtër.',
-	'api-error-filetype-banned' => 'Ky lloj i skedës është përjashtuar.',
-	'api-error-filetype-missing' => 'Skedës i mungon një shtesë.',
-	'api-error-hookaborted' => 'Modifikimi që provuat të bëni u ndërpre nga një goditje shtese.',
-	'api-error-http' => 'Gabim i brendshëm: Nuk mund të lidhet me serverin.',
-	'api-error-illegal-filename' => 'Emri i skedës nuk lejohet.',
-	'api-error-internal-error' => 'Gabim i brendshëm: Diçka shkoi keq me procesimin e ngarkimit tuaj në wiki.',
-	'api-error-invalid-file-key' => 'Gabim i brendshëm: Skeda nuk u gjet në ruajtjen e përkohshme.',
-	'api-error-missingparam' => 'Gabim i brendshëm: Mungesë e parametrave në kërkesë.',
-	'api-error-missingresult' => 'Gabim i brendshëm: Nuk mund të përcaktohet nëse kopjimi doli me sukses.',
-	'api-error-mustbeloggedin' => 'Ju duhet të identifikoheni për të ngarkuar skeda.',
-	'api-error-mustbeposted' => 'Gabim i brendshëm: Kërkesa kërkon HTTP POST.',
-	'api-error-noimageinfo' => 'Ngarkimi u krye me sukses, por serveri nuk na dha ndonjë informacion për këtë skedë.',
-	'api-error-nomodule' => 'Gabim i brendshëm: Nuk ka modul ngarkimi të vendosur.',
-	'api-error-ok-but-empty' => 'Gabim i brendshëm: Nuk ka përgjigje nga serveri.',
-	'api-error-overwrite' => 'Mbishkrimi i një skede ekzistuese nuk lejohet.',
-	'api-error-stashfailed' => 'Gabim i brendshëm: Serveri nuk arriti të ruajë skedën e përkohshme.',
-	'api-error-timeout' => 'Serveri nuk u përgjigj gjatës kohës që pritej.',
-	'api-error-unclassified' => 'Një gabim i panjohur ndodhi.',
-	'api-error-unknown-code' => 'Gabim i panjohur: "$1"',
-	'api-error-unknown-error' => 'Gabim i brendshëm: Diçka shkoi gabim kur provuat të ngarkoni skedën tuaj.',
-	'api-error-unknown-warning' => 'Paralajmërim i panjohur: $1',
-	'api-error-uploaddisabled' => 'Ngarkimi është i çaktivizuar në këte wiki.',
-	'api-error-verification-error' => 'Skeda mund të jetë e korruptuar ose ka shtesë të gabuar.',
-	'addnewtalksection-link' => 'Fillo një temë të re diskutimi.',
-	'add_comment' => 'Dodaj komentar',
-);
-
 $messages['sr-ec'] = array(
 	'april' => 'април',
 	'august' => 'август',
@@ -27295,8 +28189,11 @@ $messages['sv'] = array(
 Som ett resultat kan besökare som använder den här IP-adressen inte skapa några fler användarkonton just nu.',
 	'accountcreated' => 'Användarkontot har skapats',
 	'accountcreatedtext' => 'Användarkontot $1 har skapats.',
-	'anoneditwarning' => "'''Varning:''' Du är inte inloggad.
-Din IP-adress kommer att sparas i historiken för den här sidan.",
+	'anoneditwarning' => '<table class="plainlinks" align="center" cellpadding="5" style="width:75%; background:#D3E1F2; border:1px solid #99C; text-align:center; font-size:120%;" >
+<tr>
+<td>http://images1.wikia.nocookie.net/__cb1/messaging/images/f/f1/Greenbutton.png &nbsp; \'\'\'[{{fullurl:Special:Signup|returnto={{FULLPAGENAMEE}}}} KLICKA HÄR FÖR ATT LOGGA IN ELLER SKAPA ETT KONTO]\'\'\' &nbsp; http://images1.wikia.nocookie.net/__cb1/messaging/images/f/f1/Greenbutton.png</td>
+</tr>
+</table>',
 	'anonpreviewwarning' => "''Du är inte inloggad. Om du sparar kommer din IP-adress registreras på denna sidas redigeringshistorik.''",
 	'autoblockedtext' => 'Din IP-adress har blockerats automatiskt eftersom den har använts av en annan användare som blockerats av $1.
 Motiveringen av blockeringen var:
@@ -27317,10 +28214,15 @@ Vänligen ange informationen ovan i alla förfrågningar som du gör i ärendet.
 	'accmailtext' => "Ett slumpgenererat lösenord för [[User talk:$1|$1]] har skickats till $2.
 
 Lösenordet för det här nya användarkontot kan ändras på sidan ''[[Special:ChangePassword|ändra lösenord]]'' när du loggar in.",
-	'anontalkpagetext' => "----''Detta är diskussionssidan för en anonym användare som inte ännu skapat ett konto, eller som inte använder det.
-Därför måste vi använda den numeriska IP-adressen för att identifiera honom/henne.
-En sådan IP-adress kan delas av flera användare.
-Om du är en anonym användare och känner att irrelevanta kommentarer har riktats mot dig, vänligen [[Special:UserLogin/signup|skapa ett konto]] eller [[Special:UserLogin|logga in]] för att undvika framtida förväxlingar med andra anonyma användare.''",
+	'anontalkpagetext' => "<br style=\"clear:both;\" />
+----
+{| id=\"anontalktext\" class=\"plainlinks noeditsection\" style=\"font-size:90%; border: 1px solid #B8B8B8; margin:1em 1em 0em 1em; padding:0.25em 1em 0.25em 1em; clear: both;\" 
+| '''Detta är en diskussionssida för en anonym användare som inte skapat ett konto ännu, eller som inte använder det, som identifierats av användarens numeriska [[wikipedia:IP address|IP-adress]].'''
+
+Vissa IP-adresser ändras regelbundet, och kan delas av flera användare. Om du är en anonym användare kan du [[{{ns:Special}}:Userlogin|skapa ett konto eller logga in]] för att undvika framtida förväxlingar användare. Registrera också döljer din IP-adress.
+
+'''Hjälp:''' [[Help:Why create an account?|Varför skapa ett konto?]] &bull; [[Help:Create an account|Hur man skapar ett konto]] &bull; [http://samspade.org/whois?query={{PAGENAMEE}} WHOIS]
+|}",
 	'allowemail' => 'Tillåt e-post från andra användare',
 	'action-read' => 'läsa denna sida',
 	'action-edit' => 'redigera denna sida',
@@ -27382,8 +28284,7 @@ Du kan avgränsa sökningen och få färre träffar genom att ange typ av logg, 
 	'activeusers-hidesysops' => 'Dölj administratörer',
 	'activeusers-noresult' => 'Inga användare funna.',
 	'addwatch' => 'Lägg till i bevakningslistan',
-	'addedwatchtext' => "Sidan \"[[:\$1]]\" har lagts till på din [[Special:Watchlist|bevakningslista]].
-Framtida ändringar av den här sidan och dess diskussionssida kommer att listas där, och sidan kommer att markeras med '''fetstil''' i [[Special:RecentChanges|listan över de senaste ändringarna]] för att lättare kunna hittas.",
+	'addedwatchtext' => 'Sidan "[[:$1]]" har lagts till i din [[Special:Watchlist|bevakningslista]].',
 	'actioncomplete' => 'Genomfört',
 	'actionfailed' => 'Handlingen misslyckades',
 	'alreadyrolled' => 'Det gick inte att rulla tillbaka den senaste redigeringen av [[User:$2|$2]] ([[User talk:$2|diskussion]]{{int:pipe-separator}}[[Special:Contributions/$2|{{int:contribslink}}]]) på sidan [[:$1|$1]]. Någon annan har redan rullat tillbaka eller redigerat sidan.
@@ -27456,6 +28357,7 @@ Besök [//www.mediawiki.org/wiki/Localisation MediaWiki Localisation] eller [//t
 	'api-error-uploaddisabled' => 'Uppladdning är inaktiverad på denna wiki.',
 	'api-error-verification-error' => 'Denna fil kan vara skadad eller har fel filändelse.',
 	'addnewtalksection-link' => 'Starta ett nytt avsnitt',
+	'addsection' => 'Lämna meddelande',
 );
 
 $messages['sw'] = array(
@@ -30317,6 +31219,8 @@ Mời vào [//www.mediawiki.org/wiki/Localisation Địa phương hóa MediaWiki
 	'api-error-uploaddisabled' => 'Chức năng tải lên đã bị tắt trên wiki này.',
 	'api-error-verification-error' => 'Tập tin này có thể bị hỏng hoặc có phần mở rộng sai.',
 	'addnewtalksection-link' => 'Bắt đầu một đề mục mới',
+	'admin_skin' => 'Tùy chọn bảo quản viên',
+	'adminskin_ds' => 'Mặc định',
 );
 
 $messages['vls'] = array(
@@ -31534,10 +32438,6 @@ Kiest 'n aore naem.",
 	'autosumm-new' => 'Nieuwe bladzie mee as inoud: $1',
 );
 
-$messages['zh-classical'] = array(
-	'addnewtalksection-link' => '有言議，添新要',
-);
-
 $messages['zh-hans'] = array(
 	'april' => '4月',
 	'august' => '8月',
@@ -31625,7 +32525,7 @@ $messages['zh-hans'] = array(
 	'allpagesprefix' => '显示具有此前缀（名字空间）的页面：',
 	'allpagesbadtitle' => '给定的页面标题是非法的，或者具有一个内部语言或内部 wiki 的前缀。它可能包含一个或更多的不能用于标题的字符。',
 	'allpages-bad-ns' => '在{{SITENAME}}中没有一个叫做"$1"的名字空间。',
-	'activeusers' => '活跃用户列表',
+	'activeusers' => '活跃用户',
 	'activeusers-intro' => '这个列表列出了最近$1天进行过操作的用户。',
 	'activeusers-count' => '最近$3天编辑了$1次',
 	'activeusers-from' => '显示用户开始于：',
@@ -31648,8 +32548,7 @@ $1被封禁的理由是：“$2”',
 	'allmessagesname' => '名称',
 	'allmessagesdefault' => '默认消息文本',
 	'allmessagescurrent' => '当前消息文本',
-	'allmessagestext' => '此处列出了MediaWiki名字空间下的所有有效系统消息。
-如果想为MediaWiki的本地化贡献翻译，请访问[//www.mediawiki.org/wiki/Localisation MediaWiki本地化]和[//translatewiki.net translatewiki.net]。',
+	'allmessagestext' => '这是MediaWiki命名空间中可编辑的系统消息列表。出于网络安全考虑，并不是所有的MediaWiki消息都允许编辑。请查看[[Help:System_messages|此页]]了解详细信息。如果你认为某些系统消息需要进行编辑或调整，请[[Special:Contact|联络FANDOM员工]]。',
 	'allmessagesnotsupportedDB' => "此页面无法使用，因为'''\$wgUseDatabaseMessages'''已被设置关闭。",
 	'allmessages-filter-legend' => '过滤',
 	'allmessages-filter' => '以自定状况过滤：',
@@ -31705,6 +32604,116 @@ $1被封禁的理由是：“$2”',
 	'api-error-uploaddisabled' => '这个维基不接受上传。',
 	'api-error-verification-error' => '此文件可能已损坏，或有错误的扩展名。',
 	'addnewtalksection-link' => '开始一个新小节',
+	'all_the_wikia' => '所有FANDOM',
+	'achievements-leaderboard-navigation-item' => '维基排行榜',
+	'add_comment' => '留言',
+	'addsection' => '留言',
+	'admin_skin' => '管理员功能',
+	'adminskin_ds' => '默认',
+	'anonnotice' => '-',
+	'addsection-preload' => '',
+	'addsection-editintro' => '',
+	'ancientpages-summary' => '',
+	'allpages-summary' => '',
+	'activeusers-summary' => '',
+	'accesskey-pt-userpage' => '.',
+	'accesskey-pt-anonuserpage' => '.',
+	'accesskey-pt-mytalk' => 'n',
+	'accesskey-pt-anontalk' => 'n',
+	'accesskey-pt-preferences' => '',
+	'accesskey-pt-watchlist' => 'l',
+	'accesskey-pt-mycontris' => 'y',
+	'accesskey-pt-login' => 'o',
+	'accesskey-pt-anonlogin' => 'o',
+	'accesskey-pt-logout' => '',
+	'accesskey-ca-talk' => 't',
+	'accesskey-ca-edit' => 'e',
+	'accesskey-ca-addsection' => '+',
+	'accesskey-ca-viewsource' => 'e',
+	'accesskey-ca-history' => 'h',
+	'accesskey-ca-protect' => '=',
+	'accesskey-ca-unprotect' => '=',
+	'accesskey-ca-delete' => 'd',
+	'accesskey-ca-undelete' => 'd',
+	'accesskey-ca-move' => 'm',
+	'accesskey-ca-watch' => 'w',
+	'accesskey-ca-unwatch' => 'w',
+	'accesskey-search' => 'f',
+	'accesskey-search-go' => '',
+	'accesskey-search-fulltext' => '',
+	'accesskey-p-logo' => '',
+	'accesskey-n-mainpage' => 'z',
+	'accesskey-n-mainpage-description' => 'z',
+	'accesskey-n-portal' => '',
+	'accesskey-n-currentevents' => '',
+	'accesskey-n-recentchanges' => 'r',
+	'accesskey-n-randompage' => 'x',
+	'accesskey-n-help' => '',
+	'accesskey-t-whatlinkshere' => 'j',
+	'accesskey-t-recentchangeslinked' => 'k',
+	'accesskey-feed-rss' => '',
+	'accesskey-feed-atom' => '',
+	'accesskey-t-contributions' => '',
+	'accesskey-t-emailuser' => '',
+	'accesskey-t-permalink' => '',
+	'accesskey-t-print' => 'p',
+	'accesskey-t-upload' => 'u',
+	'accesskey-t-specialpages' => 'q',
+	'accesskey-ca-nstab-main' => 'c',
+	'accesskey-ca-nstab-user' => 'c',
+	'accesskey-ca-nstab-media' => 'c',
+	'accesskey-ca-nstab-special' => '',
+	'accesskey-ca-nstab-project' => 'a',
+	'accesskey-ca-nstab-image' => 'c',
+	'accesskey-ca-nstab-mediawiki' => 'c',
+	'accesskey-ca-nstab-template' => 'c',
+	'accesskey-ca-nstab-help' => 'c',
+	'accesskey-ca-nstab-category' => 'c',
+	'accesskey-minoredit' => 'i',
+	'accesskey-save' => 's',
+	'accesskey-preview' => 'p',
+	'accesskey-diff' => 'v',
+	'accesskey-compareselectedversions' => 'v',
+	'accesskey-watch' => 'w',
+	'accesskey-upload' => 's',
+	'accesskey-preferences-save' => 's',
+	'accesskey-summary' => 'b',
+	'accesskey-userrights-set' => 's',
+	'accesskey-blockip-block' => 's',
+	'accesskey-export' => 's',
+	'accesskey-import' => 's',
+	'accesskey-watchlistedit-normal-submit' => 's',
+	'accesskey-watchlistedit-raw-submit' => 's',
+	'autocomment-prefix' => '-&#32;',
+	'autoblock_whitelist' => 'AOL http://webmaster.info.aol.com/proxyinfo.html
+*64.12.96.0/19
+*149.174.160.0/20
+*152.163.240.0/21
+*152.163.248.0/22
+*152.163.252.0/23
+*152.163.96.0/22
+*152.163.100.0/23
+*195.93.32.0/22
+*195.93.48.0/22
+*195.93.64.0/19
+*195.93.96.0/19
+*195.93.16.0/20
+*198.81.0.0/22
+*198.81.16.0/20
+*198.81.8.0/23
+*202.67.64.128/25
+*205.188.192.0/20
+*205.188.208.0/23
+*205.188.112.0/20
+*205.188.146.144/30
+*207.200.112.0/21
+*10.6.0.0/16
+*10.7.0.0/16
+*10.8.0.0/16
+*199.102.47.71
+*199.102.47.72',
+	'already_a_member' => 'Already a member?',
+	'atom' => 'Atom',
 );
 
 $messages['zh-hant'] = array(
@@ -31800,7 +32809,7 @@ $messages['zh-hant'] = array(
 	'allpagesprefix' => '顯示具有此前綴（名字空間）的頁面:',
 	'allpagesbadtitle' => '給定的頁面標題是非法的，或者具有一個內部語言或內部 wiki 的前綴。它可能包含一個或更多的不能用於標題的字元。',
 	'allpages-bad-ns' => '在{{SITENAME}}中沒有一個叫做"$1"的名字空間。',
-	'activeusers' => '活躍用戶列表',
+	'activeusers' => '活躍用戶',
 	'activeusers-intro' => '這個是在最近$1天之內有一些動作的用戶列表。',
 	'activeusers-count' => '於$3天內的$1次編輯',
 	'activeusers-from' => '顯示用戶開始於：',
@@ -31823,8 +32832,7 @@ $1被封禁的理由是“$2”',
 	'allmessagesname' => '名稱',
 	'allmessagesdefault' => '預設的訊息文字',
 	'allmessagescurrent' => '現時的訊息文字',
-	'allmessagestext' => '這裡列出所有可定製的系統界面。
-如果想貢獻正宗的MediaWiki本地化的話，請參閱[//www.mediawiki.org/wiki/Localisation MediaWiki本地化]以及[//translatewiki.net translatewiki.net]。',
+	'allmessagestext' => '這是MediaWiki命名空間中可編輯的系統消息清單。出於線上安全考慮，並不是所有的MediaWiki消息都允許編輯。請查閱[[Help:System_messages|這個頁面]]瞭解詳細內容。如果你認為某些系統消息需要進行編輯或調整，請[[Special:Contact|聯絡FANDOM員工]]。',
 	'allmessagesnotsupportedDB' => "這個頁面無法使用，因為'''\$wgUseDatabaseMessages'''已被設定關閉。",
 	'allmessages-filter-legend' => '過濾',
 	'allmessages-filter' => '以自定狀況過濾：',
@@ -31880,110 +32888,116 @@ $1被封禁的理由是“$2”',
 	'api-error-uploaddisabled' => '本wiki的上傳檔案功能已停用。',
 	'api-error-verification-error' => '本檔案可能已損壞，或副檔名錯誤。',
 	'addnewtalksection-link' => '開始一個新小節',
-);
-
-$messages['zh-hk'] = array(
-	'april' => '四月',
-	'august' => '八月',
-	'aboutpage' => 'Project:關於我們',
-	'activeusers-hidebots' => '隱藏機械人',
-);
-
-$messages['zh-min-nan'] = array(
-	'april' => '四月',
-	'august' => '八月',
-	'aboutpage' => 'Project:關於我們',
-	'activeusers-hidebots' => '隱藏機械人',
-);
-
-$messages['zh-mo'] = array(
-	'april' => '四月',
-	'august' => '八月',
-	'aboutpage' => 'Project:關於我們',
-	'activeusers-hidebots' => '隱藏機械人',
-);
-
-$messages['zh-my'] = array(
-	'april' => '四月',
-	'august' => '八月',
-	'aboutpage' => 'Project:關於我們',
-	'activeusers-hidebots' => '隱藏機械人',
-);
-
-$messages['zh-tw'] = array(
-	'april' => '四月',
-	'august' => '八月',
-	'april-gen' => '四月',
-	'august-gen' => '八月',
-	'apr' => '4月',
-	'aug' => '8月',
-	'aboutsite' => '關於 {{SITENAME}}',
-	'actionthrottledtext' => '系統因為反垃圾編輯的考量，禁止如此頻繁地修改資料，請數分鐘後再嘗試。',
-	'acct_creation_throttle_hit' => '抱歉，使用您的IP位址拜訪此wiki網站的訪客已經在昨天創建了$1個帳號，達到了該時段的上限，所以目前使用這個IP位址的訪客不能再繼續創建帳號。',
-	'accountcreated' => '已建立帳號',
-	'accountcreatedtext' => '$1的帳號已經被建立。',
-	'accmailtext' => "'[[User talk:$1|$1]]'的隨機產生密碼已經寄到$2。
-
-這個新帳號的密碼可以在登入後的''[[Special:ChangePassword|更改密碼]]''頁面中更改。",
-	'anontalkpagetext' => "---- ''這是一個還未建立帳號的匿名使用者的對話頁。我們因此只能用IP地址來與他／她聯絡。該IP地址可能由幾名使用者共享。如果您是一名匿名使用者並認為本頁上的評語與您無關，請[[Special:UserLogin|建立新帳號或登入]]以避免在未來於其他匿名使用者混淆。''",
-	'allowemail' => '接受來自其他使用者的郵件',
-	'alllogstext' => '綜合顯示上傳、刪除、保護、封鎖以及站務日誌。',
-	'activeusers-hidebots' => '隱藏機器人',
-	'addedwatchtext' => "頁面「[[:$1]]」已經被加入到您的[[Special:Watchlist|監視清單]]中。將來有關此頁面及其討論頁的任何修改將會在那裡列出，而且還會在[[Special:RecentChanges|近期變動]]中以'''粗體'''形式列出以使起更容易識別。",
-	'alreadyrolled' => '無法復原由[[User:$2|$2]] ([[User talk:$2|討論]])進行的[[$1]]的最後編輯；
-其他人已經編輯或是復原了該頁。
-
-最後編輯者: [[User:$3|$3]] ([[User talk:$3|討論]]{{int:pipe-separator}}[[Special:Contributions/$3|{{int:contribslink}}]])。',
-	'anononlyblock' => '僅限匿名使用者',
-	'allmessages' => '系統介面',
-	'allmessagestext' => '這裡列出所有可定製的系統介面。',
-	'allmessagesnotsupportedDB' => '系統介面功能處於關閉狀態 (wgUseDatabaseMessages)。',
-	'anonymous' => '{{SITENAME}}的匿名{{PLURAL:$1|使用者|使用者}}',
-	'anonuser' => '{{SITENAME}}匿名使用者$1',
-	'anonusers' => '{{SITENAME}}匿名{{PLURAL:$2|使用者|使用者}}$1',
-	'autosumm-blank' => '移除所有頁面內容',
-	'autosumm-replace' => "正在將頁面替換為 '$1'",
-	'autoredircomment' => '正在重定向到 [[$1]]',
-	'autosumm-new' => '新頁面: $1',
-	'addnewtalksection-link' => '於本討論頁增加新的討論主題',
-);
-
-$messages['zh-yue'] = array(
-	'april' => '四月',
-	'august' => '八月',
-	'april-gen' => '四月',
-	'august-gen' => '八月',
-	'apr' => '4月',
-	'aug' => '8月',
-	'aboutsite' => '關於 {{SITENAME}}',
-	'actionthrottledtext' => '系統因為反垃圾編輯的考量，禁止如此頻繁地修改資料，請數分鐘後再嘗試。',
-	'acct_creation_throttle_hit' => '抱歉，使用您的IP位址拜訪此wiki網站的訪客已經在昨天創建了$1個帳號，達到了該時段的上限，所以目前使用這個IP位址的訪客不能再繼續創建帳號。',
-	'accountcreated' => '已建立帳號',
-	'accountcreatedtext' => '$1的帳號已經被建立。',
-	'accmailtext' => "'[[User talk:$1|$1]]'的隨機產生密碼已經寄到$2。
-
-這個新帳號的密碼可以在登入後的''[[Special:ChangePassword|更改密碼]]''頁面中更改。",
-	'anontalkpagetext' => "---- ''這是一個還未建立帳號的匿名使用者的對話頁。我們因此只能用IP地址來與他／她聯絡。該IP地址可能由幾名使用者共享。如果您是一名匿名使用者並認為本頁上的評語與您無關，請[[Special:UserLogin|建立新帳號或登入]]以避免在未來於其他匿名使用者混淆。''",
-	'allowemail' => '接受來自其他使用者的郵件',
-	'alllogstext' => '綜合顯示上傳、刪除、保護、封鎖以及站務日誌。',
-	'activeusers-hidebots' => '隱藏機器人',
-	'addedwatchtext' => "頁面「[[:$1]]」已經被加入到您的[[Special:Watchlist|監視清單]]中。將來有關此頁面及其討論頁的任何修改將會在那裡列出，而且還會在[[Special:RecentChanges|近期變動]]中以'''粗體'''形式列出以使起更容易識別。",
-	'alreadyrolled' => '無法復原由[[User:$2|$2]] ([[User talk:$2|討論]])進行的[[$1]]的最後編輯；
-其他人已經編輯或是復原了該頁。
-
-最後編輯者: [[User:$3|$3]] ([[User talk:$3|討論]]{{int:pipe-separator}}[[Special:Contributions/$3|{{int:contribslink}}]])。',
-	'anononlyblock' => '僅限匿名使用者',
-	'allmessages' => '系統介面',
-	'allmessagestext' => '這裡列出所有可定製的系統介面。',
-	'allmessagesnotsupportedDB' => '系統介面功能處於關閉狀態 (wgUseDatabaseMessages)。',
-	'anonymous' => '{{SITENAME}}的匿名{{PLURAL:$1|使用者|使用者}}',
-	'anonuser' => '{{SITENAME}}匿名使用者$1',
-	'anonusers' => '{{SITENAME}}匿名{{PLURAL:$2|使用者|使用者}}$1',
-	'autosumm-blank' => '移除所有頁面內容',
-	'autosumm-replace' => "正在將頁面替換為 '$1'",
-	'autoredircomment' => '正在重定向到 [[$1]]',
-	'autosumm-new' => '新頁面: $1',
-	'addnewtalksection-link' => '於本討論頁增加新的討論主題',
+	'all_the_wikia' => '所有FANDOM',
+	'achievements-leaderboard-navigation-item' => '維基排行榜',
+	'add_comment' => '留言',
+	'addsection' => '留言',
+	'admin_skin' => '管理員功能',
+	'adminskin_ds' => '預設',
+	'anonnotice' => '-',
+	'addsection-preload' => '',
+	'addsection-editintro' => '',
+	'ancientpages-summary' => '',
+	'allpages-summary' => '',
+	'activeusers-summary' => '',
+	'accesskey-pt-userpage' => '.',
+	'accesskey-pt-anonuserpage' => '.',
+	'accesskey-pt-mytalk' => 'n',
+	'accesskey-pt-anontalk' => 'n',
+	'accesskey-pt-preferences' => '',
+	'accesskey-pt-watchlist' => 'l',
+	'accesskey-pt-mycontris' => 'y',
+	'accesskey-pt-login' => 'o',
+	'accesskey-pt-anonlogin' => 'o',
+	'accesskey-pt-logout' => '',
+	'accesskey-ca-talk' => 't',
+	'accesskey-ca-edit' => 'e',
+	'accesskey-ca-addsection' => '+',
+	'accesskey-ca-viewsource' => 'e',
+	'accesskey-ca-history' => 'h',
+	'accesskey-ca-protect' => '=',
+	'accesskey-ca-unprotect' => '=',
+	'accesskey-ca-delete' => 'd',
+	'accesskey-ca-undelete' => 'd',
+	'accesskey-ca-move' => 'm',
+	'accesskey-ca-watch' => 'w',
+	'accesskey-ca-unwatch' => 'w',
+	'accesskey-search' => 'f',
+	'accesskey-search-go' => '',
+	'accesskey-search-fulltext' => '',
+	'accesskey-p-logo' => '',
+	'accesskey-n-mainpage' => 'z',
+	'accesskey-n-mainpage-description' => 'z',
+	'accesskey-n-portal' => '',
+	'accesskey-n-currentevents' => '',
+	'accesskey-n-recentchanges' => 'r',
+	'accesskey-n-randompage' => 'x',
+	'accesskey-n-help' => '',
+	'accesskey-t-whatlinkshere' => 'j',
+	'accesskey-t-recentchangeslinked' => 'k',
+	'accesskey-feed-rss' => '',
+	'accesskey-feed-atom' => '',
+	'accesskey-t-contributions' => '',
+	'accesskey-t-emailuser' => '',
+	'accesskey-t-permalink' => '',
+	'accesskey-t-print' => 'p',
+	'accesskey-t-upload' => 'u',
+	'accesskey-t-specialpages' => 'q',
+	'accesskey-ca-nstab-main' => 'c',
+	'accesskey-ca-nstab-user' => 'c',
+	'accesskey-ca-nstab-media' => 'c',
+	'accesskey-ca-nstab-special' => '',
+	'accesskey-ca-nstab-project' => 'a',
+	'accesskey-ca-nstab-image' => 'c',
+	'accesskey-ca-nstab-mediawiki' => 'c',
+	'accesskey-ca-nstab-template' => 'c',
+	'accesskey-ca-nstab-help' => 'c',
+	'accesskey-ca-nstab-category' => 'c',
+	'accesskey-minoredit' => 'i',
+	'accesskey-save' => 's',
+	'accesskey-preview' => 'p',
+	'accesskey-diff' => 'v',
+	'accesskey-compareselectedversions' => 'v',
+	'accesskey-watch' => 'w',
+	'accesskey-upload' => 's',
+	'accesskey-preferences-save' => 's',
+	'accesskey-summary' => 'b',
+	'accesskey-userrights-set' => 's',
+	'accesskey-blockip-block' => 's',
+	'accesskey-export' => 's',
+	'accesskey-import' => 's',
+	'accesskey-watchlistedit-normal-submit' => 's',
+	'accesskey-watchlistedit-raw-submit' => 's',
+	'autocomment-prefix' => '-&#32;',
+	'autoblock_whitelist' => 'AOL http://webmaster.info.aol.com/proxyinfo.html
+*64.12.96.0/19
+*149.174.160.0/20
+*152.163.240.0/21
+*152.163.248.0/22
+*152.163.252.0/23
+*152.163.96.0/22
+*152.163.100.0/23
+*195.93.32.0/22
+*195.93.48.0/22
+*195.93.64.0/19
+*195.93.96.0/19
+*195.93.16.0/20
+*198.81.0.0/22
+*198.81.16.0/20
+*198.81.8.0/23
+*202.67.64.128/25
+*205.188.192.0/20
+*205.188.208.0/23
+*205.188.112.0/20
+*205.188.146.144/30
+*207.200.112.0/21
+*10.6.0.0/16
+*10.7.0.0/16
+*10.8.0.0/16
+*199.102.47.71
+*199.102.47.72',
+	'already_a_member' => 'Already a member?',
+	'atom' => 'Atom',
 );
 
 $messages['zu'] = array(

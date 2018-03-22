@@ -9,24 +9,6 @@ use \Wikia\Logger\WikiaLogger;
 
 class ThumbnailVideo extends ThumbnailImage {
 
-	// temporary hack - start
-	// rewrite URLs to point to a proper video thumbnails storage during images migration
-	// @author macbre
-	function __construct( $file, $url, $width, $height, $path = false, $page = false ) {
-		global $wgWikiaVideoImageHost, $wgEnableVignette;
-		parent::__construct( $file, $url, $width, $height, $path, $page );
-
-		// handle videos coming from shared repo (video.wikia.com)
-		if ( !$wgEnableVignette && !empty( $wgWikiaVideoImageHost ) && ( $file instanceof WikiaForeignDBFile ) ) {
-			// replace with a proper video domain for production
-			$domain = parse_url( $this->url, PHP_URL_HOST );
-			$this->url = str_replace( "http://{$domain}/", $wgWikiaVideoImageHost, $this->url );
-		}
-
-		#var_dump(__METHOD__); var_dump($this->url);
-	}
-	// temporary hack - end
-
 	function getFile( ) {
 		return $this->file;
 	}
@@ -218,7 +200,7 @@ class ThumbnailVideo extends ThumbnailImage {
 		$html = '';
 
 		//give extensions a chance to modify the markup
-		wfRunHooks( 'ThumbnailVideoHTML', array( $options, $linkAttribs, $attribs, $this->file,  &$html ) );
+		Hooks::run( 'ThumbnailVideoHTML', array( $options, $linkAttribs, $attribs, $this->file,  &$html ) );
 
 		wfProfileOut( __METHOD__ );
 

@@ -39,44 +39,20 @@ class UpdateMediaWiki extends Maintenance {
 	function __construct() {
 		parent::__construct();
 		$this->mDescription = "MediaWiki database updater";
-		$this->addOption( 'skip-compat-checks', 'Skips compatibility checks, mostly for developers' );
+		$this->addOption( 'ext-only', 'Only update extension schema' );
 		$this->addOption( 'quick', 'Skip 5 second countdown before starting' );
 		$this->addOption( 'doshared', 'Also update shared tables' );
-		$this->addOption( 'nopurge', 'Do not purge the objectcache table after updates' );
 		$this->addOption( 'force', 'Override when $wgAllowSchemaUpdates disables this script' );
 	}
 
 	function getDbType() {
-		/* If we used the class constant PHP4 would give a parser error here */
-		return 2 /* Maintenance::DB_ADMIN */;
-	}
-
-	function compatChecks() {
-		$test = new PhpXmlBugTester();
-		if ( !$test->ok ) {
-			$this->error(
-				"Your system has a combination of PHP and libxml2 versions which is buggy\n" .
-				"and can cause hidden data corruption in MediaWiki and other web apps.\n" .
-				"Upgrade to PHP 5.2.9 or later and libxml2 2.7.3 or later!\n" .
-				"ABORTING (see http://bugs.php.net/bug.php?id=45996).\n",
-				true );
-		}
-
-		$test = new PhpRefCallBugTester;
-		$test->execute();
-		if ( !$test->ok ) {
-			$ver = phpversion();
-			$this->error(
-				"PHP $ver is not compatible with MediaWiki due to a bug involving\n" .
-				"reference parameters to __call. Upgrade to PHP 5.3.2 or higher, or \n" .
-				"downgrade to PHP 5.3.0 to fix this.\n" .
-				"ABORTING (see http://bugs.php.net/bug.php?id=50394 for details)\n",
-				true );
-		}
+		return Maintenance::DB_ADMIN;
 	}
 
 	function execute() {
-		global $wgVersion, $wgTitle, $wgLang, $wgAllowSchemaUpdates;
+		global $wgVersion, $wgTitle, $wgLang, $wgAllowSchemaUpdates, $wgSharedTables;
+
+		$wgSharedTables = [];
 
 		if( !$wgAllowSchemaUpdates && !$this->hasOption( 'force' ) ) {
 			$this->error( "Do not run update.php on this wiki. If you're seeing this you should\n"
@@ -90,13 +66,6 @@ class UpdateMediaWiki extends Maintenance {
 		$this->output( "MediaWiki {$wgVersion} Updater\n\n" );
 
 		wfWaitForSlaves(); // let's not kill databases, shall we? ;) --tor
-
-		if ( !$this->hasOption( 'skip-compat-checks' ) ) {
-			$this->compatChecks();
-		} else {
-			$this->output( "Skipping compatibility checks, proceed at your own risk (Ctrl+C to abort)\n" );
-			wfCountdown( 5 );
-		}
 
 		# Attempt to connect to the database as a privileged user
 		# This will vomit up an error if there are permissions problems
@@ -112,10 +81,8 @@ class UpdateMediaWiki extends Maintenance {
 
 		$shared = $this->hasOption( 'doshared' );
 
-		$updates = array( 'core', 'extensions', 'stats' );
-		if( !$this->hasOption('nopurge') ) {
-			$updates[] = 'purge';
-		}
+		$updates = !$this->hasOption( 'ext-only' ) ? array( 'core', 'extensions', 'stats' ) : [ 'extensions' ];
+		$updates[] = 'purge';
 
 		$updater = DatabaseUpdater::newForDb( $db, $shared, $this );
 		$updater->doUpdates( $updates );

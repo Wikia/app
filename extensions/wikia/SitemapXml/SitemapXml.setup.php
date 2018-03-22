@@ -1,4 +1,4 @@
 <?php
 
-$wgAutoloadClasses['SpecialSitemapXmlController'] = __DIR__ . '/SpecialSitemapXmlController.class.php';
-$wgSpecialPages['SitemapXml'] = 'SpecialSitemapXmlController';
+$wgAutoloadClasses['SitemapXmlModel'] = __DIR__ . '/SitemapXmlModel.class.php';
+$wgAutoloadClasses['SitemapXmlController'] = __DIR__ . '/SitemapXmlController.class.php';

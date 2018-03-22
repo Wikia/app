@@ -473,6 +473,7 @@ ve.dm.Converter.prototype.getDataFromDomClean = function ( domElement, wrapperEl
  * @returns {Array} Linear model data
  */
 ve.dm.Converter.prototype.getDataFromDomSubtree = function ( domElement, wrapperElement, annotationSet ) {
+	/* jshint -W003 */
 	/**
 	 * Add whitespace to an element at a specific offset.
 	 *
@@ -988,6 +989,7 @@ ve.dm.Converter.prototype.getDataFromDomSubtree = function ( domElement, wrapper
 
 	this.contextStack.pop();
 	return data;
+	/* jshint +W003 */
 };
 
 /**

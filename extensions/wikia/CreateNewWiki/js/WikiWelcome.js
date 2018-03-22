@@ -3,10 +3,17 @@
 /**
  * A module that displays a "welcome" modal when the CreateNewWiki process is finished
  */
-define('WikiWelcome', ['wikia.ui.factory', 'wikia.loader'], function (uiFactory, loader) {
+define('WikiWelcome', ['wikia.ui.factory', 'wikia.loader', 'wikia.tracker'], function (uiFactory, loader, tracker) {
 	'use strict';
 
-	var templatePath = 'extensions/wikia/CreateNewWiki/templates/FinishCreateWiki_WikiWelcomeModal.mustache';
+	var templatePath = 'extensions/wikia/CreateNewWiki/templates/FinishCreateWiki_WikiWelcomeModal.mustache',
+		modalWrapper,
+		track = tracker.buildTrackingFunction({
+			action: tracker.ACTIONS.CLICK,
+			category: 'create-new-wiki',
+			trackingMethod: 'analytics'
+		});
+
 
 	/**
 	 * Sends a request to a WikiWelcomeModal method to initialize the module
@@ -57,6 +64,7 @@ define('WikiWelcome', ['wikia.ui.factory', 'wikia.loader'], function (uiFactory,
 				return false;
 			});
 			wikiWelcomeModal.show();
+			bindEventHandlers();
 		});
 	}
 
@@ -79,6 +87,41 @@ define('WikiWelcome', ['wikia.ui.factory', 'wikia.loader'], function (uiFactory,
 		).then(function (uiModal, resources) {
 			createModalComponent(uiModal, resources, data);
 		});
+	}
+
+
+	function bindEventHandlers(){
+		modalWrapper = $('#WikiWelcomeModal');
+		modalWrapper.find('button.createpage').bind('click', onCreatePageButtonClick);
+		modalWrapper.find('.help > a').bind('mousedown', onCommCentralLinkClick);
+		modalWrapper.find('header a.close').bind('click', onModalClose);
+		modalWrapper.bind('click mousedown', onModalWrapperClick);
+		$('#blackout_WikiWelcomeModal').bind('click', onModalClose);
+	}
+
+	function onCreatePageButtonClick(){
+		track({
+			label: 'welcome-modal-add-page-clicked'
+		});
+	}
+
+	function onCommCentralLinkClick(){
+		track({
+			label: 'welcome-modal-community-central-clicked'
+		});
+	}
+
+	function onModalWrapperClick(e) {
+		// to prevent tracking the modal closing event when clicking within modal area
+		e.originalEvent.preventCloseTracking = true;
+	}
+
+	function onModalClose(e){
+		if(!e.originalEvent.preventCloseTracking) {
+			track({
+				label: 'welcome-modal-closed'
+			});
+		}
 	}
 
 	return {

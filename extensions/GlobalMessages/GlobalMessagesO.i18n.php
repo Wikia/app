@@ -1,10 +1,4 @@
 <?php
-/**
- * Internationalisation file for extension GlobalMessages.
- *
- * @file
- * @ingroup Extensions
- */
 $messages = array();
 
 $messages['en'] = array(
@@ -688,6 +682,12 @@ $messages['de'] = array(
 	'overwroteimage' => 'lud eine neue Version von „[[$1]]“ hoch',
 	'othercontribs' => 'Basierend auf der Arbeit von $1.',
 	'others' => 'anderen',
+	'oasis-mobile-site' => 'Mobile Ansicht',
+	'old_skins' => 'Alte Skins',
+	'or' => 'oder',
+	'or_learn' => 'Um mehr zu erfahren,',
+	'other_people' => 'Andere Benutzer haben dies hier gesucht...',
+	'opensearch-desc' => '{{SITENAME}} ({{CONTENTLANGUAGE}})',
 );
 
 $messages['de-weigsbrag'] = array(
@@ -800,6 +800,12 @@ $messages['es'] = array(
 	'overwroteimage' => 'subió una nueva versión de «[[$1]]»',
 	'othercontribs' => 'Basado en el trabajo de $1.',
 	'others' => 'otros',
+	'old_skins' => 'Pieles viejas',
+	'or' => 'o',
+	'or_learn' => 'O para aprender más, mira',
+	'other_people' => 'Otras personas han estado buscando por...',
+	'opensearch-desc' => '{{SITENAME}} ({{CONTENTLANGUAGE}})',
+	'oasis-mobile-site' => 'Mobile site',
 );
 
 $messages['et'] = array(
@@ -868,6 +874,10 @@ $messages['fi'] = array(
 	'overwroteimage' => 'tallensi uuden version [[$1]]',
 	'othercontribs' => 'Perustuu työlle, jonka teki $1.',
 	'others' => 'muut',
+	'old_skins' => 'Vanhat ulkoasut',
+	'or' => 'tai',
+	'or_learn' => 'Tai oppiaksesi lisää, ota',
+	'other_people' => 'Muut ihmiset ovat hakeneet seuraavia...',
 );
 
 $messages['fiu-vro'] = array(
@@ -913,6 +923,12 @@ $messages['fr'] = array(
 	'overwroteimage' => 'a importé une nouvelle version de « [[$1]] »',
 	'othercontribs' => 'Basé sur le travail de $1.',
 	'others' => 'autres',
+	'oasis-mobile-site' => 'Site mobile',
+	'old_skins' => 'Anciens habillages',
+	'opensearch-desc' => '{{SITENAME}} ({{CONTENTLANGUAGE}})',
+	'or' => 'or',
+	'other_people' => 'Other people have been searching for...',
+	'or_learn' => 'Or to learn more, take the ',
 );
 
 $messages['frc'] = array(
@@ -1355,6 +1371,12 @@ $messages['it'] = array(
 	'overwroteimage' => 'ha caricato una nuova versione di "[[$1]]"',
 	'othercontribs' => 'Il testo attuale è basato su contributi di $1.',
 	'others' => 'altri',
+	'oasis-mobile-site' => 'Mobile site',
+	'opensearch-desc' => '{{SITENAME}} ({{CONTENTLANGUAGE}})',
+	'old_skins' => 'Old skins',
+	'or' => 'or',
+	'other_people' => 'Other people have been searching for...',
+	'or_learn' => 'Or to learn more, take the ',
 );
 
 $messages['iu'] = array(
@@ -1383,6 +1405,10 @@ $messages['ja'] = array(
 	'others' => 'その他',
 	'other_people' => '他の人は、こんなことを探しています',
 	'or_learn' => 'ウィキアを知るには',
+	'old_skins' => '旧式の外装',
+	'opensearch-desc' => '{{SITENAME}} ({{CONTENTLANGUAGE}})',
+	'or' => 'or',
+	'oasis-mobile-site' => 'Mobile site',
 );
 
 $messages['jam'] = array(
@@ -1614,6 +1640,7 @@ $messages['ko'] = array(
 	'overwroteimage' => '‘[[$1]]’ 파일의 새 버전을 올렸습니다.',
 	'othercontribs' => '$1의 작업을 바탕으로 함.',
 	'others' => '기타',
+	'oasis-mobile-site' => '모바일 사이트',
 );
 
 $messages['ko-kp'] = array(
@@ -2216,6 +2243,12 @@ $messages['nl'] = array(
 	'overwroteimage' => 'heeft een nieuwe versie van "[[$1]]" toegevoegd',
 	'othercontribs' => 'Gebaseerd op werk van $1.',
 	'others' => 'anderen',
+	'opensearch-desc' => '{{SITENAME}} ({{CONTENTLANGUAGE}})',
+	'old_skins' => 'Old skins',
+	'or' => 'or',
+	'other_people' => 'Other people have been searching for...',
+	'or_learn' => 'Or to learn more, take the ',
+	'oasis-mobile-site' => 'Mobile site',
 );
 
 $messages['nn'] = array(
@@ -2242,6 +2275,10 @@ $messages['no'] = array(
 	'overwroteimage' => 'lasta opp ein ny versjon av «[[$1]]»',
 	'othercontribs' => 'Basert på arbeid av $1.',
 	'others' => 'andre',
+	'old_skins' => 'Gamle utseender',
+	'or' => 'eller',
+	'or_learn' => 'Eller for å finne ut mer, ta',
+	'other_people' => 'Andre folk har søkt etter...',
 );
 
 $messages['nov'] = array(
@@ -2387,10 +2424,15 @@ $messages['pl'] = array(
 	'ok' => 'OK',
 	'oldpassword' => 'Stare hasło',
 	'overwrite' => 'Nadpisanie istniejącego pliku nie jest dopuszczalne.',
-	'overwroteimage' => 'przesłano nową wersję pliku „[[$1]]“',
+	'overwroteimage' => 'przesłał(a) nową wersję pliku „[[$1]]”',
 	'othercontribs' => 'Inni autorzy: $1.',
 	'others' => 'inni',
 	'or' => 'lub',
+	'opensearch-desc' => '{{SITENAME}} ({{CONTENTLANGUAGE}})',
+	'old_skins' => 'Old skins',
+	'other_people' => 'Other people have been searching for...',
+	'or_learn' => 'Or to learn more, take the ',
+	'oasis-mobile-site' => 'Mobile site',
 );
 
 $messages['pms'] = array(
@@ -2453,19 +2495,6 @@ $messages['ps'] = array(
 );
 
 $messages['pt'] = array(
-	'october' => 'Outubro',
-	'october-gen' => 'Outubro',
-	'oct' => 'Out.',
-	'otherlanguages' => 'Noutras línguas',
-	'ok' => 'OK',
-	'oldpassword' => 'Palavra-chave anterior:',
-	'overwrite' => 'Não é permitido gravar por cima de um ficheiro existente.',
-	'overwroteimage' => 'foi enviada uma nova versão de "[[$1]]"',
-	'othercontribs' => 'Baseado no trabalho de $1.',
-	'others' => 'outros',
-);
-
-$messages['pt-br'] = array(
 	'october' => 'outubro',
 	'october-gen' => 'outubro',
 	'oct' => 'out.',
@@ -2476,6 +2505,12 @@ $messages['pt-br'] = array(
 	'overwroteimage' => 'enviou uma nova versão de "[[$1]]"',
 	'othercontribs' => 'Baseado no trabalho de $1.',
 	'others' => 'outros',
+	'opensearch-desc' => '{{SITENAME}} ({{CONTENTLANGUAGE}})',
+	'old_skins' => 'Old skins',
+	'or' => 'ou',
+	'other_people' => 'Other people have been searching for...',
+	'or_learn' => 'Or to learn more, take the ',
+	'oasis-mobile-site' => 'Site móvel',
 );
 
 $messages['qu'] = array(
@@ -2577,6 +2612,12 @@ $messages['ru'] = array(
 	'overwroteimage' => 'загружена новая версия «[[$1]]»',
 	'othercontribs' => 'В создании приняли участие: $1.',
 	'others' => 'другие',
+	'opensearch-desc' => '{{SITENAME}} ({{CONTENTLANGUAGE}})',
+	'old_skins' => 'Old skins',
+	'or' => 'or',
+	'other_people' => 'Other people have been searching for...',
+	'or_learn' => 'Or to learn more, take the ',
+	'oasis-mobile-site' => 'Mobile site',
 );
 
 $messages['rue'] = array(
@@ -2836,19 +2877,6 @@ $messages['so'] = array(
 );
 
 $messages['sq'] = array(
-	'october' => 'tetor',
-	'october-gen' => 'tetor',
-	'oct' => 'Tet',
-	'otherlanguages' => 'Në gjuhë të tjera',
-	'ok' => 'Ok',
-	'oldpassword' => 'I vjetri',
-	'overwrite' => 'Mbishkrimi i një skede ekzistuese nuk lejohet.',
-	'overwroteimage' => 'dha dhe zëvendësoi me një version të ri të "[[$1]]"',
-	'othercontribs' => 'Bazuar në punën e: $1',
-	'others' => 'të tjerë',
-);
-
-$messages['sr'] = array(
 	'october' => 'tetor',
 	'october-gen' => 'tetor',
 	'oct' => 'Tet',
@@ -3467,6 +3495,12 @@ $messages['zh-hans'] = array(
 	'overwroteimage' => '上传“[[$1]]”的新版本',
 	'othercontribs' => '在$1的工作基础上。',
 	'others' => '其他',
+	'oasis-mobile-site' => '手机版网页',
+	'opensearch-desc' => '{{SITENAME}} ({{CONTENTLANGUAGE}})',
+	'old_skins' => 'Old skins',
+	'or' => 'or',
+	'other_people' => 'Other people have been searching for...',
+	'or_learn' => 'Or to learn more, take the ',
 );
 
 $messages['zh-hant'] = array(
@@ -3480,36 +3514,12 @@ $messages['zh-hant'] = array(
 	'overwroteimage' => '已經上傳「[[$1]]」的新版本',
 	'othercontribs' => '在$1的工作基礎上。',
 	'others' => '其他',
-);
-
-$messages['zh-hk'] = array(
-	'october' => '十月',
-);
-
-$messages['zh-min-nan'] = array(
-	'october' => '十月',
-);
-
-$messages['zh-mo'] = array(
-	'october' => '十月',
-);
-
-$messages['zh-my'] = array(
-	'october' => '十月',
-);
-
-$messages['zh-tw'] = array(
-	'october' => '十月',
-	'october-gen' => '十月',
-	'oct' => '10月',
-	'oldpassword' => '舊密碼',
-);
-
-$messages['zh-yue'] = array(
-	'october' => '十月',
-	'october-gen' => '十月',
-	'oct' => '10月',
-	'oldpassword' => '舊密碼',
+	'oasis-mobile-site' => '手機版網頁',
+	'opensearch-desc' => '{{SITENAME}} ({{CONTENTLANGUAGE}})',
+	'old_skins' => 'Old skins',
+	'or' => 'or',
+	'other_people' => 'Other people have been searching for...',
+	'or_learn' => 'Or to learn more, take the ',
 );
 
 $messages['zu'] = array(

@@ -32,14 +32,13 @@ define('wikia.krux', [
 	}
 
 	function addConfigScript(confid) {
-		var k, m, src, s;
+		var k, s;
 
 		k = document.createElement('script');
 		k.type = 'text/javascript';
 		k.id = kruxScriptId;
 		k.async = true;
-		src = (m = location.href.match(/\bkxsrc=([^&]+)\b/)) && decodeURIComponent(m[1]);
-		k.src = src || (location.protocol === 'https:' ? 'https:' : 'http:') + '//cdn.krxd.net/controltag?confid=' + confid;
+		k.src = (location.protocol === 'https:' ? 'https:' : 'http:') + '//cdn.krxd.net/controltag?confid=' + confid;
 		s = document.getElementsByTagName('script')[0];
 		s.parentNode.insertBefore(k, s);
 	}
@@ -81,9 +80,15 @@ define('wikia.krux', [
 
 	function getParams(n) {
 		var k = 'kx' + n;
-		if (win.localStorage) {
-			return win.localStorage[k] || '';
-		} else {
+
+		// Some browsers throw an exception when trying to check `window.localStorage` value when LS is disabled
+		try {
+			if (win.localStorage) {
+				return win.localStorage[k] || '';
+			} else {
+				return '';
+			}
+		} catch (e) {
 			return '';
 		}
 	}

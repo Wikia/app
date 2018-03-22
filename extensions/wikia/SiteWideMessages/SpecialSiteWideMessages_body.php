@@ -71,7 +71,6 @@ class SiteWideMessages extends SpecialPage {
 		$formData['wikiCreationDateTwo'] = $wgRequest->getVal( 'mWikiCreationDateTwo' );
 		$formData['groupName'] = $wgRequest->getText('mGroupName');
 		$formData['groupNameS'] = $wgRequest->getText('mGroupNameS');
-		$formData[ 'powerUserType' ] = $wgRequest->getArray( 'mPowerUserType' );
 		$formData['userName'] = $wgRequest->getText('mUserName');
 		$formData['listUserNames'] = $wgRequest->getText( 'mUserNames' );
 		$formData['expireTime'] = $wgRequest->getVal('mExpireTime');
@@ -131,11 +130,6 @@ class SiteWideMessages extends SpecialPage {
 		$groupList = $wgGroupPermissions;
 		unset($groupList['*']);
 		$formData['groupNames'] = array_keys($groupList);
-
-		/**
-		 * Fetch types of power users to generate checkboxes
-		 */
-		$formData[ 'powerUserTypes' ] = \Wikia\PowerUser\PowerUser::$aPowerUserProperties;
 
 		//handle different submit buttons in one form
 		$button = $wgRequest->getVal('mAction');
@@ -300,6 +294,13 @@ class SiteWideMessages extends SpecialPage {
 	}
 
 	//DB functions
+
+	/**
+	 * @param User $mSender
+	 * @param $mText
+	 * @param $formData
+	 * @return array
+	 */
 	private function sendMessage( $mSender, $mText, $formData ) {
 		global $wgExternalSharedDB, $wgSpecialsDB, $wgUser;
 		$result = array('msgId' => null, 'errMsg' => null);
@@ -313,10 +314,6 @@ class SiteWideMessages extends SpecialPage {
 		$mWikiName = $formData['wikiName'];
 		$mRecipientName = $formData['userName'];
 		$mGroupName = $formData['groupName'] == '' ? $formData['groupNameS'] : $formData['groupName'];
-		$mPowerUserType = $formData['powerUserType'];
-		if ( is_array( $mPowerUserType ) ) {
-			$mPowerUserType = implode( ',', $mPowerUserType );
-		}
 		$mSendModeWikis = $formData['sendModeWikis'];
 		$mSendModeUsers = $formData['sendModeUsers'];
 		$mHubId = $formData['hubId'];
@@ -360,41 +357,30 @@ class SiteWideMessages extends SpecialPage {
 			case 'ACTIVE':
 				$mRecipientName = '';
 				$mGroupName = '';
-				$mPowerUserType = '';
 				break;
 			case 'GROUP':
 				$mRecipientName = '';
-				$mPowerUserType = '';
-				break;
-			case 'POWERUSER':
-				$mRecipientName = '';
-				$mGroupName = '';
 				break;
 			case 'USER':
 				$mGroupName = '';
-				$mPowerUserType = '';
 				$mLang = MSG_LANG_ALL;
 				break;
 			case 'USERS':
 				$mRecipientName = count( $mUserNamesArr ) . ' users';
 				$mGroupName = '';
-				$mPowerUserType = '';
 				$mLang = MSG_LANG_ALL;
 				break;
 			case 'ANONS':
 				$mRecipientName = MSG_RECIPIENT_ANON;
 				$mGroupName = '';
-				$mPowerUserType = '';
 				break;
 			case 'REGISTRATION':
 				$mRecipientName = '';
 				$mGroupName = '';
-				$mPowerUserType = '';
 				break;
 			case 'EDITCOUNT':
 				$mRecipientName = '';
 				$mGroupName = '';
-				$mPowerUserType = '';
 				break;
 		}
 
@@ -511,15 +497,30 @@ class SiteWideMessages extends SpecialPage {
 			$mText = $wgParser->preSaveTransform($mText, $title, $wgUser, $options);
 
 			$DB = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
+
+			// SUS-3111
+			if ( $mRecipientName === MSG_RECIPIENT_ANON ) {
+				// the message is for anons
+				$recipientUserId = 0;
+			}
+			elseif ( $mSendModeUsers === 'USER' ) {
+				// the message is for a specific user
+				$recipientUserId = User::idFromName( $mRecipientName );
+			}
+			else {
+				// msg_recipient_user_id will be set to NULL when given message is directed to all users
+				$recipientUserId = 'NULL';
+			}
+
 			$dbResult = (boolean)$DB->Query (
 				  'INSERT INTO ' . MSG_TEXT_DB
-				. ' (msg_sender_id, msg_text, msg_mode, msg_expire, msg_recipient_name, msg_group_name, msg_wiki_name, msg_hub_id, msg_lang, msg_cluster_id)'
+				. ' (msg_sender_id, msg_text, msg_mode, msg_expire, msg_recipient_user_id, msg_group_name, msg_wiki_name, msg_hub_id, msg_lang, msg_cluster_id)'
 				. ' VALUES ('
 				. $DB->AddQuotes($mSender->GetID()). ', '
 				. $DB->AddQuotes($mText) . ', '
 				. ($sendToAll ? MSG_MODE_ALL : MSG_MODE_SELECTED) . ', '
 				. $DB->AddQuotes($mExpire) . ', '
-				. $DB->AddQuotes($mRecipientName) . ', '
+				. $recipientUserId . ', ' # SUS-3111
 				. $DB->AddQuotes($mGroupName) . ', '
 				. $DB->AddQuotes($mWikiName) . ', '
 				. $DB->AddQuotes($mHubId) . ' , '
@@ -557,7 +558,6 @@ class SiteWideMessages extends SpecialPage {
 						'sendModeUsers'	=> $mSendModeUsers,
 						'wikiName'		=> $mWikiName,
 						'groupName'		=> $mGroupName,
-						'powerUserType' => $mPowerUserType,
 						'userNames'     => $mUserNamesArr,
 						'senderId'		=> $mSender->GetID(),
 						'senderName'	=> $mSender->GetName(),
@@ -595,27 +595,11 @@ class SiteWideMessages extends SpecialPage {
 										'sendModeUsers'	=> $mSendModeUsers,
 										'wikiName'		=> $mWikiName,
 										'groupName'		=> $mGroupName,
-										'powerUserType' => $mPowerUserType,
 										'senderId'		=> $mSender->GetID(),
 										'senderName'	=> $mSender->GetName(),
 										'hubId'			=> $mHubId,
 										'clusterId'     => $mClusterId,
 									]);
-									break;
-
-								case 'POWERUSER':
-									$result[ 'taskId' ] = $this->queueTask( [
-										'messageId'		=> $result[ 'msgId' ],
-										'sendModeWikis'	=> $mSendModeWikis,
-										'sendModeUsers'	=> $mSendModeUsers,
-										'wikiName'		=> $mWikiName,
-										'groupName'		=> $mGroupName,
-										'powerUserType' => $mPowerUserType,
-										'senderId'		=> $mSender->GetID(),
-										'senderName'	=> $mSender->GetName(),
-										'hubId'			=> $mHubId,
-										'clusterId'     => $mClusterId,
-									] );
 									break;
 
 								case 'REGISTRATION':
@@ -625,7 +609,6 @@ class SiteWideMessages extends SpecialPage {
 										'sendModeUsers'	=> $mSendModeUsers,
 										'wikiName'		=> $mWikiName,
 										'groupName'		=> $mGroupName,
-										'powerUserType' => $mPowerUserType,
 										'regOption'     => $formData['registrationDateOption'],
 										'regStartDate'  => $formData['registrationDateOne'],
 										'regEndDate'    => $formData['registrationDateTwo'],
@@ -643,7 +626,6 @@ class SiteWideMessages extends SpecialPage {
 										'sendModeUsers'		=> $mSendModeUsers,
 										'wikiName'			=> $mWikiName,
 										'groupName'			=> $mGroupName,
-										'powerUserType' 	=> $mPowerUserType,
 										'editCountOption'	=> $formData['editCountOption'],
 										'editCountStart'	=> $formData['editCountOne'],
 										'editCountEnd'		=> $formData['editCountTwo'],
@@ -668,7 +650,6 @@ class SiteWideMessages extends SpecialPage {
 										'sendModeUsers'	=> $mSendModeUsers,
 										'wikiName'		=> $mWikiName,
 										'groupName'		=> $mGroupName,
-										'powerUserType' => $mPowerUserType,
 										'senderId'		=> $mSender->GetID(),
 										'senderName'	=> $mSender->GetName(),
 										'hubId'			=> $mHubId,
@@ -689,7 +670,6 @@ class SiteWideMessages extends SpecialPage {
 										'sendModeUsers'	=> $mSendModeUsers,
 										'wikiName'		=> $mWikiName,
 										'groupName'		=> $mGroupName,
-										'powerUserType' => $mPowerUserType,
 										'senderId'		=> $mSender->GetID(),
 										'senderName'	=> $mSender->GetName(),
 										'hubId'			=> $mHubId,
@@ -763,27 +743,11 @@ class SiteWideMessages extends SpecialPage {
 										'sendModeUsers'	=> $mSendModeUsers,
 										'wikiName'		=> $mWikiName,
 										'groupName'		=> $mGroupName,
-										'powerUserType' => $mPowerUserType,
 										'senderId'		=> $mSender->GetID(),
 										'senderName'	=> $mSender->GetName(),
 										'hubId'			=> $mHubId,
 										'clusterId'     => $mClusterId,
 									]);
-									break;
-
-								case 'POWERUSER':
-									$result[ 'taskId' ] = $this->queueTask( [
-										'messageId'		=> $result[ 'msgId' ],
-										'sendModeWikis'	=> $mSendModeWikis,
-										'sendModeUsers'	=> $mSendModeUsers,
-										'wikiName'		=> $mWikiName,
-										'groupName'		=> $mGroupName,
-										'powerUserType' => $mPowerUserType,
-										'senderId'		=> $mSender->GetID(),
-										'senderName'	=> $mSender->GetName(),
-										'hubId'			=> $mHubId,
-										'clusterId'     => $mClusterId,
-									] );
 									break;
 
 								case 'EDITCOUNT':
@@ -793,7 +757,6 @@ class SiteWideMessages extends SpecialPage {
 										'sendModeUsers'		=> $mSendModeUsers,
 										'wikiName'			=> $mWikiName,
 										'groupName'			=> $mGroupName,
-										'powerUserType' 	=> $mPowerUserType,
 										'editCountOption'	=> $formData['editCountOption'],
 										'editCountStart'	=> $formData['editCountOne'],
 										'editCountEnd'		=> $formData['editCountTwo'],
@@ -820,7 +783,6 @@ class SiteWideMessages extends SpecialPage {
 										'wikiName'			=> $mWikiName,
 										'wikiNames'			=> $mWikiNamesArr,
 										'groupName'			=> $mGroupName,
-										'powerUserType' 	=> $mPowerUserType,
 										'editCountOption'	=> $formData['editCountOption'],
 										'editCountStart'	=> $formData['editCountOne'],
 										'editCountEnd'		=> $formData['editCountTwo'],
@@ -847,7 +809,6 @@ class SiteWideMessages extends SpecialPage {
 										'wikiName'			=> $mWikiName,
 										'wikiNames'			=> $mWikiNamesArr,
 										'groupName'			=> $mGroupName,
-										'powerUserType' 	=> $mPowerUserType,
 										'wcOption'			=> $formData['wikiCreationDateOption'],
 										'wcStartDate'		=> $formData['wikiCreationDateOne'],
 										'wcEndDate'			=> $formData['wikiCreationDateTwo'],
@@ -970,34 +931,34 @@ class SiteWideMessages extends SpecialPage {
 
 	private function getAllMessagesInfo() {
 		global $wgExternalSharedDB;
-		$DB = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
+		$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
 
-		$dbResult = $DB->Query (
-			  'SELECT msg_id, user_name, msg_text, msg_removed, msg_expire, msg_date, msg_recipient_name, msg_group_name, msg_wiki_name'
-			. ' FROM ' . MSG_TEXT_DB
-			. ' LEFT JOIN user ON msg_sender_id = user_id'
-			. ' ORDER BY msg_id DESC'
-			. ';'
-			, __METHOD__
+		$rows = $dbr->select(
+			MSG_TEXT_DB,
+			'msg_id, msg_sender_id, msg_text, msg_removed, msg_expire, msg_date, msg_recipient_user_id, msg_group_name, msg_wiki_name',
+			[],
+			__METHOD__,
+			[
+				'ORDER BY' => 'msg_id DESC'
+			]
 		);
 
 		$messages = array();
 		$i = 0;
-		while ($oMsg = $DB->FetchObject($dbResult)) {
+		while ($oMsg = $dbr->FetchObject($rows)) {
 			$messages[$i]['msg_id'] = $oMsg->msg_id;
-			$messages[$i]['msg_sender'] = $oMsg->user_name;
+			$messages[$i]['msg_sender'] = User::whoIs( $oMsg->msg_sender_id ); # SUS-3111
 			$messages[$i]['msg_text'] = htmlspecialchars($oMsg->msg_text);
 			$messages[$i]['msg_removed'] = $oMsg->msg_removed;
 			$messages[$i]['msg_expire'] = $oMsg->msg_expire;
 			$messages[$i]['msg_date'] = $oMsg->msg_date;
-			$messages[$i]['msg_recipient_name'] = $oMsg->msg_recipient_name;
+			$messages[$i]['msg_recipient_user_id'] = $oMsg->msg_recipient_user_id; # SUS-3111
+			$messages[$i]['msg_recipient_name'] = ( $oMsg->msg_recipient_user_id > 0 ) ? User::whoIs( $oMsg->msg_recipient_user_id ) : false; # SUS-3111
 			$messages[$i]['msg_group_name'] = $oMsg->msg_group_name;
 			$messages[$i]['msg_wiki_name'] = $oMsg->msg_wiki_name;
 			$i++;
 		}
-		if ($dbResult !== false) {
-			$DB->FreeResult($dbResult);
-		}
+
 		return $messages;
 	}
 
@@ -1017,11 +978,16 @@ class SiteWideMessages extends SpecialPage {
 		return $dbResult;
 	}
 
-	//Static functions (used in hooks)
+	/**
+	 * Static functions (used in hooks)
+	 *
+	 * @param User $user
+	 * @param bool $filter_seen
+	 * @return array
+	 */
 	static function getAllUserMessagesId($user, $filter_seen = true) {
-		global $wgCityId, $wgLanguageCode;
-		global $wgExternalSharedDB ;
-		$localCityId = isset($wgCityId) ? $wgCityId : 0;
+		global $wgCityId, $wgExternalSharedDB;
+		$localCityId = $wgCityId;
 		$DB = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
 
 		//step 1 of 3: get all active messages sent to *all*
@@ -1056,7 +1022,7 @@ class SiteWideMessages extends SpecialPage {
 				  'SELECT msg_id AS id'
 				. ' FROM ' . MSG_STATUS_DB
 				. ' WHERE msg_id IN (' . implode(',', array_keys($tmpMsg)) . ')'
-				. ' AND msg_recipient_id = ' . $DB->AddQuotes($user->GetID())
+				. ' AND msg_recipient_id = ' . $DB->AddQuotes($user->getId())
 				. ' AND msg_status IN (' . join(',', $status) . ')'
 				. ';'
 				, __METHOD__
@@ -1081,7 +1047,7 @@ class SiteWideMessages extends SpecialPage {
 			. ' FROM ' . MSG_TEXT_DB
 			. ' LEFT JOIN ' . MSG_STATUS_DB . ' USING (msg_id)'
 			. ' WHERE msg_mode = ' . MSG_MODE_SELECTED
-			. ' AND msg_recipient_id = ' . $DB->AddQuotes($user->GetID())
+			. ' AND msg_recipient_id = ' . $DB->AddQuotes($user->getId())
 			. ' AND msg_status IN (' . join(',', $status) . ')'
 			. ' AND (msg_expire IS NULL OR msg_expire > ' . $DB->AddQuotes(date('Y-m-d H:i:s')) . ')'
 			. ' AND msg_removed = ' . MSG_REMOVED_NO
@@ -1102,13 +1068,12 @@ class SiteWideMessages extends SpecialPage {
 		//sort from newer to older
 		krsort($tmpMsg);
 
-		$messages = array();
 		$IDs = array();
 		foreach ($tmpMsg as $tmpMsgId => $tmpMsgData) {
 			$IDs['id'][] = $tmpMsgId;
 			$IDs['wiki'][] = $tmpMsgData['wiki_id'];
 		}
-		wfDebug(basename(__FILE__) . ' || ' . __METHOD__ . " || userID={$user->GetID()}, result=" . ($dbResult ? 'true':'false') . "\n");
+		wfDebug(basename(__FILE__) . ' || ' . __METHOD__ . " || userID={$user->getId()}, result=" . ($dbResult ? 'true':'false') . "\n");
 
 		return $IDs;
 	}
@@ -1268,7 +1233,7 @@ class SiteWideMessages extends SpecialPage {
 				' LEFT JOIN ' . MSG_STATUS_DB . ' USING (msg_id)' .
 				' WHERE msg_mode = ' . MSG_MODE_SELECTED .
 				' AND msg_recipient_id = 0' .
-				' AND msg_recipient_name = ' . $dbr->addQuotes( MSG_RECIPIENT_ANON ) .
+				' AND msg_recipient_user_id = 0' . # message is for all anons
 				' AND msg_status IN (' . MSG_STATUS_UNSEEN . ', ' . MSG_STATUS_SEEN . ')' .
 				' AND (msg_expire IS NULL OR msg_expire > ' . $dbr->addQuotes( date( 'Y-m-d H:i:s' ) ) . ')' .
 				' AND msg_removed = ' . MSG_REMOVED_NO .
@@ -1436,10 +1401,10 @@ class SiteWideMessagesPager extends TablePager {
 		if ( !$this->mFieldNames ) {
 			$this->mFieldNames = array();
 			$this->mFieldNames['msg_id']             = wfMsg('swm-list-table-id');
-			$this->mFieldNames['msg_sender']         = wfMsg('swm-list-table-sender');
+			$this->mFieldNames['msg_sender_id']      = wfMsg('swm-list-table-sender');
 			$this->mFieldNames['msg_wiki_name']      = wfMsg('swm-list-table-wiki');
 			$this->mFieldNames['msg_hub_id']         = wfMsg( 'swm-list-table-hub' );
-			$this->mFieldNames['msg_recipient_name'] = wfMsg('swm-list-table-recipient');
+			$this->mFieldNames['msg_recipient_user_id'] = wfMsg('swm-list-table-recipient');
 			$this->mFieldNames['msg_group_name']     = wfMsg('swm-list-table-group');
 			$this->mFieldNames['msg_expire']         = wfMsg('swm-list-table-expire');
 			$this->mFieldNames['msg_removed']        = wfMsg('swm-list-table-removed');
@@ -1453,13 +1418,13 @@ class SiteWideMessagesPager extends TablePager {
 
 	#--- isFieldSortable-----------------------------------------------------
 	function isFieldSortable( $field ) {
-		static $sortable = array( 'msg_id', 'msg_sender', 'msg_removed', 'msg_date', 'msg_expire', 'msg_wiki_name', 'msg_group_name', 'msg_recipient_name', 'msg_text', 'msg_lang', 'msg_hub_id' );
+		static $sortable = array( 'msg_id', 'msg_removed', 'msg_date', 'msg_expire', 'msg_wiki_name', 'msg_group_name', 'msg_text', 'msg_lang', 'msg_hub_id' );
 		return in_array( $field, $sortable );
 	}
 
 	#--- formatValue --------------------------------------------------------
 	function formatValue( $field, $value ) {
-		global $wgStylePath, $wgTitle;
+		global $wgTitle;
 
 		switch ($field) {
 			case 'msg_expire':
@@ -1470,10 +1435,20 @@ class SiteWideMessagesPager extends TablePager {
 				$sRetval = $value ? wfMsg('swm-yes') : wfMsg('swm-no');
 				break;
 
-			case 'msg_recipient_name':
-				$sRetval = $value ?
-					( $value === MSG_RECIPIENT_ANON ? ('<i>' . wfMsg( 'swm-label-mode-users-anon' ) . '</i>') : htmlspecialchars( $value ) ) :
-					( '<i>' . wfMsg('swm-label-mode-users-all') . '</i>' );
+			case 'msg_sender_id':
+				$sRetval = htmlspecialchars( User::whoIs( $value ) );
+				break;
+
+			case 'msg_recipient_user_id':
+				if ( is_null( $value ) ) {
+					$sRetval = '<i>' . wfMsg('swm-label-mode-users-all') . '</i>';
+				}
+				elseif ( $value === 0 ) {
+					$sRetval = '<i>' . wfMsg( 'swm-label-mode-users-anon' ) . '</i>';
+				}
+				else {
+					$sRetval = htmlspecialchars( User::whoIs( $value ) );
+				}
 				break;
 
 			case 'msg_wiki_name':
@@ -1542,8 +1517,8 @@ class SiteWideMessagesPager extends TablePager {
 	#--- getQueryInfo -------------------------------------------------------
 	function getQueryInfo() {
 		return array(
-			'tables' => MSG_TEXT_DB . ' LEFT JOIN user ON msg_sender_id = user_id',
-			'fields' => array('msg_id', 'user_name AS msg_sender', 'msg_text', 'msg_removed', 'msg_expire', 'msg_date', 'msg_recipient_name', 'msg_group_name', 'msg_wiki_name', 'msg_lang', 'msg_hub_id')
+			'tables' => MSG_TEXT_DB,
+			'fields' => array('msg_id', 'msg_sender_id', 'msg_recipient_user_id', 'msg_text', 'msg_removed', 'msg_expire', 'msg_date', 'msg_group_name', 'msg_wiki_name', 'msg_lang', 'msg_hub_id')
 		);
 	}
 
