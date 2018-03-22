@@ -17,6 +17,7 @@ $GLOBALS['wgWikiaApiControllers']['EmailConfirmationController'] = $dir . 'Email
 $GLOBALS['wgSpecialPages']['Signup'] = 'SpecialSignupRedirect';
 $GLOBALS['wgSpecialPages']['Userlogin'] = 'SpecialUserLoginRedirect';
 $GLOBALS['wgSpecialPages']['UserSignup'] = 'SpecialUserSignupRedirect';
+$GLOBALS['wgSpecialPages']['Confirmemail'] = 'SpecialWikiaConfirmEmailRedirect';
 $GLOBALS['wgSpecialPages']['WikiaConfirmEmail'] = 'SpecialWikiaConfirmEmailRedirect';
 $GLOBALS['wgSpecialPages']['Userlogout'] = 'UserLogoutSpecialController';
 
