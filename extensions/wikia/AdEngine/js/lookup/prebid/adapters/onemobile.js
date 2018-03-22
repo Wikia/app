@@ -20,7 +20,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.onemobile', [
 					size: [300, 250],
 					pos: 'wikia_mw_incontent_hb'
 				},
-				MOBILE_PREFOOTER: {
+				BOTTOM_LEADERBOARD: {
 					size: [300, 250],
 					pos: 'wikia_mw_pre_footer_hb'
 				}
