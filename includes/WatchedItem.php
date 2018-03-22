@@ -78,7 +78,7 @@ class WatchedItem {
 	/**
 	 * Given a title and user (assumes the object is setup), add the watch to the
 	 * database.
-	 * @return bool (always true)
+	 * @return bool
 	 */
 	public function addWatch() {
 
@@ -89,8 +89,6 @@ class WatchedItem {
 
 		$rows = [];
 
-		// Use INSERT IGNORE to avoid overwriting the notification timestamp
-		// if there's already an entry for this page
 		$dbw = wfGetDB( DB_MASTER );
 		$timestamp = null;
 		
@@ -107,8 +105,15 @@ class WatchedItem {
 			'wl_title' => $this->databaseKey,
 			'wl_notificationtimestamp' => $timestamp
 		];
-		
-		$dbw->insert( 'watchlist', $rows, __METHOD__, 'IGNORE' );
+
+		try {
+			// SUS-4321 | This **used** INSERT IGNORE to avoid overwriting the notification
+			// timestamp if there's already an entry for this page
+			$dbw->insert( 'watchlist', $rows, __METHOD__ );
+		} catch ( DBError $ex ) {
+			// SUS-4321 | DBError logs exceptions to elk
+			return false;
+		}
 
 		return true;
 	}
