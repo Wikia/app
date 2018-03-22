@@ -959,8 +959,7 @@ class WikiPage extends Page implements IDBAccessObject {
 			), __METHOD__ );
 
 			$affected = $dbw->affectedRows();
-		}
-		catch ( DBError $ex ) {
+		} catch ( DBError $ex ) {
 			// SUS-4334 | this method is assumed to return "false" on failure instead of raising
 			// an exception (DBError logs exceptions to elk)
 			$affected = 0;
