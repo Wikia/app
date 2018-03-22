@@ -18,7 +18,56 @@ class ArticleVideoContext {
 	const RECOMMENDED_VIDEO_MAPPINGS_PROD = [
 		509 => [
 			509 => '1Dw2sjAj',
-		]
+		],
+		// dragonage.wikia.com
+		10150 => [
+			129225 => 'YLevTBHB'
+		],
+		// dragonball.wikia.com
+		530 => [
+			609128 => 'fi25Ptnz',
+			525762 => 'KAPfrsHO',
+			2834 => 'bbOMHSz3',
+			578170 => 'H5MlOcIT',
+			598839 => 'MKcSnYez'
+		],
+		// elderscrolls.wikia.com
+		1706 => [
+			39609 => 'OHCjh0TQ',
+			65624 => 'iK257Ktw'
+		],
+		// gta.wikia.com
+		4541 => [
+			185157 => 'IqqOqNVI',
+			184893 => 'Wb1lZb0i',
+			99477 => 'OJpnFu6L',
+			185085 => 'lfz9Wmoi'
+		],
+		// marvelcinematicuniverse.wikia.com
+		177996 => [
+			8338 => 'oXCSDrnn',
+			7102 => 'PkKkV0ao'
+		],
+		// memoryalpha.wikia.com
+		113 => [
+			240 => 'f5t2iKaD',
+			1295 => '4NtOLP2p'
+		],
+		// monsterhunter.wikia.com
+		3234 => [
+			312943 => 'DT6aHDR7',
+			312943 => '318952'
+		],
+		// naruto.wikia.com
+		1318 => [
+			2958 => 'bf9OvJTK',
+			2371 => 'kAuFKJo7',
+			1527 => 'ZsT3G4aW'
+		],
+		// supersmashbros.wikia.com
+		2714 => [
+			5255 => 'yRYnUGkG'
+		],
 	];
 
 	/**
