@@ -106,8 +106,6 @@ require([
 	}
 
 	function prepareInternationalRecirculation () {
-		prepareRailRecirculation(internationalRailRecirculation);
-
 		var mixedContentFooterData = [
 			liftigniter.prepare(mixedContentFooter.wikiItems),
 			discussions.prepare()
