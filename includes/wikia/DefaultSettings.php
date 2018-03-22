@@ -1877,6 +1877,9 @@ include_once "$IP/extensions/wikia/Pages/Pages.setup.php";
 // SUS-3455: Special:ListGlobalUsers for all wikis
 include_once "$IP/extensions/wikia/ListGlobalUsers/ListGlobalUsers.setup.php";
 
+// SEC-59: Form-based Userlogout for Monobook
+include_once "$IP/extensions/wikia/UserLogout/UserLogout.setup.php";
+
 // SRE-76: Logging classes that have been initially defined in config.
 $wgAutoloadClasses['AuditLog'] = "$IP/includes/wikia/AuditLog.class.php";
 
