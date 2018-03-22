@@ -15,6 +15,7 @@ require([
 		player = null,
 		$actualVideo = null,
 		currentItemNumber = 1,
+		isEnabled = false,
 		isExpanded = false,
 		isAutoplay = false,
 		initialPlay = true;
@@ -27,7 +28,10 @@ require([
 			label: 'reveal-point'
 		});
 
-		/* Uncomment when the XW-4771 AA test is over
+		if (!isEnabled) {
+			return;
+		}
+
 		$unit.addClass('is-revealed');
 		!isAutoplay && $unit.addClass('is-click-to-play');
 		window.wikiaJWPlayer(
@@ -42,7 +46,6 @@ require([
 			action: tracker.ACTIONS.VIEW,
 			label: 'revealed'
 		});
-	    */
 	}
 
 	function onScroll() {
@@ -118,6 +121,12 @@ require([
 	}
 
 	function init() {
+		var isInAutoplayGroup = window.Wikia.AbTest.inGroup('RECOMMENDED_VIDEO_AB', 'AUTOPLAY'),
+			isInClickToPlayGroup = window.Wikia.AbTest.inGroup('RECOMMENDED_VIDEO_AB', 'CLICK_TO_PLAY');
+
+		isEnabled = isInAutoplayGroup || isInClickToPlayGroup;
+		isAutoplay = isInAutoplayGroup;
+
 		if ($unit.length && window.wikiaJWPlayer) {
 			setupPlayer();
 		}
