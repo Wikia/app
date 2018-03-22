@@ -1789,3 +1789,6 @@ include "$IP/extensions/wikia/HTTPSOptIn/HTTPSOptIn.setup.php";
 
 // Search should be enabled globally, always
 include "$IP/extensions/wikia/Search/WikiaSearch.setup.php";
+
+// Mercury auth pages related functionality - redirects, email confirmation.
+include "$IP/extensions/wikia/AuthPages/AuthPages.setup.php";
