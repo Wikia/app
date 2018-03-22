@@ -78,7 +78,16 @@ class CharacterConverter {
 
 				$sqlQuery = <<<SQL
 				UPDATE $safeTableName
-					SET $safeFieldName = CONVERT(binary CONVERT($safeFieldName using $safeSourceEncoding) using utf8mb4)
+					SET $safeFieldName = CASE
+						WHEN CONVERT(binary CONVERT($safeFieldName USING $safeSourceEncoding) USING utf8mb4) is not null 
+							THEN CONVERT(binary CONVERT($safeFieldName USING $safeSourceEncoding) USING utf8mb4)
+						WHEN CONVERT(binary CONVERT(SUBSTR($safeFieldName, 1, CHAR_LENGTH($safeFieldName) - 1) USING $safeSourceEncoding) USING utf8mb4) is not null 
+							THEN CONVERT(binary CONVERT(SUBSTR($safeFieldName, 1, CHAR_LENGTH($safeFieldName) - 1) USING $safeSourceEncoding) USING utf8mb4)
+						WHEN CONVERT(binary CONVERT(SUBSTR($safeFieldName, 1, CHAR_LENGTH($safeFieldName) - 2) USING $safeSourceEncoding) USING utf8mb4) is not null 
+							THEN CONVERT(binary CONVERT(SUBSTR($safeFieldName, 1, CHAR_LENGTH($safeFieldName) - 2) USING $safeSourceEncoding) USING utf8mb4)
+						WHEN CONVERT(binary CONVERT(SUBSTR($safeFieldName, 1, CHAR_LENGTH($safeFieldName) - 3) USING $safeSourceEncoding) USING utf8mb4) is not null 
+							THEN CONVERT(binary CONVERT(SUBSTR($safeFieldName, 1, CHAR_LENGTH($safeFieldName) - 3) USING $safeSourceEncoding) USING utf8mb4)
+					END
 					WHERE LENGTH($safeFieldName) <> CHAR_LENGTH($safeFieldName)
 SQL;
 
