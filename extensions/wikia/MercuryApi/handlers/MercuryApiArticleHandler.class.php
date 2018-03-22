@@ -98,6 +98,7 @@ class MercuryApiArticleHandler {
 			$featuredVideoData['embed']['provider'] = 'jwplayer';
 			$featuredVideoData['embed']['jsParams']['videoId'] = $featuredVideo['mediaId'];
 			$featuredVideoData['embed']['jsParams']['playlist'] = $featuredVideo['playlist'];
+			$featuredVideoData['embed']['jsParams']['videoTags'] = $featuredVideo['videoTags'];
 			$featuredVideoData['embed']['jsParams']['recommendedVideoPlaylist'] = $featuredVideo['recommendedVideoPlaylist'];
 			$featuredVideoData['metadata'] = $featuredVideo['metadata'];
 
