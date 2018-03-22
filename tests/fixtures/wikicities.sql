@@ -99,16 +99,3 @@ CREATE INDEX `cl_city_id_idx` ON `city_list_log` (`cl_city_id`);
 CREATE INDEX `cl_type_idx` ON `city_list_log` (`cl_type`);
 CREATE INDEX `cl_timestamp_idx` ON `city_list_log` (`cl_timestamp`);
 CREATE INDEX `var_city` ON `city_list_log` (`cl_var_id`,`cl_city_id`);
-
-CREATE TABLE `user_email_log` (
-  `el_id` int(10) NOT NULL PRIMARY KEY AUTOINCREMENT,
-  `user_id` int(10) NOT NULL,
-  `old_email` tinytext NOT NULL,
-  `new_email` tinytext NOT NULL,
-  `changed_by_id` int(10) NOT NULL,
-  `changed_by_ip` char(40) NOT NULL,
-  `changed_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-);
-
-CREATE INDEX `user_id` ON `user_email_log`(`user_id`,`old_email`);
-CREATE INDEX `user_id_2` ON `user_email_log`(`user_id`,`new_email`);
