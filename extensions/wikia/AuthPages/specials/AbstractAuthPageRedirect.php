@@ -58,7 +58,7 @@ abstract class AbstractAuthPageRedirect extends SpecialPage {
 			$title->isSpecial( 'Userlogout' ) ||
 			$title->isSpecial( 'Signup' ) ||
 			$title->isSpecial( 'Connect' ) ||
-			$title->isSpecial( 'UserLogin' ) ||
+			$title->isSpecial( 'Userlogin' ) ||
 			$title->isSpecial( 'UserSignup' )
 		);
 	}
