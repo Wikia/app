@@ -7,7 +7,6 @@ class UserLogoutSpecialController extends WikiaSpecialPageController {
 
 	public function index() {
 		$this->setHeaders();
-		$this->getOutput()->disallowUserJs();
 
 		$referer = $this->getContext()->getRequest()->getHeader('REFERER');
 		$redirectUrl = 'http://www.wikia.com/';
