@@ -27,9 +27,6 @@ require([
 			label: 'reveal-point'
 		});
 
-		//Remove the early return when //XW-4771 AA test is over
-		return;
-
 		/* Uncomment when the XW-4771 AA test is over
 		$unit.addClass('is-revealed');
 		!isAutoplay && $unit.addClass('is-click-to-play');
