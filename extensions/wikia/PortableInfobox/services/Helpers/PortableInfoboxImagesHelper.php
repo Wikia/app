@@ -58,19 +58,24 @@ class PortableInfoboxImagesHelper {
 		}
 		$ref = null;
 
-		\Hooks::run( 'PortableInfoboxRenderServiceHelper::extendImageData', [ $data, &$ref ] );
+		$dataAttrs = [];
+		\Hooks::run( 'PortableInfoboxRenderServiceHelper::extendImageData', [ $data, &$ref, &$dataAttrs ] );
 
 		return array_merge( $data, [
 			'ref' => $ref,
 			'height' => $imgTagDimensions['height'],
 			'width' => $imgTagDimensions['width'],
+			'originalHeight' => $dataAttrs['height'] ?? '',
+			'originalWidth' => $dataAttrs['width'] ?? '',
 			'thumbnail' => $thumbnail->getUrl(),
 			'thumbnail2x' => $thumbnail2x->getUrl(),
 			'key' => urlencode( $data['key'] ?? '' ),
 			'media-type' => isset( $data['isVideo'] ) && $data['isVideo'] ? 'video' : 'image',
-			'mercuryComponentAttrs' => json_encode( [
-				'itemContext' => 'portable-infobox',
-				'ref' => $ref
+			'fileName' => $dataAttrs['fileName'] ?? '',
+			'dataAttrs' => json_encode( $dataAttrs ),
+			'mercuryComponentAttrs' => json_encode( [   // TODO: remove it and all usages with XW-4719
+					'itemContext' => 'portable-infobox',
+					'ref' => $ref
 			] )
 		] );
 	}
@@ -80,16 +85,42 @@ class PortableInfoboxImagesHelper {
 	 * @return array
 	 */
 	public function extendImageCollectionData( $images ) {
+		// TODO: remove it and all usages with XW-4719
 		$mercuryComponentAttrs = [
-			'refs' => array_map( function ( $image ) {
-				return $image['ref'];
-			}, $images )
+			'refs' => array_map(
+				function ( $image ) {
+					return $image['ref'];
+				},
+				$images
+			)
 		];
+
+
+		$dataAttrs = array_map(
+			function ( $image ) {
+				return json_decode( $image['dataAttrs'] );
+			},
+			$images
+		);
+
+		$images = array_map(
+			function ( $image, $index ) {
+				$image['dataRef'] = $index;
+
+				return $image;
+			},
+			$images,
+			array_keys($images)
+		);
+
 		$images[0]['isFirst'] = true;
+		$images[count($images) - 1]['isLast'] = true;
 		return [
 			'images' => $images,
 			'firstImage' => $images[0],
-			'mercuryComponentAttrs' => json_encode( $mercuryComponentAttrs )
+			'dataAttrs' => json_encode( $dataAttrs ),
+			'mercuryComponentAttrs' => json_encode( $mercuryComponentAttrs ), // TODO: remove it and all usages with XW-4719
+			'menuControlIcon' => \DesignSystemHelper::renderSvg('wds-icons-menu-control', 'wds-icon')
 		];
 	}
 
