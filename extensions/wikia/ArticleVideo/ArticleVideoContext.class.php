@@ -56,7 +56,7 @@ class ArticleVideoContext {
 		// monsterhunter.wikia.com
 		3234 => [
 			312943 => 'DT6aHDR7',
-			312943 => '318952'
+			318952 => 'gFhI3dDy'
 		],
 		// naruto.wikia.com
 		1318 => [
