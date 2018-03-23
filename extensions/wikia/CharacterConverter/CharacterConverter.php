@@ -28,7 +28,7 @@ class CharacterConverter {
 		$this->preConversionCallback = $preConversionCallback;
 	}
 
-	public function convert( array $columnConfig ) {
+	public function convert() {
 		global $wgUseUnicode;
 
 		// This point forward, use utf8mb4 for all new connections! 🤞
@@ -42,6 +42,8 @@ class CharacterConverter {
 			[ 'table_name', "SUBSTRING_INDEX(table_collation,'_',1) AS table_charset" ],
 			[ 'table_schema' => $this->dbName ]
 		);
+
+		$columnConfig = $this->getColumnsConfig();
 
 		foreach ( $tables as $row ) {
 			if ( isset( $columnConfig[$row->table_name] ) ) {
@@ -63,11 +65,12 @@ class CharacterConverter {
 		$safeTableName = $this->writeConnection->addIdentifierQuotes( $tableName );
 		$safeSourceEncoding = $this->writeConnection->addIdentifierQuotes( $sourceEncoding );
 
-		call_user_func( $this->preConversionCallback, $tableName );
+		($this->preConversionCallback)($tableName, $textTypeFields);
 
 		$this->writeConnection->begin( __METHOD__ );
 
 		$this->writeConnection->query(
+			// TODO use 'unicode_ci' when possible
 			"ALTER TABLE $safeTableName CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_bin",
 			__METHOD__
 		);
@@ -103,5 +106,26 @@ SQL;
 		$this->writeConnection->query( "OPTIMIZE TABLE $safeTableName" );
 
 		wfWaitForSlaves();
+	}
+
+	/**
+	 * @return array
+	 */
+	private function getColumnsConfig(): array {
+		$columns = $this->readConnection->select(
+			'information_schema.columns',
+			[ 'table_name', 'column_name', 'character_set_name' ],
+			[ 'table_schema' => $this->dbName, 'character_set_name is not null' ]
+		);
+
+		$columnConfig = [];
+		foreach ( $columns as $column ) {
+			if ( !isset( $columnConfig[$column->table_name] ) ) {
+				$columnConfig[$column->table_name] = [];
+			}
+			$columnConfig[$column->table_name][] = $column->column_name;
+		}
+
+		return $columnConfig;
 	}
 }
