@@ -192,9 +192,6 @@ class WikiaRobots {
 			$wildcardRobot->allowPaths( $this->pathBuilder->buildPathsForSpecialPage( $page, true ) );
 		}
 
-		// Wikia ADEN-6827 Allow Grapshot to index the content
-		$robots->addRobot( $robots->createRobot( 'grapeshot' ) );
-
 		return $robots;
 	}
 
