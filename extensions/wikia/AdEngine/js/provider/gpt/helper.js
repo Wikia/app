@@ -3,7 +3,6 @@
 define('ext.wikia.adEngine.provider.gpt.helper', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adLogicPageParams',
-	'ext.wikia.adEngine.bridge',
 	'ext.wikia.adEngine.context.uapContext',
 	'ext.wikia.adEngine.provider.gpt.adDetect',
 	'ext.wikia.adEngine.provider.gpt.adElement',
@@ -26,7 +25,6 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 ], function (
 	adContext,
 	adLogicPageParams,
-	adEngineBridge,
 	uapContext,
 	adDetect,
 	AdElement,
