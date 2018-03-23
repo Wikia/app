@@ -13,7 +13,7 @@ define('wikia.articleVideo.featuredVideo.lagger', [
 	}
 
 	function getName() {
-		return 'featuredVideo'
+		return 'featuredVideo';
 	}
 
 	function isEnabled() {

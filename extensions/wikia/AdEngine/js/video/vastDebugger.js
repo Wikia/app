@@ -16,7 +16,10 @@ define('ext.wikia.adEngine.video.vastDebugger', [
 		var vastParams = vastParser.parse(vastUrl, {
 			imaAd: imaAd
 		});
+		setVastAttributesFromVastParams(element, status, vastParams);
+	}
 
+	function setVastAttributesFromVastParams(element, status, vastParams) {
 		setAttribute(element, 'data-vast-content-type', vastParams.contentType);
 		setAttribute(element, 'data-vast-creative-id', vastParams.creativeId);
 		setAttribute(element, 'data-vast-line-item-id', vastParams.lineItemId);
@@ -27,6 +30,7 @@ define('ext.wikia.adEngine.video.vastDebugger', [
 	}
 
 	return {
-		setVastAttributes: setVastAttributes
+		setVastAttributes: setVastAttributes,
+		setVastAttributesFromVastParams: setVastAttributesFromVastParams
 	};
 });

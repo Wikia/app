@@ -7,6 +7,7 @@ define('wikia.articleVideo.featuredVideo.ads', [
 	'ext.wikia.adEngine.video.articleVideoAd',
 	'ext.wikia.adEngine.video.player.jwplayer.adsTracking',
 	'ext.wikia.adEngine.video.vastDebugger',
+	'ext.wikia.adEngine.video.vastParser',
 	'wikia.articleVideo.featuredVideo.lagger',
 	'wikia.log'
 ], function (
@@ -18,6 +19,7 @@ define('wikia.articleVideo.featuredVideo.ads', [
 	articleVideoAd,
 	adsTracking,
 	vastDebugger,
+	vastParser,
 	fvLagger,
 	log
 ) {
@@ -26,9 +28,16 @@ define('wikia.articleVideo.featuredVideo.ads', [
 	var baseSrc = adContext.get('targeting.skin') === 'oasis' ? 'gpt' : 'mobile',
 		featuredVideoSlotName = 'FEATURED',
 		featuredVideoSource,
-		logGroup = 'wikia.articleVideo.featuredVideo.ads';
+		logGroup = 'wikia.articleVideo.featuredVideo.ads',
+		videoLineItemId;
 
-	return function(player, bidParams, slotTargeting) {
+	function parseVastParamsFromEvent(event) {
+		return vastParser.parse(event.tag, {
+			imaAd: event.ima && event.ima.ad
+		});
+	}
+
+	function initAds(player, bidParams, slotTargeting) {
 		var correlator,
 			featuredVideoElement = player && player.getContainer && player.getContainer(),
 			featuredVideoContainer = featuredVideoElement && featuredVideoElement.parentNode,
@@ -113,9 +122,11 @@ define('wikia.articleVideo.featuredVideo.ads', [
 			});
 
 			player.on('adRequest', function (event) {
+				var vastParams = parseVastParamsFromEvent(event);
 				slotRegistry.storeScrollY(featuredVideoSlotName);
 
-				vastDebugger.setVastAttributes(featuredVideoContainer, event.tag, 'success', event.ima && event.ima.ad);
+				videoLineItemId = vastParams.lineItemId;
+				vastDebugger.setVastAttributesFromVastParams(featuredVideoContainer, 'success', vastParams);
 
 				fvLagger.markAsReady();
 			});
@@ -129,5 +140,13 @@ define('wikia.articleVideo.featuredVideo.ads', [
 		}
 
 		adsTracking(player, trackingParams);
-	};
+	}
+
+	function getLineItemId() {
+		return videoLineItemId;
+	}
+
+	initAds.getLineItemId = getLineItemId;
+
+	return initAds;
 });

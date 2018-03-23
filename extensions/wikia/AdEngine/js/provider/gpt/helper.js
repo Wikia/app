@@ -3,6 +3,7 @@
 define('ext.wikia.adEngine.provider.gpt.helper', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adLogicPageParams',
+	'ext.wikia.adEngine.bridge',
 	'ext.wikia.adEngine.context.uapContext',
 	'ext.wikia.adEngine.provider.gpt.adDetect',
 	'ext.wikia.adEngine.provider.gpt.adElement',
@@ -21,10 +22,13 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	require.optional('ext.wikia.adEngine.ml.rabbit'),
 	require.optional('ext.wikia.adEngine.provider.gpt.sraHelper'),
 	require.optional('ext.wikia.aRecoveryEngine.instartLogic.recovery'),
-	require.optional('ext.wikia.aRecoveryEngine.pageFair.recovery')
+	require.optional('ext.wikia.aRecoveryEngine.pageFair.recovery'),
+	require.optional('wikia.articleVideo.featuredVideo.ads'),
+	require.optional('wikia.articleVideo.featuredVideo.lagger')
 ], function (
 	adContext,
 	adLogicPageParams,
+	adEngineBridge,
 	uapContext,
 	adDetect,
 	AdElement,
@@ -43,7 +47,9 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	rabbit,
 	sraHelper,
 	instartLogic,
-	pageFair
+	pageFair,
+	fvAd,
+	fvLagger
 ) {
 	'use strict';
 
@@ -52,12 +58,23 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 			'INCONTENT_PLAYER'
 		];
 
+	if (fvLagger) {
+		fvLagger.addResponseListener(function () {
+			adEngineBridge.universalAdPackage.setUapId(fvAd.getLineItemId());
+		});
+	}
+
 	function isHiddenOnStart(slotName) {
 		return hiddenSlots.indexOf(slotName) !== -1;
 	}
 
 	function isRecoverableByIL() {
 		return instartLogic && instartLogic.isEnabled() && instartLogic.isBlocking();
+	}
+
+	function getUapId() {
+		var uapId = uapContext.getUapId();
+		return uapId ? uapId.toString() : 'none';
 	}
 
 	/**
@@ -80,8 +97,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 			adIsRecoverable = extra.isPageFairRecoverable || extra.isInstartLogicRecoverable,
 			adShouldBeRecovered = isRecoveryEnabled && isBlocking && adIsRecoverable,
 			shouldPush = !isBlocking || adShouldBeRecovered,
-			slotName = slot.name,
-			uapId = uapContext.getUapId();
+			slotName = slot.name;
 
 		log(['isRecoveryEnabled, isBlocking, adIsRecoverable',
 			slot.name, isRecoveryEnabled, isBlocking, adIsRecoverable], log.levels.debug, logGroup);
@@ -131,7 +147,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 
 			slotTargetingData.passback = passbackHandler.get(slotName) || 'none';
 			slotTargetingData.wsi = slotTargeting.getWikiaSlotId(slotName, slotTargetingData.src);
-			slotTargetingData.uap = uapId ? uapId.toString() : 'none';
+			slotTargetingData.uap = getUapId();
 			slotTargetingData.outstream = slotTargeting.getOutstreamData() || 'none';
 			if (adContext.get('targeting.skin') === 'oasis') {
 				slotTargetingData.rail = doc.body.scrollWidth <= 1023 ? '0' : '1';
