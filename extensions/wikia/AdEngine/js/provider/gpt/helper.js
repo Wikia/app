@@ -22,9 +22,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	require.optional('ext.wikia.adEngine.ml.rabbit'),
 	require.optional('ext.wikia.adEngine.provider.gpt.sraHelper'),
 	require.optional('ext.wikia.aRecoveryEngine.instartLogic.recovery'),
-	require.optional('ext.wikia.aRecoveryEngine.pageFair.recovery'),
-	require.optional('wikia.articleVideo.featuredVideo.ads'),
-	require.optional('wikia.articleVideo.featuredVideo.lagger')
+	require.optional('ext.wikia.aRecoveryEngine.pageFair.recovery')
 ], function (
 	adContext,
 	adLogicPageParams,
@@ -47,9 +45,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	rabbit,
 	sraHelper,
 	instartLogic,
-	pageFair,
-	fvAd,
-	fvLagger
+	pageFair
 ) {
 	'use strict';
 
@@ -57,12 +53,6 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 		hiddenSlots = [
 			'INCONTENT_PLAYER'
 		];
-
-	if (fvLagger) {
-		fvLagger.addResponseListener(function () {
-			adEngineBridge.universalAdPackage.setUapId(fvAd.getLineItemId());
-		});
-	}
 
 	function isHiddenOnStart(slotName) {
 		return hiddenSlots.indexOf(slotName) !== -1;

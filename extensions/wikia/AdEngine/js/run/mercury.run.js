@@ -17,7 +17,8 @@ require([
 	'ext.wikia.adEngine.tracking.adInfoListener',
 	'wikia.geo',
 	'wikia.instantGlobals',
-	'wikia.window'
+	'wikia.window',
+	require.optional('wikia.articleVideo.featuredVideo.lagger')
 ], function (
 	adEngineBridge,
 	adContext,
@@ -36,7 +37,8 @@ require([
 	adInfoListener,
 	geo,
 	instantGlobals,
-	win
+	win,
+	fvLagger
 ) {
 	'use strict';
 
@@ -66,6 +68,12 @@ require([
 
 		if (geo.isProperGeo(instantGlobals.wgAdDriverA9BidderCountries)) {
 			a9.call();
+		}
+
+		if (fvLagger && context.opts.isFVUapKeyValueEnabled) {
+			fvLagger.addResponseListener(function (lineItemId) {
+				adEngineBridge.universalAdPackage.setUapId(lineItemId);
+			});
 		}
 	}
 

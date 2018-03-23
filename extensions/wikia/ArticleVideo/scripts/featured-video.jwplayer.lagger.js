@@ -6,7 +6,8 @@ define('wikia.articleVideo.featuredVideo.lagger', [
 	'use strict';
 
 	var hasResponse = false,
-		onResponseCallbacks = [];
+		onResponseCallbacks = [],
+		lastAdLineItemId = null;
 
 	function addResponseListener(callback) {
 		onResponseCallbacks.push(callback);
@@ -20,7 +21,9 @@ define('wikia.articleVideo.featuredVideo.lagger', [
 		return adContext.get('opts.isFVDelayEnabled') && adContext.get('targeting.hasFeaturedVideo');
 	}
 
-	function markAsReady() {
+	function markAsReady(lineItemId) {
+		lastAdLineItemId = lineItemId;
+
 		if (!hasResponse) {
 			hasResponse = true;
 			onResponseCallbacks.start();
@@ -31,7 +34,7 @@ define('wikia.articleVideo.featuredVideo.lagger', [
 		hasResponse = false;
 		onResponseCallbacks = [];
 		lazyQueue.makeQueue(onResponseCallbacks, function (callback) {
-			callback();
+			callback(lastAdLineItemId);
 		});
 	}
 
