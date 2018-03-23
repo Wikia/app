@@ -61,6 +61,14 @@ require([
 	});
 	win.loadCustomAd = adEngineBridge.loadCustomAd(customAdsLoader.loadCustomAd);
 
+	function passFVLineItemIdToUAP() {
+		if (fvLagger && context.opts.isFVUapKeyValueEnabled) {
+			fvLagger.addResponseListener(function (lineItemId) {
+				adEngineBridge.universalAdPackage.setUapId(lineItemId);
+			});
+		}
+	}
+
 	function callBiddersOnConsecutivePageView() {
 		if (geo.isProperGeo(instantGlobals.wgAdDriverPrebidBidderCountries)) {
 			prebid.call();
@@ -70,11 +78,7 @@ require([
 			a9.call();
 		}
 
-		if (fvLagger && context.opts.isFVUapKeyValueEnabled) {
-			fvLagger.addResponseListener(function (lineItemId) {
-				adEngineBridge.universalAdPackage.setUapId(lineItemId);
-			});
-		}
+		passFVLineItemIdToUAP();
 	}
 
 	mercuryListener.onLoad(function () {
@@ -85,6 +89,8 @@ require([
 		if (geo.isProperGeo(instantGlobals.wgAdDriverPrebidBidderCountries)) {
 			prebid.call();
 		}
+
+		passFVLineItemIdToUAP();
 
 		adInfoListener.run();
 		slotStateMonitor.run();
