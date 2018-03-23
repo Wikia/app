@@ -83,7 +83,7 @@ class WikiFactoryPage extends SpecialPage {
 		}
 		else {
 			$subpage = ( $subpage == "/" ) ? null : $subpage;
-			$oWiki = $subpage ? $this->getWikiData( $subpage ) : false;
+			$oWiki = $this->getWikiData( $subpage );
 
 			if( !isset( $oWiki->city_id )) {
 				$this->doWikiSelector();
@@ -105,13 +105,13 @@ class WikiFactoryPage extends SpecialPage {
 	 *
 	 * @param mixed $subpage:
 	 *
-	 * @return mixed: database row from city_list
+	 * @return mixed|int database row from city_list
 	 */
 	private function getWikiData( $subpage ) {
-		global $wgRequest, $wgWikiaBaseDomain;
+		global $wgWikiaBaseDomain;
 
-		$domain	= $wgRequest->getVal( "wpCityDomain", null );
-		$cityid	= $wgRequest->getVal( "cityid", null );
+		$domain	= $this->getRequest()->getVal( "wpCityDomain", null );
+		$cityid	= $this->getRequest()->getVal( "cityid", null );
 		$tab = "variables";
 		if( is_null( $cityid ) && ( isset( $subpage ) || isset( $domain ) ) ) {
 
@@ -189,7 +189,8 @@ class WikiFactoryPage extends SpecialPage {
 		if ( !isset($this->mVariableName) ) {
 			$this->mVariableName = "";
 		}
-		return WikiFactory::getWikiByID( $cityid );
+
+		return !is_null( $cityid ) ? WikiFactory::getWikiByID( $cityid ) : false;
 	}
 
 	/**

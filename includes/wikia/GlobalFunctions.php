@@ -1562,14 +1562,13 @@ function wfHttpsToHttp( $url ) {
 }
 
 function wfHttpsAllowedForURL( $url ): bool {
-	global $wgWikiaBaseDomain, $wgDevDomain, $wgWikiaEnvironment;
-	$parsedURL = parse_url( $url );
-	if ( $parsedURL === false ) {
+	global $wgWikiaBaseDomain, $wgDevDomain, $wgWikiaEnvironment, $wgDevelEnvironment;
+	$host = parse_url( $url, PHP_URL_HOST );
+	if ( $host === false ) {
 		return false;
 	}
 
-	$host = $parsedURL['host'];
-	if ( !empty( $wgDevDomain ) ) {
+	if ( $wgDevelEnvironment && !empty( $wgDevDomain ) ) {
 		$server = str_replace( ".{$wgDevDomain}", '', $host );
 	} elseif ( $wgWikiaEnvironment !== WIKIA_ENV_PROD ) {
 		$server = preg_replace(

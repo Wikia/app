@@ -14,8 +14,6 @@ export const getConfig = mercuryListener => ({
 	slotsToEnable: [
 		'MOBILE_IN_CONTENT',
 		'MOBILE_PREFOOTER',
-		// TODO remove in ADEN-6719
-		'MOBILE_BOTTOM_LEADERBOARD',
 		'BOTTOM_LEADERBOARD'
 	],
 
