@@ -23,6 +23,7 @@ class MultiwikifinderSpecialPage extends SpecialPage {
             list( $limit, $offset ) = wfCheckLimits();
         }
         $this->mfp = new MultiwikifinderPage($this->mName, $page, $limit, $offset);
+		$this->mfp->setContext( $this->getContext() );
 
 		if (!empty($show)) {
             $this->setHeaders();
@@ -36,7 +37,7 @@ class MultiwikifinderSpecialPage extends SpecialPage {
     function getResult() { return $this->mfp->getResult(); }
 }
 
-class MultiwikifinderPage {
+class MultiwikifinderPage extends ContextSource  {
 	private $data = array();
 	private $mShow = true;
 	const ORDER_ROWS = 500;
@@ -122,7 +123,7 @@ class MultiwikifinderPage {
 				'pages',
 				array( 'page_latest, page_wikia_id, page_id, page_is_redirect' ),
 				array(
-					'page_title'		=> mb_strtoupper( mb_substr( $this->mPageTitle, 0, 1 ) ) . mb_substr( $this->mPageTitle, 1 ),
+					'page_title'		=> $this->getLanguage()->ucfirst( $this->mPageTitle ),
 					'page_namespace' 	=> $this->mPageNS,
 				),
 				__METHOD__,
