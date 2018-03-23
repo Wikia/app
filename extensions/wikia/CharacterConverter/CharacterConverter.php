@@ -55,7 +55,7 @@ class CharacterConverter {
 
 		$safeDbName = $this->writeConnection->addIdentifierQuotes( $this->dbName );
 		$this->writeConnection->query(
-			"ALTER DATABASE $safeDbName CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci",
+			"ALTER DATABASE $safeDbName DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci",
 			__METHOD__
 		);
 	}
@@ -75,6 +75,11 @@ class CharacterConverter {
 		$this->writeConnection->begin( __METHOD__ );
 
 		try {
+			$this->writeConnection->query(
+				"ALTER TABLE $safeTableName DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci",
+				__METHOD__
+			);
+
 			foreach ( $textTypeFields as $filedConfig ) {
 				try {
 					$this->migrateColumn(
@@ -95,11 +100,6 @@ class CharacterConverter {
 					);
 				}
 			}
-
-			$this->writeConnection->query(
-				"ALTER TABLE $safeTableName CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci",
-				__METHOD__
-			);
 		} catch ( Exception $e ) {
 			$this->writeConnection->rollback( __METHOD__ );
 			throw $e;
