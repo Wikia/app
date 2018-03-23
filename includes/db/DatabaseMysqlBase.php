@@ -49,7 +49,7 @@ abstract class DatabaseMysqlBase extends DatabaseBase {
 	 * @throws DBConnectionError
 	 */
 	function open( $server, $user, $password, $dbName ) {
-		global $wgAllDBsAreLocalhost, $wgDBmysql5, $wgSQLMode;
+		global $wgAllDBsAreLocalhost, $wgDBmysql5, $wgSQLMode, $wgUseUnicode;
 		wfProfileIn( __METHOD__ );
 
 		# Debugging hack -- fake cluster
@@ -114,6 +114,11 @@ abstract class DatabaseMysqlBase extends DatabaseBase {
 		// This may engage various charset conversions.
 		if ( $wgDBmysql5 ) {
 			$this->query( 'SET NAMES utf8', __METHOD__ );
+		} elseif ( $wgUseUnicode ) {
+			# <Wikia>
+			// SUS-4335: this is temporary, needs a better place
+			$this->query( 'SET NAMES utf8mb4', __METHOD__ );
+			# </Wikia>
 		} else {
 			# <Wikia>
 			# Wikia databases use latin1 charset

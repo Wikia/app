@@ -594,8 +594,11 @@ class LoadBalancer {
 	 * @return DatabaseBase
 	 */
 	function openConnection( $i, $wiki = false ) {
+		global $wgUTF8WikiDb;
+
 		wfProfileIn( __METHOD__ );
 		if ( $wiki !== false ) {
+			// TODO SUS-4335 check if we should use UTF before opening connection to other wiki DB
 			$conn = $this->openForeignConnection( $i, $wiki );
 			wfProfileOut( __METHOD__);
 			return $conn;
@@ -605,7 +608,17 @@ class LoadBalancer {
 		} else {
 			$server = $this->mServers[$i];
 			$server['serverIndex'] = $i;
-			$conn = $this->reallyOpenConnection( $server, false );
+
+			# <Wikia>
+			$globalStateWrapper = new Wikia\Util\GlobalStateWrapper( [
+				'wgUseUnicode' => $wgUTF8WikiDb
+			] );
+
+			$conn = $globalStateWrapper->wrap( function () use ( $server ) {
+				return $this->reallyOpenConnection( $server, false );
+			} );
+			# </Wikia>
+
 			if ( $conn->isOpen() ) {
 				$this->mConns['local'][$i][0] = $conn;
 			} else {

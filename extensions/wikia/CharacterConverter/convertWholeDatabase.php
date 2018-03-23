@@ -23,6 +23,9 @@ class ConvertWholeDatabase extends Maintenance {
 		} );
 
 		$characterConverter->convert();
+
+		$wiki = WikiFactory::getWikiByDB($dbName);
+		WikiFactory::setVarByName('wgUTF8WikiDb', $wiki->city_id, true);
 	}
 }
 

@@ -1854,10 +1854,16 @@ $wgWikiaBaseDomainRegex = '(wikia\\.com|wikia-staging\\.com|wikia-dev\\.(com|us|
 $wgEnableOpenXSPC = true;
 
 /**
- * Whether to use utf8mb4 connection charset when connecting to this wiki database.
+ * Whether to use utf8mb4 connection charset when connecting mysql databases.
  * Defaults to {@code false}.
  */
 $wgUseUnicode = false;
+
+/**
+ * Whether to use utf8mb4 connection charset when connecting this wiki database.
+ * Defaults to {@code false}.
+ */
+$wgUTF8WikiDb = false;
 
 /**
  * Enable recovery
