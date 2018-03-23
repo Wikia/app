@@ -19,7 +19,7 @@ class ConvertWholeDatabase extends Maintenance {
 
 		$characterConverter = CharacterConverter::newFromDatabase( $dbName );
 		$characterConverter->registerPreConversionCallback( function ( $tableName, $textColumns ) {
-			$this->output( "Converting $tableName... columns: [" . implode(', ', $textColumns) . "]\n" );
+			$this->output( "Converting $tableName... columns: [" . implode(', ', array_keys($textColumns)) . "]\n" );
 		} );
 
 		$characterConverter->convert();

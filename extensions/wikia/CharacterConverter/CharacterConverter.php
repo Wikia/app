@@ -47,11 +47,17 @@ class CharacterConverter {
 
 		foreach ( $tables as $row ) {
 			if ( isset( $columnConfig[$row->table_name] ) ) {
-				$this->processSingleTable( $row->table_name, $row->table_charset, $columnConfig[$row->table_name] );
+				$this->processSingleTable( $row->table_name, $columnConfig[$row->table_name] );
 			} else {
-				$this->processSingleTable( $row->table_name, $row->table_charset );
+				$this->processSingleTable( $row->table_name );
 			}
 		}
+
+		$safeDbName = $this->writeConnection->addIdentifierQuotes( $this->dbName );
+		$this->writeConnection->query(
+			"ALTER DATABASE $safeDbName CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci",
+			__METHOD__
+		);
 	}
 
 	/**
@@ -61,41 +67,39 @@ class CharacterConverter {
 	 *
 	 * @throws Exception
 	 */
-	private function processSingleTable( string $tableName, string $sourceEncoding, array $textTypeFields = [] ) {
+	private function processSingleTable( string $tableName, array $textTypeFields = [] ) {
 		$safeTableName = $this->writeConnection->addIdentifierQuotes( $tableName );
-		$safeSourceEncoding = $this->writeConnection->addIdentifierQuotes( $sourceEncoding );
 
 		($this->preConversionCallback)($tableName, $textTypeFields);
 
 		$this->writeConnection->begin( __METHOD__ );
 
-		$this->writeConnection->query(
-			// TODO use 'unicode_ci' when possible
-			"ALTER TABLE $safeTableName CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_bin",
-			__METHOD__
-		);
-
 		try {
-			foreach ( $textTypeFields as $fieldName ) {
-				$safeFieldName = $this->writeConnection->addIdentifierQuotes( $fieldName );
-
-				$sqlQuery = <<<SQL
-				UPDATE $safeTableName
-					SET $safeFieldName = CASE
-						WHEN CONVERT(binary CONVERT($safeFieldName USING $safeSourceEncoding) USING utf8mb4) is not null 
-							THEN CONVERT(binary CONVERT($safeFieldName USING $safeSourceEncoding) USING utf8mb4)
-						WHEN CONVERT(binary CONVERT(SUBSTR($safeFieldName, 1, CHAR_LENGTH($safeFieldName) - 1) USING $safeSourceEncoding) USING utf8mb4) is not null 
-							THEN CONVERT(binary CONVERT(SUBSTR($safeFieldName, 1, CHAR_LENGTH($safeFieldName) - 1) USING $safeSourceEncoding) USING utf8mb4)
-						WHEN CONVERT(binary CONVERT(SUBSTR($safeFieldName, 1, CHAR_LENGTH($safeFieldName) - 2) USING $safeSourceEncoding) USING utf8mb4) is not null 
-							THEN CONVERT(binary CONVERT(SUBSTR($safeFieldName, 1, CHAR_LENGTH($safeFieldName) - 2) USING $safeSourceEncoding) USING utf8mb4)
-						WHEN CONVERT(binary CONVERT(SUBSTR($safeFieldName, 1, CHAR_LENGTH($safeFieldName) - 3) USING $safeSourceEncoding) USING utf8mb4) is not null 
-							THEN CONVERT(binary CONVERT(SUBSTR($safeFieldName, 1, CHAR_LENGTH($safeFieldName) - 3) USING $safeSourceEncoding) USING utf8mb4)
-					END
-					WHERE LENGTH($safeFieldName) <> CHAR_LENGTH($safeFieldName)
-SQL;
-
-				$this->writeConnection->query( $sqlQuery, __METHOD__ );
+			foreach ( $textTypeFields as $filedConfig ) {
+				try {
+					$this->migrateColumn(
+						$tableName,
+						$filedConfig['columnName'],
+						$filedConfig['columnType'],
+						$filedConfig['sourceCharset'],
+						$filedConfig['targetCollationName']
+					);
+				} catch (Exception $e) {
+					// On duplicate key fallback to binary collation or crash
+					$this->migrateColumn(
+						$tableName,
+						$filedConfig['columnName'],
+						$filedConfig['columnType'],
+						$filedConfig['sourceCharset'],
+						'utf8mb4_bin'
+					);
+				}
 			}
+
+			$this->writeConnection->query(
+				"ALTER TABLE $safeTableName CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci",
+				__METHOD__
+			);
 		} catch ( Exception $e ) {
 			$this->writeConnection->rollback( __METHOD__ );
 			throw $e;
@@ -103,6 +107,7 @@ SQL;
 
 		$this->writeConnection->commit( __METHOD__ );
 
+		// TODO check if OPTIMIZE gives us anything
 		$this->writeConnection->query( "OPTIMIZE TABLE $safeTableName" );
 
 		wfWaitForSlaves();
@@ -114,8 +119,8 @@ SQL;
 	private function getColumnsConfig(): array {
 		$columns = $this->readConnection->select(
 			'information_schema.columns',
-			[ 'table_name', 'column_name', 'character_set_name' ],
-			[ 'table_schema' => $this->dbName, 'character_set_name is not null' ]
+			[ 'table_name', 'column_name', 'column_type', 'character_set_name', 'collation_name' ],
+			[ 'table_schema' => $this->dbName, 'character_set_name is not null', 'character_set_name <> \'binary\'' ]
 		);
 
 		$columnConfig = [];
@@ -123,9 +128,45 @@ SQL;
 			if ( !isset( $columnConfig[$column->table_name] ) ) {
 				$columnConfig[$column->table_name] = [];
 			}
-			$columnConfig[$column->table_name][] = $column->column_name;
+			$columnConfig[$column->table_name][$column->column_name] = [
+				'columnName' => $column->column_name,
+				'columnType' => $column->column_type,
+				// TODO check if it shouldn't always be latin1
+				'sourceCharset' => $column->character_set_name,
+				'targetCollationName' => substr($column->collation_name, -3) === 'bin' ?
+					'utf8mb4_bin' :
+					'utf8mb4_unicode_ci',
+			];
 		}
 
 		return $columnConfig;
+	}
+
+	private function migrateColumn($tableName, $columnName, $columnType, $sourceCharset, $targetCollation) {
+		$safeTableName = $this->writeConnection->addIdentifierQuotes( $tableName );
+		$safeColumnName = $this->writeConnection->addIdentifierQuotes( $columnName );
+		$safeSourceCharset = $this->writeConnection->addIdentifierQuotes( $sourceCharset );
+
+		$this->writeConnection->query(
+			"ALTER TABLE $safeTableName MODIFY $safeColumnName $columnType CHARACTER SET utf8mb4 collate $targetCollation",
+			__METHOD__
+		);
+
+		$sqlQuery = <<<SQL
+				UPDATE $safeTableName
+					SET $safeColumnName = CASE
+						WHEN CONVERT(binary CONVERT($safeColumnName USING $safeSourceCharset) USING utf8mb4) is not null
+							THEN CONVERT(binary CONVERT($safeColumnName USING $safeSourceCharset) USING utf8mb4)
+						WHEN CONVERT(binary CONVERT(SUBSTR($safeColumnName, 1, CHAR_LENGTH($safeColumnName) - 1) USING $safeSourceCharset) USING utf8mb4) is not null
+							THEN CONVERT(binary CONVERT(SUBSTR($safeColumnName, 1, CHAR_LENGTH($safeColumnName) - 1) USING $safeSourceCharset) USING utf8mb4)
+						WHEN CONVERT(binary CONVERT(SUBSTR($safeColumnName, 1, CHAR_LENGTH($safeColumnName) - 2) USING $safeSourceCharset) USING utf8mb4) is not null
+							THEN CONVERT(binary CONVERT(SUBSTR($safeColumnName, 1, CHAR_LENGTH($safeColumnName) - 2) USING $safeSourceCharset) USING utf8mb4)
+						WHEN CONVERT(binary CONVERT(SUBSTR($safeColumnName, 1, CHAR_LENGTH($safeColumnName) - 3) USING $safeSourceCharset) USING utf8mb4) is not null
+							THEN CONVERT(binary CONVERT(SUBSTR($safeColumnName, 1, CHAR_LENGTH($safeColumnName) - 3) USING $safeSourceCharset) USING utf8mb4)
+					END
+					WHERE LENGTH($safeColumnName) <> CHAR_LENGTH($safeColumnName)
+SQL;
+
+		$this->writeConnection->query( $sqlQuery, __METHOD__ );
 	}
 }
