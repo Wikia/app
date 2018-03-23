@@ -34,7 +34,8 @@ define('ext.wikia.adEngine.template.porvata', [
 	var fallbackBidders = [
 			'appnexusAst',
 			'beachfront',
-			'rubicon'
+			'rubicon',
+			'wikiaVideo'
 		],
 		logGroup = 'ext.wikia.adEngine.template.porvata',
 		videoAspectRatio = 640 / 360;
