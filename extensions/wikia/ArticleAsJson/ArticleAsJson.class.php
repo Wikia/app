@@ -297,11 +297,15 @@ class ArticleAsJson {
 				$mediaObj = self::createMediaObject( $details, $image['name'], $caption, $linkHref );
 				$mediaObj['mediaAttr'] = json_encode( $mediaObj );
 				$mediaObj['galleryRef'] = $index;
-				$mediaObj['thumbnailUrl'] = VignetteRequest::fromUrl( $mediaObj['url'] )
-					->zoomCrop()
-					->width( 195 )
-					->height( 195 )
-					->url();
+				try {
+					$mediaObj['thumbnailUrl'] = VignetteRequest::fromUrl( $mediaObj['url'] )
+						->zoomCrop()
+						->width( 195 )
+						->height( 195 )
+						->url();
+				} catch (InvalidArgumentException $e) {
+					$mediaObj['thumbnailUrl'] = '';
+				}
 
 				$media[] = $mediaObj;
 
@@ -408,9 +412,15 @@ class ArticleAsJson {
 	}
 
 	private static function getThumbnailUrlForWidth( string $url, int $requestedWidth ) {
-		return VignetteRequest::fromUrl( $url )
-			->scaleToWidth( $requestedWidth )
-			->url();
+		try {
+			$url = VignetteRequest::fromUrl( $url )
+				->scaleToWidth( $requestedWidth )
+				->url();
+		} catch(InvalidArgumentException $e) {
+			$url = '';
+		}
+
+		return $url;
 	}
 
 	public static function onPageRenderingHash( &$confstr ) {
