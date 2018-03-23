@@ -73,6 +73,7 @@ class ArticleVideoContext {
 				$videoData = array_merge( $videoData, $details );
 
 				$videoData['duration'] = WikiaFileHelper::formatDuration( $details['playlist'][0]['duration'] );
+				$videoData['videoTags'] = $details['playlist'][0]['tags'];
 				$videoData['metadata'] = self::getVideoMetaData( $videoData );
 				$videoData['recommendedLabel'] = $wg->featuredVideoRecommendedVideosLabel;
 				$videoData['recommendedVideoPlaylist'] = $wg->recommendedVideoPlaylist;
