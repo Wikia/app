@@ -131,8 +131,8 @@ class CharacterConverter {
 			$columnConfig[$column->table_name][$column->column_name] = [
 				'columnName' => $column->column_name,
 				'columnType' => $column->column_type,
-				// TODO check if it shouldn't always be latin1
-				'sourceCharset' => $column->character_set_name,
+				// don't use column charset as always use latin1 connection
+				'sourceCharset' => 'latin1',
 				'targetCollationName' => substr($column->collation_name, -3) === 'bin' ?
 					'utf8mb4_bin' :
 					'utf8mb4_unicode_ci',
