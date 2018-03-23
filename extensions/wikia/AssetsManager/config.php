@@ -175,7 +175,6 @@ $config['recirculation_js'] = [
 	'assets' => [
 		'//extensions/wikia/Recirculation/js/tracker.js',
 		'//extensions/wikia/Recirculation/js/utils.js',
-		'//extensions/wikia/Recirculation/js/helpers/FandomHelper.js',
 		'//extensions/wikia/Recirculation/js/helpers/DiscussionsHelper.js',
 		'//extensions/wikia/Recirculation/js/helpers/CuratedContentHelper.js',
 		'//extensions/wikia/Recirculation/js/helpers/LiftigniterHelper.js',

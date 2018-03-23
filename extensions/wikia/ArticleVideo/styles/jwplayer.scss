@@ -91,7 +91,11 @@
 		z-index: 1;
 	}
 
-	&__wrapper.is-removed {
-		display: none;
+	&__wrapper {
+		margin-bottom: 18px;
+
+		&.is-removed {
+			display: none;
+		}
 	}
 }
