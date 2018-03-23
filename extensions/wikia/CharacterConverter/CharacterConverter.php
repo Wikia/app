@@ -58,6 +58,8 @@ class CharacterConverter {
 			"ALTER DATABASE $safeDbName DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci",
 			__METHOD__
 		);
+
+		wfWaitForSlaves();
 	}
 
 	/**
@@ -107,10 +109,7 @@ class CharacterConverter {
 
 		$this->writeConnection->commit( __METHOD__ );
 
-		// TODO check if OPTIMIZE gives us anything
 		$this->writeConnection->query( "OPTIMIZE TABLE $safeTableName" );
-
-		wfWaitForSlaves();
 	}
 
 	/**
