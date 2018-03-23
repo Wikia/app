@@ -84,8 +84,8 @@ class ChatAjax {
 		if ( $res['canChat'] ) {
 			$roomId = $wgRequest->getVal( 'roomId' );
 			$cityIdFromRoom = ChatServerApiClient::getCityIdFromRoomId( $roomId );
-			$cityIdHash = md5($wgCityId.$wgServer.$wgScriptPath);
-			if ( $cityIdHash !== $cityIdFromRoom ) {
+
+			if ( $wgCityId !== $cityIdFromRoom ) {
 				$res['canChat'] = false; // don't let the user chat in the room they requested.
 				$res['errorMsg'] = wfMessage( 'chat-room-is-not-on-this-wiki' )->text();
 			}
