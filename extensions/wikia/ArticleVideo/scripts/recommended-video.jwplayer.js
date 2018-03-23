@@ -16,10 +16,18 @@ require([
 		$actualVideo = null,
 		currentItemNumber = 1,
 		isExpanded = false,
-		isAutoplay = true,
+		isAutoplay = false,
 		initialPlay = true;
 
 	function reveal() {
+		tracker.track({
+			category: 'related-video-module',
+			trackingMethod: 'analytics',
+			action: tracker.ACTIONS.IMPRESSION,
+			label: 'reveal-point'
+		});
+
+		/* Uncomment when the XW-4771 AA test is over
 		$unit.addClass('is-revealed');
 		!isAutoplay && $unit.addClass('is-click-to-play');
 		window.wikiaJWPlayer(
@@ -30,10 +38,11 @@ require([
 
 		tracker.track({
 			category: 'related-video-module',
-			trackingMethod: 'both',
+			trackingMethod: 'analytics',
 			action: tracker.ACTIONS.VIEW,
-			label: 'recommended-video-revealed'
+			label: 'revealed'
 		});
+	    */
 	}
 
 	function onScroll() {
@@ -102,7 +111,7 @@ require([
 
 		tracker.track({
 			category: 'related-video-module',
-			trackingMethod: 'both',
+			trackingMethod: 'analytics',
 			action: tracker.ACTIONS.VIEW,
 			label: 'playlist-item-start'
 		});
@@ -148,7 +157,7 @@ require([
 
 			tracker.track({
 				category: 'related-video-module',
-				trackingMethod: 'both',
+				trackingMethod: 'analytics',
 				action: tracker.ACTIONS.CLICK,
 				label: 'playlist-item'
 			});
@@ -159,7 +168,7 @@ require([
 
 			tracker.track({
 				category: 'related-video-module',
-				trackingMethod: 'both',
+				trackingMethod: 'analytics',
 				action: tracker.ACTIONS.CLICK,
 				label: 'playlist-item'
 			});
@@ -222,7 +231,7 @@ require([
 
 			tracker.track({
 				category: 'related-video-module',
-				trackingMethod: 'both',
+				trackingMethod: 'analytics',
 				action: tracker.ACTIONS.VIEW,
 				label: 'expanded'
 			});
