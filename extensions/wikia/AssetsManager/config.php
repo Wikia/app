@@ -1769,15 +1769,6 @@ $config['qualaroo_blocking_js'] = [
 	],
 ];
 
-/** Optimizely Blocking **/
-$config['optimizely_blocking_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'oasis', 'wikiamobile' ],
-	'assets' => [
-		'//extensions/wikia/Optimizely/scripts/OptimizelyBlocking.js',
-	],
-];
-
 /** DesignSystem extension */
 $config['design_system_js'] = [
 	'type' => AssetsManager::TYPE_JS,

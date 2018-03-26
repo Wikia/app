@@ -228,11 +228,6 @@ ve.init.wikia.ViewPageTarget.prototype.onToolbarSaveButtonClick = function () {
 		veTrack( { action: 've-save-button-click' } );
 	}
 
-	if ( window.veSourceEntryPoint ) {
-		window.optimizely = window.optimizely || [];
-		window.optimizely.push( ['trackEvent', 've-save-button-click'] );
-	}
-
 	ve.track( 'wikia', {
 		action: ve.track.actions.CLICK,
 		label: 'button-publish',
@@ -272,10 +267,6 @@ ve.init.wikia.ViewPageTarget.prototype.updateToolbarSaveButtonState = function (
 		!this.toolbarSaveButtonEnableTracked &&
 		( this.toolbarSaveButtonEnableTracked = !this.toolbarSaveButton.isDisabled() )
 	) {
-		if ( window.veSourceEntryPoint !== undefined ) {
-			window.optimizely = window.optimizely || [];
-			window.optimizely.push( ['trackEvent', 've-save-button-enable'] );
-		}
 		ve.track( 'wikia', {
 			action: ve.track.actions.ENABLE,
 			label: 'button-publish',
