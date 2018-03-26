@@ -181,7 +181,11 @@ module.exports = function (config) {
 
 			// Image Lazy Loading
 			'extensions/wikia/ImageLazyLoad/js/ImgLzy.module.js',
-			'extensions/wikia/ImageLazyLoad/spec/ImgLzy.spec.js'
+			'extensions/wikia/ImageLazyLoad/spec/ImgLzy.spec.js',
+
+			// Global Shortcuts
+			'extensions/wikia/GlobalShortcuts/scripts/PageActions.js',
+			'extensions/wikia/GlobalShortcuts/scripts/spec/PageActions.spec.js',
 		]
 	});
 };
