@@ -121,11 +121,10 @@ require([
 	}
 
 	function init() {
-		var isInAutoplayGroup = window.Wikia.AbTest.inGroup('RECOMMENDED_VIDEO_AB', 'AUTOPLAY'),
-			isInClickToPlayGroup = window.Wikia.AbTest.inGroup('RECOMMENDED_VIDEO_AB', 'CLICK_TO_PLAY');
+		var isInClickToPlayGroup = window.Wikia.AbTest.inGroup('RECOMMENDED_VIDEO_AB', 'CLICK_TO_PLAY');
 
-		isEnabled = isInAutoplayGroup || isInClickToPlayGroup;
-		isAutoplay = isInAutoplayGroup;
+		isAutoplay = window.Wikia.AbTest.inGroup('RECOMMENDED_VIDEO_AB', 'AUTOPLAY');
+		isEnabled = isAutoplay || isInClickToPlayGroup;
 
 		if ($unit.length && window.wikiaJWPlayer) {
 			setupPlayer();
