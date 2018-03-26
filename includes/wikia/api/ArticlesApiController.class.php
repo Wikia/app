@@ -1008,8 +1008,6 @@ class ArticlesApiController extends WikiaApiController {
 
 		$result = [
 			'content' => $content,
-			'media' => $articleContent->media,
-			'users' => $articleContent->users,
 			'categories' => $categories,
 			// The same transformation that happens in OutputPage::setPageTitle:
 			'displayTitle' => Sanitizer::stripAllTags( $parsedArticle->getTitleText()
