@@ -44,7 +44,6 @@ $config['adengine2_desktop_js'] = [
 		'//extensions/wikia/AdEngine/js/AdDecoratorPageDimensions.js',
 		'//extensions/wikia/AdEngine/js/AdEngine2.js',
 		'//extensions/wikia/AdEngine/js/AdEngineRunner.js',
-		'//extensions/wikia/AdEngine/js/AdLogicDartSubdomain.js',
 		'//extensions/wikia/AdEngine/js/AdLogicPageDimensions.js',
 		'//extensions/wikia/AdEngine/js/AdLogicPageParams.js',
 		'//extensions/wikia/AdEngine/js/AdLogicPageViewCounter.js',
@@ -53,7 +52,6 @@ $config['adengine2_desktop_js'] = [
 		'//extensions/wikia/AdEngine/js/context/adContext.js',
 		'//extensions/wikia/AdEngine/js/context/slotsContext.js',
 		'//extensions/wikia/AdEngine/js/context/uapContext.js',
-		'//extensions/wikia/AdEngine/js/DartUrl.js',
 		'//extensions/wikia/AdEngine/js/DOMElementTweaker.js',
 		'//extensions/wikia/AdEngine/js/lookup/services.js',
 		'//extensions/wikia/AdEngine/js/MessageListener.js',
@@ -61,7 +59,6 @@ $config['adengine2_desktop_js'] = [
 		'//extensions/wikia/AdEngine/js/SlotTweaker.js',
 		'//extensions/wikia/AdEngine/js/pageFairDetection.js',
 		'//extensions/wikia/AdEngine/js/babDetection.js',
-		'//extensions/wikia/AdEngine/js/WikiaDartHelper.js',
 		'//extensions/wikia/AdEngine/js/config/desktop.js',
 		'//extensions/wikia/AdEngine/js/provider/btfBlocker.js',
 		'//extensions/wikia/AdEngine/js/provider/directGpt.js',
@@ -313,8 +310,7 @@ $config['adengine2_porvata_js'] = [
 		'//extensions/wikia/AdEngine/js/video/player/porvata/moatVideoTrackerScript.js',
 		'//extensions/wikia/AdEngine/js/video/player/porvata/porvata.js',
 		'//extensions/wikia/AdEngine/js/video/player/porvata/porvataPlayerFactory.js',
-		'//extensions/wikia/AdEngine/js/video/player/porvata/porvataTracker.js',
-		'//extensions/wikia/AdEngine/js/video/player/porvata/vastLogger.js'
+		'//extensions/wikia/AdEngine/js/video/player/porvata/porvataTracker.js'
 	],
 ];
 
@@ -836,7 +832,6 @@ $config['mobile_base_ads_js'] = [
 		'//extensions/wikia/AdEngine/js/AdLogicPageParams.js',
 		'//extensions/wikia/AdEngine/js/AdTracker.js',
 		'//extensions/wikia/AdEngine/js/utils/timeBuckets.js',
-		'//extensions/wikia/AdEngine/js/DartUrl.js',
 		'//extensions/wikia/AdEngine/js/DOMElementTweaker.js',
 		'//extensions/wikia/AdEngine/js/MessageListener.js',
 		'//extensions/wikia/AdEngine/js/SlotTracker.js',

@@ -16,7 +16,7 @@ define('ext.wikia.aRecoveryEngine.adBlockRecovery', [
 ) {
 	'use strict';
 
-	var customLogEndpoint = '/wikia.php?controller=ARecoveryEngineApi&method=getLogInfo&kind=',
+	var customLogEndpoint = win.wgScriptPath + '/wikia.php?controller=ARecoveryEngineApi&method=getLogInfo&kind=',
 		logGroup = 'ext.wikia.aRecoveryEngine.adBlockRecovery';
 
 	function getName() {
