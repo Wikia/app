@@ -1,18 +1,13 @@
 <?php
 
 class ArticleAsJson {
-	// TODO: remove it and all usages with XW-4719
-	const SIMPLYFY_RENDERING_QP = 'simplifyRendering';
-	const SIMPLYFY_RENDERING_QP_VALUE = 'true';
-
 	static $media = [ ];
-	static $users = [ ];
 	static $heroImage = null;
 	static $mediaDetailConfig = [
 		'imageMaxWidth' => false
 	];
 
-	const CACHE_VERSION = 3.28;
+	const CACHE_VERSION = 3.29;
 
 	const ICON_MAX_SIZE = 48;
 	// Line height in Mercury
@@ -28,10 +23,6 @@ class ArticleAsJson {
 	const MEDIA_THUMBNAIL_TEMPLATE = 'extensions/wikia/ArticleAsJson/templates/media-thumbnail.mustache';
 	const MEDIA_GALLERY_TEMPLATE = 'extensions/wikia/ArticleAsJson/templates/media-gallery.mustache';
 	const MEDIA_LINKED_GALLERY_TEMPLATE = 'extensions/wikia/ArticleAsJson/templates/media-linked-gallery.mustache';
-
-	// TODO: remove these, all usages and mentioned templates with XW-4719
-	const MEDIA_THUMBNAIL_TEMPLATE_OLD = 'extensions/wikia/ArticleAsJson/templates/media-thumbnail-old.mustache';
-	const MEDIA_GALLERY_TEMPLATE_OLD = 'extensions/wikia/ArticleAsJson/templates/media-gallery-old.mustache';
 
 	private static function renderIcon( $media ) {
 		$scaledSize = self::scaleIconSize( $media['height'], $media['width'] );
@@ -62,110 +53,44 @@ class ArticleAsJson {
 		);
 	}
 
-	// TODO: remove it and all usages with XW-4719
-	public static function simplifyRendering(): bool {
-		return RequestContext::getMain()->getRequest()->getVal(self::SIMPLYFY_RENDERING_QP, "false") === self::SIMPLYFY_RENDERING_QP_VALUE;
+	private static function renderImage( $media ) {
+		return self::removeNewLines(
+			\MustacheService::getInstance()->render(
+				self::MEDIA_THUMBNAIL_TEMPLATE,
+				[
+					'media' => $media,
+					'mediaAttrs' => json_encode( $media ),
+					'downloadIcon' => DesignSystemHelper::renderSvg( 'wds-icons-download', 'wds-icon' ),
+					'chevronIcon' => DesignSystemHelper::renderSvg('wds-icons-menu-control-tiny', 'wds-icon wds-icon-tiny chevron'),
+					'hasFigcaption' => !empty( $media['caption'] ) || ( !empty( $media['title'] ) && ( $media['isVideo'] || $media['isOgg'] ) )
+				]
+			)
+		);
 	}
 
-	private static function renderImage( $media, $id ) {
-		if ( self::simplifyRendering() ) {
+	private static function renderGallery( $media, $hasLinkedImages ) {
+		if ( $hasLinkedImages ) {
 			return self::removeNewLines(
 				\MustacheService::getInstance()->render(
-					self::MEDIA_THUMBNAIL_TEMPLATE,
+					self::MEDIA_LINKED_GALLERY_TEMPLATE,
 					[
+						'galleryAttrs' => json_encode( $media ),
 						'media' => $media,
-						'mediaAttrs' => json_encode( $media ),
 						'downloadIcon' => DesignSystemHelper::renderSvg( 'wds-icons-download', 'wds-icon' ),
-						'chevronIcon' => DesignSystemHelper::renderSvg('wds-icons-menu-control-tiny', 'wds-icon wds-icon-tiny chevron'),
-						'hasFigcaption' => !empty( $media['caption'] ) || ( !empty( $media['title'] ) && ( $media['isVideo'] || $media['isOgg'] ) )
+						'viewMoreLabel' => wfMessage('communitypage-view-more')->escaped(), // TODO:  XW-4793
+						'linkedGalleryViewMoreVisible' => $hasLinkedImages && count($media) > 4,
+						'chevronIcon' => DesignSystemHelper::renderSvg('wds-icons-menu-control-tiny', 'wds-icon wds-icon-tiny chevron')
 					]
 				)
 			);
 		} else {
 			return self::removeNewLines(
 				\MustacheService::getInstance()->render(
-					self::MEDIA_THUMBNAIL_TEMPLATE_OLD,
+					self::MEDIA_GALLERY_TEMPLATE,
 					[
-						'mediaAttrs' => json_encode( [ 'ref' => $id ] ),
+						'galleryAttrs' => json_encode( $media ),
 						'media' => $media,
-						'width' => $media['width'],
-						'height' => $media['height'],
-						'url' => $media['url'],
-						'title' => $media['title'],
-						'fileUrl' => $media['fileUrl'],
-						'caption' => $media['caption'] ?? '',
-						'href' => $media['href'],
-						'isLinkedByUser' => $media['isLinkedByUser'],
-						/**
-						 * data-ref has to be set for now because it's read in
-						 * extensions/wikia/PortableInfobox/services/Parser/Nodes/NodeImage.php:getGalleryData
-						 * and in
-						 * extensions/wikia/PortableInfobox/services/Parser/Nodes/NodeImage.php:getTabberData.
-						 * Base on presence of data-ref element is classified as an image
-						 * - without that service would return null
-						 *
-						 * @TODO XW-1460 fix the regex and remove this attribute
-						 */
-						'ref' => $id
-					]
-				)
-			);
-		}
-
-	}
-
-	private static function renderGallery( $media, $id, $hasLinkedImages ) {
-		if ( self::simplifyRendering() ) {
-			if ( $hasLinkedImages ) {
-				return self::removeNewLines(
-					\MustacheService::getInstance()->render(
-						self::MEDIA_LINKED_GALLERY_TEMPLATE,
-						[
-							'galleryAttrs' => json_encode( $media ),
-							'media' => $media,
-							'downloadIcon' => DesignSystemHelper::renderSvg( 'wds-icons-download', 'wds-icon' ),
-							'viewMoreLabel' => wfMessage('communitypage-view-more')->escaped(), // TODO:  XW-4793
-							'linkedGalleryViewMoreVisible' => $hasLinkedImages && count($media) > 4,
-							'chevronIcon' => DesignSystemHelper::renderSvg('wds-icons-menu-control-tiny', 'wds-icon wds-icon-tiny chevron')
-						]
-					)
-				);
-			} else {
-				return self::removeNewLines(
-					\MustacheService::getInstance()->render(
-						self::MEDIA_GALLERY_TEMPLATE,
-						[
-							'galleryAttrs' => json_encode( $media ),
-							'media' => $media,
-							'downloadIcon' => DesignSystemHelper::renderSvg( 'wds-icons-download', 'wds-icon' ),
-						]
-					)
-				);
-			}
-		} else {
-			return self::removeNewLines(
-				\MustacheService::getInstance()->render(
-					self::MEDIA_GALLERY_TEMPLATE_OLD,
-					[
-						'galleryAttrs' => json_encode( [ 'ref' => $id ] ),
-						/**    +                    'hasLinkedImages' => $hasLinkedImages,
-						 * data-ref has to be set for now because it's read in
-						 * extensions/wikia/PortableInfobox/services/Parser/Nodes/NodeImage.php::getGalleryData
-						 * and in
-						 * extensions/wikia/PortableInfobox/services/Parser/Nodes/NodeImage.php::getTabberData
-						 * Base on presence of data-ref element is classified as an image
-						 * - without that service would return null
-						 *
-						 * !!! Important note - data-ref inside template has ' instead of "
-						 * because this is how regex in
-						 * extensions/wikia/PortableInfobox/services/Parser/Nodes/NodeImage.php::getGalleryData
-						 * works
-						 *
-						 * @TODO XW-1460 fix the regex and remove this attribute
-						 */
-						'ref' => $id,
-						'media' => $media,
-						'hasLinkedImages' => $hasLinkedImages
+						'downloadIcon' => DesignSystemHelper::renderSvg( 'wds-icons-download', 'wds-icon' ),
 					]
 				)
 			);
@@ -177,8 +102,6 @@ class ArticleAsJson {
 	}
 
 	private static function createMarker( $media, $isGallery = false ) {
-		$id = count( self::$media ) - 1;
-
 		if ( $isGallery ) {
 			$hasLinkedImages = false;
 
@@ -193,11 +116,11 @@ class ArticleAsJson {
 				$hasLinkedImages = true;
 			}
 
-			return self::renderGallery( $media, $id, $hasLinkedImages );
+			return self::renderGallery( $media, $hasLinkedImages );
 		} else if ( $media['context'] === self::MEDIA_CONTEXT_ICON ) {
 			return self::renderIcon( $media );
 		} else {
-			return self::renderImage( $media, $id );
+			return self::renderImage( $media );
 		}
 	}
 
@@ -256,16 +179,6 @@ class ArticleAsJson {
 		return $media;
 	}
 
-	private static function addUserObj( $details ) {
-		$userTitle = Title::newFromText( $details['userName'], NS_USER );
-
-		self::$users[$details['userName']] = [
-			'id' => (int) $details['userId'],
-			'avatar' => $details['userThumbUrl'],
-			'url' => $userTitle instanceof Title ? $userTitle->getLocalURL() : ''
-		];
-	}
-
 	public static function onGalleryBeforeProduceHTML( $data, &$out ) {
 		global $wgArticleAsJson;
 
@@ -297,15 +210,17 @@ class ArticleAsJson {
 				$mediaObj = self::createMediaObject( $details, $image['name'], $caption, $linkHref );
 				$mediaObj['mediaAttr'] = json_encode( $mediaObj );
 				$mediaObj['galleryRef'] = $index;
-				$mediaObj['thumbnailUrl'] = VignetteRequest::fromUrl( $mediaObj['url'] )
-					->zoomCrop()
-					->width( 195 )
-					->height( 195 )
-					->url();
+				try {
+					$mediaObj['thumbnailUrl'] = VignetteRequest::fromUrl( $mediaObj['url'] )
+						->zoomCrop()
+						->width( 195 )
+						->height( 195 )
+						->url();
+				} catch (InvalidArgumentException $e) {
+					$mediaObj['thumbnailUrl'] = '';
+				}
 
 				$media[] = $mediaObj;
-
-				self::addUserObj( $details );
 			}
 
 			self::$media[] = $media;
@@ -383,8 +298,6 @@ class ArticleAsJson {
 
 			self::$media[] = $media;
 
-			self::addUserObj( $details );
-
 			$res = self::createMarker( $media );
 
 			return false;
@@ -408,9 +321,15 @@ class ArticleAsJson {
 	}
 
 	private static function getThumbnailUrlForWidth( string $url, int $requestedWidth ) {
-		return VignetteRequest::fromUrl( $url )
-			->scaleToWidth( $requestedWidth )
-			->url();
+		try {
+			$url = VignetteRequest::fromUrl( $url )
+				->scaleToWidth( $requestedWidth )
+				->url();
+		} catch(InvalidArgumentException $e) {
+			$url = '';
+		}
+
+		return $url;
 	}
 
 	public static function onPageRenderingHash( &$confstr ) {
@@ -427,10 +346,6 @@ class ArticleAsJson {
 			) {
 				$confstr .= ':collapsibleSections';
 			}
-
-			if ( self::simplifyRendering() ) {
-				$confstr .= ':simplifyRendering';
-			}
 		}
 
 		return true;
@@ -440,41 +355,6 @@ class ArticleAsJson {
 		global $wgArticleAsJson;
 
 		if ( $wgArticleAsJson && !is_null( $parser->getRevisionId() ) ) {
-
-			$userName = $parser->getRevisionUser();
-
-			if ( !empty( $userName ) ) {
-				if ( User::isIP( $userName ) ) {
-
-					self::addUserObj(
-						[
-							'userId' => 0,
-							'userName' => $userName,
-							'userThumbUrl' => AvatarService::getAvatarUrl(
-								$userName,
-								AvatarService::AVATAR_SIZE_MEDIUM
-							),
-							'userPageUrl' => Title::newFromText( $userName )->getLocalURL()
-						]
-					);
-				} else {
-					$user = User::newFromName( $userName );
-					if ( $user instanceof User ) {
-						self::addUserObj(
-							[
-								'userId' => $user->getId(),
-								'userName' => $user->getName(),
-								'userThumbUrl' => AvatarService::getAvatarUrl(
-									$user,
-									AvatarService::AVATAR_SIZE_MEDIUM
-								),
-								'userPageUrl' => $user->getUserPage()->getLocalURL()
-							]
-						);
-					}
-				}
-			}
-
 			foreach ( self::$media as &$media ) {
 				self::linkifyMediaCaption( $parser, $media );
 			}
@@ -484,8 +364,6 @@ class ArticleAsJson {
 			$text = json_encode(
 				[
 					'content' => $text,
-					'media' => self::$media,
-					'users' => self::$users,
 					'heroImage' => self::$heroImage
 				]
 			);

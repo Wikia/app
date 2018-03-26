@@ -306,7 +306,7 @@ class MercuryApiController extends WikiaController {
 
 		$data['article'] = [
 			'content' => $articleAsJson->content,
-			'media' => $articleAsJson->media
+			'heroImage' => $articleAsJson->heroImage
 		];
 
 		$wikiVariables = $this->prepareWikiVariables();

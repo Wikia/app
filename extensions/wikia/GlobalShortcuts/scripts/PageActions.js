@@ -4,7 +4,7 @@
  * but if they have it can be found in GlobalShortcuts module)
  * Keeps references on functions that handles actions
  */
-define('PageActions', ['mw', 'jquery'], function (mw, $) {
+define('PageActions', ['mw', 'jquery', 'wikia.log'], function (mw, $, log) {
 	'use strict';
 
 	var CATEGORY_WEIGHTS = {},
@@ -52,7 +52,7 @@ define('PageActions', ['mw', 'jquery'], function (mw, $) {
 		} else if (key === 'weight') {
 			this.weight = value;
 		} else {
-			throw new Error('Invalid property for PageAction: ' + key);
+			log('Invalid property for PageAction: ' + key, log.levels.warn, 'GlobalShortcuts');
 		}
 	};
 
@@ -73,7 +73,8 @@ define('PageActions', ['mw', 'jquery'], function (mw, $) {
 			throw new Error('Invalid argument - requires PageAction instance');
 		}
 		if (!canReplace && (pageAction.id in byId)) {
-			throw new Error('Could not register more than one action with the same ID: ' + pageAction.id);
+			log('Could not register more than one action with the same ID: ' + pageAction.id, log.levels.debug, 'GlobalShortcuts');
+			return;
 		}
 		all.push(pageAction);
 		byId[pageAction.id] = pageAction;
@@ -85,7 +86,7 @@ define('PageActions', ['mw', 'jquery'], function (mw, $) {
 			category = desc.category,
 			fn, pageAction;
 		if (!id || !caption) {
-			console.error('Invalid action description - missing id and/or caption: ', desc);
+			log('Invalid action description - missing id and/or caption: ' + desc, log.levels.error);
 		}
 		if (desc.href) {
 			fn = function () {
@@ -96,7 +97,7 @@ define('PageActions', ['mw', 'jquery'], function (mw, $) {
 			fn = desc.fn;
 		}
 		if (!fn) {
-			console.error('Invalid action description - missing action specifier: ', desc);
+			log('Invalid action description - missing action specifier: ' + desc, log.levels.error);
 		}
 		pageAction = new PageAction(id, caption, fn, category, desc.weight);
 		register(pageAction, canReplace);
