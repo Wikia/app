@@ -462,7 +462,7 @@ class ArticleCommentList {
 		$block = $wgUser->mBlock;
 
 		list( $blockerName, $reason, $ip, $blockid, $blockTimestamp, $blockExpiry, $intended, $isGlobal ) = [
-			User::whoIs( $wgUser->blockedBy() ),
+			$wgUser->blockedBy(),
 			$wgUser->blockedFor() ? $wgUser->blockedFor() : wfMessage( 'blockednoreason' )->text(),
 			$wgRequest->getIP(),
 			$wgUser->getBlockId(),

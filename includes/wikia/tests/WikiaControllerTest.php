@@ -8,24 +8,6 @@ use PHPUnit\Framework\TestCase;
  */
 class WikiaControllerTest extends TestCase {
 
-	public function generatingHelpDataProvider() {
-		return array(
-			array( 'json', '{' ),
-			array( 'html', '<' )
-		);
-	}
-
-	/**
-	 * @dataProvider generatingHelpDataProvider
-	 */
-	public function testGeneratingHelp( $format, $prefix ) {
-		$response = F::app()->sendRequest( 'Test', 'help', array( 'format' => $format ), false );
-		//$response->setTemplatePath('non');
-		$this->assertInstanceOf( 'WikiaResponse', $response );
-		$this->assertNull( $response->getException() );
-		$this->assertStringStartsWith( $prefix, $response->toString() );
-	}
-
 	public function redirectingDataProvider() {
 		return array(
 			array( true ),
