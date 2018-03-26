@@ -275,48 +275,6 @@
 		['set', 'dimension29', hasFeaturedVideo()]                                  // If there is Featured Video on the page (ADEN-5420)
 	);
 
-	/**
-	 * Checks if Optimizely object and its crucial data attributes are available
-	 *
-	 * @returns {boolean}
-	 */
-	function isOptimizelyLoadedAndActive() {
-		var optimizely = window.optimizely;
-
-		return optimizely &&
-			optimizely.activeExperiments &&
-			Array.isArray(optimizely.activeExperiments) &&
-			optimizely.activeExperiments.length > 0 &&
-			typeof optimizely.allExperiments === 'object' &&
-			Object.keys(optimizely.allExperiments).length > 0 &&
-			typeof optimizely.variationNamesMap === 'object' &&
-			Object.keys(optimizely.variationNamesMap).length > 0;
-	}
-
-	// UA integration code is also used in Mercury SPA - if you change it here, change it there too:
-	// function integrateOptimizelyWithUA and above in
-	// https://github.com/Wikia/mercury/blob/dev/front/scripts/mercury/utils/variantTesting.ts
-	if (isOptimizelyLoadedAndActive()) {
-		var optimizely = window.optimizely;
-
-		optimizely.activeExperiments.forEach(function (experimentId) {
-			if (
-				optimizely.allExperiments.hasOwnProperty(experimentId) &&
-				typeof optimizely.allExperiments[experimentId].universal_analytics === 'object'
-			) {
-				var dimension = optimizely.allExperiments[experimentId].universal_analytics.slot,
-					experimentName = optimizely.allExperiments[experimentId].name,
-					variationName = optimizely.variationNamesMap[experimentId];
-
-				_gaWikiaPush([
-					'set',
-					'dimension' + dimension,
-					'Optimizely ' + experimentName + ' (' + experimentId + '): ' + variationName
-				]);
-			}
-		});
-	}
-
 	/**** Include A/B testing status ****/
 	if (window.Wikia && window.Wikia.AbTest) {
 		var abList = window.Wikia.AbTest.getExperiments( /* includeAll */ true),
