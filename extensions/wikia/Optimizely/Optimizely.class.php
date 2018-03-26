@@ -43,9 +43,9 @@ class Optimizely {
 	}
 
 	protected static function loadFromOurCDN() {
-		$scriptDomain = WikiFactory::getLocalEnvURL(
+		$scriptDomain = wfProtocolUrlToRelative( WikiFactory::getLocalEnvURL(
 			WikiFactory::getVarValueByName( 'wgServer', Wikia::COMMUNITY_WIKI_ID )
-		);
+		) );
 		// do not async - we need it for UA tracking
 		return '<script src="' . $scriptDomain . '/wikia.php?controller=Optimizely&method=getCode"></script>';
 	}
