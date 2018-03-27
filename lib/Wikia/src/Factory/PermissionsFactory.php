@@ -14,17 +14,21 @@ class PermissionsFactory extends AbstractFactory {
 	public function setPermissionsService( PermissionsService $permissionsService ) {
 		$this->permissionsService = $permissionsService;
 	}
+	
+	private function getGlobalOrDefault( string $globalName ): array {
+		return isset( $GLOBALS[$globalName] ) ? $GLOBALS[$globalName] : [];
+	}
 
 	public function permissionsConfiguration(): PermissionsConfiguration {
 		if ( $this->permissionsConfiguration === null ) {
 			$this->permissionsConfiguration = new PermissionsConfiguration(
-					$GLOBALS['wgGroupPermissions'] ?: [],
-					$GLOBALS['wgAddGroupsLocal'] ?: [],
-					$GLOBALS['wgRemoveGroupsLocal'] ?: [],
-					$GLOBALS['wgGroupsAddToSelfLocal'] ?: [],
-					$GLOBALS['wgGroupsRemoveFromSelfLocal'] ?: [],
-					$GLOBALS['wgRestrictedAccessGroups'] ?: [],
-					$GLOBALS['wgRestrictedAccessExemptGroups'] ?: []
+					$this->getGlobalOrDefault( 'wgGroupPermissions' ),
+					$this->getGlobalOrDefault( 'wgAddGroupsLocal' ),
+					$this->getGlobalOrDefault( 'wgRemoveGroupsLocal' ),
+					$this->getGlobalOrDefault( 'wgGroupsAddToSelfLocal' ),
+					$this->getGlobalOrDefault( 'wgGroupsRemoveFromSelfLocal' ),
+					$this->getGlobalOrDefault( 'wgRestrictedAccessGroups' ),
+					$this->getGlobalOrDefault( 'wgRestrictedAccessExemptGroups' )
 				);
 		}
 
