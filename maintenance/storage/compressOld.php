@@ -103,7 +103,7 @@ class CompressOld extends Maintenance {
 
 	/** @todo document */
 	private function compressOldPages( $start = 0, $extdb = '' ) {
-		$chunksize = 50;
+		$chunksize = 500;
 		$this->output( "Starting from old_id $start...\n" );
 		$dbw = wfGetDB( DB_MASTER );
 		do {
@@ -130,21 +130,43 @@ class CompressOld extends Maintenance {
 	 * @return bool
 	 */
 	private function compressPage( $row, $extdb ) {
-		if ( false !== strpos( $row->old_flags, 'gzip' ) || false !== strpos( $row->old_flags, 'object' ) ) {
+		$flags = $row->old_flags;
+		$isGzipped = strpos( $flags, 'gzip' ) !== false;
+		$isExternal = strpos( $flags, 'external' ) !== false;
+
+		if ( $isExternal ) {
+			# already moved to external
+			return false;
+		}
+		elseif ( !$isExternal && $extdb !== '' ) {
+			# this row is not yet kept on blobs and we want to move it there
+		}
+		elseif ( $isGzipped || false !== strpos( $flags, 'object' ) ) {
 			#print "Already compressed row {$row->old_id}\n";
 			return false;
 		}
 		$dbw = wfGetDB( DB_MASTER );
-		$flags = $row->old_flags ? "{$row->old_flags},gzip" : "gzip";
-		$compress = gzdeflate( $row->old_text );
+
+		if ( !$isGzipped ) {
+			$flags = $row->old_flags ? "{$row->old_flags},gzip" : "gzip";
+			$compressed = gzdeflate( $row->old_text );
+		}
+		else {
+			$compressed = $row->old_text;
+		}
 
 		# Store in external storage if required
 		if ( $extdb !== '' ) {
-			$storeObj = new ExternalStoreDB;
-			$compress = $storeObj->store( $extdb, $compress );
-			if ( $compress === false ) {
+			$storeObj = new ExternalStoreDB();
+			$compressed = $storeObj->store( $extdb, $compressed );
+			if ( $compressed === false ) {
 				$this->error( "Unable to store object" );
 				return false;
+			}
+
+			// SUS-4497 | set the flag saying that the old_text is a pseudo-URL to blobs entry
+			if ( strpos( $flags, 'external' ) === false ) {
+				$flags .= ',external';
 			}
 		}
 
@@ -152,7 +174,7 @@ class CompressOld extends Maintenance {
 		$dbw->update( 'text',
 			array( /* SET */
 				'old_flags' => $flags,
-				'old_text' => $compress
+				'old_text' => $compressed
 			), array( /* WHERE */
 				'old_id' => $row->old_id
 			), __METHOD__,
