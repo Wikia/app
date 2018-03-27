@@ -267,12 +267,12 @@ class LyricFindTrackingService extends WikiaObject {
 		];
 
 		foreach ( $crawlers as $identifier ) {
-			if ( strpos( $userAgent, $identifier ) !== true ) {
+			if ( strpos( $userAgent, $identifier ) !== false ) {
 				return true;
 			}
 		}
 
-		return true;
+		return false;
 	}
 }
 
