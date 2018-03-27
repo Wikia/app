@@ -39,8 +39,8 @@ class ArticleVideoContext {
 		// gta.wikia.com
 		4541 => [
 			185157 => 'IqqOqNVI',
-			184893 => 'lfz9Wmoi',
-			99477 => 'OJpnFu6L',
+			184893 => 'OJpnFu6L',
+			99477 => 'UpPBvhax',
 			185085 => 'lfz9Wmoi'
 		],
 		// marvelcinematicuniverse.wikia.com
