@@ -18,7 +18,7 @@
   "homepage": "https://github.com/Wikia/app",
   "devDependencies": {
     "istanbul": "latest",
-    "jasmine-core": "latest",
+    "jasmine-core": "^2.8",
     "karma": "latest",
     "karma-chrome-launcher": "latest",
     "karma-coverage": "latest",
