@@ -13,6 +13,7 @@ define('ext.wikia.adEngine.lookup.prebid.adaptersRegistry', [
 	'ext.wikia.adEngine.lookup.prebid.adapters.rubicon',
 	'ext.wikia.adEngine.lookup.prebid.adapters.rubiconDisplay',
 	'ext.wikia.adEngine.lookup.prebid.adapters.wikia',
+	'ext.wikia.adEngine.lookup.prebid.adapters.wikiaVideo',
 	'wikia.window'
 ], function(
 	aol,
@@ -28,6 +29,7 @@ define('ext.wikia.adEngine.lookup.prebid.adaptersRegistry', [
 	rubicon,
 	rubiconDisplay,
 	wikia,
+	wikiaVideo,
 	win
 ) {
 	'use strict';
@@ -47,7 +49,8 @@ define('ext.wikia.adEngine.lookup.prebid.adaptersRegistry', [
 			rubiconDisplay
 		],
 		customAdapters = [
-			wikia
+			wikia,
+			wikiaVideo
 		];
 
 	function getAdapters() {
