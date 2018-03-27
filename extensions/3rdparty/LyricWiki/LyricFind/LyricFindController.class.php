@@ -15,26 +15,41 @@ class LyricFindController extends WikiaController {
 	public function track() {
 		$amgId = intval($this->getVal('amgid'));
 		$gracenoteId = intval($this->getVal('gracenoteid'));
+		$isMWBot = RequestContext::getMain()->getUser()->isBot();
+		$isCrawler = LyricFindTrackingService::isWebCrawler(
+			RequestContext::getMain()->getRequest()->getHeader( 'User-Agent' )
+		);
 
-		// make a request to LyricFind API
-		$service = new LyricFindTrackingService();
-		$status = $service->track($amgId, $gracenoteId, $this->wg->Title);
+		if ( !$isMWBot && $this->wg->Title->isKnown() && !$isCrawler ) {
+			// make a request to LyricFind API
+			$service = new LyricFindTrackingService();
+			$status = $service->track($amgId, $gracenoteId, $this->wg->Title);
 
-		// don't try to find a template for this controller's method
-		$this->skipRendering();
+			// debug response headers
+			if (!$status->isOK()) {
+				$errors = $status->getErrorsArray();
+				$this->response->setHeader('X-LyricFind-API-Error', reset($errors)[0]);
+			}
 
-		// debug response headers
-		if (!$status->isOK()) {
-			$errors = $status->getErrorsArray();
-			$this->response->setHeader('X-LyricFind-API-Error', reset($errors)[0]);
-		}
+			if (!empty($status->value)) {
+				$this->response->setHeader('X-LyricFind-API-Code', $status->value);
+			}
 
-		if (!empty($status->value)) {
-			$this->response->setHeader('X-LyricFind-API-Code', $status->value);
-		}
+			if ($status->isOK()) {
+				// emit blank image - /skins/common/blank.gif
+				$this->response->setCode(self::RESPONSE_OK);
+				$this->response->setContentType('image/gif');
 
-		if ($status->isOK()) {
-			// emit blank image - /skins/common/blank.gif
+				// emit raw GIF content when not in CLI mode
+				// i.e. not running unit tests
+				if ( php_sapi_name() != 'cli' ) {
+					echo file_get_contents($this->wg->StyleDirectory . '/common/blank.gif');
+				}
+			}
+			else {
+				$this->response->setCode(self::RESPONSE_ERR);
+			}
+		} else {
 			$this->response->setCode(self::RESPONSE_OK);
 			$this->response->setContentType('image/gif');
 
@@ -44,8 +59,8 @@ class LyricFindController extends WikiaController {
 				echo file_get_contents($this->wg->StyleDirectory . '/common/blank.gif');
 			}
 		}
-		else {
-			$this->response->setCode(self::RESPONSE_ERR);
-		}
+
+		// don't try to find a template for this controller's method
+		$this->skipRendering();
 	}
 }

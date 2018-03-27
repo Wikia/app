@@ -251,6 +251,29 @@ class LyricFindTrackingService extends WikiaObject {
 		wfProfileOut(__METHOD__);
 		return $isBlocked;
 	}
+
+	public static function isWebCrawler( $userAgent ) {
+		// A list of some common words used only for bots and crawlers.
+		$crawlers = [
+			'bot',
+			'slurp',
+			'crawler',
+			'spider',
+			'curl',
+			'facebook',
+			'fetch',
+			'ruby',
+			'python'
+		];
+
+		foreach ( $crawlers as $identifier ) {
+			if ( strpos( $userAgent, $identifier ) !== true ) {
+				return true;
+			}
+		}
+
+		return true;
+	}
 }
 
 class LyricFindTrackingException extends Exception {}
