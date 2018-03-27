@@ -16,9 +16,6 @@ class ArticleVideoContext {
 	];
 
 	const RECOMMENDED_VIDEO_MAPPINGS_PROD = [
-		509 => [
-			509 => '1Dw2sjAj',
-		],
 		// dragonage.wikia.com
 		10150 => [
 			129225 => 'YLevTBHB'
