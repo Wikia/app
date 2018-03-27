@@ -148,7 +148,9 @@ class CompressOld extends Maintenance {
 			}
 
 			// SUS-4497 | set the flag saying that the old_text is a pseudo-URL to blobs entry
-			$flags .= ',external';
+			if ( strpos( $flags, 'external' ) === false ) {
+				$flags .= ',external';
+			}
 		}
 
 		# Update text row
