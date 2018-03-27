@@ -130,6 +130,7 @@ define('wikia.articleVideo.featuredVideo.ads', [
 			});
 
 			player.on('adError', function (event) {
+				fvLagger.markAsReady(null);
 				vastDebugger.setVastAttributes(featuredVideoContainer, event.tag, 'error', event.ima && event.ima.ad);
 			});
 		} else {
