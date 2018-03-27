@@ -597,9 +597,9 @@ $config['gameguides_js'] = [
 
 		//tracker
 		'#group_tracker_js',
+		'//extensions/wikia/JSMessages/js/JSMessages.js',
 
 		//platform components
-		'//extensions/wikia/JSMessages/js/JSMessages.js',
 		'//extensions/wikia/JSSnippets/js/JSSnippets.js',
 
 		//feature detection
@@ -2574,5 +2574,31 @@ $config['jwplayer_tag_scss'] = [
 	'skin' => [ 'oasis' ],
 	'assets' => [
 		'//extensions/wikia/JWPlayerTag/styles/jwplayertag.scss'
+	]
+];
+
+$config['recommended_video_css'] = [
+	'type' => AssetsManager::TYPE_CSS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'//skins/oasis/js/jwplayer/node_modules/jwplayer-fandom/dist/index.css',
+	],
+];
+
+$config['recommended_video_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'//extensions/wikia/ArticleVideo/styles/recommended-video.scss'
+	]
+];
+
+$config['recommended_video_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'//skins/oasis/js/jwplayer/node_modules/jwplayer-fandom/dist/wikiajwplayer.js',
+		'//extensions/wikia/ArticleVideo/scripts/featured-video.cookies.js',
+		'//extensions/wikia/ArticleVideo/scripts/recommended-video.jwplayer.js',
 	]
 ];

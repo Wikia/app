@@ -1,0 +1,249 @@
+@import 'skins/oasis/css/core/layout';
+@import 'skins/oasis/css/core/breakpoints-variables';
+
+.article-recommended-video-unit {
+	background-color: rgba(255, 255, 255, 0.98);
+	bottom: 0;
+	box-shadow: 0 2px 9px 0 rgba(0, 0, 0, 0.5);
+	box-sizing: border-box;
+	display: flex;
+	font-size: 14px;
+	justify-content: center;
+	left: 0;
+	min-width: 718px;
+	padding: 15px 0 40px;
+	position: fixed;
+	right: 0;
+	transform: translate(0, 1000px);
+	transition: 0.3s transform ease-in;
+	z-index: 10000;
+
+	&__close-button {
+		align-items: center;
+		cursor: pointer;
+		display: flex;
+		height: 24px;
+		justify-content: center;
+		position: absolute;
+		right: 10px;
+		top: 10px;
+		width: 24px;
+
+		.wds-icon {
+			fill: initial;
+		}
+	}
+
+	&.is-revealed {
+		transform: translate(0, 0);
+	}
+
+	&.is-expanded {
+		height: auto;
+
+		.actual-video {
+			flex-grow: 1;
+			flex-shrink: 1;
+			flex-basis: 678px;
+			margin-right: 0;
+			order: 1;
+
+			h3 {
+				font-size: 24px;
+				font-weight: 500;
+				margin-bottom: 26px;
+				margin-top: 24px;
+				text-decoration: none;
+			}
+
+			.jwplayer {
+				border: none;
+			}
+		}
+
+		.side-playlist {
+			display: flex;
+			flex: 0;
+			flex-basis: 400px;
+		}
+
+		.video-placeholder {
+			display: none;
+		}
+
+		.side-playlist .video-placeholder {
+			display: flex;
+		}
+
+		.side-playlist .article-recommended-video {
+			display: flex;
+			flex: initial;
+			width: auto;
+		}
+
+		.article-recommended-video-placeholder {
+			min-width: 122px;
+			width: 122px;
+		}
+	}
+}
+
+.article-recommended-videos-wrapper {
+	align-items: center;
+	display: flex;
+	flex-direction: column;
+	max-width: calc(100vw - 2 * #{$padding-width-small});
+
+	@if $widthType == 0 {
+		@media #{$breakpoint-small-only} {
+			width: $page-width-small;
+		}
+
+		@media #{$breakpoint-small-plus} {
+			width: $page-width-small-plus;
+		}
+
+		@media #{$breakpoint-medium-only} {
+			width: $page-width-medium;
+		}
+
+		@media #{$breakpoint-large-up} {
+			width: $page-width-large;
+		}
+	}
+
+	h2 {
+		align-self: flex-start;
+		color: #000;
+		font-size: 14px;
+		margin-bottom: 16px;
+		text-transform: uppercase;
+
+		strong {
+			font-weight: bold;
+		}
+	}
+
+	.side-playlist {
+		display: none;
+		flex-direction: column;
+		margin-left: 30px;
+		order: 2;
+
+		h3 {
+			font-size: 14px;
+			line-height: 20px;
+			margin-left: 12px;
+			margin-top: 0;
+		}
+
+		.video-placeholder {
+			align-items: center;
+			margin-bottom: 12px;
+		}
+
+		svg {
+			left: calc(50% - 18px);
+			top: calc(50% - 18px);
+		}
+	}
+}
+
+.article-recommended-videos {
+	display: flex;
+	overflow: auto;
+	width: 100%;
+
+	.actual-video {
+		background: #fff;
+		display: none;
+		height: auto;
+
+		.jwplayer {
+			border: solid 3px #00d6d6;
+		}
+	}
+}
+
+.article-recommended-video-placeholder {
+	cursor: pointer;
+	position: relative;
+	width: 100%;
+
+	img {
+		border: solid 1px #cccccc;
+	}
+
+	svg {
+		fill: #fff;
+		left: calc(50% - 36px);
+		position: absolute;
+		top: calc(50% - 36px);
+	}
+}
+
+.is-click-to-play .article-recommended-video img {
+	opacity: 1;
+}
+
+.article-recommended-video {
+	cursor: pointer;
+	display: inline-block;
+	flex: 1;
+	margin-right: 16px;
+	min-width: 200px;
+
+	&:hover {
+		h3 {
+			text-decoration: underline;
+		}
+	}
+
+	img {
+		height: auto;
+		opacity: 0.7;
+		width: 100%;
+	}
+
+	h3 {
+		font-size: 12px;
+		font-weight: bold;
+		margin-top: 9px;
+	}
+
+	&:not(:first-child) {
+		.video-title {
+			margin-top: 6px;
+		}
+	}
+}
+
+@for $i from 1 through 5 {
+	.article-recommended-video:nth-child(#{$i}) {
+		order: #{$i};
+	}
+
+	.plays-video-#{$i} {
+		.video-placeholder:nth-child(#{$i}) {
+			display: none;
+
+			img {
+				border: 3px solid #00d6d6;
+			}
+		}
+
+		.actual-video {
+			display: inline-block;
+			order: #{$i}
+		}
+	}
+}
+
+// ToDo when productizing: Figure out better way to make WikiaBar work with the unit
+.article-recommended-video-unit + #WikiaBar {
+	z-index: 10001;
+}
+
+.article-recommended-video-unit:not(.is-expanded) .jw-text-track-container {
+	display: none;
+}

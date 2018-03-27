@@ -5,15 +5,23 @@ class ArticleVideoHooks {
 		$articleId = $out->getTitle()->getArticleID();
 
 		if ( ArticleVideoContext::isFeaturedVideoEmbedded( $articleId ) ) {
-			self::addJWPlayerAssets();
+			self::addFeaturedVideoAssets();
+		} else if ( ArticleVideoContext::isRecommendedVideoAvailable( $articleId ) ) {
+			self::addRecommendedVideoAssets();
 		}
 
 		return true;
 	}
 
-	private static function addJWPlayerAssets() {
+	private static function addFeaturedVideoAssets() {
 		\Wikia::addAssetsToOutput( 'jwplayer_scss' );
 		\Wikia::addAssetsToOutput( 'jwplayer_js' );
+	}
+
+	private static function addRecommendedVideoAssets() {
+		\Wikia::addAssetsToOutput( 'recommended_video_css' );
+		\Wikia::addAssetsToOutput( 'recommended_video_scss' );
+		\Wikia::addAssetsToOutput( 'recommended_video_js' );
 	}
 
 	public static function onInstantGlobalsGetVariables( array &$vars ): bool {
