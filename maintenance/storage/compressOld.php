@@ -130,13 +130,26 @@ class CompressOld extends Maintenance {
 	 * @return bool
 	 */
 	private function compressPage( $row, $extdb ) {
-		if ( false !== strpos( $row->old_flags, 'gzip' ) || false !== strpos( $row->old_flags, 'object' ) ) {
+		$flags = $row->old_flags;
+		$isGzipped = strpos( $flags, 'gzip' ) !== false;
+		$isExternal = strpos( $flags, 'external' ) !== false;
+
+		if ( !$isExternal && $extdb !== '' ) {
+			# this row is not yet kept on blobs and we want to move it there
+		}
+		else if ( $isGzipped || false !== strpos( $flags, 'object' ) ) {
 			#print "Already compressed row {$row->old_id}\n";
 			return false;
 		}
 		$dbw = wfGetDB( DB_MASTER );
-		$flags = $row->old_flags ? "{$row->old_flags},gzip" : "gzip";
-		$compressed = gzdeflate( $row->old_text );
+
+		if ( !$isGzipped ) {
+			$flags = $row->old_flags ? "{$row->old_flags},gzip" : "gzip";
+			$compressed = gzdeflate( $row->old_text );
+		}
+		else {
+			$compressed = $row->old_text;
+		}
 
 		# Store in external storage if required
 		if ( $extdb !== '' ) {
