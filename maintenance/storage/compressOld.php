@@ -103,7 +103,7 @@ class CompressOld extends Maintenance {
 
 	/** @todo document */
 	private function compressOldPages( $start = 0, $extdb = '' ) {
-		$chunksize = 50;
+		$chunksize = 500;
 		$this->output( "Starting from old_id $start...\n" );
 		$dbw = wfGetDB( DB_MASTER );
 		do {
