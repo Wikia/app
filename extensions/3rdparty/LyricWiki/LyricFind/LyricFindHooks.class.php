@@ -43,9 +43,6 @@ class LyricFindHooks {
 		$wg = F::app()->wg;
 		$title = $editPage->getTitle();
 		$blockEdit = false;
-		$isCrawler = LyricFindTrackingService::isWebCrawler(
-			RequestContext::getMain()->getRequest()->getHeader( 'User-Agent' )
-		);
 
 		// Block view-source on the certain pages.
 		if($title->exists()){
@@ -58,7 +55,7 @@ class LyricFindHooks {
 					$blockEdit = true;
 				}
 			}
-		} elseif ( !$isCrawler ) {
+		} else {
 			// Page is being created. Prevent this if page is prohibited by LyricFind.
 			$blockEdit = LyricFindTrackingService::isPageBlockedViaApi($amgId="", $gracenoteId="", $title->getText());
 			if($blockEdit){
