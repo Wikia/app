@@ -145,10 +145,18 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 
 	public function getExploreMenu(): array {
 		if ( $this->exploreMenu === null ) {
-			$wgEnableCommunityPageExt = WikiFactory::getVarValueByName( 'wgEnableCommunityPageExt', $this->productInstanceId );
-			$wgEnableForumExt = WikiFactory::getVarValueByName( 'wgEnableForumExt', $this->productInstanceId );
-			$wgEnableDiscussions = WikiFactory::getVarValueByName( 'wgEnableDiscussions', $this->productInstanceId );
-			$wgEnableSpecialVideosExt = WikiFactory::getVarValueByName( 'wgEnableSpecialVideosExt', $this->productInstanceId );
+			$wgEnableCommunityPageExt =
+				WikiFactory::getVarValueByName( 'wgEnableCommunityPageExt',
+					$this->productInstanceId, false, F::app()->wg->enableCommunityPageExt );
+			$wgEnableForumExt =
+				WikiFactory::getVarValueByName( 'wgEnableForumExt', $this->productInstanceId, false,
+					F::app()->wg->enableForumExt );
+			$wgEnableDiscussions =
+				WikiFactory::getVarValueByName( 'wgEnableDiscussions', $this->productInstanceId,
+					false, F::app()->wg->enableDiscussions );
+			$wgEnableSpecialVideosExt =
+				WikiFactory::getVarValueByName( 'wgEnableSpecialVideosExt',
+					$this->productInstanceId, false, F::app()->wg->enableSpecialVideosExt );
 
 			$exploreItems = [
 				[

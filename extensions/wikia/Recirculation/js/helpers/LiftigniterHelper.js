@@ -64,6 +64,7 @@ define('ext.wikia.recirculation.helpers.liftigniter', [
 			willFetch[modelName].forEach(function (module) {
 				w.$p('register', module.options);
 			});
+			delete willFetch[modelName];
 			fetching = true;
 			w.$p('fetch');
 		} else if (fetching) {

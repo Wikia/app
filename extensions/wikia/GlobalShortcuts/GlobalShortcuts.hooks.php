@@ -10,7 +10,6 @@ class Hooks {
 		if ( Helper::shouldDisplayGlobalShortcuts() ) {
 			$hooks = new self();
 			\Hooks::register( 'BeforePageDisplay', [ $hooks, 'onBeforePageDisplay' ] );
-			\Hooks::register( 'MakeGlobalVariablesScript', [ $hooks, 'onMakeGlobalVariablesScript' ] );
 			\Hooks::register( 'BeforeToolbarMenu', [ $hooks, 'onBeforeToolbarMenu' ] );
 		}
 	}
@@ -34,22 +33,17 @@ class Hooks {
 		\Wikia::addAssetsToOutput( 'globalshortcuts_js' );
 		\Wikia::addAssetsToOutput( 'globalshortcuts_scss' );
 
-		return true;
-	}
-
-	/**
-	 * Add global JS variables for GlobalShortcuts
-	 */
-	public function onMakeGlobalVariablesScript( array &$vars ) {
 		$actions = [];
 		$shortcuts = [];
+
 		$helper = new Helper();
 		$helper->addCurrentPageActions( $actions, $shortcuts );
 		$helper->addSpecialPageActions( $actions, $shortcuts );
 
-		\Hooks::run( 'PageGetActions', [ &$actions, &$shortcuts ] );
-		$vars['wgWikiaPageActions'] = $actions;
-		$vars['wgWikiaShortcutKeys'] = $shortcuts;
+		$out->addJsConfigVars( [
+			'wgWikiaPageActions' => $actions,
+			'wgWikiaShortcutKeys' => $shortcuts,
+		] );
 
 		return true;
 	}

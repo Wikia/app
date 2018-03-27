@@ -164,12 +164,6 @@ describe('ext.wikia.adEngine.slot.slotTargeting', function () {
 			},
 			{
 				env: {
-					slotName: 'MOBILE_BOTTOM_LEADERBOARD'
-				},
-				wsi: 'xbxx'
-			},
-			{
-				env: {
 					slotName: 'undefined'
 				},
 				wsi: 'xxxx'

@@ -10,7 +10,6 @@ require([
 	'ext.wikia.adEngine.slot.service.stateMonitor',
 	'ext.wikia.adEngine.config.desktop',
 	'ext.wikia.adEngine.customAdsLoader',
-	'ext.wikia.adEngine.dartHelper',
 	'ext.wikia.adEngine.messageListener',
 	'ext.wikia.adEngine.pageFairDetection',
 	'ext.wikia.adEngine.provider.btfBlocker',
@@ -34,7 +33,6 @@ require([
 	slotStateMonitor,
 	adConfigDesktop,
 	customAdsLoader,
-	dartHelper,
 	messageListener,
 	pageFairDetection,
 	btfBlocker,
@@ -56,9 +54,6 @@ require([
 	win.AdEngine_getTrackerStats = slotTracker.getStats;
 
 	messageListener.init();
-
-	// Register window.wikiaDartHelper so jwplayer can use it
-	win.wikiaDartHelper = dartHelper;
 
 	// Register adSlotTweaker so DART creatives can use it
 	// https://www.google.com/dfp/5441#delivery/CreateCreativeTemplate/creativeTemplateId=10017012

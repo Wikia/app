@@ -18,13 +18,13 @@ class PermissionsFactory extends AbstractFactory {
 	public function permissionsConfiguration(): PermissionsConfiguration {
 		if ( $this->permissionsConfiguration === null ) {
 			$this->permissionsConfiguration = new PermissionsConfiguration(
-					$GLOBALS['wgGroupPermissions'] ?? [],
-					$GLOBALS['wgAddGroupsLocal'] ?? [],
-					$GLOBALS['wgRemoveGroupsLocal'] ?? [],
-					$GLOBALS['wgGroupsAddToSelfLocal'] ?? [],
-					$GLOBALS['wgGroupsRemoveFromSelfLocal'] ?? [],
-					$GLOBALS['wgRestrictedAccessGroups'] ?? [],
-					$GLOBALS['wgRestrictedAccessExemptGroups'] ?? []
+					$GLOBALS['wgGroupPermissions'] ?: [],
+					$GLOBALS['wgAddGroupsLocal'] ?: [],
+					$GLOBALS['wgRemoveGroupsLocal'] ?: [],
+					$GLOBALS['wgGroupsAddToSelfLocal'] ?: [],
+					$GLOBALS['wgGroupsRemoveFromSelfLocal'] ?: [],
+					$GLOBALS['wgRestrictedAccessGroups'] ?: [],
+					$GLOBALS['wgRestrictedAccessExemptGroups'] ?: []
 				);
 		}
 

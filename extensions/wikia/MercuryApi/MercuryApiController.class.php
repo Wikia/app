@@ -306,7 +306,7 @@ class MercuryApiController extends WikiaController {
 
 		$data['article'] = [
 			'content' => $articleAsJson->content,
-			'media' => $articleAsJson->media
+			'heroImage' => $articleAsJson->heroImage
 		];
 
 		$wikiVariables = $this->prepareWikiVariables();
@@ -385,6 +385,11 @@ class MercuryApiController extends WikiaController {
 						$featuredVideo = MercuryApiArticleHandler::getFeaturedVideoDetails( $title );
 						if ( !empty( $featuredVideo ) ) {
 							$data['article']['featuredVideo'] = $featuredVideo;
+						}
+
+						$recommendedVideoPlaylist = ArticleVideoContext::getRecommendedVideoPlaylistId( $title->getArticleID() );
+						if ( !empty( $recommendedVideoPlaylist ) ) {
+							$data['article']['recommendedVideoPlaylist'] = $recommendedVideoPlaylist;
 						}
 
 						if ( !$title->isContentPage() ) {
