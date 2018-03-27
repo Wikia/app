@@ -496,7 +496,7 @@ $(function() {
 });
 </script>
 <div id="wiki-factory">
-	<div id="wk-busy-bar" style="display: none;"><img src="http://images.wikia.com/common/progress_bar.gif" width="70" height="11" alt="Wait..." border="0" /></div>
+	<div id="wk-busy-bar" style="display: none;"><img src="<?= $wgStylePath ?>/common/images/ajax.gif" alt="Wait..." border="0" /></div>
 	<h2>
 		Wiki info: <span class="wiki-sitename"><?php echo $wiki->city_title ?></span> <sup><small><a href="<?php echo $wikiFactoryUrl . '/' . $wiki->city_id; ?>/variables/wgSitename">edit</a></small></sup>
 	</h2>
@@ -517,7 +517,7 @@ $(function() {
 			<tr>
 				<td><?php echo $wiki->city_id ?></td>
 				<td><?php echo $wiki->city_dbname ?></td>
-				<td><?php echo empty( $cluster ) ? "c1<acronym title='default'>*</acronym>" : $cluster ?></td>
+				<td><?php echo $wiki->city_cluster ?></td>
 				<td><?php echo $wiki->city_lang ?></td>
 				<td><?php
 					$wgHub = WikiFactory::getCategory( $wiki->city_id );

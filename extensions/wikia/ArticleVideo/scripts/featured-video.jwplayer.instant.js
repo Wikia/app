@@ -99,6 +99,7 @@ require([
 				showQuality: true,
 				showCaptions: true
 			},
+			sharing: true,
 			mute: isFromRecirculation() ? false : willAutoplay,
 			related: {
 				time: 3,

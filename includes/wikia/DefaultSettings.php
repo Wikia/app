@@ -140,7 +140,6 @@ $wgAutoloadClasses['MoviesApiController'] = "{$IP}/includes/wikia/api/MoviesApiC
 $wgAutoloadClasses['DWDimensionApiController'] = "{$IP}/includes/wikia/api/DWDimensionApiController.class.php";
 $wgAutoloadClasses['DWDimensionApiControllerSQL'] = "{$IP}/includes/wikia/api/DWDimensionApiControllerSQL.class.php";
 $wgAutoloadClasses['InfoboxApiController'] = "{$IP}/includes/wikia/api/InfoboxApiController.class.php";
-$wgAutoloadClasses['LogEventsApiController'] = "{$IP}/includes/wikia/api/LogEventsApiController.class.php";
 $wgAutoloadClasses['TemplateClassificationApiController'] = "{$IP}/includes/wikia/api/TemplateClassificationApiController.class.php";
 $wgExtensionMessagesFiles['WikiaApi'] = "{$IP}/includes/wikia/api/WikiaApi.i18n.php";
 
@@ -1216,6 +1215,13 @@ $wgAdDriverAolOneMobileBidderCountries = null;
 $wgAdDriverAppNexusBidderCountries = null;
 
 /**
+ * @name $wgAdDriverAppNexusWebAdsBidderCountries
+ * List of countries where appnexus via WebAds bidding platform is enabled.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverAppNexusWebAdsBidderCountries = null;
+
+/**
  * @name $wgAdDriverUseAudienceNetworkBidder
  * Enables Facebook Audience Network bidding platform.
  */
@@ -1241,6 +1247,13 @@ $wgAdDriverBeachfrontBidderCountries = null;
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverBottomLeaderBoardOnMobileCountries = null;
+
+/**
+ * @name $wgAdDriverBottomLeaderBoardMegaCountries
+ * List of countries where BOTTOM_LEADERBOARD ad slot mega is enabled.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverBottomLeaderBoardMegaCountries = null;
 
 /**
  * @name $wgAdDriverIndexExchangeBidderCountries
@@ -1380,21 +1393,6 @@ $wgAdDriverSrcPremiumCountries = [];
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverKILOCountries = null;
-
-/**
- * @name $wgAdDriverLBScrollExperimentCountires
- * Enables experiment that sends scrolltop position keyval to DFP for TLB requests
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverLBScrollExperimentCountires = null;
-
-/**
- * @name $wgAdDriverLBScrollExperimentBucket
- * Bucket size for experiment enabled in $wgAdDriverLBScrollExperimentCountires
- * eg for 50, available values: 0, 50, 100, 150, 200, 250, 300...
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverLBScrollExperimentBucket = null;
 
 /**
  * @name $wgAdDriverMEGACountries
@@ -1878,9 +1876,6 @@ include_once "$IP/extensions/wikia/Pages/Pages.setup.php";
 
 // SUS-3455: Special:ListGlobalUsers for all wikis
 include_once "$IP/extensions/wikia/ListGlobalUsers/ListGlobalUsers.setup.php";
-
-// SEC-59: Form-based Userlogout for Monobook
-include_once "$IP/extensions/wikia/UserLogout/UserLogout.setup.php";
 
 // SRE-76: Logging classes that have been initially defined in config.
 $wgAutoloadClasses['AuditLog'] = "$IP/includes/wikia/AuditLog.class.php";

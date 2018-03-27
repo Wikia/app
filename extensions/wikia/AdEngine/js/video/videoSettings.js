@@ -1,27 +1,21 @@
 /*global define*/
 define('ext.wikia.adEngine.video.videoSettings', [
 	'ext.wikia.adEngine.adContext',
-	'ext.wikia.adEngine.slot.resolvedState',
 	'ext.wikia.adEngine.utils.sampler',
 	'wikia.instantGlobals',
 	'wikia.window'
-], function (adContext, resolvedState, sampler, instantGlobals, win) {
+], function (adContext, sampler, instantGlobals, win) {
 	'use strict';
 
 	function create(params) {
 		var state = {
 			autoPlay: false,
 			moatTracking: false,
-			resolvedState: false,
-			splitLayout: false,
 			withUiControls: false
 		};
 
 		function calculateAutoPlayFlag(params) {
-			var defaultStateAutoPlay = params.autoPlay && !state.resolvedState,
-				resolvedStateAutoPlay = params.resolvedStateAutoPlay && state.resolvedState;
-
-			return Boolean(defaultStateAutoPlay || resolvedStateAutoPlay);
+			return Boolean(params.autoPlay);
 		}
 
 		function calculateMoatTrackingFlag(params) {
@@ -47,9 +41,7 @@ define('ext.wikia.adEngine.video.videoSettings', [
 		}
 
 		function init() {
-			state.resolvedState = resolvedState.isResolvedState();
 			state.autoPlay = calculateAutoPlayFlag(params);
-			state.splitLayout = Boolean(params.splitLayoutVideoPosition);
 			state.moatTracking = calculateMoatTrackingFlag(params);
 			state.withUiControls = Boolean(params.hasUiControls);
 		}
@@ -74,12 +66,6 @@ define('ext.wikia.adEngine.video.videoSettings', [
 			},
 			isAutoPlay: function () {
 				return state.autoPlay;
-			},
-			isResolvedState: function () {
-				return state.resolvedState;
-			},
-			isSplitLayout: function () {
-				return state.splitLayout;
 			},
 			isMoatTrackingEnabled: function () {
 				return state.moatTracking;

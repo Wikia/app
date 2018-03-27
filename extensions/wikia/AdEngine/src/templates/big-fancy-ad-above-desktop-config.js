@@ -1,7 +1,6 @@
 import { universalAdPackage } from '@wikia/ad-products';
 import { context, scrollListener, slotTweaker, utils } from '@wikia/ad-engine';
-import autobind from 'core-decorators/es/autobind';
-import { pinNavbar, navBarElement, navBarStickClass, isElementInViewport } from './navbar-updater';
+import { pinNavbar, navBarElement, isElementInViewport } from './navbar-updater';
 
 const {
 	CSS_CLASSNAME_STICKY_BFAA,
@@ -10,13 +9,18 @@ const {
 } = universalAdPackage;
 
 export const getConfig = () => ({
+	autoPlayAllowed: true,
+	defaultStateAllowed: true,
+	fullscreenAllowed: true,
+	stickinessAllowed: true,
 	adSlot: null,
 	slotParams: null,
 	updateNavbarOnScroll: null,
 
 	slotsToEnable: [
 		'BOTTOM_LEADERBOARD',
-		'INCONTENT_BOXAD_1'
+		'INCONTENT_BOXAD_1',
+		'TOP_RIGHT_BOXAD'
 	],
 
 	onInit(adSlot, params) {

@@ -386,7 +386,7 @@ if ( defined( 'REBUILD_LOCALISATION_CACHE_IN_PROGRESS' ) || !empty($wgEnableSema
 
 	# Function to switch on Semantic MediaWiki. This function must be called in
 	# LocalSettings.php after including SMW_Settings.php.
-	enableSemantics(preg_replace('/^http:\/\//', '', $wgServer));
+	enableSemantics(preg_replace('/^https?:\/\//', '', $wgServer));
 
 	$smwgNamespacesWithSemanticLinks[NS_USER] = false;
 	$smwgShowFactbox = SMW_FACTBOX_NONEMPTY;
@@ -1745,10 +1745,6 @@ if (!empty($wgFandomCreatorCommunityId)) {
 	include "$IP/extensions/wikia/FandomCreator/FandomCreator.setup.php";
 }
 
-if ( !empty( $wgEnableAppPromoLandingExt ) ) {
-	include "$IP/extensions/wikia/AppPromoLanding/AppPromoLanding_setup.php";
-}
-
 /**
  * @name $wgEnableNewAuthModal
  * Enables new popup-based authentication
@@ -1793,3 +1789,6 @@ include "$IP/extensions/wikia/HTTPSOptIn/HTTPSOptIn.setup.php";
 
 // Search should be enabled globally, always
 include "$IP/extensions/wikia/Search/WikiaSearch.setup.php";
+
+// Mercury auth pages related functionality - redirects, email confirmation.
+include "$IP/extensions/wikia/AuthPages/AuthPages.setup.php";

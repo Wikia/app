@@ -146,6 +146,7 @@ class MercuryApiController extends WikiaController {
 		$wikiVariables['localNav'] = $navigation;
 		$wikiVariables['vertical'] = WikiFactoryHub::getInstance()->getWikiVertical( $this->wg->CityId )['short'];
 		$wikiVariables['basePath'] = $this->wg->Server;
+		$wikiVariables['scriptPath'] = $this->wg->ScriptPath;
 
 		// Used to determine GA tracking
 		if ( !empty( $this->wg->IsGASpecialWiki ) ) {

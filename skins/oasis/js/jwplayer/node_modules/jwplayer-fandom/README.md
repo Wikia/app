@@ -81,6 +81,7 @@ Id of DOM element where the player should be placed
 	// captions toggle appears in settings menu, sends event `captionsSelected` on click
 	showCaptions: boolean
   },
+  sharing: true,
   related: {
     // countdown time to autoplay next video
     time: number,

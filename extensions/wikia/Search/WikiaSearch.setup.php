@@ -49,8 +49,6 @@ $wgHooks['GetPreferences'][] = 'Wikia\Search\Hooks::onGetPreferences';
 /**
  * hooks
  */
-$wgHooks['WikiaMobileAssetsPackages'][] = 'Wikia\Search\Hooks::onWikiaMobileAssetsPackages';
-
 $wgHooks['WikiFactoryPublicStatusChange'][] = 'Wikia\Search\Hooks::onWikiFactoryPublicStatusChange';
 
 $wgExtensionCredits['other'][] = [

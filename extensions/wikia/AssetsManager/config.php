@@ -82,7 +82,6 @@ $config['adengine2_desktop_js'] = [
 		'//extensions/wikia/AdEngine/js/slot/floatingMedrec.js',
 		'//extensions/wikia/AdEngine/js/slot/highImpact.js',
 		'//extensions/wikia/AdEngine/js/slot/inContent.js',
-		'//extensions/wikia/AdEngine/js/slot/resolvedState.js',
 		'//extensions/wikia/AdEngine/js/slot/service/actionHandler.js',
 		'//extensions/wikia/AdEngine/js/slot/service/passbackHandler.js',
 		'//extensions/wikia/AdEngine/js/slot/service/slotRegistry.js',
@@ -279,6 +278,7 @@ $config['adengine2_pr3b1d_js'] = [
 		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/aol.js',
 		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/appnexus.js',
 		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/appnexusAst.js',
+		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/appnexusWebAds.js',
 		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/appnexusPlacements.js',
 		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/audienceNetwork.js',
 		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/beachfront.js',
@@ -293,7 +293,10 @@ $config['adengine2_pr3b1d_js'] = [
 		// IL recovery
 		'//extensions/wikia/ARecoveryEngine/js/InstartLogic/recovery.js',
 
-		'//extensions/wikia/AdEngine/js/wrappers/prebid.js'
+		'//extensions/wikia/AdEngine/js/wrappers/prebid.js',
+
+		// prebid library
+		'#group_pr3b1d_prod_js'
 	],
 ];
 
@@ -918,7 +921,6 @@ $config['mercury_ads_js'] = [
 		'//extensions/wikia/AdEngine/js/babDetection.js',
 		'//extensions/wikia/AdEngine/js/mobile/mercuryListener.js',
 		'//extensions/wikia/AdEngine/js/slot/service/actionHandler.js',
-		'//extensions/wikia/AdEngine/js/slot/resolvedState.js',
 		'//extensions/wikia/AdEngine/js/template/floor.js',
 		'//extensions/wikia/AdEngine/js/template/floorAdhesion.js',
 		'//extensions/wikia/AdEngine/js/template/modal.js',
@@ -948,6 +950,7 @@ $config['mercury_ads_js'] = [
 	],
 ];
 
+// TODO remove this group and include file directly after ADEN-6797 release
 $config['pr3b1d_prod_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [
@@ -1433,23 +1436,6 @@ $config['wampage_js'] = [
 	],
 ];
 
-/** WikiaSearch **/
-$config['wikiasearch_js_wikiamobile'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => 'wikiamobile',
-	'assets' => [
-		'//extensions/wikia/Search/js/WikiaSearch.wikiamobile.js',
-	],
-];
-
-$config['wikiasearch_scss_wikiamobile'] = [
-	'type' => AssetsManager::TYPE_SCSS,
-	'skin' => 'wikiamobile',
-	'assets' => [
-		'//extensions/wikia/Search/css/WikiaSearch.wikiamobile.scss',
-	],
-];
-
 /** Places **/
 $config['places_js'] = [
 	'skin' => [ 'oasis', 'monobook', 'wikiamobile' ],
@@ -1596,14 +1582,6 @@ $config['achievements_js'] = [
 	'assets' => [
 		'//resources/wikia/libraries/bootstrap/popover.js',
 		'//skins/oasis/js/Achievements.js',
-	],
-];
-
-/* AppPromo Landing Screen */
-$config['app_promo_landing_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => [
-		'//extensions/wikia/AppPromoLanding/js/appPromoLanding.js',
 	],
 ];
 
@@ -2563,7 +2541,6 @@ $config['jwplayer_featured_video_ads_js'] = [
 		'//extensions/wikia/AdEngine/js/video/player/jwplayer/jwplayerAdsTracking.js',
 		'//extensions/wikia/AdEngine/js/video/player/jwplayer/jwplayerTracker.js',
 		'//extensions/wikia/ArticleVideo/scripts/featured-video.jwplayer.ads.js',
-		'//extensions/wikia/ArticleVideo/scripts/featured-video.jwplayer.moat-plugin.js',
 		'//extensions/wikia/ArticleVideo/scripts/featured-video.jwplayer.moat-tracking.js',
 	],
 ];
