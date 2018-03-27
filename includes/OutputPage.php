@@ -280,10 +280,6 @@ class OutputPage extends ContextSource {
 		if( $responsecode == '301' ) {
 			$this->setSquidMaxage( 1200 );
 		}
-
-		// SUS-4175 | make the source of the redirect more obvious
-		$this->getRequest()->response()->header( 'X-Redirected-By: mw-OutputPage::redirect' );
-		# end wikia change
 	}
 
 	/**
@@ -2088,6 +2084,10 @@ class OutputPage extends ContextSource {
 					$this->addVaryHeader( 'X-Forwarded-Proto' );
 				}
 				$this->sendCacheControl();
+
+				// SUS-4175 | make the source of the redirect more obvious
+				$response->header( 'X-Redirected-By: mw-OutputPage::redirect' );
+				# end wikia change
 
 				$response->header( "Content-Type: text/html; charset=utf-8" );
 				if( $wgDebugRedirects ) {

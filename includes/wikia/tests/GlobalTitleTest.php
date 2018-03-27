@@ -28,11 +28,6 @@ class GlobalTitleTest extends WikiaBaseTest {
 				[ 'wgExtraNamespacesLocal', 490, false, [], [ 116 => 'Portal' ] ],
 				[ 'wgExtraNamespacesLocal', 1686, false, [], [] ],
 				[ 'wgExtraNamespacesLocal', 165, false, [], [] ],
-				[ 'wgAllowHTTPS', 177, false ],
-				[ 'wgAllowHTTPS', 113, false ],
-				[ 'wgAllowHTTPS', 490, false ],
-				[ 'wgAllowHTTPS', 1686, false ],
-				[ 'wgAllowHTTPS', 165, true ],
 			] );
 	}
 
@@ -175,7 +170,7 @@ class GlobalTitleTest extends WikiaBaseTest {
 		$this->mockStaticMethod( 'WebRequest', 'detectProtocol', $requestProtocol );
 
 		$fullUrl = GlobalTitle::newFromText( 'Test', NS_MAIN, $cityId )->getFullURL();
-		$this->assertEquals( $fullUrl, $expectedUrl );
+		$this->assertEquals( $expectedUrl, $fullUrl );
 	}
 
 	public function urlsSpacesProvider() {
@@ -248,9 +243,11 @@ class GlobalTitleTest extends WikiaBaseTest {
 	public function httpsUrlsProvider() {
 		return [
 			[ 177, 'http', 'http://community.wikia.com/wiki/Test' ],
-			[ 177, 'https', 'http://community.wikia.com/wiki/Test' ],
+			[ 177, 'https', 'https://community.wikia.com/wiki/Test' ],
 			[ 165, 'http', 'http://firefly.wikia.com/wiki/Test' ],
 			[ 165, 'https', 'https://firefly.wikia.com/wiki/Test' ],
+			[ 5931, 'http', 'http://ja.starwars.wikia.com/wiki/Test' ],
+			[ 5931, 'https', 'http://ja.starwars.wikia.com/wiki/Test' ],
 		];
 	}
 }

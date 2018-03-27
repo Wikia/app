@@ -39,7 +39,7 @@ class ArticleVideoContext {
 		// gta.wikia.com
 		4541 => [
 			185157 => 'IqqOqNVI',
-			184893 => 'Wb1lZb0i',
+			184893 => 'lfz9Wmoi',
 			99477 => 'OJpnFu6L',
 			185085 => 'lfz9Wmoi'
 		],
@@ -56,7 +56,7 @@ class ArticleVideoContext {
 		// monsterhunter.wikia.com
 		3234 => [
 			312943 => 'DT6aHDR7',
-			312943 => '318952'
+			318952 => 'gFhI3dDy'
 		],
 		// naruto.wikia.com
 		1318 => [
@@ -110,20 +110,35 @@ class ArticleVideoContext {
 				$logger->error( self::ARTICLE_VIDEO_ERROR_MESSAGE );
 			}
 
-			$details = json_decode(
-				Http::get(
-					'https://cdn.jwplayer.com/v2/media/' . $videoData['mediaId'],
-					1
-				),
-				true
+			$jwPlayerRequest = Http::get(
+				'https://cdn.jwplayer.com/v2/media/' . $videoData['mediaId'],
+				2,
+				[ 'returnInstance' => true ]
 			);
 
-			if ( empty( $details ) || empty( $details['playlist'] ) || empty( $details['playlist'][0] ) ) {
-				$logger->error( self::JWPLAYER_API_ERROR_MESSAGE );
+			$isOK = $jwPlayerRequest->status->isOK();
+			$memCacheKey = wfMemcKey( 'featured-video', $wg->cityId, $pageId );
+
+			$content = $jwPlayerRequest->getContent();
+
+			if ( !$isOK ) {
+				$content = F::app()->wg->Memc->get( $memCacheKey );
+			} else {
+				F::app()->wg->Memc->set( $memCacheKey, $content );
+			}
+
+			$details = json_decode( $content, true );
+
+			if ( empty( $details ) || empty( $details['playlist'] ) ||
+			     empty( $details['playlist'][0] )
+			) {
+				$logger->error( self::JWPLAYER_API_ERROR_MESSAGE,
+					[ 'isOK' => $isOK, 'statusCode' => $jwPlayerRequest->getStatus(), 'content' => $content ] );
 			} else {
 				$videoData = array_merge( $videoData, $details );
 
 				$videoData['duration'] = WikiaFileHelper::formatDuration( $details['playlist'][0]['duration'] );
+				$videoData['videoTags'] = $details['playlist'][0]['tags'];
 				$videoData['metadata'] = self::getVideoMetaData( $videoData );
 				$videoData['recommendedLabel'] = $wg->featuredVideoRecommendedVideosLabel;
 				$videoData['recommendedVideoPlaylist'] = $wg->recommendedVideoPlaylist;

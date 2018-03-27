@@ -18,7 +18,11 @@ describe('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', function () {
 			},
 			adContext: {
 				addCallback: noop,
-				getContext: noop
+				getContext: noop,
+				get: function (path) {
+					path = path.split('.');
+					return this.getContext()[path[0]][path[1]];
+				}
 			},
 			slotsContext: {
 				isApplicable: noop
@@ -115,9 +119,9 @@ describe('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', function () {
 		mocks.page.getPageLevelParams.and.returnValue(params);
 	}
 
-	function mockTargeting(targeting) {
+	function mockContext(targeting, opts) {
 		spyOn(mocks.adContext, 'getContext');
-		mocks.adContext.getContext.and.returnValue({targeting: targeting});
+		mocks.adContext.getContext.and.returnValue({targeting: targeting, opts: opts});
 	}
 
 	it('Should build new ad unit', function () {
@@ -127,7 +131,7 @@ describe('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', function () {
 			's2': 'home',
 			'skin': 'mercury'
 		});
-		mockTargeting({ wikiIsTop1000: true });
+		mockContext({ wikiIsTop1000: true }, {});
 
 		expect(getModule().build('MOBILE_PREFOOTER', 'mobile_remnant'))
 			.toEqual('/5441/wka2a.PF/mobile_prefooter/smartphone/mercury-home/_godofwar-gaming');
@@ -135,7 +139,7 @@ describe('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', function () {
 
 	it('Should build new ad unit with correct tablet recognition', function () {
 		mockPageParams(DEFAULT_PAGE_PARAMS);
-		mockTargeting({ wikiIsTop1000: true });
+		mockContext({ wikiIsTop1000: true }, {});
 
 		spyOn(mocks.browserDetect, 'isMobile').and.returnValue(true);
 
@@ -150,7 +154,7 @@ describe('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', function () {
 			's2': 'fv-article',
 			'skin': 'mercury'
 		});
-		mockTargeting({ wikiIsTop1000: true });
+		mockContext({ wikiIsTop1000: true }, {});
 
 		expect(getModule().build('MOBILE_PREFOOTER', 'mobile_remnant'))
 			.toEqual('/5441/wka2a.PF/mobile_prefooter/smartphone/mercury-fv-article/_godofwar-gaming');
@@ -163,7 +167,7 @@ describe('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', function () {
 			's2': 'fv-article',
 			'skin': 'oasis'
 		});
-		mockTargeting({ wikiIsTop1000: true });
+		mockContext({ wikiIsTop1000: true }, {});
 
 		expect(getModule().build('MOBILE_PREFOOTER', 'mobile_remnant'))
 			.toEqual('/5441/wka2a.PF/mobile_prefooter/desktop/oasis-fv-article/_godofwar-gaming');
@@ -176,7 +180,7 @@ describe('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', function () {
 			's2': 'article',
 			'skin': 'oasis'
 		});
-		mockTargeting({ wikiIsTop1000: true });
+		mockContext({ wikiIsTop1000: true }, {});
 		spyOn(mocks.slotsContext, 'isApplicable').and.returnValue(true);
 
 		expect(getModule().build('TOP_LEADERBOARD', 'gpt')).toContain('/oasis-article-ic/');
@@ -189,7 +193,7 @@ describe('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', function () {
 			's2': 'fv-article',
 			'skin': 'oasis'
 		});
-		mockTargeting({ wikiIsTop1000: true });
+		mockContext({ wikiIsTop1000: true }, {});
 		spyOn(mocks.slotsContext, 'isApplicable').and.returnValue(true);
 
 		expect(getModule().build('TOP_LEADERBOARD', 'gpt')).toContain('/oasis-fv-article-ic/');
@@ -197,7 +201,7 @@ describe('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', function () {
 
 	it('Should build new ad unit for wiki not in top 1000', function () {
 		mockPageParams(DEFAULT_PAGE_PARAMS);
-		mockTargeting({ wikiIsTop1000: false });
+		mockContext({ wikiIsTop1000: false }, {});
 
 		spyOn(mocks.browserDetect, 'isMobile').and.returnValue(true);
 
@@ -207,7 +211,7 @@ describe('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', function () {
 
 	it('Should build new ad unit non-remnant provider with wka1a', function () {
 		mockPageParams(DEFAULT_PAGE_PARAMS);
-		mockTargeting({ wikiIsTop1000: true });
+		mockContext({ wikiIsTop1000: true }, {});
 
 		expect(getModule().build('TOP_LEADERBOARD', 'gpt'))
 			.toEqual('/5441/wka1a.LB/top_leaderboard/desktop/oasis-home/_godofwar-gaming');
@@ -220,7 +224,7 @@ describe('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', function () {
 			's2': 'special',
 			'skin': 'oasis'
 		});
-		mockTargeting({ wikiIsTop1000: true });
+		mockContext({ wikiIsTop1000: true }, {});
 
 		spyOn(mocks.browserDetect, 'isMobile').and.returnValue(true);
 
@@ -229,23 +233,29 @@ describe('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', function () {
 	});
 
 	it('Should extract slot name from ad unit', function () {
+		mockContext({}, {});
+
 		expect(getModule().getShortSlotName('/5441/wka2a.OTHER/bottom_leaderboard/tablet/oasis-home/_godofwar-gaming'))
 			.toBe('BOTTOM_LEADERBOARD');
 	});
 
 	it('Should keep slotName untouched if passed ad unit is not valid', function () {
+		mockContext({}, {});
+
 		expect(getModule().getShortSlotName('/5441/wka.life/_project43//article/playwire/TOP_LEADERBOARD'))
 			.toBe('/5441/wka.life/_project43//article/playwire/TOP_LEADERBOARD');
 	});
 
 	it('Should keep slotName untouched if passed slotName is not an ad unit', function () {
+		mockContext({}, {});
+
 		expect(getModule().getShortSlotName('TOP_LEADERBOARD')).toBe('TOP_LEADERBOARD');
 	});
 
 	testCases.forEach(function (testCase) {
 		it('Should build new ad unit without correct pos group', function () {
 			mockPageParams(DEFAULT_PAGE_PARAMS);
-			mockTargeting({ wikiIsTop1000: true });
+			mockContext({ wikiIsTop1000: true }, {});
 
 			spyOn(mocks.browserDetect, 'isMobile').and.returnValue(true);
 
@@ -256,22 +266,24 @@ describe('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', function () {
 
 	testCasesForValidation.forEach(function (testCase) {
 		it('Should validate given ad unit', function () {
+			mockContext({}, {});
+
 			expect(getModule().isValid(testCase.adUnit)).toBe(testCase.valid);
 		});
 	});
 
 	it('isMegaSlot returns true for INVISIBLE_SKIN', function () {
-		mockTargeting({ skin: 'oasis' });
+		mockContext({ skin: 'oasis' }, {});
 		expect(getModule().isMegaSlot('INVISIBLE_SKIN')).toBeTruthy();
 	});
 
-	it('isMegaSlot returns false for BOTTOM_LEADERBOARD on Oasis', function () {
-		mockTargeting({ skin: 'oasis' });
-		expect(getModule().isMegaSlot('BOTTOM_LEADERBOARD')).toBeFalsy();
+	it('isMegaSlot returns true for BOTTOM_LEADERBOARD on Oasis', function () {
+		mockContext({ skin: 'oasis' }, { isBLBMegaEnabled: true });
+		expect(getModule().isMegaSlot('BOTTOM_LEADERBOARD')).toBeTruthy();
 	});
 
 	it('isMegaSlot returns false for BOTTOM_LEADERBOARD on Mercury', function () {
-		mockTargeting({ skin: 'mercury' });
+		mockContext({ skin: 'mercury' }, { isBLBMegaEnabled: false });
 		expect(getModule().isMegaSlot('BOTTOM_LEADERBOARD')).toBeTruthy();
 	});
 });

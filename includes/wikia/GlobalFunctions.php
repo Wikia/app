@@ -1560,3 +1560,26 @@ function wfHttpToHttps( $url ) {
 function wfHttpsToHttp( $url ) {
 	return preg_replace( '/^https:\/\//', 'http://', $url );
 }
+
+function wfHttpsAllowedForURL( $url ): bool {
+	global $wgWikiaBaseDomain, $wgDevDomain, $wgWikiaEnvironment, $wgDevelEnvironment;
+	$host = parse_url( $url, PHP_URL_HOST );
+	if ( $host === false ) {
+		return false;
+	}
+
+	if ( $wgDevelEnvironment && !empty( $wgDevDomain ) ) {
+		$server = str_replace( ".{$wgDevDomain}", '', $host );
+	} elseif ( $wgWikiaEnvironment !== WIKIA_ENV_PROD ) {
+		$server = preg_replace(
+			'/\\.(stable|preview|verify|sandbox-[a-z0-9]+)\\.' . preg_quote( $wgWikiaBaseDomain ) . '$/',
+			'',
+			$host
+		);
+	} else {
+		$server = str_replace( ".{$wgWikiaBaseDomain}", '', $host );
+	}
+
+	// Only allow single subdomain wikis through
+	return substr_count( $server, '.' ) === 0;
+}

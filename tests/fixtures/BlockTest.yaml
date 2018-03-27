@@ -8,7 +8,6 @@ ipblocks:
     ipb_timestamp: '20110101000000'
     ipb_auto: 0
     ipb_anon_only: 0
-    ipb_create_account: 0
     ipb_expiry: 'infinity'
     ipb_range_start: ''
     ipb_range_end: ''
@@ -24,7 +23,6 @@ ipblocks:
     ipb_timestamp: '20130412050100'
     ipb_auto: 0
     ipb_anon_only: 1
-    ipb_create_account: 1
     ipb_expiry: '20360712050100' # otherwise MW will discard it as expired ;)
     ipb_range_start: ''
     ipb_range_end: ''
@@ -40,7 +38,6 @@ ipblocks:
     ipb_timestamp: '20130412050100'
     ipb_auto: 1
     ipb_anon_only: 1
-    ipb_create_account: 1
     ipb_expiry: '20360712050100' # otherwise MW will discard it as expired ;)
     ipb_range_start: ''
     ipb_range_end: ''
@@ -56,7 +53,6 @@ ipblocks:
     ipb_timestamp: '20110101000000'
     ipb_auto: 0
     ipb_anon_only: 0
-    ipb_create_account: 0
     ipb_expiry: 'infinity'
     ipb_range_start: ''
     ipb_range_end: ''
@@ -72,7 +68,6 @@ ipblocks:
     ipb_timestamp: '20110101000000'
     ipb_auto: 1
     ipb_anon_only: 0
-    ipb_create_account: 0
     ipb_expiry: '20150101000000'
     ipb_range_start: ''
     ipb_range_end: ''

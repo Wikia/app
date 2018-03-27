@@ -142,7 +142,8 @@ class ChangeTags {
 			);
 		}
 
-		$dbw->insert( 'change_tag', $tagsRows, __METHOD__, array( 'IGNORE' ) );
+		// SUS-3798 | Wikia change - remove an evil IGNORE flag
+		$dbw->insert( 'change_tag', $tagsRows, __METHOD__ );
 
 		return true;
 	}

@@ -29,9 +29,8 @@ define('wikia.articleVideo.featuredVideo.moatTracking', [
 		}
 	}
 
-	track.track = track;
-	track.loadTrackingPlugin = loadTrackingPlugin;
-	track.pluginURL = jwplayerPluginUrl;
-
-	return track; // TODO remove in ADEN-6836
+	return {
+		track: track,
+		loadTrackingPlugin: loadTrackingPlugin
+	};
 });

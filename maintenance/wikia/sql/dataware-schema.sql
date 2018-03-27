@@ -174,23 +174,6 @@ CREATE TABLE `pages` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Table structure for table `portability_dashboard`
---
-
-DROP TABLE IF EXISTS `portability_dashboard`;
-CREATE TABLE `portability_dashboard` (
-  `wiki_id` int(11) NOT NULL,
-  `portability` decimal(5,4) DEFAULT '0.0000',
-  `infobox_portability` decimal(5,4) DEFAULT '0.0000',
-  `traffic` int(11) DEFAULT '0',
-  `migration_impact` int(11) DEFAULT '0',
-  `typeless` int(11) DEFAULT '0',
-  `custom_infoboxes` int(11) DEFAULT '0',
-  `excluded` tinyint(4) DEFAULT '0',
-  PRIMARY KEY (`wiki_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
 -- Table structure for table `user_flags`
 --
 

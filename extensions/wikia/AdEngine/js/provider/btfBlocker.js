@@ -1,12 +1,12 @@
 /*global define*/
 define('ext.wikia.adEngine.provider.btfBlocker', [
 	'ext.wikia.adEngine.adContext',
-	'ext.wikia.adEngine.context.uapContext',
+	'ext.wikia.adEngine.bridge',
 	'ext.wikia.adEngine.messageListener',
 	'wikia.lazyqueue',
 	'wikia.log',
 	'wikia.window'
-], function (adContext, uapContext, messageListener, lazyQueue, log, win) {
+], function (adContext, bridge, messageListener, lazyQueue, log, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.btfBlocker',
@@ -52,7 +52,7 @@ define('ext.wikia.adEngine.provider.btfBlocker', [
 
 		function processBtfSlot(slot) {
 
-			if (uapContext.isUapLoaded() && slot.name === 'INVISIBLE_HIGH_IMPACT_2') {
+			if (bridge.universalAdPackage.isFanTakeoverLoaded() && slot.name === 'INVISIBLE_HIGH_IMPACT_2') {
 				log(['IHI2 disabled when UAP on page'], log.levels.info, logGroup);
 				return;
 			}

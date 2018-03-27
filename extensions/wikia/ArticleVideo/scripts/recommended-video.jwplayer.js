@@ -23,7 +23,7 @@ require([
 	function reveal() {
 		tracker.track({
 			category: 'related-video-module',
-			trackingMethod: 'both',
+			trackingMethod: 'analytics',
 			action: tracker.ACTIONS.IMPRESSION,
 			label: 'reveal-point'
 		});
@@ -42,7 +42,7 @@ require([
 
 		tracker.track({
 			category: 'related-video-module',
-			trackingMethod: 'both',
+			trackingMethod: 'analytics',
 			action: tracker.ACTIONS.VIEW,
 			label: 'revealed'
 		});
@@ -114,7 +114,7 @@ require([
 
 		tracker.track({
 			category: 'related-video-module',
-			trackingMethod: 'both',
+			trackingMethod: 'analytics',
 			action: tracker.ACTIONS.VIEW,
 			label: 'playlist-item-start'
 		});
@@ -165,7 +165,7 @@ require([
 
 			tracker.track({
 				category: 'related-video-module',
-				trackingMethod: 'both',
+				trackingMethod: 'analytics',
 				action: tracker.ACTIONS.CLICK,
 				label: 'playlist-item'
 			});
@@ -176,7 +176,7 @@ require([
 
 			tracker.track({
 				category: 'related-video-module',
-				trackingMethod: 'both',
+				trackingMethod: 'analytics',
 				action: tracker.ACTIONS.CLICK,
 				label: 'playlist-item'
 			});
@@ -239,7 +239,7 @@ require([
 
 			tracker.track({
 				category: 'related-video-module',
-				trackingMethod: 'both',
+				trackingMethod: 'analytics',
 				action: tracker.ACTIONS.VIEW,
 				label: 'expanded'
 			});

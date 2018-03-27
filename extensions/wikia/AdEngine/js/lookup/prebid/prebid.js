@@ -1,23 +1,19 @@
 /*global define*/
 define('ext.wikia.adEngine.lookup.prebid', [
-	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker',
 	'ext.wikia.adEngine.lookup.prebid.adaptersPricesTracker',
 	'ext.wikia.adEngine.lookup.prebid.adaptersRegistry',
 	'ext.wikia.adEngine.lookup.prebid.prebidHelper',
 	'ext.wikia.adEngine.lookup.prebid.prebidSettings',
 	'ext.wikia.adEngine.lookup.lookupFactory',
-	'wikia.document',
 	'wikia.window'
 ], function (
-	adContext,
 	performanceTracker,
 	pricesTracker,
 	adaptersRegistry,
 	helper,
 	settings,
 	factory,
-	doc,
 	win
 ) {
 	'use strict';
@@ -32,19 +28,9 @@ define('ext.wikia.adEngine.lookup.prebid', [
 	}
 
 	function call(skin, onResponse) {
-		var prebid, node;
-
 		if (!prebidLoaded) {
-			prebid = doc.createElement('script');
-			node = doc.getElementsByTagName('script')[0];
-
 			adaptersRegistry.setupCustomAdapters();
 			adaptersRegistry.registerAliases();
-
-			prebid.async = true;
-			prebid.type = 'text/javascript';
-			prebid.src = adContext.getContext().opts.prebidBidderUrl || '//acdn.adnxs.com/prebid/prebid.js';
-			node.parentNode.insertBefore(prebid, node);
 		}
 
 		biddersPerformanceMap = performanceTracker.setupPerformanceMap(skin);
@@ -105,13 +91,36 @@ define('ext.wikia.adEngine.lookup.prebid', [
 	}
 
 	function getSlotParams(slotName) {
-		var params;
+		var slotParams;
 
-		if (win.pbjs && typeof win.pbjs.getAdserverTargetingForAdUnitCode === 'function') {
-			params = win.pbjs.getAdserverTargetingForAdUnitCode(slotName) || {};
+		if (win.pbjs && typeof win.pbjs.getBidResponses === 'function') {
+			var params = win.pbjs.getBidResponses(slotName) || {};
+
+			if (params && params[slotName] && params[slotName].bids && params[slotName].bids.length) {
+				var bidParams,
+					priorities = adaptersRegistry.getPriorities();
+
+				params[slotName].bids.forEach(function (param) {
+					if (!bidParams) {
+						bidParams = param;
+					} else {
+						if (bidParams.cpm === param.cpm) {
+							if (priorities[bidParams.bidder] === priorities[param.bidder]) {
+								bidParams = bidParams.timeToRespond > param.timeToRespond ? param : bidParams;
+							} else {
+								bidParams = priorities[bidParams.bidder] < priorities[param.bidder] ? param : bidParams;
+							}
+						} else {
+							bidParams = bidParams.cpm < param.cpm ? param : bidParams;
+						}
+					}
+				});
+
+				slotParams = bidParams.adserverTargeting;
+			}
 		}
 
-		return params || {};
+		return slotParams || {};
 	}
 
 	function getBestSlotPrice(slotName) {

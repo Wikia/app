@@ -1,0 +1,9 @@
+<div class="article-media-linked-gallery gallery{{#linkedGalleryViewMoreVisible}} article-media-linked-gallery__collapsed{{/linkedGalleryViewMoreVisible}}"
+	{{#galleryAttrs}}data-attrs="{{galleryAttrs}}"{{/galleryAttrs}}>
+{{#media}}
+    {{> gallery-thumbnail}}
+{{/media}}
+{{#linkedGalleryViewMoreVisible}}
+	<button class="article-media-linked-gallery__view-more wds-button">{{viewMoreLabel}}</button>
+{{/linkedGalleryViewMoreVisible}}
+</div>

@@ -44,7 +44,6 @@ $config['adengine2_desktop_js'] = [
 		'//extensions/wikia/AdEngine/js/AdDecoratorPageDimensions.js',
 		'//extensions/wikia/AdEngine/js/AdEngine2.js',
 		'//extensions/wikia/AdEngine/js/AdEngineRunner.js',
-		'//extensions/wikia/AdEngine/js/AdLogicDartSubdomain.js',
 		'//extensions/wikia/AdEngine/js/AdLogicPageDimensions.js',
 		'//extensions/wikia/AdEngine/js/AdLogicPageParams.js',
 		'//extensions/wikia/AdEngine/js/AdLogicPageViewCounter.js',
@@ -53,7 +52,6 @@ $config['adengine2_desktop_js'] = [
 		'//extensions/wikia/AdEngine/js/context/adContext.js',
 		'//extensions/wikia/AdEngine/js/context/slotsContext.js',
 		'//extensions/wikia/AdEngine/js/context/uapContext.js',
-		'//extensions/wikia/AdEngine/js/DartUrl.js',
 		'//extensions/wikia/AdEngine/js/DOMElementTweaker.js',
 		'//extensions/wikia/AdEngine/js/lookup/services.js',
 		'//extensions/wikia/AdEngine/js/MessageListener.js',
@@ -61,7 +59,6 @@ $config['adengine2_desktop_js'] = [
 		'//extensions/wikia/AdEngine/js/SlotTweaker.js',
 		'//extensions/wikia/AdEngine/js/pageFairDetection.js',
 		'//extensions/wikia/AdEngine/js/babDetection.js',
-		'//extensions/wikia/AdEngine/js/WikiaDartHelper.js',
 		'//extensions/wikia/AdEngine/js/config/desktop.js',
 		'//extensions/wikia/AdEngine/js/provider/btfBlocker.js',
 		'//extensions/wikia/AdEngine/js/provider/directGpt.js',
@@ -82,7 +79,6 @@ $config['adengine2_desktop_js'] = [
 		'//extensions/wikia/AdEngine/js/slot/floatingMedrec.js',
 		'//extensions/wikia/AdEngine/js/slot/highImpact.js',
 		'//extensions/wikia/AdEngine/js/slot/inContent.js',
-		'//extensions/wikia/AdEngine/js/slot/resolvedState.js',
 		'//extensions/wikia/AdEngine/js/slot/service/actionHandler.js',
 		'//extensions/wikia/AdEngine/js/slot/service/passbackHandler.js',
 		'//extensions/wikia/AdEngine/js/slot/service/slotRegistry.js',
@@ -176,7 +172,6 @@ $config['recirculation_js'] = [
 	'assets' => [
 		'//extensions/wikia/Recirculation/js/tracker.js',
 		'//extensions/wikia/Recirculation/js/utils.js',
-		'//extensions/wikia/Recirculation/js/helpers/FandomHelper.js',
 		'//extensions/wikia/Recirculation/js/helpers/DiscussionsHelper.js',
 		'//extensions/wikia/Recirculation/js/helpers/CuratedContentHelper.js',
 		'//extensions/wikia/Recirculation/js/helpers/LiftigniterHelper.js',
@@ -279,6 +274,7 @@ $config['adengine2_pr3b1d_js'] = [
 		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/aol.js',
 		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/appnexus.js',
 		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/appnexusAst.js',
+		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/appnexusWebAds.js',
 		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/appnexusPlacements.js',
 		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/audienceNetwork.js',
 		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/beachfront.js',
@@ -289,11 +285,15 @@ $config['adengine2_pr3b1d_js'] = [
 		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/rubicon.js',
 		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/rubiconDisplay.js',
 		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/wikia.js',
+		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/wikiaVideo.js',
 
 		// IL recovery
 		'//extensions/wikia/ARecoveryEngine/js/InstartLogic/recovery.js',
 
-		'//extensions/wikia/AdEngine/js/wrappers/prebid.js'
+		'//extensions/wikia/AdEngine/js/wrappers/prebid.js',
+
+		// prebid library
+		'#group_pr3b1d_prod_js'
 	],
 ];
 
@@ -311,8 +311,7 @@ $config['adengine2_porvata_js'] = [
 		'//extensions/wikia/AdEngine/js/video/player/porvata/moatVideoTrackerScript.js',
 		'//extensions/wikia/AdEngine/js/video/player/porvata/porvata.js',
 		'//extensions/wikia/AdEngine/js/video/player/porvata/porvataPlayerFactory.js',
-		'//extensions/wikia/AdEngine/js/video/player/porvata/porvataTracker.js',
-		'//extensions/wikia/AdEngine/js/video/player/porvata/vastLogger.js'
+		'//extensions/wikia/AdEngine/js/video/player/porvata/porvataTracker.js'
 	],
 ];
 
@@ -834,7 +833,6 @@ $config['mobile_base_ads_js'] = [
 		'//extensions/wikia/AdEngine/js/AdLogicPageParams.js',
 		'//extensions/wikia/AdEngine/js/AdTracker.js',
 		'//extensions/wikia/AdEngine/js/utils/timeBuckets.js',
-		'//extensions/wikia/AdEngine/js/DartUrl.js',
 		'//extensions/wikia/AdEngine/js/DOMElementTweaker.js',
 		'//extensions/wikia/AdEngine/js/MessageListener.js',
 		'//extensions/wikia/AdEngine/js/SlotTracker.js',
@@ -918,7 +916,6 @@ $config['mercury_ads_js'] = [
 		'//extensions/wikia/AdEngine/js/babDetection.js',
 		'//extensions/wikia/AdEngine/js/mobile/mercuryListener.js',
 		'//extensions/wikia/AdEngine/js/slot/service/actionHandler.js',
-		'//extensions/wikia/AdEngine/js/slot/resolvedState.js',
 		'//extensions/wikia/AdEngine/js/template/floor.js',
 		'//extensions/wikia/AdEngine/js/template/floorAdhesion.js',
 		'//extensions/wikia/AdEngine/js/template/modal.js',
@@ -948,6 +945,7 @@ $config['mercury_ads_js'] = [
 	],
 ];
 
+// TODO remove this group and include file directly after ADEN-6797 release
 $config['pr3b1d_prod_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [
@@ -1433,23 +1431,6 @@ $config['wampage_js'] = [
 	],
 ];
 
-/** WikiaSearch **/
-$config['wikiasearch_js_wikiamobile'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => 'wikiamobile',
-	'assets' => [
-		'//extensions/wikia/Search/js/WikiaSearch.wikiamobile.js',
-	],
-];
-
-$config['wikiasearch_scss_wikiamobile'] = [
-	'type' => AssetsManager::TYPE_SCSS,
-	'skin' => 'wikiamobile',
-	'assets' => [
-		'//extensions/wikia/Search/css/WikiaSearch.wikiamobile.scss',
-	],
-];
-
 /** Places **/
 $config['places_js'] = [
 	'skin' => [ 'oasis', 'monobook', 'wikiamobile' ],
@@ -1596,14 +1577,6 @@ $config['achievements_js'] = [
 	'assets' => [
 		'//resources/wikia/libraries/bootstrap/popover.js',
 		'//skins/oasis/js/Achievements.js',
-	],
-];
-
-/* AppPromo Landing Screen */
-$config['app_promo_landing_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => [
-		'//extensions/wikia/AppPromoLanding/js/appPromoLanding.js',
 	],
 ];
 
@@ -1794,15 +1767,6 @@ $config['qualaroo_blocking_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [
 		'//extensions/wikia/Qualaroo/scripts/QualarooBlocking.js',
-	],
-];
-
-/** Optimizely Blocking **/
-$config['optimizely_blocking_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'oasis', 'wikiamobile' ],
-	'assets' => [
-		'//extensions/wikia/Optimizely/scripts/OptimizelyBlocking.js',
 	],
 ];
 
@@ -2563,7 +2527,6 @@ $config['jwplayer_featured_video_ads_js'] = [
 		'//extensions/wikia/AdEngine/js/video/player/jwplayer/jwplayerAdsTracking.js',
 		'//extensions/wikia/AdEngine/js/video/player/jwplayer/jwplayerTracker.js',
 		'//extensions/wikia/ArticleVideo/scripts/featured-video.jwplayer.ads.js',
-		'//extensions/wikia/ArticleVideo/scripts/featured-video.jwplayer.moat-plugin.js',
 		'//extensions/wikia/ArticleVideo/scripts/featured-video.jwplayer.moat-tracking.js',
 	],
 ];

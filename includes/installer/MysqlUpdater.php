@@ -139,7 +139,6 @@ class MysqlUpdater extends DatabaseUpdater {
 			# array( 'addTable', 'user_properties',                   'patch-user_properties.sql' ),
 			array( 'addTable', 'log_search',                        'patch-log_search.sql' ),
 			array( 'doLogSearchPopulation' ),
-			array( 'addTable', 'l10n_cache',                        'patch-l10n_cache.sql' ),
 			array( 'addIndex', 'log_search',    'ls_field_val',     'patch-log_search-rename-index.sql' ),
 			array( 'addIndex', 'change_tag',    'change_tag_rc_tag', 'patch-change_tag-indexes.sql' ),
 			array( 'addField', 'redirect',      'rd_interwiki',     'patch-rd_interwiki.sql' ),

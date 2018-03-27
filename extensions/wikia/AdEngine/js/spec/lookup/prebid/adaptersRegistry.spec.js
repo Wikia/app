@@ -20,6 +20,7 @@ describe('adaptersRegistry', function () {
 			mocks.adapters.aol,
 			mocks.adapters.appnexus,
 			mocks.adapters.appnexusAst,
+			mocks.adapters.appnexusWebAds,
 			mocks.adapters.audienceNetwork,
 			mocks.adapters.indexExchange,
 			mocks.adapters.beachfront,
@@ -29,6 +30,7 @@ describe('adaptersRegistry', function () {
 			mocks.adapters.rubicon,
 			mocks.adapters.rubiconDisplay,
 			mocks.adapters.wikia,
+			mocks.adapters.wikiaVideo,
 			mocks.win
 		);
 	}
@@ -39,6 +41,7 @@ describe('adaptersRegistry', function () {
 				aol: new AdapterMock('aol', true),
 				appnexus: new AdapterMock('appnexus', true),
 				appnexusAst: new AdapterMock('appnexusAst', true),
+				appnexusWebAds: new AdapterMock('appnexusWebAds', true),
 				audienceNetwork: new AdapterMock('audienceNetwork', true),
 				fastlane: new AdapterMock('rubiconDisplay', true),
 				beachfront: new AdapterMock('beachfront', true),
@@ -47,7 +50,8 @@ describe('adaptersRegistry', function () {
 				openx: new AdapterMock('openx', true),
 				pubmatic: new AdapterMock('pubmatic', true),
 				rubicon: new AdapterMock('rubicon', true),
-				wikia: new AdapterMock('wikia', true)
+				wikia: new AdapterMock('wikia', true),
+				wikiaVideo: new AdapterMock('wikiaVideo', true)
 			},
 			win: {
 				pbjs: {
@@ -67,6 +71,7 @@ describe('adaptersRegistry', function () {
 				mocks.adapters.aol,
 				mocks.adapters.appnexus,
 				mocks.adapters.appnexusAst,
+				mocks.adapters.appnexusWebAds,
 				mocks.adapters.audienceNetwork,
 				mocks.adapters.beachfront,
 				mocks.adapters.indexExchange,
@@ -74,7 +79,7 @@ describe('adaptersRegistry', function () {
 				mocks.adapters.openx,
 				mocks.adapters.pubmatic,
 				mocks.adapters.rubicon,
-				mocks.adapters.rubiconDisplay
+				mocks.adapters.rubiconDisplay,
 			];
 
 		expectedAdapters.forEach(function (adapter) {

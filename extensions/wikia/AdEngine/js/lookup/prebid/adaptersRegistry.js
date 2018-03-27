@@ -3,6 +3,7 @@ define('ext.wikia.adEngine.lookup.prebid.adaptersRegistry', [
 	'ext.wikia.adEngine.lookup.prebid.adapters.aol',
 	'ext.wikia.adEngine.lookup.prebid.adapters.appnexus',
 	'ext.wikia.adEngine.lookup.prebid.adapters.appnexusAst',
+	'ext.wikia.adEngine.lookup.prebid.adapters.appnexusWebAds',
 	'ext.wikia.adEngine.lookup.prebid.adapters.audienceNetwork',
 	'ext.wikia.adEngine.lookup.prebid.adapters.beachfront',
 	'ext.wikia.adEngine.lookup.prebid.adapters.indexExchange',
@@ -12,11 +13,13 @@ define('ext.wikia.adEngine.lookup.prebid.adaptersRegistry', [
 	'ext.wikia.adEngine.lookup.prebid.adapters.rubicon',
 	'ext.wikia.adEngine.lookup.prebid.adapters.rubiconDisplay',
 	'ext.wikia.adEngine.lookup.prebid.adapters.wikia',
+	'ext.wikia.adEngine.lookup.prebid.adapters.wikiaVideo',
 	'wikia.window'
 ], function(
 	aol,
 	appnexus,
 	appnexusAst,
+	appnexusWebAds,
 	audienceNetwork,
 	beachfront,
 	indexExchange,
@@ -26,6 +29,7 @@ define('ext.wikia.adEngine.lookup.prebid.adaptersRegistry', [
 	rubicon,
 	rubiconDisplay,
 	wikia,
+	wikiaVideo,
 	win
 ) {
 	'use strict';
@@ -34,6 +38,7 @@ define('ext.wikia.adEngine.lookup.prebid.adaptersRegistry', [
 			aol,
 			appnexus,
 			appnexusAst,
+			appnexusWebAds,
 			audienceNetwork,
 			beachfront,
 			indexExchange,
@@ -44,7 +49,8 @@ define('ext.wikia.adEngine.lookup.prebid.adaptersRegistry', [
 			rubiconDisplay
 		],
 		customAdapters = [
-			wikia
+			wikia,
+			wikiaVideo
 		];
 
 	function getAdapters() {
@@ -81,8 +87,19 @@ define('ext.wikia.adEngine.lookup.prebid.adaptersRegistry', [
 		});
 	}
 
+	function getPriorities() {
+		var priority = {};
+
+		adapters.forEach(function (adapter) {
+			priority[adapter.getName()] = typeof adapter.getPriority === 'function' ? adapter.getPriority() : 1;
+		});
+
+		return priority;
+	}
+
 	return {
 		getAdapters: getAdapters,
+		getPriorities: getPriorities,
 		push: push,
 		registerAliases: registerAliases,
 		setupCustomAdapters: setupCustomAdapters
