@@ -136,23 +136,26 @@ class CompressOld extends Maintenance {
 		}
 		$dbw = wfGetDB( DB_MASTER );
 		$flags = $row->old_flags ? "{$row->old_flags},gzip" : "gzip";
-		$compress = gzdeflate( $row->old_text );
+		$compressed = gzdeflate( $row->old_text );
 
 		# Store in external storage if required
 		if ( $extdb !== '' ) {
-			$storeObj = new ExternalStoreDB;
-			$compress = $storeObj->store( $extdb, $compress );
-			if ( $compress === false ) {
+			$storeObj = new ExternalStoreDB();
+			$compressed = $storeObj->store( $extdb, $compressed );
+			if ( $compressed === false ) {
 				$this->error( "Unable to store object" );
 				return false;
 			}
+
+			// SUS-4497 | set the flag saying that the old_text is a pseudo-URL to blobs entry
+			$flags .= ',external';
 		}
 
 		# Update text row
 		$dbw->update( 'text',
 			array( /* SET */
 				'old_flags' => $flags,
-				'old_text' => $compress
+				'old_text' => $compressed
 			), array( /* WHERE */
 				'old_id' => $row->old_id
 			), __METHOD__,
