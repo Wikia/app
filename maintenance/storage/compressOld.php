@@ -134,10 +134,14 @@ class CompressOld extends Maintenance {
 		$isGzipped = strpos( $flags, 'gzip' ) !== false;
 		$isExternal = strpos( $flags, 'external' ) !== false;
 
-		if ( !$isExternal && $extdb !== '' ) {
+		if ( $isExternal ) {
+			# already moved to external
+			return false;
+		}
+		elseif ( !$isExternal && $extdb !== '' ) {
 			# this row is not yet kept on blobs and we want to move it there
 		}
-		else if ( $isGzipped || false !== strpos( $flags, 'object' ) ) {
+		elseif ( $isGzipped || false !== strpos( $flags, 'object' ) ) {
 			#print "Already compressed row {$row->old_id}\n";
 			return false;
 		}
