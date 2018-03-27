@@ -17,15 +17,15 @@
   },
   "homepage": "https://github.com/Wikia/app",
   "devDependencies": {
-    "istanbul": "latest",
+    "istanbul": "^0.4.5",
     "jasmine-core": "^2.8",
-    "karma": "latest",
-    "karma-chrome-launcher": "latest",
-    "karma-coverage": "latest",
-    "karma-jasmine": "latest",
-    "karma-junit-reporter": "latest",
-    "karma-requirejs": "latest",
-    "requirejs": "latest",
-    "jscs-jsdoc": "latest"
+    "karma": "^2.0.0",
+    "karma-chrome-launcher": "^2.2.0",
+    "karma-coverage": "^1.1.1",
+    "karma-jasmine": "^1.1.1",
+    "karma-junit-reporter": "^1.2.0",
+    "karma-requirejs": "^1.1.0",
+    "requirejs": "^2.3.5",
+    "jscs-jsdoc": "^2.0.0"
   }
 }
