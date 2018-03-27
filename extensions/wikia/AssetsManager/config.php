@@ -820,7 +820,6 @@ $config['mobile_base_ads_js'] = [
 		'//resources/wikia/modules/domCalculator.js',
 		'//resources/wikia/modules/lazyqueue.js',
 		'//resources/wikia/modules/iframeWriter.js',
-		'//resources/wikia/modules/promise.js',
 		'//resources/wikia/modules/throttle.js',
 		'//resources/wikia/modules/viewportObserver.js',
 
