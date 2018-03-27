@@ -50,30 +50,29 @@ class QuickToolsHelper extends ContextSource {
 	/**
 	 * Rollback edits and/or delete page creations by user
 	 *
-	 * @param  Title   $title The page name to perform reverts on
-	 * @param  string  $user Username of user to revert
-	 * @param  string  $time Timestamp to revert edits since
-	 * @param  string  $summary Edit summary to give for reverts and deletions
+	 * @param  Title $title The page name to perform reverts on
+	 * @param  string $user Username of user to revert
+	 * @param  string $time Timestamp to revert edits since
+	 * @param  string $summary Edit summary to give for reverts and deletions
 	 * @param  boolean $rollback Whether or not to perform rollbacks (default: true)
 	 * @param  boolean $delete Whether or not to perform deletions (default: true)
 	 * @param  boolean $markBot Whether or not to mark rollbacks as bot edits through
 	 *         the bot=1 URL parameter (default: false)
 	 * @return boolean True on success, false on failure
+	 * @throws MWException
 	 */
 	public function rollbackTitle(
 		Title $title, $user, $time, $summary, $rollback = true, $delete = true, $markBot = false
 	) {
-		// build article object and find article id
-		$article = new Article( $title );
-		$pageId = $article->getID();
+		$pageId = $title->getArticleID();
 
-		// check if article exists
-		if ( $pageId <= 0 ) {
+		if ( !$pageId ) {
 			return false;
 		}
 
 		// find the newest edit done by other user
 		$revertRevId = $this->getRevertId( $pageId, $user, $time );
+		$article = WikiPage::factory( $title );
 
 		if ( $revertRevId && $rollback ) { // found an edit by other user - reverting
 			return $this->doRollback( $article, $revertRevId, $summary, $markBot );
@@ -87,13 +86,14 @@ class QuickToolsHelper extends ContextSource {
 	/**
 	 * Rollback a page to the given revision ID.
 	 *
-	 * @param  Article $article     Article to rollback
-	 * @param  int     $revertRevId Revision ID to revert the article to
-	 * @param  string  $summary     Edit summary for the revert
-	 * @param  boolean $markBot     Whether or not the edit should be flagged as a bot
+	 * @param WikiPage $article Article to rollback
+	 * @param  int $revertRevId Revision ID to revert the article to
+	 * @param  string $summary Edit summary for the revert
+	 * @param  boolean $markBot Whether or not the edit should be flagged as a bot
 	 * @return boolean              Result of the rollback
+	 * @throws MWException
 	 */
-	private function doRollback( Article $article, $revertRevId, $summary, $markBot = false ) {
+	private function doRollback( WikiPage $article, $revertRevId, $summary, $markBot = false ) {
 		$revision = Revision::newFromId( $revertRevId );
 		$text = $revision->getRawText();
 		$flags = EDIT_UPDATE|EDIT_MINOR;
@@ -108,18 +108,20 @@ class QuickToolsHelper extends ContextSource {
 	/**
 	 * Delete an article or file.
 	 *
-	 * @param  Article $article Article or file page
-	 * @param  string  $summary Summary for the deletion
+	 * @param  WikiPage $article Article or file page
+	 * @param  string $summary Summary for the deletion
 	 * @return boolean          Result of the deletion
+	 * @throws MWException
 	 */
-	private function doDelete( Article $article, $summary ) {
+	private function doDelete( WikiPage $article, $summary ) {
 		$title = $article->getTitle();
 		$file = $title->getNamespace() == NS_FILE ? wfLocalFile( $title ) : false;
 		if ( $file ) {
 			$oldimage = null; // Must be passed by reference
 			$status = FileDeleteForm::doDelete( $title, $file, $oldimage, $summary, false )->isOK();
 		} else {
-			$status = $article->doDeleteArticle( $summary );
+			$err = [];
+			$status = $article->doDeleteArticle( $summary, false, 0, true, $err, $this->getUser() );
 		}
 
 		return $status;
@@ -166,6 +168,10 @@ class QuickToolsHelper extends ContextSource {
 	}
 
 	private function isOtherUser( $row, $userId, $userName ) {
-		return $row->rev_user != $userId || ( !$userId && $row->rev_user_text != $userName );
+		if ( $userId ) {
+			return $row->rev_user != $userId;
+		}
+
+		return $row->rev_user > 0 || $row->rev_user_text != $userName;
 	}
 }

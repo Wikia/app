@@ -247,6 +247,28 @@ class PipelineEventProducer {
 	}
 
 	/**
+	 * SUS-4495: Feed indexing pipeline with the parsed HTML of the new edit.
+	 * It will be used by article-snippet-worker to generate a snippet for Solr.
+	 *
+	 * @param \WikiPage $page
+	 * @param $editInfo
+	 * @param bool $changed
+	 */
+	public static function onArticleEditUpdates( \WikiPage $page, $editInfo, bool $changed ) {
+		if ( $changed ) {
+			global $wgCityId;
+
+			$message = [
+				'wiki_id' => $wgCityId,
+				'article_id' => $page->getId(),
+				'html' => $editInfo->output->getText()
+			];
+
+			self::getPipeline()->publish( 'articleFeeder._output', $message );
+		}
+	}
+
+	/**
 	 * @desc run on maintanence script - reindex wiki
 	 * @param Title $title
 	 * @return void
