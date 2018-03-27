@@ -278,12 +278,12 @@ describe('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', function () {
 	});
 
 	it('isMegaSlot returns true for BOTTOM_LEADERBOARD on Oasis', function () {
-		mockContext({ skin: 'oasis' }, { isBLBMegaEnabled: true });
+		mockContext({ skin: 'oasis' }, {});
 		expect(getModule().isMegaSlot('BOTTOM_LEADERBOARD')).toBeTruthy();
 	});
 
-	it('isMegaSlot returns false for BOTTOM_LEADERBOARD on Mercury', function () {
-		mockContext({ skin: 'mercury' }, { isBLBMegaEnabled: false });
+	it('isMegaSlot returns true for BOTTOM_LEADERBOARD on Mercury', function () {
+		mockContext({ skin: 'mercury' }, {});
 		expect(getModule().isMegaSlot('BOTTOM_LEADERBOARD')).toBeTruthy();
 	});
 });
