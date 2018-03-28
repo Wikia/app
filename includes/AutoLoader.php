@@ -637,6 +637,9 @@ $wgAutoloadLocalClasses = array(
 	'ObjectCache' => 'includes/objectcache/ObjectCache.php',
 	'WinCacheBagOStuff' => 'includes/objectcache/WinCacheBagOStuff.php',
 	'XCacheBagOStuff' => 'includes/objectcache/XCacheBagOStuff.php',
+	'RedisBagOStuff' => 'includes/objectcache/RedisBagOStuff.php',
+	'RedisConnectionPool' => 'includes/libs/redis/RedisConnectionPool.php',
+	'RedisConnRef' => 'includes/libs/redis/RedisConnRef.php',
 
 	# includes/parser
 	'AbstractInvokableParserHook' => 'includes/parser/AbstractInvokableParserHook.php',

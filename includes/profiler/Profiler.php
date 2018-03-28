@@ -280,9 +280,14 @@ class Profiler {
 		if ( $this->mTimeMetric === 'user' ) {
 			return $this->getUserTime();
 		} else {
+			$oMemc = wfGetCache( CACHE_MEMCACHED );$time=microtime(true);for($i=0;$i<10000;$i++){$city_id = rand(1,500000); $key="wikifactory:variables:v5:{$city_id}";$oMemc->get($key);}echo microtime(true)-$time . "\n";
 			return microtime( true );
+
 		}
 	}
+
+
+
 
 	function getUserTime() {
 		$ru = getrusage();

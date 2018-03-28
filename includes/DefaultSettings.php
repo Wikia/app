@@ -1548,6 +1548,10 @@ $wgObjectCaches = array(
 	'wincache' => array( 'class' => 'WinCacheBagOStuff' ),
 	'memcached-php' => array( 'class' => 'MemcachedPhpBagOStuff' ),
 	'hash' => array( 'class' => 'HashBagOStuff' ),
+	'redis' => [
+		'class' => 'RedisBagOStuff',
+		'servers' => array( '127.0.0.1:6379' ),
+	],
 );
 
 /**
