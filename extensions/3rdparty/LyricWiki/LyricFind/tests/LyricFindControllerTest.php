@@ -9,6 +9,7 @@ class LyricFindControllerTest extends WikiaBaseTest {
 		// mock title and prevent DB changes
 		$titleMock = $this->createConfiguredMock( Title::class, [
 			'getArticleID' => 123,
+			'isKnown' => true
 		] );
 
 		$this->mockGlobalVariable('wgTitle', $titleMock );
@@ -21,7 +22,13 @@ class LyricFindControllerTest extends WikiaBaseTest {
 	 * @param $responseCode
 	 */
 	public function testTrack($amgId, $trackResult, $responseCode) {
-		$controller = new LyricFindController();
+		$controller = $this->getMockBuilder('LyricFindController')
+			->setMethods(['isWebCrawler'])
+			->getMock();
+
+		$controller->expects($this->any())
+			->method('isWebCrawler')
+			->willReturn(false);
 
 		$controller->setRequest(new WikiaRequest(['amgid' => $amgId]));
 		$controller->setResponse(new WikiaResponse('json'));
