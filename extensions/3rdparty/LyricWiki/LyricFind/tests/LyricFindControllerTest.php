@@ -12,7 +12,6 @@ class LyricFindControllerTest extends WikiaBaseTest {
 		] );
 
 		$this->mockGlobalVariable('wgTitle', $titleMock );
-		$this->mockStaticMethod(LyricFindTrackingService::class, 'isWebCrawler', false);
 	}
 
 	/**
