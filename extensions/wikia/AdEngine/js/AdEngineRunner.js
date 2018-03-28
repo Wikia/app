@@ -1,5 +1,6 @@
 /*global define, require*/
 define('ext.wikia.adEngine.adEngineRunner', [
+	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adEngine',
 	'ext.wikia.adEngine.adTracker',
 	'wikia.instantGlobals',
@@ -9,12 +10,23 @@ define('ext.wikia.adEngine.adEngineRunner', [
 	require.optional('ext.wikia.adEngine.lookup.prebid'),
 	require.optional('ext.wikia.aRecoveryEngine.adBlockRecovery'),
 	require.optional('wikia.articleVideo.featuredVideo.lagger')
-], function (adEngine, adTracker, instantGlobals, log, win, a9, prebid, adBlockRecovery, fvLagger) {
+], function (adContext, adEngine, adTracker, instantGlobals, log, win, a9, prebid, adBlockRecovery, fvLagger) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.adEngineRunner',
 		supportedModules = [a9, prebid, adBlockRecovery, fvLagger],
-		timeout = instantGlobals.wgAdDriverDelayTimeout || 2000;
+		timeout = getTimeout();
+
+	function getTimeout() {
+		var fvTimeout;
+
+		if (fvLagger && fvLagger.wasCalled() && adContext.get('targeting.hasFeaturedVideo')) {
+			fvTimeout = adContext.get('targeting.skin') === 'oasis' ?
+				instantGlobals.wgAdDriverFVDelayTimeoutOasis : instantGlobals.wgAdDriverFVDelayTimeoutMobileWiki;
+		}
+
+		return fvTimeout || instantGlobals.wgAdDriverDelayTimeout || 2000;
+	}
 
 	/**
 	 * Delay running AdEngine by module responses or by configured timeout
