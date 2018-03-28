@@ -77,7 +77,7 @@ class ChatServerApiClient {
 
 		// Add some extra data that the server will want in order to store it in the room's hash.
 		$extraData = [
-			'wgServer' => $wgServer,
+			'wgServer' => WikiFactory::getLocalEnvURL( $wgServer ),
 			'wgScriptPath' => $wgScriptPath,
 			'wgArticlePath' => $wgArticlePath
 		];
