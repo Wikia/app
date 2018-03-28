@@ -21,17 +21,16 @@ langCodes.forEach(function(element){
 
 langCodes.forEach(function(element){
 	for( var i =1; i < result[element].length; i++ ) {
-	if(result[element][i]['A'] == "Example"){
-		break;
-	}
+		if(result[element][i]['A'] == "Example"){
+			break;
+		}
+
 	output[element.toLowerCase()][i-1] = result[element][i];
 
 }
 });
-var output2 = {};
+var output2 = {'en': {}};
 
-
-/*
 var fs = require('fs');
 fs.writeFile('recommendations.json',JSON.stringify(output, null, "\t"),function(err){
 	if(err){
@@ -40,6 +39,4 @@ fs.writeFile('recommendations.json',JSON.stringify(output, null, "\t"),function(
 	console.log('Output in ./output.json\n');
 
 });
-*/
-var output2 = JSON.parse(JSON.stringify(output));
-console.log(output2);
+
