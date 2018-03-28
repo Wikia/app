@@ -94,6 +94,13 @@ require([
 	function onCloseClicked() {
 		$unit.removeClass('is-revealed');
 
+		tracker.track({
+			category: 'related-video-module',
+			trackingMethod: 'analytics',
+			action: tracker.ACTIONS.CLICK,
+			label: 'close'
+		});
+
 		setTimeout(function () {
 			$unit.remove();
 		}.bind(this), 300);
