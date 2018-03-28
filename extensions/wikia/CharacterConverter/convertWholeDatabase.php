@@ -17,15 +17,20 @@ class ConvertWholeDatabase extends Maintenance {
 	public function execute() {
 		$dbName = $this->getOption( 'db-name' ) ?? $GLOBALS['wgDBname'];
 
+		// TODO put wiki in read-only mode
+		// TODO copy DB
+		// TODO perform the migration on DB copy
 		$characterConverter = CharacterConverter::newFromDatabase( $dbName );
 		$characterConverter->registerPreConversionCallback( function ( $tableName, $textColumns ) {
 			$this->output( "Converting $tableName... columns: [" . implode(', ', array_keys($textColumns)) . "]\n" );
 		} );
 
 		$characterConverter->convert();
-
+		// TODO switch DBs
 		$wiki = WikiFactory::getWikiByDB($dbName);
 		WikiFactory::setVarByName('wgUTF8WikiDb', $wiki->city_id, true);
+
+		// TODO enable read-write mode
 	}
 }
 
