@@ -1,5 +1,5 @@
 <?php
-	exec('node parseRecommendations.js');
+	exec('node parseRecommendations.js "X.xlsx"');
 	$file = json_decode(file_get_contents('./recommendations.json', true),true);
 	file_put_contents('recommendations.txt', var_export( $file, true ));
 

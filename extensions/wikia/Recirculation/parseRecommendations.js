@@ -1,9 +1,16 @@
 const convertExcel = require('convert-excel-to-json');
 
 var langCodes = ['EN','FR','DE','IT','JA','PL','PT-BR','RU','ES','ZH ZH-TW ZH-HK'];
+var  defSheet = 'X.xlsx';
+
+if(process.argv.length > 2){
+	defSheet = process.argv[2];
+	console.log(process.argv[2]);
+}
+
 var result = convertExcel(
 	{
-		sourceFile: 'X.xlsx',
+		sourceFile: defSheet,
 		sheets: langCodes,
 		columnToKey: {
 			B: 'title',
@@ -36,7 +43,7 @@ fs.writeFile('recommendations.json',JSON.stringify(output, null, "\t"),function(
 	if(err){
 		console.log('Something went horribly wrong');
 	}
-	console.log('Output in ./output.json\n');
+	console.log('Output in ./recommendations.json\n');
 
 });
 
