@@ -74,10 +74,11 @@ class ChatServerApiClient {
 		wfProfileIn( __METHOD__ );
 
 		$roomId = null;
+		$server = WikiFactory::getLocalEnvURL( $wgServer );
 
 		// Add some extra data that the server will want in order to store it in the room's hash.
 		$extraData = [
-			'wgServer' => WikiFactory::getLocalEnvURL( $wgServer ),
+			'wgServer' => $server,
 			'wgScriptPath' => $wgScriptPath,
 			'wgArticlePath' => $wgArticlePath
 		];
@@ -85,7 +86,7 @@ class ChatServerApiClient {
 
 		$roomData = self::makeRequest( [
 			"func" => "getDefaultRoomId",
-			"wgCityId" => $wgCityId,
+			"wgCityId" => md5( $wgCityId . parse_url( $server, PHP_URL_HOST ) . $wgScriptPath ),
 			"roomType" => $roomType,
 			"roomUsers" => json_encode( $roomUsers ),
 			"extraDataString" => $extraDataString
