@@ -16,7 +16,7 @@ class AnalyticsProviderExelate implements iAnalyticsProvider {
 					$payload .= "&" . urlencode($key) . "=" . urlencode($val);
 				}
 
-				return "<script type=\"text/javascript\" src=\"http://loadus.exelator.com/load/?p=232&g=001{$payload}\"></script>\n";
+				return "<script type=\"text/javascript\" src=\"https://loadus.exelator.com/load/?p=232&g=001{$payload}\"></script>\n";
 
 				break;
 			default:

@@ -24,11 +24,11 @@
 			{{disableTestMode}}
 		</button>
 		{{/isTestModeEnabled}}
-		{{^isTestModeEnabled}}
+		{{#displayEnterTestModeButton}}
 		<button class="content-review-module-test-mode-enable secondary">
 			{{enableTestMode}}
 		</button>
-		{{/isTestModeEnabled}}
+		{{/displayEnterTestModeButton}}
 	</div>
 
 	<div class="content-review-module-help">

@@ -71,7 +71,7 @@ class Helper {
 				$group = \SpecialPageFactory::getGroup( $page );
 				$actionId = mb_strtolower( 'special:' . $page->getName() );
 
-				$groups[$group][] = [
+				$groups[$group][$actionId] = [
 					'id' => $actionId,
 					'caption' => $page->getDescription(),
 					'href' => $page->getTitle()->getFullURL(),

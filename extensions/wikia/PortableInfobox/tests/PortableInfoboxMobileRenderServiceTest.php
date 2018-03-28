@@ -147,9 +147,9 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 									<hgroup class="pi-hero-title-wrapper pi-item-spacing">
 										<h2 class="pi-hero-title">Test Title</h2>
 									</hgroup>
-									<figure data-component="portable-infobox-hero-image" data-attrs="">
+									<figure data-attrs="" data-file="">
 										<a href="http://image.jpg">
-										<img class="article-media-placeholder" src="data:image/svg+xml;charset=utf-8,%3Csvg xmlns%3D\'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg\' viewBox%3D\'0 0 400 200\'%2F%3E" alt="" width="400" height="200"/>
+										<img class="article-media-placeholder lazyload" src="data:image/svg+xml;charset=utf-8,%3Csvg xmlns%3D\'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg\' viewBox%3D\'0 0 400 200\'%2F%3E" data-src="http://image.jpg" data-srcset="http://image.jpg, http://image2x.jpg 2x" data-sizes="auto" alt="" width="400" height="200"/>
 										<noscript>
 											<img src="http://image.jpg" alt="image alt" width="400" height="200"/>
 										</noscript>
@@ -171,6 +171,8 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 						'ref' => 1,
 						'width' => '400',
 						'height' => '200',
+						'originalWidth' => '400',
+						'originalHeight' => '200',
 						'thumbnail' => 'http://image.jpg',
 						'thumbnail2x' => 'http://image2x.jpg',
 						'media-type' => 'image',
@@ -457,6 +459,8 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 						'ref' => 1,
 						'width' => '400',
 						'height' => '200',
+						'originalWidth' => '400',
+						'originalHeight' => '200',
 						'thumbnail' => 'http://image.jpg',
 						'thumbnail2x' => 'http://image2x.jpg',
 						'media-type' => 'image',
@@ -504,6 +508,8 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 						'ref' => 44,
 						'width' => '400',
 						'height' => '200',
+						'originalWidth' => '400',
+						'originalHeight' => '200',
 						'thumbnail' => 'thumbnail.jpg',
 						'thumbnail2x' => 'thumbnail2x.jpg',
 						'isVideo' => false,
@@ -529,9 +535,9 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 				],
 				'output' => '<aside class="portable-infobox pi-background pi">
 								<div class="pi-item pi-hero">
-									<figure data-component="portable-infobox-hero-image" data-attrs="{&quot;itemContext&quot;:&quot;portable-infobox&quot;,&quot;ref&quot;:1}">
+									<figure data-attrs="" data-file="">
 										<a href="http://image.jpg">
-											<img class="article-media-placeholder" src="data:image/svg+xml;charset=utf-8,%3Csvg xmlns%3D\'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg\' viewBox%3D\'0 0 400 200\'%2F%3E" alt="" width="400" height="200"/>
+											<img class="article-media-placeholder lazyload" src="data:image/svg+xml;charset=utf-8,%3Csvg xmlns%3D\'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg\' viewBox%3D\'0 0 400 200\'%2F%3E" data-src="http://image.jpg" data-srcset="http://image.jpg, http://image2x.jpg 2x" data-sizes="auto" alt="" width="400" height="200"/>
 											<noscript>
 												<img src="http://image.jpg" alt="image alt" width="400" height="200"/>
 											</noscript>
@@ -549,6 +555,8 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 						'ref' => 1,
 						'width' => '400',
 						'height' => '200',
+						'originalWidth' => '400',
+						'originalHeight' => '200',
 						'thumbnail' => 'http://image.jpg',
 						'thumbnail2x' => 'http://image2x.jpg',
 						'media-type' => 'image',
@@ -586,9 +594,9 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 									<hgroup class="pi-hero-title-wrapper pi-item-spacing">
 										<h2 class="pi-hero-title">Test <a href="example.com">Title</a></h2>
 									</hgroup>
-									<figure data-component="portable-infobox-hero-image" data-attrs="{&quot;itemContext&quot;:&quot;portable-infobox&quot;,&quot;ref&quot;:44}">
+									<figure data-attrs="" data-file="">
 										<a href="http://image.jpg">
-											<img class="article-media-placeholder" src="data:image/svg+xml;charset=utf-8,%3Csvg xmlns%3D\'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg\' viewBox%3D\'0 0 400 200\'%2F%3E" alt="" width="400" height="200"/>
+											<img class="article-media-placeholder lazyload" src="data:image/svg+xml;charset=utf-8,%3Csvg xmlns%3D\'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg\' viewBox%3D\'0 0 400 200\'%2F%3E" data-src="thumbnail.jpg" data-srcset="thumbnail.jpg, thumbnail2x.jpg 2x" data-sizes="auto" alt="" width="400" height="200"/>
 											<noscript>
 												<img src="http://image.jpg" alt="" width="400" height="200"/>
 											</noscript>
@@ -605,6 +613,8 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 						'ref' => 44,
 						'width' => '400',
 						'height' => '200',
+						'originalWidth' => '400',
+						'originalHeight' => '200',
 						'thumbnail' => 'thumbnail.jpg',
 						'thumbnail2x' => 'thumbnail2x.jpg',
 						'isVideo' => false,
@@ -679,9 +689,9 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 									<hgroup class="pi-hero-title-wrapper pi-item-spacing">
 										<h2 class="pi-hero-title">Test <a href="example.com">Title</a></h2>
 									</hgroup>
-									<figure data-component="portable-infobox-hero-image" data-attrs="{&quot;itemContext&quot;:&quot;portable-infobox&quot;,&quot;ref&quot;:44}">
+									<figure data-attrs="" data-file="">
 										<a href="http://image.jpg">
-											<img class="article-media-placeholder" src="data:image/svg+xml;charset=utf-8,%3Csvg xmlns%3D\'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg\' viewBox%3D\'0 0 400 200\'%2F%3E" alt="" width="400" height="200"/>
+											<img class="article-media-placeholder lazyload" src="data:image/svg+xml;charset=utf-8,%3Csvg xmlns%3D\'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg\' viewBox%3D\'0 0 400 200\'%2F%3E" data-src="thumbnail.jpg" data-srcset="thumbnail.jpg, thumbnail2x.jpg 2x" data-sizes="auto" alt="" width="400" height="200"/>
 											<noscript>
 												<img src="http://image.jpg" alt="" width="400" height="200"/>
 											</noscript>
@@ -713,6 +723,8 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 						'ref' => 44,
 						'width' => '400',
 						'height' => '200',
+						'originalWidth' => '400',
+						'originalHeight' => '200',
 						'thumbnail' => 'thumbnail.jpg',
 						'thumbnail2x' => 'thumbnail2x.jpg',
 						'isVideo' => false,
@@ -787,11 +799,11 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 									<hgroup class="pi-hero-title-wrapper pi-item-spacing">
 										<h2 class="pi-hero-title">Test <a href="example.com">Title</a></h2>
 									</hgroup>
-									<figure data-component="portable-infobox-hero-image" data-attrs="{&quot;itemContext&quot;:&quot;portable-infobox&quot;,&quot;ref&quot;:44}">
+									<figure data-attrs="" data-file="">
 										<a href="http://image.jpg">
-											<img class="article-media-placeholder" src="data:image/svg+xml;charset=utf-8,%3Csvg xmlns%3D\'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg\' viewBox%3D\'0 0 200 200\'%2F%3E" alt="" width="200" height="200"/>
+											<img class="article-media-placeholder lazyload" src="data:image/svg+xml;charset=utf-8,%3Csvg xmlns%3D\'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg\' viewBox%3D\'0 0 400 200\'%2F%3E" data-src="thumbnail.jpg" data-srcset="thumbnail.jpg, thumbnail2x.jpg 2x" data-sizes="auto" alt="" width="400" height="200"/>
 											<noscript>
-												<img src="http://image.jpg" alt="" width="200" height="200"/>
+												<img src="http://image.jpg" alt="" width="400" height="200"/>
 											</noscript>
 										</a>
 									</figure>
@@ -821,6 +833,8 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 						'ref' => 44,
 						'width' => '200',
 						'height' => '200',
+						'originalWidth' => '400',
+						'originalHeight' => '200',
 						'thumbnail' => 'thumbnail.jpg',
 						'thumbnail2x' => 'thumbnail2x.jpg',
 						'isVideo' => false,
