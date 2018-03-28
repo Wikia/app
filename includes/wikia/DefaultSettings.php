@@ -1099,19 +1099,6 @@ $wgEnableGoogleFundingChoices = true;
 $wgEnableGoogleFundingChoicesInHead = false;
 
 /**
- * @name $wgEnableNielsen
- * Enables Nielsen Digital Content Ratings
- */
-$wgEnableNielsen = false;
-
-/**
- * @name $wgNielsenApid
- * Nielsen Digital Content Ratings apid. Should be changed via WikiFactory when $wgEnableNielsen is set to true
- */
-$wgNielsenApid = 'FIXME';
-
-
-/**
  * @name $wgEnableNetzAthleten
  * Enables NetzAthleten provider
  */
