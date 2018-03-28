@@ -244,9 +244,7 @@ $config['adengine2_top_js'] = [
 		'//extensions/wikia/ARecoveryEngine/js/adBlockRecovery.js',
 		'//extensions/wikia/ARecoveryEngine/js/PageFair/recovery.js',
 		'//resources/wikia/modules/browserDetect.js',
-		'//resources/wikia/modules/krux.js',
-		// TODO ADEN-6812 remove promise.js after ADEN-6624 is live
-		'//resources/wikia/modules/promise.js'
+		'//resources/wikia/modules/krux.js'
 	],
 ];
 
@@ -597,9 +595,9 @@ $config['gameguides_js'] = [
 
 		//tracker
 		'#group_tracker_js',
+		'//extensions/wikia/JSMessages/js/JSMessages.js',
 
 		//platform components
-		'//extensions/wikia/JSMessages/js/JSMessages.js',
 		'//extensions/wikia/JSSnippets/js/JSSnippets.js',
 
 		//feature detection
@@ -822,7 +820,6 @@ $config['mobile_base_ads_js'] = [
 		'//resources/wikia/modules/domCalculator.js',
 		'//resources/wikia/modules/lazyqueue.js',
 		'//resources/wikia/modules/iframeWriter.js',
-		'//resources/wikia/modules/promise.js',
 		'//resources/wikia/modules/throttle.js',
 		'//resources/wikia/modules/viewportObserver.js',
 
@@ -2574,5 +2571,31 @@ $config['jwplayer_tag_scss'] = [
 	'skin' => [ 'oasis' ],
 	'assets' => [
 		'//extensions/wikia/JWPlayerTag/styles/jwplayertag.scss'
+	]
+];
+
+$config['recommended_video_css'] = [
+	'type' => AssetsManager::TYPE_CSS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'//skins/oasis/js/jwplayer/node_modules/jwplayer-fandom/dist/index.css',
+	],
+];
+
+$config['recommended_video_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'//extensions/wikia/ArticleVideo/styles/recommended-video.scss'
+	]
+];
+
+$config['recommended_video_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'//skins/oasis/js/jwplayer/node_modules/jwplayer-fandom/dist/wikiajwplayer.js',
+		'//extensions/wikia/ArticleVideo/scripts/featured-video.cookies.js',
+		'//extensions/wikia/ArticleVideo/scripts/recommended-video.jwplayer.js',
 	]
 ];

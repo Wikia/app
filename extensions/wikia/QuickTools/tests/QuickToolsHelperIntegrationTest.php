@@ -18,12 +18,7 @@ class QuickToolsHelperIntegrationTest extends WikiaDatabaseTest {
 	private $quickToolsHelper;
 
 	protected function setUp() {
-		global $wgDefaultExternalStore;
 		parent::setUp();
-
-		if ( $wgDefaultExternalStore ) {
-			$wgDefaultExternalStore = $this->wgDefaultExternalStoreWasFalse = false;
-		}
 
 		$hooks = &Hooks::getHandlersArray();
 		$hooks = [];
@@ -125,12 +120,15 @@ class QuickToolsHelperIntegrationTest extends WikiaDatabaseTest {
 		yield [ static::TARGET_USER_NAME, 'TestArticle2', '20100101000000', 'RevisionToRevertTo' ];
 	}
 
-	protected function tearDown() {
-		parent::tearDown();
+	public function testDeleteArticleByAnon() {
+		$title = Title::makeTitle( NS_MAIN, 'TestAnonArticle' );
 
-		if ( !$this->wgDefaultExternalStoreWasFalse ) {
-			$GLOBALS['wgDefaultExternalStore'] = true;
-		}
+		$this->assertTrue( $title->exists() );
+
+		$res = $this->quickToolsHelper->rollbackTitle( $title, static::TARGET_ANON, '', 'test' );
+
+		$this->assertTrue( $res );
+		$this->assertFalse( $title->exists() );
 	}
 
 	protected function getDataSet() {
