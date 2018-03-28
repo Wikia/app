@@ -4,7 +4,7 @@
  * but if they have it can be found in GlobalShortcuts module)
  * Keeps references on functions that handles actions
  */
-define('PageActions', ['mw', 'jquery', 'wikia.log'], function (mw, $, log) {
+define('PageActions', ['mw', 'jquery', 'wikia.log', 'wikia.window'], function (mw, $, log, context) {
 	'use strict';
 
 	var CATEGORY_WEIGHTS = {},
@@ -57,7 +57,7 @@ define('PageActions', ['mw', 'jquery', 'wikia.log'], function (mw, $, log) {
 	};
 
 	PageAction.prototype.execute = function () {
-		this.fn.call(window);
+		this.fn.call(context);
 		closeModals();
 	};
 
@@ -69,19 +69,17 @@ define('PageActions', ['mw', 'jquery', 'wikia.log'], function (mw, $, log) {
 	};
 
 	function register(pageAction, canReplace) {
-		if (!(pageAction instanceof PageAction)) {
-			throw new Error('Invalid argument - requires PageAction instance');
-		}
 		if (!canReplace && (pageAction.id in byId)) {
 			log('Could not register more than one action with the same ID: ' + pageAction.id, log.levels.debug, 'GlobalShortcuts');
 			return;
 		}
+
 		all.push(pageAction);
 		byId[pageAction.id] = pageAction;
 	}
 
 	function add(desc, canReplace) {
-		var id = desc.id,
+		var id = desc.id.toLowerCase(),
 			caption = desc.caption,
 			category = desc.category,
 			fn, pageAction;
@@ -90,7 +88,7 @@ define('PageActions', ['mw', 'jquery', 'wikia.log'], function (mw, $, log) {
 		}
 		if (desc.href) {
 			fn = function () {
-				window.location.href = desc.href;
+				context.location.href = desc.href;
 			};
 		}
 		if (desc.fn) {
@@ -104,7 +102,7 @@ define('PageActions', ['mw', 'jquery', 'wikia.log'], function (mw, $, log) {
 	}
 
 	function find(id) {
-		return byId[id];
+		return byId[id.toLowerCase()];
 	}
 
 	function sortList(pageActions) {
@@ -138,7 +136,7 @@ define('PageActions', ['mw', 'jquery', 'wikia.log'], function (mw, $, log) {
 	}
 
 	// default actions
-	(window.wgWikiaPageActions || []).forEach(function (actionDesc) {
+	(context.wgWikiaPageActions || []).forEach(function (actionDesc) {
 		add(actionDesc);
 	});
 
