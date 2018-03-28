@@ -1,5 +1,5 @@
-<php
+<?php
 
-	$file = file_get_contents('recommendations.json', FILE_USE_INCLUDE_PATH);
+	$file = file_get_contents('./recommendations.json', true);
 
 	var_dump($file);

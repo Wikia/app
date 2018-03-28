@@ -28,7 +28,10 @@ langCodes.forEach(function(element){
 
 }
 });
+var output2 = {};
 
+
+/*
 var fs = require('fs');
 fs.writeFile('recommendations.json',JSON.stringify(output, null, "\t"),function(err){
 	if(err){
@@ -37,3 +40,6 @@ fs.writeFile('recommendations.json',JSON.stringify(output, null, "\t"),function(
 	console.log('Output in ./output.json\n');
 
 });
+*/
+var output2 = JSON.parse(JSON.stringify(output));
+console.log(output2);
