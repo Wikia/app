@@ -211,8 +211,6 @@ define('ext.wikia.adEngine.adContext', [
 		context.opts.replayAdsForFV = geo.isProperGeo(instantGlobals.wgAdDriverPlayAdsOnNextFVCountries);
 		context.opts.fvAdsFrequency = fvAdsFrequency !== undefined ? fvAdsFrequency : 3;
 		context.opts.disableSra = geo.isProperGeo(instantGlobals.wgAdDriverDisableSraCountries);
-		context.opts.isBLBOnMobileEnabled =
-			geo.isProperGeo(instantGlobals.wgAdDriverBottomLeaderBoardOnMobileCountries);
 		context.opts.isBLBMegaEnabled = geo.isProperGeo(instantGlobals.wgAdDriverBottomLeaderBoardMegaCountries);
 
 		// Export the context back to ads.context
