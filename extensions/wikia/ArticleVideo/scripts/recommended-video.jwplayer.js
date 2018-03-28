@@ -153,12 +153,12 @@ require([
 	function bindPlayerEvents(playerInstance) {
 		playerInstance.on('playlistItem', playItem);
 
-		playerInstance.once('mute', function () {
+		isAutoplay && playerInstance.once('mute', function () {
 			playExpandedItem(currentItemNumber - 1);
 		});
 
-		playerInstance.on('play', function (data) {
-			if (data.playReason === 'interaction') {
+		isAutoplay && playerInstance.on('play', function (data) {
+			if (data.playReason === 'interaction' && isExpanded !== true) {
 				playExpandedItem(currentItemNumber - 1);
 			}
 		});
