@@ -397,6 +397,9 @@ class WikiFactoryLoader {
 
 		if( ( $cond1 || $cond2 ) && empty( $wgDevelEnvironment ) ) {
 			$redirectUrl = WikiFactory::getLocalEnvURL( $this->mCityUrl );
+			if ( $_SERVER['HTTP_FASTLY_SSL'] && wfHttpsAllowedForURL( $redirectUrl ) ) {
+				$redirectUrl = wfHttpToHttps( $url );
+			}
 			$target = rtrim( $redirectUrl, '/' ) . '/' . $this->pathParams;
 
 			$queryParams = $_GET;
