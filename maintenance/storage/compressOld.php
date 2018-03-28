@@ -138,22 +138,19 @@ class CompressOld extends Maintenance {
 			# already moved to external
 			return false;
 		}
-		elseif ( !$isExternal && $extdb !== '' ) {
-			# this row is not yet kept on blobs and we want to move it there
-		}
-		elseif ( $isGzipped || false !== strpos( $flags, 'object' ) ) {
-			#print "Already compressed row {$row->old_id}\n";
+		elseif ( $isGzipped && $extdb === '' ) {
+			# already compressed locally and we do not want to move it to external
 			return false;
 		}
+
 		$dbw = wfGetDB( DB_MASTER );
 
-		if ( !$isGzipped ) {
-			$flags = $row->old_flags ? "{$row->old_flags},gzip" : "gzip";
-			$compressed = gzdeflate( $row->old_text );
-		}
-		else {
-			$compressed = $row->old_text;
-		}
+		# get the raw text out of text table row (this will handle all possible flags setup)
+		$text = Revision::getRevisionText( $row );
+
+		// compress the raw text
+		$flags = 'utf-8,gzip';
+		$compressed = gzdeflate( $text );
 
 		# Store in external storage if required
 		if ( $extdb !== '' ) {
@@ -165,9 +162,7 @@ class CompressOld extends Maintenance {
 			}
 
 			// SUS-4497 | set the flag saying that the old_text is a pseudo-URL to blobs entry
-			if ( strpos( $flags, 'external' ) === false ) {
-				$flags .= ',external';
-			}
+			$flags .= ',external';
 		}
 
 		# Update text row
