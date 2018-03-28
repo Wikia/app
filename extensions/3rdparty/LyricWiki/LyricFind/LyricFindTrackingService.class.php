@@ -263,7 +263,10 @@ class LyricFindTrackingService extends WikiaObject {
 			'facebook',
 			'fetch',
 			'ruby',
-			'python'
+			'python',
+			'perl/lyrics::fetcher::lyricwiki',
+			'mozilla/5.0 (windows; u; windows nt 5.1; en-us; rv:1.8.1.6) gecko/20070725 firefox/2.0.0.6',
+			'mozilla/5.0 (x11; linux x86_64) applewebkit/535.19 (khtml, like gecko) chrome/18.0.1025.142 safari/535.19'
 		];
 
 		foreach ( $crawlers as $identifier ) {
