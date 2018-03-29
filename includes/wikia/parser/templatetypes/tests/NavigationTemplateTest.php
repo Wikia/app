@@ -88,18 +88,18 @@ class NavigationTemplateTest extends WikiaBaseTest {
 	public function getMarkedWikitext() {
 		return [
 			[
-				"<div data-navuniq=\"test\">\nsome wikitext within NAVUNIQ_342  marks</div>",
-				"<div data-navuniq=\"test\">\nsome wikitext within NAVUNIQ_342  marks</div>",
+				"<div data-navuniq=\"test\">some wikitext within NAVUNIQ_342  marks</div>",
+				"<div data-navuniq=\"test\">some wikitext within NAVUNIQ_342  marks</div>",
 				"outer marks should not be removed"
 			],
 			[
-				"<div data-navuniq=\"test\">\nsome <div data-navuniq=\"test_1\">\nwikitext within\n</div> NAVUNIQ_342  marks\n</div>",
-				"<div data-navuniq=\"test\">\nsome wikitext within\n NAVUNIQ_342  marks\n</div>",
+				"<div data-navuniq=\"test\">some <div data-navuniq=\"test_1\">\nwikitext within\n</div> NAVUNIQ_342  marks\n</div>",
+				"<div data-navuniq=\"test\">some wikitext within\n NAVUNIQ_342  marks\n</div>",
 				"inner marks should be removed"
 			],
 			[
-				"<div data-navuniq=\"test\">\n<div data-navuniq=\"test_1\">\nsome <div data-navuniq=\"test_2\">\nwikitext within\n</div> NAVUNIQ_342  marks\n</div>\n</div>",
-				"<div data-navuniq=\"test\">\nsome wikitext within\n NAVUNIQ_342  marks\n\n</div>",
+				"<div data-navuniq=\"test\"><div data-navuniq=\"test_1\">some <div data-navuniq=\"test_2\">wikitext within\n</div> NAVUNIQ_342  marks\n</div>\n</div>",
+				"<div data-navuniq=\"test\">some wikitext within\n NAVUNIQ_342  marks\n\n</div>",
 				"multiple inner marks should be removed"
 			],
 			[
@@ -108,8 +108,8 @@ class NavigationTemplateTest extends WikiaBaseTest {
 				"wikitext without NAVUNIQ marks should be unchanged"
 			],
 			[
-				"wikitext without NAVUNIQ <div data-navuniq=\"test\">\nmarks</div>",
-				"wikitext without NAVUNIQ <div data-navuniq=\"test\">\nmarks</div>",
+				"wikitext without NAVUNIQ <div data-navuniq=\"test\">marks</div>",
+				"wikitext without NAVUNIQ <div data-navuniq=\"test\">marks</div>",
 				"inline marker"
 			]
 		];
