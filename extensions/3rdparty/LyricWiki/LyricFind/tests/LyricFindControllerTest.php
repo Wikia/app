@@ -13,6 +13,7 @@ class LyricFindControllerTest extends WikiaBaseTest {
 		] );
 
 		$this->mockGlobalVariable('wgTitle', $titleMock );
+		$this->mockStaticMethod(LyricFindHooks::class, 'isWebCrawler', false);
 	}
 
 	/**
@@ -22,13 +23,7 @@ class LyricFindControllerTest extends WikiaBaseTest {
 	 * @param $responseCode
 	 */
 	public function testTrack($amgId, $trackResult, $responseCode) {
-		$controller = $this->getMockBuilder('LyricFindController')
-			->setMethods(['isWebCrawler'])
-			->getMock();
-
-		$controller->expects($this->any())
-			->method('isWebCrawler')
-			->willReturn(false);
+		$controller = new LyricFindController();
 
 		$controller->setRequest(new WikiaRequest(['amgid' => $amgId]));
 		$controller->setResponse(new WikiaResponse('json'));

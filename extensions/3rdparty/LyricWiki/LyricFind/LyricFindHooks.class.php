@@ -43,6 +43,9 @@ class LyricFindHooks {
 		$wg = F::app()->wg;
 		$title = $editPage->getTitle();
 		$blockEdit = false;
+		$isCrawler = self::isWebCrawler(
+			RequestContext::getMain()->getRequest()->getHeader( 'User-Agent' )
+		);
 
 		// Block view-source on the certain pages.
 		if($title->exists()){
@@ -55,7 +58,7 @@ class LyricFindHooks {
 					$blockEdit = true;
 				}
 			}
-		} else {
+		} elseif( !$isCrawler ) {
 			// Page is being created. Prevent this if page is prohibited by LyricFind.
 			$blockEdit = LyricFindTrackingService::isPageBlockedViaApi($amgId="", $gracenoteId="", $title->getText());
 			if($blockEdit){
@@ -111,4 +114,29 @@ class LyricFindHooks {
 		return true;
 	}
 
+	public static function isWebCrawler( $userAgent ) {
+		// A list of some common words used only for bots and crawlers.
+		$crawlers = [
+			'bot',
+			'slurp',
+			'crawler',
+			'spider',
+			'curl',
+			'facebook',
+			'fetch',
+			'ruby',
+			'python',
+			'perl/lyrics::fetcher::lyricwiki',
+			'mozilla/5.0 (windows; u; windows nt 5.1; en-us; rv:1.8.1.6) gecko/20070725 firefox/2.0.0.6',
+			'mozilla/5.0 (x11; linux x86_64) applewebkit/535.19 (khtml, like gecko) chrome/18.0.1025.142 safari/535.19'
+		];
+
+		foreach ( $crawlers as $identifier ) {
+			if ( strpos( $userAgent, $identifier ) !== false ) {
+				return true;
+			}
+		}
+
+		return false;
+	}
 }
