@@ -6,6 +6,71 @@ class ArticleVideoContext {
 	const JWPLAYER_API_ERROR_MESSAGE = 'JWPlayer: Could not find enough playback info in JW API to play the video';
 
 	/**
+	 * to get playlist for given article: $playlist = self::RECOMMENDED_VIDEO_MAPPINGS[$cityId][$articleId]
+	 */
+	const RECOMMENDED_VIDEO_MAPPINGS_POZ_DEV = [
+		// harrypotter Knight_Bus
+		509 => [
+			509 => '1Dw2sjAj',
+		]
+	];
+
+	const RECOMMENDED_VIDEO_MAPPINGS_PROD = [
+		509 => [
+			509 => '1Dw2sjAj',
+		],
+		// dragonage.wikia.com
+		10150 => [
+			129225 => 'YLevTBHB'
+		],
+		// dragonball.wikia.com
+		530 => [
+			609128 => 'fi25Ptnz',
+			525762 => 'KAPfrsHO',
+			2834 => 'bbOMHSz3',
+			578170 => 'H5MlOcIT',
+			598839 => 'MKcSnYez'
+		],
+		// elderscrolls.wikia.com
+		1706 => [
+			39609 => 'OHCjh0TQ',
+			65624 => 'iK257Ktw'
+		],
+		// gta.wikia.com
+		4541 => [
+			185157 => 'IqqOqNVI',
+			184893 => 'lfz9Wmoi',
+			99477 => 'OJpnFu6L',
+			185085 => 'lfz9Wmoi'
+		],
+		// marvelcinematicuniverse.wikia.com
+		177996 => [
+			8338 => 'oXCSDrnn',
+			7102 => 'PkKkV0ao'
+		],
+		// memoryalpha.wikia.com
+		113 => [
+			240 => 'f5t2iKaD',
+			1295 => '4NtOLP2p'
+		],
+		// monsterhunter.wikia.com
+		3234 => [
+			312943 => 'DT6aHDR7',
+			318952 => 'gFhI3dDy'
+		],
+		// naruto.wikia.com
+		1318 => [
+			2958 => 'bf9OvJTK',
+			2371 => 'kAuFKJo7',
+			1527 => 'ZsT3G4aW'
+		],
+		// supersmashbros.wikia.com
+		2714 => [
+			5255 => 'yRYnUGkG'
+		],
+	];
+
+	/**
 	 * Checks if featured video is embedded on given article
 	 *
 	 * @param $pageId
@@ -45,20 +110,35 @@ class ArticleVideoContext {
 				$logger->error( self::ARTICLE_VIDEO_ERROR_MESSAGE );
 			}
 
-			$details = json_decode(
-				Http::get(
-					'https://cdn.jwplayer.com/v2/media/' . $videoData['mediaId'],
-					1
-				),
-				true
+			$jwPlayerRequest = Http::get(
+				'https://cdn.jwplayer.com/v2/media/' . $videoData['mediaId'],
+				2,
+				[ 'returnInstance' => true ]
 			);
 
-			if ( empty( $details ) || empty( $details['playlist'] ) || empty( $details['playlist'][0] ) ) {
-				$logger->error( self::JWPLAYER_API_ERROR_MESSAGE );
+			$isOK = $jwPlayerRequest->status->isOK();
+			$memCacheKey = wfMemcKey( 'featured-video', $wg->cityId, $pageId );
+
+			$content = $jwPlayerRequest->getContent();
+
+			if ( !$isOK ) {
+				$content = F::app()->wg->Memc->get( $memCacheKey );
+			} else {
+				F::app()->wg->Memc->set( $memCacheKey, $content );
+			}
+
+			$details = json_decode( $content, true );
+
+			if ( empty( $details ) || empty( $details['playlist'] ) ||
+			     empty( $details['playlist'][0] )
+			) {
+				$logger->error( self::JWPLAYER_API_ERROR_MESSAGE,
+					[ 'isOK' => $isOK, 'statusCode' => $jwPlayerRequest->getStatus(), 'content' => $content ] );
 			} else {
 				$videoData = array_merge( $videoData, $details );
 
 				$videoData['duration'] = WikiaFileHelper::formatDuration( $details['playlist'][0]['duration'] );
+				$videoData['videoTags'] = $details['playlist'][0]['tags'];
 				$videoData['metadata'] = self::getVideoMetaData( $videoData );
 				$videoData['recommendedLabel'] = $wg->featuredVideoRecommendedVideosLabel;
 				$videoData['recommendedVideoPlaylist'] = $wg->recommendedVideoPlaylist;
@@ -122,26 +202,24 @@ class ArticleVideoContext {
 		return $isoTime;
 	}
 
-	/**
-	 * Returns related video data for given article title, empty array in case of no video
-	 *
-	 * @param string $title Prefixed article title (see: Title::getPrefixedDBkey)
-	 *
-	 * @return array Related video data, empty if not applicable
-	 */
-	public static function getRelatedVideoData( $title ) {
-		$wg = F::app()->wg;
-		$relatedVideos = $wg->articleVideoRelatedVideos;
+	public static function getRecommendedVideoPlaylistId( int $pageId ): string {
+		global $wgCityId, $wgWikiaEnvironment, $wgWikiaDatacenter;
 
-		if ( !empty( $wg->enableArticleRelatedVideo ) && !empty( $relatedVideos ) ) {
-			foreach ( $relatedVideos as $videoData ) {
-				if ( isset( $videoData['articles'], $videoData['videoId'] ) &&
-					in_array( $title, $videoData['articles'] ) ) {
-					return $videoData;
-				}
+		$playlist = '';
+
+		if ( $wgWikiaEnvironment === WIKIA_ENV_DEV ) {
+			if ( $wgWikiaDatacenter === WIKIA_DC_POZ ) {
+				//$playlist = self::RECOMMENDED_VIDEO_MAPPINGS_POZ_DEV[$wgCityId][$pageId] ?? '';
+				$playlist = self::RECOMMENDED_VIDEO_MAPPINGS_POZ_DEV[509][509] ?? '';
 			}
+		} else {
+			$playlist = self::RECOMMENDED_VIDEO_MAPPINGS_PROD[$wgCityId][$pageId] ?? '';
 		}
 
-		return [];
+		return $playlist;
+	}
+
+	public static function isRecommendedVideoAvailable( int $pageId ): bool {
+		return !F::app()->wg->user->isLoggedIn() && !empty( self::getRecommendedVideoPlaylistId( $pageId ) );
 	}
 }

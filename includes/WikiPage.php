@@ -943,21 +943,27 @@ class WikiPage extends Page implements IDBAccessObject {
 	public function insertOn( $dbw ) {
 		wfProfileIn( __METHOD__ );
 
-		$page_id = $dbw->nextSequenceValue( 'page_page_id_seq' );
-		$dbw->insert( 'page', array(
-			'page_id'           => $page_id,
-			'page_namespace'    => $this->mTitle->getNamespace(),
-			'page_title'        => $this->mTitle->getDBkey(),
-			'page_restrictions' => '',
-			'page_is_redirect'  => 0, # Will set this shortly...
-			'page_is_new'       => 1,
-			'page_random'       => wfRandom(),
-			'page_touched'      => $dbw->timestamp(),
-			'page_latest'       => 0, # Fill this in shortly...
-			'page_len'          => 0, # Fill this in shortly...
-		), __METHOD__, 'IGNORE' );
+		try {
+			$page_id = $dbw->nextSequenceValue( 'page_page_id_seq' );
+			$dbw->insert( 'page', array(
+				'page_id' => $page_id,
+				'page_namespace' => $this->mTitle->getNamespace(),
+				'page_title' => $this->mTitle->getDBkey(),
+				'page_restrictions' => '',
+				'page_is_redirect' => 0, # Will set this shortly...
+				'page_is_new' => 1,
+				'page_random' => wfRandom(),
+				'page_touched' => $dbw->timestamp(),
+				'page_latest' => 0, # Fill this in shortly...
+				'page_len' => 0, # Fill this in shortly...
+			), __METHOD__ );
 
-		$affected = $dbw->affectedRows();
+			$affected = $dbw->affectedRows();
+		} catch ( DBError $ex ) {
+			// SUS-4334 | this method is assumed to return "false" on failure instead of raising
+			// an exception (DBError logs exceptions to elk)
+			$affected = 0;
+		}
 
 		if ( $affected ) {
 			$newid = $dbw->insertId();

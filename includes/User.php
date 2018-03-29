@@ -4269,17 +4269,6 @@ class User implements JsonSerializable {
 	}
 
 	/**
-	 * Return a URL the user can use to confirm their email address. (Wikia change)
-	 *
-	 * @author wikia
-	 * @param $token string Accepts the email confirmation token
-	 * @return string New token URL
-	 */
-	public function wikiaConfirmationTokenUrl( $token ) {
-		return $this->getTokenUrl( 'WikiaConfirmEmail', $token );
-	}
-
-	/**
 	 * Return the memcache key for storing cross-wiki "user_touched" value.
 	 *
 	 * It's used to refresh user caches on Wiki B when user changes his setting on Wiki A

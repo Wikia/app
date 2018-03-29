@@ -5,11 +5,14 @@ class EmailConfirmationController extends WikiaController {
 	 * Attempt to confirm the user's email address and show success or failure
 	 */
 	public function postEmailConfirmation() {
-		$token = $this->wg->request->getVal( 'token', null );
-		$userFromToken = User::newFromConfirmationCode( $token );
-		$currentUserId = $this->wg->user->getId();
+		$context = $this->getContext();
+		$request = $context->getRequest();
 
-		if ( !$this->wg->request->wasPosted() ) {
+		$token = $request->getVal( 'token', null );
+		$userFromToken = User::newFromConfirmationCode( $token );
+		$currentUserId = $context->getUser()->getId();
+
+		if ( !$request->wasPosted() ) {
 			// Only POST to this resource is allowed
 			$this->response->setCode( 405 );
 		} elseif ( is_null( $token ) ) {

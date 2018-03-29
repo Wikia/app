@@ -63,7 +63,6 @@ class CreateNewWikiTask extends BaseTask {
 		$this->setWelcomeTalkPage();
 		$this->populateCheckUserTables();
 		$this->protectKeyPages();
-		$this->sendRevisionToScribe();
 
 		$hookParams = [ 'title' => $params['sitename'], 'url' => $params['url'], 'city_id' => $params['city_id'] ];
 
@@ -408,53 +407,5 @@ class CreateNewWikiTask extends BaseTask {
 		}
 
 		$wgUser = $saveUser;
-	}
-
-	/**
-	 * send pages from starters to scribe
-	 *
-	 * @access private
-	 * @author Piotr Molski (moli)
-	 *
-	 */
-	private function sendRevisionToScribe() {
-		$dbr = wfGetDB( DB_SLAVE );
-
-		$numRows = ( new \WikiaSQL() )
-			->SELECT( 'rev_page as page_id', 'rev_id', 'rev_user' )
-			->FROM( 'revision' )
-			->WHERE( 'rev_page' )->GREATER_THAN( 0 )
-			->ORDER_BY( 'rev_id' )
-			->run( $dbr, function ( \ResultWrapper $res ) {
-
-				$numRows = 0;
-				$pages = [ ];
-
-				while ( $row = $res->fetchObject() ) {
-					$article = \Article::newFromID( $row->page_id );
-					$user = \User::newFromId( $row->rev_user );
-					$revision = \Revision::newFromId( $row->rev_id );
-
-
-					$key = ( isset( $pages[ $row->page_id ] ) ) ? 'edit' : 'create';
-					$scribeProducer = new \ScribeEventProducer( $key, 0 );
-					if ( is_object( $scribeProducer ) ) {
-						if ( $scribeProducer->buildEditPackage( $article, $user, $revision ) ) {
-							// SUS-760 Do not send images images (creations and edits) for review while creating a wiki.
-							if ( $article->getTitle()->inNamespaces( NS_FILE, NS_IMAGE ) ) {
-								$scribeProducer->setIsImageForReview( false );
-							}
-							$scribeProducer->sendLog();
-						}
-					}
-
-					$pages[ $row->page_id ] = $row->rev_id;
-					++$numRows;
-				}
-
-				return $numRows;
-			} );
-
-		$this->info('send starter revisions to scribe', ['num_rows' => $numRows]);
 	}
 }

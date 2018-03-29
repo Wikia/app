@@ -170,7 +170,7 @@ class GlobalTitleTest extends WikiaBaseTest {
 		$this->mockStaticMethod( 'WebRequest', 'detectProtocol', $requestProtocol );
 
 		$fullUrl = GlobalTitle::newFromText( 'Test', NS_MAIN, $cityId )->getFullURL();
-		$this->assertEquals( $fullUrl, $expectedUrl );
+		$this->assertEquals( $expectedUrl, $fullUrl );
 	}
 
 	public function urlsSpacesProvider() {

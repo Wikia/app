@@ -48,6 +48,7 @@ function init(
 		context.get('targeting.s1') : '_not_a_top1k_wiki';
 
 	context.set('custom.wikiIdentifier', wikiIdentifier);
+	context.set('options.contentLanguage', window.wgContentLanguage);
 }
 
 function overrideSlotService(slotRegistry, legacyBtfBlocker) {

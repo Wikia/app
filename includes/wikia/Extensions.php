@@ -386,7 +386,7 @@ if ( defined( 'REBUILD_LOCALISATION_CACHE_IN_PROGRESS' ) || !empty($wgEnableSema
 
 	# Function to switch on Semantic MediaWiki. This function must be called in
 	# LocalSettings.php after including SMW_Settings.php.
-	enableSemantics(preg_replace('/^http:\/\//', '', $wgServer));
+	enableSemantics(preg_replace('/^https?:\/\//', '', $wgServer));
 
 	$smwgNamespacesWithSemanticLinks[NS_USER] = false;
 	$smwgShowFactbox = SMW_FACTBOX_NONEMPTY;
@@ -1441,10 +1441,6 @@ if ( !empty( $wgEnableAbuseFilterBypass ) ) {
 	include( "{$IP}/extensions/wikia/AbuseFilterBypass/AbuseFilterBypass.php" );
 }
 
-if ( !empty( $wgEnableOptimizelyExt ) ) {
-	include "$IP/extensions/wikia/Optimizely/Optimizely.setup.php";
-}
-
 if ( !empty( $wgEnableQualarooExt ) ) {
 	include "$IP/extensions/wikia/Qualaroo/Qualaroo.setup.php";
 }
@@ -1789,3 +1785,6 @@ include "$IP/extensions/wikia/HTTPSOptIn/HTTPSOptIn.setup.php";
 
 // Search should be enabled globally, always
 include "$IP/extensions/wikia/Search/WikiaSearch.setup.php";
+
+// Mercury auth pages related functionality - redirects, email confirmation.
+include "$IP/extensions/wikia/AuthPages/AuthPages.setup.php";

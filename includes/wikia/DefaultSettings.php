@@ -1242,13 +1242,6 @@ $wgAdDriverAudienceNetworkBidderCountries = null;
 $wgAdDriverBeachfrontBidderCountries = null;
 
 /**
- * @name $wgAdDriverBottomLeaderBoardOnMobileCountries
- * List of countries where BOTTOM_LEADERBOARD ad slot is enabled on mobile-wiki.
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverBottomLeaderBoardOnMobileCountries = null;
-
-/**
  * @name $wgAdDriverBottomLeaderBoardMegaCountries
  * List of countries where BOTTOM_LEADERBOARD ad slot mega is enabled.
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
@@ -1455,6 +1448,20 @@ $wgAdDriverDelayCountries = null;
 $wgAdDriverDelayTimeout = 2000;
 
 /**
+ * @name $wgAdDriverFVDelayTimeoutOasis
+ * AdEngine delay timeout (in ms)
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverFVDelayTimeoutOasis = 2000;
+
+/**
+ * @name $wgAdDriverFVDelayTimeoutMobileWiki
+ * AdEngine delay timeout (in ms)
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverFVDelayTimeoutMobileWiki = 2000;
+
+/**
  * @name $wgAdDriverKruxCountries
  * List of countries Krux will be enabled on
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
@@ -1595,8 +1602,7 @@ $wgApiAccess = [
 	'SearchSuggestionsApiController' => ApiAccessService::WIKIA_NON_CORPORATE,
 	'MoviesApiController' => ApiAccessService::WIKIA_CORPORATE,
 	'WAMApiController' => ApiAccessService::WIKIA_CORPORATE,
-	'WikisApiController' => ApiAccessService::WIKIA_CORPORATE,
-	'DesignSystemApiController' => ApiAccessService::WIKIA_CORPORATE
+	'WikisApiController' => ApiAccessService::WIKIA_CORPORATE
 ];
 
 /**
@@ -1876,9 +1882,6 @@ include_once "$IP/extensions/wikia/Pages/Pages.setup.php";
 
 // SUS-3455: Special:ListGlobalUsers for all wikis
 include_once "$IP/extensions/wikia/ListGlobalUsers/ListGlobalUsers.setup.php";
-
-// SEC-59: Form-based Userlogout for Monobook
-include_once "$IP/extensions/wikia/UserLogout/UserLogout.setup.php";
 
 // SRE-76: Logging classes that have been initially defined in config.
 $wgAutoloadClasses['AuditLog'] = "$IP/includes/wikia/AuditLog.class.php";

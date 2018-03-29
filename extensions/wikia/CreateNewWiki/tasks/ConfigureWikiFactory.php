@@ -65,7 +65,6 @@ class ConfigureWikiFactory extends Task {
 			'wgLogo' => self::DEFAULT_WIKI_LOGO,
 			'wgUploadPath' => $imagesURL,
 			'wgUploadDirectory' => $imagesDir,
-			'wgDBname' => $dbName,
 			'wgLocalInterwiki' => $siteName,
 			'wgLanguageCode' => $language,
 			'wgServer' => rtrim( $url, "/" ),
@@ -80,8 +79,7 @@ class ConfigureWikiFactory extends Task {
 			$wikiFactoryVariables['wgMetaNamespace'] = str_replace( [ ':', ' ' ], [ '', '_' ], $siteName );
 		}
 
-		wfGetLBFactory()->sectionsByDB[$dbName] = $wikiFactoryVariables['wgDBcluster'] = \F::app()->wg->CreateDatabaseActiveCluster;
-
+		wfGetLBFactory()->sectionsByDB[$dbName] = \F::app()->wg->CreateDatabaseActiveCluster;
 
 		return $wikiFactoryVariables;
 	}

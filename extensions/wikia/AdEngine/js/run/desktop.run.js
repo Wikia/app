@@ -10,7 +10,6 @@ require([
 	'ext.wikia.adEngine.slot.service.stateMonitor',
 	'ext.wikia.adEngine.config.desktop',
 	'ext.wikia.adEngine.customAdsLoader',
-	'ext.wikia.adEngine.dartHelper',
 	'ext.wikia.adEngine.messageListener',
 	'ext.wikia.adEngine.pageFairDetection',
 	'ext.wikia.adEngine.provider.btfBlocker',
@@ -22,7 +21,8 @@ require([
 	'ext.wikia.adEngine.tracking.scrollDepthTracker',
 	'ext.wikia.aRecoveryEngine.adBlockDetection',
 	'wikia.geo',
-	'wikia.window'
+	'wikia.window',
+	require.optional('wikia.articleVideo.featuredVideo.lagger')
 ], function (
 	adEngineBridge,
 	adContext,
@@ -33,7 +33,6 @@ require([
 	slotStateMonitor,
 	adConfigDesktop,
 	customAdsLoader,
-	dartHelper,
 	messageListener,
 	pageFairDetection,
 	btfBlocker,
@@ -45,7 +44,8 @@ require([
 	scrollDepthTracker,
 	adBlockDetection,
 	geo,
-	win
+	win,
+	fvLagger
 ) {
 	'use strict';
 
@@ -54,9 +54,6 @@ require([
 	win.AdEngine_getTrackerStats = slotTracker.getStats;
 
 	messageListener.init();
-
-	// Register window.wikiaDartHelper so jwplayer can use it
-	win.wikiaDartHelper = dartHelper;
 
 	// Register adSlotTweaker so DART creatives can use it
 	// https://www.google.com/dfp/5441#delivery/CreateCreativeTemplate/creativeTemplateId=10017012
@@ -77,6 +74,13 @@ require([
 
 	if (context.opts.babDetectionDesktop) {
 		adEngineBridge.checkAdBlocking(babDetection);
+	}
+
+	if (fvLagger && context.opts.isFVUapKeyValueEnabled) {
+		fvLagger.addResponseListener(function (lineItemId) {
+			adEngineBridge.universalAdPackage.setUapId(lineItemId);
+			adEngineBridge.universalAdPackage.setType('jwp');
+		});
 	}
 
 	// Everything starts after content and JS

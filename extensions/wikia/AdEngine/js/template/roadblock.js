@@ -1,15 +1,13 @@
 /*global define, require*/
 define('ext.wikia.adEngine.template.roadblock', [
-	'ext.wikia.adEngine.adContext',
-	'ext.wikia.adEngine.context.uapContext',
+	'ext.wikia.adEngine.bridge',
 	'ext.wikia.adEngine.provider.btfBlocker',
 	'ext.wikia.adEngine.provider.gpt.helper',
 	'ext.wikia.adEngine.slot.service.slotRegistry',
 	'wikia.document',
 	'wikia.log'
 ], function (
-	adContext,
-	uapContext,
+	bridge,
 	btfBlocker,
 	gptHelper,
 	slotRegistry,
@@ -18,8 +16,7 @@ define('ext.wikia.adEngine.template.roadblock', [
 ) {
 	'use strict';
 
-	var context = adContext.getContext(),
-		logGroup = 'ext.wikia.adEngine.template.roadblock',
+	var logGroup = 'ext.wikia.adEngine.template.roadblock',
 		uapType = 'ruap';
 
 	/**
@@ -30,8 +27,8 @@ define('ext.wikia.adEngine.template.roadblock', [
 		var medrecSlot = slotRegistry.get('TOP_RIGHT_BOXAD'),
 			skinSlot = slotRegistry.get('INVISIBLE_SKIN');
 
-		uapContext.setUapId(params.uap);
-		uapContext.setType(uapType);
+		bridge.universalAdPackage.setUapId(params.uap);
+		bridge.universalAdPackage.setType(uapType);
 
 		if (medrecSlot) {
 			btfBlocker.unblock(medrecSlot.name);

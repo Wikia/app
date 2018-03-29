@@ -114,14 +114,12 @@ class ConfigureWikiFactoryTest extends \WikiaBaseTest {
 					'wgLogo' => '$wgUploadPath/b/bc/Wiki.png',
 					'wgUploadPath' => 'https://images.wikia.com/foo/images',
 					'wgUploadDirectory' => '/images/f/foo/images',
-					'wgDBname' => 'foo',
 					'wgLocalInterwiki' => 'foo',
 					'wgLanguageCode' => 'en',
 					'wgServer' => 'https://foo.wikia.com',
 					'wgEnableSectionEdit' => true,
 					'wgOasisLoadCommonCSS' => true,
 					'wgEnablePortableInfoboxEuropaTheme' => true,
-					'wgDBcluster' => 'c7'
 				]
 			],
 			[ 'foo:', 'https://images.wikia.com/foo/images', '/images/f/foo/images', 'foo', 'en', 'https://foo.wikia.com/',
@@ -130,7 +128,6 @@ class ConfigureWikiFactoryTest extends \WikiaBaseTest {
 					'wgLogo' => '$wgUploadPath/b/bc/Wiki.png',
 					'wgUploadPath' => 'https://images.wikia.com/foo/images',
 					'wgUploadDirectory' => '/images/f/foo/images',
-					'wgDBname' => 'foo',
 					'wgLocalInterwiki' => 'foo:',
 					'wgLanguageCode' => 'en',
 					'wgServer' => 'https://foo.wikia.com',
@@ -138,7 +135,6 @@ class ConfigureWikiFactoryTest extends \WikiaBaseTest {
 					'wgOasisLoadCommonCSS' => true,
 					'wgEnablePortableInfoboxEuropaTheme' => true,
 					'wgMetaNamespace' => 'foo',
-					'wgDBcluster' => 'c7'
 				]
 			],
 			[ 'foo_bar:fizz', 'https://images.wikia.com/foo/images', '/images/f/foo/images', 'foo', 'en', 'https://foo.wikia.com/',
@@ -147,7 +143,6 @@ class ConfigureWikiFactoryTest extends \WikiaBaseTest {
 					'wgLogo' => '$wgUploadPath/b/bc/Wiki.png',
 					'wgUploadPath' => 'https://images.wikia.com/foo/images',
 					'wgUploadDirectory' => '/images/f/foo/images',
-					'wgDBname' => 'foo',
 					'wgLocalInterwiki' => 'foo_bar:fizz',
 					'wgLanguageCode' => 'en',
 					'wgServer' => 'https://foo.wikia.com',
@@ -155,7 +150,6 @@ class ConfigureWikiFactoryTest extends \WikiaBaseTest {
 					'wgOasisLoadCommonCSS' => true,
 					'wgEnablePortableInfoboxEuropaTheme' => true,
 					'wgMetaNamespace' => 'foo_barfizz',
-					'wgDBcluster' => 'c7'
 				]
 			]
 		];

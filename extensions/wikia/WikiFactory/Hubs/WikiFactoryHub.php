@@ -347,7 +347,7 @@ class WikiFactoryHub extends WikiaModel {
 	 * @param string    $reason      optional extra reason string for logging
 	 */
 
-	public function setVertical ( $city_id, $vertical_id, $reason) {
+	public function setVertical ( int $city_id, int $vertical_id, string $reason) {
 
 		( new WikiaSQL() )
 			->UPDATE( 'city_list' )
