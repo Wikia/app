@@ -1,9 +1,10 @@
 /*global define*/
 define('wikia.viewportObserver', [
+	'wikia.document',
 	'wikia.domCalculator',
 	'wikia.throttle',
 	'wikia.window'
-], function (domCalculator, throttle, win) {
+], function (doc, domCalculator, throttle, win) {
 	'use strict';
 
 	function updateInViewport(listener) {
@@ -13,6 +14,34 @@ define('wikia.viewportObserver', [
 			listener.callback(newInViewport);
 			listener.inViewport = newInViewport;
 		}
+	}
+
+	function sameViewport(element, otherElements) {
+		element = doc.getElementById(element);
+
+		var windowHeight = win.innerHeight || doc.documentElement.clientHeight || doc.body.clientHeight,
+			elementOffset = domCalculator.getTopOffset(element),
+			elementHeight = element.offsetHeight,
+			found = false;
+
+		otherElements.forEach(function (other) {
+			other = doc.getElementById(other);
+
+			var otherOffset = domCalculator.getTopOffset(other),
+				otherHeight = other.offsetHeight;
+
+			if (elementOffset < otherOffset) {
+				if (otherOffset - elementOffset - elementHeight < windowHeight) {
+					found = true;
+				}
+			} else {
+				if (elementOffset - otherOffset - otherHeight < windowHeight) {
+					found = true;
+				}
+			}
+		});
+
+		return found;
 	}
 
 	function addListener(element, callback, throttleThreshold) {
@@ -39,6 +68,7 @@ define('wikia.viewportObserver', [
 	 * return API to add a new/remove listener
 	 */
 	return {
+		sameViewport: sameViewport,
 		addListener: addListener,
 		removeListener: removeListener
 	};
