@@ -1448,6 +1448,20 @@ $wgAdDriverDelayCountries = null;
 $wgAdDriverDelayTimeout = 2000;
 
 /**
+ * @name $wgAdDriverFVDelayTimeoutOasis
+ * AdEngine delay timeout (in ms)
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverFVDelayTimeoutOasis = 2000;
+
+/**
+ * @name $wgAdDriverFVDelayTimeoutMobileWiki
+ * AdEngine delay timeout (in ms)
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverFVDelayTimeoutMobileWiki = 2000;
+
+/**
  * @name $wgAdDriverKruxCountries
  * List of countries Krux will be enabled on
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.

@@ -60,6 +60,11 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 		return instartLogic && instartLogic.isEnabled() && instartLogic.isBlocking();
 	}
 
+	function getUapId() {
+		var uapId = uapContext.getUapId();
+		return uapId ? uapId.toString() : 'none';
+	}
+
 	/**
 	 * Push ad to queue and flush if it should be
 	 *
@@ -80,8 +85,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 			adIsRecoverable = extra.isPageFairRecoverable || extra.isInstartLogicRecoverable,
 			adShouldBeRecovered = isRecoveryEnabled && isBlocking && adIsRecoverable,
 			shouldPush = !isBlocking || adShouldBeRecovered,
-			slotName = slot.name,
-			uapId = uapContext.getUapId();
+			slotName = slot.name;
 
 		log(['isRecoveryEnabled, isBlocking, adIsRecoverable',
 			slot.name, isRecoveryEnabled, isBlocking, adIsRecoverable], log.levels.debug, logGroup);
@@ -131,7 +135,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 
 			slotTargetingData.passback = passbackHandler.get(slotName) || 'none';
 			slotTargetingData.wsi = slotTargeting.getWikiaSlotId(slotName, slotTargetingData.src);
-			slotTargetingData.uap = uapId ? uapId.toString() : 'none';
+			slotTargetingData.uap = getUapId();
 			slotTargetingData.outstream = slotTargeting.getOutstreamData() || 'none';
 			if (adContext.get('targeting.skin') === 'oasis') {
 				slotTargetingData.rail = doc.body.scrollWidth <= 1023 ? '0' : '1';
