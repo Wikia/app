@@ -40,23 +40,33 @@ define('ext.wikia.adEngine.slot.bottomLeaderboard', [
 				pushed = true;
 				doc.removeEventListener('scroll', pushSlot);
 
-				if (adContext.get('opts.isBLBViewportEnabled') &&
-					doc.getElementsByTagName('body')[0].className.indexOf('uap-skin') === -1 &&
-					viewportObserver.sameViewport(slotName, breakSlots)) {
-					eventDispatcher.dispatch('adengine.slot.status', {
-						slot: {
-							name: slotName
-						},
-						status: 'viewport',
-						adInfo: {}
-					});
-					log(['pushSlot', 'Same viewport ' + slotName], 'debug', logGroup);
-				} else {
+				if (!collapseOnSameViewport()) {
 					win.adslots2.push(slotName);
 					log(['pushSlot', 'Pushed ' + slotName], 'debug', logGroup);
 				}
 			}
 		});
+
+	function collapseOnSameViewport() {
+		if (adContext.get('opts.isBLBViewportEnabled') && isUap() && viewportObserver.sameViewport(slotName, breakSlots)) {
+			eventDispatcher.dispatch('adengine.slot.status', {
+				slot: {
+					name: slotName
+				},
+				status: 'viewport',
+				adInfo: {}
+			});
+			log(['pushSlot', 'Same viewport ' + slotName], 'debug', logGroup);
+
+			return true;
+		}
+
+		return false;
+	}
+
+	function isUap() {
+		return doc.getElementsByTagName('body')[0].className.indexOf('uap-skin') === -1;
+	}
 
 	function init() {
 		if (!doc.getElementById(slotName)) {

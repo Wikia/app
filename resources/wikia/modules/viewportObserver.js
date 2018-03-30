@@ -28,16 +28,14 @@ define('wikia.viewportObserver', [
 			other = doc.getElementById(other);
 
 			var otherOffset = domCalculator.getTopOffset(other),
-				otherHeight = other.offsetHeight;
+				otherHeight = other.offsetHeight,
+				elementFirst = elementOffset < otherOffset,
+				elementsDifference = elementFirst ?
+					otherOffset - elementOffset - elementHeight :
+					elementOffset - otherOffset - otherHeight;
 
-			if (elementOffset < otherOffset) {
-				if (otherOffset - elementOffset - elementHeight < windowHeight) {
-					found = true;
-				}
-			} else {
-				if (elementOffset - otherOffset - otherHeight < windowHeight) {
-					found = true;
-				}
+			if (elementsDifference < windowHeight) {
+				found = true;
 			}
 		});
 
