@@ -21,7 +21,8 @@ require([
 	'ext.wikia.adEngine.tracking.scrollDepthTracker',
 	'ext.wikia.aRecoveryEngine.adBlockDetection',
 	'wikia.geo',
-	'wikia.window'
+	'wikia.window',
+	require.optional('wikia.articleVideo.featuredVideo.lagger')
 ], function (
 	adEngineBridge,
 	adContext,
@@ -43,7 +44,8 @@ require([
 	scrollDepthTracker,
 	adBlockDetection,
 	geo,
-	win
+	win,
+	fvLagger
 ) {
 	'use strict';
 
@@ -72,6 +74,13 @@ require([
 
 	if (context.opts.babDetectionDesktop) {
 		adEngineBridge.checkAdBlocking(babDetection);
+	}
+
+	if (fvLagger && context.opts.isFVUapKeyValueEnabled) {
+		fvLagger.addResponseListener(function (lineItemId) {
+			adEngineBridge.universalAdPackage.setUapId(lineItemId);
+			adEngineBridge.universalAdPackage.setType('jwp');
+		});
 	}
 
 	// Everything starts after content and JS

@@ -245,7 +245,7 @@ class AvatarService {
 	 * @param Masthead $masthead
 	 * @param int $width
 	 * @param $timestamp
-	 * @return string
+	 * @return \Wikia\Vignette\UrlGenerator
 	 */
 	public static function getVignetteUrl( Masthead $masthead, $width, $timestamp ) {
 		$relativePath = $masthead->mUser->getGlobalAttribute( AVATAR_USER_OPTION_NAME );
@@ -267,18 +267,16 @@ class AvatarService {
 		return $url;
 	}
 
-	private static function vignetteCustomUrl( $width, $relativePath, $timestamp ) : string {
+	private static function vignetteCustomUrl( $width, $relativePath, $timestamp ) {
 		global $wgVignetteUrl;
 
+		$url = $relativePath;
 		if ( !preg_match( '/^https?:\/\//', $relativePath ) ) {
 			$bucket = VignetteRequest::parseBucket( "{$wgVignetteUrl}/common/avatars" );
 			$relativePath = ltrim( $relativePath, '/' );
 			$url = self::buildVignetteUrl( $width, $bucket, $relativePath, $timestamp );
 		}
 		else {
-			// SUS-4341 | something is setting "avatar" URLs with scaling parameters, remove them
-			$relativePath = preg_replace( '#(/revision/latest)?/scale-to-width-down/\d+$#', '', $relativePath );
-
 			// handle full URLs introduced by PLATFORM-1334
 			$parsedUrl = parse_url( $relativePath );
 

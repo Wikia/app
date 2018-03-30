@@ -1099,19 +1099,6 @@ $wgEnableGoogleFundingChoices = true;
 $wgEnableGoogleFundingChoicesInHead = false;
 
 /**
- * @name $wgEnableNielsen
- * Enables Nielsen Digital Content Ratings
- */
-$wgEnableNielsen = false;
-
-/**
- * @name $wgNielsenApid
- * Nielsen Digital Content Ratings apid. Should be changed via WikiFactory when $wgEnableNielsen is set to true
- */
-$wgNielsenApid = 'FIXME';
-
-
-/**
  * @name $wgEnableNetzAthleten
  * Enables NetzAthleten provider
  */
@@ -1453,6 +1440,20 @@ $wgAdDriverDelayCountries = null;
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverDelayTimeout = 2000;
+
+/**
+ * @name $wgAdDriverFVDelayTimeoutOasis
+ * AdEngine delay timeout (in ms)
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverFVDelayTimeoutOasis = 2000;
+
+/**
+ * @name $wgAdDriverFVDelayTimeoutMobileWiki
+ * AdEngine delay timeout (in ms)
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverFVDelayTimeoutMobileWiki = 2000;
 
 /**
  * @name $wgAdDriverKruxCountries
