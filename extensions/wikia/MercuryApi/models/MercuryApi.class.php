@@ -163,10 +163,6 @@ class MercuryApi {
 				'comscore' => [
 					'c7Value' => AnalyticsProviderComscore::getC7Value(),
 				],
-				'nielsen' => [
-					'enabled' => AnalyticsProviderNielsen::isEnabled(),
-					'apid' => AnalyticsProviderNielsen::getApid()
-				],
 				'netzathleten' => [
 					'enabled' => AnalyticsProviderNetzAthleten::isEnabled(),
 					'url' => AnalyticsProviderNetzAthleten::URL
