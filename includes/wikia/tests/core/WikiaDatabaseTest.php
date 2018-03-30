@@ -47,6 +47,7 @@ abstract class WikiaDatabaseTest extends TestCase {
 
 		// destroy leaked user accounts from other tests
 		User::$idCacheByName = [];
+		\Wikia\Factory\ServiceFactory::clearState();
 	}
 
 	protected function setUp() {

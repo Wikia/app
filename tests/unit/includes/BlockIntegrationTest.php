@@ -1,6 +1,9 @@
 <?php
 
-class BlockTest extends WikiaDatabaseTest {
+/**
+ * @group Integration
+ */
+class BlockIntegrationTest extends WikiaDatabaseTest {
 	const BLOCKED_USER_ONE_ID = 1;
 	const BLOCKED_USER_ONE_NAME = 'BlockedUser';
 
@@ -32,9 +35,11 @@ class BlockTest extends WikiaDatabaseTest {
 
 		$this->assertEquals( static::BLOCKING_ADMIN_ID, $block->getBlocker()->getId() );
 		$this->assertEquals( static::BLOCKING_ADMIN_NAME, $block->getBlocker()->getName() );
+		$this->assertEquals( static::BLOCKING_ADMIN_NAME, $user->blockedBy() );
 
 		$this->assertEquals( static::BLOCKED_USER_ONE_BLOCK_ID, $block->getId() );
 		$this->assertEquals( static::BLOCKED_USER_ONE_BLOCK_REASON, $block->mReason );
+		$this->assertEquals( static::BLOCKED_USER_ONE_BLOCK_REASON, $user->blockedFor() );
 		$this->assertEquals( static::BLOCKED_USER_ONE_BLOCK_TS, $block->mTimestamp );
 		$this->assertEquals( static::BLOCKED_USER_ONE_BLOCK_EXPIRY, $block->getExpiry() );
 
