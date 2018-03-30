@@ -1099,19 +1099,6 @@ $wgEnableGoogleFundingChoices = true;
 $wgEnableGoogleFundingChoicesInHead = false;
 
 /**
- * @name $wgEnableNielsen
- * Enables Nielsen Digital Content Ratings
- */
-$wgEnableNielsen = false;
-
-/**
- * @name $wgNielsenApid
- * Nielsen Digital Content Ratings apid. Should be changed via WikiFactory when $wgEnableNielsen is set to true
- */
-$wgNielsenApid = 'FIXME';
-
-
-/**
  * @name $wgEnableNetzAthleten
  * Enables NetzAthleten provider
  */
@@ -1240,13 +1227,6 @@ $wgAdDriverAudienceNetworkBidderCountries = null;
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverBeachfrontBidderCountries = null;
-
-/**
- * @name $wgAdDriverBottomLeaderBoardOnMobileCountries
- * List of countries where BOTTOM_LEADERBOARD ad slot is enabled on mobile-wiki.
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverBottomLeaderBoardOnMobileCountries = null;
 
 /**
  * @name $wgAdDriverBottomLeaderBoardMegaCountries
@@ -1455,6 +1435,20 @@ $wgAdDriverDelayCountries = null;
 $wgAdDriverDelayTimeout = 2000;
 
 /**
+ * @name $wgAdDriverFVDelayTimeoutOasis
+ * AdEngine delay timeout (in ms)
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverFVDelayTimeoutOasis = 2000;
+
+/**
+ * @name $wgAdDriverFVDelayTimeoutMobileWiki
+ * AdEngine delay timeout (in ms)
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverFVDelayTimeoutMobileWiki = 2000;
+
+/**
  * @name $wgAdDriverKruxCountries
  * List of countries Krux will be enabled on
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
@@ -1595,8 +1589,7 @@ $wgApiAccess = [
 	'SearchSuggestionsApiController' => ApiAccessService::WIKIA_NON_CORPORATE,
 	'MoviesApiController' => ApiAccessService::WIKIA_CORPORATE,
 	'WAMApiController' => ApiAccessService::WIKIA_CORPORATE,
-	'WikisApiController' => ApiAccessService::WIKIA_CORPORATE,
-	'DesignSystemApiController' => ApiAccessService::WIKIA_CORPORATE
+	'WikisApiController' => ApiAccessService::WIKIA_CORPORATE
 ];
 
 /**

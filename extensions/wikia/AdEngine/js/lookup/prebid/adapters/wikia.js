@@ -19,12 +19,32 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.wikia',[
 					sizes: [
 						[300, 250]
 					]
+				},
+				INCONTENT_BOXAD_1: {
+					sizes: [
+						[300, 250]
+					]
+				},
+				BOTTOM_LEADERBOARD: {
+					sizes: [
+						[728, 90]
+					]
 				}
 			},
 			mercury: {
 				MOBILE_TOP_LEADERBOARD: {
 					sizes: [
 						[320, 50]
+					]
+				},
+				MOBILE_IN_CONTENT: {
+					sizes: [
+						[300, 250]
+					]
+				},
+				BOTTOM_LEADERBOARD: {
+					sizes: [
+						[300, 250]
 					]
 				}
 			}

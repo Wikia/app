@@ -1441,10 +1441,6 @@ if ( !empty( $wgEnableAbuseFilterBypass ) ) {
 	include( "{$IP}/extensions/wikia/AbuseFilterBypass/AbuseFilterBypass.php" );
 }
 
-if ( !empty( $wgEnableOptimizelyExt ) ) {
-	include "$IP/extensions/wikia/Optimizely/Optimizely.setup.php";
-}
-
 if ( !empty( $wgEnableQualarooExt ) ) {
 	include "$IP/extensions/wikia/Qualaroo/Qualaroo.setup.php";
 }

@@ -120,7 +120,7 @@ class MercuryApi {
 		       $wgEnableDiscussionsImageUpload, $wgDiscussionColorOverride, $wgEnableNewAuth,
 		       $wgLanguageCode, $wgSitename, $wgWikiDirectedAtChildrenByFounder,
 		       $wgWikiDirectedAtChildrenByStaff, $wgCdnRootUrl, $wgScriptPath,
-		       $wgEnableDiscussionsPostsWithoutText, $wgEnableDiscussionsPolls;
+		       $wgEnableDiscussionsPostsWithoutText, $wgEnableDiscussionsPolls, $wgEnableLightweightContributions;
 
 		$enableFAsmartBannerCommunity = WikiFactory::getVarValueByName( 'wgEnableFandomAppSmartBanner', WikiFactory::COMMUNITY_CENTRAL );
 
@@ -140,6 +140,7 @@ class MercuryApi {
 			'enableDiscussionsPostsWithoutText' => $wgEnableDiscussionsPostsWithoutText,
 			'enableDiscussionsPolls' => $wgEnableDiscussionsPolls,
 			'enableFandomAppSmartBanner' => !empty( $enableFAsmartBannerCommunity ),
+			'enableLightweightContributions' => $wgEnableLightweightContributions,
 			'enableNewAuth' => $wgEnableNewAuth,
 			'favicon' => Wikia::getFaviconFullUrl(),
 			'homepage' => $this->getHomepageUrl(),
@@ -161,10 +162,6 @@ class MercuryApi {
 				'vertical' => HubService::getVerticalNameForComscore( $wgCityId ),
 				'comscore' => [
 					'c7Value' => AnalyticsProviderComscore::getC7Value(),
-				],
-				'nielsen' => [
-					'enabled' => AnalyticsProviderNielsen::isEnabled(),
-					'apid' => AnalyticsProviderNielsen::getApid()
 				],
 				'netzathleten' => [
 					'enabled' => AnalyticsProviderNetzAthleten::isEnabled(),

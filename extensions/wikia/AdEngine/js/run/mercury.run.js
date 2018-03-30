@@ -17,7 +17,8 @@ require([
 	'ext.wikia.adEngine.tracking.adInfoListener',
 	'wikia.geo',
 	'wikia.instantGlobals',
-	'wikia.window'
+	'wikia.window',
+	require.optional('wikia.articleVideo.featuredVideo.lagger')
 ], function (
 	adEngineBridge,
 	adContext,
@@ -36,7 +37,8 @@ require([
 	adInfoListener,
 	geo,
 	instantGlobals,
-	win
+	win,
+	fvLagger
 ) {
 	'use strict';
 
@@ -59,6 +61,15 @@ require([
 	});
 	win.loadCustomAd = adEngineBridge.loadCustomAd(customAdsLoader.loadCustomAd);
 
+	function passFVLineItemIdToUAP() {
+		if (fvLagger && context.opts.isFVUapKeyValueEnabled) {
+			fvLagger.addResponseListener(function (lineItemId) {
+				adEngineBridge.universalAdPackage.setUapId(lineItemId);
+				adEngineBridge.universalAdPackage.setType('jwp');
+			});
+		}
+	}
+
 	function callBiddersOnConsecutivePageView() {
 		if (geo.isProperGeo(instantGlobals.wgAdDriverPrebidBidderCountries)) {
 			prebid.call();
@@ -67,6 +78,8 @@ require([
 		if (geo.isProperGeo(instantGlobals.wgAdDriverA9BidderCountries)) {
 			a9.call();
 		}
+
+		passFVLineItemIdToUAP();
 	}
 
 	mercuryListener.onLoad(function () {
@@ -77,6 +90,8 @@ require([
 		if (geo.isProperGeo(instantGlobals.wgAdDriverPrebidBidderCountries)) {
 			prebid.call();
 		}
+
+		passFVLineItemIdToUAP();
 
 		adInfoListener.run();
 		slotStateMonitor.run();

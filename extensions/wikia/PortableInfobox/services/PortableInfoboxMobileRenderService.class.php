@@ -84,19 +84,11 @@ class PortableInfoboxMobileRenderService extends PortableInfoboxRenderService {
 		} else {
 			if ( count( $images ) === 1 ) {
 				$data = $images[0];
-				if ( ArticleAsJson::simplifyRendering() ) {
-					$templateName = 'image-mobile';
-				} else { // TODO: remove it and all usages with XW-4719
-					$templateName = 'image-mobile-old';
-				}
+				$templateName = 'image-mobile';
 			} else {
 				// more than one image means image collection
 				$data = $helper->extendImageCollectionData( $images );
-				if ( ArticleAsJson::simplifyRendering() ) {
-					$templateName = 'image-collection-mobile';
-				} else { // TODO: remove it and all usages with XW-4719
-					$templateName = 'image-collection-mobile-old';
-				}
+				$templateName = 'image-collection-mobile';
 			}
 		}
 
@@ -143,11 +135,7 @@ class PortableInfoboxMobileRenderService extends PortableInfoboxRenderService {
 			if ( !$this->isMercury() ) {
 				return $this->renderItem( 'hero-mobile-wikiamobile', $data );
 			} elseif ( $firstInfoboxAlredyRendered ) {
-				if ( ArticleAsJson::simplifyRendering() ) {
-					return $this->renderItem( 'hero-mobile', $data );
-				} else {
-					return $this->renderItem( 'hero-mobile-old', $data );
-				}
+				return $this->renderItem( 'hero-mobile', $data );
 			}
 		} elseif ( !$this->isMercury() || $firstInfoboxAlredyRendered ) {
 			return $this->renderItem( 'title', $data['title'] );

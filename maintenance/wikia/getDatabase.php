@@ -24,27 +24,12 @@ $USAGE =
 	"\t\t-h          Fetch and import to dev db by hostname (short name or fully qualified name ok)\n" .
 	"\t\t-f          Fetch a new database file from s3\n" .
 	"\t\t-i          Import a downloaded file to dev db\n" .
-	"\t\t-p          Which dev database to use for target: sjc or poz (optional, defaults to WIKIA_DATACENTER) \n".
 	"\n";
 
 $opts = getopt ("h:i:f:p:?::");
 if( empty( $opts ) ) die( $USAGE );
 
-if (array_key_exists('p', $opts)) {
-	$wgWikiaDatacenter = $opts['p'];
-} else {
-	$wgWikiaDatacenter = getenv('WIKIA_DATACENTER');
-}
-switch($wgWikiaDatacenter) {
-	case WIKIA_DC_POZ:
-		$wgDBdevboxServer = 'master.db-dev-db.service.poz-dev.consul';
-		break;
-	case WIKIA_DC_SJC:
-		$wgDBdevboxServer = 'master.db-dev-db.service.sjc-dev.consul';
-		break;
-	default:
-		die("unknown data center: {$opts['p']}\n$USAGE");
-}
+$wgDBdevboxServer = 'geo-db-dev-db-master.query.consul';
 
 // Get db credentials from production. This is pretty gross. :)
 if ( file_exists( $dirName . "/../../../config/DB.php" ) ) {
@@ -291,7 +276,7 @@ class mysqlwrapper {
 			$source = "cat $fullpath | bar | zcat";
 		$this->response = `$source | mysql {$this->creds} $dbname 2>&1`;
 
-		$this->response = trim(str_replace('Warning: Using a password on the command line interface can be insecure.', '', $this->response));
+		$this->response = trim(str_replace('mysql: [Warning] Using a password on the command line interface can be insecure.', '', $this->response));
 
 	}
 }

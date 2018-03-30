@@ -32,11 +32,11 @@ module.exports = function(config) {
 			reporters: [
 				{
 					type: 'cobertura',
-					dir: buildPath + 'jsunit-coverage'
+					dir: buildPath
 				},
 				{
 					type: 'text-summary',
-					dir: buildPath + 'jsunit-coverage'
+					dir: buildPath
 				}
 			]
 		},
@@ -46,7 +46,8 @@ module.exports = function(config) {
 		},
 		reportSlowerThan: 500,
 		junitReporter: {
-			outputFile: buildPath + 'test-results.xml'
+			outputFile: 'test-results.xml',
+			outputDir: buildPath
 		}
 	});
 };

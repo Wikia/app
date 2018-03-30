@@ -32,7 +32,7 @@
 			videoHeight: 360,
 			onClose: function () {
 				// Reset lightbox
-				$(window).off('.Lightbox');
+				$(document).off('.Lightbox');
 				// bugid-64334 and bugid-69047
 				Lightbox.openModal.find('.video-media').children().remove();
 				LightboxLoader.lightboxLoading = false;

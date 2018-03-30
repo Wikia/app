@@ -46,13 +46,16 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverBabRecoveryCountries';
 		$vars[] = 'wgAdDriverBeachfrontBidderCountries';
 		$vars[] = 'wgAdDriverBottomLeaderBoardMegaCountries';
-		$vars[] = 'wgAdDriverBottomLeaderBoardOnMobileCountries';
 		$vars[] = 'wgAdDriverDelayCountries';
 		$vars[] = 'wgAdDriverDelayTimeout';
 		$vars[] = 'wgAdDriverDisableSraCountries';
 		$vars[] = 'wgAdDriverEvolve2Countries';
 		$vars[] = 'wgAdDriverFMRLogisticRegressionRabbitCountries';
 		$vars[] = 'wgAdDriverFMRPassiveAggressiveClassifierRabbitCountries';
+		$vars[] = 'wgAdDriverFVAsUapKeyValueCountries';
+		$vars[] = 'wgAdDriverFVDelayCountries';
+		$vars[] = 'wgAdDriverFVDelayTimeoutOasis';
+		$vars[] = 'wgAdDriverFVDelayTimeoutMobileWiki';
 		$vars[] = 'wgAdDriverFVMidrollCountries';
 		$vars[] = 'wgAdDriverFVPostrollCountries';
 		$vars[] = 'wgAdDriverHighImpactSlotCountries';
@@ -87,7 +90,6 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverScrollDepthTrackingCountries';
 		$vars[] = 'wgAdDriverSrcPremiumCountries';
 		$vars[] = 'wgAdDriverTurtleCountries';
-		$vars[] = 'wgPorvataVastLoggerConfig';
 
 		/**
 		 * Disaster Recovery
@@ -109,6 +111,8 @@ class AdEngine2Hooks {
 	public static function onInstantGlobalsGetNewsAndStoriesVariables( array &$vars ) {
 		// shared variables with communities
 		$vars[] = 'wgAdDriverBottomLeaderBoardMegaCountries';
+		$vars[] = 'wgAdDriverFVAsUapKeyValueCountries';
+		$vars[] = 'wgAdDriverFVDelayCountries';
 		$vars[] = 'wgAdDriverKikimoraPlayerTrackingCountries';
 		$vars[] = 'wgAdDriverKikimoraTrackingCountries';
 		$vars[] = 'wgAdDriverKikimoraViewabilityTrackingCountries';
@@ -123,6 +127,7 @@ class AdEngine2Hooks {
 
 		// news&stories variables only
 		$vars[] = 'wgAdDriverF2BabDetectionCountries';
+		$vars[] = 'wgAdDriverF2DelayTimeout';
 		$vars[] = 'wgAdDriverF2InstartLogicRecoveryCountries';
 
 		return true;
@@ -154,8 +159,6 @@ class AdEngine2Hooks {
 		// Legacy vars:
 		// Queue for ads registration
 		$vars['adslots2'] = [ ];
-		// Used to hop by DART ads
-		$vars['adDriverLastDARTCallNoAds'] = [ ];
 		// 3rd party code (eg. dart collapse slot template) can force AdDriver2 to respect unusual slot status
 		$vars['adDriver2ForcedStatus'] = [ ];
 
