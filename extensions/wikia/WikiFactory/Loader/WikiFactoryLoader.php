@@ -419,7 +419,7 @@ class WikiFactoryLoader {
 			}
 
 			header( "X-Redirected-By-WF: NotPrimary" );
-			header( "Vary: Cookie");
+			header( "Vary: Fastly-SSL");
 			header( "Location: {$target}", true, 301 );
 			wfProfileOut( __METHOD__ );
 			return false;
