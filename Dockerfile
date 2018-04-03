@@ -1,7 +1,11 @@
-FROM php:7.0.28-cli-alpine
+FROM php:7.0.28-cli
 
-# install PHP extensions required by MediaWiki
-RUN docker-php-ext-install mysqli
+# install make (reuired by unit tests)
+# and install PHP extensions required by MediaWiki
+RUN apt-get update && apt-get install -y \
+    make \
+    && docker-php-ext-install \
+    mysqli
 
 # expose volumes for app and config repositories clones
 ENV WIKIA_DOCROOT=/usr/wikia/slot1/current/src
