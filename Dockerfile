@@ -49,6 +49,16 @@ RUN pecl install uopz-5.0.2 \
     && docker-php-ext-enable uopz
 
 
+# wikidiff2 extension / @see https://www.mediawiki.org/wiki/Extension:Wikidiff2#Manually
+RUN wget https://releases.wikimedia.org/wikidiff2/wikidiff2-1.4.1.tar.gz -O wikidiff2.tar.gz \
+    && mkdir -p /tmp/wikidiff2 \
+    && tar -xf wikidiff2.tar.gz -C /tmp/wikidiff2 --strip-components=1 \
+    && apt-get install -y libthai-dev \
+    && docker-php-ext-configure /tmp/wikidiff2 \
+    && docker-php-ext-install /tmp/wikidiff2 \
+    && rm -r /tmp/wikidiff2
+
+
 # expose volumes for app and config repositories clones
 ENV WIKIA_DOCROOT=/usr/wikia/slot1/current/src
 ENV WIKIA_CONFIG_ROOT=/usr/wikia/slot1/current/config
