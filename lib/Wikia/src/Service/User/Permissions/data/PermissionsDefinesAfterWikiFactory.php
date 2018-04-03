@@ -1,5 +1,7 @@
 <?php
 
+// TODO: Move to app/includes/wikia/Extensions.php
+
 /**
  * before main variable case we set/unset anonymous edititng
  */
@@ -86,38 +88,9 @@ if ( !empty($wgAllVideosAdminOnly) ) {
 
 $wgGroupPermissions[ 'user' ][ 'MultiFileUploader' ] = true;
 
-$wgGroupPermissions['sysop']['allowedtoblank'] = true;
-
-// this is so that only sysops can do batch moves
-$wgGroupPermissions['sysop']['batchmove'] = true;
-
-// Allows anyone to view the page.
-$wgGroupPermissions['*']['linkstoredirects'] = true;
-$wgGroupPermissions['user']['linkstoredirects'] = true;
-$wgGroupPermissions['sysop']['linkstoredirects'] = true;
-
-// Allows anyone to view the page.
-$wgGroupPermissions['*']['mobilesearches'] = true;
-$wgGroupPermissions['user']['mobilesearches'] = true;
-$wgGroupPermissions['sysop']['mobilesearches'] = true;
-
-// Allows anyone to view the page.
-$wgGroupPermissions['*']['soapfailures'] = true;
-$wgGroupPermissions['user']['soapfailures'] = true;
-$wgGroupPermissions['sysop']['soapfailures'] = true;
-
-// edit permissions & view-source protection
-// @see http://www.mediawiki.org/wiki/Manual:$wgNamespaceProtection
-$wgGroupPermissions['*']['editlyricfind'] = false;
-$wgGroupPermissions['staff']['editlyricfind'] = true;
-$wgGroupPermissions['sysop']['editlyricfind'] = true;
-
-$wgGroupPermissions['sysop']['moderatesotd'] = true;
-
 /**
  * Users who can vote
  */
-$wgGroupPermissions['user']['vote'] = false;
 $wgGroupPermissions['checkuser']['checkuser'] = true;
 $wgGroupPermissions['checkuser']['checkuser-log'] = true;
 
@@ -288,7 +261,10 @@ $wgGroupPermissions['staff']['commentcsv'] = true;
 $wgGroupPermissions['*']['content-review'] = false;
 $wgGroupPermissions['content-reviewer']['content-review'] = true;
 
-$wgGroupPermissions['user']['content-review-test-mode'] = true;
+$wgGroupPermissions['*']['content-review-test-mode'] = false;
+$wgGroupPermissions['sysop']['content-review-test-mode'] = true;
+$wgGroupPermissions['helper']['content-review-test-mode'] = true;
+$wgGroupPermissions['staff']['content-review-test-mode'] = true;
 
 $wgGroupPermissions['util']['coppatool'] = true;
 
@@ -311,13 +287,6 @@ $wgGroupPermissions['sysop']['curatedcontent'] = true;
 
 $wgGroupPermissions['*']['curatedcontent-switchforadmins'] = false;
 $wgGroupPermissions['staff']['curatedcontent-switchforadmins'] = true;
-
-// TODO: DETERMINE THE CORRECT PERMISSIONS... IS THERE A "DEVELOPERS" GROUP THAT WE ALL ACTUALLY BELONG TO?  WILL WE BE ON ALL WIKIS?
-// Permissions
-$wgGroupPermissions['*']['devboxpanel'] = false;
-$wgGroupPermissions['user']['devboxpanel'] = false;
-$wgGroupPermissions['staff']['devboxpanel'] = true;
-$wgGroupPermissions['devboxpanel']['devboxpanel'] = true;
 
 $wgGroupPermissions['util']['dmcarequestmanagement'] = true;
 
@@ -641,8 +610,6 @@ $wgGroupPermissions['user']['upload_by_url']   = true;
 
 $wgGroupPermissions['*']['wikiaquiz'] = false;
 $wgGroupPermissions['staff']['wikiaquiz'] = true;
-
-$wgGroupPermissions['staff']['wikifactorymetrics'] = true;
 
 $wgGroupPermissions['*']['dumpsondemand'] = false;
 $wgGroupPermissions['staff']['dumpsondemand'] = true;
