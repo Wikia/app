@@ -4,14 +4,20 @@ FROM php:7.0.28-cli-jessie
 RUN echo 'deb http://ftp.debian.org/debian jessie-backports main' > /etc/apt/sources.list.d/backports.list
 
 # install make (reuired by unit tests)
-# and install PHP extensions required by MediaWiki
 RUN apt-get update && apt-get install -y \
     autoconf \
     automake \
+    libbz2-dev \
+    # needed by wikidiff2
+    libthai-dev \
     libtool \
     make \
     wget \
+    # needed by sass
+    && apt-get -t jessie-backports install -y libsass-dev \
+    # install PHP extensions required by MediaWiki
     && docker-php-ext-install \
+    bz2 \
     mysqli
 
 
@@ -53,7 +59,6 @@ RUN pecl install uopz-5.0.2 \
 RUN wget https://releases.wikimedia.org/wikidiff2/wikidiff2-1.4.1.tar.gz -O wikidiff2.tar.gz \
     && mkdir -p /tmp/wikidiff2 \
     && tar -xf wikidiff2.tar.gz -C /tmp/wikidiff2 --strip-components=1 \
-    && apt-get install -y libthai-dev \
     && docker-php-ext-configure /tmp/wikidiff2 \
     && docker-php-ext-install /tmp/wikidiff2 \
     && rm -r /tmp/wikidiff2
