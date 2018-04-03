@@ -397,8 +397,8 @@ class WikiFactoryLoader {
 
 		if( ( $cond1 || $cond2 ) && empty( $wgDevelEnvironment ) ) {
 			$redirectUrl = WikiFactory::getLocalEnvURL( $this->mCityUrl );
-			if ( $_SERVER['HTTP_FASTLY_SSL'] && wfHttpsAllowedForURL( $redirectUrl ) ) {
-				$redirectUrl = wfHttpToHttps( $url );
+			if ( !empty($_COOKIE[\Wikia\Service\User\Auth\CookieHelper::ACCESS_TOKEN_COOKIE_NAME]) && $_SERVER['HTTP_FASTLY_SSL'] && wfHttpsAllowedForURL( $redirectUrl ) ) {
+				$redirectUrl = wfHttpToHttps( $redirectUrl );
 			}
 			$target = rtrim( $redirectUrl, '/' ) . '/' . $this->pathParams;
 
@@ -416,6 +416,7 @@ class WikiFactoryLoader {
 			}
 
 			header( "X-Redirected-By-WF: NotPrimary" );
+			header( "Vary: Cookie");
 			header( "Location: {$target}", true, 301 );
 			wfProfileOut( __METHOD__ );
 			return false;
