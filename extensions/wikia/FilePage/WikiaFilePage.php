@@ -55,6 +55,7 @@ class WikiaFilePage extends ImagePage {
 
 		JSMessages::enqueuePackage('VideoPage', JSMessages::EXTERNAL);
 
+		/* @var $file WikiaLocalFile|OldWikiaLocalFile */
 		$file = $this->getDisplayedFile();
 
 		//If a timestamp is specified, show the archived version of the video (if it exists)
@@ -94,10 +95,10 @@ class WikiaFilePage extends ImagePage {
 
 	/**
 	 * Display info about the video below the video player: provider, views, expiration date (if any)
-	 * @param WikiaLocalFileShared $file
+	 * @param WikiaLocalFile|OldWikiaLocalFile $file
 	 * @return string
 	 */
-	public function getVideoInfoLine( WikiaLocalFile $file ) {
+	private function getVideoInfoLine( $file ) {
 		wfProfileIn( __METHOD__ );
 
 		$app = F::app();
