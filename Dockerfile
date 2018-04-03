@@ -44,6 +44,11 @@ RUN wget https://github.com/jbboehr/php-mustache/archive/v0.7.3.tar.gz -O mustac
     && rm -r /tmp/mustache
 
 
+# uopz extension / @see https://pecl.php.net/package/uopz
+RUN pecl install uopz-5.0.2 \
+    && docker-php-ext-enable uopz
+
+
 # expose volumes for app and config repositories clones
 ENV WIKIA_DOCROOT=/usr/wikia/slot1/current/src
 ENV WIKIA_CONFIG_ROOT=/usr/wikia/slot1/current/config
