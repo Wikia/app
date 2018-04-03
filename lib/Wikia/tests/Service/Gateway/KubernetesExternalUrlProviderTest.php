@@ -7,7 +7,7 @@ use WikiaBaseTest;
 
 class KubernetesExternalUrlProviderTest extends WikiaBaseTest {
 	/**
-	 * @dataProvider provideEnvironmentDatacenterAndServiceName
+	 * @dataProvider provideEnvironmentAndServiceName
 	 *
 	 * @param string $wgServicesExternalDomain
 	 * @param string $serviceName
@@ -16,17 +16,18 @@ class KubernetesExternalUrlProviderTest extends WikiaBaseTest {
 		string $wgServicesExternalDomain, string $serviceName
 	) {
 		$this->mockProdEnv();
+		$this->mockGlobalVariable( 'wgServicesExternalDomain', $wgServicesExternalDomain );
 		$kubernetesUrlProvider = new KubernetesExternalUrlProvider( );
 		$kubernetesUrlProvider->setLogger( new NullLogger() );
 
 		$this->assertEquals(
-			"$wgServicesExternalDomain/$serviceName",
+			"$wgServicesExternalDomain$serviceName",
 			$kubernetesUrlProvider->getUrl( $serviceName )
 		);
 	}
 
 	public function provideEnvironmentAndServiceName(): Generator {
-		yield [ "https://services.wikia.com", 'example' ];
+		yield [ "https://services.wikia.com/", 'example' ];
 	}
 
 	/**
@@ -39,16 +40,17 @@ class KubernetesExternalUrlProviderTest extends WikiaBaseTest {
 		string $wgServicesExternalDomain, string $serviceName
 	) {
 		$this->mockDevEnv();
+		$this->mockGlobalVariable( 'wgServicesExternalDomain', $wgServicesExternalDomain );
 		$kubernetesUrlProvider = new KubernetesExternalUrlProvider( );
 		$kubernetesUrlProvider->setLogger( new NullLogger() );
 
 		$this->assertEquals(
-			"$wgServicesExternalDomain/$serviceName",
+			"$wgServicesExternalDomain$serviceName",
 			$kubernetesUrlProvider->getUrl( $serviceName )
 		);
 	}
 
 	public function provideDevEnvironmentAndServiceName(): Generator {
-		yield [ "https://services.wikia-dev.us", 'example' ];
+		yield [ "https://services.wikia-dev.us/", 'example' ];
 	}
 }
