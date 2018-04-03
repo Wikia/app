@@ -27,8 +27,6 @@ $wgAutoloadClasses[ 'DesignSystemHooks' ] = __DIR__ . '/DesignSystemHooks.class.
 $wgHooks[ 'BeforePageDisplay' ][] = 'DesignSystemHooks::onBeforePageDisplay';
 $wgHooks[ 'WikiaSkinTopScripts' ][] = 'addJsVariables';
 
-$wgOnSiteNotificationsApiUrl = $wgServicesExternalDomain . 'on-site-notifications';
-
 /**
  * MW1.19 - ResourceLoaderStartUpModule class adds more variables
  * @param array $vars JS variables to be added at the bottom of the page
@@ -37,9 +35,9 @@ $wgOnSiteNotificationsApiUrl = $wgServicesExternalDomain . 'on-site-notification
  */
 function addJsVariables( Array &$vars, &$scripts ) {
 	wfProfileIn( __METHOD__ );
-	global $wgOnSiteNotificationsApiUrl;
+	$urlProvider = new \Wikia\Service\Gateway\KubernetesExternalUrlProvider();
 
-	$vars[ 'wgOnSiteNotificationsApiUrl' ] = $wgOnSiteNotificationsApiUrl;
+	$vars[ 'wgOnSiteNotificationsApiUrl' ] = $urlProvider->getUrl("on-site-notifications");
 
 	wfProfileOut( __METHOD__ );
 

@@ -103,7 +103,8 @@ class Track {
 	}
 
 	private static function getViewJS( $param = null ) {
-		global $wgDevelEnvironment, $wgServicesExternalDomain;
+		global $wgDevelEnvironment;
+		$urlProvider = new \Wikia\Service\Gateway\KubernetesExternalUrlProvider();
 
 		// Fake beacon and varnishTime values for development environment
 		if ( !empty( $wgDevelEnvironment ) ) {
@@ -113,7 +114,7 @@ class Track {
 			$url = Track::getURL( 'view', '', $param, false );
 			$script = ( new Wikia\Template\MustacheEngine )
 				->setPrefix( dirname( __FILE__ ) . '/templates' )
-				->setData(['url' => $url, 'event-logger-url' => $wgServicesExternalDomain . 'event-logger'])
+				->setData(['url' => $url, 'event-logger-url' => $urlProvider->getUrl( 'event-logger' ) ] )
 				->render('track.mustache');
 		}
 
