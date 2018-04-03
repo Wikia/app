@@ -397,7 +397,10 @@ class WikiFactoryLoader {
 
 		if( ( $cond1 || $cond2 ) && empty( $wgDevelEnvironment ) ) {
 			$redirectUrl = WikiFactory::getLocalEnvURL( $this->mCityUrl );
-			if ( !empty($_COOKIE[\Wikia\Service\User\Auth\CookieHelper::ACCESS_TOKEN_COOKIE_NAME]) && $_SERVER['HTTP_FASTLY_SSL'] && wfHttpsAllowedForURL( $redirectUrl ) ) {
+			if ( !empty( $_COOKIE[\Wikia\Service\User\Auth\CookieHelper::ACCESS_TOKEN_COOKIE_NAME] ) &&
+				 $_SERVER['HTTP_FASTLY_SSL'] &&
+				 wfHttpsAllowedForURL( $redirectUrl )
+			) {
 				$redirectUrl = wfHttpToHttps( $redirectUrl );
 			}
 			$target = rtrim( $redirectUrl, '/' ) . '/' . $this->pathParams;
