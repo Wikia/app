@@ -105,7 +105,7 @@ class HelperController extends \WikiaController {
 		}
 	}
 
-	private function emailControllerForTokenContext(string $tokenContext): string {
+	private function emailControllerForTokenContext(string $tokenContext = null): string {
 	    if ($tokenContext === 'facebook') {
 	        return 'Email\Controller\FacebookDisconnect';
         }
