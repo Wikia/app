@@ -351,7 +351,7 @@ function axWFactoryDomainCRUD($type="add") {
 				 */
 				$sInfo .= "Error: Domain <em>{$sDomain}</em> is invalid (or empty) so it's not added.";
 			}
-			elseif ( !array_key_exists( $matches[1], $languages ) ) {
+			elseif ( isset( $matches[1] ) && !array_key_exists( $matches[1], $languages ) ) {
 				$sInfo .= "Error: Unrecognized language code in the path: '$matches[1]'";
 			}
 			else {
