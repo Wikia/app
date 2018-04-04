@@ -133,16 +133,6 @@ class DesignSystemSharedLinksTest extends WikiaBaseTest {
 				'http://fallout.preview.wikia.com/wiki/test'
 			],
 			[
-				WIKIA_ENV_STAGING,
-				'en',
-				[
-					'en' => [
-						'create-new-wiki' => 'http://fallout.wikia.com/wiki/test'
-					]
-				],
-				'http://fallout.wikia-staging.com/wiki/test'
-			],
-			[
 				WIKIA_ENV_DEV,
 				'en',
 				[

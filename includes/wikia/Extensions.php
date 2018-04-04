@@ -1318,10 +1318,6 @@ if ( !empty( $wgEnableVisualEditorExt ) ) {
 			$wgVisualEditorParsoidHTTPProxy = 'http://prod.icache.service.consul:80';
 			$wgVisualEditorParsoidURL = 'http://prod.parsoid-cache';
 			break;
-		case WIKIA_ENV_STAGING:
-			$wgVisualEditorParsoidHTTPProxy = 'http://staging.icache.service.consul:80';
-			$wgVisualEditorParsoidURL = 'http://staging.parsoid-cache';
-			break;
 		case WIKIA_ENV_DEV:
 			// Note: This must NOT end with a slash due to Parsoid bug (wtf?)
 			$wgVisualEditorParsoidURL = "http://dev.$wgWikiaDatacenter-dev.k8s.wikia.net/parsoid";

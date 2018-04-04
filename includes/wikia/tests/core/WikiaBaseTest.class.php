@@ -442,12 +442,6 @@ abstract class WikiaBaseTest extends TestCase {
 		$this->mockGlobalVariable( 'wgWikiaEnvironment', WIKIA_ENV_PREVIEW );
 	}
 
-	protected function mockStagingEnv() {
-		$this->mockGlobalVariable( 'wgDevelEnvironment', false );
-		$this->mockGlobalVariable( 'wgWikiaBaseDomain', 'wikia-staging.com' );
-		$this->mockGlobalVariable( 'wgWikiaEnvironment', WIKIA_ENV_STAGING );
-	}
-
 	protected function mockVerifyEnv() {
 		$this->mockGlobalVariable( 'wgDevelEnvironment', false );
 		$this->mockGlobalVariable( 'wgWikiaEnvironment', WIKIA_ENV_VERIFY );
@@ -489,9 +483,6 @@ abstract class WikiaBaseTest extends TestCase {
 				break;
 			case WIKIA_ENV_PREVIEW:
 				$this->mockPreviewEnv();
-				break;
-			case WIKIA_ENV_STAGING:
-				$this->mockStagingEnv();
 				break;
 			case WIKIA_ENV_VERIFY:
 				$this->mockVerifyEnv();
