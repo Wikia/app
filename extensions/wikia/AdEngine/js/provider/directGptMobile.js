@@ -17,12 +17,12 @@ define('ext.wikia.adEngine.provider.directGptMobile', [
 			MOBILE_TOP_LEADERBOARD:     {size: '300x50,320x50,320x100,320x480,2x2', loc: 'top'},
 			BOTTOM_LEADERBOARD:         {
 				size: '320x50,300x250,300x50,2x2',
-				sizeMap: [
+				sizeMap: adContext.get('opts.additionalBLBSizes') ? [
 					{
 						viewport: [375, 627],
 						sizes: [[2, 2], [300, 50], [320, 50], [300, 250], [300, 600]]
 					}
-				],
+				] : [],
 				loc: 'footer',
 				pos: ['BOTTOM_LEADERBOARD', 'MOBILE_PREFOOTER']
 			},
@@ -31,7 +31,7 @@ define('ext.wikia.adEngine.provider.directGptMobile', [
 		},
 		{
 			getAdUnitBuilder: function () {
-				return adContext.getContext().opts.megaAdUnitBuilderEnabled ? megaAdUnitBuilder : kiloAdUnitBuilder;
+				return adContext.get('opts.megaAdUnitBuilderEnabled') ? megaAdUnitBuilder : kiloAdUnitBuilder;
 			},
 			atfSlots: [
 				'MOBILE_TOP_LEADERBOARD'

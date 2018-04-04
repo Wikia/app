@@ -28,7 +28,7 @@ define('ext.wikia.adEngine.provider.gpt.adElement', [
 			this.sizes = adSizeFilter.filter(slotName, this.sizes);
 			this.node.setAttribute(
 				'data-gpt-slot-sizes',
-				this.sizeMap.isEmpty() ? JSON.stringify(this.sizes) : this.sizeMap.toDataParam()
+				this.sizeMap.isEmpty() ? JSON.stringify(this.sizes) : this.sizeMap
 			);
 
 			delete slotTargeting.size;
@@ -74,7 +74,7 @@ define('ext.wikia.adEngine.provider.gpt.adElement', [
 	};
 
 	AdElement.prototype.getSizeMap = function () {
-		return this.sizeMap ? this.sizeMap.toGptSizeMap() : null;
+		return this.sizeMap.toGptSizeMap();
 	};
 
 	AdElement.prototype.configureSlot = function (slot) {

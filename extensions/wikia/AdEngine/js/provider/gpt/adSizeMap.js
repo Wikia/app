@@ -32,7 +32,7 @@ define('ext.wikia.adEngine.provider.gpt.adSizeMap', [
 		return sizeMapping;
 	};
 
-	SizeMap.prototype.toDataParam = function () {
+	SizeMap.prototype.toString = function () {
 		var param = {};
 
 		this.mapping.forEach(function (viewportMapping) {

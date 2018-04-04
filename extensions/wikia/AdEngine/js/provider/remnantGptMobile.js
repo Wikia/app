@@ -15,12 +15,12 @@ define('ext.wikia.adEngine.provider.remnantGptMobile', [
 			MOBILE_TOP_LEADERBOARD:     {size: '300x50,320x50,320x100,320x480'},
 			BOTTOM_LEADERBOARD:         {
 				size: '320x50,300x250,300x50',
-				sizeMap: [
+				sizeMap: adContext.get('opts.additionalBLBSizes') ? [
 					{
 						viewport: [375, 627],
 						sizes: [[300, 50], [320, 50], [300, 250], [300, 600]]
 					}
-				],
+				] : [],
 				pos: ['BOTTOM_LEADERBOARD', 'MOBILE_PREFOOTER']
 			},
 			MOBILE_IN_CONTENT:          {size: '320x50,300x250,300x50,320x480'},
@@ -28,7 +28,7 @@ define('ext.wikia.adEngine.provider.remnantGptMobile', [
 		},
 		{
 			getAdUnitBuilder: function () {
-				return adContext.getContext().opts.enableRemnantNewAdUnit ? megaAdUnitBuilder : adUnitBuilder;
+				return adContext.get('opts.enableRemnantNewAdUnit') ? megaAdUnitBuilder : adUnitBuilder;
 			},
 			testSrc: 'test-remnant'
 		});
