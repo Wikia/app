@@ -20,7 +20,7 @@ define('ext.wikia.adEngine.provider.directGptMobile', [
 				sizeMap: [
 					{
 						viewport: [375, 627],
-						sizes: [[300, 600]]
+						sizes: [[2, 2], [300, 50], [320, 50], [300, 250], [300, 600]]
 					}
 				],
 				loc: 'footer',

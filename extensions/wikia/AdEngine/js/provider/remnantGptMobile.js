@@ -18,7 +18,7 @@ define('ext.wikia.adEngine.provider.remnantGptMobile', [
 				sizeMap: [
 					{
 						viewport: [375, 627],
-						sizes: [[300, 600]]
+						sizes: [[300, 50], [320, 50], [300, 250], [300, 600]]
 					}
 				],
 				pos: ['BOTTOM_LEADERBOARD', 'MOBILE_PREFOOTER']

@@ -32,10 +32,24 @@ define('ext.wikia.adEngine.provider.gpt.adSizeMap', [
 		return sizeMapping;
 	};
 
+	SizeMap.prototype.toDataParam = function () {
+		var param = {};
+
+		this.mapping.forEach(function (viewportMapping) {
+			param[viewportMapping.viewport.join('x')] = viewportMapping.sizes;
+		});
+
+		return JSON.stringify(param);
+	};
+
+	SizeMap.prototype.isEmpty = function () {
+		return !this.mapping.length;
+	}
+
 	SizeMap.prototype.filterAllSizes = function (filter) {
 		log(['filterAllSizes', this.mapping], 'debug', logGroup);
 		this.mapping.forEach(function (viewportMapping) {
-			viewportMapping.sizes = viewportMapping.sizes.filter(filter);
+			viewportMapping.sizes = filter(viewportMapping.sizes);
 		});
 	};
 

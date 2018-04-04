@@ -16,6 +16,8 @@ define('ext.wikia.adEngine.provider.gpt.adElement', [
 		this.slotPath = slotPath;
 		this.slotName = slotName;
 		this.slotContainerId = this.id;
+		this.sizeMap = new SizeMap(slotTargeting.sizeMap);
+		this.sizeMap.filterAllSizes(adSizeFilter.filter.bind(null, slotName));
 
 		if (!this.node) {
 			this.node = doc.createElement('div');
@@ -24,12 +26,13 @@ define('ext.wikia.adEngine.provider.gpt.adElement', [
 		if (slotTargeting.size) {
 			this.sizes = adSizeConverter.toArray(slotTargeting.size);
 			this.sizes = adSizeFilter.filter(slotName, this.sizes);
-			this.sizeMap = new SizeMap(slotTargeting.sizeMap);
-			this.sizeMap.filterAllSizes(adSizeFilter.filter.bind(null, slotName));
+			this.node.setAttribute(
+				'data-gpt-slot-sizes',
+				this.sizeMap.isEmpty() ? JSON.stringify(this.sizes) : this.sizeMap.toDataParam()
+			);
 
 			delete slotTargeting.size;
 			delete slotTargeting.sizeMap;
-			this.node.setAttribute('data-gpt-slot-sizes', JSON.stringify(this.sizes));
 		} else {
 			this.node.setAttribute('data-gpt-slot-type', 'out-of-page');
 		}
@@ -71,7 +74,7 @@ define('ext.wikia.adEngine.provider.gpt.adElement', [
 	};
 
 	AdElement.prototype.getSizeMap = function () {
-		return this.sizeMap.toGptSizeMap();
+		return this.sizeMap ? this.sizeMap.toGptSizeMap() : null;
 	};
 
 	AdElement.prototype.configureSlot = function (slot) {
