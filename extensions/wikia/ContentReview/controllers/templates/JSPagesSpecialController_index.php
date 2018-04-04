@@ -7,7 +7,7 @@
 		<button class="content-review-module-test-mode-disable secondary">
 			<?= wfMessage( 'content-review-module-test-mode-disable' )->escaped() ?>
 		</button>
-	<?php elseif ( $canAccessTestMode ): ?>
+	<?php else: ?>
 		<button class="content-review-module-test-mode-enable secondary">
 			<?= wfMessage( 'content-review-module-test-mode-enable' )->escaped() ?>
 		</button>
