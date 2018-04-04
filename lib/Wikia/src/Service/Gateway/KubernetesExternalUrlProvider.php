@@ -14,7 +14,9 @@ class KubernetesExternalUrlProvider implements UrlProvider, LoggerAwareInterface
 		global $wgServicesExternalDomain;
 		$url = "${wgServicesExternalDomain}${serviceName}";
 
-		$this->logger->debug( "Url provider", [ 'provider_url' => $url ] );
+		if ( $this->logger ) {
+			$this->logger->debug( "Url provider", ['provider_url' => $url] );
+		}
 
 		return $url;
 	}
