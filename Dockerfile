@@ -65,6 +65,10 @@ RUN docker-php-ext-install \
     mysqli \
     opcache
 
+# dev only: XDebug extension / @see https://pecl.php.net/package/uopz
+RUN pecl install xdebug-2.6.0 \
+    && docker-php-ext-enable xdebug
+
 # expose volumes for app and config repositories clones
 ENV WIKIA_DOCROOT=/usr/wikia/slot1/current/src
 ENV WIKIA_CONFIG_ROOT=/usr/wikia/slot1/current/config
