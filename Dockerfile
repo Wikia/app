@@ -11,10 +11,15 @@ RUN apt-get update && apt-get install -y \
     # needed by wikidiff2
     libthai-dev \
     libtool \
+    locales \
     make \
     wget \
     # needed by sass
     && apt-get -t jessie-backports install -y libsass-dev
+
+# set locale as required by MediaWiki / Perl
+ENV LANG C.UTF-8
+ENV LC_ALL C.UTF-8
 
 
 # sassphp extension / @see https://github.com/absalomedia/sassphp fork
