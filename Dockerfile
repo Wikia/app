@@ -14,11 +14,7 @@ RUN apt-get update && apt-get install -y \
     make \
     wget \
     # needed by sass
-    && apt-get -t jessie-backports install -y libsass-dev \
-    # install PHP extensions required by MediaWiki
-    && docker-php-ext-install \
-    bz2 \
-    mysqli
+    && apt-get -t jessie-backports install -y libsass-dev
 
 
 # sassphp extension / @see https://github.com/absalomedia/sassphp fork
@@ -63,6 +59,11 @@ RUN wget https://releases.wikimedia.org/wikidiff2/wikidiff2-1.4.1.tar.gz -O wiki
     && docker-php-ext-install /tmp/wikidiff2 \
     && rm -r /tmp/wikidiff2
 
+# install PHP extensions required by MediaWiki that are provided by Docker base PHP image helper
+RUN docker-php-ext-install \
+    bz2 \
+    mysqli \
+    opcache
 
 # expose volumes for app and config repositories clones
 ENV WIKIA_DOCROOT=/usr/wikia/slot1/current/src
