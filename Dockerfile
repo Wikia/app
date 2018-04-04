@@ -71,5 +71,6 @@ ENV WIKIA_CONFIG_ROOT=/usr/wikia/slot1/current/config
 
 VOLUME /usr/wikia/slot1/current/src
 VOLUME /usr/wikia/slot1/current/config
+VOLUME /usr/wikia/slot1/current/cache/messages
 
 WORKDIR /usr/wikia/slot1/current/src
