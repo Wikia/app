@@ -22,7 +22,10 @@ class HelperController extends \WikiaController {
 	const FIELD_SUCCESS = 'success';
 	const FIELD_USERNAME = 'username';
 
-	public function init() {
+    /**
+     * @throws \ForbiddenException
+     */
+    public function init() {
 		$this->response->setFormat( 'json' );
 		$this->response->setCacheValidity( \WikiaResponse::CACHE_DISABLED );
 
