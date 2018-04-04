@@ -67,4 +67,5 @@ $wgGroupPermissions['staff']['specialdiscussions'] = true;
 
 $wgHooks['WikiaSkinTopScripts'][] = 'DiscussionsHooksHelper::addDiscussionJsVariable';
 
-$wgDiscussionsApiUrl = $wgServicesExternalDomain . 'discussion';
+$urlProvider = new \Wikia\Service\Gateway\KubernetesExternalUrlProvider();
+$wgDiscussionsApiUrl = $urlProvider->getUrl( 'discussion' );
