@@ -12,6 +12,12 @@ describe('ext.wikia.adEngine.provider.gpt.googleTag', function () {
 			adSlot: {
 				getIframe: noop
 			},
+			bridge: {
+				slotService: {
+					getBySlotName: noop,
+					hasViewportConflict: noop
+				}
+			},
 			element: {
 				getId: noop,
 				getNode: function () {
@@ -24,6 +30,7 @@ describe('ext.wikia.adEngine.provider.gpt.googleTag', function () {
 					return mocks.elementSizes;
 				},
 				getSlotPath: noop,
+				setSlotLevelParams: noop,
 				setPageLevelParams: noop,
 				configureSlot: noop,
 				getSlotName: noop
@@ -95,6 +102,7 @@ describe('ext.wikia.adEngine.provider.gpt.googleTag', function () {
 
 	beforeEach(function () {
 		googleTag = modules['ext.wikia.adEngine.provider.gpt.googleTag'](
+			mocks.bridge,
 			mocks.googleSlots,
 			mocks.adSlot,
 			mocks.slotRegistry,

@@ -1,27 +1,14 @@
 /*global define*/
 define('ext.wikia.adEngine.slot.bottomLeaderboard', [
-	'ext.wikia.adEngine.adContext',
-	'ext.wikia.adEngine.utils.eventDispatcher',
 	'wikia.document',
 	'wikia.domCalculator',
 	'wikia.log',
 	'wikia.throttle',
-	'wikia.viewportObserver',
 	'wikia.window'
-], function (
-	adContext,
-	eventDispatcher,
-	doc,
-	dom,
-	log,
-	throttle,
-	viewportObserver,
-	win
-) {
+], function (doc, dom, log, throttle, win) {
 	'use strict';
 
 	var slotName = 'BOTTOM_LEADERBOARD',
-		breakSlots = ['TOP_RIGHT_BOXAD'],
 		threshold = 100,
 		viewPortHeight = Math.max(doc.documentElement.clientHeight, win.innerHeight || 0),
 		logGroup = 'ext.wikia.adEngine.slot.bottomLeaderboard',
@@ -39,34 +26,10 @@ define('ext.wikia.adEngine.slot.bottomLeaderboard', [
 			if (!pushed && pushPos < scrollPosition) {
 				pushed = true;
 				doc.removeEventListener('scroll', pushSlot);
-
-				if (!collapseOnSameViewport()) {
-					win.adslots2.push(slotName);
-					log(['pushSlot', 'Pushed ' + slotName], 'debug', logGroup);
-				}
+				win.adslots2.push(slotName);
+				log(['pushSlot', 'Pushed ' + slotName], 'debug', logGroup);
 			}
 		});
-
-	function collapseOnSameViewport() {
-		if (adContext.get('opts.isBLBViewportEnabled') && isUap() && viewportObserver.sameViewport(slotName, breakSlots)) {
-			eventDispatcher.dispatch('adengine.slot.status', {
-				slot: {
-					name: slotName
-				},
-				status: 'viewport',
-				adInfo: {}
-			});
-			log(['pushSlot', 'Same viewport ' + slotName], 'debug', logGroup);
-
-			return true;
-		}
-
-		return false;
-	}
-
-	function isUap() {
-		return doc.getElementsByTagName('body')[0].className.indexOf('uap-skin') === -1;
-	}
 
 	function init() {
 		if (!doc.getElementById(slotName)) {

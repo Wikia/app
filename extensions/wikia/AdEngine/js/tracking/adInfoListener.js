@@ -51,7 +51,7 @@ define('ext.wikia.adEngine.tracking.adInfoListener',  [
 	}
 
 	function trackSlot(slot, status, adInfo) {
-		var slotFirstChildData = slot.container ? slot.container.firstChild.dataset : {},
+		var slotFirstChildData = slot.container.firstChild.dataset,
 			pageParams = JSON.parse(slotFirstChildData.gptPageParams || '{}'),
 			slotParams = JSON.parse(slotFirstChildData.gptSlotParams || '{}'),
 			slotPricesIgnoringTimeout = lookupServices.getCurrentSlotPrices(slot.name),
@@ -105,11 +105,13 @@ define('ext.wikia.adEngine.tracking.adInfoListener',  [
 			});
 	}
 
-	function shouldHandleSlot(slot, status) {
+	function shouldHandleSlot(slot) {
 		var dataGptDiv = slot.container && slot.container.firstChild;
 
-		return (
-			enabledSlots[slot.name] && (status === 'viewport' || (dataGptDiv && dataGptDiv.dataset.gptPageParams))
+		return !!(
+			enabledSlots[slot.name] &&
+			dataGptDiv &&
+			dataGptDiv.dataset.gptPageParams
 		);
 	}
 
@@ -121,9 +123,18 @@ define('ext.wikia.adEngine.tracking.adInfoListener',  [
 				var adInfo = event.detail.adInfo || {},
 					adType = adInfo && adInfo.adType,
 					slot = event.detail.slot,
-					status = adType === 'blocked' ? 'blocked' : event.detail.status;
+					status;
 
-				if (shouldHandleSlot(slot, status)) {
+				switch (adType) {
+					case 'blocked':
+					case 'viewport-conflict':
+						status = adType;
+						break;
+					default:
+						status = event.detail.status;
+				}
+
+				if (shouldHandleSlot(slot)) {
 					log(['adengine.slot.status', event], log.levels.debug, logGroup);
 					trackSlot(slot, status, adInfo);
 				}
