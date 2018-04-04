@@ -3,10 +3,6 @@
 #  Overwrite some variables, load extensions, etc. Former CustomSettings.php  #
 ###############################################################################
 
-# please use "date +%Y%m%d%H%M%S" as a proper value
-# don't update it unless you really need to
-$wgCacheEpoch = max( $wgCacheEpoch, '20080205154442' );
-
 ###############################################################################
 # DC specific settings                                                        #
 ###############################################################################
@@ -16,11 +12,6 @@ switch ($wgWikiaDatacenter) {
 		$wgTaskBroker = false;
 		break;
 }
-
-/**
- * define extension directory based on IP variable
- */
-$wgExtensionsDirectory = $IP . "/extensions";
 
 
 /**
@@ -180,7 +171,6 @@ if (empty($wgHelpWikiId)) {
 }
 
 $wgLocalMessageCache = '/tmp/messagecache';
-$wgLocalMessageCacheSerialized = true;
 
 /**
  * @name $wgAppleTouchIcon
@@ -654,9 +644,8 @@ if (!empty($wgEnableSearchNearMatchExt)) {
 
 if (!empty($wgEnableAnswers)) {
 	$wgArticleRobotPolicies['Special:WhatLinksHere'] = 'index,follow';
-
 	// To get this, check out from https://svn.wikia-inc.com/svn/answers
-	include("$answersIP/Answers.php");
+	include("$IP/extensions/wikia/Answers/Answers.php");
 
 	# disable AutoPageCreate extension (RT #48292)
 	$wgWikiaEnableAutoPageCreateExt = false;
@@ -1037,7 +1026,7 @@ if( file_exists("$IP/extensions/wikia/SpecialEmailTest/SpecialEmailTest.php") ) 
 	include( "$IP/extensions/wikia/SpecialEmailTest/SpecialEmailTest.php" );
 }
 
-if ( !empty( $wgEnablePerSkinParserCacheExt ) && file_exists( "$IP/extensions/wikia/PerSkinParserCache/PerSkinParserCache.php" ) ) {
+if ( !empty( $wgEnablePerSkinParserCacheExt ) ) {
 	include( "$IP/extensions/wikia/PerSkinParserCache/PerSkinParserCache.php" );
 }
 
@@ -1273,10 +1262,6 @@ if ( !empty( $wgEnableArticlesAsResourcesExt )  ) {
 	include( "$IP/extensions/wikia/ArticlesAsResources/ArticlesAsResources.setup.php" );
 }
 
-if ($wgEnableGameProAds === null && in_array( $wgLanguageCode, $wgAvailableGameProAdsLang )) {
-	$wgEnableGameProAds = true;
-}
-
 /**
  * Our own extension which template is being shared among two [three] other extensions (Article Comments [Blog], Wall)
  * It has one method which is a hook fired in ChangesList.php and it fires our own hook via which we can change
@@ -1479,20 +1464,6 @@ if( !empty( $wgEnableEditorSyntaxHighlighting ) ) {
 
 if ( !empty( $wgEnableCloseMyAccountExt ) ) {
 	include "$IP/extensions/wikia/CloseMyAccount/CloseMyAccount.setup.php";
-}
-
-/**
- * Add a rate limit on IPs on Russian wikias
- *
- * Throttle edits at 6 per minute per IP address.
- *
- * Needs to go in here so that the language
- * of the wikia is available.
- *
- * @see CE-601
- */
-if ( $wgLanguageCode === 'ru' ) {
-	$wgRateLimits['edit']['ip'] = [ 6, 60 ];
 }
 
 if ( $wgWikiaEnvironment !== WIKIA_ENV_PROD && $wgWikiaEnvironment !== WIKIA_ENV_DEV ) {
@@ -1770,7 +1741,7 @@ if ( !empty( $wgEnableGoogleAmp ) ) {
 }
 
 if ( !empty( $wgEnableOpenXSPC ) ) {
-	include "$IP/extensions/wikia/Spotlights/Spotlights.setup.php";
+    include "$IP/extensions/wikia/Spotlights/Spotlights.setup.php";
 }
 
 include "$IP/extensions/wikia/JWPlayerTag/JWPlayerTag.setup.php";

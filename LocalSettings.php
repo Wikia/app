@@ -34,14 +34,18 @@ $wgWikiaEnvironment = getenv( 'WIKIA_ENVIRONMENT' );
 
 // CONFIG_REVISION: remove $wgWikiaDatacenter and $wgWikiaEnvironment from the global scope and only use it to load configuration
 
+require_once( "$IP/includes/DefaultSettings.php" );
+require "$IP/../config/base.php";
+require_once( "$IP/includes/wikia/DefaultSettings.php" );
+
 // the rest of the old contents
 require "$IP/../config/LocalSettings.php";
 require_once "$IP/includes/wikia/Extensions.php";
 
 // SUS-3851 - if the wiki has a language code path component, recalculate wgScript and wgArticlePath with its value
 if ( !empty( $wgScriptPath ) ) {
-	$wgScript = $wgScriptPath . $wgScript;
-	$wgArticlePath = $wgScriptPath . $wgArticlePath;
+       $wgScript = $wgScriptPath . $wgScript;
+       $wgArticlePath = $wgScriptPath . $wgArticlePath;
 }
 
 /* @var $wgDBcluster string */

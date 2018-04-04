@@ -422,18 +422,6 @@ $wgHooks['AfterHttpRequest'][] = 'Wikia\\Tracer\\WikiaTracer::onAfterHttpRequest
 $wgAutoloadClasses['Wikia\\Memcached\\MemcachedStats'] = "$IP/includes/wikia/memcached/MemcachedStats.class.php";
 $wgHooks['RestInPeace'][] = 'Wikia\\Memcached\\MemcachedStats::onRestInPeace';
 
-# list of groups for wfDebugLog calls that will be logged using WikiaLogger
-# @see PLATFORM-424
-$wgDebugLogGroups = [
-	'ExternalStorage' => true,
-	'ExternalStoreDB' => true,
-	'MessageCache' => true,
-	'poolcounter' => true,  // errors from PoolCounterWork
-	'replication' => true,  // replication errros / excessive lags
-	'squid' => true,        // timeouts and errors from SquidPurgeClient
-	'createwiki' => true,   // CreateWiki process
-];
-
 // Register \Wikia\Sass namespace
 spl_autoload_register( function( $class ) {
 	if ( strpos( $class, 'Wikia\\Sass\\' ) !== false ) {
@@ -544,7 +532,6 @@ $wgAPIModules[ "awcreminder"       ] = "WikiaApiCreatorReminderEmail";
 $wgAPIModules[ "fetchblob"         ] = "ApiFetchBlob";
 $wgAPIModules[ "licenses"          ] = "ApiLicenses";
 
-$wgUseAjax                = true;
 $wgValidateUserName       = true;
 $wgAjaxAutoCompleteSearch = true;
 
@@ -590,65 +577,12 @@ include_once( "$IP/extensions/wikia/TOC/TOC.setup.php" );
 include_once( "$IP/extensions/wikia/SEOTweaks/SEOTweaks.setup.php" );
 include_once( "$IP/extensions/wikia/StaticUserPages/StaticUserPages.setup.php" );
 
-/**
- * @name $wgSkipSkins
- *
- * NOTE: a few wikis may have local override for this var,
- * you need to modify those by hand.
- * A SELECT on city_variables will get you a list.
- */
-$wgSkipSkins = array(
-		'armchairgm',
-		'cars',
-		'corporate',
-		'corporatebase',
-		'corporatehome',
-		'curse',
-		'entertainment',
-		'food',
-		'games',
-		'gwmonobook',
-		'halo',
-		'halogamespot',
-		'health',
-		'home',
-		'law',
-		'local',
-		'memalpha',
-		'music',
-		'politics',
-		'psn',
-		'restaurants',
-		'searchwikia',
-		'search',
-		'test',
-		'uncyclopedia',
-		'lostbook',
-		'quartz',
-		'monaco_old',
-		'smartphone',
-		'efmonaco',
-		'answers',
-		'campfire',
-		'wikiamobile',
-);
-
-/**
- * @name $wgBiggestCategoriesBlacklist
- * Lists phrases that disqualify a category from appearing in
- * the biggest category list (Monaco sidebar)
- */
-$wgBiggestCategoriesBlacklist = array();
 
 /**
  * extensions path as seen by users
  */
 $wgExtensionsPath = false; /// defaults to "{$wgScriptPath}/extensions"
 
-/**
- * Auxiliary variables for CreateWikiTask
- */
-$wgLangCreationVariables = array();
 
 /**
  * Define Video namespace (used by WikiaVideo extensions)
@@ -668,11 +602,6 @@ require_once( "{$IP}/extensions/wikia/Tasks/Tasks.setup.php");
  */
 $wgDBAvgStatusPoll = 30000;
 
-/**
- * @name wgExternalSharedDB
- * All wikis use shared database to fetch user data
- */
-$wgExternalSharedDB = 'wikicities';
 
 /**
  * @name wgDumpsDisabledWikis
@@ -739,15 +668,6 @@ $wgUseWikiaSearchUI = false;
 $wgSpecialPagesRequiredLogin = array('Resetpass', 'MyHome', 'Preferences', 'Watchlist', 'Upload', 'CreateBlogPage', 'CreateBlogListingPage', 'MultipleUpload');
 
 /**
- * @name: $wgArticleCommentsMaxPerPage
- * max comments per page under article
- * @see Article comments
- */
-$wgArticleCommentsMaxPerPage = 5;
-
-$wgMaxThumbnailArea = 0.9e7;
-
-/**
  * @name $wgWikiaMaxNameChars
  * soft enforced limit of length for new username
  * @see rt#39263
@@ -793,11 +713,6 @@ $wgUseJQueryFromCDN = true;
  * NOTE: Keep this in sync with the value in /wikia-ops/config/varnish/wikia.vcl
  */
 $wgWikiaCombinedPrefix = "index.php?action=ajax&rs=WikiaAssets::combined&";
-
-/**
- * Override MW default enable of EE
- */
-$wgUseExternalEditor = false;
 
 
 /**
@@ -907,7 +822,6 @@ $wgABTests = array();
 /**
  * Memcached client timeouts
  */
-$wgMemCachedTimeout = 500000; // stream timeout in microseconds
 $wgMemCachedConnectionTimeout = 0.5; // connection timeout in seconds
 
 
@@ -918,22 +832,6 @@ $wgAssetsManagerQuery = '/__am/%4$d/%1$s/%3$s/%2$s';
  * debug level for memcached
  */
 $wgMemCachedDebugLevel = 1;
-
-
-/**
- * We keep this enabled to support monobook
- **/
-$wgEnableMWSuggest = true;
-
-/**
- * enable extension to output OpenGraph meta tags so that facebook sharing
- * and liking works well
- *
- * @name wgEnableOpenGraphMetaExt
- * @see /extensions/OpenGraphMeta
- * @see /extensions/wikia/OpenGraphMetaCustomizations
- */
-$wgEnableOpenGraphMetaExt = true;
 
 /**
  * List of internal usernames that shouldn't be allowed in Special:EditCount, e.g. "Default", bots
@@ -961,11 +859,6 @@ $wgEnableNirvanaAPI = true;
  * Array of disabled article actions which will fallback to "view" action (BugId:9964)
  */
 $wgDisabledActionsWithViewFallback = array();
-
-/**
- * Disable the slow updating of MySQL search index. We use Lucene/Solr.
- */
-$wgDisableSearchUpdate = true;
 
 /**
  * New search code needs a default type to avoid falling back to SearchMySQL.
@@ -1012,12 +905,6 @@ $wgPasswordSenderName = Wikia::USER;
 $wgResourceLoaderAssetsSkinMapping = [
 	'oasis' => 'wikia', // in Oasis we use Wikia.js (and Wikia.css) instead of Oasis.js (Oasis.css)
 ];
-
-/**
- * @see https://wikia.fogbugz.com/default.asp?36946
- * core mediawiki feature variable
- */
-$wgArticleCountMethod = "any";
 
 /**
  * Javascript minifier used by ResourceLoader
@@ -1325,13 +1212,6 @@ $wgSitewideDisableAdsOnMercury = false;
 $wgSitewideDisableGpt = false;
 
 /**
- * @name $wgEnableKruxTargeting
- *
- * Enables Krux Targeting
- */
-$wgEnableKruxTargeting = true;
-
-/**
  * @name $wgSitewideDisableKrux
  * @link https://wikia-inc.atlassian.net/wiki/display/ADEN/Disaster+Recovery
  * @link http://community.wikia.com/wiki/Special:WikiFactory/community/variables/wgSitewideDisableKrux
@@ -1557,26 +1437,6 @@ $wgOasisResponsive = true;
  */
 $wgDisableReportTime = true;
 
-/**
- * @name $wgInvalidateCacheOnLocalSettingsChange
- * Setting this to true will invalidate all cached pages whenever LocalSettings.php is changed.
- */
-$wgInvalidateCacheOnLocalSettingsChange = false;
-
-/**
- * Set to true to enable user-to-user e-mail.
- * This can potentially be abused, as it's hard to track.
- */
-$wgEnableUserEmail = false;
-
-/**
- * Enables ETag globally
- *
- * @see http://www.mediawiki.org/wiki/Manual:$wgUseETag
- *
- * $wgUseETag is a core MW variable initialized in includes/DefaultSettings.php
- */
-$wgUseETag = true;
 
 /**
  * Restrictions for some api methods
@@ -1670,17 +1530,6 @@ $wgBuckyEnabledSkins = [
  */
 $wgMemcacheStatsSampling = 1;
 
-/**
- * @name wgXhprofUDPHost
- * Host that xhprof data should be reported to (if set to null will use $wgUDPProfilerHost)
- */
-$wgXhprofUDPHost = null;
-
-/**
- * @name wgXhprofUDPPort
- * Port that xhprof data should be reported to
- */
-$wgXhprofUDPPort = '3911';
 
 /**
  * @name wgXhprofMinimumTime
@@ -1842,7 +1691,6 @@ $wgAutoapproveJS = false;
  * update/add/change domains in the future
  */
 $wgWikiaBaseDomainRegex = '(wikia\\.com|wikia-staging\\.com|wikia-dev\\.(com|us|pl))';
-
 
 $wgEnableOpenXSPC = true;
 
