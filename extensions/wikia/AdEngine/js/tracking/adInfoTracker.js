@@ -83,7 +83,7 @@ define('ext.wikia.adEngine.tracking.adInfoTracker',  [
 			'rabbit': (rabbit && rabbit.getAllSerializedResults()) || '',
 			'page_width': win.document.body.scrollWidth || '',
 			'page_layout': pageLayout.getSerializedData(slotName) || '',
-			'labrador': adEngineBridge.getTrackingValues().join(',')
+			'labrador': adEngineBridge.getTrackingValues().join(';')
 		};
 
 		log(['prepareData', slotName, data], log.levels.debug, logGroup);
