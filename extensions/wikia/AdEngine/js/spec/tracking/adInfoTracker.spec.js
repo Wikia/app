@@ -4,6 +4,11 @@ describe('ext.wikia.adEngine.tracking.adInfoTracker', function () {
 	function noop() {}
 
 	var mocks = {
+		adEngineBridge: {
+			getTrackingValues: function () {
+				return [];
+			}
+		},
 		adTracker: {
 			trackDW: function () {
 				return {};
@@ -44,6 +49,7 @@ describe('ext.wikia.adEngine.tracking.adInfoTracker', function () {
 	function getModule() {
 		return modules['ext.wikia.adEngine.tracking.adInfoTracker'](
 			mocks.adTracker,
+			mocks.adEngineBridge,
 			mocks.slotRegistry,
 			mocks.pageLayout,
 			mocks.browserDetect,
