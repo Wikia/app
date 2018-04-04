@@ -1,6 +1,7 @@
 /*global define, require*/
 /*jshint maxlen:125, camelcase:false, maxdepth:7*/
 define('ext.wikia.adEngine.provider.gpt.googleTag', [
+	'ext.wikia.adEngine.provider.gpt.adSizeConverter',
 	'ext.wikia.adEngine.provider.gpt.googleSlots',
 	'ext.wikia.adEngine.slot.adSlot',
 	'ext.wikia.adEngine.slot.service.slotRegistry',
@@ -8,7 +9,7 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 	'wikia.document',
 	'wikia.log',
 	'wikia.window'
-], function (googleSlots, adSlot, slotRegistry, srcProvider, doc, log, win) {
+], function (SizeMap, googleSlots, adSlot, slotRegistry, srcProvider, doc, log, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.gpt.googleTag',
@@ -138,6 +139,7 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 
 	function addSlot(adElement) {
 		var sizes = adElement.getSizes(),
+			sizeMap = adElement.getSizeMap(),
 			slotId = adElement.getId(),
 			slot = googleSlots.getSlot(slotId);
 
@@ -149,6 +151,7 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 				win.googletag.defineSlot(adElement.getSlotPath(), sizes, slotId) :
 				win.googletag.defineOutOfPageSlot(adElement.getSlotPath(), slotId);
 
+			slot.defineSizeMapping(sizeMap.build());
 			slot.addService(win.googletag.pubads());
 			win.googletag.display(slotId);
 			googleSlots.addSlot(slot);
@@ -170,7 +173,7 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 
 		onAdLoadCallback(element.getId(), gptEvent, iframe);
 	}
-	
+
 	function isGoogleTagLoaded() {
 		return typeof win.googletag.pubads === 'function';
 	}
@@ -183,7 +186,7 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 		if (!isInitialized()) {
 			return;
 		}
-		
+
 		if (!isGoogleTagLoaded()) {
 			log(['destroySlots', 'pubads not yet available', 'resetting cmd'], log.levels.info, logGroup);
 			win.googletag.cmd = [];
