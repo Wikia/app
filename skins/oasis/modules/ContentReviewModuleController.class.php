@@ -19,13 +19,7 @@ class ContentReviewModuleController extends WikiaController {
 
 		$helper = new Helper();
 
-		$isContentReviewTestModeEnabled = $helper->isContentReviewTestModeEnabled();
-
-		$this->setVal( 'isTestModeEnabled', $isContentReviewTestModeEnabled );
-		$this->setVal(
-			'displayEnterTestModeButton',
-			!$isContentReviewTestModeEnabled && $this->wg->User->isAllowed( 'content-review-test-mode' )
-		);
+		$this->setVal( 'isTestModeEnabled', $helper->isContentReviewTestModeEnabled() );
 
 		$contentReviewStatusesService = new ContentReviewStatusesService();
 		$pageStatus = $contentReviewStatusesService->getJsPageStatus( $params['wikiId'], $params['pageId'] );
