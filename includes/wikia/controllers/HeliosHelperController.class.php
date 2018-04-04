@@ -92,7 +92,7 @@ class HelperController extends \WikiaController {
 			return;
 		}
 
-		$resp = $this->app->sendRequest( $this->emailControllerForTokenContext($tokenContext), 'handle', [
+		$resp = $this->app->sendRequest( $this->emailControllerForTokenContext( $tokenContext ), 'handle', [
 			'targetUserId'          => $userId,
 			self::FIELD_RESET_TOKEN => $token,
 			self::FIELD_RETURN_URL  => $returnUrl,
@@ -108,11 +108,11 @@ class HelperController extends \WikiaController {
 		}
 	}
 
-	private function emailControllerForTokenContext(string $tokenContext = null): string {
-	    if ($tokenContext === 'facebook') {
+	private function emailControllerForTokenContext( string $tokenContext = null ): string {
+	    if ( $tokenContext === 'facebook' ) {
 	        return 'Email\Controller\FacebookDisconnect';
         }
-        if ($tokenContext === 'google') {
+        if ( $tokenContext === 'google' ) {
 	        return 'Email\Controller\GoogleDisconnect';
         }
         return 'Email\Controller\PasswordResetLink';
