@@ -426,12 +426,12 @@ class WikiFactoryLoader {
 			}
 
 			header( "X-Redirected-By-WF: NotPrimary" );
-			header( "Vary: Cookie,Accept-Encoding");
+			header( 'Vary: Cookie,Accept-Encoding' );
 
 			if ( $hasAuthCookie ) {
-				header( "Cache-Control: private, must-revalidate, max-age=0" );
+				header( 'Cache-Control: private, must-revalidate, max-age=0' );
 			} else {
-				header( "Cache-Control: s-maxage=86400, must-revalidate, max-age=0" );
+				header( 'Cache-Control: s-maxage=86400, must-revalidate, max-age=0' );
 			}
 
 			header( "Location: {$target}", true, 301 );
