@@ -5,6 +5,11 @@
  * Works as interface, logic should go to WikiaLocalFileShared
  */
 
+/**
+ * @method string getProviderName
+ * @method string getProviderHomeUrl
+ * @method string getProviderDetailUrl
+ */
 class WikiaLocalFile extends LocalFile {
 
 	protected $oLocalFileLogic = null; // Leaf object
