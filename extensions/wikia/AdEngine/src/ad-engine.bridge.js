@@ -11,7 +11,9 @@ import {
 import {
 	BigFancyAdAbove,
 	BigFancyAdBelow,
-	universalAdPackage
+	universalAdPackage,
+	isProperGeo,
+	getTrackingValues
 } from '@wikia/ad-products';
 
 import { createTracker } from './tracking/porvata-tracker-factory';
@@ -147,5 +149,7 @@ export {
 	checkAdBlocking,
 	passSlotEvent,
 	context,
-	universalAdPackage
+	universalAdPackage,
+	isProperGeo,
+	getTrackingValues
 };
