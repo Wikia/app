@@ -261,10 +261,7 @@ $wgGroupPermissions['staff']['commentcsv'] = true;
 $wgGroupPermissions['*']['content-review'] = false;
 $wgGroupPermissions['content-reviewer']['content-review'] = true;
 
-$wgGroupPermissions['*']['content-review-test-mode'] = false;
-$wgGroupPermissions['sysop']['content-review-test-mode'] = true;
-$wgGroupPermissions['helper']['content-review-test-mode'] = true;
-$wgGroupPermissions['staff']['content-review-test-mode'] = true;
+$wgGroupPermissions['user']['content-review-test-mode'] = true;
 
 $wgGroupPermissions['util']['coppatool'] = true;
 
