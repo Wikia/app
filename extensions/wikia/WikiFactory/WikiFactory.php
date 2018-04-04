@@ -3425,10 +3425,14 @@ class WikiFactory {
          */
         static public function unserializeHandler( $errno, $errstr ) {
                 global $_variable_key, $_variable_value;
-                Wikia::log(
-                    __FUNCTION__,
-                    $_SERVER['SERVER_NAME'] ?? '',
-                    "($_variable_key=$_variable_value): $errno, $errstr"
+                WikiaLogger::instance()->error(
+                        'WikiFactory unserialize error',
+                        [
+                            'variable_key' => $_variable_key,
+                            'variable_value' => $_variable_value,
+                            'errno' => $errno,
+                            'errstr' => $errstr
+                        ]
                 );
         }
 };
