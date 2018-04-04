@@ -2,8 +2,6 @@
 
 namespace Wikia\Helios;
 
-use Email\Controller\EmailConfirmationController;
-
 /**
  * A helper controller to provide end points exposing MediaWiki functionality to Helios.
  */
@@ -23,7 +21,6 @@ class HelperController extends \WikiaController {
 	const FIELD_RETURN_URL = 'return_url';
 	const FIELD_SUCCESS = 'success';
 	const FIELD_USERNAME = 'username';
-	const FACEBOOK_DISCONNECT_TOKEN_CONTEXT = 'facebook';
 
 	public function init() {
 		$this->response->setFormat( 'json' );
@@ -92,10 +89,7 @@ class HelperController extends \WikiaController {
 			return;
 		}
 
-		$emailController = ( $tokenContext === self::FACEBOOK_DISCONNECT_TOKEN_CONTEXT ) ?
-			'Email\Controller\FacebookDisconnect' :
-			'Email\Controller\PasswordResetLink';
-		$resp = $this->app->sendRequest( $emailController, 'handle', [
+		$resp = $this->app->sendRequest( $this->emailControllerForTokenContext($tokenContext), 'handle', [
 			'targetUserId'          => $userId,
 			self::FIELD_RESET_TOKEN => $token,
 			self::FIELD_RETURN_URL  => $returnUrl,
@@ -110,6 +104,16 @@ class HelperController extends \WikiaController {
 			$this->response->setCode( \WikiaResponse::RESPONSE_CODE_NOT_FOUND );
 		}
 	}
+
+	private function emailControllerForTokenContext(string $tokenContext): string {
+	    if ($tokenContext === 'facebook') {
+	        return 'Email\Controller\FacebookDisconnect';
+        }
+        if ($tokenContext === 'google') {
+	        return 'Email\Controller\GoogleDisconnect';
+        }
+        return 'Email\Controller\PasswordResetLink';
+    }
 
 	public function isBlocked() {
 		$username = $this->getFieldFromRequest( self::FIELD_USERNAME, 'invalid username' );
