@@ -1,11 +1,11 @@
 /*global define*/
 define('ext.wikia.adEngine.provider.gpt.adElement', [
+	'ext.wikia.adEngine.bridge',
 	'ext.wikia.adEngine.provider.gpt.adSizeConverter',
 	'ext.wikia.adEngine.provider.gpt.adSizeFilter',
-	'ext.wikia.adEngine.provider.gpt.adSizeMap',
 	'wikia.document',
 	'wikia.log'
-], function (adSizeConverter, adSizeFilter, SizeMap, doc, log) {
+], function (adEngineBridge, adSizeConverter, adSizeFilter, doc, log) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.gpt.adElement';
@@ -16,8 +16,8 @@ define('ext.wikia.adEngine.provider.gpt.adElement', [
 		this.slotPath = slotPath;
 		this.slotName = slotName;
 		this.slotContainerId = this.id;
-		this.sizeMap = new SizeMap(slotTargeting.sizeMap);
-		this.sizeMap.filterAllSizes(adSizeFilter.filter.bind(null, slotName));
+		this.sizeMap = new adEngineBridge.GptSizeMap(slotTargeting.sizeMap)
+			.mapAllSizes(adSizeFilter.filter.bind(null, slotName));
 
 		if (!this.node) {
 			this.node = doc.createElement('div');
@@ -28,7 +28,7 @@ define('ext.wikia.adEngine.provider.gpt.adElement', [
 			this.sizes = adSizeFilter.filter(slotName, this.sizes);
 			this.node.setAttribute(
 				'data-gpt-slot-sizes',
-				this.sizeMap.isEmpty() ? JSON.stringify(this.sizes) : this.sizeMap
+				this.sizeMap.isEmpty() ? JSON.stringify(this.sizes) : this.sizeMap.toString()
 			);
 
 			delete slotTargeting.size;
@@ -69,12 +69,12 @@ define('ext.wikia.adEngine.provider.gpt.adElement', [
 		return this.slotPath;
 	};
 
-	AdElement.prototype.getSizes = function () {
+	AdElement.prototype.getDefaultSizes = function () {
 		return this.sizes;
 	};
 
-	AdElement.prototype.getSizeMap = function () {
-		return this.sizeMap.toGptSizeMap();
+	AdElement.prototype.getSizes = function () {
+		return this.sizeMap;
 	};
 
 	AdElement.prototype.configureSlot = function (slot) {

@@ -1,7 +1,6 @@
 /*global define, require*/
 /*jshint maxlen:125, camelcase:false, maxdepth:7*/
 define('ext.wikia.adEngine.provider.gpt.googleTag', [
-	'ext.wikia.adEngine.provider.gpt.adSizeConverter',
 	'ext.wikia.adEngine.provider.gpt.googleSlots',
 	'ext.wikia.adEngine.slot.adSlot',
 	'ext.wikia.adEngine.slot.service.slotRegistry',
@@ -9,7 +8,7 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 	'wikia.document',
 	'wikia.log',
 	'wikia.window'
-], function (SizeMap, googleSlots, adSlot, slotRegistry, srcProvider, doc, log, win) {
+], function (googleSlots, adSlot, slotRegistry, srcProvider, doc, log, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.gpt.googleTag',
@@ -138,8 +137,8 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 	}
 
 	function addSlot(adElement) {
-		var sizes = adElement.getSizes(),
-			sizeMap = adElement.getSizeMap(),
+		var defaultSizes = adElement.getDefaultSizes(),
+			sizeMap = adElement.getSizes(),
 			slotId = adElement.getId(),
 			slot = googleSlots.getSlot(slotId);
 
@@ -147,8 +146,8 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 
 		adElement.setPageLevelParams(pageLevelParams);
 		if (!slot) {
-			slot = sizes ?
-				win.googletag.defineSlot(adElement.getSlotPath(), sizes, slotId) :
+			slot = (defaultSizes || !sizeMap.isEmpty()) ?
+				win.googletag.defineSlot(adElement.getSlotPath(), defaultSizes, slotId) :
 				win.googletag.defineOutOfPageSlot(adElement.getSlotPath(), slotId);
 
 			slot.defineSizeMapping(sizeMap.build());

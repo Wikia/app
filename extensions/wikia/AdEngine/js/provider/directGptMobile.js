@@ -19,7 +19,7 @@ define('ext.wikia.adEngine.provider.directGptMobile', [
 				size: '320x50,300x250,300x50,2x2',
 				sizeMap: adContext.get('opts.additionalBLBSizes') ? [
 					{
-						viewport: [375, 627],
+						viewportSize: [375, 627],
 						sizes: [[2, 2], [300, 50], [320, 50], [300, 250], [300, 600]]
 					}
 				] : [],
