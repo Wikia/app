@@ -21,7 +21,7 @@ If you need help getting started, check out our [[Help:Getting Started|help page
 
 Please [[$2|leave me a message]] if I can help with anything. Enjoy your time at {{SITENAME}}!
 
-$2",
+$3",
 	'welcome-message-anon' => "==Welcome==
 
 Hi, I'm an admin for the {{SITENAME}} community. Welcome and thank you for your edit to [[:$1]]!
@@ -31,7 +31,7 @@ If you need help getting started, check outour [[Help:Getting Started|help pages
 
 Please [[$2|leave me a message]] if I can help with anything. Enjoy your time at {{SITENAME}}!
 
-$2",
+$3",
 	'welcome-message-log' => 'Welcome to {{SITENAME}}!',
 	'welcome-message-user-staff' => "==Welcome==
 
@@ -45,7 +45,7 @@ Please [[$2|leave me a message]] if I can help with anything.
 
 Enjoy your time at {{SITENAME}}!
 
-$2",
+$3",
 	'welcome-message-anon-staff' => "==Welcome==
 
 Hi, welcome to {{SITENAME}}! I'm a member of FANDOM's Community Support team. Thank you for your edit to [[:$1]]!
@@ -60,7 +60,7 @@ Please [[$2|leave me a message]] if I can help with anything.
 
 Enjoy your time at {{SITENAME}}!
 
-$2",
+$3",
 	'staffsig-text' => '$1 <staff /> <small>([[w:forums|help forum]] | [[w:sblog|blog]])</small>',
 	'hawelcomeedit' => 'HAWelcomeEdit',
 	'welcome-message-wall-user' => "Hi, I'm an admin for the {{SITENAME}} community. Welcome and thank you for your edit to [[:$1]]!
@@ -327,7 +327,7 @@ Wenn du Hilfe brauchst, um loszulegen, sieh dir am besten erst einmal unsere [[H
 
  [[$2|Hinterlasse mir bitte eine Nachricht]], wenn ich dir bei irgendeinem Problem behilflich sein kann. Viel Spaß bei {{SITENAME}}! 
 
-$2',
+$3',
 	'welcome-message-anon' => "==Herzlich Willkommen==
 
 Hallo, ich bin einer der Admins der {{SITENAME}} Community. Herzlich willkommen und vielen Dank, dass du [[:$1]] bearbeitet hast!
@@ -337,7 +337,7 @@ Wenn du Hilfe brauchst, um loszulegen, sieh dir am besten erst einmal unsere [[H
 
 [[$2|Hinterlasse mir bitte eine Nachricht]], wenn ich dir bei irgendeinem Problem behilflich sein kann. Viel Spaß bei {{SITENAME}}!
 
-$2",
+$3",
 	'welcome-message-log' => 'Begrüßung eines neuen Autors',
 	'welcome-message-user-staff' => '==Herzlich WIllkommen== 
 
@@ -351,7 +351,7 @@ Du kannst außerdem dem [[w:c:de.community:Blog:Fandom_Deutschland_News|FANDOM-B
 
 Viel Spaß bei {{SITENAME}}!
 
-$2',
+$3',
 	'welcome-message-anon-staff' => "==Herzlich Willkommen==
 
 Hallo und willkommen bei {{SITENAME}}! Ich bin ein Mitglied des Community Support-Teams bei FANDOM. Vielen Dank, dass du [[:$1]] bearbeitet hast!
@@ -366,7 +366,7 @@ Du kannst außerdem dem [[w:c:de.community:Blog:Fandom_Deutschland_News|FANDOM-B
 
 Viel Spaß bei {{SITENAME}}!
 
-$2",
+$3",
 	'staffsig-text' => '$1<staff /> <small>([[w:c:de.c:Special:Forum|Hilfe]] | [[w:c:de.c:Blog:Wikia Deutschland News|Blog]])</small>',
 	'hawelcomeedit' => 'HAWelcomeEdit',
 	'welcome-message-wall-user' => 'Hallo, ich bin einer der Admins der {{SITENAME}} Community. Herzlich willkommen und vielen Dank, dass du [[:$1]] bearbeitet hast!
@@ -471,7 +471,7 @@ Hola, soy un administrador de la comunidad {{SITENAME}}. ¡Bienvenido y muchas g
 
 ¡Diviértete dentro de {{SITENAME}}!
 
-$2',
+$3',
 	'welcome-message-anon' => "==Bienvenido==
 
 Hola, soy un administrador de la comunidad {{SITENAME}}. ¡Bienvenido y muchas gracias por tu edición en [[:$1]]! Si deseas puedes '''[[Special:UserSignup|crearte una cuenta de usuario]]''', esta es una manera fácil de revisar las contribuciones que has hecho además de ayudarte a comunicarte con el resto de la comunidad. 
@@ -480,7 +480,7 @@ Si necesitas ayuda para comenzar, revisa nuestras [[Ayuda:Contenido|páginas de 
 
 ¡Diviértete dentro de {{SITENAME}}!
 
-$2",
+$3",
 	'welcome-message-log' => 'Bienvenida',
 	'welcome-message-user-staff' => '==Bienvenido==
 
@@ -494,7 +494,7 @@ Si necesitas ayuda no dejes de [[$2|enviarme un mensaje]].
 
 ¡Diviértete dentro de {{SITENAME}}!
 
-$2',
+$3',
 	'welcome-message-anon-staff' => "==Bienvenido==
 
 ¡Hola, bienvenido a {{SITENAME}}! Soy un miembro del equipo de soporte comunitario de FANDOM. ¡Muchas gracias por tu edición en [[:$1]]! 
@@ -509,7 +509,7 @@ Si necesitas ayuda no dejes de [[$2|enviarme un mensaje]].
 
 ¡Diviértete dentro de {{SITENAME}}!
 
-$2",
+$3",
 	'staffsig-text' => '[[{{ns:user}}:$1|$2]] <staff /> <small>([[w:c:es.c:special:forums|foro de ayuda]] | [[w:c:es.c:Blog:Noticias_de_Wikia|blog del staff]])</small>',
 	'hawelcomeedit' => 'HaWelcomeEdit',
 	'welcome-message-wall-user' => 'Hola, soy un administrador de la comunidad {{SITENAME}}. ¡Bienvenido y muchas gracias por tu edición en [[:$1]]!
@@ -651,7 +651,7 @@ Si vous avez besoin d'aide pour vous lancer, consultez nos [[Aide:Commencer|page
 
 Veuillez [[$2|me laisser un message]] si vous avez besoin d'aide supplémentaire. Passez un bon moment sur {{SITENAME}} !
 
-$2",
+$3",
 	'welcome-message-anon' => "==Bienvenue==
 
 Bonjour, je suis administrateur de la communauté {{SITENAME}}. Bienvenue et merci pour votre contribution à [[:$1]] !
@@ -661,7 +661,7 @@ Si vous avez besoin d'aide pour vous lancer, consultez nos [[Aide:Commencer|page
 
 Veuillez [[$2|me laisser un message]] si vous avez besoin d'aide supplémentaire. Passez un bon moment sur {{SITENAME}} !
 
-$2",
+$3",
 	'welcome-message-log' => 'Bienvenue sur {{SITENAME}} !',
 	'welcome-message-user-staff' => "==Bienvenue==
 
@@ -675,7 +675,7 @@ Veuillez [[$2|me laisser un message]] si vous avez besoin d'aide supplémentaire
 
 Passez un bon moment sur {{SITENAME}} !
 
-$2",
+$3",
 	'welcome-message-anon-staff' => "==Bienvenue==
 
 Bonjour et bienvenue à {{SITENAME}} ! Je suis membre de l'équipe de support de la communauté FANDOM. Merci pour votre contribution à [[:$1]] !
@@ -690,7 +690,7 @@ Veuillez [[$2|me laisser un message]] si vous avez besoin d'aide supplémentaire
 
 Passez un bon moment sur {{SITENAME}} !
 
-$2",
+$3",
 	'staffsig-text' => '[[{{ns:user}}:$1|$2]]<staff /> <small>([[w:fr:Special:Forum|forum d’aide]] | [[w:fr:Blog:Actualité Wikia|blog]])</small>',
 	'hawelcomeedit' => 'HAWelcomeEdit',
 	'welcome-message-wall-user' => "Bonjour, je suis administrateur de la communauté {{SITENAME}}. Bienvenue et merci pour votre contribution à [[:$1]] !
@@ -975,7 +975,7 @@ Se hai bisogno di aiuto per iniziare, dai un'occhiata alle nostre [[Aiuto:Nozion
 
 [[$2|Lasciami un messaggio]] se posso aiutarti con qualcosa. Divertiti su {{SITENAME}}!
 
-$2",
+$3",
 	'welcome-message-anon' => "== Benvenuto ==
 
 Ciao, sono un amministratore della community {{SITENAME}}. Benvenuto e grazie per le modifiche apportate a [[:$1]]!
@@ -985,7 +985,7 @@ Se hai bisogno di aiuto per iniziare, dai un'occhiata alle nostre [[Aiuto:Nozion
 
 [[$2|Lasciami un messaggio]] se posso aiutarti con qualcosa. Divertiti su {{SITENAME}}!
 
-$2",
+$3",
 	'welcome-message-log' => 'Benvenuto a un nuovo collaboratore',
 	'welcome-message-user-staff' => "== Benvenuto ==
 
@@ -999,7 +999,7 @@ Puoi anche seguire il [[w:it:Blog:Blog ufficiale di FANDOM Italia|blog dello Sta
 
 Divertiti su {{SITENAME}}!
 
-$2",
+$3",
 	'welcome-message-anon-staff' => "== Benvenuto ==
 
 Ciao, benvenuto su {{SITENAME}}! Sono un membro del team di supporto della community di FANDOM. Grazie per le modifiche apportate a [[:$1]]!
@@ -1014,7 +1014,7 @@ Puoi anche seguire il [[w:it:Blog:Blog ufficiale di FANDOM Italia|blog dello Sta
 
 Divertiti su {{SITENAME}}!
 
-$2",
+$3",
 	'staffsig-text' => '[[{{ns:user}}:$1|$2]]<staff /> <small>([[w:forums|forum di supporto]] | [[w:sblog|blog]])</small>',
 	'welcome-message-wall-user' => "Ciao, sono un amministratore della community {{SITENAME}}. Benvenuto e grazie per le modifiche apportate a [[:$1]]!
 
@@ -1068,7 +1068,7 @@ $messages['ja'] = array(
 
 私でお役に立てそうなことがございましたら、お気軽に[[$2|メッセージをお送りください]]。それでは、{{SITENAME}}をお楽しみください！
 
-$2',
+$3',
 	'welcome-message-anon' => "==ようこそ==
 
 はじめまして、{{SITENAME}}コミュニティのアドミンです。[[:$1]]へようこそ！そして、ページ編集をありがとうございます！
@@ -1078,7 +1078,7 @@ $2',
 
 私でお役に立てそうなことがございましたら、お気軽に[[$2|メッセージをお送りください]]。それでは、{{SITENAME}}をお楽しみください！
 
-$2",
+$3",
 	'welcome-message-log' => 'FANDOMへようこそ！',
 	'welcome-message-user-staff' => '==ようこそ==
 
@@ -1092,7 +1092,7 @@ $2",
 
 それでは、{{SITENAME}}をお楽しみください！
 
-$2',
+$3',
 	'welcome-message-anon-staff' => "==ようこそ==
 
 はじめまして、FANDOMのコミュニティ・サポートチームです。このたびは、{{SITENAME}}へようこそ！そして、[[:$1]]に編集を加えていただきありがとうございます！
@@ -1107,7 +1107,7 @@ $2',
 
 それでは、{{SITENAME}}をお楽しみください！
 
-$2",
+$3",
 	'welcome-message-wall-anon' => "はじめまして、{{SITENAME}}コミュニティのアドミンです。[[:$1]]へようこそ！そして、ページ編集をありがとうございます！
 
 '''[[Special:UserSignup|ログインしてユーザー名を作成]]'''していただくと、編集履歴を整理したり、他のコミュニティメンバーと交流できるようになります。
@@ -1535,7 +1535,7 @@ Jeżeli mogę Ci w czymś pomóc, [[$2|wyślij do mnie wiadomość]].
 
 Miłego pobytu na {{SITENAME}}!
 
-$2',
+$3',
 	'welcome-message-anon' => "== Witaj ==
 
 Cześć, jestem administratorem społeczności {{SITENAME}}! Dziękujemy Ci za edycję na stronie [[:$1]]!
@@ -1548,7 +1548,7 @@ Jeżeli mogę Ci w czymś pomóc, [[$2|wyślij do mnie wiadomość]].
 
 Miłego pobytu na {{SITENAME}}!
 
-$2",
+$3",
 	'welcome-message-log' => 'Witaj na {{SITENAME}}!',
 	'welcome-message-user-staff' => '== Witaj ==
 
@@ -1562,7 +1562,7 @@ Jeżeli mogę Ci w czymś pomóc, [[$2|wyślij do mnie wiadomość]].
 
 Miłego pobytu na {{SITENAME}}!
 
-$2',
+$3',
 	'welcome-message-anon-staff' => "== Witaj ==
 
 Cześć, witaj na {{SITENAME}}! Jestem członkiem Zespołu Wsparcia Społeczności portalu FANDOM. Dziękujemy za edycję w [[:$1]]!
@@ -1577,7 +1577,7 @@ Jeżeli mogę Ci w czymś pomóc, [[$2|wyślij do mnie wiadomość]].
 
 Miłego pobytu na {{SITENAME}}!
 
-$2",
+$3",
 	'staffsig-text' => '[[{{ns:user}}:$1|$2]]<staff /> <small>([[w:forums|forum pomocy]] | [[w:sblog|blog]])</small>',
 	'hawelcomeedit' => 'HAWelcomeEdit',
 	'welcome-message-wall-user' => 'Cześć, jestem administratorem społeczności {{SITENAME}}! Dziękujemy Ci za edycję na stronie [[:$1]]!
@@ -1712,7 +1712,7 @@ Se precisar de ajuda para começar, confira nossas [[Ajuda:Começando|páginas d
 
 Por favor [[$2|deixe uma mensagem]] se eu puder ajudar em algo. Divirta-se em {{SITENAME}}!
 
-$2',
+$3',
 	'welcome-message-anon' => "==Bem-vindo==
 
 Olá, eu sou um administrador da comunidade {{SITENAME}}. Bem-vindo e obrigado por sua edição na [[: $1]]!
@@ -1722,7 +1722,7 @@ Se precisar de ajuda para começar, confira nossas [[Ajuda:Começando|páginas d
 
 Por favor [[$2|deixe uma mensagem]] se eu puder ajudar em algo. Divirta-se em {{SITENAME}}!
 
-$2",
+$3",
 	'welcome-message-log' => 'Bem-vindo novo contribuidor!',
 	'welcome-message-user-staff' => '==Bem-vindo==
 
@@ -1737,7 +1737,7 @@ Por favor [[$2| deixe uma mensagem]] se eu puder ajudar em algo.
 
 Divirta-se em {{SITENAME}}
 
-$2',
+$3',
 	'welcome-message-anon-staff' => "==Bem-vindo==
 
 Olá, bem-vindo a {{SITENAME}}! Eu sou um membro da equipe de suporte à comunidade FANDOM. Obrigado por sua edição de [[:$1]]!
@@ -1753,7 +1753,7 @@ Por favor [[$2|deixe uma mensagem]] se eu puder ajudar em algo.
 
 Divirta-se em {{SITENAME}}
 
-$2",
+$3",
 	'staffsig-text' => '[[{{ns:user}}:$1|$2]]<staff /> <small>([[w:forums|fórum de ajuda]] | [[w:sblog|blogue]])</small>',
 	'hawelcomeedit' => 'HAWelcomeEdit',
 	'welcome-message-wall-user' => "Olá, eu sou um administrador da comunidade {{SITENAME}}. Bem-vindo e obrigado por sua edição de [[: $1]]!
@@ -1819,7 +1819,7 @@ $messages['ru'] = array(
 
 Пожалуйста, [[$2|оставьте мне сообщение]], если я могу вам чем-нибудь помочь. Надеюсь, что вам понравится на {{SITENAME}}.
 
-$2',
+$3',
 	'welcome-message-anon' => "==Добро пожаловать!==
 
 Здравствуйте и добро пожаловать на {{SITENAME}}. Я являюсь администратором этой вики и благодарю вас за вашу правку на странице «[[:$1]]». 
@@ -1830,7 +1830,7 @@ $2',
 
 Пожалуйста, [[$2|оставьте мне сообщение]], если я могу вам чем-нибудь помочь. Надеюсь, что вам понравится на {{SITENAME}}.
 
-$2",
+$3",
 	'welcome-message-log' => 'Приветствие нового автора',
 	'welcome-message-user-staff' => '==Добро пожаловать==
 
@@ -1844,7 +1844,7 @@ $2",
 
 Надеюсь, что вам понравится на {{SITENAME}}.
 
-$2',
+$3',
 	'welcome-message-anon-staff' => "==Добро пожаловать==
 
 Здравствуйте и добро пожаловать на {{SITENAME}}. Я представляю команду поддержки Фэндома. Спасибо за вашу правку на странице «[[:$1]]».
@@ -1859,7 +1859,7 @@ $2',
 
 Надеюсь, что вам понравится на {{SITENAME}}.
 
-$2",
+$3",
 	'staffsig-text' => '[[{{ns:user}}:$1|$2]]<staff /> <small>([[w:forums|справочный форум]] | [[w:sblog|блог]])</small>',
 	'hawelcomeedit' => 'HAWelcomeEdit',
 	'welcome-message-wall-user' => 'Здравствуйте и добро пожаловать на {{SITENAME}}. Я являюсь администратором этой вики и благодарю вас за вашу правку на странице «[[:$1]]». 
@@ -1890,7 +1890,7 @@ $2",
 Вы также можете следить за [[w:c:ru.community:Блог:Блоги_сотрудников|блогами сотрудников]], чтобы получать последние новости и быть в курсе происходящего на Фэндоме. И не забывайте о наших учебных видео [[w:c:ru.community:Университет Фэндома|Университета Фэндома]], которые быстро введут вас в курс дела.
 
 Надеюсь, что вам понравится на {{SITENAME}}.
-$2",
+$3",
 	'welcome-description' => 'Отправляет сообщение с приветствием пользователям после их первых правок',
 	'welcome-enabled' => 'page-user message-anon message-user',
 	'welcome-user' => '@latest',
@@ -2316,7 +2316,7 @@ $messages['zh-hans'] = array(
 
 如果需要其他帮助，请在[[$2|这里留言]]！希望您在{{SITENAME}}上玩的愉快！
 
-$2',
+$3',
 	'welcome-message-anon' => "==欢迎==
 
 您好，我是{{SITENAME}}社区管理员。欢迎来到这个社区并且感谢您对[[:$1]]做出的编辑。'''[[Special:UserSignup|请您登录并创建一个用户名]]'''。这样会更方便来追踪您的贡献和帮助您与社区其他成员进行沟通。 
@@ -2325,7 +2325,7 @@ $2',
 
 如需其他帮助，请[[$2|给我留言]]。希望您在{{SITENAME}}玩的愉快！
 
-$2",
+$3",
 	'welcome-message-log' => '欢迎新贡献者',
 	'welcome-message-user-staff' => '==欢迎==
 
@@ -2339,7 +2339,7 @@ $2",
 
 希望您在{{SITENAME}}上玩的愉快！
 
-$2',
+$3',
 	'welcome-message-anon-staff' => "==欢迎==
 
 您好，欢迎来到{{SITENAME}}！我们是FANDOM社区支持团队。感谢您对页面[[:$1]]所作的编辑。
@@ -2354,7 +2354,7 @@ $2',
 
 希望您在{{SITENAME}}上玩的愉快！
 
-$2",
+$3",
 	'staffsig-text' => '[[{{ns:user}}:$1|$2]]<staff /><small>（[[w:forums|帮助论坛]] | [[w:sblog|博客]]）</small>',
 	'hawelcomeedit' => 'HA欢迎编辑',
 	'welcome-message-wall-user' => '您好，我是{{SITENAME}}的管理员！欢迎您参与这个社区，并且感谢您对页面[[:$1]]所作的编辑。
@@ -2431,7 +2431,7 @@ $messages['zh-hant'] = array(
 
 希望您在{{SITENAME}}上玩的愉快！
 
-$2',
+$3',
 	'welcome-message-anon-staff' => "==歡迎==
 
 您好，歡迎來到{{SITENAME}}！我是FANDOM社區支援團隊成員。感謝您對頁面[[:$1]]所作的編輯。
@@ -2446,7 +2446,7 @@ $2',
 
 希望您在{{SITENAME}}上玩的愉快！
 
-$2",
+$3",
 	'staffsig-text' => '[[{{ns:user}}:$1|$2]]<staff /> <small>([[w:forums|論壇求助]] | [[w:sblog|部落格]])</small>',
 	'hawelcomeedit' => '歡迎工具編輯',
 	'welcome-message-wall-user' => '您好，我是{{SITENAME}}的管理員！歡迎您參與這個社群，並且感謝您對頁面[[:$1]]所作的編輯。

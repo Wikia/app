@@ -50,6 +50,8 @@ class CreateWiki {
 	public function create() {
 		wfProfileIn( __METHOD__ );
 
+		$then = microtime( true );
+
 		$taskRunner = new Wikia\CreateNewWiki\Tasks\TaskRunner( $this->taskContext );
 
 		$taskRunner->prepare();
@@ -57,6 +59,11 @@ class CreateWiki {
 		$taskRunner->check();
 
 		$taskRunner->run();
+
+		// SUS-4383 | log the CreateNewWiki process time
+		$this->info( __METHOD__, [
+			'took' => microtime( true ) - $then, // [sec]
+		] );
 
 		wfProfileOut( __METHOD__ );
 	}

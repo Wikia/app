@@ -40879,7 +40879,7 @@ Sommige sjabloon'n worr'n nie getranscludeerd.",
 );
 
 $messages['zh-hans'] = array(
-	'pagecategories' => '{{PLURAL:$1|个分类|个分类}}',
+	'pagecategories' => '{{PLURAL:$1个|分类|分类}}',
 	'printableversion' => '可打印版本',
 	'permalink' => '永久链接',
 	'print' => '打印',

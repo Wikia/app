@@ -17,9 +17,11 @@ class ChatController extends WikiaController {
 	const SOCKET_IO_RECONNECT_MAX_TRIES = 4;
 
 	public function executeIndex() {
-		global $wgUser, $wgFavicon, $wgOut, $wgHooks, $wgWikiaBaseDomain, $wgWikiaNocookieDomain;
+		global $wgUser, $wgFavicon, $wgOut, $wgHooks, $wgScriptPath, $wgWikiaBaseDomain, $wgWikiaNocookieDomain;
 
 		wfProfileIn( __METHOD__ );
+
+		$this->wgScriptPath = $wgScriptPath;
 
 		// String replacement logic taken from includes/Skin.php
 		$this->wgFavicon = str_replace( "images.{$wgWikiaBaseDomain}", "images1.{$wgWikiaNocookieDomain}", $wgFavicon );

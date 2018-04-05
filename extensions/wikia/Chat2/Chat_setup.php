@@ -13,7 +13,7 @@
 $wgExtensionCredits['specialpage'][] = [
 	'name' => 'Chat',
 	'author' => [ 'Christian Williams', 'Sean Colombo' ],
-	'url' => 'http://community.wikia.com/wiki/Chat',
+	'url' => 'https://community.wikia.com/wiki/Chat',
 	'descriptionmsg' => 'chat-desc',
 ];
 

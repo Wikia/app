@@ -78,11 +78,11 @@ class WikiaUpdater {
 			array( 'dropField', 'cu_changes', 'cuc_user_text', $ext_dir . '/CheckUser/patch-cu_changes.sql', true ), // SUS-3080
 			array( 'WikiaUpdater::do_drop_table', 'tag_summary' ), // SUS-3066
 			array( 'WikiaUpdater::do_drop_table', 'sitemap_blobs' ), // SUS-3589
-			array( 'WikiaUpdater::do_clean_video_info_table' ), // SUS-3862
 			array( 'WikiaUpdater::removeUnusedGroups' ), // SUS-4169
 			array( 'WikiaUpdater::do_drop_table', 'objectcache' ), // SUS-4171
 			array( 'WikiaUpdater::doPageVoteCleanup' ), // SUS-3390 / SUS-4252
 			array( 'addIndex', 'page_vote', 'article_user_idx', $dir. 'patch-index-page_vote.sql', true ), // SUS-3390
+			array( 'addIndex', 'video_info', 'video_id', $dir. 'patch-index-video_info.sql', true ), //  SUS-4297
 		);
 
 		if ( $wgDBname === $wgExternalSharedDB ) {
@@ -223,16 +223,6 @@ class WikiaUpdater {
 
 		$databaseUpdater->output( "done.\n" );
 
-		wfWaitForSlaves();
-	}
-
-	public static function do_clean_video_info_table( DatabaseUpdater $databaseUpdater ) {
-		$dbw = $databaseUpdater->getDB();
-		$databaseUpdater->output( 'Removing video_info rows for premium video providers... ' );
-
-		$dbw->delete( 'video_info', [ 'premium' => 1 ], __METHOD__ );
-
-		$databaseUpdater->output( "done.\n" );
 		wfWaitForSlaves();
 	}
 
