@@ -18,13 +18,13 @@ docker run -it --rm --dns 10.14.30.130 -h localhost -e 'SERVER_ID=165' -e 'WIKIA
 ## How to push base image to Wikia's repository
 
 ```sh
-docker tag php-wikia-base php:7.0.28-base-wikia
+docker tag php-wikia-base php-wikia-base:7.0.28
 
-docker tag php:7.0.28-base-wikia artifactory.wikia-inc.com/sus/php
-docker tag php:7.0.28-base-wikia artifactory.wikia-inc.com/sus/php:7.0.28-base-wikia
+docker tag php-wikia-base artifactory.wikia-inc.com/sus/php-wikia-base
+docker tag php-wikia-base artifactory.wikia-inc.com/sus/php-wikia-base:7.0.28
 
-docker push artifactory.wikia-inc.com/sus/php
-docker push artifactory.wikia-inc.com/sus/php:7.0.28-base-wikia
+docker push artifactory.wikia-inc.com/sus/php-wikia-base
+docker push artifactory.wikia-inc.com/sus/php-wikia-base:7.0.28
 ```
 
 ## How to set up Docker on your machine
