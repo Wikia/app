@@ -11,3 +11,7 @@ ENV WIKIA_ENVIRONMENT=dev
 # yaml extension / @see https://pecl.php.net/package/yaml / needed by db2yml.php
 RUN pecl install uopz-5.0.2 xdebug-2.6.0 yaml-2.0.2 \
     && docker-php-ext-enable uopz xdebug yaml
+
+
+# we no longer need root's super-power
+USER nobody
