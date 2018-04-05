@@ -11,6 +11,7 @@ RUN apt-get update && apt-get install -y \
     # needed by wikidiff2
     libthai-dev \
     libtool \
+    libyaml-dev \
     locales \
     make \
     wget \
@@ -67,9 +68,10 @@ RUN docker-php-ext-install \
 
 # TODO: move below dependencies to dev app image
 # uopz extension / @see https://pecl.php.net/package/uopz
-# XDebug extension / @see https://pecl.php.net/package/uopz
-RUN pecl install uopz-5.0.2 xdebug-2.6.0 \
-    && docker-php-ext-enable uopz xdebug
+# XDebug extension / @see https://pecl.php.net/package/xdebug
+# yaml extension / @see https://pecl.php.net/package/yaml / needed by db2yml.php
+RUN pecl install uopz-5.0.2 xdebug-2.6.0 yaml-2.0.2 \
+    && docker-php-ext-enable uopz xdebug yaml
 
 # expose volumes for app and config repositories clones
 ENV WIKIA_DOCROOT=/usr/wikia/slot1/current/src
