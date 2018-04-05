@@ -12,7 +12,7 @@ We assume that you have `app` and `config` repository cloned in the same directo
 docker build -t php-wikia-base .
 
 # 2. you can now run eval.php
-docker run -it --rm --dns 10.14.30.130 -h localhost -e 'SERVER_ID=165' -e 'WIKIA_DATACENTER=poz' -e 'WIKIA_ENVIRONMENT=dev' -v "$PWD":/usr/wikia/slot1/current/src -v "`realpath $PWD/../config`":/usr/wikia/slot1/current/config -v "`realpath $PWD/../cache`":/usr/wikia/slot1/current/cache/messages php-wikia-base php maintenance/eval.php
+docker run -it --rm --dns 10.14.30.130 -h localhost -e 'SERVER_ID=165' -e 'WIKIA_DATACENTER=poz' -e 'WIKIA_ENVIRONMENT=dev' -v "$PWD":/usr/wikia/slot1/current/src -v "$PWD/../config":/usr/wikia/slot1/current/config -v "$PWD/../cache":/usr/wikia/slot1/current/cache/messages php-wikia-base php maintenance/eval.php
 ```
 
 ## How to set up Docker on your machine
