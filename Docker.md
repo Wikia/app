@@ -15,7 +15,7 @@ docker build -t php-wikia-base .
 docker run -it --rm --dns 10.14.30.130 -h localhost -e 'SERVER_ID=165' -e 'WIKIA_DATACENTER=poz' -e 'WIKIA_ENVIRONMENT=dev' -v "$PWD":/usr/wikia/slot1/current/src -v "`realpath $PWD/../config`":/usr/wikia/slot1/current/config -v "`realpath $PWD/../cache`":/usr/wikia/slot1/current/cache/messages php-wikia-base php maintenance/eval.php
 ```
 
-## How to set up Docker on your devbox
+## How to set up Docker on your machine
 
 ```sh
 # Uninstall old versions
