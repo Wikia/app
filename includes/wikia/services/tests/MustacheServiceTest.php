@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * @group mustache
+ */
 class MustacheServiceTest extends WikiaBaseTest {
 
 	/* @var MustacheService $service */
