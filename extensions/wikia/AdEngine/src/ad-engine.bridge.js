@@ -56,7 +56,6 @@ function init(
 }
 
 function overrideSlotService(slotRegistry, legacyBtfBlocker) {
-
 	const slotsCache = {};
 
 	slotService.getBySlotName = (id) => {
@@ -68,6 +67,10 @@ function overrideSlotService(slotRegistry, legacyBtfBlocker) {
 
 			return slotsCache[id];
 		}
+	};
+
+	slotService.clearSlot = (id) => {
+		delete slotsCache[id];
 	};
 
 	slotService.legacyEnabled = slotService.enable;

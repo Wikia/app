@@ -225,6 +225,7 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 				} else {
 					if (slotsNames.indexOf(slotsPositionTargeting[0]) > -1) {
 						slotsToDestroy.push(slot);
+						bridge.slotService.clearSlot(slotsPositionTargeting[0]);
 					}
 				}
 			});
