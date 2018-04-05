@@ -1671,18 +1671,6 @@ $wgBuckyEnabledSkins = [
 $wgMemcacheStatsSampling = 1;
 
 /**
- * @name wgXhprofUDPHost
- * Host that xhprof data should be reported to (if set to null will use $wgUDPProfilerHost)
- */
-$wgXhprofUDPHost = null;
-
-/**
- * @name wgXhprofUDPPort
- * Port that xhprof data should be reported to
- */
-$wgXhprofUDPPort = '3911';
-
-/**
  * @name wgXhprofMinimumTime
  * Threshold for total time spent in function to be reported (set to 0 to report all entries)
  */
