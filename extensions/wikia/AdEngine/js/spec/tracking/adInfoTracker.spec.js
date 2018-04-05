@@ -5,7 +5,7 @@ describe('ext.wikia.adEngine.tracking.adInfoTracker', function () {
 
 	var mocks = {
 		adEngineBridge: {
-			getTrackingValues: function () {
+			getSamplingResults: function () {
 				return [];
 			}
 		},
