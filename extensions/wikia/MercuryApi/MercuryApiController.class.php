@@ -184,7 +184,7 @@ class MercuryApiController extends WikiaController {
 			'parts' => array_values( $htmlTitle->getAllParts() ),
 		];
 
-		$wikiVariables['wgQualarooUrl'] =
+		$wikiVariables['qualarooUrl'] =
 			( $this->wg->develEnvironment ) ? $this->wg->qualarooDevUrl : $this->wg->qualarooUrl;
 
 		\Hooks::run( 'MercuryWikiVariables', [ &$wikiVariables ] );
