@@ -73,7 +73,7 @@ class NavigationTemplate {
 	}
 
 	private static function mark( $text ) {
-		return sprintf( "<div data-navuniq=\"%s\">%s</div>", uniqid(), $text );
+		return sprintf( "<div data-navuniq=\"%s\">\n%s</div>", uniqid(), $text );
 	}
 
 	private static function removeFirstCharacter( $text ) {
