@@ -577,29 +577,6 @@ $wgHooks = &Hooks::getHandlersArray();
 $wgDefaultRobotPolicy = 'index,follow';
 
 /**
- * Settings for incoming cross-site AJAX requests:
- * Newer browsers support cross-site AJAX when the target resource allows requests
- * from the origin domain by the Access-Control-Allow-Origin header.
- * This is currently only used by the API (requests to api.php)
- * $wgCrossSiteAJAXdomains can be set using a wildcard syntax:
- *
- * '*' matches any number of characters
- * '?' matches any 1 character
- *
- * Example:
- $wgCrossSiteAJAXdomains = array(
-  'www.mediawiki.org',
-  '*.wikipedia.org',
-  '*.wikimedia.org',
-  '*.wiktionary.org',
- );
- *
- */
-$wgCrossSiteAJAXdomains = [
-    "internal-vstf.{$wgWikiaBaseDomain}", # PLATFORM-1719
-];
-
-/**
  * Timeout for HTTP requests done internally
  *
  * Let's use different values when running a maintenance script (that includes Wikia Tasks)
