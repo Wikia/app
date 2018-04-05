@@ -51,11 +51,6 @@ RUN wget https://github.com/jbboehr/php-mustache/archive/v0.7.3.tar.gz -O mustac
     && rm -r /tmp/mustache
 
 
-# uopz extension / @see https://pecl.php.net/package/uopz
-RUN pecl install uopz-5.0.2 \
-    && docker-php-ext-enable uopz
-
-
 # wikidiff2 extension / @see https://www.mediawiki.org/wiki/Extension:Wikidiff2#Manually
 RUN wget https://releases.wikimedia.org/wikidiff2/wikidiff2-1.4.1.tar.gz -O wikidiff2.tar.gz \
     && mkdir -p /tmp/wikidiff2 \
@@ -70,9 +65,11 @@ RUN docker-php-ext-install \
     mysqli \
     opcache
 
-# dev only: XDebug extension / @see https://pecl.php.net/package/uopz
-RUN pecl install xdebug-2.6.0 \
-    && docker-php-ext-enable xdebug
+# TODO: move below dependencies to dev app image
+# uopz extension / @see https://pecl.php.net/package/uopz
+# XDebug extension / @see https://pecl.php.net/package/uopz
+RUN pecl install uopz-5.0.2 xdebug-2.6.0 \
+    && docker-php-ext-enable uopz xdebug
 
 # expose volumes for app and config repositories clones
 ENV WIKIA_DOCROOT=/usr/wikia/slot1/current/src
