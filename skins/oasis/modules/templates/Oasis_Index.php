@@ -100,7 +100,6 @@
 <script type="text/javascript">/*<![CDATA[*/ if (typeof AdEngine_trackPageInteractive === 'function') {wgAfterContentAndJS.push(AdEngine_trackPageInteractive);} /*]]>*/</script>
 <?= $bottomScripts ?>
 
-<?= $nielsen ?>
 <?= $recoveryBottomBodyBootstrapCode ?>
 </body>
 

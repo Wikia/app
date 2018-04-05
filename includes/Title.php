@@ -2118,18 +2118,12 @@ class Title {
 			// This is from OutputPage::blockedPage
 			// Copied at r23888 by werdna
 
-			$id = $user->blockedBy();
+			$name = $user->blockedBy();
 			$reason = $user->blockedFor();
 			if ( $reason == '' ) {
 				$reason = wfMsg( 'blockednoreason' );
 			}
 			$ip = $user->getRequest()->getIP();
-
-			if ( is_numeric( $id ) ) {
-				$name = User::whoIs( $id );
-			} else {
-				$name = $id;
-			}
 
 			$link = '[[' . $wgContLang->getNsText( NS_USER ) . ":{$name}|{$name}]]";
 			$blockid = $block->getId();

@@ -45,7 +45,6 @@ class JSPagesSpecialController extends WikiaSpecialPageController {
 
 		$this->submit = wfMessage( 'content-review-module-submit' )->escaped();
 		$this->isTestModeEnabled = ( new Helper() )->isContentReviewTestModeEnabled();
-		$this->canAccessTestMode = $this->getUser()->isAllowed( 'content-review-test-mode' );
 	}
 
 	private function preparePages( $jsPages ) {

@@ -245,7 +245,7 @@ class AsyncTaskList {
 			'app' => self::EXECUTOR_APP_NAME,
 		];
 
-		if ( !in_array( $wgWikiaEnvironment, [ WIKIA_ENV_PROD, WIKIA_ENV_STAGING ] ) ) {
+		if ( $wgWikiaEnvironment != WIKIA_ENV_PROD ) {
 			$host = gethostname();
 			$executionMethod = 'http';
 
