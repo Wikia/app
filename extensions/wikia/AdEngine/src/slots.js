@@ -32,7 +32,8 @@ export default {
 			targeting: {
 				pos: 'BOTTOM_LEADERBOARD',
 				loc: 'footer'
-			}
+			},
+			viewportConflicts: []
 		}
 	},
 	mercury: {
