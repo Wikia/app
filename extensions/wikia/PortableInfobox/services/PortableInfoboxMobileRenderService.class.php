@@ -31,6 +31,8 @@ class PortableInfoboxMobileRenderService extends PortableInfoboxRenderService {
 			$output = '';
 		}
 
+		TemplateTypesParser::onParserAfterTidy( null, $output );
+
 		\Wikia\PortableInfobox\Helpers\PortableInfoboxDataBag::getInstance()->setFirstInfoboxAlredyRendered( true );
 
 		return $output;
