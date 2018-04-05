@@ -15,6 +15,18 @@ docker build -t php-wikia-base .
 docker run -it --rm --dns 10.14.30.130 -h localhost -e 'SERVER_ID=165' -e 'WIKIA_DATACENTER=poz' -e 'WIKIA_ENVIRONMENT=dev' -v "$PWD":/usr/wikia/slot1/current/src -v "$PWD/../config":/usr/wikia/slot1/current/config -v "$PWD/../cache":/usr/wikia/slot1/current/cache/messages php-wikia-base php maintenance/eval.php
 ```
 
+## How to push base image to Wikia's repository
+
+```sh
+docker tag php-wikia-base php:7.0.28-base-wikia
+
+docker tag php:7.0.28-base-wikia artifactory.wikia-inc.com/sus/php
+docker tag php:7.0.28-base-wikia artifactory.wikia-inc.com/sus/php:7.0.28-base-wikia
+
+docker push artifactory.wikia-inc.com/sus/php
+docker push artifactory.wikia-inc.com/sus/php:7.0.28-base-wikia
+```
+
 ## How to set up Docker on your machine
 
 ```sh
