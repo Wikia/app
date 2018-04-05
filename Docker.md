@@ -29,18 +29,7 @@ docker push artifactory.wikia-inc.com/sus/php:7.0.28-base-wikia
 
 ## How to set up Docker on your machine
 
-```sh
-# Uninstall old versions
-sudo apt-get remove docker docker-engine docker.io
-
-wget -qO- https://get.docker.com/ | sh
-
-# be able to run docker as non-root user
-sudo usermod -aG docker ${LOGNAME}
-
-# verify the steps above
-docker -v
-```
+> https://docs.docker.com/install/
 
 #### Troubleshooting
 
