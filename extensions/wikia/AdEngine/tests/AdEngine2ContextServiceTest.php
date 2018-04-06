@@ -281,6 +281,7 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 		$this->mockGlobalVariable( 'wgEnableKruxTargeting', false );
 		$this->mockGlobalVariable( 'wgWikiDirectedAtChildrenByFounder', false );
 		$this->mockGlobalVariable( 'wgWikiDirectedAtChildrenByStaff', false );
+		$this->mockGlobalVariable( 'wgEnableArticleFeaturedVideo', false );
 
 		foreach ( $flags as $flag ) {
 			$this->mockGlobalVariable( $flag, true );
@@ -406,6 +407,7 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 			->willReturn( 123 );
 
 		$this->mockStaticMethod( 'ArticleVideoService', 'getFeatureVideoForArticle', $mediaId );
+		$this->mockStaticMethod( 'ArticleVideoContext', 'isRecommendedVideoAvailable', $expected );
 
 		$adContextService = new AdEngine2ContextService();
 		$result = $adContextService->getContext( $titleMock, 'test' );
