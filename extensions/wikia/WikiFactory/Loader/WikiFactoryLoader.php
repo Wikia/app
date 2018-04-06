@@ -22,7 +22,7 @@ class WikiFactoryLoader {
 	public $mCityDB;
 
 	public $mWikiID, $mCityUrl, $mOldServerName;
-	public $mAlternativeDomainUsed, $mCityCluster, $mDebug;
+	public $mAlternativeDomainUsed, $mCityCluster;
 	public $mDomain, $mVariables, $mIsWikiaActive, $mAlwaysFromDB;
 	public $mTimestamp, $mCommandLine;
 	public $mExpireDomainCacheTimeout = 86400; #--- 24 hours
@@ -51,7 +51,6 @@ class WikiFactoryLoader {
 		global $wgDevelEnvironment;
 
 		// initializations
-		$this->mDebug = false;
 		$this->mOldServerName = false;
 		$this->mAlternativeDomainUsed = false;
 		$this->mDBname = WikiFactory::db;
@@ -63,7 +62,6 @@ class WikiFactoryLoader {
 		$this->mDBhandler  = null;
 
 		if( !empty( $wgDevelEnvironment ) ) {
-			$this->mDebug = true;
 			$this->mAlwaysFromDB = 1;
 		}
 
@@ -396,7 +394,19 @@ class WikiFactoryLoader {
 		$cond2 = $this->mAlternativeDomainUsed && ( $url['host'] != $this->mOldServerName );
 
 		if( ( $cond1 || $cond2 ) && empty( $wgDevelEnvironment ) ) {
+			global $wgCookiePrefix;
 			$redirectUrl = WikiFactory::getLocalEnvURL( $this->mCityUrl );
+			$hasAuthCookie = !empty( $_COOKIE[\Wikia\Service\User\Auth\CookieHelper::ACCESS_TOKEN_COOKIE_NAME] ) ||
+							 !empty( $_COOKIE[session_name()] ) ||
+							 !empty( $_COOKIE["{$wgCookiePrefix}Token"] ) ||
+							 !empty( $_COOKIE["{$wgCookiePrefix}UserID"] );
+
+			if ( $hasAuthCookie &&
+				 $_SERVER['HTTP_FASTLY_SSL'] &&
+				 wfHttpsAllowedForURL( $redirectUrl )
+			) {
+				$redirectUrl = wfHttpToHttps( $redirectUrl );
+			}
 			$target = rtrim( $redirectUrl, '/' ) . '/' . $this->pathParams;
 
 			$queryParams = $_GET;
@@ -413,6 +423,14 @@ class WikiFactoryLoader {
 			}
 
 			header( "X-Redirected-By-WF: NotPrimary" );
+			header( 'Vary: Cookie,Accept-Encoding' );
+
+			if ( $hasAuthCookie ) {
+				header( 'Cache-Control: private, must-revalidate, max-age=0' );
+			} else {
+				header( 'Cache-Control: s-maxage=86400, must-revalidate, max-age=0' );
+			}
+
 			header( "Location: {$target}", true, 301 );
 			wfProfileOut( __METHOD__ );
 			return false;
@@ -469,9 +487,9 @@ class WikiFactoryLoader {
 		}
 
 		/**
-		 * if wgDBname is not defined we get all variables from database
+		 * the list of variables is empty (cache miss), get them from the database
 		 */
-		if( ! isset( $this->mVariables["wgDBname"] ) ) {
+		if( empty( $this->mVariables ) ) {
 			wfProfileIn( __METHOD__."-varsdb" );
 			$dbr = $this->getDB();
 			$oRes = $dbr->select(
@@ -818,9 +836,6 @@ class WikiFactoryLoader {
 	 */
 	private function debug( $message ) {
 		wfDebug("wikifactory: {$message}", true);
-		if( !empty( $this->mDebug ) ) {
-			error_log("wikifactory: {$message}");
-		}
 	}
 
 	/**

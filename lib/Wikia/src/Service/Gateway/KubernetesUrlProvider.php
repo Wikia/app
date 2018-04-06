@@ -21,7 +21,7 @@ class KubernetesUrlProvider implements UrlProvider, LoggerAwareInterface {
 	 * @param string $dataCenter
 	 */
 	public function __construct( string $environment, string $dataCenter ) {
-		if ( !in_array( $environment, [ WIKIA_ENV_PROD, WIKIA_ENV_DEV, WIKIA_ENV_STAGING ] ) ) {
+		if ( !in_array( $environment, [ WIKIA_ENV_PROD, WIKIA_ENV_DEV ] ) ) {
 			throw new InvalidArgumentException( "Invalid environment $environment" );
 		}
 

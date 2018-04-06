@@ -389,12 +389,11 @@ class WikiFactory {
 			Wikia::log( __METHOD__, "", "WikiFactory is not used." );
 			return false;
 		}
-
-		if ( 'http://' != strpos($domain, 0, 7) ) {
+		if ( !preg_match( "^https?:\/\/", $domain ) ) {
 			$domain = 'http://' . $domain;
 		}
 
-		$retVal = WikiFactory::setVarByName("wgServer", $city_id, $domain, $reason);
+		$retVal = WikiFactory::setVarByName( "wgServer", $city_id, $domain, $reason );
 
 		static::clearDomainCache( $city_id );
 
@@ -1234,7 +1233,6 @@ class WikiFactory {
 				return "$protocol//" . $server . '.verify' . static::WIKIA_TOP_DOMAIN . $address;
 			case WIKIA_ENV_STABLE:
 				return "$protocol//" . $server . '.stable' . static::WIKIA_TOP_DOMAIN . $address;
-			case WIKIA_ENV_STAGING:
 			case WIKIA_ENV_PROD:
 				return sprintf( '%s//%s.%s%s', $protocol, $server, $wgWikiaBaseDomain, $address );
 			case WIKIA_ENV_SANDBOX:
