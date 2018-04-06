@@ -55,11 +55,9 @@ class ImportStarterData extends Task {
 	}
 
 	public function canExecute() {
-		if ( !file_exists( $this->phpBin ) || !is_executable( $this->phpBin ) ) {
-			global $wgPhpCli;
+		global $wgPhpCli;
 
-			$this->phpBin = $wgPhpCli;
-		}
+		$this->phpBin = $wgPhpCli;
 		
 		return file_exists( $this->phpBin ) && is_executable( $this->phpBin );
 	}
