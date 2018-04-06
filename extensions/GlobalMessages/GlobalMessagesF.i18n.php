@@ -204,6 +204,7 @@ Otherwise, you can use the easy form below. Your comment will be added to the pa
 	'footer_Advertise_on_Wikia' => '[http://www.wikia.com/wiki/Advertising Advertise on Wikia]',
 	'fast-adv' => 'Advertisement',
 	'feed-watom' => 'FANDOM Atom',
+	'file-resolution-exceeded' => 'Provided image resolution ($1 megapixels) exceeds maximum allowed resolution of $2 megapixels for $3 MIME type.',
 );
 
 $messages['qqq'] = array(
@@ -372,6 +373,7 @@ $1 is the name of the requested file.',
 * $1 is the name of the requested file.
 * $2 is the number of identical duplicates of the requested file',
 	'feed-watom' => 'Missing documentation',
+	'file-resolution-exceeded' => 'Error displayed when user tries to upload image with too high resolution',
 );
 
 $messages['ab'] = array(

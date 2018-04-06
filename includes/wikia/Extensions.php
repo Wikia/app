@@ -1273,10 +1273,6 @@ if ( !empty( $wgEnableArticlesAsResourcesExt )  ) {
 	include( "$IP/extensions/wikia/ArticlesAsResources/ArticlesAsResources.setup.php" );
 }
 
-if ($wgEnableGameProAds === null && in_array( $wgLanguageCode, $wgAvailableGameProAdsLang )) {
-	$wgEnableGameProAds = true;
-}
-
 /**
  * Our own extension which template is being shared among two [three] other extensions (Article Comments [Blog], Wall)
  * It has one method which is a hook fired in ChangesList.php and it fires our own hook via which we can change

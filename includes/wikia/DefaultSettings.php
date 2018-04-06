@@ -1236,6 +1236,13 @@ $wgAdDriverBeachfrontBidderCountries = null;
 $wgAdDriverBottomLeaderBoardMegaCountries = null;
 
 /**
+ * @name $wgAdDriverBottomLeaderBoardViewportCountries
+ * List of countries where BOTTOM_LEADERBOARD will collapse if it is in same viewport with MR.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverBottomLeaderBoardViewportCountries = null;
+
+/**
  * @name $wgAdDriverIndexExchangeBidderCountries
  * List of countries where indexExchange bidding platform is enabled.
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
@@ -1669,18 +1676,6 @@ $wgBuckyEnabledSkins = [
  * Unit: percent (0-100)
  */
 $wgMemcacheStatsSampling = 1;
-
-/**
- * @name wgXhprofUDPHost
- * Host that xhprof data should be reported to (if set to null will use $wgUDPProfilerHost)
- */
-$wgXhprofUDPHost = null;
-
-/**
- * @name wgXhprofUDPPort
- * Port that xhprof data should be reported to
- */
-$wgXhprofUDPPort = '3911';
 
 /**
  * @name wgXhprofMinimumTime

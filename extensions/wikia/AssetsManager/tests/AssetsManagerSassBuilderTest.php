@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * @group sass
+ */
 class AssetsManagerSassBuilderTest extends WikiaBaseTest {
 
 	const SASS_FILE = '/extensions/wikia/AssetsManager/tests/test.scss';
