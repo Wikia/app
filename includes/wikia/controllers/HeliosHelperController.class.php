@@ -109,13 +109,16 @@ class HelperController extends \WikiaController {
 	}
 
 	private function emailControllerForTokenContext( string $tokenContext = null ): string {
-	    if ( $tokenContext === 'facebook' ) {
-	        return 'Email\Controller\FacebookDisconnect';
+        WikiaLogger::instance()->info( __METHOD__, [
+            'token_context' => $tokenContext,
+        ] );
+		if ( $tokenContext === 'facebook' ) {
+		    return 'Email\Controller\FacebookDisconnect';
         }
         if ( $tokenContext === 'google' ) {
-	        return 'Email\Controller\GoogleDisconnect';
-        }
-        return 'Email\Controller\PasswordResetLink';
+		    return 'Email\Controller\GoogleDisconnect';
+		}
+		return 'Email\Controller\PasswordResetLink';
     }
 
 	public function isBlocked() {
