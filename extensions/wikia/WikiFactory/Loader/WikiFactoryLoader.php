@@ -394,7 +394,19 @@ class WikiFactoryLoader {
 		$cond2 = $this->mAlternativeDomainUsed && ( $url['host'] != $this->mOldServerName );
 
 		if( ( $cond1 || $cond2 ) && empty( $wgDevelEnvironment ) ) {
+			global $wgCookiePrefix;
 			$redirectUrl = WikiFactory::getLocalEnvURL( $this->mCityUrl );
+			$hasAuthCookie = !empty( $_COOKIE[\Wikia\Service\User\Auth\CookieHelper::ACCESS_TOKEN_COOKIE_NAME] ) ||
+							 !empty( $_COOKIE[session_name()] ) ||
+							 !empty( $_COOKIE["{$wgCookiePrefix}Token"] ) ||
+							 !empty( $_COOKIE["{$wgCookiePrefix}UserID"] );
+
+			if ( $hasAuthCookie &&
+				 $_SERVER['HTTP_FASTLY_SSL'] &&
+				 wfHttpsAllowedForURL( $redirectUrl )
+			) {
+				$redirectUrl = wfHttpToHttps( $redirectUrl );
+			}
 			$target = rtrim( $redirectUrl, '/' ) . '/' . $this->pathParams;
 
 			$queryParams = $_GET;
@@ -411,6 +423,14 @@ class WikiFactoryLoader {
 			}
 
 			header( "X-Redirected-By-WF: NotPrimary" );
+			header( 'Vary: Cookie,Accept-Encoding' );
+
+			if ( $hasAuthCookie ) {
+				header( 'Cache-Control: private, must-revalidate, max-age=0' );
+			} else {
+				header( 'Cache-Control: s-maxage=86400, must-revalidate, max-age=0' );
+			}
+
 			header( "Location: {$target}", true, 301 );
 			wfProfileOut( __METHOD__ );
 			return false;
