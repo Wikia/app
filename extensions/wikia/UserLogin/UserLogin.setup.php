@@ -29,7 +29,6 @@ $wgHooks['MakeGlobalVariablesScript'][] = 'UserLoginHooksHelper::onMakeGlobalVar
 $wgHooks['Preferences::SetUserEmail'][] = 'UserLoginHooksHelper::onSetUserEmail';
 $wgHooks['AbortNewAccountErrorMessage'][] = 'UserLoginHooksHelper::onAbortNewAccountErrorMessage';
 $wgHooks['ConfirmEmailShowRequestForm'][] = 'UserLoginHooksHelper::onConfirmEmailShowRequestForm';
-$wgHooks['UserSendConfirmationMail'][] = 'UserLoginHooksHelper::onUserSendConfirmationMail';
 $wgHooks['PreferencesGetEmailAuthentication'][] = 'UserLoginHooksHelper::onGetEmailAuthentication';
 $wgHooks['isValidEmailAddr'][] = 'UserLoginHooksHelper::isValidEmailAddr';
 $wgHooks['SavePreferences'][] = 'UserLoginHooksHelper::onSavePreferences';

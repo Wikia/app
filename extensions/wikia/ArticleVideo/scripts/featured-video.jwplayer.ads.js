@@ -7,8 +7,22 @@ define('wikia.articleVideo.featuredVideo.ads', [
 	'ext.wikia.adEngine.video.articleVideoAd',
 	'ext.wikia.adEngine.video.player.jwplayer.adsTracking',
 	'ext.wikia.adEngine.video.vastDebugger',
+	'ext.wikia.adEngine.video.vastParser',
+	'wikia.articleVideo.featuredVideo.lagger',
 	'wikia.log'
-], function (adContext, vastUrlBuilder, megaAdUnitBuilder, slotRegistry, srcProvider, articleVideoAd, adsTracking, vastDebugger, log) {
+], function (
+	adContext,
+	vastUrlBuilder,
+	megaAdUnitBuilder,
+	slotRegistry,
+	srcProvider,
+	articleVideoAd,
+	adsTracking,
+	vastDebugger,
+	vastParser,
+	fvLagger,
+	log
+) {
 	'use strict';
 
 	var baseSrc = adContext.get('targeting.skin') === 'oasis' ? 'gpt' : 'mobile',
@@ -16,7 +30,13 @@ define('wikia.articleVideo.featuredVideo.ads', [
 		featuredVideoSource,
 		logGroup = 'wikia.articleVideo.featuredVideo.ads';
 
-	return function(player, bidParams, slotTargeting) {
+	function parseVastParamsFromEvent(event) {
+		return vastParser.parse(event.tag, {
+			imaAd: event.ima && event.ima.ad
+		});
+	}
+
+	return function (player, bidParams, slotTargeting) {
 		var correlator,
 			featuredVideoElement = player && player.getContainer && player.getContainer(),
 			featuredVideoContainer = featuredVideoElement && featuredVideoElement.parentNode,
@@ -101,16 +121,21 @@ define('wikia.articleVideo.featuredVideo.ads', [
 			});
 
 			player.on('adRequest', function (event) {
+				var vastParams = parseVastParamsFromEvent(event);
 				slotRegistry.storeScrollY(featuredVideoSlotName);
 
-				vastDebugger.setVastAttributes(featuredVideoContainer, event.tag, 'success', event.ima && event.ima.ad);
+				vastDebugger.setVastAttributesFromVastParams(featuredVideoContainer, 'success', vastParams);
+
+				fvLagger.markAsReady(vastParams.lineItemId);
 			});
 
 			player.on('adError', function (event) {
+				fvLagger.markAsReady(null);
 				vastDebugger.setVastAttributes(featuredVideoContainer, event.tag, 'error', event.ima && event.ima.ad);
 			});
 		} else {
 			trackingParams.adProduct = 'featured-video-no-ad';
+			fvLagger.markAsReady(null);
 		}
 
 		adsTracking(player, trackingParams);

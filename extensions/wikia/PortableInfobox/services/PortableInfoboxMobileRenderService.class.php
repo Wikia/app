@@ -93,6 +93,7 @@ class PortableInfoboxMobileRenderService extends PortableInfoboxRenderService {
 		}
 
 		$data = SanitizerBuilder::createFromType( 'image' )->sanitize( $data );
+
 		return parent::render( $templateName, $data );
 	}
 
@@ -121,7 +122,7 @@ class PortableInfoboxMobileRenderService extends PortableInfoboxRenderService {
 		$helper = $this->getImageHelper();
 		$template = '';
 
-		// In Mercury SPA content of the first infobox's hero module has been moved to the article header.
+		// In mobile-wiki SPA content of the first infobox's hero module has been moved to the article header.
 		$firstInfoboxAlredyRendered = \Wikia\PortableInfobox\Helpers\PortableInfoboxDataBag::getInstance()
 			->isFirstInfoboxAlredyRendered();
 

@@ -240,11 +240,7 @@ class User implements JsonSerializable {
 	}
 
 	private static function permissionsService(): PermissionsService {
-		if ( is_null( self::$permissionsService ) ) {
-			self::$permissionsService = ServiceFactory::instance()->permissionsFactory()->permissionsService();
-		}
-
-		return self::$permissionsService;
+		return ServiceFactory::instance()->permissionsFactory()->permissionsService();
 	}
 
 	/**
@@ -4266,17 +4262,6 @@ class User implements JsonSerializable {
 		*/
 
 		return $ret;
-	}
-
-	/**
-	 * Return a URL the user can use to confirm their email address. (Wikia change)
-	 *
-	 * @author wikia
-	 * @param $token string Accepts the email confirmation token
-	 * @return string New token URL
-	 */
-	public function wikiaConfirmationTokenUrl( $token ) {
-		return $this->getTokenUrl( 'WikiaConfirmEmail', $token );
 	}
 
 	/**

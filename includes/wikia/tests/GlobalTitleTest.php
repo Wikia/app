@@ -170,7 +170,7 @@ class GlobalTitleTest extends WikiaBaseTest {
 		$this->mockStaticMethod( 'WebRequest', 'detectProtocol', $requestProtocol );
 
 		$fullUrl = GlobalTitle::newFromText( 'Test', NS_MAIN, $cityId )->getFullURL();
-		$this->assertEquals( $fullUrl, $expectedUrl );
+		$this->assertEquals( $expectedUrl, $fullUrl );
 	}
 
 	public function urlsSpacesProvider() {
@@ -180,7 +180,6 @@ class GlobalTitleTest extends WikiaBaseTest {
 			[ WIKIA_ENV_PREVIEW, 'Test Ze Spacjami', NS_TALK, 177, 'http://community.preview.wikia.com/wiki/Talk:Test_Ze_Spacjami' ],
 			[ WIKIA_ENV_VERIFY, 'Test Ze Spacjami', NS_TALK, 177, 'http://community.verify.wikia.com/wiki/Talk:Test_Ze_Spacjami' ],
 			[ WIKIA_ENV_SANDBOX, 'Test Ze Spacjami', NS_TALK, 177, 'http://community.sandbox-s1.wikia.com/wiki/Talk:Test_Ze_Spacjami' ],
-			[ WIKIA_ENV_STAGING, 'Test Ze Spacjami', NS_TALK, 177, 'http://community.wikia-staging.com/wiki/Talk:Test_Ze_Spacjami' ],
 		];
 	}
 

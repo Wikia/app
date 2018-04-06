@@ -22,3 +22,4 @@ $wgHooks[ 'ArticleUndelete' ][] = 'Wikia\IndexingPipeline\PipelineEventProducer:
 $wgHooks[ 'TitleMoveComplete' ][] = 'Wikia\IndexingPipeline\PipelineEventProducer::onTitleMoveComplete';
 $wgHooks[ 'UserTemplateClassification::TemplateClassified' ][] = 'Wikia\IndexingPipeline\PipelineEventProducer::onTemplateClassified';
 $wgHooks[ 'AfterWikiCreated' ][] = 'Wikia\IndexingPipeline\PipelineEventProducer::onAfterWikiCreated';
+$wgHooks[ 'ArticleEditUpdates'][] = '\Wikia\IndexingPipeline\PipelineEventProducer::onArticleEditUpdates';

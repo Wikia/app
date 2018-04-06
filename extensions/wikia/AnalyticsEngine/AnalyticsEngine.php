@@ -47,8 +47,6 @@ class AnalyticsEngine {
 				return new AnalyticsProviderKrux();
 			case 'A9':
 				return new AnalyticsProviderA9();
-			case 'Nielsen':
-				return new AnalyticsProviderNielsen();
 			case 'Prebid':
 				return new AnalyticsProviderPrebid();
 			case 'DynamicYield':

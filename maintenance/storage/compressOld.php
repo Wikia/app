@@ -103,7 +103,7 @@ class CompressOld extends Maintenance {
 
 	/** @todo document */
 	private function compressOldPages( $start = 0, $extdb = '' ) {
-		$chunksize = 50;
+		$chunksize = 500;
 		$this->output( "Starting from old_id $start...\n" );
 		$dbw = wfGetDB( DB_MASTER );
 		do {
@@ -130,29 +130,46 @@ class CompressOld extends Maintenance {
 	 * @return bool
 	 */
 	private function compressPage( $row, $extdb ) {
-		if ( false !== strpos( $row->old_flags, 'gzip' ) || false !== strpos( $row->old_flags, 'object' ) ) {
-			#print "Already compressed row {$row->old_id}\n";
+		$flags = $row->old_flags;
+		$isGzipped = strpos( $flags, 'gzip' ) !== false;
+		$isExternal = strpos( $flags, 'external' ) !== false;
+
+		if ( $isExternal ) {
+			# already moved to external
 			return false;
 		}
+		elseif ( $isGzipped && $extdb === '' ) {
+			# already compressed locally and we do not want to move it to external
+			return false;
+		}
+
 		$dbw = wfGetDB( DB_MASTER );
-		$flags = $row->old_flags ? "{$row->old_flags},gzip" : "gzip";
-		$compress = gzdeflate( $row->old_text );
+
+		# get the raw text out of text table row (this will handle all possible flags setup)
+		$text = Revision::getRevisionText( $row );
+
+		// compress the raw text
+		$flags = 'utf-8,gzip';
+		$compressed = gzdeflate( $text );
 
 		# Store in external storage if required
 		if ( $extdb !== '' ) {
-			$storeObj = new ExternalStoreDB;
-			$compress = $storeObj->store( $extdb, $compress );
-			if ( $compress === false ) {
+			$storeObj = new ExternalStoreDB();
+			$compressed = $storeObj->store( $extdb, $compressed );
+			if ( $compressed === false ) {
 				$this->error( "Unable to store object" );
 				return false;
 			}
+
+			// SUS-4497 | set the flag saying that the old_text is a pseudo-URL to blobs entry
+			$flags .= ',external';
 		}
 
 		# Update text row
 		$dbw->update( 'text',
 			array( /* SET */
 				'old_flags' => $flags,
-				'old_text' => $compress
+				'old_text' => $compressed
 			), array( /* WHERE */
 				'old_id' => $row->old_id
 			), __METHOD__,

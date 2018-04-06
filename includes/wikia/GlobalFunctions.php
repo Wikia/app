@@ -1562,14 +1562,13 @@ function wfHttpsToHttp( $url ) {
 }
 
 function wfHttpsAllowedForURL( $url ): bool {
-	global $wgWikiaBaseDomain, $wgDevDomain, $wgWikiaEnvironment;
-	$parsedURL = parse_url( $url );
-	if ( $parsedURL === false ) {
+	global $wgWikiaBaseDomain, $wgDevDomain, $wgWikiaEnvironment, $wgDevelEnvironment;
+	$host = parse_url( $url, PHP_URL_HOST );
+	if ( $host === false ) {
 		return false;
 	}
 
-	$host = $parsedURL['host'];
-	if ( !empty( $wgDevDomain ) ) {
+	if ( $wgDevelEnvironment && !empty( $wgDevDomain ) ) {
 		$server = str_replace( ".{$wgDevDomain}", '', $host );
 	} elseif ( $wgWikiaEnvironment !== WIKIA_ENV_PROD ) {
 		$server = preg_replace(
@@ -1583,4 +1582,17 @@ function wfHttpsAllowedForURL( $url ): bool {
 
 	// Only allow single subdomain wikis through
 	return substr_count( $server, '.' ) === 0;
+}
+
+/**
+ * Removes the protocol part of a url and returns the result, e. g. http://muppet.wikia.com -> muppet.wikia.com
+ *
+ * @param $url
+ */
+function wfStripProtocol( $url ) {
+	$pos = strpos( $url, '://' );
+	if ( $pos === FALSE ) {
+		return $url;
+	}
+	return substr( $url, $pos + 3 );
 }

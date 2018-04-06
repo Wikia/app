@@ -26,19 +26,6 @@ class FixDomainNameTest extends WikiaBaseTest {
 				'language' => 'pl',
 				'execpted' => 'pl.foo.wikia.com'
 			],
-			# staging
-			[
-				'env' => WIKIA_ENV_STAGING,
-				'name' => 'foo',
-				'language' => 'en',
-				'execpted' => 'foo.wikia-staging.com'
-			],
-			[
-				'env' => WIKIA_ENV_STAGING,
-				'name' => 'foo',
-				'language' => 'pl',
-				'execpted' => 'pl.foo.wikia-staging.com'
-			],
 			# lowercasing
 			[
 				'env' => WIKIA_ENV_PROD,

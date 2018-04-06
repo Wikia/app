@@ -1273,10 +1273,6 @@ if ( !empty( $wgEnableArticlesAsResourcesExt )  ) {
 	include( "$IP/extensions/wikia/ArticlesAsResources/ArticlesAsResources.setup.php" );
 }
 
-if ($wgEnableGameProAds === null && in_array( $wgLanguageCode, $wgAvailableGameProAdsLang )) {
-	$wgEnableGameProAds = true;
-}
-
 /**
  * Our own extension which template is being shared among two [three] other extensions (Article Comments [Blog], Wall)
  * It has one method which is a hook fired in ChangesList.php and it fires our own hook via which we can change
@@ -1317,10 +1313,6 @@ if ( !empty( $wgEnableVisualEditorExt ) ) {
 		case WIKIA_ENV_SANDBOX:
 			$wgVisualEditorParsoidHTTPProxy = 'http://prod.icache.service.consul:80';
 			$wgVisualEditorParsoidURL = 'http://prod.parsoid-cache';
-			break;
-		case WIKIA_ENV_STAGING:
-			$wgVisualEditorParsoidHTTPProxy = 'http://staging.icache.service.consul:80';
-			$wgVisualEditorParsoidURL = 'http://staging.parsoid-cache';
 			break;
 		case WIKIA_ENV_DEV:
 			// Note: This must NOT end with a slash due to Parsoid bug (wtf?)
@@ -1439,10 +1431,6 @@ if ( $wgUseMimeMagicLite ) {
 
 if ( !empty( $wgEnableAbuseFilterBypass ) ) {
 	include( "{$IP}/extensions/wikia/AbuseFilterBypass/AbuseFilterBypass.php" );
-}
-
-if ( !empty( $wgEnableOptimizelyExt ) ) {
-	include "$IP/extensions/wikia/Optimizely/Optimizely.setup.php";
 }
 
 if ( !empty( $wgEnableQualarooExt ) ) {

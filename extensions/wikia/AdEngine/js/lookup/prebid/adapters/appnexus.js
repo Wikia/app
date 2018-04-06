@@ -54,7 +54,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.appnexus',[
 						[320, 480]
 					]
 				},
-				MOBILE_PREFOOTER: {
+				BOTTOM_LEADERBOARD: {
 					sizes: [
 						[300, 250],
 						[320, 50]

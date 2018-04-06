@@ -15,8 +15,9 @@ $GLOBALS['wgAutoloadClasses']['UserLogoutSpecialController'] = __DIR__ . '/speci
 $GLOBALS['wgWikiaApiControllers']['EmailConfirmationController'] = $dir . 'EmailConfirmationController.class.php';
 
 $GLOBALS['wgSpecialPages']['Signup'] = 'SpecialSignupRedirect';
-$GLOBALS['wgSpecialPages']['UserLogin'] = 'SpecialUserLoginRedirect';
+$GLOBALS['wgSpecialPages']['Userlogin'] = 'SpecialUserLoginRedirect';
 $GLOBALS['wgSpecialPages']['UserSignup'] = 'SpecialUserSignupRedirect';
+$GLOBALS['wgSpecialPages']['Confirmemail'] = 'SpecialWikiaConfirmEmailRedirect';
 $GLOBALS['wgSpecialPages']['WikiaConfirmEmail'] = 'SpecialWikiaConfirmEmailRedirect';
 $GLOBALS['wgSpecialPages']['Userlogout'] = 'UserLogoutSpecialController';
 

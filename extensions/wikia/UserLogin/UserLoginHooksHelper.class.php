@@ -38,21 +38,6 @@ class UserLoginHooksHelper {
 		return true;
 	}
 
-	// set parameters for User::sendConfirmationEmail()
-	public static function onUserSendConfirmationMail( User $user, &$args, &$priority, &$url, $token, $ip_arg, $type ): bool {
-		if ( $type !== 'reactivateaccount' ) {
-			$priority = 1;  // confirmation emails are higher than default priority of 0
-			$url = $user->wikiaConfirmationTokenUrl( $token );
-			if ( !$ip_arg ) {
-				$args[1] = $url;
-			} else {
-				$args[2] = $url;
-			}
-		}
-
-		return true;
-	}
-
 	// get email authentication for Preferences::profilePreferences
 	public static function onGetEmailAuthentication( User &$user, IContextSource $context, &$disableEmailPrefs, &$emailauthenticated ) {
 		$optionNewEmail = $user->getNewEmail();
