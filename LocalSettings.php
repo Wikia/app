@@ -35,8 +35,25 @@ $wgWikiaEnvironment = getenv( 'WIKIA_ENVIRONMENT' );
 // CONFIG_REVISION: remove $wgWikiaDatacenter and $wgWikiaEnvironment from the global scope and only use it to load configuration
 
 require_once( "$IP/includes/DefaultSettings.php" );
-require_once( "$IP/includes/wikia/DefaultSettings.php" );
 require "$IP/../config/base.php";
+require_once( "$IP/includes/wikia/DefaultSettings.php" );
+
+/** TEMPORARY TO OVERRIDE VARIABLES CHANGED BY CLASS AUTOLOADER **/
+/**
+ * Geographical names service for Maps extension.
+ * @see extensions/Maps/
+ * @var string $egMapsDefaultGeoService
+ */
+$egMapsDefaultGeoService = 'nominatim';
+
+/**
+ * Maps service for Maps extension.
+ * @see extensions/Maps/
+ * @var string $egMapsDefaultService
+ */
+$egMapsDefaultService = 'googlemaps3';
+/** END OF TEMPORARY **/
+
 
 // the rest of the old contents
 require "$IP/../config/LocalSettings.php";
