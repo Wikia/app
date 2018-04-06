@@ -38,6 +38,7 @@ class WikiaUpdater {
 			array( 'modifyField', 'recentchanges', 'rc_ip', $dir . 'patch-rc_ip-varbinary.sql', true ),
 			array( 'addField', 'recentchanges', 'rc_ip_bin',$dir . 'patch-rc_ip_bin.sql', true ), // SUS-3079
 			array( 'addField', 'video_info', 'video_id', $dir . 'patch-video_info_id.sql', true ), // SUS-4297
+			array( 'addField', 'video_info', 'provider', $dir . 'patch-video_info_provider.sql', true	), // SUS-4297
 			// SUS-805
 			array( 'dropField', 'ipblocks', 'ipb_by_text', $dir . 'patch-drop-ipb_by_text.sql', true ),
 
