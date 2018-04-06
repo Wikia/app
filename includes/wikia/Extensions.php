@@ -172,10 +172,12 @@ if (empty($wgHelpWikiId)) {
 
 $wgLocalMessageCache = '/tmp/messagecache';
 
+
 /**
- * @name $wgAppleTouchIcon
- * Favicon for iPod Touch and iPhone
- * Note: Has to be set here, since it makes use of $wgLogo set by WikiFactory
+ * The URL path of the icon for iPhone and iPod Touch web app bookmarks.
+ * Defaults to no icon.
+ * @see $wgLogo
+ * @var string|bool
  */
 $wgAppleTouchIcon = $wgLogo;
 
