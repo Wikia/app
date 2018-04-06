@@ -9,12 +9,12 @@ class ImportStarterData extends Task {
 
 	use Loggable;
 
-	private $phpBin = "/usr/bin/php";
-
 	public function check() {
+		global $wgPhpCli;
+
 		// php-cli is required for spawning PHP maintenance scripts
 		if ( !$this->canExecute() ) {
-			return TaskResult::createForError( $this->phpBin . " doesn't exist or is not an executable" );
+			return TaskResult::createForError( $wgPhpCli . " doesn't exist or is not an executable" );
 		} else {
 			return TaskResult::createForSuccess();
 		}
@@ -55,16 +55,18 @@ class ImportStarterData extends Task {
 	}
 
 	public function canExecute() {
-		return file_exists( $this->phpBin ) && is_executable( $this->phpBin );
+		global $wgPhpCli;
+
+		return file_exists( $wgPhpCli ) && is_executable( $wgPhpCli );
 	}
 
 	public function executeShell() {
-		global $IP;
+		global $IP, $wgPhpCli;
 
 		$cmd = sprintf(
 			"SERVER_ID=%d %s %s/maintenance/importStarter.php",
 			$this->taskContext->getCityId(),
-			$this->phpBin,
+			$wgPhpCli,
 			"{$IP}/extensions/wikia/CreateNewWiki"
 		);
 
