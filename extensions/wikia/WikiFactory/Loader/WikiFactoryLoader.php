@@ -469,9 +469,9 @@ class WikiFactoryLoader {
 		}
 
 		/**
-		 * if wgDBname is not defined we get all variables from database
+		 * the list of variables is empty (cache miss), get them from the database
 		 */
-		if( ! isset( $this->mVariables["wgDBname"] ) ) {
+		if( empty( $this->mVariables ) ) {
 			wfProfileIn( __METHOD__."-varsdb" );
 			$dbr = $this->getDB();
 			$oRes = $dbr->select(
