@@ -416,20 +416,6 @@ $wgNamespacesWithSubpages = array(
  */
 $wgContentNamespaces = array(NS_MAIN);
 
-/**
- * If the above is false, you can specify an exception here. Image URLs
- * that start with this string are then rendered, while all others are not.
- * You can use this to set up a trusted, simple repository of images.
- * You may also specify an array of strings to allow multiple sites
- *
- * Examples:
- * <code>
- * $wgAllowExternalImagesFrom = 'http://127.0.0.1/';
- * $wgAllowExternalImagesFrom = array( 'http://127.0.0.1/', 'http://example.com' );
- * </code>
- */
-$wgAllowExternalImagesFrom = '';
-
 /** @see $wgUseTidy */
 $wgTidyConf = $IP . '/includes/tidy.conf';
 
