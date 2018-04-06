@@ -401,7 +401,7 @@ class WikiFactoryLoader {
 			$hasAuthCookie = !empty( $_COOKIE[\Wikia\Service\User\Auth\CookieHelper::ACCESS_TOKEN_COOKIE_NAME] ) ||
 							 !empty( $_COOKIE[session_name()] ) ||
 							 !empty( $_COOKIE["{$wgCookiePrefix}Token"] ) ||
-							 !empty( $_COOKIE["{$wgCookiePrefix}UserID"] ) );
+							 !empty( $_COOKIE["{$wgCookiePrefix}UserID"] );
 
 			if ( $hasAuthCookie &&
 				 $_SERVER['HTTP_FASTLY_SSL'] &&
