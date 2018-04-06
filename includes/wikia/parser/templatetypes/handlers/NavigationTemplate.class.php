@@ -30,6 +30,10 @@ class NavigationTemplate {
 	 * @return string
 	 */
 	private static function process( $html ) {
+		// Do not build whole DOM if there is no navigation template wrappers within html
+		// side effect: PortableInfobox tests are working because of this condition. These tests
+		// use DOMDocument->loadXML to normalize html, which does not parse not closed tags that
+		// are valid HTML (for example <img src="">)
 		if ( strpos($html, 'data-navuniq') === false ) {
 			return $html;
 		}
