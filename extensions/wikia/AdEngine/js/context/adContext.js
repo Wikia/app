@@ -8,11 +8,11 @@ define('ext.wikia.adEngine.adContext', [
 	'wikia.document',
 	'wikia.geo',
 	'wikia.instantGlobals',
-	'ext.wikia.adEngine.bridge',
+	'ext.wikia.adEngine.geo',
 	'ext.wikia.adEngine.utils.sampler',
 	'wikia.window',
 	'wikia.querystring'
-], function (browserDetect, cookies, doc, geo, instantGlobals, adEngineBridge, sampler, w, Querystring) {
+], function (browserDetect, cookies, doc, geo, instantGlobals, adsGeo, sampler, w, Querystring) {
 	'use strict';
 
 	instantGlobals = instantGlobals || {};
@@ -217,7 +217,7 @@ define('ext.wikia.adEngine.adContext', [
 		context.opts.isBLBMegaEnabled = geo.isProperGeo(instantGlobals.wgAdDriverBottomLeaderBoardMegaCountries);
 
 		context.opts.labradorTestGroup =
-			adEngineBridge.isProperGeo(instantGlobals.wgAdDriverLABradorTestCountries, 'wgAdDriverLABradorTestCountries') ?
+			adsGeo.isProperGeo(instantGlobals.wgAdDriverLABradorTestCountries, 'wgAdDriverLABradorTestCountries') ?
 				'B' : 'A';
 
 		// Export the context back to ads.context

@@ -1,14 +1,14 @@
 /*global define, require*/
 define('ext.wikia.adEngine.tracking.adInfoTracker',  [
 	'ext.wikia.adEngine.adTracker',
-	'ext.wikia.adEngine.bridge',
+	'ext.wikia.adEngine.geo',
 	'ext.wikia.adEngine.slot.service.slotRegistry',
 	'ext.wikia.adEngine.tracking.pageLayout',
 	'wikia.browserDetect',
 	'wikia.log',
 	'wikia.window',
 	require.optional('ext.wikia.adEngine.ml.rabbit')
-], function (adTracker, adEngineBridge, slotRegistry, pageLayout, browserDetect, log, win, rabbit) {
+], function (adTracker, geo, slotRegistry, pageLayout, browserDetect, log, win, rabbit) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.tracking.adInfoTracker';
@@ -83,7 +83,7 @@ define('ext.wikia.adEngine.tracking.adInfoTracker',  [
 			'rabbit': (rabbit && rabbit.getAllSerializedResults()) || '',
 			'page_width': win.document.body.scrollWidth || '',
 			'page_layout': pageLayout.getSerializedData(slotName) || '',
-			'labrador': adEngineBridge.getSamplingResults().join(';')
+			'labrador': geo.getSamplingResults().join(';')
 		};
 
 		log(['prepareData', slotName, data], log.levels.debug, logGroup);
