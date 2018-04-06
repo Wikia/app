@@ -36,15 +36,15 @@ class UpdateMissingGuidelines extends Maintenance {
 		$wikia = WikiFactory::getWikiByID( $wikiId );
 		$lang = $wikia->city_lang;
 
-		$this->output( "Wiki id: $wikia->city_id \n" );
-		$this->output( "Wiki lang: $lang \n" );
+		$this->output( "Wiki id: $wikia->city_id \n\n" );
+		$this->output( "Wiki lang: $lang \n\n" );
 		$guidelinesText = empty( $this->langMap[ $lang ] ) ? $this->langMap[ 'en' ] : $this->langMap[ $lang ];
 		$existingLangAttr = $api->getAttribute($wikiId, "languageCode")->getValue();
 		$existingGuidelines = $api->getAttribute($wikiId, "guidelines")->getValue();
 
-		$this->output( "Site lang: $existingLangAttr\n" );
-		$this->output( "Site guidelines: \n$existingGuidelines\n" );
-		$this->output( "New guidelines: \n$guidelinesText\n" );
+		$this->output( "Site lang: $existingLangAttr\n\n" );
+		$this->output( "Site guidelines: \n$existingGuidelines\n\n" );
+		$this->output( "New guidelines: \n$guidelinesText\n\n" );
 
 		if ( empty( $existingGuidelines ) ) {
 			$internalApi->internallySaveAttribute( $wikiId, "guidelines", $wgTheSchwartzSecretToken, $guidelinesText );
