@@ -53,6 +53,14 @@ class UpdateMissingGuidelines extends Maintenance {
 		} else {
 			$this->output( "Guidelines for $wikiId exists, skipping\n" );
 		}
+
+		if ( empty( $existingLangAttr ) ) {
+			$internalApi->internallySaveAttribute( $wikiId, "languageCode", $wgTheSchwartzSecretToken, $lang );
+
+			$this->output( "Updated lang for $wikiId\n" );
+		} else {
+			$this->output( "Lang for $wikiId exists, skipping\n" );
+		}
 	}
 
 	private $langMap = array(
