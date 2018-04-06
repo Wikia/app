@@ -30,6 +30,10 @@ class NavigationTemplate {
 	 * @return string
 	 */
 	private static function process( $html ) {
+		if ( strpos($html, 'data-navuniq') === false ) {
+			return $html;
+		}
+
 		$document = HtmlHelper::createDOMDocumentFromText( $html );
 		$xpath = new DOMXPath( $document );
 		$result = $xpath->query( self::NAV_PATH, $document );
