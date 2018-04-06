@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * @group wikidiff
+ */
 class DiffEngineTest extends WikiaBaseTest {
 
 	public function testExtensionsIsLoaded() {

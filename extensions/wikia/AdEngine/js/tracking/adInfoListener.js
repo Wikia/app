@@ -108,7 +108,7 @@ define('ext.wikia.adEngine.tracking.adInfoListener',  [
 	function shouldHandleSlot(slot) {
 		var dataGptDiv = slot.container && slot.container.firstChild;
 
-		return (
+		return !!(
 			enabledSlots[slot.name] &&
 			dataGptDiv &&
 			dataGptDiv.dataset.gptPageParams
@@ -123,7 +123,16 @@ define('ext.wikia.adEngine.tracking.adInfoListener',  [
 				var adInfo = event.detail.adInfo || {},
 					adType = adInfo && adInfo.adType,
 					slot = event.detail.slot,
-					status = adType === 'blocked' ? 'blocked' : event.detail.status;
+					status;
+
+				switch (adType) {
+					case 'blocked':
+					case 'viewport-conflict':
+						status = adType;
+						break;
+					default:
+						status = event.detail.status;
+				}
 
 				if (shouldHandleSlot(slot)) {
 					log(['adengine.slot.status', event], log.levels.debug, logGroup);

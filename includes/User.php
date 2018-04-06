@@ -240,11 +240,7 @@ class User implements JsonSerializable {
 	}
 
 	private static function permissionsService(): PermissionsService {
-		if ( is_null( self::$permissionsService ) ) {
-			self::$permissionsService = ServiceFactory::instance()->permissionsFactory()->permissionsService();
-		}
-
-		return self::$permissionsService;
+		return ServiceFactory::instance()->permissionsFactory()->permissionsService();
 	}
 
 	/**

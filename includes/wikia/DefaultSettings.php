@@ -33,7 +33,6 @@ $wgUseFakeExternalStoreDB = false;
 /**
  * includes common for all wikis
  */
-require_once ( $IP."/includes/wikia/Defines.php" );
 require_once ( $IP."/includes/wikia/GlobalFunctions.php" );
 require_once ( $IP."/includes/wikia/Wikia.php" );
 require_once ( $IP."/includes/wikia/WikiaMailer.php" );
@@ -202,6 +201,7 @@ $wgAutoloadClasses[ "ArticleQualityService"           ] = "$IP/includes/wikia/se
 $wgAutoloadClasses[ "GlobalTitle"                     ] = "$IP/includes/wikia/GlobalTitle.php";
 $wgAutoloadClasses[ "GlobalFile"                      ] = "$IP/includes/wikia/GlobalFile.class.php";
 $wgAutoloadClasses[ "WikiFactory"                     ] = "$IP/extensions/wikia/WikiFactory/WikiFactory.php";
+$wgAutoloadClasses[ "WikiFactoryLoader"               ] = "$IP/extensions/wikia/WikiFactory/Loader/WikiFactoryLoader.php";
 $wgAutoloadClasses[ "WikiFactoryHub"                  ] = "$IP/extensions/wikia/WikiFactory/Hubs/WikiFactoryHub.php";
 $wgAutoloadClasses[ "WikiFactoryHubHooks"             ] = "$IP/extensions/wikia/WikiFactory/Hubs/WikiFactoryHubHooks.class.php";
 $wgAutoloadClasses[ 'FakeLocalFile'                   ] = "$IP/includes/wikia/FakeLocalFile.class.php";
@@ -1099,19 +1099,6 @@ $wgEnableGoogleFundingChoices = true;
 $wgEnableGoogleFundingChoicesInHead = false;
 
 /**
- * @name $wgEnableNielsen
- * Enables Nielsen Digital Content Ratings
- */
-$wgEnableNielsen = false;
-
-/**
- * @name $wgNielsenApid
- * Nielsen Digital Content Ratings apid. Should be changed via WikiFactory when $wgEnableNielsen is set to true
- */
-$wgNielsenApid = 'FIXME';
-
-
-/**
  * @name $wgEnableNetzAthleten
  * Enables NetzAthleten provider
  */
@@ -1247,6 +1234,13 @@ $wgAdDriverBeachfrontBidderCountries = null;
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverBottomLeaderBoardMegaCountries = null;
+
+/**
+ * @name $wgAdDriverBottomLeaderBoardViewportCountries
+ * List of countries where BOTTOM_LEADERBOARD will collapse if it is in same viewport with MR.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverBottomLeaderBoardViewportCountries = null;
 
 /**
  * @name $wgAdDriverIndexExchangeBidderCountries
@@ -1682,18 +1676,6 @@ $wgBuckyEnabledSkins = [
  * Unit: percent (0-100)
  */
 $wgMemcacheStatsSampling = 1;
-
-/**
- * @name wgXhprofUDPHost
- * Host that xhprof data should be reported to (if set to null will use $wgUDPProfilerHost)
- */
-$wgXhprofUDPHost = null;
-
-/**
- * @name wgXhprofUDPPort
- * Port that xhprof data should be reported to
- */
-$wgXhprofUDPPort = '3911';
 
 /**
  * @name wgXhprofMinimumTime

@@ -82,6 +82,7 @@ class WikiaUpdater {
 			array( 'WikiaUpdater::do_drop_table', 'objectcache' ), // SUS-4171
 			array( 'WikiaUpdater::doPageVoteCleanup' ), // SUS-3390 / SUS-4252
 			array( 'addIndex', 'page_vote', 'article_user_idx', $dir. 'patch-index-page_vote.sql', true ), // SUS-3390
+			array( 'addIndex', 'video_info', 'video_id', $dir. 'patch-index-video_info.sql', true ), //  SUS-4297
 		);
 
 		if ( $wgDBname === $wgExternalSharedDB ) {

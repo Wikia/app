@@ -31,7 +31,6 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 		wikiVerticalList,
 		wikiVerticalError,
 		wikiAllAges,
-		allAgesDiv,
 		descWikiSubmitError,
 		nextButtons,
 		finishSpinner,
@@ -46,7 +45,8 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 			action: tracker.ACTIONS.CLICK,
 			category: 'create-new-wiki',
 			trackingMethod: 'analytics'
-		});
+		}),
+		NO_SUBDOMAIN_LANGUAGE = 'en';
 
 	function init() {
 		var pane;
@@ -95,7 +95,6 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 		wikiVerticalList = $descWikiWrapper.find('.wiki-vertical-dropdown');
 		wikiVerticalError = $descWikiWrapper.find('.wiki-vertical-error');
 		wikiAllAges = $descWikiWrapper.find('input[name=all-ages]');
-		allAgesDiv = $('#all-ages-div');
 		descWikiSubmitError = $descWikiWrapper.find('.submit-error');
 		nextButtons = wb.find('nav .next');
 		finishSpinner = wb.find('.finish-status');
@@ -301,12 +300,10 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 		checkDomain();
 		var selected = $(this).val();
 
-		if (selected && selected !== window.wgLangAllAgesOpt) {
+		if (selected && selected !== NO_SUBDOMAIN_LANGUAGE) {
 			wikiDomainCountry.html(selected + '.');
-			allAgesDiv.hide();
 		} else {
 			wikiDomainCountry.html('');
-			allAgesDiv.show();
 		}
 
 		if (!wikiDomainLabel.hasClass('active')) {
