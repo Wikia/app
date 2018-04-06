@@ -63,7 +63,9 @@ class ImportStarterData extends Task {
 	}
 
 	public function executeShell() {
-		global $IP;
+		global $IP, $wgPhpCli;
+
+		$this->phpBin = $wgPhpCli;
 
 		$cmd = sprintf(
 			"SERVER_ID=%d %s %s/maintenance/importStarter.php",
