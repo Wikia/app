@@ -36,6 +36,7 @@ class UpdateMissingGuidelines extends Maintenance {
 		$wikia = WikiFactory::getWikiByID( $wikiId );
 		$lang = $wikia->city_lang;
 
+		$this->output( "-------------------\n" );
 		$this->output( "Wiki id: $wikia->city_id \n\n" );
 		$this->output( "Wiki lang: $lang \n\n" );
 		$guidelinesText = empty( $this->langMap[ $lang ] ) ? $this->langMap[ 'en' ] : $this->langMap[ $lang ];
