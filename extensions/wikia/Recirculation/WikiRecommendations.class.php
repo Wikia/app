@@ -474,24 +474,6 @@ class WikiRecommendations {
 		]
 	];
 
-	const STAGING_RECOMMENDATIONS = [
-		[
-			'thumbnailUrl' => 'https://vignette.wikia-staging.nocookie.net/muppet/images/4/4b/Image001.png/revision/latest?cb=20170911141514',
-			'title' => 'Selenium',
-			'url' => 'http://selenium.wikia-staging.com',
-		],
-		[
-			'thumbnailUrl' => 'https://vignette.wikia-staging.nocookie.net/selenium/images/e/e2/Image009.jpg/revision/latest?cb=20170911141722',
-			'title' => 'Halloween',
-			'url' => 'http://halloween.wikia-staging.com',
-		],
-		[
-			'thumbnailUrl' => 'https://vignette.wikia-staging.nocookie.net/selenium/images/2/2e/WallPaperHD_138.jpg/revision/latest?cb=20170911141722',
-			'title' => 'Sktest123',
-			'url' => 'http://sktest123.wikia-staging.com',
-		]
-	];
-
 	const DEV_RECOMMENDATIONS = [
 		'us' => [
 			[
@@ -532,9 +514,7 @@ class WikiRecommendations {
 	public static function getRecommendations( $contentLanguage ) {
 		global $wgWikiaDatacenter, $wgWikiaEnvironment;
 
-		if ( $wgWikiaEnvironment === WIKIA_ENV_STAGING ) {
-			$recommendations = self::STAGING_RECOMMENDATIONS;
-		} elseif ( $wgWikiaEnvironment === WIKIA_ENV_DEV ) {
+		if ( $wgWikiaEnvironment === WIKIA_ENV_DEV ) {
 			if ( $wgWikiaDatacenter === WIKIA_DC_POZ ) {
 				$recommendations = self::DEV_RECOMMENDATIONS['pl'];
 			} else {

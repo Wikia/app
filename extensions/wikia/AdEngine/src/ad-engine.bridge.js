@@ -50,10 +50,13 @@ function init(
 
 	context.set('custom.wikiIdentifier', wikiIdentifier);
 	context.set('options.contentLanguage', window.wgContentLanguage);
+
+	if (legacyContext.get('opts.isBLBViewportEnabled')) {
+		context.push('slots.BOTTOM_LEADERBOARD.viewportConflicts', 'TOP_RIGHT_BOXAD');
+	}
 }
 
 function overrideSlotService(slotRegistry, legacyBtfBlocker) {
-
 	const slotsCache = {};
 
 	slotService.getBySlotName = (id) => {
@@ -65,6 +68,10 @@ function overrideSlotService(slotRegistry, legacyBtfBlocker) {
 
 			return slotsCache[id];
 		}
+	};
+
+	slotService.clearSlot = (id) => {
+		delete slotsCache[id];
 	};
 
 	slotService.legacyEnabled = slotService.enable;
@@ -86,6 +93,9 @@ function unifySlotInterface(slot) {
 		getSlotName: () => slot.name,
 		getTargeting: () => slotContext.targeting,
 		getVideoAdUnit: () => AdUnitBuilder.build(slot),
+		getViewportConflicts: () => {
+			return slotContext.viewportConflicts || [];
+		},
 		setConfigProperty: (key, value) => {
 			context.set(`slots.${slot.name}.${key}`, value);
 		}
@@ -149,5 +159,6 @@ export {
 	checkAdBlocking,
 	passSlotEvent,
 	context,
-	universalAdPackage
+	universalAdPackage,
+	slotService
 };

@@ -27,6 +27,7 @@ export const getConfig = () => ({
 		this.adSlot = adSlot;
 		this.slotParams = params;
 		context.set(`slots.${adSlot.getSlotName()}.options.isVideoMegaEnabled`, params.isVideoMegaEnabled);
+		context.set('slots.BOTTOM_LEADERBOARD.viewportConflicts', []);
 
 		const spotlightFooter = document.getElementById('SPOTLIGHT_FOOTER');
 		const wrapper = document.getElementById('WikiaTopAds');

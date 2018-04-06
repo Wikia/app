@@ -216,6 +216,8 @@ define('ext.wikia.adEngine.adContext', [
 		context.opts.isBLBMegaEnabled = geo.isProperGeo(instantGlobals.wgAdDriverBottomLeaderBoardMegaCountries);
 		context.opts.additionalBLBSizes =
 			geo.isProperGeo(instantGlobals.wgAdDriverBottomLeaderBoardAdditionalSizesCountries);
+		context.opts.isBLBViewportEnabled =
+			geo.isProperGeo(instantGlobals.wgAdDriverBottomLeaderBoardViewportCountries);
 
 		// Export the context back to ads.context
 		// Only used by Lightbox.js, WikiaBar.js and AdsInContext.js
