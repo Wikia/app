@@ -167,7 +167,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 			googleTag.setPageLevelParams(adLogicPageParams.getPageLevelParams());
 		}
 
-		if (!shouldPush) {
+		if (!shouldPush || !slot.isEnabled()) {
 			log(['Push blocked', slotName], log.levels.debug, logGroup);
 			slot.collapse();
 			return;

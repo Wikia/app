@@ -184,14 +184,10 @@ define('ext.wikia.adEngine.adEngine', [
 				slot.isViewed = true;
 			});
 
-			if (slot.isEnabled()) {
-				slotRegistry.add(slot, provider.name);
-				initializeProviderOnce(provider);
+			slotRegistry.add(slot, provider.name);
+			initializeProviderOnce(provider);
 
-				provider.fillInSlotQueue.push([slot]);
-			} else {
-				slot.collapse('Slot blocked - collapsing.');
-			}
+			provider.fillInSlotQueue.push([slot]);
 		}
 
 		function fillInSlot(slot) {
