@@ -115,12 +115,12 @@ class MercuryApi {
 	 */
 	public function getWikiVariables() {
 		global $wgStyleVersion, $wgCityId, $wgContLang, $wgContentNamespaces, $wgDBname,
-		       $wgDefaultSkin, $wgDisableAnonymousEditing, $wgDisableAnonymousUploadForMercury,
-		       $wgDisableMobileSectionEditor, $wgEnableCommunityData, $wgEnableDiscussions,
-		       $wgEnableDiscussionsImageUpload, $wgDiscussionColorOverride, $wgEnableNewAuth,
-		       $wgLanguageCode, $wgSitename, $wgWikiDirectedAtChildrenByFounder,
-		       $wgWikiDirectedAtChildrenByStaff, $wgCdnRootUrl, $wgScriptPath,
-		       $wgEnableDiscussionsPostsWithoutText, $wgEnableDiscussionsPolls, $wgEnableLightweightContributions;
+			   $wgDefaultSkin, $wgDisableAnonymousEditing, $wgDisableAnonymousUploadForMercury,
+			   $wgDisableMobileSectionEditor, $wgEnableCommunityData, $wgEnableDiscussions,
+			   $wgEnableDiscussionsImageUpload, $wgDiscussionColorOverride, $wgEnableNewAuth,
+			   $wgLanguageCode, $wgSitename, $wgWikiDirectedAtChildrenByFounder,
+			   $wgWikiDirectedAtChildrenByStaff, $wgCdnRootUrl, $wgScriptPath,
+			   $wgEnableDiscussionsPolls, $wgEnableLightweightContributions;
 
 		$enableFAsmartBannerCommunity = WikiFactory::getVarValueByName( 'wgEnableFandomAppSmartBanner', WikiFactory::COMMUNITY_CENTRAL );
 
@@ -137,7 +137,6 @@ class MercuryApi {
 			'enableCommunityData' => $wgEnableCommunityData,
 			'enableDiscussions' => $wgEnableDiscussions,
 			'enableDiscussionsImageUpload' => $wgEnableDiscussionsImageUpload,
-			'enableDiscussionsPostsWithoutText' => $wgEnableDiscussionsPostsWithoutText,
 			'enableDiscussionsPolls' => $wgEnableDiscussionsPolls,
 			'enableFandomAppSmartBanner' => !empty( $enableFAsmartBannerCommunity ),
 			'enableLightweightContributions' => $wgEnableLightweightContributions,
