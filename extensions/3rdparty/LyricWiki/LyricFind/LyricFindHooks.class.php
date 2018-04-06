@@ -139,7 +139,7 @@ class LyricFindHooks {
 		];
 
 		foreach ( $crawlers as $identifier ) {
-			if ( strpos( $userAgent, $identifier ) !== false ) {
+			if ( strpos( strtolower( $userAgent ), strtolower( $identifier ) ) !== false ) {
 				return true;
 			}
 		}
