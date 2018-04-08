@@ -65,6 +65,16 @@ $wgAntivirusSetup = [
 ];
 
 /**
+ * The URL path for primary article page views. This path should contain $1,
+ * which is replaced by the article title. Will default to "{$wgScript}/$1" or
+ * "{$wgScript}?title=$1" in Setup.php, depending on $wgUsePathInfo.
+ * @see $wgUsePathInfo
+ * @see $wgScriptPath
+ * @global string $wgArticlePath
+ */
+$wgArticlePath = "$wgScriptPath/wiki/$1";
+
+/**
  * Automatically add a usergroup to any user who matches certain conditions.
  * The format is
  *   array( '&' or '|' or '^' or '!', cond1, cond2, ... )
@@ -96,6 +106,19 @@ $wgAutopromote = [
 ];
 
 /**
+ * Directory for caching data in the local filesystem. Should not be accessible
+ * from the web. Set this to false to not use any local caches. Note: if
+ * multiple wikis share the same localisation cache directory, they must all
+ * have the same set of extensions. You can set a directory just for the
+ * localisation cache using $wgLocalisationCacheConf['storeDirectory'].
+ * @see includes/cache/MessageCache.php
+ * @see includes/LocalisationCache.php
+ * @see maintenance/rebuildLocalisationCache.php
+ * @global string $wgCacheDirectory
+ */
+$wgCacheDirectory = "$IP/../cache/messages";
+
+/**
  * Array of namespaces which can be deemed to contain valid "content", as far
  * as the site statistics are concerned. Useful if additional namespaces also
  * contain "content" which should be considered when generating a count of the
@@ -120,6 +143,35 @@ $wgContentNamespaces = [ NS_MAIN ];
 $wgExtensionsDirectory = "$IP/extensions";
 
 /**
+ * Main cache type. This should be a cache with fast access, but it may have
+ * limited space. By default, it is disabled, since the database is not fast
+ * enough to make it worthwhile.
+ *
+ * The options are:
+ *
+ *   - CACHE_ANYTHING:   Use anything, as long as it works
+ *   - CACHE_NONE:       Do not cache
+ *   - CACHE_MEMCACHED:  MemCached, must specify servers in $wgMemCachedServers
+ *   - CACHE_ACCEL:      APC, XCache or WinCache
+ *   - CACHE_DBA:        Use PHP's DBA extension to store in a DBM-style
+ *                       database. This is slow, and is not recommended for
+ *                       anything other than debugging.
+ *   - (other):          A string may be used which identifies a cache
+ *                       configuration in $wgObjectCaches.
+ *
+ * @see $wgMessageCacheType, $wgParserCacheType
+ */
+$wgMainCacheType = CACHE_MEMCACHED;
+
+/**
+ * The cache type for storing the contents of the MediaWiki namespace. This
+ * cache is used for a small amount of data which is expensive to regenerate.
+ *
+ * For available types see $wgMainCacheType.
+ */
+$wgMessageCacheType = CACHE_MEMCACHED;
+
+/**
  * Namespaces to be searched when user clicks the "Help" tab on Special:Search.
  * @see includes/search/SearchEngine.php
  * @global Array $wgNamespacesToBeSearchedHelp
@@ -128,6 +180,14 @@ $wgNamespacesToBeSearchedHelp = [
     NS_PROJECT => true,
     NS_HELP => true,
 ];
+
+/**
+ * The cache type for storing article HTML. This is used to store data which
+ * is expensive to regenerate, and benefits from having plenty of storage space.
+ *
+ * For available types see $wgMainCacheType.
+ */
+$wgParserCacheType = CACHE_MEMCACHED;
 
 /**
  * Which namespaces have special treatment where they should be preview-on-open
@@ -174,3 +234,21 @@ $wgTrustedMediaFormats = [
     'application/pdf', // PDF files
     'image/svg+xml', // svg (only needed if inline rendering of svg is not supported)
 ];
+
+/**
+ * The URL path for the images directory. Defaults to "{$wgScriptPath}/images"
+ * in Setup.php, but there are variables declared earlier that depend on it
+ * so it has to be declared explicitly here.
+ * @see app/includes/Setup.php
+ * @var string|bool $wgUploadPath
+ */
+$wgUploadPath = "$wgScriptPath/images";
+
+/**
+ * The URL path of the wiki logo. Will default to
+ * "{$wgStylePath}/common/images/wiki.png" in Setup.php.
+ * @see Setup.php
+ * @see $wgUploadPath
+ * @global string|bool $wgLogo
+ */
+$wgLogo = "$wgUploadPath/b/bc/Wiki.png";

@@ -6675,14 +6675,6 @@ $wgScript = false;
 $wgScriptExtension  = '.php';
 
 /**
- * The URL path MediaWiki entry points. Other paths will be set to defaults
- * based on it unless they are directly set.
- * @see app/includes/Setup.php
- * @var string $wgScriptPath
- */
-$wgScriptPath = '';
-
-/**
  * If set to true the 'searcheverything' preference will be effective only for
  * logged-in users. Useful for big wikis to maintain different search profiles
  * for anonymous and logged-in users.
@@ -6805,6 +6797,14 @@ $wgSessionsInMemcached = true;
  * @var string $wgSharedDB
  */
 $wgSharedDB = null;
+
+/**
+ * Prefix for Memcached keys shared between wikis.
+ * @see extensions/wikia/Staging/Staging.setup.php
+ * @see wfSharedMemcKey()
+ * @var string $wgSharedKeyPrefix
+ */
+$wgSharedKeyPrefix = 'wikicities';
 
 /**
  * Table prefix for the shared database.
@@ -7118,6 +7118,13 @@ $wgSortSpecialPages = true;
  * @var Array|string $wgSpamRegex
  */
 $wgSpamRegex = [];
+
+/**
+ * User support email used in Special:Contact.
+ * @see extensions/wikia/SpecialContact2
+ * @var string $wgSpecialContactEmail
+ */
+$wgSpecialContactEmail = 'support@wikia.zendesk.com';
 
 /**
  * Additional functions to be performed with updateSpecialPages.
