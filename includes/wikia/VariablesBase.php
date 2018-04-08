@@ -1154,6 +1154,15 @@ $wgCustomConvertCommand = false;
 $wgDBAhandler = 'db3';
 
 /**
+ * Scale load balancer polling time so that under overload conditions, the
+ * database server receives a SHOW STATUS query at an average interval of this
+ * many microseconds.
+ * @see includes/db/LoadBalancer.php
+ * @var int $wgDBAvgStatusPoll
+ */
+$wgDBAvgStatusPoll = 30000; // 0.03 ms
+
+/**
  * Issue a warning when database server lag is higher than this number of
  * seconds.
  * @var int $wgDBClusterTimeout
@@ -1306,6 +1315,16 @@ $wgDebugDumpSql = false;
 $wgDebugFunctionEntry = false;
 
 /**
+ * Filename for debug logging. See http://www.mediawiki.org/wiki/How_to_debug
+ * The debug log file should be not be publicly accessible if it is used, as it
+ * may contain private data.
+ * @see wfDebug()
+ * @see $wgShowDebug
+ * @var string $wgDebugLogFile
+ */
+$wgDebugLogFile = '';
+
+/**
  * Set to an array of log group keys to filenames. If set, wfDebugLog() output
  * for that group will go to that file instead of the regular $wgDebugLogFile.
  * Useful for enabling selective logging in production.
@@ -1381,6 +1400,15 @@ $wgDebugToolbar = false;
  * @var string|bool $wgDefaultLanguageVariant
  */
 $wgDefaultLanguageVariant = false;
+
+/**
+ * Default robot policy.  The default policy is to encourage indexing and
+ * following of links.  It may be overridden on a per-namespace and/or per-page
+ * basis.
+ * @see includes/Article.php
+ * @global string $wgDefaultRobotPolicy
+ */
+$wgDefaultRobotPolicy = 'index,follow';
 
 /**
  * Settings added to this array will override the default globals for the user
@@ -3940,6 +3968,14 @@ $wgExtractInfoboxes = false;
 $wgExtraGenderNamespaces = [];
 
 /**
+ * List of language names or overrides for default names in Names.php.
+ * @see languages/Language.php
+ * @see languages/Names.php
+ * @var Array $wgExtraLanguageNames
+ */
+$wgExtraLanguageNames = [];
+
+/**
  * Additional namespaces. If the namespaces defined in Language.php and
  * Namespace.php are insufficient, you can create new ones here, for example,
  * to import Help files in other languages. You can also override the namespace
@@ -5281,6 +5317,14 @@ $wgMaintenanceScripts = [];
 $wgMangleFlashPolicy = true;
 
 /**
+ * How long to wait for a MySQL slave to catch up to the master.
+ * @see includes/db/LBFactory_Multi.php
+ * @see includes/db/LBFactory.php
+ * @var int $wgMasterWaitTimeout
+ */
+$wgMasterWaitTimeout = 10;
+
+/**
  * Force thumbnailing of animated GIFs above this size to a single frame instead
  * of an animated thumbnail.  As of MW 1.17 this limit is checked against the
  * total size of all frames in the animation. It probably makes sense to keep
@@ -6340,6 +6384,27 @@ $wgRCShowChangedSize = true;
 $wgRCShowWatchingUsers = false;
 
 /**
+ * Set this to a string to put the wiki into read-only mode. The text will be
+ * used as an explanation to users. This prevents most write operations. Cache
+ * updates may still be possible. To prevent database writes completely, use the
+ * read_only option in MySQL.
+ * @see includes/WebStart.php
+ * @see includes/db/Database.php
+ * @global string $wgReadOnly
+ */
+$wgReadOnly = null;
+
+/**
+ * Set this to specify an external URL containing details about the content
+ * license used on your wiki. If $wgRightsPage is set then this setting is
+ * ignored.
+ * @see includes/Metadata.php
+ * @see includes/OutputPage.php
+ * @var string $wgRightsUrl
+ */
+$wgRightsUrl = null;
+
+/**
  * If this lock file exists (size > 0), the wiki will be forced into read-only
  * mode. Its contents will be shown to users as part of the read-only warning
  * message. Will default to "{$wgUploadDirectory}/lock_yBgMBwiR" in Setup.php
@@ -6846,6 +6911,16 @@ $wgShowDBErrorBacktrace = false;
  * @var bool $wgShowDebug
  */
 $wgShowDebug = false;
+
+/**
+ * If set to true, uncaught exceptions will print a complete stack trace
+ * to output. This should only be used for debugging, as it may reveal
+ * private information in function parameters due to PHP's backtrace
+ * formatting.
+ * @see includes/Exception.php
+ * @global bool $wgShowExceptionDetails
+ */
+$wgShowExceptionDetails = false;
 
 /**
  * Expose backend server host names through the API and various HTML comments.

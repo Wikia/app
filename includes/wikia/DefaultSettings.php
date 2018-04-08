@@ -595,13 +595,6 @@ $wgExtensionsPath = false; /// defaults to "{$wgScriptPath}/extensions"
  */
 require_once( "{$IP}/extensions/wikia/Tasks/Tasks.setup.php");
 
-/**
- * @name wgDBAvgStatusPoll
- * Scale load balancer polling time so that under overload conditions, the database server
- * receives a SHOW STATUS query at an average interval of this many microseconds
- */
-$wgDBAvgStatusPoll = 30000;
-
 
 /**
  * @name wgDumpsDisabledWikis
@@ -682,21 +675,6 @@ $wgWikiaMaxNameChars = 50;
  */
 $wgNoExternals = false;
 
-
-/**
- * Style path for resources on the CDN.
- *
- * NOTE: while the normal wgStylePath would include /skins/ in it,
- * this path will NOT have that in it so that CSS and other static
- * files can use a correct local path (such as "/skins/common/blank.gif")
- * which would be a completely functioning local path (which will be prepended
- * in the CSS combiner with wgResourceBasePath).  The advantages of this are two-fold:
- * 1) if the combiner fails to prepend the wgResourceBasePath, the link will still work,
- * 2) the combiner WON'T prepend the wgResourceBasePath on development machines so that
- * the local resource is used (makes testing easier).
- */
-$wgResourceBasePath = '';
-
 /**
  * Transpaent 1x1 GIF URI-encoded (BugId:9975)
  */
@@ -719,7 +697,36 @@ $wgWikiaCombinedPrefix = "index.php?action=ajax&rs=WikiaAssets::combined&";
  * libmemcached related stuff
  */
 define( "CACHE_LIBMEMCACHED", 11 );
-$wgObjectCaches[ CACHE_LIBMEMCACHED ] = array( 'factory' => 'LibmemcachedBagOStuff::newFromGlobals' );
+/**
+ * Advanced object cache configuration.
+ *
+ * Use this to define the class names and constructor parameters which are used
+ * for the various cache types. Custom cache types may be defined here and
+ * referenced from $wgMainCacheType, $wgMessageCacheType or $wgParserCacheType.
+ *
+ * The format is an associative array where the key is a cache identifier, and
+ * the value is an associative array of parameters. The "class" parameter is the
+ * class name which will be used. Alternatively, a "factory" parameter may be
+ * given, giving a callable function which will generate a suitable cache object.
+ *
+ * The other parameters are dependent on the class used.
+ * - CACHE_DBA uses $wgTmpDirectory by default. The 'dir' parameter let you
+ *   overrides that.
+ */
+$wgObjectCaches = array(
+    CACHE_NONE => array('class' => 'EmptyBagOStuff'),
+    CACHE_DBA => array('class' => 'DBABagOStuff'),
+    CACHE_ANYTHING => array('factory' => 'ObjectCache::newAnything'),
+    CACHE_ACCEL => array('factory' => 'ObjectCache::newAccelerator'),
+    CACHE_MEMCACHED => array('factory' => 'ObjectCache::newMemcached'),
+    CACHE_LIBMEMCACHED => array( 'factory' => 'LibmemcachedBagOStuff::newFromGlobals' ),
+    'apc' => array('class' => 'APCBagOStuff'),
+    'xcache' => array('class' => 'XCacheBagOStuff'),
+    'wincache' => array('class' => 'WinCacheBagOStuff'),
+    'memcached-php' => array('class' => 'MemcachedPhpBagOStuff'),
+    'hash' => array('class' => 'HashBagOStuff'),
+);
+
 $wgSessionsInLibmemcached = false;
 
 
@@ -892,7 +899,9 @@ $wgHooks['ArticleSaveComplete'][] = 'ArticlesUsingMediaQuery::onArticleSaveCompl
 $wgHooks['ArticleDelete'][] = 'ArticlesUsingMediaQuery::onArticleDelete';
 
 /**
- * Password reminder name
+ * Sender name for password reminder emails.
+ * @see includes/User.php
+ * @var string $wgPasswordSenderName
  */
 $wgPasswordSenderName = Wikia::USER;
 
