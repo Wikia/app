@@ -1,5 +1,17 @@
 <?php
 /**
+ * If wgAllowExternalImages is false, you can specify an exception here. Image
+ * URLs that start with this string are then rendered, while all others are not.
+ * You can use this to set up a trusted, simple repository of images. You may
+ * also specify an array of strings to allow multiple sites.
+ * @example $wgAllowExternalImagesFrom = 'http://127.0.0.1/';
+ * @example $wgAllowExternalImagesFrom = array( 'http://127.0.0.1/', 'http://example.com' );
+ * @see includes/parser/ParserOptions.php
+ * @var Array|string $wgAllowExternalImagesFrom
+ */
+$wgAllowExternalImagesFrom = "http://images.$wgWikiaBaseDomain/";
+
+/**
  * Configuration for different virus scanners. This an associative array of
  * associative arrays. It contains one setup array per known scanner type.
  * The entry is selected by $wgAntivirus, i.e.
@@ -37,7 +49,7 @@
  * 
  * @see includes/upload/UploadBase.php
  * @see $wgAntivirus
- * @global Array $wgAntivirusSetup
+ * @var Array $wgAntivirusSetup
  */
 $wgAntivirusSetup = [
     // setup for clamav
@@ -65,6 +77,16 @@ $wgAntivirusSetup = [
 ];
 
 /**
+ * The URL path for primary article page views. This path should contain $1,
+ * which is replaced by the article title. Will default to "{$wgScript}/$1" or
+ * "{$wgScript}?title=$1" in Setup.php, depending on $wgUsePathInfo.
+ * @see $wgUsePathInfo
+ * @see $wgScriptPath
+ * @var string $wgArticlePath
+ */
+$wgArticlePath = "$wgScriptPath/wiki/$1";
+
+/**
  * Automatically add a usergroup to any user who matches certain conditions.
  * The format is
  *   array( '&' or '|' or '^' or '!', cond1, cond2, ... )
@@ -85,7 +107,7 @@ $wgAntivirusSetup = [
  * user who has provided an e-mail address.
  * 
  * @see includes/Autopromote.php
- * @global Array $wgAutopromote
+ * @var Array $wgAutopromote
  */
 $wgAutopromote = [
     'autoconfirmed' => [
@@ -96,6 +118,19 @@ $wgAutopromote = [
 ];
 
 /**
+ * Directory for caching data in the local filesystem. Should not be accessible
+ * from the web. Set this to false to not use any local caches. Note: if
+ * multiple wikis share the same localisation cache directory, they must all
+ * have the same set of extensions. You can set a directory just for the
+ * localisation cache using $wgLocalisationCacheConf['storeDirectory'].
+ * @see includes/cache/MessageCache.php
+ * @see includes/LocalisationCache.php
+ * @see maintenance/rebuildLocalisationCache.php
+ * @var string $wgCacheDirectory
+ */
+$wgCacheDirectory = "$IP/../cache/messages";
+
+/**
  * Array of namespaces which can be deemed to contain valid "content", as far
  * as the site statistics are concerned. Useful if additional namespaces also
  * contain "content" which should be considered when generating a count of the
@@ -104,6 +139,51 @@ $wgAutopromote = [
  * @var Array $wgContentNamespaces
  */
 $wgContentNamespaces = [ NS_MAIN ];
+
+/**
+ * Domain for cookies.
+ * @example 'justthis.domain.org'
+ * @example '.any.subdomain.net'
+ * @bvar string $wgCookieDomain
+ */
+$wgCookieDomain = ".$wgWikiaBaseDomain";
+
+/**
+ * Default community for UserPageRedirects. It's very old. It mentions corporate
+ * but has nothing to do with the actual FANDOM corporate pages.
+ * @see extensions/wikia/UserPageRedirects
+ * @var string $wgCorporatePageRedirectWiki
+ */
+$wgCorporatePageRedirectWiki = "http://community.$wgWikiaBaseDomain/wiki/";
+
+/**
+ * Settings for incoming cross-site AJAX requests. Newer browsers support
+ * cross-site AJAX when the target resource allows requests from the origin
+ * domain by the Access-Control-Allow-Origin header. $wgCrossSiteAJAXdomains can
+ * be set using a wildcard syntax where '*' matches any number of characters and
+ * '?' matches any 1 character.
+ * @example  $wgCrossSiteAJAXdomains = [ 'www.wikia.com', '*.wikia.com' ];
+ * @see PLATFORM-1719
+ * @see wfHandleCrossSiteAJAXdomain()
+ * @var string $wgCrossSiteAJAXdomains
+ */
+$wgCrossSiteAJAXdomains = [ "internal-vstf.$wgWikiaBaseDomain" ];
+
+/**
+ * URL for HTTP Content-Security-Policy (CSP) report-uri directive. It's where
+ * user agents should automatically report attempts to violate the Content
+ * Security Policy. 
+ * @see includes/wikia/Wikia.php
+ * @var string $wgCSPLoggerUrl
+ */
+$wgCSPLoggerUrl = "https://services.$wgWikiaBaseDomain/csp-logger/csp";
+
+/**
+ * Discussions API
+ * @see extensions/wikia/Discussions
+ * @var string $wgDiscussionsApiUrl
+ */
+$wgDiscussionsApiUrl = "https://services.$wgWikiaBaseDomain/discussion";
 
 /**
  * Filesystem extensions directory. Defaults to $IP/../extensions. To compile
@@ -120,14 +200,153 @@ $wgContentNamespaces = [ NS_MAIN ];
 $wgExtensionsDirectory = "$IP/extensions";
 
 /**
+ * Localized central wikis.
+ * @see extensions/wikia/WikiaLogo/WikiaLogoHelper.class.php
+ * @var Array $wgLangToCentralMap
+ */
+$wgLangToCentralMap = [
+    'de' => "http://de.$wgWikiaBaseDomain/wiki/Wikia",
+    'es' => "http://es.$wgWikiaBaseDomain/wiki/Wikia",
+    'fr' => "http://fr.$wgWikiaBaseDomain/wiki/Accueil",
+    'ja' => "http://ja.$wgWikiaBaseDomain/wiki/Wikia",
+    'pl' => "http://pl.$wgWikiaBaseDomain/wiki/Wikia_Polska",
+    'pt' => "http://pt-br.$wgWikiaBaseDomain/wiki/Wikia_em_Português",
+    'ru' => "http://ru.$wgWikiaBaseDomain/wiki/Викия_на_русском",
+    'zh' => "http://zh-tw.$wgWikiaBaseDomain/wiki/Wikia中文"
+];
+
+/**
+ * Legacy base URL to Vignette.
+ * @see includes/wikia/vignette/VignetteRequest.php
+ * @var string $wgLegacyVignetteUrl
+ */
+$wgLegacyVignetteUrl = "https://vignette<SHARD>.$wgWikiaNocookieDomain";
+
+/**
+ * The interwiki prefix of the current wiki, or false if it doesn't have one.
+ * @see includes/Title.php
+ * @see includes/RecentChange.php
+ * @var string|bool $wgLocalInterwiki
+ */
+$wgLocalInterwiki = $wgSitename;
+
+/**
+ * Main cache type. This should be a cache with fast access, but it may have
+ * limited space. By default, it is disabled, since the database is not fast
+ * enough to make it worthwhile.
+ *
+ * The options are:
+ *
+ *   - CACHE_ANYTHING:   Use anything, as long as it works
+ *   - CACHE_NONE:       Do not cache
+ *   - CACHE_MEMCACHED:  MemCached, must specify servers in $wgMemCachedServers
+ *   - CACHE_ACCEL:      APC, XCache or WinCache
+ *   - CACHE_DBA:        Use PHP's DBA extension to store in a DBM-style
+ *                       database. This is slow, and is not recommended for
+ *                       anything other than debugging.
+ *   - (other):          A string may be used which identifies a cache
+ *                       configuration in $wgObjectCaches.
+ *
+ * @see includes/objectcache/ObjectCache.php
+ * @var int $wgMainCacheType
+ */
+$wgMainCacheType = CACHE_MEMCACHED;
+
+/**
+ * The cache type for storing the contents of the MediaWiki namespace. This
+ * cache is used for a small amount of data which is expensive to regenerate.
+ * @see $wgMainCacheType
+ * @see includes/objectcache/ObjectCache.php
+ * @var int $wgMessageCacheType
+ */
+$wgMessageCacheType = CACHE_MEMCACHED;
+
+/**
+ * Set the minimum permissions required to edit pages in each namespace. If you
+ * list more than one permission, a user must have all of them to edit pages in
+ * that namespace. NS_MEDIAWIKI is implicitly restricted to 'editinterface'.
+ * @see includes/Namespace.php
+ * @see includes/Setup.php
+ * @see includes/Title.php
+ * @var Array $wgNamespaceProtection
+ */
+$wgNamespaceProtection = [
+    NS_TEMPLATE => [ 'edittemplates' ]
+];
+
+/**
+ * List of namespaces which are searched by default.
+ * @example $wgNamespacesToBeSearchedDefault[NS_MAIN] = true;
+ * @example $wgNamespacesToBeSearchedDefault[NS_PROJECT] = true;
+ * @see includes/search/SearchEngine.php
+ * @global Array $wgNamespacesToBeSearchedDefault
+ */
+$wgNamespacesToBeSearchedDefault = [
+    NS_MAIN     => true,
+    NS_CATEGORY => true,
+];
+
+/**
  * Namespaces to be searched when user clicks the "Help" tab on Special:Search.
  * @see includes/search/SearchEngine.php
  * @global Array $wgNamespacesToBeSearchedHelp
  */
 $wgNamespacesToBeSearchedHelp = [
     NS_PROJECT => true,
-    NS_HELP => true,
+    NS_HELP    => true,
 ];
+
+/**
+ * Namespaces supporting subpages.
+ * @see includes/Namespace.php
+ * @var Array $wgNamespacesWithSubpages
+ */
+$wgNamespacesWithSubpages = [
+    NS_MAIN           => true,
+    NS_TALK           => true,
+    NS_USER           => true,
+    NS_USER_TALK      => true,
+    NS_PROJECT        => true,
+    NS_PROJECT_TALK   => true,
+    NS_FILE_TALK      => true,
+    NS_IMAGE          => true,
+    NS_IMAGE_TALK     => true,
+    NS_MEDIAWIKI      => true,
+    NS_MEDIAWIKI_TALK => true,
+    NS_TEMPLATE       => true,
+    NS_TEMPLATE_TALK  => true,
+    NS_HELP           => true,
+    NS_HELP_TALK      => true,
+    NS_CATEGORY       => true,
+    NS_CATEGORY_TALK  => true
+];
+
+/**
+ * While trying to access a non-existing community, client will be redirected
+ * to this URL.
+ * @see $wgEnableNotAValidWikiaExt
+ * @see extensions/wikia/WikiFactory/Loader/WikiFactoryLoader.php
+ * @see extensions/wikia/NotAValidWikia
+ * @see extensions/wikia/InterwikiDispatcher
+ * @var string $wgNotAValidWikia
+ */
+$wgNotAValidWikia = "http://community.$wgWikiaBaseDomain/wiki/Community_Central:Not_a_valid_community";
+
+/**
+ * OnSiteNotifications API.
+ * @see lib/Swagger/src/OnSiteNotifications
+ * @var string $wgOnSiteNotificationsApiUrl
+ */
+$wgOnSiteNotificationsApiUrl = "https://services.$wgWikiaBaseDomain/on-site-notifications";
+
+/**
+ * The cache type for storing article HTML. This is used to store data which
+ * is expensive to regenerate, and benefits from having plenty of storage space.
+ * @see $wgMainCacheType
+ * @see includes/objectcache/ObjectCache.php
+ * @var int $wgParserCacheType
+ */
+$wgParserCacheType = CACHE_MEMCACHED;
 
 /**
  * Which namespaces have special treatment where they should be preview-on-open
@@ -135,7 +354,7 @@ $wgNamespacesToBeSearchedHelp = [
  * Semantic MediaWiki) can specify namespaces of pages they have special
  * treatment for.
  * @see includes/EditPage.php
- * @global Array $wgPreviewOnOpenNamespaces
+ * @var Array $wgPreviewOnOpenNamespaces
  */
 $wgPreviewOnOpenNamespaces = [
     NS_CATEGORY => true
@@ -144,16 +363,31 @@ $wgPreviewOnOpenNamespaces = [
 /**
  * Script used to scan IPs for open proxies.
  * @see includes/ProxyTools.php
- * @global string $wgProxyScriptPath
+ * @var string $wgProxyScriptPath
  */
 $wgProxyScriptPath = "$IP/maintenance/proxy_check.php";
+
+/**
+ * Copyright icon.
+ * @see includes/Skin.php
+ * @global string $wgRightsIcon
+ */
+$wgRightsIcon = "https://vignette.$wgWikiaNocookieDomain/messaging/images/a/a9/CC-BY-SA.png?1";
+
+/**
+ * Custom rules for robots.txt. Supported rules: allowSpecialPage and
+ * disallowNamespace.
+ * @see string extensions/wikia/RobotsTxt/classes/WikiaRobots.class.php
+ * @global Array $wgRobotsTxtCustomRules
+ */
+$wgRobotsTxtCustomRules = [ 'disallowNamespace' => [ NS_HELP, NS_USER ] ];
 
 /**
  * Configuration file for external Tidy.
  * @see $wgTidyBin
  * @see $wgTidyInternal
  * @see $wgUseTidy
- * @global string $wgTidyConf
+ * @var string $wgTidyConf
  */
 $wgTidyConf = "$IP/includes/tidy.conf";
 
@@ -163,7 +397,6 @@ $wgTidyConf = "$IP/includes/tidy.conf";
  * content displayed on the images description page. It would also be possible
  * to use this for further restrictions, like disabling direct [[media:...]]
  * links for non-trusted formats.
- * 
  * @see File::isSafeFile()
  * @var Array $wgTrustedMediaFormats
  */
@@ -174,3 +407,30 @@ $wgTrustedMediaFormats = [
     'application/pdf', // PDF files
     'image/svg+xml', // svg (only needed if inline rendering of svg is not supported)
 ];
+
+/**
+ * The URL path for the images directory. Defaults to "{$wgScriptPath}/images"
+ * in Setup.php, but there are variables declared earlier that depend on it
+ * so it has to be declared explicitly here.
+ * @see app/includes/Setup.php
+ * @var string|bool $wgUploadPath
+ */
+$wgUploadPath = "$wgScriptPath/images";
+
+/**
+ * The URL path of the wiki logo. Will default to
+ * "{$wgStylePath}/common/images/wiki.png" in Setup.php.
+ * @see Setup.php
+ * @see $wgUploadPath
+ * @global string|bool $wgLogo
+ */
+$wgLogo = "$wgUploadPath/b/bc/Wiki.png";
+
+/**
+ * The base URL to Vignette.
+ * @see includes/wikia/vignette/VignetteRequest.php
+ * @see includes/wikia/services/AvatarService.class.php
+ * @see extensions/wikia/UserProfilePageV3/Masthead.class.php
+ * @var string $wgVignetteUrl
+ */
+$wgVignetteUrl = "https://vignette.$wgWikiaNocookieDomain";

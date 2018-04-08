@@ -13,17 +13,6 @@ switch ($wgWikiaDatacenter) {
 		break;
 }
 
-
-/**
- * $wgDefaultSkin is first set to 'oasis' in CommonSettings.php. Then the value is assigned to
- * $wgDefaultSkinBeforeWF and $wgDefaultSkin is nullified. WikiFactor is supposed to assign
- * some value to $wgDefaultSkin - a per-wiki setting. If it fails and at this point $wgDefaultSkin
- * is still null, we use the cached value from $wgDefaultSkinBeforeWF.
- */
-if ( is_null( $wgDefaultSkin ) ) {
-	$wgDefaultSkin = $wgDefaultSkinBeforeWF;
-}
-
 // TODO: Clean up after CK editor as default test is finished
 if (isset( $wgCityId ) && is_numeric($wgCityId) ) {
 	if ( in_array( intval( $wgCityId ), $wgCKEdefaultEditorTestWikis ) ) {
@@ -105,8 +94,16 @@ switch ( $wgLanguageCode ) {
 		$wgNamespaceAliases["Forum_talk"] = 111;
 
 		break;
+            
+        default:
+                $wgExtraNamespaces[110] = 'Forum';
+                $wgExtraNamespaces[111] = 'Forum_talk';
+                break;
 
 }
+
+$wgNamespacesWithSubpages[110] = true; //Forum
+$wgNamespacesWithSubpages[111] = true; //Forum talk
 
 /*
  * WikisApi
@@ -242,6 +239,10 @@ if (!empty($wgWikiaEnableYouTubeExt)) {
 # quick switch to turn this trigger on where/when requested
 if (!empty($wgCaptchaForMainCreate)) {
 	$wgCaptchaTriggersOnNamespace[NS_MAIN]['create'] = true;
+}
+
+if ( !empty( $wgEnableCaptchaExt ) ) {
+	include( "$IP/extensions/wikia/Captcha/Captcha.setup.php" );
 }
 
 #--- 24. Special:InterwikiEdit
@@ -515,7 +516,10 @@ if( !empty( $wgEnableAjaxPollExt ) ) {
 /**
  * Enable the loader that loads mini hacks/tools/tweaks
  */
-include("$IP/extensions/wikia/Comteam/Comteam_setup.php");
+
+if( !empty( $wgEnableForumIndexProtectorExt ) ) {
+	include("$IP/extensions/wikia/ForumIndexProtector/ForumIndexProtector.php");
+}
 
 if( !empty( $wgEnableContactExt ) ) {
 	include_once( "$IP/extensions/wikia/SpecialContact2/SpecialContact.php" );
@@ -1167,6 +1171,11 @@ if(!empty($wgEnableProtectSiteJSExt)) {
 	include("$IP/extensions/wikia/ProtectSiteJS/ProtectSiteJS_setup.php");
 }
 
+#--- 1. Special::ProtectSite
+if (!empty($wgWikiaEnableSpecialProtectSiteExt)) {
+	include("$IP/extensions/wikia/SpecialProtectSite/SpecialProtectSite.php");
+}
+
 if ( !empty($wgCityId) && $wgCityId != 1252 /* starter.wikia.com */ && !$wgDevelEnvironment ) {
 	// this allows for starter images to be taken from the appropriate language starter wiki directly
 	// @note Make sure that newly added starter is protected (e.g. from being removed by automated deletion scripts)
@@ -1402,8 +1411,6 @@ $wgFileBackends['swift-backend'] = array(
 	'debug'         => false,
 	'url'           => "http://{$wgFSSwiftServer}/swift/v1",
 );
-# use a different images domain on wikis with Swift storage enabled (BAC-854)
-$wgImagesDomainSharding = "img%s.{$wgWikiaNocookieDomain}";
 
 // This extension is enabled globally and handles Sync between datacenters
 // It does work on devboxes if you need to enable for testing, but we are not running the sync script
@@ -1757,3 +1764,12 @@ include "$IP/extensions/wikia/Search/WikiaSearch.setup.php";
 
 // Mercury auth pages related functionality - redirects, email confirmation.
 include "$IP/extensions/wikia/AuthPages/AuthPages.setup.php";
+
+if ( !empty( $wgEnableOpenGraphMetaExt ) ) {
+	include( "$IP/extensions/OpenGraphMeta/OpenGraphMeta.php" );
+	// Wikia-specific customizations to set image and description by ImageServing and ArticleService respectively.
+	include( "$IP/extensions/wikia/OpenGraphMetaCustomizations/OpenGraphMetaCustomizations.setup.php");
+}
+
+putenv( 'GDFONTPATH=/usr/share/fonts/truetype/freefont/' );
+include_once "$IP/extensions/timeline/Timeline.php";

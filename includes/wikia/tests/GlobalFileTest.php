@@ -21,7 +21,6 @@ class GlobalFileTest extends WikiaBaseTest {
 		$this->mockGlobalVariable('wgDevelEnvironment', false);
 		$this->mockGlobalVariable('wgDevBoxImageServerOverride', false);
 
-		$this->mockGlobalVariable('wgImagesDomainSharding', 'images%s.wikia.nocookie.net');
 		$this->mockGlobalVariable('wgResourceBasePath', sprintf('https://slot1.images.wikia.nocookie.net/__cb%s/common', self::DEFAULT_CB));
 	}
 

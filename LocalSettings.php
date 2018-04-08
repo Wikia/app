@@ -25,6 +25,10 @@ $wgWikiaLocalSettingsPath = __FILE__;
  */
 $wgWikiaDatacenter = getenv( 'WIKIA_DATACENTER' );
 
+if ( empty( $wgWikiaDatacenter ) ) {
+    throw new ConfigException( 'Datacenter not configured in /etc/environment.' ); 
+}
+
 /**
  * @global string $wgWikiaEnvironment
  * Runtime environment discovered from the environment variable.
@@ -32,7 +36,9 @@ $wgWikiaDatacenter = getenv( 'WIKIA_DATACENTER' );
  */
 $wgWikiaEnvironment = getenv( 'WIKIA_ENVIRONMENT' );
 
-// CONFIG_REVISION: remove $wgWikiaDatacenter and $wgWikiaEnvironment from the global scope and only use it to load configuration
+if ( empty( $wgWikiaEnvironment ) ) {
+    throw new ConfigException( 'Environment not configured in /etc/environment.' ); 
+}
 
 /**
  * Create a site configuration object. Not used for much in a default install.
@@ -138,6 +144,40 @@ $egMapsDefaultService = 'googlemaps3';
 
 // the rest of the old contents
 require "$IP/../config/LocalSettings.php";
+
+// OVERRIDES TO WIKIFACTORY START HERE
+
+/**
+ * @name $wgLyricsApiSolrariumConfig
+ * The name of solr core for Lyrics API extension
+ */
+$wgLyricsApiSolrariumConfig = [
+	'adapter' => 'Solarium_Client_Adapter_Curl',
+	'adapteroptions' => [
+		'core' => 'lyricsapi',
+		'host' => $wgSolrHost,
+		'path' => '/solr/',
+		'port' => $wgSolrPort,
+		'proxy' => false,
+	]
+];
+
+
+/**
+ * User attributes that show up on the Special:Preferences page.
+ * @see $wgPublicUserAttributes
+ * @see $wgPrivateUserAttributes
+ * @see includes/Preferences.php
+ * @var Array $wgUserAttributeWhitelist
+ */
+$wgUserAttributeWhitelist = array_merge( $wgPublicUserAttributes, $wgPrivateUserAttributes );
+
+$wgCdnRootUrl = 'https://' . str_replace('.', '-', $wgMedusaHostPrefix) . "images.{$wgWikiaNocookieDomain}";
+
+$wgCdnApiUrl = "https://api.{$wgWikiaNocookieDomain}/__cb$wgStyleVersion";
+
+require_once "$IP/includes/wikia/Emergency.php";
+
 require_once "$IP/includes/wikia/Extensions.php";
 
 // SUS-3851 - if the wiki has a language code path component, recalculate wgScript and wgArticlePath with its value

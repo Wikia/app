@@ -33,7 +33,13 @@
  * 6. Use common sense.
  * 
  ******************************************************************************/
-
+/**
+ * OpenGraphMeta application ID to display in <meta property="fb:app_id">.
+ * @see extensions/OpenGraphMeta
+ * @var string $egFacebookAppId
+ */
+$egFacebookAppId = '112328095453510';
+        
 /**
  * Default block duration for Abuse Filter.
  * @see SpecialBlock::parseExpiryInput
@@ -179,6 +185,13 @@ $wgAjaxWatch = true;
  * @var bool $wgAllDBsAreLocalhost
  */
 $wgAllDBsAreLocalhost = false;
+
+/**
+ * Merge all JavaScript / CSS files together.
+ * @see extensions/wikia/AssetsManager
+ * @var bool $wgAllInOne
+ */
+$wgAllInOne = true;
 
 /**
  * Enable filtering of categories in Recentchanges.
@@ -407,6 +420,25 @@ $wgAlwaysUseTidy = false;
  * @var bool $wgAmericanDates
  */
 $wgAmericanDates = true;
+
+/**
+ * Anti-lock flags - bitfield
+ *   - ALF_PRELOAD_LINKS:
+ *       Preload links during link update for save
+ *   - ALF_PRELOAD_EXISTENCE:
+ *       Preload cur_id during replaceLinkHolders
+ *   - ALF_NO_LINK_LOCK:
+ *       Don't use locking reads when updating the link table. This is
+ *       necessary for wikis with a high edit rate for performance
+ *       reasons, but may cause link table inconsistency
+ *   - ALF_NO_BLOCK_LOCK:
+ *       As for ALF_LINK_LOCK, this flag is a necessity for high-traffic
+ *       wikis.
+ * @see includes/LinksUpdate.php
+ * @see includes/cache/LinkCache.php
+ * @var int $wgAntiLockFlags
+ */
+$wgAntiLockFlags = ALF_NO_LINK_LOCK;
 
 /**
  * Internal name of virus scanner. This servers as a key to the
@@ -840,7 +872,7 @@ $wgCacheSharedUploads = true;
 $wgCacheVaryCookies = [];
 
 /**
- * Whether to enable cononical language links in meta data.
+ * Whether to enable canonical language links in meta data.
  * @var bool $wgCanonicalLanguageLinks
  */
 $wgCanonicalLanguageLinks = true;
@@ -876,6 +908,13 @@ $wgCapitalLinkOverrides = [];
  * @var bool $wgCapitalLinks
  */
 $wgCapitalLinks = true;
+
+/**
+ * Image repository for FancyCaptch
+ * @see extensions/wikia/Captcha/Module/FancyCaptcha.class.php
+ * @var string $wgCaptchaDirectory
+ */
+$wgCaptchaDirectory = '/usr/wikia/captchas/images-20111115';
 
 /**
  * Specify how category names should be sorted, when listed on a category page.
@@ -964,6 +1003,22 @@ $wgCategoryPagingLimit = 200;
 $wgChatPrivateServerOverride = null;
 
 /**
+ * Default chat host. Will be prefixed, based on the environment.
+ * @see $wgWikiaEnvironment
+ * @see extensions/wikia/Chat2/ChatConfig.class.php
+ * @var string $wgChatPublicHost
+ */
+$wgChatPublicHost = 'chat.wikia-services.com:443';
+
+/**
+ * Override to $wgChatPublicHost for development and testing purposes.
+ * @see $wgChatPublicHost
+ * @see extensions/wikia/Chat2/ChatConfig.class.php
+ * @var string $wgChatPublicHostOverride
+ */
+$wgChatPublicHostOverride = null;
+
+/**
  * This is a flag to determine whether or not to check file extensions on
  * upload. WARNING: setting this to false is insecure for public wikis.
  * @var bool $wgCheckFileExtensions
@@ -980,6 +1035,46 @@ $wgCheckFileExtensions = true;
  * @var string|bool $wgCheckUserLog
  */
 $wgCheckUserLog = false;
+
+/**
+ * Wikis with CK editor as default (unless users set otherwise).
+ * @see includes/wikia/Extensions.php
+ * @var Array $wgCKEdefaultEditorTestWikis
+ */
+// TODO: Clean up after CK editor as default test is finished, used in app/includes/wikia/Extensions.php
+// list of test wikis on which CK editor is the default editor (unless user explicitly sets different one)
+$wgCKEdefaultEditorTestWikis = [
+    // group 1
+    544934, 14316, 130814, 14764, 490, 3469, 185111, 277, 38969, 1241752, 710900, 2569, 2180, 831, 105, 638551, 5975,
+    68154, 175043, 643102, 750919, 31618, 9768, 1268, 6527, 12244, 985887, 677654, 659, 653222, 1426824, 1139, 6279, 766,
+    271325, 667, 633820, 7193, 702401, 11344, 1166, 342218, 1030786, 312, 8221, 604797, 381, 824677, 134307, 212757,
+    166617, 997, 14161, 1346, 4097, 321995, 525179, 2583, 536811, 8322, 5473, 1573, 175944, 880093, 1458654, 912, 1049,
+    575144, 430, 1000027, 896, 1209305, 598369, 1138138, 977, 1163770, 11649, 12747, 1130468, 10178, 812244, 78127,
+    66452, 670464, 3534, 1766, 4531, 594035, 699353, 5481, 12113, 44531, 1377985, 38926, 2022, 6877, 617245, 807122,
+    718954, 4470, 427912, 310, 3066, 2531, 981708, 6708, 291796, 707903, 1013286, 1114574, 5682, 37152, 9637, 6139, 635,
+    586931, 13501, 790642, 749375, 6390, 891, 4907, 435087, 7052, 553933, 594611, 468156, 401001, 534, 793375, 601762,
+    1019331, 89210, 3395, 4267, 749, 1090910, 1473, 91051, 7439, 55445, 161263, 422454, 833147, 6521, 7639, 639206,
+    112657, 8035, 989, 480886, 1248, 1110714, 8311, 470973, 544777, 768449, 189030, 122722, 7542, 480276, 1051712,
+    614094, 1228271, 5618, 2459, 571430, 1097470, 1020891, 357399, 85103, 6342, 3212, 345416, 1304636, 989102, 2897,
+    759, 2514, 57800, 580383, 1134817, 770288, 1021507, 1061981, 590987, 284111, 101230, 360967, 11115, 1023891, 822,
+    792310, 12734, 593209, 265480, 1361490, 525359, 1055644, 1282596, 1199146, 5942, 1720, 8681, 392, 434195, 487467,
+    764816, 1863, 580809, 570658, 1280124, 1178, 150738, 2781, 916058,
+    // group 2
+    530, 1081, 2520, 1254589, 1249, 3443, 1079837, 5278, 1544, 621556, 255, 3775, 169605, 3510, 24357, 462, 5813, 1744,
+    769303, 458479, 35322, 22439, 867635, 260936, 1071836, 443588, 3313, 629, 2857, 376, 276141, 1332299, 13367, 608783,
+    401, 18751, 295658, 249133, 151693, 245424, 458381, 848200, 20780, 941394, 740935, 1012029, 51, 7434, 3405, 118480,
+    681379, 2866, 1153146, 2154, 1258949, 1114809, 801751, 11106, 724592, 9144, 3144, 1149584, 803756, 955166, 3489,
+    124137, 823, 1062439, 79888, 543435, 1407, 602, 297767, 1053611, 665, 281135, 44732, 6216, 87205, 5748, 95, 91319,
+    750, 6092, 204565, 27822, 47276, 140095, 7976, 146012, 453462, 123411, 10994, 5858, 1048673, 305850, 3626, 644564,
+    554951, 711765, 1024023, 1016456, 7727, 86644, 52685, 351990, 6236, 3289, 149192, 558403, 611971, 6546, 8015, 746358,
+    765031, 3468, 745286, 1425, 130547, 558705, 1903, 1109913, 120639, 1206155, 3155, 1264671, 1015651, 1030684, 39401,
+    2777, 1063533, 833670, 704662, 677670, 524772, 1391253, 6961, 296530, 547034, 636376, 7852, 9565, 1229499, 115238,
+    1368, 1365085, 9252, 767758, 6013, 1464550, 3989, 1362292, 437084, 2334, 133392, 764460, 63627, 1872, 936541, 4396,
+    410236, 2188, 5935, 744227, 281465, 1199421, 42426, 863039, 6786, 4156, 2794, 229033, 1204308, 2390, 114341, 2889,
+    642, 566695, 3502, 598051, 781890, 736299, 6840, 3207, 930697, 849806, 1036242, 38188, 912119, 1066675, 953630,
+    285136, 679923, 142503, 265126, 504037, 286083, 351776, 1393535, 3473, 73495, 1447835, 88531, 1084546, 6051, 643051,
+    11764, 7060, 1337446, 26903, 351441, 1065217, 1715, 4951, 60471, 1718, 13022
+];
 
 /**
  * If true, removes (substitutes) templates in "~~~~" signatures.
@@ -1107,6 +1202,13 @@ $wgCountCategorizedImagesAsUsed = false;
  * @var bool $wgCountTotalSearchHits
  */
 $wgCountTotalSearchHits = false;
+
+/**
+ * Create new communities on this cluster.
+ * @see extensions/wikia/CreateNewWiki
+ * @var string $wgCreateDatabaseActiveCluster
+ */
+$wgCreateDatabaseActiveCluster = 'c7';
 
 /**
  * Domains that should not be allowed to make AJAX requests,
@@ -1411,6 +1513,14 @@ $wgDefaultLanguageVariant = false;
 $wgDefaultRobotPolicy = 'index,follow';
 
 /**
+ * Default search profile.
+ * @see extensions/wikia/Search
+ * @see skins/oasis/modules/SearchController.class.php
+ * @var string $wgDefaultSearchProfile
+ */
+$wgDefaultSearchProfile = 'default';
+
+/**
  * Settings added to this array will override the default globals for the user
  * preferences used by anonymous visitors and newly created accounts.
  * For instance, to disable section editing links:
@@ -1517,6 +1627,12 @@ $wgDeleteRevisionsLimit = 0;
 $wgDeprecationReleaseLimit = '1.17';
 
 /**
+ * Indicate dev environment.
+ * @var bool $wgDevelEnvironment
+ */
+$wgDevelEnvironment = false;
+
+/**
  * If set to true MediaWiki will throw notices for some possible error
  * conditions and for deprecated functions.
  * @var bool false
@@ -1565,6 +1681,15 @@ $wgDisableAnonTalk = false;
  * @var bool $wgDisableAnonymousEditing
  */
 $wgDisableAnonymousEditing = false;
+
+/**
+ * We are enabling photo upload from mercury for JP wiki
+ * without login. This is temporary solution to disable such uploads.
+ * @see https://wikia-inc.atlassian.net/browse/INT-155
+ * @see extensions/wikia/MercuryApi
+ * @var bool $wgDisableAnonymousUploadForMercury
+ */
+$wgDisableAnonymousUploadForMercury = false;
 
 /**
  * By default, MediaWiki checks if the client supports cookies during the
@@ -2487,6 +2612,20 @@ $wgEnableFlowTracking = true;
 $wgEnableForumExt = false;
 
 /**
+ * Disallow anonymous editing of Forum:Index.
+ * @see extensions/wikia/ForumIndexProtector
+ * @var bool $wgEnableForumIndexProtector
+ */
+$wgEnableForumIndexProtectorExt = true;
+
+/**
+ * Enables FounderProgressBar extension.
+ * @see extensions/wikia/FounderProgressBar
+ * @var bool $wgEnableFounderProgressBarExt 
+ */
+$wgEnableFounderProgressBarExt = false;
+
+/**
  * Enable Gadgets extension.
  * @see /extensions/Gadgets
  * @var bool $wgEnableGadgetsExt
@@ -2695,6 +2834,14 @@ $wgEnableKruxTargeting = true;
  * @see extensions/wikia/Lightbox
  */
 $wgEnableLightboxExt = true;
+
+/**
+ * Allow submitting posts of specific types.
+ * @see extensions/wikia/MercuryApi/models/MercuryApi.class.php
+ * @global bool $wgEnableLightweightContributions
+ */
+$wgEnableLightweightContributions = false;
+
 /**
  * Enable LinkSuggest extension.
  * @see /extensions/wikia/LinkSuggest
@@ -2877,6 +3024,14 @@ $wgEnableNCFDialog = false;
 $wgEnableNewAuth = true;
 
 /**
+ * Enable popup-based authentication.
+ * @see includes/User.php
+ * @see includes/wikia/Extensions.php
+ * @var bool $wgEnableNewAuthModal
+ */
+$wgEnableNewAuthModal = true;
+
+/**
  * Enable user search in Special:Newpages. This is really a temporary hack
  * around an index install bug on some Wikipedias. Kill it once fixed.
  * @var bool $wgEnableNewpagesUserFilter
@@ -3017,6 +3172,13 @@ $wgEnablePlaybuzzTagExt = true;
  * @var bool $wgEnablePolldaddyTagExt
  */
 $wgEnablePolldaddyTagExt = true;
+
+/**
+ * Enable PoolCounter extension.
+ * @see extensions/PoolCounter
+ * @var bool $wgEnablePoolCounter
+ */
+$wgEnablePoolCounter = true;
 
 /**
  * Enable query page to fetch data about popular pages.
@@ -3645,6 +3807,34 @@ $wgEnableWikiaMiniUploadExt = true;
  * @var bool $wgEnableWikiaMobileSmartBanner
  */
 $wgEnableWikiaMobileSmartBanner = null;
+
+/**
+ * Configuration for a smart banner.
+ * @see skins/oasis/modules/OasisController.class.php
+ * @see extensions/wikia/MercuryApi/MercuryApiController.class.php
+ * @see extensions/wikia/WikiaMobile/WikiaMobileService.class.php
+ * @example
+ *  [
+ *              'disabled' => 0,
+ *              'name' => 'Warframe'
+ *              'icon' => 'url/to/icon' // this can be full url or relative to extensions folder
+ *              'meta' => [
+ *                      'apple-itunes-app' => 'app-id=739263891',
+ *                      'google-play-app' => 'app-id=com.wikia.singlewikia.warframe'
+ *              ]
+ * ]
+ *
+ * @var Array $wgWikiaMobileSmartBannerConfig
+ */
+$wgWikiaMobileSmartBannerConfig = [
+    'name' => 'Game Guides',
+    'icon' => 'https://static.wikia.nocookie.net/8af6c2f0-05aa-425c-a107-78c0551ca5e4',
+    'meta' => [
+        // The values below are public app IDs.
+        'apple-itunes-app' => 'app-id=422467074',
+        'google-play-app' => 'app-id=com.wikia.app.GameGuides'
+    ]
+];
 
 /**
  * Enable WikiaPhotoGallery extension.
@@ -4639,6 +4829,16 @@ $wgHtml5 = true;
 $wgHtml5Version = null;
 
 /**
+ * Proxy to use for CURL requests.
+ * @see PLATFORM-1745
+ * @see includes/wikia/CurlMultiClient.php
+ * @see includes/HttpFunctions.php
+ * @see extensions/3rdparty/LyricWiki/Special_Soapfailures.php
+ * @var string $wgHTTPProxy
+ */
+$wgHTTPProxy = 'prod.border.service.consul:80';
+
+/**
  * If set, inline scaled images will still produce <img> tags ready for output
  * instead of showing an error message. This may be useful if errors are
  * transitory, especially if the site is configured to automatically render
@@ -5090,6 +5290,38 @@ $wgLocalDatabases = [];
 $wgLocalFileRepo = false;
 
 /**
+ * Localisation cache configuration. Associative array with keys:
+ *     class:       The class to use. May be overridden by extensions.
+ *
+ *     store:       The location to store cache data. May be 'files', 'db' or
+ *                  'detect'. If set to "files", data will be in CDB files. If set
+ *                  to "db", data will be stored to the database. If set to
+ *                  "detect", files will be used if $wgCacheDirectory is set,
+ *                  otherwise the database will be used.
+ *
+ *     storeClass:  The class name for the underlying storage. If set to a class
+ *                  name, it overrides the "store" setting.
+ *
+ *     storeDirectory:  If the store class puts its data in files, this is the
+ *                      directory it will use. If this is false, $wgCacheDirectory
+ *                      will be used.
+ *
+ *     manualRecache:   Set this to true to disable cache updates on web requests.
+ *                      Use maintenance/rebuildLocalisationCache.php instead.
+ * @see maintenance/rebuildLocalisationCache.php
+ * @see languages/Language.php
+ * @see includes/installer/DatabaseUpdater.php
+ * @var Array $wgLocalisationCacheConf
+ */
+$wgLocalisationCacheConf = [
+    'class' => 'LocalisationCache',
+    'store' => 'files',
+    'storeClass' => false,
+    'storeDirectory' => false,
+    'manualRecache' => true,
+];
+
+/**
  * Defines format of local cache.
  * true - Serialized object
  * false - PHP source file (Warning - security risk)
@@ -5515,11 +5747,41 @@ $wgMediaHandlers = [
 ];
 
 /**
+ * URL section corresponing to the deployment directory in /usr/wikia/.
+ * @see wfReplaceImageServer()
+ * @see maintenance/wikia/WikiFactoryVariables/migrateWikiFactoryToHttps.php
+ * @see maintenance/wikia/WikiFactoryVariables/migrateWikiWordmarks.php
+ * @global string $wgMedusaHostPrefix
+ */
+$wgMedusaHostPrefix = 'slot1.';
+
+/**
+ * If true, will send MemCached debugging information to $wgDebugLogFile.
+ * @see $wgDebugLogFile
+ * @see includes/cache/wikia/LibmemcachedBagOStuff.php
+ * @see includes/cache/MemcachedSessions.php
+ * @see includes/objectcache/MemcachedPhpBagOStuff.php
+ * @var bool $wgMemCachedDebug
+ */
+$wgMemCachedDebug = true;
+
+/**
  * Use persistent connections to MemCached, which are shared across multiple
  * requests.
  * @var bool $wgMemCachedPersistent
  */
 $wgMemCachedPersistent = true;
+
+/**
+ * The list of MemCached servers and port numbers.
+ * @see includes/cache/wikia/LibmemcachedBagOStuff.php
+ * @see includes/objectcache/MemcachedPhpBagOStuff.php
+ * @var Array $wgMemCachedServers
+ */
+$wgMemCachedServers = [
+    0 => 'prod.twemproxy.service.consul:21000',
+    1 => 'prod.twemproxy.service.consul:31000',
+];
 
 /**
  * Read/write timeout for MemCached server communication, in microseconds.
@@ -6122,6 +6384,20 @@ $wgProfilePerHost = false;
 $wgProfileToDatabase = false;
 
 /**
+ * Groups that should not be affected by Special:ProtectSite lockdown.
+ * @see extensions/wikia/SpecialProtectSite
+ * @var Array $wgProtectsiteExempt
+ */
+$wgProtectsiteExempt = [ 'helper', 'staff', 'vstf' ];
+
+/**
+ * Enable ProtectSiteJS extension.
+ * @see extensions/wikia/ProtectSiteJS
+ * @var bool $wgEnableProtectSiteJSExt
+ */
+$wgEnableProtectSiteJSExt = true;
+
+/**
  * The maximum time, site can be locked by the Protectsite extension.
  * @see /extensions/wikia/SpecialProtectSite
  * @var string $wgProtectsiteLimit
@@ -6296,6 +6572,14 @@ $wgRawHtml = false;
  * @var string $wgRC2UDPAddress
  */
 $wgRC2UDPAddress = '10.8.34.15'; // 'irc.wikia-inc.com';
+
+/**
+ * Notify external application about contributions via UDP.
+ * @see includes/RecentChange.php
+ * @see extensions/wikia/ArticleComments
+ * @var bool $wgRC2UDPEnabled
+ */
+$wgRC2UDPEnabled = true;
 
 /**
  * If this is set to true, $wgLocalInterwiki will be prepended to links in the
@@ -6675,14 +6959,6 @@ $wgScript = false;
 $wgScriptExtension  = '.php';
 
 /**
- * The URL path MediaWiki entry points. Other paths will be set to defaults
- * based on it unless they are directly set.
- * @see app/includes/Setup.php
- * @var string $wgScriptPath
- */
-$wgScriptPath = '';
-
-/**
  * If set to true the 'searcheverything' preference will be effective only for
  * logged-in users. Useful for big wikis to maintain different search profiles
  * for anonymous and logged-in users.
@@ -6777,6 +7053,17 @@ $wgSend404Code = true;
 $wgSessionHandler = null;
 
 /**
+ * Memcached servers for session data.
+ * @see includes/cache/MemcachedSessions.php
+ * @see $wgMemCachedServers
+ * @var Array $wgSessionMemCachedServers
+ */
+$wgSessionMemCachedServers = [
+    0 => 'prod.twemproxy.service.consul:31001',
+    1 => 'prod.twemproxy.service.consul:21001',
+];
+
+/**
  * Override to customise the session name.
  * @var string|bool $wgSessionName
  */
@@ -6805,6 +7092,14 @@ $wgSessionsInMemcached = true;
  * @var string $wgSharedDB
  */
 $wgSharedDB = null;
+
+/**
+ * Prefix for Memcached keys shared between wikis.
+ * @see extensions/wikia/Staging/Staging.setup.php
+ * @see wfSharedMemcKey()
+ * @var string $wgSharedKeyPrefix
+ */
+$wgSharedKeyPrefix = 'wikicities';
 
 /**
  * Table prefix for the shared database.
@@ -7120,6 +7415,13 @@ $wgSortSpecialPages = true;
 $wgSpamRegex = [];
 
 /**
+ * User support email used in Special:Contact.
+ * @see extensions/wikia/SpecialContact2
+ * @var string $wgSpecialContactEmail
+ */
+$wgSpecialContactEmail = 'support@wikia.zendesk.com';
+
+/**
  * Additional functions to be performed with updateSpecialPages.
  * Expensive Querypages are already updated.
  * @see PLATFORM-2275
@@ -7315,6 +7617,36 @@ $wgSquidServersNoPurge = [
     '202.21.128.0/24', # Fastly network
     '203.57.145.0/24', # Fastly network
 ];
+
+/**
+ * Used for StaffWelcomePoster which creates a post upon community migration to
+ * Discussions.
+ * @see extensions/wikia/Discussions/maintenance/StaffWelcomePoster.class.php
+ * @var Array $wgStaffWelcomePostLanguageToUserId
+ */
+$wgStaffWelcomePostLanguageToUserId = [
+    'de' => 26339491, // Mira Laime
+    'en' => 26339491, // Mira Laime
+    'es' => 12648798, // Luchofigo85
+    'fr' => 26442523, // Hypsoline
+    'it' => 3279487, // Leviathan_89
+    'ja' => 29395778, // Kuro0222
+    'ko' => 24883131, // Miri-Nae
+    'nl' => 4142476, // Yatalu
+    'pl' => 1117661, // Nanaki
+    'pt' => 5653518, // Ultragustavo25
+    'ru' => 1121346, // Kuzura
+    'vi' => 26041741, // KhangND
+    'zh-hans' => 11909873, // Cal-Boy
+    'zh-hant' => 56584     // Ffaarr
+];
+
+/**
+ * Indicate a staging environment.
+ * @see extensions/wikia/Staging/StagingHooks.class.php
+ * @var bool $wgStagingEnvironment
+ */
+$wgStagingEnvironment = false;
 
 /**
  * Destination for wfIncrStats() data...
@@ -8093,6 +8425,13 @@ $wgWhitelistRead = false;
 $wgWikiaBarMainLanguages = [ 'de', 'en', 'es', 'fr' ];
 
 /**
+ * FANDOM's main top-level domain. It's used in many places across the entire
+ * codebase.
+ * @var string $wgWikiaBaseDomain
+ */
+$wgWikiaBaseDomain = 'wikia.com';
+
+/**
  * User accounts that are used as bots but do not have the bot flag.
  * @see extensions/wikia/AchievementsII
  * @see includes/wikia/Wikia.php
@@ -8256,6 +8595,13 @@ $wgWikiaMobileAppSupportedVideos = [ 'youtube', ];
 $wgWikiaMobileSupportedVideos = [ 'dailymotion', 'vimeo', 'youtube', ];
 
 /**
+ * FANDOM no-cookie or cookie-less domain. Used in many places across the
+ * codebase.
+ * @var string $wgWikiaNocookieDomain
+ */
+$wgWikiaNocookieDomain = 'wikia.nocookie.net';
+
+/**
  * Enable Special:Nuke for sysops. Disabled globally. Set in WikiFactory if
  * required.
  * @see lib/Wikia/src/Service/User/Permissions/data/PermissionsDefinesAfterWikiFactory.php
@@ -8366,3 +8712,10 @@ $wgXMLMimeTypes = [
     'http://www.w3.org/1999/xhtml:html' => 'text/html', // application/xhtml+xml?
     'html' => 'text/html', // application/xhtml+xml?
 ];
+
+/**
+ * Youku configuration.
+ * @see extensions/wikia/VideoHandlers/
+ * @var Array $wgYoukuConfig
+ */
+$wgYoukuConfig['playerColor'] = 0;
