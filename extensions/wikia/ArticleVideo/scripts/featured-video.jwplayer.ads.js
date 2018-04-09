@@ -10,6 +10,7 @@ define('wikia.articleVideo.featuredVideo.ads', [
 	'ext.wikia.adEngine.video.vastParser',
 	'wikia.articleVideo.featuredVideo.lagger',
 	'wikia.log',
+	'wikia.window',
 	require.optional('ext.wikia.adEngine.wrappers.prebid'),
 ], function (
 	adContext,
@@ -23,6 +24,7 @@ define('wikia.articleVideo.featuredVideo.ads', [
 	vastParser,
 	fvLagger,
 	log,
+	win,
 	prebid
 ) {
 	'use strict';
@@ -168,10 +170,17 @@ define('wikia.articleVideo.featuredVideo.ads', [
 			});
 
 			player.on('adError', function (event) {
+				// https://support.jwplayer.com/customer/portal/articles/2924017
+				// According to JWPlayer docs IMA events have pattern 2xxxx
+				// Example:
+				// IMA Error Code = 1009 (empty vast)
+				// JW Error Code = 21009
+				var emptyImaVastErrorCode = 20000 + win.google.ima.AdError.ErrorCode.VAST_EMPTY_RESPONSE;
+
 				fvLagger.markAsReady(null);
 				vastDebugger.setVastAttributes(featuredVideoContainer, event.tag, 'error', event.ima && event.ima.ad);
 
-				if (bidderEnabled) {
+				if (bidderEnabled && event.adErrorCode === emptyImaVastErrorCode) {
 					requestBidder();
 				}
 				bidderEnabled = false;
