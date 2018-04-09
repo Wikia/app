@@ -1,4 +1,3 @@
-
 require(['jquery'],
 	function ($) {
 		if ( $.cookie('useskin') === 'oasis' ) {
