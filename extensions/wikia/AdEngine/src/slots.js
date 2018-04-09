@@ -51,7 +51,8 @@ export default {
 			targeting: {
 				pos: ['BOTTOM_LEADERBOARD', 'MOBILE_PREFOOTER'],
 				loc: 'footer'
-			}
+			},
+			viewportConflicts: []
 		},
 		'MOBILE_TOP_LEADERBOARD': {
 			disabled: false,
