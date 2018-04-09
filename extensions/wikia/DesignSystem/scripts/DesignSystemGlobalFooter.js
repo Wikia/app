@@ -1,9 +1,14 @@
 
 require(['jquery'],
 	function ($) {
-		$('.mobile-site-link').click(mobileSiteLinkClicked);
+
+		if ( $.cookie('useskin') === 'oasis' ) {
+			$('.mobile-site-link').click(mobileSiteLinkClicked);
+			$('.mobile-site-link').css("display", "inline-block");
+		}
+
 		function mobileSiteLinkClicked(){
-			document.cookie = 'useskin=; expires=Thu, 01 Jan 1970 00:00:01 GMT; path=/; domain=' + wgCookieDomain;
+			$.cookie("useskin", null, {path: '/', domain: wgCookieDomain});
 		}
 	}
 );
