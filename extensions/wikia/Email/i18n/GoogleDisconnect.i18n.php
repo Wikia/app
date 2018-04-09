@@ -4,8 +4,8 @@ $messages = array();
 $messages['en'] = array(
 	'emailext-googledisconnect-subject' => 'Your FANDOM account is now disconnected from Google!',
 	'emailext-googledisconnect-summary' => "It looks like you've just disconnected your FANDOM account from Google. We've kept all of your history, messages and profile details intact since you're an important part of the FANDOM community.",
-	'emailext-googledisconnect-intro' => "You can use the same username as before, and we've generated a new temporary password for you to use. Here are your details:",
-	'emailext-googledisconnect-instructions' => "If you already set a password on FANDOM, don't worry! Your account is safe and secure. You can ignore this email and continue signing in to FANDOM with your old password. Otherwise, please sign in with the temporary password above and reset it to your password of choice on your Preferences page.",
+    'emailext-googledisconnect-intro' => 'You can use the same username, but we may need you to click the link below to set your new password on Fandom:',
+    'emailext-googledisconnect-instructions' => 'If you previously set a password on Fandom, no action is needed. You can ignore this message and continue signing in to Fandom with your old password. Otherwise, please click the link above to set your new password on Fandom.',
 );
 
 $messages['qqq'] = array(
