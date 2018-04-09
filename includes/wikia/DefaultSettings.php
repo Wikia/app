@@ -395,10 +395,6 @@ $wgAutoloadClasses['IncludeMessagesTrait'] = $IP . '/includes/wikia/traits/Inclu
 $wgAutoloadClasses['JsonDeserializerTrait'] = "$IP/includes/wikia/traits/JsonDeserializerTrait.php";
 $wgAutoloadClasses['TitleTrait'] = $IP . '/includes/wikia/traits/TitleTrait.php';
 
-// Profiler classes
-$wgAutoloadClasses['ProfilerData'] = "{$IP}/includes/profiler/ProfilerData.php";
-$wgAutoloadClasses['ProfilerDataSink'] = "{$IP}/includes/profiler/sinks/ProfilerDataSink.php";
-
 //RabbitMq
 $wgAutoloadClasses['Wikia\Rabbit\ConnectionBase'] = "{$IP}/includes/wikia/rabbitmq/ConnectionBase.class.php";
 
@@ -1234,6 +1230,13 @@ $wgAdDriverBeachfrontBidderCountries = null;
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverBottomLeaderBoardMegaCountries = null;
+
+/**
+ * @name $wgAdDriverBottomLeaderBoardViewportCountries
+ * List of countries where BOTTOM_LEADERBOARD will collapse if it is in same viewport with MR.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverBottomLeaderBoardViewportCountries = null;
 
 /**
  * @name $wgAdDriverIndexExchangeBidderCountries

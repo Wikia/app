@@ -19,156 +19,157 @@ $wgExtensionCredits['specialpage'][] = [
 
 $dir = dirname( __FILE__ );
 
-include( $dir . '/WallNamespaces.php' );
+include_once( $dir . '/WallNamespaces.php' );
 
-$wgNamespacesWithSubpages[ NS_USER_WALL ] = true;
+$GLOBALS['wgNamespacesWithSubpages'][ NS_USER_WALL ] = true;
 
-$wgAutoloadClasses['CommentsIndex'] = __DIR__ . '/index/CommentsIndex.class.php';
-$wgAutoloadClasses['CommentsIndexEntry'] = __DIR__ . '/index/CommentsIndexEntry.class.php';
-$wgAutoloadClasses['CommentsIndexHooks'] = __DIR__ . '/index/CommentsIndexHooks.class.php';
-$wgAutoloadClasses['CommentsIndexEntryNotFoundException'] = __DIR__ . '/index/CommentsIndexEntryNotFoundException.php';
+$GLOBALS['wgAutoloadClasses']['CommentsIndex'] = __DIR__ . '/index/CommentsIndex.class.php';
+$GLOBALS['wgAutoloadClasses']['CommentsIndexEntry'] = __DIR__ . '/index/CommentsIndexEntry.class.php';
+$GLOBALS['wgAutoloadClasses']['CommentsIndexHooks'] = __DIR__ . '/index/CommentsIndexHooks.class.php';
+$GLOBALS['wgAutoloadClasses']['CommentsIndexEntryNotFoundException'] = __DIR__ . '/index/CommentsIndexEntryNotFoundException.php';
 
-$wgAutoloadClasses['Wall'] =  $dir . '/Wall.class.php';
-$wgAutoloadClasses['WallThread'] =  $dir . '/WallThread.class.php';
+$GLOBALS['wgAutoloadClasses']['Wall'] =  $dir . '/Wall.class.php';
+$GLOBALS['wgAutoloadClasses']['WallThread'] =  $dir . '/WallThread.class.php';
 
-$wgAutoloadClasses['WallMessage'] =  $dir . '/WallMessage.class.php';
-$wgAutoloadClasses['WallController'] =  $dir . '/WallController.class.php';
-$wgAutoloadClasses['WallExternalController'] =  $dir . '/WallExternalController.class.php';
-$wgAutoloadClasses['WallHistoryController'] =  $dir . '/WallHistoryController.class.php';
-$wgAutoloadClasses['WallHooksHelper'] =  $dir . '/WallHooksHelper.class.php';
-$wgAutoloadClasses['WallRailHelper'] =  $dir . '/WallRailHelper.class.php';
-$wgAutoloadClasses['WallHelper'] =  $dir . '/WallHelper.class.php';
-$wgAutoloadClasses['WallHistory'] =  $dir . '/WallHistory.class.php';
-$wgAutoloadClasses['WallBaseController'] =  $dir . '/WallBaseController.class.php';
-$wgAutoloadClasses['VoteHelper'] =  $dir . '/VoteHelper.class.php';
-$wgAutoloadClasses['WallRelatedPages'] =  $dir . '/WallRelatedPages.class.php';
+$GLOBALS['wgAutoloadClasses']['WallMessage'] =  $dir . '/WallMessage.class.php';
+$GLOBALS['wgAutoloadClasses']['WallController'] =  $dir . '/WallController.class.php';
+$GLOBALS['wgAutoloadClasses']['WallExternalController'] =  $dir . '/WallExternalController.class.php';
+$GLOBALS['wgAutoloadClasses']['WallHistoryController'] =  $dir . '/WallHistoryController.class.php';
+$GLOBALS['wgAutoloadClasses']['WallHooksHelper'] =  $dir . '/WallHooksHelper.class.php';
+$GLOBALS['wgAutoloadClasses']['WallRailHelper'] =  $dir . '/WallRailHelper.class.php';
+$GLOBALS['wgAutoloadClasses']['WallHelper'] =  $dir . '/WallHelper.class.php';
+$GLOBALS['wgAutoloadClasses']['WallHistory'] =  $dir . '/WallHistory.class.php';
+$GLOBALS['wgAutoloadClasses']['WallBaseController'] =  $dir . '/WallBaseController.class.php';
+$GLOBALS['wgAutoloadClasses']['VoteHelper'] =  $dir . '/VoteHelper.class.php';
+$GLOBALS['wgAutoloadClasses']['WallRelatedPages'] =  $dir . '/WallRelatedPages.class.php';
 
-$wgAutoloadClasses['WallTabsRenderer'] = __DIR__ . '/WallTabsRenderer.php';
+$GLOBALS['wgAutoloadClasses']['WallTabsRenderer'] = __DIR__ . '/WallTabsRenderer.php';
 
-$wgAutoloadClasses['WallBuilder'] = __DIR__ . '/builders/WallBuilder.class.php';
-$wgAutoloadClasses['WallMessageBuilder'] = __DIR__ . '/builders/WallMessageBuilder.class.php';
-$wgAutoloadClasses['WallEditBuilder'] = __DIR__ . '/builders/WallEditBuilder.class.php';
+$GLOBALS['wgAutoloadClasses']['WallBuilder'] = __DIR__ . '/builders/WallBuilder.class.php';
+$GLOBALS['wgAutoloadClasses']['WallMessageBuilder'] = __DIR__ . '/builders/WallMessageBuilder.class.php';
+$GLOBALS['wgAutoloadClasses']['WallEditBuilder'] = __DIR__ . '/builders/WallEditBuilder.class.php';
 
-$wgAutoloadClasses['InappropriateContentException'] = __DIR__ . '/exceptions/InappropriateContentException.class.php';
-$wgAutoloadClasses['WallBuilderException'] = __DIR__ . '/exceptions/WallBuilderException.class.php';
-$wgAutoloadClasses['WallBuilderGenericException'] = __DIR__ . '/exceptions/WallBuilderGenericException.class.php';
+$GLOBALS['wgAutoloadClasses']['InappropriateContentException'] = __DIR__ . '/exceptions/InappropriateContentException.class.php';
+$GLOBALS['wgAutoloadClasses']['WallBuilderException'] = __DIR__ . '/exceptions/WallBuilderException.class.php';
+$GLOBALS['wgAutoloadClasses']['WallBuilderGenericException'] = __DIR__ . '/exceptions/WallBuilderGenericException.class.php';
 
-$wgExtensionMessagesFiles['Wall'] = $dir . '/Wall.i18n.php';
+$GLOBALS['wgExtensionMessagesFiles']['Wall'] = $dir . '/Wall.i18n.php';
 
-$wgHooks['ArticleViewHeader'][] = 'WallHooksHelper::onArticleViewHeader';
-$wgHooks['SkinTemplateTabs'][] = 'WallHooksHelper::onSkinTemplateTabs';
-$wgHooks['AlternateEdit'][] = 'WallHooksHelper::onAlternateEdit';
-$wgHooks['AfterEditPermissionErrors'][] = 'WallHooksHelper::onAfterEditPermissionErrors';
-$wgHooks['BeforePageProtect'][] = 'WallHooksHelper::onBeforePageProtect';
-$wgHooks['BeforePageUnprotect'][] = 'WallHooksHelper::onBeforePageUnprotect';
-$wgHooks['BeforePageDelete'][] = 'WallHooksHelper::onBeforePageDelete';
-$wgHooks['PersonalUrls'][] = 'WallHooksHelper::onPersonalUrls';
-$wgHooks['UserPagesHeaderModuleAfterGetTabs'][] = 'WallHooksHelper::onUserPagesHeaderModuleAfterGetTabs';
-$wgHooks['SkinSubPageSubtitleAfterTitle'][] = 'WallHooksHelper::onSkinSubPageSubtitleAfterTitle';
-$wgHooks['SkinTemplateContentActions'][] = 'WallHooksHelper::onSkinTemplateContentActions';
-$wgHooks['BlockIpCompleteWatch'][] = 'WallHooksHelper::onBlockIpCompleteWatch';
-$wgHooks['UserIsBlockedFrom'][] = 'WallHooksHelper::onUserIsBlockedFrom';
+$GLOBALS['wgHooks']['ArticleViewHeader'][] = 'WallHooksHelper::onArticleViewHeader';
+$GLOBALS['wgHooks']['SkinTemplateTabs'][] = 'WallHooksHelper::onSkinTemplateTabs';
+$GLOBALS['wgHooks']['AlternateEdit'][] = 'WallHooksHelper::onAlternateEdit';
+$GLOBALS['wgHooks']['AfterEditPermissionErrors'][] = 'WallHooksHelper::onAfterEditPermissionErrors';
+$GLOBALS['wgHooks']['BeforePageProtect'][] = 'WallHooksHelper::onBeforePageProtect';
+$GLOBALS['wgHooks']['BeforePageUnprotect'][] = 'WallHooksHelper::onBeforePageUnprotect';
+$GLOBALS['wgHooks']['BeforePageDelete'][] = 'WallHooksHelper::onBeforePageDelete';
+$GLOBALS['wgHooks']['PersonalUrls'][] = 'WallHooksHelper::onPersonalUrls';
+$GLOBALS['wgHooks']['UserPagesHeaderModuleAfterGetTabs'][] = 'WallHooksHelper::onUserPagesHeaderModuleAfterGetTabs';
+$GLOBALS['wgHooks']['SkinSubPageSubtitleAfterTitle'][] = 'WallHooksHelper::onSkinSubPageSubtitleAfterTitle';
+$GLOBALS['wgHooks']['SkinTemplateContentActions'][] = 'WallHooksHelper::onSkinTemplateContentActions';
+$GLOBALS['wgHooks']['BlockIpCompleteWatch'][] = 'WallHooksHelper::onBlockIpCompleteWatch';
+$GLOBALS['wgHooks']['UserIsBlockedFrom'][] = 'WallHooksHelper::onUserIsBlockedFrom';
 
-$wgHooks['ArticleRobotPolicy'][] = 'WallHooksHelper::onArticleRobotPolicy';
+$GLOBALS['wgHooks']['ArticleRobotPolicy'][] = 'WallHooksHelper::onArticleRobotPolicy';
 
 // wall history in toolbar
-$wgHooks['BeforeToolbarMenu'][] = 'WallHooksHelper::onBeforeToolbarMenu';
-$wgHooks['BeforePageHistory'][] = 'WallHooksHelper::onBeforePageHistory';
-$wgHooks['GetHistoryDescription'][] = 'WallHooksHelper::onGetHistoryDescription';
+$GLOBALS['wgHooks']['BeforeToolbarMenu'][] = 'WallHooksHelper::onBeforeToolbarMenu';
+$GLOBALS['wgHooks']['BeforePageHistory'][] = 'WallHooksHelper::onBeforePageHistory';
+$GLOBALS['wgHooks']['GetHistoryDescription'][] = 'WallHooksHelper::onGetHistoryDescription';
 
-$wgHooks['AllowNotifyOnPageChange'][] = 'WallHooksHelper::onAllowNotifyOnPageChange';
-$wgHooks['GetPreferences'][] = 'WallHooksHelper::onGetPreferences';
+$GLOBALS['wgHooks']['AllowNotifyOnPageChange'][] = 'WallHooksHelper::onAllowNotifyOnPageChange';
+$GLOBALS['wgHooks']['GetPreferences'][] = 'WallHooksHelper::onGetPreferences';
 
 // recent changes adjusting
-$wgHooks['ChangesListInsertFlags'][] = 'WallHooksHelper::onChangesListInsertFlags';
-$wgHooks['ChangesListInsertArticleLink'][] = 'WallHooksHelper::onChangesListInsertArticleLink';
-$wgHooks['ChangesListInsertDiffHist'][] = 'WallHooksHelper::onChangesListInsertDiffHist';
-$wgHooks['ChangesListInsertRollback'][] = 'WallHooksHelper::onChangesListInsertRollback';
-$wgHooks['ChangesListInsertLogEntry'][] = 'WallHooksHelper::onChangesListInsertLogEntry';
-$wgHooks['ChangesListInsertComment'][] = 'WallHooksHelper::onChangesListInsertComment';
+$GLOBALS['wgHooks']['ChangesListInsertFlags'][] = 'WallHooksHelper::onChangesListInsertFlags';
+$GLOBALS['wgHooks']['ChangesListInsertArticleLink'][] = 'WallHooksHelper::onChangesListInsertArticleLink';
+$GLOBALS['wgHooks']['ChangesListInsertDiffHist'][] = 'WallHooksHelper::onChangesListInsertDiffHist';
+$GLOBALS['wgHooks']['ChangesListInsertRollback'][] = 'WallHooksHelper::onChangesListInsertRollback';
+$GLOBALS['wgHooks']['ChangesListInsertLogEntry'][] = 'WallHooksHelper::onChangesListInsertLogEntry';
+$GLOBALS['wgHooks']['ChangesListInsertComment'][] = 'WallHooksHelper::onChangesListInsertComment';
 
-$wgHooks['ArticleDoDeleteArticleBeforeLogEntry'][] = 'WallHooksHelper::onArticleDoDeleteArticleBeforeLogEntry';
-$wgHooks['PageArchiveUndeleteBeforeLogEntry'][] = 'WallHooksHelper::onPageArchiveUndeleteBeforeLogEntry';
-$wgHooks['OldChangesListRecentChangesLine'][] = 'WallHooksHelper::onOldChangesListRecentChangesLine';
-$wgHooks['ChangesListMakeSecureName'][] = 'WallHooksHelper::onChangesListMakeSecureName';
-$wgHooks['WikiaRecentChangesBlockHandlerChangeHeaderBlockGroup'][] = 'WallHooksHelper::onWikiaRecentChangesBlockHandlerChangeHeaderBlockGroup';
-$wgHooks['ChangesListItemGroupRegular'][] = 'WallHooksHelper::onChangesListItemGroupRegular';
+$GLOBALS['wgHooks']['ArticleDoDeleteArticleBeforeLogEntry'][] = 'WallHooksHelper::onArticleDoDeleteArticleBeforeLogEntry';
+$GLOBALS['wgHooks']['PageArchiveUndeleteBeforeLogEntry'][] = 'WallHooksHelper::onPageArchiveUndeleteBeforeLogEntry';
+$GLOBALS['wgHooks']['OldChangesListRecentChangesLine'][] = 'WallHooksHelper::onOldChangesListRecentChangesLine';
+$GLOBALS['wgHooks']['ChangesListMakeSecureName'][] = 'WallHooksHelper::onChangesListMakeSecureName';
+$GLOBALS['wgHooks']['WikiaRecentChangesBlockHandlerChangeHeaderBlockGroup'][] = 'WallHooksHelper::onWikiaRecentChangesBlockHandlerChangeHeaderBlockGroup';
+$GLOBALS['wgHooks']['ChangesListItemGroupRegular'][] = 'WallHooksHelper::onChangesListItemGroupRegular';
 
-$wgHooks['ArticleDeleteComplete'][] = 'WallHooksHelper::onArticleDeleteComplete';
-$wgHooks['FilePageImageUsageSingleLink'][] = 'WallHooksHelper::onFilePageImageUsageSingleLink';
+$GLOBALS['wgHooks']['ArticleDeleteComplete'][] = 'WallHooksHelper::onArticleDeleteComplete';
+$GLOBALS['wgHooks']['FilePageImageUsageSingleLink'][] = 'WallHooksHelper::onFilePageImageUsageSingleLink';
 
-$wgHooks['getUserPermissionsErrors'][] = 'WallHooksHelper::onGetUserPermissionsErrors';
+$GLOBALS['wgHooks']['getUserPermissionsErrors'][] = 'WallHooksHelper::onGetUserPermissionsErrors';
 
 // Special:Contributions adjusting
-$wgHooks['ContributionsLineEnding'][] = 'WallHooksHelper::onContributionsLineEnding';
+$GLOBALS['wgHooks']['ContributionsLineEnding'][] = 'WallHooksHelper::onContributionsLineEnding';
 
 // Special:Whatlinkshere adjustinb
-$wgHooks['SpecialWhatlinkshere::renderWhatLinksHereRow'][] = 'WallHooksHelper::onRenderWhatLinksHereRow';
-$wgHooks['ContributionsToolLinks'][] = 'WallHooksHelper::onContributionsToolLinks';
+$GLOBALS['wgHooks']['SpecialWhatlinkshere::renderWhatLinksHereRow'][] = 'WallHooksHelper::onRenderWhatLinksHereRow';
+$GLOBALS['wgHooks']['ContributionsToolLinks'][] = 'WallHooksHelper::onContributionsToolLinks';
 
 // watchlist
-$wgHooks['ArticleCommentBeforeWatchlistAdd'][] = 'WallHooksHelper::onArticleCommentBeforeWatchlistAdd';
-// $wgHooks['WatchArticle'][] = 'WallHooksHelper::onWatchArticle';
-$wgHooks['UnwatchArticle'][] = 'WallHooksHelper::onUnwatchArticle';
+$GLOBALS['wgHooks']['ArticleCommentBeforeWatchlistAdd'][] = 'WallHooksHelper::onArticleCommentBeforeWatchlistAdd';
+// $GLOBALS['wgHooks']['WatchArticle'][] = 'WallHooksHelper::onWatchArticle';
+$GLOBALS['wgHooks']['UnwatchArticle'][] = 'WallHooksHelper::onUnwatchArticle';
 
 // diff page adjusting
-$wgHooks['DiffViewHeader'][] = 'WallHooksHelper::onDiffViewHeader';
+$GLOBALS['wgHooks']['DiffViewHeader'][] = 'WallHooksHelper::onDiffViewHeader';
 
 // right rail adjusting
-$wgHooks['GetRailModuleList'][] = 'WallRailHelper::onGetRailModuleList';
+$GLOBALS['wgHooks']['GetRailModuleList'][] = 'WallRailHelper::onGetRailModuleList';
 
 // handmade links to message wall adjusting
-$wgHooks['LinkBegin'][] = 'WallHooksHelper::onLinkBegin';
-$wgHooks['LinkerUserTalkLinkAfter'][] = 'WallHooksHelper::onLinkerUserTalkLinkAfter';
+$GLOBALS['wgHooks']['LinkBegin'][] = 'WallHooksHelper::onLinkBegin';
+$GLOBALS['wgHooks']['LinkerUserTalkLinkAfter'][] = 'WallHooksHelper::onLinkerUserTalkLinkAfter';
 
 // saving user talk archive redirects to user talk archive
-$wgHooks['ArticleSaveComplete'][] = 'WallHooksHelper::onArticleSaveComplete';
+$GLOBALS['wgHooks']['ArticleSaveComplete'][] = 'WallHooksHelper::onArticleSaveComplete';
 
 // cancel API vote adding
-$wgHooks['ArticleBeforeVote'][] = 'WallHooksHelper::onArticleBeforeVote';
+$GLOBALS['wgHooks']['ArticleBeforeVote'][] = 'WallHooksHelper::onArticleBeforeVote';
 
 // vote invalidation
-$wgHooks['BlockIpComplete'][] = 'WallHooksHelper::onBlockIpComplete';
-$wgHooks['UnBlockIpComplete'][] = 'WallHooksHelper::onBlockIpComplete';
+$GLOBALS['wgHooks']['BlockIpComplete'][] = 'WallHooksHelper::onBlockIpComplete';
+$GLOBALS['wgHooks']['UnBlockIpComplete'][] = 'WallHooksHelper::onBlockIpComplete';
 
-$wgHooks['CategoryViewer::beforeCategoryData'][] = 'WallHooksHelper::onBeforeCategoryData';
+$GLOBALS['wgHooks']['CategoryViewer::beforeCategoryData'][] = 'WallHooksHelper::onBeforeCategoryData';
 
-$wgHooks['GetRailModuleSpecialPageList'][] = 'WallHooksHelper::onGetRailModuleSpecialPageList';
-$wgHooks['SpecialWikiActivityExecute'][] = 'WallHooksHelper::onSpecialWikiActivityExecute';
+$GLOBALS['wgHooks']['GetRailModuleSpecialPageList'][] = 'WallHooksHelper::onGetRailModuleSpecialPageList';
+$GLOBALS['wgHooks']['SpecialWikiActivityExecute'][] = 'WallHooksHelper::onSpecialWikiActivityExecute';
 
-$wgHooks['WantedPages::getQueryInfo'][] = 'WallHooksHelper::onWantedPagesGetQueryInfo';
-$wgHooks['ListredirectsPage::getQueryInfo'][] = 'WallHooksHelper::onListredirectsPageGetQueryInfo';
+$GLOBALS['wgHooks']['WantedPages::getQueryInfo'][] = 'WallHooksHelper::onWantedPagesGetQueryInfo';
+$GLOBALS['wgHooks']['ListredirectsPage::getQueryInfo'][] = 'WallHooksHelper::onListredirectsPageGetQueryInfo';
 
-$wgHooks['BeforeInitialize'][] = 'WallHooksHelper::onBeforeInitialize';
+$GLOBALS['wgHooks']['BeforeInitialize'][] = 'WallHooksHelper::onBeforeInitialize';
 // lazy loaded by the previous hook
 
-$wgHooks['WikiFeatures::afterToggleFeature'][] = 'WallHooksHelper::onAfterToggleFeature';
-$wgHooks['AdvancedBoxSearchableNamespaces'][] = 'WallHooksHelper::onAdvancedBoxSearchableNamespaces';
+$GLOBALS['wgHooks']['WikiFeatures::afterToggleFeature'][] = 'WallHooksHelper::onAfterToggleFeature';
+$GLOBALS['wgHooks']['AdvancedBoxSearchableNamespaces'][] = 'WallHooksHelper::onAdvancedBoxSearchableNamespaces';
 
-$wgHooks['HAWelcomeGetPrefixText'][] = 'WallHooksHelper::onHAWelcomeGetPrefixText';
+$GLOBALS['wgHooks']['HAWelcomeGetPrefixText'][] = 'WallHooksHelper::onHAWelcomeGetPrefixText';
 
 // Monobook toolbar links
-$wgHooks['SkinTemplateToolboxEnd'][] = 'WallHooksHelper::onBuildMonobookToolbox';
+$GLOBALS['wgHooks']['SkinTemplateToolboxEnd'][] = 'WallHooksHelper::onBuildMonobookToolbox';
 
 // Hook for code that wants a beautified title and URL given the not very readable Wall/Forum title
-$wgHooks['FormatForumLinks'][] = 'WallHooksHelper::onFormatForumLinks';
+$GLOBALS['wgHooks']['FormatForumLinks'][] = 'WallHooksHelper::onFormatForumLinks';
 
 // Fix URLs when purging after adding a thread/post
-$wgHooks['TitleGetSquidURLs'][] = 'WallHooksHelper::onTitleGetSquidURLs';
-$wgHooks['ArticleCommentGetSquidURLs'][] = 'WallHooksHelper::onArticleCommentGetSquidURLs';
+$GLOBALS['wgHooks']['TitleGetSquidURLs'][] = 'WallHooksHelper::onTitleGetSquidURLs';
+$GLOBALS['wgHooks']['ArticleCommentGetSquidURLs'][] = 'WallHooksHelper::onArticleCommentGetSquidURLs';
 
 // Fix User_talk links for profile page diff on wall enabled wikis
 // VOLDEV-66
-$wgHooks['GetTalkPage'][] = 'WallHooksHelper::onGetTalkPage';
+
+$GLOBALS['wgHooks']['GetTalkPage'][] = 'WallHooksHelper::onGetTalkPage';
 
 // SUS-260: Prevent moving pages within, into or out of Wall namespaces
-$wgHooks['MWNamespace:isMovable'][] = 'WallHooksHelper::onNamespaceIsMovable';
+$GLOBALS['wgHooks']['MWNamespace:isMovable'][] = 'WallHooksHelper::onNamespaceIsMovable';
 
 // handle MediaWiki delete flow and comments_index updates
-$wgHooks['ArticleDoDeleteArticleBeforeLogEntry'][] = 'CommentsIndexHooks::onArticleDoDeleteArticleBeforeLogEntry';
-$wgHooks['ArticleUndelete'][] = 'CommentsIndexHooks::onArticleUndelete';
+$GLOBALS['wgHooks']['ArticleDoDeleteArticleBeforeLogEntry'][] = 'CommentsIndexHooks::onArticleDoDeleteArticleBeforeLogEntry';
+$GLOBALS['wgHooks']['ArticleUndelete'][] = 'CommentsIndexHooks::onArticleUndelete';
 
-$wgHooks['AfterPageHeaderPageSubtitle'][] = 'WallHooksHelper::onAfterPageHeaderPageSubtitle';
+$GLOBALS['wgHooks']['AfterPageHeaderPageSubtitle'][] = 'WallHooksHelper::onAfterPageHeaderPageSubtitle';
 
 JSMessages::registerPackage( 'Wall', [
 	'wall-notifications',
@@ -215,11 +216,11 @@ define( 'WALL_EMAIL_EVERY', 1 );
 define( 'WALL_EMAIL_SINCEVISITED', 2 );
 define( 'WALL_EMAIL_REMINDER', 3 );
 
-$wgDefaultUserOptions['enotifwallthread'] = WALL_EMAIL_SINCEVISITED;
-$wgDefaultUserOptions['wallshowsource'] = false;
-$wgDefaultUserOptions['walldelete'] = false;
+$GLOBALS['wgDefaultUserOptions']['enotifwallthread'] = WALL_EMAIL_SINCEVISITED;
+$GLOBALS['wgDefaultUserOptions']['wallshowsource'] = false;
+$GLOBALS['wgDefaultUserOptions']['walldelete'] = false;
 
-$wgUserProfileNamespaces = [
+$GLOBALS['wgUserProfileNamespaces'] = [
 	NS_USER, NS_USER_TALK, NS_USER_WALL
 ];
 
