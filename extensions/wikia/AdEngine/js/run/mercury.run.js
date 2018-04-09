@@ -66,6 +66,9 @@ require([
 			fvLagger.addResponseListener(function (lineItemId) {
 				adEngineBridge.universalAdPackage.setUapId(lineItemId);
 				adEngineBridge.universalAdPackage.setType('jwp');
+
+				slotRegistry.disable('MOBILE_TOP_LEADERBOARD');
+				slotRegistry.disable('BOTTOM_LEADERBOARD');
 			});
 		}
 	}

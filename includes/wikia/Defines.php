@@ -69,13 +69,6 @@ define( 'WIKIA_ENV_SANDBOX', 'sandbox' );
 define( 'WIKIA_ENV_STABLE', 'stable' );
 
 /**
- * @name WIKIA_ENV_STAGING
- * Name constant for "staging" environment.
- * @deprecated Code portability: do not add more environment-specific code.
- */
-define( 'WIKIA_ENV_STAGING', 'staging' );
-
-/**
  * @name WIKIA_ENV_VERIFY
  * Name constant for "verify" environment.
  * @deprecated Code portability: do not add more environment-specific code.
