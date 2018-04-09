@@ -717,15 +717,6 @@ describe('AdContext', function () {
 
 	[
 		{
-			hasFeaturedVideo: true,
-			instantGlobals: {
-				wgAdDriverRubiconPrebidCountries: ['CURRENT_COUNTRY']
-			},
-			testedBidder: 'rubicon',
-			expectedResult: false
-		},
-		{
-			hasFeaturedVideo: false,
 			instantGlobals: {
 				wgAdDriverRubiconPrebidCountries: ['ZZ']
 			},
@@ -733,7 +724,6 @@ describe('AdContext', function () {
 			expectedResult: false
 		},
 		{
-			hasFeaturedVideo: false,
 			instantGlobals: {
 				wgAdDriverRubiconPrebidCountries: ['CURRENT_COUNTRY']
 			},

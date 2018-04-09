@@ -4,8 +4,8 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.rubicon', function () {
 
 	var mocks = {
 		adContext: {
-			getContext: function () {
-				return mocks.context;
+			get: function () {
+				return true;
 			}
 		},
 		context: {},
@@ -58,7 +58,7 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.rubicon', function () {
 	});
 
 	it('Is disabled when context is disabled', function () {
-		mocks.context.bidders.rubicon = false;
+		spyOn(mocks.adContext, 'get').and.returnValue(false);
 		var rubicon = getBidder();
 
 		expect(rubicon.isEnabled()).toBeFalsy();
