@@ -70,6 +70,7 @@ define('wikia.articleVideo.featuredVideo.ads', [
 
 			if (bid && bid.vastUrl) {
 				trackingParams.adProduct = 'featured-video-preroll';
+				bidderEnabled = false;
 				player.playAd(bid.vastUrl);
 			}
 		}
