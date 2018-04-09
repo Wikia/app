@@ -910,6 +910,7 @@ $config['mercury_ads_js'] = [
 		// Advertisement libs
 		'//extensions/wikia/AbTesting/js/AbTest.js',
 		'//extensions/wikia/AdEngine/js/AdLogicPageViewCounter.js',
+		'//extensions/wikia/AdEngine/js/build/geo.js',
 		'//extensions/wikia/AdEngine/js/CustomAdsLoader.js',
 		'//extensions/wikia/AdEngine/js/babDetection.js',
 		'//extensions/wikia/AdEngine/js/mobile/mercuryListener.js',
