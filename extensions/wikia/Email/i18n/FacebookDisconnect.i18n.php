@@ -4,8 +4,8 @@ $messages = array();
 $messages['en'] = array(
 	'emailext-fbdisconnect-subject' => 'Your FANDOM account is now disconnected from Facebook!',
 	'emailext-fbdisconnect-summary' => "It looks like you've just disconnected your FANDOM account from Facebook. We've kept all of your history, messages and profile details intact since you're an important part of the FANDOM community.",
-    'emailext-fbdisconnect-intro' => 'You can use the same username, but we may need you to click the link below to set your new password on Fandom:',
-    'emailext-fbdisconnect-instructions' => 'If you previously set a password on Fandom, no action is needed. You can ignore this message and continue signing in to Fandom with your old password. Otherwise, please click the link above to set your new password on Fandom.',
+    'emailext-fbdisconnect-intro' => 'You can use the same username, but we may need you to click the link below to set your new password on FANDOM:',
+    'emailext-fbdisconnect-instructions' => 'If you previously set a password on FANDOM, no action is needed. You can ignore this message and continue signing in to FANDOM with your old password. Otherwise, please click the link above to set your new password on FANDOM.',
 );
 
 $messages['qqq'] = array(
@@ -55,13 +55,6 @@ $messages['ko'] = array(
 	'emailext-fbdisconnect-subject' => '위키아 계정의 페이스북 연동이 해제되었습니다',
 	'emailext-fbdisconnect-summary' => '방금 막 귀하의 위키아 계정을 페이스북 연동에서 해제했습니다. 연동과 관련된 귀하의 정보(메시지, 프로필 등)는 서버에 안전히 보관됩니다.',
 	'emailext-fbdisconnect-intro' => '기존의 사용자 이름은 그대로 사용하실 수 있으며 저희가 임시 비밀번호를 생성해드렸습니다. 자세한 사항은 다음을 참고하세요.',
-);
-
-$messages['nl'] = array(
-	'emailext-fbdisconnect-subject' => 'Your Wikia account is now disconnected from Facebook!',
-	'emailext-fbdisconnect-summary' => "It looks like you've just disconnected your Wikia account from Facebook. We've kept all of your history, messages and profile details intact since you’re an important part of the Wikia community.",
-	'emailext-fbdisconnect-intro' => "You can use the same username as before, and we've generated a new temporary password for you to use. Here are your details:",
-	'emailext-fbdisconnect-instructions' => "If you already set a password on Wikia, don't worry! Your account is safe and secure. You can ignore this email and continue signing in to Wikia with your old password. Otherwise, please sign in with the temporary password above and reset it to your password of choice on your Preferences page.",
 );
 
 $messages['pl'] = array(
