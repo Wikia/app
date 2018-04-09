@@ -157,7 +157,7 @@ class UserStatsService extends WikiaModel {
 	 * @param int $flags bit flags with options (ie. to force DB_MASTER)
 	 * @return Int Number of edits
 	 */
-	public function calculateEditCountWiki( $flags = 0 ) {
+	private function calculateEditCountWiki( $flags = 0 ) {
 		if ( !$this->validateUser() ) {
 			return 0;
 		}
