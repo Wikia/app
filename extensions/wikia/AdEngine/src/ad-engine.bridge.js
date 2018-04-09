@@ -57,7 +57,7 @@ function init(
 	context.set('options.contentLanguage', window.wgContentLanguage);
 
 	legacyContext.addCallback(() => {
-		context.extend({slots: Object.assign(slots, {})});
+		context.set('slots', Object.assign(slots, {}));
 	})
 }
 
