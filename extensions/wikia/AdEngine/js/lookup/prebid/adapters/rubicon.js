@@ -15,12 +15,22 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.rubicon', [
 		rubiconSiteId = 55412,
 		slots = {
 			oasis: {
+				FEATURED: {
+					disabled: true,
+					zoneId: 260296,
+					position: 'btf'
+				},
 				INCONTENT_PLAYER: {
 					zoneId: 260296,
 					position: 'btf'
 				}
 			},
 			mercury: {
+				FEATURED: {
+					disabled: true,
+					zoneId: 563110,
+					position: 'btf'
+				},
 				MOBILE_IN_CONTENT: {
 					zoneId: 563110,
 					position: 'btf'
@@ -28,18 +38,18 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.rubicon', [
 			}
 		};
 
-	function getAdContext() {
-		return adContext.getContext();
-	}
-
 	function isEnabled() {
-		return getAdContext().bidders.rubicon && !instartLogic.isBlocking();
+		return adContext.get('bidders.rubicon') && !instartLogic.isBlocking();
 	}
 
 	function prepareAdUnit(slotName, config, skin) {
 		var targeting = adaptersHelper.getTargeting(slotName, skin),
 			adUnit,
 			bidParams;
+
+		if (config.disabled) {
+			return;
+		}
 
 		bidParams = {
 			accountId: rubiconAccountId,
@@ -74,7 +84,13 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.rubicon', [
 	}
 
 	function getSlots(skin) {
-		return slotsContext.filterSlotMap(slots[skin]);
+		var enabledSlots = slots[skin];
+
+		if (adContext.get('bidders.rubiconInFV')) {
+			enabledSlots.FEATURED.disabled = false;
+		}
+
+		return slotsContext.filterSlotMap(enabledSlots);
 	}
 
 	function getName() {
