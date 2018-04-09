@@ -213,10 +213,12 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 				],
 			],
 			'mobile_site_button' => [
-				'description' => [
+				'type' => 'link-text',
+				'title' => [
 					'type' => 'translatable-text',
 					'key' => 'global-footer-mobile-site-button'
-				]
+				],
+				'href' => 'google.com'
 			]
 		];
 

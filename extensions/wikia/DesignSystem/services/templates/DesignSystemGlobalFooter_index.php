@@ -90,6 +90,7 @@
 			); ?>
 		</div>
 	</div>
+	<div class="wds-global-footer__bottom-bar">
 	<?= $app->renderView(
 		'DesignSystemGlobalFooterService',
 		'licensingAndVertical',
@@ -105,5 +106,6 @@
 			'model' => $model['mobile_site_button']
 		]
 	); ?>
+	</div>
 
 </footer>
