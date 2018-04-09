@@ -9,7 +9,7 @@ class ArticleVideoContext {
 	 * to get playlist for given article: $playlist = self::RECOMMENDED_VIDEO_MAPPINGS[$cityId][$articleId]
 	 */
 	const RECOMMENDED_VIDEO_MAPPINGS_POZ_DEV = [
-		// harrypotter Knight_Bus
+		// harrypotter.wikia-dev.pl
 		509 => '1Dw2sjAj',
 	];
 
@@ -181,7 +181,10 @@ class ArticleVideoContext {
 	}
 
 	public static function isRecommendedVideoAvailable( int $pageId ): bool {
-		return !F::app()->wg->user->isLoggedIn() &&
+		$wg = F::app()->wg;
+
+		return !$wg->user->isLoggedIn() &&
+			$wg->Title->isContentPage() &&
 			!empty( self::getRecommendedVideoPlaylistId() ) &&
 			empty( self::isFeaturedVideoEmbedded( $pageId ) );
 	}
