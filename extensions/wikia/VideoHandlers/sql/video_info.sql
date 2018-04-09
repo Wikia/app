@@ -10,5 +10,5 @@ CREATE TABLE IF NOT EXISTS `video_info` (
   `views_30day` int(10) unsigned DEFAULT '0',
   `views_total` int(10) unsigned DEFAULT '0',
   PRIMARY KEY (`video_title`),
-  KEY `added_at` (`added_at`, `duration`)
+  KEY `video_id` (`video_id`,`provider`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;

@@ -50,9 +50,6 @@ class Profiler {
 	protected $mProfileID = false, $mCollateDone = false, $mTemplated = false;
 	private static $__instance = null;
 
-	/** @var ProfilerDataSink[] */
-	protected $sinks;
-
 	function __construct( $params ) {
 		if ( isset( $params['timeMetric'] ) ) {
 			$this->mTimeMetric = $params['timeMetric'];
@@ -522,20 +519,6 @@ class Profiler {
 	function debug( $s ) {
 		if( defined( 'MW_COMPILED' ) || function_exists( 'wfDebug' ) ) {
 			wfDebug( $s );
-		}
-	}
-
-	public function hasSinks() {
-		return !empty($this->sinks);
-	}
-
-	public function addSink( ProfilerDataSink $sink ) {
-		$this->sinks[] = $sink;
-	}
-
-	public function sendToSinks( ProfilerData $data ) {
-		foreach ( $this->sinks as $sink ) {
-			$sink->send( $data );
 		}
 	}
 

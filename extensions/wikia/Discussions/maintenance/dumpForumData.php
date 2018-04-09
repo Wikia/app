@@ -25,11 +25,12 @@ class DumpForumData extends Maintenance {
 	}
 
 	public function execute() {
-		if ( $this->hasOption( 'out' ) ) {
-			$this->fh = fopen( $this->getArg(), 'w' );
-		} else {
-			$this->fh = STDOUT;
+		$outputName = $this->hasOption( 'out' ) ? $this->getArg() : "php://stdout";
+		$this->fh = fopen( $outputName, 'w' );
+		if ( $this->fh === false ) {
+			$this->error( "Unable to open file " . $outputName, 1 );
 		}
+
 		$this->dumper = new Discussions\ForumDumper();
 
 		$this->setConnectinoEncoding();

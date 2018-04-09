@@ -540,7 +540,7 @@ class MercuryApiController extends WikiaController {
 	}
 
 	private function isSupportedByMercury( Title $title ) {
-		$nsList = [ NS_FILE, NS_CATEGORY ];
+		$nsList = [ NS_FILE, NS_CATEGORY, NS_PROJECT ];
 
 		if ( defined( 'NS_BLOG_ARTICLE' ) ) {
 			$nsList[] = NS_BLOG_ARTICLE;
