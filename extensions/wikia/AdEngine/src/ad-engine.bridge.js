@@ -18,7 +18,7 @@ import { createTracker } from './tracking/porvata-tracker-factory';
 import TemplateRegistry from './templates/templates-registry';
 import AdUnitBuilder from './ad-unit-builder';
 import config from './context';
-import slotConfig from './slots';
+import { getSlotsContext } from './slots';
 import './ad-engine.bridge.scss';
 
 context.extend(config);
@@ -38,13 +38,7 @@ function init(
 	TemplateRegistry.init(legacyContext, mercuryListener);
 	scrollListener.init();
 
-	var slots = slotConfig[skin];
-
-	if (legacyContext.get('opts.isBLBViewportEnabled')) {
-		slots.BOTTOM_LEADERBOARD.viewportConflicts.push('TOP_RIGHT_BOXAD');
-	}
-
-	context.extend({slots: Object.assign(slots, {})});
+	context.set('slots', getSlotsContext(legacyContext, skin));
 	context.push('listeners.porvata', createTracker(legacyContext, geo, pageLevelTargeting, adTracker));
 
 	overrideSlotService(slotRegistry, legacyBtfBlocker);
@@ -57,8 +51,8 @@ function init(
 	context.set('options.contentLanguage', window.wgContentLanguage);
 
 	legacyContext.addCallback(() => {
-		context.set('slots', Object.assign(slots, {}));
-	})
+		context.set('slots', getSlotsContext(legacyContext, skin));
+	});
 }
 
 function overrideSlotService(slotRegistry, legacyBtfBlocker) {
