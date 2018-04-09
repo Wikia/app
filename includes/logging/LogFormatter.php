@@ -68,6 +68,9 @@ class LogFormatter {
 	/// Whether to output user tool links
 	protected $linkFlood = false;
 
+	/// Whether to skip calculating edits count
+	protected $skipEditsCount = false;
+
 	/**
 	 * Set to true if we are constructing a message text that is going to
 	 * be included in page history or send to IRC feed. Links are replaced
@@ -126,6 +129,16 @@ class LogFormatter {
 	 */
 	public function setShowUserToolLinks( $value ) {
 		$this->linkFlood = $value;
+	}
+
+	/**
+	 * If set to true we will skip calculating user edits count and render contribs link always in
+	 * blue
+	 * @see SUS-4547
+	 * @param $value boolean
+	 */
+	public function setSkipEditsCount( $value ) {
+		$this->skipEditsCount = $value;
 	}
 
 	/**
@@ -484,7 +497,7 @@ class LogFormatter {
 			->title( $this->context->getTitle() );
 	}
 
-	protected function makeUserLink( User $user ) {
+	protected function makeUserLink( User $user, $toolFlags = 0 ) {
 		if ( $this->plaintext ) {
 			$element = $user->getName();
 		} else {
@@ -494,12 +507,13 @@ class LogFormatter {
 			);
 
 			if ( $this->linkFlood ) {
+				# SUS-4547: do not calculate edit count when not needed (i.e. skipEditsCount is set)
 				$element .= Linker::userToolLinks(
 					$user->getId(),
 					$user->getName(),
-					true, // Red if no edits
-					0, // Flags
-					$user->getEditCount()
+					$this->skipEditsCount ? false : true, // redContribsWhenNoEdits
+					$toolFlags,
+					$this->skipEditsCount ? null : $user->getEditCount()
 				);
 			}
 		}
