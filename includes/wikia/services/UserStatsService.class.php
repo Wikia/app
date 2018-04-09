@@ -61,7 +61,8 @@ class UserStatsService extends WikiaModel {
 		$stats = $this->getStats( Title::GAID_FOR_UPDATE );
 
 		// update edit counts on wiki
-		if ( empty( $stats['editcount'] ) ) {
+		if ( !isset( $stats['editcount'] ) ) {
+			// editcount not set yet, calculate it
 			$stats['editcount'] = $this->calculateEditCountWiki( Title::GAID_FOR_UPDATE );
 		} elseif ( $this->updateEditCount( 'editcount' ) ) {
 			$stats['editcount']++;
@@ -109,11 +110,12 @@ class UserStatsService extends WikiaModel {
 			function () use ( $flags ) {
 				$stats = $this->loadUserStatsFromDB();
 
-				if ( empty( $stats['editcount'] ) ) {
+				if ( !isset( $stats['editcount'] ) ) {
+					// editcount not set yet, calculate it
 					$stats['editcount'] = $this->calculateEditCountWiki( $flags );
 				}
 
-				if ( empty( $stats['editcount'] ) ) {
+				if ( $stats['editcount'] === 0 ) {
 					return [
 						'firstContributionTimestamp' => null,
 						'lastContributionTimestamp' => null,
