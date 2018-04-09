@@ -484,7 +484,7 @@ class LogFormatter {
 			->title( $this->context->getTitle() );
 	}
 
-	protected function makeUserLink( User $user ) {
+	protected function makeUserLink( User $user, $toolFlags = 0 ) {
 		if ( $this->plaintext ) {
 			$element = $user->getName();
 		} else {
@@ -497,8 +497,8 @@ class LogFormatter {
 				$element .= Linker::userToolLinks(
 					$user->getId(),
 					$user->getName(),
-					true, // Red if no edits
-					0, // Flags
+					true, // redContribsWhenNoEdits
+					$toolFlags,
 					$user->getEditCount()
 				);
 			}
