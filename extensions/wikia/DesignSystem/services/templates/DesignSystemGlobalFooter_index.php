@@ -97,4 +97,13 @@
 			'model' => $model['licensing_and_vertical']
 		]
 	); ?>
+
+	<?= $app->renderView(
+		'DesignSystemGlobalFooterService',
+		'mobileSiteButton',
+		[
+			'model' => $model['mobile_site_button']
+		]
+	); ?>
+
 </footer>

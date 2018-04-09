@@ -29,6 +29,10 @@ class DesignSystemGlobalFooterService extends WikiaService {
 		$this->setVal( 'model', $this->getVal( 'model' ) );
 	}
 
+	public function mobileSiteButton() {
+		$this->setVal( 'model', $this->getVal( 'model' ) );
+	}
+
 	private function getData() {
 		return $this->sendRequest( 'DesignSystemApi', 'getFooter', [
 			'id' => $this->wg->CityId,
