@@ -453,7 +453,7 @@ function axWFactoryDomainCRUD($type="add") {
 							} else {
 								$sInfo .= "Failed: Domain <em>{$sDomain}</em> was not set as main.";
 							}
-						} catch (WikiFactoryDuplicateWgServer $error) {
+						} catch (WikiFactoryDuplicateDomain $error) {
 							$sInfo .= "Failed: " . $error->getMessage();
 						}
             break;
