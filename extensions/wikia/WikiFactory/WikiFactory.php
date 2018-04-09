@@ -409,14 +409,10 @@ class WikiFactory {
 		] );
 		wfProfileIn( __METHOD__."-changelog" );
 		$oldValue = self::IDtoUrl( $city_id );
-		$message = '<div>Main domain changed</div>' .
-			'<div class="v1"><strong>Old value:</strong><pre>%s</pre></div> ' .
-			'<div class="v2"><strong>New value:</strong><pre>%s</pre></div>' .
-			'<div class="clear">%s</div></div>';
 		$reason_extra = !empty($reason) ? " (reason: ". (string)$reason .")" : '';
 		static::log(
 			static::LOG_DOMAIN,
-			sprintf($message,
+			sprintf('Main domain changed from %s to %s %s',
 				htmlspecialchars( $oldValue ),
 				htmlspecialchars( $domain ),
 				htmlspecialchars( $reason_extra )
