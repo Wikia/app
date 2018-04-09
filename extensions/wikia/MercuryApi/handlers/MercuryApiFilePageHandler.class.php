@@ -13,7 +13,7 @@ class MercuryApiFilePageHandler {
 		$mediaObject = ArticleAsJson::createMediaObject( $details, $title->getText() );
 
 		// if article contains user provided HTML which is invalid (e.g. to many </div>), snippetter treat it as a text
-		// and it is not removed as other tags. In mobile-wiki we do not escape snippets, therefore invalid html may
+		// too and it is not removed as other tags. In mobile-wiki we do not escape snippets, therefore invalid html may
 		// cause errors on front-end side
 		$fileUsageList = array_map( function( $item ) {
 			$tidy = new tidy();
