@@ -396,7 +396,7 @@ class WikiFactory {
 			Wikia::log( __METHOD__, "", "wgWikicitiesReadOnly mode. Skipping update.");
 			return false;
 		}
-		if ( !preg_match( "^https?:\/\/", $domain ) ) {
+		if ( !preg_match( "/^https?:\/\//", $domain ) ) {
 			$domain = 'http://' . $domain;
 		}
 		wfProfileIn( __METHOD__ );
