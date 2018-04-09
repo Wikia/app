@@ -409,13 +409,13 @@ class WikiFactory {
 		] );
 		wfProfileIn( __METHOD__."-changelog" );
 		$oldValue = self::IDtoUrl( $city_id );
-		$reason_extra = !empty($reason) ? " (reason: ". (string)$reason .")" : '';
+		$reason_extra = !empty($reason) ? " (reason: ". htmlspecialchars( $reason ) .")" : '';
 		static::log(
 			static::LOG_DOMAIN,
 			sprintf('Main domain changed from %s to %s %s',
 				htmlspecialchars( $oldValue ),
 				htmlspecialchars( $domain ),
-				htmlspecialchars( $reason_extra )
+				$reason_extra
 			),
 			$city_id
 		);
@@ -449,7 +449,7 @@ class WikiFactory {
 		// Trigger WikiFactoryChanged for backward compatibility and CSRF protection
 		Hooks::run( 'WikiFactoryChanged', [ 'wgServer' , $city_id, $domain ] );
 
-		static::clearDomainCache( $city_id );
+		static::clearCache( $city_id );
 
 		wfProfileOut( __METHOD__ );
 
