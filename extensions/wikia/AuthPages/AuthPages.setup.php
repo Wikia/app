@@ -9,11 +9,13 @@ $GLOBALS['wgAutoloadClasses']['SpecialSignupRedirect'] = __DIR__ . '/specials/Sp
 $GLOBALS['wgAutoloadClasses']['SpecialUserLoginRedirect'] = __DIR__ . '/specials/SpecialUserLoginRedirect.php';
 $GLOBALS['wgAutoloadClasses']['SpecialUserSignupRedirect'] = __DIR__ . '/specials/SpecialUserSignupRedirect.php';
 $GLOBALS['wgAutoloadClasses']['SpecialWikiaConfirmEmailRedirect'] = __DIR__ . '/specials/SpecialWikiaConfirmEmailRedirect.php';
+$GLOBALS['wgAutoloadClasses']['SpecialPiggybackRedirect'] = __DIR__ . '/specials/SpecialPiggybackRedirect.php';
 
 $GLOBALS['wgAutoloadClasses']['UserLogoutSpecialController'] = __DIR__ . '/specials/UserLogoutSpecialController.php';
 
 $GLOBALS['wgWikiaApiControllers']['EmailConfirmationController'] = $dir . 'EmailConfirmationController.class.php';
 
+$GLOBALS['wgSpecialPages']['Piggyback'] = 'SpecialPiggybackRedirect';
 $GLOBALS['wgSpecialPages']['Signup'] = 'SpecialSignupRedirect';
 $GLOBALS['wgSpecialPages']['Userlogin'] = 'SpecialUserLoginRedirect';
 $GLOBALS['wgSpecialPages']['UserSignup'] = 'SpecialUserSignupRedirect';

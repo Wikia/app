@@ -23,11 +23,7 @@ abstract class AbstractAuthPageRedirect extends SpecialPage {
 	 * @throws MWException
 	 */
 	private function getReturnUrl(): string {
-		$titleObj = $this->getReturnToTitle();
-
-		if ( $this->isInvalidLoginRedirect( $titleObj ) ) {
-			$titleObj = Title::newMainPage();
-		}
+		$titleObj = $this->getReturnToTitle() ?? Title::newMainPage();
 
 		$cbParam = 'cb=' . rand( 1, 10000 );
 		$returnParams = $cbParam . '&' . $this->getRequest()->getVal( 'returntoquery', '' );
@@ -43,23 +39,5 @@ abstract class AbstractAuthPageRedirect extends SpecialPage {
 		}
 
 		return null;
-	}
-
-	/**
-	 * Blacklist certain titles from being used as the value of returnto parameter
-	 *
-	 * @param Title|null $title
-	 * @return bool
-	 */
-	private function isInvalidLoginRedirect( $title ): bool {
-		return (
-			!$title instanceof Title ||
-			$title->isExternal() ||
-			$title->isSpecial( 'Userlogout' ) ||
-			$title->isSpecial( 'Signup' ) ||
-			$title->isSpecial( 'Connect' ) ||
-			$title->isSpecial( 'Userlogin' ) ||
-			$title->isSpecial( 'UserSignup' )
-		);
 	}
 }

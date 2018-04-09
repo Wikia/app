@@ -358,7 +358,7 @@ $config['oasis_noads_extensions_js'] = [
 
 		// This needs to load last after all common extensions, please keep this last.
 		'//skins/oasis/js/GlobalModal.js',
-		'//extensions/wikia/UserLogin/js/UserLogin.js',
+		'//extensions/wikia/AuthModal/js/UserLogin.js',
 		// WikiaBar is enabled sitewide
 		'//extensions/wikia/WikiaBar/js/WikiaBar.js',
 		// Chat is enabled sitewide
@@ -521,34 +521,7 @@ $config['oasis_nojquery_shared_js'] = [
 $config['oasis_anon_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [
-		'#group_user_login_js_anon',
 		'//skins/oasis/js/LatestActivity.js',
-	],
-];
-
-$config['user_login_js_anon'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'oasis' ],
-	'assets' => [
-		'//extensions/wikia/UserLogin/js/MarketingOptIn.js',
-		'//extensions/wikia/UserLogin/js/UserBaseAjaxForm.js',
-		'//extensions/wikia/UserLogin/js/mixins/UserSignup.mixin.js',
-		'//extensions/wikia/UserLogin/js/UserSignupAjaxValidation.js',
-		'//extensions/wikia/UserLogin/js/UserLoginAjaxForm.js',
-		'//extensions/wikia/UserLogin/js/UserLoginModal.js',
-	],
-];
-
-/**
- * We allow logged in users to create account without logging out
- */
-$config['user_signup_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => [
-		'//extensions/wikia/UserLogin/js/UserSignupAjaxValidation.js',
-		'//extensions/wikia/UserLogin/js/MarketingOptIn.js',
-		'//extensions/wikia/UserLogin/js/mixins/UserSignup.mixin.js',
-		'//extensions/wikia/UserLogin/js/UserSignup.js',
 	],
 ];
 
@@ -984,27 +957,6 @@ $config['wikiamobile_autocomplete_js'] = [
 	],
 ];
 
-$config['wikiamobile_usersignup_scss'] = [
-	'type' => AssetsManager::TYPE_SCSS,
-	'skin' => 'wikiamobile',
-	'assets' => [
-		'//extensions/wikia/UserLogin/css/UserSignup.wikiamobile.scss',
-	],
-];
-
-$config['wikiamobile_usersignup_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => 'wikiamobile',
-	'assets' => [
-		'//resources/wikia/libraries/bootstrap/tooltip.js',
-		'//extensions/wikia/WikiaStyleGuide/js/Form.js',
-		'//extensions/wikia/UserLogin/js/UserSignupAjaxValidation.js',
-		'//extensions/wikia/UserLogin/js/MarketingOptIn.js',
-		'//extensions/wikia/UserLogin/js/mixins/UserSignup.mixin.js',
-		'//extensions/wikia/UserLogin/js/UserSignup.js',
-	],
-];
-
 $config['wikiamobile_categorypage_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => 'wikiamobile',
@@ -1384,23 +1336,6 @@ $config['VET_js'] = [
 		'//resources/jquery.ui/jquery.ui.widget.js',
 		'//resources/jquery.ui/jquery.ui.mouse.js',
 		'//resources/jquery.ui/jquery.ui.slider.js',
-	],
-];
-
-/** UserLogin **/
-$config['userlogin_scss_wikiamobile'] = [
-	'type' => AssetsManager::TYPE_SCSS,
-	'skin' => 'wikiamobile',
-	'assets' => [
-		'//extensions/wikia/UserLogin/css/UserLogin.wikiamobile.scss',
-	],
-];
-
-$config['userlogin_js_wikiamobile'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => 'wikiamobile',
-	'assets' => [
-		'//extensions/wikia/UserLogin/js/UserLoginSpecial.wikiamobile.js',
 	],
 ];
 

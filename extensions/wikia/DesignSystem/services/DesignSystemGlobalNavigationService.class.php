@@ -47,16 +47,15 @@ class DesignSystemGlobalNavigationService extends WikiaService {
 		switch ( $messageKey ) {
 			case 'global-navigation-anon-sign-in':
 				$classNames = 'wds-button wds-is-full-width';
-				$href = ( new UserLoginHelper() )->getNewAuthUrl( $href );
+				$href = $this->getNewAuthUrl( $href );
 				break;
 			case 'global-navigation-anon-register':
 				$classNames = 'wds-button wds-is-full-width wds-is-secondary';
-				$href = ( new UserLoginHelper() )->getNewAuthUrl( $href );
+				$href = $this->getNewAuthUrl( $href );
 				break;
 			case 'global-navigation-user-sign-out':
 				$classNames = 'wds-global-navigation__dropdown-link';
-				$model['redirect'] =
-					( new UserLoginHelper() )->getCurrentUrlOrMainPageIfOnUserLogout();
+				$model['redirect'] = wfExpandUrl( $this->wg->request->getRequestURL() );
 		}
 
 		$this->setVal( 'model', $model );
@@ -74,5 +73,11 @@ class DesignSystemGlobalNavigationService extends WikiaService {
 			'product' => 'wikis',
 			'lang' => $this->wg->Lang->getCode()
 		] )->getData();
+	}
+
+	private function getNewAuthUrl( string $baseMercuryUrl ): string {
+		$redirect = urlencode( wfExpandUrl( $this->app->wg->request->getRequestURL() ) );
+
+		return wfAppendQuery( $baseMercuryUrl, "redirect=$redirect" );
 	}
 }

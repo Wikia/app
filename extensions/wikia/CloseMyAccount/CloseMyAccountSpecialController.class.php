@@ -141,8 +141,11 @@ class CloseMyAccountSpecialController extends WikiaSpecialPageController {
 		$helper = new CloseMyAccountHelper();
 
 		if ( $user->isAnon() ) {
-			$userLoginHelper = new UserLoginHelper();
-			$this->getOutput()->redirect( $userLoginHelper->getNewAuthUrl( '/signin' ) );
+			$langCode = $this->getLanguage()->getCode();
+			$redirect = urlencode( $this->getTitle()->getFullURL() );
+			$uselang = $langCode == 'en' ? '' : "&uselang=$langCode";
+
+			$this->getOutput()->redirect( wfAppendQuery( '/signin', "redirect=$redirect" . $uselang ) );
 			return;
 		}
 
