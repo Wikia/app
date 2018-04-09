@@ -51,6 +51,7 @@ class WikiaUpdater {
 			array( 'dropIndex', 'ach_custom_badges', 'id',  $dir . 'patch-ach_custom_badges-drop-id.sql', true ), // SUS-3098
 			array( 'dropIndex', 'wall_related_pages', 'comment_id_idx',  $dir . 'patch-wall_related_pages-drop-comment_id_idx.sql', true ), // SUS-3096
 			array( 'dropIndex', 'wall_related_pages', 'page_id_idx_2',  $dir . 'patch-wall_related_pages-drop-page_id_idx_2.sql', true ), // SUS-3096
+			array( 'dropIndex', 'video_info', 'added_at',  $dir . 'patch-video_info-drop-added_at_idx.sql', true ), // SUS-4297
 
 			# functions
 			array( 'WikiaUpdater::do_page_wikia_props_update' ),
