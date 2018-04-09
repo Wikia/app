@@ -32,12 +32,14 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 			return '';
 		}
 
-		$DOM = new DOMDocument( '1.0' );
-		$DOM->formatOutput = true;
-		$DOM->preserveWhiteSpace = false;
-		$DOM->loadXML( $html );
+		$config = [
+			'indent'         => true,
+			'output-xhtml'   => false];
+		$tidy = new tidy();
+		$tidy->parseString($html, $config);
+		$tidy->cleanRepair();
 
-		return $DOM->saveXML();
+		return (string) $tidy;
 	}
 
 	/**
