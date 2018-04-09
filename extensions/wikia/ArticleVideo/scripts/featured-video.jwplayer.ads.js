@@ -9,7 +9,8 @@ define('wikia.articleVideo.featuredVideo.ads', [
 	'ext.wikia.adEngine.video.vastDebugger',
 	'ext.wikia.adEngine.video.vastParser',
 	'wikia.articleVideo.featuredVideo.lagger',
-	'wikia.log'
+	'wikia.log',
+	require.optional('ext.wikia.adEngine.wrappers.prebid'),
 ], function (
 	adContext,
 	vastUrlBuilder,
@@ -21,11 +22,13 @@ define('wikia.articleVideo.featuredVideo.ads', [
 	vastDebugger,
 	vastParser,
 	fvLagger,
-	log
+	log,
+	prebid
 ) {
 	'use strict';
 
-	var baseSrc = adContext.get('targeting.skin') === 'oasis' ? 'gpt' : 'mobile',
+	var allowedBidders = ['wikiaVideo'],
+		baseSrc = adContext.get('targeting.skin') === 'oasis' ? 'gpt' : 'mobile',
 		featuredVideoSlotName = 'FEATURED',
 		featuredVideoSource,
 		logGroup = 'wikia.articleVideo.featuredVideo.ads';
@@ -36,16 +39,40 @@ define('wikia.articleVideo.featuredVideo.ads', [
 		});
 	}
 
+	function getPrebidParams() {
+		if (prebid) {
+			return prebid.get().getAdserverTargetingForAdUnitCode(featuredVideoSlotName);
+		}
+
+		return {};
+	}
+
 	return function (player, bidParams, slotTargeting) {
 		var correlator,
 			featuredVideoElement = player && player.getContainer && player.getContainer(),
 			featuredVideoContainer = featuredVideoElement && featuredVideoElement.parentNode,
 			prerollPositionReached = false,
+			bidderEnabled = true,
 			trackingParams = {
 				adProduct: 'featured-video',
 				slotName: featuredVideoSlotName
 			},
 			videoDepth = 0;
+
+		bidParams = bidParams || {};
+
+		function requestBidder() {
+			if (!prebid) {
+				return;
+			}
+
+			var bid = prebid.getWinningVideoBidBySlotName(featuredVideoSlotName, allowedBidders);
+
+			if (bid && bid.vastUrl) {
+				trackingParams.adProduct = 'featured-video-preroll';
+				player.playAd(bid.vastUrl);
+			}
+		}
 
 		slotTargeting = slotTargeting || {};
 		featuredVideoSource = srcProvider.get(baseSrc, {testSrc: 'test'}, 'JWPLAYER');
@@ -55,6 +82,10 @@ define('wikia.articleVideo.featuredVideo.ads', [
 			player.on('adBlock', function () {
 				trackingParams.adProduct = 'featured-video';
 			});
+
+			if (adContext.get('bidders.rubiconInFV')) {
+				allowedBidders.push('rubicon')
+			}
 
 			player.on('beforePlay', function () {
 				var currentMedia = player.getPlaylistItem() || {};
@@ -69,6 +100,11 @@ define('wikia.articleVideo.featuredVideo.ads', [
 				correlator = Math.round(Math.random() * 10000000000);
 				trackingParams.adProduct = 'featured-video';
 				videoDepth += 1;
+
+				var prebidParams = getPrebidParams();
+				Object.keys(prebidParams).forEach(function (key) {
+					bidParams[key] = prebidParams[key];
+				});
 
 				if (articleVideoAd.shouldPlayPreroll(videoDepth)) {
 					trackingParams.adProduct = 'featured-video-preroll';
@@ -124,6 +160,7 @@ define('wikia.articleVideo.featuredVideo.ads', [
 				var vastParams = parseVastParamsFromEvent(event);
 				slotRegistry.storeScrollY(featuredVideoSlotName);
 
+				bidderEnabled = false;
 				vastDebugger.setVastAttributesFromVastParams(featuredVideoContainer, 'success', vastParams);
 
 				fvLagger.markAsReady(vastParams.lineItemId);
@@ -132,6 +169,11 @@ define('wikia.articleVideo.featuredVideo.ads', [
 			player.on('adError', function (event) {
 				fvLagger.markAsReady(null);
 				vastDebugger.setVastAttributes(featuredVideoContainer, event.tag, 'error', event.ima && event.ima.ad);
+
+				if (bidderEnabled) {
+					requestBidder();
+				}
+				bidderEnabled = false;
 			});
 		} else {
 			trackingParams.adProduct = 'featured-video-no-ad';
