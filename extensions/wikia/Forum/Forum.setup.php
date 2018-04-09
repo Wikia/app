@@ -94,11 +94,11 @@ $GLOBALS['wgHooks']['MWNamespace:isMovable'][] = 'ForumHooksHelper::onNamespaceI
 
 $GLOBALS['wgHooks']['AfterPageHeaderButtons'][] = 'ForumHooksHelper::onAfterPageHeaderButtons';
 
-include ( $dir . '/Forum.namespace.setup.php' );
+include_once ( $dir . '/Forum.namespace.setup.php' );
 
 // add this namespace to list of wall namespaces
-$app->registerNamespaceController( NS_WIKIA_FORUM_BOARD, 'ForumController', 'board', true );
-$app->registerNamespaceController( NS_WIKIA_FORUM_TOPIC_BOARD, 'ForumController', 'board',
+F::app()->registerNamespaceController( NS_WIKIA_FORUM_BOARD, 'ForumController', 'board', true );
+F::app()->registerNamespaceController( NS_WIKIA_FORUM_TOPIC_BOARD, 'ForumController', 'board',
 	true );
 
 JSMessages::registerPackage( 'Forum', [

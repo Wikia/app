@@ -32,8 +32,6 @@ class KubernetesUrlProviderTest extends TestCase {
 		yield [ WIKIA_ENV_PROD, WIKIA_DC_SJC, 'foobar' ];
 		yield [ WIKIA_ENV_PROD, WIKIA_DC_RES, 'example' ];
 		yield [ WIKIA_ENV_PROD, WIKIA_DC_RES, 'foobar' ];
-		yield [ WIKIA_ENV_STAGING, WIKIA_DC_SJC, 'example' ];
-		yield [ WIKIA_ENV_STAGING, WIKIA_DC_SJC, 'foobar' ];
 	}
 
 	/**

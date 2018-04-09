@@ -215,6 +215,7 @@ define('ext.wikia.adEngine.adContext', [
 		context.opts.fvAdsFrequency = fvAdsFrequency !== undefined ? fvAdsFrequency : 3;
 		context.opts.disableSra = geo.isProperGeo(instantGlobals.wgAdDriverDisableSraCountries);
 		context.opts.isBLBMegaEnabled = geo.isProperGeo(instantGlobals.wgAdDriverBottomLeaderBoardMegaCountries);
+		context.opts.isBLBViewportEnabled = geo.isProperGeo(instantGlobals.wgAdDriverBottomLeaderBoardViewportCountries);
 
 		context.opts.labradorTestGroup =
 			adsGeo.isProperGeo(instantGlobals.wgAdDriverLABradorTestCountries, 'wgAdDriverLABradorTestCountries') ?

@@ -56,7 +56,9 @@ abstract class WikiaDatabaseTest extends TestCase {
 			$this->mockGlobalVariable( $globalName, false );
 		}
 
+		// disable memcache and tasks queue
 		$this->mockGlobalVariable( 'wgMemc', new EmptyBagOStuff() );
+		$this->mockGlobalVariable( 'wgTaskBroker', false ); // @see PLATFORM-1740
 
 		foreach ( $this->extraSchemaFiles() as $schemaFile ) {
 			static::loadSchemaFile( $schemaFile );

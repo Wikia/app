@@ -76,19 +76,6 @@ class WikiFactoryTest extends WikiaBaseTest {
 				'expected' => 'http://gta.verify.wikia.com/wiki/test/test/test'
 			],
 			[
-				'env' => WIKIA_ENV_STAGING,
-				'forcedEnv' => null,
-				'url' => 'http://gta.wikia.com/wiki/test/test/test',
-				'expected' => 'http://gta.wikia-staging.com/wiki/test/test/test'
-			],
-			// @see PLATFORM-2400
-			[
-				'env' => WIKIA_ENV_STAGING,
-				'forcedEnv' => null,
-				'url' => 'http://gta.wikia-staging.com/wiki/test/test/test',
-				'expected' => 'http://gta.wikia-staging.com/wiki/test/test/test'
-			],
-			[
 				'env' => WIKIA_ENV_DEV,
 				'forcedEnv' => null,
 				'url' => 'http://gta.wikia.com/',
@@ -149,12 +136,6 @@ class WikiFactoryTest extends WikiaBaseTest {
 				'expected' => 'https://www.wikia.com/wiki/test',
 			],
 			[
-				'env' => WIKIA_ENV_STAGING,
-				'forcedEnv' => null,
-				'url' => 'https://fallout.wikia.com/wiki/test',
-				'expected' => 'https://fallout.wikia-staging.com/wiki/test'
-			],
-			[
 				'env' => WIKIA_ENV_PREVIEW,
 				'forcedEnv' => null,
 				'url' => 'https://fallout.wikia.com/wiki/test',
@@ -171,12 +152,6 @@ class WikiFactoryTest extends WikiaBaseTest {
 				'forcedEnv' => null,
 				'url' => '//www.wikia.com/wiki/test',
 				'expected' => '//www.wikia.com/wiki/test',
-			],
-			[
-				'env' => WIKIA_ENV_STAGING,
-				'forcedEnv' => null,
-				'url' => '//fallout.wikia.com/wiki/test',
-				'expected' => '//fallout.wikia-staging.com/wiki/test'
 			],
 			[
 				'env' => WIKIA_ENV_PREVIEW,
