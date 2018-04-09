@@ -44,7 +44,7 @@ class DiscussionsActivator {
 		return new SiteInput(
 			[
 				'id' => $this->cityId,
-				'name' => mb_substr( $this->cityName, 0, self::SITE_NAME_MAX_LENGTH ),
+				'name' => mb_strcut( $this->cityName, 0, self::SITE_NAME_MAX_LENGTH ),
 				'language_code' => $this->cityLang
 			]
 		);
