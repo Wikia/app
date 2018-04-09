@@ -44,7 +44,7 @@ function init(
 		slots.BOTTOM_LEADERBOARD.viewportConflicts.push('TOP_RIGHT_BOXAD');
 	}
 
-	context.extend({slots});
+	context.extend({slots: Object.assign(slots, {})});
 	context.push('listeners.porvata', createTracker(legacyContext, geo, pageLevelTargeting, adTracker));
 
 	overrideSlotService(slotRegistry, legacyBtfBlocker);
@@ -57,7 +57,7 @@ function init(
 	context.set('options.contentLanguage', window.wgContentLanguage);
 
 	legacyContext.addCallback(() => {
-		context.extend({slots});
+		context.extend({slots: Object.assign(slots, {})});
 	})
 }
 
