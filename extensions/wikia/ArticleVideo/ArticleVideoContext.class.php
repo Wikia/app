@@ -10,64 +10,26 @@ class ArticleVideoContext {
 	 */
 	const RECOMMENDED_VIDEO_MAPPINGS_POZ_DEV = [
 		// harrypotter Knight_Bus
-		509 => [
-			509 => '1Dw2sjAj',
-		]
+		509 => '1Dw2sjAj',
 	];
 
 	const RECOMMENDED_VIDEO_MAPPINGS_PROD = [
-		509 => [
-			509 => '1Dw2sjAj',
-		],
 		// dragonage.wikia.com
-		10150 => [
-			129225 => 'YLevTBHB'
-		],
+		10150 => 'dPf9fZOb',
 		// dragonball.wikia.com
-		530 => [
-			609128 => 'fi25Ptnz',
-			525762 => 'KAPfrsHO',
-			2834 => 'bbOMHSz3',
-			578170 => 'H5MlOcIT',
-			598839 => 'MKcSnYez'
-		],
+		530 => 'SNktAc2f',
 		// elderscrolls.wikia.com
-		1706 => [
-			39609 => 'OHCjh0TQ',
-			65624 => 'iK257Ktw'
-		],
+		1706 => '13LQl8EZ',
 		// gta.wikia.com
-		4541 => [
-			185157 => 'IqqOqNVI',
-			184893 => 'lfz9Wmoi',
-			99477 => 'OJpnFu6L',
-			185085 => 'lfz9Wmoi'
-		],
+		4541 =>'UquaqAUw',
 		// marvelcinematicuniverse.wikia.com
-		177996 => [
-			8338 => 'oXCSDrnn',
-			7102 => 'PkKkV0ao'
-		],
+		177996 => 'ylAOcMY4',
 		// memoryalpha.wikia.com
-		113 => [
-			240 => 'f5t2iKaD',
-			1295 => '4NtOLP2p'
-		],
+		113 => 'Kj2vi6b3',
 		// monsterhunter.wikia.com
-		3234 => [
-			312943 => 'DT6aHDR7',
-			318952 => 'gFhI3dDy'
-		],
+		3234 => 'wTpdHlVc',
 		// naruto.wikia.com
-		1318 => [
-			2958 => 'bf9OvJTK',
-			2371 => 'kAuFKJo7',
-			1527 => 'ZsT3G4aW'
-		],
-		// supersmashbros.wikia.com
-		2714 => [
-			5255 => 'yRYnUGkG'
-		],
+		1318 => 'xfiGVAFO',
 	];
 
 	/**
@@ -202,24 +164,25 @@ class ArticleVideoContext {
 		return $isoTime;
 	}
 
-	public static function getRecommendedVideoPlaylistId( int $pageId ): string {
+	public static function getRecommendedVideoPlaylistId(): string {
 		global $wgCityId, $wgWikiaEnvironment, $wgWikiaDatacenter;
 
 		$playlist = '';
 
 		if ( $wgWikiaEnvironment === WIKIA_ENV_DEV ) {
 			if ( $wgWikiaDatacenter === WIKIA_DC_POZ ) {
-				//$playlist = self::RECOMMENDED_VIDEO_MAPPINGS_POZ_DEV[$wgCityId][$pageId] ?? '';
-				$playlist = self::RECOMMENDED_VIDEO_MAPPINGS_POZ_DEV[509][509] ?? '';
+				$playlist = self::RECOMMENDED_VIDEO_MAPPINGS_POZ_DEV[$wgCityId] ?? '';
 			}
 		} else {
-			$playlist = self::RECOMMENDED_VIDEO_MAPPINGS_PROD[$wgCityId][$pageId] ?? '';
+			$playlist = self::RECOMMENDED_VIDEO_MAPPINGS_PROD[$wgCityId] ?? '';
 		}
 
 		return $playlist;
 	}
 
 	public static function isRecommendedVideoAvailable( int $pageId ): bool {
-		return !F::app()->wg->user->isLoggedIn() && !empty( self::getRecommendedVideoPlaylistId( $pageId ) );
+		return !F::app()->wg->user->isLoggedIn() &&
+			!empty( self::getRecommendedVideoPlaylistId() ) &&
+			empty( self::isFeaturedVideoEmbedded( $pageId ) );
 	}
 }
