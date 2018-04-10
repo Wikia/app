@@ -180,6 +180,16 @@ require_once "$IP/includes/wikia/Emergency.php";
 
 require_once "$IP/includes/wikia/Extensions.php";
 
+// OVERRIDES TO EXTENSIONS DEFAULTS
+
+/**
+ * OpenGraphMeta application ID to display in <meta property="fb:app_id">.
+ * @see extensions/OpenGraphMeta
+ * @var string $egFacebookAppId
+ */
+$egFacebookAppId = ( $wgDevelEnvironment ) ? '116800565037587' : '112328095453510';
+
+
 // SUS-3851 - if the wiki has a language code path component, recalculate wgScript and wgArticlePath with its value
 if ( !empty( $wgScriptPath ) ) {
        $wgScript = $wgScriptPath . $wgScript;

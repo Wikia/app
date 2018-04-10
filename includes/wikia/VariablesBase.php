@@ -33,12 +33,6 @@
  * 6. Use common sense.
  * 
  ******************************************************************************/
-/**
- * OpenGraphMeta application ID to display in <meta property="fb:app_id">.
- * @see extensions/OpenGraphMeta
- * @var string $egFacebookAppId
- */
-$egFacebookAppId = '112328095453510';
         
 /**
  * Default block duration for Abuse Filter.
