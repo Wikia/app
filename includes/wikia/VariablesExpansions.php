@@ -170,22 +170,6 @@ $wgCorporatePageRedirectWiki = "http://community.$wgWikiaBaseDomain/wiki/";
 $wgCrossSiteAJAXdomains = [ "internal-vstf.$wgWikiaBaseDomain" ];
 
 /**
- * URL for HTTP Content-Security-Policy (CSP) report-uri directive. It's where
- * user agents should automatically report attempts to violate the Content
- * Security Policy. 
- * @see includes/wikia/Wikia.php
- * @var string $wgCSPLoggerUrl
- */
-$wgCSPLoggerUrl = "https://services.$wgWikiaBaseDomain/csp-logger/csp";
-
-/**
- * Discussions API
- * @see extensions/wikia/Discussions
- * @var string $wgDiscussionsApiUrl
- */
-$wgDiscussionsApiUrl = "https://services.$wgWikiaBaseDomain/discussion";
-
-/**
  * Filesystem extensions directory. Defaults to $IP/../extensions. To compile
  * extensions with HipHop, set $wgExtensionsDirectory correctly, and use code
  * like:
@@ -333,13 +317,6 @@ $wgNamespacesWithSubpages = [
 $wgNotAValidWikia = "http://community.$wgWikiaBaseDomain/wiki/Community_Central:Not_a_valid_community";
 
 /**
- * OnSiteNotifications API.
- * @see lib/Swagger/src/OnSiteNotifications
- * @var string $wgOnSiteNotificationsApiUrl
- */
-$wgOnSiteNotificationsApiUrl = "https://services.$wgWikiaBaseDomain/on-site-notifications";
-
-/**
  * The cache type for storing article HTML. This is used to store data which
  * is expensive to regenerate, and benefits from having plenty of storage space.
  * @see $wgMainCacheType
@@ -378,9 +355,14 @@ $wgRightsIcon = "https://vignette.$wgWikiaNocookieDomain/messaging/images/a/a9/C
  * Custom rules for robots.txt. Supported rules: allowSpecialPage and
  * disallowNamespace.
  * @see string extensions/wikia/RobotsTxt/classes/WikiaRobots.class.php
- * @global Array $wgRobotsTxtCustomRules
+ * @var Array $wgRobotsTxtCustomRules
  */
 $wgRobotsTxtCustomRules = [ 'disallowNamespace' => [ NS_HELP, NS_USER ] ];
+
+/**
+ * @var string $wgServicesExternalDomain
+ */
+$wgServicesExternalDomain = "https://services.$wgWikiaBaseDomain/";
 
 /**
  * Configuration file for external Tidy.
