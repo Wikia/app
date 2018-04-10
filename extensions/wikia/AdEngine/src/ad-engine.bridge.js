@@ -98,6 +98,9 @@ function unifySlotInterface(slot) {
 		getViewportConflicts: () => {
 			return slotContext.viewportConflicts || [];
 		},
+		hasDefinedViewportConflicts: () => {
+			return (slotContext.viewportConflicts || []).length > 0;
+		},
 		setConfigProperty: (key, value) => {
 			context.set(`slots.${slot.name}.${key}`, value);
 		}
