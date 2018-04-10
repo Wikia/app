@@ -80,6 +80,7 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.rubicon', function () {
 	it('prepareAdUnit returns data in correct shape', function () {
 		var bidder = getBidder();
 		expect(bidder.prepareAdUnit('TOP_LEADERBOARD', {
+			siteId: 55412,
 			zoneId: 519058,
 			position: 'atf'
 		}, 'oasis')).toEqual({
