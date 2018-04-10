@@ -370,7 +370,7 @@ class MathRenderer {
 	 * @yauthor macbre
 	 * @return string remote path
 	 */
-	public function getSwiftPath() {
+	private function getSwiftPath() {
 		return sprintf( '/math/%s/%s.png', $this->_getHashSubPath(), $this->hash );
 	}
 }
