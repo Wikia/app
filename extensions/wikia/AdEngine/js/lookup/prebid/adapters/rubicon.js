@@ -12,15 +12,16 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.rubicon', [
 		logGroup = 'ext.wikia.adEngine.lookup.prebid.adapters.rubicon',
 		outstreamSizeId = 203,
 		rubiconAccountId = 7450,
-		rubiconSiteId = 55412,
 		slots = {
 			oasis: {
 				FEATURED: {
 					disabled: true,
-					zoneId: 260296,
+					siteId: 147980,
+					zoneId: 699374,
 					position: 'btf'
 				},
 				INCONTENT_PLAYER: {
+					siteId: 55412,
 					zoneId: 260296,
 					position: 'btf'
 				}
@@ -28,10 +29,12 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.rubicon', [
 			mercury: {
 				FEATURED: {
 					disabled: true,
-					zoneId: 563110,
+					siteId: 147980,
+					zoneId: 699374,
 					position: 'btf'
 				},
 				MOBILE_IN_CONTENT: {
+					siteId: 55412,
 					zoneId: 563110,
 					position: 'btf'
 				}
@@ -53,7 +56,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.rubicon', [
 
 		bidParams = {
 			accountId: rubiconAccountId,
-			siteId: rubiconSiteId,
+			siteId: config.siteId,
 			zoneId: config.zoneId,
 			name: slotName,
 			position: config.position,
