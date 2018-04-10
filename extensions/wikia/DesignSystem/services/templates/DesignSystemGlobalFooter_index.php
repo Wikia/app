@@ -91,7 +91,7 @@
 		</div>
 	</div>
 	<div class="wds-global-footer__bottom-bar">
-		<?= $app->renderView(
+		<?= $app->renderPartial(
 			'DesignSystemGlobalFooterService',
 			'licensingAndVertical',
 			[
@@ -99,7 +99,7 @@
 			]
 		); ?>
 
-		<?= $app->renderView(
+		<?= $app->renderPartial(
 			'DesignSystemGlobalFooterService',
 			'mobileSiteButton',
 			[
