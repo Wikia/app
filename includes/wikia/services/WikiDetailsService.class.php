@@ -165,7 +165,7 @@ class WikiDetailsService extends WikiService {
 			$exists = true;
 			return [
 				'title' => $wikiObj->city_title,
-				'url' => $wikiObj->city_url,
+				'url' => WikiFactory::getLocalEnvURL( $wikiObj->city_url ) . "xxxx"
 			];
 		}
 		return [];
