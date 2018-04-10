@@ -10,18 +10,19 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.rubicon', [
 
 	var bidderName = 'rubicon', // aka rubicon vulcan
 		logGroup = 'ext.wikia.adEngine.lookup.prebid.adapters.rubicon',
-		outstreamSizeId = 203,
 		rubiconAccountId = 7450,
 		slots = {
 			oasis: {
 				FEATURED: {
 					disabled: true,
 					siteId: 147980,
+					sizeId: 201,
 					zoneId: 699374,
 					position: 'btf'
 				},
 				INCONTENT_PLAYER: {
 					siteId: 55412,
+					sizeId: 203,
 					zoneId: 260296,
 					position: 'btf'
 				}
@@ -30,11 +31,13 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.rubicon', [
 				FEATURED: {
 					disabled: true,
 					siteId: 147980,
+					sizeId: 201,
 					zoneId: 699374,
 					position: 'btf'
 				},
 				MOBILE_IN_CONTENT: {
 					siteId: 55412,
+					sizeId: 203,
 					zoneId: 563110,
 					position: 'btf'
 				}
@@ -64,7 +67,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.rubicon', [
 			video: {
 				playerHeight: 480,
 				playerWidth: 640,
-				size_id: outstreamSizeId
+				size_id: config.sizeId
 			}
 		};
 
