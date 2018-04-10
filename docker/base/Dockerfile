@@ -1,3 +1,5 @@
+# This is a base Docker image used by Wikia's MediaWiki app. It uses base PHP image provided by Docker with additional
+# production dependencies installed.
 FROM php:7.0.28-cli-jessie
 
 # add jessie-backports repo (required to install libsass-dev package)
@@ -65,13 +67,6 @@ RUN docker-php-ext-install \
     bz2 \
     mysqli \
     opcache
-
-# TODO: move below dependencies to dev app image
-# uopz extension / @see https://pecl.php.net/package/uopz
-# XDebug extension / @see https://pecl.php.net/package/xdebug
-# yaml extension / @see https://pecl.php.net/package/yaml / needed by db2yml.php
-RUN pecl install uopz-5.0.2 xdebug-2.6.0 yaml-2.0.2 \
-    && docker-php-ext-enable uopz xdebug yaml
 
 # expose volumes for app and config repositories clones
 ENV WIKIA_DOCROOT=/usr/wikia/slot1/current/src
