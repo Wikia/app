@@ -2,6 +2,7 @@ import { EventEmitter } from 'events';
 import {
 	client,
 	context,
+	GptSizeMap,
 	scrollListener,
 	slotListener,
 	slotService,
@@ -155,6 +156,7 @@ function passSlotEvent(slotName, eventName) {
 
 export {
 	init,
+	GptSizeMap,
 	loadCustomAd,
 	checkAdBlocking,
 	passSlotEvent,
