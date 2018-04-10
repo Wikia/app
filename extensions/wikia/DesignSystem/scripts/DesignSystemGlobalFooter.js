@@ -1,8 +1,9 @@
 require(['jquery'],
 	function ($) {
 		if ($.cookie('useskin') === 'oasis')  {
-			$('.mobile-site-link').click(mobileSiteLinkClicked);
-			$('.mobile-site-link').css("display", "inline-block");
+			$('.mobile-site-link')
+				.click(mobileSiteLinkClicked)
+				.addClass("mobile-site-link--active");
 		}
 
 		function mobileSiteLinkClicked(){
