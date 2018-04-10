@@ -58,7 +58,7 @@ class ConnectionBase {
 				$routingKey
 			);
 
-			$channel->wait_for_pending_acks(ACK_WAIT_TIMEOUT_SECONDS);
+			$channel->wait_for_pending_acks(self::ACK_WAIT_TIMEOUT_SECONDS);
 		} catch ( AMQPExceptionInterface $e ) {
 			WikiaLogger::instance()->error( __METHOD__, [
 				'exception' => $e,
