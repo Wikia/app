@@ -399,6 +399,9 @@ class WikiFactory {
 		if ( !preg_match( "/^https?:\/\//", $domain ) ) {
 			$domain = 'http://' . $domain;
 		}
+		if ( !endsWith( $domain, '/' ) ) {
+			$domain .= '/';
+		}
 		wfProfileIn( __METHOD__ );
 		$dbw = static::db( DB_MASTER );
 		$dbw->begin();
