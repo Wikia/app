@@ -91,7 +91,8 @@ define('wikia.articleVideo.featuredVideo.ads', [
 			}
 
 			player.on('beforePlay', function () {
-				var currentMedia = player.getPlaylistItem() || {};
+				var currentMedia = player.getPlaylistItem() || {},
+					prebidParams = getPrebidParams();
 
 				slotTargeting.v1 = currentMedia.mediaid;
 
@@ -104,10 +105,11 @@ define('wikia.articleVideo.featuredVideo.ads', [
 				trackingParams.adProduct = 'featured-video';
 				videoDepth += 1;
 
-				var prebidParams = getPrebidParams();
-				Object.keys(prebidParams).forEach(function (key) {
-					bidParams[key] = prebidParams[key];
-				});
+				if (prebidParams) {
+					Object.keys(prebidParams).forEach(function (key) {
+						bidParams[key] = prebidParams[key];
+					});
+				}
 
 				if (articleVideoAd.shouldPlayPreroll(videoDepth)) {
 					trackingParams.adProduct = 'featured-video-preroll';
