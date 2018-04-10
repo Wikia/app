@@ -950,7 +950,7 @@ class MediaWikiService {
 	 * @return string
 	 */
 	public function getHostName() {
-		return substr( $this->getGlobal( 'Server' ), 7 );
+		return wfStripProtocol( $this->getGlobal( 'Server' ) );
 	}
 
 	/**

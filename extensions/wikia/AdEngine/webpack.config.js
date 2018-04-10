@@ -7,7 +7,7 @@ const compact = (collection) => Array.from(collection).filter(v => v != null);
 module.exports = function (env) {
 	const hoistDependencies = env && env['hoist-dependencies'];
 
-	return {
+	const bridge = {
 		context: __dirname,
 		entry: {
 			'bridge': './src/ad-engine.bridge.js',
@@ -49,4 +49,19 @@ module.exports = function (env) {
 			new webpack.optimize.ModuleConcatenationPlugin()
 		]
 	};
+
+	const geo = {
+		context: __dirname,
+		entry: {
+			'geo': './node_modules/@wikia/ad-products/dist/geo.amd.js',
+		},
+		output: {
+			path: path.resolve(__dirname, 'js/build'),
+			filename: '[name].js',
+			libraryTarget: 'amd',
+			library: 'ext.wikia.adEngine.geo'
+		}
+	};
+
+	return [bridge, geo];
 };

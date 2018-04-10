@@ -35,8 +35,9 @@ $wgHooks[ 'WikiaSkinTopScripts' ][] = 'addJsVariables';
  */
 function addJsVariables( Array &$vars, &$scripts ) {
 	wfProfileIn( __METHOD__ );
+	$urlProvider = new \Wikia\Service\Gateway\KubernetesExternalUrlProvider();
 
-	$vars[ 'wgOnSiteNotificationsApiUrl' ] = F::app()->wg->OnSiteNotificationsApiUrl;
+	$vars[ 'wgOnSiteNotificationsApiUrl' ] = $urlProvider->getUrl("on-site-notifications");
 
 	wfProfileOut( __METHOD__ );
 

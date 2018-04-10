@@ -5624,6 +5624,7 @@ Anderenfalls kannst du auch das untenstehende einfache Formular nutzen. Dein Kom
 	'fewestrevisions-summary' => '',
 	'footer_MediaWiki' => '[http://www.mediawiki.org/ MediaWiki]',
 	'footer_License' => '[http://www.gnu.org/copyleft/fdl.html GFDL]',
+	'file-resolution-exceeded' => 'Die Auflösung der Bilddatei ($1 Megapixel) überschreitet das erlaubte Höchstmaß von $2 Megapixeln für $3-Dateien.',
 );
 
 $messages['de-at'] = array(
@@ -6727,6 +6728,7 @@ PICT # misc.
 	'forum-url' => 'Forum:Index',
 	'footer_MediaWiki' => '[http://www.mediawiki.org/ MediaWiki]',
 	'fast-adv' => 'Advertisement',
+	'file-resolution-exceeded' => 'Resolución de imagen provista ($1 megapíxeles) excede la máxima resolución permitida de $2 megapíxeles para el tipo $3 MIME.',
 );
 
 $messages['et'] = array(
@@ -7925,6 +7927,7 @@ Sinon, vous pouvez utiliser le formulaire simplifié ci-dessous. Votre commentai
 	'footer_MediaWiki' => '[http://www.mediawiki.org/ MediaWiki]',
 	'footer_License' => '[http://www.gnu.org/copyleft/fdl.html GFDL]',
 	'fast-adv' => 'Advertisement',
+	'file-resolution-exceeded' => 'La résolution de l’image fournie ($1 mégapixels) excède la résolution maximale autorisée de $2 mégapixels pour le type MIME $3.',
 );
 
 $messages['frc'] = array(
@@ -11735,6 +11738,7 @@ Le immagini vengono mostrate alla massima risoluzione disponibile, per gli altri
 	'footer_Terms_of_use' => '[http://www.wikia.com/wiki/Terms_of_use Terms of use]',
 	'footer_Advertise_on_Wikia' => '[http://www.wikia.com/wiki/Advertising Advertise on Wikia]',
 	'fast-adv' => 'Advertisement',
+	'file-resolution-exceeded' => "La risoluzione dell'immagine fornita ($1 megapixel) supera quella massima consentita di $2 megapixel per il tipo MIME $3.",
 );
 
 $messages['iu'] = array(
@@ -12106,6 +12110,7 @@ Otherwise, you can use the easy form below. Your comment will be added to the pa
 	'feedback-bugcheck' => 'Great! Just check that it is not already one of the [$1 known bugs].',
 	'feedback-bugnew' => 'I checked. Report a new bug',
 	'forum-url' => 'Forum:Index',
+	'file-resolution-exceeded' => '指定された画像の解像度（$1メガピクセル）は、$3のMIME形式で許可される$2メガピクセルの上限を超えています。',
 );
 
 $messages['jam'] = array(
@@ -19906,6 +19911,7 @@ W przeciwnym wypadku można użyć prostego formularza poniżej. Komentarz zosta
 	'footer_Contact_Wikia' => '[http://www.wikia.com/wiki/Contact_us Contact Wikia]',
 	'footer_Advertise_on_Wikia' => '[http://www.wikia.com/wiki/Advertising Advertise on Wikia]',
 	'fast-adv' => 'Advertisement',
+	'file-resolution-exceeded' => 'Rozdzielczość przesłanego obrazu ({{FORMATNUM:$1}} megapikseli) przekracza maksymalną dopuszczalną rozdzielczość {{FORMATNUM:$2}} megapiskeli dla pliku typu $3 MIME.',
 );
 
 $messages['pms'] = array(
@@ -20713,6 +20719,7 @@ Caso contrário, você poderá usar o formulário simplificado a seguir. Seu com
 	'footer_Terms_of_use' => '[http://www.wikia.com/wiki/Terms_of_use Terms of use]',
 	'footer_Advertise_on_Wikia' => '[http://www.wikia.com/wiki/Advertising Advertise on Wikia]',
 	'fast-adv' => 'Anúncio',
+	'file-resolution-exceeded' => 'A resolução da imagem fornecida ($1 megapixels) excede a resolução máxima permitida de $2 megapixels para o tipo $3 MIME.',
 );
 
 $messages['qu'] = array(
@@ -21631,6 +21638,7 @@ $1',
 	'footer_Terms_of_use' => '[http://www.wikia.com/wiki/Terms_of_use Terms of use]',
 	'footer_Advertise_on_Wikia' => '[http://www.wikia.com/wiki/Advertising Advertise on Wikia]',
 	'fast-adv' => 'Advertisement',
+	'file-resolution-exceeded' => 'Разрешение файла ($1 МП) превышает максимально допустимое разрешение в $2 МП для файлов типа $3.',
 );
 
 $messages['rue'] = array(
@@ -28401,6 +28409,7 @@ PICT # misc.
 	'footer_Terms_of_use' => '[http://www.wikia.com/wiki/Terms_of_use Terms of use]',
 	'footer_Advertise_on_Wikia' => '[http://www.wikia.com/wiki/Advertising Advertise on Wikia]',
 	'fast-adv' => 'Advertisement',
+	'file-resolution-exceeded' => '对于使用$3类型的MIME文件来说，您所提供的图像分辨率（$1百万像素）已超出允许的最大$2百万像素。',
 );
 
 $messages['zh-hant'] = array(
@@ -28589,6 +28598,7 @@ PICT # misc.
 	'footer_Terms_of_use' => '[http://www.wikia.com/wiki/Terms_of_use Terms of use]',
 	'footer_Advertise_on_Wikia' => '[http://www.wikia.com/wiki/Advertising Advertise on Wikia]',
 	'fast-adv' => 'Advertisement',
+	'file-resolution-exceeded' => '對於使用$3類型的MIME檔案來說，您所提供的圖像解析度（$1百萬像素）已超出允許的最大$2百萬像素。',
 );
 
 $messages['zu'] = array(
