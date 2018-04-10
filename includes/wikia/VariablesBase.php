@@ -6959,6 +6959,14 @@ $wgScript = false;
 $wgScriptExtension  = '.php';
 
 /**
+ * The base URL path. It might be a virtual path in case with use Apache
+ * mod_rewrite for example. This *needs* to be set correctly. Other paths will
+ * be set to defaults based on it unless they are directly set.
+ * @var string $wgScriptPath
+ */
+$wgScriptPath = '';
+
+/**
  * If set to true the 'searcheverything' preference will be effective only for
  * logged-in users. Useful for big wikis to maintain different search profiles
  * for anonymous and logged-in users.
