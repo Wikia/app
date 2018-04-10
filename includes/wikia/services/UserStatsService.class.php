@@ -61,14 +61,15 @@ class UserStatsService extends WikiaModel {
 		$stats = $this->getStats( Title::GAID_FOR_UPDATE );
 
 		// update edit counts on wiki
-		if ( empty( $stats['editcount'] ) ) {
+		if ( !isset( $stats['editcount'] ) ) {
+			// editcount not set yet, calculate it
 			$stats['editcount'] = $this->calculateEditCountWiki( Title::GAID_FOR_UPDATE );
 		} elseif ( $this->updateEditCount( 'editcount' ) ) {
 			$stats['editcount']++;
 		}
 
 		// update weekly edit counts on wiki
-		if ( empty( $stats['editcountThisWeek'] ) ) {
+		if ( !isset( $stats['editcountThisWeek'] ) ) {
 			$stats['editcountThisWeek'] = $this->calculateEditCountFromWeek( Title::GAID_FOR_UPDATE );
 		} elseif ( $this->updateEditCount( 'editcountThisWeek' ) ) {
 			$stats['editcountThisWeek']++;
@@ -109,11 +110,16 @@ class UserStatsService extends WikiaModel {
 			function () use ( $flags ) {
 				$stats = $this->loadUserStatsFromDB();
 
-				if ( empty( $stats['editcount'] ) ) {
+				if ( !isset( $stats['editcount'] ) ) {
+					// editcount not set yet, calculate it
 					$stats['editcount'] = $this->calculateEditCountWiki( $flags );
 				}
+				else {
+					// make sure this value is an integer
+					$stats['editcount'] = (int) $stats['editcount'];
+				}
 
-				if ( empty( $stats['editcount'] ) ) {
+				if ( $stats['editcount'] === 0 ) {
 					return [
 						'firstContributionTimestamp' => null,
 						'lastContributionTimestamp' => null,
@@ -157,7 +163,7 @@ class UserStatsService extends WikiaModel {
 	 * @param int $flags bit flags with options (ie. to force DB_MASTER)
 	 * @return Int Number of edits
 	 */
-	public function calculateEditCountWiki( $flags = 0 ) {
+	private function calculateEditCountWiki( $flags = 0 ) : int {
 		if ( !$this->validateUser() ) {
 			return 0;
 		}
@@ -177,7 +183,7 @@ class UserStatsService extends WikiaModel {
 		);
 
 		$this->setUserStat( 'editcount', $editCount );
-		return $editCount;
+		return (int) $editCount;
 	}
 
 	private function updateEditCount( $propertyName ) {
@@ -303,7 +309,7 @@ class UserStatsService extends WikiaModel {
 	 * @since Nov 2013
 	 * @author Kamil Koterba
 	 *
-	 * @return String Timestamp in format YmdHis e.g. 20131107192200 or empty string
+	 * @return null|string Timestamp in format YmdHis e.g. 20131107192200 or empty string
 	 */
 	private function initFirstContributionTimestamp() {
 		$dbw = $this->getDatabase( Title::GAID_FOR_UPDATE );
@@ -322,6 +328,9 @@ class UserStatsService extends WikiaModel {
 		return $firstContributionTimestamp;
 	}
 
+	/**
+	 * @return null|string
+	 */
 	private function initLastContributionTimestamp() {
 		/* Get lastContributionTimestamp from database */
 		$dbw = $this->getDatabase( Title::GAID_FOR_UPDATE );

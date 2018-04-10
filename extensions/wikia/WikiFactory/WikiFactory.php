@@ -389,12 +389,11 @@ class WikiFactory {
 			Wikia::log( __METHOD__, "", "WikiFactory is not used." );
 			return false;
 		}
-
-		if ( 'http://' != strpos($domain, 0, 7) ) {
+		if ( !preg_match( "^https?:\/\/", $domain ) ) {
 			$domain = 'http://' . $domain;
 		}
 
-		$retVal = WikiFactory::setVarByName("wgServer", $city_id, $domain, $reason);
+		$retVal = WikiFactory::setVarByName( "wgServer", $city_id, $domain, $reason );
 
 		static::clearDomainCache( $city_id );
 

@@ -27,6 +27,10 @@ class LogEventsList {
 	const NO_ACTION_LINK = 1;
 	const NO_EXTRA_USER_LINKS = 2;
 
+	# SUS-4547: extra flag that will force (contribs) link to never be red and edit count to not
+	# be checked
+	const NO_EDIT_COUNT_CHECK = 4;
+
 	/**
 	 * @var Skin
 	 */
@@ -342,6 +346,7 @@ class LogEventsList {
 		$entry = DatabaseLogEntry::newFromRow( $row );
 		$formatter = LogFormatter::newFromEntry( $entry );
 		$formatter->setShowUserToolLinks( !( $this->flags & self::NO_EXTRA_USER_LINKS ) );
+		$formatter->setSkipEditsCount( $this->flags & self::NO_EDIT_COUNT_CHECK ); // SUS-4547
 
 		$action = $formatter->getActionText();
 		$comment = $formatter->getComment();
