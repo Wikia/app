@@ -91,21 +91,21 @@
 		</div>
 	</div>
 	<div class="wds-global-footer__bottom-bar">
-	<?= $app->renderView(
-		'DesignSystemGlobalFooterService',
-		'licensingAndVertical',
-		[
-			'model' => $model['licensing_and_vertical']
-		]
-	); ?>
+		<?= $app->renderView(
+			'DesignSystemGlobalFooterService',
+			'licensingAndVertical',
+			[
+				'model' => $model['licensing_and_vertical']
+			]
+		); ?>
 
-	<?= $app->renderView(
-		'DesignSystemGlobalFooterService',
-		'mobileSiteButton',
-		[
-			'model' => $model['mobile_site_button']
-		]
-	); ?>
+		<?= $app->renderView(
+			'DesignSystemGlobalFooterService',
+			'mobileSiteButton',
+			[
+				'model' => $model['mobile_site_button']
+			]
+		); ?>
 	</div>
 
 </footer>
