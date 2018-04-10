@@ -12,6 +12,7 @@ use Wikia\Tracer\WikiaTracer;
 class ConnectionBase {
 	const DURABLE_MESSAGE = 2;
 	const MESSAGE_TTL = 57600000; //16h
+	const ACK_WAIT_TIMEOUT_SECONDS = 3;
 
 	protected $host;
 	protected $port;
@@ -56,6 +57,8 @@ class ConnectionBase {
 				$this->exchange,
 				$routingKey
 			);
+
+			$channel->wait_for_pending_acks(ACK_WAIT_TIMEOUT_SECONDS);
 		} catch ( AMQPExceptionInterface $e ) {
 			WikiaLogger::instance()->error( __METHOD__, [
 				'exception' => $e,
@@ -68,6 +71,12 @@ class ConnectionBase {
 		if ( !isset( $this->channel ) ) {
 			$pubConn = $this->getConnection();
 			$this->channel = $pubConn->channel();
+			/*
+			 * Bring the channel into publish confirm mode.
+			 * This is necessary if we want publishes to fail in case of a blocked connection.
+			 * https://www.rabbitmq.com/alarms.html
+			 */
+			$this->channel->confirm_select();
 		}
 
 		return $this->channel;
