@@ -13,6 +13,16 @@ define('ext.wikia.adEngine.tracking.adInfoTracker',  [
 
 	var logGroup = 'ext.wikia.adEngine.tracking.adInfoTracker';
 
+	function itContainsBLB(pos) {
+		var strings = pos.split(',');
+		return strings.length > 1 && strings.indexOf('BOTTOM_LEADERBOARD') > -1;
+	}
+
+	function getPosParameter(slotParams) {
+		var pos = slotParams.pos || '';
+		return itContainsBLB(pos) ? 'BOTTOM_LEADERBOARD' : pos;
+	}
+
 	function prepareData(slotName, pageParams, slotParams, creative, bidders) {
 		var data,
 			now = new Date(),
@@ -48,7 +58,7 @@ define('ext.wikia.adEngine.tracking.adInfoTracker',  [
 			'kv_s1': pageParams.s1 || '',
 			'kv_s2': pageParams.s2 || '',
 			'kv_s0v': pageParams.s0v || '',
-			'kv_pos': slotParams.pos || '',
+			'kv_pos': getPosParameter(slotParams),
 			'kv_rv': slotParams.rv || '',
 			'kv_wsi': slotParams.wsi || '',
 			'kv_lang': pageParams.lang || '',

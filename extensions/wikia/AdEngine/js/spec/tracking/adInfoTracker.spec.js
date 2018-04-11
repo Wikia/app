@@ -109,6 +109,20 @@ describe('ext.wikia.adEngine.tracking.adInfoTracker', function () {
 		expect(trackedData.kv_abi).toBe('50_1');
 	});
 
+	it('tracks only one pos parameter', function () {
+		spyOn(mocks.adTracker, 'trackDW');
+		getModule().track('FOO', {}, {
+			pos: 'BOTTOM_LEADERBOARD,MOBILE_PREFOOTER',
+			rv: '2',
+			wsi: 'ofa1',
+			abi: '50_1'
+		});
+
+		var trackedData = mocks.adTracker.trackDW.calls.mostRecent().args[0];
+
+		expect(trackedData.kv_pos).toBe('BOTTOM_LEADERBOARD');
+	});
+
 	it('track data with page layout', function () {
 		spyOn(mocks.adTracker, 'trackDW');
 		getModule().track('FOO', {}, {});
