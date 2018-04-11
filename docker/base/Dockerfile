@@ -18,6 +18,8 @@ RUN apt-get update && apt-get install -y \
     libyaml-dev \
     locales \
     make \
+    # needed by Timeline extension
+    ploticus \
     wget \
     # needed by sass
     && apt-get -t jessie-backports install -y libsass-dev
