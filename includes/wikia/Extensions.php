@@ -221,6 +221,11 @@ if ( !empty( $wgEnableEditPageLayoutExt ) ) {
  * load extensions by using configuration variables
  */
 
+#--- 1. Special::ProtectSite
+if (!empty($wgWikiaEnableSpecialProtectSiteExt)) {
+	include("$IP/extensions/wikia/SpecialProtectSite/SpecialProtectSite.php");
+}
+
 #--- 5. EventCountdown
 if (!empty($wgWikiaEnableEventCountdownExt)) {
 	include("{$IP}/extensions/3rdparty/EventCountdown/EventCountdown.php");
@@ -1178,11 +1183,6 @@ if ( !empty( $wgEnablePlacesExt ) ) {
 /* ProtectSiteJS */
 if(!empty($wgEnableProtectSiteJSExt)) {
 	include("$IP/extensions/wikia/ProtectSiteJS/ProtectSiteJS_setup.php");
-}
-
-#--- 1. Special::ProtectSite
-if (!empty($wgWikiaEnableSpecialProtectSiteExt)) {
-	include("$IP/extensions/wikia/SpecialProtectSite/SpecialProtectSite.php");
 }
 
 if ( !empty($wgCityId) && $wgCityId != 1252 /* starter.wikia.com */ && !$wgDevelEnvironment ) {
