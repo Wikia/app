@@ -22,8 +22,8 @@ $messages['es'] = array(
 );
 
 $messages['fr'] = array(
-	'right-https-opt-in' => 'Able to opt in to use HTTPS while logged in',
-	'https-opt-in-toggle' => 'Use HTTPS while logged in (beta)',
+	'right-https-opt-in' => "Possibilité de choisir d'utiliser HTTPS en mode connecté",
+	'https-opt-in-toggle' => 'Utiliser HTTPS en mode connecté (bêta)',
 );
 
 $messages['it'] = array(
