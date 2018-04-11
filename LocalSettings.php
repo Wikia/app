@@ -137,6 +137,11 @@ $wgHTTPTimeout = defined( 'RUN_MAINTENANCE_IF_MAIN' ) ? 25 : 5; # Wikia change
 require_once "$IP/includes/wikia/VariablesBase.php";
 
 /**
+ * Access credentials from private repository.
+ */
+require_once "$IP/../config/Secrets.php";
+
+/**
  * Variable expansions.
  */
 require_once "$IP/includes/wikia/VariablesExpansions.php";
