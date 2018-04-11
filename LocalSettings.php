@@ -152,6 +152,13 @@ require_once "$IP/includes/wikia/VariablesExpansions.php";
 require_once "$IP/includes/wikia/DefaultSettings.php";
 
 /**
+ * @see BAC-1235
+ */
+if ( !empty( $maintClass ) && $maintClass == 'RebuildLocalisationCache' ) {
+    $wgLocalisationCacheConf['manualRecache'] = false;
+}
+
+/**
  * Settings from Wikia/config
  */
 require_once "$IP/../config/LocalSettings.php";
