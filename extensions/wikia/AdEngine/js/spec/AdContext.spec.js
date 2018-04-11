@@ -13,6 +13,9 @@ describe('AdContext', function () {
 					return false;
 				}
 			},
+			adEngineBridge: {
+				isProperGeo: noop
+			},
 			geo: {
 				getCountryCode: function () {
 					return 'CURRENT_COUNTRY';
@@ -72,6 +75,7 @@ describe('AdContext', function () {
 			mocks.doc,
 			mocks.geo,
 			mocks.instantGlobals,
+			mocks.adEngineBridge,
 			mocks.sampler,
 			mocks.win,
 			mocks.Querystring
@@ -717,15 +721,6 @@ describe('AdContext', function () {
 
 	[
 		{
-			hasFeaturedVideo: true,
-			instantGlobals: {
-				wgAdDriverRubiconPrebidCountries: ['CURRENT_COUNTRY']
-			},
-			testedBidder: 'rubicon',
-			expectedResult: false
-		},
-		{
-			hasFeaturedVideo: false,
 			instantGlobals: {
 				wgAdDriverRubiconPrebidCountries: ['ZZ']
 			},
@@ -733,7 +728,6 @@ describe('AdContext', function () {
 			expectedResult: false
 		},
 		{
-			hasFeaturedVideo: false,
 			instantGlobals: {
 				wgAdDriverRubiconPrebidCountries: ['CURRENT_COUNTRY']
 			},

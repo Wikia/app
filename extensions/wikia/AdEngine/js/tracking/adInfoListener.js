@@ -89,6 +89,10 @@ define('ext.wikia.adEngine.tracking.adInfoListener',  [
 			slotPrices.a9 = vastInfo.amznbid;
 		}
 
+		if (vastInfo.customParams.hb_bidder) {
+			slotPrices[vastInfo.customParams.hb_bidder] = vastInfo.customParams.hb_pb;
+		}
+
 		tracker.track(
 			vastInfo.customParams.pos,
 			vastInfo.customParams,
