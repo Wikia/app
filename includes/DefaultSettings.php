@@ -623,32 +623,6 @@ $wgMediaHandlers = array(
 );
 
 /**
- * Resizing can be done using PHP's internal image libraries or using
- * ImageMagick or another third-party converter, e.g. GraphicMagick.
- * These support more file formats than PHP, which only supports PNG,
- * GIF, JPG, XBM and WBMP.
- *
- * Use Image Magick instead of PHP builtin functions.
- */
-$wgUseImageMagick = false;
-/** The convert command shipped with ImageMagick */
-$wgImageMagickConvertCommand = '/usr/bin/convert';
-/** The identify command shipped with ImageMagick */
-$wgImageMagickIdentifyCommand = '/usr/bin/identify';
-
-/** Sharpening parameter to ImageMagick */
-$wgSharpenParameter = '0x0.4';
-
-/** Reduction in linear dimensions below which sharpening will be enabled */
-$wgSharpenReductionThreshold = 0.85;
-
-/**
- * Temporary directory used for ImageMagick. The directory must exist. Leave
- * this set to false to let ImageMagick decide for itself.
- */
-$wgImageMagickTempDir = false;
-
-/**
  * Use another resizing converter, e.g. GraphicMagick
  * %s will be replaced with the source path, %d with the destination
  * %w and %h will be replaced with the width and height.
