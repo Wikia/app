@@ -403,6 +403,8 @@ class WikiFactoryLoader {
 
 			if ( $hasAuthCookie &&
 				 $_SERVER['HTTP_FASTLY_SSL'] &&
+				 // Hack until we are better able to handle internal HTTPS requests
+				 !empty( $_SERVER['HTTP_FASTLY_FF'] ) &&
 				 wfHttpsAllowedForURL( $redirectUrl )
 			) {
 				$redirectUrl = wfHttpToHttps( $redirectUrl );
