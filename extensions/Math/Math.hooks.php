@@ -153,7 +153,7 @@ class MathHooks {
 		return true;
 	}
 
-	static function addMathJax( $parser ) {
+	private static function addMathJax( $parser ) {
 		global $wgMathJaxUrl;
 		//$script = Html::element( 'script', array( 'type' => 'text/x-mathjax-config' ), $config );
 		$html = Html::element( 'script', array( 'src' => $wgMathJaxUrl ) );

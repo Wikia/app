@@ -39,7 +39,7 @@ define( 'MW_MATH_MATHML', 5 ); /// @deprecated
 /**@}*/
 
 /** For back-compat */
-$wgUseTeX = true;
+$wgUseTeX = false;
 
 /** Location of the texvc binary */
 $wgTexvc = '/usr/bin/texvc'; # WIKIA CHANGE
@@ -88,7 +88,7 @@ $wgMathDirectory = false;
  *
  * Not guaranteed to be stable at this time.
  */
-$wgMathUseMathJax = false;
+$wgUseMathJax = true;
 
 /**
  * Use of MathJax's CDN is governed by terms of service
@@ -96,11 +96,11 @@ $wgMathUseMathJax = false;
  *
  * If you don't like them, install your own copy to load.
  */
-$wgMathJaxUrl = 'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML';
+$wgMathJaxUrl = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js';
 
 ////////// end of config settings.
 
-$wgDefaultUserOptions['math'] = MW_MATH_PNG;
+$wgDefaultUserOptions['math'] = MW_MATH_SOURCE; // SUS-4529 - use front-end rendering
 
 $wgExtensionFunctions[] = 'MathHooks::setup';
 $wgHooks['ParserFirstCallInit'][] = 'MathHooks::onParserFirstCallInit';
