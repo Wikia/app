@@ -27,12 +27,14 @@ define('ext.wikia.adEngine.provider.gpt.adSizeFilter', [
 	}
 
 	function removeUAPForFeaturedVideoPages(slotName, slotSizes) {
-		var adContext = getAdContext();
+		var adContext = getAdContext(),
+			recommendedVideoTestName = 'RECOMMENDED_VIDEO_AB',
+			runsRecommendedVideoABTest = window.Wikia.AbTest.getGroup(recommendedVideoTestName);
 
 		if (slotName.indexOf('TOP_LEADERBOARD') > -1 &&
 			adContext &&
 			adContext.targeting &&
-			adContext.targeting.hasFeaturedVideo
+			(adContext.targeting.hasFeaturedVideo || runsRecommendedVideoABTest)
 		) {
 			slotSizes = removeUAPFromSlotSizes(slotSizes);
 		}
