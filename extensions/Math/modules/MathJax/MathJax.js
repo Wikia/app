@@ -604,8 +604,11 @@ MathJax.fileversion = "1.1.7";
     //
     //  Return a complete URL to a file (replacing the root pattern)
     //
-    fileURL: function (file) {return file.replace(this.rootPattern,this.config.root)},
-    
+    fileURL: function (file) {
+      // SUS-4529 | use Wikia's CDN assets path
+      return file.replace(this.rootPattern, window.wgExtensionsPath + '/Math/modules/MathJax');
+    },
+
     //
     //  Load a file if it hasn't been already.
     //  Make sure the file URL is "safe"?
