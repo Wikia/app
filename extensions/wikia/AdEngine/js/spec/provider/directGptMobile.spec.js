@@ -7,19 +7,22 @@ describe('ext.wikia.adEngine.provider.directGptMobile', function () {
 			adContext: {
 				getContext: function () {
 					return mocks.context;
+				},
+				get: function (field) {
+					return mocks.context[field];
 				}
 			},
-			context: {
-				opts: {
-
-				}
-			},
+			context: {},
 			factory: {
 				createProvider: noop
 			},
 			kiloAdUnitBuilder: {name: 'kiloAdUnit'},
 			megaAdUnitBuilder: {name: 'megaAdUnit'}
 		};
+
+	function setContext(context) {
+		mocks.context = context || {};
+	}
 
 	function getModule() {
 		return modules['ext.wikia.adEngine.provider.directGptMobile'](
@@ -32,6 +35,9 @@ describe('ext.wikia.adEngine.provider.directGptMobile', function () {
 
 	it('Return kilo adUnit if there is no param in context', function () {
 		spyOn(mocks.factory, 'createProvider');
+		setContext({
+			'opts.megaAdUnitBuilderEnabled': null
+		});
 
 		getModule();
 
@@ -41,7 +47,9 @@ describe('ext.wikia.adEngine.provider.directGptMobile', function () {
 
 	it('Return MEGA adUnit if there is correct param turned on', function () {
 		spyOn(mocks.factory, 'createProvider');
-		spyOn(mocks.adContext, 'getContext').and.returnValue({opts:{megaAdUnitBuilderEnabled: true}});
+		setContext({
+			'opts.megaAdUnitBuilderEnabled': true
+		});
 
 		getModule();
 
