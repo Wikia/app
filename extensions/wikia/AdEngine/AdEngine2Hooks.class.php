@@ -46,13 +46,17 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverBabRecoveryCountries';
 		$vars[] = 'wgAdDriverBeachfrontBidderCountries';
 		$vars[] = 'wgAdDriverBottomLeaderBoardMegaCountries';
-		$vars[] = 'wgAdDriverBottomLeaderBoardOnMobileCountries';
+		$vars[] = 'wgAdDriverBottomLeaderBoardViewportCountries';
 		$vars[] = 'wgAdDriverDelayCountries';
 		$vars[] = 'wgAdDriverDelayTimeout';
 		$vars[] = 'wgAdDriverDisableSraCountries';
 		$vars[] = 'wgAdDriverEvolve2Countries';
 		$vars[] = 'wgAdDriverFMRLogisticRegressionRabbitCountries';
 		$vars[] = 'wgAdDriverFMRPassiveAggressiveClassifierRabbitCountries';
+		$vars[] = 'wgAdDriverFVAsUapKeyValueCountries';
+		$vars[] = 'wgAdDriverFVDelayCountries';
+		$vars[] = 'wgAdDriverFVDelayTimeoutOasis';
+		$vars[] = 'wgAdDriverFVDelayTimeoutMobileWiki';
 		$vars[] = 'wgAdDriverFVMidrollCountries';
 		$vars[] = 'wgAdDriverFVPostrollCountries';
 		$vars[] = 'wgAdDriverHighImpactSlotCountries';
@@ -64,6 +68,7 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverKikimoraViewabilityTrackingCountries';
 		$vars[] = 'wgAdDriverKruxCountries';
 		$vars[] = 'wgAdDriverKILOCountries';
+		$vars[] = 'wgAdDriverLABradorTestCountries';
 		$vars[] = 'wgAdDriverMEGACountries';
 		$vars[] = 'wgAdDriverMegaAdUnitBuilderForFVCountries';
 		$vars[] = 'wgAdDriverMoatTrackingForFeaturedVideoAdCountries';
@@ -84,6 +89,7 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverRabbitTargetingKeyValues';
 		$vars[] = 'wgAdDriverRubiconDisplayPrebidCountries';
 		$vars[] = 'wgAdDriverRubiconPrebidCountries';
+		$vars[] = 'wgAdDriverRubiconVideoInFeaturedVideoCountries';
 		$vars[] = 'wgAdDriverScrollDepthTrackingCountries';
 		$vars[] = 'wgAdDriverSrcPremiumCountries';
 		$vars[] = 'wgAdDriverTurtleCountries';
@@ -126,6 +132,7 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverF2BabDetectionCountries';
 		$vars[] = 'wgAdDriverF2DelayTimeout';
 		$vars[] = 'wgAdDriverF2InstartLogicRecoveryCountries';
+		$vars[] = 'wgAdDriverLABradorTestF2Countries';
 
 		return true;
 	}

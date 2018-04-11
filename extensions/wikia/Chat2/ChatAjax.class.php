@@ -26,7 +26,7 @@ class ChatAjax {
 	 * If the user is not allowed to chat, an error message is returned (which can be shown to the user).
 	 */
 	static public function getUserInfo() {
-		global $wgMemc, $wgServer, $wgArticlePath, $wgRequest, $wgCityId, $wgContLang;
+		global $wgMemc, $wgScriptPath, $wgServer, $wgArticlePath, $wgRequest, $wgCityId;
 
 		wfProfileIn( __METHOD__ );
 
@@ -53,6 +53,8 @@ class ChatAjax {
 			return [ 'errorMsg' => self::ERROR_USER_NOT_FOUND ];
 		}
 
+		$server = WikiFactory::getLocalEnvURL( $wgServer );
+
 		$res = [
 			'canChat' => Chat::canChat( $user ),
 			'isModerator' => $user->isAllowed( Chat::CHAT_MODERATOR ),
@@ -67,7 +69,8 @@ class ChatAjax {
 
 			// Extra wg variables that we need.
 			'wgCityId' => $wgCityId,
-			'wgServer' => $wgServer,
+			'wgServer' => $server,
+			'wgScriptPath' => $wgScriptPath,
 			'wgArticlePath' => $wgArticlePath
 		];
 
@@ -83,7 +86,7 @@ class ChatAjax {
 		if ( $res['canChat'] ) {
 			$roomId = $wgRequest->getVal( 'roomId' );
 			$cityIdFromRoom = ChatServerApiClient::getCityIdFromRoomId( $roomId );
-			$cityIdHash = md5($wgCityId.$wgServer);
+			$cityIdHash = md5( $wgCityId . parse_url( $server, PHP_URL_HOST ) . $wgScriptPath );
 			if ( $cityIdHash !== $cityIdFromRoom ) {
 				$res['canChat'] = false; // don't let the user chat in the room they requested.
 				$res['errorMsg'] = wfMessage( 'chat-room-is-not-on-this-wiki' )->text();

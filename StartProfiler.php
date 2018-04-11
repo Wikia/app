@@ -27,14 +27,6 @@ if( !empty( $_GET['forceprofile'] ) ) {
 } elseif( !empty( $_GET['forcetrace'] ) ) {
 	require_once( dirname(__FILE__).'/includes/profiler/ProfilerSimpleTrace.php' );
 	$wgProfiler = new ProfilerSimpleTrace(array());
-} elseif ($wgProfilerRequestSample <= $wgProfilerSamplePercent  ) {
-	require_once( dirname(__FILE__).'/includes/profiler/ProfilerSimpleDataCollector.php' );
-	$wgProfiler = new ProfilerSimpleDataCollector(array());
-} elseif ($wgProfilerRequestSample <= $wgProfilerSamplePercent + $wgXhprofSamplePercent ) {
-	if ( function_exists('tideways_enable') ) {
-		require_once( dirname(__FILE__).'/includes/profiler/ProfilerTideways.php' );
-		$wgProfiler = new ProfilerTideways(array());
-	}
 } else {
 	require_once( dirname(__FILE__).'/includes/profiler/ProfilerStub.php' );
 }

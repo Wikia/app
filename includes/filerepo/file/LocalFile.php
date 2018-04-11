@@ -995,6 +995,14 @@ class LocalFile extends File {
 
 	/**
 	 * Record a file upload in the upload log and the image table
+	 *
+	 * @param $oldver
+	 * @param $comment
+	 * @param $pageText
+	 * @param bool $props
+	 * @param bool $timestamp
+	 * @param null $user
+	 * @return bool
 	 */
 	function recordUpload2(
 		$oldver, $comment, $pageText, $props = false, $timestamp = false, $user = null
@@ -1034,29 +1042,41 @@ class LocalFile extends File {
 
 		$reupload = false;
 
-		# Test to see if the row exists using INSERT IGNORE
-		# This avoids race conditions by locking the row until the commit, and also
-		# doesn't deadlock. SELECT FOR UPDATE causes a deadlock for every race condition.
-		$dbw->insert( 'image',
-			array(
-				'img_name'        => $this->getName(),
-				'img_size'        => $this->size,
-				'img_width'       => intval( $this->width ),
-				'img_height'      => intval( $this->height ),
-				'img_bits'        => $this->bits,
-				'img_media_type'  => $this->media_type,
-				'img_major_mime'  => $this->major_mime,
-				'img_minor_mime'  => $this->minor_mime,
-				'img_timestamp'   => $timestamp,
-				'img_description' => $comment,
-				'img_user'        => $user->getId(),
-				'img_user_text'   => $user->isAnon() ? $user->getName() : '', // SUS-3086
-				'img_metadata'    => $this->metadata,
-				'img_sha1'        => $this->sha1
-			),
-			__METHOD__,
-			'IGNORE'
-		);
+		try {
+			# SUS-4318 | this code was using INSERT IGNORE to "detect" already existing image:
+			#
+			# Test to see if the row exists using INSERT IGNORE
+			# This avoids race conditions by locking the row until the commit, and also
+			# doesn't deadlock. SELECT FOR UPDATE causes a deadlock for every race condition.
+			#
+			# Use INSERT IGNORE .. ON DUPLICATE KEY UPDATE instead now
+			$dbw->upsert(
+				'image',
+				[
+					'img_name' => $this->getName(),
+					'img_size' => $this->size,
+					'img_width' => intval( $this->width ),
+					'img_height' => intval( $this->height ),
+					'img_bits' => $this->bits,
+					'img_media_type' => $this->media_type,
+					'img_major_mime' => $this->major_mime,
+					'img_minor_mime' => $this->minor_mime,
+					'img_timestamp' => $timestamp,
+					'img_description' => $comment,
+					'img_user' => $user->getId(),
+					'img_user_text' => $user->isAnon() ? $user->getName() : '', // SUS-3086
+					'img_metadata' => $this->metadata,
+					'img_sha1' => $this->sha1
+				],
+				[],
+				[ "img_name = VALUES(img_name)" ],
+				__METHOD__
+			);
+		}
+		catch ( DBError $ex ) {
+			$dbw->rollback( __METHOD__ );
+			return false;
+		}
 
 		if ( $dbw->affectedRows() == 0 ) {
 			if ( $oldver == '' ) { // XXX

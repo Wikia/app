@@ -9,9 +9,11 @@ class LyricFindControllerTest extends WikiaBaseTest {
 		// mock title and prevent DB changes
 		$titleMock = $this->createConfiguredMock( Title::class, [
 			'getArticleID' => 123,
+			'isKnown' => true
 		] );
 
 		$this->mockGlobalVariable('wgTitle', $titleMock );
+		$this->mockStaticMethod(LyricFindHooks::class, 'isWebCrawler', false);
 	}
 
 	/**

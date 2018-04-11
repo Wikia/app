@@ -16,18 +16,6 @@ $wgExtensionCredits['other'][] = [
 	"author" => "[http://www.wikia.com/wiki/User:Eloy.wikia Krzysztof Krzyżaniak (eloy)]"
 ];
 
-if ( ! function_exists( "wfUnserializeHandler" ) ) {
-	/**
-	 * wfUnserializeErrorHandler
-	 *
-	 * @author Emil Podlaszewski <emil@wikia-inc.com>
-	 */
-	function wfUnserializeHandler( $errno, $errstr ) {
-		global $_variable_key, $_variable_value;
-		Wikia::log( __FUNCTION__, $_SERVER['SERVER_NAME'], "({$_variable_key}={$_variable_value}): {$errno}, {$errstr}" );
-	}
-}
-
 /**
  * define hooks for WikiFactory here
  */
@@ -401,12 +389,11 @@ class WikiFactory {
 			Wikia::log( __METHOD__, "", "WikiFactory is not used." );
 			return false;
 		}
-
-		if ( 'http://' != strpos($domain, 0, 7) ) {
+		if ( !preg_match( "^https?:\/\/", $domain ) ) {
 			$domain = 'http://' . $domain;
 		}
 
-		$retVal = WikiFactory::setVarByName("wgServer", $city_id, $domain, $reason);
+		$retVal = WikiFactory::setVarByName( "wgServer", $city_id, $domain, $reason );
 
 		static::clearDomainCache( $city_id );
 
@@ -1246,7 +1233,6 @@ class WikiFactory {
 				return "$protocol//" . $server . '.verify' . static::WIKIA_TOP_DOMAIN . $address;
 			case WIKIA_ENV_STABLE:
 				return "$protocol//" . $server . '.stable' . static::WIKIA_TOP_DOMAIN . $address;
-			case WIKIA_ENV_STAGING:
 			case WIKIA_ENV_PROD:
 				return sprintf( '%s//%s.%s%s', $protocol, $server, $wgWikiaBaseDomain, $address );
 			case WIKIA_ENV_SANDBOX:
@@ -1475,7 +1461,7 @@ class WikiFactory {
 			return false;
 		}
 
-		set_error_handler( "wfUnserializeHandler" );
+		set_error_handler( 'WikiFactory::unserializeHandler' );
 		$_variable_key = "";
 		$_variable_value = "";
 		$data = unserialize( file_get_contents( $file ) );
@@ -3429,4 +3415,22 @@ class WikiFactory {
 		$db->freeResult( $dbResult );
 		return $result;
 	}
+        
+        /**
+         * unserializeErrorHandler
+         *
+         * @author Emil Podlaszewski <emil@wikia-inc.com>
+         */
+        static public function unserializeHandler( $errno, $errstr ) {
+                global $_variable_key, $_variable_value;
+                WikiaLogger::instance()->error(
+                        'WikiFactory unserialize error',
+                        [
+                            'variable_key' => $_variable_key,
+                            'variable_value' => $_variable_value,
+                            'errno' => $errno,
+                            'errstr' => $errstr
+                        ]
+                );
+        }
 };

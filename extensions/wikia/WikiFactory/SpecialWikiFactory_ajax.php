@@ -339,15 +339,20 @@ function axWFactoryDomainCRUD($type="add") {
     $dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
     $aDomains = array();
     $aResponse = array();
+    $matches = array();
     $sInfo = "";
+    $languages = Language::getLanguageNames();
     switch( $type ) {
 		case "add":
-			if (!preg_match("/^[\w\.\-]+$/", $sDomain)) {
+			if (!preg_match("/^[\w\.\-]+(?:\/([^\/]+))?$/", $sDomain, $matches )) {
 				/**
 				 * check if domain is valid (a im sure that there is function
 				 * somewhere for such purpose
 				 */
 				$sInfo .= "Error: Domain <em>{$sDomain}</em> is invalid (or empty) so it's not added.";
+			}
+			elseif ( isset( $matches[1] ) && !array_key_exists( $matches[1], $languages ) ) {
+				$sInfo .= "Error: Unrecognized language code in the path: '$matches[1]'";
 			}
 			else {
 				$added = WikiFactory::addDomain( $city_id, $sDomain, $reason );
@@ -374,10 +379,13 @@ function axWFactoryDomainCRUD($type="add") {
                 #--- domain is used already
                 $sInfo .= "<strong>Error: Domain <em>{$sNewDomain}</em> is already used so no change was done.</strong>";
             }
-            elseif (!preg_match("/^[\w\.\-]+$/", $sNewDomain)) {
+            elseif ( !preg_match("/^[\w\.\-]+(?:\/([^\/]+))?$/", $sNewDomain, $matches )) {
                 #--- check if domain is valid (a im sure that there is function
                 #--- somewhere for such purpose
                 $sInfo .= "<strong>Error: Domain <em>{$sNewDomain}</em> is invalid so no change was done..</strong>";
+            }
+            elseif ( isset( $matches[1] ) && !array_key_exists( $matches[1], $languages ) ) {
+                $sInfo .= "Error: Unrecognized language code in the path: '$matches[1]'";
             }
             else {
                 #--- reall change domain

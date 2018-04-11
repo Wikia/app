@@ -101,7 +101,6 @@ class WikiaTest extends WikiaBaseTest {
 	}
 
 	public function testOnSkinTemplateOutputPageBeforeExec_setsNoIndexNoFollowBecauseStaging() {
-		$this->mockStagingEnv();
 
 		$context = new RequestContext();
 		$context->setTitle( new Title() );

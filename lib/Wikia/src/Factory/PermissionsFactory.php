@@ -16,7 +16,7 @@ class PermissionsFactory extends AbstractFactory {
 	}
 	
 	private function getGlobalOrDefault( string $globalName ): array {
-		return isset( $GLOBALS[$globalName] ) ? $GLOBALS[$globalName] : [];
+		return !empty( $GLOBALS[$globalName] ) ? $GLOBALS[$globalName] : [];
 	}
 
 	public function permissionsConfiguration(): PermissionsConfiguration {

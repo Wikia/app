@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @package MediaWiki
  * contains all logic needed for loading and setting configuration data
@@ -8,35 +7,6 @@
  * @author Krzysztof Krzyżaniak (eloy) <eloy@wikia-inc.com> for Wikia Inc.
  * @todo change use of mIsWikiaActive to a series of isClosed, isDeleted, etc. methods
  */
-
-ini_set( "include_path", "{$IP}:{$IP}/includes:{$IP}/languages:{$IP}/lib/vendor:.:" );
-ini_set( "cgi.fix_pathinfo", 1);
-
-require_once( "$IP/includes/Defines.php" );
-require_once( "$IP/includes/DefaultSettings.php" );
-require_once( "$IP/includes/Hooks.php" );
-require_once( "$IP/includes/GlobalFunctions.php" );
-require_once( "$IP/includes/wikia/GlobalFunctions.php" );
-require_once( "$IP/includes/Exception.php" );
-require_once( "$IP/includes/db/Database.php" );
-require_once( "$IP/extensions/wikia/WikiFactory/WikiFactory.php" );
-
-if( !function_exists("wfProfileIn") ) {
-	require_once( "$IP/StartProfiler.php" );
-}
-
-/**
- * wfUnserializeErrorHandler
- *
- * @author Emil Podlaszewski <emil@wikia.com>
- */
-function wfUnserializeHandler( $errno, $errstr ) {
-	global $_variable_key, $_variable_value;
-
-	$serverMame = isset($_SERVER['SERVER_NAME']) ? $_SERVER['SERVER_NAME'] : '';
-	error_log("$serverMame ($_variable_key=$_variable_value): $errno, $errstr");
-}
-
 class WikiFactoryLoader {
 	// Input variables used to identify wiki in HTTPD context
 
@@ -52,7 +22,7 @@ class WikiFactoryLoader {
 	public $mCityDB;
 
 	public $mWikiID, $mCityUrl, $mOldServerName;
-	public $mAlternativeDomainUsed, $mCityCluster, $mDebug;
+	public $mAlternativeDomainUsed, $mCityCluster;
 	public $mDomain, $mVariables, $mIsWikiaActive, $mAlwaysFromDB;
 	public $mTimestamp, $mCommandLine;
 	public $mExpireDomainCacheTimeout = 86400; #--- 24 hours
@@ -81,7 +51,6 @@ class WikiFactoryLoader {
 		global $wgDevelEnvironment;
 
 		// initializations
-		$this->mDebug = false;
 		$this->mOldServerName = false;
 		$this->mAlternativeDomainUsed = false;
 		$this->mDBname = WikiFactory::db;
@@ -93,7 +62,6 @@ class WikiFactoryLoader {
 		$this->mDBhandler  = null;
 
 		if( !empty( $wgDevelEnvironment ) ) {
-			$this->mDebug = true;
 			$this->mAlwaysFromDB = 1;
 		}
 
@@ -426,7 +394,19 @@ class WikiFactoryLoader {
 		$cond2 = $this->mAlternativeDomainUsed && ( $url['host'] != $this->mOldServerName );
 
 		if( ( $cond1 || $cond2 ) && empty( $wgDevelEnvironment ) ) {
+			global $wgCookiePrefix;
 			$redirectUrl = WikiFactory::getLocalEnvURL( $this->mCityUrl );
+			$hasAuthCookie = !empty( $_COOKIE[\Wikia\Service\User\Auth\CookieHelper::ACCESS_TOKEN_COOKIE_NAME] ) ||
+							 !empty( $_COOKIE[session_name()] ) ||
+							 !empty( $_COOKIE["{$wgCookiePrefix}Token"] ) ||
+							 !empty( $_COOKIE["{$wgCookiePrefix}UserID"] );
+
+			if ( $hasAuthCookie &&
+				 $_SERVER['HTTP_FASTLY_SSL'] &&
+				 wfHttpsAllowedForURL( $redirectUrl )
+			) {
+				$redirectUrl = wfHttpToHttps( $redirectUrl );
+			}
 			$target = rtrim( $redirectUrl, '/' ) . '/' . $this->pathParams;
 
 			$queryParams = $_GET;
@@ -443,6 +423,14 @@ class WikiFactoryLoader {
 			}
 
 			header( "X-Redirected-By-WF: NotPrimary" );
+			header( 'Vary: Cookie,Accept-Encoding' );
+
+			if ( $hasAuthCookie ) {
+				header( 'Cache-Control: private, must-revalidate, max-age=0' );
+			} else {
+				header( 'Cache-Control: s-maxage=86400, must-revalidate, max-age=0' );
+			}
+
 			header( "Location: {$target}", true, 301 );
 			wfProfileOut( __METHOD__ );
 			return false;
@@ -499,9 +487,9 @@ class WikiFactoryLoader {
 		}
 
 		/**
-		 * if wgDBname is not defined we get all variables from database
+		 * the list of variables is empty (cache miss), get them from the database
 		 */
-		if( ! isset( $this->mVariables["wgDBname"] ) ) {
+		if( empty( $this->mVariables ) ) {
 			wfProfileIn( __METHOD__."-varsdb" );
 			$dbr = $this->getDB();
 			$oRes = $dbr->select(
@@ -523,7 +511,7 @@ class WikiFactoryLoader {
 				#--- some magic, rewritting path, etc legacy data
 				global $_variable_key, $_variable_value;
 
-				set_error_handler( "wfUnserializeHandler" );
+				set_error_handler( 'WikiFactory::unserializeHandler' );
 				$_variable_key = $oRow->cv_name;
 				$_variable_value = $oRow->cv_value;
 				$tUnserVal = unserialize( $oRow->cv_value, [ 'allowed_classes' => false ] );
@@ -848,9 +836,6 @@ class WikiFactoryLoader {
 	 */
 	private function debug( $message ) {
 		wfDebug("wikifactory: {$message}", true);
-		if( !empty( $this->mDebug ) ) {
-			error_log("wikifactory: {$message}");
-		}
 	}
 
 	/**
