@@ -82,9 +82,6 @@ abstract class MathRenderer {
 			case MW_MATH_MATHJAX:
 				$renderer = new MathMathJax( $tex, $params );
 				break;
-			case MW_MATH_PNG:
-			default:
-				$renderer = new MathTexvc( $tex, $params );
 		}
 		wfDebugLog ( "Math", 'start rendering $' . $renderer->tex . '$' );
 		return $renderer;
@@ -123,74 +120,6 @@ abstract class MathRenderer {
 		// TODO: What happens if $tex is empty?
 		$dbr = wfGetDB( DB_SLAVE );
 		return $dbr->encodeBlob( pack( "H32", md5( $this->tex ) ) ); # Binary packed, not hex
-	}
-
-	/**
-	 * Reads rendering data from database
-	 *
-	 * @return boolean true if read successfully, false otherwise
-	 */
-	public function readFromDatabase() {
-		$dbr = wfGetDB( DB_SLAVE );
-		$rpage = $dbr->selectRow(
-			'math',
-			array(
-				'math_outputhash', 'math_html_conservativeness', 'math_html',
-				'math_mathml'
-			),
-			array(
-				'math_inputhash' => $this->getInputHash()
-			),
-			__METHOD__
-		);
-		if ( $rpage !== false ) {
-			# Trailing 0x20s can get dropped by the database, add it back on if necessary:
-			$xhash = unpack( 'H32md5', $dbr->decodeBlob( $rpage->math_outputhash ) . "                " );
-			$this->hash = $xhash['md5'];
-			$this->conservativeness = $rpage->math_html_conservativeness;
-			$this->html = $rpage->math_html;
-			$this->mathml = $rpage->math_mathml;
-			$this->recall = true;
-			return true;
-		}
-
-		# Missing from the database and/or the render cache
-		$this->recall = false;
-		return false;
-	}
-
-	/**
-	 * Writes rendering entry to database.
-	 *
-	 * WARNING: Use writeCache() instead of this method to be sure that all
-	 * renderer specific (such as squid caching) are taken into account.
-	 * This function stores the values that are currently present in the class to the database even if they are empty.
-	 *
-	 * This function can be seen as protected function.
-	 */
-	public function writeToDatabase() {
-		# Now save it back to the DB:
-		if ( !wfReadOnly() ) {
-			$dbw = wfGetDB( DB_MASTER );
-			if ( $this->hash !== '' ) {
-				$outmd5_sql = $dbw->encodeBlob( pack( 'H32', $this->hash ) );
-			} else {
-				$outmd5_sql = '';
-			}
-			wfDebugLog( "Math", 'store entry for $' . $this->tex . '$ in database (hash:' . $this->hash . ')\n' );
-			$dbw->replace(
-				'math',
-				array( 'math_inputhash' ),
-				array(
-					'math_inputhash' => $this->getInputHash(),
-					'math_outputhash' => $outmd5_sql ,
-					'math_html_conservativeness' => $this->conservativeness,
-					'math_html' => $this->html,
-					'math_mathml' => $this->mathml,
-					),
-				__METHOD__
-			);
-		}
 	}
 
 	/**
