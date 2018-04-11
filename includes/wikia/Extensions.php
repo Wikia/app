@@ -224,6 +224,14 @@ if( !empty( $wgEnableMultiUploadExt ) ) {
 	include( "{$IP}/extensions/MultiUpload/MultiUpload.php" );
 }
 
+putenv( 'GDFONTPATH=/usr/share/fonts/truetype/freefont/' );
+include_once "$IP/extensions/timeline/Timeline.php";
+
+if ( !empty( $wgEnableOpenGraphMetaExt ) ) {
+	include( "$IP/extensions/OpenGraphMeta/OpenGraphMeta.php" );
+	// Wikia-specific customizations to set image and description by ImageServing and ArticleService respectively.
+	include( "$IP/extensions/wikia/OpenGraphMetaCustomizations/OpenGraphMetaCustomizations.setup.php");
+}
 
 #--- 13. Poem - sitewide
 include("{$IP}/extensions/Poem/Poem.php");
@@ -1764,12 +1772,3 @@ include "$IP/extensions/wikia/Search/WikiaSearch.setup.php";
 
 // Mercury auth pages related functionality - redirects, email confirmation.
 include "$IP/extensions/wikia/AuthPages/AuthPages.setup.php";
-
-if ( !empty( $wgEnableOpenGraphMetaExt ) ) {
-	include( "$IP/extensions/OpenGraphMeta/OpenGraphMeta.php" );
-	// Wikia-specific customizations to set image and description by ImageServing and ArticleService respectively.
-	include( "$IP/extensions/wikia/OpenGraphMetaCustomizations/OpenGraphMetaCustomizations.setup.php");
-}
-
-putenv( 'GDFONTPATH=/usr/share/fonts/truetype/freefont/' );
-include_once "$IP/extensions/timeline/Timeline.php";
