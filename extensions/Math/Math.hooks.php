@@ -147,18 +147,13 @@ class MathHooks {
 	 * @param Parser $parser
 	 * @return bool
 	 */
-	static function onParserTestParser( &$parser ) {
+	static function onParserTestParser( $parser ) {
 		global $wgMathPath;
 		$wgMathPath = '/images/math';
 		return true;
 	}
 
-	private static function addMathJax( $parser ) {
-		global $wgMathJaxUrl;
-		//$script = Html::element( 'script', array( 'type' => 'text/x-mathjax-config' ), $config );
-		$html = Html::element( 'script', array( 'src' => $wgMathJaxUrl ) );
-
-		//$parser->getOutput()->addHeadItem( $html, 'mathjax' );
+	private static function addMathJax( Parser $parser ) {
 		$parser->getOutput()->addModules( array( 'ext.math.mathjax.enabler' ) );
 	}
 }

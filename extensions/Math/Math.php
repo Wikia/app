@@ -90,14 +90,6 @@ $wgMathDirectory = false;
  */
 $wgUseMathJax = true;
 
-/**
- * Use of MathJax's CDN is governed by terms of service
- * <http://www.mathjax.org/download/mathjax-cdn-terms-of-service/>
- *
- * If you don't like them, install your own copy to load.
- */
-$wgMathJaxUrl = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js';
-
 ////////// end of config settings.
 
 $wgDefaultUserOptions['math'] = MW_MATH_SOURCE; // SUS-4529 - use front-end rendering
