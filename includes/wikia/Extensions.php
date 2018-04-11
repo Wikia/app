@@ -202,6 +202,16 @@ if ( $wgSharedUploadDBname ) {
  */
 $wgWikicitiesNavLinks[] = array( 'text'=>'wikicitieshome', 'href'=>'wikicitieshome-url' );
 
+putenv( 'GDFONTPATH=/usr/share/fonts/truetype/freefont/' );
+include_once "$IP/extensions/timeline/Timeline.php";
+
+if ( !empty( $wgEnableOpenGraphMetaExt ) ) {
+	include( "$IP/extensions/OpenGraphMeta/OpenGraphMeta.php" );
+	// Wikia-specific customizations to set image and description by ImageServing and ArticleService respectively.
+	include( "$IP/extensions/wikia/OpenGraphMetaCustomizations/OpenGraphMetaCustomizations.setup.php");
+}
+
+
 
 if ( !empty( $wgEnableEditPageLayoutExt ) ) {
 	include "$IP/extensions/wikia/EditPageLayout/EditPageLayout_setup.php";
@@ -222,15 +232,6 @@ if( !empty( $wgEnableMultiUploadExt ) ) {
 		$wgMaxUploadFiles = 10;
 	}
 	include( "{$IP}/extensions/MultiUpload/MultiUpload.php" );
-}
-
-putenv( 'GDFONTPATH=/usr/share/fonts/truetype/freefont/' );
-include_once "$IP/extensions/timeline/Timeline.php";
-
-if ( !empty( $wgEnableOpenGraphMetaExt ) ) {
-	include( "$IP/extensions/OpenGraphMeta/OpenGraphMeta.php" );
-	// Wikia-specific customizations to set image and description by ImageServing and ArticleService respectively.
-	include( "$IP/extensions/wikia/OpenGraphMetaCustomizations/OpenGraphMetaCustomizations.setup.php");
 }
 
 #--- 13. Poem - sitewide
