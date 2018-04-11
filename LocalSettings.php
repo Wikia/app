@@ -1,27 +1,32 @@
 <?php
-// IP stands for Installation Path, the top folder of MediaWiki codebase.
+/**
+ * IP stands for Installation Path, the top folder of MediaWiki codebase.
+ */
 $IP = __DIR__;
 
-// Register some $IP subdirectories in include_path to speed up imports with
-// relative paths.
+/**
+ * Register some $IP subdirectories in include_path to speed up imports with
+ * relative paths.
+ */
 ini_set( 'include_path', "$IP:$IP/includes:$IP/languages:$IP/lib/vendor:.:" );
 
-// FANDOM-specific constants.
+/**
+ * FANDOM-specific constants.
+ */
 require "$IP/includes/wikia/Defines.php";
 
 /**
- * @global string $wgWikiaLocalSettingsPath
  * This is used by some maintenance scripts that execute other maintenance
  * scripts and need to point them to the right LocalSettings.php.
  * @deprecated Maintenance scripts must not require --conf
+ * @var string $wgWikiaLocalSettingsPath
  */
 $wgWikiaLocalSettingsPath = __FILE__;
-// CONFIG_REVISION: retire $wgWikiaLocalSettingsPath completely
 
 /**
- * @global string $wgWikiaDatacenter
  * Runtime datacenter discovered from the environment variable.
  * @deprecated Code portability: do not add more dc-specific code.
+ * @var string $wgWikiaDatacenter
  */
 $wgWikiaDatacenter = getenv( 'WIKIA_DATACENTER' );
 
@@ -30,9 +35,9 @@ if ( empty( $wgWikiaDatacenter ) ) {
 }
 
 /**
- * @global string $wgWikiaEnvironment
  * Runtime environment discovered from the environment variable.
  * @deprecated Code portability: do not add more environment-specific code.
+ * @var string $wgWikiaEnvironment
  */
 $wgWikiaEnvironment = getenv( 'WIKIA_ENVIRONMENT' );
 
@@ -70,6 +75,7 @@ $wgServer = WebRequest::detectServer();
  * default $wgArticlePath will be set based on this value at runtime, but if
  * you have customized it, having this incorrectly set to true can cause
  * redirect loops when "pretty URLs" are used.
+ * @var bool $wgUsePathInfo
  */
 $wgUsePathInfo = ( strpos(php_sapi_name(), 'cgi') === false ) &&
         ( strpos(php_sapi_name(), 'apache2filter') === false ) &&
@@ -84,15 +90,19 @@ $wgUsePathInfo = ( strpos(php_sapi_name(), 'cgi') === false ) &&
  */
 $wgShowEXIF = function_exists( 'exif_read_data' );
 
-/** @see $wgUseTidy */
+/**
+ * Use Tidy from PHP extension ("internal") rather than external binary.
+ * @see $wgUseTidy
+ * @var bool $wgTidyInternal
+ */
 $wgTidyInternal = extension_loaded( 'tidy' );
 
 /**
- * @cond file_level_code
  * Set $wgCommandLineMode if it's not set already, to avoid notices
  */
 if (!isset($wgCommandLineMode)) {
     // TODO:log those as suspicious cases
+    // is wikia logger here?
     $wgCommandLineMode = false;
 }
 
@@ -105,7 +115,7 @@ if (!isset($wgCommandLineMode)) {
  * or:
  *     $wgHooks['event_name'][] = array($object, 'method');
  * or:
- *      Hooks::register ...
+ *     Hooks::register($name, $callback);
  */
 $wgHooks = &Hooks::getHandlersArray();
 
@@ -121,47 +131,72 @@ $wgHooks = &Hooks::getHandlersArray();
  */
 $wgHTTPTimeout = defined( 'RUN_MAINTENANCE_IF_MAIN' ) ? 25 : 5; # Wikia change
 
+/**
+ * Elementary variables.
+ */
 require_once "$IP/includes/wikia/VariablesBase.php";
+
+/**
+ * Variable expansions.
+ */
 require_once "$IP/includes/wikia/VariablesExpansions.php";
+
+/**
+ * FANDOM-specific general settings.
+ */
 require_once "$IP/includes/wikia/DefaultSettings.php";
 
-/** TEMPORARY TO OVERRIDE VARIABLES CHANGED BY CLASS AUTOLOADER **/
 /**
- * Geographical names service for Maps extension.
- * @see extensions/Maps/
- * @var string $egMapsDefaultGeoService
+ * Settings from Wikia/config
  */
-$egMapsDefaultGeoService = 'nominatim';
+require_once "$IP/../config/LocalSettings.php";
 
 /**
- * Maps service for Maps extension.
- * @see extensions/Maps/
- * @var string $egMapsDefaultService
+ * Load legacy overrides. Do not add to that file
  */
-$egMapsDefaultService = 'googlemaps3';
-/** END OF TEMPORARY **/
-
-
-// the rest of the old contents
-require "$IP/../config/LocalSettings.php";
-
-// OVERRIDES TO WIKIFACTORY START HERE
+require_once "$IP/../config/overrides_to_remove.php";
 
 /**
- * @name $wgLyricsApiSolrariumConfig
- * The name of solr core for Lyrics API extension
+ * Recalculate $wgScript and $wgArticlePath for wikis with language code path
+ * component.
+ * @see SUS-3851
  */
-$wgLyricsApiSolrariumConfig = [
-	'adapter' => 'Solarium_Client_Adapter_Curl',
-	'adapteroptions' => [
-		'core' => 'lyricsapi',
-		'host' => $wgSolrHost,
-		'path' => '/solr/',
-		'port' => $wgSolrPort,
-		'proxy' => false,
-	]
-];
+if ( !empty( $wgScriptPath ) ) {
+       $wgScript = $wgScriptPath . $wgScript;
+       $wgArticlePath = $wgScriptPath . $wgArticlePath;
+}
 
+/**
+ * In some cases $wgMemc is still null at this point. Let's initialize it.
+ * @see SUS-2699
+ * @var string $wgDBcluster
+ */
+$wgMemc = wfGetMainCache();
+
+/**
+ * Disabled wikis do not have $wgDBcluster set at this point. We need to skip
+ * this check to allow update.php and other maintenance scripts to process
+ * those wikis.
+ * @see SUS-3589
+ * @see maintenance/update.php
+ */
+if ( is_string( $wgDBcluster ) && WikiFactoryLoader::checkPerClusterReadOnlyFlag( $wgDBcluster ) ) {
+    $wgReadOnly = WikiFactoryLoader::PER_CLUSTER_READ_ONLY_MODE_REASON;
+}
+
+/**
+ * Discard permission settings made by WikiFactory and extensions setups.
+ */
+require "$IP/lib/Wikia/src/Service/User/Permissions/data/PermissionsDefinesAfterWikiFactory.php";
+
+// The above has originally been loaded before the statement below. Yet, the
+// old comment brings confusion:
+// 
+// this has to be fired after extensions - because any extension may add some
+// new permissions (initialized with their default values)
+if ( !empty( $wgGroupPermissionsLocal ) ) {
+    WikiFactoryLoader::LocalToGlobalPermissions( $wgGroupPermissionsLocal );
+}
 
 /**
  * User attributes that show up on the Special:Preferences page.
@@ -172,51 +207,6 @@ $wgLyricsApiSolrariumConfig = [
  */
 $wgUserAttributeWhitelist = array_merge( $wgPublicUserAttributes, $wgPrivateUserAttributes );
 
-$wgCdnRootUrl = 'https://' . str_replace('.', '-', $wgMedusaHostPrefix) . "images.{$wgWikiaNocookieDomain}";
-
-$wgCdnApiUrl = "https://api.{$wgWikiaNocookieDomain}/__cb$wgStyleVersion";
-
 require_once "$IP/includes/wikia/Emergency.php";
 
 require_once "$IP/includes/wikia/Extensions.php";
-
-// OVERRIDES TO EXTENSIONS DEFAULTS
-
-/**
- * OpenGraphMeta application ID to display in <meta property="fb:app_id">.
- * @see extensions/OpenGraphMeta
- * @var string $egFacebookAppId
- */
-$egFacebookAppId = ( $wgDevelEnvironment ) ? '116800565037587' : '112328095453510';
-
-
-// SUS-3851 - if the wiki has a language code path component, recalculate wgScript and wgArticlePath with its value
-if ( !empty( $wgScriptPath ) ) {
-       $wgScript = $wgScriptPath . $wgScript;
-       // CONFIG_REVISION: $wgArticlePath is set in CommonSettings.php, below is a conditional override.
-       $wgArticlePath = $wgScriptPath . $wgArticlePath;
-}
-
-/* @var $wgDBcluster string */
-// in some cases $wgMemc is still null at this point, let's initialize it (SUS-2699)
-$wgMemc = wfGetMainCache();
-
-// disabled wikis do not have $wgDBcluster set at this point, skip the following check
-// to allow update.php and other maintenance scripts to process such wikis (SUS-3589)
-if ( is_string( $wgDBcluster ) && WikiFactoryLoader::checkPerClusterReadOnlyFlag( $wgDBcluster ) ) {
-	$wgReadOnly = WikiFactoryLoader::PER_CLUSTER_READ_ONLY_MODE_REASON;
-}
-
-// This is to discard permission changes made by WikiFactory and extensions
-// setups.
-require "$IP/lib/Wikia/src/Service/User/Permissions/data/PermissionsDefinesAfterWikiFactory.php";
-
-// The above has originally been loaded before the statement below. Yet, the
-// old comment brings confusion:
-// 
-// this has to be fired after extensions - because any extension may add some
-// new permissions (initialized with their default values)
-// CONFIG_REVISION: clarify the confusion with permissions and WikiFactory
-if ( !empty( $wgGroupPermissionsLocal ) ) {
-	WikiFactoryLoader::LocalToGlobalPermissions( $wgGroupPermissionsLocal );
-}
