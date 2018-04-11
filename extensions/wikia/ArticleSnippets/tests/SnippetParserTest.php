@@ -69,11 +69,11 @@ class SnippetParserTest extends TestCase {
 	}
 
 	public function testInvalidHtmlStripped() {
-		$html = "<div>aaa</div>&lt;/div&gt;";
+		$html = "<p>aaa&lt;/div&gt;</p>";
 		$this->assertEquals( "aaa", $this->parser->getSnippet( $html ) );
 	}
 
-	public function testFullArticle() {
+	public function testRegularFullArticle() {
 		$this->assertEquals(
 			"Sue Richards is in her Hollywood dressing room trying to telephone her husband, from whom she" .
 					  " has not heard in many days. She wonders whether something might be wrong, but she dismisses the " .
@@ -151,7 +151,7 @@ class SnippetParserTest extends TestCase {
 					  "has at last accepted that even a monarch must sometimes be a prisoner. Then Namor flies away, and" .
 					  " Sue's eyes fill with tears. She hopes that he eventually finds the peace that he so rightly " .
 					  "deserves. Featured Characters: Fantastic Four Mister Fantastic (Reed Richards) Thing (Ben Grimm) " .
-					  "Invisible Girl (Susan Richards) Human Torch (Johnny Storm), Mister Fantastic (Reed Richards), " .
+					  "Invisible Girl (Susan Richards) Human Torch (Johnny Storm) Mister Fantastic (Reed Richards), " .
 					  "Thing (Ben Grimm), Invisible Girl (Susan Richards), Human Torch (Johnny Storm)",
 			$this->parser->getSnippet( file_get_contents( __DIR__ . "/resources/RegularFullArticle.html" ) )
 		);
@@ -206,8 +206,8 @@ class SnippetParserTest extends TestCase {
 
 	public function testMainPageArticle() {
 		$this->assertEquals(
-			"Villains Understanding the concept of villains, Monster Clowns Terrifying your childhood, " .
-					  "Big Bads The baddest of the bad guys, Elder Beings Survivors from ancient times",
+			"Villains Understanding the concept of villains Monster Clowns Terrifying your childhood " .
+					  "Big Bads The baddest of the bad guys Elder Beings Survivors from ancient times",
 			$this->parser->getSnippet( file_get_contents( __DIR__ . "/resources/MainPageArticle.html" ) )
 		);
 	}

@@ -25,7 +25,8 @@ class SnippetParser {
 		libxml_use_internal_errors( true );
 
 		$document = new DOMDocument();
-		$document->loadHTML( $html );
+		$document->loadHTML( '<?xml encoding="UTF-8">' . $html );
+		$document->encoding = 'UTF-8';
 
 		$xpath = new DOMXPath( $document );
 
@@ -36,7 +37,9 @@ class SnippetParser {
 		$portableInfoboxes = $this->extractPortableInfoboxes( $xpath );
 
 		// First try to generate a snippet from the raw article body
-		$rootContent = $this->parseIntoParagraphs( $document->documentElement->lastChild, static::CONTENT_NODE_BLACKLIST );
+		$originalDocument = clone $document;
+		$rootDocument = clone $document;
+		$rootContent = $this->parseIntoParagraphs( $rootDocument->documentElement->lastChild, static::CONTENT_NODE_BLACKLIST );
 
 		if ( !empty( $rootContent ) ) {
 			return $this->cleanSnippet( $rootContent );
@@ -46,15 +49,19 @@ class SnippetParser {
 		$divContents = [];
 		$contentCount = 0;
 
-		/** @var DOMElement $divContentNode */
-		foreach ( $xpath->query( '///*[name() != \"div\"]/parent::div' ) as $divContentNode ) {
-			foreach ( $this->parseIntoParagraphs( $divContentNode, static::DIV_CONTENT_NODE_BLACKLIST ) as $paragraph ) {
+		while ( ( $list = $xpath->query( '///*[name() != "div"]/parent::div' ) )->length ) {
+			$contentNode = $list->item( 0 );
+			$parsedContents = $this->parseIntoParagraphs( $contentNode, static::DIV_CONTENT_NODE_BLACKLIST );
+
+			foreach ( $parsedContents as $paragraph ) {
 				$divContents[] = $paragraph;
 
 				if ( ++$contentCount >= 2 ) {
-					break;
+					return $this->cleanSnippet( $divContents );
 				}
 			}
+
+			$contentNode->parentNode->removeChild( $contentNode );
 		}
 
 		if ( !empty( $divContents ) ) {
@@ -68,16 +75,13 @@ class SnippetParser {
 			return $this->cleanSnippet( $portableInfoboxContent );
 		}
 
-		return $this->cleanSnippet( $this->parseIntoParagraphs( $document->documentElement->lastChild, [] ) );
+		return $this->cleanSnippet( $this->parseIntoParagraphs( $originalDocument->documentElement->lastChild, [] ) );
 	}
 
 	private function extractPortableInfoboxes( DOMXPath $xpath ): DOMNodeList {
 		$portableInfoboxes = $xpath->query( '///*[contains(@class, "portable-infobox")]' );
 
-		/** @var DOMElement $node */
-		foreach ( $portableInfoboxes as $node ) {
-			$node->parentNode->removeChild( $node );
-		}
+		$this->removeListedNodes( $portableInfoboxes );
 
 		return $portableInfoboxes;
 	}
@@ -89,41 +93,32 @@ class SnippetParser {
 			$toc->parentNode->removeChild( $toc );
 		}
 
-		/** @var DOMElement $node */
-		foreach ( $xpath->query( '///*[contains(@class,"wikia-button") or contains(@class, "editsection")]' ) as $redundantNode ) {
-			$redundantNode->parentNode->removeChild( $redundantNode );
-		}
+		$redundant = $xpath->query( '///*[contains(@class,"wikia-button") or contains(@class, "editsection")]' );
+		$hidden = $xpath->query( '///*[contains(@style, "display:none")]' );
 
-		/** @var DOMElement $node */
-		foreach ( $xpath->query( '///*[contains(@style, "display:none")]' ) as $hiddenNode ) {
-			$hiddenNode->parentNode->removeChild( $hiddenNode );
-		}
+		$this->removeListedNodes( $redundant );
+		$this->removeListedNodes( $hidden );
 	}
 
 	private function removeBrokenTemplates( DOMXPath $xpath ) {
 		$template = $this->language->getNsText( NS_TEMPLATE );
 		$redLinks = $xpath->query( "///a[contains(@class, 'new') and starts-with(@title, '$template')]" );
 
-		/** @var DOMElement $node */
-		foreach ( $redLinks as $node ) {
-			$node->parentNode->removeChild( $node );
-		}
+		$this->removeListedNodes( $redLinks );
 	}
 
 	private function parseIntoParagraphs( DOMElement $theNode, array $excludedTags ): array {
 		$headings = array_flip( [ 'h1', 'h2', 'h3', 'h4' ] );
 
 		foreach ( $excludedTags as $tagName ) {
-			foreach ( $theNode->getElementsByTagName( $tagName ) as $notWantedNode ) {
-				$notWantedNode->parentNode->removeChild( $notWantedNode );
-			}
+			$this->removeListedNodes( $theNode->getElementsByTagName( $tagName ) );
 		}
 
 		$allContent = [];
 		$listContent = [];
 		$paragraph = '';
 
-		/** @var DOMNode $childNode */
+		/** @var DOMElement $childNode */
 		foreach ( $theNode->childNodes as $childNode ) {
 			if ( $childNode->nodeType === XML_TEXT_NODE ) {
 				$paragraph .= $childNode->textContent;
@@ -131,13 +126,25 @@ class SnippetParser {
 				if ( $childNode->nodeName === 'ul' || $childNode->nodeName === 'ol' ) {
 					$listContent[] .= $this->getListContent( $childNode );
 				} elseif ( !isset( $headings[$childNode->nodeName] ) ) {
-					if ( $childNode->nodeName === 'p' ) {
-						$allContent[] = $paragraph;
-						$paragraph = '';
-					}
+					$nextElementSibling = $this->nextElementSibling( $childNode );
 
-					if ( !$childNode->nextSibling || ( $childNode->nextSibling->nodeName !== 'ul' && $childNode->nextSibling->nodeName !== 'ol' ) ) {
-						$paragraph .= $childNode->textContent;
+					if ( !$nextElementSibling || ( $nextElementSibling->nodeName !== 'ul' && $nextElementSibling->nodeName !== 'ol' ) ) {
+						if ( $childNode->nodeName === 'p' ) {
+							$allContent[] = $paragraph;
+							$paragraph = '';
+						}
+
+						// convert line breaks found in text into spaces for snippet readability 😶
+						$breaks = $childNode->getElementsByTagName( 'br' );
+
+						for ( $i = $breaks->length - 1; $i >= 0; $i -- ) {
+							$aBreak = $breaks->item( $i );
+							$space = $childNode->ownerDocument->createTextNode( ' ' );
+
+							$aBreak->parentNode->replaceChild( $space, $aBreak );
+						}
+
+						$paragraph .= $childNode->textContent . ' ';
 					}
 				}
 			}
@@ -155,14 +162,17 @@ class SnippetParser {
 		/** @var DOMElement $itemNode */
 		foreach ( $listNode->getElementsByTagName( 'li' ) as $itemNode ) {
 			$content .= $itemNode->textContent;
+			$nextElementSibling = $this->nextElementSibling( $itemNode );
 
-			if ( $itemNode->nextSibling ) {
+			if ( $nextElementSibling && $nextElementSibling->nodeName === 'li' ) {
 				$content .= ', ';
 			}
 		}
 
-		if ( $listNode->previousSibling && in_array( $listNode->previousSibling->nodeName, static::POTENTIAL_LIST_TITLE_NODES ) ) {
-			return "{$listNode->previousSibling->textContent} $content";
+		$previousElementSibling = $this->previousElementSibling( $listNode );
+
+		if ( $previousElementSibling && in_array( $previousElementSibling->nodeName, static::POTENTIAL_LIST_TITLE_NODES ) ) {
+			return "{$previousElementSibling->textContent} $content";
 		}
 
 		return $content;
@@ -175,22 +185,22 @@ class SnippetParser {
 			$snippet = '';
 			$content = [];
 
-			$titleNode = $xpath->query( '///*[contains(@class, "pi-title")]', $infobox )->item( 0 );
+			$titleNode = $xpath->query( './/*[contains(@class, "pi-title")]', $infobox )->item( 0 );
 			$title = $titleNode ? $titleNode->textContent : '';
 
-			foreach ( $xpath->query( '///*[contains(@class, "pi-data")]', $infobox ) as $dataNode ) {
-				$label = $xpath->query( '///*[contains(@class, "pi-data-label")]', $dataNode )->item( 0 );
-				$value = $xpath->query( '///*[contains(@class, "pi-data-value")]', $dataNode )->item( 0 );
+			foreach ( $xpath->query( './/*[contains(@class, "pi-item pi-data")]', $infobox ) as $dataNode ) {
+				$label = $xpath->query( './/*[contains(@class, "pi-data-label")]', $dataNode )->item( 0 );
+				$value = $xpath->query( './/*[contains(@class, "pi-data-value")]', $dataNode )->item( 0 );
 
-				$content[] = $label->textContent . ':' . $value->textContent;
+				$content[] = $label->textContent . ': ' . $value->textContent;
 			}
 
-			foreach ( $xpath->query( '///*[contains(@class, "pi-smart-group")]', $infobox ) as $groupNode ) {
-				$labels = $xpath->query( '///*[contains(@class, "pi-data-label")]', $groupNode );
-				$values = $xpath->query( '///*[contains(@class, "pi-data-value")]', $groupNode );
+			foreach ( $xpath->query( './/*[contains(@class, "pi-smart-group")]', $infobox ) as $groupNode ) {
+				$labels = $xpath->query( './/*[contains(@class, "pi-data-label")]', $groupNode );
+				$values = $xpath->query( './/*[contains(@class, "pi-data-value")]', $groupNode );
 
-				for ( $i = 0; $i < $values->length; $i++ ) {
-					$content[] = $labels->item( $i )->textContent . ':' . $values->item( $i )->textContent;
+				for ( $i = 0; $i < $labels->length && $i < $values->length; $i++ ) {
+					$content[] = $labels->item( $i )->textContent . ': ' . $values->item( $i )->textContent;
 				}
 			}
 
@@ -208,8 +218,45 @@ class SnippetParser {
 		return $all;
 	}
 
+	/**
+	 * Helper function to remove all elements of a node list (can't do this in a simple iteration)
+	 * @param DOMNodeList $nodeList
+	 */
+	private function removeListedNodes( DOMNodeList $nodeList ) {
+		$remove = [];
+
+		foreach ( $nodeList as $toRemove ) {
+			$remove[] = $toRemove;
+		}
+
+		/** @var DOMNode $toRemove */
+		foreach ( $remove as $toRemove ) {
+			$toRemove->parentNode->removeChild( $toRemove );
+		}
+	}
+
+	private function previousElementSibling( DOMNode $node ) {
+		$sibling = $node->previousSibling;
+
+		while ( $sibling && $sibling->nodeType !== XML_ELEMENT_NODE ) {
+			$sibling = $sibling->previousSibling;
+		}
+
+		return $sibling;
+	}
+
+	private function nextElementSibling( DOMNode $node ) {
+		$sibling = $node->nextSibling;
+
+		while ( $sibling && $sibling->nodeType !== XML_ELEMENT_NODE ) {
+			$sibling = $sibling->nextSibling;
+		}
+
+		return $sibling;
+	}
+
 	private function isNotEmpty( string $content ): bool {
-		return trim( str_replace( "\u{00a0}", '', preg_replace('/\p{S}/', '', $content ) ) ) !== '';
+		return trim( str_replace( "\u{00a0}", ' ', preg_replace('/\p{S}/u', '', $content ) ) ) !== '';
 	}
 
 	private function cleanSnippet( array $paragraphs ): string {
@@ -219,9 +266,9 @@ class SnippetParser {
 		$sanitized = strip_tags( html_entity_decode( $snippet ) );
 
 		// Normalize whitespace
-		$cleared = str_replace( "\u{00a0}", '', preg_replace( '/\\s+/', ' ', $sanitized ) );
+		$cleared = preg_replace( '/\s+/', ' ', str_replace( "\u{00a0}", ' ', $sanitized  ) );
 
 		// remove spaces before punctuation
-		return preg_replace( '/\\s((?![\(\)\[\]"\-<>])\p{P})/', '$1', $cleared );
+		return trim( preg_replace( '/\s((?![\(\)\[\]"\-<>])\p{P})/', '$1', $cleared ) );
 	}
 }

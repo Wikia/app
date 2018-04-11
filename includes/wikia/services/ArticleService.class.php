@@ -153,7 +153,9 @@ class ArticleService extends WikiaObject {
 			$text = self::$localCache[$articleId] = WikiaDataAccess::cache(
 				$key,
 				86400 * 14 /* 14 days, same as parser cache */,
-				[ $service, 'getUncachedSnippetFromArticle' ]
+				function () use ( $service ) {
+					return $service->getUncachedSnippetFromArticle();
+				}
 			);
 		}
 
