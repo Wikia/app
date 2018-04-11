@@ -27,7 +27,7 @@ define('ext.wikia.adEngine.provider.gpt.adSizeFilter', [
 			win.ads.context;
 	}
 
-	function removeUAPForFeaturedVideoPages(slotName, slotSizes) {
+	function removeFanTakeoverSizes(slotName, slotSizes) {
 		var adContext = getAdContext(),
 			recommendedVideoTestName = 'RECOMMENDED_VIDEO_AB',
 			runsRecommendedVideoABTest = abTest.getGroup(recommendedVideoTestName);
@@ -66,7 +66,7 @@ define('ext.wikia.adEngine.provider.gpt.adSizeFilter', [
 
 		var context = getAdContext();
 
-		slotSizes = removeUAPForFeaturedVideoPages(slotName, slotSizes);
+		slotSizes = removeFanTakeoverSizes(slotName, slotSizes);
 
 		switch (true) {
 			case slotName.indexOf('TOP_LEADERBOARD') > -1:
