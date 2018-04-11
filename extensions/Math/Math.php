@@ -101,16 +101,15 @@ $wgHooks['LoadExtensionSchemaUpdates'][] = 'MathHooks::onLoadExtensionSchemaUpda
 $wgHooks['ParserTestTables'][] = 'MathHooks::onParserTestTables';
 $wgHooks['ParserTestParser'][] = 'MathHooks::onParserTestParser';
 
-$dir = dirname( __FILE__ ) . '/';
-$wgAutoloadClasses['MathHooks'] = $dir . 'Math.hooks.php';
-$wgAutoloadClasses['MathRenderer'] = $dir . 'Math.body.php';
+$wgAutoloadClasses['MathHooks'] = __DIR__ . '/Math.hooks.php';
+$wgAutoloadClasses['MathRenderer'] = __DIR__ . '/Math.body.php';
 
-$wgExtensionMessagesFiles['Math'] = $dir . 'Math.i18n.php';
+$wgExtensionMessagesFiles['Math'] = __DIR__ . '/Math.i18n.php';
 
-$wgParserTestFiles[] = $dir . 'mathParserTests.txt';
+$wgParserTestFiles[] = __DIR__ . '/mathParserTests.txt';
 
 $moduleTemplate = array(
-	'localBasePath' => dirname( __FILE__ ) . '/modules',
+	'localBasePath' => __DIR__ . '/modules',
 	'remoteExtPath' => 'Math/modules',
 );
 
