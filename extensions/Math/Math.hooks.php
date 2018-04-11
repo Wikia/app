@@ -2,7 +2,7 @@
 /**
  * MediaWiki math extension
  *
- * (c) 2002-2011 various MediaWiki contributors
+ * (c) 2002-2012 various MediaWiki contributors
  * GPLv2 license; info in main package.
  */
 
@@ -36,23 +36,26 @@ class MathHooks {
 	/**
 	 * Callback function for the <math> parser hook.
 	 *
-	 * @param $content
+	 * @param $content (the LaTeX input)
 	 * @param $attributes
 	 * @param $parser Parser
-	 * @return
+	 * @return string
 	 */
 	static function mathTagHook( $content, $attributes, $parser ) {
 		global $wgContLang, $wgUseMathJax;
-		$renderedMath = MathRenderer::renderMath(
-			$content, $attributes, $parser->getOptions()
-		);
-		
-		if ( $wgUseMathJax ) {
-			self::addMathJax( $parser );
+		if ( trim( $content )  === "" ) { // bug 8372
+			return "";
 		}
-		$output = $renderedMath;
-
-		return $wgContLang->armourMath( $output );
+		$mode = $parser->getOptions()->getMath();
+		$renderer = MathRenderer::getRenderer(
+			$content, $attributes, $mode
+		);
+		$renderedMath = $renderer->render();
+		if ( $wgUseMathJax && $mode == MW_MATH_MATHJAX ) {
+			$parser->getOutput()->addModules( array( 'ext.math.mathjax.enabler' ) );
+		}
+		$renderer->writeCache();
+		return $wgContLang->armourMath( $renderedMath );
 	}
 
 	/**
@@ -65,7 +68,7 @@ class MathHooks {
 	static function onGetPreferences( $user, &$defaultPreferences ) {
 		$defaultPreferences['math'] = array(
 			'type' => 'radio',
-			'options' => array_flip( array_map( 'wfMsgHtml', self::getMathNames() ) ),
+			'options' => array_flip( self::getMathNames() ),
 			'label' => '&#160;',
 			'section' => 'rendering/math',
 		);
@@ -78,10 +81,16 @@ class MathHooks {
 	 * @return array of strings
 	 */
 	private static function getMathNames() {
-		return array(
-			MW_MATH_PNG => 'mw_math_png',
-			MW_MATH_SOURCE => 'mw_math_source'
+		global $wgUseMathJax;
+		$names = array(
+			MW_MATH_PNG => wfMessage( 'mw_math_png' )->escaped(),
+			MW_MATH_SOURCE => wfMessage( 'mw_math_source' )->escaped(),
 		);
+		if ( $wgUseMathJax ) {
+			$names[MW_MATH_MATHJAX] = wfMessage( 'mw_math_mathjax' )->escaped();
+		}
+
+		return $names;
 	}
 
 	/**
@@ -94,8 +103,7 @@ class MathHooks {
 		global $wgUser;
 
 		# Don't generate TeX PNGs (lack of a sensible current directory causes errors anyway)
-		$wgUser->setGlobalPreference( 'math', MW_MATH_SOURCE );
-
+		$wgUser->setOption( 'math', MW_MATH_SOURCE );
 		return true;
 	}
 
@@ -103,10 +111,11 @@ class MathHooks {
 	 * LoadExtensionSchemaUpdates handler; set up math table on install/upgrade.
 	 *
 	 * @param $updater DatabaseUpdater
+	 * @throws MWException
 	 * @return bool
 	 */
 	static function onLoadExtensionSchemaUpdates( $updater = null ) {
-		if( is_null( $updater ) ) {
+		if ( is_null( $updater ) ) {
 			throw new MWException( "Math extension is only necessary in 1.18 or above" );
 		}
 		$map = array(
@@ -147,13 +156,21 @@ class MathHooks {
 	 * @param Parser $parser
 	 * @return bool
 	 */
-	static function onParserTestParser( $parser ) {
+	static function onParserTestParser( &$parser ) {
 		global $wgMathPath;
 		$wgMathPath = '/images/math';
 		return true;
 	}
 
-	private static function addMathJax( Parser $parser ) {
-		$parser->getOutput()->addModules( array( 'ext.math.mathjax.enabler' ) );
+	/**
+	 * Links to the unit test files for the test cases.
+	 *
+	 * @param string $files
+	 * @return boolean (true)
+	 */
+	static function onRegisterUnitTests( &$files ) {
+		$testDir = __DIR__ . '/tests/';
+		$files = array_merge( $files, glob( "$testDir/*Test.php" ) );
+		return true;
 	}
 }
