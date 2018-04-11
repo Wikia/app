@@ -12,7 +12,7 @@
   mathJax.loaded = false;
 
   mathJax.config = $.extend( true, {
-    root: mw.config.get('wgExtensionAssetsPath') + '/Math/modules/MathJax',
+    root: mw.config.get('wgExtensionsPath') + '/Math/modules/MathJax', // SUS-4529 | use Wikia's cookie-less domain
     config: ['TeX-AMS-texvc_HTML.js'],
     'v1.0-compatible': false,
     styles: {
@@ -33,7 +33,7 @@
 
   mathJax.Config = function () {
     MathJax.Hub.Config( mathJax.config );
-    MathJax.OutputJax.fontDir = mw.config.get('wgExtensionAssetsPath') + '/Math/modules/MathJax/fonts';
+    MathJax.OutputJax.fontDir = mw.config.get('wgExtensionsPath') + '/Math/modules/MathJax/fonts'; // SUS-4529 | use Wikia's cookie-less domain
   };
 
   /**
