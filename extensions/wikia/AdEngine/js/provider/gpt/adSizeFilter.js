@@ -3,8 +3,9 @@ define('ext.wikia.adEngine.provider.gpt.adSizeFilter', [
 	'ext.wikia.adEngine.bridge',
 	'wikia.document',
 	'wikia.log',
-	'wikia.window'
-], function (bridge, doc, log, win) {
+	'wikia.window',
+	'wikia.abTest'
+], function (bridge, doc, log, win, abTest) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.gpt.adSizeFilter',
@@ -29,7 +30,7 @@ define('ext.wikia.adEngine.provider.gpt.adSizeFilter', [
 	function removeUAPForFeaturedVideoPages(slotName, slotSizes) {
 		var adContext = getAdContext(),
 			recommendedVideoTestName = 'RECOMMENDED_VIDEO_AB',
-			runsRecommendedVideoABTest = window.Wikia.AbTest.getGroup(recommendedVideoTestName);
+			runsRecommendedVideoABTest = abTest.getGroup(recommendedVideoTestName);
 
 		if (slotName.indexOf('TOP_LEADERBOARD') > -1 &&
 			adContext &&
