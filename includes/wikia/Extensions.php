@@ -224,6 +224,8 @@ if( !empty( $wgEnableMultiUploadExt ) ) {
 	include( "{$IP}/extensions/MultiUpload/MultiUpload.php" );
 }
 
+putenv( 'GDFONTPATH=/usr/share/fonts/truetype/freefont/' );
+include_once "$IP/extensions/timeline/Timeline.php";
 
 #--- 13. Poem - sitewide
 include("{$IP}/extensions/Poem/Poem.php");
@@ -1771,5 +1773,3 @@ if ( !empty( $wgEnableOpenGraphMetaExt ) ) {
 	include( "$IP/extensions/wikia/OpenGraphMetaCustomizations/OpenGraphMetaCustomizations.setup.php");
 }
 
-putenv( 'GDFONTPATH=/usr/share/fonts/truetype/freefont/' );
-include_once "$IP/extensions/timeline/Timeline.php";
