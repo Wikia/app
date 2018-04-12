@@ -3,8 +3,9 @@ define('ext.wikia.adEngine.provider.gpt.adSizeFilter', [
 	'ext.wikia.adEngine.bridge',
 	'wikia.document',
 	'wikia.log',
-	'wikia.window'
-], function (bridge, doc, log, win) {
+	'wikia.window',
+	'wikia.abTest'
+], function (bridge, doc, log, win, abTest) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.gpt.adSizeFilter',
@@ -26,13 +27,17 @@ define('ext.wikia.adEngine.provider.gpt.adSizeFilter', [
 			win.ads.context;
 	}
 
-	function removeUAPForFeaturedVideoPages(slotName, slotSizes) {
-		var adContext = getAdContext();
+	function removeFanTakeoverSizes(slotName, slotSizes) {
+		var adContext = getAdContext(),
+			recommendedVideoTestName = 'RECOMMENDED_VIDEO_AB',
+			runsRecommendedVideoABTest = abTest.getGroup(recommendedVideoTestName) && win.location.hostname.match(
+				/(dragonage|dragonball|elderscrolls|gta|memory-alpha|monsterhunter|naruto|marvelcinematicuniverse)((\.wikia\.com)|(\.wikia-dev\.pl))/g
+			);
 
 		if (slotName.indexOf('TOP_LEADERBOARD') > -1 &&
 			adContext &&
 			adContext.targeting &&
-			adContext.targeting.hasFeaturedVideo
+			(adContext.targeting.hasFeaturedVideo || runsRecommendedVideoABTest)
 		) {
 			slotSizes = removeUAPFromSlotSizes(slotSizes);
 		}
@@ -63,7 +68,7 @@ define('ext.wikia.adEngine.provider.gpt.adSizeFilter', [
 
 		var context = getAdContext();
 
-		slotSizes = removeUAPForFeaturedVideoPages(slotName, slotSizes);
+		slotSizes = removeFanTakeoverSizes(slotName, slotSizes);
 
 		switch (true) {
 			case slotName.indexOf('TOP_LEADERBOARD') > -1:
