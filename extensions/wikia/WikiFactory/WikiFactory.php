@@ -560,31 +560,16 @@ class WikiFactory {
 	}
 
 	/**
-	 * Given a wiki's dbName, return the wgServer value properly altered to reflect the current environment.
+	 * Strips the language path from city_url.
 	 *
-	 * @param int $dbName
-	 *
-	 * @return string
-	 */
-	public static function getHostByDbName( $dbName ) {
-
-		$cityId = \WikiFactory::DBtoID( $dbName );
-
-		return static::getHostById($cityId);
-	}
-
-	/**
-	 * Given a wiki's id, return the wgServer value properly altered to reflect the current environment.
-	 *
-	 * @param int $cityId
+	 * @param string $city_url
 	 *
 	 * @return string
 	 */
-	public static function getHostById( $cityId ) {
-		$hostName = \WikiFactory::getVarValueByName( 'wgServer', $cityId );
-		$hostName = \WikiFactory::getLocalEnvURL( $hostName );
-
-		return rtrim( $hostName, '/' );
+	public static function cityUrlToHostname( $city_url ) {
+		$url = parse_url( $city_url );
+		return ( ( isset( $url['scheme'] ) ) ? $url['scheme'] . '://' : '//' )
+			. ( ( isset( $url['host'] ) ) ? $url['host'] : '' );
 	}
 
 	/**
@@ -1040,6 +1025,10 @@ class WikiFactory {
 		global $wgCityId;
 		if ( $city_id == $wgCityId ) {
 			return isset($GLOBALS[$cv_name]) ? $GLOBALS[$cv_name] : null;
+		}
+		if ( $cv_name == 'wgServer' ) {
+			// wgServer it not a WF variable anymore. Remove it after this var is deleted from city_variables
+			return null;
 		}
 
 		wfProfileIn( __METHOD__ );

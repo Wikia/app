@@ -188,7 +188,6 @@ class WikiFactoryLoader {
 			$wgDBservers, $wgLBFactoryConf, $wgDBserver, $wgContLang, $wgWikiaBaseDomain, $wgArticlePath;
 
 		wfProfileIn(__METHOD__);
-
 		/**
 		 * Hook to allow extensions to alter the initialization.  For example,
 		 * setting the mCityID then returning true will override which wiki
@@ -517,14 +516,10 @@ class WikiFactoryLoader {
 				$tUnserVal = unserialize( $oRow->cv_value, [ 'allowed_classes' => false ] );
 				restore_error_handler();
 
-				if( !empty( $wgDevelEnvironment ) && $oRow->cv_name === "wgServer" ) {
-					/**
-					 * skip this variable
-					 */
-					unset($this->mVariables[ $oRow->cv_name ]);
-					$this->debug( "{$oRow->cv_name} with value {$tUnserVal} skipped" );
-				}
-				else {
+				if ( $oRow->cv_name === "wgServer" ) {
+					// wgServer is not a part of WF anymore. Remove after the variable is deleted from db
+					unset( $this->mVariables[ $oRow->cv_name ] );
+				} else {
 					$this->mVariables[ $oRow->cv_name ] = $tUnserVal;
 				}
 			}
@@ -536,6 +531,7 @@ class WikiFactoryLoader {
 			if ( !isset( $this->mVariables['wgArticlePath'] ) ) {
 				$this->mVariables['wgArticlePath'] = $GLOBALS['wgArticlePath'];
 			}
+			$this->mVariables['wgServer'] = WikiFactory::cityUrlToHostname( $this->mCityUrl );
 
 			/**
 			 * read tags for this wiki, store in global variable as array
@@ -657,7 +653,6 @@ class WikiFactoryLoader {
 				if ($key == 'wgServer') {
 					if ( !empty( $_SERVER['HTTP_X_ORIGINAL_HOST'] ) ) {
 						global $wgConf;
-
 						$stagingServer = $_SERVER['HTTP_X_ORIGINAL_HOST'];
 
 						$tValue = 'http://'.$stagingServer;
