@@ -54,7 +54,8 @@ describe('ext.wikia.adEngine.provider.gpt.adSizeFilter', function () {
 			mocks.bridge,
 			mocks.getDocument(),
 			mocks.log,
-			mocks.win
+			mocks.win,
+			mocks.abTest
 		);
 	}
 

@@ -2,6 +2,7 @@ import { EventEmitter } from 'events';
 import {
 	client,
 	context,
+	GptSizeMap,
 	scrollListener,
 	slotListener,
 	slotService,
@@ -11,7 +12,9 @@ import {
 import {
 	BigFancyAdAbove,
 	BigFancyAdBelow,
-	universalAdPackage
+	universalAdPackage,
+	isProperGeo,
+	getSamplingResults
 } from '@wikia/ad-products';
 
 import { createTracker } from './tracking/porvata-tracker-factory';
@@ -153,10 +156,13 @@ function passSlotEvent(slotName, eventName) {
 
 export {
 	init,
+	GptSizeMap,
 	loadCustomAd,
 	checkAdBlocking,
 	passSlotEvent,
 	context,
 	universalAdPackage,
+	isProperGeo,
+	getSamplingResults,
 	slotService
 };

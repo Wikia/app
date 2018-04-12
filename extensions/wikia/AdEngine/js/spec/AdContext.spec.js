@@ -13,6 +13,9 @@ describe('AdContext', function () {
 					return false;
 				}
 			},
+			adEngineBridge: {
+				isProperGeo: noop
+			},
 			geo: {
 				getCountryCode: function () {
 					return 'CURRENT_COUNTRY';
@@ -72,6 +75,7 @@ describe('AdContext', function () {
 			mocks.doc,
 			mocks.geo,
 			mocks.instantGlobals,
+			mocks.adEngineBridge,
 			mocks.sampler,
 			mocks.win,
 			mocks.Querystring
