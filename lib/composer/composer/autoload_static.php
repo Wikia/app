@@ -3290,6 +3290,7 @@ class ComposerStaticInitb367f9b4bf4d43e0d5ea402c134db26b
         'Wikia\\Search\\Utilities' => __DIR__ . '/../../..' . '/extensions/wikia/Search/classes/Utilities.php',
         'Wikia\\Service\\Constants' => __DIR__ . '/../../..' . '/lib/Wikia/src/Service/Constants.php',
         'Wikia\\Service\\ForbiddenException' => __DIR__ . '/../../..' . '/lib/Wikia/src/Service/ForbiddenException.php',
+        'Wikia\\Service\\Gateway\\KubernetesExternalUrlProvider' => __DIR__ . '/../../..' . '/lib/Wikia/src/Service/Gateway/KubernetesExternalUrlProvider.php',
         'Wikia\\Service\\Gateway\\KubernetesUrlProvider' => __DIR__ . '/../../..' . '/lib/Wikia/src/Service/Gateway/KubernetesUrlProvider.php',
         'Wikia\\Service\\Gateway\\StaticUrlProvider' => __DIR__ . '/../../..' . '/lib/Wikia/src/Service/Gateway/StaticUrlProvider.php',
         'Wikia\\Service\\Gateway\\UrlProvider' => __DIR__ . '/../../..' . '/lib/Wikia/src/Service/Gateway/UrlProvider.php',
