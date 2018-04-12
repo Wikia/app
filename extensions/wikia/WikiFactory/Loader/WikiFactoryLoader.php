@@ -272,9 +272,6 @@ class WikiFactoryLoader {
 					);
 				}
 			} else {
-				// ToDo: DEVELOPER HACK - REMOVE
-				$this->mServerName = 'muppet.wikia.com';
-
 				// request from HTTPD case.
 				// We only know server name so we have to ask city_domains table
 
