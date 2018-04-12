@@ -30,7 +30,9 @@ define('ext.wikia.adEngine.provider.gpt.adSizeFilter', [
 	function removeFanTakeoverSizes(slotName, slotSizes) {
 		var adContext = getAdContext(),
 			recommendedVideoTestName = 'RECOMMENDED_VIDEO_AB',
-			runsRecommendedVideoABTest = abTest.getGroup(recommendedVideoTestName);
+			runsRecommendedVideoABTest = abTest.getGroup(recommendedVideoTestName) && win.location.hostname.match(
+				/(dragonage|dragonball|elderscrolls|gta|memory-alpha|monsterhunter|naruto|marvelcinematicuniverse)((\.wikia\.com)|(\.wikia-dev\.pl))/g
+			);
 
 		if (slotName.indexOf('TOP_LEADERBOARD') > -1 &&
 			adContext &&
