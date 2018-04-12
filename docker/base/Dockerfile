@@ -10,12 +10,16 @@ RUN apt-get update && apt-get install -y \
     autoconf \
     automake \
     libbz2-dev \
+    libjpeg-dev \
+    libpng-dev \
     # needed by wikidiff2
     libthai-dev \
     libtool \
     libyaml-dev \
     locales \
     make \
+    # needed by Timeline extension
+    ploticus \
     wget \
     # needed by sass
     && apt-get -t jessie-backports install -y libsass-dev
@@ -62,6 +66,7 @@ RUN wget https://github.com/Wikia/wikidiff2/archive/1.4.1.tar.gz -O wikidiff2.ta
 # install PHP extensions required by MediaWiki that are provided by Docker base PHP image helper
 RUN docker-php-ext-install \
     bz2 \
+    gd \
     mysqli \
     opcache
 

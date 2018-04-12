@@ -9,7 +9,9 @@ define('wikia.articleVideo.featuredVideo.ads', [
 	'ext.wikia.adEngine.video.vastDebugger',
 	'ext.wikia.adEngine.video.vastParser',
 	'wikia.articleVideo.featuredVideo.lagger',
-	'wikia.log'
+	'wikia.log',
+	'wikia.window',
+	require.optional('ext.wikia.adEngine.wrappers.prebid'),
 ], function (
 	adContext,
 	vastUrlBuilder,
@@ -21,11 +23,14 @@ define('wikia.articleVideo.featuredVideo.ads', [
 	vastDebugger,
 	vastParser,
 	fvLagger,
-	log
+	log,
+	win,
+	prebid
 ) {
 	'use strict';
 
-	var baseSrc = adContext.get('targeting.skin') === 'oasis' ? 'gpt' : 'mobile',
+	var allowedBidders = ['wikiaVideo'],
+		baseSrc = adContext.get('targeting.skin') === 'oasis' ? 'gpt' : 'mobile',
 		featuredVideoSlotName = 'FEATURED',
 		featuredVideoSource,
 		logGroup = 'wikia.articleVideo.featuredVideo.ads';
@@ -36,16 +41,41 @@ define('wikia.articleVideo.featuredVideo.ads', [
 		});
 	}
 
+	function getPrebidParams() {
+		if (prebid) {
+			return prebid.get().getAdserverTargetingForAdUnitCode(featuredVideoSlotName);
+		}
+
+		return {};
+	}
+
 	return function (player, bidParams, slotTargeting) {
 		var correlator,
 			featuredVideoElement = player && player.getContainer && player.getContainer(),
 			featuredVideoContainer = featuredVideoElement && featuredVideoElement.parentNode,
 			prerollPositionReached = false,
+			bidderEnabled = true,
 			trackingParams = {
 				adProduct: 'featured-video',
 				slotName: featuredVideoSlotName
 			},
 			videoDepth = 0;
+
+		bidParams = bidParams || {};
+
+		function requestBidder() {
+			if (!prebid) {
+				return;
+			}
+
+			var bid = prebid.getWinningVideoBidBySlotName(featuredVideoSlotName, allowedBidders);
+
+			if (bid && bid.vastUrl) {
+				trackingParams.adProduct = 'featured-video-preroll';
+				bidderEnabled = false;
+				player.playAd(bid.vastUrl);
+			}
+		}
 
 		slotTargeting = slotTargeting || {};
 		featuredVideoSource = srcProvider.get(baseSrc, {testSrc: 'test'}, 'JWPLAYER');
@@ -56,8 +86,13 @@ define('wikia.articleVideo.featuredVideo.ads', [
 				trackingParams.adProduct = 'featured-video';
 			});
 
+			if (adContext.get('bidders.rubiconInFV')) {
+				allowedBidders.push('rubicon')
+			}
+
 			player.on('beforePlay', function () {
-				var currentMedia = player.getPlaylistItem() || {};
+				var currentMedia = player.getPlaylistItem() || {},
+					prebidParams = getPrebidParams();
 
 				slotTargeting.v1 = currentMedia.mediaid;
 
@@ -69,6 +104,12 @@ define('wikia.articleVideo.featuredVideo.ads', [
 				correlator = Math.round(Math.random() * 10000000000);
 				trackingParams.adProduct = 'featured-video';
 				videoDepth += 1;
+
+				if (prebidParams) {
+					Object.keys(prebidParams).forEach(function (key) {
+						bidParams[key] = prebidParams[key];
+					});
+				}
 
 				if (articleVideoAd.shouldPlayPreroll(videoDepth)) {
 					trackingParams.adProduct = 'featured-video-preroll';
@@ -124,14 +165,27 @@ define('wikia.articleVideo.featuredVideo.ads', [
 				var vastParams = parseVastParamsFromEvent(event);
 				slotRegistry.storeScrollY(featuredVideoSlotName);
 
+				bidderEnabled = false;
 				vastDebugger.setVastAttributesFromVastParams(featuredVideoContainer, 'success', vastParams);
 
 				fvLagger.markAsReady(vastParams.lineItemId);
 			});
 
 			player.on('adError', function (event) {
+				// https://support.jwplayer.com/customer/portal/articles/2924017
+				// According to JWPlayer docs IMA events have pattern 2xxxx
+				// Example:
+				// IMA Error Code = 1009 (empty vast)
+				// JW Error Code = 21009
+				var emptyImaVastErrorCode = 20000 + win.google.ima.AdError.ErrorCode.VAST_EMPTY_RESPONSE;
+
 				fvLagger.markAsReady(null);
 				vastDebugger.setVastAttributes(featuredVideoContainer, event.tag, 'error', event.ima && event.ima.ad);
+
+				if (bidderEnabled && event.adErrorCode === emptyImaVastErrorCode) {
+					requestBidder();
+				}
+				bidderEnabled = false;
 			});
 		} else {
 			trackingParams.adProduct = 'featured-video-no-ad';

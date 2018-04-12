@@ -11,9 +11,11 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.wikiaVideo',[
 	var bidderName = 'wikiaVideo',
 		slots = {
 			oasis: {
+				FEATURED: {},
 				INCONTENT_PLAYER: {}
 			},
 			mercury: {
+				FEATURED: {},
 				MOBILE_IN_CONTENT: {}
 			}
 		},

@@ -90,11 +90,22 @@
 			); ?>
 		</div>
 	</div>
-	<?= $app->renderView(
-		'DesignSystemGlobalFooterService',
-		'licensingAndVertical',
-		[
-			'model' => $model['licensing_and_vertical']
-		]
-	); ?>
+	<div class="wds-global-footer__bottom-bar">
+		<?= $app->renderPartial(
+			'DesignSystemGlobalFooterService',
+			'licensingAndVertical',
+			[
+				'model' => $model['licensing_and_vertical']
+			]
+		); ?>
+
+		<?= $app->renderPartial(
+			'DesignSystemGlobalFooterService',
+			'mobileSiteButton',
+			[
+				'model' => $model['mobile_site_button']
+			]
+		); ?>
+	</div>
+
 </footer>
