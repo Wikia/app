@@ -22,13 +22,6 @@ class CloseWikiMaintenance {
 
 	const CLOSE_WIKI_DELAY = 30;
 
-	/**
-	 * s3cmd + config for DFS storage
-	 *
-	 * This maintenance script needs to be run as root due to permissions set for /etc/s3cmd
-	 */
-	const S3_COMMAND = '/usr/bin/s3cmd -c /etc/s3cmd/sjc_prod.cfg';
-
 	private $mOptions;
 
 	/**
@@ -185,7 +178,7 @@ class CloseWikiMaintenance {
 
 						$newFlags = $newFlags | WikiFactory::FLAG_CREATE_IMAGE_ARCHIVE | WikiFactory::FLAG_HIDE_DB_IMAGES;
 					}
-					catch( WikiaException $e ) {
+					catch( Exception $e ) {
 						/**
 						 * actually it's better to die than remove
 						 * images later without backup
@@ -311,16 +304,16 @@ class CloseWikiMaintenance {
 	 * @access public
 	 *
 	 * @param string $dbname database name
-	 * @param int $cityid city ID
+	 * @param int $cityId city ID
 	 *
 	 * @return string path to created archive or false if there are no files to backup (S3 bucket does not exist / is empty)
-	 * @throws WikiaException thrown on failed backups
+	 * @throws Exception thrown on failed backups
 	 */
-	private function tarFiles( $dbname, $cityid ) {
-		$wgUploadPath = WikiFactory::getVarValueByName( 'wgUploadPath', $cityid );
+	private function tarFiles( $dbname, $cityId ) {
+		$wgUploadPath = WikiFactory::getVarValueByName( 'wgUploadPath', $cityId );
 
 		// check that S3 bucket for this wiki exists (PLATFORM-1199)
-		$swiftStorage = \Wikia\SwiftStorage::newFromWiki( $cityid );
+		$swiftStorage = \Wikia\SwiftStorage::newFromWiki( $cityId );
 		$isEmpty = intval( $swiftStorage->getContainer()->object_count ) === 0;
 
 		if ( $isEmpty ) {
@@ -340,16 +333,27 @@ class CloseWikiMaintenance {
 		$time = wfTime();
 
 		// s3cmd sync --dry-run s3://dilbert ~/images/dilbert/ --exclude "/thumb/*" --exclude "/temp/*"
-		$cmd = sprintf(
-			'%s sync s3://%s/images "%s" --exclude "/thumb/*" --exclude "/temp/*"',
-			self::S3_COMMAND,
-			$container,
-			$directory
-		);
+		// but use SwiftStorage instead (SUS-4537)
+		$objects = $swiftStorage->getContainer()->list_objects_recursively(
+			ltrim( $swiftStorage->getPathPrefix(), '/' ) );
 
-		wfShellExec( $cmd, $iStatus );
+		foreach( $objects as $object ) {
+			// do not backup thumbnails and temporary files
+			// --exclude "/thumb/*" --exclude "/temp/*"
+			if ( strpos($object, 'images/thumb/') !== false || strpos($object, 'images/temp/') !== false ) {
+				continue;
+			}
+
+			// prepare a destination directory for this file
+			wfMkdirParents( dirname( $directory . $object ) );
+
+			// fetch files one by one
+			( new CF_Object( $swiftStorage->getContainer(), $object ) )
+				->save_to_filename( $directory . $object );
+		}
+
 		$time = Wikia::timeDuration( wfTime() - $time );
-		Wikia::log( __METHOD__, "info", "Rsync to {$directory} from {$container} Swift storage: status: {$iStatus}, time: {$time}", true, true );
+		Wikia::log( __METHOD__, "info", "Rsync to {$directory} from {$container} Swift storage: status: time: {$time}", true, true );
 
 		/**
 		 * @name dumpfile
