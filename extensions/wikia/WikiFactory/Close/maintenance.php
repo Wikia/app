@@ -428,32 +428,28 @@ class CloseWikiMaintenance {
 	 * Remove DFS bucket of a given wiki
 	 *
 	 * @see PLATFORM-1700
-	 * @param int $cityid
+	 * @see SUS-4536
+	 * @param int $cityId
 	 */
-	private function removeBucket( $cityid ) {
+	private function removeBucket( int $cityId ) {
 		try {
-			$swift = \Wikia\SwiftStorage::newFromWiki( $cityid );
+			$swift = \Wikia\SwiftStorage::newFromWiki( $cityId );
 			$this->log( sprintf( "Removing DFS bucket /%s%s", $swift->getContainerName(), $swift->getPathPrefix() ) );
 
-			// s3cmd --recursive del s3://BUCKET/OBJECT / Recursively delete files from bucket
-			$cmd = sprintf(
-				'%s --recursive del s3://%s%s/',
-				self::S3_COMMAND,
-				$swift->getContainerName(),  # e.g. 'nordycka'
-				$swift->getPathPrefix()      # e.g. '/pl/images'
-			);
-			$this->log( $cmd );
-			$out = wfShellExec( $cmd, $iStatus );
+			// get the list of all objects in wiki images sub-bucket
+			$path = ltrim( $swift->getPathPrefix(), '/' );
+			$objectsToDelete = $swift->getContainer()->list_objects_recursively( $path );
 
-			if ( $iStatus !== 0 ) {
-				throw new Exception( 'Failed to remove a bucket content - ' . $cmd, $iStatus );
+			// now delete them all
+			foreach( $objectsToDelete as $object ) {
+				$swift->getContainer()->delete_object( $object );
 			}
 		} catch ( Exception $ex ) {
 			$this->log( __METHOD__ . ' - ' . $ex->getMessage() );
 
-			Wikia\Logger\WikiaLogger::instance()->error( 'Removing DFS bucket failed', [
+			Wikia\Logger\WikiaLogger::instance()->error( 'Removing DFS files failed', [
 				'exception' => $ex,
-				'city_id' => $cityid
+				'city_id' => $cityId
 			] );
 		}
 	}
