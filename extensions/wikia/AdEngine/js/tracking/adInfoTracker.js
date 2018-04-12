@@ -14,7 +14,11 @@ define('ext.wikia.adEngine.tracking.adInfoTracker',  [
 	var logGroup = 'ext.wikia.adEngine.tracking.adInfoTracker';
 
 	function itContainsBLB(pos) {
-		var strings = pos.split(',');
+		var strings;
+		if (typeof pos !== 'string') {
+			return false;
+		}
+		strings = pos.split(',');
 		return strings.length > 1 && strings.indexOf('BOTTOM_LEADERBOARD') > -1;
 	}
 

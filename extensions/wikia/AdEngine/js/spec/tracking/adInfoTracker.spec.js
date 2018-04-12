@@ -123,6 +123,17 @@ describe('ext.wikia.adEngine.tracking.adInfoTracker', function () {
 		expect(trackedData.kv_pos).toBe('BOTTOM_LEADERBOARD');
 	});
 
+	it('handle case where input pos is not string', function () {
+		spyOn(mocks.adTracker, 'trackDW');
+		getModule().track('FOO', {}, {
+			pos: null,
+		});
+
+		var trackedData = mocks.adTracker.trackDW.calls.mostRecent().args[0];
+
+		expect(trackedData.kv_pos).toBe('');
+	});
+
 	it('track data with page layout', function () {
 		spyOn(mocks.adTracker, 'trackDW');
 		getModule().track('FOO', {}, {});
