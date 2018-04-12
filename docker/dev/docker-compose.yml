@@ -14,7 +14,6 @@ services:
     image: php-wikia-dev:latest
     ports:
       - "9000:9000"
-      - "9090:9090"
     volumes:
       - ./../../../app:/php-wikia-dev/src
       - ./../../../config:/php-wikia-dev/config

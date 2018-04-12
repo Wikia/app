@@ -64,7 +64,7 @@ require(
 
 		function getTargetLanguage() {
 			var browserLanguage = window.navigator.language || window.navigator.userLanguage,
-				geoCountryCode = geo.getCountryCode() ? geo.getCountryCode().toLowerCase() : '',
+				geoCountryCode = geo.getCountryCode().toLowerCase(),
 				targetLanguage;
 
 			if (w.wgUserName !== null) {
