@@ -36,7 +36,7 @@ define('ext.wikia.adEngine.slot.service.slotRegistry',  [
 	}
 
 	function setState(slotName, state) {
-		const slot = get(slotName);
+		var slot = get(slotName);
 		slotStates[slotName] = state;
 
 		if (slot) {
