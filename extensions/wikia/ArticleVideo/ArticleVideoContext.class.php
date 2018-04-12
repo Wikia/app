@@ -5,15 +5,7 @@ class ArticleVideoContext {
 	const ARTICLE_VIDEO_ERROR_MESSAGE = 'JWPlayer: Could not find mediaId in article-video service';
 	const JWPLAYER_API_ERROR_MESSAGE = 'JWPlayer: Could not find enough playback info in JW API to play the video';
 
-	/**
-	 * to get playlist for given article: $playlist = self::RECOMMENDED_VIDEO_MAPPINGS[$cityId][$articleId]
-	 */
-	const RECOMMENDED_VIDEO_MAPPINGS_POZ_DEV = [
-		// harrypotter.wikia-dev.pl
-		509 => '1Dw2sjAj',
-	];
-
-	const RECOMMENDED_VIDEO_MAPPINGS_PROD = [
+	const RECOMMENDED_VIDEO_MAPPINGS = [
 		// dragonage.wikia.com
 		10150 => 'dPf9fZOb',
 		// dragonball.wikia.com
@@ -164,28 +156,14 @@ class ArticleVideoContext {
 		return $isoTime;
 	}
 
-	public static function getRecommendedVideoPlaylistId(): string {
-		global $wgCityId, $wgWikiaEnvironment, $wgWikiaDatacenter;
-
-		$playlist = '';
-
-		if ( $wgWikiaEnvironment === WIKIA_ENV_DEV ) {
-			if ( $wgWikiaDatacenter === WIKIA_DC_POZ ) {
-				$playlist = self::RECOMMENDED_VIDEO_MAPPINGS_POZ_DEV[$wgCityId] ?? '';
-			}
-		} else {
-			$playlist = self::RECOMMENDED_VIDEO_MAPPINGS_PROD[$wgCityId] ?? '';
-		}
-
-		return $playlist;
-	}
-
 	public static function isRecommendedVideoAvailable( int $pageId ): bool {
+		global $wgRecommendedVideoABTestPlaylist;
+
 		$wg = F::app()->wg;
 
 		return !$wg->user->isLoggedIn() &&
 			$wg->Title->isContentPage() &&
-			!empty( self::getRecommendedVideoPlaylistId() ) &&
+			!empty( $wgRecommendedVideoABTestPlaylist ) &&
 			empty( self::isFeaturedVideoEmbedded( $pageId ) );
 	}
 }
