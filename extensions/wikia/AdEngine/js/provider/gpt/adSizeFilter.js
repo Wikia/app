@@ -1,11 +1,11 @@
 /*global define, require*/
 define('ext.wikia.adEngine.provider.gpt.adSizeFilter', [
 	'ext.wikia.adEngine.bridge',
+	'wikia.abTest',
 	'wikia.document',
 	'wikia.log',
-	'wikia.window',
-	'wikia.abTest'
-], function (bridge, doc, log, win, abTest) {
+	'wikia.window'
+], function (bridge, abTest, doc, log, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.gpt.adSizeFilter',
@@ -30,9 +30,11 @@ define('ext.wikia.adEngine.provider.gpt.adSizeFilter', [
 	function removeFanTakeoverSizes(slotName, slotSizes) {
 		var adContext = getAdContext(),
 			recommendedVideoTestName = 'RECOMMENDED_VIDEO_AB',
-			runsRecommendedVideoABTest = abTest.getGroup(recommendedVideoTestName) && win.location.hostname.match(
-				/(dragonage|dragonball|elderscrolls|gta|memory-alpha|monsterhunter|naruto|marvelcinematicuniverse)((\.wikia\.com)|(\.wikia-dev\.pl))/g
-			);
+			hasRecommendedVideoABTestPlaylistOnOasis = win.wgRecommendedVideoABTestPlaylist,
+			hasRecommendedVideoABTestPlaylistOnMercury = win.M &&
+				!!win.M.getFromHeadDataStore('wikiVariables.recommendedVideoPlaylist'),
+			runsRecommendedVideoABTest = abTest.getGroup(recommendedVideoTestName) &&
+				(hasRecommendedVideoABTestPlaylistOnOasis || hasRecommendedVideoABTestPlaylistOnMercury);
 
 		if (slotName.indexOf('TOP_LEADERBOARD') > -1 &&
 			adContext &&

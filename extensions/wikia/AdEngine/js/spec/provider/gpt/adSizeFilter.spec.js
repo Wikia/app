@@ -52,10 +52,10 @@ describe('ext.wikia.adEngine.provider.gpt.adSizeFilter', function () {
 	function getModule() {
 		return modules['ext.wikia.adEngine.provider.gpt.adSizeFilter'](
 			mocks.bridge,
+			mocks.abTest,
 			mocks.getDocument(),
 			mocks.log,
-			mocks.win,
-			mocks.abTest
+			mocks.win
 		);
 	}
 
