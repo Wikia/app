@@ -2,8 +2,6 @@
 # Simply mount your app and config repositories clone (refer to README.md)
 FROM php-wikia-base
 
-ENV WIKIA_ENVIRONMENT=dev
-
 # install dev dependencies
 
 # uopz extension / @see https://pecl.php.net/package/uopz
@@ -12,6 +10,10 @@ ENV WIKIA_ENVIRONMENT=dev
 RUN pecl install uopz-5.0.2 xdebug-2.6.0 yaml-2.0.2 \
     && docker-php-ext-enable uopz xdebug yaml
 
+# set environment variables
+ENV SERVER_ID=165
+ENV WIKIA_DATACENTER=poz
+ENV WIKIA_ENVIRONMENT=dev
 
 # we no longer need root's super-power
 USER nobody

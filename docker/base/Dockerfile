@@ -1,6 +1,6 @@
 # This is a base Docker image used by Wikia's MediaWiki app. It uses base PHP image provided by Docker with additional
 # production dependencies installed.
-FROM php:7.0.28-cli-jessie
+FROM php:7.0.28-fpm-jessie
 
 # add jessie-backports repo (required to install libsass-dev package)
 RUN echo 'deb http://ftp.debian.org/debian jessie-backports main' > /etc/apt/sources.list.d/backports.list
@@ -24,7 +24,6 @@ RUN apt-get update && apt-get install -y \
 ENV LANG C.UTF-8
 ENV LC_ALL C.UTF-8
 
-
 # sassphp extension / @see https://github.com/absalomedia/sassphp fork
 RUN wget https://github.com/Wikia/sassphp/archive/0.5.10.tar.gz -O sassphp.tar.gz \
     && mkdir -p /tmp/sassphp \
@@ -34,7 +33,6 @@ RUN wget https://github.com/Wikia/sassphp/archive/0.5.10.tar.gz -O sassphp.tar.g
     && docker-php-ext-configure /tmp/sassphp \
     && docker-php-ext-install /tmp/sassphp \
     && rm -r /tmp/sassphp
-
 
 # libmustache / @see https://github.com/jbboehr/libmustache
 RUN wget https://github.com/Wikia/libmustache/archive/v0.4.4.tar.gz -O libmustache.tar.gz \
@@ -52,7 +50,6 @@ RUN wget https://github.com/Wikia/php-mustache/archive/v0.7.3.tar.gz -O mustache
     && docker-php-ext-configure /tmp/mustache \
     && docker-php-ext-install /tmp/mustache \
     && rm -r /tmp/mustache
-
 
 # wikidiff2 extension / @see https://www.mediawiki.org/wiki/Extension:Wikidiff2#Manually
 RUN wget https://github.com/Wikia/wikidiff2/archive/1.4.1.tar.gz -O wikidiff2.tar.gz \

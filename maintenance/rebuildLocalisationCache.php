@@ -34,6 +34,12 @@ require_once( __DIR__ . '/Maintenance.php' );
 class RebuildLocalisationCache extends Maintenance {
 
 	public function __construct() {
+		// ToDo: DEVELOPER HACK - REMOVE
+		putenv("WIKIA_DATACENTER=poz");
+		putenv("WIKIA_ENVIRONMENT=dev");
+		putenv("SERVER_ID=177");
+
+
 		parent::__construct();
 		$this->mDescription = "Rebuild the localisation cache";
 		$this->addOption( 'force', 'Rebuild all files, even ones not out of date' );
