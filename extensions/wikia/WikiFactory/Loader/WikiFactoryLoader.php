@@ -188,6 +188,7 @@ class WikiFactoryLoader {
 			$wgDBservers, $wgLBFactoryConf, $wgDBserver, $wgContLang, $wgWikiaBaseDomain, $wgArticlePath;
 
 		wfProfileIn(__METHOD__);
+
 		/**
 		 * Hook to allow extensions to alter the initialization.  For example,
 		 * setting the mCityID then returning true will override which wiki
@@ -653,6 +654,7 @@ class WikiFactoryLoader {
 				if ($key == 'wgServer') {
 					if ( !empty( $_SERVER['HTTP_X_ORIGINAL_HOST'] ) ) {
 						global $wgConf;
+
 						$stagingServer = $_SERVER['HTTP_X_ORIGINAL_HOST'];
 
 						$tValue = 'http://'.$stagingServer;
