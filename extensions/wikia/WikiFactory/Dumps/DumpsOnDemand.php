@@ -19,8 +19,6 @@ class DumpsOnDemand {
 	 */
 	const S3_MIGRATION = '20131002154415';
 
-	const S3_COMMAND = '/usr/bin/s3cmd -c /etc/s3cmd/amazon_prod.cfg';
-
 	/**
 	 * @param SpecialStatistics $page
 	 * @param string $text
@@ -177,13 +175,14 @@ class DumpsOnDemand {
 	 * @throws S3Exception
 	 */
 	static public function putToAmazonS3( string $sPath, bool $bPublic, string $sMimeType )  {
+		global $wgAWSAccessKey, $wgAWSSecretKey;
+
 		$time = wfTime();
 		$size = filesize( $sPath );
 		$sPath = wfEscapeShellArg( $sPath );
 
 		// SUS-4538 | use PHP S3 client instead of s3cmd
-		// TODO: add credentials to the config
-		$s3 = new S3( $awsAccessKey, $awsSecretKey );
+		$s3 = new S3( $wgAWSAccessKey, $wgAWSSecretKey );
 		S3::setExceptions( true );
 
 		$resource = S3::inputResource( fopen( $sPath, 'rb' ), $size );
