@@ -46,6 +46,13 @@ if ( empty( $wgWikiaEnvironment ) ) {
 }
 
 /**
+ * Indicate the runtime environment as dev.
+ * @deprecated Code portability: do not add more environment-specific code.
+ * @var bool $wgDevelEnvironment
+ */
+$wgDevelEnvironment = ( $wgWikiaEnvironment == WIKIA_ENV_DEV );
+
+/**
  * Create a site configuration object. Not used for much in a default install.
  * @see includes/SiteConfiguration.php
  * @var SiteConfiguration $wgConf
@@ -129,7 +136,17 @@ $wgHooks = &Hooks::getHandlersArray();
  * @see includes/HttpFunctions.php
  * @var int $wgHTTPTimeout
  */
-$wgHTTPTimeout = defined( 'RUN_MAINTENANCE_IF_MAIN' ) ? 25 : 5; # Wikia change
+$wgHTTPTimeout = ( $wgCommandLineMode ) ? 25 : 5; # Wikia change
+
+/**
+ * If true, will send MemCached debugging information to $wgDebugLogFile.
+ * @see $wgDebugLogFile
+ * @see includes/cache/wikia/LibmemcachedBagOStuff.php
+ * @see includes/cache/MemcachedSessions.php
+ * @see includes/objectcache/MemcachedPhpBagOStuff.php
+ * @var bool $wgMemCachedDebug
+ */
+$wgMemCachedDebug = ! $wgCommandLineMode; // true unless in command line mode
 
 /**
  * Elementary variables.
@@ -157,6 +174,27 @@ require_once "$IP/includes/wikia/DefaultSettings.php";
 if ( !empty( $maintClass ) && $maintClass == 'RebuildLocalisationCache' ) {
     $wgLocalisationCacheConf['manualRecache'] = false;
 }
+
+/**
+ * A collection of general-purpose functions, wf*() family.
+ */
+require_once "$IP/includes/GlobalFunctions.php";
+require_once "$IP/includes/wikia/GlobalFunctions.php";
+
+/**
+ * Launch the profiler.
+ */
+if( !function_exists( 'wfProfileIn' ) ) {
+    require_once "$IP/StartProfiler.php";
+}
+
+/**
+ * Manipulate IEUrlExtension::areServerVarsBad() to work well with our Apache
+ * mod_rewrite rules.
+ * @see IEUrlExtension::areServerVarsBad()
+ * @see includes/WebRequest.php
+ */
+unset( $_SERVER[ 'SERVER_SOFTWARE' ] );
 
 /**
  * Settings from Wikia/config

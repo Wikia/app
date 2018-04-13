@@ -33,7 +33,14 @@
  * 6. Use common sense.
  * 
  ******************************************************************************/
-        
+
+/**
+ * OpenGraphMeta application ID to display in <meta property="fb:app_id">.
+ * @see extensions/OpenGraphMeta
+ * @var string $egFacebookAppId
+ */
+$egFacebookAppId = '112328095453510';
+
 /**
  * Default block duration for Abuse Filter.
  * @see SpecialBlock::parseExpiryInput
@@ -722,6 +729,41 @@ $wgBacklinksEnabled = false;
  * @var bool $wgBetterDirectionality
  */
 $wgBetterDirectionality = true;
+
+/**
+ * Pages from these categories will not be shown as Related Pages.
+ * @see includes/wikia/services/CategoriesService.class.php
+ * @see extensions/wikia/RelatedPages/RelatedPages.class.php
+ * @var Array $wgBiggestCategoriesBlacklist
+ */
+$wgBiggestCategoriesBlacklist = [
+    'Administración_del_sitio', 'Administration', 'Allgemeine_Vorlagen',
+    'Article', 'Article_management_templates', 'articles', 'Artikel-Vorlagen',
+    'attention', 'Ayuda', 'Banned', 'Begriffsklärung', 'Bildzitat', 'Browse',
+    'Candidatas_para_borrado', 'candidate', 'candidates', 'Category_templates',
+    'CC-by', 'CC-by-1.0', 'CC-by-2.0', 'CC-by-2.5', 'CC-by-sa', 'CC-by-sa-1.0',
+    'CC-by-sa-2.0', 'CC-by-sa-2.5', 'CC-sa-1.0', 'cleanup', 'Code-Vorlagen',
+    'Community', 'Comunidad', 'Contenidos', 'Content', 'Copy_edit', 'Copyright',
+    'Copyrighted_free_use', 'Datei-Vorlagen', 'Dateien', 'Dateien_nach_Lizenz',
+    'Dateien_von_flickr', 'Delete', 'deleting', 'deletion', 'Desambiguaciones',
+    'Desambiguaciones', 'Destruir', 'Dringende_Löschanträge', 'Emoticons',
+    'Esbozo', 'Esbozos', 'Fair_use', 'FAL', 'File', 'files', 'Forenbeiträge',
+    'Foros', 'Forum', 'Forums', 'General', 'General_wiki_templates', 'GFDL',
+    'GPL', 'Help', 'Help_desk', 'Hidden_categories', 'Image',
+    'Image_wiki_templates', 'images', 'Imágenes', 'infobox', 'Infobox-Vorlagen',
+    'Infobox_templates', 'Inhalt', 'Instandhaltung', 'Kategorie-Vorlagen',
+    'LGPL', 'Lizenz_unbekannt', 'Lizenzvorlagen', 'Löschanträge', 'merge',
+    'merged', 'Mesa_de_ayuda', 'need', 'needed', 'needing', 'needs',
+    'Neue_Seiten', 'nominated', 'nomination', 'Opisy_licencji', 'page', 'pages',
+    'Panel', 'panels', 'PD', 'Plantillas', 'Plantillas_de_categoría',
+    'Plantillas_de_imágenes', 'Plantillas_de_mantenimiento',
+    'Plantillas_generales', 'Policy', 'Políticas', 'Public_domain_files',
+    'Redirect', 'redirects', 'request', 'requested', 'requests', 'Screencap',
+    'screencaps', 'Screenshot', 'screenshots', 'Site_administration',
+    'Site_maintenance', 'Skript-Benutzerkonten_von_Wikia', 'Stub', 'stubs',
+    'Szablony', 'TagSynced', 'Template', 'Template_documentation', 'templated',
+    'templates', 'Vorlagen', 'Vídeos', 'Watercooler', 'wiki', 'wikify',
+];
 
 /**
  * Set this to true to allow blocked users to edit their own user talk page.
@@ -1492,6 +1534,14 @@ $wgDebugTimestamps = false;
 $wgDebugToolbar = false;
 
 /**
+ * Storage for revision contents. If false, contents will be stored in the local
+ * per-wiki text table. Can be a string or an array for data distribution. Keys
+ * must be consecutive integers, starting at zero.
+ * @var Array $wgDefaultExternalStore
+ */
+$wgDefaultExternalStore = [ 'DB://blobs20141' ];
+
+/**
  * Default variant code, if false, the default will be the language code.
  * @var string|bool $wgDefaultLanguageVariant
  */
@@ -1899,6 +1949,18 @@ $wgDummyLanguageCodes = [
 ];
 
 /**
+ * These communities should not be dumped with MediaWiki's
+ * maintenance/dumpBackup.php for performance reasons.
+ * @see extensions/wikia/WikiFactory/Dumps/runBackups.php
+ * @var Array $wgDumpsDisabledWikis
+ */
+$wgDumpsDisabledWikis = [
+    43339, // lyrics.wikia.com
+    60540, // fr.lyrics.wikia.com
+    78733, // websitewiki.wikia.com
+];
+
+/**
  * Character set for use in the article edit box. Language-specific encodings
  * may be defined. This historic feature is one of the first that was added by
  * former MediaWiki team leader Brion Vibber, and is used to support the
@@ -2140,6 +2202,13 @@ $wgEnableApesterTagExt = true;
  * @var bool $wgEnableAPI
  */
 $wgEnableAPI = true;
+
+/**
+ * Used to set $wgArticleCommentsNamespaces properly.
+ * @see $wgArticleCommentsNamespaces
+ * @var bool $wgEnableArticleCommentsExt
+ */
+$wgEnableArticleCommentsExt = false;
 
 /**
  * Enable ArticleVideo extension.
@@ -3220,6 +3289,14 @@ $wgEnablePortableInfoboxEuropaTheme = false;
 $wgEnablePortableInfoboxExt = true;
 
 /**
+ * Use smtp driver in WikiaMailer (and Postfix MTA as backend).
+ * @see includes/wikia/WikiaMailer.php
+ * @see extensions/wikia/SpecialEmailTest/SpecialEmailTest.php
+ * @var bool $wgEnablePostfixEmail
+ */
+$wgEnablePostfixEmail = true;
+
+/**
  * Enable Qualaroo extension.
  * @see extensions/wikia/Qualaroo
  * @var bool $wgEnableQualarooExt
@@ -3598,6 +3675,13 @@ $wgEnableTemplateTypesParsing = true;
  * @var bool wgEnableTitleBlacklistExt
  */
 $wgEnableTitleBlacklistExt = true;
+
+/**
+ * Enable TorBlock extension.
+ * @see extensions/TorBlock
+ * @var bool $wgEnableTorBlockExt
+ */
+$wgEnableTorBlockExt = true;
 
 /**
  * Enable page/event tracking.
@@ -5750,16 +5834,6 @@ $wgMediaHandlers = [
 $wgMedusaHostPrefix = 'slot1.';
 
 /**
- * If true, will send MemCached debugging information to $wgDebugLogFile.
- * @see $wgDebugLogFile
- * @see includes/cache/wikia/LibmemcachedBagOStuff.php
- * @see includes/cache/MemcachedSessions.php
- * @see includes/objectcache/MemcachedPhpBagOStuff.php
- * @var bool $wgMemCachedDebug
- */
-$wgMemCachedDebug = true;
-
-/**
  * Use persistent connections to MemCached, which are shared across multiple
  * requests.
  * @var bool $wgMemCachedPersistent
@@ -6274,6 +6348,14 @@ $wgPhpCli = '/usr/bin/php';
  * @var Array $wgPoolCounterConf
  */
 $wgPoolCounterConf = null;
+
+/**
+ * PoolCounter hosts.
+ * @see extensions/PoolCounter
+ * @see $wgEnablePoolCounter
+ * @var Array $wgPoolCounterServers
+ */
+$wgPoolCounterServers = [ 'prod.kubernetes-lb-l4.service.consul' ];
 
 /**
  * Whether to preload the mediawiki.util module as blocking module in the top
@@ -7406,6 +7488,50 @@ $wgSorbsUrl = [];
  * @var bool $wgSortSpecialPages
  */
 $wgSortSpecialPages = true;
+
+/**
+ * SMTP configuration for WikiaMailer.
+ * @see includes/wikia/WikiaMailer.php
+ * @var Array $wgSMTP
+ */
+$wgSMTP = [
+    'host'   => 'relay-mailer-s2',
+    'port'   => 25,
+    'auth'   => false,
+    'IDHost' => ''
+];
+
+/**
+ * Solr host for Search and ArticleService.
+ * @see services/ArticleService.class.php
+ * @see extensions/wikia/Search
+ * @var string $wgSolrHost
+ */
+$wgSolrHost = 'prod.search-fulltext.service.consul';
+
+/**
+ * Solr host for key-value storage for ArticleService.
+ * @see includes/wikia/services/ArticleService.class.php
+ * @var string $wgSolrKvHost
+ */
+$wgSolrKvHost = 'prod.search-kv.service.consul';
+
+/**
+ * Master Solr server used by multiple components.
+ * @see includes/wikia/services/tests/ArticleServiceTest.php
+ * @see extensions/3rdparty/LyricWiki
+ * @see extensions/wikia/Search
+ * @see extensions/wikia/VideoHandlers
+ * @var strig $wgSolrMaster
+ */
+$wgSolrMaster = 'prod.search-master.service.sjc.consul';
+
+/**
+ * The list of bad URLs for SpamBlacklist
+ * @see extensions/SpamBlacklist
+ * @var Array $wgSpamBlacklistFiles
+ */
+$wgSpamBlacklistFiles = [];
 
 /**
  * Edits matching these regular expressions in body text will be recognised as

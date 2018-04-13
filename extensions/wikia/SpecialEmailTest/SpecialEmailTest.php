@@ -59,7 +59,6 @@ class SpecialEmailTest extends UnlistedSpecialPage {
 
 		# default to whatever mail backend is in config or wikifactory, allow override
 		if ( $wgRequest->getVal('force') ) {
-			$wgEnableWikiaDBEmail = ($wgRequest->getVal('force') == 'wikiadb');
 			$wgEnablePostfixEmail = ($wgRequest->getVal('force') == 'postfix');
 		}
 

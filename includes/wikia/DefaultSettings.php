@@ -591,13 +591,6 @@ $wgExtensionsPath = false; /// defaults to "{$wgScriptPath}/extensions"
  */
 require_once( "{$IP}/extensions/wikia/Tasks/Tasks.setup.php");
 
-
-/**
- * @name wgDumpsDisabledWikis
- * list of wiki ids not to do dumps for
- */
-$wgDumpsDisabledWikis = array();
-
 /**
  * @name wgWikiFactoryTags
  *
