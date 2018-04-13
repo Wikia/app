@@ -5,25 +5,6 @@ class ArticleVideoContext {
 	const ARTICLE_VIDEO_ERROR_MESSAGE = 'JWPlayer: Could not find mediaId in article-video service';
 	const JWPLAYER_API_ERROR_MESSAGE = 'JWPlayer: Could not find enough playback info in JW API to play the video';
 
-	const RECOMMENDED_VIDEO_MAPPINGS = [
-		// dragonage.wikia.com
-		10150 => 'dPf9fZOb',
-		// dragonball.wikia.com
-		530 => 'SNktAc2f',
-		// elderscrolls.wikia.com
-		1706 => '13LQl8EZ',
-		// gta.wikia.com
-		4541 =>'UquaqAUw',
-		// marvelcinematicuniverse.wikia.com
-		177996 => 'ylAOcMY4',
-		// memoryalpha.wikia.com
-		113 => 'Kj2vi6b3',
-		// monsterhunter.wikia.com
-		3234 => 'wTpdHlVc',
-		// naruto.wikia.com
-		1318 => 'xfiGVAFO',
-	];
-
 	/**
 	 * Checks if featured video is embedded on given article
 	 *
@@ -157,13 +138,11 @@ class ArticleVideoContext {
 	}
 
 	public static function isRecommendedVideoAvailable( int $pageId ): bool {
-		global $wgRecommendedVideoABTestPlaylist;
-
 		$wg = F::app()->wg;
 
 		return !$wg->user->isLoggedIn() &&
 			$wg->Title->isContentPage() &&
-			!empty( $wgRecommendedVideoABTestPlaylist ) &&
+			!empty( $wg->RecommendedVideoABTestPlaylist ) &&
 			empty( self::isFeaturedVideoEmbedded( $pageId ) );
 	}
 }

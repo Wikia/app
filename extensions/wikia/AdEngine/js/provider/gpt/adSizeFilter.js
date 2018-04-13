@@ -31,10 +31,10 @@ define('ext.wikia.adEngine.provider.gpt.adSizeFilter', [
 		var adContext = getAdContext(),
 			recommendedVideoTestName = 'RECOMMENDED_VIDEO_AB',
 			hasRecommendedVideoABTestPlaylistOnOasis = win.wgRecommendedVideoABTestPlaylist,
-			hasRecommendedVideoABTestPlaylistOnMercury = win.M &&
+			hasRecommendedVideoABTestPlaylistOnMobile = win.M &&
 				!!win.M.getFromHeadDataStore('wikiVariables.recommendedVideoPlaylist'),
 			runsRecommendedVideoABTest = abTest.getGroup(recommendedVideoTestName) &&
-				(hasRecommendedVideoABTestPlaylistOnOasis || hasRecommendedVideoABTestPlaylistOnMercury);
+				(hasRecommendedVideoABTestPlaylistOnOasis || hasRecommendedVideoABTestPlaylistOnMobile);
 
 		if (slotName.indexOf('TOP_LEADERBOARD') > -1 &&
 			adContext &&
