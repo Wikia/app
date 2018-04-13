@@ -10,6 +10,8 @@ FROM php-wikia-base
 RUN pecl install uopz-5.0.2 xdebug-2.6.0 yaml-2.0.2 \
     && docker-php-ext-enable uopz xdebug yaml
 
+ADD ./xdebug.ini /usr/local/etc/php/conf.d/
+
 # set environment variables
 ENV SERVER_ID=165
 ENV WIKIA_DATACENTER=poz
