@@ -51,7 +51,7 @@ class CuratedContentModel {
 				foreach ( $recommendedIds as $wikiId ) {
 					$wikiName = WikiFactory::getVarValueByName( 'wgSitename', $wikiId );
 					$wikiGames = WikiFactory::getVarValueByName( 'wgWikiTopics', $wikiId );
-					$wikiDomain = preg_replace( '!^https?://!', '', WikiFactory::cityIDtoUrl( $wikiId ) );
+					$wikiUrl = preg_replace( '!^https?://!', '', WikiFactory::cityIDtoUrl( $wikiId ) );
 					$wikiThemeSettings = WikiFactory::getVarValueByName( 'wgOasisThemeSettings', $wikiId );
 					$wordmarkUrl = $wikiThemeSettings['wordmark-image-url'];
 					$wordmarkType = $wikiThemeSettings['wordmark-type'];
@@ -62,7 +62,7 @@ class CuratedContentModel {
 						'games' => ( !empty( $wikiGames ) ) ? $wikiGames : '',
 						'color' => ( !empty( $wikiThemeSettings['wordmark-color'] ) ) ? $wikiThemeSettings['wordmark-color'] : '#0049C6',
 						'backgroundColor' => ( !empty( $wikiThemeSettings['color-page'] ) ) ? $wikiThemeSettings['color-page'] : '#FFFFFF',
-						'domain' => $wikiDomain,
+						'domain' => $wikiUrl,
 						'wordmarkUrl' => ( $wordmarkType == 'graphic' && !empty( $wordmarkUrl ) ) ? $wordmarkUrl : ''
 					);
 				}
