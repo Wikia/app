@@ -14,6 +14,7 @@ RUN pecl install uopz-5.0.2 xdebug-2.6.0 yaml-2.0.2 \
 ENV SERVER_ID=165
 ENV WIKIA_DATACENTER=poz
 ENV WIKIA_ENVIRONMENT=dev
+ENV WIKIA_DEV_DOMAIN=wikia-loc.com
 
 # we no longer need root's super-power
 USER nobody
