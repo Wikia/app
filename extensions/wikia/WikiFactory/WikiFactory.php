@@ -566,10 +566,26 @@ class WikiFactory {
 	 *
 	 * @return string
 	 */
-	public static function cityUrlToHostname( $city_url ) {
+	public static function cityUrlToDomain( $city_url ) {
 		$url = parse_url( $city_url );
+		if ( FALSE === $url ) return FALSE;
 		return ( ( isset( $url['scheme'] ) ) ? $url['scheme'] . '://' : '//' )
 			. ( ( isset( $url['host'] ) ) ? $url['host'] : '' );
+	}
+
+	/**
+	 * Returns the language path part of the city_url.
+	 *
+	 * @param string $city_url
+	 *
+	 * @return string
+	 */
+	public static function cityUrlToLanguagePath( $city_url ) {
+		$url = parse_url( $city_url );
+		if ( FALSE !== $url && !empty( $url['path'] ) && $url['path'] !== '/' ) {
+			return rtrim( $url['path'], '/' );
+		}
+		return '';
 	}
 
 	/**
@@ -3296,10 +3312,10 @@ class WikiFactory {
 		return isset( $oRow->city_url ) ? $oRow->city_url : false;
 	}
 
-	static public function IDtoHostname( $city_id, $master = false ) {
+	static public function cityIDtoDomain( $city_id, $master = false ) {
 		$url = static::cityIDtoUrl( $city_id, $master );
 		if ( $url ) {
-			$url = static::cityUrlToHostname( $url );
+			$url = static::cityUrlToDomain( $url );
 		}
 		return $url;
 	}

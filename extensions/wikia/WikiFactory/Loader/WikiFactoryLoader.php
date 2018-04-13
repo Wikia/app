@@ -532,7 +532,6 @@ class WikiFactoryLoader {
 			if ( !isset( $this->mVariables['wgArticlePath'] ) ) {
 				$this->mVariables['wgArticlePath'] = $GLOBALS['wgArticlePath'];
 			}
-			$this->mVariables['wgServer'] = WikiFactory::cityUrlToHostname( $this->mCityUrl );
 
 			/**
 			 * read tags for this wiki, store in global variable as array
@@ -587,14 +586,11 @@ class WikiFactoryLoader {
 		# take some WF variables values from city_list
 		$this->mVariables["wgDBname"] = $this->mCityDB;
 		$this->mVariables["wgDBcluster"] = $this->mCityCluster;
+		$this->mVariables['wgServer'] = WikiFactory::cityUrlToDomain( $this->mCityUrl );
+		$this->mVariables['wgScriptPath'] = WikiFactory::cityUrlToLanguagePath( $this->mCityUrl );
 
 		// @author macbre
 		Hooks::run( 'WikiFactory::executeBeforeTransferToGlobals', [ $this ] );
-
-		// SUS-3851: Prepend language code to MW path variables if present
-		if ( !empty( $url['path'] ) && $url['path'] !== '/' ) {
-			$this->mVariables['wgScriptPath'] = rtrim( $url['path'], '/' );
-		}
 
 		/**
 		 * transfer configuration variables from database to GLOBALS
