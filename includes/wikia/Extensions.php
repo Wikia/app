@@ -1780,3 +1780,6 @@ include "$IP/extensions/wikia/Search/WikiaSearch.setup.php";
 
 // Mercury auth pages related functionality - redirects, email confirmation.
 include "$IP/extensions/wikia/AuthPages/AuthPages.setup.php";
+
+// Article snippet generator
+include "$IP/extensions/wikia/ArticleSnippets/ArticleSnippets.php";
