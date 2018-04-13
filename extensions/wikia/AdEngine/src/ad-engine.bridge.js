@@ -21,7 +21,7 @@ import { createTracker } from './tracking/porvata-tracker-factory';
 import TemplateRegistry from './templates/templates-registry';
 import AdUnitBuilder from './ad-unit-builder';
 import config from './context';
-import slotConfig from './slots';
+import { getSlotsContext } from './slots';
 import './ad-engine.bridge.scss';
 
 context.extend(config);
@@ -41,7 +41,7 @@ function init(
 	TemplateRegistry.init(legacyContext, mercuryListener);
 	scrollListener.init();
 
-	context.extend({slots: slotConfig[skin]});
+	context.set('slots', getSlotsContext(legacyContext, skin));
 	context.push('listeners.porvata', createTracker(legacyContext, geo, pageLevelTargeting, adTracker));
 
 	overrideSlotService(slotRegistry, legacyBtfBlocker);
@@ -53,9 +53,9 @@ function init(
 	context.set('custom.wikiIdentifier', wikiIdentifier);
 	context.set('options.contentLanguage', window.wgContentLanguage);
 
-	if (legacyContext.get('opts.isBLBViewportEnabled')) {
-		context.push('slots.BOTTOM_LEADERBOARD.viewportConflicts', 'TOP_RIGHT_BOXAD');
-	}
+	legacyContext.addCallback(() => {
+		context.set('slots', getSlotsContext(legacyContext, skin));
+	});
 }
 
 function overrideSlotService(slotRegistry, legacyBtfBlocker) {
@@ -97,6 +97,9 @@ function unifySlotInterface(slot) {
 		getVideoAdUnit: () => AdUnitBuilder.build(slot),
 		getViewportConflicts: () => {
 			return slotContext.viewportConflicts || [];
+		},
+		hasDefinedViewportConflicts: () => {
+			return (slotContext.viewportConflicts || []).length > 0;
 		},
 		setConfigProperty: (key, value) => {
 			context.set(`slots.${slot.name}.${key}`, value);
