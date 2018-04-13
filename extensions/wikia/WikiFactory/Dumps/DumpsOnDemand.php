@@ -179,7 +179,6 @@ class DumpsOnDemand {
 
 		$time = wfTime();
 		$size = filesize( $sPath );
-		$sPath = wfEscapeShellArg( $sPath );
 
 		// SUS-4538 | use PHP S3 client instead of s3cmd
 		$s3 = new S3( $wgAWSAccessKey, $wgAWSSecretKey );
