@@ -3222,6 +3222,7 @@ class ComposerStaticInitb367f9b4bf4d43e0d5ea402c134db26b
         'Wikia\\Logger\\ContextSource' => __DIR__ . '/../../..' . '/lib/Wikia/src/Logger/ContextSource.php',
         'Wikia\\Logger\\Hooks' => __DIR__ . '/../../..' . '/lib/Wikia/src/Logger/Hooks.php',
         'Wikia\\Logger\\Loggable' => __DIR__ . '/../../..' . '/lib/Wikia/src/Logger/Loggable.php',
+        'Wikia\\Logger\\LoggerFactory' => __DIR__ . '/../../..' . '/lib/Wikia/src/Logger/LoggerFactory.php',
         'Wikia\\Logger\\LogstashFormatter' => __DIR__ . '/../../..' . '/lib/Wikia/src/Logger/LogstashFormatter.php',
         'Wikia\\Logger\\StatusProcessor' => __DIR__ . '/../../..' . '/lib/Wikia/src/Logger/StatusProcessor.php',
         'Wikia\\Logger\\SyslogHandler' => __DIR__ . '/../../..' . '/lib/Wikia/src/Logger/SyslogHandler.php',

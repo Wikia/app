@@ -2748,6 +2748,7 @@ return array(
     'Wikia\\Logger\\ContextSource' => $baseDir . '/lib/Wikia/src/Logger/ContextSource.php',
     'Wikia\\Logger\\Hooks' => $baseDir . '/lib/Wikia/src/Logger/Hooks.php',
     'Wikia\\Logger\\Loggable' => $baseDir . '/lib/Wikia/src/Logger/Loggable.php',
+    'Wikia\\Logger\\LoggerFactory' => $baseDir . '/lib/Wikia/src/Logger/LoggerFactory.php',
     'Wikia\\Logger\\LogstashFormatter' => $baseDir . '/lib/Wikia/src/Logger/LogstashFormatter.php',
     'Wikia\\Logger\\StatusProcessor' => $baseDir . '/lib/Wikia/src/Logger/StatusProcessor.php',
     'Wikia\\Logger\\SyslogHandler' => $baseDir . '/lib/Wikia/src/Logger/SyslogHandler.php',

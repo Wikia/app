@@ -32,6 +32,12 @@ $wgWikiaDatacenter = getenv( 'WIKIA_DATACENTER' );
  */
 $wgWikiaEnvironment = getenv( 'WIKIA_ENVIRONMENT' );
 
+/**
+ * Temporary variable for Kubernetes migration
+ * If {@code true}, then logs will be sent to stdout formatted as JSON, instead of using syslog.
+ */
+$wgLoggerLogToStdOutOnly = $_ENV['LOG_STDOUT_ONLY'] ?? false;
+
 // CONFIG_REVISION: remove $wgWikiaDatacenter and $wgWikiaEnvironment from the global scope and only use it to load configuration
 
 // the rest of the old contents
