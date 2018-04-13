@@ -165,15 +165,16 @@ class CloseWikiMaintenance {
 						$source = $this->tarFiles( $dbname, $cityid );
 
 						if( is_string( $source ) ) {
-							$retval = DumpsOnDemand::putToAmazonS3( $source, !$hide,  MimeMagic::singleton()->guessMimeType( $source ) );
-							if( $retval > 0 ) {
-								$this->log( "putToAmazonS3 command failed." );
+							try {
+								DumpsOnDemand::putToAmazonS3( $source, !$hide, MimeMagic::singleton()->guessMimeType( $source ) );
+							} catch ( S3Exception $ex ) {
+								$this->log( "putToAmazonS3 command failed - " . $ex->getMessage() );
 								echo "Can't copy images to remote host. Please, fix that and rerun";
 								die( 1 );
-							} else {
-								$this->log( "{$source} copied to S3 Amazon" );
-								unlink( $source );
 							}
+
+							$this->log( "{$source} copied to S3 Amazon" );
+							unlink( $source );
 						}
 
 						$newFlags = $newFlags | WikiFactory::FLAG_CREATE_IMAGE_ARCHIVE | WikiFactory::FLAG_HIDE_DB_IMAGES;

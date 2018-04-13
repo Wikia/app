@@ -164,17 +164,18 @@ function doDumpBackup( $row, $path, array $args = [] ) {
 		if ( isset( $options['s3'] ) ) {
 			Wikia\Util\Assert::true( file_exists( $path ), __FUNCTION__ . ': Dump file does not exist' );
 
-			$res = DumpsOnDemand::putToAmazonS3( $path, !isset( $options[ "hide" ] ),  MimeMagic::singleton()->guessMimeType( $path ) );
-			unlink( $path );
-
-			if ( $res !== 0 ) {
+			try {
+				DumpsOnDemand::putToAmazonS3( $path, !isset( $options[ "hide" ] ),  MimeMagic::singleton()->guessMimeType( $path ) );
+			} catch( S3Exception $ex ) {
 				$logger->error( __METHOD__ . '::putToAmazonS3', [
-					'exception' => new Exception( 'putToAmazonS3 failed', $res ),
+					'exception' => $ex,
 					'row' => (array) $row,
 				] );
 
 				exit( 1 );
 			}
+
+			unlink( $path );
 		}
 	}
 	else {

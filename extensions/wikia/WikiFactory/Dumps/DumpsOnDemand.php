@@ -170,35 +170,40 @@ class DumpsOnDemand {
 	 * Puts the specified file to Amazon S3 storage
 	 *
 	 * if $bPublic, the file will be available for all users
-	 * if $sMimeType is set then the specified mime tipe is set, otherwise
-	 *      let AmazonS3 decide on mime type.
+	 *
+	 * @param string $sPath
+	 * @param bool $bPublic
+	 * @param string $sMimeType
+	 * @throws S3Exception
 	 */
-	static public function putToAmazonS3( $sPath, $bPublic = true, $sMimeType = null ) {
+	static public function putToAmazonS3( string $sPath, bool $bPublic, string $sMimeType )  {
 		$time = wfTime();
-		$sDestination = wfEscapeShellArg(
-			's3://wikia_xml_dumps/'
-			. DumpsOnDemand::getPath( basename( $sPath ) )
-		);
-
 		$size = filesize( $sPath );
 		$sPath = wfEscapeShellArg( $sPath );
 
-		$sCmd = self::S3_COMMAND . ' --add-header=Content-Disposition:attachment';
-		if ( !is_null( $sMimeType ) ) {
-			$sMimeType = wfEscapeShellArg( $sMimeType );
-			$sCmd .= " --mime-type={$sMimeType}";
-		}
-		$sCmd .= ($bPublic)? ' --acl-public' : '';
-		$sCmd .= " put {$sPath} {$sDestination}";
+		// SUS-4538 | use PHP S3 client instead of s3cmd
+		// TODO: add credentials to the config
+		$s3 = new S3( $awsAccessKey, $awsSecretKey );
+		S3::setExceptions( true );
 
-		Wikia::log( __METHOD__, "info", "Put {$sPath} to Amazon S3 storage: command: {$sCmd} size: {$size}", true, true);
+		$resource = S3::inputResource( fopen( $sPath, 'rb' ), $size );
+		$remotePath = DumpsOnDemand::getPath( basename( $sPath ) );
 
-		wfShellExec( $sCmd, $iStatus );
+		// this will throw S3Exception on errors, callers should handle it accordingly
+		$s3->putObject(
+			$resource,
+			'wikia_xml_dumps',
+			$remotePath,
+			$bPublic ? S3::ACL_PUBLIC_READ : S3::ACL_PRIVATE,
+			[],
+			[
+				'Content-Disposition' => 'attachment',
+				'Content-Type' => $sMimeType
+			]
+		);
 
 		$time = Wikia::timeDuration( wfTime() - $time );
-		Wikia::log( __METHOD__, "info", "Put {$sPath} to Amazon S3 storage: status: {$iStatus}, time: {$time}", true, true);
-
-		return $iStatus;
+		Wikia::log( __METHOD__, "info", "Put {$sPath} to Amazon S3 storage s3://wikia_xml_dumps/{$remotePath} (size: {$size}, time: {$time})", true, true);
 	}
 
 	/**
