@@ -43,7 +43,6 @@ class ImageReviewTask extends BaseTask {
 				$this->warning( 'could not determine city url', ['wiki_id' => $wikiId] );
 				continue;
 			}
-
 			$cityLang = \WikiFactory::getVarValueByName( 'wgLanguageCode', $wikiId );
 			$reason = wfMessage( 'imagereview-reason' )->inLanguage( $cityLang );
 
@@ -97,9 +96,12 @@ class ImageReviewTask extends BaseTask {
 				}
 
 				$escapedTitle = wfEscapeWikiText( $title );
+				$cityDomain = \WikiFactory::cityUrlToDomain( $cityUrl );
+				$cityScript = \WikiFactory::cityUrlToWgScript( $cityUrl );
+
 
 				$this->info( 'removed image', [
-					'link' => "{$cityUrl}/index.php?title={$escapedTitle}",
+					'link' => "{$cityDomain}{$cityScript}?title={$escapedTitle}",
 					'title' => $escapedTitle,
 				] );
 			}

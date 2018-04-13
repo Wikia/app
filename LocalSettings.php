@@ -38,9 +38,8 @@ $wgWikiaEnvironment = getenv( 'WIKIA_ENVIRONMENT' );
 require "$IP/../config/LocalSettings.php";
 require_once "$IP/includes/wikia/Extensions.php";
 
-// SUS-3851 - if the wiki has a language code path component, recalculate wgScript and wgArticlePath with its value
+// SUS-3851 - if the wiki has a language code path component, recalculate wgArticlePath with its value
 if ( !empty( $wgScriptPath ) ) {
-	$wgScript = $wgScriptPath . $wgScript;
 	$wgArticlePath = $wgScriptPath . $wgArticlePath;
 }
 

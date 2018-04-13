@@ -589,6 +589,17 @@ class WikiFactory {
 	}
 
 	/**
+	 * Returns the script address relative to wiki domain.
+	 *
+	 * @param string $city_url
+	 *
+	 * @return string
+	 */
+	public static function cityUrlToWgScript( $city_url ) {
+		return static::cityUrlToLanguagePath( $city_url ) . '/index.php';
+	}
+
+	/**
 	 * @param $varId
 	 * @param $cityId
 	 * @param $value
@@ -3312,6 +3323,13 @@ class WikiFactory {
 		return isset( $oRow->city_url ) ? $oRow->city_url : false;
 	}
 
+	/**
+	 * Returns the domain address of a wiki.
+	 *
+	 * @param int $city_id	wiki id
+	 * @param boolean $master	use master or slave connection
+	 * @return city domain
+	 */
 	static public function cityIDtoDomain( $city_id, $master = false ) {
 		$url = static::cityIDtoUrl( $city_id, $master );
 		if ( $url ) {

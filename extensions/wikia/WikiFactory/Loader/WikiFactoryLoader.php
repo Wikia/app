@@ -588,6 +588,7 @@ class WikiFactoryLoader {
 		$this->mVariables["wgDBcluster"] = $this->mCityCluster;
 		$this->mVariables['wgServer'] = WikiFactory::cityUrlToDomain( $this->mCityUrl );
 		$this->mVariables['wgScriptPath'] = WikiFactory::cityUrlToLanguagePath( $this->mCityUrl );
+		$this->mVariables['wgScript'] = WikiFactory::cityUrlToWgScript( $this->mCityUrl );
 
 		// @author macbre
 		Hooks::run( 'WikiFactory::executeBeforeTransferToGlobals', [ $this ] );
