@@ -411,7 +411,7 @@ class WikiFactory {
 			'reason' => $reason ?: '',
 		] );
 		wfProfileIn( __METHOD__."-changelog" );
-		$oldValue = self::IDtoUrl( $city_id );
+		$oldValue = self::cityIDtoUrl( $city_id );
 		$reason_extra = !empty($reason) ? " (reason: ". htmlspecialchars( $reason ) .")" : '';
 		static::log(
 			static::LOG_DOMAIN,
@@ -3285,7 +3285,7 @@ class WikiFactory {
 	 * @param boolean $master	use master or slave connection
 	 * @return url in city_list
 	 */
-	static public function IDtoUrl( $city_id, $master = false ) {
+	static public function cityIDtoUrl( $city_id, $master = false ) {
 		if ( !static::isUsed() ) {
 			Wikia::log( __METHOD__, "", "WikiFactory is not used." );
 			return false;
@@ -3294,6 +3294,14 @@ class WikiFactory {
 		$oRow = static::getWikiByID( $city_id, $master );
 
 		return isset( $oRow->city_url ) ? $oRow->city_url : false;
+	}
+
+	static public function IDtoHostname( $city_id, $master = false ) {
+		$url = static::cityIDtoUrl( $city_id, $master );
+		if ( $url ) {
+			$url = static::cityUrlToHostname( $url );
+		}
+		return $url;
 	}
 
 	/**

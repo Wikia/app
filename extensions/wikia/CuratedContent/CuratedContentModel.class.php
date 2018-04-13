@@ -51,7 +51,7 @@ class CuratedContentModel {
 				foreach ( $recommendedIds as $wikiId ) {
 					$wikiName = WikiFactory::getVarValueByName( 'wgSitename', $wikiId );
 					$wikiGames = WikiFactory::getVarValueByName( 'wgWikiTopics', $wikiId );
-					$wikiDomain = preg_replace( '!^https?://!', '', WikiFactory::IDtoUrl( $wikiId ) );
+					$wikiDomain = preg_replace( '!^https?://!', '', WikiFactory::cityIDtoUrl( $wikiId ) );
 					$wikiThemeSettings = WikiFactory::getVarValueByName( 'wgOasisThemeSettings', $wikiId );
 					$wordmarkUrl = $wikiThemeSettings['wordmark-image-url'];
 					$wordmarkType = $wikiThemeSettings['wordmark-type'];
