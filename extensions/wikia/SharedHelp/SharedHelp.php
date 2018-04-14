@@ -512,9 +512,10 @@ function SharedHelpCanonicalHook( &$url ) {
 
 	if ( $wgTitle instanceof Title && $wgTitle->getNamespace() == NS_HELP && !$wgTitle->exists() ) {
 
-		$sharedServer = WikiFactory::getVarValueByName( 'wgServer', $wgHelpWikiId );
+		$cityUrl = WikiFactory::cityIDtoUrl( $wgHelpWikiId );
+		$sharedServer = WikiFactory::cityUrlToDomain( $cityUrl );
 		$titleUrl = $wgTitle->getLinkURL();
-		$url = $sharedServer . $titleUrl;
+		$url = $sharedServer . $titleUrl;  // language path should be a part of $titleUrl
 	}
 
 	return true;
