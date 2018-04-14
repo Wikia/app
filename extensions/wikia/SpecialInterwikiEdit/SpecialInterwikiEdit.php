@@ -504,6 +504,7 @@ function wfSIWELinkWikisCommit () {
 function wfSIWEMakeInterlanguageUrl($wikiaID) {
 	global $wgArticlePath;
 
+	// PLATFORM-3430: tbd - fix
 	$server = WikiFactory::getVarValueByName( 'wgServer', $wikiaID );
 	$path = WikiFactory::getVarValueByName( 'wgArticlePath', $wikiaID );
 	if ( empty( $path ) ) {

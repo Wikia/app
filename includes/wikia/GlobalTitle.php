@@ -738,7 +738,7 @@ class GlobalTitle extends Title {
 
 	private function usingHTTPS( string $url = '' ): bool {
 		if ( empty( $url ) ) {
-			$url = WikiFactory::getVarValueByName( 'wgServer', $this->mCityId );
+			$url = WikiFactory::cityIDtoUrl( $this->mCityId );
 		}
 		return WebRequest::detectProtocol() === 'https' &&
 			wfHttpsAllowedForURL( $url );

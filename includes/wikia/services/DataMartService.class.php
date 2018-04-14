@@ -616,7 +616,7 @@ class DataMartService {
 						// WF data has it's own cache
 						'name' => WikiFactory::getVarValueByName( 'wgSitename', $wikiId ),
 						'language' => WikiFactory::getVarValueByName( 'wgLanguageCode', $wikiId ),
-						'domain' => WikiFactory::getVarValueByName( 'wgServer', $wikiId )
+						'domain' => WikiFactory::cityIDtoUrl( $wikiId )  // this can include the langauge path!
 					],
 					'articles' => []
 				];

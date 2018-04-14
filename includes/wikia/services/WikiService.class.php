@@ -607,13 +607,15 @@ class WikiService extends WikiaModel {
 	 *
 	 * @return string The domain name, without protocol
 	 */
-	private function getDomainByWikiId( $wikiId ){
+	private function getDomainByWikiId( $wikiId ) {
+		// Language path change - make sure this can contain the path!
+
 		//this has its' own cache layer
-		$domain = WikiFactory::getVarValueByName( 'wgServer', $wikiId );
+		$cityUrl = WikiFactory::cityIDtoUrl( $wikiId );
 		$ret = null;
 
-		if ( !empty( $domain ) ) {
-			$ret = preg_replace( '!^https?://!', '', $domain );
+		if ( !empty( $cityUrl ) ) {
+			$ret = preg_replace( '!^https?://!', '', $cityUrl );
 		}
 
 		return $ret;
