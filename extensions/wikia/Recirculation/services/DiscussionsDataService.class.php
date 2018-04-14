@@ -22,7 +22,7 @@ class DiscussionsDataService {
 			$this->cityId = $cityId;
 		}
 
-		$this->server = WikiFactory::getVarValueByName( 'wgServer', $this->cityId );
+		$this->server = WikiFactory::cityIDtoUrl( $this->cityId );
 	}
 
 	public function getData( $type, $sortKey = self::DISCUSSIONS_API_SORT_KEY_TRENDING ) {
