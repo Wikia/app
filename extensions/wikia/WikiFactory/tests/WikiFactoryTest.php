@@ -262,4 +262,50 @@ class WikiFactoryTest extends WikiaBaseTest {
 		yield [ [ "foo" => "bar", "0" => "c" ], '{"foo":"bar","0":"c"}' ];
 		yield [ [ 1 => 'foo', 15 => 'bar' ], '{"1":"foo","15":"bar"}' ];
 	}
+
+	/**
+	 * @dataProvider provideCityUrlToDomain
+	 *
+	 * @param string $cityUrl
+	 * @param string $domain
+	 */
+	public function testCityUrlToDomain( $cityUrl, $domain ) {
+		$this->assertEquals( $domain, WikiFactory::cityUrlToDomain( $cityUrl ) );
+	}
+
+	public function provideCityUrlToDomain() {
+		yield [ 'http://gta.wikia.com', 'http://gta.wikia.com' ];
+		yield [ 'http://gta.wikia.com/de', 'http://gta.wikia.com' ];
+	}
+
+	/**
+	 * @dataProvider provideCityUrlToLanguagePath
+	 *
+	 * @param string $cityUrl
+	 * @param string $languagePath
+	 */
+	public function testCityUrlToLanguagePath( $cityUrl, $languagePath ) {
+		$this->assertEquals( $languagePath, WikiFactory::cityUrlToLanguagePath( $cityUrl ) );
+	}
+
+	public function provideCityUrlToLanguagePath() {
+		yield [ 'http://gta.wikia.com', '' ];
+		yield [ 'http://gta.wikia.com/de', '/de' ];
+	}
+
+	/**
+	 * @dataProvider provideCityUrlToWgScript
+	 *
+	 * @param string $cityUrl
+	 * @param string $wgScript
+	 */
+	public function testCityUrlToWgScript( $cityUrl, $wgScript ) {
+		$this->assertEquals( $wgScript, WikiFactory::cityUrlToWgScript( $cityUrl ) );
+	}
+
+	public function provideCityUrlToWgScript() {
+		yield [ 'http://gta.wikia.com', '/index.php' ];
+		yield [ 'http://gta.wikia.com/de', '/de/index.php' ];
+	}
+
 }
