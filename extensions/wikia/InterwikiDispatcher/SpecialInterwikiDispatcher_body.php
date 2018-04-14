@@ -103,7 +103,7 @@ class InterwikiDispatcher extends UnlistedSpecialPage {
 	}
 
 	private static function getCityUrl( $iCityId ) {
-		return WikiFactory::getVarValueByName( 'wgServer', $iCityId );
+		return WikiFactory::cityIDtoUrl( $iCityId );
 	}
 
 	/**
@@ -164,7 +164,7 @@ class InterwikiDispatcher extends UnlistedSpecialPage {
 						$sCityUrl = self::getCityUrl( $iCityId );
 						if ( !empty( $sCityUrl ) ) {
 							$url = str_replace( '$1', $sArticleTitle, $sArticlePath );
-							$url = $sCityUrl . $url;
+							$url = $sCityUrl . $url;  // should work fine with language path as it is a part of $sCityUrl
 						}
 					}
 				}
