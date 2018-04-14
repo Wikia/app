@@ -159,8 +159,10 @@ function SharedHelpHook( OutputPage $out, string &$text ): bool {
 			SHAREDHELP_CACHE_VERSION
 		);
 		$sharedArticle = $wgMemc->get($sharedArticleKey);
-		$sharedServer = WikiFactory::getVarValueByName( 'wgServer', $wgHelpWikiId );
-		$sharedScript = WikiFactory::getVarValueByName( 'wgScript', $wgHelpWikiId );
+		$cityUrl = WikiFactory::cityIDtoUrl( $wgHelpWikiId );
+		$sharedServer = WikiFactory::cityUrlToDomain( $cityUrl );
+		$sharedScript = WikiFactory::cityUrlToWgScript( $cityUrl );
+		// TBD: fix wgArticlePath!
 		$sharedArticlePath = WikiFactory::getVarValueByName( 'wgArticlePath', $wgHelpWikiId );
 
 		// get defaults
@@ -168,9 +170,6 @@ function SharedHelpHook( OutputPage $out, string &$text ): bool {
 		// @TODO pull this from somewhere instead of hardcoding
 		if ( empty( $sharedArticlePath ) ) {
 			$sharedArticlePath = '/wiki/$1';
-		}
-		if ( empty( $sharedScript ) ) {
-			$sharedScript = '/index.php';
 		}
 
 		$sharedArticlePathClean = str_replace('$1', '', $sharedArticlePath);
