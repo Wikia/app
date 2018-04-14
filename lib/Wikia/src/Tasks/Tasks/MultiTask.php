@@ -292,9 +292,9 @@ class MultiTask extends BaseTask {
 		}
 
 		$result = $query->runLoop( $db, function( &$result, $row ) use ( $action, $commandParams ) {
-			$city_url = \WikiFactory::cityIDtoUrl( $row->city_id );
-			$row->city_server = \WikiFactory::cityUrlToDomain( $city_url );
-			$row->city_script = \WikiFactory::cityUrlToWgScript( $city_url );
+			$cityUrl = \WikiFactory::cityIDtoUrl( $row->city_id );
+			$row->city_server = \WikiFactory::cityUrlToDomain( $cityUrl );
+			$row->city_script = \WikiFactory::cityUrlToWgScript( $cityUrl );
 			$res = $this->runCommand( $row, $action, $commandParams );
 			$result[ $row->city_dbname ] = ( $res == false ) ? 0 : 1 ;
 		} );

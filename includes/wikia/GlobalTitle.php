@@ -715,21 +715,12 @@ class GlobalTitle extends Title {
 		}
 
 		/**
-		 * get value from city_variables
-		 */
-		$server = WikiFactory::getVarValueByName( "wgServer", $this->mCityId );
-		if ( $server ) {
-			$this->mServer = $this->formatServer( $server );
-			return $this->mServer;
-		}
-
-		/**
 		 * get value from city_list.city_url
 		 */
-		$city = WikiFactory::getWikiByID( $this->mCityId );
+		$cityUrl = \WikiFactory::cityIDtoUrl( $this->mCityId );
 
-		if ( $city ) {
-			$server = rtrim( $city->city_url, "/" );
+		if ( $cityUrl ) {
+			$server = \WikiFactory::cityUrlToDomain( $cityUrl );
 			$this->mServer = $this->formatServer( $server );
 			return $this->mServer;
 		}

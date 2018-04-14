@@ -562,12 +562,12 @@ class WikiFactory {
 	/**
 	 * Strips the language path from city_url.
 	 *
-	 * @param string $city_url
+	 * @param string $cityUrl
 	 *
 	 * @return string
 	 */
-	public static function cityUrlToDomain( $city_url ) {
-		$url = parse_url( $city_url );
+	public static function cityUrlToDomain( $cityUrl ) {
+		$url = parse_url( $cityUrl );
 		if ( FALSE === $url ) return FALSE;
 		return ( ( isset( $url['scheme'] ) ) ? $url['scheme'] . '://' : '//' )
 			. ( ( isset( $url['host'] ) ) ? $url['host'] : '' );
@@ -576,12 +576,12 @@ class WikiFactory {
 	/**
 	 * Returns the language path part of the city_url.
 	 *
-	 * @param string $city_url
+	 * @param string $cityUrl
 	 *
 	 * @return string
 	 */
-	public static function cityUrlToLanguagePath( $city_url ) {
-		$url = parse_url( $city_url );
+	public static function cityUrlToLanguagePath( $cityUrl ) {
+		$url = parse_url( $cityUrl );
 		if ( FALSE !== $url && !empty( $url['path'] ) && $url['path'] !== '/' ) {
 			return rtrim( $url['path'], '/' );
 		}
@@ -591,12 +591,12 @@ class WikiFactory {
 	/**
 	 * Returns the script address relative to wiki domain.
 	 *
-	 * @param string $city_url
+	 * @param string $cityUrl
 	 *
 	 * @return string
 	 */
-	public static function cityUrlToWgScript( $city_url ) {
-		return static::cityUrlToLanguagePath( $city_url ) . '/index.php';
+	public static function cityUrlToWgScript( $cityUrl ) {
+		return static::cityUrlToLanguagePath( $cityUrl ) . '/index.php';
 	}
 
 	/**
