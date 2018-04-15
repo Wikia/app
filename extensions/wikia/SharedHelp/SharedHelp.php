@@ -162,15 +162,7 @@ function SharedHelpHook( OutputPage $out, string &$text ): bool {
 		$cityUrl = WikiFactory::cityIDtoUrl( $wgHelpWikiId );
 		$sharedServer = WikiFactory::cityUrlToDomain( $cityUrl );
 		$sharedScript = WikiFactory::cityUrlToWgScript( $cityUrl );
-		// TBD: fix wgArticlePath!
-		$sharedArticlePath = WikiFactory::getVarValueByName( 'wgArticlePath', $wgHelpWikiId );
-
-		// get defaults
-		// in case anybody's curious: no, we can't use $wgScript cause that may be overridden locally :/
-		// @TODO pull this from somewhere instead of hardcoding
-		if ( empty( $sharedArticlePath ) ) {
-			$sharedArticlePath = '/wiki/$1';
-		}
+		$sharedArticlePath = WikiFactory::cityUrlToArticlePath( $cityUrl, $wgHelpWikiId );
 
 		$sharedArticlePathClean = str_replace('$1', '', $sharedArticlePath);
 		$localArticlePathClean = str_replace('$1', '', $wgArticlePath);

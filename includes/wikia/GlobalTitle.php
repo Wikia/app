@@ -18,11 +18,6 @@
 class GlobalTitle extends Title {
 
 	/**
-	 * Default wgArticlePath
-	 */
-	const DEFAULT_ARTICLE_PATH = '/wiki/$1';
-
-	/**
 	 * public, used in static constructor
 	 */
 	public $mText = false;
@@ -190,13 +185,11 @@ class GlobalTitle extends Title {
 	 * @return string
 	 */
 	protected static function getWgArticlePath( $wikiId ) {
-		$destinationWgArticlePath = WikiFactory::getVarValueByName( 'wgArticlePath', $wikiId );
-
-		if ( !isset( $destinationWgArticlePath ) ) {
-			$destinationWgArticlePath = self::DEFAULT_ARTICLE_PATH;
+		$cityUrl = WikiFactory::cityIDtoUrl( $wikiId );
+		if ( !$cityUrl ) {
+			return '';
 		}
-
-		return $destinationWgArticlePath;
+		return WikiFactory::cityUrlToArticlePath( $cityUrl, $wikiId );
 	}
 
 	/**
@@ -762,15 +755,9 @@ class GlobalTitle extends Title {
 		}
 
 		/**
-		 * get value from city_variables
+		 * get wgArticlePath value
 		 */
-		$path = WikiFactory::getVarValueByName( "wgArticlePath", $this->mCityId );
-		if( ! $path ) {
-			/**
-			 * it's 100% true but it's at least something
-			 */
-			$path = $wgArticlePath;
-		}
+		$path = self::getWgArticlePath( $this->mCityId );
 
 		/**
 		 * replace all variables with proper values (for example wgScriptPath)

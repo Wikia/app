@@ -600,6 +600,21 @@ class WikiFactory {
 	}
 
 	/**
+	 * Returns the article path relative to wiki domain.
+	 * todo: Remove $cityId param after corporate wikis are moved to N&S
+	 *
+	 * @param string $cityUrl
+	 * @param int $cityId
+	 *
+	 * @return string
+	 */
+	public static function cityUrlToArticlePath( $cityUrl, $cityId ) {
+		global $wgShortArticlePathWikis;
+		$path = in_array( $cityId, $wgShortArticlePathWikis ) ? '/$1' : '/wiki/$1';
+		return static::cityUrlToLanguagePath( $cityUrl ) . $path;
+	}
+
+	/**
 	 * @param $varId
 	 * @param $cityId
 	 * @param $value
@@ -1053,8 +1068,8 @@ class WikiFactory {
 		if ( $city_id == $wgCityId ) {
 			return isset($GLOBALS[$cv_name]) ? $GLOBALS[$cv_name] : null;
 		}
-		if ( $cv_name == 'wgServer' ) {
-			// wgServer it not a WF variable anymore. Remove it after this var is deleted from city_variables
+		if ( $cv_name == 'wgServer' || $cv_name == 'wgArticlePath' ) {
+			// these are not a WF variable anymore. Remove this check after they are deleted from city_variables
 			return null;
 		}
 

@@ -517,21 +517,14 @@ class WikiFactoryLoader {
 				$tUnserVal = unserialize( $oRow->cv_value, [ 'allowed_classes' => false ] );
 				restore_error_handler();
 
-				if ( $oRow->cv_name === "wgServer" ) {
-					// wgServer is not a part of WF anymore. Remove after the variable is deleted from db
+				if ( $oRow->cv_name === "wgServer" || $oRow->cv_name === "wgArticlePath" ) {
+					// these are not a part of WF anymore. Remove this code after thesse variables are deleted from db
 					unset( $this->mVariables[ $oRow->cv_name ] );
 				} else {
 					$this->mVariables[ $oRow->cv_name ] = $tUnserVal;
 				}
 			}
 			$dbr->freeResult( $oRes );
-
-			/**
-			 * wgArticlePath
-			 */
-			if ( !isset( $this->mVariables['wgArticlePath'] ) ) {
-				$this->mVariables['wgArticlePath'] = $GLOBALS['wgArticlePath'];
-			}
 
 			/**
 			 * read tags for this wiki, store in global variable as array
@@ -589,6 +582,7 @@ class WikiFactoryLoader {
 		$this->mVariables['wgServer'] = WikiFactory::cityUrlToDomain( $this->mCityUrl );
 		$this->mVariables['wgScriptPath'] = WikiFactory::cityUrlToLanguagePath( $this->mCityUrl );
 		$this->mVariables['wgScript'] = WikiFactory::cityUrlToWgScript( $this->mCityUrl );
+		$this->mVariables['wgArticlePath'] = WikiFactory::cityUrlToArticlePath( $this->mCityUrl, $this->mWikiID );
 
 		// @author macbre
 		Hooks::run( 'WikiFactory::executeBeforeTransferToGlobals', [ $this ] );
