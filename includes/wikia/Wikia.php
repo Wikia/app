@@ -130,9 +130,8 @@ class Wikia {
 		// Do NOT set $wgDbname here.  The wfGetDB method will no longer do
 		// what you think it should since it pulls from a LoadBalance cache
 		// that likely already has cached DB handles for the previous value
-		$cityUrl = WikiFactory::cityIDtoUrl( $wikiId );
 		// TBD: do we need to set wgScript, wgScriptPath and wgArticlePath as well?
-		$wg->Server = WikiFactory::cityUrlToDomain( $cityUrl );
+		$wg->Server = WikiFactory::cityIDtoDomain( $wikiId );
 
 		if ( !empty( $wg->DevelEnvironment ) ) {
 			$wg->Server = WikiFactory::getLocalEnvURL( $wg->Server );
