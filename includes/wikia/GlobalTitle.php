@@ -18,6 +18,11 @@
 class GlobalTitle extends Title {
 
 	/**
+	 * Default wgArticlePath
+	 */
+	const DEFAULT_ARTICLE_PATH = '/wiki/$1';
+
+	/**
 	 * public, used in static constructor
 	 */
 	public $mText = false;
@@ -187,7 +192,7 @@ class GlobalTitle extends Title {
 	protected static function getWgArticlePath( $wikiId ) {
 		$cityUrl = WikiFactory::cityIDtoUrl( $wikiId );
 		if ( !$cityUrl ) {
-			return '';
+			return self::DEFAULT_ARTICLE_PATH;
 		}
 		return WikiFactory::cityUrlToArticlePath( $cityUrl, $wikiId );
 	}
