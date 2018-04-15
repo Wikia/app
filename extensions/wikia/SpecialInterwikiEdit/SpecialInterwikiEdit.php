@@ -504,6 +504,9 @@ function wfSIWELinkWikisCommit () {
 function wfSIWEMakeInterlanguageUrl($wikiaID) {
 	$cityUrl = WikiFactory::cityIDtoUrl( $wikiaID );
 	if ( !$cityUrl ) {
+		\Wikia\Logger\WikiaLogger::instance()->warning( 'wfSIWEMakeInterlanguageUrl - empty city_url', [
+			'city_id' => $wikiaID
+		] );
 		return '';
 	}
 	$server = WikiFactory::cityUrlToDomain( $cityUrl );
