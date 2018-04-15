@@ -1838,7 +1838,16 @@ $wgWikiaBaseDomainRegex = '(wikia\\.com|wikia-staging\\.com|wikia-dev\\.(com|us|
  * @name $wgShortArticlePathWikis
  * List of wikis that don't have the '/wiki' prefix in the article path. To be removed
  */
-$wgShortArticlePathWikis = [ 80433, 111264, 208826, 435095, 637291, 875569, 1169860, 1618258 ];
+$wgShortArticlePathWikis = [
+	80433,   // www.wikia.com
+	111264,  // de.wikia.com
+	208826,  // fr.wikia.com
+	435095,  // pl.wikia.com
+	637291,  // es.wikia.com
+	875569,  // ja.wikia.com
+	1169860, // ru.wikia.com
+	1618258  // it.wikia.com
+];
 
 $wgEnableOpenXSPC = true;
 
