@@ -12,6 +12,7 @@ RUN apt-get update && apt-get install -y \
     libbz2-dev \
     libjpeg-dev \
     libpng-dev \
+    libxml2-dev \
     # needed by wikidiff2
     libthai-dev \
     libtool \
@@ -68,7 +69,8 @@ RUN docker-php-ext-install \
     bz2 \
     gd \
     mysqli \
-    opcache
+    opcache \
+    simplexml
 
 # expose volumes for app and config repositories clones
 ENV WIKIA_DOCROOT=/usr/wikia/slot1/current/src
