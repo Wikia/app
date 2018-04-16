@@ -30,6 +30,10 @@ class SnippetParser {
 
 		$xpath = new DOMXPath( $document );
 
+		if ( !$document->documentElement->lastChild ) {
+			return '';
+		}
+
 		$this->cleanupExtraneousContent( $document, $xpath );
 		$this->removeBrokenTemplates( $xpath );
 
