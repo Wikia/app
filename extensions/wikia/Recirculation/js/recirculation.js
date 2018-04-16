@@ -72,7 +72,7 @@ require([
 
 	function prepareRailRecirculation(options) {
 		var request;
-		if (window.Wikia.AbTest.inGroup('RIGHT_RAIL_RECIRCULATION', 'CURATION_CMS') && isCorrectTestWiki(window.wgCityId)) {
+		if (window.Wikia.AbTest.inGroup('RIGHT_RAIL_RECIRCULATION', 'CURATION_CMS') && getCurationCMSTopic()) {
 			request = getDataFromRecirculationCMS();
 		} else {
 			request = liftigniter.prepare(options);
@@ -103,13 +103,6 @@ require([
 		});
 
 		return normalizedData;
-	}
-
-	function isCorrectTestWiki(cityId) {
-		// array of RIGHT_RAIL_RECIRCULATION AB test wikis
-		var testWikisCitiesId = ['2233', '147', '1071836', '3035', '250551', '13346', '410', '1081'];
-
-		return testWikisCitiesId.indexOf(cityId) > -1;
 	}
 
 	function getDataFromRecirculationCMS() {
