@@ -13,18 +13,9 @@ define('ext.wikia.adEngine.tracking.adInfoTracker',  [
 
 	var logGroup = 'ext.wikia.adEngine.tracking.adInfoTracker';
 
-	function itContainsBLB(pos) {
-		var strings;
-		if (typeof pos !== 'string') {
-			return false;
-		}
-		strings = pos.split(',');
-		return strings.length > 1 && strings.indexOf('BOTTOM_LEADERBOARD') > -1;
-	}
-
 	function getPosParameter(slotParams) {
-		var pos = slotParams.pos || '';
-		return itContainsBLB(pos) ? 'BOTTOM_LEADERBOARD' : pos;
+		var pos = (slotParams.pos || '');
+		return (Array.isArray(pos) ? pos : pos.split(','))[0];
 	}
 
 	function prepareData(slotName, pageParams, slotParams, creative, bidders) {

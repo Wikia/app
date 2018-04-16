@@ -109,18 +109,48 @@ describe('ext.wikia.adEngine.tracking.adInfoTracker', function () {
 		expect(trackedData.kv_abi).toBe('50_1');
 	});
 
-	it('tracks only one pos parameter', function () {
+	it('tracks only first one pos parameter (for string pos)', function () {
 		spyOn(mocks.adTracker, 'trackDW');
 		getModule().track('FOO', {}, {
-			pos: 'BOTTOM_LEADERBOARD,MOBILE_PREFOOTER',
-			rv: '2',
-			wsi: 'ofa1',
-			abi: '50_1'
+			pos: 'FIRST,SECOND',
 		});
 
 		var trackedData = mocks.adTracker.trackDW.calls.mostRecent().args[0];
 
-		expect(trackedData.kv_pos).toBe('BOTTOM_LEADERBOARD');
+		expect(trackedData.kv_pos).toBe('FIRST');
+	});
+
+	it('tracks single pos correctly ', function () {
+		spyOn(mocks.adTracker, 'trackDW');
+		getModule().track('FOO', {}, {
+			pos: 'ONLY_ONE',
+		});
+
+		var trackedData = mocks.adTracker.trackDW.calls.mostRecent().args[0];
+
+		expect(trackedData.kv_pos).toBe('ONLY_ONE');
+	});
+
+	it('tracks undefined pos correctly', function () {
+		spyOn(mocks.adTracker, 'trackDW');
+		getModule().track('FOO', {}, {
+			pos: undefined,
+		});
+
+		var trackedData = mocks.adTracker.trackDW.calls.mostRecent().args[0];
+
+		expect(trackedData.kv_pos).toBe('');
+	});
+
+	it('tracks first element of pos array', function () {
+		spyOn(mocks.adTracker, 'trackDW');
+		getModule().track('FOO', {}, {
+			pos: ['FIRST', 'SECOND'],
+		});
+
+		var trackedData = mocks.adTracker.trackDW.calls.mostRecent().args[0];
+
+		expect(trackedData.kv_pos).toBe('FIRST');
 	});
 
 	it('handle case where input pos is not string', function () {
