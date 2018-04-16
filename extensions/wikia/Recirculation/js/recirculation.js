@@ -72,8 +72,11 @@ require([
 
 	function prepareRailRecirculation(options) {
 		var request;
-		if (window.Wikia.AbTest.inGroup('RIGHT_RAIL_RECIRCULATION', 'CURATION_CMS') && getCurationCMSTopic()) {
-			request = getDataFromRecirculationCMS();
+		var isRecirculationABTest = window.Wikia.AbTest.inGroup('RIGHT_RAIL_RECIRCULATION', 'CURATION_CMS') &&
+			getCurationCMSTopic();
+
+		if (isRecirculationABTest) {
+			request = getDataFromCurationCMS();
 		} else {
 			request = liftigniter.prepare(options);
 		}
@@ -84,7 +87,9 @@ require([
 				view.render(data, options.title)
 					.then(view.setupTracking())
 					.then(function () {
-						liftigniter.setupTracking(view.itemsSelector, options);
+						if (!isRecirculationABTest) {
+							liftigniter.setupTracking(view.itemsSelector, options);
+						}
 					});
 			});
 		});
@@ -105,14 +110,13 @@ require([
 		return normalizedData;
 	}
 
-	function getDataFromRecirculationCMS() {
+	function getDataFromCurationCMS() {
 		var deferred = $.Deferred();
 
 		nirvana.sendRequest({
 			controller: 'RecirculationApi',
 			method: 'getFandomPosts',
 			format: 'json',
-			type: 'get',
 			scriptPath: window.wgCdnApiUrl,
 			data: {
 				type: 'stories',
@@ -135,14 +139,14 @@ require([
 
 	function getCurationCMSTopic() {
 		var topics = {
-			'2233': 'marvel',
-			'147': 'star-wars',
-			'1071836': 'overwatch',
-			'3035': 'fallout',
-			'250551': 'arrowverse',
-			'13346': 'the-walking-dead',
-			'410': 'anime',
-			'1081': 'anime',
+			2233: 'marvel',
+			147: 'star-wars',
+			1071836: 'overwatch',
+			3035: 'fallout',
+			250551: 'arrowverse',
+			13346: 'the-walking-dead',
+			410: 'anime',
+			1081: 'anime',
 		};
 
 		return topics[window.wgCityId];

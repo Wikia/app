@@ -25,7 +25,7 @@ class CurationCMSService {
 	}
 
 	private function buildUrl() {
-		return self::API_BASE.$this->slug.'?limit='.$this->limit.'&postType=fandom-article';
+		return self::API_BASE . $this->slug . '?limit=' . $this->limit . '&postType=fandom-article';
 	}
 
 	/**
