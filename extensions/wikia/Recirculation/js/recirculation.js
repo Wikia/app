@@ -2,6 +2,7 @@ require([
 	'jquery',
 	'wikia.window',
 	'wikia.log',
+	'wikia.nirvana',
 	'ext.wikia.recirculation.utils',
 	'ext.wikia.recirculation.views.mixedFooter',
 	'ext.wikia.recirculation.helpers.liftigniter',
@@ -11,6 +12,7 @@ require([
 ], function ($,
              window,
              log,
+             nirvana,
              utils,
              mixedFooter,
              liftigniter,
@@ -41,7 +43,7 @@ require([
 			modelName: 'wiki',
 			title: 'recirculation-trending',
 			opts: {
-				rule_language : window.wgContentLanguage
+				rule_language: window.wgContentLanguage
 			}
 		},
 		mixedContentFooter = {
@@ -63,25 +65,22 @@ require([
 				height: 337,
 				modelName: 'wiki',
 				opts: {
-					rule_language : window.wgContentLanguage
+					rule_language: window.wgContentLanguage
 				}
 			}
 		};
 
 	function prepareRailRecirculation(options) {
 		var request;
-
-		//if (window.Wikia.AbTest.inGroup('RIGHT_RAIL_RECIRCULATION', 'CURATION_CMS')) {
+		if (window.Wikia.AbTest.inGroup('RIGHT_RAIL_RECIRCULATION', 'CURATION_CMS') && isCorrectTestWiki(window.wgCityId)) {
 			request = getDataFromRecirculationCMS();
-		// } else {
-		// 	request = liftigniter.prepare(options);
-		// }
+		} else {
+			request = liftigniter.prepare(options);
+		}
 		// prepare & render right rail recirculation module
 		request.done(function (data) {
-			debugger;
 			require(['ext.wikia.recirculation.views.premiumRail'], function (viewFactory) {
 				var view = viewFactory();
-				debugger;
 				view.render(data, options.title)
 					.then(view.setupTracking())
 					.then(function () {
@@ -92,37 +91,71 @@ require([
 	}
 
 	function getNormalizedCurationCMSData(data) {
-		var normalizedData = [];
+		var normalizedData = {};
+		normalizedData.items = [];
 
-		data.feed.forEach(function (feed) {
-			normalizedData.push({
-				title: feed.headline,
-				thumbnail: feed.image.url,
-				url: feed.fandomUrl
+		data.posts.forEach(function (post) {
+			normalizedData.items.push({
+				title: post.title,
+				thumbnail: post.thumbnail.url,
+				url: post.url
 			});
 		});
 
 		return normalizedData;
 	}
 
+	function isCorrectTestWiki(cityId) {
+		// array of RIGHT_RAIL_RECIRCULATION AB test wikis
+		var testWikisCitiesId = ['2233', '147', '1071836', '3035', '250551', '13346', '410', '1081'];
+
+		return testWikisCitiesId.indexOf(cityId) > -1;
+	}
+
 	function getDataFromRecirculationCMS() {
-		return $.ajax({
-			method: 'GET',
-			url: 'http://services.wikia-dev.pl/curation-cms/stories/feed/slug/' + getCurationCMSTopic(),
+		var deferred = $.Deferred();
+
+		nirvana.sendRequest({
+			controller: 'RecirculationApi',
+			method: 'getFandomPosts',
+			format: 'json',
+			type: 'get',
+			scriptPath: window.wgCdnApiUrl,
 			data: {
-				limit: 5
+				type: 'stories',
+				slug: getCurationCMSTopic()
 			},
-			xhrFields: {
-				withCredentials: true
+			callback: function (data) {
+				if (data && data.posts && data.posts.length > 0) {
+					deferred.resolve(getNormalizedCurationCMSData(data));
+				} else {
+					deferred.reject();
+				}
+			},
+			onErrorCallback: function () {
+				deferred.reject();
 			}
 		});
+
+		return deferred;
 	}
 
 	function getCurationCMSTopic() {
-		return 'marvel';
+		var topics = {
+			'2233': 'marvel',
+			'147': 'star-wars',
+			'1071836': 'overwatch',
+			'3035': 'fallout',
+			'250551': 'arrowverse',
+			'13346': 'the-walking-dead',
+			'410': 'anime',
+			'1081': 'anime',
+		};
+
+		return topics[window.wgCityId];
 	}
 
-	function prepareEnglishRecirculation () {
+	function prepareEnglishRecirculation() {
 		// prepare & render mixed content footer module
 		var mixedContentFooterData = [
 			liftigniter.prepare(mixedContentFooter.nsItems),
@@ -145,7 +178,7 @@ require([
 		});
 	}
 
-	function prepareInternationalRecirculation () {
+	function prepareInternationalRecirculation() {
 		var mixedContentFooterData = [
 			liftigniter.prepare(mixedContentFooter.wikiItems),
 			discussions.prepare()

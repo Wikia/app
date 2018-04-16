@@ -25,18 +25,18 @@ class CurationCMSService {
 	}
 
 	private function buildUrl() {
-		return self::API_BASE.$this->slug.'?limit='.$this->limit;
+		return self::API_BASE.$this->slug.'?limit='.$this->limit.'&postType=fandom-article';
 	}
 
 	/**
-	 * Make an API request to parsely to gather posts
-	 * @return an array of posts
+	 * Make an API request to CurationCMS to gather posts
+	 * @return [] array of posts
 	 */
 	private function apiRequest() {
 		$response = ExternalHttp::get( self::buildUrl() );
 		$data = json_decode( $response, true );
 
-		if ( isset( $data['posts'] ) && is_array( $data['posts'] ) ) {
+		if ( isset( $data['feed'] ) && is_array( $data['feed'] ) ) {
 			return $this->formatData( $data['feed'] );
 		} else {
 			return [];
@@ -49,7 +49,7 @@ class CurationCMSService {
 		foreach ( $rawPosts as $index => $post ) {
 			$posts[] = [
 				'index' => $index,
-				'id' => $post['post_id'],
+				'id' => $post['id'],
 				'url' => $post['fandomUrl'],
 				'thumbnail' => $post['image'],
 				'title' => $post['headline'],
