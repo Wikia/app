@@ -1,0 +1,2 @@
+<?php
+$wgStyleVersion = 0;
