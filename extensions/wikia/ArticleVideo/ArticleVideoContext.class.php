@@ -143,6 +143,7 @@ class ArticleVideoContext {
 		return !$wg->user->isLoggedIn() &&
 			$wg->Title->isContentPage() &&
 			!empty( $wg->RecommendedVideoABTestPlaylist ) &&
+			!WikiaPageType::isActionPage() &&
 			empty( self::isFeaturedVideoEmbedded( $pageId ) );
 	}
 }
