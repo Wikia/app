@@ -8,7 +8,7 @@ class CurationCMSService {
 	const API_BASE = 'https://services.wikia.com/curation-cms/stories/feed/slug/';
 
 	const MCACHE_VER = '1.0';
-	const MCACHE_TIME = 900; // 15 minutes
+	const MCACHE_TIME = 300; // 5 minutes
 
 	public function getPosts( $slug, $limit ) {
 		$this->limit = $limit;
