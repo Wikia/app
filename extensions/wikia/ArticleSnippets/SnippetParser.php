@@ -17,12 +17,21 @@ class SnippetParser {
 	}
 
 	public function getSnippet( string $html ): string {
+		$entityLoaderState = libxml_disable_entity_loader( true );
+		$internalErrorState = libxml_use_internal_errors( true );
+
+		$snippet = $this->doGetSnippet( $html );
+
+		libxml_disable_entity_loader( $entityLoaderState );
+		libxml_use_internal_errors( $internalErrorState );
+
+		return $snippet;
+	}
+
+	private function doGetSnippet( string $html ): string {
 		if ( empty( $html ) ) {
 			return '';
 		}
-
-		libxml_disable_entity_loader( true );
-		libxml_use_internal_errors( true );
 
 		$document = new DOMDocument();
 		$document->loadHTML( '<?xml encoding="UTF-8">' . $html );
