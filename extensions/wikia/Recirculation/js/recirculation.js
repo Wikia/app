@@ -69,10 +69,19 @@ require([
 		};
 
 	function prepareRailRecirculation(options) {
+		var request;
+
+		//if (window.Wikia.AbTest.inGroup('RIGHT_RAIL_RECIRCULATION', 'CURATION_CMS')) {
+			request = getDataFromRecirculationCMS();
+		// } else {
+		// 	request = liftigniter.prepare(options);
+		// }
 		// prepare & render right rail recirculation module
-		liftigniter.prepare(options).done(function (data) {
+		request.done(function (data) {
+			debugger;
 			require(['ext.wikia.recirculation.views.premiumRail'], function (viewFactory) {
 				var view = viewFactory();
+				debugger;
 				view.render(data, options.title)
 					.then(view.setupTracking())
 					.then(function () {
@@ -80,6 +89,37 @@ require([
 					});
 			});
 		});
+	}
+
+	function getNormalizedCurationCMSData(data) {
+		var normalizedData = [];
+
+		data.feed.forEach(function (feed) {
+			normalizedData.push({
+				title: feed.headline,
+				thumbnail: feed.image.url,
+				url: feed.fandomUrl
+			});
+		});
+
+		return normalizedData;
+	}
+
+	function getDataFromRecirculationCMS() {
+		return $.ajax({
+			method: 'GET',
+			url: 'http://services.wikia-dev.pl/curation-cms/stories/feed/slug/' + getCurationCMSTopic(),
+			data: {
+				limit: 5
+			},
+			xhrFields: {
+				withCredentials: true
+			}
+		});
+	}
+
+	function getCurationCMSTopic() {
+		return 'marvel';
 	}
 
 	function prepareEnglishRecirculation () {
