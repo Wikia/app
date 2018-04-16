@@ -15,13 +15,65 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.appnexusWebAds',[
 		priorityLevel = 0,
 		slots = {
 			oasis: {
+				/* WIKIA_LB_AS */
+				TOP_LEADERBOARD: {
+					placementId: '13104394',
+					sizes: [
+						[728, 90],
+						[970, 250]
+					]
+				},
+				/* WIKIA_MR_AS */
+				TOP_RIGHT_BOXAD: {
+					placementId: '13104393',
+					sizes: [
+						[300, 250],
+						[300, 600]
+					]
+				},
+				/* WIKIA_BLB_AS */
+				BOTTOM_LEADERBOARD: {
+					placementId: '13104395',
+					sizes: [
+						[728, 90],
+						[970, 250]
+					]
+				},
+				/* WIKIA_FMR_AS */
 				INCONTENT_BOXAD_1: {
 					placementId: '12939349',
 					sizes: [
-						[300, 600],
-						[300, 250],
 						[120, 600],
 						[160, 600]
+					]
+				}
+			},
+			mercury: {
+				/* WIKIA_mLB_AS */
+				MOBILE_TOP_LEADERBOARD: {
+					placementId: '13104396',
+					sizes: [
+						[320, 50]
+					]
+				},
+				/* WIKIA_mIC_AS */
+				MOBILE_IN_CONTENT: {
+					placementId: '13104397',
+					sizes: [
+						[300, 250],
+						[320, 240],
+						[320, 100],
+						[320, 50]
+					]
+				},
+				/* WIKIA_BLB_AS */
+				BOTTOM_LEADERBOARD: {
+					placementId: '13104398',
+					sizes: [
+						[300, 250],
+						[320, 240],
+						[320, 100],
+						[320, 50]
 					]
 				}
 			}
