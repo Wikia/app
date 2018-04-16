@@ -61,7 +61,6 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.appnexusWebAds',[
 					placementId: '13104397',
 					sizes: [
 						[300, 250],
-						[320, 240],
 						[320, 100],
 						[320, 50]
 					]
@@ -71,7 +70,6 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.appnexusWebAds',[
 					placementId: '13104398',
 					sizes: [
 						[300, 250],
-						[320, 240],
 						[320, 100],
 						[320, 50]
 					]
