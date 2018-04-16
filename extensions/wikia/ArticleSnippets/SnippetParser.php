@@ -39,7 +39,9 @@ class SnippetParser {
 		// First try to generate a snippet from the raw article body
 		$originalDocument = clone $document;
 		$rootDocument = clone $document;
-		$rootContent = $this->parseIntoParagraphs( $rootDocument->documentElement->lastChild, static::CONTENT_NODE_BLACKLIST );
+		if ( $rootDocument->documentElement->lastChild ) {
+			$rootContent = $this->parseIntoParagraphs( $rootDocument->documentElement->lastChild, static::CONTENT_NODE_BLACKLIST );
+		}
 
 		if ( !empty( $rootContent ) ) {
 			return $this->cleanSnippet( $rootContent );
