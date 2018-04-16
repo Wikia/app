@@ -14,8 +14,9 @@ define('ext.wikia.adEngine.tracking.adInfoTracker',  [
 	var logGroup = 'ext.wikia.adEngine.tracking.adInfoTracker';
 
 	function getPosParameter(slotParams) {
-		var pos = (slotParams.pos || '');
-		return (Array.isArray(pos) ? pos : pos.split(','))[0];
+		var pos = (slotParams.pos || ''),
+			posArray = Array.isArray(pos) ? pos : pos.split(',');
+		return posArray[0];
 	}
 
 	function prepareData(slotName, pageParams, slotParams, creative, bidders) {
