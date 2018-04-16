@@ -608,10 +608,8 @@ class WikiService extends WikiaModel {
 	 * @return string The domain name, without protocol
 	 */
 	private function getDomainByWikiId( $wikiId ) {
-		// Language path change - make sure this can contain the path!
-
-		//this has its' own cache layer
-		$cityUrl = WikiFactory::cityIDtoUrl( $wikiId );
+		// language-path - can clients handle the language path after the domain name?
+		$cityUrl = WikiFactory::cityIDtoUrl( $wikiId );  //this has its' own cache layer
 		$ret = null;
 
 		if ( !empty( $cityUrl ) ) {

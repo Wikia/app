@@ -22,6 +22,7 @@ class DiscussionsDataService {
 			$this->cityId = $cityId;
 		}
 
+		// language-path - most likely this is ok, as the code below appends "/d/" to this value.
 		$this->server = WikiFactory::cityIDtoUrl( $this->cityId );
 	}
 

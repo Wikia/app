@@ -51,6 +51,7 @@ class CuratedContentModel {
 				foreach ( $recommendedIds as $wikiId ) {
 					$wikiName = WikiFactory::getVarValueByName( 'wgSitename', $wikiId );
 					$wikiGames = WikiFactory::getVarValueByName( 'wgWikiTopics', $wikiId );
+					// language-path - can clients handle the language path after the domain name?
 					$wikiUrl = preg_replace( '!^https?://!', '', WikiFactory::cityIDtoUrl( $wikiId ) );
 					$wikiThemeSettings = WikiFactory::getVarValueByName( 'wgOasisThemeSettings', $wikiId );
 					$wordmarkUrl = $wikiThemeSettings['wordmark-image-url'];
