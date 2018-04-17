@@ -17,7 +17,6 @@ module.exports = function (config) {
 		exclude: [
 			'resources/wikia/ui_components/**/Gruntfile.js',
 			'resources/wikia/ui_components/**/node_modules/**/*.js',
-			'extensions/wikia/ARecoveryEngine/js/SourcePoint/*_fallback.js'
 		],
 		files: [
 			'resources/wikia/libraries/define.mock.js',
@@ -116,46 +115,9 @@ module.exports = function (config) {
 			'extensions/wikia/PhalanxII/js/modules/phalanx.js',
 			'extensions/wikia/PhalanxII/spec/*.spec.js',
 
-			/**
-			 * Extension: VideoPageTool
-			 * @description This extension is actually split up into a 'homepage' & an 'admin' component and is
-			 * built using Backbone. Therefore, these unit tests are to be organized in a mirrored structure.
-			 */
-
-			/*
-			 * Common VideoPageTool Deps
-			 */
-			'extensions/wikia/VideoPageTool/scripts/lib/lodash/dist/lodash.underscore.js',
-			'extensions/wikia/VideoPageTool/scripts/lib/backbone/backbone.js',
-			'extensions/wikia/VideoPageTool/scripts/shared/views/switcher.js',
-
-			// Collections
-			'extensions/wikia/VideoPageTool/scripts/admin/collections/category.js',
-			'extensions/wikia/VideoPageTool/scripts/admin/collections/categorydata.js',
-			// Views
-			'extensions/wikia/VideoPageTool/scripts/admin/views/autocomplete.js',
-
 			//CreateNewWiki
 			'extensions/wikia/CreateNewWiki/js/CreateNewWikiHelper.js',
 			'extensions/wikia/CreateNewWiki/js/spec/*.spec.js',
-
-			/*
-			 * VideoPageTool: Homepage Module
-			 */
-			'extensions/wikia/VideoPageTool/scripts/homepage/collections/featuredslides.js',
-
-			/*
-			 * VideoPageTool: Source the tests
-			 */
-			'extensions/wikia/VideoPageTool/scripts/spec/*.spec.js',
-			'extensions/wikia/VideoPageTool/scripts/spec/**/*.spec.js',
-			'extensions/wikia/VideoPageTool/scripts/spec/**/**/*.spec.js',
-
-			/*
-			 * Extension: VideosModule
-			 */
-			'extensions/wikia/VideosModule/scripts/models/videos.js',
-			'extensions/wikia/VideosModule/scripts/spec/**/*.spec.js',
 
 			//Search
 			'extensions/wikia/Search/js/SearchAbTest.js',
@@ -193,10 +155,6 @@ module.exports = function (config) {
 			'extensions/wikia/BannerNotifications/js/BannerNotifications.js',
 			'extensions/wikia/BannerNotifications/js/spec/BannerNotifications.spec.js',
 
-			// Paid Asset Drop
-			'extensions/wikia/PaidAssetDrop/js/paidAssetDrop.js',
-			'extensions/wikia/PaidAssetDrop/js/spec/paidAssetDrop.spec.js',
-
 			// PageShare
 			'extensions/wikia/PageShare/scripts/PageShare.js',
 			'extensions/wikia/PageShare/scripts/spec/PageShare.spec.js',
@@ -223,7 +181,11 @@ module.exports = function (config) {
 
 			// Image Lazy Loading
 			'extensions/wikia/ImageLazyLoad/js/ImgLzy.module.js',
-			'extensions/wikia/ImageLazyLoad/spec/ImgLzy.spec.js'
+			'extensions/wikia/ImageLazyLoad/spec/ImgLzy.spec.js',
+
+			// Global Shortcuts
+			'extensions/wikia/GlobalShortcuts/scripts/PageActions.js',
+			'extensions/wikia/GlobalShortcuts/scripts/spec/PageActions.spec.js',
 		]
 	});
 };

@@ -101,14 +101,6 @@ $text-overlay-value: 40%;
 		float: left;
 	}
 
-	.embeddable-discussions-content {
-		font-size: $font-size-regular;
-
-		&.is-deleted {
-			opacity: $discussion-deleted-actions-opacity;
-		}
-	}
-
 	.embeddable-discussions-header-container {
 		@include flexbox();
 		@include flex-direction(row);
@@ -267,6 +259,7 @@ $text-overlay-value: 40%;
 	.embeddable-discussions-title {
 		font-size: $font-size-regular;
 		font-weight: bold;
+		margin-top: 5px;
 		min-height: 22px;
 
 		&.is-deleted {

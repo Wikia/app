@@ -34,26 +34,8 @@ var GlobalModal = {
 		if (!wgUserName) {
 			$('.ajaxLogin').trigger('click');
 		}
-	},
-
-	showAdopt: function() {
-		$.when(
-			$.getResources([$.getSassCommonURL('/extensions/wikia/AutomaticWikiAdoption/css/AutomaticWikiAdoption.scss')]),
-			$.nirvana.sendRequest({
-				controller: 'AutomaticWikiAdoption',
-				method: 'AdoptWelcomeDialog',
-				format: 'html',
-				type: 'get',
-				data: {
-					cb: wgCurRevisionId
-				}
-			})
-		).then(function(sass, nirvanaData) {
-			var html = nirvanaData[0]; // while using .when/.then pattern ajax returns jQuery XHR object and html is at index [0]
-			$(html).makeModal({width: 500, height: 400});
-		});
 	}
-}
+};
 
 $(function() {
 	GlobalModal.init();

@@ -25,7 +25,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.audienceNetwork',[
 					],
 					placementId: '963689110376230_1245838625494609'
 				},
-				MOBILE_PREFOOTER: {
+				BOTTOM_LEADERBOARD: {
 					sizes: [
 						[300, 250]
 					],

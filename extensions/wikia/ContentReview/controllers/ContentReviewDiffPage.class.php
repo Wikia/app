@@ -14,15 +14,17 @@ class ContentReviewDiffPage extends \ContextSource {
 		$revisionId,
 		$status,
 		$title,
-		$wikiId;
+		$wikiId,
+		$diffEngine;
 
-	public function __construct( \Title $title ) {
+	public function __construct( \Title $title, \DifferenceEngine $diffEngine ) {
 		global $wgCityId;
 
 		$this->wikiId = $wgCityId;
 		$this->title = $title;
 		$this->pageId = $title->getArticleID();
 		$this->revisionId = $this->getCurrentlyReviewedRevisionId();
+		$this->diffEngine = $diffEngine;
 	}
 
 	/**
@@ -111,6 +113,7 @@ class ContentReviewDiffPage extends \ContextSource {
 			'talkpageLinkText' => $this->msg( 'content-review-diff-toolbar-talkpage' )->plain(),
 			'guidelinesUrl' => $this->msg( 'content-review-diff-toolbar-guidelines-url' )->useDatabase( false )->plain(),
 			'guidelinesLinkText' => $this->msg( 'content-review-diff-toolbar-guidelines' )->plain(),
+			'notices' => $this->getNotices(),
 		];
 
 		if ( $this->escalated ) {
@@ -139,5 +142,18 @@ class ContentReviewDiffPage extends \ContextSource {
 			$this->reviewModel = new ReviewModel();
 		}
 		return $this->reviewModel;
+	}
+
+	private function getNotices() {
+		$notices = [];
+		// Warn on references to plain HTTP
+		if ( stripos( $this->diffEngine->mNewRev->getText( \Revision::FOR_THIS_USER ), 'http://' ) !== false ) {
+			$notices[] = [
+				'text' => $this->msg( 'content-review-diff-notice-http' )->plain(),
+				'icon' => \DesignSystemHelper::renderSvg( 'wds-icons-alert', 'wds-icon' ),
+			];
+		}
+
+		return $notices;
 	}
 }

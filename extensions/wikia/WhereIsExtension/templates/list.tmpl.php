@@ -25,7 +25,7 @@ select {
 </style>
 
 <div id="busyDiv" style="display: none;">
-	<img src="http://images.wikia.com/common/progress_bar.gif" width="100" height="9" alt="Wait..." border="0" />'
+	<img src="<?= $wgStylePath ?>/common/images/ajax.gif" alt="Wait..." border="0" />'
 </div>
 <?php if( !empty( $tagResultInfo ) ): ?>
 	<div class="successbox" "style="margin: 0;margin-bottom: 1em;">
@@ -148,7 +148,7 @@ select {
 
 	$.loadJQueryAutocomplete(function() {
 		$('#wikiSelectTagName').autocomplete({
-			serviceUrl: mw.config.get( 'wgServer' ) + mw.config.get( 'wgScript' ) + '?action=ajax&rs=WikiFactoryTags::axQuery',
+			serviceUrl: mw.util.wikiScript() + '?action=ajax&rs=WikiFactoryTags::axQuery',
 			minChars:3,
 			deferRequestBy: 0
 		});
@@ -161,8 +161,6 @@ select {
 </div>
 
 <script type="text/javascript">
-	var ajaxpath = mw.config.get('wgScriptPath') + '/index.php';
-
 	function showHideLikeBool(e) {
 		if(e.val() == "bool") {
 			$('.likeValue').hide();
@@ -207,7 +205,7 @@ select {
 		$.ajax({
 			type:"POST",
 			dataType: "json",
-			url: ajaxpath + '?action=ajax&rs=axWFactoryFilterVariables' + values,
+			url: mw.util.wikiScript() + '?action=ajax&rs=axWFactoryFilterVariables' + values,
 			success: function( aData ) {
 				$('#variableSelect').html(aData['selector']);
 				busy(0);

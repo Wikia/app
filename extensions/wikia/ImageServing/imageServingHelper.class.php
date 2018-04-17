@@ -115,7 +115,7 @@ class ImageServingHelper {
 	 * @param bool $dryRun don't store results in DB (think twice before passing true, used by imageServing.php maintenance script)
 	 * @return mixed|bool set of images extracted from given article
 	 */
-	public static function buildIndex( $articleId, $images, $ignoreEmpty = false, $dryRun = false ) {
+	private static function buildIndex( $articleId, $images, $ignoreEmpty = false, $dryRun = false ) {
 		wfProfileIn(__METHOD__);
 
 		// BugId:95164: limit the number of images to be stored serialized in DB

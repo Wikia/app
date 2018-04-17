@@ -42,10 +42,3 @@ $wgExtensionFunctions[] = function() {
 JSMessages::enqueuePackage('AdEngine', JSMessages::EXTERNAL);
 
 AdEngine2Resource::register('wikia.ext.adengine.pf.detection', 'ResourceLoaderAdEnginePageFairDetectionModule');
-AdEngine2Resource::register('wikia.ext.adengine.sp.detection', 'ResourceLoaderAdEngineSourcePointDetectionModule');
-
-// Special page for importing ad test
-if ( !empty( $wgDevelEnvironment ) && $wgDBname === 'adtest' ) {
-	$wgAutoloadClasses['SpecialAdTestImport'] = __DIR__ . '/SpecialAdTestImport.class.php';
-	$wgSpecialPages['AdTestImport'] = 'SpecialAdTestImport';
-}

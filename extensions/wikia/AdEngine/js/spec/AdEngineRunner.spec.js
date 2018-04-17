@@ -9,6 +9,9 @@ describe('ext.wikia.adEngine.adEngineRunner', function () {
 	}
 
 	var mocks = {
+			adContext: {
+				get: noop
+			},
 			adEngine: {
 				run: noop
 			},
@@ -19,7 +22,13 @@ describe('ext.wikia.adEngine.adEngineRunner', function () {
 					};
 				}
 			},
-			instantGlobals: {},
+			fvLagger: {
+				addResponseListener: noop,
+				wasCalled: function () {
+					return false;
+				},
+				getName: noop
+			},
 			log: noop,
 			win: {},
 			a9: {
@@ -31,16 +40,28 @@ describe('ext.wikia.adEngine.adEngineRunner', function () {
 
 	mocks.log.levels = {};
 
-	function getRunner(bidders) {
+	function getRunner(bidders, instantGlobals, fvLagger) {
 		bidders = bidders || {};
+		instantGlobals = instantGlobals || {};
+		fvLagger = fvLagger || fvLagger;
 		return modules['ext.wikia.adEngine.adEngineRunner'](
+			mocks.adContext,
 			mocks.adEngine,
 			mocks.adTracker,
-			mocks.instantGlobals,
+			instantGlobals,
 			mocks.log,
 			mocks.win,
-			bidders.a9
+			bidders.a9,
+			null,
+			null,
+			fvLagger
 		);
+	}
+
+	function mockContext(map) {
+		spyOn(mocks.adContext, 'get').and.callFake(function (name) {
+			return map[name];
+		});
 	}
 
 	beforeEach(function () {
@@ -140,5 +161,73 @@ describe('ext.wikia.adEngine.adEngineRunner', function () {
 		runner.run({}, [], 'queue.name', true);
 
 		expect(mocks.adEngine.run).not.toHaveBeenCalled();
+	});
+
+	it('sets timeout to default if nothing else is defined', function () {
+		var runner = getRunner({
+			a9: mocks.a9
+		});
+		spyOn(mocks.adEngine, 'run');
+		spyOn(mocks.a9, 'wasCalled').and.returnValue(true);
+		spyOn(mocks.win, 'setTimeout');
+
+		runner.run({}, [], 'queue.name', true);
+		expect(mocks.win.setTimeout.calls.first().args[1]).toEqual(2000);
+	});
+
+	it('sets overwritten timeout value by instant global', function () {
+		var runner = getRunner({
+			a9: mocks.a9
+		}, {
+			wgAdDriverDelayTimeout: 666
+		});
+		spyOn(mocks.adEngine, 'run');
+		spyOn(mocks.a9, 'wasCalled').and.returnValue(true);
+		spyOn(mocks.win, 'setTimeout');
+
+		runner.run({}, [], 'queue.name', true);
+		expect(mocks.win.setTimeout.calls.first().args[1]).toEqual(666);
+	});
+
+	it('overwrites overwritten timeout value by instant global for featured video on mercury (mobile-wiki)', function () {
+		mockContext({
+			'targeting.skin': 'mercury',
+			'targeting.hasFeaturedVideo': true
+		});
+		spyOn(mocks.adEngine, 'run');
+		spyOn(mocks.a9, 'wasCalled').and.returnValue(true);
+		spyOn(mocks.fvLagger, 'wasCalled').and.returnValue(true);
+		spyOn(mocks.win, 'setTimeout');
+
+		var runner = getRunner({
+			a9: mocks.a9
+		}, {
+			wgAdDriverFVDelayTimeoutOasis: 666,
+			wgAdDriverFVDelayTimeoutMobileWiki: 11111
+		}, mocks.fvLagger);
+
+		runner.run({}, [], 'queue.name', true);
+		expect(mocks.win.setTimeout.calls.first().args[1]).toEqual(11111);
+	});
+
+	it('overwrites overwritten timeout value by instant global for featured video on oasis', function () {
+		mockContext({
+			'targeting.skin': 'oasis',
+			'targeting.hasFeaturedVideo': true
+		});
+		spyOn(mocks.adEngine, 'run');
+		spyOn(mocks.a9, 'wasCalled').and.returnValue(true);
+		spyOn(mocks.fvLagger, 'wasCalled').and.returnValue(true);
+		spyOn(mocks.win, 'setTimeout');
+
+		var runner = getRunner({
+			a9: mocks.a9
+		}, {
+			wgAdDriverFVDelayTimeoutOasis: 666,
+			wgAdDriverFVDelayTimeoutMobileWiki: 11111
+		}, mocks.fvLagger);
+
+		runner.run({}, [], 'queue.name', true);
+		expect(mocks.win.setTimeout.calls.first().args[1]).toEqual(666);
 	});
 });

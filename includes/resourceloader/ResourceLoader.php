@@ -725,11 +725,6 @@ class ResourceLoader {
 			'exception' => $e
 		] );
 
-		// SUS-1900: emit a proper HTTP error code indicating that something went wrong
-		HttpStatus::header( 500 );
-		header( "X-MediaWiki-Exception: 1" );
-		header( "Content-Type: text/plain; charset=utf-8" );
-
 		if ( $wgShowExceptionDetails ) {
 			return $this->makeComment( $e->__toString() );
 		} else {
@@ -1207,19 +1202,6 @@ class ResourceLoader {
 				$this->moduleInfos[$name]['source'] = $source;
 			}
 		}
-	}
-
-	public function setSource( $id, $properties = null ) {
-		// Allow multiple sources to be registered in one call
-		if ( is_array( $id ) ) {
-			foreach ( $id as $key => $value ) {
-				$this->addSource( $key, $value );
-			}
-			return;
-		}
-
-		unset($this->sources[$id]);
-		$this->addSource($id,$properties);
 	}
 
 	public function rebaseModules( $modules, $source ) {

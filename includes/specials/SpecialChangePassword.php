@@ -21,8 +21,7 @@
  * @ingroup SpecialPage
  */
 
-use Wikia\DependencyInjection\Injector;
-use Wikia\Service\User\Auth\CookieHelper;
+use Wikia\Factory\ServiceFactory;
 
 /**
  * Let users recover their password.
@@ -273,7 +272,7 @@ class SpecialChangePassword extends UnlistedSpecialPage {
 		 * We shouldn't logout user when changing password, so after deleting
 		 * all user tokens in Helios service we need to set a new access token.
 		 */
-		$cookieHelper = Injector::getInjector()->get( CookieHelper::class );
+		$cookieHelper = ServiceFactory::instance()->heliosFactory()->cookieHelper();
 		$cookieHelper->setAuthenticationCookieWithUserId( $user->getId(), $this->getRequest()->response() );
 	}
 }

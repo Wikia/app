@@ -381,6 +381,9 @@ class ApiQueryRevisions extends ApiQueryBase {
 			$res->rewind();
 
 			$this->userNames = User::whoAre( $userIds );
+
+			// SUS-3723 | do not cache "A FANDOM user" message for anons
+			unset( $this->userNames[0] );
 		}
 
 		foreach ( $res as $row ) {

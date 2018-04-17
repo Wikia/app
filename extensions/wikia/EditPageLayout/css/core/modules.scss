@@ -211,7 +211,7 @@ $color-icon: mix($color-text, #fff, 90%);
 		> .module_content {
 			padding: 10px 0 10px 12px;
 		}
-		.cke_button_big {
+		.cke_button_big  {
 			display: inline-block;
 			margin: 5px 0 4px 5px;
 			@if $oasisWidthType == 3 {

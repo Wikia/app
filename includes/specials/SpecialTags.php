@@ -63,10 +63,12 @@ class SpecialTags extends SpecialPage {
 
 		Hooks::run( 'SpecialTags::UsedTags', [ &$used_tags ] );
 
-		// SUS-2752: Temporarily keep edit tags hidden until cleanup
-		$used_tags = array_diff( $used_tags, ChangeTags::$tagBlacklist );
-
 		foreach ( $used_tags as $used_tag ) {
+			// SUS-2752: Temporarily keep edit tags hidden until cleanup
+			if ( in_array( $used_tag['ct_tag'], ChangeTags::$tagBlacklist ) ) {
+				continue;
+			}
+
 			$html .= $this->doTagRow( $used_tag['ct_tag'], $used_tag['hitcount'] );
 		}
 

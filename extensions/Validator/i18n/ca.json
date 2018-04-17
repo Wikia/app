@@ -1,9 +1,30 @@
 {
 	"@metadata": {
 		"authors": [
-			"Luckas"
+			"Luckas",
+			"Toniher"
 		]
 	},
+	"validator-warning": "Avís: $1",
+	"validator-error": "Error: $1",
+	"validator-type-string": "text",
+	"validator-type-integer": "nombre enter",
+	"validator-type-float": "nombre",
+	"validator-type-boolean": "sí/no",
+	"validator-type-char": "caràcter",
+	"validator-type-title": "títol",
+	"validator-type-string-list": "llista de textos",
+	"validator-type-integer-list": "llista d'enters",
+	"validator-type-float-list": "llista de nombres",
+	"validator-type-boolean-list": "llista de sí/no",
+	"validator-type-char-list": "llista de caràcters",
+	"validator-type-title-list": "llista de títols",
+	"validator-listerrors-errors": "Errors",
+	"validator-listerrors-minor": "Menor",
+	"validator-listerrors-low": "Baix",
+	"validator-listerrors-normal": "Normal",
+	"validator-listerrors-high": "Alt",
+	"validator-listerrors-fatal": "Fatal",
 	"validator-describe-descriptionmsg": "'''Descripció''': $1",
 	"validator-describe-header-description": "Descripció"
 }

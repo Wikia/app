@@ -1,0 +1,29 @@
+page:
+  - page_id: 1
+    page_namespace: 8
+    page_title: SomeMwPage
+    page_restrictions: ''
+    page_random: 0
+    page_latest: 1
+    page_len: 0
+  - page_id: 2
+    page_namespace: 0
+    page_title: TestPageWithRedLink
+    page_restrictions: ''
+    page_random: 0
+    page_latest: 2
+    page_len: 0
+pagelinks:
+  - pl_from: 1
+    pl_namespace: 0
+    pl_title: PageLinkedFromMwPage
+  - pl_from: 2
+    pl_namespace: 0
+    pl_title: PageLinkedFromNormalPage
+  - pl_from: 2
+    pl_namespace: 0
+    pl_title: OtherPageLinkedFromNormalPage
+  - pl_from: 2
+    pl_namespace: 2
+    pl_title: UserPageLinkedFromNormalPage
+

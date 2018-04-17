@@ -1,23 +1,27 @@
 {
-	"name": "wikia/maps",
+	"name": "mediawiki/maps",
 	"type": "mediawiki-extension",
 	"description": "Adds various mapping features to MediaWiki",
 	"keywords": [
 		"MediaWiki",
 		"Semantic MediaWiki",
 		"Maps",
+		"Semantic Maps",
 		"Google Maps",
 		"OpenLayers",
 		"OSM",
+		"Leaflet",
+		"Geocode",
+		"Geocoding",
 		"OpenStreetMap"
 	],
 	"homepage": "https://github.com/JeroenDeDauw/Maps",
-	"license": "GPL-2.0+",
+	"license": "GPL-2.0-or-later",
 	"authors": [
 		{
 			"name": "Jeroen De Dauw",
 			"email": "jeroendedauw@gmail.com",
-			"homepage": "http://jeroendedauw.com",
+			"homepage": "https://www.entropywins.wtf",
 			"role": "Creator and lead developer"
 		}
 	],
@@ -27,32 +31,55 @@
 		"source": "https://github.com/JeroenDeDauw/Maps"
 	},
 	"require": {
-		"php": ">=5.3.2",
+		"php": ">=7.0",
 		"composer/installers": "^1.0.1",
-		"mediawiki/validator": "^2.0.2",
-		"data-values/geo": "~1.0"
+		"mediawiki/validator": "~2.2",
+		"data-values/geo": "~2.0",
+		"jeroen/file-fetcher": "~4.2",
+		"jeroen/simple-cache": "~2.0",
+		"jeroen/simple-geocoder": "@dev"
+	},
+	"require-dev": {
+		"data-values/common": "~0.3.1"
 	},
 	"autoload": {
 		"files" : [
 			"Maps.php"
 		],
 		"psr-4": {
-			"Maps\\": "src/Maps/"
+			"Maps\\": "src/"
 		},
 		"classmap": [
 			"includes/",
-			"Maps.hooks.php"
+			"Maps.hooks.php",
+			"SemanticMaps/src/",
+			"SemanticMaps/SemanticMaps.hooks.php"
+		]
+	},
+	"autoload-dev": {
+		"psr-4": {
+			"Maps\\Tests\\TestDoubles\\": "tests/TestDoubles/"
+		},
+		"classmap": [
+			"tests/Unit/Elements/",
+			"tests/Integration/parserhooks/ParserHookTest.php"
 		]
 	},
 	"extra": {
 		"branch-alias": {
-			"dev-master": "3.5.x-dev"
+			"dev-master": "5.2.x-dev"
 		}
+	},
+	"replace": {
+		"mediawiki/semantic-maps": "*"
+	},
+	"suggest": {
+		"mediawiki/semantic-media-wiki": "Add, edit, aggregate and visualize structured coordinate data stored with Semantic MediaWiki"
 	},
 	"config": {
 		"process-timeout": 0
 	},
 	"scripts":{
-		"phpunit": "php ../../tests/phpunit/phpunit.php -c phpunit.xml.dist"
+		"ci": "php ../../tests/phpunit/phpunit.php -c phpunit.xml.dist"
 	}
 }

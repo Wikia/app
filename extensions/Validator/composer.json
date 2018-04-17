@@ -10,12 +10,12 @@
 		"Semantic MediaWiki"
 	],
 	"homepage": "https://github.com/JeroenDeDauw/Validator",
-	"license": "GPL-2.0+",
+	"license": "GPL-2.0-or-later",
 	"authors": [
 		{
 			"name": "Jeroen De Dauw",
 			"email": "jeroendedauw@gmail.com",
-			"homepage": "http://jeroendedauw.com",
+			"homepage": "https://www.entropywins.wtf",
 			"role": "Developer"
 		}
 	],
@@ -23,7 +23,7 @@
 		"irc": "irc://irc.freenode.net/mediawiki"
 	},
 	"require": {
-		"php": ">=5.3.0",
+		"php": ">=5.5.0",
 		"param-processor/param-processor": "~1.1"
 	},
 	"require-dev": {
@@ -42,7 +42,7 @@
 	},
 	"extra": {
 		"branch-alias": {
-			"dev-master": "2.0.x-dev"
+			"dev-master": "2.2.x-dev"
 		}
 	}
 }

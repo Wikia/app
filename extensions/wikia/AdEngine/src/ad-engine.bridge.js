@@ -2,6 +2,7 @@ import { EventEmitter } from 'events';
 import {
 	client,
 	context,
+	GptSizeMap,
 	scrollListener,
 	slotListener,
 	slotService,
@@ -11,18 +12,21 @@ import {
 import {
 	BigFancyAdAbove,
 	BigFancyAdBelow,
-	universalAdPackage
+	universalAdPackage,
+	isProperGeo,
+	getSamplingResults
 } from '@wikia/ad-products';
 
 import { createTracker } from './tracking/porvata-tracker-factory';
 import TemplateRegistry from './templates/templates-registry';
 import AdUnitBuilder from './ad-unit-builder';
 import config from './context';
-import slotConfig from './slots';
+import { getSlotsContext } from './slots';
 import './ad-engine.bridge.scss';
 
 context.extend(config);
-let supportedTemplates = [BigFancyAdAbove, BigFancyAdBelow];
+
+const supportedTemplates = [BigFancyAdAbove, BigFancyAdBelow];
 
 function init(
 	adTracker,
@@ -37,7 +41,7 @@ function init(
 	TemplateRegistry.init(legacyContext, mercuryListener);
 	scrollListener.init();
 
-	context.extend({slots: slotConfig[skin]});
+	context.set('slots', getSlotsContext(legacyContext, skin));
 	context.push('listeners.porvata', createTracker(legacyContext, geo, pageLevelTargeting, adTracker));
 
 	overrideSlotService(slotRegistry, legacyBtfBlocker);
@@ -47,10 +51,14 @@ function init(
 		context.get('targeting.s1') : '_not_a_top1k_wiki';
 
 	context.set('custom.wikiIdentifier', wikiIdentifier);
+	context.set('options.contentLanguage', window.wgContentLanguage);
+
+	legacyContext.addCallback(() => {
+		context.set('slots', getSlotsContext(legacyContext, skin));
+	});
 }
 
 function overrideSlotService(slotRegistry, legacyBtfBlocker) {
-
 	const slotsCache = {};
 
 	slotService.getBySlotName = (id) => {
@@ -62,6 +70,10 @@ function overrideSlotService(slotRegistry, legacyBtfBlocker) {
 
 			return slotsCache[id];
 		}
+	};
+
+	slotService.clearSlot = (id) => {
+		delete slotsCache[id];
 	};
 
 	slotService.legacyEnabled = slotService.enable;
@@ -82,7 +94,16 @@ function unifySlotInterface(slot) {
 		getId: () => slot.name,
 		getSlotName: () => slot.name,
 		getTargeting: () => slotContext.targeting,
-		getVideoAdUnit: () => AdUnitBuilder.build(slot)
+		getVideoAdUnit: () => AdUnitBuilder.build(slot),
+		getViewportConflicts: () => {
+			return slotContext.viewportConflicts || [];
+		},
+		hasDefinedViewportConflicts: () => {
+			return (slotContext.viewportConflicts || []).length > 0;
+		},
+		setConfigProperty: (key, value) => {
+			context.set(`slots.${slot.name}.${key}`, value);
+		}
 	});
 	slot.pre('viewed', (event) => {
 		slotListener.emitImpressionViewable(event, slot);
@@ -94,6 +115,10 @@ function unifySlotInterface(slot) {
 function loadCustomAd(fallback) {
 	return (params) => {
 		if (getSupportedTemplateNames().includes(params.type)) {
+			if (params.slotName.indexOf(',') !== -1) {
+				params.slotName = params.slotName.split(',')[0];
+			}
+
 			const slot = slotService.getBySlotName(params.slotName);
 			slot.container.parentNode.classList.add('gpt-ad');
 
@@ -128,10 +153,19 @@ function checkAdBlocking(detection) {
 	);
 }
 
+function passSlotEvent(slotName, eventName) {
+	slotService.getBySlotName(slotName).emit(eventName);
+}
+
 export {
 	init,
+	GptSizeMap,
 	loadCustomAd,
 	checkAdBlocking,
+	passSlotEvent,
 	context,
-	universalAdPackage
+	universalAdPackage,
+	isProperGeo,
+	getSamplingResults,
+	slotService
 };

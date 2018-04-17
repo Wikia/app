@@ -43,6 +43,10 @@
 				display: block;
 			}
 		}
+
+	  	.jw-related-close {
+			display: none;
+		}
 	}
 
 	&__details {
@@ -80,14 +84,18 @@
 	&__close {
 		display: none;
 		fill: #fff;
-		left: 0;
+		right: 0;
 		padding: 7px;
 		position: absolute;
 		top: 0;
 		z-index: 1;
 	}
 
-	&__wrapper.is-removed {
-		display: none;
+	&__wrapper {
+		margin-bottom: 18px;
+
+		&.is-removed {
+			display: none;
+		}
 	}
 }

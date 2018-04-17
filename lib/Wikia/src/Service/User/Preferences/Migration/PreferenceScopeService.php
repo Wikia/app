@@ -3,10 +3,6 @@
 namespace Wikia\Service\User\Preferences\Migration;
 
 class PreferenceScopeService {
-
-	const GLOBAL_SCOPE_PREFS = 'global_scope_preferences';
-	const LOCAL_SCOPE_PREFS = 'local_scope_preferences';
-
 	/** @var array */
 	private $globalPreferenceLiterals = [];
 
@@ -16,13 +12,6 @@ class PreferenceScopeService {
 	/** @var string */
 	private $localPreferenceRegex;
 
-	/**
-	 * @Inject({
-	 *    Wikia\Service\User\Preferences\Migration\PreferenceScopeService::GLOBAL_SCOPE_PREFS,
-	 *    Wikia\Service\User\Preferences\Migration\PreferenceScopeService::LOCAL_SCOPE_PREFS})
-	 * @param array $globalPreferences
-	 * @param array $localPreferences
-	 */
 	public function __construct( array $globalPreferences, array $localPreferences ) {
 		if (isset($globalPreferences['literals'])) {
 			$this->globalPreferenceLiterals = $globalPreferences['literals'];

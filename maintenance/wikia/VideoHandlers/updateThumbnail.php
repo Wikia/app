@@ -97,16 +97,7 @@ class UpdateThumbnail extends Maintenance {
 			}
 
 			if ( $this->opt == 'reupload' ) {
-				if ( $this->provider == 'screenplay' ) {
-					$thumbUrl = ScreenplayApiWrapper::getThumbnailUrlFromAsset( $file->getVideoId() );
-					if ( empty( $thumbUrl ) ) {
-						echo " ... FAILED (Thumbnail URL not found)\n";
-						$failed++;
-						continue;
-					}
-				} else {
-					$thumbUrl = null;
-				}
+				$thumbUrl = null;
 
 				$status = $helper->resetVideoThumb( $file, $thumbUrl );
 			} else if ( $this->opt == 'data' ) {

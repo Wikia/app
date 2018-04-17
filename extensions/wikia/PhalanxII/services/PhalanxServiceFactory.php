@@ -1,16 +1,13 @@
 <?php
 
-use Wikia\DependencyInjection\Injector;
-
 class PhalanxServiceFactory {
 	/** @var PhalanxService $phalanxService */
 	private static $phalanxService;
 
 	public static function getServiceInstance(): PhalanxService {
 		if ( static::$phalanxService === null ) {
-			/** @var PhalanxHttpClient $phalanxHttpClient */
-			$phalanxHttpClient = Injector::getInjector()->get( PhalanxHttpClient::class );
-			$defaultPhalanxService = new DefaultPhalanxService( $phalanxHttpClient );
+			$urlProvider = \Wikia\Factory\ServiceFactory::instance()->providerFactory()->urlProvider();
+			$defaultPhalanxService = new DefaultPhalanxService( $urlProvider );
 
 			static::$phalanxService =  new DesperatePhalanxService( $defaultPhalanxService );
 		}

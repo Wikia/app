@@ -2,24 +2,20 @@
 /*jshint maxlen: 150*/
 define('ext.wikia.adEngine.provider.directGpt', [
 	'ext.wikia.adEngine.adContext',
-	'ext.wikia.adEngine.context.uapContext',
 	'ext.wikia.adEngine.provider.factory.wikiaGpt',
 	'ext.wikia.adEngine.slot.service.kiloAdUnitBuilder',
 	'ext.wikia.adEngine.slot.service.megaAdUnitBuilder',
 	'ext.wikia.adEngine.slotTweaker',
 	require.optional('ext.wikia.aRecoveryEngine.instartLogic.recovery'),
-	require.optional('ext.wikia.aRecoveryEngine.pageFair.recovery'),
-	require.optional('ext.wikia.aRecoveryEngine.sourcePoint.recovery')
+	require.optional('ext.wikia.aRecoveryEngine.pageFair.recovery')
 ], function (
 	adContext,
-	uapContext,
 	factory,
 	kiloAdUnitBuilder,
 	megaAdUnitBuilder,
 	slotTweaker,
 	instartLogic,
-	pageFair,
-	sourcePoint
+	pageFair
 ) {
 	'use strict';
 
@@ -39,7 +35,7 @@ define('ext.wikia.adEngine.provider.directGpt', [
 		'DirectGpt',
 		'gpt',
 		{
-			BOTTOM_LEADERBOARD:         {size: '728x90,970x250', loc: 'footer'},
+			BOTTOM_LEADERBOARD:         {size: '3x3,728x90,970x250', loc: 'footer'},
 			GPT_FLUSH:                  {flushOnly: true},
 			INCONTENT_BOXAD_1:          {size: '120x600,160x600,300x250,300x600', loc: 'hivi'},
 			INCONTENT_PLAYER:           {size: '1x1', loc: 'middle'},
@@ -54,14 +50,9 @@ define('ext.wikia.adEngine.provider.directGpt', [
 		{
 			afterSuccess: function (slotName) {
 				slotTweaker.removeDefaultHeight(slotName);
-				if (!uapContext.isBfaaLoaded()) {
-					slotTweaker.removeTopButtonIfNeeded(slotName);
-					slotTweaker.adjustLeaderboardSize(slotName);
-				}
 			},
 			isInstartLogicRecoverable: instartLogic ? instartLogic.isSlotRecoverable : false,
 			isPageFairRecoverable: pageFair ? pageFair.isSlotRecoverable : false,
-			isSourcePointRecoverable: sourcePoint ? sourcePoint.isSlotRecoverable : false,
 			sraEnabled: sraEnabled,
 			atfSlots: atfSlots,
 			getAdUnitBuilder: function () {

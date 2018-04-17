@@ -1,5 +1,7 @@
 <?php
 
+use Wikia\Factory\ServiceFactory;
+
 if (!defined('MEDIAWIKI')) {
 	// Eclipse helper - will be ignored in production
 	require_once ('ApiQueryBase.php');
@@ -68,9 +70,8 @@ class WikiaApiQuerySiteinfo extends ApiQuerySiteinfo {
 			$data[$id] = array( 'id' => $variableName );
 			switch ($variableName) {
 				case 'wgWikiaGlobalUserGroups':
-					/** @var \Wikia\Service\User\Permissions\PermissionsService $permissionsService */
-					$permissionsService = \Wikia\DependencyInjection\Injector::getInjector()->get( \Wikia\Service\User\Permissions\PermissionsService::class );
-					$value = $permissionsService->getConfiguration()->getGlobalGroups();
+					$config = ServiceFactory::instance()->permissionsFactory()->permissionsConfiguration();
+					$value = $config->getGlobalGroups();
 					break;
 				default:
 					$value = (array_key_exists($variableName, $GLOBALS) && !is_null($GLOBALS[$variableName])) ? $GLOBALS[$variableName] : "";

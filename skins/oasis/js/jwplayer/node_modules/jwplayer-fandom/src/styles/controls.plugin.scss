@@ -1,0 +1,56 @@
+.wikia-jw-small-player-controls {
+	.wikia-jw-small-player-controls-plugin {
+		align-items: center;
+		display: none;
+		fill: white;
+		height: 100%;
+		justify-content: center;
+		left: 0;
+		opacity: 0;
+		position: absolute;
+		top: 0;
+		transition: opacity .1s linear .1s;
+		width: 100%;
+
+		div {
+			display: flex;
+			justify-content: center;
+			width: 100%;
+
+			svg {
+				cursor: pointer;
+				height: 35px;
+				width: 35px;
+
+				&:first-child {
+					margin-right: 35px;
+				}
+			}
+		}
+	}
+
+	.jw-button-container {
+		display: none;
+	}
+
+	.jw-display-icon-container {
+		display: none;
+	}
+
+	.jw-controlbar {
+		margin-bottom: 2px;
+	}
+}
+
+.jwplayer:not(.jw-flag-user-inactive):not(.jw-state-idle), .jw-state-paused  {
+	.wikia-jw-small-player-controls-plugin {
+		opacity: 1;
+		display: flex;
+	}
+}
+
+.jwplayer:not(.wikia-jw-small-player-controls), .jw-state-idle, .jwplayer:not(.jw-flag-user-inactive):not(.wikia-jw-small-player-controls) {
+	.wikia-jw-small-player-controls-plugin {
+		display: none;
+	}
+}

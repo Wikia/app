@@ -1,8 +1,5 @@
 <?php
 
-use Wikia\DependencyInjection\Injector;
-use Wikia\Service\User\Auth\CookieHelper;
-
 /**
  * User Login Helper
  * @author Hyun

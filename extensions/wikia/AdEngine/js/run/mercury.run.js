@@ -17,7 +17,8 @@ require([
 	'ext.wikia.adEngine.tracking.adInfoListener',
 	'wikia.geo',
 	'wikia.instantGlobals',
-	'wikia.window'
+	'wikia.window',
+	require.optional('wikia.articleVideo.featuredVideo.lagger')
 ], function (
 	adEngineBridge,
 	adContext,
@@ -36,7 +37,8 @@ require([
 	adInfoListener,
 	geo,
 	instantGlobals,
-	win
+	win,
+	fvLagger
 ) {
 	'use strict';
 
@@ -45,22 +47,30 @@ require([
 	messageListener.init();
 
 	// Custom ads (skins, footer, etc)
-	if (geo.isProperGeo(instantGlobals.wgAdDriverAdProductsBridgeMobileCountries)) {
-		adContext.addCallback(function () {
-			adEngineBridge.init(
-				adTracker,
-				geo,
-				slotRegistry,
-				mercuryListener,
-				pageLevelParams.getPageLevelParams(),
-				adContext,
-				btfBlocker,
-				'mercury'
-			);
-		});
-		win.loadCustomAd = adEngineBridge.loadCustomAd(customAdsLoader.loadCustomAd);
-	} else {
-		win.loadCustomAd = customAdsLoader.loadCustomAd;
+	adContext.addCallback(function () {
+		adEngineBridge.init(
+			adTracker,
+			geo,
+			slotRegistry,
+			mercuryListener,
+			pageLevelParams.getPageLevelParams(),
+			adContext,
+			btfBlocker,
+			'mercury'
+		);
+	});
+	win.loadCustomAd = adEngineBridge.loadCustomAd(customAdsLoader.loadCustomAd);
+
+	function passFVLineItemIdToUAP() {
+		if (fvLagger && context.opts.isFVUapKeyValueEnabled) {
+			fvLagger.addResponseListener(function (lineItemId) {
+				adEngineBridge.universalAdPackage.setUapId(lineItemId);
+				adEngineBridge.universalAdPackage.setType('jwp');
+
+				slotRegistry.disable('MOBILE_TOP_LEADERBOARD');
+				slotRegistry.disable('BOTTOM_LEADERBOARD');
+			});
+		}
 	}
 
 	function callBiddersOnConsecutivePageView() {
@@ -71,6 +81,8 @@ require([
 		if (geo.isProperGeo(instantGlobals.wgAdDriverA9BidderCountries)) {
 			a9.call();
 		}
+
+		passFVLineItemIdToUAP();
 	}
 
 	mercuryListener.onLoad(function () {
@@ -82,9 +94,15 @@ require([
 			prebid.call();
 		}
 
+		passFVLineItemIdToUAP();
+
 		adInfoListener.run();
 		slotStateMonitor.run();
 		actionHandler.registerMessageListener();
+
+		window.addEventListener('adengine.emitter', function (event) {
+			adEngineBridge.passSlotEvent(event.detail.slotName, event.detail.eventName);
+		});
 	});
 
 	mercuryListener.afterPageWithAdsRender(function () {

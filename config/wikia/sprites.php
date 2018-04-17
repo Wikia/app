@@ -95,11 +95,3 @@ $config['Lightbox'] = array(
 	'sprite' => "$IP/extensions/wikia/Lightbox/images/sprite-Lightbox.png",
 	'scss'   => "$IP/extensions/wikia/Lightbox/styles/mixins/_sprite-Lightbox.scss"
 );
-
-$config['VideoPageTool'] = array(
-	'name'   => 'VideoPageTool',
-	'source' => "$IP/extensions/wikia/VideoPageTool/images/sprite-VideoPageTool/",
-	'sprite' => "$IP/extensions/wikia/VideoPageTool/images/sprite-VideoPageTool.png",
-	'scss'   => "$IP/extensions/wikia/VideoPageTool/css/mixins/_sprite-VideoPageTool.scss"
-
-);

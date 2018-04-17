@@ -30,7 +30,7 @@ $wgHooks['SpecialSearchProfiles'][] = 'efSharedHelpSearchProfilesHook';
 
 
 /* in MW 1.19 WantedPages::getSQL hook changes into WantedPages::getQueryInfo */
-$wgHooks['WantedPages::getQueryInfo'][] = 'SharedHelpWantedPagesSql';
+$wgHooks['WantedPages::getExcludedNamespaces'][] = 'SharedHelpWantedPagesSql';
 
 define( 'NOSHAREDHELP_MARKER', '<!--NOSHAREDHELP-->' );
 define( 'SHAREDHELP_CACHE_VERSION', '2' );
@@ -472,58 +472,10 @@ function SharedHelpArticleExists(Title $title) {
 	return $exists;
 }
 
-// basically modify the Wantedpages query to exclude pages that appear on the help wiki, as per #5866
-function SharedHelpWantedPagesSql( WantedPagesPage $page, array &$sql ): bool {
-	global $wgHelpWikiId, $wgMemc;
-	wfProfileIn( __METHOD__ );
-
-	$helpPages = "";
-	$helpdb = WikiFactory::IDtoDB( $wgHelpWikiId  );
-
-	if ($helpdb) {
-		$helpPagesKey = wfSharedMemcKey('helppages', $helpdb);
-		$helpArticles = $wgMemc->get($helpPagesKey);
-
-		if ( empty($helpArticles) ) {
-			$dbr = wfGetDB( DB_SLAVE, array(), $helpdb );
-			$oRes = $dbr->select(
-				'page',
-				'page_title, page_namespace',
-				array(
-					'page_namespace' => NS_HELP
-				),
-				__METHOD__
-			);
-
-			$helpArticles = array();
-			while ( $oRow = $dbr->fetchObject( $oRes ) ) {
-				$helpArticles[] = $oRow->page_title;
-			}
-			$helpPages = $dbr->makeList($helpArticles);
-			$wgMemc->set($helpPagesKey, $helpPages, 12*60*60);
-		} else {
-			$helpPages = $helpArticles;
-		}
-	}
-
-	$notInHelpPages = '';
-	if ( !empty( $helpPages ) ) {
-		$notInHelpPages = " OR pl_title NOT IN (" . $helpPages . ") ";
-	}
-
-	$excludedNamespaces = array( NS_MEDIAWIKI );
-	if ( defined('NS_BLOG_ARTICLE') ) {
-		$excludedNamespaces[] = NS_BLOG_ARTICLE;
-		$excludedNamespaces[] = NS_BLOG_ARTICLE_TALK;
-	}
-	if ( !empty( $excludedNamespaces ) ) {
-		$sql['conds'][] = ' pl_namespace NOT IN ( ' . implode( ',', $excludedNamespaces ) . ' ) ';
-	}
-
-	$sql['conds'][] = " ( pl_namespace != 12 {$notInHelpPages} ) ";
-
-	wfProfileOut( __METHOD__ );
-	return true;
+// basically modify the Wantedpages query to exclude help pages, as per #5866
+function SharedHelpWantedPagesSql( array &$namespaces ) {
+	$namespaces[] = NS_HELP;
+	$namespaces[] = NS_HELP_TALK;
 }
 
 # __NOSHAREDHELP__ magic word prevents rendering of shared content

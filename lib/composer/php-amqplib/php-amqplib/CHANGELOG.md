@@ -2,9 +2,23 @@
 
 All Notable changes to `php-amqplib` will be documented in this file
 
-## [Unreleased]
+## 2.7.2 - 2018-02-11
 
-## 2.7.0-rc1 - 2017-05-22
+[GitHub Milestone](https://github.com/php-amqplib/php-amqplib/milestone/5)
+
+- PHP `5.3` compatibility [PR](https://github.com/php-amqplib/php-amqplib/issues/539)
+
+## 2.7.1 - 2018-02-01
+
+- Support PHPUnit 6 [PR](https://github.com/php-amqplib/php-amqplib/pull/530)
+- Use `tcp_nodelay` for `StreamIO` [PR](https://github.com/php-amqplib/php-amqplib/pull/517)
+- Pass connection timeout to `wait` method [PR](https://github.com/php-amqplib/php-amqplib/pull/512)
+- Fix possible indefinite waiting for data in StreamIO [PR](https://github.com/php-amqplib/php-amqplib/pull/423), [PR](https://github.com/php-amqplib/php-amqplib/pull/534)
+- Change protected method check_heartbeat to public [PR](https://github.com/php-amqplib/php-amqplib/pull/520)
+- Ensure access levels are consistent for calling `check_heartbeat` [PR](https://github.com/php-amqplib/php-amqplib/pull/535)
+
+## 2.7.0 - 2017-09-20
+
 ### Added
 - Increased overall test coverage
 - Bring heartbeat support to socket connection
@@ -21,6 +35,7 @@ All Notable changes to `php-amqplib` will be documented in this file
 
 ### Changed
 - declare(ticks=1) no longer needed after PHP5.3 / amqplib 2.4.1
+- Minor DebugHelper improvements
 
 ### Enhancements
 - Add extensions requirements to README.md

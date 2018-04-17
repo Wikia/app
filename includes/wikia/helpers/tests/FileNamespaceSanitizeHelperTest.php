@@ -241,7 +241,7 @@ class FileNamespaceSanitizeHelperTest extends TestCase {
 			[
 				'[[Tập tin:Naruto-Opening01_222.jpg|200px]]',
 				'vi',
-				null,
+				'Tập_tin',
 				'Naruto-Opening01_222.jpg',
 				'File namespace that include a space'
 			],

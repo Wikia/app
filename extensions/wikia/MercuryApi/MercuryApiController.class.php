@@ -146,6 +146,7 @@ class MercuryApiController extends WikiaController {
 		$wikiVariables['localNav'] = $navigation;
 		$wikiVariables['vertical'] = WikiFactoryHub::getInstance()->getWikiVertical( $this->wg->CityId )['short'];
 		$wikiVariables['basePath'] = $this->wg->Server;
+		$wikiVariables['scriptPath'] = $this->wg->ScriptPath;
 
 		// Used to determine GA tracking
 		if ( !empty( $this->wg->IsGASpecialWiki ) ) {
@@ -182,6 +183,8 @@ class MercuryApiController extends WikiaController {
 			'separator' => $htmlTitle->getSeparator(),
 			'parts' => array_values( $htmlTitle->getAllParts() ),
 		];
+
+		\Hooks::run( 'MercuryWikiVariables', [ &$wikiVariables ] );
 
 		return $wikiVariables;
 	}
@@ -239,8 +242,6 @@ class MercuryApiController extends WikiaController {
 		$wikiCategoryNames = WikiFactoryHub::getInstance()->getWikiCategoryNames( $wgCityId );
 		$wikiCategoryNames = join( ',', $wikiCategoryNames );
 
-		$powerUserTypes = ( new \Wikia\PowerUser\PowerUser( $wgUser ) )->getTypesForUser();
-
 		$dimensions[1] = $wgDBname;
 		$dimensions[2] = $wgLanguageCode;
 		$dimensions[4] = 'mercury';
@@ -251,8 +252,6 @@ class MercuryApiController extends WikiaController {
 		$dimensions[15] = WikiaPageType::isCorporatePage() ? 'yes' : 'no';
 		$dimensions[17] = WikiFactoryHub::getInstance()->getWikiVertical( $wgCityId )['short'];
 		$dimensions[18] = $wikiCategoryNames;
-		$dimensions[23] = in_array( 'poweruser_lifetime', $powerUserTypes ) ? 'yes' : 'no';
-		$dimensions[24] = in_array( 'poweruser_frequent', $powerUserTypes ) ? 'yes' : 'no';
 		$dimensions[28] = !empty( $adContext['targeting']['hasPortableInfobox'] ) ? 'yes' : 'no';
 		$dimensions[29] = !empty( $adContext['targeting']['hasFeaturedVideo'] ) ? 'yes' : 'no';
 
@@ -307,7 +306,7 @@ class MercuryApiController extends WikiaController {
 
 		$data['article'] = [
 			'content' => $articleAsJson->content,
-			'media' => $articleAsJson->media
+			'heroImage' => $articleAsJson->heroImage
 		];
 
 		$wikiVariables = $this->prepareWikiVariables();
@@ -386,6 +385,11 @@ class MercuryApiController extends WikiaController {
 						$featuredVideo = MercuryApiArticleHandler::getFeaturedVideoDetails( $title );
 						if ( !empty( $featuredVideo ) ) {
 							$data['article']['featuredVideo'] = $featuredVideo;
+						}
+
+						$recommendedVideoPlaylist = ArticleVideoContext::getRecommendedVideoPlaylistId( $title->getArticleID() );
+						if ( !empty( $recommendedVideoPlaylist ) ) {
+							$data['article']['recommendedVideoPlaylist'] = $recommendedVideoPlaylist;
 						}
 
 						if ( !$title->isContentPage() ) {
@@ -536,7 +540,7 @@ class MercuryApiController extends WikiaController {
 	}
 
 	private function isSupportedByMercury( Title $title ) {
-		$nsList = [ NS_FILE, NS_CATEGORY ];
+		$nsList = [ NS_FILE, NS_CATEGORY, NS_PROJECT ];
 
 		if ( defined( 'NS_BLOG_ARTICLE' ) ) {
 			$nsList[] = NS_BLOG_ARTICLE;

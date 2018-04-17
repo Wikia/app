@@ -8,10 +8,11 @@ define('ext.wikia.adEngine.adContext', [
 	'wikia.document',
 	'wikia.geo',
 	'wikia.instantGlobals',
+	'ext.wikia.adEngine.geo',
 	'ext.wikia.adEngine.utils.sampler',
 	'wikia.window',
 	'wikia.querystring'
-], function (browserDetect, cookies, doc, geo, instantGlobals, sampler, w, Querystring) {
+], function (browserDetect, cookies, doc, geo, instantGlobals, adsGeo, sampler, w, Querystring) {
 	'use strict';
 
 	instantGlobals = instantGlobals || {};
@@ -51,16 +52,6 @@ define('ext.wikia.adEngine.adContext', [
 		return isUrlParamSet('pagefairdetection') || (isSupportedGeo && sampler.sample('pageFairDetection', 1, 10));
 	}
 
-	function isSourcePointDetectionDesktopEnabled(context) {
-		return context.opts.sourcePointDetectionUrl && context.targeting.skin === 'oasis' &&
-			geo.isProperGeo(instantGlobals.wgAdDriverSourcePointDetectionCountries);
-	}
-
-	function isSourcePointDetectionMobileEnabled(context) {
-		return context.opts.sourcePointDetectionUrl && context.targeting.skin === 'mercury' &&
-			geo.isProperGeo(instantGlobals.wgAdDriverSourcePointDetectionMobileCountries);
-	}
-
 	function isBabDetectionDesktopEnabled() {
 		return geo.isProperGeo(instantGlobals.wgAdDriverBabDetectionDesktopCountries);
 	}
@@ -70,10 +61,6 @@ define('ext.wikia.adEngine.adContext', [
 	}
 
 	function updateDetectionServicesAdContext(context, noExternals) {
-		// SourcePoint detection integration
-		context.opts.sourcePointDetection = !noExternals && isSourcePointDetectionDesktopEnabled(context);
-		context.opts.sourcePointDetectionMobile = !noExternals && isSourcePointDetectionMobileEnabled(context);
-
 		// PageFair detection
 		context.opts.pageFairDetection = !noExternals && isPageFairDetectionEnabled();
 
@@ -98,17 +85,9 @@ define('ext.wikia.adEngine.adContext', [
 		context.opts.pageFairRecovery = serviceCanBeEnabled && !isRecoveryServiceAlreadyEnabled &&
 			context.opts.pageFairRecovery && geo.isProperGeo(instantGlobals.wgAdDriverPageFairRecoveryCountries) &&
 			!browserDetect.isEdge();
-		isRecoveryServiceAlreadyEnabled |= context.opts.pageFairRecovery;
 
-		// SourcePoint recovery
-		context.opts.sourcePointRecovery = serviceCanBeEnabled && !isRecoveryServiceAlreadyEnabled &&
-			context.opts.sourcePointRecovery && geo.isProperGeo(instantGlobals.wgAdDriverSourcePointRecoveryCountries);
-		isRecoveryServiceAlreadyEnabled |= context.opts.sourcePointRecovery;
-
-		// SourcePoint MMS
-		context.opts.sourcePointMMS = serviceCanBeEnabled && !isRecoveryServiceAlreadyEnabled && context.opts.sourcePointMMS;
-
-		context.opts.sourcePointBootstrap = context.opts.sourcePointMMS || context.opts.sourcePointRecovery;
+		// BlockAdBlock recovery
+		context.opts.babRecovery = serviceCanBeEnabled && geo.isProperGeo(instantGlobals.wgAdDriverBabRecoveryCountries);
 	}
 
 	function updateAdContextBidders(context) {
@@ -116,8 +95,10 @@ define('ext.wikia.adEngine.adContext', [
 
 		context.bidders.rubiconDisplay = geo.isProperGeo(instantGlobals.wgAdDriverRubiconDisplayPrebidCountries);
 
-		context.bidders.rubicon = geo.isProperGeo(instantGlobals.wgAdDriverRubiconPrebidCountries) &&
-			!hasFeaturedVideo;
+		context.bidders.rubicon = geo.isProperGeo(instantGlobals.wgAdDriverRubiconPrebidCountries);
+
+		context.bidders.rubiconInFV = geo.isProperGeo(instantGlobals.wgAdDriverRubiconVideoInFeaturedVideoCountries) &&
+			hasFeaturedVideo;
 
 		context.bidders.beachfront = geo.isProperGeo(instantGlobals.wgAdDriverBeachfrontBidderCountries) &&
 			!hasFeaturedVideo;
@@ -166,8 +147,6 @@ define('ext.wikia.adEngine.adContext', [
 			context.opts.delayEngine = true;
 		}
 
-		context.opts.isAdProductsBridgeEnabled = geo.isProperGeo(instantGlobals.wgAdDriverAdProductsBridgeCountries);
-
 		context.opts.premiumOnly = context.targeting.hasFeaturedVideo &&
 			geo.isProperGeo(instantGlobals.wgAdDriverSrcPremiumCountries);
 
@@ -192,9 +171,10 @@ define('ext.wikia.adEngine.adContext', [
 			context.providers.evolve2 = geo.isProperGeo(instantGlobals.wgAdDriverEvolve2Countries);
 		}
 
-		if (geo.isProperGeo(instantGlobals.wgAdDriverTurtleCountries)) {
-			context.providers.turtle = true;
-		}
+		context.providers.turtle = adsGeo.isProperGeo(
+			instantGlobals.wgAdDriverTurtleCountries,
+			'wgAdDriverTurtleCountries'
+		);
 
 		context.opts.enableRemnantNewAdUnit = geo.isProperGeo(instantGlobals.wgAdDriverMEGACountries);
 
@@ -230,11 +210,23 @@ define('ext.wikia.adEngine.adContext', [
 		context.opts.megaAdUnitBuilderEnabled = context.targeting.hasFeaturedVideo &&
 			geo.isProperGeo(instantGlobals.wgAdDriverMegaAdUnitBuilderForFVCountries);
 
+		context.opts.isFVDelayEnabled = geo.isProperGeo(instantGlobals.wgAdDriverFVDelayCountries);
+		context.opts.isFVUapKeyValueEnabled = geo.isProperGeo(instantGlobals.wgAdDriverFVAsUapKeyValueCountries);
 		context.opts.isFVMidrollEnabled = geo.isProperGeo(instantGlobals.wgAdDriverFVMidrollCountries);
 		context.opts.isFVPostrollEnabled = geo.isProperGeo(instantGlobals.wgAdDriverFVPostrollCountries);
 		context.opts.replayAdsForFV = geo.isProperGeo(instantGlobals.wgAdDriverPlayAdsOnNextFVCountries);
 		context.opts.fvAdsFrequency = fvAdsFrequency !== undefined ? fvAdsFrequency : 3;
 		context.opts.disableSra = geo.isProperGeo(instantGlobals.wgAdDriverDisableSraCountries);
+		context.opts.isBLBMegaEnabled = geo.isProperGeo(instantGlobals.wgAdDriverBottomLeaderBoardMegaCountries);
+		context.opts.additionalBLBSizes =
+			geo.isProperGeo(instantGlobals.wgAdDriverBottomLeaderBoardAdditionalSizesCountries);
+		context.opts.isBLBViewportEnabled =
+			geo.isProperGeo(instantGlobals.wgAdDriverBottomLeaderBoardViewportCountries);
+
+		context.opts.labradorTestGroup =
+			adsGeo.isProperGeo(instantGlobals.wgAdDriverLABradorTestCountries, 'wgAdDriverLABradorTestCountries') ?
+				'B' : 'A';
+
 		// Export the context back to ads.context
 		// Only used by Lightbox.js, WikiaBar.js and AdsInContext.js
 		if (w.ads && w.ads.context) {
@@ -262,7 +254,7 @@ define('ext.wikia.adEngine.adContext', [
 		return nextElement;
 	}
 
-	setContext(w.ads ? w.ads.context : {});
+	setContext((w.ads && w.ads.context) ? w.ads.context : {});
 
 	return {
 		get: get,

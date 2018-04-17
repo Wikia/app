@@ -34,6 +34,10 @@ class ApiProvider {
 	}
 
 	public function getAuthenticatedApi($serviceName, $userId, $apiClass) {
+		if ( $userId === 0 ) {
+			return $this->getApi( $serviceName, $apiClass );
+		}
+
 		$apiClient = $this->getApiClient($serviceName);
 		$apiClient->getConfig()->setApiKey(Constants::HELIOS_AUTH_HEADER, $userId);
 

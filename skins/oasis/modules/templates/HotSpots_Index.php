@@ -47,7 +47,10 @@ if(count($data) == 5) {
 		$hotSpotSeverity++;
 	}
 	echo '</ul>';
-} else { echo wfMsgExt('myhome-hot-spots-brandnew', array('parseinline')); } ?>
+} else {
+	echo wfMsgExt('myhome-hot-spots-feed-empty', [ 'parseinline' ]);
+}
+?>
 
 
 </section>

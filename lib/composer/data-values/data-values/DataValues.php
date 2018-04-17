@@ -12,13 +12,9 @@ if ( defined( 'DataValues_VERSION' ) ) {
 	return 1;
 }
 
-define( 'DATAVALUES_VERSION', '1.0' );
+define( 'DATAVALUES_VERSION', '1.1.1' );
 
 /**
  * @deprecated
  */
 define( 'DataValues_VERSION', DATAVALUES_VERSION );
-
-if ( defined( 'MEDIAWIKI' ) ) {
-	include __DIR__ . '/DataValues.mw.php';
-}

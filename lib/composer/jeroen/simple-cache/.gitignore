@@ -1,0 +1,10 @@
+.*
+*~
+*.kate-swp
+
+!.gitignore
+!.gitreview
+!.travis.yml
+
+vendor/
+composer.lock

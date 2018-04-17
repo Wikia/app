@@ -42,7 +42,6 @@ describe('ext.wikia.adEngine.adEngine', function () {
 			slotTweaker: {
 				show: noop,
 				hide: noop,
-				isTopLeaderboard: noop
 			},
 			doc: {
 				getElementById: function () {

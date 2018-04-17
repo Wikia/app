@@ -18,16 +18,22 @@ define('ext.wikia.adEngine.utils.scriptLoader', [
 		return script;
 	}
 
-	function loadAsync(src, node, type) {
-		return loadScript(src, type, true, node);
+	function loadAsync(src, options) {
+		options = options || {};
+		options.isAsync = true;
+
+		return loadScript(src, options);
 	}
 
-	function loadScript(src, type, isAsync, node) {
-		return new Promise(function (resolve, reject) {
-			var script = createScript(src, type, isAsync, node);
-			script.onload = resolve;
-			script.onerror = reject;
-		});
+	function loadScript(src, options) {
+		options = options || {};
+
+		var script = createScript(src, options.type, options.isAsync, options.node);
+
+		script.onload = options.onLoad;
+		script.onerror = options.onError;
+
+		return script;
 	}
 
 	return {

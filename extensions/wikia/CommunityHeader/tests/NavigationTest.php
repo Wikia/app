@@ -62,7 +62,7 @@ class NavigationTest extends WikiaBaseTest {
 	}
 
 	public function exploreItemsProvider() {
-		$host = WikiFactory::getLocalEnvURL( self::DOMAIN );
+		$host = wfProtocolUrlToRelative( WikiFactory::getLocalEnvURL( self::DOMAIN ) );
 
 		return [
 			[
@@ -358,7 +358,7 @@ class NavigationTest extends WikiaBaseTest {
 	}
 
 	public function discussLinkProvider() {
-		$host = WikiFactory::getLocalEnvURL( self::DOMAIN );
+		$host = wfProtocolUrlToRelative( WikiFactory::getLocalEnvURL( self::DOMAIN ) );
 
 		return [
 			[

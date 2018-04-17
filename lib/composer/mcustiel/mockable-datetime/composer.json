@@ -1,0 +1,38 @@
+{
+	"keywords" : [
+		"library",
+		"mocks",
+		"Date",
+		"Time",
+		"tests"
+	],
+	"authors" : [{
+        "name" : "Mariano Custiel",
+        "email" : "jmcustiel@gmail.com",
+        "homepage" : "https://github.com/mcustiel",
+        "role" : "Developer"
+    }],
+	"autoload" : {
+		"psr-4" : {
+			"Mcustiel\\Mockable\\" : "src"
+		}
+	},
+	"name" : "mcustiel/mockable-datetime",
+	"version" : "1.0.0",
+	"type" : "library",
+	"description" : "A DateTime library that allows mock dates and times in UnitTests.",
+	"license" : "GPL-3.0+",
+	"require" : {
+		"php" : ">=5.3"
+	},
+	"require-dev" : {
+        "phpunit/phpunit" : ">=4.3.0",
+        "phing/phing" : ">=2.0",
+        "squizlabs/php_codesniffer" : ">=2.1.0",
+        "phpmd/phpmd" : ">=2.2.2",
+        "sebastian/phpcpd" : ">=1.4.3",
+        "pdepend/pdepend" : ">=2.0.6",
+        "phploc/phploc" : ">=2.1.1"
+    },
+    "minimum-stability" : "stable"
+}

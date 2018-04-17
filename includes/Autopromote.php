@@ -125,6 +125,11 @@ class Autopromote {
 
 				return $user->getEditCount() >= $cond[1];
 			case APCOND_AGE:
+				// Wikia change
+				// If age condition is 0 skip check
+				if ( $cond[1] === 0 ) {
+					return true;
+				}
 				$age = time() - wfTimestampOrNull( TS_UNIX, $user->getRegistration() );
 				return $age >= $cond[1];
 			case APCOND_AGE_FROM_EDIT:

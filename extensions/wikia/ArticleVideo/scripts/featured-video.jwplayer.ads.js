@@ -2,85 +2,82 @@ define('wikia.articleVideo.featuredVideo.ads', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.video.vastUrlBuilder',
 	'ext.wikia.adEngine.slot.service.megaAdUnitBuilder',
+	'ext.wikia.adEngine.slot.service.slotRegistry',
 	'ext.wikia.adEngine.slot.service.srcProvider',
+	'ext.wikia.adEngine.video.articleVideoAd',
 	'ext.wikia.adEngine.video.player.jwplayer.adsTracking',
 	'ext.wikia.adEngine.video.vastDebugger',
-	'wikia.log'
-], function (adContext, vastUrlBuilder, megaAdUnitBuilder, srcProvider, adsTracking, vastDebugger, log) {
+	'ext.wikia.adEngine.video.vastParser',
+	'wikia.articleVideo.featuredVideo.lagger',
+	'wikia.log',
+	'wikia.window',
+	require.optional('ext.wikia.adEngine.wrappers.prebid'),
+], function (
+	adContext,
+	vastUrlBuilder,
+	megaAdUnitBuilder,
+	slotRegistry,
+	srcProvider,
+	articleVideoAd,
+	adsTracking,
+	vastDebugger,
+	vastParser,
+	fvLagger,
+	log,
+	win,
+	prebid
+) {
 	'use strict';
 
-	var aspectRatio = 640 / 480,
+	var allowedBidders = ['wikiaVideo'],
 		baseSrc = adContext.get('targeting.skin') === 'oasis' ? 'gpt' : 'mobile',
-		featuredVideoPassback = 'jwplayer',
 		featuredVideoSlotName = 'FEATURED',
 		featuredVideoSource,
 		logGroup = 'wikia.articleVideo.featuredVideo.ads';
 
-	function calculateRV(depth) {
-		var capping = adContext.get('opts.fvAdsFrequency');
-
-		return (depth < 2 || !capping) ? 1 : (Math.floor((depth - 1) / capping) + 1);
+	function parseVastParamsFromEvent(event) {
+		return vastParser.parse(event.tag, {
+			imaAd: event.ima && event.ima.ad
+		});
 	}
 
-	function shouldPlayAdOnNextVideo(depth) {
-		var capping = adContext.get('opts.fvAdsFrequency');
-
-		return adContext.get('opts.replayAdsForFV') && capping > 0 && (depth - 1) % capping === 0;
-	}
-
-	function canAdBePlayed(depth) {
-		var isReplay = depth > 1;
-
-		return !isReplay || (isReplay && shouldPlayAdOnNextVideo(depth));
-	}
-
-	function shouldPlayPreroll(videoDepth) {
-		return canAdBePlayed(videoDepth);
-	}
-
-	function shouldPlayMidroll(videoDepth) {
-		return adContext.get('opts.isFVMidrollEnabled') && canAdBePlayed(videoDepth);
-	}
-
-	function shouldPlayPostroll(videoDepth) {
-		return adContext.get('opts.isFVPostrollEnabled') && canAdBePlayed(videoDepth);
-	}
-
-	function buildVastUrl(position, videoDepth, correlator, bidParams) {
-		var options = {
-				correlator: correlator,
-				vpos: position
-			},
-			slotParams = {
-				passback: featuredVideoPassback,
-				pos: featuredVideoSlotName,
-				rv: calculateRV(videoDepth),
-				src: featuredVideoSource
-			};
-
-		if (videoDepth === 1 && bidParams) {
-			Object.keys(bidParams).forEach(function (key) {
-				slotParams[key] = bidParams[key];
-			});
+	function getPrebidParams() {
+		if (prebid) {
+			return prebid.get().getAdserverTargetingForAdUnitCode(featuredVideoSlotName);
 		}
-		options.adUnit = megaAdUnitBuilder.build(slotParams.pos, slotParams.src);
 
-		log(['buildVastUrl', position, videoDepth, slotParams, options], log.levels.debug, logGroup);
-
-		return vastUrlBuilder.build(aspectRatio, slotParams, options);
+		return {};
 	}
 
-	return function(player, bidParams) {
+	return function (player, bidParams, slotTargeting) {
 		var correlator,
 			featuredVideoElement = player && player.getContainer && player.getContainer(),
 			featuredVideoContainer = featuredVideoElement && featuredVideoElement.parentNode,
 			prerollPositionReached = false,
+			bidderEnabled = true,
 			trackingParams = {
 				adProduct: 'featured-video',
 				slotName: featuredVideoSlotName
 			},
 			videoDepth = 0;
 
+		bidParams = bidParams || {};
+
+		function requestBidder() {
+			if (!prebid) {
+				return;
+			}
+
+			var bid = prebid.getWinningVideoBidBySlotName(featuredVideoSlotName, allowedBidders);
+
+			if (bid && bid.vastUrl) {
+				trackingParams.adProduct = 'featured-video-preroll';
+				bidderEnabled = false;
+				player.playAd(bid.vastUrl);
+			}
+		}
+
+		slotTargeting = slotTargeting || {};
 		featuredVideoSource = srcProvider.get(baseSrc, {testSrc: 'test'}, 'JWPLAYER');
 		trackingParams.src = featuredVideoSource;
 
@@ -89,7 +86,16 @@ define('wikia.articleVideo.featuredVideo.ads', [
 				trackingParams.adProduct = 'featured-video';
 			});
 
+			if (adContext.get('bidders.rubiconInFV')) {
+				allowedBidders.push('rubicon')
+			}
+
 			player.on('beforePlay', function () {
+				var currentMedia = player.getPlaylistItem() || {},
+					prebidParams = getPrebidParams();
+
+				slotTargeting.v1 = currentMedia.mediaid;
+
 				if (prerollPositionReached) {
 					return;
 				}
@@ -99,41 +105,91 @@ define('wikia.articleVideo.featuredVideo.ads', [
 				trackingParams.adProduct = 'featured-video';
 				videoDepth += 1;
 
-				if (shouldPlayPreroll(videoDepth)) {
+				if (prebidParams) {
+					Object.keys(prebidParams).forEach(function (key) {
+						bidParams[key] = prebidParams[key];
+					});
+				}
+
+				if (articleVideoAd.shouldPlayPreroll(videoDepth)) {
 					trackingParams.adProduct = 'featured-video-preroll';
-					player.playAd(buildVastUrl('preroll', videoDepth, correlator, bidParams));
+					player.playAd(articleVideoAd.buildVastUrl(
+						featuredVideoSlotName,
+						'preroll',
+						videoDepth,
+						correlator,
+						slotTargeting,
+						player.getMute(),
+						bidParams
+					));
 				}
 				prerollPositionReached = true;
 			});
 
 			player.on('videoMidPoint', function () {
 				log('Midroll position reached', log.levels.info, logGroup);
-				if (shouldPlayMidroll(videoDepth)) {
+				if (articleVideoAd.shouldPlayMidroll(videoDepth)) {
 					trackingParams.adProduct = 'featured-video-midroll';
-					player.playAd(buildVastUrl('midroll', videoDepth, correlator));
+					player.playAd(articleVideoAd.buildVastUrl(
+						featuredVideoSlotName,
+						'midroll',
+						videoDepth,
+						correlator,
+						slotTargeting,
+						player.getMute()
+					));
 				}
 
 			});
 
 			player.on('beforeComplete', function () {
 				log('Postroll position reached', log.levels.info, logGroup);
-				if (shouldPlayPostroll(videoDepth)) {
+				if (articleVideoAd.shouldPlayPostroll(videoDepth)) {
 					trackingParams.adProduct = 'featured-video-postroll';
-					player.playAd(buildVastUrl('postroll', videoDepth, correlator));
+					player.playAd(articleVideoAd.buildVastUrl(
+						featuredVideoSlotName,
+						'postroll',
+						videoDepth,
+						correlator,
+						slotTargeting,
+						player.getMute()
+					));
 				}
 			});
 
 			player.on('complete', function () {
 				prerollPositionReached = false;
 			});
+
 			player.on('adRequest', function (event) {
-				vastDebugger.setVastAttributes(featuredVideoContainer, event.tag, 'success', event.ima && event.ima.ad);
+				var vastParams = parseVastParamsFromEvent(event);
+				slotRegistry.storeScrollY(featuredVideoSlotName);
+
+				bidderEnabled = false;
+				vastDebugger.setVastAttributesFromVastParams(featuredVideoContainer, 'success', vastParams);
+
+				fvLagger.markAsReady(vastParams.lineItemId);
 			});
+
 			player.on('adError', function (event) {
+				// https://support.jwplayer.com/customer/portal/articles/2924017
+				// According to JWPlayer docs IMA events have pattern 2xxxx
+				// Example:
+				// IMA Error Code = 1009 (empty vast)
+				// JW Error Code = 21009
+				var emptyImaVastErrorCode = 20000 + win.google.ima.AdError.ErrorCode.VAST_EMPTY_RESPONSE;
+
+				fvLagger.markAsReady(null);
 				vastDebugger.setVastAttributes(featuredVideoContainer, event.tag, 'error', event.ima && event.ima.ad);
+
+				if (bidderEnabled && event.adErrorCode === emptyImaVastErrorCode) {
+					requestBidder();
+				}
+				bidderEnabled = false;
 			});
 		} else {
 			trackingParams.adProduct = 'featured-video-no-ad';
+			fvLagger.markAsReady(null);
 		}
 
 		adsTracking(player, trackingParams);

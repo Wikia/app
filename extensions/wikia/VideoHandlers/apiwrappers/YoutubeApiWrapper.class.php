@@ -28,9 +28,7 @@ class YoutubeApiWrapper extends ApiWrapper {
 			$id = $aData['v'];
 		}
 
-		if ( empty( $id ) ) {
-			$parsedUrl = parse_url( $url );
-
+		if ( empty( $id ) && isset( $parsedUrl['path'] ) ) {
 			$aExploded = explode( '/', $parsedUrl['path'] );
 			$id = array_pop( $aExploded );
 		}
@@ -149,15 +147,6 @@ class YoutubeApiWrapper extends ApiWrapper {
 		}
 
 		return '';
-	}
-
-	/**
-	 * Is resolution of 720 or higher available
-	 * @return boolean
-	 */
-	protected function isHdAvailable() {
-		return !empty( $this->interfaceObj['contentDetails']['definition'] )
-			&& ( $this->interfaceObj['contentDetails']['definition'] == 'hd' );
 	}
 
 	/**

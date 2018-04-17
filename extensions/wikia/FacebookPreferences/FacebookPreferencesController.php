@@ -1,7 +1,7 @@
 <?php
 
 use Swagger\Client\ApiException;
-use Wikia\DependencyInjection\Injector;
+use Wikia\Factory\ServiceFactory;
 use Wikia\Logger\Loggable;
 use Wikia\Service\User\ExternalAuth\FacebookService;
 
@@ -17,7 +17,7 @@ class FacebookPreferencesController extends WikiaController {
 	public function __construct() {
 		parent::__construct();
 
-		$this->facebookService = Injector::getInjector()->get( FacebookService::class );
+		$this->facebookService = ServiceFactory::instance()->externalAuthFactory()->facebookService();
 	}
 
 	public function init() {

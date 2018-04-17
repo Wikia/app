@@ -37,13 +37,14 @@ define('ext.wikia.adEngine.context.slotsContext', [
 		// those slots exists on all pages
 		setStatus('TOP_LEADERBOARD', true);
 		setStatus('TOP_RIGHT_BOXAD', true);
-		setStatus('BOTTOM_LEADERBOARD', true);
+		setStatus('BOTTOM_LEADERBOARD', context.targeting.skin === 'oasis');
 
 		setStatus('INCONTENT_BOXAD_1', !isHome);
 
 		setStatus('INVISIBLE_HIGH_IMPACT_2', !context.targeting.hasFeaturedVideo && geo.isProperGeo(instantGlobals.wgAdDriverHighImpact2SlotCountries));
 
 		setStatus('INCONTENT_PLAYER', isIncontentEnabled);
+		setStatus('FEATURED', context.targeting.hasFeaturedVideo);
 
 		log(['Slots:', slots], log.levels.info, logGroup);
 	}

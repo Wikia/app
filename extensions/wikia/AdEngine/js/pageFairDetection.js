@@ -56,7 +56,7 @@ define('ext.wikia.adEngine.pageFairDetection', [
 
 		win.bm_website_code = getWebsiteCode();
 		win.pf_notify = detector;
-		scriptLoader.loadAsync(context.opts.pageFairDetectionUrl, node);
+		scriptLoader.loadAsync(context.opts.pageFairDetectionUrl, {node: node});
 	}
 
 	return {

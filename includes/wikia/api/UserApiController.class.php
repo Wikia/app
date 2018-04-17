@@ -42,7 +42,6 @@ class UserApiController extends WikiaApiController {
 
 		foreach ( $users as $user ) {
 			$userName = $user->getName();
-			$powerUserTypes = ( new \Wikia\PowerUser\PowerUser( $user ) )->getTypesForUser();
 
 			$item = array(
 				'user_id' => $user->getId(),
@@ -51,10 +50,6 @@ class UserApiController extends WikiaApiController {
 				'url' => AvatarService::getUrl( $userName ),
 				'numberofedits' => (int) $user->getEditCount()
 			);
-
-			if ( !empty( $powerUserTypes ) ) {
-				$item['poweruser_types'] = $powerUserTypes;
-			}
 
 			//add avatar url if size !== 0
 			if ( $size > 0 ) {

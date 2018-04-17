@@ -126,7 +126,8 @@
 			format: 'json',
 			data: {
 				boardId1: boardId1,
-				boardId2: boardId2
+				boardId2: boardId2,
+				token: mw.user.tokens.get('editToken')
 			},
 			callback: function (json) {
 				if (json.status === 'error') {

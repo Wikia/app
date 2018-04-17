@@ -65,7 +65,7 @@ class VideoEmbedTool extends Video {
 	}
 
 	/**
-	 * Require the wiki ID we're on (or video wiki), and that everything is a video
+	 * Require the wiki ID we're on and that everything is a video
 	 *
 	 * @return string
 	 */

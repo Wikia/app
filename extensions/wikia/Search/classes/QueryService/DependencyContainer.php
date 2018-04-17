@@ -4,7 +4,10 @@
  */
 namespace Wikia\Search\QueryService;
 
-use \Wikia\Search\Traits, \Solarium_Client, \Wikia\Search\Config, \Wikia\Search\MediaWikiService, \Wikia\Search\ResultSet;
+use Solarium_Client;
+use Wikia\Search\Config;
+use Wikia\Search\MediaWikiService;
+use Wikia\Search\Traits\ArrayConfigurableTrait;
 
 /**
  * Used to encapsulate the dependencies that must be injected into the different query services.
@@ -16,7 +19,7 @@ use \Wikia\Search\Traits, \Solarium_Client, \Wikia\Search\Config, \Wikia\Search\
  * @subpackage QueryService
  */
 class DependencyContainer {
-	use Traits\ArrayConfigurableTrait;
+	use ArrayConfigurableTrait;
 
 	/**
 	 * Used to handle all non-primitive MediaWiki logic.
@@ -45,16 +48,16 @@ class DependencyContainer {
 	 * @param array $dependencies an associative array of attribute to value.
 	 */
 	public function __construct( array $dependencies = [] ) {
-		$this->service = ( new \Wikia\Search\ProfiledClassFactory )->get( 'Wikia\Search\MediaWikiService' );
+		$this->service = new MediaWikiService();
 		$this->configureByArray( $dependencies );
 	}
 
 	/**
 	 * Accessor for mw service.
 	 *
-	 * @return DependencyContainer
+	 * @return MediaWikiService
 	 */
-	public function getService() {
+	public function getService(): MediaWikiService {
 		return $this->service;
 	}
 

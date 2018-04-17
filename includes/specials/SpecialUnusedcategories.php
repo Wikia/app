@@ -37,16 +37,24 @@ class UnusedCategoriesPage extends QueryPage {
 	}
 
 	function getQueryInfo() {
-		return array (
-			'tables' => array ( 'page', 'categorylinks' ),
-			'fields' => array ( 'page_namespace AS namespace',
-					'page_title AS title' ),
-			'conds' => array ( 'cl_from IS NULL',
-					'page_namespace' => NS_CATEGORY,
-					'page_is_redirect' => 0 ),
-			'join_conds' => array ( 'categorylinks' => array (
-					'LEFT JOIN', 'cl_to = page_title' ) )
-		);
+		return [
+			'tables' => [ 'page', 'categorylinks' ],
+			'fields' => [
+				'page_namespace AS namespace',
+				'page_title AS title',
+			],
+			'conds' => [
+				'cl_from IS NULL',
+				'page_namespace' => NS_CATEGORY,
+				'page_is_redirect' => 0,
+			],
+			'join_conds' => [
+				'categorylinks' => [
+					'LEFT JOIN',
+					'cl_to = page_title',
+				],
+			],
+		];
 	}
 
 	/**
@@ -59,5 +67,9 @@ class UnusedCategoriesPage extends QueryPage {
 	function formatResult( $skin, $result ) {
 		$title = Title::makeTitle( NS_CATEGORY, $result->title );
 		return Linker::link( $title, htmlspecialchars( $title->getText() ) );
+	}
+
+	function getOrderFields() {
+		return [ 'title' ];
 	}
 }

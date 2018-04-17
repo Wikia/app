@@ -212,4 +212,13 @@ class BlogsHelper {
 
 		return true;
 	}
+
+	/**
+	 * SUS-3561: Exclude Blogs from Wanted Pages
+	 * @param array $namespaces
+	 */
+	public static function onWantedPagesGetExcludedNamespaces( array &$namespaces ) {
+		$namespaces[] = NS_BLOG_ARTICLE;
+		$namespaces[] = NS_BLOG_ARTICLE_TALK;
+	}
 }

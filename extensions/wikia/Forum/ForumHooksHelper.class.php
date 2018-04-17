@@ -319,6 +319,9 @@ class ForumHooksHelper {
 					'exception' => $entryNotFoundException
 				] );
 			}
+
+			// SUS-4084: Purge Forum activity module cache here - we don't need to purge it when a Wall thread changes
+			CachedForumActivityService::purgeCache();
 		}
 		return true;
 	}
@@ -466,8 +469,7 @@ class ForumHooksHelper {
 		$pageTitle = $page->getTitle();
 
 		if ( $pageTitle->inNamespace( NS_WIKIA_FORUM_BOARD_THREAD ) ) {
-			$wallHistory = new WallHistory();
-			WikiaDataAccess::cachePurge( $wallHistory->getLastPostsMemcKey() );
+			CachedForumActivityService::purgeCache();
 
 			// SUS-2757: After the main transaction is closed, delete watchlist entries for thread
 			$threadWatchlistDeleteUpdate = new ThreadWatchlistDeleteUpdate( $pageTitle );

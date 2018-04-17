@@ -56,9 +56,7 @@ class OasisController extends WikiaController {
 		$this->quantServe = null;
 		$this->a9 = null;
 		$this->gfc = null;
-		$this->nielsen = null;
 		$this->prebid = null;
-		$this->sourcePoint = null;
 		$this->instartLogic = null;
 		$this->dynamicYield = null;
 		$this->krux = null;
@@ -88,8 +86,6 @@ class OasisController extends WikiaController {
 	 * at the bottom for performance reasons, but there are some exceptions for engineering reasons).
 	 *
 	 * TODO: make sure JavaScripts can be always loaded on bottom
-	 *
-	 * Note: NS_FILE pages need JS at top because AnyClips relies on jQuery.
 	 */
 	public static function JsAtBottom(){
 		global $wgTitle;
@@ -250,9 +246,7 @@ class OasisController extends WikiaController {
 			$this->quantServe = AnalyticsEngine::track('QuantServe', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->a9 = AnalyticsEngine::track('A9', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->gfc = AnalyticsEngine::track('GoogleFundingChoices', AnalyticsEngine::EVENT_PAGEVIEW);
-			$this->nielsen = AnalyticsEngine::track('Nielsen', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->prebid = AnalyticsEngine::track('Prebid', AnalyticsEngine::EVENT_PAGEVIEW);
-			$this->sourcePoint = ARecoveryBootstrapCode::getSourcePointBootstrapCode();
 			$this->instartLogic = ARecoveryBootstrapCode::getInstartLogicBootstrapCode();
 			$this->dynamicYield = AnalyticsEngine::track('DynamicYield', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->krux = AnalyticsEngine::track('Krux', AnalyticsEngine::EVENT_PAGEVIEW);

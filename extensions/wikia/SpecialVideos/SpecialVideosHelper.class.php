@@ -49,13 +49,12 @@ class SpecialVideosHelper extends WikiaModel {
 	/**
 	 * get list of videos
 	 * @param integer $page
-	 * @param string $filter [all/premium]
 	 * @param array $providers
 	 * @param string $category
 	 * @param array $options
 	 * @return array $videos
 	 */
-	public function getVideos( $page, $filter = 'all', $providers = [], $category = '', $options = [] ) {
+	public function getVideos( $page, $providers = [], $category = '', $options = [] ) {
 		wfProfileIn( __METHOD__ );
 
 		if ( $this->app->checkSkin( 'wikiamobile' ) ) {
@@ -80,7 +79,7 @@ class SpecialVideosHelper extends WikiaModel {
 
 		// get video list
 		$mediaService = new MediaQueryService();
-		$videoList = $mediaService->getVideoList( $filter, $limit, $page, $providers, $category );
+		$videoList = $mediaService->getVideoList( $limit, $page, $providers, $category );
 
 		$videoOptions = [
 			'thumbWidth'       => self::THUMBNAIL_WIDTH,
@@ -129,9 +128,7 @@ class SpecialVideosHelper extends WikiaModel {
 		wfProfileIn( __METHOD__ );
 
 		$mediaService = new MediaQueryService();
-		if ( !empty( $videoParams['sort'] ) && $videoParams['sort'] == 'premium' ) {
-			$totalVideos = $mediaService->getTotalPremiumVideos();
-		} else if ( !empty( $videoParams['category'] ) ) {
+		if ( !empty( $videoParams['category'] ) ) {
 			$totalVideos = $mediaService->getTotalVideosByCategory( $videoParams['category'] );
 		} else {
 			$totalVideos = $mediaService->getTotalVideos();
@@ -176,17 +173,6 @@ class SpecialVideosHelper extends WikiaModel {
 		}
 
 		return $postedInMsg;
-	}
-
-	/**
-	 * check if premium video exists
-	 * @return integer $videoExist [0/1]
-	 */
-	public function premiumVideosExist() {
-		$mediaService = new MediaQueryService();
-		$videoExist = (bool) $mediaService->getTotalPremiumVideos();
-
-		return $videoExist;
 	}
 
 	/**

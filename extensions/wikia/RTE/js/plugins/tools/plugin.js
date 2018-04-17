@@ -116,7 +116,15 @@ window.RTE.tools = {
 
 	// creates new placeholder of given type and with given meta data
 	createPlaceholder: function(type, data) {
-		var placeholder = $('<img />', RTE.getInstance().document.$);
+
+		var placeholder;
+
+		if (type === 'double-brackets') {
+			placeholder = $('<div />', RTE.getInstance().document.$);
+			placeholder.attr('contenteditable', false);
+		} else {
+			placeholder = $('<img />', RTE.getInstance().document.$);
+		}
 
 		// CSS classes and attributes
 		placeholder.addClass('placeholder placeholder-' + type);
@@ -144,14 +152,14 @@ window.RTE.tools = {
 
 	// get height of editor's iframe
 	getEditorHeight: function() {
-		return $('#cke_contents_' + WikiaEditor.instanceId).height();
+		return $('#cke_' + WikiaEditor.instanceId).height();
 	},
 
 	// get editor's document scroll offsets
 	getEditorScrollOffsets: function() {
 		var scrollLeft, scrollTop;
 
-		if (CKEDITOR.env.webkit) {
+		if (CKEDITOR.env.safari) {
 			// RT #46408: use different property for Safari to get scroll offset
 			scrollLeft = RTE.getInstance().document.$.body.scrollLeft;
 			scrollTop = RTE.getInstance().document.$.body.scrollTop;
@@ -206,7 +214,7 @@ window.RTE.tools = {
 
 	// get list of placeholders of given type (or all if no type is provided)
 	getPlaceholders: function(type) {
-		var query = type ? ('img[type=' + type + ']') : 'img.placeholder';
+		var query = type ? ('*[type=' + type + ']') : '.placeholder';
 		var placeholders = RTE.getEditor().find(query);
 		return placeholders;
 	},

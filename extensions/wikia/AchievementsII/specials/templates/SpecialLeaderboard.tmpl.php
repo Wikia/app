@@ -37,7 +37,6 @@
 		foreach($ranking as $rank => $rankedUser){
 		global $wgExtensionsPath, $wgLang;
 		$curRanking = $rankedUser->getCurrentRanking();
-		$prevRanking = $rankedUser->getPreviousRanking();
 		if (!isset($topUserBadges[$rankedUser->getID()])) continue;
 		$badge = $topUserBadges[$rankedUser->getID()];
 		$badgeIsSponsored = $badge->isSponsored();
@@ -50,13 +49,7 @@
 	?>
 		<tr>
 			<td class="rank">
-				<span><?= '&nbsp;' . $curRanking ?>
-					<?if($curRanking < $prevRanking):?>
-						<img src="<?="{$wgExtensionsPath}/wikia/AchievementsII/images/uparrow.png";?>" />
-					<?elseif($curRanking > $prevRanking && $prevRanking !== null):?>
-						<img src="<?="{$wgExtensionsPath}/wikia/AchievementsII/images/downarrow.png";?>" />
-					<?endif;?>
-				</span>
+				<span><?= '&nbsp;' . $curRanking ?></span>
 			</td>
 			<td class="user">
 				<?= AvatarService::renderAvatar($rankedUser->getName(), 35); ?>

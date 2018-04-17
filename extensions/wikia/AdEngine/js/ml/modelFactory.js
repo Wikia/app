@@ -1,22 +1,30 @@
 /*global define*/
 define('ext.wikia.adEngine.ml.modelFactory', [
+	'ext.wikia.adEngine.adContext',
 	'wikia.geo',
 	'wikia.instantGlobals'
-], function (geo, instantGlobals) {
+], function (adContext, geo, instantGlobals) {
 	'use strict';
 
 	var requiredData = [
 		'inputParser',
 		'model',
 		'name',
-		'wgCountriesVariable'
+		'wgCountriesVariable',
+		'enabled'
 	];
 
 	function create(modelData) {
 		requiredData.forEach(function (key) {
-			if (!modelData[key]) {
+			if (typeof modelData[key] === 'undefined') {
 				throw new Error('Missing ' + key + ' in model definition.');
 			}
+		});
+
+		var predictedValue = null;
+
+		adContext.addCallback(function () {
+			predictedValue = null;
 		});
 
 		return {
@@ -29,13 +37,17 @@ define('ext.wikia.adEngine.ml.modelFactory', [
 			},
 
 			isEnabled: function () {
-				return geo.isProperGeo(instantGlobals[modelData.wgCountriesVariable]);
+				return modelData.enabled && geo.isProperGeo(instantGlobals[modelData.wgCountriesVariable]);
 			},
 
 			predict: function () {
-				var data = modelData.inputParser.getData();
+				if (predictedValue === null || !modelData.cachePrediction) {
+					var data = modelData.inputParser.getData();
 
-				return modelData.model.predict(data);
+					predictedValue = modelData.model.predict(data);
+				}
+
+				return predictedValue;
 			}
 		};
 	}

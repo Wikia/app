@@ -58,7 +58,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.aol', [
 					alias: '4431565',
 					sizeId: '170'
 				},
-				MOBILE_PREFOOTER: {
+				BOTTOM_LEADERBOARD: {
 					size: [300, 250],
 					placement: '4431566',
 					network: network,

@@ -5,9 +5,8 @@ define('ext.wikia.adEngine.lookup.lookupFactory', [
 	'ext.wikia.aRecoveryEngine.adBlockDetection',
 	'wikia.lazyqueue',
 	'wikia.log',
-	'wikia.promise',
 	require.optional('ext.wikia.adEngine.mobile.mercuryListener')
-], function (adContext, adTracker, adBlockDetection, lazyQueue, log, Promise, mercuryListener) {
+], function (adContext, adTracker, adBlockDetection, lazyQueue, log, mercuryListener) {
 	'use strict';
 
 	function create(module) {
@@ -123,14 +122,28 @@ define('ext.wikia.adEngine.lookup.lookupFactory', [
 			});
 		}
 
-		function waitForResponse(milisToTimeout) {
-			return Promise.createWithTimeout(function (resolve) {
-				if (hasResponse()) {
-					resolve();
-				} else {
-					addResponseListener(resolve);
-				}
-			}, milisToTimeout);
+		function waitForResponseCallbacks(onSuccess, onTimeout, millisToTimeout) {
+			var resolved = false,
+				timeoutId;
+
+			if (hasResponse()) {
+				onSuccess();
+			} else {
+				timeoutId = setTimeout(function () {
+					onTimeout();
+					resolved = true;
+				}, millisToTimeout);
+
+				addResponseListener(function () {
+					if (!resolved) {
+						onSuccess();
+
+						if (timeoutId) {
+							clearTimeout(timeoutId);
+						}
+					}
+				});
+			}
 		}
 
 		resetState();
@@ -149,7 +162,7 @@ define('ext.wikia.adEngine.lookup.lookupFactory', [
 			isSlotSupported: isSlotSupported,
 			trackState: trackState,
 			wasCalled: wasCalled,
-			waitForResponse: waitForResponse
+			waitForResponseCallbacks: waitForResponseCallbacks
 		};
 	}
 

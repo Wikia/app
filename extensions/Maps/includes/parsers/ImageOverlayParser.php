@@ -2,11 +2,9 @@
 
 namespace Maps;
 
-use DataValues\Geo\Parsers\GeoCoordinateParser;
 use Maps\Elements\ImageOverlay;
-use Maps\Elements\WmsOverlay;
 use ValueParsers\ParseException;
-use ValueParsers\StringValueParser;
+use ValueParsers\ValueParser;
 
 /**
  * @since 3.1
@@ -14,17 +12,23 @@ use ValueParsers\StringValueParser;
  * @licence GNU GPL v2+
  * @author Jeroen De Dauw < jeroendedauw@gmail.com >
  */
-class ImageOverlayParser extends StringValueParser {
+class ImageOverlayParser implements ValueParser {
+
+	private $geocoder;
+
+	public function __construct() {
+		$this->geocoder = MapsFactory::newDefault()->newGeocoder();
+	}
 
 	/**
 	 * @since 3.1
 	 *
 	 * @param string $value
 	 *
-	 * @return WmsOverlay
+	 * @return ImageOverlay
 	 * @throws ParseException
 	 */
-	protected function stringParse( $value ) {
+	public function parse( $value ) {
 		$parameters = explode( '~', $value );
 		$imageParameters = explode( ':', $parameters[0], 3 );
 
@@ -40,8 +44,13 @@ class ImageOverlayParser extends StringValueParser {
 	}
 
 	private function stringToLatLongValue( $location ) {
-		$parser = new GeoCoordinateParser( new \ValueParsers\ParserOptions() );
-		return $parser->parse( $location );
+		$latLong = $this->geocoder->geocode( $location );
+
+		if ( $location === null ) {
+			throw new ParseException( 'Failed to parse or geocode' );
+		}
+
+		return $latLong;
 	}
 
 }

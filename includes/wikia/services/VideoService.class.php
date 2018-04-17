@@ -27,11 +27,6 @@ class VideoService extends WikiaModel {
 		}
 
 		$vHelper = new VideoHandlerHelper();
-# @TODO Commenting out to fix MAIN-4436 -- Should be fixed correctly when content team is back
-#		if ( !$vHelper->isVideoProviderSupported( $url ) ) {
-#			wfProfileOut( __METHOD__ );
-#			return wfMessage( 'videos-error-provider-not-supported' )->parse();
-#		}
 
 		try {
 			// is it a WikiLink?
@@ -49,12 +44,7 @@ class VideoService extends WikiaModel {
 				$videoTitle = $title;
 				$videoPageId = $title->getArticleId();
 				$videoProvider = '';
-				Hooks::run( 'AddPremiumVideo', array( $title ) );
 			} else {
-				if ( empty( $this->wg->allowNonPremiumVideos ) ) {
-					wfProfileOut( __METHOD__ );
-					return wfMessage( 'videohandler-non-premium' )->parse();
-				}
 				list($videoTitle, $videoPageId, $videoProvider) = $this->addVideoVideoHandlers( $url );
 
 				// SUS-1195: by-pass the RepoGroup process cache

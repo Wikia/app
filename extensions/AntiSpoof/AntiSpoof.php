@@ -30,7 +30,6 @@ $wgAutoloadClasses['AntiSpoofHooks'] = "$dir/AntiSpoofHooks.php";
 $wgAutoloadClasses['SpoofUser'] = "$dir/SpoofUser.php";
 $wgAutoloadClasses['BatchAntiSpoof'] = "$dir/maintenance/batchAntiSpoof.php";
 
-$wgHooks['LoadExtensionSchemaUpdates'][] = 'AntiSpoofHooks::asUpdateSchema';
 $wgHooks['AbortNewAccount'][] = 'AntiSpoofHooks::asAbortNewAccountHook';
 $wgHooks['UserCreateForm'][] = 'AntiSpoofHooks::asUserCreateFormHook';
 $wgHooks['AddNewAccount'][] = 'AntiSpoofHooks::asAddNewAccountHook';

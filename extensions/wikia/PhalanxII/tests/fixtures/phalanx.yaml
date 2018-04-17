@@ -1,0 +1,68 @@
+phalanx:
+  - p_id: 1
+    p_author_id: 1
+    p_text: karamba
+    p_ip_hex:
+    p_type: 8
+    p_timestamp: 20110101000000
+    p_expire:
+    p_exact: 1
+    p_regex: 0
+    p_case: 0
+    p_reason: test
+    p_lang:
+    p_comment: internal test
+  - p_id: 2
+    p_author_id: 1
+    p_text: other
+    p_ip_hex:
+    p_type: 8
+    p_timestamp: 20110201000000
+    p_expire:
+    p_exact: 1
+    p_regex: 0
+    p_case: 1
+    p_reason: test 2
+    p_lang:
+    p_comment: other test
+phalanx_stats:
+  - ps_id: 120
+    ps_blocker_id: 1
+    ps_blocker_type: 8
+    ps_timestamp: 20130301000000
+    ps_blocked_user_id: 2
+    ps_blocked_user: ''
+    ps_wiki_id: 177
+    ps_blocker_hit: 8
+    ps_referrer:
+  - ps_id: 121
+    ps_blocker_id: 1
+    ps_blocker_type: 8
+    ps_timestamp: 20140301000000
+    ps_blocked_user_id: 3
+    ps_blocked_user: ''
+    ps_wiki_id: 147
+    ps_blocker_hit: 8
+    ps_referrer:
+  - ps_id: 122
+    ps_blocker_id: 2
+    ps_blocker_type: 8
+    ps_timestamp: 20120301000000
+    ps_blocked_user_id: 2
+    ps_blocked_user: ''
+    ps_wiki_id: 1706
+    ps_blocker_hit: 8
+    ps_referrer:
+user:
+  - user_id: 1
+    user_name: 'TestUser'
+    user_real_name: ''
+    user_email: 'kossuth.lajos@lajoskossuth.hu'
+    user_touched: '20110101000000'
+    user_token: 'loremipsum'
+    user_email_authenticated: '20101102000000'
+    user_email_token: 'dolorsitamet'
+    user_email_token_expires: '20120301120000'
+    user_registration: '20090604060000'
+    user_editcount: 2500
+    user_birthdate:

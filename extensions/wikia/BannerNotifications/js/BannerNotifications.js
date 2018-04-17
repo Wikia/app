@@ -267,13 +267,10 @@
 		headerBottom = $header.length > 0 ? $header.get(0).getBoundingClientRect().bottom : 0;
 
 		if (containerTop < headerBottom) {
+			notificationWrapper.css('top', headerBottom);
+
 			if (!notificationWrapper.hasClass('float')) {
 				notificationWrapper.addClass('float');
-
-				// if element has no inline top style let's put it to make sure container is positioned correctly
-				if (!notificationWrapper.prop('style').top) {
-					notificationWrapper.css('top', headerBottom);
-				}
 			}
 		} else {
 			notificationWrapper.removeClass('float');

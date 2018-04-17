@@ -293,7 +293,6 @@ class LightboxControllerTest extends WikiaBaseTest {
 
 		$mediaType = $data['mediaType'];
 		$videoEmbedCode = $data['videoEmbedCode'];
-		$playerAsset = $data['playerAsset'];
 		$imageUrl = $data['imageUrl'];
 		$fileUrl = $data['fileUrl'];
 		$rawImageUrl = $data['rawImageUrl'];
@@ -312,7 +311,6 @@ class LightboxControllerTest extends WikiaBaseTest {
 		$mediaDetail = [
 			'mediaType'         => $mediaType,
 			'videoEmbedCode'    => $videoEmbedCode,
-			'playerAsset'       => $playerAsset,
 			'imageUrl'          => $imageUrl,
 			'fileUrl'           => $fileUrl,
 			'rawImageUrl'       => $rawImageUrl,

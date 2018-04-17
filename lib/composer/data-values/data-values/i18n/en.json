@@ -1,9 +1,0 @@
-{
-    "@metadata": {
-        "authors": [
-            "Jeroen De Dauw"
-        ]
-    },
-    "datavalues-desc": "Collection of objects representing various kinds of values",
-    "version-datavalues": "DataValues"
-}

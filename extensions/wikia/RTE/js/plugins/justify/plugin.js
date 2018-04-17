@@ -269,7 +269,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 			editor.on( 'dirChanged', onDirChanged );
 		},
 
-		requires : [ 'domiterator' ]
+//		requires : [ 'domiterator' ]
 	});
 })();
 

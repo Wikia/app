@@ -59,12 +59,6 @@ class CuratedContentValidatorTest extends WikiaBaseTest {
 				],
 				[],
 			], [
-				['article_id' => 9, 'image_id' => 9, 'label' => 'foo', 'type' => 'video', 'video_info' => [
-						'provider' => 'ooyalaFoo'
-					]
-				],
-				[],
-			], [
 				['article_id' => 9, 'image_id' => 9, 'label' => 'foo', 'type' => ''],
 				[CuratedContentValidator::ERR_NOT_SUPPORTED_TYPE],
 			], [

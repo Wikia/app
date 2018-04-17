@@ -49,7 +49,7 @@ class UserService {
 	 * @param $ids array|string list of ids or names for users, should be specified as
 	 *             array( 'user_id' => array(ids)|id [, 'user_name' => array(names)|name ]) or array( ids and names )
 	 *
-	 * @return mixed array list of User class objects
+	 * @return User[] list of User class objects
 	 */
 	public function getUsers( $ids ) {
 		wfProfileIn( __METHOD__ );

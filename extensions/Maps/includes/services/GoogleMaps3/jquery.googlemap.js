@@ -3,6 +3,7 @@
  * @see http://www.mediawiki.org/wiki/Extension:Maps
  *
  * @author Jeroen De Dauw <jeroendedauw at gmail dot com>
+ * @author Peter Grassberger < petertheone@gmail.com >
  */
 
 (function ($, mw) {
@@ -53,7 +54,7 @@
 
 		var getBounds = function() {
 			if (( options.centre === false || options.zoom === false ) && options.locations.length > 1) {
-				bounds = new google.maps.LatLngBounds();
+				var bounds = new google.maps.LatLngBounds();
 
 				for (var i = _this.markers.length - 1; i >= 0; i--) {
 					bounds.extend(_this.markers[i].getPosition());
@@ -64,7 +65,7 @@
 		};
 
 		var setZoom = function(bounds) {
-				if (options.zoom === false) {
+			if (options.zoom === false) {
 				_this.map.fitBounds(bounds);
 			}
 			else {
@@ -89,7 +90,7 @@
 				labelClass:'markerwithlabel'
 			};
 
-			if (markerData.icon !== '') {
+			if (!markerData.hasOwnProperty('icon') || markerData.icon !== '') {
 				markerOptions.icon = markerData.icon;
 			}
 
@@ -161,6 +162,10 @@
 		 * Removes all markers from the map.
 		 */
 		this.removeMarkers = function () {
+			if (this.markercluster) {
+				this.markercluster.setMap(null);
+				this.markercluster = null;
+			}
 			for (var i = this.markers.length - 1; i >= 0; i--) {
 				this.markers[i].setMap(null);
 			}
@@ -215,7 +220,7 @@
 									doc[i].gpolygons,
 									doc[i].gpolylines,
 									doc[i].ggroundoverlays
-									]);
+								]);
 							}
 						}
 					}
@@ -225,7 +230,7 @@
 						map:_this.map,
 						zoom:options.kmlrezoom,
 						failedParse:function(){
-							alert(mediaWiki.msg('maps-kml-parsing-failed'));
+							alert(mw.msg('maps-kml-parsing-failed'));
 						}
 					});
 					geoXml.options.afterParse = function(docs){
@@ -255,8 +260,6 @@
 								label.appendChild(text);
 
 								toggleDiv.appendChild(label);
-
-								console.log(toggleDiv);
 							})(docs[i]);
 						}
 						_this.map.controls[google.maps.ControlPosition.TOP_RIGHT].push(toggleDiv);
@@ -444,12 +447,31 @@
 				}
 			}
 			this.map.fitBounds(bounds);
-		}
+		};
+
+		this.createMarkerCluster = function() {
+			if ( !options.markercluster ) {
+				return;
+			}
+			if (this.markercluster) {
+				this.markercluster.setMap(null);
+				this.markercluster = null;
+			}
+			this.markercluster = new MarkerClusterer( this.map, this.markers, {
+				imagePath: mw.config.get( 'wgScriptPath' ) +
+				'/extensions/Maps/includes/images/m',
+				gridSize: this.options.clustergridsize,
+				maxZoom: this.options.clustermaxzoom,
+				zoomOnClick: this.options.clusterzoomonclick,
+				averageCenter: this.options.clusteraveragecenter,
+				minimumClusterSize: this.options.clusterminsize
+			} );
+		};
 
 		this.initializeMap = function () {
 			var mapOptions = {
 				disableDefaultUI:true,
-				mapTypeId:options.type == 'earth' ? google.maps.MapTypeId.SATELLITE : eval('google.maps.MapTypeId.' + options.type)
+				mapTypeId:options.type == 'earth' ? google.maps.MapTypeId.SATELLITE : google.maps.MapTypeId[ options.type ]
 			};
 
 			// Map controls
@@ -458,17 +480,18 @@
 			mapOptions.mapTypeControl = $.inArray('type', options.controls) != -1;
 			mapOptions.scaleControl = $.inArray('scale', options.controls) != -1;
 			mapOptions.streetViewControl = $.inArray('streetview', options.controls) != -1;
+			mapOptions.rotateControl = $.inArray('rotate', options.controls) != -1;
 
 			for (i in options.types) {
 				if (typeof( options.types[i] ) !== 'function') {
-					options.types[i] = eval('google.maps.MapTypeId.' + options.types[i].toUpperCase() );
+					options.types[i] = google.maps.MapTypeId[ options.types[i].toUpperCase() ];
 				}
 			}
 
 			// Map control styles
-			mapOptions.zoomControlOptions = { style:eval('google.maps.ZoomControlStyle.' + options.zoomstyle) };
+			mapOptions.zoomControlOptions = { style:google.maps.ZoomControlStyle[ options.zoomstyle ] };
 			mapOptions.mapTypeControlOptions = {
-				style:eval('google.maps.MapTypeControlStyle.' + options.typestyle),
+				style:google.maps.MapTypeControlStyle[ options.typestyle ],
 				mapTypeIds:options.types
 			};
 
@@ -524,12 +547,12 @@
 			}
 
 			var layerMapping = {
-				'traffic':'new google.maps.TrafficLayer()',
-				'bicycling':'new google.maps.BicyclingLayer()'
+				'traffic': new google.maps.TrafficLayer(),
+				'bicycling': new google.maps.BicyclingLayer()
 			};
 
 			for (i = options.layers.length - 1; i >= 0; i--) {
-				var layer = eval(layerMapping[options.layers[i]]);
+				var layer = layerMapping[ options.layers[i] ];
 				layer.setMap(map);
 			}
 
@@ -613,21 +636,11 @@
 			/**
 			 * Allows grouping of markers.
 			 */
-			if ( options.markercluster ) {
-				mw.loader.using(
-					'ext.maps.gm3.markercluster',
-					function() {
-						_this.markercluster = new MarkerClusterer( _this.map, _this.markers, {
-							averageCenter: true
-						} );
-					}
-				);
-			}
-
+			this.createMarkerCluster();
 
 
 			if (options.searchmarkers) {
-				var searchBoxValue = mediaWiki.msg('maps-searchmarkers-text');
+				var searchBoxValue = mw.msg('maps-searchmarkers-text');
 				var searchBox = $('<input type="text" value="' + searchBoxValue + '" />');
 				var searchContainer = document.createElement('div');
 				searchContainer.style.padding = '5px';
@@ -647,7 +660,7 @@
 						var marker = _this.markers[i];
 						if (options.searchmarkers == 'title') {
 							haystack = marker.title;
-						} else if (options.searchmarkers == 'all') {
+						} else {
 							haystack = marker.title + marker.text;
 						}
 
@@ -780,7 +793,7 @@
 			controlUI.style.textAlign = 'center';
 			controlUI.style.boxShadow = 'rgba(0, 0, 0, 0.298039) 0px 1px 4px -1px';
 			controlUI.style.backgroundClip = 'padding-box';
-			controlUI.title = mediaWiki.msg('maps-fullscreen-button-tooltip');
+			controlUI.title = mw.msg('maps-fullscreen-button-tooltip');
 			controlDiv.appendChild(controlUI);
 
 			var controlText = document.createElement('div');
@@ -789,7 +802,7 @@
 			controlText.style.fontWeight = '400';
 			controlText.style.color = 'rgb(86, 86, 86)';
 			controlText.style.padding = '1px 6px';
-			controlText.innerHTML = mediaWiki.msg('maps-fullscreen-button');
+			controlText.innerHTML = mw.msg('maps-fullscreen-button');
 			controlUI.appendChild(controlText);
 
 			google.maps.event.addDomListener(controlUI, 'click', function() {
@@ -846,10 +859,10 @@
 			};
 
 			if ( event.latLng === undefined ) {
-				this.openWindow.open( this.map, this );
+				this.openWindow.open( _this.map, this );
 			}
 			else {
-				this.openWindow.open( this.map );
+				this.openWindow.open( _this.map );
 			}
 		}
 
@@ -860,14 +873,20 @@
 				}
 			}else{
 				google.maps.event.addListener(object, 'rightclick', function (event) {
-					prompt(mediaWiki.msg('maps-copycoords-prompt'), event.latLng.lat() + ',' + event.latLng.lng());
+					prompt(mw.msg('maps-copycoords-prompt'), event.latLng.lat() + ',' + event.latLng.lng());
 				});
 			}
 		}
 
 		//Complete path to OpenLayers WMS layer
 
-		this.setup();
+		if (!options.markercluster) {
+			this.setup();
+		} else {
+			mw.loader.using( 'ext.maps.gm3.markercluster', function() {
+				_this.setup();
+			} );
+		}
 
 		return this;
 

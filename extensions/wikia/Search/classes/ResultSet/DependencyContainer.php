@@ -4,7 +4,10 @@
  */
 namespace Wikia\Search\ResultSet;
 
-use \Wikia\Search\Config, \Solarium_Result_Select, \Wikia\Search\MediaWikiService, \Wikia\Search\Traits, \Wikia\Search\Match\Wiki;
+use Solarium_Result_Select;
+use Wikia\Search\Config;
+use Wikia\Search\MediaWikiService;
+use Wikia\Search\Traits\ArrayConfigurableTrait;
 
 /**
  * This allows us to encapsulate all dependencies and send a single object to Wikia\Search\ResultSet\Factory
@@ -14,7 +17,7 @@ use \Wikia\Search\Config, \Solarium_Result_Select, \Wikia\Search\MediaWikiServic
  * @subpackage ResultSet
  */
 class DependencyContainer {
-	use Traits\ArrayConfigurableTrait;
+	use ArrayConfigurableTrait;
 
 	/**
 	 * Search Config
@@ -44,7 +47,7 @@ class DependencyContainer {
 	 * @param array $dependencies optional method of prepopulating the dependencies. Can also call mutators.
 	 */
 	public function __construct( array $dependencies = [] ) {
-		$this->setService( ( new \Wikia\Search\ProfiledClassFactory )->get( 'Wikia\Search\MediaWikiService' ) )
+		$this->setService( new MediaWikiService() )
 			->configureByArray( $dependencies );
 	}
 

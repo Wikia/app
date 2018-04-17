@@ -136,16 +136,6 @@ $global-navigation-and-sitewide-messages-index: 5000101;
 	}
 }
 
-#TOP_BUTTON_WIDE {
-        margin-right: 10px;
-}
-
-@media screen and (max-width: 1063px) {
-	#TOP_BUTTON_WIDE {
-		display: none;
-	}
-}
-
 #TOP_LEADERBOARD {
 	> div {
 		margin-left: auto;

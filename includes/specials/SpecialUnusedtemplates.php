@@ -54,6 +54,10 @@ class UnusedtemplatesPage extends QueryPage {
 		);
 	}
 
+	function getOrderFields() {
+		return [ 'title' ];
+	}
+
 	/**
 	 * @param $skin Skin
 	 * @param $result

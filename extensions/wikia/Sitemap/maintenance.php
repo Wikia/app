@@ -34,17 +34,6 @@ foreach( $namespaces as $namespace ) {
 	$indexes[ $namespace ] = $sitemap->cachePages( $namespace );
 	echo " pages " . count( $indexes[ $namespace ] );
 	echo " done\n";
-
-	$includeVideo = (bool) F::app()->wg->EnableVideoSitemaps;
-	if( $includeVideo && ( $namespace !=  NS_FILE ) ) {
-		$includeVideo = false;
-	}
-
-	if($includeVideo) {
-		echo  "`-> Caching sitemaps for namespace: $namespace ...\n";
-		$sitemap->cacheSitemap( $namespace, $indexes );
-	}
-
 }
 
 /**

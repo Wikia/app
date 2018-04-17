@@ -19,7 +19,7 @@ require_once "$IP/includes/AutoLoader.php";
 require_once "$IP/includes/profiler/Profiler.php";
 
 # Start the profiler
-$wgProfiler = array();
+$wgProfiler = [];
 if ( file_exists( "$IP/StartProfiler.php" ) ) {
 	require "$IP/StartProfiler.php";
 }
@@ -52,7 +52,7 @@ $wgTitle = null;
 global $wgAutoloadClasses;
 
 if ( is_null( $wgAutoloadClasses ) ) {
-	$wgAutoloadClasses = array();
+	$wgAutoloadClasses = [];
 }
 
 require_once $IP . '/tests/TestsAutoLoader.php';

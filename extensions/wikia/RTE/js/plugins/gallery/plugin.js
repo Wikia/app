@@ -1,3 +1,4 @@
+
 CKEDITOR.plugins.add('rte-gallery',
 {
 	init: function(editor) {

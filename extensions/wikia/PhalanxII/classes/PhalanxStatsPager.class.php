@@ -19,7 +19,15 @@ class PhalanxStatsPager extends PhalanxPager {
 
 	function getQueryInfo() {
 		$query['tables'] = 'phalanx_stats';
-		$query['fields'] = '*';
+		$query['fields'] = [
+			'ps_timestamp',
+			'ps_blocker_hit',
+			'ps_blocker_type',
+			'ps_blocked_user_id',
+			'ps_blocked_user',
+			'ps_referrer',
+			'ps_wiki_id',
+		];
 		$query['conds'] = array(
 			$this->qCond => $this->id,
 		);

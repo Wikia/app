@@ -31,10 +31,8 @@ class ApiAccessServiceTest extends \WikiaBaseTest {
 	}
 
 	public function testLoginAsUser() {
-
-		# 2 methods and 1 var used by private method ApiService::getHostByDbName, not directly mockable
-		$this->mockStaticMethod( "WikiFactory", 'DBtoID', "1" );
-		$this->mockStaticMethod( "WikiFactory", 'getVarValueByName', "foo.wikia.com" );
+		# 1 method and 1 var used by private method ApiService::getHostByDbName, not directly mockable
+		$this->mockStaticMethod( "WikiFactory", 'DBtoUrl', "foo.wikia.com" );
 		#turn off special case url building inside getHostByDbName
 		$this->mockGlobalVariable( "wgDevelEnvironment", false );
 

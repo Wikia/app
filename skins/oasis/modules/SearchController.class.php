@@ -26,10 +26,7 @@ class SearchController extends WikiaController {
 				$searchParams['ns'.$namespaceInt] = 1;
 			}
 		}
-		if ( $this->wg->CityId == Wikia\Search\QueryService\Select\Dismax\Video::VIDEO_WIKI_ID ) {
-			$searchParams['filters[]'] = 'is_video'; // this is required to hide images
-			$searchParams['rank'] = 'default'; // this is required to keep urls consistent between search and non-search pages
-		}
+
 		$this->searchParams = $searchParams;
 
 		$this->fulltext = $this->wg->User->getGlobalPreference('enableGoSearch') ? 0 : 'Search';

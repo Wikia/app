@@ -2,9 +2,8 @@
 
 use Swagger\Client\ApiException;
 use Swagger\Client\SiteAttribute\Api\SiteAttributeApi;
-use Wikia\DependencyInjection\Injector;
+use Wikia\Factory\ServiceFactory;
 use Wikia\Logger\Loggable;
-use Wikia\Service\Swagger\ApiProvider;
 
 class SiteAttributeService {
 
@@ -33,8 +32,7 @@ class SiteAttributeService {
 	 * @return SiteAttributeApi
 	 */
 	public function createApiClient() {
-		/** @var ApiProvider $apiProvider */
-		$apiProvider = Injector::getInjector()->get(ApiProvider::class);
+		$apiProvider = ServiceFactory::instance()->providerFactory()->apiProvider();
 
 		/** @var SiteAttributeApi $api */
 		$api = $apiProvider->getApi( self::SERVICE_NAME, SiteAttributeApi::class );

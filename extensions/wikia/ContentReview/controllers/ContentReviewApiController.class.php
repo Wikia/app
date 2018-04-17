@@ -11,7 +11,6 @@ class ContentReviewApiController extends WikiaApiController {
 
 	const CONTENT_REVIEW_RESPONSE_ACTION_INSERT = 'insert';
 	const CONTENT_REVIEW_RESPONSE_ACTION_UPDATE = 'update';
-	const CONTENT_REVIEW_TEST_MODE_KEY = 'contentReviewTestMode';
 
 	/**
 	 * Check permissions and add page to review queue

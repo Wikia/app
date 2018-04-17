@@ -62,6 +62,7 @@ class WallNotificationsTest extends WikiaBaseTest {
 
 		$notification->data = new StdClass();
 
+		$notification->data->article_title_ns = NS_USER_WALL;
 		$notification->data->wall_userid = '123';
 		$notification->data->msg_author_id = '567';
 		$notification->data->wall_username = 'LoremIpsum';

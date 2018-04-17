@@ -59,6 +59,10 @@ Contributions where also made by [several other awesome people]
 
 ## Release notes
 
+### 1.1.0 (2017-08-09)
+
+* Remove MediaWiki integration
+
 ### 1.0 (2014-09-26)
 
 * The CI now ensures compatibility with PHP 5.6 and HHVM

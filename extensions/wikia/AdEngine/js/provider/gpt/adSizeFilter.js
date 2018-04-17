@@ -1,14 +1,13 @@
 /*global define, require*/
 define('ext.wikia.adEngine.provider.gpt.adSizeFilter', [
-	'ext.wikia.adEngine.adContext',
+	'ext.wikia.adEngine.bridge',
 	'wikia.document',
 	'wikia.log',
 	'wikia.window'
-], function (adContext, doc, log, win) {
+], function (bridge, doc, log, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.gpt.adSizeFilter',
-		context = adContext.getContext(),
 		minSkinWidth = 1240;
 
 	function getNewSizes(sizes, maxWidth, fallbackSizes) {
@@ -35,32 +34,46 @@ define('ext.wikia.adEngine.provider.gpt.adSizeFilter', [
 			adContext.targeting &&
 			adContext.targeting.hasFeaturedVideo
 		) {
-			slotSizes.forEach(function(size, index, array) {
-				var str = size.toString();
-
-				if (str === '2,2' || str === '3,3') {
-					array.splice(index, 1);
-				}
-			});
+			slotSizes = removeUAPFromSlotSizes(slotSizes);
 		}
 
 		return slotSizes;
 	}
 
+	function removeUAPFromSlotSizes(slotSizes) {
+		return slotSizes.filter(function(size) {
+			var str = size.toString();
+
+			return !(str === '2,2' || str === '3,3');
+		});
+	}
+
+	function getBottomLeaderboardSizes(slotSizes) {
+		var skin = getAdContext().targeting.skin;
+
+		if (bridge.universalAdPackage.isFanTakeoverLoaded()) {
+			return skin === 'oasis' ? [[728, 90], [3, 3]] : [[2, 2]];
+		}
+
+		return removeUAPFromSlotSizes(slotSizes);
+	}
+
 	function filterSizes(slotName, slotSizes) {
 		log(['filterSizes', slotName, slotSizes], 'debug', logGroup);
 
-		removeUAPForFeaturedVideoPages(slotName, slotSizes);
+		var context = getAdContext();
+
+		slotSizes = removeUAPForFeaturedVideoPages(slotName, slotSizes);
 
 		switch (true) {
 			case slotName.indexOf('TOP_LEADERBOARD') > -1:
 				return getNewSizes(slotSizes, doc.documentElement.offsetWidth, [[728, 90]]);
 			case slotName === 'INVISIBLE_SKIN':
 				return doc.documentElement.offsetWidth >= minSkinWidth ? slotSizes : [[1, 1]];
-			case slotName === 'BOTTOM_LEADERBOARD':
-				return getNewSizes(slotSizes, doc.getElementById('WikiaFooter').offsetWidth, [[728, 90]]);
 			case slotName === 'INCONTENT_BOXAD_1' && context.targeting.hasFeaturedVideo:
 				return [[300, 250]];
+			case slotName === 'BOTTOM_LEADERBOARD':
+				return getBottomLeaderboardSizes(slotSizes);
 			default:
 				return slotSizes;
 		}

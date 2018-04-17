@@ -14,7 +14,6 @@ describe('ext.wikia.adEngine.provider.directGpt', function () {
 
 				}
 			},
-			uapContext: {},
 			factory: {
 				createProvider: noop
 			},
@@ -22,19 +21,18 @@ describe('ext.wikia.adEngine.provider.directGpt', function () {
 			megaAdUnitBuilder: {name: 'megaAdUnit'},
 			slotTweaker: {},
 			pageFairRecovery: {},
-			sourcePointRecovery: {}
+			instartLogicRecovery: {}
 		};
 
 	function getModule() {
 		return modules['ext.wikia.adEngine.provider.directGpt'](
 			mocks.adContext,
-			mocks.uapContext,
 			mocks.factory,
 			mocks.kiloAdUnitBuilder,
 			mocks.megaAdUnitBuilder,
 			mocks.slotTweaker,
-			mocks.pageFairRecovery,
-			mocks.sourcePointRecovery
+			mocks.instartLogicRecovery,
+			mocks.pageFairRecovery
 		);
 	}
 

@@ -255,8 +255,6 @@ abstract class DatabaseUpdater {
 		}
 
 		if ( isset( $what['purge'] ) ) {
-			$this->purgeCache();
-
 			if ( $wgLocalisationCacheConf['manualRecache'] ) {
 				$this->rebuildLocalisationCache();
 			}
@@ -565,17 +563,6 @@ abstract class DatabaseUpdater {
 	}
 
 	/**
-	 * Purge the objectcache table
-	 */
-	protected function purgeCache() {
-		# We can't guarantee that the user will be able to use TRUNCATE,
-		# but we know that DELETE is available to us
-		$this->output( "Purging caches..." );
-		$this->db->delete( 'objectcache', '*', __METHOD__ );
-		$this->output( "done.\n" );
-	}
-
-	/**
 	 * Check the site_stats table is not properly populated.
 	 */
 	protected function checkStats() {
@@ -626,20 +613,6 @@ abstract class DatabaseUpdater {
 			$task->execute();
 			$this->output( "done.\n" );
 		}
-	}
-
-	/**
-	 * Updates the timestamps in the transcache table
-	 */
-	protected function doUpdateTranscacheField() {
-		if ( $this->updateRowExists( 'convert transcache field' ) ) {
-			$this->output( "...transcache tc_time already converted.\n" );
-			return;
-		}
-
-		$this->output( "Converting tc_time from UNIX epoch to MediaWiki timestamp... " );
-		$this->applyPatch( 'patch-tc-timestamp.sql' );
-		$this->output( "done.\n" );
 	}
 
 	/**

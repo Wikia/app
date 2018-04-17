@@ -30,7 +30,9 @@ class ContentReviewService {
 	 * @throws \FluentSql\Exception\SqlException
 	 */
 	public function automaticallyApproveRevision( \User $user, $wikiId, $pageId, $revisionId ) {
-		if ( !$user->isAllowed( 'content-review' ) ) {
+		global $wgAutoapproveJS;
+
+		if ( !$user->isAllowed( 'content-review' ) && !$wgAutoapproveJS ) {
 			throw new \PermissionsException( 'content-review' );
 		}
 

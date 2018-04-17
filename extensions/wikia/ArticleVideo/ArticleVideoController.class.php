@@ -42,4 +42,51 @@ class ArticleVideoController extends WikiaController {
 			$this->skipRendering();
 		}
 	}
+
+	public function purgeVideo() {
+		global $wgCityId;
+
+		$request = RequestContext::getMain()->getRequest();
+		$articleId = $request->getVal( 'articleId', null );
+		$internalRequest = $request->getHeader( 'X-Wikia-Internal-Request' );
+
+		if ( empty( $articleId ) || !$request->wasPosted() ) {
+			throw new BadRequestException();
+		}
+
+		if ( empty( $internalRequest ) ) {
+			throw new ForbiddenException();
+		}
+
+		ArticleVideoService::purgeVideoMemCache( $wgCityId );
+		Title::newFromID($articleId)->purgeSquid();
+
+		$this->skipRendering();
+	}
+
+	public function attribution() {
+		$videoDetails = $this->getVal( 'videoDetails' );
+
+		$this->response->setValues( [
+			'userAvatarUrl' => $videoDetails['userAvatarUrl'],
+			'userUrl' => $videoDetails['userUrl'],
+			'username' => $videoDetails['username'],
+			'fromMsg' => wfMessage( 'articlevideo-attribution-from' )->escaped(),
+		] );
+
+		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
+	}
+
+	public function recommendedVideo() {
+		$articleId = RequestContext::getMain()->getTitle()->getArticleID();
+
+		if ( empty( ArticleVideoContext::isRecommendedVideoAvailable( $articleId ) ) ) {
+			$this->skipRendering();
+		} else {
+			$this->setVal(
+				'playlistId',
+				ArticleVideoContext::getRecommendedVideoPlaylistId( $articleId )
+			);
+		}
+	}
 }

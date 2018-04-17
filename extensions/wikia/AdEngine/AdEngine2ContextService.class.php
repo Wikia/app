@@ -17,13 +17,13 @@ class AdEngine2ContextService {
 			$adPageTypeService = new AdEngine2PageTypeService();
 			$wikiaPageType = new WikiaPageType();
 			$pageType = $wikiaPageType->getPageType();
-			$hasFeaturedVideo = !empty( $wg->EnableArticleFeaturedVideo )
-				&& ArticleVideoContext::isFeaturedVideoEmbedded( $title->getArticleID() );
+			$articleId = $title->getArticleID();
+			$hasFeaturedVideo =  !empty( $wg->EnableArticleFeaturedVideo ) &&
+				( ArticleVideoContext::isFeaturedVideoEmbedded( $articleId )  ||
+				// XW-4713 | Hide UAPs on pages running the Recommended Video ABTest
+				ArticleVideoContext::isRecommendedVideoAvailable( $articleId ) );
 			// pages with featured video on mercury have no ATF slots
 			$delayBtf = ( $skinName === 'mercury' && $hasFeaturedVideo ) ? false : $wg->AdDriverDelayBelowTheFold;
-
-			$sourcePointDetectionKey = AdEngine2Resource::getKey( 'wikia.ext.adengine.sp.detection' );
-			$sourcePointDetectionUrl = ResourceLoader::makeCustomURL( $wg->Out, [ $sourcePointDetectionKey ], 'scripts' );
 
 			$pageFairDetectionKey = AdEngine2Resource::getKey( 'wikia.ext.adengine.pf.detection' );
 			$pageFairDetectionUrl = ResourceLoader::makeCustomURL( $wg->Out, [ $pageFairDetectionKey ], 'scripts' );
@@ -45,18 +45,15 @@ class AdEngine2ContextService {
 					'delayBtf' => $delayBtf,
 					'enableAdsInMaps' => $wg->AdDriverEnableAdsInMaps,
 					'pageType' => $adPageTypeService->getPageType(),
-					'paidAssetDropConfig' => $wg->PaidAssetDropConfig, // @see extensions/wikia/PaidAssetDrop
 					'showAds' => $adPageTypeService->areAdsShowableOnPage(),
 					'trackSlotState' => $wg->AdDriverTrackState,
-					'sourcePointDetectionUrl' => $sourcePointDetectionUrl,
-					'sourcePointMMS' => ARecoveryModule::isSourcePointMessagingEnabled(),
-					'sourcePointMMSDomain' => $wg->develEnvironment ? 'mms.bre.wikia-dev.com' : 'mms.bre.wikia.com',
-					'sourcePointRecovery' => ARecoveryModule::isSourcePointRecoveryEnabled(),
 					'pageFairDetectionUrl' => $pageFairDetectionUrl,
 					'pageFairRecovery' => ARecoveryModule::isPageFairRecoveryEnabled(),
 					'instartLogicRecovery' => ARecoveryModule::isInstartLogicRecoveryEnabled(),
+					// TODO remove after ADEN-6797 release
 					'prebidBidderUrl' => $prebidBidderUrl,
-					'isAdTestWiki' => $wg->AdDriverIsAdTestWiki
+					'isAdTestWiki' => $wg->AdDriverIsAdTestWiki,
+					'cdnApiUrl' => $wg->wgCdnApiUrl
 				] ),
 				'targeting' => $this->filterOutEmptyItems( [
 					'enableKruxTargeting' => AnalyticsProviderKrux::isEnabled(),

@@ -10,8 +10,15 @@ class DesignSystemGlobalFooterModelTest extends WikiaBaseTest {
 	 * @param $rightsUrl license URL
 	 * @param $expectedResult
 	 */
-	public function testGetLicensingAndVertical( $product, $sitename, $rightsText, $rightsUrl, $expectedResult ) {
+	public function testGetLicensingAndVertical( $product, $server, $sitename, $rightsText, $rightsUrl, $rightsPage, $expectedResult ) {
 		$productInstanceId = 1234;
+
+		$this->getStaticMethodMock( '\WikiFactory', 'getLocalEnvURL' )
+			->expects( $this->any() )
+			->method( 'getLocalEnvURL' )
+			->will( $this->returnCallback( function($url) use ($server) {
+				return $server;
+			} ) );
 
 		$this->getStaticMethodMock( 'WikiFactory', 'getVarValueByName' )
 			->expects( $this->any() )
@@ -19,6 +26,7 @@ class DesignSystemGlobalFooterModelTest extends WikiaBaseTest {
 			->will( $this->returnValueMap( [
 				[ 'wgRightsText', $productInstanceId, $rightsText ],
 				[ 'wgRightsUrl', $productInstanceId, $rightsUrl ],
+				[ 'wgRightsPage', $productInstanceId, $rightsPage ],
 				[ 'wgSitename', $productInstanceId, $sitename ]
 			] ) );
 
@@ -32,9 +40,11 @@ class DesignSystemGlobalFooterModelTest extends WikiaBaseTest {
 		return [
 			[
 				DesignSystemGlobalFooterModel::PRODUCT_WIKIS,
+				'http://unittest.wikia.com',
 				'wikia',
 				'CC-BY-SA',
-				'http://www.wikia.com/Licensing',
+				'https://www.wikia.com/Licensing',
+				'',
 				[
 					'description' => [
 						'type' => 'translatable-text',
@@ -54,7 +64,7 @@ class DesignSystemGlobalFooterModelTest extends WikiaBaseTest {
 									'type' => 'text',
 									'value' => 'CC-BY-SA'
 								],
-								'href' => 'http://www.wikia.com/Licensing',
+								'href' => 'https://www.wikia.com/Licensing',
 								'tracking_label' => 'license',
 							],
 						],
@@ -63,9 +73,11 @@ class DesignSystemGlobalFooterModelTest extends WikiaBaseTest {
 			],
 			[
 				DesignSystemGlobalFooterModel::PRODUCT_WIKIS,
+				'http://unittest.wikia.com',
 				'memory-alpha',
 				'CC-BY-NC-SA',
 				'http://memory-alpha.wikia.com/wiki/Project:Licensing',
+				'',
 				[
 					'description' => [
 						'type' => 'translatable-text',
@@ -94,8 +106,10 @@ class DesignSystemGlobalFooterModelTest extends WikiaBaseTest {
 			],
 			[
 				DesignSystemGlobalFooterModel::PRODUCT_FANDOMS,
+				'http://unittest.wikia.com',
 				'Fandom',
 				'foo',
+				'',
 				'',
 				'licensing_and_vertical' => [
 					'description' => [
@@ -118,6 +132,39 @@ class DesignSystemGlobalFooterModelTest extends WikiaBaseTest {
 					],
 				],
 
+			],
+			[
+				DesignSystemGlobalFooterModel::PRODUCT_WIKIS,
+				'http://unittest.wikia.com',
+				'wikia',
+				'CC-BY-SA',
+				'',
+				'w:Wikia:Licensing',
+				[
+					'description' => [
+						'type' => 'translatable-text',
+						'key' => 'global-footer-licensing-and-vertical-description',
+						'params' => [
+							'sitename' => [
+								'type' => 'text',
+								'value' => 'wikia'
+							],
+							'vertical' => [
+								'type' => 'translatable-text',
+								'key' => 'global-footer-licensing-and-vertical-description-param-vertical-lifestyle'
+							],
+							'license' => [
+								'type' => 'link-text',
+								'title' => [
+									'type' => 'text',
+									'value' => 'CC-BY-SA'
+								],
+								'href' => '//unittest.wikia.com/wiki/w:Wikia:Licensing',
+								'tracking_label' => 'license',
+							],
+						],
+					],
+				],
 			]
 		];
 	}

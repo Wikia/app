@@ -14,12 +14,6 @@ describe('ext.wikia.adEngine.config.mobile', function () {
 				return true;
 			}
 		},
-		adProviderPaidAssetDropMock = {
-			name: 'PaidAssetDropMock',
-			canHandleSlot: function () {
-				return false;
-			}
-		},
 		adProviderRemnantMock = {
 			name: 'RemnantGptMobileMock',
 			canHandleSlot: function () {
@@ -62,7 +56,6 @@ describe('ext.wikia.adEngine.config.mobile', function () {
 			mocks.adContext,
 			adProviderDirectMock,
 			adProviderEvolveMock,
-			adProviderPaidAssetDropMock,
 			adProviderRemnantMock,
 			adProviderRubiconFastlaneMock,
 			mocks.instantGlobals

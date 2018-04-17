@@ -128,6 +128,7 @@ class MagicWord {
 		'directionmark',
 		'contentlanguage',
 		'numberofadmins',
+		'servercanonical',
 	);
 
 	/* Array of caching hints for ParserCache */

@@ -10,7 +10,6 @@ class ChatHooks {
 		wfProfileIn( __METHOD__ );
 
 		if ( $wgUser->isLoggedIn() ) {
-			// Make sure this module is positioned above the VideosModule (1285) when the user is logged in.  VID-1780
 			// Above spotlights, below everything else. BugzId: 4597.
 			$modules[1286] = [ 'ChatRail', 'placeholder', null ];
 		}

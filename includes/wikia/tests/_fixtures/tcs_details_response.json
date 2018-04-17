@@ -1,0 +1,16 @@
+[
+	{
+		"provider": "auto_type_matcher",
+		"origin": "1.0",
+		"types": [
+			"infobox"
+		]
+	},
+	{
+		"provider": "user",
+		"origin": "826221",
+		"types": [
+			"infobox"
+		]
+	}
+]

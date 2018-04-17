@@ -29,7 +29,7 @@ $messages['qqq'] = array(
 	'filepage-desc' => '{{desc}}',
 	'video-page-file-list-header' => 'Heading for file list on Video File Page',
 	'video-page-global-file-list-header' => 'Heading for global usage list on Video File Page',
-	'video-page-from-provider' => 'The provider is where we got the video content from.  Some current examples are IGN and Ooyala. Parameters:
+	'video-page-from-provider' => 'The provider is where we got the video content from.  Some current examples is IGN. Parameters:
 * $1 is the provider name.',
 	'video-page-expires' => 'After the date specified, the video content will no longer be available to view. Parameters:
 * $1 is a date',

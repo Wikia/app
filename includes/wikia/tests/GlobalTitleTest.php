@@ -17,14 +17,17 @@ class GlobalTitleTest extends WikiaBaseTest {
 				[ 'wgServer', 113, 'http://memory-alpha.wikia.com' ],
 				[ 'wgServer', 490, 'http://wowwiki.wikia.com' ],
 				[ 'wgServer', 1686, 'http://spolecznosc.wikia.com' ],
+				[ 'wgServer', 165, 'http://firefly.wikia.com' ],
 				[ 'wgLanguageCode', 177, 'en' ],
 				[ 'wgLanguageCode', 113, 'en' ],
 				[ 'wgLanguageCode', 490, 'en' ],
 				[ 'wgLanguageCode', 1686, 'pl' ],
+				[ 'wgLanguageCode', 165, 'en' ],
 				[ 'wgExtraNamespacesLocal', 177, false, [], [] ],
 				[ 'wgExtraNamespacesLocal', 113, false, [], [] ],
 				[ 'wgExtraNamespacesLocal', 490, false, [], [ 116 => 'Portal' ] ],
 				[ 'wgExtraNamespacesLocal', 1686, false, [], [] ],
+				[ 'wgExtraNamespacesLocal', 165, false, [], [] ],
 			] );
 	}
 
@@ -159,6 +162,17 @@ class GlobalTitleTest extends WikiaBaseTest {
 		$this->assertEquals( GlobalTitle::stripArticlePath( $path, $articlePath ), $expResult );
 	}
 
+	/**
+	 * @dataProvider httpsUrlsProvider
+	 */
+	public function testHTTPSUrls( $cityId, $requestProtocol, $expectedUrl ) {
+		$this->mockProdEnv();
+		$this->mockStaticMethod( 'WebRequest', 'detectProtocol', $requestProtocol );
+
+		$fullUrl = GlobalTitle::newFromText( 'Test', NS_MAIN, $cityId )->getFullURL();
+		$this->assertEquals( $expectedUrl, $fullUrl );
+	}
+
 	public function urlsSpacesProvider() {
 		return [
 			[ WIKIA_ENV_DEV, 'Test Ze Spacjami', NS_TALK, 177, 'http://community.' . self::MOCK_DEV_NAME . '.wikia-dev.us/wiki/Talk:Test_Ze_Spacjami' ],
@@ -166,7 +180,6 @@ class GlobalTitleTest extends WikiaBaseTest {
 			[ WIKIA_ENV_PREVIEW, 'Test Ze Spacjami', NS_TALK, 177, 'http://community.preview.wikia.com/wiki/Talk:Test_Ze_Spacjami' ],
 			[ WIKIA_ENV_VERIFY, 'Test Ze Spacjami', NS_TALK, 177, 'http://community.verify.wikia.com/wiki/Talk:Test_Ze_Spacjami' ],
 			[ WIKIA_ENV_SANDBOX, 'Test Ze Spacjami', NS_TALK, 177, 'http://community.sandbox-s1.wikia.com/wiki/Talk:Test_Ze_Spacjami' ],
-			[ WIKIA_ENV_STAGING, 'Test Ze Spacjami', NS_TALK, 177, 'http://community.wikia-staging.com/wiki/Talk:Test_Ze_Spacjami' ],
 		];
 	}
 
@@ -223,6 +236,17 @@ class GlobalTitleTest extends WikiaBaseTest {
 				'Test',
 			],
 			[ 'Notexists', false, [], false, 'Main Page' ],
+		];
+	}
+
+	public function httpsUrlsProvider() {
+		return [
+			[ 177, 'http', 'http://community.wikia.com/wiki/Test' ],
+			[ 177, 'https', 'https://community.wikia.com/wiki/Test' ],
+			[ 165, 'http', 'http://firefly.wikia.com/wiki/Test' ],
+			[ 165, 'https', 'https://firefly.wikia.com/wiki/Test' ],
+			[ 5931, 'http', 'http://ja.starwars.wikia.com/wiki/Test' ],
+			[ 5931, 'https', 'http://ja.starwars.wikia.com/wiki/Test' ],
 		];
 	}
 }

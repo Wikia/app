@@ -80,7 +80,6 @@ $wgAutoloadLocalClasses = array(
 	'ExternalStore' => 'includes/ExternalStore.php',
 	'ExternalStoreDB' => 'includes/ExternalStoreDB.php',
 	'ExternalStoreHttp' => 'includes/ExternalStoreHttp.php',
-	'ExternalUser' => 'includes/ExternalUser.php',
 	'FakeTitle' => 'includes/FakeTitle.php',
 	'Fallback' => 'includes/Fallback.php',
 	'FatalError' => 'includes/Exception.php',
@@ -136,7 +135,6 @@ $wgAutoloadLocalClasses = array(
 	'IP' => 'includes/IP.php',
 	'LCStore_Accel' => 'includes/LocalisationCache.php',
 	'LCStore_CDB' => 'includes/LocalisationCache.php',
-	'LCStore_DB' => 'includes/LocalisationCache.php',
 	'LCStore_Null' => 'includes/LocalisationCache.php',
 	'License' => 'includes/Licenses.php',
 	'Licenses' => 'includes/Licenses.php',
@@ -309,7 +307,6 @@ $wgAutoloadLocalClasses = array(
 	'ApiImport' => 'includes/api/ApiImport.php',
 	'ApiImportReporter' => 'includes/api/ApiImport.php',
 	'ApiLogin' => 'includes/api/ApiLogin.php',
-	'ApiLogout' => 'includes/api/ApiLogout.php',
 	'ApiMain' => 'includes/api/ApiMain.php',
 	'ApiMove' => 'includes/api/ApiMove.php',
 	'ApiOpenSearch' => 'includes/api/ApiOpenSearch.php',
@@ -464,10 +461,6 @@ $wgAutoloadLocalClasses = array(
 	'UnifiedDiffFormatter' => 'includes/diff/DairikiDiff.php',
 	'WikiDiff3' => 'includes/diff/WikiDiff3.php',
 	'WordLevelDiff' => 'includes/diff/DairikiDiff.php',
-
-	# includes/extauth
-	'ExternalUser_Hardcoded' => 'includes/extauth/Hardcoded.php',
-	'ExternalUser_vB' => 'includes/extauth/vB.php',
 
 	# includes/filerepo
 	'FileRepo' => 'includes/filerepo/FileRepo.php',
@@ -637,13 +630,11 @@ $wgAutoloadLocalClasses = array(
 	'EmptyBagOStuff' => 'includes/objectcache/EmptyBagOStuff.php',
 	'FakeMemCachedClient' => 'includes/objectcache/EmptyBagOStuff.php',
 	'HashBagOStuff' => 'includes/objectcache/HashBagOStuff.php',
-	'MediaWikiBagOStuff' => 'includes/objectcache/SqlBagOStuff.php',
 	'MemCachedClientforWiki' => 'includes/objectcache/MemcachedClient.php',
 	'MemcachedPhpBagOStuff' => 'includes/objectcache/MemcachedPhpBagOStuff.php',
 	'MultiWriteBagOStuff' => 'includes/objectcache/MultiWriteBagOStuff.php',
 	'MWMemcached' => 'includes/objectcache/MemcachedClient.php',
 	'ObjectCache' => 'includes/objectcache/ObjectCache.php',
-	'SqlBagOStuff' => 'includes/objectcache/SqlBagOStuff.php',
 	'WinCacheBagOStuff' => 'includes/objectcache/WinCacheBagOStuff.php',
 	'XCacheBagOStuff' => 'includes/objectcache/XCacheBagOStuff.php',
 

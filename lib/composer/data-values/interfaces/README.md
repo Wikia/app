@@ -15,7 +15,7 @@ On [Packagist](https://packagist.org/packages/data-values/interfaces):
 
 ## Requirements
 
-* PHP 5.3 or later
+* PHP 5.5 or later
 
 ## Installation
 
@@ -55,6 +55,20 @@ DataValues Interfaces has been written by [Jeroen De Dauw](https://www.mediawiki
 as [Wikimedia Germany](https://wikimedia.de) employee for the [Wikidata project](https://wikidata.org/).
 
 ## Release notes
+
+### 0.2.5 (2017-08-09)
+
+* Removed MediaWiki extension credits registration
+
+### 0.2.4 (2017-08-02)
+
+* Fixed `ValueFormatterTestBase` not being installable via Composer.
+
+### 0.2.3 (2017-08-02)
+
+* Updated minimal required PHP version from 5.3 to 5.5.9.
+* Minor fixes to code documentation.
+* Added PHPCS support.
 
 ### 0.2.2 (2016-07-15)
 

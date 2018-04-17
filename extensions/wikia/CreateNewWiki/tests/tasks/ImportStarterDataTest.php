@@ -85,7 +85,7 @@ class ImportStarterDataTest extends \WikiaBaseTest {
 		$this->mockStaticMethod( '\Wikia\CreateNewWiki\Tasks\TaskResult', 'createForSuccess', 'ok' );
 		$this->mockStaticMethod( '\Wikia\CreateNewWiki\Tasks\TaskResult', 'createForError', 'error' );
 		$this->mockStaticMethod( '\Wikia\CreateNewWiki\Tasks\TaskHelper', 'waitForSlaves', null );
-		$this->mockStaticMethod( '\Wikia\CreateNewWiki\Starters', 'getStarterByLanguageAndVertical', null );
+		$this->mockStaticMethod( '\Wikia\CreateNewWiki\Starters', 'getStarterByLanguage', null );
 
 		$result = $importStarterDataTask->run();
 

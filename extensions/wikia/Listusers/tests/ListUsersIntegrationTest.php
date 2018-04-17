@@ -1,6 +1,5 @@
 <?php
 use PHPUnit\Framework\TestCase;
-use \Wikia\PowerUser\PowerUser;
 use \Wikia\Service\User\Permissions\PermissionsServiceAccessor;
 
 /**
@@ -35,10 +34,6 @@ class ListUsersIntegrationTest extends TestCase {
 
 		$firstWikiGroups = $firstWikiData->getGroups();
 		$centralWikiGroups = $centralWikiData->getGroups();
-
-		// CE-1487: poweruser group must be excluded from group listing
-		$this->assertArrayNotHasKey( PowerUser::GROUP_NAME, $firstWikiGroups );
-		$this->assertArrayNotHasKey( PowerUser::GROUP_NAME, $centralWikiGroups );
 
 		foreach ( $this->permissionsService()->getConfiguration()->getGlobalGroups() as $globalGroup ) {
 			// Exclude groups with 0 members

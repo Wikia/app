@@ -2,20 +2,22 @@
 
 namespace Wikia\Service\User\Auth;
 
+use PHPUnit\Framework\TestCase;
 use Wikia\Service\Helios\ClientException;
 use Wikia\Service\Helios\HeliosClient;
 
-class MediaWikiAuthServiceTest extends \WikiaBaseTest {
+class MediaWikiAuthServiceTest extends TestCase {
+	/** @var AuthService $authService */
 	private $authService;
+	/** @var HeliosClient|\PHPUnit_Framework_MockObject_MockObject $heliosClientMock */
 	private $heliosClientMock;
 
 	public function setUp() {
 		parent::setUp();
 
-		$this->heliosClientMock = $this->getMock( HeliosClient::class,
-			[ 'login', 'forceLogout', 'invalidateToken', 'register', 'info', 'generateToken' , 'setPassword', 'validatePassword', 'deletePassword', 'requestPasswordReset' ] );
+		$this->heliosClientMock = $this->createMock( HeliosClient::class );
 
-		$this->authService = new MediaWikiAuthService( $this->heliosClientMock );
+		$this->authService = new AuthService( $this->heliosClientMock );
 	}
 
 	public function testAuthenticateAuthenticationFailed() {

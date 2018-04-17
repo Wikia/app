@@ -7,7 +7,7 @@ function deletechecked() {
 
 $.loadJQueryAutocomplete(function() {
 	$('.wftagautocomplete').autocomplete({
-		serviceUrl: wgServer+wgScript+'?action=ajax&rs=WikiFactoryTags::axQuery',
+		serviceUrl: mw.util.wikiScript() +'?action=ajax&rs=WikiFactoryTags::axQuery',
 		minChars:3,
 		deferRequestBy: 0
 	});

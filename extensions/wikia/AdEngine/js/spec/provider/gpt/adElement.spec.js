@@ -16,6 +16,15 @@ describe('ext.wikia.adEngine.provider.gpt.adElement', function () {
 			adSizeConverter: {
 				toArray: noop
 			},
+			bridge: {
+				GptSizeMap: function GptSizeMapMock() {
+					return {
+						mapAllSizes: function () { return this; },
+						toString: noop,
+						isEmpty: function () { return true; }
+					};
+				}
+			},
 			log: noop
 		},
 		slot,
@@ -23,6 +32,7 @@ describe('ext.wikia.adEngine.provider.gpt.adElement', function () {
 
 	beforeEach(function () {
 		AdElement = modules['ext.wikia.adEngine.provider.gpt.adElement'](
+			mocks.bridge,
 			mocks.adSizeConverter,
 			mocks.adSizeFilter,
 			document,
@@ -61,7 +71,7 @@ describe('ext.wikia.adEngine.provider.gpt.adElement', function () {
 
 		var element = new AdElement('TOP_RIGHT_BOXAD', '/ELEMENT_SLOTPATH', slotTargeting);
 
-		expect(element.getSizes()).toEqual(adSizes);
+		expect(element.getDefaultSizes()).toEqual(adSizes);
 		expect(element.getNode().getAttribute('data-gpt-slot-sizes')).toEqual('[[300,250],[300,600]]');
 	});
 

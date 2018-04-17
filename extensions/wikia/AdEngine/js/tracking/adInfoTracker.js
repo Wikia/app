@@ -1,20 +1,28 @@
 /*global define, require*/
 define('ext.wikia.adEngine.tracking.adInfoTracker',  [
 	'ext.wikia.adEngine.adTracker',
+	'ext.wikia.adEngine.geo',
 	'ext.wikia.adEngine.slot.service.slotRegistry',
 	'ext.wikia.adEngine.tracking.pageLayout',
 	'wikia.browserDetect',
 	'wikia.log',
 	'wikia.window',
 	require.optional('ext.wikia.adEngine.ml.rabbit')
-], function (adTracker, slotRegistry, pageLayout, browserDetect, log, win, rabbit) {
+], function (adTracker, geo, slotRegistry, pageLayout, browserDetect, log, win, rabbit) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.tracking.adInfoTracker';
 
+	function getPosParameter(slotParams) {
+		var pos = (slotParams.pos || ''),
+			posArray = Array.isArray(pos) ? pos : pos.split(',');
+		return posArray[0];
+	}
+
 	function prepareData(slotName, pageParams, slotParams, creative, bidders) {
 		var data,
-			now = new Date();
+			now = new Date(),
+			timestamp = now.getTime();
 
 		function transformBidderPrice(bidderName) {
 			if (bidders.realSlotPrices && bidders.realSlotPrices[bidderName]) {
@@ -39,13 +47,14 @@ define('ext.wikia.adEngine.tracking.adInfoTracker',  [
 			'browser': [ browserDetect.getOS(), browserDetect.getBrowser() ].join(' '),
 			'country': pageParams.geo || '',
 			'time_bucket': now.getHours(),
-			'timestamp': now.getTime(),
+			'timestamp': timestamp,
+			'ad_load_time': timestamp - win.performance.timing.connectStart,
 			'slot_size': creative.slotSize && creative.slotSize.length ? creative.slotSize.join('x') : '',
 			'kv_s0': pageParams.s0 || '',
 			'kv_s1': pageParams.s1 || '',
 			'kv_s2': pageParams.s2 || '',
 			'kv_s0v': pageParams.s0v || '',
-			'kv_pos': slotParams.pos || '',
+			'kv_pos': getPosParameter(slotParams),
 			'kv_rv': slotParams.rv || '',
 			'kv_wsi': slotParams.wsi || '',
 			'kv_lang': pageParams.lang || '',
@@ -69,6 +78,7 @@ define('ext.wikia.adEngine.tracking.adInfoTracker',  [
 			'bidder_13': transformBidderPrice('onemobile'),
 			'bidder_14': transformBidderPrice('pubmatic'),
 			'bidder_15': transformBidderPrice('beachfront'),
+			'bidder_16': transformBidderPrice('appnexusWebAds'),
 			'product_chosen': creative.adProduct || 'unknown',
 			'product_lineitem_id': creative.lineItemId || '',
 			'creative_id': creative.creativeId || '',
@@ -76,9 +86,10 @@ define('ext.wikia.adEngine.tracking.adInfoTracker',  [
 			'viewport_height': win.innerHeight || 0,
 			'ad_status': creative.status || 'unknown',
 			'scroll_y': slotRegistry.getScrollY(slotName) || 0,
-			'rabbit': (rabbit && rabbit.getSerializedResults()) || '',
+			'rabbit': (rabbit && rabbit.getAllSerializedResults()) || '',
 			'page_width': win.document.body.scrollWidth || '',
-			'page_layout': pageLayout.getSerializedData(slotName) || ''
+			'page_layout': pageLayout.getSerializedData(slotName) || '',
+			'labrador': geo.getSamplingResults().join(';')
 		};
 
 		log(['prepareData', slotName, data], log.levels.debug, logGroup);

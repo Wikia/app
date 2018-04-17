@@ -1,0 +1,20 @@
+{
+    "directories" : [ "src" ],
+    "compactors": [ "Herrera\\Box\\Compactor\\Php" ],
+    "chmod" : "0755",
+    "main" : "bin/phiremock",
+    "output" : "phiremock.phar",
+    "web" : false,
+    "extract": false,
+    "stub" : true,
+    "files": [
+        "LICENSE"
+    ],
+    "finder": [
+        {
+            "name": ["*.php"],
+            "exclude": ["Tests", "tests"],
+            "in": ["vendor", "."]
+        }
+    ]
+}

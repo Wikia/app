@@ -52,11 +52,11 @@
 			<form id="userData" class="WikiaForm" name="userData">
 				<div class="input-group">
 					<label for="name"><?= wfMessage( 'user-identity-box-about-name' )->escaped(); ?></label>
-					<input type="text" id="name" name="name" value="<?= $user['realName']; ?>" maxlength="<?= $charLimits['name']; ?>"/>
+					<input type="text" id="name" name="name" value="<?= Sanitizer::encodeAttribute( $user['realName'] ); ?>" maxlength="<?= $charLimits['name']; ?>"/>
 				</div>
 				<div class="input-group">
 					<label for="location"><?= wfMessage( 'user-identity-box-about-location' )->escaped(); ?></label>
-					<input type="text" id="location" name="location" value="<?= $user['location']; ?>" maxlength="<?= $charLimits['location']; ?>"/>
+					<input type="text" id="location" name="location" value="<?= Sanitizer::encodeAttribute( $user['location'] ); ?>" maxlength="<?= $charLimits['location']; ?>"/>
 				</div>
 				<div class="input-group">
 					<label for="month"><?= wfMessage( 'user-identity-box-about-birthday' )->escaped(); ?></label>
@@ -87,21 +87,23 @@
 				</div>
 				<div class="input-group">
 					<label for="gender"><?= wfMessage( 'user-identity-box-about-gender' )->escaped(); ?></label>
-					<input type="text" id="gender" name="gender" value="<?= $user['gender']; ?>" maxlength="<?= $charLimits['gender']; ?>"/>
+					<input type="text" id="gender" name="gender" value="<?= Sanitizer::encodeAttribute( $user['gender'] ); ?>"
+						   maxlength="<?=
+					$charLimits['gender']; ?>"/>
 				</div>
 				<div class="input-group">
 					<label for="website"><?= wfMessage( 'user-identity-box-about-website' )->escaped(); ?></label>
-					<input type="text" id="website" name="website" value="<?= $user['website']; ?>">
+					<input type="text" id="website" name="website" value="<?= Sanitizer::encodeAttribute( $user['website'] ); ?>">
 				</div>
 				<div class="input-group">
 					<label for="twitter"><?= wfMessage( 'user-identity-box-about-tweet' )->escaped(); ?></label>
 					<label for="twitter" class="tweet-at">twitter.com/</label>
-					<input type="text" id="twitter" name="twitter" value="<?= $user['twitter']; ?>">
+					<input type="text" id="twitter" name="twitter" value="<?= Sanitizer::encodeAttribute( $user['twitter'] ); ?>">
 				</div>
 				<div class="input-group">
 					<label for="fbPage"><?= wfMessage( 'user-identity-box-about-fb-page' )->escaped(); ?></label>
 					<label for="fbPage" class="fb-start">facebook.com/</label>
-					<input type="text" id="fbPage" name="fbPage" value="<?= $user['fbPage']; ?>">
+					<input type="text" id="fbPage" name="fbPage" value="<?= Sanitizer::encodeAttribute( $user['fbPage'] ); ?>">
 				</div>
 				<div class="input-group">
 					<label><?= wfMessage( 'user-identity-box-about-fav-wikis' )->escaped(); ?></label>

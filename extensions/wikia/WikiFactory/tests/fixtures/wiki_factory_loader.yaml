@@ -1,0 +1,114 @@
+city_list:
+  - city_id: 1
+    city_dbname: test1
+    city_lang: en
+    city_url: http://test1.wikia.com/
+    city_flags: 0
+    city_public: 1
+    city_last_timestamp: 20110101000000
+  - city_id: 2
+    city_dbname: detest1
+    city_lang: de
+    city_url: http://test1.wikia.com/de/
+    city_flags: 0
+    city_public: 1
+    city_last_timestamp: 20110101000000
+  - city_id: 3
+    city_dbname: zamkniete
+    city_lang: en
+    city_url: http://zamkniete.wikia.com/
+    city_flags: 0
+    city_public: -1
+    city_last_timestamp: 20110101000000
+  - city_id: 4
+    city_dbname: spamtest
+    city_lang: en
+    city_url: http://spamtest.wikia.com/
+    city_flags: 0
+    city_public: -1
+    city_last_timestamp: 20110101000000
+  - city_id: 5
+    city_dbname: rekt
+    city_lang: en
+    city_url: http://rekt.wikia.com/
+    city_flags: 0
+    city_public: -2
+    city_last_timestamp: 20110101000000
+  - city_id: 6
+    city_dbname: dead
+    city_lang: en
+    city_url: http://dead.wikia.com/
+    city_flags: 0
+    city_public: -2
+    city_last_timestamp: 20110101000000
+  - city_id: 7
+    city_dbname: redirect
+    city_lang: en
+    city_url: http://redirect-target.wikia.com/
+    city_flags: 0
+    city_public: 2
+    city_last_timestamp: 20110101000000
+  - city_id: 8
+    city_dbname: enpoznan
+    city_lang: en
+    city_url: http://poznan.wikia.com/en/
+    city_flags: 0
+    city_public: 1
+    city_last_timestamp: 20110101000000
+  - city_id: 9
+    city_dbname: poznan
+    city_lang: pl
+    city_url: http://poznan.wikia.com/
+    city_flags: 0
+    city_public: 1
+    city_last_timestamp: 20110101000000
+  - city_id: 10
+    city_dbname: zgubieni
+    city_lang: pl
+    city_url: http://zgubieni.wikia.com/
+    city_flags: 0
+    city_public: 1
+    city_last_timestamp: 20110101000000
+city_domains:
+  - city_id: 1
+    city_domain: test1.wikia.com
+  - city_id: 1
+    city_domain: test1.wikia.com/en
+  - city_id: 2
+    city_domain: test1.wikia.com/de
+  - city_id: 2
+    city_domain: einetest.wikia.com
+  - city_id: 3
+    city_domain: zamkniete.wikia.com
+  - city_id: 3
+    city_domain: zamkniete.wikia.com/pl
+  - city_id: 4
+    city_domain: spamtest.wikia.com
+  - city_id: 4
+    city_domain: spamtest.wikia.com/en
+  - city_id: 5
+    city_domain: rekt.wikia.com
+  - city_id: 5
+    city_domain: rekt.wikia.com/en
+  - city_id: 6
+    city_domain: dead.wikia.com
+  - city_id: 6
+    city_domain: dead.wikia.com/en
+  - city_id: 7
+    city_domain: redirect.wikia.com
+  - city_id: 7
+    city_domain: redirect.wikia.com/en
+  - city_id: 7
+    city_domain: redirect2.wikia.com
+  - city_id: 7
+    city_domain: redirect2.wikia.com/en
+  - city_id: 8
+    city_domain: poznan.wikia.com/en
+  - city_id: 9
+    city_domain: poznan.wikia.com
+  - city_id: 9
+    city_domain: poznan.wikia.com/pl
+  - city_id: 10
+    city_domain: zgubieni.wikia.com
+  - city_id: 10
+    city_domain: zgubieni.wikia.com/pl

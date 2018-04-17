@@ -3,7 +3,7 @@ CKEDITOR.plugins.add('rte-linksuggest', {
 		if (typeof jQuery.fn.linksuggest === 'function') {
 			editor.on('mode', function(ev) {
 				if (editor.mode === 'source') {
-					$(editor.textarea.$).linksuggest();
+					$(editor.editable().$).linksuggest();
 				}
 			});
 		}

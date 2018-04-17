@@ -14,8 +14,10 @@ It's been tested against [RabbitMQ](http://www.rabbitmq.com/).
 
 **Requirements: bcmath and mbstring extensions** This library utilizes the bcmath and mbstring PHP extensions.  The installation steps vary per PHP version and the underlying OS.  The following example shows how to add to an existing PHP installation on Ubuntu 15.10:
 
+```bash
 sudo apt-get install php7.0-mbstring
 sudo apt-get install php7.0-bcmath
+```
 
 The library was used for the PHP examples of [RabbitMQ in Action](http://manning.com/videla/) and the [official RabbitMQ tutorials](http://www.rabbitmq.com/tutorials/tutorial-one-php.html).
 
@@ -31,7 +33,8 @@ working on RabbitMQ and related projects.
 ## Supported RabbitMQ Versions ##
 
 Starting with version 2.0 this library uses `AMQP 0.9.1` by default and thus requires [RabbitMQ 2.0 or later version](http://www.rabbitmq.com/download.html).
-You shouldn't need to change your code, but test before upgrading.
+Usually server upgrades do not require any application code changes since
+the protocol changes very infrequently but please conduct your own testing before upgrading.
 
 ## Supported RabbitMQ Extensions ##
 
@@ -44,22 +47,16 @@ Since the library uses `AMQP 0.9.1` we added support for the following RabbitMQ 
 
 Extensions that modify existing methods like `alternate exchanges` are also supported.
 
+### Related libraries
+
+* [enqueue/amqp-lib](https://github.com/php-enqueue/amqp-lib) is a [amqp interop](https://github.com/queue-interop/queue-interop#amqp-interop) compatible wrapper.
+
 ## Setup ##
 
- Add a `composer.json` file to your project:
-
-```javascript
-{
-  "require": {
-      "php-amqplib/php-amqplib": "2.6.*"
-  }
-}
-```
-
-Then provided you have [composer](http://getcomposer.org) installed, you can run the following command:
+Ensure you have [composer](http://getcomposer.org) installed, then run the following command:
 
 ```bash
-$ composer.phar install
+$ composer require php-amqplib/php-amqplib
 ```
 
 That will fetch the library and its dependencies inside your vendor folder. Then you can add the following to your

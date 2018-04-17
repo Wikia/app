@@ -1,6 +1,6 @@
 <?php
 
-use Wikia\Service\Gateway\KubernetesUrlProvider;
+use Wikia\Factory\ServiceFactory;
 
 class WikiDetailsService extends WikiService {
 
@@ -165,7 +165,7 @@ class WikiDetailsService extends WikiService {
 			$exists = true;
 			return [
 				'title' => $wikiObj->city_title,
-				'url' => $wikiObj->city_url,
+				'url' => WikiFactory::getLocalEnvURL( $wikiObj->city_url ),
 			];
 		}
 		return [];
@@ -281,10 +281,7 @@ class WikiDetailsService extends WikiService {
 	 * @return mixed
 	 */
 	private function getDiscussionStats( $id ) {
-		global $wgWikiaEnvironment, $wgWikiaDatacenter;
-
-		$discussionsServiceUrl = ( new KubernetesUrlProvider( $wgWikiaEnvironment, $wgWikiaDatacenter ) )
-			->getUrl( 'discussion' );
+		$discussionsServiceUrl = ServiceFactory::instance()->providerFactory()->urlProvider()->getUrl( 'discussion' );
 		$response = Http::get( "http://$discussionsServiceUrl/$id/forums/$id?limit=1", 'default', [ 'noProxy' => true ] );
 		if ( $response !== false ) {
 			$decodedResponse = json_decode( $response, true );

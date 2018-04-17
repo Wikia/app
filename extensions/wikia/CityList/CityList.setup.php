@@ -8,13 +8,11 @@ $GLOBALS['wgAutoloadClasses']['UpdateCityListTask'] = __DIR__ . '/UpdateCityList
 function wfScheduleCityListUpdateTask() {
 	global $wgCityId;
 
-	$user = RequestContext::getMain()->getUser();
 	$timestamp = wfTimestampNow();
 
 	$task = ( new UpdateCityListTask() )->wikiId( $wgCityId );
 
 	$task->call( 'updateLastTimestamp', $timestamp );
-	$task->call( 'checkIfWikiIsStillAdoptable', $user->getId() );
 
 	$task->queue();
 }

@@ -14,5 +14,6 @@
 	"maps_centred_on": "Map centred on $1, $2.",
 	"maps-par-centre": "The location on which the map should be centred",
 	"mapeditor-form-field-strokecolor": "Stroke colour",
-	"mapeditor-form-field-fillcolor": "Fill colour"
+	"mapeditor-form-field-fillcolor": "Fill colour",
+	"semanticmaps-par-centre": "The centre of the map. When not provided, the map will automatically pick the optimal centre to display all markers on the map."
 }

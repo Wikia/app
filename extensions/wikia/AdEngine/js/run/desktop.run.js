@@ -10,7 +10,6 @@ require([
 	'ext.wikia.adEngine.slot.service.stateMonitor',
 	'ext.wikia.adEngine.config.desktop',
 	'ext.wikia.adEngine.customAdsLoader',
-	'ext.wikia.adEngine.dartHelper',
 	'ext.wikia.adEngine.messageListener',
 	'ext.wikia.adEngine.pageFairDetection',
 	'ext.wikia.adEngine.provider.btfBlocker',
@@ -18,12 +17,12 @@ require([
 	'ext.wikia.adEngine.slot.service.slotRegistry',
 	'ext.wikia.adEngine.slotTracker',
 	'ext.wikia.adEngine.slotTweaker',
-	'ext.wikia.adEngine.sourcePointDetection',
 	'ext.wikia.adEngine.tracking.adInfoListener',
 	'ext.wikia.adEngine.tracking.scrollDepthTracker',
 	'ext.wikia.aRecoveryEngine.adBlockDetection',
 	'wikia.geo',
-	'wikia.window'
+	'wikia.window',
+	require.optional('wikia.articleVideo.featuredVideo.lagger')
 ], function (
 	adEngineBridge,
 	adContext,
@@ -34,7 +33,6 @@ require([
 	slotStateMonitor,
 	adConfigDesktop,
 	customAdsLoader,
-	dartHelper,
 	messageListener,
 	pageFairDetection,
 	btfBlocker,
@@ -42,12 +40,12 @@ require([
 	slotRegistry,
 	slotTracker,
 	slotTweaker,
-	sourcePointDetection,
 	adInfoListener,
 	scrollDepthTracker,
 	adBlockDetection,
 	geo,
-	win
+	win,
+	fvLagger
 ) {
 	'use strict';
 
@@ -57,32 +55,35 @@ require([
 
 	messageListener.init();
 
-	// Register window.wikiaDartHelper so jwplayer can use it
-	win.wikiaDartHelper = dartHelper;
-
 	// Register adSlotTweaker so DART creatives can use it
 	// https://www.google.com/dfp/5441#delivery/CreateCreativeTemplate/creativeTemplateId=10017012
 	win.adSlotTweaker = slotTweaker;
 
 	// Custom ads (skins, footer, etc)
-	if (adContext.get('opts.isAdProductsBridgeEnabled')) {
-		adEngineBridge.init(
-			adTracker,
-			geo,
-			slotRegistry,
-			null,
-			pageLevelParams.getPageLevelParams(),
-			adContext,
-			btfBlocker,
-			'oasis'
-		);
-		win.loadCustomAd = adEngineBridge.loadCustomAd(customAdsLoader.loadCustomAd);
+	adEngineBridge.init(
+		adTracker,
+		geo,
+		slotRegistry,
+		null,
+		pageLevelParams.getPageLevelParams(),
+		adContext,
+		btfBlocker,
+		'oasis'
+	);
+	win.loadCustomAd = adEngineBridge.loadCustomAd(customAdsLoader.loadCustomAd);
 
-		if (context.opts.babDetectionDesktop) {
-			adEngineBridge.checkAdBlocking(babDetection);
-		}
-	} else {
-		win.loadCustomAd = customAdsLoader.loadCustomAd;
+	if (context.opts.babDetectionDesktop) {
+		adEngineBridge.checkAdBlocking(babDetection);
+	}
+
+	if (fvLagger && context.opts.isFVUapKeyValueEnabled) {
+		fvLagger.addResponseListener(function (lineItemId) {
+			adEngineBridge.universalAdPackage.setUapId(lineItemId);
+			adEngineBridge.universalAdPackage.setType('jwp');
+
+			slotRegistry.disable('TOP_LEADERBOARD');
+			slotRegistry.disable('BOTTOM_LEADERBOARD');
+		});
 	}
 
 	// Everything starts after content and JS
@@ -101,9 +102,6 @@ require([
 		if (context.opts.pageFairDetection) {
 			pageFairDetection.initDetection(context);
 		}
-
-		// Recovery & detection
-		adBlockDetection.initEventQueues();
 	});
 });
 

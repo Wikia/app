@@ -258,7 +258,7 @@ class Masthead {
 	 * @return String
 	 */
 	public function getPurgeUrl( $thumb = "" ) {
-		global $wgBlogAvatarPath;
+		global $wgVignetteUrl;
 		$url = $this->mUser->getGlobalAttribute( AVATAR_USER_OPTION_NAME );
 
 		if ( $url ) {
@@ -274,7 +274,7 @@ class Masthead {
 				// e.g http://vignette.wikia.nocookie.net/messaging/images/1/19/Avatar.jpg/revision/latest/scale-to-width/150?format=jpg
 				// e.g http://images3.wikia.nocookie.net/__cb2/messaging/images/thumb/1/19/Avatar.jpg/150px-Avatar.jpg
 				if ( !preg_match( '/^https?:\/\//', $url ) ) {
-					$url = $wgBlogAvatarPath . rtrim( $thumb, '/' ) . $url . '/revision/latest';
+					$url = "{$wgVignetteUrl}/common/avatars" . rtrim( $thumb, '/' ) . $url . '/revision/latest';
 				}
 			} else {
 				/**

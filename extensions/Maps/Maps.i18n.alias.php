@@ -1,129 +1,129 @@
 <?php
-$specialPageAliases = array();
+$specialPageAliases = [];
 
 /** English
  * @author netbrain
  */
 // @codingStandardsIgnoreFile
 
-$specialPageAliases = array();
+$specialPageAliases = [];
 
 /** English (English) */
-$specialPageAliases['en'] = array(
-	'MapEditor' => array( 'MapEditor' ),
-);
+$specialPageAliases['en'] = [
+	'MapEditor' => [ 'MapEditor' ],
+];
 
 /** Arabic (العربية) */
-$specialPageAliases['ar'] = array(
-	'MapEditor' => array( 'محرر_الخريطة' ),
-);
+$specialPageAliases['ar'] = [
+	'MapEditor' => [ 'محرر_الخريطة' ],
+];
 
 /** Egyptian Arabic (مصرى) */
-$specialPageAliases['arz'] = array(
-	'MapEditor' => array( 'محرر_الخريطه' ),
-);
+$specialPageAliases['arz'] = [
+	'MapEditor' => [ 'محرر_الخريطه' ],
+];
 
 /** Assamese (অসমীয়া) */
-$specialPageAliases['as'] = array(
-	'MapEditor' => array( 'মানচিত্ৰ_সম্পাদক' ),
-);
+$specialPageAliases['as'] = [
+	'MapEditor' => [ 'মানচিত্ৰ_সম্পাদক' ],
+];
 
 /** Western Balochi (بلوچی رخشانی) */
-$specialPageAliases['bgn'] = array(
-	'MapEditor' => array( 'نخشه_ئی_ایڈیٹگر' ),
-);
+$specialPageAliases['bgn'] = [
+	'MapEditor' => [ 'نخشه_ئی_ایڈیٹگر' ],
+];
 
 /** German (Deutsch) */
-$specialPageAliases['de'] = array(
-	'MapEditor' => array( 'Karteneditor' ),
-);
+$specialPageAliases['de'] = [
+	'MapEditor' => [ 'Karteneditor' ],
+];
 
 /** Zazaki (Zazaki) */
-$specialPageAliases['diq'] = array(
-	'MapEditor' => array( 'VırneréXerita' ),
-);
+$specialPageAliases['diq'] = [
+	'MapEditor' => [ 'VırneréXerita' ],
+];
 
 /** Greek (Ελληνικά) */
-$specialPageAliases['el'] = array(
-	'MapEditor' => array( 'ΕπεξεργαστήςΧαρτών' ),
-);
+$specialPageAliases['el'] = [
+	'MapEditor' => [ 'ΕπεξεργαστήςΧαρτών' ],
+];
 
 /** Persian (فارسی) */
-$specialPageAliases['fa'] = array(
-	'MapEditor' => array( 'ویرایشگر_نقشه' ),
-);
+$specialPageAliases['fa'] = [
+	'MapEditor' => [ 'ویرایشگر_نقشه' ],
+];
 
 /** Galician (galego) */
-$specialPageAliases['gl'] = array(
-	'MapEditor' => array( 'Editor_do_mapa' ),
-);
+$specialPageAliases['gl'] = [
+	'MapEditor' => [ 'Editor_do_mapa' ],
+];
 
 /** Hebrew (עברית) */
-$specialPageAliases['he'] = array(
-	'MapEditor' => array( 'עורך_מפה' ),
-);
+$specialPageAliases['he'] = [
+	'MapEditor' => [ 'עורך_מפה' ],
+];
 
 /** Upper Sorbian (hornjoserbsce) */
-$specialPageAliases['hsb'] = array(
-	'MapEditor' => array( 'Kartowy_editor' ),
-);
+$specialPageAliases['hsb'] = [
+	'MapEditor' => [ 'Kartowy_editor' ],
+];
 
 /** Italian (italiano) */
-$specialPageAliases['it'] = array(
-	'MapEditor' => array( 'EditorMappa' ),
-);
+$specialPageAliases['it'] = [
+	'MapEditor' => [ 'EditorMappa' ],
+];
 
 /** Japanese (日本語) */
-$specialPageAliases['ja'] = array(
-	'MapEditor' => array( '地図編集', 'マップ編集' ),
-);
+$specialPageAliases['ja'] = [
+	'MapEditor' => [ '地図編集', 'マップ編集' ],
+];
 
 /** Korean (한국어) */
-$specialPageAliases['ko'] = array(
-	'MapEditor' => array( '지도편집기' ),
-);
+$specialPageAliases['ko'] = [
+	'MapEditor' => [ '지도편집기' ],
+];
 
 /** Luxembourgish (Lëtzebuergesch) */
-$specialPageAliases['lb'] = array(
-	'MapEditor' => array( 'Kaartenediteur' ),
-);
+$specialPageAliases['lb'] = [
+	'MapEditor' => [ 'Kaartenediteur' ],
+];
 
 /** Macedonian (македонски) */
-$specialPageAliases['mk'] = array(
-	'MapEditor' => array( 'УредникНаКарти' ),
-);
+$specialPageAliases['mk'] = [
+	'MapEditor' => [ 'УредникНаКарти' ],
+];
 
 /** Malayalam (മലയാളം) */
-$specialPageAliases['ml'] = array(
-	'MapEditor' => array( 'ഭൂപടതിരുത്തലുപാധി' ),
-);
+$specialPageAliases['ml'] = [
+	'MapEditor' => [ 'ഭൂപടതിരുത്തലുപാധി' ],
+];
 
 /** Dutch (Nederlands) */
-$specialPageAliases['nl'] = array(
-	'MapEditor' => array( 'Kaarteditor' ),
-);
+$specialPageAliases['nl'] = [
+	'MapEditor' => [ 'Kaarteditor' ],
+];
 
 /** Sicilian (sicilianu) */
-$specialPageAliases['scn'] = array(
-	'MapEditor' => array( 'EditorMappa' ),
-);
+$specialPageAliases['scn'] = [
+	'MapEditor' => [ 'EditorMappa' ],
+];
 
 /** Turkish (Türkçe) */
-$specialPageAliases['tr'] = array(
-	'MapEditor' => array( 'HaritaDüzenleyici', 'HaritaEditörü' ),
-);
+$specialPageAliases['tr'] = [
+	'MapEditor' => [ 'HaritaDüzenleyici', 'HaritaEditörü' ],
+];
 
 /** Vietnamese (Tiếng Việt) */
-$specialPageAliases['vi'] = array(
-	'MapEditor' => array( 'Sửa_đổi_bản_đồ' ),
-);
+$specialPageAliases['vi'] = [
+	'MapEditor' => [ 'Sửa_đổi_bản_đồ' ],
+];
 
 /** Simplified Chinese (中文（简体）‎) */
-$specialPageAliases['zh-hans'] = array(
-	'MapEditor' => array( '地图编辑器' ),
-);
+$specialPageAliases['zh-hans'] = [
+	'MapEditor' => [ '地图编辑器' ],
+];
 
 /** Traditional Chinese (中文（繁體）‎) */
-$specialPageAliases['zh-hant'] = array(
-	'MapEditor' => array( '地圖編輯器' ),
-);
+$specialPageAliases['zh-hant'] = [
+	'MapEditor' => [ '地圖編輯器' ],
+];

@@ -28,6 +28,10 @@ class DatabaseGlobalUsersServiceIntegrationTest extends WikiaDatabaseTest {
 		$this->assertEmpty( $this->dataBaseGlobalUsersService->getGroupMembers( [] ) );
 	}
 
+	public function testReturnsEmptyMapForGroupsWithNoMembers() {
+		$this->assertEmpty( $this->dataBaseGlobalUsersService->getGroupMembers( [ 'no-such-group' ] ) );
+	}
+
 	protected function getDataSet() {
 		return $this->createYamlDataSet( __DIR__ . '/fixtures/database_global_users_service.yaml' );
 	}

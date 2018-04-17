@@ -27,11 +27,11 @@ class HeliosCookieHelperTest extends TestCase {
 
 		$this->request = $this->createMock( \WebRequest::class );
 
-		$this->cookieHelper = new HeliosCookieHelper( $this->helios );
+		$this->cookieHelper = new CookieHelper( $this->helios );
 	}
 
 	public function testSetAuthenticationCookie() {
-		$tokenData = (object)array( HeliosCookieHelper::ACCESS_TOKEN_COOKIE_NAME => self::TEST_TOKEN );
+		$tokenData = (object)array( CookieHelper::ACCESS_TOKEN_COOKIE_NAME => self::TEST_TOKEN );
 		$this->helios->expects( $this->once() )
 			->method( 'generateToken' )
 			->with( self::TEST_USER_ID )
@@ -40,10 +40,10 @@ class HeliosCookieHelperTest extends TestCase {
 		$this->response->expects( $this->once() )
 			->method( 'setcookie' )
 			->with(
-			 	HeliosCookieHelper::ACCESS_TOKEN_COOKIE_NAME,
+			 	CookieHelper::ACCESS_TOKEN_COOKIE_NAME,
 				$tokenData->access_token,
 				$this->isType('int'),
-				HeliosCookieHelper::COOKIE_PREFIX
+				CookieHelper::COOKIE_PREFIX
 		 	);
 
 		$this->cookieHelper->setAuthenticationCookieWithUserId( self::TEST_USER_ID, $this->response );
@@ -53,10 +53,10 @@ class HeliosCookieHelperTest extends TestCase {
 		$this->response->expects( $this->once() )
 			->method( 'setcookie' )
 			->with(
-			 	HeliosCookieHelper::ACCESS_TOKEN_COOKIE_NAME,
+			 	CookieHelper::ACCESS_TOKEN_COOKIE_NAME,
 				"",
 				$this->isType('int'),
-				HeliosCookieHelper::COOKIE_PREFIX
+				CookieHelper::COOKIE_PREFIX
 		 	);
 
 		$this->cookieHelper->clearAuthenticationCookie( $this->response );
@@ -81,7 +81,7 @@ class HeliosCookieHelperTest extends TestCase {
 
 		$this->request->expects( $this->once() )
 			->method( 'getHeader' )
-			->with( HeliosCookieHelper::ACCESS_TOKEN_HEADER_NAME )
+			->with( CookieHelper::ACCESS_TOKEN_HEADER_NAME )
 			->willReturn( $token );
 
 		$this->assertEquals( $this->cookieHelper->getAccessToken( $this->request ), $token );
@@ -91,7 +91,7 @@ class HeliosCookieHelperTest extends TestCase {
 		// No HTTP header
 		$this->request->expects( $this->any() )
 			->method( 'getHeader' )
-			->with( HeliosCookieHelper::ACCESS_TOKEN_HEADER_NAME )
+			->with( CookieHelper::ACCESS_TOKEN_HEADER_NAME )
 			->willReturn( '' );
 
 		// Cookie with no value
@@ -123,21 +123,21 @@ class HeliosCookieHelperTest extends TestCase {
 		// Header with no value
 		$this->request->expects( $this->any() )
 			->method( 'getHeader' )
-			->with( HeliosCookieHelper::ACCESS_TOKEN_HEADER_NAME )
+			->with( CookieHelper::ACCESS_TOKEN_HEADER_NAME )
 			->willReturn( '' );
 
 		$this->assertNull( $this->cookieHelper->getAccessToken( $this->request ) );
 
 		$this->request->expects( $this->any() )
 			->method( 'getHeader' )
-			->with( HeliosCookieHelper::ACCESS_TOKEN_HEADER_NAME )
+			->with( CookieHelper::ACCESS_TOKEN_HEADER_NAME )
 			->willReturn( false );
 
 		$this->assertNull( $this->cookieHelper->getAccessToken( $this->request ) );
 
 		$this->request->expects( $this->any() )
 			->method( 'getHeader' )
-			->with( HeliosCookieHelper::ACCESS_TOKEN_HEADER_NAME )
+			->with( CookieHelper::ACCESS_TOKEN_HEADER_NAME )
 			->willReturn( null );
 
 		$this->assertNull( $this->cookieHelper->getAccessToken( $this->request ) );
@@ -154,7 +154,7 @@ class HeliosCookieHelperTest extends TestCase {
 
 		$this->request->expects( $this->any() )
 			->method( 'getHeader' )
-			->with( HeliosCookieHelper::ACCESS_TOKEN_HEADER_NAME )
+			->with( CookieHelper::ACCESS_TOKEN_HEADER_NAME )
 			->willReturn( $tokenInHeader );
 
 		$this->assertEquals( $this->cookieHelper->getAccessToken( $this->request ), $tokenInCookie );
@@ -167,7 +167,7 @@ class HeliosCookieHelperTest extends TestCase {
 
 		$this->request->expects( $this->once() )
 			->method( 'getHeader' )
-			->with( HeliosCookieHelper::ACCESS_TOKEN_HEADER_NAME )
+			->with( CookieHelper::ACCESS_TOKEN_HEADER_NAME )
 			->willReturn( false );
 
 		$this->assertNull( $this->cookieHelper->getAccessToken( $this->request ) );
@@ -180,7 +180,7 @@ class HeliosCookieHelperTest extends TestCase {
 
 		$this->request->expects( $this->once() )
 			->method( 'getHeader' )
-			->with( HeliosCookieHelper::ACCESS_TOKEN_HEADER_NAME )
+			->with( CookieHelper::ACCESS_TOKEN_HEADER_NAME )
 			->willReturn( false );
 
 		$this->assertNull( $this->cookieHelper->getAccessToken( $this->request ) );

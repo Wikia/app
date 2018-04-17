@@ -46,8 +46,6 @@
 	"maps_centred_on": "რუკის ცენტრი — $1, $2.",
 	"maps-googlemaps3-incompatbrowser": "თქვენი ბრაუზერი არ არის თავსებადი Google Maps v3-თან.",
 	"maps-googlemaps3-par-poi": "ღირსშესანიშნაობების ჩვენება.",
-	"maps-osm-par-thumbs": "მინიატიურის ჩვენება",
-	"maps-osm-par-photos": "ფოტოს ჩვენება",
 	"mapeditor": "რუკის რედაქტორი",
 	"specialpages-group-maps": "რუკები",
 	"mapeditor-none-text": "არა",
@@ -66,5 +64,12 @@
 	"mapeditor-form-field-showonhover": "მხოლოდ მიტანისას ჩვენება",
 	"mapeditor-mapparam-title": "რუკის პარამეტრების რედაქტირება",
 	"mapeditor-mapparam-defoption": "-აირჩიეთ პარამეტრი-",
-	"mapeditor-form-field-image": "სურათი"
+	"mapeditor-form-field-image": "სურათი",
+	"semanticmaps-kml-link": "KML ფაილის ხილვა",
+	"semanticmaps-default-kml-pagelink": "გვერდი $1 ხილვა",
+	"semanticmaps-latitude": "განედი: $1",
+	"semanticmaps-longitude": "გრძედი: $1",
+	"semanticmaps-altitude": "სიმაღლე: $1",
+	"semanticmaps-forminput-locations": "მდებარეობები",
+	"semanticmaps-kml-title": "საწყისი სათაური შედეგებისათვის"
 }

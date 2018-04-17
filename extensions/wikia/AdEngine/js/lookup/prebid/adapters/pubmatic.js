@@ -75,7 +75,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.pubmatic',[
 						'/5441/MOBILE_IN_CONTENT_320x480@320x480'
 					]
 				},
-				MOBILE_PREFOOTER: {
+				BOTTOM_LEADERBOARD: {
 					sizes: [
 						[300, 250],
 						[320, 50]

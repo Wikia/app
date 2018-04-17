@@ -19,8 +19,6 @@ class DumpsOnDemand {
 	 */
 	const S3_MIGRATION = '20131002154415';
 
-	const S3_COMMAND = '/usr/bin/s3cmd -c /etc/s3cmd/amazon_prod.cfg';
-
 	/**
 	 * @param SpecialStatistics $page
 	 * @param string $text
@@ -104,58 +102,45 @@ class DumpsOnDemand {
 	}
 
 	/**
-	 * @static
-	 * @access public
-	 * @deprecated
+	 * @param int $iCityId
+	 * @param bool $bHidden
+	 * @param bool $bClose
+	 * @throws Wikia\Util\AssertionException
 	 */
-	static public function sendMail( $sDbName = null, $iCityId = null, $bHidden = false, $bClose = false ) {
-		trigger_error( sprintf( 'Using of deprecated method %s.', __METHOD__ ) , E_USER_WARNING );
-		self::queueDump( $iCityId, $bHidden, $bClose );
-	}
+	static public function queueDump( int $iCityId, bool $bHidden = false, bool $bClose = false ) {
+		global $wgUser;
 
-	/**
-	 * @static
-	 * @access public
-	 */
-	static public function queueDump( $iCityId = null, $bHidden = false, $bClose = false ) {
-		global $wgCityId, $wgUser;
+		$oWiki = WikiFactory::getWikiByID( $iCityId );
 
-			if ( is_null( $iCityId ) ) {
-				$iCityId = $wgCityId;
-			}
+		\Wikia\Util\Assert::true(
+			is_object( $oWiki ),
+			sprintf( 'No such wiki. city_id: %d.', $iCityId )
+		);
 
-			$oWiki = WikiFactory::getWikiByID( $iCityId );
+		$aData = [
+			'dump_wiki_id'   => $iCityId,
+			'dump_user_id'   => $wgUser->getId(),
+			'dump_requested' => wfTimestampNow()
+		];
 
-			if ( !is_object( $oWiki ) ) {
-				trigger_error( sprintf( '%s terminated. No such wiki (city_id: %d.', __METHOD__, $iCityId ) , E_USER_WARNING );
-				return null;
-			}
+		if ( $bHidden ) {
+			$aData['dump_hidden'] = 'Y';
+		}
 
-			$aData = [
-				'dump_wiki_id'	  => $iCityId,
-				'dump_wiki_dbname'  => $oWiki->city_dbname,
-				'dump_wiki_url'	 => $oWiki->city_url,
-				'dump_user_id' => $wgUser->getId(),
-				'dump_requested'	=> wfTimestampNow()
-			];
+		if ( $bClose ) {
+			$aData['dump_closed'] = 'Y';
+		}
 
-			if ( $bHidden ) {
-				$aData['dump_hidden'] = 'Y';
-			}
+		$oDB = wfGetDB( DB_MASTER, array(), 'wikicities' );
+		$oDB->insert( 'dumps', $aData, __METHOD__ );
+		$oDB->update(
+				'city_list',
+				array( 'city_lastdump_timestamp' => wfTimestampNow() ),
+				array( 'city_id' => $iCityId ),
+				__METHOD__
+		);
 
-			if ( $bClose ) {
-				$aData['dump_closed'] = 'Y';
-			}
-
-			$oDB = wfGetDB( DB_MASTER, array(), 'wikicities' );
-			$oDB->insert( 'dumps', $aData, __METHOD__ );
-			$oDB->update(
-					'city_list',
-					array( 'city_lastdump_timestamp' => wfTimestampNow() ),
-					array( 'city_id' => $iCityId ),
-					__METHOD__
-			);
-			WikiFactory::clearCache( $iCityId );
+		WikiFactory::clearCache( $iCityId );
 	}
 
 	static public function getPath( $sName ) {
@@ -183,35 +168,40 @@ class DumpsOnDemand {
 	 * Puts the specified file to Amazon S3 storage
 	 *
 	 * if $bPublic, the file will be available for all users
-	 * if $sMimeType is set then the specified mime tipe is set, otherwise
-	 *      let AmazonS3 decide on mime type.
+	 *
+	 * @param string $sPath
+	 * @param bool $bPublic
+	 * @param string $sMimeType
+	 * @throws S3Exception
 	 */
-	static public function putToAmazonS3( $sPath, $bPublic = true, $sMimeType = null ) {
+	static public function putToAmazonS3( string $sPath, bool $bPublic, string $sMimeType )  {
+		global $wgAWSAccessKey, $wgAWSSecretKey;
+
 		$time = wfTime();
-		$sDestination = wfEscapeShellArg(
-			's3://wikia_xml_dumps/'
-			. DumpsOnDemand::getPath( basename( $sPath ) )
+		$size = filesize( $sPath );
+
+		// SUS-4538 | use PHP S3 client instead of s3cmd
+		$s3 = new S3( $wgAWSAccessKey, $wgAWSSecretKey );
+		S3::setExceptions( true );
+
+		$resource = S3::inputResource( fopen( $sPath, 'rb' ), $size );
+		$remotePath = DumpsOnDemand::getPath( basename( $sPath ) );
+
+		// this will throw S3Exception on errors, callers should handle it accordingly
+		$s3->putObject(
+			$resource,
+			'wikia_xml_dumps',
+			$remotePath,
+			$bPublic ? S3::ACL_PUBLIC_READ : S3::ACL_PRIVATE,
+			[],
+			[
+				'Content-Disposition' => 'attachment',
+				'Content-Type' => $sMimeType
+			]
 		);
 
-		$size = filesize( $sPath );
-		$sPath = wfEscapeShellArg( $sPath );
-
-		$sCmd = self::S3_COMMAND . ' --add-header=Content-Disposition:attachment';
-		if ( !is_null( $sMimeType ) ) {
-			$sMimeType = wfEscapeShellArg( $sMimeType );
-			$sCmd .= " --mime-type={$sMimeType}";
-		}
-		$sCmd .= ($bPublic)? ' --acl-public' : '';
-		$sCmd .= " put {$sPath} {$sDestination}";
-
-		Wikia::log( __METHOD__, "info", "Put {$sPath} to Amazon S3 storage: command: {$sCmd} size: {$size}", true, true);
-
-		wfShellExec( $sCmd, $iStatus );
-
 		$time = Wikia::timeDuration( wfTime() - $time );
-		Wikia::log( __METHOD__, "info", "Put {$sPath} to Amazon S3 storage: status: {$iStatus}, time: {$time}", true, true);
-
-		return $iStatus;
+		Wikia::log( __METHOD__, "info", "Put {$sPath} to Amazon S3 storage s3://wikia_xml_dumps/{$remotePath} (size: {$size}, time: {$time})", true, true);
 	}
 
 	/**

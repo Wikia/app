@@ -30,6 +30,8 @@ define('ext.wikia.adEngine.video.player.jwplayer.jwplayerTracker', [
 			return;
 		}
 
+		params.withAudio = !player.getConfig().mute;
+
 		Object.keys(trackingEventsMap).forEach(function (playerEvent) {
 			player.on(playerEvent, function(event) {
 				var errorCode;

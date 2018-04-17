@@ -268,11 +268,11 @@ class AvatarService {
 	}
 
 	private static function vignetteCustomUrl( $width, $relativePath, $timestamp ) {
-		global $wgBlogAvatarPath;
+		global $wgVignetteUrl;
 
 		$url = $relativePath;
 		if ( !preg_match( '/^https?:\/\//', $relativePath ) ) {
-			$bucket = VignetteRequest::parseBucket( $wgBlogAvatarPath );
+			$bucket = VignetteRequest::parseBucket( "{$wgVignetteUrl}/common/avatars" );
 			$relativePath = ltrim( $relativePath, '/' );
 			$url = self::buildVignetteUrl( $width, $bucket, $relativePath, $timestamp );
 		}

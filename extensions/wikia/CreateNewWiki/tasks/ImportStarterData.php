@@ -9,12 +9,12 @@ class ImportStarterData extends Task {
 
 	use Loggable;
 
-	private $phpBin = "/usr/bin/php";
-
 	public function check() {
+		global $wgPhpCli;
+
 		// php-cli is required for spawning PHP maintenance scripts
 		if ( !$this->canExecute() ) {
-			return TaskResult::createForError( $this->phpBin . " doesn't exist or is not an executable" );
+			return TaskResult::createForError( $wgPhpCli . " doesn't exist or is not an executable" );
 		} else {
 			return TaskResult::createForSuccess();
 		}
@@ -22,10 +22,7 @@ class ImportStarterData extends Task {
 
 	public function run() {
 		// I need to pass $this->sDbStarter to CreateWikiLocalJob::changeStarterContributions
-		$starterDatabase = Starters::getStarterByLanguageAndVertical(
-			$this->taskContext->getLanguage(),
-			(int) $this->taskContext->getVertical()
-		);
+		$starterDatabase = Starters::getStarterByLanguage( $this->taskContext->getLanguage() );
 		$this->taskContext->setStarterDb( $starterDatabase );
 
 		// import a starter database XML dump from DFS
@@ -58,18 +55,19 @@ class ImportStarterData extends Task {
 	}
 
 	public function canExecute() {
-		return file_exists( $this->phpBin ) && is_executable( $this->phpBin );
+		global $wgPhpCli;
+
+		return file_exists( $wgPhpCli ) && is_executable( $wgPhpCli );
 	}
 
 	public function executeShell() {
-		global $IP;
+		global $IP, $wgPhpCli;
 
 		$cmd = sprintf(
-			"SERVER_ID=%d %s %s/maintenance/importStarter.php --vertical=%d",
+			"SERVER_ID=%d %s %s/maintenance/importStarter.php",
 			$this->taskContext->getCityId(),
-			$this->phpBin,
-			"{$IP}/extensions/wikia/CreateNewWiki",
-			$this->taskContext->getVertical()
+			$wgPhpCli,
+			"{$IP}/extensions/wikia/CreateNewWiki"
 		);
 
 		$this->debug( implode( ":", [ __METHOD__, "Executing script: {$cmd}" ] ) );

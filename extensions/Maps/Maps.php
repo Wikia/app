@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Initialization file for the Maps extension.
  *
@@ -10,91 +11,93 @@
  * @author Jeroen De Dauw < jeroendedauw@gmail.com >
  */
 
-if ( !defined( 'MEDIAWIKI' ) ) {
-	die( 'Not an entry point.' );
-}
+use DataValues\Geo\Parsers\GeoCoordinateParser;
+use Maps\CircleParser;
+use Maps\DistanceParser;
+use Maps\ImageOverlayParser;
+use Maps\LineParser;
+use Maps\LocationParser;
+use Maps\PolygonParser;
+use Maps\RectangleParser;
+use Maps\SemanticMaps;
+use Maps\ServiceParam;
+use Maps\WmsOverlayParser;
 
-if ( defined( 'Maps_VERSION' ) ) {
+if ( defined( 'Maps_COORDS_FLOAT' ) ) {
 	// Do not initialize more than once.
 	return 1;
 }
 
-define( 'Maps_VERSION' , '3.5.0' );
+// The different coordinate notations.
+define( 'Maps_COORDS_FLOAT', 'float' );
+define( 'Maps_COORDS_DMS', 'dms' );
+define( 'Maps_COORDS_DM', 'dm' );
+define( 'Maps_COORDS_DD', 'dd' );
+
+require_once __DIR__ . '/Maps_Settings.php';
 
 // Include the composer autoloader if it is present.
 if ( is_readable( __DIR__ . '/vendor/autoload.php' ) ) {
 	include_once( __DIR__ . '/vendor/autoload.php' );
 }
 
-// Only initialize the extension when all dependencies are present.
-if ( !defined( 'Validator_VERSION' ) ) {
-	throw new Exception( 'You need to have Validator installed in order to use Maps' );
-}
+// Internationalization
+$GLOBALS['wgMessagesDirs']['Maps'] = __DIR__ . '/i18n';
+$GLOBALS['wgExtensionMessagesFiles']['Maps'] = __DIR__ . '/Maps.i18n.php'; // Wikia change
+$GLOBALS['wgExtensionMessagesFiles']['MapsMagic'] = __DIR__ . '/Maps.i18n.magic.php';
+$GLOBALS['wgExtensionMessagesFiles']['MapsAlias'] = __DIR__ . '/Maps.i18n.alias.php';
 
-if ( version_compare( $GLOBALS['wgVersion'], '1.18c' , '<' ) ) {
-	throw new Exception( 'This version of Maps requires MediaWiki 1.18 or above; use Maps 1.0.x for MediaWiki 1.17 and Maps 0.7.x for older versions.' );
-}
+$GLOBALS['wgExtensionFunctions'][] = function() {
+	if ( $GLOBALS['egMapsDisableExtension'] ) {
+		return true;
+	}
 
-call_user_func( function() {
-	$GLOBALS['wgExtensionCredits']['parserhook'][] = array(
-		'path' => __FILE__ ,
-		'name' => 'Maps' ,
-		'version' => Maps_VERSION ,
-		'author' => array(
+	if ( defined( 'Maps_VERSION' ) ) {
+		// Do not initialize more than once.
+		return true;
+	}
+
+	// Only initialize the extension when all dependencies are present.
+	if ( !defined( 'Validator_VERSION' ) ) {
+		throw new Exception( 'You need to have Validator installed in order to use Maps' );
+	}
+
+	// Wikia change - hardcoded exception was removed here
+
+	define( 'Maps_VERSION', '5.2.0 alpha' );
+	define( 'SM_VERSION', Maps_VERSION );
+
+	if ( $GLOBALS['egMapsGMaps3Language'] === '' ) {
+		$GLOBALS['egMapsGMaps3Language'] = $GLOBALS['wgLang'];
+	}
+
+	if ( in_array( 'googlemaps3', $GLOBALS['egMapsAvailableServices'] ) ) {
+		$GLOBALS['wgSpecialPages']['MapEditor'] = 'SpecialMapEditor';
+		$GLOBALS['wgSpecialPageGroups']['MapEditor'] = 'maps';
+	}
+
+	$GLOBALS['wgExtensionCredits']['parserhook'][] = [
+		'path' => __FILE__,
+		'name' => 'Maps',
+		'version' => Maps_VERSION,
+		'author' => [
 			'[https://www.mediawiki.org/wiki/User:Jeroen_De_Dauw Jeroen De Dauw]',
 			'...'
-		) ,
-		'url' => 'https://github.com/JeroenDeDauw/Maps/blob/master/README.md#maps' ,
+		],
+		'url' => 'https://github.com/JeroenDeDauw/Maps/blob/master/README.md#maps',
 		'descriptionmsg' => 'maps-desc',
-		'license-name' => 'GPL-2.0+'
-	);
-
-	// The different coordinate notations.
-	define( 'Maps_COORDS_FLOAT' , 'float' );
-	define( 'Maps_COORDS_DMS' , 'dms' );
-	define( 'Maps_COORDS_DM' , 'dm' );
-	define( 'Maps_COORDS_DD' , 'dd' );
-
-	$mapsDir = __DIR__ . '/';
+		'license-name' => 'GPL-2.0-or-later'
+	];
 
 	$GLOBALS['egMapsStyleVersion'] = $GLOBALS['wgStyleVersion'] . '-' . Maps_VERSION;
-
-	$GLOBALS['wgMessagesDirs']['Maps']							= __DIR__ . '/i18n';
-	$GLOBALS['wgExtensionMessagesFiles']['Maps'] 				= __DIR__ . '/Maps.i18n.php';
-	$GLOBALS['wgExtensionMessagesFiles']['MapsMagic'] 			= __DIR__ . '/Maps.i18n.magic.php';
-	$GLOBALS['wgExtensionMessagesFiles']['MapsNamespaces'] 		= __DIR__ . '/Maps.i18n.namespaces.php';
-	$GLOBALS['wgExtensionMessagesFiles']['MapsAlias'] 			= __DIR__ . '/Maps.i18n.alias.php';
 
 	$GLOBALS['wgResourceModules'] = array_merge( $GLOBALS['wgResourceModules'], include 'Maps.resources.php' );
 
 	$GLOBALS['wgAPIModules']['geocode'] = 'Maps\Api\Geocode';
 
-	// Register the initialization function of Maps.
-	$GLOBALS['wgExtensionFunctions'][] = function () {
-
-		if ( $GLOBALS['egMapsGMaps3Language'] === '' ) {
-			$GLOBALS['egMapsGMaps3Language'] = $GLOBALS['wgLang'];
-		}
-
-		Hooks::run( 'MappingServiceLoad' );
-		Hooks::run( 'MappingFeatureLoad' );
-
-		if ( in_array( 'googlemaps3', $GLOBALS['egMapsAvailableServices'] ) ) {
-			$GLOBALS['wgSpecialPages']['MapEditor'] = 'SpecialMapEditor';
-			$GLOBALS['wgSpecialPageGroups']['MapEditor'] = 'maps';
-		}
-
-		return true;
-	};
-
-	$GLOBALS['wgHooks']['AdminLinks'][]                = 'MapsHooks::addToAdminLinks';
-	$GLOBALS['wgHooks']['ArticleFromTitle'][]          = 'MapsHooks::onArticleFromTitle';
+	$GLOBALS['wgHooks']['AdminLinks'][] = 'MapsHooks::addToAdminLinks';
 	$GLOBALS['wgHooks']['MakeGlobalVariablesScript'][] = 'MapsHooks::onMakeGlobalVariablesScript';
-	$GLOBALS['wgHooks']['CanonicalNamespaces'][]       = 'MapsHooks::onCanonicalNamespaces';	$GLOBALS['wgHooks']['LoadExtensionSchemaUpdates'][] = 'MapsHooks::onLoadExtensionSchemaUpdates';
-	$GLOBALS['wgHooks']['ArticlePurge'][]              = 'MapsHooks::onArticlePurge';
-	$GLOBALS['wgHooks']['LinksUpdateConstructed'][]    = 'MapsHooks::onLinksUpdateConstructed';
-	$GLOBALS['wgHooks']['ParserAfterTidy'][]           = 'MapsHooks::onParserAfterTidy';
-	$GLOBALS['wgHooks']['ParserClearState'][]          = 'MapsHooks::onParserClearState';
+	$GLOBALS['wgHooks']['OutputPageParserOutput'][] = 'MapsHooks::onOutputPageParserOutput';
 
 	// Parser hooks
 
@@ -134,87 +137,87 @@ call_user_func( function() {
 		return $instance->init( $parser );
 	};
 
-	$GLOBALS['wgHooks']['ParserFirstCallInit'][] = function( Parser $parser ) {
-		$instance = new MapsLayerDefinition();
-		return $instance->init( $parser );
-	};
-
-	// Geocoders
-
-	// Registration of the GeoNames service geocoder.
-	$GLOBALS['wgHooks']['GeocoderFirstCallInit'][] = 'MapsGeonamesGeocoder::register';
-
-	// Registration of the Google Geocoding (v2) service geocoder.
-	$GLOBALS['wgHooks']['GeocoderFirstCallInit'][] = 'MapsGoogleGeocoder::register';
-
-	// Registration of the geocoder.us service geocoder.
-	$GLOBALS['wgHooks']['GeocoderFirstCallInit'][] = 'MapsGeocoderusGeocoder::register';
-
-	// Layers
-
-	// Registration of the image layer type.
-	$GLOBALS['wgHooks']['MappingLayersInitialization'][] = 'MapsImageLayer::register';
-
-	// Mapping services
-
-	// Include the mapping services that should be loaded into Maps.
-	// Commenting or removing a mapping service will make Maps completely ignore it, and so improve performance.
-
 	// Google Maps API v3
-	// TODO: improve loading mechanism
-	include_once $mapsDir . 'includes/services/GoogleMaps3/GoogleMaps3.php';
+	if ( $GLOBALS['egMapsGMaps3ApiKey'] === '' && array_key_exists( 'egGoogleJsApiKey', $GLOBALS ) ) {
+		$GLOBALS['egMapsGMaps3ApiKey'] = $GLOBALS['egGoogleJsApiKey'];
+	}
+
+	include_once __DIR__ . '/includes/services/GoogleMaps3/GoogleMaps3.php';
+
+	MapsMappingServices::registerService( 'googlemaps3', MapsGoogleMaps3::class );
+
+	$googleMaps = MapsMappingServices::getServiceInstance( 'googlemaps3' );
+	$googleMaps->addFeature( 'display_map', MapsDisplayMapRenderer::class );
 
 	// OpenLayers API
-	// TODO: improve loading mechanism
-	include_once $mapsDir . 'includes/services/OpenLayers/OpenLayers.php';
+	include_once __DIR__ . '/includes/services/OpenLayers/OpenLayers.php';
+
+	MapsMappingServices::registerService(
+		'openlayers',
+		MapsOpenLayers::class,
+		[ 'display_map' => MapsDisplayMapRenderer::class ]
+	);
 
 	// Leaflet API
-	// TODO: improve loading mechanism
-	include_once $mapsDir . 'includes/services/Leaflet/Leaflet.php';
+	include_once __DIR__ . '/includes/services/Leaflet/Leaflet.php';
 
+	MapsMappingServices::registerService( 'leaflet', MapsLeaflet::class );
+	$leafletMaps = MapsMappingServices::getServiceInstance( 'leaflet' );
+	$leafletMaps->addFeature( 'display_map', MapsDisplayMapRenderer::class );
 
-	require_once __DIR__ . '/Maps_Settings.php';
+	$GLOBALS['wgAvailableRights'][] = 'geocode';
 
-	define( 'Maps_NS_LAYER' , $GLOBALS['egMapsNamespaceIndex'] + 0 );
-	define( 'Maps_NS_LAYER_TALK' , $GLOBALS['egMapsNamespaceIndex'] + 1 );
+	// Users that can geocode. By default the same as those that can edit.
+	foreach ( $GLOBALS['wgGroupPermissions'] as $group => $rights ) {
+		if ( array_key_exists( 'edit', $rights ) ) {
+			$GLOBALS['wgGroupPermissions'][$group]['geocode'] = $GLOBALS['wgGroupPermissions'][$group]['edit'];
+		}
+	}
 
-	$GLOBALS['wgParamDefinitions']['coordinate'] = array(
-		'string-parser' => 'DataValues\Geo\Parsers\GeoCoordinateParser',
-	);
+	$GLOBALS['wgParamDefinitions']['coordinate'] = [
+		'string-parser' => GeoCoordinateParser::class,
+	];
 
-	$GLOBALS['wgParamDefinitions']['mappingservice'] = array(
-		'definition'=> 'Maps\ServiceParam',
-	);
+	$GLOBALS['wgParamDefinitions']['mappingservice'] = [
+		'definition' => ServiceParam::class,
+	];
 
-	$GLOBALS['wgParamDefinitions']['mapslocation'] = array(
-		'string-parser' => 'Maps\LocationParser',
-	);
+	$GLOBALS['wgParamDefinitions']['mapslocation'] = [
+		'string-parser' => LocationParser::class,
+	];
 
-	$GLOBALS['wgParamDefinitions']['mapsline'] = array(
-		'string-parser' => 'Maps\LineParser',
-	);
+	$GLOBALS['wgParamDefinitions']['mapsline'] = [
+		'string-parser' => LineParser::class,
+	];
 
-	$GLOBALS['wgParamDefinitions']['mapscircle'] = array(
-		'string-parser' => 'Maps\CircleParser',
-	);
+	$GLOBALS['wgParamDefinitions']['mapscircle'] = [
+		'string-parser' => CircleParser::class,
+	];
 
-	$GLOBALS['wgParamDefinitions']['mapsrectangle'] = array(
-		'string-parser' => 'Maps\RectangleParser',
-	);
+	$GLOBALS['wgParamDefinitions']['mapsrectangle'] = [
+		'string-parser' => RectangleParser::class,
+	];
 
-	$GLOBALS['wgParamDefinitions']['mapspolygon'] = array(
-		'string-parser' => 'Maps\PolygonParser',
-	);
+	$GLOBALS['wgParamDefinitions']['mapspolygon'] = [
+		'string-parser' => PolygonParser::class,
+	];
 
-	$GLOBALS['wgParamDefinitions']['distance'] = array(
-		'string-parser' => 'Maps\DistanceParser',
-	);
+	$GLOBALS['wgParamDefinitions']['distance'] = [
+		'string-parser' => DistanceParser::class,
+	];
 
-	$GLOBALS['wgParamDefinitions']['wmsoverlay'] = array(
-		'string-parser' => 'Maps\WmsOverlayParser',
-	);
+	$GLOBALS['wgParamDefinitions']['wmsoverlay'] = [
+		'string-parser' => WmsOverlayParser::class,
+	];
 
-	$GLOBALS['wgParamDefinitions']['mapsimageoverlay'] = array(
-		'string-parser' => 'Maps\ImageOverlayParser',
-	);
-} );
+	$GLOBALS['wgParamDefinitions']['mapsimageoverlay'] = [
+		'string-parser' => ImageOverlayParser::class,
+	];
+
+	if ( !$GLOBALS['egMapsDisableSmwIntegration'] && defined( 'SMW_VERSION' ) ) {
+		SemanticMaps::newFromMediaWikiGlobals( $GLOBALS )->initExtension();
+	}
+
+	return true;
+};
+

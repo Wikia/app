@@ -5,7 +5,8 @@
 			"Giro720",
 			"Jaideraf",
 			"Luckas",
-			"Luckas Blade"
+			"Luckas Blade",
+			"!Silent"
 		]
 	},
 	"validator-desc": "Biblioteca para o processamento de parâmetros declarativos",
@@ -25,6 +26,7 @@
 	"validator-type-float": "número",
 	"validator-type-boolean": "sim/não",
 	"validator-type-char": "caractere",
+	"validator-type-dimension": "número e unidade dimensional",
 	"validator-type-title": "título",
 	"validator-type-string-list": "lista de textos",
 	"validator-type-integer-list": "lista de números inteiros",

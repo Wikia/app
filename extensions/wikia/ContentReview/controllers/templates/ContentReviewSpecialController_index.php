@@ -33,14 +33,14 @@
 					<td><?= wfMessage( ContentReviewSpecialController::$statusMessageKeys[$review['status']] )->escaped() ?></td>
 					<td><?= htmlspecialchars( $review['user'] ) ?></td>
 					<td><?= $review['submit_time'] ?></td>
-					<td><?= htmlspecialchars( $review['review_user_name'] ) ?></td>
+					<td><?= htmlspecialchars( $review['review_user_name'] ?? '' ) ?></td>
 					<td><?= $review['review_start'] ?></td>
 					<td class="content-review-special-list-item-actions clearfix">
 						<? if ( !empty( $review['hide'] ) ): ?>
 							<?= wfMessage( 'content-review-special-review-open' )->escaped() ?>
 						<? else: ?>
 							<a href="<?= Sanitizer::encodeAttribute( $review['diff'] ) ?>" target="_blank"
-							   class="<?= ContentReviewSpecialController::$statusMessageKeys[$review['status']] ?><?= $review['class'] ?> wikia-button primary"
+							   class="<?= ContentReviewSpecialController::$statusMessageKeys[$review['status']] ?><?= $review['class'] ?? '' ?> wikia-button primary"
 							   data-wiki-id="<?= $review['wiki_id'] ?>"
 							   data-page-id="<?= $review['page_id'] ?>"
 							   data-old-status="<?= $review['status'] ?>"

@@ -4,8 +4,6 @@
  */
 namespace Wikia\Search;
 
-use Wikia\Search\Indexer;
-
 /**
  * This class is responsible for storing MediaWiki hook logic related to search.
  * Each method must be registered as a hook in the setup file, given the appropriate global settings.
@@ -77,26 +75,6 @@ class Hooks {
 			'label-message' => [ 'wikiasearch2-search-all-namespaces' ],
 			'section' => 'under-the-hood/advanced-displayv2',
 		];
-
-		return true;
-	}
-
-	/**
-	 * WikiaMobile hook to add assets so they are minified and concatenated
-	 *
-	 * @see    SearchControllerTest::testOnWikiaMobileAssetsPackages
-	 *
-	 * @param  array $jsStaticPackages
-	 * @param  array $jsExtensionPackages
-	 * @param  array $scssPackages
-	 *
-	 * @return boolean
-	 */
-	public static function onWikiaMobileAssetsPackages( &$jsStaticPackages, &$jsExtensionPackages, &$scssPackages ) {
-		if ( \F::app()->wg->Title->isSpecial( 'Search' ) ) {
-			$jsExtensionPackages[] = 'wikiasearch_js_wikiamobile';
-			$scssPackages[] = 'wikiasearch_scss_wikiamobile';
-		}
 
 		return true;
 	}

@@ -1,10 +1,6 @@
 <?php
 
 class ForumExternalController extends WallExternalController {
-	public function __construct() {
-		parent::__construct();
-		$this->app = F::app();
-	}
 
 	public function getCommentsPage() {
 		// workaround to prevent index data expose
@@ -32,6 +28,14 @@ class ForumExternalController extends WallExternalController {
 	 */
 
 	public function swapOrder() {
+		try {
+			// SUS-4042: Validate edit token
+			$this->checkWriteRequest();
+		} catch ( BadRequestException $e ) {
+			$this->setTokenMismatchError();
+			return false;
+		}
+
 		$boardId1 = $this->getVal( 'boardId1', 0 );
 		$boardId2 = $this->getVal( 'boardId2', 0 );
 

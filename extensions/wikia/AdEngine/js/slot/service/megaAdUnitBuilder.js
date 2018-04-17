@@ -8,7 +8,17 @@ define('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', [
 	'use strict';
 
 	var dfpId = '5441',
+		megaSlots = [
+			'INVISIBLE_SKIN',
+			//ToDo ADEN-6864: Go global
+			//'BOTTOM_LEADERBOARD'
+		],
 		context;
+
+	//ToDo ADEN-6864: Go global
+	if (getContextTargeting().skin === 'mercury' || adContext.get('opts.isBLBMegaEnabled')) {
+		megaSlots.push('BOTTOM_LEADERBOARD');
+	}
 
 	function getContextTargeting() {
 		if (!context) {
@@ -31,11 +41,11 @@ define('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', [
 			'LB': ['TOP_LEADERBOARD', 'MOBILE_TOP_LEADERBOARD'],
 			'MR': ['TOP_RIGHT_BOXAD'],
 			'PF': [
-				'MOBILE_PREFOOTER', 'BOTTOM_LEADERBOARD', 'MOBILE_BOTTOM_LEADERBOARD'
+				'MOBILE_PREFOOTER', 'BOTTOM_LEADERBOARD'
 			],
 			'PX': ['INVISIBLE_SKIN', 'INVISIBLE_HIGH_IMPACT', 'INVISIBLE_HIGH_IMPACT_2'],
 			'HiVi': ['INCONTENT_BOXAD_1', 'MOBILE_IN_CONTENT'],
-			'VIDEO': ['FEATURED', 'OUTSTREAM', 'UAP_BFAA', 'UAP_BFAB', 'ABCD', 'OOYALA', 'VIDEO']
+			'VIDEO': ['FEATURED', 'OUTSTREAM', 'UAP_BFAA', 'UAP_BFAB', 'ABCD', 'VIDEO']
 		};
 
 		// OTHER: 'INCONTENT_PLAYER'
@@ -58,7 +68,7 @@ define('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', [
 		return result;
 	}
 
-	function build(slotName, src) {
+	function build(slotName, src, slotNameSuffix) {
 		var adUnitElements,
 			params = page.getPageLevelParams(),
 			device = getDevice(params),
@@ -70,7 +80,7 @@ define('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', [
 			'',
 			dfpId,
 			provider + '.' + getGroup(slotName),
-			slotName.toLowerCase(),
+			slotName.toLowerCase() + (slotNameSuffix || ''),
 			device,
 			params.skin + '-' + getAdLayout(params),
 			wikiName + '-' + vertical
@@ -102,6 +112,10 @@ define('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', [
 		});
 	}
 
+	function isMegaSlot(slotName) {
+		return megaSlots.indexOf(slotName) !== -1;
+	}
+
 	adContext.addCallback(function () {
 		context = null;
 	});
@@ -109,6 +123,7 @@ define('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', [
 	return {
 		build: build,
 		getShortSlotName: getShortSlotName,
-		isValid: isValid
+		isValid: isValid,
+		isMegaSlot: isMegaSlot
 	};
 });

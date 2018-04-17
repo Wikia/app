@@ -125,7 +125,38 @@ class TemplatePageHelper {
 			}
 		}
 
+		$infoboxes = PortableInfoboxDataService::newFromTitle( $this->getTitle() )->getData();
+		if ( !empty( $infoboxes ) ) {
+			foreach ( $infoboxes as $infobox ) {
+				if ( isset( $infobox['metadata'] ) ) {
+					foreach ( $infobox['metadata'] as $nodeMetadata ) {
+						$params = array_merge($params, $this->getInfoboxNodeParameters($nodeMetadata));
+					}
+				}
+			}
+		}
+
 		wfProfileOut(__METHOD__);
 		return array_keys( $params );
 	}
+
+	private function getInfoboxNodeParameters( $nodeMetadata ) {
+		$params = [];
+		if (isset($nodeMetadata['sources'])) {
+			foreach ( $nodeMetadata['sources'] as $sourceName => $sourceMetadata ) {
+				if ( !isset( $params[$sourceName] ) ) {
+					$params[$sourceName] = 1;
+				}
+			}
+		}
+
+		if (isset($nodeMetadata['metadata'])) {
+			foreach($nodeMetadata['metadata'] as $nestedNodeMetadata ) {
+				$params = array_merge($params, $this->getInfoboxNodeParameters($nestedNodeMetadata));
+			}
+		}
+
+		return $params;
+	}
+
 }

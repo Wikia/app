@@ -30,7 +30,7 @@ class Error {
 	 *
 	 * @return self
 	 */
-	public static function newError( $text = '', $property = null, $code = 'invalid', array $params = array() ) {
+	public static function newError( $text = '', $property = null, $code = 'invalid', array $params = [] ) {
 		return new static( $text, self::SEVERITY_ERROR, $property, $code, $params );
 	}
 

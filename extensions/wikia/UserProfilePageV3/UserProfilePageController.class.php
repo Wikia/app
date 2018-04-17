@@ -1,7 +1,6 @@
 <?php
 
-use Wikia\Service\User\Attributes\UserAttributes;
-use Wikia\DependencyInjection\Injector;
+use Wikia\Factory\ServiceFactory;
 
 class UserProfilePageController extends WikiaController {
 	const AVATAR_DEFAULT_SIZE = 150;
@@ -502,8 +501,7 @@ class UserProfilePageController extends WikiaController {
 	}
 
 	private function clearAttributeCache( $userId ) {
-		/** @var UserAttributes $attributeService */
-		$attributeService = Injector::getInjector()->get( UserAttributes::class );
+		$attributeService = ServiceFactory::instance()->attributesFactory()->userAttributes();
 		$attributeService->clearCache( $userId );
 	}
 

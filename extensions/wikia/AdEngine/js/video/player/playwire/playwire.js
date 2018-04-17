@@ -14,7 +14,7 @@ define('ext.wikia.adEngine.video.player.playwire', [
 		return '//config.playwire.com/' + publisherId + '/videos/v2/' + videoId + '/zeus.json';
 	}
 
-	function inject(params) {
+	function inject(params, onPlayerCreated) {
 		var configUrl = params.configUrl,
 			container = params.container,
 			height = params.height,
@@ -34,42 +34,43 @@ define('ext.wikia.adEngine.video.player.playwire', [
 
 		tracker.track(params, 'init');
 
-		return new Promise(function (resolve) {
-			configUrl = configUrl || getConfigUrl(params.publisherId, params.videoId);
-			vastUrl = vastUrl || vastUrlBuilder.build(width / height, vastTargeting, vastUrlBuilderOptions);
+		configUrl = configUrl || getConfigUrl(params.publisherId, params.videoId);
+		vastUrl = vastUrl || vastUrlBuilder.build(width / height, vastTargeting, vastUrlBuilderOptions);
 
-			win[playerId + '_ready'] = function () {
-				var video = playerFactory.create(win.Bolt, playerId, params);
+		win[playerId + '_ready'] = function () {
+			var video = playerFactory.create(win.Bolt, playerId, params);
 
-				tracker.register(video, params);
+			tracker.register(video, params);
 
-				video.addEventListener('boltContentStarted', function () {
-					video.api.dispatchEvent(video.id, 'wikiaAdStarted');
-				});
-				video.addEventListener('boltContentComplete', function () {
-					video.api.dispatchEvent(video.id, 'wikiaAdCompleted');
-				});
+			video.addEventListener('boltContentStarted', function () {
+				video.api.dispatchEvent(video.id, 'wikiaAdStarted');
+			});
+			video.addEventListener('boltContentComplete', function () {
+				video.api.dispatchEvent(video.id, 'wikiaAdCompleted');
+			});
 
-				resolve(video);
-				if (params.onReady) {
-					params.onReady(win.Bolt, playerId, video);
-				}
-			};
-
-			script.setAttribute('data-id', playerId);
-			script.setAttribute('data-config', configUrl);
-			script.setAttribute('data-onready', playerId + '_ready');
-			script.setAttribute('data-ad-tag', vastUrl);
-			if (params.volume !== undefined) {
-				script.setAttribute('data-volume', params.volume);
+			if (typeof onPlayerCreated === 'function') {
+				onPlayerCreated(video);
 			}
 
-			script.setAttribute('type', 'text/javascript');
-			script.src = playerUrl;
+			if (params.onReady) {
+				params.onReady(win.Bolt, playerId, video);
+			}
+		};
 
-			container.appendChild(script);
-			log(['inject', configUrl], log.levels.debug, logGroup);
-		});
+		script.setAttribute('data-id', playerId);
+		script.setAttribute('data-config', configUrl);
+		script.setAttribute('data-onready', playerId + '_ready');
+		script.setAttribute('data-ad-tag', vastUrl);
+		if (params.volume !== undefined) {
+			script.setAttribute('data-volume', params.volume);
+		}
+
+		script.setAttribute('type', 'text/javascript');
+		script.src = playerUrl;
+
+		container.appendChild(script);
+		log(['inject', configUrl], log.levels.debug, logGroup);
 	}
 
 	return {

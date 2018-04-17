@@ -509,53 +509,6 @@ function wfWaitForSlavesExt( $maxLag, $cluster = null ) {
 	}
 }
 
-/**
- * wfGetCurrentUrl
- *
- * Get full url for request, used when $wgTitle is not available yet
- * based on code from marco panichi
- *
- * @author Krzysztof Krzyżaniak <eloy@wikia-inc.com>
- * @access public
- *
- * @param boolean $s_string default false -- return url as string not array
- *
- * @return array	parts of current url
- */
-function wfGetCurrentUrl( $as_string = false ) {
-	$uri = $_SERVER['REQUEST_URI'];
-
-	/**
-	 * sometimes $uri contain whole url, not only last part
-	 */
-	if ( !preg_match( '!^https?://!', $uri ) ) {
-		$uri = isset( $_SERVER[ "SERVER_NAME" ] )
-			? "http://" . $_SERVER[ "SERVER_NAME" ] . $uri
-			: "http://localhost" . $uri;
-	}
-	$arr = parse_url( $uri );
-
-	/**
-	 * host
-	 */
-	$arr[ "host" ] = $_SERVER['SERVER_NAME'];
-
-	/**
-	 * scheme
-	 */
-	$server_prt = explode( '/', $_SERVER['SERVER_PROTOCOL'] );
-	$arr[ "scheme" ] = strtolower( $server_prt[0] );
-
-	/**
-	 * full url
-	 */
-	$arr[ "url" ] = $arr[ "scheme" ] . '://' . $arr[ "host" ] . $arr[ "path" ];
-	$arr[ "url" ] = isset( $arr[ "query" ] ) ? $arr[ "url" ] . "?" . $arr[ "query" ] : $arr[ "url" ];
-
-	return ( $as_string ) ? $arr[ "url" ]: $arr ;
-}
-
-
 function getMenuHelper( $name, $limit = 7 ) {
 	global $wgMemc;
 	wfProfileIn( __METHOD__ );
@@ -1598,4 +1551,48 @@ function wfProtocolUrlToRelative( $url ) {
 	}
 
 	return $url;
+}
+
+function wfHttpToHttps( $url ) {
+	return preg_replace( '/^http:\/\//', 'https://', $url );
+}
+
+function wfHttpsToHttp( $url ) {
+	return preg_replace( '/^https:\/\//', 'http://', $url );
+}
+
+function wfHttpsAllowedForURL( $url ): bool {
+	global $wgWikiaBaseDomain, $wgDevDomain, $wgWikiaEnvironment, $wgDevelEnvironment;
+	$host = parse_url( $url, PHP_URL_HOST );
+	if ( $host === false ) {
+		return false;
+	}
+
+	if ( $wgDevelEnvironment && !empty( $wgDevDomain ) ) {
+		$server = str_replace( ".{$wgDevDomain}", '', $host );
+	} elseif ( $wgWikiaEnvironment !== WIKIA_ENV_PROD ) {
+		$server = preg_replace(
+			'/\\.(stable|preview|verify|sandbox-[a-z0-9]+)\\.' . preg_quote( $wgWikiaBaseDomain ) . '$/',
+			'',
+			$host
+		);
+	} else {
+		$server = str_replace( ".{$wgWikiaBaseDomain}", '', $host );
+	}
+
+	// Only allow single subdomain wikis through
+	return substr_count( $server, '.' ) === 0;
+}
+
+/**
+ * Removes the protocol part of a url and returns the result, e. g. http://muppet.wikia.com -> muppet.wikia.com
+ *
+ * @param $url
+ */
+function wfStripProtocol( $url ) {
+	$pos = strpos( $url, '://' );
+	if ( $pos === FALSE ) {
+		return $url;
+	}
+	return substr( $url, $pos + 3 );
 }

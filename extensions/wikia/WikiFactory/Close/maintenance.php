@@ -10,9 +10,8 @@
 ini_set( "include_path", dirname(__FILE__) . "/../../../../maintenance/" );
 
 use Swagger\Client\Discussion\Api\SitesApi;
-use Wikia\DependencyInjection\Injector;
+use Wikia\Factory\ServiceFactory;
 use Wikia\Logger\WikiaLogger;
-use Wikia\Service\Swagger\ApiProvider;
 
 $optionsWithArgs = array( "limit", "sleep" );
 
@@ -22,13 +21,6 @@ require_once( "Archive/Tar.php" );
 class CloseWikiMaintenance {
 
 	const CLOSE_WIKI_DELAY = 30;
-
-	/**
-	 * s3cmd + config for DFS storage
-	 *
-	 * This maintenance script needs to be run as root due to permissions set for /etc/s3cmd
-	 */
-	const S3_COMMAND = '/usr/bin/s3cmd -c /etc/s3cmd/sjc_prod.cfg';
 
 	private $mOptions;
 
@@ -62,8 +54,7 @@ class CloseWikiMaintenance {
 	 * @access public
 	 */
 	public function execute() {
-        
-		global $wgUploadDirectory, $wgDBname, $IP;
+		global $IP;
 
 		$first     = isset( $this->mOptions[ "first" ] ) ? true : false;
 		$sleep     = isset( $this->mOptions[ "sleep" ] ) ? $this->mOptions[ "sleep" ] : 15;
@@ -100,7 +91,7 @@ class CloseWikiMaintenance {
 		$dbr = WikiFactory::db( DB_SLAVE );
 		$sth = $dbr->select(
 			array( "city_list" ),
-			array( "city_id", "city_flags", "city_dbname", "city_url", "city_public" ),
+			array( "city_id", "city_flags", "city_dbname", "city_cluster", "city_url", "city_public" ),
 			$where,
 			__METHOD__,
 			$opts
@@ -124,9 +115,9 @@ class CloseWikiMaintenance {
 			$xdumpok  = true;
 			$newFlags = 0;
 			$dbname   = $row->city_dbname;
-			$cityid   = $row->city_id;
+			$cityid   = intval( $row->city_id );
+			$cluster  = $row->city_cluster;
 			$folder   = WikiFactory::getVarValueByName( "wgUploadDirectory", $cityid );
-			$cluster  = WikiFactory::getVarValueByName( "wgDBcluster", $cityid );
 
 			/**
 			 * safety check, if city_dbname is not unique die with message
@@ -156,18 +147,11 @@ class CloseWikiMaintenance {
 				$this->log( "Dumping database on remote host" );
 
 				$script = ( $hide )
-					? "--script='../extensions/wikia/WikiFactory/Dumps/runBackups.php --both --id={$cityid} --tmp --s3'"
-					: "--script='../extensions/wikia/WikiFactory/Dumps/runBackups.php --both --id={$cityid} --hide --tmp --s3'";
+					? "php {$IP}/extensions/wikia/WikiFactory/Dumps/runBackups.php --both --id={$cityid} --tmp --s3"
+					: "php {$IP}/extensions/wikia/WikiFactory/Dumps/runBackups.php --both --id={$cityid} --hide --tmp --s3";
 
-				$cmd  = array(
-					"/usr/wikia/backend/bin/run_maintenance",
-					"--id=177",
-					$script
-				);
-
-                $cmd = '/usr/wikia/backend/bin/run_maintenance --id=177 ' . wfEscapeShellArg( $script );
-				$this->log( $cmd );
-				$output = wfShellExec( $cmd, $retval );
+				$this->log( $script );
+				$output = wfShellExec( $script, $retval, [ 'SERVER_ID' => Wikia::COMMUNITY_WIKI_ID ] );
 				$xdumpok = empty( $retval ) ? true : false;
 				/**
 				 * reset flag
@@ -178,23 +162,24 @@ class CloseWikiMaintenance {
 				if( $dbname && $folder ) {
 					$this->log( "Dumping images on remote host" );
 					try {
-						$source = $this->tarFiles( $folder, $dbname, $cityid );
+						$source = $this->tarFiles( $dbname, $cityid );
 
 						if( is_string( $source ) ) {
-							$retval = DumpsOnDemand::putToAmazonS3( $source, !$hide,  MimeMagic::singleton()->guessMimeType( $source ) );
-							if( $retval > 0 ) {
-								$this->log( "putToAmazonS3 command failed." );
+							try {
+								DumpsOnDemand::putToAmazonS3( $source, !$hide, MimeMagic::singleton()->guessMimeType( $source ) );
+							} catch ( S3Exception $ex ) {
+								$this->log( "putToAmazonS3 command failed - " . $ex->getMessage() );
 								echo "Can't copy images to remote host. Please, fix that and rerun";
 								die( 1 );
-							} else {
-								$this->log( "{$source} copied to S3 Amazon" );
-								unlink( $source );
 							}
+
+							$this->log( "{$source} copied to S3 Amazon" );
+							unlink( $source );
 						}
 
 						$newFlags = $newFlags | WikiFactory::FLAG_CREATE_IMAGE_ARCHIVE | WikiFactory::FLAG_HIDE_DB_IMAGES;
 					}
-					catch( WikiaException $e ) {
+					catch( Exception $e ) {
 						/**
 						 * actually it's better to die than remove
 						 * images later without backup
@@ -319,18 +304,17 @@ class CloseWikiMaintenance {
 	 *
 	 * @access public
 	 *
-	 * @param string $uploadDirectory path to images
 	 * @param string $dbname database name
-	 * @param int $cityid city ID
+	 * @param int $cityId city ID
 	 *
 	 * @return string path to created archive or false if there are no files to backup (S3 bucket does not exist / is empty)
-	 * @throws WikiaException thrown on failed backups
+	 * @throws Exception thrown on failed backups
 	 */
-	private function tarFiles( $directory, $dbname, $cityid ) {
-		$wgUploadPath = WikiFactory::getVarValueByName( 'wgUploadPath', $cityid );
+	private function tarFiles( $dbname, $cityId ) {
+		$wgUploadPath = WikiFactory::getVarValueByName( 'wgUploadPath', $cityId );
 
 		// check that S3 bucket for this wiki exists (PLATFORM-1199)
-		$swiftStorage = \Wikia\SwiftStorage::newFromWiki( $cityid );
+		$swiftStorage = \Wikia\SwiftStorage::newFromWiki( $cityId );
 		$isEmpty = intval( $swiftStorage->getContainer()->object_count ) === 0;
 
 		if ( $isEmpty ) {
@@ -350,16 +334,27 @@ class CloseWikiMaintenance {
 		$time = wfTime();
 
 		// s3cmd sync --dry-run s3://dilbert ~/images/dilbert/ --exclude "/thumb/*" --exclude "/temp/*"
-		$cmd = sprintf(
-			'%s sync s3://%s/images "%s" --exclude "/thumb/*" --exclude "/temp/*"',
-			self::S3_COMMAND,
-			$container,
-			$directory
-		);
+		// but use SwiftStorage instead (SUS-4537)
+		$objects = $swiftStorage->getContainer()->list_objects_recursively(
+			ltrim( $swiftStorage->getPathPrefix(), '/' ) );
 
-		wfShellExec( $cmd, $iStatus );
+		foreach( $objects as $object ) {
+			// do not backup thumbnails and temporary files
+			// --exclude "/thumb/*" --exclude "/temp/*"
+			if ( strpos($object, 'images/thumb/') !== false || strpos($object, 'images/temp/') !== false ) {
+				continue;
+			}
+
+			// prepare a destination directory for this file
+			wfMkdirParents( dirname( $directory . $object ) );
+
+			// fetch files one by one
+			( new CF_Object( $swiftStorage->getContainer(), $object ) )
+				->save_to_filename( $directory . $object );
+		}
+
 		$time = Wikia::timeDuration( wfTime() - $time );
-		Wikia::log( __METHOD__, "info", "Rsync to {$directory} from {$container} Swift storage: status: {$iStatus}, time: {$time}", true, true );
+		Wikia::log( __METHOD__, "info", "Rsync to {$directory} from {$container} Swift storage: status: time: {$time}", true, true );
 
 		/**
 		 * @name dumpfile
@@ -380,13 +375,23 @@ class CloseWikiMaintenance {
 
 		if( is_array( $files ) && count( $files ) ) {
 			$this->log( sprintf( "Packing %d files from {$directory} to {$tarfile}", count( $files ) ) );
-			$tar->create( $files );
+			$res = $tar->create( $files );
+
+			if ( $res !== true ) {
+				throw new WikiaException( "Archive_Tar::create failed" );
+			}
+
 			$result = $tarfile;
 		}
 		else {
 			$this->log( "List of files in {$directory} is empty" );
 			throw new WikiaException( "List of files in {$directory} is empty" );
 		}
+
+		// SUS-4325 | CloseWikiMaintenance should remove directories with images after tar file is created
+		$this->log( "Removing '{$directory}' directory" );
+		wfRecursiveRemoveDir( $directory );
+
 		return $result;
 	}
 
@@ -428,32 +433,28 @@ class CloseWikiMaintenance {
 	 * Remove DFS bucket of a given wiki
 	 *
 	 * @see PLATFORM-1700
-	 * @param int $cityid
+	 * @see SUS-4536
+	 * @param int $cityId
 	 */
-	private function removeBucket( $cityid ) {
+	private function removeBucket( int $cityId ) {
 		try {
-			$swift = \Wikia\SwiftStorage::newFromWiki( $cityid );
+			$swift = \Wikia\SwiftStorage::newFromWiki( $cityId );
 			$this->log( sprintf( "Removing DFS bucket /%s%s", $swift->getContainerName(), $swift->getPathPrefix() ) );
 
-			// s3cmd --recursive del s3://BUCKET/OBJECT / Recursively delete files from bucket
-			$cmd = sprintf(
-				'%s --recursive del s3://%s%s/',
-				self::S3_COMMAND,
-				$swift->getContainerName(),  # e.g. 'nordycka'
-				$swift->getPathPrefix()      # e.g. '/pl/images'
-			);
-			$this->log( $cmd );
-			$out = wfShellExec( $cmd, $iStatus );
+			// get the list of all objects in wiki images sub-bucket
+			$path = ltrim( $swift->getPathPrefix(), '/' );
+			$objectsToDelete = $swift->getContainer()->list_objects_recursively( $path );
 
-			if ( $iStatus !== 0 ) {
-				throw new Exception( 'Failed to remove a bucket content - ' . $cmd, $iStatus );
+			// now delete them all
+			foreach( $objectsToDelete as $object ) {
+				$swift->getContainer()->delete_object( $object );
 			}
 		} catch ( Exception $ex ) {
 			$this->log( __METHOD__ . ' - ' . $ex->getMessage() );
 
-			Wikia\Logger\WikiaLogger::instance()->error( 'Removing DFS bucket failed', [
+			Wikia\Logger\WikiaLogger::instance()->error( 'Removing DFS files failed', [
 				'exception' => $ex,
-				'city_id' => $cityid
+				'city_id' => $cityId
 			] );
 		}
 	}
@@ -507,11 +508,8 @@ class CloseWikiMaintenance {
 		}
 	}
 
-	/**
-	 * just helper for logging
-	 */
-	private function log( $message ) {
-		Wikia::log( "CloseWiki", false, $message, true, true );
+	private function log( string $message ) {
+		WikiaLogger::instance()->info( $message );
 	}
 
 	private function removeDiscussions( int $cityId ) {
@@ -528,8 +526,8 @@ class CloseWikiMaintenance {
 	 * @return SitesApi
 	 */
 	private function getSitesApi() {
-		/** @var ApiProvider $apiProvider */
-		$apiProvider = Injector::getInjector()->get( ApiProvider::class );
+		$apiProvider = ServiceFactory::instance()->providerFactory()->apiProvider();
+
 		/** @var SitesApi $api */
 		$api = $apiProvider->getApi( 'discussion', SitesApi::class );
 		$api->getApiClient()->getConfig()->setCurlTimeout( 5 );

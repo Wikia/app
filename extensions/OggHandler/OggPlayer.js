@@ -9,7 +9,7 @@ var wgOggPlayer = {
 
 	// List of players in order of preference
 	// Downpreffed VLC because it crashes my browser all the damn time -- TS
-	'players': ['videoElement', 'cortado', 'quicktime-mozilla', 'quicktime-activex', 'vlc-mozilla', 'vlc-activex', 'totem', 'kmplayer', 'kaffeine', 'mplayerplug-in', 'oggPlugin'],
+	'players': ['videoElement', 'quicktime-mozilla', 'quicktime-activex', 'vlc-mozilla', 'vlc-activex', 'totem', 'kmplayer', 'kaffeine', 'mplayerplug-in', 'oggPlugin'],
 
 	// Client support table
 	'clientSupports': { 'thumbnail' : true },
@@ -39,7 +39,6 @@ var wgOggPlayer = {
 
 	// Configuration from MW
 	'msg': {},
-	'cortadoUrl' : '',
 	'extPathUrl' : '',
 	'showPlayerSelect': true,
 	'controlsHeightGuess': 20, 
@@ -108,9 +107,6 @@ var wgOggPlayer = {
 			case 'vlc-activex':
 				this.embedVlcActiveX( elt, params );
 				break;
-			case 'cortado':
-				this.embedCortado( elt, params );
-				break;
 			case 'quicktime-mozilla':
 			case 'quicktime-activex':
 				this.embedQuicktimePlugin( elt, params, player );
@@ -173,14 +169,6 @@ var wgOggPlayer = {
 		// In Mozilla, navigator.javaEnabled() only tells us about preferences, we need to
 		// search navigator.mimeTypes to see if it's installed
 		var javaEnabled = navigator.javaEnabled();
-		// In Opera, navigator.javaEnabled() is all there is
-		var invisibleJava = this.opera;
-
-		// Opera will switch off javaEnabled in preferences if java can't be found.
-		// And it doesn't register an application/x-java-applet mime type like Mozilla does.
-		if ( invisibleJava && javaEnabled ) {
-			this.clientSupports['cortado'] = true;
-		}
 
 		if ( this.konqueror ) {
 			// Java is bugged as of 3.5.9
@@ -200,10 +188,6 @@ var wgOggPlayer = {
 		// VLC
 		if ( this.testActiveX( 'VideoLAN.VLCPlugin.2' ) ) {
 			this.clientSupports['vlc-activex'] = true;
-		}
-		// Java
-		if ( javaEnabled && this.testActiveX( 'JavaWebStart.isInstalled' ) ) {
-			this.clientSupports['cortado'] = true;
 		}
 		// QuickTime
 		if ( this.testActiveX( 'QuickTimeCheckObject.QuickTimeCheck.1' ) ) {
@@ -259,13 +243,7 @@ var wgOggPlayer = {
 			var pluginFilename = plugin && plugin.filename ? plugin.filename : '';
 			player = '';
 
-			if ( javaEnabled && type == 'application/x-java-applet' ) {
-				// We use <applet> so we don't have to worry about unique types
-				this.clientSupports['cortado'] = true;
-				// But it could conflict with another plugin
-				// Set player='' to avoid double registration of cortado
-				player = '';
-			} else if ( pluginFilename.indexOf( 'libtotem' ) > -1 ) {
+			if ( pluginFilename.indexOf( 'libtotem' ) > -1 ) {
 				// Totem
 				player = 'totem';
 			} else if ( pluginFilename.indexOf( 'libkmplayerpart' ) > -1 ) {
@@ -633,48 +611,6 @@ var wgOggPlayer = {
 		// FIXME: playlist.pause() doesn't work
 		div.appendChild( this.newButton( 'ogg-stop', 'stop.png', function() { videoElt.playlist.stop(); } ) );
 		elt.appendChild( div );
-	},
-
-	'embedCortado' : function ( elt, params ) {
-		var statusHeight = 18;
-		var playerHeight = params.height + statusHeight;
-
-		// Create the applet all at once
-		// In Opera, document.createElement('applet') immediately creates
-		// a non-working applet with unchangeable parameters, similar to the 
-		// problem with IE and ActiveX. 
-		var html =
-		    '<applet code="com.fluendo.player.Cortado.class" ' +
-		    '      width=' + this.hq( params.width ) +
-		    '      height=' + this.hq( playerHeight ) + 
-		    '      archive=' + this.hq( this.cortadoUrl ) + '>' +
-		    '  <param name="url"  value=' + this.hq( params.videoUrl ) + '/>' +
-		    '  <param name="duration"  value=' + this.hq( params.length ) + '/>' +
-		    '  <param name="seekable"  value="true"/>' +
-		    '  <param name="autoPlay" value="true"/>' +
-		    '  <param name="showStatus"  value="show"/>' +
-		    '  <param name="showSpeaker" value="false"/>' +
-		    '  <param name="statusHeight"  value="' + statusHeight + '"/>' +
-		    '</applet>';
-
-		// Wrap it in an iframe to avoid hanging the event thread in FF 2/3 and similar
-		// Doesn't work in MSIE or Safari/Mac or Opera 9.5
-		if ( this.mozilla ) {
-			var iframe = document.createElement( 'iframe' );
-			iframe.setAttribute( 'width', params.width );
-			iframe.setAttribute( 'height', playerHeight );
-			iframe.setAttribute( 'scrolling', 'no' );
-			iframe.setAttribute( 'frameborder', 0 );
-			iframe.setAttribute( 'marginWidth', 0 );
-			iframe.setAttribute( 'marginHeight', 0 );
-			elt.appendChild( iframe );
-			var newDoc = iframe.contentDocument;
-			newDoc.open();
-			newDoc.write( '<html><body>' + html + '</body></html>' );
-			newDoc.close(); // spurious error in some versions of FF, no workaround known
-		} else {
-			elt.innerHTML ='<div>' + html + '</div>';
-		}
 	},
 
 	'embedQuicktimePlugin': function ( elt, params, player ) {

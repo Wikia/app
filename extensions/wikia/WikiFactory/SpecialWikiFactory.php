@@ -34,15 +34,6 @@ $wgExtensionMessagesFiles["WikiFactory"] =  $dir . '/SpecialWikiFactory.i18n.php
 require_once( $dir . '/SpecialWikiFactory_ajax.php' );
 
 /**
- * metrics
- */
-require_once( $dir . '/Metrics/SpecialAWCMetrics.php' );
-$wgAutoloadClasses['NewWikisGraphSpecialPageController'] = $dir . '/Metrics/SpecialNewWikisGraph.php';
-$wgSpecialPages['NewWikisGraph'] = 'NewWikisGraphSpecialPageController';
-$wgAutoloadClasses['SpecialNewWikisGraphOutput'] = $dir . '/Metrics/output/SpecialNewWikisGraphOutput.class.php';
-$wgAutoloadClasses['SpecialNewWikisGraphSourceDatabase'] = $dir . '/Metrics/SpecialNewWikisGraphSourceDatabase.class.php';
-
-/**
  * tags
  */
 require_once( $dir . '/Tags/WikiFactoryTags.php' );
@@ -55,4 +46,20 @@ $wgAutoloadClasses[ "CloseWikiPage" ] = $dir. "/Close/SpecialCloseWiki_body.php"
 $wgSpecialPages[ "CloseWiki" ] = "CloseWikiPage";
 $wgSpecialPageGroups[ "CloseWiki" ] = 'wikia';
 
-require_once( $dir . '/../SponsorshipDashboard/SponsorshipDashboard_autoload.php' );
+$wgAutoloadClasses['WikiFactoryVariableParser'] = __DIR__ . '/WikiFactoryVariableParser.php';
+$wgAutoloadClasses['WikiFactoryVariableParseException'] = __DIR__ . '/WikiFactoryVariableParseException.php';
+$wgAutoloadClasses['ApiWikiFactorySaveVariable'] = __DIR__ . '/api/ApiWikiFactorySaveVariable.php';
+$wgAutoloadClasses['ApiWikiFactoryRemoveVariable'] = __DIR__ . '/api/ApiWikiFactoryRemoveVariable.php';
+$wgAPIModules['wfsavevariable'] = 'ApiWikiFactorySaveVariable';
+$wgAPIModules['wfremovevariable'] = 'ApiWikiFactoryRemoveVariable';
+
+$wgResourceModules['ext.wikia.wikiFactory'] = [
+	'scripts' => [
+		'js/ext.wikia.wikiFactory.requestManager.js',
+		'js/ext.wikia.wikiFactory.variableService.js',
+		'js/ext.wikia.wikiFactory.variableManager.js',
+	],
+
+	'localBasePath' => __DIR__,
+	'remoteExtPath' => 'wikia/WikiFactory',
+];

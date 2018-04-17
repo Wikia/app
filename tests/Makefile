@@ -5,7 +5,7 @@ LOGS_PATH=build/logs
 
 # command to run PHPUnit
 CMD_PHPUNIT=php -v && php -d xdebug.coverage_enable=0 -d opcache.enable=0 run-test.php \
-	--configuration=phpunit.xml
+	--stderr --configuration=phpunit.xml
 
 # command to run PHPUnit Code Coverage
 CMD_PHPUNIT_COVERAGE=php -v && php -d xdebug.coverage_enable=1 -d opcache.enable=0 run-test.php \
@@ -43,18 +43,6 @@ phpunit-infrastructure: prepare
 		--log-junit=${LOGS_PATH}/phpunit-infrastructure.xml \
 		--group Infrastructure,Integration
 
-# runs external partners api integration tests only
-phpunit-externals: prepare
-	${CMD_PHPUNIT} \
-		--log-junit=${LOGS_PATH}/phpunit-externals.xml \
-		--group ExternalIntegration
-
-# runs tests for externally used parts
-phpunit-contractual-responsibilities: prepare
-	${CMD_PHPUNIT} \
-		--log-junit=${LOGS_PATH}/phpunit-contractual-responsibilities.xml \
-		--group ContractualResponsibilitiesValidation
-
 # runs all (i.e. both unit and integration) tests from a given directory or a file
 phpunit-single: prepare
 	${CMD_PHPUNIT} \
@@ -76,14 +64,7 @@ phpunit-single-coverage: prepare
 phpunit-fast: prepare
 	${CMD_PHPUNIT} \
 		--log-junit=${LOGS_PATH}/phpunit-fast.xml \
-		--exclude-group Slow,Infrastructure,Integration,Broken,Stub,Monitoring,Hack,UsingDB,ExternalIntegration
-
-# lists all slow test cases with execution time
-phpunit-slow-list: prepare
-	${CMD_PHPUNIT} \
-		--log-junit=${LOGS_PATH}/phpunit-slow.xml \
-		--exclude-group=Infrastructure,Integration,Broken,Stub,Monitoring,Hack \
-		--slow-list
+		--exclude-group Infrastructure,Integration,Broken,Stub,Monitoring,Hack,UsingDB,ExternalIntegration
 
 # run tests for a specific group
 phpunit-group: prepare

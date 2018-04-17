@@ -24,51 +24,51 @@ class ResultTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	public function testNewError() {
-		$result = Result::newError( array(
+		$result = Result::newError( [
 			Error::newError( 'foo' ),
 			Error::newError( 'bar' ),
-		) );
+		] );
 
 		$this->assertFalse( $result->isValid() );
 		$this->assertCount( 2, $result->getErrors() );
 	}
 
 	public static function provideMerge() {
-		$errors = array(
+		$errors = [
 			Error::newError( 'foo' ),
 			Error::newError( 'bar' ),
-		);
+		];
 
-		return array(
-			array(
+		return [
+			[
 				Result::newSuccess(),
 				Result::newSuccess(),
 				true,
 				0,
 				'success + success'
-			),
-			array(
+			],
+			[
 				Result::newSuccess(),
 				Result::newError( $errors ),
 				false,
 				2,
 				'success + error'
-			),
-			array(
+			],
+			[
 				Result::newSuccess(),
 				Result::newError( $errors ),
 				false,
 				2,
 				'error + success'
-			),
-			array(
+			],
+			[
 				Result::newError( $errors ),
 				Result::newError( $errors ),
 				false,
 				4,
 				'error + error'
-			),
-		);
+			],
+		];
 	}
 
 	/**

@@ -1,0 +1,46 @@
+{
+    "keywords" : [
+        "http",
+        "mock",
+        "server",
+        "external",
+        "acceptance",
+        "tests"
+    ],
+    "authors" : [
+        {
+            "name" : "Mariano Custiel",
+            "email" : "jmcustiel@gmail.com",
+            "homepage" : "https://github.com/mcustiel",
+            "role" : "Developer"
+        }
+    ],
+    "autoload" : {
+        "psr-4" : {
+            "Mcustiel\\Phiremock\\" : "src"
+        }
+    },
+    "name" : "mcustiel/phiremock",
+    "type" : "project",
+    "description" : "A mocker for HTTP and REST services",
+    "license" : "GPL-3.0+",
+    "require" : {
+        "php" : ">=5.6",
+        "react/http" : "~0.7.0",
+        "mcustiel/php-simple-request" : "^3.1",
+        "symfony/cache": "^3.1",
+        "mcustiel/power-route" : "^3.0.0",
+        "mcustiel/php-simple-di" : "^1.2.1",
+        "guzzlehttp/guzzle" : "^6.0",
+        "monolog/monolog" : "^1.17.2"
+    },
+    "require-dev" : {
+        "codeception/codeception" : "^2.2.10"
+    },
+    "suggest" : {
+        "ext-pcntl" : "Allows phiremock to handle system signals"
+    },
+    "bin" : [
+        "bin/phiremock"
+    ]
+}

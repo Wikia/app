@@ -96,19 +96,6 @@ class VimeoApiWrapper extends ApiWrapper {
 	}
 
 	/**
-	 * Is resolution of 720 or higher available
-	 * @return boolean 
-	 */
-	protected function isHdAvailable() {
-		if (	!empty( $this->interfaceObj['width'] ) &&
-			$this->interfaceObj['width'] >= 720 ) {
-
-			return true;
-		}
-		return false;
-	}
-
-	/**
 	 * Can video be embedded
 	 * @return boolean
 	 */

@@ -429,11 +429,8 @@ if( is_null( $wgLocalTZoffset ) ) {
 	$wgLocalTZoffset = date( 'Z' ) / 60;
 }
 
-# Useful debug output
 if ( $wgCommandLineMode ) {
 	$wgRequest = new FauxRequest( array() );
-
-	wfDebug( "\n\nStart command line script $self\n" );
 } else {
 	# Can't stub this one, it sets up $_GET and $_REQUEST in its constructor
 	$wgRequest = new WebRequest;

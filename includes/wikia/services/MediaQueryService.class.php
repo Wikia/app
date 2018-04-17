@@ -1,7 +1,5 @@
 <?php
 
-use \Wikia\Cache\AsyncCache;
-
 /**
  * This service provides methods for querying for media
  */
@@ -396,18 +394,17 @@ class MediaQueryService extends WikiaModel {
 	 * Get list of videos based on a few filters ($type, $providers, $category)
 	 * and sort options ($sort, $limit, $page).
 	 *
-	 * @param string $type What type of videos to return.  Valid options are:
-	 *                     - all     : Show all videos (DEFAULT)
-	 *                     - premium : Show only premium videos
 	 * @param integer $limit Limit the number of videos to return
 	 * @param integer $page Specify a page of results (DEFAULT $page = 1)
 	 * @param array $providers An array of content providers.  Only videos hosted by these providers
 	 *                        will be returned (DEFAULT all providers)
 	 * @param array|string $categories - category names.  Only videos tagged with these categories will be returned
 	 *                         (DEFAULT any category)
+	 * @param string $sort
 	 * @return array $videoList
 	 */
-	public function getVideoList( $type = 'all', $limit = 0, $page = 1, $providers = [], $categories = [], $sort = self::SORT_RECENT_FIRST ) {
+	public function getVideoList( int $limit = 0, int $page = 1, $providers = [], $categories = [],
+	                              $sort = self::SORT_RECENT_FIRST ) {
 		wfProfileIn( __METHOD__ );
 
 		// Setup the base query cache for a minimal amount of time
@@ -452,10 +449,6 @@ class MediaQueryService extends WikiaModel {
 
 		if ( $providers ) {
 			$query->AND_( 'provider' )->IN( $providers );
-		}
-
-		if ( $type == 'premium' ) {
-			$query->AND_( 'premium' )->EQUAL_TO( 1 );
 		}
 
 		if ( $limit ) {
@@ -528,38 +521,6 @@ class MediaQueryService extends WikiaModel {
 	}
 
 	/**
-	 * Get number of total premium videos
-	 * @return integer $totalVideos
-	 */
-	public function getTotalPremiumVideos() {
-		wfProfileIn( __METHOD__ );
-
-		$memKey = $this->getMemKeyTotalPremiumVideos();
-		$totalVideos = $this->wg->Memc->get( $memKey );
-		if ( !is_numeric($totalVideos) ) {
-			$db = wfGetDB( DB_SLAVE );
-
-			$row = $db->selectRow(
-				array( 'video_info' ),
-				array( 'count(video_title) cnt' ),
-				array(
-					'premium' => 1,
-					'removed' => 0,
-				),
-				__METHOD__
-			);
-
-			$totalVideos = ($row) ? $row->cnt : 0 ;
-
-			$this->wg->Memc->set( $memKey, $totalVideos, 60*60*24 );
-		}
-
-		wfProfileOut( __METHOD__ );
-
-		return $totalVideos;
-	}
-
-	/**
 	 * Get number of total videos in a given category
 	 *
 	 * @param string $category Category name
@@ -595,39 +556,11 @@ class MediaQueryService extends WikiaModel {
 	}
 
 	/**
-	 * Clear the cache of total videos for a given category
-	 *
-	 * @param $category The category name
-	 */
-	public function clearCacheTotalVideosByCategory( $category ) {
-		$this->wg->Memc->delete( $this->getMemKeyTotalVideosByCategory( $category ) );
-	}
-
-	/**
-	 * Get memcache key for total premium videos
-	 */
-	protected function getMemKeyTotalPremiumVideos() {
-		return wfMemcKey( 'videos', 'total_premium_videos', 'v3' );
-	}
-
-	/**
-	 * Clear the cache of total premium video count
-	 */
-	public function clearCacheTotalPremiumVideos() {
-		$this->wg->Memc->delete( $this->getMemKeyTotalPremiumVideos() );
-	}
-
-	/**
 	 * Get memcache key for total video views
-	 * @TODO: Remove $async once EnableAsyncVideoViewCache is removed - @see VID-2103
 	 *
-	 * @param $async bool
 	 * @return string
 	 */
-	public static function getMemKeyTotalVideoViews( $async = false ) {
-		if ( $async ) {
-			return wfMemcKey( 'videos', 'total_video_views', 'v4', 'async' );
-		}
+	private static function getMemKeyTotalVideoViews() {
 		return wfMemcKey( 'videos', 'total_video_views', 'v4' );
 	}
 
@@ -643,65 +576,22 @@ class MediaQueryService extends WikiaModel {
 		wfProfileIn( __METHOD__ );
 
 		$cacheTtl = 7200; // 2 hours for caching the result in memcache
-		// 24hr allowance for returning stale results until new cache is built
-		// Adjusted to increase the caching benefit for infrequently viewed videos
-		$staleCacheTtl = 86400;
-		$asyncCacheEnabled = !empty( $app->wg->EnableAsyncVideoViewCache );
 
 		$hashTitle = md5( $title );
-		$memKeyBase = self::getMemKeyTotalVideoViews( $asyncCacheEnabled );
+		$memKeyBase = self::getMemKeyTotalVideoViews();
 
-		// @TODO: Remove EnableAsyncVideoViewCache and the else clause,
-		// after verifying the async caching solution works (@see VID-2103)
-		if ( $asyncCacheEnabled ) {
-			$cacheKey = $memKeyBase . '-' . $hashTitle;
-			$videoViews = ( new AsyncCache() )
-				->key( $cacheKey )
-				->ttl( $cacheTtl )
-				->callback( [__CLASS__, 'getTotalVideoViewsByTitleFromDb'], [ $title ] )
-				->staleOnMiss( $staleCacheTtl )
-				->value();
-		} else {
-			$cacheKey = $memKeyBase . '-' . substr( $hashTitle, 0, 2 );
-			$videoList = $app->wg->Memc->get( $cacheKey );
-			if ( !isset( $videoList[ $hashTitle ] ) ) {
-				$viewCount = VideoInfoHelper::getTotalViewsFromTitle( $title );
-				$videoList[ $hashTitle ] = $viewCount;
-				$app->wg->Memc->set( $cacheKey, $videoList, $cacheTtl );
-			}
-			$videoViews = $videoList[ $hashTitle ];
+		$cacheKey = $memKeyBase . '-' . substr( $hashTitle, 0, 2 );
+		$videoList = $app->wg->Memc->get( $cacheKey );
+		if ( !isset( $videoList[ $hashTitle ] ) ) {
+			$viewCount = VideoInfoHelper::getTotalViewsFromTitle( $title );
+			$videoList[ $hashTitle ] = $viewCount;
+			$app->wg->Memc->set( $cacheKey, $videoList, $cacheTtl );
 		}
+		$videoViews = $videoList[ $hashTitle ];
 
 		wfProfileOut( __METHOD__ );
 
 		return $videoViews;
-	}
-
-	/**
-	 * Get total video view count from DB, given video title
-	 *
-	 * @param string $title Video title
-	 * @return integer
-	 */
-	public static function getTotalVideoViewsByTitleFromDb( $title ) {
-		$db = wfGetDB( DB_SLAVE );
-
-		$totalViews = ( new WikiaSQL() )
-			->SELECT( 'views_total' )
-			->FROM( 'video_info' )
-			->WHERE( 'video_title' )->EQUAL_TO( $title )
-			->run( $db, function ( $result ) {
-					$row = $result->fetchObject( $result );
-					return $row->views_total;
-				});
-
-		Wikia\Logger\WikiaLogger::instance()->info( 'Video view query to db', [
-			'method' => __METHOD__,
-			'title' => $title,
-			'totalViews' => $totalViews,
-		] );
-
-		return $totalViews;
 	}
 
 }

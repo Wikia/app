@@ -975,6 +975,17 @@ class Parser {
 					}
 				}
 				# RTE - end
+
+				// Wikia change start XW-4587
+				if ( !empty( $wgRTEParserEnabled ) ) {
+					// from placeholder remove tag name, <, >, </ so only attributes and template content left.
+					// They are attached then to <table> and this <table> is treated as placeholder
+					$attributes = preg_replace("/<span/", '', $attributes);
+					$attributes = preg_replace("/>\&#x0200B;/", ' ', $attributes);
+					$attributes = preg_replace("/\&#x0200B;<\/span>/", '', $attributes);
+				}
+				// Wikia change end
+
 				$attributes = Sanitizer::fixTagAttributes( $attributes , 'table' );
 
 				$outLine = str_repeat( '<dl><dd>' , $indent_level ) . "<table{$attributes}>";
@@ -1024,6 +1035,17 @@ class Parser {
 					}
 				}
 				# RTE - end
+
+				// Wikia change start XW-4587
+				if ( !empty( $wgRTEParserEnabled ) ) {
+					// from placeholder remove tag name, <, >, </ so only attributes and template content left.
+					// They are attached then to <tr> and this <tr> is treated as placeholder
+					$attributes = preg_replace("/<span/", '', $attributes);
+					$attributes = preg_replace("/>\&#x0200B;/", ' ', $attributes);
+					$attributes = preg_replace("/\&#x0200B;<\/span>/", '', $attributes);
+				}
+				// Wikia change end
+
 				$attributes = Sanitizer::fixTagAttributes( $attributes, 'tr' );
 				array_pop( $tr_attributes );
 				array_push( $tr_attributes, $attributes );
@@ -1101,6 +1123,29 @@ class Parser {
 					# A cell could contain both parameters and data
 					$cell_data = explode( '|' , $cell , 2 );
 
+					// Wikia change start XW-4587
+					if ( !empty( $wgRTEParserEnabled ) ) {
+						// $cell_data[0] in this place contains either attributes of td/th/caption or if there were no
+						// attributes specified it will contain whole content of a cell. In the first case treat it all
+						// as content so wikitext after parse/reverseparse is not broken. In the second case implode does
+						// not change anything
+						if ( preg_match( "/<[^>]*placeholder.*/", $cell_data[0] ) ) {
+							$cellDataSize = count($cell_data);
+							$cell_data = implode( "|", $cell_data );
+
+							if ( $cellDataSize > 1 ) {
+								$cell_data = preg_replace(
+									'/(<span class="placeholder placeholder-double-brackets"[^>]+>&#x0200B;)(.*?&#x0200B;)(<\/span>)/s',
+									'$1$3',
+									$cell_data
+								);
+							}
+
+							$cell_data = [ $cell_data ];
+						}
+					}
+					// Wikia change end
+
 					# Bug 553: Note that a '|' inside an invalid link should not
 					# be mistaken as delimiting cell parameters
 					if ( strpos( $cell_data[0], '[[' ) !== false ) {
@@ -1149,7 +1194,9 @@ class Parser {
 			if ( !array_pop( $has_opened_tr ) ) {
 				$out .= "<tr><td></td></tr>\n" ;
 			}
-
+			if ($wgRTEParserEnabled) {
+				RTE::$edgeCases[] = 'COMPLEX.12';
+			}
 			$out .= "</table>\n";
 		}
 
@@ -1219,6 +1266,17 @@ class Parser {
 		# places.
 		$text = $this->doTableStuff( $text );
 
+		// FANDOM change start
+		// XW-4742: cleanup after handling table rows defined inside templates
+		global $wgRTEParserEnabled;
+		if ( !empty( $wgRTEParserEnabled ) ) {
+			$text = preg_replace(
+				'/\|-(<span[^>]+>&#x0200B;&#x0200B;<\/span>)\n\| data-rte-filler="true" \|<span[^>]+>&#x0200B;&#x0200B;<\/span>/',
+				'$1',
+				$text);
+		}
+		// FANDOM change end
+
 		$text = preg_replace( '/(^|\n)-----*/', '\\1<hr />', $text );
 
 		$text = $this->doDoubleUnderscore( $text );
@@ -1229,6 +1287,36 @@ class Parser {
 			$text = $df->reformat( $this->mOptions->getDateFormat(), $text );
 		}
 		$text = $this->replaceInternalLinks( $text );
+
+		// FANDOM change start: XW-4614
+		global $wgRTEParserEnabled;
+		if ( !empty( $wgRTEParserEnabled ) ) {
+			// XW-4380: Make template placeholders in list items render correctly
+			// XW-4609: remove newlines from template's placeholder when used inside list's item to not break list
+			// before this code was executed inside doBlockLevels(), however it needs to be done before doAllQuotes to not break bolds and italics
+
+			do {
+				$before = $text;
+				$text = preg_replace_callback('/^([\*#;:][^\n]*<div class="placeholder placeholder-double-brackets"[^>]+>&#x0200B;)(.*?)(&#x0200B;<\/div>)/ms',
+					function($matches) {
+						return preg_replace('/\\n/', '', $matches[0]);
+					},
+					str_replace("\r\n", "\n", $text));
+			} while ( $before != $text );
+
+			do {
+				$before = $text;
+				$text = preg_replace_callback(
+					'/^([\*#;:][^\n]*<span class="placeholder placeholder-double-brackets"[^>]+>&#x0200B;)(.*?)(&#x0200B;<\/span>)/ms',
+					function ( $matches ) {
+						return preg_replace( '/\\n/', '', $matches[0] );
+					},
+					str_replace( "\r\n", "\n", $text )
+				);
+			} while ( $before != $text );
+		}
+		// FANDOM change end
+
 		$text = $this->doAllQuotes( $text );
 		$text = $this->replaceExternalLinks( $text );
 
@@ -3147,6 +3235,8 @@ class Parser {
 				return $wgSitename;
 			case 'server':
 				return wfProtocolUrlToRelative( $wgServer );
+			case 'servercanonical':
+				return $wgServer;
 			case 'servername':
 				$serverParts = wfParseUrl( $wgServer );
 				return $serverParts && isset( $serverParts['host'] ) ? $serverParts['host'] : wfProtocolUrlToRelative( $wgServer );
@@ -4010,17 +4100,25 @@ class Parser {
 	}
 
 	/**
+	 * Wikia change - use a memcache instead of per-wiki transcache table which had its limitations:
+	 *
+	 *  - there was no garbage collection mechanism
+	 *  - long content was causing DB errors (BLOB column was apparently too short)
+	 *  - responses for the same URLs where cached separately on each wiki
+	 *
+	 * @see SUS-3754
+	 *
 	 * @param $url string
-	 * @return Mixed|String
+	 * @return string
 	 */
-	function fetchScaryTemplateMaybeFromCache( $url ) {
-		global $wgTranscludeCacheExpiry;
-		$dbr = wfGetDB( DB_SLAVE );
-		$tsCond = $dbr->timestamp( time() - $wgTranscludeCacheExpiry );
-		$obj = $dbr->selectRow( 'transcache', array('tc_time', 'tc_contents' ),
-				array( 'tc_url' => $url, "tc_time >= " . $dbr->addQuotes( $tsCond ) ) );
-		if ( $obj ) {
-			return $obj->tc_contents;
+	private function fetchScaryTemplateMaybeFromCache( $url ) {
+		global $wgTranscludeCacheExpiry, $wgMemc;
+
+		$key = wfSharedMemcKey( __METHOD__, md5( $url ) );
+		$content = $wgMemc->get( $key );
+
+		if ( is_string( $content ) ) {
+			return $content;
 		}
 
 		$text = Http::get( $url );
@@ -4036,18 +4134,7 @@ class Parser {
 			return wfMsgForContent( 'scarytranscludefailed', $url );
 		}
 
-		# wikia start
-		if ( wfReadOnly() ) {
-			return wfReadOnlyReason();
-		}
-		# wikia end
-
-		$dbw = wfGetDB( DB_MASTER );
-		$dbw->replace( 'transcache', array('tc_url'), array(
-			'tc_url' => $url,
-			'tc_time' => $dbw->timestamp( time() ),
-			'tc_contents' => $text)
-		);
+		$wgMemc->set( $key, $text, $wgTranscludeCacheExpiry );
 		return $text;
 	}
 
@@ -4119,31 +4206,18 @@ class Parser {
 		$name = $frame->expand( $params['name'] );
 		$attrText = !isset( $params['attr'] ) ? null : $frame->expand( $params['attr'] );
 		$content = !isset( $params['inner'] ) ? null : $frame->expand( $params['inner'] );
+
 		# RTE (Rich Text Editor) - begin
 		# @author: Inez Korczyński
 		global $wgRTEParserEnabled;
-		if( !empty( $wgRTEParserEnabled ) ) {
-			$wikitextIdx = RTEMarker::getDataIdx(RTEMarker::EXT_WIKITEXT, $content);
-
+		if ( !empty( $wgRTEParserEnabled && in_array($name, RTEParser::CUSTOM_PLACEHOLDER_TAG ) ) ) {
 			# Allow parser extensions to generate their own placeholders (instead of default one from RTE)
 			# @author: Macbre
-			if( Hooks::run( 'RTEUseDefaultPlaceholder', array( $name, $params, $frame, $wikitextIdx ) ) ) {
-				if( $wikitextIdx !== null) {
-					$dataIdx = RTEData::put('placeholder', array('type' => 'ext', 'wikitextIdx' => $wikitextIdx));
-					return RTEMarker::generate(RTEMarker::PLACEHOLDER, $dataIdx);
-				}
-			}
-			else {
-				RTE::log(__METHOD__, "skipped default placeholder for <{$name}>");
-
-				// restore value of $content
-				$content = RTEData::get('wikitext', $wikitextIdx);
-
-				// keep inner content of tag
-				$content = preg_replace('#^<[^>]+>(.*)<[^>]+>$#s', '\1', $content);
-			}
+			$wikitextIdx = $params[ 'wikitextIdx' ];
+			Hooks::run( 'RTEUseDefaultPlaceholder', [ $name, $params, $frame, $wikitextIdx ] );
 		}
 		# RTE - end
+
 		$marker = "{$this->mUniqPrefix}-$name-" . sprintf( '%08X', $this->mMarkerIndex++ ) . self::MARKER_SUFFIX;
 
 		$isFunctionTag = isset( $this->mFunctionTagHooks[strtolower($name)] ) &&
@@ -5577,7 +5651,7 @@ class Parser {
 			$params['frame']['title'] = $this->stripAltText( $caption, $holders );
 		}
 
-		Hooks::run( 'ParserMakeImageParams', array( $title, $file, &$params ) );
+		Hooks::run( 'ParserMakeImageParams', [ $this, &$params ] );
 
 		# Linker does the rest
 		$time = isset( $options['time'] ) ? $options['time'] : false;

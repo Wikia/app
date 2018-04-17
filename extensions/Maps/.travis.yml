@@ -1,0 +1,33 @@
+language: php
+
+sudo: false
+
+matrix:
+  fast_finish: true
+  include:
+    - env: DBTYPE=mysql; MW=1.27.3
+      php: 7
+    - env: DBTYPE=mysql; MW=master; SMW=master
+      php: 7.2
+    - env: DBTYPE=sqlite; MW=1.28.2; SMW=2.1.3
+      php: 7.0
+    - env: DBTYPE=mysql; MW=1.27.3; SMW=2.4.6
+      php: 7.0
+    - env: DBTYPE=sqlite; MW=master; TYPE=coverage
+      php: 7.1
+
+install:
+  - travis_retry composer self-update
+  - bash .travis.install.sh
+
+script: ../phase3/tests/phpunit/phpunit.php -c ../phase3/extensions/Maps/phpunit.xml.dist
+
+after_success:
+  - if [[ "$TYPE" != "coverage" ]]; then exit 0; fi
+  - ../phase3/tests/phpunit/phpunit.php -c ../phase3/extensions/Maps/phpunit.xml.dist --coverage-clover coverage.clover
+  - wget https://scrutinizer-ci.com/ocular.phar
+  - php ocular.phar code-coverage:upload --format=php-clover coverage.clover
+
+cache:
+  directories:
+    - $HOME/.composer/cache

@@ -237,7 +237,7 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 
 		$viewProfileLinks[] = [
 			'type' => 'link-text',
-			'href' => $this->getPageUrl( $userName, NS_USER ),
+			'href' => $this->getPageUrl( $userName, NS_USER, '', true ),
 			'title' => [
 				'type' => 'translatable-text',
 				'key' => 'global-navigation-user-view-profile'
@@ -275,8 +275,8 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 					[
 						'type' => 'link-text',
 						'href' => $isMessageWallEnabled
-							? $this->getPageUrl( $userName, NS_USER_WALL )
-							: $this->getPageUrl( $userName, NS_USER_TALK ),
+							? $this->getPageUrl( $userName, NS_USER_WALL, '', true )
+							: $this->getPageUrl( $userName, NS_USER_TALK, '', true ),
 						'title' => [
 							'type' => 'translatable-text',
 							'key' => $isMessageWallEnabled
@@ -287,7 +287,7 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 					],
 					[
 						'type' => 'link-text',
-						'href' => $this->getPageUrl( 'Preferences', NS_SPECIAL ),
+						'href' => $this->getPageUrl( 'Preferences', NS_SPECIAL, '', true ),
 						'title' => [
 							'type' => 'translatable-text',
 							'key' => 'global-navigation-user-my-preferences'
@@ -349,14 +349,14 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 			'module' => [
 				'type' => 'notifications',
 				'url' => $this->isMessageWallEnabled()
-					? $this->getPageUrl( $userName, NS_USER_WALL )
-					: $this->getPageUrl( $userName, NS_USER_TALK )
+					? $this->getPageUrl( $userName, NS_USER_WALL, '', true )
+					: $this->getPageUrl( $userName, NS_USER_TALK, '', true )
 			]
 		];
 	}
 
 	private function getVerticalsSection() {
-		return [
+		$verticals = [
 			'links' => [
 				[
 					'type' => 'link-branded',
@@ -390,6 +390,21 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 				]
 			]
 		];
+
+		if ( $this->product === static::PRODUCT_FANDOMS ) {
+			$verticals['links'][] = [
+				'type' => 'link-branded',
+				'brand' => 'video',
+				'title' => [
+					'type' => 'translatable-text',
+					'key' => 'global-navigation-fandom-overview-link-video'
+				],
+				'href' => $this->getHref( 'video' ),
+				'tracking_label' => 'link.video'
+			];
+		}
+
+		return $verticals;
 	}
 
 	private function isMessageWallEnabled() {

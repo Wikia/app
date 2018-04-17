@@ -13,7 +13,7 @@ define('ext.wikia.adEngine.slot.bottomLeaderboard', [
 		viewPortHeight = Math.max(doc.documentElement.clientHeight, win.innerHeight || 0),
 		logGroup = 'ext.wikia.adEngine.slot.bottomLeaderboard',
 		pushed = false,
-		wikiaFooter = doc.getElementById('WikiaFooter'),
+		wikiaFooter,
 
 		pushSlot = throttle(function () {
 			var scrollPosition = win.scrollY || win.pageYOffset || doc.documentElement.scrollTop,
@@ -37,6 +37,7 @@ define('ext.wikia.adEngine.slot.bottomLeaderboard', [
 			return;
 		}
 
+		wikiaFooter = doc.getElementById('WikiaFooter');
 		doc.addEventListener('scroll', pushSlot);
 	}
 

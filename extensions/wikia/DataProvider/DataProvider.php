@@ -70,9 +70,10 @@ class DataProvider {
 	/**
 	 * Returns original translation or translation used in monobook if original is not found
 	 * Author: Gerard, Inez, Tomek
+	 * @param string $key
 	 * @return string
 	 */
-	final public static function Translate( $key ) {
+	private static function Translate( string $key ) {
 		wfProfileIn( __METHOD__ );
 		global $wgLang, $wgSkinTranslationMap;
 

@@ -80,6 +80,9 @@ class AbstractConnection extends AbstractChannel
     /** @var int */
     protected $heartbeat;
 
+    /** @var float */
+    protected $last_frame;
+
     /** @var SocketIO */
     protected $sock;
 
@@ -110,6 +113,9 @@ class AbstractConnection extends AbstractChannel
     /** @var callable Handles connection unblocking from the server */
     private $connection_unblock_handler;
 
+    /** @var int Connection timeout value*/
+    protected $connection_timeout ;
+
     /**
      * Circular buffer to speed up prepare_content().
      * Max size limited by $prepare_content_cache_max_size.
@@ -132,6 +138,7 @@ class AbstractConnection extends AbstractChannel
      * @param string $locale
      * @param AbstractIO $io
      * @param int $heartbeat
+     * @param int $connection_timeout
      * @throws \Exception
      */
     public function __construct(
@@ -143,7 +150,8 @@ class AbstractConnection extends AbstractChannel
         $login_response = null,
         $locale = 'en_US',
         AbstractIO $io,
-        $heartbeat = 0
+        $heartbeat = 0,
+        $connection_timeout = 0
     ) {
         // save the params for the use of __clone
         $this->construct_params = func_get_args();
@@ -156,6 +164,7 @@ class AbstractConnection extends AbstractChannel
         $this->locale = $locale;
         $this->io = $io;
         $this->heartbeat = $heartbeat;
+        $this->connection_timeout = $connection_timeout;
 
         if ($user && $password) {
             $this->login_response = new AMQPWriter();
@@ -202,7 +211,7 @@ class AbstractConnection extends AbstractChannel
                 $this->input = new AMQPReader(null, $this->getIO());
 
                 $this->write($this->amqp_protocol_header);
-                $this->wait(array($this->waitHelper->get_wait('connection.start')));
+                $this->wait(array($this->waitHelper->get_wait('connection.start')),false,$this->connection_timeout);
                 $this->x_start_ok(self::$LIBRARY_PROPERTIES, $this->login_method, $this->login_response, $this->locale);
 
                 $this->wait_tune_ok = true;
@@ -557,10 +566,24 @@ class AbstractConnection extends AbstractChannel
         $_timeout = $timeout;
         while (true) {
             $now = time();
-            list($frame_type, $frame_channel, $payload) = $this->wait_frame($_timeout);
+            try {
+                list($frame_type, $frame_channel, $payload) = $this->wait_frame($_timeout);
+            }
+            catch ( AMQPTimeoutException $e ) {
+                if ( $this->heartbeat && microtime(true) - ($this->heartbeat*2) > $this->last_frame ) {
+                    $this->debug->debug_msg("missed server heartbeat (at threshold * 2)");
+                    $this->setIsConnected(false);
+                    throw new AMQPRuntimeException("Missed server heartbeat");
+                }
+
+                throw $e;
+            }
+
+            $this->last_frame = microtime(true);
 
             if ($frame_channel === 0 && $frame_type === 8) {
                 // skip heartbeat frames and reduce the timeout by the time passed
+                $this->debug->debug_msg("received server heartbeat");
                 if($_timeout > 0) {
                     $_timeout -= time() - $now;
                     if($_timeout <= 0) {
@@ -647,7 +670,7 @@ class AbstractConnection extends AbstractChannel
 
         return $this->wait(array(
             $this->waitHelper->get_wait('connection.close_ok')
-        ));
+        ),false,$this->connection_timeout);
     }
 
     /**
@@ -855,7 +878,7 @@ class AbstractConnection extends AbstractChannel
     /**
      * @return \PhpAmqpLib\Wire\IO\AbstractIO
      */
-    protected function getIO()
+    public function getIO()
     {
         return $this->io;
     }

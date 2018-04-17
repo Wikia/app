@@ -83,11 +83,9 @@ class Track {
 			'cd14' => isset( $adContext[ 'opts' ][ 'showAds' ] ) ? 'Yes' : 'No',
 			'cd15' => WikiaPageType::isCorporatePage(),
 			'cd17' => implode( ',', $hubFactory->getWikiVertical( $wgCityId ) ),
-			'cd18' => implode( ',', $hubFactory->getWikiCategories( $wgCityId ) ),
+			'cd18' => implode( ',', $hubFactory->getWikiCategoryNames( $wgCityId ) ),
 			'cd19' => WikiaPageType::getArticleType(),
 			'cd21' => $wgTitle->getArticleID(),
-			'cd23' => $wgUser->isSpecificPowerUser( Wikia\PowerUser\PowerUser::TYPE_FREQUENT ) ? 'Yes' : 'No',
-			'cd24' => $wgUser->isSpecificPowerUser( Wikia\PowerUser\PowerUser::TYPE_LIFETIME ) ? 'Yes' : 'No',
 			'cd25' => $wgTitle->getNamespace(),
 		];
 		if ( !$wgUser->isAnon() ) {
@@ -99,15 +97,14 @@ class Track {
 	}
 
 	private static function getGATrackingIds() {
-		global $wgDevelEnvironment, $wgStagingEnvironment;
-
-		$tids = [ $wgDevelEnvironment || $wgStagingEnvironment ? 'UA-32129070-2' : 'UA-32129070-1' ];
+		$tids = [ !Wikia::isProductionEnv() ? 'UA-32129070-2' : 'UA-32129070-1' ];
 
 		return $tids;
 	}
 
 	private static function getViewJS( $param = null ) {
 		global $wgDevelEnvironment;
+		$urlProvider = new \Wikia\Service\Gateway\KubernetesExternalUrlProvider();
 
 		// Fake beacon and varnishTime values for development environment
 		if ( !empty( $wgDevelEnvironment ) ) {
@@ -115,10 +112,9 @@ class Track {
 
 		} else {
 			$url = Track::getURL( 'view', '', $param, false );
-
 			$script = ( new Wikia\Template\MustacheEngine )
 				->setPrefix( dirname( __FILE__ ) . '/templates' )
-				->setData(['url' => $url])
+				->setData(['url' => $url, 'event-logger-url' => $urlProvider->getUrl( 'event-logger' ) ] )
 				->render('track.mustache');
 		}
 

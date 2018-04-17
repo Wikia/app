@@ -6,75 +6,40 @@ define('ext.wikia.adEngine.context.uapContext', [
 ], function (adEngineBridge, eventDispatcher, log) {
 	'use strict';
 
-	var context = {},
+	var eventDispatched = false,
 		logGroup = 'ext.wikia.adEngine.context.uapContext',
-		mainSlotName = 'TOP_LEADERBOARD',
-		uapTypes = ['uap', 'vuap'];
-
-	function setUapStateBasedOnBridge() {
-		setUapId(adEngineBridge.universalAdPackage.getUapId());
-		setType(adEngineBridge.universalAdPackage.getType());
-	}
-
-	function setUapId(uap) {
-		context.uapId = uap;
-	}
-
-	function getUapId() {
-		return context.uapId;
-	}
-
-	function setType(type) {
-		context.type = type;
-	}
-
-	function getType() {
-		return context.type;
-	}
-
-	function isUapLoaded() {
-		var isUapType = uapTypes.indexOf(context.type) !== -1;
-
-		return !!context.uapId && isUapType;
-	}
-
-	function isBfaaLoaded() {
-		return !!context.uapId;
-	}
-
-	function isRoadblockLoaded() {
-		return !!context.uapId && context.type === 'ruap';
-	}
+		mainSlotName = 'TOP_LEADERBOARD';
 
 	function reset() {
-		context = {};
+		adEngineBridge.universalAdPackage.reset();
+		eventDispatched = false;
+	}
+
+	function getUapID() {
+		return adEngineBridge.universalAdPackage.getUapId();
+	}
+
+	function isFanTakeoverLoaded() {
+		return adEngineBridge.universalAdPackage.isFanTakeoverLoaded();
 	}
 
 	function shouldDispatchEvent(slotName) {
-		return !context.eventDispatched && slotName.indexOf(mainSlotName) !== -1;
+		return !eventDispatched && slotName.indexOf(mainSlotName) !== -1;
 	}
 
 	function dispatchEvent() {
-		var eventName = isUapLoaded() ? 'wikia.uap' : 'wikia.not_uap';
+		var eventName = isFanTakeoverLoaded() ? 'wikia.uap' : 'wikia.not_uap';
 
 		eventDispatcher.dispatch(eventName);
-		context.eventDispatched = true;
+		eventDispatched = true;
 		log(['dispatchEvent', eventName], 'info', logGroup);
 	}
 
-	adEngineBridge.context.onChange('slots.TOP_LEADERBOARD.targeting.uap', setUapStateBasedOnBridge);
-	adEngineBridge.context.onChange('slots.MOBILE_TOP_LEADERBOARD.targeting.uap', setUapStateBasedOnBridge);
-
 	return {
 		dispatchEvent: dispatchEvent,
-		getType: getType,
-		getUapId: getUapId,
-		isBfaaLoaded: isBfaaLoaded,
-		isUapLoaded: isUapLoaded,
-		isRoadblockLoaded: isRoadblockLoaded,
+		getUapId: getUapID,
+		isFanTakeoverLoaded: isFanTakeoverLoaded,
 		reset: reset,
-		setType: setType,
-		setUapId: setUapId,
 		shouldDispatchEvent: shouldDispatchEvent
 	};
 });

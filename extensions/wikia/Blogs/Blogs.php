@@ -117,6 +117,8 @@ $wgHooks['AbortMove'][] = 'BlogsHelper::onAbortMove';
 
 $wgHooks['AfterPageHeaderButtons'][] = 'BlogsHelper::onAfterPageHeaderButtons';
 
+$wgHooks['WantedPages::getExcludedNamespaces'][] = 'BlogsHelper::onWantedPagesGetExcludedNamespaces';
+
 /**
  * load other parts
  */

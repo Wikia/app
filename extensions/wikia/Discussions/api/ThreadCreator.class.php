@@ -3,8 +3,7 @@
 use Swagger\Client\ApiException;
 use Swagger\Client\Discussion\Api\ThreadsApi;
 use Swagger\Client\Discussion\Models\PostInput;
-use Wikia\DependencyInjection\Injector;
-use Wikia\Service\Swagger\ApiProvider;
+use Wikia\Factory\ServiceFactory;
 
 class ThreadCreator {
 
@@ -35,8 +34,8 @@ class ThreadCreator {
 	}
 
 	private function getThreadsApi( int $userId ): ThreadsApi {
-		/** @var ApiProvider $apiProvider */
-		$apiProvider = Injector::getInjector()->get( ApiProvider::class );
+		$apiProvider = ServiceFactory::instance()->providerFactory()->apiProvider();
+
 		/** @var \Swagger\Client\Discussion\Api\ThreadsApi $api */
 		$api = $apiProvider->getAuthenticatedApi( self::SERVICE_NAME, $userId, ThreadsApi::class );
 		$api->getApiClient()->getConfig()->setCurlTimeout( self::TIME_OUT );

@@ -9,8 +9,6 @@ class UserAttributes {
 
 	use Loggable;
 
-	const DEFAULT_ATTRIBUTES = "user_attributes_default_attributes";
-
 	// Attributes which the service returns, but treats as immutable and therefore we
 	// shouldn't attempt to save as the service will return a 403.
 	const READ_ONLY_ATTRIBUTES = [ 'username' ];
@@ -25,10 +23,6 @@ class UserAttributes {
 	private $defaultAttributes;
 
 	/**
-	 * @Inject({
-	 *    Wikia\Service\User\Attributes\AttributeService::class,
-	 *    Wikia\Service\User\Attributes\UserAttributes::DEFAULT_ATTRIBUTES
-	 * })
 	 * @param AttributeService $attributeService
 	 * @param string[string] $defaultAttributes
 	 */
@@ -143,11 +137,12 @@ class UserAttributes {
 	 * @param $value
 	 * @return bool
 	 */
-	private function attributeShouldBeSaved( $name, $value ) {
-		return (
-			( is_null( $this->defaultAttributes[$name] ) ) && !( $value === false || is_null( $value ) ) ||
-			$value != $this->defaultAttributes[$name]
-		);
+	private function attributeShouldBeSaved( $name, $value ): bool {
+		if ( !isset( $this->defaultAttributes[$name] ) ) {
+			return $value !== false && $value !== null;
+		}
+
+		return $value !== $this->defaultAttributes[$name];
 	}
 
 	private function attributeShouldBeDeleted( $name, $value ) {

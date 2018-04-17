@@ -50,7 +50,6 @@ class ApiMain extends ApiBase {
 	 */
 	private static $Modules = array(
 		'login' => 'ApiLogin',
-		'logout' => 'ApiLogout',
 		'query' => 'ApiQuery',
 		'expandtemplates' => 'ApiExpandTemplates',
 		'parse' => 'ApiParse',

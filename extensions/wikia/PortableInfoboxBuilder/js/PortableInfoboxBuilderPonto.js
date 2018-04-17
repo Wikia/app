@@ -1,6 +1,8 @@
 'use strict';
 
 define('wikia.infoboxBuilder.ponto', ['wikia.window', 'ponto'], function (w, ponto) {
+	var currentCallbackId = null;
+
 	function InfoboxBuilderPonto() {
 		/**
 		 * sends wiki context to infobox builder in mercury
@@ -11,7 +13,8 @@ define('wikia.infoboxBuilder.ponto', ['wikia.window', 'ponto'], function (w, pon
 				isWikiaContext: true,
 				isLoggedIn: w.wqUserName !== null,
 				// checks if infobox builder is opened in VE context
-				isVEContext: isVEContext()
+				isVEContext: isVEContext(),
+				isCKContext: isCKContext()
 			};
 		};
 
@@ -36,6 +39,18 @@ define('wikia.infoboxBuilder.ponto', ['wikia.window', 'ponto'], function (w, pon
 		this.returnToVE = function (infoboxTitle) {
 			w.ve.ui.commandRegistry.emit('infoboxBuilderReturnToVE', infoboxTitle);
 		};
+
+		this.returnToCK = function (infoboxTitle) {
+			window.CKEDITOR.fire('new-infobox-created', infoboxTitle);
+		};
+
+		this.exposeForReloading = function (params, callbackId) {
+			currentCallbackId = callbackId;
+		};
+
+		this.reloadInfoboxBuilder = function () {
+			currentCallbackId && ponto.respond({}, currentCallbackId);
+		};
 	}
 
 	// PontoBaseHandler extension pattern - check Ponto documentation for details
@@ -50,6 +65,14 @@ define('wikia.infoboxBuilder.ponto', ['wikia.window', 'ponto'], function (w, pon
 	 */
 	function isVEContext() {
 		return w.document.querySelector('html.ve-activated') !== null;
+	}
+
+	/**
+	 * checks if infobox builder is opened in VE context
+	 * @returns {boolean}
+	 */
+	function isCKContext() {
+		return !!window.CKEDITOR;
 	}
 
 	return InfoboxBuilderPonto;

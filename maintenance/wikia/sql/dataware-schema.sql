@@ -98,86 +98,6 @@ CREATE TABLE `blobs` (
  PARTITION p4 VALUES LESS THAN (83110720) ENGINE = InnoDB,
  PARTITION p5 VALUES LESS THAN (103888400) ENGINE = InnoDB,
  PARTITION p6 VALUES LESS THAN MAXVALUE ENGINE = InnoDB) */;
-DELIMITER ;;
-        DECLARE global_row_cnt INT DEFAULT -1;
-        DECLARE wikia_row_cnt INT DEFAULT -1;
-
-        DECLARE edits_ns INT DEFAULT -1;
-
-        DECLARE global_first_rev INT DEFAULT 0;
-        DECLARE wikia_first_rev INT DEFAULT 0;
-        DECLARE global_page_first INT DEFAULT 0;
-        DECLARE wikia_page_first INT DEFAULT 0;
-        DECLARE global_ns_first INT DEFAULT 0;
-        DECLARE wikia_ns_first INT DEFAULT 0;
-
-        DECLARE wikia_ts_edit_first TIMESTAMP DEFAULT NULL;
-        DECLARE global_ts_edit_first TIMESTAMP DEFAULT NULL;
-        
-        DECLARE page_status_value INT DEFAULT 1;
-
-        
-        SELECT  edit_count INTO edits_ns 
-        FROM user_edits_summary WHERE city_id = NEW.rev_wikia_id and edit_ns = NEW.rev_namespace and user_id = NEW.rev_user;
-        
-        SELECT  edit_count, rev_first, page_first, ns_first, ts_edit_first 
-        INTO wikia_row_cnt, wikia_first_rev, wikia_page_first, wikia_ns_first, wikia_ts_edit_first
-        FROM user_summary WHERE user_id = NEW.rev_user and city_id = NEW.rev_wikia_id;
-        
-        SELECT  edit_count, rev_first, page_first, ns_first, ts_edit_first  
-        INTO global_row_cnt, global_first_rev, global_page_first, global_ns_first, global_ts_edit_first 
-        FROM user_summary WHERE user_id = NEW.rev_user and city_id = 0;
-        
-        SELECT  page_status INTO page_status_value FROM pages WHERE page_wikia_id = NEW.rev_wikia_id and page_id = NEW.rev_page_id;
-        IF page_status_value = 0 THEN 
-                
-                IF wikia_row_cnt >= 0 THEN
-                        
-                        UPDATE  user_summary SET 
-                        edit_count = wikia_row_cnt + 1, 
-                        rev_last = NEW.rev_id,
-                        page_last = NEW.rev_page_id,
-                        ns_last = NEW.rev_namespace,
-                        ts_edit_last = NEW.rev_timestamp,
-                        rev_first = if(wikia_first_rev=0, NEW.rev_id, wikia_first_rev),
-                        page_first = if(wikia_first_rev=0, NEW.rev_page_id, wikia_page_first),
-                        ns_first = if(wikia_first_rev=0, NEW.rev_namespace, wikia_ns_first),
-                        ts_edit_first = if(wikia_first_rev=0, NEW.rev_timestamp, wikia_ts_edit_first)
-                        WHERE user_id = NEW.rev_user and city_id = NEW.rev_wikia_id;
-                ELSE
-                        INSERT INTO  user_summary (city_id, user_id, edit_count, rev_first, rev_last, page_first, page_last, ns_first, ns_last, ts_edit_first, ts_edit_last)
-                        VALUES (NEW.rev_wikia_id, NEW.rev_user, 1, NEW.rev_id, NEW.rev_id, NEW.rev_page_id, NEW.rev_page_id, NEW.rev_namespace, NEW.rev_namespace, NEW.rev_timestamp, NEW.rev_timestamp);
-                END IF;
-                
-                if edits_ns >= 0 THEN
-                        UPDATE  user_edits_summary SET 
-                        edit_count = edits_ns + 1 
-                        WHERE user_id = NEW.rev_user and city_id = NEW.rev_wikia_id and edit_ns = NEW.rev_namespace;
-                ELSE
-                        INSERT INTO  user_edits_summary (city_id, user_id, edit_ns, edit_count)
-                        VALUES (NEW.rev_wikia_id, NEW.rev_user, NEW.rev_namespace, 1);
-                END IF;
-                
-                IF global_row_cnt >= 0 THEN
-                        
-                        UPDATE  user_summary SET 
-                        edit_count = global_row_cnt + 1, 
-                        rev_last = NEW.rev_id,
-                        page_last = NEW.rev_page_id,
-                        ns_last = NEW.rev_namespace,
-                        ts_edit_last = NEW.rev_timestamp,
-                        rev_first = if(global_first_rev=0, NEW.rev_id, global_first_rev),
-                        page_first = if(global_first_rev=0, NEW.rev_page_id, global_page_first),
-                        ns_first = if(global_first_rev=0, NEW.rev_namespace, global_ns_first),
-                        ts_edit_first = if(global_first_rev=0, NEW.rev_timestamp, global_ts_edit_first)
-                        WHERE user_id = NEW.rev_user and city_id = 0;
-                ELSE
-                        INSERT INTO  user_summary (city_id, user_id, edit_count, rev_first, rev_last, page_first, page_last, ns_first, ns_last, ts_edit_first, ts_edit_last)
-                        VALUES (0, NEW.rev_user, 1, NEW.rev_id, NEW.rev_id, NEW.rev_page_id, NEW.rev_page_id, NEW.rev_namespace, NEW.rev_namespace, NEW.rev_timestamp, NEW.rev_timestamp);
-                END IF;
-        END IF;        
-END */;;
-DELIMITER ;
 
 --
 -- Table structure for table `chat_ban_users`
@@ -218,19 +138,6 @@ CREATE TABLE `email_types` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Table structure for table `global_registry`
---
-
-DROP TABLE IF EXISTS `global_registry`;
-CREATE TABLE `global_registry` (
-  `item_id` int(10) NOT NULL,
-  `item_type` int(10) NOT NULL,
-  `item_value` blob NOT NULL,
-  `item_updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`item_id`,`item_type`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
 -- Table structure for table `global_watchlist`
 --
 
@@ -261,25 +168,9 @@ CREATE TABLE `pages` (
   `page_is_redirect` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `page_latest` int(8) unsigned NOT NULL DEFAULT '0',
   `page_last_edited` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `page_created_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`page_wikia_id`,`page_id`),
   KEY `page_title_namespace_latest_idx` (`page_title`,`page_namespace`,`page_latest`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Table structure for table `portability_dashboard`
---
-
-DROP TABLE IF EXISTS `portability_dashboard`;
-CREATE TABLE `portability_dashboard` (
-  `wiki_id` int(11) NOT NULL,
-  `portability` decimal(5,4) DEFAULT '0.0000',
-  `infobox_portability` decimal(5,4) DEFAULT '0.0000',
-  `traffic` int(11) DEFAULT '0',
-  `migration_impact` int(11) DEFAULT '0',
-  `typeless` int(11) DEFAULT '0',
-  `custom_infoboxes` int(11) DEFAULT '0',
-  `excluded` tinyint(4) DEFAULT '0',
-  PRIMARY KEY (`wiki_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -346,29 +237,6 @@ CREATE TABLE `wall_notification_queue_processed` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Table structure for table `wikia_rss_feeds`
---
-
-DROP TABLE IF EXISTS `wikia_rss_feeds`;
-CREATE TABLE `wikia_rss_feeds` (
-  `wrf_wikia_id` int(10) unsigned NOT NULL,
-  `wrf_page_id` int(10) unsigned NOT NULL,
-  `wrf_url` varchar(255) DEFAULT NULL,
-  `wrf_feed` char(20) NOT NULL DEFAULT '',
-  `wrf_pub_date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `wrf_title` varchar(255) DEFAULT NULL,
-  `wrf_description` varchar(1024) DEFAULT NULL,
-  `wrf_img_url` varchar(500) DEFAULT NULL,
-  `wrf_img_width` int(5) DEFAULT NULL,
-  `wrf_img_height` int(5) DEFAULT NULL,
-  `wrf_ins_date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `wrf_source` char(10) NOT NULL,
-  PRIMARY KEY (`wrf_wikia_id`,`wrf_page_id`,`wrf_feed`,`wrf_pub_date`),
-  KEY `fresh_content` (`wrf_feed`,`wrf_pub_date`),
-  KEY `last_inserted` (`wrf_feed`,`wrf_source`,`wrf_ins_date`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
 -- Table structure for table `wikiastaff_log`
 --
 
@@ -392,4 +260,4 @@ CREATE TABLE `wikiastaff_log` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
--- Dump completed on 2018-01-16 12:22:09
+-- Dump completed on 2018-03-07 14:30:05

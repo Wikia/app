@@ -57,6 +57,11 @@ class FileCacheReader implements Reader
     private $classNameHashes = array();
 
     /**
+     * @var int
+     */
+    private $umask;
+
+    /**
      * Constructor.
      *
      * @param Reader  $reader
@@ -65,10 +70,19 @@ class FileCacheReader implements Reader
      *
      * @throws \InvalidArgumentException
      */
-    public function __construct(Reader $reader, $cacheDir, $debug = false)
+    public function __construct(Reader $reader, $cacheDir, $debug = false, $umask = 0002)
     {
+        if ( ! is_int($umask)) {
+            throw new \InvalidArgumentException(sprintf(
+                'The parameter umask must be an integer, was: %s',
+                gettype($umask)
+            ));
+        }
+
         $this->reader = $reader;
-        if (!is_dir($cacheDir) && !@mkdir($cacheDir, 0777, true)) {
+        $this->umask = $umask;
+
+        if (!is_dir($cacheDir) && !@mkdir($cacheDir, 0777 & (~$this->umask), true)) {
             throw new \InvalidArgumentException(sprintf('The directory "%s" does not exist and could not be created.', $cacheDir));
         }
 
@@ -98,7 +112,7 @@ class FileCacheReader implements Reader
         }
 
         if ($this->debug
-            && (false !== $filename = $class->getFilename())
+            && (false !== $filename = $class->getFileName())
             && filemtime($path) < filemtime($filename)) {
             @unlink($path);
 
@@ -200,18 +214,20 @@ class FileCacheReader implements Reader
             throw new \RuntimeException(sprintf('Unable to create tempfile in directory: %s', $this->dir));
         }
 
+        @chmod($tempfile, 0666 & (~$this->umask));
+
         $written = file_put_contents($tempfile, '<?php return unserialize('.var_export(serialize($data), true).');');
 
         if (false === $written) {
             throw new \RuntimeException(sprintf('Unable to write cached file to: %s', $tempfile));
         }
 
+        @chmod($tempfile, 0666 & (~$this->umask));
+
         if (false === rename($tempfile, $path)) {
             @unlink($tempfile);
             throw new \RuntimeException(sprintf('Unable to rename %s to %s', $tempfile, $path));
         }
-
-        @chmod($path, 0666 & ~umask());
     }
 
     /**

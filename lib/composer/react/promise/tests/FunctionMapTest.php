@@ -109,6 +109,25 @@ class FunctionMapTest extends TestCase
     }
 
     /** @test */
+    public function shouldPreserveTheOrderOfArrayWhenResolvingAsyncPromises()
+    {
+        $mock = $this->createCallableMock();
+        $mock
+            ->expects($this->once())
+            ->method('__invoke')
+            ->with($this->identicalTo([2, 4, 6]));
+
+        $deferred = new Deferred();
+
+        map(
+            [resolve(1), $deferred->promise(), resolve(3)],
+            $this->mapper()
+        )->then($mock);
+
+        $deferred->resolve(2);
+    }
+
+    /** @test */
     public function shouldRejectWhenInputContainsRejection()
     {
         $mock = $this->createCallableMock();
@@ -121,5 +140,59 @@ class FunctionMapTest extends TestCase
             [resolve(1), reject(2), resolve(3)],
             $this->mapper()
         )->then($this->expectCallableNever(), $mock);
+    }
+
+    /** @test */
+    public function shouldRejectWhenInputPromiseRejects()
+    {
+        $mock = $this->createCallableMock();
+        $mock
+            ->expects($this->once())
+            ->method('__invoke')
+            ->with($this->identicalTo(null));
+
+        map(
+            reject(),
+            $this->mapper()
+        )->then($this->expectCallableNever(), $mock);
+    }
+
+    /** @test */
+    public function shouldCancelInputPromise()
+    {
+        $mock = $this
+            ->getMockBuilder('React\Promise\CancellablePromiseInterface')
+            ->getMock();
+        $mock
+            ->expects($this->once())
+            ->method('cancel');
+
+        map(
+            $mock,
+            $this->mapper()
+        )->cancel();
+    }
+
+    /** @test */
+    public function shouldCancelInputArrayPromises()
+    {
+        $mock1 = $this
+            ->getMockBuilder('React\Promise\CancellablePromiseInterface')
+            ->getMock();
+        $mock1
+            ->expects($this->once())
+            ->method('cancel');
+
+        $mock2 = $this
+            ->getMockBuilder('React\Promise\CancellablePromiseInterface')
+            ->getMock();
+        $mock2
+            ->expects($this->once())
+            ->method('cancel');
+
+        map(
+            [$mock1, $mock2],
+            $this->mapper()
+        )->cancel();
     }
 }

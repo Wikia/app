@@ -1,8 +1,7 @@
 <?php
 
 use Swagger\Client\Discussion\Api\LegacyRedirectsApi;
-use Wikia\DependencyInjection\Injector;
-use Wikia\Service\Swagger\ApiProvider;
+use Wikia\Factory\ServiceFactory;
 
 class LegacyRedirect {
 
@@ -57,8 +56,8 @@ class LegacyRedirect {
 	}
 
 	private function getLegacyRedirectApi() {
-		/** @var ApiProvider $apiProvider */
-		$apiProvider = Injector::getInjector()->get( ApiProvider::class );
+		$apiProvider = ServiceFactory::instance()->providerFactory()->apiProvider();
+
 		/** @var LegacyRedirectsApi $api */
 		$api = $apiProvider->getApi( self::SERVICE_NAME, LegacyRedirectsApi::class );
 		$api->getApiClient()->getConfig()->setCurlTimeout( self::TIMEOUT );

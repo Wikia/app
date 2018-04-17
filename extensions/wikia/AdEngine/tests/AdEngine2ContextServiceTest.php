@@ -232,7 +232,7 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 		$catId = WikiFactoryHub::CATEGORY_ID_LIFESTYLE;
 		$shortCat = 'shortcat';
 		// mech: using %S for hostname as RL can produce local links when $wgEnableLocalResourceLoaderLinks is set to true
-		$expectedAdEngineResourceURLFormat = '%S/__load/-/cb%3D%d%26debug%3Dfalse%26lang%3D%s%26only%3Dscripts%26skin%3Doasis/%s';
+		$expectedAdEngineResourceURLFormat = '%S/load.php?cb=%d&debug=false&lang=%s&modules=%s&only=scripts&skin=oasis&*';
 		$expectedPrebidBidderUrl = 'http://i2.john-doe.wikia-dev.com/__am/123/group/-/pr3b1d_prod_js';
 
 		$assetsManagerMock = $this->getMockBuilder( 'AssetsManager' )
@@ -281,6 +281,7 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 		$this->mockGlobalVariable( 'wgEnableKruxTargeting', false );
 		$this->mockGlobalVariable( 'wgWikiDirectedAtChildrenByFounder', false );
 		$this->mockGlobalVariable( 'wgWikiDirectedAtChildrenByStaff', false );
+		$this->mockGlobalVariable( 'wgEnableArticleFeaturedVideo', false );
 
 		foreach ( $flags as $flag ) {
 			$this->mockGlobalVariable( $flag, true );
@@ -332,8 +333,6 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 				'pageType' => 'all_ads',
 				'showAds' => true,
 				'delayBtf' => true,
-				'sourcePointMMSDomain' => 'mms.bre.wikia-dev.com',
-				'sourcePointRecovery' => true,
 				'pageFairRecovery' => true,
 				'instartLogicRecovery' => true
 			],
@@ -373,10 +372,6 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 			$expected['slots'][$var] = $val;
 		}
 
-		// Check for SourcePoint URL
-		$this->assertStringMatchesFormat( $expectedAdEngineResourceURLFormat, $result['opts']['sourcePointDetectionUrl'] );
-		unset($result['opts']['sourcePointDetectionUrl']);
-
 		// Check for PageFair URL
 		$this->assertStringMatchesFormat( $expectedAdEngineResourceURLFormat, $result['opts']['pageFairDetectionUrl'] );
 		unset($result['opts']['pageFairDetectionUrl']);
@@ -412,6 +407,7 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 			->willReturn( 123 );
 
 		$this->mockStaticMethod( 'ArticleVideoService', 'getFeatureVideoForArticle', $mediaId );
+		$this->mockStaticMethod( 'ArticleVideoContext', 'isRecommendedVideoAvailable', $expected );
 
 		$adContextService = new AdEngine2ContextService();
 		$result = $adContextService->getContext( $titleMock, 'test' );

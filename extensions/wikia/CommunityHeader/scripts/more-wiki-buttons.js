@@ -1,7 +1,9 @@
-require(['jquery', 'GlobalShortcutsSearch', 'wikia.cookies'], function ($, GlobalShortcutsSearch, cookies) {
+require(['jquery', require.optional('GlobalShortcutsSearch'), 'wikia.cookies'], function ($, GlobalShortcutsSearch, cookies) {
 	$('.wds-community-header__wiki-buttons .wiki-button-all-shortcuts').click(function (event) {
-		var searchModal = new GlobalShortcutsSearch();
-		searchModal.open();
+		if (GlobalShortcutsSearch) {
+			var searchModal = new GlobalShortcutsSearch();
+			searchModal.open();
+		}
 		event.preventDefault();
 	});
 

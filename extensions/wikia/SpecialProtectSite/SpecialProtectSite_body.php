@@ -4,7 +4,7 @@
 
 class ProtectsiteForm extends SpecialPage
 {
-	var $mName, $mRequest, $action, $persist_data, $isMagicUser;
+	var $mName, $mRequest, $action, $isMagicUser;
 
 	public function __construct() {
 		parent::__construct( "Protectsite", "protectsite", true );
@@ -37,13 +37,8 @@ class ProtectsiteForm extends SpecialPage
 
 		$wgOut->setPagetitle( wfMsg( $this->mName ) );
 
-		$this->persist_data = new MediaWikiBagOStuff(array());
-
 		/* Get data into the value variable/array */
 		$prot = $wgMemc->get( self::key() );
-		if( !$prot ) {
-			# ?
-		}
 
 		global $wgProtectsiteExempt;
 		// are there any groups that should not get affected by Protectsite's lockdown?
@@ -84,7 +79,7 @@ class ProtectsiteForm extends SpecialPage
 
 	function setProtectsite()
 	{
-		global $wgOut, $wgUser, $wgProtectsiteLimit, $wgMemc;
+		global $wgOut, $wgProtectsiteLimit, $wgMemc;
 
 		/* Get the request data */
 		$request = $this->mRequest->getValues();

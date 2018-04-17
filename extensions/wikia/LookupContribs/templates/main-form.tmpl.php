@@ -15,7 +15,7 @@ function lcShowDetails(dbname, mode) {
 }
 
 $(document).ready(function() {
-	var baseurl = wgScript + "?action=ajax&rs=LookupContribsAjax::axData";
+	var baseurl = mw.util.wikiScript() + "?action=ajax&rs=LookupContribsAjax::axData";
 	var username = '<?= Xml::escapeJsString( $username ) ?>';
 
 	if ( !username ) {

@@ -6,6 +6,7 @@
  * @author macbre
  * @author Wladyslaw Bodzek
  */
+
 use Wikia\Logger\WikiaLogger;
 
 class ResourceLoaderHooks {
@@ -13,10 +14,6 @@ class ResourceLoaderHooks {
 	const TIMESTAMP_PRECISION = 900; // 15 minutes
 
 	static protected $resourceLoaderInstance;
-	static protected $assetsManagerGroups = array(
-//		'skins.oasis.blocking' => 'oasis_blocking',
-//		'skins.oasis.core' => 'oasis_shared_core',
-	);
 
 	/**
 	 * @static
@@ -32,102 +29,27 @@ class ResourceLoaderHooks {
 	/**
 	 * Configure Wikia-specific settings in ResourceLoader
 	 *
-	 * @static
 	 * @param ResourceLoader $resourceLoader Object to configure
-	 * @return bool true because it's a hook
+	 * @throws MWException
 	 */
 	static public function onResourceLoaderRegisterModules( ResourceLoader $resourceLoader ) {
-		self::registerSources($resourceLoader);
-		self::registerAssetsManagerGroups($resourceLoader);
-
-		return true;
-	}
-
-	static protected function registerSources( ResourceLoader $resourceLoader ) {
-		global $wgScriptPath, $wgScriptExtension, $wgMedusaHostPrefix, $wgCdnRootUrl, $wgDevelEnvironment,
-			   $wgStagingEnvironment, $wgCityId, $wgEnableResourceLoaderRewrites;
+		global $wgCdnRootUrl;
 
 		$sources = $resourceLoader->getSources();
 
-		// staff and internal special case
-		if ( $wgCityId === null || $wgCityId === 11 ) {
-			$resourceLoader->addSource('common',$sources['local']);
-			return true;
+		// Do not use shared domain for shared assets for dev env
+		if ( Wikia::isDevEnv() ) {
+			$resourceLoader->addSource( 'common', $sources['local'] );
+			return;
 		}
 
-		// Determine the shared domain name
-		$isProduction = empty($wgDevelEnvironment) && empty($wgStagingEnvironment);
-		if ( $isProduction ) {
-			// Adding https here doesn't change anything, as $wgEnableResourceLoaderRewrites is enabled
-			// everywhere so this gets replaced with $wgCdnRootUrl anyway.
-			$host = 'https://' . (empty($wgMedusaHostPrefix) ? 'community.' : $wgMedusaHostPrefix) . 'wikia.com';
-		} else {
-			$host = $wgCdnRootUrl;
-		}
-
-		// Feed RL with the "common" source
-		$scriptUri = "$host{$wgScriptPath}/load{$wgScriptExtension}";
-		$sources['common'] = array(
-			'loadScript' => $scriptUri,
+		// Use shared domain name "common" source
+		$sources['common'] = [
+			'loadScript' => "$wgCdnRootUrl/__load/-/",
 			'apiScript' => $sources['local']['apiScript'],
-		);
+		];
 
-		if ( !empty( $wgEnableResourceLoaderRewrites ) ) {
-			// rewrite local source
-			$url = $sources['local']['loadScript'];
-			$url = str_replace( "/load{$wgScriptExtension}", "/__load/-/", $url );
-			$sources['local']['loadScript'] = $url;
-			// rewrite common source
-			$url = $sources['common']['loadScript'];
-			$url = str_replace( "/load{$wgScriptExtension}", "/__load/-/", $url );
-			if ( $isProduction ) {
-				$url = str_replace( $host, $wgCdnRootUrl, $url );
-			}
-			$sources['common']['loadScript'] = $url;
-		}
-
-		$resourceLoader->setSource('local',$sources['local']);
-		$resourceLoader->addSource('common',$sources['common']);
-
-		return true;
-	}
-
-	static protected function registerAssetsManagerGroups( ResourceLoader $resourceLoader ) {
-		if ( empty( self::$assetsManagerGroups ) ) {
-			return true;
-		}
-
-		$assetsConfig = new AssetsConfig();
-		foreach (self::$assetsManagerGroups as $moduleName => $groupName) {
-			$type = $assetsConfig->getGroupType($groupName);
-			$key = null;
-			switch ($type) {
-				case AssetsManager::TYPE_JS:
-					$key = 'scripts';
-					break;
-				case AssetsManager::TYPE_CSS:
-				case AssetsManager::TYPE_SCSS:
-					$key = 'styles';
-					break;
-			}
-			if ( empty( $key ) ) {
-				// todo: log error
-				continue;
-			}
-
-			$assets = $assetsConfig->resolve($groupName,false,false);
-			foreach ($assets as $k => $v) {
-				if ( !preg_match('#^(extensions|resources|skins)/#', $v) ) {
-					unset($assets[$k]);
-				}
-			}
-			$assets = array_values($assets);
-			$module = array();
-			$module[$key] = $assets;
-			$resourceLoader->register($moduleName,$module);
-		}
-
-		return true;
+		$resourceLoader->addSource( 'common', $sources['common'] );
 	}
 
 	/**
@@ -263,8 +185,9 @@ class ResourceLoaderHooks {
 		$sources = $resourceLoaderInstance->getSources();
 		$loadScript = $sources[$source]['loadScript'];
 
-		// this is triggered only when $wgEnableResourceLoaderRewrites is set
 		if ( substr($loadScript,-1) == '/' ) {
+			// shared asset loaded from shared domain
+
 			$loadQuery = $query;
 			$modules = $loadQuery['modules'];
 			unset($loadQuery['modules']);

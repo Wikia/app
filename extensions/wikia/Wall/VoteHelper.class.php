@@ -6,12 +6,8 @@
 class VoteHelper {
 	protected $userId;
 	protected $pageId;
-	protected $userIP = '';
 
-	function __construct( User $user = null, $pageId = 0 ) {
-		global $wgRequest;
-
-		$this->userIP = $wgRequest->getIP();
+	function __construct( User $user, $pageId = 0 ) {
 		$this->userId = $user->getId();
 		$this->pageId = $pageId;
 	}
@@ -50,7 +46,7 @@ class VoteHelper {
 		return $out;
 	}
 
-	function addVote( $score = 1 ) {
+	function addVote() {
 		if ( $this->isVoted() ) {
 			return false;
 		}
@@ -58,11 +54,8 @@ class VoteHelper {
 
 		$values = [
 			'article_id' => $this->pageId,
-			'ip' => $this->userIP,
 			'user_id' => $this->userId,
-			'unique_id' => md5( $this->userIP ), // Backward compatibility
-			'time' => wfTimestampNow(),
-			'vote' => $score,
+			'time' => wfTimestampNow()
 		];
 
 		$dbr->insert(

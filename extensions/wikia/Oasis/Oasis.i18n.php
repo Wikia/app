@@ -114,7 +114,6 @@ $messages['en'] = array(
 **Blog:Recent_posts|Recent blog posts',
 	'imageseo-featured-on' => 'Featured on:',
 	'imageseo-featured-more' => 'more...',
-	'oasis-related-video-by-5min' => 'by 5min Video',
 	'oasis-related-video-header' => 'Related Videos',
 	'oasis-editpage-readonlywarning' => '<h2>Sorry!</h2>
 <p>You cannot edit this page at the moment. We should be up and running again shortly. Here\'s what\'s happening:<br /><em>$1</em></p>
@@ -192,7 +191,6 @@ $messages['qqq'] = array(
 	'oasis-home' => "This refers to the wiki's main page title shown on the top of the page.",
 	'oasis-more' => 'Included in the activity minibox in the sidebar beside articles.',
 	'oasis-signup' => 'Label for link to account creation form, seen in header',
-	'oasis-related-video-by-5min' => '"5min Video" is a web site name. See http://www.5min.com/',
 	'oasis-total-articles-mainpage' => '$1 is the number of pages on the wiki.
 
 PLEASE NOTE: This message MUST be separated into two lines by a <nowiki><BR /></nowiki>.',
@@ -383,7 +381,6 @@ $messages['br'] = array(
 	'oasis-activity-watchlist-login' => "Ret eo deoc'h kevreañ evit gwelet ar pajennoù heuliet nemetken.",
 	'oasis-activity-header' => 'Oberiantizoù wiki nevez',
 	'oasis-related-video-header' => 'Videoioù kar',
-	'oasis-related-video-by-5min' => 'gant "5min Video"',
 	'oasis-total-articles-mainpage' => '<em>{{FORMATNUM:$1}}</em><span>{{PLURAL:$1|pajenn war<br /> ar wiki-mañ|pajenn war<br /> ar wiki-mañ}}</span>',
 	'oasis-global-nav-create-wiki' => 'Kregiñ gant ur wiki',
 	'oasis-page-header-no-comments-tooltip' => "Bezit ar c'hentañ o lakaat ar gaoz war ar bajenn-mañ.",
@@ -513,7 +510,6 @@ $messages['cs'] = array(
 	'oasis-activity-watchlist-login' => 'Musíte se přihlásit, pokud chcete vidět Vaše sledované stránky.',
 	'oasis-activity-header' => 'Nedávná aktivita na Wiki',
 	'oasis-related-video-header' => 'Související videa',
-	'oasis-related-video-by-5min' => 'od 5min Video',
 	'oasis-total-articles-mainpage' => '<em>{{FORMATNUM:$1}}</em><span>{{PLURAL:$1|stránka|stránky|stránek}} na<br /> této wiki</span>',
 	'oasis-global-nav-create-wiki' => 'Založit wiki',
 	'oasis-page-header-no-comments-tooltip' => 'Buďte první, kdo diskutuje o této stránce',
@@ -639,7 +635,6 @@ $messages['de'] = array(
 	'oasis-activity-watchlist-login' => 'Du musst dich anmelden, um nur die Seiten zu sehen, denen du folgst.',
 	'oasis-activity-header' => 'Letzte Aktivitäten im Wiki',
 	'oasis-related-video-header' => 'Ähnliche Videos',
-	'oasis-related-video-by-5min' => 'von 5min Video',
 	'oasis-total-articles-mainpage' => '<em>{{FORMATNUM:$1}}</em><span>{{PLURAL:$1|Seite in<br /> diesem Wiki|Seiten in<br /> diesem Wiki}}</span>',
 	'oasis-global-nav-create-wiki' => 'Starte ein Wiki',
 	'oasis-page-header-no-comments-tooltip' => 'Sei der erste, der diese Seite kommentiert',
@@ -819,6 +814,7 @@ $messages['de'] = array(
 	'oasis-navigation-v2-edit-page' => 'Seite bearbeiten',
 	'oasis-navigation-v2-edit-this-menu' => 'Wiki-Navigation bearbeiten',
 	'oasis-page-header-diff' => '<strong>Änderungen:</strong> $1',
+	'oasis-related-video-by-5min' => 'von 5min Video',
 );
 
 $messages['de-formal'] = array(
@@ -866,7 +862,6 @@ $messages['es'] = array(
 	'oasis-activity-watchlist-login' => 'Tienes que haber iniciado sesión para ver tus páginas seguidas.',
 	'oasis-activity-header' => 'Actividad reciente',
 	'oasis-related-video-header' => 'Videos relacionados',
-	'oasis-related-video-by-5min' => 'video de 5min',
 	'oasis-total-articles-mainpage' => '<em>{{FORMATNUM:$1}}</em><span>{{PLURAL:$1|página en<br /> el wiki|páginas en<br /> el wiki}}</span>',
 	'oasis-global-nav-create-wiki' => 'Crear un wiki',
 	'oasis-page-header-no-comments-tooltip' => 'Sé el primero en comentar en esta página',
@@ -1043,6 +1038,7 @@ $messages['es'] = array(
 	'oasis-navigation-v2-edit-page' => 'Editar esta página',
 	'oasis-navigation-v2-edit-this-menu' => 'Editar la navegación del wiki',
 	'oasis-page-header-diff' => '<strong>Cambios:</strong> $1',
+	'oasis-related-video-by-5min' => 'video de 5min',
 );
 
 $messages['fa'] = array(
@@ -1059,7 +1055,6 @@ $messages['fa'] = array(
 	'oasis-activity-watchlist-login' => 'برای دیدن صفحات پیگیری‌شده فقط باید وارد سایت شوید',
 	'oasis-activity-header' => 'آخرین فعالیت‌های ویکی',
 	'oasis-related-video-header' => 'ویدیوهای مرتبط',
-	'oasis-related-video-by-5min' => 'توسط پنج دقیقه ویدیو',
 	'oasis-total-articles-mainpage' => '<em>{{FORMATNUM:$1}}</em><span>{{PLURAL:$1|صفحه در<br /> این ویکی|صفحه‌ها در<br /> این ویکی}}</span>',
 	'oasis-global-nav-create-wiki' => 'شروع یک ویکی',
 	'oasis-page-header-no-comments-tooltip' => 'نخستین کسی باشید که این صفحه را بحث می‌کند',
@@ -1154,7 +1149,6 @@ $messages['fi'] = array(
 	'oasis-activity-watchlist-login' => 'Sinun täytyy kirjautua sisään nähdäksesi vain seuratut sivut',
 	'oasis-activity-header' => 'Viimeisin toiminta wikissä',
 	'oasis-related-video-header' => 'Samankaltaiset videot',
-	'oasis-related-video-by-5min' => '5min Video',
 	'oasis-total-articles-mainpage' => '<em>{{FORMATNUM:$1}}</em><span>{{PLURAL:$1|sivu<br /> tässä wikissä|sivua<br /> tässä wikissä}}</span>',
 	'oasis-global-nav-create-wiki' => 'Perusta wiki',
 	'oasis-page-header-no-comments-tooltip' => 'Ole ensimmäinen joka keskustelee tästä sivusta',
@@ -1273,7 +1267,6 @@ $messages['fr'] = array(
 	'oasis-activity-watchlist-login' => 'Connectez-vous pour afficher les pages suivies uniquement.',
 	'oasis-activity-header' => 'Activité récente du wiki',
 	'oasis-related-video-header' => 'Vidéos similaires',
-	'oasis-related-video-by-5min' => 'de 5min Video',
 	'oasis-total-articles-mainpage' => '<em>{{FORMATNUM:$1}}</em><span>{{PLURAL:$1|page sur<br /> ce wiki|pages sur<br /> ce wiki}}</span>',
 	'oasis-global-nav-create-wiki' => 'Créer un wiki',
 	'oasis-page-header-no-comments-tooltip' => 'Soyez le premier à laisser un commentaire sur cette page.',
@@ -1450,6 +1443,7 @@ $messages['fr'] = array(
 	'oasis-navigation-v2-edit-page' => 'Modifier cette page',
 	'oasis-navigation-v2-edit-this-menu' => 'Modifier la navigation',
 	'oasis-page-header-diff' => '<strong>Modifications :</strong> $1',
+	'oasis-related-video-by-5min' => 'de 5min Video',
 );
 
 $messages['gl'] = array(
@@ -1467,7 +1461,6 @@ $messages['gl'] = array(
 	'oasis-activity-watchlist-login' => 'Cómpre acceder ao sistema para ver as páxinas que está a seguir.',
 	'oasis-activity-header' => 'Actividade recente no wiki',
 	'oasis-related-video-header' => 'Vídeos relacionados',
-	'oasis-related-video-by-5min' => 'por 5min Video',
 	'oasis-total-articles-mainpage' => '<em>{{FORMATNUM:$1}}</em><span>{{PLURAL:$1|páxina<br />neste wiki|páxinas<br />neste wiki}}</span>',
 	'oasis-global-nav-create-wiki' => 'Comezar un wiki',
 	'oasis-page-header-no-comments-tooltip' => 'Sexa o primeiro en abrir un fío de conversa nesta páxina',
@@ -1587,7 +1580,6 @@ $messages['he'] = array(
 	'oasis-activity-watchlist-login' => 'נדרשת התחברות כדי לצפות ברשימת המעקב.',
 	'oasis-activity-header' => 'פעילות ויקי אחרונה',
 	'oasis-related-video-header' => 'סרטוני וידאו קשורים',
-	'oasis-related-video-by-5min' => 'מאת 5min Video',
 	'oasis-total-articles-mainpage' => '<em>{{FORMATNUM:$1}}</em><span class="$2">{{PLURAL:$1|דף באתר זה|דפים באתר זה}}</span>',
 	'oasis-global-nav-create-wiki' => 'יצירת ויקי',
 	'oasis-page-header-no-comments-tooltip' => 'להתחיל שיחה על דף זה',
@@ -1729,7 +1721,6 @@ $messages['ia'] = array(
 	'oasis-activity-watchlist-login' => 'Tu debe aperir session pro vider solmente tu paginas sub observation.',
 	'oasis-activity-header' => 'Activitate recente in wiki',
 	'oasis-related-video-header' => 'Videos similar',
-	'oasis-related-video-by-5min' => 'per 5min Video',
 	'oasis-total-articles-mainpage' => '<em>{{FORMATNUM:$1}}</em><span>{{PLURAL:$1|pagina in<br /> iste wiki|paginas in<br /> iste wiki}}</span>',
 	'oasis-global-nav-create-wiki' => 'Comenciar un wiki',
 	'oasis-page-header-no-comments-tooltip' => 'Sia le prime a discuter iste pagina',
@@ -1942,7 +1933,6 @@ $messages['id'] = array(
 **Blog:Recent_posts|Postingan blog terbaru',
 	'imageseo-featured-on' => 'Ditampilkan di:',
 	'imageseo-featured-more' => 'lagi...',
-	'oasis-related-video-by-5min' => 'oleh 5min video',
 	'oasis-related-video-header' => 'Video terkait',
 	'oasis-editpage-readonlywarning' => '<h2>Maaf!</h2>
 <p>Anda tidak dapat menyunting halaman saat ini. Kami akan secepatnya memperbaiki ini dan akan berjalan seperti semua lagi.
@@ -2033,7 +2023,6 @@ $messages['it'] = array(
 	'oasis-activity-watchlist-login' => 'Devi accedere per vedere solamente le pagine che segui.',
 	'oasis-activity-header' => 'Attività recente della wiki',
 	'oasis-related-video-header' => 'Video correlati',
-	'oasis-related-video-by-5min' => 'di 5min Video',
 	'oasis-total-articles-mainpage' => '<em>{{FORMATNUM:$1}}</em><span>{{PLURAL:$1|pagina|pagine}} in<br />questa wiki</span>',
 	'oasis-global-nav-create-wiki' => 'Crea una wiki',
 	'oasis-page-header-no-comments-tooltip' => 'Sii il primo a commentare su questa pagina',
@@ -2209,6 +2198,7 @@ $messages['it'] = array(
 	'oasis-navigation-v2-edit-page' => 'Modifica questa pagina',
 	'oasis-navigation-v2-edit-this-menu' => 'Modifica la navigazione della wiki',
 	'oasis-page-header-diff' => '<strong>Differenze:</strong> $1',
+	'oasis-related-video-by-5min' => 'di 5min Video',
 );
 
 $messages['ja'] = array(
@@ -2328,7 +2318,6 @@ $messages['ja'] = array(
 **#category2#
 *Project:Community Portal|コミュニティ
 **Blog:Recent_posts|最近の投稿',
-	'oasis-related-video-by-5min' => '提供: 5min Video',
 	'oasis-editpage-readonlywarning' => '<h2>申し訳ありません。</h2>
 <p>現在、このページは編集できなくなっています。間もなく復旧予定ですので、しばらくお待ちください。原因:<br /><em>$1</em></p>
 <p>詳細については、<a href="http://twitter.com/getfandom">Twitter</a>または<a href="http://facebook.com/getfandom">Facebook</a>をご覧ください。</p>',
@@ -2402,6 +2391,7 @@ $messages['ja'] = array(
 	'oasis-navigation-v2-edit-page' => 'このページを編集',
 	'oasis-navigation-v2-edit-this-menu' => 'ウィキナビゲーションを編集',
 	'oasis-page-header-diff' => '<strong>変更:</strong> $1',
+	'oasis-related-video-by-5min' => '提供: 5min Video',
 );
 
 $messages['jp'] = array(
@@ -2552,7 +2542,6 @@ $messages['ko'] = array(
 	'oasis-anon-user' => 'A FANDOM user',
 	'photosblacklist' => '* example-blacklist.png',
 	'categoryblacklist' => '* stub',
-	'oasis-related-video-by-5min' => 'by 5min Video',
 	'oasis-upload-photos-overwrite-file' => 'Overwrite File',
 	'oasis-skip-to-wiki-navigation' => 'Skip to Wiki Navigation',
 	'oasis-on-the-wiki' => 'On the Wiki',
@@ -2657,7 +2646,6 @@ $messages['lt'] = array(
 	'oasis-activity-watchlist-login' => 'Jūs turite prisijungti norėdami pamatyti savo stebimus puslapius.',
 	'oasis-activity-header' => 'Naujausias Wiki aktyvumas',
 	'oasis-related-video-header' => "Susiję ''Video''",
-	'oasis-related-video-by-5min' => 'iki 5 min Video',
 	'oasis-total-articles-mainpage' => '<em>{{FORMATNUM: $1}}</em> <span>{{PLURAL: $1 | puslapis | puslapiai | puslapių }}<br /> šioje wiki</span>',
 	'oasis-global-nav-create-wiki' => 'Sukurti naują Wiki',
 	'oasis-page-header-no-comments-tooltip' => 'Būkite pirmas, aptardamas šį puslapį',
@@ -2752,7 +2740,6 @@ $messages['mk'] = array(
 	'oasis-activity-watchlist-login' => 'За да ги гледате само следените страници, ќе треба прво да се најавите.',
 	'oasis-activity-header' => 'Скорешни вики-активности',
 	'oasis-related-video-header' => 'Поврзани видеа',
-	'oasis-related-video-by-5min' => 'по 5-мин. снимка',
 	'oasis-total-articles-mainpage' => '<em>{{FORMATNUM:$1}}</em><span>{{PLURAL:$1|страница на<br /> ова вики|страници на<br /> ова вики}}</span>',
 	'oasis-global-nav-create-wiki' => 'Започнете вики',
 	'oasis-page-header-no-comments-tooltip' => 'Бидете првите што ќе разговарате за страницава',
@@ -2905,7 +2892,6 @@ $messages['ms'] = array(
 	'oasis-activity-watchlist-login' => 'Anda perlu mengelog masuk untuk melihat laman-laman yang anda pantau sahaja.',
 	'oasis-activity-header' => 'Kegiatan Terbaru di Wiki Ini',
 	'oasis-related-video-header' => 'Video Berkaitan',
-	'oasis-related-video-by-5min' => 'oleh 5min Video',
 	'oasis-total-articles-mainpage' => '<em>{{FORMATNUM:$1}}</em><span>{{PLURAL:$1|laman di<br /> wiki ini|laman di<br /> wiki ini}}</span>',
 	'oasis-global-nav-create-wiki' => 'Cipta wiki baru',
 	'oasis-page-header-no-comments-tooltip' => 'Jadi yang pertama untuk membincangkan laman ini',
@@ -3038,7 +3024,6 @@ $messages['nb'] = array(
 	'oasis-activity-watchlist-login' => 'Du må være logget inn for å kun se dine fulgte sider.',
 	'oasis-activity-header' => 'Siste wiki-aktivitet',
 	'oasis-related-video-header' => 'Relaterte videoer',
-	'oasis-related-video-by-5min' => 'etter 5min video',
 	'oasis-total-articles-mainpage' => '<em>{{FORMATNUM:$1}}</em><span>{{PLURAL:$1|side på<br /> denne wikien|sider på<br /> denne wikien}}</span>',
 	'oasis-global-nav-create-wiki' => 'Start en wiki',
 	'oasis-page-header-no-comments-tooltip' => 'Bli den første til å diskutere denne siden',
@@ -3155,7 +3140,6 @@ $messages['nl'] = array(
 	'oasis-activity-watchlist-login' => "Je moet aanmelden om alleen door jou gevolgde pagina's te zien.",
 	'oasis-activity-header' => 'Recente wikiactivity',
 	'oasis-related-video-header' => 'Related Videos',
-	'oasis-related-video-by-5min' => 'by 5min Video',
 	'oasis-total-articles-mainpage' => '<em>{{FORMATNUM:$1}}</em><span>{{PLURAL:$1|page on<br /> this wiki|pages on<br /> this wiki}}</span>',
 	'oasis-global-nav-create-wiki' => 'Start a wiki',
 	'oasis-page-header-no-comments-tooltip' => 'Je kunt de eerste zijn die overleg voor deze pagina start',
@@ -3349,7 +3333,6 @@ $messages['pl'] = array(
 	'oasis-activity-watchlist-login' => 'Musisz się zalogować, aby zobaczyć wyłącznie swoje obserwowane strony.',
 	'oasis-activity-header' => 'Ostatnia aktywność na wiki',
 	'oasis-related-video-header' => 'Podobne filmy',
-	'oasis-related-video-by-5min' => 'z 5min Video',
 	'oasis-total-articles-mainpage' => '<em>{{FORMATNUM:$1}}</em><span>{{PLURAL:$1|strona|strony|stron}} na<br /> tej wiki</span>',
 	'oasis-global-nav-create-wiki' => 'Utwórz wiki',
 	'oasis-page-header-no-comments-tooltip' => 'Rozpocznij dyskusję jako pierwszy',
@@ -3532,6 +3515,7 @@ $messages['pl'] = array(
 	'oasis-navigation-v2-edit-page' => 'Edytuj tę stronę',
 	'oasis-navigation-v2-edit-this-menu' => 'Edytuj nawigację',
 	'oasis-page-header-diff' => '<strong>Zmiany:</strong> $1',
+	'oasis-related-video-by-5min' => 'z 5min Video',
 );
 
 $messages['pms'] = array(
@@ -3583,7 +3567,6 @@ $messages['pt'] = array(
 	'oasis-activity-watchlist-login' => 'Você precisa fazer login para ver as páginas que está seguindo apenas.',
 	'oasis-activity-header' => 'Atividade recente',
 	'oasis-related-video-header' => 'Vídeos relacionados',
-	'oasis-related-video-by-5min' => 'por 5min, vídeo',
 	'oasis-total-articles-mainpage' => '<em>{{FORMATNUM:$1}}</em><span> {{PLURAL:$1|página<br />nesta wiki|páginas<br />nesta wiki}}</span>',
 	'oasis-global-nav-create-wiki' => 'Começar uma wiki',
 	'oasis-page-header-no-comments-tooltip' => 'Seja o primeiro a discutir esta página',
@@ -3760,6 +3743,7 @@ $messages['pt'] = array(
 	'oasis-navigation-v2-edit-page' => 'Editar esta página',
 	'oasis-navigation-v2-edit-this-menu' => 'Editar a navegação da wiki',
 	'oasis-page-header-diff' => '<strong>Alterações:</strong> $1',
+	'oasis-related-video-by-5min' => 'por 5min, vídeo',
 );
 
 $messages['ru'] = array(
@@ -3777,7 +3761,6 @@ $messages['ru'] = array(
 	'oasis-activity-watchlist-login' => 'Чтобы просмотреть только отслеживаемые страницы, необходимо войти в систему.',
 	'oasis-activity-header' => 'Недавняя вики-деятельность',
 	'oasis-related-video-header' => 'Близкие по теме видео',
-	'oasis-related-video-by-5min' => 'с сайта 5min Video',
 	'oasis-total-articles-mainpage' => '<em>{{FORMATNUM:$1}}</em><span>{{PLURAL:$1|статья на<br /> этой вики|статьи на<br /> этой вики|статей на<br /> этой вики}}</span>',
 	'oasis-global-nav-create-wiki' => 'Создать вики',
 	'oasis-page-header-no-comments-tooltip' => 'Оставьте комментарии к этой странице первыми',
@@ -3954,6 +3937,7 @@ $messages['ru'] = array(
 	'oasis-navigation-v2-edit-page' => 'Редактировать страницу',
 	'oasis-navigation-v2-edit-this-menu' => 'Править меню вики',
 	'oasis-page-header-diff' => '<strong>Изменения:</strong> $1',
+	'oasis-related-video-by-5min' => 'с сайта 5min Video',
 );
 
 $messages['sr-ec'] = array(
@@ -3970,7 +3954,6 @@ $messages['sr-ec'] = array(
 	'oasis-activity-watchlist-login' => 'Морате бити пријављени да бисте видели праћене странице.',
 	'oasis-activity-header' => 'Скорашње активности',
 	'oasis-related-video-header' => 'Сродни видео-снимци',
-	'oasis-related-video-by-5min' => 'од 5мин видео',
 	'oasis-total-articles-mainpage' => '<em>{{FORMATNUM:$1}}</em><span class="$2">{{PLURAL:$1|страница на викију|странице на викију|страница на викију}}</span>',
 	'oasis-global-nav-create-wiki' => 'Направите вики',
 	'oasis-page-header-comments' => '{{PLURAL:$1|Коментар|Коментари}}',
@@ -4040,7 +4023,6 @@ $messages['sv'] = array(
 	'oasis-activity-watchlist-login' => 'Du måste logga in för att se dina bevakade sidor.',
 	'oasis-activity-header' => 'Senaste Wiki-aktivitet',
 	'oasis-related-video-header' => 'Relaterade videoklipp',
-	'oasis-related-video-by-5min' => 'av 5min Video',
 	'oasis-total-articles-mainpage' => '<em>{{FORMATNUM:$1}}</em><span>{{PLURAL:$1|sida|sidor}} på<br />denna wiki</span>',
 	'oasis-global-nav-create-wiki' => 'Starta en wiki',
 	'oasis-page-header-no-comments-tooltip' => 'Bli den första att diskutera denna sida',
@@ -4174,7 +4156,6 @@ $messages['tl'] = array(
 	'oasis-activity-watchlist-login' => 'Kailangan mong lumagda upang makita ang sinusundan mong mga pahina lamang.',
 	'oasis-activity-header' => 'Kamakailang Galaw sa Wiki',
 	'oasis-related-video-header' => 'Kaugnay na mga Bidyo',
-	'oasis-related-video-by-5min' => 'sa pamamagitan ng 5 minutong Bidyo',
 	'oasis-page-header-comments-m' => '$1Milyon',
 	'oasis-page-header-talk' => 'Usapan',
 	'oasis-page-header-edited-by' => 'Binago ni $2 ang $1',
@@ -4229,7 +4210,6 @@ $messages['tt-cyrl'] = array(
 	'oasis-activity-watchlist-login' => 'Сез күзәтә торган мәкаләләрегезне күрер өчен системага керергә тиешсез.',
 	'oasis-activity-header' => 'Викидагы соңгы гамәлләр',
 	'oasis-related-video-header' => 'Охшаш видео',
-	'oasis-related-video-by-5min' => '"Биш минутлык роликлар" сайтыннан',
 	'oasis-total-articles-mainpage' => '<em>{{FORMATNUM:$1}}</em><span>{{PLURAL:$1|бу викида<br /> мәкалә}}</span>',
 	'oasis-global-nav-create-wiki' => 'Вики ясау',
 	'oasis-page-header-no-comments-tooltip' => 'Бу биткә фикер калдырган беренче кеше булыгыз',
@@ -4384,7 +4364,6 @@ $messages['vi'] = array(
 	'oasis-activity-watchlist-login' => 'Bạn cần phải đăng nhập để xem những trang theo dõi của bạn.',
 	'oasis-activity-header' => 'Hoạt động trên wiki gần đây',
 	'oasis-related-video-header' => 'Đoạn phim liên quan',
-	'oasis-related-video-by-5min' => 'bởi 5min Video',
 	'oasis-total-articles-mainpage' => '<em>{{FORMATNUM:$1}}</em><span>bài viết<br /> trên wiki này</span>',
 	'oasis-global-nav-create-wiki' => 'Tạo lập wiki',
 	'oasis-page-header-no-comments-tooltip' => 'Trở thành người đầu tiên bàn luận về trang này',
@@ -4554,6 +4533,7 @@ $messages['vi'] = array(
 	'oasis-social-reddit-link' => 'https://www.reddit.com/r/wikia',
 	'oasis-social-instagram' => 'Instagram',
 	'oasis-social-instagram-link' => 'https://www.instagram.com/getfandom/',
+	'oasis-related-video-by-5min' => 'bởi 5min Video',
 );
 
 $messages['zh-hans'] = array(
@@ -4675,7 +4655,6 @@ $messages['zh-hans'] = array(
 **w:c:zh.community:FANDOM课堂|FANDOM课堂',
 	'imageseo-featured-on' => '功能存在于:',
 	'imageseo-featured-more' => '更多...',
-	'oasis-related-video-by-5min' => '由5min网站提供',
 	'oasis-related-video-header' => '相关视频',
 	'oasis-editpage-readonlywarning' => '<h2>很抱歉！</h2>
 <p>您现在无法编辑此页面。请稍后重新尝试。原因如下：<br /><em>$1</em></p>
@@ -4750,6 +4729,7 @@ $messages['zh-hans'] = array(
 	'oasis-navigation-v2-edit-page' => '编辑此页面',
 	'oasis-navigation-v2-edit-this-menu' => '编辑维基导航',
 	'oasis-page-header-diff' => '<strong>更改内容：</strong> $1',
+	'oasis-related-video-by-5min' => '由5min网站提供',
 );
 
 $messages['zh-hant'] = array(
@@ -4876,7 +4856,6 @@ $messages['zh-hant'] = array(
 **Blog:Recent_posts|最新網誌
 **Help:內容|幫助中心',
 	'imageseo-featured-on' => '功能：',
-	'oasis-related-video-by-5min' => '由5min網站提供',
 	'oasis-editpage-readonlywarning' => '<h2>很抱歉！</h2>
 <p>您現在無法編輯此頁面。請稍後重新嘗試。原因如下：<br /><em>$1</em></p>
 <p>如需查看詳情，請查閱<a href="http://twitter.com/getfandom">Twitter</a>或者<a href="http://facebook.com/getfandom.zh">Facebook</a>。</p>',
@@ -4944,5 +4923,6 @@ $messages['zh-hant'] = array(
 	'oasis-navigation-v2-edit-page' => '編輯此頁',
 	'oasis-navigation-v2-edit-this-menu' => '編輯Wiki導航',
 	'oasis-page-header-diff' => '<strong>變更：</strong> $1',
+	'oasis-related-video-by-5min' => '由5min網站提供',
 );
 

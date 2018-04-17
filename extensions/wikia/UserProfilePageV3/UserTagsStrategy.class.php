@@ -1,12 +1,13 @@
 <?php
-use \Wikia\DependencyInjection\Injector;
-use \Wikia\Service\User\Permissions\PermissionsService;
+
+use Wikia\Service\User\Permissions\PermissionsServiceAccessor;
 
 /**
  * Class for handling user "tags" logic in user masthead
  * @class UserTagsStrategy
  */
 class UserTagsStrategy extends WikiaObject {
+	use PermissionsServiceAccessor;
 
 	/** @var int MAX_USER_TAGS Positive even integer indicating at most how many user tags can be shown */
 	const MAX_USER_TAGS = 2;
@@ -20,6 +21,7 @@ class UserTagsStrategy extends WikiaObject {
 		'voldev',
 		'vanguard',
 		'council',
+		'content-volunteer',
 	];
 
 	/** @var array LOCAL_GROUPS_RANK Local groups that should be shown in masthead, in order of importance  */
@@ -29,6 +31,7 @@ class UserTagsStrategy extends WikiaObject {
 		'content-moderator',
 		'threadmoderator',
 		'chatmoderator',
+		'bot',
 	];
 
 	/** @var string[] List of explicit global groups this user belongs to */
@@ -52,11 +55,9 @@ class UserTagsStrategy extends WikiaObject {
 	 */
 	public function __construct( User $user ) {
 		parent::__construct();
-		/** @var PermissionsService $permissionsService */
-		$permissionsService = Injector::getInjector()->get( PermissionsService::class );
 
-		$this->usersGlobalGroups = $permissionsService->getExplicitGlobalGroups( $user );
-		$this->usersLocalGroups = $permissionsService->getExplicitLocalGroups( $user );
+		$this->usersGlobalGroups = $this->permissionsService()->getExplicitGlobalGroups( $user );
+		$this->usersLocalGroups = $this->permissionsService()->getExplicitLocalGroups( $user );
 		$this->globalGroupsWithTags = array_intersect( static::GLOBAL_GROUPS_RANK, $this->usersGlobalGroups );
 		$this->localGroupsWithTags = array_intersect( static::LOCAL_GROUPS_RANK, $this->usersLocalGroups );
 		$this->user = $user;
@@ -139,6 +140,9 @@ class UserTagsStrategy extends WikiaObject {
 				case 'global-discussions-moderator':
 					$tags[] = wfMessage( 'user-identity-box-group-global-discussions-moderator' )->escaped();
 					break;
+				case 'content-volunteer':
+					$tags[] = wfMessage( 'user-identity-box-group-content-volunteer' )->escaped();
+					break;
 			}
 		}
 
@@ -170,6 +174,9 @@ class UserTagsStrategy extends WikiaObject {
 					break;
 				case 'chatmoderator':
 					$tags[] = wfMessage( 'user-identity-box-group-chatmoderator' )->escaped();
+					break;
+				case 'bot':
+					$tags[] = wfMessage( 'user-identity-box-group-bot' )->escaped();
 					break;
 			}
 		}

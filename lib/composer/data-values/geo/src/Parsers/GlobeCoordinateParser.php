@@ -9,7 +9,7 @@ use ValueParsers\ParserOptions;
 use ValueParsers\StringValueParser;
 
 /**
- * Extends the GeoCoordinateParser by adding precision detection support.
+ * Extends the LatLongParser by adding precision detection support.
  *
  * The object that gets constructed is a GlobeCoordinateValue rather then a LatLongValue.
  *
@@ -24,6 +24,10 @@ class GlobeCoordinateParser extends StringValueParser {
 
 	const FORMAT_NAME = 'globe-coordinate';
 
+	/**
+	 * Option specifying the globe. Should be a string containing a Wikidata concept URI. Defaults
+	 * to Earth.
+	 */
 	const OPT_GLOBE = 'globe';
 
 	/**
@@ -54,7 +58,7 @@ class GlobeCoordinateParser extends StringValueParser {
 						$latLong->getLongitude()
 					),
 					$this->detectPrecision( $latLong, $precisionDetector ),
-					$this->getOption( 'globe' )
+					$this->getOption( self::OPT_GLOBE )
 				);
 			} catch ( ParseException $parseException ) {
 				continue;
@@ -68,14 +72,20 @@ class GlobeCoordinateParser extends StringValueParser {
 		);
 	}
 
+	/**
+	 * @param LatLongValue $latLong
+	 * @param string $precisionDetector
+	 *
+	 * @return float|int
+	 */
 	private function detectPrecision( LatLongValue $latLong, $precisionDetector ) {
 		if ( $this->options->hasOption( 'precision' ) ) {
 			return $this->getOption( 'precision' );
 		}
 
 		return min(
-			call_user_func( array( $this, $precisionDetector ), $latLong->getLatitude() ),
-			call_user_func( array( $this, $precisionDetector ), $latLong->getLongitude() )
+			call_user_func( [ $this, $precisionDetector ], $latLong->getLatitude() ),
+			call_user_func( [ $this, $precisionDetector ], $latLong->getLongitude() )
 		);
 	}
 
@@ -83,7 +93,7 @@ class GlobeCoordinateParser extends StringValueParser {
 	 * @return  StringValueParser[]
 	 */
 	private function getParsers() {
-		$parsers = array();
+		$parsers = [];
 
 		$parsers['detectFloatPrecision'] = new FloatCoordinateParser( $this->options );
 		$parsers['detectDmsPrecision'] = new DmsCoordinateParser( $this->options );
@@ -93,10 +103,20 @@ class GlobeCoordinateParser extends StringValueParser {
 		return $parsers;
 	}
 
+	/**
+	 * @param float $degree
+	 *
+	 * @return float|int
+	 */
 	protected function detectDdPrecision( $degree ) {
 		return $this->detectFloatPrecision( $degree );
 	}
 
+	/**
+	 * @param float $degree
+	 *
+	 * @return float|int
+	 */
 	protected function detectDmPrecision( $degree ) {
 		$minutes = $degree * 60;
 		$split = explode( '.', round( $minutes, 6 ) );
@@ -108,6 +128,11 @@ class GlobeCoordinateParser extends StringValueParser {
 		return 1 / 60;
 	}
 
+	/**
+	 * @param float $degree
+	 *
+	 * @return float|int
+	 */
 	protected function detectDmsPrecision( $degree ) {
 		$seconds = $degree * 3600;
 		$split = explode( '.', round( $seconds, 4 ) );
@@ -119,6 +144,11 @@ class GlobeCoordinateParser extends StringValueParser {
 		return 1 / 3600;
 	}
 
+	/**
+	 * @param float $degree
+	 *
+	 * @return float|int
+	 */
 	protected function detectFloatPrecision( $degree ) {
 		$split = explode( '.', round( $degree, 8 ) );
 

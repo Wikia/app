@@ -26,7 +26,7 @@ define('ext.wikia.adEngine.tracking.scrollDepthTracker', [
 			if (!currentScrollBreakpoint) {
 				log('no more breakpoints', log.levels.debug, logGroup);
 				win.removeEventListener('scroll', onScroll);
-				
+
 				return;
 			}
 
@@ -37,7 +37,7 @@ define('ext.wikia.adEngine.tracking.scrollDepthTracker', [
 
 				tracker.track({
 					category: 'scroll-depth-monitoring',
-					eventName: currentScrollBreakpoint + 'px|' + timeOnPage + 's|' + win.pvUID,
+					label: currentScrollBreakpoint + 'px|' + timeOnPage + 's|' + win.pvUID,
 					trackingMethod: 'internal'
 				});
 				currentScrollBreakpoint = scrollBreakpoints.shift();

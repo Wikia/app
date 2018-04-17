@@ -8,32 +8,35 @@
  * @licence GNU GPL v2+
  * @author Nischayn22
  */
-class MapEditorHtml extends ContextSource{
+class MapEditorHtml extends ContextSource {
 
-    /**
-     * Array holding the additional attributes for the canvas div.
-     * @var array()
-     * @since 2.1
-     */
-    protected $attribs;
+	/**
+	 * Array holding the additional attributes for the canvas div.
+	 *
+	 * @var array()
+	 * @since 2.1
+	 */
+	protected $attribs;
 
-    /**
-     * @param array $attribs
-     * @param ContextSource|null $
-     * @since 2.1
-     */
-    public function __construct( $attribs = array(), ContextSource $contextSource = null ){
-        $this->attribs = $attribs;
-    }
+	/**
+	 * @param array $attribs
+	 * @param ContextSource|null $
+	 *
+	 * @since 2.1
+	 */
+	public function __construct( $attribs = [], ContextSource $contextSource = null ) {
+		$this->attribs = $attribs;
+	}
 
-    /**
-     * Returns the HTML for the MapEditor.
-     * @return string
-     * @since 2.1
-     */
-    public function getEditorHTML() {
+	/**
+	 * Returns the HTML for the MapEditor.
+	 *
+	 * @return string
+	 * @since 2.1
+	 */
+	public function getEditorHTML() {
 
-	$output = <<<EOT
+		$output = <<<EOT
 	{$this->getCanvasDiv()}<div style="display: none;">
 	<div id="code-output-container" title="%1\$s">
 		<textarea id="code-output" rows="15" readonly></textarea>
@@ -205,15 +208,15 @@ EOT;
 		return $html;
 	}
 
-    /**
-     * @return string
-     * @since 2.1
-     */
-    public function getCanvasDiv(){
-        return Html::element(
-            'div',
-            $this->attribs
-        );
-    }
-	
+	/**
+	 * @return string
+	 * @since 2.1
+	 */
+	public function getCanvasDiv() {
+		return Html::element(
+			'div',
+			$this->attribs
+		);
+	}
+
 }

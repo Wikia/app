@@ -271,6 +271,11 @@ RTE.overlay = {
 
 		// assign overlay to given node
 		node.each(function() {
+			// XW-4380: Disable media overlay for media within non-contenteditable items
+			if (!this.isContentEditable) {
+				return;
+			}
+
 			var node = $(this)
 				.removeData('overlay')
 				// remove previously added event handlers

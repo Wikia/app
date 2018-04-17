@@ -4,7 +4,8 @@
 			"Bennylin",
 			"Farras",
 			"Irwangatot",
-			"IvanLanin"
+			"IvanLanin",
+			"Kenrick95"
 		]
 	},
 	"validator-desc": "Validator memberikan cara mudah untuk ekstensi lain untuk memvalidasi parameter ParserFunction dan ekstensi tag, mengatur nilai biasa dan membuat pesan kesalahan",
@@ -24,6 +25,14 @@
 	"validator-type-float": "nomor",
 	"validator-type-boolean": "ya/tidak",
 	"validator-type-char": "karakter",
+	"validator-type-dimension": "satuan angka dan dimensi",
+	"validator-type-title": "judul",
+	"validator-type-string-list": "daftar teks",
+	"validator-type-integer-list": "daftar bilangan bulat",
+	"validator-type-float-list": "daftar angka",
+	"validator-type-boolean-list": "daftar ya/tidak",
+	"validator-type-char-list": "daftar karakter",
+	"validator-type-title-list": "daftar judul",
 	"validator-listerrors-errors": "Kesalahan",
 	"validator-listerrors-minor": "Kecil",
 	"validator-listerrors-low": "Rendah",
@@ -41,6 +50,7 @@
 	"validator-describe-bothhooks": "Diterapkan sebagai fungsi parser dan ekstensi tag.",
 	"validator-describe-par-hooks": "Pengait parser untuk menampilkan dokumentasi.",
 	"validator-describe-par-pre": "Memungkinkan Anda mengambil tekswiki aktual untuk dokumentasi, tanpa ditampilkan pada halaman.",
+	"validator-describe-par-language": "Bahasa tampilan deksriptor",
 	"validator-describe-listtype": "Daftar $1 butir",
 	"validator-describe-empty": "kosong",
 	"validator-describe-required": "wajib diisi",
@@ -61,6 +71,8 @@
 	"validator_error_empty_argument": "Parameter $1 tidak dapat bernilai kosong.",
 	"validator_error_must_be_number": "Parameter $1 hanya dapat berupa angka.",
 	"validator_error_must_be_integer": "Parameter $1 hanya dapat berupa integer.",
+	"validator_error_must_be_title": "Parameter $1 hanya dapat berupa judul halaman wiki yang valid.",
+	"validator_error_must_be_existing_title": "Parameter $1 hanya dapat berupa judul halaman wiki yang telah ada.",
 	"validator-error-must-be-float": "Parameter $1 hanya dapat berupa angka titik kambang.",
 	"validator_error_invalid_range": "Parameter $1 harus antara $2 dan $3.",
 	"validator-error-invalid-regex": "Parameter $1 harus sesuai dengan persamaan reguler: $2.",
@@ -70,6 +82,8 @@
 	"validator_list_error_empty_argument": "Parameter $1 tidak menerima nilai kosong.",
 	"validator_list_error_must_be_number": "Parameter $1 hanya dapat berisi angka.",
 	"validator_list_error_must_be_integer": "Parameter $1 hanya dapat berisi bilangan bulat.",
+	"validator_list_error_must_be_title": "Parameter $1 hanya dapat berisi judul halaman wiki yang valid.",
+	"validator_list_error_must_be_existing_title": "Parameter $1 hanya dapat berisi judul halaman wiki yang telah ada.",
 	"validator-list-error-must-be-float": "Parameter $1 hanya dapat berisi angka kambang.",
 	"validator_list_error_invalid_range": "Semua nilai parameter $1 harus antara $2 dan $3.",
 	"validator-list-error-invalid-regex": "Semua nilai parameter $1 harus sesuai dengan persamaan reguler: $2.",
@@ -78,5 +92,6 @@
 	"validator-list-error-accepts-only-omitted": "Satu atau lebih nilai untuk parameter $1 tidak sah. Parameter itu hanya menerima {{PLURAL:$3|nilai berikut|nilai berikut}}: $2 (dan $4 {{PLURAL:$4|nilai|nilai}} yang diabaikan).",
 	"validator_error_accepts_only": "Nilai \"$4\" tidak sah untuk parameter $1. Nilai yang diterima hanyalah {{PLURAL:$3|nilai ini|nilai-nilai ini}}: $2.",
 	"validator-error-accepts-only-omitted": "Nilai \"$2\" tidak sah untuk parameter $1. Parameter itu hanya menerima {{PLURAL:$5|nilai berikut|nilai berikut}}: $3 (dan $4 {{PLURAL:$4|nilai|nilai}} yang diabaikan).",
-	"validator_list_omitted": "{{PLURAL:$2|Nilai|Nilai}} $1 {{PLURAL:$2|telah|telah}} dihapus."
+	"validator_list_omitted": "{{PLURAL:$2|Nilai|Nilai}} $1 {{PLURAL:$2|telah|telah}} dihapus.",
+	"validator-message-nodesc": "Tidak ada deskripsi yang diberikan"
 }

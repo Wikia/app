@@ -12,8 +12,6 @@ use Wikia\SwiftStorage;
 class Starters {
 
 	const STARTER_DUMPS_BUCKET = 'starter';
-	// TODO Clean up in XW-2393
-	const STARTER_EN_TV = 'secondaryczechlab';
 
 	/**
 	 * starters map: langcode => database name
@@ -25,8 +23,6 @@ class Starters {
 		'cs' => 'aastarter3',
 		'de' => 'destarter',
 		'en' => 'starter',
-		// It's required here for dumpStarters.php
-		'en:tv' => self::STARTER_EN_TV,
 		'el' => 'aastarter6',
 		'es' => 'esstarter',
 		'fi' => 'fistarter',
@@ -52,22 +48,15 @@ class Starters {
 	];
 
 	/**
-	 * Get the starter database for a given language code and vertical
+	 * Get the starter database for a given language code
 	 *
 	 * @param string $lang language code
-	 * @param int $vertical vertical id
-	 *
 	 * @return string
 	 */
-	public static function getStarterByLanguageAndVertical( $lang, int $vertical ) {
-		// TODO Clean up in XW-2393
-		if ( $vertical === \WikiFactoryHub::VERTICAL_ID_TV && $lang === 'en' ) {
-			return self::STARTER_EN_TV;
-		} else {
-			return ( isset( self::$mStarters[ $lang ] ) )
-				? self::$mStarters[ $lang ]
-				: self::$mStarters[ '*' ];
-		}
+	public static function getStarterByLanguage( $lang ) {
+		return ( isset( self::$mStarters[ $lang ] ) )
+			? self::$mStarters[ $lang ]
+			: self::$mStarters[ '*' ];
 	}
 
 	/**

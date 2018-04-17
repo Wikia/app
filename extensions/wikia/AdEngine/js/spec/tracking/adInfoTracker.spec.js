@@ -4,6 +4,11 @@ describe('ext.wikia.adEngine.tracking.adInfoTracker', function () {
 	function noop() {}
 
 	var mocks = {
+		adEngineBridge: {
+			getSamplingResults: function () {
+				return [];
+			}
+		},
 		adTracker: {
 			trackDW: function () {
 				return {};
@@ -31,7 +36,12 @@ describe('ext.wikia.adEngine.tracking.adInfoTracker', function () {
 					scrollHeight: 500
 				}
 			},
-			pvUID: 'foo-xxx-bar'
+			pvUID: 'foo-xxx-bar',
+			performance: {
+				timing: {
+					connectStart: 1234
+				}
+			}
 		},
 		log: noop
 	};
@@ -39,6 +49,7 @@ describe('ext.wikia.adEngine.tracking.adInfoTracker', function () {
 	function getModule() {
 		return modules['ext.wikia.adEngine.tracking.adInfoTracker'](
 			mocks.adTracker,
+			mocks.adEngineBridge,
 			mocks.slotRegistry,
 			mocks.pageLayout,
 			mocks.browserDetect,
@@ -96,6 +107,61 @@ describe('ext.wikia.adEngine.tracking.adInfoTracker', function () {
 		expect(trackedData.kv_rv).toBe('2');
 		expect(trackedData.kv_wsi).toBe('ofa1');
 		expect(trackedData.kv_abi).toBe('50_1');
+	});
+
+	it('tracks only first one pos parameter (for string pos)', function () {
+		spyOn(mocks.adTracker, 'trackDW');
+		getModule().track('FOO', {}, {
+			pos: 'FIRST,SECOND',
+		});
+
+		var trackedData = mocks.adTracker.trackDW.calls.mostRecent().args[0];
+
+		expect(trackedData.kv_pos).toBe('FIRST');
+	});
+
+	it('tracks single pos correctly ', function () {
+		spyOn(mocks.adTracker, 'trackDW');
+		getModule().track('FOO', {}, {
+			pos: 'ONLY_ONE',
+		});
+
+		var trackedData = mocks.adTracker.trackDW.calls.mostRecent().args[0];
+
+		expect(trackedData.kv_pos).toBe('ONLY_ONE');
+	});
+
+	it('tracks undefined pos correctly', function () {
+		spyOn(mocks.adTracker, 'trackDW');
+		getModule().track('FOO', {}, {
+			pos: undefined,
+		});
+
+		var trackedData = mocks.adTracker.trackDW.calls.mostRecent().args[0];
+
+		expect(trackedData.kv_pos).toBe('');
+	});
+
+	it('tracks first element of pos array', function () {
+		spyOn(mocks.adTracker, 'trackDW');
+		getModule().track('FOO', {}, {
+			pos: ['FIRST', 'SECOND'],
+		});
+
+		var trackedData = mocks.adTracker.trackDW.calls.mostRecent().args[0];
+
+		expect(trackedData.kv_pos).toBe('FIRST');
+	});
+
+	it('handle case where input pos is not string', function () {
+		spyOn(mocks.adTracker, 'trackDW');
+		getModule().track('FOO', {}, {
+			pos: null,
+		});
+
+		var trackedData = mocks.adTracker.trackDW.calls.mostRecent().args[0];
+
+		expect(trackedData.kv_pos).toBe('');
 	});
 
 	it('track data with page layout', function () {

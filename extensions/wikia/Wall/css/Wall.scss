@@ -359,7 +359,6 @@ html>body #Wall .new-reply .speech-bubble-avatar { *position: absolute; *left:-9
 		}
 		.speech-bubble-buttons {
 			@include clearfix;
-			display: none;
 		}
 	}
 

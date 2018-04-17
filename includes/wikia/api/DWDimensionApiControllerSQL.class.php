@@ -25,13 +25,14 @@ class DWDimensionApiControllerSQL {
       LIMIT $limit';
 
 
-    const DIMENSION_WIKI_ARTICLES_QUERY = '
+    const DIMENSION_ALL_ARTICLES = '
         SELECT
             page_wikia_id AS wiki_id,
             page_namespace AS namespace_id,
             page_id AS article_id,
             page_title AS title,
-            page_is_redirect AS is_redirect
+            page_is_redirect AS is_redirect,
+            page_created_at AS created_at
         FROM 
             pages
         WHERE
@@ -54,22 +55,6 @@ class DWDimensionApiControllerSQL {
 		WHERE user_id > $user_id
 		ORDER BY user_id      
 		LIMIT $limit';
-
-	const DIMENSION_WIKI_EMBEDS = '
-		SELECT
-			il.il_from AS article_id,
-			v.video_title,
-			v.added_at,
-			v.added_by,
-			v.duration,
-			v.premium,
-			v.hdfile,
-			v.removed,
-			v.views_30day,
-			v.views_total
-		FROM imagelinks il
-		JOIN video_info v
-		ON v.video_title = il.il_to';
 
 	const DIMENSION_WIKI_IMAGES = '
 		SELECT

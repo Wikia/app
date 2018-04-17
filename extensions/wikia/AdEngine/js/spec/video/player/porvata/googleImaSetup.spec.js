@@ -25,11 +25,6 @@ describe('ext.wikia.adEngine.video.player.porvata.googleImaSetup', function () {
 					return MEGA_AD_UNIT;
 				}
 			},
-			sourcePoint: {
-				getSafeUri: function (url) {
-					return url;
-				}
-			},
 			win: {
 				google: {
 					ima: {
@@ -48,7 +43,6 @@ describe('ext.wikia.adEngine.video.player.porvata.googleImaSetup', function () {
 			mocks.context,
 			mocks.megaAdUnitBuilder,
 			vastUrlBuilder,
-			mocks.sourcePoint,
 			mocks.browserDetect,
 			mocks.log,
 			mocks.win

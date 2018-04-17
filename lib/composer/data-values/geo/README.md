@@ -51,7 +51,7 @@ These are simple value objects. They all implement the <code>DataValues\DataValu
 These turn value objects into string representations.
 They all implement the <code>ValueFormatters\ValueFormatter</code> interface.
 
-* <code>GeoCoordinateFormatter</code> - Formats a LatLongValue into float, decimal minute,
+* <code>LatLongFormatter</code> - Formats a LatLongValue into float, decimal minute,
 decimal degree or degree minute second notation. Both directional and non-directional notation
 are supported. Directional labels, latitude-longitude separator and precision can be specified.
 * <code>GlobeCoordinateFormatter</code> - Formats a GlobeCoordinateValue.
@@ -70,7 +70,7 @@ Simple parsers:
 
 Composite parsers:
 
-* <code>GeoCoordinateParser</code> - Facade for DdCoordinateParser, DmCoordinateParser, DmsCoordinateParser
+* <code>LatLongParser</code> - Facade for DdCoordinateParser, DmCoordinateParser, DmsCoordinateParser
 and FloatCoordinateParser. Parses a coordinate in any of the notations supported by these parsers
 into a LatLongValue object. Both directional and non-directional notation are supported. Directional
 labels and the latitude-longitude separator can be specified.
@@ -92,6 +92,53 @@ It is based upon and contains a lot of code written by [Jeroen De Dauw]
 [Semantic MediaWiki](https://semantic-mediawiki.org/) projects.
 
 ## Release notes
+
+### 2.1.1 (2017-08-09)
+
+* Allow use with ~0.4.0 of DataValues/Common
+
+### 2.1.0 (2017-08-09)
+
+* Remove MediaWiki integration
+* Make use of the …::class feature
+* Add .gitattributes to exclude not needed files from git exports
+* Use Wikibase CodeSniffer instead of Mediawiki's
+* Move to short array syntax
+
+### 2.0.1 (2017-06-26)
+
+* Fixed `GlobeCoordinateValue::newFromArray` and `LatLongValue::newFromArray` not accepting mixed
+  values.
+* Deprecated `GlobeCoordinateValue::newFromArray` and `LatLongValue::newFromArray`.
+* Updated minimal required PHP version from 5.3 to 5.5.9.
+
+### 2.0.0 (2017-05-09)
+
+* `GlobeCoordinateValue` does not accept empty strings as globes any more.
+* `GlobeCoordinateValue` does not accept precisions outside the [-360..+360] interval any more.
+* Changed hash calculation of `GlobeCoordinateValue` in an incompatible way.
+* Renamed `GeoCoordinateFormatter` to `LatLongFormatter`, leaving a deprecated alias.
+* Renamed `GeoCoordinateParser` to `LatLongParser`, leaving a deprecated alias.
+* Renamed `GeoCoordinateParserBase` to `LatLongParserBase`.
+* Deprecated `LatLongParser::areCoordinates`.
+
+### 1.2.2 (2017-03-14)
+
+* Fixed multiple rounding issues in `GeoCoordinateFormatter`.
+
+### 1.2.1 (2016-12-16)
+
+* Fixed another IEEE issue in `GeoCoordinateFormatter`.
+
+### 1.2.0 (2016-11-11)
+
+* Added missing inline documentation to public methods and constants.
+* Added a basic PHPCS rule set, can be run with `composer phpcs`.
+
+### 1.1.8 (2016-10-12)
+
+* Fixed an IEEE issue in `GeoCoordinateFormatter`
+* Fixed a PHP 7.1 compatibility issue in a test
 
 ### 1.1.7 (2016-05-25)
 

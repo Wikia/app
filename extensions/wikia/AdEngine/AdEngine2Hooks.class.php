@@ -33,25 +33,30 @@ class AdEngine2Hooks {
 	 */
 	public static function onInstantGlobalsGetVariables( array &$vars ) {
 		$vars[] = 'wgAdDriverAbTestIdTargeting';
-		$vars[] = 'wgAdDriverAdProductsBridgeCountries';
-		$vars[] = 'wgAdDriverAdProductsBridgeMobileCountries';
 		$vars[] = 'wgAdDriverAolBidderCountries';
 		$vars[] = 'wgAdDriverAolOneMobileBidderCountries';
 		$vars[] = 'wgAdDriverAppNexusAstBidderCountries';
 		$vars[] = 'wgAdDriverAppNexusBidderCountries';
+		$vars[] = 'wgAdDriverAppNexusWebAdsBidderCountries';
 		$vars[] = 'wgAdDriverAudienceNetworkBidderCountries';
 		$vars[] = 'wgAdDriverA9BidderCountries';
 		$vars[] = 'wgAdDriverA9VideoBidderCountries';
 		$vars[] = 'wgAdDriverBabDetectionDesktopCountries';
 		$vars[] = 'wgAdDriverBabDetectionMobileCountries';
+		$vars[] = 'wgAdDriverBabRecoveryCountries';
 		$vars[] = 'wgAdDriverBeachfrontBidderCountries';
+		$vars[] = 'wgAdDriverBottomLeaderBoardMegaCountries';
+		$vars[] = 'wgAdDriverBottomLeaderBoardViewportCountries';
 		$vars[] = 'wgAdDriverDelayCountries';
 		$vars[] = 'wgAdDriverDelayTimeout';
 		$vars[] = 'wgAdDriverDisableSraCountries';
-		$vars[] = 'wgAdDriverDisableBadgeAdCountries';
 		$vars[] = 'wgAdDriverEvolve2Countries';
 		$vars[] = 'wgAdDriverFMRLogisticRegressionRabbitCountries';
 		$vars[] = 'wgAdDriverFMRPassiveAggressiveClassifierRabbitCountries';
+		$vars[] = 'wgAdDriverFVAsUapKeyValueCountries';
+		$vars[] = 'wgAdDriverFVDelayCountries';
+		$vars[] = 'wgAdDriverFVDelayTimeoutOasis';
+		$vars[] = 'wgAdDriverFVDelayTimeoutMobileWiki';
 		$vars[] = 'wgAdDriverFVMidrollCountries';
 		$vars[] = 'wgAdDriverFVPostrollCountries';
 		$vars[] = 'wgAdDriverHighImpactSlotCountries';
@@ -63,12 +68,12 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverKikimoraViewabilityTrackingCountries';
 		$vars[] = 'wgAdDriverKruxCountries';
 		$vars[] = 'wgAdDriverKILOCountries';
-		$vars[] = 'wgAdDriverLBScrollExperimentCountires';
-		$vars[] = 'wgAdDriverLBScrollExperimentBucket';
+		$vars[] = 'wgAdDriverLABradorTestCountries';
 		$vars[] = 'wgAdDriverMEGACountries';
 		$vars[] = 'wgAdDriverMegaAdUnitBuilderForFVCountries';
 		$vars[] = 'wgAdDriverMoatTrackingForFeaturedVideoAdCountries';
 		$vars[] = 'wgAdDriverMoatTrackingForFeaturedVideoAdSampling';
+		$vars[] = 'wgAdDriverN1DecisionTreeClassifierRabbitCountries';
 		$vars[] = 'wgAdDriverN1LogisticRegressionRabbitCountries';
 		$vars[] = 'wgAdDriverNetzAthletenCountries';
 		$vars[] = 'wgAdDriverOpenXPrebidBidderCountries';
@@ -81,14 +86,13 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverPorvataMoatTrackingSampling';
 		$vars[] = 'wgAdDriverPrebidBidderCountries';
 		$vars[] = 'wgAdDriverPubMaticBidderCountries';
+		$vars[] = 'wgAdDriverRabbitTargetingKeyValues';
 		$vars[] = 'wgAdDriverRubiconDisplayPrebidCountries';
 		$vars[] = 'wgAdDriverRubiconPrebidCountries';
+		$vars[] = 'wgAdDriverRubiconVideoInFeaturedVideoCountries';
 		$vars[] = 'wgAdDriverScrollDepthTrackingCountries';
-		$vars[] = 'wgAdDriverSourcePointDetectionCountries';
-		$vars[] = 'wgAdDriverSourcePointDetectionMobileCountries';
 		$vars[] = 'wgAdDriverSrcPremiumCountries';
 		$vars[] = 'wgAdDriverTurtleCountries';
-		$vars[] = 'wgPorvataVastLoggerConfig';
 
 		/**
 		 * Disaster Recovery
@@ -109,6 +113,9 @@ class AdEngine2Hooks {
 	 */
 	public static function onInstantGlobalsGetNewsAndStoriesVariables( array &$vars ) {
 		// shared variables with communities
+		$vars[] = 'wgAdDriverBottomLeaderBoardMegaCountries';
+		$vars[] = 'wgAdDriverFVAsUapKeyValueCountries';
+		$vars[] = 'wgAdDriverFVDelayCountries';
 		$vars[] = 'wgAdDriverKikimoraPlayerTrackingCountries';
 		$vars[] = 'wgAdDriverKikimoraTrackingCountries';
 		$vars[] = 'wgAdDriverKikimoraViewabilityTrackingCountries';
@@ -121,15 +128,11 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverVideoMoatTrackingSampling';
 		$vars[] = 'wgAdDriverVideoPostrollCountries';
 
-		// TODO: Remove after src=[gpt,ns] is finished
-		$vars[] = 'wgAdDriverNewsAndStoriesSingleSrcKeyValueCountries';
-		$vars[] = 'wgAdDriverNewsAndStoriesSrcKeyValueCountries';
-
 		// news&stories variables only
 		$vars[] = 'wgAdDriverF2BabDetectionCountries';
+		$vars[] = 'wgAdDriverF2DelayTimeout';
 		$vars[] = 'wgAdDriverF2InstartLogicRecoveryCountries';
-		$vars[] = 'wgAdDriverF2MEGAVideosCountries';
-		$vars[] = 'wgAdDriverF2OoyalaPosKeyValueCountries';
+		$vars[] = 'wgAdDriverLABradorTestF2Countries';
 
 		return true;
 	}
@@ -160,8 +163,6 @@ class AdEngine2Hooks {
 		// Legacy vars:
 		// Queue for ads registration
 		$vars['adslots2'] = [ ];
-		// Used to hop by DART ads
-		$vars['adDriverLastDARTCallNoAds'] = [ ];
 		// 3rd party code (eg. dart collapse slot template) can force AdDriver2 to respect unusual slot status
 		$vars['adDriver2ForcedStatus'] = [ ];
 

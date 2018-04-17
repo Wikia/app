@@ -2,6 +2,7 @@
 @import '/extensions/wikia/DesignSystem/bower_components/design-system/dist/css/styles.css';
 @import '../bower_components/design-system/dist/scss/wds-variables/index';
 @import 'skins/oasis/css/core/breakpoints-variables';
+@import 'DesignSystemGlobalFooter';
 
 // Legacy notification styles - copied here from original GlobalNavigation extension
 @import 'GlobalNavigationNotifications';
@@ -88,5 +89,16 @@ $global-navigation-z-index: 5000101;
 		.wds-global-footer {
 			width: $content-width-small;
 		}
+	}
+}
+
+/* MAIN-12770: harmonize DS buttons with older ones */
+.wds-button {
+	background-image: none;
+	border-radius: 0;
+	font-family: inherit;
+
+	&:hover {
+		background-image: none;
 	}
 }

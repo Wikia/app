@@ -4,10 +4,10 @@
  */
 namespace Wikia\Search;
 
-use Wikia\Search\MediaWikiService, Wikia\Search\Match;
-use Wikia\Search\TestProfile\Base as BaseProfile;
+use Solarium_Query_Select;
+use Wikia\Search\Match;
 use Wikia\Search\Query\Select as Query;
-use Solarium_Query_Select, Wikia\Search\Traits\ArrayConfigurableTrait;
+use Wikia\Search\Traits\ArrayConfigurableTrait;
 
 /**
  * A config class intended to handle variable flags for search
@@ -40,7 +40,6 @@ class Config {
 	 */
 	const FILTER_VIDEO = 'is_video';
 	const FILTER_IMAGE = 'is_image';
-	const FILTER_HD = 'is_hd';
 	const FILTER_CAT_VIDEOGAMES = 'cat_videogames';
 	const FILTER_CAT_ENTERTAINMENT = 'cat_entertainment';
 	const FILTER_CAT_LIFESTYLE = 'cat_lifestyle';
@@ -246,7 +245,6 @@ class Config {
 	protected $publicFilterKeys = [
 		self::FILTER_VIDEO,
 		self::FILTER_IMAGE,
-		self::FILTER_HD,
 		self::FILTER_CAT_VIDEOGAMES,
 		self::FILTER_CAT_ENTERTAINMENT,
 		self::FILTER_CAT_LIFESTYLE,
@@ -262,7 +260,6 @@ class Config {
 	protected $filterCodes = [
 		self::FILTER_VIDEO => '(is_video:true AND -is_image:true)',
 		self::FILTER_IMAGE => '(is_image:true AND -is_video:true)',
-		self::FILTER_HD => 'video_hd_b:true',
 	];
 
 	/**
@@ -850,15 +847,11 @@ class Config {
 	 * @return string
 	 */
 	protected function bootstrapQueryService() {
-		$service = 'Select\\Dismax\\OnWiki';
-		if ( $this->getWikiId() == \Wikia\Search\QueryService\Select\Dismax\Video::VIDEO_WIKI_ID ) {
-			$service = 'Select\\Dismax\\Video';
-		}
 		if ( \WikiaPageType::isCorporatePage() ) {
-			$service = 'Select\\Dismax\\InterWiki';
+			return 'Select\\Dismax\\InterWiki';
 		}
 
-		return $service;
+		return 'Select\\Dismax\\OnWiki';
 	}
 
 	/**
@@ -961,28 +954,6 @@ class Config {
 	 */
 	public function setCrossWikiLuceneQuery( $apply ) {
 		return $this->setQueryService( 'Select\\Lucene\\CrossWikiLucene', $apply );
-	}
-
-	/**
-	 * Sets or unsets VideoTitle as our query service
-	 *
-	 * @param bool $apply
-	 *
-	 * @return Config
-	 */
-	public function setVideoTitleSearch( $apply ) {
-		return $this->setQueryService( 'Select\\Dismax\\VideoTitle', $apply );
-	}
-
-	/**
-	 * Sets or unsets VideoContent as our query service
-	 *
-	 * @param bool $apply
-	 *
-	 * @return Config
-	 */
-	public function setVideoContentSearch( $apply ) {
-		return $this->setQueryService( 'Select\\Dismax\\VideoContent', $apply );
 	}
 
 	/**
@@ -1292,12 +1263,7 @@ class Config {
 		$publicKeys = $this->publicFilterKeys;
 		$filterKeys = array_keys( $this->filterQueries );
 
-		return array_filter(
-			$filterKeys,
-			function ( $key ) use ( $publicKeys ) {
-				return in_array( $key, $publicKeys );
-			}
-		);
+		return array_intersect( $filterKeys, $publicKeys );
 	}
 
 	/**
@@ -1452,9 +1418,9 @@ class Config {
 	 *
 	 * @return \Wikia\Search\MediaWikiService
 	 */
-	protected function getService() {
+	protected function getService(): MediaWikiService {
 		if ( $this->service === null ) {
-			$this->service = ( new \Wikia\Search\ProfiledClassFactory )->get( 'Wikia\Search\MediaWikiService' );
+			$this->service = new MediaWikiService();
 		}
 
 		return $this->service;

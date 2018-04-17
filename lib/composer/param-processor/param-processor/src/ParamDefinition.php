@@ -68,7 +68,7 @@ class ParamDefinition implements IParamDefinition {
 	 *
 	 * @since 1.0
 	 *
-	 * @var array
+	 * @var string[]
 	 */
 	protected $dependencies = [];
 
@@ -107,7 +107,7 @@ class ParamDefinition implements IParamDefinition {
 	 *
 	 * @since 1.0
 	 *
-	 * @var array
+	 * @var string[]
 	 */
 	protected $aliases = [];
 
@@ -205,7 +205,7 @@ class ParamDefinition implements IParamDefinition {
 	 *
 	 * @since 1.0
 	 *
-	 * @return array
+	 * @return string[]
 	 */
 	public function getAliases() {
 		return $this->aliases;
@@ -238,18 +238,19 @@ class ParamDefinition implements IParamDefinition {
 	}
 
 	/**
-	 * Returns the list of allowed values, or false if there is no such restriction.
+	 * Returns the list of allowed values, or an empty array if there is no such restriction.
 	 *
 	 * @since 1.0
 	 *
-	 * @return array|boolean false
+	 * @return array
 	 */
 	public function getAllowedValues() {
 		$allowedValues = [];
 
 		if ( $this->validator !== null && method_exists( $this->validator, 'getWhitelistedValues' ) ) {
-			// TODO: properly implement this
-			$this->validator->setOptions( $this->options );
+			if ( method_exists( $this->validator, 'setOptions' ) ) {
+				$this->validator->setOptions( $this->options );
+			}
 
 			$allowedValues = $this->validator->getWhitelistedValues();
 
@@ -334,7 +335,7 @@ class ParamDefinition implements IParamDefinition {
 	 *
 	 * @since 1.0
 	 *
-	 * @param mixed $aliases string or array of string
+	 * @param string|string[] $aliases
 	 */
 	public function addAliases( $aliases ) {
 		$args = func_get_args();
@@ -346,7 +347,7 @@ class ParamDefinition implements IParamDefinition {
 	 *
 	 * @since 1.0
 	 *
-	 * @param mixed $dependencies string or array of string
+	 * @param string|string[] $dependencies
 	 */
 	public function addDependencies( $dependencies ) {
 		$args = func_get_args();
@@ -386,7 +387,7 @@ class ParamDefinition implements IParamDefinition {
 	 *
 	 * @since 1.0
 	 *
-	 * @return array
+	 * @return string[]
 	 */
 	public function getDependencies() {
 		return $this->dependencies;

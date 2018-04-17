@@ -25,8 +25,8 @@
  * over to the tryUISubmit static method of this class.
  */
 
+use Wikia\Factory\ServiceFactory;
 use Wikia\Logger\WikiaLogger;
-use Wikia\DependencyInjection\Injector;
 use Wikia\Service\User\Preferences\Migration\PreferenceScopeService;
 
 class Preferences {
@@ -40,11 +40,8 @@ class Preferences {
 		'searchlimit' => array( 'Preferences', 'filterIntval' ),
 	);
 
-	/**
-	 * @return PreferenceScopeService
-	 */
-	static function preferenceScope() {
-		return Injector::getInjector()->get( PreferenceScopeService::class );
+	static function preferenceScope(): PreferenceScopeService {
+		return ServiceFactory::instance()->preferencesFactory()->scopeService();
 	}
 
 	/**

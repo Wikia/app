@@ -50,7 +50,7 @@
 			// Clear the statically-added blackout
 			$('.lightbox-beforejs-blackout').remove();
 
-			// Allow other extensions to react when a Lightbox is opened.  Used in FilePage and VideoPageTool
+			// Allow other extensions to react when a Lightbox is opened.  Used in FilePage
 			$(window).trigger('lightboxOpened');
 
 			// if we don't have latest photos in the DOM, request them from back end

@@ -33,9 +33,6 @@ class BlogListingController extends WikiaController {
 
 		// macbre: prevent PHP warnings and try to find the reason of them
 		if (!is_array($posts)) {
-			$url = wfGetCurrentUrl();
-			Wikia::log(__METHOD__, false, "\$posts is not an array - {$url['url']}", true);
-
 			wfProfileOut(__METHOD__);
 			return true;
 		}

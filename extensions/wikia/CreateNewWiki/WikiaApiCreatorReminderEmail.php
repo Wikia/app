@@ -28,8 +28,7 @@ class WikiaApiCreatorReminderEmail extends ApiBase {
 	 */
 	public function execute() {
 
-		global $wgTheSchwartzSecretToken, $wgCityId, $wgServer,
-			$wgExtensionMessagesFiles;
+		global $wgTheSchwartzSecretToken, $wgCityId, $wgScriptPath, $wgServer;
 
 		$params = $this->extractRequestParams();
 		$status = 0;
@@ -52,11 +51,11 @@ class WikiaApiCreatorReminderEmail extends ApiBase {
 	      			if( $founder && $founder->isEmailConfirmed() ) {
 				if( $founder->sendMail(
 					wfMsg( "autocreatewiki-reminder-subject" ),
-					wfMsg( "autocreatewiki-reminder-body", array( $founder->getName(), $wgServer ) ),
+					wfMsg( "autocreatewiki-reminder-body", array( $founder->getName(), $wgServer . $wgScriptPath ) ),
 					null /*from*/,
 					null /*replyto*/,
 					"AutoCreateWikiReminder",
-					wfMsg( "autocreatewiki-reminder-body-HTML", array( $founder->getName(), $wgServer ) )
+					wfMsg( "autocreatewiki-reminder-body-HTML", array( $founder->getName(), $wgServer . $wgScriptPath ) )
 				) ) {
 					$status = 1;
 				}

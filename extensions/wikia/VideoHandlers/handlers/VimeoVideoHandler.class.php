@@ -10,10 +10,6 @@ class VimeoVideoHandler extends VideoHandler {
 	protected static $autoplayParam = "autoplay";
 	protected static $autoplayValue = "1";
 
-	public function getPlayerAssetUrl() {
-		return '';
-	}
-
 	public function getGoogleSitemapCustomVideoUrl() {
 		return str_replace('$1', $this->getEmbedVideoId(), $this->googleSitemapCustomVideoUrl);
 	}

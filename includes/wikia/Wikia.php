@@ -64,6 +64,7 @@ $wgHooks['WikiaSkinTopScripts'][] = 'Wikia::onWikiaSkinTopScripts';
 
 # handle internal requests - PLATFORM-1473
 $wgHooks['WebRequestInitialized'][] = 'Wikia::onWebRequestInitialized';
+$wgHooks['WebRequestInitialized'][] = 'Wikia::outputHTTPSHeaders';
 
 # Log user email changes
 $wgHooks['BeforeUserSetEmail'][] = 'Wikia::logEmailChanges';
@@ -1142,11 +1143,11 @@ class Wikia {
 	}
 
 	static public function getEnvironmentRobotPolicy(WebRequest $request) {
-		global $wgDevelEnvironment, $wgStagingEnvironment, $wgDefaultRobotPolicy;
+		global $wgDefaultRobotPolicy;
 
 		$policy = '';
 
-		if( !empty( $wgDevelEnvironment ) || !empty( $wgStagingEnvironment ) ) {
+		if ( !Wikia::isProductionEnv() ) {
 			$policy = $wgDefaultRobotPolicy;
 		}
 
@@ -1239,6 +1240,23 @@ class Wikia {
 			$request->response()->header( 'X-Wikia-Is-Internal-Request: ' . $requestSource );
 		}
 
+		return true;
+	}
+
+	/**
+	 * Output HTTPS-specific headers like CSP or Strict-Transport-Security.
+	 *
+	 * @param WebRequest $request
+	 * @return bool true, it's a hook
+	 */
+	static public function outputHTTPSHeaders( WebRequest $request ) {
+		if ( WebRequest::detectProtocol() === 'https' ) {
+			$urlProvider = new \Wikia\Service\Gateway\KubernetesExternalUrlProvider();
+			$request->response()->header("Content-Security-Policy-Report-Only: " .
+				"default-src https: 'self' data: blob:; " .
+				"script-src https: 'self' data: 'unsafe-inline' 'unsafe-eval' blob:; " .
+				"style-src https: 'self' 'unsafe-inline' blob:; report-uri " . $urlProvider->getUrl( 'csp-logger' ) . '/csp' );
+		}
 		return true;
 	}
 
@@ -1414,25 +1432,19 @@ class Wikia {
 			return true;
 		}
 
-		// validate an image using ImageMagick
+		// SUS-4525 | validate an image using GD library (this is NOT a security check!)
 		$imageFile = $upload->getTempPath();
 
-		$output = wfShellExec("identify -regard-warnings {$imageFile} 2>&1", $retVal);
-		wfDebug("Exit code #{$retVal}\n{$output}\n");
+		// avoid emitting "Notice: getimagesize(): Read error!"
+		$imageInfo = @getimagesize($imageFile);
 
-		/**
-		 * Let's ignore warnings reported by "identify" binary and focus on errors, examples:
-		 *
-		 * identify: Ignoring attempt to set negative chromaticity value `/tmp/Gree.png' @ warning/png.c/MagickPNGWarningHandler/1671.
-		 * identify.im6: no decode delegate for this image format `/tmp/UploadTestExwn06' @ error/constitute.c/ReadImage/544.
-		 *
-		 * @see SUS-1625
-		 */
-		$isValid = strpos( $output, ' @ error/' ) === false; /* no errors reported */
+		// MIME type should match
+		$isValid = is_array( $imageInfo ) && ( $imageInfo['mime'] === $mime );
 
 		if (!$isValid) {
 			Wikia\Logger\WikiaLogger::instance()->warning( __METHOD__ . ' failed', [
-				'output' => rtrim($output),
+				'output' => json_encode($imageInfo),
+				'mime_type' => $mime,
 			] );
 
 			// pass an error to UploadBase class
@@ -1902,4 +1914,13 @@ class Wikia {
 		CeleryPurge::purgeBySurrogateKey( $key );
 	}
 
+	public static function isProductionEnv(): bool {
+		global $wgWikiaEnvironment;
+		return $wgWikiaEnvironment === WIKIA_ENV_PROD;
+	}
+
+	public static function isDevEnv(): bool {
+		global $wgWikiaEnvironment;
+		return $wgWikiaEnvironment === WIKIA_ENV_DEV;
+	}
 }

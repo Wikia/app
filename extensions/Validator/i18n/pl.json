@@ -5,7 +5,8 @@
 			"Fizykaa",
 			"Matma Rex",
 			"Sp5uhe",
-			"Woytecr"
+			"Woytecr",
+			"Chrumps"
 		]
 	},
 	"validator-desc": "Dostarcza innym rozszerzeniom ogólną obsługę parametrów",
@@ -25,6 +26,7 @@
 	"validator-type-float": "liczba rzeczywista",
 	"validator-type-boolean": "tak lub nie",
 	"validator-type-char": "znak",
+	"validator-type-dimension": "liczba i jednostka miary",
 	"validator-type-title": "tytuł",
 	"validator-type-string-list": "lista ciągów znaków",
 	"validator-type-integer-list": "lista liczb całkowitych",

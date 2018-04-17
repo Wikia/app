@@ -2,7 +2,7 @@
 
 namespace Wikia\Service\User\Permissions;
 
-use Wikia\DependencyInjection\Injector;
+use Wikia\Factory\ServiceFactory;
 
 trait PermissionsServiceAccessor {
 
@@ -16,7 +16,7 @@ trait PermissionsServiceAccessor {
 	 */
 	protected function permissionsService() {
 		if ( is_null( $this->permissionsService ) ) {
-			$this->permissionsService = Injector::getInjector()->get( PermissionsService::class );
+			$this->permissionsService = ServiceFactory::instance()->permissionsFactory()->permissionsService();
 		}
 
 		return $this->permissionsService;

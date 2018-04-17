@@ -73,9 +73,11 @@ class CuratedContentHooks {
 	}
 
 	public static function onBeforePrepareActionButtons( $actionButton, &$contentActions ) {
+		global $wgScriptPath;
+
 		if ( CuratedContentHelper::shouldDisplayToolButton() ) {
 			$contentActions['edit-mobile-main-page'] = [
-				'href' => '/main/edit?useskin=wikiamobile',
+				'href' => $wgScriptPath . '/main/edit?useskin=wikiamobile',
 				'text' => wfMessage( 'page-header-action-button-edit-mobile-main-page' )->text(),
 				'id' => 'CuratedContentTool'
 			];

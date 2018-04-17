@@ -45,9 +45,6 @@ $wgAutoloadClasses['PrefilledDefaultQuestion'] = dirname( __FILE__ ) . "/Prefill
 $wgAutoloadClasses['CreateQuestionPage'] = dirname( __FILE__ ) . "/SpecialCreateDefaultQuestionPage.php";
 $wgSpecialPages['CreateQuestionPage'] = 'CreateQuestionPage';
 
-$wgAutoloadClasses['GetQuestionWidget'] = dirname( __FILE__ ) . "/SpecialGetQuestionWidget.php";
-$wgSpecialPages['GetQuestionWidget'] = 'GetQuestionWidget';
-
 function fnWatchHeldPage( $user ){
 	global $wgOut, $wgCookiePrefix, $wgCookieDomain, $wgCookieSecure ;
 	$watch_page = isset( $_COOKIE["{$wgCookiePrefix}wsWatchHold"] ) ? $_COOKIE["{$wgCookiePrefix}wsWatchHold"] : '';
@@ -225,40 +222,6 @@ function wfGetCategoriesSuggest( $query, $limit = 5 ){
 	return json_encode( $out );
 }
 
-$wgAjaxExportList [] = 'wfGetQuestionsWidget';
-function wfGetQuestionsWidget( $title, $category, $limit = 5 ,$order = ""){
-	global $wgServer, $wgStylePath;
-
-
-	$category = urldecode( $category );
-	$category = str_replace(" ", "%20", $category );
-
-	$url = $wgServer . "/api.php?action=query&smaxage=60&list=wkpagesincat&wkcategory=$category&wklimit=$limit&wkorder=$order&format=php";
-
-	$questions = Http::get( $url );
-	$questions = unserialize( $questions );
-
-	$html = "";
-	$html .= "document.write('<link rel=\"stylesheet\" type=\"text/css\" href=\"{$wgServer}{$wgStylePath}/answers/css/widget.css\" />')\n";
-
-	$html .= "document.write('<div class=\"question_widget\" style=\"' + ((wikia_answers_width)? 'width:' + wikia_answers_width + ';':'') + ((wikia_answers_border)?'border:' + wikia_answers_border+';':'') + ((wikia_answers_background_color)?'background-color:' + wikia_answers_background_color+';':'') + '\">')\n";
-	$html .= "document.write('<div class=\"question_widget_title\"><h3>$title</h3></div>')\n";
-
-	if ( is_array( $questions ) ){
-		$html .= "document.write('<ul style=\"\">')\n";
-		foreach( $questions["query"]["wkpagesincat"] as $page ){
-			$title = Title::newFromDBkey( $page["title"] );
-			$html .= "document.write('<li><a style=\"' + ((wikia_answers_link_color)?'color:' + wikia_answers_link_color+';':'') + '\" href=\"" . $page["url"] . "\" target=\"_top\">" . str_replace("'","\'",$title->getText()) . "?</a></li>')\n";
-		}
-		$html .= "document.write('</ul>')\n";
-	}else{
-		$html .= "document.write('<div>" . wfMsg("no_questions_found") . "</div>')";
-	}
-	$html .= "document.write('<div id=\"question_widget_logo\"><a href=\"$wgServer\"><img src=\"$wgServer/skins/answers/images/wikianswers_logo.png\" border=\"0\"></a></div>')\n
-	document.write('</div>')";
-	return $html;
-
-}
 $wgAjaxExportList [] = 'wfHoldWatchForAnon';
 function wfHoldWatchForAnon( $title ){
 	global $wgCookiePrefix, $wgCookieDomain, $wgCookieSecure, $wgCookieExpiration;

@@ -1,0 +1,13 @@
+{
+  "scenarioName": "hello",
+  "request": {
+    "method": "GET",
+    "url": {
+      "isEqualTo": "/hello"
+    }
+  },
+  "response": {
+    "statusCode": 200,
+    "body": "Hello!"
+  }
+}

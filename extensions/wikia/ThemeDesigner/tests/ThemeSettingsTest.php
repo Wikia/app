@@ -154,8 +154,8 @@ class ThemeSettingsTest extends TestCase {
 	}
 
 	public function provideNotValidColorVars(): Generator {
-		$notValidColors = [ 'foo', 'bar', 'baz', 0, [] ];
-		$colorVars = array_slice( ThemeDesignerHelper::getColorVars(), 0, 5 );
+		$notValidColors = [ 'foo', 'bar', 'baz', 0 ];
+		$colorVars = array_slice( ThemeDesignerHelper::getColorVars(), 0, 2 );
 
 		foreach ( $colorVars as $varName => $defaultValue ) {
 			foreach ( $notValidColors as $colorValue ) {

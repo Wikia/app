@@ -71,7 +71,6 @@ class SiteWideMessages extends SpecialPage {
 		$formData['wikiCreationDateTwo'] = $wgRequest->getVal( 'mWikiCreationDateTwo' );
 		$formData['groupName'] = $wgRequest->getText('mGroupName');
 		$formData['groupNameS'] = $wgRequest->getText('mGroupNameS');
-		$formData[ 'powerUserType' ] = $wgRequest->getArray( 'mPowerUserType' );
 		$formData['userName'] = $wgRequest->getText('mUserName');
 		$formData['listUserNames'] = $wgRequest->getText( 'mUserNames' );
 		$formData['expireTime'] = $wgRequest->getVal('mExpireTime');
@@ -131,11 +130,6 @@ class SiteWideMessages extends SpecialPage {
 		$groupList = $wgGroupPermissions;
 		unset($groupList['*']);
 		$formData['groupNames'] = array_keys($groupList);
-
-		/**
-		 * Fetch types of power users to generate checkboxes
-		 */
-		$formData[ 'powerUserTypes' ] = \Wikia\PowerUser\PowerUser::$aPowerUserProperties;
 
 		//handle different submit buttons in one form
 		$button = $wgRequest->getVal('mAction');
@@ -320,10 +314,6 @@ class SiteWideMessages extends SpecialPage {
 		$mWikiName = $formData['wikiName'];
 		$mRecipientName = $formData['userName'];
 		$mGroupName = $formData['groupName'] == '' ? $formData['groupNameS'] : $formData['groupName'];
-		$mPowerUserType = $formData['powerUserType'];
-		if ( is_array( $mPowerUserType ) ) {
-			$mPowerUserType = implode( ',', $mPowerUserType );
-		}
 		$mSendModeWikis = $formData['sendModeWikis'];
 		$mSendModeUsers = $formData['sendModeUsers'];
 		$mHubId = $formData['hubId'];
@@ -367,41 +357,30 @@ class SiteWideMessages extends SpecialPage {
 			case 'ACTIVE':
 				$mRecipientName = '';
 				$mGroupName = '';
-				$mPowerUserType = '';
 				break;
 			case 'GROUP':
 				$mRecipientName = '';
-				$mPowerUserType = '';
-				break;
-			case 'POWERUSER':
-				$mRecipientName = '';
-				$mGroupName = '';
 				break;
 			case 'USER':
 				$mGroupName = '';
-				$mPowerUserType = '';
 				$mLang = MSG_LANG_ALL;
 				break;
 			case 'USERS':
 				$mRecipientName = count( $mUserNamesArr ) . ' users';
 				$mGroupName = '';
-				$mPowerUserType = '';
 				$mLang = MSG_LANG_ALL;
 				break;
 			case 'ANONS':
 				$mRecipientName = MSG_RECIPIENT_ANON;
 				$mGroupName = '';
-				$mPowerUserType = '';
 				break;
 			case 'REGISTRATION':
 				$mRecipientName = '';
 				$mGroupName = '';
-				$mPowerUserType = '';
 				break;
 			case 'EDITCOUNT':
 				$mRecipientName = '';
 				$mGroupName = '';
-				$mPowerUserType = '';
 				break;
 		}
 
@@ -579,7 +558,6 @@ class SiteWideMessages extends SpecialPage {
 						'sendModeUsers'	=> $mSendModeUsers,
 						'wikiName'		=> $mWikiName,
 						'groupName'		=> $mGroupName,
-						'powerUserType' => $mPowerUserType,
 						'userNames'     => $mUserNamesArr,
 						'senderId'		=> $mSender->GetID(),
 						'senderName'	=> $mSender->GetName(),
@@ -617,27 +595,11 @@ class SiteWideMessages extends SpecialPage {
 										'sendModeUsers'	=> $mSendModeUsers,
 										'wikiName'		=> $mWikiName,
 										'groupName'		=> $mGroupName,
-										'powerUserType' => $mPowerUserType,
 										'senderId'		=> $mSender->GetID(),
 										'senderName'	=> $mSender->GetName(),
 										'hubId'			=> $mHubId,
 										'clusterId'     => $mClusterId,
 									]);
-									break;
-
-								case 'POWERUSER':
-									$result[ 'taskId' ] = $this->queueTask( [
-										'messageId'		=> $result[ 'msgId' ],
-										'sendModeWikis'	=> $mSendModeWikis,
-										'sendModeUsers'	=> $mSendModeUsers,
-										'wikiName'		=> $mWikiName,
-										'groupName'		=> $mGroupName,
-										'powerUserType' => $mPowerUserType,
-										'senderId'		=> $mSender->GetID(),
-										'senderName'	=> $mSender->GetName(),
-										'hubId'			=> $mHubId,
-										'clusterId'     => $mClusterId,
-									] );
 									break;
 
 								case 'REGISTRATION':
@@ -647,7 +609,6 @@ class SiteWideMessages extends SpecialPage {
 										'sendModeUsers'	=> $mSendModeUsers,
 										'wikiName'		=> $mWikiName,
 										'groupName'		=> $mGroupName,
-										'powerUserType' => $mPowerUserType,
 										'regOption'     => $formData['registrationDateOption'],
 										'regStartDate'  => $formData['registrationDateOne'],
 										'regEndDate'    => $formData['registrationDateTwo'],
@@ -665,7 +626,6 @@ class SiteWideMessages extends SpecialPage {
 										'sendModeUsers'		=> $mSendModeUsers,
 										'wikiName'			=> $mWikiName,
 										'groupName'			=> $mGroupName,
-										'powerUserType' 	=> $mPowerUserType,
 										'editCountOption'	=> $formData['editCountOption'],
 										'editCountStart'	=> $formData['editCountOne'],
 										'editCountEnd'		=> $formData['editCountTwo'],
@@ -690,7 +650,6 @@ class SiteWideMessages extends SpecialPage {
 										'sendModeUsers'	=> $mSendModeUsers,
 										'wikiName'		=> $mWikiName,
 										'groupName'		=> $mGroupName,
-										'powerUserType' => $mPowerUserType,
 										'senderId'		=> $mSender->GetID(),
 										'senderName'	=> $mSender->GetName(),
 										'hubId'			=> $mHubId,
@@ -711,7 +670,6 @@ class SiteWideMessages extends SpecialPage {
 										'sendModeUsers'	=> $mSendModeUsers,
 										'wikiName'		=> $mWikiName,
 										'groupName'		=> $mGroupName,
-										'powerUserType' => $mPowerUserType,
 										'senderId'		=> $mSender->GetID(),
 										'senderName'	=> $mSender->GetName(),
 										'hubId'			=> $mHubId,
@@ -785,27 +743,11 @@ class SiteWideMessages extends SpecialPage {
 										'sendModeUsers'	=> $mSendModeUsers,
 										'wikiName'		=> $mWikiName,
 										'groupName'		=> $mGroupName,
-										'powerUserType' => $mPowerUserType,
 										'senderId'		=> $mSender->GetID(),
 										'senderName'	=> $mSender->GetName(),
 										'hubId'			=> $mHubId,
 										'clusterId'     => $mClusterId,
 									]);
-									break;
-
-								case 'POWERUSER':
-									$result[ 'taskId' ] = $this->queueTask( [
-										'messageId'		=> $result[ 'msgId' ],
-										'sendModeWikis'	=> $mSendModeWikis,
-										'sendModeUsers'	=> $mSendModeUsers,
-										'wikiName'		=> $mWikiName,
-										'groupName'		=> $mGroupName,
-										'powerUserType' => $mPowerUserType,
-										'senderId'		=> $mSender->GetID(),
-										'senderName'	=> $mSender->GetName(),
-										'hubId'			=> $mHubId,
-										'clusterId'     => $mClusterId,
-									] );
 									break;
 
 								case 'EDITCOUNT':
@@ -815,7 +757,6 @@ class SiteWideMessages extends SpecialPage {
 										'sendModeUsers'		=> $mSendModeUsers,
 										'wikiName'			=> $mWikiName,
 										'groupName'			=> $mGroupName,
-										'powerUserType' 	=> $mPowerUserType,
 										'editCountOption'	=> $formData['editCountOption'],
 										'editCountStart'	=> $formData['editCountOne'],
 										'editCountEnd'		=> $formData['editCountTwo'],
@@ -842,7 +783,6 @@ class SiteWideMessages extends SpecialPage {
 										'wikiName'			=> $mWikiName,
 										'wikiNames'			=> $mWikiNamesArr,
 										'groupName'			=> $mGroupName,
-										'powerUserType' 	=> $mPowerUserType,
 										'editCountOption'	=> $formData['editCountOption'],
 										'editCountStart'	=> $formData['editCountOne'],
 										'editCountEnd'		=> $formData['editCountTwo'],
@@ -869,7 +809,6 @@ class SiteWideMessages extends SpecialPage {
 										'wikiName'			=> $mWikiName,
 										'wikiNames'			=> $mWikiNamesArr,
 										'groupName'			=> $mGroupName,
-										'powerUserType' 	=> $mPowerUserType,
 										'wcOption'			=> $formData['wikiCreationDateOption'],
 										'wcStartDate'		=> $formData['wikiCreationDateOne'],
 										'wcEndDate'			=> $formData['wikiCreationDateTwo'],

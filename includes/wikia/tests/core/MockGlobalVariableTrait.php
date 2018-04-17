@@ -20,7 +20,8 @@ trait MockGlobalVariableTrait {
 	 * @param $returnValue mixed value variable should be set to
 	 */
 	protected function mockGlobalVariable( string $globalName, $returnValue ) {
-		$this->mockedGlobalVariables[$globalName] = $GLOBALS[$globalName];
+		$this->mockedGlobalVariables[$globalName] = $GLOBALS[$globalName] ?? null;
+
 		$this->setInGlobalScope( $globalName, $returnValue );
 	}
 

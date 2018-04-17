@@ -1,8 +1,5 @@
 <?php
 
-use Wikia\DependencyInjection\Injector;
-use Wikia\Service\User\Auth\CookieHelper;
-
 class Piggyback extends SpecialPage {
 	var $mAction;
 	private $logger;
@@ -92,8 +89,7 @@ class PBHooks {
 
 	public static function onUserSetCookies(User $user, $session, $cookies) {
 		if (PBLoginForm::isPiggyback()) {
-			/** @var CookieHelper $cookieHelper */
-			$cookieHelper = Injector::getInjector()->get(CookieHelper::class);
+			$cookieHelper = \Wikia\Factory\ServiceFactory::instance()->heliosFactory()->cookieHelper();
 			$response = RequestContext::getMain()->getRequest()->response();
 			$cookieHelper->setAuthenticationCookieWithUserId($user->getId(), $response);
 		}

@@ -563,13 +563,6 @@ class WallBaseController extends WikiaService {
 		$user = $this->helper->getUser();
 		$wallUsername = $user->getName();
 
-		// only use realname if user made edits (use logic from masthead)
-		$userStatsService = new UserStatsService( $user->getID() );
-		$userStats = $userStatsService->getStats();
-		if ( empty( $userStats[ 'editcount' ] ) || $userStats[ 'editcount' ] == 0 ) {
-			$wallUsername = $user->getName();
-		}
-
 		$username = $this->wg->User->getName();
 		$this->response->setVal( 'username', $username );
 		$this->response->setVal( 'wall_username', $wallUsername );

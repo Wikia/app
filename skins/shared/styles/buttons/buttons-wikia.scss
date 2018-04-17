@@ -9,10 +9,10 @@ a.wikia-button,
 .wikia-single-button a,
 .wikia-menu-button,
 input[type="submit"]:not(.wds-button),
-input[type="reset"]:not(.wds-button),
-input[type="button"]:not(.wds-button),
-.button:not(.wds-button),
-button:not(.wds-button) {
+input[type="reset"],
+input[type="button"],
+.button,
+button {
 	@include linear-gradient($color-buttons, top, $color-button-highlight, 35%, $color-buttons, 65%);
 	border: 1px solid $color-buttons;
 	border-radius: 4px;

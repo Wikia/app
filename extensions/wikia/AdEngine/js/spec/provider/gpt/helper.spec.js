@@ -106,11 +106,6 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 					};
 				}
 			},
-			geo: {
-				isProperGeo: function () {
-					return false;
-				}
-			},
 			log: noop
 		};
 
@@ -133,7 +128,6 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 			mocks.adBlockRecovery,
 			mocks.slotTweaker,
 			mocks.doc,
-			mocks.geo,
 			{},
 			mocks.log,
 			undefined,
@@ -143,7 +137,7 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 		);
 	}
 
-	function createSlot(slotName) {
+	function createSlot(slotName, disabled) {
 		return {
 			name: slotName,
 			container: mocks.slotElement,
@@ -152,6 +146,9 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 			pre: function (methodName, callback) {
 				callbacks[methodName] = [];
 				callbacks[methodName].push(callback);
+			},
+			isEnabled: function () {
+				return !disabled;
 			}
 		};
 	}
@@ -237,6 +234,15 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 
 		expect(mocks.googleTag.push).not.toHaveBeenCalled();
 		expect(mocks.googleTag.flush).toHaveBeenCalled();
+	});
+
+	it('Prevent push when given slot is disabled', function () {
+		spyOn(mocks.googleTag, 'push');
+		spyOn(mocks.googleTag, 'flush');
+
+		getModule().pushAd(createSlot('TOP_LEADERBOARD', true), '/foo/slot/path', {}, {});
+
+		expect(mocks.googleTag.push).not.toHaveBeenCalled();
 	});
 
 	it('Register slot callback on push', function () {

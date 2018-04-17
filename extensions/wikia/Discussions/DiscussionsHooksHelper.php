@@ -13,13 +13,12 @@ class DiscussionsHooksHelper {
 
 	/**
 	 * IRIS-5184: Exclude outgoing links in Forum content from Special:WantedPages report
-	 * @see WantedPagesPage::getQueryInfo()
+	 * @see WantedPagesPage::getExcludedSourceNamespaces()
 	 *
-	 * @param WantedPagesPage $wantedPagesPage
-	 * @param array $queryInfo
+	 * @param int[] $namespaces
 	 */
-	public static function onWantedPagesGetQueryInfo( $wantedPagesPage, array &$queryInfo ) {
-		$queryInfo['conds'][] = "pg2.page_namespace != '" . NS_WIKIA_FORUM_BOARD_THREAD . "'";
+	public static function onWantedPagesGetExcludedSourceNamespaces( array &$namespaces ) {
+		$namespaces[] = NS_WIKIA_FORUM_BOARD_THREAD;
 	}
 
 	/**

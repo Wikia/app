@@ -12,6 +12,7 @@ use DataValues\IllegalValueException;
  *
  * @license GPL-2.0+
  * @author Jeroen De Dauw < jeroendedauw@gmail.com >
+ * @author Thiemo Mättig
  */
 class GlobeCoordinateValue extends DataValueObject {
 
@@ -34,6 +35,9 @@ class GlobeCoordinateValue extends DataValueObject {
 	 */
 	private $globe;
 
+	/**
+	 * Wikidata concept URI for the Earth. Used as default value when no other globe was specified.
+	 */
 	const GLOBE_EARTH = 'http://www.wikidata.org/entity/Q2';
 
 	/**
@@ -43,28 +47,35 @@ class GlobeCoordinateValue extends DataValueObject {
 	 *
 	 * @throws IllegalValueException
 	 */
-	public function __construct( LatLongValue $latLong, $precision, $globe = null ) {
+	public function __construct( LatLongValue $latLong, $precision = null, $globe = null ) {
+		$this->assertIsPrecision( $precision );
+
 		if ( $globe === null ) {
 			$globe = self::GLOBE_EARTH;
+		} elseif ( !is_string( $globe ) || $globe === '' ) {
+			throw new IllegalValueException( '$globe must be a non-empty string or null' );
 		}
-
-		$this->assertIsPrecision( $precision );
-		$this->assertIsGlobe( $globe );
 
 		$this->latLong = $latLong;
 		$this->precision = $precision;
 		$this->globe = $globe;
 	}
 
-	protected function assertIsPrecision( $precision ) {
-		if ( !is_null( $precision ) && !is_float( $precision ) && !is_int( $precision ) ) {
-			throw new IllegalValueException( 'Can only construct GlobeCoordinateValue with a numeric precision or null' );
-		}
-	}
-
-	protected function assertIsGlobe( $globe ) {
-		if ( !is_string( $globe ) ) {
-			throw new IllegalValueException( 'Can only construct GlobeCoordinateValue with a string globe parameter' );
+	/**
+	 * @see LatLongValue::assertIsLatitude
+	 * @see LatLongValue::assertIsLongitude
+	 *
+	 * @param float|int|null $precision
+	 *
+	 * @throws IllegalValueException
+	 */
+	private function assertIsPrecision( $precision ) {
+		if ( $precision !== null ) {
+			if ( !is_float( $precision ) && !is_int( $precision ) ) {
+				throw new IllegalValueException( '$precision must be a number or null' );
+			} elseif ( $precision < -360 || $precision > 360 ) {
+				throw new IllegalValueException( '$precision needs to be between -360 and 360' );
+			}
 		}
 	}
 
@@ -108,10 +119,6 @@ class GlobeCoordinateValue extends DataValueObject {
 	}
 
 	/**
-	 * Returns the latitude.
-	 *
-	 * @since 0.1
-	 *
 	 * @return float
 	 */
 	public function getLatitude() {
@@ -119,10 +126,6 @@ class GlobeCoordinateValue extends DataValueObject {
 	}
 
 	/**
-	 * Returns the longitude.
-	 *
-	 * @since 0.1
-	 *
 	 * @return float
 	 */
 	public function getLongitude() {
@@ -130,7 +133,6 @@ class GlobeCoordinateValue extends DataValueObject {
 	}
 
 	/**
-	 * Returns the text.
 	 * @see DataValue::getValue
 	 *
 	 * @return self
@@ -140,8 +142,6 @@ class GlobeCoordinateValue extends DataValueObject {
 	}
 
 	/**
-	 * @since 0.1
-	 *
 	 * @return LatLongValue
 	 */
 	public function getLatLong() {
@@ -150,8 +150,6 @@ class GlobeCoordinateValue extends DataValueObject {
 
 	/**
 	 * Returns the precision of the coordinate in degrees, e.g. 0.01.
-	 *
-	 * @since 0.1
 	 *
 	 * @return float|int|null
 	 */
@@ -162,12 +160,24 @@ class GlobeCoordinateValue extends DataValueObject {
 	/**
 	 * Returns the IRI of the globe on which the location resides.
 	 *
-	 * @since 0.1
-	 *
 	 * @return string
 	 */
 	public function getGlobe() {
 		return $this->globe;
+	}
+
+	/**
+	 * @see Hashable::getHash
+	 *
+	 * @since 2.0
+	 *
+	 * @return string
+	 */
+	public function getHash() {
+		return md5( $this->latLong->getLatitude() . '|'
+			. $this->latLong->getLongitude() . '|'
+			. $this->precision . '|'
+			. $this->globe );
 	}
 
 	/**
@@ -176,7 +186,7 @@ class GlobeCoordinateValue extends DataValueObject {
 	 * @return array
 	 */
 	public function getArrayValue() {
-		return array(
+		return [
 			'latitude' => $this->latLong->getLatitude(),
 			'longitude' => $this->latLong->getLongitude(),
 
@@ -186,22 +196,27 @@ class GlobeCoordinateValue extends DataValueObject {
 
 			'precision' => $this->precision,
 			'globe' => $this->globe,
-		);
+		];
 	}
 
 	/**
-	 * Constructs a new instance of the DataValue from the provided data.
-	 * This can round-trip with @see getArrayValue
+	 * Constructs a new instance from the provided data. Required for @see DataValueDeserializer.
+	 * This is expected to round-trip with @see getArrayValue.
 	 *
-	 * @since 0.1
+	 * @deprecated since 2.0.1. Static DataValue::newFromArray constructors like this are
+	 *  underspecified (not in the DataValue interface), and misleadingly named (should be named
+	 *  newFromArrayValue). Instead, use DataValue builder callbacks in @see DataValueDeserializer.
 	 *
-	 * @param array $data
+	 * @param mixed $data Warning! Even if this is expected to be a value as returned by
+	 *  @see getArrayValue, callers of this specific newFromArray implementation can not guarantee
+	 *  this. This is not even guaranteed to be an array!
 	 *
+	 * @throws IllegalValueException if $data is not in the expected format. Subclasses of
+	 *  InvalidArgumentException are expected and properly handled by @see DataValueDeserializer.
 	 * @return self
-	 * @throws IllegalValueException
 	 */
-	public static function newFromArray( array $data ) {
-		self::requireArrayFields( $data, array( 'latitude', 'longitude' ) );
+	public static function newFromArray( $data ) {
+		self::requireArrayFields( $data, [ 'latitude', 'longitude' ] );
 
 		return new static(
 			new LatLongValue(

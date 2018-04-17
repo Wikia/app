@@ -19,7 +19,7 @@ class PreferencePersistenceSwaggerServiceTest extends TestCase {
 
 	protected $userId = 1;
 
-	/** @var PreferencePersistenceSwaggerService */
+	/** @var PreferencePersistence */
 	protected $persistence;
 
 	/** @var \PHPUnit_Framework_MockObject_MockObject */
@@ -46,14 +46,14 @@ class PreferencePersistenceSwaggerServiceTest extends TestCase {
 			->getMock();
 		$this->apiProvider->expects( $this->any() )
 			->method( 'getAuthenticatedApi' )
-			->with( PreferencePersistenceSwaggerService::SERVICE_NAME, $this->userId, UserPreferencesApi::class )
+			->with( PreferencePersistence::SERVICE_NAME, $this->userId, UserPreferencesApi::class )
 			->willReturn( $this->userPreferencesApi );
 		$this->apiProvider->expects( $this->any() )
 			->method( 'getApi' )
-			->with( PreferencePersistenceSwaggerService::SERVICE_NAME, ReverseLookupApi::class )
+			->with( PreferencePersistence::SERVICE_NAME, ReverseLookupApi::class )
 			->willReturn( $this->reverseLookupApi );
 
-		$this->persistence = new PreferencePersistenceSwaggerService( $this->apiProvider );
+		$this->persistence = new PreferencePersistence( $this->apiProvider );
 	}
 
 	public function testGetSuccess() {

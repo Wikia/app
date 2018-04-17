@@ -41,14 +41,6 @@ class YoukuApiWrapper extends ApiWrapper {
 	}
 
 	/**
-	 * Is resolution of 720 or higher available
-	 * @return boolean
-	 */
-	protected function isHdAvailable() {
-		return in_array( "hd", $this->interfaceObj['streamtypes'] );
-	}
-
-	/**
 	 * Video duration, in seconds
 	 * @return int
 	 */

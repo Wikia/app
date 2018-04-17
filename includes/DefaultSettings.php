@@ -423,11 +423,11 @@ $wgUpdateCompatibleMetadata = false;
  */
 $wgUseSharedUploads = false;
 /** Full path on the web server where shared uploads can be found */
-$wgSharedUploadPath = "http://commons.wikimedia.org/shared/images";
+$wgSharedUploadPath = null;
 /** Fetch commons image description pages and display them on the local wiki? */
 $wgFetchCommonsDescriptions = false;
 /** Path on the file system where shared uploads can be found. */
-$wgSharedUploadDirectory = "/var/www/wiki3/images";
+$wgSharedUploadDirectory = null;
 /** DB name with metadata about shared directory. Set this to false if the uploads do not come from a wiki. */
 $wgSharedUploadDBname = false;
 /** Optional table prefix used in database. */
@@ -623,32 +623,6 @@ $wgMediaHandlers = array(
 );
 
 /**
- * Resizing can be done using PHP's internal image libraries or using
- * ImageMagick or another third-party converter, e.g. GraphicMagick.
- * These support more file formats than PHP, which only supports PNG,
- * GIF, JPG, XBM and WBMP.
- *
- * Use Image Magick instead of PHP builtin functions.
- */
-$wgUseImageMagick = false;
-/** The convert command shipped with ImageMagick */
-$wgImageMagickConvertCommand = '/usr/bin/convert';
-/** The identify command shipped with ImageMagick */
-$wgImageMagickIdentifyCommand = '/usr/bin/identify';
-
-/** Sharpening parameter to ImageMagick */
-$wgSharpenParameter = '0x0.4';
-
-/** Reduction in linear dimensions below which sharpening will be enabled */
-$wgSharpenReductionThreshold = 0.85;
-
-/**
- * Temporary directory used for ImageMagick. The directory must exist. Leave
- * this set to false to let ImageMagick decide for itself.
- */
-$wgImageMagickTempDir = false;
-
-/**
  * Use another resizing converter, e.g. GraphicMagick
  * %s will be replaced with the source path, %d with the destination
  * %w and %h will be replaced with the width and height.
@@ -725,7 +699,7 @@ $wgAllowTitlesInSVG = false;
  * The default is 50 MB if decompressed to RGBA form, which corresponds to
  * 12.5 million pixels or 3500x3500.
  */
-$wgMaxImageArea = 1.25e7;
+$wgMaxImageArea = 6e7;
 /**
  * Force thumbnailing of animated GIFs above this size to a single
  * frame instead of an animated thumbnail.  As of MW 1.17 this limit
@@ -1491,7 +1465,6 @@ $wgCacheDirectory = false;
  *
  *   - CACHE_ANYTHING:   Use anything, as long as it works
  *   - CACHE_NONE:       Do not cache
- *   - CACHE_DB:         Store cache objects in the DB
  *   - CACHE_MEMCACHED:  MemCached, must specify servers in $wgMemCachedServers
  *   - CACHE_ACCEL:      APC, XCache or WinCache
  *   - CACHE_DBA:        Use PHP's DBA extension to store in a DBM-style
@@ -1538,7 +1511,6 @@ $wgParserCacheType = CACHE_ANYTHING;
  */
 $wgObjectCaches = array(
 	CACHE_NONE => array( 'class' => 'EmptyBagOStuff' ),
-	CACHE_DB => array( 'class' => 'SqlBagOStuff', 'table' => 'objectcache' ),
 	CACHE_DBA => array( 'class' => 'DBABagOStuff' ),
 
 	CACHE_ANYTHING => array( 'factory' => 'ObjectCache::newAnything' ),
@@ -3254,28 +3226,6 @@ $wgInvalidUsernameCharacters = '@:';
  * modify the user rights of those users via Special:UserRights
  */
 $wgUserrightsInterwikiDelimiter = '@';
-
-/**
- * Use some particular type of external authentication.  The specific
- * authentication module you use will normally require some extra settings to
- * be specified.
- *
- * null indicates no external authentication is to be used.  Otherwise,
- * $wgExternalAuthType must be the name of a non-abstract class that extends
- * ExternalUser.
- *
- * Core authentication modules can be found in includes/extauth/.
- */
-$wgExternalAuthType = null;
-
-/**
- * Configuration for the external authentication.  This may include arbitrary
- * keys that depend on the authentication mechanism.  For instance,
- * authentication against another web app might require that the database login
- * info be provided.  Check the file where your auth mechanism is defined for
- * info on what to put here.
- */
-$wgExternalAuthConf = array();
 
 /**
  * Policies for how each preference is allowed to be changed, in the presence

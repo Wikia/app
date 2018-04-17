@@ -1,1 +1,0 @@
-<h1>This is the 'fan' display controller</h1>

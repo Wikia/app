@@ -7,6 +7,8 @@ define('wikia.articleVideo.featuredVideo.jwplayer.onScroll', ['wikia.onScroll', 
 			$duration = $('.featured-video__time'),
 			$closeBtn = $('.featured-video__close');
 
+		playerInstance.trigger('onScrollStateChanged', {state: 'inactive'});
+
 		function isVideoInFullScreenMode() {
 			return playerInstance.getFullscreen();
 		}
@@ -62,8 +64,10 @@ define('wikia.articleVideo.featuredVideo.jwplayer.onScroll', ['wikia.onScroll', 
 
 				if (scrollTop > collapseOffset && !videoCollapsed) {
 					collapseVideo(videoOffset, videoHeight);
+					playerInstance.trigger('onScrollStateChanged', {state: 'active'});
 				} else if (scrollTop <= collapseOffset && videoCollapsed) {
 					uncollapseVideo();
+					playerInstance.trigger('onScrollStateChanged', {state: 'inactive'});
 				}
 			}
 		}
@@ -72,7 +76,7 @@ define('wikia.articleVideo.featuredVideo.jwplayer.onScroll', ['wikia.onScroll', 
 			playerInstance.pause(true);
 			uncollapseVideo();
 			collapsingDisabled = true;
-			playerInstance.trigger('onScrollClosed');
+			playerInstance.trigger('onScrollStateChanged', {state: 'closed'});
 		}
 
 		function updateTitleAndDuration(data) {

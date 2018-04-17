@@ -203,7 +203,6 @@ class LightboxController extends WikiaController {
 		$this->fileTitle = $title->getText();
 		$this->mediaType = $data['mediaType'];
 		$this->videoEmbedCode = $data['videoEmbedCode'];
-		$this->playerAsset = $data['playerAsset'];
 		$this->imageUrl = $data['imageUrl'];
 		$this->fileUrl = $data['fileUrl'];
 		$this->rawImageUrl = $data['rawImageUrl'];
@@ -258,12 +257,7 @@ class LightboxController extends WikiaController {
 				$articleTitleText = $articleTitleObj->getText();
 			}
 
-			// check if the file is added to the wiki
-			if ( WikiaFileHelper::isAdded( $file ) ) {
-				$fileUrl = $fileTitleObj->getFullURL();
-			} else {
-				$fileUrl = WikiaFileHelper::getFullUrlPremiumVideo( $fileTitleObj->getDBkey() );
-			}
+			$fileUrl = $fileTitleObj->getFullURL();
 
 			// determine share url
 			$sharingNamespaces = array(

@@ -15,4 +15,12 @@
 		<a href="{{talkpageUrl}}" target="_blank" class="button secondary content-review-toolbar-link">{{talkpageLinkText}}</a>
 		<a href="{{guidelinesUrl}}" target="_blank" class="content-review-toolbar-link">{{guidelinesLinkText}}</a>
 	</div>
+	{{#notices}}
+		<div class="content-review-toolbar-notice">
+			<div class="content-review-toolbar-notice__icon">
+				{{{icon}}}
+			</div>
+			<span class="content-review-toolbar-notice__text">{{text}}</span>
+		</div>
+	{{/notices}}
 </div>

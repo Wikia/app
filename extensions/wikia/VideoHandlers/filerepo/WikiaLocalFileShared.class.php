@@ -76,20 +76,6 @@ class WikiaLocalFileShared  {
 		return $res;
 	}
 
-	public function getPlayerAssetUrl() {
-
-		wfProfileIn( __METHOD__ );
-		if ( $this->isVideo() ) {
-			$asset = $this->oFile->getHandler()->getPlayerAssetUrl();
-			$res = $asset;
-		}
-		else {
-			$res = false;
-		}
-		wfProfileOut( __METHOD__ );
-		return $res;
-	}
-
 	public function getVideoUniqueId() {
 		return $this->getProviderName() . $this->getVideoId();
 	}
@@ -135,28 +121,6 @@ class WikiaLocalFileShared  {
 		return false;
 	}
 
-	public function getExpirationDate() {
-		$handler = $this->oFile->getHandler();
-		if ( $this->isVideo() && !empty( $handler ) ) {
-			return $handler->getExpirationDate();
-		}
-
-		return false;
-	}
-
-	/**
-	 * Get regional restrictions of Video file or false
-	 * @return string|false
-	 */
-	public function getRegionalRestrictions() {
-		$handler = $this->oFile->getHandler();
-		if ( $this->isVideo() && !empty( $handler ) ) {
-			return $handler->getRegionalRestrictions();
-		}
-
-		return false;
-	}
-
 	/**
 	 * Force file to use some specyfic mimetype
 	 *
@@ -166,18 +130,6 @@ class WikiaLocalFileShared  {
 	 */
 	function forceMime( $aMime ) {
 		$this->forceMime = $aMime;
-	}
-
-	/**
-	 * Used only as part of video migration process (prevent
-	 * connecting to Provider, because we take metadata from
-	 * previously stored information)
-	 * and in video ingestion scripts from premium partners
-	 *
-	 * @param $metadata
-	 */
-	function forceMetadata( $metadata ) {
-		$this->forceMetadata = $metadata;
 	}
 
 	function setVideoId( $videoId ) {
@@ -236,7 +188,7 @@ class WikiaLocalFileShared  {
 			$handler = new $class();
 			$handler->setVideoId( $this->oFile->videoId );
 
-			$this->oFile->metadata = ( isset( $this->forceMetadata ) ) ? $this->forceMetadata : $handler->getVideoMetadata();
+			$this->oFile->metadata = $handler->getVideoMetadata();
 			$this->oFile->media_type = MEDIATYPE_VIDEO;
 			$this->forceMime = false;
 		}

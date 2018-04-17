@@ -22,7 +22,7 @@ class Result {
 	 *
 	 * @var Error[]
 	 */
-	protected $errors = array();
+	protected $errors = [];
 
 	/**
 	 * @since 0.1
@@ -68,7 +68,7 @@ class Result {
 
 		if ( $a->isValid() && empty( $aErrors ) ) {
 			return $b;
-		} elseif( $b->isValid() && empty( $bErrors ) ) {
+		} elseif ( $b->isValid() && empty( $bErrors ) ) {
 			return $a;
 		} else {
 			$errors = array_merge( $aErrors, $bErrors );
@@ -84,7 +84,7 @@ class Result {
 	 * @param bool $isValid
 	 * @param Error[] $errors
 	 */
-	protected function __construct( $isValid, array $errors = array() ) {
+	protected function __construct( $isValid, array $errors = [] ) {
 		$this->isValid = $isValid;
 		$this->errors = $errors;
 	}

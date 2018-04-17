@@ -1079,6 +1079,9 @@ abstract class DatabaseBase implements DatabaseType {
 			$sql1line = str_replace( "\n", "\\n", $sql );
 			wfLogDBError( "$fname\t{$this->mServer}\t$errno\t$error\t$sql1line\n" );
 			wfDebug( "SQL ERROR: " . $error . "\n" );
+
+			// SUS-3754 | make long SQL queries fit the error message sent via UDP to Logstash
+			$sql = substr( $sql, 0, 1024 );
 			throw new DBQueryError( $this, $error, $errno, $sql, $fname );
 		}
 	}

@@ -47,17 +47,27 @@ class UncategorizedImagesPage extends ImageQueryPage {
 	}
 
 	function getQueryInfo() {
-		return array (
-			'tables' => array( 'page', 'categorylinks' ),
-			'fields' => array( 'page_namespace AS namespace',
-					'page_title AS title',
-					'page_title AS value' ),
-			'conds' => array( 'cl_from IS NULL',
-					'page_namespace' => NS_FILE,
-					'page_is_redirect' => 0 ),
-			'join_conds' => array( 'categorylinks' => array(
-					'LEFT JOIN', 'cl_from=page_id' ) )
-		);
+		return [
+			'tables' => [ 'page', 'categorylinks' ],
+			'fields' => [
+				'page_namespace AS namespace',
+				'page_title AS title',
+			],
+			'conds' => [
+				'cl_from IS NULL',
+				'page_namespace' => NS_FILE,
+				'page_is_redirect' => 0,
+			],
+			'join_conds' => [
+				'categorylinks' => [
+					'LEFT JOIN',
+					'cl_from=page_id',
+				],
+			],
+		];
 	}
 
+	function getOrderFields() {
+		return [ 'title' ];
+	}
 }

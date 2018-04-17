@@ -48,15 +48,10 @@
 	var cookieExists,
 		isProductionEnv,
 		blockingTracked = {
-			sourcePoint: false,
+			babDetector: false,
 			pageFair: false
 		},
 		GASettings = {
-			sourcePoint: {
-				trackName: 'sourcePoint',
-				name: 'sourcepoint',
-				dimension: 999
-			},
 			babDetector: {
 				trackName: 'babDetector',
 				dimension: 6,
@@ -69,16 +64,6 @@
 			}
 		},
 		listenerSettings = [
-			{
-				eventName: 'sp.blocking',
-				value: true,
-				detectorSettings: GASettings.sourcePoint
-			},
-			{
-				eventName: 'sp.not_blocking',
-				value: false,
-				detectorSettings: GASettings.sourcePoint
-			},
 			{
 				eventName: 'bab.blocking',
 				value: true,
@@ -284,55 +269,11 @@
 		['set', 'dimension19', window.wgArticleType],                               // ArticleType
 		['set', 'dimension20', 'not set'],                                          // Performance A/B testing (Not used any more)
 		['set', 'dimension21', String(window.wgArticleId)],                         // ArticleId
-		['set', 'dimension23', window.wikiaIsPowerUserFrequent ? 'Yes' : 'No'],     // IsPowerUser: Frequent
-		['set', 'dimension24', window.wikiaIsPowerUserLifetime ? 'Yes' : 'No'],     // IsPowerUser: Lifetime
 		['set', 'dimension25', String(window.wgNamespaceNumber)],                   // Namespace Number
 		['set', 'dimension27', String(window.wgCanonicalSpecialPageName || '')],    // Special page canonical name (SUS-1465)
 		['set', 'dimension28', hasPortableInfobox()],                               // If there is Portable Infobox on the page (ADEN-4708)
 		['set', 'dimension29', hasFeaturedVideo()]                                  // If there is Featured Video on the page (ADEN-5420)
 	);
-
-	/**
-	 * Checks if Optimizely object and its crucial data attributes are available
-	 *
-	 * @returns {boolean}
-	 */
-	function isOptimizelyLoadedAndActive() {
-		var optimizely = window.optimizely;
-
-		return optimizely &&
-			optimizely.activeExperiments &&
-			Array.isArray(optimizely.activeExperiments) &&
-			optimizely.activeExperiments.length > 0 &&
-			typeof optimizely.allExperiments === 'object' &&
-			Object.keys(optimizely.allExperiments).length > 0 &&
-			typeof optimizely.variationNamesMap === 'object' &&
-			Object.keys(optimizely.variationNamesMap).length > 0;
-	}
-
-	// UA integration code is also used in Mercury SPA - if you change it here, change it there too:
-	// function integrateOptimizelyWithUA and above in
-	// https://github.com/Wikia/mercury/blob/dev/front/scripts/mercury/utils/variantTesting.ts
-	if (isOptimizelyLoadedAndActive()) {
-		var optimizely = window.optimizely;
-
-		optimizely.activeExperiments.forEach(function (experimentId) {
-			if (
-				optimizely.allExperiments.hasOwnProperty(experimentId) &&
-				typeof optimizely.allExperiments[experimentId].universal_analytics === 'object'
-			) {
-				var dimension = optimizely.allExperiments[experimentId].universal_analytics.slot,
-					experimentName = optimizely.allExperiments[experimentId].name,
-					variationName = optimizely.variationNamesMap[experimentId];
-
-				_gaWikiaPush([
-					'set',
-					'dimension' + dimension,
-					'Optimizely ' + experimentName + ' (' + experimentId + '): ' + variationName
-				]);
-			}
-		});
-	}
 
 	/**** Include A/B testing status ****/
 	if (window.Wikia && window.Wikia.AbTest) {
@@ -437,8 +378,6 @@
 	window.ga('ads.set', 'dimension19', window.wgArticleType);                           // ArticleType
 	window.ga('ads.set', 'dimension20', 'not set');                                      // Performance A/B testing (not used any more)
 	window.ga('ads.set', 'dimension21', String(window.wgArticleId));                     // ArticleId
-	window.ga('ads.set', 'dimension23', window.wikiaIsPowerUserFrequent ? 'Yes' : 'No'); // IsPowerUser: Frequent
-	window.ga('ads.set', 'dimension24', window.wikiaIsPowerUserLifetime ? 'Yes' : 'No'); // IsPowerUser: Lifetime
 	window.ga('ads.set', 'dimension25', String(window.wgNamespaceNumber));               // Namespace Number
 	window.ga('ads.set', 'dimension27', String(window.wgCanonicalSpecialPageName || '')); // Special page canonical name (SUS-1465)
 	window.ga('ads.set', 'dimension28', hasPortableInfobox());                            // If there is Portable Infobox on the page (ADEN-4708)

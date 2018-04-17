@@ -1,7 +1,6 @@
 require(['wikia.window', 'ext.createNewWiki.builder'], function (win, wikiBuilder) {
 	'use strict';
 	$(function() {
-		win.wgAjaxPath = win.wgScriptPath + win.wgScript;
 		wikiBuilder.init();
 
 		if (win.wgOasisResponsive || win.wgOasisBreakpoints) {

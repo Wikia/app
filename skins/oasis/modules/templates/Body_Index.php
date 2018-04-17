@@ -36,12 +36,12 @@
 <? if ( empty( $wg->SuppressCommunityHeader ) && !WikiaPageType::isCorporatePage() && $wg->user->isAllowed('read')) : ?>
 	<?= $app->renderView( 'CommunityHeaderService', 'index' ) ?>
 <? endif; ?>
-
+<?= $app->renderView( 'ArticleVideo', 'recommendedVideo' ) ?>
 <!-- empty onclick event needs to be applied here to ensure that wds dropdowns work correctly on ios -->
 <section id="WikiaPage" class="WikiaPage<?= empty( $wg->OasisNavV2 ) ? '' : ' V2' ?><?= !empty( $isGridLayoutEnabled ) ? ' WikiaGrid' : '' ?>" onclick="">
 	<div id="WikiaPageBackground" class="WikiaPageBackground"></div>
 	<div class="WikiaPageContentWrapper">
-		<? if ( !empty( $wg->EnableWikiAnswers ) ) : ?>
+		<? if ( !empty( $wg->EnableAnswers ) ) : ?>
 			<?= $app->renderView( 'WikiAnswers', 'QuestionBox' ) ?>
 		<? endif; ?>
 
@@ -86,7 +86,7 @@
 				<div id="WikiaArticle" class="WikiaArticle">
 					<div class="home-top-right-ads">
 					<?php
-						if ( !WikiaPageType::isCorporatePage() && !$wg->EnableVideoPageToolExt && WikiaPageType::isMainPage() ) {
+						if ( !WikiaPageType::isCorporatePage() && WikiaPageType::isMainPage() ) {
 							echo $app->renderView( 'Ad', 'Index', [
 								'slotName' => 'TOP_RIGHT_BOXAD',
 								'pageTypes' => ['homepage_logged', 'corporate', 'all_ads']
@@ -104,19 +104,6 @@
 					<?= $bodytext ?>
 
 				</div>
-
-				<? if ( ARecoveryModule::isSourcePointRecoveryEnabled() ) : ?>
-					<!--googleoff: all-->
-					<div id="WikiaArticleMsg">
-						<h2><?= wfMessage('arecovery-blocked-message-headline')->escaped() ?></h2>
-						<br />
-						<h3><?= wfMessage('arecovery-blocked-message-part-one')->escaped() ?>
-							<br /><br />
-							<?= wfMessage('arecovery-blocked-message-part-two')->escaped() ?>
-						</h3>
-					</div>
-					<!--googleon: all-->
-				<? endif; ?>
 
 				<? if ( empty( $wg->SuppressArticleCategories ) ): ?>
 					<? if ( !empty( $wg->EnableCategorySelectExt ) && CategorySelectHelper::isEnabled() ): ?>

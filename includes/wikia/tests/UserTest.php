@@ -1,16 +1,11 @@
 <?php
 
-use Wikia\DependencyInjection\Injector;
-use Wikia\DependencyInjection\InjectorBuilder;
+use Wikia\Factory\ServiceFactory;
 use Wikia\Service\User\Permissions\PermissionsService;
 use Wikia\Service\User\Preferences\PreferenceService;
 use Wikia\Service\User\Attributes\UserAttributes;
-use Wikia\Service\User\Attributes\AttributeService;
 use Wikia\Domain\User\Preferences\UserPreferences;
-use Wikia\Service\User\Preferences\Migration\PreferenceScopeService;
 use Wikia\Service\Helios\HeliosClient;
-use Wikia\Service\User\Auth\CookieHelper;
-use Wikia\Service\User\Auth\HeliosCookieHelper;
 
 class UserTest extends WikiaBaseTest {
 
@@ -19,21 +14,13 @@ class UserTest extends WikiaBaseTest {
 	const SOME_PREF = 'somepref';
 	const SOME_VALUE = 'somevalue';
 
-	protected $injector;
 	protected $userPreferenceServiceMock;
-	protected $userAttributeServiceMock;
 	protected $userAttributesMock;
 	protected $userPermissionsMock;
 	protected $heliosClientMock;
 
 	/** @var User */
 	protected $testUser;
-
-	protected static $currentInjector;
-
-	public static function setUpBeforeClass() {
-		self::$currentInjector = Injector::getInjector();
-	}
 
 	public function setUp() {
 		parent::setUp();
@@ -43,38 +30,21 @@ class UserTest extends WikiaBaseTest {
 	}
 
 	public static function tearDownAfterClass() {
-		Injector::setInjector( self::$currentInjector );
+		ServiceFactory::clearState();
 	}
 
 	private function setupAndInjectServiceMocks() {
-		global $wgGlobalUserPreferenceWhiteList, $wgLocalUserPreferenceWhiteList;
+		$this->userPreferenceServiceMock = $this->createMock( PreferenceService::class );
+		$this->userAttributesMock = $this->createMock( UserAttributes::class );
+		$this->userPermissionsMock = $this->createMock( PermissionsService::class );
+		$this->heliosClientMock = $this->createMock( HeliosClient::class );
 
-		$this->userPreferenceServiceMock = $this->getMock( PreferenceService::class,
-			['getGlobalPreference', 'getPreferences', 'setPreferences', 'setGlobalPreference', 'deleteGlobalPreference',
-			'getLocalPreference', 'setLocalPreference', 'deleteLocalPreference', 'save', 'getGlobalDefault', 'deleteFromCache',
-			'deleteAllPreferences', 'findWikisWithLocalPreferenceValue', 'findUsersWithGlobalPreferenceValue'] );
+		$serviceFactory = ServiceFactory::instance();
 
-		$this->userAttributeServiceMock = $this->getMock( AttributeService::class );
-		$this->userAttributesMock = $this->getMockBuilder( UserAttributes::class )
-			->disableOriginalConstructor()
-			->getMock();
-
-		$this->userPermissionsMock = $this->getMock( PermissionsService::class );
-
-		$this->heliosClientMock = $this->getMock( HeliosClient::class,
-			[ 'login', 'forceLogout', 'invalidateToken', 'register', 'info', 'generateToken', 'setPassword', 'validatePassword', 'deletePassword', 'requestPasswordReset' ] );
-
-		$container = ( new InjectorBuilder() )
-			->bind( PreferenceService::class )->to( $this->userPreferenceServiceMock )
-			->bind( AttributeService::class )->to( $this->userAttributeServiceMock )
-			->bind( PreferenceScopeService::GLOBAL_SCOPE_PREFS )->to( $wgGlobalUserPreferenceWhiteList )
-			->bind( PreferenceScopeService::LOCAL_SCOPE_PREFS )->to( $wgLocalUserPreferenceWhiteList )
-			->bind( UserAttributes::class )->to( $this->userAttributesMock )
-			->bind( HeliosClient::class )->to( $this->heliosClientMock )
-			->bind( CookieHelper::class )->toClass( HeliosCookieHelper::class )
-			->bind( PermissionsService::class )->to( $this->userPermissionsMock )
-			->build();
-		Injector::setInjector( $container );
+		$serviceFactory->heliosFactory()->setHeliosClient( $this->heliosClientMock );
+		$serviceFactory->attributesFactory()->setUserAttributes( $this->userAttributesMock );
+		$serviceFactory->preferencesFactory()->setPreferenceService( $this->userPreferenceServiceMock );
+		$serviceFactory->permissionsFactory()->setPermissionsService( $this->userPermissionsMock );
 	}
 
 

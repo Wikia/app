@@ -1,8 +1,7 @@
 /*global define*/
 define('ext.wikia.adEngine.video.player.porvata.porvataTracker', [
-	'ext.wikia.adEngine.video.player.playerTracker',
-	'ext.wikia.adEngine.video.player.porvata.vastLogger'
-], function (playerTracker, logger) {
+	'ext.wikia.adEngine.video.player.playerTracker'
+], function (playerTracker) {
 	'use strict';
 	var playerName = 'porvata',
 		trackingEventsMap = {
@@ -21,6 +20,8 @@ define('ext.wikia.adEngine.video.player.porvata.porvataTracker', [
 			'adError': 'error',
 			'wikiaAdPlayTriggered': 'play_triggered',
 			'wikiaAdStop': 'closed',
+			'wikiaAdMute': 'mute',
+			'wikiaAdUnmute': 'unmute',
 			'wikiaInViewportWithDirect': 'in_viewport_with_direct',
 			'wikiaInViewportWithFallbackBid': 'in_viewport_with_fallback_bid',
 			'wikiaInViewportWithoutOffer': 'in_viewport_without_offer'
@@ -51,12 +52,9 @@ define('ext.wikia.adEngine.video.player.porvata.porvataTracker', [
 	 * @param {object} [player]
 	 */
 	function track(params, eventName, errorCode, player) {
-		var contentType = getContentType(player),
-			data = playerTracker.track(params, playerName, eventName, errorCode, contentType);
+		var contentType = getContentType(player);
 
-		if (data && params.adProduct === 'rubicon') {
-			logger.logVast(player, params, data);
-		}
+		playerTracker.track(params, playerName, eventName, errorCode, contentType);
 	}
 
 	/**
@@ -73,6 +71,8 @@ define('ext.wikia.adEngine.video.player.porvata.porvataTracker', [
 		if (!playerTracker.isEnabled()) {
 			return;
 		}
+
+		params.withAudio = !params.autoPlay;
 
 		track(params, 'ready');
 

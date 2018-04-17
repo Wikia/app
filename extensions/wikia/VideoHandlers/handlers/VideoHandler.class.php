@@ -82,10 +82,6 @@ abstract class VideoHandler extends BitmapHandler {
 		return true;
 	}
 
-	function getPlayerAssetUrl() {
-		return '';
-	}
-
 	/**
 	 * Returns embed code for a provider
 	 *
@@ -242,42 +238,6 @@ abstract class VideoHandler extends BitmapHandler {
 
 	/**
 	 *
-	 * @return boolean
-	 */
-	protected function isHd() {
-		$metadata = $this->getVideoMetadata(true);
-		return (!empty($metadata['hd']));
-	}
-
-	/**
-	 *
-	 * @return boolean
-	 */
-	protected function isAgeGate() {
-		$metadata = $this->getVideoMetadata(true);
-		return (!empty($metadata['ageGate']));
-	}
-
-	/**
-	 * get expiration date
-	 * @return integer|null
-	 */
-	public function getExpirationDate() {
-		$metadata = $this->getVideoMetadata(true);
-		return (!empty($metadata['expirationDate']) ? $metadata['expirationDate'] : null);
-	}
-
-	/**
-	 * Get regional restrictions of file
-	 * @return string|null
-	 */
-	public function getRegionalRestrictions() {
-		$metadata = $this->getVideoMetadata(true);
-		return ( !empty( $metadata['regionalRestrictions'] ) ? $metadata['regionalRestrictions'] : null );
-	}
-
-	/**
-	 *
 	 * @return int duration in seconds, or null
 	 */
 	protected function getDuration() {
@@ -309,10 +269,6 @@ abstract class VideoHandler extends BitmapHandler {
 	 * @return string
 	 */
 	protected function getEmbedVideoId() {
-		$metadata = $this->getVideoMetadata(true);
-		if ( !empty($metadata['altVideoId']) ) {
-			return $metadata['altVideoId'];
-		}
 		return $this->videoId;
 	}
 
@@ -353,9 +309,6 @@ abstract class VideoHandler extends BitmapHandler {
 			$oThumbnailImage->url,
 			$oThumbnailImage->width,
 			$oThumbnailImage->height,
-//			!empty( $this::$aspectRatio )
-//				? round( $oThumbnailImage->width / $this::$aspectRatio )
-//				: $oThumbnailImage->height,
 			$oThumbnailImage->path,
 			$oThumbnailImage->page
 		);

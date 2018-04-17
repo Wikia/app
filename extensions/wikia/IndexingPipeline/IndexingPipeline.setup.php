@@ -13,7 +13,6 @@ $dir = dirname( __FILE__ );
 $wgExtensionMessagesFiles[ 'IndexingPipeline' ] = $dir . '/IndexingPipeline.i18n.php';
 
 $wgAutoloadClasses[ 'Wikia\IndexingPipeline\PipelineEventProducer' ] = $dir . '/PipelineEventProducer.class.php';
-$wgAutoloadClasses[ 'Wikia\IndexingPipeline\MySQLMetricEventProducer' ] = $dir . '/MySQLMetricEventProducer.class.php';
 $wgAutoloadClasses[ 'Wikia\IndexingPipeline\PipelineMessageBuilder' ] = $dir . '/PipelineMessageBuilder.class.php';
 $wgAutoloadClasses[ 'Wikia\IndexingPipeline\PipelineRoutingBuilder' ] = $dir . '/PipelineRoutingBuilder.class.php';
 
@@ -23,3 +22,4 @@ $wgHooks[ 'ArticleUndelete' ][] = 'Wikia\IndexingPipeline\PipelineEventProducer:
 $wgHooks[ 'TitleMoveComplete' ][] = 'Wikia\IndexingPipeline\PipelineEventProducer::onTitleMoveComplete';
 $wgHooks[ 'UserTemplateClassification::TemplateClassified' ][] = 'Wikia\IndexingPipeline\PipelineEventProducer::onTemplateClassified';
 $wgHooks[ 'AfterWikiCreated' ][] = 'Wikia\IndexingPipeline\PipelineEventProducer::onAfterWikiCreated';
+$wgHooks[ 'ArticleEditUpdates'][] = '\Wikia\IndexingPipeline\PipelineEventProducer::onArticleEditUpdates';

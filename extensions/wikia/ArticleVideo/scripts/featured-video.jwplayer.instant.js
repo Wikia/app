@@ -1,7 +1,7 @@
 require([
 	'wikia.window',
 	'wikia.geo',
-	'wikia.instantGlobals',
+//	'wikia.instantGlobals',
 	'wikia.cookies',
 	'wikia.tracker',
 	'ext.wikia.adEngine.adContext',
@@ -13,7 +13,7 @@ require([
 ], function (
 	win,
 	geo,
-	instantGlobals,
+//	instantGlobals,
 	cookies,
 	tracker,
 	adContext,
@@ -27,11 +27,17 @@ require([
 		return;
 	}
 
-	var inNextVideoAutoplayCountries = geo.isProperGeo(instantGlobals.wgArticleVideoNextVideoAutoplayCountries),
+	var inNextVideoAutoplayCountries = true, //geo.isProperGeo(instantGlobals.wgArticleVideoNextVideoAutoplayCountries),
 		//Fallback to the generic playlist when no recommended videos playlist is set for the wiki
 		recommendedPlaylist = videoDetails.recommendedVideoPlaylist || 'Y2RWCKuS',
-		inAutoplayCountries = geo.isProperGeo(instantGlobals.wgArticleVideoAutoplayCountries),
+		videoTags = videoDetails.videoTags || '',
+		inAutoplayCountries = true, //geo.isProperGeo(instantGlobals.wgArticleVideoAutoplayCountries),
 		willAutoplay = isAutoplayEnabled() && inAutoplayCountries,
+		slotTargeting = {
+			plist: recommendedPlaylist,
+			vtags: videoTags
+		},
+		responseTimeout = 2000,
 		bidParams;
 
 	function isFromRecirculation() {
@@ -49,8 +55,8 @@ require([
 
 		win.dispatchEvent(new CustomEvent('wikia.jwplayer.instanceReady', {detail: playerInstance}));
 
-		featuredVideoAds(playerInstance, bidParams);
-		featuredVideoMoatTracking(playerInstance);
+		featuredVideoAds(playerInstance, bidParams, slotTargeting);
+		featuredVideoMoatTracking.track(playerInstance);
 
 		playerInstance.on('autoplayToggle', function (data) {
 			featuredVideoCookieService.setAutoplay(data.enabled ? '1' : '0');
@@ -79,6 +85,7 @@ require([
 	}
 
 	function setupPlayer() {
+		featuredVideoMoatTracking.loadTrackingPlugin();
 		win.wikiaJWPlayer('featured-video__player', {
 			tracking: {
 				track: function (data) {
@@ -94,6 +101,7 @@ require([
 				showQuality: true,
 				showCaptions: true
 			},
+			sharing: true,
 			mute: isFromRecirculation() ? false : willAutoplay,
 			related: {
 				time: 3,
@@ -113,17 +121,17 @@ require([
 	}
 
 	if (a9 && adContext.get('bidders.a9Video')) {
-		a9.waitForResponse()
-			.then(function () {
-				return a9.getSlotParams('FEATURED');
-			})
-			.catch(function () {
-				return {};
-			})
-			.then(function (params) {
-				bidParams = params;
+		a9.waitForResponseCallbacks(
+			function onSuccess() {
+				bidParams = a9.getSlotParams('FEATURED');
 				setupPlayer();
-			});
+			},
+			function onTimeout() {
+				bidParams = {};
+				setupPlayer();
+			},
+			responseTimeout
+		);
 	} else {
 		setupPlayer();
 	}

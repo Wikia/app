@@ -1,0 +1,29 @@
+user:
+  - user_id: 12
+    user_name: 'TestUser'
+    user_real_name: ''
+    user_email: ''
+    user_touched: '20110101000000'
+    user_token: 'loremipsum'
+    user_email_authenticated: ''
+    user_email_token: b6d78bc08ab94d02c592601af527717d # an MD5 checksum, see User class
+    user_email_token_expires: '280301120000'
+    user_registration: '20090604060000'
+    user_editcount: 2500
+    user_birthdate:
+  - user_id: 13
+    user_name: 'TestUser2'
+    user_real_name: ''
+    user_email: ''
+    user_touched: '20110101000000'
+    user_token: 'loremipsum'
+    user_email_authenticated: ''
+    user_email_token: 1c134379039e6b7c4cb158d0df618b98
+    user_email_token_expires: '280301120000'
+    user_registration: '20090604060000'
+    user_editcount: 2500
+    user_birthdate:
+user_properties:
+  - up_user: 12
+    up_property: new_email
+    up_value: jkowalski@example.com

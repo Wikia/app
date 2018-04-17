@@ -36,7 +36,7 @@ define('ext.wikia.adEngine.video.vastParser', [
 		var adInfo,
 			currentAd = getAdInfo(extra.imaAd),
 			vastParams = new Querystring(vastUrl),
-			customParams = '?' + vastParams.getVal('cust_params', '');
+			customParams = encodeURI('?' + vastParams.getVal('cust_params', ''));
 
 		adInfo = {
 			contentType: currentAd.contentType || extra.contentType,
