@@ -10,11 +10,36 @@ use Wikia\Util\GlobalStateWrapper;
 class ArticleService extends WikiaObject {
 	const MAX_LENGTH = 500;
 	const CACHE_VERSION = 9;
+	const SOLR_SNIPPETS_FIELD = 'snippet_s';
 	const SOLR_ARTICLE_TYPE_FIELD = 'article_type_s';
 
 	/** @var Article $article */
 	private $article = null;
-
+	private $tags = array(
+			'script',
+			'style',
+			'noscript',
+			'div',
+			'table',
+			'figure',
+			'figcaption',
+			'aside',
+			'details',
+			'h1',
+			'h2',
+			'h3',
+			'h4',
+			'h5',
+			'h6'
+	);
+	private $patterns = array(
+		// strip decimal entities
+		'/&#\d{2,5};/u' => '',
+		// strip hex entities
+		'/&#x[a-fA-F0-7]{2,8};/u' => '',
+		// this should be always the last
+		'/\s+/' => ' '
+	);
 	private static $localCache = array();
 
 	/**
@@ -149,11 +174,22 @@ class ArticleService extends WikiaObject {
 			$text = self::$localCache[$articleId];
 		} else {
 			$key = self::getCacheKey( $articleId );
+			$service = $this;
 			$text = self::$localCache[$articleId] = WikiaDataAccess::cache(
 				$key,
-				86400 * 14 /* 14 days, same as parser cache */,
-				function () {
-					return $this->getUncachedSnippetFromArticle();
+				86400 /*24h*/,
+				function() use ( $service ) {
+					$content = '';
+					if ( !$this->wg->DevelEnvironment && !empty( $this->wg->SolrMaster ) ) {
+						$content = $service->getTextFromSolr();
+					}
+
+					if ( $content === '' ) {
+						// back-off is to use mediawiki
+						$content = $service->getUncachedSnippetFromArticle();
+					}
+
+					return $content;
 				}
 			);
 		}
@@ -178,36 +214,99 @@ class ArticleService extends WikiaObject {
 	 * Accesses a snippet from MediaWiki.
 	 * @return string
 	 */
-	private function getUncachedSnippetFromArticle(): string {
+	public function getUncachedSnippetFromArticle()
+	{
 		// get standard parser cache for anons,
 		// 99% of the times it will be available but
 		// generate it in case is not
+		$content = '';
 		$page = $this->article->getPage();
 		$opts = $page->makeParserOptions( new User() );
 		$parserOutput = $page->getParserOutput( $opts );
 		try {
-			return $this->getContentFromParser( $parserOutput );
+			$content = $this->getContentFromParser( $parserOutput );
 		} catch ( Exception $e ) {
 			\Wikia\Logger\WikiaLogger::instance()->error(
 				'ArticleService, not parser output object found',
 				['parserOutput' => $parserOutput, 'parserOptions' => $opts, 'wikipage_dump' => $page, 'exception' => $e]
 			);
-
-			return '';
 		}
+
+		// Run hook to allow wikis to modify the content (ie: customize their snippets) before the stripping and length limitations are done.
+		Hooks::run( 'ArticleService::getTextSnippet::beforeStripping',
+			[ $this->article, &$content, ArticleService::MAX_LENGTH ] );
+
+		return $this->cleanArticleSnippet( $content );
 	}
 
-	private function getContentFromParser( $output ): string {
-		global $wgContLang;
+	/**
+	 * Cleans up the content of the article snippet
+	 *
+	 * @param string $content
+	 * @return string
+	 */
+	public function cleanArticleSnippet( $content ) {
+		if ( mb_strlen( $content ) > 0 ) {
+			// remove all unwanted tag pairs and their contents
+			foreach ( $this->tags as $tag ) {
+				$content = preg_replace( "/<{$tag}\b[^>]*>.*<\/{$tag}>/imsU", '', $content );
+			}
 
+			// cleanup remaining tags
+			$content = strip_tags( $content );
+
+			// apply some replacements
+			foreach ( $this->patterns as $reg => $rep ) {
+				$content = preg_replace( $reg, $rep, $content );
+			}
+
+			// decode entities
+			$content = html_entity_decode( $content );
+			$content = trim( $content );
+
+			if ( mb_strlen( $content ) > ArticleService::MAX_LENGTH ) {
+				$content = mb_substr( $content, 0, ArticleService::MAX_LENGTH );
+			}
+		}
+		return $content;
+	}
+
+	private function getContentFromParser( $output ) {
 		if ( !$output instanceof ParserOutput ) {
 			throw new Exception("Not ParserOutput instance.");
 		}
+		return $output->getText();
+	}
 
-		$text = $output->getText();
-		$parser = new SnippetParser( $wgContLang );
+	/**
+	 * Gets a plain text of an article using Solr.
+	 *
+	 * @return string The plain text as stored in solr. Will be empty if we don't have a result.
+	 */
+	public function getTextFromSolr()
+	{
+		$wrapper = new GlobalStateWrapper(['wgSolrHost' => $this->solrHostname]);
 
-		return $parser->getSnippet( $text );
+		$document = $wrapper->wrap(function(){
+			$service = new SolrDocumentService();
+			// note that this will use wgArticleId without an article
+			if ( $this->article ) {
+				$service->setArticleId( $this->article->getID() );
+			}
+			return $service->getResult();
+		});
+
+		$htmlField = Wikia\Search\Utilities::field( 'html' );
+
+		$text = '';
+		if ( $document !== null ) {
+			if ( !empty( $document[ static::SOLR_SNIPPETS_FIELD ] ) ) {
+				$text = $document[ static::SOLR_SNIPPETS_FIELD ];
+			} elseif ( isset( $document[$htmlField] ) ) {
+				$text = $document[$htmlField];
+			}
+		}
+		return $text;
 	}
 
 	/**
@@ -245,7 +344,7 @@ class ArticleService extends WikiaObject {
 	 *
 	 * @return string The cache key associated to the article
 	 */
-	private static function getCacheKey( $articleId ): string {
+	static public function getCacheKey( $articleId ) {
 		return wfMemcKey(
 			__CLASS__,
 			self::CACHE_VERSION,
@@ -254,23 +353,45 @@ class ArticleService extends WikiaObject {
 	}
 
 	/**
-	 * Regenerate article snippet when a page is edited
-	 *
-	 * @param WikiPage $page
-	 * @param $editInfo
-	 * @throws Exception
+	 * Clear the snippet cache when the page is purged
 	 */
-	public static function onArticleEditUpdates( WikiPage $page, $editInfo ) {
-		global $wgMemc;
+	static public function onArticlePurge( WikiPage $page ) {
+		/**
+		 * @var $service ArticleService
+		 */
+		if ( $page->exists() ) {
+			$id = $page->getId();
 
-		$id = $page->getId();
-		$service = new ArticleService( $id );
+			F::app()->wg->Memc->delete( self::getCacheKey( $id ) );
 
-		$wgMemc->set( self::getCacheKey( $id ), $service->getContentFromParser( $editInfo->output ), 86400 * 14 );
-
-		// clear in memory cache too
-		if ( array_key_exists( $id, self::$localCache ) ) {
-			unset( self::$localCache[$id] );
+			if ( array_key_exists( $id, self::$localCache ) ) {
+				unset( self::$localCache[$id] );
+			}
 		}
+
+		return true;
+ 	}
+
+	/**
+	 * Clear the cache when the page is edited
+	 */
+	static public function onArticleSaveComplete(
+		WikiPage $page, User $user, $text, $summary, $minoredit, $watchthis, $sectionanchor, $flags,
+		$revision, Status &$status, $baseRevId
+	): bool {
+		/**
+		 * @var $service ArticleService
+		 */
+		if ( $page->exists() ) {
+			$id = $page->getId();
+
+			F::app()->wg->Memc->delete( self::getCacheKey( $id ) );
+
+			if ( array_key_exists( $id, self::$localCache ) ) {
+				unset( self::$localCache[$id] );
+			}
+		}
+
+		return true;
 	}
 }
