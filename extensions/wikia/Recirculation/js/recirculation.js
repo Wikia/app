@@ -72,7 +72,7 @@ require([
 
 	function prepareRailRecirculation(options) {
 		var request;
-		var isRecirculationABTest = window.Wikia.AbTest.inGroup('RIGHT_RAIL_RECIRCULATION', 'CURATION_CMS') &&
+		var isRecirculationABTest = window.Wikia.AbTest.inGroup('RIGHT_RAIL_RECIRCULATION_SOURCE', 'TOPIC_FEED') &&
 			getCurationCMSTopic();
 
 		if (isRecirculationABTest) {
