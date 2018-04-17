@@ -169,7 +169,7 @@ class MercuryApi {
 			],
 			'wikiCategories' => WikiFactoryHub::getInstance()->getWikiCategoryNames( $wgCityId ),
 			'recommendedVideoPlaylist' => $wgRecommendedVideoABTestPlaylist,
-		    'recommendedVideoRelatedMediaId' => ArticleVideoContext::getRelatedMediaIdForRecommendedVideo()
+			'recommendedVideoRelatedMediaId' => ArticleVideoContext::getRelatedMediaIdForRecommendedVideo()
 		];
 	}
 
