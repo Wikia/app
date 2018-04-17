@@ -205,6 +205,11 @@ $wgWikicitiesNavLinks[] = array( 'text'=>'wikicitieshome', 'href'=>'wikicitiesho
 putenv( 'GDFONTPATH=/usr/share/fonts/truetype/freefont/' );
 include_once "$IP/extensions/timeline/Timeline.php";
 
+if ( $wgDevelEnvironment ) {
+    # lazy-load blobs from production when there's a miss on devbox blobs cluster
+    include_once "$IP/extensions/wikia/Development/ExternalStoreDBFetchBlobHook.php";
+}
+
 if ( !empty( $wgEnableOpenGraphMetaExt ) ) {
 	include( "$IP/extensions/OpenGraphMeta/OpenGraphMeta.php" );
 	// Wikia-specific customizations to set image and description by ImageServing and ArticleService respectively.

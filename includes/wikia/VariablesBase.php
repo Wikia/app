@@ -766,6 +766,15 @@ $wgBiggestCategoriesBlacklist = [
 ];
 
 /**
+ * Servers in blobs cluster (blobs, etc.)
+ * @var Array $wgBlobs001Cluster
+ */
+$wgBlobs001Cluster = [
+    'geo-db-blobs-a-master.query.consul' => 0,
+    'geo-db-blobs-a-slave.query.consul' => 1000
+];
+
+/**
  * Set this to true to allow blocked users to edit their own user talk page.
  * @var bool $wgBlockAllowsUTEdit
  */
@@ -1290,6 +1299,15 @@ $wgCustomConvertCommand = false;
  * @var string $wgDBAhandler
  */
 $wgDBAhandler = 'db3';
+
+/**
+ * Servers in archive cluster (blobs, dataware, etc.)
+ * @var Array $wgDBArchiveCluster
+ */
+$wgDBArchiveCluster = [
+    'geo-db-archive-master.query.consul' => 0,
+    'geo-db-archive-slave.query.consul' => 1000
+];
 
 /**
  * Scale load balancer polling time so that under overload conditions, the
@@ -4478,6 +4496,15 @@ $wgFixArabicUnicode = true;
 $wgFixMalayalamUnicode = true;
 
 /**
+ * Celery monitoring tool URL.
+ * @see extensions/wikia/Tasks/TasksSpecialController.class.php
+ * @see lib/Wikia/src/Tasks/Tasks/ImageReviewTask.php
+ * @see maintenance/wikia/task_runner.php
+ * @var string $wgFlowerUrl
+ */
+$wgFlowerUrl = 'http://prod.flower.service.sjc.consul:5555';
+
+/**
  * Abstract list of footer icons for skins in place of old copyrightico and poweredbyico code
  * You can add new icons to the built in copyright or poweredby, or you can create
  * a new block. Though note that you may need to add some custom css to get good styling
@@ -5641,7 +5668,7 @@ $wgMasterWaitTimeout = 10;
  * this equal to $wgMaxImageArea.
  * @var float $wgMaxAnimatedGifArea
  */
-$wgMaxAnimatedGifArea = 1.25e7; // 12.5 million pixels
+$wgMaxAnimatedGifArea = 6e7; // 60 million pixels
 
 /**
  * Maximum article size in kibibytes.
@@ -8798,6 +8825,48 @@ $wgWikiDirectedAtChildrenByFounder = false;
  * @var bool $wgWikiDirectedAtChildrenByStaff
  */
 $wgWikiDirectedAtChildrenByStaff = false;
+
+/**
+ * Indicates whether wikicities database is in read-only mode.
+ * @see extensions/wikia/WikiFactory/WikiFactory.php
+ * @see extensions/wikia/FounderEmails
+ * @see extensions/wikia/TaskManager
+ * @see extensions/wikia/WikiFactory/
+ * @deprecated
+ * @var bool $wgWikicitiesReadOnly
+ */
+$wgWikicitiesReadOnly = false;
+
+/**
+ * Additional domains that need to be mapped to wikia.com and redirected
+ * properly.
+ * @see extensions/wikia/WikiFactory/Loader/WikiFactoryLoader.php
+ * @var Array $wgWikiFactoryDomains
+ */
+$wgWikiFactoryDomains = [
+    # gTLDs
+    'wikia.net',
+    'wikia.org',
+    'wikia.info',
+    # ccTLDs
+    'wikia.at',
+    'wikia.be',
+    'wikia.ch',
+    'wikia.cn',
+    'wikia.de',
+    'wikia.jp',
+    'wikia.lt',
+    'wikia.no',
+    'wikia.pl',
+    'wikia.tw',
+    'wikia.co.uk',
+    'wikia.us',
+    'wikia.fr',
+    # legacy wikicities domains
+    'wikicities.com',
+    'wikicities.net',
+    'wikicities.org'
+];
 
 /**
  * Do not allow editing articles from these namespaces with Rich Text Editor.

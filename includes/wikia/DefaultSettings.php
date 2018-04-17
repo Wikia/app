@@ -575,12 +575,6 @@ include_once( "$IP/extensions/wikia/StaticUserPages/StaticUserPages.setup.php" )
 
 
 /**
- * extensions path as seen by users
- */
-$wgExtensionsPath = false; /// defaults to "{$wgScriptPath}/extensions"
-
-
-/**
  * Define Video namespace (used by WikiaVideo extensions)
  * Can not be define directly in extension since it is used in Parser.php and extension is not always enabled
  */

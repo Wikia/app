@@ -5,7 +5,7 @@
  * You can use this to set up a trusted, simple repository of images. You may
  * also specify an array of strings to allow multiple sites.
  * @example $wgAllowExternalImagesFrom = 'http://127.0.0.1/';
- * @example $wgAllowExternalImagesFrom = array( 'http://127.0.0.1/', 'http://example.com' );
+ * @example $wgAllowExternalImagesFrom = [ 'http://127.0.0.1/', 'http://example.com' );
  * @see includes/parser/ParserOptions.php
  * @var Array|string $wgAllowExternalImagesFrom
  */
@@ -87,20 +87,27 @@ $wgAntivirusSetup = [
 $wgArticlePath = "$wgScriptPath/wiki/$1";
 
 /**
+ * Helios URL.
+ * @see lib/Wikia/src/Factory/HeliosFactory.php
+ * @var string $wgAuthServiceInternalUrl
+ */
+$wgAuthServiceInternalUrl = "http://prod.$wgWikiaDatacenter.k8s.wikia.net/helios/";
+
+/**
  * Automatically add a usergroup to any user who matches certain conditions.
  * The format is
- *   array( '&' or '|' or '^' or '!', cond1, cond2, ... )
+ *   [ '&' or '|' or '^' or '!', cond1, cond2, ... )
  * where cond1, cond2, ... are themselves conditions; *OR*
  *   APCOND_EMAILCONFIRMED, *OR*
- *   array( APCOND_EMAILCONFIRMED ), *OR*
- *   array( APCOND_EDITCOUNT, number of edits ), *OR*
- *   array( APCOND_AGE, seconds since registration ), *OR*
- *   array( APCOND_INGROUPS, group1, group2, ... ), *OR*
- *   array( APCOND_ISIP, ip ), *OR*
- *   array( APCOND_IPINRANGE, range ), *OR*
- *   array( APCOND_AGE_FROM_EDIT, seconds since first edit ), *OR*
- *   array( APCOND_BLOCKED ), *OR*
- *   array( APCOND_ISBOT ), *OR*
+ *   [ APCOND_EMAILCONFIRMED ], *OR*
+ *   [ APCOND_EDITCOUNT, number of edits ], *OR*
+ *   [ APCOND_AGE, seconds since registration ], *OR*
+ *   [ APCOND_INGROUPS, group1, group2, ... ], *OR*
+ *   [ APCOND_ISIP, ip ], *OR*
+ *   [ APCOND_IPINRANGE, range ], *OR*
+ *   [ APCOND_AGE_FROM_EDIT, seconds since first edit ], *OR*
+ *   [ APCOND_BLOCKED ], *OR*
+ *   [ APCOND_ISBOT ], *OR*
  *   similar constructs defined by extensions.
  *
  * If $wgEmailAuthentication is off, APCOND_EMAILCONFIRMED will be true for any
@@ -144,7 +151,7 @@ $wgContentNamespaces = [ NS_MAIN ];
  * Domain for cookies.
  * @example 'justthis.domain.org'
  * @example '.any.subdomain.net'
- * @bvar string $wgCookieDomain
+ * @var string $wgCookieDomain
  */
 $wgCookieDomain = ".$wgWikiaBaseDomain";
 
@@ -170,6 +177,30 @@ $wgCorporatePageRedirectWiki = "http://community.$wgWikiaBaseDomain/wiki/";
 $wgCrossSiteAJAXdomains = [ "internal-vstf.$wgWikiaBaseDomain" ];
 
 /**
+ * Database user and password for Perl backend scripts.
+ * @see SUS-3609 | Make backend scripts use "backend_admin" MySQL user instead of "mw_only"
+ * @var string $wgDBbackenduser
+ * @var string $wgDBbackendpassword
+ */
+$wgDBbackenduser = $wgDBbackendAdminUser;
+$wgDBbackendpassword = $wgDBbackendAdminPassword;
+
+/**
+ * RabbitMQ configuration for Edit Events Pipeline.
+ * @see extensions/wikia/DataWarehouse/DataWarehouseEventProducer.class.php
+ * @var Array $wgEditEventsRabbitConfig
+ */
+$wgEditEventsRabbitConfig = [
+    'host' => 'prod.rabbit.service.sjc.consul',
+    'port' => 5672,
+    'user' => $wgRabbitUser,
+    'pass' => $wgRabbitPass,
+    'vhost' => 'data-warehouse',
+    'exchange' => 'mediawiki-edit-events',
+    'deadExchange' => 'zombie.v0.1',
+];
+
+/**
  * Filesystem extensions directory. Defaults to $IP/../extensions. To compile
  * extensions with HipHop, set $wgExtensionsDirectory correctly, and use code
  * like:
@@ -182,6 +213,36 @@ $wgCrossSiteAJAXdomains = [ "internal-vstf.$wgWikiaBaseDomain" ];
  * @var string $wgExtensionsDirectory
  */
 $wgExtensionsDirectory = "$IP/extensions";
+
+/**
+ * RabbitMQ configuration for ImageReview.
+ * @see extensions/wikia/ImageReview/ImageReviewEventsHooks.class.php
+ * @var Array $wgImageReview
+ */
+$wgImageReview = [
+    'host' => "$wgRealEnvironment.rabbit.service.consul",
+    'port' => 5672,
+    'user' => $wgRabbitUser,
+    'pass' => $wgRabbitPass,
+    'vhost' => 'dc-file-sync',
+    'exchange' => 'amq.topic',
+    'deadExchange' => 'zombie.v0.1'
+];
+
+/**
+ * RabbitMQ configuration for Indexing Pipeline.
+ * @see extensions/wikia/IndexingPipeline/PipelineEventProducer.class.php
+ * @var Array $wgIndexingPipeline
+ */
+$wgIndexingPipeline = [
+    'host' => "$wgRealEnvironment.rabbit.service.consul",
+    'port' => 5672,
+    'user' => $wgRabbitUser,
+    'pass' => $wgRabbitPass,
+    'vhost' => 'indexer',
+    'exchange' => 'events',
+    'deadExchange' => 'zombie.v0.1',
+];
 
 /**
  * Localized central wikis.
@@ -200,6 +261,119 @@ $wgLangToCentralMap = [
 ];
 
 /**
+ * Load balancer configuration.
+ * @see includes/db/LBFactory.php
+ * @see includes/api/wikia/ApiFetchBlob.php
+ * @var Array $wgLBFactoryConf
+ */
+$wgLBFactoryConf = [
+    'class' => 'LBFactory_Wikia',
+    'externalLoads' => [
+        'archive1'   => $wgDBArchiveCluster,
+        'blobs20101' => $wgDBArchiveCluster,
+        'blobs20111' => $wgDBArchiveCluster,
+        'blobs20112' => $wgDBArchiveCluster,
+        'blobs20121' => $wgDBArchiveCluster,
+        'blobs20131' => $wgDBArchiveCluster,
+        'blobs20132' => $wgBlobs001Cluster,
+        'blobs20141' => $wgBlobs001Cluster,
+    ],
+    'sectionsByDB' => [
+        'help'           => 'c1',
+        'messaging'      => 'c1',
+        'content_review' => 'central',
+        'wikicities'     => 'central',
+        'wikicities_c1'  => 'c1',
+        'wikicities_c2'  => 'c2',
+        'wikicities_c3'  => 'c3',
+        'wikicities_c4'  => 'c4',
+        'wikicities_c5'  => 'c5',
+        'wikicities_c6'  => 'c6',
+        'wikicities_c7'  => 'c7',
+        'dataware'       => 'ext1',
+        'archive'        => 'ext1',
+        'portability_db' => 'ext1',
+        'specials'       => 'specials',
+        'statsdb'        => 'datawarehouse',
+        'blobs20101'     => 'ext1',
+        'blobs20111'     => 'ext1',
+        'blobs20112'     => 'ext1',
+        'blobs20121'     => 'ext1',
+        'blobs20131'     => 'ext1',
+        'blobs20132'     => 'blobs001',
+        'blobs20141'     => 'blobs001',
+        'smw+'           => 'semanticdb',
+    ],
+    'serverTemplate' => [
+        'dbname' => $wgDBname,
+        'user' => $wgDBuser,
+        'password' => $wgDBpassword,
+        'type' => 'mysql',
+        'flags' => DBO_DEFAULT,
+        'max lag' => 60,
+        'utf8' => false,
+    ],
+    'sectionLoads' => [
+        'c1' => [
+            'geo-db-a-master.query.consul' => 0,
+            'geo-db-a-slave.query.consul' => 1000,
+        ],
+        'c2' => [
+            'geo-db-b-master.query.consul' => 0,
+            'geo-db-b-slave.query.consul' => 1000,
+        ],
+        'c3' => [
+            'geo-db-c-master.query.consul' => 0,
+            'geo-db-c-slave.query.consul' => 1000,
+        ],
+        'c4' => [
+            'geo-db-d-master.query.consul' => 0,
+            'geo-db-d-slave.query.consul' => 1000,
+        ],
+        'c5' => [
+            'geo-db-e-master.query.consul' => 0,
+            'geo-db-e-slave.query.consul' => 1000,
+        ],
+        'c6' => [
+            'geo-db-f-master.query.consul' => 0,
+            'geo-db-f-slave.query.consul' => 1000,
+        ],
+        'c7' => [
+            'geo-db-g-master.query.consul' => 0,
+            'geo-db-g-slave.query.consul' => 1000,
+        ],
+        'ext1' => $wgDBArchiveCluster,
+        'specials' => [
+            'geo-db-specials-master.query.consul' => 0,
+            'geo-db-specials-slave.query.consul' => 1000,
+        ],
+        'datawarehouse' => [
+            'geo-db-dataware-master.query.consul' => 0,
+            'geo-db-dataware-slave.query.consul' => 1000,
+        ],
+        'semanticdb' => [
+            'geo-db-smw-master.query.consul' => 0,
+            'geo-db-smw-slave.query.consul' => 1000,
+        ],
+        'central' => [
+            'geo-db-sharedb-master.query.consul' => 0,
+            'geo-db-sharedb-slave.query.consul'	=> 1000,
+        ],
+        'blobs001' => $wgBlobs001Cluster,
+    ],
+    'templateOverridesByCluster' => [
+        'archive1'   => [ 'dbname' => 'dataware' ],
+        'blobs20101' => [ 'dbname' => 'blobs20101' ],
+        'blobs20111' => [ 'dbname' => 'blobs20111' ],
+        'blobs20112' => [ 'dbname' => 'blobs20112' ],
+        'blobs20121' => [ 'dbname' => 'blobs20121' ],
+        'blobs20131' => [ 'dbname' => 'blobs20131' ],
+        'blobs20132' => [ 'dbname' => 'blobs20132' ],
+        'blobs20141' => [ 'dbname' => 'blobs20141' ],
+    ],
+];
+
+/**
  * Legacy base URL to Vignette.
  * @see includes/wikia/vignette/VignetteRequest.php
  * @var string $wgLegacyVignetteUrl
@@ -213,6 +387,23 @@ $wgLegacyVignetteUrl = "https://vignette<SHARD>.$wgWikiaNocookieDomain";
  * @var string|bool $wgLocalInterwiki
  */
 $wgLocalInterwiki = $wgSitename;
+
+/**
+ * Solr for Lyrics API extension.
+ * @see extensions/wikia/LyricsApi
+ * @see extensions/3rdparty/LyricWiki
+ * @var Array $wgLyricsApiSolrariumConfig
+ */
+$wgLyricsApiSolrariumConfig = [
+    'adapter' => 'Solarium_Client_Adapter_Curl',
+    'adapteroptions' => [
+        'core' => 'lyricsapi',
+        'host' => 'prod.search-fulltext.service.consul',
+        'path' => '/solr/',
+        'port' => $wgSolrPort,
+        'proxy' => false,
+    ]
+];
 
 /**
  * Main cache type. This should be a cache with fast access, but it may have
@@ -326,6 +517,20 @@ $wgNotAValidWikia = "http://community.$wgWikiaBaseDomain/wiki/Community_Central:
 $wgParserCacheType = CACHE_MEMCACHED;
 
 /**
+ * Phalanx RabbitMQ configuration.
+ * @see extensions/wikia/PhalanxII
+ * @var Array $wgPhalanxQueue
+ */
+$wgPhalanxQueue = [
+    'host' => "$wgRealEnvironment.rabbit.service.consul",
+    'port' => 5672,
+    'user' => $wgRabbitUser,
+    'pass' => $wgRabbitPass,
+    'vhost' => '/',
+    'exchange' => 'amq.direct',
+];
+
+/**
  * Which namespaces have special treatment where they should be preview-on-open
  * Internaly only Category: pages apply, but using this extensions (e.g.
  * Semantic MediaWiki) can specify namespaces of pages they have special
@@ -360,9 +565,23 @@ $wgRightsIcon = "https://vignette.$wgWikiaNocookieDomain/messaging/images/a/a9/C
 $wgRobotsTxtCustomRules = [ 'disallowNamespace' => [ NS_HELP, NS_USER ] ];
 
 /**
+ * External services domain.
+ * @see lib/Wikia/src/Service/Gateway/KubernetesExternalUrlProvider.php
  * @var string $wgServicesExternalDomain
  */
 $wgServicesExternalDomain = "https://services.$wgWikiaBaseDomain/";
+
+/**
+ * RabbitMQ configurarion.
+ * @see lib/Wikia/src/Tasks/AsyncTaskList.php
+ * @var Array $wgTaskBroker
+ */
+$wgTaskBroker = [
+    'host' => 'prod.rabbit.service.consul',
+    'port' => 5672,
+    'user' => $wgRabbitUser,
+    'pass' => $wgRabbitPass,
+];
 
 /**
  * Configuration file for external Tidy.
