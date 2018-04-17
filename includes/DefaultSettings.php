@@ -699,7 +699,7 @@ $wgAllowTitlesInSVG = false;
  * The default is 50 MB if decompressed to RGBA form, which corresponds to
  * 12.5 million pixels or 3500x3500.
  */
-$wgMaxImageArea = 1.25e7;
+$wgMaxImageArea = 6e7;
 /**
  * Force thumbnailing of animated GIFs above this size to a single
  * frame instead of an animated thumbnail.  As of MW 1.17 this limit
