@@ -14,7 +14,6 @@ define('ext.wikia.adEngine.ml.nivens.mobileNivensInputParser', [
 			params = pageParams.getPageLevelParams();
 
 		data = [
-
 			browserDetect.getBrowser().indexOf('Chrome') === 0 ? 1 : 0,
 			browserDetect.getBrowser().indexOf('Safari') === 0 ? 1 : 0,
 			geo.getCountryCode() === 'US' ? 1 : 0,
