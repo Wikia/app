@@ -13,6 +13,12 @@ define('ext.wikia.adEngine.tracking.adInfoTracker',  [
 
 	var logGroup = 'ext.wikia.adEngine.tracking.adInfoTracker';
 
+	function getPosParameter(slotParams) {
+		var pos = (slotParams.pos || ''),
+			posArray = Array.isArray(pos) ? pos : pos.split(',');
+		return posArray[0];
+	}
+
 	function prepareData(slotName, pageParams, slotParams, creative, bidders) {
 		var data,
 			now = new Date(),
@@ -48,7 +54,7 @@ define('ext.wikia.adEngine.tracking.adInfoTracker',  [
 			'kv_s1': pageParams.s1 || '',
 			'kv_s2': pageParams.s2 || '',
 			'kv_s0v': pageParams.s0v || '',
-			'kv_pos': slotParams.pos || '',
+			'kv_pos': getPosParameter(slotParams),
 			'kv_rv': slotParams.rv || '',
 			'kv_wsi': slotParams.wsi || '',
 			'kv_lang': pageParams.lang || '',
