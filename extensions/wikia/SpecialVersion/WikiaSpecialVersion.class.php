@@ -35,9 +35,9 @@ class WikiaSpecialVersion extends SpecialVersion {
 	}
 
 	/**
-	 * Returns wiki text showing the third party software versions (apache, php, mysql).
+	 * Returns wiki text showing MediaWiki (and SMW) version.
 	 * @see SpecialVersion
-	 * @return array of strings
+	 * @return string[]
 	 */
 	public static function getSoftwareList() {
 	    // Put the software in an array of form 'name' => 'version'. All messages should
