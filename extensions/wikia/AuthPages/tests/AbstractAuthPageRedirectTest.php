@@ -45,31 +45,6 @@ abstract class AbstractAuthPageRedirectTest extends TestCase {
 		yield [ 'User:TestUser' ];
 	}
 
-	/**
-	 * @dataProvider provideBlacklistedPages
-	 * @param string $badTarget
-	 */
-	public function testDoesNotReturnToBlacklistedPages( string $badTarget ) {
-		$this->setupRequest( [ 'returnto' => $badTarget ] );
-
-		$this->specialPage->execute();
-
-		$params = [];
-		$query = parse_url( $this->requestContext->getOutput()->getRedirect(), PHP_URL_QUERY );
-
-		parse_str( $query, $params );
-
-		$this->assertArrayHasKey( 'redirect', $params );
-		$this->assertStringEndsNotWith( $badTarget, parse_url( $params['redirect'], PHP_URL_PATH ) );
-	}
-
-	public function provideBlacklistedPages() {
-		yield [ 'Special:Signup' ];
-		yield [ 'Special:UserLogin' ];
-		yield [ 'Special:UserLogout' ];
-		yield [ 'Special:UserSignup' ];
-	}
-
 	protected function setupRequest( array $params ) {
 		$this->requestContext->setRequest( new FauxRequest( $params ) );
 	}

@@ -42,20 +42,9 @@ class  WikiaMobileNavigationService extends WikiaService {
 		}
 	}
 
-	/**
-	 * If WikiFactory wgEnableNewAuth variable is set to true, then this method sets login url for the New Auth Flow login page.
-	 * Also new class is set for the login button.
-	 * Otherwise it sets url to the old Special:Login page.
-	 */
 	private function setupLoginLink() {
-		if ( $this->app->wg->EnableNewAuth ) {
-			$this->loginUrl = ( new UserLoginHelper() )->getNewAuthUrl();
-			$this->loginButtonClass = 'new-login';
-		}
-		else {
-			$this->loginUrl = SpecialPage::getTitleFor( 'UserLogin' )->getLocalURL();
-			$this->loginButtonClass = '';
-		}
+		$this->loginUrl = SpecialPage::getTitleFor( 'UserLogin' )->getLocalURL();
+		$this->loginButtonClass = 'new-login';
 	}
 
 	public function navMenu(){

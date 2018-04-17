@@ -449,6 +449,82 @@ class UserPreferencesV2 {
 		return true;
 	}
 
+	// get email authentication for Preferences::profilePreferences
+	public static function onGetEmailAuthentication( User &$user, IContextSource $context, &$disableEmailPrefs, &$emailauthenticated ) {
+		$optionNewEmail = $user->getNewEmail();
+		if ( $user->getEmail() || $optionNewEmail ) {
+			$emailTimestamp = $user->getEmailAuthenticationTimestamp();
+			$msgKeyPrefixEmail = ( empty( $optionNewEmail ) && !$emailTimestamp ) ? 'usersignup-user-pref-unconfirmed-' : 'usersignup-user-pref-';
+			if ( empty( $optionNewEmail ) && $emailTimestamp ) {
+				$lang = $context->getLanguage();
+				$displayUser = $context->getUser();
+				$time = $lang->userTimeAndDate( $emailTimestamp, $displayUser );
+				$d = $lang->userDate( $emailTimestamp, $displayUser );
+				$t = $lang->userTime( $emailTimestamp, $displayUser );
+				$emailauthenticated = $context->msg( $msgKeyPrefixEmail . 'emailauthenticated', $time, $d, $t )->parse() . '<br />';
+				$disableEmailPrefs = false;
+			} else {
+				$disableEmailPrefs = true;
+				$emailauthenticated = $context->msg( $msgKeyPrefixEmail . 'emailnotauthenticated', array( $optionNewEmail ) )->parse() . '<br />' .
+									  Linker::linkKnown(
+										  SpecialPage::getTitleFor( 'Confirmemail' ),
+										  $context->msg( 'usersignup-user-pref-emailconfirmlink' )->escaped()
+									  ) . '<br />';
+			}
+		} else {
+			$disableEmailPrefs = true;
+			$emailauthenticated = $context->msg( 'usersignup-user-pref-noemailprefs' )->escaped();
+		}
+
+		return true;
+	}
+
+	// set user email for Preferences::trySetUserEmail
+	public static function onSetUserEmail( User $user, $newEmail, &$result, &$info ) {
+		$app = F::app();
+		$oldEmail = $user->getEmail();
+		$optionNewEmail = $user->getNewEmail();
+		if ( ( empty( $optionNewEmail ) &&  $newEmail != $oldEmail ) || ( !empty( $optionNewEmail ) &&  $newEmail != $optionNewEmail ) ) {
+			$user->setNewEmail( $newEmail );
+			$user->invalidateEmail();
+			if ( $app->wg->EmailAuthentication ) {
+				$result = static::sendReconfirmationEmail( $user, $newEmail );
+				if ( $result->isGood() ) {
+					$info = 'eauth';
+				}
+			}
+		} elseif ( $newEmail != $oldEmail ) { // if the address is the same, don't change it
+			$user->setEmail( $newEmail );
+		}
+
+		return true;
+	}
+
+	/**
+	 * Send reconfirmation email to the email address without saving that email address
+	 *
+	 * @param User $user
+	 * @param string $email
+	 * @param string $type
+	 *
+	 * @return Status object
+	 */
+	private static function sendReconfirmationEmail( &$user, $email, $type = 'change' ) {
+		$userId = $user->getId();
+		$userEmail = $user->getEmail();
+
+		$user->mId = 0;
+		$user->mEmail = $email;
+
+		$result = $user->sendReConfirmationMail();
+
+		$user->mId = $userId;
+		$user->mEmail = $userEmail;
+		$user->saveSettings();
+
+		return $result;
+	}
+
 	static public function moveToEndOfArray( $array, $key ) {
 		$temp[$key] = $array[$key];
 		unset( $array[$key] );

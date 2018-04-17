@@ -782,10 +782,6 @@ if (!empty($wgEnableLyricsTagExt)) {
 	include( "$IP/extensions/3rdparty/LyricWiki/Tag_Lyric.php" );
 }
 
-if ( !empty($wgEnablePiggybackExt ) ) {
-	include("$IP/extensions/wikia/Piggyback/Piggyback.php");
-}
-
 if ( !empty( $wgEnableHealthCheckExt ) ) {
 	include( "$IP/extensions/wikia/SpecialHealthcheck/SpecialHealthcheck.php" );
 }
@@ -870,9 +866,6 @@ if ( !empty( $wgEnableDiscussions ) ) {
 if (!empty($wgEnableBlogArticles)) {
 	include( "$IP/extensions/wikia/Blogs/Blogs.php" );
 }
-
-
-include("$IP/extensions/wikia/UserLogin/UserLogin.setup.php");
 
 if( !empty($wgEnableUserPageRedirectsExt ) )  {
 	include ("$IP/extensions/wikia/UserPageRedirects/UserPageRedirects.setup.php");

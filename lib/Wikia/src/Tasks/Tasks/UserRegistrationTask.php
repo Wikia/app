@@ -6,7 +6,6 @@ use Hooks;
 use LogPage;
 use MemcachedPhpBagOStuff;
 use User;
-use UserLoginHelper;
 use UserRegistrationInfo;
 use WebRequest;
 use Wikia\Logger\Loggable;
@@ -17,9 +16,6 @@ use Wikia\Logger\Loggable;
 class UserRegistrationTask extends BaseTask {
 	use Loggable;
 
-	/** @var UserLoginHelper $userLoginHelper */
-	private $userLoginHelper;
-
 	/** @var MemcachedPhpBagOStuff $cache */
 	private $cache;
 
@@ -29,7 +25,6 @@ class UserRegistrationTask extends BaseTask {
 	public function __construct() {
 		global $wgMemc, $wgEmailAuthentication;
 
-		$this->userLoginHelper = new UserLoginHelper();
 		$this->cache = $wgMemc;
 		$this->isEmailAuthenticationRequired = $wgEmailAuthentication;
 	}
@@ -63,19 +58,6 @@ class UserRegistrationTask extends BaseTask {
 	private function sendConfirmationEmail( User $user, UserRegistrationInfo $userRegistrationInfo ) {
 		if ( $user->isEmailConfirmed() ) {
 			$this->info( 'User is already emailconfirmed, not sending email', [
-				'user_name' => $userRegistrationInfo->getUserName()
-			] );
-			return;
-		}
-
-		$memcKey = $this->userLoginHelper->getMemKeyConfirmationEmailsSent( $user->getId() );
-		$emailsSent = intval( $this->cache->get( $memcKey ) );
-
-		if ( $user->isEmailConfirmationPending() &&
-			 strtotime( $user->mEmailTokenExpires ) - strtotime( '+6 days' ) > 0 &&
-			 $emailsSent >= \UserLoginHelper::LIMIT_EMAILS_SENT
-		) {
-			$this->info( 'Confirmation email limit reached, not sending email', [
 				'user_name' => $userRegistrationInfo->getUserName()
 			] );
 			return;
