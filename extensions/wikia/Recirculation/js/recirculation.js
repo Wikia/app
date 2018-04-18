@@ -117,6 +117,7 @@ require([
 			controller: 'RecirculationApi',
 			method: 'getFandomPosts',
 			format: 'json',
+			type: 'get',
 			scriptPath: window.wgCdnApiUrl,
 			data: {
 				type: 'stories',
