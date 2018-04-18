@@ -65,13 +65,15 @@ RUN wget https://github.com/Wikia/wikidiff2/archive/1.4.1.tar.gz -O wikidiff2.ta
     && rm -r /tmp/wikidiff2
 
 # install PHP extensions required by MediaWiki that are provided by Docker base PHP image helper
-# simplexml: SimpleXMLElement is used by DesignSystem and PortableInfoboxBuilder extensions
 RUN docker-php-ext-install \
     bz2 \
     gd \
     mysqli \
     opcache \
-    simplexml
+    # simplexml: SimpleXMLElement is used by DesignSystem and PortableInfoboxBuilder extensions
+    simplexml \
+    # needed by RabbitMQ client
+    bcmath
 
 # expose volumes for app and config repositories clones
 ENV WIKIA_DOCROOT=/usr/wikia/slot1/current/src
