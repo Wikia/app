@@ -34,7 +34,8 @@ require([
 		recommendedPlaylist = videoDetails.recommendedVideoPlaylist || 'Y2RWCKuS',
 		videoTags = videoDetails.videoTags || '',
 		inAutoplayCountries = true, //geo.isProperGeo(instantGlobals.wgArticleVideoAutoplayCountries),
-		willAutoplay = isAutoplayEnabled() && inAutoplayCountries && !abTest.inGroup('FV_CLICK_TO_PLAY', 'CLICK_TO_PLAY'),
+		inFeaturedVideoClickToPlayABTest = abTest.inGroup('FV_CLICK_TO_PLAY', 'CLICK_TO_PLAY'),
+		willAutoplay = isAutoplayEnabled() && inAutoplayCountries && !inFeaturedVideoClickToPlayABTest,
 		slotTargeting = {
 			plist: recommendedPlaylist,
 			vtags: videoTags
@@ -99,7 +100,7 @@ require([
 			autoplay: willAutoplay,
 			selectedCaptionsLanguage: featuredVideoCookieService.getCaptions(),
 			settings: {
-				showAutoplayToggle: !abTest.inGroup('FV_CLICK_TO_PLAY', 'CLICK_TO_PLAY'),
+				showAutoplayToggle: !inFeaturedVideoClickToPlayABTest,
 				showQuality: true,
 				showCaptions: true
 			},
