@@ -88,7 +88,7 @@ class LCStoreDB implements \LCStore {
 		try {
 			$primaryKey = [ 'lc_prefix', 'lc_lang', 'lc_key' ];
 			foreach ( array_chunk( $this->batch, 500 ) as $rows ) {
-				$this->dbw->upsert( 'l10n_cache', $rows, [ $primaryKey ], [ 'lc_value' => 'VALUES(lc_value)' ], __METHOD__ );
+				$this->dbw->upsert( 'l10n_cache', $rows, [ $primaryKey ], [ 'lc_value = VALUES(lc_value)' ], __METHOD__ );
 			}
 			$this->writesDone = true;
 		} catch ( \DBQueryError $e ) {
