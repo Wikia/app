@@ -1427,6 +1427,34 @@ class CF_Container
         return $obj_list;
     }
 
+	/**
+	 * Execute self::list_objects recursively returning ALL objects in the current container.
+	 * Path filtering can be applied by passing $path argument
+	 *
+	 * Wikia change
+	 *
+	 * @see SUS-4536
+	 *
+	 * @param string $path <i>optional</i> only return results under "pathname"
+	 * @return string[] array of strings
+	 * @throws InvalidResponseException unexpected response
+	 */
+    function list_objects_recursively($path=NULL) {
+		$ret = [];
+
+		foreach( $this->list_objects( 0, null, null, $path ) as $object ) {
+			// treat "pl/images/timeline/" as a "subbucket" and iterate through items there
+			if ( endsWith( $object, '/' ) ) {
+				$ret = array_merge( $ret, $this->list_objects_recursively( $object ) );
+			}
+			else {
+				$ret[] = $object;
+			}
+		}
+
+		return $ret;
+    }
+
     /**
      * Return an array of Objects
      *

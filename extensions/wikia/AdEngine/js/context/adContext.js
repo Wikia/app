@@ -171,9 +171,10 @@ define('ext.wikia.adEngine.adContext', [
 			context.providers.evolve2 = geo.isProperGeo(instantGlobals.wgAdDriverEvolve2Countries);
 		}
 
-		if (geo.isProperGeo(instantGlobals.wgAdDriverTurtleCountries)) {
-			context.providers.turtle = true;
-		}
+		context.providers.turtle = adsGeo.isProperGeo(
+			instantGlobals.wgAdDriverTurtleCountries,
+			'wgAdDriverTurtleCountries'
+		);
 
 		context.opts.enableRemnantNewAdUnit = geo.isProperGeo(instantGlobals.wgAdDriverMEGACountries);
 

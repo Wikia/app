@@ -85,6 +85,11 @@ require([
 	}
 
 	function onJWDataLoaded(videoElementId, jwPlayerData) {
+		var shuffledPlaylist = jwPlayerData.playlist.sort(function () {
+			return .5 - Math.random();
+		});
+
+		jwPlayerData.playlist = shuffledPlaylist.slice(0, 5);
 		recommendedVideoData = jwPlayerData;
 		recommendedVideoElementId = videoElementId;
 
@@ -235,7 +240,9 @@ require([
 	}
 
 	function fetchJWVideoData(mediaId) {
-		return $.get(jwPlaylistDataUrl + mediaId);
+		var relatedMediaId = 'LnqN4iBt';
+
+		return $.get(jwPlaylistDataUrl + mediaId + '?related_media_id=' + relatedMediaId);
 	}
 
 	function expand() {
