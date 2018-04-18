@@ -163,6 +163,8 @@ class SitemapXmlController extends WikiaController {
 	}
 
 	private function generateSitemapIndex() {
+		global $wgCityId, $wgEnableDiscussions;
+
 		$out = '<?xml version="1.0" encoding="UTF-8"?>' . PHP_EOL;
 		$out .= '<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' . PHP_EOL;
 
@@ -181,6 +183,11 @@ class SitemapXmlController extends WikiaController {
 		for ( $page = 1; $page <= $otherPages; $page++ ) {
 			$url = $baseUrl . '/sitemap-newsitemapxml-others-p' . $page . '.xml';
 			$out .= '<sitemap><loc>' . $url . '</loc></sitemap>' . PHP_EOL;
+		}
+
+		if ($wgEnableDiscussions) {
+			$discussionsSitemapUrl = 'https://services.wikia.com/discussions-sitemap/sitemap/' . $wgCityId;
+			$out .= '<sitemap><loc>' . $discussionsSitemapUrl . '</loc></sitemap>' . PHP_EOL;
 		}
 
 		$out .= '</sitemapindex>' . PHP_EOL;
