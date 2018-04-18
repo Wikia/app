@@ -44,6 +44,9 @@ class SitemapXmlController extends WikiaController {
 		NS_TEMPLATE,
 		NS_HELP,
 		110,
+		500, // NS_BLOG_ARTICLE
+		502, // NS_BLOG_LISTING
+		828, // NS_MODULE
 		1100,
 		1200,
 		1202,
