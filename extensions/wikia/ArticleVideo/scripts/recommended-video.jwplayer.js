@@ -233,16 +233,24 @@ require([
 	}
 
 	function setupPlayer() {
-		fetchJWVideoData($unit.data('playlistId'))
-			.then(function (jwVideoData) {
+		fetchJWVideoData($unit.data('playlistId'), $unit.data('relatedMediaId'))
+			.done(function (jwVideoData) {
 				onJWDataLoaded(recommendedVideoElementId, jwVideoData);
 			});
 	}
 
-	function fetchJWVideoData(mediaId) {
-		var relatedMediaId = 'LnqN4iBt';
+	function fetchJWVideoData(mediaId, relatedMediaId) {
+		var deferred = $.Deferred();
 
-		return $.get(jwPlaylistDataUrl + mediaId + '?related_media_id=' + relatedMediaId);
+		$.get(jwPlaylistDataUrl + mediaId + '?related_media_id=' + relatedMediaId).then(function (data) {
+			deferred.resolve(data);
+		}).fail(function () {{
+			$.get(jwPlaylistDataUrl + mediaId).then(function (data) {
+				deferred.resolve(data);
+			});
+		}});
+
+		return deferred.promise();
 	}
 
 	function expand() {
