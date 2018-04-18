@@ -19,9 +19,7 @@ class AdEngine2ContextService {
 			$pageType = $wikiaPageType->getPageType();
 			$articleId = $title->getArticleID();
 			$hasFeaturedVideo =  !empty( $wg->EnableArticleFeaturedVideo ) &&
-				( ArticleVideoContext::isFeaturedVideoEmbedded( $articleId )  ||
-				// XW-4713 | Hide UAPs on pages running the Recommended Video ABTest
-				ArticleVideoContext::isRecommendedVideoAvailable( $articleId ) );
+				ArticleVideoContext::isFeaturedVideoEmbedded( $articleId );
 			// pages with featured video on mercury have no ATF slots
 			$delayBtf = ( $skinName === 'mercury' && $hasFeaturedVideo ) ? false : $wg->AdDriverDelayBelowTheFold;
 
