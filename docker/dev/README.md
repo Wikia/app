@@ -21,3 +21,6 @@ docker exec -it dev_php-wikia_1 bash
 ## Permissions
 
 To run unit tests set up the `app/tests/build` directory to be owned by `nobody:nogroup`.
+
+To rebuild localisation cache you need to have `cache` directory created at the same level as `app` and `config` git clones.
+`cache` directory should have `777` rights set up and have an empty file touched there.
