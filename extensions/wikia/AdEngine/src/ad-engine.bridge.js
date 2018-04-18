@@ -47,6 +47,7 @@ function init(
 
 	overrideSlotService(slotRegistry, legacyBtfBlocker);
 	updatePageLevelTargeting(legacyContext, pageLevelTargeting, skin);
+	syncSlotsStatus(slotRegistry, context.get('slots'));
 
 	const wikiIdentifier = legacyContext.get('targeting.wikiIsTop1000') ?
 		context.get('targeting.s1') : '_not_a_top1k_wiki';
@@ -81,6 +82,14 @@ function overrideSlotService(slotRegistry, legacyBtfBlocker) {
 	slotService.enable = (slotName) => {
 		legacyBtfBlocker.unblock(slotName);
 	};
+}
+
+function syncSlotsStatus(slotRegistry, slotsInContext) {
+	for (let slot in slotsInContext) {
+		if (slotsInContext[slot].disabled) {
+			slotRegistry.disable(slot);
+		}
+	}
 }
 
 function unifySlotInterface(slot) {

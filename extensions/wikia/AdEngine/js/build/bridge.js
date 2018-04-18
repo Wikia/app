@@ -13765,7 +13765,7 @@ var big_fancy_ad_above_desktop_config_getConfig = function getConfig() {
 		adSlot: null,
 		slotParams: null,
 		updateNavbarOnScroll: null,
-
+		slotsToDisable: ['INVISIBLE_HIGH_IMPACT_2'],
 		slotsToEnable: ['BOTTOM_LEADERBOARD', 'INCONTENT_BOXAD_1', 'TOP_RIGHT_BOXAD'],
 
 		onInit: function onInit(adSlot, params) {
@@ -13840,13 +13840,13 @@ var big_fancy_ad_above_desktop_config_getConfig = function getConfig() {
 function big_fancy_ad_in_player_mobile_config_getConfig() {
 	return {
 		slotsToDisable: ['MOBILE_TOP_LEADERBOARD', 'BOTTOM_LEADERBOARD'],
-		slotsToEnable: ['MOBILE_INCONTENT', 'MOBILE_PREFOOTER']
+		slotsToEnable: ['MOBILE_IN_CONTENT', 'MOBILE_PREFOOTER']
 	};
 }
 // CONCATENATED MODULE: ./src/templates/big-fancy-ad-in-player-desktop-config.js
 function big_fancy_ad_in_player_desktop_config_getConfig() {
 	return {
-		slotsToDisable: ['TOP_LEADERBOARD', 'BOTTOM_LEADERBOARD'],
+		slotsToDisable: ['TOP_LEADERBOARD', 'BOTTOM_LEADERBOARD', 'INVISIBLE_HIGH_IMPACT_2'],
 		slotsToEnable: ['TOP_BOXAD', 'INCONTENT_BOXAD']
 	};
 }
@@ -14089,6 +14089,7 @@ function ad_engine_bridge_init(adTracker, geo, slotRegistry, mercuryListener, pa
 
 	overrideSlotService(slotRegistry, legacyBtfBlocker);
 	updatePageLevelTargeting(legacyContext, pageLevelTargeting, skin);
+	syncSlotsStatus(slotRegistry, ad_engine["context"].get('slots'));
 
 	var wikiIdentifier = legacyContext.get('targeting.wikiIsTop1000') ? ad_engine["context"].get('targeting.s1') : '_not_a_top1k_wiki';
 
@@ -14122,6 +14123,14 @@ function overrideSlotService(slotRegistry, legacyBtfBlocker) {
 	ad_engine["slotService"].enable = function (slotName) {
 		legacyBtfBlocker.unblock(slotName);
 	};
+}
+
+function syncSlotsStatus(slotRegistry, slotsInContext) {
+	for (var slot in slotsInContext) {
+		if (slotsInContext[slot].disabled) {
+			slotRegistry.disable(slot);
+		}
+	}
 }
 
 function unifySlotInterface(slot) {
