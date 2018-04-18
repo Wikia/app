@@ -8,9 +8,6 @@ class CachedLCStoreDB implements \LCStore {
 	/** @var \BagOStuff $cacheService */
 	private $cacheService;
 
-	/** @var string $cachePrefix */
-	private $cachePrefix;
-
 	/** @var LCStoreDB $lcStoreDb */
 	private $lcStoreDb;
 
@@ -20,16 +17,15 @@ class CachedLCStoreDB implements \LCStore {
 	/** @var array $keys */
 	private $keys;
 
-	public function __construct( \BagOStuff $cacheService, string $cachePrefix, LCStoreDB $lcStoreDb ) {
+	public function __construct( \BagOStuff $cacheService, LCStoreDB $lcStoreDb ) {
 		$this->cacheService = $cacheService;
-		$this->cachePrefix = $cachePrefix;
 		$this->lcStoreDb = $lcStoreDb;
 	}
 
 	public static function newDefault(): \LCStore {
 		global $wgLocalisationCachePrefix, $wgMemc;
 
-		return new CachedLCStoreDB( $wgMemc, $wgLocalisationCachePrefix, new LCStoreDB( $wgLocalisationCachePrefix ) );
+		return new CachedLCStoreDB( $wgMemc, new LCStoreDB( $wgLocalisationCachePrefix ) );
 	}
 
 	/**
@@ -99,10 +95,10 @@ class CachedLCStoreDB implements \LCStore {
 	}
 
 	private function getCacheKeyForList( string $langCode ): string {
-		return wfMemcKey( 'l10n', $this->cachePrefix, $langCode, 'l' );
+		return wfMemcKey( 'l10n', $langCode, 'l' );
 	}
 
 	private function getCacheKeyForMessage( string $langCode, string $key ): string {
-		return wfMemcKey( 'l10n', $this->cachePrefix, $langCode, 'k', $key );
+		return wfMemcKey( 'l10n', $langCode, 'k', $key );
 	}
 }
