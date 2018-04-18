@@ -70,6 +70,9 @@ RUN docker-php-ext-install \
     mysqli \
     opcache
 
+# setup php.ini for apache
+ADD ./php.ini /etc/php/7.0/apache2/php.ini
+
 # expose volumes for app and config repositories clones
 ENV WIKIA_DOCROOT=/usr/wikia/slot1/current/src
 ENV WIKIA_CONFIG_ROOT=/usr/wikia/slot1/current/config
