@@ -15,7 +15,7 @@ class CachedLCStoreDBTest extends TestCase {
 		parent::setUp();
 
 		$this->dbMock = $this->createMock( LCStoreDB::class );
-		$this->lcStore = new CachedLCStoreDB( new \HashBagOStuff(), $this->dbMock );
+		$this->lcStore = new CachedLCStoreDB( new \HashBagOStuff(), 'test-prefix', $this->dbMock );
 	}
 
 	public function testPersistData() {

@@ -86,13 +86,9 @@ class LCStoreDB implements \LCStore {
 
 		$this->dbw->begin( __METHOD__ );
 		try {
-			$this->dbw->delete(
-				'l10n_cache',
-				[ 'lc_prefix' => $this->localisationCachePrefix, 'lc_lang' => $this->currentLang ],
-				__METHOD__
-			);
+			$primaryKey = [ 'lc_prefix', 'lc_lang', 'lc_key' ];
 			foreach ( array_chunk( $this->batch, 500 ) as $rows ) {
-				$this->dbw->insert( 'l10n_cache', $rows, __METHOD__ );
+				$this->dbw->upsert( 'l10n_cache', $rows, [ $primaryKey ], [ 'lc_value = VALUES(lc_value)' ], __METHOD__ );
 			}
 			$this->writesDone = true;
 		} catch ( \DBQueryError $e ) {
