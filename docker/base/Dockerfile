@@ -71,7 +71,7 @@ RUN docker-php-ext-install \
     opcache
 
 # setup php.ini for apache
-ADD ./php.ini /etc/php/7.0/apache2/php.ini
+ADD ./php.ini /usr/local/etc/php/php.ini
 
 # expose volumes for app and config repositories clones
 ENV WIKIA_DOCROOT=/usr/wikia/slot1/current/src
