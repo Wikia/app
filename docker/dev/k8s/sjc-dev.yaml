@@ -28,7 +28,7 @@ spec:
             - name: WIKIA_ENVIRONMENT
               value: "dev"
             - name: WIKIA_DEV_DOMAIN
-              value: "wiki.poz-dev.k8s.wikia.net"
+              value: "wiki.sjc-dev.k8s.wikia.net"
 ---
 apiVersion: v1
 kind: Service
@@ -47,14 +47,14 @@ metadata:
   name: php-nginx-test-ingress
 spec:
   rules:
-    - host: "*.wiki.poz-dev.k8s.wikia.net"
+    - host: "*.wiki.sjc-dev.k8s.wikia.net"
       http:
         paths:
           - path: /
             backend:
               serviceName: nginx-wikia-dev
               servicePort: 8080
-    - host: "wiki.poz-dev.k8s.wikia.net"
+    - host: "wiki.sjc-dev.k8s.wikia.net"
       http:
         paths:
           - path: /
