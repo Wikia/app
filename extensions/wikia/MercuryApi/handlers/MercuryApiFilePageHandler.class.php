@@ -19,12 +19,14 @@ class MercuryApiFilePageHandler {
 			$tidy = new tidy();
 			$tidy->parseString( $item['snippet'] );
 			$tidy->cleanRepair();
-			$item['snippet'] = array_reduce(
-				$tidy->body()->child,
-				function ( $acc, $child ) {
-					return $acc . $child->value;
-				}
-			);
+			if ( !empty( $tidy->body()->child ) ) {
+				$item['snippet'] = array_reduce(
+					$tidy->body()->child,
+					function ( $acc, $child ) {
+						return $acc . $child->value;
+					}
+				);
+			}
 
 			return $item;
 		}, $fileUsageData['fileList']);

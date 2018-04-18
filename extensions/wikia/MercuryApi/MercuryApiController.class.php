@@ -321,6 +321,8 @@ class MercuryApiController extends WikiaController {
 	 * @return void
 	 */
 	public function getPage() {
+		global $wgRecommendedVideoABTestPlaylist;
+
 		$cacheValidity = WikiaResponse::CACHE_STANDARD;
 
 		try {
@@ -387,9 +389,8 @@ class MercuryApiController extends WikiaController {
 							$data['article']['featuredVideo'] = $featuredVideo;
 						}
 
-						$recommendedVideoPlaylist = ArticleVideoContext::getRecommendedVideoPlaylistId( $title->getArticleID() );
-						if ( !empty( $recommendedVideoPlaylist ) ) {
-							$data['article']['recommendedVideoPlaylist'] = $recommendedVideoPlaylist;
+						if ( !empty( $wgRecommendedVideoABTestPlaylist ) ) {
+							$data['article']['recommendedVideoPlaylist'] = $wgRecommendedVideoABTestPlaylist;
 						}
 
 						if ( !$title->isContentPage() ) {

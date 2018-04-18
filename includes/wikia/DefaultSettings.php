@@ -325,7 +325,7 @@ $wgAutoloadClasses['RedirectService'] = $IP . '/includes/wikia/services/Redirect
 // services hooks
 $wgHooks['ArticleEditUpdates'][] = 'MediaQueryService::onArticleEditUpdates';
 $wgHooks['ArticlePurge'][] = 'ArticleService::onArticlePurge';
-$wgHooks['ArticleEditUpdates'][] = 'ArticleService::onArticleEditUpdates';
+$wgHooks['ArticleSaveComplete'][] = 'ArticleService::onArticleSaveComplete';
 $wgHooks['ArticleDeleteComplete'][] = 'PageStatsService::onArticleDeleteComplete';
 $wgHooks['ArticleSaveComplete'][] = 'PageStatsService::onArticleSaveComplete';
 
