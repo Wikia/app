@@ -66,8 +66,7 @@ class ChatController extends WikiaController {
 		$this->pathToContribsPage = SpecialPage::getTitleFor( 'Contributions', '$1' )->getFullURL();
 
 		// Adding a community-specific class to the body tag.
-		$skin = RequestContext::getMain()->getSkin();
-		$this->bodyClasses = $skin->getBodyClassForCommunity();
+		$this->bodyClasses = Sanitizer::escapeClass( "wiki-{$this->wg->DBname}" );
 
 		// Adding chatmoderator class to the body tag.
 		if ( $wgUser->isAllowed( Chat::CHAT_MODERATOR ) ) {
