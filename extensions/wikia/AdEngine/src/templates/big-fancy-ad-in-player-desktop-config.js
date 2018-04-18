@@ -3,6 +3,7 @@ export function getConfig() {
 		slotsToDisable: [
 			'TOP_LEADERBOARD',
 			'BOTTOM_LEADERBOARD',
+			'INVISIBLE_HIGH_IMPACT_2',
 		],
 		slotsToEnable: [
 			'TOP_BOXAD',

@@ -16,7 +16,9 @@ export const getConfig = () => ({
 	adSlot: null,
 	slotParams: null,
 	updateNavbarOnScroll: null,
-
+	slotsToDisable: [
+		'INVISIBLE_HIGH_IMPACT_2',
+	],
 	slotsToEnable: [
 		'BOTTOM_LEADERBOARD',
 		'INCONTENT_BOXAD_1',
