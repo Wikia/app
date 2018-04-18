@@ -4,6 +4,7 @@ require([
 //	'wikia.instantGlobals',
 	'wikia.cookies',
 	'wikia.tracker',
+	'wikia.abTest',
 	'ext.wikia.adEngine.adContext',
 	'wikia.articleVideo.featuredVideo.data',
 	'wikia.articleVideo.featuredVideo.ads',
@@ -16,6 +17,7 @@ require([
 //	instantGlobals,
 	cookies,
 	tracker,
+	abTest,
 	adContext,
 	videoDetails,
 	featuredVideoAds,
@@ -32,7 +34,7 @@ require([
 		recommendedPlaylist = videoDetails.recommendedVideoPlaylist || 'Y2RWCKuS',
 		videoTags = videoDetails.videoTags || '',
 		inAutoplayCountries = true, //geo.isProperGeo(instantGlobals.wgArticleVideoAutoplayCountries),
-		willAutoplay = isAutoplayEnabled() && inAutoplayCountries,
+		willAutoplay = isAutoplayEnabled() && inAutoplayCountries && !abTest.inGroup('FV_CLICK_TO_PLAY', 'CLICK_TO_PLAY'),
 		slotTargeting = {
 			plist: recommendedPlaylist,
 			vtags: videoTags
@@ -97,7 +99,7 @@ require([
 			autoplay: willAutoplay,
 			selectedCaptionsLanguage: featuredVideoCookieService.getCaptions(),
 			settings: {
-				showAutoplayToggle: true,
+				showAutoplayToggle: !abTest.inGroup('FV_CLICK_TO_PLAY', 'CLICK_TO_PLAY'),
 				showQuality: true,
 				showCaptions: true
 			},
