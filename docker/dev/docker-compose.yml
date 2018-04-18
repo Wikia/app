@@ -15,3 +15,9 @@ services:
       - ../../../app:/usr/wikia/slot1/current/src
       - ../../../config:/usr/wikia/slot1/current/config
       - ../../../cache:/usr/wikia/slot1/current/cache/messages
+    depends_on:
+      - memcached
+    environment:
+      - MEMCACHED_SERVER=memcached:11211
+  memcached:
+    image: memcached:alpine
