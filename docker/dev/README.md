@@ -11,3 +11,9 @@ Run:
 ```
 docker-compose up
 ```
+
+Then you can use `docker exec` to take a look inside the container:
+
+```
+docker exec -it dev_php-wikia_1 bash
+```

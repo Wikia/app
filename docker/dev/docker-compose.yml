@@ -14,4 +14,4 @@ services:
     volumes:
       - ../../../app:/usr/wikia/slot1/current/src
       - ../../../config:/usr/wikia/slot1/current/config
-      - ../../../cache:/usr/wikia/slot1/current/cache
+      - ../../../cache:/usr/wikia/slot1/current/cache/messages
