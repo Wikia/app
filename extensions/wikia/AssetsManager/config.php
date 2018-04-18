@@ -163,6 +163,8 @@ $config['adengine2_rabbit_mobile_js'] = [
 		'#group_adengine2_rabbit_js',
 		'//extensions/wikia/AdEngine/js/ml/n1/n1mInputParser.js',
 		'//extensions/wikia/AdEngine/js/ml/n1/n1mLogisticRegression.js',
+		'//extensions/wikia/AdEngine/js/ml/nivens/mobileNivensInputParser.js',
+		'//extensions/wikia/AdEngine/js/ml/nivens/mobileNivensLogisticRegression.js',
 	],
 ];
 
