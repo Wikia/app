@@ -12,6 +12,7 @@ import {
 import {
 	BigFancyAdAbove,
 	BigFancyAdBelow,
+	BigFancyAdInPlayer,
 	universalAdPackage,
 	isProperGeo,
 	getSamplingResults
@@ -26,7 +27,7 @@ import './ad-engine.bridge.scss';
 
 context.extend(config);
 
-const supportedTemplates = [BigFancyAdAbove, BigFancyAdBelow];
+const supportedTemplates = [BigFancyAdAbove, BigFancyAdBelow, BigFancyAdInPlayer];
 
 function init(
 	adTracker,
@@ -114,7 +115,9 @@ function unifySlotInterface(slot) {
 
 function loadCustomAd(fallback) {
 	return (params) => {
-		if (getSupportedTemplateNames().includes(params.type)) {
+		const isTemplateSupported = getSupportedTemplateNames().includes(params.type);
+
+		if (isTemplateSupported && params.slotName) {
 			if (params.slotName.indexOf(',') !== -1) {
 				params.slotName = params.slotName.split(',')[0];
 			}
@@ -127,6 +130,8 @@ function loadCustomAd(fallback) {
 			context.set(`slots.${slot.getSlotName()}.options.loadedProduct`, params.adProduct);
 
 			templateService.init(params.type, slot, params);
+		} else if (isTemplateSupported) {
+			templateService.init(params.type, null, params);
 		} else {
 			fallback(params);
 		}
