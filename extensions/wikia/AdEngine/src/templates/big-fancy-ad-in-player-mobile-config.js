@@ -5,7 +5,7 @@ export function getConfig() {
 			'BOTTOM_LEADERBOARD',
 		],
 		slotsToEnable: [
-			'MOBILE_INCONTENT',
+			'MOBILE_IN_CONTENT',
 			'MOBILE_PREFOOTER',
 		]
 	};
