@@ -11,17 +11,17 @@ class WikiFactoryLoader {
 	// Input variables used to identify wiki in HTTPD context
 
 	/** @var mixed $mServerName SERVER_NAME as provided by apache */
-	public $mServerName;
+	private $mServerName;
 	/** @var string $pathParams The part of the request path excluding the language code, without a leading slash */
 	private $pathParams = '';
 	/** @var string $langCode Language code given in request path, if present, without a leading slash  */
 	private $langCode = '';
 
 	// Input variables used to identify wiki in CLI (e.g. maintenance script) context
-	public $mCityID;
-	public $mCityDB;
+	private $mCityID;
+	private $mCityDB;
 
-	public $mWikiID, $mCityUrl, $mOldServerName;
+	private $mWikiID, $mCityUrl, $mOldServerName;
 	public $mAlternativeDomainUsed, $mCityCluster;
 	public $mDomain, $mVariables, $mIsWikiaActive, $mAlwaysFromDB;
 	public $mTimestamp, $mCommandLine;
