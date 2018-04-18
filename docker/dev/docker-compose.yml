@@ -1,18 +1,17 @@
-version: '2'
+version: '3'
 
 services:
   web:
     image: nginx:latest
     ports:
-      - "80:80"
+      - "80:8080"
     volumes:
-      - ./../../../app:/usr/wikia/slot1/current/src
       - ./site.conf:/etc/nginx/conf.d/default.conf
     depends_on:
       - php-wikia
   php-wikia:
-    build: .
+    image: php-wikia
     volumes:
-      - ./../../../app:/usr/wikia/slot1/current/src
-      - ./../../../config:/usr/wikia/slot1/current/config
-      - ./../../../cache/messages:/usr/wikia/slot1/current/cache/messages
+      - ../../../app:/usr/wikia/slot1/current/src
+      - ../../../config:/usr/wikia/slot1/current/ocnfig
+      - ../../../cache:/usr/wikia/slot1/current/cache

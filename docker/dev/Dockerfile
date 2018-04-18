@@ -15,9 +15,7 @@ ADD ./xdebug.ini /usr/local/etc/php/conf.d/
 # set environment variables
 ENV WIKIA_DATACENTER=poz
 ENV WIKIA_ENVIRONMENT=dev
-ENV WIKIA_DEV_DOMAIN=wikia-loc.com
-
-# RUN SERVER_ID=177 php /usr/wikia/slot1/current/src/maintenance/rebuildLocalisationCache.php
+ENV WIKIA_DEV_DOMAIN=wikia-local.com
 
 # we no longer need root's super-power
 USER nobody
