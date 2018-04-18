@@ -10,7 +10,7 @@ services:
     depends_on:
       - php-wikia
   php-wikia:
-    image: php-wikia-dev
+    image: php-wikia-dev:latest
     volumes:
       - ../../../app:/usr/wikia/slot1/current/src
       - ../../../config:/usr/wikia/slot1/current/config
@@ -19,5 +19,8 @@ services:
       - memcached
     environment:
       - MEMCACHED_SERVER=memcached:11211
+      - WIKIA_DATACENTER=poz
+      - WIKIA_ENVIRONMENT=dev
+      - WIKIA_DEV_DOMAIN=wikia-local.com
   memcached:
     image: memcached:alpine
