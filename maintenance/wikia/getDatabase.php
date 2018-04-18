@@ -36,9 +36,9 @@ if ( file_exists( $dirName . "/../../../config/DB.php" ) ) {
 	require_once( $dirName . "/../../../config/DB.php" );
 }
 
-if ( isset( $wgDBbackenduser, $wgDBbackendpassword, $wgDBdevboxUser, $wgDBdevboxPass ) ) {
+if ( isset( $wgDBbackenduser, $wgDBbackendpassword ) ) {
 	$prod = new mysqlwrapper($wgDBbackenduser, $wgDBbackendpassword, 'slave.db-sharedb.service.sjc.consul');
-	$dev = new mysqlwrapper($wgDBdevboxUser, $wgDBdevboxPass, $wgDBdevboxServer);
+	$dev = new mysqlwrapper($wgDBbackenduser, $wgDBbackendpassword, $wgDBdevboxServer);
 } else {
 	print "Error loading production database configuration\n";
 	exit;
