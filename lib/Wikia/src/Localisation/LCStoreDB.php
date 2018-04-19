@@ -44,6 +44,8 @@ class LCStoreDB implements \LCStore {
 	}
 
 	public function get( $code, $key ) {
+		wfProfileIn( __METHOD__ );
+
 		if ( $this->writesDone && $this->dbw ) {
 			$db = $this->dbw; // see the changes in finishWrite()
 		} else {
@@ -58,7 +60,10 @@ class LCStoreDB implements \LCStore {
 			__METHOD__
 		);
 
-		return ( $value !== false ) ? unserialize( $db->decodeBlob( $value ), [ 'allowed_classes' => false ] ) : null;
+		$ret =  ( $value !== false ) ? unserialize( $db->decodeBlob( $value ), [ 'allowed_classes' => false ] ) : null;
+
+		wfProfileOut( __METHOD__ );
+		return $ret;
 	}
 
 	public function startWrite( $code ) {

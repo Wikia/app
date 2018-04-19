@@ -39,6 +39,8 @@ class CachedLCStoreDB implements \LCStore {
 	 * @return string|null
 	 */
 	function get( $code, $key ) {
+		wfProfileIn( __METHOD__ );
+
 		$cacheKey = $this->getCacheKeyForMessage( $code, $key );
 		$value = $this->cacheService->get( $cacheKey );
 
@@ -47,6 +49,7 @@ class CachedLCStoreDB implements \LCStore {
 			$this->cacheService->set( $cacheKey, $value, static::CACHE_TTL );
 		}
 
+		wfProfileOut( __METHOD__ );
 		return $value;
 	}
 
