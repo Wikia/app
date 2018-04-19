@@ -70,7 +70,7 @@ RUN docker-php-ext-install \
     mysqli \
     opcache
 
-# setup php.ini for apache
+# setup php.ini globally
 ADD ./php.ini /usr/local/etc/php/php.ini
 
 # expose volumes for app and config repositories clones
