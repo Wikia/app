@@ -392,7 +392,7 @@ class MercuryApiController extends WikiaController {
 							// magicword, then Title::newFromText( $displayTitle ) will return null
 							$tempTitle = Title::newFromText( $displayTitle );
 							if ( !empty( $tempTitle ) && $tempTitle->isKnown() ) {
-								$displayTitle = Title::newFromText( $displayTitle )->getText();
+								$displayTitle = $tempTitle->getText();
 								$data['article']['displayTitle'] = $displayTitle;
 							}
 						}
