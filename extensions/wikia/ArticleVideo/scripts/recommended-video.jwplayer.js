@@ -82,6 +82,11 @@ require([
 	}
 
 	function onJWDataLoaded(videoElementId, jwPlayerData) {
+		var shuffledPlaylist = jwPlayerData.playlist.sort(function () {
+			return .5 - Math.random();
+		});
+
+		jwPlayerData.playlist = shuffledPlaylist.slice(0, 5);
 		recommendedVideoData = jwPlayerData;
 		recommendedVideoElementId = videoElementId;
 
@@ -213,14 +218,24 @@ require([
 	}
 
 	function setupPlayer() {
-		fetchJWVideoData($unit.data('playlistId'))
-			.then(function (jwVideoData) {
+		fetchJWVideoData($unit.data('playlistId'), $unit.data('relatedMediaId'))
+			.done(function (jwVideoData) {
 				onJWDataLoaded(recommendedVideoElementId, jwVideoData);
 			});
 	}
 
-	function fetchJWVideoData(mediaId) {
-		return $.get(jwPlaylistDataUrl + mediaId);
+	function fetchJWVideoData(mediaId, relatedMediaId) {
+		var deferred = $.Deferred();
+
+		$.get(jwPlaylistDataUrl + mediaId + '?related_media_id=' + relatedMediaId).then(function (data) {
+			deferred.resolve(data);
+		}).fail(function () {{
+			$.get(jwPlaylistDataUrl + mediaId).then(function (data) {
+				deferred.resolve(data);
+			});
+		}});
+
+		return deferred.promise();
 	}
 
 	function expand() {
