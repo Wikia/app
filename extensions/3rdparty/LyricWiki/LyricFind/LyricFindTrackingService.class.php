@@ -96,7 +96,7 @@ class LyricFindTrackingService extends WikiaObject {
 	 * Calls Lyric Display API and returns the response (see Http::request)
 	 *
 	 * @param string $trackId properly formatted "trackid" parameter for LyricFind API
-	 * @param int $count 'count' paramater passed to
+	 * @param int $count 'count' paramater passed to Lyric API
 	 * @return string|bool
 	 */
 	public static function callLyricDisplayApi( string $trackId, int $count ) {
