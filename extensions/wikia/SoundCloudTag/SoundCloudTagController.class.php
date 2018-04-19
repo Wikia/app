@@ -7,7 +7,6 @@ class SoundCloudTagController extends WikiaController {
 	const TAG_SOURCE_ALLOWED_PARAMS_WITH_DEFAULTS = [
 		'url' => '',
 		'color' => '',
-		'auto_play' => '',
 		'buying' => '',
 		'liking' => '',
 		'download' => '',
