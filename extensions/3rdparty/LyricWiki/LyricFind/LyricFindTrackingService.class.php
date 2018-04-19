@@ -141,7 +141,7 @@ class LyricFindTrackingService extends WikiaObject {
 
 		// get the code from API response
 		if ($resp !== false) {
-			wfDebug(__METHOD__ . ": API response - {$resp}\n")
+			wfDebug(__METHOD__ . ": API response - {$resp}\n");
 
 			$json = json_decode($resp, true);
 
