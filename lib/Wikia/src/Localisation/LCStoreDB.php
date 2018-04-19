@@ -43,15 +43,21 @@ class LCStoreDB implements \LCStore {
 		$this->localisationCachePrefix = $localisationCachePrefix;
 	}
 
-	public function get( $code, $key ) {
-		wfProfileIn( __METHOD__ );
-
+	private function getDB() : \DatabaseBase {
 		if ( $this->writesDone && $this->dbw ) {
 			$db = $this->dbw; // see the changes in finishWrite()
 		} else {
 			global $wgExternalSharedDB;
 			$db = wfGetDB( DB_SLAVE, [], $wgExternalSharedDB );
 		}
+
+		return $db;
+	}
+
+	public function get( $code, $key ) {
+		wfProfileIn( __METHOD__ );
+
+		$db = $this->getDB();
 
 		$value = $db->selectField(
 			'l10n_cache',
@@ -64,6 +70,23 @@ class LCStoreDB implements \LCStore {
 
 		wfProfileOut( __METHOD__ );
 		return $ret;
+	}
+
+	/**
+	 * Return the list of all messages that are kept in localisation cache in the database.
+	 *
+	 * @param string $code
+	 * @return string[]
+	 */
+	public function getAllKeys( $code ) : array {
+		wfProfileIn( __METHOD__ );
+
+		return $this->getDB()->selectFieldValues(
+			'l10n_cache',
+			'lc_key',
+			[ 'lc_prefix' => $this->localisationCachePrefix, 'lc_lang' => $code ],
+			__METHOD__
+		);
 	}
 
 	public function startWrite( $code ) {
