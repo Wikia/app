@@ -89,6 +89,10 @@ class ArticleVideoController extends WikiaController {
 				'playlistId',
 				$wgRecommendedVideoABTestPlaylist
 			);
+			$this->setVal(
+				'relatedMediaId',
+				ArticleVideoContext::getRelatedMediaIdForRecommendedVideo()
+			);
 		}
 	}
 }

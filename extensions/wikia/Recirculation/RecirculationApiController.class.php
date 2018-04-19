@@ -1,7 +1,7 @@
 <?php
 
 class RecirculationApiController extends WikiaApiController {
-	const ALLOWED_TYPES = ['recent_popular', 'vertical', 'community', 'curated', 'hero', 'category', 'latest', 'posts', 'all'];
+	const ALLOWED_TYPES = ['recent_popular', 'vertical', 'community', 'curated', 'hero', 'category', 'latest', 'posts', 'all', 'stories'];
 	const FANDOM_LIMIT = 5;
 
 	/**
@@ -22,18 +22,11 @@ class RecirculationApiController extends WikiaApiController {
 		$cityId = $this->getParamCityId();
 		$limit = $this->getParamLimit();
 		$fill = $this->getParamFill();
+		$slug = $this->getParamSlug();
 
 		$title = wfMessage( 'recirculation-fandom-title' )->plain();
-
-		if ( $type === 'curated' ) {
-			$dataService = new CuratedContentService();
-		} elseif ( $type === 'hero' || $type === 'category' || $type === 'latest' ) {
-			$dataService = new FandomDataService( $cityId, $type );
-		} else {
-			$dataService = new ParselyDataService( $cityId );
-		}
-
-		$posts = $dataService->getPosts( $type, $limit );
+		$dataService = $this->getDataServiceInstance($type, $cityId);
+		$posts = $dataService->getPosts( $type === 'stories' ? $slug : $type, $limit );
 
 		if ( $fill === 'true' && count( $posts ) < $limit ) {
 			$ds = new ParselyDataService( $cityId );
@@ -45,6 +38,20 @@ class RecirculationApiController extends WikiaApiController {
 			'title' => $title,
 			'posts' => $posts,
 		] );
+	}
+
+	private function getDataServiceInstance($type, $cityId) {
+		if ( $type === 'curated' ) {
+			$dataService = new CuratedContentService();
+		} elseif ( $type === 'hero' || $type === 'category' || $type === 'latest' ) {
+			$dataService = new FandomDataService( $cityId, $type );
+		} elseif ( $type === 'stories' ) {
+			$dataService = new CurationCMSService();
+		} else {
+			$dataService = new ParselyDataService( $cityId );
+		}
+
+		return $dataService;
 	}
 
 	public function getDiscussions() {
@@ -83,6 +90,10 @@ class RecirculationApiController extends WikiaApiController {
 		}
 
 		return $type;
+	}
+
+	private function getParamSlug() {
+		return $this->request->getVal( 'slug', null );
 	}
 
 	private function getParamFill() {
