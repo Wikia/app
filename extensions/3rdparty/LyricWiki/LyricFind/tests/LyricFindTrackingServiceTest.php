@@ -30,12 +30,7 @@ class LyricFindTrackingServiceTest extends WikiaBaseTest {
 	 * @param $expected
 	 */
 	public function testFormatTrackId($amgId, $gracenoteId, $title, $expected) {
-		$service = new LyricFindTrackingService();
-
-		$method = new ReflectionMethod('LyricFindTrackingService', 'formatTrackId');
-		$method->setAccessible(true);
-
-		$trackId = $method->invoke($service, [
+		$trackId = LyricFindTrackingService::formatTrackId([
 			'amg' => $amgId,
 			'gracenote' => $gracenoteId,
 			'title' => $title
