@@ -16,6 +16,6 @@ export default class TemplateRegistry {
 
 		templateService.register(BigFancyAdAbove, getBfaaConfig(mercuryListener));
 		templateService.register(BigFancyAdBelow, getBfabConfig());
-		templateService.register(BigFancyAdInPlayer, getBfpConfig);
+		templateService.register(BigFancyAdInPlayer, getBfpConfig());
 	}
 }

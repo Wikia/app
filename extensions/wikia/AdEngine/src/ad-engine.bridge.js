@@ -82,6 +82,9 @@ function overrideSlotService(slotRegistry, legacyBtfBlocker) {
 	slotService.enable = (slotName) => {
 		legacyBtfBlocker.unblock(slotName);
 	};
+	slotService.disable = (slotName) => {
+		slotRegistry.disable(slotName);
+	};
 }
 
 function syncSlotsStatus(slotRegistry, slotsInContext) {
