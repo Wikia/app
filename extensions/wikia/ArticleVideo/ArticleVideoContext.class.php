@@ -146,4 +146,24 @@ class ArticleVideoContext {
 			!WikiaPageType::isActionPage() &&
 			empty( self::isFeaturedVideoEmbedded( $pageId ) );
 	}
+
+	public static function getRelatedMediaIdForRecommendedVideo(): string {
+		$wg = F::app()->wg;
+
+		$relatedMediaId = [
+			'b2tPs4we' => 'BfX1X16j',
+			'ufzLA79x' => 'hpBoYVlX',
+			'BQwrCCwR' => 'O2hLKIci',
+			'PzmSVrS5' => 'MXqX3hnr',
+			'Z3Vzra8s' => 'Q31xhSnO',
+			'qYUWMfZP' => 'yesrrkst',
+			'X3TqEV0w' => 'Xw333ob1',
+			'KhkQyQT3' => 'WNcPjgNz',
+		];
+
+		// returns hardcoded mediaId or use `WNcPjgNz` if mapping doesn't exist
+		// this hack is only for AB test
+		return !empty( $relatedMediaId[$wg->RecommendedVideoABTestPlaylist] )
+			? $relatedMediaId[$wg->RecommendedVideoABTestPlaylist] : 'WNcPjgNz';
+	}
 }
