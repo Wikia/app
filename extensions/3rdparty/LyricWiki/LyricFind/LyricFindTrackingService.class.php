@@ -117,7 +117,7 @@ class LyricFindTrackingService extends WikiaObject {
 		wfDebug(__METHOD__ . ': ' . json_encode($data) . "\n");
 
 		$dbt = debug_backtrace( DEBUG_BACKTRACE_IGNORE_ARGS, 2 );
-		$callerName = isset( $dbt[1]['function']) ? $dbt[1]['function'] : 'unknown';
+		$callerName = isset( $dbt[1]['function'] ) ? $dbt[1]['function'] : 'unknown';
 
 		$ctx = Wikia\Tracer\WikiaTracer::instance()->getContext();
 		Wikia\Logger\WikiaLogger::instance()->info( 'Calling Lyric Display API', [
