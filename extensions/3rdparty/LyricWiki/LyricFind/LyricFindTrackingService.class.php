@@ -68,7 +68,7 @@ class LyricFindTrackingService extends WikiaObject {
 	 *
 	 * @param $data array containing amgid, gnlyricid and title of the lyric
 	 */
-	public function formatTrackId($data) {
+	public static function formatTrackId($data) {
 		$parts = [];
 
 		if (!empty($data['amg'])) {
@@ -104,7 +104,7 @@ class LyricFindTrackingService extends WikiaObject {
 		$status = Status::newGood();
 
 		// format trackid parameter
-		$trackId = $this->formatTrackId([
+		$trackId = self::formatTrackId([
 			'amg' => $amgId,
 			'gracenote' => $gracenoteId,
 			'title' => $title->getText()
@@ -190,10 +190,9 @@ class LyricFindTrackingService extends WikiaObject {
 		$isBlocked = false;
 		
 		$app = F::app();
-		$service = new LyricFindTrackingService();
 
 		// format trackid parameter
-		$trackId = $service->formatTrackId([
+		$trackId = self::formatTrackId([
 			'amg' => $amgId,
 			'gracenote' => $gracenoteId,
 			'title' => $pageTitleText
