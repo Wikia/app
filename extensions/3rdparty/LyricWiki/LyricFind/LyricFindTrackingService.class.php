@@ -100,7 +100,7 @@ class LyricFindTrackingService extends WikiaObject {
 	 * @return string|bool
 	 */
 	public static function callLyricDisplayApi( string $trackId, int $count ) {
-		global $wgLyricFindApiUrl, $wgLyricFindApiKeys, $wgRequest;
+		global $wgLyricFindApiUrl, $wgLyricFindApiKeys;
 
 		$url = $wgLyricFindApiUrl . '/lyric.do';
 		$data = [
