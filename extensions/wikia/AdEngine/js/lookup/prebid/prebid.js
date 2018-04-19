@@ -1,5 +1,7 @@
 /*global define*/
 define('ext.wikia.adEngine.lookup.prebid', [
+	'ext.wikia.adEngine.adContext',
+	'ext.wikia.adEngine.context.uapContext',
 	'ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker',
 	'ext.wikia.adEngine.lookup.prebid.adaptersPricesTracker',
 	'ext.wikia.adEngine.lookup.prebid.adaptersRegistry',
@@ -8,6 +10,8 @@ define('ext.wikia.adEngine.lookup.prebid', [
 	'ext.wikia.adEngine.lookup.lookupFactory',
 	'wikia.window'
 ], function (
+	adContext,
+	uapContext,
 	performanceTracker,
 	pricesTracker,
 	adaptersRegistry,
@@ -19,7 +23,9 @@ define('ext.wikia.adEngine.lookup.prebid', [
 	'use strict';
 	var adUnits = [],
 		biddersPerformanceMap = {},
-		prebidLoaded = false;
+		prebidLoaded = false,
+		prebidLazy = adContext.get('opts.isBLBLazyPrebidEnabled') && !uapContext.isFanTakeoverLoaded(),
+		prebidLazyLoaded = false;
 
 	function removeAdUnits() {
 		(win.pbjs.adUnits || []).forEach(function (adUnit) {
@@ -34,14 +40,13 @@ define('ext.wikia.adEngine.lookup.prebid', [
 		}
 
 		biddersPerformanceMap = performanceTracker.setupPerformanceMap(skin);
-		adUnits = helper.setupAdUnits(skin);
+		adUnits = helper.setupAdUnits(skin, prebidLazy ? 'pre' : 'off');
 
 		if (win.pbjs) {
 			win.pbjs._bidsReceived = [];
 		}
 
 		if (adUnits.length > 0) {
-
 			if (!prebidLoaded) {
 				win.pbjs.que.push(function () {
 					win.pbjs.bidderSettings = settings.create();
@@ -58,6 +63,27 @@ define('ext.wikia.adEngine.lookup.prebid', [
 		}
 
 		prebidLoaded = true;
+
+		if (prebidLazy) {
+			win.addEventListener('adengine.lookup.prebid.lazy', function () {
+				if (!prebidLazyLoaded) {
+					prebidLazyLoaded = true;
+
+					var adUnitsLazy = helper.setupAdUnits(skin, 'post');
+
+					if (adUnitsLazy.length > 0) {
+						win.pbjs.que.push(function () {
+							win.pbjs.requestBids({
+								adUnits: adUnitsLazy,
+								bidsBackHandler: onResponse
+							});
+						});
+
+						adUnits = adUnits.concat(adUnitsLazy);
+					}
+				}
+			});
+		}
 	}
 
 	function calculatePrices() {
