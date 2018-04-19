@@ -124,7 +124,7 @@ class LyricFindTrackingService extends WikiaObject {
 			'url' => !empty( $ctx['http_url'] ) ? $ctx['http_url'] : '',
 			'referer' => !empty( $ctx['http_referrer'] ) ? $ctx['http_referrer'] : '',
 			'trackid' => $trackId,
-			'clientIp' => !empty( $ctx['client_ip'] ) ? $ctx['client_ip'] : '',
+			'client_ip' => !empty( $ctx['client_ip'] ) ? $ctx['client_ip'] : '',
 			'initiator' => $callerName,
 			'timestamp' => wfTimestamp( TS_DB )
 		] );
