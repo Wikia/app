@@ -100,7 +100,7 @@ class LyricFindTrackingService extends WikiaObject {
 	 * @return string|bool
 	 */
 	public static function callLyricDisplayApi( string $trackId, int $count ) {
-		global $wgLyricFindApiUrl, $wgLyricFindApiKeys;
+		global $wgLyricFindApiUrl, $wgLyricFindApiKeys, $wgRequest;
 
 		$url = $wgLyricFindApiUrl . '/lyric.do';
 		$data = [
@@ -115,6 +115,19 @@ class LyricFindTrackingService extends WikiaObject {
 		];
 
 		wfDebug(__METHOD__ . ': ' . json_encode($data) . "\n");
+
+		$dbt = debug_backtrace( DEBUG_BACKTRACE_IGNORE_ARGS, 2 );
+		$callerName = isset( $dbt[1]['function']) ? $dbt[1]['function'] : 'unknown';
+
+		$ctx = Wikia\Tracer\WikiaTracer::instance()->getContext();
+		Wikia\Logger\WikiaLogger::instance()->info( 'Calling Lyric Display API', [
+			'url' => !empty( $ctx['http_url'] ) ? $ctx['http_url'] : '',
+			'referer' => !empty( $ctx['http_referrer'] ) ? $ctx['http_referrer'] : '',
+			'trackid' => $trackId,
+			'clientIp' => !empty( $ctx['client_ip'] ) ? $ctx['client_ip'] : '',
+			'initiator' => $callerName,
+			'timestamp' => wfTimestamp( TS_DB )
+		] );
 
 		return ExternalHttp::post($url, ['postData' => $data]);
 	}
