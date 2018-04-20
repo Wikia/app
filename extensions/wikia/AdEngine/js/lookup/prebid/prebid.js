@@ -24,7 +24,7 @@ define('ext.wikia.adEngine.lookup.prebid', [
 	var adUnits = [],
 		biddersPerformanceMap = {},
 		prebidLoaded = false,
-		withLazyLoading = adContext.get('opts.isBLBLazyPrebidEnabled') && !uapContext.isFanTakeoverLoaded(),
+		withLazyLoading = adContext.get('opts.isBLBLazyPrebidEnabled'),
 		isLazyLoaded = false;
 
 	function removeAdUnits() {
@@ -69,12 +69,14 @@ define('ext.wikia.adEngine.lookup.prebid', [
 		if (!isLazyLoaded) {
 			isLazyLoaded = true;
 
-			var adUnitsLazy = helper.setupAdUnits(skin, 'post');
+			if (!uapContext.isFanTakeoverLoaded()) {
+				var adUnitsLazy = helper.setupAdUnits(skin, 'post');
 
-			if (adUnitsLazy.length > 0) {
-				requestBids(adUnitsLazy, onResponse, false);
+				if (adUnitsLazy.length > 0) {
+					requestBids(adUnitsLazy, onResponse, false);
 
-				adUnits = adUnits.concat(adUnitsLazy);
+					adUnits = adUnits.concat(adUnitsLazy);
+				}
 			}
 		}
 	}
