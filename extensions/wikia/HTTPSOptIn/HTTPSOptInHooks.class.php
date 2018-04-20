@@ -14,8 +14,8 @@ class HTTPSOptInHooks {
 	];
 
 	public static function onGetPreferences( User $user, array &$preferences ): bool {
-		global $wgAllowHTTPS;
-		if ( !empty( $wgAllowHTTPS ) && $user->isAllowed( 'https-opt-in' ) ) {
+		global $wgServer;
+		if ( wfHttpsAllowedForURL( $wgServer ) && $user->isAllowed( 'https-opt-in' ) ) {
 			$preferences['https-opt-in'] = [
 				'type' => 'toggle',
 				'label-message' => 'https-opt-in-toggle',
@@ -29,10 +29,12 @@ class HTTPSOptInHooks {
 		global $wgDisableHTTPSDowngrade;
 		$basePath = $wikiVariables['basePath'];
 		$user = RequestContext::getMain()->getUser();
-		if ( startsWith( $basePath, 'http://' ) && self::userAllowedHTTPS( $user ) ) {
+		if ( startsWith( $basePath, 'http://' ) &&
+			self::httpsAllowed( $user, $basePath )
+		) {
 			$wikiVariables['basePath'] = wfHttpToHttps( $basePath );
 		} elseif ( startsWith( $basePath, 'https://' ) &&
-			!self::userAllowedHTTPS( $user ) &&
+			!self::httpsAllowed( $user, $basePath ) &&
 			empty( $wgDisableHTTPSDowngrade )
 		) {
 			$wikiVariables['basePath'] = wfHttpsToHttp( $basePath );
@@ -56,24 +58,24 @@ class HTTPSOptInHooks {
 		User $user, WebRequest $request, MediaWiki $mediawiki
 	): bool {
 		global $wgDisableHTTPSDowngrade;
+		$requestURL = $request->getFullRequestURL();
 		if ( WebRequest::detectProtocol() === 'http' &&
-			self::userAllowedHTTPS( $user )
+			self::httpsAllowed( $user, $requestURL )
 		) {
-			$output->redirect( wfHttpToHttps( $request->getFullRequestURL() ) );
+			$output->redirect( wfHttpToHttps( $requestURL ) );
 		} elseif ( WebRequest::detectProtocol() === 'https' &&
-			!self::userAllowedHTTPS( $user ) &&
+			!self::httpsAllowed( $user, $requestURL ) &&
 			empty( $wgDisableHTTPSDowngrade ) &&
 			!$request->getHeader( 'X-Wikia-WikiaAppsID' ) &&
 			!self::httpsEnabledTitle( $title )
 		) {
-			$output->redirect( wfHttpsToHttp( $request->getFullRequestURL() ) );
+			$output->redirect( wfHttpsToHttp( $requestURL ) );
 		}
 		return true;
 	}
 
-	private static function userAllowedHTTPS( User $user ): bool {
-		global $wgAllowHTTPS;
-		return !empty( $wgAllowHTTPS ) &&
+	private static function httpsAllowed( User $user, string $url ): bool {
+		return wfHttpsAllowedForURL( $url ) &&
 			$user->isAllowed( 'https-opt-in' ) &&
 			$user->getGlobalPreference( 'https-opt-in', false );
 	}

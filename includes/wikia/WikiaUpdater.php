@@ -37,6 +37,8 @@ class WikiaUpdater {
 			array( 'addField', 'watchlist', 'wl_wikia_addedtimestamp', $dir . 'patch-watchlist-improvements.sql', true ),
 			array( 'modifyField', 'recentchanges', 'rc_ip', $dir . 'patch-rc_ip-varbinary.sql', true ),
 			array( 'addField', 'recentchanges', 'rc_ip_bin',$dir . 'patch-rc_ip_bin.sql', true ), // SUS-3079
+			array( 'addField', 'video_info', 'video_id', $dir . 'patch-video_info_id.sql', true ), // SUS-4297
+			array( 'addField', 'video_info', 'provider', $dir . 'patch-video_info_provider.sql', true	), // SUS-4297
 			// SUS-805
 			array( 'dropField', 'ipblocks', 'ipb_by_text', $dir . 'patch-drop-ipb_by_text.sql', true ),
 
@@ -49,6 +51,7 @@ class WikiaUpdater {
 			array( 'dropIndex', 'ach_custom_badges', 'id',  $dir . 'patch-ach_custom_badges-drop-id.sql', true ), // SUS-3098
 			array( 'dropIndex', 'wall_related_pages', 'comment_id_idx',  $dir . 'patch-wall_related_pages-drop-comment_id_idx.sql', true ), // SUS-3096
 			array( 'dropIndex', 'wall_related_pages', 'page_id_idx_2',  $dir . 'patch-wall_related_pages-drop-page_id_idx_2.sql', true ), // SUS-3096
+			array( 'dropIndex', 'video_info', 'added_at',  $dir . 'patch-video_info-drop-added_at_idx.sql', true ), // SUS-4297
 
 			# functions
 			array( 'WikiaUpdater::do_page_wikia_props_update' ),
@@ -78,11 +81,11 @@ class WikiaUpdater {
 			array( 'dropField', 'cu_changes', 'cuc_user_text', $ext_dir . '/CheckUser/patch-cu_changes.sql', true ), // SUS-3080
 			array( 'WikiaUpdater::do_drop_table', 'tag_summary' ), // SUS-3066
 			array( 'WikiaUpdater::do_drop_table', 'sitemap_blobs' ), // SUS-3589
-			array( 'WikiaUpdater::do_clean_video_info_table' ), // SUS-3862
 			array( 'WikiaUpdater::removeUnusedGroups' ), // SUS-4169
 			array( 'WikiaUpdater::do_drop_table', 'objectcache' ), // SUS-4171
 			array( 'WikiaUpdater::doPageVoteCleanup' ), // SUS-3390 / SUS-4252
 			array( 'addIndex', 'page_vote', 'article_user_idx', $dir. 'patch-index-page_vote.sql', true ), // SUS-3390
+			array( 'addIndex', 'video_info', 'video_id', $dir. 'patch-index-video_info.sql', true ), //  SUS-4297
 		);
 
 		if ( $wgDBname === $wgExternalSharedDB ) {
@@ -223,16 +226,6 @@ class WikiaUpdater {
 
 		$databaseUpdater->output( "done.\n" );
 
-		wfWaitForSlaves();
-	}
-
-	public static function do_clean_video_info_table( DatabaseUpdater $databaseUpdater ) {
-		$dbw = $databaseUpdater->getDB();
-		$databaseUpdater->output( 'Removing video_info rows for premium video providers... ' );
-
-		$dbw->delete( 'video_info', [ 'premium' => 1 ], __METHOD__ );
-
-		$databaseUpdater->output( "done.\n" );
 		wfWaitForSlaves();
 	}
 

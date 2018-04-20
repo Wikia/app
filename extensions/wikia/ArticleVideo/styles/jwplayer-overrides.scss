@@ -9,9 +9,9 @@
 		display: none;
 	}
 
-	.wikia-jw-settings__plugin,
-	.wikia-jw-settings-button {
-		display: none!important;
+	.wikia-jw__plugin,
+	.wikia-jw--button {
+		display: none !important;
 	}
 
 	// if both .is-collapsed & is-collapsed-ready are added it means animation is in progress and we do not want to show controls

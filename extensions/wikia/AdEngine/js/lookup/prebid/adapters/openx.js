@@ -49,7 +49,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.openx',[
 					],
 					unit: 538735699
 				},
-				MOBILE_PREFOOTER: {
+				BOTTOM_LEADERBOARD: {
 					sizes: [
 						[300, 250],
 						[320, 50]

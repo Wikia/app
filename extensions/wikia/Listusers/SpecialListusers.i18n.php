@@ -385,6 +385,7 @@ $messages['lol'] = array(
 	'listusers-select-all' => 'crwdns65473:0crwdne65473:0',
 	'listusers-deselect-all' => 'crwdns65474:0crwdne65474:0',
 	'listusersstartingtext' => 'crwdns65447:0crwdne65447:0',
+	'listuserbyname' => 'crwdns76834:0crwdne76834:0',
 );
 
 $messages['nl'] = array(

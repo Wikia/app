@@ -41,16 +41,13 @@ table.TablePager { border: 1px solid gray;}
 	</li>
 	<li>
 		You can use "shortcuts" for wikia address (<strong>.wikia.com</strong>
-		will be added automaticly). For example food means food.wikia.com
+		will be added automatically). For example food means food.wikia.com
 	</li>
 	<li>
 		You can <a href="<?php echo $title->getFullUrl() ?>/add.variable"><strong>add a new variable</strong></a> to be managed by WikiFactory
 	</li>
 	<li>
-		You can start typing begining of domain name into input field below
-	</li>
-	<li>
-		You can use filters in the <a href="<?php echo $title->getFullUrl() ?>/metrics"><strong>metrics interface</strong></a>
+		You can start typing beginning of domain name into input field below
 	</li>
 </ul>
 <!-- e:short info -->

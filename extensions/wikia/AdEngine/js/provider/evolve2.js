@@ -28,7 +28,6 @@ define('ext.wikia.adEngine.provider.evolve2', [
 			MOBILE_TOP_LEADERBOARD:    {size: '320x50,320x100', wsrc: 'mobile_evolve'},
 			MOBILE_IN_CONTENT:         {size: '300x250', wsrc: 'mobile_evolve'},
 			MOBILE_PREFOOTER:          {size: '300x250', wsrc: 'mobile_evolve'},
-			MOBILE_BOTTOM_LEADERBOARD: {size: '300x250', wsrc: 'mobile_evolve'},
 			BOTTOM_LEADERBOARD:        {size: '300x250', wsrc: 'mobile_evolve'}
 		};
 

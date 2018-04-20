@@ -10,11 +10,11 @@ define('ext.wikia.recirculation.views.premiumRail', [
 
 	var options = {};
 
-	function render(data) {
+	function render(data, title) {
 		var curated = new CuratedHelper();
 
 		return curated.injectContent(data)
-			.then(renderTemplate('client/premiumRail.mustache'))
+			.then(renderTemplate('client/premiumRail.mustache', title))
 			.then(utils.waitForRail)
 			.then(function ($html) {
 				var $recirculationRail = $('#recirculation-rail');
@@ -31,9 +31,9 @@ define('ext.wikia.recirculation.views.premiumRail', [
 			});
 	}
 
-	function renderTemplate(templateName) {
+	function renderTemplate(templateName, title) {
 		return function (data) {
-			data.title = data.title || $.msg('recirculation-fandom-title');
+			data.title = $.msg(title);
 			data.items = data.items.slice(0, 5);
 			data.fandomHeartSvg = utils.fandomHeartSvg;
 			return utils.renderTemplateByName(templateName, data);

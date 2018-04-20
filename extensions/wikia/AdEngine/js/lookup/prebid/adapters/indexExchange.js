@@ -59,7 +59,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.indexExchange',[
 					id: '10',
 					siteID: 185055
 				},
-				MOBILE_PREFOOTER: {
+				BOTTOM_LEADERBOARD: {
 					sizes: [
 						[300, 250],
 						[320, 50]

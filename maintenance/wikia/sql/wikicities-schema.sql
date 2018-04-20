@@ -119,7 +119,7 @@ CREATE TABLE `city_list` (
   `city_useshared` tinyint(1) DEFAULT '1',
   `ad_cat` char(4) NOT NULL DEFAULT '',
   `city_flags` int(10) unsigned NOT NULL DEFAULT '0',
-  `city_cluster` varchar(255) DEFAULT NULL,
+  `city_cluster` varchar(255) NOT NULL,
   `city_last_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `city_vertical` int(11) NOT NULL DEFAULT '0',
   `city_founding_ip_bin` varbinary(16) DEFAULT NULL,
@@ -192,7 +192,9 @@ CREATE TABLE `city_variables` (
   `cv_value` text NOT NULL,
   PRIMARY KEY (`cv_variable_id`,`cv_city_id`),
   KEY `cv_city_id_archive` (`cv_city_id`),
-  KEY `cv_variable_id` (`cv_variable_id`,`cv_value`(300))
+  KEY `cv_variable_id` (`cv_variable_id`,`cv_value`(300)),
+  CONSTRAINT `fk_city_id` FOREIGN KEY (`cv_city_id`) REFERENCES `city_list` (`city_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `fk_cv_variable_id` FOREIGN KEY (`cv_variable_id`) REFERENCES `city_variables_pool` (`cv_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -289,22 +291,20 @@ DROP TABLE IF EXISTS `dumps`;
 CREATE TABLE `dumps` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `dump_wiki_id` int(9) NOT NULL,
-  `dump_wiki_dbname` varchar(64) NOT NULL,
-  `dump_wiki_url` varchar(255) NOT NULL,
   `dump_user_id` int(9) DEFAULT '0',
   `dump_hidden` enum('N','Y') DEFAULT 'N',
   `dump_closed` enum('N','Y') DEFAULT 'N',
   `dump_requested` datetime NOT NULL,
   `dump_completed` datetime DEFAULT NULL,
   `dump_hold` enum('N','Y') DEFAULT 'N',
-  `dump_errors` text,
+  `dump_errors` datetime DEFAULT NULL,
   `dump_compression` enum('gzip','7zip') NOT NULL DEFAULT 'gzip',
   PRIMARY KEY (`id`),
   KEY `dumps_ibfk_1` (`dump_wiki_id`),
   KEY `dumps_dump_requested_idx` (`dump_requested`),
   KEY `dumps_dump_completed_hold_idx` (`dump_completed`,`dump_hold`),
   CONSTRAINT `dumps_ibfk_1` FOREIGN KEY (`dump_wiki_id`) REFERENCES `city_list` (`city_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Table structure for table `founder_emails_event`
@@ -391,11 +391,11 @@ CREATE TABLE `messages_text` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Table structure for table `page`
+-- Table structure for table `page_to_be_removed`
 --
 
-DROP TABLE IF EXISTS `page`;
-CREATE TABLE `page` (
+DROP TABLE IF EXISTS `page_to_be_removed`;
+CREATE TABLE `page_to_be_removed` (
   `page_id` int(8) unsigned NOT NULL AUTO_INCREMENT,
   `page_namespace` int(11) NOT NULL,
   `page_title` varchar(255) CHARACTER SET latin1 COLLATE latin1_bin NOT NULL,
@@ -451,11 +451,11 @@ CREATE TABLE `phalanx` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Table structure for table `revision`
+-- Table structure for table `revision_to_be_removed`
 --
 
-DROP TABLE IF EXISTS `revision`;
-CREATE TABLE `revision` (
+DROP TABLE IF EXISTS `revision_to_be_removed`;
+CREATE TABLE `revision_to_be_removed` (
   `rev_id` int(8) unsigned NOT NULL AUTO_INCREMENT,
   `rev_page` int(8) unsigned NOT NULL,
   `rev_comment` tinyblob NOT NULL,
@@ -509,11 +509,11 @@ CREATE TABLE `spoofuser` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Table structure for table `text`
+-- Table structure for table `text_to_be_removed`
 --
 
-DROP TABLE IF EXISTS `text`;
-CREATE TABLE `text` (
+DROP TABLE IF EXISTS `text_to_be_removed`;
+CREATE TABLE `text_to_be_removed` (
   `old_id` int(8) unsigned NOT NULL AUTO_INCREMENT,
   `old_namespace` tinyint(2) unsigned NOT NULL DEFAULT '0',
   `old_title` varchar(255) CHARACTER SET latin1 COLLATE latin1_bin NOT NULL DEFAULT '',
@@ -665,4 +665,4 @@ CREATE TABLE `wikia_tasks_log` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
--- Dump completed on 2018-01-09 10:57:28
+-- Dump completed on 2018-03-26  9:30:25

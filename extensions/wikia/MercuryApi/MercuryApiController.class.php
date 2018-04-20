@@ -146,6 +146,7 @@ class MercuryApiController extends WikiaController {
 		$wikiVariables['localNav'] = $navigation;
 		$wikiVariables['vertical'] = WikiFactoryHub::getInstance()->getWikiVertical( $this->wg->CityId )['short'];
 		$wikiVariables['basePath'] = $this->wg->Server;
+		$wikiVariables['scriptPath'] = $this->wg->ScriptPath;
 
 		// Used to determine GA tracking
 		if ( !empty( $this->wg->IsGASpecialWiki ) ) {
@@ -305,7 +306,7 @@ class MercuryApiController extends WikiaController {
 
 		$data['article'] = [
 			'content' => $articleAsJson->content,
-			'media' => $articleAsJson->media
+			'heroImage' => $articleAsJson->heroImage
 		];
 
 		$wikiVariables = $this->prepareWikiVariables();
@@ -387,9 +388,13 @@ class MercuryApiController extends WikiaController {
 						}
 
 						if ( !$title->isContentPage() ) {
-							// Remove the namespace prefix from display title
-							$displayTitle = Title::newFromText( $displayTitle )->getText();
-							$data['article']['displayTitle'] = $displayTitle;
+							// Remove the namespace prefix from display title, note that if page uses DISPLAYTITLE
+							// magicword, then Title::newFromText( $displayTitle ) will return null
+							$tempTitle = Title::newFromText( $displayTitle );
+							if ( !empty( $tempTitle ) && $tempTitle->isKnown() ) {
+								$displayTitle = $tempTitle->getText();
+								$data['article']['displayTitle'] = $displayTitle;
+							}
 						}
 					}
 
@@ -534,7 +539,7 @@ class MercuryApiController extends WikiaController {
 	}
 
 	private function isSupportedByMercury( Title $title ) {
-		$nsList = [ NS_FILE, NS_CATEGORY ];
+		$nsList = [ NS_FILE, NS_CATEGORY, NS_PROJECT ];
 
 		if ( defined( 'NS_BLOG_ARTICLE' ) ) {
 			$nsList[] = NS_BLOG_ARTICLE;

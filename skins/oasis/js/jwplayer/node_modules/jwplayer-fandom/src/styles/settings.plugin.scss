@@ -1,38 +1,6 @@
 @import '../../node_modules/design-system/dist/scss/wds-variables/index';
 
 .wikia-jw-settings {
-	background-color: $wds-color-black;
-	border-radius: 4px;
-	bottom: 44px;
-	pointer-events: auto;
-	position: absolute;
-	right: 12px;
-
-	&__plugin {
-		display: none;
-		height: 100%;
-		left: 0;
-		position: absolute;
-		top: 0;
-		width: 100%;
-		z-index: 3;
-	}
-
-	&__list {
-		color: #fff;
-
-		li {
-			align-items: center;
-			cursor: pointer;
-			display: flex;
-			justify-content: space-between;
-
-			.jw-svg-icon {
-				margin: 0 17px 0 10px;
-			}
-		}
-	}
-
 	&__submenu {
 		color: #fff;
 		display: none;
@@ -67,27 +35,6 @@
 
 	&__list &__toggle {
 		padding: 4px 0;
-	}
-
-	// keep controlbar and play icon on mobile open when settings popover is open
-	&-open {
-		.jw-display, .jw-controlbar {
-			opacity: 1 !important;
-			visibility: visible !important;
-		}
-	}
-
-	&-open &-button::after {
-		border: 8px solid transparent;
-		border-top-color: $wds-color-black;
-		content: '';
-		display: block;
-		height: 0;
-		left: 50%;
-		margin-left: -8px;
-		position: absolute;
-		top: -1px;
-		width: 0;
 	}
 
 	&__back-icon {

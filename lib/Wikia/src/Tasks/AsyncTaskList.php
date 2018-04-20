@@ -33,6 +33,9 @@ class AsyncTaskList {
 	/** which config to grab when figuring out the executor (on the job queue side) */
 	const EXECUTOR_APP_NAME = 'mediawiki';
 
+	/** how long we're willing to wait for publishing to finish */
+	const ACK_WAIT_TIMEOUT_SECONDS = 3;
+
 	/** @var AbstractConnection connection to message broker */
 	protected $connection;
 
@@ -245,7 +248,7 @@ class AsyncTaskList {
 			'app' => self::EXECUTOR_APP_NAME,
 		];
 
-		if ( !in_array( $wgWikiaEnvironment, [ WIKIA_ENV_PROD, WIKIA_ENV_STAGING ] ) ) {
+		if ( $wgWikiaEnvironment != WIKIA_ENV_PROD ) {
 			$host = gethostname();
 			$executionMethod = 'http';
 
@@ -275,6 +278,8 @@ class AsyncTaskList {
 
 	/**
 	 * put this task list into the queue
+	 *
+	 * IMPORTANT: The provided channel must be in publish confirm mode
 	 *
 	 * @param AMQPChannel $channel channel to publish messages to, if part of a batch
 	 * @param string $priority which queue to add this task list to
@@ -329,7 +334,13 @@ class AsyncTaskList {
 			try {
 				$connection = $this->connection();
 				$channel = $connection->channel();
+				/*
+				 * Allow basic_publish to fail in case the connection is blocked by rabbit, due to insufficient resources.
+				 * https://www.rabbitmq.com/alarms.html
+				 */
+				$channel->confirm_select();
 				$channel->basic_publish( $message, '', $this->getQueue()->name() );
+				$channel->wait_for_pending_acks(self::ACK_WAIT_TIMEOUT_SECONDS);
 			} catch ( AMQPExceptionInterface $e ) {
 				$exception = $e;
 			}
@@ -437,6 +448,11 @@ class AsyncTaskList {
 		}
 
 		$channel = $connection->channel();
+		/*
+		 * Allow basic_publish to fail in case the connection is blocked by rabbit, due to insufficient resources.
+		 * https://www.rabbitmq.com/alarms.html
+		 */
+		$channel->confirm_select();
 		$exception = null;
 		$ids = [];
 
@@ -447,6 +463,7 @@ class AsyncTaskList {
 
 		try {
 			$channel->publish_batch();
+			$channel->wait_for_pending_acks(self::ACK_WAIT_TIMEOUT_SECONDS);
 		} catch ( AMQPExceptionInterface $e ) {
 			$exception = $e;
 		}

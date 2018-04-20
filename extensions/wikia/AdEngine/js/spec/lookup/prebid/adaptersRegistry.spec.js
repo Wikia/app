@@ -30,6 +30,7 @@ describe('adaptersRegistry', function () {
 			mocks.adapters.rubicon,
 			mocks.adapters.rubiconDisplay,
 			mocks.adapters.wikia,
+			mocks.adapters.wikiaVideo,
 			mocks.win
 		);
 	}
@@ -49,7 +50,8 @@ describe('adaptersRegistry', function () {
 				openx: new AdapterMock('openx', true),
 				pubmatic: new AdapterMock('pubmatic', true),
 				rubicon: new AdapterMock('rubicon', true),
-				wikia: new AdapterMock('wikia', true)
+				wikia: new AdapterMock('wikia', true),
+				wikiaVideo: new AdapterMock('wikiaVideo', true)
 			},
 			win: {
 				pbjs: {
@@ -77,7 +79,7 @@ describe('adaptersRegistry', function () {
 				mocks.adapters.openx,
 				mocks.adapters.pubmatic,
 				mocks.adapters.rubicon,
-				mocks.adapters.rubiconDisplay
+				mocks.adapters.rubiconDisplay,
 			];
 
 		expectedAdapters.forEach(function (adapter) {

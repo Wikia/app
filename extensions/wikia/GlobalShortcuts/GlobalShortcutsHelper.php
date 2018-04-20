@@ -63,21 +63,21 @@ class Helper {
 	public function addSpecialPageActions( array &$actions, array &$shortcuts ) {
 		$context = \RequestContext::getMain();
 		$pages = \SpecialPageFactory::getUsablePages( $context->getUser() );
-		$helper = new Helper();
 
-		$groups = [ ];
+		$groups = [];
+		/** @var \SpecialPage $page */
 		foreach ( $pages as $page ) {
 			if ( $page->isListed() ) {
 				$group = \SpecialPageFactory::getGroup( $page );
-				$actionId = 'special:' . $page->getName();
+				$actionId = mb_strtolower( 'special:' . $page->getName() );
 
-				$groups[$group][] = [
+				$groups[$group][$actionId] = [
 					'id' => $actionId,
 					'caption' => $page->getDescription(),
 					'href' => $page->getTitle()->getFullURL(),
 				];
 
-				$helper->addShortcutKeys( $actionId, $shortcuts );
+				$this->addShortcutKeys( $actionId, $shortcuts );
 			}
 		}
 

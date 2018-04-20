@@ -31,6 +31,12 @@ class PortableInfoboxMobileRenderService extends PortableInfoboxRenderService {
 			$output = '';
 		}
 
+		// Since portable infoboxes are rendered within ParserAfterTidy Hook, we can not be sure if this method will be
+		// invoked before or after infobox is rendered. If this method does not process PI html, markers related to
+		// template type parsing may be included in the result html and this may break our mobile application.
+		// See XW-4827
+		TemplateTypesParser::onParserAfterTidy( null, $output );
+
 		\Wikia\PortableInfobox\Helpers\PortableInfoboxDataBag::getInstance()->setFirstInfoboxAlredyRendered( true );
 
 		return $output;
@@ -93,6 +99,7 @@ class PortableInfoboxMobileRenderService extends PortableInfoboxRenderService {
 		}
 
 		$data = SanitizerBuilder::createFromType( 'image' )->sanitize( $data );
+
 		return parent::render( $templateName, $data );
 	}
 
@@ -121,7 +128,7 @@ class PortableInfoboxMobileRenderService extends PortableInfoboxRenderService {
 		$helper = $this->getImageHelper();
 		$template = '';
 
-		// In Mercury SPA content of the first infobox's hero module has been moved to the article header.
+		// In mobile-wiki SPA content of the first infobox's hero module has been moved to the article header.
 		$firstInfoboxAlredyRendered = \Wikia\PortableInfobox\Helpers\PortableInfoboxDataBag::getInstance()
 			->isFirstInfoboxAlredyRendered();
 

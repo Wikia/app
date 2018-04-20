@@ -4,6 +4,7 @@ require([
 //	'wikia.instantGlobals',
 	'wikia.cookies',
 	'wikia.tracker',
+	'wikia.abTest',
 	'ext.wikia.adEngine.adContext',
 	'wikia.articleVideo.featuredVideo.data',
 	'wikia.articleVideo.featuredVideo.ads',
@@ -16,6 +17,7 @@ require([
 //	instantGlobals,
 	cookies,
 	tracker,
+	abTest,
 	adContext,
 	videoDetails,
 	featuredVideoAds,
@@ -30,10 +32,13 @@ require([
 	var inNextVideoAutoplayCountries = true, //geo.isProperGeo(instantGlobals.wgArticleVideoNextVideoAutoplayCountries),
 		//Fallback to the generic playlist when no recommended videos playlist is set for the wiki
 		recommendedPlaylist = videoDetails.recommendedVideoPlaylist || 'Y2RWCKuS',
+		videoTags = videoDetails.videoTags || '',
 		inAutoplayCountries = true, //geo.isProperGeo(instantGlobals.wgArticleVideoAutoplayCountries),
-		willAutoplay = isAutoplayEnabled() && inAutoplayCountries,
+		inFeaturedVideoClickToPlayABTest = abTest.inGroup('FV_CLICK_TO_PLAY', 'CLICK_TO_PLAY'),
+		willAutoplay = isAutoplayEnabled() && inAutoplayCountries && !inFeaturedVideoClickToPlayABTest,
 		slotTargeting = {
-			plist: recommendedPlaylist
+			plist: recommendedPlaylist,
+			vtags: videoTags
 		},
 		responseTimeout = 2000,
 		bidParams;
@@ -95,10 +100,11 @@ require([
 			autoplay: willAutoplay,
 			selectedCaptionsLanguage: featuredVideoCookieService.getCaptions(),
 			settings: {
-				showAutoplayToggle: true,
+				showAutoplayToggle: !inFeaturedVideoClickToPlayABTest,
 				showQuality: true,
 				showCaptions: true
 			},
+			sharing: true,
 			mute: isFromRecirculation() ? false : willAutoplay,
 			related: {
 				time: 3,

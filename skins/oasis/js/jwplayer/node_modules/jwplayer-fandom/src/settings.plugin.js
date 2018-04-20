@@ -9,8 +9,9 @@ function wikiaJWPlayerSettingsPlugin(player, config, div) {
 	this.config = config;
 	this.documentClickHandler = this.documentClickHandler.bind(this);
 
-	this.container.classList.add('wikia-jw-settings__plugin');
+	this.container.classList.add('wikia-jw__plugin');
 	this.wikiaSettingsElement.classList.add('wikia-jw-settings');
+	this.wikiaSettingsElement.classList.add('wikia-jw');
 	this.addSettingsContent(this.wikiaSettingsElement);
 	this.container.appendChild(this.wikiaSettingsElement);
 
@@ -48,13 +49,13 @@ wikiaJWPlayerSettingsPlugin.prototype.addButton = function () {
 	settingsIcon.classList.add('jw-svg-icon');
 	settingsIcon.classList.add('jw-svg-icon-wikia-settings');
 
-	this.player.addButton(settingsIcon.outerHTML, this.config.i18n.settings, function () {
+	this.player.addButton(settingsIcon.outerHTML, this.config.i18n.settings, function (evt) {
 		if (!this.wikiaSettingsElement.style.display) {
-			this.open();
+			this.open(evt.currentTarget);
 		} else {
 			this.close();
 		}
-	}.bind(this), this.buttonID, 'wikia-jw-settings-button');
+	}.bind(this), this.buttonID, 'wikia-jw-button');
 };
 
 wikiaJWPlayerSettingsPlugin.prototype.removeButton = function () {
@@ -65,17 +66,21 @@ wikiaJWPlayerSettingsPlugin.prototype.removeButton = function () {
  * closes settings menu
  */
 wikiaJWPlayerSettingsPlugin.prototype.close = function () {
+	var playerContainer = this.player.getContainer();
+
 	this.showSettingsList();
 	this.container.style.display = null;
-	this.player.getContainer().classList.remove('wikia-jw-settings-open');
+	playerContainer.classList.remove('wikia-jw-open');
+	playerContainer.querySelector('.wikia-jw-button__open').classList.remove('wikia-jw-button__open');
 };
 
 /**
  * opens settings menu
  */
-wikiaJWPlayerSettingsPlugin.prototype.open = function () {
+wikiaJWPlayerSettingsPlugin.prototype.open = function (button) {
 	showElement(this.container);
-	this.player.getContainer().classList.add('wikia-jw-settings-open');
+	this.player.getContainer().classList.add('wikia-jw-open');
+	button.classList.add('wikia-jw-button__open');
 };
 
 /**
@@ -102,6 +107,7 @@ wikiaJWPlayerSettingsPlugin.prototype.showSettingsList = function () {
 };
 
 wikiaJWPlayerSettingsPlugin.prototype.addSettingsContent = function (div) {
+	div.classList.add('wikia-jw');
 	div.classList.add('wikia-jw-settings');
 	div.classList.remove('jw-reset');
 	div.classList.remove('jw-plugin');
@@ -124,7 +130,7 @@ wikiaJWPlayerSettingsPlugin.prototype.addSettingsContent = function (div) {
 wikiaJWPlayerSettingsPlugin.prototype.createSettingsListElement = function () {
 	var settingsList = document.createElement('ul');
 
-	settingsList.className = 'wikia-jw-settings__list wds-list';
+	settingsList.className = 'wikia-jw__list wds-list';
 
 	if (this.config.showQuality) {
 		settingsList.appendChild(this.createQualityButton());

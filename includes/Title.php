@@ -1297,44 +1297,22 @@ class Title {
 	}
 
 	/**
-	 * Get the base page name, i.e. the leftmost part before any slashes
+	 * Cut off the last subpage text
 	 *
 	 * @return String Base name
 	 */
 	public function getBaseText() {
-		$text = $this->getText();
 
 		if ( !MWNamespace::hasSubpages( $this->mNamespace ) ) {
-			return $text;
+			return $this->getText();
 		}
 
-		$slashPosition = mb_strpos( $text, '/' );
-
-		if ( $slashPosition === false ) {
-			return $text;
+		$parts = explode( '/', $this->getText() );
+		# Don't discard the real title if there's no subpage involved
+		if ( count( $parts ) > 1 ) {
+			unset( $parts[count( $parts ) - 1] );
 		}
-
-		return mb_substr( $text, 0, $slashPosition );
-	}
-
-	/**
-	 * Cut off the last subpage text
-	 * @return string
-	 */
-	public function getParentText() {
-		$text = $this->getText();
-
-		if ( !MWNamespace::hasSubpages( $this->mNamespace ) ) {
-			return $text;
-		}
-
-		$lastSlashPosition = mb_strrpos( $text, '/' );
-
-		if ( $lastSlashPosition === false ) {
-			return $text;
-		}
-
-		return mb_substr( $text, 0, $lastSlashPosition );
+		return implode( '/', $parts );
 	}
 
 	/**
@@ -2140,18 +2118,12 @@ class Title {
 			// This is from OutputPage::blockedPage
 			// Copied at r23888 by werdna
 
-			$id = $user->blockedBy();
+			$name = $user->blockedBy();
 			$reason = $user->blockedFor();
 			if ( $reason == '' ) {
 				$reason = wfMsg( 'blockednoreason' );
 			}
 			$ip = $user->getRequest()->getIP();
-
-			if ( is_numeric( $id ) ) {
-				$name = User::whoIs( $id );
-			} else {
-				$name = $id;
-			}
 
 			$link = '[[' . $wgContLang->getNsText( NS_USER ) . ":{$name}|{$name}]]";
 			$blockid = $block->getId();

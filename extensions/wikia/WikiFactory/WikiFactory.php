@@ -16,18 +16,6 @@ $wgExtensionCredits['other'][] = [
 	"author" => "[http://www.wikia.com/wiki/User:Eloy.wikia Krzysztof Krzyżaniak (eloy)]"
 ];
 
-if ( ! function_exists( "wfUnserializeHandler" ) ) {
-	/**
-	 * wfUnserializeErrorHandler
-	 *
-	 * @author Emil Podlaszewski <emil@wikia-inc.com>
-	 */
-	function wfUnserializeHandler( $errno, $errstr ) {
-		global $_variable_key, $_variable_value;
-		Wikia::log( __FUNCTION__, $_SERVER['SERVER_NAME'], "({$_variable_key}={$_variable_value}): {$errno}, {$errstr}" );
-	}
-}
-
 /**
  * define hooks for WikiFactory here
  */
@@ -401,12 +389,11 @@ class WikiFactory {
 			Wikia::log( __METHOD__, "", "WikiFactory is not used." );
 			return false;
 		}
-
-		if ( 'http://' != strpos($domain, 0, 7) ) {
+		if ( !preg_match( "^https?:\/\/", $domain ) ) {
 			$domain = 'http://' . $domain;
 		}
 
-		$retVal = WikiFactory::setVarByName("wgServer", $city_id, $domain, $reason);
+		$retVal = WikiFactory::setVarByName( "wgServer", $city_id, $domain, $reason );
 
 		static::clearDomainCache( $city_id );
 
@@ -794,29 +781,6 @@ class WikiFactory {
 					$dbw->update(
 						static::table("city_list"),
 						[ "city_title" => $value ],
-						[ "city_id" => $city_id ],
-						__METHOD__ );
-					break;
-
-				case "wgDBname":
-					#--- city_dbname
-					$dbw->update(
-						static::table("city_list"),
-						[ "city_dbname" => $value ],
-						[ "city_id" => $city_id ],
-						__METHOD__ );
-					break;
-
-				case "wgDBcluster":
-					/**
-					 * city_cluster
-					 *
-					 * city_cluster = null for first cluster
-					 * @todo handle deleting values of this variable
-					 */
-					$dbw->update(
-						static::table("city_list"),
-						[ "city_cluster" => $value ],
 						[ "city_id" => $city_id ],
 						__METHOD__ );
 					break;
@@ -1269,7 +1233,6 @@ class WikiFactory {
 				return "$protocol//" . $server . '.verify' . static::WIKIA_TOP_DOMAIN . $address;
 			case WIKIA_ENV_STABLE:
 				return "$protocol//" . $server . '.stable' . static::WIKIA_TOP_DOMAIN . $address;
-			case WIKIA_ENV_STAGING:
 			case WIKIA_ENV_PROD:
 				return sprintf( '%s//%s.%s%s', $protocol, $server, $wgWikiaBaseDomain, $address );
 			case WIKIA_ENV_SANDBOX:
@@ -1309,7 +1272,7 @@ class WikiFactory {
 	 * @param bool $master
 	 * @return object|false: database row with wiki params
 	 */
-	static public function getWikiByID( $id, $master = false ) {
+	static public function getWikiByID( int $id, $master = false ) {
 
 		if ( ! static::isUsed() ) {
 			Wikia::log( __METHOD__, "", "WikiFactory is not used." );
@@ -1498,7 +1461,7 @@ class WikiFactory {
 			return false;
 		}
 
-		set_error_handler( "wfUnserializeHandler" );
+		set_error_handler( 'WikiFactory::unserializeHandler' );
 		$_variable_key = "";
 		$_variable_value = "";
 		$data = unserialize( file_get_contents( $file ) );
@@ -1868,53 +1831,6 @@ class WikiFactory {
 			}
 		}
 		return $retVal;
-	}
-
-	/**
-	 * getFileCachePath
-	 *
-	 * build path to file based on id of wikia
-	 *
-	 *
-	 * @author eloy@wikia
-	 * @access public
-	 * @static
-	 *
-	 * @param integer	$city_id	identifier from city_list
-	 *
-	 * @return string: path to file or null if id is not a number
-	 */
-	static public function getFileCachePath( $city_id ) {
-		if ( is_null( $city_id ) || empty( $city_id ) ) {
-			return null;
-		}
-		wfProfileIn( __METHOD__ );
-
-		$intid = $city_id;
-		$strid = (string)$intid;
-		$path = "";
-		if ( $intid < 10 ) {
-			$path = sprintf( "%s/%d.ser", static::CACHEDIR, $intid );
-		}
-		elseif ( $intid < 100 ) {
-			$path = sprintf(
-				"%s/%s/%d.ser",
-				static::CACHEDIR,
-				substr($strid, 0, 1),
-				$intid
-			);
-		}
-		else {
-			$path = sprintf(
-				"%s/%s/%s/%d.ser",
-				static::CACHEDIR,
-				substr($strid, 0, 1),
-				substr($strid, 0, 2),
-				$intid
-			);
-		}
-		wfProfileOut( __METHOD__ );
-		return $path;
 	}
 
 	/**
@@ -3499,4 +3415,22 @@ class WikiFactory {
 		$db->freeResult( $dbResult );
 		return $result;
 	}
+        
+        /**
+         * unserializeErrorHandler
+         *
+         * @author Emil Podlaszewski <emil@wikia-inc.com>
+         */
+        static public function unserializeHandler( $errno, $errstr ) {
+                global $_variable_key, $_variable_value;
+                WikiaLogger::instance()->error(
+                        'WikiFactory unserialize error',
+                        [
+                            'variable_key' => $_variable_key,
+                            'variable_value' => $_variable_value,
+                            'errno' => $errno,
+                            'errstr' => $errstr
+                        ]
+                );
+        }
 };

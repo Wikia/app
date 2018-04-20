@@ -5,7 +5,7 @@ $messages['en'] = array(
 	'emailext-founder-active-subject' => '{{SITENAME}} is heating up!',
 	'emailext-founder-subject' => '$1 on {{SITENAME}} has been edited by $2',
 	'emailext-founder-anon-subject' => '$1 on {{SITENAME}} has been edited',
-	'emailext-founder-summary' => '[$1 $2] on [{{SERVER}} {{SITENAME}}] has been edited.',
+	'emailext-founder-summary' => '[$1 $2] on [{{SERVERCANONICAL}} {{SITENAME}}] has been edited.',
 	'emailext-founder-active-summary' => "Congratulations, there's a lot going on at {{SITENAME}} today! Here are some recent updates:",
 	'emailext-founder-body' => "This is [$1 $2]'s first edit on your wiki. Help them feel like they are a part of the community and encourage them to keep that good stuff coming!",
 	'emailext-founder-link-label' => 'Compare Changes',
@@ -482,14 +482,14 @@ $messages['ko'] = array(
 	'emailext-founder-newly-created-summary' => '귀하는 이제 [$1 $2]의 자랑스러운 설립자가 되셨습니다!',
 	'emailext-founder-share-header' => '공유하세요',
 	'emailext-founder-subject' => '$2 님이 {{SITENAME}}의 $1 문서를 편집했습니다',
-	'emailext-founder-summary' => '[{{SERVER}} {{SITENAME}}]의 [$1 $2] 문서에 편집이 있었습니다.',
+	'emailext-founder-summary' => '[{{SERVERCANONICAL}} {{SITENAME}}]의 [$1 $2] 문서에 편집이 있었습니다.',
 	'emailext-founder-visit-community' => '이제 지금까지 알려드렸던 팁을 참고해 자신만의 길로 나아가시면 됩니다! 혹시 추가적인 도움이 필요하시다면 [http://ko.community.wikia.com 위키아 중앙 커뮤니티]에 들러 도움을 구해 보세요!',
 );
 
 $messages['nl'] = array(
 	'emailext-founder-subject' => '$1 on {{SITENAME}} has been edited by $2',
 	'emailext-founder-anon-subject' => '$1 on {{SITENAME}} has been edited',
-	'emailext-founder-summary' => '[$1 $2] on [{{SERVER}} {{SITENAME}}] has been edited.',
+	'emailext-founder-summary' => '[$1 $2] on [{{SERVERCANONICAL}} {{SITENAME}}] has been edited.',
 	'emailext-founder-body' => 'This is [$1 $2]’s first edit on your wikia. Help them feel like they are a part of the community and encourage them to keep that good stuff coming!',
 	'emailext-founder-link-label' => 'Compare Changes',
 	'emailext-founder-footer-article' => "Head over to [$1 $2] to see what's new",

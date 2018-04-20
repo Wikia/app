@@ -84,23 +84,23 @@ $messages['qqq'] = array(
 $messages['de'] = array(
 	'wam-html-title' => 'Wiki-Aktivitätsmonitor (WAM)',
 	'wampage-header' => 'WAM',
-	'wampage-header-wam' => 'WAM-Punktzahl',
+	'wampage-header-wam' => 'WAM-Rang',
 	'wampage-header-faq' => 'Häufig gestellte Fragen',
 	'wampage-content' => 'Der WAM-Rang wird täglich für die 5.000 Top-Wikis berechnet und beinhaltet eine Platzierung innerhalb aller Top-Wikis, innerhalb der zugehörigen Kategorie und eine Punktzahl von 0 bis 100. Die WAM-Punktezahl reagiert auf aktuelle Themen, ändert sich oft und bildet die neuesten Trends auf FANDOM-Wikis ab.',
 	'wampage-faq' => '__NOTOC____NOEDITSECTION__
-===Wie wird die WAM-Punktzahl ermittelt?===
+===Wie wird der WAM-Rang ermittelt?===
 
-Die WAM-Punktzahl ist eine Kombination aus Netzverkehr, Aktivitätsgrad und Wachstumsrate. Wir können die genaue Zusammensetzung nicht offenlegen, da Wikis dies sonst ausnutzen könnten, um ihre Platzierung zu manipulieren. Du kannst dir sicher sein, dass wir alle wichtigen Daten miteinbezogen haben, die ein aktives, erfolgreiches Wiki ausmachen.
+Die WAM-Punktzahl setzt sich aus einer Kombination aus Traffic, Aktivität und Wachstum zusammen. Wir können die genaue Zusammensetzung nicht offenlegen, da Wikis dies sonst ausnutzen könnten, um ihre Platzierung zu manipulieren. Bleib ruhig, wir haben alle alle wichtigen Daten miteinbezogen, die ein aktives erfolgreiches Wiki ausmachen.
 
-===Warum sollte mir die WAM-Punktzahl nicht egal sein?===
+===Warum sollte mir der WAM-Rang nicht egal sein?===
 Wir von Fandom glauben daran, dass Wissen Macht ist. Wir gehen offen im Bezug auf Daten und Statistiken um, und WAM ist ein großer Schritt nach vorne beim Messen von Online-Gemeinschaften. Die WAM-Punktzahl ist ein Wert, mit dem Wiki-Gründer, -Administratoren und -Benutzer direkte Rückmeldung darüber haben, wo ihr Wiki momentan steht und welchen Unterschied ihre Arbeit macht.
 
-===Wie kann ich meine WAM-Punktzahl verbessern?===
+===Wie kann ich meinen WAM-Rang verbessern?===
 WAM ist ein komplexer Algorithmus und es gibt keine schnelle Möglichkeit, deine Platzierung oder Punktzahl umgehend zu verbessern. Es gibt jedoch Dinge, die du tun kannst [[w:c:de:hilfe:Benutzer_begeistern|um die Platzierung deines Wikis zu verbessern]]. Wikis mit einer großen Anzahl an Benutzern haben in der Regel eine relativ gute Platzierung. Dennoch kann man damit das System nicht austricksen - je authentischer und sinnvoller der Inhalt ist, desto eher wird er Leser ansprechen.
 
-	Wir empfehlen au-erdem, deine Benutzerschaft zu fragen, [[w:c:de:hilfe:Erschaffe_eine_Gemeinschaft|ob es Dinge am Wiki zu verbessern gibt]]. Beinhaltet die Navigation alle wichtigen Seiten? Gibt es genügend Videos und Bilder? Gibt es Lücken im Inhalt selbst? Solltest du Probleme haben, diese Fragen zu beantworten, [[w:c:de:hilfe:%C3%9Cbersicht|können wir dir weiterhelfen]].
+Wir empfehlen dir ebenfalls, deine Benutzerschaft zu fragen, [[w:c:de:hilfe:Erschaffe_eine_Gemeinschaft|ob es Dinge am Wiki zu verbessern gibt]]. Beinhaltet die Navigation alle wichtigen Seiten? Gibt es genügend Videos und Bilder? Gibt es Lücken im Inhalt selbst? Solltest du Probleme haben, diese Fragen zu beantworten, [[w:c:de:hilfe:%C3%9Cbersicht|können wir dir weiterhelfen]].
 
-===Wie weit gehen die Daten zurück, die für die WAM-Punktzahl verwendet werden?===
+===Wie weit gehen die Daten zurück, die für den WAM-Rang verwendet werden?===
 
 Die Daten gehen bis zum 1. Januar 2012 zurück.
 
@@ -116,12 +116,12 @@ Du darfst den WAM-Rang deines Wikis gerne dort anzeigen, bitten dich aber, dabei
 
 Dem Community-Team unter [mailto:support@fancom.com support@fancom.com].',
 	'wam-index-header-rank' => 'Rang',
-	'wam-index-header-score' => 'WAM-Punktzahl',
+	'wam-index-header-score' => 'WAM-Rang',
 	'wam-index-header-wiki-name' => 'URL',
 	'wam-index-header-vertical' => 'Hub',
 	'wam-index-header-vertical-rank' => 'Hub-Rang',
 	'wam-index-header-admins' => 'Admins',
-	'wampage-breadcrumb-back-to-wam' => 'Zurück zur WAM-Punktezahl',
+	'wampage-breadcrumb-back-to-wam' => 'Zurück zum WAM-Rang',
 	'wam-index-header-peak-rank' => 'Höchster Rang',
 	'wam-index-no-results' => 'Das von dir gesuchte Wiki ist für das von dir ausgewählte Datum nicht unter den Top 5000. Der WAM-Wert wird täglich aktualisiert - also schau bald wieder vorbei! Bei Fragen wende dich bitte an den [mailto:support@fandom.com FANDOM-Support].',
 	'wam-index-filter-search-placeholder' => 'Suche',
@@ -139,7 +139,7 @@ Dem Community-Team unter [mailto:support@fancom.com support@fancom.com].',
 	'wam-music' => 'Musik',
 	'wam-movies' => 'Filme',
 	'wampage-top-gainers-header' => 'Aufsteiger',
-	'wampage-subheader-wam' => 'Die Wiki-Aktivitätsmonitor-Punktezahl (WAM) zeigt an, wie aktiv und bekannt eine FANDOM-Community ist.',
+	'wampage-subheader-wam' => 'Der Wiki-Aktivitätsmonitor (WAM) zeigt an, wie aktiv und bekannt eine FANDOM-Community ist.',
 	'wampage-content-faq-link' => '[[$1|Häufig gestellte Fragen]]',
 	'wam-page-desc' => 'WAM Page',
 );

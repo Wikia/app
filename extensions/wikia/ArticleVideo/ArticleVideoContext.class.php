@@ -45,20 +45,35 @@ class ArticleVideoContext {
 				$logger->error( self::ARTICLE_VIDEO_ERROR_MESSAGE );
 			}
 
-			$details = json_decode(
-				Http::get(
-					'https://cdn.jwplayer.com/v2/media/' . $videoData['mediaId'],
-					1
-				),
-				true
+			$jwPlayerRequest = Http::get(
+				'https://cdn.jwplayer.com/v2/media/' . $videoData['mediaId'],
+				2,
+				[ 'returnInstance' => true ]
 			);
 
-			if ( empty( $details ) || empty( $details['playlist'] ) || empty( $details['playlist'][0] ) ) {
-				$logger->error( self::JWPLAYER_API_ERROR_MESSAGE );
+			$isOK = $jwPlayerRequest->status->isOK();
+			$memCacheKey = wfMemcKey( 'featured-video', $wg->cityId, $pageId );
+
+			$content = $jwPlayerRequest->getContent();
+
+			if ( !$isOK ) {
+				$content = F::app()->wg->Memc->get( $memCacheKey );
+			} else {
+				F::app()->wg->Memc->set( $memCacheKey, $content );
+			}
+
+			$details = json_decode( $content, true );
+
+			if ( empty( $details ) || empty( $details['playlist'] ) ||
+			     empty( $details['playlist'][0] )
+			) {
+				$logger->error( self::JWPLAYER_API_ERROR_MESSAGE,
+					[ 'isOK' => $isOK, 'statusCode' => $jwPlayerRequest->getStatus(), 'content' => $content ] );
 			} else {
 				$videoData = array_merge( $videoData, $details );
 
 				$videoData['duration'] = WikiaFileHelper::formatDuration( $details['playlist'][0]['duration'] );
+				$videoData['videoTags'] = $details['playlist'][0]['tags'];
 				$videoData['metadata'] = self::getVideoMetaData( $videoData );
 				$videoData['recommendedLabel'] = $wg->featuredVideoRecommendedVideosLabel;
 				$videoData['recommendedVideoPlaylist'] = $wg->recommendedVideoPlaylist;
@@ -122,26 +137,33 @@ class ArticleVideoContext {
 		return $isoTime;
 	}
 
-	/**
-	 * Returns related video data for given article title, empty array in case of no video
-	 *
-	 * @param string $title Prefixed article title (see: Title::getPrefixedDBkey)
-	 *
-	 * @return array Related video data, empty if not applicable
-	 */
-	public static function getRelatedVideoData( $title ) {
+	public static function isRecommendedVideoAvailable( int $pageId ): bool {
 		$wg = F::app()->wg;
-		$relatedVideos = $wg->articleVideoRelatedVideos;
 
-		if ( !empty( $wg->enableArticleRelatedVideo ) && !empty( $relatedVideos ) ) {
-			foreach ( $relatedVideos as $videoData ) {
-				if ( isset( $videoData['articles'], $videoData['videoId'] ) &&
-					in_array( $title, $videoData['articles'] ) ) {
-					return $videoData;
-				}
-			}
-		}
+		return !$wg->user->isLoggedIn() &&
+			$wg->Title->isContentPage() &&
+			!empty( $wg->RecommendedVideoABTestPlaylist ) &&
+			!WikiaPageType::isActionPage() &&
+			empty( self::isFeaturedVideoEmbedded( $pageId ) );
+	}
 
-		return [];
+	public static function getRelatedMediaIdForRecommendedVideo(): string {
+		$wg = F::app()->wg;
+
+		$relatedMediaId = [
+			'b2tPs4we' => 'BfX1X16j',
+			'ufzLA79x' => 'hpBoYVlX',
+			'BQwrCCwR' => 'O2hLKIci',
+			'PzmSVrS5' => 'MXqX3hnr',
+			'Z3Vzra8s' => 'Q31xhSnO',
+			'qYUWMfZP' => 'yesrrkst',
+			'X3TqEV0w' => 'Xw333ob1',
+			'KhkQyQT3' => 'WNcPjgNz',
+		];
+
+		// returns hardcoded mediaId or use `WNcPjgNz` if mapping doesn't exist
+		// this hack is only for AB test
+		return !empty( $relatedMediaId[$wg->RecommendedVideoABTestPlaylist] )
+			? $relatedMediaId[$wg->RecommendedVideoABTestPlaylist] : 'WNcPjgNz';
 	}
 }

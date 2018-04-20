@@ -170,12 +170,17 @@ class LocalisationCache {
 			}
 		}
 
-		wfDebug( get_class( $this ) . ": using store $storeClass\n" );
 		if ( !empty( $conf['storeDirectory'] ) ) {
 			$storeConf['directory'] = $conf['storeDirectory'];
 		}
 
-		$this->store = new $storeClass( $storeConf );
+		// Wikia change: allow to supply a factory method to instantiate the LCStore
+		if ( is_callable( $storeClass ) ) {
+			$this->store = $storeClass();
+		} else {
+			$this->store = new $storeClass( $storeConf );
+		}
+
 		foreach ( array( 'manualRecache', 'forceRecache' ) as $var ) {
 			if ( isset( $conf[$var] ) ) {
 				$this->$var = $conf[$var];

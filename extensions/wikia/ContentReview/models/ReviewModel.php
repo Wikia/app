@@ -214,7 +214,7 @@ class ReviewModel extends ContentReviewBaseModel {
 		$db = $this->getDatabaseForRead();
 
 		$content = ( new \WikiaSQL() )
-			->SELECT_ALL()
+			->SELECT( 'revision_id', 'wiki_id', 'page_id', 'submit_user_id', 'submit_time', 'review_start' )
 			->FROM( self::CONTENT_REVIEW_STATUS_TABLE )
 			->WHERE( 'wiki_id' )->EQUAL_TO( $wiki_id )
 			->AND_( 'page_id' )->EQUAL_TO( $page_id )
@@ -230,7 +230,7 @@ class ReviewModel extends ContentReviewBaseModel {
 		$db = $this->getDatabaseForRead();
 
 		$revisionInfo = ( new \WikiaSQL() )
-			->SELECT_ALL()
+			->SELECT( 'wiki_id', 'page_id', 'status', 'escalated' )
 			->FROM( self::CONTENT_REVIEW_STATUS_TABLE )
 			->WHERE( 'wiki_id' )->EQUAL_TO( $wikiId )
 			->AND_( 'page_id' )->EQUAL_TO( $pageId )

@@ -19,7 +19,7 @@ define('ext.wikia.adEngine.lookup.a9', [
 			},
 			mercury: {
 				MOBILE_IN_CONTENT: [[300, 250], [320, 480]],
-				MOBILE_PREFOOTER: [[320, 50], [300, 250]],
+				BOTTOM_LEADERBOARD: [[320, 50], [300, 250]],
 				MOBILE_TOP_LEADERBOARD: [[320, 50]]
 			}
 		},

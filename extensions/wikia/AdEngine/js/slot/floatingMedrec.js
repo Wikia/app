@@ -1,7 +1,7 @@
 /*global define Promise*/
 define('ext.wikia.adEngine.slot.floatingMedrec', [
 	'ext.wikia.adEngine.adContext',
-	'ext.wikia.adEngine.context.uapContext',
+	'ext.wikia.adEngine.bridge',
 	'ext.wikia.adEngine.slot.service.viewabilityHandler',
 	'wikia.document',
 	'wikia.log',
@@ -9,7 +9,7 @@ define('ext.wikia.adEngine.slot.floatingMedrec', [
 	'wikia.window'
 ], function (
 	adContext,
-	uapContext,
+	bridge,
 	viewabilityHandler,
 	doc,
 	log,
@@ -57,7 +57,7 @@ define('ext.wikia.adEngine.slot.floatingMedrec', [
 
 		function isUAPFloatingMedrecVisible() {
 			var isAdVisible = refreshInfo.adVisible && refreshInfo.refreshNumber !== 0;
-			return uapContext.isUapLoaded() && isAdVisible;
+			return bridge.universalAdPackage.isFanTakeoverLoaded() && isAdVisible;
 		}
 
 		function shouldSwitchModules(currentHeightPosition) {

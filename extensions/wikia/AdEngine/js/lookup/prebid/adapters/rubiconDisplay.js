@@ -58,7 +58,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.rubiconDisplay', [
 					siteId: 23565,
 					zoneId: 87671
 				},
-				MOBILE_PREFOOTER: {
+				BOTTOM_LEADERBOARD: {
 					sizes: [[300, 250], [320, 50]],
 					position: 'btf',
 					siteId: 23565,

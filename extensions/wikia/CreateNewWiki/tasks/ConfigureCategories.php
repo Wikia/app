@@ -51,7 +51,7 @@ class ConfigureCategories extends Task {
 		return $categories;
 	}
 
-	public function setVertical( $vertical, $cityId, WikiFactoryHub $wikiFactoryHubInstance ) {
+	public function setVertical( int $vertical, int $cityId, WikiFactoryHub $wikiFactoryHubInstance ) {
 		$wikiFactoryHubInstance->setVertical( $cityId, $vertical, "CW Setup" );
 		$this->debug( implode( ":", [ __METHOD__, "Wiki added to the vertical: {$vertical}" ] ) );
 	}

@@ -1,10 +1,11 @@
 /*global define, require*/
 define('ext.wikia.adEngine.provider.gpt.adSizeFilter', [
-	'ext.wikia.adEngine.context.uapContext',
+	'ext.wikia.adEngine.bridge',
+	'wikia.abTest',
 	'wikia.document',
 	'wikia.log',
 	'wikia.window'
-], function (uapContext, doc, log, win) {
+], function (bridge, abTest, doc, log, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.gpt.adSizeFilter',
@@ -26,13 +27,19 @@ define('ext.wikia.adEngine.provider.gpt.adSizeFilter', [
 			win.ads.context;
 	}
 
-	function removeUAPForFeaturedVideoPages(slotName, slotSizes) {
-		var adContext = getAdContext();
+	function removeFanTakeoverSizes(slotName, slotSizes) {
+		var adContext = getAdContext(),
+			recommendedVideoTestName = 'RECOMMENDED_VIDEO_AB',
+			hasRecommendedVideoABTestPlaylistOnOasis = win.wgRecommendedVideoABTestPlaylist,
+			hasRecommendedVideoABTestPlaylistOnMobile = win.M && win.M.getFromHeadDataStore &&
+				!!win.M.getFromHeadDataStore('wikiVariables.recommendedVideoPlaylist'),
+			runsRecommendedVideoABTest = abTest.getGroup(recommendedVideoTestName) &&
+				(hasRecommendedVideoABTestPlaylistOnOasis || hasRecommendedVideoABTestPlaylistOnMobile);
 
 		if (slotName.indexOf('TOP_LEADERBOARD') > -1 &&
 			adContext &&
 			adContext.targeting &&
-			adContext.targeting.hasFeaturedVideo
+			(adContext.targeting.hasFeaturedVideo || runsRecommendedVideoABTest)
 		) {
 			slotSizes = removeUAPFromSlotSizes(slotSizes);
 		}
@@ -48,25 +55,32 @@ define('ext.wikia.adEngine.provider.gpt.adSizeFilter', [
 		});
 	}
 
+	function getBottomLeaderboardSizes(slotSizes) {
+		var skin = getAdContext().targeting.skin;
+
+		if (bridge.universalAdPackage.isFanTakeoverLoaded()) {
+			return skin === 'oasis' ? [[728, 90], [3, 3]] : [[2, 2]];
+		}
+
+		return removeUAPFromSlotSizes(slotSizes);
+	}
+
 	function filterSizes(slotName, slotSizes) {
 		log(['filterSizes', slotName, slotSizes], 'debug', logGroup);
 
 		var context = getAdContext();
 
-		slotSizes = removeUAPForFeaturedVideoPages(slotName, slotSizes);
+		slotSizes = removeFanTakeoverSizes(slotName, slotSizes);
 
 		switch (true) {
 			case slotName.indexOf('TOP_LEADERBOARD') > -1:
 				return getNewSizes(slotSizes, doc.documentElement.offsetWidth, [[728, 90]]);
 			case slotName === 'INVISIBLE_SKIN':
 				return doc.documentElement.offsetWidth >= minSkinWidth ? slotSizes : [[1, 1]];
-			case slotName === 'BOTTOM_LEADERBOARD' && context.targeting.skin === 'oasis':
-				return getNewSizes(slotSizes, doc.getElementById('WikiaFooter').offsetWidth, [[728, 90]]);
 			case slotName === 'INCONTENT_BOXAD_1' && context.targeting.hasFeaturedVideo:
 				return [[300, 250]];
-			case slotName === 'MOBILE_BOTTOM_LEADERBOARD' ||
-				(slotName === 'BOTTOM_LEADERBOARD' && context.targeting.skin === 'mercury'):
-				return uapContext.isUapLoaded() ? [[2, 2]] : removeUAPFromSlotSizes(slotSizes);
+			case slotName === 'BOTTOM_LEADERBOARD':
+				return getBottomLeaderboardSizes(slotSizes);
 			default:
 				return slotSizes;
 		}

@@ -738,16 +738,19 @@ class GlobalTitle extends Title {
 	}
 
 	private function formatServer( string $server ): string {
-		if ( $this->usingHTTPS() ) {
+		if ( $this->usingHTTPS( $server ) ) {
 			$server = wfHttpToHttps( $server );
 		}
 
 		return \WikiFactory::getLocalEnvURL( $server );
 	}
 
-	private function usingHTTPS(): bool {
+	private function usingHTTPS( string $url = '' ): bool {
+		if ( empty( $url ) ) {
+			$url = WikiFactory::getVarValueByName( 'wgServer', $this->mCityId );
+		}
 		return WebRequest::detectProtocol() === 'https' &&
-			WikiFactory::getVarValueByName( 'wgAllowHTTPS', $this->mCityId );
+			wfHttpsAllowedForURL( $url );
 	}
 
 	/**

@@ -217,10 +217,10 @@ class ForumDumper {
 
 		// Truncate the strings if they are too big
 		if ( strlen( $parsedText ) > self::MAX_CONTENT_SIZE ) {
-			$parsedText = substr( $parsedText, 0, self::MAX_CONTENT_SIZE );
+			$parsedText = mb_strcut( $parsedText, 0, self::MAX_CONTENT_SIZE );
 		}
 		if ( strlen( $rawText ) > self::MAX_CONTENT_SIZE ) {
-			$rawText = substr( $rawText, 0, self::MAX_CONTENT_SIZE );
+			$rawText = mb_strcut( $rawText, 0, self::MAX_CONTENT_SIZE );
 		}
 
 		return [ $parsedText, $rawText, $title ];

@@ -17,8 +17,9 @@ class AdEngine2ContextService {
 			$adPageTypeService = new AdEngine2PageTypeService();
 			$wikiaPageType = new WikiaPageType();
 			$pageType = $wikiaPageType->getPageType();
-			$hasFeaturedVideo = !empty( $wg->EnableArticleFeaturedVideo )
-				&& ArticleVideoContext::isFeaturedVideoEmbedded( $title->getArticleID() );
+			$articleId = $title->getArticleID();
+			$hasFeaturedVideo =  !empty( $wg->EnableArticleFeaturedVideo ) &&
+				ArticleVideoContext::isFeaturedVideoEmbedded( $articleId );
 			// pages with featured video on mercury have no ATF slots
 			$delayBtf = ( $skinName === 'mercury' && $hasFeaturedVideo ) ? false : $wg->AdDriverDelayBelowTheFold;
 
@@ -47,6 +48,7 @@ class AdEngine2ContextService {
 					'pageFairDetectionUrl' => $pageFairDetectionUrl,
 					'pageFairRecovery' => ARecoveryModule::isPageFairRecoveryEnabled(),
 					'instartLogicRecovery' => ARecoveryModule::isInstartLogicRecoveryEnabled(),
+					// TODO remove after ADEN-6797 release
 					'prebidBidderUrl' => $prebidBidderUrl,
 					'isAdTestWiki' => $wg->AdDriverIsAdTestWiki,
 					'cdnApiUrl' => $wg->wgCdnApiUrl
