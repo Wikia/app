@@ -27,9 +27,9 @@ define('ext.wikia.adEngine.lookup.prebid.prebidHelper', [
 
 	function addAdUnits(adapterAdUnits) {
 		adapterAdUnits.forEach(function (adUnit) {
-			if (lazyLoad === 'off' ||
-				(lazyLoad === 'pre' && lazyLoadSlots.indexOf(adUnit.code) === -1) ||
-				(lazyLoad === 'post' && lazyLoadSlots.indexOf(adUnit.code) !== -1)) {
+			var isSlotLazy = lazyLoadSlots.indexOf(adUnit.code) !== -1;
+
+			if (lazyLoad === 'off' || (lazyLoad === 'pre' && !isSlotLazy) || (lazyLoad === 'post' && isSlotLazy)) {
 				adUnits.push(adUnit);
 			}
 		});
@@ -38,7 +38,7 @@ define('ext.wikia.adEngine.lookup.prebid.prebidHelper', [
 	function setupAdUnits(skin, mode) {
 		var adapters = adaptersRegistry.getAdapters();
 
-		lazyLoad = mode ? mode : lazyLoad;
+		lazyLoad = mode || lazyLoad;
 		adUnits = [];
 		adapters.forEach(function (adapter) {
 			if (adapter && adapter.isEnabled()) {

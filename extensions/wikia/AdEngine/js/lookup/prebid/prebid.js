@@ -24,8 +24,8 @@ define('ext.wikia.adEngine.lookup.prebid', [
 	var adUnits = [],
 		biddersPerformanceMap = {},
 		prebidLoaded = false,
-		prebidLazy = adContext.get('opts.isBLBLazyPrebidEnabled') && !uapContext.isFanTakeoverLoaded(),
-		prebidLazyLoaded = false;
+		withLazyLoading = adContext.get('opts.isBLBLazyPrebidEnabled') && !uapContext.isFanTakeoverLoaded(),
+		isLazyLoaded = false;
 
 	function removeAdUnits() {
 		(win.pbjs.adUnits || []).forEach(function (adUnit) {
@@ -40,7 +40,7 @@ define('ext.wikia.adEngine.lookup.prebid', [
 		}
 
 		biddersPerformanceMap = performanceTracker.setupPerformanceMap(skin);
-		adUnits = helper.setupAdUnits(skin, prebidLazy ? 'pre' : 'off');
+		adUnits = helper.setupAdUnits(skin, withLazyLoading ? 'pre' : 'off');
 
 		if (win.pbjs) {
 			win.pbjs._bidsReceived = [];
@@ -53,37 +53,43 @@ define('ext.wikia.adEngine.lookup.prebid', [
 				});
 			}
 
-			win.pbjs.que.push(function () {
-				removeAdUnits();
-				win.pbjs.requestBids({
-					adUnits: adUnits,
-					bidsBackHandler: onResponse
-				});
-			});
+			requestBids(adUnits, onResponse, true);
 		}
 
 		prebidLoaded = true;
 
-		if (prebidLazy) {
+		if (withLazyLoading) {
 			win.addEventListener('adengine.lookup.prebid.lazy', function () {
-				if (!prebidLazyLoaded) {
-					prebidLazyLoaded = true;
-
-					var adUnitsLazy = helper.setupAdUnits(skin, 'post');
-
-					if (adUnitsLazy.length > 0) {
-						win.pbjs.que.push(function () {
-							win.pbjs.requestBids({
-								adUnits: adUnitsLazy,
-								bidsBackHandler: onResponse
-							});
-						});
-
-						adUnits = adUnits.concat(adUnitsLazy);
-					}
-				}
+				lazyCall(skin, onResponse);
 			});
 		}
+	}
+
+	function lazyCall(skin, onResponse) {
+		if (!isLazyLoaded) {
+			isLazyLoaded = true;
+
+			var adUnitsLazy = helper.setupAdUnits(skin, 'post');
+
+			if (adUnitsLazy.length > 0) {
+				requestBids(adUnitsLazy, onResponse, false);
+
+				adUnits = adUnits.concat(adUnitsLazy);
+			}
+		}
+	}
+
+	function requestBids(adUnits, onResponse, withRemove) {
+		win.pbjs.que.push(function () {
+			if (withRemove) {
+				removeAdUnits();
+			}
+
+			win.pbjs.requestBids({
+				adUnits: adUnits,
+				bidsBackHandler: onResponse
+			});
+		});
 	}
 
 	function calculatePrices() {
