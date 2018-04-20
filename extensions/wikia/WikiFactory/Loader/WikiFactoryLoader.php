@@ -258,7 +258,7 @@ class WikiFactoryLoader {
 					$this->mCityID = $oRow->city_id;
 					$this->mWikiID =  $oRow->city_id;
 					$this->mIsWikiaActive = $oRow->city_public;
-					$this->mCityUrl = $oRow->city_url;
+					$this->mCityUrl = rtrim( $oRow->city_url, '/' );
 					$this->mCityDB   = $oRow->city_dbname;
 					$this->mCityCluster = $oRow->city_cluster;
 					$this->mTimestamp = $oRow->city_factory_timestamp;
@@ -302,7 +302,7 @@ class WikiFactoryLoader {
 
 					$this->mWikiID =  $oRow->city_id;
 					$this->mIsWikiaActive = $oRow->city_public;
-					$this->mCityUrl = $oRow->city_url;
+					$this->mCityUrl = rtrim( $oRow->city_url, '/' );
 					$this->mCityDB   = $oRow->city_dbname;
 					$this->mCityCluster = $oRow->city_cluster;
 					$this->mTimestamp = $oRow->city_factory_timestamp;

@@ -3335,7 +3335,7 @@ class WikiFactory {
 
 		$oRow = static::getWikiByID( $city_id, $master );
 
-		return isset( $oRow->city_url ) ? WikiFactory::getLocalEnvURL( $oRow->city_url ) : false;
+		return isset( $oRow->city_url ) ? WikiFactory::getLocalEnvURL( rtrim( $oRow->city_url, '/' ) ) : false;
 	}
 
 	/**
