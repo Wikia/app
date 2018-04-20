@@ -105,6 +105,16 @@ class LCStoreDB implements \LCStore {
 		$this->batch = [];
 	}
 
+	/**
+	 * @throws \DBQueryError
+	 */
+	private function writeBatch() {
+		$primaryKey = [ 'lc_prefix', 'lc_lang', 'lc_key' ];
+		$this->dbw->upsert( 'l10n_cache', $this->batch, [ $primaryKey ], [ 'lc_value = VALUES(lc_value)' ], __METHOD__ );
+
+		$this->batch = [];
+	}
+
 	public function finishWrite() {
 		if ( $this->readOnly ) {
 			return;
@@ -112,21 +122,8 @@ class LCStoreDB implements \LCStore {
 			throw new \MWException( __CLASS__ . ': must call startWrite() before finishWrite()' );
 		}
 
-		// Wikia: avoid "Warning: Error while sending QUERY packet"
-		$this->dbw->ping();
-
-		$this->dbw->begin( __METHOD__ );
 		try {
-			$this->dbw->delete(
-				'l10n_cache',
-				[ 'lc_lang' => $this->currentLang ],
-				__METHOD__
-			);
-
-			$primaryKey = [ 'lc_prefix', 'lc_lang', 'lc_key' ];
-			foreach ( array_chunk( $this->batch, 50 ) as $rows ) {
-				$this->dbw->upsert( 'l10n_cache', $rows, [ $primaryKey ], [ 'lc_value = VALUES(lc_value)' ], __METHOD__ );
-			}
+			$this->writeBatch();
 			$this->writesDone = true;
 		} catch ( \DBQueryError $e ) {
 			if ( $this->dbw->wasReadOnlyError() ) {
@@ -135,7 +132,6 @@ class LCStoreDB implements \LCStore {
 				throw $e;
 			}
 		}
-		$this->dbw->commit( __METHOD__ );
 
 		$this->currentLang = null;
 		$this->batch = [];
@@ -154,6 +150,12 @@ class LCStoreDB implements \LCStore {
 			'lc_key' => $key,
 			'lc_value' => $this->dbw->encodeBlob( serialize( $value ) )
 		];
+
+		// Wikia: write to database as we add new items here instead of when all processing is done
+		// avoid timeouts on database connections
+		if ( count( $this->batch ) > 100 ) {
+			$this->writeBatch();
+		}
 	}
 
 }
