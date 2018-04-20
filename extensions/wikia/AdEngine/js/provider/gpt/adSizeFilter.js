@@ -31,7 +31,7 @@ define('ext.wikia.adEngine.provider.gpt.adSizeFilter', [
 		var adContext = getAdContext(),
 			recommendedVideoTestName = 'RECOMMENDED_VIDEO_AB',
 			hasRecommendedVideoABTestPlaylistOnOasis = win.wgRecommendedVideoABTestPlaylist,
-			hasRecommendedVideoABTestPlaylistOnMobile = win.M &&
+			hasRecommendedVideoABTestPlaylistOnMobile = win.M && win.M.getFromHeadDataStore &&
 				!!win.M.getFromHeadDataStore('wikiVariables.recommendedVideoPlaylist'),
 			runsRecommendedVideoABTest = abTest.getGroup(recommendedVideoTestName) &&
 				(hasRecommendedVideoABTestPlaylistOnOasis || hasRecommendedVideoABTestPlaylistOnMobile);
