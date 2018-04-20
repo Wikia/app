@@ -142,7 +142,8 @@
 				'u': window.trackID || window.wgTrackID || 0,
 				's': window.skin,
 				'beacon': window.beacon_id || '',
-				'cb': Math.floor( Math.random() * 99999 )
+				'cb': Math.floor( Math.random() * 99999 ),
+				'pv_unique_id': window.pvUID
 			};
 
 			// Add data object to params object
