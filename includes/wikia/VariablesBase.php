@@ -3081,7 +3081,7 @@ $wgEnableMyHomeExt = true;
  * @see includes/wikia/parser/templatetypes/TemplateTypesParser.class.php
  * @var bool $wgEnableNavboxTemplateParsing
  */
-$wgEnableNavboxTemplateParsing = true;
+$wgEnableNavboxTemplateParsing = false;
 
 /**
  * Enable special parser handling for navigation templates.
