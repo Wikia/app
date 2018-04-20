@@ -3318,7 +3318,7 @@ class WikiFactory {
 
 		$oRow = static::getWikiByDB( $dbname, $master );
 
-		return isset( $oRow->city_url ) ? WikiFactory::getLocalEnvURL( $oRow->city_url ) : false;
+		return isset( $oRow->city_url ) ? WikiFactory::getLocalEnvURL( rtrim( $oRow->city_url, '/' ) ) : false;
 	}
 
 	/**
@@ -3488,7 +3488,7 @@ class WikiFactory {
 		$db->freeResult( $dbResult );
 		return $result;
 	}
-        
+
         /**
          * unserializeErrorHandler
          *
