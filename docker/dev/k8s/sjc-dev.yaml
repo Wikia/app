@@ -24,11 +24,11 @@ spec:
           image: artifactory.wikia-inc.com/sus/php-wikia-k8s:latest
           env:
             - name: WIKIA_DATACENTER
-              value: "poz"
+              value: "sjc"
             - name: WIKIA_ENVIRONMENT
               value: "dev"
             - name: WIKIA_DEV_DOMAIN
-              value: "wiki.sjc-dev.k8s.wikia.net"
+              value: "k8s.wikia-dev.us"
 ---
 apiVersion: v1
 kind: Service
@@ -39,7 +39,8 @@ spec:
     app: nginx-wikia-dev
   ports:
     - protocol: TCP
-      port: 8080
+      port: 80
+      targetPort: 8080
 ---
 apiVersion: extensions/v1beta1
 kind: Ingress
@@ -47,17 +48,10 @@ metadata:
   name: php-nginx-test-ingress
 spec:
   rules:
-    - host: "*.wiki.sjc-dev.k8s.wikia.net"
+    - host: "mediawiki.sjc-dev.k8s.wikia.net"
       http:
         paths:
           - path: /
             backend:
               serviceName: nginx-wikia-dev
-              servicePort: 8080
-    - host: "wiki.sjc-dev.k8s.wikia.net"
-      http:
-        paths:
-          - path: /
-            backend:
-              serviceName: nginx-wikia-dev
-              servicePort: 8080
+              servicePort: 80
