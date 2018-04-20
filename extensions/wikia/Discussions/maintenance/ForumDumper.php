@@ -51,6 +51,7 @@ class ForumDumper {
 	];
 
 	const COLUMNS_REVISION = [
+		"raw_content",
 		"content",
 	];
 
@@ -156,15 +157,15 @@ class ForumDumper {
 			->ON( 'rev_text_id', 'old_id' )
 			->WHERE( 'rev_page' )
 			->IN( $pageIds )
+			->AND_('rev_timestamp' )
+			->GREATER_THAN(20171020173917)
 			->runLoop( $dbh, function ( &$revisions, $row ) {
 				list( $parsedText, $plainText, $title ) = $this->getTextAndTitle( $row->rev_page );
 
 				$pages = $this->getPages();
 				$curPage = $pages[$row->rev_page];
 
-				$this->addRevision( [
-					"content" => $parsedText,
-				] );
+				$this->addRevision( $parsedText );
 			} );
 
 		return $this->revisions;
