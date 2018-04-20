@@ -33,13 +33,7 @@ class DumpForumData extends Maintenance {
 
 		$this->dumper = new Discussions\ForumDumper();
 
-		$this->setConnectinoEncoding();
-		$this->clearImportTables();
-		$this->dumpPages();
 		$this->dumpRevisions();
-		$this->dumpVotes();
-		$this->dumpFollows();
-		$this->dumpWallHistory();
 	}
 
 	private function setConnectinoEncoding() {
