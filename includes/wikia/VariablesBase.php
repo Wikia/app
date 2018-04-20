@@ -5662,7 +5662,7 @@ $wgMasterWaitTimeout = 10;
  * this equal to $wgMaxImageArea.
  * @var float $wgMaxAnimatedGifArea
  */
-$wgMaxAnimatedGifArea = 6e7; // 60 million pixels
+$wgMaxAnimatedGifArea = 1.25e7; // 12.5 million pixels
 
 /**
  * Maximum article size in kibibytes.
@@ -5694,7 +5694,7 @@ $wgMaxCredits = 0;
  * 12.5 million pixels or 3500x3500.
  * @var float $wgMaxImageArea
  */
-$wgMaxImageArea = 1.25e7; // 12.5 million pixels
+$wgMaxImageArea = 6e7; // 6 million pixels
 
 /**
  * Article IDs to maximize area for article content (e.g. hide rail module).
