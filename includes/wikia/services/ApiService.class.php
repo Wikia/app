@@ -48,17 +48,17 @@ class ApiService {
 	 * @return mixed API response
 	 */
 	static function foreignCall( string $dbName, array $params, string $endpoint = self::API, bool $setUser = false ) {
-		$hostName = self::getHostByDbName( $dbName );
+		$cityUrl = WikiFactory::DBtoUrl( $dbName );
 
-		// If hostName is empty, this would make a request to the current host.
-		if ( empty( $hostName ) ) {
+		// If city url is empty, this would make a request to the current host.
+		if ( empty( $cityUrl ) ) {
 			return false;
 		}
 
 		// request JSON format of API response
 		$params[ 'format' ] = 'json';
 
-		$url = "{$hostName}/{$endpoint}?" . http_build_query( $params );
+		$url = "{$cityUrl}{$endpoint}?" . http_build_query( $params );
 		wfDebug( __METHOD__ . ": {$url}\n" );
 
 		$options = [];
@@ -77,29 +77,6 @@ class ApiService {
 		}
 
 		return $res;
-	}
-
-	/**
-	 * Get domain for a wiki using given database name
-	 *
-	 * @param string $dbName database name
-	 *
-	 * @return string HTTP domain
-	 */
-	private static function getHostByDbName( string $dbName ): string {
-		global $wgDevelEnvironment, $wgDevDomain;
-
-		$hostName = WikiFactory::DBtoUrl( $dbName );
-
-		if ( !empty( $wgDevelEnvironment ) ) {
-			if ( strpos( $hostName, 'wikia.com' ) ) {
-				$hostName = str_replace( 'wikia.com', $wgDevDomain, $hostName );
-			} else {
-				$hostName = WikiFactory::getLocalEnvURL( $hostName );
-			}
-		}
-
-		return rtrim( $hostName, '/' );
 	}
 
 	/**

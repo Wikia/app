@@ -3305,10 +3305,10 @@ class WikiFactory {
 	}
 
 	/**
-	 * get url from dbname
+	 * get environment-ready url from dbname
 	 * @param string $dbname	name of database
 	 * @param boolean $master	use master or slave connection
-	 * @return url in city_list
+	 * @return url in city_list with sandbox/devbox subdomain added if needed
 	 */
 	static public function DBtoUrl( $dbname, $master = false ) {
 		if ( !static::isUsed() ) {
@@ -3318,14 +3318,14 @@ class WikiFactory {
 
 		$oRow = static::getWikiByDB( $dbname, $master );
 
-		return isset( $oRow->city_url ) ? $oRow->city_url : false;
+		return isset( $oRow->city_url ) ? WikiFactory::getLocalEnvURL( $oRow->city_url ) : false;
 	}
 
 	/**
-	 * get url from city_id
+	 * get environment-ready url from city_id
 	 * @param int $city_id	wiki id
 	 * @param boolean $master	use master or slave connection
-	 * @return url in city_list
+	 * @return url in city_list with sandbox/devbox subdomain added if needed
 	 */
 	static public function cityIDtoUrl( $city_id, $master = false ) {
 		if ( !static::isUsed() ) {
@@ -3335,7 +3335,7 @@ class WikiFactory {
 
 		$oRow = static::getWikiByID( $city_id, $master );
 
-		return isset( $oRow->city_url ) ? $oRow->city_url : false;
+		return isset( $oRow->city_url ) ? WikiFactory::getLocalEnvURL( $oRow->city_url ) : false;
 	}
 
 	/**

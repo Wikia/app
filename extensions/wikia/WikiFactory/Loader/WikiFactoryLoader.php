@@ -581,7 +581,7 @@ class WikiFactoryLoader {
 		# take some WF variables values from city_list
 		$this->mVariables["wgDBname"] = $this->mCityDB;
 		$this->mVariables["wgDBcluster"] = $this->mCityCluster;
-		$this->mVariables['wgServer'] = WikiFactory::cityUrlToDomain( $this->mCityUrl );
+		$this->mVariables['wgServer'] = WikiFactory::getLocalEnvURL( WikiFactory::cityUrlToDomain( $this->mCityUrl ) );
 		$this->mVariables['wgScriptPath'] = WikiFactory::cityUrlToLanguagePath( $this->mCityUrl );
 		$this->mVariables['wgScript'] = WikiFactory::cityUrlToWgScript( $this->mCityUrl );
 		$this->mVariables['wgArticlePath'] = WikiFactory::cityUrlToArticlePath( $this->mCityUrl, $this->mWikiID );
