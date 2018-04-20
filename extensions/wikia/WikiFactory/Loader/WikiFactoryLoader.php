@@ -386,7 +386,7 @@ class WikiFactoryLoader {
 
 		// check if domain from browser is different than main domain for wiki
 		$cond1 = !empty( $this->mServerName ) &&
-				 ( strtolower( $url['host'] ) != $this->mServerName || rtrim( $url['path'], '/' ) !== rtrim( "/{$this->langCode}", '/' ) );
+				 ( strtolower( $url['host'] ) != $this->mServerName || rtrim( $url['path'] ?? '', '/' ) !== rtrim( "/{$this->langCode}", '/' ) );
 
 		/**
 		 * check if not additional domain was used (then we redirect anyway)
