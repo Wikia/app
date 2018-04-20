@@ -68,7 +68,7 @@ class LyricFindTrackingService extends WikiaObject {
 	 *
 	 * @param $data array containing amgid, gnlyricid and title of the lyric
 	 */
-	public function formatTrackId($data) {
+	public static function formatTrackId($data) {
 		$parts = [];
 
 		if (!empty($data['amg'])) {
@@ -93,6 +93,46 @@ class LyricFindTrackingService extends WikiaObject {
 	}
 
 	/**
+	 * Calls Lyric Display API and returns the response (see Http::request)
+	 *
+	 * @param string $trackId properly formatted "trackid" parameter for LyricFind API
+	 * @param int $count 'count' paramater passed to Lyric API
+	 * @return string|bool
+	 */
+	public static function callLyricDisplayApi( string $trackId, int $count ) {
+		global $wgLyricFindApiUrl, $wgLyricFindApiKeys;
+
+		$url = $wgLyricFindApiUrl . '/lyric.do';
+		$data = [
+			'apikey' => $wgLyricFindApiKeys['display'],
+			//'ipaddress' => $this->wg->Request->getIP(), // territory is better. If we used IP and someone hit from a place where a song is banned, it would ban accross the site.
+			'territory' => 'US',
+			'reqtype' => 'offlineviews',
+			'count' => $count,
+			'trackid' => $trackId,
+			'output' => 'json',
+			'useragent' => isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : self::DEFAULT_USER_AGENT
+		];
+
+		wfDebug(__METHOD__ . ': ' . json_encode($data) . "\n");
+
+		$dbt = debug_backtrace( DEBUG_BACKTRACE_IGNORE_ARGS, 2 );
+		$callerName = isset( $dbt[1]['function'] ) ? $dbt[1]['function'] : 'unknown';
+
+		$ctx = Wikia\Tracer\WikiaTracer::instance()->getContext();
+		Wikia\Logger\WikiaLogger::instance()->info( 'Calling Lyric Display API', [
+			'url' => !empty( $ctx['http_url'] ) ? $ctx['http_url'] : '',
+			'referer' => !empty( $ctx['http_referrer'] ) ? $ctx['http_referrer'] : '',
+			'trackid' => $trackId,
+			'client_ip' => !empty( $ctx['client_ip'] ) ? $ctx['client_ip'] : '',
+			'initiator' => $callerName,
+			'timestamp' => wfTimestamp( TS_DB )
+		] );
+
+		return ExternalHttp::post($url, ['postData' => $data]);
+	}
+
+	/**
 	 * @param $amgId int|bool AMG (All Music Guide) lyric ID to track page view for (or false if not found)
 	 * @param $gracenoteId int|bool Gracenote lyric ID to track page view for (or false if not found)
 	 * @param $title Title page with the lyric to track
@@ -104,34 +144,18 @@ class LyricFindTrackingService extends WikiaObject {
 		$status = Status::newGood();
 
 		// format trackid parameter
-		$trackId = $this->formatTrackId([
+		$trackId = self::formatTrackId([
 			'amg' => $amgId,
 			'gracenote' => $gracenoteId,
 			'title' => $title->getText()
 		]);
 
-		$url = $this->wg->LyricFindApiUrl . '/lyric.do';
-		$data = [
-			'apikey' => $this->wg->LyricFindApiKeys['display'],
-			//'ipaddress' => $this->wg->Request->getIP(), // territory is better. If we used IP and someone hit from a place where a song is banned, it would ban accross the site.
-			'territory' => 'US',
-			'reqtype' => 'offlineviews',
-			'count' => 1,
-			'trackid' => $trackId,
-			'output' => 'json',
-			'useragent' => isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : self::DEFAULT_USER_AGENT
-		];
-
-		wfDebug(__METHOD__ . ': ' . json_encode($data) . "\n");
-
-		$resp = ExternalHttp::post($url, ['postData' => $data]);
-
-		if ($resp !== false) {
-			wfDebug(__METHOD__ . ": API response - {$resp}\n");
-		}
+		$resp = self::callLyricDisplayApi( $trackId, 1 );
 
 		// get the code from API response
 		if ($resp !== false) {
+			wfDebug(__METHOD__ . ": API response - {$resp}\n");
+
 			$json = json_decode($resp, true);
 
 			$code = !empty($json['response']['code']) ? intval($json['response']['code']) : false;
@@ -189,38 +213,20 @@ class LyricFindTrackingService extends WikiaObject {
 		
 		$isBlocked = false;
 		
-		$app = F::app();
-		$service = new LyricFindTrackingService();
-
 		// format trackid parameter
-		$trackId = $service->formatTrackId([
+		$trackId = self::formatTrackId([
 			'amg' => $amgId,
 			'gracenote' => $gracenoteId,
 			'title' => $pageTitleText
 		]);
 
-		$url = $app->wg->LyricFindApiUrl . '/lyric.do';
-		$data = [
-			'apikey' => $app->wg->LyricFindApiKeys['display'],
-			//'ipaddress' => $this->wg->Request->getIP(), // territory is better. If we used IP and someone hit from a place where a song is banned, it would ban accross the site.
-			'territory' => 'US',
-			'reqtype' => 'offlineviews',
-			'count' => 1, // This is overcounting since we know it's not a view (page doesn't exist yet), but their API won't accept "0"
-			'trackid' => $trackId,
-			'output' => 'json',
-			'useragent' => isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : self::DEFAULT_USER_AGENT
-		];
-
-		wfDebug(__METHOD__ . ': ' . json_encode($data) . "\n");
-
-		$resp = ExternalHttp::post($url, ['postData' => $data]);
-
-		if ($resp !== false) {
-			wfDebug(__METHOD__ . ": API response - {$resp}\n");
-		}
+		// count 1 is overcounting since we know it's not a view (page doesn't exist yet), but their API won't accept "0"
+		$resp = self::callLyricDisplayApi( $trackId, 1 );
 
 		// get the code from API response
 		if ($resp !== false) {
+			wfDebug(__METHOD__ . ": API response - {$resp}\n");
+
 			$json = json_decode($resp, true);
 
 			$code = !empty($json['response']['code']) ? intval($json['response']['code']) : false;
