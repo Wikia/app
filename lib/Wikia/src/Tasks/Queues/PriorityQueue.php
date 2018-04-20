@@ -13,8 +13,7 @@ namespace Wikia\Tasks\Queues;
 class PriorityQueue extends Queue {
 	const NAME = 'PriorityQueue';
 
-	public function __construct() {
-		$this->name = 'mediawiki_priority';
-		$this->routingKey = 'mediawiki.priority';
+	public function name() {
+		return 'mediawiki_priority';
 	}
 }

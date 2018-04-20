@@ -22,6 +22,7 @@ use Wikia\Tasks\Queues\ParsoidPurgeQueue;
 use Wikia\Tasks\Queues\PriorityQueue;
 use Wikia\Tasks\Queues\PurgeQueue;
 use Wikia\Tasks\Queues\Queue;
+use Wikia\Tasks\Queues\RefreshTemplateLinksQueue;
 use Wikia\Tasks\Queues\SMWQueue;
 use Wikia\Tasks\Tasks\BaseTask;
 use Wikia\Tracer\WikiaTracer;
@@ -76,7 +77,7 @@ class AsyncTaskList {
 	 * @return $this
 	 */
 	public function prioritize() {
-		return $this->setPriority( PriorityQueue::NAME );
+		return $this->setQueueName( PriorityQueue::NAME );
 	}
 
 	/**
@@ -85,7 +86,7 @@ class AsyncTaskList {
 	 * @param string $queue which queue to add this task list to
 	 * @return $this
 	 */
-	public function setPriority( $queue ) {
+	public function setQueueName( $queue ) {
 		switch ( $queue ) {
 			case PriorityQueue::NAME:
 				$queue = new PriorityQueue();
@@ -101,6 +102,9 @@ class AsyncTaskList {
 				break;
 			case PurgeQueue::NAME:
 				$queue = new PurgeQueue();
+				break;
+			case RefreshTemplateLinksQueue::NAME:
+				$queue = new RefreshTemplateLinksQueue();
 				break;
 			default:
 				$queue = new Queue();
@@ -296,7 +300,7 @@ class AsyncTaskList {
 		}
 
 		if ( is_string( $priority ) ) {
-			$this->setPriority( $priority );
+			$this->setQueueName( $priority );
 		}
 
 		$id = $this->generateId();
@@ -426,12 +430,11 @@ class AsyncTaskList {
 	 * send a group of AsyncTaskList objects to the broker
 	 *
 	 * @param array $taskLists AsyncTaskList objects to insert into the queue
-	 * @param string $priority which queue to add this task list to
+	 * @param string $queueName which queue to add this task list to
 	 * @return array list of task ids
-	 * @throws \PhpAmqpLib\Exception\AMQPRuntimeException
-	 * @throws \PhpAmqpLib\Exception\AMQPTimeoutException
+	 * @throws AMQPExceptionInterface
 	 */
-	public static function batch( $taskLists, $priority = null ) {
+	public static function batch( $taskLists, $queueName = null ) {
 		$logError = function( \Exception $e ) {
 			WikiaLogger::instance()->error( 'AsyncTaskList::batch', [
 				'exception' => $e,
@@ -458,7 +461,7 @@ class AsyncTaskList {
 
 		foreach ( $taskLists as $task ) {
 			/** @var AsyncTaskList $task */
-			$ids [] = $task->queue( $channel, $priority );
+			$ids [] = $task->queue( $channel, $queueName );
 		}
 
 		try {
