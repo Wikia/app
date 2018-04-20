@@ -308,4 +308,54 @@ class WikiFactoryTest extends WikiaBaseTest {
 		yield [ 'http://gta.wikia.com/de', '/de/index.php' ];
 	}
 
+	/**
+	 * @dataProvider provideCityIDToUrl
+	 *
+	 * @param $environment
+	 * @param string $cityUrl url stored in database
+	 * @param string $expected expected result of the WikiFactory::cityIDtoUrl method
+	 */
+	public function testCityIDToUrl( $environment, $cityUrl, $expected ) {
+		$this->mockStaticMethod( WikiFactory::class, 'getWikiById', (object)[ 'city_url' => $cityUrl ] );
+		$this->mockEnvironment( $environment );
+		$this->assertEquals( $expected, WikiFactory::cityIDtoUrl( 0 ) );
+	}
+
+	public function provideCityIDToUrl() {
+		yield [ WIKIA_ENV_PROD, 'http://gta.wikia.com', 'http://gta.wikia.com' ];
+		yield [ WIKIA_ENV_PROD, 'http://gta.wikia.com/', 'http://gta.wikia.com' ]; // trims the trailing slash
+		yield [ WIKIA_ENV_PROD, 'http://gta.wikia.com/de', 'http://gta.wikia.com/de' ];
+		yield [ WIKIA_ENV_PROD, 'http://gta.wikia.com/de/', 'http://gta.wikia.com/de' ];
+		yield [ WIKIA_ENV_PREVIEW, 'http://gta.wikia.com/de', 'http://gta.preview.wikia.com/de' ];
+		yield [ WIKIA_ENV_PREVIEW, 'http://gta.wikia.com/de/', 'http://gta.preview.wikia.com/de' ];
+		yield [ WIKIA_ENV_DEV, 'http://gta.wikia.com/de', 'http://gta.mockdevname.wikia-dev.us/de' ];
+		yield [ WIKIA_ENV_DEV, 'http://gta.wikia.com/de/', 'http://gta.mockdevname.wikia-dev.us/de' ];
+	}
+
+	/**
+	 * Test for extracting $wgServer from city url stored in db
+	 *
+	 * @dataProvider provideCityIDtoDomain
+	 *
+	 * @param $environment
+	 * @param string $cityUrl url stored in database
+	 * @param string $expected expected result of the WikiFactory::cityIDtoUrl method
+	 */
+	public function testCityIDtoDomain( $environment, $cityUrl, $expected ) {
+		$this->mockStaticMethod( WikiFactory::class, 'getWikiById', (object)[ 'city_url' => $cityUrl ] );
+		$this->mockEnvironment( $environment );
+		$this->assertEquals( $expected, WikiFactory::cityIDtoDomain( 0 ) );
+	}
+
+	public function provideCityIDtoDomain() {
+		yield [ WIKIA_ENV_PROD, 'http://gta.wikia.com', 'http://gta.wikia.com' ];
+		yield [ WIKIA_ENV_PROD, 'http://gta.wikia.com/', 'http://gta.wikia.com' ]; // trims the trailing slash
+		yield [ WIKIA_ENV_PROD, 'http://gta.wikia.com/de', 'http://gta.wikia.com' ];
+		yield [ WIKIA_ENV_PROD, 'http://gta.wikia.com/de/', 'http://gta.wikia.com' ];
+		yield [ WIKIA_ENV_PREVIEW, 'http://gta.wikia.com/de', 'http://gta.preview.wikia.com' ];
+		yield [ WIKIA_ENV_PREVIEW, 'http://gta.wikia.com/de/', 'http://gta.preview.wikia.com' ];
+		yield [ WIKIA_ENV_DEV, 'http://gta.wikia.com/de', 'http://gta.mockdevname.wikia-dev.us' ];
+		yield [ WIKIA_ENV_DEV, 'http://gta.wikia.com/de/', 'http://gta.mockdevname.wikia-dev.us' ];
+	}
+
 }
