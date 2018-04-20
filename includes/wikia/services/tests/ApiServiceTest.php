@@ -21,7 +21,7 @@ class ApiAccessServiceTest extends \WikiaBaseTest {
 	public function testForeignCall() {
 
 		# used by private method ApiService::getHostByDbName
-		$this->mockStaticMethod( "WikiFactory", 'DBtoUrl', "foo.wikia.com" );
+		$this->mockStaticMethod( "WikiFactory", 'DBtoUrl', "http://foo.wikia.com" );
 
 		$fakeJson = '{"a": "b"}'; // some non-null json formatted data
 		$this->mockStaticMethod( "Http", 'get', $fakeJson );
@@ -32,7 +32,7 @@ class ApiAccessServiceTest extends \WikiaBaseTest {
 
 	public function testLoginAsUser() {
 		# 1 method and 1 var used by private method ApiService::getHostByDbName, not directly mockable
-		$this->mockStaticMethod( "WikiFactory", 'DBtoUrl', "http://foo.wikia.com/" );
+		$this->mockStaticMethod( "WikiFactory", 'DBtoUrl', "http://foo.wikia.com" );
 		#turn off special case url building inside getHostByDbName
 		$this->mockGlobalVariable( "wgDevelEnvironment", false );
 

@@ -58,7 +58,7 @@ class ApiService {
 		// request JSON format of API response
 		$params[ 'format' ] = 'json';
 
-		$url = "{$cityUrl}{$endpoint}?" . http_build_query( $params );
+		$url = "{$cityUrl}/{$endpoint}?" . http_build_query( $params );
 		wfDebug( __METHOD__ . ": {$url}\n" );
 
 		$options = [];
