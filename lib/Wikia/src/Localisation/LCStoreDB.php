@@ -112,10 +112,19 @@ class LCStoreDB implements \LCStore {
 			throw new \MWException( __CLASS__ . ': must call startWrite() before finishWrite()' );
 		}
 
+		// Wikia: avoid "Warning: Error while sending QUERY packet"
+		$this->dbw->ping();
+
 		$this->dbw->begin( __METHOD__ );
 		try {
+			$this->dbw->delete(
+				'l10n_cache',
+				[ 'lc_lang' => $this->currentLang ],
+				__METHOD__
+			);
+
 			$primaryKey = [ 'lc_prefix', 'lc_lang', 'lc_key' ];
-			foreach ( array_chunk( $this->batch, 500 ) as $rows ) {
+			foreach ( array_chunk( $this->batch, 50 ) as $rows ) {
 				$this->dbw->upsert( 'l10n_cache', $rows, [ $primaryKey ], [ 'lc_value = VALUES(lc_value)' ], __METHOD__ );
 			}
 			$this->writesDone = true;
