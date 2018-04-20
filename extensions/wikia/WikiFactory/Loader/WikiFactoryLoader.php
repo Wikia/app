@@ -11,17 +11,17 @@ class WikiFactoryLoader {
 	// Input variables used to identify wiki in HTTPD context
 
 	/** @var mixed $mServerName SERVER_NAME as provided by apache */
-	public $mServerName;
+	private $mServerName;
 	/** @var string $pathParams The part of the request path excluding the language code, without a leading slash */
 	private $pathParams = '';
 	/** @var string $langCode Language code given in request path, if present, without a leading slash  */
 	private $langCode = '';
 
 	// Input variables used to identify wiki in CLI (e.g. maintenance script) context
-	public $mCityID;
-	public $mCityDB;
+	private $mCityID;
+	private $mCityDB;
 
-	public $mWikiID, $mCityUrl, $mOldServerName;
+	private $mWikiID, $mCityUrl, $mOldServerName;
 	public $mAlternativeDomainUsed, $mCityCluster;
 	public $mDomain, $mVariables, $mIsWikiaActive, $mAlwaysFromDB;
 	public $mTimestamp, $mCommandLine;
@@ -403,6 +403,8 @@ class WikiFactoryLoader {
 
 			if ( $hasAuthCookie &&
 				 $_SERVER['HTTP_FASTLY_SSL'] &&
+				 // Hack until we are better able to handle internal HTTPS requests
+				 !empty( $_SERVER['HTTP_FASTLY_FF'] ) &&
 				 wfHttpsAllowedForURL( $redirectUrl )
 			) {
 				$redirectUrl = wfHttpToHttps( $redirectUrl );
@@ -579,7 +581,7 @@ class WikiFactoryLoader {
 		# take some WF variables values from city_list
 		$this->mVariables["wgDBname"] = $this->mCityDB;
 		$this->mVariables["wgDBcluster"] = $this->mCityCluster;
-		$this->mVariables['wgServer'] = WikiFactory::cityUrlToDomain( $this->mCityUrl );
+		$this->mVariables['wgServer'] = WikiFactory::getLocalEnvURL( WikiFactory::cityUrlToDomain( $this->mCityUrl ) );
 		$this->mVariables['wgScriptPath'] = WikiFactory::cityUrlToLanguagePath( $this->mCityUrl );
 		$this->mVariables['wgScript'] = WikiFactory::cityUrlToWgScript( $this->mCityUrl );
 		$this->mVariables['wgArticlePath'] = WikiFactory::cityUrlToArticlePath( $this->mCityUrl, $this->mWikiID );

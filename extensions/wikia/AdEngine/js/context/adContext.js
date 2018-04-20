@@ -8,10 +8,11 @@ define('ext.wikia.adEngine.adContext', [
 	'wikia.document',
 	'wikia.geo',
 	'wikia.instantGlobals',
+	'ext.wikia.adEngine.geo',
 	'ext.wikia.adEngine.utils.sampler',
 	'wikia.window',
 	'wikia.querystring'
-], function (browserDetect, cookies, doc, geo, instantGlobals, sampler, w, Querystring) {
+], function (browserDetect, cookies, doc, geo, instantGlobals, adsGeo, sampler, w, Querystring) {
 	'use strict';
 
 	instantGlobals = instantGlobals || {};
@@ -94,8 +95,10 @@ define('ext.wikia.adEngine.adContext', [
 
 		context.bidders.rubiconDisplay = geo.isProperGeo(instantGlobals.wgAdDriverRubiconDisplayPrebidCountries);
 
-		context.bidders.rubicon = geo.isProperGeo(instantGlobals.wgAdDriverRubiconPrebidCountries) &&
-			!hasFeaturedVideo;
+		context.bidders.rubicon = geo.isProperGeo(instantGlobals.wgAdDriverRubiconPrebidCountries);
+
+		context.bidders.rubiconInFV = geo.isProperGeo(instantGlobals.wgAdDriverRubiconVideoInFeaturedVideoCountries) &&
+			hasFeaturedVideo;
 
 		context.bidders.beachfront = geo.isProperGeo(instantGlobals.wgAdDriverBeachfrontBidderCountries) &&
 			!hasFeaturedVideo;
@@ -168,9 +171,10 @@ define('ext.wikia.adEngine.adContext', [
 			context.providers.evolve2 = geo.isProperGeo(instantGlobals.wgAdDriverEvolve2Countries);
 		}
 
-		if (geo.isProperGeo(instantGlobals.wgAdDriverTurtleCountries)) {
-			context.providers.turtle = true;
-		}
+		context.providers.turtle = adsGeo.isProperGeo(
+			instantGlobals.wgAdDriverTurtleCountries,
+			'wgAdDriverTurtleCountries'
+		);
 
 		context.opts.enableRemnantNewAdUnit = geo.isProperGeo(instantGlobals.wgAdDriverMEGACountries);
 
@@ -214,7 +218,14 @@ define('ext.wikia.adEngine.adContext', [
 		context.opts.fvAdsFrequency = fvAdsFrequency !== undefined ? fvAdsFrequency : 3;
 		context.opts.disableSra = geo.isProperGeo(instantGlobals.wgAdDriverDisableSraCountries);
 		context.opts.isBLBMegaEnabled = geo.isProperGeo(instantGlobals.wgAdDriverBottomLeaderBoardMegaCountries);
-		context.opts.isBLBViewportEnabled = geo.isProperGeo(instantGlobals.wgAdDriverBottomLeaderBoardViewportCountries);
+		context.opts.additionalBLBSizes =
+			geo.isProperGeo(instantGlobals.wgAdDriverBottomLeaderBoardAdditionalSizesCountries);
+		context.opts.isBLBViewportEnabled =
+			geo.isProperGeo(instantGlobals.wgAdDriverBottomLeaderBoardViewportCountries);
+
+		context.opts.labradorTestGroup =
+			adsGeo.isProperGeo(instantGlobals.wgAdDriverLABradorTestCountries, 'wgAdDriverLABradorTestCountries') ?
+				'B' : 'A';
 
 		// Export the context back to ads.context
 		// Only used by Lightbox.js, WikiaBar.js and AdsInContext.js

@@ -19,8 +19,6 @@ class DumpsOnDemand {
 	 */
 	const S3_MIGRATION = '20131002154415';
 
-	const S3_COMMAND = '/usr/bin/s3cmd -c /etc/s3cmd/amazon_prod.cfg';
-
 	/**
 	 * @param SpecialStatistics $page
 	 * @param string $text
@@ -170,35 +168,40 @@ class DumpsOnDemand {
 	 * Puts the specified file to Amazon S3 storage
 	 *
 	 * if $bPublic, the file will be available for all users
-	 * if $sMimeType is set then the specified mime tipe is set, otherwise
-	 *      let AmazonS3 decide on mime type.
+	 *
+	 * @param string $sPath
+	 * @param bool $bPublic
+	 * @param string $sMimeType
+	 * @throws S3Exception
 	 */
-	static public function putToAmazonS3( $sPath, $bPublic = true, $sMimeType = null ) {
+	static public function putToAmazonS3( string $sPath, bool $bPublic, string $sMimeType )  {
+		global $wgAWSAccessKey, $wgAWSSecretKey;
+
 		$time = wfTime();
-		$sDestination = wfEscapeShellArg(
-			's3://wikia_xml_dumps/'
-			. DumpsOnDemand::getPath( basename( $sPath ) )
+		$size = filesize( $sPath );
+
+		// SUS-4538 | use PHP S3 client instead of s3cmd
+		$s3 = new S3( $wgAWSAccessKey, $wgAWSSecretKey );
+		S3::setExceptions( true );
+
+		$resource = S3::inputResource( fopen( $sPath, 'rb' ), $size );
+		$remotePath = DumpsOnDemand::getPath( basename( $sPath ) );
+
+		// this will throw S3Exception on errors, callers should handle it accordingly
+		$s3->putObject(
+			$resource,
+			'wikia_xml_dumps',
+			$remotePath,
+			$bPublic ? S3::ACL_PUBLIC_READ : S3::ACL_PRIVATE,
+			[],
+			[
+				'Content-Disposition' => 'attachment',
+				'Content-Type' => $sMimeType
+			]
 		);
 
-		$size = filesize( $sPath );
-		$sPath = wfEscapeShellArg( $sPath );
-
-		$sCmd = self::S3_COMMAND . ' --add-header=Content-Disposition:attachment';
-		if ( !is_null( $sMimeType ) ) {
-			$sMimeType = wfEscapeShellArg( $sMimeType );
-			$sCmd .= " --mime-type={$sMimeType}";
-		}
-		$sCmd .= ($bPublic)? ' --acl-public' : '';
-		$sCmd .= " put {$sPath} {$sDestination}";
-
-		Wikia::log( __METHOD__, "info", "Put {$sPath} to Amazon S3 storage: command: {$sCmd} size: {$size}", true, true);
-
-		wfShellExec( $sCmd, $iStatus );
-
 		$time = Wikia::timeDuration( wfTime() - $time );
-		Wikia::log( __METHOD__, "info", "Put {$sPath} to Amazon S3 storage: status: {$iStatus}, time: {$time}", true, true);
-
-		return $iStatus;
+		Wikia::log( __METHOD__, "info", "Put {$sPath} to Amazon S3 storage s3://wikia_xml_dumps/{$remotePath} (size: {$size}, time: {$time})", true, true);
 	}
 
 	/**

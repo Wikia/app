@@ -212,6 +212,13 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 					]
 				],
 			],
+			'mobile_site_button' => [
+				'type' => 'link-text',
+				'title' => [
+					'type' => 'translatable-text',
+					'key' => 'global-footer-mobile-site-link'
+				]
+			]
 		];
 
 		$data['fandom_overview'] = $this->getFandomOverview();

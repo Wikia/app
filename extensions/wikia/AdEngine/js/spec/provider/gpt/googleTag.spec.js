@@ -27,8 +27,14 @@ describe('ext.wikia.adEngine.provider.gpt.googleTag', function () {
 					};
 				},
 				setSizes: noop,
-				getSizes: function () {
+				getDefaultSizes: function () {
 					return mocks.elementSizes;
+				},
+				getSizes: function () {
+					return {
+						build: noop,
+						isEmpty: function () { return true; }
+					};
 				},
 				getSlotPath: noop,
 				setSlotLevelParams: noop,
@@ -66,12 +72,14 @@ describe('ext.wikia.adEngine.provider.gpt.googleTag', function () {
 					display: noop,
 					defineSlot: function () {
 						return {
-							addService: noop
+							addService: noop,
+							defineSizeMapping: noop
 						};
 					},
 					defineOutOfPageSlot: function () {
 						return {
-							addService: noop
+							addService: noop,
+							defineSizeMapping: noop
 						};
 					},
 					destroySlots: noop
