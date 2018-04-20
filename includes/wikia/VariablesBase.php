@@ -1689,12 +1689,6 @@ $wgDeleteRevisionsLimit = 0;
 $wgDeprecationReleaseLimit = '1.17';
 
 /**
- * Indicate dev environment.
- * @var bool $wgDevelEnvironment
- */
-$wgDevelEnvironment = false;
-
-/**
  * If set to true MediaWiki will throw notices for some possible error
  * conditions and for deprecated functions.
  * @var bool false
