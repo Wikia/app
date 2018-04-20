@@ -377,7 +377,7 @@ class WikiFactoryLoader {
 		if( $this->mIsWikiaActive == 2 && !$this->mCommandLine ) {
 			$this->debug( "city_id={$this->mWikiID};city_public={$this->mIsWikiaActive}), redirected to {$this->mCityUrl}" );
 			header( "X-Redirected-By-WF: 2" );
-			header( "Location: {$this->mCityUrl}", true, 301 );
+			header( "Location: {$this->mCityUrl}/", true, 301 );
 			wfProfileOut( __METHOD__ );
 			return false;
 		}
