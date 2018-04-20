@@ -24,7 +24,7 @@ define('ext.wikia.adEngine.lookup.prebid', [
 	var adUnits = [],
 		biddersPerformanceMap = {},
 		prebidLoaded = false,
-		withLazyLoading = adContext.get('opts.isBLBLazyPrebidEnabled'),
+		isLazyLoadingEnabled = adContext.get('opts.isBLBLazyPrebidEnabled'),
 		isLazyLoaded = false;
 
 	function removeAdUnits() {
@@ -40,7 +40,7 @@ define('ext.wikia.adEngine.lookup.prebid', [
 		}
 
 		biddersPerformanceMap = performanceTracker.setupPerformanceMap(skin);
-		adUnits = helper.setupAdUnits(skin, withLazyLoading ? 'pre' : 'off');
+		adUnits = helper.setupAdUnits(skin, isLazyLoadingEnabled ? 'pre' : 'off');
 
 		if (win.pbjs) {
 			win.pbjs._bidsReceived = [];
@@ -58,7 +58,7 @@ define('ext.wikia.adEngine.lookup.prebid', [
 
 		prebidLoaded = true;
 
-		if (withLazyLoading) {
+		if (isLazyLoadingEnabled) {
 			win.addEventListener('adengine.lookup.prebid.lazy', function () {
 				lazyCall(skin, onResponse);
 			});
