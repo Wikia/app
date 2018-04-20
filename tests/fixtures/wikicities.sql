@@ -112,3 +112,15 @@ CREATE TABLE `user_email_log` (
 
 CREATE INDEX `user_id` ON `user_email_log`(`user_id`,`old_email`);
 CREATE INDEX `user_id_2` ON `user_email_log`(`user_id`,`new_email`);
+
+-- Table for storing localisation data
+CREATE TABLE l10n_cache (
+  lc_prefix varchar(16) NOT NULL,
+  -- Language code
+  lc_lang varchar(16) NOT NULL,
+  -- Cache key
+  lc_key varchar(255) NOT NULL,
+  -- Value
+  lc_value mediumblob NOT NULL,
+  PRIMARY KEY (lc_prefix, lc_lang, lc_key)
+);

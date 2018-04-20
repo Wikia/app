@@ -5275,7 +5275,7 @@ $messages['pl'] = array(
 	'group-global-discussions-moderator' => 'Globalni moderatorzy Dyskusji',
 	'group-global-discussions-moderator-member' => 'globalny moderator Dyskusji',
 	'group-content-volunteer' => 'Wolontariusze treści',
-	'group-content-volunteer-member' => 'wolontariusz treści',
+	'group-content-volunteer-member' => '{{GENDER:$1|wolontariusz treści|wolontariuszka treści}}',
 );
 
 $messages['pms'] = array(

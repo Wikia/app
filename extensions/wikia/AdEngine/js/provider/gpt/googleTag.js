@@ -150,7 +150,8 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 	}
 
 	function addSlot(adElement) {
-		var sizes = adElement.getSizes(),
+		var defaultSizes = adElement.getDefaultSizes(),
+			sizeMap = adElement.getSizes(),
 			slotId = adElement.getId(),
 			slot = googleSlots.getSlot(slotId);
 
@@ -164,9 +165,13 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 		}
 
 		if (!slot) {
-			slot = sizes ?
-				win.googletag.defineSlot(adElement.getSlotPath(), sizes, slotId) :
+			slot = (defaultSizes || !sizeMap.isEmpty()) ?
+				win.googletag.defineSlot(adElement.getSlotPath(), defaultSizes, slotId) :
 				win.googletag.defineOutOfPageSlot(adElement.getSlotPath(), slotId);
+
+			if (!sizeMap.isEmpty()) {
+				slot.defineSizeMapping(sizeMap.build());
+			}
 
 			slot.addService(win.googletag.pubads());
 			win.googletag.display(slotId);
@@ -189,7 +194,7 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 
 		onAdLoadCallback(element.getId(), gptEvent, iframe);
 	}
-	
+
 	function isGoogleTagLoaded() {
 		return typeof win.googletag.pubads === 'function';
 	}
@@ -202,7 +207,7 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 		if (!isInitialized()) {
 			return;
 		}
-		
+
 		if (!isGoogleTagLoaded()) {
 			log(['destroySlots', 'pubads not yet available', 'resetting cmd'], log.levels.info, logGroup);
 			win.googletag.cmd = [];

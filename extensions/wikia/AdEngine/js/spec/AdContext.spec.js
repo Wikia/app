@@ -7,11 +7,33 @@ describe('AdContext', function () {
 		return;
 	}
 
+	function isProperGeo(countryList) {
+		if (!countryList) {
+			return false;
+		}
+		if (countryList.indexOf('CURRENT_COUNTRY') > -1) {
+			return true;
+		}
+		if (countryList.indexOf('CURRENT_COUNTRY-CURRENT_REGION') > -1) {
+			return true;
+		}
+		if (countryList.indexOf('XX-CURRENT_CONTINENT') > -1) {
+			return true;
+		}
+		if (countryList.indexOf('XX') > -1) { //global
+			return true;
+		}
+		return false;
+	}
+
 	var mocks = {
 			browserDetect: {
 				isEdge: function() {
 					return false;
 				}
+			},
+			adEngineBridge: {
+				isProperGeo: isProperGeo
 			},
 			geo: {
 				getCountryCode: function () {
@@ -23,24 +45,7 @@ describe('AdContext', function () {
 				getContinentCode: function () {
 					return 'CURRENT_CONTINENT';
 				},
-				isProperGeo: function (countryList) {
-					if (!countryList) {
-						return false;
-					}
-					if (countryList.indexOf('CURRENT_COUNTRY') > -1) {
-						return true;
-					}
-					if (countryList.indexOf('CURRENT_COUNTRY-CURRENT_REGION') > -1) {
-						return true;
-					}
-					if (countryList.indexOf('XX-CURRENT_CONTINENT') > -1) {
-						return true;
-					}
-					if (countryList.indexOf('XX') > -1) { //global
-						return true;
-					}
-					return false;
-				}
+				isProperGeo: isProperGeo
 			},
 			instantGlobals: {},
 			win: {},
@@ -72,6 +77,7 @@ describe('AdContext', function () {
 			mocks.doc,
 			mocks.geo,
 			mocks.instantGlobals,
+			mocks.adEngineBridge,
 			mocks.sampler,
 			mocks.win,
 			mocks.Querystring
@@ -717,15 +723,6 @@ describe('AdContext', function () {
 
 	[
 		{
-			hasFeaturedVideo: true,
-			instantGlobals: {
-				wgAdDriverRubiconPrebidCountries: ['CURRENT_COUNTRY']
-			},
-			testedBidder: 'rubicon',
-			expectedResult: false
-		},
-		{
-			hasFeaturedVideo: false,
 			instantGlobals: {
 				wgAdDriverRubiconPrebidCountries: ['ZZ']
 			},
@@ -733,7 +730,6 @@ describe('AdContext', function () {
 			expectedResult: false
 		},
 		{
-			hasFeaturedVideo: false,
 			instantGlobals: {
 				wgAdDriverRubiconPrebidCountries: ['CURRENT_COUNTRY']
 			},

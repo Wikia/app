@@ -4,8 +4,8 @@ $messages = array();
 $messages['en'] = array(
 	'emailext-fbdisconnect-subject' => 'Your FANDOM account is now disconnected from Facebook!',
 	'emailext-fbdisconnect-summary' => "It looks like you've just disconnected your FANDOM account from Facebook. We've kept all of your history, messages and profile details intact since you're an important part of the FANDOM community.",
-	'emailext-fbdisconnect-intro' => "You can use the same username as before, and we've generated a new temporary password for you to use. Here are your details:",
-	'emailext-fbdisconnect-instructions' => "If you already set a password on FANDOM, don't worry! Your account is safe and secure. You can ignore this email and continue signing in to FANDOM with your old password. Otherwise, please sign in with the temporary password above and reset it to your password of choice on your Preferences page.",
+	'emailext-fbdisconnect-intro' => 'You can use the same username, but we may need you to click the link below to set your new password on FANDOM:',
+	'emailext-fbdisconnect-instructions' => 'If you previously set a password on FANDOM, no action is needed. You can ignore this message and continue signing in to FANDOM with your old password. Otherwise, please click the link above to set your new password on FANDOM.',
 );
 
 $messages['qqq'] = array(
@@ -57,16 +57,9 @@ $messages['ko'] = array(
 	'emailext-fbdisconnect-intro' => '기존의 사용자 이름은 그대로 사용하실 수 있으며 저희가 임시 비밀번호를 생성해드렸습니다. 자세한 사항은 다음을 참고하세요.',
 );
 
-$messages['nl'] = array(
-	'emailext-fbdisconnect-subject' => 'Your Wikia account is now disconnected from Facebook!',
-	'emailext-fbdisconnect-summary' => "It looks like you've just disconnected your Wikia account from Facebook. We've kept all of your history, messages and profile details intact since you’re an important part of the Wikia community.",
-	'emailext-fbdisconnect-intro' => "You can use the same username as before, and we've generated a new temporary password for you to use. Here are your details:",
-	'emailext-fbdisconnect-instructions' => "If you already set a password on Wikia, don't worry! Your account is safe and secure. You can ignore this email and continue signing in to Wikia with your old password. Otherwise, please sign in with the temporary password above and reset it to your password of choice on your Preferences page.",
-);
-
 $messages['pl'] = array(
 	'emailext-fbdisconnect-subject' => 'Twoje konto na portalu FANDOM zostało odłączone od Facebooka!',
-	'emailext-fbdisconnect-summary' => 'Wygląda na to, że odłączyłeś swoje konto FANDOM od Facebooka. Zachowaliśmy całą Twoją historię, wiadomości i dane profilu, ponieważ stanowisz ważną część społeczności Fandomu.',
+	'emailext-fbdisconnect-summary' => 'Wygląda na to, że Twoje konto FANDOM zostało odłączone od Facebooka. Zachowaliśmy całą Twoją historię, wiadomości i dane profilu, ponieważ stanowisz ważną część społeczności FANDOMU.',
 	'emailext-fbdisconnect-intro' => 'Możesz dalej używać tej samej nazwy użytkownika, ale możliwe, że będzie potrzeba kliknąć w link poniżej, w celu ustawienia nowego hasła dla Twojego konta na portalu FANDOM:',
 	'emailext-fbdisconnect-instructions' => 'Jeżeli hasło do Twojego konta na portalu FANDOM zostało już wcześniej ustawione, nie musisz nic robić. Możesz zignorować tę wiadomość i dalej logować się używając starego hasła. W przeciwnym wypadku, ustaw nowe hasło klikając powyższy przycisk.',
 );

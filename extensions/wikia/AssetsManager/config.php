@@ -163,6 +163,8 @@ $config['adengine2_rabbit_mobile_js'] = [
 		'#group_adengine2_rabbit_js',
 		'//extensions/wikia/AdEngine/js/ml/n1/n1mInputParser.js',
 		'//extensions/wikia/AdEngine/js/ml/n1/n1mLogisticRegression.js',
+		'//extensions/wikia/AdEngine/js/ml/nivens/mobileNivensInputParser.js',
+		'//extensions/wikia/AdEngine/js/ml/nivens/mobileNivensLogisticRegression.js',
 	],
 ];
 
@@ -219,6 +221,7 @@ $config['adengine2_top_js'] = [
 		'//extensions/wikia/AdEngine/js/utils/eventDispatcher.js',
 		'//extensions/wikia/AdEngine/js/utils/sampler.js',
 		'//extensions/wikia/AdEngine/js/utils/timeBuckets.js',
+		'//extensions/wikia/AdEngine/js/build/geo.js',
 		'//extensions/wikia/AdEngine/js/context/adContext.js',
 		'//extensions/wikia/AdEngine/js/context/slotsContext.js',
 		'//extensions/wikia/AdEngine/js/lookup/lookupFactory.js',
@@ -909,6 +912,7 @@ $config['mercury_ads_js'] = [
 		// Advertisement libs
 		'//extensions/wikia/AbTesting/js/AbTest.js',
 		'//extensions/wikia/AdEngine/js/AdLogicPageViewCounter.js',
+		'//extensions/wikia/AdEngine/js/build/geo.js',
 		'//extensions/wikia/AdEngine/js/CustomAdsLoader.js',
 		'//extensions/wikia/AdEngine/js/babDetection.js',
 		'//extensions/wikia/AdEngine/js/mobile/mercuryListener.js',
@@ -1779,6 +1783,7 @@ $config['design_system_js'] = [
 		'//extensions/wikia/DesignSystem/scripts/DesignSystemAuthenticationMenu.js',
 		'//extensions/wikia/DesignSystem/scripts/DesignSystemGlobalNavigationSearch.js',
 		'//extensions/wikia/DesignSystem/scripts/DesignSystemGlobalNavigationSearchSuggestions.js',
+		'//extensions/wikia/DesignSystem/scripts/DesignSystemGlobalFooter.js'
 	],
 ];
 
