@@ -37,7 +37,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.audienceNetwork',[
 
 		return adContext.getContext().targeting.skin === 'mercury' &&
 			isAudienceNetworkAvailable &&
-			adContext.get('context.audienceNetwork') &&
+			adContext.get('bidders.audienceNetwork') &&
 			!instartLogic.isBlocking();
 	}
 
