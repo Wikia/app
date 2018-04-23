@@ -2,7 +2,7 @@
 define('ext.wikia.adEngine.lookup.prebid.adapters.appnexus',[
 	'ext.wikia.adEngine.context.slotsContext',
 	'ext.wikia.adEngine.lookup.prebid.adapters.appnexusPlacements',
-	'wikia.geo',
+	'ext.wikia.adEngine.geo',
 	'wikia.instantGlobals',
 	'wikia.log'
 ], function (slotsContext, appnexusPlacements, geo, instantGlobals, log) {
@@ -64,7 +64,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.appnexus',[
 		};
 
 	function isEnabled() {
-		return geo.isProperGeo(instantGlobals.wgAdDriverAppNexusBidderCountries);
+		return geo.isProperGeo(instantGlobals.wgAdDriverAppNexusBidderCountries, 'wgAdDriverAppNexusBidderCountries');
 	}
 
 	function prepareAdUnit(slotName, config, skin, isRecovering) {

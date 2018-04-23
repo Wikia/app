@@ -2,7 +2,7 @@
 define('ext.wikia.adEngine.lookup.prebid.adapters.audienceNetwork',[
 	'ext.wikia.adEngine.context.slotsContext',
 	'ext.wikia.aRecoveryEngine.instartLogic.recovery',
-	'wikia.geo',
+	'ext.wikia.adEngine.geo',
 	'wikia.instantGlobals',
 	'ext.wikia.adEngine.adContext',
 	'wikia.querystring'
@@ -39,7 +39,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.audienceNetwork',[
 
 		return adContext.getContext().targeting.skin === 'mercury' &&
 			isAudienceNetworkAvailable &&
-			geo.isProperGeo(instantGlobals.wgAdDriverAudienceNetworkBidderCountries) &&
+			geo.isProperGeo(instantGlobals.wgAdDriverAudienceNetworkBidderCountries, 'wgAdDriverAudienceNetworkBidderCountries') &&
 			!instartLogic.isBlocking();
 	}
 
