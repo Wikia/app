@@ -4980,19 +4980,6 @@ $wgImageLimits = [
 $wgImageMagickConvertCommand = '/usr/bin/convert';
 
 /**
- * The identify command shipped with ImageMagick.
- * @var string $wgImageMagickIdentifyCommand
- */
-$wgImageMagickIdentifyCommand = '/usr/bin/identify';
-
-/**
- * Temporary directory used for ImageMagick. The directory must exist. Leave
- * this set to false to let ImageMagick decide for itself.
- * @var string|bool $wgImageMagickTempDir
- */
-$wgImageMagickTempDir = false;
-
-/**
  * An image can be used as a thumbnail of an article if it is used less than
  * this many times.
  * @see extensions/wikia/ImageServing/drivers/ImageServingDriverMainNS.class.php
