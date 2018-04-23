@@ -4,6 +4,7 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.appnexusPlacements', functio
 
 	var mocks = {
 		adContext: {
+			get: function () {},
 			getContext: function () {
 				return mocks.context;
 			}
