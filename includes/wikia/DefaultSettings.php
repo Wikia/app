@@ -976,12 +976,6 @@ $wgMaxLevelTwoNavElements = 7;
 $wgMaxLevelThreeNavElements = 10;
 
 /**
- * Memcached class name
- */
-
-$wgMemCachedClass = 'MemCachedClientforWiki';
-
-/**
  * Extra configuration options for memcached when using libmemcached/pecl-memcached
  */
 $wgLibMemCachedOptions = array();

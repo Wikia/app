@@ -1515,7 +1515,12 @@ $wgObjectCaches = array(
 
 	CACHE_ANYTHING => array( 'factory' => 'ObjectCache::newAnything' ),
 	CACHE_ACCEL => array( 'factory' => 'ObjectCache::newAccelerator' ),
-	CACHE_MEMCACHED => array( 'factory' => 'ObjectCache::newMemcached' ),
+
+	// SUS-4611
+	CACHE_MEMCACHED => [
+		'class' => 'MemcachedPeclBagOStuff', // use memcached-based client
+		# 'use_binary_protocol' => true, // Moxy does not support binary protocol
+	],
 
 	'apc' => array( 'class' => 'APCBagOStuff' ),
 	'xcache' => array( 'class' => 'XCacheBagOStuff' ),
