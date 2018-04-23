@@ -7252,18 +7252,6 @@ $wgSharedUploadDirectory = null;
 $wgSharedUploadPath = null;
 
 /**
- * Sharpening parameter to ImageMagick.
- * @var string $wgSharpenParameter
- */
-$wgSharpenParameter = '0x0.4';
-
-/**
- * Reduction in linear dimensions below which sharpening will be enabled.
- * @var float $wgSharpenReductionThreshold
- */
-$wgSharpenReductionThreshold = 0.85;
-
-/**
  * Locale for LC_CTYPE, to work around http://bugs.php.net/bug.php?id=45132
  * For Unix-like operating systems, set this to to a locale that has a UTF-8
  * character set. Only the character set is relevant.
