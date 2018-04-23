@@ -3,12 +3,8 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.pubmatic', function () {
 	'use strict';
 
 	var mocks = {
-		instantGlobals: {
-			wgAdDriverPubMaticBidderCountries: ['PL']
-		},
-		geo: {
-			isProperGeo: function() {
-			}
+		adContext: {
+			get: function () {}
 		},
 		slotsContext: {
 			filterSlotMap: function (map) {
@@ -27,28 +23,23 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.pubmatic', function () {
 
 	function getPubMatic() {
 		return modules['ext.wikia.adEngine.lookup.prebid.adapters.pubmatic'](
+			mocks.adContext,
 			mocks.slotsContext,
 			mocks.instartLogic,
-			mocks.geo,
-			mocks.instantGlobals,
 			mocks.log
 		);
 	}
 
-	it('isEnabled checks whether user is not blocking ads', function () {
-		var pubmatic = getPubMatic();
+	it('enables bidder if flag is on and user is not blocking ads', function () {
 		spyOn(mocks.instartLogic, 'isBlocking').and.returnValue(false);
-		spyOn(mocks.geo, 'isProperGeo').and.returnValue(true);
-
-		expect(pubmatic.isEnabled()).toBeTruthy();
+		spyOn(mocks.adContext, 'get').and.returnValue(true);
+		expect(getPubMatic().isEnabled()).toBeTruthy();
 	});
 
-	it('', function () {
-		var pubmatic = getPubMatic(),
-			isProperGeoSpy = spyOn(mocks.geo, 'isProperGeo');
-
-		pubmatic.isEnabled();
-		expect(isProperGeoSpy).toHaveBeenCalledWith(['PL']);
+	it('disables bidder if flag is off and user is not blocking ads', function () {
+		spyOn(mocks.instartLogic, 'isBlocking').and.returnValue(false);
+		spyOn(mocks.adContext, 'get').and.returnValue(false);
+		expect(getPubMatic().isEnabled()).toBeFalsy();
 	});
 
 	it('isEnabled checks the countries instant global', function () {

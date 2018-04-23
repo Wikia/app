@@ -71,61 +71,42 @@ class MemcachedPhpBagOStuff extends MemcachedBagOStuff {
 	}
 
 	/**
-	 * Do a get_multi request and optionally return the data if required
+	 * Get the underlying client object. This is provided for debugging 
+	 * purposes.
 	 *
-	 * @author Władysław Bodzek <wladek@wikia-inc.com>
-	 * @param $keys array List of keys
-	 * @param $returnData bool Return the data?
-	 * @return array|true
+	 * @return MemCachedClientforWiki
 	 */
-	protected function getMultiInternal( $keys, $returnData ) {
-		$map = array();
-		foreach ($keys as $key) {
-			$map[$this->encodeKey($key)] = $key;
-		}
-		$mappedData = $this->client->get_multi( array_keys( $map ) );
-
-		if ( !$returnData ) {
-			return true;
-		}
-
-		$data = array();
-		foreach ($mappedData as $k => $v) {
-			$data[$map[$k]] = $v;
-		}
-
-		return $data;
+	public function getClient() {
+		return $this->client;
 	}
 
 	/**
-	 * Get multiple items at once
+	 * Encode a key for use on the wire inside the memcached protocol.
 	 *
-	 * @author Władysław Bodzek <wladek@wikia-inc.com>
-	 * @param $keys array List of keys
-	 * @return array Data associated with given keys, no data is indicated by "false"
+	 * We encode spaces and line breaks to avoid protocol errors. We encode 
+	 * the other control characters for compatibility with libmemcached 
+	 * verify_key. We leave other punctuation alone, to maximise backwards
+	 * compatibility.
 	 */
-	public function getMulti( $keys ) {
-		global $wgEnableMemcachedBulkMode;
-		if ( empty( $wgEnableMemcachedBulkMode ) ) {
-			return parent::getMulti($keys);
-		}
+	public function encodeKey( $key ) {
+		return preg_replace_callback( '/[\x00-\x20\x25\x7f]+/', 
+			array( $this, 'encodeKeyCallback' ), $key );
+	}
 
-		return $this->getMultiInternal($keys,true);
+	protected function encodeKeyCallback( $m ) {
+		return rawurlencode( $m[0] );
 	}
 
 	/**
-	 * Prefetch the following keys if local cache is enabled, otherwise don't do anything
+	 * Decode a key encoded with encodeKey(). This is provided as a convenience 
+	 * function for debugging.
 	 *
-	 * @author Władysław Bodzek <wladek@wikia-inc.com>
-	 * @param $keys array List of keys to prefetch
+	 * @param $key string
+	 *
+	 * @return string
 	 */
-	public function prefetch( $keys ) {
-		global $wgEnableMemcachedBulkMode;
-		if ( empty( $wgEnableMemcachedBulkMode ) ) {
-			parent::prefetch($keys);
-		}
-
-		$this->getMultiInternal($keys,false);
+	public function decodeKey( $key ) {
+		return urldecode( $key );
 	}
 
 	/**
@@ -139,4 +120,3 @@ class MemcachedPhpBagOStuff extends MemcachedBagOStuff {
 	}
 
 }
-

@@ -1,12 +1,10 @@
 /*global define*/
 define('ext.wikia.adEngine.lookup.prebid.adapters.audienceNetwork',[
+	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.context.slotsContext',
 	'ext.wikia.aRecoveryEngine.instartLogic.recovery',
-	'wikia.geo',
-	'wikia.instantGlobals',
-	'ext.wikia.adEngine.adContext',
 	'wikia.querystring'
-], function (slotsContext, instartLogic, geo, instantGlobals, adContext, querystring) {
+], function (adContext, slotsContext, instartLogic, querystring) {
 	'use strict';
 
 	var bidderName = 'audienceNetwork',
@@ -39,7 +37,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.audienceNetwork',[
 
 		return adContext.getContext().targeting.skin === 'mercury' &&
 			isAudienceNetworkAvailable &&
-			geo.isProperGeo(instantGlobals.wgAdDriverAudienceNetworkBidderCountries) &&
+			adContext.get('bidders.audienceNetwork') &&
 			!instartLogic.isBlocking();
 	}
 
