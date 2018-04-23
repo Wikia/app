@@ -26,27 +26,27 @@ describe('AdContext', function () {
 		return false;
 	}
 
+	var geo = {
+		getCountryCode: function () {
+			return 'CURRENT_COUNTRY';
+		},
+		getRegionCode: function () {
+			return 'CURRENT_REGION';
+		},
+		getContinentCode: function () {
+			return 'CURRENT_CONTINENT';
+		},
+		isProperGeo: isProperGeo
+	};
+
 	var mocks = {
 			browserDetect: {
 				isEdge: function() {
 					return false;
 				}
 			},
-			adEngineBridge: {
-				isProperGeo: isProperGeo
-			},
-			geo: {
-				getCountryCode: function () {
-					return 'CURRENT_COUNTRY';
-				},
-				getRegionCode: function () {
-					return 'CURRENT_REGION';
-				},
-				getContinentCode: function () {
-					return 'CURRENT_CONTINENT';
-				},
-				isProperGeo: isProperGeo
-			},
+			adsGeo: geo,
+			geo: geo,
 			instantGlobals: {},
 			win: {},
 			Querystring: function () {
@@ -77,7 +77,7 @@ describe('AdContext', function () {
 			mocks.doc,
 			mocks.geo,
 			mocks.instantGlobals,
-			mocks.adEngineBridge,
+			mocks.adsGeo,
 			mocks.sampler,
 			mocks.win,
 			mocks.Querystring
