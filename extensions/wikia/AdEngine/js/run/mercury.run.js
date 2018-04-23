@@ -76,11 +76,11 @@ require([
 	}
 
 	function callBiddersOnConsecutivePageView() {
-		if (adGeo.isProperGeo(instantGlobals.wgAdDriverPrebidBidderCountries, 'wgAdDriverPrebidBidderCountries')) {
+		if (adContext.get('bidders.prebid')) {
 			prebid.call();
 		}
 
-		if (adGeo.isProperGeo(instantGlobals.wgAdDriverA9BidderCountries, 'wgAdDriverA9BidderCountries')) {
+		if (adContext.get('bidders.a9')) {
 			a9.call();
 		}
 
@@ -88,11 +88,11 @@ require([
 	}
 
 	mercuryListener.onLoad(function () {
-		if (adGeo.isProperGeo(instantGlobals.wgAdDriverA9BidderCountries, 'wgAdDriverA9BidderCountries')) {
+		if (adContext.get('bidders.a9')) {
 			a9.call();
 		}
 
-		if (adGeo.isProperGeo(instantGlobals.wgAdDriverPrebidBidderCountries, 'wgAdDriverPrebidBidderCountries')) {
+		if (adContext.get('bidders.prebid')) {
 			prebid.call();
 		}
 

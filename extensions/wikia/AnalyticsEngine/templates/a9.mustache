@@ -1,12 +1,12 @@
 <script>
 	require([
-		'wikia.geo',
-		'wikia.instantGlobals',
+        'ext.wikia.adEngine.geo',
+        'wikia.instantGlobals',
 		'ext.wikia.adEngine.lookup.a9'
 	], function (geo, globals, a9) {
-		var ac = globals['{{wgCountriesVarName}}'];
+        var name = '{{wgCountriesVarName}}';
 
-		if (geo.isProperGeo(ac)) {
+		if (geo.isProperGeo(globals[name], name)) {
 			a9.call();
 		}
 	});
