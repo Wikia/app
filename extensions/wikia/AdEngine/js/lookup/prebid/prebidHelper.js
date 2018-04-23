@@ -4,7 +4,11 @@ define('ext.wikia.adEngine.lookup.prebid.prebidHelper', [
 	'ext.wikia.aRecoveryEngine.instartLogic.recovery'
 ], function(adaptersRegistry, instartLogic) {
 	'use strict';
-	var adUnits = [];
+	var adUnits = [],
+		lazyLoad = 'off',
+		lazyLoadSlots = [
+			'BOTTOM_LEADERBOARD'
+		];
 
 	function getAdapterAdUnits(adapter, skin) {
 		var adapterAdUnits = [],
@@ -23,13 +27,18 @@ define('ext.wikia.adEngine.lookup.prebid.prebidHelper', [
 
 	function addAdUnits(adapterAdUnits) {
 		adapterAdUnits.forEach(function (adUnit) {
-			adUnits.push(adUnit);
+			var isSlotLazy = lazyLoadSlots.indexOf(adUnit.code) !== -1;
+
+			if (lazyLoad === 'off' || (lazyLoad === 'pre' && !isSlotLazy) || (lazyLoad === 'post' && isSlotLazy)) {
+				adUnits.push(adUnit);
+			}
 		});
 	}
 
-	function setupAdUnits(skin) {
+	function setupAdUnits(skin, mode) {
 		var adapters = adaptersRegistry.getAdapters();
 
+		lazyLoad = mode || lazyLoad;
 		adUnits = [];
 		adapters.forEach(function (adapter) {
 			if (adapter && adapter.isEnabled()) {
