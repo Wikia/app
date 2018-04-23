@@ -71,45 +71,6 @@ class MemcachedPhpBagOStuff extends MemcachedBagOStuff {
 	}
 
 	/**
-	 * Get the underlying client object. This is provided for debugging 
-	 * purposes.
-	 *
-	 * @return MemCachedClientforWiki
-	 */
-	public function getClient() {
-		return $this->client;
-	}
-
-	/**
-	 * Encode a key for use on the wire inside the memcached protocol.
-	 *
-	 * We encode spaces and line breaks to avoid protocol errors. We encode 
-	 * the other control characters for compatibility with libmemcached 
-	 * verify_key. We leave other punctuation alone, to maximise backwards
-	 * compatibility.
-	 */
-	public function encodeKey( $key ) {
-		return preg_replace_callback( '/[\x00-\x20\x25\x7f]+/', 
-			array( $this, 'encodeKeyCallback' ), $key );
-	}
-
-	protected function encodeKeyCallback( $m ) {
-		return rawurlencode( $m[0] );
-	}
-
-	/**
-	 * Decode a key encoded with encodeKey(). This is provided as a convenience 
-	 * function for debugging.
-	 *
-	 * @param $key string
-	 *
-	 * @return string
-	 */
-	public function decodeKey( $key ) {
-		return urldecode( $key );
-	}
-
-	/**
 	 * Remove value from local cache which is associated with a given key
 	 *
 	 * @author Władysław Bodzek <wladek@wikia-inc.com>

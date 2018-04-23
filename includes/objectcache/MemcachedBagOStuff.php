@@ -24,7 +24,7 @@
  *
  * @ingroup Cache
  */
-class MemcachedBagOStuff extends BagOStuff {
+abstract class MemcachedBagOStuff extends BagOStuff {
 
 	/* @var MemCachedClientforWiki $client */
 	protected $client;

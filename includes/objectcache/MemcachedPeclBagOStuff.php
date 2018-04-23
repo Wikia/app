@@ -271,6 +271,16 @@ class MemcachedPeclBagOStuff extends MemcachedBagOStuff {
 		return parent::encodeKey( self::KEY_PREFIX . $key ); // Wikia change
 	}
 
+	/**
+	 * Remove value from local cache which is associated with a given key
+	 *
+	 * @author Władysław Bodzek <wladek@wikia-inc.com>
+	 * @param $key
+	 */
+	public function clearLocalCache( $key ) {
+		unset($this->_dupe_cache[$key]);
+	}
+
 	/* NOTE: there is no cas() method here because it is currently not supported 
 	 * by the BagOStuff interface and other BagOStuff subclasses, such as 
 	 * SqlBagOStuff.
