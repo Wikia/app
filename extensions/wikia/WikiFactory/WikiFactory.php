@@ -3281,37 +3281,6 @@ class WikiFactory {
 	}
 
 	/**
-	 * Prefetch specified data for given set of wikis
-	 *
-	 * @author Władysław Bodzek <wladek@wikia-inc.com>
-	 *
-	 * @param $ids array List of wiki ids
-	 * @param $what int Flags specifying what data to prefetch
-	 */
-	static public function prefetchWikisById( $ids, $what = self::PREFETCH_DEFAULT ) {
-		global $wgMemc;
-		if ( !is_array( $ids ) ) $ids = [ $ids ];
-		$keys = [];
-		$added = [];
-		foreach ( $ids as $id ) {
-			$id = intval($id);
-
-			// don't add the same wiki twice
-			if ( !empty($added[$id]) ) continue;
-			$added[$id] = true;
-
-
-			if ( $what & static::PREFETCH_WIKI_METADATA ) {
-				$keys[] = static::getVarsKey($id);
-			}
-			if ( $what & static::PREFETCH_VARIABLES ) {
-				$keys[] = static::getWikiaCacheKey($id);
-			}
-		}
-		$wgMemc->prefetch($keys);
-	}
-
-	/**
 	 * Renders community's value of given variable
 	 *
 	 * @access public
