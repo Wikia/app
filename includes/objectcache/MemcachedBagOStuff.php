@@ -25,6 +25,8 @@
  * @ingroup Cache
  */
 class MemcachedBagOStuff extends BagOStuff {
+
+	/* @var MemCachedClientforWiki $client */
 	protected $client;
 
 	/**
@@ -48,7 +50,7 @@ class MemcachedBagOStuff extends BagOStuff {
 			$params['timeout'] = $GLOBALS['wgMemCachedTimeout'];
 		}
 		if ( !isset( $params['connect_timeout'] ) ) {
-			$params['connect_timeout'] = 0.1;
+			$params['connect_timeout'] = $GLOBALS['wgMemCachedConnectionTimeout'] ?: 0.5; # Wikia change (global introduced)
 		}
 		return $params;
 	}
@@ -166,7 +168,6 @@ class MemcachedBagOStuff extends BagOStuff {
 		if ( substr( $text, -1 ) !== "\n" ) {
 			$text .= "\n";
 		}
-		wfDebugLog( 'memcached', $text );
+		wfDebug( 'memcached' . $text );
 	}
 }
-
