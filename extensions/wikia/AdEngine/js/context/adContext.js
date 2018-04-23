@@ -215,6 +215,7 @@ define('ext.wikia.adEngine.adContext', [
 		context.opts.isFVMidrollEnabled = geo.isProperGeo(instantGlobals.wgAdDriverFVMidrollCountries);
 		context.opts.isFVPostrollEnabled = geo.isProperGeo(instantGlobals.wgAdDriverFVPostrollCountries);
 		context.opts.replayAdsForFV = geo.isProperGeo(instantGlobals.wgAdDriverPlayAdsOnNextFVCountries);
+		context.opts.mobileSectionsCollapse = geo.isProperGeo(instantGlobals.wgAdDriverMobileSectionsCollapseCountries);
 		context.opts.fvAdsFrequency = fvAdsFrequency !== undefined ? fvAdsFrequency : 3;
 		context.opts.disableSra = geo.isProperGeo(instantGlobals.wgAdDriverDisableSraCountries);
 		context.opts.isBLBLazyPrebidEnabled = context.targeting.skin === 'oasis' &&
