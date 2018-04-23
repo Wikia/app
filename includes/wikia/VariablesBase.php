@@ -6763,6 +6763,14 @@ $wgRCShowWatchingUsers = false;
 $wgReadOnly = null;
 
 /**
+ * Enable Recommended Video AB Test by passing a RV playlist ID for given wikis.
+ * @see extensions/wikia/MercuryApi
+ * @see includes/resourceloader/ResourceLoaderStartUpModule.php
+ * @var string $wgRecommendedVideoABTestPlaylist
+ */
+$wgRecommendedVideoABTestPlaylist = '';
+
+/**
  * Set this to specify an external URL containing details about the content
  * license used on your wiki. If $wgRightsPage is set then this setting is
  * ignored.
