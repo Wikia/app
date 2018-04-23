@@ -7,8 +7,14 @@
  */
 class MemcachedPeclBagOStuff extends MemcachedBagOStuff {
 
+	/* @var Memcached $client */
+	protected $client;
+
 	/**
 	 * Constructor
+	 *
+	 * @param $params array
+	 * @throws MWException
 	 *
 	 * Available parameters are:
 	 *   - servers:             The list of IP:port combinations holding the memcached servers.
@@ -106,6 +112,7 @@ class MemcachedPeclBagOStuff extends MemcachedBagOStuff {
 	/**
 	 * @param $key string
 	 * @param $value int
+	 * @param $exptime int
 	 * @return Mixed
 	 */
 	public function add( $key, $value, $exptime = 0 ) {
@@ -153,8 +160,9 @@ class MemcachedPeclBagOStuff extends MemcachedBagOStuff {
 	 * the client, but some day we might find a case where it should be 
 	 * different.
 	 * 
-	 * @param $key The key used by the caller, or false if there wasn't one.
-	 * @param $result The return value
+	 * @param $key string The key used by the caller, or false if there wasn't one.
+	 * @param $result mixed The return value
+	 * @return mixed
 	 */
 	protected function checkResult( $key, $result ) {
 		if ( $result !== false ) {
@@ -183,8 +191,8 @@ class MemcachedPeclBagOStuff extends MemcachedBagOStuff {
 	}
 
 	/**
-	 * @param $keys Array
-	 * @return Array
+	 * @param $keys array
+	 * @return array
 	 */
 	public function getBatch( array $keys ) {
 		$this->debugLog( 'getBatch(' . implode( ', ', $keys ) . ')' );
