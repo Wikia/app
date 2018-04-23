@@ -66,11 +66,6 @@ class WikiFactory {
 	// Community Central's city_id in wikicities.city_list.
 	const COMMUNITY_CENTRAL = 177;
 
-	const PREFETCH_WIKI_METADATA = 1;
-	const PREFETCH_VARIABLES = 2;
-	const PREFETCH_ALL = 255;
-	const PREFETCH_DEFAULT = self::PREFETCH_ALL;
-
 	static public $types = [
 		"integer",
 		"long",
