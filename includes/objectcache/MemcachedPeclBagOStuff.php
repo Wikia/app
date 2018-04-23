@@ -14,6 +14,15 @@ class MemcachedPeclBagOStuff extends MemcachedBagOStuff {
 	protected $client;
 
 	/**
+	 * @author wikia
+	 * Internal memoization to avoid unnecessary network requests
+	 * If a get() is done twice in a single request use the stored value
+	 *
+	 * Ported from MemcachedClient.php
+	 */
+	private $_dupe_cache = [];
+
+	/**
 	 * Constructor
 	 *
 	 * @param $params array
@@ -107,10 +116,22 @@ class MemcachedPeclBagOStuff extends MemcachedBagOStuff {
 		wfProfileIn( __METHOD__ );
 		wfProfileIn( __METHOD__ . "::$key" );
 
+		// Wikia: Memoize duplicate memcache requests for the same key in the same request
+		if( isset( $this->_dupe_cache[ $key ] ) ) {
+			wfProfileIn( __METHOD__ . "::$key !DUPE" );
+			wfProfileOut( __METHOD__ . "::$key !DUPE" );
+			wfProfileOut( __METHOD__ . "::$key" );
+			wfProfileOut( __METHOD__ );
+			return $this->_dupe_cache[ $key ];
+		}
+
 		$res =  $this->checkResult( $key, parent::get( $key ) );
 
 		wfProfileOut( __METHOD__ . "::$key" );
 		wfProfileOut( __METHOD__ );
+
+		// Wikia: Memoize duplicate memcache requests for the same key in the same request
+		$this->_dupe_cache[$key] = $res;
 
 		return $res;
 	}
@@ -122,6 +143,9 @@ class MemcachedPeclBagOStuff extends MemcachedBagOStuff {
 	 * @return bool
 	 */
 	public function set( $key, $value, $exptime = 0 ) {
+		// Wikia: Memoize duplicate memcache requests for the same key in the same request
+		$this->_dupe_cache[ $key ] = $value;
+
 		$this->debugLog( "set($key)" );
 		return $this->checkResult( $key, parent::set( $key, $value, $exptime ) );
 	}
@@ -132,6 +156,8 @@ class MemcachedPeclBagOStuff extends MemcachedBagOStuff {
 	 * @return bool
 	 */
 	public function delete( $key, $time = 0 ) {
+		unset( $this->_dupe_cache[ $key ] ); // Wikia change
+
 		$this->debugLog( "delete($key)" );
 		return $this->checkResult( $key, parent::delete( $key, $time ) );
 	}
@@ -143,6 +169,8 @@ class MemcachedPeclBagOStuff extends MemcachedBagOStuff {
 	 * @return Mixed
 	 */
 	public function add( $key, $value, $exptime = 0 ) {
+		unset( $this->_dupe_cache[ $key ] ); // Wikia change
+
 		$this->debugLog( "add($key)" );
 		return $this->checkResult( $key, parent::add( $key, $value, $exptime ) );
 	}
@@ -154,6 +182,8 @@ class MemcachedPeclBagOStuff extends MemcachedBagOStuff {
 	 * @return Mixed
 	 */
 	public function replace( $key, $value, $exptime = 0 ) {
+		unset( $this->_dupe_cache[ $key ] ); // Wikia change
+
 		$this->debugLog( "replace($key)" );
 		return $this->checkResult( $key, parent::replace( $key, $value, $exptime ) );
 	}
@@ -164,6 +194,8 @@ class MemcachedPeclBagOStuff extends MemcachedBagOStuff {
 	 * @return Mixed
 	 */
 	public function incr( $key, $value = 1 ) {
+		unset( $this->_dupe_cache[ $key ] ); // Wikia change
+
 		$this->debugLog( "incr($key)" );
 		$result = $this->client->increment( $key, $value );
 		return $this->checkResult( $key, $result );
@@ -175,6 +207,8 @@ class MemcachedPeclBagOStuff extends MemcachedBagOStuff {
 	 * @return Mixed
 	 */
 	public function decr( $key, $value = 1 ) {
+		unset( $this->_dupe_cache[ $key ] ); // Wikia change
+
 		$this->debugLog( "decr($key)" );
 		$result = $this->client->decrement( $key, $value );
 		return $this->checkResult( $key, $result );
