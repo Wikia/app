@@ -126,7 +126,7 @@ class LyricFindTrackingService extends WikiaObject {
 			'trackid' => $trackId,
 			'client_ip' => !empty( $ctx['client_ip'] ) ? $ctx['client_ip'] : '',
 			'initiator' => $callerName,
-			'timestamp' => wfTimestamp( TS_DB )
+			'call_timestamp' => wfTimestamp( TS_DB )
 		] );
 
 		return ExternalHttp::post($url, ['postData' => $data]);
