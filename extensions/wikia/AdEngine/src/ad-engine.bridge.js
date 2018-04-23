@@ -57,6 +57,7 @@ function init(
 
 	legacyContext.addCallback(() => {
 		context.set('slots', getSlotsContext(legacyContext, skin));
+		syncSlotsStatus(slotRegistry, context.get('slots'));
 	});
 }
 
