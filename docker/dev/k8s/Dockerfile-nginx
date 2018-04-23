@@ -1,3 +1,12 @@
-FROM nginx:latest
+FROM nginx:1.13
 
+RUN chown -R nginx:nginx /etc/nginx && \
+    chown nginx:nginx /var/cache/nginx && \
+    chown -R nginx:nginx /var/log/nginx && \
+    mkdir /var/run/nginx && \
+    chown nginx:nginx /var/run/nginx
+
+ADD nginx.conf /etc/nginx/nginx.conf
 ADD site.conf /etc/nginx/conf.d/default.conf
+
+USER nginx

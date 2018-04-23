@@ -6,7 +6,14 @@ define('ext.wikia.adEngine.lookup.lookupFactory', [
 	'wikia.lazyqueue',
 	'wikia.log',
 	require.optional('ext.wikia.adEngine.mobile.mercuryListener')
-], function (adContext, adTracker, adBlockDetection, lazyQueue, log, mercuryListener) {
+], function (
+	adContext,
+	adTracker,
+	adBlockDetection,
+	lazyQueue,
+	log,
+	mercuryListener
+) {
 	'use strict';
 
 	function create(module) {
