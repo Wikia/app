@@ -1,12 +1,10 @@
 /*global define*/
 define('ext.wikia.adEngine.lookup.prebid.adapters.audienceNetwork',[
+	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.context.slotsContext',
 	'ext.wikia.aRecoveryEngine.instartLogic.recovery',
-	'ext.wikia.adEngine.geo',
-	'wikia.instantGlobals',
-	'ext.wikia.adEngine.adContext',
 	'wikia.querystring'
-], function (slotsContext, instartLogic, geo, instantGlobals, adContext, querystring) {
+], function (adContext, slotsContext, instartLogic, querystring) {
 	'use strict';
 
 	var bidderName = 'audienceNetwork',
