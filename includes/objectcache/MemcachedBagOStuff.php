@@ -32,6 +32,9 @@ class MemcachedBagOStuff extends BagOStuff {
 	/**
 	 * Fill in the defaults for any parameters missing from $params, using the
 	 * backwards-compatible global variables
+	 *
+	 * @param array $params
+	 * @return array
 	 */
 	protected function applyDefaultParams( $params ) {
 		if ( !isset( $params['servers'] ) ) {
@@ -86,6 +89,7 @@ class MemcachedBagOStuff extends BagOStuff {
 	/**
 	 * @param $key string
 	 * @param $value int
+	 * @param $exptime int
 	 * @return Mixed
 	 */
 	public function add( $key, $value, $exptime = 0 ) {
@@ -119,6 +123,8 @@ class MemcachedBagOStuff extends BagOStuff {
 	 * the other control characters for compatibility with libmemcached
 	 * verify_key. We leave other punctuation alone, to maximise backwards
 	 * compatibility.
+	 *
+	 * @param $key string
 	 * @return string
 	 */
 	public function encodeKey( $key ) {
@@ -136,6 +142,9 @@ class MemcachedBagOStuff extends BagOStuff {
 	 * discarded immediately because the expiry is in the past.
 	 * Clamp expiries >30d at 30d, unless they're >=1e9 in which
 	 * case they are likely to really be absolute (1e9 = 2011-09-09)
+	 *
+	 * @param int $expiry
+	 * @return int
 	 */
 	function fixExpiry( $expiry ) {
 		if ( $expiry > 2592000 && $expiry < 1000000000 ) {
@@ -158,6 +167,8 @@ class MemcachedBagOStuff extends BagOStuff {
 
 	/**
 	 * Send a debug message to the log
+	 *
+	 * @param string $text
 	 */
 	protected function debugLog( $text ) {
 		global $wgDebugLogGroups;

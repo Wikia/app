@@ -38,7 +38,7 @@ class MemcachedPhpBagOStuff extends MemcachedBagOStuff {
 	/**
 	 * @param $key
 	 * @param $timeout int
-	 * @return
+	 * @return bool
 	 */
 	public function lock( $key, $timeout = 0 ) {
 		return $this->client->lock( $this->encodeKey( $key ), $timeout );
@@ -75,8 +75,8 @@ class MemcachedPhpBagOStuff extends MemcachedBagOStuff {
 	 *
 	 * @author Władysław Bodzek <wladek@wikia-inc.com>
 	 * @param $keys array List of keys
-	 * @parma $returnData bool Return the data?
-	 * @return array
+	 * @param $returnData bool Return the data?
+	 * @return array|true
 	 */
 	protected function getMultiInternal( $keys, $returnData ) {
 		$map = array();
