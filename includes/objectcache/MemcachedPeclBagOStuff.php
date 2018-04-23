@@ -103,7 +103,16 @@ class MemcachedPeclBagOStuff extends MemcachedBagOStuff {
 	 */
 	public function get( $key ) {
 		$this->debugLog( "get($key)" );
-		return $this->checkResult( $key, parent::get( $key ) );
+
+		wfProfileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ . "::$key" );
+
+		$res =  $this->checkResult( $key, parent::get( $key ) );
+
+		wfProfileOut( __METHOD__ . "::$key" );
+		wfProfileOut( __METHOD__ );
+
+		return $res;
 	}
 
 	/**
