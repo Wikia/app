@@ -39,7 +39,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.audienceNetwork',[
 
 		return adContext.getContext().targeting.skin === 'mercury' &&
 			isAudienceNetworkAvailable &&
-			geo.isProperGeo(instantGlobals.wgAdDriverAudienceNetworkBidderCountries, 'wgAdDriverAudienceNetworkBidderCountries') &&
+			adContext.get('context.audienceNetwork') &&
 			!instartLogic.isBlocking();
 	}
 

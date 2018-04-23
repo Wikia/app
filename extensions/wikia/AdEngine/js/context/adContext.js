@@ -10,9 +10,10 @@ define('ext.wikia.adEngine.adContext', [
 	'wikia.instantGlobals',
 	'ext.wikia.adEngine.geo',
 	'ext.wikia.adEngine.utils.sampler',
+	'ext.wikia.aRecoveryEngine.instartLogic.recovery',
 	'wikia.window',
 	'wikia.querystring'
-], function (browserDetect, cookies, doc, geo, instantGlobals, adsGeo, sampler, w, Querystring) {
+], function (browserDetect, cookies, doc, geo, instantGlobals, adsGeo, sampler, instartLogic, w, Querystring) {
 	'use strict';
 
 	instantGlobals = instantGlobals || {};
@@ -104,6 +105,14 @@ define('ext.wikia.adEngine.adContext', [
 		context.bidders.beachfront = isProperGeo('wgAdDriverBeachfrontBidderCountries') && !hasFeaturedVideo;
 		context.bidders.appnexusAst = isProperGeo('wgAdDriverAppNexusAstBidderCountries') && !hasFeaturedVideo;
 		context.bidders.a9Video = isProperGeo('wgAdDriverA9VideoBidderCountries');
+		context.bidders.aol = isProperGeo('wgAdDriverAolBidderCountries');
+		context.bidders.appnexus = isProperGeo('wgAdDriverAppNexusBidderCountries');
+		context.bidders.appnexusWebAds = isProperGeo('wgAdDriverAppNexusWebAdsBidderCountries');
+		context.bidders.audienceNetwork = isProperGeo('wgAdDriverAudienceNetworkBidderCountries');
+		context.bidders.indexExchange = isProperGeo('wgAdDriverIndexExchangeBidderCountries');
+		context.bidders.onemobile = isProperGeo('wgAdDriverAolOneMobileBidderCountries');
+		context.bidders.openx = isProperGeo('wgAdDriverOpenXPrebidBidderCountries');
+		context.bidders.pubmatic = isProperGeo('wgAdDriverPubMaticBidderCountries');
 	}
 
 	function referrerIsSonySite() {
