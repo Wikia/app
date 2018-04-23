@@ -25,6 +25,7 @@ class MemcachedPeclBagOStuff extends MemcachedBagOStuff {
 	 *   - serializer:          May be either "php" or "igbinary". Igbinary produces more compact 
 	 *                          values, but serialization is much slower unless the php.ini option
 	 *                          igbinary.compact_strings is off.
+	 *   - use_binary_protocol  Whether to enable the binary protocol (default is ASCII) (boolean)
 	 */
 	function __construct( $params ) {
 		$params = $this->applyDefaultParams( $params );
@@ -35,8 +36,8 @@ class MemcachedPeclBagOStuff extends MemcachedBagOStuff {
 			$this->client = new Memcached;
 		}
 
-		if ( !isset( $params['serializer'] ) ) {
-			$params['serializer'] = 'php';
+		if ( $params['use_binary_protocol'] ) {
+			$this->client->setOption( Memcached::OPT_BINARY_PROTOCOL, true );
 		}
 
 		// The compression threshold is an undocumented php.ini option for some 
@@ -77,6 +78,20 @@ class MemcachedPeclBagOStuff extends MemcachedBagOStuff {
 			list( $ip, $port ) = IP::splitHostAndPort( $host );
 			$this->client->addServer( $ip, $port );
 		}
+	}
+
+	protected function applyDefaultParams( $params ) {
+		$params = parent::applyDefaultParams( $params );
+
+		if ( !isset( $params['use_binary_protocol'] ) ) {
+			$params['use_binary_protocol'] = false;
+		}
+
+		if ( !isset( $params['serializer'] ) ) {
+			$params['serializer'] = 'php';
+		}
+
+		return $params;
 	}
 
 	/**
