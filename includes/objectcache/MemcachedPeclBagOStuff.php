@@ -185,7 +185,12 @@ class MemcachedPeclBagOStuff extends MemcachedBagOStuff {
 				} else {
 					$msg = "Memcached error: $msg";
 				}
-				wfDebugLog( 'memcached-serious', $msg );
+
+				// Wikia change
+				Wikia\Logger\WikiaLogger::instance()->error (__METHOD__, [
+					'exception' => new Exception( $msg ),
+					'normalized_key' => \Wikia\Memcached\MemcachedStats::normalizeKey( $key )
+				] );
 		}
 		return $result;
 	}

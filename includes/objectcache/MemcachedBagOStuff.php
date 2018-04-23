@@ -171,14 +171,6 @@ class MemcachedBagOStuff extends BagOStuff {
 	 * @param string $text
 	 */
 	protected function debugLog( $text ) {
-		global $wgDebugLogGroups;
-		if( !isset( $wgDebugLogGroups['memcached'] ) ) {
-			# Prefix message since it will end up in main debug log file
-			$text = "memcached: $text";
-		}
-		if ( substr( $text, -1 ) !== "\n" ) {
-			$text .= "\n";
-		}
-		wfDebug( 'memcached' . $text );
+		wfDebug( "memcached: $text\n" );
 	}
 }
