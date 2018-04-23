@@ -10,10 +10,9 @@ define('ext.wikia.adEngine.adContext', [
 	'wikia.instantGlobals',
 	'ext.wikia.adEngine.geo',
 	'ext.wikia.adEngine.utils.sampler',
-	'ext.wikia.aRecoveryEngine.instartLogic.recovery',
 	'wikia.window',
 	'wikia.querystring'
-], function (browserDetect, cookies, doc, geo, instantGlobals, adsGeo, sampler, instartLogic, w, Querystring) {
+], function (browserDetect, cookies, doc, geo, instantGlobals, adsGeo, sampler, w, Querystring) {
 	'use strict';
 
 	instantGlobals = instantGlobals || {};
