@@ -81,3 +81,8 @@ $separatorTransformTable = array(
 
 $linkTrail = '/^([абвгґджзеёжзійклмнопрстуўфхцчшыьэюяćčłńśšŭźža-z]+)(.*)$/sDu';
 
+$pluralRules = [
+	"n % 10 = 1 and n % 100 != 11",
+	"n % 10 = 2..4 and n % 100 != 12..14",
+	"n % 10 = 0 or n % 10 = 5..9 or n % 100 = 11..14",
+];

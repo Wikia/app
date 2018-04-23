@@ -131,3 +131,6 @@ $specialPageAliases = array(
 	'Withoutinterwiki'          => array( 'Walang ugnayang-wiki' ),
 );
 
+$pluralRules = [
+	"i = 0..1 and v = 0",
+];
