@@ -211,7 +211,6 @@ $wgAutoloadClasses[ 'WikiaPageType'                   ] = "$IP/includes/wikia/Wi
 $wgAutoloadClasses[ 'WikiaSkinMonoBook'               ] = "$IP/skins/wikia/WikiaMonoBook.php";
 $wgAutoloadClasses[ 'PaginationController'            ] = "$IP/includes/wikia/services/PaginationController.class.php";
 $wgAutoloadClasses[ 'MemcacheSync'                    ] = "$IP/includes/wikia/MemcacheSync.class.php";
-$wgAutoloadClasses[ 'LibmemcachedBagOStuff'           ] = "$IP/includes/cache/wikia/LibmemcachedBagOStuff.php";
 $wgAutoloadClasses[ 'WikiaAssets'                     ] = "$IP/includes/wikia/WikiaAssets.class.php";
 $wgAutoloadClasses[ 'FakeSkin'                        ] = "$IP/includes/wikia/FakeSkin.class.php";
 $wgAutoloadClasses[ 'WikiaUpdater'                    ] = "$IP/includes/wikia/WikiaUpdater.php";
