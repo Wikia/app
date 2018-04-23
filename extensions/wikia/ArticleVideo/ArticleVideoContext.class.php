@@ -6,71 +6,6 @@ class ArticleVideoContext {
 	const JWPLAYER_API_ERROR_MESSAGE = 'JWPlayer: Could not find enough playback info in JW API to play the video';
 
 	/**
-	 * to get playlist for given article: $playlist = self::RECOMMENDED_VIDEO_MAPPINGS[$cityId][$articleId]
-	 */
-	const RECOMMENDED_VIDEO_MAPPINGS_POZ_DEV = [
-		// harrypotter Knight_Bus
-		509 => [
-			509 => '1Dw2sjAj',
-		]
-	];
-
-	const RECOMMENDED_VIDEO_MAPPINGS_PROD = [
-		509 => [
-			509 => '1Dw2sjAj',
-		],
-		// dragonage.wikia.com
-		10150 => [
-			129225 => 'YLevTBHB'
-		],
-		// dragonball.wikia.com
-		530 => [
-			609128 => 'fi25Ptnz',
-			525762 => 'KAPfrsHO',
-			2834 => 'bbOMHSz3',
-			578170 => 'H5MlOcIT',
-			598839 => 'MKcSnYez'
-		],
-		// elderscrolls.wikia.com
-		1706 => [
-			39609 => 'OHCjh0TQ',
-			65624 => 'iK257Ktw'
-		],
-		// gta.wikia.com
-		4541 => [
-			185157 => 'IqqOqNVI',
-			184893 => 'lfz9Wmoi',
-			99477 => 'OJpnFu6L',
-			185085 => 'lfz9Wmoi'
-		],
-		// marvelcinematicuniverse.wikia.com
-		177996 => [
-			8338 => 'oXCSDrnn',
-			7102 => 'PkKkV0ao'
-		],
-		// memoryalpha.wikia.com
-		113 => [
-			240 => 'f5t2iKaD',
-			1295 => '4NtOLP2p'
-		],
-		// monsterhunter.wikia.com
-		3234 => [
-			312943 => 'DT6aHDR7',
-			318952 => 'gFhI3dDy'
-		],
-		// naruto.wikia.com
-		1318 => [
-			2958 => 'bf9OvJTK',
-			2371 => 'kAuFKJo7',
-			1527 => 'ZsT3G4aW'
-		],
-		// supersmashbros.wikia.com
-		2714 => [
-			5255 => 'yRYnUGkG'
-		],
-	];
-
-	/**
 	 * Checks if featured video is embedded on given article
 	 *
 	 * @param $pageId
@@ -202,24 +137,33 @@ class ArticleVideoContext {
 		return $isoTime;
 	}
 
-	public static function getRecommendedVideoPlaylistId( int $pageId ): string {
-		global $wgCityId, $wgWikiaEnvironment, $wgWikiaDatacenter;
+	public static function isRecommendedVideoAvailable( int $pageId ): bool {
+		$wg = F::app()->wg;
 
-		$playlist = '';
-
-		if ( $wgWikiaEnvironment === WIKIA_ENV_DEV ) {
-			if ( $wgWikiaDatacenter === WIKIA_DC_POZ ) {
-				//$playlist = self::RECOMMENDED_VIDEO_MAPPINGS_POZ_DEV[$wgCityId][$pageId] ?? '';
-				$playlist = self::RECOMMENDED_VIDEO_MAPPINGS_POZ_DEV[509][509] ?? '';
-			}
-		} else {
-			$playlist = self::RECOMMENDED_VIDEO_MAPPINGS_PROD[$wgCityId][$pageId] ?? '';
-		}
-
-		return $playlist;
+		return !$wg->user->isLoggedIn() &&
+			$wg->Title->isContentPage() &&
+			!empty( $wg->RecommendedVideoABTestPlaylist ) &&
+			!WikiaPageType::isActionPage() &&
+			empty( self::isFeaturedVideoEmbedded( $pageId ) );
 	}
 
-	public static function isRecommendedVideoAvailable( int $pageId ): bool {
-		return !F::app()->wg->user->isLoggedIn() && !empty( self::getRecommendedVideoPlaylistId( $pageId ) );
+	public static function getRelatedMediaIdForRecommendedVideo(): string {
+		$wg = F::app()->wg;
+
+		$relatedMediaId = [
+			'b2tPs4we' => 'BfX1X16j',
+			'ufzLA79x' => 'hpBoYVlX',
+			'BQwrCCwR' => 'O2hLKIci',
+			'PzmSVrS5' => 'MXqX3hnr',
+			'Z3Vzra8s' => 'Q31xhSnO',
+			'qYUWMfZP' => 'yesrrkst',
+			'X3TqEV0w' => 'Xw333ob1',
+			'KhkQyQT3' => 'WNcPjgNz',
+		];
+
+		// returns hardcoded mediaId or use `WNcPjgNz` if mapping doesn't exist
+		// this hack is only for AB test
+		return !empty( $relatedMediaId[$wg->RecommendedVideoABTestPlaylist] )
+			? $relatedMediaId[$wg->RecommendedVideoABTestPlaylist] : 'WNcPjgNz';
 	}
 }

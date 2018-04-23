@@ -1107,6 +1107,13 @@ $wgAdDriverAudienceNetworkBidderCountries = null;
 $wgAdDriverBeachfrontBidderCountries = null;
 
 /**
+ * @name $wgAdDriverBottomLeaderBoardLazyPrebidCountries
+ * List of countries where BOTTOM_LEADERBOARD lazy Prebid.js loading is enabled.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverBottomLeaderBoardLazyPrebidCountries = null;
+
+/**
  * @name $wgAdDriverBottomLeaderBoardMegaCountries
  * List of countries where BOTTOM_LEADERBOARD ad slot mega is enabled.
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.

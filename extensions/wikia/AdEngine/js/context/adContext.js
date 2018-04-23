@@ -171,9 +171,10 @@ define('ext.wikia.adEngine.adContext', [
 			context.providers.evolve2 = geo.isProperGeo(instantGlobals.wgAdDriverEvolve2Countries);
 		}
 
-		if (geo.isProperGeo(instantGlobals.wgAdDriverTurtleCountries)) {
-			context.providers.turtle = true;
-		}
+		context.providers.turtle = adsGeo.isProperGeo(
+			instantGlobals.wgAdDriverTurtleCountries,
+			'wgAdDriverTurtleCountries'
+		);
 
 		context.opts.enableRemnantNewAdUnit = geo.isProperGeo(instantGlobals.wgAdDriverMEGACountries);
 
@@ -216,11 +217,13 @@ define('ext.wikia.adEngine.adContext', [
 		context.opts.replayAdsForFV = geo.isProperGeo(instantGlobals.wgAdDriverPlayAdsOnNextFVCountries);
 		context.opts.fvAdsFrequency = fvAdsFrequency !== undefined ? fvAdsFrequency : 3;
 		context.opts.disableSra = geo.isProperGeo(instantGlobals.wgAdDriverDisableSraCountries);
+		context.opts.isBLBLazyPrebidEnabled = context.targeting.skin === 'oasis' &&
+			geo.isProperGeo(instantGlobals.wgAdDriverBottomLeaderBoardLazyPrebidCountries);
 		context.opts.isBLBMegaEnabled = geo.isProperGeo(instantGlobals.wgAdDriverBottomLeaderBoardMegaCountries);
-		context.opts.additionalBLBSizes =
-			geo.isProperGeo(instantGlobals.wgAdDriverBottomLeaderBoardAdditionalSizesCountries);
 		context.opts.isBLBViewportEnabled =
 			geo.isProperGeo(instantGlobals.wgAdDriverBottomLeaderBoardViewportCountries);
+		context.opts.additionalBLBSizes =
+			geo.isProperGeo(instantGlobals.wgAdDriverBottomLeaderBoardAdditionalSizesCountries);
 
 		context.opts.labradorTestGroup =
 			adsGeo.isProperGeo(instantGlobals.wgAdDriverLABradorTestCountries, 'wgAdDriverLABradorTestCountries') ?

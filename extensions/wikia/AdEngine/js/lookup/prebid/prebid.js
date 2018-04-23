@@ -1,5 +1,7 @@
 /*global define*/
 define('ext.wikia.adEngine.lookup.prebid', [
+	'ext.wikia.adEngine.adContext',
+	'ext.wikia.adEngine.context.uapContext',
 	'ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker',
 	'ext.wikia.adEngine.lookup.prebid.adaptersPricesTracker',
 	'ext.wikia.adEngine.lookup.prebid.adaptersRegistry',
@@ -8,6 +10,8 @@ define('ext.wikia.adEngine.lookup.prebid', [
 	'ext.wikia.adEngine.lookup.lookupFactory',
 	'wikia.window'
 ], function (
+	adContext,
+	uapContext,
 	performanceTracker,
 	pricesTracker,
 	adaptersRegistry,
@@ -19,7 +23,9 @@ define('ext.wikia.adEngine.lookup.prebid', [
 	'use strict';
 	var adUnits = [],
 		biddersPerformanceMap = {},
-		prebidLoaded = false;
+		prebidLoaded = false,
+		isLazyLoadingEnabled = adContext.get('opts.isBLBLazyPrebidEnabled'),
+		isLazyLoaded = false;
 
 	function removeAdUnits() {
 		(win.pbjs.adUnits || []).forEach(function (adUnit) {
@@ -34,30 +40,58 @@ define('ext.wikia.adEngine.lookup.prebid', [
 		}
 
 		biddersPerformanceMap = performanceTracker.setupPerformanceMap(skin);
-		adUnits = helper.setupAdUnits(skin);
+		adUnits = helper.setupAdUnits(skin, isLazyLoadingEnabled ? 'pre' : 'off');
 
 		if (win.pbjs) {
 			win.pbjs._bidsReceived = [];
 		}
 
 		if (adUnits.length > 0) {
-
 			if (!prebidLoaded) {
 				win.pbjs.que.push(function () {
 					win.pbjs.bidderSettings = settings.create();
 				});
 			}
 
-			win.pbjs.que.push(function () {
-				removeAdUnits();
-				win.pbjs.requestBids({
-					adUnits: adUnits,
-					bidsBackHandler: onResponse
-				});
-			});
+			requestBids(adUnits, onResponse, true);
 		}
 
 		prebidLoaded = true;
+
+		if (isLazyLoadingEnabled) {
+			win.addEventListener('adengine.lookup.prebid.lazy', function () {
+				lazyCall(skin, onResponse);
+			});
+		}
+	}
+
+	function lazyCall(skin, onResponse) {
+		if (!isLazyLoaded) {
+			isLazyLoaded = true;
+
+			if (!uapContext.isFanTakeoverLoaded()) {
+				var adUnitsLazy = helper.setupAdUnits(skin, 'post');
+
+				if (adUnitsLazy.length > 0) {
+					requestBids(adUnitsLazy, onResponse, false);
+
+					adUnits = adUnits.concat(adUnitsLazy);
+				}
+			}
+		}
+	}
+
+	function requestBids(adUnits, onResponse, withRemove) {
+		win.pbjs.que.push(function () {
+			if (withRemove) {
+				removeAdUnits();
+			}
+
+			win.pbjs.requestBids({
+				adUnits: adUnits,
+				bidsBackHandler: onResponse
+			});
+		});
 	}
 
 	function calculatePrices() {

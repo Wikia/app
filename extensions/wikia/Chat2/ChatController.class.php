@@ -65,10 +65,13 @@ class ChatController extends WikiaController {
 		$this->pathToProfilePage = Title::makeTitle( !empty( $this->wg->EnableWallExt ) ? NS_USER_WALL : NS_USER_TALK, '$1' )->getFullURL();
 		$this->pathToContribsPage = SpecialPage::getTitleFor( 'Contributions', '$1' )->getFullURL();
 
-		$this->bodyClasses = "";
+		// Adding a community-specific class to the body tag.
+		$this->bodyClasses = Sanitizer::escapeClass( "wiki-{$this->wg->DBname}" );
+
+		// Adding chatmoderator class to the body tag.
 		if ( $wgUser->isAllowed( Chat::CHAT_MODERATOR ) ) {
 			$this->isModerator = 1;
-			$this->bodyClasses .= ' chatmoderator ';
+			$this->bodyClasses .= ' chatmoderator';
 		} else {
 			$this->isModerator = 0;
 		}
@@ -76,7 +79,7 @@ class ChatController extends WikiaController {
 		// Adding chatmoderator group for other users. CSS classes added to body tag to hide/show option in menu.
 		$userChangeableGroups = $wgUser->changeableGroups();
 		if ( in_array( Chat::CHAT_MODERATOR, $userChangeableGroups['add'] ) ) {
-			$this->bodyClasses .= ' can-give-chat-mod ';
+			$this->bodyClasses .= ' can-give-chat-mod';
 		}
 
 		// set up global js variables just for the chat page

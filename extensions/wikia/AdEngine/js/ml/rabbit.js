@@ -5,14 +5,16 @@ define('ext.wikia.adEngine.ml.rabbit', [
 	require.optional('ext.wikia.adEngine.ml.n1.n1DecisionTreeClassifier'),
 	require.optional('ext.wikia.adEngine.ml.n1.n1LogisticRegression'),
 	require.optional('ext.wikia.adEngine.ml.n1.n1mLogisticRegression'),
-	require.optional('ext.wikia.adEngine.ml.outstream.outstreamLogisticRegression')
+	require.optional('ext.wikia.adEngine.ml.outstream.outstreamLogisticRegression'),
+	require.optional('ext.wikia.adEngine.ml.nivens.mobileNivensLogisticRegression')
 ], function (
 	fmrLr,
 	fmrPac,
 	n1dtc,
 	n1Lr,
 	n1mLr,
-	outstreamLr
+	outstreamLr,
+	mobileNivens
 ) {
 	'use strict';
 
@@ -22,7 +24,8 @@ define('ext.wikia.adEngine.ml.rabbit', [
 		n1dtc,
 		n1Lr,
 		n1mLr,
-		outstreamLr
+		outstreamLr,
+		mobileNivens
 	];
 
 	function getModelNames() {
