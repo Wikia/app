@@ -36,7 +36,7 @@ export function getSlotsContext(legacyContext, skin) {
 					}
 				},
 				'BOTTOM_LEADERBOARD': {
-					disabled: true,
+					disabled: false,
 					slotName: 'BOTTOM_LEADERBOARD',
 					sizes: [
 						{
