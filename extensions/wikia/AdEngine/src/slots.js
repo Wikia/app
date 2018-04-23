@@ -19,6 +19,22 @@ export function getSlotsContext(legacyContext, skin) {
 						loc: 'top'
 					}
 				},
+				'TOP_RIGHT_BOXAD': {
+					disabled: false,
+					slotName: 'TOP_RIGHT_BOXAD',
+					sizes: [
+						{
+							viewportSize: [728, 0],
+							sizes: [[300, 250], [300, 600], [300, 1050]]
+						}
+					],
+					options: {},
+					defaultSizes: [[300, 250]],
+					targeting: {
+						pos: 'TOP_RIGHT_BOXAD',
+						loc: 'top'
+					}
+				},
 				'BOTTOM_LEADERBOARD': {
 					disabled: true,
 					slotName: 'BOTTOM_LEADERBOARD',
