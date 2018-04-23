@@ -1518,8 +1518,12 @@ $wgObjectCaches = array(
 
 	// SUS-4611
 	CACHE_MEMCACHED => [
-		# 'class' => 'MemcachedPhpBagOStuff', // use old, puge PHP client
-		'class' => 'MemcachedPeclBagOStuff', // use memcached-based client
+		/**
+		 * Note that MemcachedPhpBagOStuff and MemcachedPeclBagOStuff clients use
+		 * incompatible serialization logic.
+		 */
+		'class' => 'MemcachedPhpBagOStuff', // use old, pure PHP client
+		# 'class' => 'MemcachedPeclBagOStuff', // TODO: use memcached-based client
 		'use_binary_protocol' => false, // twemproxy does not support binary protocol
 	],
 
