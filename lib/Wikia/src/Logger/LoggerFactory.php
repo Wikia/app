@@ -48,8 +48,11 @@ class LoggerFactory {
 		$logger = new Logger( $ident );
 
 		if ( $this->shouldLogToStandardOutput ) {
-			$handler = new StreamHandler( STDOUT );
+			$stdout = fopen('php://stdout', 'w');
+			$handler = new StreamHandler( $stdout );
 			$handler->setFormatter( new JsonFormatter( JsonFormatter::BATCH_MODE_NEWLINES ) );
+			
+			$logger->pushProcessor( new AppNameProcessor( $ident ) );
 		} else {
 			$handler = new SyslogHandler( $ident );
 			$handler->setFormatter( new LogstashFormatter( $ident ) );
