@@ -51,12 +51,6 @@ define('ext.wikia.adEngine.provider.btfBlocker', [
 		win.addEventListener('wikia.blocking', startBtfQueue);
 
 		function processBtfSlot(slot) {
-
-			if (bridge.universalAdPackage.isFanTakeoverLoaded() && slot.name === 'INVISIBLE_HIGH_IMPACT_2') {
-				log(['IHI2 disabled when UAP on page'], log.levels.info, logGroup);
-				return;
-			}
-
 			if (win.ads.runtime.unblockHighlyViewableSlots && config.highlyViewableSlots) {
 				log(['Unblocking HiVi slots', slot.name], log.levels.info, logGroup);
 				config.highlyViewableSlots.map(unblock);

@@ -78,11 +78,11 @@ require([
 
 	if (fvLagger && context.opts.isFVUapKeyValueEnabled) {
 		fvLagger.addResponseListener(function (lineItemId) {
-			adEngineBridge.universalAdPackage.setUapId(lineItemId);
-			adEngineBridge.universalAdPackage.setType('jwp');
-
-			slotRegistry.disable('TOP_LEADERBOARD');
-			slotRegistry.disable('BOTTOM_LEADERBOARD');
+			win.loadCustomAd({
+				adProduct: 'jwp',
+				type: 'bfp',
+				uap: lineItemId
+			});
 		});
 	}
 
