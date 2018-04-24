@@ -14,8 +14,8 @@ class HTTPSOptInHooks {
 	];
 
 	public static function onGetPreferences( User $user, array &$preferences ): bool {
-		global $wgServer;
-		if ( wfHttpsAllowedForURL( $wgServer ) ) {
+		global $wgServer, $wgHTTPSForLoggedInUsers;
+		if ( empty( $wgHTTPSForLoggedInUsers ) && wfHttpsAllowedForURL( $wgServer ) ) {
 			$preferences['https-opt-in'] = [
 				'type' => 'toggle',
 				'label-message' => 'https-opt-in-toggle',
@@ -75,9 +75,10 @@ class HTTPSOptInHooks {
 	}
 
 	private static function httpsAllowed( User $user, string $url ): bool {
+		global $wgHTTPSForLoggedInUsers;
 		return wfHttpsAllowedForURL( $url ) &&
 			$user->isLoggedIn() &&
-			$user->getGlobalPreference( 'https-opt-in', false );
+			( !empty( $wgHTTPSForLoggedInUsers ) || $user->getGlobalPreference( 'https-opt-in', false ) );
 	}
 
 	private static function httpsEnabledTitle( Title $title ): bool {
