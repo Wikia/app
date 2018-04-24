@@ -5,12 +5,20 @@ describe('ext.wikia.adEngine.lookup.prebid', function () {
 	var insertBefore = jasmine.createSpy('insertBefore'),
 		mocks = {
 			adContext: {
+				get: function () {
+					return true;
+				},
 				getContext: function () {
 					return {
 						opts: mocks.opts,
 						slots: noop,
 						targeting: mocks.targeting
 					};
+				}
+			},
+			uapContext: {
+				isFanTakeoverLoaded: function () {
+					return false;
 				}
 			},
 			opts: {
@@ -82,6 +90,7 @@ describe('ext.wikia.adEngine.lookup.prebid', function () {
 				}
 			},
 			win: {
+				addEventListener: noop,
 				pbjs: {
 					que: [],
 					requestBids: function () {
@@ -149,6 +158,8 @@ describe('ext.wikia.adEngine.lookup.prebid', function () {
 
 	function getPrebid() {
 		return modules['ext.wikia.adEngine.lookup.prebid'](
+			mocks.adContext,
+			mocks.uapContext,
 			mocks.adaptersPerformanceTracker,
 			mocks.adaptersPricesTracker,
 			mocks.adaptersRegistry,

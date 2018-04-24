@@ -12,6 +12,7 @@ import {
 import {
 	BigFancyAdAbove,
 	BigFancyAdBelow,
+	BigFancyAdInPlayer,
 	universalAdPackage,
 	isProperGeo,
 	getSamplingResults
@@ -21,12 +22,12 @@ import { createTracker } from './tracking/porvata-tracker-factory';
 import TemplateRegistry from './templates/templates-registry';
 import AdUnitBuilder from './ad-unit-builder';
 import config from './context';
-import slotConfig from './slots';
+import { getSlotsContext } from './slots';
 import './ad-engine.bridge.scss';
 
 context.extend(config);
 
-const supportedTemplates = [BigFancyAdAbove, BigFancyAdBelow];
+const supportedTemplates = [BigFancyAdAbove, BigFancyAdBelow, BigFancyAdInPlayer];
 
 function init(
 	adTracker,
@@ -41,11 +42,12 @@ function init(
 	TemplateRegistry.init(legacyContext, mercuryListener);
 	scrollListener.init();
 
-	context.extend({slots: slotConfig[skin]});
+	context.set('slots', getSlotsContext(legacyContext, skin));
 	context.push('listeners.porvata', createTracker(legacyContext, geo, pageLevelTargeting, adTracker));
 
 	overrideSlotService(slotRegistry, legacyBtfBlocker);
 	updatePageLevelTargeting(legacyContext, pageLevelTargeting, skin);
+	syncSlotsStatus(slotRegistry, context.get('slots'));
 
 	const wikiIdentifier = legacyContext.get('targeting.wikiIsTop1000') ?
 		context.get('targeting.s1') : '_not_a_top1k_wiki';
@@ -53,9 +55,10 @@ function init(
 	context.set('custom.wikiIdentifier', wikiIdentifier);
 	context.set('options.contentLanguage', window.wgContentLanguage);
 
-	if (legacyContext.get('opts.isBLBViewportEnabled')) {
-		context.push('slots.BOTTOM_LEADERBOARD.viewportConflicts', 'TOP_RIGHT_BOXAD');
-	}
+	legacyContext.addCallback(() => {
+		context.set('slots', getSlotsContext(legacyContext, skin));
+		syncSlotsStatus(slotRegistry, context.get('slots'));
+	});
 }
 
 function overrideSlotService(slotRegistry, legacyBtfBlocker) {
@@ -79,7 +82,19 @@ function overrideSlotService(slotRegistry, legacyBtfBlocker) {
 	slotService.legacyEnabled = slotService.enable;
 	slotService.enable = (slotName) => {
 		legacyBtfBlocker.unblock(slotName);
+		slotRegistry.enable(slotName);
 	};
+	slotService.disable = (slotName) => {
+		slotRegistry.disable(slotName);
+	};
+}
+
+function syncSlotsStatus(slotRegistry, slotsInContext) {
+	for (let slot in slotsInContext) {
+		if (slotsInContext[slot].disabled) {
+			slotRegistry.disable(slot);
+		}
+	}
 }
 
 function unifySlotInterface(slot) {
@@ -98,6 +113,9 @@ function unifySlotInterface(slot) {
 		getViewportConflicts: () => {
 			return slotContext.viewportConflicts || [];
 		},
+		hasDefinedViewportConflicts: () => {
+			return (slotContext.viewportConflicts || []).length > 0;
+		},
 		setConfigProperty: (key, value) => {
 			context.set(`slots.${slot.name}.${key}`, value);
 		}
@@ -111,7 +129,9 @@ function unifySlotInterface(slot) {
 
 function loadCustomAd(fallback) {
 	return (params) => {
-		if (getSupportedTemplateNames().includes(params.type)) {
+		const isTemplateSupported = getSupportedTemplateNames().includes(params.type);
+
+		if (isTemplateSupported && params.slotName) {
 			if (params.slotName.indexOf(',') !== -1) {
 				params.slotName = params.slotName.split(',')[0];
 			}
@@ -124,6 +144,8 @@ function loadCustomAd(fallback) {
 			context.set(`slots.${slot.getSlotName()}.options.loadedProduct`, params.adProduct);
 
 			templateService.init(params.type, slot, params);
+		} else if (isTemplateSupported) {
+			templateService.init(params.type, null, params);
 		} else {
 			fallback(params);
 		}

@@ -39,7 +39,7 @@ class ResourceLoaderStartUpModule extends ResourceLoaderModule {
 			$wgEnableAPI, $wgEnableWriteAPI, $wgDBname, $wgEnableMWSuggest,
 			$wgSitename, $wgFileExtensions, $wgExtensionAssetsPath,
 			$wgCookiePrefix, $wgResourceLoaderMaxQueryLength, $wgWikiaBaseDomain,
-			$wgWikiaBaseDomainRegex;
+			$wgWikiaBaseDomainRegex, $wgRecommendedVideoABTestPlaylist;
 
 		$mainPage = Title::newMainPage();
 
@@ -101,6 +101,7 @@ class ResourceLoaderStartUpModule extends ResourceLoaderModule {
 			'wgSassParams' => SassUtil::getSassSettings(),
 			'wgWikiaBaseDomain' => $wgWikiaBaseDomain,
 			'wgWikiaBaseDomainRegex' => $wgWikiaBaseDomainRegex,
+			'wgRecommendedVideoABTestPlaylist' => $wgRecommendedVideoABTestPlaylist,
 			// Wikia - change end
 		);
 

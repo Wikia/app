@@ -11,6 +11,22 @@ define('ext.wikia.adEngine.video.player.jwplayer.adsTracking', [
 		params.contentType = undefined;
 	}
 
+	function dispatchStatus(vastUrl, adInfo, status) {
+		if (vastUrl.indexOf('https://pubads.g.doubleclick.net') === -1) {
+			return;
+		}
+		if (!eventDispatcher) {
+			return;
+		}
+
+		eventDispatcher.dispatch('adengine.video.status', {
+			vastUrl: vastUrl,
+			creativeId: adInfo.creativeId,
+			lineItemId: adInfo.lineItemId,
+			status: status
+		});
+	}
+
 	return function(player, params) {
 		tracker.track(params, 'init');
 
@@ -18,7 +34,8 @@ define('ext.wikia.adEngine.video.player.jwplayer.adsTracking', [
 			clearParams(params);
 		});
 
-		player.on('adError', function () {
+		player.on('adError', function (event) {
+			dispatchStatus(event.tag, params, 'error');
 			clearParams(params);
 		});
 
@@ -31,14 +48,7 @@ define('ext.wikia.adEngine.video.player.jwplayer.adsTracking', [
 		});
 
 		player.on('adImpression', function (event) {
-			if (eventDispatcher) {
-				eventDispatcher.dispatch('adengine.video.status', {
-					vastUrl: event.tag,
-					creativeId: params.creativeId,
-					lineItemId: params.lineItemId,
-					status: 'success'
-				});
-			}
+			dispatchStatus(event.tag, params, 'success');
 		});
 
 		tracker.register(player, params);

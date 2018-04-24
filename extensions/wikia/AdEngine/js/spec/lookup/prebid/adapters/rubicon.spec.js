@@ -4,8 +4,8 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.rubicon', function () {
 
 	var mocks = {
 		adContext: {
-			getContext: function () {
-				return mocks.context;
+			get: function () {
+				return true;
 			}
 		},
 		context: {},
@@ -58,7 +58,7 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.rubicon', function () {
 	});
 
 	it('Is disabled when context is disabled', function () {
-		mocks.context.bidders.rubicon = false;
+		spyOn(mocks.adContext, 'get').and.returnValue(false);
 		var rubicon = getBidder();
 
 		expect(rubicon.isEnabled()).toBeFalsy();
@@ -80,6 +80,8 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.rubicon', function () {
 	it('prepareAdUnit returns data in correct shape', function () {
 		var bidder = getBidder();
 		expect(bidder.prepareAdUnit('TOP_LEADERBOARD', {
+			siteId: 55412,
+			sizeId: 203,
 			zoneId: 519058,
 			position: 'atf'
 		}, 'oasis')).toEqual({

@@ -27,7 +27,7 @@
 	<?php // TODO: use js var?>
 
 </head>
-<body class="<?= $bodyClasses ?> ChatWindow">
+<body class="ChatWindow <?= $bodyClasses ?>">
 
 	<header id="ChatHeader" class="ChatHeader">
 		<h1 class="public wordmark">

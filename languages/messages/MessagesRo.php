@@ -296,3 +296,7 @@ $fallback8bitEncoding = 'iso8859-2';
 
 $linkTrail = '/^([a-zăâîşţșțĂÂÎŞŢȘȚ]+)(.*)$/sDu';
 
+$pluralRules = [
+	"i = 1 and v = 0",
+	"v != 0 or n = 0 or n != 1 and n % 100 = 1..19",
+];

@@ -191,3 +191,6 @@ $magicWords = array(
 	'special'                 => array( '0', 'විශේෂ', 'special' ),
 );
 
+$pluralRules = [
+	"n = 0,1 or i = 0 and f = 1",
+];
