@@ -69,3 +69,6 @@ $linkTrail = '/^([a-zåâêîôûçéè]+)(.*)$/sDu';
 # bureaucrat = mwaisse-manaedjeu
 #
 
+$pluralRules = [
+	"n = 0..1",
+];

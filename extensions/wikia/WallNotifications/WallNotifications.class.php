@@ -188,15 +188,6 @@ class WallNotifications {
 
 				$wikiList = $this->getWikiList( $userId );
 
-				// prefetch data
-				$keys = [];
-				$wno = new WallNotificationsOwner;
-				foreach ( $wikiList as $wiki ) {
-					$keys[] = $this->getKey( $userId, $wiki['id'] );
-					$keys[] = $wno->getKey( $wiki['id'], $userId );
-				}
-				$wgMemc->prefetch( $keys );
-
 				$output = [];
 				$total = 0;
 				foreach ( $wikiList as $wiki ) {
@@ -271,7 +262,6 @@ class WallNotifications {
 		} else {
 			$output = [];
 		}
-		WikiFactory::prefetchWikisById( array_keys( $val ), WikiFactory::PREFETCH_VARIABLES );
 		foreach ( $val as $wikiId => $wikiSitename ) {
 			$output[] = [
 				'id' => $wikiId,
@@ -332,7 +322,6 @@ class WallNotifications {
 			/** @var Object $row */
 			$ids[] = $row->wiki_id;
 		}
-		WikiFactory::prefetchWikisById( $ids, WikiFactory::PREFETCH_WIKI_METADATA );
 		$output = [];
 		foreach ( $ids as $id ) {
 			$output[ $id ] = WikiFactory::getWikiByID( $id )->city_title;

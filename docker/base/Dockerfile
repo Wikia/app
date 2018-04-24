@@ -11,6 +11,8 @@ RUN apt-get update && apt-get install -y \
     automake \
     libbz2-dev \
     libjpeg-dev \
+    # needed by memcached
+    libmemcached-dev \
     libpng-dev \
     libxml2-dev \
     # needed by wikidiff2
@@ -74,6 +76,9 @@ RUN docker-php-ext-install \
     simplexml \
     # needed by RabbitMQ client
     bcmath
+
+RUN pecl install memcached-3.0.4 \
+    && docker-php-ext-enable memcached
 
 # expose volumes for app and config repositories clones
 ENV WIKIA_DOCROOT=/usr/wikia/slot1/current/src

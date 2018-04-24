@@ -4,6 +4,7 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.beachfront', function () {
 
 	var mocks = {
 		adContext: {
+			get: function() {},
 			getContext: function () {
 				return mocks.context;
 			}
@@ -47,16 +48,15 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.beachfront', function () {
 	});
 
 	it('Is disabled when context is disabled', function () {
-		mocks.context.bidders.beachfront = false;
-		var beachfront = getBeachfront();
+		spyOn(mocks.adContext, 'get').and.returnValue(false);
 
-		expect(beachfront.isEnabled()).toBeFalsy();
+		expect(getBeachfront().isEnabled()).toBeFalsy();
 	});
 
 	it('Is enabled when context is enabled', function () {
-		var beachfront = getBeachfront();
+		spyOn(mocks.adContext, 'get').and.returnValue(true);
 
-		expect(beachfront.isEnabled()).toBeTruthy();
+		expect(getBeachfront().isEnabled()).toBeTruthy();
 	});
 
 	it('prepareAdUnit returns data in correct shape', function () {

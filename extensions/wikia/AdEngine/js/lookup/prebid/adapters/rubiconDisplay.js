@@ -67,12 +67,8 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.rubiconDisplay', [
 			}
 		};
 
-	function getAdContext() {
-		return adContext.getContext();
-	}
-
 	function isEnabled() {
-		return getAdContext().bidders.rubiconDisplay && !instartLogic.isBlocking();
+		return adContext.get('bidders.rubiconDisplay') && !instartLogic.isBlocking();
 	}
 
 	function prepareAdUnit(slotName, config, skin) {
