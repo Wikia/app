@@ -91,7 +91,7 @@ define('ext.wikia.adEngine.adContext', [
 	}
 
 	function isProperGeo(name) {
-		const geos = instantGlobals[name] || [];
+		var geos = instantGlobals[name] || [];
 		return adsGeo.isProperGeo(geos, name);
 	}
 
