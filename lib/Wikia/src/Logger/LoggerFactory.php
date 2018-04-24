@@ -13,6 +13,9 @@ class LoggerFactory {
 	/** @var bool $shouldExcludeDebugLevel */
 	private $shouldExcludeDebugLevel;
 
+	/** @var string $mwLogFile */
+	private $mwLogFile;
+
 	/** @var StatusProcessor $statusProcessor */
 	private $statusProcessor;
 
@@ -35,9 +38,11 @@ class LoggerFactory {
 		return self::$instance;
 	}
 
-	public function __construct( bool $shouldLogToStandardOutput, bool $shouldExcludeDebugLevel ) {
+	public function __construct( bool $shouldLogToStandardOutput,
+								 bool $shouldExcludeDebugLevel, string $mwLogFile = '/var/log/mediawiki.log' ) {
 		$this->shouldLogToStandardOutput = $shouldLogToStandardOutput;
 		$this->shouldExcludeDebugLevel = $shouldExcludeDebugLevel;
+		$this->mwLogFile = $mwLogFile;
 	}
 
 	public function getLogger( string $ident ): Logger {
@@ -48,10 +53,10 @@ class LoggerFactory {
 		$logger = new Logger( $ident );
 
 		if ( $this->shouldLogToStandardOutput ) {
-			$stdout = fopen('php://stdout', 'w');
+			$stdout = fopen( $this->mwLogFile, 'w');
 			$handler = new StreamHandler( $stdout );
 			$handler->setFormatter( new JsonFormatter( JsonFormatter::BATCH_MODE_NEWLINES ) );
-			
+
 			$logger->pushProcessor( new AppNameProcessor( $ident ) );
 		} else {
 			$handler = new SyslogHandler( $ident );
