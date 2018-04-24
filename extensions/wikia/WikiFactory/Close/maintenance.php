@@ -261,7 +261,15 @@ class CloseWikiMaintenance {
 				/**
 				 * let other extensions remove entries for closed wiki
 				 */
-				Hooks::run( 'WikiFactoryDoCloseWiki', [ $row ] );
+				try {
+					Hooks::run( 'WikiFactoryDoCloseWiki', [ $row ] );
+				} catch ( Exception $ex ) {
+					// SUS-4606 | catch exceptions instead of stopping the script
+					WikiaLogger::instance()->error( 'WikiFactoryDoCloseWiki hook processing returned an error', [
+						'exception' => $ex,
+						'wiki_id' => (int) $row->city_id
+					] );
+				}
 
 				/**
 				 * there is nothing to set because row in city_list doesn't

@@ -1,9 +1,8 @@
 /*global define*/
 define('ext.wikia.adEngine.lookup.prebid.adapters.indexExchange',[
-	'ext.wikia.adEngine.context.slotsContext',
-	'wikia.geo',
-	'wikia.instantGlobals'
-], function (slotsContext, geo, instantGlobals) {
+	'ext.wikia.adEngine.adContext',
+	'ext.wikia.adEngine.context.slotsContext'
+], function (adContext, slotsContext) {
 	'use strict';
 
 	var bidderName = 'indexExchange',
@@ -106,7 +105,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.indexExchange',[
 		};
 
 	function isEnabled() {
-		return geo.isProperGeo(instantGlobals.wgAdDriverIndexExchangeBidderCountries);
+		return adContext.get('bidders.indexExchange');
 	}
 
 	function getSlots(skin, isRecovering) {

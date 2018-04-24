@@ -2745,6 +2745,8 @@ return array(
     'Wikia\\Factory\\ProviderFactory' => $baseDir . '/lib/Wikia/src/Factory/ProviderFactory.php',
     'Wikia\\Factory\\ServiceFactory' => $baseDir . '/lib/Wikia/src/Factory/ServiceFactory.php',
     'Wikia\\HTTP\\Response' => $baseDir . '/lib/Wikia/src/HTTP/Response.php',
+    'Wikia\\Localisation\\CachedLCStoreDB' => $baseDir . '/lib/Wikia/src/Localisation/CachedLCStoreDB.php',
+    'Wikia\\Localisation\\LCStoreDB' => $baseDir . '/lib/Wikia/src/Localisation/LCStoreDB.php',
     'Wikia\\Logger\\ContextSource' => $baseDir . '/lib/Wikia/src/Logger/ContextSource.php',
     'Wikia\\Logger\\Hooks' => $baseDir . '/lib/Wikia/src/Logger/Hooks.php',
     'Wikia\\Logger\\Loggable' => $baseDir . '/lib/Wikia/src/Logger/Loggable.php',

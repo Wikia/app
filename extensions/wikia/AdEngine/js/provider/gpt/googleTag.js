@@ -169,7 +169,10 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 				win.googletag.defineSlot(adElement.getSlotPath(), defaultSizes, slotId) :
 				win.googletag.defineOutOfPageSlot(adElement.getSlotPath(), slotId);
 
-			slot.defineSizeMapping(sizeMap.build());
+			if (!sizeMap.isEmpty()) {
+				slot.defineSizeMapping(sizeMap.build());
+			}
+
 			slot.addService(win.googletag.pubads());
 			win.googletag.display(slotId);
 			googleSlots.addSlot(slot);

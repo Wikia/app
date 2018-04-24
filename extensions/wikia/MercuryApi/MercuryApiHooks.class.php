@@ -92,9 +92,8 @@ class MercuryApiHooks {
 	static public function onTitleGetSquidURLs( Title $title, Array &$urls ) {
 		if ( $title->inNamespaces( NS_MAIN ) ) {
 			// Request from browser to MediaWiki
-			// TODO: Remove one of these two below when it is decided if we do the switch to getPage() or drop it.
-			$urls[] = MercuryApiController::getUrl( 'getArticle', [ 'title' => $title->getPartialURL() ] );
 			$urls[] = MercuryApiController::getUrl( 'getPage', [ 'title' => $title->getPartialURL() ] );
+			$urls[] = MercuryApiController::getUrl( 'getTrackingDimensions', [ 'title' => $title->getPartialURL() ] );
 		}
 		return true;
 	}

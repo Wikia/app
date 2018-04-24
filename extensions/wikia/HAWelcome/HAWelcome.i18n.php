@@ -339,9 +339,9 @@ Wenn du Hilfe brauchst, um loszulegen, sieh dir am besten erst einmal unsere [[H
 
 $3",
 	'welcome-message-log' => 'Begrüßung eines neuen Autors',
-	'welcome-message-user-staff' => '==Herzlich WIllkommen== 
+	'welcome-message-user-staff' => '==Herzlich Willkommen== 
 
-Hallo und willkommen bei {{SITENAME}}! Ich bin ein Mitglied des Community Support-Teams bei FANDOM. Vielen Dank, dass du [[:$1]] bearbeitet hast!
+Hallo und willkommen bei {{SITENAME}}! Ich bin ein Mitglied des Community-Support-Teams bei FANDOM. Vielen Dank, dass du [[:$1]] bearbeitet hast!
 
 Momentan scheint in dieser Community kein Admin aktiv zu sein, aber wenn du Hilfe brauchst, kannst du dir unsere [[Hilfe:Einführung|Hilfeseiten]] ansehen oder in der [[w:c:de.community|Community Deutschland]] vorbei schauen und dort die [[w:de.c:community:Spezial:Forum|Foren]] durchforsten.
 
