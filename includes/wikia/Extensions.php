@@ -817,12 +817,6 @@ if ( !empty($wgEnableStaffLogExt ) ) {
 	require_once("$IP/extensions/wikia/StaffLog/StaffLog.php");
 }
 
-/**
- * Namespaces for which ArticleComments are enabled.
- * @var Array $wgArticleCommentsNamespaces
- */
-$wgArticleCommentsNamespaces = array(NS_MAIN, 500 /* NS_BLOG_ARTICLE */ );
-
 if ( empty( $wgEnableArticleCommentsExt ) ) {
 	$wgArticleCommentsNamespaces = array( -1 );
 	if ( !empty( $wgEnableBlogArticles ) ) {

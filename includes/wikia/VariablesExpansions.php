@@ -77,6 +77,12 @@ $wgAntivirusSetup = [
 ];
 
 /**
+ * Namespaces for which ArticleComments are enabled.
+ * @var Array $wgArticleCommentsNamespaces
+ */
+$wgArticleCommentsNamespaces = [ NS_MAIN, 500 /* NS_BLOG_ARTICLE */ ];
+
+/**
  * The URL path for primary article page views. This path should contain $1,
  * which is replaced by the article title. Will default to "{$wgScript}/$1" or
  * "{$wgScript}?title=$1" in Setup.php, depending on $wgUsePathInfo.
