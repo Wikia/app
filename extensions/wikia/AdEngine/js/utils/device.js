@@ -4,7 +4,7 @@ define('ext.wikia.adEngine.utils.device', [
 ], function (browserDetect) {
 	'use strict';
 
-	var result = '';
+	var result = 'unknown';
 
 	function getDevice(params) {
 		if (params.skin === 'oasis') {
@@ -16,18 +16,7 @@ define('ext.wikia.adEngine.utils.device', [
 		return result;
 	}
 
-	function getDeviceSpecial(params) {
-		result = 'unknown';
-
-		if (params.s2 === 'special') {
-			return 'unknown-specialpage';
-		}
-
-		return getDevice(params);
-	}
-
 	return {
 		getDevice: getDevice,
-		getDeviceSpecial: getDeviceSpecial
 	};
 });
