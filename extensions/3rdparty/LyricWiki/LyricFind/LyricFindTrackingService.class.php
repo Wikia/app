@@ -12,6 +12,7 @@ class LyricFindTrackingService extends WikiaObject {
 	const CODE_LYRIC_IS_INSTRUMENTAL = 102;
 	const CODE_LRC_IS_AVAILABLE  = 111;
 	const CODE_LYRIC_IS_BLOCKED  = 206;
+	const USAGE_TRACKING_URL = 'https://lyricsfind.wikia-services.com/__track/';
 
 	// Not documented. The response body says "SUCCESS: NO LYRICS" which I assume means that they
 	// have licensing in place, they just don't have lyrics for the song.
@@ -120,14 +121,20 @@ class LyricFindTrackingService extends WikiaObject {
 		$callerName = isset( $dbt[1]['function'] ) ? $dbt[1]['function'] : 'unknown';
 
 		$ctx = Wikia\Tracer\WikiaTracer::instance()->getContext();
-		Wikia\Logger\WikiaLogger::instance()->info( 'Calling Lyric Display API', [
-			'url' => !empty( $ctx['http_url'] ) ? $ctx['http_url'] : '',
-			'referer' => !empty( $ctx['http_referrer'] ) ? $ctx['http_referrer'] : '',
-			'trackid' => $trackId,
-			'client_ip' => !empty( $ctx['client_ip'] ) ? $ctx['client_ip'] : '',
-			'initiator' => $callerName,
-			'call_timestamp' => wfTimestamp( TS_DB )
-		] );
+
+		if ( false === ExternalHttp::get( USAGE_TRACKING_URL, 'default', [ 'headers' => [
+			'X-Trace-User-Agent' => RequestContext::getMain()->getRequest()->getHeader( 'User-Agent' ),
+			'X-Trace-Url' => !empty( $ctx['http_url'] ) ? $ctx['http_url'] : '',
+			'X-Trace-Referer' => !empty( $ctx['http_referrer'] ) ? $ctx['http_referrer'] : '',
+			'X-Trace-Track-Id' => $trackId,
+			'X-Trace-Client-IP' => !empty( $ctx['client_ip'] ) ? $ctx['client_ip'] : '',
+			'X-Trace-Initiator' => $callerName,
+			'X-Trace-Timestamp' => wfTimestamp( TS_DB ),
+			'X-Trace-Datacenter' => !empty( $ctx['datacenter'] ) ? $ctx['datacenter'] : '',
+			'X-Trace-Environment' => !empty( $ctx['environment'] ) ? $ctx['environment'] : '',
+			] ] ) ) {
+			Wikia\Logger\WikiaLogger::instance()->warning( 'Failed to log Lyric Find API call');
+		}
 
 		return ExternalHttp::post($url, ['postData' => $data]);
 	}
