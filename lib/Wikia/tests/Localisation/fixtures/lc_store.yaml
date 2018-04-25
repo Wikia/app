@@ -1,0 +1,9 @@
+l10n_cache:
+  - lc_prefix: other-prefix
+    lc_lang: en
+    lc_key: test-message
+    lc_value: s:4:"test";
+  - lc_prefix: test-prefix
+    lc_lang: hu
+    lc_key: test-message
+    lc_value: s:5:"teszt";

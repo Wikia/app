@@ -130,8 +130,15 @@ class SpecialLog extends SpecialPage {
 	}
 
 	private function show( FormOptions $opts, array $extraConds ) {
+		# SUS-4547: do not check edit count for each item (i.e. user) in the log
+		if ( in_array( $opts->getValue( 'type' ), $this->typeOnUser ) ) {
+			$logEventsListFlags = LogEventsList::NO_EDIT_COUNT_CHECK;
+		} else {
+			$logEventsListFlags = 0;
+		}
+
 		# Create a LogPager item to get the results and a LogEventsList item to format them...
-		$loglist = new LogEventsList( $this->getSkin(), $this->getOutput(), 0 );
+		$loglist = new LogEventsList( $this->getSkin(), $this->getOutput(), $logEventsListFlags );
 		$pager = new LogPager( $loglist, $opts->getValue( 'type' ), $opts->getValue( 'user' ),
 			$opts->getValue( 'page' ), $opts->getValue( 'pattern' ), $extraConds, $opts->getValue( 'year' ),
 			$opts->getValue( 'month' ), $opts->getValue( 'tagfilter' ) );

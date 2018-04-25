@@ -2,6 +2,7 @@ import { EventEmitter } from 'events';
 import {
 	client,
 	context,
+	GptSizeMap,
 	scrollListener,
 	slotListener,
 	slotService,
@@ -11,19 +12,22 @@ import {
 import {
 	BigFancyAdAbove,
 	BigFancyAdBelow,
-	universalAdPackage
+	BigFancyAdInPlayer,
+	universalAdPackage,
+	isProperGeo,
+	getSamplingResults
 } from '@wikia/ad-products';
 
 import { createTracker } from './tracking/porvata-tracker-factory';
 import TemplateRegistry from './templates/templates-registry';
 import AdUnitBuilder from './ad-unit-builder';
 import config from './context';
-import slotConfig from './slots';
+import { getSlotsContext } from './slots';
 import './ad-engine.bridge.scss';
 
 context.extend(config);
 
-const supportedTemplates = [BigFancyAdAbove, BigFancyAdBelow];
+const supportedTemplates = [BigFancyAdAbove, BigFancyAdBelow, BigFancyAdInPlayer];
 
 function init(
 	adTracker,
@@ -38,21 +42,26 @@ function init(
 	TemplateRegistry.init(legacyContext, mercuryListener);
 	scrollListener.init();
 
-	context.extend({slots: slotConfig[skin]});
+	context.set('slots', getSlotsContext(legacyContext, skin));
 	context.push('listeners.porvata', createTracker(legacyContext, geo, pageLevelTargeting, adTracker));
 
 	overrideSlotService(slotRegistry, legacyBtfBlocker);
 	updatePageLevelTargeting(legacyContext, pageLevelTargeting, skin);
+	syncSlotsStatus(slotRegistry, context.get('slots'));
 
 	const wikiIdentifier = legacyContext.get('targeting.wikiIsTop1000') ?
 		context.get('targeting.s1') : '_not_a_top1k_wiki';
 
 	context.set('custom.wikiIdentifier', wikiIdentifier);
 	context.set('options.contentLanguage', window.wgContentLanguage);
+
+	legacyContext.addCallback(() => {
+		context.set('slots', getSlotsContext(legacyContext, skin));
+		syncSlotsStatus(slotRegistry, context.get('slots'));
+	});
 }
 
 function overrideSlotService(slotRegistry, legacyBtfBlocker) {
-
 	const slotsCache = {};
 
 	slotService.getBySlotName = (id) => {
@@ -66,10 +75,26 @@ function overrideSlotService(slotRegistry, legacyBtfBlocker) {
 		}
 	};
 
+	slotService.clearSlot = (id) => {
+		delete slotsCache[id];
+	};
+
 	slotService.legacyEnabled = slotService.enable;
 	slotService.enable = (slotName) => {
 		legacyBtfBlocker.unblock(slotName);
+		slotRegistry.enable(slotName);
 	};
+	slotService.disable = (slotName) => {
+		slotRegistry.disable(slotName);
+	};
+}
+
+function syncSlotsStatus(slotRegistry, slotsInContext) {
+	for (let slot in slotsInContext) {
+		if (slotsInContext[slot].disabled) {
+			slotRegistry.disable(slot);
+		}
+	}
 }
 
 function unifySlotInterface(slot) {
@@ -85,6 +110,12 @@ function unifySlotInterface(slot) {
 		getSlotName: () => slot.name,
 		getTargeting: () => slotContext.targeting,
 		getVideoAdUnit: () => AdUnitBuilder.build(slot),
+		getViewportConflicts: () => {
+			return slotContext.viewportConflicts || [];
+		},
+		hasDefinedViewportConflicts: () => {
+			return (slotContext.viewportConflicts || []).length > 0;
+		},
 		setConfigProperty: (key, value) => {
 			context.set(`slots.${slot.name}.${key}`, value);
 		}
@@ -98,7 +129,9 @@ function unifySlotInterface(slot) {
 
 function loadCustomAd(fallback) {
 	return (params) => {
-		if (getSupportedTemplateNames().includes(params.type)) {
+		const isTemplateSupported = getSupportedTemplateNames().includes(params.type);
+
+		if (isTemplateSupported && params.slotName) {
 			if (params.slotName.indexOf(',') !== -1) {
 				params.slotName = params.slotName.split(',')[0];
 			}
@@ -111,6 +144,8 @@ function loadCustomAd(fallback) {
 			context.set(`slots.${slot.getSlotName()}.options.loadedProduct`, params.adProduct);
 
 			templateService.init(params.type, slot, params);
+		} else if (isTemplateSupported) {
+			templateService.init(params.type, null, params);
 		} else {
 			fallback(params);
 		}
@@ -143,9 +178,13 @@ function passSlotEvent(slotName, eventName) {
 
 export {
 	init,
+	GptSizeMap,
 	loadCustomAd,
 	checkAdBlocking,
 	passSlotEvent,
 	context,
-	universalAdPackage
+	universalAdPackage,
+	isProperGeo,
+	getSamplingResults,
+	slotService
 };

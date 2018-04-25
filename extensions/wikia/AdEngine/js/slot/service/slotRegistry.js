@@ -6,6 +6,7 @@ define('ext.wikia.adEngine.slot.service.slotRegistry',  [
 	'use strict';
 
 	var slots = {},
+		slotStates = {},
 		slotQueueCount = {},
 		scrollYOnDfpRequest = {};
 
@@ -25,6 +26,34 @@ define('ext.wikia.adEngine.slot.service.slotRegistry',  [
 			providerName: providerName,
 			slot: slot
 		});
+
+		if (slotStates[slot.name] === false) {
+			slot.disable();
+		}
+		if (slotStates[slot.name] === true) {
+			slot.enable();
+		}
+	}
+
+	function setState(slotName, state) {
+		var slot = get(slotName);
+		slotStates[slotName] = state;
+
+		if (slot) {
+			if (state) {
+				slot.enable();
+			} else {
+				slot.disable();
+			}
+		}
+	}
+
+	function enable(slotName) {
+		setState(slotName, true);
+	}
+
+	function disable(slotName) {
+		setState(slotName, false);
 	}
 
 	function get(slotName, providerName) {
@@ -68,6 +97,7 @@ define('ext.wikia.adEngine.slot.service.slotRegistry',  [
 	adContext.addCallback(function () {
 		slots = {};
 		slotQueueCount = {};
+		slotStates = {};
 	});
 
 	function storeScrollY(slotName) {
@@ -80,6 +110,8 @@ define('ext.wikia.adEngine.slot.service.slotRegistry',  [
 
 	return {
 		add: add,
+		disable: disable,
+		enable: enable,
 		get: get,
 		getRefreshCount: getRefreshCount,
 		getScrollY: getScrollY,

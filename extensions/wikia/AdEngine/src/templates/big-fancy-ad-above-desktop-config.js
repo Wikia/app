@@ -16,7 +16,9 @@ export const getConfig = () => ({
 	adSlot: null,
 	slotParams: null,
 	updateNavbarOnScroll: null,
-
+	slotsToDisable: [
+		'INVISIBLE_HIGH_IMPACT_2',
+	],
 	slotsToEnable: [
 		'BOTTOM_LEADERBOARD',
 		'INCONTENT_BOXAD_1',
@@ -27,6 +29,7 @@ export const getConfig = () => ({
 		this.adSlot = adSlot;
 		this.slotParams = params;
 		context.set(`slots.${adSlot.getSlotName()}.options.isVideoMegaEnabled`, params.isVideoMegaEnabled);
+		context.set('slots.BOTTOM_LEADERBOARD.viewportConflicts', []);
 
 		const spotlightFooter = document.getElementById('SPOTLIGHT_FOOTER');
 		const wrapper = document.getElementById('WikiaTopAds');

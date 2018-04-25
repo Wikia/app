@@ -6,6 +6,8 @@ use Wikia\Rabbit\ConnectionBase;
 class PhalanxHooks {
 	const ROUTING_KEY = 'onUpdate';
 
+	protected static $rabbitConnection;
+
 	/**
 	 * Add a link to central:Special:Phalanx from Special:Contributions/USERNAME
 	 * if the user has 'phalanx' permission
@@ -186,10 +188,7 @@ class PhalanxHooks {
 	}
 
 	public static function notifyPhalanxService( array $changedBlockIds ) {
-		global $wgPhalanxQueue;
-
-		$rabbitConnection = new ConnectionBase( $wgPhalanxQueue );
-		$rabbitConnection->publish( self::ROUTING_KEY, implode( ",", $changedBlockIds ) );
+		self::getRabbitConnection()->publish( self::ROUTING_KEY, implode( ",", $changedBlockIds ) );
 	}
 
 	/**
@@ -266,5 +265,16 @@ class PhalanxHooks {
 		}
 
 		return !$blockedGlobally; // If blocked globally disable listing local log
+	}
+
+	/** @return \Wikia\Rabbit\ConnectionBase */
+	protected static function getRabbitConnection() {
+		global $wgPhalanxQueue;
+
+		if ( !isset( self::$rabbitConnection ) ) {
+			self::$rabbitConnection = new ConnectionBase( $wgPhalanxQueue );
+		}
+
+		return self::$rabbitConnection;
 	}
 }

@@ -5,6 +5,7 @@ require([
 	'ext.wikia.adEngine.adLogicPageParams',
 	'ext.wikia.adEngine.adTracker',
 	'ext.wikia.adEngine.babDetection',
+	'ext.wikia.adEngine.geo',
 	'ext.wikia.adEngine.slot.service.stateMonitor',
 	'ext.wikia.adEngine.lookup.a9',
 	'ext.wikia.adEngine.lookup.prebid',
@@ -25,6 +26,7 @@ require([
 	pageLevelParams,
 	adTracker,
 	babDetection,
+	adGeo,
 	slotStateMonitor,
 	a9,
 	prebid,
@@ -64,18 +66,21 @@ require([
 	function passFVLineItemIdToUAP() {
 		if (fvLagger && context.opts.isFVUapKeyValueEnabled) {
 			fvLagger.addResponseListener(function (lineItemId) {
-				adEngineBridge.universalAdPackage.setUapId(lineItemId);
-				adEngineBridge.universalAdPackage.setType('jwp');
+				win.loadCustomAd({
+					adProduct: 'jwp',
+					type: 'bfp',
+					uap: lineItemId
+				});
 			});
 		}
 	}
 
 	function callBiddersOnConsecutivePageView() {
-		if (geo.isProperGeo(instantGlobals.wgAdDriverPrebidBidderCountries)) {
+		if (adContext.get('bidders.prebid')) {
 			prebid.call();
 		}
 
-		if (geo.isProperGeo(instantGlobals.wgAdDriverA9BidderCountries)) {
+		if (adContext.get('bidders.a9')) {
 			a9.call();
 		}
 
@@ -83,11 +88,11 @@ require([
 	}
 
 	mercuryListener.onLoad(function () {
-		if (geo.isProperGeo(instantGlobals.wgAdDriverA9BidderCountries)) {
+		if (adContext.get('bidders.a9')) {
 			a9.call();
 		}
 
-		if (geo.isProperGeo(instantGlobals.wgAdDriverPrebidBidderCountries)) {
+		if (adContext.get('bidders.prebid')) {
 			prebid.call();
 		}
 

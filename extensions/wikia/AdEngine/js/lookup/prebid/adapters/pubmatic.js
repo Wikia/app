@@ -1,11 +1,10 @@
 /*global define*/
 define('ext.wikia.adEngine.lookup.prebid.adapters.pubmatic',[
+	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.context.slotsContext',
 	'ext.wikia.aRecoveryEngine.instartLogic.recovery',
-	'wikia.geo',
-	'wikia.instantGlobals',
 	'wikia.log'
-], function (slotsContext, instartLogic, geo, instantGlobals, log) {
+], function (adContext, slotsContext, instartLogic, log) {
 	'use strict';
 
 	var bidderName = 'pubmatic',
@@ -89,7 +88,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.pubmatic',[
 		};
 
 	function isEnabled() {
-		return geo.isProperGeo(instantGlobals.wgAdDriverPubMaticBidderCountries) && !instartLogic.isBlocking();
+		return adContext.get('bidders.pubmatic') && !instartLogic.isBlocking();
 	}
 
 	function getSlots(skin) {

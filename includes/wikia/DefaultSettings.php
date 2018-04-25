@@ -395,10 +395,6 @@ $wgAutoloadClasses['IncludeMessagesTrait'] = $IP . '/includes/wikia/traits/Inclu
 $wgAutoloadClasses['JsonDeserializerTrait'] = "$IP/includes/wikia/traits/JsonDeserializerTrait.php";
 $wgAutoloadClasses['TitleTrait'] = $IP . '/includes/wikia/traits/TitleTrait.php';
 
-// Profiler classes
-$wgAutoloadClasses['ProfilerData'] = "{$IP}/includes/profiler/ProfilerData.php";
-$wgAutoloadClasses['ProfilerDataSink'] = "{$IP}/includes/profiler/sinks/ProfilerDataSink.php";
-
 //RabbitMq
 $wgAutoloadClasses['Wikia\Rabbit\ConnectionBase'] = "{$IP}/includes/wikia/rabbitmq/ConnectionBase.class.php";
 
@@ -1037,14 +1033,6 @@ $wgResourceLoaderCssMinifier = false;
  */
 $wgWikiaIsCentralWiki = false;
 
-
-/**
- * Is bulk mode in Memcached routines enabled?
- * (eg. get_multi())
- * @var boolean
- */
-$wgEnableMemcachedBulkMode = false;
-
 /**
  * WikiaSeasons flags
  */
@@ -1229,11 +1217,25 @@ $wgAdDriverAudienceNetworkBidderCountries = null;
 $wgAdDriverBeachfrontBidderCountries = null;
 
 /**
+ * @name $wgAdDriverBottomLeaderBoardLazyPrebidCountries
+ * List of countries where BOTTOM_LEADERBOARD lazy Prebid.js loading is enabled.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverBottomLeaderBoardLazyPrebidCountries = null;
+
+/**
  * @name $wgAdDriverBottomLeaderBoardMegaCountries
  * List of countries where BOTTOM_LEADERBOARD ad slot mega is enabled.
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverBottomLeaderBoardMegaCountries = null;
+
+/**
+ * @name $wgAdDriverBottomLeaderBoardViewportCountries
+ * List of countries where BOTTOM_LEADERBOARD will collapse if it is in same viewport with MR.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverBottomLeaderBoardViewportCountries = null;
 
 /**
  * @name $wgAdDriverIndexExchangeBidderCountries
@@ -1351,6 +1353,12 @@ $wgSitewideDisableKrux = false;
  */
 $wgAdDriverKikimoraTrackingCountries = [];
 
+/**
+ * @name $wgAdDriverMobileSectionsCollapseCountries
+ * List of countries where sections on mobile wiki are collapsed after page load.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverMobileSectionsCollapseCountries = null;
 
 /**
  * @name $wgAdDriverScrollDepthTrackingCountries
@@ -1669,18 +1677,6 @@ $wgBuckyEnabledSkins = [
  * Unit: percent (0-100)
  */
 $wgMemcacheStatsSampling = 1;
-
-/**
- * @name wgXhprofUDPHost
- * Host that xhprof data should be reported to (if set to null will use $wgUDPProfilerHost)
- */
-$wgXhprofUDPHost = null;
-
-/**
- * @name wgXhprofUDPPort
- * Port that xhprof data should be reported to
- */
-$wgXhprofUDPPort = '3911';
 
 /**
  * @name wgXhprofMinimumTime

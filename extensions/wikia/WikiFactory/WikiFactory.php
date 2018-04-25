@@ -66,11 +66,6 @@ class WikiFactory {
 	// Community Central's city_id in wikicities.city_list.
 	const COMMUNITY_CENTRAL = 177;
 
-	const PREFETCH_WIKI_METADATA = 1;
-	const PREFETCH_VARIABLES = 2;
-	const PREFETCH_ALL = 255;
-	const PREFETCH_DEFAULT = self::PREFETCH_ALL;
-
 	static public $types = [
 		"integer",
 		"long",
@@ -389,12 +384,11 @@ class WikiFactory {
 			Wikia::log( __METHOD__, "", "WikiFactory is not used." );
 			return false;
 		}
-
-		if ( 'http://' != strpos($domain, 0, 7) ) {
+		if ( !preg_match( "^https?:\/\/", $domain ) ) {
 			$domain = 'http://' . $domain;
 		}
 
-		$retVal = WikiFactory::setVarByName("wgServer", $city_id, $domain, $reason);
+		$retVal = WikiFactory::setVarByName( "wgServer", $city_id, $domain, $reason );
 
 		static::clearDomainCache( $city_id );
 
@@ -3279,37 +3273,6 @@ class WikiFactory {
 		$oRow = static::getWikiByDB( $dbname, $master );
 
 		return isset( $oRow->city_url ) ? $oRow->city_url : false;
-	}
-
-	/**
-	 * Prefetch specified data for given set of wikis
-	 *
-	 * @author Władysław Bodzek <wladek@wikia-inc.com>
-	 *
-	 * @param $ids array List of wiki ids
-	 * @param $what int Flags specifying what data to prefetch
-	 */
-	static public function prefetchWikisById( $ids, $what = self::PREFETCH_DEFAULT ) {
-		global $wgMemc;
-		if ( !is_array( $ids ) ) $ids = [ $ids ];
-		$keys = [];
-		$added = [];
-		foreach ( $ids as $id ) {
-			$id = intval($id);
-
-			// don't add the same wiki twice
-			if ( !empty($added[$id]) ) continue;
-			$added[$id] = true;
-
-
-			if ( $what & static::PREFETCH_WIKI_METADATA ) {
-				$keys[] = static::getVarsKey($id);
-			}
-			if ( $what & static::PREFETCH_VARIABLES ) {
-				$keys[] = static::getWikiaCacheKey($id);
-			}
-		}
-		$wgMemc->prefetch($keys);
 	}
 
 	/**

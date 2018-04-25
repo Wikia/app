@@ -8,10 +8,11 @@ define('ext.wikia.adEngine.adContext', [
 	'wikia.document',
 	'wikia.geo',
 	'wikia.instantGlobals',
+	'ext.wikia.adEngine.geo',
 	'ext.wikia.adEngine.utils.sampler',
 	'wikia.window',
 	'wikia.querystring'
-], function (browserDetect, cookies, doc, geo, instantGlobals, sampler, w, Querystring) {
+], function (browserDetect, cookies, doc, geo, instantGlobals, adsGeo, sampler, w, Querystring) {
 	'use strict';
 
 	instantGlobals = instantGlobals || {};
@@ -89,21 +90,30 @@ define('ext.wikia.adEngine.adContext', [
 		context.opts.babRecovery = serviceCanBeEnabled && geo.isProperGeo(instantGlobals.wgAdDriverBabRecoveryCountries);
 	}
 
+	function isProperGeo(name) {
+		var geos = instantGlobals[name] || [];
+		return adsGeo.isProperGeo(geos, name);
+	}
+
 	function updateAdContextBidders(context) {
 		var hasFeaturedVideo = context.targeting.hasFeaturedVideo;
 
-		context.bidders.rubiconDisplay = geo.isProperGeo(instantGlobals.wgAdDriverRubiconDisplayPrebidCountries);
-
-		context.bidders.rubicon = geo.isProperGeo(instantGlobals.wgAdDriverRubiconPrebidCountries) &&
-			!hasFeaturedVideo;
-
-		context.bidders.beachfront = geo.isProperGeo(instantGlobals.wgAdDriverBeachfrontBidderCountries) &&
-			!hasFeaturedVideo;
-
-		context.bidders.appnexusAst = geo.isProperGeo(instantGlobals.wgAdDriverAppNexusAstBidderCountries) &&
-			!hasFeaturedVideo;
-
-		context.bidders.a9Video = geo.isProperGeo(instantGlobals.wgAdDriverA9VideoBidderCountries);
+		context.bidders.prebid = isProperGeo('wgAdDriverPrebidBidderCountries');
+		context.bidders.a9 = isProperGeo('wgAdDriverA9BidderCountries');
+		context.bidders.rubiconDisplay = isProperGeo('wgAdDriverRubiconDisplayPrebidCountries');
+		context.bidders.rubicon = isProperGeo('wgAdDriverRubiconPrebidCountries');
+		context.bidders.rubiconInFV = isProperGeo('wgAdDriverRubiconVideoInFeaturedVideoCountries') && hasFeaturedVideo;
+		context.bidders.beachfront = isProperGeo('wgAdDriverBeachfrontBidderCountries') && !hasFeaturedVideo;
+		context.bidders.appnexusAst = isProperGeo('wgAdDriverAppNexusAstBidderCountries') && !hasFeaturedVideo;
+		context.bidders.a9Video = isProperGeo('wgAdDriverA9VideoBidderCountries');
+		context.bidders.aol = isProperGeo('wgAdDriverAolBidderCountries');
+		context.bidders.appnexus = isProperGeo('wgAdDriverAppNexusBidderCountries');
+		context.bidders.appnexusWebAds = isProperGeo('wgAdDriverAppNexusWebAdsBidderCountries');
+		context.bidders.audienceNetwork = isProperGeo('wgAdDriverAudienceNetworkBidderCountries');
+		context.bidders.indexExchange = isProperGeo('wgAdDriverIndexExchangeBidderCountries');
+		context.bidders.onemobile = isProperGeo('wgAdDriverAolOneMobileBidderCountries');
+		context.bidders.openx = isProperGeo('wgAdDriverOpenXPrebidBidderCountries');
+		context.bidders.pubmatic = isProperGeo('wgAdDriverPubMaticBidderCountries');
 	}
 
 	function referrerIsSonySite() {
@@ -168,9 +178,7 @@ define('ext.wikia.adEngine.adContext', [
 			context.providers.evolve2 = geo.isProperGeo(instantGlobals.wgAdDriverEvolve2Countries);
 		}
 
-		if (geo.isProperGeo(instantGlobals.wgAdDriverTurtleCountries)) {
-			context.providers.turtle = true;
-		}
+		context.providers.turtle = isProperGeo('wgAdDriverTurtleCountries');
 
 		context.opts.enableRemnantNewAdUnit = geo.isProperGeo(instantGlobals.wgAdDriverMEGACountries);
 
@@ -189,7 +197,7 @@ define('ext.wikia.adEngine.adContext', [
 		// Krux integration
 		context.targeting.enableKruxTargeting = !!(
 			context.targeting.enableKruxTargeting &&
-			geo.isProperGeo(instantGlobals.wgAdDriverKruxCountries) && !instantGlobals.wgSitewideDisableKrux
+			isProperGeo('wgAdDriverKruxCountries') && !instantGlobals.wgSitewideDisableKrux
 		);
 
 		// Floating medrec
@@ -213,7 +221,17 @@ define('ext.wikia.adEngine.adContext', [
 		context.opts.replayAdsForFV = geo.isProperGeo(instantGlobals.wgAdDriverPlayAdsOnNextFVCountries);
 		context.opts.fvAdsFrequency = fvAdsFrequency !== undefined ? fvAdsFrequency : 3;
 		context.opts.disableSra = geo.isProperGeo(instantGlobals.wgAdDriverDisableSraCountries);
+		context.opts.isBLBLazyPrebidEnabled = context.targeting.skin === 'oasis' &&
+			geo.isProperGeo(instantGlobals.wgAdDriverBottomLeaderBoardLazyPrebidCountries);
 		context.opts.isBLBMegaEnabled = geo.isProperGeo(instantGlobals.wgAdDriverBottomLeaderBoardMegaCountries);
+		context.opts.isBLBViewportEnabled =
+			geo.isProperGeo(instantGlobals.wgAdDriverBottomLeaderBoardViewportCountries);
+		context.opts.additionalBLBSizes =
+			geo.isProperGeo(instantGlobals.wgAdDriverBottomLeaderBoardAdditionalSizesCountries);
+
+		context.opts.labradorTest = isProperGeo('wgAdDriverLABradorTestCountries');
+		context.opts.labradorTestGroup = context.opts.labradorTest ? 'B' : 'A';
+		context.opts.mobileSectionsCollapse = isProperGeo('wgAdDriverMobileSectionsCollapseCountries');
 
 		// Export the context back to ads.context
 		// Only used by Lightbox.js, WikiaBar.js and AdsInContext.js

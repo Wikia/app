@@ -1,6 +1,7 @@
 /*global define, require*/
 /*jshint maxlen:125, camelcase:false, maxdepth:7*/
 define('ext.wikia.adEngine.provider.gpt.googleTag', [
+	'ext.wikia.adEngine.bridge',
 	'ext.wikia.adEngine.provider.gpt.googleSlots',
 	'ext.wikia.adEngine.slot.adSlot',
 	'ext.wikia.adEngine.slot.service.slotRegistry',
@@ -8,7 +9,7 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 	'wikia.document',
 	'wikia.log',
 	'wikia.window'
-], function (googleSlots, adSlot, slotRegistry, srcProvider, doc, log, win) {
+], function (bridge, googleSlots, adSlot, slotRegistry, srcProvider, doc, log, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.gpt.googleTag',
@@ -18,6 +19,18 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 
 	win.googletag = win.googletag || {};
 	win.googletag.cmd = win.googletag.cmd || [];
+
+	function collapseIfSlotHasViewportConflicts(slotName) {
+		var slot = bridge.slotService.getBySlotName(slotName);
+
+		if (bridge.slotService.hasViewportConflict(slot)) {
+			slot.collapse({ adType: 'viewport-conflict' });
+
+			return true;
+		}
+
+		return false;
+	}
 
 	function dispatchEvent(event, methodName) {
 		var slot,
@@ -137,17 +150,28 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 	}
 
 	function addSlot(adElement) {
-		var sizes = adElement.getSizes(),
+		var defaultSizes = adElement.getDefaultSizes(),
+			sizeMap = adElement.getSizes(),
 			slotId = adElement.getId(),
 			slot = googleSlots.getSlot(slotId);
 
 		log(['addSlot', adElement], log.levels.debug, logGroup);
 
 		adElement.setPageLevelParams(pageLevelParams);
+		adElement.setSlotLevelParams();
+
+		if (collapseIfSlotHasViewportConflicts(adElement.getSlotName())) {
+			return;
+		}
+
 		if (!slot) {
-			slot = sizes ?
-				win.googletag.defineSlot(adElement.getSlotPath(), sizes, slotId) :
+			slot = (defaultSizes || !sizeMap.isEmpty()) ?
+				win.googletag.defineSlot(adElement.getSlotPath(), defaultSizes, slotId) :
 				win.googletag.defineOutOfPageSlot(adElement.getSlotPath(), slotId);
+
+			if (!sizeMap.isEmpty()) {
+				slot.defineSizeMapping(sizeMap.build());
+			}
 
 			slot.addService(win.googletag.pubads());
 			win.googletag.display(slotId);
@@ -170,7 +194,7 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 
 		onAdLoadCallback(element.getId(), gptEvent, iframe);
 	}
-	
+
 	function isGoogleTagLoaded() {
 		return typeof win.googletag.pubads === 'function';
 	}
@@ -183,7 +207,7 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 		if (!isInitialized()) {
 			return;
 		}
-		
+
 		if (!isGoogleTagLoaded()) {
 			log(['destroySlots', 'pubads not yet available', 'resetting cmd'], log.levels.info, logGroup);
 			win.googletag.cmd = [];
@@ -206,6 +230,7 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 				} else {
 					if (slotsNames.indexOf(slotsPositionTargeting[0]) > -1) {
 						slotsToDestroy.push(slot);
+						bridge.slotService.clearSlot(slotsPositionTargeting[0]);
 					}
 				}
 			});

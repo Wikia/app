@@ -36,7 +36,6 @@ class EnableDiscussionsTask extends Task {
 		( new \DiscussionsVarToggler( $this->taskContext->getCityId() ) )
 			->setEnableDiscussions( true )
 			->setEnableDiscussionsNav( true )
-			->setEnableForums( false )
 			->setArchiveWikiForums( true )
 			->setEnableRecircDiscussions( true )
 			->save();

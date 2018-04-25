@@ -1,0 +1,29 @@
+version: '2'
+
+services:
+  web:
+    image: nginx:latest
+    ports:
+      - "80:8080"
+    volumes:
+      - ./site.conf:/etc/nginx/conf.d/default.conf
+      - ../../../app/skins:/usr/wikia/slot1/current/src/skins
+      - ../../../app/resources:/usr/wikia/slot1/current/src/resources
+      - ../../../app/extensions:/usr/wikia/slot1/current/src/extensions
+    depends_on:
+      - php-wikia
+  php-wikia:
+    image: php-wikia-dev
+    volumes:
+      - ../../../app:/usr/wikia/slot1/current/src
+      - ../../../config:/usr/wikia/slot1/current/config
+      - ../../../cache:/usr/wikia/slot1/current/cache/messages
+    depends_on:
+      - memcached
+    environment:
+      - MEMCACHED_SERVER=memcached:11211
+      - WIKIA_DATACENTER=poz
+      - WIKIA_ENVIRONMENT=dev
+      - WIKIA_DEV_DOMAIN=wikia-local.com
+  memcached:
+    image: memcached:alpine

@@ -44,7 +44,7 @@ class DiscussionsActivator {
 		return new SiteInput(
 			[
 				'id' => $this->cityId,
-				'name' => substr( $this->cityName, 0, self::SITE_NAME_MAX_LENGTH ),
+				'name' => mb_strcut( $this->cityName, 0, self::SITE_NAME_MAX_LENGTH ),
 				'language_code' => $this->cityLang
 			]
 		);
@@ -76,7 +76,7 @@ class DiscussionsActivator {
 
 	private function logAndThrowError( Exception $e ) {
 		$this->logger->critical(
-			'DISCUSSIONS Creating site caused an error',
+			'DISCUSSIONS Creating site caused an error. Site ID: ' . $this->cityId,
 			[
 				'siteId' => $this->cityId,
 				'error' => $e->getMessage()

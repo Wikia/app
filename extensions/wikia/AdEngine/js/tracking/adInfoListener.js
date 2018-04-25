@@ -3,11 +3,12 @@ define('ext.wikia.adEngine.tracking.adInfoListener',  [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.lookup.services',
 	'ext.wikia.adEngine.tracking.adInfoTracker',
+	'ext.wikia.adEngine.utils.eventDispatcher',
 	'ext.wikia.adEngine.video.vastParser',
 	'wikia.log',
 	'wikia.querystring',
 	'wikia.window'
-], function (adContext, lookupServices, tracker, vastParser, log, Querystring, win) {
+], function (adContext, lookupServices, tracker, eventDispatcher, vastParser, log, Querystring, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.tracking.adInfoListener',
@@ -89,6 +90,10 @@ define('ext.wikia.adEngine.tracking.adInfoListener',  [
 			slotPrices.a9 = vastInfo.amznbid;
 		}
 
+		if (vastInfo.customParams.hb_bidder) {
+			slotPrices[vastInfo.customParams.hb_bidder] = vastInfo.customParams.hb_pb;
+		}
+
 		tracker.track(
 			vastInfo.customParams.pos,
 			vastInfo.customParams,
@@ -108,7 +113,7 @@ define('ext.wikia.adEngine.tracking.adInfoListener',  [
 	function shouldHandleSlot(slot) {
 		var dataGptDiv = slot.container && slot.container.firstChild;
 
-		return (
+		return !!(
 			enabledSlots[slot.name] &&
 			dataGptDiv &&
 			dataGptDiv.dataset.gptPageParams
@@ -123,11 +128,24 @@ define('ext.wikia.adEngine.tracking.adInfoListener',  [
 				var adInfo = event.detail.adInfo || {},
 					adType = adInfo && adInfo.adType,
 					slot = event.detail.slot,
-					status = adType === 'blocked' ? 'blocked' : event.detail.status;
+					status;
+
+				switch (adType) {
+					case 'blocked':
+					case 'viewport-conflict':
+						status = adType;
+						break;
+					default:
+						status = event.detail.status;
+				}
 
 				if (shouldHandleSlot(slot)) {
 					log(['adengine.slot.status', event], log.levels.debug, logGroup);
 					trackSlot(slot, status, adInfo);
+				}
+
+				if (slot.name === 'TOP_RIGHT_BOXAD') {
+					eventDispatcher.dispatch('adengine.lookup.prebid.lazy', {});
 				}
 			});
 
