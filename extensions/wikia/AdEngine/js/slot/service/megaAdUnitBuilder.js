@@ -122,6 +122,7 @@ define('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', [
 
 	return {
 		build: build,
+		getDevice: getDevice,
 		getShortSlotName: getShortSlotName,
 		isValid: isValid,
 		isMegaSlot: isMegaSlot

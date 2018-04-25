@@ -2,13 +2,14 @@
 define('ext.wikia.adEngine.tracking.adInfoTracker',  [
 	'ext.wikia.adEngine.adTracker',
 	'ext.wikia.adEngine.geo',
+	'ext.wikia.adEngine.slot.service.megaAdUnitBuilder',
 	'ext.wikia.adEngine.slot.service.slotRegistry',
 	'ext.wikia.adEngine.tracking.pageLayout',
 	'wikia.browserDetect',
 	'wikia.log',
 	'wikia.window',
 	require.optional('ext.wikia.adEngine.ml.rabbit')
-], function (adTracker, geo, slotRegistry, pageLayout, browserDetect, log, win, rabbit) {
+], function (adTracker, geo, megaAdUnitBuilder, slotRegistry, pageLayout, browserDetect, log, win, rabbit) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.tracking.adInfoTracker';
@@ -45,6 +46,7 @@ define('ext.wikia.adEngine.tracking.adInfoTracker',  [
 			'pv': pageParams.pv || '',
 			'pv_unique_id': win.pvUID,
 			'browser': [ browserDetect.getOS(), browserDetect.getBrowser() ].join(' '),
+			'device': megaAdUnitBuilder.getDevice(pageParams),
 			'country': pageParams.geo || '',
 			'time_bucket': now.getHours(),
 			'timestamp': timestamp,
