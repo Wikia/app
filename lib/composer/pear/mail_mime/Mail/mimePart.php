@@ -8,7 +8,7 @@
  * of mime mail.
  * This class however allows full control over the email.
  *
- * Compatible with PHP version 5
+ * Compatible with PHP version 5 and 7
  *
  * LICENSE: This LICENSE is in the BSD license style.
  * Copyright (c) 2002-2003, Richard Heyes <richard@phpguru.org>
@@ -93,7 +93,7 @@ class Mail_mimePart
      *
      * @var array
      */
-    protected $subparts;
+    protected $subparts = array();
 
     /**
      * The output of this part after being built
@@ -107,7 +107,7 @@ class Mail_mimePart
      *
      * @var array
      */
-    protected $headers;
+    protected $headers = array();
 
     /**
      * The body of this part (not encoded)
@@ -622,7 +622,7 @@ class Mail_mimePart
         $escape = '=';
         $output = '';
 
-        while (list($idx, $line) = each($lines)) {
+        foreach ($lines as $idx => $line) {
             $newline = '';
             $i = 0;
 
@@ -656,13 +656,17 @@ class Mail_mimePart
                     $output  .= $newline . $escape . $eol;
                     $newline  = '';
                 }
+
                 $newline .= $char;
             } // end of for
+
             $output .= $newline . $eol;
             unset($lines[$idx]);
         }
+
         // Don't want last crlf
         $output = substr($output, 0, -1 * strlen($eol));
+
         return $output;
     }
 
