@@ -4,16 +4,14 @@ define('ext.wikia.adEngine.utils.device', [
 ], function (browserDetect) {
 	'use strict';
 
-	var result = 'unknown';
-
 	function getDevice(params) {
 		if (params.skin === 'oasis') {
-			result = browserDetect.isMobile() ? 'tablet' : 'desktop';
+			return result = browserDetect.isMobile() ? 'tablet' : 'desktop';
 		} else if (params.skin === 'mercury' || params.skin === 'mobile-wiki') {
-			result = 'smartphone';
+			return result = 'smartphone';
 		}
 
-		return result;
+		return 'unknown';
 	}
 
 	return {
