@@ -1353,6 +1353,12 @@ $wgSitewideDisableKrux = false;
  */
 $wgAdDriverKikimoraTrackingCountries = [];
 
+/**
+ * @name $wgAdDriverMobileSectionsCollapseCountries
+ * List of countries where sections on mobile wiki are collapsed after page load.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverMobileSectionsCollapseCountries = null;
 
 /**
  * @name $wgAdDriverScrollDepthTrackingCountries
