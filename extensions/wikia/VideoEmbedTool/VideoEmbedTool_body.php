@@ -83,6 +83,10 @@ class VideoEmbedTool {
 			$awf = ApiWrapperFactory::getInstance(); /* @var $awf ApiWrapperFactory */
 			$apiwrapper = $awf->getApiWrapper( $url );
 		} catch ( Exception $e ) {
+			\Wikia\Logger\WikiaLogger::instance()->error( __METHOD__, [
+				'exception' => $e,
+				'video_url' => $url,
+			] );
 			$nonPremiumException = $e;
 		}
 
