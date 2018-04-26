@@ -53,7 +53,7 @@ class UserrightsPage extends SpecialPage {
 	 * @param $newGroups
 	 * @param $reason
 	 */
-	public static function addLogEntry( \User $user, $oldGroups, $newGroups, $reason ) {
+	public static function addLogEntry( \User $user, array $oldGroups, array $newGroups, string $reason ) {
 		$log = new LogPage( 'rights' );
 
 		$log->addEntry( 'rights',
@@ -155,7 +155,7 @@ class UserrightsPage extends SpecialPage {
 			$msg = $user->isAnon() ? 'userrights-nologin' : 'userrights-notallowed';
 			throw new PermissionsError( null, array( array( $msg ) ) );
 		}
-		
+
 		$this->checkReadOnly();
 
 		$this->setHeaders();
@@ -236,12 +236,14 @@ class UserrightsPage extends SpecialPage {
 	 * Save user groups changes in the database.
 	 *
 	 * @param $user User object
-	 * @param $groupsToAdd Array of groups to add
-	 * @param $groupsToRemove Array of groups to remove
-	 * @param $reason String: reason for group change
-	 * @return Array: Tuple of added, then removed groups
+	 * @param string[] $groupsToAdd Array of groups to add
+	 * @param string[] $groupsToRemove Array of groups to remove
+	 * @param string $reason reason for group change
+	 * @return array Tuple of added, then removed groups
+	 * @throws FatalError
+	 * @throws MWException
 	 */
-	function doSaveUserGroups( $user, $groupsToAdd, $groupsToRemove, $reason = '' ) {
+	function doSaveUserGroups( User $user, array $groupsToAdd, array $groupsToRemove, string $reason = '' ): array {
 		$groups = $user->getGroups();
 		$globalGroups = $this->permissionsService()->getConfiguration()->getGlobalGroups();
 		$changeable = $this->getUser()->changeableGroups();

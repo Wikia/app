@@ -26,7 +26,7 @@ math
 !! input
 [[Image:foobar.jpg|thumb|<math>2+2</math>]]
 !! result
-<div class="thumb tright"><div class="thumbinner" style="width:182px;"><a href="/wiki/File:Foobar.jpg" class="image"><img alt="" src="http://example.com/images/3/3a/Foobar.jpg" width="180" height="20" class="thumbimage" /></a>  <div class="thumbcaption"><div class="magnify"><a href="/wiki/File:Foobar.jpg" class="internal" title="Enlarge"><img src="/skins/common/images/magnify-clip.png" width="15" height="11" alt="" /></a></div><span class="texhtml" dir="ltr">2 + 2</span></div></div></div>
+<div class="thumb tright"><div class="thumbinner" style="width:182px;"><a href="/wiki/File:Foobar.jpg" class="image"><img alt="" src="http://example.com/images/thumb/3/3a/Foobar.jpg/180px-Foobar.jpg" width="180" height="20" class="thumbimage" srcset="http://example.com/images/thumb/3/3a/Foobar.jpg/270px-Foobar.jpg 1.5x, http://example.com/images/thumb/3/3a/Foobar.jpg/360px-Foobar.jpg 2x" /></a>  <div class="thumbcaption"><div class="magnify"><a href="/wiki/File:Foobar.jpg" class="internal" title="Enlarge"><img src="/skins/common/images/magnify-clip.png" width="15" height="11" alt="" /></a></div><img class="tex" alt="2+2" src="/images/math/f/a/5/fa50b8b616463173474302ca3e63586b.png" /></div></div></div>
 
 !! end
 
@@ -59,7 +59,7 @@ BUG 27324: Euro symbol for math
 <math>\geneurowide</math>
 <math>\officialeuro</math>
 !! result
-<p><span class="texhtml" dir="ltr">&#8364;200</span>
+<p><img class="tex" alt="\euro 200" src="/images/math/1/8/8/18867d4c568a19ae7b2388346e504ec3.png" />
 <img class="tex" alt="\geneuro" src="/images/math/9/8/b/98b63c235ee187a38267e0e170b10e9d.png" />
 <img class="tex" alt="\geneuronarrow" src="/images/math/a/a/4/aa4a1ed370f4ee705c6930384bf89502.png" />
 <img class="tex" alt="\geneurowide" src="/images/math/4/4/0/4404468e6187fb04e4f7e1f15e550825.png" />
@@ -93,9 +93,9 @@ BUG 19547: Apostrophe / single quotes in math \text{...}
 <math>\text{next year's}</math>
 <math>\text{`next' year}</math>
 !! result
-<p><span class="texhtml" dir="ltr">next years</span>
-<span class="texhtml" dir="ltr">next year's</span>
-<span class="texhtml" dir="ltr">`next' year</span>
+<p><img class="tex" alt="\text{next years}" src="/images/math/6/6/9/6691dbc0b36631a68b78dd5ace256d80.png" />
+<img class="tex" alt="\text{next year&#39;s}" src="/images/math/2/3/6/236fd262b1976d04bc0e7a969d61aede.png" />
+<img class="tex" alt="\text{`next&#39; year}" src="/images/math/0/5/8/05854b483a833f067cb6ae72319b44bc.png" />
 </p>
 !! end
 
@@ -110,9 +110,9 @@ BUG 6722: Spacing fix for functions in math HTML output
 <math>\sin(x) \,</math>
 <math>\sin{x} \,</math>
 !!result
-<p><span class="texhtml" dir="ltr">sin&#160;<i>x</i></span>
-<span class="texhtml" dir="ltr">sin(<i>x</i>)</span>
-<span class="texhtml" dir="ltr">sin&#160;<i>x</i></span>
+<p><img class="tex" alt="\sin x" src="/images/math/c/d/b/cdba58911c590ced3e2435dfa39f6873.png" />
+<img class="tex" alt="\sin(x)" src="/images/math/3/e/2/3e21673ce6c9b09f9ec50b7237248576.png" />
+<img class="tex" alt="\sin{x}" src="/images/math/f/b/5/fb5551723991d4dcb974a23c162ae813.png" />
 </p><p><img class="tex" alt="\sin x \," src="/images/math/7/6/a/76a8e1a01bd233c1e4e16d63b2bbf939.png" />
 <img class="tex" alt="\sin(x) \," src="/images/math/1/6/c/16c69b0a3658d3b398f72c518d869a03.png" />
 <img class="tex" alt="\sin{x} \," src="/images/math/8/3/9/839639707da39f691e702c2399cbf943.png" />
@@ -130,9 +130,9 @@ BUG 18912: Add \sen function for Spanish sin to math
 <math>\sen(x) \,</math>
 <math>\sen{x} \,</math>
 !! result
-<p><span class="texhtml" dir="ltr">sen&#160;<i>x</i></span>
-<span class="texhtml" dir="ltr">sen(<i>x</i>)</span>
-<span class="texhtml" dir="ltr">sen&#160;<i>x</i></span>
+<p><img class="tex" alt="\sen x" src="/images/math/f/b/8/fb82a78d580396c62cecb4cf018f3769.png" />
+<img class="tex" alt="\sen(x)" src="/images/math/8/3/a/83a10e6756c8e59055178dc1f593130a.png" />
+<img class="tex" alt="\sen{x}" src="/images/math/0/4/f/04fde4f7a7e478015066f378050b1979.png" />
 </p><p><img class="tex" alt="\sen x \," src="/images/math/0/a/c/0ac592b8f31b4698766c50c532f446a7.png" />
 <img class="tex" alt="\sen(x) \," src="/images/math/b/b/5/bb5469d24fcdd52aa60cb9ee90ba697d.png" />
 <img class="tex" alt="\sen{x} \," src="/images/math/d/4/8/d4882a4bcf5db1da3e30d905da8b394e.png" />
@@ -165,3 +165,18 @@ BUG 31442: Math accents with math font fail to parse if braces not used
 <p><img class="tex" alt="\tilde \mathcal{M}" src="/images/math/5/5/0/55072ce6ef8c840c4b7687bd8a028bde.png" />
 </p>
 !! end
+
+!! test
+BUG 31824: Empty math tag returns uniq
+!! input
+<math></math>
+!! result
+!! end
+
+!! test
+BUG 31824: Empty math tag returns uniq
+!! input
+<math> </math>
+!! result
+!! end
+
