@@ -1,86 +1,93 @@
 /**
  * From https://en.wikipedia.org/wiki/User:Nageh/mathJax.js
  */
+/*global mathJax:true, MathJax */
+( function ( mw, $ ) {
+  if ( typeof mathJax === 'undefined' ) {
+    mathJax = {};
+  }
 
-if ( typeof(mathJax) === "undefined" ) mathJax = {};
+  mathJax.version = '0.2';
 
-mathJax.version = "0.2";
+  mathJax.loaded = false;
 
-mathJax.loaded = false;
-
-mathJax.Config = function() {
-  MathJax.Hub.Config({
-    root: mediaWiki.config.get('wgExtensionAssetsPath') + '/Math/modules/MathJax/',
-    config: "TeX-AMS-texvc_HTML.js",
-    "v1.0-compatible": false,
-    styles: { ".mtext": { "font-family": "sans-serif ! important", "font-size": "80%" } },
-    displayAlign: "left",
-    menuSettings: { zoom: "click" },
-    "HTML-CSS": { imageFont: null, availableFonts: ["TeX"] }
-  });
-  MathJax.Message.styles["#MathJax_Message"].right = MathJax.Message.styles["#MathJax_Message"].left;
-  delete MathJax.Message.styles["#MathJax_Message"].left;
-  if ( typeof(mathJax.userConfig) !== "undefined" ) MathJax.Hub.Config( mathJax.userConfig );
-  if ( typeof(mathJax.fontDir) !== "undefined" ) MathJax.OutputJax.fontDir = mathJax.fontDir; else MathJax.Hub.Config({ NativeMML: {webFont: null} });
-  MathJax.Hub.Register.StartupHook("End Extensions", function() {
-    var TEX = MathJax.InputJax.TeX;
-    var MACROS = TEX.config.Macros;
-    for (var id in MACROS) {
-      if (typeof(MACROS[id]) === "string") TEX.Macro(id, MACROS[id]);
-      else TEX.Macro(id, MACROS[id][0], MACROS[id][1]);
-    }
-/*    TEX.Parse.Augment({
-      Cr: function(name) {
-        this.GetBrackets(name);
-        this.Push(TEX.Stack.Item.cell().With({isCR: true, name: name}));
+  mathJax.config = $.extend( true, {
+    root: mw.config.get('wgExtensionsPath') + '/Math/modules/MathJax', // SUS-4529 | use Wikia's cookie-less domain
+    config: ['TeX-AMS-texvc_HTML.js'],
+    'v1.0-compatible': false,
+    styles: {
+      '.mtext': {
+        'font-family': 'sans-serif ! important',
+        'font-size': '80%'
       }
-    });*/
-  });
-  MathJax.Hub.Startup.onload();
-}
-
-mathJax.Load = function(element) {
-  if (this.loaded)
-    return true;
-
-  var span = element.getElementsByTagName("span"), i;
-  for (i = span.length-1; i >= 0; i--) {
-    if (span[i].className === "tex") {
-//      this.span = span;
-//      this.spanIndex = i;
-
-      // create configuration element
-      var config = 'mathJax.Config();';
-      var script = document.createElement( 'script' );
-      script.setAttribute( 'type', 'text/x-mathjax-config' );
-      if ( window.opera ) script.innerHTML = config; else script.text = config;
-      document.getElementsByTagName('head')[0].appendChild( script );
-
-      // create startup element
-	  mediaWiki.loader.load('ext.math.mathjax');
-
-      this.loaded = true;
-      break;
+    },
+    displayAlign: 'left',
+    menuSettings: {
+      zoom: 'Click'
+    },
+    'HTML-CSS': {
+      imageFont: null,
+      availableFonts: ['TeX']
     }
-  }
-  return false;
-}
+  }, mathJax.config );
 
-mathJax.Init = function() {
-  this.Load( document.getElementById("bodyContent") || document.body );
+  mathJax.Config = function () {
+    MathJax.Hub.Config( mathJax.config );
+    MathJax.OutputJax.fontDir = mw.config.get('wgExtensionsPath') + '/Math/modules/MathJax/fonts'; // SUS-4529 | use Wikia's cookie-less domain
+  };
 
-  // compatibility with wikEd
-  if ( typeof(wikEd) == "undefined" ) { wikEd = {}; }
-  if ( typeof(wikEd.config) == "undefined" ) { wikEd.config = {}; }
-  if ( typeof(wikEd.config.previewHook) == "undefined" ) { wikEd.config.previewHook = []; }
-  wikEd.config.previewHook.push( function(){ if (window.mathJax.Load(document.getElementById("wikEdPreviewBox") || document.body)) MathJax.Hub.Queue(["Typeset", MathJax.Hub, "wikEdPreviewBox"]) } );
+  /**
+   * Renders all Math TeX inside the given elements.
+   * @param {function} callback to be executed after text elements have rendered [optional]
+   */
+  $.fn.renderTex = function ( callback ) {
+    var elem = this.find( '.tex' ).parent().toArray();
 
-  // compatibility with ajaxPreview
-  this.oldAjaxPreviewExec = window.ajaxPreviewExec;
-  window.ajaxPreviewExec = function(previewArea) {
-    if ( typeof(mathJax.oldAjaxPreviewExec) !== "undefined" ) mathJax.oldAjaxPreviewExec(previewArea);
-    if ( mathJax.Load(previewArea) ) MathJax.Hub.Queue( ["Typeset", MathJax.Hub, previewArea] );
-  }
-}
+    if ( !$.isFunction( callback ) ) {
+      callback = $.noop;
+    }
 
-mathJax.Init();
+    function render () {
+      MathJax.Hub.Queue( ['Typeset', MathJax.Hub, elem, callback] );
+    }
+
+    mw.loader.using( 'ext.math.mathjax', function () {
+      if ( MathJax.isReady ) {
+        render();
+      } else {
+        MathJax.Hub.Startup.signal.MessageHook( 'End', render );
+      }
+    });
+    return this;
+  };
+
+  mathJax.Load = function () {
+    var config, script;
+    if (this.loaded) {
+      return true;
+    }
+
+    // create configuration element
+    config = 'mathJax.Config();';
+    script = document.createElement( 'script' );
+    script.setAttribute( 'type', 'text/x-mathjax-config' );
+    if ( window.opera ) {
+      script.innerHTML = config;
+    } else {
+      script.text = config;
+    }
+    document.getElementsByTagName('head')[0].appendChild( script );
+
+    // create startup element
+    mw.loader.load('ext.math.mathjax');
+
+    this.loaded = true;
+
+    return false;
+  };
+
+  $( document ).ready( function () {
+    mathJax.Load();
+  } );
+
+}( mediaWiki, jQuery ) );
