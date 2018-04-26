@@ -8,7 +8,7 @@
  * contain plain-text bodies, HTML bodies, attachments, inline
  * images and specific headers.
  *
- * Compatible with PHP >= 5
+ * Compatible with PHP version 5 and 7
  *
  * LICENSE: This LICENSE is in the BSD license style.
  * Copyright (c) 2002-2003, Richard Heyes <richard@phpguru.org>
@@ -104,14 +104,14 @@ class Mail_mime
     protected $calbody;
 
     /**
-     * list of the attached images
+     * List of the attached images
      *
      * @var array
      */
     protected $html_images = array();
 
     /**
-     * list of the attachements
+     * List of the attachements
      *
      * @var array
      */
@@ -181,9 +181,7 @@ class Mail_mime
 
         // Update build parameters
         if (!empty($params) && is_array($params)) {
-            while (list($key, $value) = each($params)) {
-                $this->build_params[$key] = $value;
-            }
+            $this->build_params = array_merge($this->build_params, $params);
         }
     }
 
@@ -194,7 +192,7 @@ class Mail_mime
      * @param string $value Parameter value
      *
      * @return void
-     * @since 1.6.0
+     * @since  1.6.0
      */
     public function setParam($name, $value)
     {
@@ -207,7 +205,7 @@ class Mail_mime
      * @param string $name Parameter name
      *
      * @return mixed Parameter value
-     * @since 1.6.0
+     * @since  1.6.0
      */
     public function getParam($name)
     {
@@ -238,7 +236,7 @@ class Mail_mime
      * Get message text body
      *
      * @return string Text body
-     * @since 1.6.0
+     * @since  1.6.0
      */
     public function getTXTBody()
     {
@@ -263,7 +261,7 @@ class Mail_mime
      * Get message HTML body
      *
      * @return string HTML body
-     * @since 1.6.0
+     * @since  1.6.0
      */
     public function getHTMLBody()
     {
@@ -284,7 +282,7 @@ class Mail_mime
      * @param string $encoding Transfer encoding
      *
      * @return mixed True on success or PEAR_Error object
-     * @since 1.9.0
+     * @since  1.9.0
      */
     public function setCalendarBody($data, $isfile = false, $append = false,
         $method = 'request', $charset = 'UTF-8', $encoding = 'quoted-printable'
@@ -302,7 +300,7 @@ class Mail_mime
      * Get body of calendar part
      *
      * @return string Calendar part body
-     * @since 1.9.0
+     * @since  1.9.0
      */
     public function getCalendarBody()
     {
@@ -467,7 +465,7 @@ class Mail_mime
      * Checks if the current message has many parts
      *
      * @return bool True if the message has many parts, False otherwise.
-     * @since 1.9.0
+     * @since  1.9.0
      */
     public function isMultipart()
     {
@@ -742,7 +740,7 @@ class Mail_mime
      *                      get() method. See get() for more info.
      *
      * @return mixed The e-mail body or PEAR error object
-     * @since 1.6.0
+     * @since  1.6.0
      */
     public function getMessageBody($params = null)
     {
@@ -761,7 +759,7 @@ class Mail_mime
      * @param bool   $overwrite Overwrite the existing headers with new.
      *
      * @return mixed True or PEAR error object
-     * @since 1.6.0
+     * @since  1.6.0
      */
     public function saveMessage($filename, $params = null, $headers = null, $overwrite = false)
     {
@@ -806,7 +804,7 @@ class Mail_mime
      *                        get() method. See get() for more info.
      *
      * @return mixed True or PEAR error object
-     * @since 1.6.0
+     * @since  1.6.0
      */
     public function saveMessageBody($filename, $params = null)
     {
@@ -857,10 +855,8 @@ class Mail_mime
      */
     public function get($params = null, $filename = null, $skip_head = false)
     {
-        if (isset($params)) {
-            while (list($key, $value) = each($params)) {
-                $this->build_params[$key] = $value;
-            }
+        if (!empty($params) && is_array($params)) {
+            $this->build_params = array_merge($this->build_params, $params);
         }
 
         if (isset($this->headers['From'])) {
@@ -1161,25 +1157,22 @@ class Mail_mime
      * @param array  $params Hash array of header parameters
      *
      * @return void
-     * @since 1.7.0
+     * @since  1.7.0
      */
     public function setContentType($type, $params = array())
     {
         $header = $type;
 
-        $eol = !empty($this->build_params['eol'])
-            ? $this->build_params['eol'] : "\r\n";
+        $eol = !empty($this->build_params['eol']) ? $this->build_params['eol'] : "\r\n";
 
         // add parameters
-        $token_regexp = '#([^\x21\x23-\x27\x2A\x2B\x2D'
-            . '\x2E\x30-\x39\x41-\x5A\x5E-\x7E])#';
+        $token_regexp = '#([^\x21\x23-\x27\x2A\x2B\x2D\x2E\x30-\x39\x41-\x5A\x5E-\x7E])#';
 
         if (is_array($params)) {
             foreach ($params as $name => $value) {
                 if ($name == 'boundary') {
                     $this->build_params['boundary'] = $value;
-                }
-                if (!preg_match($token_regexp, $value)) {
+                } else if (!preg_match($token_regexp, $value)) {
                     $header .= ";$eol $name=$value";
                 } else {
                     $value = addcslashes($value, '\\"');
@@ -1340,7 +1333,7 @@ class Mail_mime
      * @param string $encoding Encoding name (base64 or quoted-printable)
      *
      * @return string Encoded header data (without a name)
-     * @since 1.5.3
+     * @since  1.5.3
      */
     public function encodeHeader($name, $value, $charset, $encoding)
     {
@@ -1446,8 +1439,7 @@ class Mail_mime
             }
             $headers['Content-Transfer-Encoding']
                 = $this->build_params['html_encoding'];
-        }
-        else if ($headers['Content-Type'] == 'text/calendar') {
+        } else if ($headers['Content-Type'] == 'text/calendar') {
             // single-part message: add charset and encoding
             if ($this->build_params['calendar_charset']) {
                 $charset = 'charset=' . $this->build_params['calendar_charset'];
