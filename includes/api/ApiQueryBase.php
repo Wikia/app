@@ -179,9 +179,7 @@ abstract class ApiQueryBase extends ApiBase {
 	 * @param $value string Value; ignored if null or empty array;
 	 */
 	protected function addWhereFld( $field, $value ) {
-		// Use count() to its full documented capabilities to simultaneously
-		// test for null, empty array or empty countable object
-		if ( count( $value ) ) {
+		if ( $value !== null && !( is_array( $value ) && !$value ) ) {
 			$this->where[$field] = $value;
 		}
 	}
