@@ -25,6 +25,9 @@ describe('ext.wikia.adEngine.tracking.adInfoTracker', function () {
 				return 'Foo 50';
 			}
 		},
+		deviceDetect: {
+			getDevice: noop
+		},
 		pageLayout: {
 			getSerializedData: function () {
 				return 'xyz=012';
@@ -52,6 +55,7 @@ describe('ext.wikia.adEngine.tracking.adInfoTracker', function () {
 			mocks.adEngineBridge,
 			mocks.slotRegistry,
 			mocks.pageLayout,
+			mocks.deviceDetect,
 			mocks.browserDetect,
 			mocks.log,
 			mocks.window
