@@ -8,3 +8,6 @@
  */
 
 $fallback = 'bho';
+$pluralRules = [
+	"n = 0..1",
+];

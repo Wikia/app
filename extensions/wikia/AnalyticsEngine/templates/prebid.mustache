@@ -1,12 +1,12 @@
 <script>
 	require([
-		'wikia.geo',
 		'wikia.instantGlobals',
+		'ext.wikia.adEngine.geo',
 		'ext.wikia.adEngine.lookup.prebid'
-	], function (geo, globals, prebid) {
-		var ac = globals['{{wgCountriesVarName}}'];
+	], function (globals, geo, prebid) {
+		var name = '{{wgCountriesVarName}}';
 
-		if (geo.isProperGeo(ac)) {
+		if (geo.isProperGeo(globals[name], name)) {
 			prebid.call();
 		}
 	});

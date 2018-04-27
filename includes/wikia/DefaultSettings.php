@@ -325,7 +325,7 @@ $wgAutoloadClasses['RedirectService'] = $IP . '/includes/wikia/services/Redirect
 // services hooks
 $wgHooks['ArticleEditUpdates'][] = 'MediaQueryService::onArticleEditUpdates';
 $wgHooks['ArticlePurge'][] = 'ArticleService::onArticlePurge';
-$wgHooks['ArticleEditUpdates'][] = 'ArticleService::onArticleEditUpdates';
+$wgHooks['ArticleSaveComplete'][] = 'ArticleService::onArticleSaveComplete';
 $wgHooks['ArticleDeleteComplete'][] = 'PageStatsService::onArticleDeleteComplete';
 $wgHooks['ArticleSaveComplete'][] = 'PageStatsService::onArticleSaveComplete';
 
@@ -1033,14 +1033,6 @@ $wgResourceLoaderCssMinifier = false;
  */
 $wgWikiaIsCentralWiki = false;
 
-
-/**
- * Is bulk mode in Memcached routines enabled?
- * (eg. get_multi())
- * @var boolean
- */
-$wgEnableMemcachedBulkMode = false;
-
 /**
  * WikiaSeasons flags
  */
@@ -1225,6 +1217,13 @@ $wgAdDriverAudienceNetworkBidderCountries = null;
 $wgAdDriverBeachfrontBidderCountries = null;
 
 /**
+ * @name $wgAdDriverBottomLeaderBoardLazyPrebidCountries
+ * List of countries where BOTTOM_LEADERBOARD lazy Prebid.js loading is enabled.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverBottomLeaderBoardLazyPrebidCountries = null;
+
+/**
  * @name $wgAdDriverBottomLeaderBoardMegaCountries
  * List of countries where BOTTOM_LEADERBOARD ad slot mega is enabled.
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
@@ -1354,6 +1353,12 @@ $wgSitewideDisableKrux = false;
  */
 $wgAdDriverKikimoraTrackingCountries = [];
 
+/**
+ * @name $wgAdDriverMobileSectionsCollapseCountries
+ * List of countries where sections on mobile wiki are collapsed after page load.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverMobileSectionsCollapseCountries = null;
 
 /**
  * @name $wgAdDriverScrollDepthTrackingCountries

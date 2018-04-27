@@ -4,6 +4,7 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.rubiconDisplay', function ()
 
 	var mocks = {
 		adContext: {
+			get: function () {},
 			getContext: function () {
 				return mocks.context;
 			}
@@ -47,6 +48,7 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.rubiconDisplay', function ()
 	}
 
 	beforeEach(function () {
+		spyOn(mocks.adContext, 'get');
 		mocks.context = {
 			bidders: {
 				rubiconDisplay: true
@@ -59,13 +61,14 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.rubiconDisplay', function ()
 	});
 
 	it('Is disabled when context is disabled', function () {
-		mocks.context.bidders.rubiconDisplay = false;
+		mocks.adContext.get.and.returnValue(false);
 		var rubicon = getBidder();
 
 		expect(rubicon.isEnabled()).toBeFalsy();
 	});
 
 	it('Is disabled when context is enabled but is blocking', function () {
+		mocks.adContext.get.and.returnValue(true);
 		var rubicon = getBidder();
 		spyOn(mocks.instartLogic, 'isBlocking').and.returnValue(true);
 
@@ -73,12 +76,14 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.rubiconDisplay', function ()
 	});
 
 	it('Is enabled when context is enabled', function () {
+		mocks.adContext.get.and.returnValue(true);
 		var rubicon = getBidder();
 
 		expect(rubicon.isEnabled()).toBeTruthy();
 	});
 
 	it('prepareAdUnit returns data in correct shape', function () {
+		mocks.adContext.get.and.returnValue(undefined);
 		var bidder = getBidder();
 		expect(bidder.prepareAdUnit('TOP_LEADERBOARD', {
 			sizes: [[728, 90], [970, 250]],

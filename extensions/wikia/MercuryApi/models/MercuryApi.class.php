@@ -120,7 +120,7 @@ class MercuryApi {
 			   $wgEnableDiscussionsImageUpload, $wgDiscussionColorOverride, $wgEnableNewAuth,
 			   $wgLanguageCode, $wgSitename, $wgWikiDirectedAtChildrenByFounder,
 			   $wgWikiDirectedAtChildrenByStaff, $wgCdnRootUrl, $wgScriptPath,
-			   $wgEnableDiscussionsPolls, $wgEnableLightweightContributions;
+			   $wgEnableDiscussionsPolls, $wgEnableLightweightContributions, $wgRecommendedVideoABTestPlaylist;
 
 		$enableFAsmartBannerCommunity = WikiFactory::getVarValueByName( 'wgEnableFandomAppSmartBanner', WikiFactory::COMMUNITY_CENTRAL );
 
@@ -168,6 +168,8 @@ class MercuryApi {
 				]
 			],
 			'wikiCategories' => WikiFactoryHub::getInstance()->getWikiCategoryNames( $wgCityId ),
+			'recommendedVideoPlaylist' => $wgRecommendedVideoABTestPlaylist,
+			'recommendedVideoRelatedMediaId' => ArticleVideoContext::getRelatedMediaIdForRecommendedVideo()
 		];
 	}
 

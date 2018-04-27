@@ -15,6 +15,7 @@ require([
 		player = null,
 		$actualVideo = null,
 		currentItemNumber = 1,
+		isEnabled = false,
 		isExpanded = false,
 		isAutoplay = false,
 		initialPlay = true;
@@ -27,7 +28,10 @@ require([
 			label: 'reveal-point'
 		});
 
-		/* Uncomment when the XW-4771 AA test is over
+		if (!isEnabled) {
+			return;
+		}
+
 		$unit.addClass('is-revealed');
 		!isAutoplay && $unit.addClass('is-click-to-play');
 		window.wikiaJWPlayer(
@@ -42,7 +46,6 @@ require([
 			action: tracker.ACTIONS.VIEW,
 			label: 'revealed'
 		});
-	    */
 	}
 
 	function onScroll() {
@@ -82,6 +85,11 @@ require([
 	}
 
 	function onJWDataLoaded(videoElementId, jwPlayerData) {
+		var shuffledPlaylist = jwPlayerData.playlist.sort(function () {
+			return .5 - Math.random();
+		});
+
+		jwPlayerData.playlist = shuffledPlaylist.slice(0, 5);
 		recommendedVideoData = jwPlayerData;
 		recommendedVideoElementId = videoElementId;
 
@@ -90,6 +98,13 @@ require([
 
 	function onCloseClicked() {
 		$unit.removeClass('is-revealed');
+
+		tracker.track({
+			category: 'related-video-module',
+			trackingMethod: 'analytics',
+			action: tracker.ACTIONS.CLICK,
+			label: 'close'
+		});
 
 		setTimeout(function () {
 			$unit.remove();
@@ -118,6 +133,11 @@ require([
 	}
 
 	function init() {
+		var isInClickToPlayGroup = window.Wikia.AbTest.inGroup('RECOMMENDED_VIDEO_AB', 'CLICK_TO_PLAY');
+
+		isAutoplay = window.Wikia.AbTest.inGroup('RECOMMENDED_VIDEO_AB', 'AUTOPLAY');
+		isEnabled = isAutoplay || isInClickToPlayGroup;
+
 		if ($unit.length && window.wikiaJWPlayer) {
 			setupPlayer();
 		}
@@ -138,12 +158,12 @@ require([
 	function bindPlayerEvents(playerInstance) {
 		playerInstance.on('playlistItem', playItem);
 
-		playerInstance.once('mute', function () {
+		isAutoplay && playerInstance.once('mute', function () {
 			playExpandedItem(currentItemNumber - 1);
 		});
 
-		playerInstance.on('play', function (data) {
-			if (data.playReason === 'interaction') {
+		isAutoplay && playerInstance.on('play', function (data) {
+			if (data.playReason === 'interaction' && isExpanded !== true) {
 				playExpandedItem(currentItemNumber - 1);
 			}
 		});
@@ -213,14 +233,24 @@ require([
 	}
 
 	function setupPlayer() {
-		fetchJWVideoData($unit.data('playlistId'))
-			.then(function (jwVideoData) {
+		fetchJWVideoData($unit.data('playlistId'), $unit.data('relatedMediaId'))
+			.done(function (jwVideoData) {
 				onJWDataLoaded(recommendedVideoElementId, jwVideoData);
 			});
 	}
 
-	function fetchJWVideoData(mediaId) {
-		return $.get(jwPlaylistDataUrl + mediaId);
+	function fetchJWVideoData(mediaId, relatedMediaId) {
+		var deferred = $.Deferred();
+
+		$.get(jwPlaylistDataUrl + mediaId + '?related_media_id=' + relatedMediaId).then(function (data) {
+			deferred.resolve(data);
+		}).fail(function () {{
+			$.get(jwPlaylistDataUrl + mediaId).then(function (data) {
+				deferred.resolve(data);
+			});
+		}});
+
+		return deferred.promise();
 	}
 
 	function expand() {

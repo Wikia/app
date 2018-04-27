@@ -15,7 +15,7 @@ class CrossOriginResourceSharingHeaderHelper {
 	const HEADER_DELIMETER = ',';
 
 	const PROD_ORIGINS = ['.wikia.com'];
-	const DEV_ORIGINS = ['.wikia-dev.us', '.wikia-dev.pl', '.wikia-loc.com'];
+	const DEV_ORIGINS = ['.wikia-dev.us', '.wikia-dev.pl'];
 
 	protected $allowValues = [];
 	protected $whitelistOrigins = [];

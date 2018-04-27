@@ -26,7 +26,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.beachfront', [
 		};
 
 	function isEnabled() {
-		return adContext.getContext().bidders.beachfront && !instartLogic.isBlocking();
+		return adContext.get('bidders.beachfront') && !instartLogic.isBlocking();
 	}
 
 	function prepareAdUnit(slotName, config) {

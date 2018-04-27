@@ -4,14 +4,21 @@ define('ext.wikia.adEngine.tracking.adInfoTracker',  [
 	'ext.wikia.adEngine.geo',
 	'ext.wikia.adEngine.slot.service.slotRegistry',
 	'ext.wikia.adEngine.tracking.pageLayout',
+	'ext.wikia.adEngine.utils.device',
 	'wikia.browserDetect',
 	'wikia.log',
 	'wikia.window',
 	require.optional('ext.wikia.adEngine.ml.rabbit')
-], function (adTracker, geo, slotRegistry, pageLayout, browserDetect, log, win, rabbit) {
+], function (adTracker, geo, slotRegistry, pageLayout, deviceDetect, browserDetect, log, win, rabbit) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.tracking.adInfoTracker';
+
+	function getPosParameter(slotParams) {
+		var pos = (slotParams.pos || ''),
+			posArray = Array.isArray(pos) ? pos : pos.split(',');
+		return posArray[0];
+	}
 
 	function prepareData(slotName, pageParams, slotParams, creative, bidders) {
 		var data,
@@ -39,6 +46,7 @@ define('ext.wikia.adEngine.tracking.adInfoTracker',  [
 			'pv': pageParams.pv || '',
 			'pv_unique_id': win.pvUID,
 			'browser': [ browserDetect.getOS(), browserDetect.getBrowser() ].join(' '),
+			'device': deviceDetect.getDevice(pageParams),
 			'country': pageParams.geo || '',
 			'time_bucket': now.getHours(),
 			'timestamp': timestamp,
@@ -48,7 +56,7 @@ define('ext.wikia.adEngine.tracking.adInfoTracker',  [
 			'kv_s1': pageParams.s1 || '',
 			'kv_s2': pageParams.s2 || '',
 			'kv_s0v': pageParams.s0v || '',
-			'kv_pos': slotParams.pos || '',
+			'kv_pos': getPosParameter(slotParams),
 			'kv_rv': slotParams.rv || '',
 			'kv_wsi': slotParams.wsi || '',
 			'kv_lang': pageParams.lang || '',

@@ -3,8 +3,8 @@ define('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adLogicPageParams',
 	'ext.wikia.adEngine.context.slotsContext',
-	'wikia.browserDetect'
-], function (adContext, page, slotsContext, browserDetect) {
+	'ext.wikia.adEngine.utils.device'
+], function (adContext, page, slotsContext, deviceDetect) {
 	'use strict';
 
 	var dfpId = '5441',
@@ -52,26 +52,18 @@ define('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', [
 		return findSlotGroup(map, slotName.toUpperCase()) || 'OTHER';
 	}
 
-	function getDevice(params) {
-		var result = 'unknown';
-
+	function getDeviceSpecial(params) {
 		if (params.s2 === 'special') {
 			return 'unknown-specialpage';
 		}
 
-		if (params.skin === 'oasis') {
-			result = browserDetect.isMobile() ? 'tablet' : 'desktop';
-		} else if (params.skin === 'mercury' || params.skin === 'mobile-wiki') {
-			result = 'smartphone';
-		}
-
-		return result;
+		return deviceDetect.getDevice(params);
 	}
 
 	function build(slotName, src, slotNameSuffix) {
 		var adUnitElements,
 			params = page.getPageLevelParams(),
-			device = getDevice(params),
+			device = getDeviceSpecial(params),
 			provider = src.indexOf('remnant') === -1 ? 'wka1a' : 'wka2a',
 			wikiName = getContextTargeting().wikiIsTop1000 ? params.s1 : '_not_a_top1k_wiki',
 			vertical = params.s0;

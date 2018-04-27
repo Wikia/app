@@ -1,10 +1,11 @@
 /*global define, require*/
 define('ext.wikia.adEngine.provider.gpt.adSizeFilter', [
 	'ext.wikia.adEngine.bridge',
+	'wikia.abTest',
 	'wikia.document',
 	'wikia.log',
 	'wikia.window'
-], function (bridge, doc, log, win) {
+], function (bridge, abTest, doc, log, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.gpt.adSizeFilter',
@@ -26,13 +27,19 @@ define('ext.wikia.adEngine.provider.gpt.adSizeFilter', [
 			win.ads.context;
 	}
 
-	function removeUAPForFeaturedVideoPages(slotName, slotSizes) {
-		var adContext = getAdContext();
+	function removeFanTakeoverSizes(slotName, slotSizes) {
+		var adContext = getAdContext(),
+			recommendedVideoTestName = 'RECOMMENDED_VIDEO_AB',
+			hasRecommendedVideoABTestPlaylistOnOasis = win.wgRecommendedVideoABTestPlaylist,
+			hasRecommendedVideoABTestPlaylistOnMobile = win.M && win.M.getFromHeadDataStore &&
+				!!win.M.getFromHeadDataStore('wikiVariables.recommendedVideoPlaylist'),
+			runsRecommendedVideoABTest = abTest.getGroup(recommendedVideoTestName) &&
+				(hasRecommendedVideoABTestPlaylistOnOasis || hasRecommendedVideoABTestPlaylistOnMobile);
 
 		if (slotName.indexOf('TOP_LEADERBOARD') > -1 &&
 			adContext &&
 			adContext.targeting &&
-			adContext.targeting.hasFeaturedVideo
+			(adContext.targeting.hasFeaturedVideo || runsRecommendedVideoABTest)
 		) {
 			slotSizes = removeUAPFromSlotSizes(slotSizes);
 		}
@@ -63,7 +70,7 @@ define('ext.wikia.adEngine.provider.gpt.adSizeFilter', [
 
 		var context = getAdContext();
 
-		slotSizes = removeUAPForFeaturedVideoPages(slotName, slotSizes);
+		slotSizes = removeFanTakeoverSizes(slotName, slotSizes);
 
 		switch (true) {
 			case slotName.indexOf('TOP_LEADERBOARD') > -1:

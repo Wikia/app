@@ -4,13 +4,14 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.appnexusAst', function () {
 
 	var mocks = {
 		adContext: {
+			get: function () {},
 			getContext: function () {
 				return mocks.context;
 			}
 		},
 		context: {},
 		instartLogic: {
-			isBlocking: function() {}
+			isBlocking: function () {}
 		},
 		slotsContext: {
 			filterSlotMap: function (map) {
@@ -39,22 +40,20 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.appnexusAst', function () {
 		};
 	});
 
-	it('Is disabled when context is disabled', function () {
-		mocks.context.bidders.appnexusAst = false;
-		var appnexus = getAppNexus();
-
-		expect(appnexus.isEnabled()).toBeFalsy();
+	it('enables bidder if flag is on and user is not blocking ads', function () {
+		spyOn(mocks.instartLogic, 'isBlocking').and.returnValue(false);
+		spyOn(mocks.adContext, 'get').and.returnValue(true);
+		expect(getAppNexus().isEnabled()).toBeTruthy();
 	});
 
-	it('Is enabled when context is enabled', function () {
-		var appnexus = getAppNexus();
-
-		expect(appnexus.isEnabled()).toBeTruthy();
+	it('disables bidder if flag is off and user is not blocking ads', function () {
+		spyOn(mocks.instartLogic, 'isBlocking').and.returnValue(false);
+		spyOn(mocks.adContext, 'get').and.returnValue(false);
+		expect(getAppNexus().isEnabled()).toBeFalsy();
 	});
 
 	it('prepareAdUnit returns data in correct shape', function () {
-		var appNexus = getAppNexus();
-		expect(appNexus.prepareAdUnit('TOP_LEADERBOARD', {
+		expect(getAppNexus().prepareAdUnit('TOP_LEADERBOARD', {
 			placementId: 'foo'
 		})).toEqual({
 			code: 'TOP_LEADERBOARD',

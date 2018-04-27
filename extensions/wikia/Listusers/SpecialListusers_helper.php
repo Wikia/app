@@ -463,11 +463,16 @@ class ListusersData {
 	 * Fills specials.events_local_users table with entries for a given wiki.
 	 * Used by CreateNewWikiTask class
 	 *
+	 * Get the list of all users that made an edit or a members of local groups
+	 *
 	 * @see SUS-3264
+	 * @see SUS-4493
 	 * @param int $cityId
 	 */
 	public static function populateEventsLocalUsers( int $cityId ) {
-		$listUsers = new \ListusersData( $cityId );
+		$ids = [];
+
+		// all users that made an edit
 		$res = wfGetDB(DB_SLAVE)->select(
 			'revision',
 			'DISTINCT(rev_user) as user_id',
@@ -475,8 +480,27 @@ class ListusersData {
 			__METHOD__
 		);
 
-		foreach($res as $row) {
-			$user = \User::newFromId( $row->user_id );
+		foreach( $res as $row ) {
+			$ids[] = $row->user_id;
+		}
+
+		// all members of local groups
+		$res = wfGetDB(DB_SLAVE)->select(
+			'user_groups',
+			'DISTINCT(ug_user) as user_id',
+			[],
+			__METHOD__
+		);
+
+		foreach( $res as $row ) {
+			$ids[] = $row->user_id;
+		}
+
+		// process all accounts
+		$listUsers = new \ListusersData( $cityId );
+
+		foreach( array_unique( $ids ) as $id ) {
+			$user = \User::newFromId( $id );
 			$listUsers->updateUserGroups( $user, $user->getGroups() );
 		}
 	}

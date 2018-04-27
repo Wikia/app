@@ -11,7 +11,10 @@ RUN apt-get update && apt-get install -y \
     automake \
     libbz2-dev \
     libjpeg-dev \
+    # needed by memcached
+    libmemcached-dev \
     libpng-dev \
+    libxml2-dev \
     # needed by wikidiff2
     libthai-dev \
     libtool \
@@ -68,7 +71,14 @@ RUN docker-php-ext-install \
     bz2 \
     gd \
     mysqli \
-    opcache
+    opcache \
+    # simplexml: SimpleXMLElement is used by DesignSystem and PortableInfoboxBuilder extensions
+    simplexml \
+    # needed by RabbitMQ client
+    bcmath
+
+RUN pecl install memcached-3.0.4 \
+    && docker-php-ext-enable memcached
 
 # setup php.ini globally
 ADD ./php.ini /usr/local/etc/php/php.ini

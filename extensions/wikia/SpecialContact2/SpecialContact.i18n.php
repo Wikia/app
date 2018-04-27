@@ -397,7 +397,7 @@ Weitere Informationen dazu, welche Angaben du in deinen Bericht aufnehmen sollte
 Vielen Dank für deine Meldung und weiterhin viel Spaß auf FANDOM!',
 	'specialcontact-intro-bad-ad' => 'Es tut uns Leid, dass dir eine unangebrachte Werbeanzeige auf FANDOM begegnet ist. Falls du weitere Details hast, teile sie uns mit. Wir leiten sie dann an unsere Marketing-Abteilung weiter, die die Anzeige überprüfen wird und sie eventuell von der Seite nehmen kann.
 
-Vergiss nicht, uns mitzuteilen, in welcher Community du warst, welche Anzeige du gesehen hast und warum diese ein Problem darstellt. Eine große Hilfe wäre auch ein Screenshot und die URL, auf die die Anzeige verweist. Hier findest du die Anleitung dazu, wie du die URL der Anzeige herausfinden kannst: http://de.community.wikia.com/wiki/Hilfe:Unerw%C3%BCnschte_Werbung
+Vergiss nicht, uns mitzuteilen, in welcher Community du warst, welche Anzeige du gesehen hast und warum diese ein Problem darstellt. Eine große Hilfe wären auch ein Screenshot und die URL, auf die die Anzeige verweist. Hier findest du die Anleitung dazu, wie du die URL der Anzeige herausfinden kannst: http://de.community.wikia.com/wiki/Hilfe:Unerw%C3%BCnschte_Werbung
 
 Vielen Dank!',
 	'specialcontact-intro-wiki-name-change' => 'Falls du ein Admin der Community bist, kannst du hier den Antrag stellen, um den [[w:c:de:Hilfe:Projektname|Namen]] oder die [[w:c:de:Hilfe:Subdomain|URL]] zu ändern. Überprüfe die Schreibweise gründlich, um sicher zu stellen, das alles korrekt ist. Falls du kein Admin bist, dann wende dich mit deinem Antrag an die [[Special:ListAdmins|lokalen Admins]].',
@@ -415,7 +415,7 @@ Admins, die Interesse daran haben, neue Funktionen in der Entwicklung zu testen,
 Wenn du über neue Funktionen auf dem Laufenden bleiben möchtest, folge einfach unserem [[w:c:de.community.wikia.com/wiki/Blog:Fandom_Deutschland_News|Blog über neue Funktionen]]',
 	'specialcontact-intro-close-wiki' => 'Danke, dass du FANDOM kontaktiert hast. Üblicherweise löschen wir keine Wikis, nachdem sie erstellt wurden. Wiki-Projekte gehören der Community, und falls du nicht länger an einem Wiki interessiert bist, gibt es vielleicht jemand anderen, der es [[Special:Contact/adoption|adoptieren möchte]].
 
-Falls du den Namen deines Wikis ändern möchtest oder einen Rechtschreib- oder Grammatikfehler korrigieren möchtest, informiere dich bitte zuerst unter [[w:c:de:Hilfe:Verschieben]], wie du eine Seite umbenennen kannst, und unter [[w:c:de:Hilfe:Projektname]], um den Namen des Wikis zu ändern. Der Name eines Wikis kann geändert werden, ohne dass du komplett von vorne beginnen musst. Falls du die URL deines Wikis ändern möchtest, dann [[Special:Contact/general|schreib uns]]. Wir übernehmen das gerne für dich und du musst deswegen deine Community nicht schließen.
+Falls du den Namen deines Wikis ändern möchtest oder einen Rechtschreib- oder Grammatikfehler korrigieren möchtest, informiere dich bitte zuerst unter [[w:c:de:Hilfe:Verschieben|Hilfe:Verschieben]], wie du eine Seite umbenennen kannst, und unter [[w:c:de:Hilfe:Projektname|Hilfe:Projektname]], um den Namen des Wikis zu ändern. Der Name eines Wikis kann geändert werden, ohne dass du komplett von vorne beginnen musst. Falls du die URL deines Wikis ändern möchtest, dann [[Special:Contact/general|schreib uns]]. Wir übernehmen das gerne für dich und du musst deswegen deine Community nicht schließen.
 
 Wenn du das Gefühl hast, dass dieses Wiki keinen Nutzen für andere hat (wie z.B. ein Wiki zu einem persönlichen Thema), stelle einen Antrag, indem du das folgende Formular benutzt. Bitte füge auch einen Link zum entsprechenden Wiki in deiner Nachricht ein. 
 
@@ -427,7 +427,7 @@ Viel Spaß dabei!',
 Zusätzliche Informationen zum Melden von Problemen findest du [[Special:Contact|hier]] oder wenn du in den [[w:c:de.community:Special:Forum|Foren]] andere Benutzer um Hilfe bittest. 
 
 Wenn du lieber eine E-Mail schicken möchtest, kontaktiere uns unter [mailto:community@fandom.com community@fandom.com].',
-	'specialcontact-noform-footer' => "'''Beantwortet diese Seite deine Fragen?''' Wenn nicht, dann [[Special:contact/general|schreib uns]]. Vergiss nicht, dass du jederzeit die '''[[w:c:de.community:Hilfe:Übersicht|Hilfeseiten]]''' durchschauen, den [[w:c:de.community:Blog:Fandom_Staff_Blog|Fandom-Blog]] lesen oder in unseren '''[[w:c:de.community:Special:Forum|Foren]]''' posten kannst.",
+	'specialcontact-noform-footer' => "'''Beantwortet diese Seite deine Fragen?''' Wenn nicht, dann [[Special:contact/general|schreib uns]]. Vergiss nicht, dass du jederzeit unsere '''[[w:c:de.community:Hilfe:Übersicht|Hilfeseiten]]''', den [[w:c:de.community:Blog:News|FANDOM-Blog]] oder unsere '''[[w:c:de.community:Special:Forum|Foren]]''' zurate ziehen kannst.",
 	'specialcontact-username' => 'Benutzername',
 	'specialcontact-wikiname' => 'Welches Wiki',
 	'specialcontact-realname' => 'Dein Name',
@@ -517,7 +517,7 @@ Browser/System: ',
 
 Falls du denkst, dass der Inhalt gegen unsere Nutzungsbedingungen verstößt, kannst du dich direkt an einen FANDOM-Mitarbeiter wenden.',
 	'specialcontact-label-bad-ad-url' => 'Wenn möglich gib bitte die URL an, auf die die Anzeige verlinkt. Wie du diesen Link finden kannst, erfährst du auf dieser [[w:c:de:Hilfe:Unerwünschte_Werbung|Hilfeseite]].',
-	'specialcontact-desc' => 'Fandoms Kontaktformular [[Special:Contact]]',
+	'specialcontact-desc' => 'FANDOMs Kontaktformular [[Special:Contact|Spezial:Kontakt]]',
 	'specialcontact-label-bad-ad-help-page' => 'Hilfe:Unerwünschte_Werbung',
 );
 
