@@ -1,0 +1,20 @@
+version: '2'
+
+services:
+  web:
+    image: nginx:latest
+    ports:
+      - "80:80"
+    volumes:
+      - ./../../../app:/php-wikia-dev/src
+      - ./site.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - php-wikia
+  php-wikia:
+    image: php-wikia-dev:latest
+    ports:
+      - "9000:9000"
+    volumes:
+      - ./../../../app:/php-wikia-dev/src
+      - ./../../../config:/php-wikia-dev/config
+      - ./../../../cache/messages:/php-wikia-dev/cache/messages
