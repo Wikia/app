@@ -10,7 +10,6 @@ abstract class ApiWrapper {
 
 	protected static $API_URL;
 	protected static $CACHE_KEY;
-	protected static $CACHE_KEY_VERSION = 0.1;
 	protected static $CACHE_EXPIRY = 86400;
 
 	/**
@@ -119,12 +118,16 @@ abstract class ApiWrapper {
 		}
 	}
 
+	/**
+	 * @return mixed
+	 * @throws EmptyResponseException
+	 */
 	protected function getInterfaceObjectFromType() {
 		wfProfileIn( __METHOD__ );
 
 		$apiUrl = $this->getApiUrl();
 		// use URL's hash to avoid going beyond 250 characters limit of memcache key
-		$memcKey = wfSharedMemcKey( __METHOD__, md5($apiUrl), static::$CACHE_KEY_VERSION );
+		$memcKey = wfSharedMemcKey( __METHOD__, md5($apiUrl), '2' );
 		if ( empty($this->videoId) ){
 			wfProfileOut( __METHOD__ );
 			throw new EmptyResponseException($apiUrl);
@@ -157,7 +160,22 @@ abstract class ApiWrapper {
 		return $apiUrl;
 	}
 
+	/**
+	 * @param $status
+	 * @param $content
+	 * @param $apiUrl
+	 * @throws NegativeResponseException
+	 * @throws VideoIsPrivateException
+	 * @throws VideoNotFoundException
+	 */
 	protected function checkForResponseErrors( $status, $content, $apiUrl ){
+		// we should be able to get thumbnail URL out of URL response
+		try {
+			$this->getThumbnailUrl();
+		} catch ( Exception $ex ) {
+			throw new NegativeResponseException( $status, $content, $apiUrl );
+		}
+
 		if (is_array($status->errors)) {
 			foreach ($status->errors as $error) {
 				if (!empty($error['params']) && is_array($error['params'])) {
