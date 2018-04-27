@@ -250,7 +250,8 @@ class MemcachedPeclBagOStuff extends MemcachedBagOStuff {
 				// Wikia change
 				Wikia\Logger\WikiaLogger::instance()->error (__METHOD__, [
 					'exception' => new Exception( $msg ),
-					'normalized_key' => \Wikia\Memcached\MemcachedStats::normalizeKey( $key )
+					'key' => $key,
+					'caller' => wfGetCallerClassMethod( __CLASS__ )
 				] );
 		}
 		return $result;

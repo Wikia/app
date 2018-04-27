@@ -1222,7 +1222,7 @@ class MWMemcached {
 				\Wikia\Logger\WikiaLogger::instance()->error( __METHOD__ . ' - MemcachedClient: large value' , [
 					'exception' => new Exception(),
 					'key' => $key,
-					'normalized_key' => Wikia\Memcached\MemcachedStats::normalizeKey( $key ), # for easier grouping in Kibana
+					'caller' => wfGetCallerClassMethod( [ __CLASS__, MemcachedPhpBagOStuff::class ]	),
 					'len' => $len,
 				] );
 			}
@@ -1248,7 +1248,7 @@ class MWMemcached {
 			$this->error( __METHOD__ . ' - MemcachedClient: store failed - ' . $line, [
 				'cmd' => $cmd,
 				'key' => $key,
-				'normalized_key' => Wikia\Memcached\MemcachedStats::normalizeKey( $key ), # for easier grouping in Kibana
+				'caller' => wfGetCallerClassMethod( [ __CLASS__, MemcachedPhpBagOStuff::class ]	),
 				'val_size' => strlen( $val ),
 				'exception' => new Exception( $line ),
 				'host' => $host,
