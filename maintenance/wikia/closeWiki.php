@@ -12,14 +12,15 @@ require_once( dirname( __FILE__ ) . '/../Maintenance.php' );
 
 class CloseWiki extends Maintenance {
 
-	const REASON = 'Marked for removal by CloseWiki maintenance script due to SUS-3249';
-
 	/**
 	 * Set script options
 	 */
 	public function __construct() {
 		parent::__construct();
 		$this->mDescription = 'Marks a given wiki for removal';
+		$this->addOption( 'wiki-id', 'wiki ID to close', false, true );
+		$this->addOption( 'list-file', 'path to file with wiki IDs to close', false, true );
+		$this->addOption( 'reason', 'reason for close', true, true );
 	}
 
 	/**
@@ -30,22 +31,46 @@ class CloseWiki extends Maintenance {
 	 * @return bool
 	 */
 	private function markWikiAsClosed( int $wikiId, string $reason ) :bool {
-		WikiFactory::setFlags( $wikiId, WikiFactory::FLAG_FREE_WIKI_URL | WikiFactory::FLAG_DELETE_DB_IMAGES );
+		WikiFactory::setFlags( $wikiId, WikiFactory::FLAG_FREE_WIKI_URL | WikiFactory::FLAG_CREATE_DB_DUMP | WikiFactory::FLAG_CREATE_IMAGE_ARCHIVE );
 		$res = WikiFactory::setPublicStatus( WikiFactory::CLOSE_ACTION, $wikiId, $reason );
 		WikiFactory::clearCache( $wikiId );
 
 		return $res !== false;
 	}
 
-	public function execute() {
-		global $wgCityId;
-		$isOk = $this->markWikiAsClosed( $wgCityId, self::REASON );
+	private function closeMultipleWikis( string $listFile, string $reason ) {
+		$file = fopen( $listFile, 'r' );
 
-		if ( $isOk ) {
-			$this->output( "Wiki has been marked for removal!\n" );
+		while ( ( $line = fgets( $file ) ) !== false ) {
+			$wikiId = intval( $line );
+			$ok = $this->markWikiAsClosed( intval( $line ), $reason );
+
+			if ( $ok ) {
+				$this->output( "Wiki ID $wikiId has been marked for removal!\n" );
+			} else {
+				$this->error( "Failed to mark wiki ID $wikiId for removal!" );
+			}
 		}
-		else {
-			$this->error( 'Failed to mark a wiki for removal!', 1 );
+	}
+
+	public function execute() {
+		$reason = $this->getOption( 'reason' );
+
+		$wikiId = $this->getOption( 'wiki-id' );
+		$listFile = $this->getOption( 'list-file' );
+
+		if ( $wikiId ) {
+			$ok = $this->markWikiAsClosed( $wikiId, $reason );
+
+			if ( $ok ) {
+				$this->output( "Wiki has been marked for removal!\n" );
+			} else {
+				$this->error( 'Failed to mark a wiki for removal!', 1 );
+			}
+		} elseif ( $listFile ) {
+			$this->closeMultipleWikis( $listFile, $reason );
+		} else {
+			die( 'One of --wiki-id or --list-file arguments must be provided' );
 		}
 	}
 }

@@ -27,7 +27,7 @@
  *
  * To add magic words in an extension, use $magicWords in a file listed in
  * $wgExtensionMessagesFiles[].
- * 
+ *
  * @par Example:
  * @code
  * $magicWords = array();
@@ -771,7 +771,10 @@ class MagicWordArray {
 	 */
 	function parseMatch( $m ) {
 		reset( $m );
-		while ( list( $key, $value ) = each( $m ) ) {
+		while ( ( $key = key( $m ) ) !== null ) {
+			$value = current( $m );
+			next( $m );
+
 			if ( $key === 0 || $value === '' ) {
 				continue;
 			}

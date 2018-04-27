@@ -1008,7 +1008,7 @@ class MWMemcached {
 	 * @access private
 	 */
 	function _hashfunc( $key ) {
-		# Hash function must on [0,0x7ffffff]
+		# Hash function must be in [0,0x7ffffff]
 		# We take the first 31 bits of the MD5 hash, which unlike the hash
 		# function used in a previous version of this client, works
 		return hexdec( substr( md5( $key ), 0, 8 ) ) & 0x7fffffff;
@@ -1187,15 +1187,6 @@ class MWMemcached {
 			$this->stats[$cmd] = 1;
 		}
 
-		// TTLs higher than 30 days will be detected as absolute TTLs
-		// (UNIX timestamps), and will result in the cache entry being
-		// discarded immediately because the expiry is in the past.
-		// Clamp expiries >30d at 30d, unless they're >=1e9 in which
-		// case they are likely to really be absolute (1e9 = 2011-09-09)
-		if ( $exp > 2592000 && $exp < 1000000000 ) {
-			$exp = 2592000;
-		}
-
 		$flags = 0;
 
 		if ( !is_scalar( $val ) ) {
@@ -1231,7 +1222,7 @@ class MWMemcached {
 				\Wikia\Logger\WikiaLogger::instance()->error( __METHOD__ . ' - MemcachedClient: large value' , [
 					'exception' => new Exception(),
 					'key' => $key,
-					'normalized_key' => Wikia\Memcached\MemcachedStats::normalizeKey( $key ), # for easier grouping in Kibana
+					'caller' => wfGetCallerClassMethod( [ __CLASS__, MemcachedPhpBagOStuff::class ]	),
 					'len' => $len,
 				] );
 			}
@@ -1257,7 +1248,7 @@ class MWMemcached {
 			$this->error( __METHOD__ . ' - MemcachedClient: store failed - ' . $line, [
 				'cmd' => $cmd,
 				'key' => $key,
-				'normalized_key' => Wikia\Memcached\MemcachedStats::normalizeKey( $key ), # for easier grouping in Kibana
+				'caller' => wfGetCallerClassMethod( [ __CLASS__, MemcachedPhpBagOStuff::class ]	),
 				'val_size' => strlen( $val ),
 				'exception' => new Exception( $line ),
 				'host' => $host,

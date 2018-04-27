@@ -101,17 +101,4 @@ class ObjectCache {
 		}
 		return self::newFromId( $id );
 	}
-
-	/**
-	 * Factory function that creates a memcached client object.
-	 * The idea of this is that it might eventually detect and automatically
-	 * support the PECL extension, assuming someone can get it to compile.
-	 *
-	 * @param $params array
-	 *
-	 * @return MemcachedPhpBagOStuff
-	 */
-	static function newMemcached( $params ) {
-		return new MemcachedPhpBagOStuff( $params );
-	}
 }

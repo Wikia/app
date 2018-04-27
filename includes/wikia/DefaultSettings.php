@@ -211,7 +211,6 @@ $wgAutoloadClasses[ 'WikiaPageType'                   ] = "$IP/includes/wikia/Wi
 $wgAutoloadClasses[ 'WikiaSkinMonoBook'               ] = "$IP/skins/wikia/WikiaMonoBook.php";
 $wgAutoloadClasses[ 'PaginationController'            ] = "$IP/includes/wikia/services/PaginationController.class.php";
 $wgAutoloadClasses[ 'MemcacheSync'                    ] = "$IP/includes/wikia/MemcacheSync.class.php";
-$wgAutoloadClasses[ 'LibmemcachedBagOStuff'           ] = "$IP/includes/cache/wikia/LibmemcachedBagOStuff.php";
 $wgAutoloadClasses[ 'WikiaAssets'                     ] = "$IP/includes/wikia/WikiaAssets.class.php";
 $wgAutoloadClasses[ 'FakeSkin'                        ] = "$IP/includes/wikia/FakeSkin.class.php";
 $wgAutoloadClasses[ 'WikiaUpdater'                    ] = "$IP/includes/wikia/WikiaUpdater.php";
@@ -413,10 +412,6 @@ $wgHooks['AfterSetupUser'][] = 'Wikia\\Tracer\\WikiaTracer::updateInstanceFromMe
 $wgHooks['AfterUserLogin'][] = 'Wikia\\Tracer\\WikiaTracer::updateInstanceFromMediawiki';
 $wgHooks['BeforeWfShellExec'][] = 'Wikia\\Tracer\\WikiaTracer::onBeforeWfShellExec';
 $wgHooks['AfterHttpRequest'][] = 'Wikia\\Tracer\\WikiaTracer::onAfterHttpRequest';
-
-// memcache stats (PLATFORM-292)
-$wgAutoloadClasses['Wikia\\Memcached\\MemcachedStats'] = "$IP/includes/wikia/memcached/MemcachedStats.class.php";
-$wgHooks['RestInPeace'][] = 'Wikia\\Memcached\\MemcachedStats::onRestInPeace';
 
 # list of groups for wfDebugLog calls that will be logged using WikiaLogger
 # @see PLATFORM-424
@@ -976,12 +971,6 @@ $wgMaxLevelTwoNavElements = 7;
 $wgMaxLevelThreeNavElements = 10;
 
 /**
- * Memcached class name
- */
-
-$wgMemCachedClass = 'MemCachedClientforWiki';
-
-/**
  * Extra configuration options for memcached when using libmemcached/pecl-memcached
  */
 $wgLibMemCachedOptions = array();
@@ -1032,14 +1021,6 @@ $wgResourceLoaderCssMinifier = false;
  * @var false|callback
  */
 $wgWikiaIsCentralWiki = false;
-
-
-/**
- * Is bulk mode in Memcached routines enabled?
- * (eg. get_multi())
- * @var boolean
- */
-$wgEnableMemcachedBulkMode = false;
 
 /**
  * WikiaSeasons flags
@@ -1361,6 +1342,12 @@ $wgSitewideDisableKrux = false;
  */
 $wgAdDriverKikimoraTrackingCountries = [];
 
+/**
+ * @name $wgAdDriverMobileSectionsCollapseCountries
+ * List of countries where sections on mobile wiki are collapsed after page load.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverMobileSectionsCollapseCountries = null;
 
 /**
  * @name $wgAdDriverScrollDepthTrackingCountries

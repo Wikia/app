@@ -270,3 +270,6 @@ $specialPageAliases = array(
 
 $linkTrail = '/^([a-zաբգդեզէըթժիլխծկհձղճմյնշոչպջռսվտրցւփքօֆև«»]+)(.*)$/sDu';
 
+$pluralRules = [
+	"i = 0,1",
+];

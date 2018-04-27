@@ -6,7 +6,7 @@ metadata:
   labels:
     app: php-nginx-test
 spec:
-  replicas: 4
+  replicas: 1
   selector:
     matchLabels:
       app: nginx-wikia-dev
