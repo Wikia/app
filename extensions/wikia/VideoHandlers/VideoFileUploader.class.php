@@ -75,14 +75,16 @@ class VideoFileUploader {
 			// Some providers will sometimes return error codes when attempting
 			// to fetch a thumbnail
 			try {
-				$upload = $this->uploadBestThumbnail( $apiWrapper->getThumbnailUrl() );
+				$thumbnailUrl1 = $apiWrapper->getThumbnailUrl();
+				$upload = $this->uploadBestThumbnail( $thumbnailUrl1 );
 			} catch ( Exception $e ) {
 				WikiaLogger::instance()->error('Video upload failed', [
 					'targetFile' => $this->sTargetTitle,
 					'externalURL' => $this->sExternalUrl,
 					'videoID' => $this->sVideoId,
 					'provider' => $this->sProvider,
-					'exception' => $e
+					'exception' => $e,
+					'thumbnailURL' => $thumbnailUrl,
 				]);
 				return Status::newFatal($e->getMessage());
 			}

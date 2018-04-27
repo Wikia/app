@@ -58,7 +58,7 @@ abstract class ApiWrapper {
 
 	abstract public function getDescription();
 
-	abstract public function getThumbnailUrl();
+	abstract public function getThumbnailUrl() : string;
 
 	public function getProvider() {
 		return strtolower(str_replace('ApiWrapper', '', get_class($this)));
@@ -409,7 +409,7 @@ abstract class LegacyVideoApiWrapper extends PseudoApiWrapper {
 		return '';
 	}
 
-	public function getThumbnailUrl() {
+	public function getThumbnailUrl() : string {
 		return self::getLegacyThumbnailUrl();
 	}
 

@@ -58,7 +58,7 @@ class YoutubeApiWrapper extends ApiWrapper {
 		return '';
 	}
 
-	public function getThumbnailUrl() {
+	public function getThumbnailUrl() : string {
 		wfProfileIn( __METHOD__ );
 
 		$thumbnailData = $this->getVideoThumbnails();
