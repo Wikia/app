@@ -58,6 +58,10 @@ class YoutubeApiWrapper extends ApiWrapper {
 		return '';
 	}
 
+	/**
+	 * @return string
+	 * @throws InvalidDataException
+	 */
 	public function getThumbnailUrl() : string {
 		wfProfileIn( __METHOD__ );
 
@@ -75,7 +79,7 @@ class YoutubeApiWrapper extends ApiWrapper {
 		}
 
 		wfProfileOut( __METHOD__ );
-		return '';
+		throw new InvalidDataException( 'Could not find a thumbnail URL' );
 	}
 
 	public function videoExists() {
@@ -85,14 +89,16 @@ class YoutubeApiWrapper extends ApiWrapper {
 	/**
 	 * returns array of thumbnail data. Thumbnails taken from different
 	 * points of video. Elements: time, height, width, url
+	 *
 	 * @return array
+	 * @throws InvalidDataException
 	 */
 	protected function getVideoThumbnails() {
 		if ( !empty( $this->interfaceObj['snippet']['thumbnails'] ) ) {
 			return $this->interfaceObj['snippet']['thumbnails'];
 		}
 
-		return array();
+		throw new InvalidDataException( 'Could not find thumbnails data' );
 	}
 
 	/**

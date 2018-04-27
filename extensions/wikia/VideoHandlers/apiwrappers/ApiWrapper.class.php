@@ -101,17 +101,30 @@ abstract class ApiWrapper {
 		return $videoId;
 	}
 
+	/**
+	 * @throws Exception
+	 */
 	protected function initializeInterfaceObject() {
-		$this->interfaceObj = $this->getInterfaceObjectFromType();
+		try {
+			$this->interfaceObj = $this->getInterfaceObjectFromType();
+		}
+		catch ( Exception $e ) {
+			\Wikia\Logger\WikiaLogger::instance()->error( __METHOD__, [
+				'provider' => get_class( $this ),
+				'exception' => $e,
+				'url' => $this->getApiUrl(),
+			] );
+
+			throw $e;
+		}
 	}
 
 	protected function getInterfaceObjectFromType() {
-
 		wfProfileIn( __METHOD__ );
 
 		$apiUrl = $this->getApiUrl();
 		// use URL's hash to avoid going beyond 250 characters limit of memcache key
-		$memcKey = wfMemcKey( static::$CACHE_KEY, md5($apiUrl), static::$CACHE_KEY_VERSION );
+		$memcKey = wfSharedMemcKey( __METHOD__, md5($apiUrl), static::$CACHE_KEY_VERSION );
 		if ( empty($this->videoId) ){
 			wfProfileOut( __METHOD__ );
 			throw new EmptyResponseException($apiUrl);
