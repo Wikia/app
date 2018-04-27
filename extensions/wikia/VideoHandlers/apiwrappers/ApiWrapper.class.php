@@ -10,7 +10,6 @@ abstract class ApiWrapper {
 
 	protected static $API_URL;
 	protected static $CACHE_KEY;
-	protected static $CACHE_EXPIRY = 86400;
 
 	/**
 	 * Get appropriate ApiWrapper for the given URL
@@ -121,26 +120,31 @@ abstract class ApiWrapper {
 	/**
 	 * @return mixed
 	 * @throws EmptyResponseException
+	 * @throws NegativeResponseException
+	 * @throws VideoIsPrivateException
+	 * @throws VideoNotFoundException
 	 */
 	protected function getInterfaceObjectFromType() {
+		global $wgMemc;
 		wfProfileIn( __METHOD__ );
 
 		$apiUrl = $this->getApiUrl();
+
 		// use URL's hash to avoid going beyond 250 characters limit of memcache key
-		$memcKey = wfSharedMemcKey( __METHOD__, md5($apiUrl), '2' );
+		$memcKey = wfSharedMemcKey( __METHOD__, md5( $apiUrl ), '3' );
+
 		if ( empty($this->videoId) ){
 			wfProfileOut( __METHOD__ );
 			throw new EmptyResponseException($apiUrl);
 		}
-		$response = F::app()->wg->memc->get( $memcKey );
-		$cacheMe = false;
-		if ( empty( $response ) ){
-			$cacheMe = true;
+
+		$response = $wgMemc->get( $memcKey );
+
+		if ( empty( $response ) ) {
 			$req = MWHttpRequest::factory( $apiUrl, array( 'noProxy' => true ) );
 			$status = $req->execute();
 			if( $status->isOK() ) {
 				$response = $req->getContent();
-				$this->response = $response;	// Only for migration purposes
 				if ( empty( $response ) ) {
 					wfProfileOut( __METHOD__ );
 					throw new EmptyResponseException($apiUrl);
@@ -148,11 +152,13 @@ abstract class ApiWrapper {
 			} else {
 				$this->checkForResponseErrors( $req->status, $req->getContent(), $apiUrl );
 			}
+
+			$response = $this->processResponse( $response );
+			$wgMemc->set( $memcKey, $response, WikiaResponse::CACHE_STANDARD );
 		}
-		$processedResponse = $this->processResponse( $response );
-		if ( $cacheMe ) F::app()->wg->memc->set( $memcKey, $response, static::$CACHE_EXPIRY );
+
 		wfProfileOut( __METHOD__ );
-		return $processedResponse;
+		return $response;
 	}
 
 	protected function getApiUrl() {
@@ -195,7 +201,7 @@ abstract class ApiWrapper {
 		throw new NegativeResponseException( $status, $content, $apiUrl );
 	}
 
-	protected function processResponse( $response ){
+	protected function processResponse( $response ) : array {
 		$return = json_decode( $response, true );
 		return $this->postProcess( $return );
 	}
@@ -410,8 +416,8 @@ abstract class PseudoApiWrapper extends ApiWrapper {
 		// override me!
 	}
 
-	protected function processResponse( $response ) {
-		// override me!
+	protected function processResponse( $response ) : array {
+		return $response;
 	}
 
 }
