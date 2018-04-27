@@ -1596,3 +1596,10 @@ function wfStripProtocol( $url ) {
 	}
 	return substr( $url, $pos + 3 );
 }
+
+/**
+ * In some cases, we don't want to use the actual hostname and use a configured value.
+ */
+function wfGetEffectiveHostname() {
+	return getenv('HOSTNAME_OVERRIDE') ?: gethostname();
+}
