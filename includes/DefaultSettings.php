@@ -1515,12 +1515,27 @@ $wgObjectCaches = array(
 
 	CACHE_ANYTHING => array( 'factory' => 'ObjectCache::newAnything' ),
 	CACHE_ACCEL => array( 'factory' => 'ObjectCache::newAccelerator' ),
-	CACHE_MEMCACHED => array( 'factory' => 'ObjectCache::newMemcached' ),
+
+	// SUS-4611
+	CACHE_MEMCACHED => [
+		/**
+		 * Note that MemcachedPhpBagOStuff and MemcachedPeclBagOStuff clients use
+		 * incompatible serialization logic.
+		 */
+		// FIXME: this is a temporary condition used to gradually deploy the new client
+		'class' => in_array( $wgWikiaEnvironment, [ WIKIA_ENV_SANDBOX, WIKIA_ENV_DEV ] )
+			// use a new  memcached-based client on sandboxes and devboxes
+			? 'MemcachedPeclBagOStuff'
+			// use an old memcache-client on production
+			: 'MemcachedPhpBagOStuff',
+		'use_binary_protocol' => false, // twemproxy does not support binary protocol
+	],
 
 	'apc' => array( 'class' => 'APCBagOStuff' ),
 	'xcache' => array( 'class' => 'XCacheBagOStuff' ),
 	'wincache' => array( 'class' => 'WinCacheBagOStuff' ),
 	'memcached-php' => array( 'class' => 'MemcachedPhpBagOStuff' ),
+	'memcached-pecl' => array( 'class' => 'MemcachedPeclBagOStuff' ),
 	'hash' => array( 'class' => 'HashBagOStuff' ),
 );
 
