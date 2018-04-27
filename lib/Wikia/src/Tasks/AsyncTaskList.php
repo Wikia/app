@@ -249,7 +249,7 @@ class AsyncTaskList {
 		];
 
 		if ( $wgWikiaEnvironment != WIKIA_ENV_PROD ) {
-			$host = gethostname();
+			$host = wfGetEffectiveHostname();
 			$executionMethod = 'http';
 
 			if ( $wgWikiaEnvironment == WIKIA_ENV_DEV && preg_match( '/^dev-(.*?)$/', $host ) ) {
