@@ -1246,7 +1246,7 @@ class WikiFactory {
 	 */
 	public static function getExternalHostName() {
 		global $wgWikiaEnvironment;
-		
+
 		$hostname = wfGetEffectiveHostname();
 		if ( $wgWikiaEnvironment == WIKIA_ENV_DEV ) {
 			return mb_ereg_replace( '^dev-', '', $hostname );
