@@ -53,7 +53,8 @@ class GameGuidesModel{
 				foreach( $recommendedIds as $wikiId ) {
 					$wikiName = WikiFactory::getVarValueByName( 'wgSitename', $wikiId );
 					$wikiGames = WikiFactory::getVarValueByName( 'wgWikiTopics', $wikiId );
-					$wikiDomain = preg_replace( '!^https?://!', '', WikiFactory::getVarValueByName( 'wgServer', $wikiId ));
+					// language-path - can clients handle the language path after the domain name?
+					$wikiDomain = preg_replace( '!^https?://!', '', WikiFactory::cityIDtoUrl( $wikiId ) );
 					$wikiThemeSettings = WikiFactory::getVarValueByName( 'wgOasisThemeSettings', $wikiId);
 					$wordmarkUrl = $wikiThemeSettings[ 'wordmark-image-url' ];
 					$wordmarkType = $wikiThemeSettings[ 'wordmark-type' ];

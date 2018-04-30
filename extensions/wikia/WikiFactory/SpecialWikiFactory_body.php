@@ -418,13 +418,15 @@ class WikiFactoryPage extends SpecialPage {
 			);
 			if( $wgRequest->wasPosted() && $wgRequest->getVal( "ezsuWikiId" ) ) {
 				$ezsuRemoteWikiId = $wgRequest->getVal( "ezsuWikiId" );
+				$cityUrl = WikiFactory::cityIDtoUrl( $ezsuRemoteWikiId );
+
 				$vars[ "EZSharedUpload" ][ "remote" ] = array(
 					"wikiId" => $ezsuRemoteWikiId,
-					"wgServer" => WikiFactory::getVarValueByName( "wgServer", $ezsuRemoteWikiId ),
+					"wgServer" => WikiFactory::cityUrlToDomain( $cityUrl ),
 					"wgDBname" => WikiFactory::getWikiByID( $ezsuRemoteWikiId )->city_dbname,
 					"wgUploadDirectory" => WikiFactory::getVarValueByName( "wgUploadDirectory", $ezsuRemoteWikiId ),
 					"wgUploadPath" => WikiFactory::getVarValueByName( "wgUploadPath", $ezsuRemoteWikiId ),
-					"baseUrl" => WikiFactory::getVarValueByName( "wgServer", $ezsuRemoteWikiId ) . WikiFactory::getVarValueByName( "wgScriptPath", $ezsuRemoteWikiId ) . str_replace( '$1', 'File:', WikiFactory::getVarValueByName( "wgArticlePath", $ezsuRemoteWikiId ) )
+					"baseUrl" => WikiFactory::cityUrlToDomain( $cityUrl ) . str_replace( '$1', 'File:', WikiFactory::cityUrlToArticlePath( $cityUrl, $ezsuRemoteWikiId ) )
 				);
 			}
 		}
@@ -463,11 +465,12 @@ class WikiFactoryPage extends SpecialPage {
 	private function doSharedUploadEnable( &$request ) {
 		$remoteWikiId = $request->getVal('ezsuWikiId');
 		if(!empty($remoteWikiId)) {
+			$cityUrl = WikiFactory::cityIDtoUrl( $remoteWikiId );
 			$remoteWikiData = array(
 				"wgDBname" => WikiFactory::getWikiByID( $remoteWikiId )->city_dbname,
 				"wgUploadDirectory" => WikiFactory::getVarValueByName( "wgUploadDirectory", $remoteWikiId ),
 				"wgUploadPath" => WikiFactory::getVarValueByName( "wgUploadPath", $remoteWikiId ),
-				"baseUrl" => WikiFactory::getVarValueByName( "wgServer", $remoteWikiId ) . WikiFactory::getVarValueByName( "wgScriptPath", $remoteWikiId ) . str_replace( '$1', 'File:', WikiFactory::getVarValueByName( "wgArticlePath", $remoteWikiId ) )
+				"baseUrl" => WikiFactory::cityUrlToDomain( $cityUrl ) . str_replace( '$1', 'File:', WikiFactory::cityUrlToArticlePath( $cityUrl, $remoteWikiId ) )
 			);
 
 			// set variables
