@@ -1,10 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3b8a1ea13688e0c3e6522549a1075138",
+    "content-hash": "0e9119537ca21c4754de682c8b97b784",
     "packages": [
         {
             "name": "composer/installers",
@@ -5104,12 +5104,11 @@
         },
         {
             "name": "wikia/semantic-media-wiki",
-            "version": "2.4.6",
-            "dist": {
-                "type": "tar",
-                "url": "http://artifactory.wikia-inc.com/artifactory/api/composer/php-local/direct-dists/wikia/semantic-media-wiki/semantic-media-wiki-2.4.6.tar",
-                "reference": null,
-                "shasum": null
+            "version": "2.4.6.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Wikia/SemanticMediaWiki",
+                "reference": "01061bc3cb24ace83321f7bd93c502aab3afdd53"
             },
             "require": {
                 "composer/installers": "1.*,>=1.0.1",
@@ -5212,7 +5211,8 @@
                 "forum": "https://www.semantic-mediawiki.org/wiki/semantic-mediawiki.org_talk:Community_portal",
                 "wiki": "https://www.semantic-mediawiki.org/wiki/",
                 "source": "https://github.com/SemanticMediaWiki/SemanticMediaWiki"
-            }
+            },
+            "time": "2018-04-30T07:49:22+00:00"
         },
         {
             "name": "wikia/semantic-scribunto",

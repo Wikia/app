@@ -11,6 +11,10 @@
     {
       "type": "git",
       "url": "https://github.com/Wikia/Maps"
+    },
+    {
+      "type": "git",
+      "url": "https://github.com/Wikia/SemanticMediaWiki"
     }
   ],
   "config": {

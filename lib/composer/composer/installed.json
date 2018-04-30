@@ -5289,13 +5289,12 @@
     },
     {
         "name": "wikia/semantic-media-wiki",
-        "version": "2.4.6",
-        "version_normalized": "2.4.6.0",
-        "dist": {
-            "type": "tar",
-            "url": "http://artifactory.wikia-inc.com/artifactory/api/composer/php-local/direct-dists/wikia/semantic-media-wiki/semantic-media-wiki-2.4.6.tar",
-            "reference": null,
-            "shasum": null
+        "version": "2.4.6.1",
+        "version_normalized": "2.4.6.1",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/Wikia/SemanticMediaWiki",
+            "reference": "01061bc3cb24ace83321f7bd93c502aab3afdd53"
         },
         "require": {
             "composer/installers": "1.*,>=1.0.1",
@@ -5325,13 +5324,14 @@
             "mediawiki/semantic-forms": "Easy creation of forms to add semantic data",
             "mediawiki/semantic-result-formats": "Additional result formats for SMW queries"
         },
+        "time": "2018-04-30T07:49:22+00:00",
         "type": "mediawiki-extension",
         "extra": {
             "branch-alias": {
                 "dev-master": "2.4.x-dev"
             }
         },
-        "installation-source": "dist",
+        "installation-source": "source",
         "autoload": {
             "psr-4": {
                 "SMW\\": "src/",
