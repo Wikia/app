@@ -458,7 +458,8 @@ CREATE TABLE `shared_newtalks` (
   PRIMARY KEY (`id`),
   KEY `idx_user_ip_wiki` (`sn_wiki`),
   KEY `idx_user_id_wiki` (`sn_user_id`,`sn_wiki`),
-  KEY `idx_anon_ip_wiki` (`sn_anon_ip`,`sn_wiki`)
+  KEY `idx_anon_ip_wiki` (`sn_anon_ip`,`sn_wiki`),
+  CONSTRAINT `fk_shared_newtalks_city_dbname` FOREIGN KEY (`sn_wiki`) REFERENCES `city_list` (`city_dbname`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -609,4 +610,4 @@ CREATE TABLE `wikia_tasks_log` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
--- Dump completed on 2018-04-30 10:37:10
+-- Dump completed on 2018-04-30 10:50:17
