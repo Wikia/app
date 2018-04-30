@@ -14,7 +14,8 @@ CREATE TABLE `ach_ranking_snapshots` (
   `wiki_id` int(9) NOT NULL,
   `date` datetime NOT NULL,
   `data` text COLLATE utf8_unicode_ci NOT NULL,
-  UNIQUE KEY `wiki_id` (`wiki_id`)
+  UNIQUE KEY `wiki_id` (`wiki_id`),
+  CONSTRAINT `fk_achievements_city_id` FOREIGN KEY (`wiki_id`) REFERENCES `city_list` (`city_id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -351,6 +352,19 @@ CREATE TABLE `garbage_collector` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
+-- Table structure for table `l10n_cache`
+--
+
+DROP TABLE IF EXISTS `l10n_cache`;
+CREATE TABLE `l10n_cache` (
+  `lc_prefix` varchar(16) NOT NULL,
+  `lc_lang` varchar(16) NOT NULL,
+  `lc_key` varchar(255) NOT NULL,
+  `lc_value` mediumblob NOT NULL,
+  PRIMARY KEY (`lc_prefix`,`lc_lang`,`lc_key`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
 -- Table structure for table `messages_status`
 --
 
@@ -391,30 +405,6 @@ CREATE TABLE `messages_text` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Table structure for table `page_to_be_removed`
---
-
-DROP TABLE IF EXISTS `page_to_be_removed`;
-CREATE TABLE `page_to_be_removed` (
-  `page_id` int(8) unsigned NOT NULL AUTO_INCREMENT,
-  `page_namespace` int(11) NOT NULL,
-  `page_title` varchar(255) CHARACTER SET latin1 COLLATE latin1_bin NOT NULL,
-  `page_restrictions` tinyblob NOT NULL,
-  `page_counter` bigint(20) unsigned NOT NULL DEFAULT '0',
-  `page_is_redirect` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `page_is_new` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `page_random` double unsigned NOT NULL,
-  `page_touched` char(14) CHARACTER SET latin1 COLLATE latin1_bin NOT NULL DEFAULT '',
-  `page_latest` int(8) unsigned NOT NULL,
-  `page_len` int(8) unsigned NOT NULL,
-  PRIMARY KEY (`page_id`),
-  UNIQUE KEY `name_title` (`page_namespace`,`page_title`),
-  KEY `page_random` (`page_random`),
-  KEY `page_len` (`page_len`),
-  KEY `page_redirect_namespace_len` (`page_is_redirect`,`page_namespace`,`page_len`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
 -- Table structure for table `page_wikia_props`
 --
 
@@ -451,32 +441,6 @@ CREATE TABLE `phalanx` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Table structure for table `revision_to_be_removed`
---
-
-DROP TABLE IF EXISTS `revision_to_be_removed`;
-CREATE TABLE `revision_to_be_removed` (
-  `rev_id` int(8) unsigned NOT NULL AUTO_INCREMENT,
-  `rev_page` int(8) unsigned NOT NULL,
-  `rev_comment` tinyblob NOT NULL,
-  `rev_user` int(5) unsigned NOT NULL DEFAULT '0',
-  `rev_user_text` varchar(255) CHARACTER SET latin1 COLLATE latin1_bin NOT NULL DEFAULT '',
-  `rev_timestamp` char(14) CHARACTER SET latin1 COLLATE latin1_bin NOT NULL DEFAULT '',
-  `rev_minor_edit` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `rev_deleted` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `rev_text_id` int(8) unsigned NOT NULL,
-  `rev_len` int(10) unsigned DEFAULT NULL,
-  `rev_parent_id` int(10) unsigned DEFAULT NULL,
-  `rev_sha1` varbinary(32) NOT NULL DEFAULT '',
-  PRIMARY KEY (`rev_page`,`rev_id`),
-  UNIQUE KEY `rev_id` (`rev_id`),
-  KEY `rev_timestamp` (`rev_timestamp`),
-  KEY `page_timestamp` (`rev_page`,`rev_timestamp`),
-  KEY `user_timestamp` (`rev_user`,`rev_timestamp`),
-  KEY `usertext_timestamp` (`rev_user_text`,`rev_timestamp`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
 -- Table structure for table `shared_newtalks`
 --
 
@@ -506,30 +470,6 @@ CREATE TABLE `spoofuser` (
   `su_created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`su_name`),
   KEY `su_normalized` (`su_normalized`,`su_name`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Table structure for table `text_to_be_removed`
---
-
-DROP TABLE IF EXISTS `text_to_be_removed`;
-CREATE TABLE `text_to_be_removed` (
-  `old_id` int(8) unsigned NOT NULL AUTO_INCREMENT,
-  `old_namespace` tinyint(2) unsigned NOT NULL DEFAULT '0',
-  `old_title` varchar(255) CHARACTER SET latin1 COLLATE latin1_bin NOT NULL DEFAULT '',
-  `old_text` mediumtext NOT NULL,
-  `old_comment` tinyblob NOT NULL,
-  `old_user` int(5) unsigned NOT NULL DEFAULT '0',
-  `old_user_text` varchar(255) CHARACTER SET latin1 COLLATE latin1_bin NOT NULL DEFAULT '',
-  `old_timestamp` varchar(14) CHARACTER SET latin1 COLLATE latin1_bin NOT NULL DEFAULT '',
-  `old_minor_edit` tinyint(1) NOT NULL DEFAULT '0',
-  `old_flags` tinyblob NOT NULL,
-  `inverse_timestamp` varchar(14) CHARACTER SET latin1 COLLATE latin1_bin NOT NULL DEFAULT '',
-  PRIMARY KEY (`old_id`),
-  KEY `old_timestamp` (`old_timestamp`),
-  KEY `name_title_timestamp` (`old_namespace`,`old_title`,`inverse_timestamp`),
-  KEY `user_timestamp` (`old_user`,`inverse_timestamp`),
-  KEY `usertext_timestamp` (`old_user_text`,`inverse_timestamp`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -665,4 +605,4 @@ CREATE TABLE `wikia_tasks_log` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
--- Dump completed on 2018-03-26  9:30:25
+-- Dump completed on 2018-04-30  8:05:28
