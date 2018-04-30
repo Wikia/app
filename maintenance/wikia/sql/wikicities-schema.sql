@@ -319,7 +319,8 @@ CREATE TABLE `founder_emails_event` (
   `feev_type` varchar(32) DEFAULT NULL,
   `feev_data` blob NOT NULL,
   PRIMARY KEY (`feev_id`),
-  KEY `feev_wiki_id` (`feev_wiki_id`)
+  KEY `feev_wiki_id` (`feev_wiki_id`),
+  CONSTRAINT `fk_founder_emails_event_city_id` FOREIGN KEY (`feev_wiki_id`) REFERENCES `city_list` (`city_id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -605,4 +606,4 @@ CREATE TABLE `wikia_tasks_log` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
--- Dump completed on 2018-04-30  8:05:28
+-- Dump completed on 2018-04-30  9:12:58
