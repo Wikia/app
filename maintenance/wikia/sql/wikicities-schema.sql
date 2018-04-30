@@ -335,7 +335,8 @@ CREATE TABLE `founder_progress_bar_tasks` (
   `task_completed` tinyint(1) NOT NULL DEFAULT '0',
   `task_skipped` tinyint(1) NOT NULL DEFAULT '0',
   `task_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`wiki_id`,`task_id`)
+  PRIMARY KEY (`wiki_id`,`task_id`),
+  CONSTRAINT `fk_founder_progress_bar_tasks_city_id` FOREIGN KEY (`wiki_id`) REFERENCES `city_list` (`city_id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -606,4 +607,4 @@ CREATE TABLE `wikia_tasks_log` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
--- Dump completed on 2018-04-30  9:12:58
+-- Dump completed on 2018-04-30  9:57:33
