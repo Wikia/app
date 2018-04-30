@@ -350,7 +350,9 @@ CREATE TABLE `garbage_collector` (
   `gc_timestamp` varchar(14) CHARACTER SET latin1 COLLATE latin1_bin NOT NULL DEFAULT '',
   `gc_wiki_id` int(9) DEFAULT NULL,
   PRIMARY KEY (`gc_id`),
-  KEY `gc_timestamp` (`gc_timestamp`)
+  KEY `gc_timestamp` (`gc_timestamp`),
+  KEY `fk_garbage_collector_city_id` (`gc_wiki_id`),
+  CONSTRAINT `fk_garbage_collector_city_id` FOREIGN KEY (`gc_wiki_id`) REFERENCES `city_list` (`city_id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -607,4 +609,4 @@ CREATE TABLE `wikia_tasks_log` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
--- Dump completed on 2018-04-30  9:57:33
+-- Dump completed on 2018-04-30 10:37:10
