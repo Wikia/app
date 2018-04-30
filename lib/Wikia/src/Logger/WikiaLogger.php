@@ -7,7 +7,6 @@
 
 namespace Wikia\Logger;
 
-use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use Psr\Log\LoggerInterface;
 
@@ -202,10 +201,6 @@ class WikiaLogger implements LoggerInterface {
 		return new SyslogHandler($ident, LOG_USER /* $facility */, $level);
 	}
 
-	static public function getStdoutHandler() {
-		return new StreamHandler( fopen('php://stdout', 'w') );
-	}
-
 	/**
 	 * @return WebProcessor.
 	 */
@@ -251,8 +246,7 @@ class WikiaLogger implements LoggerInterface {
 	public function defaultLogger($ident = self::SYSLOG_IDENT) {
 		return new Logger(
 			'default',
-//			[self::getSyslogHandler($ident)],
-			[self::getStdoutHandler()],
+			[self::getSyslogHandler($ident)],
 			[$this->getWebProcessor(), $this->getStatusProcessor()]
 		);
 	}
