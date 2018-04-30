@@ -71,7 +71,7 @@ class WikiFactoryLoader {
 			// normal HTTP request
 			$this->mServerName = strtolower( $server['SERVER_NAME'] );
 
-			$path = parse_url( $server['REQUEST_URI'], PHP_URL_PATH );
+			$path = parse_url( $server['REQUEST_SCHEME'] . '://' . $server['SERVER_NAME'] . $server['REQUEST_URI'], PHP_URL_PATH );
 
 			$slash = strpos( $path, '/', 1 ) ?: strlen( $path );
 
