@@ -523,20 +523,6 @@ $wgNotAValidWikia = "http://community.$wgWikiaBaseDomain/wiki/Community_Central:
 $wgParserCacheType = CACHE_MEMCACHED;
 
 /**
- * Phalanx RabbitMQ configuration.
- * @see extensions/wikia/PhalanxII
- * @var Array $wgPhalanxQueue
- */
-$wgPhalanxQueue = [
-    'host' => "$wgRealEnvironment.rabbit.service.consul",
-    'port' => 5672,
-    'user' => $wgRabbitUser,
-    'pass' => $wgRabbitPass,
-    'vhost' => '/',
-    'exchange' => 'amq.direct',
-];
-
-/**
  * Which namespaces have special treatment where they should be preview-on-open
  * Internaly only Category: pages apply, but using this extensions (e.g.
  * Semantic MediaWiki) can specify namespaces of pages they have special
