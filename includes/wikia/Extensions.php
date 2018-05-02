@@ -255,13 +255,13 @@ if (!empty($wgWikiaEnableYouTubeExt)) {
 	include("{$IP}/extensions/wikia/YouTube/YouTube.php");
 }
 
+if ( !empty( $wgEnableCaptchaExt ) ) {
+	include( "$IP/extensions/wikia/Captcha/Captcha.setup.php" );
+}
+
 # quick switch to turn this trigger on where/when requested
 if (!empty($wgCaptchaForMainCreate)) {
 	$wgCaptchaTriggersOnNamespace[NS_MAIN]['create'] = true;
-}
-
-if ( !empty( $wgEnableCaptchaExt ) ) {
-	include( "$IP/extensions/wikia/Captcha/Captcha.setup.php" );
 }
 
 #--- 24. Special:InterwikiEdit
