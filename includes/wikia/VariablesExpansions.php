@@ -221,21 +221,6 @@ $wgEditEventsRabbitConfig = [
 $wgExtensionsDirectory = "$IP/extensions";
 
 /**
- * RabbitMQ configuration for ImageReview.
- * @see extensions/wikia/ImageReview/ImageReviewEventsHooks.class.php
- * @var Array $wgImageReview
- */
-$wgImageReview = [
-    'host' => "$wgRealEnvironment.rabbit.service.consul",
-    'port' => 5672,
-    'user' => $wgRabbitUser,
-    'pass' => $wgRabbitPass,
-    'vhost' => 'dc-file-sync',
-    'exchange' => 'amq.topic',
-    'deadExchange' => 'zombie.v0.1'
-];
-
-/**
  * RabbitMQ configuration for Indexing Pipeline.
  * @see extensions/wikia/IndexingPipeline/PipelineEventProducer.class.php
  * @var Array $wgIndexingPipeline
