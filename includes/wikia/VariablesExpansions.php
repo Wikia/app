@@ -221,21 +221,6 @@ $wgEditEventsRabbitConfig = [
 $wgExtensionsDirectory = "$IP/extensions";
 
 /**
- * RabbitMQ configuration for Indexing Pipeline.
- * @see extensions/wikia/IndexingPipeline/PipelineEventProducer.class.php
- * @var Array $wgIndexingPipeline
- */
-$wgIndexingPipeline = [
-    'host' => "$wgRealEnvironment.rabbit.service.consul",
-    'port' => 5672,
-    'user' => $wgRabbitUser,
-    'pass' => $wgRabbitPass,
-    'vhost' => 'indexer',
-    'exchange' => 'events',
-    'deadExchange' => 'zombie.v0.1',
-];
-
-/**
  * Localized central wikis.
  * @see extensions/wikia/WikiaLogo/WikiaLogoHelper.class.php
  * @var Array $wgLangToCentralMap
