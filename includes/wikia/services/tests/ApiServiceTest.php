@@ -21,7 +21,7 @@ class ApiAccessServiceTest extends \WikiaBaseTest {
 	public function testForeignCall() {
 
 		# used by private method ApiService::getHostByDbName
-		$this->mockStaticMethod( "WikiFactory", 'DBtoUrl', "foo.wikia.com" );
+		$this->mockStaticMethod( "WikiFactory", 'DBtoUrl', "http://foo.wikia.com" );
 
 		$fakeJson = '{"a": "b"}'; // some non-null json formatted data
 		$this->mockStaticMethod( "Http", 'get', $fakeJson );
@@ -32,7 +32,7 @@ class ApiAccessServiceTest extends \WikiaBaseTest {
 
 	public function testLoginAsUser() {
 		# 1 method and 1 var used by private method ApiService::getHostByDbName, not directly mockable
-		$this->mockStaticMethod( "WikiFactory", 'DBtoUrl', "foo.wikia.com" );
+		$this->mockStaticMethod( "WikiFactory", 'DBtoUrl', "http://foo.wikia.com" );
 		#turn off special case url building inside getHostByDbName
 		$this->mockGlobalVariable( "wgDevelEnvironment", false );
 
@@ -41,7 +41,7 @@ class ApiAccessServiceTest extends \WikiaBaseTest {
 		$this->mockStaticMethod( "ApiService", "loginAsUser", $fakeUserData );
 
 		$fakeJson = '{"a": "b"}'; // any non-null json formatted data
-		$fakeUrl = "foo.wikia.com/wikia.php?format=json";  // with our fake data, this is the fake url the code builds
+		$fakeUrl = "http://foo.wikia.com/wikia.php?format=json";  // with our fake data, this is the fake url the code builds
 		$mockHttp = $this->getStaticMethodMock( 'Http', 'get' );
 		$mockHttp->expects( $this->once() )->method( 'get' )->with( $fakeUrl, 'default', $fakeUserData )->will( $this->returnValue( $fakeJson ) );
 

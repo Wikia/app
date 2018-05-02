@@ -211,7 +211,6 @@ $wgAutoloadClasses[ 'WikiaPageType'                   ] = "$IP/includes/wikia/Wi
 $wgAutoloadClasses[ 'WikiaSkinMonoBook'               ] = "$IP/skins/wikia/WikiaMonoBook.php";
 $wgAutoloadClasses[ 'PaginationController'            ] = "$IP/includes/wikia/services/PaginationController.class.php";
 $wgAutoloadClasses[ 'MemcacheSync'                    ] = "$IP/includes/wikia/MemcacheSync.class.php";
-$wgAutoloadClasses[ 'LibmemcachedBagOStuff'           ] = "$IP/includes/cache/wikia/LibmemcachedBagOStuff.php";
 $wgAutoloadClasses[ 'WikiaAssets'                     ] = "$IP/includes/wikia/WikiaAssets.class.php";
 $wgAutoloadClasses[ 'FakeSkin'                        ] = "$IP/includes/wikia/FakeSkin.class.php";
 $wgAutoloadClasses[ 'WikiaUpdater'                    ] = "$IP/includes/wikia/WikiaUpdater.php";
@@ -414,9 +413,17 @@ $wgHooks['AfterUserLogin'][] = 'Wikia\\Tracer\\WikiaTracer::updateInstanceFromMe
 $wgHooks['BeforeWfShellExec'][] = 'Wikia\\Tracer\\WikiaTracer::onBeforeWfShellExec';
 $wgHooks['AfterHttpRequest'][] = 'Wikia\\Tracer\\WikiaTracer::onAfterHttpRequest';
 
-// memcache stats (PLATFORM-292)
-$wgAutoloadClasses['Wikia\\Memcached\\MemcachedStats'] = "$IP/includes/wikia/memcached/MemcachedStats.class.php";
-$wgHooks['RestInPeace'][] = 'Wikia\\Memcached\\MemcachedStats::onRestInPeace';
+# list of groups for wfDebugLog calls that will be logged using WikiaLogger
+# @see PLATFORM-424
+$wgDebugLogGroups = [
+	'ExternalStorage' => true,
+	'ExternalStoreDB' => true,
+	'MessageCache' => true,
+	'poolcounter' => true,  // errors from PoolCounterWork
+	'replication' => true,  // replication errros / excessive lags
+	'squid' => true,        // timeouts and errors from SquidPurgeClient
+	'createwiki' => true,   // CreateWiki process
+];
 
 // Register \Wikia\Sass namespace
 spl_autoload_register( function( $class ) {
@@ -862,12 +869,6 @@ $wgMaxLevelTwoNavElements = 7;
 $wgMaxLevelThreeNavElements = 10;
 
 /**
- * Memcached class name
- */
-
-$wgMemCachedClass = 'MemCachedClientforWiki';
-
-/**
  * Extra configuration options for memcached when using libmemcached/pecl-memcached
  */
 $wgLibMemCachedOptions = array();
@@ -1228,6 +1229,12 @@ $wgSitewideDisableKrux = false;
  */
 $wgAdDriverKikimoraTrackingCountries = [];
 
+/**
+ * @name $wgAdDriverMobileSectionsCollapseCountries
+ * List of countries where sections on mobile wiki are collapsed after page load.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverMobileSectionsCollapseCountries = null;
 
 /**
  * @name $wgAdDriverScrollDepthTrackingCountries
@@ -1687,6 +1694,21 @@ $wgAutoapproveJS = false;
  * update/add/change domains in the future
  */
 $wgWikiaBaseDomainRegex = '(wikia\\.com|wikia-staging\\.com|wikia-dev\\.(com|us|pl))';
+
+/**
+ * @name $wgShortArticlePathWikis
+ * List of wikis that don't have the '/wiki' prefix in the article path. To be removed
+ */
+$wgShortArticlePathWikis = [
+	80433,   // www.wikia.com
+	111264,  // de.wikia.com
+	208826,  // fr.wikia.com
+	435095,  // pl.wikia.com
+	637291,  // es.wikia.com
+	875569,  // ja.wikia.com
+	1169860, // ru.wikia.com
+	1618258  // it.wikia.com
+];
 
 $wgEnableOpenXSPC = true;
 

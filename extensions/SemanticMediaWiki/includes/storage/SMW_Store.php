@@ -123,7 +123,7 @@ abstract class Store {
 	public function getWikiPageSortKey( DIWikiPage $wikiPage ) {
 		$sortkeyDataItems = $this->getPropertyValues( $wikiPage, new DIProperty( '_SKEY' ) );
 
-		if ( count( $sortkeyDataItems ) > 0 ) {
+		if ( is_array( $sortkeyDataItems ) && count( $sortkeyDataItems ) > 0 ) {
 			return end( $sortkeyDataItems )->getString();
 		} else {
 			return str_replace( '_', ' ', $wikiPage->getDBkey() );
@@ -180,7 +180,7 @@ abstract class Store {
 
 		$redirectDataItems = $this->getPropertyValues( $wikipage, new DIProperty( '_REDI' ) );
 
-		if ( count( $redirectDataItems ) > 0 ) {
+		if ( is_array( $redirectDataItems ) && count( $redirectDataItems ) > 0 ) {
 
 			$redirectDataItem = end( $redirectDataItems );
 

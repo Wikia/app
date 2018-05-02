@@ -2193,23 +2193,23 @@
     },
     {
         "name": "pear/mail_mime",
-        "version": "1.10.1",
-        "version_normalized": "1.10.1.0",
+        "version": "1.10.2",
+        "version_normalized": "1.10.2.0",
         "source": {
             "type": "git",
             "url": "https://github.com/pear/Mail_Mime.git",
-            "reference": "3d4e33a6879cbb4c71684a282750b7bb072a121e"
+            "reference": "7b2f93fa5219da99e9997f497b916b5bb27eb57a"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/pear/Mail_Mime/zipball/3d4e33a6879cbb4c71684a282750b7bb072a121e",
-            "reference": "3d4e33a6879cbb4c71684a282750b7bb072a121e",
+            "url": "https://api.github.com/repos/pear/Mail_Mime/zipball/7b2f93fa5219da99e9997f497b916b5bb27eb57a",
+            "reference": "7b2f93fa5219da99e9997f497b916b5bb27eb57a",
             "shasum": ""
         },
         "require": {
             "pear/pear-core-minimal": "*"
         },
-        "time": "2017-05-21T10:43:06+00:00",
+        "time": "2017-11-17T09:21:45+00:00",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
@@ -5289,13 +5289,12 @@
     },
     {
         "name": "wikia/semantic-media-wiki",
-        "version": "2.4.6",
-        "version_normalized": "2.4.6.0",
-        "dist": {
-            "type": "tar",
-            "url": "http://artifactory.wikia-inc.com/artifactory/api/composer/php-local/direct-dists/wikia/semantic-media-wiki/semantic-media-wiki-2.4.6.tar",
-            "reference": null,
-            "shasum": null
+        "version": "2.4.6.1",
+        "version_normalized": "2.4.6.1",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/Wikia/SemanticMediaWiki",
+            "reference": "01061bc3cb24ace83321f7bd93c502aab3afdd53"
         },
         "require": {
             "composer/installers": "1.*,>=1.0.1",
@@ -5325,13 +5324,14 @@
             "mediawiki/semantic-forms": "Easy creation of forms to add semantic data",
             "mediawiki/semantic-result-formats": "Additional result formats for SMW queries"
         },
+        "time": "2018-04-30T07:49:22+00:00",
         "type": "mediawiki-extension",
         "extra": {
             "branch-alias": {
                 "dev-master": "2.4.x-dev"
             }
         },
-        "installation-source": "dist",
+        "installation-source": "source",
         "autoload": {
             "psr-4": {
                 "SMW\\": "src/",

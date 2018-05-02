@@ -10,8 +10,6 @@ abstract class ApiWrapper {
 
 	protected static $API_URL;
 	protected static $CACHE_KEY;
-	protected static $CACHE_KEY_VERSION = 0.1;
-	protected static $CACHE_EXPIRY = 86400;
 
 	/**
 	 * Get appropriate ApiWrapper for the given URL
@@ -58,7 +56,7 @@ abstract class ApiWrapper {
 
 	abstract public function getDescription();
 
-	abstract public function getThumbnailUrl();
+	abstract public function getThumbnailUrl() : string;
 
 	public function getProvider() {
 		return strtolower(str_replace('ApiWrapper', '', get_class($this)));
@@ -101,30 +99,52 @@ abstract class ApiWrapper {
 		return $videoId;
 	}
 
+	/**
+	 * @throws Exception
+	 */
 	protected function initializeInterfaceObject() {
-		$this->interfaceObj = $this->getInterfaceObjectFromType();
+		try {
+			$this->interfaceObj = $this->getInterfaceObjectFromType();
+		}
+		catch ( Exception $e ) {
+			\Wikia\Logger\WikiaLogger::instance()->error( __METHOD__, [
+				'provider' => get_class( $this ),
+				'exception' => $e,
+				'url' => $this->getApiUrl(),
+			] );
+
+			throw $e;
+		}
 	}
 
+	/**
+	 * @return mixed
+	 * @throws EmptyResponseException
+	 * @throws NegativeResponseException
+	 * @throws VideoIsPrivateException
+	 * @throws VideoNotFoundException
+	 */
 	protected function getInterfaceObjectFromType() {
-
+		global $wgMemc;
 		wfProfileIn( __METHOD__ );
 
 		$apiUrl = $this->getApiUrl();
+
 		// use URL's hash to avoid going beyond 250 characters limit of memcache key
-		$memcKey = wfMemcKey( static::$CACHE_KEY, md5($apiUrl), static::$CACHE_KEY_VERSION );
+		$memcKey = wfSharedMemcKey( __METHOD__, md5( $apiUrl ), '3' );
+
 		if ( empty($this->videoId) ){
 			wfProfileOut( __METHOD__ );
 			throw new EmptyResponseException($apiUrl);
 		}
-		$response = F::app()->wg->memc->get( $memcKey );
-		$cacheMe = false;
-		if ( empty( $response ) ){
-			$cacheMe = true;
+
+		$response = $wgMemc->get( $memcKey );
+
+		if ( empty( $response ) ) {
 			$req = MWHttpRequest::factory( $apiUrl, array( 'noProxy' => true ) );
 			$status = $req->execute();
 			if( $status->isOK() ) {
 				$response = $req->getContent();
-				$this->response = $response;	// Only for migration purposes
 				if ( empty( $response ) ) {
 					wfProfileOut( __METHOD__ );
 					throw new EmptyResponseException($apiUrl);
@@ -132,11 +152,13 @@ abstract class ApiWrapper {
 			} else {
 				$this->checkForResponseErrors( $req->status, $req->getContent(), $apiUrl );
 			}
+
+			$response = $this->processResponse( $response );
+			$wgMemc->set( $memcKey, $response, WikiaResponse::CACHE_STANDARD );
 		}
-		$processedResponse = $this->processResponse( $response );
-		if ( $cacheMe ) F::app()->wg->memc->set( $memcKey, $response, static::$CACHE_EXPIRY );
+
 		wfProfileOut( __METHOD__ );
-		return $processedResponse;
+		return $response;
 	}
 
 	protected function getApiUrl() {
@@ -144,7 +166,22 @@ abstract class ApiWrapper {
 		return $apiUrl;
 	}
 
+	/**
+	 * @param $status
+	 * @param $content
+	 * @param $apiUrl
+	 * @throws NegativeResponseException
+	 * @throws VideoIsPrivateException
+	 * @throws VideoNotFoundException
+	 */
 	protected function checkForResponseErrors( $status, $content, $apiUrl ){
+		// we should be able to get thumbnail URL out of URL response
+		try {
+			$this->getThumbnailUrl();
+		} catch ( Exception $ex ) {
+			throw new NegativeResponseException( $status, $content, $apiUrl );
+		}
+
 		if (is_array($status->errors)) {
 			foreach ($status->errors as $error) {
 				if (!empty($error['params']) && is_array($error['params'])) {
@@ -164,7 +201,7 @@ abstract class ApiWrapper {
 		throw new NegativeResponseException( $status, $content, $apiUrl );
 	}
 
-	protected function processResponse( $response ){
+	protected function processResponse( $response ) : array {
 		$return = json_decode( $response, true );
 		return $this->postProcess( $return );
 	}
@@ -379,8 +416,8 @@ abstract class PseudoApiWrapper extends ApiWrapper {
 		// override me!
 	}
 
-	protected function processResponse( $response ) {
-		// override me!
+	protected function processResponse( $response ) : array {
+		return $response;
 	}
 
 }
@@ -409,7 +446,7 @@ abstract class LegacyVideoApiWrapper extends PseudoApiWrapper {
 		return '';
 	}
 
-	public function getThumbnailUrl() {
+	public function getThumbnailUrl() : string {
 		return self::getLegacyThumbnailUrl();
 	}
 

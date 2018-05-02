@@ -213,13 +213,6 @@ class WikiFactoryTest extends WikiaBaseTest {
 		];
 	}
 
-	public function testGetHostById() {
-		$this->mockStaticMethod( 'WikiFactory', 'getVarValueByName', 1 );
-		$this->mockStaticMethod( 'WikiFactory', 'getLocalEnvURL', 'test_host/' );
-
-		$this->assertEquals( 'test_host', WikiFactory::getHostById( 2 ) );
-	}
-
 	public function testRenderValueOfVariableWithoutValue() {
 		$variable = new stdClass();
 
@@ -269,4 +262,100 @@ class WikiFactoryTest extends WikiaBaseTest {
 		yield [ [ "foo" => "bar", "0" => "c" ], '{"foo":"bar","0":"c"}' ];
 		yield [ [ 1 => 'foo', 15 => 'bar' ], '{"1":"foo","15":"bar"}' ];
 	}
+
+	/**
+	 * @dataProvider provideCityUrlToDomain
+	 *
+	 * @param string $cityUrl
+	 * @param string $domain
+	 */
+	public function testCityUrlToDomain( $cityUrl, $domain ) {
+		$this->assertEquals( $domain, WikiFactory::cityUrlToDomain( $cityUrl ) );
+	}
+
+	public function provideCityUrlToDomain() {
+		yield [ 'http://gta.wikia.com', 'http://gta.wikia.com' ];
+		yield [ 'http://gta.wikia.com/de', 'http://gta.wikia.com' ];
+	}
+
+	/**
+	 * @dataProvider provideCityUrlToLanguagePath
+	 *
+	 * @param string $cityUrl
+	 * @param string $languagePath
+	 */
+	public function testCityUrlToLanguagePath( $cityUrl, $languagePath ) {
+		$this->assertEquals( $languagePath, WikiFactory::cityUrlToLanguagePath( $cityUrl ) );
+	}
+
+	public function provideCityUrlToLanguagePath() {
+		yield [ 'http://gta.wikia.com', '' ];
+		yield [ 'http://gta.wikia.com/de', '/de' ];
+	}
+
+	/**
+	 * @dataProvider provideCityUrlToWgScript
+	 *
+	 * @param string $cityUrl
+	 * @param string $wgScript
+	 */
+	public function testCityUrlToWgScript( $cityUrl, $wgScript ) {
+		$this->assertEquals( $wgScript, WikiFactory::cityUrlToWgScript( $cityUrl ) );
+	}
+
+	public function provideCityUrlToWgScript() {
+		yield [ 'http://gta.wikia.com', '/index.php' ];
+		yield [ 'http://gta.wikia.com/de', '/de/index.php' ];
+	}
+
+	/**
+	 * @dataProvider provideCityIDToUrl
+	 *
+	 * @param $environment
+	 * @param string $cityUrl url stored in database
+	 * @param string $expected expected result of the WikiFactory::cityIDtoUrl method
+	 */
+	public function testCityIDToUrl( $environment, $cityUrl, $expected ) {
+		$this->mockStaticMethod( WikiFactory::class, 'getWikiById', (object)[ 'city_url' => $cityUrl ] );
+		$this->mockEnvironment( $environment );
+		$this->assertEquals( $expected, WikiFactory::cityIDtoUrl( 0 ) );
+	}
+
+	public function provideCityIDToUrl() {
+		yield [ WIKIA_ENV_PROD, 'http://gta.wikia.com', 'http://gta.wikia.com' ];
+		yield [ WIKIA_ENV_PROD, 'http://gta.wikia.com/', 'http://gta.wikia.com' ]; // trims the trailing slash
+		yield [ WIKIA_ENV_PROD, 'http://gta.wikia.com/de', 'http://gta.wikia.com/de' ];
+		yield [ WIKIA_ENV_PROD, 'http://gta.wikia.com/de/', 'http://gta.wikia.com/de' ];
+		yield [ WIKIA_ENV_PREVIEW, 'http://gta.wikia.com/de', 'http://gta.preview.wikia.com/de' ];
+		yield [ WIKIA_ENV_PREVIEW, 'http://gta.wikia.com/de/', 'http://gta.preview.wikia.com/de' ];
+		yield [ WIKIA_ENV_DEV, 'http://gta.wikia.com/de', 'http://gta.mockdevname.wikia-dev.us/de' ];
+		yield [ WIKIA_ENV_DEV, 'http://gta.wikia.com/de/', 'http://gta.mockdevname.wikia-dev.us/de' ];
+	}
+
+	/**
+	 * Test for extracting $wgServer from city url stored in db
+	 *
+	 * @dataProvider provideCityIDtoDomain
+	 *
+	 * @param $environment
+	 * @param string $cityUrl url stored in database
+	 * @param string $expected expected result of the WikiFactory::cityIDtoUrl method
+	 */
+	public function testCityIDtoDomain( $environment, $cityUrl, $expected ) {
+		$this->mockStaticMethod( WikiFactory::class, 'getWikiById', (object)[ 'city_url' => $cityUrl ] );
+		$this->mockEnvironment( $environment );
+		$this->assertEquals( $expected, WikiFactory::cityIDtoDomain( 0 ) );
+	}
+
+	public function provideCityIDtoDomain() {
+		yield [ WIKIA_ENV_PROD, 'http://gta.wikia.com', 'http://gta.wikia.com' ];
+		yield [ WIKIA_ENV_PROD, 'http://gta.wikia.com/', 'http://gta.wikia.com' ]; // trims the trailing slash
+		yield [ WIKIA_ENV_PROD, 'http://gta.wikia.com/de', 'http://gta.wikia.com' ];
+		yield [ WIKIA_ENV_PROD, 'http://gta.wikia.com/de/', 'http://gta.wikia.com' ];
+		yield [ WIKIA_ENV_PREVIEW, 'http://gta.wikia.com/de', 'http://gta.preview.wikia.com' ];
+		yield [ WIKIA_ENV_PREVIEW, 'http://gta.wikia.com/de/', 'http://gta.preview.wikia.com' ];
+		yield [ WIKIA_ENV_DEV, 'http://gta.wikia.com/de', 'http://gta.mockdevname.wikia-dev.us' ];
+		yield [ WIKIA_ENV_DEV, 'http://gta.wikia.com/de/', 'http://gta.mockdevname.wikia-dev.us' ];
+	}
+
 }

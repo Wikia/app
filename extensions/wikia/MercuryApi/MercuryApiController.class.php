@@ -184,6 +184,9 @@ class MercuryApiController extends WikiaController {
 			'parts' => array_values( $htmlTitle->getAllParts() ),
 		];
 
+		$wikiVariables['qualarooUrl'] =
+			( $this->wg->develEnvironment ) ? $this->wg->qualarooDevUrl : $this->wg->qualarooUrl;
+
 		\Hooks::run( 'MercuryWikiVariables', [ &$wikiVariables ] );
 
 		return $wikiVariables;
@@ -194,10 +197,9 @@ class MercuryApiController extends WikiaController {
 	 *
 	 */
 	public function getWikiVariables() {
-		(new CrossOriginResourceSharingHeaderHelper())
-		  ->allowWhitelistedOrigins()
-		  ->setAllowMethod( [ 'GET' ] )
-		  ->setHeaders($this->response);
+		( new CrossOriginResourceSharingHeaderHelper() )->allowWhitelistedOrigins()
+			->setAllowMethod( [ 'GET' ] )
+			->setHeaders( $this->response );
 
 		$wikiVariables = $this->prepareWikiVariables();
 
@@ -214,7 +216,7 @@ class MercuryApiController extends WikiaController {
 	public function getTrackingDimensions() {
 		global $wgDBname, $wgUser, $wgCityId, $wgLanguageCode;
 
-		$dimensions = [ ];
+		$dimensions = [];
 
 		// Exception is thrown when empty title is send
 		// In that case we don't want to set dimensions which depend on title
@@ -226,14 +228,14 @@ class MercuryApiController extends WikiaController {
 			$article = Article::newFromID( $articleId );
 
 			if ( $article instanceof Article && $title->isRedirect() ) {
-				$title = $this->handleRedirect( $title, $article, [ ] )[0];
+				$title = $this->handleRedirect( $title, $article, [] )[0];
 			}
 
 			$adContext = ( new AdEngine2ContextService() )->getContext( $title, 'mercury' );
 			$dimensions[3] = $adContext['targeting']['wikiVertical'];
 			$dimensions[14] = !empty( $adContext['opts']['showAds'] ) ? 'Yes' : 'No';
 			$dimensions[19] = WikiaPageType::getArticleType( $title );
-			$dimensions[21] = (string)$articleId;
+			$dimensions[21] = (string) $articleId;
 			$dimensions[25] = strval( $title->getNamespace() );
 		} catch ( Exception $ex ) {
 			// In case of exception - don't set the dimensions
@@ -301,6 +303,7 @@ class MercuryApiController extends WikiaController {
 			);
 		} else {
 			$this->response->setVal( 'data', [ 'content' => 'Invalid title' ] );
+
 			return;
 		}
 
@@ -356,7 +359,7 @@ class MercuryApiController extends WikiaController {
 				$isMainPage = $title->isMainPage();
 				$data['isMainPage'] = $isMainPage;
 
-				if ( $article instanceof Article) {
+				if ( $article instanceof Article ) {
 					$articleData = MercuryApiArticleHandler::getArticleJson( $this->request, $article );
 					$displayTitle = $articleData['displayTitle'];
 					$data['categories'] = $articleData['categories'];
@@ -377,10 +380,27 @@ class MercuryApiController extends WikiaController {
 
 				if ( MercuryApiMainPageHandler::shouldGetMainPageData( $isMainPage ) ) {
 					$data['curatedMainPageData'] = MercuryApiMainPageHandler::getMainPageData( $this->mercuryApi );
+
+					// XW-4866 Make all main page content available on mobile to improve SEO.
+					// Temporary solution, should be removed around Q318.
+					if ( !empty( $articleData['content'] ) ) {
+						$data['article'] = $articleData;
+						$data['article']['hasPortableInfobox'] = !empty(
+						\Wikia::getProps(
+							$title->getArticleID(),
+							PortableInfoboxDataService::INFOBOXES_PROPERTY_NAME
+						)
+						);
+					}
 				} else {
 					if ( !empty( $articleData['content'] ) ) {
 						$data['article'] = $articleData;
-						$data['article']['hasPortableInfobox'] = !empty( \Wikia::getProps( $title->getArticleID(), PortableInfoboxDataService::INFOBOXES_PROPERTY_NAME ) );
+						$data['article']['hasPortableInfobox'] = !empty(
+						\Wikia::getProps(
+							$title->getArticleID(),
+							PortableInfoboxDataService::INFOBOXES_PROPERTY_NAME
+						)
+						);
 
 						$featuredVideo = MercuryApiArticleHandler::getFeaturedVideoDetails( $title );
 						if ( !empty( $featuredVideo ) ) {

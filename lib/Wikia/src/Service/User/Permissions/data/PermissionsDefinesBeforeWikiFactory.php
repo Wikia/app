@@ -374,7 +374,3 @@ $wgGroupPermissions['staff']['clearuserprofile'] = true;
 $wgGroupPermissions['helper']['clearuserprofile'] = true;
 
 $wgGroupPermissions['global-discussions-moderator']['block'] = true;
-
-$wgGroupPermissions['util']['https-opt-in'] = true;
-$wgGroupPermissions['council']['https-opt-in'] = true;
-$wgGroupPermissions['beta']['https-opt-in'] = true;

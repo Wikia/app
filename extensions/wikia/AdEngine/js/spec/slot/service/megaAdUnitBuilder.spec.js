@@ -13,8 +13,8 @@ describe('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', function () {
 			page: {
 				getPageLevelParams: noop
 			},
-			browserDetect: {
-				isMobile: noop
+			deviceDetect: {
+				getDevice: noop
 			},
 			adContext: {
 				addCallback: noop,
@@ -110,7 +110,7 @@ describe('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', function () {
 			mocks.adContext,
 			mocks.page,
 			mocks.slotsContext,
-			mocks.browserDetect
+			mocks.deviceDetect
 		);
 	}
 
@@ -133,6 +133,8 @@ describe('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', function () {
 		});
 		mockContext({ wikiIsTop1000: true }, {});
 
+		spyOn(mocks.deviceDetect, 'getDevice').and.returnValue('smartphone');
+
 		expect(getModule().build('MOBILE_PREFOOTER', 'mobile_remnant'))
 			.toEqual('/5441/wka2a.PF/mobile_prefooter/smartphone/mercury-home/_godofwar-gaming');
 	});
@@ -141,7 +143,7 @@ describe('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', function () {
 		mockPageParams(DEFAULT_PAGE_PARAMS);
 		mockContext({ wikiIsTop1000: true }, {});
 
-		spyOn(mocks.browserDetect, 'isMobile').and.returnValue(true);
+		spyOn(mocks.deviceDetect, 'getDevice').and.returnValue('tablet');
 
 		expect(getModule().build('MOBILE_PREFOOTER', 'mobile_remnant'))
 			.toEqual('/5441/wka2a.PF/mobile_prefooter/tablet/oasis-home/_godofwar-gaming');
@@ -156,6 +158,8 @@ describe('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', function () {
 		});
 		mockContext({ wikiIsTop1000: true }, {});
 
+		spyOn(mocks.deviceDetect, 'getDevice').and.returnValue('smartphone');
+
 		expect(getModule().build('MOBILE_PREFOOTER', 'mobile_remnant'))
 			.toEqual('/5441/wka2a.PF/mobile_prefooter/smartphone/mercury-fv-article/_godofwar-gaming');
 	});
@@ -168,6 +172,8 @@ describe('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', function () {
 			'skin': 'oasis'
 		});
 		mockContext({ wikiIsTop1000: true }, {});
+
+		spyOn(mocks.deviceDetect, 'getDevice').and.returnValue('desktop');
 
 		expect(getModule().build('MOBILE_PREFOOTER', 'mobile_remnant'))
 			.toEqual('/5441/wka2a.PF/mobile_prefooter/desktop/oasis-fv-article/_godofwar-gaming');
@@ -203,7 +209,7 @@ describe('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', function () {
 		mockPageParams(DEFAULT_PAGE_PARAMS);
 		mockContext({ wikiIsTop1000: false }, {});
 
-		spyOn(mocks.browserDetect, 'isMobile').and.returnValue(true);
+		spyOn(mocks.deviceDetect, 'getDevice').and.returnValue('tablet');
 
 		expect(getModule().build('MOBILE_PREFOOTER', 'mobile_remnant'))
 			.toEqual('/5441/wka2a.PF/mobile_prefooter/tablet/oasis-home/_not_a_top1k_wiki-gaming');
@@ -212,6 +218,8 @@ describe('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', function () {
 	it('Should build new ad unit non-remnant provider with wka1a', function () {
 		mockPageParams(DEFAULT_PAGE_PARAMS);
 		mockContext({ wikiIsTop1000: true }, {});
+
+		spyOn(mocks.deviceDetect, 'getDevice').and.returnValue('desktop');
 
 		expect(getModule().build('TOP_LEADERBOARD', 'gpt'))
 			.toEqual('/5441/wka1a.LB/top_leaderboard/desktop/oasis-home/_godofwar-gaming');
@@ -226,7 +234,7 @@ describe('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', function () {
 		});
 		mockContext({ wikiIsTop1000: true }, {});
 
-		spyOn(mocks.browserDetect, 'isMobile').and.returnValue(true);
+		spyOn(mocks.deviceDetect, 'getDevice').and.returnValue('tablet');
 
 		expect(getModule().build('MOBILE_PREFOOTER', 'mobile_remnant'))
 			.toEqual('/5441/wka2a.PF/mobile_prefooter/unknown-specialpage/oasis-special/_lego-life');
@@ -257,7 +265,7 @@ describe('ext.wikia.adEngine.slot.service.megaAdUnitBuilder', function () {
 			mockPageParams(DEFAULT_PAGE_PARAMS);
 			mockContext({ wikiIsTop1000: true }, {});
 
-			spyOn(mocks.browserDetect, 'isMobile').and.returnValue(true);
+			spyOn(mocks.deviceDetect, 'getDevice').and.returnValue('tablet');
 
 			expect(getModule().build(testCase.slotName, 'mobile_remnant'))
 				.toEqual(testCase.adUnit);
