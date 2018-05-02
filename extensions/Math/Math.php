@@ -132,6 +132,9 @@ $wgResourceModules['ext.math.mathjax'] = array(
 		// We'll let the other parts be loaded by MathJax's
 		// own module/config loader.
 	),
+	'styles' => [
+		'MathJax.css',
+	],
 	'group' => 'ext.math.mathjax',
 ) + $moduleTemplate;
 
