@@ -3221,7 +3221,6 @@ class ComposerStaticInitb367f9b4bf4d43e0d5ea402c134db26b
         'Wikia\\HTTP\\Response' => __DIR__ . '/../../..' . '/lib/Wikia/src/HTTP/Response.php',
         'Wikia\\Localisation\\CachedLCStoreDB' => __DIR__ . '/../../..' . '/lib/Wikia/src/Localisation/CachedLCStoreDB.php',
         'Wikia\\Localisation\\LCStoreDB' => __DIR__ . '/../../..' . '/lib/Wikia/src/Localisation/LCStoreDB.php',
-        'Wikia\\Logger\\AppNameProcessor' => __DIR__ . '/../../..' . '/lib/Wikia/src/Logger/AppNameProcessor.php',
         'Wikia\\Logger\\ContextSource' => __DIR__ . '/../../..' . '/lib/Wikia/src/Logger/ContextSource.php',
         'Wikia\\Logger\\Hooks' => __DIR__ . '/../../..' . '/lib/Wikia/src/Logger/Hooks.php',
         'Wikia\\Logger\\Loggable' => __DIR__ . '/../../..' . '/lib/Wikia/src/Logger/Loggable.php',

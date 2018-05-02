@@ -34,9 +34,10 @@ $wgWikiaEnvironment = getenv( 'WIKIA_ENVIRONMENT' );
 
 /**
  * Temporary variable for Kubernetes migration
- * If {@code true}, then logs will be sent to stdout formatted as JSON, instead of using syslog.
+ * If {@code true}, then logs will be sent to the configured socket address formatted as JSON, instead of using syslog.
  */
-$wgLoggerLogToStdOutOnly = $_ENV['LOG_STDOUT_ONLY'] ?? false;
+$wgLoggerLogToSocketOnly = $_ENV['LOG_SOCKET_ONLY'] ?? false;
+$wgLoggerSocketAddress = $_ENV['LOG_SOCKET_ADDRESS'] ?? 'tcp://127.0.0.1:9999';
 
 // CONFIG_REVISION: remove $wgWikiaDatacenter and $wgWikiaEnvironment from the global scope and only use it to load configuration
 
