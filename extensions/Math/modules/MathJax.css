@@ -1,0 +1,7 @@
+/**
+ * SUS-4746 | MathJax's SVG renderer always outputs black text
+ */
+.MathJax_SVG > svg > g {
+    fill: currentColor;
+    stroke: currentColor;
+}
