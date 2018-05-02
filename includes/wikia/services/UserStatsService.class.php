@@ -61,7 +61,7 @@ class UserStatsService extends WikiaModel {
 		$stats = $this->getStats();
 
 		$this->setUserStat( 'editcount', ++$stats['editcount'] );
-		$this->setUserStat( 'editcount', ++$stats['editcountThisWeek'] );
+		$this->setUserStat( 'editcountThisWeek', ++$stats['editcountThisWeek'] );
 
 		$now = wfTimestampNow();
 
