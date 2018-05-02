@@ -710,7 +710,7 @@ $wgObjectCaches = array(
     CACHE_MEMCACHED => array(
         'class' => 'MemcachedPhpBagOStuff',
         'use_binary_protocol' => false,
-    );
+    ),
     CACHE_LIBMEMCACHED => array( 'factory' => 'LibmemcachedBagOStuff::newFromGlobals' ),
     'apc' => array('class' => 'APCBagOStuff'),
     'xcache' => array('class' => 'XCacheBagOStuff'),
