@@ -707,7 +707,10 @@ $wgObjectCaches = array(
     CACHE_DBA => array('class' => 'DBABagOStuff'),
     CACHE_ANYTHING => array('factory' => 'ObjectCache::newAnything'),
     CACHE_ACCEL => array('factory' => 'ObjectCache::newAccelerator'),
-    CACHE_MEMCACHED => array('factory' => 'ObjectCache::newMemcached'),
+    CACHE_MEMCACHED => array(
+        'class' => 'MemcachedPhpBagOStuff',
+        'use_binary_protocol' => false,
+    );
     CACHE_LIBMEMCACHED => array( 'factory' => 'LibmemcachedBagOStuff::newFromGlobals' ),
     'apc' => array('class' => 'APCBagOStuff'),
     'xcache' => array('class' => 'XCacheBagOStuff'),
