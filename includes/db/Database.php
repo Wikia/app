@@ -1198,7 +1198,8 @@ abstract class DatabaseBase implements DatabaseType {
 			case '\\&': return '&';
 		}
 
-		list( /* $n */ , $arg ) = each( $this->preparedArgs );
+		$arg = current( $this->preparedArgs );
+		next( $this->preparedArgs );
 
 		switch( $matches[1] ) {
 			case '?': return $this->addQuotes( $arg );

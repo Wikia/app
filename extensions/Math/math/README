@@ -32,6 +32,11 @@ already contain AMS*. In Debian/Ubuntu you need to install tetex-extra.
 To work properly with rendering non-ASCII Unicode characters, a supplemental TeX
 package is needed (cjk-latex in Debian)
 
+In Ubuntu Precise, all dependencies can be installed using:
+
+  $ sudo apt-get install build-essential dvipng ocaml \
+        texlive-fonts-recommended texlive-lang-greek texlive-latex-recommended
+
 === Installation ===
 
 Run 'make' (or 'gmake' if GNU make is not your default make). This should

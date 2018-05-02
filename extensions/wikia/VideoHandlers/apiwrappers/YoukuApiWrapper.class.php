@@ -173,7 +173,7 @@ class YoukuApiWrapper extends ApiWrapper {
 	 * Url of video thumbnail. Note: The Youku API guarantees this value to be returned.
 	 * @return string
 	 */
-	public function getThumbnailUrl() {
+	public function getThumbnailUrl() : string {
 		return $this->interfaceObj['bigThumbnail'];
 	}
 

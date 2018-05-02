@@ -1,0 +1,15 @@
+*~
+*.kate-swp
+
+vendor/
+extensions/
+build/logs/
+build/release/build-*
+
+composer.phar
+composer.lock
+*.tar
+
+!.*
+.idea/
+*.iml

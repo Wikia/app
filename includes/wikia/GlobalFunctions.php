@@ -1385,7 +1385,7 @@ function wfFixMalformedHTML( $html ) {
 
 /**
  * Go through the backtrace and return the first method that is not in the ingored class
- * @param $ignoreClasses mixed array of ignored class names or a single class name
+ * @param $ignoreClasses string|string[] mixed array of ignored class names or a single class name
  * @return string method name
  */
 function wfGetCallerClassMethod( $ignoreClasses ) {
@@ -1595,4 +1595,11 @@ function wfStripProtocol( $url ) {
 		return $url;
 	}
 	return substr( $url, $pos + 3 );
+}
+
+/**
+ * In some cases, we don't want to use the actual hostname and use a configured value.
+ */
+function wfGetEffectiveHostname() {
+	return getenv('HOSTNAME_OVERRIDE') ?: gethostname();
 }

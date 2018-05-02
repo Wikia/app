@@ -21,11 +21,11 @@ $wgExtensionCredits['other'][] = [
  */
 $wgHooks[ "ArticleSaveComplete" ][] = "WikiFactory::updateCityDescription";
 
-class WikiFactoryDuplicateWgServer extends Exception {
+class WikiFactoryDuplicateDomain extends Exception {
 	public $city_id, $city_url, $duplicate_city_id;
 
 	function __construct( $city_id, $city_url, $duplicate_city_id ) {
-		$message = "Cannot set wgServer for wiki $city_id to '$city_url' because it conflicts with wiki $duplicate_city_id";
+		$message = "Cannot set domain for wiki $city_id to '$city_url' because it conflicts with wiki $duplicate_city_id";
 		parent::__construct($message);
 		$this->city_id = $city_id;
 		$this->city_url = $city_url;
@@ -378,21 +378,80 @@ class WikiFactory {
 	 * @param string $domain: domain name (on null)
 	 *
 	 * @return boolean: true - set, false otherwise
+	 * @throws WikiFactoryDuplicateDomain
 	 */
 	static public function setmainDomain ( $city_id, $domain = null, $reason = null ) {
+		global $wgWikicitiesReadOnly;
+
 		if ( ! static::isUsed() ) {
 			Wikia::log( __METHOD__, "", "WikiFactory is not used." );
 			return false;
 		}
-		if ( !preg_match( "^https?:\/\/", $domain ) ) {
+		if ( $wgWikicitiesReadOnly ) {
+			Wikia::log( __METHOD__, "", "wgWikicitiesReadOnly mode. Skipping update.");
+			return false;
+		}
+		if ( !preg_match( "/^https?:\/\//", $domain ) ) {
 			$domain = 'http://' . $domain;
 		}
+		if ( !endsWith( $domain, '/' ) ) {
+			$domain .= '/';
+		}
+		wfProfileIn( __METHOD__ );
+		$dbw = static::db( DB_MASTER );
+		$dbw->begin();
+		WikiaLogger::instance()->info( __METHOD__ . " - city_url changed", [
+			'exception' => new Exception(),
+			'city_url' => $domain,
+			'reason' => $reason ?: '',
+		] );
+		wfProfileIn( __METHOD__."-changelog" );
+		$oldValue = self::cityIDtoUrl( $city_id );
+		$reason_extra = !empty($reason) ? " (reason: ". htmlspecialchars( $reason ) .")" : '';
+		static::log(
+			static::LOG_DOMAIN,
+			sprintf('Main domain changed from %s to %s %s',
+				htmlspecialchars( $oldValue ),
+				htmlspecialchars( $domain ),
+				$reason_extra
+			),
+			$city_id
+		);
+		wfProfileOut( __METHOD__."-changelog" );
 
-		$retVal = WikiFactory::setVarByName( "wgServer", $city_id, $domain, $reason );
+		try {
+			$dbw->update(
+				static::table("city_list"),
+				[ "city_url" => $domain ],
+				[ "city_id" => $city_id ],
+				__METHOD__
+			);
+		} catch ( DBQueryError $e ) {
+			if ( preg_match("/Duplicate entry '[^']*' for key 'urlidx'/", $e->error) ) {
+				$res = $dbw->selectRow(
+					static::table("city_list"),
+					"city_id",
+					[ "city_url" => $domain ],
+					__METHOD__
+				);
+				if ( isset($res->city_id) ) {
+					$exc = new WikiFactoryDuplicateDomain($city_id, $domain, $res->city_id);
+					Wikia::log( __METHOD__, "", $exc->getMessage());
+					$dbw->rollback();
+					throw $exc;
+				}
+			}
+			throw $e;
+		}
+		$dbw->commit();
+		// Trigger WikiFactoryChanged for backward compatibility and CSRF protection
+		Hooks::run( 'WikiFactoryChanged', [ 'wgServer' , $city_id, $domain ] );
 
-		static::clearDomainCache( $city_id );
+		static::clearCache( $city_id );
 
-		return $retVal;
+		wfProfileOut( __METHOD__ );
+
+		return true;
 	}
 
 	/**
@@ -496,31 +555,58 @@ class WikiFactory {
 	}
 
 	/**
-	 * Given a wiki's dbName, return the wgServer value properly altered to reflect the current environment.
+	 * Strips the language path from city_url.
 	 *
-	 * @param int $dbName
+	 * @param string $cityUrl
 	 *
 	 * @return string
 	 */
-	public static function getHostByDbName( $dbName ) {
-
-		$cityId = \WikiFactory::DBtoID( $dbName );
-
-		return static::getHostById($cityId);
+	public static function cityUrlToDomain( $cityUrl ) {
+		$url = parse_url( $cityUrl );
+		if ( FALSE === $url ) return FALSE;
+		return ( ( isset( $url['scheme'] ) ) ? $url['scheme'] . '://' : '//' )
+			. ( ( isset( $url['host'] ) ) ? $url['host'] : '' );
 	}
 
 	/**
-	 * Given a wiki's id, return the wgServer value properly altered to reflect the current environment.
+	 * Returns the language path part of the city_url.
 	 *
+	 * @param string $cityUrl
+	 *
+	 * @return string
+	 */
+	public static function cityUrlToLanguagePath( $cityUrl ) {
+		$url = parse_url( $cityUrl );
+		if ( FALSE !== $url && !empty( $url['path'] ) && $url['path'] !== '/' ) {
+			return rtrim( $url['path'], '/' );
+		}
+		return '';
+	}
+
+	/**
+	 * Returns the script address relative to wiki domain.
+	 *
+	 * @param string $cityUrl
+	 *
+	 * @return string
+	 */
+	public static function cityUrlToWgScript( $cityUrl ) {
+		return static::cityUrlToLanguagePath( $cityUrl ) . '/index.php';
+	}
+
+	/**
+	 * Returns the article path relative to wiki domain.
+	 * todo: Remove $cityId param after corporate wikis are moved to N&S
+	 *
+	 * @param string $cityUrl
 	 * @param int $cityId
 	 *
 	 * @return string
 	 */
-	public static function getHostById( $cityId ) {
-		$hostName = \WikiFactory::getVarValueByName( 'wgServer', $cityId );
-		$hostName = \WikiFactory::getLocalEnvURL( $hostName );
-
-		return rtrim( $hostName, '/' );
+	public static function cityUrlToArticlePath( $cityUrl, $cityId ) {
+		global $wgShortArticlePathWikis;
+		$path = in_array( $cityId, $wgShortArticlePathWikis ) ? '/$1' : '/wiki/$1';
+		return static::cityUrlToLanguagePath( $cityUrl ) . $path;
 	}
 
 	/**
@@ -529,7 +615,6 @@ class WikiFactory {
 	 * @param $value
 	 * @param null $reason
 	 * @return bool
-	 * @throws WikiFactoryDuplicateWgServer
 	 * @throws WikiFactoryVariableParseException
 	 */
 	static public function validateAndSetVarById( $varId, $cityId, $value, $reason = null ) {
@@ -579,7 +664,6 @@ class WikiFactory {
 	 * @param mixed $value            new value for variable
 	 * @param string $reason          optional extra reason text
 	 *
-	 * @throws WikiFactoryDuplicateWgServer
 	 * @return boolean: transaction status
 	 */
 	static public function setVarById( $cv_variable_id, $city_id, $value, $reason=null ) {
@@ -710,53 +794,6 @@ class WikiFactory {
 			wfProfileIn( __METHOD__."-citylist" );
 			Hooks::run( 'WikiFactoryChanged', [ $variable->cv_name , $city_id, $value ] );
 			switch ( $variable->cv_name ) {
-				case "wgServer":
-				case "wgScriptPath":
-					/**
-					 * city_url is combination of $wgServer & $wgScriptPath
-					 */
-
-					/**
-					 * ...so get the other variable
-					 */
-					if ( $variable->cv_name === "wgServer" ) {
-						$tmp = static::getVarValueByName( "wgScriptPath", $city_id );
-						$server = is_null( $value ) ? "" : $value;
-						$script_path = is_null( $tmp ) ? "/" : $tmp . "/";
-					}
-					else {
-						$tmp = static::getVarValueByName( "wgServer", $city_id );
-						$server = is_null( $tmp ) ? "" : $tmp;
-						$script_path = is_null( $value ) ? "/" : $value . "/";
-					}
-					$city_url = $server . $script_path;
-					try {
-						$dbw->update(
-							static::table("city_list"),
-							[ "city_url" => $city_url ],
-							[ "city_id" => $city_id ],
-							__METHOD__
-						);
-					} catch ( DBQueryError $e ) {
-						if ( preg_match("/Duplicate entry '[^']*' for key 'urlidx'/", $e->error) ) {
-							$res = $dbw->selectRow(
-								static::table("city_list"),
-								"city_id",
-								[ "city_url" => $city_url ],
-								__METHOD__
-							);
-							if ( isset($res->city_id) ) {
-								$exc = new WikiFactoryDuplicateWgServer($city_id, $city_url, $res->city_id);
-								Wikia::log( __METHOD__, "", $exc->getMessage());
-								$dbw->rollback();
-								throw $exc;
-							}
-						}
-						throw $e;
-					}
-
-					break;
-
 				case "wgLanguageCode":
 					#--- city_lang
 					$dbw->update(
@@ -1026,6 +1063,10 @@ class WikiFactory {
 		if ( $city_id == $wgCityId ) {
 			return isset($GLOBALS[$cv_name]) ? $GLOBALS[$cv_name] : null;
 		}
+		if ( $cv_name == 'wgServer' || $cv_name == 'wgArticlePath' ) {
+			// these are not a WF variable anymore. Remove this check after they are deleted from city_variables
+			return null;
+		}
 
 		wfProfileIn( __METHOD__ );
 
@@ -1247,7 +1288,7 @@ class WikiFactory {
 	public static function getExternalHostName() {
 		global $wgWikiaEnvironment;
 
-		$hostname = gethostname();
+		$hostname = wfGetEffectiveHostname();
 		if ( $wgWikiaEnvironment == WIKIA_ENV_DEV ) {
 			return mb_ereg_replace( '^dev-', '', $hostname );
 		}
@@ -3259,10 +3300,10 @@ class WikiFactory {
 	}
 
 	/**
-	 * get url from dbname
+	 * get environment-ready url from dbname
 	 * @param string $dbname	name of database
 	 * @param boolean $master	use master or slave connection
-	 * @return url in city_list
+	 * @return url in city_list with sandbox/devbox subdomain added if needed
 	 */
 	static public function DBtoUrl( $dbname, $master = false ) {
 		if ( !static::isUsed() ) {
@@ -3272,7 +3313,39 @@ class WikiFactory {
 
 		$oRow = static::getWikiByDB( $dbname, $master );
 
-		return isset( $oRow->city_url ) ? $oRow->city_url : false;
+		return isset( $oRow->city_url ) ? WikiFactory::getLocalEnvURL( rtrim( $oRow->city_url, '/' ) ) : false;
+	}
+
+	/**
+	 * get environment-ready url from city_id
+	 * @param int $city_id	wiki id
+	 * @param boolean $master	use master or slave connection
+	 * @return url in city_list with sandbox/devbox subdomain added if needed
+	 */
+	static public function cityIDtoUrl( $city_id, $master = false ) {
+		if ( !static::isUsed() ) {
+			Wikia::log( __METHOD__, "", "WikiFactory is not used." );
+			return false;
+		}
+
+		$oRow = static::getWikiByID( $city_id, $master );
+
+		return isset( $oRow->city_url ) ? WikiFactory::getLocalEnvURL( rtrim( $oRow->city_url, '/' ) ) : false;
+	}
+
+	/**
+	 * Returns the domain address of a wiki.
+	 *
+	 * @param int $city_id	wiki id
+	 * @param boolean $master	use master or slave connection
+	 * @return city domain
+	 */
+	static public function cityIDtoDomain( $city_id, $master = false ) {
+		$url = static::cityIDtoUrl( $city_id, $master );
+		if ( $url ) {
+			$url = static::cityUrlToDomain( $url );
+		}
+		return $url;
 	}
 
 	/**
@@ -3379,7 +3452,7 @@ class WikiFactory {
 		$db->freeResult( $dbResult );
 		return $result;
 	}
-        
+
         /**
          * unserializeErrorHandler
          *

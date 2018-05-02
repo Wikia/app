@@ -258,7 +258,7 @@ class WikiFactoryLoader {
 					$this->mCityID = $oRow->city_id;
 					$this->mWikiID =  $oRow->city_id;
 					$this->mIsWikiaActive = $oRow->city_public;
-					$this->mCityUrl = $oRow->city_url;
+					$this->mCityUrl = rtrim( $oRow->city_url, '/' );
 					$this->mCityDB   = $oRow->city_dbname;
 					$this->mCityCluster = $oRow->city_cluster;
 					$this->mTimestamp = $oRow->city_factory_timestamp;
@@ -302,7 +302,7 @@ class WikiFactoryLoader {
 
 					$this->mWikiID =  $oRow->city_id;
 					$this->mIsWikiaActive = $oRow->city_public;
-					$this->mCityUrl = $oRow->city_url;
+					$this->mCityUrl = rtrim( $oRow->city_url, '/' );
 					$this->mCityDB   = $oRow->city_dbname;
 					$this->mCityCluster = $oRow->city_cluster;
 					$this->mTimestamp = $oRow->city_factory_timestamp;
@@ -377,7 +377,7 @@ class WikiFactoryLoader {
 		if( $this->mIsWikiaActive == 2 && !$this->mCommandLine ) {
 			$this->debug( "city_id={$this->mWikiID};city_public={$this->mIsWikiaActive}), redirected to {$this->mCityUrl}" );
 			header( "X-Redirected-By-WF: 2" );
-			header( "Location: {$this->mCityUrl}", true, 301 );
+			header( "Location: {$this->mCityUrl}/", true, 301 );
 			wfProfileOut( __METHOD__ );
 			return false;
 		}
@@ -386,7 +386,7 @@ class WikiFactoryLoader {
 
 		// check if domain from browser is different than main domain for wiki
 		$cond1 = !empty( $this->mServerName ) &&
-				 ( strtolower( $url['host'] ) != $this->mServerName || rtrim( $url['path'], '/' ) !== rtrim( "/{$this->langCode}", '/' ) );
+				 ( strtolower( $url['host'] ) != $this->mServerName || rtrim( $url['path'] ?? '', '/' ) !== rtrim( "/{$this->langCode}", '/' ) );
 
 		/**
 		 * check if not additional domain was used (then we redirect anyway)
@@ -519,25 +519,14 @@ class WikiFactoryLoader {
 				$tUnserVal = unserialize( $oRow->cv_value, [ 'allowed_classes' => false ] );
 				restore_error_handler();
 
-				if( !empty( $wgDevelEnvironment ) && $oRow->cv_name === "wgServer" ) {
-					/**
-					 * skip this variable
-					 */
-					unset($this->mVariables[ $oRow->cv_name ]);
-					$this->debug( "{$oRow->cv_name} with value {$tUnserVal} skipped" );
-				}
-				else {
+				if ( $oRow->cv_name === "wgServer" || $oRow->cv_name === "wgArticlePath" ) {
+					// these are not a part of WF anymore. Remove this code after thesse variables are deleted from db
+					unset( $this->mVariables[ $oRow->cv_name ] );
+				} else {
 					$this->mVariables[ $oRow->cv_name ] = $tUnserVal;
 				}
 			}
 			$dbr->freeResult( $oRes );
-
-			/**
-			 * wgArticlePath
-			 */
-			if ( !isset( $this->mVariables['wgArticlePath'] ) ) {
-				$this->mVariables['wgArticlePath'] = $GLOBALS['wgArticlePath'];
-			}
 
 			/**
 			 * read tags for this wiki, store in global variable as array
@@ -592,14 +581,13 @@ class WikiFactoryLoader {
 		# take some WF variables values from city_list
 		$this->mVariables["wgDBname"] = $this->mCityDB;
 		$this->mVariables["wgDBcluster"] = $this->mCityCluster;
+		$this->mVariables['wgServer'] = WikiFactory::getLocalEnvURL( WikiFactory::cityUrlToDomain( $this->mCityUrl ) );
+		$this->mVariables['wgScriptPath'] = WikiFactory::cityUrlToLanguagePath( $this->mCityUrl );
+		$this->mVariables['wgScript'] = WikiFactory::cityUrlToWgScript( $this->mCityUrl );
+		$this->mVariables['wgArticlePath'] = WikiFactory::cityUrlToArticlePath( $this->mCityUrl, $this->mWikiID );
 
 		// @author macbre
 		Hooks::run( 'WikiFactory::executeBeforeTransferToGlobals', [ $this ] );
-
-		// SUS-3851: Prepend language code to MW path variables if present
-		if ( !empty( $url['path'] ) && $url['path'] !== '/' ) {
-			$this->mVariables['wgScriptPath'] = rtrim( $url['path'], '/' );
-		}
 
 		/**
 		 * transfer configuration variables from database to GLOBALS

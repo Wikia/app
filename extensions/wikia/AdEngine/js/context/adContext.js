@@ -91,7 +91,7 @@ define('ext.wikia.adEngine.adContext', [
 	}
 
 	function isProperGeo(name) {
-		const geos = instantGlobals[name] || [];
+		var geos = instantGlobals[name] || [];
 		return adsGeo.isProperGeo(geos, name);
 	}
 
@@ -231,6 +231,7 @@ define('ext.wikia.adEngine.adContext', [
 
 		context.opts.labradorTest = isProperGeo('wgAdDriverLABradorTestCountries');
 		context.opts.labradorTestGroup = context.opts.labradorTest ? 'B' : 'A';
+		context.opts.mobileSectionsCollapse = isProperGeo('wgAdDriverMobileSectionsCollapseCountries');
 
 		// Export the context back to ads.context
 		// Only used by Lightbox.js, WikiaBar.js and AdsInContext.js

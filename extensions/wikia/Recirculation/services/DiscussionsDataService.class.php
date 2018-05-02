@@ -22,7 +22,8 @@ class DiscussionsDataService {
 			$this->cityId = $cityId;
 		}
 
-		$this->server = WikiFactory::getVarValueByName( 'wgServer', $this->cityId );
+		// language-path - most likely this is ok, as the code below appends "/d/" to this value.
+		$this->server = WikiFactory::cityIDtoUrl( $this->cityId );
 	}
 
 	public function getData( $type, $sortKey = self::DISCUSSIONS_API_SORT_KEY_TRENDING ) {

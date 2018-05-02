@@ -55,7 +55,6 @@ $wgAutoloadLocalClasses = array(
 	'DeferredUpdates' => 'includes/DeferredUpdates.php',
 	'DerivativeRequest' => 'includes/WebRequest.php',
 	'DiffHistoryBlob' => 'includes/HistoryBlob.php',
-
 	'DoubleReplacer' => 'includes/StringUtils.php',
 	'DummyLinker' => 'includes/Linker.php',
 	'Dump7ZipOutput' => 'includes/Export.php',
@@ -631,6 +630,8 @@ $wgAutoloadLocalClasses = array(
 	'FakeMemCachedClient' => 'includes/objectcache/EmptyBagOStuff.php',
 	'HashBagOStuff' => 'includes/objectcache/HashBagOStuff.php',
 	'MemCachedClientforWiki' => 'includes/objectcache/MemcachedClient.php',
+	'MemcachedBagOStuff' => 'includes/objectcache/MemcachedBagOStuff.php',
+	'MemcachedPeclBagOStuff' => 'includes/objectcache/MemcachedPeclBagOStuff.php',
 	'MemcachedPhpBagOStuff' => 'includes/objectcache/MemcachedPhpBagOStuff.php',
 	'MultiWriteBagOStuff' => 'includes/objectcache/MultiWriteBagOStuff.php',
 	'MWMemcached' => 'includes/objectcache/MemcachedClient.php',
