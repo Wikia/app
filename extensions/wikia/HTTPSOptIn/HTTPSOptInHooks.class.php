@@ -26,13 +26,10 @@ class HTTPSOptInHooks {
 	}
 
 	public static function onMercuryWikiVariables( array &$wikiVariables ): bool {
-		global $wgDisableHTTPSDowngrade;
 		$basePath = $wikiVariables['basePath'];
 		$user = RequestContext::getMain()->getUser();
 		if ( self::httpsAllowed( $user, $basePath ) ) {
 			$wikiVariables['basePath'] = wfHttpToHttps( $basePath );
-		} elseif ( empty( $wgDisableHTTPSDowngrade ) ) {
-			$wikiVariables['basePath'] = wfHttpsToHttp( $basePath );
 		}
 		return true;
 	}
