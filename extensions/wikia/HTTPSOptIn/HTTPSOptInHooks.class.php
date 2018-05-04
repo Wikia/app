@@ -29,14 +29,9 @@ class HTTPSOptInHooks {
 		global $wgDisableHTTPSDowngrade;
 		$basePath = $wikiVariables['basePath'];
 		$user = RequestContext::getMain()->getUser();
-		if ( startsWith( $basePath, 'http://' ) &&
-			self::httpsAllowed( $user, $basePath )
-		) {
+		if ( self::httpsAllowed( $user, $basePath ) ) {
 			$wikiVariables['basePath'] = wfHttpToHttps( $basePath );
-		} elseif ( startsWith( $basePath, 'https://' ) &&
-			!self::httpsAllowed( $user, $basePath ) &&
-			empty( $wgDisableHTTPSDowngrade )
-		) {
+		} elseif ( empty( $wgDisableHTTPSDowngrade ) ) {
 			$wikiVariables['basePath'] = wfHttpsToHttp( $basePath );
 		}
 		return true;
