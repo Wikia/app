@@ -403,7 +403,6 @@ class WikiFactoryLoader {
 
 			if ( $hasAuthCookie &&
 				 $_SERVER['HTTP_FASTLY_SSL'] &&
-				 // Hack until we are better able to handle internal HTTPS requests
 				 !empty( $_SERVER['HTTP_FASTLY_FF'] ) &&
 				 wfHttpsAllowedForURL( $redirectUrl )
 			) {
@@ -654,7 +653,7 @@ class WikiFactoryLoader {
 						$wgConf->localVHosts = array_merge( $wgConf->localVHosts, [ $stagingServer ] );
 					}
 					if ( !empty( $_SERVER['HTTP_FASTLY_SSL'] ) ) {
-						$tValue = str_replace( 'http://', 'https://', $tValue );
+						$tValue = wfHttpToHttps( $tValue );
 					}
 				}
 
