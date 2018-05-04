@@ -58,18 +58,20 @@ class HTTPSOptInHooks {
 		User $user, WebRequest $request, MediaWiki $mediawiki
 	): bool {
 		global $wgDisableHTTPSDowngrade;
-		$requestURL = $request->getFullRequestURL();
-		if ( WebRequest::detectProtocol() === 'http' &&
-			self::httpsAllowed( $user, $requestURL )
-		) {
-			$output->redirect( wfHttpToHttps( $requestURL ) );
-		} elseif ( WebRequest::detectProtocol() === 'https' &&
-			!self::httpsAllowed( $user, $requestURL ) &&
-			empty( $wgDisableHTTPSDowngrade ) &&
-			!$request->getHeader( 'X-Wikia-WikiaAppsID' ) &&
-			!self::httpsEnabledTitle( $title )
-		) {
-			$output->redirect( wfHttpsToHttp( $requestURL ) );
+		if ( !empty( $_SERVER['HTTP_FASTLY_FF'] ) ) {  // don't redirect internal clients
+			$requestURL = $request->getFullRequestURL();
+			if ( WebRequest::detectProtocol() === 'http' &&
+				self::httpsAllowed( $user, $requestURL )
+			) {
+				$output->redirect( wfHttpToHttps( $requestURL ) );
+			} elseif ( WebRequest::detectProtocol() === 'https' &&
+				!self::httpsAllowed( $user, $requestURL ) &&
+				empty( $wgDisableHTTPSDowngrade ) &&
+				!$request->getHeader( 'X-Wikia-WikiaAppsID' ) &&
+				!self::httpsEnabledTitle( $title )
+			) {
+				$output->redirect( wfHttpsToHttp( $requestURL ) );
+			}
 		}
 		return true;
 	}
