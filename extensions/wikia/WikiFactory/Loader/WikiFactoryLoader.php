@@ -652,6 +652,7 @@ class WikiFactoryLoader {
 						$tValue = 'http://'.$stagingServer;
 						$wgConf->localVHosts = array_merge( $wgConf->localVHosts, [ $stagingServer ] );
 					}
+					// TODO - what about wgServer value for requests that did not go through Fastly?
 					if ( !empty( $_SERVER['HTTP_FASTLY_SSL'] ) ) {
 						$tValue = wfHttpToHttps( $tValue );
 					}
