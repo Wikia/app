@@ -18,14 +18,20 @@ define('ext.wikia.adEngine.adEngineRunner', [
 		timeout = getTimeout();
 
 	function getTimeout() {
-		var fvTimeout;
+		var fvTimeout, timeout;
 
 		if (fvLagger && fvLagger.wasCalled() && adContext.get('targeting.hasFeaturedVideo')) {
 			fvTimeout = adContext.get('targeting.skin') === 'oasis' ?
 				instantGlobals.wgAdDriverFVDelayTimeoutOasis : instantGlobals.wgAdDriverFVDelayTimeoutMobileWiki;
 		}
 
-		return fvTimeout || instantGlobals.wgAdDriverDelayTimeout || 2000;
+		if (adContext.get('opts.overwriteDelayEngine')) {
+			timeout = instantGlobals.wgAdDriverDelayTimeout;
+		} else {
+			timeout = 2000;
+		}
+
+		return fvTimeout || timeout;
 	}
 
 	/**
