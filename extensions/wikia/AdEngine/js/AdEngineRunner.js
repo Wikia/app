@@ -26,7 +26,7 @@ define('ext.wikia.adEngine.adEngineRunner', [
 		}
 
 		if (adContext.get('opts.overwriteDelayEngine')) {
-			timeout = instantGlobals.wgAdDriverDelayTimeout;
+			timeout = instantGlobals.wgAdDriverDelayTimeout || 0;
 		} else {
 			timeout = 2000;
 		}
