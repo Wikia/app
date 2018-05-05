@@ -151,11 +151,14 @@ class WikiaRobots {
 		       $wgEnableSitemapXmlExt,
 		       $wgRobotsTxtBlockedWiki,
 		       $wgSitemapXmlExposeInRobots,
-		       $wgServer;
+			   $wgServer;
+			   
+		$wildcardRobot = $robots->createRobot( '*' );
+		$robots->addRobot( $wildcardRobot );
 
 		if ( !$this->accessAllowed || !empty( $wgRobotsTxtBlockedWiki ) ) {
 			// No crawling preview, verify, sandboxes, showcase, etc
-			$robots->addDisallowedPaths( [ '/' ] );
+			$wildcardRobot->block();
 			return $robots;
 		}
 
@@ -168,25 +171,25 @@ class WikiaRobots {
 
 		// Block namespaces
 		foreach ( $this->blockedNamespaces as $ns ) {
-			$robots->addDisallowedPaths(
+			$wildcardRobot->disallowPaths(
 				$this->pathBuilder->buildPathsForNamespace( $ns )
 			);
 		}
 
 		// Block additional paths
-		$robots->addDisallowedPaths( $this->blockedPaths );
+		$wildcardRobot->disallowPaths( $this->blockedPaths );
 
 		// Block params
 		foreach ( $this->blockedParams as $param ) {
-			$robots->addDisallowedPaths( $this->pathBuilder->buildPathsForParam( $param ) );
+			$wildcardRobot->disallowPaths( $this->pathBuilder->buildPathsForParam( $param ) );
 		}
 
 		// Allow specific paths
-		$robots->addAllowedPaths( $this->allowedPaths );
+		$wildcardRobot->allowPaths( $this->allowedPaths );
 
 		// Allow special pages
 		foreach ( array_keys( $this->allowedSpecialPages ) as $page ) {
-			$robots->addAllowedPaths( $this->pathBuilder->buildPathsForSpecialPage( $page, true ) );
+			$wildcardRobot->allowPaths( $this->pathBuilder->buildPathsForSpecialPage( $page, true ) );
 		}
 
 		return $robots;

@@ -3,41 +3,37 @@
 namespace Wikia\RobotsTxt;
 
 class RobotsTxt {
-
-	private $allowed = [];
-	private $blockedRobots = [];
-	private $disallowed = [];
+	private $robots = [];
 	private $sitemap;
 
-	/**
-	 * Allow specific paths
-	 *
-	 * It emits the Allow directives
-	 *
-	 * @param string[] $paths path prefixes to allow (some robots accept wildcards)
-	 */
-	public function addAllowedPaths( array $paths ) {
-		$this->allowed = array_merge( $this->allowed, $paths );
+	public function createRobot( $ua ) {
+		return new Robot( $ua );
 	}
 
 	/**
-	 * Disallow specific robots to crawl all the pages
-	 *
-	 * @param string[] $robots User-agent (fragment) of the robot (or an array of such)
+	 * Create robot entry and add it to robots list
+	 * 
+	 * @param Robot $robot
+	 * @return Robot
 	 */
-	public function addBlockedRobots( array $robots ) {
-		$this->blockedRobots = array_merge( $this->blockedRobots, $robots );
+	public function addRobot ( $robot ) {
+		$ua = $robot->getUserAgent();
+
+		if ( isset( $this->robots[ $ua ] ) ) {
+			throw new Exception( 'Robot with given user agent already exists.' );
+		} else {
+			return ( $this->robots[ $ua ] = $robot );
+		}
 	}
 
 	/**
-	 * Disallow specific paths
-	 *
-	 * It emits both the Disallow and Noindex directive for each path
-	 *
-	 * @param string[] $paths path prefixes to block (some robots accept wildcards)
+	 * Return robot with given User-agent (if exists)
+	 * 
+	 * @param string $ua User-agent
+	 * @return Robot
 	 */
-	public function addDisallowedPaths( array $paths ) {
-		$this->disallowed = array_merge( $this->disallowed, $paths );
+	public function getRobot( $ua ) {
+		return $this->robots[ $ua ] || null;
 	}
 
 	/**
@@ -47,8 +43,7 @@ class RobotsTxt {
 	 */
 	public function getContents() {
 		return array_merge(
-			$this->getBlockedRobotsSection(),
-			$this->getAllowDisallowSection(),
+			$this->getRobotsSection(),
 			$this->getSitemapSection()
 		);
 	}
@@ -63,51 +58,14 @@ class RobotsTxt {
 	}
 
 	// Private methods follow:
+	private function getRobotsSection() {
+		$lines = [];
 
-	private function getAllowDisallowSection() {
-
-		$allowSection = array_map(
-			function ( $prefix ) {
-				return 'Allow: ' . $prefix;
-			},
-			$this->allowed
-		);
-
-		$disallowSection = array_map(
-			function ( $prefix ) {
-				return 'Disallow: ' . $prefix;
-			},
-			$this->disallowed
-		);
-
-		$noIndexSection = array_map(
-			function ( $prefix ) {
-				return 'Noindex: ' . $prefix;
-			},
-			$this->disallowed
-		);
-
-		if ( count( $allowSection ) || count( $disallowSection ) ) {
-			return array_merge(
-				[ 'User-agent: *' ],
-				$allowSection,
-				$noIndexSection,
-				$disallowSection,
-				[ '' ]
-			);
+		foreach ( $this->robots as $robot ) {
+			$lines = array_merge( $lines, $robot->getContent() );
 		}
 
-		return [];
-	}
-
-	private function getBlockedRobotsSection() {
-		$r = [];
-		foreach ( $this->blockedRobots as $robot ) {
-			$r[] = 'User-agent: ' . $robot;
-			$r[] = 'Disallow: /';
-			$r[] = '';
-		}
-		return $r;
+		return $lines;
 	}
 
 	private function getSitemapSection() {

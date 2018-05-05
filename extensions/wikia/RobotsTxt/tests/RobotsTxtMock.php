@@ -1,21 +1,11 @@
 <?php
 
 class RobotsTxtMock extends \Wikia\RobotsTxt\RobotsTxt {
-	public $spiedAllowedPaths = [];
-	public $spiedDisallowedPaths = [];
+	public $spiedRobots = [];
 	public $spiedSitemap = [];
-	public $spiedBlockedRobots = [];
 
-	public function addAllowedPaths( array $paths ) {
-		$this->spiedAllowedPaths[] = $paths;
-	}
-
-	public function addDisallowedPaths( array $paths ) {
-		$this->spiedDisallowedPaths[] = $paths;
-	}
-
-	public function addBlockedRobots( array $robots ) {
-		$this->spiedBlockedRobots[] = $robots;
+	public function addRobot( $robot ) {
+		$this->spiedRobots[ $robot->getUserAgent() ] = $robot;
 	}
 
 	public function getContents() {
@@ -23,5 +13,9 @@ class RobotsTxtMock extends \Wikia\RobotsTxt\RobotsTxt {
 
 	public function setSitemap( $sitemapUrl ) {
 		$this->spiedSitemap[] = $sitemapUrl;
+	}
+
+	public function createRobot( $ua ) {
+		return new RobotMock( $ua );
 	}
 }
