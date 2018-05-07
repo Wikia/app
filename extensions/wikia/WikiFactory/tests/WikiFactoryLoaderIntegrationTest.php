@@ -91,6 +91,25 @@ class WikiFactoryLoaderIntegrationTest extends WikiaDatabaseTest {
 	}
 
 	/**
+	 * @dataProvider provideRequestDataWithHeaders
+	 *
+	 * @param int $expectedCityId
+	 * @param array $server
+	 */
+	public function testLoadExistingWikiFromXWikiIdHeaderWhenInternalRequest( int $expectedCityId, array $server ) {
+		$wikiFactoryLoader = new WikiFactoryLoader( $server, [] );
+		$cityId = $wikiFactoryLoader->execute();
+
+		$this->assertEquals( $expectedCityId, $cityId );
+		$this->assertTrue( WikiFactory::isUsed() );
+	}
+
+	public function provideRequestDataWithHeaders() {
+		yield [ 1, [ 'HTTP_X_WIKIA_INTERNAL_REQUEST' => '1', 'HTTP_X_WIKI_ID' => '1' ] ];
+		yield [ 8, [ 'HTTP_X_WIKIA_INTERNAL_REQUEST' => '1', 'HTTP_X_WIKI_ID' => '8' ] ];
+	}
+
+	/**
 	 * @dataProvider provideRequestWithAlternativeDomain
 	 * @runInSeparateProcess
 	 * @preserveGlobalState disabled
@@ -339,7 +358,7 @@ class WikiFactoryLoaderIntegrationTest extends WikiaDatabaseTest {
 	 * @param array $env
 	 * @param array $server
 	 */
-	public function testRequestInfoOverridesServerIdOverridesDbName( int $expectedCityId, array $env, array $server ) {
+	public function testPrecedenceOfSources( int $expectedCityId, array $env, array $server ) {
 		$wikiFactoryLoader = new WikiFactoryLoader( $server, $env );
 		$result = $wikiFactoryLoader->execute();
 
@@ -347,16 +366,27 @@ class WikiFactoryLoaderIntegrationTest extends WikiaDatabaseTest {
 	}
 
 	public function providePrecedence() {
-		yield 'Request info takes precedence over SERVER_ID' => [ 9, [ 'SERVER_ID' => 1 ], [
+		yield 'X-Wiki-Id header is the most important' => [ 1, [ 'SERVER_ID' => 1, 'SERVER_DBNAME' => 'test1' ], [
+			'REQUEST_SCHEME' => 'http',
+			'SERVER_NAME' => 'poznan.wikia.com',
+			'REQUEST_URI' => '/',
+			'HTTP_X_WIKIA_INTERNAL_REQUEST' => '1',
+			'HTTP_X_WIKI_ID' => '1',
+		] ];
+
+		yield 'X-Wiki-Id header is ignored for external requests' => [ 9, [], [
+			'REQUEST_SCHEME' => 'http',
+			'SERVER_NAME' => 'poznan.wikia.com',
+			'REQUEST_URI' => '/',
+			'HTTP_X_WIKI_ID' => '1',
+		] ];
+
+		yield 'Request URL takes precedence over SERVER_ID and SERVER_DBNAME' => [ 9, [ 'SERVER_ID' => 1 ], [
 			'REQUEST_SCHEME' => 'http',
 			'SERVER_NAME' => 'poznan.wikia.com',
 			'REQUEST_URI' => '/',
 		] ];
-		yield 'Request info takes precedence over SERVER_DBNAME' => [ 9, [ 'SERVER_DBNAME' => 'test1' ], [
-			'REQUEST_SCHEME' => 'http',
-			'SERVER_NAME' => 'poznan.wikia.com',
-			'REQUEST_URI' => '/',
-		] ];
+
 		yield 'SERVER_ID takes precedence over SERVER_DBNAME' => [ 1, [ 'SERVER_ID' => 1, 'SERVER_DBNAME' => 'poznan' ], [] ];
 	}
 

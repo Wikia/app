@@ -6,6 +6,8 @@ if ( $_SERVER['REQUEST_METHOD'] == 'OPTIONS' ) {
 	return;
 }
 
+define( 'MW_API', true );
+
 // prevent $_GET['title'] from being overwritten on API calls (BAC-906)
 define( 'DONT_INTERPOLATE_TITLE', true );
 

@@ -66,6 +66,11 @@ if ( ini_get( 'mbstring.func_overload' ) ) {
 	die( 'MediaWiki does not support installations where mbstring.func_overload is non-zero.' );
 }
 
+// Wikia change: allow to use a custom wiki ID header only for internal API requests
+if ( isset( $_SERVER['HTTP_X_WIKI_ID'] ) && ( empty( $_SERVER['HTTP_X_WIKIA_INTERNAL_REQUEST'] ) || !defined( 'MW_API' ) ) ) {
+	unset( $_SERVER['HTTP_X_WIKI_ID'] );
+}
+
 # bug 15461: Make IE8 turn off content sniffing. Everbody else should ignore this
 # We're adding it here so that it's *always* set, even for alternate entry
 # points and when $wgOut gets disabled or overridden.
