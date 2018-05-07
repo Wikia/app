@@ -11,8 +11,10 @@ class MercuryApiFilePageHandler {
 
 		$details = WikiaFileHelper::getMediaDetail( $title );
 		$mediaObject = ArticleAsJson::createMediaObject( $details, $title->getText() );
-		$mediaObject['srcset'] = ArticleAsJson::getSrcset( $mediaObject['url'], $mediaObject['width'] );
-		$mediaObject['thumbnailUrl'] = ArticleAsJson::getThumbnailUrlForWidth( $mediaObject['url'], 340 );
+		if ( $mediaObject['isOgg'] === false ) {
+			$mediaObject['srcset'] = ArticleAsJson::getSrcset( $mediaObject['url'], $mediaObject['width'] );
+			$mediaObject['thumbnailUrl'] = ArticleAsJson::getThumbnailUrlForWidth( $mediaObject['url'], 340 );
+		}
 
 		// if article contains user provided HTML which is invalid (e.g. too many </div>), snippetter treat it as a text
 		// too and it is not removed as other tags. In mobile-wiki we do not escape snippets, therefore invalid html may
