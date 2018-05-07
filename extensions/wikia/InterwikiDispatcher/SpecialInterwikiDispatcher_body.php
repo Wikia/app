@@ -103,7 +103,7 @@ class InterwikiDispatcher extends UnlistedSpecialPage {
 	}
 
 	private static function getCityUrl( $iCityId ) {
-		return WikiFactory::getVarValueByName( 'wgServer', $iCityId );
+		return WikiFactory::cityIDtoUrl( $iCityId );
 	}
 
 	/**
@@ -135,36 +135,27 @@ class InterwikiDispatcher extends UnlistedSpecialPage {
 			if ( $aLinkParts[1] == 'c' ) {
 				$iCityId = self::isWikiExists( $aLinkParts[2] );
 				if ( $iCityId ) {
-					$sArticlePath = WikiFactory::getVarValueByName( 'wgArticlePath', $iCityId );
+					$sCityUrl = self::getCityUrl( $iCityId );
+					if ( !empty( $sCityUrl ) ) {
+						$sArticlePath = WikiFactory::cityUrlToArticlePath( $sCityUrl, $iCityId );
 
-					//I've replaced wgArticlePath to hardcoded value in order to fix FogBug:3066
-					//This is a persistent issue with getting default value of variable that is not set in WikiFactory
-					//Similar problem exists when displaying "default value" in WikiFactory - it's not the real default (taken from file)
-					//it's value for current wiki (community for WikiFactory, www.wikia.com  for 3066 bug)
-					//anyway - current value in CommonSettings.php for wgArticlePath is '/wiki/$1' that's why this hardcoded
-					//fix will work.. for now.. it would be nice to introduce some function to get REAL DEFAULT VALUE for any variable
-					//Marooned
-					$sArticlePath = !empty( $sArticlePath ) ? $sArticlePath : '/wiki/$1'; //$wgArticlePath;
+						/* $wgScriptPath is already included in city_url
+						$sScriptPath = WikiFactory::getVarValueByName('wgScriptPath', $iCityId);
+						$sScriptPath = !empty($sScriptPath) ? $sScriptPath : $wgScriptPath;
+						*/
 
-					/* $wgScriptPath is already included in city_url
-					$sScriptPath = WikiFactory::getVarValueByName('wgScriptPath', $iCityId);
-					$sScriptPath = !empty($sScriptPath) ? $sScriptPath : $wgScriptPath;
-					*/
+						if ( !empty( $sArticlePath ) ) {
+							$sArticleTitle = '';
+							for ( $i = 3; $i < count( $aLinkParts ); $i++ ) {
+								$sArticleTitle .= ( !empty( $sArticleTitle ) ? ':' : '' ) . $aLinkParts[$i];
+							}
 
-					if ( !empty( $sArticlePath ) ) {
-						$sArticleTitle = '';
-						for ( $i = 3; $i < count( $aLinkParts ); $i++ ) {
-							$sArticleTitle .= ( !empty( $sArticleTitle ) ? ':' : '' ) . $aLinkParts[$i];
-						}
+							//RT#54264,#41254
+							$sArticleTitle = str_replace( ' ', '_', $sArticleTitle );
+							$sArticleTitle = wfUrlencode( $sArticleTitle );
 
-						//RT#54264,#41254
-						$sArticleTitle = str_replace( ' ', '_', $sArticleTitle );
-						$sArticleTitle = wfUrlencode( $sArticleTitle );
-
-						$sCityUrl = self::getCityUrl( $iCityId );
-						if ( !empty( $sCityUrl ) ) {
 							$url = str_replace( '$1', $sArticleTitle, $sArticlePath );
-							$url = $sCityUrl . $url;
+							$url = WikiFactory::cityUrlToDomain( $sCityUrl ) . $url;
 						}
 					}
 				}

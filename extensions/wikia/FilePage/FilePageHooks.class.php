@@ -132,7 +132,10 @@ class FilePageHooks extends WikiaObject{
 	static public function onGlobalUsageFormatItemWikiLink( $item, $page, &$link ) {
 		$link = WikiFactory::DBtoUrl( $item['wiki'] );
 		if ( $link ) {
-			$link .= 'wiki/'.$page;
+			$domain = WikiFactory::cityUrlToDomain( $link );
+			$articlePath = str_replace( '$1', $page, WikiFactory::cityUrlToArticlePath( $link ) );
+
+			$link = $domain . $articlePath;
 			$link = Xml::element( 'a', array( 'href' => $link ), str_replace( '_',' ', $page ) );
 		}
 

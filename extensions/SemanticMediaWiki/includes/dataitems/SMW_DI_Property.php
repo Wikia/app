@@ -313,7 +313,7 @@ class DIProperty extends SMWDataItem {
 				$diWikiPage = new DIWikiPage( $this->getKey(), SMW_NS_PROPERTY, $this->interwiki );
 				$typearray = ApplicationFactory::getInstance()->getStore()->getPropertyValues( $diWikiPage, new self( '_TYPE' ) );
 
-				if ( count( $typearray ) >= 1 ) { // some types given, pick one (hopefully unique)
+				if ( is_array( $typearray ) && count( $typearray ) >= 1 ) { // some types given, pick one (hopefully unique)
 					$typeDataItem = reset( $typearray );
 
 					if ( $typeDataItem instanceof SMWDIUri ) {
@@ -326,7 +326,7 @@ class DIProperty extends SMWDataItem {
 						// cached and thus this case occurs. This is why it is important to tolerate
 						// this case -- it is not necessarily a DB error.
 					}
-				} elseif ( count( $typearray ) == 0 ) { // no type given
+				} else { // no type given
 					$this->m_proptypeid = $smwgPDefaultType;
 				}
 			} else { // pre-defined property

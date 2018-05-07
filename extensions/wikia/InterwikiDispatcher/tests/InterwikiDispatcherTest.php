@@ -5,6 +5,9 @@ class InterwikiDispatcherTest extends WikiaBaseTest {
 	public function setUp() {
 		$this->setupFile = dirname( __FILE__ ) . "/../SpecialInterwikiDispatcher.php";
 		parent::setUp();
+
+		$this->mockGlobalVariable( 'wgWikiaEnvironment', WIKIA_ENV_PROD );
+		$this->mockGlobalVariable( 'wgDevelEnvironment', false );
 	}
 	/**
 	 * @param string $interwikiPageName

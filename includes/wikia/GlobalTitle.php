@@ -190,13 +190,11 @@ class GlobalTitle extends Title {
 	 * @return string
 	 */
 	protected static function getWgArticlePath( $wikiId ) {
-		$destinationWgArticlePath = WikiFactory::getVarValueByName( 'wgArticlePath', $wikiId );
-
-		if ( !isset( $destinationWgArticlePath ) ) {
-			$destinationWgArticlePath = self::DEFAULT_ARTICLE_PATH;
+		$cityUrl = WikiFactory::cityIDtoUrl( $wikiId );
+		if ( !$cityUrl ) {
+			return self::DEFAULT_ARTICLE_PATH;
 		}
-
-		return $destinationWgArticlePath;
+		return WikiFactory::cityUrlToArticlePath( $cityUrl, $wikiId );
 	}
 
 	/**
@@ -715,21 +713,12 @@ class GlobalTitle extends Title {
 		}
 
 		/**
-		 * get value from city_variables
-		 */
-		$server = WikiFactory::getVarValueByName( "wgServer", $this->mCityId );
-		if ( $server ) {
-			$this->mServer = $this->formatServer( $server );
-			return $this->mServer;
-		}
-
-		/**
 		 * get value from city_list.city_url
 		 */
-		$city = WikiFactory::getWikiByID( $this->mCityId );
+		$cityUrl = \WikiFactory::cityIDtoUrl( $this->mCityId );
 
-		if ( $city ) {
-			$server = rtrim( $city->city_url, "/" );
+		if ( $cityUrl ) {
+			$server = \WikiFactory::cityUrlToDomain( $cityUrl );
 			$this->mServer = $this->formatServer( $server );
 			return $this->mServer;
 		}
@@ -747,7 +736,7 @@ class GlobalTitle extends Title {
 
 	private function usingHTTPS( string $url = '' ): bool {
 		if ( empty( $url ) ) {
-			$url = WikiFactory::getVarValueByName( 'wgServer', $this->mCityId );
+			$url = WikiFactory::cityIDtoUrl( $this->mCityId );
 		}
 		return WebRequest::detectProtocol() === 'https' &&
 			wfHttpsAllowedForURL( $url );
@@ -771,15 +760,9 @@ class GlobalTitle extends Title {
 		}
 
 		/**
-		 * get value from city_variables
+		 * get wgArticlePath value
 		 */
-		$path = WikiFactory::getVarValueByName( "wgArticlePath", $this->mCityId );
-		if( ! $path ) {
-			/**
-			 * it's 100% true but it's at least something
-			 */
-			$path = $wgArticlePath;
-		}
+		$path = self::getWgArticlePath( $this->mCityId );
 
 		/**
 		 * replace all variables with proper values (for example wgScriptPath)
