@@ -1,5 +1,5 @@
 FROM alpine:3.7
 
-RUN apk add --no-cache netcat-openbsd
+RUN apk add --no-cache socat
 
-CMD ["nc", "-lkp", "9999"]
+CMD ["socat", "-u", "TCP-LISTEN:9999,reuseaddr,fork", "-"]
