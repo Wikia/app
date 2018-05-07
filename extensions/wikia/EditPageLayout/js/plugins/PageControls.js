@@ -265,6 +265,9 @@
 					$('#HiddenFieldsDialog input[name="wpTitle"]').keypress(function (event) {
 						if (event.keyCode == 13) {
 							$('#ok').click();
+
+							// SUS-926 | do not submit the entire edit page
+							event.preventDefault();
 						}
 					});
 				},
