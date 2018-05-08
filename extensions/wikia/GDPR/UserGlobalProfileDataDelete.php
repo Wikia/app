@@ -2,7 +2,7 @@
 
 class UserGlobalProfileDataDelete {
 	public static function deleteGlobalProfileData( User $user ): bool {
-		if ( !( $user instanceof User ) || $user->getId() === 0 ) {
+		if ( $user->isAnon() ) {
 			return false;
 		}
 
