@@ -80,7 +80,7 @@ abstract class MathRenderer {
 				$renderer = new MathSource( $tex, $params );
 				break;
 			case MW_MATH_MATHJAX:
-			default:
+			default: // SUS-4757 - always return a renderer instance
 				$renderer = new MathMathJax( $tex, $params );
 				break;
 		}
