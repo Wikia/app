@@ -113,6 +113,10 @@ class RawAction extends FormlessAction {
 			$response->header( 'HTTP/1.x 404 Not Found' );
 		}
 
+		if ( $contentType === 'text/x-wiki' ) {
+			$response->header( "Content-Disposition: inline; filename={$this->getTitle()->getText()}.txt" );
+		}
+
 		if ( !Hooks::run( 'RawPageViewBeforeOutput', [ $this, &$text ] ) ) {
 			wfDebug( __METHOD__ . ": RawPageViewBeforeOutput hook broke raw page output.\n" );
 		}
