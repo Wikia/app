@@ -18,11 +18,11 @@ define('ext.wikia.adEngine.adEngineRunner', [
 		timeout = getTimeout();
 
 	function getDisplayAdTimeout() {
-        if (adContext.get('opts.overwriteDelayEngine')) {
-            return instantGlobals.wgAdDriverDelayTimeout || 0;
-        }
+		if (adContext.get('opts.overwriteDelayEngine')) {
+			return instantGlobals.wgAdDriverDelayTimeout || 0;
+		}
 
-        return 2000;
+		return 2000;
 	}
 
 	function getTimeout() {
