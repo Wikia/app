@@ -103,6 +103,8 @@ Id of DOM element where the player should be placed
   logger: {
     // logging level, default is error, available values: 'info', 'warn', 'error', 'off'
     logLevel: string,
+    // should debug logs be logged to event-logger service?
+    logDebugToService: boolean,
     // client name (will be passed into logging service) e.g. 'oasis', 'mobile-wiki'
     clientName: string,
     // client version
