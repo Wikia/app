@@ -8,39 +8,34 @@ define('wikia.trackingOptOut', [
 	'use strict';
 
 	var qs = new Querystring(),
+		optOutEnabled = null,
 		trackingBlacklist = null;
-
-	function isOptOutEnabled() {
-		return isUrlParameterSet('trackingoptout');
-	}
 
 	function isUrlParameterSet(parameter) {
 		return !!parseInt(qs.getVal(parameter, '0'), 10);
 	}
 
-	function filterBlacklist(variables) {
-		if (window.Wikia && window.Wikia.TrackingOptOut) {
-			trackingBlacklist = window.Wikia.TrackingOptOut;
-
-			for (var name in variables) {
-				if (trackingBlacklist.hasOwnProperty(name) && variables.hasOwnProperty(name)) {
-					variables[name] = trackingBlacklist[name];
-				}
-			}
+	function isOptOutEnabled() {
+		if (optOutEnabled === null) {
+			optOutEnabled = isUrlParameterSet('trackingoptout');
 		}
 
-		return variables;
+		return optOutEnabled;
 	}
 
-	function checkOptOut(variables) {
-		if (isOptOutEnabled()) {
-			return filterBlacklist(variables);
+	function isBlacklisted(tracking) {
+		if (trackingBlacklist === null && window.Wikia && window.Wikia.TrackingOptOut) {
+			trackingBlacklist = window.Wikia.TrackingOptOut;
 		}
 
-		return variables;
+		return trackingBlacklist && trackingBlacklist.hasOwnProperty(tracking) && trackingBlacklist[tracking];
+	}
+
+	function isOptedOut(tracking) {
+		return isOptOutEnabled() && isBlacklisted(tracking);
 	}
 
 	return {
-		checkOptOut: checkOptOut
+		isOptedOut: isOptedOut
 	};
 });

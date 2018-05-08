@@ -149,12 +149,9 @@ class AdEngine2Hooks {
 	 * @return bool
 	 */
 	public static function onInstantGlobalsGetTrackingOptOut( array &$vars ) {
-		// list of variables with tracking opt-out values
-		$vars['wgEnableKruxTargeting'] = false;
-		$vars['wgAdDriverKruxCountries'] = [];
-		$vars['wgAdDriverKikimoraPlayerTrackingCountries'] = [];
-		$vars['wgAdDriverKikimoraTrackingCountries'] = [];
-		$vars['wgAdDriverKikimoraViewabilityTrackingCountries'] = [];
+		// list of functions with tracking opted-out
+		$vars['krux'] = true;
+		$vars['kikimora'] = true;
 
 		return true;
 	}
