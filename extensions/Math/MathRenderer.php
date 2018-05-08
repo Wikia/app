@@ -70,16 +70,17 @@ abstract class MathRenderer {
 	 * @param int $mode constant indicating rendering mode
 	 * @return MathRenderer appropriate renderer for mode
 	 */
-	public static function getRenderer( $tex, $params = array(),  $mode = MW_MATH_PNG ) {
+	public static function getRenderer( $tex, $params = array(),  $mode = MW_MATH_MATHJAX ) : MathRenderer {
 		global $wgDefaultUserOptions;
-		$validModes = array( MW_MATH_PNG, MW_MATH_SOURCE, MW_MATH_MATHJAX );
-		if ( !in_array( $mode, $validModes ) )
+		if ( !in_array( $mode, [ MW_MATH_SOURCE, MW_MATH_MATHJAX ] ) )
 			$mode = $wgDefaultUserOptions['math'];
+
 		switch ( $mode ) {
 			case MW_MATH_SOURCE:
 				$renderer = new MathSource( $tex, $params );
 				break;
 			case MW_MATH_MATHJAX:
+			default:
 				$renderer = new MathMathJax( $tex, $params );
 				break;
 		}
