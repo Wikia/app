@@ -63,47 +63,30 @@ class WikiaTempFilesUpload {
 		return !empty($title) && $title->exists();
 	}
 
-	public function tempFileName($user) {
+	public function tempFileName(User $user) {
 		return 'Temp_file_'. $user->getID(). '_' . time();
 	}
 
 	/**
 	 * Store info in the db to enable the script to pick it up later during the day (via an automated cleaning routine)
+	 *
+	 * @param string $filename
+	 * @return string
 	 */
-	public function tempFileStoreInfo( $filename ) {
-		global $wgExternalSharedDB, $wgCityId;
-		wfProfileIn(__METHOD__);
-
+	public function tempFileStoreInfo( string $filename ) {
 		$title = Title::makeTitle(NS_FILE, $filename);
 		$localRepo = RepoGroup::singleton()->getLocalRepo();
 
 		$path = LocalFile::newFromTitle($title, $localRepo)->getPath();
 
-		$dbw = wfGetDB(DB_MASTER, array(), $wgExternalSharedDB);
-		$dbw->insert(
-			'garbage_collector',
-			array(
-				'gc_filename' => $path,
-				'gc_timestamp' => $dbw->timestamp(),
-				'gc_wiki_id' => $wgCityId,
-			),
-			__METHOD__
-		);
-
-		$id = $dbw->insertId();
-		$this->log(__METHOD__, "image stored as #{$id}");
-
-		$dbw->commit();
-
-		wfProfileOut(__METHOD__);
-		return $id;
+		$stashedFile = self::getUploadStash()->stashFile($path);
+		return $stashedFile->getFileKey();
 	}
 
 	/**
 	 * Remove the data about given file from the garbage collector
 	 */
 	public function tempFileClearInfo($id) {
-		global $wgExternalSharedDB;
 		wfProfileIn(__METHOD__);
 
 		$imagePath = $this->tempFileGetPath($id);
@@ -117,15 +100,6 @@ class WikiaTempFilesUpload {
 
 		$imageFile = new FakeLocalFile($imageTitle, $repo);
 		$imageFile->delete('');
-
-		// remove from DB
-		$dbw = wfGetDB(DB_MASTER, array(), $wgExternalSharedDB );
-		$dbw->delete(
-			'garbage_collector',
-			array('gc_id' => $id),
-			__METHOD__
-		);
-		$dbw->commit();
 
 		wfProfileOut(__METHOD__);
 	}
@@ -185,5 +159,13 @@ class WikiaTempFilesUpload {
 
 	public function log($method, $msg) {
 		wfDebug("{$method}: {$msg}\n");
+	}
+
+	/**
+	 * @return UploadStash
+	 */
+	public static function getUploadStash() {
+		$repo = RepoGroup::singleton()->getLocalRepo();
+		return new UploadStash($repo);
 	}
 }
