@@ -233,6 +233,7 @@ class AdEngine2Hooks {
 		$scriptModules[] = 'wikia.log';
 		$scriptModules[] = 'wikia.querystring';
 		$scriptModules[] = 'wikia.tracker.stub';
+		$scriptModules[] = 'wikia.trackingOptOut';
 		$scriptModules[] = 'wikia.window';
 		return true;
 	}
