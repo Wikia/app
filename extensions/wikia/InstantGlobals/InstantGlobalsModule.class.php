@@ -56,7 +56,12 @@ class InstantGlobalsModule extends ResourceLoaderModule {
 			}
 		);
 
-		return sprintf( 'Wikia.InstantGlobals = %s', json_encode( $variables ) );
+		$trackingOptOut = [];
+
+		Hooks::run( 'InstantGlobalsGetTrackingOptOut', [&$trackingOptOut] );
+
+		return sprintf( 'Wikia.InstantGlobals = %s; Wikia.TrackingOptOut = %s;',
+			json_encode( $variables ), json_encode( $trackingOptOut ) );
 	}
 
 	/**

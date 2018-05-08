@@ -8,36 +8,32 @@ define('wikia.trackingOptOut', [
 	'use strict';
 
 	var qs = new Querystring(),
-		trackingBlacklist = {
-			boolean: [
-				'wgEnableKruxTargeting'
-			],
-			country: [
-				'wgAdDriverKruxCountries',
-				'wgAdDriverKikimoraPlayerTrackingCountries',
-				'wgAdDriverKikimoraTrackingCountries',
-				'wgAdDriverKikimoraViewabilityTrackingCountries'
-			]
-		};
+		trackingBlacklist = null;
+
+	function isOptOutEnabled() {
+		return isUrlParameterSet('trackingoptout');
+	}
 
 	function isUrlParameterSet(parameter) {
 		return !!parseInt(qs.getVal(parameter, '0'), 10);
 	}
 
 	function filterBlacklist(variables) {
-		trackingBlacklist.boolean.forEach(function (variable) {
-			variables[variable] = false;
-		});
+		if (window.Wikia && window.Wikia.TrackingOptOut) {
+			trackingBlacklist = window.Wikia.TrackingOptOut;
 
-		trackingBlacklist.country.forEach(function (variable) {
-			variables[variable] = [];
-		});
+			for (var name in variables) {
+				if (trackingBlacklist.hasOwnProperty(name) && variables.hasOwnProperty(name)) {
+					variables[name] = trackingBlacklist[name];
+				}
+			}
+		}
 
 		return variables;
 	}
 
 	function checkOptOut(variables) {
-		if (isUrlParameterSet('trackingoptout')) {
+		if (isOptOutEnabled()) {
 			return filterBlacklist(variables);
 		}
 

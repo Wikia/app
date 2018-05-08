@@ -142,6 +142,24 @@ class AdEngine2Hooks {
 	}
 
 	/**
+	 * Get tracking opt-outs for "instant" globals
+	 *
+	 * @param array $vars
+	 *
+	 * @return bool
+	 */
+	public static function onInstantGlobalsGetTrackingOptOut( array &$vars ) {
+		// list of variables with tracking opt-out values
+		$vars['wgEnableKruxTargeting'] = false;
+		$vars['wgAdDriverKruxCountries'] = [];
+		$vars['wgAdDriverKikimoraPlayerTrackingCountries'] = [];
+		$vars['wgAdDriverKikimoraTrackingCountries'] = [];
+		$vars['wgAdDriverKikimoraViewabilityTrackingCountries'] = [];
+
+		return true;
+	}
+
+	/**
 	 * Register ad-related vars on top
 	 *
 	 * @param array $vars
