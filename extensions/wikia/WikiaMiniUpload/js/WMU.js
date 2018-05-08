@@ -939,7 +939,6 @@ function WMU_insertImage(type) {
 	var params = [];
 	params.push('type='+type);
 	params.push('mwname='+$('#ImageUploadMWname').val());
-	params.push('tempid='+$('#ImageUploadTempid').val());
 
 	if(WMU_exactHeight) {
 		params.push('exactHeight='+WMU_exactHeight);
@@ -1259,8 +1258,7 @@ function WMU_switchScreen(to) {
 		    action: 'ajax',
 		    rs: 'WMU',
 		    method: 'clean',
-		    mwname: $('#ImageUploadMWname').val(),
-		    tempid: $( '#ImageUploadTempid' ).val()
+		    mwname: $('#ImageUploadMWname').val()
 		});
 	}
 

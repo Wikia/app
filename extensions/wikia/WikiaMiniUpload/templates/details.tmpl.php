@@ -116,7 +116,6 @@ global $wgExtensionsPath, $wgBlankImgUrl;
 
 	<input id="ImageUploadExtraId" type="hidden" value="<?= isset($props['extraId']) ? urlencode($props['extraId']) : '' ?>" />
 	<input id="ImageUploadMWname" type="hidden" value="<?= urlencode($props['mwname']) ?>" />
-	<input id="ImageUploadTempid" type="hidden" value="<?= isset($props['tempid']) ? $props['tempid'] : '' ?>" />
 	<input id="ImageRealWidth" type="hidden" value="<?= $props['file']->getWidth() ?>" />
 	<input id="ImageRealHeight" type="hidden" value="<?= $props['file']->getHeight() ?>" />
 

@@ -152,55 +152,6 @@ class WikiaMiniUpload {
 	}
 
 	/**
-	 * Store info in the db to enable the script to pick it up later during
-	 * the day (via an automated cleaning routine)
-	 *
-	 * @param string|$filename
-	 * @return int
-	 */
-	function tempFileStoreInfo( $filename ) {
-		global $wgExternalSharedDB, $wgCityId;
-
-		$path = LocalFile::newFromTitle(
-			Title::makeTitle( NS_FILE, $filename ),
-			RepoGroup::singleton()->getLocalRepo()
-		)->getPath( );
-
-
-		$dbw = wfGetDB(DB_MASTER, array(), $wgExternalSharedDB );
-		$dbw->insert(
-			'garbage_collector',
-			array(
-				'gc_filename'	=>	$path,
-				'gc_timestamp'	=>	$dbw->timestamp(),
-				'gc_wiki_id'	=>	$wgCityId,
-			),
-			__METHOD__
-		);
-		$dbw->commit();
-		return $dbw->insertId();
-	}
-
-	/**
-	 * Remove the data about this file from the db, so it won't clutter it
-	 *
-	 * @param $id
-	 */
-	function tempFileClearInfo( $id ) {
-		global $wgExternalSharedDB;
-
-		$dbw = wfGetDB(DB_MASTER, array(), $wgExternalSharedDB );
-		$dbw->delete(
-			'garbage_collector',
-			array(
-				'gc_id'	=>	$id,
-			),
-			__METHOD__
-		);
-		$dbw->commit();
-	}
-
-	/**
 	 * This function loads the image details page
 	 *
 	 * @return string
@@ -230,13 +181,11 @@ class WikiaMiniUpload {
 			$tempname = $this->tempFileName( $wgUser );
 			$file = new FakeLocalFile(Title::newFromText($tempname, 6), RepoGroup::singleton()->getLocalRepo());
 			$file->upload($upload->getTempPath(), '', '');
-			$tempid = $this->tempFileStoreInfo( $tempname );
 			$props = array();
 			$props['file'] = $file;
 			$props['name'] = preg_replace("/[^".Title::legalChars()."]|:/", '-', trim($flickrResult['title']['_content']).'.jpg');
 			$props['mwname'] = $tempname;
 			$props['extraId'] = $itemId;
-			$props['tempid'] = $tempid;
 		}
 		return $this->detailsPage($props);
 	}
@@ -304,12 +253,10 @@ class WikiaMiniUpload {
 			$tempname = $this->tempFileName( $wgUser );
 			$file = new FakeLocalFile(Title::newFromText($tempname, 6), RepoGroup::singleton()->getLocalRepo());
 			$file->upload($wgRequest->getFileTempName('wpUploadFile'), '', '');
-			$tempid = $this->tempFileStoreInfo( $tempname );
 			$props = array();
 			$props['file'] = $file;
 			$props['name'] = stripslashes($wgRequest->getFileName('wpUploadFile'));
 			$props['mwname'] = $tempname;
-			$props['tempid'] = $tempid;
 			$props['upload'] = true;
 			$props['default_caption'] = Wikia::getProps($file->getTitle()->getArticleID(), 'default_caption');
 			return $this->detailsPage($props);
@@ -437,7 +384,6 @@ class WikiaMiniUpload {
 		$type = $wgRequest->getVal('type');
 		$name = $wgRequest->getVal('name');
 		$mwname = $wgRequest->getVal('mwname');
-		$tempid = $wgRequest->getVal('tempid');
 
 		$gallery = $wgRequest->getVal( 'gallery', '' );
 		$title_main = urldecode( $wgRequest->getVal( 'article', '' ) );
@@ -506,7 +452,6 @@ class WikiaMiniUpload {
 
 						$file_name->upload($file_mwname->getPath(), '', $caption);
 						$file_mwname->delete('');
-						$this->tempFileClearInfo( $tempid );
 						$newFile = false;
 					} else if ( $type == 'existing' ) {
 						$file = wfFindFile( Title::newFromText( $name, 6 ) );
@@ -584,7 +529,6 @@ class WikiaMiniUpload {
 
 					$file->upload($temp_file->getPath(), '', $caption);
 					$temp_file->delete('');
-					$this->tempFileClearInfo( $tempid );
 				}
 
 				if ( $wgUser->getGLobalPreference( 'watchdefault' ) || ( $newFile && $wgUser->getGlobalPreference( 'watchcreations' ) ) ) {
@@ -789,7 +733,6 @@ class WikiaMiniUpload {
 		global $wgRequest;
 		$file = new FakeLocalFile(Title::newFromText($wgRequest->getVal('mwname'), 6), RepoGroup::singleton()->getLocalRepo());
 		$file->delete('');
-		$this->tempFileClearInfo( $wgRequest->getVal('tempid') );
 	}
 
 	function getFlickrPhotoInfo( $itemId ) {
