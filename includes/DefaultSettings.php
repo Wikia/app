@@ -1528,7 +1528,7 @@ $wgObjectCaches = array(
 			? 'MemcachedPeclBagOStuff'
 			// use an old memcache-client on production
 			// (and enable the new one on 50% of all requests)
-			: ( mt_rand(0, 100) < 50 ? 'MemcachedPeclBagOStuff' : 'MemcachedPhpBagOStuff' ),
+			: ( mt_rand(0, 100) < 0 ? 'MemcachedPeclBagOStuff' : 'MemcachedPhpBagOStuff' ),
 		'use_binary_protocol' => false, // twemproxy does not support binary protocol
 	],
 
