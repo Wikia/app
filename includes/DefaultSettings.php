@@ -1522,7 +1522,12 @@ $wgObjectCaches = array(
 		 * Note that MemcachedPhpBagOStuff and MemcachedPeclBagOStuff clients use
 		 * incompatible serialization logic.
 		 */
-		'class' =>'MemcachedPeclBagOStuff',
+		'class' => in_array( $wgWikiaEnvironment, [ WIKIA_ENV_SANDBOX, WIKIA_ENV_DEV ] )
+			// use a new memcached-based client on sandboxes and devboxes
+			? 'MemcachedPeclBagOStuff'
+			// use an old memcache-client on production
+			// (and enable the new one on 25% of all requests)
+			: ( mt_rand( 0, 100 ) < 25 ? 'MemcachedPeclBagOStuff' : 'MemcachedPhpBagOStuff' ),
 		'use_binary_protocol' => false, // twemproxy does not support binary protocol
 	],
 
