@@ -9,6 +9,8 @@ class SassUtil {
 	const HEX_REG_EXP = '/#([a-f0-9]{3,6})/i';
 	const THEME_DESIGNER_COLOR_KEYS = array('color-body', 'color-body-middle', 'color-page', 'color-buttons', 'color-links', 'color-community-header', 'color-header');
 
+	static $oasisSettings = [];
+
 	/**
 	 * Returns complete set of sass parameters including theme settings set by user
 	 * and webapp application settings.
@@ -66,26 +68,24 @@ class SassUtil {
 		wfProfileIn(__METHOD__);
 
 		// Load the 5 deafult colors by theme here (eg: in case the wiki has an override but the user doesn't have overrides).
-		static $oasisSettings = array();
-
-		if (empty($oasisSettings)) {
+		if (empty(static::$oasisSettings)) {
 			$themeSettings = new ThemeSettings();
 			$settings = $themeSettings->getSettings();
 
-			$oasisSettings['color-body'] = self::sanitizeColor($settings['color-body']);
-			$oasisSettings['color-body-middle'] = self::sanitizeColor($settings['color-body-middle']);
-			$oasisSettings['color-page'] = self::sanitizeColor($settings['color-page']);
-			$oasisSettings['color-buttons'] = self::sanitizeColor($settings['color-buttons']);
-			$oasisSettings['color-community-header'] = self::sanitizeColor($settings['color-community-header']);
-			$oasisSettings['color-links'] = self::sanitizeColor($settings['color-links']);
-			$oasisSettings['color-header'] = self::sanitizeColor($settings['color-header']);
-			$oasisSettings['background-image'] = $themeSettings->getBackgroundUrl();
+			static::$oasisSettings['color-body'] = self::sanitizeColor($settings['color-body']);
+			static::$oasisSettings['color-body-middle'] = self::sanitizeColor($settings['color-body-middle']);
+			static::$oasisSettings['color-page'] = self::sanitizeColor($settings['color-page']);
+			static::$oasisSettings['color-buttons'] = self::sanitizeColor($settings['color-buttons']);
+			static::$oasisSettings['color-community-header'] = self::sanitizeColor($settings['color-community-header']);
+			static::$oasisSettings['color-links'] = self::sanitizeColor($settings['color-links']);
+			static::$oasisSettings['color-header'] = self::sanitizeColor($settings['color-header']);
+			static::$oasisSettings['background-image'] = $themeSettings->getBackgroundUrl();
 
 			// sending width and height of background image to SASS
 			if ( !empty($settings['background-image-width']) && !empty($settings['background-image-height']) ) {
 				// strip 'px' from previously cached settings since we removed 'px' (sanity check)
-				$oasisSettings['background-image-width'] = str_replace( 'px', '', $settings['background-image-width'] );
-				$oasisSettings['background-image-height'] = str_replace( 'px', '', $settings['background-image-height'] );
+				static::$oasisSettings['background-image-width'] = str_replace( 'px', '', $settings['background-image-width'] );
+				static::$oasisSettings['background-image-height'] = str_replace( 'px', '', $settings['background-image-height'] );
 			} else {
 				// if not cached in theme settings
 				$bgImage = wfFindFile(ThemeSettings::BackgroundImageName);
@@ -94,8 +94,8 @@ class SassUtil {
 						'backgroundImageTimestamp' => $bgImage->getTimestamp()
 					] );
 
-					$settings['background-image-width'] = $oasisSettings['background-image-width'] = $bgImage->getWidth();
-					$settings['background-image-height'] = $oasisSettings['background-image-height'] = $bgImage->getHeight();
+					$settings['background-image-width'] = static::$oasisSettings['background-image-width'] = $bgImage->getWidth();
+					$settings['background-image-height'] = static::$oasisSettings['background-image-height'] = $bgImage->getHeight();
 
 					// SUS-3104: Do not run this in the context of the session user
 					$globalStateWrapper = new Wikia\Util\GlobalStateWrapper( [
@@ -108,30 +108,30 @@ class SassUtil {
 				}
 			}
 
-			$oasisSettings['background-dynamic'] = $settings['background-dynamic'];
-			$oasisSettings['page-opacity'] = $settings['page-opacity'];
+			static::$oasisSettings['background-dynamic'] = $settings['background-dynamic'];
+			static::$oasisSettings['page-opacity'] = $settings['page-opacity'];
 			if (!empty($settings['wordmark-font']) && $settings['wordmark-font'] != 'default') {
-				$oasisSettings['wordmark-font'] = $settings['wordmark-font'];
+				static::$oasisSettings['wordmark-font'] = $settings['wordmark-font'];
 			}
 
 			// RTL
 			if(self::isRTL()){
-				$oasisSettings['rtl'] = 'true';
+				static::$oasisSettings['rtl'] = 'true';
 			}
 
 			// RT:70673
-			foreach ($oasisSettings as $key => $val) {
+			foreach (static::$oasisSettings as $key => $val) {
 				if(!empty($val)) {
-					$oasisSettings[$key] = trim($val);
+					static::$oasisSettings[$key] = trim($val);
 				}
 			}
 		}
 
-		wfDebug(__METHOD__ . ': ' . json_encode($oasisSettings) . "\n");
+		wfDebug(__METHOD__ . ': ' . json_encode(static::$oasisSettings) . "\n");
 
 		wfProfileOut(__METHOD__);
 
-		return $oasisSettings;
+		return static::$oasisSettings;
 	}
 
 	/**
