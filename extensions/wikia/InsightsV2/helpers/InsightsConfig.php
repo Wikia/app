@@ -60,6 +60,10 @@ class InsightsConfig {
 		}
 	}
 
+	public function setShowPageViews( bool $pageViews ) {
+		$this->pageViews = $pageViews;
+	}
+
 	public function showPageViews() {
 		return $this->pageViews;
 	}
