@@ -307,8 +307,12 @@ class MercuryApiController extends WikiaController {
 			return;
 		}
 
+		$tidy = new tidy();
+		$tidy->parseString( $articleAsJson->content );
+		$tidy->cleanRepair();
+
 		$data['article'] = [
-			'content' => $articleAsJson->content,
+			'content' => (string) $tidy,
 			'heroImage' => $articleAsJson->heroImage
 		];
 
