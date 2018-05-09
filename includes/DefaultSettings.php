@@ -1509,6 +1509,10 @@ $wgParserCacheType = CACHE_ANYTHING;
  * - CACHE_DBA uses $wgTmpDirectory by default. The 'dir' parameter let you
  *   overrides that.
  */
+$wgDomainHash = isset($_SERVER['SERVER_NAME'])
+	? hexdec(substr(md5($_SERVER['SERVER_NAME']), 0, 7))
+	: null;
+
 $wgObjectCaches = array(
 	CACHE_NONE => array( 'class' => 'EmptyBagOStuff' ),
 	CACHE_DBA => array( 'class' => 'DBABagOStuff' ),
@@ -1526,8 +1530,8 @@ $wgObjectCaches = array(
 		'class' => in_array( $wgWikiaEnvironment, [ WIKIA_ENV_SANDBOX, WIKIA_ENV_DEV ] )
 			// use a new memcached-based client on sandboxes and devboxes
 			? 'MemcachedPeclBagOStuff'
-			// use an old memcache-client on production
-			: 'MemcachedPhpBagOStuff',
+			// use a new memcache-client on production for 10% of wikis
+			: ( ( !is_null($wgDomainHash) && $wgDomainHash % 100 < 10 ) ? 'MemcachedPeclBagOStuff' : 'MemcachedPhpBagOStuff' ),
 		'use_binary_protocol' => false, // twemproxy does not support binary protocol
 	],
 
@@ -1538,6 +1542,8 @@ $wgObjectCaches = array(
 	'memcached-pecl' => array( 'class' => 'MemcachedPeclBagOStuff' ),
 	'hash' => array( 'class' => 'HashBagOStuff' ),
 );
+
+unset($wgDomainHash);
 
 /**
  * The expiry time for the parser cache, in seconds. The default is 86.4k
