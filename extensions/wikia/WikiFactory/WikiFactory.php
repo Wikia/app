@@ -2106,44 +2106,40 @@ class WikiFactory {
 			return null;
 		}
 
-		if ( !empty( $city_id ) ) {
-			$oRow2 = WikiaDataAccess::cache(
-				static::getVarValueKey( $city_id, $oRow->cv_id ),
-				WikiaResponse::CACHE_STANDARD,
-				function() use ($dbr, $oRow, $city_id, $fname) {
-					return $dbr->selectRow(
-						[ "city_variables" ],
-						[
-							"cv_city_id",
-							"cv_variable_id",
-							"cv_value"
-						],
-						[
-							"cv_variable_id" => $oRow->cv_id,
-							"cv_city_id" => $city_id
-						],
-						$fname
-					);
+		$oVariableValue = WikiaDataAccess::cache(
+			static::getVarValueKey( $city_id, $oRow->cv_id ),
+			WikiaResponse::CACHE_STANDARD,
+			function() use ($dbr, $oRow, $city_id, $fname) {
+				$row = $dbr->selectRow(
+					[ "city_variables" ],
+					[
+						"cv_city_id",
+						"cv_variable_id",
+						"cv_value"
+					],
+					[
+						"cv_variable_id" => $oRow->cv_id,
+						"cv_city_id" => $city_id
+					],
+					$fname
+				);
+
+				// SUS-4761 | variable is NOT set in database, still cache it
+				if ( !isset( $row->cv_variable_id ) ) {
+					$row = new stdClass();
+					$row->cv_city_id = $city_id;
+					$row->cv_variable_id = $oRow->cv_id;
+					$row->cv_value = null;
 				}
-			);
 
-			if ( isset( $oRow2->cv_variable_id ) ) {
+				return $row;
+			}
+		);
 
-				$oRow->cv_city_id = $oRow2->cv_city_id;
-				$oRow->cv_variable_id = $oRow2->cv_variable_id;
-				$oRow->cv_value = $oRow2->cv_value;
-			}
-			else {
-				$oRow->cv_city_id = $city_id;
-				$oRow->cv_variable_id = $oRow->cv_id;
-				$oRow->cv_value = null;
-			}
-		}
-		else {
-			$oRow->cv_city_id = null;
-			$oRow->cv_variable_id = $oRow->cv_id;
-			$oRow->cv_value = null;
-		}
+		// merge variable value with variable's metadata
+		$oRow->cv_city_id = $oVariableValue->cv_city_id;
+		$oRow->cv_variable_id = $oVariableValue->cv_variable_id;
+		$oRow->cv_value = $oVariableValue->cv_value;
 
 		wfProfileOut( __METHOD__ );
 		return $oRow;
