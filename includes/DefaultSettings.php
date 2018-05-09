@@ -1532,7 +1532,16 @@ $wgObjectCaches = array(
 			? 'MemcachedPeclBagOStuff'
 			// use a new memcache-client on production for 10% of wikis
 			: ( ( !is_null($wgDomainHash) && $wgDomainHash % 100 < 10 ) ? 'MemcachedPeclBagOStuff' : 'MemcachedPhpBagOStuff' ),
+
 		'use_binary_protocol' => false, // twemproxy does not support binary protocol
+
+		/**
+		 * SUS-4749 | make MemcachedPeclBagOStuff use igbinary serializer when available
+		 *
+		 * @see https://github.com/igbinary/igbinary#igbinary
+		 * @see https://phpolyk.wordpress.com/2011/08/28/igbinary-the-new-php-serializer/
+		 */
+		'serializer' => extension_loaded( 'igbinary' ) ? 'igbinary' : 'php',
 	],
 
 	'apc' => array( 'class' => 'APCBagOStuff' ),

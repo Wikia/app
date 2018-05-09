@@ -104,10 +104,7 @@ class MemcachedPeclBagOStuff extends MemcachedBagOStuff {
 		}
 
 		if ( !isset( $params['serializer'] ) ) {
-			// SUS-4749 | use igbinary serializer when available
-			// @see https://github.com/igbinary/igbinary#igbinary
-			// @see https://phpolyk.wordpress.com/2011/08/28/igbinary-the-new-php-serializer/
-			$params['serializer'] = extension_loaded( 'igbinary' ) ? 'igbinary' : 'php';
+			$params['serializer'] = 'php';
 		}
 
 		return $params;
