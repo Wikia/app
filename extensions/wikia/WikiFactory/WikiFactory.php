@@ -2107,11 +2107,11 @@ class WikiFactory {
 		}
 
 		if ( !empty( $city_id ) ) {
-			$oRow2 = WikiaDataAccess::cache(
+			$oRow = WikiaDataAccess::cache(
 				static::getVarValueKey( $city_id, $oRow->cv_id ),
 				WikiaResponse::CACHE_STANDARD,
 				function() use ($dbr, $oRow, $city_id, $fname) {
-					return $dbr->selectRow(
+					$row = $dbr->selectRow(
 						[ "city_variables" ],
 						[
 							"cv_city_id",
@@ -2124,20 +2124,18 @@ class WikiFactory {
 						],
 						$fname
 					);
+
+					// SUS-4761 | variable is NOT set in database, still cache it
+					if ( !isset( $row->cv_variable_id ) ) {
+						$row = new stdClass();
+						$row->cv_city_id = $city_id;
+						$row->cv_variable_id = $oRow->cv_id;
+						$row->cv_value = null;
+					}
+
+					return $row;
 				}
 			);
-
-			if ( isset( $oRow2->cv_variable_id ) ) {
-
-				$oRow->cv_city_id = $oRow2->cv_city_id;
-				$oRow->cv_variable_id = $oRow2->cv_variable_id;
-				$oRow->cv_value = $oRow2->cv_value;
-			}
-			else {
-				$oRow->cv_city_id = $city_id;
-				$oRow->cv_variable_id = $oRow->cv_id;
-				$oRow->cv_value = null;
-			}
 		}
 		else {
 			$oRow->cv_city_id = null;
