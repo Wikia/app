@@ -33,7 +33,7 @@ define('ext.wikia.adEngine.babDetection', [
 			category: 'ads-babdetector-detection',
 			action: 'impression',
 			label: isAdBlockDetected ? 'Yes' : 'No',
-			value: isAdBlockDetected ? 1 : 0,
+			value: 0,
 			trackingMethod: 'internal'
 		});
 	}
