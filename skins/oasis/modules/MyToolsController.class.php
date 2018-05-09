@@ -43,6 +43,11 @@ class MyToolsController extends WikiaController {
 						case 'Contributions':
 							$href .= '/' . $wgUser->getTitleKey();
 							break;
+						
+						case 'PrefixIndex':
+							global $wgPageName;
+							$href .= '/' . $wgPageName->getPartialUrl();
+							break;
 					}
 					$out[] = array(
 						'text' => $page->getDescription(),
