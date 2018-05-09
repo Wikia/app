@@ -142,18 +142,16 @@ class AdEngine2Hooks {
 	}
 
 	/**
-	 * Get tracking opt-outs for "instant" globals
+	 * Get tracking opt-outs for Wikia modules
 	 *
-	 * @param array $vars
-	 *
-	 * @return bool
+	 * @return array
 	 */
-	public static function onInstantGlobalsGetTrackingOptOut( array &$vars ) {
+	public static function getTrackingOptOutModules() {
 		// list of functions with tracking opted-out
-		$vars['krux'] = true;
-		$vars['kikimora'] = true;
-
-		return true;
+		 return $vars = [
+			'krux' => true,
+			'kikimora' => true
+		];
 	}
 
 	/**

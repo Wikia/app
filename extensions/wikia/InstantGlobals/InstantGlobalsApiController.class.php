@@ -18,9 +18,7 @@ class InstantGlobalsApiController extends WikiaController {
 	 * @return array
 	 */
 	public function getNewsAndStoriesTrackingOptOut() {
-		$trackingOptOut = [];
-
-		Hooks::run( 'InstantGlobalsGetTrackingOptOut', [&$trackingOptOut] );
+		$trackingOptOut = AdEngine2Hooks::getTrackingOptOutModules();
 
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 		$this->response->setCacheValidity( WikiaResponse::CACHE_VERY_SHORT );
