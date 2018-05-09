@@ -1846,6 +1846,12 @@ $wgShortArticlePathWikis = [
 $wgEnableOpenXSPC = true;
 
 /**
+ * Whether to inline the ResourceLoader startup script (for certain error pages)
+ * SUS-4734
+ */
+$wgInlineStartupScript = false;
+
+/**
  * Enable recovery
  * It should be always included even if recovery is disabled as we use Recovery classes outside the module
  */

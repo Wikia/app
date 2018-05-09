@@ -42,7 +42,7 @@ function wikiaJWPlayerTracking(playerInstance, willAutoplay, tracker) {
 		}
 
 		var pixelID = 'comscoreVideoMetrixTrack',
-			url = 'http://b.scorecardresearch.com/p?C1=1&C2=6177433&C5=04';
+			url = 'https://sb.scorecardresearch.com/p?C1=1&C2=6177433&C5=04';
 
 		addTrackingPixel(pixelID, url);
 	}

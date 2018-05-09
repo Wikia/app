@@ -9,6 +9,7 @@ class WikiFactoryLoaderIntegrationTest extends WikiaDatabaseTest {
 		parent::setUp();
 
 		WikiFactory::isUsed( false );
+		$GLOBALS['wgExtensionFunctions'] = [];
 	}
 
 	/**
@@ -222,28 +223,24 @@ class WikiFactoryLoaderIntegrationTest extends WikiaDatabaseTest {
 
 	/**
 	 * @dataProvider provideDisabledWikis
-	 * @runInSeparateProcess
-	 * @preserveGlobalState disabled
 	 *
 	 * @param array $server
 	 */
-	public function testReturnsFalseAndRedirectsWhenWikiIsDisabled( array $server ) {
+	public function testRegistersClosedWikiHandlerWhenWikiIsDisabled( int $expectedCityId, array $server ) {
 		$wikiFactoryLoader = new WikiFactoryLoader( $server, [] );
 		$result = $wikiFactoryLoader->execute();
 
-		$headers = xdebug_get_headers();
-
-		$this->assertFalse( $result );
-		$this->assertContains( 'X-Redirected-By-WF: Dump', $headers );
+		$this->assertEquals( $expectedCityId, $result );
+		$this->assertInstanceOf( Closure::class, $GLOBALS['wgExtensionFunctions'][0] );
 	}
 
 	public function provideDisabledWikis() {
-		yield [ [
+		yield [ 5, [
 			'REQUEST_SCHEME' => 'http',
 			'SERVER_NAME' => 'rekt.wikia.com',
 			'REQUEST_URI' => '/wiki/No_page',
 		] ];
-		yield [ [
+		yield [ 6, [
 			'REQUEST_SCHEME' => 'http',
 			'SERVER_NAME' => 'dead.wikia.com',
 			'REQUEST_URI' => '/wiki/Special:Version',
