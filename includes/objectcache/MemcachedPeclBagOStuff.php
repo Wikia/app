@@ -71,6 +71,10 @@ class MemcachedPeclBagOStuff extends MemcachedBagOStuff {
 		// rewritten.
 		$this->client->setOption( Memcached::OPT_LIBKETAMA_COMPATIBLE, true );
 
+		// SUS-4749 | add a prefix to all keys due to serialization incompatibility
+		// with an old client
+		$this->client->setOption( Memcached::OPT_PREFIX_KEY, 'lb' );
+
 		// Set the serializer
 		switch ( $params['serializer'] ) {
 			case 'php':
@@ -100,7 +104,10 @@ class MemcachedPeclBagOStuff extends MemcachedBagOStuff {
 		}
 
 		if ( !isset( $params['serializer'] ) ) {
-			$params['serializer'] = 'php';
+			// SUS-4749 | use igbinary serializer when available
+			// @see https://github.com/igbinary/igbinary#igbinary
+			// @see https://phpolyk.wordpress.com/2011/08/28/igbinary-the-new-php-serializer/
+			$params['serializer'] = extension_loaded( 'igbinary' ) ? 'igbinary' : 'php';
 		}
 
 		return $params;
