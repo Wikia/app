@@ -2106,7 +2106,7 @@ class WikiFactory {
 			return null;
 		}
 
-		$oRow = WikiaDataAccess::cache(
+		$oVariableValue = WikiaDataAccess::cache(
 			static::getVarValueKey( $city_id, $oRow->cv_id ),
 			WikiaResponse::CACHE_STANDARD,
 			function() use ($dbr, $oRow, $city_id, $fname) {
@@ -2135,6 +2135,11 @@ class WikiFactory {
 				return $row;
 			}
 		);
+
+		// merge variable value with variable's metadata
+		$oRow->cv_city_id = $oVariableValue->cv_city_id;
+		$oRow->cv_variable_id = $oVariableValue->cv_variable_id;
+		$oRow->cv_value = $oVariableValue->cv_value;
 
 		wfProfileOut( __METHOD__ );
 		return $oRow;
