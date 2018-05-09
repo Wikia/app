@@ -8,11 +8,12 @@ define('ext.wikia.adEngine.adContext', [
 	'wikia.document',
 	'wikia.geo',
 	'wikia.instantGlobals',
+	'wikia.trackingOptOut',
 	'ext.wikia.adEngine.geo',
 	'ext.wikia.adEngine.utils.sampler',
 	'wikia.window',
 	'wikia.querystring'
-], function (browserDetect, cookies, doc, geo, instantGlobals, adsGeo, sampler, w, Querystring) {
+], function (browserDetect, cookies, doc, geo, instantGlobals, trackingOptOut, adsGeo, sampler, w, Querystring) {
 	'use strict';
 
 	instantGlobals = instantGlobals || {};
@@ -189,14 +190,16 @@ define('ext.wikia.adEngine.adContext', [
 			) || isUrlParamSet('highimpactslot');
 
 		// AdInfo warehouse logging
-		context.opts.kikimoraViewabilityTracking =
+		context.opts.kikimoraViewabilityTracking = !trackingOptOut.isOptedOut('kikimora') &&
 			geo.isProperGeo(instantGlobals.wgAdDriverKikimoraViewabilityTrackingCountries);
-		context.opts.enableAdInfoLog = geo.isProperGeo(instantGlobals.wgAdDriverKikimoraTrackingCountries);
-		context.opts.playerTracking = geo.isProperGeo(instantGlobals.wgAdDriverKikimoraPlayerTrackingCountries);
+		context.opts.enableAdInfoLog = !trackingOptOut.isOptedOut('kikimora') &&
+			geo.isProperGeo(instantGlobals.wgAdDriverKikimoraTrackingCountries);
+		context.opts.playerTracking = !trackingOptOut.isOptedOut('kikimora') &&
+			geo.isProperGeo(instantGlobals.wgAdDriverKikimoraPlayerTrackingCountries);
 
 		// Krux integration
 		context.targeting.enableKruxTargeting = !!(
-			context.targeting.enableKruxTargeting &&
+			context.targeting.enableKruxTargeting && !trackingOptOut.isOptedOut('krux') &&
 			isProperGeo('wgAdDriverKruxCountries') && !instantGlobals.wgSitewideDisableKrux
 		);
 
