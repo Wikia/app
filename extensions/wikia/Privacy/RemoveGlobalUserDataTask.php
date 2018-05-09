@@ -2,7 +2,7 @@
 
 use Wikia\Tasks\Tasks\BaseTask;
 
-class RemoveGlobalUserDataTaks extends BaseTask {
+class RemoveGlobalUserDataTask extends BaseTask {
 	public function removeData( int $userId ) {
 		$user = User::newFromId( $userId );
 		if ( $user->isAnon() ) {
