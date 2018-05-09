@@ -1536,12 +1536,14 @@ $wgObjectCaches = array(
 		'use_binary_protocol' => false, // twemproxy does not support binary protocol
 
 		/**
-		 * SUS-4749 | make MemcachedPeclBagOStuff use igbinary serializer when available
+		 * SUS-4749 | make MemcachedPeclBagOStuff use igbinary serializer
+		 *
+		 * An old client uses PHP serializer
 		 *
 		 * @see https://github.com/igbinary/igbinary#igbinary
 		 * @see https://phpolyk.wordpress.com/2011/08/28/igbinary-the-new-php-serializer/
 		 */
-		'serializer' => extension_loaded( 'igbinary' ) ? 'igbinary' : 'php',
+		'serializer' => 'igbinary',
 	],
 
 	'apc' => array( 'class' => 'APCBagOStuff' ),
