@@ -31,6 +31,18 @@ recentchanges:
     rc_user: 2
     rc_ip_bin: 'some ip'
 
+abuse_filter:
+  - af_id: 1
+    af_pattern: ''
+    af_user: 1
+    af_user_text: 'username'
+    af_timestamp: ''
+  - af_id: 2
+    af_pattern: ''
+    af_user: 2
+    af_user_text: 'username'
+    af_timestamp: ''
+
 abuse_filter_log:
   - afl_id: 1
     afl_user: 1
