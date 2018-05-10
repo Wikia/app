@@ -15,7 +15,7 @@ user:
     user_editcount: 10
     user_birthdate: '1998-01-01'
   - user_id: 2
-    user_name: should_anonymize2
+    user_name: should_not_anonymize
     user_real_name: user real name2
     user_email: user2@gmail.com
     user_touched: 20140101110111
