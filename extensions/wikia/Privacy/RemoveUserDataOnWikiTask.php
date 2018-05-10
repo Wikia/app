@@ -83,6 +83,7 @@ class RemoveUserDataOnWikiTask extends BaseTask {
 			if( $wgEnableWallExt ) {
 				$namespaces[] = NS_USER_WALL_MESSAGE_GREETING;
 				$namespaces[] = NS_USER_WALL_MESSAGE;
+				$namespaces[] = NS_USER_WALL;
 			}
 			$dbr = wfGetDB( DB_SLAVE );
 			$userPages = $dbr->select(
@@ -101,8 +102,8 @@ class RemoveUserDataOnWikiTask extends BaseTask {
 	}
 
 	protected function getLoggerContext() {
-		// make right to forget logs more searchable
-		return ['right_to_forget' => 1];
+		// make right to be forgotten logs more searchable
+		return ['right_to_be_forgotten' => 1];
 	}
 
 }
