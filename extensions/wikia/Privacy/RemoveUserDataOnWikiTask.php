@@ -25,8 +25,10 @@ class RemoveUserDataOnWikiTask extends BaseTask {
 			$db->delete( 'cu_changes', ['cuc_user' => $userId], __METHOD__ );
 			$db->delete( 'cu_log', ['cul_target_id' => $userId], __METHOD__ );
 			$this->info( "Removed CheckUser data", ['user_id' => $userId] );
+			return true;
 		} catch( DBError $error ) {
 			$this->error( "Couldn't remove CheckUser data", ['exception' => $error, 'user_id' => $userId] );
+			return false;
 		}
 	}
 
@@ -40,8 +42,10 @@ class RemoveUserDataOnWikiTask extends BaseTask {
 			$db = wfGetDB( DB_MASTER );
 			$db->update( 'recentchanges', ['rc_ip_bin' => ''], ['rc_user' => $userId], __METHOD__ );
 			$this->info( "Removed IPs from recent changes", ['user_id' => $userId] );
+			return true;
 		} catch( DBError $error ) {
 			$this->error( "Couldn't remove IP from recent changes", ['exception' => $error, 'user_id' => $userId] );
+			return false;
 		}
 	}
 
@@ -59,10 +63,13 @@ class RemoveUserDataOnWikiTask extends BaseTask {
 				$db->update( 'abuse_filter_history', ['afh_user_text' => ''], ['afh_user' => $userId], __METHOD__ );
 				$db->delete( 'abuse_filter_log', ['afl_user' => $userId], __METHOD__ );
 				$this->info( "Removed abuse filter data", ['user_id' => $userId] );
+				return true;
 			} catch ( DBError $error) {
 				$this->error( "Couldn't remove abuse filter data", ['exception' => $error, 'user_id' => $userId] );
+				return false;
 			}
 		}
+		return true;
 	}
 
 	/**
@@ -96,9 +103,19 @@ class RemoveUserDataOnWikiTask extends BaseTask {
 				PermanentArticleDelete::deletePage( $title );
 			}
 			$this->info( "Removed user pages", ['username' => $username] );
+			return true;
 		} catch ( Exception $error ) {
 			$this->error( "Couldn't remove user pages", ['exception' => $error, 'username' => $username] );
+			return true;
 		}
+	}
+
+	public function removeAllData( $userId, $username ) {
+		$rmcu = $this->removeCheckUserData( $userId );
+		$rmaf = $this->removeAbuseFilterData( $userId );
+		$rmrc = $this->removeIpFromRecentChanges( $userId );
+		$rmup = $this->removeUserPages( $username );
+		return $rmaf && $rmcu && $rmrc && $rmup;
 	}
 
 	protected function getLoggerContext() {
