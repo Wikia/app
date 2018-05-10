@@ -32,9 +32,12 @@ class CloseWiki extends Maintenance {
 	 */
 	private function markWikiAsClosed( int $wikiId, string $reason ) :bool {
 		try {
-			WikiFactory::setFlags( $wikiId, WikiFactory::FLAG_FREE_WIKI_URL | WikiFactory::FLAG_CREATE_DB_DUMP | WikiFactory::FLAG_CREATE_IMAGE_ARCHIVE );
 			$res = WikiFactory::setPublicStatus( WikiFactory::CLOSE_ACTION, $wikiId, $reason );
-			WikiFactory::clearCache( $wikiId );
+			
+			if ( $res ) {
+				WikiFactory::setFlags( $wikiId, WikiFactory::FLAG_FREE_WIKI_URL | WikiFactory::FLAG_CREATE_DB_DUMP | WikiFactory::FLAG_CREATE_IMAGE_ARCHIVE );
+				WikiFactory::clearCache( $wikiId );
+			}
 
 			return $res !== false;
 		} catch ( DBError $error ) {
