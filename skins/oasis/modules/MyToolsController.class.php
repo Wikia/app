@@ -23,7 +23,7 @@ class MyToolsController extends WikiaController {
 
 	private function getCustomTools() {
 		wfProfileIn(__METHOD__);
-		global $wgUser;
+		global $wgUser, $wgTitle;
 
 		$out = array();
 		$tools = json_decode($wgUser->getGlobalPreference('myTools'), true);
@@ -36,7 +36,10 @@ class MyToolsController extends WikiaController {
 
 					switch ( $tool ) {
 						case 'RecentChangesLinked':
-							global $wgTitle;
+							$href .= '/' . $wgTitle->getPartialUrl();
+							break;
+							
+						case 'PrefixIndex':
 							$href .= '/' . $wgTitle->getPartialUrl();
 							break;
 
