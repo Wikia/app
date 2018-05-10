@@ -3,6 +3,7 @@
 use Wikia\Tasks\Tasks\BaseTask;
 
 class RemoveGlobalUserDataTask extends BaseTask {
+
 	public function removeData( int $userId ) {
 		$user = User::newFromId( $userId );
 		if ( $user->isAnon() ) {
@@ -30,4 +31,5 @@ class RemoveGlobalUserDataTask extends BaseTask {
 
 		return true;
 	}
+	
 }
