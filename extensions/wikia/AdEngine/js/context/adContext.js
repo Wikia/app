@@ -151,9 +151,8 @@ define('ext.wikia.adEngine.adContext', [
 			context.opts.showAds = false;
 		}
 
-		if (geo.isProperGeo(instantGlobals.wgAdDriverDelayCountries)) {
-			context.opts.delayEngine = true;
-		}
+		context.opts.delayEngine = true;
+		context.opts.overwriteDelayEngine = isProperGeo('wgAdDriverDelayCountries');
 
 		context.opts.premiumOnly = context.targeting.hasFeaturedVideo &&
 			geo.isProperGeo(instantGlobals.wgAdDriverSrcPremiumCountries);
