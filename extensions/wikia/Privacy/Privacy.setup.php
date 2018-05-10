@@ -1,5 +1,8 @@
 <?php
 
+$GLOBALS['wgAutoloadClasses']['UserDataRemover'] = __DIR__ . '/UserDataRemover.php';
+$GLOBALS['wgAutoloadClasses']['RemoveUserDataController'] = __DIR__ . '/RemoveUserDataController.php';
+
 $GLOBALS['wgAutoloadClasses']['RemoveUserDataOnWikiTask'] = __DIR__ . '/RemoveUserDataOnWikiTask.php';
 $GLOBALS['wgAutoloadClasses']['RemoveGlobalUserDataTask'] = __DIR__ . '/RemoveGlobalUserDataTask.php';
 
