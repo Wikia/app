@@ -1670,27 +1670,48 @@ class WikiFactory {
 			);
 		}
 
-		/**
-		 * clear tags cache
-		 */
-		$tags = new WikiFactoryTags( $city_id );
-		$tags->clearCache();
+		// SUS-4749 | clear cache using both memcache clients as they use a different keys "namespace"
+		// FIXME: revert once the new client is fully deployed on production
+		global $wgObjectCaches;
 
-		/**
-		 * clear domains cache
-		 */
-		static::clearDomainCache( $city_id );
+		/* @var $caches MemcachedBagOStuff[] */
+		$caches = [
+			(new MemcachedPhpBagOStuff($wgObjectCaches[CACHE_MEMCACHED])),
+			(new MemcachedPeclBagOStuff($wgObjectCaches[CACHE_MEMCACHED])),
+		];
 
-		/**
-		 * clear variables cache
-		 */
-		$wgMemc->delete( "WikiFactory::getCategory:" . $city_id ); //ugly cat clearing (fb#9937)
-		$wgMemc->delete( static::getVarsKey( $city_id ) );
+		foreach($caches as $cache) {
+			$wrapper = new \Wikia\Util\GlobalStateWrapper( [
+				'wgMemc' => $cache
+			] );
 
-		$city_dbname = static::IDtoDB( $city_id ) ;
-		$wgMemc->delete( static::getWikiaCacheKey( $city_id ) );
-		if ( !empty( $city_dbname ) ) {
-			$wgMemc->delete( static::getWikiaDBCacheKey( $city_dbname ) );
+			$wrapper->wrap( function () use ($city_id) {
+				global $wgMemc;
+
+				/**
+				 * clear tags cache
+				 */
+				$tags = new WikiFactoryTags( $city_id );
+				$tags->clearCache();
+
+				/**
+				 * clear domains cache
+				 */
+				static::clearDomainCache( $city_id );
+
+				/**
+				 * clear variables cache
+				 */
+				$wgMemc->delete( "WikiFactory::getCategory:" .
+				                 $city_id ); //ugly cat clearing (fb#9937)
+				$wgMemc->delete( static::getVarsKey( $city_id ) );
+
+				$city_dbname = static::IDtoDB( $city_id );
+				$wgMemc->delete( static::getWikiaCacheKey( $city_id ) );
+				if ( !empty( $city_dbname ) ) {
+					$wgMemc->delete( static::getWikiaDBCacheKey( $city_dbname ) );
+				}
+			} );
 		}
 
 		wfProfileOut( __METHOD__ );
