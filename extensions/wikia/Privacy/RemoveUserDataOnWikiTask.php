@@ -1,6 +1,6 @@
 <?php
 
-use Wikia\Logger\WikiaLogger;
+use Wikia\Logger\Loggable;
 use Wikia\Tasks\Tasks\BaseTask;
 
 /**
@@ -10,6 +10,7 @@ use Wikia\Tasks\Tasks\BaseTask;
  *
  */
 class RemoveUserDataOnWikiTask extends BaseTask {
+	use Loggable;
 
 	/**
 	 * Deletes all CheckUser records associated with the given user
@@ -23,8 +24,9 @@ class RemoveUserDataOnWikiTask extends BaseTask {
 			// remove check user data
 			$db->delete( 'cu_changes', ['cuc_user' => $userId], __METHOD__ );
 			$db->delete( 'cu_log', ['cul_target_id' => $userId], __METHOD__ );
+			$this->info( "Removed CheckUser data", ['user_id' => $userId] );
 		} catch( DBError $error ) {
-			WikiaLogger::instance()->error( "Couldn't remove CheckUser data", ['exception' => $error, 'user_id' => $userId] );
+			$this->error( "Couldn't remove CheckUser data", ['exception' => $error, 'user_id' => $userId] );
 		}
 	}
 
@@ -37,8 +39,9 @@ class RemoveUserDataOnWikiTask extends BaseTask {
 		try {
 			$db = wfGetDB( DB_MASTER );
 			$db->update( 'recentchanges', ['rc_ip_bin' => ''], ['rc_user' => $userId], __METHOD__ );
+			$this->info( "Removed IPs from recent changes", ['user_id' => $userId] );
 		} catch( DBError $error ) {
-			WikiaLogger::instance()->error( "Couldn't remove IP from recent changes", ['exception' => $error, 'user_id' => $userId] );
+			$this->error( "Couldn't remove IP from recent changes", ['exception' => $error, 'user_id' => $userId] );
 		}
 	}
 
@@ -55,8 +58,9 @@ class RemoveUserDataOnWikiTask extends BaseTask {
 				$db->update( 'abuse_filter', ['af_user_text' => ''], ['af_user' => $userId], __METHOD__ );
 				$db->update( 'abuse_filter_history', ['afh_user_text' => ''], ['afh_user' => $userId], __METHOD__ );
 				$db->delete( 'abuse_filter_log', ['afl_user' => $userId], __METHOD__ );
+				$this->info( "Removed abuse filter data", ['user_id' => $userId] );
 			} catch ( DBError $error) {
-				WikiaLogger::instance()->error( "Couldn't remove abuse filter data", ['exception' => $error, 'user_id' => $userId] );
+				$this->error( "Couldn't remove abuse filter data", ['exception' => $error, 'user_id' => $userId] );
 			}
 		}
 	}
@@ -77,21 +81,28 @@ class RemoveUserDataOnWikiTask extends BaseTask {
 				$namespaces[] = NS_BLOG_ARTICLE;
 			}
 			if( $wgEnableWallExt ) {
+				$namespaces[] = NS_USER_WALL_MESSAGE_GREETING;
 				$namespaces[] = NS_USER_WALL_MESSAGE;
 			}
 			$dbr = wfGetDB( DB_SLAVE );
 			$userPages = $dbr->select(
 				'page',
 				['page_id', 'page_namespace', 'page_title'],
-				['page_namespace' => $namespaces, 'page_title' => $dbr->buildLike( $username, $dbr->anyString() )],
+				['page_namespace' => $namespaces, 'page_title' . $dbr->buildLike( $username, $dbr->anyString() )],
 				__METHOD__ );
 			foreach( $userPages as $page ) {
 				$title = Title::newFromRow( $page );
 				PermanentArticleDelete::deletePage( $title );
 			}
+			$this->info( "Removed user pages", ['username' => $username] );
 		} catch ( Exception $error ) {
-			WikiaLogger::instance()->error( "Couldn't remove user pages", ['exception' => $error, 'username' => $username] );
+			$this->error( "Couldn't remove user pages", ['exception' => $error, 'username' => $username] );
 		}
+	}
+
+	protected function getLoggerContext() {
+		// make right to forget logs more searchable
+		return ['right_to_forget' => 1];
 	}
 
 }
