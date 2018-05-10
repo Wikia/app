@@ -36,9 +36,6 @@ class MyToolsController extends WikiaController {
 
 					switch ( $tool ) {
 						case 'RecentChangesLinked':
-							$href .= '/' . $wgTitle->getPartialUrl();
-							break;
-							
 						case 'PrefixIndex':
 							$href .= '/' . $wgTitle->getPartialUrl();
 							break;
