@@ -13,7 +13,6 @@ class RemoveGlobalUserDataTask extends BaseTask {
 		$userIdentityBox->clearMastheadContents();
 		Wikia::invalidateUser( $user, true, false );
 
-
 		$dbMaster = wfGetDB( DB_MASTER, [], 'wikicities' );
 
 		$dbMaster->update(
@@ -27,6 +26,7 @@ class RemoveGlobalUserDataTask extends BaseTask {
 		);
 
 		$dbMaster->delete( 'user_email_log', [ 'user_id' => $userId ] );
+		$dbMaster->delete( 'user_properties', [ 'up_user' => $userId ] );
 
 		return true;
 	}

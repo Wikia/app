@@ -76,4 +76,30 @@ class RemoveGlobalUserDataTaskTest extends WikiaDatabaseTest {
 			'data was removed for wrong user'
 		);
 	}
+
+	public function testUserDataSHouldBeRemovedFromUserPropertiesTable() {
+		( new RemoveGlobalUserDataTask() )->removeData( self::REMOVED_USER_ID );
+
+		$wikicitiesSlave = wfGetDB( DB_SLAVE, [], 'wikicities' );
+
+		$this->assertEquals( 0,
+			$wikicitiesSlave->estimateRowCount(
+				'user_properties',
+				'*',
+				[ 'up_user' => self::REMOVED_USER_ID ],
+				__METHOD__
+			),
+			'user_properties table contains data related to user who wants to be forgotten'
+		);
+
+		$this->assertEquals( 2,
+			$wikicitiesSlave->estimateRowCount(
+				'user_properties',
+				'*',
+				[ 'up_user' => self::OTHER_USER_ID ],
+				__METHOD__
+			),
+			'data was removed for wrong user'
+		);
+	}
 }
