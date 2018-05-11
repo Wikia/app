@@ -586,7 +586,7 @@ class WikiFactory {
 		while ( $row = $dbr->fetchObject( $dbResult ) ) {
 			$result[] = [
 				'city_id' => $row->city_id,
-				'city_url' => $row->city_url];
+				'city_url' => $row->city_url ];
 		}
 		$dbr->freeResult( $dbResult );
 		return $result;
