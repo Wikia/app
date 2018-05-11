@@ -148,9 +148,10 @@ class AdEngine2Hooks {
 	 */
 	public static function getTrackingOptOutModules() {
 		// list of functions with tracking opted-out
-		 return $vars = [
+		return $vars = [
 			'krux' => true,
-			'kikimora' => true
+			'kikimora' => true,
+			'moat' => true
 		];
 	}
 
