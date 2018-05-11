@@ -2,7 +2,6 @@
 
 class AnalyticsProviderPrebid implements iAnalyticsProvider {
 	private static $template = 'extensions/wikia/AnalyticsEngine/templates/prebid.mustache';
-	private static $wgCountriesVarName = 'wgAdDriverPrebidBidderCountries';
 
 	public static function isEnabled() {
 		global $wgShowAds;
@@ -12,10 +11,7 @@ class AnalyticsProviderPrebid implements iAnalyticsProvider {
 
 	public function getSetupHtml( $params = array() ) {
 		if ( self::isEnabled() ) {
-			return \MustacheService::getInstance()->render(
-				self::$template,
-				[ 'wgCountriesVarName' => self::$wgCountriesVarName ]
-			);
+			return \MustacheService::getInstance()->render( self::$template, [] );
 		}
 	}
 

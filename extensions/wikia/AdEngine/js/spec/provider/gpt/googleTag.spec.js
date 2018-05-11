@@ -51,6 +51,7 @@ describe('ext.wikia.adEngine.provider.gpt.googleTag', function () {
 				getTargeting: noop,
 				addEventListener: noop,
 				refresh: noop,
+				setRequestNonPersonalizedAds: noop,
 				setTargeting: noop,
 				getSlots: noop
 			},
@@ -85,6 +86,7 @@ describe('ext.wikia.adEngine.provider.gpt.googleTag', function () {
 					destroySlots: noop
 				}
 			},
+			trackingOptOut: {},
 			allSlots: [
 				{
 					getTargeting: function () {
@@ -118,8 +120,11 @@ describe('ext.wikia.adEngine.provider.gpt.googleTag', function () {
 			mocks.srcProvider,
 			document,
 			mocks.log,
+			mocks.trackingOptOut,
 			mocks.window
 		);
+
+		mocks.trackingOptOut.isOptedOut = noop;
 
 		mocks.elementSizes = [[300, 250]];
 	});
@@ -129,12 +134,14 @@ describe('ext.wikia.adEngine.provider.gpt.googleTag', function () {
 		spyOn(mocks.pubads, 'enableSingleRequest');
 		spyOn(mocks.pubads, 'disableInitialLoad');
 		spyOn(mocks.pubads, 'addEventListener');
+		spyOn(mocks.pubads, 'setRequestNonPersonalizedAds');
 		spyOn(mocks.window.googletag, 'enableServices');
 
 		googleTag.init();
 
 		expect(googleTag.isInitialized()).toBe(true);
 		expect(mocks.pubads.collapseEmptyDivs).toHaveBeenCalled();
+		expect(mocks.pubads.setRequestNonPersonalizedAds).toHaveBeenCalledWith(0);
 		expect(mocks.pubads.enableSingleRequest).toHaveBeenCalled();
 		expect(mocks.pubads.disableInitialLoad).toHaveBeenCalled();
 		expect(mocks.pubads.addEventListener).toHaveBeenCalled();
@@ -265,5 +272,18 @@ describe('ext.wikia.adEngine.provider.gpt.googleTag', function () {
 		googleTag.destroySlots(['foo']);
 
 		expect(mocks.window.googletag.destroySlots).not.toHaveBeenCalled();
+	});
+
+	it('Initialization with tracking opt out should setup non personalized ads', function () {
+		spyOn(mocks.pubads, 'setRequestNonPersonalizedAds');
+
+		mocks.trackingOptOut.isOptedOut = function () {
+			return true;
+		};
+
+		googleTag.init();
+
+		expect(googleTag.isInitialized()).toBe(true);
+		expect(mocks.pubads.setRequestNonPersonalizedAds).toHaveBeenCalledWith(1);
 	});
 });
