@@ -151,7 +151,8 @@ class AdEngine2Hooks {
 		return [
 			'gpt' => true,
 			'krux' => true,
-			'kikimora' => true
+			'kikimora' => true,
+			'prebid' => true
 		];
 	}
 
