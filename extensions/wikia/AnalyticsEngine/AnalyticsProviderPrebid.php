@@ -2,7 +2,6 @@
 
 class AnalyticsProviderPrebid implements iAnalyticsProvider {
 	private static $template = 'extensions/wikia/AnalyticsEngine/templates/prebid.mustache';
-	private static $wgCountriesVarName = 'wgAdDriverPrebidBidderCountries';
 
 	public static function isEnabled() {
 		global $wgShowAds;
