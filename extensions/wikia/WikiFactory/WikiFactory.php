@@ -558,6 +558,8 @@ class WikiFactory {
 	 * Returns a list of language wikis hosted under the current domain. This works only for wikis
 	 * hosted at the root of the domain, for language wikis it will return an empty list.
 	 *
+	 * If used often, put a caching layer on top of it.
+	 *
 	 * @return array list of wikis, each entry is a dick with `city_id` and `city_url` keys
 	 */
 	public static function getLanguageWikis() {
@@ -572,8 +574,8 @@ class WikiFactory {
 		$url = parse_url( $wgServer );
 		$server = static::normalizeHost( $url['host'] );
 		$where = [
-			$dbr->makeList([ "city_url LIKE 'http://${server}/%'",  "city_url LIKE 'https://${server}/%'" ], LIST_OR),
-			"city_id != ${wgCityId}"];
+			$dbr->makeList( [ "city_url LIKE 'http://${server}/%'",  "city_url LIKE 'https://${server}/%'" ], LIST_OR ),
+			"city_id != ${wgCityId}" ];
 		$dbResult = $dbr->select(
 			[ 'city_list' ],
 			[ 'city_id', 'city_url' ],
