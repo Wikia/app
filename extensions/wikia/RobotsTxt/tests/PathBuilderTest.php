@@ -13,9 +13,9 @@ class PathBuilderTest extends WikiaBaseTest {
 	/**
 	 * Test testBuildPaths
 	 *
-	 * @covers PathBuilder::testBuildPaths
+	 * @covers PathBuilder::testBuildPathsForPage
 	 */
-	public function testBuildPaths() {
+	public function testBuildPathsForPage() {
 		$pathBuilder = new PathBuilder();
 
 		$this->assertEquals(
@@ -24,12 +24,12 @@ class PathBuilderTest extends WikiaBaseTest {
 				'/*?*title=Test123',
 				'/index.php/Test123',
 			],
-			$pathBuilder->buildPaths( 'Test123' )
+			$pathBuilder->buildPathsForPage( 'Test123' )
 		);
 
 		$this->assertEquals(
 			[ '/wiki/Test123' ],
-			$pathBuilder->buildPaths( 'Test123', true )
+			$pathBuilder->buildPathsForPage( 'Test123', true )
 		);
 	}
 
@@ -43,17 +43,17 @@ class PathBuilderTest extends WikiaBaseTest {
 
 		$this->assertEquals(
 			[ '/wiki/%C4%85%C5%9B%C4%87' ],
-			$pathBuilder->buildPaths( 'ąść', true )
+			$pathBuilder->buildPathsForPage( 'ąść', true )
 		);
 
 		$this->assertEquals(
 			[ '/wiki/%E3%82%B5%E3%82%A4%E3%83%88%E3%83%9E%E3%83%83%E3%83%97' ],
-			$pathBuilder->buildPaths( 'サイトマップ', true )
+			$pathBuilder->buildPathsForPage( 'サイトマップ', true )
 		);
 
 		$this->assertEquals(
 			[ '/wiki/*/*%5E%25$' ],
-			$pathBuilder->buildPaths( '*/*^%$', true )
+			$pathBuilder->buildPathsForPage( '*/*^%$', true )
 		);
 	}
 

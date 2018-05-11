@@ -27,7 +27,7 @@ class PathBuilder {
 	private $articlePath;
 
 	public function __construct() {
-		global $wgArticlePath, $wgContLang;
+		global $wgArticlePath, $wgContLang, $wgScriptPath;
 
 		$languages = [ $wgContLang ];
 		if ( $wgContLang->getCode() !== 'en' ) {
@@ -37,6 +37,7 @@ class PathBuilder {
 		$this->languages = $languages;
 		$this->specialNamespaces = $this->getNamespaces( NS_SPECIAL );
 		$this->articlePath = $wgArticlePath;
+		$this->scriptPath = $wgScriptPath;
 	}
 
 	/**
@@ -52,7 +53,7 @@ class PathBuilder {
 	 * @param bool $canonicalOnly only return the canonical way of accessing the page/namespace
 	 * @return array an array of paths
 	 */
-	public function buildPaths( $pageName, $canonicalOnly = false ) {
+	public function buildPathsForPage( $pageName, $canonicalOnly = false ) {
 		$pageName = $this->encodeUrl( $pageName );
 		$paths = [
 			str_replace( '$1', $pageName, $this->articlePath )
@@ -62,12 +63,16 @@ class PathBuilder {
 			return $paths;
 		}
 
-		$paths[] = '/*?*title=' . $pageName;
-		$paths[] = '/index.php/' . $pageName;
+		$paths[] = $this->scriptPath . '/*?*title=' . $pageName;
+		$paths[] = $this->scriptPath . '/index.php/' . $pageName;
 
 		return $paths;
 	}
 
+	// TODO: doc, tests
+	public function buildPath( $path ) {
+		return $this->scriptPath . $path;
+	}
 	/**
 	 * Get paths a given special page is accessible at
 	 *
@@ -78,10 +83,10 @@ class PathBuilder {
 	public function buildPathsForSpecialPage( $pageName, $canonicalOnly = false ) {
 		$paths = [];
 		foreach ( $this->specialNamespaces as $specialNamespaceAlias ) {
-			foreach ( $this->getSpecialPageNames( $pageName ) as $localPageName ) {
+			foreach ($this->getSpecialPageNames($pageName) as $localPageName) {
 				$paths = array_merge(
 					$paths,
-					$this->buildPaths( $specialNamespaceAlias . ':' . $localPageName, $canonicalOnly )
+					$this->buildPathsForPage($specialNamespaceAlias . ':' . $localPageName, $canonicalOnly)
 				);
 			}
 		}
@@ -101,7 +106,7 @@ class PathBuilder {
 		foreach ( $this->getNamespaces( $namespaceId ) as $namespace ) {
 			$paths = array_merge(
 				$paths,
-				$this->buildPaths( $namespace . ':', $canonicalOnly )
+				$this->buildPathsForPage( $namespace . ':', $canonicalOnly )
 			);
 		}
 
@@ -118,8 +123,8 @@ class PathBuilder {
 	 */
 	public function buildPathsForParam( $param ) {
 		return [
-			'/*?' . $param . '=',
-			'/*?*&' . $param . '=',
+			$this->scriptPath . '/*?' . $param . '=',
+			$this->scriptPath . '/*?*&' . $param . '=',
 		];
 	}
 

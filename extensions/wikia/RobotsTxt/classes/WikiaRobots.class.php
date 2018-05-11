@@ -151,11 +151,12 @@ class WikiaRobots {
 		       $wgEnableSitemapXmlExt,
 		       $wgRobotsTxtBlockedWiki,
 		       $wgSitemapXmlExposeInRobots,
-		       $wgServer;
+		       $wgServer,
+			   $wgRequest;
 
 		if ( !$this->accessAllowed || !empty( $wgRobotsTxtBlockedWiki ) ) {
 			// No crawling preview, verify, sandboxes, showcase, etc
-			$robots->addDisallowedPaths( [ '/' ] );
+			$robots->addDisallowedPaths( [ $this->pathBuilder->buildPath( '/' ) ] );
 			return $robots;
 		}
 
@@ -174,7 +175,7 @@ class WikiaRobots {
 		}
 
 		// Block additional paths
-		$robots->addDisallowedPaths( $this->blockedPaths );
+		$robots->addDisallowedPaths( array_map( [ $this->pathBuilder, 'buildPath' ], $this->blockedPaths ));
 
 		// Block params
 		foreach ( $this->blockedParams as $param ) {
@@ -182,11 +183,33 @@ class WikiaRobots {
 		}
 
 		// Allow specific paths
-		$robots->addAllowedPaths( $this->allowedPaths );
+		$robots->addAllowedPaths( array_map( [ $this->pathBuilder, 'buildPath' ], $this->allowedPaths ));
 
 		// Allow special pages
 		foreach ( array_keys( $this->allowedSpecialPages ) as $page ) {
 			$robots->addAllowedPaths( $this->pathBuilder->buildPathsForSpecialPage( $page, true ) );
+		}
+
+		// fetch from foreign wikis...
+		$languageWikis = \WikiFactory::getLanguageWikis();
+		foreach( $languageWikis as $wiki ) {
+			$params = array(
+				'controller' => 'WikiaRobots',
+				'method' => 'getAllowedDisallowed'
+			);
+			if ( $wgRequest->getBool( 'forcerobots' ) ) {
+				$params[ 'forcerobots' ] = '1';
+			}
+			$params['cb'] = time(); // temp
+			$params['rand'] = rand(0, 100);  // temp
+			$response = \ApiService::foreignCall( $wiki[ 'city_dbname' ], $params, \ApiService::WIKIA );
+			if ($response !== false) {
+				echo json_encode($response);
+				$robots->addAllowedPaths( $response['allowed'] );
+				$robots->addDisallowedPaths( $response['disallowed'] );
+			} else {
+				echo "cannot fetch foreign wiki rules!";
+			}
 		}
 
 		return $robots;

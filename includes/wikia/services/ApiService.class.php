@@ -48,7 +48,7 @@ class ApiService {
 	 * @return mixed API response
 	 */
 	static function foreignCall( string $dbName, array $params, string $endpoint = self::API, bool $setUser = false ) {
-		$cityUrl = WikiFactory::DBtoUrl( $dbName );
+		$cityUrl = WikiFactory::DBtoUrl( $dbName ); // not https ready
 
 		// If city url is empty, this would make a request to the current host.
 		if ( empty( $cityUrl ) ) {
