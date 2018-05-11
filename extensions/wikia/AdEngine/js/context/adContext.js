@@ -99,7 +99,7 @@ define('ext.wikia.adEngine.adContext', [
 	function updateAdContextBidders(context) {
 		var hasFeaturedVideo = context.targeting.hasFeaturedVideo;
 
-		context.bidders.prebid = isProperGeo('wgAdDriverPrebidBidderCountries');
+		context.bidders.prebid = !trackingOptOut.isOptedOut('prebid') && isProperGeo('wgAdDriverPrebidBidderCountries');
 		context.bidders.a9 = isProperGeo('wgAdDriverA9BidderCountries');
 		context.bidders.rubiconDisplay = isProperGeo('wgAdDriverRubiconDisplayPrebidCountries');
 		context.bidders.rubicon = isProperGeo('wgAdDriverRubiconPrebidCountries');

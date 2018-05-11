@@ -12,10 +12,7 @@ class AnalyticsProviderPrebid implements iAnalyticsProvider {
 
 	public function getSetupHtml( $params = array() ) {
 		if ( self::isEnabled() ) {
-			return \MustacheService::getInstance()->render(
-				self::$template,
-				[ 'wgCountriesVarName' => self::$wgCountriesVarName ]
-			);
+			return \MustacheService::getInstance()->render( self::$template, [] );
 		}
 	}
 
