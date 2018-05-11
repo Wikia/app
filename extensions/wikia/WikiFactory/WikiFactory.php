@@ -560,7 +560,7 @@ class WikiFactory {
 	 *
 	 * If used often, put a caching layer on top of it.
 	 *
-	 * @return array list of wikis, each entry is a dict with `city_id` and `city_url` keys
+	 * @return array list of wikis, each entry is a dict with 'city_id', 'city_url' and 'city_dbname' keys
 	 */
 	public static function getLanguageWikis() {
 		global $wgScriptPath, $wgServer, $wgCityId;
@@ -578,7 +578,7 @@ class WikiFactory {
 			"city_id != ${wgCityId}" ];
 		$dbResult = $dbr->select(
 			[ 'city_list' ],
-			[ 'city_id', 'city_url' ],
+			[ 'city_id', 'city_url', 'city_dbname' ],
 			$where,
 			__METHOD__
 		);
@@ -586,7 +586,8 @@ class WikiFactory {
 		while ( $row = $dbr->fetchObject( $dbResult ) ) {
 			$result[] = [
 				'city_id' => $row->city_id,
-				'city_url' => $row->city_url ];
+				'city_url' => $row->city_url,
+				'city_dbname' => $row->city_dbname];
 		}
 		$dbr->freeResult( $dbResult );
 		return $result;
