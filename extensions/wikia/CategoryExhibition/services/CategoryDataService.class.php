@@ -6,31 +6,23 @@
 class CategoryDataService {
 
 	/**
-	 * @param string $sCategoryDBKey
-	 * @param string $mNamespace
+	 * @param $sCategoryDBKey
+	 * @param $mNamespace
 	 * @param bool $negative
-	 * @return array
+	 *
+	 * @return TitleBatch
 	 */
-	public static function getAlphabetical( $sCategoryDBKey, $mNamespace, $negative = false ) {
-		wfProfileIn( __METHOD__ );
-
-		$dbr = wfGetDB( DB_SLAVE );
-		$res = $dbr->select(
-			array( 'page', 'categorylinks' ),
-			array( 'page_id', 'page_title' ),
-			array(
+	public static function getAlphabetical( $sCategoryDBKey, $mNamespace, $negative = false ): TitleBatch {
+		return TitleBatch::newFromConds(
+			'categorylinks',
+			[
 				'cl_to' => $sCategoryDBKey,
 				'page_namespace ' . ($negative ? 'NOT ' : '') . 'IN(' . $mNamespace . ')'
-			),
+			],
 			__METHOD__,
-			array(	'ORDER BY' => 'page_title' ),
-			array(	'categorylinks'  => array( 'INNER JOIN', 'cl_from = page_id' ))
+			[ 'ORDER BY' => 'page_title' ],
+			[ 'categorylinks' => [ 'INNER JOIN', 'cl_from = page_id' ] ]
 		);
-
-		$result = self::tableFromResult( $res );
-
-		wfProfileOut( __METHOD__ );
-		return $result;
 	}
 
 	/**

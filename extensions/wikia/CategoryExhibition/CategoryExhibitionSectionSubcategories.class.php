@@ -8,16 +8,14 @@ class CategoryExhibitionSectionSubcategories extends CategoryExhibitionSection {
 		global $wgCategoryExhibitionSubCategoriesSectionRows;
 		$this->sectionId = 'mw-subcategories';
 		$this->headerMessage = wfMessage( 'category-exhibition-subcategories-header' );
-		return $this->generateData( NS_CATEGORY, $wgCategoryExhibitionSubCategoriesSectionRows * 4 );
+		$this->generateData( NS_CATEGORY, $wgCategoryExhibitionSubCategoriesSectionRows * 4 );
 	}
 
-	protected function getTemplateVarsForItem( $pageId ) {
-		$oTitle = Title::newFromID( $pageId );
-
+	protected function getTemplateVarsForItem( $oTitle ) {
 		$oMemCache = F::App()->wg->memc;
 		$sKey = wfMemcKey(
 			'category_exhibition_article_cache_0',
-			$pageId,
+			$oTitle->getArticleId(),
 			$this->cacheHelper->getTouched( $oTitle ),
 			// Display/sort params are passed to the subcategory, cache separately!
 			$this->urlParams->getSortParam(),
@@ -32,11 +30,11 @@ class CategoryExhibitionSectionSubcategories extends CategoryExhibitionSection {
 		}
 
 		$snippetText = '';
-		$imageUrl = $this->getImageFromPageId( $pageId );
+		$imageUrl = $this->getImageFromPageId( $oTitle->getArticleId() );
 
 		// if category has no images in page content, look for images and articles in category
 		if ( $imageUrl == '' ) {
-			$resultArray = $this->getCategoryImageOrSnippet( $pageId );
+			$resultArray = $this->getCategoryImageOrSnippet( $oTitle->getArticleId() );
 			$snippetText = $resultArray['snippetText'];
 			$imageUrl = $resultArray['imageUrl'];
 			if ( empty( $snippetText ) && empty( $imageUrl ) ) {
@@ -46,7 +44,7 @@ class CategoryExhibitionSectionSubcategories extends CategoryExhibitionSection {
 		}
 
 		$returnData = [
-			'id' => $pageId,
+			'id' => $oTitle->getArticleId(),
 			'title' => $oTitle->getText(),
 			// Pass the display/sort params to the subcategory:
 			'url' => $oTitle->getFullURL( [
@@ -79,15 +77,14 @@ class CategoryExhibitionSectionSubcategories extends CategoryExhibitionSection {
 		$sCategoryDBKey = $title->getDBKey();
 
 		// tries to get image from images in category
-		$result = CategoryDataService::getAlphabetical( $sCategoryDBKey, NS_FILE, 1 );
+		$result = CategoryDataService::getAlphabetical( $sCategoryDBKey, NS_FILE, 1 )->getAll();
 		if ( !empty( $result ) ) {
 			$counter = 0;
-			foreach ( $result as $item ) {
+			foreach ( $result as $itemTitle ) {
 				if ( $counter > F::App()->wg->maxCategoryExhibitionSubcatChecks ) {
 					break;
 				}
-				$imageServing = new ImageServing( array( $item['page_id'] ), $this->thumbWidth, array( "w" => $this->thumbWidth, "h" => $this->thumbHeight ) );
-				$itemTitle = Title::newFromID( $item['page_id'] );
+				$imageServing = new ImageServing( [ $itemTitle->getArticleID() ], $this->thumbWidth, array( "w" => $this->thumbWidth, "h" => $this->thumbHeight ) );
 				$image = wfFindFile( $itemTitle );
 				if ( !empty( $image ) ) {
 					$imageSrc = wfReplaceImageServer(
@@ -103,21 +100,21 @@ class CategoryExhibitionSectionSubcategories extends CategoryExhibitionSection {
 
 		// if no images found, tries to get image or snippet from artice
 		unset( $result );
-		$result = CategoryDataService::getAlphabetical( $sCategoryDBKey, NS_MAIN, 10 );
+		$result = CategoryDataService::getAlphabetical( $sCategoryDBKey, NS_MAIN, 10 )->getArticleIds();
 		if ( !empty( $result ) ) {
 			$counter = 0;
 			$snippetText = '';
 			$imageUrl = '';
-			foreach ( $result as $item ) {
+			foreach ( $result as $pageId ) {
 				if ( $counter > F::App()->wg->maxCategoryExhibitionSubcatChecks ) {
 					break;
 				}
-				$imageUrl = $this->getImageFromPageId( $item['page_id'] );
+				$imageUrl = $this->getImageFromPageId( $pageId );
 				if ( !empty( $imageUrl ) ) {
 					break;
 				}
 				if ( empty( $snippetText ) ) {
-					$snippetService = new ArticleService ( $item['page_id'] );
+					$snippetService = new ArticleService ( $pageId );
 					$snippetText = htmlspecialchars( $snippetService->getTextSnippet() );
 				}
 				$counter++;
