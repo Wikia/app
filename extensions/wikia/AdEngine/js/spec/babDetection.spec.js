@@ -6,6 +6,7 @@ describe('Module ext.wikia.adEngine.babDetection', function () {
 		return modules['ext.wikia.adEngine.babDetection'](
 			mocks.document,
 			mocks.log,
+			mocks.tracker,
 			mocks.window
 		);
 	}
@@ -25,6 +26,9 @@ describe('Module ext.wikia.adEngine.babDetection', function () {
 				}
 			},
 			log: noop,
+			tracker: {
+				track: noop()
+			},
 			window: {
 				ads: {
 					runtime: {}
