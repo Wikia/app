@@ -560,7 +560,7 @@ class WikiFactory {
 	 *
 	 * If used often, put a caching layer on top of it.
 	 *
-	 * @return array list of wikis, each entry is a dick with `city_id` and `city_url` keys
+	 * @return array list of wikis, each entry is a dict with `city_id` and `city_url` keys
 	 */
 	public static function getLanguageWikis() {
 		global $wgScriptPath, $wgServer, $wgCityId;
