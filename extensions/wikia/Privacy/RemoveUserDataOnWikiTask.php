@@ -17,8 +17,9 @@ class RemoveUserDataOnWikiTask extends BaseTask {
 	 *
 	 * @param int $userId
 	 * @throws DBUnexpectedError
+	 * @return true if operation was successful
 	 */
-	public function removeCheckUserData( int $userId ) {
+	private function removeCheckUserData( int $userId ) {
 		try {
 			$db = wfGetDB( DB_MASTER );
 			// remove check user data
@@ -36,8 +37,9 @@ class RemoveUserDataOnWikiTask extends BaseTask {
 	 * Removes the IP address from all RecentChanges records associated with the given user
 	 *
 	 * @param int $userId
+	 * @return true if operation was successful
 	 */
-	public function removeIpFromRecentChanges( int $userId ) {
+	private function removeIpFromRecentChanges( int $userId ) {
 		try {
 			$db = wfGetDB( DB_MASTER );
 			$db->update( 'recentchanges', ['rc_ip_bin' => ''], ['rc_user' => $userId], __METHOD__ );
@@ -53,8 +55,9 @@ class RemoveUserDataOnWikiTask extends BaseTask {
 	 * Removes abuse filter logs associated with the given user
 	 *
 	 * @param int $userId
+	 * @return true if operation was successful
 	 */
-	public function removeAbuseFilterData( int $userId ) {
+	private function removeAbuseFilterData( int $userId ) {
 		global $wgEnableAbuseFilterExtension;
 		if( $wgEnableAbuseFilterExtension ) {
 			try {
@@ -79,8 +82,9 @@ class RemoveUserDataOnWikiTask extends BaseTask {
 	 * after the user's global data is removed.
 	 *
 	 * @param string $username
+	 * @return true if operation was successful
 	 */
-	public function removeUserPages( string $username ) {
+	private function removeUserPages( string $username ) {
 		global $wgEnableBlogArticles, $wgEnableWallExt;
 		try {
 			$namespaces = [NS_USER, NS_USER_TALK];

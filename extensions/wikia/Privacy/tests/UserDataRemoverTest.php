@@ -6,7 +6,7 @@ use Wikia\Service\User\Attributes\UserAttributes;
 /**
  * @group Integration
  */
-class RemoveGlobalUserDataTaskTest extends WikiaDatabaseTest {
+class UserDataRemoverTest extends WikiaDatabaseTest {
 
 	const REMOVED_USER_ID = 1;
 	const OTHER_USER_ID = 2;
@@ -35,7 +35,7 @@ class RemoveGlobalUserDataTaskTest extends WikiaDatabaseTest {
 	}
 
 	public function testUserDataShouldBeAnonymizedInUserTable() {
-		( new RemoveGlobalUserDataTask() )->removeData( self::REMOVED_USER_ID );
+		( new UserDataRemover() )->removeGlobalData( self::REMOVED_USER_ID );
 
 		$anonymizedUser = User::newFromId( self::REMOVED_USER_ID );
 		$otherUser = User::newFromId( self::OTHER_USER_ID );
@@ -52,7 +52,7 @@ class RemoveGlobalUserDataTaskTest extends WikiaDatabaseTest {
 	}
 
 	public function testUserDataShouldBeRemovedFromUserEmailLogTable() {
-		( new RemoveGlobalUserDataTask() )->removeData( self::REMOVED_USER_ID );
+		( new UserDataRemover() )->removeGlobalData( self::REMOVED_USER_ID );
 
 		$wikicitiesSlave = wfGetDB( DB_SLAVE, [], 'wikicities' );
 
@@ -78,7 +78,7 @@ class RemoveGlobalUserDataTaskTest extends WikiaDatabaseTest {
 	}
 
 	public function testUserDataSHouldBeRemovedFromUserPropertiesTable() {
-		( new RemoveGlobalUserDataTask() )->removeData( self::REMOVED_USER_ID );
+		( new UserDataRemover() )->removeGlobalData( self::REMOVED_USER_ID );
 
 		$wikicitiesSlave = wfGetDB( DB_SLAVE, [], 'wikicities' );
 

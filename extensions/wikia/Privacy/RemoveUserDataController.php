@@ -28,22 +28,28 @@ class RemoveUserDataController extends WikiaController {
 		if ( $isDryRun ) {
 			WikiaLogger::instance()->info( "Will remove user's global data: $userId" );
 		} else {
-			UserDataRemover::removeGlobalData( $userId );
+			$dataRemover = new UserDataRemover();
+			$dataRemover->removeGlobalData( $userId );
 		}
 
 		global $wgSpecialsDB;
 		$specialsDbr = wfGetDB( DB_SLAVE, [], $wgSpecialsDB );
 		$userWikis = $specialsDbr->selectFieldValues( 'events_local_users', 'wiki_id', ['user_id' => $userId], __METHOD__, ['DISTINCT'] );
 		$username = User::whoIs( $userId );
+		$wikiCount = count( $userWikis );
 		if ( $isDryRun ) {
-			$n = count( $userWikis );
-			WikiaLogger::instance()->info( "Will remove user:$userId:$username local data from $n wikis" );
+			WikiaLogger::instance()->info( "Will remove user:$userId:$username local data from $wikiCount wikis" );
 		} else {
 			$removeWikiDataTask = new RemoveUserDataOnWikiTask();
 			$removeWikiDataTask->call( 'removeAllData', $userId,  $username);
 			$removeWikiDataTask->wikiId( $userWikis )->queue();
 		}
 		$this->response->setCode( self::ACCEPTED );
+		$this->response->setValues( [
+			'userId' => $userId,
+			'username' => $username,
+			'numberOfWikis' => $wikiCount
+		] );
 	}
 
 }

@@ -6,6 +6,7 @@
 class RemoveUserDataOnWikiTaskTest extends WikiaDatabaseTest {
 
 	const TEST_USER_ID = 1;
+	const TEST_USER = 'foo';
 
 	/**
 	 * Returns the test dataset.
@@ -26,8 +27,8 @@ class RemoveUserDataOnWikiTaskTest extends WikiaDatabaseTest {
 		$this->mockGlobalVariable( 'wgEnableAbuseFilterExtension', true );
 	}
 
-	public function testShouldRemoveCheckUserData() {
-		(new RemoveUserDataOnWikiTask())->removeCheckUserData( self::TEST_USER_ID );
+	public function testShouldRemoveUserData() {
+		(new RemoveUserDataOnWikiTask())->removeAllData( self::TEST_USER_ID, self::TEST_USER );
 		$logPager = new CheckUserLogPager( null, [], null, null );
 		$this->assertEquals( 1,  $logPager->getNumRows() );
 		foreach ( $logPager->getResult() as $row ) {
@@ -36,7 +37,7 @@ class RemoveUserDataOnWikiTaskTest extends WikiaDatabaseTest {
 	}
 	
 	public function testShouldRemoveIpsFromRecentChanges() {
-		(new RemoveUserDataOnWikiTask())->removeIpFromRecentChanges( self::TEST_USER_ID );
+		(new RemoveUserDataOnWikiTask())->removeAllData( self::TEST_USER_ID, self::TEST_USER );
 		$dbr = wfGetDB( DB_SLAVE );
 		$changes = $dbr->select( 'recentchanges', ['rc_user', 'rc_user_text', 'rc_ip_bin'] );
 		foreach ( $changes as $change ) {
@@ -49,7 +50,7 @@ class RemoveUserDataOnWikiTaskTest extends WikiaDatabaseTest {
 	}
 
 	public function testShouldRemoveAbuseFilterData() {
-		(new RemoveUserDataOnWikiTask())->removeAbuseFilterData( self::TEST_USER_ID );
+		(new RemoveUserDataOnWikiTask())->removeAllData( self::TEST_USER_ID, self::TEST_USER );
 		$dbr = wfGetDB( DB_SLAVE );
 		// check filter author
 		$filters = $dbr->select( 'abuse_filter', ['af_user', 'af_user_text'] );

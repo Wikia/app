@@ -1,10 +1,11 @@
 <?php
 
-use Wikia\Logger\WikiaLogger;
+use Wikia\Logger\Loggable;
 
 class UserDataRemover {
+	use Loggable;
 
-	public static function removeGlobalData( int $userId ) {
+	public function removeGlobalData( int $userId ) {
 		try {
 			$user = User::newFromId( $userId );
 			if( $user->isAnon() ) {
@@ -30,12 +31,17 @@ class UserDataRemover {
 			$dbMaster->delete( 'user_email_log', ['user_id' => $userId] );
 			$dbMaster->delete( 'user_properties', ['up_user' => $userId] );
 
-			WikiaLogger::instance()->info( "Removed user's global data", ['user_id' => $userId] );
+			$this->info( "Removed user's global data", ['user_id' => $userId] );
 			return true;
 		} catch ( Exception $error ) {
-			WikiaLogger::instance()->error( "Couldn't remove global user data", ['exception' => $error, 'user_id' => $userId] );
+			$this->error( "Couldn't remove global user data", ['exception' => $error, 'user_id' => $userId] );
 			return false;
 		}
+	}
+
+	protected function getLoggerContext() {
+		// make right to be forgotten logs more searchable
+		return ['right_to_be_forgotten' => 1];
 	}
 
 }
