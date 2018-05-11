@@ -77,7 +77,7 @@ class CategoryExhibitionSectionSubcategories extends CategoryExhibitionSection {
 		$sCategoryDBKey = $title->getDBKey();
 
 		// tries to get image from images in category
-		$result = CategoryDataService::getAlphabetical( $sCategoryDBKey, NS_FILE, 1 )->getAll();
+		$result = CategoryDataService::getAlphabetical( $sCategoryDBKey, [ NS_FILE ], 1 )->getAll();
 		if ( !empty( $result ) ) {
 			$counter = 0;
 			foreach ( $result as $itemTitle ) {
@@ -100,7 +100,7 @@ class CategoryExhibitionSectionSubcategories extends CategoryExhibitionSection {
 
 		// if no images found, tries to get image or snippet from artice
 		unset( $result );
-		$result = CategoryDataService::getAlphabetical( $sCategoryDBKey, NS_MAIN, 10 )->getArticleIds();
+		$result = CategoryDataService::getAlphabetical( $sCategoryDBKey, [ NS_MAIN ], 10 )->getArticleIds();
 		if ( !empty( $result ) ) {
 			$counter = 0;
 			$snippetText = '';

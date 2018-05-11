@@ -113,7 +113,7 @@ abstract class CategoryExhibitionSection {
 			}
 		}
 
-		return CategoryDataService::getAlphabetical( $sCategoryDBKey, $ns, $exclude )->getAll();
+		return CategoryDataService::getAlphabetical( $sCategoryDBKey, [ $ns ], $exclude )->getAll();
 	}
 
 	/**

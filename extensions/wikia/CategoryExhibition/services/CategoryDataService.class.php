@@ -12,13 +12,16 @@ class CategoryDataService {
 	 *
 	 * @return TitleBatch
 	 */
-	public static function getAlphabetical( $sCategoryDBKey, $mNamespace, $negative = false ): TitleBatch {
+	public static function getAlphabetical( $sCategoryDBKey, array $mNamespace, $negative = false ): TitleBatch {
+		$where = [ 'cl_to' => $sCategoryDBKey ];
+
+		if ( !empty( $mNamespace ) ) {
+			$where[] = 'page_namespace ' . ( $negative ? 'NOT ' : '' ) . 'IN(' . implode( ',', $mNamespace ) . ')';
+		}
+
 		return TitleBatch::newFromConds(
 			'categorylinks',
-			[
-				'cl_to' => $sCategoryDBKey,
-				'page_namespace ' . ($negative ? 'NOT ' : '') . 'IN(' . $mNamespace . ')'
-			],
+			$where,
 			__METHOD__,
 			[ 'ORDER BY' => 'page_title' ],
 			[ 'categorylinks' => [ 'INNER JOIN', 'cl_from = page_id' ] ]
@@ -88,7 +91,7 @@ class CategoryDataService {
 	 * @param bool $negative
 	 * @return array
 	 */
-	public static function getMostVisited( $sCategoryDBKey, $mNamespace = null, $limit = false, $negative = false ) {
+	public static function getMostVisited( $sCategoryDBKey, $mNamespace = [], $limit = false, $negative = false ) {
 		global $wgCityId, $wgStatsDBEnabled;
 		wfProfileIn( __METHOD__ );
 
@@ -98,66 +101,42 @@ class CategoryDataService {
 			return array();
 		}
 
-		$where = array(
-			'cl_to' => $sCategoryDBKey
-		);
-
-		if ( !empty( $mNamespace ) ) {
-			$where[] = 'page_namespace ' . ($negative ? 'NOT ' : '') . 'IN(' . implode( ',', $mNamespace ) . ')';
-		}
-
-		$dbr = wfGetDB( DB_SLAVE );
-		$res = $dbr->select(
-			array( 'page', 'categorylinks' ),
-			array( 'page_id', 'cl_to' ),
-			$where,
-			__METHOD__,
-			array( 'ORDER BY' => 'page_title' ),
-			array( 'categorylinks' => array( 'INNER JOIN', 'cl_from = page_id' ) )
-		);
-
-		if ( $dbr->numRows( $res ) > 0 ) {
+		$categoryMembersTitles = self::getAlphabetical( $sCategoryDBKey, $mNamespace, $negative )->getAll();
+		if ( count( $categoryMembersTitles ) > 0 ) {
 			Wikia::log(__METHOD__, ' Found some data in categories. Proceeding ');
-			$aCategoryArticles = self::tableFromResult( $res );
-			$catKeys = array_keys($aCategoryArticles);
+			$categoryMembersIds = array_keys( $categoryMembersTitles );
 			Wikia::log(__METHOD__, ' Searching for prepared data');
 
 			//fix BugId:33086
 			//use DataMart for pageviews data
 			//as all the other data sources are disabled/obsolete
-			$items = DataMartService::getTopArticlesByPageview( $wgCityId, $catKeys, $mNamespace , $negative, count( $catKeys ) );
+			$topViewedCategoryMembersById = DataMartService::getTopArticlesByPageview( $wgCityId, $categoryMembersIds, $mNamespace , $negative, count( $categoryMembersIds ) );
 
-			if ( is_array( $items ) && count( $items ) > 0 ) {
+			if ( is_array( $topViewedCategoryMembersById ) && count( $topViewedCategoryMembersById ) > 0 ) {
 				Wikia::log(__METHOD__, ' Found some data. Lets find a commmon part with categories ');
-				$aResult = array();
+				$mostViewedArticlesFromCategory = [];
 				$aResultCount = 0;
-				$keys = array();
-				$reversedCatKeys = array_flip($catKeys);
 
 				$time = microtime(true);
 
-				foreach ( $items as $id => $pv ) {
-					$key = intval( $id );
-					$keys[$key]= $key;
-				}
-
-				foreach ( $keys as $key ) {
-					if ( isset( $reversedCatKeys[$key] ) ) {
+				foreach ( $topViewedCategoryMembersById as $id => $data) {
+					$id = intval( $id );
+					if ( isset( $categoryMembersTitles[$id] ) ) {
+						$mostViewedArticlesFromCategory[ $id ] = $categoryMembersTitles[$id];
 						$aResultCount++;
-						unset( $aCategoryArticles[$key] );
-						$aResult[ $key ] = array( 'page_id' => $key );
+						unset( $categoryMembersTitles[$id] );
 						if ( !empty( $limit ) && $aResultCount >= $limit ) {
 							self::logProcessingTime($time);
 
 							wfProfileOut( __METHOD__ );
-							return $aResult;
+							return $mostViewedArticlesFromCategory;
 						}
 					}
 				}
 
 				self::logProcessingTime($time);
 
-				$ret = ( !empty( $aResult ) )  ? $aResult + $aCategoryArticles : $aCategoryArticles;
+				$ret = ( !empty( $mostViewedArticlesFromCategory ) )  ? $mostViewedArticlesFromCategory + $categoryMembersTitles : $categoryMembersTitles;
 
 				if ( !empty( $limit ) && count( $ret ) > $limit ) {
 					$ret = array_slice($ret, 0, $limit, true);
@@ -168,28 +147,16 @@ class CategoryDataService {
 			} else {
 				Wikia::log(__METHOD__, 'No data at all. Quitting.');
 				wfProfileOut( __METHOD__ );
-				return array();
+				return [];
 			}
 		} else {
 			Wikia::log(__METHOD__, ' No articles in category found - quitting');
 			wfProfileOut( __METHOD__ );
-			return array();
+			return [];
 		}
 	}
 
 	protected static function logProcessingTime( $time ) {
 		Wikia::log(__METHOD__, ' Processing Time: ' . (microtime(true) - $time));
-	}
-
-	private static function tableFromResult( ResultWrapper $res ) {
-
-		$articles = array();
-		while ( $row = $res->fetchObject($res) ) {
-			$articles[intval($row->page_id)] = array(
-				'page_id' => $row->page_id
-			);
-		}
-
-		return $articles;
 	}
 }
