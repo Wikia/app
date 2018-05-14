@@ -12,6 +12,7 @@ class WikiaRobots {
 
 	const CACHE_PERIOD_REGULAR = 24 * 3600;
 	const CACHE_PERIOD_EXPERIMENTAL = 3600;
+	const CACHE_PERIOD_DEGRADED = 3600;
 
 	/**
 	 * Whether robots are allowed to crawl any portion of the site
@@ -107,6 +108,13 @@ class WikiaRobots {
 	 * @var bool
 	 */
 	private $experiment = false;
+
+	/**
+	 * Whether the current robots content is degraded because fetching rules from
+	 * language wikis failed.
+	 * @var bool
+	 */
+	private $degraded = false;
 
 	/**
 	 * The object used to construct paths
@@ -214,6 +222,7 @@ class WikiaRobots {
 					\Wikia\Logger\WikiaLogger::instance()->error( 'Cannot fetch language wiki robots rules', [
 						'fields' => ['foreign_wiki_dbname' => $wiki[ 'city_dbname' ] ]
 					] );
+					$this->degraded = true;
 				}
 			}
 		}
@@ -278,6 +287,9 @@ class WikiaRobots {
 	public function getRobotsTxtCachePeriod() {
 		if ( $this->experiment ) {
 			return self::CACHE_PERIOD_EXPERIMENTAL;
+		}
+		if ( $this->degraded ) {
+			return self::CACHE_PERIOD_DEGRADED;
 		}
 		return self::CACHE_PERIOD_REGULAR;
 	}
