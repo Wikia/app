@@ -31,6 +31,10 @@ class UserDataRemover {
 			$dbMaster->delete( 'user_email_log', ['user_id' => $userId] );
 			$dbMaster->delete( 'user_properties', ['up_user' => $userId] );
 
+			// commit early so that cache is properly invalidated
+			$dbMaster->commit();
+			wfWaitForSlaves( $dbMaster->getDBname() );
+
 			$this->info( "Removed user's global data", ['user_id' => $userId] );
 			return true;
 		} catch ( Exception $error ) {
