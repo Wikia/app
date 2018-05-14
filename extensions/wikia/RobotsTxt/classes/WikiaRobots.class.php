@@ -204,11 +204,11 @@ class WikiaRobots {
 			// fetch from foreign wikis...
 			$languageWikis = \WikiFactory::getLanguageWikis();
 			foreach( $languageWikis as $wiki ) {
-				$params = array(
+				$params = [
 					'controller' => 'WikiaRobots',
 					'method' => 'getAllowedDisallowed',
 					'shallow' => 1
-				);
+				];
 				if ( $wgRequest->getBool( 'forcerobots' ) ) {
 					$params[ 'forcerobots' ] = '1';
 				}

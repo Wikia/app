@@ -64,7 +64,7 @@ class PathBuilder {
 		}
 
 		$paths[] = $this->buildPath( '/*?*title=' . $pageName );
-		$paths[] = $this->buildPath( '/index.php/' . $pageName);
+		$paths[] = $this->buildPath( '/index.php/' . $pageName );
 
 		return $paths;
 	}
