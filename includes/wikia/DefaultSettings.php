@@ -701,6 +701,11 @@ define( "CACHE_LIBMEMCACHED", 11 );
  * - CACHE_DBA uses $wgTmpDirectory by default. The 'dir' parameter let you
  *   overrides that.
  */
+
+$wgDomainHash = isset($_SERVER['SERVER_NAME'])
+    ? hexdec(substr(md5($_SERVER['SERVER_NAME']), 0, 7))
+    : null;
+
 $wgObjectCaches = array(
     CACHE_NONE => array('class' => 'EmptyBagOStuff'),
     CACHE_DBA => array('class' => 'DBABagOStuff'),
@@ -736,6 +741,8 @@ $wgObjectCaches = array(
     'memcached-php' => array('class' => 'MemcachedPhpBagOStuff'),
     'hash' => array('class' => 'HashBagOStuff'),
 );
+
+unset( $wgDomainHash );
 
 $wgSessionsInLibmemcached = false;
 
