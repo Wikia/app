@@ -31,6 +31,23 @@ class PathBuilderTest extends WikiaBaseTest {
 			[ '/wiki/Test123' ],
 			$pathBuilder->buildPathsForPage( 'Test123', true )
 		);
+
+		$this->mockGlobalVariable( 'wgScriptPath', '/de' );
+		$pathBuilder = new PathBuilder();
+
+		$this->assertEquals(
+			[ '/de/wiki/Test123' ],
+			$pathBuilder->buildPathsForPage( 'Test123', true )
+		);
+
+		$this->assertEquals(
+			[
+				'/de/wiki/Test123',
+				'/de/*?*title=Test123',
+				'/de/index.php/Test123',
+			],
+			$pathBuilder->buildPathsForPage( 'Test123' )
+		);
 	}
 
 	/**
@@ -46,6 +63,7 @@ class PathBuilderTest extends WikiaBaseTest {
 		);
 
 		$this->mockGlobalVariable( 'wgScriptPath', '/de' );
+		$pathBuilder = new PathBuilder();
 
 		$this->assertEquals(
 			'/de/wiki/Test123',
@@ -96,6 +114,14 @@ class PathBuilderTest extends WikiaBaseTest {
 
 		$this->assertEquals(
 			[ '/wiki/File:' ],
+			$pathBuilder->buildPathsForNamespace( NS_FILE, true )
+		);
+
+		$this->mockGlobalVariable( 'wgScriptPath', '/de' );
+		$pathBuilder = new PathBuilder();
+
+		$this->assertEquals(
+			[ '/de/wiki/File:' ],
 			$pathBuilder->buildPathsForNamespace( NS_FILE, true )
 		);
 	}
@@ -155,6 +181,21 @@ class PathBuilderTest extends WikiaBaseTest {
 			],
 			$pathBuilder->buildPathsForSpecialPage( 'Randompage', true )
 		);
+
+		$this->mockGlobalVariable( 'wgScriptPath', '/de' );
+		$pathBuilder = new PathBuilder();
+		$this->assertEquals(
+			[
+				'/de/wiki/Special:Random',
+				'/de/*?*title=Special:Random',
+				'/de/index.php/Special:Random',
+				'/de/wiki/Special:RandomPage',
+				'/de/*?*title=Special:RandomPage',
+				'/de/index.php/Special:RandomPage',
+			],
+			$pathBuilder->buildPathsForSpecialPage( 'Randompage' )
+		);
+
 	}
 
 	/**
@@ -209,5 +250,13 @@ class PathBuilderTest extends WikiaBaseTest {
 			'/*?someparam=',
 			'/*?*&someparam=',
 		], $pathBuilder->buildPathsForParam( 'someparam' ) );
+
+		$this->mockGlobalVariable( 'wgScriptPath', '/de' );
+		$pathBuilder = new PathBuilder();
+		$this->assertEquals( [
+			'/de/*?someparam=',
+			'/de/*?*&someparam=',
+		], $pathBuilder->buildPathsForParam( 'someparam' ) );
+
 	}
 }
