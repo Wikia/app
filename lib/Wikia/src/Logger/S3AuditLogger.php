@@ -5,7 +5,7 @@
 
 namespace Wikia\Logger;
 
-use \Monolog\Formatter\LineFormatter;
+use Monolog\Formatter\LineFormatter;
 use Monolog\Logger;
 
 class S3AuditLogger extends WikiaLogger {
