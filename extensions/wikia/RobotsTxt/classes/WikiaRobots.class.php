@@ -190,24 +190,29 @@ class WikiaRobots {
 			$robots->addAllowedPaths( $this->pathBuilder->buildPathsForSpecialPage( $page, true ) );
 		}
 
-		// fetch from foreign wikis...
-		$languageWikis = \WikiFactory::getLanguageWikis();
-		foreach( $languageWikis as $wiki ) {
-			$params = array(
-				'controller' => 'WikiaRobots',
-				'method' => 'getAllowedDisallowed'
-			);
-			if ( $wgRequest->getBool( 'forcerobots' ) ) {
-				$params[ 'forcerobots' ] = '1';
-			}
-			$params['cb'] = time(); // temp
-			$params['rand'] = rand(0, 100);  // temp
-			$response = \ApiService::foreignCall( $wiki[ 'city_dbname' ], $params, \ApiService::WIKIA );
-			if ($response !== false) {
-				$robots->addAllowedPaths( $response['allowed'] );
-				$robots->addDisallowedPaths( $response['disallowed'] );
-			} else {
-				echo "cannot fetch foreign wiki rules!";
+		// Paranoid check to make sure language wikis return only their rules without calling other
+		// wikis recursively.
+		if ( !$wgRequest->getBool( 'shallow' ) ) {
+			// fetch from foreign wikis...
+			$languageWikis = \WikiFactory::getLanguageWikis();
+			foreach( $languageWikis as $wiki ) {
+				$params = array(
+					'controller' => 'WikiaRobots',
+					'method' => 'getAllowedDisallowed',
+					'shallow' => 1
+				);
+				if ( $wgRequest->getBool( 'forcerobots' ) ) {
+					$params[ 'forcerobots' ] = '1';
+				}
+				$params['cb'] = time(); // temp
+				$params['rand'] = rand(0, 100);  // temp
+				$response = \ApiService::foreignCall( $wiki[ 'city_dbname' ], $params, \ApiService::WIKIA );
+				if ($response !== false) {
+					$robots->addAllowedPaths( $response['allowed'] );
+					$robots->addDisallowedPaths( $response['disallowed'] );
+				} else {
+					echo "cannot fetch foreign wiki rules!";
+				}
 			}
 		}
 
