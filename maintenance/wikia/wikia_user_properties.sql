@@ -9,8 +9,8 @@ CREATE TABLE /*$wgDBprefix*/wikia_user_properties (
   wup_property VARBINARY(255) NULL DEFAULT NULL,
 
   -- Property value
-  wup_value BLOB NULL DEFAULT NULL,
-
-  UNIQUE INDEX (wup_user, wup_property),
-  INDEX (wup_property)
+  wup_value BLOB NULL DEFAULT NULL
 )/*$wgDBTableOptions*/;
+
+CREATE UNIQUE INDEX wup_user_property_idx ON wikia_user_properties(wup_user, wup_property);
+CREATE INDEX wup_property_idx ON wikia_user_properties(wup_property);
