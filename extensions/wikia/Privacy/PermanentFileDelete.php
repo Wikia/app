@@ -10,45 +10,36 @@ class PermanentFileDelete {
 	 *
 	 * This process is not reversible.
 	 *
-	 * @param int $userId
+	 * @param string $title
 	 * @return Status
 	 * @throws DBUnexpectedError
 	 * @throws MWException
 	 */
-	public static function deleteFiles( int $userId ): Status {
+	public static function deleteFiles( string $title ): Status {
 		$dbr = wfGetDB( DB_SLAVE );
-
-		$files = $dbr->select(
-			[ 'image' ],
-			[ 'img_name', 'img_sha1', 'img_timestamp' ],
-			[ 'img_user' => $userId ],
-			__METHOD__
-		);
 
 		$archived = $dbr->select(
 			'oldimage',
 			[ 'oi_name', 'oi_archive_name', 'oi_sha1', 'oi_timestamp' ],
-			[ 'oi_user' => $userId ],
+			[ 'oi_name' => $title ],
 			__METHOD__
 		);
 
-		$status = static::removeFilesFromBackend( $files, $archived );
+		$status = static::removeFilesFromBackend( $title, $archived );
 
 		if ( $status->isOK() ) {
-			// delete the file description pages
-			foreach ( $files as $row ) {
-				$title = Title::makeTitle( NS_FILE, $row->img_name );
-				PermanentArticleDelete::deletePage( $title );
-
-				$page = WikiPage::factory( $title );
-				$page->doPurge();
-			}
+			// delete the file description page
+			$pageTitle = Title::makeTitle( NS_FILE, $title );
+			PermanentArticleDelete::deletePage( $pageTitle );
 
 			$dbw = wfGetDB( DB_MASTER );
 
-			$dbw->delete( 'image', [ 'img_user' => $userId ], __METHOD__ );
-			$dbw->delete( 'oldimage', [ 'oi_user' => $userId ], __METHOD__ );
-			$dbw->delete( 'filearchive', [ 'fa_user' => $userId ], __METHOD__ );
+			$dbw->delete( 'image', [ 'img_name' => $title ], __METHOD__ );
+			$dbw->delete( 'oldimage', [ 'oi_name' => $title ], __METHOD__ );
+			$dbw->delete( 'filearchive', [ 'fa_name' => $title ], __METHOD__ );
+
+			$page = WikiPage::factory( $pageTitle );
+			$page->doPurge();
 		} else {
 			WikiaLogger::instance()->error( 'Error while deleting files', [
 				'status' => $status
@@ -58,16 +49,12 @@ class PermanentFileDelete {
 		return $status;
 	}
 
-	private static function removeFilesFromBackend( $files, $archived ): Status {
+	private static function removeFilesFromBackend( string $title, $archived ): Status {
 		$repo = RepoGroup::singleton()->getLocalRepo();
-		$paths = [];
 
-		foreach ( $files as $row ) {
-			$localFile = LocalFile::newFromRow( $row, $repo );
-			$paths[] = $localFile->getRel();
+		$localFile = LocalFile::newFromTitle( $title, $repo );
 
-			$localFile->purgeEverything();
-		}
+		$paths = [ $localFile->getRel() ];
 
 		foreach ( $archived as $row ) {
 			$oldLocalFile = OldLocalFile::newFromRow( $row, $repo );
@@ -86,6 +73,10 @@ class PermanentFileDelete {
 			];
 		}
 
-		return $repo->getBackend()->doOperations( $operations );
+		$status = $repo->getBackend()->doOperations( $operations );
+
+		$localFile->purgeEverything();
+
+		return $status;
 	}
 }
