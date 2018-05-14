@@ -2188,9 +2188,9 @@ If you have questions about this specific community, start by [[Special:ListAdmi
 You can also ask general questions to other community members on our [[w:c:community:Special:Forum|community help forum]].
 
 Remember, you can't break a community on FANDOM, so don't be afraid to get started. Happy editing!",
-	'specialcontact-intro-feedback' => 'Got feedback? We would love to hear it! Please provide your thoughts and details below.
+	'specialcontact-intro-feedback' => 'Wil je feedback geven? Dat horen we graag! Je kunt je gedachten en ideeën hierbeneden opschrijven.
 
-Thanks in advance and happy editing!',
+Alvast bedankt, en veel plezier met bewerken!',
 	'specialcontact-intro-bug' => 'We are sorry to hear that you found a bug on FANDOM. Please provide full details of the issue you are seeing below so we can investigate further. Important details to include are:
 *Your username
 *Link to your community
