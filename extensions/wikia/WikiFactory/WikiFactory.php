@@ -556,7 +556,7 @@ class WikiFactory {
 
 	/**
 	 * Returns a list of language wikis hosted under the current domain. This works only for wikis
-	 * hosted at the root of the domain, for language wikis it will return an empty list.
+	 * hosted at the root of the domain, for language path wikis it will return an empty list.
 	 *
 	 * If used often, put a caching layer on top of it.
 	 *
