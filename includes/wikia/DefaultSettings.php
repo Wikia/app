@@ -713,7 +713,7 @@ $wgObjectCaches = array(
          * incompatible serialization logic.
          */
         // FIXME: this is a temporary condition used to gradually deploy the new client (SUS-4611)
-        'class' => 'MemcachedPhpBagOStuff',
+        'class' => ( ( !is_null($wgDomainHash) && $wgDomainHash % 100 < 10 ) ? 'MemcachedPeclBagOStuff' : 'MemcachedPhpBagOStuff' ),
         'use_binary_protocol' => false, // twemproxy does not support binary protocol
         /**
          * SUS-4749 | make MemcachedPeclBagOStuff use igbinary serializer
