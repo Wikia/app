@@ -21,7 +21,6 @@ class S3AuditLogger extends WikiaLogger {
 		static $instance = null;
 
 		if (!isset($instance)) {
-			echo "instance";
 			$instance = new S3AuditLogger();
 		}
 
@@ -35,7 +34,6 @@ class S3AuditLogger extends WikiaLogger {
 	 * @return Logger
 	 */
 	public function defaultLogger($ident = self::SYSLOG_IDENT) {
-		echo "defaultLogger";
 		$handler = self::getSyslogHandler($ident);
 		$formatter = new LineFormatter("s3auditlog %channel%.%level_name%: %message% %context% %extra%");
 		$handler->setFormatter($formatter);
