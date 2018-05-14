@@ -152,7 +152,7 @@ class WikiaRobots {
 		       $wgRobotsTxtBlockedWiki,
 		       $wgSitemapXmlExposeInRobots,
 		       $wgServer,
-			   $wgRequest;
+		       $wgRequest;
 
 		if ( !$this->accessAllowed || !empty( $wgRobotsTxtBlockedWiki ) ) {
 			// No crawling preview, verify, sandboxes, showcase, etc
@@ -204,14 +204,16 @@ class WikiaRobots {
 				if ( $wgRequest->getBool( 'forcerobots' ) ) {
 					$params[ 'forcerobots' ] = '1';
 				}
-				$params['cb'] = time(); // temp
-				$params['rand'] = rand(0, 100);  // temp
+				$params['cb'] = time();
+				$params['rand'] = rand(0, 100);
 				$response = \ApiService::foreignCall( $wiki[ 'city_dbname' ], $params, \ApiService::WIKIA );
 				if ($response !== false) {
 					$robots->addAllowedPaths( $response['allowed'] );
 					$robots->addDisallowedPaths( $response['disallowed'] );
 				} else {
-					echo "cannot fetch foreign wiki rules!";
+					\Wikia\Logger\WikiaLogger::instance()->error( 'Cannot fetch language wiki robots rules', [
+						'fields' => ['foreign_wiki_dbname' => $wiki[ 'city_dbname' ] ]
+					] );
 				}
 			}
 		}

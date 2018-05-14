@@ -89,10 +89,10 @@ class PathBuilder {
 	public function buildPathsForSpecialPage( $pageName, $canonicalOnly = false ) {
 		$paths = [];
 		foreach ( $this->specialNamespaces as $specialNamespaceAlias ) {
-			foreach ($this->getSpecialPageNames($pageName) as $localPageName) {
+			foreach ( $this->getSpecialPageNames( $pageName ) as $localPageName ) {
 				$paths = array_merge(
 					$paths,
-					$this->buildPathsForPage($specialNamespaceAlias . ':' . $localPageName, $canonicalOnly)
+					$this->buildPathsForPage( $specialNamespaceAlias . ':' . $localPageName, $canonicalOnly )
 				);
 			}
 		}
