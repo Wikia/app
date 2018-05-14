@@ -50,10 +50,16 @@ class CommunityPageSpecialInsightsModel {
 	 *  - should display page views on list
 	 *  - how data should be sorted (@see InsightsSorting::$sorting)
 	 * @return array Insight Module
+	 * @throws MWException
 	 */
 	private function getInsightModule( $type, $config ) {
-		$insightPages = $this->insightsService->getInsightPages(
-			$type,
+		$model = InsightsHelper::getInsightModel( $type );
+
+		// SUS-4758: we don't need to load page view data
+		$model->getConfig()->setShowPageViews( false );
+
+		$insightPages = $this->insightsService->getInsightPagesForModel(
+			$model,
 			static::INSIGHTS_MODULE_ITEMS,
 			static::RANDOM_SORTING_TYPE
 		);

@@ -142,6 +142,21 @@ class AdEngine2Hooks {
 	}
 
 	/**
+	 * Get tracking opt-outs for Wikia modules
+	 *
+	 * @return array
+	 */
+	public static function getTrackingOptOutModules() {
+		// list of functions with tracking opted-out
+		return [
+			'gpt' => true,
+			'krux' => true,
+			'kikimora' => true,
+			'prebid' => true
+		];
+	}
+
+	/**
 	 * Register ad-related vars on top
 	 *
 	 * @param array $vars
@@ -233,6 +248,7 @@ class AdEngine2Hooks {
 		$scriptModules[] = 'wikia.log';
 		$scriptModules[] = 'wikia.querystring';
 		$scriptModules[] = 'wikia.tracker.stub';
+		$scriptModules[] = 'wikia.trackingOptOut';
 		$scriptModules[] = 'wikia.window';
 		return true;
 	}

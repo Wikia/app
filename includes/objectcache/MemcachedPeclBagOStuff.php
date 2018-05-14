@@ -7,8 +7,9 @@
  */
 class MemcachedPeclBagOStuff extends MemcachedBagOStuff {
 
-	// SUS-4611 | add a prefix to keys to avoid problems with incompatible serialization
-	const KEY_PREFIX = 'lm:';
+	// SUS-4749 | add a prefix to keys to avoid problems with incompatible serialization
+	// ("lm" comes from libmemcached)
+	const KEY_PREFIX = 'lm';
 
 	/* @var Memcached $client */
 	protected $client;
@@ -70,6 +71,10 @@ class MemcachedPeclBagOStuff extends MemcachedBagOStuff {
 		// forwards compatibility would require MWMemcached::get_sock() to be
 		// rewritten.
 		$this->client->setOption( Memcached::OPT_LIBKETAMA_COMPATIBLE, true );
+
+		// SUS-4749 | add a prefix to all keys due to serialization incompatibility
+		// with an old client
+		$this->client->setOption( Memcached::OPT_PREFIX_KEY, self::KEY_PREFIX );
 
 		// Set the serializer
 		switch ( $params['serializer'] ) {

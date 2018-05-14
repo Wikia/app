@@ -633,7 +633,7 @@ class CategoryViewer extends ContextSource {
 	private function addFragmentToTitle( $title, $section ) {
 		switch ( $section ) {
 			case 'page':
-				$fragment = 'mw-pages';
+				$fragment = ''; # 'mw-pages'; SUS-4071
 				break;
 			case 'subcat':
 				$fragment = 'mw-subcategories';
