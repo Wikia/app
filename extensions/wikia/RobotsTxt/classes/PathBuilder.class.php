@@ -63,8 +63,8 @@ class PathBuilder {
 			return $paths;
 		}
 
-		$paths[] = $this->scriptPath . '/*?*title=' . $pageName;
-		$paths[] = $this->scriptPath . '/index.php/' . $pageName;
+		$paths[] = $this->buildPath( '/*?*title=' . $pageName );
+		$paths[] = $this->buildPath( '/index.php/' . $pageName);
 
 		return $paths;
 	}
@@ -129,8 +129,8 @@ class PathBuilder {
 	 */
 	public function buildPathsForParam( $param ) {
 		return [
-			$this->scriptPath . '/*?' . $param . '=',
-			$this->scriptPath . '/*?*&' . $param . '=',
+			$this->buildPath( '/*?' . $param . '=' ),
+			$this->buildPath( '/*?*&' . $param . '=' ),
 		];
 	}
 
