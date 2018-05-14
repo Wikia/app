@@ -204,7 +204,6 @@ class WikiaRobots {
 			$params['rand'] = rand(0, 100);  // temp
 			$response = \ApiService::foreignCall( $wiki[ 'city_dbname' ], $params, \ApiService::WIKIA );
 			if ($response !== false) {
-				echo json_encode($response);
 				$robots->addAllowedPaths( $response['allowed'] );
 				$robots->addDisallowedPaths( $response['disallowed'] );
 			} else {
