@@ -6599,10 +6599,16 @@ $wgRateLimits = [
     'edit' => [
         'newbie' => [ 6, 60 ],
         'ip' => [ 6, 60 ],
+        // SUS-4775: apply edit rate limit - 40 edits/min for users, 80 edits/min for bots
+        'user' => [ 40, 60 ],
+        'bot' => [ 80, 60 ],
     ],
     'move' => [
         'newbie' => [ 2, 240 ],
         'user' => [ 2, 240 ],
+        // SUS-4775: apply page move rate limit - 20 moves/min for admins, 80 moves/min for bots
+        'sysop' => [ 20, 60 ],
+        'bot' => [ 80, 60 ],
     ],
     'emailuser' => [
         'user' => [ 2, 86400 ],
