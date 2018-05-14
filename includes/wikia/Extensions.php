@@ -1776,3 +1776,5 @@ include "$IP/extensions/wikia/Search/WikiaSearch.setup.php";
 
 // Mercury auth pages related functionality - redirects, email confirmation.
 include "$IP/extensions/wikia/AuthPages/AuthPages.setup.php";
+
+include "$IP/extensions/wikia/GDPR/GDPR.setup.php";

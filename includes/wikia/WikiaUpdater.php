@@ -52,6 +52,8 @@ class WikiaUpdater {
 			array( 'dropIndex', 'wall_related_pages', 'comment_id_idx',  $dir . 'patch-wall_related_pages-drop-comment_id_idx.sql', true ), // SUS-3096
 			array( 'dropIndex', 'wall_related_pages', 'page_id_idx_2',  $dir . 'patch-wall_related_pages-drop-page_id_idx_2.sql', true ), // SUS-3096
 			array( 'dropIndex', 'video_info', 'added_at',  $dir . 'patch-video_info-drop-added_at_idx.sql', true ), // SUS-4297
+			array( 'dropIndex', 'image', 'img_usertext_timestamp', $dir . 'patch-image-drop-usertext-index.sql', true ),
+			array( 'dropIndex', 'oldimage', 'oi_usertext_timestamp', $dir . 'patch-oldimage-drop-usertext-index.sql', true ),
 
 			# functions
 			array( 'WikiaUpdater::do_page_wikia_props_update' ),
@@ -86,6 +88,8 @@ class WikiaUpdater {
 			array( 'WikiaUpdater::doPageVoteCleanup' ), // SUS-3390 / SUS-4252
 			array( 'addIndex', 'page_vote', 'article_user_idx', $dir. 'patch-index-page_vote.sql', true ), // SUS-3390
 			array( 'addIndex', 'video_info', 'video_id', $dir. 'patch-index-video_info.sql', true ), //  SUS-4297
+			array( 'addIndex', 'image', 'img_user', $dir . 'patch-image-add-user-index.sql', true ),
+			array( 'addIndex', 'oldimage', 'oi_user', $dir . 'patch-oldimage-add-user-index.sql', true ),
 		);
 
 		if ( $wgDBname === $wgExternalSharedDB ) {
@@ -324,7 +328,7 @@ class WikiaUpdater {
 		$databaseUpdater->output( 'Adding default empty value to rc_user_text column... ' );
 		$databaseConnection->sourceFile( $patchDir . 'patch-rc_user_text-default.sql' );
 		$databaseUpdater->output( "done.\n" );
-		
+
 		wfWaitForSlaves();
 	}
 
