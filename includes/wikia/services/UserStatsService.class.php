@@ -196,13 +196,15 @@ class UserStatsService extends WikiaModel {
 		// SUS-4773: In the vast majority of cases the above UPDATE will have handled setting proper edit count
 		// We only need to INSERT if this is the user's first edit on this wiki
 		if ( !$dbw->affectedRows() ) {
-			$dbw->insert(
+			$dbw->upsert(
 				'wikia_user_properties',
 				[
 					 'wup_user' => $this->userId,
 					 'wup_property' => $statName,
 					 'wup_value' => $statVal
 				 ],
+				[ [ 'wup_user', 'wup_property' ] ],
+				[ 'wup_value = wup_value + 1' ],
 				__METHOD__
 			);
 		}
