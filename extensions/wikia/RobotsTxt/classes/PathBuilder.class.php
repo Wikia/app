@@ -69,10 +69,16 @@ class PathBuilder {
 		return $paths;
 	}
 
-	// TODO: doc, tests
+	/**
+	 * Return the path prefixed with current wiki language path.
+	 *
+	 * @param string $path local path like "/index.php" or "/wiki/Foo"
+	 * @return string full path
+	 */
 	public function buildPath( $path ) {
 		return $this->scriptPath . $path;
 	}
+
 	/**
 	 * Get paths a given special page is accessible at
 	 *

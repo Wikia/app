@@ -11,7 +11,7 @@ class PathBuilderTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * Test testBuildPaths
+	 * Test buildPathsForPage
 	 *
 	 * @covers PathBuilder::testBuildPathsForPage
 	 */
@@ -30,6 +30,26 @@ class PathBuilderTest extends WikiaBaseTest {
 		$this->assertEquals(
 			[ '/wiki/Test123' ],
 			$pathBuilder->buildPathsForPage( 'Test123', true )
+		);
+	}
+
+	/**
+	 * Test buildPath method
+	 *
+	 * @covers PathBuilder::buildPath
+	 */
+	public function testBuildPath() {
+		$pathBuilder = new PathBuilder();
+		$this->assertEquals(
+			'/wiki/Test123',
+			$pathBuilder->buildPathsForPage( '/wiki/Test123' )
+		);
+
+		$this->mockGlobalVariable( 'wgScriptPath', '/de' );
+
+		$this->assertEquals(
+			'/de/wiki/Test123',
+			$pathBuilder->buildPathsForPage( '/wiki/Test123' )
 		);
 	}
 
