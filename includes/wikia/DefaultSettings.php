@@ -356,7 +356,6 @@ $wgAutoloadClasses['AchievementsController'] = $IP.'/skins/oasis/modules/Achieve
 $wgAutoloadClasses['AdController'] = $IP.'/skins/oasis/modules/AdController.class.php';
 $wgAutoloadClasses['AdEmptyContainerController'] = $IP.'/skins/oasis/modules/AdEmptyContainerController.class.php';
 $wgAutoloadClasses['FollowedPagesController'] = $IP.'/skins/oasis/modules/FollowedPagesController.class.php';
-$wgAutoloadClasses['MyToolsController'] = $IP.'/skins/oasis/modules/MyToolsController.class.php';
 $wgAutoloadClasses['UserPagesHeaderController'] = $IP.'/skins/oasis/modules/UserPagesHeaderController.class.php';
 $wgAutoloadClasses['MenuButtonController'] = $IP.'/skins/oasis/modules/MenuButtonController.class.php';
 $wgAutoloadClasses['CommentsLikesController'] = $IP.'/skins/oasis/modules/CommentsLikesController.class.php';
@@ -707,6 +706,25 @@ $wgObjectCaches = array(
     CACHE_DBA => array('class' => 'DBABagOStuff'),
     CACHE_ANYTHING => array('factory' => 'ObjectCache::newAnything'),
     CACHE_ACCEL => array('factory' => 'ObjectCache::newAccelerator'),
+    // SUS-4611
+    CACHE_MEMCACHED => array(
+        /**
+         * Note that MemcachedPhpBagOStuff and MemcachedPeclBagOStuff clients use
+         * incompatible serialization logic.
+         */
+        // FIXME: this is a temporary condition used to gradually deploy the new client (SUS-4611)
+        'class' => 'MemcachedPhpBagOStuff',
+        'use_binary_protocol' => false, // twemproxy does not support binary protocol
+        /**
+         * SUS-4749 | make MemcachedPeclBagOStuff use igbinary serializer
+         *
+         * An old client uses PHP serializer
+         *
+         * @see https://github.com/igbinary/igbinary#igbinary
+         * @see https://phpolyk.wordpress.com/2011/08/28/igbinary-the-new-php-serializer/
+         */
+         'serializer' => 'igbinary',
+    ),
     CACHE_MEMCACHED => array(
         'class' => 'MemcachedPhpBagOStuff',
         'use_binary_protocol' => false,
@@ -1714,6 +1732,12 @@ $wgShortArticlePathWikis = [
 ];
 
 $wgEnableOpenXSPC = true;
+
+/**
+ * Whether to inline the ResourceLoader startup script (for certain error pages)
+ * SUS-4734
+ */
+$wgInlineStartupScript = false;
 
 /**
  * Enable recovery

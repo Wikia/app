@@ -9,6 +9,7 @@ class WikiFactoryLoaderIntegrationTest extends WikiaDatabaseTest {
 		parent::setUp();
 
 		WikiFactory::isUsed( false );
+		$GLOBALS['wgExtensionFunctions'] = [];
 	}
 
 	/**
@@ -28,11 +29,47 @@ class WikiFactoryLoaderIntegrationTest extends WikiaDatabaseTest {
 	}
 
 	public function provideRequestDataForExistingWikis() {
-		yield [ 1, [ 'SERVER_NAME' => 'test1.wikia.com', 'REQUEST_URI' => 'http://test1.wikia.com/wiki/Test' ] ];
-		yield [ 2, [ 'SERVER_NAME' => 'test1.wikia.com', 'REQUEST_URI' => 'http://test1.wikia.com/de/wiki/Bar' ] ];
-		yield [ 8, [ 'SERVER_NAME' => 'poznan.wikia.com', 'REQUEST_URI' => 'http://poznan.wikia.com/en/wiki/Stary_Rynek' ] ];
-		yield [ 9, [ 'SERVER_NAME' => 'poznan.wikia.com', 'REQUEST_URI' => 'http://poznan.wikia.com/wiki/Strona_główna' ] ];
-		yield [ 9, [ 'SERVER_NAME' => 'poznan.wikia.com', 'REQUEST_URI' => 'http://poznan.wikia.com/' ] ];
+		yield [ 1, [
+			'REQUEST_SCHEME' => 'http',
+			'SERVER_NAME' => 'test1.wikia.com',
+			'REQUEST_URI' => '/wiki/Test',
+		] ];
+		yield [ 2, [
+			'REQUEST_SCHEME' => 'http',
+			'SERVER_NAME' => 'test1.wikia.com',
+			'REQUEST_URI' => '/de/wiki/Bar',
+		] ];
+		yield [ 8, [
+			'REQUEST_SCHEME' => 'http',
+			'SERVER_NAME' => 'poznan.wikia.com',
+			'REQUEST_URI' => '/en/wiki/Stary_Rynek',
+		] ];
+		yield [ 9, [
+			'REQUEST_SCHEME' => 'http',
+			'SERVER_NAME' => 'poznan.wikia.com',
+			'REQUEST_URI' => '/wiki/Strona_główna',
+		] ];
+		yield [ 9, [
+			'REQUEST_SCHEME' => 'http',
+			'SERVER_NAME' => 'poznan.wikia.com',
+			'REQUEST_URI' => '/',
+		] ];
+		// Test cases for PHP bug: https://bugs.php.net/bug.php?id=71646
+		yield [ 1, [
+			'REQUEST_SCHEME' => 'http',
+			'SERVER_NAME' => 'test1.wikia.com',
+			'REQUEST_URI' => '/wiki/Thread:24',
+		] ];
+		yield [ 2, [
+			'REQUEST_SCHEME' => 'http',
+			'SERVER_NAME' => 'test1.wikia.com',
+			'REQUEST_URI' => '/de/wiki/Thread:24',
+		] ];
+		yield [ 8, [
+			'REQUEST_SCHEME' => 'http',
+			'SERVER_NAME' => 'poznan.wikia.com',
+			'REQUEST_URI' => '/en/wiki/Thread:24',
+		] ];
 	}
 
 	/**
@@ -80,13 +117,41 @@ class WikiFactoryLoaderIntegrationTest extends WikiaDatabaseTest {
 	}
 
 	public function provideRequestWithAlternativeDomain() {
-		yield [ 'http://test1.wikia.com/wiki/Foo', [ 'SERVER_NAME' => 'test1.wikicities.com', 'REQUEST_URI' => 'http://test1.wikicities.com/wiki/Foo' ] ];
-		yield [ 'http://test1.wikia.com/de/wiki/Bar', [ 'SERVER_NAME' => 'einetest.wikia.com', 'REQUEST_URI' => 'http://einetest.wikia.com/wiki/Bar' ] ];
-		yield [ 'http://test1.wikia.com/de/wiki/Bar', [ 'SERVER_NAME' => 'einetest.wikia.com', 'REQUEST_URI' => 'http://einetest.wikia.com/wiki/Bar' ] ];
-		yield [ 'http://test1.wikia.com/wiki/Test', [ 'SERVER_NAME' => 'test1.wikia.com', 'REQUEST_URI' => 'http://test1.wikia.com/en/wiki/Test' ] ];
-		yield [ 'http://poznan.wikia.com/wiki/Strona_główna', [ 'SERVER_NAME' => 'poznan.wikia.com', 'REQUEST_URI' => 'http://poznan.wikia.com/pl/wiki/Strona_główna' ] ];
-		yield [ 'http://poznan.wikia.com/', [ 'SERVER_NAME' => 'poznan.wikia.com', 'REQUEST_URI' => 'http://poznan.wikia.com/pl' ] ];
-		yield [ 'http://poznan.wikia.com/', [ 'SERVER_NAME' => 'poznan.wikia.com', 'REQUEST_URI' => 'http://poznan.wikia.com/pl/' ] ];
+		yield [ 'http://test1.wikia.com/wiki/Foo', [
+			'REQUEST_SCHEME' => 'http',
+			'SERVER_NAME' => 'test1.wikicities.com',
+			'REQUEST_URI' => '/wiki/Foo',
+		] ];
+		yield [ 'http://test1.wikia.com/de/wiki/Bar', [
+			'REQUEST_SCHEME' => 'http',
+			'SERVER_NAME' => 'einetest.wikia.com',
+			'REQUEST_URI' => '/wiki/Bar',
+		] ];
+		yield [ 'http://test1.wikia.com/de/wiki/Bar', [
+			'REQUEST_SCHEME' => 'http',
+			'SERVER_NAME' => 'einetest.wikia.com',
+			'REQUEST_URI' => '/wiki/Bar',
+		] ];
+		yield [ 'http://test1.wikia.com/wiki/Test', [
+			'REQUEST_SCHEME' => 'http',
+			'SERVER_NAME' => 'test1.wikia.com',
+			'REQUEST_URI' => '/en/wiki/Test',
+		] ];
+		yield [ 'http://poznan.wikia.com/wiki/Strona_główna', [
+			'REQUEST_SCHEME' => 'http',
+			'SERVER_NAME' => 'poznan.wikia.com',
+			'REQUEST_URI' => '/pl/wiki/Strona_główna',
+		] ];
+		yield [ 'http://poznan.wikia.com/', [
+			'REQUEST_SCHEME' => 'http',
+			'SERVER_NAME' => 'poznan.wikia.com',
+			'REQUEST_URI' => '/pl',
+		] ];
+		yield [ 'http://poznan.wikia.com/', [
+			'REQUEST_SCHEME' => 'http',
+			'SERVER_NAME' => 'poznan.wikia.com',
+			'REQUEST_URI' => '/pl/',
+		] ];
 	}
 
 	/**
@@ -109,16 +174,28 @@ class WikiFactoryLoaderIntegrationTest extends WikiaDatabaseTest {
 	}
 
 	public function provideNotExistingWikisRequests() {
-		yield [ [ 'SERVER_NAME' => 'badwiki.wikia.com', 'REQUEST_URI' => 'http://badwiki.wikia.com/wiki/Foo' ], [] ];
-		yield [ [ 'SERVER_NAME' => 'poznan.wikia.com', 'REQUEST_URI' => 'http://poznan.wikia.com/de/wiki/Posen' ], [] ];
-		yield [ [ 'SERVER_NAME' => 'zgubieni.wikia.com', 'REQUEST_URI' => 'http://zgubieni.wikia.com/en/wiki/London' ], [] ];
+		yield [ [
+			'REQUEST_SCHEME' => 'http',
+			'SERVER_NAME' => 'badwiki.wikia.com',
+			'REQUEST_URI' => '/wiki/Foo',
+		], [] ];
+		yield [ [
+			'REQUEST_SCHEME' => 'http',
+			'SERVER_NAME' => 'poznan.wikia.com',
+			'REQUEST_URI' => '/de/wiki/Posen',
+		], [] ];
+		yield [ [
+			'REQUEST_SCHEME' => 'http',
+			'SERVER_NAME' => 'zgubieni.wikia.com',
+			'REQUEST_URI' => '/en/wiki/London',
+		], [] ];
 	}
 
 	/**
 	 * @dataProvider provideWikisMarkedForClosing
 	 * @runInSeparateProcess
 	 * @preserveGlobalState disabled
-	 * 
+	 *
 	 * @param array $server
 	 */
 	public function testReturnsFalseAndRedirectsWhenWikiIsMarkedForClosing( array $server ) {
@@ -130,32 +207,44 @@ class WikiFactoryLoaderIntegrationTest extends WikiaDatabaseTest {
 		$this->assertFalse( $result );
 		$this->assertContains( 'X-Redirected-By-WF: MarkedForClosing', $headers );
 	}
-	
+
 	public function provideWikisMarkedForClosing() {
-		yield [ [ 'SERVER_NAME' => 'zamkniete.wikia.com', 'REQUEST_URI' => 'http://zamkniete.wikia.com/api.php' ] ];
-		yield [ [ 'SERVER_NAME' => 'spamtest.wikia.com', 'REQUEST_URI' => 'http://spamtest.wikia.com/wiki/Foo' ] ];
+		yield [ [
+			'REQUEST_SCHEME' => 'http',
+			'SERVER_NAME' => 'zamkniete.wikia.com',
+			'REQUEST_URI' => '/api.php',
+		] ];
+		yield [ [
+			'REQUEST_SCHEME' => 'http',
+			'SERVER_NAME' => 'spamtest.wikia.com',
+			'REQUEST_URI' => '/wiki/Foo',
+		] ];
 	}
 
 	/**
 	 * @dataProvider provideDisabledWikis
-	 * @runInSeparateProcess
-	 * @preserveGlobalState disabled
 	 *
 	 * @param array $server
 	 */
-	public function testReturnsFalseAndRedirectsWhenWikiIsDisabled( array $server ) {
+	public function testRegistersClosedWikiHandlerWhenWikiIsDisabled( int $expectedCityId, array $server ) {
 		$wikiFactoryLoader = new WikiFactoryLoader( $server, [] );
 		$result = $wikiFactoryLoader->execute();
 
-		$headers = xdebug_get_headers();
-
-		$this->assertFalse( $result );
-		$this->assertContains( 'X-Redirected-By-WF: Dump', $headers );
+		$this->assertEquals( $expectedCityId, $result );
+		$this->assertInstanceOf( Closure::class, $GLOBALS['wgExtensionFunctions'][0] );
 	}
 
 	public function provideDisabledWikis() {
-		yield [ [ 'SERVER_NAME' => 'rekt.wikia.com', 'REQUEST_URI' => 'http://rekt.wikia.com/wiki/No_page' ] ];
-		yield [ [ 'SERVER_NAME' => 'dead.wikia.com', 'REQUEST_URI' => 'http://dead.wikia.com/wiki/Special:Version' ] ];
+		yield [ 5, [
+			'REQUEST_SCHEME' => 'http',
+			'SERVER_NAME' => 'rekt.wikia.com',
+			'REQUEST_URI' => '/wiki/No_page',
+		] ];
+		yield [ 6, [
+			'REQUEST_SCHEME' => 'http',
+			'SERVER_NAME' => 'dead.wikia.com',
+			'REQUEST_URI' => '/wiki/Special:Version',
+		] ];
 	}
 
 	/**
@@ -178,10 +267,26 @@ class WikiFactoryLoaderIntegrationTest extends WikiaDatabaseTest {
 	}
 
 	public function provideRedirectWikiRequests() {
-		yield [ [ 'SERVER_NAME' => 'redirect.wikia.com', 'REQUEST_URI' => 'http://redirect.wikia.com/wiki/Test_redirect' ] ];
-		yield [ [ 'SERVER_NAME' => 'redirect2.wikia.com', 'REQUEST_URI' => 'http://redirect2.wikia.com/wikia.php' ] ];
-		yield [ [ 'SERVER_NAME' => 'redirect.wikia.com', 'REQUEST_URI' => 'http://redirect.wikia.com/en/wiki/Test_redirect' ] ];
-		yield [ [ 'SERVER_NAME' => 'redirect2.wikia.com', 'REQUEST_URI' => 'http://redirect2.wikia.com/en/wikia.php' ] ];
+		yield [ [
+			'REQUEST_SCHEME' => 'http',
+			'SERVER_NAME' => 'redirect.wikia.com',
+			'REQUEST_URI' => '/wiki/Test_redirect',
+		] ];
+		yield [ [
+			'REQUEST_SCHEME' => 'http',
+			'SERVER_NAME' => 'redirect2.wikia.com',
+			'REQUEST_URI' => '/wikia.php',
+		] ];
+		yield [ [
+			'REQUEST_SCHEME' => 'http',
+			'SERVER_NAME' => 'redirect.wikia.com',
+			'REQUEST_URI' => '/en/wiki/Test_redirect',
+		] ];
+		yield [ [
+			'REQUEST_SCHEME' => 'http',
+			'SERVER_NAME' => 'redirect2.wikia.com',
+			'REQUEST_URI' => '/en/wikia.php',
+		] ];
 	}
 
 	/**
@@ -239,8 +344,16 @@ class WikiFactoryLoaderIntegrationTest extends WikiaDatabaseTest {
 	}
 
 	public function providePrecedence() {
-		yield 'Request info takes precedence over SERVER_ID' => [ 9, [ 'SERVER_ID' => 1 ], [ 'SERVER_NAME' => 'poznan.wikia.com', 'REQUEST_URI'	=> 'http://poznan.wikia.com/' ] ];
-		yield 'Request info takes precedence over SERVER_DBNAME' => [ 9, [ 'SERVER_DBNAME' => 'test1' ], [ 'SERVER_NAME' => 'poznan.wikia.com', 'REQUEST_URI' => 'http://poznan.wikia.com/' ] ];
+		yield 'Request info takes precedence over SERVER_ID' => [ 9, [ 'SERVER_ID' => 1 ], [
+			'REQUEST_SCHEME' => 'http',
+			'SERVER_NAME' => 'poznan.wikia.com',
+			'REQUEST_URI' => '/',
+		] ];
+		yield 'Request info takes precedence over SERVER_DBNAME' => [ 9, [ 'SERVER_DBNAME' => 'test1' ], [
+			'REQUEST_SCHEME' => 'http',
+			'SERVER_NAME' => 'poznan.wikia.com',
+			'REQUEST_URI' => '/',
+		] ];
 		yield 'SERVER_ID takes precedence over SERVER_DBNAME' => [ 1, [ 'SERVER_ID' => 1, 'SERVER_DBNAME' => 'poznan' ], [] ];
 	}
 

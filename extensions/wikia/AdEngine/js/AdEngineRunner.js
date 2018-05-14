@@ -17,15 +17,21 @@ define('ext.wikia.adEngine.adEngineRunner', [
 		supportedModules = [a9, prebid, adBlockRecovery, fvLagger],
 		timeout = getTimeout();
 
-	function getTimeout() {
-		var fvTimeout;
+	function getDisplayAdTimeout() {
+		if (adContext.get('opts.overwriteDelayEngine')) {
+			return instantGlobals.wgAdDriverDelayTimeout || 0;
+		}
 
+		return 2000;
+	}
+
+	function getTimeout() {
 		if (fvLagger && fvLagger.wasCalled() && adContext.get('targeting.hasFeaturedVideo')) {
-			fvTimeout = adContext.get('targeting.skin') === 'oasis' ?
+			return adContext.get('targeting.skin') === 'oasis' ?
 				instantGlobals.wgAdDriverFVDelayTimeoutOasis : instantGlobals.wgAdDriverFVDelayTimeoutMobileWiki;
 		}
 
-		return fvTimeout || instantGlobals.wgAdDriverDelayTimeout || 2000;
+		return getDisplayAdTimeout();
 	}
 
 	/**

@@ -66,6 +66,13 @@ final class MapsHooks {
 			return;
 		}
 
+		// FANDOM change begin
+		global $wgArticleAsJson;
+		if ( !empty( $wgArticleAsJson ) ) {
+			return;
+		}
+		// FANDOM change end
+
 		/** @var MapsMappingService $service */
 		foreach ( $parserOutput->mapsMappingServices as $service ) {
 			$html = $service->getDependencyHtml();

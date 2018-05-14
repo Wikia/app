@@ -1685,10 +1685,6 @@ if ( !empty( $wgEnableWeiboTagExt ) ) {
 /**
  * SEO extensions (keep them ordered)
  */
-if ( !empty( $wgEnableCategoryPaginationExt ) ) {
-	include( "$IP/extensions/wikia/CategoryPagination/CategoryPagination.setup.php" );
-}
-
 if ( $wgEnableCustom404PageExt === true
 	|| ( $wgEnableCustom404PageExt === null && in_array( $wgLanguageCode, $wgEnableCustom404PageExtInLanguages ) )
 ) {

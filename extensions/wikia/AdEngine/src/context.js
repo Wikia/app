@@ -46,6 +46,8 @@ export default {
 				segment: '-audio',
 				key: 'audio'
 			}
-		}
+		},
+		trackingOptOut: false,
+		trackingOptOutBlacklist: window.Wikia.TrackingOptOut
 	}
 };
