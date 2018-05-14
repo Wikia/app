@@ -5,7 +5,9 @@ A set of script that remove user data as a part of GPDR project.
 
 ## Entry point
 
-An internal HTTP request needs to be sent to `RemoveUserDataController` (`removeUserData` method) with `userId` URL parameter
+**An internal HTTP request** needs to be sent to `RemoveUserDataController` (`removeUserData` method) with `userId` URL parameter.
+
+Alternatively, **Special:RequestToBeForgottenInternal is available** for `request-to-be-forgotten-admin` group members on wikis where [`$wgEnableRequestToBeForgottenInternalSpecialPage`](https://community.wikia.com/wiki/Special:WikiFactory/1474483/variables/wgEnableRequestToBeForgottenInternalSpecialPage) WikiFactory variable is set to `true`.
 
 ## Steps performed
 
@@ -17,7 +19,7 @@ An internal HTTP request needs to be sent to `RemoveUserDataController` (`remove
  * Recent Changes - `recentchanges` table entries are updated to have an empty IP address
  * Abuse Filter - `abuse_filter`, `abuse_filter_history` tables rows are updated to have an empty user name (rows are removed from `abuse_filter_log` table)
  * `removeUserPages` removes user pages (NS_USER), user talk pages (NS_USER_TALK), blog pages (NS_BLOG_ARTICLE), wall messages (NS_USER_WALL_MESSAGE_GREETING, NS_USER_WALL_MESSAGE, NS_USER_WALL) pages of the given user (including sub-pages). `PermanentArticleDelete::deletePage` is used to **delete them permanently, leaving no trace**.
- 
- ## Debugging
- 
- All logs from this process are marked with `@content.right_to_be_forgotten: 1` for easy "grepping" in Kibana.
+
+## Debugging
+
+All logs from this process are marked with `@content.right_to_be_forgotten: 1` for easy "grepping" in Kibana.
