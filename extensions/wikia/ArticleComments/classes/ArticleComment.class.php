@@ -1005,7 +1005,7 @@ class ArticleComment {
 		 */
 		if ( $parentId == false ) {
 			// 1st level comment
-			$commentTitle = sprintf( '%s/%s%s-%s', $title->getText(), ARTICLECOMMENT_PREFIX, $user->getName(), wfTimestampNow() );
+			$commentTitle = sprintf( '%s/%s%s', $title->getText(), ARTICLECOMMENT_PREFIX, time() );
 		} else {
 			$parentArticle = Article::newFromID( $parentId );
 			if ( empty( $parentArticle ) ) {
@@ -1035,7 +1035,7 @@ class ArticleComment {
 			}
 			$parentTitle = $parentArticle->getTitle();
 			// nested comment
-			$commentTitle = sprintf( '%s/%s%s-%s', $parentTitle->getText(), ARTICLECOMMENT_PREFIX, $user->getName(), wfTimestampNow() );
+			$commentTitle = sprintf( '%s/%s%s', $parentTitle->getText(), ARTICLECOMMENT_PREFIX, time() );
 		}
 		$commentTitleText = $commentTitle;
 		$commentTitle = Title::newFromText( $commentTitle, MWNamespace::getTalk( $title->getNamespace() ) );
