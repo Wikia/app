@@ -45,6 +45,8 @@ abstract class WikiaDatabaseTest extends TestCase {
 		static::loadSchemaFile( "$IP/tests/fixtures/specials.sql" );
 		static::loadSchemaFile( "$IP/tests/fixtures/wikicities.sql" );
 
+		static::loadSchemaFile( "$IP/maintenance/wikia/wikia_user_properties.sql" );
+
 		// destroy leaked user accounts from other tests
 		User::$idCacheByName = [];
 		\Wikia\Factory\ServiceFactory::clearState();

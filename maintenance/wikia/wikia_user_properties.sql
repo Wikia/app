@@ -6,11 +6,12 @@ CREATE TABLE /*$wgDBprefix*/wikia_user_properties (
   wup_user INT NOT NULL,
 
   -- Multiple key 2, name of property
-  wup_property VARBINARY(255) NULL DEFAULT NULL,
+  wup_property VARBINARY(255) NOT NULL DEFAULT '',
 
   -- Property value
   wup_value BLOB NULL DEFAULT NULL,
 
-  UNIQUE INDEX (wup_user, wup_property),
-  INDEX (wup_property)
+  PRIMARY KEY (wup_user, wup_property)
 )/*$wgDBTableOptions*/;
+
+CREATE INDEX wup_property_idx ON wikia_user_properties(wup_property);
