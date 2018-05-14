@@ -364,4 +364,12 @@ $wgUserAttributeWhitelist = array_merge( $wgPublicUserAttributes, $wgPrivateUser
 
 require_once "$IP/includes/wikia/Emergency.php";
 
+if ( $wgDevelEnvironment ) {
+    $wgDevBoxSettings = sprintf( '%s/../config/%s.php', $IP, gethostname() );
+    if ( file_exists( $wgDevBoxSettings ) ) {
+        require_once( $wgDevBoxSettings );
+    }
+    unset( $wgDevBoxSettings );
+}
+
 require_once "$IP/includes/wikia/Extensions.php";
