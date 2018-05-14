@@ -212,8 +212,6 @@ class WikiaRobots {
 				if ( $wgRequest->getBool( 'forcerobots' ) ) {
 					$params[ 'forcerobots' ] = '1';
 				}
-				$params['cb'] = time();
-				$params['rand'] = rand(0, 100);
 				$response = \ApiService::foreignCall( $wiki[ 'city_dbname' ], $params, \ApiService::WIKIA );
 				if ($response !== false) {
 					$robots->addAllowedPaths( $response['allowed'] );
