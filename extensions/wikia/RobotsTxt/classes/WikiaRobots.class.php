@@ -218,7 +218,7 @@ class WikiaRobots {
 					$robots->addDisallowedPaths( $response['disallowed'] );
 				} else {
 					\Wikia\Logger\WikiaLogger::instance()->error( 'Cannot fetch language wiki robots rules', [
-						'fields' => ['foreign_wiki_dbname' => $wiki[ 'city_dbname' ] ]
+						'fields' => ['foreign_dbname' => $wiki[ 'city_dbname' ] ]
 					] );
 					$this->degraded = true;
 				}
