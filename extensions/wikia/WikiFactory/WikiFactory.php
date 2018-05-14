@@ -574,7 +574,10 @@ class WikiFactory {
 		$url = parse_url( $wgServer );
 		$server = static::normalizeHost( $url['host'] );
 		$where = [
-			$dbr->makeList( [ "city_url LIKE 'http://${server}/%'",  "city_url LIKE 'https://${server}/%'" ], LIST_OR ),
+			$dbr->makeList( [
+				'city_url ' . $dbr->buildLike( "http://${server}/", $dbr->anyString() ),
+				'city_url ' . $dbr->buildLike( "https://${server}/", $dbr->anyString() ) ],
+				LIST_OR ),
 			"city_id != ${wgCityId}" ];
 		$dbResult = $dbr->select(
 			[ 'city_list' ],
