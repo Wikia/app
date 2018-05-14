@@ -14,8 +14,6 @@ class UserStatsService extends WikiaModel {
 	private $userId;
 	private $wikiId;
 
-	private $cache = [];
-
 	/**
 	 * Pass user ID of user you want to get data about
 	 * @param int $userId User ID
@@ -77,9 +75,6 @@ class UserStatsService extends WikiaModel {
 		$stats['lastContributionTimestamp'] = $now;
 		$this->setUserStat( 'lastContributionTimestamp', $now );
 
-		// SUS-4773: update in-memory cache
-		$this->cache[$this->wikiId][$this->userId] = $stats;
-
 		$wgMemc->set(
 			self::getUserStatsMemcKey( $this->userId, $this->wikiId ),
 			$stats,
@@ -111,11 +106,6 @@ class UserStatsService extends WikiaModel {
 			];
 		}
 
-		// SUS-4773: Memoize user stats to remember them in the context of a single request and avoid network overhead
-		if ( isset( $this->cache[$this->wikiId][$this->userId] ) ) {
-			return $this->cache[$this->wikiId][$this->userId];
-		}
-
 		$stats = WikiaDataAccess::cache(
 			self::getUserStatsMemcKey( $this->userId, $this->wikiId ),
 			self::CACHE_TTL,
@@ -139,8 +129,6 @@ class UserStatsService extends WikiaModel {
 				return $stats;
 			}
 		);
-
-		$this->cache[$this->wikiId][$this->userId] = $stats;
 
 		return $stats;
 	}
