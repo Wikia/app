@@ -3,6 +3,12 @@ class AnalyticsEngine {
 
 	const EVENT_PAGEVIEW = 'page_view';
 
+	public static function onWikiaSkinTopShortTTLModules( array &$modules, Skin $skin ) {
+		if ( $skin->getSkinName() === 'oasis' ) {
+			$modules[] = 'ext.wikia.analyticsEngine';
+		}
+	}
+
 	static public function track($provider, $event, $eventDetails=array(), $setupParams=array()){
 		global $wgNoExternals, $wgRequest;
 		global $wgBlockedAnalyticsProviders;

@@ -32,3 +32,17 @@ $wgHooks['InstantGlobalsGetVariables'][] = 'AnalyticsProviderGoogleFundingChoice
 
 //register hook for WikiaMobile skin to get the asset as part of the head js package in one request
 $wgHooks['WikiaMobileAssetsPackages'][] = 'AnalyticsProviderGoogleUA::onWikiaMobileAssetsPackages';
+
+$wgHooks['WikiaSkinTopShortTTLModules'][] = 'AnalyticsEngine::onWikiaSkinTopShortTTLModules';
+
+$wgResourceModules['ext.wikia.analyticsEngine'] = [
+	'scripts' => [
+		'js/comscore.js',
+		'js/quantcast.js',
+	],
+	'styles' => [],
+	'dependencies' => [ 'wikia.trackingOptOut', 'wikia.window' ],
+
+	'localBasePath' => __DIR__,
+	'remoteExtPath' => 'wikia/AnalyticsEngine',
+];
