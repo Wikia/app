@@ -3,10 +3,11 @@
 class SpecialRequestToBeForgottenInternalController extends WikiaSpecialPageController {
 	public function __construct() {
 		parent::__construct( 'RequestToBeForgottenInternal', 'requesttobeforgotten', false );
-		$this->specialPage->checkPermissions();
 	}
 
 	public function index() {
+		$this->specialPage->checkPermissions();
+
 		$reqUser = RequestContext::getMain()->getUser();
 
 		if ( $this->getRequest()->wasPosted() && $reqUser->matchEditToken( $this->getVal( 'editToken' ) ) ) {
