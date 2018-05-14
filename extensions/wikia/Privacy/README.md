@@ -7,7 +7,7 @@ A set of script that remove user data as a part of GPDR project.
 
 **An internal HTTP request** needs to be sent to `RemoveUserDataController` (`removeUserData` method) with `userId` URL parameter.
 
-Alternatively, **Special:RequestToBeForgottenInternal is available** for `request-to-be-forgotten-admin` group members on wikis where `$wgEnableRequestToBeForgottenInternalSpecialPage` WikiFactory variable is set to `true`.
+Alternatively, **Special:RequestToBeForgottenInternal is available** for `request-to-be-forgotten-admin` group members on wikis where [`$wgEnableRequestToBeForgottenInternalSpecialPage`](https://community.wikia.com/wiki/Special:WikiFactory/1474483/variables/wgEnableRequestToBeForgottenInternalSpecialPage) WikiFactory variable is set to `true`.
 
 ## Steps performed
 
