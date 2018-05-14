@@ -8,8 +8,9 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 	'ext.wikia.adEngine.slot.service.srcProvider',
 	'wikia.document',
 	'wikia.log',
+	'wikia.trackingOptOut',
 	'wikia.window'
-], function (bridge, googleSlots, adSlot, slotRegistry, srcProvider, doc, log, win) {
+], function (bridge, googleSlots, adSlot, slotRegistry, srcProvider, doc, log, trackingOptOut, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.gpt.googleTag',
@@ -50,6 +51,10 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 		win.googletag.cmd.push(callback);
 	}
 
+	function setupNonPersonalizedAds() {
+		win.googletag.pubads().setRequestNonPersonalizedAds(trackingOptOut.isOptedOut('gpt') ? 1 : 0);
+	}
+
 	function enableServices() {
 		log(['enableServices', 'push'], log.levels.info, logGroup);
 		push(function () {
@@ -62,6 +67,7 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 			win.googletag.pubads().addEventListener('impressionViewable', function (event) {
 				dispatchEvent(event, 'viewed');
 			});
+			setupNonPersonalizedAds();
 
 			win.googletag.enableServices();
 
@@ -269,6 +275,7 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 		push: push,
 		refreshSlot: refreshSlot,
 		setPageLevelParams: setPageLevelParams,
+		setupNonPersonalizedAds: setupNonPersonalizedAds,
 		updateCorrelator: updateCorrelator
 	};
 });

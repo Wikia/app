@@ -25,6 +25,7 @@ class SpecialPageUserCommand extends UserCommand {
 		$this->href = $page->getTitle()->getLocalUrl();
 
 		switch ( $this->name ) {
+			case 'PrefixIndex':
 			case 'RecentChangesLinked':
 				$this->href .= '/' . $wgTitle->getPartialUrl();
 				break;

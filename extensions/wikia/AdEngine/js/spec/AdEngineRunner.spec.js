@@ -176,6 +176,9 @@ describe('ext.wikia.adEngine.adEngineRunner', function () {
 	});
 
 	it('sets overwritten timeout value by instant global', function () {
+		mockContext({
+			'opts.overwriteDelayEngine': true
+		});
 		var runner = getRunner({
 			a9: mocks.a9
 		}, {
