@@ -2319,13 +2319,6 @@ $wgEnableCategoryGalleriesExt = true;
 $wgEnableCategoryIntersectionExt = false;
 
 /**
- * Replaces MediaWiki-style pagination on category pages.
- * @see extensions/wikia/CategoryPagination
- * @var bool $wgEnableCategoryPaginationExt
- */
-$wgEnableCategoryPaginationExt = true;
-
-/**
  * Enable CategoryTree extension.
  * @see /extensions/CategoryTree/
  * @var bool wgEnableCategoryTreeExt
