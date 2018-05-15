@@ -66,6 +66,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.wikiaVideo',[
 			bidResponse.cpm = price;
 			bidResponse.width = bid.sizes[0][0];
 			bidResponse.height = bid.sizes[0][1];
+			bidResponse.mediaType = 'video';
 			bidResponse.vastUrl = vastUrlBuilder.build(
 				bidResponse.width / bidResponse.height,
 				{
