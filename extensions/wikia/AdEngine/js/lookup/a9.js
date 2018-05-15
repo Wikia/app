@@ -45,6 +45,10 @@ define('ext.wikia.adEngine.lookup.a9', [
 		return adContext.get('bidders.a9Video') && adContext.get('targeting.hasFeaturedVideo');
 	}
 
+	function isEnabled() {
+		return adContext.get('bidders.a9');
+	}
+
 	function call(skin, onResponse) {
 		var a9Slots;
 
@@ -169,6 +173,7 @@ define('ext.wikia.adEngine.lookup.a9', [
 		logGroup: logGroup,
 		name: 'a9',
 		call: call,
+		isEnabled: isEnabled,
 		calculatePrices: calculatePrices,
 		getPrices: getPrices,
 		isSlotSupported: isSlotSupported,
