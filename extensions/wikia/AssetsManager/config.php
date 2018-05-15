@@ -1537,16 +1537,6 @@ $config['wikia_photo_gallery_mosaic_scss'] = [
 	],
 ];
 
-/** AnalyticsEngine **/
-/** Note: this group is also used in Oasis! */
-$config['universal_analytics_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'wikiamobile' ],
-	'assets' => [
-		'//extensions/wikia/AnalyticsEngine/js/universal_analytics.js',
-	],
-];
-
 /* Special:Leaderboard in AchievementsII extensions */
 $config['special_leaderboard_oasis_js'] = [
 	'type' => AssetsManager::TYPE_JS,
@@ -1744,14 +1734,6 @@ $config['api_docs_scss'] = [
 	],
 ];
 
-$config['qualaroo_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'oasis' ],
-	'assets' => [
-		'//extensions/wikia/Qualaroo/scripts/Qualaroo.js',
-	],
-];
-
 $config['imglzy_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [
@@ -1765,14 +1747,6 @@ $config['rail_js'] = [
 	'skin' => [ 'oasis' ],
 	'assets' => [
 		'//extensions/wikia/Rail/scripts/Rail.js',
-	],
-];
-
-/** Qualaroo blocking **/
-$config['qualaroo_blocking_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => [
-		'//extensions/wikia/Qualaroo/scripts/QualarooBlocking.js',
 	],
 ];
 

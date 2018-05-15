@@ -1,6 +1,6 @@
 require(['wikia.window', 'mw', 'wikia.trackingOptOut'], function (context, mw, trackingOptOut) {
 
-	if (!mw.config.get('wgQuantcastConfiguration') || trackingOptOut.isOptedOut()) {
+	if (trackingOptOut.isOptedOut()) {
 		return;
 	}
 
@@ -10,7 +10,7 @@ require(['wikia.window', 'mw', 'wikia.trackingOptOut'], function (context, mw, t
 		quantcastLabels += wgWikiVertical;
 		if (window.wgDartCustomKeyValues) {
 			var keyValues = wgDartCustomKeyValues.split(';');
-			for (var i=0; i<keyValues.length; i++) {
+			for (var i = 0; i < keyValues.length; i++) {
 				var keyValue = keyValues[i].split('=');
 				if (keyValue.length >= 2) {
 					quantcastLabels += ',' + wgWikiVertical + '.' + keyValue[1];

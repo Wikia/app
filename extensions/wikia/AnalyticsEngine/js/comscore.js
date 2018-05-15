@@ -1,6 +1,6 @@
 require(['wikia.window', 'mw', 'wikia.trackingOptOut'], function (context, mw, trackingOptOut) {
 
-	if (!mw.config.has('wgComscoreConfiguration') || trackingOptOut.isOptedOut()) {
+	if (!mw.config.exists('wgComscoreConfiguration') || trackingOptOut.isOptedOut()) {
 		return;
 	}
 

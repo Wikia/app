@@ -18,7 +18,6 @@ if ( !defined( 'MEDIAWIKI' ) ) {
  * //Wikia Change - Jakub (Helps PHP Lint)
  * @method get
  * @method set
- * @method String getTopScripts
  * //Wikia Change End
  */
 abstract class Skin extends ContextSource {

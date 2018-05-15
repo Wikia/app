@@ -12,13 +12,10 @@ $wgExtensionMessagesFiles['AnalyticsEngine'] = __DIR__ . '/i18n/AnalyticsEngine.
 // autoloaded classes
 $wgAutoloadClasses['iAnalyticsProvider'] = __DIR__ . '/iAnalyticsProvider.php';
 $wgAutoloadClasses['AnalyticsEngine'] = __DIR__ . '/AnalyticsEngine.php';
-$wgAutoloadClasses['AnalyticsProviderQuantServe'] = __DIR__ . '/AnalyticsProviderQuantServe.php';
-$wgAutoloadClasses['AnalyticsProviderComscore'] = __DIR__ . '/AnalyticsProviderComscore.php';
 $wgAutoloadClasses['AnalyticsProviderExelate'] = __DIR__ . '/AnalyticsProviderExelate.php';
 $wgAutoloadClasses['AnalyticsProviderA9'] = __DIR__ . '/AnalyticsProviderA9.php';
 $wgAutoloadClasses['AnalyticsProviderDynamicYield'] = __DIR__ . '/AnalyticsProviderDynamicYield.php';
 $wgAutoloadClasses['AnalyticsProviderGoogleFundingChoices'] = __DIR__ . '/AnalyticsProviderGoogleFundingChoices.php';
-$wgAutoloadClasses['AnalyticsProviderGoogleUA'] = __DIR__ . '/AnalyticsProviderGoogleUA.php';
 $wgAutoloadClasses['AnalyticsProviderKrux'] = __DIR__ . '/AnalyticsProviderKrux.php';
 $wgAutoloadClasses['AnalyticsProviderPrebid'] = __DIR__ . '/AnalyticsProviderPrebid.php';
 $wgAutoloadClasses['AnalyticsProviderNetzAthleten'] = __DIR__ . '/AnalyticsProviderNetzAthleten.php';
@@ -26,23 +23,25 @@ $wgAutoloadClasses['AnalyticsProviderNetzAthleten'] = __DIR__ . '/AnalyticsProvi
 //hooks
 //register hook to inject GA js library (MW 1.19)
 $wgHooks['WikiaSkinTopScripts'][] = 'AnalyticsProviderGoogleFundingChoices::onWikiaSkinTopScripts';
-$wgHooks['WikiaSkinTopScripts'][] = 'AnalyticsProviderGoogleUA::onWikiaSkinTopScripts';
-$wgHooks['OasisSkinAssetGroupsBlocking'][] = 'AnalyticsProviderGoogleUA::onOasisSkinAssetGroupsBlocking';
 $wgHooks['InstantGlobalsGetVariables'][] = 'AnalyticsProviderGoogleFundingChoices::onInstantGlobalsGetVariables';
 
 //register hook for WikiaMobile skin to get the asset as part of the head js package in one request
 $wgHooks['WikiaMobileAssetsPackages'][] = 'AnalyticsProviderGoogleUA::onWikiaMobileAssetsPackages';
 
-$wgHooks['WikiaSkinTopShortTTLModules'][] = 'AnalyticsEngine::onWikiaSkinTopShortTTLModules';
+$wgHooks['BeforePageDisplay'][] = 'AnalyticsEngine::onBeforePageDisplay';
 
 $wgResourceModules['ext.wikia.analyticsEngine'] = [
 	'scripts' => [
 		'js/comscore.js',
 		'js/quantcast.js',
+		'js/qualaroo.js',
+		'js/universal_analytics.js',
 	],
-	'styles' => [],
-	'dependencies' => [ 'wikia.trackingOptOut', 'wikia.window' ],
+	'styles' => [ 'styles/Qualaroo.scss' ],
+	'dependencies' => [ 'amd', 'wikia.trackingOptOut', 'wikia.window' ],
 
 	'localBasePath' => __DIR__,
 	'remoteExtPath' => 'wikia/AnalyticsEngine',
+
+	'position' => 'top',
 ];
