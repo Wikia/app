@@ -42,10 +42,6 @@ define('ext.wikia.adEngine.lookup.prebid', [
 		biddersPerformanceMap = performanceTracker.setupPerformanceMap(skin);
 		adUnits = helper.setupAdUnits(skin, isLazyLoadingEnabled ? 'pre' : 'off');
 
-		if (win.pbjs) {
-			win.pbjs._bidsReceived = [];
-		}
-
 		if (adUnits.length > 0) {
 			if (!prebidLoaded) {
 				win.pbjs.que.push(function () {
@@ -131,7 +127,7 @@ define('ext.wikia.adEngine.lookup.prebid', [
 			var params = win.pbjs.getBidResponses(slotName) || {};
 
 			if (params && params[slotName] && params[slotName].bids && params[slotName].bids.length) {
-				var bidParams,
+				var bidParams = null,
 					priorities = adaptersRegistry.getPriorities();
 
 				params[slotName].bids.forEach(function (param) {

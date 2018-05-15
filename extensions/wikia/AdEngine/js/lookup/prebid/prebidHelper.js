@@ -17,6 +17,7 @@ define('ext.wikia.adEngine.lookup.prebid.prebidHelper', [
 
 		Object.keys(slots).forEach(function(slotName) {
 			var adUnit = adapter.prepareAdUnit(slotName, slots[slotName], skin, isRecovering);
+
 			if (adUnit) {
 				adapterAdUnits.push(adUnit);
 			}

@@ -116,6 +116,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.wikia',[
 			bidResponse.ad = getCreative(price, bid.sizes[0]);
 			bidResponse.width = bid.sizes[0][0];
 			bidResponse.height = bid.sizes[0][1];
+			bidResponse.mediaType = 'banner';
 
 			prebid.get().addBidResponse(bid.placementCode, bidResponse);
 		});
