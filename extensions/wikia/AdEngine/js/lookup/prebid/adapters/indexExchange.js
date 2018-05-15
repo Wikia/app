@@ -6,6 +6,9 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.indexExchange',[
 	'use strict';
 
 	var bidderName = 'indexExchange',
+		aliases = {
+			'ix': [bidderName]
+		},
 		slots = {
 			oasis: {
 				TOP_LEADERBOARD: {
@@ -123,7 +126,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.indexExchange',[
 					bidder: bidderName,
 					params: {
 						id: config.id,
-						siteID: config.siteID
+						siteId: config.siteID
 					}
 				}
 			]
@@ -134,9 +137,14 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.indexExchange',[
 		return bidderName;
 	}
 
+	function getAliases() {
+		return aliases;
+	}
+
 	return {
 		isEnabled: isEnabled,
 		getName: getName,
+		getAliases: getAliases,
 		getSlots: getSlots,
 		prepareAdUnit: prepareAdUnit
 	};
