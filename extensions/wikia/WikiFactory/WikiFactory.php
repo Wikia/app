@@ -1253,7 +1253,7 @@ class WikiFactory {
 		global $wgDevDomain, $wgWikiaBaseDomain;
 		// strip env-specific pre- and suffixes for staging environment
 		$host = preg_replace(
-			'/\.(stable|preview|verify|sandbox-[a-z0-9]+)\.' . preg_quote( $wgWikiaBaseDomain ) .'/',
+			'/\.(stable|preview|verify|sandbox-[a-z0-9]+)\.' . preg_quote( $wgWikiaBaseDomain ) . '/',
 			static::WIKIA_TOP_DOMAIN,
 			$host );
 		if ( !empty( $wgDevDomain ) ) {
