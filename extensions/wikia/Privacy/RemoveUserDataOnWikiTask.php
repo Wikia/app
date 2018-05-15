@@ -11,6 +11,15 @@ use Wikia\Tasks\Tasks\BaseTask;
  */
 class RemoveUserDataOnWikiTask extends BaseTask {
 	use Loggable;
+	
+	const USER_NAMESPACES = [
+		2, // NS_USER,
+		3, // NS_USER_TALK
+		500, // NS_BLOG_ARTICLE
+		1200, // NS_USER_WALL
+		1201, // NS_USER_WALL_MESSAGE
+		1202 // NS_USER_WALL_GREETING
+	];
 
 	/**
 	 * Deletes all CheckUser records associated with the given user
@@ -85,17 +94,8 @@ class RemoveUserDataOnWikiTask extends BaseTask {
 	 * @return true if operation was successful
 	 */
 	private function removeUserPages( string $username ) {
-		global $wgEnableBlogArticles, $wgEnableWallExt;
 		try {
-			$namespaces = [NS_USER, NS_USER_TALK];
-			if( $wgEnableBlogArticles ) {
-				$namespaces[] = NS_BLOG_ARTICLE;
-			}
-			if( $wgEnableWallExt ) {
-				$namespaces[] = NS_USER_WALL_MESSAGE_GREETING;
-				$namespaces[] = NS_USER_WALL_MESSAGE;
-				$namespaces[] = NS_USER_WALL;
-			}
+			$namespaces = self::USER_NAMESPACES;
 			$dbr = wfGetDB( DB_SLAVE );
 			$userPages = $dbr->select(
 				'page',

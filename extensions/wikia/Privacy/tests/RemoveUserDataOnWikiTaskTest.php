@@ -24,7 +24,6 @@ class RemoveUserDataOnWikiTaskTest extends WikiaDatabaseTest {
 	protected function setUp() {
 		parent::setUp();
 		include __DIR__ . '/../Privacy.setup.php';
-		$this->mockGlobalVariable( 'wgEnableAbuseFilterExtension', true );
 	}
 
 	public function testShouldRemoveUserData() {
