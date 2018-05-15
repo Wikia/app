@@ -46,6 +46,13 @@ class ContactForm extends SpecialPage {
 			'markuser' => 'requested-rename',
 		),
 
+		'forget-account' => array(
+			'format' => "User \"%s\" requested to be forgotten",
+			'vars' => array( 'wpUserName' ),
+			'subject' => 'Request to be Forgotten',
+			'markuser' => 'requested-to-be-forgotten',
+		),
+
 		'bad-ad' => array(
 			'format' => "User %s reports a problem with ad visible here:\n%s\nThe URL the ad links to:\n%s\n\nDescription of the problem:\n%s",
 			'vars' => array( 'wpUserName', 'wpContactWikiName', 'wpContactAdUrl', 'wpDescription' ),
@@ -782,6 +789,10 @@ class ContactForm extends SpecialPage {
 	
 	private function isRenameAccountSupported() {
 		global $wgEnableUserRenameToolExt;
+		return !empty( $wgEnableUserRenameToolExt );
+	}
+
+	private function isRemoveAccountDataSupported() {
 		return !empty( $wgEnableUserRenameToolExt );
 	}
 }

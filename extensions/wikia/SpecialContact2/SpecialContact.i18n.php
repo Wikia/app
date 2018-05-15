@@ -19,6 +19,7 @@ Follow the links below to learn more about how to use FANDOM, make changes to yo
 	'specialcontact-seclink-account-issue' => "Can't access my account",
 	'specialcontact-seclink-close-account' => 'Disable my account',
 	'specialcontact-seclink-rename-account' => 'Rename my account',
+	'specialcontact-seclink-forget-account' => 'Forget my Fandom account',
 	'specialcontact-seclink-blocked' => 'My account is blocked',
 	'specialcontact-secheader-editing' => 'Participating on FANDOM',
 	'specialcontact-seclink-using-fandom' => 'How do I use FANDOM?',
@@ -39,6 +40,7 @@ Follow the links below to learn more about how to use FANDOM, make changes to yo
 	'specialcontact-sectitle-account-issue' => 'Account issue',
 	'specialcontact-sectitle-close-account' => 'Disable my account',
 	'specialcontact-sectitle-rename-account' => 'Rename my account',
+	'specialcontact-sectitle-forget-account' => 'Remove the data associated with the account',
 	'specialcontact-sectitle-blocked' => 'Account blocked',
 	'specialcontact-sectitle-using-fandom' => 'Using FANDOM',
 	'specialcontact-sectitle-feedback' => 'Feedback',
@@ -87,6 +89,7 @@ If you need any more information on what an account disable actually does, you c
 Once you have read that help page and are positive on the spelling of your new username, please submit a request below. Once your username is changed, you will receive a confirmation email. You can then log in with your new user name using your old password.
 
 Happy editing!',
+	'specialcontact-intro-forget-account' => 'Some words about GDPR and what it means for the user to remove all the data associated with their account.',
 	'specialcontact-intro-blocked' => 'Account blocks are usually set by the local admins, and not by the FANDOM staff. The name of the blocking admin should be on the block notice you received.You may be able to contact the blocking admin by leaving a message on your user talk page. This is still editable for blocked users (on some wikis) and changes will usually be seen by the other contributors to the wiki. Your user talk page is found by following the "my talk" link at the top right of any page.
 
 However, if this talk page option is not available in your situation, then the best advice we can give you is to wait the block out or join the community at another of the many thousand FANDOM communities available.
@@ -200,6 +203,8 @@ In response to security reports using this form, FANDOM will:
 	'specialcontact-label-rename-newusername' => 'Please enter the new username',
 	'specialcontact-label-rename-account-confirm' => 'I confirm that the spelling and punctuation for my new name is correct',
 	'specialcontact-label-rename-account-read-help' => 'I have read the [[Help:Changing your username|help page on renaming my account]]',
+	'specialcontact-label-forget-account-confirm' => 'I confirm that I want to remove all the data associated with my FANDOM account',
+	'specialcontact-label-forget-account-read-help' => 'I have read the [[Help:Remove_account_data|help page on removing your account data]]',
 	'specialcontact-form-header' => 'Contact FANDOM',
 	'specialcontact-logged-in-as' => 'You are logged in as $1. [[Special:UserLogout|Not you?]]',
 	'specialcontact-mail-on-file' => 'Your e-mail is set to $1. [[Special:Preferences|Do you wish to change it?]]',
