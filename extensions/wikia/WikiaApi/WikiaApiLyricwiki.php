@@ -575,6 +575,7 @@ function albumResult($artist, $album, $year){
 				$fullApiAuth = $wgRequest->getVal('fullApiAuth');
 				$noComscore = $wgRequest->getVal('nocomscore');
 				if( (!empty( $fullApiAuth )) && empty($noComscore) ) {
+					Wikia\Logger\WikiaLogger::instance()->info( 'Adding lyrics comscore tag placeholder' );
 					$result['lyrics'] .= self::COMSCORE_TAG_PLACEHOLDER;
 				}
 
@@ -1052,6 +1053,9 @@ function albumResult($artist, $album, $year){
 			AnalyticsEngine::track( 'Comscore', AnalyticsEngine::EVENT_PAGEVIEW )
 		);
 		if ( !empty( $result['lyrics'] ) ) {
+			Wikia\Logger\WikiaLogger::instance()->info( 'Using lyrics comscore tag', [ 'fields' => [
+				'comscore_tag' => $comscoreTag
+			] ] );
 			$result['lyrics'] = str_replace( self::COMSCORE_TAG_PLACEHOLDER, $comscoreTag, $result['lyrics'] );
 		}
 
