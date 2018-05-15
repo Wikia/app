@@ -33,6 +33,7 @@ class AdEngine2Hooks {
 	 */
 	public static function onInstantGlobalsGetVariables( array &$vars ) {
 		$vars[] = 'wgAdDriverAbTestIdTargeting';
+		$vars[] = 'wgAdDriverAdEngine3Countries';
 		$vars[] = 'wgAdDriverAolBidderCountries';
 		$vars[] = 'wgAdDriverAolOneMobileBidderCountries';
 		$vars[] = 'wgAdDriverAppNexusAstBidderCountries';
@@ -152,7 +153,8 @@ class AdEngine2Hooks {
 			'gpt' => true,
 			'krux' => true,
 			'kikimora' => true,
-			'prebid' => true
+			'prebid' => true,
+			'moat' => true,
 		];
 	}
 

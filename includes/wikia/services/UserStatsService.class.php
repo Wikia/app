@@ -55,7 +55,7 @@ class UserStatsService extends WikiaModel {
 		global $wgMemc;
 
 		if ( !$this->validateUser() ) {
-			return false;
+			return;
 		}
 
 		$stats = $this->getStats();
@@ -96,6 +96,16 @@ class UserStatsService extends WikiaModel {
 	 * @return array
 	 */
 	public function getStats() {
+		// anons don't have edit stats
+		if ( !$this->validateUser() ) {
+			return [
+				'firstContributionTimestamp' => null,
+				'lastContributionTimestamp' => null,
+				'editcount' => 0,
+				'editcountThisWeek' => 0
+			];
+		}
+
 		$stats = WikiaDataAccess::cache(
 			self::getUserStatsMemcKey( $this->userId, $this->wikiId ),
 			self::CACHE_TTL,
@@ -119,6 +129,7 @@ class UserStatsService extends WikiaModel {
 				return $stats;
 			}
 		);
+
 		return $stats;
 	}
 
@@ -172,16 +183,31 @@ class UserStatsService extends WikiaModel {
 
 		$dbw = wfGetDB( DB_MASTER );
 
-		$dbw->replace(
+		$dbw->update(
 			'wikia_user_properties',
-			[],
+			[ 'wup_value' => $statVal ],
 			[
 				'wup_user' => $this->userId,
 				'wup_property' => $statName,
-				'wup_value' => $statVal
 			],
 			__METHOD__
 		);
+
+		// SUS-4773: In the vast majority of cases the above UPDATE will have handled setting proper edit count
+		// We only need to INSERT if this is the user's first edit on this wiki
+		if ( !$dbw->affectedRows() ) {
+			$dbw->upsert(
+				'wikia_user_properties',
+				[
+					 'wup_user' => $this->userId,
+					 'wup_property' => $statName,
+					 'wup_value' => $statVal
+				 ],
+				[ [ 'wup_user', 'wup_property' ] ],
+				[ 'wup_value = wup_value + 1' ],
+				__METHOD__
+			);
+		}
 	}
 
 	private static function getUserStatsMemcKey( $userId, $wikiId ) {

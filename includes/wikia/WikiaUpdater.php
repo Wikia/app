@@ -54,6 +54,7 @@ class WikiaUpdater {
 			array( 'dropIndex', 'video_info', 'added_at',  $dir . 'patch-video_info-drop-added_at_idx.sql', true ), // SUS-4297
 			array( 'dropIndex', 'image', 'img_usertext_timestamp', $dir . 'patch-image-drop-usertext-index.sql', true ),
 			array( 'dropIndex', 'oldimage', 'oi_usertext_timestamp', $dir . 'patch-oldimage-drop-usertext-index.sql', true ),
+			array( 'dropIndex', 'wikia_user_properties', 'wup_user', $dir . 'patch-wikia-user-properties-pk.sql', true ),
 
 			# functions
 			array( 'WikiaUpdater::do_page_wikia_props_update' ),
