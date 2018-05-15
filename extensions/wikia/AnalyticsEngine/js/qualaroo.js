@@ -1,12 +1,19 @@
-( function ( window, document ) {
+require(['jquery', 'mw', 'wikia.window', 'wikia.trackingOptOut'], function ($, mw, context, trackingOptOut) {
 	'use strict';
 	var _kiq = [],
 		createCookie,
-		setABTestProperties;
+		setABTestProperties,
+		config;
+
+	if (trackingOptOut.isOptedOut()) {
+		return;
+	}
+
+	config = mw.config.get('wgQualarooConfiguration');
 
 	createCookie = function(cookieName) {
 		var cookieValue = cookieName + '=true;path=/;domain=',
-			hostName = window.location.host,
+			hostName = context.location.host,
 			devDomainIndex = hostName.indexOf('wikia-dev');
 		if (devDomainIndex > -1) {
 			cookieValue += '.' + hostName.substr(devDomainIndex);
@@ -21,7 +28,7 @@
 			ABTestProperties = {},
 			isAnyABTestActive = false;
 
-		Wikia.AbTest.getExperiments().forEach(function (experiment) {
+		context.Wikia.AbTest.getExperiments().forEach(function (experiment) {
 			if (experiment.group) {
 				ABTestProperties[ABTestPrefix + experiment.name] = experiment.group.name;
 				isAnyABTestActive = true;
@@ -36,30 +43,32 @@
 	function loadQualaroo () {
 		setTimeout(function(){
 			var d = document, f = d.getElementsByTagName('script')[0], s = d.createElement('script'); s.type = 'text/javascript';
-			s.async = true; s.src = window.wgQualarooUrl; f.parentNode.insertBefore(s, f);
+			s.async = true; s.src = config.wgQualarooUrl; f.parentNode.insertBefore(s, f);
 		}, 1);
 	}
 
-	if (window.wgUser) {
-		_kiq.push(['identify', window.wgUser]);
+	if (context.wgUser) {
+		_kiq.push(['identify', context.wgUser]);
 	}
 
-	var dartGnreValues = window.dartGnreValues || [];
+	var dartGnreValues = config.dartGnreValues || [];
+
+	context.visitorType = (document.cookie.indexOf('__utma') > -1) ? 'Returning' : 'New';
 
 	_kiq.push(['set', {
-		'userLanguage': window.wgUserLanguage,
-		'contentLanguage': window.wgContentLanguage,
-		'pageType': window.wikiaPageType,
-		'isCorporatePage': (window.wikiaPageIsCorporate ? 'Yes' : 'No'),
+		'userLanguage': context.wgUserLanguage,
+		'contentLanguage': context.wgContentLanguage,
+		'pageType': context.wikiaPageType,
+		'isCorporatePage': (context.wikiaPageIsCorporate ? 'Yes' : 'No'),
 		// canonical vertical only: 'Games', 'Entertainment', 'Lifestyle', 'Wikia'
-		'verticalName': window.verticalName,
+		'verticalName': context.verticalName,
 		// all verticals
-		'fullVerticalName': window.fullVerticalName,
-		'visitorType': window.visitorType,
-		'isLoggedIn': !!window.wgUserName,
+		'fullVerticalName': config.fullVerticalName,
+		'visitorType': context.visitorType,
+		'isLoggedIn': !!context.wgUserName,
 		'cpBenefitsModalShown': document.cookie.indexOf('cpBenefitsModalShown') > -1,
-		'isContributor': window.isContributor,
-		'isCurrentWikiAdmin': window.isCurrentWikiAdmin,
+		'isContributor': config.isContributor,
+		'isCurrentWikiAdmin': config.isCurrentWikiAdmin,
 		'isDartGnreAdventure': dartGnreValues.indexOf('adventure') > -1,
 		'isDartGnreAction': dartGnreValues.indexOf('action') > -1,
 		'isDartGnreFantasy': dartGnreValues.indexOf('fantasy') > -1,
@@ -83,7 +92,7 @@
 	//This approach is hacky and we should use eventHandler provided by Qualaroo.
 	//As soon as the fix they issue with it.
 	$('body').on('mousedown', 'form[id*="ki-"] > div[class*="ki-"]', function() {
-		window._gaq.push(['_setSampleRate', '100']);
+		context._gaq.push(['_setSampleRate', '100']);
 		createCookie('qualaroo_survey_submission');
 	});
 
@@ -91,5 +100,5 @@
 
 	setABTestProperties();
 
-	window._kiq = _kiq;
-})( window, document );
+	context._kiq = _kiq;
+});

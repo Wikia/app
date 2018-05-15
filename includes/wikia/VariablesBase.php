@@ -3,18 +3,18 @@
  * This file is the starting point of MediaWiki configuration. It contains
  * elementary configuration variables that can later be changed or expanded.
  * You know, the BASE.
- * 
+ *
  * This file is meant to be stateless. As such, it cannot contain any logic.
  * Just simple declarations. In other words, the state must be irrelevant
  * within this file. All information here must be applied in a single atomic
  * operation and only can be modified after it is imported.
- * 
+ *
  * The reason behind the above is that at some point we may manage the
  * configuration with some proper configuration management system and store
  * it in a different format.
- * 
+ *
  * Here are some kind suggestions to help us keeping this file clean and tidy.
- * 
+ *
  * 1. Only declare global variables here. Do not assign values to class
  *    properties, such as $wgConf->foo = 'Foo'.
  * 2. Put declarations in alphabetical order. This enforces strict and
@@ -31,7 +31,7 @@
  *    application.
  * 5. Always provide a docblock. There are many examples how to do it.
  * 6. Use common sense.
- * 
+ *
  ******************************************************************************/
 
 /**
@@ -574,7 +574,7 @@ $wgArticleCommentsMaxPerPage = 25;
  * Retroactively changing this variable will not affect the existing count,
  * to update it, you will need to run the maintenance/updateArticleCount.php
  * script.
- * 
+ *
  * @var string $wgArticleCountMethod
  */
 $wgArticleCountMethod = 'any';
@@ -705,12 +705,12 @@ $wgAvailableHelpLang = [
 
 /**
  * Disable avatars related operations (uploads and deletes) for maintenance.
- * 
+ *
  * As a side note, as a client of the service, MediaWiki shouldn't care whether
  * the service is undergoing maintenance or not. If the service is not
  * operational, MediaWiki _must_ display some fallback image and _should_ log
  * the event.
- * 
+ *
  * @var bool $wgAvatarsMaintenance
  */
 $wgAvatarsMaintenance = false;
@@ -813,7 +813,7 @@ $wgBlockDisablesLogin = false;
 /**
  * Banned analytics providers.
  * @see extensions/wikia/AnalyticsEngine/AnalyticsEngine.php
- * @var Array $wgBlockedAnalyticsProviders 
+ * @var Array $wgBlockedAnalyticsProviders
  */
 $wgBlockedAnalyticsProviders = [ 'IVW' ];
 
@@ -985,7 +985,7 @@ $wgCaptchaDirectory = '/usr/wikia/captchas/images-20111115';
  *
  * Extensions can define there own collations by subclassing Collation
  * and using the Collation::factory hook.
- * 
+ *
  * @var string $wgCategoryCollation
  */
 $wgCategoryCollation = 'uppercase';
@@ -1259,7 +1259,7 @@ $wgCreateDatabaseActiveCluster = 'c7';
  * Domains that should not be allowed to make AJAX requests,
  * even if they match one of the domains allowed by $wgCrossSiteAJAXdomains
  * Uses the same syntax as $wgCrossSiteAJAXdomains
- * 
+ *
  * @see $wgCrossSiteAJAXdomains
  * @var Array $wgCrossSiteAJAXdomainExceptions
  */
@@ -1411,7 +1411,7 @@ $wgDBprefix = '';
  * Since the effect of writing to a slave is so damaging and difficult to clean
  * up, we at Wikimedia set read_only=1 in my.cnf on all our DB servers, even
  * our masters, and then set read_only=0 on masters at runtime.
- * 
+ *
  * @var Array|bool $wgDBservers
  */
 $wgDBservers = false;
@@ -1586,7 +1586,7 @@ $wgDefaultSearchProfile = 'default';
  * Settings added to this array will override the default globals for the user
  * preferences used by anonymous visitors and newly created accounts.
  * For instance, to disable section editing links:
- * 
+ *
  * @example $wgDefaultUserOptions ['editsection'] = 0;
  * @var Array $wgDefaultUserOptions
  */
@@ -1599,7 +1599,7 @@ $wgDefaultUserOptions = [
     'disablesuggest' => 0,
     'editfont' => 'default',
     'editondblclick' => 0,
-    /* 
+    /*
      * Default editor is VisualEditor. This is used in
      * app/extensions/wikia/EditorPreference/EditorPreference.class.php
      */
@@ -2457,7 +2457,7 @@ $wgEnableCookiePolicyExt = true;
 $wgEnableCoppaToolExt = false;
 
 /**
- * Enable a widget for page creation. 
+ * Enable a widget for page creation.
  * @see extensions/CreateBox/CreateBox.php
  * @var bool wgEnableCreateBoxExt
  */
@@ -2611,7 +2611,7 @@ $wgEnableEmail = true;
 /**
  * Enable FANDOM email delivery extension.
  * @see extensions/wikia/Email
- * @var bool 
+ * @var bool
  */
 $wgEnableEmailExt = true;
 
@@ -2689,7 +2689,7 @@ $wgEnableForumIndexProtectorExt = true;
 /**
  * Enables FounderProgressBar extension.
  * @see extensions/wikia/FounderProgressBar
- * @var bool $wgEnableFounderProgressBarExt 
+ * @var bool $wgEnableFounderProgressBarExt
  */
 $wgEnableFounderProgressBarExt = false;
 
@@ -2835,7 +2835,7 @@ $wgEnableInsightsBlogpostRedirectExt = true;
  * Enables Insights extension.
  * @see extensions/wikia/InsightsV2
  * @see extensions/wikia/InsightsBlogpostRedirect
- * @var bool $wgEnableInsightsExt 
+ * @var bool $wgEnableInsightsExt
  */
 $wgEnableInsightsExt = true;
 
@@ -2952,7 +2952,7 @@ $wgEnableLookupContribsExt = false;
  * WikiFactory.
  * @see extensions/3rdparty/LyricWiki/Tag_Lyric.php
  * @var bool $wgEnableLyricsTagExt
- * 
+ *
  */
 $wgEnableLyricsTagExt = false;
 
@@ -3042,7 +3042,7 @@ $wgEnableMultiUploadExt = true;
  * Enable MultiWikiEdit extension.
  * @see /extensions/wikia/MultiTasks
  * @var bool $wgEnableMultiWikiEditExt
- * 
+ *
  */
 $wgEnableMultiWikiEditExt = true;
 
@@ -3302,13 +3302,6 @@ $wgEnablePortableInfoboxExt = true;
 $wgEnablePostfixEmail = true;
 
 /**
- * Enable Qualaroo extension.
- * @see extensions/wikia/Qualaroo
- * @var bool $wgEnableQualarooExt
- */
-$wgEnableQualarooExt = true;
-
-/**
  * Enable special parser handling for templates.
  * @see includes/wikia/parser/templatetypes/TemplateTypesParser.class.php
  * @var bool $wgEnableQuoteTemplateParsing
@@ -3563,7 +3556,7 @@ $wgEnableSpecialSitemapExt = true;
 /**
  * Enable Special:Unsubscribe.
  * @see extensions/wikia/SpecialUnsubscribe
- * @var bool $wgEnableSpecialUnsubscribeExt 
+ * @var bool $wgEnableSpecialUnsubscribeExt
  */
 $wgEnableSpecialUnsubscribeExt = true;
 
@@ -3576,7 +3569,7 @@ $wgEnableSpecialUnsubscribeExt = true;
 $wgEnableSpecialVideosExt = true;
 
 /**
- * 
+ *
  * Enable Special:Withoutimages.
  * @see extensions/wikia/SpecialWihtoutimages/
  * @var bool wgEnableSpecialWithoutimagesExt
@@ -4033,12 +4026,12 @@ $wgEnotifWatchlist = true;
 
 /**
  * Hooks that are used for outputting exceptions.
- * 
+ *
  * Formats:
- * 
+ *
  * $wgExceptionHooks[] = $funcname
  * $wgExceptionHooks[] = [ $class, $funcname ]
- * 
+ *
  * Hooks should return strings or false
  * @var Array $wgExceptionHooks
  */
@@ -4055,7 +4048,7 @@ $wgExceptionHooks = [];
 $wgExemptFromUserRobotsControl = null;
 
 /**
- * Some tests and extensions use exiv2 to manipulate the EXIF metadata in some 
+ * Some tests and extensions use exiv2 to manipulate the EXIF metadata in some
  * image formats.
  * @var string $wgExiv2Command
  */
@@ -4203,7 +4196,7 @@ $wgExternalLinkTarget = false;
  * An array of external mysql servers. Used by LBFactory_Simple, may be ignored
  * if $wgLBFactoryConf is set to another class.
  * @example $wgExternalServers = [ 'cluster1' => [ 'srv28', 'srv29' ] ];
- * 
+ *
  */
 $wgExternalServers = [];
 
@@ -4217,7 +4210,7 @@ $wgExternalSharedDB = 'wikicities';
  * External stores allow including content from non database sources following
  * URL links. Short names of ExternalStore classes may be specified in an array
  * here. CAUTION: Access to database might lead to code execution
- * 
+ *
  * @example $wgExternalStores =  [ 'http','file','custom' ];
  * @var Array|bool $wgExternalStores
  */
@@ -4440,7 +4433,7 @@ $wgFileStore = [];
 $wgFilterCallback = false;
 
 /**
- * Show/hide links on Special:Log will be shown for these log types. This is 
+ * Show/hide links on Special:Log will be shown for these log types. This is
  * associative array of log type => boolean "hide by default".
  *
  * For example:
@@ -4455,7 +4448,7 @@ $wgFilterCallback = false;
  *
  * A message of the form log-show-hide-<type> should be added, and will be used
  * for the link text.
- * 
+ *
  * @see $wgLogTypes for a list of available log types.
  * @var Array $wgFilterLogTypes
  */
@@ -4576,7 +4569,7 @@ $wgGalleryOptions = [
     // Length of caption to truncate (in characters).
     'captionLength' => 25,
     // Show the filesize in bytes in categories.
-    'showBytes' => true, 
+    'showBytes' => true,
 ];
 
 /**
@@ -5011,7 +5004,7 @@ $wgImgAuthPublicTest = true;
  *
  * If a user has the 'import' permission but not the 'importupload' permission,
  * they will only be able to run imports through this transwiki interface.
- * 
+ *
  * @see Special:Import
  * @var Array $wgImportSources
  */
@@ -5101,7 +5094,7 @@ $wgInvalidateCacheOnLocalSettingsChange = false;
 
 /**
  * Array of invalid page redirect targets. Attempting to create a redirect to
- * any of the pages in this array will make the redirect fail. Userlogout is 
+ * any of the pages in this array will make the redirect fail. Userlogout is
  * hard-coded, so it does not need to be listed here. As of now, this only
  * checks special pages. Redirects to pages in other namespaces cannot be
  * invalidated by this variable.
@@ -5275,7 +5268,7 @@ $wgLoadCommonCSS = false;
 $wgLoadFileinfoExtension = false;
 
 /**
- * The URL path to load.php. Defaults to 
+ * The URL path to load.php. Defaults to
  * "{$wgScriptPath}/load{$wgScriptExtension}" in Setup.php
  * @see app/includes/Setup.php
  * @var string|bool $wgScript
@@ -5543,7 +5536,7 @@ $wgLoginLanguageSelector = true;
 
 /**
  * Lists the message key strings for each log type. The localized messages
- * will be listed in the user interface. Extensions with custom log types may 
+ * will be listed in the user interface. Extensions with custom log types may
  * add to this array in their setup files. Since 1.19, if you follow the naming
  * convention log-name-TYPE, where TYPE is your log type, yoy don't need to use
  * this array.
@@ -5564,7 +5557,7 @@ $wgLogNames = [
 ];
 
 /**
- * The URL path of the wiki logo. Will default to 
+ * The URL path of the wiki logo. Will default to
  * "{$wgStylePath}/common/images/wiki.png" in Setup.php.
  * @see Setup.php
  * @var string|bool $wgLogo
@@ -5991,7 +5984,7 @@ $wgNamespaceAliases = [];
  *
  * Example:
  *   $wgNamespaceRobotPolicies = array( NS_TALK => 'noindex' );
- * 
+ *
  * @var Array $wgNamespaceRobotPolicies
  */
 $wgNamespaceRobotPolicies = [];
@@ -6012,7 +6005,7 @@ $wgNewUserLog = true;
  * This would add rel="nofollow" to links to de.wikipedia.org, but not
  * en.wikipedia.org, wiktionary.org, en.wiktionary.org, us.en.wikipedia.org,
  * etc.
- * 
+ *
  * @see $wgNoFollowLinks
  * @var Array $wgNoFollowDomainExceptions
  */
@@ -6030,7 +6023,7 @@ $wgNoFollowLinks = true;
 /**
  * Namespaces in which $wgNoFollowLinks doesn't apply, meaning external URL
  * links in wiki text will not be given the rel="nofollow" attribute.
- * 
+ *
  * @see Language.php for a list of namespaces
  * @see $wgNoFollowLinks
  * @var Array $wgNoFollowNsExceptions
@@ -6288,7 +6281,7 @@ $wgPasswordAttemptThrottle = [ 'count' => 5, 'seconds' => 300 ];
 
 /**
  * Whether to allow password resets ("enter some identifying data, and we'll
- * send an email with a temporary password you can use to get back into the 
+ * send an email with a temporary password you can use to get back into the
  * account") identified by various bits of data.  Setting all of these to false
  * (or the whole variable to false) has the effect of disabling password resets
  * entirely.
@@ -6478,7 +6471,7 @@ $wgEnableProtectSiteJSExt = true;
  * The maximum time, site can be locked by the Protectsite extension.
  * @see /extensions/wikia/SpecialProtectSite
  * @var string $wgProtectsiteLimit
- * 
+ *
  */
 $wgProtectsiteLimit = '12 hours';
 
@@ -6558,13 +6551,13 @@ $wgPurgeVignetteUsingSurrogateKeys = true;
 /**
  * Log IP addresses in the recentchanges table; can be accessed only by
  * extensions (e.g. CheckUser) or a DB admin.
- * 
+ *
  * It was set to true, but we wanted to hide IPs on RecentChanges. Instead of
  * setting this to false, we removed a piece of code from RecentChanges. Quite
  * unfortunate. So I am setting this to false because some day we will bring
  * back the original code.
- * 
- * @var bool $wgPutIPinRC 
+ *
+ * @var bool $wgPutIPinRC
  */
 $wgPutIPinRC = true;
 
@@ -6808,7 +6801,7 @@ $wgRedirectOnLogin = null;
 $wgRedirectSources = false;
 
 /**
- * By default MediaWiki does not register links pointing to same server in 
+ * By default MediaWiki does not register links pointing to same server in
  * externallinks dataset. Use this value to override that behaviour.
  * @var bool $wgRegisterInternalExternals
  */
@@ -7210,7 +7203,7 @@ $wgSharedPrefix = false;
 
 /**
  * List of tables to share in the shared.
- * 
+ *
  * @see $wgSharedDB
  * @var Array $wgSharedTables
  */
@@ -7712,7 +7705,7 @@ $wgSquidMaxage = 24 * 3600;  // 1 day
  * List of proxy servers to purge on changes; default port is 80. Use IP
  * addresses. When MediaWiki is running behind a proxy, it will trust
  * X-Forwarded-For headers sent/modified from these proxies when obtaining the
- * remote IP address. 
+ * remote IP address.
  * @see $wgSquidServersNoPurge
  * @var Array $wgSquidServers
  */
@@ -7963,7 +7956,7 @@ $wgTiffThumbnailType = false;
  * @see Setup.php
  * @see $wgUploadDirectory
  * @var string|bool $wgTmpDirectory
- * 
+ *
  */
 $wgTmpDirectory = '/tmp';
 
@@ -8448,7 +8441,7 @@ $wgValidSkinNames = [];
  *
  * It is important that $wgArticlePath not overlap with possible values
  * of $wgVariantArticlePath.
- * 
+ *
  * @see $wgArticlePath
  * @var string|bool $wgVariantArticlePath
  */
@@ -8749,7 +8742,7 @@ $wgWikiaNukeLocal = false;
 $wgWikiaSearchIsDefault = true;
 
 /**
- * Languages supported in the Search. 
+ * Languages supported in the Search.
  * @see extensions/wikia/Search/classes/MediaWikiService.php
  * @var Array $wgWikiaSearchSupportedLanguages
  */
@@ -8863,7 +8856,7 @@ $wgXhtmlDefaultNamespace = 'http://www.w3.org/1999/xhtml';
  * Permit other namespaces in addition to the w3.org default. Use the prefix for
  * the key and the namespace for the value.
  * @example $wgXhtmlNamespaces['svg'] = 'http://www.w3.org/2000/svg';
- * 
+ *
  * Normally we wouldn't have to define this in the root <html> element, but IE
  * needs it there in some circumstances. This is ignored if $wgHtml5 is true,
  * for the same reason as $wgXhtmlDefaultNamespace.

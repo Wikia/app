@@ -242,8 +242,12 @@ class OasisController extends WikiaController {
 
 		// macbre: RT #25697 - hide Comscore & QuantServe tags on edit pages
 		if ( !in_array( $request->getVal( 'action' ), [ 'edit', 'submit' ] ) ) {
-			$this->comScore = AnalyticsEngine::track('Comscore', AnalyticsEngine::EVENT_PAGEVIEW);
-			$this->quantServe = AnalyticsEngine::track('QuantServe', AnalyticsEngine::EVENT_PAGEVIEW);
+			if ( AnalyticsEngine::isEnabled( $this->getContext() ) ) {
+				$this->sharedAnalyticsModule = Html::inlineScript( AnalyticsEngine::getMinifiedAnalyticsBootstrapCode( $this->getContext() ) );
+			} else {
+				$this->sharedAnalyticsModule = '';
+			}
+
 			$this->a9 = AnalyticsEngine::track('A9', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->gfc = AnalyticsEngine::track('GoogleFundingChoices', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->prebid = AnalyticsEngine::track('Prebid', AnalyticsEngine::EVENT_PAGEVIEW);

@@ -32,7 +32,11 @@ define('wikia.trackingOptOut', [
 	}
 
 	function isOptedOut(tracking) {
-		return isOptOutEnabled() && isBlacklisted(tracking);
+		if (tracking) {
+			return isOptOutEnabled() && isBlacklisted(tracking);
+		}
+
+		return isOptOutEnabled();
 	}
 
 	return {

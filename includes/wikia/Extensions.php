@@ -94,7 +94,7 @@ switch ( $wgLanguageCode ) {
 		$wgNamespaceAliases["Forum_talk"] = 111;
 
 		break;
-            
+
         default:
                 $wgExtraNamespaces[110] = 'Forum';
                 $wgExtraNamespaces[111] = 'Forum_talk';
@@ -1448,10 +1448,6 @@ if ( $wgUseMimeMagicLite ) {
 
 if ( !empty( $wgEnableAbuseFilterBypass ) ) {
 	include( "{$IP}/extensions/wikia/AbuseFilterBypass/AbuseFilterBypass.php" );
-}
-
-if ( !empty( $wgEnableQualarooExt ) ) {
-	include "$IP/extensions/wikia/Qualaroo/Qualaroo.setup.php";
 }
 
 if ( !empty( $wgEnablePoolCounter ) ) {

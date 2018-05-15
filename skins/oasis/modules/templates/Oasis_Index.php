@@ -59,20 +59,22 @@
 
 </head>
 <body class="<?= implode(' ', $bodyClasses) ?>" <?= $itemType ?>>
+<!-- Recovery modules -->
 <?= $instartLogic ?>
 <?= $recoveryTopBodyBootstrapCode ?>
-<? if ( BodyController::isResponsiveLayoutEnabled() || BodyController::isOasisBreakpoints() ): ?>
-	<div class="background-image-gradient"></div>
-<? endif ?>
 
-<?= $comScore ?>
-<?= $quantServe ?>
+<!-- Analytics modules -->
+<?= $sharedAnalyticsModule ?>
 <?= $a9 ?>
 <?= $prebid ?>
 <?= $krux ?>
 <?= $netzathleten ?>
 <?= $dynamicYield ?>
 <?= $gfc ?>
+
+<? if ( BodyController::isResponsiveLayoutEnabled() || BodyController::isOasisBreakpoints() ): ?>
+	<div class="background-image-gradient"></div>
+<? endif ?>
 
 <div class="WikiaSiteWrapper">
 	<?= $body ?>

@@ -4,10 +4,10 @@
  * @version: 1
  */
 
-(function (window, undefined) {
+require(['wikia.window', 'mw', 'wikia.trackingOptOut'], function (context, mw, trackingOptOut) {
 	'use strict';
 
-	if (!window.wgNoExternals) {
+	if (!context.wgNoExternals && !trackingOptOut.isOptedOut()) {
 		/**
 		 * Creates a temporary global ga object and loads analy  tics.js.
 		 * Paramenters o, a, and m are all used internally.  They could have been declared using 'var',
@@ -41,12 +41,12 @@
 			m.parentNode.insertBefore(a, m);
 		})(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
 	} else {
-		// prevent errors when wgNoExternals is set
-		window.ga = function () {};
+		// prevent errors when wgNoExternals is set or user is opted out
+		context.ga = function () {};
+		return;
 	}
 
-	var cookieExists,
-		isProductionEnv,
+	var isProductionEnv,
 		blockingTracked = {
 			babDetector: false,
 			pageFair: false
@@ -84,61 +84,58 @@
 				value: false,
 				detectorSettings: GASettings.pageFair
 			}
-		];
+		],
+		config = mw.config.get('wgUniversalAnalyticsConfiguration');
 
 	/**
 	 * Main Tracker
 	 *
 	 * To be used for everything that is not advertisement
 	 */
-	isProductionEnv = !window.wgGaStaging;
-
-	cookieExists = function (cookieName) {
-		return document.cookie.indexOf(cookieName) > -1;
-	};
+	isProductionEnv = config.isProduction;
 
 	// Main Roll-up Account - UA-32129070-1/UA-32129070-2
 	if (isProductionEnv) {
 		// Production Environment
-		window.ga(
+		context.ga(
 			'create', 'UA-32129070-1', 'auto',
 			{
 				'sampleRate': 100,
 				'allowLinker': true,
-				'userId': window.wgGAUserIdHash
+				'userId': config.userIdHash
 
 			}
 		);
 	} else {
 		// Development Environment
-		window.ga(
+		context.ga(
 			'create', 'UA-32129070-2', 'auto',
 			{
 				'sampleRate': 100,
 				'allowLinker': true,
-				'userId': window.wgGAUserIdHash
+				'userId': config.userIdHash
 			}
 		);
 	}
 
 	if (isProductionEnv) {
 		// VE account - UA-32132943-4'
-		window.ga(
+		context.ga(
 			'create', 'UA-32132943-4', 'auto',
 			{
 				'name': 've',
 				'sampleRate': 100,
 				'allowLinker': true,
-				'userId': window.wgGAUserIdHash
+				'userId': config.userIdHash
 			}
 		);
 
 		// Enable Demographics and Interests Reports
-		window.ga('ve.require', 'displayfeatures');
+		context.ga('ve.require', 'displayfeatures');
 	}
 
 	// Enable Demographics and Interests Reports
-	window.ga('require', 'displayfeatures');
+	context.ga('require', 'displayfeatures');
 
 	/**
 	 * Wrapper function to a generic ga() function call.
@@ -161,12 +158,12 @@
 		for (i = 0; i < args.length; i++) {
 			// If it's a function just push to Google UA
 			if (typeof args[i] === 'function') {
-				window.ga(args[i]);
+				context.ga(args[i]);
 				continue;
 			} else if (args[i][0] === 'send' && args[i].length === 7) {
 				args[i][6] = {'nonInteraction': args[i][6]};
 			}
-			window.ga.apply(window, args[i]);
+			context.ga.apply(window, args[i]);
 
 			// Push to specific namespaces if method not already namespaced
 			if (args[i][0].indexOf('.') === -1) {
@@ -174,7 +171,7 @@
 				if (args[i][1] && args[i][1] === 'editor-ve') {
 					spec = args[i].slice();
 					spec[0] = 've.' + spec[0];
-					window.ga.apply(window, spec);
+					context.ga.apply(window, spec);
 				}
 			}
 		}
@@ -183,15 +180,15 @@
 	function getEsrbRating() {
 		var rating = 'not set';
 
-		if (window.ads && window.ads.context.targeting.esrbRating) {
-			rating = window.ads.context.targeting.esrbRating;
+		if (context.ads && context.ads.context.targeting.esrbRating) {
+			rating = context.ads.context.targeting.esrbRating;
 		}
 
 		return rating;
 	}
 
 	function hasPortableInfobox() {
-		if (window.ads && window.ads.context.targeting.hasPortableInfobox) {
+		if (context.ads && context.ads.context.targeting.hasPortableInfobox) {
 			return 'Yes';
 		}
 
@@ -199,7 +196,7 @@
 	}
 
 	function hasFeaturedVideo() {
-		if (window.ads && window.ads.context.targeting.hasFeaturedVideo) {
+		if (context.ads && context.ads.context.targeting.hasFeaturedVideo) {
 			return 'Yes';
 		}
 
@@ -219,8 +216,8 @@
 			markedSegments = [],
 			kruxSegments = [];
 
-		if (window.localStorage) {
-			kruxSegments = (window.localStorage.kxsegs || '').split(',');
+		if (context.localStorage) {
+			kruxSegments = (context.localStorage.kxsegs || '').split(',');
 		}
 
 		if (kruxSegments.length) {
@@ -242,42 +239,42 @@
 		}
 		blockingTracked[detectorSettings.trackName] = true;
 		_gaWikiaPush(['set', 'dimension' + detectorSettings.dimension, value]);
-		window.ga('ads.set', 'dimension' + detectorSettings.dimension, value);
+		context.ga('ads.set', 'dimension' + detectorSettings.dimension, value);
 		guaTrackAdEvent('ad/' + detectorSettings.name + '/detection', value, '', 0, true);
 		guaTrackEvent('ads-' + detectorSettings.name + '-detection', 'impression', value, 0, true);
 	}
 
 	/**** High-Priority Custom Dimensions ****/
 	_gaWikiaPush(
-		['set', 'dimension1', window.wgDBname],                        // DBname
-		['set', 'dimension2', window.wgContentLanguage],               // ContentLanguage
-		['set', 'dimension3', window.cscoreCat],                       // Hub
-		['set', 'dimension4', window.skin],                            // Skin
-		['set', 'dimension5', !!window.wgUserName ? 'user' : 'anon']  // LoginStatus
+		['set', 'dimension1', context.wgDBname],                        // DBname
+		['set', 'dimension2', context.wgContentLanguage],               // ContentLanguage
+		['set', 'dimension3', context.cscoreCat],                       // Hub
+		['set', 'dimension4', context.skin],                            // Skin
+		['set', 'dimension5', !!context.wgUserName ? 'user' : 'anon']  // LoginStatus
 	);
 
 	/**** Medium-Priority Custom Dimensions ****/
 	_gaWikiaPush(
-		['set', 'dimension8', window.wikiaPageType],                                // PageType
-		['set', 'dimension9', window.wgCityId],                                     // CityId
+		['set', 'dimension8', context.wikiaPageType],                                // PageType
+		['set', 'dimension9', context.wgCityId],                                     // CityId
 		['set', 'dimension13', getEsrbRating()],                                    // ESRB rating
-		['set', 'dimension14', window.wgGaHasAds ? 'Yes' : 'No'],                   // HasAds
-		['set', 'dimension15', window.wikiaPageIsCorporate ? 'Yes' : 'No'],         // IsCorporatePage
+		['set', 'dimension14', context.wgGaHasAds ? 'Yes' : 'No'],                   // HasAds
+		['set', 'dimension15', context.wikiaPageIsCorporate ? 'Yes' : 'No'],         // IsCorporatePage
 		['set', 'dimension16', getKruxSegment()],                                   // Krux Segment
-		['set', 'dimension17', window.wgWikiVertical],                              // Vertical
-		['set', 'dimension18', window.wgWikiCategories.join(',')],                  // Categories
-		['set', 'dimension19', window.wgArticleType],                               // ArticleType
+		['set', 'dimension17', context.wgWikiVertical],                              // Vertical
+		['set', 'dimension18', context.wgWikiCategories.join(',')],                  // Categories
+		['set', 'dimension19', context.wgArticleType],                               // ArticleType
 		['set', 'dimension20', 'not set'],                                          // Performance A/B testing (Not used any more)
-		['set', 'dimension21', String(window.wgArticleId)],                         // ArticleId
-		['set', 'dimension25', String(window.wgNamespaceNumber)],                   // Namespace Number
-		['set', 'dimension27', String(window.wgCanonicalSpecialPageName || '')],    // Special page canonical name (SUS-1465)
+		['set', 'dimension21', String(context.wgArticleId)],                         // ArticleId
+		['set', 'dimension25', String(context.wgNamespaceNumber)],                   // Namespace Number
+		['set', 'dimension27', String(context.wgCanonicalSpecialPageName || '')],    // Special page canonical name (SUS-1465)
 		['set', 'dimension28', hasPortableInfobox()],                               // If there is Portable Infobox on the page (ADEN-4708)
 		['set', 'dimension29', hasFeaturedVideo()]                                  // If there is Featured Video on the page (ADEN-5420)
 	);
 
 	/**** Include A/B testing status ****/
-	if (window.Wikia && window.Wikia.AbTest) {
-		var abList = window.Wikia.AbTest.getExperiments( /* includeAll */ true),
+	if (context.Wikia && context.Wikia.AbTest) {
+		var abList = context.Wikia.AbTest.getExperiments( /* includeAll */ true),
 			abExp, abGroupName, abSlot, abIndex,
 			abForceTrackOnLoad = false,
 			abCustomVarsForAds = [];
@@ -292,7 +289,7 @@
 			if (abExp.flags.forced_ga_tracking_on_load && abExp.group) {
 				abForceTrackOnLoad = true;
 			}
-			abSlot = window.Wikia.AbTest.getGASlot(abExp.name);
+			abSlot = context.Wikia.AbTest.getGASlot(abExp.name);
 			if (abSlot >= 40 && abSlot <= 49) {
 				abGroupName = abExp.group ? abExp.group.name : (abList.nouuid ? 'NOBEACON' : 'NOT_IN_ANY_GROUP');
 				_gaWikiaPush(['set', 'dimension' + abSlot, abGroupName]);
@@ -300,19 +297,19 @@
 			}
 		}
 		if (abForceTrackOnLoad) {
-			var abRenderStart = window.wgNow || (new Date()), abOnLoadHandler;
+			var abRenderStart = context.wgNow || (new Date()), abOnLoadHandler;
 
 			abOnLoadHandler = function () {
 				var renderTime = (new Date()).getTime() - abRenderStart.getTime();
 				setTimeout(function () {
-					window.guaTrackEvent('ABtest', 'ONLOAD', 'TIME', renderTime);
+					context.guaTrackEvent('ABtest', 'ONLOAD', 'TIME', renderTime);
 				}, 10);
 			};
 			// @see: http://stackoverflow.com/q/3763080/
-			if (window.attachEvent) {
-				window.attachEvent('onload', abOnLoadHandler);
-			} else if (window.addEventListener) {
-				window.addEventListener('load', abOnLoadHandler, false);
+			if (context.attachEvent) {
+				context.attachEvent('onload', abOnLoadHandler);
+			} else if (context.addEventListener) {
+				context.addEventListener('load', abOnLoadHandler, false);
 			}
 		}
 	}
@@ -320,7 +317,7 @@
 	// Unleash
 	_gaWikiaPush(['send', 'pageview']);
 
-	if (window.ads && window.ads.context.opts.showAds) {
+	if (context.ads && context.ads.context.opts.showAds) {
 		listenerSettings.map(function (listenerSetting) {
 			document.addEventListener(listenerSetting.eventName, function () {
 				trackBlocking(listenerSetting.detectorSettings, listenerSetting.value);
@@ -335,59 +332,59 @@
 	 */
 	// Advertisment Account UA-32129071-1/UA-32129071-2
 	if (isProductionEnv) {
-		window.ga(
+		context.ga(
 			'create', 'UA-32129071-1', 'auto',
 			{
 				'name': 'ads',
 				'sampleRate': 100,
 				'allowLinker': true,
-				'userId': window.wgGAUserIdHash
+				'userId': config.userIdHash
 			}
 		);
 	} else {
-		window.ga(
+		context.ga(
 			'create', 'UA-32129071-2', 'auto',
 			{
 				'name': 'ads',
 				'sampleRate': 100,
 				'allowLinker': true,
-				'userId': window.wgGAUserIdHash
+				'userId': config.userIdHash
 			}
 		);
 	}
 
 	// Enable Demographics and Interests Reports
-	window.ga('ads.require', 'displayfeatures');
+	context.ga('ads.require', 'displayfeatures');
 
 	/* Ads Account Custom Dimensions */
-	window.ga('ads.set', 'dimension1', window.wgDBname);                                 // DBname
-	window.ga('ads.set', 'dimension2', window.wgContentLanguage);                        // ContentLanguage
-	window.ga('ads.set', 'dimension3', window.cscoreCat);                                // Hub
-	window.ga('ads.set', 'dimension4', window.skin);                                     // Skin
-	window.ga('ads.set', 'dimension5', !!window.wgUserName ? 'user' : 'anon');           // LoginStatus
+	context.ga('ads.set', 'dimension1', context.wgDBname);                                 // DBname
+	context.ga('ads.set', 'dimension2', context.wgContentLanguage);                        // ContentLanguage
+	context.ga('ads.set', 'dimension3', context.cscoreCat);                                // Hub
+	context.ga('ads.set', 'dimension4', context.skin);                                     // Skin
+	context.ga('ads.set', 'dimension5', !!context.wgUserName ? 'user' : 'anon');           // LoginStatus
 
 	/**** Medium-Priority Custom Dimensions ****/
-	window.ga('ads.set', 'dimension8', window.wikiaPageType);                            // PageType
-	window.ga('ads.set', 'dimension9', window.wgCityId);                                 // CityId
-	window.ga('ads.set', 'dimension13', getEsrbRating());                                // ESRB rating
-	window.ga('ads.set', 'dimension14', window.wgGaHasAds ? 'Yes' : 'No');               // HasAds
-	window.ga('ads.set', 'dimension15', window.wikiaPageIsCorporate ? 'Yes' : 'No');     // IsCorporatePage
-	window.ga('ads.set', 'dimension16', getKruxSegment());                               // Krux Segment
-	window.ga('ads.set', 'dimension17', window.wgWikiVertical);                          // Vertical
-	window.ga('ads.set', 'dimension18', window.wgWikiCategories.join(','));              // Categories
-	window.ga('ads.set', 'dimension19', window.wgArticleType);                           // ArticleType
-	window.ga('ads.set', 'dimension20', 'not set');                                      // Performance A/B testing (not used any more)
-	window.ga('ads.set', 'dimension21', String(window.wgArticleId));                     // ArticleId
-	window.ga('ads.set', 'dimension25', String(window.wgNamespaceNumber));               // Namespace Number
-	window.ga('ads.set', 'dimension27', String(window.wgCanonicalSpecialPageName || '')); // Special page canonical name (SUS-1465)
-	window.ga('ads.set', 'dimension28', hasPortableInfobox());                            // If there is Portable Infobox on the page (ADEN-4708)
-	window.ga('ads.set', 'dimension29', hasFeaturedVideo());                              // If there is Featured Video on the page (ADEN-5420)
+	context.ga('ads.set', 'dimension8', context.wikiaPageType);                            // PageType
+	context.ga('ads.set', 'dimension9', context.wgCityId);                                 // CityId
+	context.ga('ads.set', 'dimension13', getEsrbRating());                                // ESRB rating
+	context.ga('ads.set', 'dimension14', context.wgGaHasAds ? 'Yes' : 'No');               // HasAds
+	context.ga('ads.set', 'dimension15', context.wikiaPageIsCorporate ? 'Yes' : 'No');     // IsCorporatePage
+	context.ga('ads.set', 'dimension16', getKruxSegment());                               // Krux Segment
+	context.ga('ads.set', 'dimension17', context.wgWikiVertical);                          // Vertical
+	context.ga('ads.set', 'dimension18', context.wgWikiCategories.join(','));              // Categories
+	context.ga('ads.set', 'dimension19', context.wgArticleType);                           // ArticleType
+	context.ga('ads.set', 'dimension20', 'not set');                                      // Performance A/B testing (not used any more)
+	context.ga('ads.set', 'dimension21', String(context.wgArticleId));                     // ArticleId
+	context.ga('ads.set', 'dimension25', String(context.wgNamespaceNumber));               // Namespace Number
+	context.ga('ads.set', 'dimension27', String(context.wgCanonicalSpecialPageName || '')); // Special page canonical name (SUS-1465)
+	context.ga('ads.set', 'dimension28', hasPortableInfobox());                            // If there is Portable Infobox on the page (ADEN-4708)
+	context.ga('ads.set', 'dimension29', hasFeaturedVideo());                              // If there is Featured Video on the page (ADEN-5420)
 
 	/**** Include A/B testing status ****/
-	if (window.Wikia && window.Wikia.AbTest) {
+	if (context.Wikia && context.Wikia.AbTest) {
 		var i;
 		for (i = 0; i < abCustomVarsForAds.length; i++) {
-			window.ga.apply(window, abCustomVarsForAds[i]);
+			context.ga.apply(window, abCustomVarsForAds[i]);
 		}
 	}
 
@@ -407,7 +404,7 @@
 	 * @param {number} [opt_value=0] Event Value. Have to be an integer.
 	 * @param {boolean} [opt_noninteractive=false] Event noInteractive.
 	 */
-	window.guaTrackAdEvent = function (category, action, opt_label, opt_value, opt_noninteractive) {
+	context.guaTrackAdEvent = function (category, action, opt_label, opt_value, opt_noninteractive) {
 		var args, adHitSample = 1; //1%
 		if (Math.random() * 100 <= adHitSample) {
 			args = Array.prototype.slice.call(arguments);
@@ -418,7 +415,7 @@
 
 			args.unshift('ads.send', 'event');
 			try {
-				window.ga.apply(window, args);
+				context.ga.apply(window, args);
 			} catch (e) {}
 		}
 	};
@@ -439,7 +436,7 @@
 	 * @param {number} [opt_value=0] Event Value. Have to be an integer.
 	 * @param {boolean} [opt_noninteractive=false] Event noInteractive.
 	 */
-	window.guaTrackEvent = function (category, action, opt_label, opt_value, opt_noninteractive) {
+	context.guaTrackEvent = function (category, action, opt_label, opt_value, opt_noninteractive) {
 		var args = Array.prototype.slice.call(arguments);
 
 		args.unshift('send', 'event');
@@ -454,7 +451,7 @@
 	 * @param {string} fakePage The fake URL to track. This should begin with a leading '/'.
 	 * @param {string} opt_namespace Namespace of the pageview. Used in GA reporting.
 	 */
-	window.guaTrackPageview = function (fakePage, opt_namespace) {
+	context.guaTrackPageview = function (fakePage, opt_namespace) {
 		var nsPrefix = (opt_namespace) ? opt_namespace + '.' : '';
 		_gaWikiaPush([nsPrefix + 'send', 'pageview', fakePage]);
 	};
@@ -465,7 +462,7 @@
 	 * @param {number|string} index
 	 * @param {string} value
 	 */
-	window.guaSetCustomDimension = function (index, value) {
+	context.guaSetCustomDimension = function (index, value) {
 		_gaWikiaPush(['set', 'dimension' + index, value]);
 	}
 
