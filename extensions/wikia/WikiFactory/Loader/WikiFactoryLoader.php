@@ -71,7 +71,7 @@ class WikiFactoryLoader {
 			// normal HTTP request
 			$this->mServerName = strtolower( $server['SERVER_NAME'] );
 
-			$path = parse_url( $server['REQUEST_URI'], PHP_URL_PATH );
+			$path = parse_url( $server['REQUEST_SCHEME'] . '://' . $server['SERVER_NAME'] . $server['REQUEST_URI'], PHP_URL_PATH );
 
 			$slash = strpos( $path, '/', 1 ) ?: strlen( $path );
 
@@ -437,23 +437,18 @@ class WikiFactoryLoader {
 		 */
 		if( empty( $this->mIsWikiaActive ) || $this->mIsWikiaActive == -2 /* spam */ ) {
 			if( ! $this->mCommandLine ) {
-				global $wgNotAValidWikia;
-				if( $this->mCityDB ) {
-					$database = strtolower( $this->mCityDB );
-					$redirect = sprintf(
-						"http://%s/wiki/Special:CloseWiki/information/%s",
-						($wgDevelEnvironment) ? "www.awc.wikia-inc.com" : "community.{$wgWikiaBaseDomain}",
-						$database
-					);
-				}
-				else {
+				if ( $this->mCityDB ) {
+					include __DIR__ . '/closedWikiHandler.php';
+				} else {
+					global $wgNotAValidWikia;
 					$redirect = $wgNotAValidWikia . '?from=' . rawurlencode( $this->mServerName );
+					$this->debug( "disabled and not commandline, redirected to {$redirect}, {$this->mWikiID} {$this->mIsWikiaActive}" );
+					header( "X-Redirected-By-WF: Dump" );
+					header( "Location: $redirect" );
+
+					wfProfileOut( __METHOD__ );
+					return false;
 				}
-				$this->debug( "disabled and not commandline, redirected to {$redirect}, {$this->mWikiID} {$this->mIsWikiaActive}" );
-				header( "X-Redirected-By-WF: Dump" );
-				header( "Location: $redirect" );
-				wfProfileOut( __METHOD__ );
-				return false;
 			}
 		}
 

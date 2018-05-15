@@ -3,10 +3,6 @@
 #  Overwrite some variables, load extensions, etc. Former CustomSettings.php  #
 ###############################################################################
 
-# please use "date +%Y%m%d%H%M%S" as a proper value
-# don't update it unless you really need to
-$wgCacheEpoch = max( $wgCacheEpoch, '20080205154442' );
-
 ###############################################################################
 # DC specific settings                                                        #
 ###############################################################################
@@ -15,22 +11,6 @@ switch ($wgWikiaDatacenter) {
 		# PLATFORM-1740: disable task queue in Reston, it was calling SJC broker
 		$wgTaskBroker = false;
 		break;
-}
-
-/**
- * define extension directory based on IP variable
- */
-$wgExtensionsDirectory = $IP . "/extensions";
-
-
-/**
- * $wgDefaultSkin is first set to 'oasis' in CommonSettings.php. Then the value is assigned to
- * $wgDefaultSkinBeforeWF and $wgDefaultSkin is nullified. WikiFactor is supposed to assign
- * some value to $wgDefaultSkin - a per-wiki setting. If it fails and at this point $wgDefaultSkin
- * is still null, we use the cached value from $wgDefaultSkinBeforeWF.
- */
-if ( is_null( $wgDefaultSkin ) ) {
-	$wgDefaultSkin = $wgDefaultSkinBeforeWF;
 }
 
 // TODO: Clean up after CK editor as default test is finished
@@ -114,8 +94,16 @@ switch ( $wgLanguageCode ) {
 		$wgNamespaceAliases["Forum_talk"] = 111;
 
 		break;
+            
+        default:
+                $wgExtraNamespaces[110] = 'Forum';
+                $wgExtraNamespaces[111] = 'Forum_talk';
+                break;
 
 }
+
+$wgNamespacesWithSubpages[110] = true; //Forum
+$wgNamespacesWithSubpages[111] = true; //Forum talk
 
 /*
  * WikisApi
@@ -180,12 +168,13 @@ if (empty($wgHelpWikiId)) {
 }
 
 $wgLocalMessageCache = '/tmp/messagecache';
-$wgLocalMessageCacheSerialized = true;
+
 
 /**
- * @name $wgAppleTouchIcon
- * Favicon for iPod Touch and iPhone
- * Note: Has to be set here, since it makes use of $wgLogo set by WikiFactory
+ * The URL path of the icon for iPhone and iPod Touch web app bookmarks.
+ * Defaults to no icon.
+ * @see $wgLogo
+ * @var string|bool
  */
 $wgAppleTouchIcon = $wgLogo;
 
@@ -213,6 +202,21 @@ if ( $wgSharedUploadDBname ) {
  */
 $wgWikicitiesNavLinks[] = array( 'text'=>'wikicitieshome', 'href'=>'wikicitieshome-url' );
 
+putenv( 'GDFONTPATH=/usr/share/fonts/truetype/freefont/' );
+include_once "$IP/extensions/timeline/Timeline.php";
+
+if ( $wgDevelEnvironment ) {
+    # lazy-load blobs from production when there's a miss on devbox blobs cluster
+    include_once "$IP/extensions/wikia/Development/ExternalStoreDBFetchBlobHook.php";
+}
+
+if ( !empty( $wgEnableOpenGraphMetaExt ) ) {
+	include( "$IP/extensions/OpenGraphMeta/OpenGraphMeta.php" );
+	// Wikia-specific customizations to set image and description by ImageServing and ArticleService respectively.
+	include( "$IP/extensions/wikia/OpenGraphMetaCustomizations/OpenGraphMetaCustomizations.setup.php");
+}
+
+
 
 if ( !empty( $wgEnableEditPageLayoutExt ) ) {
 	include "$IP/extensions/wikia/EditPageLayout/EditPageLayout_setup.php";
@@ -221,6 +225,11 @@ if ( !empty( $wgEnableEditPageLayoutExt ) ) {
 /**
  * load extensions by using configuration variables
  */
+
+#--- 1. Special::ProtectSite
+if (!empty($wgWikiaEnableSpecialProtectSiteExt)) {
+	include("$IP/extensions/wikia/SpecialProtectSite/SpecialProtectSite.php");
+}
 
 #--- 5. EventCountdown
 if (!empty($wgWikiaEnableEventCountdownExt)) {
@@ -235,7 +244,6 @@ if( !empty( $wgEnableMultiUploadExt ) ) {
 	include( "{$IP}/extensions/MultiUpload/MultiUpload.php" );
 }
 
-
 #--- 13. Poem - sitewide
 include("{$IP}/extensions/Poem/Poem.php");
 
@@ -245,6 +253,10 @@ include("{$IP}/extensions/wikia/AntiSpamInput/AntiSpamInput.php");
 #--- 16. YouTube -- sitewide (with exceptions)
 if (!empty($wgWikiaEnableYouTubeExt)) {
 	include("{$IP}/extensions/wikia/YouTube/YouTube.php");
+}
+
+if ( !empty( $wgEnableCaptchaExt ) ) {
+	include( "$IP/extensions/wikia/Captcha/Captcha.setup.php" );
 }
 
 # quick switch to turn this trigger on where/when requested
@@ -523,7 +535,10 @@ if( !empty( $wgEnableAjaxPollExt ) ) {
 /**
  * Enable the loader that loads mini hacks/tools/tweaks
  */
-include("$IP/extensions/wikia/Comteam/Comteam_setup.php");
+
+if( !empty( $wgEnableForumIndexProtectorExt ) ) {
+	include("$IP/extensions/wikia/ForumIndexProtector/ForumIndexProtector.php");
+}
 
 if( !empty( $wgEnableContactExt ) ) {
 	include_once( "$IP/extensions/wikia/SpecialContact2/SpecialContact.php" );
@@ -654,9 +669,8 @@ if (!empty($wgEnableSearchNearMatchExt)) {
 
 if (!empty($wgEnableAnswers)) {
 	$wgArticleRobotPolicies['Special:WhatLinksHere'] = 'index,follow';
-
 	// To get this, check out from https://svn.wikia-inc.com/svn/answers
-	include("$answersIP/Answers.php");
+	include("$IP/extensions/wikia/Answers/Answers.php");
 
 	# disable AutoPageCreate extension (RT #48292)
 	$wgWikiaEnableAutoPageCreateExt = false;
@@ -694,6 +708,11 @@ if( !empty( $wgEnableFlagClosedAccountsExt ) ) {
 
 if( !empty( $wgEnableHAWelcomeExt ) ) {
 	include("$IP/extensions/wikia/HAWelcome/HAWelcome.setup.php");
+}
+
+// Enable CategorySelect extension for all not RTL wikis
+if (!in_array($wgLanguageCode, array('ar', 'fa', 'he', 'ps', 'yi'))) {
+    $wgEnableCategorySelectExt = true;
 }
 
 if(!empty($wgEnableCategorySelectExt)) {
@@ -801,7 +820,7 @@ if ( !empty($wgEnableStaffLogExt ) ) {
 if ( empty( $wgEnableArticleCommentsExt ) ) {
 	$wgArticleCommentsNamespaces = array( -1 );
 	if ( !empty( $wgEnableBlogArticles ) ) {
-		$wgArticleCommentsNamespaces = array( 500 /* NS_BLOG */ );
+		$wgArticleCommentsNamespaces = array( 500 /* NS_BLOG_ARTICLE */ );
 	}
 }
 
@@ -1037,7 +1056,7 @@ if( file_exists("$IP/extensions/wikia/SpecialEmailTest/SpecialEmailTest.php") ) 
 	include( "$IP/extensions/wikia/SpecialEmailTest/SpecialEmailTest.php" );
 }
 
-if ( !empty( $wgEnablePerSkinParserCacheExt ) && file_exists( "$IP/extensions/wikia/PerSkinParserCache/PerSkinParserCache.php" ) ) {
+if ( !empty( $wgEnablePerSkinParserCacheExt ) ) {
 	include( "$IP/extensions/wikia/PerSkinParserCache/PerSkinParserCache.php" );
 }
 
@@ -1411,8 +1430,6 @@ $wgFileBackends['swift-backend'] = array(
 	'debug'         => false,
 	'url'           => "http://{$wgFSSwiftServer}/swift/v1",
 );
-# use a different images domain on wikis with Swift storage enabled (BAC-854)
-$wgImagesDomainSharding = "img%s.{$wgWikiaNocookieDomain}";
 
 // This extension is enabled globally and handles Sync between datacenters
 // It does work on devboxes if you need to enable for testing, but we are not running the sync script
@@ -1475,20 +1492,6 @@ if( !empty( $wgEnableEditorSyntaxHighlighting ) ) {
 
 if ( !empty( $wgEnableCloseMyAccountExt ) ) {
 	include "$IP/extensions/wikia/CloseMyAccount/CloseMyAccount.setup.php";
-}
-
-/**
- * Add a rate limit on IPs on Russian wikias
- *
- * Throttle edits at 6 per minute per IP address.
- *
- * Needs to go in here so that the language
- * of the wikia is available.
- *
- * @see CE-601
- */
-if ( $wgLanguageCode === 'ru' ) {
-	$wgRateLimits['edit']['ip'] = [ 6, 60 ];
 }
 
 if ( $wgWikiaEnvironment !== WIKIA_ENV_PROD && $wgWikiaEnvironment !== WIKIA_ENV_DEV ) {
@@ -1682,10 +1685,6 @@ if ( !empty( $wgEnableWeiboTagExt ) ) {
 /**
  * SEO extensions (keep them ordered)
  */
-if ( !empty( $wgEnableCategoryPaginationExt ) ) {
-	include( "$IP/extensions/wikia/CategoryPagination/CategoryPagination.setup.php" );
-}
-
 if ( $wgEnableCustom404PageExt === true
 	|| ( $wgEnableCustom404PageExt === null && in_array( $wgLanguageCode, $wgEnableCustom404PageExtInLanguages ) )
 ) {
@@ -1766,7 +1765,7 @@ if ( !empty( $wgEnableGoogleAmp ) ) {
 }
 
 if ( !empty( $wgEnableOpenXSPC ) ) {
-	include "$IP/extensions/wikia/Spotlights/Spotlights.setup.php";
+    include "$IP/extensions/wikia/Spotlights/Spotlights.setup.php";
 }
 
 include "$IP/extensions/wikia/JWPlayerTag/JWPlayerTag.setup.php";

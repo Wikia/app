@@ -52,6 +52,7 @@ class WikiaUpdater {
 			array( 'dropIndex', 'wall_related_pages', 'comment_id_idx',  $dir . 'patch-wall_related_pages-drop-comment_id_idx.sql', true ), // SUS-3096
 			array( 'dropIndex', 'wall_related_pages', 'page_id_idx_2',  $dir . 'patch-wall_related_pages-drop-page_id_idx_2.sql', true ), // SUS-3096
 			array( 'dropIndex', 'video_info', 'added_at',  $dir . 'patch-video_info-drop-added_at_idx.sql', true ), // SUS-4297
+			array( 'dropIndex', 'wikia_user_properties', 'wup_user', $dir . 'patch-wikia-user-properties-pk.sql', true ),
 
 			# functions
 			array( 'WikiaUpdater::do_page_wikia_props_update' ),
@@ -324,7 +325,7 @@ class WikiaUpdater {
 		$databaseUpdater->output( 'Adding default empty value to rc_user_text column... ' );
 		$databaseConnection->sourceFile( $patchDir . 'patch-rc_user_text-default.sql' );
 		$databaseUpdater->output( "done.\n" );
-		
+
 		wfWaitForSlaves();
 	}
 

@@ -123,7 +123,7 @@ class CommunityPageSpecialUsersModel {
 	}
 
 	/**
-	 * Get all admins who have contributed in the last two years ordered by number of contributions
+	 * Get all admins who have contributed in the last two years ordered by latest contribution timestamp
 	 * filter out bots
 	 *
 	 * @return array|null
@@ -147,14 +147,13 @@ class CommunityPageSpecialUsersModel {
 				$dateTwoYearsAgo = date( 'Y-m-d', strtotime( '-2 years' ) );
 
 				$sqlData = ( new WikiaSQL() )
-					->SELECT( 'rev_user_text, rev_user, MAX(rev_timestamp) AS latest_revision' )
-					->FROM( 'revision FORCE INDEX (user_timestamp)' )
+					->SELECT( 'rev_user, MAX(rev_timestamp) AS latest_revision' )
+					->FROM( 'revision' )
 					->WHERE( 'rev_user' )->NOT_EQUAL_TO( 0 )
 					->AND_( 'rev_user' )->IN( $adminIds )
 					->AND_( 'rev_user' )->NOT_IN( $botIds )
 					->AND_( 'rev_timestamp' )->GREATER_THAN( $dateTwoYearsAgo )
-					->GROUP_BY( 'rev_user' )
-					->ORDER_BY( 'latest_revision DESC' );
+					->GROUP_BY( 'rev_user' );
 
 				$result = $sqlData->runLoop( $db, function ( &$result, $row ) {
 					$result[] = [
@@ -162,6 +161,11 @@ class CommunityPageSpecialUsersModel {
 						'latestRevision' => $row->latest_revision,
 						'isAdmin' => true,
 					];
+				} );
+
+				// SUS-4758: moved sorting to PHP level from SQL - performs better
+				usort( $result, function ( $x, $y ) {
+					return strcmp( $y['latestRevision'], $x['latestRevision'] );
 				} );
 
 				return $result;

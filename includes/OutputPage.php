@@ -2853,7 +2853,7 @@ $templates
 	 * @return String: HTML fragment
 	 */
 	function getHeadScripts() {
-		global $wgResourceLoaderExperimentalAsyncLoading, $wgEnableNewVisualEditorExt;
+		global $wgResourceLoaderExperimentalAsyncLoading, $wgEnableNewVisualEditorExt, $wgInlineStartupScript;
 		// Achtung! Achtung!
 		if ( !empty( $wgEnableNewVisualEditorExt ) ) {
 			$extraData = array( 'newve' => 1 );
@@ -2861,7 +2861,27 @@ $templates
 			$extraData = array();
 		}
 		// Startup - this will immediately load jquery and mediawiki modules
-		$scripts = $this->makeResourceLoaderLink( 'startup', ResourceLoaderModule::TYPE_SCRIPTS, true, $extraData );
+		if ( !$wgInlineStartupScript ) {
+			$scripts = $this->makeResourceLoaderLink( 'startup', ResourceLoaderModule::TYPE_SCRIPTS, true, $extraData );
+		} else {
+			// Wikia change - SUS-4734 allow to generate an inline startup script
+			$query = ResourceLoader::makeLoaderQuery(
+				array(),
+				$this->getLanguage()->getCode(),
+				$this->getSkin()->getSkinName(),
+				null,
+				null, // version; not determined yet
+				ResourceLoader::inDebugMode(),
+				ResourceLoaderModule::TYPE_SCRIPTS
+			);
+
+			$resourceLoader = $this->getResourceLoader();
+			$resourceLoaderContext = new ResourceLoaderContext( $resourceLoader, new FauxRequest( $query ) );
+
+			$startupModule = $resourceLoader->getModule( 'startup' );
+
+			$scripts = Html::inlineScript( $resourceLoader->makeModuleResponse( $resourceLoaderContext, [ 'startup' => $startupModule ] ) );
+		}
 		// Load config before anything else
 		$scripts .= Html::inlineScript(
 			ResourceLoader::makeLoaderConditionalScript(
