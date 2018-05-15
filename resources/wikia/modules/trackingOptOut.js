@@ -3,8 +3,8 @@
  * AMD module checking tracking opt-out
  */
 define('wikia.trackingOptOut', [
-	'wikia.querystring'
-], function(Querystring) {
+	'wikia.querystring', 'wikia.window'
+], function(Querystring, context) {
 	'use strict';
 
 	var qs = new Querystring(),
@@ -24,15 +24,19 @@ define('wikia.trackingOptOut', [
 	}
 
 	function isBlacklisted(tracking) {
-		if (trackingBlacklist === null && window.Wikia && window.Wikia.TrackingOptOut) {
-			trackingBlacklist = window.Wikia.TrackingOptOut;
+		if (trackingBlacklist === null && context.Wikia && context.Wikia.TrackingOptOut) {
+			trackingBlacklist = context.Wikia.TrackingOptOut;
 		}
 
 		return trackingBlacklist && trackingBlacklist.hasOwnProperty(tracking) && trackingBlacklist[tracking];
 	}
 
 	function isOptedOut(tracking) {
-		return isOptOutEnabled() && isBlacklisted(tracking);
+		if (tracking) {
+			return isOptOutEnabled() && isBlacklisted(tracking);
+		}
+
+		return isOptOutEnabled();
 	}
 
 	return {

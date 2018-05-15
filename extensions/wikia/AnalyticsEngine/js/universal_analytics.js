@@ -4,10 +4,10 @@
  * @version: 1
  */
 
-(function (window, undefined) {
+require(['wikia.trackingOptOut'], function (trackingOptOut) {
 	'use strict';
 
-	if (!window.wgNoExternals) {
+	if (!window.wgNoExternals && !trackingOptOut.isOptedOut()) {
 		/**
 		 * Creates a temporary global ga object and loads analy  tics.js.
 		 * Paramenters o, a, and m are all used internally.  They could have been declared using 'var',
@@ -469,4 +469,4 @@
 		_gaWikiaPush(['set', 'dimension' + index, value]);
 	}
 
-}(window));
+});

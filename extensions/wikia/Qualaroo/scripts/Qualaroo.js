@@ -1,5 +1,10 @@
-( function ( window, document ) {
+require(['wikia.trackingOptOut', 'wikia.log'], function (trackingOptOut, log) {
 	'use strict';
+
+	if (trackingOptOut.isOptedOut()) {
+		return;
+	}
+
 	var _kiq = [],
 		createCookie,
 		setABTestProperties;
@@ -92,4 +97,4 @@
 	setABTestProperties();
 
 	window._kiq = _kiq;
-})( window, document );
+});

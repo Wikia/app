@@ -14,17 +14,20 @@ class AnalyticsProviderQuantServe implements iAnalyticsProvider {
 
 		$tag = <<<EOT
 <script type="text/javascript">
-  var _qevents = _qevents || [];
+window._qevents = window._qevents || [];
+require(['wikia.trackingOptOut'], function(trackingOptOut) {
+	if (trackingOptOut.isOptedOut()) {
+		return;
+	}
+	
+	var elem = document.createElement('script');
 
-  (function() {
-   var elem = document.createElement('script');
-
-   elem.src = (document.location.protocol == "https:" ? "https://secure" : "http://edge") + ".quantserve.com/quant.js";
-   elem.async = true;
-   elem.type = "text/javascript";
-   var scpt = document.getElementsByTagName('script')[0];
-   scpt.parentNode.insertBefore(elem, scpt);
-  })();
+	elem.src = (document.location.protocol == "https:" ? "https://secure" : "http://edge") + ".quantserve.com/quant.js";
+	elem.async = true;
+	elem.type = "text/javascript";
+	
+	document.head.appendChild(elem);
+});
 </script>
 
 EOT;
@@ -58,10 +61,6 @@ EOT;
 				$tag .= <<<EOT
 _qevents.push( { qacct:"{$this->account}", labels:quantcastLabels } );
 </script>
-<noscript>
-<div style="display: none;"><img src="//pixel.quantserve.com/pixel/{$this->account}.gif" height="1" width="1" alt="Quantcast"/></div>
-</noscript>
-
 EOT;
 			return $tag;
 			break;
