@@ -7,7 +7,7 @@
     "build": "cd node_modules/prebid.js && npm install && gulp build --modules=modules.json",
     "setup-prebid": "rm -rf node_modules && npm install && cd node_modules/prebid.js && npm install && gulp build --modules=modules.json && mkdir -p ../../prebid && cp build/dist/prebid.js ../../prebid/prebid.min.js",
     "build-prebid": "cd node_modules/prebid.js && gulp build --modules=modules.json && cp build/dist/prebid.js ../../prebid/prebid.min.js",
-    "build-prebid-dev": "cd node_modules/prebid.js && gulp build-bundle-dev --modules=modules.json && cp build/dist/prebid.js ../../prebid/prebid.min.js && cp build/dev/prebid.js ../../prebid/prebid.js"
+    "build-prebid-dev": "cd node_modules/prebid.js && gulp build-all --modules=modules.json && cp build/dist/prebid.js ../../prebid/prebid.min.js && cp build/dev/prebid.js ../../prebid/prebid.js"
   },
   "repository": {
     "type": "git",
