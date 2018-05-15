@@ -107,11 +107,6 @@ New value:
 			<?= wfMessage( 'wikifactory-label-reason' )->parse(); ?></label>
 			<input type="text" id="wk-reason" name="reason" value="" size="30" />
 		</div>
-		<div class="wf-variable-form-inline-group wf-variable-form-right">
-			<label for="tagName">
-			<strong>By tag</strong> (apply this value to wikis with this tag) :</label>
-			<input type="text" name="tagName" id="tagName" value="" size="30" />
-		</div>
 	</div>
 	<br/><input type="submit" class="wk-submit" name="submit" value="<?= wfMsg('wikifactory-button-saveparse'); ?>" />
 	&nbsp;<input type="button" class="wk-submit-remove" name="remove-submit" value="Remove value" /><br/>
