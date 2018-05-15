@@ -34,7 +34,6 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.beachfront', [
 
 		var adUnit = {
 			code: slotName,
-			sizes: [640, 480],
 			mediaTypes: {
 				video: {
 					playerSize: [640, 480]

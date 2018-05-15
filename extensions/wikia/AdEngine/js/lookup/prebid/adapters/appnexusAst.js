@@ -31,7 +31,6 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.appnexusAst', [
 
 		return {
 			code: slotName,
-			sizes: [640, 480],
 			mediaTypes: {
 				video: {
 					context: 'outstream',

@@ -120,16 +120,20 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.indexExchange',[
 	function prepareAdUnit(slotName, config) {
 		return {
 			code: slotName,
-			sizes: config.sizes,
-			bids: [
-				{
+			mediaTypes: {
+				banner: {
+					sizes: config.sizes
+				}
+			},
+			bids: config.sizes.map(function (size) {
+				return {
 					bidder: bidderName,
 					params: {
-						id: config.id,
-						siteId: config.siteId
+						siteId: String(config.siteId),
+						size: size
 					}
-				}
-			]
+				};
+			})
 		};
 	}
 

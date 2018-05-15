@@ -34,7 +34,6 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.wikiaVideo',[
 	function prepareAdUnit(slotName) {
 		return {
 			code: slotName,
-			sizes: [640, 480],
 			mediaTypes: {
 				video: {
 					context: 'outstream',

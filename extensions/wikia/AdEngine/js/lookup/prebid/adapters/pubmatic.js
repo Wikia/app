@@ -9,7 +9,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.pubmatic',[
 
 	var bidderName = 'pubmatic',
 		logGroup = 'ext.wikia.adEngine.lookup.prebid.adapters.pubmatic',
-		publisherId = 156260,
+		publisherId = '156260',
 		slots = {
 			oasis: {
 				TOP_LEADERBOARD: {
@@ -100,7 +100,11 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.pubmatic',[
 
 		return {
 			code: slotName,
-			sizes: config.sizes,
+			mediaTypes: {
+				banner: {
+					sizes: config.sizes
+				}
+			},
 			bids: config.ids.map(function (id) {
 				return {
 					bidder: bidderName,
