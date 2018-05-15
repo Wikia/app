@@ -63,30 +63,6 @@ class ServiceTest extends WikiaBaseTest {
 		$this->assertTrue(empty($data));
 	}
 
-	/**
-	 * @group UsingDB
-	 */
-	function testUserStatsService() {
-		$this->markTestSkipped('This is not a unit test');
-
-		$user = User::newFromName('QATestsBot');
-
-		$service = new UserStatsService($user->getId());
-		$stats = $service->getStats();
-
-		$this->assertInternalType('int', $stats['edits']);
-		$this->assertInternalType('int', $stats['likes']);
-		$this->assertInternalType('string', $stats['date']);
-
-		// edits increase - perform fake edit
-		$edits = $stats['edits'];
-
-		$service->increaseEditsCount();
-
-		$stats = $service->getStats();
-		$this->assertEquals($edits+1, $stats['edits']);
-	}
-
 	function testCategoriesService() {
 		global $wgBiggestCategoriesBlacklist;
 

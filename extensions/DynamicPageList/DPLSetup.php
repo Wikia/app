@@ -1222,6 +1222,7 @@ class ExtDynamicPageList {
     }
 
 	private static function commonSetup() {
+            
 		
         if (!isset(self::$createdLinks)) {
             self::$createdLinks=array( 
@@ -1229,7 +1230,7 @@ class ExtDynamicPageList {
                 'resetCategories' => false, 'resetImages' => false, 'resetdone' => false , 'elimdone' => false );
         }
 
-		if ( !defined( "MW_UPDATER" ) ) {
+		if ( !defined( "MW_UPDATER" ) || !defined( 'REBUILD_LOCALISATION_CACHE_IN_PROGRESS' ) ) {
 			// make sure page "Template:Extension DPL" exists
 			$user = User::newFromName( Wikia::BOT_USER );
 			$title = Title::newFromText( 'Template:Extension DPL' );
