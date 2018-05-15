@@ -75,13 +75,10 @@ class RemoveUserDataOnWikiTask extends BaseTask {
 				$db->update( 'abuse_filter_history', ['afh_user_text' => ''], ['afh_user' => $userId], __METHOD__ );
 				$db->delete( 'abuse_filter_log', ['afl_user' => $userId], __METHOD__ );
 				$this->info( "Removed abuse filter data", ['user_id' => $userId] );
-				return true;
 			} catch ( DBError $error) {
 				$this->error( "Couldn't remove abuse filter data", ['exception' => $error, 'user_id' => $userId] );
-				return false;
 			}
 		}
-		return true;
 	}
 
 	/**
@@ -90,36 +87,47 @@ class RemoveUserDataOnWikiTask extends BaseTask {
 	 * Since this method relies on the username, it may be impossible to retry this operation
 	 * after the user's global data is removed.
 	 *
-	 * @param string $username
+	 * @param string $userDbKey
 	 * @return true if operation was successful
 	 */
-	private function removeUserPages( string $username ) {
+	private function removeUserPages( string $userDbKey ) {
 		try {
-			$namespaces = self::USER_NAMESPACES;
 			$dbr = wfGetDB( DB_SLAVE );
 			$userPages = $dbr->select(
 				'page',
 				['page_id', 'page_namespace', 'page_title'],
-				['page_namespace' => $namespaces, 'page_title' . $dbr->buildLike( $username, $dbr->anyString() )],
+				['page_namespace' => self::USER_NAMESPACES, 'page_title' . $dbr->buildLike( $userDbKey, $dbr->anyString() )],
 				__METHOD__ );
 			foreach( $userPages as $page ) {
 				$title = Title::newFromRow( $page );
 				PermanentArticleDelete::deletePage( $title );
 			}
-			$this->info( "Removed user pages", ['username' => $username] );
-			return true;
+			$this->info( "Removed user pages", ['username' => $userDbKey] );
 		} catch ( Exception $error ) {
-			$this->error( "Couldn't remove user pages", ['exception' => $error, 'username' => $username] );
-			return true;
+			$this->error( "Couldn't remove user pages", ['exception' => $error, 'username' => $userDbKey] );
+		}
+	}
+
+	private function removeUserPagesFromRecentChanges( $userDbKey ) {
+		try {
+			$dbr = wfGetDB( DB_MASTER );
+			$dbr->delete( 'recentchanges',
+				['rc_namespace' => self::USER_NAMESPACES, 'rc_title' . $dbr->buildLike( $userDbKey, $dbr->anyString() )],
+				__METHOD__ );
+			$this->info( "Removed recent changes on user pages", ["username" => $userDbKey] );
+		} catch ( DBError $error) {
+			$this->error( "Couldn't remove user page history form recent changes", ['exception' => $error, 'username' => $userDbKey] );
 		}
 	}
 
 	public function removeAllData( $userId, $username ) {
-		$rmcu = $this->removeCheckUserData( $userId );
-		$rmaf = $this->removeAbuseFilterData( $userId );
-		$rmrc = $this->removeIpFromRecentChanges( $userId );
-		$rmup = $this->removeUserPages( $username );
-		return $rmaf && $rmcu && $rmrc && $rmup;
+		$this->removeCheckUserData( $userId );
+		$this->removeAbuseFilterData( $userId );
+		$this->removeIpFromRecentChanges( $userId );
+
+		$userDbKey = Title::newFromText( $username )->getDBkey();
+		$this->removeUserPages( $userDbKey );
+		$this->removeUserPagesFromRecentChanges( $userDbKey );
 	}
 
 	protected function getLoggerContext() {
