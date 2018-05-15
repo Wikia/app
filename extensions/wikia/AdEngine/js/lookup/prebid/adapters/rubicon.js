@@ -76,7 +76,11 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.rubicon', [
 			sizes: [
 				[640, 480]
 			],
-			mediaType: 'video',
+			mediaTypes: {
+				video: {
+					playerSize: [640, 480]
+				}
+			},
 			bids: [
 				{
 					bidder: bidderName,

@@ -31,8 +31,13 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.appnexusAst', [
 
 		return {
 			code: slotName,
-			sizes: [ 640, 480 ],
-			mediaType: 'video-outstream',
+			sizes: [640, 480],
+			mediaTypes: {
+				video: {
+					context: 'outstream',
+					playerSize: [640, 480]
+				}
+			},
 			bids: [
 				{
 					bidder: bidderName,
@@ -40,7 +45,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.appnexusAst', [
 						placementId: isDebugMode ? debugPlacementId : config.placementId,
 						video: {
 							skippable: false,
-							playback_method: [ 'auto_play_sound_off' ]
+							playback_method: ['auto_play_sound_off']
 						}
 					}
 				}
