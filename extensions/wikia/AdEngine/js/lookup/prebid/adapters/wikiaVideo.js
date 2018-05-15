@@ -34,8 +34,13 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.wikiaVideo',[
 	function prepareAdUnit(slotName) {
 		return {
 			code: slotName,
-			sizes: [ 640, 480 ],
-			mediaType: 'video-outstream',
+			sizes: [640, 480],
+			mediaTypes: {
+				video: {
+					context: 'outstream',
+					playerSize: [640, 480]
+				}
+			},
 			bids: [
 				{
 					bidder: bidderName

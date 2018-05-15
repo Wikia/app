@@ -57,8 +57,13 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.appnexusAst', function () {
 			placementId: 'foo'
 		})).toEqual({
 			code: 'TOP_LEADERBOARD',
-			sizes: [ 640, 480 ],
-			mediaType: 'video-outstream',
+			sizes: [640, 480],
+			mediaTypes: {
+				video: {
+					context: 'outstream',
+					playerSize: [640, 480]
+				}
+			},
 			bids: [
 				{
 					bidder: 'appnexusAst',
@@ -66,7 +71,7 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.appnexusAst', function () {
 						placementId: 'foo',
 						video: {
 							skippable: false,
-							playback_method: [ 'auto_play_sound_off' ]
+							playback_method: ['auto_play_sound_off']
 						}
 					}
 				}

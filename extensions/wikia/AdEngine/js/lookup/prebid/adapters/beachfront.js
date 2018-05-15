@@ -32,10 +32,14 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.beachfront', [
 	function prepareAdUnit(slotName, config) {
 		var isDebugMode = loc.href.indexOf('beachfront_debug_mode=1') >= 0;
 
-		var adUnit =  {
+		var adUnit = {
 			code: slotName,
 			sizes: [640, 480],
-			mediaType: 'video',
+			mediaTypes: {
+				video: {
+					playerSize: [640, 480]
+				}
+			},
 			bids: [
 				{
 					bidder: bidderName,

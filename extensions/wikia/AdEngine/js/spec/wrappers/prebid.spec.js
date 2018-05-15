@@ -5,21 +5,28 @@ describe('ext.wikia.adEngine.wrappers.prebid', function () {
 	function noop () {}
 
 	var mocks = {
+			bidsReceived: [
+				{
+					ad: 'foo',
+					adId: 'uniqueFooAd'
+				},
+				{
+					ad: 'bar',
+					adId: 'uniqueBarAd'
+				}
+			],
 			win: {
 				pbjs: {
 					que: {
 						push: noop
 					},
-					_bidsReceived: [
-						{
-							ad: 'foo',
-							adId: 'uniqueFooAd'
-						},
-						{
-							ad: 'bar',
-							adId: 'uniqueBarAd'
+					getBidResponses: function () {
+						return {
+							"TOP_RIGHT_BOXAD": {
+								bids: mocks.bidsReceived
+							}
 						}
-					],
+					},
 					getBidResponsesForAdUnitCode: function () {
 						return {
 							bids: [
@@ -27,10 +34,6 @@ describe('ext.wikia.adEngine.wrappers.prebid', function () {
 									bidderCode: 'bidder1',
 									cpm: 15.00,
 									vastUrl: 'http://...'
-								},
-								{
-									cpm: 20.00,
-									bidderCode: 'bidder4'
 								},
 								{
 									bidderCode: 'bidder2',
@@ -41,6 +44,10 @@ describe('ext.wikia.adEngine.wrappers.prebid', function () {
 									bidderCode: 'bidder3',
 									cpm: 19.50,
 									vastUrl: 'http://...'
+								},
+								{
+									bidderCode: 'bidder4',
+									cpm: 20.00
 								}
 							]
 						};
@@ -49,7 +56,6 @@ describe('ext.wikia.adEngine.wrappers.prebid', function () {
 			}
 		},
 		prebid;
-
 
 	function getModule() {
 		return modules['ext.wikia.adEngine.wrappers.prebid'](
@@ -74,7 +80,7 @@ describe('ext.wikia.adEngine.wrappers.prebid', function () {
 	});
 
 	it('Finds bid by ad id', function () {
-		expect(prebid.getBidByAdId('uniqueBarAd')).toBe(mocks.win.pbjs._bidsReceived[1]);
+		expect(prebid.getBidByAdId('uniqueBarAd')).toBe(mocks.bidsReceived[1]);
 	});
 
 	it('Returns null when bid does not exist', function () {
