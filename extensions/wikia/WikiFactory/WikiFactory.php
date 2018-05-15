@@ -1250,9 +1250,12 @@ class WikiFactory {
 	 * @return string normalized host name
 	 */
 	protected static function normalizeHost( $host ) {
-		global $wgDevDomain;
+		global $wgDevDomain, $wgWikiaBaseDomain;
 		// strip env-specific pre- and suffixes for staging environment
-		$host = preg_replace( '/\.(stable|preview|verify|sandbox-[a-z0-9]+)\.wikia\.com/', static::WIKIA_TOP_DOMAIN, $host );
+		$host = preg_replace(
+			'/\.(stable|preview|verify|sandbox-[a-z0-9]+)\.' . preg_quote( $wgWikiaBaseDomain ) .'/',
+			static::WIKIA_TOP_DOMAIN,
+			$host );
 		if ( !empty( $wgDevDomain ) ) {
 			$host = str_replace( ".{$wgDevDomain}", static::WIKIA_TOP_DOMAIN, $host );
 		}
