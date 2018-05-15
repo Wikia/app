@@ -37,7 +37,6 @@ require_once( $dir . '/SpecialWikiFactory_ajax.php' );
  * tags
  */
 require_once( $dir . '/Tags/WikiFactoryTags.php' );
-require_once( $dir . '/Tags/WikiFactoryTagsQuery.php' );
 
 extAddSpecialPage( dirname(__FILE__) . '/SpecialWikiFactory_body.php', 'WikiFactory', 'WikiFactoryPage' );
 $wgSpecialPageGroups['WikiFactory'] = 'wikia';
