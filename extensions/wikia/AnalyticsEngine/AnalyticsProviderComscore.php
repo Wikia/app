@@ -17,21 +17,19 @@ class AnalyticsProviderComscore implements iAnalyticsProvider {
 <!-- Begin comScore Tag -->
 <script type="text/javascript">
 require(["wikia.trackingOptOut"], function (trackingOptOut) {
-	if (trackingOptOut.isOptedOut()) {
-		return;
-	}
+	trackingOptOut.ifNotOptedOut(function () {
+		window._comscore = window._comscore || [];
+		window._comscore.push({ c1: "2", c2: "' . static::$PARTNER_ID . '",
+			options: {
+				url_append: "' . static::$COMSCORE_KEYWORD_KEYNAME . '=' . static::getC7Value() . '"
+			}
+		});
 	
-	window._comscore = window._comscore || [];
-	window._comscore.push({ c1: "2", c2: "'.static::$PARTNER_ID.'",
-		options: {
-			url_append: "'.static::$COMSCORE_KEYWORD_KEYNAME.'='.static::getC7Value().'"
-		}
+		var s = document.createElement("script");
+		s.async = true;
+		s.src = (document.location.protocol == "https:" ? "https://sb" : "http://b") + ".scorecardresearch.com/beacon.js";
+		document.head.appendChild(s);
 	});
-
-	var s = document.createElement("script");
-	s.async = true;
-	s.src = (document.location.protocol == "https:" ? "https://sb" : "http://b") + ".scorecardresearch.com/beacon.js";
-	document.head.appendChild(s);
 });
 </script>
 <!-- End comScore Tag -->';

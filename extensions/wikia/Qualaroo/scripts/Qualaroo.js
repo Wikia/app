@@ -1,9 +1,5 @@
-require(['wikia.trackingOptOut', 'wikia.log'], function (trackingOptOut, log) {
+require(['wikia.trackingOptOut'], function (trackingOptOut) {
 	'use strict';
-
-	if (trackingOptOut.isOptedOut()) {
-		return;
-	}
 
 	var _kiq = [],
 		createCookie,
@@ -92,7 +88,7 @@ require(['wikia.trackingOptOut', 'wikia.log'], function (trackingOptOut, log) {
 		createCookie('qualaroo_survey_submission');
 	});
 
-	loadQualaroo();
+	trackingOptOut.ifNotOptedOut(loadQualaroo);
 
 	setABTestProperties();
 

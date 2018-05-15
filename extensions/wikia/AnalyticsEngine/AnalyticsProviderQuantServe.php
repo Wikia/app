@@ -16,17 +16,15 @@ class AnalyticsProviderQuantServe implements iAnalyticsProvider {
 <script type="text/javascript">
 window._qevents = window._qevents || [];
 require(['wikia.trackingOptOut'], function(trackingOptOut) {
-	if (trackingOptOut.isOptedOut()) {
-		return;
-	}
+	trackingOptOut.ifNotOptedOut(function () {
+		var elem = document.createElement('script');
 	
-	var elem = document.createElement('script');
-
-	elem.src = (document.location.protocol == "https:" ? "https://secure" : "http://edge") + ".quantserve.com/quant.js";
-	elem.async = true;
-	elem.type = "text/javascript";
-	
-	document.head.appendChild(elem);
+		elem.src = (document.location.protocol == "https:" ? "https://secure" : "http://edge") + ".quantserve.com/quant.js";
+		elem.async = true;
+		elem.type = "text/javascript";
+		
+		document.head.appendChild(elem);
+	});
 });
 </script>
 
