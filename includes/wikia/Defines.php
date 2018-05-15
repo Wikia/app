@@ -145,3 +145,15 @@ define("WPP_VIDEO_STATUS", 24);
 $wgWPPNotSerialized = array( WPP_LYRICFIND_MARKED_FOR_REMOVAL, WPP_VIDEO_STATUS );
 
 define( 'PREFERENCE_EDITOR', 'editor' );
+
+/**
+ * Should Magpie cache parsed RSS objects?s
+ * @see extensions/3rdparty/RSS/magpierss/rss_fetch.inc
+ */
+define('MAGPIE_CACHE_ON', false);
+
+/**
+ * Magpie read timeout in seconds.
+ * @see extensions/3rdparty/RSS/magpierss/rss_fetch.inc
+ */
+define('MAGPIE_FETCH_TIME_OUT', 20);

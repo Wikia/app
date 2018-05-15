@@ -77,12 +77,6 @@ class OnWikiTest extends Wikia\Search\Test\BaseTest {
 		    ->method ( 'setArticleMatch' )
 		    ->with   ( $mockMatch )
 		;
-		$mockService
-		    ->expects( $this->once() )
-		    ->method ( 'getGlobal' )
-		    ->with   ( 'OnWikiSearchIncludesWikiMatch' )
-		    ->will   ( $this->returnValue( true ) )
-		;
 		$mockSelect
 		    ->expects( $this->once() )
 		    ->method ( 'extractWikiMatch' )
