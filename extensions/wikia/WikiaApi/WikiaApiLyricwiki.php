@@ -1053,10 +1053,14 @@ function albumResult($artist, $album, $year){
 			AnalyticsEngine::track( 'Comscore', AnalyticsEngine::EVENT_PAGEVIEW )
 		);
 		if ( !empty( $result['lyrics'] ) ) {
-			Wikia\Logger\WikiaLogger::instance()->info( 'Using lyrics comscore tag', [ 'fields' => [
-				'comscore_tag' => $comscoreTag
-			] ] );
+			$oldValue = $result['lyrics'];
 			$result['lyrics'] = str_replace( self::COMSCORE_TAG_PLACEHOLDER, $comscoreTag, $result['lyrics'] );
+			if ( $oldValue !== $result['lyrics'] ) {
+				Wikia\Logger\WikiaLogger::instance()->info( 'Using lyrics comscore tag', [ 'fields' => [
+					'comscore_tag' => $comscoreTag
+				] ] );
+            }
+
 		}
 
 		// TODO: Use this once we are on PHP 5.3 or greater.
