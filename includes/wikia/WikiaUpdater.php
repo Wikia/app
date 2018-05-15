@@ -79,6 +79,7 @@ class WikiaUpdater {
 			array( 'WikiaUpdater::do_wall_history_ipv6_update' ), // SUS-2257
 			array( 'WikiaUpdater::doLoggingTableUserCleanup' ), // SUS-3222
 			array( 'WikiaUpdater::migrateRecentChangesIpData' ), // SUS-3079
+			array( 'WikiaUpdater::addWikiaUserPropertiesKey' ), // SUS-4773
 			array( 'dropField', 'interwiki', 'iw_api', $dir . 'patch-drop-iw_api.sql', true ),
 			array( 'dropField', 'interwiki', 'iw_wikiid', $dir . 'patch-drop-wikiid.sql', true ),
 			array( 'dropField', 'cu_changes', 'cuc_user_text', $ext_dir . '/CheckUser/patch-cu_changes.sql', true ), // SUS-3080
@@ -345,6 +346,19 @@ class WikiaUpdater {
 		);
 
 		$worker->execute();
+	}
+
+	public static function addWikiaUserPropertiesKey( DatabaseUpdater $databaseUpdater ) {
+		$dbw = $databaseUpdater->getDB();
+
+		if ( $dbw->indexExists( 'wikia_user_properties', 'wup_user' ) ) {
+			$databaseUpdater->output( "adding primary key to wikia_user_properties table..." );
+			$dbw->sourceFile( static::get_patch_dir() . 'patch-wikia-user-properties-pk.sql', false, false, __METHOD__ );
+			wfWaitForSlaves();
+			$databaseUpdater->output( "done.\n" );
+		} else {
+			$databaseUpdater->output( "...wikia_user_properties table already has a primary key.\n" );
+		}
 	}
 
 	/**

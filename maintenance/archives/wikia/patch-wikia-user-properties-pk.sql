@@ -1,4 +1,6 @@
 -- set proper primary key for wikia_user_properties table
+START TRANSACTION;
+
 DELETE FROM wikia_user_properties
 WHERE wup_property IS NULL;
 
@@ -10,3 +12,5 @@ ALTER TABLE wikia_user_properties
 
 ALTER TABLE wikia_user_properties
   DROP INDEX wup_user;
+
+COMMIT;

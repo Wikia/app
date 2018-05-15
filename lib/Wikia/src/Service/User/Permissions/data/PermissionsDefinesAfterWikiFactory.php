@@ -1,7 +1,4 @@
 <?php
-
-// TODO: Move to app/includes/wikia/Extensions.php
-
 /**
  * before main variable case we set/unset anonymous edititng
  */

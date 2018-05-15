@@ -23,7 +23,8 @@
 	// service is present in the $GLOBALS['egMapsDefaultServices'] array for a certain feature.
 	// A service that supports all features is recommended. This service needs to be
 	// enabled, if not, the first one from the available services will be taken.
-	$GLOBALS['egMapsDefaultService'] = 'leaflet';
+	/* FANDOM change */ // $GLOBALS['egMapsDefaultService'] = 'leaflet';
+        /* FANDOM change */ $GLOBALS['egMapsDefaultService'] = 'googlemaps3';
 
 	// Array of String. The default mapping service for each feature, which will be
 	// used when no valid service is provided by the user. Each service needs to be
@@ -54,7 +55,8 @@
 	// String. The name of the geocoding service to use.
 	// Available services: geonames, google, nominatim
 	// Some services might require you to provide credentials, see the settings below.
-	$GLOBALS['egMapsDefaultGeoService'] = 'geonames';
+	/* FANDOM change */ // $GLOBALS['egMapsDefaultGeoService'] = 'geonames';
+        /* FANDOM change */ $GLOBALS['egMapsDefaultGeoService'] = 'nominatim';
 
 	// String. GeoNames API user/application name.
 	// Obtain an account here: http://www.geonames.org/login
