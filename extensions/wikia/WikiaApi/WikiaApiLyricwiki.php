@@ -1059,8 +1059,7 @@ function albumResult($artist, $album, $year){
 				Wikia\Logger\WikiaLogger::instance()->info( 'Using lyrics comscore tag', [ 'fields' => [
 					'comscore_tag' => $comscoreTag
 				] ] );
-            }
-
+			}
 		}
 
 		// TODO: Use this once we are on PHP 5.3 or greater.
