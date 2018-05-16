@@ -211,6 +211,14 @@ $config['spotlights_js'] = [
 	],
 ];
 
+$config['tracking_opt_in_js'] = [
+	'skin' => [ 'oasis' ],
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => [
+		'//extensions/wikia/TrackingOptIn/dist/tracking-opt-in.min.js',
+		'//extensions/wikia/TrackingOptIn/js/trackingOptIn.js',
+	],
+];
 
 $config['adengine2_top_js'] = [
 	'type' => AssetsManager::TYPE_JS,

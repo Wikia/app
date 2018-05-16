@@ -52,10 +52,12 @@ class OasisController extends WikiaController {
 		$this->skinNameClass = $skinVars['skinnameclass'];
 		$this->bottomScripts = $skinVars['bottomscripts'];
 		// initialize variables
+		$this->trackingOptIn = TrackingOptIn::renderScript();
 		$this->comScore = null;
 		$this->quantServe = null;
 		$this->a9 = null;
 		$this->gfc = null;
+		$this->prebid = null;
 		$this->prebid = null;
 		$this->instartLogic = null;
 		$this->dynamicYield = null;
