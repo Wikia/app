@@ -592,13 +592,6 @@ include_once( "$IP/extensions/wikia/StaticUserPages/StaticUserPages.setup.php" )
 require_once( "{$IP}/extensions/wikia/Tasks/Tasks.setup.php");
 
 /**
- * @name wgWikiFactoryTags
- *
- * tags defined in current wiki
- */
-$wgWikiFactoryTags = array();
-
-/**
  * external databases
  */
 $wgContentReviewDB = 'content_review';
