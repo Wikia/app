@@ -1,5 +1,9 @@
 {{#isLoggedIn}}
-    {{{introText}}}
+  {{{introText}}}
+  <form method="POST" name="DownloadYourDataForm" id="DownloadYourDataForm" class="DownloadYourDataForm">
+    {{{submitButton}}}
+    <input type="hidden" name="token" value="{{editToken}}" />
+  </form>
 {{/isLoggedIn}}
 {{^isLoggedIn}}
     {{{notLoggedInMessage}}}
