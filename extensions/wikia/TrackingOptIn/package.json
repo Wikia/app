@@ -2,15 +2,9 @@
   "name": "@wikia/oasis-tracking-opt-in",
   "version": "0.0.0",
   "private": true,
-  "devDependencies": {
-    "babel-core": "^6.26.0",
-    "babel-loader": "^7.1.2",
-    "webpack": "4.5.0",
-    "webpack-cli": "2.0.14"
-  },
+  "devDependencies": {},
   "scripts": {
-    "build": "webpack -p",
-    "watch": "webpack -p -w"
+    "build": "cp node_modules/@wikia/tracking-opt-in/dist/tracking-opt-in.min.js dist/tracking-opt-in.min.js"
   },
   "dependencies": {
     "@wikia/tracking-opt-in": "^1.0.26"

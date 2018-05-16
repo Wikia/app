@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<script src="tracking-opt-in.min.js"></script>
+</head>
+<body>
+	<script>
+		window.addEventListener('message', function (event) {
+			event.source.postMessage('received event', event.origin);
+
+			trackingOptIn.default({
+				countriesRequiringPrompt: ['us'], // TODO provide full list of countries
+				country: 'us', // TODO provide geo from cookie
+				onAcceptTracking: function () {
+					optIn = true;
+					event.source.postMessage('tracking accepted', event.origin);
+				},
+				onRejectTracking: function () {
+					event.source.postMessage('tracking rejected', event.origin);
+				}
+			});
+		}, false);
+	</script>
+</body>
+</html>
