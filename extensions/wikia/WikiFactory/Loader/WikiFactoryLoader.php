@@ -394,16 +394,9 @@ class WikiFactoryLoader {
 		$cond2 = $this->mAlternativeDomainUsed && ( $url['host'] != $this->mOldServerName );
 
 		if( ( $cond1 || $cond2 ) && empty( $wgDevelEnvironment ) ) {
-			global $wgCookiePrefix;
 			$redirectUrl = WikiFactory::getLocalEnvURL( $this->mCityUrl );
-			$hasAuthCookie = !empty( $_COOKIE[\Wikia\Service\User\Auth\CookieHelper::ACCESS_TOKEN_COOKIE_NAME] ) ||
-							 !empty( $_COOKIE[session_name()] ) ||
-							 !empty( $_COOKIE["{$wgCookiePrefix}Token"] ) ||
-							 !empty( $_COOKIE["{$wgCookiePrefix}UserID"] );
 
-			if ( $hasAuthCookie &&
-				 !empty( $_SERVER['HTTP_FASTLY_SSL'] ) &&
-				 // Hack until we are better able to handle internal HTTPS requests
+			if ( $_SERVER['HTTP_FASTLY_SSL'] &&
 				 !empty( $_SERVER['HTTP_FASTLY_FF'] ) &&
 				 wfHttpsAllowedForURL( $redirectUrl )
 			) {
@@ -626,8 +619,9 @@ class WikiFactoryLoader {
 						$tValue = 'http://'.$stagingServer;
 						$wgConf->localVHosts = array_merge( $wgConf->localVHosts, [ $stagingServer ] );
 					}
+					// TODO - what about wgServer value for requests that did not go through Fastly?
 					if ( !empty( $_SERVER['HTTP_FASTLY_SSL'] ) ) {
-						$tValue = str_replace( 'http://', 'https://', $tValue );
+						$tValue = wfHttpToHttps( $tValue );
 					}
 				}
 
