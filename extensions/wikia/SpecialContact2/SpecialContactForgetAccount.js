@@ -7,11 +7,11 @@ require(['jquery'], function ($) {
 
 	$isOnBehalfCheckbox.on('change', function () {
 		if (this.checked) {
-			$relationshipInput.prop('disabled', false);
-			$relationshipInputWrapper.css('display', 'block');
-		} else {
 			$relationshipInput.prop('disabled', true);
 			$relationshipInputWrapper.css('display', 'none');
+		} else {
+			$relationshipInput.prop('disabled', false);
+			$relationshipInputWrapper.css('display', 'block');
 		}
 	});
 });

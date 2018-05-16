@@ -33,7 +33,7 @@ echo wfMessage( 'specialcontact-intro-forget-account' )->parseAsBlock();
 </p>
 
 <p>
-	<input type="checkbox" name="wpIsOnBehalf" required />
+	<input type="checkbox" name="wpIsOnBehalf" checked />
 	<label for="wpIsOnBehalf"><?= wfMessage( 'specialcontact-label-forget-account-is-on-behalf' )->escaped() ?></label>
 </p>
 
@@ -43,7 +43,7 @@ echo wfMessage( 'specialcontact-intro-forget-account' )->parseAsBlock();
 </p>
 
 <p>
-	<input type="checkbox" name="wpPreviousRequest" required />
+	<input type="checkbox" name="wpPreviousRequest"/>
 	<label for="wpPreviousRequest"><?= wfMessage( 'specialcontact-label-forget-account-previous-request' )->escaped() ?></label>
 </p>
 

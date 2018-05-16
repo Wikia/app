@@ -47,7 +47,7 @@ class ContactForm extends SpecialPage {
 		),
 
 		'forget-account' => array(
-			'format' => "Forget account request has been made.\nCountry: \"%s\"\nFull Name: \"%s\"\nIs On Behalf of someone: \"%s\"\nRelationship: \"%s\"\n Has this person previously requested forgetting acount: \"%s\"",
+			'format' => "Forget account request has been made.\nCountry: \"%s\"\nFull Name: \"%s\"\nEmail: \"%s\"\nIs On Behalf of someone: \"%s\"\nRelationship: \"%s\"\n Has this person previously requested forgetting acount: \"%s\"",
 			'vars' => array( 'wpCountry', 'wpFullName', 'wpEmailAddress', 'wpIsOnBehalf', 'wpRelationship', 'wpPreviousRequest' ),
 			'subject' => 'Request to be Forgotten',
 			'markuser' => 'requested-to-be-forgotten',
@@ -136,7 +136,7 @@ class ContactForm extends SpecialPage {
 			$this->mRealName = $request->getText( 'wpContactRealName' );
 			$this->mWhichWiki = $request->getText( 'wpContactWikiName', $wgServer );
 
-			#sibject still handled outside of post check, because of existing hardcoded prefill links
+			#subject still handled outside of post check, because of existing hardcoded prefill links
 
 			if ( $user->isLoggedIn() && ( $user->getName() !== $request->getText( 'wpUserName' ) ) ) {
 				$out->showErrorPage( 'specialcontact-error-title', 'specialcontact-error-message' );
