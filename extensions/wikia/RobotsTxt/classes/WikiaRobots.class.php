@@ -183,7 +183,7 @@ class WikiaRobots {
 		}
 
 		// Block additional paths
-		$robots->addDisallowedPaths( array_map( [ $this->pathBuilder, 'buildPath' ], $this->blockedPaths ));
+		$robots->addDisallowedPaths( array_map( [ $this->pathBuilder, 'buildPath' ], $this->blockedPaths ) );
 
 		// Block params
 		foreach ( $this->blockedParams as $param ) {
@@ -191,7 +191,7 @@ class WikiaRobots {
 		}
 
 		// Allow specific paths
-		$robots->addAllowedPaths( array_map( [ $this->pathBuilder, 'buildPath' ], $this->allowedPaths ));
+		$robots->addAllowedPaths( array_map( [ $this->pathBuilder, 'buildPath' ], $this->allowedPaths ) );
 
 		// Allow special pages
 		foreach ( array_keys( $this->allowedSpecialPages ) as $page ) {
@@ -203,7 +203,7 @@ class WikiaRobots {
 		if ( !$wgRequest->getBool( 'shallow' ) ) {
 			// fetch from foreign wikis...
 			$languageWikis = \WikiFactory::getLanguageWikis();
-			foreach( $languageWikis as $wiki ) {
+			foreach ( $languageWikis as $wiki ) {
 				$params = [
 					'controller' => 'WikiaRobots',
 					'method' => 'getAllowedDisallowed',

@@ -576,9 +576,10 @@ class WikiFactory {
 		$where = [
 			$dbr->makeList( [
 				'city_url ' . $dbr->buildLike( "http://{$server}/", $dbr->anyString() ),
-				'city_url ' . $dbr->buildLike( "https://{$server}/", $dbr->anyString() ) ],
-				LIST_OR ),
-			"city_id != $wgCityId" ];
+				'city_url ' . $dbr->buildLike( "https://{$server}/", $dbr->anyString() ),
+			], LIST_OR ),
+			"city_id != $wgCityId",
+		];
 		$dbResult = $dbr->select(
 			[ 'city_list' ],
 			[ 'city_id', 'city_url', 'city_dbname' ],
@@ -590,7 +591,8 @@ class WikiFactory {
 			$result[] = [
 				'city_id' => $row->city_id,
 				'city_url' => $row->city_url,
-				'city_dbname' => $row->city_dbname];
+				'city_dbname' => $row->city_dbname,
+			];
 		}
 		$dbr->freeResult( $dbResult );
 		return $result;
