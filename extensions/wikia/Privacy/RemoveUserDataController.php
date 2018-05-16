@@ -1,6 +1,7 @@
 <?php
 
 use Wikia\Logger\Loggable;
+use Wikia\Tasks\Queues\Queue;
 
 class RemoveUserDataController extends WikiaController {
 	use Loggable;
@@ -47,8 +48,9 @@ class RemoveUserDataController extends WikiaController {
 		$wikiCount = count( $userWikis );
 
 		$removeWikiDataTask = new RemoveUserDataOnWikiTask();
+    
 		$removeWikiDataTask->call( 'removeAllData', $userId, $username, $fakeUsername );
-		$removeWikiDataTask->wikiId( $userWikis )->queue();
+		$removeWikiDataTask->setQueue( Queue::RTBF_QUEUE_NAME )->wikiId( $userWikis )->queue();
 
 		$this->info( "Wiki data removal queued for user $userId", ['userId' => $userId] );
 
