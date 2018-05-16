@@ -20,6 +20,7 @@ describe('ext.wikia.adEngine.wrappers.prebid', function () {
 					que: {
 						push: noop
 					},
+					setConfig: noop,
 					getBidResponses: function () {
 						return {
 							"TOP_RIGHT_BOXAD": {
@@ -53,12 +54,16 @@ describe('ext.wikia.adEngine.wrappers.prebid', function () {
 						};
 					}
 				}
+			},
+			loc: {
+				href: '//bar'
 			}
 		},
 		prebid;
 
 	function getModule() {
 		return modules['ext.wikia.adEngine.wrappers.prebid'](
+			mocks.loc,
 			mocks.win
 		);
 	}

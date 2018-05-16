@@ -46,7 +46,11 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.appnexusWebAds', function ()
 			placementId: '11283988'
 		})).toEqual({
 			code: 'INCONTENT_BOXAD_1',
-			sizes: [[300, 600], [300, 250], [120, 600], [160, 600]],
+			mediaTypes: {
+				banner: {
+					sizes: [[300, 600], [300, 250], [120, 600], [160, 600]]
+				}
+			},
 			bids: [
 				{
 					bidder: 'appnexusWebAds',

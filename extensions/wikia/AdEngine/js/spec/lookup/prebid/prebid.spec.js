@@ -95,9 +95,9 @@ describe('ext.wikia.adEngine.lookup.prebid', function () {
 					que: [],
 					requestBids: function () {
 					},
-					getBidResponses: function (slotName) {
-						return mocks.bidResponses;
-					},
+					getBidResponsesForAdUnitCode: function (slotName) {
+						return mocks.bidResponses[slotName];
+					}
 				}
 			},
 			adaptersPricesTracker: {},

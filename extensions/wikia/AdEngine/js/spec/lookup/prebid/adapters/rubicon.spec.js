@@ -86,9 +86,7 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.rubicon', function () {
 			position: 'atf'
 		}, 'oasis')).toEqual({
 			code: 'TOP_LEADERBOARD',
-			sizes: [
-				[640, 480]
-			],
+			mediaType: 'video',
 			mediaTypes: {
 				video: {
 					playerSize: [640, 480]
@@ -98,7 +96,7 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.rubicon', function () {
 				{
 					bidder: 'rubicon',
 					params: {
-						accountId: 7450,
+						accountId: '7450',
 						siteId: 55412,
 						zoneId: 519058,
 						name: 'TOP_LEADERBOARD',
@@ -112,9 +110,10 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.rubicon', function () {
 							lang: ['en']
 						},
 						video: {
-							playerHeight: 480,
-							playerWidth: 640,
-							size_id: 203
+							playerHeight: '480',
+							playerWidth: '640',
+							size_id: 203,
+							language: 'en'
 						}
 					}
 				}

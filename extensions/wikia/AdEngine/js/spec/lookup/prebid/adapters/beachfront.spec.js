@@ -65,7 +65,6 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.beachfront', function () {
 			appId: 'ww-11-kk-11-44'
 		})).toEqual({
 			code: 'INCONTENT_PLAYER',
-			sizes: [640, 480],
 			mediaTypes: {
 				video: {
 					playerSize: [640, 480]

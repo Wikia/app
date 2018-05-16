@@ -123,7 +123,7 @@ define('ext.wikia.adEngine.lookup.prebid', [
 	function getSlotParams(slotName) {
 		var slotParams;
 
-		if (win.pbjs && typeof win.pbjs.getBidResponses === 'function') {
+		if (win.pbjs && typeof win.pbjs.getBidResponsesForAdUnitCode === 'function') {
 			var bids = win.pbjs.getBidResponsesForAdUnitCode(slotName).bids || [];
 
 			if (bids.length) {

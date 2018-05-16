@@ -57,7 +57,6 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.appnexusAst', function () {
 			placementId: 'foo'
 		})).toEqual({
 			code: 'TOP_LEADERBOARD',
-			sizes: [640, 480],
 			mediaTypes: {
 				video: {
 					context: 'outstream',
