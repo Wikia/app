@@ -47,8 +47,8 @@ class ContactForm extends SpecialPage {
 		),
 
 		'forget-account' => array(
-			'format' => "Forget account request has been made.\nCountry: \"%s\"\nFull Name: \"%s\"\nEmail: \"%s\"\nIs On Behalf of someone: \"%s\"\nRelationship: \"%s\"\n Has this person previously requested forgetting acount: \"%s\"",
-			'vars' => array( 'wpCountry', 'wpFullName', 'wpEmailAddress', 'wpIsOnBehalf', 'wpRelationship', 'wpPreviousRequest' ),
+			'format' => "Forget account request has been made.\nCountry: \"%s\"\nFull Name: \"%s\"\nEmail: \"%s\"\nIs it for themselves: \"%s\"\nRelationship: \"%s\"\n Has this person previously requested forgetting acount: \"%s\"",
+			'vars' => array( 'wpCountry', 'wpFullName', 'wpEmailAddress', 'wpIsForThemselves', 'wpRelationship', 'wpPreviousRequest' ),
 			'subject' => 'Request to be Forgotten',
 			'markuser' => 'requested-to-be-forgotten',
 		),

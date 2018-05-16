@@ -1,7 +1,7 @@
 require(['jquery'], function ($) {
 	'use strict';
 
-	var $isOnBehalfCheckbox = $('input[name=wpIsOnBehalf]'),
+	var $isOnBehalfCheckbox = $('input[name=wpIsForThemselves]'),
 		$relationshipInputWrapper = $('.wp-relationship-input-wrapper'),
 		$relationshipInput = $relationshipInputWrapper.find('input');
 

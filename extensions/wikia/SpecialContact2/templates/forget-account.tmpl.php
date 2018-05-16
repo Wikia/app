@@ -33,8 +33,8 @@ echo wfMessage( 'specialcontact-intro-forget-account' )->parseAsBlock();
 </p>
 
 <p>
-	<input type="checkbox" name="wpIsOnBehalf" checked />
-	<label for="wpIsOnBehalf"><?= wfMessage( 'specialcontact-label-forget-account-is-on-behalf' )->escaped() ?></label>
+	<input type="checkbox" name="wpIsForThemselves" checked />
+	<label for="wpIsForThemselves"><?= wfMessage( 'specialcontact-label-forget-account-is-on-behalf' )->escaped() ?></label>
 </p>
 
 <p class="wp-relationship-input-wrapper" style="display: none;">
