@@ -86,6 +86,9 @@ class RemoveUserDataController extends WikiaController {
 		return $specialsDbr->selectFieldValues( 'events_local_users', 'wiki_id', ['user_id' => $userId], __METHOD__, ['DISTINCT'] );
 	}
 
+	/**
+	 * Returns fake user created in rename user process
+	 */
 	private function getFakeUser( $username ) {
 		$dbr = wfGetDB( DB_SLAVE, [], 'wikicities' );
 
