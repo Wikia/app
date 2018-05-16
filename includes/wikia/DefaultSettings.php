@@ -288,6 +288,14 @@ $wgAutoloadClasses['PageStatsService']  =  $IP.'/includes/wikia/services/PageSta
 $wgAutoloadClasses['UserStatsService'] = $IP.'/includes/wikia/services/UserStatsService.class.php';
 $wgAutoloadClasses['CategoriesService'] = $IP.'/includes/wikia/services/CategoriesService.class.php';
 $wgAutoloadClasses['UserCommandsService'] = $IP.'/includes/wikia/services/UserCommandsService.class.php';
+$wgAutoloadClasses['UserCommand'] = $IP.'/includes/wikia/services/usercommands/UserCommand.php';
+$wgAutoloadClasses['PageActionUserCommand'] = $IP.'/includes/wikia/services/usercommands/PageActionUserCommand.php';
+$wgAutoloadClasses['FollowUserCommand'] = $IP.'/includes/wikia/services/usercommands/FollowUserCommand.php';
+$wgAutoloadClasses['SpecialPageUserCommand'] = $IP.'/includes/wikia/services/usercommands/SpecialPageUserCommand.php';
+$wgAutoloadClasses['CustomizeToolbarUserCommand'] = $IP.'/includes/wikia/services/usercommands/CustomizeToolbarUserCommand.php';
+$wgAutoloadClasses['MenuUserCommand'] = $IP.'/includes/wikia/services/usercommands/MenuUserCommand.php';
+// Developer Info a.k.a. PerformanceStats (BugId:5497)
+$wgAutoloadClasses['DevInfoUserCommand'] = $IP.'/includes/wikia/services/usercommands/DevInfoUserCommand.php';
 $wgAutoloadClasses['ToolbarService'] = $IP.'/includes/wikia/services/ToolbarService.class.php';
 $wgAutoloadClasses['SharedToolbarService'] = $IP.'/includes/wikia/services/SharedToolbarService.class.php';
 $wgAutoloadClasses['CsvService'] = $IP . '/includes/wikia/services/CsvService.class.php';
