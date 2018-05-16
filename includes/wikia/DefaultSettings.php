@@ -680,11 +680,6 @@ $wgUseJQueryFromCDN = true;
  */
 $wgWikiaCombinedPrefix = "index.php?action=ajax&rs=WikiaAssets::combined&";
 
-
-/**
- * libmemcached related stuff
- */
-define( "CACHE_LIBMEMCACHED", 11 );
 /**
  * Advanced object cache configuration.
  *
@@ -730,11 +725,6 @@ $wgObjectCaches = array(
          */
          'serializer' => 'igbinary',
     ),
-    CACHE_MEMCACHED => array(
-        'class' => 'MemcachedPhpBagOStuff',
-        'use_binary_protocol' => false,
-    ),
-    CACHE_LIBMEMCACHED => array( 'factory' => 'LibmemcachedBagOStuff::newFromGlobals' ),
     'apc' => array('class' => 'APCBagOStuff'),
     'xcache' => array('class' => 'XCacheBagOStuff'),
     'wincache' => array('class' => 'WinCacheBagOStuff'),
