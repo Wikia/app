@@ -5,7 +5,7 @@
  */
 
 if ( !defined( 'MEDIAWIKI' ) ) {
-	echo "This is a MediaWiki extension named GDPRDataExport.\n";
+	echo "This is a MediaWiki extension named DownloadYourData.\n";
 	exit( 1 );
 }
 

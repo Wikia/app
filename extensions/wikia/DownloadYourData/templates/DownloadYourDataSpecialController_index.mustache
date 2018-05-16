@@ -1,1 +1,6 @@
-{{{introText}}}
+{{#isLoggedIn}}
+    {{{introText}}}
+{{/isLoggedIn}}
+{{^isLoggedIn}}
+    {{{notLoggedInMessage}}}
+{{/isLoggedIn}}

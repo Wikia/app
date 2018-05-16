@@ -13,7 +13,11 @@ class DownloadYourDataSpecialController extends WikiaSpecialPageController {
 
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
 
+		$this->isLoggedIn = $this->getUser()->isLoggedIn();
+
 		$this->introText = $this->msg( 'downloadyourdata-intro' )->escaped();
+		$this->notLoggedInMessage = $this->msg( 'downloadyourdata-not-logged-in' )->escaped();
+
 
 		wfProfileOut( __METHOD__ );
 	}
