@@ -218,6 +218,7 @@ class PreferenceService {
 	 * @throws \Exception
 	 */
 	private function load( $userId ) {
+		wfProfileIn( __METHOD__ );
 		if ( $userId == 0 ) {
 			return $this->applyDefaults( new UserPreferences() );
 		}
@@ -236,6 +237,7 @@ class PreferenceService {
 
 		$this->preferences[$userId] = $this->applyDefaults( $preferences );
 
+		wfProfileOut( __METHOD__ );
 		return $this->preferences[$userId];
 	}
 
