@@ -5,12 +5,25 @@ define('ext.wikia.adEngine.adEngineRunner', [
 	'ext.wikia.adEngine.adTracker',
 	'wikia.instantGlobals',
 	'wikia.log',
+	require.optional('wikia.trackingOptIn'),
 	'wikia.window',
 	require.optional('ext.wikia.adEngine.lookup.a9'),
 	require.optional('ext.wikia.adEngine.lookup.prebid'),
 	require.optional('ext.wikia.aRecoveryEngine.adBlockRecovery'),
 	require.optional('wikia.articleVideo.featuredVideo.lagger')
-], function (adContext, adEngine, adTracker, instantGlobals, log, win, a9, prebid, adBlockRecovery, fvLagger) {
+], function (
+	adContext,
+	adEngine,
+	adTracker,
+	instantGlobals,
+	log,
+	trackingOptIn,
+	win,
+	a9,
+	prebid,
+	adBlockRecovery,
+	fvLagger
+) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.adEngineRunner',
@@ -136,12 +149,21 @@ define('ext.wikia.adEngine.adEngineRunner', [
 			adEngine.run(config, slots, queueName);
 		}
 
-		if (delayEnabled) {
-			delayRun(runAdEngine);
-		} else {
-			log('Run AdEngine without delay', log.levels.info, logGroup);
-			runAdEngine();
+		// TODO make some clean up here
+		function runAdEngineWithDelay() {
+			if (delayEnabled) {
+				delayRun(runAdEngine);
+			} else {
+				log('Run AdEngine without delay', log.levels.info, logGroup);
+				runAdEngine();
+			}
 		}
+
+		// TODO decide what to do with mobile-wiki
+		trackingOptIn.pushToUserConsentQueue(function (optIn) {
+			// TODO setup bridge context with optIn value
+			runAdEngineWithDelay();
+		});
 	}
 
 	return {
