@@ -22,6 +22,12 @@ class UserDataRemoverTest extends WikiaDatabaseTest {
 		return $this->createYamlDataSet( __DIR__ . '/fixtures/pii_wikicities_data.yaml' );
 	}
 
+	protected function extraSchemaFiles() {
+		return [
+			__DIR__ . '/fixtures/wikiastaff_log.sql',
+		];
+	}
+
 	protected function setUp() {
 		parent::setUp();
 		include __DIR__ . '/../Privacy.setup.php';
@@ -117,5 +123,19 @@ class UserDataRemoverTest extends WikiaDatabaseTest {
 		$this->assertEquals( '', $fakeUser->getRealName(), 'User real name is not cleared' );
 		$this->assertEquals( '', $fakeUser->getEmail(), 'User email is not cleared' );
 		$this->assertEquals( '', $fakeUser->mBirthDate, 'User birth date is not cleared' );
+	}
+
+	public function testStaffLogsShouldBeRemoved() {
+		( new UserDataRemover() )->removeGlobalData( self::REMOVED_USER_ID );
+
+		$db = wfGetDB( DB_SLAVE, [] );
+
+		$this->assertEquals( 0,
+			$db->estimateRowCount( 'wikiastaff_log', '*', [ 'slog_user' => self::REMOVED_USER_ID ],
+				__METHOD__ ), 'Staff logs for removed user are not removed' );
+
+		$this->assertEquals( 1,
+			$db->estimateRowCount( 'wikiastaff_log', '*', [ 'slog_user' => self::OTHER_USER_ID ],
+				__METHOD__ ), 'Staff logs were removed for wrong user' );
 	}
 }

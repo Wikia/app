@@ -55,6 +55,8 @@ class UserDataRemover {
 			$this->invalidateUser( $user );
 			$this->invalidateUser( $newUserName );
 
+			$this->removeUserDataFromStaffLog( $userId );
+
 			$this->info( "Removed user's global data",
 				[ 'user_id' => $userId, 'new_user_name' => $newUserName ] );
 
@@ -79,6 +81,14 @@ class UserDataRemover {
 				'up_property' => 'removedRenamedUser',
 				'up_value' => $userId,
 			],
+		] );
+	}
+
+	private function removeUserDataFromStaffLog( int $userId ) {
+		$dbMaster = wfGetDB( DB_MASTER, [], 'dataware' );
+
+		$dbMaster->delete( 'wikiastaff_log', [
+			'slog_user' => $userId,
 		] );
 	}
 

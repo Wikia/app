@@ -97,3 +97,17 @@ user_properties:
   - up_user: 4
     up_property: renameData
     up_value: renamed_to=renamed_user
+
+wikiastaff_log:
+  - slog_id: 1
+    slog_type: 'renameuser'
+    slog_action: 'start'
+    slog_user: 1
+    slog_user_name: 'should_anonymize'
+    slog_user_namedst: 'should_anonymize'
+  - slog_id: 2
+    slog_type: 'renameuser'
+    slog_action: 'start'
+    slog_user: 2
+    slog_user_name: 'should_not_anonymize'
+    slog_user_namedst: 'should_not_anonymize'
