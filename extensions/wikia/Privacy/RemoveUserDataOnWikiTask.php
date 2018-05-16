@@ -134,6 +134,9 @@ class RemoveUserDataOnWikiTask extends BaseTask {
 	}
 
 	public function removeAllData( $userId, $username ) {
+		global $wgUser;
+		$wgUser = User::newFromName( Wikia::BOT_USER );
+		
 		$this->removeCheckUserData( $userId );
 		$this->removeAbuseFilterData( $userId );
 		$this->removeIpFromRecentChanges( $userId );
