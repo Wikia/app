@@ -8,6 +8,9 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.appnexusAst', [
 	'use strict';
 
 	var bidderName = 'appnexusAst',
+		aliases = {
+			'appnexus': [bidderName]
+		},
 		debugPlacementId = '5768085',
 		slots = {
 			oasis: {
@@ -60,9 +63,14 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.appnexusAst', [
 		return bidderName;
 	}
 
+	function getAliases() {
+		return aliases;
+	}
+
 	return {
 		isEnabled: isEnabled,
 		getName: getName,
+		getAliases: getAliases,
 		getSlots: getSlots,
 		prepareAdUnit: prepareAdUnit
 	};

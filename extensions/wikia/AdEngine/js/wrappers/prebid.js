@@ -1,7 +1,8 @@
 /*global define*/
 define('ext.wikia.adEngine.wrappers.prebid', [
+	'wikia.location',
 	'wikia.window'
-], function (win) {
+], function (loc, win) {
 	'use strict';
 
 	var validResponseStatusCode = 1,
@@ -9,6 +10,20 @@ define('ext.wikia.adEngine.wrappers.prebid', [
 
 	win.pbjs = win.pbjs || {};
 	win.pbjs.que = win.pbjs.que || [];
+
+	if (win.pbjs) {
+		win.pbjs.setConfig({
+			debug: loc.href.indexOf('pbjs_debug=1') >= 0,
+			enableSendAllBids: true,
+			bidderSequence: 'random',
+			bidderTimeout: 2000,
+			userSync: {
+				iframeEnabled: true,
+				enabledBidders: [],
+				syncDelay: 6000
+			}
+		});
+	}
 
 	function get() {
 		return win.pbjs;

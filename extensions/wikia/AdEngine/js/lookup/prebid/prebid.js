@@ -124,13 +124,13 @@ define('ext.wikia.adEngine.lookup.prebid', [
 		var slotParams;
 
 		if (win.pbjs && typeof win.pbjs.getBidResponses === 'function') {
-			var params = win.pbjs.getBidResponses(slotName) || {};
+			var bids = win.pbjs.getBidResponsesForAdUnitCode(slotName).bids || [];
 
-			if (params && params[slotName] && params[slotName].bids && params[slotName].bids.length) {
+			if (bids.length) {
 				var bidParams = null,
 					priorities = adaptersRegistry.getPriorities();
 
-				params[slotName].bids.forEach(function (param) {
+				bids.forEach(function (param) {
 					if (!bidParams) {
 						bidParams = param;
 					} else {
