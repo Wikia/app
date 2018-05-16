@@ -52,7 +52,6 @@ class WikiaUpdater {
 			array( 'dropIndex', 'wall_related_pages', 'comment_id_idx',  $dir . 'patch-wall_related_pages-drop-comment_id_idx.sql', true ), // SUS-3096
 			array( 'dropIndex', 'wall_related_pages', 'page_id_idx_2',  $dir . 'patch-wall_related_pages-drop-page_id_idx_2.sql', true ), // SUS-3096
 			array( 'dropIndex', 'video_info', 'added_at',  $dir . 'patch-video_info-drop-added_at_idx.sql', true ), // SUS-4297
-			array( 'dropIndex', 'wikia_user_properties', 'wup_user', $dir . 'patch-wikia-user-properties-pk.sql', true ),
 
 			# functions
 			array( 'WikiaUpdater::do_page_wikia_props_update' ),
@@ -77,6 +76,7 @@ class WikiaUpdater {
 			array( 'WikiaUpdater::do_wall_history_ipv6_update' ), // SUS-2257
 			array( 'WikiaUpdater::doLoggingTableUserCleanup' ), // SUS-3222
 			array( 'WikiaUpdater::migrateRecentChangesIpData' ), // SUS-3079
+			array( 'WikiaUpdater::addWikiaUserPropertiesKey' ), // SUS-4773
 			array( 'dropField', 'interwiki', 'iw_api', $dir . 'patch-drop-iw_api.sql', true ),
 			array( 'dropField', 'interwiki', 'iw_wikiid', $dir . 'patch-drop-wikiid.sql', true ),
 			array( 'dropField', 'cu_changes', 'cuc_user_text', $ext_dir . '/CheckUser/patch-cu_changes.sql', true ), // SUS-3080
@@ -341,6 +341,19 @@ class WikiaUpdater {
 		);
 
 		$worker->execute();
+	}
+
+	public static function addWikiaUserPropertiesKey( DatabaseUpdater $databaseUpdater ) {
+		$dbw = $databaseUpdater->getDB();
+
+		if ( $dbw->indexExists( 'wikia_user_properties', 'wup_user' ) ) {
+			$databaseUpdater->output( "adding primary key to wikia_user_properties table..." );
+			$dbw->sourceFile( static::get_patch_dir() . 'patch-wikia-user-properties-pk.sql', false, false, __METHOD__ );
+			wfWaitForSlaves();
+			$databaseUpdater->output( "done.\n" );
+		} else {
+			$databaseUpdater->output( "...wikia_user_properties table already has a primary key.\n" );
+		}
 	}
 
 	/**

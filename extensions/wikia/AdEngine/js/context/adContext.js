@@ -100,13 +100,13 @@ define('ext.wikia.adEngine.adContext', [
 		var hasFeaturedVideo = context.targeting.hasFeaturedVideo;
 
 		context.bidders.prebid = !trackingOptOut.isOptedOut('prebid') && isProperGeo('wgAdDriverPrebidBidderCountries');
-		context.bidders.a9 = isProperGeo('wgAdDriverA9BidderCountries');
+		context.bidders.a9 = !trackingOptOut.isOptedOut('a9') && isProperGeo('wgAdDriverA9BidderCountries');
+		context.bidders.a9Video = !trackingOptOut.isOptedOut('a9') && isProperGeo('wgAdDriverA9VideoBidderCountries');
 		context.bidders.rubiconDisplay = isProperGeo('wgAdDriverRubiconDisplayPrebidCountries');
 		context.bidders.rubicon = isProperGeo('wgAdDriverRubiconPrebidCountries');
 		context.bidders.rubiconInFV = isProperGeo('wgAdDriverRubiconVideoInFeaturedVideoCountries') && hasFeaturedVideo;
 		context.bidders.beachfront = isProperGeo('wgAdDriverBeachfrontBidderCountries') && !hasFeaturedVideo;
 		context.bidders.appnexusAst = isProperGeo('wgAdDriverAppNexusAstBidderCountries') && !hasFeaturedVideo;
-		context.bidders.a9Video = isProperGeo('wgAdDriverA9VideoBidderCountries');
 		context.bidders.aol = isProperGeo('wgAdDriverAolBidderCountries');
 		context.bidders.appnexus = isProperGeo('wgAdDriverAppNexusBidderCountries');
 		context.bidders.appnexusWebAds = isProperGeo('wgAdDriverAppNexusWebAdsBidderCountries');
