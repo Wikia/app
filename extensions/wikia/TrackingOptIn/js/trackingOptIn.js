@@ -1,4 +1,4 @@
-define('ext.wikia.trackingOptIn', [
+define('wikia.trackingOptIn', [
 	'trackingOptIn',
 	'wikia.lazyqueue'
 ], function (trackingOptIn, lazyQueue) {

@@ -3,8 +3,10 @@
  * AMD module checking tracking opt-out
  */
 define('wikia.trackingOptOut', [
-	'wikia.querystring', 'wikia.window'
-], function(Querystring, context) {
+	'wikia.querystring',
+	'wikia.trackingOptIn',
+	'wikia.window'
+], function(Querystring, trackingOptIn, context) {
 	'use strict';
 
 	var qs = new Querystring(),
@@ -51,6 +53,10 @@ define('wikia.trackingOptOut', [
 			thenCall();
 		}
 	}
+
+	trackingOptIn.pushToUserConsentQueue(function (optIn) {
+		notOptedOut = optIn;
+	});
 
 	return {
 		isOptedOut: isOptedOut,
