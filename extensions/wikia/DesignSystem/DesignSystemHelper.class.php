@@ -12,7 +12,6 @@ class DesignSystemHelper {
 		'global-footer-licensing-and-vertical-description' => [
 			'sitename',
 			'vertical',
-			'license'
 		],
 		'global-navigation-search-placeholder-in-wiki' => [
 			'sitename',
