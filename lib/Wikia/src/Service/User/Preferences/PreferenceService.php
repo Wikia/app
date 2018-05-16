@@ -222,21 +222,19 @@ class PreferenceService {
 			return $this->applyDefaults( new UserPreferences() );
 		}
 
-		if ( !isset( $this->preferences[$userId] ) ) {
-			try {
-				$preferences = $this->persistence->get( $userId );
-			} catch ( PersistenceException $e ) {
-				$this->error( $e->getMessage() . ": setting preferences in read-only mode",
-					['user' => $userId] );
-				$preferences = ( new UserPreferences() )
-					->setReadOnly( true );
-			} catch ( \Exception $e ) {
-				$this->error( $e->getMessage(), ['user' => $userId] );
-				throw $e;
-			}
-
-			$this->preferences[$userId] = $this->applyDefaults( $preferences );
+		try {
+			$preferences = $this->persistence->get( $userId );
+		} catch ( PersistenceException $e ) {
+			$this->error( $e->getMessage() . ": setting preferences in read-only mode",
+				['user' => $userId] );
+			$preferences = ( new UserPreferences() )
+				->setReadOnly( true );
+		} catch ( \Exception $e ) {
+			$this->error( $e->getMessage(), ['user' => $userId] );
+			throw $e;
 		}
+
+		$this->preferences[$userId] = $this->applyDefaults( $preferences );
 
 		return $this->preferences[$userId];
 	}
