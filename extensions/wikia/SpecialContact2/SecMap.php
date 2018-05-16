@@ -19,7 +19,7 @@ $SpecialContactSecMap[] = array(
 		array('link'=>'close-account',  'form'=> 'close-account', 'reqlogin' => true ),
 		array('link'=>'rename-account', 'form'=> 'rename-account', 'reqlogin' => true ),
 		array('link'=>'blocked' ),
-		array('link'=>'forget-account', 'form'=> 'forget-account', 'reqlogin' => true ),
+		array('link'=>'forget-account', 'form'=> 'forget-account' ),
 	)
 );
 

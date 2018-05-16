@@ -47,8 +47,8 @@ class ContactForm extends SpecialPage {
 		),
 
 		'forget-account' => array(
-			'format' => "User \"%s\" requested to be forgotten",
-			'vars' => array( 'wpUserName' ),
+			'format' => "Forget account request has been made.\nCountry: \"%s\"\nFull Name: \"%s\"\nIs On Behalf of someone: \"%s\"\nRelationship: \"%s\"\n Has this person previously requested forgetting acount: \"%s\"",
+			'vars' => array( 'wpCountry', 'wpFullName', 'wpEmailAddress', 'wpIsOnBehalf', 'wpRelationship', 'wpPreviousRequest' ),
 			'subject' => 'Request to be Forgotten',
 			'markuser' => 'requested-to-be-forgotten',
 		),
@@ -96,6 +96,10 @@ class ContactForm extends SpecialPage {
 		if ( $par === 'rename-account' && $this->isRenameAccountSupported() ) {
 			$renameAccountTitle = SpecialPage::getTitleFor( 'UserRenameTool' );
 			$out->redirect( $renameAccountTitle->getFullURL() );
+		}
+
+		if ($par === 'forget-account') {
+			Wikia::addAssetsToOutput('special_contact_forget_account_js');
 		}
 
 		$out->addStyle( AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/SpecialContact2/SpecialContact.scss'));

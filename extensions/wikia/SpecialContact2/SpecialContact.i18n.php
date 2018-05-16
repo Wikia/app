@@ -19,7 +19,7 @@ Follow the links below to learn more about how to use FANDOM, make changes to yo
 	'specialcontact-seclink-account-issue' => "Can't access my account",
 	'specialcontact-seclink-close-account' => 'Disable my account',
 	'specialcontact-seclink-rename-account' => 'Rename my account',
-	'specialcontact-seclink-forget-account' => 'Forget my Fandom account',
+	'specialcontact-seclink-forget-account' => 'Forget my FANDOM account',
 	'specialcontact-seclink-blocked' => 'My account is blocked',
 	'specialcontact-secheader-editing' => 'Participating on FANDOM',
 	'specialcontact-seclink-using-fandom' => 'How do I use FANDOM?',
@@ -40,7 +40,7 @@ Follow the links below to learn more about how to use FANDOM, make changes to yo
 	'specialcontact-sectitle-account-issue' => 'Account issue',
 	'specialcontact-sectitle-close-account' => 'Disable my account',
 	'specialcontact-sectitle-rename-account' => 'Rename my account',
-	'specialcontact-sectitle-forget-account' => 'Remove the data associated with the account',
+	'specialcontact-sectitle-forget-account' => 'Request to be Forgotten',
 	'specialcontact-sectitle-blocked' => 'Account blocked',
 	'specialcontact-sectitle-using-fandom' => 'Using FANDOM',
 	'specialcontact-sectitle-feedback' => 'Feedback',
@@ -89,7 +89,7 @@ If you need any more information on what an account disable actually does, you c
 Once you have read that help page and are positive on the spelling of your new username, please submit a request below. Once your username is changed, you will receive a confirmation email. You can then log in with your new user name using your old password.
 
 Happy editing!',
-	'specialcontact-intro-forget-account' => 'Some words about GDPR and what it means for the user to remove all the data associated with their account.',
+	'specialcontact-intro-forget-account' => 'Under European data protection law, you may have the right to ask for your personal information to be deleted by us. By using this form, you will be helping us in understanding your request and acting on it properly and in good time.',
 	'specialcontact-intro-blocked' => 'Account blocks are usually set by the local admins, and not by the FANDOM staff. The name of the blocking admin should be on the block notice you received.You may be able to contact the blocking admin by leaving a message on your user talk page. This is still editable for blocked users (on some wikis) and changes will usually be seen by the other contributors to the wiki. Your user talk page is found by following the "my talk" link at the top right of any page.
 
 However, if this talk page option is not available in your situation, then the best advice we can give you is to wait the block out or join the community at another of the many thousand FANDOM communities available.
@@ -203,8 +203,7 @@ In response to security reports using this form, FANDOM will:
 	'specialcontact-label-rename-newusername' => 'Please enter the new username',
 	'specialcontact-label-rename-account-confirm' => 'I confirm that the spelling and punctuation for my new name is correct',
 	'specialcontact-label-rename-account-read-help' => 'I have read the [[Help:Changing your username|help page on renaming my account]]',
-	'specialcontact-label-forget-account-confirm' => 'I confirm that I want my FANDOM account to be forgotter.',
-	'specialcontact-label-forget-account-read-help' => 'I have read the [[Help:Remove_account_data|help page on forgetting your account]].',
+	'specialcontact-label-forget-account-confirm' => 'Delete FANDOM account',
 	'specialcontact-form-header' => 'Contact FANDOM',
 	'specialcontact-logged-in-as' => 'You are logged in as $1. [[Special:UserLogout|Not you?]]',
 	'specialcontact-mail-on-file' => 'Your e-mail is set to $1. [[Special:Preferences|Do you wish to change it?]]',
@@ -238,6 +237,16 @@ Browser/OS: ',
 	'specialcontact-submitcomplete' => 'Thank you for contacting FANDOM. We receive and review all messages submitted here. We will do our best to get back to you in the next 2-3 business days, but please be patient as we work through all of the messages.
 
 Remember, you can also find help in our [[w:c:community:Special:Forum|Community Forum]] and [[w:c:community:Help:Index|Help pages]]. You can keep up to date with the latest FANDOM news on our [[w:c:community:Blog:Wikia_Staff_Blog |Staff Blog]]. Happy editing!',
+	'specialcontact-label-forget-account-country-info' => 'Country of origin',
+	'specialcontact-label-forget-account-full-name' => 'Full name',
+	'specialcontact-label-forget-account-email-address' => 'Contact email address',
+	'specialcontact-label-forget-account-is-on-behalf' => 'Are you making this request on behalf of yourself?',
+	'specialcontact-label-forget-account-relationship' => 'Please specify your relationship to the person on whose behalf you are making this request (e.g. "parent" or "legal guardian"). We may ask for proof to verify that you are authorized to make this request on their behalf.',
+	'specialcontact-label-forget-account-previous-request' => 'Have you previously made a Personal Data Deletion Request to us?',
+	'specialcontact-label-forget-account-processing-consent' => 'I understand that Wikia will only be able to process this request if the information given is correct.',
+	'specialcontact-label-forget-account-data-processing-info' => 'Wikia will use the personal information given on this form, and any other personal information you give to us in correspondence relating to it, for the purposes of processing your request, and meeting our legal obligations. We may share details of your request with data protection authorities, but only where we are required to do so, for instance, where these details are required to investigate a decision that we have made. We will retain a copy of this request to comply with our legal obligation to maintain data processing records.',
+	'specialcontact-label-forget-account-confirm-checkbox' => 'I have read and understood this statement.',
+	'specialcontact-label-forget-account-data-deletion-info' => 'Once the request for deletion is processed, the data removal cannot be reversed and your FANDOM account cannot be recovered.',
 );
 
 $messages['qqq'] = array(
