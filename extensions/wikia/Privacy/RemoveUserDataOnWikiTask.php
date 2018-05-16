@@ -120,7 +120,7 @@ class RemoveUserDataOnWikiTask extends BaseTask {
 		}
 	}
 
-	public function removeAllData( $userId, $username, $oldUsername ) {
+	public function removeAllData( $userId, $username, $oldUsername = null ) {
 		$this->removeCheckUserData( $userId );
 		$this->removeAbuseFilterData( $userId );
 		$this->removeIpFromRecentChanges( $userId );
@@ -129,7 +129,8 @@ class RemoveUserDataOnWikiTask extends BaseTask {
 		$this->removeUserPages( $userDbKey );
 		$this->removeUserPagesFromRecentChanges( $userDbKey );
 		if ( !empty( $oldUsername ) ) {
-			$this->removeUserPages( $oldUsername );
+			$oldUserDbKey = Title::newFromText( $oldUsername )->getDBkey();
+			$this->removeUserPages( $oldUserDbKey );
 		}
 	}
 

@@ -9,7 +9,9 @@ class RemoveUserDataOnWikiTaskTest extends WikiaDatabaseTest {
 	const TEST_USER = 'Test user';
 	const TEST_USER_DB_KEY = 'Test_user';
 	const OLD_TEST_USER = 'Old test user';
+	const OLD_TEST_USER_DB_KEY = 'Old_test_user';
 	const OTHER_TEST_USER = 'Other test user';
+	const OTHER_TEST_USER_DB_KEY = 'Other_test_user';
 
 	/**
 	 * Returns the test dataset.
@@ -91,21 +93,25 @@ class RemoveUserDataOnWikiTaskTest extends WikiaDatabaseTest {
 	}
 
 	public function testShouldRemoveUserPages() {
-		(new RemoveUserDataOnWikiTask())->removeAllData( self::TEST_USER_ID, self::TEST_USER, self::OLD_TEST_USER );
+		( new RemoveUserDataOnWikiTask() )->removeAllData( self::TEST_USER_ID, self::TEST_USER,
+			self::OLD_TEST_USER );
 
 		$dbr = wfGetDB( DB_SLAVE );
 
 		$this->assertEquals( 0,
-			$dbr->estimateRowCount( 'page', '*', [ 'page_title' => self::TEST_USER ],
-				__METHOD__ ), 'page table contains data related to user who wants to be forgotten' );
+			$dbr->estimateRowCount( 'page', '*', [ 'page_title' => self::TEST_USER_DB_KEY ],
+				__METHOD__ ),
+			'page table contains data related to user who wants to be forgotten' );
 
 		$this->assertEquals( 0,
-			$dbr->estimateRowCount( 'page', '*', [ 'page_title' => self::OLD_TEST_USER ],
-				__METHOD__ ), 'page table contains data related to renamed user who wants to be forgotten' );
+			$dbr->estimateRowCount( 'page', '*', [ 'page_title' => self::OLD_TEST_USER_DB_KEY ],
+				__METHOD__ ),
+			'page table contains data related to renamed user who wants to be forgotten' );
 
 		$this->assertEquals( 1,
-			$dbr->estimateRowCount( 'page', '*', [ 'page_title' => self::OTHER_TEST_USER ],
-				__METHOD__ ), 'page table doesn\'t contain data related to user who hasn\'t been removed' );
+			$dbr->estimateRowCount( 'page', '*', [ 'page_title' => self::OTHER_TEST_USER_DB_KEY ],
+				__METHOD__ ),
+			'page table doesn\'t contain data related to user who hasn\'t been removed' );
 	}
 
 }
