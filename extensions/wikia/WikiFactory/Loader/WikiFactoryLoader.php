@@ -402,7 +402,7 @@ class WikiFactoryLoader {
 							 !empty( $_COOKIE["{$wgCookiePrefix}UserID"] );
 
 			if ( $hasAuthCookie &&
-				 $_SERVER['HTTP_FASTLY_SSL'] &&
+				 !empty( $_SERVER['HTTP_FASTLY_SSL'] ) &&
 				 // Hack until we are better able to handle internal HTTPS requests
 				 !empty( $_SERVER['HTTP_FASTLY_FF'] ) &&
 				 wfHttpsAllowedForURL( $redirectUrl )
