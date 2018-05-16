@@ -14,12 +14,14 @@ class DownloadYourDataSpecialController extends WikiaSpecialPageController {
 		$user = $this->getUser();
 
 		if ( $user->isLoggedIn() && $this->request->wasPosted() && $user->matchEditToken( $this->getVal( 'token' ) ) ) {
-			$this->response->setHeader( 'Content-disposition', 'attachment;filename=wikia_account_data.csv' );
-			$this->response->setContentType( 'text/csv' );
-			$this->response->setCode( WikiaResponse::RESPONSE_CODE_OK );
-			$this->response->setFormat( WikiaResponse::FORMAT_RAW );
-			echo "fake csv content";
-			$this->skipRendering();
+			$output = RequestContext::getMain()->getOutput();
+
+			$output->getRequest()->response()->header('Content-disposition: attachment;filename=wikia_account_data.csv');
+			$output->getRequest()->response()->header('Content-type: text/csv');
+
+			$output->setArticleBodyOnly( true );
+
+			$output->addHTML( 'works like a charm!' );
 
 			wfProfileOut( __METHOD__ );
 
