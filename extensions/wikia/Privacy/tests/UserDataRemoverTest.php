@@ -10,6 +10,8 @@ class UserDataRemoverTest extends WikiaDatabaseTest {
 
 	const REMOVED_USER_ID = 1;
 	const OTHER_USER_ID = 2;
+	const RENAMED_USER_ID = 3;
+	const FAKE_USER_ID = 4;
 
 	/**
 	 * Returns the test dataset.
@@ -101,5 +103,19 @@ class UserDataRemoverTest extends WikiaDatabaseTest {
 			),
 			'data was removed for wrong user'
 		);
+	}
+
+	public function testFakeUserDataShouldBeAnonymizedInUserTable() {
+		$fakeUserBefore = User::newFromId( self::FAKE_USER_ID );
+
+		( new UserDataRemover() )->removeGlobalData( self::RENAMED_USER_ID, $fakeUserBefore );
+
+		$fakeUser = User::newFromId( self::FAKE_USER_ID );
+
+		$this->assertStringStartsWith( 'Anonymous', $fakeUser->getName(),
+			'User name does not start with \'Anonymous\'' );
+		$this->assertEquals( '', $fakeUser->getRealName(), 'User real name is not cleared' );
+		$this->assertEquals( '', $fakeUser->getEmail(), 'User email is not cleared' );
+		$this->assertEquals( '', $fakeUser->mBirthDate, 'User birth date is not cleared' );
 	}
 }

@@ -81,3 +81,14 @@ abuse_filter_log:
     afl_namespace: 0
     afl_title: ''
     afl_filter: 0
+
+page:
+  - page_id: 1
+    page_namespace: 2
+    page_title: 'foo'
+  - page_id: 2
+    page_namespace: 2
+    page_title: 'bar'
+  - page_id: 3
+    page_namespace: 2
+    page_title: 'baz'

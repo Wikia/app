@@ -26,6 +26,30 @@ user:
     user_registration: sadfss
     user_editcount: 102
     user_birthdate: '1998-01-02'
+  - user_id: 3
+    user_name: renamed_user
+    user_real_name: user real name3
+    user_email: user3@gmail.com
+    user_touched: 20140101110111
+    user_token: something3
+    user_email_authenticated: 20140101110113
+    user_email_token: somefunnytoken
+    user_email_token_expires: 20140130110113
+    user_registration: sadfss
+    user_editcount: 10
+    user_birthdate: '1998-01-03'
+  - user_id: 4
+    user_name: before_rename_fake_user
+    user_real_name: user real name4
+    user_email: user4@gmail.com
+    user_touched: 20140101110111
+    user_token: something4
+    user_email_authenticated: 20140101110113
+    user_email_token: somefunnytoken
+    user_email_token_expires: 20140130110113
+    user_registration: sadfss
+    user_editcount: 10
+    user_birthdate: '1998-01-04'
 
 user_email_log:
   - el_id: 0
@@ -70,3 +94,6 @@ user_properties:
   - up_user: 2
     up_property: some_property2
     up_value: someVal
+  - up_user: 4
+    up_property: renameData
+    up_value: renamed_to=renamed_user
