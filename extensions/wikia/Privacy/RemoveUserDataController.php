@@ -63,7 +63,7 @@ class RemoveUserDataController extends WikiaController {
 			return;
 		}
 
-		$this->response->setCode( self::ACCEPTED );
+		$this->response->setCode( WikiaResponse::RESPONSE_CODE_OK );
 		$this->response->setValues( [
 			'userId' => $userId,
 			'username' => User::whoIs( $userId ),

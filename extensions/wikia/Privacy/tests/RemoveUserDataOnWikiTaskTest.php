@@ -6,7 +6,8 @@
 class RemoveUserDataOnWikiTaskTest extends WikiaDatabaseTest {
 
 	const TEST_USER_ID = 1;
-	const TEST_USER = 'foo';
+	const TEST_USER = 'Test user';
+	const TEST_USER_DB_KEY = 'Test_user';
 
 	/**
 	 * Returns the test dataset.
@@ -69,6 +70,17 @@ class RemoveUserDataOnWikiTaskTest extends WikiaDatabaseTest {
 		// check abuse filter log
 		$log = $dbr->select( 'abuse_filter_log', ['afl_user'], ['afl_user' => self::TEST_USER_ID] );
 		$this->assertEquals( 0, $log->numRows() );
+	}
+
+	public function testShouldRemoveUserPageHistoryFromRecentChanges() {
+		(new RemoveUserDataOnWikiTask())->removeAllData( self::TEST_USER_ID, self::TEST_USER );
+		$dbr = wfGetDB( DB_SLAVE );
+		$changes = $dbr->select( 'recentchanges', ['rc_namespace', 'rc_title'] );
+		foreach ( $changes as $change ) {
+			$isUserPage = in_array( $change->rc_namespace, RemoveUserDataOnWikiTask::USER_NAMESPACES );
+			$startsWithUsername = strpos( $change->rc_title, self::TEST_USER_DB_KEY ) === 0;
+			$this->assertFalse( $isUserPage && $startsWithUsername );
+		}
 	}
 	
 }

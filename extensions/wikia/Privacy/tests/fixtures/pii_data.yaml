@@ -27,9 +27,24 @@ recentchanges:
   - rc_id: 1
     rc_user: 1
     rc_ip_bin: 'some ip'
+    rc_namespace: 999
+    rc_title: 'Test_user'
   - rc_id: 2
     rc_user: 2
     rc_ip_bin: 'some ip'
+    rc_namespace: 999
+    rc_title: 'Other_user'
+  - rc_id: 3
+    rc_user: 1
+    rc_ip_bin: 'some ip'
+    rc_namespace: 2
+    rc_title: 'Test_user'
+  - rc_id: 4
+    rc_user: 1
+    rc_ip_bin: 'some ip'
+    rc_namespace: 999
+    rc_title: 'Test_user'
+
 
 abuse_filter:
   - af_id: 1
