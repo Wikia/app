@@ -288,6 +288,14 @@ $wgAutoloadClasses['PageStatsService']  =  $IP.'/includes/wikia/services/PageSta
 $wgAutoloadClasses['UserStatsService'] = $IP.'/includes/wikia/services/UserStatsService.class.php';
 $wgAutoloadClasses['CategoriesService'] = $IP.'/includes/wikia/services/CategoriesService.class.php';
 $wgAutoloadClasses['UserCommandsService'] = $IP.'/includes/wikia/services/UserCommandsService.class.php';
+$wgAutoloadClasses['UserCommand'] = $IP.'/includes/wikia/services/usercommands/UserCommand.php';
+$wgAutoloadClasses['PageActionUserCommand'] = $IP.'/includes/wikia/services/usercommands/PageActionUserCommand.php';
+$wgAutoloadClasses['FollowUserCommand'] = $IP.'/includes/wikia/services/usercommands/FollowUserCommand.php';
+$wgAutoloadClasses['SpecialPageUserCommand'] = $IP.'/includes/wikia/services/usercommands/SpecialPageUserCommand.php';
+$wgAutoloadClasses['CustomizeToolbarUserCommand'] = $IP.'/includes/wikia/services/usercommands/CustomizeToolbarUserCommand.php';
+$wgAutoloadClasses['MenuUserCommand'] = $IP.'/includes/wikia/services/usercommands/MenuUserCommand.php';
+// Developer Info a.k.a. PerformanceStats (BugId:5497)
+$wgAutoloadClasses['DevInfoUserCommand'] = $IP.'/includes/wikia/services/usercommands/DevInfoUserCommand.php';
 $wgAutoloadClasses['ToolbarService'] = $IP.'/includes/wikia/services/ToolbarService.class.php';
 $wgAutoloadClasses['SharedToolbarService'] = $IP.'/includes/wikia/services/SharedToolbarService.class.php';
 $wgAutoloadClasses['CsvService'] = $IP . '/includes/wikia/services/CsvService.class.php';
@@ -592,13 +600,6 @@ include_once( "$IP/extensions/wikia/StaticUserPages/StaticUserPages.setup.php" )
 require_once( "{$IP}/extensions/wikia/Tasks/Tasks.setup.php");
 
 /**
- * @name wgWikiFactoryTags
- *
- * tags defined in current wiki
- */
-$wgWikiFactoryTags = array();
-
-/**
  * external databases
  */
 $wgContentReviewDB = 'content_review';
@@ -680,11 +681,6 @@ $wgUseJQueryFromCDN = true;
  */
 $wgWikiaCombinedPrefix = "index.php?action=ajax&rs=WikiaAssets::combined&";
 
-
-/**
- * libmemcached related stuff
- */
-define( "CACHE_LIBMEMCACHED", 11 );
 /**
  * Advanced object cache configuration.
  *
@@ -718,7 +714,7 @@ $wgObjectCaches = array(
          * incompatible serialization logic.
          */
         // FIXME: this is a temporary condition used to gradually deploy the new client (SUS-4611)
-        'class' => ( ( !is_null($wgDomainHash) && $wgDomainHash % 100 < 10 ) ? 'MemcachedPeclBagOStuff' : 'MemcachedPhpBagOStuff' ),
+        'class' => ( ( !is_null($wgDomainHash) && $wgDomainHash % 100 < 25 ) ? 'MemcachedPeclBagOStuff' : 'MemcachedPhpBagOStuff' ),
         'use_binary_protocol' => false, // twemproxy does not support binary protocol
         /**
          * SUS-4749 | make MemcachedPeclBagOStuff use igbinary serializer
@@ -730,11 +726,6 @@ $wgObjectCaches = array(
          */
          'serializer' => 'igbinary',
     ),
-    CACHE_MEMCACHED => array(
-        'class' => 'MemcachedPhpBagOStuff',
-        'use_binary_protocol' => false,
-    ),
-    CACHE_LIBMEMCACHED => array( 'factory' => 'LibmemcachedBagOStuff::newFromGlobals' ),
     'apc' => array('class' => 'APCBagOStuff'),
     'xcache' => array('class' => 'XCacheBagOStuff'),
     'wincache' => array('class' => 'WinCacheBagOStuff'),

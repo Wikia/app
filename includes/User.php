@@ -1564,7 +1564,6 @@ class User implements JsonSerializable {
 		}
 		// Set the user limit key
 		if ( $userLimit !== false ) {
-			wfDebug( __METHOD__ . ": effective user limit: $userLimit\n" );
 			$keys[ wfMemcKey( 'limiter', $action, 'user', $id ) ] = $userLimit;
 		}
 
