@@ -34,7 +34,8 @@ class DownloadYourDataSpecialController extends \WikiaSpecialPageController {
 			if ( empty( $this->error ) ) {
 				$output = \RequestContext::getMain()->getOutput();
 
-				$output->getRequest()->response()->header('Content-disposition: attachment;filename=wikia_account_data.csv');
+				$output->getRequest()->response()->header(
+					'Content-disposition: attachment;filename=wikia_account_data.csv');
 				$output->getRequest()->response()->header('Content-type: text/csv');
 
 				$output->setArticleBodyOnly( true );

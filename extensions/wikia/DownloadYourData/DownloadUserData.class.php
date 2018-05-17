@@ -25,7 +25,8 @@ class DownloadUserData {
 	 * @throws \Exception in case of permission errors
 	 */
 	public function getDataForUser( \User $user ) {
-		if ( $this->exportingUser->getId() !== $user->getId() && !$this->exportingUser->isAllowed( 'exportuserdata' ) ) {
+		if ( $this->exportingUser->getId() !== $user->getId() &&
+			!$this->exportingUser->isAllowed( 'exportuserdata' ) ) {
 			throw new \Exception( 'Current user is not allowed to export data for other users.' );
 		}
 
@@ -41,7 +42,8 @@ class DownloadUserData {
 		}
 
 		if ( !empty( $user->getRealName() ) ) {
-			$userdata[] = [ wfMessage( 'downloadyourdata-realname' )->inLanguage( $language )->text(), $user->getRealName() ];
+			$userdata[] = [ wfMessage( 'downloadyourdata-realname' )->inLanguage( $language )->text(),
+				$user->getRealName() ];
 		}
 
 		if ( isset( $user->mBirthDate ) ) {
@@ -51,15 +53,19 @@ class DownloadUserData {
 
 		$identityBox = new \UserIdentityBox( $user );
 		$profileData = $identityBox->getFullData();
-		//$userdata[] = ['ibox', json_encode($profileData)];
 
 		if ( !empty( $profileData['registration'] ) ) {
-			$userdata[] = [ wfMessage( 'downloadyourdata-registration' )->inLanguage( $language )->text(), $profileData['registration'] ];
+			$userdata[] = [ wfMessage( 'downloadyourdata-registration' )->inLanguage( $language )->text(),
+				$profileData['registration'] ];
 		}
 
 		if ( !empty( $profileData['birthday'] ) && intval( $profileData['birthday']['month'] ) > 0 && intval( $profileData['birthday']['month'] ) < 13 ) {
+			$formattedBirthday = wfMessage( 'downloadyourdata-birthday-value' )->inLanguage( $language )
+				->params( $userLang->getMonthName( intval( $profileData['birthday']['month'] ) ) )
+				->numParams( htmlspecialchars( $profileData['birthday']['day'] ) )
+				->parse();
 			$userdata[] = [ wfMessage( 'downloadyourdata-profile-birthday' )->inLanguage( $language )->text(),
-				wfMessage( 'downloadyourdata-birthday-value' )->inLanguage( $language )->params( $userLang->getMonthName( intval( $profileData['birthday']['month'] ) ) )->numParams( htmlspecialchars( $profileData['birthday']['day'] ) )->parse() ];
+				$formattedBirthday ];
 		}
 
 		$gender = $user->getGlobalAttribute( 'gender' );
@@ -69,18 +75,21 @@ class DownloadUserData {
 		}
 
 		if ( !empty( $profileData['gender'] ) ) {
-			$userdata[] = [ wfMessage( 'downloadyourdata-profile-gender' )->inLanguage( $language )->text(), $profileData['gender'] ];
+			$userdata[] = [ wfMessage( 'downloadyourdata-profile-gender' )->inLanguage( $language )->text(),
+				$profileData['gender'] ];
 		}
 
 		if ( !empty( $profileData['location'] ) ) {
-			$userdata[] = [ wfMessage( 'downloadyourdata-location' )->inLanguage( $language )->text(), $profileData['location'] ];
+			$userdata[] = [ wfMessage( 'downloadyourdata-location' )->inLanguage( $language )->text(),
+				$profileData['location'] ];
 		}
 		if ( !empty( $profileData['occupation'] ) ) {
-			$userdata[] = [ wfMessage( 'downloadyourdata-occupation' )->inLanguage( $language )->text(), $profileData['occupation'] ];
+			$userdata[] = [ wfMessage( 'downloadyourdata-occupation' )->inLanguage( $language )->text(),
+				$profileData['occupation'] ];
 		}
 
-		$userdata[] = [ wfMessage( 'downloadyourdata-user-activity-link' )->inLanguage( $language )->text(), \GlobalTitle::newFromText('UserActivity', NS_SPECIAL, \Wikia::COMMUNITY_WIKI_ID)->getFullURL() ];
-
+		$userdata[] = [ wfMessage( 'downloadyourdata-user-activity-link' )->inLanguage( $language )->text(),
+			\GlobalTitle::newFromText('UserActivity', NS_SPECIAL, \Wikia::COMMUNITY_WIKI_ID)->getFullURL() ];
 
 		return $userdata;
 
