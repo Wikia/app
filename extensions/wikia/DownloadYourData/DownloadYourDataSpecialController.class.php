@@ -32,7 +32,7 @@ class DownloadYourDataSpecialController extends WikiaSpecialPageController {
 
 		$this->isLoggedIn = $user->isLoggedIn();
 
-		$this->notLoggedInMessage = $this->msg( 'downloadyourdata-not-logged-in' )->escaped();
+		$this->notLoggedInMessage = $this->msg( 'downloadyourdata-not-logged-in' )->parse();
 		$this->editToken = $user->getEditToken();
 		$this->showForm = true;
 
