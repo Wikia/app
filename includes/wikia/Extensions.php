@@ -94,12 +94,6 @@ switch ( $wgLanguageCode ) {
 		$wgNamespaceAliases["Forum_talk"] = 111;
 
 		break;
-            
-        default:
-                $wgExtraNamespaces[110] = 'Forum';
-                $wgExtraNamespaces[111] = 'Forum_talk';
-                break;
-
 }
 
 $wgNamespacesWithSubpages[110] = true; //Forum
