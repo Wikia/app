@@ -69,6 +69,7 @@ class DownloadYourDataSpecialController extends WikiaSpecialPageController {
 	}
 
 	private function prepareUserData( User &$user ) {
+
 		$userdata = [ [ $this->msg( 'downloadyourdata-username' )->text(), $user->getName() ] ];
 
 		if ( !empty( $user->getEmail() ) ) {
@@ -82,6 +83,12 @@ class DownloadYourDataSpecialController extends WikiaSpecialPageController {
 		if ( isset( $user->mBirthDate ) ) {
 			$userdata[] = [ $this->msg( 'downloadyourdata-birthdate' )->text(), $user->mBirthDate ];
 		}
+
+		$gender = $user->getGlobalAttribute( UserIdentityBox::USER_PROPERTIES_PREFIX . 'gender' );
+		if ( !empty( $gender ) ) {
+			$userdata[] = [ $this->msg( 'downloadyourdata-gender' )->text(), $gender ];
+		}
+
 
 		return $userdata;
 	}
