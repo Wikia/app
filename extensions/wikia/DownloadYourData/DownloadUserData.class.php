@@ -1,13 +1,15 @@
 <?php
 
+namespace DownloadYourData;
+
 class DownloadUserData {
 
 	private $exportingUser;
 
 	/**
-	 * @param User $exportingUser User performing the export operation.
+	 * @param \User $exportingUser User performing the export operation.
 	 */
-	public function __construct( User $exportingUser ) {
+	public function __construct( \User $exportingUser ) {
 		$this->exportingUser = $exportingUser;
 	}
 
@@ -18,17 +20,17 @@ class DownloadUserData {
 	 *
 	 * Attribute names and values are returned in language set for $user.
 	 *
-	 * @param User $user user whos data is fetched
-	 * @return array 2-dimesional array with user data. each row contains 2 values - attribute name and value.
-	 * @throws Exception in case of permission errors
+	 * @param \User $user user whos data is fetched
+	 * @return Array 2-dimesional array with user data. each row contains 2 values - attribute name and value.
+	 * @throws \Exception in case of permission errors
 	 */
-	public function getDataForUser( User $user ) {
+	public function getDataForUser( \User $user ) {
 		if ( $this->exportingUser->getId() !== $user->getId() && !$this->exportingUser->isAllowed( 'exportuserdata' ) ) {
-			throw new Exception( 'Current user is not allowed to export data for other users.' );
+			throw new \Exception( 'Current user is not allowed to export data for other users.' );
 		}
 
 		$language = $user->getGlobalPreference( 'language' );
-		$userLang = Language::factory( $language );
+		$userLang = \Language::factory( $language );
 
 		$userdata = [ [ wfMessage( 'downloadyourdata-username' )->inLanguage( $language )->text(), $user->getName() ],
 			[ wfMessage( 'downloadyourdata-userid' )->inLanguage( $language )->text(), $user->getId() ] ];
@@ -47,7 +49,7 @@ class DownloadUserData {
 				$userLang->userDate( strtotime( $user->mBirthDate ), $user ) ];
 		}
 
-		$identityBox = new UserIdentityBox( $user );
+		$identityBox = new \UserIdentityBox( $user );
 		$profileData = $identityBox->getFullData();
 		//$userdata[] = ['ibox', json_encode($profileData)];
 
@@ -77,7 +79,7 @@ class DownloadUserData {
 			$userdata[] = [ wfMessage( 'downloadyourdata-occupation' )->inLanguage( $language )->text(), $profileData['occupation'] ];
 		}
 
-		$userdata[] = [ wfMessage( 'downloadyourdata-user-activity-link' )->inLanguage( $language )->text(), GlobalTitle::newFromText('UserActivity', NS_SPECIAL, Wikia::COMMUNITY_WIKI_ID)->getFullURL() ];
+		$userdata[] = [ wfMessage( 'downloadyourdata-user-activity-link' )->inLanguage( $language )->text(), \GlobalTitle::newFromText('UserActivity', NS_SPECIAL, \Wikia::COMMUNITY_WIKI_ID)->getFullURL() ];
 
 
 		return $userdata;

@@ -1,6 +1,8 @@
 <?php
 
-class DownloadYourDataSpecialController extends WikiaSpecialPageController {
+namespace DownloadYourData;
+
+class DownloadYourDataSpecialController extends \WikiaSpecialPageController {
 
 	public function __construct() {
 		parent::__construct( 'DownloadYourData' );
@@ -18,7 +20,7 @@ class DownloadYourDataSpecialController extends WikiaSpecialPageController {
 			$username = $this->request->getVal( 'username' );
 
 			if ( $user->isAllowed( 'exportuserdata' ) && !empty( $username ) ) {
-				$exportedUser = User::newFromName( $username );
+				$exportedUser = \User::newFromName( $username );
 				if ( !$exportedUser || !$exportedUser->getId() ) {
 					$this->error = $this->msg( 'downloadyourdata-user-not-found', $username )->parse();
 				}
@@ -27,7 +29,7 @@ class DownloadYourDataSpecialController extends WikiaSpecialPageController {
 			}
 
 			if ( empty( $this->error ) ) {
-				$output = RequestContext::getMain()->getOutput();
+				$output = \RequestContext::getMain()->getOutput();
 
 				$output->getRequest()->response()->header('Content-disposition: attachment;filename=wikia_account_data.csv');
 				$output->getRequest()->response()->header('Content-type: text/csv');
@@ -45,7 +47,7 @@ class DownloadYourDataSpecialController extends WikiaSpecialPageController {
 
 		$this->specialPage->setHeaders();
 
-		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
+		$this->response->setTemplateEngine( \WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
 
 		$this->introText = $this->msg( 'downloadyourdata-intro' )->text();
 		$this->notLoggedInMessage = $this->msg( 'downloadyourdata-not-logged-in' )->parse();
