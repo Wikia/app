@@ -1,17 +1,19 @@
 /*global define*/
 define('ext.wikia.adEngine.wrappers.prebid', [
+	'ext.wikia.adEngine.adContext',
 	'wikia.location',
 	'wikia.window'
-], function (loc, win) {
+], function (adContext, loc, win) {
 	'use strict';
 
 	var validResponseStatusCode = 1,
-		errorResponseStatusCode = 2;
+		errorResponseStatusCode = 2,
+		isNewPrebidEnabled = adContext.get('opts.isNewPrebidEnabled');
 
 	win.pbjs = win.pbjs || {};
 	win.pbjs.que = win.pbjs.que || [];
 
-	if (win.pbjs) {
+	if (win.pbjs && isNewPrebidEnabled) {
 		win.pbjs.setConfig({
 			debug: loc.href.indexOf('pbjs_debug=1') >= 0,
 			enableSendAllBids: true,
@@ -30,20 +32,28 @@ define('ext.wikia.adEngine.wrappers.prebid', [
 	}
 
 	function getBidByAdId(adId) {
-		if (!win.pbjs || typeof win.pbjs.getBidResponses !== 'function') {
+		// TODO: clean up after GDPR rollout
+		var bids = [],
+			responses;
+
+		if (!win.pbjs || (typeof win.pbjs.getBidResponses !== 'function' && !win.pbjs._bidsReceived)) {
 			return null;
 		}
 
-		var bids = [],
-			responses = win.pbjs.getBidResponses();
-
-		Object.keys(responses).forEach(function (adUnit) {
-			var adUnitsBids = responses[adUnit].bids.filter(function (bid) {
+		if (win.pbjs._bidsReceived) {
+			bids = win.pbjs._bidsReceived.filter(function (bid) {
 				return adId === bid.adId;
 			});
+		} else {
+			responses = win.pbjs.getBidResponses();
+			Object.keys(responses).forEach(function (adUnit) {
+				var adUnitsBids = responses[adUnit].bids.filter(function (bid) {
+					return adId === bid.adId;
+				});
 
-			bids = bids.concat(adUnitsBids);
-		});
+				bids = bids.concat(adUnitsBids);
+			});
+		}
 
 		return bids.length ? bids[0] : null;
 	}

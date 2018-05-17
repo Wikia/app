@@ -197,6 +197,8 @@ define('ext.wikia.adEngine.adContext', [
 		context.opts.playerTracking = !trackingOptOut.isOptedOut('kikimora') &&
 			geo.isProperGeo(instantGlobals.wgAdDriverKikimoraPlayerTrackingCountries);
 
+		context.opts.isNewPrebidEnabled = geo.isProperGeo(instantGlobals.wgAdDriverNewPrebidCountries);
+
 		// Krux integration
 		context.targeting.enableKruxTargeting = !!(
 			context.targeting.enableKruxTargeting && !trackingOptOut.isOptedOut('krux') &&

@@ -129,6 +129,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.indexExchange',[
 				return {
 					bidder: bidderName,
 					params: {
+						id: config.id,
 						siteId: String(config.siteId),
 						size: size
 					}
