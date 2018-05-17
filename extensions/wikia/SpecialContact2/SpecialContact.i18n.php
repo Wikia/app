@@ -246,10 +246,10 @@ Remember, you can also find help in our [[w:c:community:Special:Forum|Community 
 	'specialcontact-label-forget-account-previous-request' => 'Have you previously made a Personal Data Deletion Request to us?',
 	'specialcontact-label-forget-account-processing-consent' => 'I understand that Wikia, Inc. will only be able to process this request if the information given is correct.*',
 	'specialcontact-label-forget-account-data-processing-info' => 'Wikia, Inc. will use the personal information given on this form, and any other personal information you give to us in correspondence relating to it, for the purposes of processing your request, and meeting our legal obligations. We may share details of your request with data protection authorities, but only where we are required to do so, for instance, where these details are required to investigate a decision that we have made. We will retain a copy of this request to comply with our legal obligation to maintain data processing records.',
-	'specialcontact-label-forget-account-confirm-checkbox' => 'I have read and understood this statement.*',
+	'specialcontact-label-forget-account-confirm-checkbox' => 'I have read and understand this statement.*',
 	'specialcontact-label-forget-account-data-deletion-info' => 'Once the request for deletion is processed, the data removal cannot be reversed and your Wikia, Inc. account cannot be recovered.',
 	'specialcontact-label-forget-account-data-required-explanation' => '* Required',
-	'specialcontact-title-forget-account' => 'Your information',
+	'specialcontact-title-forget-account' => 'Your Information',
 );
 
 $messages['qqq'] = array(

@@ -513,9 +513,13 @@ class ContactForm extends SpecialPage {
 		$out = $this->getOutput();
 		$user = $this->getUser();
 
-		$out->setPageTitle(
-			$this->msg( 'specialcontact-sectitle', $this->msg( 'specialcontact-sectitle-'.$sub )->text() )->text()
-		);
+		if ($sub == 'forget-account') {
+			$out->setPageTitle( $this->msg( 'specialcontact-sectitle-forget-account')->escaped() );
+		} else {
+			$out->setPageTitle(
+				$this->msg( 'specialcontact-sectitle', $this->msg( 'specialcontact-sectitle-'.$sub )->text() )->text()
+			);
+		}
 
 		if( $user->isLoggedIn() ) {
 			//user mode
