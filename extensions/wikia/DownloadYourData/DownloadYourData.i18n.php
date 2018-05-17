@@ -15,3 +15,12 @@ $messages['en'] = array(
 	'downloadyourdata-birthdate' => 'Birth date',
 	'downloadyourdata-gender' => 'Gender'
 );
+
+
+$messages['pl'] = array(
+	'downloadyourdata-username' => 'Nazwa użytkownika',
+	'downloadyourdata-email' => 'Adres email',
+	'downloadyourdata-realname' => 'Prawdziwe nazwisko',
+	'downloadyourdata-birthdate' => 'Data urodzenia',
+	'downloadyourdata-gender' => 'Płeć'
+);

@@ -69,26 +69,27 @@ class DownloadYourDataSpecialController extends WikiaSpecialPageController {
 	}
 
 	private function prepareUserData( User &$user ) {
+		$language = $user->getGlobalPreference( 'language' );
 
-		$userdata = [ [ $this->msg( 'downloadyourdata-username' )->text(), $user->getName() ] ];
+		$userdata = [ [ $this->msg( 'downloadyourdata-username' )->inLanguage( $language )->text(), $user->getName() ] ];
 
 		if ( !empty( $user->getEmail() ) ) {
-			$userdata[] = [ $this->msg( 'downloadyourdata-email' )->text(), $user->getEmail() ];
+			$userdata[] = [ $this->msg( 'downloadyourdata-email' )->inLanguage( $language )->text(), $user->getEmail() ];
 		}
 
 		if ( !empty( $user->getRealName() ) ) {
-			$userdata[] = [ $this->msg( 'downloadyourdata-realname' )->text(), $user->getRealName() ];
+			$userdata[] = [ $this->msg( 'downloadyourdata-realname' )->inLanguage( $language )->text(), $user->getRealName() ];
 		}
 
 		if ( isset( $user->mBirthDate ) ) {
-			$userdata[] = [ $this->msg( 'downloadyourdata-birthdate' )->text(), $user->mBirthDate ];
+			$userdata[] = [ $this->msg( 'downloadyourdata-birthdate' )->inLanguage( $language )->text(), $user->mBirthDate ];
 		}
 
-		$gender = $user->getGlobalAttribute( UserIdentityBox::USER_PROPERTIES_PREFIX . 'gender' );
+		$gender = $user->getGlobalAttribute( 'gender' );
 		if ( !empty( $gender ) ) {
-			$userdata[] = [ $this->msg( 'downloadyourdata-gender' )->text(), $gender ];
+			$userdata[] = [ $this->msg( 'downloadyourdata-gender' )->inLanguage( $language )->text(),
+				$this->msg( 'gender-' . $gender )->inLanguage( $language )->text() ];
 		}
-
 
 		return $userdata;
 	}
