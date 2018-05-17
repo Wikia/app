@@ -77,6 +77,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.wikiaVideo',[
 			);
 
 			addBidResponse(bid.adUnitCode, bidResponse);
+			done();
 		});
 	}
 
