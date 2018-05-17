@@ -106,7 +106,7 @@ class UserDataRemover {
 		}
 
 		if ( is_object( $user ) ) {
-			$user->invalidateCache();
+			$user->invalidateCache( false );
 		}
 	}
 
