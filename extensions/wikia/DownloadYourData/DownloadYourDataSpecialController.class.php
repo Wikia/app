@@ -43,9 +43,8 @@ class DownloadYourDataSpecialController extends \WikiaSpecialPageController {
 				$output->setArticleBodyOnly( true );
 
 				WikiaLogger::instance()->info( 'Exported user data', [
-					'fields' => [
-						'exporting_user' => $user->getName(),
-						'exported_user' => $exportedUser->getName() ] ] );
+					'exporting_user' => $user->getName(),
+					'exported_user' => $exportedUser->getName() ] );
 
 				$output->addHTML( $model->formatAsCsv( $model->getDataForUser( $exportedUser ) ) );
 
