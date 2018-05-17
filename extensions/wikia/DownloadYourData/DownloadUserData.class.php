@@ -101,7 +101,7 @@ class DownloadUserData {
 	 * @return string csv content
 	 */
 	public function formatAsCsv( $data ) {
-		$fp = fopen("php://temp", 'r+');
+		$fp = fopen("php://temp", 'w+');
 		foreach($data as $row ) {
 			fputcsv( $fp, $row );
 		}
