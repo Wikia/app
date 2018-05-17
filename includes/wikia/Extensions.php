@@ -144,7 +144,7 @@ if ( ! empty( $wgEnableLyricWikiExt ) ) {
 /**
  * enable welcome tool on specified languages
  */
-if( in_array( $wgLanguageCode, $wgAvailableHAWLang ) ) {
+if( in_array( $wgLanguageCode, $wgAvailableHAWLang ) && !isset($wgEnableHAWelcomeExt) ) {
 	$wgEnableHAWelcomeExt = true;
 }
 
