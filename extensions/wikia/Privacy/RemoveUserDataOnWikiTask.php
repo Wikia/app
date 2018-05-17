@@ -133,10 +133,10 @@ class RemoveUserDataOnWikiTask extends BaseTask {
 		}
 	}
 
-	public function removeAllData( $userId, $username ) {
+	public function removeAllData( $userId, $username, $oldUsername = null ) {
 		global $wgUser;
 		$wgUser = User::newFromName( Wikia::BOT_USER );
-		
+
 		$this->removeCheckUserData( $userId );
 		$this->removeAbuseFilterData( $userId );
 		$this->removeIpFromRecentChanges( $userId );
@@ -145,6 +145,10 @@ class RemoveUserDataOnWikiTask extends BaseTask {
 		$this->removeUserPages( $userDbKey );
 		$this->removeUserPagesFromRecentChanges( $userDbKey );
 		$this->removeActionLogs( $userDbKey );
+		if ( !empty( $oldUsername ) ) {
+			$oldUserDbKey = Title::newFromText( $oldUsername )->getDBkey();
+			$this->removeUserPages( $oldUserDbKey );
+		}
 	}
 
 	protected function getLoggerContext() {

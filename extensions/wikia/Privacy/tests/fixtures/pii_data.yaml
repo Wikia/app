@@ -81,3 +81,23 @@ abuse_filter_log:
     afl_namespace: 0
     afl_title: ''
     afl_filter: 0
+
+page:
+  - page_id: 1
+    page_namespace: 2
+    page_title: 'Test user'
+    page_is_redirect: 0
+    page_len: 1
+    page_latest: 1
+  - page_id: 2
+    page_namespace: 2
+    page_title: 'Old_test_user'
+    page_is_redirect: 1
+    page_len: 1
+    page_latest: 1
+  - page_id: 3
+    page_namespace: 2
+    page_title: 'Other_test_user'
+    page_is_redirect: 0
+    page_len: 1
+    page_latest: 1

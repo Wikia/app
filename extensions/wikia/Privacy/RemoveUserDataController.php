@@ -29,17 +29,27 @@ class RemoveUserDataController extends WikiaController {
 
 		$this->info( "Right to be forgotten request for user $userId", ['userId' => $userId] );
 
-		$dataRemover = new UserDataRemover();
-		$dataRemover->removeGlobalData( $userId );
+		$username = User::whoIs( $userId );
+		$fakeUser = $this->getFakeUser($username);
+		$fakeUsername = !empty( $fakeUser ) ? $fakeUser->getName() : null;
 
-		$this->info( "Global data removed for user $userId", ['userId' => $userId] );
+		$dataRemover = new UserDataRemover();
+
+		if ( !empty( $fakeUser ) ) {
+			$dataRemover->removeGlobalData( $userId, $fakeUser );
+		} else {
+			$dataRemover->removeGlobalData( $userId );
+		}
+
+		$this->info( "Global data removed for user $userId", [ 'userId' => $userId ] );
 
 		$userWikis = $this->getUserWikis( $userId );
-		$username = User::whoIs( $userId );
+
 		$wikiCount = count( $userWikis );
 
 		$removeWikiDataTask = new RemoveUserDataOnWikiTask();
-		$removeWikiDataTask->call( 'removeAllData', $userId,  $username);
+
+		$removeWikiDataTask->call( 'removeAllData', $userId, $username, $fakeUsername );
 		$removeWikiDataTask->setQueue( Queue::RTBF_QUEUE_NAME )->wikiId( $userWikis )->queue();
 
 		$this->info( "Wiki data removal queued for user $userId", ['userId' => $userId] );
@@ -76,6 +86,20 @@ class RemoveUserDataController extends WikiaController {
 		global $wgSpecialsDB;
 		$specialsDbr = wfGetDB( DB_SLAVE, [], $wgSpecialsDB );
 		return $specialsDbr->selectFieldValues( 'events_local_users', 'wiki_id', ['user_id' => $userId], __METHOD__, ['DISTINCT'] );
+	}
+
+	/**
+	 * Returns fake user created in rename user process
+	 */
+	private function getFakeUser( $username ) {
+		$dbr = wfGetDB( DB_SLAVE, [], 'wikicities' );
+
+		$fakeUserId = $dbr->selectField( 'user_properties', 'up_user', [
+			'up_property' => 'renameData',
+			'up_value' => "renamed_to=$username",
+		], __METHOD__ );
+
+		return !empty( $fakeUserId ) ? User::newFromId( $fakeUserId ) : null;
 	}
 
 	protected function getLoggerContext() {
