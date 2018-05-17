@@ -977,6 +977,24 @@ class ArticleComment {
 	}
 
 	/**
+	 * Format a page_title for a comment
+	 *
+	 * e.g. Macbre/@comment-(user_ID_or_IP)-20170301152835/@comment-(user_ID_or_IP)-20171103161051
+	 *
+	 * @param Title $title
+	 * @param User $user
+	 * @return string
+	 */
+	static public function makeCommentTitle( Title $title, User $user ) : string {
+		return sprintf(
+			'%s/%s%s-%s',
+			$title->getText(),
+			ARTICLECOMMENT_PREFIX,
+			$user->isLoggedIn() ? $user->getId() : $user->getName(),
+			wfTimestampNow() );
+	}
+
+	/**
 	 * doPost -- static hook/entry for normal request post
 	 *
 	 * @param $text
@@ -986,12 +1004,10 @@ class ArticleComment {
 	 * @param bool $parentId
 	 * @param array $metadata
 	 *
-	 * @return Article -- newly created article
+	 * @return false|array
 	 * @throws MWException
 	 */
 	static public function doPost( $text, $user, $title, $parentId = false, $metadata = [ ] ) {
-		global $wgTitle;
-
 		if ( !$text || !strlen( $text ) ) {
 			return false;
 		}
@@ -1005,7 +1021,7 @@ class ArticleComment {
 		 */
 		if ( $parentId == false ) {
 			// 1st level comment
-			$commentTitle = sprintf( '%s/%s%s-%s', $title->getText(), ARTICLECOMMENT_PREFIX, $user->getName(), wfTimestampNow() );
+			$commentTitle = self::makeCommentTitle( $title, $user );
 		} else {
 			$parentArticle = Article::newFromID( $parentId );
 			if ( empty( $parentArticle ) ) {
@@ -1033,9 +1049,8 @@ class ArticleComment {
 
 				return false;
 			}
-			$parentTitle = $parentArticle->getTitle();
 			// nested comment
-			$commentTitle = sprintf( '%s/%s%s-%s', $parentTitle->getText(), ARTICLECOMMENT_PREFIX, $user->getName(), wfTimestampNow() );
+			$commentTitle = self::makeCommentTitle( $parentArticle->getTitle(), $user );
 		}
 		$commentTitleText = $commentTitle;
 		$commentTitle = Title::newFromText( $commentTitle, MWNamespace::getTalk( $title->getNamespace() ) );
@@ -1046,7 +1061,6 @@ class ArticleComment {
 					'method' => __METHOD__,
 					'parentId' => $parentId,
 					'commentTitleText' => $commentTitleText
-
 				] );
 			}
 
