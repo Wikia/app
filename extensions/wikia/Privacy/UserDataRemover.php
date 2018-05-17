@@ -84,6 +84,10 @@ class UserDataRemover {
 		$dbMaster->delete( 'wikiastaff_log', [
 			'slog_user' => $userId,
 		] );
+
+		$dbMaster->delete( 'wikiastaff_log', [
+			'slog_userdst' => $userId,
+		] );
 	}
 
 	protected function getLoggerContext() {

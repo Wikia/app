@@ -103,11 +103,20 @@ wikiastaff_log:
     slog_type: 'renameuser'
     slog_action: 'start'
     slog_user: 1
+    slog_userdst: 3
     slog_user_name: 'should_anonymize'
     slog_user_namedst: 'should_anonymize'
   - slog_id: 2
     slog_type: 'renameuser'
     slog_action: 'start'
     slog_user: 2
+    slog_userdst: 2
     slog_user_name: 'should_not_anonymize'
     slog_user_namedst: 'should_not_anonymize'
+  - slog_id: 3
+    slog_type: 'renameuser'
+    slog_action: 'start'
+    slog_user: 3
+    slog_userdst: 1
+    slog_user_name: 'should_anonymize'
+    slog_user_namedst: 'should_anonymize'

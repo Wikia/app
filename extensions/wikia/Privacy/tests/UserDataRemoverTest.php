@@ -134,6 +134,10 @@ class UserDataRemoverTest extends WikiaDatabaseTest {
 			$db->estimateRowCount( 'wikiastaff_log', '*', [ 'slog_user' => self::REMOVED_USER_ID ],
 				__METHOD__ ), 'Staff logs for removed user are not removed' );
 
+		$this->assertEquals( 0,
+			$db->estimateRowCount( 'wikiastaff_log', '*', [ 'slog_userdst' => self::REMOVED_USER_ID ],
+				__METHOD__ ), 'Staff logs for removed user are not removed' );
+
 		$this->assertEquals( 1,
 			$db->estimateRowCount( 'wikiastaff_log', '*', [ 'slog_user' => self::OTHER_USER_ID ],
 				__METHOD__ ), 'Staff logs were removed for wrong user' );
