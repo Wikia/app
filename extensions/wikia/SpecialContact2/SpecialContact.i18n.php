@@ -20,6 +20,7 @@ Follow the links below to learn more about how to use FANDOM, make changes to yo
 	'specialcontact-seclink-close-account' => 'Disable my account',
 	'specialcontact-seclink-rename-account' => 'Rename my account',
 	'specialcontact-seclink-blocked' => 'My account is blocked',
+	'specialcontact-seclink-data-access' => 'I want to download a copy of my data',
 	'specialcontact-secheader-editing' => 'Participating on FANDOM',
 	'specialcontact-seclink-using-fandom' => 'How do I use FANDOM?',
 	'specialcontact-seclink-feedback' => 'I want to offer some feedback',
@@ -40,6 +41,7 @@ Follow the links below to learn more about how to use FANDOM, make changes to yo
 	'specialcontact-sectitle-close-account' => 'Disable my account',
 	'specialcontact-sectitle-rename-account' => 'Rename my account',
 	'specialcontact-sectitle-blocked' => 'Account blocked',
+	'specialcontact-sectitle-data-access' => 'Request a copy of my data',
 	'specialcontact-sectitle-using-fandom' => 'Using FANDOM',
 	'specialcontact-sectitle-feedback' => 'Feedback',
 	'specialcontact-sectitle-bug' => 'Bug Report',
@@ -92,6 +94,7 @@ Happy editing!',
 However, if this talk page option is not available in your situation, then the best advice we can give you is to wait the block out or join the community at another of the many thousand FANDOM communities available.
 
 If you feel you still need to discuss this block further with FANDOM staff, please contact us [[Special:Contact/general|here]].',
+	'specialcontact-intro-data-access' => 'You can use this form to request a copy of your account data. If you have the ability to log in to your account, please log in and you will be able to download a copy of your data using this page. If you have lost access to your account, please fill out the form below in order to request a copy of your data.',
 	'specialcontact-intro-using-fandom' => "Now that you are a part of the community, you are able to edit and contribute to almost any page across FANDOM. For some introductory help, check out our [[Help:Getting_Started|help pages here]]. They are a great place to learn the basics of editing, formatting and much more.
 
 If you have questions about this specific community, start by [[Special:ListAdmins|contacting your local admins]].
@@ -237,6 +240,9 @@ Remember, you can also find help in our [[w:c:community:Special:Forum|Community 
 
 $messages['qqq'] = array(
 	'specialcontact-seclink-dmca-request' => 'Link text for copyright complaints.',
+	'specialcontact-seclink-data-access' => 'Link text for requesting a copy of your profile data.',
+	'specialcontact-sectitle-data-access' => 'The title of the form for requesting a copy of your profile data.',
+	'specialcontact-intro-data-access' => 'Introductory text for the data access request form.',
 	'specialcontact-seclink-security' => 'Link text for reporting security issues.',
 	'specialcontact-sectitle-security' => 'Title of the form for reporting security issues.',
 	'specialcontact-intro-security' => 'Introductory text for the security issue report form, including responsible disclosure guidelines.',
