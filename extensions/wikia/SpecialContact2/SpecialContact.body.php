@@ -63,6 +63,12 @@ class ContactForm extends SpecialPage {
 			'vars' => [ 'wpUserName', 'wpIssueType', 'wpUrl', 'wpDescription' ],
 			'subject' => 'Security report by %s at %s',
 		],
+
+		'data-access' => [
+			'format' => "%s has requested a copy of their data for the account \"%s\".",
+			'vars' => [ 'wpContactRealName', 'wpUserName' ],
+			'subject' => 'Data access request for %s',
+		],
 	);
 
 	function  __construct() {
@@ -89,6 +95,11 @@ class ContactForm extends SpecialPage {
 		if ( $par === 'rename-account' && $this->isRenameAccountSupported() ) {
 			$renameAccountTitle = SpecialPage::getTitleFor( 'UserRenameTool' );
 			$out->redirect( $renameAccountTitle->getFullURL() );
+		}
+
+		if ( $par === 'data-access' && $user->isLoggedIn() ) {
+			$dataAccessTitle = SpecialPage::getTitleFor( 'DownloadYourData' );
+			$out->redirect( $dataAccessTitle->getFullURL() );
 		}
 
 		$out->addStyle( AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/SpecialContact2/SpecialContact.scss'));
