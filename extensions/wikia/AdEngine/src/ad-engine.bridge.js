@@ -15,7 +15,8 @@ import {
 	BigFancyAdInPlayer,
 	universalAdPackage,
 	isProperGeo,
-	getSamplingResults
+	getSamplingResults,
+	utils as adProductsUtils
 } from '@wikia/ad-products';
 
 import { createTracker } from './tracking/porvata-tracker-factory';
@@ -37,13 +38,20 @@ function init(
 	pageLevelTargeting,
 	legacyContext,
 	legacyBtfBlocker,
-	skin
+	skin,
+	trackingOptIn
 ) {
+	const isOptedIn = trackingOptIn.isOptedIn();
+
 	TemplateRegistry.init(legacyContext, mercuryListener);
 	scrollListener.init();
 
 	context.set('slots', getSlotsContext(legacyContext, skin));
-	context.push('listeners.porvata', createTracker(legacyContext, geo, pageLevelTargeting, adTracker));
+	if (isOptedIn) {
+		context.push('listeners.porvata', createTracker(legacyContext, geo, pageLevelTargeting, adTracker));
+	}
+	context.set('options.trackingOptOut', !isOptedIn);
+	adProductsUtils.setupNpaContext();
 
 	overrideSlotService(slotRegistry, legacyBtfBlocker);
 	updatePageLevelTargeting(legacyContext, pageLevelTargeting, skin);

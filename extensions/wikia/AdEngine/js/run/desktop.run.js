@@ -72,7 +72,8 @@ require([
 			pageLevelParams.getPageLevelParams(),
 			adContext,
 			btfBlocker,
-			'oasis'
+			'oasis',
+			trackingOptIn
 		);
 		win.loadCustomAd = adEngineBridge.loadCustomAd(customAdsLoader.loadCustomAd);
 
