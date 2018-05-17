@@ -1314,11 +1314,11 @@ class Wikia {
 	 * @return bool true
 	 */
 	static public function onUserMailerSend( &$to ) {
-		foreach ( $to as $u ) {
-			if ( $u instanceof MailAddress && $u->name != '' ) {
-				$u->name = '';
-			}
-		}
+//		foreach ( $to as $u ) {
+//			if ( $u instanceof MailAddress && $u->name != '' ) {
+//				$u->name = '';
+//			}
+//		}
 
 		return true;
 	}

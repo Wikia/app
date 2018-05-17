@@ -13,90 +13,110 @@ require_once( dirname( __FILE__ ) . '/../Maintenance.php' );
 
 class sendGdprEmail extends Maintenance {
 	const ARGUMENT_FILE = 'file';
+	const ARGUMENT_LANGUAGE = 'language';
+
+	private $filename;
+	private $language;
 
 	public function __construct() {
 		parent::__construct();
 		$this->addOption( self::ARGUMENT_FILE, 'File with user IDs to process', true, true, 'f' );
-		$this->mDescription = "Send the GDPR notification email";
+		$this->addOption( self::ARGUMENT_LANGUAGE, 'Email language', true, true, 'l' );
+		$this->mDescription = 'Send the GDPR notification email';
 	}
 
 	public function execute() {
 		// FIXME just for measurements START
 		global $wgProfiler;
 		$wgProfiler = new ProfilerSimpleText([
-			"visible" => true
+			'visible' => true
 		]);
 
 		global $wgMemc;
 		$wgMemc = new EmptyBagOStuff();
 		// FIXME just for measurements STOP
 
-		$filename = $this->getOption( self::ARGUMENT_FILE );
-		$file = fopen( $filename, 'r' );
+		$this->filename = $this->getOption( self::ARGUMENT_FILE );
+		$this->language = $this->getOption( self::ARGUMENT_LANGUAGE );
+
+		$file = fopen( $this->filename, 'r' );
 		if ( !$file ) {
 			print "Unable to read file, exiting\n";
 			exit(1);
 		}
 
+		$recipients = [];
+
+		// TODO batch by 500
 		while ( ( $line = fgets( $file ) ) !== false ) {
 			$userId = intval( $line );
-			try {
-				$this->sendEmail( $userId );
-			} catch ( Exception $exception ) {
-				// TODO save to a file
-				$this->log( "fail", $userId );
-				WikiaLogger::instance()->error( "sendGdprEmail failed", [
-					'id' => $userId,
-					'exception' => $exception->getMessage(),
-				] );
+			$recipient = $this->userToRecipient( $userId );
+
+			if ( $recipient !== null ) {
+				array_push( $recipients, $recipient );
+			} else {
+				$this->log( 'skip', $userId );
 			}
 		}
 
-		$this->output( "Finished" );
+		$this->sendEmail( $recipients );
+		$this->output( 'Finished' );
 
 		$wgProfiler->logData();
 	}
 
-	private function sendEmail( $userId ) {
-		$user = User::newFromId( $userId );
+	private function sendEmail( $recipients ) {
+		try {
+			$status = UserMailer::send(
+				$recipients,
+				$this->getSender(),
+				$this->getSubject(),
+				$this->getBody(),
+				null,
+				null,
+				'gdpr'
+			);
+		} catch ( Exception $exception ) {
+			WikiaLogger::instance()->error( 'sendGdprEmail exception', [
+				'exception' => $exception->getMessage(),
+			] );
 
-		if ( !$user->canReceiveEmail() || $user->getGlobalPreference( 'unsubscribed' ) ) {
-			$this->log( "skip", $userId );
 			return;
 		}
 
-		$userLanguage = explode( '-', $user->getGlobalPreference( 'language' ) )[0];
-
-		$status = $user->sendMail(
-			$this->getSubject( $userLanguage ),
-			$this->getBody( $userLanguage ),
-			null,
-			null,
-			"gdpr",
-			$this->getBodyHtml( $userLanguage )
-		);
-
-		if ( $status->isOK() ) {
-			$this->log( "success", $userId );
-		} else {
-			$this->log( "fail", $userId );
-			WikiaLogger::instance()->error( "sendGdprEmail failed", [
-				'id' => $userId,
+		if ( !$status->isOK() ) {
+			WikiaLogger::instance()->error( 'sendGdprEmail failed', [
 				'errors' => $status->getErrorsArray()
 			] );
+
+			$this->output( "NOT OK: " . $status->getMessage() );
 		}
 	}
 
-	private function getSubject( $userLanguage ) {
-		return "GDPR email";
+	private function userToRecipient( int $userId ): MailAddress {
+		$user = User::newFromId( $userId );
+
+		if ( !$user->canReceiveEmail() || $user->getGlobalPreference( 'unsubscribed' ) ) {
+			return null;
+		}
+
+		return new MailAddress( $user );
 	}
 
-	private function getBody( $userLanguage ) {
-		return "Lorem ipsum.";
+	private function getSender() {
+		global $wgPasswordSender, $wgPasswordSenderName;
+		return new MailAddress( $wgPasswordSender, $wgPasswordSenderName );
 	}
 
-	private function getBodyHtml( $userLanguage ) {
-		return "<p>Lorem ipsum.</p>";
+	private function getSubject() {
+		return 'GDPR email';
+	}
+
+	private function getBody() {
+		return [
+			'text' => 'Hi {{name}}.',
+			'html' => '<p>Hi {{name}}.</p>'
+		];
 	}
 
 	private function log( $type, $userId ) {
