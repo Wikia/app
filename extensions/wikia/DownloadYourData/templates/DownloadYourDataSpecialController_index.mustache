@@ -1,9 +1,9 @@
 {{#isLoggedIn}}
   {{{introText}}}
   <form method="POST" name="DownloadYourDataForm" id="DownloadYourDataForm" class="DownloadYourDataForm">
-    {{#canPickUsername}}
+    {{#showUsernameField}}
       <input type="text" name="username" placeholder="{{usernamePlaceholder}}" />
-    {{/canPickUsername}}
+    {{/showUsernameField}}
     {{{submitButton}}}
     <input type="hidden" name="token" value="{{editToken}}" />
   </form>

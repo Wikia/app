@@ -20,5 +20,6 @@ $wgExtensionCredits['specialpage'][] = array(
 // Set up the new special page
 $wgExtensionMessagesFiles['DownloadYourData'] = __DIR__ . '/DownloadYourData.i18n.php';
 $wgAutoloadClasses['DownloadYourDataSpecialController'] = __DIR__ . '/DownloadYourDataSpecialController.class.php';
+$wgAutoloadClasses['DownloadUserData'] = __DIR__ . '/DownloadUserData.class.php';
 $wgSpecialPages['DownloadYourData'] = 'DownloadYourDataSpecialController';
 $wgSpecialPageGroups['DownloadYourData'] = 'wikia';
