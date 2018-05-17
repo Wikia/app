@@ -12,7 +12,7 @@ if ( !empty( $err ) ) {
 
 	<p>
 		<label for="wpUserName">
-			<?= wfMessage( 'specialcontact-username' )->escaped() ?>
+			<?= wfMessage( 'specialcontact-label-data-access-username' )->escaped() ?>
 			<input name="wpUserName" type="text" value="<?= $encName ?>" />
 		</label>
 	</p>
@@ -26,7 +26,7 @@ if ( !empty( $err ) ) {
 
 	<p>
 		<label for="wpEmail">
-			<?= wfMessage( 'specialcontact-yourmail' )->escaped() ?>
+			<?= wfMessage( 'specialcontact-label-data-access-email' )->escaped() ?>
 			<input name="wpEmail" type="email" value="<?= $encEmail ?>" />
 		</label>
 	</p>
