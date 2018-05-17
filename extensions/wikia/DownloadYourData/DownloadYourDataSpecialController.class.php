@@ -19,7 +19,7 @@ class DownloadYourDataSpecialController extends \WikiaSpecialPageController {
 
 		if ( $this->request->wasPosted() && $user->matchEditToken( $this->getVal( 'token' ) ) ) {
 
-			$model = new DownloadUserData( $this->getUser() );
+			$model = new DownloadUserData( $user );
 			$username = $this->request->getVal( 'username' );
 
 			if ( $user->isAllowed( 'exportuserdata' ) && !empty( $username ) ) {
