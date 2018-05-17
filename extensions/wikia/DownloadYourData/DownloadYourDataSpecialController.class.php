@@ -70,8 +70,11 @@ class DownloadYourDataSpecialController extends WikiaSpecialPageController {
 
 	private function prepareUserData( User $user ) {
 		$language = $user->getGlobalPreference( 'language' );
+		$userLang = Language::factory( $language );
 
-		$userdata = [ [ $this->msg( 'downloadyourdata-username' )->inLanguage( $language )->text(), $user->getName() ] ];
+		$userdata = [ [ $this->msg( 'downloadyourdata-username' )->inLanguage( $language )->text(), $user->getName() ],
+			[ $this->msg( 'downloadyourdata-userid' )->inLanguage( $language )->text(), $user->getId() ] ];
+
 
 		if ( !empty( $user->getEmail() ) ) {
 			$userdata[] = [ $this->msg( 'downloadyourdata-email' )->inLanguage( $language )->text(), $user->getEmail() ];
@@ -83,7 +86,20 @@ class DownloadYourDataSpecialController extends WikiaSpecialPageController {
 
 		if ( isset( $user->mBirthDate ) ) {
 			$userdata[] = [ $this->msg( 'downloadyourdata-birthdate' )->inLanguage( $language )->text(),
-				Language::factory( $language )->userDate( strtotime( $user->mBirthDate ), $user ) ];
+				$userLang->userDate( strtotime( $user->mBirthDate ), $user ) ];
+		}
+
+		$identityBox = new UserIdentityBox( $user );
+		$profileData = $identityBox->getFullData();
+		//$userdata[] = ['ibox', json_encode($profileData)];
+
+		if ( !empty( $profileData['registration'] ) ) {
+			$userdata[] = [ $this->msg( 'downloadyourdata-registration' )->inLanguage( $language )->text(), $profileData['registration'] ];
+		}
+
+		if ( !empty( $profileData['birthday'] ) && intval( $profileData['birthday']['month'] ) > 0 && intval( $profileData['birthday']['month'] ) < 13 ) {
+			$userdata[] = [ $this->msg( 'downloadyourdata-profile-birthday' )->inLanguage( $language )->text(),
+				$this->msg( 'downloadyourdata-birthday-value' )->inLanguage( $language )->params( $userLang->getMonthName( intval( $profileData['birthday']['month'] ) ) )->numParams( htmlspecialchars( $profileData['birthday']['day'] ) )->parse() ];
 		}
 
 		$gender = $user->getGlobalAttribute( 'gender' );
@@ -91,6 +107,20 @@ class DownloadYourDataSpecialController extends WikiaSpecialPageController {
 			$userdata[] = [ $this->msg( 'downloadyourdata-gender' )->inLanguage( $language )->text(),
 				$this->msg( 'gender-' . $gender )->inLanguage( $language )->text() ];
 		}
+
+		if ( !empty( $profileData['gender'] ) ) {
+			$userdata[] = [ $this->msg( 'downloadyourdata-profile-gender' )->inLanguage( $language )->text(), $profileData['gender'] ];
+		}
+
+		if ( !empty( $profileData['location'] ) ) {
+			$userdata[] = [ $this->msg( 'downloadyourdata-location' )->inLanguage( $language )->text(), $profileData['location'] ];
+		}
+		if ( !empty( $profileData['occupation'] ) ) {
+			$userdata[] = [ $this->msg( 'downloadyourdata-occupation' )->inLanguage( $language )->text(), $profileData['occupation'] ];
+		}
+
+		$userdata[] = [ $this->msg( 'downloadyourdata-user-activity-link' )->inLanguage( $language )->text(), GlobalTitle::newFromText('UserActivity', NS_SPECIAL, Wikia::COMMUNITY_WIKI_ID)->getFullURL() ];
+
 
 		return $userdata;
 	}
