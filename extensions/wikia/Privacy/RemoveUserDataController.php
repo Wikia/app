@@ -48,6 +48,7 @@ class RemoveUserDataController extends WikiaController {
 		$wikiCount = count( $userWikis );
 
 		$removeWikiDataTask = new RemoveUserDataOnWikiTask();
+
 		$removeWikiDataTask->call( 'removeAllData', $userId, $username, $fakeUsername );
 		$removeWikiDataTask->setQueue( Queue::RTBF_QUEUE_NAME )->wikiId( $userWikis )->queue();
 
