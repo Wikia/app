@@ -6,16 +6,22 @@ if ( !empty($err) ) {
 echo wfMessage( 'specialcontact-intro-forget-account' )->parseAsBlock();
 ?>
 
-<h2><?= wfMessage( 'specialcontact-form-header' )->escaped() ?></h2>
+<h2><?= wfMessage( 'specialcontact-title-forget-account' )->escaped() ?></h2>
 
 <form id="contactform" method="post" action="">
 <input name="wpEmail" type="hidden" value="<?= $encEmail ?>" />
 <input name="wpUserName" type="hidden" value="<?= $encName ?>" />
 <input name="wpEditToken" type="hidden" value="<?= Sanitizer::encodeAttribute( $editToken ) ?>" />
 
-<?= wfMessage( 'specialcontact-logged-in-as', $encName )->parseAsBlock() ?>
-
-<?= wfMessage( 'specialcontact-mail-on-file', $encEmail )->parseAsBlock() ?>
+<? if (F::app()->wg->User->isLoggedIn()) {
+	echo( wfMessage( 'specialcontact-logged-in-as', $encName )->parseAsBlock() );
+	echo( wfMessage( 'specialcontact-mail-on-file', $encEmail )->parseAsBlock() );
+} ?>
+<p>
+	<em>
+		<?= wfMessage( 'specialcontact-label-forget-account-data-required-explanation' )->escaped() ?>
+	</em>
+</p>
 
 <p>
 	<label for="wpCouuntry"><?= wfMessage( 'specialcontact-label-forget-account-country-info' )->escaped() ?></label>
