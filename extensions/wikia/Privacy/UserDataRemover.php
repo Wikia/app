@@ -27,7 +27,6 @@ class UserDataRemover {
 			$userIdentityBox->clearMastheadContents();
 			Wikia::invalidateUser( $user, true, false );
 
-			// invalidate user cache
 			$user = User::newFromId( $userId );
 
 			$dbMaster = wfGetDB( DB_MASTER, [], 'wikicities' );
