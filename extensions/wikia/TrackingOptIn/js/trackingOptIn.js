@@ -25,7 +25,8 @@ define('wikia.trackingOptIn', [
 				onRejectTracking: function () {
 					userConsentQueue.start();
 					log('User opted out', log.levels.debug, logGroup);
-				}
+				},
+				zIndex: 9999999
 			});
 			log('Using tracking opt in modal', log.levels.info, logGroup);
 		} else {
