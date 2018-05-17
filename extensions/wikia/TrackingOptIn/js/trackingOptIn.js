@@ -31,12 +31,18 @@ define('wikia.trackingOptIn', [
 		});
 	}
 
+	function isOptedIn() {
+		log(['TrackingOptIn isOptedIn', optIn], log.levels.info, logGroup);
+		return optIn;
+	}
+
 	function pushToUserConsentQueue(callback) {
 		userConsentQueue.push(callback);
 	}
 
 	return {
 		init: init,
+		isOptedIn: isOptedIn,
 		pushToUserConsentQueue: pushToUserConsentQueue
 	};
 });
