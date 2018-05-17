@@ -68,7 +68,7 @@ class DownloadYourDataSpecialController extends WikiaSpecialPageController {
 		wfProfileOut( __METHOD__ );
 	}
 
-	private function prepareUserData( User &$user ) {
+	private function prepareUserData( User $user ) {
 		$language = $user->getGlobalPreference( 'language' );
 
 		$userdata = [ [ $this->msg( 'downloadyourdata-username' )->inLanguage( $language )->text(), $user->getName() ] ];
@@ -82,7 +82,8 @@ class DownloadYourDataSpecialController extends WikiaSpecialPageController {
 		}
 
 		if ( isset( $user->mBirthDate ) ) {
-			$userdata[] = [ $this->msg( 'downloadyourdata-birthdate' )->inLanguage( $language )->text(), $user->mBirthDate ];
+			$userdata[] = [ $this->msg( 'downloadyourdata-birthdate' )->inLanguage( $language )->text(),
+				Language::factory( $language )->userDate( date( 'Y-m-d H:i:s', strtotime( $user->mBirthDate ) ), $user ) ];
 		}
 
 		$gender = $user->getGlobalAttribute( 'gender' );
