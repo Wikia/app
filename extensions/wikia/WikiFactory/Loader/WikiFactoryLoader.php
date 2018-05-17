@@ -402,7 +402,7 @@ class WikiFactoryLoader {
 							 !empty( $_COOKIE["{$wgCookiePrefix}UserID"] );
 
 			if ( $hasAuthCookie &&
-				 $_SERVER['HTTP_FASTLY_SSL'] &&
+				 !empty( $_SERVER['HTTP_FASTLY_SSL'] ) &&
 				 // Hack until we are better able to handle internal HTTPS requests
 				 !empty( $_SERVER['HTTP_FASTLY_FF'] ) &&
 				 wfHttpsAllowedForURL( $redirectUrl )
@@ -522,28 +522,6 @@ class WikiFactoryLoader {
 				}
 			}
 			$dbr->freeResult( $oRes );
-
-			/**
-			 * read tags for this wiki, store in global variable as array
-			 * @name $wgWikiFactoryTags
-			 */
-			wfProfileIn( __METHOD__."-tagsdb" );
-			$this->mVariables[ "wgWikiFactoryTags" ] = array();
-			$sth = $dbr->select(
-				array( "city_tag", "city_tag_map" ),
-				array( "id", "name"	),
-				array(
-					"city_tag.id = city_tag_map.tag_id",
-					"city_id = {$this->mWikiID}"
-				),
-				__METHOD__ . '::tagsdb'
-			);
-			while( $row = $dbr->fetchObject( $sth ) ) {
-				$this->mVariables[ "wgWikiFactoryTags" ][ $row->id ] = $row->name;
-			}
-			$dbr->freeResult( $sth );
-			$this->debug( "reading tags from database, id {$this->mWikiID}, count ".count( $this->mVariables[ "wgWikiFactoryTags" ] ) );
-			wfProfileOut( __METHOD__."-tagsdb" );
 
 			if( empty($this->mAlwaysFromDB) ) {
 				/**

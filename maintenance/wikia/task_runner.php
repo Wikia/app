@@ -35,6 +35,7 @@ class TaskRunnerMaintenance extends Maintenance {
 
 		if (!empty($this->mOptions['wiki_id'])) {
 			putenv("SERVER_ID={$this->mOptions['wiki_id']}");
+			$_ENV['SERVER_ID'] = $this->mOptions['wiki_id'];
 		}
 	}
 

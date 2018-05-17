@@ -3,7 +3,7 @@
 /**
  * Base class for the various commands and tools presented in the bottom toolbar of the Oasis skin
  */
-abstract class UserCommand {
+abstract class UserCommand extends ContextSource {
 
 	/**
 	 * @var string|null $id Unique id of this tool (tool type and tool name separated by a : )
