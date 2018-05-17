@@ -13,6 +13,8 @@ class HTTPSOptInHooks {
 		'wikia' => [ 'Community_Central:Licensing' ]
 	];
 
+	const WIKI_ID_THRESHOLD_WITH_HTTPS_ON = 10000;
+
 	public static function onGetPreferences( User $user, array &$preferences ): bool {
 		global $wgServer, $wgHTTPSForLoggedInUsers;
 		if ( empty( $wgHTTPSForLoggedInUsers ) && wfHttpsAllowedForURL( $wgServer ) ) {
@@ -69,10 +71,14 @@ class HTTPSOptInHooks {
 	}
 
 	private static function httpsAllowed( User $user, string $url ): bool {
-		global $wgHTTPSForLoggedInUsers;
+		global $wgHTTPSForLoggedInUsers, $wgCityId;
 		return wfHttpsAllowedForURL( $url ) &&
 			$user->isLoggedIn() &&
-			( !empty( $wgHTTPSForLoggedInUsers ) || $user->getGlobalPreference( 'https-opt-in', false ) );
+			(
+				!empty( $wgHTTPSForLoggedInUsers ) ||
+				$user->getGlobalPreference( 'https-opt-in', false ) ||
+				$wgCityId > self::WIKI_ID_THRESHOLD_WITH_HTTPS_ON
+			);
 	}
 
 	private static function httpsEnabledTitle( Title $title ): bool {
