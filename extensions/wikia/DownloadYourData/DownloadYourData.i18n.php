@@ -23,12 +23,3 @@ $messages['en'] = array(
 	'downloadyourdata-occupation' => 'Occupation',
 	'downloadyourdata-user-activity-link' => 'User activity link'
 );
-
-
-$messages['pl'] = array(
-	'downloadyourdata-username' => 'Nazwa użytkownika',
-	'downloadyourdata-email' => 'Adres email',
-	'downloadyourdata-realname' => 'Prawdziwe nazwisko',
-	'downloadyourdata-birthdate' => 'Data urodzenia',
-	'downloadyourdata-gender' => 'Płeć'
-);
