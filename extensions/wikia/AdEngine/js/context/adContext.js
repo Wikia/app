@@ -191,11 +191,11 @@ define('ext.wikia.adEngine.adContext', [
 			) || isUrlParamSet('highimpactslot');
 
 		// AdInfo warehouse logging
-		context.opts.kikimoraViewabilityTracking = !trackingOptOut.isOptedOut('kikimora') &&
+		context.opts.kikimoraViewabilityTracking = trackingOptIn.isOptedIn() &&
 			geo.isProperGeo(instantGlobals.wgAdDriverKikimoraViewabilityTrackingCountries);
-		context.opts.enableAdInfoLog = !trackingOptOut.isOptedOut('kikimora') &&
+		context.opts.enableAdInfoLog = trackingOptIn.isOptedIn() &&
 			geo.isProperGeo(instantGlobals.wgAdDriverKikimoraTrackingCountries);
-		context.opts.playerTracking = !trackingOptOut.isOptedOut('kikimora') &&
+		context.opts.playerTracking = trackingOptIn.isOptedIn() &&
 			geo.isProperGeo(instantGlobals.wgAdDriverKikimoraPlayerTrackingCountries);
 
 		// Krux integration
