@@ -21,21 +21,19 @@ class UserDataRemover {
 	private function removeUserData( User $user ) {
 		try {
 			$userId = $user->getId();
-			$userName = $user->getName();
 			$newUserName = uniqid( 'Anonymous ' );
 
 			$userIdentityBox = new UserIdentityBox( $user );
 			$userIdentityBox->clearMastheadContents();
 			Wikia::invalidateUser( $user, true, false );
 
+			$user = User::newFromId( $userId );
+
 			$dbMaster = wfGetDB( DB_MASTER, [], 'wikicities' );
 
 			// commit changes performed by Wikia::invalidateUser
 			$dbMaster->commit( __METHOD__ );
 			wfWaitForSlaves( $dbMaster->getDBname() );
-
-			// invalidate the old user name -> user ID mapping
-			$this->invalidateUser( $userName );
 
 			$dbMaster->update( 'user', [
 					'user_name' => $newUserName,
@@ -49,11 +47,7 @@ class UserDataRemover {
 			$dbMaster->commit( __METHOD__ );
 			wfWaitForSlaves( $dbMaster->getDBname() );
 
-			// invalidate user cache
-			$user = User::newFromId( $userId );
-
-			$this->invalidateUser( $user );
-			$this->invalidateUser( $newUserName );
+			$user->deleteCache();
 
 			$this->removeUserDataFromStaffLog( $userId );
 
@@ -90,24 +84,6 @@ class UserDataRemover {
 		$dbMaster->delete( 'wikiastaff_log', [
 			'slog_user' => $userId,
 		] );
-	}
-
-	/**
-	 * Borrowed from RenameUserProcess class
-	 *
-	 * @param User|string $user
-	 * @throws InvalidArgumentException
-	 */
-	private function invalidateUser( $user ) {
-		if ( is_string( $user ) ) {
-			$user = User::newFromName( $user );
-		} elseif ( !is_object( $user ) ) {
-			throw new InvalidArgumentException(__METHOD__ . ' method should be called with string or User provided');
-		}
-
-		if ( is_object( $user ) ) {
-			$user->invalidateCache();
-		}
 	}
 
 	protected function getLoggerContext() {
