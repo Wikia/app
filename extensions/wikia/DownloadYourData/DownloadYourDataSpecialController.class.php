@@ -126,7 +126,7 @@ class DownloadYourDataSpecialController extends WikiaSpecialPageController {
 	}
 
 	private function formatAsCsv( $data ) {
-		$fp = fopen("php://temp/maxmemory:65536", 'r+');
+		$fp = fopen("php://temp", 'r+');
 		foreach($data as $row ) {
 			fputcsv( $fp, $row );
 		}
