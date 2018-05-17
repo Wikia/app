@@ -6,6 +6,9 @@ use \Wikia\Logger\WikiaLogger;
 
 class DownloadYourDataSpecialController extends \WikiaSpecialPageController {
 
+	const CSV_FILE_NAME = 'fandom_account_data.csv';
+	const CSV_CONTENT_TYPE = 'text/csv; charset=UTF-8';
+
 	public function __construct() {
 		parent::__construct( 'DownloadYourData' );
 	}
@@ -37,8 +40,8 @@ class DownloadYourDataSpecialController extends \WikiaSpecialPageController {
 				$output = \RequestContext::getMain()->getOutput();
 
 				$output->getRequest()->response()->header(
-					'Content-disposition: attachment;filename=fandom_account_data.csv');
-				$output->getRequest()->response()->header('Content-type: text/csv; charset=UTF-8');
+					'Content-disposition: attachment;filename=' . self::CSV_FILE_NAME );
+				$output->getRequest()->response()->header('Content-type: ' . self::CSV_CONTENT_TYPE );
 
 				$output->setArticleBodyOnly( true );
 
