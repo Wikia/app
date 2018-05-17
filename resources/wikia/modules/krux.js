@@ -8,14 +8,17 @@ define('wikia.krux', [
 	'ext.wikia.adEngine.adTracker',
 	'wikia.document',
 	'wikia.tracker',
-	'wikia.window'
-], function (adContext, adTracker, doc, wikiaTracker, win) {
+	'wikia.trackingOptIn',
+	'wikia.window',
+	'wikia.log'
+], function (adContext, adTracker, doc, wikiaTracker, trackingOptIn, win, log) {
 	'use strict';
 
 	var maxNumberOfKruxSegments = 50,
 		kruxScriptId = 'krux-control-tag',
 		kruxLoaded = false,
-		segmentsCountTracked = false;
+		segmentsCountTracked = false,
+		logGroup = 'wikia.krux';
 
 	function exportPageParams(adLogicPageParams) {
 		var params, value;
@@ -51,30 +54,38 @@ define('wikia.krux', [
 			adContext,
 			adLogicPageParams
 		) {
-			var script;
-			if (adContext.getContext().targeting.enableKruxTargeting) {
-				// Export page level params, so Krux can read them
-				exportPageParams(adLogicPageParams);
-
-				script = doc.getElementById(kruxScriptId);
-				if (script) {
-					script.parentNode.removeChild(script);
+			trackingOptIn.pushToUserConsentQueue(function(optIn) {
+				if (optIn === false) {
+					log('User opt-out for Krux', log.levels.info, logGroup);
+					return;
 				}
+				log('User opt-in for Krux', log.levels.info, logGroup);
 
-				// Add Krux pixel
-				addConfigScript(confid);
-				kruxLoaded = true;
+				var script;
+				if (adContext.getContext().targeting.enableKruxTargeting) {
+					// Export page level params, so Krux can read them
+					exportPageParams(adLogicPageParams);
 
-				// Add GA tracking
-				adTracker.track('krux/load');
-				wikiaTracker.track({
-					category: 'ads-trackers',
-					action: 'krux',
-					label: 'load',
-					value: 0,
-					trackingMethod: 'analytics'
-				});
-			}
+					script = doc.getElementById(kruxScriptId);
+					if (script) {
+						script.parentNode.removeChild(script);
+					}
+
+					// Add Krux pixel
+					addConfigScript(confid);
+					kruxLoaded = true;
+
+					// Add GA tracking
+					adTracker.track('krux/load');
+					wikiaTracker.track({
+						category: 'ads-trackers',
+						action: 'krux',
+						label: 'load',
+						value: 0,
+						trackingMethod: 'analytics'
+					});
+				}
+			});
 		});
 	}
 

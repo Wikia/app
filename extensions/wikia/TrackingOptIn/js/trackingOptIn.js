@@ -14,6 +14,7 @@ define('wikia.trackingOptIn', [
 
 	function init() {
 		if (instantGlobals.wgEnableTrackingOptInModal) {
+			log('Using tracking opt in modal', log.levels.info, logGroup);
 			trackingOptInModal.render({
 				countriesRequiringPrompt: ['us'], // TODO provide full list of countries
 				country: 'us', // TODO provide geo from cookie
@@ -28,7 +29,6 @@ define('wikia.trackingOptIn', [
 				},
 				zIndex: 9999999
 			});
-			log('Using tracking opt in modal', log.levels.info, logGroup);
 		} else {
 			optIn = true;
 			userConsentQueue.start();
