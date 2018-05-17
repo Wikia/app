@@ -239,7 +239,7 @@ class WikiaSendgridMailer {
 				return $address->toString();
 			}, $to ),
 			'sub' => [
-				'{{name}}' => array_map( function ( MailAddress $address ) {
+				'$username$' => array_map( function ( MailAddress $address ) {
 					return $address->name;
 				}, $to )
 			]

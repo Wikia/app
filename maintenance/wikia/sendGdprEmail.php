@@ -7,13 +7,27 @@ use \Wikia\Logger\WikiaLogger;
  */
 
 ini_set( 'display_errors', 'stderr' );
-ini_set( 'error_reporting', E_ERROR | E_WARNING );
+ini_set( 'error_reporting', E_ALL );
 
 require_once( dirname( __FILE__ ) . '/../Maintenance.php' );
 
 class sendGdprEmail extends Maintenance {
 	const ARGUMENT_FILE = 'file';
 	const ARGUMENT_LANGUAGE = 'language';
+
+	const SUBJECTS = [
+		'en' => 'We\'re updating our Terms of Use and Privacy Policy',
+		'zh' => '我们正在更新我们的使用条款和隐私政策',
+		'zh-tw' => '我們正在更新我們的使用條款和隱私權方針',
+		'fr' => 'Mise à jour de nos Conditions d\'utilisation et de notre Politique de confidentialité',
+		'de' => 'Wir aktualisieren unsere Nutzungsbedingungen und Datenschutzrichtlinien',
+		'it' => 'Stiamo aggiornando i nostri termini di utilizzo e la nostra informativa sulla privacy',
+		'ja' => '利用規約とプライバシー・ポリシーの更新について',
+		'pl' => 'Aktualizujemy nasze Zasady Użytkowania i Politykę Prywatności',
+		'pt' => 'Estamos atualizando nossos Termos de uso e Política de privacidade',
+		'ru' => 'Мы обновляем наши Условия использования и Политику конфиденциальности',
+		'es' => 'Estamos actualizando nuestros Términos de uso y Política de Privacidad'
+	];
 
 	private $filename;
 	private $language;
@@ -26,16 +40,6 @@ class sendGdprEmail extends Maintenance {
 	}
 
 	public function execute() {
-		// FIXME just for measurements START
-		global $wgProfiler;
-		$wgProfiler = new ProfilerSimpleText([
-			'visible' => true
-		]);
-
-		global $wgMemc;
-		$wgMemc = new EmptyBagOStuff();
-		// FIXME just for measurements STOP
-
 		$this->filename = $this->getOption( self::ARGUMENT_FILE );
 		$this->language = $this->getOption( self::ARGUMENT_LANGUAGE );
 
@@ -47,7 +51,7 @@ class sendGdprEmail extends Maintenance {
 
 		$recipients = [];
 
-		// TODO batch by 500
+		// TODO batch by 1000
 		while ( ( $line = fgets( $file ) ) !== false ) {
 			$userId = intval( $line );
 			$recipient = $this->userToRecipient( $userId );
@@ -60,9 +64,7 @@ class sendGdprEmail extends Maintenance {
 		}
 
 		$this->sendEmail( $recipients );
-		$this->output( 'Finished' );
-
-		$wgProfiler->logData();
+		echo "Finished\n";
 	}
 
 	private function sendEmail( $recipients ) {
@@ -78,8 +80,15 @@ class sendGdprEmail extends Maintenance {
 			);
 		} catch ( Exception $exception ) {
 			WikiaLogger::instance()->error( 'sendGdprEmail exception', [
-				'exception' => $exception->getMessage(),
+				'message' => $exception->getMessage(),
+				'trace' => $exception->getTraceAsString()
 			] );
+
+			echo $exception->getMessage();
+			echo "\n";
+			echo $exception->getTraceAsString();
+			echo "\n";
+			echo "Exception in sendEmail, quitting\n";
 
 			return;
 		}
@@ -89,7 +98,7 @@ class sendGdprEmail extends Maintenance {
 				'errors' => $status->getErrorsArray()
 			] );
 
-			$this->output( "NOT OK: " . $status->getMessage() );
+			echo "NOT OK: " . $status->getMessage();
 		}
 	}
 
@@ -109,18 +118,35 @@ class sendGdprEmail extends Maintenance {
 	}
 
 	private function getSubject() {
-		return 'GDPR email';
+		return self::SUBJECTS[ $this->language ];
 	}
 
 	private function getBody() {
+		$html = F::app()->renderView( 'Email\Controller\GdprNotificationController', 'getBody', [
+			'language' => $this->language
+		] );
+
 		return [
-			'text' => 'Hi {{name}}.',
-			'html' => '<p>Hi {{name}}.</p>'
+			'text' => $this->bodyHtmlToText( $html ),
+			'html' => $html
 		];
 	}
 
 	private function log( $type, $userId ) {
-		// TODO log to file per type
+		// TODO rethink logging
+		echo $type . ':' . $userId;
+	}
+
+	// Copy paste from EmailController.class.php
+	private function bodyHtmlToText( $html ) {
+		$bodyText = strip_tags( $html );
+
+		// Get rid of multiple blank white lines
+		$bodyText = preg_replace( '/^\h*\v+/m', '', $bodyText );
+
+		// Get rid of leading spacing/indenting
+		$bodyText = preg_replace( '/^[\t ]+/m', '', $bodyText );
+		return $bodyText;
 	}
 }
 
