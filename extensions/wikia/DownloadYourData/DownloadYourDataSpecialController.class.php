@@ -20,7 +20,7 @@ class DownloadYourDataSpecialController extends WikiaSpecialPageController {
 			$username = $this->request->getVal( 'username' );
 			if ( $this->canPickUsername && !empty( $username ) ) {
 				$exportedUser = User::newFromName( $username );
-				if ( !$exportedUser ) {
+				if ( !$exportedUser || !$exportedUser->getId() ) {
 					$this->error = $this->msg( 'downloadyourdata-user-not-found', $username )->parse();
 				}
 			} else {
@@ -36,9 +36,7 @@ class DownloadYourDataSpecialController extends WikiaSpecialPageController {
 
 				$output->setArticleBodyOnly( true );
 
-				// use $exportedUser object to fetch the csv data
-
-				$output->addHTML( 'works like a charm!' );
+				$output->addHTML( $this->formatAsCsv( $this->prepareUserData( $exportedUser ) ) );
 
 				wfProfileOut( __METHOD__ );
 
@@ -49,7 +47,7 @@ class DownloadYourDataSpecialController extends WikiaSpecialPageController {
 
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
 
-
+		$this->introText = $this->msg( 'downloadyourdata-intro' )->text();
 		$this->notLoggedInMessage = $this->msg( 'downloadyourdata-not-logged-in' )->parse();
 		$this->usernamePlaceholder = $this->msg( 'downloadyourdata-username-placeholder' )->text();
 		$this->editToken = $user->getEditToken();
@@ -67,9 +65,37 @@ class DownloadYourDataSpecialController extends WikiaSpecialPageController {
 
 		$this->submitButton = \Wikia\UI\Factory::getInstance()->init( 'button' )->render( $buttonParams );
 
-		$this->introText = $this->msg( 'downloadyourdata-intro' )->escaped();
-
 		wfProfileOut( __METHOD__ );
+	}
+
+	private function prepareUserData( User &$user ) {
+		$userdata = [ [ $this->msg( 'downloadyourdata-username' )->text(), $user->getName() ] ];
+
+		if ( !empty( $user->getEmail() ) ) {
+			$userdata[] = [ $this->msg( 'downloadyourdata-email' )->text(), $user->getEmail() ];
+		}
+
+		if ( !empty( $user->getRealName() ) ) {
+			$userdata[] = [ $this->msg( 'downloadyourdata-realname' )->text(), $user->getRealName() ];
+		}
+
+		if ( isset( $user->mBirthDate ) ) {
+			$userdata[] = [ $this->msg( 'downloadyourdata-birthdate' )->text(), $user->mBirthDate ];
+		}
+
+		return $userdata;
+	}
+
+	private function formatAsCsv( $data ) {
+		$fp = fopen("php://temp/maxmemory:65536", 'r+');
+		foreach($data as $row ) {
+			fputcsv( $fp, $row );
+		}
+		fflush( $fp );
+		rewind( $fp );
+		$result = stream_get_contents( $fp );
+		fclose($fp);
+		return $result;
 	}
 
 }
