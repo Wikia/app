@@ -5,7 +5,6 @@ define('ext.wikia.adEngine.adEngineRunner', [
 	'ext.wikia.adEngine.adTracker',
 	'wikia.instantGlobals',
 	'wikia.log',
-	require.optional('wikia.trackingOptIn'),
 	'wikia.window',
 	require.optional('ext.wikia.adEngine.lookup.a9'),
 	require.optional('ext.wikia.adEngine.lookup.prebid'),
@@ -17,7 +16,6 @@ define('ext.wikia.adEngine.adEngineRunner', [
 	adTracker,
 	instantGlobals,
 	log,
-	trackingOptIn,
 	win,
 	a9,
 	prebid,
@@ -149,21 +147,12 @@ define('ext.wikia.adEngine.adEngineRunner', [
 			adEngine.run(config, slots, queueName);
 		}
 
-		// TODO make some clean up here
-		function runAdEngineWithDelay() {
-			if (delayEnabled) {
-				delayRun(runAdEngine);
-			} else {
-				log('Run AdEngine without delay', log.levels.info, logGroup);
-				runAdEngine();
-			}
+		if (delayEnabled) {
+			delayRun(runAdEngine);
+		} else {
+			log('Run AdEngine without delay', log.levels.info, logGroup);
+			runAdEngine();
 		}
-
-		// TODO decide what to do with mobile-wiki
-		trackingOptIn.pushToUserConsentQueue(function (optIn) {
-			// TODO setup bridge context with optIn value
-			runAdEngineWithDelay();
-		});
 	}
 
 	return {
