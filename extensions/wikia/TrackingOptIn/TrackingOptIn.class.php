@@ -10,6 +10,12 @@ class TrackingOptIn {
 		return true;
 	}
 
+	public static function onInstantGlobalsGetVariables( array &$vars ) {
+		$vars[] = 'wgEnableTrackingOptInModal';
+
+		return true;
+	}
+
 	public static function renderScript() {
 		return \MustacheService::getInstance()->render(self::TEMPLATE, []);
 	}

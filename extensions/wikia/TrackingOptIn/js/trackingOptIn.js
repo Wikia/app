@@ -1,8 +1,11 @@
 define('wikia.trackingOptIn', [
-	'trackingOptIn',
-	'wikia.lazyqueue'
-], function (trackingOptIn, lazyQueue) {
+	'wikia.instantGlobals',
+	'wikia.lazyqueue',
+	'wikia.log',
+	'wikia.trackingOptInModal'
+], function (instantGlobals, lazyQueue, log, trackingOptInModal) {
 	var optIn = false,
+		logGroup = 'wikia.trackingOptIn',
 		userConsentQueue = [];
 
 	lazyQueue.makeQueue(userConsentQueue, function (callback) {
@@ -10,17 +13,26 @@ define('wikia.trackingOptIn', [
 	});
 
 	function init() {
-		trackingOptIn.main({
-			countriesRequiringPrompt: ['us'], // TODO provide full list of countries
-			country: 'us', // TODO provide geo from cookie
-			onAcceptTracking: function () {
-				optIn = true;
-				userConsentQueue.start();
-			},
-			onRejectTracking: function () {
-				userConsentQueue.start();
-			}
-		});
+		if (instantGlobals.wgEnableTrackingOptInModal) {
+			trackingOptInModal.render({
+				countriesRequiringPrompt: ['us'], // TODO provide full list of countries
+				country: 'us', // TODO provide geo from cookie
+				onAcceptTracking: function () {
+					optIn = true;
+					userConsentQueue.start();
+					log('User opted in', log.levels.debug, logGroup);
+				},
+				onRejectTracking: function () {
+					userConsentQueue.start();
+					log('User opted out', log.levels.debug, logGroup);
+				}
+			});
+			log('Using tracking opt in modal', log.levels.info, logGroup);
+		} else {
+			optIn = true;
+			userConsentQueue.start();
+			log('Running queue without tracking opt in modal', log.levels.info, logGroup);
+		}
 	}
 
 	function pushToUserConsentQueue(callback) {

@@ -11,7 +11,7 @@ module.exports = function () {
 			path: path.resolve(__dirname, 'dist'),
 			filename: '[name].js',
 			libraryTarget: 'amd',
-			library: 'trackingOptIn'
+			library: 'wikia.trackingOptInModal'
 		},
 		module: {
 			rules: [
