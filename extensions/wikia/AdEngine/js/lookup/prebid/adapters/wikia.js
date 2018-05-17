@@ -110,27 +110,29 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.wikia',[
 		return creative.outerHTML;
 	}
 
-	function addBids(bidderRequest) {
-		bidderRequest.bids.forEach(function (bid) {
+	function addBids(bidRequest, addBidResponse, done) {
+		bidRequest.bids.forEach(function (bid) {
 			var bidResponse = prebid.get().createBid(1),
 				price = getPrice();
 
-			bidResponse.bidderCode = bidderRequest.bidderCode;
-			bidResponse.cpm = price;
 			bidResponse.ad = getCreative(price, bid.sizes[0]);
+			bidResponse.bidderCode = bidRequest.bidderCode;
+			bidResponse.cpm = price;
+			bidResponse.ttl = 300;
+			bidResponse.mediaType = 'banner';
 			bidResponse.width = bid.sizes[0][0];
 			bidResponse.height = bid.sizes[0][1];
-			bidResponse.mediaType = 'banner';
 
-			prebid.get().addBidResponse(bid.placementCode, bidResponse);
+			addBidResponse(bid.adUnitCode, bidResponse);
+			done();
 		});
 	}
 
 	function create() {
 		return {
-			callBids: function (bidderRequest) {
+			callBids: function (bidRequest, addBidResponse, done) {
 				prebid.push(function () {
-					addBids(bidderRequest);
+					addBids(bidRequest, addBidResponse, done);
 				});
 			}
 		};
