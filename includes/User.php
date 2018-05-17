@@ -2046,6 +2046,8 @@ class User implements JsonSerializable {
 
 	public function deleteCache() {
 		global $wgMemc;
+
+		$this->load();
 		$wgMemc->delete( $this->getCacheKey() );
 		$wgMemc->delete( self::getCacheKeyByName( $this->getName() ) ); // SUS-2945
 		$this->userPreferences()->deleteFromCache( $this->getId() );
