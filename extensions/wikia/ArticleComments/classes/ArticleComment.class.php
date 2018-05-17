@@ -983,15 +983,16 @@ class ArticleComment {
 	 *
 	 * @param Title $title
 	 * @param User $user
+	 * @param string $now
 	 * @return string
 	 */
-	static public function makeCommentTitle( Title $title, User $user ) : string {
+	static public function makeCommentTitle( Title $title, User $user, $now = null ) : string {
 		return sprintf(
 			'%s/%s%s-%s',
 			$title->getText(),
 			ARTICLECOMMENT_PREFIX,
 			$user->isLoggedIn() ? $user->getId() : $user->getName(),
-			wfTimestampNow() );
+			$now ?: wfTimestampNow() );
 	}
 
 	/**
