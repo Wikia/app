@@ -2,6 +2,8 @@
 
 namespace DownloadYourData;
 
+use \Wikia\Logger\WikiaLogger;
+
 class DownloadYourDataSpecialController extends \WikiaSpecialPageController {
 
 	public function __construct() {
@@ -39,6 +41,11 @@ class DownloadYourDataSpecialController extends \WikiaSpecialPageController {
 				$output->getRequest()->response()->header('Content-type: text/csv');
 
 				$output->setArticleBodyOnly( true );
+
+				WikiaLogger::instance()->info( 'Exported user data', [
+					'fields' => [
+						'exporting_user' => $user->getName(),
+						'exported_user' => $exportedUser->getName() ] ] );
 
 				$output->addHTML( $model->formatAsCsv( $model->getDataForUser( $exportedUser ) ) );
 
