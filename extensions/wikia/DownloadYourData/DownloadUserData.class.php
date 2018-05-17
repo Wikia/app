@@ -4,10 +4,24 @@ class DownloadUserData {
 
 	private $exportingUser;
 
+	/**
+	 * @param User $exportingUser User performing the export operation.
+	 */
 	public function __construct( User $exportingUser ) {
 		$this->exportingUser = $exportingUser;
 	}
 
+	/**
+	 * Returns a 2-dimensional array of user data. Note that exportuserdata permission is needed in order to fetch
+	 * someone's data. Otherwise $user should be the same user as $exportingUser passed to the constructor. In case
+	 * of permission error exception is thrown.
+	 *
+	 * Attribute names and values are returned in language set for $user.
+	 *
+	 * @param User $user user whos data is fetched
+	 * @return array 2-dimesional array with user data. each row contains 2 values - attribute name and value.
+	 * @throws Exception in case of permission errors
+	 */
 	public function getDataForUser( User $user ) {
 		if ( $this->exportingUser->getId() !== $user->getId() && !$this->exportingUser->isAllowed( 'exportuserdata' ) ) {
 			throw new Exception( 'Current user is not allowed to export data for other users.' );
@@ -70,6 +84,11 @@ class DownloadUserData {
 
 	}
 
+	/**
+	 * Takes a 2-dimensional array and formats it into a CSV file
+	 * @param $data Array of csv rows
+	 * @return string csv content
+	 */
 	public function formatAsCsv( $data ) {
 		$fp = fopen("php://temp", 'r+');
 		foreach($data as $row ) {
