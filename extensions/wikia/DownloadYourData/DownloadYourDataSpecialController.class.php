@@ -12,9 +12,12 @@ class DownloadYourDataSpecialController extends \WikiaSpecialPageController {
 		wfProfileIn( __METHOD__ );
 
 		$user = $this->getUser();
-		$this->isLoggedIn = $user->isLoggedIn();
+		if ( !$user->isLoggedIn() ) {
+			$this->getOutput()->redirect( \SpecialPage::getTitleFor( 'Contact/data-portability' )->getFullURL() );
+			return false;
+		}
 
-		if ( $this->isLoggedIn && $this->request->wasPosted() && $user->matchEditToken( $this->getVal( 'token' ) ) ) {
+		if ( $this->request->wasPosted() && $user->matchEditToken( $this->getVal( 'token' ) ) ) {
 
 			$model = new DownloadUserData( $this->getUser() );
 			$username = $this->request->getVal( 'username' );
@@ -50,7 +53,6 @@ class DownloadYourDataSpecialController extends \WikiaSpecialPageController {
 		$this->response->setTemplateEngine( \WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
 
 		$this->introText = $this->msg( 'downloadyourdata-intro' )->text();
-		$this->notLoggedInMessage = $this->msg( 'downloadyourdata-not-logged-in' )->parse();
 		$this->showUsernameField = $user->isAllowed( 'exportuserdata' );
 		$this->usernamePlaceholder = $this->msg( 'downloadyourdata-username-placeholder' )->text();
 		$this->editToken = $user->getEditToken();
