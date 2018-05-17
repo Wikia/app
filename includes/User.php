@@ -2040,9 +2040,9 @@ class User implements JsonSerializable {
 	 *
 	 * @see SUS-1620
 	 */
-	public function invalidateCache() {
+	public function invalidateCache( $save = true ) {
 		$this->touch();
-		$this->clearSharedCache();
+		$this->clearSharedCache( $save );
 
 		// Wikia change
 		self::permissionsService()->invalidateCache( $this );
