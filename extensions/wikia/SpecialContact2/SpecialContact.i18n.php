@@ -237,15 +237,16 @@ Browser/OS: ',
 	'specialcontact-submitcomplete' => 'Thank you for contacting FANDOM. We receive and review all messages submitted here. We will do our best to get back to you in the next 2-3 business days, but please be patient as we work through all of the messages.
 
 Remember, you can also find help in our [[w:c:community:Special:Forum|Community Forum]] and [[w:c:community:Help:Index|Help pages]]. You can keep up to date with the latest FANDOM news on our [[w:c:community:Blog:Wikia_Staff_Blog |Staff Blog]]. Happy editing!',
-	'specialcontact-label-forget-account-country-info' => 'Country of origin',
-	'specialcontact-label-forget-account-full-name' => 'Full name',
-	'specialcontact-label-forget-account-email-address' => 'Contact email address',
-	'specialcontact-label-forget-account-is-on-behalf' => 'Are you making this request on behalf of yourself?',
+	'specialcontact-label-forget-account-country-info' => 'Country of origin*',
+	'specialcontact-label-forget-account-full-name' => 'Full name*',
+	'specialcontact-label-forget-account-email-address' => 'Contact email address*',
+	'specialcontact-label-forget-account-is-on-behalf' => 'Are you making this request on behalf of yourself?*',
+	'specialcontact-label-forget-account-username-on-behalf' => 'Username of the person on whose behalf you are making this request*',
 	'specialcontact-label-forget-account-relationship' => 'Please specify your relationship to the person on whose behalf you are making this request (e.g. "parent" or "legal guardian"). We may ask for proof to verify that you are authorized to make this request on their behalf.',
 	'specialcontact-label-forget-account-previous-request' => 'Have you previously made a Personal Data Deletion Request to us?',
-	'specialcontact-label-forget-account-processing-consent' => 'I understand that Wikia, Inc will only be able to process this request if the information given is correct.',
+	'specialcontact-label-forget-account-processing-consent' => 'I understand that Wikia, Inc will only be able to process this request if the information given is correct.*',
 	'specialcontact-label-forget-account-data-processing-info' => 'Wikia, Inc will use the personal information given on this form, and any other personal information you give to us in correspondence relating to it, for the purposes of processing your request, and meeting our legal obligations. We may share details of your request with data protection authorities, but only where we are required to do so, for instance, where these details are required to investigate a decision that we have made. We will retain a copy of this request to comply with our legal obligation to maintain data processing records.',
-	'specialcontact-label-forget-account-confirm-checkbox' => 'I have read and understood this statement.',
+	'specialcontact-label-forget-account-confirm-checkbox' => 'I have read and understood this statement.*',
 	'specialcontact-label-forget-account-data-deletion-info' => 'Once the request for deletion is processed, the data removal cannot be reversed and your Wikia, Inc account cannot be recovered.',
 );
 

@@ -63,6 +63,12 @@ echo wfMessage( 'specialcontact-intro-forget-account' )->parseAsBlock();
 	<p>
 		<input type="text" name="wpRelationship" required disabled />
 	</p>
+	<p>
+		<label for="wpUsernameOnBehalf"><?= wfMessage( 'specialcontact-label-forget-account-username-on-behalf' )->escaped() ?></label>
+	</p>
+	<p>
+		<input type="text" name="wpUsernameOnBehalf" required disabled />
+	</p>
 </div>
 
 <p>
