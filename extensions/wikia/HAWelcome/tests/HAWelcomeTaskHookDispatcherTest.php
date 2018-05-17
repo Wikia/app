@@ -5,6 +5,11 @@
  */
 class HAWelcomeTaskHookDispatcherTest extends WikiaBaseTest {
 
+	public function setUp() {
+		$this->setupFile =  __DIR__ . '/../HAWelcome.setup.php';
+		parent::setUp();
+	}
+
 	public function testDispatchWhenDisabled() {
 		/** @var HAWelcomeTaskHookDispatcher|PHPUnit_Framework_MockObject_MockObject $dispatcher */
 		$dispatcher = $this->getMockBuilder( HAWelcomeTaskHookDispatcher::class )

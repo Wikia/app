@@ -60,4 +60,33 @@ class ArticleCommentTest extends WikiaBaseTest {
 		$articleComment->setRawText( $text );
 		$returnText = $articleComment->getTransformedParsedText();
 	}
+
+	public function makeCommentTitleProvider() {
+		yield [ 'Foo_bar', 1234, 'Macbre', 'Foo_bar/@comment-1234-20071201000000' ];
+		yield [ 'Foo_bar', 0, '1.2.3.4', 'Foo_bar/@comment-1.2.3.4-20071201000000' ];
+	}
+
+	/**
+	 * @dataProvider makeCommentTitleProvider
+	 * @param string $titleText
+	 * @param int $userId
+	 * @param string $userName
+	 * @param string $expected
+	 */
+	public function testMakeCommentTitle( string $titleText, int $userId, string $userName, string $expected) {
+		$title = $this->mockClassWithMethods( Title::class, [
+			'getText' => $titleText
+		]);
+
+		$user = $this->mockClassWithMethods( User::class, [
+			'isLoggedIn' => $userId > 0,
+			'getId' => $userId,
+			'getName' => $userName,
+		]);
+
+		$this->assertEquals(
+			$expected,
+			ArticleComment::makeCommentTitle( $title, $user, '20071201000000' )
+		);
+	}
 }

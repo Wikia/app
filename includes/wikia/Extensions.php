@@ -94,12 +94,6 @@ switch ( $wgLanguageCode ) {
 		$wgNamespaceAliases["Forum_talk"] = 111;
 
 		break;
-            
-        default:
-                $wgExtraNamespaces[110] = 'Forum';
-                $wgExtraNamespaces[111] = 'Forum_talk';
-                break;
-
 }
 
 $wgNamespacesWithSubpages[110] = true; //Forum
@@ -150,7 +144,7 @@ if ( ! empty( $wgEnableLyricWikiExt ) ) {
 /**
  * enable welcome tool on specified languages
  */
-if( in_array( $wgLanguageCode, $wgAvailableHAWLang ) ) {
+if( in_array( $wgLanguageCode, $wgAvailableHAWLang ) && !isset($wgEnableHAWelcomeExt) ) {
 	$wgEnableHAWelcomeExt = true;
 }
 
@@ -711,7 +705,7 @@ if( !empty( $wgEnableHAWelcomeExt ) ) {
 }
 
 // Enable CategorySelect extension for all not RTL wikis
-if (!in_array($wgLanguageCode, array('ar', 'fa', 'he', 'ps', 'yi')) && is_null( $wgEnableCategorySelectExt) ) {
+if (!in_array($wgLanguageCode, array('ar', 'fa', 'he', 'ps', 'yi')) && !isset($wgEnableCategorySelectExt) ) {
     $wgEnableCategorySelectExt = true;
 }
 
