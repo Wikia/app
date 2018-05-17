@@ -4,6 +4,7 @@ require([
 //	'wikia.instantGlobals',
 	'wikia.cookies',
 	'wikia.tracker',
+	'wikia.trackingOptIn',
 	'wikia.abTest',
 	'ext.wikia.adEngine.adContext',
 	'wikia.articleVideo.featuredVideo.data',
@@ -17,6 +18,7 @@ require([
 //	instantGlobals,
 	cookies,
 	tracker,
+	trackingOptIn,
 	abTest,
 	adContext,
 	videoDetails,
@@ -58,8 +60,10 @@ require([
 
 		win.dispatchEvent(new CustomEvent('wikia.jwplayer.instanceReady', {detail: playerInstance}));
 
-		featuredVideoAds(playerInstance, bidParams, slotTargeting);
-		featuredVideoMoatTracking.track(playerInstance);
+		trackingOptIn.pushToUserConsentQueue(function () {
+			featuredVideoAds(playerInstance, bidParams, slotTargeting);
+			featuredVideoMoatTracking.track(playerInstance);
+		});
 
 		playerInstance.on('autoplayToggle', function (data) {
 			featuredVideoCookieService.setAutoplay(data.enabled ? '1' : '0');
