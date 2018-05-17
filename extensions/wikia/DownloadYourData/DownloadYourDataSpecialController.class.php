@@ -83,7 +83,7 @@ class DownloadYourDataSpecialController extends WikiaSpecialPageController {
 
 		if ( isset( $user->mBirthDate ) ) {
 			$userdata[] = [ $this->msg( 'downloadyourdata-birthdate' )->inLanguage( $language )->text(),
-				Language::factory( $language )->userDate( date( 'Y-m-d H:i:s', strtotime( $user->mBirthDate ) ), $user ) ];
+				Language::factory( $language )->userDate( strtotime( $user->mBirthDate ), $user ) ];
 		}
 
 		$gender = $user->getGlobalAttribute( 'gender' );
