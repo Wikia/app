@@ -200,7 +200,7 @@ define('ext.wikia.adEngine.adContext', [
 
 		// Krux integration
 		context.targeting.enableKruxTargeting = !!(
-			context.targeting.enableKruxTargeting && !trackingOptOut.isOptedOut('krux') &&
+			context.targeting.enableKruxTargeting && trackingOptIn.isOptedIn() &&
 			isProperGeo('wgAdDriverKruxCountries') && !instantGlobals.wgSitewideDisableKrux
 		);
 
