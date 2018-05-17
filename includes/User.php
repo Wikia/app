@@ -2014,18 +2014,13 @@ class User implements JsonSerializable {
 	 *
 	 * Called implicitly from invalidateCache() and saveSettings().
 	 */
-	private function clearSharedCache( $save = true ) {
+	private function clearSharedCache() {
 		$this->load();
 		if( $this->mId ) {
-			global $wgMemc;
-			$wgMemc->delete( $this->getCacheKey() );
-			$wgMemc->delete( self::getCacheKeyByName( $this->getName() ) ); // SUS-2945
-			$this->userPreferences()->deleteFromCache( $this->getId() );
+			$this->deleteCache();
 
 			// Wikia: and save updated user data in the cache to avoid memcache miss and DB query
-			if ( $save ) {
-				$this->saveToCache();
-			}
+			$this->saveToCache();
 
 			$memckey = self::getUserTouchedKey( $this->mId );
 			$wgMemc->set( $memckey, $this->mTouched );
@@ -2040,12 +2035,19 @@ class User implements JsonSerializable {
 	 *
 	 * @see SUS-1620
 	 */
-	public function invalidateCache( $save = true ) {
+	public function invalidateCache() {
 		$this->touch();
-		$this->clearSharedCache( $save );
+		$this->clearSharedCache();
 
 		// Wikia change
 		self::permissionsService()->invalidateCache( $this );
+	}
+
+	public function deleteCache() {
+		global $wgMemc;
+		$wgMemc->delete( $this->getCacheKey() );
+		$wgMemc->delete( self::getCacheKeyByName( $this->getName() ) ); // SUS-2945
+		$this->userPreferences()->deleteFromCache( $this->getId() );
 	}
 
 	/**
