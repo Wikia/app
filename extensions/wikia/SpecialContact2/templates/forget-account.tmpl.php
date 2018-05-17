@@ -18,33 +18,65 @@ echo wfMessage( 'specialcontact-intro-forget-account' )->parseAsBlock();
 <?= wfMessage( 'specialcontact-mail-on-file', $encEmail )->parseAsBlock() ?>
 
 <p>
-	<input type="text" name="wpCountry" required />
-	<label for="wpFullName"><?= wfMessage( 'specialcontact-label-forget-account-country-info' )->escaped() ?></label>
+	<label for="wpCouuntry"><?= wfMessage( 'specialcontact-label-forget-account-country-info' )->escaped() ?></label>
+</p>
+<p>
+	<select name="wpCountry" required>
+		<? foreach(CountryNames::getNames(F::app()->wg->Lang->getCode()) as $code => $country) {
+			echo('<option value="'. $country . '">' . $country . '</option>');
+		} ?>
+	</select>
 </p>
 
 <p>
-	<input type="text" name="wpFullName" required />
 	<label for="wpFullName"><?= wfMessage( 'specialcontact-label-forget-account-full-name' )->escaped() ?></label>
 </p>
+<p>
+	<input type="text" name="wpFullName" required />
+</p>
 
 <p>
-	<input type="email" name="wpEmailAddress" required />
 	<label for="wpEmailAddress"><?= wfMessage( 'specialcontact-label-forget-account-email-address' )->escaped() ?></label>
 </p>
+<p>
+	<input type="email" name="wpEmailAddress" required value="<?= $encEmail ?>" />
+</p>
 
 <p>
-	<input type="checkbox" name="wpIsForThemselves" checked />
 	<label for="wpIsForThemselves"><?= wfMessage( 'specialcontact-label-forget-account-is-on-behalf' )->escaped() ?></label>
 </p>
-
-<p class="wp-relationship-input-wrapper" style="display: none;">
-	<input type="text" name="wpRelationship" required disabled />
-	<label for="wpRelationship"><?= wfMessage( 'specialcontact-label-forget-account-relationship' )->escaped() ?></label>
+<p>
+	<label>
+		<input type="radio" name="wpIsForThemselves" value="Yes" required checked />
+		<?= wfMessage( 'swm-yes' )->escaped() ?>
+	</label>
+	<label>
+		<input type="radio" name="wpIsForThemselves" value="No" />
+		<?= wfMessage( 'swm-no' )->escaped() ?>
+	</label>
 </p>
 
+<div class="wp-relationship-input-wrapper" style="display: none;">
+	<p>
+		<label for="wpRelationship"><?= wfMessage( 'specialcontact-label-forget-account-relationship' )->escaped() ?></label>
+	</p>
+	<p>
+		<input type="text" name="wpRelationship" required disabled />
+	</p>
+</div>
+
 <p>
-	<input type="checkbox" name="wpPreviousRequest"/>
 	<label for="wpPreviousRequest"><?= wfMessage( 'specialcontact-label-forget-account-previous-request' )->escaped() ?></label>
+</p>
+<p>
+	<label>
+		<input type="radio" name="wpPreviousRequest" value="Yes" required />
+		<?= wfMessage( 'swm-yes' )->escaped() ?>
+	</label>
+	<label>
+		<input type="radio" name="wpPreviousRequest" value="No" checked />
+		<?= wfMessage( 'swm-no' )->escaped() ?>
+	</label>
 </p>
 
 <p>

@@ -19,7 +19,7 @@ Follow the links below to learn more about how to use FANDOM, make changes to yo
 	'specialcontact-seclink-account-issue' => "Can't access my account",
 	'specialcontact-seclink-close-account' => 'Disable my account',
 	'specialcontact-seclink-rename-account' => 'Rename my account',
-	'specialcontact-seclink-forget-account' => 'Forget my FANDOM account',
+	'specialcontact-seclink-forget-account' => 'Forget my Wikia, Inc account',
 	'specialcontact-seclink-blocked' => 'My account is blocked',
 	'specialcontact-secheader-editing' => 'Participating on FANDOM',
 	'specialcontact-seclink-using-fandom' => 'How do I use FANDOM?',
@@ -203,7 +203,7 @@ In response to security reports using this form, FANDOM will:
 	'specialcontact-label-rename-newusername' => 'Please enter the new username',
 	'specialcontact-label-rename-account-confirm' => 'I confirm that the spelling and punctuation for my new name is correct',
 	'specialcontact-label-rename-account-read-help' => 'I have read the [[Help:Changing your username|help page on renaming my account]]',
-	'specialcontact-label-forget-account-confirm' => 'Delete FANDOM account',
+	'specialcontact-label-forget-account-confirm' => 'Delete Wikia, Inc account',
 	'specialcontact-form-header' => 'Contact FANDOM',
 	'specialcontact-logged-in-as' => 'You are logged in as $1. [[Special:UserLogout|Not you?]]',
 	'specialcontact-mail-on-file' => 'Your e-mail is set to $1. [[Special:Preferences|Do you wish to change it?]]',
@@ -243,10 +243,10 @@ Remember, you can also find help in our [[w:c:community:Special:Forum|Community 
 	'specialcontact-label-forget-account-is-on-behalf' => 'Are you making this request on behalf of yourself?',
 	'specialcontact-label-forget-account-relationship' => 'Please specify your relationship to the person on whose behalf you are making this request (e.g. "parent" or "legal guardian"). We may ask for proof to verify that you are authorized to make this request on their behalf.',
 	'specialcontact-label-forget-account-previous-request' => 'Have you previously made a Personal Data Deletion Request to us?',
-	'specialcontact-label-forget-account-processing-consent' => 'I understand that Wikia will only be able to process this request if the information given is correct.',
-	'specialcontact-label-forget-account-data-processing-info' => 'Wikia will use the personal information given on this form, and any other personal information you give to us in correspondence relating to it, for the purposes of processing your request, and meeting our legal obligations. We may share details of your request with data protection authorities, but only where we are required to do so, for instance, where these details are required to investigate a decision that we have made. We will retain a copy of this request to comply with our legal obligation to maintain data processing records.',
+	'specialcontact-label-forget-account-processing-consent' => 'I understand that Wikia, Inc will only be able to process this request if the information given is correct.',
+	'specialcontact-label-forget-account-data-processing-info' => 'Wikia, Inc will use the personal information given on this form, and any other personal information you give to us in correspondence relating to it, for the purposes of processing your request, and meeting our legal obligations. We may share details of your request with data protection authorities, but only where we are required to do so, for instance, where these details are required to investigate a decision that we have made. We will retain a copy of this request to comply with our legal obligation to maintain data processing records.',
 	'specialcontact-label-forget-account-confirm-checkbox' => 'I have read and understood this statement.',
-	'specialcontact-label-forget-account-data-deletion-info' => 'Once the request for deletion is processed, the data removal cannot be reversed and your FANDOM account cannot be recovered.',
+	'specialcontact-label-forget-account-data-deletion-info' => 'Once the request for deletion is processed, the data removal cannot be reversed and your Wikia, Inc account cannot be recovered.',
 );
 
 $messages['qqq'] = array(
