@@ -1,8 +1,9 @@
 /*global define*/
 define('ext.wikia.adEngine.lookup.prebid.prebidHelper', [
 	'ext.wikia.adEngine.lookup.prebid.adaptersRegistry',
-	'ext.wikia.aRecoveryEngine.instartLogic.recovery'
-], function(adaptersRegistry, instartLogic) {
+	'ext.wikia.aRecoveryEngine.instartLogic.recovery',
+	'wikia.window'
+], function(adaptersRegistry, instartLogic, win) {
 	'use strict';
 	var adUnits = [],
 		lazyLoad = 'off',
@@ -50,7 +51,18 @@ define('ext.wikia.adEngine.lookup.prebid.prebidHelper', [
 		return adUnits;
 	}
 
+	function isVersion1() {
+		var version = (win.pbjs && win.pbjs.version);
+
+		if (!version) {
+			throw new Error('Version of prebid not known. Check if library is loaded.');
+		}
+
+		return (version.split('.')[0] === 'v1');
+	}
+
 	return {
-		setupAdUnits: setupAdUnits
+		setupAdUnits: setupAdUnits,
+		isVersion1: isVersion1
 	};
 });
