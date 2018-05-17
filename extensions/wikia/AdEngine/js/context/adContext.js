@@ -9,12 +9,11 @@ define('ext.wikia.adEngine.adContext', [
 	'wikia.geo',
 	'wikia.instantGlobals',
 	'wikia.trackingOptIn',
-	'wikia.trackingOptOut',
 	'ext.wikia.adEngine.geo',
 	'ext.wikia.adEngine.utils.sampler',
 	'wikia.window',
 	'wikia.querystring'
-], function (browserDetect, cookies, doc, geo, instantGlobals, trackingOptIn, trackingOptOut, adsGeo, sampler, w, Querystring) {
+], function (browserDetect, cookies, doc, geo, instantGlobals, trackingOptIn, adsGeo, sampler, w, Querystring) {
 	'use strict';
 
 	instantGlobals = instantGlobals || {};
