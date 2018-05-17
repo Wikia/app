@@ -8,12 +8,13 @@ define('ext.wikia.adEngine.adContext', [
 	'wikia.document',
 	'wikia.geo',
 	'wikia.instantGlobals',
+	'wikia.trackingOptIn',
 	'wikia.trackingOptOut',
 	'ext.wikia.adEngine.geo',
 	'ext.wikia.adEngine.utils.sampler',
 	'wikia.window',
 	'wikia.querystring'
-], function (browserDetect, cookies, doc, geo, instantGlobals, trackingOptOut, adsGeo, sampler, w, Querystring) {
+], function (browserDetect, cookies, doc, geo, instantGlobals, trackingOptIn, trackingOptOut, adsGeo, sampler, w, Querystring) {
 	'use strict';
 
 	instantGlobals = instantGlobals || {};
@@ -99,9 +100,9 @@ define('ext.wikia.adEngine.adContext', [
 	function updateAdContextBidders(context) {
 		var hasFeaturedVideo = context.targeting.hasFeaturedVideo;
 
-		context.bidders.prebid = !trackingOptOut.isOptedOut('prebid') && isProperGeo('wgAdDriverPrebidBidderCountries');
-		context.bidders.a9 = !trackingOptOut.isOptedOut('a9') && isProperGeo('wgAdDriverA9BidderCountries');
-		context.bidders.a9Video = !trackingOptOut.isOptedOut('a9') && isProperGeo('wgAdDriverA9VideoBidderCountries');
+		context.bidders.prebid = trackingOptIn.isOptedIn() && isProperGeo('wgAdDriverPrebidBidderCountries');
+		context.bidders.a9 = trackingOptIn.isOptedIn() && isProperGeo('wgAdDriverA9BidderCountries');
+		context.bidders.a9Video = trackingOptIn.isOptedIn() && isProperGeo('wgAdDriverA9VideoBidderCountries');
 		context.bidders.rubiconDisplay = isProperGeo('wgAdDriverRubiconDisplayPrebidCountries');
 		context.bidders.rubicon = isProperGeo('wgAdDriverRubiconPrebidCountries');
 		context.bidders.rubiconInFV = isProperGeo('wgAdDriverRubiconVideoInFeaturedVideoCountries') && hasFeaturedVideo;
@@ -124,7 +125,7 @@ define('ext.wikia.adEngine.adContext', [
 	function isMOATTrackingForFVEnabled() {
 		var samplingForMoatFV = instantGlobals.wgAdDriverMoatTrackingForFeaturedVideoAdSampling || 1;
 
-		return !trackingOptOut.isOptedOut('moat') &&
+		return trackingOptIn.isOptedIn() &&
 			sampler.sample('moatTrackingForFeaturedVideo', samplingForMoatFV, 100) &&
 			geo.isProperGeo(instantGlobals.wgAdDriverMoatTrackingForFeaturedVideoAdCountries);
 	}
@@ -190,16 +191,16 @@ define('ext.wikia.adEngine.adContext', [
 			) || isUrlParamSet('highimpactslot');
 
 		// AdInfo warehouse logging
-		context.opts.kikimoraViewabilityTracking = !trackingOptOut.isOptedOut('kikimora') &&
+		context.opts.kikimoraViewabilityTracking = trackingOptIn.isOptedIn() &&
 			geo.isProperGeo(instantGlobals.wgAdDriverKikimoraViewabilityTrackingCountries);
-		context.opts.enableAdInfoLog = !trackingOptOut.isOptedOut('kikimora') &&
+		context.opts.enableAdInfoLog = trackingOptIn.isOptedIn() &&
 			geo.isProperGeo(instantGlobals.wgAdDriverKikimoraTrackingCountries);
-		context.opts.playerTracking = !trackingOptOut.isOptedOut('kikimora') &&
+		context.opts.playerTracking = trackingOptIn.isOptedIn() &&
 			geo.isProperGeo(instantGlobals.wgAdDriverKikimoraPlayerTrackingCountries);
 
 		// Krux integration
 		context.targeting.enableKruxTargeting = !!(
-			context.targeting.enableKruxTargeting && !trackingOptOut.isOptedOut('krux') &&
+			context.targeting.enableKruxTargeting && trackingOptIn.isOptedIn() &&
 			isProperGeo('wgAdDriverKruxCountries') && !instantGlobals.wgSitewideDisableKrux
 		);
 
@@ -210,7 +211,7 @@ define('ext.wikia.adEngine.adContext', [
 		);
 
 		context.opts.outstreamVideoFrequencyCapping = instantGlobals.wgAdDriverOutstreamVideoFrequencyCapping;
-		context.opts.porvataMoatTrackingEnabled = !trackingOptOut.isOptedOut('moat') &&
+		context.opts.porvataMoatTrackingEnabled = trackingOptIn.isOptedIn() &&
 			geo.isProperGeo(instantGlobals.wgAdDriverPorvataMoatTrackingCountries);
 		context.opts.porvataMoatTrackingSampling = instantGlobals.wgAdDriverPorvataMoatTrackingSampling || 0;
 
