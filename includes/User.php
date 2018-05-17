@@ -2017,6 +2017,7 @@ class User implements JsonSerializable {
 	private function clearSharedCache() {
 		$this->load();
 		if( $this->mId ) {
+			global $wgMemc;
 			$this->deleteCache();
 
 			// Wikia: and save updated user data in the cache to avoid memcache miss and DB query
