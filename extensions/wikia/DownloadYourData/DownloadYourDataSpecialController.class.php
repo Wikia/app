@@ -12,27 +12,46 @@ class DownloadYourDataSpecialController extends WikiaSpecialPageController {
 		$this->specialPage->setHeaders();
 
 		$user = $this->getUser();
+		$this->canPickUsername = $user->isAllowed( 'exportuserdata' );
+		$this->isLoggedIn = $user->isLoggedIn();
 
-		if ( $user->isLoggedIn() && $this->request->wasPosted() && $user->matchEditToken( $this->getVal( 'token' ) ) ) {
-			$output = RequestContext::getMain()->getOutput();
+		if ( $this->isLoggedIn && $this->request->wasPosted() && $user->matchEditToken( $this->getVal( 'token' ) ) ) {
 
-			$output->getRequest()->response()->header('Content-disposition: attachment;filename=wikia_account_data.csv');
-			$output->getRequest()->response()->header('Content-type: text/csv');
+			$username = $this->request->getVal( 'username' );
+			if ( $this->canPickUsername && !empty( $username ) ) {
+				$exportedUser = User::newFromName( $username );
+				if ( !$exportedUser ) {
+					$this->error = $this->msg( 'downloadyourdata-user-not-found', $username )->parse();
+				}
+			} else {
+				$exportedUser = $user;
+			}
 
-			$output->setArticleBodyOnly( true );
+			if ( empty( $this->error ) ) {
+				$output = RequestContext::getMain()->getOutput();
 
-			$output->addHTML( 'works like a charm!' );
+				// todo - include user name or user id in file name?
+				$output->getRequest()->response()->header('Content-disposition: attachment;filename=wikia_account_data.csv');
+				$output->getRequest()->response()->header('Content-type: text/csv');
 
-			wfProfileOut( __METHOD__ );
+				$output->setArticleBodyOnly( true );
 
-			return false;
+				// use $exportedUser object to fetch the csv data
+
+				$output->addHTML( 'works like a charm!' );
+
+				wfProfileOut( __METHOD__ );
+
+				return false;
+			}
+
 		}
 
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
 
-		$this->isLoggedIn = $user->isLoggedIn();
 
 		$this->notLoggedInMessage = $this->msg( 'downloadyourdata-not-logged-in' )->parse();
+		$this->usernamePlaceholder = $this->msg( 'downloadyourdata-username-placeholder' )->text();
 		$this->editToken = $user->getEditToken();
 		$this->showForm = true;
 

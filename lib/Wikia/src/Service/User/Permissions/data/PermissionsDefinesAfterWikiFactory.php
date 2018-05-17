@@ -641,3 +641,5 @@ $wgGroupPermissions['*']['portabilitydashboard'] = true;
 $wgGroupPermissions['*']['fandom-admin'] = false;
 $wgGroupPermissions['staff']['fandom-admin'] = true;
 $wgGroupPermissions['fandom-editor']['fandom-admin'] = true;
+
+$wgGroupPermissions['staff']['exportuserdata'] = true;
