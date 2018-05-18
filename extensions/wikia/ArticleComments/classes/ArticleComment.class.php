@@ -986,12 +986,10 @@ class ArticleComment {
 	 * @param bool $parentId
 	 * @param array $metadata
 	 *
-	 * @return Article -- newly created article
+	 * @return false|array
 	 * @throws MWException
 	 */
 	static public function doPost( $text, $user, $title, $parentId = false, $metadata = [ ] ) {
-		global $wgTitle;
-
 		if ( !$text || !strlen( $text ) ) {
 			return false;
 		}
@@ -1005,7 +1003,7 @@ class ArticleComment {
 		 */
 		if ( $parentId == false ) {
 			// 1st level comment
-			$commentTitle = sprintf( '%s/%s%s-%s', $title->getText(), ARTICLECOMMENT_PREFIX, $user->getName(), wfTimestampNow() );
+			$commentTitle = ArticleCommentsTitle::format( $title, $user );
 		} else {
 			$parentArticle = Article::newFromID( $parentId );
 			if ( empty( $parentArticle ) ) {
@@ -1033,9 +1031,9 @@ class ArticleComment {
 
 				return false;
 			}
-			$parentTitle = $parentArticle->getTitle();
 			// nested comment
-			$commentTitle = sprintf( '%s/%s%s-%s', $parentTitle->getText(), ARTICLECOMMENT_PREFIX, $user->getName(), wfTimestampNow() );
+			$commentTitle =
+				ArticleCommentsTitle::format( $parentArticle->getTitle(), $user );
 		}
 		$commentTitleText = $commentTitle;
 		$commentTitle = Title::newFromText( $commentTitle, MWNamespace::getTalk( $title->getNamespace() ) );
@@ -1046,7 +1044,6 @@ class ArticleComment {
 					'method' => __METHOD__,
 					'parentId' => $parentId,
 					'commentTitleText' => $commentTitleText
-
 				] );
 			}
 

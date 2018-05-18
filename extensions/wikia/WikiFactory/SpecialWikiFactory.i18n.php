@@ -1687,10 +1687,6 @@ $messages['es'] = array(
 	'right-wikifactorymetrics' => 'Permite el acceso a Special:WikiFactory/metrics',
 	'awc-metrics-language-top-list' => 'de,en,es,fr,it,ja,pl,pt,pt-br,zh',
 	'closed-wiki-policy-url' => 'http://community.wikia.com/wiki/Community_Central:Closed_Wikis',
-	'wikifactory-label-tags' => 'Etiquetas',
-	'wikifactory-label-findtags' => 'EtiquetasEncontrar',
-	'wikifactory-label-masstags' => 'EtiquetasMasivas',
-	'wikifactory-label-tags2' => 'Etiquetas',
 );
 
 $messages['et'] = array(
@@ -3185,10 +3181,6 @@ $messages['lol'] = array(
 	'newwikisgraph-wikis-created' => 'crwdns64598:0crwdne64598:0',
 	'newwikisgraph-param-all' => 'crwdns64599:0crwdne64599:0',
 	'newwikisgraph-param-other' => 'crwdns64600:0crwdne64600:0',
-	'wikifactory-label-tags' => 'crwdns64491:0crwdne64491:0',
-	'wikifactory-label-findtags' => 'crwdns64494:0crwdne64494:0',
-	'wikifactory-label-masstags' => 'crwdns64493:0crwdne64493:0',
-	'wikifactory-label-tags2' => 'crwdns64492:0crwdne64492:0',
 );
 
 $messages['mk'] = array(
@@ -4029,8 +4021,6 @@ $messages['pl'] = array(
 	'awc-metrics-language-top-list' => 'de,en,es,fr,it,ja,pl,pt,pt-br,zh',
 	'awc-metrics-vertical' => 'and vertical:',
 	'closed-wiki-policy-url' => 'http://spolecznosc.wikia.com/wiki/Centrum_Spo%C5%82eczno%C5%9Bci:Zamkni%C4%99te_wiki',
-	'wikifactory-label-findtags' => 'FindTags',
-	'wikifactory-label-masstags' => 'MassTags',
 );
 
 $messages['pms'] = array(
@@ -4359,10 +4349,6 @@ $messages['pt'] = array(
 	'awc-metrics-vertical' => 'e vertical:',
 	'closed-wiki-policy-url' => 'http://community.wikia.com/wiki/Community_Central:Closed_Wikia',
 	'closed-wiki-invalid-redirect-url' => 'Error: Redirect URL does not point to any existing wiki: "$1"',
-	'wikifactory-label-tags' => 'Etiquetas',
-	'wikifactory-label-findtags' => 'PesquisarEtiquetas',
-	'wikifactory-label-masstags' => 'MassTags',
-	'wikifactory-label-tags2' => 'Etiquetas',
 );
 
 $messages['ro'] = array(
@@ -4590,10 +4576,6 @@ $messages['ru'] = array(
 	'awc-metrics-language-top-list' => 'de,en,es,fr,it,ja,pl,pt,pt-br,zh',
 	'awc-metrics-vertical' => 'и порталу:',
 	'closed-wiki-invalid-redirect-url' => 'Ошибка. URL-адрес перенаправления указывает на несуществующую вики: «$1»',
-	'wikifactory-label-tags' => 'Теги',
-	'wikifactory-label-findtags' => 'Поиск тегов',
-	'wikifactory-label-masstags' => 'Множественные теги',
-	'wikifactory-label-tags2' => 'Теги',
 );
 
 $messages['sco'] = array(
@@ -5588,9 +5570,5 @@ $messages['zh-hant'] = array(
 	'awc-metrics-recordspager' => "顯示 '''$3'''項記錄中的 '''$1'''到'''$2''' ",
 	'closed-wiki-invalid-redirect-url' => '錯誤: 重定項的URL並未指項任何存在的Wiki： "$1"',
 	'closed-redirect-alert' => '請放置一個新的重定向URL',
-	'wikifactory-label-tags' => '標籤',
-	'wikifactory-label-findtags' => '尋找標籤',
-	'wikifactory-label-masstags' => '標籤集',
-	'wikifactory-label-tags2' => '標籤',
 );
 
