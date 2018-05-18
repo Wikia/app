@@ -22,3 +22,25 @@ $messages['en'] = array(
 	'downloadyourdata-occupation' => 'Occupation',
 	'downloadyourdata-user-activity-link' => 'User activity link'
 );
+
+$messages['qqq'] = array(
+	'downloadyourdata' => 'Name of the "Download Your Data" special page. This message is displayed as the H1 page title of the special page.',
+	'downloadyourdata-desc' => 'Extension description that shows up on Special:Version',
+	'downloadyourdata-intro' => 'Text displayed on the "Download Your Data" page, below the page header.',
+	'downloadyourdata-button-text' => 'Displayed on the button positioned below the intro text. Allows to download a csv file with user data.',
+	'downloadyourdata-username-placeholder' => 'Placeholder text shown in the input field that allows to enter user name.',
+	'downloadyourdata-user-not-found' => 'Error message displayed when user with a given name is not found. $1 is replaced with the username.',
+	'downloadyourdata-username' => 'Name of the csv file field that stores user login',
+	'downloadyourdata-userid' => 'Name of the csv file field that stores user numeric identifier',
+	'downloadyourdata-registration' => 'Name of the csv file field that stores user registration date',
+	'downloadyourdata-email' => 'Name of the csv file field that stores user email address date',
+	'downloadyourdata-realname' => 'Name of the csv file field that stores user real name',
+	'downloadyourdata-birthdate' => 'Name of the csv file field that stores user birthdate',
+	'downloadyourdata-birthday' => 'Name of the csv file field that stores user birthday',
+	'downloadyourdata-birthday-value' => 'Formats the value of user birthday, $1 is the name of the month and $2 is the day of the month',
+	'downloadyourdata-gender' => 'Name of the csv file field that stores user gender',
+	'downloadyourdata-profile-gender' => 'Name of the csv file field that stores user gender displayed on profile page',
+	'downloadyourdata-location' => 'Name of the csv file field that stores user location',
+	'downloadyourdata-occupation' => 'Name of the csv file field that stores user occupation',
+	'downloadyourdata-user-activity-link' => 'Name of the csv file field that stores link to a page that should user activity across wikis',
+);
