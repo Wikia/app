@@ -16,6 +16,11 @@ class ArticleCommentTitleTest extends WikiaDatabaseTest {
 			'Macbre/@comment-123-20170301152835/@comment-126761-20170302153001',
 		];
 
+		yield [
+			'Macbre/@comment-123-20170301152835/@comment-Foo-Dash-123-20170302153001',
+			'Macbre/@comment-123-20170301152835/@comment-123456-20170302153001',
+		];
+
 		// IP address
 		yield [
 			'Macbre/@comment-1.2.3.4-20170301152835/@comment-2001:978:3500:BEEF:0:0:0:1008-20170302153001',
