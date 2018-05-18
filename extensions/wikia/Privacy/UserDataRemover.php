@@ -46,7 +46,7 @@ class UserDataRemover {
 				[
 					'up_user' => $userId,
 					'up_property' => 'disabled',
-					'up_value' => $userId,
+					'up_value' => '1',
 				],
 			] );
 
