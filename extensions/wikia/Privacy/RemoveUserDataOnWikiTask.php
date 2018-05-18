@@ -93,6 +93,7 @@ class RemoveUserDataOnWikiTask extends BaseTask {
 				__METHOD__ );
 			foreach( $userPages as $page ) {
 				$title = Title::newFromRow( $page );
+				$title->purgeSquid();
 				PermanentArticleDelete::deletePage( $title );
 			}
 			$this->info( "Removed user pages", ['username' => $userDbKey] );
