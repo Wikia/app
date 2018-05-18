@@ -29,6 +29,7 @@ class MigrateUserNamesInTitles extends Maintenance {
 			[
 				'page_namespace' => [
 					NS_TALK, // comments
+					501, // blog comments
 					1201, // Wall
 					2001, // Forum
 				],
