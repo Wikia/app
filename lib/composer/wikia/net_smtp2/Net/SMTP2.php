@@ -244,12 +244,14 @@ class Net_SMTP2
      */
     protected function _send($data)
     {
+		wfProfileIn(__METHOD__);
         $this->_debug("Send: $data");
 
         $result = $this->_socket->write($data);
         if (!$result) {
             throw new PEAR_Exception('Failed to write to socket: unknown error');
         }
+		wfProfileOut(__METHOD__);
 
         return $result;
     }
@@ -299,6 +301,7 @@ class Net_SMTP2
      */
     protected function _parseResponse($valid, $later = false)
     {
+		wfProfileIn(__METHOD__);
         $this->_code = -1;
         $this->_arguments = array();
 
@@ -341,9 +344,11 @@ class Net_SMTP2
         /* Compare the server's response code with the valid code/codes. */
         if ((is_int($valid) && ($this->_code === $valid)) ||
             (is_array($valid) && in_array($this->_code, $valid, true))) {
+			wfProfileOut(__METHOD__);
             return;
         }
 
+		wfProfileOut(__METHOD__);
         throw new PEAR_Exception('Invalid response code received from server',
                                  $this->_code);
     }
@@ -780,6 +785,7 @@ class Net_SMTP2
      */
     public function mailFrom($sender, $params = null)
     {
+    	wfProfileIn(__METHOD__);
         $args = "FROM:<$sender>";
         if (is_string($params) && strlen($params)) {
             $args .= ' ' . $params;
@@ -787,6 +793,7 @@ class Net_SMTP2
 
         $this->_put('MAIL', $args);
         $this->_parseResponse(250, $this->pipelining);
+		wfProfileOut(__METHOD__);
     }
 
     /**
@@ -800,6 +807,7 @@ class Net_SMTP2
      */
     public function rcptTo($recipient, $params = null)
     {
+    	wfProfileIn(__METHOD__);
         $args = "TO:<$recipient>";
         if (is_string($params) && strlen($params)) {
             $args .= ' ' . $params;
@@ -807,6 +815,7 @@ class Net_SMTP2
 
         $this->_put('RCPT', $args);
         $this->_parseResponse(array(250, 251), $this->pipelining);
+		wfProfileOut(__METHOD__);
     }
 
     /**
@@ -845,6 +854,7 @@ class Net_SMTP2
      */
     public function data($data, $headers = null)
     {
+		wfProfileIn(__METHOD__);
         /* Verify that $data is a supported type. */
         if (!is_string($data) && !is_resource($data)) {
             throw new InvalidArgumentException('Expected a string or file resource');
@@ -939,6 +949,7 @@ class Net_SMTP2
 
         /* Verify that the data was successfully received by the server. */
         $this->_parseResponse(250, $this->pipelining);
+		wfProfileOut(__METHOD__);
     }
 
     /**

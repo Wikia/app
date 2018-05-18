@@ -170,6 +170,7 @@ class Mail2
      */
     protected function prepareHeaders($headers)
     {
+		wfProfileIn( __METHOD__ );
         $lines = array();
         $from = null;
 
@@ -213,6 +214,7 @@ class Mail2
                 $lines[] = $key . ': ' . $value;
             }
         }
+		wfProfileOut( __METHOD__ );
 
         return array($from, join($this->sep, $lines));
     }
@@ -230,6 +232,7 @@ class Mail2
      */
     protected function parseRecipients($recipients)
     {
+		wfProfileIn( __METHOD__ );
         include_once 'Mail2/RFC822.php';
 
         // if we're passed an array, assume addresses are valid and
@@ -250,6 +253,7 @@ class Mail2
                 $recipients[] = $ob->mailbox . '@' . $ob->host;
             }
         }
+		wfProfileOut( __METHOD__ );
 
         return $recipients;
     }

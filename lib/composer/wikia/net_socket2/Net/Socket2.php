@@ -563,6 +563,7 @@ class Net_Socket2
      */
     function readLine()
     {
+		wfProfileIn(__METHOD__);
         if (!is_resource($this->fp)) {
             throw new Net_Socket2_Exception('not connected');
         }
@@ -574,9 +575,11 @@ class Net_Socket2
         while (!feof($this->fp) && (!$this->timeout || time() < $timeout)) {
             $line .= @fgets($this->fp, $this->lineLength);
             if (substr($line, -1) == "\n") {
+				wfProfileOut(__METHOD__);
                 return rtrim($line, $this->newline);
             }
         }
+		wfProfileOut(__METHOD__);
         return $line;
     }
 

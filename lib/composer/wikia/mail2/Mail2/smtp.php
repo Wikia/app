@@ -242,6 +242,7 @@ class Mail2_smtp extends Mail2 {
      */
     public function send($recipients, $headers, $body)
     {
+    	wfProfileIn( __METHOD__ );
         /* If we don't already have an SMTP object, create one. */
         $result = $this->getSMTPObject();
 
@@ -299,6 +300,8 @@ class Mail2_smtp extends Mail2 {
             $this->disconnect();
         }
 
+		wfProfileOut( __METHOD__ );
+
         return true;
     }
 
@@ -311,6 +314,7 @@ class Mail2_smtp extends Mail2 {
      */
     public function getSMTPObject()
     {
+		wfProfileIn( __METHOD__ );
         if (is_object($this->_smtp) !== false) {
             return $this->_smtp;
         }
@@ -341,6 +345,7 @@ class Mail2_smtp extends Mail2 {
                 $method
             );
         }
+		wfProfileOut( __METHOD__ );
 
         return $this->_smtp;
     }
@@ -367,11 +372,13 @@ class Mail2_smtp extends Mail2 {
      */
     public function disconnect()
     {
+		wfProfileIn( __METHOD__ );
         /* If we have an SMTP object, disconnect and destroy it. */
         if (is_object($this->_smtp) && $this->_smtp->disconnect()) {
             $this->_smtp = null;
         }
 
+		wfProfileOut( __METHOD__ );
         /* We are disconnected if we no longer have an SMTP object. */
         return ($this->_smtp === null);
     }
