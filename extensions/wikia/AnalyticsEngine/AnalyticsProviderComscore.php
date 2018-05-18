@@ -17,38 +17,29 @@ class AnalyticsProviderComscore implements iAnalyticsProvider {
 <!-- Begin comScore Tag -->
 <script type="text/javascript">
 require(["wikia.trackingOptOut", require.optional("wikia.trackingOptIn")], function (trackingOptOut, trackingOptIn) {
+	function loadScript() {
+		window._comscore = window._comscore || [];
+		window._comscore.push({ c1: "2", c2: "' . static::$PARTNER_ID . '",
+			options: {
+				url_append: "' . static::$COMSCORE_KEYWORD_KEYNAME . '=' . static::getC7Value() . '"
+			}
+		});
+	
+		var s = document.createElement("script");
+		s.async = true;
+		s.src = (document.location.protocol == "https:" ? "https://sb" : "http://b") + ".scorecardresearch.com/beacon.js";
+		document.head.appendChild(s);
+	}
+
 	if (trackingOptIn) {
 		trackingOptIn.pushToUserConsentQueue(function (optIn) {
-			if (optIn === false) {
-				// user opt-outs for Comescore
-				return;
+			if (optIn) {
+				loadScript();
 			}
-		
-			window._comscore = window._comscore || [];
-			window._comscore.push({ c1: "2", c2: "' . static::$PARTNER_ID . '",
-				options: {
-					url_append: "' . static::$COMSCORE_KEYWORD_KEYNAME . '=' . static::getC7Value() . '"
-				}
-			});
-		
-			var s = document.createElement("script");
-			s.async = true;
-			s.src = (document.location.protocol == "https:" ? "https://sb" : "http://b") + ".scorecardresearch.com/beacon.js";
-			document.head.appendChild(s);
 		});
 	} else {
 		trackingOptOut.ifNotOptedOut(function () {
-			window._comscore = window._comscore || [];
-			window._comscore.push({ c1: "2", c2: "' . static::$PARTNER_ID . '",
-				options: {
-					url_append: "' . static::$COMSCORE_KEYWORD_KEYNAME . '=' . static::getC7Value() . '"
-				}
-			});
-		
-			var s = document.createElement("script");
-			s.async = true;
-			s.src = (document.location.protocol == "https:" ? "https://sb" : "http://b") + ".scorecardresearch.com/beacon.js";
-			document.head.appendChild(s);
+			loadScript();
 		});
 	}
 });
