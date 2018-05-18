@@ -28,12 +28,9 @@ require(["wikia.trackingOptOut", require.optional("wikia.trackingOptIn")], funct
 
 	if (trackingOptIn) {
 		trackingOptIn.pushToUserConsentQueue(function (optIn) {
-			if (optIn === false) {
-				// user opt-outs for Comescore
-				return;
+			if (optIn) {
+				loadScript();
 			}
-			
-			loadScript();
 		});
 	} else {
 		trackingOptOut.ifNotOptedOut(function () {
