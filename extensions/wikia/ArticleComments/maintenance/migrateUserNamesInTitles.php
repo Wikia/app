@@ -64,6 +64,11 @@ class MigrateUserNamesInTitles extends Maintenance {
 				$updated += $dbw->affectedRows();
 
 				$this->output( "updated\n" );
+
+				// glee wiki has ~2mm rows to be processed here, do not harm the DB replication
+				if ($updated % 5000 === 0) {
+					wfWaitForSlaves();
+				}
 			}
 			else {
 				$this->output( "dry-run\n" );
