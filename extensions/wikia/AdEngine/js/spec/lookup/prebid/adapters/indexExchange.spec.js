@@ -50,6 +50,7 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.indexExchange', function () 
 				{
 					bidder: 'indexExchange',
 					params: {
+						id: '1',
 						siteId: '183423',
 						size: [728, 90]
 					}
@@ -57,6 +58,7 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.indexExchange', function () 
 				{
 					bidder: 'indexExchange',
 					params: {
+						id: '1',
 						siteId: '183423',
 						size: [970, 250]
 					}

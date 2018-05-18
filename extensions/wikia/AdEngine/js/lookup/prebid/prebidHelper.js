@@ -16,7 +16,7 @@ define('ext.wikia.adEngine.lookup.prebid.prebidHelper', [
 	function getAdapterAdUnits(adapter, skin) {
 		var adapterAdUnits = [],
 			isRecovering = instartLogic.isBlocking(),
-			isNewPrebidEnabled = adContext.get('opts.isNewPrebidEnabled');
+			isNewPrebidEnabled = adContext.get('opts.isNewPrebidEnabled'),
 			slots = adapter.getSlots(skin, isRecovering);
 
 		Object.keys(slots).forEach(function(slotName) {
