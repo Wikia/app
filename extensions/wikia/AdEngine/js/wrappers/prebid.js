@@ -13,7 +13,7 @@ define('ext.wikia.adEngine.wrappers.prebid', [
 	win.pbjs = win.pbjs || {};
 	win.pbjs.que = win.pbjs.que || [];
 
-	if (win.pbjs && isNewPrebidEnabled) {
+	if (win.pbjs && typeof win.pbjs.setConfig === 'function' && isNewPrebidEnabled) {
 		win.pbjs.setConfig({
 			debug: loc.href.indexOf('pbjs_debug=1') >= 0,
 			enableSendAllBids: true,

@@ -69,7 +69,7 @@ define('ext.wikia.adEngine.lookup.prebid.versionCompatibility', [
 
 			aliasesObj = getAliases.apply(null, arguments);
 
-			Object.keys(aliases).forEach(function (bidder) {
+			Object.keys(aliasesObj).forEach(function (bidder) {
 				var aliases = aliasesObj[bidder];
 
 				switch (true) {

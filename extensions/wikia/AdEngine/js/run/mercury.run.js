@@ -76,6 +76,12 @@ require([
 	}
 
 	function callBiddersOnConsecutivePageView() {
+		if (adContext.get('opts.isNewPrebidEnabled')) {
+			loadNewPrebid();
+		} else {
+			loadOldPrebid();
+		}
+
 		if (adContext.get('bidders.prebid')) {
 			prebid.call();
 		}
@@ -90,6 +96,12 @@ require([
 	mercuryListener.onLoad(function () {
 		if (adContext.get('bidders.a9')) {
 			a9.call();
+		}
+
+		if (adContext.get('opts.isNewPrebidEnabled')) {
+			loadNewPrebid();
+		} else {
+			loadOldPrebid();
 		}
 
 		if (adContext.get('bidders.prebid')) {
