@@ -60,30 +60,32 @@ define('ext.wikia.adEngine.lookup.prebid.versionCompatibility', [
 
 	function toVersion0GetAliases(getAliases) {
 		return function () {
-			var newAliases = {},
-				oldAliases;
+			var newAliasesObj = {},
+				aliasesObj;
 
 			if (!getAliases) {
-				return newAliases;
+				return newAliasesObj;
 			}
 
-			aliases = getAliases.apply(null, arguments);
+			aliasesObj = getAliases.apply(null, arguments);
 
-			Object.keys(oldAliases).forEach(function (bidder) {
-				var aliases = aliases[bidder];
+			Object.keys(aliases).forEach(function (bidder) {
+				var aliases = aliasesObj[bidder];
 
 				switch (true) {
 					case (bidder === 'appnexus' && aliases[0] === 'appnexusWebAds'):
-						newAliases['appnexusAst'] = ['appnexusWebAds'];
+						newAliasesObj['appnexusAst'] = ['appnexusWebAds'];
 						break;
 					case (bidder === 'appnexus' && aliases[0] === 'appnexusAst'):
 						break;
 					case (bidder === 'ix' && aliases[0] === 'indexExchange'):
 						break;
+					default:
+						return aliasesObj;
 				}
 			});
 
-			return newAliases;
+			return newAliasesObj;
 		};
 	}
 
