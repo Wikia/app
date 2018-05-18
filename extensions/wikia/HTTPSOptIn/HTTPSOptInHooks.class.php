@@ -13,7 +13,9 @@ class HTTPSOptInHooks {
 		'wikia' => [ 'Community_Central:Licensing' ]
 	];
 
-	const WIKI_ID_THRESHOLD_WITH_HTTPS_ON = 10000;
+	// wikis with ID greater than this threshold will get HTTPS on by default for
+	// logged-in users despite the opt-in preference
+	const WIKI_ID_THRESHOLD_WITH_HTTPS_ON = 1700000;
 
 	public static function onGetPreferences( User $user, array &$preferences ): bool {
 		global $wgServer, $wgHTTPSForLoggedInUsers;
