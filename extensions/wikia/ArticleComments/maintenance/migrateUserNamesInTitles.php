@@ -17,8 +17,7 @@ class MigrateUserNamesInTitles extends Maintenance {
 
 	public function execute() {
 		/**
-		 * SELECT  page_id,page_title  FROM `page`  WHERE page_namespace IN ('1','1201','2001')
-		 * AND (page_title LIKE '%/@comment-%' )
+		 * SELECT  page_id,page_title  FROM `page`  WHERE (page_title LIKE '%/@comment-%' )
 		 */
 		$dbr = $this->getDB( DB_SLAVE );
 		$dbw = $this->getDB( DB_MASTER );
