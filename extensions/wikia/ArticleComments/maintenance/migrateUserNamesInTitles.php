@@ -27,12 +27,6 @@ class MigrateUserNamesInTitles extends Maintenance {
 			'page',
 			['page_id', 'page_title'],
 			[
-				'page_namespace' => [
-					NS_TALK, // comments
-					501, // blog comments
-					1201, // Wall
-					2001, // Forum
-				],
 				'page_title' . $dbr->buildLike(
 					$dbr->anyString(), '/' . ARTICLECOMMENT_PREFIX, $dbr->anyString()
 				)
