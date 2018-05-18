@@ -34,7 +34,7 @@ define('wikia.trackingOptOut', [
 	}
 
 	/**
-	 * @deprecated use async API
+	 * @deprecated use wikia.trackingOptIn
 	 * @param tracker
 	 * @returns {*|boolean}
 	 */
@@ -42,12 +42,21 @@ define('wikia.trackingOptOut', [
 		return isBlacklisted(tracker) && !isNotOptedOut();
 	}
 
+	/**
+	 * @deprecated use wikia.trackingOptIn
+	 * @param tracker
+	 * @param thenCall
+	 */
 	function ifTrackerNotOptedOut(tracker, thenCall) {
 		if (!isBlacklisted(tracker) || isNotOptedOut()) {
 			thenCall();
 		}
 	}
 
+	/**
+	 * @deprecated use wikia.trackingOptIn
+	 * @param thenCall
+	 */
 	function ifNotOptedOut(thenCall) {
 		if (isNotOptedOut()) {
 			thenCall();
