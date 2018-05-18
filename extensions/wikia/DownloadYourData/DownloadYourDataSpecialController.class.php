@@ -68,7 +68,7 @@ class DownloadYourDataSpecialController extends \WikiaSpecialPageController {
 			'vars' => [
 				'type' => 'submit',
 				'classes' => [ 'wikia-button' ],
-				'value' => $this->msg( 'downloadyourdata-button-text' )->text(),
+				'value' => $this->msg( 'downloadyourdata-button-text' )->escaped(),
 				'data' => [],
 			]
 		];
