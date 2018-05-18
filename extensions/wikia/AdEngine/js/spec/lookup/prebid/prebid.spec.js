@@ -148,6 +148,8 @@ describe('ext.wikia.adEngine.lookup.prebid', function () {
 		},
 		prebid;
 
+	mocks.log.levels = {};
+
 	function noop() {
 	}
 

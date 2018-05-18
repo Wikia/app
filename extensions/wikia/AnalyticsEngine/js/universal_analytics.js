@@ -4,11 +4,11 @@
  * @version: 1
  */
 
-require(['wikia.trackingOptOut'], function (trackingOptOut) {
+require(['wikia.trackingOptIn'], function (trackingOptIn) {
 	'use strict';
 
-	trackingOptOut.ifNotOptedOut(function () {
-		if (!window.wgNoExternals) {
+	trackingOptIn.pushToUserConsentQueue(function (optIn) {
+		if (!window.wgNoExternals && optIn === true) {
 			/**
 			 * Creates a temporary global ga object and loads analy  tics.js.
 			 * Paramenters o, a, and m are all used internally.  They could have been declared using 'var',
@@ -42,7 +42,7 @@ require(['wikia.trackingOptOut'], function (trackingOptOut) {
 				m.parentNode.insertBefore(a, m);
 			})(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
 		} else {
-			// prevent errors when wgNoExternals is set
+			// prevent errors when wgNoExternals is set or user opt-outs
 			window.ga = function () {
 			};
 		}

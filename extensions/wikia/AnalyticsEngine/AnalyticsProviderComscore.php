@@ -13,29 +13,50 @@ class AnalyticsProviderComscore implements iAnalyticsProvider {
 		switch ($event){
 		  case AnalyticsEngine::EVENT_PAGEVIEW :
 			  if (static::getC7Value()) {
-				  return '
+					return '
 <!-- Begin comScore Tag -->
 <script type="text/javascript">
-require(["wikia.trackingOptOut"], function (trackingOptOut) {
-	trackingOptOut.ifNotOptedOut(function () {
-		window._comscore = window._comscore || [];
-		window._comscore.push({ c1: "2", c2: "' . static::$PARTNER_ID . '",
-			options: {
-				url_append: "' . static::$COMSCORE_KEYWORD_KEYNAME . '=' . static::getC7Value() . '"
+require(["wikia.trackingOptOut", require.optional("wikia.trackingOptIn")], function (trackingOptOut, trackingOptIn) {
+	if (trackingOptIn) {
+		trackingOptIn.pushToUserConsentQueue(function (optIn) {
+			if (optIn === false) {
+				// user opt-outs for Comescore
+				return;
 			}
+		
+			window._comscore = window._comscore || [];
+			window._comscore.push({ c1: "2", c2: "' . static::$PARTNER_ID . '",
+				options: {
+					url_append: "' . static::$COMSCORE_KEYWORD_KEYNAME . '=' . static::getC7Value() . '"
+				}
+			});
+		
+			var s = document.createElement("script");
+			s.async = true;
+			s.src = (document.location.protocol == "https:" ? "https://sb" : "http://b") + ".scorecardresearch.com/beacon.js";
+			document.head.appendChild(s);
 		});
-	
-		var s = document.createElement("script");
-		s.async = true;
-		s.src = (document.location.protocol == "https:" ? "https://sb" : "http://b") + ".scorecardresearch.com/beacon.js";
-		document.head.appendChild(s);
-	});
+	} else {
+		trackingOptOut.ifNotOptedOut(function () {
+			window._comscore = window._comscore || [];
+			window._comscore.push({ c1: "2", c2: "' . static::$PARTNER_ID . '",
+				options: {
+					url_append: "' . static::$COMSCORE_KEYWORD_KEYNAME . '=' . static::getC7Value() . '"
+				}
+			});
+		
+			var s = document.createElement("script");
+			s.async = true;
+			s.src = (document.location.protocol == "https:" ? "https://sb" : "http://b") + ".scorecardresearch.com/beacon.js";
+			document.head.appendChild(s);
+		});
+	}
 });
 </script>
 <!-- End comScore Tag -->';
-			  }
+			}
 			break;
-                  default: return '<!-- Unsupported event for ' . __CLASS__ . ' -->';
+			default: return '<!-- Unsupported event for ' . __CLASS__ . ' -->';
 		}
 	}
 
