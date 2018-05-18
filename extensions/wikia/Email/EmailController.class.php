@@ -369,11 +369,7 @@ abstract class EmailController extends \WikiaController {
 
 	protected function getFooterMessages() {
 		return [
-			$this->getMessage( 'emailext-recipient-notice', $this->getTargetUserEmail() )
-				->parse(),
-			$this->getMessage( 'emailext-update-frequency' )
-				->parse(),
-			$this->getMessage( 'emailext-unsubscribe', $this->getUnsubscribeLink() )
+			$this->getMessage( 'emailext-recipient-notice', '$address$' )
 				->parse(),
 		];
 	}

@@ -241,6 +241,9 @@ class WikiaSendgridMailer {
 			'sub' => [
 				'$username$' => array_map( function ( MailAddress $address ) {
 					return $address->name;
+				}, $to ),
+				'$address$'=> array_map( function ( MailAddress $address ) {
+					return $address->address;
 				}, $to )
 			]
 		];

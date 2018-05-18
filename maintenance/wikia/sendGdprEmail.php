@@ -73,8 +73,6 @@ class sendGdprEmail extends Maintenance {
 				$recipients,
 				$this->getSender(),
 				$this->getSubject(),
-				// FIXME links point to sandbox
-				// FIXME footer is always english
 				$this->getBody(),
 				null,
 				null,
