@@ -1,26 +1,46 @@
 <!-- Begin NetzAthleten (Netletix) Tag -->
 <script type="text/javascript">
 require([
-    'ext.wikia.adEngine.adContext',
+	'ext.wikia.adEngine.adContext',
 	'wikia.geo',
-    'wikia.instantGlobals',
-    'wikia.trackingOptOut'
-], function(adContext, geo, instantGlobals, trackingOptOut,) {
+	'wikia.instantGlobals',
+	'wikia.trackingOptOut',
+	require.optional('wikia.trackingOptIn')
+], function(adContext, geo, instantGlobals, trackingOptOut, trackingOptIn) {
 	var url = "{{ url }}",
-            scriptElementNetzAthleten,
-            // TODO: remove next line after ADEN-7148 live + 24h - this is for backward compatibility
-            isNetzAthletenTurnedOn = !trackingOptOut.isOptedOut('netzathleten') && geo.isProperGeo(instantGlobals.wgAdDriverNetzAthletenCountries);
+		scriptElementNetzAthleten,
+		isNetzAthletenTurnedOn;
+		
+		if (trackingOptIn) {
+			trackingOptIn.pushToUserConsentQueue(function (optIn) {
+				if (optIn && adContext.get('opts.netzathleten')) {
+					// user opt-ins for NetzAthleten
+					scriptElementNetzAthleten = document.createElement("script");
+					scriptElementNetzAthleten.type = "text/javascript";
+					scriptElementNetzAthleten.src = url;
 
-    if (adContext.get('opts.netzathleten') || isNetzAthletenTurnedOn) {
-        scriptElementNetzAthleten = document.createElement("script");
-		scriptElementNetzAthleten.type = "text/javascript";
-		scriptElementNetzAthleten.src = url;
+					scriptElementNetzAthleten.addEventListener("load", function() {
+						window.naMediaAd.setValue("homesite", window.wgIsMainpage);
+					});
+					document.head.appendChild(scriptElementNetzAthleten);
+				}
+			});
+		} else {
+			// TODO: remove this block after ADEN-7155 live + 24h - this is for backward compatibility
+			isNetzAthletenTurnedOn = !trackingOptOut.isOptedOut('netzathleten')
+				&& geo.isProperGeo(instantGlobals.wgAdDriverNetzAthletenCountries);
 
-		scriptElementNetzAthleten.addEventListener("load", function() {
-			window.naMediaAd.setValue("homesite", window.wgIsMainpage);
-		});
-		document.head.appendChild(scriptElementNetzAthleten);
-	}
+			if (adContext.get('opts.netzathleten') || isNetzAthletenTurnedOn) {
+				scriptElementNetzAthleten = document.createElement("script");
+				scriptElementNetzAthleten.type = "text/javascript";
+				scriptElementNetzAthleten.src = url;
+
+				scriptElementNetzAthleten.addEventListener("load", function() {
+					window.naMediaAd.setValue("homesite", window.wgIsMainpage);
+				});
+				document.head.appendChild(scriptElementNetzAthleten);
+			}
+		}
 });
 </script>
 <!-- End NetzAthleten (Netletix) Tag -->
