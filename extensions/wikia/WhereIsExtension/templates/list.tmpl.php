@@ -27,12 +27,7 @@ select {
 <div id="busyDiv" style="display: none;">
 	<img src="<?= $wgStylePath ?>/common/images/ajax.gif" alt="Wait..." border="0" />'
 </div>
-<?php if( !empty( $tagResultInfo ) ): ?>
-	<div class="successbox" "style="margin: 0;margin-bottom: 1em;">
-		<?php echo $tagResultInfo; ?>
-	</div>
-	<br style="clear: both;" />
-<?php endif; ?>
+
 <div id="PaneList">
 	<form method="get" action="<?= Sanitizer::encodeAttribute( $formData['actionURL'] ) ?>">
 		<div style="float: left; margin-right: 6px">
@@ -107,7 +102,6 @@ select {
 	if ( !empty( $formData['wikis'] ) && count( $formData['wikis'] ) ) {
 		?>
 		<h3 id="headerWikis"><?= wfMessage( 'whereisextension-list', $formData['count'] )->escaped() ?></h3>
-		<form method="post" action="<?= Sanitizer::encodeAttribute( $formData['actionURL'] ) ?>" name="wikiSelectForm">
 			<ul>
 				<?
 					foreach( $formData['wikis'] as $wikiID => $wikiInfo ) :
@@ -115,7 +109,6 @@ select {
 						$editURL = SpecialPage::getTitleFor( 'WikiFactory', "{$wikiID}/variables/{$formData['vars'][ $formData['selectedVar'] ]}" )->getFullURL();
 				?>
 					<li class="wikiList">
-						<input type="checkbox" name="wikiSelected[]" id="wikiSelected_<?= Sanitizer::encodeAttribute( $wikiID ) ?>" value="<?= Sanitizer::encodeAttribute( $wikiID ) ?>">
 						<a href="<?= Sanitizer::encodeAttribute( $editURL ) ?>" <?= $style ?>><?= wfMessage( 'whereisextension-edit' )->escaped() ?></a>
 						<a href="<?= Sanitizer::encodeAttribute( $wikiInfo['u'] ) ?>" <?= $style ?>>
 							<?= htmlspecialchars( $wikiInfo['t'] ) ?>
@@ -124,37 +117,7 @@ select {
 				<? endforeach; ?>
 			</ul>
                         <?= $sPager ?>
-			<a href="#" id="wikiSelectAll" class="selectorLink"><?= wfMessage( 'whereisextension-select-all' )->escaped() ?></a>&nbsp;
-			<a href="#" id="wikiDeselectAll" class="selectorLink"><?= wfMessage( 'whereisextension-deselect-all' )->escaped() ?></a><br />
-			Tag name:&nbsp;
-			<input type="text" name="wikiSelectTagName" id="wikiSelectTagName" value="" />&nbsp;
-			<input type="submit" name="wikiSelectSubmit" value="Tag selected" />
-		</form>
-<script type="text/javascript">
-/*<![CDATA[*/
-	$('#wikiSelectAll').bind('click', function(e) {
-		$(".wikiList").find('input').each( function(i, element) {
-				element.checked = true;
-			});
-			return false;
-		});
 
-	$('#wikiDeselectAll').bind('click', function(e) {
-		$(".wikiList").find('input').each( function(i, element) {
-				element.checked = false;
-			});
-			return false;
-	});
-
-	$.loadJQueryAutocomplete(function() {
-		$('#wikiSelectTagName').autocomplete({
-			serviceUrl: mw.util.wikiScript() + '?action=ajax&rs=WikiFactoryTags::axQuery',
-			minChars:3,
-			deferRequestBy: 0
-		});
-	});
-/*]]>*/
-</script>
 		<?php
 	}
 	?>

@@ -802,12 +802,6 @@ class WikiFactory {
 						[ "city_id" => $city_id ],
 						__METHOD__ );
 
-					#--- update language tags
-					$tags = new WikiFactoryTags( $city_id );
-					$tags->removeTagsByName( $oldValue );
-					$tags->addTagsByName( $value );
-					break;
-
 				case "wgSitename":
 					#--- city_title
 					$dbw->update(
@@ -1687,12 +1681,6 @@ class WikiFactory {
 
 			$wrapper->wrap( function () use ($city_id) {
 				global $wgMemc;
-
-				/**
-				 * clear tags cache
-				 */
-				$tags = new WikiFactoryTags( $city_id );
-				$tags->clearCache();
 
 				/**
 				 * clear domains cache
