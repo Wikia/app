@@ -20,7 +20,7 @@ require_once('UserMailer.php');
 
 $dir = dirname(__FILE__) . '/';
 $wgAutoloadClasses['ContactForm'] = $dir . 'SpecialContact.body.php'; # Tell MediaWiki to load the extension body.
-$wgAutoloadClasses['SpecialContactCountryNames'] = $dir . 'SpecialContactCountryNames.php'; # Tell MediaWiki to load the extension body.
+$wgAutoloadClasses['SpecialContactCountryNames'] = $dir . 'SpecialContactCountryNames.php'; # i18ned list of countries
 $wgExtensionMessagesFiles['ContactForm2'] = $dir . 'SpecialContact.i18n.php';
 $wgExtensionMessagesFiles['ContactForm2Aliases']  = $dir . 'SpecialContact.alias.php';
 
