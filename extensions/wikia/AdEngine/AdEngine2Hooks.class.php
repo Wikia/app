@@ -156,6 +156,7 @@ class AdEngine2Hooks {
 			'kikimora' => true,
 			'prebid' => true,
 			'moat' => true,
+			'netzathleten' => true
 		];
 	}
 

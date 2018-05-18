@@ -26,18 +26,10 @@ class HTTPSOptInHooks {
 	}
 
 	public static function onMercuryWikiVariables( array &$wikiVariables ): bool {
-		global $wgDisableHTTPSDowngrade;
 		$basePath = $wikiVariables['basePath'];
 		$user = RequestContext::getMain()->getUser();
-		if ( startsWith( $basePath, 'http://' ) &&
-			self::httpsAllowed( $user, $basePath )
-		) {
+		if ( self::httpsAllowed( $user, $basePath ) ) {
 			$wikiVariables['basePath'] = wfHttpToHttps( $basePath );
-		} elseif ( startsWith( $basePath, 'https://' ) &&
-			!self::httpsAllowed( $user, $basePath ) &&
-			empty( $wgDisableHTTPSDowngrade )
-		) {
-			$wikiVariables['basePath'] = wfHttpsToHttp( $basePath );
 		}
 		return true;
 	}
@@ -58,18 +50,20 @@ class HTTPSOptInHooks {
 		User $user, WebRequest $request, MediaWiki $mediawiki
 	): bool {
 		global $wgDisableHTTPSDowngrade;
-		$requestURL = $request->getFullRequestURL();
-		if ( WebRequest::detectProtocol() === 'http' &&
-			self::httpsAllowed( $user, $requestURL )
-		) {
-			$output->redirect( wfHttpToHttps( $requestURL ) );
-		} elseif ( WebRequest::detectProtocol() === 'https' &&
-			!self::httpsAllowed( $user, $requestURL ) &&
-			empty( $wgDisableHTTPSDowngrade ) &&
-			!$request->getHeader( 'X-Wikia-WikiaAppsID' ) &&
-			!self::httpsEnabledTitle( $title )
-		) {
-			$output->redirect( wfHttpsToHttp( $requestURL ) );
+		if ( !empty( $_SERVER['HTTP_FASTLY_FF'] ) ) {  // don't redirect internal clients
+			$requestURL = $request->getFullRequestURL();
+			if ( WebRequest::detectProtocol() === 'http' &&
+				self::httpsAllowed( $user, $requestURL )
+			) {
+				$output->redirect( wfHttpToHttps( $requestURL ) );
+			} elseif ( WebRequest::detectProtocol() === 'https' &&
+				!self::httpsAllowed( $user, $requestURL ) &&
+				empty( $wgDisableHTTPSDowngrade ) &&
+				!$request->getHeader( 'X-Wikia-WikiaAppsID' ) &&
+				!self::httpsEnabledTitle( $title )
+			) {
+				$output->redirect( wfHttpsToHttp( $requestURL ) );
+			}
 		}
 		return true;
 	}
