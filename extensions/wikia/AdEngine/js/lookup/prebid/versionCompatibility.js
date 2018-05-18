@@ -3,15 +3,15 @@ define('ext.wikia.adEngine.lookup.prebid.versionCompatibility', [
 ], function () {
 	'use strict';
 
-	function toPrebidV0Bid(bid) {
+	function toPrebidVersion0Bid(bid) {
 		switch (bid.bidder) {
-			case 'indexEchange':
+			case 'indexExchange':
 				bid.params.siteID = Number(bid.params.siteId);
 				delete bid.params.siteId;
 				delete bid.params.size;
 				break;
 			case 'rubicon':
-			case 'rubiconDisplay':
+			case 'rubicon_display':
 				bid.params.accountId = Number(bid.params.accountId);
 				bid.params.zoneId = Number(bid.params.zoneId);
 				bid.params.siteId = Number(bid.params.siteId);
@@ -52,7 +52,7 @@ define('ext.wikia.adEngine.lookup.prebid.versionCompatibility', [
 
 			delete adUnit.mediaTypes;
 
-			adUnit.bids = adUnit.bids.map(toPrebidV0Bid);
+			adUnit.bids = adUnit.bids.map(toPrebidVersion0Bid);
 
 			return adUnit;
 		};
@@ -60,11 +60,10 @@ define('ext.wikia.adEngine.lookup.prebid.versionCompatibility', [
 
 	function toVersion0GetAliases(getAliases) {
 		return function () {
-			var newAliasesObj = {},
-				aliasesObj;
+			var aliasesObj;
 
 			if (!getAliases) {
-				return newAliasesObj;
+				return {};
 			}
 
 			aliasesObj = getAliases.apply(null, arguments);
@@ -74,18 +73,19 @@ define('ext.wikia.adEngine.lookup.prebid.versionCompatibility', [
 
 				switch (true) {
 					case (bidder === 'appnexus' && aliases[0] === 'appnexusWebAds'):
-						newAliasesObj['appnexusAst'] = ['appnexusWebAds'];
+						aliasesObj['appnexusAst'] = ['appnexusWebAds'];
+						delete aliasesObj['appnexus'];
 						break;
 					case (bidder === 'appnexus' && aliases[0] === 'appnexusAst'):
+						delete aliasesObj['appnexus'];
 						break;
 					case (bidder === 'ix' && aliases[0] === 'indexExchange'):
+						delete aliasesObj['ix'];
 						break;
-					default:
-						return aliasesObj;
 				}
 			});
 
-			return newAliasesObj;
+			return aliasesObj;
 		};
 	}
 
