@@ -48,8 +48,10 @@ describe('AdContext', function () {
 			adsGeo: geo,
 			geo: geo,
 			instantGlobals: {},
-			trackingOptOut: {
-				isOptedOut: noop
+			trackingOptIn: {
+				isOptedIn: function () {
+					return true;
+				}
 			},
 			win: {},
 			Querystring: function () {
@@ -80,7 +82,7 @@ describe('AdContext', function () {
 			mocks.doc,
 			mocks.geo,
 			mocks.instantGlobals,
-			mocks.trackingOptOut,
+			mocks.trackingOptIn,
 			mocks.adsGeo,
 			mocks.sampler,
 			mocks.win,
