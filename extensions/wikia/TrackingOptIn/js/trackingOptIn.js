@@ -5,10 +5,11 @@ define('wikia.trackingOptIn', [
 	'wikia.trackingOptInModal'
 ], function (instantGlobals, lazyQueue, log, trackingOptInModal) {
 	var optIn = false,
-		logGroup = 'wikia.trackingOptIn',
-		userConsentQueue = [];
+		logGroup = 'wikia.trackingOptIn';
 
-	lazyQueue.makeQueue(userConsentQueue, function (callback) {
+	window.Wikia.consentQueue = window.Wikia.consentQueue || [];
+
+	lazyQueue.makeQueue(window.Wikia.consentQueue, function (callback) {
 		callback(optIn);
 	});
 
@@ -16,22 +17,20 @@ define('wikia.trackingOptIn', [
 		if (instantGlobals.wgEnableTrackingOptInModal) {
 			log('Using tracking opt in modal', log.levels.info, logGroup);
 			trackingOptInModal.render({
-				countriesRequiringPrompt: ['us'], // TODO provide full list of countries
-				country: 'us', // TODO provide geo from cookie
 				onAcceptTracking: function () {
 					optIn = true;
-					userConsentQueue.start();
+					window.Wikia.consentQueue.start();
 					log('User opted in', log.levels.debug, logGroup);
 				},
 				onRejectTracking: function () {
-					userConsentQueue.start();
+					window.Wikia.consentQueue.start();
 					log('User opted out', log.levels.debug, logGroup);
 				},
 				zIndex: 9999999
 			});
 		} else {
 			optIn = true;
-			userConsentQueue.start();
+			window.Wikia.consentQueue.start();
 			log('Running queue without tracking opt in modal', log.levels.info, logGroup);
 		}
 	}
@@ -42,7 +41,7 @@ define('wikia.trackingOptIn', [
 	}
 
 	function pushToUserConsentQueue(callback) {
-		userConsentQueue.push(callback);
+		window.Wikia.consentQueue.push(callback);
 	}
 
 	return {

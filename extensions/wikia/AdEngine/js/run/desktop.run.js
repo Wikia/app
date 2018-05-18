@@ -57,7 +57,6 @@ require([
 	// https://www.google.com/dfp/5441#delivery/CreateCreativeTemplate/creativeTemplateId=10017012
 	win.adSlotTweaker = slotTweaker;
 
-	// TODO setup bridge context with optIn value
 	trackingOptIn.pushToUserConsentQueue(function () {
 		var context = adContext.getContext();
 
