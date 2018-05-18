@@ -1683,12 +1683,6 @@ class WikiFactory {
 				global $wgMemc;
 
 				/**
-				 * clear tags cache
-				 */
-				$tags = new WikiFactoryTags( $city_id );
-				$tags->clearCache();
-
-				/**
 				 * clear domains cache
 				 */
 				static::clearDomainCache( $city_id );
