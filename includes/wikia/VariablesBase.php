@@ -4268,7 +4268,10 @@ $wgExtraLanguageNames = [];
  *     103 => "Discussion_Aide"
  * ];
  */
-$wgExtraNamespaces = [];
+$wgExtraNamespaces = [
+	110 => 'Forum',
+	111 => 'Forum_talk',
+];
 
 /**
  * A subtitle to add to the tagline, for skins that have it.

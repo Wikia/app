@@ -467,7 +467,6 @@ $wgAutoloadClasses[ "WikiaApiQueryPopularPages"     ] = "$IP/extensions/wikia/Wi
 $wgAutoloadClasses[ "WikiaApiQuerySiteInfo"         ] = "$IP/extensions/wikia/WikiaApi/WikiaApiQuerySiteinfo.php";
 $wgAutoloadClasses[ "WikiaApiQueryPageinfo"         ] = "$IP/extensions/wikia/WikiaApi/WikiaApiQueryPageinfo.php";
 $wgAutoloadClasses[ "WikiaApiCreatorReminderEmail"  ] = "$IP/extensions/wikia/CreateNewWiki/WikiaApiCreatorReminderEmail.php";
-$wgAutoloadClasses[ "WikiFactoryTags"               ] = "$IP/extensions/wikia/WikiFactory/Tags/WikiFactoryTags.php";
 $wgAutoloadClasses[ "WikiaApiQueryAllUsers"         ] = "$IP/extensions/wikia/WikiaApi/WikiaApiQueryAllUsers.php";
 $wgAutoloadClasses[ "ApiFetchBlob"                  ] = "$IP/includes/api/wikia/ApiFetchBlob.php";
 $wgAutoloadClasses[ "ApiLicenses"                   ] = "$IP/includes/wikia/api/ApiLicenses.php";
@@ -714,7 +713,7 @@ $wgObjectCaches = array(
          * incompatible serialization logic.
          */
         // FIXME: this is a temporary condition used to gradually deploy the new client (SUS-4611)
-        'class' => ( ( !is_null($wgDomainHash) && $wgDomainHash % 100 < 25 ) ? 'MemcachedPeclBagOStuff' : 'MemcachedPhpBagOStuff' ),
+        'class' => ( ( !is_null($wgDomainHash) && $wgDomainHash % 100 < 0 ) ? 'MemcachedPeclBagOStuff' : 'MemcachedPhpBagOStuff' ),
         'use_binary_protocol' => false, // twemproxy does not support binary protocol
         /**
          * SUS-4749 | make MemcachedPeclBagOStuff use igbinary serializer
@@ -730,7 +729,7 @@ $wgObjectCaches = array(
     'xcache' => array('class' => 'XCacheBagOStuff'),
     'wincache' => array('class' => 'WinCacheBagOStuff'),
     'memcached-php' => array('class' => 'MemcachedPhpBagOStuff'),
-    'memcached-pecl' => array( 'class' => 'MemcachedPeclBagOStuff' ),    
+    'memcached-pecl' => array( 'class' => 'MemcachedPeclBagOStuff' ),
     'hash' => array('class' => 'HashBagOStuff'),
 );
 
