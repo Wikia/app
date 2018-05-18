@@ -124,8 +124,7 @@ define('ext.wikia.adEngine.adContext', [
 	function isMOATTrackingForFVEnabled() {
 		var samplingForMoatFV = instantGlobals.wgAdDriverMoatTrackingForFeaturedVideoAdSampling || 1;
 
-		return trackingOptIn.isOptedIn() &&
-			sampler.sample('moatTrackingForFeaturedVideo', samplingForMoatFV, 100) &&
+		return sampler.sample('moatTrackingForFeaturedVideo', samplingForMoatFV, 100) &&
 			geo.isProperGeo(instantGlobals.wgAdDriverMoatTrackingForFeaturedVideoAdCountries);
 	}
 
@@ -208,7 +207,7 @@ define('ext.wikia.adEngine.adContext', [
 		);
 
 		context.opts.outstreamVideoFrequencyCapping = instantGlobals.wgAdDriverOutstreamVideoFrequencyCapping;
-		context.opts.porvataMoatTrackingEnabled = trackingOptIn.isOptedIn() &&
+		context.opts.porvataMoatTrackingEnabled =
 			geo.isProperGeo(instantGlobals.wgAdDriverPorvataMoatTrackingCountries);
 		context.opts.porvataMoatTrackingSampling = instantGlobals.wgAdDriverPorvataMoatTrackingSampling || 0;
 

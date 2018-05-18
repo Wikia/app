@@ -54,7 +54,7 @@ function init(
 	adProductsUtils.setupNpaContext();
 
 	overrideSlotService(slotRegistry, legacyBtfBlocker);
-	updatePageLevelTargeting(legacyContext, pageLevelTargeting, skin);
+	updatePageLevelTargeting(legacyContext, pageLevelTargeting, skin, isOptedIn);
 	syncSlotsStatus(slotRegistry, context.get('slots'));
 
 	const wikiIdentifier = legacyContext.get('targeting.wikiIsTop1000') ?
@@ -164,11 +164,12 @@ function getSupportedTemplateNames() {
 	return supportedTemplates.map((template) => template.getName());
 }
 
-function updatePageLevelTargeting(legacyContext, params, skin) {
+function updatePageLevelTargeting(legacyContext, params, skin, isOptedIn) {
 	context.set('custom.device', utils.client.getDeviceType());
 	context.set('targeting.skin', skin);
-	context.set('options.video.moatTracking.enabled', legacyContext.get('opts.porvataMoatTrackingEnabled'));
 	context.set('options.video.moatTracking.sampling', legacyContext.get('opts.porvataMoatTrackingSampling'));
+	context.set('options.video.moatTracking.enabled',
+		isOptedIn && legacyContext.get('opts.porvataMoatTrackingEnabled'));
 
 	Object.keys(params).forEach((key) => context.set(`targeting.${key}`, params[key]));
 }

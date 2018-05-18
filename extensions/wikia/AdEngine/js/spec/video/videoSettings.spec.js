@@ -14,6 +14,11 @@ describe('ext.wikia.adEngine.video.videoSettings', function () {
 				return true;
 			}
 		},
+		trackingOptIn: {
+			isOptedIn: function () {
+				return true;
+			}
+		},
 		win: {
 			google: {
 				ima: {
@@ -33,6 +38,7 @@ describe('ext.wikia.adEngine.video.videoSettings', function () {
 			mocks.adContext,
 			mocks.sampler,
 			mocks.instantGlobals,
+			mocks.trackingOptIn,
 			mocks.win
 		).create(params);
 	}
