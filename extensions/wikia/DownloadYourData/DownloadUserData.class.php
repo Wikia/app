@@ -55,9 +55,9 @@ class DownloadUserData {
 		$identityBox = new \UserIdentityBox( $user );
 		$profileData = $identityBox->getFullData();
 
-		if ( !empty( $profileData['registration'] ) ) {
+		if ( !empty( $user->getRegistration() ) ) {
 			$userdata[] = [ wfMessage( 'downloadyourdata-registration' )->inLanguage( $language )->text(),
-				$profileData['registration'] ];
+				$userLang->userTimeAndDate( $user->getRegistration(), $user ) ];
 		}
 
 		if ( !empty( $profileData['birthday'] ) &&
