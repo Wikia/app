@@ -24,8 +24,8 @@ define('wikia.trackingOptIn', [
 		lazyQueue.makeQueue(fakeConsentQueue, function (callback) {
 			callback(optIn);
 		});
-		fakeConsentQueue.start();
 		optIn = true;
+		fakeConsentQueue.start();
 
 		return fakeConsentQueue;
 	}
