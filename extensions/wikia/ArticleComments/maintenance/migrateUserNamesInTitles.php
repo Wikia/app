@@ -56,15 +56,26 @@ class MigrateUserNamesInTitles extends Maintenance {
 				continue;
 			}
 
-			$this->output( "#{$pageId}: {$oldPageTitle} -> {$newPageTitle}\n" );
+			$this->output( "#{$pageId}: {$oldPageTitle} -> {$newPageTitle} ... " );
 
 			if ($this->hasOption('do-migrate')) {
-				// TODO - migrate
-				$updated++;
+				$dbw->update(
+					'page',
+					['page_title' => $newPageTitle],
+					['page_id' => $pageId],
+					__METHOD__
+				);
+
+				$updated += $dbw->affectedRows();
+
+				$this->output( "updated\n" );
+			}
+			else {
+				$this->output( "dry-run\n" );
 			}
 		}
 
-		$this->output( "\nDone! $count rows processed.\n" );
+		$this->output( "\nDone! $count rows checked, $updated updated.\n" );
 
 		\Wikia\Logger\WikiaLogger::instance()->info(__CLASS__, [
 			'updated' => $updated,
