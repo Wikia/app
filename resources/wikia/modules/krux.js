@@ -7,11 +7,11 @@ define('wikia.krux', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adTracker',
 	'wikia.document',
+	'wikia.log',
 	'wikia.tracker',
 	'wikia.trackingOptIn',
-	'wikia.window',
-	'wikia.log'
-], function (adContext, adTracker, doc, wikiaTracker, trackingOptIn, win, log) {
+	'wikia.window'
+], function (adContext, adTracker, doc, log, wikiaTracker, trackingOptIn, win) {
 	'use strict';
 
 	var maxNumberOfKruxSegments = 50,
