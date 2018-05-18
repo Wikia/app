@@ -143,8 +143,7 @@ describe('ext.wikia.adEngine.lookup.prebid', function () {
 		},
 		prebid;
 
-	function noop() {
-	}
+	function noop() {}
 
 	function getFactory() {
 		return modules['ext.wikia.adEngine.lookup.lookupFactory'](
@@ -178,6 +177,9 @@ describe('ext.wikia.adEngine.lookup.prebid', function () {
 		prebid = getPrebid();
 		spyOn(mocks.adTracker, 'track');
 		spyOn(mocks.win.pbjs.que, 'push');
+
+		window.loadOldPrebid = noop;
+		window.loadNewPrebid = noop;
 	});
 
 	it('Ad slots are pushed', function () {
