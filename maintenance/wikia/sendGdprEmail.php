@@ -14,6 +14,7 @@ require_once( dirname( __FILE__ ) . '/../Maintenance.php' );
 class sendGdprEmail extends Maintenance {
 	const ARGUMENT_FILE = 'file';
 	const ARGUMENT_LANGUAGE = 'language';
+	const GDPR_BATCH_SIZE = 1000;
 
 	const SUBJECTS = [
 		'en' => 'We\'re updating our Terms of Use and Privacy Policy',
@@ -49,25 +50,56 @@ class sendGdprEmail extends Maintenance {
 			exit(1);
 		}
 
+		$batchCounter = 0;
+		$perBatchCounter = 0;
 		$recipients = [];
+		$userIdsForLog = [];
 
-		// TODO batch by 1000
 		while ( ( $line = fgets( $file ) ) !== false ) {
 			$userId = intval( $line );
 			$recipient = $this->userToRecipient( $userId );
 
 			if ( $recipient !== null ) {
 				array_push( $recipients, $recipient );
+				array_push( $userIdsForLog, $userId );
 			} else {
-				$this->log( 'skip', $userId );
+				$this->log( 'skip', [$userId] );
+			}
+
+			$perBatchCounter++;
+
+			if ( $perBatchCounter >= self::GDPR_BATCH_SIZE ) {
+				list(
+					$batchCounter,
+					$perBatchCounter,
+					$recipients,
+					$userIdsForLog
+				) = $this->flushBatch( $recipients, $userIdsForLog, $batchCounter );
 			}
 		}
 
-		$this->sendEmail( $recipients );
+		// Not a full batch
+		$this->flushBatch( $recipients, $userIdsForLog, $batchCounter );
+
 		echo "Finished\n";
 	}
 
-	private function sendEmail( $recipients ) {
+	private function flushBatch( $recipients, $userIdsForLog, $batchCounter ): array
+	{
+		if ( !empty( $recipients ) ) {
+			$this->sendEmail( $recipients, $userIdsForLog, $batchCounter );
+			$this->log( 'success', $userIdsForLog );
+		}
+
+		$this->log( 'batchdone', [ $batchCounter ] );
+		$batchCounter++;
+		$perBatchCounter = 0;
+		$recipients = [];
+		$userIdsForLog = [];
+		return array( $batchCounter, $perBatchCounter, $recipients, $userIdsForLog );
+	}
+
+	private function sendEmail( $recipients, $userIdsForLog, $batchCounter ) {
 		try {
 			$status = UserMailer::send(
 				$recipients,
@@ -88,7 +120,10 @@ class sendGdprEmail extends Maintenance {
 			echo "\n";
 			echo $exception->getTraceAsString();
 			echo "\n";
-			echo "Exception in sendEmail, quitting\n";
+			echo "Exception for batch " . $batchCounter;
+			echo "\n";
+
+			$this->log( 'error', $userIdsForLog );
 
 			return;
 		}
@@ -98,11 +133,16 @@ class sendGdprEmail extends Maintenance {
 				'errors' => $status->getErrorsArray()
 			] );
 
-			echo "NOT OK: " . $status->getMessage();
+			echo "Status not ok for batch " . $batchCounter;
+			echo "\n";
+			echo  $status->getMessage();
+			echo "\n";
+
+			$this->log( 'error', $userIdsForLog );
 		}
 	}
 
-	private function userToRecipient( int $userId ): MailAddress {
+	private function userToRecipient( int $userId ) {
 		$user = User::newFromId( $userId );
 
 		if ( !$user->canReceiveEmail() || $user->getGlobalPreference( 'unsubscribed' ) ) {
@@ -132,9 +172,12 @@ class sendGdprEmail extends Maintenance {
 		];
 	}
 
-	private function log( $type, $userId ) {
-		// TODO rethink logging
-		echo $type . ':' . $userId;
+	private function log( $type, $items ) {
+		foreach ( $items as $item ) {
+			// TODO log to file per type
+			echo $type . ':' . $item;
+			echo "\n";
+		}
 	}
 
 	// Copy paste from EmailController.class.php
