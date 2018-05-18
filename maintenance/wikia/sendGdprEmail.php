@@ -125,7 +125,7 @@ class sendGdprEmail extends Maintenance {
 
 	private function getBody() {
 		$html = F::app()->renderView( 'Email\Controller\GdprNotificationController', 'getBody', [
-			'language' => $this->language
+			'targetLang' => $this->language
 		] );
 
 		return [

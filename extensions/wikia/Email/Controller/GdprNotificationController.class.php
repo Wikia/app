@@ -14,6 +14,6 @@ class GdprNotificationController extends EmailController {
 	 * @template passwordResetLink
 	 */
 	public function body() {
-		$this->overrideTemplate( 'gdprNotification-' . $this->getVal( 'language' )  );
+		$this->overrideTemplate( 'gdprNotification-' . $this->targetLang  );
 	}
 }
