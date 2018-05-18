@@ -46,10 +46,6 @@
 			</sup>
 		<?php endif; ?>
 	</li>
-	<li>
-		Tags: <?php if( is_array( $tags ) ): echo "<strong>"; foreach( $tags as $id => $tag ): echo "{$tag} "; endforeach; echo "</strong>"; endif; ?>
-		<sup><a href="<?php echo "{$wikiFactoryUrl}/{$wiki->city_id}"; ?>/tags">edit</a></sup>
-	</li>
 	<?php if ($wiki->city_public <= 0) : ?><li>
 		<div>Disabled reason: <?php echo wfMsg('closed-reason')?> (<?php echo $wiki->city_additional?>)</div>
 	</li><?php endif ?>

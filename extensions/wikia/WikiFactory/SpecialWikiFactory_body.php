@@ -19,7 +19,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 class WikiFactoryPage extends SpecialPage {
 
 	/* @var object $mWiki a row from city_list table */
-	private $mWiki, $mTitle, $mDomain, $mTab, $mVariableName, $mTags, $mSearchTag;
+	private $mWiki, $mTitle, $mDomain, $mTab, $mVariableName, $mSearchTag;
 	public $mStatuses = array(-2 => 'spam', -1=> 'disabled*', "disabled", "enabled", "redirected" );
 	private $mTagWikiIds = array();
 
@@ -90,7 +90,6 @@ class WikiFactoryPage extends SpecialPage {
 			}
 			else {
 				$this->mWiki = $oWiki;
-				$this->mTags = new WikiFactoryTags( $this->mWiki->city_id );
 				$this->doWikiForm( );
 			}
 		}
@@ -247,42 +246,6 @@ class WikiFactoryPage extends SpecialPage {
 				case "domains":
 					$info = $this->doUpdateDomains( $wgRequest );
 					break;
-				case "tags":
-					$info = $this->doUpdateTags( $wgRequest );
-					break;
-				case "findtags":
-					#we have 2 things that post from this page :(
-					if( $wgRequest->getVal('wpSearchTag') != null ) {
-						$this->mSearchTag = $wgRequest->getVal('wpSearchTag');
-						$info = $this->doSearchTags( $this->mSearchTag );
-					}
-
-						$this->mRemoveTag = $wgRequest->getVal('remove_tag');
-						$this->mRemoveTags = $wgRequest->getIntArray('remove_tag_id');
-					if( $this->mRemoveTag != null &&
-						$this->mRemoveTags != null ) {
-						$info = $this->doMultiRemoveTags();
-					}
-					break;
-				case "masstags":
-						$this->mMassTag = $wgRequest->getVal('wpMassTag');
-						$this->mMassTagWikis = $wgRequest->getVal('wfMassTagWikis');
-
-					if( $this->mMassTag != null && $this->mMassTagWikis != null ) {
-						$info = $this->doMassTag();
-					}
-					else
-					{
-						if( $this->mMassTag == null )
-						{
-							$info = Wikia::errorbox('missing tag to apply to wikis');
-						}
-						if( $this->mMassTagWikis == null )
-						{
-							$info = Wikia::errorbox('missing wikis to apply tag to');
-						}
-					}
-					break;
 				case "ezsharedupload":
 					if($wgRequest->getVal('ezsuSave') != null) {
 						$info = $this->doSharedUploadEnable( $wgRequest );
@@ -291,31 +254,12 @@ class WikiFactoryPage extends SpecialPage {
 			}
 			Hooks::run('WikiFactory::onPostChangesApplied', array($this->mWiki->city_id));
 		}
-		else {
-			/**
-			 * maybe some other action but with GET not POST
-			 */
-			switch( $this->mTab ) {
-				case "tags":
-					$tag_id  = $wgRequest->getVal( "wpTagId", false );
-					if( $tag_id ) {
-						$info = $this->doUpdateTags( $wgRequest, $tag_id );
-					}
-					break;
-				case "findtags":
-					if ( !empty( $this->mSearchTag ) ) {
-						$info = $this->doSearchTags( $this->mSearchTag );
-					}
-					break;
-			}
-		}
 
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 		$vars = array(
 			"tab"         => $this->mTab,
 			"hub"         => WikiFactoryHub::getInstance(),
 			"wiki"        => $this->mWiki,
-			"tags"        => $this->mTags->getTags(),
 			"info"        => $info,
 			"title"       => $this->mTitle,
 			"groups"      => WikiFactory::getGroups(),
@@ -357,10 +301,6 @@ class WikiFactoryPage extends SpecialPage {
 					$vars[ 'lookupuser_by_founder_usermail_url' ] = Title::newFromText( "LookupUser", NS_SPECIAL)->getFullURL(array("target" => $vars['founder_usermail']));
 				}
 			}
-		}
-		if( $this->mTab === "tags" ||  $this->mTab === "findtags" ) {
-			$vars[ 'searchTag' ] = $this->mSearchTag;
-			$vars[ 'searchTagWikiIds' ] = $this->mTagWikiIds;
 		}
 		if( $this->mTab === "hubs" ) {
 
@@ -522,189 +462,6 @@ class WikiFactoryPage extends SpecialPage {
 			break;
 		}
 		return Wikia::successmsg( $message );
-	}
-
-	/**
-	 * doUpdateTags
-	 *
-	 * @access private
-	 * @author eloy@wikia-inc.com
-	 *
-	 * @param WebRequest $request  WebRequest instance
-	 * @param Boolean    $tag_id   set if removing, tag_id of removing tag
-	 *
-	 * @return mixed	info when change, null when not changed
-	 */
-	private function doUpdateTags( &$request, $tag_id = false ) {
-		#global $wgOut;
-
-		wfProfileIn( __METHOD__ );
-
-		$msg  = false;
-		$wfTags = new WikiFactoryTags( $this->mWiki->city_id );
-
-		if( $tag_id ) {
-			$tagName = $request->getText( "wpTagName" );
-			$newTags = $this->mTags->removeTagsById( array( $tag_id ) );
-			#$wgOut->addHTML('<pre>' . print_r($newTags,1) . "</pre>" );
-			$msg = "Tag {$tagName} removed";
-
-		}
-		else {
-			$stag = $request->getText( "wpTag", false );
-
-			if( $stag ) {
-				$before = $wfTags->getTags( true ); // from master
-				$after  = $wfTags->addTagsByName( $stag );
-				$diff   = array_diff( $after, $before );
-				#$wgOut->addHTML('<pre>' );
-				#$wgOut->addHTML( print_r($before,1) ."\n" );
-				#$wgOut->addHTML( print_r($after,1) ."\n");
-				#$wgOut->addHTML( print_r($diff,1) ."\n");
-				#$wgOut->addHTML( "</pre>");
-
-				$msg = "Added new tags: " . implode( ", ", $diff );
-			}
-			else {
-				$msg = "Nothing to add";
-			}
-		}
-		wfProfileOut( __METHOD__ );
-
-		return Wikia::successbox( $msg );
-	}
-
-	/**
-	 * doMassTag
-	 *
-	 * data is stored in:
-	 *  $this->mMassTag
-	 *  $this->mMassTagWikis
-	 *
-	 * @access private
-	 * @author uberfuzzy@wikia-inc.com
-	 * @note yes, i know this is HORRIBLY ineffecient, but I was going for RAD, not clean.
-	 */
-	private function doMassTag() {
-
-		wfProfileIn( __METHOD__ );
-
-		$this->mMassTagWikis = explode("\n", $this->mMassTagWikis);
-		global $wgOut;
-
-		$msg  = false;
-		$added=0;
-
-		foreach($this->mMassTagWikis as $dart_string)
-		{
-			if( empty($dart_string) ) { continue; }
-			$dart_parts = explode("/", $dart_string);
-			if( count($dart_parts) < 2 ) {
-				continue;
-			}
-			$db = ltrim($dart_parts[1], '_');
-
-			$wkid = WikiFactory::DBtoID( $db );
-			// $wgOut->addHTML("id={$wkid}<br/>"); #debug
-
-			$added++;
-			$oTag = new WikiFactoryTags( $wkid );
-			$oTag->addTagsByName( $this->mMassTag );
-			#$oTag->clearCache();
-		}
-
-		$oTQ = new WikiFactoryTagsQuery(''); // no tag, because we're just using it to uncache
-		$oTQ->clearCache();
-
-		$msg = "Added '{$this->mMassTag}' to {$added} wikis";
-		wfProfileOut( __METHOD__ );
-
-		return Wikia::successbox( $msg );
-	}
-
-	/**
-	 * doSearchTags
-	 *
-	 * @access private
-	 * @author adi@wikia-inc.com
-	 */
-	private function doSearchTags( $searchTag ) {
-		if( empty( $searchTag ) ) {
-			$result = Wikia::errorbox( "Nothing to search" );
-		}
-		else {
-			$tagsQuery = new WikiFactoryTagsQuery( $searchTag );
-			$this->mTagWikiIds = $tagsQuery->doQuery();
-				#print "(filled mTagWikiIds with a WikiFactoryTagsQuery from inside doSearchTags ".gmdate('r').")";
-
-			if( count( $this->mTagWikiIds ) == 0 ) {
-				$result = Wikia::errorbox( "No wikis with \"" . $searchTag . "\" tag assigned" );
-			}
-			else {
-				$result = Wikia::successbox( count( $this->mTagWikiIds ) . " wiki(s) found with \"" . $searchTag . "\" tag assigned" );
-				$result ='';
-			}
-		}
-		return $result;
-	}
-
-	/**
-	 * doMultiRemoveTags
-	 *
-	 * @access private
-	 * @author uberfuzzy@wikia-inc.com
-	 *
-	 * @return text message (use Wikia::*box functions)
-	 */
-	private function doMultiRemoveTags( ) {
-
-		/* working data is stored in object prior to call
-			$this->mRemoveTag; has the tag to remove
-			$this->mRemoveTags; has int array of wiki id to remove from
-		*/
-
-		/* in theory, these should never trigger, but BSTS */
-		if( empty( $this->mRemoveTag ) ) {
-			return Wikia::errorbox( "no tag to remove?" );
-		}
-		if( empty( $this->mRemoveTags ) ) {
-			return Wikia::errorbox( "no items to remove?" );
-		}
-
-		/* turn the tag string into the tag id */
-		$tagID = WikiFactoryTags::idFromName( $this->mRemoveTag );
-		if( $tagID === false ) {
-			return Wikia::errorbox( "tag [{$this->mRemoveTag}] doesnt exist" );
-		}
-
-		/* to get list of all wikis with this tag, and later, use this to cache clear */
-		$tagsQuery = new WikiFactoryTagsQuery( $this->mRemoveTag );
-
-			$fails = array();
-		foreach($this->mRemoveTags as $wkid)
-		{
-			$oTag = new WikiFactoryTags( $wkid );
-			$ret = $oTag->removeTagsById( array($tagID) );
-			if($ret === false) {
-				$fails[] = $wkid;
-			}
-		}
-
-		/* force dump of the tag_map in memcache */
-		$tagsQuery->clearCache();
-
-		/* since we /hopefully/ removed some tags from wikis,
-			force the search results for this pageload to be empty. */
-		$this->mTagWikiIds = array();
-		#print "(forcing mTagWikiIds to null at ".gmdate('r').")";
-
-		if( empty($fails) ) {
-			return Wikia::successbox( "ok!" );
-		}else{
-			return Wikia::errorbox( "ok, but failed at ".count($fails)." wikis".
-									" (" . implode(", ", $fails ) . ")" );
-		}
-
 	}
 
 	/**

@@ -1,17 +1,26 @@
-<!-- Begin NetzAthleten Tag -->
+<!-- Begin NetzAthleten (Netletix) Tag -->
 <script type="text/javascript">
-require(['wikia.geo', 'wikia.instantGlobals'], function(geo, instantGlobals) {
+require([
+    'ext.wikia.adEngine.adContext',
+	'wikia.geo',
+    'wikia.instantGlobals',
+    'wikia.trackingOptOut'
+], function(adContext, geo, instantGlobals, trackingOptOut,) {
 	var url = "{{ url }}",
-		scriptElementNetzAthleten = document.createElement("script");
-	if (geo.isProperGeo(instantGlobals.wgAdDriverNetzAthletenCountries)) {
+            scriptElementNetzAthleten,
+            // TODO: remove next line after ADEN-7148 live + 24h - this is for backward compatibility
+            isNetzAthletenTurnedOn = !trackingOptOut.isOptedOut('netzathleten') && geo.isProperGeo(instantGlobals.wgAdDriverNetzAthletenCountries);
+
+    if (adContext.get('opts.netzathleten') || isNetzAthletenTurnedOn) {
+        scriptElementNetzAthleten = document.createElement("script");
 		scriptElementNetzAthleten.type = "text/javascript";
 		scriptElementNetzAthleten.src = url;
 
-		scriptElementNetzAthleten.addEventListener("load", function(){
+		scriptElementNetzAthleten.addEventListener("load", function() {
 			window.naMediaAd.setValue("homesite", window.wgIsMainpage);
 		});
 		document.head.appendChild(scriptElementNetzAthleten);
 	}
 });
 </script>
-<!-- End NetzAthleten Tag -->
+<!-- End NetzAthleten (Netletix) Tag -->

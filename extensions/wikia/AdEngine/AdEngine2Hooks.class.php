@@ -151,11 +151,13 @@ class AdEngine2Hooks {
 	public static function getTrackingOptOutModules() {
 		// list of functions with tracking opted-out
 		return [
+			'a9' => true,
 			'gpt' => true,
 			'krux' => true,
 			'kikimora' => true,
 			'prebid' => true,
 			'moat' => true,
+			'netzathleten' => true
 		];
 	}
 

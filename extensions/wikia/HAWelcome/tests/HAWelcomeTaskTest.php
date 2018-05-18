@@ -5,6 +5,11 @@
  */
 class HAWelcomeTaskTest extends WikiaBaseTest {
 
+	public function setUp() {
+		$this->setupFile = __DIR__ . '/../HAWelcome.setup.php';
+		parent::setUp();
+	}
+
 	public function testNormalizeInstanceParameters() {
 		$userId    = 1;
 		$username  = 'foo';
