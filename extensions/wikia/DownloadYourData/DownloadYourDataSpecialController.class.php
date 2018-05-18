@@ -14,8 +14,6 @@ class DownloadYourDataSpecialController extends \WikiaSpecialPageController {
 	}
 
 	public function index() {
-		wfProfileIn( __METHOD__ );
-
 		$user = $this->getUser();
 		if ( !$user->isLoggedIn() ) {
 			$this->getOutput()->redirect( \SpecialPage::getTitleFor( 'Contact/data-portability' )->getFullURL() );
@@ -51,8 +49,6 @@ class DownloadYourDataSpecialController extends \WikiaSpecialPageController {
 
 				$output->addHTML( $model->formatAsCsv( $model->getDataForUser( $exportedUser ) ) );
 
-				wfProfileOut( __METHOD__ );
-
 				return false;
 			}
 
@@ -78,8 +74,6 @@ class DownloadYourDataSpecialController extends \WikiaSpecialPageController {
 		];
 
 		$this->submitButton = \Wikia\UI\Factory::getInstance()->init( 'button' )->render( $buttonParams );
-
-		wfProfileOut( __METHOD__ );
 	}
 
 }
