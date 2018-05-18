@@ -52,13 +52,13 @@ class DownloadUserData {
 				$userLang->userDate( strtotime( $user->mBirthDate ), $user ) ];
 		}
 
-		$identityBox = new \UserIdentityBox( $user );
-		$profileData = $identityBox->getFullData();
-
 		if ( !empty( $user->getRegistration() ) ) {
 			$userdata[] = [ wfMessage( 'downloadyourdata-registration' )->inLanguage( $language )->text(),
 				$userLang->userTimeAndDate( $user->getRegistration(), $user ) ];
 		}
+
+		$identityBox = new \UserIdentityBox( $user );
+		$profileData = $identityBox->getFullData();
 
 		if ( !empty( $profileData['birthday'] ) &&
 			intval( $profileData['birthday']['month'] ) > 0 &&
