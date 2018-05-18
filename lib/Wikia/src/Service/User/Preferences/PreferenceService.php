@@ -218,26 +218,26 @@ class PreferenceService {
 	 * @throws \Exception
 	 */
 	private function load( $userId ) {
-		wfProfileIn( __METHOD__ );
 		if ( $userId == 0 ) {
 			return $this->applyDefaults( new UserPreferences() );
 		}
 
-		try {
-			$preferences = $this->persistence->get( $userId );
-		} catch ( PersistenceException $e ) {
-			$this->error( $e->getMessage() . ": setting preferences in read-only mode",
-				['user' => $userId] );
-			$preferences = ( new UserPreferences() )
-				->setReadOnly( true );
-		} catch ( \Exception $e ) {
-			$this->error( $e->getMessage(), ['user' => $userId] );
-			throw $e;
+		if ( !isset( $this->preferences[$userId] ) ) {
+			try {
+				$preferences = $this->persistence->get( $userId );
+			} catch ( PersistenceException $e ) {
+				$this->error( $e->getMessage() . ": setting preferences in read-only mode",
+					['user' => $userId] );
+				$preferences = ( new UserPreferences() )
+					->setReadOnly( true );
+			} catch ( \Exception $e ) {
+				$this->error( $e->getMessage(), ['user' => $userId] );
+				throw $e;
+			}
+
+			$this->preferences[$userId] = $this->applyDefaults( $preferences );
 		}
 
-		$this->preferences[$userId] = $this->applyDefaults( $preferences );
-
-		wfProfileOut( __METHOD__ );
 		return $this->preferences[$userId];
 	}
 
