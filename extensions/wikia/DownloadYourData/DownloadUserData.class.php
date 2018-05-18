@@ -26,7 +26,8 @@ class DownloadUserData {
 	 */
 	public function getDataForUser( \User $user ) {
 		if ( $this->exportingUser->getId() !== $user->getId() &&
-			!$this->exportingUser->isAllowed( 'exportuserdata' ) ) {
+			!$this->exportingUser->isAllowed( 'exportuserdata' )
+		) {
 			throw new \Exception( 'Current user is not allowed to export data for other users.' );
 		}
 
@@ -59,7 +60,10 @@ class DownloadUserData {
 				$profileData['registration'] ];
 		}
 
-		if ( !empty( $profileData['birthday'] ) && intval( $profileData['birthday']['month'] ) > 0 && intval( $profileData['birthday']['month'] ) < 13 ) {
+		if ( !empty( $profileData['birthday'] ) &&
+			intval( $profileData['birthday']['month'] ) > 0 &&
+			intval( $profileData['birthday']['month'] ) < 13
+		) {
 			$formattedBirthday = wfMessage( 'downloadyourdata-birthday-value' )->inLanguage( $language )
 				->params( $userLang->getMonthName( intval( $profileData['birthday']['month'] ) ) )
 				->numParams( htmlspecialchars( $profileData['birthday']['day'] ) )
