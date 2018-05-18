@@ -58,7 +58,6 @@ class OasisController extends WikiaController {
 		$this->a9 = null;
 		$this->gfc = null;
 		$this->prebid = null;
-		$this->prebid = null;
 		$this->instartLogic = null;
 		$this->dynamicYield = null;
 		$this->krux = null;
