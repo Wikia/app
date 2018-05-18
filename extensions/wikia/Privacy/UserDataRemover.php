@@ -42,13 +42,19 @@ class UserDataRemover {
 
 			$dbMaster->delete( 'user_email_log', [ 'user_id' => $userId ] );
 			$dbMaster->delete( 'user_properties', [ 'up_user' => $userId ] );
+			$dbMaster->insert( 'user_properties', [
+				[
+					'up_user' => $userId,
+					'up_property' => 'disabled',
+					'up_value' => $userId,
+				],
+			] );
 
 			// commit early so that cache is properly invalidated
 			$dbMaster->commit( __METHOD__ );
 			wfWaitForSlaves( $dbMaster->getDBname() );
 
 			$user->deleteCache();
-
 			$this->removeUserDataFromStaffLog( $userId );
 
 			$this->info( "Removed user's global data",

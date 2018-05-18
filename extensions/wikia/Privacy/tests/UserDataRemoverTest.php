@@ -52,6 +52,7 @@ class UserDataRemoverTest extends WikiaDatabaseTest {
 		$this->assertEquals( '', $anonymizedUser->getRealName(), 'User real name is not cleared' );
 		$this->assertEquals( '', $anonymizedUser->getEmail(), 'User email is not cleared' );
 		$this->assertEquals( '', $anonymizedUser->mBirthDate, 'User birth date is not cleared' );
+		$this->assertEquals( '1', $anonymizedUser->getGlobalFlag( 'disabled' ) );
 
 		$this->assertStringStartsWith( 'should_not_anonymize', $otherUser->getName(), 'Wrong user is anonymized' );
 		$this->assertEquals( 'user real name2', $otherUser->getRealName(), 'Wrong user has real name cleared' );
