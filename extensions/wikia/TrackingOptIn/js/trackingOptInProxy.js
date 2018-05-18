@@ -1,19 +1,48 @@
 define('wikia.trackingOptIn', [
+	'wikia.lazyqueue',
 	'wikia.log',
 	'wikia.window',
-], function (log, win) {
+], function (lazyQueue, log, win) {
 	var optIn,
-		logGroup = 'wikia.trackingOptIn - proxy';
+		logGroup = 'wikia.trackingOptIn - proxy',
+		queue;
 
-	win.M.trackingQueue.push(function (isOptedIn) {
-		optIn = isOptedIn;
-		log('User opted ' + (optIn ? 'in' : 'out'), log.levels.debug, logGroup);
-	});
+	init();
 
-	function init() {}
+	function init() {
+		queue = isMobileWikiQueueExists() ? initPoxyQueue() : initFakeQueue();
+	}
+
+	function isMobileWikiQueueExists() {
+		return typeof win.M !== 'undefined' && typeof win.M.trackingQueue !== 'undefined';
+	}
+
+	function initFakeQueue() {
+		log('Init fake queue', log.levels.debug, logGroup);
+
+		var fakeConsentQueue = [];
+		lazyQueue.makeQueue(fakeConsentQueue, function (callback) {
+			callback(optIn);
+		});
+		fakeConsentQueue.start();
+		optIn = true;
+
+		return fakeConsentQueue;
+	}
+
+	function initPoxyQueue() {
+		log('Init proxy queue', log.levels.debug, logGroup);
+
+		win.M.trackingQueue.push(function (isOptedIn) {
+			optIn = isOptedIn;
+			log('User opted ' + (optIn ? 'in' : 'out'), log.levels.debug, logGroup);
+		});
+
+		return win.M.trackingQueue;
+	}
 
 	function pushToUserConsentQueue(callback) {
-		win.M.trackingQueue.push(callback);
+		queue.push(callback);
 	}
 
 	function isOptedIn() {
@@ -22,7 +51,9 @@ define('wikia.trackingOptIn', [
 	}
 
 	return {
-		init: init,
+		init: function () {
+			log(['Placeholder for init', optIn], log.levels.info, logGroup);
+		},
 		isOptedIn: isOptedIn,
 		pushToUserConsentQueue: pushToUserConsentQueue
 	}
