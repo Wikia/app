@@ -3,12 +3,6 @@
 		'ext.wikia.adEngine.adContext',
 		'ext.wikia.adEngine.lookup.prebid'
 	], function (adContext, prebid) {
-		if (adContext.get('opts.isNewPrebidEnabled')) {
-			loadNewPrebid();
-		} else {
-			loadOldPrebid();
-		}
-
 		if (adContext.get('bidders.prebid')) {
 			prebid.call();
 		}
