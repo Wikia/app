@@ -21,7 +21,7 @@ class DownloadUserData {
 	 * Attribute names and values are returned in language set for $user.
 	 *
 	 * @param \User $user user whos data is fetched
-	 * @return Array 2-dimesional array with user data. each row contains 2 values - attribute name and value.
+	 * @return array 2-dimesional array with user data. each row contains 2 values - attribute name and value.
 	 * @throws \Exception in case of permission errors
 	 */
 	public function getDataForUser( \User $user ) {
@@ -97,7 +97,7 @@ class DownloadUserData {
 
 	/**
 	 * Takes a 2-dimensional array and formats it into a CSV file
-	 * @param $data Array of csv rows
+	 * @param $data array of csv rows
 	 * @return string csv content
 	 */
 	public function formatAsCsv( $data ) {

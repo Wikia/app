@@ -1441,8 +1441,6 @@ if ( !empty( $wgEnableCoppaToolExt ) ) {
 	include( "{$IP}/extensions/wikia/CoppaTool/CoppaTool.setup.php" );
 }
 
-include("$IP/extensions/wikia/DownloadYourData/DownloadYourData.setup.php");
-
 // Include mime types directly in PHP
 if ( $wgUseMimeMagicLite ) {
 	include( "$IP/includes/wikia/MimeMagicLite.php" );
@@ -1781,3 +1779,5 @@ include "$IP/extensions/wikia/Search/WikiaSearch.setup.php";
 
 // Mercury auth pages related functionality - redirects, email confirmation.
 include "$IP/extensions/wikia/AuthPages/AuthPages.setup.php";
+
+include("$IP/extensions/wikia/DownloadYourData/DownloadYourData.setup.php");
