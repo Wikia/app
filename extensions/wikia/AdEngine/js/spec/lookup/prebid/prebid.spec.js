@@ -144,11 +144,6 @@ describe('ext.wikia.adEngine.lookup.prebid', function () {
 			},
 			adaptersPerformanceTracker: {
 				setupPerformanceMap: noop
-			},
-			trackingOptIn: {
-				pushToUserConsentQueue: function (cb) {
-					cb(true);
-				}
 			}
 		},
 		prebid;
