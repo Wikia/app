@@ -12,6 +12,8 @@ class UserDataRemoverTest extends WikiaDatabaseTest {
 	const OTHER_USER_ID = 2;
 	const RENAMED_USER_ID = 3;
 	const FAKE_USER_ID = 4;
+	const REMOVED_USER_NAME = 'should_anonymize';
+	const SPOOF_HASH = 'dd6846900c173f39d39c0760dc8d23a35f5799cea4a91239fba16620ad4e59e6';
 
 	/**
 	 * Returns the test dataset.
@@ -25,6 +27,7 @@ class UserDataRemoverTest extends WikiaDatabaseTest {
 	protected function extraSchemaFiles() {
 		return [
 			__DIR__ . '/fixtures/wikiastaff_log.sql',
+			__DIR__ . '/fixtures/spoofuser.sql',
 		];
 	}
 
@@ -145,5 +148,25 @@ class UserDataRemoverTest extends WikiaDatabaseTest {
 		$this->assertEquals( 1,
 			$db->estimateRowCount( 'wikiastaff_log', '*', [ 'slog_user' => self::OTHER_USER_ID ],
 				__METHOD__ ), 'Staff logs were removed for wrong user' );
+	}
+
+	public function testShouldAnonimizeAnfispoof() {
+		( new UserDataRemover() )->removeGlobalData( self::REMOVED_USER_ID );
+
+		// check basic functionality
+		$spoof = new SpoofUser( self::REMOVED_USER_NAME );
+		$this->assertEquals( 1, count( $spoof->getConflicts() ), 'Username is not blocked for removed user' );
+
+		// check if username is in plaintext
+		$db = $db = wfGetDB( DB_SLAVE, [] );
+		$this->assertEquals( 0,
+			$db->estimateRowCount( 'spoofuser', '*', [ 'su_name' => self::REMOVED_USER_NAME ],
+				__METHOD__ ), 'Username is stored in plaintext for removed user' );
+
+		// check if hash is correct
+		$this->assertEquals( 1,
+			$db->estimateRowCount( 'spoofuser_forgotten', '*', [ 'suf_hash' => self::SPOOF_HASH ],
+				__METHOD__ ), 'Spoof hash is different than expected' );
+
 	}
 }
