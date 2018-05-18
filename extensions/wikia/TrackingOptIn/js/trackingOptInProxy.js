@@ -10,10 +10,10 @@ define('wikia.trackingOptIn', [
 	init();
 
 	function init() {
-		queue = isMobileWikiQueueExists() ? initPoxyQueue() : initFakeQueue();
+		queue = doesMobileWikiQueueExist() ? initPoxyQueue() : initFakeQueue();
 	}
 
-	function isMobileWikiQueueExists() {
+	function doesMobileWikiQueueExist() {
 		return typeof win.M !== 'undefined' && typeof win.M.trackingQueue !== 'undefined';
 	}
 
