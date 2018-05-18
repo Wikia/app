@@ -86,20 +86,23 @@ class UserDataRemoverTest extends WikiaDatabaseTest {
 		);
 	}
 
-	public function testUserDataSHouldBeRemovedFromUserPropertiesTable() {
+	public function testUserDataShouldBeRemovedFromUserPropertiesTable() {
 		( new UserDataRemover() )->removeGlobalData( self::REMOVED_USER_ID );
 
 		$wikicitiesSlave = wfGetDB( DB_SLAVE, [], 'wikicities' );
 
-		$this->assertEquals( 0,
-			$wikicitiesSlave->estimateRowCount(
-				'user_properties',
-				'*',
-				[ 'up_user' => self::REMOVED_USER_ID ],
-				__METHOD__
-			),
-			'user_properties table contains data related to user who wants to be forgotten'
-		);
+		$this->assertEquals( 1,
+			$wikicitiesSlave->estimateRowCount( 'user_properties', '*', [
+				'up_user' => self::REMOVED_USER_ID
+			], __METHOD__ ),
+			'user_properties table contains data related to user who wants to be forgotten' );
+
+		$this->assertEquals( '1',
+			$wikicitiesSlave->selectField( 'user_properties', 'up_value', [
+				'up_user' => self::REMOVED_USER_ID,
+				'up_property' => 'disabled'
+			] ),
+			'user_properties table doesn\'t contain disabled property for user who wants to be forgotten' );
 
 		$this->assertEquals( 2,
 			$wikicitiesSlave->estimateRowCount(
