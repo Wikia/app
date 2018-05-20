@@ -5,8 +5,8 @@ use Wikia\Logger\WikiaLogger;
 class PermanentFileDelete {
 
 	/**
-	 * Permanently delete all files uploaded by a given user.
-	 * File description pages are permanently deleted, files are removed from disk and all related DB rows are removed.
+	 * Permanently delete a file.
+	 * The file description page is permanently deleted, all file revisions are removed from disk and all related DB rows are removed.
 	 *
 	 * This process is not reversible.
 	 *
