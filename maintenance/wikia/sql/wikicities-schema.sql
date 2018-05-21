@@ -6,32 +6,6 @@
 
 
 --
--- Table structure for table `__city_tag`
---
-
-DROP TABLE IF EXISTS `__city_tag`;
-CREATE TABLE `__city_tag` (
-  `id` int(8) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `city_tag_name_uniq` (`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Table structure for table `__city_tag_map`
---
-
-DROP TABLE IF EXISTS `__city_tag_map`;
-CREATE TABLE `__city_tag_map` (
-  `city_id` int(9) NOT NULL,
-  `tag_id` int(8) unsigned NOT NULL,
-  PRIMARY KEY (`city_id`,`tag_id`),
-  KEY `tag_id` (`tag_id`),
-  CONSTRAINT `__city_tag_map_ibfk_1` FOREIGN KEY (`city_id`) REFERENCES `city_list` (`city_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `__city_tag_map_ibfk_2` FOREIGN KEY (`tag_id`) REFERENCES `__city_tag` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
 -- Table structure for table `ach_ranking_snapshots`
 --
 
@@ -484,10 +458,12 @@ CREATE TABLE `spoofuser` (
 DROP TABLE IF EXISTS `spoofuser_forgotten`;
 CREATE TABLE `spoofuser_forgotten` (
   `suf_id` int(5) NOT NULL AUTO_INCREMENT,
-  `suf_hash` char(64) NOT NULL,
+  `suf_exact_hash` char(64) NOT NULL,
+  `suf_normalized_hash` char(64) NOT NULL,
   `suf_created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`suf_id`),
-  UNIQUE KEY `suf_hash` (`suf_hash`)
+  UNIQUE KEY `suf_exact_hash` (`suf_exact_hash`),
+  UNIQUE KEY `suf_normalized_hash` (`suf_normalized_hash`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -623,4 +599,4 @@ CREATE TABLE `wikia_tasks_log` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
--- Dump completed on 2018-05-18 11:57:16
+-- Dump completed on 2018-05-21 14:11:43

@@ -15,6 +15,7 @@ class SpoofUser {
 		if ( $this->mLegal ) {
 			$this->mNormalized = $normalized;
 			$this->mNormalizedHash = hash( self::HASH_ALGO, $normalized );
+			$this->mExactHash = hash( self::HASH_ALGO, $this->mName );
 			$this->mError = null;
 		} else {
 			$this->mNormalized = null;
@@ -62,13 +63,17 @@ class SpoofUser {
 			Quote the table names, otherwise the select method
 				tries to prefix the tablenames with the current user DB
 			Added $skipExactMatch */
-		$conds = array(
+		$conds = [
 			'su_normalized' => $this->mNormalized,
 			'su_name=user_name',
-		);
+		];
+		$forgottenConds = [
+			'suf_normalized_hash' => $this->mNormalizedHash
+		];
 		if ( $skipExactMatch ) {
 			// BINARY enforces case sensitive comparison
 			$conds[] = "BINARY su_name != {$dbr->addQuotes( $this->mName )}";
+			$forgottenConds[] = "suf_exact_hash != {$dbr->addQuotes( $this->mExactHash )}";
 		}
 
 		$spoofedUsers = $dbr->select(
@@ -83,8 +88,8 @@ class SpoofUser {
 		// check forgotten users as well
 		$forgottenSpoofedUsers = $dbr->select(
 			'`spoofuser_forgotten`',
-			'suf_hash',
-			['suf_hash' => $this->mNormalizedHash],
+			'suf_normalized_hash',
+			$forgottenConds,
 			__METHOD__ );
 		/* Wikia Change - end */
 
@@ -207,7 +212,10 @@ class SpoofUser {
 	 */
 	public function makeRecordPrivate() {
 		$db = $this->getDBMaster();
-		$row = ['suf_hash' => $this->mNormalizedHash];
+		$row = [
+			'suf_exact_hash' => $this->mExactHash,
+			'suf_normalized_hash' => $this->mNormalizedHash
+		];
 		$db->insert( 'spoofuser_forgotten', $row, __METHOD__ );
 		$db->delete( 'spoofuser', ['su_name' => $this->mName], __METHOD__ );
 		$db->commit();
