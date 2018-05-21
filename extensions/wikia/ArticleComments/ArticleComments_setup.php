@@ -37,6 +37,7 @@ $wgAutoloadClasses['ArticleCommentInit'] = __DIR__ . '/classes/ArticleCommentIni
 $wgAutoloadClasses['ArticleComment'] = __DIR__ . '/classes/ArticleComment.class.php';
 $wgAutoloadClasses['ArticleCommentList'] = __DIR__ . '/classes/ArticleCommentList.class.php';
 $wgAutoloadClasses['ArticleCommentsAjax'] = __DIR__ . '/classes/ArticleCommentsAjax.class.php';
+$wgAutoloadClasses['ArticleCommentsTitle'] = __DIR__ . '/classes/ArticleCommentsTitle.class.php';
 $wgAutoloadClasses['ArticleCommentsController'] = __DIR__ . '/modules/ArticleCommentsController.class.php';
 $wgAutoloadClasses['ArticleCommentsHooks'] = __DIR__ . '/ArticleCommentsHooks.class.php';
 

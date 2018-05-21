@@ -60,7 +60,7 @@ class SitemapXmlModel extends WikiaModel {
 		if ( $namespaces == [ NS_CATEGORY ] ) {
 			$sql->JOIN( 'category' )->ON( 'page.page_title', 'category.cat_title')
 				->AND_( 'page.page_namespace', NS_CATEGORY );
-			$sql->AND_( 'category.cat_pages' )->GREATER_THAN( 0 );
+			$sql->AND_( 'category.cat_pages' )->GREATER_THAN( 9 );
 		}
 
 		return $sql;
