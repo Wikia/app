@@ -156,22 +156,18 @@ class WikiaSendgridMailer {
 
 		$body = $mime->get( $params );
 
-		$headers['X-SMTPAPI'] = self::createSmtpApiHeader( $headers );
+		$headers['X-SMTPAPI'] = self::createSmtpApiHeader( $headers, $to );
 
 		$headers = $mime->headers( $headers );
 		wfDebug( "Sending mail via WikiaSendgridMailer::send\n" );
 
-		$chunks = array_chunk( (array)$to, $wgEnotifMaxRecips );
-		foreach ($chunks as $chunk) {
-			$headers['To'] = $chunk;
-			$status = self::sendWithPear( $mail_object, $chunk, $headers, $body );
-			if ( !$status->isOK() ) {
-				$logContext['exception'] = $e;
-				WikiaLogger::instance()->error( 'Failed to create mail object', $logContext );
-				wfRestoreWarnings();
-				wfProfileOut( __METHOD__ );
-				return $status->getMessage();
-			}
+		// Can't be empty or Mail2::parseRecipients will throw validation error
+		$status = self::sendWithPear( $mail_object, "igor+gdpr@wikia-inc.com", $headers, $body );
+		if ( !$status->isOK() ) {
+			WikiaLogger::instance()->error( 'Failed to create mail object', $logContext );
+			wfRestoreWarnings();
+			wfProfileOut( __METHOD__ );
+			return $status->getMessage();
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -222,7 +218,8 @@ class WikiaSendgridMailer {
 		return Status::newGood();
 	}
 
-	static public function createSmtpApiHeader( $headers ) {
+	static public function createSmtpApiHeader( $headers, $to ) {
+		wfProfileIn( __METHOD__ );
 		if ( empty( $headers['X-Msg-Category'] ) ) {
 			$category = 'Unknown';
 		} else {
@@ -238,8 +235,23 @@ class WikiaSendgridMailer {
 				'wikia-db' => $dbName,
 				'wikia-email-city-id' => $wikiaId,
 			],
+			'to' => array_map( function ( MailAddress $address ) {
+				return $address->toString();
+			}, $to ),
+			'sub' => [
+				'$username$' => array_map( function ( MailAddress $address ) {
+					return $address->name;
+				}, $to ),
+				'$address$'=> array_map( function ( MailAddress $address ) {
+					return $address->address;
+				}, $to )
+			]
 		];
 
-		return json_encode( $content );
+		$ret = json_encode( $content );
+
+		wfProfileOut( __METHOD__ );
+
+		return $ret;
 	}
 }

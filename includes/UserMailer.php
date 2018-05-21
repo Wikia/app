@@ -195,7 +195,7 @@ class UserMailer {
 	 * @throws MWException
 	 */
 	public static function send(
-		MailAddress $to,
+		$to,
 		MailAddress $from,
 		$subject,
 		$body,

@@ -33,7 +33,6 @@ class ProfilerSimpleText extends ProfilerSimple {
 			return;
 		}
 		/* Wikia change end */
-		if ( $this->mTemplated ) {
 			$this->close();
 			$totalReal = isset( $this->mCollated['-total'] )
 				? $this->mCollated['-total']['real']
@@ -45,7 +44,6 @@ class ProfilerSimpleText extends ProfilerSimple {
 			} else {
 				print "<!--\n".self::$out."\n-->\n";
 			}
-		}
 	}
 
 	static function sort( $a, $b ) {

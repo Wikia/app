@@ -258,7 +258,7 @@ abstract class EmailController extends \WikiaController {
 	 *
 	 * @return string
 	 */
-	protected function getBody() {
+	public function getBody() {
 		$css = file_get_contents( __DIR__ . '/styles/main.css' );
 
 		$html = $this->app->renderView(
@@ -278,7 +278,7 @@ abstract class EmailController extends \WikiaController {
 
 		$html = $this->inlineStyles( $html, $css );
 
-		return $html;
+		$this->response->setBody($html);
 	}
 
 	/**
@@ -369,11 +369,7 @@ abstract class EmailController extends \WikiaController {
 
 	protected function getFooterMessages() {
 		return [
-			$this->getMessage( 'emailext-recipient-notice', $this->getTargetUserEmail() )
-				->parse(),
-			$this->getMessage( 'emailext-update-frequency' )
-				->parse(),
-			$this->getMessage( 'emailext-unsubscribe', $this->getUnsubscribeLink() )
+			$this->getMessage( 'emailext-recipient-notice', '$address$' )
 				->parse(),
 		];
 	}
