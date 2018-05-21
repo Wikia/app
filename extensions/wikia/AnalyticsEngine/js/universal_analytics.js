@@ -473,4 +473,4 @@
 			_gaWikiaPush(['send', 'pageview']);
 		});
 	});
-}(window);
+}(window));
