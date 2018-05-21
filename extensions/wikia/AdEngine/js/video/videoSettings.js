@@ -3,8 +3,9 @@ define('ext.wikia.adEngine.video.videoSettings', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.utils.sampler',
 	'wikia.instantGlobals',
+	'wikia.trackingOptIn',
 	'wikia.window'
-], function (adContext, sampler, instantGlobals, win) {
+], function (adContext, sampler, instantGlobals, trackingOptIn, win) {
 	'use strict';
 
 	function create(params) {
@@ -25,7 +26,7 @@ define('ext.wikia.adEngine.video.videoSettings', [
 				return params.moatTracking;
 			}
 
-			if (!adContext.get('opts.porvataMoatTrackingEnabled')) {
+			if (!adContext.get('opts.porvataMoatTrackingEnabled') || !trackingOptIn.isOptedIn()) {
 				return false;
 			}
 

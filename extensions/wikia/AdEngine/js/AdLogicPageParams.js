@@ -7,11 +7,11 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 	'wikia.geo',
 	'wikia.location',
 	'wikia.log',
-	'wikia.trackingOptOut',
+	'wikia.trackingOptIn',
 	'wikia.window',
 	require.optional('wikia.abTest'),
 	require.optional('wikia.krux')
-], function (adContext, zoneParams, doc, geo, loc, log, trackingOptOut, win, abTest, krux) {
+], function (adContext, zoneParams, doc, geo, loc, log, trackingOptIn, win, abTest, krux) {
 	'use strict';
 
 	var context = {},
@@ -178,7 +178,7 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 			ref: getRefParam(),
 			esrb: targeting.esrbRating,
 			geo: geo.getCountryCode() || 'none',
-			npa: trackingOptOut.isOptedOut('gpt') ? '1' : '0'
+			npa: trackingOptIn.isOptedIn() ? '0' : '1'
 		};
 
 		if (win.pvNumber) {
