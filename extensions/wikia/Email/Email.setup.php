@@ -81,6 +81,7 @@ $wgAutoloadClasses['Email\Controller\GoogleDisconnectController'] = $dir . 'Cont
 $wgAutoloadClasses['Email\Controller\DiscussionReplyController'] = $dir . 'Controller/DiscussionController.class.php';
 $wgAutoloadClasses['Email\Controller\DiscussionUpvoteController'] = $dir . 'Controller/DiscussionController.class.php';
 $wgAutoloadClasses['Email\Controller\GdprNotificationController'] = $dir . 'Controller/GdprNotificationController.class.php';
+$wgAutoloadClasses['Email\Controller\MonobookNotificationController'] = $dir . 'Controller/MonobookNotificationController.class.php';
 $wgAutoloadClasses['Email\SpecialSendEmailController'] = $dir . 'SpecialSendEmailController.class.php';
 
 /**
