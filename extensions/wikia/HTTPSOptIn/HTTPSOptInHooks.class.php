@@ -18,8 +18,11 @@ class HTTPSOptInHooks {
 	const WIKI_ID_THRESHOLD_WITH_HTTPS_ON = 1700000;
 
 	public static function onGetPreferences( User $user, array &$preferences ): bool {
-		global $wgServer, $wgHTTPSForLoggedInUsers;
-		if ( empty( $wgHTTPSForLoggedInUsers ) && wfHttpsAllowedForURL( $wgServer ) ) {
+		global $wgServer, $wgHTTPSForLoggedInUsers, $wgCityId;
+		if ( empty( $wgHTTPSForLoggedInUsers ) &&
+			$wgCityId <= self::WIKI_ID_THRESHOLD_WITH_HTTPS_ON &&
+			wfHttpsAllowedForURL( $wgServer )
+		) {
 			$preferences['https-opt-in'] = [
 				'type' => 'toggle',
 				'label-message' => 'https-opt-in-toggle',
