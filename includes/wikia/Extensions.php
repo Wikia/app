@@ -349,6 +349,8 @@ if (!empty( $wgEnableArticleMetaDescription )) {
 #--- 44. AdEngine
 include ( "$IP/extensions/wikia/AdEngine/AdEngine2.setup.php" );
 
+include ( "$IP/extensions/wikia/TrackingOptIn/TrackingOptIn.setup.php" );
+
 if (!empty($wgEnableOggHandlerExt)) {
 	include("$IP/extensions/OggHandler/OggHandler.php");
 }
@@ -1752,10 +1754,6 @@ if ( !empty( $wgEnableApesterTagExt ) ) {
 
 if ( !empty( $wgEnablePlaybuzzTagExt ) ) {
 	include "$IP/extensions/wikia/PlaybuzzTag/PlaybuzzTag.setup.php";
-}
-
-if ( !empty( $wgEnableGoogleAmp ) ) {
-    include "$IP/extensions/wikia/GoogleAmp/GoogleAmp.setup.php";
 }
 
 if ( !empty( $wgEnableOpenXSPC ) ) {
