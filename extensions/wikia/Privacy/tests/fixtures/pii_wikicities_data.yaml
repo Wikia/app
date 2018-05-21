@@ -120,3 +120,7 @@ wikiastaff_log:
     slog_userdst: 1
     slog_user_name: 'should_anonymize'
     slog_user_namedst: 'should_anonymize'
+
+spoofuser:
+  - su_name: 'should_anonymize'
+    su_normalized: 'v2:5H0U1DAN0NYM1ZE'

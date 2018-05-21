@@ -23,11 +23,13 @@ class UserDataRemover {
 			$userId = $user->getId();
 			$newUserName = uniqid( 'Anonymous ' );
 
+			// anonimize antispoof record
+			$spoofRecord = new SpoofUser( $user->getName() );
+			$spoofRecord->makeRecordPrivate();
+
 			$userIdentityBox = new UserIdentityBox( $user );
 			$userIdentityBox->clearMastheadContents();
 			Wikia::invalidateUser( $user, true, false );
-
-			$user = User::newFromId( $userId );
 
 			$dbMaster = wfGetDB( DB_MASTER, [], 'wikicities' );
 

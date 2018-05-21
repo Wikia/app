@@ -11,7 +11,14 @@ Alternatively, **Special:RequestToBeForgottenInternal is available** for `reques
 
 ## Steps performed
 
-1. `UserDataRemover::removeGlobalData` renames the user to a random name (with `Anonymous ` prefix) by issuing an `UPDATE` query on `wikicities.user` table, all caches are invalidated there as well. User specific data is removed from `user_email_log` and `user_properties` tables.
+1. `UserDataRemover::removeGlobalData` anonimizes all user data not related to specific communities.
+  * the user is renamed to a random name (with `Anonymous ` prefix) by issuing an `UPDATE` query on `wikicities.user` table
+  * user's email and birthday are removed from the `user` table
+  * antispoof data is anonimized by removing the username record from the `spoofuser` table, and adding a hashed version to `spoofuser_forgotten`
+  * user specific data is removed from `user_email_log`, `user_properties` and `wikiastaff_log` tables.
+  * user cache in deleted
+  * the user is marked as disabled
+  * if the user was previously renamed, all the above steps are also performed for the old username
 2. `events_local_users` table is then used to get the list of wikis given user was active on.
 3. `RemoveUserDataOnWikiTask` task is scheduled for each of these wikis.
 4. The task is dispatched on each wiki and it does the following cleanups:
@@ -19,6 +26,9 @@ Alternatively, **Special:RequestToBeForgottenInternal is available** for `reques
  * Recent Changes - `recentchanges` table entries are updated to have an empty IP address
  * Abuse Filter - `abuse_filter`, `abuse_filter_history` tables rows are updated to have an empty user name (rows are removed from `abuse_filter_log` table)
  * `removeUserPages` removes user pages (NS_USER), user talk pages (NS_USER_TALK), blog pages (NS_BLOG_ARTICLE), wall messages (NS_USER_WALL_MESSAGE_GREETING, NS_USER_WALL_MESSAGE, NS_USER_WALL) pages of the given user (including sub-pages). `PermanentArticleDelete::deletePage` is used to **delete them permanently, leaving no trace**.
+ * all `recentchanges` entries connected to user pages are removed
+ * all `logging` entries connected to user pages are removed
+ * if the user was renamed, user pages are removed for the old username as well
 
 ## Debugging
 
