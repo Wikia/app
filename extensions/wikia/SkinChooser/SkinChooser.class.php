@@ -254,6 +254,8 @@ class SkinChooser {
 				$adminSkinArray = explode( '-', $wgAdminSkin );
 				$userSkin = isset( $adminSkinArray[0] ) ? $adminSkinArray[0] : null;
 				$userTheme = isset( $adminSkinArray[1] ) ? $adminSkinArray[1] : null;
+			} else if ( $userSkin === 'monobook') {
+				$userSkin = 'oasis'; // SUS-4796 - force Oasis for MonoBook users
 			}
 		}
 
