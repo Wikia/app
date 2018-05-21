@@ -3,9 +3,8 @@ define('ext.wikia.adEngine.video.videoSettings', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.utils.sampler',
 	'wikia.instantGlobals',
-	'wikia.trackingOptIn',
 	'wikia.window'
-], function (adContext, sampler, instantGlobals, trackingOptIn, win) {
+], function (adContext, sampler, instantGlobals, win) {
 	'use strict';
 
 	function create(params) {
