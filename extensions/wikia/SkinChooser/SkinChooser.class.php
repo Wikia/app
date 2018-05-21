@@ -5,75 +5,17 @@ class SkinChooser {
 	/**
 	 * @static
 	 * @param User $user
-	 * @param Array $defaultPreferences
-	 * @return bool
+	 * @param array $defaultPreferences
 	 */
 	public static function onGetPreferences( $user, &$defaultPreferences ) {
-		global $wgEnableAnswers, $wgAdminSkin, $wgDefaultSkin, $wgSkinPreviewPage, $wgSkipSkins, $wgEnableUserPreferencesV2Ext;
-
 		// hide default MediaWiki skin fieldset
 		unset( $defaultPreferences['skin'] );
-
-		$mSkin  = $user->getGlobalPreference( 'skin' );
-
-		if ( !empty( $wgAdminSkin ) ) {
-			$defaultSkinKey = $wgAdminSkin;
-		} else if ( !empty( $wgDefaultTheme ) ) {
-			$defaultSkinKey = $wgDefaultSkin . '-' . $wgDefaultTheme;
-		} else {
-			$defaultSkinKey = $wgDefaultSkin;
-		}
-
-		// load list of skin names
-		$validSkinNames = Skin::getSkinNames();
-
-		// and sort them
-		foreach ( $validSkinNames as $skinkey => &$skinname ) {
-			if ( isset( $skinNames[$skinkey] ) )  {
-				$skinname = $skinNames[$skinkey];
-			}
-		}
-		asort( $validSkinNames );
-
-		$previewtext = wfMsg( 'skin-preview' );
-		if ( isset( $wgSkinPreviewPage ) && is_string( $wgSkinPreviewPage ) ) {
-			$previewLinkTemplate = Title::newFromText( $wgSkinPreviewPage )->getLocalURL( 'useskin=' );
-		} else {
-			$mptitle = Title::newMainPage();
-			$previewLinkTemplate = $mptitle->getLocalURL( 'useskin=' );
-		}
-
-		$oldSkinNames = array();
-		foreach ( $validSkinNames as $skinKey => $skinVal ) {
-			if ( $skinKey == 'oasis' || ( ( in_array( $skinKey, $wgSkipSkins ) ) && !( $skinKey == $mSkin ) ) ) {
-				continue;
-			}
-			$oldSkinNames[$skinKey] = $skinVal;
-		}
-
-		$skins = array();
-		$skins[wfMsg( 'new-look' )] = 'oasis';
-
-		// display radio buttons for rest of skin
-		if ( count( $oldSkinNames ) > 0 ) {
-			foreach ( $oldSkinNames as $skinKey => $skinVal ) {
-				$previewlink = $wgEnableUserPreferencesV2Ext ? '' : ' <a target="_blank" href="' . htmlspecialchars( $previewLinkTemplate . $skinKey ) . '">' . $previewtext . '</a>';
-				$skins[$skinVal . $previewlink . ( $skinKey == $defaultSkinKey ? ' (' . wfMsg( 'default' ) . ')' : '' )] = $skinKey;
-			}
-		}
 
 		$defaultPreferencesTemp = array();
 
 		foreach ( $defaultPreferences as $k => $v ) {
 			$defaultPreferencesTemp[$k] = $v;
 			if ( $k == 'oldsig' ) {
-
-				$defaultPreferencesTemp['skin'] = array(
-					'type' => 'radio',
-					'options' => $skins,
-					'label' => '&nbsp;',
-					'section' => 'personal/layout',
-				);
 
 				$defaultPreferencesTemp['showAds'] = array(
 					'type' => 'toggle',
@@ -85,8 +27,6 @@ class SkinChooser {
 		}
 
 		$defaultPreferences = $defaultPreferencesTemp;
-
-		return true;
 	}
 
 	/**
