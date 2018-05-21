@@ -6,8 +6,8 @@ define('wikia.articleVideo.featuredVideo.moatTracking', [
 	var jwplayerPluginUrl = 'https://z.moatads.com/jwplayerplugin0938452/moatplugin.js',
 		partnerCode = 'wikiajwint101173217941';
 
-	function track(player) {
-		if (adContext.get('opts.isMoatTrackingForFeaturedVideoEnabled')) {
+	function track(player, isOptedIn) {
+		if (isOptedIn && adContext.get('opts.isMoatTrackingForFeaturedVideoEnabled')) {
 			player.on('adImpression', function (event) {
 				if (win.moatjw) {
 					win.moatjw.add({

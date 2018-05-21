@@ -85,8 +85,7 @@ class ArticleCommentTest extends WikiaBaseTest {
 		]);
 
 		$this->assertEquals(
-			$expected,
-			ArticleComment::makeCommentTitle( $title, $user, '20071201000000' )
+			$expected, ArticleCommentsTitle::format( $title, $user, '20071201000000' )
 		);
 	}
 }

@@ -211,6 +211,14 @@ $config['spotlights_js'] = [
 	],
 ];
 
+$config['tracking_opt_in_js'] = [
+	'skin' => [ 'oasis' ],
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => [
+		'//extensions/wikia/TrackingOptIn/dist/tracking-opt-in.min.js',
+		'//extensions/wikia/TrackingOptIn/js/trackingOptIn.js',
+	],
+];
 
 $config['adengine2_top_js'] = [
 	'type' => AssetsManager::TYPE_JS,
@@ -949,6 +957,7 @@ $config['mercury_ads_js'] = [
 		'//extensions/wikia/AdEngine/js/run/mercury.run.js',
 		'#group_adengine2_rabbit_mobile_js',
 		'#group_jwplayer_featured_video_ads_js',
+		'//extensions/wikia/TrackingOptIn/js/trackingOptInProxy.js'
 	],
 ];
 

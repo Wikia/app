@@ -5215,12 +5215,12 @@ $messages['pl'] = array(
 	'group-bureaucrat' => 'Biurokraci',
 	'group-suppress' => 'Rewizorzy',
 	'group-all' => '(wszyscy)',
-	'group-user-member' => '{{GENDER:$1|użytkownik|użytkowniczka}}',
-	'group-autoconfirmed-member' => '{{GENDER:$1|automatycznie zatwierdzony użytkownik|automatycznie zatwierdzona użytkowniczka}}',
+	'group-user-member' => 'użytkownik',
+	'group-autoconfirmed-member' => 'automatycznie zatwierdzony użytkownik',
 	'group-bot-member' => 'bot',
 	'group-sysop-member' => 'administrator',
 	'group-bureaucrat-member' => 'biurokrata',
-	'group-suppress-member' => '{{GENDER:$1|rewizor|rewizorka}}',
+	'group-suppress-member' => 'rewizor',
 	'grouppage-user' => 'w:pl:Pomoc:Uprawnienia grup użytkowników#Zalogowani użytkownicy',
 	'grouppage-autoconfirmed' => 'w:pl:Pomoc:Uprawnienia grup użytkowników#Automatycznie zatwierdzeni użytkownicy',
 	'grouppage-bot' => 'w:pl:Pomoc:Boty',
@@ -5275,7 +5275,7 @@ $messages['pl'] = array(
 	'group-global-discussions-moderator' => 'Globalni moderatorzy Dyskusji',
 	'group-global-discussions-moderator-member' => 'globalny moderator Dyskusji',
 	'group-content-volunteer' => 'Wolontariusze treści',
-	'group-content-volunteer-member' => '{{GENDER:$1|wolontariusz treści|wolontariuszka treści}}',
+	'group-content-volunteer-member' => 'wolontariusz treści',
 );
 
 $messages['pms'] = array(

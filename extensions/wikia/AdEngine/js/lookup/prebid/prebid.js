@@ -8,6 +8,8 @@ define('ext.wikia.adEngine.lookup.prebid', [
 	'ext.wikia.adEngine.lookup.prebid.prebidHelper',
 	'ext.wikia.adEngine.lookup.prebid.prebidSettings',
 	'ext.wikia.adEngine.lookup.lookupFactory',
+	'wikia.log',
+	'wikia.trackingOptIn',
 	'wikia.window'
 ], function (
 	adContext,
@@ -18,6 +20,8 @@ define('ext.wikia.adEngine.lookup.prebid', [
 	helper,
 	settings,
 	factory,
+	log,
+	trackingOptIn,
 	win
 ) {
 	'use strict';
@@ -27,7 +31,7 @@ define('ext.wikia.adEngine.lookup.prebid', [
 		isLazyLoadingEnabled = adContext.get('opts.isBLBLazyPrebidEnabled'),
 		isLazyLoaded = false,
 		isNewPrebidEnabled = adContext.get('opts.isNewPrebidEnabled'),
-		isPrebidVersionChoosen = false;
+		logGroup = 'ext.wikia.adEngine.lookup.prebid';
 
 	function removeAdUnits() {
 		(win.pbjs.adUnits || []).forEach(function (adUnit) {
@@ -36,41 +40,52 @@ define('ext.wikia.adEngine.lookup.prebid', [
 	}
 
 	function call(skin, onResponse) {
-		if (!isPrebidVersionChoosen) {
+		if (!prebidLoaded) {
 			if (isNewPrebidEnabled) {
 				loadNewPrebid();
 			} else {
 				loadOldPrebid();
 			}
-
-			isPrebidVersionChoosen = true;
 		}
 
-		if (!prebidLoaded) {
-			adaptersRegistry.setupCustomAdapters();
-			adaptersRegistry.registerAliases();
-		}
-
-		biddersPerformanceMap = performanceTracker.setupPerformanceMap(skin);
-		adUnits = helper.setupAdUnits(skin, isLazyLoadingEnabled ? 'pre' : 'off');
-
-		if (adUnits.length > 0) {
-			if (!prebidLoaded) {
-				win.pbjs.que.push(function () {
-					win.pbjs.bidderSettings = settings.create();
-				});
+		trackingOptIn.pushToUserConsentQueue(function(optIn) {
+			if (optIn === false) {
+				log('User opt-out for prebid', log.levels.info, logGroup);
+				return;
 			}
 
-			requestBids(adUnits, onResponse, true);
-		}
+			log('User opt-in for prebid', log.levels.info, logGroup);
 
-		prebidLoaded = true;
+			if (!prebidLoaded) {
+				adaptersRegistry.setupCustomAdapters();
+				adaptersRegistry.registerAliases();
+			}
 
-		if (isLazyLoadingEnabled) {
-			win.addEventListener('adengine.lookup.prebid.lazy', function () {
-				lazyCall(skin, onResponse);
-			});
-		}
+			biddersPerformanceMap = performanceTracker.setupPerformanceMap(skin);
+			adUnits = helper.setupAdUnits(skin, isLazyLoadingEnabled ? 'pre' : 'off');
+
+			if (win.pbjs && !isNewPrebidEnabled) {
+				win.pbjs._bidsReceived = [];
+			}
+
+			if (adUnits.length > 0) {
+				if (!prebidLoaded) {
+					win.pbjs.que.push(function () {
+						win.pbjs.bidderSettings = settings.create();
+					});
+				}
+
+				requestBids(adUnits, onResponse, true);
+			}
+
+			prebidLoaded = true;
+
+			if (isLazyLoadingEnabled) {
+				win.addEventListener('adengine.lookup.prebid.lazy', function () {
+					lazyCall(skin, onResponse);
+				});
+			}
+		});
 	}
 
 	function lazyCall(skin, onResponse) {
