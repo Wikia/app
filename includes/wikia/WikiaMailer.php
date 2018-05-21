@@ -162,7 +162,7 @@ class WikiaSendgridMailer {
 		wfDebug( "Sending mail via WikiaSendgridMailer::send\n" );
 
 		// Can't be empty or Mail2::parseRecipients will throw validation error
-		$status = self::sendWithPear( $mail_object, "igor+gdpr@wikia-inc.com", $headers, $body );
+		$status = self::sendWithPear( $mail_object, "community@fandom.com", $headers, $body );
 		if ( !$status->isOK() ) {
 			WikiaLogger::instance()->error( 'Failed to create mail object', $logContext );
 			wfRestoreWarnings();
