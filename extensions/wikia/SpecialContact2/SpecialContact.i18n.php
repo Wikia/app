@@ -237,7 +237,7 @@ Browser/OS: ',
 	'specialcontact-submitcomplete' => 'Thank you for contacting FANDOM. We receive and review all messages submitted here. We will do our best to get back to you in the next 2-3 business days, but please be patient as we work through all of the messages.
 
 Remember, you can also find help in our [[w:c:community:Special:Forum|Community Forum]] and [[w:c:community:Help:Index|Help pages]]. You can keep up to date with the latest FANDOM news on our [[w:c:community:Blog:Wikia_Staff_Blog |Staff Blog]]. Happy editing!',
-	'specialcontact-label-forget-account-country-info' => 'Country of origin*',
+	'specialcontact-label-forget-account-country-info' => 'Country of residence*',
 	'specialcontact-label-forget-account-full-name' => 'Full name*',
 	'specialcontact-label-forget-account-email-address' => 'Contact email address*',
 	'specialcontact-label-forget-account-is-on-behalf' => 'Are you making this request on behalf of yourself?*',
