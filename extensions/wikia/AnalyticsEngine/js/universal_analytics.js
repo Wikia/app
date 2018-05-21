@@ -461,6 +461,7 @@
 			}
 
 			if (!optIn) {
+				window.wgTrackID = -1;
 				window.ga('set', 'anonymizeIp', true);
 				window.ga('ads.set', 'anonymizeIp', true);
 				window.ga('ve.set', 'anonymizeIp', true);
