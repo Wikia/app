@@ -19,7 +19,6 @@ AdProviderOpenX.getConfig = function() {
 		'cont_lang': window.wgContentLanguage,
 		'user_lang': window.wgUserLanguage,
 		'dbname': wgDBname,
-		'tags': escape(window.wgWikiFactoryTagNames.join(",")),
 		'block': '1'
 	};
 	if (typeof document.referrer !== "undefined") {

@@ -86,21 +86,10 @@ class HubService {
 	/**
 	 * Look for a comscore_zzz tag
 	 * @param integer $cityId
-	 * @return hash of category data { id, name, url, short, deprecated, active }
+	 * @return string|null
 	 */
 	public static function getComscoreCategoryOverride( $cityId ) {
-
-		$wftags = new WikiFactoryTags( $cityId );
-		$tags = $wftags->getTags();
-		if ( is_array( $tags ) ) {
-			foreach ( $tags as $name ) {
-				if ( startsWith( $name, self::$comscore_prefix, false ) ) {
-					$catName = substr( $name, strlen( self::$comscore_prefix ) );
-					return $catName;
-				}
-			}
-		}
-		return null;
+		return WikiFactory::getVarValueByName('wgComScoreTagOverride', $cityId) ?: null;
 	}
 
 	/**

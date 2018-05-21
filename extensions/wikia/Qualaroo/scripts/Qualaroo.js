@@ -1,5 +1,6 @@
-( function ( window, document ) {
+require(['wikia.trackingOptOut'], function (trackingOptOut) {
 	'use strict';
+
 	var _kiq = [],
 		createCookie,
 		setABTestProperties;
@@ -87,9 +88,9 @@
 		createCookie('qualaroo_survey_submission');
 	});
 
-	loadQualaroo();
+	trackingOptOut.ifNotOptedOut(loadQualaroo);
 
 	setABTestProperties();
 
 	window._kiq = _kiq;
-})( window, document );
+});
