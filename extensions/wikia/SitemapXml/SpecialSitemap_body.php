@@ -37,6 +37,7 @@ class SitemapPage extends UnlistedSpecialPage {
 	public function execute( $subpage ) {
 		global $wgOut, $wgEnableSitemapXmlExt, $wgSitemapXmlExposeInRobots;
 
+		// keeping the checks for old sitemaps for now so we return 404s
 		$showIndex = strpos( $subpage, '-index.xml' ) !== false;
 		$isNewSitemapDefault = !empty( $wgEnableSitemapXmlExt ) && !empty( $wgSitemapXmlExposeInRobots );
 
