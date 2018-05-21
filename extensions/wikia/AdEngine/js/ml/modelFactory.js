@@ -14,12 +14,16 @@ define('ext.wikia.adEngine.ml.modelFactory', [
 		'enabled'
 	];
 
-	function create(modelData) {
+	function validateModel(modelData) {
 		requiredData.forEach(function (key) {
 			if (typeof modelData[key] === 'undefined') {
 				throw new Error('Missing ' + key + ' in model definition.');
 			}
 		});
+	}
+
+	function create(modelData) {
+		validateModel(modelData);
 
 		var predictedValue = null;
 
