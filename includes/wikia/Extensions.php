@@ -23,10 +23,8 @@ if (isset( $wgCityId ) && is_numeric($wgCityId) ) {
 //can access ->cat_id or ->cat_name
 $wgHub = WikiFactory::getCategory($wgCityId);
 
-# Remove any skin(s) listed in UnSkipSkins from SkipSkins
-if( !empty($wgUnSkipSkins) && is_array($wgUnSkipSkins) ) {
-	$wgSkipSkins = array_diff($wgSkipSkins, $wgUnSkipSkins);
-}
+// SUS-4796 | force Oasis skin // FIXME remove after the post-sunset cleanup
+$wgDefaultSkin = 'oasis';
 
 # Language specific settings. Currently only used for $wgExtraNamespaces.
 # Consider using /languages/messages/Wikia/ for customization.
