@@ -136,15 +136,14 @@ class WikiaRobotsTest extends WikiaBaseTest {
 
 	/**
 	 * Test Wikia\RobotsTxt\WikiaRobots sets the proper sitemap based on wgServer,
-	 * wgEnableSpecialSitemapExt, wgEnableSitemapXmlExt and wgSitemapXmlExposeInRobots
+	 * wgEnableSitemapXmlExt and wgSitemapXmlExposeInRobots
 	 *
 	 * @dataProvider dataProviderSitemap
 	 */
-	public function testSitemap( $wgEnableSpecialSitemapExt, $wgEnableSitemapXmlExt, $wgSitemapXmlExposeInRobots, $sitemapUrls ) {
+	public function testSitemap( $wgEnableSitemapXmlExt, $wgSitemapXmlExposeInRobots, $sitemapUrls ) {
 		$this->mockGlobalVariable( 'wgWikiaEnvironment', WIKIA_ENV_PROD );
 		$this->mockGlobalVariable( 'wgRobotsTxtBlockedWiki', false );
 		$this->mockGlobalVariable( 'wgServer', 'http://server' );
-		$this->mockGlobalVariable( 'wgEnableSpecialSitemapExt', $wgEnableSpecialSitemapExt );
 		$this->mockGlobalVariable( 'wgEnableSitemapXmlExt', $wgEnableSitemapXmlExt );
 		$this->mockGlobalVariable( 'wgSitemapXmlExposeInRobots', $wgSitemapXmlExposeInRobots );
 
@@ -155,15 +154,11 @@ class WikiaRobotsTest extends WikiaBaseTest {
 
 	public function dataProviderSitemap() {
 		return [
-			# $wgEnableSpecialSitemapExt, $wgEnableSitemapXmlExt, $wgSitemapXmlExposeInRobots, $sitemapUrls
-			[ false, false, false, [] ],
-			[ false, false, true, [] ],
-			[ false, true, false, [] ],
-			[ false, true, true, [ 'http://server/sitemap-newsitemapxml-index.xml' ] ],
-			[ true, false, false, [ 'http://server/sitemap-index.xml' ] ],
-			[ true, false, true, [ 'http://server/sitemap-index.xml' ] ],
-			[ true, true, false, [ 'http://server/sitemap-index.xml' ] ],
-			[ true, true, true, [ 'http://server/sitemap-newsitemapxml-index.xml' ] ],
+			# $wgEnableSitemapXmlExt, $wgSitemapXmlExposeInRobots, $sitemapUrls
+			[ false, false, [] ],
+			[ false, true, [] ],
+			[ true, false, [] ],
+			[ true, true, [ 'http://server/sitemap-newsitemapxml-index.xml' ] ],
 		];
 	}
 
