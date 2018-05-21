@@ -67,13 +67,9 @@ class SpoofUser {
 			'su_normalized' => $this->mNormalized,
 			'su_name=user_name',
 		];
-		$forgottenConds = [
-			'suf_normalized_hash' => $this->mNormalizedHash
-		];
 		if ( $skipExactMatch ) {
 			// BINARY enforces case sensitive comparison
 			$conds[] = "BINARY su_name != {$dbr->addQuotes( $this->mName )}";
-			$forgottenConds[] = "suf_exact_hash != {$dbr->addQuotes( $this->mExactHash )}";
 		}
 
 		$spoofedUsers = $dbr->select(
@@ -89,7 +85,7 @@ class SpoofUser {
 		$forgottenSpoofedUsers = $dbr->select(
 			'`spoofuser_forgotten`',
 			'suf_normalized_hash',
-			$forgottenConds,
+			['suf_normalized_hash' => $this->mNormalizedHash],
 			__METHOD__ );
 		/* Wikia Change - end */
 
