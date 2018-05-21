@@ -142,6 +142,12 @@ require(['wikia.trackingOptIn'], function (trackingOptIn) {
 		// Enable Demographics and Interests Reports
 		window.ga('require', 'displayfeatures');
 
+		if (!optIn) {
+			window.ga('set', 'anonymizeIp', true);
+			window.ga('ads.set', 'anonymizeIp', true);
+			window.ga('ve.set', 'anonymizeIp', true);
+		}
+
 		/**
 		 * Wrapper function to a generic ga() function call.
 		 *
@@ -391,12 +397,6 @@ require(['wikia.trackingOptIn'], function (trackingOptIn) {
 			for (i = 0; i < abCustomVarsForAds.length; i++) {
 				window.ga.apply(window, abCustomVarsForAds[i]);
 			}
-		}
-
-		if (!optIn) {
-			window.ga('set', 'anonymizeIp', true);
-			window.ga('ads.set', 'anonymizeIp', true);
-			window.ga('ve.set', 'anonymizeIp', true);
 		}
 
 		/**
