@@ -33,3 +33,5 @@ Alternatively, **Special:RequestToBeForgottenInternal is available** for `reques
 ## Debugging
 
 All logs from this process are marked with `@content.right_to_be_forgotten: 1` for easy "grepping" in Kibana.
+
+Due to caching, it may take up to 24h for user pages to be removed completely.
