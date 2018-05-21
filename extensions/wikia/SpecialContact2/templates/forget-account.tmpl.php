@@ -106,11 +106,11 @@ echo wfMessage( 'specialcontact-intro-forget-account' )->parseAsBlock();
 	<label for="wpConfirm"><?= wfMessage( 'specialcontact-label-forget-account-confirm-checkbox' )->escaped() ?></label>
 </p>
 
-<input type="submit" value="<?= wfMessage( 'specialcontact-label-forget-account-confirm' )->escaped() ?>" />
-
 <p>
 	<?= wfMessage( 'specialcontact-label-forget-account-data-deletion-info' )->escaped() ?>
 </p>
+
+<input type="submit" value="<?= wfMessage( 'specialcontact-label-forget-account-confirm' )->escaped() ?>" />
 
 <input type="hidden" id="wpBrowser" name="wpBrowser" value="<?= Sanitizer::encodeAttribute( $_SERVER['HTTP_USER_AGENT'] ); ?>" />
 <input type="hidden" id="wpAbTesting" name="wpAbTesting" value="[unknown]" />
