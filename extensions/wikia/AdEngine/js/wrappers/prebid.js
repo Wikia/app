@@ -13,17 +13,24 @@ define('ext.wikia.adEngine.wrappers.prebid', [
 	win.pbjs = win.pbjs || {};
 	win.pbjs.que = win.pbjs.que || [];
 
-	if (win.pbjs && typeof win.pbjs.setConfig === 'function' && isNewPrebidEnabled) {
-		win.pbjs.setConfig({
-			debug: loc.href.indexOf('pbjs_debug=1') >= 0,
-			enableSendAllBids: true,
-			bidderSequence: 'random',
-			bidderTimeout: 2000,
-			userSync: {
-				iframeEnabled: true,
-				enabledBidders: [],
-				syncDelay: 6000
-			}
+	if (isNewPrebidEnabled) {
+		win.pbjs.que.push(function() {
+			win.pbjs.setConfig({
+				debug: loc.href.indexOf('pbjs_debug=1') >= 0,
+				enableSendAllBids: true,
+				bidderSequence: 'random',
+				bidderTimeout: 2000,
+				userSync: {
+					iframeEnabled: true,
+					enabledBidders: [],
+					syncDelay: 6000
+				},
+				consentManagement: {
+					cmpApi: 'iab',
+					timeout: 2000,
+					allowAuctionWithoutConsent: false
+				}
+			});
 		});
 	}
 
