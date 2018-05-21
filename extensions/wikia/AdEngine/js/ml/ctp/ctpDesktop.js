@@ -14,7 +14,7 @@ define('ext.wikia.adEngine.ml.ctp.ctpDesktop', [
 
 	return modelFactory.create({
 		dataSource: source,
-		model: linearModel.create(source.getCoefficients(), source.getIntercept()),
+		model: linearModel.create(source.coefficients, source.intercept),
 		name: 'ctpdesktop',
 		wgCountriesVariable: 'wgAdDriverCTPDesktopRabbitCountries',
 		enabled: isFeaturedVideoClickToPlay && adContext.get('targeting.skin') === 'oasis',

@@ -18,16 +18,12 @@ define('ext.wikia.adEngine.ml.dataSourceFactory', [
 		});
 
 		return {
-			getCoefficients: function () {
-				return dataSource.coefficients;
-			},
+			coefficients: dataSource.coefficients,
+			features: dataSource.features,
+			intercept: dataSource.intercept,
 
 			getData: function () {
 				return inputParser.parse(dataSource.features);
-			},
-
-			getIntercept: function () {
-				return dataSource.intercept;
 			}
 		};
 	}
