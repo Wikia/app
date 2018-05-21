@@ -349,6 +349,8 @@ if (!empty( $wgEnableArticleMetaDescription )) {
 #--- 44. AdEngine
 include ( "$IP/extensions/wikia/AdEngine/AdEngine2.setup.php" );
 
+include ( "$IP/extensions/wikia/TrackingOptIn/TrackingOptIn.setup.php" );
+
 if (!empty($wgEnableOggHandlerExt)) {
 	include("$IP/extensions/OggHandler/OggHandler.php");
 }

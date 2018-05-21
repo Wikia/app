@@ -2,8 +2,9 @@ require([
 	'jquery',
 	'wikia.articleVideo.jwplayertag.ads',
 	'wikia.tracker',
+	'wikia.trackingOptIn',
 	'wikia.articleVideo.featuredVideo.cookies'
-], function ($, videoAds, tracker, featuredVideoCookieService) {
+], function ($, videoAds, tracker, trackingOptIn, featuredVideoCookieService) {
 	'use strict';
 
 	var parserTagSelector = '.jwplayer-in-article-video .jwplayer-container',
@@ -22,7 +23,9 @@ require([
 	}
 
 	function onPlayerReady(playerInstance) {
-		videoAds(playerInstance);
+		trackingOptIn.pushToUserConsentQueue(function () {
+			videoAds(playerInstance);
+		});
 
 		playerInstance.on('captionsSelected', function (data) {
 			featuredVideoCookieService.setCaptions(data.selectedLang);
