@@ -249,7 +249,8 @@ class PermissionsConfiguration {
 		'clearuserprofile',
 		'smw-patternedit',
 		'smw-admin',
-		'fandom-admin'
+		'fandom-admin',
+		'exportuserdata'
 	];
 
 	public function __construct(
