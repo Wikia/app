@@ -28,6 +28,7 @@ echo wfMessage( 'specialcontact-intro-forget-account' )->parseAsBlock();
 </p>
 <p>
 	<select name="wpCountry" required>
+		<option selected disabled hidden style='display: none' value=''></option>
 		<? foreach(SpecialContactCountryNames::getNames(F::app()->wg->Lang->getCode()) as $code => $country) {
 			echo('<option value="'. $country . '">' . $country . '</option>');
 		} ?>
