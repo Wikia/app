@@ -387,12 +387,6 @@
 
 	require(['wikia.trackingOptIn'], function (trackingOptIn) {
 		trackingOptIn.pushToUserConsentQueue(function (optIn) {
-			if (!optIn) {
-				window.ga('set', 'anonymizeIp', true);
-				window.ga('ads.set', 'anonymizeIp', true);
-				window.ga('ve.set', 'anonymizeIp', true);
-			}
-
 			/**
 			 * Main Tracker
 			 *
@@ -464,6 +458,12 @@
 						'userId': window.wgGAUserIdHash
 					}
 				);
+			}
+
+			if (!optIn) {
+				window.ga('set', 'anonymizeIp', true);
+				window.ga('ads.set', 'anonymizeIp', true);
+				window.ga('ve.set', 'anonymizeIp', true);
 			}
 
 			// Enable Demographics and Interests Reports
