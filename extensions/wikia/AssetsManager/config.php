@@ -147,16 +147,11 @@ $config['adengine2_rabbit_desktop_js'] = [
 		'#group_adengine2_rabbit_js',
 		'//extensions/wikia/AdEngine/js/ml/ctp/ctpDesktop.js',
 		'//extensions/wikia/AdEngine/js/ml/ctp/ctpDesktopData.js',
-		'//extensions/wikia/AdEngine/js/ml/fmr/fmrInputParser.js',
-		'//extensions/wikia/AdEngine/js/ml/fmr/fmrLogisticRegression.js',
-		'//extensions/wikia/AdEngine/js/ml/fmr/fmrPassiveAggressiveClassifier.js',
 		'//extensions/wikia/AdEngine/js/ml/model/decisionTreeClassifier.js',
 		'//extensions/wikia/AdEngine/js/ml/n1/n1DecisionTreeClassifier.js',
 		'//extensions/wikia/AdEngine/js/ml/n1/n1DecisionTreeClassifierInputParser.js',
 		'//extensions/wikia/AdEngine/js/ml/n1/n1InputParser.js',
 		'//extensions/wikia/AdEngine/js/ml/n1/n1LogisticRegression.js',
-		'//extensions/wikia/AdEngine/js/ml/outstream/outstreamInputParser.js',
-		'//extensions/wikia/AdEngine/js/ml/outstream/outstreamLogisticRegression.js',
 	],
 ];
 

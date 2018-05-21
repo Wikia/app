@@ -1,33 +1,24 @@
 /*global define, require*/
 define('ext.wikia.adEngine.ml.rabbit', [
 	require.optional('ext.wikia.adEngine.ml.ctp.ctpDesktop'),
-	require.optional('ext.wikia.adEngine.ml.fmr.fmrLogisticRegression'),
-	require.optional('ext.wikia.adEngine.ml.fmr.fmrPassiveAggressiveClassifier'),
 	require.optional('ext.wikia.adEngine.ml.n1.n1DecisionTreeClassifier'),
 	require.optional('ext.wikia.adEngine.ml.n1.n1LogisticRegression'),
 	require.optional('ext.wikia.adEngine.ml.n1.n1mLogisticRegression'),
-	require.optional('ext.wikia.adEngine.ml.outstream.outstreamLogisticRegression'),
 	require.optional('ext.wikia.adEngine.ml.nivens.mobileNivensLogisticRegression')
 ], function (
 	ctpDesktop,
-	fmrLr,
-	fmrPac,
 	n1dtc,
 	n1Lr,
 	n1mLr,
-	outstreamLr,
 	mobileNivens
 ) {
 	'use strict';
 
 	var models = [
 		ctpDesktop,
-		fmrLr,
-		fmrPac,
 		n1dtc,
 		n1Lr,
 		n1mLr,
-		outstreamLr,
 		mobileNivens
 	];
 
