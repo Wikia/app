@@ -28,8 +28,15 @@ describe('Tracking opt-out', function () {
 			}
 		};
 		mocks.qs = function () {};
+		mocks.trackingOptIn = {
+			pushToUserConsentQueue: function () {}
+		};
 
-		trackingOptOut = modules['wikia.trackingOptOut'](mocks.qs, mocks.context);
+		trackingOptOut = modules['wikia.trackingOptOut'](
+			mocks.qs,
+			mocks.trackingOptIn,
+			mocks.context
+		);
 	});
 
 	describe('when user opted out', function () {
