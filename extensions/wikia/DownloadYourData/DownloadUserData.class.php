@@ -68,7 +68,7 @@ class DownloadUserData {
 				->params( $userLang->getMonthName( intval( $profileData['birthday']['month'] ) ) )
 				->numParams( htmlspecialchars( $profileData['birthday']['day'] ) )
 				->parse();
-			$userdata[] = [ wfMessage( 'downloadyourdata-profile-birthday' )->inLanguage( $language )->text(),
+			$userdata[] = [ wfMessage( 'downloadyourdata-birthday' )->inLanguage( $language )->text(),
 				$formattedBirthday ];
 		}
 
