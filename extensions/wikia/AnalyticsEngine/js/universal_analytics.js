@@ -8,7 +8,7 @@ require(['wikia.trackingOptIn'], function (trackingOptIn) {
 	'use strict';
 
 	trackingOptIn.pushToUserConsentQueue(function (optIn) {
-		if (!window.wgNoExternals && optIn === true) {
+		if (!window.wgNoExternals) {
 			/**
 			 * Creates a temporary global ga object and loads analy  tics.js.
 			 * Paramenters o, a, and m are all used internally.  They could have been declared using 'var',
@@ -391,6 +391,12 @@ require(['wikia.trackingOptIn'], function (trackingOptIn) {
 			for (i = 0; i < abCustomVarsForAds.length; i++) {
 				window.ga.apply(window, abCustomVarsForAds[i]);
 			}
+		}
+
+		if (!optIn) {
+			window.ga('set', 'anonymizeIp', true);
+			window.ga('ads.set', 'anonymizeIp', true);
+			window.ga('ve.set', 'anonymizeIp', true);
 		}
 
 		/**
