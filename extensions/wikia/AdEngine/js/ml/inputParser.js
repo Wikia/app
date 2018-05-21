@@ -3,10 +3,10 @@ define('ext.wikia.adEngine.ml.inputParser', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adLogicPageParams',
 	'ext.wikia.adEngine.utils.device',
-	'wikia.articleVideo.featuredVideo.data',
 	'wikia.geo',
-	'wikia.window'
-], function (adContext, pageLevelParams, deviceDetect, featuredVideoData, geo, win) {
+	'wikia.window',
+	require.optional('wikia.articleVideo.featuredVideo.data')
+], function (adContext, pageLevelParams, deviceDetect, geo, win, featuredVideoData) {
 	'use strict';
 
 	var pageValues = null;

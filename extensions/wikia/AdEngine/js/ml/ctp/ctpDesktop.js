@@ -12,7 +12,7 @@ define('ext.wikia.adEngine.ml.ctp.ctpDesktop', [
 		model: linearModel.create(data.getCoefficients(), data.getIntercept()),
 		name: 'ctpdesktop',
 		wgCountriesVariable: 'wgAdDriverCTPDesktopRabbitCountries',
-		enabled: adContext.get('targeting.hasFeaturedVideo') && adContext.get('targeting.skin') === 'oasis',
+		enabled: !!adContext.get('targeting.hasFeaturedVideo') && adContext.get('targeting.skin') === 'oasis',
 		cachePrediction: true
 	});
 });

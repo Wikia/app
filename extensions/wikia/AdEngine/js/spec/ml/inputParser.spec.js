@@ -37,9 +37,9 @@ describe('ext.wikia.adEngine.ml.modelFactory', function () {
 			mocks.adContext,
 			mocks.pageParams,
 			mocks.deviceDetect,
-			mocks.featuredVideoData,
 			mocks.geo,
-			mocks.win
+			mocks.win,
+			mocks.featuredVideoData
 		);
 	}
 
