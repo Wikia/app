@@ -7,6 +7,7 @@ define('ext.wikia.adEngine.video.player.playerTracker', [
 	'wikia.browserDetect',
 	'wikia.geo',
 	'wikia.log',
+	'wikia.trackingOptIn',
 	'wikia.window',
 	require.optional('ext.wikia.adEngine.lookup.prebid.bidHelper'),
 	require.optional('ext.wikia.adEngine.video.player.porvata.floater')
@@ -18,6 +19,7 @@ define('ext.wikia.adEngine.video.player.playerTracker', [
 	browserDetect,
 	geo,
 	log,
+	trackingOptIn,
 	win,
 	bidHelper,
 	floater
@@ -32,7 +34,7 @@ define('ext.wikia.adEngine.video.player.playerTracker', [
 		};
 
 	function isEnabled() {
-		return !!context.opts.playerTracking;
+		return trackingOptIn.isOptedIn() && !!context.opts.playerTracking;
 	}
 
 	function prepareData(params, playerName, eventName, errorCode, contentType) {

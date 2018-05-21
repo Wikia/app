@@ -8,7 +8,13 @@ describe('Krux module', function () {
 
 	function getModule() {
 		return modules['wikia.krux'](
-			mocks.adContext, mocks.adTracker, mocks.document, mocks.wikiaTracker, mocks.window
+			mocks.adContext,
+			mocks.adTracker,
+			mocks.document,
+			mocks.log,
+			mocks.wikiaTracker,
+			mocks.trackingOptIn,
+			mocks.window
 		);
 	}
 
@@ -27,8 +33,16 @@ describe('Krux module', function () {
 		document: {},
 		wikiaTracker: {
 			track: noop
+		},
+		log: function () {},
+		trackingOptIn: {
+			pushToUserConsentQueue: function (cb) {
+				cb(true);
+			}
 		}
 	};
+
+	mocks.log.levels = {};
 
 	it('Expects to get user from localStorage', function () {
 		expect(getModule().getUser()).toBe(mocks.window.localStorage.kxuser);
