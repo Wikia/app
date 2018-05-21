@@ -18,6 +18,7 @@ require([
 	'ext.wikia.adEngine.tracking.adInfoListener',
 	'wikia.geo',
 	'wikia.instantGlobals',
+	'wikia.trackingOptIn',
 	'wikia.window',
 	require.optional('wikia.articleVideo.featuredVideo.lagger')
 ], function (
@@ -39,6 +40,7 @@ require([
 	adInfoListener,
 	geo,
 	instantGlobals,
+	trackingOptIn,
 	win,
 	fvLagger
 ) {
@@ -58,7 +60,8 @@ require([
 			pageLevelParams.getPageLevelParams(),
 			adContext,
 			btfBlocker,
-			'mercury'
+			'mercury',
+			trackingOptIn
 		);
 	});
 	win.loadCustomAd = adEngineBridge.loadCustomAd(customAdsLoader.loadCustomAd);

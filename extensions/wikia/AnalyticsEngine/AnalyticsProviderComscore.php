@@ -13,11 +13,11 @@ class AnalyticsProviderComscore implements iAnalyticsProvider {
 		switch ($event){
 		  case AnalyticsEngine::EVENT_PAGEVIEW :
 			  if (static::getC7Value()) {
-				  return '
+					return '
 <!-- Begin comScore Tag -->
 <script type="text/javascript">
-require(["wikia.trackingOptOut"], function (trackingOptOut) {
-	trackingOptOut.ifNotOptedOut(function () {
+require(["wikia.trackingOptOut", require.optional("wikia.trackingOptIn")], function (trackingOptOut, trackingOptIn) {
+	function loadScript() {
 		window._comscore = window._comscore || [];
 		window._comscore.push({ c1: "2", c2: "' . static::$PARTNER_ID . '",
 			options: {
@@ -29,13 +29,25 @@ require(["wikia.trackingOptOut"], function (trackingOptOut) {
 		s.async = true;
 		s.src = (document.location.protocol == "https:" ? "https://sb" : "http://b") + ".scorecardresearch.com/beacon.js";
 		document.head.appendChild(s);
-	});
+	}
+
+	if (trackingOptIn) {
+		trackingOptIn.pushToUserConsentQueue(function (optIn) {
+			if (optIn) {
+				loadScript();
+			}
+		});
+	} else {
+		trackingOptOut.ifNotOptedOut(function () {
+			loadScript();
+		});
+	}
 });
 </script>
 <!-- End comScore Tag -->';
-			  }
+			}
 			break;
-                  default: return '<!-- Unsupported event for ' . __CLASS__ . ' -->';
+			default: return '<!-- Unsupported event for ' . __CLASS__ . ' -->';
 		}
 	}
 
