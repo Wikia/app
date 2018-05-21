@@ -16,7 +16,7 @@ define('ext.wikia.adEngine.ml.inputParser', [
 
 		pageValues = {
 			country: geo.getCountryCode() || null,
-			device: deviceDetect.getDevice(),
+			device: deviceDetect.getDevice(pageParams),
 			esrb: pageParams.esrb || null,
 			videoId: featuredVideoData.mediaId || null,
 			videoTag: featuredVideoData.videoTags || null,

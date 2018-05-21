@@ -1,5 +1,6 @@
 /*global define, require*/
 define('ext.wikia.adEngine.ml.rabbit', [
+	require.optional('ext.wikia.adEngine.ml.ctp.ctpDesktop'),
 	require.optional('ext.wikia.adEngine.ml.fmr.fmrLogisticRegression'),
 	require.optional('ext.wikia.adEngine.ml.fmr.fmrPassiveAggressiveClassifier'),
 	require.optional('ext.wikia.adEngine.ml.n1.n1DecisionTreeClassifier'),
@@ -8,6 +9,7 @@ define('ext.wikia.adEngine.ml.rabbit', [
 	require.optional('ext.wikia.adEngine.ml.outstream.outstreamLogisticRegression'),
 	require.optional('ext.wikia.adEngine.ml.nivens.mobileNivensLogisticRegression')
 ], function (
+	ctpDesktop,
 	fmrLr,
 	fmrPac,
 	n1dtc,
@@ -19,6 +21,7 @@ define('ext.wikia.adEngine.ml.rabbit', [
 	'use strict';
 
 	var models = [
+		ctpDesktop,
 		fmrLr,
 		fmrPac,
 		n1dtc,

@@ -133,6 +133,7 @@ $config['adengine2_rabbit_js'] = [
 	'skin' => [ 'oasis' ],
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [
+		'//extensions/wikia/AdEngine/js/ml/inputParser.js',
 		'//extensions/wikia/AdEngine/js/ml/modelFactory.js',
 		'//extensions/wikia/AdEngine/js/ml/model/linear.js',
 		'//extensions/wikia/AdEngine/js/ml/rabbit.js',
@@ -144,6 +145,8 @@ $config['adengine2_rabbit_desktop_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [
 		'#group_adengine2_rabbit_js',
+		'//extensions/wikia/AdEngine/js/ml/ctp/ctpDesktop.js',
+		'//extensions/wikia/AdEngine/js/ml/ctp/ctpDesktopData.js',
 		'//extensions/wikia/AdEngine/js/ml/fmr/fmrInputParser.js',
 		'//extensions/wikia/AdEngine/js/ml/fmr/fmrLogisticRegression.js',
 		'//extensions/wikia/AdEngine/js/ml/fmr/fmrPassiveAggressiveClassifier.js',
