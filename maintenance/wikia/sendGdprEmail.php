@@ -14,6 +14,7 @@ require_once( dirname( __FILE__ ) . '/../Maintenance.php' );
 class sendGdprEmail extends Maintenance {
 	const ARGUMENT_FILE = 'file';
 	const ARGUMENT_LANGUAGE = 'language';
+	const ARGUMENT_LOGS_DIRECTORY = 'logs';
 	const GDPR_BATCH_SIZE = 1000;
 
 	const SUBJECTS = [
@@ -32,17 +33,21 @@ class sendGdprEmail extends Maintenance {
 
 	private $filename;
 	private $language;
+	private $logsDirectory;
+	private $streams = [];
 
 	public function __construct() {
 		parent::__construct();
 		$this->addOption( self::ARGUMENT_FILE, 'File with user IDs to process', true, true, 'f' );
 		$this->addOption( self::ARGUMENT_LANGUAGE, 'Email language', true, true, 'l' );
+		$this->addOption( self::ARGUMENT_LOGS_DIRECTORY, 'Logs directory, no trailing slash', false, true );
 		$this->mDescription = 'Send the GDPR notification email';
 	}
 
 	public function execute() {
 		$this->filename = $this->getOption( self::ARGUMENT_FILE );
 		$this->language = $this->getOption( self::ARGUMENT_LANGUAGE );
+		$this->logsDirectory = $this->getOption( self::ARGUMENT_LOGS_DIRECTORY, __DIR__ );
 
 		$file = fopen( $this->filename, 'r' );
 		if ( !$file ) {
@@ -80,12 +85,15 @@ class sendGdprEmail extends Maintenance {
 
 		// Not a full batch
 		$this->flushBatch( $recipients, $userIdsForLog, $batchCounter );
+		$this->closeLogFiles();
 
 		echo "Finished\n";
 	}
 
 	private function flushBatch( $recipients, $userIdsForLog, $batchCounter ): array
 	{
+		$this->log( 'batchstart', [ $batchCounter ] );
+
 		if ( !empty( $recipients ) ) {
 			$this->sendEmail( $recipients, $userIdsForLog, $batchCounter );
 			$this->log( 'success', $userIdsForLog );
@@ -173,10 +181,26 @@ class sendGdprEmail extends Maintenance {
 	}
 
 	private function log( $type, $items ) {
+		if ( empty( $this->streams[ $type ] ) ) {
+			$this->streams[ $type ] = fopen( $this->logsDirectory . '/log_' . $type, 'a' );
+
+			if ( $this->streams[ $type ] === false ) {
+				throw new Exception( "Can't open log file" );
+			}
+		}
+
 		foreach ( $items as $item ) {
-			// TODO log to file per type
-			echo $type . ':' . $item;
-			echo "\n";
+			$result = fwrite( $this->streams[ $type ], $item . "\n" );
+
+			if ( $result === false || $result === 0 ) {
+				throw new Exception( "Can't write log file type: " . $type . ", item: " . $item );
+			}
+		}
+	}
+
+	private function closeLogFiles() {
+		foreach ( $this->streams as $stream ) {
+			fclose( $stream );
 		}
 	}
 
