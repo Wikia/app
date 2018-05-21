@@ -1,4 +1,4 @@
-/*global define, setTimeout*/
+/*global define*/
 define('ext.wikia.adEngine.video.player.ui.toggleVideo', [
 	'ext.wikia.adEngine.domElementTweaker'
 ], function (DOMElementTweaker) {

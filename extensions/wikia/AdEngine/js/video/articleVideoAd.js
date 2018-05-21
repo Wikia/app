@@ -25,27 +25,27 @@ define('ext.wikia.adEngine.video.articleVideoAd', [
 
 	function buildVastUrl(slotName, position, videoDepth, correlator, slotTargeting, playerMuted, bidParams) {
 		var options = {
-				correlator: correlator,
-				vpos: position
-			},
-			slotParams = Object.assign({
-				passback: featuredVideoPassback,
-				pos: slotName,
-				rv: calculateRV(videoDepth),
-				src: srcProvider.get(baseSrc, {testSrc: 'test'}),
-				audio: playerMuted ? 'no' : 'yes'
-			}, slotTargeting);
+			correlator: correlator,
+			vpos: position
+		};
+
+		slotTargeting.passback = featuredVideoPassback;
+		slotTargeting.pos = slotName;
+		slotTargeting.rv = calculateRV(videoDepth);
+		slotTargeting.src = srcProvider.get(baseSrc, {testSrc: 'test'});
+		slotTargeting.audio = playerMuted ? 'no' : 'yes';
 
 		if (videoDepth === 1 && bidParams) {
 			Object.keys(bidParams).forEach(function (key) {
-				slotParams[key] = bidParams[key];
+				slotTargeting[key] = bidParams[key];
 			});
 		}
-		options.adUnit = megaAdUnitBuilder.build(slotParams.pos, slotParams.src, (playerMuted ? '' : '-audio'));
 
-		log(['buildVastUrl', position, videoDepth, slotParams, options], log.levels.debug, logGroup);
+		options.adUnit = megaAdUnitBuilder.build(slotTargeting.pos, slotTargeting.src, (playerMuted ? '' : '-audio'));
 
-		return vastUrlBuilder.build(aspectRatio, slotParams, options);
+		log(['buildVastUrl', position, videoDepth, slotTargeting, options], log.levels.debug, logGroup);
+
+		return vastUrlBuilder.build(aspectRatio, slotTargeting, options);
 	}
 
 	function shouldPlayAdOnNextVideo(depth) {

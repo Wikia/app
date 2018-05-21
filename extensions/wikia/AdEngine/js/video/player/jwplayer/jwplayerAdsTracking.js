@@ -1,3 +1,4 @@
+/*global define*/
 define('ext.wikia.adEngine.video.player.jwplayer.adsTracking', [
 	'ext.wikia.adEngine.utils.eventDispatcher',
 	'ext.wikia.adEngine.video.player.jwplayer.jwplayerTracker',

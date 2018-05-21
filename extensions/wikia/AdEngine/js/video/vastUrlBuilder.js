@@ -85,7 +85,7 @@ define('ext.wikia.adEngine.video.vastUrlBuilder', [
 			params.push('vid=' + options.videoId);
 		}
 
-		params.push(`npa=${trackingOptOut.isOptedOut('gpt') ? 1 : 0}`);
+		params.push('npa=' + (trackingOptOut.isOptedOut('gpt') ? 1 : 0));
 
 		url = baseUrl + params.join('&');
 		log(['build', url], 'debug', logGroup);

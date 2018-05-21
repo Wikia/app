@@ -1,4 +1,4 @@
-/*global define,require*/
+/*global define*/
 define('ext.wikia.adEngine.config.desktop', [
 	// regular dependencies
 	'wikia.log',

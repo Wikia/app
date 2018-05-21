@@ -1,3 +1,4 @@
+/*global define*/
 define('ext.wikia.adEngine.utils.timeBuckets', function() {
 
 	function getTimeBucket(timeBuckets, time) {
