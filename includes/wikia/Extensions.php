@@ -1754,10 +1754,6 @@ if ( !empty( $wgEnablePlaybuzzTagExt ) ) {
 	include "$IP/extensions/wikia/PlaybuzzTag/PlaybuzzTag.setup.php";
 }
 
-if ( !empty( $wgEnableGoogleAmp ) ) {
-    include "$IP/extensions/wikia/GoogleAmp/GoogleAmp.setup.php";
-}
-
 if ( !empty( $wgEnableOpenXSPC ) ) {
     include "$IP/extensions/wikia/Spotlights/Spotlights.setup.php";
 }
