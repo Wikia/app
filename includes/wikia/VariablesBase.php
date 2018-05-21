@@ -3554,13 +3554,6 @@ $wgEnableSpecialDiscussions = true;
 $wgEnableSpecialPhalanxExt = false;
 
 /**
- * Enable Special:Sitemap extension.
- * @see /extensions/wikia/Sitemap
- * @var bool $wgEnableSpecialSitemapExt
- */
-$wgEnableSpecialSitemapExt = true;
-
-/**
  * Enable Special:Unsubscribe.
  * @see extensions/wikia/SpecialUnsubscribe
  * @var bool $wgEnableSpecialUnsubscribeExt 
