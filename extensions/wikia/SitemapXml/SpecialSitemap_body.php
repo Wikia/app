@@ -35,21 +35,15 @@ class SitemapPage extends UnlistedSpecialPage {
 	 * @param $subpage Mixed: subpage of SpecialPage
 	 */
 	public function execute( $subpage ) {
-		global $wgOut, $wgEnableSitemapXmlExt, $wgSitemapXmlExposeInRobots;
+		global $wgOut;
 
 		// keeping the checks for old sitemaps for now so we return 404s
 		$showIndex = strpos( $subpage, '-index.xml' ) !== false;
-		$isNewSitemapDefault = !empty( $wgEnableSitemapXmlExt ) && !empty( $wgSitemapXmlExposeInRobots );
 
 		$forceOldSitemap = strpos( $subpage, '-oldsitemapxml-' ) !== false;
 		$forceNewSitemap = strpos( $subpage, '-newsitemapxml-' ) !== false;
 
-		if ( ( $showIndex && $isNewSitemapDefault && !$forceOldSitemap ) || $forceNewSitemap ) {
-			if ( empty( $wgEnableSitemapXmlExt ) ) {
-				$this->print404();
-				return;
-			}
-
+		if ( ( $showIndex && !$forceOldSitemap ) || $forceNewSitemap ) {
 			$wgOut->disable();
 			$response = F::app()->sendRequest( 'SitemapXml', 'index', [ 'path' => $subpage ] );
 			$response->sendHeaders();
