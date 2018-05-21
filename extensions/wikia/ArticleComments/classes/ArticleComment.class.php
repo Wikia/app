@@ -977,25 +977,6 @@ class ArticleComment {
 	}
 
 	/**
-	 * Format a page_title for a comment
-	 *
-	 * e.g. Macbre/@comment-(user_ID_or_IP)-20170301152835/@comment-(user_ID_or_IP)-20171103161051
-	 *
-	 * @param Title $title
-	 * @param User $user
-	 * @param string $now
-	 * @return string
-	 */
-	static public function makeCommentTitle( Title $title, User $user, $now = null ) : string {
-		return sprintf(
-			'%s/%s%s-%s',
-			$title->getText(),
-			ARTICLECOMMENT_PREFIX,
-			$user->isLoggedIn() ? $user->getId() : $user->getName(),
-			$now ?: wfTimestampNow() );
-	}
-
-	/**
 	 * doPost -- static hook/entry for normal request post
 	 *
 	 * @param $text
@@ -1022,7 +1003,7 @@ class ArticleComment {
 		 */
 		if ( $parentId == false ) {
 			// 1st level comment
-			$commentTitle = self::makeCommentTitle( $title, $user );
+			$commentTitle = ArticleCommentsTitle::format( $title, $user );
 		} else {
 			$parentArticle = Article::newFromID( $parentId );
 			if ( empty( $parentArticle ) ) {
@@ -1051,7 +1032,8 @@ class ArticleComment {
 				return false;
 			}
 			// nested comment
-			$commentTitle = self::makeCommentTitle( $parentArticle->getTitle(), $user );
+			$commentTitle =
+				ArticleCommentsTitle::format( $parentArticle->getTitle(), $user );
 		}
 		$commentTitleText = $commentTitle;
 		$commentTitle = Title::newFromText( $commentTitle, MWNamespace::getTalk( $title->getNamespace() ) );

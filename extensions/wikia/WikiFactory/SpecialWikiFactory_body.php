@@ -19,7 +19,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 class WikiFactoryPage extends SpecialPage {
 
 	/* @var object $mWiki a row from city_list table */
-	private $mWiki, $mTitle, $mDomain, $mTab, $mVariableName, $mSearchTag;
+	private $mWiki, $mTitle, $mDomain, $mTab, $mVariableName;
 	public $mStatuses = array(-2 => 'spam', -1=> 'disabled*', "disabled", "enabled", "redirected" );
 	private $mTagWikiIds = array();
 
@@ -124,9 +124,6 @@ class WikiFactoryPage extends SpecialPage {
 					$tab = $parts[1];
 					if ( ( $tab === "variables" ) && ( isset($parts[2]) ) ) {
 						$this->mVariableName = trim($parts[2]);
-					}
-					if ( ( $tab === "tags" || $tab === "findtags"  ) && ( isset($parts[2]) ) ) {
-						$this->mSearchTag = trim($parts[2]);
 					}
 				}
 			}

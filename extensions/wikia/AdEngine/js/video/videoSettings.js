@@ -26,7 +26,7 @@ define('ext.wikia.adEngine.video.videoSettings', [
 				return params.moatTracking;
 			}
 
-			if (!adContext.get('opts.porvataMoatTrackingEnabled') || !trackingOptIn.isOptedIn()) {
+			if (!adContext.get('opts.porvataMoatTrackingEnabled')) {
 				return false;
 			}
 
