@@ -48,7 +48,11 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.openx', function () {
 			unit: 123
 		})).toEqual({
 			code: 'TOP_LEADERBOARD',
-			sizes: [[728, 90], [970, 250]],
+			mediaTypes: {
+				banner: {
+					sizes: [[728, 90], [970, 250]]
+				}
+			},
 			bids: [
 				{
 					bidder: 'openx',

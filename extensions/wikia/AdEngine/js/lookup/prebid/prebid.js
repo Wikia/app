@@ -30,6 +30,7 @@ define('ext.wikia.adEngine.lookup.prebid', [
 		prebidLoaded = false,
 		isLazyLoadingEnabled = adContext.get('opts.isBLBLazyPrebidEnabled'),
 		isLazyLoaded = false,
+		isNewPrebidEnabled = adContext.get('opts.isNewPrebidEnabled'),
 		logGroup = 'ext.wikia.adEngine.lookup.prebid';
 
 	function removeAdUnits() {
@@ -39,6 +40,14 @@ define('ext.wikia.adEngine.lookup.prebid', [
 	}
 
 	function call(skin, onResponse) {
+		if (!prebidLoaded) {
+			if (isNewPrebidEnabled) {
+				loadNewPrebid();
+			} else {
+				loadOldPrebid();
+			}
+		}
+
 		trackingOptIn.pushToUserConsentQueue(function(optIn) {
 			if (optIn === false) {
 				log('User opt-out for prebid', log.levels.info, logGroup);
@@ -55,7 +64,7 @@ define('ext.wikia.adEngine.lookup.prebid', [
 			biddersPerformanceMap = performanceTracker.setupPerformanceMap(skin);
 			adUnits = helper.setupAdUnits(skin, isLazyLoadingEnabled ? 'pre' : 'off');
 
-			if (win.pbjs) {
+			if (win.pbjs && !isNewPrebidEnabled) {
 				win.pbjs._bidsReceived = [];
 			}
 
@@ -141,14 +150,14 @@ define('ext.wikia.adEngine.lookup.prebid', [
 	function getSlotParams(slotName) {
 		var slotParams;
 
-		if (win.pbjs && typeof win.pbjs.getBidResponses === 'function') {
-			var params = win.pbjs.getBidResponses(slotName) || {};
+		if (win.pbjs && typeof win.pbjs.getBidResponsesForAdUnitCode === 'function') {
+			var bids = win.pbjs.getBidResponsesForAdUnitCode(slotName).bids || [];
 
-			if (params && params[slotName] && params[slotName].bids && params[slotName].bids.length) {
-				var bidParams,
+			if (bids.length) {
+				var bidParams = null,
 					priorities = adaptersRegistry.getPriorities();
 
-				params[slotName].bids.forEach(function (param) {
+				bids.forEach(function (param) {
 					if (!bidParams) {
 						bidParams = param;
 					} else {
