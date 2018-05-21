@@ -43,10 +43,10 @@ echo wfMessage( 'specialcontact-intro-forget-account' )->parseAsBlock();
 </p>
 
 <p>
-	<label for="wpEmailAddress"><?= wfMessage( 'specialcontact-label-forget-account-email-address' )->escaped() ?></label>
+	<label for="wpEmail"><?= wfMessage( 'specialcontact-label-forget-account-email-address' )->escaped() ?></label>
 </p>
 <p>
-	<input type="email" name="wpEmailAddress" required value="<?= $encEmail ?>" />
+	<input type="email" name="wpEmail" required value="<?= $encEmail ?>" />
 </p>
 
 <p>
