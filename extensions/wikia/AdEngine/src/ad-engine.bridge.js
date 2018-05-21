@@ -47,9 +47,7 @@ function init(
 	scrollListener.init();
 
 	context.set('slots', getSlotsContext(legacyContext, skin));
-	if (isOptedIn) {
-		context.push('listeners.porvata', createTracker(legacyContext, geo, pageLevelTargeting, adTracker));
-	}
+	context.push('listeners.porvata', createTracker(legacyContext, geo, pageLevelTargeting, adTracker));
 	context.set('options.trackingOptOut', !isOptedIn);
 	adProductsUtils.setupNpaContext();
 

@@ -25,7 +25,7 @@ define('ext.wikia.adEngine.tracking.adInfoListener',  [
 		};
 
 	function isEnabled() {
-		return trackingOptIn.isOptedIn() && adContext.getContext().opts.enableAdInfoLog;
+		return adContext.getContext().opts.enableAdInfoLog;
 	}
 
 	function getBidderWon(slotParams, realSlotPrices) {
