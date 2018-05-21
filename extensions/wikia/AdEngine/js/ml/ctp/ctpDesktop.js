@@ -10,7 +10,7 @@ define('ext.wikia.adEngine.ml.ctp.ctpDesktop', [
 
 	var isFeaturedVideoClickToPlay = !!adContext.get('targeting.hasFeaturedVideo') &&
 		!!featuredVideoAutoplay &&
-		featuredVideoAutoplay.isAutoplayEnabled();
+		!featuredVideoAutoplay.isAutoplayEnabled();
 
 	return modelFactory.create({
 		inputParser: data,
