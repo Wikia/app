@@ -29,6 +29,8 @@ define('ext.wikia.adEngine.video.articleVideoAd', [
 			vpos: position
 		};
 
+		slotTargeting = slotTargeting || {};
+
 		slotTargeting.passback = featuredVideoPassback;
 		slotTargeting.pos = slotName;
 		slotTargeting.rv = calculateRV(videoDepth);
