@@ -1,5 +1,5 @@
 /*global define*/
-define('ext.wikia.adEngine.ml.ctp.ctpDesktopData', [
+define('ext.wikia.adEngine.ml.ctp.ctpDesktopDataSource', [
 	'ext.wikia.adEngine.ml.inputParser',
 	'wikia.log'
 ], function (inputParser, log) {

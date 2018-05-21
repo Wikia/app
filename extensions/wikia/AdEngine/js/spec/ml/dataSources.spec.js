@@ -3,7 +3,7 @@ describe('ext.wikia.adEngine.ml.dataSources', function () {
 	'use strict';
 
 	var dataSources = [
-			'ext.wikia.adEngine.ml.ctp.ctpDesktopData'
+			'ext.wikia.adEngine.ml.ctp.ctpDesktopDataSource'
 		],
 		mocks = {
 			inputParser: {

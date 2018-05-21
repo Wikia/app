@@ -7,7 +7,7 @@ define('ext.wikia.adEngine.ml.modelFactory', [
 	'use strict';
 
 	var requiredData = [
-		'inputParser',
+		'dataSource',
 		'model',
 		'name',
 		'wgCountriesVariable',
@@ -42,7 +42,7 @@ define('ext.wikia.adEngine.ml.modelFactory', [
 
 			predict: function () {
 				if (predictedValue === null || !modelData.cachePrediction) {
-					var data = modelData.inputParser.getData();
+					var data = modelData.dataSource.getData();
 
 					predictedValue = modelData.model.predict(data);
 				}

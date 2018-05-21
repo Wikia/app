@@ -146,7 +146,7 @@ $config['adengine2_rabbit_desktop_js'] = [
 	'assets' => [
 		'#group_adengine2_rabbit_js',
 		'//extensions/wikia/AdEngine/js/ml/ctp/ctpDesktop.js',
-		'//extensions/wikia/AdEngine/js/ml/ctp/ctpDesktopData.js',
+		'//extensions/wikia/AdEngine/js/ml/ctp/ctpDesktopDataSource.js',
 		'//extensions/wikia/AdEngine/js/ml/model/decisionTreeClassifier.js',
 		'//extensions/wikia/AdEngine/js/ml/n1/n1DecisionTreeClassifier.js',
 		'//extensions/wikia/AdEngine/js/ml/n1/n1DecisionTreeClassifierInputParser.js',
