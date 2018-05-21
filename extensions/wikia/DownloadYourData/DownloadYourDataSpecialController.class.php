@@ -16,7 +16,7 @@ class DownloadYourDataSpecialController extends \WikiaSpecialPageController {
 	public function index() {
 		$user = $this->getUser();
 		if ( !$user->isLoggedIn() ) {
-			$this->getOutput()->redirect( \SpecialPage::getTitleFor( 'Contact', 'data-portability' )->getFullURL() );
+			$this->getOutput()->redirect( \SpecialPage::getTitleFor( 'Contact', 'data-access' )->getFullURL() );
 			return false;
 		}
 
