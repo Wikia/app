@@ -348,7 +348,11 @@
 		};
 	}
 
-	// Extending Wikia.Tracker, which is also exported as the AMD module
-	extend( trackerStub, tracker( window ) );
+	require(['wikia.trackingOptIn'], function (trackingOptIn) {
+		trackingOptIn.pushToUserConsentQueue(function () {
+			// Extending Wikia.Tracker, which is also exported as the AMD module
+			extend(trackerStub, tracker(window));
+		});
+	});
 
 }(window, undefined));
