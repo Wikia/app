@@ -3,8 +3,10 @@
  * AMD module checking tracking opt-out
  */
 define('wikia.trackingOptOut', [
-	'wikia.querystring', 'wikia.window'
-], function(Querystring, context) {
+	'wikia.querystring',
+	'wikia.trackingOptIn',
+	'wikia.window'
+], function(Querystring, trackingOptIn, context) {
 	'use strict';
 
 	var qs = new Querystring(),
@@ -32,7 +34,7 @@ define('wikia.trackingOptOut', [
 	}
 
 	/**
-	 * @deprecated use async API
+	 * @deprecated use wikia.trackingOptIn
 	 * @param tracker
 	 * @returns {*|boolean}
 	 */
@@ -40,17 +42,30 @@ define('wikia.trackingOptOut', [
 		return isBlacklisted(tracker) && !isNotOptedOut();
 	}
 
+	/**
+	 * @deprecated use wikia.trackingOptIn
+	 * @param tracker
+	 * @param thenCall
+	 */
 	function ifTrackerNotOptedOut(tracker, thenCall) {
 		if (!isBlacklisted(tracker) || isNotOptedOut()) {
 			thenCall();
 		}
 	}
 
+	/**
+	 * @deprecated use wikia.trackingOptIn
+	 * @param thenCall
+	 */
 	function ifNotOptedOut(thenCall) {
 		if (isNotOptedOut()) {
 			thenCall();
 		}
 	}
+
+	trackingOptIn.pushToUserConsentQueue(function (optIn) {
+		notOptedOut = optIn;
+	});
 
 	return {
 		isOptedOut: isOptedOut,

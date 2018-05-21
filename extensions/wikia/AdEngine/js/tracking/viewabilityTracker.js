@@ -3,15 +3,16 @@ define('ext.wikia.adEngine.tracking.viewabilityTracker', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adTracker',
 	'wikia.log',
+	'wikia.trackingOptIn',
 	'wikia.window'
-], function (adContext, adTracker, log, win) {
+], function (adContext, adTracker, log, trackingOptIn, win) {
 	'use strict';
 
 	var context = adContext.getContext(),
 		logGroup = 'ext.wikia.adEngine.tracking.viewabilityTracker';
 
 	function track(slot) {
-		if (!context.opts.kikimoraViewabilityTracking) {
+		if (!context.opts.kikimoraViewabilityTracking || !trackingOptIn.isOptedIn()) {
 			log('Viewability tracking disabled', log.levels.info, logGroup);
 			return;
 		}

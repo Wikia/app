@@ -1,9 +1,18 @@
 <!-- Begin NetzAthleten Tag -->
 <script type="text/javascript">
-require(['wikia.geo', 'wikia.instantGlobals'], function(geo, instantGlobals) {
+require([
+	'ext.wikia.adEngine.adContext',
+	'wikia.geo',
+	'wikia.instantGlobals',
+	'wikia.trackingOptOut',
+	require.optional('wikia.trackingOptIn')
+], function(adContext, geo, instantGlobals, trackingOptOut, trackingOptIn) {
 	var url = "{{ url }}",
+		scriptElementNetzAthleten,
+		isNetzAthletenTurnedOn;
+
+	function loadScript() {
 		scriptElementNetzAthleten = document.createElement("script");
-	if (geo.isProperGeo(instantGlobals.wgAdDriverNetzAthletenCountries)) {
 		scriptElementNetzAthleten.type = "text/javascript";
 		scriptElementNetzAthleten.src = url;
 
@@ -11,6 +20,23 @@ require(['wikia.geo', 'wikia.instantGlobals'], function(geo, instantGlobals) {
 			window.naMediaAd.setValue("homesite", window.wgIsMainpage);
 		});
 		document.head.appendChild(scriptElementNetzAthleten);
+	}
+
+	if (trackingOptIn) {
+		trackingOptIn.pushToUserConsentQueue(function (optIn) {
+			if (optIn && adContext.get('opts.netzathleten')) {
+				// user opt-ins for NetzAthleten
+				loadScript();
+			}
+		});
+	} else {
+		// TODO: remove this block after ADEN-7155 live + 24h - this is for backward compatibility
+		isNetzAthletenTurnedOn = !trackingOptOut.isOptedOut('netzathleten')
+			&& geo.isProperGeo(instantGlobals.wgAdDriverNetzAthletenCountries);
+
+		if (adContext.get('opts.netzathleten') || isNetzAthletenTurnedOn) {
+			loadScript();
+		}
 	}
 });
 </script>
