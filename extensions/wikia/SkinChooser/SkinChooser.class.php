@@ -152,6 +152,11 @@ class SkinChooser {
 			$useskin = 'wikiamobile';
 		}
 
+		// SUS-4796
+		if ( in_array( $useskin, [ 'monobook', 'uncyclopedia' ] ) ) {
+			$useskin = 'oasis';
+		}
+
 		if ( !( $title instanceof Title ) || in_array( self::getUserOption( 'skin' ), $wgSkipSkins ) ) {
 			$skin = Skin::newFromKey( isset( $wgDefaultSkin ) ? $wgDefaultSkin : 'monobook' );
 			wfProfileOut( __METHOD__ );
