@@ -117,13 +117,13 @@
 		}
 
 		function flushInternalTrackingQueue(optIn) {
+			isOptedIn = optIn;
+			isTrackingOptInReady = true;
+			
 			while (internalTrackingQueue.length > 0) {
 				var fn = internalTrackingQueue.shift();
 				fn();
 			}
-
-			isOptedIn = optIn;
-			isTrackingOptInReady = true;
 		}
 
 		/**
