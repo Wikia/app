@@ -43,7 +43,8 @@ class PermissionsConfiguration {
 		'voldev',
 		'vstf',
 		'fandom-editor',
-		'global-discussions-moderator'
+		'global-discussions-moderator',
+		'request-to-be-forgotten-admin',
 	];
 
 	private $implicitGroups = [

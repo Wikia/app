@@ -6,6 +6,32 @@
 
 
 --
+-- Table structure for table `__city_tag`
+--
+
+DROP TABLE IF EXISTS `__city_tag`;
+CREATE TABLE `__city_tag` (
+  `id` int(8) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `city_tag_name_uniq` (`name`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Table structure for table `__city_tag_map`
+--
+
+DROP TABLE IF EXISTS `__city_tag_map`;
+CREATE TABLE `__city_tag_map` (
+  `city_id` int(9) NOT NULL,
+  `tag_id` int(8) unsigned NOT NULL,
+  PRIMARY KEY (`city_id`,`tag_id`),
+  KEY `tag_id` (`tag_id`),
+  CONSTRAINT `__city_tag_map_ibfk_1` FOREIGN KEY (`city_id`) REFERENCES `city_list` (`city_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `__city_tag_map_ibfk_2` FOREIGN KEY (`tag_id`) REFERENCES `__city_tag` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
 -- Table structure for table `ach_ranking_snapshots`
 --
 
