@@ -270,34 +270,6 @@
 		});
 	}
 
-	/**
-	 * Advertisement Tracker, pushed separatedly.
-	 *
-	 * To be used for all ad impression and click events
-	 */
-	// Advertisment Account UA-32129071-1/UA-32129071-2
-	if (isProductionEnv) {
-		window.ga(
-			'create', 'UA-32129071-1', 'auto',
-			{
-				'name': 'ads',
-				'sampleRate': 100,
-				'allowLinker': true,
-				'userId': window.wgGAUserIdHash
-			}
-		);
-	} else {
-		window.ga(
-			'create', 'UA-32129071-2', 'auto',
-			{
-				'name': 'ads',
-				'sampleRate': 100,
-				'allowLinker': true,
-				'userId': window.wgGAUserIdHash
-			}
-		);
-	}
-
 	// Enable Demographics and Interests Reports
 	window.ga('ads.require', 'displayfeatures');
 
@@ -459,6 +431,34 @@
 				window.ga(
 					'create', 'UA-32129070-2', 'auto',
 					{
+						'sampleRate': 100,
+						'allowLinker': true,
+						'userId': window.wgGAUserIdHash
+					}
+				);
+			}
+
+			/**
+			 * Advertisement Tracker, pushed separatedly.
+			 *
+			 * To be used for all ad impression and click events
+			 */
+			// Advertisment Account UA-32129071-1/UA-32129071-2
+			if (isProductionEnv) {
+				window.ga(
+					'create', 'UA-32129071-1', 'auto',
+					{
+						'name': 'ads',
+						'sampleRate': 100,
+						'allowLinker': true,
+						'userId': window.wgGAUserIdHash
+					}
+				);
+			} else {
+				window.ga(
+					'create', 'UA-32129071-2', 'auto',
+					{
+						'name': 'ads',
 						'sampleRate': 100,
 						'allowLinker': true,
 						'userId': window.wgGAUserIdHash
