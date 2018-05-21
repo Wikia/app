@@ -133,6 +133,7 @@ $config['adengine2_rabbit_js'] = [
 	'skin' => [ 'oasis' ],
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [
+		'//extensions/wikia/AdEngine/js/ml/dataSourceFactory.js',
 		'//extensions/wikia/AdEngine/js/ml/inputParser.js',
 		'//extensions/wikia/AdEngine/js/ml/modelFactory.js',
 		'//extensions/wikia/AdEngine/js/ml/model/linear.js',
