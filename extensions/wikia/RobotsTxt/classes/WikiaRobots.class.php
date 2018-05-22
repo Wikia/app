@@ -213,9 +213,13 @@ class WikiaRobots {
 					$params[ 'forcerobots' ] = '1';
 				}
 				$response = \ApiService::foreignCall( $wiki[ 'city_dbname' ], $params, \ApiService::WIKIA );
-				if ($response !== false) {
-					$robots->addAllowedPaths( $response['allowed'] );
-					$robots->addDisallowedPaths( $response['disallowed'] );
+				if ( !empty( $response ) ) {
+					if ( isset( $response['allowed'] ) ) {
+						$robots->addAllowedPaths($response['allowed']);
+					}
+					if ( isset( $response['disallowed'] ) ) {
+						$robots->addDisallowedPaths( $response['disallowed'] );
+					}
 				} else {
 					\Wikia\Logger\WikiaLogger::instance()->error( 'Cannot fetch language wiki robots rules', [
 						'fields' => ['foreign_dbname' => $wiki[ 'city_dbname' ] ]
