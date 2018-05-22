@@ -61,7 +61,6 @@ class ApiService {
 			$options[ 'headers' ] = [ 'FASTLY-SSL' => 1, ];
 		}
 
-
 		// request JSON format of API response
 		$params[ 'format' ] = 'json';
 
