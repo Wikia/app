@@ -55,15 +55,21 @@ class ApiService {
 			return false;
 		}
 
+		$options = [];
+		if ( startsWith( $cityUrl, "https://" ) ) {
+			$cityUrl = wfHttpsToHttp( $cityUrl );
+			$options[ 'headers' ] = [ 'FASTLY-SSL' => 1, ];
+		}
+
+
 		// request JSON format of API response
 		$params[ 'format' ] = 'json';
 
 		$url = "{$cityUrl}/{$endpoint}?" . http_build_query( $params );
 		wfDebug( __METHOD__ . ": {$url}\n" );
 
-		$options = [];
 		if ( $setUser ) {
-			$options = self::loginAsUser();
+			$options = array_merge( $options, self::loginAsUser() );
 		}
 
 		// send request and parse response
