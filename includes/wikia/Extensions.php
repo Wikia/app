@@ -1756,6 +1756,10 @@ if ( !empty( $wgEnableOpenXSPC ) ) {
     include "$IP/extensions/wikia/Spotlights/Spotlights.setup.php";
 }
 
+if ( !empty( $wgEnableTrackingSettingsManager ) ) {
+	include "$IP/extensions/wikia/Privacy/TrackingSettingsManager.setup.php";
+}
+
 include "$IP/extensions/wikia/JWPlayerTag/JWPlayerTag.setup.php";
 
 include_once("$IP/extensions/wikia/DataWarehouse/DataWarehouseEventProducer.setup.php");
