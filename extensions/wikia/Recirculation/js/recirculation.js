@@ -199,6 +199,7 @@ require([
 
 	trackingOptIn.pushToUserConsentQueue(function (optIn) {
 		if (!optIn) {
+			$mixedContentFooter.hide();
 			return;
 		}
 
