@@ -153,7 +153,6 @@ class AdEngine2Hooks {
 			'a9' => true,
 			'gpt' => true,
 			'krux' => true,
-			'kikimora' => true,
 			'prebid' => true,
 			'netzathleten' => true
 		];
