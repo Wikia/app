@@ -41,7 +41,7 @@
 			m.parentNode.insertBefore(a, m);
 		})(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
 	} else {
-		// prevent errors when wgNoExternals is set or user opt-outs
+		// prevent errors when wgNoExternals is set
 		window.ga = function () {
 		};
 	}
