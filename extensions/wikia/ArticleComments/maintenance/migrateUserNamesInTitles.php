@@ -91,7 +91,8 @@ class MigrateUserNamesInTitles extends Maintenance {
 					'watchlist',
 					['wl_title' => $newPageTitle],
 					['wl_namespace' => $pageNs , 'wl_title' => $oldPageTitle],
-					__METHOD__
+					__METHOD__,
+					'IGNORE'
 				);
 
 				$updated += $dbw->affectedRows();
