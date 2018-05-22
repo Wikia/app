@@ -2,35 +2,41 @@
 define('ext.wikia.adEngine.wrappers.prebid', [
 	'ext.wikia.adEngine.adContext',
 	'wikia.location',
+	'wikia.trackingOptIn',
 	'wikia.window'
-], function (adContext, loc, win) {
+], function (adContext, loc, trackingOptIn, win) {
 	'use strict';
 
 	var validResponseStatusCode = 1,
 		errorResponseStatusCode = 2,
-		isNewPrebidEnabled = adContext.get('opts.isNewPrebidEnabled');
+		isNewPrebidEnabled = adContext.get('opts.isNewPrebidEnabled'),
+		prebidConfig = {
+			debug: loc.href.indexOf('pbjs_debug=1') >= 0,
+			enableSendAllBids: true,
+			bidderSequence: 'random',
+			bidderTimeout: 2000,
+			userSync: {
+				iframeEnabled: true,
+				enabledBidders: [],
+				syncDelay: 6000
+			}
+		},
+		prebidConsentManagement = {
+			cmpApi: 'iab',
+			timeout: 2000,
+			allowAuctionWithoutConsent: true
+		};
 
 	win.pbjs = win.pbjs || {};
 	win.pbjs.que = win.pbjs.que || [];
 
 	if (isNewPrebidEnabled) {
+		if (trackingOptIn.geoRequiresTrackingConsent()) {
+			prebidConfig.consentManagement = prebidConsentManagement;
+		}
+
 		win.pbjs.que.push(function() {
-			win.pbjs.setConfig({
-				debug: loc.href.indexOf('pbjs_debug=1') >= 0,
-				enableSendAllBids: true,
-				bidderSequence: 'random',
-				bidderTimeout: 2000,
-				userSync: {
-					iframeEnabled: true,
-					enabledBidders: [],
-					syncDelay: 6000
-				},
-				consentManagement: {
-					cmpApi: 'iab',
-					timeout: 2000,
-					allowAuctionWithoutConsent: false
-				}
-			});
+			win.pbjs.setConfig(prebidConfig);
 		});
 	}
 

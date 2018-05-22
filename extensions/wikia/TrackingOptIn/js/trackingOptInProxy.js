@@ -41,13 +41,13 @@ define('wikia.trackingOptIn', [
 		return win.M.trackingQueue;
 	}
 
-	function pushToUserConsentQueue(callback) {
-		queue.push(callback);
-	}
-
 	function isOptedIn() {
 		log(['isOptedIn - proxy', optIn], log.levels.info, logGroup);
 		return optIn;
+	}
+
+	function pushToUserConsentQueue(callback) {
+		queue.push(callback);
 	}
 
 	return {

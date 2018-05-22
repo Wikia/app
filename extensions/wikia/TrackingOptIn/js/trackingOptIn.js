@@ -5,6 +5,8 @@ define('wikia.trackingOptIn', [
 	'wikia.trackingOptInModal'
 ], function (instantGlobals, lazyQueue, log, trackingOptInModal) {
 	var optIn = false,
+		geoRequiresConsent = true,
+		instance = null,
 		logGroup = 'wikia.trackingOptIn';
 
 	window.Wikia.consentQueue = window.Wikia.consentQueue || [];
@@ -16,7 +18,7 @@ define('wikia.trackingOptIn', [
 	function init() {
 		if (instantGlobals.wgEnableTrackingOptInModal) {
 			log('Using tracking opt in modal', log.levels.info, logGroup);
-			trackingOptInModal.render({
+			instance = trackingOptInModal.render({
 				onAcceptTracking: function () {
 					optIn = true;
 					window.Wikia.consentQueue.start();
@@ -28,8 +30,10 @@ define('wikia.trackingOptIn', [
 				},
 				zIndex: 9999999
 			});
+			geoRequiresConsent = instance.geoRequiresTrackingConsent();
 		} else {
 			optIn = true;
+			geoRequiresConsent = false;
 			window.Wikia.consentQueue.start();
 			log('Running queue without tracking opt in modal', log.levels.info, logGroup);
 		}
@@ -44,9 +48,14 @@ define('wikia.trackingOptIn', [
 		window.Wikia.consentQueue.push(callback);
 	}
 
+	function geoRequiresTrackingConsent() {
+		return geoRequiresConsent;
+	}
+
 	return {
 		init: init,
 		isOptedIn: isOptedIn,
-		pushToUserConsentQueue: pushToUserConsentQueue
+		pushToUserConsentQueue: pushToUserConsentQueue,
+		geoRequiresTrackingConsent: geoRequiresTrackingConsent
 	};
 });
