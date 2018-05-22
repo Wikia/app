@@ -5,6 +5,13 @@ describe('AdLogicPageParams', function () {
 	'use strict';
 
 	var logMock = function () { return; },
+		mocks = {
+			trackingOptIn: {
+				isOptedIn: function () {
+					return true;
+				}
+			}
+		},
 		geoMock = {
 			getCountryCode: function() {
 				return 'PL';
@@ -111,6 +118,7 @@ describe('AdLogicPageParams', function () {
 			geoMock,
 			windowMock.location,
 			logMock,
+			mocks.trackingOptIn,
 			windowMock,
 			abTestMock,
 			kruxMock

@@ -21,6 +21,7 @@ require([
 	'ext.wikia.adEngine.tracking.scrollDepthTracker',
 	'ext.wikia.aRecoveryEngine.adBlockDetection',
 	'wikia.geo',
+	'wikia.trackingOptIn',
 	'wikia.window',
 	require.optional('wikia.articleVideo.featuredVideo.lagger')
 ], function (
@@ -44,64 +45,68 @@ require([
 	scrollDepthTracker,
 	adBlockDetection,
 	geo,
+	trackingOptIn,
 	win,
 	fvLagger
 ) {
 	'use strict';
 
-	var context = adContext.getContext();
-
 	win.AdEngine_getTrackerStats = slotTracker.getStats;
-
-	messageListener.init();
 
 	// Register adSlotTweaker so DART creatives can use it
 	// https://www.google.com/dfp/5441#delivery/CreateCreativeTemplate/creativeTemplateId=10017012
 	win.adSlotTweaker = slotTweaker;
 
-	// Custom ads (skins, footer, etc)
-	adEngineBridge.init(
-		adTracker,
-		geo,
-		slotRegistry,
-		null,
-		pageLevelParams.getPageLevelParams(),
-		adContext,
-		btfBlocker,
-		'oasis'
-	);
-	win.loadCustomAd = adEngineBridge.loadCustomAd(customAdsLoader.loadCustomAd);
+	trackingOptIn.pushToUserConsentQueue(function () {
+		var context = adContext.getContext();
 
-	if (context.opts.babDetectionDesktop) {
-		adEngineBridge.checkAdBlocking(babDetection);
-	}
+		messageListener.init();
 
-	if (fvLagger && context.opts.isFVUapKeyValueEnabled) {
-		fvLagger.addResponseListener(function (lineItemId) {
-			win.loadCustomAd({
-				adProduct: 'jwp',
-				type: 'bfp',
-				uap: lineItemId
-			});
-		});
-	}
+		// Custom ads (skins, footer, etc)
+		adEngineBridge.init(
+			adTracker,
+			geo,
+			slotRegistry,
+			null,
+			pageLevelParams.getPageLevelParams(),
+			adContext,
+			btfBlocker,
+			'oasis',
+			trackingOptIn
+		);
+		win.loadCustomAd = adEngineBridge.loadCustomAd(customAdsLoader.loadCustomAd);
 
-	// Everything starts after content and JS
-	win.wgAfterContentAndJS.push(function () {
-		adInfoListener.run();
-		slotStateMonitor.run();
-
-		// Ads
-		win.adslots2 = win.adslots2 || [];
-		adEngineRunner.run(adConfigDesktop, win.adslots2, 'queue.desktop', !!context.opts.delayEngine);
-
-		actionHandler.registerMessageListener();
-
-		scrollDepthTracker.run();
-
-		if (context.opts.pageFairDetection) {
-			pageFairDetection.initDetection(context);
+		if (context.opts.babDetectionDesktop) {
+			adEngineBridge.checkAdBlocking(babDetection);
 		}
+
+		if (fvLagger && context.opts.isFVUapKeyValueEnabled) {
+			fvLagger.addResponseListener(function (lineItemId) {
+				win.loadCustomAd({
+					adProduct: 'jwp',
+					type: 'bfp',
+					uap: lineItemId
+				});
+			});
+		}
+
+		// Everything starts after content and JS
+		win.wgAfterContentAndJS.push(function () {
+			adInfoListener.run();
+			slotStateMonitor.run();
+
+			// Ads
+			win.adslots2 = win.adslots2 || [];
+			adEngineRunner.run(adConfigDesktop, win.adslots2, 'queue.desktop', !!context.opts.delayEngine);
+
+			actionHandler.registerMessageListener();
+
+			scrollDepthTracker.run();
+
+			if (context.opts.pageFairDetection) {
+				pageFairDetection.initDetection(context);
+			}
+		});
 	});
 });
 
@@ -113,6 +118,7 @@ require([
 	'ext.wikia.adEngine.slot.highImpact',
 	'ext.wikia.adEngine.slot.inContent',
 	'wikia.document',
+	'wikia.trackingOptIn',
 	'wikia.window'
 ], function (
 	adContext,
@@ -121,6 +127,7 @@ require([
 	highImpact,
 	inContent,
 	doc,
+	trackingOptIn,
 	win
 ) {
 	'use strict';
@@ -131,19 +138,11 @@ require([
 		bottomLeaderboard.init();
 	}
 
-	if (doc.readyState === 'complete') {
-		initDesktopSlots();
-	} else {
-		win.addEventListener('load', initDesktopSlots);
-	}
-});
-
-// FPS meter
-require(['wikia.querystring', 'wikia.document'], function (qs, doc) {
-	'use strict';
-	if (qs().getVal('fps')) {
-		var s = doc.createElement('script');
-		s.src = 'https://raw.githubusercontent.com/Wikia/fps-meter/master/fps-meter.js';
-		doc.body.appendChild(s);
-	}
+	trackingOptIn.pushToUserConsentQueue(function () {
+		if (doc.readyState === 'complete') {
+			initDesktopSlots();
+		} else {
+			win.addEventListener('load', initDesktopSlots);
+		}
+	});
 });

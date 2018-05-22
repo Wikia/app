@@ -359,17 +359,21 @@ ve.init.mw.Target.static.apiRequest = function ( data, settings ) {
  * @param {HTMLDocument} sourceDoc Document whose base URL should be used for resolution
  */
 ve.init.mw.Target.static.fixBase = function ( targetDoc, sourceDoc ) {
-	var $base;
+	var $base, baseURI;
 	if ( !targetDoc.baseURI ) {
 		$base = $( 'base', targetDoc );
 		if ( $base.length ) {
 			// Modify the existing <base> tag
-			$base.attr( 'href', ve.resolveUrl( $base.attr( 'href' ), sourceDoc ) );
+			baseURI = ve.resolveUrl( $base.attr( 'href' ), sourceDoc );
+			$base.attr( 'href', ve.convertToCurrentProtocol( baseURI ) );
 		} else {
 			// No <base> tag, add one
-			$base = $( '<base>', targetDoc ).attr( 'href', sourceDoc.baseURI );
+			$base = $( '<base>', targetDoc ).attr( 'href', ve.convertToCurrentProtocol( sourceDoc.baseURI ) );
 			$( 'head', sourceDoc ).append( $base );
 		}
+	} else if ( !targetDoc.baseURI.startsWith( location.protocol ) ) {
+		$base = $( 'base', targetDoc );
+		$base.attr( 'href', ve.convertToCurrentProtocol( $base.attr( 'href' ) ) );
 	}
 };
 

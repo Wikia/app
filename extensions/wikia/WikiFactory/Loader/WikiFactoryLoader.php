@@ -396,16 +396,9 @@ class WikiFactoryLoader {
 		$cond2 = $this->mAlternativeDomainUsed && ( $url['host'] != $this->mOldServerName );
 
 		if( ( $cond1 || $cond2 ) && empty( $wgDevelEnvironment ) ) {
-			global $wgCookiePrefix;
 			$redirectUrl = WikiFactory::getLocalEnvURL( $this->mCityUrl );
-			$hasAuthCookie = !empty( $_COOKIE[\Wikia\Service\User\Auth\CookieHelper::ACCESS_TOKEN_COOKIE_NAME] ) ||
-							 !empty( $_COOKIE[session_name()] ) ||
-							 !empty( $_COOKIE["{$wgCookiePrefix}Token"] ) ||
-							 !empty( $_COOKIE["{$wgCookiePrefix}UserID"] );
 
-			if ( $hasAuthCookie &&
-				 $_SERVER['HTTP_FASTLY_SSL'] &&
-				 // Hack until we are better able to handle internal HTTPS requests
+			if ( $_SERVER['HTTP_FASTLY_SSL'] &&
 				 !empty( $_SERVER['HTTP_FASTLY_FF'] ) &&
 				 wfHttpsAllowedForURL( $redirectUrl )
 			) {
@@ -525,28 +518,6 @@ class WikiFactoryLoader {
 			}
 			$dbr->freeResult( $oRes );
 
-			/**
-			 * read tags for this wiki, store in global variable as array
-			 * @name $wgWikiFactoryTags
-			 */
-			wfProfileIn( __METHOD__."-tagsdb" );
-			$this->mVariables[ "wgWikiFactoryTags" ] = array();
-			$sth = $dbr->select(
-				array( "city_tag", "city_tag_map" ),
-				array( "id", "name"	),
-				array(
-					"city_tag.id = city_tag_map.tag_id",
-					"city_id = {$this->mWikiID}"
-				),
-				__METHOD__ . '::tagsdb'
-			);
-			while( $row = $dbr->fetchObject( $sth ) ) {
-				$this->mVariables[ "wgWikiFactoryTags" ][ $row->id ] = $row->name;
-			}
-			$dbr->freeResult( $sth );
-			$this->debug( "reading tags from database, id {$this->mWikiID}, count ".count( $this->mVariables[ "wgWikiFactoryTags" ] ) );
-			wfProfileOut( __METHOD__."-tagsdb" );
-
 			if( empty($this->mAlwaysFromDB) ) {
 				/**
 				 * cache as well some values even if they are not defined in database
@@ -650,8 +621,9 @@ class WikiFactoryLoader {
 						$tValue = 'http://'.$stagingServer;
 						$wgConf->localVHosts = array_merge( $wgConf->localVHosts, [ $stagingServer ] );
 					}
+					// TODO - what about wgServer value for requests that did not go through Fastly?
 					if ( !empty( $_SERVER['HTTP_FASTLY_SSL'] ) ) {
-						$tValue = str_replace( 'http://', 'https://', $tValue );
+						$tValue = wfHttpToHttps( $tValue );
 					}
 				}
 

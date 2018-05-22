@@ -33,6 +33,7 @@ class AdEngine2Hooks {
 	 */
 	public static function onInstantGlobalsGetVariables( array &$vars ) {
 		$vars[] = 'wgAdDriverAbTestIdTargeting';
+		$vars[] = 'wgAdDriverAdEngine3Countries';
 		$vars[] = 'wgAdDriverAolBidderCountries';
 		$vars[] = 'wgAdDriverAolOneMobileBidderCountries';
 		$vars[] = 'wgAdDriverAppNexusAstBidderCountries';
@@ -148,9 +149,13 @@ class AdEngine2Hooks {
 	 */
 	public static function getTrackingOptOutModules() {
 		// list of functions with tracking opted-out
-		 return $vars = [
+		return [
+			'a9' => true,
+			'gpt' => true,
 			'krux' => true,
-			'kikimora' => true
+			'kikimora' => true,
+			'prebid' => true,
+			'netzathleten' => true
 		];
 	}
 

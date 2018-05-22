@@ -5,8 +5,9 @@ define('ext.wikia.adEngine.lookup.a9', [
 	'ext.wikia.adEngine.lookup.lookupFactory',
 	'wikia.document',
 	'wikia.log',
+	'wikia.trackingOptIn',
 	'wikia.window'
-], function (adContext, slotsContext, factory, doc, log, win) {
+], function (adContext, slotsContext, factory, doc, log, trackingOptIn, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.lookup.a9',
@@ -48,43 +49,51 @@ define('ext.wikia.adEngine.lookup.a9', [
 	function call(skin, onResponse) {
 		var a9Slots;
 
-		if (!loaded) {
-			log(['call - load', skin], 'debug', logGroup);
+		trackingOptIn.pushToUserConsentQueue(function(optIn) {
+			if (optIn === false) {
+				log('User opt-out for A9', log.levels.info, logGroup);
+				return;
+			}
+			log('User opt-in for A9', log.levels.info, logGroup);
 
-			insertScript();
-			configureApstag();
+			if (!loaded) {
+				log(['call - load', skin], 'debug', logGroup);
 
-			win.apstag.init({
-				pubID: amazonId,
-				videoAdServer: 'DFP'
+				insertScript();
+				configureApstag();
+
+				win.apstag.init({
+					pubID: amazonId,
+					videoAdServer: 'DFP'
+				});
+
+				loaded = true;
+			}
+
+			bids = {};
+			priceMap = {};
+
+			slots = slotsContext.filterSlotMap(config[skin]);
+			a9Slots = Object.keys(slots).map(createSlotDefinition);
+
+			if (isVideoBidderEnabled()) {
+				a9Slots = a9Slots.concat(VIDEO_SLOTS.map(createVideoSlotDefinition));
+			}
+
+			log(['call - fetchBids', a9Slots], 'debug', logGroup);
+
+			win.apstag.fetchBids({
+				slots: a9Slots,
+				timeout: 2000
+			}, function (currentBids) {
+				log(['call - fetchBids response', currentBids], 'debug', logGroup);
+
+				currentBids.forEach(function (bid) {
+					bids[bid.slotID] = bid;
+				});
+
+				onResponse();
 			});
-
-			loaded = true;
-		}
-
-		bids = {};
-		priceMap = {};
-
-		slots = slotsContext.filterSlotMap(config[skin]);
-		a9Slots = Object.keys(slots).map(createSlotDefinition);
-
-		if (isVideoBidderEnabled()) {
-			a9Slots = a9Slots.concat(VIDEO_SLOTS.map(createVideoSlotDefinition));
-		}
-
-		log(['call - fetchBids', a9Slots], 'debug', logGroup);
-
-		win.apstag.fetchBids({
-			slots: a9Slots,
-			timeout: 2000
-		}, function (currentBids) {
-			log(['call - fetchBids response', currentBids], 'debug', logGroup);
-
-			currentBids.forEach(function (bid) {
-				bids[bid.slotID] = bid;
-			});
-
-			onResponse();
 		});
 	}
 

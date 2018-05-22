@@ -43,7 +43,8 @@ class PermissionsConfiguration {
 		'voldev',
 		'vstf',
 		'fandom-editor',
-		'global-discussions-moderator'
+		'global-discussions-moderator',
+		'request-to-be-forgotten-admin',
 	];
 
 	private $implicitGroups = [
@@ -248,7 +249,8 @@ class PermissionsConfiguration {
 		'clearuserprofile',
 		'smw-patternedit',
 		'smw-admin',
-		'fandom-admin'
+		'fandom-admin',
+		'exportuserdata'
 	];
 
 	public function __construct(

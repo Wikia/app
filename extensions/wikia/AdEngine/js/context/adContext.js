@@ -8,12 +8,11 @@ define('ext.wikia.adEngine.adContext', [
 	'wikia.document',
 	'wikia.geo',
 	'wikia.instantGlobals',
-	'wikia.trackingOptOut',
 	'ext.wikia.adEngine.geo',
 	'ext.wikia.adEngine.utils.sampler',
 	'wikia.window',
 	'wikia.querystring'
-], function (browserDetect, cookies, doc, geo, instantGlobals, trackingOptOut, adsGeo, sampler, w, Querystring) {
+], function (browserDetect, cookies, doc, geo, instantGlobals, adsGeo, sampler, w, Querystring) {
 	'use strict';
 
 	instantGlobals = instantGlobals || {};
@@ -101,12 +100,12 @@ define('ext.wikia.adEngine.adContext', [
 
 		context.bidders.prebid = isProperGeo('wgAdDriverPrebidBidderCountries');
 		context.bidders.a9 = isProperGeo('wgAdDriverA9BidderCountries');
+		context.bidders.a9Video = isProperGeo('wgAdDriverA9VideoBidderCountries');
 		context.bidders.rubiconDisplay = isProperGeo('wgAdDriverRubiconDisplayPrebidCountries');
 		context.bidders.rubicon = isProperGeo('wgAdDriverRubiconPrebidCountries');
 		context.bidders.rubiconInFV = isProperGeo('wgAdDriverRubiconVideoInFeaturedVideoCountries') && hasFeaturedVideo;
 		context.bidders.beachfront = isProperGeo('wgAdDriverBeachfrontBidderCountries') && !hasFeaturedVideo;
 		context.bidders.appnexusAst = isProperGeo('wgAdDriverAppNexusAstBidderCountries') && !hasFeaturedVideo;
-		context.bidders.a9Video = isProperGeo('wgAdDriverA9VideoBidderCountries');
 		context.bidders.aol = isProperGeo('wgAdDriverAolBidderCountries');
 		context.bidders.appnexus = isProperGeo('wgAdDriverAppNexusBidderCountries');
 		context.bidders.appnexusWebAds = isProperGeo('wgAdDriverAppNexusWebAdsBidderCountries');
@@ -189,16 +188,14 @@ define('ext.wikia.adEngine.adContext', [
 			) || isUrlParamSet('highimpactslot');
 
 		// AdInfo warehouse logging
-		context.opts.kikimoraViewabilityTracking = !trackingOptOut.isOptedOut('kikimora') &&
+		context.opts.kikimoraViewabilityTracking =
 			geo.isProperGeo(instantGlobals.wgAdDriverKikimoraViewabilityTrackingCountries);
-		context.opts.enableAdInfoLog = !trackingOptOut.isOptedOut('kikimora') &&
-			geo.isProperGeo(instantGlobals.wgAdDriverKikimoraTrackingCountries);
-		context.opts.playerTracking = !trackingOptOut.isOptedOut('kikimora') &&
-			geo.isProperGeo(instantGlobals.wgAdDriverKikimoraPlayerTrackingCountries);
+		context.opts.enableAdInfoLog = geo.isProperGeo(instantGlobals.wgAdDriverKikimoraTrackingCountries);
+		context.opts.playerTracking = geo.isProperGeo(instantGlobals.wgAdDriverKikimoraPlayerTrackingCountries);
 
 		// Krux integration
 		context.targeting.enableKruxTargeting = !!(
-			context.targeting.enableKruxTargeting && !trackingOptOut.isOptedOut('krux') &&
+			context.targeting.enableKruxTargeting &&
 			isProperGeo('wgAdDriverKruxCountries') && !instantGlobals.wgSitewideDisableKrux
 		);
 
@@ -234,6 +231,7 @@ define('ext.wikia.adEngine.adContext', [
 		context.opts.labradorTest = isProperGeo('wgAdDriverLABradorTestCountries');
 		context.opts.labradorTestGroup = context.opts.labradorTest ? 'B' : 'A';
 		context.opts.mobileSectionsCollapse = isProperGeo('wgAdDriverMobileSectionsCollapseCountries');
+		context.opts.netzathleten = isProperGeo('wgAdDriverNetzAthletenCountries');
 
 		// Export the context back to ads.context
 		// Only used by Lightbox.js, WikiaBar.js and AdsInContext.js

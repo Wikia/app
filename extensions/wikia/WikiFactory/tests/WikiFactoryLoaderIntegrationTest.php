@@ -70,6 +70,11 @@ class WikiFactoryLoaderIntegrationTest extends WikiaDatabaseTest {
 			'SERVER_NAME' => 'poznan.wikia.com',
 			'REQUEST_URI' => '/en/wiki/Thread:24',
 		] ];
+		yield [ 2, [
+			'REQUEST_SCHEME' => 'http',
+			'SERVER_NAME' => 'test1.wikia.com',
+			'REQUEST_URI' => 'http://test1.wikia.com/de/wiki/Bar',
+		] ];
 	}
 
 	/**

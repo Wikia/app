@@ -29,10 +29,6 @@ function wfJSVariablesTopScripts(Array &$vars, &$scripts) {
 
 	// ads need it
 	$vars['wgAfterContentAndJS'] = array();
-	if (is_array($wg->WikiFactoryTags)) {
-		$vars['wgWikiFactoryTagIds'] = array_keys( $wg->WikiFactoryTags );
-		$vars['wgWikiFactoryTagNames'] = array_values( $wg->WikiFactoryTags );
-	}
 	$vars['wgCdnRootUrl'] = $wg->CdnRootUrl;
 	$vars['wgCdnApiUrl'] = $wg->CdnApiUrl;
 
