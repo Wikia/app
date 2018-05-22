@@ -1,11 +1,12 @@
 /*global define*/
 define('ext.wikia.adEngine.lookup.prebid.adapters.wikiaVideo',[
+	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.wrappers.prebid',
 	'ext.wikia.adEngine.video.vastUrlBuilder',
 	'ext.wikia.aRecoveryEngine.instartLogic.recovery',
 	'wikia.document',
 	'wikia.querystring'
-], function (prebid, vastUrlBuilder, instartLogic, doc, QueryString) {
+], function (adContext, prebid, vastUrlBuilder, instartLogic, doc, QueryString) {
 	'use strict';
 
 	var bidderName = 'wikiaVideo',
@@ -19,7 +20,8 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.wikiaVideo',[
 				MOBILE_IN_CONTENT: {}
 			}
 		},
-		qs = new QueryString();
+		qs = new QueryString(),
+		isNewPrebidEnabled = adContext.get('opts.isNewPrebidEnabled');
 
 	function getPrice() {
 		var price = qs.getVal('wikia_video_adapter', 0);
@@ -76,8 +78,12 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.wikiaVideo',[
 				}
 			);
 
-			addBidResponse(bid.adUnitCode, bidResponse);
-			done();
+			if (isNewPrebidEnabled) {
+				addBidResponse(bid.adUnitCode, bidResponse);
+				done();
+			} else {
+				prebid.get().addBidResponse(bid.placementCode, bidResponse);
+			}
 		});
 	}
 
@@ -87,6 +93,12 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.wikiaVideo',[
 				prebid.push(function () {
 					addBids(bidRequest, addBidResponse, done);
 				});
+			},
+			getSpec: function () {
+				return {
+					code: getName(),
+					supportedMediaTypes: ['video']
+				};
 			}
 		};
 	}
