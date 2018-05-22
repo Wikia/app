@@ -46,6 +46,13 @@ class ContactForm extends SpecialPage {
 			'markuser' => 'requested-rename',
 		),
 
+		'forget-account' => array(
+			'format' => "Forget account request has been made.\nCountry: \"%s\"\nFull Name: \"%s\"\nEmail: \"%s\"\nIs it for themselves: \"%s\"\nRelationship: \"%s\"\nUsername on behalf of whom the request is made: \"%s\"\n Has this person previously requested forgetting acount: \"%s\"",
+			'vars' => array( 'wpCountry', 'wpFullName', 'wpEmail', 'wpIsForThemselves', 'wpRelationship', 'wpUsernameOnBehalf', 'wpPreviousRequest' ),
+			'subject' => 'Request to be Forgotten',
+			'markuser' => 'requested-to-be-forgotten',
+		),
+
 		'bad-ad' => array(
 			'format' => "User %s reports a problem with ad visible here:\n%s\nThe URL the ad links to:\n%s\n\nDescription of the problem:\n%s",
 			'vars' => array( 'wpUserName', 'wpContactWikiName', 'wpContactAdUrl', 'wpDescription' ),
@@ -97,6 +104,11 @@ class ContactForm extends SpecialPage {
 			$out->redirect( $renameAccountTitle->getFullURL() );
 		}
 
+
+		if ($par === 'forget-account') {
+			Wikia::addAssetsToOutput( 'special_contact_forget_account_js' );
+		}
+
 		if ( $par === 'data-access' && $user->isLoggedIn() ) {
 			$dataAccessTitle = SpecialPage::getTitleFor( 'DownloadYourData' );
 			$out->redirect( $dataAccessTitle->getFullURL() );
@@ -136,7 +148,7 @@ class ContactForm extends SpecialPage {
 			$this->mRealName = $request->getText( 'wpContactRealName' );
 			$this->mWhichWiki = $request->getText( 'wpContactWikiName', $wgServer );
 
-			#sibject still handled outside of post check, because of existing hardcoded prefill links
+			#subject still handled outside of post check, because of existing hardcoded prefill links
 
 			if ( $user->isLoggedIn() && ( $user->getName() !== $request->getText( 'wpUserName' ) ) ) {
 				$out->showErrorPage( 'specialcontact-error-title', 'specialcontact-error-message' );
@@ -513,9 +525,13 @@ class ContactForm extends SpecialPage {
 		$out = $this->getOutput();
 		$user = $this->getUser();
 
-		$out->setPageTitle(
-			$this->msg( 'specialcontact-sectitle', $this->msg( 'specialcontact-sectitle-'.$sub )->text() )->text()
-		);
+		if ($sub == 'forget-account') {
+			$out->setPageTitle( $this->msg( 'specialcontact-sectitle-forget-account')->escaped() );
+		} else {
+			$out->setPageTitle(
+				$this->msg( 'specialcontact-sectitle', $this->msg( 'specialcontact-sectitle-'.$sub )->text() )->text()
+			);
+		}
 
 		if( $user->isLoggedIn() ) {
 			//user mode
@@ -793,6 +809,10 @@ class ContactForm extends SpecialPage {
 	
 	private function isRenameAccountSupported() {
 		global $wgEnableUserRenameToolExt;
+		return !empty( $wgEnableUserRenameToolExt );
+	}
+
+	private function isRemoveAccountDataSupported() {
 		return !empty( $wgEnableUserRenameToolExt );
 	}
 }

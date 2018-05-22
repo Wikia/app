@@ -2619,3 +2619,11 @@ $config['recommended_video_js'] = [
 		'//extensions/wikia/ArticleVideo/scripts/recommended-video.jwplayer.js',
 	]
 ];
+
+$config['special_contact_forget_account_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'//extensions/wikia/SpecialContact2/SpecialContactForgetAccount.js',
+	],
+];
