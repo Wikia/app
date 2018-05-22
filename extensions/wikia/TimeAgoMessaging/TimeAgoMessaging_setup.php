@@ -22,10 +22,8 @@ $wgExtensionCredits['other'][] = array(
 	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/TimeAgoMessaging'
 );
 
-$dir = dirname(__FILE__);
-
 // i18n
-$wgExtensionMessagesFiles['TimeAgoMessaging'] = "{$dir}/TimeAgoMessaging.i18n.php";
+$wgExtensionMessagesFiles['TimeAgoMessaging'] = __DIR__ . "/TimeAgoMessaging.i18n.php";
 
 $wgResourceModules['ext.wikia.TimeAgoMessaging'] = [
 	'messages' => [
@@ -41,9 +39,13 @@ $wgResourceModules['ext.wikia.TimeAgoMessaging'] = [
 		'timeago-month-from-now',
 		'timeago-second-from-now',
 	],
+	'dependencies' => [
+		// SUS-4811 - provides {{PLURAL}} magic word support
+		'mediawiki.jqueryMsg',
+	],
 ];
 
 $wgHooks['BeforePageDisplay'][] = 'TimeAgoMessaging::onBeforePageDisplay';
 
 // classes
-$wgAutoloadClasses['TimeAgoMessaging'] = "{$dir}/TimeAgoMessaging.class.php";
+$wgAutoloadClasses['TimeAgoMessaging'] = __DIR__ . "/TimeAgoMessaging.class.php";
