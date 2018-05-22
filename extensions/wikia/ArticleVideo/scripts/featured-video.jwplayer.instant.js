@@ -60,9 +60,9 @@ require([
 
 		win.dispatchEvent(new CustomEvent('wikia.jwplayer.instanceReady', {detail: playerInstance}));
 
-		trackingOptIn.pushToUserConsentQueue(function (isOptedIn) {
+		trackingOptIn.pushToUserConsentQueue(function () {
 			featuredVideoAds(playerInstance, bidParams, slotTargeting);
-			featuredVideoMoatTracking.track(playerInstance, isOptedIn);
+			featuredVideoMoatTracking.track(playerInstance);
 		});
 
 		playerInstance.on('autoplayToggle', function (data) {
@@ -127,19 +127,21 @@ require([
 		}, onPlayerReady);
 	}
 
-	if (a9 && adContext.get('bidders.a9Video')) {
-		a9.waitForResponseCallbacks(
-			function onSuccess() {
-				bidParams = a9.getSlotParams('FEATURED');
-				setupPlayer();
-			},
-			function onTimeout() {
-				bidParams = {};
-				setupPlayer();
-			},
-			responseTimeout
-		);
-	} else {
-		setupPlayer();
-	}
+	trackingOptIn.pushToUserConsentQueue(function () {
+		if (a9 && adContext.get('bidders.a9Video')) {
+			a9.waitForResponseCallbacks(
+				function onSuccess() {
+					bidParams = a9.getSlotParams('FEATURED');
+					setupPlayer();
+				},
+				function onTimeout() {
+					bidParams = {};
+					setupPlayer();
+				},
+				responseTimeout
+			);
+		} else {
+			setupPlayer();
+		}
+	});
 });

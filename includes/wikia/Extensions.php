@@ -731,10 +731,6 @@ if (!empty($wgEnableGoogleCalendarExt)) {
 	include("$IP/extensions/3rdparty/googleCalendar/googleCalendar.php");
 }
 
-if ( !empty( $wgEnableCookiePolicyExt ) ) {
-	include( "$IP/extensions/wikia/CookiePolicy/CookiePolicy.setup.php" );
-}
-
 if (!empty($wgEnableAbuseFilterExtension)) {
 	$wgUseTagFilter = true; // rt#22038
 
@@ -1771,3 +1767,8 @@ include "$IP/extensions/wikia/Search/WikiaSearch.setup.php";
 
 // Mercury auth pages related functionality - redirects, email confirmation.
 include "$IP/extensions/wikia/AuthPages/AuthPages.setup.php";
+
+include "$IP/extensions/wikia/DownloadYourData/DownloadYourData.setup.php";
+
+// SUS-4738 | Handles requests to be forgotten
+include "$IP/extensions/wikia/Privacy/Privacy.setup.php";

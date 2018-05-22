@@ -15,10 +15,12 @@ $SpecialContactSecMap[] = array(
 $SpecialContactSecMap[] = array(
 	'headerMsg' => 'account',
 	'links' => array(
-		array('link'=>'account-issue',  'form'=> 'account-issue' ),
-		array('link'=>'close-account',  'form'=> 'close-account', 'reqlogin' => true ),
-		array('link'=>'rename-account', 'form'=> 'rename-account', 'reqlogin' => true ),
-		array('link'=>'blocked' ),
+		[ 'link' => 'account-issue',  'form' => 'account-issue' ],
+		[ 'link' => 'close-account',  'form '=> 'close-account', 'reqlogin' => true ],
+		[ 'link' => 'rename-account', 'form' => 'rename-account', 'reqlogin' => true ],
+		[ 'link' => 'blocked' ],
+		[ 'link'=>'forget-account', 'form'=> 'forget-account' ],
+		[ 'link' => 'data-access',    'form' => 'data-access' ],
 	)
 );
 

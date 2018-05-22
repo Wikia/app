@@ -154,7 +154,6 @@ class AdEngine2Hooks {
 			'gpt' => true,
 			'krux' => true,
 			'prebid' => true,
-			'moat' => true,
 			'netzathleten' => true
 		];
 	}
