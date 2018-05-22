@@ -20,6 +20,7 @@ Follow the links below to learn more about how to use FANDOM, make changes to yo
 	'specialcontact-seclink-close-account' => 'Disable my account',
 	'specialcontact-seclink-rename-account' => 'Rename my account',
 	'specialcontact-seclink-blocked' => 'My account is blocked',
+	'specialcontact-seclink-data-access' => 'I want to download a copy of my data',
 	'specialcontact-secheader-editing' => 'Participating on FANDOM',
 	'specialcontact-seclink-using-fandom' => 'How do I use FANDOM?',
 	'specialcontact-seclink-feedback' => 'I want to offer some feedback',
@@ -40,6 +41,7 @@ Follow the links below to learn more about how to use FANDOM, make changes to yo
 	'specialcontact-sectitle-close-account' => 'Disable my account',
 	'specialcontact-sectitle-rename-account' => 'Rename my account',
 	'specialcontact-sectitle-blocked' => 'Account blocked',
+	'specialcontact-sectitle-data-access' => 'Request a copy of my data',
 	'specialcontact-sectitle-using-fandom' => 'Using FANDOM',
 	'specialcontact-sectitle-feedback' => 'Feedback',
 	'specialcontact-sectitle-bug' => 'Bug Report',
@@ -92,6 +94,13 @@ Happy editing!',
 However, if this talk page option is not available in your situation, then the best advice we can give you is to wait the block out or join the community at another of the many thousand FANDOM communities available.
 
 If you feel you still need to discuss this block further with FANDOM staff, please contact us [[Special:Contact/general|here]].',
+	'specialcontact-intro-data-access' => "The data we provide is username, user ID, real name (if provided), email address, account creation date and a link to a list of your contributions.
+
+To prevent fraudulent data requests from people impersonating others we need to verify the identity of the person who is requesting the user data.
+
+In order to download your data from FANDOM, we need some more information from you to confirm account ownership.
+
+Once we receive your request, we'll email you with confirmation. The email will include a requirement that you respond with a copy of your identification so that we may confirm your identity.",
 	'specialcontact-intro-using-fandom' => "Now that you are a part of the community, you are able to edit and contribute to almost any page across FANDOM. For some introductory help, check out our [[Help:Getting_Started|help pages here]]. They are a great place to learn the basics of editing, formatting and much more.
 
 If you have questions about this specific community, start by [[Special:ListAdmins|contacting your local admins]].
@@ -173,7 +182,7 @@ In response to security reports using this form, FANDOM will:
 	'specialcontact-noform-footer' => "'''Does this page answer your question?''' If not, please feel free to [[Special:contact/general|contact us]] to discuss your issue further. Remember you can always check out our '''[[w:c:community:Help:Index|help pages]]''', [[w:c:community:Blog:Wikia_Staff_Blog|staff blog]],  or post on our '''[[w:c:community:Special:Forum|community help forums]]'''.",
 	'specialcontact-username' => 'Your username',
 	'specialcontact-wikiname' => 'Which wiki',
-	'specialcontact-realname' => 'Your name',
+	'specialcontact-realname' => 'Your real name',
 	'specialcontact-yourmail' => 'Your email',
 	'specialcontact-problem' => 'Subject',
 	'specialcontact-problemdesc' => 'Message',
@@ -203,6 +212,8 @@ In response to security reports using this form, FANDOM will:
 	'specialcontact-form-header' => 'Contact FANDOM',
 	'specialcontact-logged-in-as' => 'You are logged in as $1. [[Special:UserLogout|Not you?]]',
 	'specialcontact-mail-on-file' => 'Your e-mail is set to $1. [[Special:Preferences|Do you wish to change it?]]',
+	'specialcontact-label-data-access-username' => 'Your FANDOM username',
+	'specialcontact-label-data-access-email' => 'Your current contact email address',
 	'specialcontact-label-security-type' => 'Type of security issue if known',
 	'specialcontact-label-security-link' => 'Link to where the issue can be found',
 	'specialcontact-label-security-description' => 'Please describe the security issue including steps to reproduce',
@@ -237,6 +248,11 @@ Remember, you can also find help in our [[w:c:community:Special:Forum|Community 
 
 $messages['qqq'] = array(
 	'specialcontact-seclink-dmca-request' => 'Link text for copyright complaints.',
+	'specialcontact-seclink-data-access' => 'Link text for requesting a copy of your profile data.',
+	'specialcontact-sectitle-data-access' => 'The title of the form for requesting a copy of your profile data.',
+	'specialcontact-intro-data-access' => 'Introductory text for the data access request form.',
+	'specialcontact-label-data-access-username' => 'Label for the username field on the data access request form.',
+	'specialcontact-label-data-access-email' => 'Label for the email field on the data access request form.',
 	'specialcontact-seclink-security' => 'Link text for reporting security issues.',
 	'specialcontact-sectitle-security' => 'Title of the form for reporting security issues.',
 	'specialcontact-intro-security' => 'Introductory text for the security issue report form, including responsible disclosure guidelines.',

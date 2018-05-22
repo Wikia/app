@@ -347,6 +347,8 @@ if (!empty( $wgEnableArticleMetaDescription )) {
 #--- 44. AdEngine
 include ( "$IP/extensions/wikia/AdEngine/AdEngine2.setup.php" );
 
+include ( "$IP/extensions/wikia/TrackingOptIn/TrackingOptIn.setup.php" );
+
 if (!empty($wgEnableOggHandlerExt)) {
 	include("$IP/extensions/OggHandler/OggHandler.php");
 }
@@ -1767,3 +1769,8 @@ include "$IP/extensions/wikia/Search/WikiaSearch.setup.php";
 
 // Mercury auth pages related functionality - redirects, email confirmation.
 include "$IP/extensions/wikia/AuthPages/AuthPages.setup.php";
+
+include "$IP/extensions/wikia/DownloadYourData/DownloadYourData.setup.php";
+
+// SUS-4738 | Handles requests to be forgotten
+include "$IP/extensions/wikia/Privacy/Privacy.setup.php";

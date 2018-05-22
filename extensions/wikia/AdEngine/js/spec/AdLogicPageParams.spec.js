@@ -6,9 +6,9 @@ describe('AdLogicPageParams', function () {
 
 	var logMock = function () { return; },
 		mocks = {
-			trackingOptOut: {
-				isOptedOut: function () {
-					return false;
+			trackingOptIn: {
+				isOptedIn: function () {
+					return true;
 				}
 			}
 		},
@@ -118,7 +118,7 @@ describe('AdLogicPageParams', function () {
 			geoMock,
 			windowMock.location,
 			logMock,
-			mocks.trackingOptOut,
+			mocks.trackingOptIn,
 			windowMock,
 			abTestMock,
 			kruxMock
