@@ -13,7 +13,8 @@ class UserDataRemoverTest extends WikiaDatabaseTest {
 	const RENAMED_USER_ID = 3;
 	const FAKE_USER_ID = 4;
 	const REMOVED_USER_NAME = 'should_anonymize';
-	const SPOOF_HASH = 'dd6846900c173f39d39c0760dc8d23a35f5799cea4a91239fba16620ad4e59e6';
+	const EXACT_HASH = '9ce937b220262ce1bb62b918ea196d78c39d6326ceaae974f8d3fbf1d550b44b';
+	const NORMALIZED_HASH = 'dd6846900c173f39d39c0760dc8d23a35f5799cea4a91239fba16620ad4e59e6';
 
 	/**
 	 * Returns the test dataset.
@@ -165,7 +166,11 @@ class UserDataRemoverTest extends WikiaDatabaseTest {
 
 		// check if hash is correct
 		$this->assertEquals( 1,
-			$db->estimateRowCount( 'spoofuser_forgotten', '*', [ 'suf_hash' => self::SPOOF_HASH ],
+			$db->estimateRowCount( 'spoofuser_forgotten', '*',
+				[
+					'suf_normalized_hash' => self::NORMALIZED_HASH,
+					'suf_exact_hash' => self::EXACT_HASH,
+				],
 				__METHOD__ ), 'Spoof hash is different than expected' );
 
 	}
