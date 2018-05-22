@@ -58,7 +58,7 @@ class ApiService {
 		$options = [];
 		if ( startsWith( $cityUrl, "https://" ) ) {
 			$cityUrl = wfHttpsToHttp( $cityUrl );
-			$options[ 'headers' ] = [ 'FASTLY-SSL' => 1, ];
+			$options[ 'headers' ] = [ 'Fastly-SSL' => 1, ];
 		}
 
 		// request JSON format of API response
