@@ -155,7 +155,6 @@ class AdEngine2Hooks {
 			'krux' => true,
 			'kikimora' => true,
 			'prebid' => true,
-			'moat' => true,
 			'netzathleten' => true
 		];
 	}
