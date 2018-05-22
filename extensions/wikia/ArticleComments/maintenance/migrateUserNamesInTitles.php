@@ -4,9 +4,11 @@
  *
  * Per-wiki tables that are modified:
  *  - page
+ *  - recentchanges
  *  - watchlist
  *
  * @see SUS-4766
+ * @see SUS-4806
  * @ingroup Maintenance
  */
 
@@ -65,6 +67,52 @@ class MigrateUserNamesInTitles extends Maintenance {
 		return $updated;
 	}
 
+	private function migrateRecentChangesTableRows( ResultWrapper $rows) : int {
+		$dbw = $this->getDB( DB_MASTER );
+
+		$count = $rows->numRows();
+		$updated = 0;
+
+		$this->output("Found {$count} `recentchanges` table rows to be checked...\n");
+
+		// process each title
+		foreach($rows as $row) {
+			$rc_id = $row->rc_id;
+			$oldPageTitle = $row->rc_title;
+			$newPageTitle = ArticleCommentsTitle::normalize( $oldPageTitle );
+
+			// no reason to update
+			if ($oldPageTitle === $newPageTitle) {
+				continue;
+			}
+
+			$this->output( "#{$rc_id}: {$oldPageTitle} -> {$newPageTitle} ... " );
+
+			if ($this->hasOption('do-migrate')) {
+				$dbw->update(
+					'recentchanges',
+					['rc_title' => $newPageTitle],
+					['rc_id' => $rc_id],
+					__METHOD__
+				);
+
+				$updated += $dbw->affectedRows();
+
+				$this->output( "updated\n" );
+
+				// do not harm the DB replication
+				if ($updated % 5000 === 0) {
+					wfWaitForSlaves();
+				}
+			}
+			else {
+				$this->output( "dry-run\n" );
+			}
+		}
+
+		return $updated;
+	}
+
 	private function migrateWatchlistTableRows( ResultWrapper $rows) : int {
 		$dbw = $this->getDB( DB_MASTER );
 
@@ -99,7 +147,7 @@ class MigrateUserNamesInTitles extends Maintenance {
 
 				$this->output( "updated\n" );
 
-				// glee wiki has ~2mm rows to be processed here, do not harm the DB replication
+				// do not harm the DB replication
 				if ($updated % 5000 === 0) {
 					wfWaitForSlaves();
 				}
@@ -135,6 +183,18 @@ class MigrateUserNamesInTitles extends Maintenance {
 			['wl_namespace', 'wl_title'],
 			[
 				'wl_title' . $dbr->buildLike(
+					$dbr->anyString(), '/' . ARTICLECOMMENT_PREFIX, $dbr->anyString()
+				)
+			],
+			__METHOD__
+		));
+
+		// SELECT  rc_id,rc_title  FROM `recentchanges`  WHERE (rc_title LIKE '%/@comment-%' )
+		$updated += $this->migrateRecentChangesTableRows($dbr->select(
+			'recentchanges',
+			['rc_id', 'rc_title'],
+			[
+				'rc_title' . $dbr->buildLike(
 					$dbr->anyString(), '/' . ARTICLECOMMENT_PREFIX, $dbr->anyString()
 				)
 			],
