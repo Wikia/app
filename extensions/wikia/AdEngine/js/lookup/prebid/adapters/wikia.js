@@ -140,6 +140,12 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.wikia',[
 				prebid.push(function () {
 					addBids(bidRequest, addBidResponse, done);
 				});
+			},
+			getSpec: function () {
+				return {
+					code: getName(),
+					supportedMediaTypes: ['banner']
+				};
 			}
 		};
 	}
