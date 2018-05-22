@@ -2,6 +2,10 @@
 /**
  * Removes user name component of article comment titles and replaces it with user ID
  *
+ * Per-wiki tables that are modified:
+ *  - page
+ *  - watchlist
+ *
  * @see SUS-4766
  * @ingroup Maintenance
  */
@@ -15,29 +19,13 @@ class MigrateUserNamesInTitles extends Maintenance {
 		$this->addOption( 'do-migrate', 'Perform the migration', false, false );
 	}
 
-	public function execute() {
-		/**
-		 * SELECT  page_id,page_title  FROM `page`  WHERE (page_title LIKE '%/@comment-%' )
-		 */
-		$dbr = $this->getDB( DB_SLAVE );
+	private function migratePageTableRows( ResultWrapper $rows) : int {
 		$dbw = $this->getDB( DB_MASTER );
 
-		$rows = $dbr->select(
-			'page',
-			['page_id', 'page_title'],
-			[
-				'page_title' . $dbr->buildLike(
-					$dbr->anyString(), '/' . ARTICLECOMMENT_PREFIX, $dbr->anyString()
-				)
-			],
-			__METHOD__
-		);
-
-		$count = $dbr->affectedRows();
+		$count = $rows->numRows();
 		$updated = 0;
 
-		$this->output($dbr->lastQuery() . "\n\n");
-		$this->output("Found {$count} rows to be checked...\n");
+		$this->output("Found {$count} `page` table rows to be checked...\n");
 
 		// process each title
 		foreach($rows as $row) {
@@ -74,11 +62,88 @@ class MigrateUserNamesInTitles extends Maintenance {
 			}
 		}
 
-		$this->output( "\nDone! $count rows checked, $updated updated.\n" );
+		return $updated;
+	}
+
+	private function migrateWatchlistTableRows( ResultWrapper $rows) : int {
+		$dbw = $this->getDB( DB_MASTER );
+
+		$count = $rows->numRows();
+		$updated = 0;
+
+		$this->output("Found {$count} `watchlist` table rows to be checked...\n");
+
+		// process each title
+		foreach($rows as $row) {
+			$pageNs = $row->wl_namespace;
+			$oldPageTitle = $row->wl_title;
+			$newPageTitle = ArticleCommentsTitle::normalize( $oldPageTitle );
+
+			// no reason to update
+			if ($oldPageTitle === $newPageTitle) {
+				continue;
+			}
+
+			$this->output( "NS {$pageNs}:{$oldPageTitle} -> {$newPageTitle} ... " );
+
+			if ($this->hasOption('do-migrate')) {
+				$dbw->update(
+					'watchlist',
+					['wl_title' => $newPageTitle],
+					['wl_namespace' => $pageNs , 'wl_title' => $oldPageTitle],
+					__METHOD__
+				);
+
+				$updated += $dbw->affectedRows();
+
+				$this->output( "updated\n" );
+
+				// glee wiki has ~2mm rows to be processed here, do not harm the DB replication
+				if ($updated % 5000 === 0) {
+					wfWaitForSlaves();
+				}
+			}
+			else {
+				$this->output( "dry-run\n" );
+			}
+		}
+
+		return $updated;
+	}
+
+	public function execute() {
+		$dbr = $this->getDB( DB_SLAVE );
+
+		$updated = 0;
+
+		// SELECT  page_id,page_title  FROM `page`  WHERE (page_title LIKE '%/@comment-%' )
+		$updated += $this->migratePageTableRows($dbr->select(
+			'page',
+			['page_id', 'page_title'],
+			[
+				'page_title' . $dbr->buildLike(
+					$dbr->anyString(), '/' . ARTICLECOMMENT_PREFIX, $dbr->anyString()
+				)
+			],
+			__METHOD__
+		));
+
+		// SELECT  wl_namespace,wl_title  FROM `watchlist`  WHERE (wl_title LIKE '%/@comment-%' )
+		$updated += $this->migrateWatchlistTableRows($dbr->select(
+			'watchlist',
+			['wl_namespace', 'wl_title'],
+			[
+				'wl_title' . $dbr->buildLike(
+					$dbr->anyString(), '/' . ARTICLECOMMENT_PREFIX, $dbr->anyString()
+				)
+			],
+			__METHOD__
+		));
+
+		$this->output( "\nDone! $updated rows updated.\n" );
 
 		\Wikia\Logger\WikiaLogger::instance()->info(__CLASS__, [
 			'updated' => $updated,
-			'checked' => $count,
 		]);
 	}
 }
