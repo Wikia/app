@@ -1879,14 +1879,6 @@ $config['wikia_in_your_lang_js'] = [
 	],
 ];
 
-$config['cookie_policy_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'oasis', 'monobook' ],
-	'assets' => [
-		'//extensions/wikia/CookiePolicy/scripts/cookiePolicy.js',
-	],
-];
-
 $config['upload_photos_dialog_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => [ 'oasis' ],
