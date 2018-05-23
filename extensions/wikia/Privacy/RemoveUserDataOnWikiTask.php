@@ -133,7 +133,7 @@ class RemoveUserDataOnWikiTask extends BaseTask {
 		}
 	}
 
-	public function removeAllData( $userId, $username, $oldUsername = null ) {
+	public function removeUserDataOnThisWiki( $userId, $username, $oldUsername = null ) {
 		global $wgUser;
 		$wgUser = User::newFromName( Wikia::BOT_USER );
 
