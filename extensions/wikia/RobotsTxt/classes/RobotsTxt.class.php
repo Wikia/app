@@ -53,6 +53,14 @@ class RobotsTxt {
 		);
 	}
 
+	public function getAllowedPaths() {
+		return $this->allowed;
+	}
+
+	public function getDisallowedPaths() {
+		return $this->disallowed;
+	}
+
 	/**
 	 * Set Sitemap URL
 	 *

@@ -48,6 +48,8 @@ class ApiService {
 	 * @return mixed API response
 	 */
 	static function foreignCall( string $dbName, array $params, string $endpoint = self::API, bool $setUser = false ) {
+		// Note - this won't work the city_url contains url, as it uses http proxy to make the call.
+		// This should be fixed in PLATFORM-3486
 		$cityUrl = WikiFactory::DBtoUrl( $dbName );
 
 		// If city url is empty, this would make a request to the current host.
