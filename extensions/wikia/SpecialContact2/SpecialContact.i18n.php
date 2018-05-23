@@ -1522,7 +1522,7 @@ Buone modifiche!",
 	'specialcontact-notyou' => 'Non sei tu?',
 	'specialcontact-problem' => 'Oggetto',
 	'specialcontact-problemdesc' => 'Messaggio',
-	'specialcontact-realname' => 'Il tuo nome',
+	'specialcontact-realname' => 'Il tuo vero nome',
 	'specialcontact-secheader-account' => "Modifiche all'account",
 	'specialcontact-seclink-account-issue' => 'Non riesco ad accedere al mio account',
 	'specialcontact-seclink-adoption' => 'Voglio i diritti di amministrazione per questa wiki',
@@ -1569,6 +1569,17 @@ Buone modifiche!",
 	'specialcontact-label-forget-account-relationship' => 'Si prega di specificare il tuo rapporto con la persona per conto della quale si effettua la richiesta (ad es., "padre" o "tutore legale"). Potremmo chiedere prova per verificare che tu sia autorizzato a fare questa richiesta per suo conto.*',
 	'specialcontact-label-forget-account-full-name' => 'Nome completo*',
 	'specialcontact-intro-forget-account' => 'Sotto la legge europea per la protezione dei dati, hai il diritto di chiedere che i tuoi dati personali vengano eliminati da noi. Utilizzando questo modulo, ci aiuterai a capire la tua richiesta e agire correttamente in sua risposta in tempi utili.',
+	'specialcontact-label-data-access-email' => 'Il tuo attuale indirizzo email di contatto',
+	'specialcontact-sectitle-data-access' => 'Richiedere una copia dei miei dati',
+	'specialcontact-seclink-data-access' => 'Voglio scaricare una copia dei miei dati',
+	'specialcontact-label-data-access-username' => 'Il tuo nome utente di FANDOM',
+	'specialcontact-intro-data-access' => "I dati che forniamo consistono nel nome utente, ID utente, nome reale (se fornito), indirizzo email, data di creazione dell'account e un link alla lista dei tuoi contributi.
+
+Al fine di prevenire richieste fraudolente da parte di chi si impersona come qualcun altro, dobbiamo verificare l'identità della persona che sta richiedendo i dati dell'utente.
+
+Per poter scaricare i tuoi dati da FANDOM, dobbiamo verificare alcune informazioni in modo da confermare che sei il proprietario dell'account.
+
+Ti invieremo l'email con la conferma una volta ricevuta la tua richiesta. Nell'email sarà richiesto di rispondere con una copia della tua identificazione in modo da poter confermare la tua identità.",
 );
 
 $messages['ja'] = array(
