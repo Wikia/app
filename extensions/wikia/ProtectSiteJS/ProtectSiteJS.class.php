@@ -41,7 +41,6 @@ class ProtectSiteJS {
 		$allowedJsSubpages = [
 			'chat',
 			'common',
-			'monobook',
 			'wikia',
 			'uncyclopedia',
 		];
