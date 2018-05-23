@@ -248,7 +248,8 @@ class WikiaSendgridMailer {
 			]
 		];
 
-		$ret = json_encode( $content );
+		// Without whitespaces, wordwrap() in mimePart::encodeHeader() can break utf-8 characters
+		$ret = json_encode( $content, JSON_PRETTY_PRINT );
 
 		wfProfileOut( __METHOD__ );
 
