@@ -160,6 +160,7 @@ class WikiaRobots {
 		       $wgRobotsTxtBlockedWiki,
 		       $wgSitemapXmlExposeInRobots,
 		       $wgServer,
+			   $wgScriptPath,
 		       $wgRequest;
 
 		if ( !$this->accessAllowed || !empty( $wgRobotsTxtBlockedWiki ) ) {
@@ -170,9 +171,9 @@ class WikiaRobots {
 
 		// Sitemap
 		if ( !empty( $wgEnableSitemapXmlExt ) && !empty( $wgSitemapXmlExposeInRobots ) ) {
-			$robots->addSitemap( $wgServer . '/sitemap-newsitemapxml-index.xml' );
+			$robots->addSitemap( $wgServer . $wgScriptPath . '/sitemap-newsitemapxml-index.xml' );
 		} elseif ( !empty( $wgEnableSpecialSitemapExt ) ) {
-			$robots->addSitemap( $wgServer . '/sitemap-index.xml' );
+			$robots->addSitemap( $wgServer . $wgScriptPath .'/sitemap-index.xml' );
 		}
 
 		// Block namespaces
