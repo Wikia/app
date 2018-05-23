@@ -5,6 +5,8 @@ describe('adaptersRegistry', function () {
 
 	var mocks = null;
 
+	function noop() {}
+
 	function AdapterMock(name, enabled) {
 		this.getName = function () {
 			return name;
@@ -15,8 +17,15 @@ describe('adaptersRegistry', function () {
 		};
 	}
 
+	function mockContext(map) {
+		spyOn(mocks.adContext, 'get').and.callFake(function (name) {
+			return map[name];
+		});
+	}
+
 	function getModule() {
 		return modules['ext.wikia.adEngine.lookup.prebid.adaptersRegistry'](
+			mocks.adContext,
 			mocks.adapters.aol,
 			mocks.adapters.appnexus,
 			mocks.adapters.appnexusAst,
@@ -31,12 +40,16 @@ describe('adaptersRegistry', function () {
 			mocks.adapters.rubiconDisplay,
 			mocks.adapters.wikia,
 			mocks.adapters.wikiaVideo,
+			mocks.prebidVersionCompatibility,
 			mocks.win
 		);
 	}
 
 	beforeEach(function () {
 		mocks = {
+			adContext: {
+				get: noop
+			},
 			adapters: {
 				aol: new AdapterMock('aol', true),
 				appnexus: new AdapterMock('appnexus', true),
@@ -53,6 +66,7 @@ describe('adaptersRegistry', function () {
 				wikia: new AdapterMock('wikia', true),
 				wikiaVideo: new AdapterMock('wikiaVideo', true)
 			},
+			prebidVersionCompatibility: noop,
 			win: {
 				pbjs: {
 					que: [],
@@ -63,6 +77,10 @@ describe('adaptersRegistry', function () {
 				}
 			}
 		};
+
+		mockContext({
+			'opts.isNewPrebidEnabled': true
+		});
 	});
 
 	it('returns a list of adapters', function () {

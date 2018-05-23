@@ -199,6 +199,8 @@ define('ext.wikia.adEngine.adContext', [
 		context.opts.enableAdInfoLog = geo.isProperGeo(instantGlobals.wgAdDriverKikimoraTrackingCountries);
 		context.opts.playerTracking = geo.isProperGeo(instantGlobals.wgAdDriverKikimoraPlayerTrackingCountries);
 
+		context.opts.isNewPrebidEnabled = geo.isProperGeo(instantGlobals.wgAdDriverNewPrebidCountries);
+
 		// Krux integration
 		context.targeting.enableKruxTargeting = !!(
 			context.targeting.enableKruxTargeting &&

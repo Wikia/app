@@ -1,6 +1,7 @@
 /*global define*/
-define('ext.wikia.adEngine.lookup.prebid.bidHelper',
-	['ext.wikia.adEngine.lookup.prebid.priceGranularityHelper'], function (priceGranularityHelper) {
+define('ext.wikia.adEngine.lookup.prebid.bidHelper', [
+	'ext.wikia.adEngine.lookup.prebid.priceGranularityHelper'
+], function (priceGranularityHelper) {
 	'use strict';
 
 	function transformPriceFromBid(bid) {

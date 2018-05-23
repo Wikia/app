@@ -260,6 +260,10 @@ return [
 		'scripts' => 'resources/wikia/libraries/jquery/datatables/jquery.dataTables.min.js',
 	],
 
+	'jquery.timeago' => [
+		'scripts' => 'resources/wikia/libraries/jquery/timeago/jquery.timeago.js',
+	],
+
 	// moved here from AssetsManager by wladek
 	'wikia.yui' => [
 		'scripts' => [
