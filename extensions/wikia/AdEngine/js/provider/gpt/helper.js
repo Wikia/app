@@ -1,4 +1,4 @@
-/*global define, setTimeout, require*/
+/*global define, require, setTimeout*/
 /*jshint maxlen:125, camelcase:false, maxdepth:7*/
 define('ext.wikia.adEngine.provider.gpt.helper', [
 	'ext.wikia.adEngine.adContext',
@@ -119,7 +119,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 
 		function setAdditionalTargeting(slotTargetingData) {
 			var abId,
-			    rabbitResults = rabbit && rabbit.getResults(instantGlobals.wgAdDriverRabbitTargetingKeyValues);
+				rabbitResults = rabbit && rabbit.getResults(instantGlobals.wgAdDriverRabbitTargetingKeyValues);
 
 			if (isRecoverableByIL()) {
 				slotTargetingData.requestSource = 'instartLogic';

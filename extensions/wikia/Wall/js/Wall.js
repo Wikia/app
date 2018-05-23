@@ -77,8 +77,6 @@
 				placement: 'top'
 			});
 
-			$('.timeago').timeago();
-
 			// If any textarea has content make sure Reply / Post button is visible
 			$(document).ready(this.initTextareas);
 			$(window).bind('hashchange', this.proxy(this.onHashChange)).trigger('hashchange');

@@ -1,4 +1,4 @@
-/*global define Promise*/
+/*global define*/
 define('ext.wikia.adEngine.slot.floatingMedrec', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.bridge',

@@ -1,4 +1,4 @@
-/*global define, Promise*/
+/*global define*/
 define('ext.wikia.adEngine.video.player.playwire', [
 	'ext.wikia.adEngine.video.player.playwire.playwirePlayerFactory',
 	'ext.wikia.adEngine.video.player.playwire.playwireTracker',

@@ -1,3 +1,4 @@
+/*global define*/
 define('ext.wikia.adEngine.pageFairDetection', [
 	'ext.wikia.adEngine.utils.scriptLoader',
 	'wikia.browserDetect',

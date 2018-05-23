@@ -10,7 +10,7 @@ define('ext.wikia.adEngine.ml.n1.n1DecisionTreeClassifier', [
 
 	var dtc = decisionTreeClassifier.create('n1dtc'),
 		modelData = {
-			inputParser: inputParser,
+			dataSource: inputParser,
 			model: dtc,
 			name: 'n1dtc',
 			wgCountriesVariable: 'wgAdDriverN1DecisionTreeClassifierRabbitCountries',
