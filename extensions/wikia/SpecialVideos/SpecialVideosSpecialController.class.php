@@ -27,21 +27,8 @@ class SpecialVideosSpecialController extends WikiaSpecialPageController {
 	public function index() {
 		$this->wg->SuppressPageSubtitle = true;
 
-		$scriptsStr = 'special_videos_js';
-		$stylesStr = 'special_videos_css';
-
-		$isMobile = $this->app->checkSkin( 'wikiamobile' );
-
-		if ( $isMobile ) {
-			$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
-			$scriptsStr .= '_mobile';
-			$stylesStr .= '_mobile';
-		} else {
-			$this->response->addAsset('special_videos_css_monobook');
-		}
-
-		$this->response->addAsset( $scriptsStr );
-		$this->response->addAsset( $stylesStr );
+		$this->response->addAsset( 'special_videos_js' );
+		$this->response->addAsset( 'special_videos_css' );
 
 		// enqueue i18n message for javascript
 		JSMessages::enqueuePackage( 'SpecialVideos', JSMessages::INLINE );

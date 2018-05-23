@@ -1613,14 +1613,6 @@ $config['special_videos_css'] = [
 	],
 ];
 
-$config['special_videos_css_monobook'] = [
-	'type' => AssetsManager::TYPE_SCSS,
-	'skin' => [ 'monobook' ],
-	'assets' => [
-		'//skins/oasis/css/lib/foundation.custom/foundation.custom.scss',
-	],
-];
-
 $config['special_videos_js_mobile'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => [ 'wikiamobile' ],
@@ -1926,28 +1918,11 @@ $config['portable_infobox_js'] = [
 	],
 ];
 
-$config['portable_infobox_monobook_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'monobook' ],
-	'assets' => [
-		'//extensions/wikia/PortableInfobox/js/PortableInfoboxMonobook.js',
-	],
-];
-
 $config['portable_infobox_scss'] = [
 	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => [ 'oasis' ],
 	'assets' => [
 		'//extensions/wikia/PortableInfobox/styles/PortableInfobox.scss',
-	],
-];
-
-$config['portable_infobox_monobook_scss'] = [
-	'type' => AssetsManager::TYPE_SCSS,
-	'skin' => [ 'monobook' ],
-	'assets' => [
-		'#group_portable_infobox_scss',
-		'//extensions/wikia/PortableInfobox/styles/PortableInfoboxMonobook.scss',
 	],
 ];
 

@@ -34,18 +34,6 @@
 }
 
 .ShowContentWarning {
-	&.skin-monobook,
-	&.skin-uncyclopedia {
-		.firstHeading,
-		#siteNotice {
-			display: none;
-		}
-
-		#bodyContent {
-			overflow: hidden;
-			visibility: hidden;
-		}
-	}
 
 	.WikiaMainContent,
 	.WikiaRail,
