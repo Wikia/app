@@ -6,11 +6,14 @@ describe('ext.wikia.adEngine.ml.modelFactory', function () {
 		adContext: {
 			addCallback: function () {},
 			get: function (key) {
-				if (key === 'targeting.featuredVideo') {
-					return {
-						mediaId: 'abc7x7',
-						videoTags: [ 'foo' ]
-					};
+				switch (key) {
+					case 'targeting.featuredVideo':
+						return {
+							mediaId: 'abc7x7',
+							videoTags: [ 'foo' ]
+						};
+					case 'targeting.wikiId':
+						return '123';
 				}
 			}
 		},
@@ -31,10 +34,7 @@ describe('ext.wikia.adEngine.ml.modelFactory', function () {
 				return 'PL';
 			}
 		},
-		log: function () {},
-		win: {
-			wgCityId: '123'
-		}
+		log: function () {}
 	};
 
 	mocks.log.levels = {};
@@ -45,8 +45,7 @@ describe('ext.wikia.adEngine.ml.modelFactory', function () {
 			mocks.pageParams,
 			mocks.deviceDetect,
 			mocks.geo,
-			mocks.log,
-			mocks.win
+			mocks.log
 		);
 	}
 

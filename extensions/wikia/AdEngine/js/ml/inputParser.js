@@ -4,9 +4,8 @@ define('ext.wikia.adEngine.ml.inputParser', [
 	'ext.wikia.adEngine.adLogicPageParams',
 	'ext.wikia.adEngine.utils.device',
 	'wikia.geo',
-	'wikia.log',
-	'wikia.window'
-], function (adContext, pageLevelParams, deviceDetect, geo, log, win) {
+	'wikia.log'
+], function (adContext, pageLevelParams, deviceDetect, geo, log) {
 	'use strict';
 
 	var pageValues = null,
@@ -22,7 +21,7 @@ define('ext.wikia.adEngine.ml.inputParser', [
 			esrb: pageParams.esrb || null,
 			videoId: featuredVideoData.mediaId || null,
 			videoTag: featuredVideoData.videoTags || null,
-			wikiId: win.wgCityId
+			wikiId: adContext.get('targeting.wikiId')
 		};
 
 		log(['pageValues', pageValues], log.levels.debug, logGroup);
