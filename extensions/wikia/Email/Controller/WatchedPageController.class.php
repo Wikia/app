@@ -73,10 +73,8 @@ abstract class WatchedPageController extends EmailController {
 		return array_merge( $footerMessages, parent::getFooterMessages() );
 	}
 
-	/**
-	 * @template avatarLayout
-	 */
 	public function body() {
+		$this->setViewTemplate( 'avatarLayout' );
 		$contentFooterMessages = $this->getContentFooterMessages();
 
 		$this->response->setData( [
