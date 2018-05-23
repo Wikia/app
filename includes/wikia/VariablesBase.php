@@ -3689,6 +3689,12 @@ $wgEnableTorBlockExt = true;
 $wgEnableTracking = true;
 
 /**
+ * Enable an extension that renders a button to manage tracking preferences on privacy policy pages
+ * @var bool $wgEnableTrackingSettingsManager
+ */
+$wgEnableTrackingSettingsManager = false;
+
+/**
  * Enable TwitterCards extension.
  * @see extensions/wikia/TwitterCards
  * @var bool $wgEnableTwitterCardsExt
