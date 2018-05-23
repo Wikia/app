@@ -1,4 +1,4 @@
-/*global define*/
+/*global define, require*/
 define('ext.wikia.adEngine.ml.ctp.ctpDesktop', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.ml.ctp.ctpDesktopDataSource',
