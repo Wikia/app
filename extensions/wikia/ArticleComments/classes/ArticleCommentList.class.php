@@ -340,15 +340,11 @@ class ArticleCommentList {
 	public function getData( $page = 1 ) {
 		$wg = F::app()->wg;
 
-		// $isSysop = in_array('sysop', $groups) || in_array('staff', $groups);
-		
 		$isBlocked = $wg->User->isBlocked();
 
 		$isReadOnly = wfReadOnly();
-		// $showall = $wgRequest->getText( 'showall', false );
 
 		// default to using slave. comments are posted with ajax which hits master db
-		// $commentList = $this->getCommentList(false);
 		$countComments = $this->getCountAll();
 		$countCommentsNested = $this->getCountAllNested();
 
@@ -839,31 +835,6 @@ class ArticleCommentList {
 
 		return true;
 	}
-
-	/**
-	 * formatList
-	 *
-	 * @static
-	 * @access public
-	 *
-	 * @return String - HTML
-	 */
-	static function formatList( $comments ) {
-		$template = new EasyTemplate( dirname( __FILE__ ) . '/../templates/' );
-		$template->set_vars( [
-			'comments'  => $comments
-		] );
-		return $template->render( 'comment-list' );
-	}
-
-	/**
-	 * @deprecated Don't use it for Oasis, still needed for non-Oasis skins
-	 *
-	 * @return String HTML text with rendered comments section
-	 */
-	public function render() {
-		return F::app()->renderView( 'ArticleComments', 'Index' );
- 	}
 
 	/**
 	 * Static entry point for hook
