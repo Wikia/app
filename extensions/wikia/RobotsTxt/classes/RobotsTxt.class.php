@@ -67,7 +67,7 @@ class RobotsTxt {
 	 * @param string $sitemapUrl
 	 */
 	public function addSitemap( $sitemapUrl ) {
-		$this->sitemaps = array_merge( $this->sitemaps, $sitemapUrl );
+		$this->sitemaps[] = $sitemapUrl;
 	}
 
 	// Private methods follow:
