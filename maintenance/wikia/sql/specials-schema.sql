@@ -98,6 +98,35 @@ CREATE TABLE `phalanx_stats` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
+-- Table structure for table `rtbf_log`
+--
+
+DROP TABLE IF EXISTS `rtbf_log`;
+CREATE TABLE `rtbf_log` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int(5) unsigned NOT NULL,
+  `created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `number_of_wikis` int(10) unsigned DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Table structure for table `rtbf_log_details`
+--
+
+DROP TABLE IF EXISTS `rtbf_log_details`;
+CREATE TABLE `rtbf_log_details` (
+  `log_id` int(10) unsigned NOT NULL,
+  `wiki_id` int(10) unsigned NOT NULL,
+  `created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `celery_task` varchar(39) DEFAULT NULL,
+  `finished` datetime DEFAULT NULL,
+  `was_successful` tinyint(1) DEFAULT NULL,
+  UNIQUE KEY `log_id` (`log_id`,`wiki_id`),
+  CONSTRAINT `rtbf_log_details_ibfk_1` FOREIGN KEY (`log_id`) REFERENCES `rtbf_log` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
 -- Table structure for table `script_log`
 --
 
@@ -109,4 +138,4 @@ CREATE TABLE `script_log` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
--- Dump completed on 2018-01-30 12:33:44
+-- Dump completed on 2018-05-23 15:46:55
