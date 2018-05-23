@@ -1,4 +1,4 @@
-/*global define, require*/
+/*global define*/
 define('ext.wikia.adEngine.provider.evolve2', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.provider.btfBlocker',

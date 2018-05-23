@@ -1,4 +1,4 @@
-/*global define, require, setTimeout*/
+/*global define, require*/
 define('ext.wikia.adEngine.template.porvata', [
 	'ext.wikia.adEngine.domElementTweaker',
 	'ext.wikia.adEngine.slot.service.slotRegistry',

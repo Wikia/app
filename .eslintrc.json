@@ -1,0 +1,16 @@
+{
+    "plugins": [
+        "es5"
+    ],
+    "extends": [
+        "eslint:recommended",
+        "plugin:es5/no-es2015"
+    ],
+    "rules": {
+        "no-useless-escape": 0
+    },
+    "globals": {
+        "document": false,
+        "window": false
+    }
+}

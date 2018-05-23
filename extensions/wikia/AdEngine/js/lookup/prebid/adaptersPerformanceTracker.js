@@ -1,3 +1,4 @@
+/*global define*/
 define('ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker', [
 	'ext.wikia.adEngine.adTracker',
 	'ext.wikia.adEngine.lookup.prebid.adaptersRegistry',
