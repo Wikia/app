@@ -10,12 +10,6 @@ class RelatedForumDiscussionController extends WikiaService {
 	public function index() {
 		$this->response->setVal('messages', $this->getVal( 'messages' ));
 
-		// loading assets in Monobook that would normally load in oasis
-		if ( $this->app->checkSkin( 'monobook' ) ) {
-			$this->response->addAsset( 'skins/shared/styles/sprite.scss' );
-			$this->response->addAsset( 'extensions/wikia/Forum/css/monobook/RelatedForumMonobook.scss' );
-		}
-
 		$title = $this->getContext()->getTitle();
 		$topicTitle = Title::newFromText( $title->getPrefixedText(), NS_WIKIA_FORUM_TOPIC_BOARD );
 
