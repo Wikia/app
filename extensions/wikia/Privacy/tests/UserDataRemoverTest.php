@@ -29,6 +29,7 @@ class UserDataRemoverTest extends WikiaDatabaseTest {
 		return [
 			__DIR__ . '/fixtures/wikiastaff_log.sql',
 			__DIR__ . '/fixtures/spoofuser.sql',
+			__DIR__ . '/fixtures/audit_log.sql'
 		];
 	}
 

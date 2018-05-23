@@ -32,7 +32,7 @@ class RemovalAuditLog {
 	public static function markTaskAsFinished( $logId, $wikiId, $wasSuccessful ) {
 		self::getDb( DB_MASTER )->update(
 			self::DETAILS_TABLE,
-			['finished' => new DateTime(), 'was_successful' => $wasSuccessful],
+			['finished' => date( DateTime::ATOM ), 'was_successful' => $wasSuccessful],
 			['log_id' => $logId, 'wiki_id' => $wikiId],
 			__METHOD__ );
 	}
