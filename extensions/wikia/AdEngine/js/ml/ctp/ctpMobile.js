@@ -13,7 +13,7 @@ define('ext.wikia.adEngine.ml.ctp.ctpMobile', [
 		name: 'ctpmobile',
 		wgCountriesVariable: 'wgAdDriverCTPMobileRabbitCountries',
 		enabled: function () {
-			return !!adContext.get('targeting.hasFeaturedVideo') && adContext.get('targeting.skin') !== 'oasis';
+			return !!adContext.get('targeting.hasFeaturedVideo') && adContext.get('targeting.skin') === 'mercury';
 		},
 		cachePrediction: true
 	});
