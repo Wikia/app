@@ -1757,7 +1757,7 @@ if ( !empty( $wgEnableOpenXSPC ) ) {
 }
 
 if ( !empty( $wgEnableTrackingSettingsManager ) ) {
-	include "$IP/extensions/wikia/Privacy/TrackingSettingsManager.setup.php";
+	include "$IP/extensions/wikia/TrackingOptIn/TrackingSettingsManager.setup.php";
 }
 
 include "$IP/extensions/wikia/JWPlayerTag/JWPlayerTag.setup.php";
