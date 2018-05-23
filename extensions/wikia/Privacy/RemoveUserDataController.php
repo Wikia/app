@@ -30,11 +30,11 @@ class RemoveUserDataController extends WikiaController {
 		$this->info( "Right to be forgotten request for user $userId", ['userId' => $userId] );
 
 		$dataRemover = new UserDataRemover();
-		$removalRecord = $dataRemover->removeAllPersonalUserData( $userId );
+		$auditLogId = $dataRemover->removeAllPersonalUserData( $userId );
 		
 
 		$this->response->setCode( self::ACCEPTED );
-		$this->response->setValues( $removalRecord );
+		$this->response->setValues( ['auditLogId' => $auditLogId] );
 	}
 
 	/**

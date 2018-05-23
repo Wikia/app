@@ -6,6 +6,8 @@ use Wikia\Tasks\Queues\Queue;
 class UserDataRemover {
 	use Loggable;
 
+	private $logContext = [];
+
 	/**
 	 * Permanently removes or anonimizes all personal data of the given user.
 	 *
@@ -19,7 +21,13 @@ class UserDataRemover {
 			return;
 		}
 
-		$startDate = date( DateTime::ATOM );
+		$auditLogId = RemovalAuditLog::createLog( $userId );
+
+		$this->logContext = [
+			'right_to_be_forgotten' => 1,
+			'rtbf_log_id' => $auditLogId,
+			'user_id' => $userId
+		];
 
 		$username = $user->getName();
 		$fakeUserId = $this->getFakeUserId( $username );
@@ -30,30 +38,26 @@ class UserDataRemover {
 			$this->removeUserData( $fakeUser );
 			$this->connectUserToRenameRecord( $userId, $fakeUserId );
 
-			$this->info( "Removed data connected to old username", ['user_id' => $userId, 'rename_user_id' => $fakeUserId] );
+			$this->info( "Removed data connected to old username", ['rename_user_id' => $fakeUserId] );
 		}
 
 		$this->removeUserData( $user );
 
-		$this->info( "Removed global user data", ['user_id' => $userId] );
+		$this->info( "Removed global user data" );
 
 		// remove local data on all wikis edited by the user
 		$userWikis = $this->getUserWikis( $userId );
+
+		RemovalAuditLog::setNumberOfWikis( $auditLogId, count( $userWikis ) );
+
 		$task = new RemoveUserDataOnWikiTask();
-		$task->call( 'removeUserDataOnThisWiki', $userId, $username, $oldUsername );
+		$task->call( 'removeUserDataOnCurrentWiki', $auditLogId, $userId, $username, $oldUsername );
 		$task->setQueue( Queue::RTBF_QUEUE_NAME )->wikiId( $userWikis )->queue();
 
-		$this->info( "Wiki data removal queued for user $userId", ['user_id' => $userId] );
+		$this->info( "Wiki data removal queued for user $userId" );
 
-		// return removal record
-		return [
-			'started' => $startDate,
-			'userId' => $userId,
-			'username' => $username,
-			'renameUserId' => $fakeUserId,
-			'oldUsername' => $oldUsername,
-			'numberOfWikis' => count( $userWikis )
-		];
+		// return removal log id
+		return $auditLogId;
 	}
 
 	private function removeUserData( User $user ) {
@@ -97,14 +101,12 @@ class UserDataRemover {
 			$user->deleteCache();
 			$this->removeUserDataFromStaffLog( $userId );
 
-			$this->info( "Removed user's global data",
-				[ 'user_id' => $userId, 'new_user_name' => $newUserName ] );
+			$this->info( "Removed user's global data", ['new_user_name' => $newUserName ] );
 
 			return true;
 		}
 		catch ( Exception $error ) {
-			$this->error( "Couldn't remove global user data",
-				[ 'exception' => $error, 'user_id' => $userId ] );
+			$this->error( "Couldn't remove global user data", ['exception' => $error] );
 
 			return false;
 		}
@@ -154,7 +156,7 @@ class UserDataRemover {
 
 	protected function getLoggerContext() {
 		// make right to be forgotten logs more searchable
-		return ['right_to_be_forgotten' => 1];
+		return $this->logContext;
 	}
 
 }
