@@ -18,7 +18,7 @@ $wgExtensionCredits['other'][] = array(
 	'author' => 'Maciej Brencz',
 	'descriptionmsg' => 'timeagomessaging-desc',
 	'name' => 'TimeAgo Messaging',
-	'version' => '1.0',
+	'version' => '2.0',
 	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/TimeAgoMessaging'
 );
 
@@ -26,6 +26,11 @@ $wgExtensionCredits['other'][] = array(
 $wgExtensionMessagesFiles['TimeAgoMessaging'] = __DIR__ . "/TimeAgoMessaging.i18n.php";
 
 $wgResourceModules['ext.wikia.TimeAgoMessaging'] = [
+	'scripts' => [
+		'js/timeago.init.js',
+	],
+	'localBasePath' => __DIR__,
+	'remoteExtPath' => 'wikia/TimeAgoMessaging',
 	'messages' => [
 		'timeago-year',
 		'timeago-month',
@@ -40,6 +45,7 @@ $wgResourceModules['ext.wikia.TimeAgoMessaging'] = [
 		'timeago-second-from-now',
 	],
 	'dependencies' => [
+		'jquery.timeago',
 		// SUS-4811 - provides {{PLURAL}} magic word support
 		'mediawiki.jqueryMsg',
 	],
