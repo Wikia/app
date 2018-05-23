@@ -50,12 +50,11 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverBottomLeaderBoardAdditionalSizesCountries';
 		$vars[] = 'wgAdDriverBottomLeaderBoardMegaCountries';
 		$vars[] = 'wgAdDriverBottomLeaderBoardViewportCountries';
+		$vars[] = 'wgAdDriverCTPDesktopRabbitCountries';
 		$vars[] = 'wgAdDriverDelayCountries';
 		$vars[] = 'wgAdDriverDelayTimeout';
 		$vars[] = 'wgAdDriverDisableSraCountries';
 		$vars[] = 'wgAdDriverEvolve2Countries';
-		$vars[] = 'wgAdDriverFMRLogisticRegressionRabbitCountries';
-		$vars[] = 'wgAdDriverFMRPassiveAggressiveClassifierRabbitCountries';
 		$vars[] = 'wgAdDriverFVAsUapKeyValueCountries';
 		$vars[] = 'wgAdDriverFVDelayCountries';
 		$vars[] = 'wgAdDriverFVDelayTimeoutOasis';
@@ -81,8 +80,8 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverN1DecisionTreeClassifierRabbitCountries';
 		$vars[] = 'wgAdDriverN1LogisticRegressionRabbitCountries';
 		$vars[] = 'wgAdDriverNetzAthletenCountries';
+		$vars[] = 'wgAdDriverNewPrebidCountries';
 		$vars[] = 'wgAdDriverOpenXPrebidBidderCountries';
-		$vars[] = 'wgAdDriverOutstreamLogisticRegressionRabbitCountries';
 		$vars[] = 'wgAdDriverOutstreamVideoFrequencyCapping';
 		$vars[] = 'wgAdDriverPageFairDetectionCountries';
 		$vars[] = 'wgAdDriverPlayAdsOnNextFVCountries';
@@ -153,9 +152,7 @@ class AdEngine2Hooks {
 			'a9' => true,
 			'gpt' => true,
 			'krux' => true,
-			'kikimora' => true,
 			'prebid' => true,
-			'moat' => true,
 			'netzathleten' => true
 		];
 	}

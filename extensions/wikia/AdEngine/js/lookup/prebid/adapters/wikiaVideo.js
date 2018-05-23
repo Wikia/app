@@ -1,11 +1,12 @@
 /*global define*/
 define('ext.wikia.adEngine.lookup.prebid.adapters.wikiaVideo',[
+	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.wrappers.prebid',
 	'ext.wikia.adEngine.video.vastUrlBuilder',
 	'ext.wikia.aRecoveryEngine.instartLogic.recovery',
 	'wikia.document',
 	'wikia.querystring'
-], function (prebid, vastUrlBuilder, instartLogic, doc, QueryString) {
+], function (adContext, prebid, vastUrlBuilder, instartLogic, doc, QueryString) {
 	'use strict';
 
 	var bidderName = 'wikiaVideo',
@@ -19,7 +20,8 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.wikiaVideo',[
 				MOBILE_IN_CONTENT: {}
 			}
 		},
-		qs = new QueryString();
+		qs = new QueryString(),
+		isNewPrebidEnabled = adContext.get('opts.isNewPrebidEnabled');
 
 	function getPrice() {
 		var price = qs.getVal('wikia_video_adapter', 0);
@@ -34,8 +36,12 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.wikiaVideo',[
 	function prepareAdUnit(slotName) {
 		return {
 			code: slotName,
-			sizes: [ 640, 480 ],
-			mediaType: 'video-outstream',
+			mediaTypes: {
+				video: {
+					context: 'outstream',
+					playerSize: [640, 480]
+				}
+			},
 			bids: [
 				{
 					bidder: bidderName
@@ -52,13 +58,15 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.wikiaVideo',[
 		return bidderName;
 	}
 
-	function addBids(bidderRequest) {
-		bidderRequest.bids.forEach(function (bid) {
+	function addBids(bidRequest, addBidResponse, done) {
+		bidRequest.bids.forEach(function (bid) {
 			var bidResponse = prebid.get().createBid(1),
 				price = getPrice();
 
-			bidResponse.bidderCode = bidderRequest.bidderCode;
+			bidResponse.bidderCode = bidRequest.bidderCode;
 			bidResponse.cpm = price;
+			bidResponse.ttl = 300;
+			bidResponse.mediaType = 'video';
 			bidResponse.width = bid.sizes[0][0];
 			bidResponse.height = bid.sizes[0][1];
 			bidResponse.vastUrl = vastUrlBuilder.build(
@@ -70,16 +78,27 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.wikiaVideo',[
 				}
 			);
 
-			prebid.get().addBidResponse(bid.placementCode, bidResponse);
+			if (isNewPrebidEnabled) {
+				addBidResponse(bid.adUnitCode, bidResponse);
+				done();
+			} else {
+				prebid.get().addBidResponse(bid.placementCode, bidResponse);
+			}
 		});
 	}
 
 	function create() {
 		return {
-			callBids: function (bidderRequest) {
+			callBids: function (bidRequest, addBidResponse, done) {
 				prebid.push(function () {
-					addBids(bidderRequest);
+					addBids(bidRequest, addBidResponse, done);
 				});
+			},
+			getSpec: function () {
+				return {
+					code: getName(),
+					supportedMediaTypes: ['video']
+				};
 			}
 		};
 	}

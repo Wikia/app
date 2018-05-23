@@ -731,10 +731,6 @@ if (!empty($wgEnableGoogleCalendarExt)) {
 	include("$IP/extensions/3rdparty/googleCalendar/googleCalendar.php");
 }
 
-if ( !empty( $wgEnableCookiePolicyExt ) ) {
-	include( "$IP/extensions/wikia/CookiePolicy/CookiePolicy.setup.php" );
-}
-
 if (!empty($wgEnableAbuseFilterExtension)) {
 	$wgUseTagFilter = true; // rt#22038
 
@@ -1758,6 +1754,10 @@ if ( !empty( $wgEnablePlaybuzzTagExt ) ) {
 
 if ( !empty( $wgEnableOpenXSPC ) ) {
     include "$IP/extensions/wikia/Spotlights/Spotlights.setup.php";
+}
+
+if ( !empty( $wgEnableTrackingSettingsManager ) ) {
+	include "$IP/extensions/wikia/TrackingOptIn/TrackingSettingsManager.setup.php";
 }
 
 include "$IP/extensions/wikia/JWPlayerTag/JWPlayerTag.setup.php";

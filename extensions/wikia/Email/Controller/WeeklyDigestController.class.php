@@ -39,10 +39,9 @@ class WeeklyDigestController extends EmailController {
 		return $digestData;
 	}
 
-	/**
-	 * @template weeklyDigest
-	 */
 	public function body() {
+		$this->setViewTemplate( 'weeklyDigest' );
+
 		$this->response->setData( [
 			'salutation' => $this->getSalutation(),
 			'summary' => $this->getSummary(),

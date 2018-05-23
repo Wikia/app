@@ -38,7 +38,11 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.onemobile', [
 	function prepareAdUnit(slotName, config) {
 		return {
 			code: slotName,
-			sizes: [config.size],
+			mediaTypes: {
+				banner: {
+					sizes: [config.size]
+				}
+			},
 			bids: [
 				{
 					bidder: bidderName,

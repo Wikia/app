@@ -65,10 +65,9 @@ class GenericController extends EmailController {
 		return $this->getToAddress()->address;
 	}
 
-	/**
-	 * @template genericLayout
-	 */
 	public function body() {
+		$this->setViewTemplate( 'genericLayout' );
+
 		$this->response->setData( [
 			'salutation' => $this->salutation,
 			'body' => $this->body,

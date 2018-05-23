@@ -1,4 +1,4 @@
-/*global define, require*/
+/*global define*/
 define('ext.wikia.adEngine.slot.service.passbackHandler', [
 	'ext.wikia.adEngine.slot.service.stateMonitor'
 ], function (slotStateMonitor) {

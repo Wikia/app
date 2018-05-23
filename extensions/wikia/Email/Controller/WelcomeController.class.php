@@ -19,10 +19,9 @@ class WelcomeController extends EmailController {
 		return $this->getMessage( 'emailext-welcome-subject', $this->getCurrentUserName() )->text();
 	}
 
-	/**
-	 * @template digestLayout
-	 */
 	public function body() {
+		$this->setViewTemplate( 'digestLayout' );
+
 		$this->response->setData( [
 			'salutation' => $this->getSalutation(),
 			'summary' => $this->createSummary(),
