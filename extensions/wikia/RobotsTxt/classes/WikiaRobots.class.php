@@ -160,7 +160,7 @@ class WikiaRobots {
 		       $wgRobotsTxtBlockedWiki,
 		       $wgSitemapXmlExposeInRobots,
 		       $wgServer,
-			   $wgScriptPath,
+		       $wgScriptPath,
 		       $wgRequest;
 
 		if ( !$this->accessAllowed || !empty( $wgRobotsTxtBlockedWiki ) ) {
