@@ -119,7 +119,7 @@ class WikiFactoryPage extends SpecialPage {
 			 */
 			if ( strpos( $subpage, '/' ) ) {
 				$languages = Language::getLanguageNames();
-				$parts = explode( '/', $subpage, 3 );
+				$parts = explode( '/', $subpage, 4 );
 				if ( is_array( $parts ) && sizeof( $parts ) >= 2 ) {
 					if ( array_key_exists( $parts[1], $languages ) ) {
 						$parts[0] .= '/' . $parts[1];
