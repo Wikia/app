@@ -19,6 +19,10 @@ define('ext.wikia.adEngine.ml.inputParser', [
 			country: geo.getCountryCode() || null,
 			device: deviceDetect.getDevice(pageParams),
 			esrb: pageParams.esrb || null,
+			isTopWiki: !!adContext.get('targeting.wikiIsTop1000'),
+			namespace: pageParams.s2 || null,
+			trafficSource: pageParams.ref || null,
+			verticalName: pageParams.s0v || null,
 			videoId: featuredVideoData.mediaId || null,
 			videoTag: featuredVideoData.videoTags || null,
 			wikiId: adContext.get('targeting.wikiId') || null
