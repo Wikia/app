@@ -176,7 +176,9 @@ class InterwikiDispatcher extends UnlistedSpecialPage {
 	 */
 	public static function getInterWikiaURLHook( Title $title, &$url, $query ): bool {
 		$interwikiUrl = self::getInterWikiaURL( $title );
+
 		$url = empty( $interwikiUrl ) ? $url : $interwikiUrl;
+		$url = wfProtocolUrlToRelative( $url );
 
 		return true;
 	}
