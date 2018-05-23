@@ -28,7 +28,7 @@
     "requirejs": "^2.3.5"
   },
   "scripts": {
-    "lint": "./node_modules/.bin/eslint ./extensions/wikia/AdEngine/js",
+    "lint": "eslint ./extensions/wikia/AdEngine/js",
     "test": "cd tests/ && ./js-all"
   }
 }
