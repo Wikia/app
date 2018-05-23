@@ -1,4 +1,4 @@
-/*global define*/
+/*global define, require*/
 define('ext.wikia.adEngine.slot.service.srcProvider',  [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.aRecoveryEngine.adBlockDetection',

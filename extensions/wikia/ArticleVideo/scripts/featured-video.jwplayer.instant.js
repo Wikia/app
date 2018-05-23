@@ -1,25 +1,25 @@
 require([
 	'wikia.window',
-	'wikia.geo',
-//	'wikia.instantGlobals',
 	'wikia.cookies',
 	'wikia.tracker',
+	'wikia.trackingOptIn',
 	'wikia.abTest',
 	'ext.wikia.adEngine.adContext',
 	'wikia.articleVideo.featuredVideo.data',
+	'wikia.articleVideo.featuredVideo.autoplay',
 	'wikia.articleVideo.featuredVideo.ads',
 	'wikia.articleVideo.featuredVideo.moatTracking',
 	'wikia.articleVideo.featuredVideo.cookies',
 	require.optional('ext.wikia.adEngine.lookup.a9')
 ], function (
 	win,
-	geo,
-//	instantGlobals,
 	cookies,
 	tracker,
+	trackingOptIn,
 	abTest,
 	adContext,
 	videoDetails,
+	featuredVideoAutoplay,
 	featuredVideoAds,
 	featuredVideoMoatTracking,
 	featuredVideoCookieService,
@@ -29,13 +29,11 @@ require([
 		return;
 	}
 
-	var inNextVideoAutoplayCountries = true, //geo.isProperGeo(instantGlobals.wgArticleVideoNextVideoAutoplayCountries),
-		//Fallback to the generic playlist when no recommended videos playlist is set for the wiki
-		recommendedPlaylist = videoDetails.recommendedVideoPlaylist || 'Y2RWCKuS',
+	//Fallback to the generic playlist when no recommended videos playlist is set for the wiki
+	var recommendedPlaylist = videoDetails.recommendedVideoPlaylist || 'Y2RWCKuS',
 		videoTags = videoDetails.videoTags || '',
-		inAutoplayCountries = true, //geo.isProperGeo(instantGlobals.wgArticleVideoAutoplayCountries),
 		inFeaturedVideoClickToPlayABTest = abTest.inGroup('FV_CLICK_TO_PLAY', 'CLICK_TO_PLAY'),
-		willAutoplay = isAutoplayEnabled() && inAutoplayCountries && !inFeaturedVideoClickToPlayABTest,
+		willAutoplay = featuredVideoAutoplay.isAutoplayEnabled(),
 		slotTargeting = {
 			plist: recommendedPlaylist,
 			vtags: videoTags
@@ -47,10 +45,6 @@ require([
 		return window.location.search.indexOf('wikia-footer-wiki-rec') > -1;
 	}
 
-	function isAutoplayEnabled() {
-		return featuredVideoCookieService.getAutoplay() !== '0';
-	}
-
 	function onPlayerReady(playerInstance) {
 		define('wikia.articleVideo.featuredVideo.jwplayer.instance', function() {
 			return playerInstance;
@@ -58,8 +52,10 @@ require([
 
 		win.dispatchEvent(new CustomEvent('wikia.jwplayer.instanceReady', {detail: playerInstance}));
 
-		featuredVideoAds(playerInstance, bidParams, slotTargeting);
-		featuredVideoMoatTracking.track(playerInstance);
+		trackingOptIn.pushToUserConsentQueue(function () {
+			featuredVideoAds(playerInstance, bidParams, slotTargeting);
+			featuredVideoMoatTracking.track(playerInstance);
+		});
 
 		playerInstance.on('autoplayToggle', function (data) {
 			featuredVideoCookieService.setAutoplay(data.enabled ? '1' : '0');
@@ -109,7 +105,7 @@ require([
 			related: {
 				time: 3,
 				playlistId: recommendedPlaylist,
-				autoplay: inNextVideoAutoplayCountries
+				autoplay: featuredVideoAutoplay.inNextVideoAutoplayEnabled()
 			},
 			videoDetails: {
 				description: videoDetails.description,
@@ -123,19 +119,21 @@ require([
 		}, onPlayerReady);
 	}
 
-	if (a9 && adContext.get('bidders.a9Video')) {
-		a9.waitForResponseCallbacks(
-			function onSuccess() {
-				bidParams = a9.getSlotParams('FEATURED');
-				setupPlayer();
-			},
-			function onTimeout() {
-				bidParams = {};
-				setupPlayer();
-			},
-			responseTimeout
-		);
-	} else {
-		setupPlayer();
-	}
+	trackingOptIn.pushToUserConsentQueue(function () {
+		if (a9 && adContext.get('bidders.a9Video')) {
+			a9.waitForResponseCallbacks(
+				function onSuccess() {
+					bidParams = a9.getSlotParams('FEATURED');
+					setupPlayer();
+				},
+				function onTimeout() {
+					bidParams = {};
+					setupPlayer();
+				},
+				responseTimeout
+			);
+		} else {
+			setupPlayer();
+		}
+	});
 });

@@ -12,7 +12,7 @@ describe('ext.wikia.adEngine.ml.modelFactory', function () {
 
 	it('Create model with proper interface', function () {
 		var model = getModule().create({
-			inputParser: {},
+			dataSource: {},
 			model: {},
 			name: 'foo',
 			wgCountriesVariable: 'bar',
@@ -28,7 +28,7 @@ describe('ext.wikia.adEngine.ml.modelFactory', function () {
 	it('Throw exception when model has missing field', function () {
 		expect(function () {
 			getModule().create({
-				inputParser: {},
+				dataSource: {},
 				model: {},
 				wgCountriesVariable: 'bar',
 				enabled: true

@@ -1,10 +1,11 @@
 /*global define*/
 define('ext.wikia.adEngine.lookup.prebid.adapters.wikia',[
+	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.wrappers.prebid',
 	'ext.wikia.aRecoveryEngine.instartLogic.recovery',
 	'wikia.document',
 	'wikia.querystring'
-], function (prebid, instartLogic, doc, QueryString) {
+], function (adContext, prebid, instartLogic, doc, QueryString) {
 	'use strict';
 
 	var bidderName = 'wikia',
@@ -49,7 +50,8 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.wikia',[
 				}
 			}
 		},
-		qs = new QueryString();
+		qs = new QueryString(),
+		isNewPrebidEnabled = adContext.get('opts.isNewPrebidEnabled');
 
 	function getPrice() {
 		var price = qs.getVal('wikia_adapter', 0);
@@ -64,7 +66,11 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.wikia',[
 	function prepareAdUnit(slotName, config) {
 		return {
 			code: slotName,
-			sizes: config.sizes,
+			mediaTypes: {
+				banner: {
+					sizes: config.sizes
+				}
+			},
 			bids: [
 				{
 					bidder: bidderName
@@ -106,27 +112,40 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.wikia',[
 		return creative.outerHTML;
 	}
 
-	function addBids(bidderRequest) {
-		bidderRequest.bids.forEach(function (bid) {
+	function addBids(bidRequest, addBidResponse, done) {
+		bidRequest.bids.forEach(function (bid) {
 			var bidResponse = prebid.get().createBid(1),
 				price = getPrice();
 
-			bidResponse.bidderCode = bidderRequest.bidderCode;
-			bidResponse.cpm = price;
 			bidResponse.ad = getCreative(price, bid.sizes[0]);
+			bidResponse.bidderCode = bidRequest.bidderCode;
+			bidResponse.cpm = price;
+			bidResponse.ttl = 300;
+			bidResponse.mediaType = 'banner';
 			bidResponse.width = bid.sizes[0][0];
 			bidResponse.height = bid.sizes[0][1];
 
-			prebid.get().addBidResponse(bid.placementCode, bidResponse);
+			if (isNewPrebidEnabled) {
+				addBidResponse(bid.adUnitCode, bidResponse);
+				done();
+			} else {
+				prebid.get().addBidResponse(bid.placementCode, bidResponse);
+			}
 		});
 	}
 
 	function create() {
 		return {
-			callBids: function (bidderRequest) {
+			callBids: function (bidRequest, addBidResponse, done) {
 				prebid.push(function () {
-					addBids(bidderRequest);
+					addBids(bidRequest, addBidResponse, done);
 				});
+			},
+			getSpec: function () {
+				return {
+					code: getName(),
+					supportedMediaTypes: ['banner']
+				};
 			}
 		};
 	}

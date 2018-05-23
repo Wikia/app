@@ -1,4 +1,4 @@
-/*global require*/
+/*global require, define*/
 (function() {
 	'use strict';
 

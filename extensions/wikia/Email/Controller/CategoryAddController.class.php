@@ -96,10 +96,8 @@ class CategoryAddController extends EmailController {
 		return $this->targetUser->getId() . ":sentCategoryAddEmailCount";
 	}
 
-	/**
-	 * @template avatarLayout
-	 */
 	public function body() {
+		$this->setViewTemplate( 'avatarLayout' );
 		$this->response->setData( [
 			'salutation' => $this->getSalutation(),
 			'summary' => $this->getSummary(),

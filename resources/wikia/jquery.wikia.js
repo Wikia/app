@@ -594,11 +594,6 @@ $.showCustomModal('title', '<b>content</b>',
 
 		// For selenium tests
 		window.wgWikiaDOMReady = true;
-
-		// Dynamic timestamps
-		if (typeof $.fn.timeago != 'undefined') {
-			$('.timeago').timeago();
-		}
 	});
 
 	var $window = $(window);

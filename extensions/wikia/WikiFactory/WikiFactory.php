@@ -555,6 +555,50 @@ class WikiFactory {
 	}
 
 	/**
+	 * Returns a list of language wikis hosted under the current domain. This works only for wikis
+	 * hosted at the root of the domain, for language path wikis it will return an empty list.
+	 *
+	 * If used often, put a caching layer on top of it.
+	 *
+	 * @return array list of wikis, each entry is a dict with 'city_id', 'city_url' and 'city_dbname' keys
+	 */
+	public static function getLanguageWikis() {
+		global $wgScriptPath, $wgServer, $wgCityId;
+
+		if ( $wgScriptPath !== '' ) {
+			return [];
+		}
+
+		$dbr = static::db( DB_SLAVE );
+
+		$url = parse_url( $wgServer );
+		$server = static::normalizeHost( $url['host'] );
+		$where = [
+			$dbr->makeList( [
+				'city_url ' . $dbr->buildLike( "http://{$server}/", $dbr->anyString() ),
+				'city_url ' . $dbr->buildLike( "https://{$server}/", $dbr->anyString() ),
+			], LIST_OR ),
+			"city_id != $wgCityId",
+		];
+		$dbResult = $dbr->select(
+			[ 'city_list' ],
+			[ 'city_id', 'city_url', 'city_dbname' ],
+			$where,
+			__METHOD__
+		);
+		$result = [];
+		while ( $row = $dbr->fetchObject( $dbResult ) ) {
+			$result[] = [
+				'city_id' => $row->city_id,
+				'city_url' => $row->city_url,
+				'city_dbname' => $row->city_dbname,
+			];
+		}
+		$dbr->freeResult( $dbResult );
+		return $result;
+	}
+
+	/**
 	 * Strips the language path from city_url.
 	 *
 	 * @param string $cityUrl
@@ -1195,6 +1239,26 @@ class WikiFactory {
 	}
 
 	/**
+	 * "Unlocalizes" the host replaces env-specific domains with "wikia.com", for example
+	 * 'muppet.preview.wikia.com' -> 'muppet.wikia.com'
+	 *
+	 * @param $host
+	 * @return string normalized host name
+	 */
+	protected static function normalizeHost( $host ) {
+		global $wgDevDomain, $wgWikiaBaseDomain;
+		// strip env-specific pre- and suffixes for staging environment
+		$host = preg_replace(
+			'/\.(stable|preview|verify|sandbox-[a-z0-9]+)\.' . preg_quote( $wgWikiaBaseDomain ) . '/',
+			static::WIKIA_TOP_DOMAIN,
+			$host );
+		if ( !empty( $wgDevDomain ) ) {
+			$host = str_replace( ".{$wgDevDomain}", static::WIKIA_TOP_DOMAIN, $host );
+		}
+		return $host;
+	}
+
+	/**
 	 * getLocalEnvURL
 	 *
 	 * return URL specific to current env:
@@ -1238,11 +1302,7 @@ class WikiFactory {
 			$address = '/' . $address;
 		}
 
-		// strip env-specific pre- and suffixes for staging environment
-		$server = preg_replace( '/\.(stable|preview|verify|sandbox-[a-z0-9]+)\.wikia\.com/', '.wikia.com', $server );
-		if ( !empty( $wgDevDomain ) ) {
-			$server = str_replace( ".{$wgDevDomain}", '', $server );
-		}
+		$server = static::normalizeHost( $server );
 		$server = str_replace( static::WIKIA_TOP_DOMAIN, '', $server );
 		$server = str_replace( '.' . $wgWikiaBaseDomain, '', $server ); // PLATFORM-2400: make WF redirects work on staging
 

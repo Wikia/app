@@ -15,7 +15,8 @@ import {
 	BigFancyAdInPlayer,
 	universalAdPackage,
 	isProperGeo,
-	getSamplingResults
+	getSamplingResults,
+	utils as adProductsUtils
 } from '@wikia/ad-products';
 
 import { createTracker } from './tracking/porvata-tracker-factory';
@@ -37,13 +38,18 @@ function init(
 	pageLevelTargeting,
 	legacyContext,
 	legacyBtfBlocker,
-	skin
+	skin,
+	trackingOptIn
 ) {
+	const isOptedIn = trackingOptIn.isOptedIn();
+
 	TemplateRegistry.init(legacyContext, mercuryListener);
 	scrollListener.init();
 
 	context.set('slots', getSlotsContext(legacyContext, skin));
 	context.push('listeners.porvata', createTracker(legacyContext, geo, pageLevelTargeting, adTracker));
+	context.set('options.trackingOptOut', !isOptedIn);
+	adProductsUtils.setupNpaContext();
 
 	overrideSlotService(slotRegistry, legacyBtfBlocker);
 	updatePageLevelTargeting(legacyContext, pageLevelTargeting, skin);
@@ -159,8 +165,8 @@ function getSupportedTemplateNames() {
 function updatePageLevelTargeting(legacyContext, params, skin) {
 	context.set('custom.device', utils.client.getDeviceType());
 	context.set('targeting.skin', skin);
-	context.set('options.video.moatTracking.enabled', legacyContext.get('opts.porvataMoatTrackingEnabled'));
 	context.set('options.video.moatTracking.sampling', legacyContext.get('opts.porvataMoatTrackingSampling'));
+	context.set('options.video.moatTracking.enabled', legacyContext.get('opts.porvataMoatTrackingEnabled'));
 
 	Object.keys(params).forEach((key) => context.set(`targeting.${key}`, params[key]));
 }

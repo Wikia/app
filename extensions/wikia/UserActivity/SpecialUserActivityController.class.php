@@ -45,10 +45,8 @@ class SpecialController extends \WikiaSpecialPageController {
 		$this->response->addAsset( 'special_user_activity_scss' );
 	}
 
-	/**
-	 * @template specialUserActivity
-	 */
 	public function index() {
+		$this->response->getView()->setTemplatePath( __DIR__ . '/templates/specialUserActivity.mustache' );
 		if ( $this->wg->User->isAnon() ) {
 			$this->getResponse()->redirect( '/' );
 			return;

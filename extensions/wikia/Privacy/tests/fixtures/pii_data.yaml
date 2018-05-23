@@ -1,0 +1,103 @@
+# user 1 data should be removed/anonimized
+# user 2 should be preserved
+
+cu_log:
+  - cul_target_id: 1
+    cul_type: 'userips'
+    cul_timestamp: ''
+    cul_user: 99
+    cul_user_text: ''
+    cul_target_text: ''
+    cul_reason: ''
+  - cul_target_id: 2
+    cul_type: 'userips'
+    cul_timestamp: ''
+    cul_user: 99
+    cul_user_text: ''
+    cul_target_text: ''
+    cul_reason: ''
+
+cu_changes:
+  - cuc_id: 1
+    cuc_user: 1
+  - cuc_id: 2
+    cuc_user: 2
+
+recentchanges:
+  - rc_id: 1
+    rc_user: 1
+    rc_ip_bin: 'some ip'
+    rc_namespace: 999
+    rc_title: 'Test_user'
+  - rc_id: 2
+    rc_user: 2
+    rc_ip_bin: 'some ip'
+    rc_namespace: 999
+    rc_title: 'Other_user'
+  - rc_id: 3
+    rc_user: 1
+    rc_ip_bin: 'some ip'
+    rc_namespace: 2
+    rc_title: 'Test_user'
+  - rc_id: 4
+    rc_user: 1
+    rc_ip_bin: 'some ip'
+    rc_namespace: 999
+    rc_title: 'Test_user'
+
+
+abuse_filter:
+  - af_id: 1
+    af_pattern: ''
+    af_user: 1
+    af_user_text: 'username'
+    af_timestamp: ''
+  - af_id: 2
+    af_pattern: ''
+    af_user: 2
+    af_user_text: 'username'
+    af_timestamp: ''
+
+abuse_filter_log:
+  - afl_id: 1
+    afl_user: 1
+    afl_user_text: ''
+    afl_ip: 'some ip'
+    afl_action: ''
+    afl_actions: ''
+    afl_var_dump: ''
+    afl_timestamp: ''
+    afl_namespace: 0
+    afl_title: ''
+    afl_filter: 0
+  - afl_id: 2
+    afl_user: 2
+    afl_user_text: ''
+    afl_ip: 'some ip'
+    afl_action: ''
+    afl_actions: ''
+    afl_var_dump: ''
+    afl_timestamp: ''
+    afl_namespace: 0
+    afl_title: ''
+    afl_filter: 0
+
+page:
+  - page_id: 1
+    page_namespace: 2
+    page_title: 'Test user'
+    page_is_redirect: 0
+    page_len: 1
+    page_latest: 1
+  - page_id: 2
+    page_namespace: 2
+    page_title: 'Old_test_user'
+    page_is_redirect: 1
+    page_len: 1
+    page_latest: 1
+  - page_id: 3
+    page_namespace: 2
+    page_title: 'Other_test_user'
+    page_is_redirect: 0
+    page_len: 1
+    page_latest: 1

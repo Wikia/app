@@ -41,6 +41,11 @@ class WikiaRobotsTest extends WikiaBaseTest {
 			->willReturnCallback( function ( $param ) {
 				return [ '/path/for/param/' . $param ];
 			} );
+		$pathBuilderMock->expects( $this->any() )
+			->method( 'buildPath' )
+			->willReturnCallback( function ( $path ) {
+				return $path;
+			} );
 		return $pathBuilderMock;
 	}
 
@@ -116,13 +121,11 @@ class WikiaRobotsTest extends WikiaBaseTest {
 	public function testNonProductionEnvironment( $env ) {
 		$this->mockGlobalVariable( 'wgWikiaEnvironment', $env );
 		$this->mockGlobalVariable( 'wgRobotsTxtBlockedWiki', false );
-
 		$robotsTxtMock = $this->getWikiaRobotsTxt();
-
-		$this->assertEquals( $robotsTxtMock->spiedDisallowedPaths, [ [ '/' ] ] );
-		$this->assertEquals( $robotsTxtMock->spiedAllowedPaths, [] );
-		$this->assertEquals( $robotsTxtMock->spiedBlockedRobots, [] );
-		$this->assertEquals( $robotsTxtMock->spiedSitemap, [] );
+		$this->assertEquals( [ [ '/' ] ], $robotsTxtMock->spiedDisallowedPaths );
+		$this->assertEquals( [], $robotsTxtMock->spiedAllowedPaths );
+		$this->assertEquals( [], $robotsTxtMock->spiedBlockedRobots );
+		$this->assertEquals( [], $robotsTxtMock->spiedSitemap );
 	}
 
 	public function dataProviderNonProductionEnvironment() {

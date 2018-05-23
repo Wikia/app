@@ -7,8 +7,9 @@ define('ext.wikia.adEngine.tracking.adInfoListener',  [
 	'ext.wikia.adEngine.video.vastParser',
 	'wikia.log',
 	'wikia.querystring',
+	'wikia.trackingOptIn',
 	'wikia.window'
-], function (adContext, lookupServices, tracker, eventDispatcher, vastParser, log, Querystring, win) {
+], function (adContext, lookupServices, tracker, eventDispatcher, vastParser, log, Querystring, trackingOptIn, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.tracking.adInfoListener',

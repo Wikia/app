@@ -38,16 +38,29 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.indexExchange', function () 
 				[970, 250]
 			],
 			id: '1',
-			siteID: 183423
+			siteId: 183423
 		})).toEqual({
 			code: 'TOP_LEADERBOARD',
-			sizes: [[728, 90], [970, 250]],
+			mediaTypes: {
+				banner: {
+					sizes: [[728, 90], [970, 250]]
+				}
+			},
 			bids: [
 				{
 					bidder: 'indexExchange',
 					params: {
 						id: '1',
-						siteID: 183423
+						siteId: '183423',
+						size: [728, 90]
+					}
+				},
+				{
+					bidder: 'indexExchange',
+					params: {
+						id: '1',
+						siteId: '183423',
+						size: [970, 250]
 					}
 				}
 			]
