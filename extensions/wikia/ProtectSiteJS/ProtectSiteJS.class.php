@@ -42,7 +42,6 @@ class ProtectSiteJS {
 			'chat',
 			'common',
 			'wikia',
-			'uncyclopedia',
 		];
 
 		if ( $wgCityId == Wikia::COMMUNITY_WIKI_ID ) {
