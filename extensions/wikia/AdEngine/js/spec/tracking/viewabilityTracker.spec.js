@@ -15,13 +15,7 @@ describe('ext.wikia.adEngine.tracking.viewabilityTracker', function () {
 			},
 			log: function () {},
 			opts: {
-				isOptedIn: true,
 				kikimoraViewabilityTracking: true
-			},
-			trackingOptIn: {
-				isOptedIn: function () {
-					return mocks.opts.isOptedIn
-				}
 			},
 			win: {
 				pvUID: 'fooBarID'
@@ -33,7 +27,6 @@ describe('ext.wikia.adEngine.tracking.viewabilityTracker', function () {
 			mocks.adContext,
 			mocks.adTracker,
 			mocks.log,
-			mocks.trackingOptIn,
 			mocks.win
 		);
 	}
@@ -53,7 +46,6 @@ describe('ext.wikia.adEngine.tracking.viewabilityTracker', function () {
 	}
 
 	beforeEach(function () {
-		mocks.opts.isOptedIn = true;
 		mocks.opts.kikimoraViewabilityTracking = true;
 		mocks.log.levels = {};
 	});
@@ -61,15 +53,6 @@ describe('ext.wikia.adEngine.tracking.viewabilityTracker', function () {
 	it('Do not track if it is disabled in context', function () {
 		spyOn(mocks.adTracker, 'trackDW');
 		mocks.opts.kikimoraViewabilityTracking = false;
-
-		getModule().track({});
-
-		expect(mocks.adTracker.trackDW).not.toHaveBeenCalled();
-	});
-
-	it('Do not track if user opts out', function () {
-		spyOn(mocks.adTracker, 'trackDW');
-		mocks.opts.isOptedIn = false;
 
 		getModule().track({});
 

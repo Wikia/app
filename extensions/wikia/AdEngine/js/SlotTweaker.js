@@ -3,14 +3,12 @@ define('ext.wikia.adEngine.slotTweaker', [
 	'ext.wikia.adEngine.domElementTweaker',
 	'ext.wikia.adEngine.slot.adSlot',
 	'wikia.document',
-	'wikia.log',
-	'wikia.window'
-], function (DOMElementTweaker, adSlot, doc, log, win) {
+	'wikia.log'
+], function (DOMElementTweaker, adSlot, doc, log) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.slotTweaker',
-		defaultHeightClass = 'default-height',
-		standardLeaderboardSizeClass = 'standard-leaderboard';
+		defaultHeightClass = 'default-height';
 
 	function hide(slotname, useInline) {
 		log('hide ' + slotname + ' using class hidden', 6, logGroup);

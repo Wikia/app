@@ -1,4 +1,4 @@
-/*global define, Promise*/
+/*global define*/
 define('ext.wikia.adEngine.utils.scriptLoader', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adTracker',

@@ -170,7 +170,7 @@ class MigrateCustomJsToHttps extends Maintenance {
 	 */
 	private function upgradeThirdPartyUrl( $url ) {
 		$knownHttpsHosts = [ 'en.wikipedia.org', 'i.imgur.com', 'upload.wikimedia.org', 'fonts.googleapis.com',
-			'commons.wikimedia.org' ];
+			'commons.wikimedia.org', 'platform.twitter.com' ];
 		$host = parse_url( $url, PHP_URL_HOST );
 		if ( in_array( $host, $knownHttpsHosts ) ) {
 			$newUrl = $this->upgradeToHttps( $url );

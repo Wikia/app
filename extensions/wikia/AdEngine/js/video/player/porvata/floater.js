@@ -1,4 +1,4 @@
-/*global define, require*/
+/*global define*/
 define('ext.wikia.adEngine.video.player.porvata.floater', [
 		'ext.wikia.adEngine.video.player.porvata.floaterConfiguration',
 		'ext.wikia.adEngine.video.player.porvata.floatingContextFactory',

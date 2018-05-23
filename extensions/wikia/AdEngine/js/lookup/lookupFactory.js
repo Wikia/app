@@ -1,4 +1,4 @@
-/*global define Promise*/
+/*global define, require, setTimeout, clearTimeout*/
 define('ext.wikia.adEngine.lookup.lookupFactory', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adTracker',

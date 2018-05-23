@@ -86,20 +86,12 @@ class ArticlesUsingMediaQuery {
 			$changedImages[ $img['il_to'] ] = true;
 		}
 
-		$sendTrackEvent = false;
 		foreach( $changedImages as $imageDBName => $dummy ) {
 			$title = Title::newFromDBkey( $imageDBName );
 			if ( !empty( $title ) ) {
 				$mq = new self( $title );
 				$mq->unsetCache();
-
-				$sendTrackEvent = true;
 			}
-		}
-
-		// send track event if embed change
-		if ( $sendTrackEvent ) {
-			Track::event( 'embed_change' );
 		}
 
 		wfProfileOut(__METHOD__);
