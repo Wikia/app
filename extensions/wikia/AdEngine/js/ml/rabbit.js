@@ -1,12 +1,14 @@
 /*global define, require*/
 define('ext.wikia.adEngine.ml.rabbit', [
 	require.optional('ext.wikia.adEngine.ml.ctp.ctpDesktop'),
+	require.optional('ext.wikia.adEngine.ml.ctp.ctpMobile'),
 	require.optional('ext.wikia.adEngine.ml.n1.n1DecisionTreeClassifier'),
 	require.optional('ext.wikia.adEngine.ml.n1.n1LogisticRegression'),
 	require.optional('ext.wikia.adEngine.ml.n1.n1mLogisticRegression'),
 	require.optional('ext.wikia.adEngine.ml.nivens.mobileNivensLogisticRegression')
 ], function (
 	ctpDesktop,
+	ctpMobile,
 	n1dtc,
 	n1Lr,
 	n1mLr,
@@ -16,6 +18,7 @@ define('ext.wikia.adEngine.ml.rabbit', [
 
 	var models = [
 		ctpDesktop,
+		ctpMobile,
 		n1dtc,
 		n1Lr,
 		n1mLr,
