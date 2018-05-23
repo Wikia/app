@@ -75,7 +75,11 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.openx',[
 	function prepareAdUnit(slotName, config) {
 		return {
 			code: slotName,
-			sizes: config.sizes,
+			mediaTypes: {
+				banner: {
+					sizes: config.sizes
+				}
+			},
 			bids: [
 				{
 					bidder: bidderName,

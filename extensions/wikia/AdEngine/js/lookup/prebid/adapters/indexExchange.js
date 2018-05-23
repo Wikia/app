@@ -6,6 +6,9 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.indexExchange',[
 	'use strict';
 
 	var bidderName = 'indexExchange',
+		aliases = {
+			'ix': [bidderName]
+		},
 		slots = {
 			oasis: {
 				TOP_LEADERBOARD: {
@@ -14,7 +17,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.indexExchange',[
 						[970, 250]
 					],
 					id: '1',
-					siteID: 183423
+					siteId: 183423
 				},
 				TOP_RIGHT_BOXAD: {
 					sizes: [
@@ -22,7 +25,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.indexExchange',[
 						[300, 600]
 					],
 					id: '2',
-					siteID: 183567
+					siteId: 183567
 				},
 				INCONTENT_BOXAD_1: {
 					sizes: [
@@ -31,7 +34,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.indexExchange',[
 						[300, 250]
 					],
 					id: '9',
-					siteID: 185049
+					siteId: 185049
 				},
 				BOTTOM_LEADERBOARD: {
 					sizes: [
@@ -39,7 +42,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.indexExchange',[
 						[970, 250]
 					],
 					id: '12',
-					siteID: 209250
+					siteId: 209250
 				}
 			},
 			mercury: {
@@ -48,7 +51,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.indexExchange',[
 						[320, 50]
 					],
 					id: '3',
-					siteID: 183568
+					siteId: 183568
 				},
 				MOBILE_IN_CONTENT: {
 					sizes: [
@@ -56,7 +59,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.indexExchange',[
 						[320, 480]
 					],
 					id: '10',
-					siteID: 185055
+					siteId: 185055
 				},
 				BOTTOM_LEADERBOARD: {
 					sizes: [
@@ -64,7 +67,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.indexExchange',[
 						[320, 50]
 					],
 					id: '11',
-					siteID: 185056
+					siteId: 185056
 				}
 			},
 			recovery: {
@@ -74,7 +77,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.indexExchange',[
 						[970, 250]
 					],
 					id: '1',
-					siteID: 215807
+					siteId: 215807
 				},
 				TOP_RIGHT_BOXAD: {
 					sizes: [
@@ -82,7 +85,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.indexExchange',[
 						[300, 600]
 					],
 					id: '2',
-					siteID: 215808
+					siteId: 215808
 				},
 				INCONTENT_BOXAD_1: {
 					sizes: [
@@ -91,7 +94,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.indexExchange',[
 						[300, 250]
 					],
 					id: '9',
-					siteID: 215809
+					siteId: 215809
 				},
 				BOTTOM_LEADERBOARD: {
 					sizes: [
@@ -99,7 +102,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.indexExchange',[
 						[970, 250]
 					],
 					id: '12',
-					siteID: 215810
+					siteId: 215810
 				}
 			}
 		};
@@ -117,16 +120,21 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.indexExchange',[
 	function prepareAdUnit(slotName, config) {
 		return {
 			code: slotName,
-			sizes: config.sizes,
-			bids: [
-				{
+			mediaTypes: {
+				banner: {
+					sizes: config.sizes
+				}
+			},
+			bids: config.sizes.map(function (size) {
+				return {
 					bidder: bidderName,
 					params: {
 						id: config.id,
-						siteID: config.siteID
+						siteId: String(config.siteId),
+						size: size
 					}
-				}
-			]
+				};
+			})
 		};
 	}
 
@@ -134,9 +142,14 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.indexExchange',[
 		return bidderName;
 	}
 
+	function getAliases() {
+		return aliases;
+	}
+
 	return {
 		isEnabled: isEnabled,
 		getName: getName,
+		getAliases: getAliases,
 		getSlots: getSlots,
 		prepareAdUnit: prepareAdUnit
 	};

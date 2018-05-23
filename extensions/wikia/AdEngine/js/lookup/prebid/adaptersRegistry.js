@@ -1,5 +1,6 @@
 /*global define*/
 define('ext.wikia.adEngine.lookup.prebid.adaptersRegistry', [
+	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.lookup.prebid.adapters.aol',
 	'ext.wikia.adEngine.lookup.prebid.adapters.appnexus',
 	'ext.wikia.adEngine.lookup.prebid.adapters.appnexusAst',
@@ -14,8 +15,10 @@ define('ext.wikia.adEngine.lookup.prebid.adaptersRegistry', [
 	'ext.wikia.adEngine.lookup.prebid.adapters.rubiconDisplay',
 	'ext.wikia.adEngine.lookup.prebid.adapters.wikia',
 	'ext.wikia.adEngine.lookup.prebid.adapters.wikiaVideo',
+	'ext.wikia.adEngine.lookup.prebid.versionCompatibility',
 	'wikia.window'
 ], function(
+	adContext,
 	aol,
 	appnexus,
 	appnexusAst,
@@ -30,6 +33,7 @@ define('ext.wikia.adEngine.lookup.prebid.adaptersRegistry', [
 	rubiconDisplay,
 	wikia,
 	wikiaVideo,
+	prebidVersionCompatibility,
 	win
 ) {
 	'use strict';
@@ -62,12 +66,17 @@ define('ext.wikia.adEngine.lookup.prebid.adaptersRegistry', [
 	}
 
 	function registerAliases() {
+		var isNewPrebidEnabled = adContext.get('opts.isNewPrebidEnabled');
+
 		adapters.forEach(function (adapter) {
 			var aliasMap = {};
 
 			if (typeof adapter.getAliases === 'function') {
 				win.pbjs.que.push(function () {
-					aliasMap = adapter.getAliases();
+					aliasMap = isNewPrebidEnabled ?
+						adapter.getAliases() :
+						prebidVersionCompatibility.toVersion0.decorateGetAliases(adapter.getAliases)();
+
 					Object.keys(aliasMap).forEach(function (bidderName) {
 						aliasMap[bidderName].forEach(function (alias) {
 							win.pbjs.aliasBidder(bidderName, alias);
