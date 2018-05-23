@@ -21,7 +21,7 @@ define('ext.wikia.adEngine.ml.inputParser', [
 			esrb: pageParams.esrb || null,
 			videoId: featuredVideoData.mediaId || null,
 			videoTag: featuredVideoData.videoTags || null,
-			wikiId: adContext.get('targeting.wikiId')
+			wikiId: adContext.get('targeting.wikiId') || null
 		};
 
 		log(['pageValues', pageValues], log.levels.debug, logGroup);
@@ -30,6 +30,10 @@ define('ext.wikia.adEngine.ml.inputParser', [
 	function getBinaryValue(property, value) {
 		if (pageValues === null) {
 			calculateValues();
+		}
+
+		if (typeof pageValues[property] === 'undefined') {
+			throw new Error('Value for "' + property + '" is not defined.');
 		}
 
 		if (Array.isArray(pageValues[property])) {

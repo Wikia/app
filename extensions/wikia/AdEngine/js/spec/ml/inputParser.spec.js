@@ -110,4 +110,12 @@ describe('ext.wikia.adEngine.ml.modelFactory', function () {
 		assertParsing('wikiId', '123', 1);
 		assertParsing('wikiId', '789', 0);
 	});
+
+	it('Throw exception when data source has missing field', function () {
+		expect(function () {
+			getModule().parse([
+				{ name: 'foo', value: 'bar' }
+			]);
+		}).toThrowError('Value for "foo" is not defined.');
+	});
 });
