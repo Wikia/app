@@ -170,9 +170,9 @@ class WikiaRobots {
 
 		// Sitemap
 		if ( !empty( $wgEnableSitemapXmlExt ) && !empty( $wgSitemapXmlExposeInRobots ) ) {
-			$robots->setSitemap( $wgServer . '/sitemap-newsitemapxml-index.xml' );
+			$robots->addSitemap( $wgServer . '/sitemap-newsitemapxml-index.xml' );
 		} elseif ( !empty( $wgEnableSpecialSitemapExt ) ) {
-			$robots->setSitemap( $wgServer . '/sitemap-index.xml' );
+			$robots->addSitemap( $wgServer . '/sitemap-index.xml' );
 		}
 
 		// Block namespaces

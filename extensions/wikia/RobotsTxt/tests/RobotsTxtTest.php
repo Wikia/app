@@ -194,16 +194,17 @@ class RobotsTxtTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * Test setSitemap
+	 * Test addSitemap
 	 *
-	 * @covers RobotsTxt::setSitemap
+	 * @covers RobotsTxt::addSitemap
 	 */
 	public function testSetSitemap() {
 		$robots = new RobotsTxt();
-		$robots->setSitemap( 'http://www.my-site.com/sitemap.xml' );
+		$robots->addSitemap( 'http://www.my-site.com/sitemap.xml' );
+		$robots->addSitemap( 'http://www.my-site.com/de/sitemap.xml' );
 
 		$this->assertEquals(
-			[ 'Sitemap: http://www.my-site.com/sitemap.xml' ],
+			[ 'Sitemap: http://www.my-site.com/sitemap.xml', 'Sitemap: http://www.my-site.com/de/sitemap.xml'],
 			$robots->getContents()
 		);
 	}
@@ -216,7 +217,7 @@ class RobotsTxtTest extends WikiaBaseTest {
 	public function testSitemapWithOtherMethods() {
 		$robots = new RobotsTxt();
 		$robots->addAllowedPaths( [ '/abc' ] );
-		$robots->setSitemap( 'http://www.my-site.com/sitemap.xml' );
+		$robots->addSitemap( 'http://www.my-site.com/sitemap.xml' );
 		$robots->addDisallowedPaths( [ '/def' ] );
 		$robots->addBlockedRobots( [ 'my-robot' ] );
 
