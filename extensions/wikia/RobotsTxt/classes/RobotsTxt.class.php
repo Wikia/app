@@ -61,6 +61,10 @@ class RobotsTxt {
 		return $this->disallowed;
 	}
 
+	public function getSitemaps() {
+		return $this->sitemaps;
+	}
+
 	/**
 	 * Add a sitemap URL
 	 *
@@ -68,6 +72,15 @@ class RobotsTxt {
 	 */
 	public function addSitemap( $sitemapUrl ) {
 		$this->sitemaps[] = $sitemapUrl;
+	}
+
+	/**
+	 * Add multiple sitemap URLs
+	 *
+	 * @param array $sitemaps
+	 */
+	public function addSitemaps( array $sitemaps ) {
+		$this->sitemaps =  array_merge( $this->sitemaps, $sitemaps );
 	}
 
 	// Private methods follow:

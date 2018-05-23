@@ -220,6 +220,9 @@ class WikiaRobots {
 					if ( isset( $response['disallowed'] ) ) {
 						$robots->addDisallowedPaths( $response['disallowed'] );
 					}
+					if ( isset( $response['sitemaps'] ) ) {
+						$robots->addSitemaps( $response['sitemaps'] );
+					}
 				} else {
 					\Wikia\Logger\WikiaLogger::instance()->error( 'Cannot fetch language wiki robots rules', [
 						'fields' => ['foreign_dbname' => $wiki[ 'city_dbname' ] ]

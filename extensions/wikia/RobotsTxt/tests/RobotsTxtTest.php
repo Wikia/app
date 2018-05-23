@@ -198,13 +198,31 @@ class RobotsTxtTest extends WikiaBaseTest {
 	 *
 	 * @covers RobotsTxt::addSitemap
 	 */
-	public function testSetSitemap() {
+	public function testAddSitemap() {
 		$robots = new RobotsTxt();
 		$robots->addSitemap( 'http://www.my-site.com/sitemap.xml' );
 		$robots->addSitemap( 'http://www.my-site.com/de/sitemap.xml' );
 
 		$this->assertEquals(
 			[ 'Sitemap: http://www.my-site.com/sitemap.xml', 'Sitemap: http://www.my-site.com/de/sitemap.xml'],
+			$robots->getContents()
+		);
+	}
+
+	/**
+	 * Test addSitemaps
+	 *
+	 * @covers RobotsTxt::addSitemaps
+	 */
+	public function testAddSitemaps() {
+		$robots = new RobotsTxt();
+		$robots->addSitemaps( [ 'http://www.my-site.com/sitemap.xml' ] );
+		$robots->addSitemaps( [ 'http://www.my-site.com/de/sitemap.xml', 'http://www.my-site.com/pl/sitemap.xml' ] );
+
+		$this->assertEquals([
+			'Sitemap: http://www.my-site.com/sitemap.xml',
+			'Sitemap: http://www.my-site.com/de/sitemap.xml',
+			'Sitemap: http://www.my-site.com/pl/sitemap.xml' ],
 			$robots->getContents()
 		);
 	}
