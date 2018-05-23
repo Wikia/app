@@ -35,10 +35,9 @@ abstract class AbstractEmailConfirmationController extends EmailController {
 		$this->assertUserHasEmail();
 	}
 
-	/**
-	 * @template registrationEmailConfirmation
-	 */
 	public function body() {
+		$this->setViewTemplate( 'registrationEmailConfirmation' );
+
 		$this->response->setData( [
 			'salutation' => $this->getSalutation(),
 			'summary' => $this->getSummary(),
