@@ -4,7 +4,15 @@ describe('ext.wikia.adEngine.ml.modelFactory', function () {
 
 	var mocks = {
 		adContext: {
-			addCallback: function () {}
+			addCallback: function () {},
+			get: function (key) {
+				if (key === 'targeting.featuredVideo') {
+					return {
+						mediaId: 'abc7x7',
+						videoTags: [ 'foo' ]
+					};
+				}
+			}
 		},
 		pageParams: {
 			getPageLevelParams: function () {
@@ -18,19 +26,18 @@ describe('ext.wikia.adEngine.ml.modelFactory', function () {
 				return 'desktop';
 			}
 		},
-		featuredVideoData: {
-			mediaId: 'abc7x7',
-			videoTags: [ 'foo' ]
-		},
 		geo: {
 			getCountryCode: function () {
 				return 'PL';
 			}
 		},
+		log: function () {},
 		win: {
 			wgCityId: '123'
 		}
 	};
+
+	mocks.log.levels = {};
 
 	function getModule() {
 		return modules['ext.wikia.adEngine.ml.inputParser'](
@@ -38,8 +45,8 @@ describe('ext.wikia.adEngine.ml.modelFactory', function () {
 			mocks.pageParams,
 			mocks.deviceDetect,
 			mocks.geo,
-			mocks.win,
-			mocks.featuredVideoData
+			mocks.log,
+			mocks.win
 		);
 	}
 

@@ -4,15 +4,17 @@ define('ext.wikia.adEngine.ml.inputParser', [
 	'ext.wikia.adEngine.adLogicPageParams',
 	'ext.wikia.adEngine.utils.device',
 	'wikia.geo',
-	'wikia.window',
-	require.optional('wikia.articleVideo.featuredVideo.data')
-], function (adContext, pageLevelParams, deviceDetect, geo, win, featuredVideoData) {
+	'wikia.log',
+	'wikia.window'
+], function (adContext, pageLevelParams, deviceDetect, geo, log, win) {
 	'use strict';
 
-	var pageValues = null;
+	var pageValues = null,
+		logGroup = 'ext.wikia.adEngine.ml.inputParser';
 
 	function calculateValues() {
-		var pageParams = pageLevelParams.getPageLevelParams();
+		var featuredVideoData = adContext.get('targeting.featuredVideo') || {},
+			pageParams = pageLevelParams.getPageLevelParams();
 
 		pageValues = {
 			country: geo.getCountryCode() || null,
@@ -21,7 +23,9 @@ define('ext.wikia.adEngine.ml.inputParser', [
 			videoId: featuredVideoData.mediaId || null,
 			videoTag: featuredVideoData.videoTags || null,
 			wikiId: win.wgCityId
-		}
+		};
+
+		log(['pageValues', pageValues], log.levels.debug, logGroup);
 	}
 
 	function getBinaryValue(property, value) {
