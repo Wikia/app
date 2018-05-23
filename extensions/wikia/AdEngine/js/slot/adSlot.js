@@ -1,4 +1,4 @@
-/*global define, require*/
+/*global define*/
 define('ext.wikia.adEngine.slot.adSlot', [
 	'ext.wikia.adEngine.slot.adUnitBuilder',
 	'ext.wikia.adEngine.slot.service.megaAdUnitBuilder',

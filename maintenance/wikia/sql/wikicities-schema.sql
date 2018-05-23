@@ -458,10 +458,12 @@ CREATE TABLE `spoofuser` (
 DROP TABLE IF EXISTS `spoofuser_forgotten`;
 CREATE TABLE `spoofuser_forgotten` (
   `suf_id` int(5) NOT NULL AUTO_INCREMENT,
-  `suf_hash` char(64) NOT NULL,
+  `suf_exact_hash` char(64) NOT NULL,
+  `suf_normalized_hash` char(64) NOT NULL,
   `suf_created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`suf_id`),
-  UNIQUE KEY `suf_hash` (`suf_hash`)
+  UNIQUE KEY `suf_exact_hash` (`suf_exact_hash`),
+  UNIQUE KEY `suf_normalized_hash` (`suf_normalized_hash`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -597,4 +599,4 @@ CREATE TABLE `wikia_tasks_log` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
--- Dump completed on 2018-05-18 11:57:16
+-- Dump completed on 2018-05-21 14:11:43

@@ -78,6 +78,8 @@ $messages['en'] = array(
 	'group-fandom-editor-member' => 'News and Stories Wordpress access',
 	'group-global-discussions-moderator' => 'Global Discussions Moderator',
 	'group-global-discussions-moderator-member' => 'Global Discussions Moderator',
+	'group-request-to-be-forgotten-admin' => 'Request To Be Forgotten Tool Admin',
+	'group-request-to-be-forgotten-admin-member' => 'Request To Be Forgotten Tool Admin',
 );
 
 $messages['qqq'] = array(

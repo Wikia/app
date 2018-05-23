@@ -312,16 +312,6 @@ try {
 }
 
 /**
- * Recalculate $wgScript and $wgArticlePath for wikis with language code path
- * component.
- * @see SUS-3851
- */
-if ( !empty( $wgScriptPath ) ) {
-       $wgScript = $wgScriptPath . $wgScript;
-       $wgArticlePath = $wgScriptPath . $wgArticlePath;
-}
-
-/**
  * In some cases $wgMemc is still null at this point. Let's initialize it.
  * @see SUS-2699
  * @var string $wgDBcluster

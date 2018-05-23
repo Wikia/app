@@ -1,4 +1,4 @@
-/*global define, require*/
+/*global define*/
 define('ext.wikia.adEngine.tracking.pageLayout',  [
 	'wikia.document',
 	'wikia.domCalculator'

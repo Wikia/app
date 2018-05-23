@@ -50,14 +50,6 @@ describe('ext.wikia.adEngine.video.player.playerTracker', function () {
 					return slotName + '-' + src;
 				}
 			},
-			options: {
-				isOptedIn: true
-			},
-			trackingOptIn: {
-				isOptedIn: function () {
-					return mocks.options.isOptedIn;
-				}
-			},
 			window: {
 				pvUID: 'superFooUniqueID'
 			}
@@ -73,7 +65,6 @@ describe('ext.wikia.adEngine.video.player.playerTracker', function () {
 			mocks.browserDetect,
 			mocks.geo,
 			mocks.log,
-			mocks.trackingOptIn,
 			mocks.window,
 			mocks.bidHelper
 		);
@@ -90,22 +81,11 @@ describe('ext.wikia.adEngine.video.player.playerTracker', function () {
 	beforeEach(function () {
 		spyOn(mocks.adTracker, 'trackDW');
 		mocks.adTracker.trackDW.calls.reset();
-		mocks.options.isOptedIn = true;
 
 		tracker = getModule();
 	});
 
 	it('Do not track data when tracking is disabled', function () {
-		tracker.track({
-			trackingDisabled: true
-		}, 'fooPlayer', 'barEvent');
-
-		expect(mocks.adTracker.trackDW).not.toHaveBeenCalled();
-	});
-
-	it('Do not track data when user opts out', function () {
-		mocks.options.isOptedIn = false;
-
 		tracker.track({
 			trackingDisabled: true
 		}, 'fooPlayer', 'barEvent');
