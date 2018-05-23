@@ -95,6 +95,10 @@ define('ext.wikia.adEngine.adContext', [
 		return adsGeo.isProperGeo(geos, name);
 	}
 
+	function updateAdContextRabbitExperiments(context) {
+		context.rabbits.ctpDesktop = isProperGeo('wgAdDriverCTPDesktopRabbitCountries');
+	}
+
 	function updateAdContextBidders(context) {
 		var hasFeaturedVideo = context.targeting.hasFeaturedVideo;
 
@@ -142,6 +146,7 @@ define('ext.wikia.adEngine.adContext', [
 		context.targeting = context.targeting || {};
 		context.providers = context.providers || {};
 		context.bidders = context.bidders || {};
+		context.rabbits = context.rabbits || {};
 		context.forcedProvider = qs.getVal('forcead', null) || context.forcedProvider || null;
 		context.opts.noExternals = noExternals;
 
@@ -161,6 +166,7 @@ define('ext.wikia.adEngine.adContext', [
 		updateAdContextRecoveryServices(context, noExternals);
 
 		updateAdContextBidders(context);
+		updateAdContextRabbitExperiments(context);
 
 		// showcase.*
 		if (cookies.get('mock-ads') === 'NlfdjR5xC0') {
