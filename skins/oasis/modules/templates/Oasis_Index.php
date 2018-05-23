@@ -65,6 +65,8 @@
 	<div class="background-image-gradient"></div>
 <? endif ?>
 
+<?= $internalTracker ?>
+
 <?= $trackingOptIn ?>
 
 <?= $comScore ?>

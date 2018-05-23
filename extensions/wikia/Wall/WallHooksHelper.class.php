@@ -1770,14 +1770,9 @@ class WallHooksHelper {
 	/**
 	 * @param OutputPage $out
 	 * @param User $user
-	 * @return bool
 	 */
-	static public function onSpecialWikiActivityExecute( $out, $user ) {
-		$app = F::App();
-		$out->addScript( "<script type=\"{$app->wg->JsMimeType}\" src=\"{$app->wg->ExtensionsPath}/wikia/Wall/js/WallWikiActivity.js\"></script>\n" );
+	static public function onSpecialWikiActivityExecute( OutputPage $out, $user ) {
 		$out->addExtensionStyle( AssetsManager::getInstance()->getSassCommonURL( 'extensions/wikia/Wall/css/WallWikiActivity.scss' ) );
-
-		return true;
 	}
 
 	static protected function getQueryNS() {

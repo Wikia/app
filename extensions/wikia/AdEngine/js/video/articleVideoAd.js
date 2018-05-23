@@ -28,19 +28,26 @@ define('ext.wikia.adEngine.video.articleVideoAd', [
 				correlator: correlator,
 				vpos: position
 			},
-			slotParams = Object.assign({
+			slotParams = {
 				passback: featuredVideoPassback,
 				pos: slotName,
 				rv: calculateRV(videoDepth),
 				src: srcProvider.get(baseSrc, {testSrc: 'test'}),
 				audio: playerMuted ? 'no' : 'yes'
-			}, slotTargeting);
+			};
+
+		if (slotTargeting) {
+			Object.keys(slotTargeting).forEach(function (key) {
+				slotParams[key] = slotTargeting[key];
+			});
+		}
 
 		if (videoDepth === 1 && bidParams) {
 			Object.keys(bidParams).forEach(function (key) {
 				slotParams[key] = bidParams[key];
 			});
 		}
+
 		options.adUnit = megaAdUnitBuilder.build(slotParams.pos, slotParams.src, (playerMuted ? '' : '-audio'));
 
 		log(['buildVastUrl', position, videoDepth, slotParams, options], log.levels.debug, logGroup);

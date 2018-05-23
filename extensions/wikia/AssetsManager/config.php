@@ -133,6 +133,8 @@ $config['adengine2_rabbit_js'] = [
 	'skin' => [ 'oasis' ],
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [
+		'//extensions/wikia/AdEngine/js/ml/dataSourceFactory.js',
+		'//extensions/wikia/AdEngine/js/ml/inputParser.js',
 		'//extensions/wikia/AdEngine/js/ml/modelFactory.js',
 		'//extensions/wikia/AdEngine/js/ml/model/linear.js',
 		'//extensions/wikia/AdEngine/js/ml/rabbit.js',
@@ -144,16 +146,13 @@ $config['adengine2_rabbit_desktop_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [
 		'#group_adengine2_rabbit_js',
-		'//extensions/wikia/AdEngine/js/ml/fmr/fmrInputParser.js',
-		'//extensions/wikia/AdEngine/js/ml/fmr/fmrLogisticRegression.js',
-		'//extensions/wikia/AdEngine/js/ml/fmr/fmrPassiveAggressiveClassifier.js',
+		'//extensions/wikia/AdEngine/js/ml/ctp/ctpDesktop.js',
+		'//extensions/wikia/AdEngine/js/ml/ctp/ctpDesktopDataSource.js',
 		'//extensions/wikia/AdEngine/js/ml/model/decisionTreeClassifier.js',
 		'//extensions/wikia/AdEngine/js/ml/n1/n1DecisionTreeClassifier.js',
 		'//extensions/wikia/AdEngine/js/ml/n1/n1DecisionTreeClassifierInputParser.js',
 		'//extensions/wikia/AdEngine/js/ml/n1/n1InputParser.js',
 		'//extensions/wikia/AdEngine/js/ml/n1/n1LogisticRegression.js',
-		'//extensions/wikia/AdEngine/js/ml/outstream/outstreamInputParser.js',
-		'//extensions/wikia/AdEngine/js/ml/outstream/outstreamLogisticRegression.js',
 	],
 ];
 
@@ -424,7 +423,6 @@ $config['oasis_jquery'] = [
 		// 3rd party plugins
 		'//resources/wikia/libraries/jquery/getcss/jquery.getcss.js',
 		'//resources/wikia/libraries/jquery/cookies/jquery.cookies.2.1.0.js',
-		'//resources/wikia/libraries/jquery/timeago/jquery.timeago.js',
 		'//resources/wikia/libraries/jquery/store/jquery.store.js',
 		'//resources/wikia/libraries/jquery/throttle-debounce/jquery.throttle-debounce.js',
 		'//resources/wikia/libraries/jquery/floating-scrollbar/jquery.floating-scrollbar.js',

@@ -1,4 +1,4 @@
-/*global define*/
+/*global define, loadNewPrebid, loadOldPrebid*/
 define('ext.wikia.adEngine.lookup.prebid', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.context.uapContext',
