@@ -1,9 +1,11 @@
 define('wikia.articleVideo.featuredVideo.autoplay', [
+	'ext.wikia.adEngine.adContext',
 	'wikia.abTest',
 	'wikia.articleVideo.featuredVideo.cookies',
 //	'wikia.geo',
 //	'wikia.instantGlobals'
 ], function (
+	adContext,
 	abTest,
 	featuredVideoCookieService
 //	geo,
@@ -14,6 +16,7 @@ define('wikia.articleVideo.featuredVideo.autoplay', [
 	function isAutoplayEnabled() {
 		return featuredVideoCookieService.getAutoplay() !== '0' &&
 			// geo.isProperGeo(instantGlobals.wgArticleVideoAutoplayCountries) &&
+			!adContext.get('rabbits.ctpDesktop') &&
 			!inFeaturedVideoClickToPlayABTest;
 	}
 
