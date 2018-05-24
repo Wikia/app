@@ -7433,6 +7433,7 @@ $wgSkipSkins = [
     'lostbook',
     'memalpha',
     'monaco_old',
+    'monobook',
     'music',
     'politics',
     'psn',
