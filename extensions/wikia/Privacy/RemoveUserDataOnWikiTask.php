@@ -99,20 +99,37 @@ class RemoveUserDataOnWikiTask extends BaseTask {
 	private function removeUserPages( string $userDbKey ) {
 		try {
 			$dbr = wfGetDB( DB_SLAVE );
-			$userPages = $dbr->select(
+
+			// We must only remove pages from user namespaces that have titles exactly like the username
+			// or are prefixed with "<username>/". We can't use a single "<username>%" wildcard, since that could
+			// remove pages of similarly named users (e. g. users "Jo" and "Joe").
+
+			$exactMatches = $dbr->select(
 				'page',
 				['page_id', 'page_namespace', 'page_title'],
-				['page_namespace' => self::USER_NAMESPACES, 'page_title' . $dbr->buildLike( $userDbKey, $dbr->anyString() )],
+				['page_namespace' => self::USER_NAMESPACES, 'page_title' => $userDbKey],
 				__METHOD__ );
-			foreach( $userPages as $page ) {
-				$title = Title::newFromRow( $page );
-				PermanentArticleDelete::deletePage( $title );
-			}
+			$this->removePages( $exactMatches );
+
+			$prefixedMatches = $dbr->select(
+				'page',
+				['page_id', 'page_namespace', 'page_title'],
+				['page_namespace' => self::USER_NAMESPACES, 'page_title' . $dbr->buildLike( $userDbKey . '/', $dbr->anyString() )],
+			 	__METHOD__ );
+			$this->removePages( $prefixedMatches );
+
 			$this->info( "Removed user pages", ['user_db_key' => $userDbKey] );
 			return true;
 		} catch ( Exception $error ) {
 			$this->error( "Couldn't remove user pages", ['exception' => $error, 'user_db_key' => $userDbKey] );
 			return false;
+		}
+	}
+
+	private function removePages( $pages ) {
+		foreach( $pages as $page ) {
+			$title = Title::newFromRow( $page );
+			PermanentArticleDelete::deletePage( $title );
 		}
 	}
 
@@ -126,7 +143,10 @@ class RemoveUserDataOnWikiTask extends BaseTask {
 		try {
 			$db = wfGetDB( DB_MASTER );
 			$db->delete( 'recentchanges',
-				['rc_namespace' => self::USER_NAMESPACES, 'rc_title' . $db->buildLike( $userDbKey, $db->anyString() )],
+				['rc_namespace' => self::USER_NAMESPACES, 'rc_title' => $userDbKey],
+				__METHOD__ );
+			$db->delete( 'recentchanges',
+				['rc_namespace' => self::USER_NAMESPACES, 'rc_title' . $db->buildLike( $userDbKey . '/', $db->anyString() )],
 				__METHOD__ );
 			$this->info( "Removed recent changes on user pages", ["user_db_key" => $userDbKey] );
 			return true;
@@ -146,7 +166,9 @@ class RemoveUserDataOnWikiTask extends BaseTask {
 		try {
 			$db = wfGetDB( DB_MASTER );
 			$db->delete( 'logging',
-				['log_namespace' => self::USER_NAMESPACES, 'log_title' . $db->buildLike( $userDbKey, $db->anyString() )] );
+				['log_namespace' => self::USER_NAMESPACES, 'log_title' => $userDbKey] );
+			$db->delete( 'logging',
+				['log_namespace' => self::USER_NAMESPACES, 'log_title' . $db->buildLike( $userDbKey . '/', $db->anyString() )] );
 			$this->info( 'Removed action logs on user pages', ['user_db_key' => $userDbKey] );
 			return true;
 		} catch ( DBError $error ) {
@@ -184,6 +206,8 @@ class RemoveUserDataOnWikiTask extends BaseTask {
 		if ( !empty( $oldUsername ) ) {
 			$oldUserDbKey = Title::newFromText( $oldUsername )->getDBkey();
 			$results[] = $this->removeUserPages( $oldUserDbKey );
+			$results[] = $this->removeUserPagesFromRecentChanges( $oldUserDbKey );
+			$results[] = $this->removeActionLogs( $oldUserDbKey );
 		}
 
 		RemovalAuditLog::markTaskAsFinished(
