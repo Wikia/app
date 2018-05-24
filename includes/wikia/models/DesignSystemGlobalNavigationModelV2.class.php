@@ -68,7 +68,7 @@ class DesignSystemGlobalNavigationModelV2 extends WikiaModel {
 						'href' => $this->getHref( 'fandom-university' ),
 						'tracking_label' => 'link.fandom-university',
 					],
-					$this->getCreateWiki('link.start-a-wiki'),
+					$this->getCreateWiki( 'link.start-a-wiki' ),
 				]
 			];
 		} else {
