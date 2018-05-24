@@ -51,8 +51,10 @@ class PasswordResetLinkController extends EmailController {
 		return $this->getMessage( 'emailext-password-subject' )->text();
 	}
 
+	/**
+	 * @template passwordResetLink
+	 */
 	public function body() {
-		$this->setViewTemplate( 'passwordResetLink' );
 		$url = $this->getResetLink();
 
 		$this->response->setData( [

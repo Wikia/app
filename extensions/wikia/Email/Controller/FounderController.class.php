@@ -62,9 +62,10 @@ class FounderEditController extends EmailController {
 		}
 	}
 
+	/**
+	 * @template avatarLayout
+	 */
 	public function body() {
-		$this->setViewTemplate( 'avatarLayout' );
-
 		$this->response->setData( [
 			'salutation' => $this->getSalutation(),
 			'editorProfilePage' => $this->getCurrentProfilePage(),
@@ -249,9 +250,10 @@ class FounderActiveController extends EmailController {
 		return $this->getMessage( 'emailext-founder-active-subject' )->text();
 	}
 
+	/**
+	 * @template multiAvatarLayout
+	 */
 	public function body() {
-		$this->setViewTemplate( 'multiAvatarLayout' );
-
 		$this->response->setData( [
 			'salutation' => $this->getSalutation(),
 			'summary' => $this->getSummary(),
@@ -355,9 +357,10 @@ class FounderActiveController extends EmailController {
 
 class FounderNewMemberController extends EmailController {
 
+	/**
+	 * @template avatarLayout
+	 */
 	public function body() {
-		$this->setViewTemplate( 'avatarLayout' );
-
 		$this->response->setData( [
 			'salutation' => $this->getSalutation(),
 			'editorProfilePage' => $this->getCurrentProfilePage(),
@@ -467,9 +470,10 @@ class FounderTipsController extends EmailController {
 		return $this->getMessage( 'emailext-founder-newly-created-subject', $this->wikiName )->text();
 	}
 
+	/**
+	 * @template digestLayout
+	 */
 	public function body() {
-		$this->setViewTemplate( 'digestLayout' );
-
 		$this->response->setData( [
 			'salutation' => $this->getSalutation(),
 			'summary' => $this->getMessage( 'emailext-founder-newly-created-summary', $this->wikiUrl, $this->wikiName )->parse(),
@@ -563,9 +567,10 @@ class FounderTipsThreeDaysController extends FounderTipsController {
 		return $this->getMessage( 'emailext-founder-3-days-subject', $this->wikiName )->text();
 	}
 
+	/**
+	 * @template digestLayout
+	 */
 	public function body() {
-		$this->setViewTemplate( 'digestLayout' );
-
 		$this->response->setData( [
 			'salutation' => $this->getSalutation(),
 			'summary' => $this->getMessage( 'emailext-founder-3-days-extended-summary' )->text(),
@@ -627,9 +632,10 @@ class FounderTipsTenDaysController extends FounderTipsController {
 		return $this->getMessage( 'emailext-founder-10-days-subject', $this->wikiName )->text();
 	}
 
+	/**
+	 * @template digestLayout
+	 */
 	public function body() {
-		$this->setViewTemplate( 'digestLayout' );
-
 		$this->response->setData( [
 			'salutation' => $this->getSalutation(),
 			'summary' => $this->getMessage( 'emailext-founder-10-days-summary', $this->wikiUrl, $this->wikiName )->parse(),
