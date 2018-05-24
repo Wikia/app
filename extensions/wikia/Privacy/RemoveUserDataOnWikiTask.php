@@ -81,6 +81,9 @@ class RemoveUserDataOnWikiTask extends BaseTask {
 				$this->error( "Couldn't remove abuse filter data", ['exception' => $error] );
 				return false;
 			}
+		} else {
+			$this->info( "Skipping abuse filter, the extension is disabled" );
+			return true;
 		}
 	}
 

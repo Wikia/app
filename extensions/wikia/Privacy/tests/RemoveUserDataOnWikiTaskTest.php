@@ -122,7 +122,7 @@ class RemoveUserDataOnWikiTaskTest extends WikiaDatabaseTest {
 		$dbr = wfGetDB( DB_SLAVE );
 
 		$this->assertEquals( 1,
-			$dbr->estimateRowCount( 'rtbf_log_details', '*', [ 'log_id' => self::TEST_AUDIT_ID ],
+			$dbr->estimateRowCount( 'rtbf_log_details', '*', [ 'log_id' => self::TEST_AUDIT_ID, 'was_successful' => 1 ],
 				__METHOD__ ), 'No audit log found' );
 	}
 
