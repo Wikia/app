@@ -213,7 +213,7 @@ class RemoveUserDataOnWikiTask extends BaseTask {
 		RemovalAuditLog::markTaskAsFinished(
 			$auditLogId,
 			$wgCityId,
-			array_reduce( $results, function( $acc, $res ) { return $acc && $res; } ) );
+			array_reduce( $results, function( $acc, $res ) { return $acc && $res; }, true ) );
 
 		$this->info( "Removed user data from wiki" );
 	}
