@@ -33,16 +33,8 @@ class DesignSystemGlobalNavigationModelV2 extends WikiaModel {
 				'module' => $this->getSearchData()
 			],
 			'create_wiki' => [
-				'header' => [
-					'type' => 'link-text',
-					'title' => [
-						'type' => 'translatable-text',
-						'key' => 'global-navigation-create-wiki-link-start-wikia'
-					],
-					'href' => $this->getHref( 'create-new-wiki', true ),
-					'tracking_label' => 'start-a-wiki',
-				]
-			]
+				'header' => $this->getCreateWiki( 'start-a-wiki' )
+			],
 		];
 
 		if ( $this->lang === static::DEFAULT_LANG && !$this->isWikiaOrgCommunity() ) {
@@ -75,7 +67,8 @@ class DesignSystemGlobalNavigationModelV2 extends WikiaModel {
 						],
 						'href' => $this->getHref( 'fandom-university' ),
 						'tracking_label' => 'link.fandom-university',
-					]
+					],
+					$this->getCreateWiki( 'link.start-a-wiki' ),
 				]
 			];
 		} else {
@@ -102,6 +95,18 @@ class DesignSystemGlobalNavigationModelV2 extends WikiaModel {
 		}
 
 		return $data;
+	}
+
+	private function getCreateWiki( string $trackingLabel ) {
+		return [
+			'type' => 'link-button',
+			'title' => [
+				'type' => 'translatable-text',
+				'key' => 'global-navigation-create-wiki-link-start-wikia'
+			],
+			'href' => $this->getHref( 'create-new-wiki', true ),
+			'tracking_label' => $trackingLabel,
+		];
 	}
 
 	private function getHref( $hrefKey, $protocolRelative = false ) {
