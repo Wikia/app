@@ -11,7 +11,7 @@ CREATE TABLE rtbf_log_details (
   log_id int NOT NULL,
 	wiki_id int NOT NULL,
 	created datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-	celery_task varchar(39),
+	celery_task char(39),
 	finished datetime,
 	was_successful bool,
 	foreign key (log_id) references rtbf_log(id),

@@ -119,7 +119,7 @@ CREATE TABLE `rtbf_log_details` (
   `log_id` int(10) unsigned NOT NULL,
   `wiki_id` int(10) unsigned NOT NULL,
   `created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `celery_task` varchar(39) DEFAULT NULL,
+  `celery_task` char(39) DEFAULT NULL,
   `finished` datetime DEFAULT NULL,
   `was_successful` tinyint(1) DEFAULT NULL,
   UNIQUE KEY `log_id` (`log_id`,`wiki_id`),
