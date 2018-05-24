@@ -179,6 +179,11 @@ class WikiaView {
 
 		$controllerClass = $this->getClassName( $controllerClassWithNamespace );
 
+		$fromAnnotation = $this->getTemplateAnnotation( $controllerClassWithNamespace, $methodName );
+		if ( !empty( $fromAnnotation ) ) {
+			$templates[] = $fromAnnotation;
+		}
+
 		// Add variations on the controller name
 		if ( $controllerBaseName === null ) {
 			$controllerBaseName = F::app()->getBaseName( $controllerClass );
@@ -195,6 +200,41 @@ class WikiaView {
 		$controllerClassExploded = explode( '\\', $controllerClassWithNamespace );
 
 		return end( $controllerClassExploded );
+	}
+
+	/**
+	 * Extract template form "@template" annotation of a method
+	 *
+	 * @param string $controllerClass
+	 * @param string $methodName
+	 * @return mixed|null
+	 */
+	protected function getTemplateAnnotation( string $controllerClass, string $methodName ) {
+		static $annotations = [];
+		$cacheKey = $controllerClass . '-' . $methodName;
+
+		// Cache the result of this reflection code
+		if ( array_key_exists( $cacheKey, $annotations ) ) {
+			return $annotations[$cacheKey];
+		}
+
+		$template = null;
+
+		// Make sure this method exists, otherwise the call to getMethod crashes PHP
+		// so badly it can't even log that a problem occurred.
+		if ( method_exists( $controllerClass, $methodName ) ) {
+			// See if there is a @template annotation for the method we're generating a view for
+			$reflection = new ReflectionClass( $controllerClass );
+			$method = $reflection->getMethod( $methodName );
+
+			$comment = $method->getDocComment();
+			if ( preg_match( '/@template (\S+)/', $comment, $matches ) ) {
+				$template = $matches[1];
+			}
+		}
+
+		$annotations[$cacheKey] = $template;
+		return $template;
 	}
 
 	/**
