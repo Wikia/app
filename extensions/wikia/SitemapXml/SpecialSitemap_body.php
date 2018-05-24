@@ -35,8 +35,6 @@ class SitemapPage extends UnlistedSpecialPage {
 	 * @param $subpage Mixed: subpage of SpecialPage
 	 */
 	public function execute( $subpage ) {
-		global $wgOut;
-
 		// keeping the checks for old sitemaps for now so we return 404s
 		$showIndex = strpos( $subpage, '-index.xml' ) !== false;
 
@@ -44,7 +42,7 @@ class SitemapPage extends UnlistedSpecialPage {
 		$forceNewSitemap = strpos( $subpage, '-newsitemapxml-' ) !== false;
 
 		if ( ( $showIndex && !$forceOldSitemap ) || $forceNewSitemap ) {
-			$wgOut->disable();
+			$this->getOutput()->disable();
 			$response = F::app()->sendRequest( 'SitemapXml', 'index', [ 'path' => $subpage ] );
 			$response->sendHeaders();
 			echo $response->getBody();
@@ -60,9 +58,7 @@ class SitemapPage extends UnlistedSpecialPage {
 	 * @access private
 	 */
 	private function print404() {
-		global $wgOut;
-
-		$wgOut->disable();
+		$this->getOutput()->disable();
 
 		header( 'HTTP/1.0 404 Not Found' );
 		echo '404: Page doesn\'t exist';
