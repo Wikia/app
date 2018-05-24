@@ -1427,6 +1427,7 @@ class Wikia {
 				'file-resolution-exceeded',
 				round( $imageResolution / 1000000, 2 ),
 				round( $wgMaxImageArea / 1000000, 2 ),
+				$imageInfo['mime'],
 			];
 		}
 
