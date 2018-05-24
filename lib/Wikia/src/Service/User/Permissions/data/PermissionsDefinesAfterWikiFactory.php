@@ -647,5 +647,4 @@ $wgGroupPermissions['util']['exportuserdata'] = true;
 
 // request to be forgotten
 $wgGroupPermissions['*']['requesttobeforgotten'] = false;
-$wgGroupPermissions['staff']['requesttobeforgotten'] = true;
 $wgGroupPermissions['request-to-be-forgotten-admin']['requesttobeforgotten'] = true;
