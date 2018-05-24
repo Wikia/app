@@ -326,7 +326,7 @@ class WikiaMiniUpload {
 				'name' => stripslashes( $wgRequest->getFileName( 'wpUploadFile' ) ),
 				'mwname' => $tempname,
 				'tempid' => $tempid,
-				'upload' => true
+				'upload' => true,
 				'default_caption' => Wikia::getProps( $file->getTitle()->getArticleID(), 'default_caption' )
 			];
 			return $this->detailsPage($props);
@@ -590,7 +590,7 @@ class WikiaMiniUpload {
 						$license = $wgRequest->getVal( 'ImageUploadLicense' );
 
 						if ( $license != '' ) {
-							$caption = '== ' . wfMessage( 'license' )->inContentLanguage()->text() . " ==\n" . {{' . $license . '}} . "\n";
+							$caption = '== ' . wfMessage( 'license' )->inContentLanguage()->text() . " ==\n" . '{{' . $license . '}}' . "\n";
 						} else {
 							$caption = '';
 						}
@@ -630,7 +630,7 @@ class WikiaMiniUpload {
 
 		if ( ( -2 == $gallery ) && !$ck ) {
 			// this went in from the single placeholder...
-			$name = $title->getplain();
+			$name = $title->getText();
 			$size = $wgRequest->getVal( 'size' );
 			$width = $wgRequest->getVal( 'width' );
 			$layout = $wgRequest->getVal( 'layout' );
