@@ -607,7 +607,7 @@ abstract class DatabaseMysqlBase extends DatabaseBase {
 	 * Wait for the slave to catch up to a given master position.
 	 * @TODO: return values for this and base class are rubbish
 	 *
-	 * @param $pos DBMasterPos object
+	 * @param $pos MySQLMasterPos object
 	 * @param $timeout Integer: the maximum number of seconds to wait for synchronisation
 	 * @return bool|string
 	 */
@@ -618,7 +618,7 @@ abstract class DatabaseMysqlBase extends DatabaseBase {
 
 		wfProfileIn( __METHOD__ );
 		# Commit any open transactions
-		$this->commit( __METHOD__, 'flush' );
+		$this->commit( __METHOD__ );
 
 		if ( !is_null( $this->mFakeSlaveLag ) ) {
 			$status = parent::masterPosWait( $pos, $timeout );
