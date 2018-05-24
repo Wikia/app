@@ -97,7 +97,7 @@ class DesignSystemGlobalNavigationModelV2 extends WikiaModel {
 		return $data;
 	}
 
-	private function getCreateWiki(string $trackingLabel) {
+	private function getCreateWiki( string $trackingLabel ) {
 		return [
 			'type' => 'link-button',
 			'title' => [
