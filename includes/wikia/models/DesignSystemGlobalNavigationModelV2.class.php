@@ -37,7 +37,13 @@ class DesignSystemGlobalNavigationModelV2 extends WikiaModel {
 			],
 		];
 
-		if ( $this->lang === static::DEFAULT_LANG && !$this->isWikiaOrgCommunity() ) {
+		if ( $this->isWikiaOrgCommunity() ) {
+			$data[ 'wikis' ] = [
+				'links' => [
+					$this->getCommunityCentralLink()
+				]
+			];
+		} else {
 			$data[ 'fandom_overview' ] = $this->getVerticalsSection();
 			$data[ 'wikis' ] = [
 				'header' => [
@@ -69,12 +75,6 @@ class DesignSystemGlobalNavigationModelV2 extends WikiaModel {
 						'tracking_label' => 'link.fandom-university',
 					],
 					$this->getCreateWiki( 'link.start-a-wiki' ),
-				]
-			];
-		} else {
-			$data[ 'wikis' ] = [
-				'links' => [
-					$this->getCommunityCentralLink()
 				]
 			];
 		}
@@ -392,7 +392,7 @@ class DesignSystemGlobalNavigationModelV2 extends WikiaModel {
 			]
 		];
 
-		if ( $this->product === static::PRODUCT_FANDOMS ) {
+		if ( $this->lang === self::DEFAULT_LANG ) {
 			$verticals['links'][] = [
 				'type' => 'link-branded',
 				'brand' => 'video',
