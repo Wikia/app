@@ -80,7 +80,7 @@ class RobotsTxt {
 	 * @param array $sitemaps
 	 */
 	public function addSitemaps( array $sitemaps ) {
-		$this->sitemaps =  array_merge( $this->sitemaps, $sitemaps );
+		$this->sitemaps = array_merge( $this->sitemaps, $sitemaps );
 	}
 
 	// Private methods follow:
@@ -132,6 +132,8 @@ class RobotsTxt {
 	}
 
 	private function getSitemapSection() {
-		return array_map( function( $sitemapUrl ) { return 'Sitemap: ' . $sitemapUrl; }, $this->sitemaps );
+		return array_map( function ( $sitemapUrl ) {
+			return 'Sitemap: ' . $sitemapUrl;
+		}, $this->sitemaps );
 	}
 }
