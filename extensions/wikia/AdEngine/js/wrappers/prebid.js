@@ -1,32 +1,59 @@
 /*global define*/
 define('ext.wikia.adEngine.wrappers.prebid', [
+	'ext.wikia.adEngine.adContext',
+	'wikia.location',
 	'wikia.window'
-], function (win) {
+], function (adContext, loc, win) {
 	'use strict';
 
-	/*
-	 * When updating prebid.js (https://github.com/prebid/Prebid.js/) to a new version
-	 * remember about the additional [320, 480] slot size, see:
-	 * https://github.com/Wikia/app/pull/12269/files#diff-5bbaaa809332f9adaddae42c8847ae5bR6015
-	 */
 	var validResponseStatusCode = 1,
-		errorResponseStatusCode = 2;
+		errorResponseStatusCode = 2,
+		isNewPrebidEnabled = adContext.get('opts.isNewPrebidEnabled');
 
 	win.pbjs = win.pbjs || {};
 	win.pbjs.que = win.pbjs.que || [];
+
+	if (win.pbjs && typeof win.pbjs.setConfig === 'function' && isNewPrebidEnabled) {
+		win.pbjs.setConfig({
+			debug: loc.href.indexOf('pbjs_debug=1') >= 0,
+			enableSendAllBids: true,
+			bidderSequence: 'random',
+			bidderTimeout: 2000,
+			userSync: {
+				iframeEnabled: true,
+				enabledBidders: [],
+				syncDelay: 6000
+			}
+		});
+	}
 
 	function get() {
 		return win.pbjs;
 	}
 
 	function getBidByAdId(adId) {
-		if (!win.pbjs || !win.pbjs._bidsReceived) {
+		// TODO: clean up after GDPR rollout
+		var bids = [],
+			responses;
+
+		if (!win.pbjs || (typeof win.pbjs.getBidResponses !== 'function' && !win.pbjs._bidsReceived)) {
 			return null;
 		}
 
-		var bids = win.pbjs._bidsReceived.filter(function (bid) {
-			return adId === bid.adId;
-		});
+		if (win.pbjs._bidsReceived) {
+			bids = win.pbjs._bidsReceived.filter(function (bid) {
+				return adId === bid.adId;
+			});
+		} else {
+			responses = win.pbjs.getBidResponses();
+			Object.keys(responses).forEach(function (adUnit) {
+				var adUnitsBids = responses[adUnit].bids.filter(function (bid) {
+					return adId === bid.adId;
+				});
+
+				bids = bids.concat(adUnitsBids);
+			});
+		}
 
 		return bids.length ? bids[0] : null;
 	}
@@ -41,18 +68,17 @@ define('ext.wikia.adEngine.wrappers.prebid', [
 		bids = win.pbjs.getBidResponsesForAdUnitCode(slotName).bids || [];
 
 		return bids.filter(function (bid) {
-				var canUseThisBidder = !allowedBidders || allowedBidders.indexOf(bid.bidderCode) !== -1,
-					hasVast = bid.vastUrl || bid.vastContent;
+			var canUseThisBidder = !allowedBidders || allowedBidders.indexOf(bid.bidderCode) !== -1,
+				hasVast = bid.vastUrl || bid.vastContent;
 
-				return canUseThisBidder && hasVast && bid.cpm > 0;
-			})
-			.reduce(function (previousBid, currentBid) {
-				if (previousBid === null || currentBid.cpm > previousBid.cpm) {
-					return currentBid;
-				}
+			return canUseThisBidder && hasVast && bid.cpm > 0;
+		}).reduce(function (previousBid, currentBid) {
+			if (previousBid === null || currentBid.cpm > previousBid.cpm) {
+				return currentBid;
+			}
 
-				return previousBid;
-			}, null);
+			return previousBid;
+		}, null);
 	}
 
 	function push(callback) {

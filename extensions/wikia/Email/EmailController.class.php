@@ -133,7 +133,6 @@ abstract class EmailController extends \WikiaController {
 	 * This is the main entry point for the email extension.  The template set for this
 	 * method is used for testing only, to preview the email that will be sent.
 	 *
-	 * @template emailPreview
 	 *
 	 * @throws \MWException
 	 */
@@ -142,6 +141,8 @@ abstract class EmailController extends \WikiaController {
 		if ( $this->hasErrorResponse ) {
 			return;
 		}
+
+		$this->setViewTemplate( 'emailPreview' );
 
 		try {
 			$this->assertCanEmail();
@@ -191,10 +192,9 @@ abstract class EmailController extends \WikiaController {
 
 	/**
 	 * Render the main layout file
-	 *
-	 * @template main
 	 */
 	public function main() {
+		$this->setViewTemplate( 'main' );
 		$this->response->setValues( $this->request->getParams() );
 	}
 
@@ -816,5 +816,9 @@ abstract class EmailController extends \WikiaController {
 
 		wfProfileOut( __METHOD__ );
 		return $params;
+	}
+
+	protected function setViewTemplate( string $templateName ) {
+		$this->response->getView()->setTemplatePath( self::getTemplateDir() . "/$templateName.{$this->response->getTemplateEngine()}" );
 	}
 }

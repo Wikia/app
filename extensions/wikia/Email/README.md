@@ -58,8 +58,8 @@ requests should be sufficient for almost all cases.
 
 ### Creating a New Template
 
-When defining the `body` method in the controller, give the template name via the `@template` annotation.
-This gives the name of the template, minus the directory and templating suffix.
+When defining the `body` method in the controller, give the template name by calling the `setViewTemplate` method
+in the method body with the name of the template, minus the directory and templating suffix, as argument.
 
 The `main.mustache` template is the main layout for all emails and includes the header and footer. 
 

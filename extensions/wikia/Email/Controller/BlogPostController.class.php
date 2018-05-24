@@ -64,10 +64,8 @@ abstract class BlogPostController extends EmailController {
 		}
 	}
 
-	/**
-	 * @template avatarLayout
-	 */
 	public function body() {
+		$this->setViewTemplate( 'avatarLayout' );
 		$this->response->setData( [
 			'salutation' => $this->getSalutation(),
 			'editorProfilePage' => $this->getCurrentProfilePage(),

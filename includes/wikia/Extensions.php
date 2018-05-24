@@ -23,10 +23,8 @@ if (isset( $wgCityId ) && is_numeric($wgCityId) ) {
 //can access ->cat_id or ->cat_name
 $wgHub = WikiFactory::getCategory($wgCityId);
 
-# Remove any skin(s) listed in UnSkipSkins from SkipSkins
-if( !empty($wgUnSkipSkins) && is_array($wgUnSkipSkins) ) {
-	$wgSkipSkins = array_diff($wgSkipSkins, $wgUnSkipSkins);
-}
+// SUS-4796 | force Oasis skin // FIXME remove after the post-sunset cleanup
+$wgDefaultSkin = 'oasis';
 
 # Language specific settings. Currently only used for $wgExtraNamespaces.
 # Consider using /languages/messages/Wikia/ for customization.
@@ -729,10 +727,6 @@ if (!empty($wgEnableWikiaIrcGatewayExt)) {
 
 if (!empty($wgEnableGoogleCalendarExt)) {
 	include("$IP/extensions/3rdparty/googleCalendar/googleCalendar.php");
-}
-
-if ( !empty( $wgEnableCookiePolicyExt ) ) {
-	include( "$IP/extensions/wikia/CookiePolicy/CookiePolicy.setup.php" );
 }
 
 if (!empty($wgEnableAbuseFilterExtension)) {
@@ -1754,6 +1748,10 @@ if ( !empty( $wgEnablePlaybuzzTagExt ) ) {
 
 if ( !empty( $wgEnableOpenXSPC ) ) {
     include "$IP/extensions/wikia/Spotlights/Spotlights.setup.php";
+}
+
+if ( !empty( $wgEnableTrackingSettingsManager ) ) {
+	include "$IP/extensions/wikia/TrackingOptIn/TrackingSettingsManager.setup.php";
 }
 
 include "$IP/extensions/wikia/JWPlayerTag/JWPlayerTag.setup.php";

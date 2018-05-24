@@ -78,7 +78,11 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.aol', [
 	function prepareAdUnit(slotName, config) {
 		return {
 			code: slotName,
-			sizes: [config.size],
+			mediaTypes: {
+				banner: {
+					sizes: [config.size]
+				}
+			},
 			bids: [
 				{
 					bidder: bidderName,

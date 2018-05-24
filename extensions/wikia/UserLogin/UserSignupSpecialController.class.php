@@ -129,8 +129,6 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 		$redirected = $this->request->getVal( 'redirected', '' );
 		if ( $this->wg->Request->wasPosted() && empty( $redirected ) ) {
 			$this->handleSignupFormSubmit();
-		} else {
-			$this->track( 'signup-start' );
 		}
 
 		/**
@@ -162,10 +160,8 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 			];
 			$redirectUrl = $this->wg->title->getFullUrl( $params );
 
-			$this->track( 'signup-successful' );
 			$this->wg->out->redirect( $redirectUrl );
 		} else {
-			$this->track( 'signup-failed' );
 			$this->response->setValues( [
 				'result' => $result,
 				'msg' => $response->getVal( 'msg', '' ),
@@ -677,19 +673,5 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 		} catch ( MWException $e ) {
 			return false;
 		}
-	}
-
-	/**
-	 * Track an event with a given label with category 'user-sign-up' and action 'request'
-	 *
-	 * @param string $label
-	 */
-	protected function track( $label ) {
-		\Track::event( 'trackingevent', [
-			'ga_category' => 'user-sign-up',
-			'ga_action' => 'request',
-			'ga_label' => $label,
-			'beacon' => !empty( $this->wg->DevelEnvironment ) ? 'ThisIsFake' : wfGetBeaconId(),
-		] );
 	}
 }

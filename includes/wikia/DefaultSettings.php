@@ -1422,6 +1422,12 @@ $wgAdDriverF2BabDetectionCountries = null;
 $wgAdDriverBabRecoveryCountries = null;
 
 /**
+ * @name $wgAdDriverNewPrebidCountries
+ * List of countries to enable new Prebid
+ */
+$wgAdDriverNewPrebidCountries = null;
+
+/**
  * trusted proxy service registry
  */
 $wgAutoloadClasses[ 'TrustedProxyService'] =  "$IP/includes/wikia/services/TrustedProxyService.class.php" ;
