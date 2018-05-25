@@ -117,13 +117,23 @@ class WikiFactoryPage extends SpecialPage {
 			/**
 			 * if there is # in subpage we are switching tab
 			 */
-			if( strpos( $subpage, "/" ) ) {
-				$parts = explode( "/", $subpage, 3 );
-				if( is_array( $parts ) && sizeof( $parts ) >= 2 ) {
+			if ( strpos( $subpage, '/' ) ) {
+				$languages = Language::getLanguageNames();
+				$parts = explode( '/', $subpage, 4 );
+				if ( is_array( $parts ) && sizeof( $parts ) >= 2 ) {
+					if ( array_key_exists( $parts[1], $languages ) ) {
+						$parts[0] .= '/' . $parts[1];
+						unset( $parts[1] );
+						$parts = array_values( $parts );
+					}
 					$subpage = $parts[0];
-					$tab = $parts[1];
-					if ( ( $tab === "variables" ) && ( isset($parts[2]) ) ) {
-						$this->mVariableName = trim($parts[2]);
+
+					if ( isset( $parts[1] ) ) {
+						$tab = $parts[1];
+
+						if ( $tab === 'variables' && isset( $parts[2] ) ) {
+							$this->mVariableName = trim( $parts[2] );
+						}
 					}
 				}
 			}
