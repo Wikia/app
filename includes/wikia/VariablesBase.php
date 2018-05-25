@@ -3547,13 +3547,6 @@ $wgEnableSpecialDiscussions = true;
 $wgEnableSpecialPhalanxExt = false;
 
 /**
- * Enable Special:Sitemap extension.
- * @see /extensions/wikia/Sitemap
- * @var bool $wgEnableSpecialSitemapExt
- */
-$wgEnableSpecialSitemapExt = true;
-
-/**
  * Enable Special:Unsubscribe.
  * @see extensions/wikia/SpecialUnsubscribe
  * @var bool $wgEnableSpecialUnsubscribeExt
@@ -3687,6 +3680,12 @@ $wgEnableTorBlockExt = true;
  * @var bool $wgEnableTracking
  */
 $wgEnableTracking = true;
+
+/**
+ * Enable an extension that renders a button to manage tracking preferences on privacy policy pages
+ * @var bool $wgEnableTrackingSettingsManager
+ */
+$wgEnableTrackingSettingsManager = false;
 
 /**
  * Enable TwitterCards extension.
@@ -7427,6 +7426,7 @@ $wgSkipSkins = [
     'lostbook',
     'memalpha',
     'monaco_old',
+    'monobook',
     'music',
     'politics',
     'psn',

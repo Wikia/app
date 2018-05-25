@@ -48,11 +48,19 @@ class ApiService {
 	 * @return mixed API response
 	 */
 	static function foreignCall( string $dbName, array $params, string $endpoint = self::API, bool $setUser = false ) {
+		// Note - this won't work the city_url contains url, as it uses http proxy to make the call.
+		// This should be fixed in PLATFORM-3486
 		$cityUrl = WikiFactory::DBtoUrl( $dbName );
 
 		// If city url is empty, this would make a request to the current host.
 		if ( empty( $cityUrl ) ) {
 			return false;
+		}
+
+		$options = [];
+		if ( startsWith( $cityUrl, "https://" ) ) {
+			$cityUrl = wfHttpsToHttp( $cityUrl );
+			$options[ 'headers' ] = [ 'Fastly-SSL' => 1, ];
 		}
 
 		// request JSON format of API response
@@ -61,9 +69,8 @@ class ApiService {
 		$url = "{$cityUrl}/{$endpoint}?" . http_build_query( $params );
 		wfDebug( __METHOD__ . ": {$url}\n" );
 
-		$options = [];
 		if ( $setUser ) {
-			$options = self::loginAsUser();
+			$options = array_merge( $options, self::loginAsUser() );
 		}
 
 		// send request and parse response

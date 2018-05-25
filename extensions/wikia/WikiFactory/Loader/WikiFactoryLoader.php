@@ -422,6 +422,12 @@ class WikiFactoryLoader {
 			header( "X-Redirected-By-WF: NotPrimary" );
 			header( 'Vary: Cookie,Accept-Encoding' );
 
+			global $wgCookiePrefix;
+			$hasAuthCookie = !empty( $_COOKIE[\Wikia\Service\User\Auth\CookieHelper::ACCESS_TOKEN_COOKIE_NAME] ) ||
+				!empty( $_COOKIE[session_name()] ) ||
+				!empty( $_COOKIE["{$wgCookiePrefix}Token"] ) ||
+				!empty( $_COOKIE["{$wgCookiePrefix}UserID"] );
+
 			if ( $hasAuthCookie ) {
 				header( 'Cache-Control: private, must-revalidate, max-age=0' );
 			} else {

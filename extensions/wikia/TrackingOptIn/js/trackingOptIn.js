@@ -18,7 +18,7 @@ define('wikia.trackingOptIn', [
 	function init() {
 		if (instantGlobals.wgEnableTrackingOptInModal) {
 			log('Using tracking opt in modal', log.levels.info, logGroup);
-			instance = trackingOptInModal.render({
+			instance = trackingOptInModal.init({
 				onAcceptTracking: function () {
 					optIn = true;
 					window.Wikia.consentQueue.start();
