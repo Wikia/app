@@ -228,9 +228,9 @@ class RobotsTxtTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * Test setSitemap with other methods
+	 * Test addSitemap with other methods
 	 *
-	 * @covers RobotsTxt::setSitemap
+	 * @covers RobotsTxt::addSitemap
 	 */
 	public function testSitemapWithOtherMethods() {
 		$robots = new RobotsTxt();

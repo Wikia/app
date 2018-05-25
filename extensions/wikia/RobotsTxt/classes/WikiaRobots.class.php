@@ -170,7 +170,7 @@ class WikiaRobots {
 
 		// Sitemap
 		if ( !empty( $wgEnableSitemapXmlExt ) && !empty( $wgSitemapXmlExposeInRobots ) ) {
-			$robots->setSitemap( $wgServer . $wgScriptPath . '/sitemap-newsitemapxml-index.xml' );
+			$robots->addSitemap( $wgServer . $wgScriptPath . '/sitemap-newsitemapxml-index.xml' );
 		}
 
 		// Block namespaces
