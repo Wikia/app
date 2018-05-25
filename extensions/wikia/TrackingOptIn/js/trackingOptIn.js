@@ -1,13 +1,25 @@
 define('wikia.trackingOptIn', [
+	'wikia.cookies',
 	'wikia.instantGlobals',
 	'wikia.lazyqueue',
 	'wikia.log',
 	'wikia.trackingOptInModal'
-], function (instantGlobals, lazyQueue, log, trackingOptInModal) {
+], function (cookies, instantGlobals, lazyQueue, log, trackingOptInModal) {
 	var optIn = false,
 		geoRequiresConsent = true,
 		instance = null,
-		logGroup = 'wikia.trackingOptIn';
+		logGroup = 'wikia.trackingOptIn',
+		prebidConsentStringCookie = 'prebid-consent-string',
+		prebidCookieExpireDays = 604800000, // 7 days in milliseconds
+		prebidVendorListUrl = 'https://vendorlist.consensu.org/vendorlist.json',
+		prebidPurposesList = [1, 2, 3, 4, 5],
+		prebidVendorsList = [
+			10, // Index Exchange, Inc.
+			32, // AppNexus Inc.
+			52, // The Rubicon Project, Limited
+			69, // OpenX Software Ltd. and its affiliates
+			76, // PubMatic, Inc.
+		];
 
 	window.Wikia.consentQueue = window.Wikia.consentQueue || [];
 
@@ -52,10 +64,50 @@ define('wikia.trackingOptIn', [
 		return geoRequiresConsent;
 	}
 
+	function getPrebidGlobalVendorList() {
+		var request = new XMLHttpRequest();
+
+		log('Requesting IAB Global Vendor List', log.levels.debug, logGroup);
+
+		request.open('GET', prebidVendorListUrl, false);
+		request.send(null);
+
+		return JSON.parse(request.responseText);
+	}
+
+	function getPrebidConsentString(optIn) {
+		var cookie = cookies.get(prebidConsentStringCookie);
+
+		if (cookie) {
+			log('Serving consent string from cookie', log.levels.debug, logGroup);
+			return cookie;
+		}
+
+		var consentString,
+			consentData = new trackingOptInModal.ConsentString();
+
+		consentData.setGlobalVendorList(getPrebidGlobalVendorList());
+		consentData.setPurposesAllowed(optIn ? prebidPurposesList : []);
+		consentData.setVendorsAllowed(optIn ? prebidVendorsList : []);
+
+		consentString = consentData.getConsentString();
+
+		cookies.set(prebidConsentStringCookie, consentString, {
+			path: '/',
+			domain: window.wgCookieDomain,
+			expires: prebidCookieExpireDays
+		});
+
+		log('Saving consent string to cookie', log.levels.debug, logGroup);
+
+		return consentString;
+	}
+
 	return {
 		init: init,
 		isOptedIn: isOptedIn,
 		pushToUserConsentQueue: pushToUserConsentQueue,
-		geoRequiresTrackingConsent: geoRequiresTrackingConsent
+		geoRequiresTrackingConsent: geoRequiresTrackingConsent,
+		getPrebidConsentString: getPrebidConsentString
 	};
 });

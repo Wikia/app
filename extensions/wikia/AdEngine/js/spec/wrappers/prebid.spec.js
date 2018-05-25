@@ -18,9 +18,6 @@ describe('ext.wikia.adEngine.wrappers.prebid', function () {
 					adId: 'uniqueBarAd'
 				}
 			],
-			trackingOptIn: {
-				geoRequiresTrackingConsent: noop
-			},
 			win: {
 				pbjs: {
 					que: {
@@ -77,7 +74,6 @@ describe('ext.wikia.adEngine.wrappers.prebid', function () {
 		return modules['ext.wikia.adEngine.wrappers.prebid'](
 			mocks.adContext,
 			mocks.loc,
-			mocks.trackingOptIn,
 			mocks.win
 		);
 	}

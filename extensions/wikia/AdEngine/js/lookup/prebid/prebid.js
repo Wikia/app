@@ -49,12 +49,27 @@ define('ext.wikia.adEngine.lookup.prebid', [
 		}
 
 		trackingOptIn.pushToUserConsentQueue(function(optIn) {
-			if (optIn === false) {
-				log('User opt-out for prebid', log.levels.info, logGroup);
-				return;
-			}
+			win.__cmp = function(command, version, callback) {
+				var iabConsentData = trackingOptIn.getPrebidConsentString(optIn),
+					gdprApplies = trackingOptIn.geoRequiresTrackingConsent(),
+					responseCode = true;
 
-			log('User opt-in for prebid', log.levels.info, logGroup);
+				if (command === 'getConsentData') {
+					callback({
+						consentData: iabConsentData,
+						gdprApplies: gdprApplies
+					}, responseCode);
+				} else if (command === 'getVendorConsents') {
+					callback({
+						metadata: iabConsentData,
+						gdprApplies: gdprApplies
+					}, responseCode);
+				} else {
+					callback(undefined, false);
+				}
+			};
+
+			log('User opt-' + (optIn ? 'in' : 'out') + ' for prebid', log.levels.info, logGroup);
 
 			if (!prebidLoaded) {
 				adaptersRegistry.setupCustomAdapters();
