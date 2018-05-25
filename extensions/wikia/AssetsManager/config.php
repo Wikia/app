@@ -1044,48 +1044,12 @@ $config['special_contact_wikiamobile_js'] = [
 	],
 ];
 
-/** MonoBook **/
-$config['monobook_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => [
-		'#group_oasis_shared_core_js',
-		'#group_oasis_jquery',
-		'#group_bucky_js',
-		'#group_articlecomments_js',
-
-		// TODO: remove dependency on YUI (see BugId:3116)
-		'//resources/wikia/libraries/yui/utilities/utilities.js',
-		'//resources/wikia/libraries/yui/cookie/cookie-beta.js',
-		'//resources/wikia/libraries/yui/container/container.js',
-		'//resources/wikia/libraries/yui/autocomplete/autocomplete.js',
-		'//resources/wikia/libraries/yui/logger/logger.js',
-		'//resources/wikia/libraries/yui/menu/menu.js',
-		'//resources/wikia/libraries/yui/tabview/tabview.js',
-		'//resources/wikia/libraries/yui/extra/tools-min.js',
-
-//		'//resources/mediawiki/mediawiki.util.js', # instead of //skins/common/wikibits.js'
-//		'//skins/common/ajax.js',
-
-		'//skins/monobook/main.js',
-		'//resources/wikia/modules/lazyqueue.js',
-		'//extensions/wikia/JSMessages/js/JSMessages.js',
-		'#group_imglzy_js',
-		'//resources/wikia/libraries/ghostwriter/gw.min.js',
-		'//skins/shared/scripts/onScroll.js',
-		'//extensions/wikia/VideoHandlers/js/VideoBootstrap.js',
-		'//extensions/wikia/JSSnippets/js/JSSnippets.js',
-
-		'//resources/wikia/libraries/bootstrap/tooltip.js',
-		'//resources/wikia/libraries/bootstrap/popover.js',
-	],
-];
-
 /********** Extensions packages **********/
 
 /** Article Comments **/
 $config['articlecomments_js'] = [
 	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'oasis', 'monobook' ],
+	'skin' => [ 'oasis' ],
 	'assets' => [
 		'//extensions/wikia/ArticleComments/js/ArticleComments.js',
 	],
@@ -1447,7 +1411,7 @@ $config['wampage_js'] = [
 
 /** Places **/
 $config['places_js'] = [
-	'skin' => [ 'oasis', 'monobook', 'wikiamobile' ],
+	'skin' => [ 'oasis', 'wikiamobile' ],
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [
 		'//extensions/wikia/Places/js/Places.js',
@@ -1456,7 +1420,7 @@ $config['places_js'] = [
 
 $config['places_css'] = [
 	'type' => AssetsManager::TYPE_CSS,
-	'skin' => [ 'oasis', 'monobook', 'wikiamobile' ],
+	'skin' => [ 'oasis', 'wikiamobile' ],
 	'assets' => [
 		'//extensions/wikia/Places/css/Places.css',
 	],
@@ -1481,7 +1445,7 @@ $config['wikiaphotogallery_slider_scss_wikiamobile'] = [
 
 $config['wikia_photo_gallery_js'] = [
 	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'oasis', 'monobook' ],
+	'skin' => [ 'oasis' ],
 	'assets' => [
 		'//extensions/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.view.js',
 	],
@@ -1489,7 +1453,7 @@ $config['wikia_photo_gallery_js'] = [
 
 $config['wikia_photo_gallery_scss'] = [
 	'type' => AssetsManager::TYPE_SCSS,
-	'skin' => [ 'oasis', 'monobook' ],
+	'skin' => [ 'oasis' ],
 	'assets' => [
 		'//extensions/wikia/WikiaPhotoGallery/css/gallery.scss',
 	],
@@ -1497,7 +1461,7 @@ $config['wikia_photo_gallery_scss'] = [
 
 $config['wikia_photo_gallery_slideshow_js'] = [
 	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'oasis', 'monobook' ],
+	'skin' => [ 'oasis' ],
 	'assets' => [
 		'//resources/wikia/libraries/jquery/slideshow/jquery-slideshow-0.4.js',
 		'//extensions/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.slideshow.js',
@@ -1506,7 +1470,7 @@ $config['wikia_photo_gallery_slideshow_js'] = [
 
 $config['wikia_photo_gallery_slideshow_scss'] = [
 	'type' => AssetsManager::TYPE_SCSS,
-	'skin' => [ 'oasis', 'monobook' ],
+	'skin' => [ 'oasis' ],
 	'assets' => [
 		'//extensions/wikia/WikiaPhotoGallery/css/slideshow.scss',
 	],
@@ -1514,7 +1478,7 @@ $config['wikia_photo_gallery_slideshow_scss'] = [
 
 $config['wikia_photo_gallery_slider_js'] = [
 	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'oasis', 'monobook' ],
+	'skin' => [ 'oasis' ],
 	'assets' => [
 		'//extensions/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.slider.js',
 	],
@@ -1522,7 +1486,7 @@ $config['wikia_photo_gallery_slider_js'] = [
 
 $config['wikia_photo_gallery_slider_scss'] = [
 	'type' => AssetsManager::TYPE_SCSS,
-	'skin' => [ 'oasis', 'monobook' ],
+	'skin' => [ 'oasis' ],
 	'assets' => [
 		'//extensions/wikia/WikiaPhotoGallery/css/WikiaPhotoGallery.slidertag.scss',
 	],
@@ -1597,7 +1561,7 @@ $config['achievements_js'] = [
 /* Special:Videos */
 $config['special_videos_js'] = [
 	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'oasis', 'monobook' ],
+	'skin' => [ 'oasis' ],
 	'assets' => [
 		'//extensions/wikia/SpecialVideos/scripts/SpecialVideos.js',
 		'//extensions/wikia/WikiaStyleGuide/js/Dropdown.js',
@@ -1606,18 +1570,10 @@ $config['special_videos_js'] = [
 
 $config['special_videos_css'] = [
 	'type' => AssetsManager::TYPE_SCSS,
-	'skin' => [ 'oasis', 'monobook' ],
+	'skin' => [ 'oasis' ],
 	'assets' => [
 		'//extensions/wikia/SpecialVideos/styles/SpecialVideos.scss',
 		'//extensions/wikia/WikiaStyleGuide/css/Dropdown.scss',
-	],
-];
-
-$config['special_videos_css_monobook'] = [
-	'type' => AssetsManager::TYPE_SCSS,
-	'skin' => [ 'monobook' ],
-	'assets' => [
-		'//skins/oasis/css/lib/foundation.custom/foundation.custom.scss',
 	],
 ];
 
@@ -1676,7 +1632,7 @@ $config['file_page_tabbed_css'] = [
 /* LyricFind */
 $config['LyricsFindTracking'] = [
 	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'oasis', 'wikiamobile', 'monobook' ],
+	'skin' => [ 'oasis', 'wikiamobile' ],
 	'assets' => [
 		'//extensions/3rdparty/LyricWiki/LyricFind/js/modules/LyricFind.Tracker.js',
 		'//extensions/3rdparty/LyricWiki/LyricFind/js/tracking.js',
@@ -1853,18 +1809,9 @@ $config['media_gallery_js'] = [
 	],
 ];
 
-$config['banner_notifications_scss'] = [
-	'type' => AssetsManager::TYPE_SCSS,
-	'skin' => [ 'monobook' ],
-	'assets' => [
-		'//extensions/wikia/BannerNotifications/css/BannerNotifications.scss',
-		'//extensions/wikia/BannerNotifications/css/BannerNotifications.monobook.scss',
-	],
-];
-
 $config['banner_notifications_js'] = [
 	'type' => AssetsManager::TYPE_SCSS,
-	'skin' => [ 'oasis', 'monobook' ],
+	'skin' => [ 'oasis' ],
 	'assets' => [
 		'//extensions/wikia/BannerNotifications/js/BannerNotifications.js',
 	],
@@ -1872,7 +1819,7 @@ $config['banner_notifications_js'] = [
 
 $config['wikia_in_your_lang_js'] = [
 	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'oasis', 'monobook' ],
+	'skin' => [ 'oasis' ],
 	'assets' => [
 		'//extensions/wikia/WikiaInYourLang/modules/ext.wikiaInYourLang.js',
 	],
@@ -1913,7 +1860,7 @@ $config['page_share_scss'] = [
 
 $config['captcha_js'] = [
 	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'oasis', 'monobook' ],
+	'skin' => [ 'oasis' ],
 	'assets' => [
 		'//extensions/wikia/Captcha/scripts/Captcha.js',
 	],
@@ -1926,28 +1873,11 @@ $config['portable_infobox_js'] = [
 	],
 ];
 
-$config['portable_infobox_monobook_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'monobook' ],
-	'assets' => [
-		'//extensions/wikia/PortableInfobox/js/PortableInfoboxMonobook.js',
-	],
-];
-
 $config['portable_infobox_scss'] = [
 	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => [ 'oasis' ],
 	'assets' => [
 		'//extensions/wikia/PortableInfobox/styles/PortableInfobox.scss',
-	],
-];
-
-$config['portable_infobox_monobook_scss'] = [
-	'type' => AssetsManager::TYPE_SCSS,
-	'skin' => [ 'monobook' ],
-	'assets' => [
-		'#group_portable_infobox_scss',
-		'//extensions/wikia/PortableInfobox/styles/PortableInfoboxMonobook.scss',
 	],
 ];
 
@@ -2014,23 +1944,6 @@ $config['template_draft'] = [
 	],
 ];
 
-$config['content_review_module_monobook_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'monobook' ],
-	'assets' => [
-		'//extensions/wikia/ContentReview/scripts/contentReviewModuleMonobook.run.js',
-		'//extensions/wikia/ContentReview/scripts/contentReviewModule.js',
-	],
-];
-
-$config['content_review_module_monobook_scss'] = [
-	'type' => AssetsManager::TYPE_SCSS,
-	'skin' => [ 'monobook' ],
-	'assets' => [
-		'//extensions/wikia/ContentReview/styles/ContentReviewMonobookEntrypoint.scss',
-	],
-];
-
 $config['content_review_module_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [
@@ -2041,7 +1954,7 @@ $config['content_review_module_js'] = [
 
 $config['content_review_module_scss'] = [
 	'type' => AssetsManager::TYPE_SCSS,
-	'skin' => [ 'oasis', 'monobook' ],
+	'skin' => [ 'oasis' ],
 	'assets' => [
 		'//skins/oasis/css/modules/ContentReview.scss',
 	],
@@ -2385,7 +2298,7 @@ $config['create_new_wiki_scss'] = [
 
 $config['design_system_scss'] = [
 	'type' => AssetsManager::TYPE_SCSS,
-	'skin' => [ 'oasis', 'monobook' ],
+	'skin' => [ 'oasis' ],
 	'assets' => [
 		'//extensions/wikia/DesignSystem/styles/design-system.scss'
 	],
