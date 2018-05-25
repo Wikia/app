@@ -116,6 +116,27 @@ class RemoveUserDataOnWikiTaskTest extends WikiaDatabaseTest {
 			'page table doesn\'t contain data related to user who hasn\'t been removed' );
 	}
 
+	public function testShouldRemoveActionLogs() {
+		( new RemoveUserDataOnWikiTask() )->removeUserDataOnCurrentWiki( self::TEST_AUDIT_ID, self::TEST_USER_ID, self::TEST_USER );
+
+		$db = wfGetDB( DB_MASTER );
+
+		$logs = $db->select( 'logging', '*' );
+
+		$this->assertEquals( 1, $logs->numRows(), 'Incorrect number of log records' );
+		$this->assertEquals( 'Test_user1', $logs->next()->log_title, 'Incorrect log record' );
+	}
+
+	public function testShouldRemoveWatchlist() {
+		( new RemoveUserDataOnWikiTask() )->removeUserDataOnCurrentWiki( self::TEST_AUDIT_ID, self::TEST_USER_ID, self::TEST_USER );
+
+		$db = wfGetDB( DB_SLAVE );
+
+		$this->assertEquals( 0,
+			$db->estimateRowCount( 'watchlist', '*', ['wl_user' => self::TEST_USER_ID], __METHOD__ ),
+			'Watchlist is not empty');
+	}
+
 	public function testShouldHaveAuditLog() {
 		(new RemoveUserDataOnWikiTask())->removeUserDataOnCurrentWiki( self::TEST_AUDIT_ID, self::TEST_USER_ID, self::TEST_USER );
 

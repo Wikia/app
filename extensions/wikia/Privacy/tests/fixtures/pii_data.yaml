@@ -101,3 +101,32 @@ page:
     page_is_redirect: 0
     page_len: 1
     page_latest: 1
+
+logging:
+  - log_id: 1
+    log_namespace: 2
+    log_type: 'test'
+    log_action: ''
+    log_title: 'Test_user'
+    log_comment: 'remove'
+    log_params: ''
+  - log_id: 2
+    log_namespace: 1201
+    log_type: 'test'
+    log_action: ''
+    log_title: 'Test_user/@comment-xyz'
+    log_comment: 'remove'
+    log_params: ''
+  - log_id: 3
+    log_namespace: 2
+    log_type: 'test'
+    log_action: ''
+    log_title: 'Test_user1'
+    log_comment: 'leave'
+    log_params: ''
+
+watchlist:
+  - wl_user: 1
+    wl_title: 'A watched page'
+  - wl_user: 2
+    wl_title: 'A different page'

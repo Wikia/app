@@ -166,13 +166,33 @@ class RemoveUserDataOnWikiTask extends BaseTask {
 		try {
 			$db = wfGetDB( DB_MASTER );
 			$db->delete( 'logging',
-				['log_namespace' => self::USER_NAMESPACES, 'log_title' => $userDbKey] );
-			$db->delete( 'logging',
-				['log_namespace' => self::USER_NAMESPACES, 'log_title' . $db->buildLike( $userDbKey . '/', $db->anyString() )] );
+				['log_namespace' => self::USER_NAMESPACES, 'log_title' => $userDbKey], __METHOD__ );
+			$db->delete(
+				'logging',
+				['log_namespace' => self::USER_NAMESPACES, 'log_title' . $db->buildLike( $userDbKey . '/', $db->anyString() )],
+				__METHOD__ );
 			$this->info( 'Removed action logs on user pages', ['user_db_key' => $userDbKey] );
 			return true;
 		} catch ( DBError $error ) {
 			$this->error( "Couldn't remove action logs", ['exception' => $error, 'user_db_key' => $userDbKey] );
+			return false;
+		}
+	}
+
+	/**
+	 * Removes all watchlist items for the given user
+	 *
+	 * @param $userId
+	 * @return true if operation was successful
+	 */
+	private function removeWatchlist( $userId ) {
+		try {
+			$db = wfGetDB( DB_MASTER );
+			$db->delete( 'watchlist', ['wl_user' => $userId], __METHOD__ );
+			$this->info( "Removed user's watchlist" );
+			return true;
+		} catch ( DBError $error ) {
+			$this->error( "Couldn't remove user's watchlist", ['exception' => $error] );
 			return false;
 		}
 	}
@@ -198,6 +218,7 @@ class RemoveUserDataOnWikiTask extends BaseTask {
 		$results[] = $this->removeCheckUserData( $userId );
 		$results[] = $this->removeAbuseFilterData( $userId );
 		$results[] = $this->removeIpFromRecentChanges( $userId );
+		$results[] = $this->removeWatchlist( $userId );
 
 		$userDbKey = Title::newFromText( $username )->getDBkey();
 		$results[] = $this->removeUserPages( $userDbKey );
