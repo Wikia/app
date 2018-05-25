@@ -1,5 +1,5 @@
-import render from '@wikia/tracking-opt-in';
+import init from '@wikia/tracking-opt-in'
 
 export {
-	render
+	init
 }

@@ -155,8 +155,7 @@ class WikiaRobots {
 	}
 
 	public function configureRobotsBuilder( RobotsTxt $robots ) {
-		global $wgEnableSpecialSitemapExt,
-		       $wgEnableSitemapXmlExt,
+		global $wgEnableSitemapXmlExt,
 		       $wgRobotsTxtBlockedWiki,
 		       $wgSitemapXmlExposeInRobots,
 		       $wgServer,
@@ -171,9 +170,7 @@ class WikiaRobots {
 
 		// Sitemap
 		if ( !empty( $wgEnableSitemapXmlExt ) && !empty( $wgSitemapXmlExposeInRobots ) ) {
-			$robots->addSitemap( $wgServer . $wgScriptPath . '/sitemap-newsitemapxml-index.xml' );
-		} elseif ( !empty( $wgEnableSpecialSitemapExt ) ) {
-			$robots->addSitemap( $wgServer . $wgScriptPath . '/sitemap-index.xml' );
+			$robots->setSitemap( $wgServer . $wgScriptPath . '/sitemap-newsitemapxml-index.xml' );
 		}
 
 		// Block namespaces
