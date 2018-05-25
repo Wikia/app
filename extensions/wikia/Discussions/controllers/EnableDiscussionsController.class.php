@@ -8,6 +8,7 @@ class EnableDiscussionsController extends \WikiaController {
 
 	public function init() {
 		$this->assertCanAccessController();
+		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 	}
 
 	public function activateDiscussions() {
