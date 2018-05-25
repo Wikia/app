@@ -8,7 +8,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.appnexusWebAds',[
 
 	var bidderName = 'appnexusWebAds',
 		aliases = {
-			'appnexusAst': [bidderName]
+			'appnexus': [bidderName]
 		},
 		logGroup = 'ext.wikia.adEngine.lookup.prebid.adapters.appnexusWebAds',
 		priorityLevel = 0,
@@ -87,7 +87,11 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.appnexusWebAds',[
 
 		return {
 			code: slotName,
-			sizes: config.sizes,
+			mediaTypes: {
+				banner: {
+					sizes: config.sizes
+				}
+			},
 			bids: [
 				{
 					bidder: bidderName,

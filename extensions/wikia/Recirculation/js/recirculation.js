@@ -3,6 +3,7 @@ require([
 	'wikia.window',
 	'wikia.log',
 	'wikia.nirvana',
+	'wikia.trackingOptIn',
 	'ext.wikia.recirculation.utils',
 	'ext.wikia.recirculation.views.mixedFooter',
 	'ext.wikia.recirculation.helpers.liftigniter',
@@ -13,6 +14,7 @@ require([
              window,
              log,
              nirvana,
+             trackingOptIn,
              utils,
              mixedFooter,
              liftigniter,
@@ -195,40 +197,46 @@ require([
 		});
 	}
 
-
-	if (window.wgContentLanguage === 'en') {
-		prepareEnglishRecirculation();
-		prepareRailRecirculation(railRecirculation);
-
-		// fetch data for all recirculation modules
-		liftigniter.fetch('ns');
-	} else {
-		prepareInternationalRecirculation();
-
-		if (window.wgContentLanguage === 'de') {
-			prepareRailRecirculation(internationalRailRecirculation);
-			liftigniter.fetch('wiki');
+	trackingOptIn.pushToUserConsentQueue(function (optIn) {
+		if (!optIn) {
+			$mixedContentFooter.hide();
+			return;
 		}
 
-		if (videosModule) {
-			videosModule('#recirculation-rail');
-		}
-	}
+		if (window.wgContentLanguage === 'en') {
+			prepareEnglishRecirculation();
+			prepareRailRecirculation(railRecirculation);
 
-	var lazyLoadHandler = $.throttle(50, function () {
-		var mcfOffset = $mixedContentFooter.offset().top,
-			scrollPosition = $(window).scrollTop(),
-			windowInnerHeight = $(window).height(),
-			lazyLoadOffset = 500,
-			aproachingMCF = scrollPosition > mcfOffset - windowInnerHeight - lazyLoadOffset;
+			// fetch data for all recirculation modules
+			liftigniter.fetch('ns');
+		} else {
+			prepareInternationalRecirculation();
 
-		if (aproachingMCF) {
-			liftigniter.fetch('wiki');
-			discussions.fetch();
-			window.removeEventListener('scroll', lazyLoadHandler);
+			if (window.wgContentLanguage === 'de') {
+				prepareRailRecirculation(internationalRailRecirculation);
+				liftigniter.fetch('wiki');
+			}
+
+			if (videosModule) {
+				videosModule('#recirculation-rail');
+			}
 		}
+
+		var lazyLoadHandler = $.throttle(50, function () {
+			var mcfOffset = $mixedContentFooter.offset().top,
+				scrollPosition = $(window).scrollTop(),
+				windowInnerHeight = $(window).height(),
+				lazyLoadOffset = 500,
+				aproachingMCF = scrollPosition > mcfOffset - windowInnerHeight - lazyLoadOffset;
+
+			if (aproachingMCF) {
+				liftigniter.fetch('wiki');
+				discussions.fetch();
+				window.removeEventListener('scroll', lazyLoadHandler);
+			}
+		});
+
+		window.addEventListener('scroll', lazyLoadHandler);
+		lazyLoadHandler();
 	});
-
-	window.addEventListener('scroll', lazyLoadHandler);
-	lazyLoadHandler();
 });

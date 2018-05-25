@@ -23,10 +23,8 @@ if (isset( $wgCityId ) && is_numeric($wgCityId) ) {
 //can access ->cat_id or ->cat_name
 $wgHub = WikiFactory::getCategory($wgCityId);
 
-# Remove any skin(s) listed in UnSkipSkins from SkipSkins
-if( !empty($wgUnSkipSkins) && is_array($wgUnSkipSkins) ) {
-	$wgSkipSkins = array_diff($wgSkipSkins, $wgUnSkipSkins);
-}
+// SUS-4796 | force Oasis skin // FIXME remove after the post-sunset cleanup
+$wgDefaultSkin = 'oasis';
 
 # Language specific settings. Currently only used for $wgExtraNamespaces.
 # Consider using /languages/messages/Wikia/ for customization.
@@ -348,6 +346,8 @@ if (!empty( $wgEnableArticleMetaDescription )) {
 
 #--- 44. AdEngine
 include ( "$IP/extensions/wikia/AdEngine/AdEngine2.setup.php" );
+
+include ( "$IP/extensions/wikia/TrackingOptIn/TrackingOptIn.setup.php" );
 
 if (!empty($wgEnableOggHandlerExt)) {
 	include("$IP/extensions/OggHandler/OggHandler.php");
@@ -729,10 +729,6 @@ if (!empty($wgEnableGoogleCalendarExt)) {
 	include("$IP/extensions/3rdparty/googleCalendar/googleCalendar.php");
 }
 
-if ( !empty( $wgEnableCookiePolicyExt ) ) {
-	include( "$IP/extensions/wikia/CookiePolicy/CookiePolicy.setup.php" );
-}
-
 if (!empty($wgEnableAbuseFilterExtension)) {
 	$wgUseTagFilter = true; // rt#22038
 
@@ -946,10 +942,6 @@ if(!empty($wgWikiaEnableContentFeedsExt)) {
 
 if ( (!empty( $wgEnableWikiaFollowedPages )) || (!empty( $wgEnableWikiaFollowedPagesOnlyPrefs )) ) {
 	include( "$IP/extensions/wikia/Follow/Follow.php" );
-}
-
-if ( !empty( $wgEnableSpecialSitemapExt ) ) {
-	include( "$IP/extensions/wikia/Sitemap/SpecialSitemap.php" );
 }
 
 if(!empty($wgEnableSendGridPostback)){
@@ -1754,12 +1746,12 @@ if ( !empty( $wgEnablePlaybuzzTagExt ) ) {
 	include "$IP/extensions/wikia/PlaybuzzTag/PlaybuzzTag.setup.php";
 }
 
-if ( !empty( $wgEnableGoogleAmp ) ) {
-    include "$IP/extensions/wikia/GoogleAmp/GoogleAmp.setup.php";
-}
-
 if ( !empty( $wgEnableOpenXSPC ) ) {
     include "$IP/extensions/wikia/Spotlights/Spotlights.setup.php";
+}
+
+if ( !empty( $wgEnableTrackingSettingsManager ) ) {
+	include "$IP/extensions/wikia/TrackingOptIn/TrackingSettingsManager.setup.php";
 }
 
 include "$IP/extensions/wikia/JWPlayerTag/JWPlayerTag.setup.php";
@@ -1773,3 +1765,8 @@ include "$IP/extensions/wikia/Search/WikiaSearch.setup.php";
 
 // Mercury auth pages related functionality - redirects, email confirmation.
 include "$IP/extensions/wikia/AuthPages/AuthPages.setup.php";
+
+include "$IP/extensions/wikia/DownloadYourData/DownloadYourData.setup.php";
+
+// SUS-4738 | Handles requests to be forgotten
+include "$IP/extensions/wikia/Privacy/Privacy.setup.php";

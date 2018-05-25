@@ -641,3 +641,10 @@ $wgGroupPermissions['*']['portabilitydashboard'] = true;
 $wgGroupPermissions['*']['fandom-admin'] = false;
 $wgGroupPermissions['staff']['fandom-admin'] = true;
 $wgGroupPermissions['fandom-editor']['fandom-admin'] = true;
+
+$wgGroupPermissions['*']['exportuserdata'] = false;
+$wgGroupPermissions['util']['exportuserdata'] = true;
+
+// request to be forgotten
+$wgGroupPermissions['*']['requesttobeforgotten'] = false;
+$wgGroupPermissions['request-to-be-forgotten-admin']['requesttobeforgotten'] = true;

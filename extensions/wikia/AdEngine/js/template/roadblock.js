@@ -1,4 +1,4 @@
-/*global define, require*/
+/*global define*/
 define('ext.wikia.adEngine.template.roadblock', [
 	'ext.wikia.adEngine.bridge',
 	'ext.wikia.adEngine.provider.btfBlocker',

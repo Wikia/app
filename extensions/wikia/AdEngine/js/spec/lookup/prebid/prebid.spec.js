@@ -95,9 +95,14 @@ describe('ext.wikia.adEngine.lookup.prebid', function () {
 					que: [],
 					requestBids: function () {
 					},
-					getBidResponses: function (slotName) {
-						return mocks.bidResponses;
-					},
+					getBidResponsesForAdUnitCode: function (slotName) {
+						return mocks.bidResponses[slotName];
+					}
+				}
+			},
+			trackingOptIn: {
+				pushToUserConsentQueue: function (cb) {
+					cb(true);
 				}
 			},
 			adaptersPricesTracker: {},
@@ -143,8 +148,8 @@ describe('ext.wikia.adEngine.lookup.prebid', function () {
 		},
 		prebid;
 
-	function noop() {
-	}
+	function noop() {}
+	mocks.log.levels = {};
 
 	function getFactory() {
 		return modules['ext.wikia.adEngine.lookup.lookupFactory'](
@@ -166,6 +171,8 @@ describe('ext.wikia.adEngine.lookup.prebid', function () {
 			mocks.prebidHelper,
 			mocks.prebidSettings,
 			getFactory(),
+			mocks.log,
+			mocks.trackingOptIn,
 			mocks.win
 		);
 	}
@@ -178,6 +185,10 @@ describe('ext.wikia.adEngine.lookup.prebid', function () {
 		prebid = getPrebid();
 		spyOn(mocks.adTracker, 'track');
 		spyOn(mocks.win.pbjs.que, 'push');
+
+		window.loadOldPrebid = noop;
+		window.loadNewPrebid = noop;
+		mocks.log.levels = {};
 	});
 
 	it('Ad slots are pushed', function () {

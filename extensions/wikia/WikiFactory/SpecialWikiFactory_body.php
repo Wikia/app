@@ -19,7 +19,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 class WikiFactoryPage extends SpecialPage {
 
 	/* @var object $mWiki a row from city_list table */
-	private $mWiki, $mTitle, $mDomain, $mTab, $mVariableName, $mSearchTag;
+	private $mWiki, $mTitle, $mDomain, $mTab, $mVariableName;
 	public $mStatuses = array(-2 => 'spam', -1=> 'disabled*', "disabled", "enabled", "redirected" );
 	private $mTagWikiIds = array();
 
@@ -117,16 +117,23 @@ class WikiFactoryPage extends SpecialPage {
 			/**
 			 * if there is # in subpage we are switching tab
 			 */
-			if( strpos( $subpage, "/" ) ) {
-				$parts = explode( "/", $subpage, 3 );
-				if( is_array( $parts ) && sizeof( $parts ) >= 2 ) {
-					$subpage = $parts[0];
-					$tab = $parts[1];
-					if ( ( $tab === "variables" ) && ( isset($parts[2]) ) ) {
-						$this->mVariableName = trim($parts[2]);
+			if ( strpos( $subpage, '/' ) ) {
+				$languages = Language::getLanguageNames();
+				$parts = explode( '/', $subpage, 4 );
+				if ( is_array( $parts ) && sizeof( $parts ) >= 2 ) {
+					if ( array_key_exists( $parts[1], $languages ) ) {
+						$parts[0] .= '/' . $parts[1];
+						unset( $parts[1] );
+						$parts = array_values( $parts );
 					}
-					if ( ( $tab === "tags" || $tab === "findtags"  ) && ( isset($parts[2]) ) ) {
-						$this->mSearchTag = trim($parts[2]);
+					$subpage = $parts[0];
+
+					if ( isset( $parts[1] ) ) {
+						$tab = $parts[1];
+
+						if ( $tab === 'variables' && isset( $parts[2] ) ) {
+							$this->mVariableName = trim( $parts[2] );
+						}
 					}
 				}
 			}

@@ -10,6 +10,12 @@ describe('ext.wikia.adEngine.config.desktop', function () {
 		return {};
 	}
 
+	function logMock() {
+
+	}
+
+	logMock.levels = {};
+
 	var mocks = {
 			adDecoratorPageDimensions: noop,
 			getAdContextOpts: function () {
@@ -23,6 +29,9 @@ describe('ext.wikia.adEngine.config.desktop', function () {
 			geo: {
 				getCountryCode: noop
 			},
+			trackingOptIn: {
+				isOptedIn: noop
+			},
 			adsContext: {
 				getContext: function () {
 					return {
@@ -33,7 +42,7 @@ describe('ext.wikia.adEngine.config.desktop', function () {
 					};
 				}
 			},
-			log: noop,
+			log: logMock,
 			opts: {
 				showAds: true,
 				premiumOnly: false
@@ -66,6 +75,7 @@ describe('ext.wikia.adEngine.config.desktop', function () {
 			{navigator: {userAgent: mocks.getUserAgent()}},
 			mocks.getInstantGlobals(),
 			mocks.geo,
+			mocks.trackingOptIn,
 			mocks.adsContext,
 			mocks.adDecoratorPageDimensions,
 			mocks.providers.directGpt,
@@ -111,12 +121,21 @@ describe('ext.wikia.adEngine.config.desktop', function () {
 
 	it('Turtle: Turtle, Remnant', function () {
 		spyOn(mocks.providers.turtle, 'canHandleSlot').and.returnValue(true);
+		spyOn(mocks.trackingOptIn, 'isOptedIn').and.returnValue(true);
 		spyOn(mocks, 'getAdContextProviders').and.returnValue({turtle: true});
 		expect(getProviders('foo')).toEqual('turtle,remnant');
 	});
 
 	it('Turtle cannot handle slot: Direct, Remnant', function () {
 		spyOn(mocks.providers.turtle, 'canHandleSlot').and.returnValue(false);
+		spyOn(mocks.trackingOptIn, 'isOptedIn').and.returnValue(true);
+		spyOn(mocks, 'getAdContextProviders').and.returnValue({turtle: true});
+		expect(getProviders('foo')).toEqual('direct,remnant');
+	});
+
+	it('Turtle opted out: Direct, Remnant', function () {
+		spyOn(mocks.providers.turtle, 'canHandleSlot').and.returnValue(true);
+		spyOn(mocks.trackingOptIn, 'isOptedIn').and.returnValue(false);
 		spyOn(mocks, 'getAdContextProviders').and.returnValue({turtle: true});
 		expect(getProviders('foo')).toEqual('direct,remnant');
 	});
@@ -136,6 +155,7 @@ describe('ext.wikia.adEngine.config.desktop', function () {
 
 	it('Turtle country, wgSitewideDisableGpt on: Turtle', function () {
 		spyOn(mocks.providers.turtle, 'canHandleSlot').and.returnValue(true);
+		spyOn(mocks.trackingOptIn, 'isOptedIn').and.returnValue(true);
 		spyOn(mocks, 'getAdContextProviders').and.returnValue({turtle: true});
 		spyOn(mocks, 'getInstantGlobals').and.returnValue({wgSitewideDisableGpt: true});
 		expect(getProviders('foo')).toEqual('turtle');

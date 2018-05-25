@@ -52,6 +52,9 @@ class OasisController extends WikiaController {
 		$this->skinNameClass = $skinVars['skinnameclass'];
 		$this->bottomScripts = $skinVars['bottomscripts'];
 		// initialize variables
+		$this->trackingOptIn = TrackingOptIn::renderScript();
+		// FIXME SUS-4812 get this out of here
+		$this->internalTracker = Track::getViewJS();
 		$this->comScore = null;
 		$this->quantServe = null;
 		$this->a9 = null;

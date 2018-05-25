@@ -31,6 +31,7 @@ describe('Method ext.wikia.adEngine.lookup.a9', function () {
 			getFactory(),
 			mocks.document,
 			mocks.log,
+			mocks.trackingOptIn,
 			mocks.window
 		);
 	}
@@ -110,6 +111,11 @@ describe('Method ext.wikia.adEngine.lookup.a9', function () {
 			}
 		},
 		log: noop,
+		trackingOptIn: {
+			pushToUserConsentQueue: function (cb) {
+				cb(true);
+			}
+		},
 		window: {
 			apstag: {
 				getAdsCallback: function (id, callback) {
@@ -120,6 +126,8 @@ describe('Method ext.wikia.adEngine.lookup.a9', function () {
 			}
 		}
 	};
+
+	mocks.log.levels = {};
 
 	testCases = [
 		// Empty

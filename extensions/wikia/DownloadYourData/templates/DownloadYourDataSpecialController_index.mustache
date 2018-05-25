@@ -1,0 +1,14 @@
+<p>{{introText}}</p>
+<br/>
+<p>
+  <form method="POST" name="DownloadYourDataForm" id="DownloadYourDataForm" class="DownloadYourDataForm">
+    {{#showUsernameField}}
+      <input type="text" name="username" placeholder="{{usernamePlaceholder}}" />
+    {{/showUsernameField}}
+    <input type="hidden" name="token" value="{{editToken}}" />
+    {{{submitButton}}}
+  </form>
+</p>
+{{#error}}
+  <p class="error">{{{error}}}</p>
+{{/error}}

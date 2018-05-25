@@ -276,49 +276,21 @@ require "$IP/lib/Wikia/src/Service/User/Permissions/data/PermissionsDefinesBefor
  * Apply WikiFactory settings.
  */
 try { 
-    /**
-     * Default skin, for new users and anonymous visitors. Registered users may
-     * change this to any one of the other available skins in their preferences.
-     * This has to be completely lowercase; see the "skins" directory for the
-     * list of available skins.
-     */
-    $wgDefaultSkinBeforeWF = 'oasis';
-    $wgDefaultSkin = null;
-    
     $oWiki = new WikiFactoryLoader( $_SERVER, $_ENV, $wgWikiFactoryDomains );
     $result = $oWiki->execute();
-    
+
     if ( !$result ) {
         // shouldn't we throw an exception here?
         exit( 1 );
     }
-    
+
     $wgCityId = $result;
 
     // we do not need the loader and the result in the global scope.
     unset( $oWiki, $result );
-    
-    /**
-     * WikiFactory is supposed to assign some value to $wgDefaultSkin, a
-     * per-wiki setting. If it fails and at this point $wgDefaultSkin is still
-     * null, we use the cached value from $wgDefaultSkinBeforeWF.
-     */
-    if ( is_null( $wgDefaultSkin ) ) {
-        $wgDefaultSkin = $wgDefaultSkinBeforeWF;
-    }
 } catch ( InvalidArgumentException $invalidArgumentException ) {
 	echo $invalidArgumentException->getMessage() . PHP_EOL;
 	exit( 1 );
-}
-
-/**
- * Recalculate $wgScript and $wgArticlePath for wikis with language code path
- * component.
- * @see SUS-3851
- */
-if ( !empty( $wgScriptPath ) ) {
-       $wgScript = $wgScriptPath . $wgScript;
-       $wgArticlePath = $wgScriptPath . $wgArticlePath;
 }
 
 /**

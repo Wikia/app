@@ -1,3 +1,4 @@
+/*global define*/
 define('ext.wikia.adEngine.babDetection', [
 	'wikia.document',
 	'wikia.log',
