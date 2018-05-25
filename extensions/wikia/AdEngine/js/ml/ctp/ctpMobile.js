@@ -11,9 +11,10 @@ define('ext.wikia.adEngine.ml.ctp.ctpMobile', [
 		dataSource: source,
 		model: linearModel.create(source.coefficients, source.intercept),
 		name: 'ctpmobile',
-		wgCountriesVariable: 'wgAdDriverCTPMobileRabbitCountries',
 		enabled: function () {
-			return !!adContext.get('targeting.hasFeaturedVideo') && adContext.get('targeting.skin') === 'mercury';
+			return !!adContext.get('targeting.hasFeaturedVideo') &&
+				adContext.get('rabbits.ctpMobile') &&
+				adContext.get('targeting.skin') === 'mercury';
 		},
 		cachePrediction: true
 	});
