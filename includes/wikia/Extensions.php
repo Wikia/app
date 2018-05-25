@@ -944,10 +944,6 @@ if ( (!empty( $wgEnableWikiaFollowedPages )) || (!empty( $wgEnableWikiaFollowedP
 	include( "$IP/extensions/wikia/Follow/Follow.php" );
 }
 
-if ( !empty( $wgEnableSpecialSitemapExt ) ) {
-	include( "$IP/extensions/wikia/Sitemap/SpecialSitemap.php" );
-}
-
 if(!empty($wgEnableSendGridPostback)){
 	F::app()->registerApiController( 'SendGridPostbackController', "{$IP}/includes/wikia/api/SendGridPostBackApiController.class.php" );
 }

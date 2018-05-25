@@ -41,9 +41,10 @@ class ForgotPasswordController extends EmailController {
 		return $this->getMessage( 'emailext-password-subject' )->text();
 	}
 
+	/**
+	 * @template temporaryPassword
+	 */
 	public function body() {
-		$this->setViewTemplate( 'temporaryPassword' );
-
 		$this->response->setData( [
 			'salutation' => $this->getSalutation(),
 			'summary' => $this->getSummary(),
