@@ -49,6 +49,11 @@ define('ext.wikia.adEngine.lookup.prebid', [
 		}
 
 		trackingOptIn.pushToUserConsentQueue(function(optIn) {
+			if (optIn === false) {
+				log('User opt-out for prebid', log.levels.info, logGroup);
+				return;
+			}
+
 			win.__cmp = function(command, version, callback) {
 				var iabConsentData = trackingOptIn.getPrebidConsentString(optIn),
 					gdprApplies = trackingOptIn.geoRequiresTrackingConsent(),
