@@ -28,22 +28,11 @@ class ForumDumper {
 
 	const COLUMNS_PAGE = [
 		"page_id",
-		"namespace",
 		"raw_title",
-		"is_redirect",
-		"is_new",
 		"touched",
 		"latest_revision_id",
-		"length",
-		"parent_page_id",
 		"parent_comment_id",
 		"last_child_comment_id",
-		"archived_ind",
-		"deleted_ind",
-		"removed_ind",
-		"locked_ind",
-		"protected_ind",
-		"sticky_ind",
 		"first_revision_id",
 		"last_revision_id",
 		"comment_timestamp",
@@ -52,20 +41,11 @@ class ForumDumper {
 
 	const COLUMNS_REVISION = [
 		"revision_id",
-		"page_id",
-		"page_namespace",
 		"title",
-		"user_type",
 		"user_identifier",
 		"timestamp",
-		"is_minor_edit",
-		"is_deleted",
-		"length",
 		"parent_id",
-		"text_flags",
-		"comment",
 		"raw_content",
-		"content",
 	];
 
 	const COLUMNS_VOTE = [
