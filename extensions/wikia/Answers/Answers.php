@@ -1,16 +1,4 @@
 <?php
-// register answers themes
-$wgSkinTheme['answers'] = array('bluebell', 'leaf', 'carnation', 'sky', 'spring', 'forest', 'moonlight', 'carbon', 'obsession', 'custom');
-$wgDefaultSkin = 'answers';
-$wgDefaultTheme = 'bluebell';
-
-// macbre: make SkinChooser works for Answers
-$wgSkinTheme['monobook'] = array();
-$wgSkipSkins[] = 'monaco';
-$wgSkipSkins[] = 'monobook';
-
-// remove answers from $wgSkipSkins
-unset($wgSkipSkins[ array_search('answers', $wgSkipSkins) ]);
 
 $wgHooks['ArticleSaveComplete'][] = 'AttributionCache::purgeArticleContribs';
 $wgHooks['TitleMoveComplete'][] = 'AttributionCache::purgeArticleContribsAfterMove';
