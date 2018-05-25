@@ -492,6 +492,19 @@ class ListusersData {
 		}
 	}
 
+	public static function populateEditDates( int $cityId ) {
+		global $wgSpecialsDB;
+
+		// get all users for a given wiki from The Table
+		$dbr = wfGetDB(DB_SLAVE, array(), $wgSpecialsDB);
+		$res = $dbr->select(
+			self::TABLE,
+			'user_id',
+			[ 'wiki_id' => $cityId ],
+			__METHOD__
+		);
+	}
+
 	/**
 	 * @param int $user_id
 	 * @return array
