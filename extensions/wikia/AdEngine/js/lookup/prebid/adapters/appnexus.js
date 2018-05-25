@@ -77,7 +77,11 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.appnexus',[
 
 		return {
 			code: slotName,
-			sizes: config.sizes,
+			mediaTypes: {
+				banner: {
+					sizes: config.sizes
+				}
+			},
 			bids: [
 				{
 					bidder: bidderName,

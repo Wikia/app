@@ -316,7 +316,7 @@ class FeedRenderer {
 			$timestamp = '';
 			if ( !empty($comment['timestamp']) ) {
 				$timestamp .= Xml::openElement('time', array(
-					'class' => 'wall-timeago',
+					'class' => 'timeago',
 					'datetime' => wfTimestamp(TS_ISO_8601, $comment['timestamp']),
 				));
 				$timestamp .= self::formatTimestamp($comment['timestamp']);

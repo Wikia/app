@@ -1,16 +1,4 @@
 <?php
-// register answers themes
-$wgSkinTheme['answers'] = array('bluebell', 'leaf', 'carnation', 'sky', 'spring', 'forest', 'moonlight', 'carbon', 'obsession', 'custom');
-$wgDefaultSkin = 'answers';
-$wgDefaultTheme = 'bluebell';
-
-// macbre: make SkinChooser works for Answers
-$wgSkinTheme['monobook'] = array();
-$wgSkipSkins[] = 'monaco';
-$wgSkipSkins[] = 'monobook';
-
-// remove answers from $wgSkipSkins
-unset($wgSkipSkins[ array_search('answers', $wgSkipSkins) ]);
 
 $wgHooks['ArticleSaveComplete'][] = 'AttributionCache::purgeArticleContribs';
 $wgHooks['TitleMoveComplete'][] = 'AttributionCache::purgeArticleContribsAfterMove';
@@ -24,10 +12,10 @@ $wgExtensionCredits[ 'other' ][ ] = array(
 );
 
 // FIXME: Migrate require_once's to inclues for performance reasons.
-require_once( dirname(__FILE__) . "/AnswersClass.php");
-require_once( dirname(__FILE__) . "/AttributionCache.class.php");
+require_once( __DIR__ . "/AnswersClass.php");
+require_once( __DIR__ . "/AttributionCache.class.php");
 
-$wgExtensionMessagesFiles['Answers'] = dirname( __FILE__ ) . '/Answers.i18n.php';
+$wgExtensionMessagesFiles['Answers'] = __DIR__ . '/Answers.i18n.php';
 
 if(empty($wgAnswerHelperIDs)) {
 	$wgAnswerHelperIDs = array( 0 /* anonymous */, 1172427 /* Wikia User */ );
@@ -40,9 +28,9 @@ function incAnswerStats($article, $revision, $baseRevId) {
 }
 
 
-$wgAutoloadClasses['DefaultQuestion'] = dirname( __FILE__ ) . "/DefaultQuestion.php";
-$wgAutoloadClasses['PrefilledDefaultQuestion'] = dirname( __FILE__ ) . "/PrefilledDefaultQuestion.php";
-$wgAutoloadClasses['CreateQuestionPage'] = dirname( __FILE__ ) . "/SpecialCreateDefaultQuestionPage.php";
+$wgAutoloadClasses['DefaultQuestion'] = __DIR__ . "/DefaultQuestion.php";
+$wgAutoloadClasses['PrefilledDefaultQuestion'] = __DIR__ . "/PrefilledDefaultQuestion.php";
+$wgAutoloadClasses['CreateQuestionPage'] = __DIR__ . "/SpecialCreateDefaultQuestionPage.php";
 $wgSpecialPages['CreateQuestionPage'] = 'CreateQuestionPage';
 
 function fnWatchHeldPage( $user ){
@@ -229,7 +217,7 @@ function wfHoldWatchForAnon( $title ){
 	return SpecialPage::getTitleFor( 'Userlogin' )->getFullURL("type=signup");
 }
 
-$wgAutoloadClasses["CustomMovePageForm"]  = dirname( __FILE__ ) . "/CustomMoveForm.php";
+$wgAutoloadClasses["CustomMovePageForm"]  = __DIR__ . "/CustomMoveForm.php";
 $wgHooks['MovePageForm'][] = 'wfCustomMoveForm';
 function wfCustomMoveForm( &$newTitle, &$oldTitle, &$form ){
 
@@ -458,8 +446,8 @@ class CategoryWithAds extends CategoryViewer{
 	}
 }
 
-include( dirname(__FILE__) . "/HomePageList.php");
-include( dirname(__FILE__) . "/FakeAnswersMessaging.php");
+include( __DIR__ . "/HomePageList.php");
+include( __DIR__ . "/FakeAnswersMessaging.php");
 
 $wgAjaxExportList[] = 'wfAnswersGetEditPointsAjax';
 /**

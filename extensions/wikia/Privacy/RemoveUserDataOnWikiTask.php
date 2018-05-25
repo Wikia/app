@@ -21,10 +21,13 @@ class RemoveUserDataOnWikiTask extends BaseTask {
 		1202 // NS_USER_WALL_GREETING
 	];
 
+	private $logContext = [];
+
 	/**
 	 * Deletes all CheckUser records associated with the given user
 	 *
 	 * @param int $userId
+	 * @return true if operation was successful
 	 */
 	private function removeCheckUserData( int $userId ) {
 		try {
@@ -32,9 +35,11 @@ class RemoveUserDataOnWikiTask extends BaseTask {
 			// remove check user data
 			$db->delete( 'cu_changes', ['cuc_user' => $userId], __METHOD__ );
 			$db->delete( 'cu_log', ['cul_target_id' => $userId], __METHOD__ );
-			$this->info( "Removed CheckUser data", ['user_id' => $userId] );
+			$this->info( "Removed CheckUser data" );
+			return true;
 		} catch( DBError $error ) {
-			$this->error( "Couldn't remove CheckUser data", ['exception' => $error, 'user_id' => $userId] );
+			$this->error( "Couldn't remove CheckUser data", ['exception' => $error] );
+			return false;
 		}
 	}
 
@@ -42,14 +47,17 @@ class RemoveUserDataOnWikiTask extends BaseTask {
 	 * Removes the IP address from all RecentChanges records associated with the given user
 	 *
 	 * @param int $userId
+	 * @return true if operation was successful
 	 */
 	private function removeIpFromRecentChanges( int $userId ) {
 		try {
 			$db = wfGetDB( DB_MASTER );
 			$db->update( 'recentchanges', ['rc_ip_bin' => ''], ['rc_user' => $userId], __METHOD__ );
 			$this->info( "Removed IPs from recent changes", ['user_id' => $userId] );
+			return true;
 		} catch( DBError $error ) {
 			$this->error( "Couldn't remove IP from recent changes", ['exception' => $error, 'user_id' => $userId] );
+			return false;
 		}
 	}
 
@@ -67,10 +75,15 @@ class RemoveUserDataOnWikiTask extends BaseTask {
 				$db->update( 'abuse_filter', ['af_user_text' => ''], ['af_user' => $userId], __METHOD__ );
 				$db->update( 'abuse_filter_history', ['afh_user_text' => ''], ['afh_user' => $userId], __METHOD__ );
 				$db->delete( 'abuse_filter_log', ['afl_user' => $userId], __METHOD__ );
-				$this->info( "Removed abuse filter data", ['user_id' => $userId] );
+				$this->info( "Removed abuse filter data" );
+				return true;
 			} catch ( DBError $error) {
-				$this->error( "Couldn't remove abuse filter data", ['exception' => $error, 'user_id' => $userId] );
+				$this->error( "Couldn't remove abuse filter data", ['exception' => $error] );
+				return false;
 			}
+		} else {
+			$this->info( "Skipping abuse filter, the extension is disabled" );
+			return true;
 		}
 	}
 
@@ -86,18 +99,37 @@ class RemoveUserDataOnWikiTask extends BaseTask {
 	private function removeUserPages( string $userDbKey ) {
 		try {
 			$dbr = wfGetDB( DB_SLAVE );
-			$userPages = $dbr->select(
+
+			// We must only remove pages from user namespaces that have titles exactly like the username
+			// or are prefixed with "<username>/". We can't use a single "<username>%" wildcard, since that could
+			// remove pages of similarly named users (e. g. users "Jo" and "Joe").
+
+			$exactMatches = $dbr->select(
 				'page',
 				['page_id', 'page_namespace', 'page_title'],
-				['page_namespace' => self::USER_NAMESPACES, 'page_title' . $dbr->buildLike( $userDbKey, $dbr->anyString() )],
+				['page_namespace' => self::USER_NAMESPACES, 'page_title' => $userDbKey],
 				__METHOD__ );
-			foreach( $userPages as $page ) {
-				$title = Title::newFromRow( $page );
-				PermanentArticleDelete::deletePage( $title );
-			}
-			$this->info( "Removed user pages", ['username' => $userDbKey] );
+			$this->removePages( $exactMatches );
+
+			$prefixedMatches = $dbr->select(
+				'page',
+				['page_id', 'page_namespace', 'page_title'],
+				['page_namespace' => self::USER_NAMESPACES, 'page_title' . $dbr->buildLike( $userDbKey . '/', $dbr->anyString() )],
+			 	__METHOD__ );
+			$this->removePages( $prefixedMatches );
+
+			$this->info( "Removed user pages", ['user_db_key' => $userDbKey] );
+			return true;
 		} catch ( Exception $error ) {
-			$this->error( "Couldn't remove user pages", ['exception' => $error, 'username' => $userDbKey] );
+			$this->error( "Couldn't remove user pages", ['exception' => $error, 'user_db_key' => $userDbKey] );
+			return false;
+		}
+	}
+
+	private function removePages( $pages ) {
+		foreach( $pages as $page ) {
+			$title = Title::newFromRow( $page );
+			PermanentArticleDelete::deletePage( $title );
 		}
 	}
 
@@ -105,55 +137,111 @@ class RemoveUserDataOnWikiTask extends BaseTask {
 	 * Removes all recentchanges rows related to user pages.
 	 *
 	 * @param $userDbKey
+	 * @return true if operation was successful
 	 */
 	private function removeUserPagesFromRecentChanges( $userDbKey ) {
 		try {
 			$db = wfGetDB( DB_MASTER );
 			$db->delete( 'recentchanges',
-				['rc_namespace' => self::USER_NAMESPACES, 'rc_title' . $db->buildLike( $userDbKey, $db->anyString() )],
+				['rc_namespace' => self::USER_NAMESPACES, 'rc_title' => $userDbKey],
 				__METHOD__ );
-			$this->info( "Removed recent changes on user pages", ["username" => $userDbKey] );
+			$db->delete( 'recentchanges',
+				['rc_namespace' => self::USER_NAMESPACES, 'rc_title' . $db->buildLike( $userDbKey . '/', $db->anyString() )],
+				__METHOD__ );
+			$this->info( "Removed recent changes on user pages", ["user_db_key" => $userDbKey] );
+			return true;
 		} catch ( DBError $error) {
-			$this->error( "Couldn't remove user page history form recent changes", ['exception' => $error, 'username' => $userDbKey] );
+			$this->error( "Couldn't remove user page history form recent changes", ['exception' => $error, 'user_db_key' => $userDbKey] );
+			return false;
 		}
 	}
 
 	/**
+	 * Remove logging records related to user pages
 	 *
 	 * @param $userDbKey
+	 * @return true if operation was successful
 	 */
 	private function removeActionLogs( $userDbKey ) {
 		try {
 			$db = wfGetDB( DB_MASTER );
 			$db->delete( 'logging',
-				['log_namespace' => self::USER_NAMESPACES, 'log_title' . $db->buildLike( $userDbKey, $db->anyString() )] );
-			$this->info( 'Removed action logs on user pages', ['username' => $userDbKey] );
+				['log_namespace' => self::USER_NAMESPACES, 'log_title' => $userDbKey], __METHOD__ );
+			$db->delete(
+				'logging',
+				['log_namespace' => self::USER_NAMESPACES, 'log_title' . $db->buildLike( $userDbKey . '/', $db->anyString() )],
+				__METHOD__ );
+			$this->info( 'Removed action logs on user pages', ['user_db_key' => $userDbKey] );
+			return true;
 		} catch ( DBError $error ) {
-			$this->error( "Couldn't remove action logs", ['exception' => $error, 'username' => $userDbKey] );
+			$this->error( "Couldn't remove action logs", ['exception' => $error, 'user_db_key' => $userDbKey] );
+			return false;
 		}
 	}
 
-	public function removeAllData( $userId, $username, $oldUsername = null ) {
-		global $wgUser;
+	/**
+	 * Removes all watchlist items for the given user
+	 *
+	 * @param $userId
+	 * @return true if operation was successful
+	 */
+	private function removeWatchlist( $userId ) {
+		try {
+			$db = wfGetDB( DB_MASTER );
+			$db->delete( 'watchlist', ['wl_user' => $userId], __METHOD__ );
+			$this->info( "Removed user's watchlist" );
+			return true;
+		} catch ( DBError $error ) {
+			$this->error( "Couldn't remove user's watchlist", ['exception' => $error] );
+			return false;
+		}
+	}
+
+	public function removeUserDataOnCurrentWiki( $auditLogId, $userId, $username, $oldUsername = null ) {
+		global $wgUser, $wgCityId;
 		$wgUser = User::newFromName( Wikia::BOT_USER );
 
-		$this->removeCheckUserData( $userId );
-		$this->removeAbuseFilterData( $userId );
-		$this->removeIpFromRecentChanges( $userId );
+		$this->logContext = [
+			'right_to_be_forgotten' => 1,
+			'rtbf_log_id' => $auditLogId,
+			'user_id' => $userId,
+			'username' => $username,
+			'old_username' => $oldUsername
+		];
+
+		RemovalAuditLog::addWikiTask( $auditLogId, $wgCityId, $this->taskId );
+
+		// gather results of all removal operations
+		// if something fails, we still want to continue the process
+		$results = [];
+
+		$results[] = $this->removeCheckUserData( $userId );
+		$results[] = $this->removeAbuseFilterData( $userId );
+		$results[] = $this->removeIpFromRecentChanges( $userId );
+		$results[] = $this->removeWatchlist( $userId );
 
 		$userDbKey = Title::newFromText( $username )->getDBkey();
-		$this->removeUserPages( $userDbKey );
-		$this->removeUserPagesFromRecentChanges( $userDbKey );
-		$this->removeActionLogs( $userDbKey );
+		$results[] = $this->removeUserPages( $userDbKey );
+		$results[] = $this->removeUserPagesFromRecentChanges( $userDbKey );
+		$results[] = $this->removeActionLogs( $userDbKey );
 		if ( !empty( $oldUsername ) ) {
 			$oldUserDbKey = Title::newFromText( $oldUsername )->getDBkey();
-			$this->removeUserPages( $oldUserDbKey );
+			$results[] = $this->removeUserPages( $oldUserDbKey );
+			$results[] = $this->removeUserPagesFromRecentChanges( $oldUserDbKey );
+			$results[] = $this->removeActionLogs( $oldUserDbKey );
 		}
+
+		RemovalAuditLog::markTaskAsFinished(
+			$auditLogId,
+			$wgCityId,
+			array_reduce( $results, function( $acc, $res ) { return $acc && $res; }, true ) );
+
+		$this->info( "Removed user data from wiki" );
 	}
 
 	protected function getLoggerContext() {
 		// make right to be forgotten logs more searchable
-		return ['right_to_be_forgotten' => 1];
+		return $this->logContext;
 	}
 
 }
