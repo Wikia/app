@@ -12,6 +12,7 @@ class WikiaRobotsController extends WikiaController {
 
 		$this->response->setVal( 'allowed', $robots->getAllowedPaths() );
 		$this->response->setVal( 'disallowed', $robots->getDisallowedPaths() );
+		$this->response->setVal( 'sitemaps', $robots->getSitemaps() );
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 	}
 }
