@@ -52,4 +52,56 @@ class SkinChooserTest extends WikiaBaseTest {
 			[ 'monobook', null ],
 		];
 	}
+
+
+	/**
+	 * @param string||false $paramValue
+	 * @param string $expectedSkinClass
+	 *
+	 * @dataProvider useSkinProvider
+	 */
+	function testUseSkin( $paramValue, $expectedSkinClass ) {
+		/** @var WebRequest $requestMock */
+		$requestMock = $this->createConfiguredMock( WebRequest::class, [
+			'getVal' => $paramValue
+		] );
+
+		/** @var User $userMock */
+		$userMock = $this->createConfiguredMock( User::class, [
+			'isLoggedIn' => false
+		] );
+
+		/** @var Title $titleMock */
+		$titleMock = $this->createConfiguredMock( Title::class, [] );
+
+		$this->mockGlobalVariable('wgDefaultSkin', 'oasis');
+
+		$context = new RequestContext();
+		$context->setRequest( $requestMock );
+		$context->setUser( $userMock );
+		$context->setTitle( $titleMock );
+
+		SkinChooser::onGetSkin( $context, $skin );
+
+		if ($expectedSkinClass !== null) {
+			$this->assertInstanceOf( $expectedSkinClass, $skin );
+		}
+		else {
+			$this->assertNull( $skin );
+		}
+	}
+
+	function useSkinProvider() {
+		yield [ 'dynks', SkinOasis::class ];
+		yield [ false, SkinOasis::class ]; # use $wgDefaultSkin (for anons)
+		yield [ 'oasis', SkinOasis::class ];
+		yield [ 'wikia', SkinOasis::class ];
+		yield [ 'wikiamobile', SkinWikiaMobile::class ];
+		yield [ 'mercury', SkinWikiaMobile::class ];
+
+		// legacy skins - fallback to oasis
+		yield [ 'uncyclopedia', SkinOasis::class ];
+		yield [ 'monobook', SkinOasis::class ];
+		yield [ 'vector', SkinOasis::class ];
+	}
 }
