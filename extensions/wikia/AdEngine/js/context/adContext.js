@@ -97,6 +97,7 @@ define('ext.wikia.adEngine.adContext', [
 
 	function updateAdContextRabbitExperiments(context) {
 		context.rabbits.ctpDesktop = isProperGeo('wgAdDriverCTPDesktopRabbitCountries');
+		context.rabbits.ctpMobile = isProperGeo('wgAdDriverCTPMobileRabbitCountries');
 	}
 
 	function updateAdContextBidders(context) {
