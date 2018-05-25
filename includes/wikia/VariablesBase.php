@@ -7396,51 +7396,6 @@ $wgSiteStatsAsyncFactor = 1;
 $wgSkipCountForCategories = [];
 
 /**
- * Specify the name of a skin that should not be presented in the list of
- * available skins.  Use for blacklisting a skin which you do not want to
- * remove from the .../skins/ directory. NOTE: a few wikis may have local
- * override for this var, you need to modify those by hand. A SELECT on
- * city_variables will get you a list.
- * @var Array $wgSkipSkins
- */
-$wgSkipSkins = [
-    'answers',
-    'armchairgm',
-    'campfire',
-    'cars',
-    'corporate',
-    'corporatebase',
-    'corporatehome',
-    'curse',
-    'efmonaco',
-    'entertainment',
-    'food',
-    'games',
-    'gwmonobook',
-    'halo',
-    'halogamespot',
-    'health',
-    'home',
-    'law',
-    'local',
-    'lostbook',
-    'memalpha',
-    'monaco_old',
-    'monobook',
-    'music',
-    'politics',
-    'psn',
-    'quartz',
-    'restaurants',
-    'search',
-    'searchwikia',
-    'smartphone',
-    'test',
-    'uncyclopedia',
-    'wikiamobile',
-];
-
-/**
  * If slave DB lag is higher than this number of seconds, show an OBVIOUS
  * warning on some special pages.
  * @see $wgSlaveLagWarning

@@ -50,22 +50,21 @@ class Answer {
 		return $category_tag;
 	}
 
-	public function stripCategories( $content ){
+	private static function stripCategories( $content ){
 		global $wgContLang;
 		$content =  preg_replace("@\[\[" . $wgContLang->getNsText( NS_CATEGORY ) . ":[^\]]*?].*?\]@si", '', $content);
 		$content = trim( $content );
 		return $content;
 	}
 
-	public function stripImages( $content ){
+	private static function stripImages( $content ){
 		global $wgContLang;
 		$content =  preg_replace("@\[\[" . $wgContLang->getNsText( NS_IMAGE ) . ":[^\]]*?].*?\]@si", '', $content);
 		$content = trim( $content );
 		return $content;
 	}
 
-	public function stripInterlang( $content ){
-		global $wgContLang;
+	private static function stripInterlang( $content ){
 		$lang_mask = "(" . join("|", array_keys(Language::getLanguageNames())) . ")";
 		$content =  preg_replace("@\[\[" . $lang_mask . ":[^\]]*?].*?\]@si", '', $content);
 		$content = trim( $content );

@@ -117,7 +117,7 @@ class SkinChooser {
 	 * Select proper skin and theme based on user preferences / default settings
 	 */
 	public static function onGetSkin( RequestContext $context, &$skin ) {
-		global $wgDefaultSkin, $wgDefaultTheme, $wgSkinTheme, $wgAdminSkin, $wgSkipSkins, $wgEnableAnswers;
+		global $wgDefaultSkin, $wgDefaultTheme, $wgSkinTheme, $wgAdminSkin, $wgEnableAnswers;
 
 		wfProfileIn( __METHOD__ );
 
@@ -157,8 +157,8 @@ class SkinChooser {
 			$useskin = 'oasis';
 		}
 
-		if ( !( $title instanceof Title ) || in_array( self::getUserOption( 'skin' ), $wgSkipSkins ) ) {
-			$skin = Skin::newFromKey( isset( $wgDefaultSkin ) ? $wgDefaultSkin : 'monobook' );
+		if ( !( $title instanceof Title ) ) {
+			$skin = Skin::newFromKey( $wgDefaultSkin );
 			wfProfileOut( __METHOD__ );
 			return false;
 		}
