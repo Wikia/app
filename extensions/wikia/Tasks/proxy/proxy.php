@@ -1,5 +1,5 @@
 <?php
-set_time_limit( 0 );
+set_time_limit( 3600 );
 ini_set('display_errors', 0);
 
 # SEC-21: make sure that this is called internally
