@@ -136,7 +136,7 @@ class SkinChooser {
 			$skinFromHeader = $request->getHeader( 'X-Skin' );
 
 			if ( $skinFromHeader !== false ) {
-				if ( in_array( $skinFromHeader, array( 'monobook', 'oasis', 'wikia', 'wikiamobile', 'uncyclopedia' ) ) ) {
+				if ( in_array( $skinFromHeader, array( 'oasis', 'wikia', 'wikiamobile' ) ) ) {
 					$skin = Skin::newFromKey( $skinFromHeader );
 				// X-Skin header fallback for Mercury which is actually not a MediaWiki skin but a separate application
 				} elseif ( $skinFromHeader === 'mercury') {

@@ -24,6 +24,8 @@ class SkinChooserTest extends WikiaBaseTest {
 			'isLoggedIn' => false
 		] );
 
+		$this->mockGlobalVariable('wgDefaultSkin', 'oasis');
+
 		$context = new RequestContext();
 		$context->setRequest( $requestMock );
 		$context->setUser( $userMock );
@@ -42,11 +44,12 @@ class SkinChooserTest extends WikiaBaseTest {
 		return [
 			[ 'dynks', null ], # SkinChooser logic leaves early when X-Skin is set to an unknown skin (and returns no skin instance)
 			[ false, SkinOasis::class ], # use $wgDefaultSkin (for anons)
-			[ 'monobook', SkinMonoBook::class ],
 			[ 'oasis', SkinOasis::class ],
 			[ 'wikia', SkinOasis::class ],
-			[ 'uncyclopedia', SkinUncyclopedia::class ],
 			[ 'mercury', SkinWikiaMobile::class ],
+			// legacy skins - fallback to oasis
+			[ 'uncyclopedia', null ],
+			[ 'monobook', null ],
 		];
 	}
 }
