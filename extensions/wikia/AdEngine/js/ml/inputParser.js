@@ -1,4 +1,4 @@
-/*global define, require*/
+/*global define*/
 define('ext.wikia.adEngine.ml.inputParser', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adLogicPageParams',
