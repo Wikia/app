@@ -38,10 +38,16 @@ phpunit: prepare
 		--exclude-group Infrastructure,Integration,Broken,Stub,Monitoring,Hack,ExternalIntegration,ContractualResponsibilitiesValidation
 
 # runs integration tests only
+phpunit-integration: prepare
+	${CMD_PHPUNIT} \
+		--log-junit=${LOGS_PATH}/phpunit-infrastructure.xml \
+		--group Integration
+
+# runs infrastructure/system tests only
 phpunit-infrastructure: prepare
 	${CMD_PHPUNIT} \
 		--log-junit=${LOGS_PATH}/phpunit-infrastructure.xml \
-		--group Infrastructure,Integration
+		--group Infrastructure
 
 # runs all (i.e. both unit and integration) tests from a given directory or a file
 phpunit-single: prepare

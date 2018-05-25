@@ -5,11 +5,15 @@
  */
 class WikiFactoryLoaderIntegrationTest extends WikiaDatabaseTest {
 
+	/** @var string $dbName */
+	private $dbName;
+
 	protected function setUp() {
 		parent::setUp();
 
 		WikiFactory::isUsed( false );
 		$GLOBALS['wgExtensionFunctions'] = [];
+		$this->dbName = $GLOBALS['wgDBname'];
 	}
 
 	/**
@@ -373,6 +377,8 @@ class WikiFactoryLoaderIntegrationTest extends WikiaDatabaseTest {
 		parent::tearDown();
 
 		WikiFactory::isUsed( true );
+		LBFactory::destroyInstance();
+		$GLOBALS['wgDBname'] = $this->dbName;
 	}
 
 	protected function getDataSet() {

@@ -48,12 +48,12 @@ class WikiFactoryLoader {
 	 * @param array $wikiFactoryDomains
 	 */
 	public function  __construct( array $server, array $environment, array $wikiFactoryDomains = [] ) {
-		global $wgDevelEnvironment;
+		global $wgDevelEnvironment, $wgExternalSharedDB;
 
 		// initializations
 		$this->mOldServerName = false;
 		$this->mAlternativeDomainUsed = false;
-		$this->mDBname = WikiFactory::db;
+		$this->mDBname = $wgExternalSharedDB;
 		$this->mDomain = array();
 		$this->mVariables = array();
 		$this->mIsWikiaActive = 0;

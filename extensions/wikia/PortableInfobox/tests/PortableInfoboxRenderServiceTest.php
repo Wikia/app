@@ -5,6 +5,10 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 	protected function setUp() {
 		$this->setupFile = dirname( __FILE__ ) . '/../PortableInfobox.setup.php';
 		parent::setUp();
+
+		if ( !extension_loaded( 'mustache' ) ) {
+			$this->markTestSkipped( '"mustache" PHP extension needs to be loaded!' );
+		}
 	}
 
 	private function mockInfoboxRenderServiceHelper( $input ) {

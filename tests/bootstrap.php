@@ -41,3 +41,5 @@ if ( !defined( 'PHPUNIT_COMPOSER_INSTALL' ) ) {
 
 $wgWikiFactoryCacheType = CACHE_NONE;
 $wgMemc = new EmptyBagOStuff();
+
+$wgTaskBroker = false;

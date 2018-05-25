@@ -1,68 +1,6 @@
 <?php
 class ServiceTest extends WikiaBaseTest {
 
-	/**
-	 * @group Slow
-	 * @slowExecutionTime 0.35311 ms
-	 * @group UsingDB
-	 */
-	function testPageStatsService() {
-		global $wgTitle, $wgMemc;
-
-		$this->markTestSkipped('This test fails randomly');
-
-		$wgTitle = Title::newMainPage();
-		$articleId = $wgTitle->getArticleId();
-		$article = Article::newFromId($articleId);
-		$key = wfMemcKey('services', 'pageheader', 'current-revision', $articleId);
-
-		// macbre: perform this test only for existing pages
-		if (!$wgTitle->exists()) {
-			$this->markTestSkipped('Main page cannot be found');
-			return;
-		}
-
-		$service = new PageStatsService($articleId);
-
-		$this->assertInternalType('int', $service->getCommentsCount());
-		$this->assertInternalType('int', $service->getLikesCount());
-		$this->assertInternalType('array', $service->getCurrentRevision());
-		$this->assertInternalType('array', $service->getPreviousEdits());
-		$this->assertInternalType('string', $service->getFirstRevisionTimestamp());
-
-		// comments counter regenerating
-		$comments = $service->getCommentsCount();
-
-		$service->regenerateCommentsCount();
-		$this->assertEquals($comments, $service->getCommentsCount());
-
-		// remove cached stats when article is edited
-		$user = $flags = $status = false;
-		PageStatsService::onArticleSaveComplete($article, $user, false, false, false, false, false, $flags, false, $status, false);
-
-		$data = $wgMemc->get($key);
-		$this->assertTrue(empty($data));
-
-		$service->getCurrentRevision();
-
-		$data = $wgMemc->get($key);
-		$this->assertFalse(empty($data));
-
-		// remove cached stats when article (comment) is deleted
-		PageStatsService::onArticleDeleteComplete($article, $user, false, $articleId);
-
-		$data = $wgMemc->get($key);
-		$this->assertTrue(empty($data));
-
-		$service->getCurrentRevision();
-
-		// regenerate data
-		$service->regenerateData();
-
-		$data = $wgMemc->get($key);
-		$this->assertTrue(empty($data));
-	}
-
 	function testCategoriesService() {
 		global $wgBiggestCategoriesBlacklist;
 

@@ -840,44 +840,6 @@ class MediaWikiServiceTest extends BaseTest
 
 	/**
 	 * @group Slow
-	 * @slowExecutionTime 0.20025 ms
-	 * @covers \Wikia\Search\MediaWikiService::getApiStatsForPageId
-	 */
-	public function testGetApiStatsForPageId() {
-		$this->assertEquals(
-				\ApiService::call( array(
-        				'pageids'  => $this->pageId,
-        				'action'   => 'query',
-        				'prop'     => 'info',
-        				'inprop'   => 'url|created|views|revcount',
-        				'meta'     => 'siteinfo',
-        				'siprop'   => 'statistics|wikidesc|variables|namespaces|category'
-        		) ),
-			    (new MediaWikiService)->getApiStatsForPageId( $this->pageId )
-		);
-	}
-
-	/**
-	 * @group Slow
-	 * @slowExecutionTime 0.14909 ms
-	 * @covers \Wikia\Search\MediaWikiService::getApiStatsForWiki
-	 */
-	public function testGetApiStatsForWiki() {
-		global $wgCityId;
-		$this->assertEquals(
-				\ApiService::call( array(
-						'action'   => 'query',
-						'prop'     => 'info',
-						'inprop'   => 'url|created|views|revcount',
-						'meta'     => 'siteinfo',
-						'siprop'   => 'statistics'
-						) ),
-			    (new MediaWikiService)->getApiStatsForWiki( $wgCityId )
-		);
-	}
-
-	/**
-	 * @group Slow
 	 * @slowExecutionTime 0.08778 ms
 	 * @covers \Wikia\Search\MediaWikiService::pageIdExists
 	 */

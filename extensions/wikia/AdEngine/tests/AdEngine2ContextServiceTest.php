@@ -409,6 +409,23 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 		$this->mockStaticMethod( 'ArticleVideoService', 'getFeatureVideoForArticle', $mediaId );
 		$this->mockStaticMethod( 'ArticleVideoContext', 'isRecommendedVideoAvailable', $expected );
 
+		// Mock HubService
+		$this->mockStaticMethod( 'HubService', 'getCategoryInfoForCity', (object)[
+			'cat_name' => 'test'
+		] );
+
+		// Mock WikiFactoryHub
+		$wikiFactoryHubMock = $this->getMockBuilder( 'WikiFactoryHub' )
+			->disableOriginalConstructor()
+			->setMethods( [ 'getCategoryId', 'getCategoryShort', 'getWikiVertical', 'getWikiCategoryNames' ] )
+			->getMock();
+
+		$wikiFactoryHubMock->expects( $this->any() )
+			->method( 'getCategoryShort' )
+			->willReturn( 'test' );
+
+		$this->mockStaticMethod( WikiFactoryHub::class, 'getInstance', $wikiFactoryHubMock );
+
 		$adContextService = new AdEngine2ContextService();
 		$result = $adContextService->getContext( $titleMock, 'test' );
 

@@ -187,16 +187,7 @@ class SolrDocumentServiceTest extends WikiaBaseTest
 				'wikiId',
 				$ds
 		);
-		global $wgCityId;
-		$this->assertEquals(
-				$wgCityId,
-				$ds->getWikiId()
-		);
-		$this->assertAttributeEquals(
-				$wgCityId,
-				'wikiId',
-				$ds
-		);
+
 		$this->assertEquals(
 				$ds,
 				$ds->setWikiId( 123 )

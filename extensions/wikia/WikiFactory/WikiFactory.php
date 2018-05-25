@@ -1695,7 +1695,7 @@ class WikiFactory {
 	 * @return boolean status
 	 */
 	static public function clearCache( $city_id ) {
-		global $wgMemc,$wgWikicitiesReadOnly;
+		global $wgWikicitiesReadOnly;
 
 		if ( ! static::isUsed() ) {
 			Wikia::log( __METHOD__, "", "WikiFactory is not used." );
@@ -1724,42 +1724,24 @@ class WikiFactory {
 			);
 		}
 
-		// SUS-4749 | clear cache using both memcache clients as they use a different keys "namespace"
-		// FIXME: revert once the new client is fully deployed on production
-		global $wgObjectCaches;
+		global $wgMemc;
 
-		/* @var $caches MemcachedBagOStuff[] */
-		$caches = [
-			(new MemcachedPhpBagOStuff($wgObjectCaches[CACHE_MEMCACHED])),
-			(new MemcachedPeclBagOStuff($wgObjectCaches[CACHE_MEMCACHED])),
-		];
+		/**
+		 * clear domains cache
+		 */
+		static::clearDomainCache( $city_id );
 
-		foreach($caches as $cache) {
-			$wrapper = new \Wikia\Util\GlobalStateWrapper( [
-				'wgMemc' => $cache
-			] );
+		/**
+		 * clear variables cache
+		 */
+		$wgMemc->delete( "WikiFactory::getCategory:" .
+						 $city_id ); //ugly cat clearing (fb#9937)
+		$wgMemc->delete( static::getVarsKey( $city_id ) );
 
-			$wrapper->wrap( function () use ($city_id) {
-				global $wgMemc;
-
-				/**
-				 * clear domains cache
-				 */
-				static::clearDomainCache( $city_id );
-
-				/**
-				 * clear variables cache
-				 */
-				$wgMemc->delete( "WikiFactory::getCategory:" .
-				                 $city_id ); //ugly cat clearing (fb#9937)
-				$wgMemc->delete( static::getVarsKey( $city_id ) );
-
-				$city_dbname = static::IDtoDB( $city_id );
-				$wgMemc->delete( static::getWikiaCacheKey( $city_id ) );
-				if ( !empty( $city_dbname ) ) {
-					$wgMemc->delete( static::getWikiaDBCacheKey( $city_dbname ) );
-				}
-			} );
+		$city_dbname = static::IDtoDB( $city_id );
+		$wgMemc->delete( static::getWikiaCacheKey( $city_id ) );
+		if ( !empty( $city_dbname ) ) {
+			$wgMemc->delete( static::getWikiaDBCacheKey( $city_dbname ) );
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -3535,4 +3517,8 @@ class WikiFactory {
                         ]
                 );
         }
+
+	public static function clearVariablesCache() {
+		static::$variablesCache = [];
+	}
 };

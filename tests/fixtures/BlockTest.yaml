@@ -88,6 +88,7 @@ user:
     user_registration: '20090604060000'
     user_editcount: 2500
     user_birthdate:
+    user_options: ''
   -
     user_id: 2
     user_name: 'BlockingAdmin'
@@ -101,6 +102,7 @@ user:
     user_registration: '20090604060000'
     user_editcount: 2500
     user_birthdate:
+    user_options: ''
   -
     user_id: 3
     user_name: 'NotBlockedUser'
@@ -114,6 +116,7 @@ user:
     user_registration: '20090604060000'
     user_editcount: 2500
     user_birthdate:
+    user_options: ''
   -
     user_id: 4
     user_name: '1234'
@@ -126,7 +129,7 @@ user:
     user_email_token_expires: '20120301120000'
     user_registration: '20090604060000'
     user_editcount: 2500
-    user_birthdate:
+    user_options: ''
   -
     user_id: 5
     user_name: '78910'
@@ -140,3 +143,4 @@ user:
     user_registration: '20090604060000'
     user_editcount: 2500
     user_birthdate:
+    user_options: ''
