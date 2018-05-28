@@ -412,7 +412,7 @@ class ListusersData {
 		$dbw = wfGetDB( DB_MASTER, array(), $this->mDBh );
 		if ( empty($oRow) ) {
 			$edits = $user->getEditCount();
-			list( $editdate, $lastrev ) = $this->getEditDateAndLastRevision( $user_id );
+			list( $editdate, $lastrev ) = self::getEditDateAndLastRevision( $user_id );
 
 			$dbw->replace(
 				self::TABLE,
@@ -492,6 +492,14 @@ class ListusersData {
 		}
 	}
 
+	/**
+	 * Updates edits count, last edit data and last revision ID for every entry in
+	 * events_local_users table for a given wiki.
+	 *
+	 * @see SUS-4625
+	 *
+	 * @param int $cityId
+	 */
 	public static function populateEditDates( int $cityId ) {
 		global $wgSpecialsDB;
 
@@ -503,13 +511,36 @@ class ListusersData {
 			[ 'wiki_id' => $cityId ],
 			__METHOD__
 		);
+
+		$dbw = wfGetDB( DB_MASTER, array(), $wgSpecialsDB );
+
+		foreach($res as $row) {
+			$userId = $row->user_id;
+
+			$edits = User::newFromId($userId)->getEditCount();
+			list( $editdate, $lastrev ) = self::getEditDateAndLastRevision( $userId );
+
+			$dbw->update(
+				self::TABLE,
+				[
+					"edits"			 => $edits,
+					"editdate"		 => $editdate,
+					"last_revision"  => $lastrev,
+				],
+				[
+					'wiki_id' => $cityId,
+					'user_id' => $userId,
+				],
+				__METHOD__ . '::update'
+			);
+		}
 	}
 
 	/**
 	 * @param int $user_id
 	 * @return array
 	 */
-	private function getEditDateAndLastRevision( int $user_id ): array {
+	private static function getEditDateAndLastRevision( int $user_id ): array {
 		$dbr = wfGetDB( DB_SLAVE );
 		$revRow = $dbr->selectRow( 'revision',
 			array( 'rev_id', 'rev_timestamp' ),
