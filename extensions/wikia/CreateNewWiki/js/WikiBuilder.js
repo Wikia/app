@@ -22,6 +22,7 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 		wikiNameLabel,
 		wikiNameError,
 		wikiDomain,
+		wikiBaseDomain,
 		wikiDomainLabel,
 		wikiDomainError,
 		wikiDomainCountry,
@@ -46,6 +47,8 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 			category: 'create-new-wiki',
 			trackingMethod: 'analytics'
 		}),
+		wikiaBaseDomain = window.wgWikiaBaseDomain,
+		shouldCreateLanguageWikisWithPath = window.wgCreateLanguageWikisWithPath,
 		NO_SUBDOMAIN_LANGUAGE = 'en';
 
 	function init() {
@@ -86,6 +89,7 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 		wikiNameLabel = $nameWikiWrapper.find('label[for=wiki-name]');
 		wikiNameError = $nameWikiWrapper.find('.wiki-name-error');
 		wikiDomain = $nameWikiWrapper.find('input[name=wiki-domain]');
+		wikiBaseDomain = $nameWikiWrapper.find('.wiki-base-domain');
 		wikiDomainLabel = $nameWikiWrapper.find('label[for=wiki-domain]');
 		wikiDomainError = $nameWikiWrapper.find('.wiki-domain-error');
 		wikiDomainCountry = $nameWikiWrapper.find('.domain-country');
@@ -300,14 +304,22 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 		checkDomain();
 		var selected = $(this).val();
 
-		if (selected && selected !== NO_SUBDOMAIN_LANGUAGE) {
-			wikiDomainCountry.html(selected + '.');
+		if (shouldCreateLanguageWikisWithPath) {
+			if (selected && selected !== NO_SUBDOMAIN_LANGUAGE) {
+				wikiBaseDomain.text(wikiaBaseDomain + '/' + selected);
+			} else {
+				wikiBaseDomain.text(wikiaBaseDomain);
+			}
 		} else {
-			wikiDomainCountry.html('');
-		}
+			if (selected && selected !== NO_SUBDOMAIN_LANGUAGE) {
+				wikiDomainCountry.html(selected + '.');
+			} else {
+				wikiDomainCountry.html('');
+			}
 
-		if (!wikiDomainLabel.hasClass('active')) {
-			wikiDomainLabel.css('left', wikiDomain.position().left);
+			if (!wikiDomainLabel.hasClass('active')) {
+				wikiDomainLabel.css('left', wikiDomain.position().left);
+			}
 		}
 
 		track({
@@ -640,9 +652,7 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 					cityId = res.cityId;
 					createStatus = res.status;
 					createStatusMessage = res.statusMsg;
-					finishCreateUrl = (res.finishCreateUrl.indexOf('.com/wiki/') < 0 ?
-						res.finishCreateUrl.replace('.com/', '.com/wiki/') :
-						res.finishCreateUrl);
+					finishCreateUrl = res.finishCreateUrl;
 
 					// unblock "Next" button (BugId:51519)
 					// for QA with love
