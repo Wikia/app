@@ -168,7 +168,7 @@ class CommentsIndex {
 				'commentId' => $commentId
 			] );
 
-			throw new CommentsIndexEntryNotFoundException();
+			throw new CommentsIndexEntryNotFoundException( $commentId );
 		}
 
 		$entry = CommentsIndexEntry::newFromRow( $row );
