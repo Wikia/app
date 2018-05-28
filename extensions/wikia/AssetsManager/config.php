@@ -215,6 +215,7 @@ $config['tracking_opt_in_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [
 		'//extensions/wikia/TrackingOptIn/dist/tracking-opt-in.min.js',
+		'//extensions/wikia/TrackingOptIn/dist/consent-string.min.js',
 		'//extensions/wikia/TrackingOptIn/js/trackingOptIn.js',
 		'//extensions/wikia/TrackingOptIn/js/consentString.js',
 	],
@@ -956,7 +957,9 @@ $config['mercury_ads_js'] = [
 		'//extensions/wikia/AdEngine/js/run/mercury.run.js',
 		'#group_adengine2_rabbit_mobile_js',
 		'#group_jwplayer_featured_video_ads_js',
-		'//extensions/wikia/TrackingOptIn/js/trackingOptInProxy.js'
+		'//extensions/wikia/TrackingOptIn/dist/consent-string.min.js',
+		'//extensions/wikia/TrackingOptIn/js/trackingOptInProxy.js',
+		'//extensions/wikia/TrackingOptIn/js/consentString.js'
 	],
 ];
 

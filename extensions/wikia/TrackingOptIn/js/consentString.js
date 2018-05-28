@@ -1,8 +1,8 @@
 define('wikia.consentString', [
 	'wikia.cookies',
 	'wikia.log',
-	'wikia.trackingOptInModal'
-], function (cookies, log, trackingOptInModal) {
+	'wikia.consentStringLibrary'
+], function (cookies, log, consentStringLibrary) {
 	var logGroup = 'wikia.consentString',
 		consentStringCookie = 'consent-string',
 		cookieExpireDays = 604800000, // 7 days in milliseconds
@@ -153,7 +153,7 @@ define('wikia.consentString', [
 		}
 
 		var consentString,
-			consentData = new trackingOptInModal.ConsentString();
+			consentData = new consentStringLibrary.ConsentString();
 
 		consentData.setGlobalVendorList(vendorsListGlobal);
 		consentData.setPurposesAllowed(optIn ? purposesList : []);
