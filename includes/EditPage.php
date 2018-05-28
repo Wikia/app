@@ -1891,7 +1891,7 @@ class EditPage {
 		/* Wikia change begin - @author: kflorence (BugId:40705) */
 		if ( !$this->isCssJsSubpage &&
 			$showToolbar &&
-			( !( $wgUser->getSkin() instanceof SkinMonobook ) || $wgUser->getGlobalPreference( 'showtoolbar' ) ) ) {
+			$wgUser->getGlobalPreference( 'showtoolbar' ) ) {
 			$wgOut->addHTML( EditPage::getEditToolbar() );
 		}
 		/* Wikia change end */
