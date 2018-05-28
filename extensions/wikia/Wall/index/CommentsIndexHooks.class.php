@@ -35,7 +35,7 @@ class CommentsIndexHooks {
 				$wallMessage->getThread()->invalidateCache();
 				$wallMessage->invalidateCache();
 			} catch ( CommentsIndexEntryNotFoundException $notFoundException ) {
-				// bummer
+				// don't fail if comment was invalid
 			}
 		}
 
