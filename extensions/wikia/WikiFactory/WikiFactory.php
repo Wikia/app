@@ -1101,10 +1101,6 @@ class WikiFactory {
 		if ( $city_id == $wgCityId ) {
 			return isset($GLOBALS[$cv_name]) ? $GLOBALS[$cv_name] : null;
 		}
-		if ( $cv_name == 'wgServer' || $cv_name == 'wgArticlePath' ) {
-			// these are not a WF variable anymore. Remove this check after they are deleted from city_variables
-			return null;
-		}
 
 		wfProfileIn( __METHOD__ );
 
