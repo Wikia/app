@@ -245,7 +245,7 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 
 			if ( !empty( $wgEnableDiscussions ) ) {
 				$url = WikiFactory::cityUrlToLanguagePath(
-						WikiaFactory::cityIDtoUrl($this->productInstanceId)
+						WikiFactory::cityIDtoUrl($this->productInstanceId)
 					) . '/d/f';
 				$key = 'community-header-discuss';
 				$tracking = 'discuss';
