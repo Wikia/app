@@ -7883,6 +7883,7 @@ La última edición fue hecha por [[User:$3|$3]] ([[User talk:$3|discusión]]{{i
 *199.102.47.71
 *199.102.47.72',
 	'atom' => 'Atom',
+	'achievements-leaderboard-navigation-item' => 'Tabla de líderes del wiki',
 );
 
 $messages['et'] = array(
@@ -17984,6 +17985,7 @@ $messages['lol'] = array(
 	'add_comment' => 'crwdns27458:0crwdne27458:0',
 	'atom' => 'crwdns48417:0crwdne48417:0',
 	'addnewtalksection-link' => 'crwdns48418:0crwdne48418:0',
+	'achievements-leaderboard-navigation-item' => 'crwdns27459:0crwdne27459:0',
 );
 
 $messages['loz'] = array(
@@ -24119,6 +24121,7 @@ Por favor, escolha outro nome.',
 	'already_a_member' => 'Já é membro?',
 	'add_comment' => 'Deixar mensagem',
 	'atom' => 'Atom',
+	'achievements-leaderboard-navigation-item' => 'Wiki Leaderboard',
 );
 
 $messages['qu'] = array(

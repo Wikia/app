@@ -41019,7 +41019,7 @@ ___________________________________________________________
 请检查file_uploads设置。',
 	'popularpages' => '流行页面',
 	'prefixindex' => '所有含前缀的页面',
-	'prefixindex-namespace' => '所有含前缀的页面（$1个名字空间）',
+	'prefixindex-namespace' => '所有含前缀的页面（$1名字空间）',
 	'protectedpages' => '受保护页面',
 	'protectedpages-indef' => '仅无限期保护',
 	'protectedpages-cascade' => '仅连锁保护',
