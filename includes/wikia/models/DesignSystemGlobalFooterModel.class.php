@@ -547,7 +547,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 	}
 
 	private function getHref( $hrefKey ) {
-		return DesignSystemSharedLinks::getInstance()->getHref( $hrefKey, $this->lang );
+		return DesignSystemSharedLinks::getInstance()->getLocalHref($hrefKey, $this->lang, $this->productInstanceId);
 	}
 
 	private function getSocialHrefs() {
