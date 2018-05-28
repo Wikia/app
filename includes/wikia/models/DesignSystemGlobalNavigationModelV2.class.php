@@ -476,7 +476,7 @@ class DesignSystemGlobalNavigationModelV2 extends WikiaModel {
 				'href' => $this->getHref( 'wikia-org-logo' ),
 				'image-data' => [
 					'type' => 'wds-svg',
-					'name' => 'wds-company-logo-wikia-org', // TODO: change it to white version when asset is ready
+					'name' => 'wds-company-logo-wikia-org-white',
 				],
 				'tracking_label' => 'logo',
 			];
