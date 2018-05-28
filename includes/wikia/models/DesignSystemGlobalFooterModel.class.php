@@ -522,7 +522,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 			);
 
 			if ( $localSitemapAvailable ) {
-				return $this->getHref( 'local-sitemap' );
+				return $this->getLocalHref( 'local-sitemap' );
 			}
 		}
 
@@ -546,8 +546,12 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 		return $licenseUrl;
 	}
 
-	private function getHref( $hrefKey ) {
+	private function getLocalHref( $hrefKey ) {
 		return DesignSystemSharedLinks::getInstance()->getLocalHref($hrefKey, $this->lang, $this->productInstanceId);
+	}
+
+	private function getHref( $hrefKey ) {
+		return DesignSystemSharedLinks::getInstance()->getHref($hrefKey, $this->lang);
 	}
 
 	private function getSocialHrefs() {
