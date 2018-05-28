@@ -120,13 +120,16 @@ class LyricFindTrackingService extends WikiaObject {
 		$callerName = isset( $dbt[1]['function'] ) ? $dbt[1]['function'] : 'unknown';
 
 		$ctx = Wikia\Tracer\WikiaTracer::instance()->getContext();
-		Wikia\Logger\WikiaLogger::instance()->info( 'Calling Lyric Display API', [
+		Wikia\Logger\S3AuditLogger::instance()->info( 'Calling Lyric Display API', [
 			'url' => !empty( $ctx['http_url'] ) ? $ctx['http_url'] : '',
 			'referer' => !empty( $ctx['http_referrer'] ) ? $ctx['http_referrer'] : '',
+			'user_agent' => RequestContext::getMain()->getRequest()->getHeader( 'User-Agent' ),
 			'trackid' => $trackId,
 			'client_ip' => !empty( $ctx['client_ip'] ) ? $ctx['client_ip'] : '',
 			'initiator' => $callerName,
-			'call_timestamp' => wfTimestamp( TS_DB )
+			'call_timestamp' => wfTimestamp( TS_DB ),
+			'datacenter' => !empty( $ctx['datacenter'] ) ? $ctx['datacenter'] : '',
+			'environment' => !empty( $ctx['environment'] ) ? $ctx['environment'] : '',
 		] );
 
 		return ExternalHttp::post($url, ['postData' => $data]);
