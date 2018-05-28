@@ -34,6 +34,24 @@ class DesignSystemSharedLinks {
 	}
 
 	/**
+	 * @param $name string key for href
+	 * @param $lang string two letter language code
+	 * @param $cityId int
+	 * @return string full URL, in case of lang specific URL missing, default one is returned
+	 */
+	public function getLocalHref( $name, $lang, $cityId) {
+		$lang = $this->getLangWithFallback( $lang );
+
+		$href = $this->hrefs[$lang][$name] ?? $this->hrefs['default'][$name];
+
+		return WikiFactory::getLocalEnvURL(
+			WikiFactory::cityUrlToLanguagePath(
+				WikiFactory::cityIDtoUrl($cityId)
+			) . $href
+		);
+	}
+
+	/**
 	 * @param $lang string two letter language code
 	 * @return array list of social urls for given language. In case of no url is defined for given language, english urls are returned.
 	 */
