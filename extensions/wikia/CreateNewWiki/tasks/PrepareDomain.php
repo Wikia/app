@@ -28,12 +28,18 @@ class PrepareDomain extends Task {
 
 		$subdomain = $domain;
 
-		if ( !empty($wikiLanguage) && $wikiLanguage !== "en" ) {
-			$subdomain = strtolower( $wikiLanguage ) . "." . $domain;
-		}
+		// SUS-4784 - create language wikis with the language code in the path, but only if enabled
+		if ( $this->taskContext->shouldCreateLanguageWikiWithPath() && !empty( $wikiLanguage ) && $wikiLanguage !== "en" ) {
+			$this->taskContext->setDomain( "$subdomain.$wgWikiaBaseDomain/$wikiLanguage" );
+			$this->taskContext->setUrl( "http://$subdomain.$wgWikiaBaseDomain/$wikiLanguage" );
+		} else {
+			if ( !empty( $wikiLanguage ) && $wikiLanguage !== "en" ) {
+				$subdomain = strtolower( $wikiLanguage ) . "." . $domain;
+			}
 
-		$this->taskContext->setDomain( sprintf( "%s.%s", $subdomain, $wgWikiaBaseDomain ) );
-		$this->taskContext->setUrl( sprintf( "http://%s.%s/", $subdomain, $wgWikiaBaseDomain ) );
+			$this->taskContext->setDomain( sprintf( "%s.%s", $subdomain, $wgWikiaBaseDomain ) );
+			$this->taskContext->setUrl( sprintf( "http://%s.%s/", $subdomain, $wgWikiaBaseDomain ) );
+		}
 
 		return TaskResult::createForSuccess();
 	}
