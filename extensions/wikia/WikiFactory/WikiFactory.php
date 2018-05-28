@@ -3417,7 +3417,7 @@ class WikiFactory {
 	 * @return string
 	 */
 	static public function cityIdToLanguagePath( $city_id, $href ) {
-		return static::cityIDtoUrl( WikiFactory::cityIDtoUrl( $city_id ) ) . $href;
+		return static::cityUrlToLanguagePath( WikiFactory::cityIDtoUrl( $city_id ) ) . $href;
 	}
 
 	/**
