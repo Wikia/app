@@ -156,6 +156,10 @@ class InterwikiDispatcher extends UnlistedSpecialPage {
 
 							$url = str_replace( '$1', $sArticleTitle, $sArticlePath );
 							$url = WikiFactory::cityUrlToDomain( $sCityUrl ) . $url;
+
+							if ( wfHttpsAllowedForURL( $url ) ) {
+								$url = wfProtocolUrlToRelative( $url );
+							}
 						}
 					}
 				}
