@@ -86,7 +86,7 @@ describe('ext.wikia.adEngine.provider.gpt.googleTag', function () {
 					destroySlots: noop
 				}
 			},
-			trackingOptOut: {},
+			trackingOptIn: {},
 			allSlots: [
 				{
 					getTargeting: function () {
@@ -120,11 +120,11 @@ describe('ext.wikia.adEngine.provider.gpt.googleTag', function () {
 			mocks.srcProvider,
 			document,
 			mocks.log,
-			mocks.trackingOptOut,
+			mocks.trackingOptIn,
 			mocks.window
 		);
 
-		mocks.trackingOptOut.isOptedOut = noop;
+		mocks.trackingOptIn.isOptedIn = noop;
 
 		mocks.elementSizes = [[300, 250]];
 	});
@@ -141,7 +141,7 @@ describe('ext.wikia.adEngine.provider.gpt.googleTag', function () {
 
 		expect(googleTag.isInitialized()).toBe(true);
 		expect(mocks.pubads.collapseEmptyDivs).toHaveBeenCalled();
-		expect(mocks.pubads.setRequestNonPersonalizedAds).toHaveBeenCalledWith(0);
+		expect(mocks.pubads.setRequestNonPersonalizedAds).toHaveBeenCalledWith(1);
 		expect(mocks.pubads.enableSingleRequest).toHaveBeenCalled();
 		expect(mocks.pubads.disableInitialLoad).toHaveBeenCalled();
 		expect(mocks.pubads.addEventListener).toHaveBeenCalled();
@@ -277,8 +277,8 @@ describe('ext.wikia.adEngine.provider.gpt.googleTag', function () {
 	it('Initialization with tracking opt out should setup non personalized ads', function () {
 		spyOn(mocks.pubads, 'setRequestNonPersonalizedAds');
 
-		mocks.trackingOptOut.isOptedOut = function () {
-			return true;
+		mocks.trackingOptIn.isOptedIn = function () {
+			return false;
 		};
 
 		googleTag.init();

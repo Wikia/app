@@ -39,7 +39,7 @@ describe('ext.wikia.adEngine.video.vastUrlBuilder', function () {
 				src: 'src',
 				pos: 'SLOT_NAME'
 			},
-			trackingOptOut: {}
+			trackingOptIn: {}
 	};
 
 	function getModule() {
@@ -49,12 +49,12 @@ describe('ext.wikia.adEngine.video.vastUrlBuilder', function () {
 			mocks.slotTargeting,
 			mocks.loc,
 			mocks.log,
-			mocks.trackingOptOut
+			mocks.trackingOptIn
 		);
 	}
 
 	beforeEach(function () {
-		mocks.trackingOptOut.isOptedOut = noop;
+		mocks.trackingOptIn.isOptedIn = noop;
 	});
 
 	it('Build VAST URL with DFP domain', function () {
@@ -219,15 +219,19 @@ describe('ext.wikia.adEngine.video.vastUrlBuilder', function () {
 		expect(vastUrl).toContain(encodeURIComponent('uap=6666'));
 	});
 
-	it('Build VAST URL with disabled non personalized ads when tracking opt out is disabled', function () {
+	it('Build VAST URL with disabled non personalized ads when tracking opted out', function () {
+		mocks.trackingOptIn.isOptedIn = function () {
+			return true;
+		};
+
 		var vastUrl = getModule().build(1, mocks.slotParams);
 
 		expect(vastUrl).toContain('&npa=0');
 	});
 
-	it('Build VAST URL with non personalized ads when tracking opt out is enabled', function () {
-		mocks.trackingOptOut.isOptedOut = function () {
-			return true;
+	it('Build VAST URL with non personalized ads when tracking opted in', function () {
+		mocks.trackingOptIn.isOptedIn = function () {
+			return false;
 		};
 
 		var vastUrl = getModule().build(1, mocks.slotParams);
