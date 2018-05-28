@@ -8,6 +8,7 @@ define('ext.wikia.adEngine.lookup.prebid', [
 	'ext.wikia.adEngine.lookup.prebid.prebidHelper',
 	'ext.wikia.adEngine.lookup.prebid.prebidSettings',
 	'ext.wikia.adEngine.lookup.lookupFactory',
+	'wikia.consentString',
 	'wikia.log',
 	'wikia.trackingOptIn',
 	'wikia.window'
@@ -20,6 +21,7 @@ define('ext.wikia.adEngine.lookup.prebid', [
 	helper,
 	settings,
 	factory,
+	consentString,
 	log,
 	trackingOptIn,
 	win
@@ -55,7 +57,7 @@ define('ext.wikia.adEngine.lookup.prebid', [
 			}
 
 			win.__cmp = function(command, version, callback) {
-				var iabConsentData = trackingOptIn.getPrebidConsentString(optIn),
+				var iabConsentData = consentString.getPrebidConsentString(optIn),
 					gdprApplies = trackingOptIn.geoRequiresTrackingConsent(),
 					responseCode = true;
 
