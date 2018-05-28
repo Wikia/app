@@ -86,24 +86,6 @@ class ArticleCommentInit {
 		return $enable;
 	}
 
-	static public function ArticleCommentEnable( &$data ) {
-		global $wgTitle;
-
-		$skin = RequestContext::getMain()->getSkin();
-
-		// use this hook only for skins other than Monaco
-		// update: it's actually only MonoBook since Oasis and WikiaMobile use their own
-		// logic and the other mobile skins do not show comments-related stuff
-		if ( $skin instanceof SkinMonoBook ) {
-			if ( self::ArticleCommentCheck() ) {
-				$page = ArticleCommentList::newFromTitle( $wgTitle );
-				$data = $page->render();
-			}
-		}
-
-		return true;
-	}
-
 	/**
 	 * @param OutputPage $out
 	 * @param Skin $skin
