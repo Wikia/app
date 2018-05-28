@@ -4,17 +4,17 @@ define('wikia.consentString', [
 	'wikia.trackingOptInModal'
 ], function (cookies, log, trackingOptInModal) {
 	var logGroup = 'wikia.consentString',
-		prebidConsentStringCookie = 'prebid-consent-string',
-		prebidCookieExpireDays = 604800000, // 7 days in milliseconds
-		prebidPurposesList = [1, 2, 3, 4, 5],
-		prebidVendorsList = [
+		consentStringCookie = 'consent-string',
+		cookieExpireDays = 604800000, // 7 days in milliseconds
+		purposesList = [1, 2, 3, 4, 5],
+		vendorsList = [
 			10, // Index Exchange, Inc.
 			32, // AppNexus Inc.
 			52, // The Rubicon Project, Limited
 			69, // OpenX Software Ltd. and its affiliates
 			76, // PubMatic, Inc.
 		],
-		prebidVendorsListGlobal = {
+		vendorsListGlobal = {
 			"vendorListVersion": 33,
 			"lastUpdated": "2018-05-27T16:00:14Z",
 			"purposes": [
@@ -141,8 +141,8 @@ define('wikia.consentString', [
 			]
 		};
 
-	function getPrebidConsentString(optIn) {
-		var cookie = cookies.get(prebidConsentStringCookie);
+	function getConsentString(optIn) {
+		var cookie = cookies.get(consentStringCookie);
 
 		cookie = cookie ? cookie.split('...') : cookie;
 
@@ -155,16 +155,16 @@ define('wikia.consentString', [
 		var consentString,
 			consentData = new trackingOptInModal.ConsentString();
 
-		consentData.setGlobalVendorList(prebidVendorsListGlobal);
-		consentData.setPurposesAllowed(optIn ? prebidPurposesList : []);
-		consentData.setVendorsAllowed(optIn ? prebidVendorsList : []);
+		consentData.setGlobalVendorList(vendorsListGlobal);
+		consentData.setPurposesAllowed(optIn ? purposesList : []);
+		consentData.setVendorsAllowed(optIn ? vendorsList : []);
 
 		consentString = consentData.getConsentString();
 
-		cookies.set(prebidConsentStringCookie, (optIn ? '1...' : '0...') + consentString, {
+		cookies.set(consentStringCookie, (optIn ? '1...' : '0...') + consentString, {
 			path: '/',
 			domain: window.wgCookieDomain || '.wikia.com',
-			expires: prebidCookieExpireDays
+			expires: cookieExpireDays
 		});
 
 		log('Saving consent string to cookie', log.levels.debug, logGroup);
@@ -173,6 +173,6 @@ define('wikia.consentString', [
 	}
 
 	return {
-		getPrebidConsentString: getPrebidConsentString
+		getConsentString: getConsentString
 	};
 });

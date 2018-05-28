@@ -57,7 +57,7 @@ define('ext.wikia.adEngine.lookup.prebid', [
 			}
 
 			win.__cmp = function(command, version, callback) {
-				var iabConsentData = consentString.getPrebidConsentString(optIn),
+				var iabConsentData = consentString.getConsentString(optIn),
 					gdprApplies = trackingOptIn.geoRequiresTrackingConsent(),
 					responseCode = true;
 
