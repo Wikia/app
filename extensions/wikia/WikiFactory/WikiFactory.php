@@ -3465,11 +3465,9 @@ class WikiFactory {
 	 * @return string
 	 */
 	static private function parseValue( $value, $type ) {
-		if ( $type == "string" || $type == "integer"  ) {
+		if ( $type == "string" || $type == "text" || $type == "integer" ) {
 			return htmlspecialchars( $value );
-		}
-
-		if ( $type == "array" || $type == "struct" || $type == "hash" ) {
+		} elseif ( $type == "array" || $type == "struct" || $type == "hash" ) {
 			return json_encode( $value, JSON_PRETTY_PRINT );
 		}
 
