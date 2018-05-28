@@ -12,21 +12,32 @@ class EnableDiscussionsController extends \WikiaController {
 	}
 
 	public function activateDiscussions() {
-		$cityId = $this->request->getInt( self::SITE_ID );
-		if ( empty( $cityId ) ) {
-			throw new BadRequestException();
-		}
+		try {
+			$cityId = $this->request->getInt( self::SITE_ID );
+			if ( empty( $cityId ) ) {
+				throw new BadRequestException();
+			}
 
-		$wiki = WikiFactory::getWikiByID( $cityId );
-		if ( empty( $wiki ) ) {
-			throw new NotFoundException();
-		}
+			$wiki = WikiFactory::getWikiByID( $cityId );
+			if ( empty( $wiki ) ) {
+				throw new NotFoundException();
+			}
 
-		( new \DiscussionsActivator( $wiki->city_id, $wiki->city_title,
-			$wiki->city_lang ) )->activateDiscussions();
+			( new \DiscussionsActivator( $wiki->city_id, $wiki->city_title,
+				$wiki->city_lang ) )->activateDiscussions();
 
-		if ( $this->request->getBool( self::CREATE_WELCOME_POST, false ) ) {
-			( new \StaffWelcomePoster() )->postMessage( $wiki->city_id, $wiki->city_lang );
+			if ( $this->request->getBool( self::CREATE_WELCOME_POST, false ) ) {
+				( new \StaffWelcomePoster() )->postMessage( $wiki->city_id, $wiki->city_lang );
+			}
+		} catch ( WikiaBaseException $exception ) {
+			$this->response->setCode( $exception->getCode() );
+			$this->response->setVal(
+				'exception',
+				[
+					'message' => $exception->getMessage(),
+					'code' => $exception->getCode()
+				]
+			);
 		}
 	}
 
@@ -50,7 +61,7 @@ class EnableDiscussionsController extends \WikiaController {
 
 	/**
 	 * Make sure to only allow authorized POST methods.
-	 * @throws \Email\Fatal
+	 * @throws WikiaHttpException
 	 */
 	public function assertCanAccessController() {
 		if ( !$this->request->isInternal() ) {
