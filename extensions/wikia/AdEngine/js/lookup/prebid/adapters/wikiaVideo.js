@@ -65,6 +65,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.wikiaVideo',[
 
 			bidResponse.bidderCode = bidRequest.bidderCode;
 			bidResponse.cpm = price;
+			bidResponse.creativeId = 'wikiaAdapter';
 			bidResponse.ttl = 300;
 			bidResponse.mediaType = 'video';
 			bidResponse.width = bid.sizes[0][0];
