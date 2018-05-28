@@ -44,9 +44,7 @@ class DesignSystemSharedLinks {
 
 		$href = $this->hrefs[$lang][$name] ?? $this->hrefs['default'][$name];
 
-		return WikiFactory::cityUrlToLanguagePath(
-				WikiFactory::cityIDtoUrl( $cityId )
-			) . $href;
+		return WikiFactory::cityIdToLanguagePath( $cityId, $href );
 	}
 
 	/**
