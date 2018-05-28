@@ -679,9 +679,6 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			$this->overrideTemplate( 'CrossWiki_index' );
 		}
 		$skin = $this->wg->User->getSkin();
-		if ( $skin instanceof SkinMonoBook ) {
-			$this->response->addAsset( 'extensions/wikia/Search/monobook/monobook.scss' );
-		}
 		if ( $skin instanceof SkinOasis ) {
 			$this->response->addAsset( 'extensions/wikia/Search/css/WikiaSearch.scss' );
 		}
