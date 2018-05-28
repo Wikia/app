@@ -14,6 +14,7 @@ define('wikia.consentString', [
 			69, // OpenX Software Ltd. and its affiliates
 			76, // PubMatic, Inc.
 		],
+		// Downloaded from: https://vendorlist.consensu.org/vendorlist.json
 		vendorsListGlobal = {
 			"vendorListVersion": 33,
 			"lastUpdated": "2018-05-27T16:00:14Z",
