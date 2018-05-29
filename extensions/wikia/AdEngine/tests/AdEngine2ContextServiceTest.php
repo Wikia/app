@@ -344,6 +344,7 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 				'wikiCategory' => $shortCat,
 				'wikiCustomKeyValues' => $customDartKvs,
 				'wikiDbName' => $dbName,
+				'wikiId' => $cityId,
 				'wikiLanguage' => $langCode,
 				'wikiVertical' => $vertical,
 				'mappedVerticalName' => $verticals['expectedMappedVertical']
