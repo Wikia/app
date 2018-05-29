@@ -24,11 +24,11 @@ class InterwikiDispatcherTest extends WikiaBaseTest {
 		return [
 			[
 				'$interwikiPageName' => 'w:c:muppet:Elmo',
-				'$expected' =>  'http://muppet.wikia.com/wiki/Elmo'
+				'$expected' =>  '//muppet.wikia.com/wiki/Elmo'
 			],
 			[
 				'$interwikiPageName' => 'w:c:muppet:NonExisting',
-				'$expected' =>  'http://muppet.wikia.com/wiki/NonExisting'
+				'$expected' =>  '//muppet.wikia.com/wiki/NonExisting'
 			],
 			[
 				'$interwikiPageName' => 'c:muppet:Elmo',

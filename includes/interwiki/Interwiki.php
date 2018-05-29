@@ -339,6 +339,11 @@ class Interwiki {
 		if( $title !== null ) {
 			$url = str_replace( "$1", wfUrlencode( $title ), $url );
 		}
+
+		if ( wfHttpsAllowedForURL( $url ) ) {
+			$url = wfProtocolUrlToRelative( $url );
+		}
+
 		return $url;
 	}
 

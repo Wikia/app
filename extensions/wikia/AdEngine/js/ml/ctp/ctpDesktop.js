@@ -16,7 +16,6 @@ define('ext.wikia.adEngine.ml.ctp.ctpDesktop', [
 		dataSource: source,
 		model: linearModel.create(source.coefficients, source.intercept),
 		name: 'ctpdesktop',
-		wgCountriesVariable: 'wgAdDriverCTPDesktopRabbitCountries',
 		enabled: isFeaturedVideoClickToPlay && adContext.get('targeting.skin') === 'oasis',
 		cachePrediction: true
 	});

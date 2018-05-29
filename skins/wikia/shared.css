@@ -258,14 +258,8 @@ ul.wikia-slideshow-images li { /* ul adds specificity to override .WikiaArticle 
 	display: none;
 }
 
-/* hide new blog listing box on Monobook */
-body.skin-monobook .WikiaBlogListingBox {
-	display: none;
-}
-
-/* show on Monaco and Oasis */
-body.skin-oasis .wikia-slideshow-images .wikia-slideshow-image,
-body.wikiaSkinMonaco .wikia-slideshow-images .wikia-slideshow-image {
+/* show on Oasis */
+body.skin-oasis .wikia-slideshow-images .wikia-slideshow-image {
 	cursor: pointer;
 	display: block;
 	height: 100%;

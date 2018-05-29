@@ -1,7 +1,7 @@
 Privacy
 =======
 
-A set of script that remove user data as a part of GPDR project.
+A set of scripts that remove user data as a part of GPDR project.
 
 ## Entry point
 
@@ -28,6 +28,7 @@ Alternatively, **Special:RequestToBeForgottenInternal is available** for `reques
  * `removeUserPages` removes user pages (NS_USER), user talk pages (NS_USER_TALK), blog pages (NS_BLOG_ARTICLE), wall messages (NS_USER_WALL_MESSAGE_GREETING, NS_USER_WALL_MESSAGE, NS_USER_WALL) pages of the given user (including sub-pages). `PermanentArticleDelete::deletePage` is used to **delete them permanently, leaving no trace**.
  * all `recentchanges` entries connected to user pages are removed
  * all `logging` entries connected to user pages are removed
+ * all `watchlist` entries that belong to the user are removed
  * if the user was renamed, user pages are removed for the old username as well
 
 ## Debugging
@@ -35,3 +36,7 @@ Alternatively, **Special:RequestToBeForgottenInternal is available** for `reques
 All logs from this process are marked with `@content.right_to_be_forgotten: 1` for easy "grepping" in Kibana.
 
 Due to caching, it may take up to 24h for user pages to be removed completely.
+
+## Handling "forget me" requests in a bulk
+
+See [sus-dynks' gdpr tool](https://github.com/Wikia/sus-dynks/tree/master/gdpr).

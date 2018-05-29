@@ -103,9 +103,10 @@ class FounderActivityDigestController extends FounderDigestController {
 		return $this->getMessage( 'emailext-founder-activity-digest-subject', $this->wikiName )->parse();
 	}
 
+	/**
+	 * @template digestLayout
+	 */
 	public function body() {
-		$this->setViewTemplate( 'digestLayout' );
-
 		$this->response->setData( [
 			'salutation' => $this->getSalutation(),
 			'summary' => $this->getSummary(),
@@ -212,9 +213,10 @@ class FounderPageViewsDigestController extends FounderDigestController {
 		return $this->getMessage( 'emailext-founder-views-digest-subject', $this->wikiName )->parse();
 	}
 
+	/**
+	 * @template digestLayout
+	 */
 	public function body() {
-		$this->setViewTemplate( 'digestLayout' );
-
 		$this->response->setData( [
 			'salutation' => $this->getSalutation(),
 			'summary' => $this->getSummary(),

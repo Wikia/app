@@ -583,13 +583,7 @@ class WallMessage {
 
 			return ( static::$titleCache[$parentPageId] = $parentTitle );
 		} catch ( CommentsIndexEntryNotFoundException $entryNotFoundException ) {
-			$title = $this->getTitle();
-			WikiaLogger::instance()->error( 'SUS-1680: No comments index entry for message', [
-				'messageTitle' => $title->getPrefixedText(),
-				'messageId' => $title->getArticleID(),
-				'exception' => $entryNotFoundException
-			] );
-
+			// don't fail if comment was invalid
 			return static::emptyTitle();
 		}
 	}

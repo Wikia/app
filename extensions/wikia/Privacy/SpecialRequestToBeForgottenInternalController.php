@@ -25,12 +25,9 @@ class SpecialRequestToBeForgottenInternalController extends WikiaSpecialPageCont
 			$this->setVal( 'message', 'Invalid username' );
 		} else {
 			$userId = $user->getId();
+			$dataRemover = new UserDataRemover();
+			$dataRemover->removeAllPersonalUserData( $userId );
 			$this->setVal( 'message', 'Request to forget ' . $userName . ' with id=' . $userId . ' sent' );
-			F::app()->sendRequest(
-				'RemoveUserDataController',
-				'removeUserData',
-				[ 'userId' => $userId ]
-			);
 		}
 	}
 }

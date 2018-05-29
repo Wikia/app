@@ -194,29 +194,48 @@ class RobotsTxtTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * Test setSitemap
+	 * Test addSitemap
 	 *
-	 * @covers RobotsTxt::setSitemap
+	 * @covers RobotsTxt::addSitemap
 	 */
-	public function testSetSitemap() {
+	public function testAddSitemap() {
 		$robots = new RobotsTxt();
-		$robots->setSitemap( 'http://www.my-site.com/sitemap.xml' );
+		$robots->addSitemap( 'http://www.my-site.com/sitemap.xml' );
+		$robots->addSitemap( 'http://www.my-site.com/de/sitemap.xml' );
 
 		$this->assertEquals(
-			[ 'Sitemap: http://www.my-site.com/sitemap.xml' ],
+			[ 'Sitemap: http://www.my-site.com/sitemap.xml', 'Sitemap: http://www.my-site.com/de/sitemap.xml'],
 			$robots->getContents()
 		);
 	}
 
 	/**
-	 * Test setSitemap with other methods
+	 * Test addSitemaps
 	 *
-	 * @covers RobotsTxt::setSitemap
+	 * @covers RobotsTxt::addSitemaps
+	 */
+	public function testAddSitemaps() {
+		$robots = new RobotsTxt();
+		$robots->addSitemaps( [ 'http://www.my-site.com/sitemap.xml' ] );
+		$robots->addSitemaps( [ 'http://www.my-site.com/de/sitemap.xml', 'http://www.my-site.com/pl/sitemap.xml' ] );
+
+		$this->assertEquals([
+			'Sitemap: http://www.my-site.com/sitemap.xml',
+			'Sitemap: http://www.my-site.com/de/sitemap.xml',
+			'Sitemap: http://www.my-site.com/pl/sitemap.xml' ],
+			$robots->getContents()
+		);
+	}
+
+	/**
+	 * Test addSitemap with other methods
+	 *
+	 * @covers RobotsTxt::addSitemap
 	 */
 	public function testSitemapWithOtherMethods() {
 		$robots = new RobotsTxt();
 		$robots->addAllowedPaths( [ '/abc' ] );
-		$robots->setSitemap( 'http://www.my-site.com/sitemap.xml' );
+		$robots->addSitemap( 'http://www.my-site.com/sitemap.xml' );
 		$robots->addDisallowedPaths( [ '/def' ] );
 		$robots->addBlockedRobots( [ 'my-robot' ] );
 

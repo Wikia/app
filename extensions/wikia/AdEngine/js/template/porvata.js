@@ -110,6 +110,7 @@ define('ext.wikia.adEngine.template.porvata', [
 			if (fallbackBid) {
 				fallbackAdRequested = true;
 				params.bid = fallbackBid;
+				params.adProduct += '_' + fallbackBid.bidderCode;
 
 				offerEvent = 'wikiaInViewportWithFallbackBid';
 				videoSettings.setMoatTracking(false);

@@ -672,7 +672,6 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			$this->setVal( 'corporateWikiId', $wgCityId );
 			$this->overrideTemplate( 'CrossWiki_index' );
 		}
-
 		$this->response->addAsset( 'extensions/wikia/Search/css/WikiaSearch.scss' );
 
 		return true;

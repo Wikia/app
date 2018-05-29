@@ -28,6 +28,8 @@ class ContentUpdatedController extends FandomCreatorEmailController {
 	}
 
 	/**
+	 * @template avatarLayout
+	 *
 	 * other possible keys:
 	 * 	details - additional email text
 	 * 	editorProfilePage - link to user's profile page on this community
@@ -35,8 +37,6 @@ class ContentUpdatedController extends FandomCreatorEmailController {
 	 * 	buttonLink - where buttonText goes
 	 */
 	public function body() {
-		$this->setViewTemplate( 'avatarLayout' );
-
 		$this->magicWordWrapper->wrap( function() {
 			$this->response->setData( [
 					'salutation' => $this->getSalutation(),
