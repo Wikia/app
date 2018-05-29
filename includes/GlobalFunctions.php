@@ -3833,6 +3833,9 @@ function wfWaitForSlaves( $wiki = false ) {
 				$slaves = array_merge( $slaves, $consul->getNodesFromHostname( $slaveInfo['hostName'] ) );
 			}
 
+			// we may get duplicated entries from different DCs
+			$slaves = array_unique( $slaves );
+
 			// clone the loadbalancer and add all slaves that we've got from Consul
 			$lb = clone $lb;
 
