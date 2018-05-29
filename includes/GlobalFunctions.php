@@ -3813,12 +3813,23 @@ function wfWaitForSlaves( $wiki = false ) {
 		// Wikia change - begin
 		// PLATFORM-1489: check if we're using consul configuration for DB slave
 		if ( $lb->hasConsulConfig() ) {
-			// get the list of IP addresses of all slave nodes from consul
-			// so that we can check all of them explicitly
+			$slaveInfo = $lb->getServerInfo( 1 ); // e.g. slave.db-g.service.consul
+
+			// SUS-4805 | iterate over all data centers for the current environment
+			global $wgWikiaEnvironment;
 			$consul = new Wikia\Consul\Client();
 
-			$slaveInfo = $lb->getServerInfo( 1 ); // e.g. slave.db-g.service.consul
-			$slaves = $consul->getNodesFromHostname( $slaveInfo['hostName'] );
+			$slaves = [];
+
+			foreach( $consul->getDataCentersForEnv( $wgWikiaEnvironment ) as $dc ) {
+				// get the list of IP addresses of all slave nodes from consul
+				// so that we can check all of them explicitly
+				$consul = new Wikia\Consul\Client( [
+					'base_uri' => Wikia\Consul\Client::getConsulBaseUrlForDC( $dc )
+				] );
+
+				$slaves = array_merge( $slaves, $consul->getNodesFromHostname( $slaveInfo['hostName'] ) );
+			}
 
 			// clone the loadbalancer and add all slaves that we've got from Consul
 			$lb = clone $lb;
