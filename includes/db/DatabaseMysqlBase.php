@@ -766,17 +766,6 @@ abstract class DatabaseMysqlBase extends DatabaseBase {
 		} else {
 			return false;
 		}
-
-		$res = $this->query(
-			"SELECT TIMESTAMPDIFF(MICROSECOND,ts,UTC_TIMESTAMP(6)) AS Lag " .
-			"FROM heartbeat.heartbeat WHERE server_id = $masterId"
-		);
-		$row = $res ? $res->fetchObject() : false;
-		if ( $row ) {
-			return max( floatval( $row->Lag ) / 1e6, 0.0 );
-		}
-
-		return false;
 	}
 
 	/**
