@@ -3822,6 +3822,8 @@ function wfWaitForSlaves( $wiki = false ) {
 			$slaves = [];
 
 			foreach( $consul->getDataCentersForEnv( $wgWikiaEnvironment ) as $dc ) {
+				wfDebug( __METHOD__ . ": getting the list of slaves in {$dc} DC...\n" );
+
 				// get the list of IP addresses of all slave nodes from consul
 				// so that we can check all of them explicitly
 				$consul = new Wikia\Consul\Client( [
