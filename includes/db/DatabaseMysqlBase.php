@@ -52,7 +52,7 @@ abstract class DatabaseMysqlBase extends DatabaseBase {
 		// SUS-4805 | pt-heartbeat based lag support
 		$this->lagDetectionMethod = isset( $params['lagDetectionMethod'] )
 			? $params['lagDetectionMethod']
-			: 'pt-heartbeat';
+			: 'Seconds_Behind_Master';
 
 		global $wgMemc;
 		$this->srvCache = $wgMemc;
@@ -620,6 +620,7 @@ abstract class DatabaseMysqlBase extends DatabaseBase {
 		$res = $this->query( 'SHOW SLAVE STATUS', __METHOD__ );
 		$row = $res ? $res->fetchObject() : false;
 		if ( $row && strval( $row->Seconds_Behind_Master ) !== '' ) {
+			wfDebug( __METHOD__ . ": lag for {$this->getServer()} is {$row->Seconds_Behind_Master} seconds\n" );
 			return intval( $row->Seconds_Behind_Master );
 		}
 
