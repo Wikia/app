@@ -47,7 +47,7 @@ class PrepareDomain extends Task {
 	public function check() {
 		$this->debug( implode( ":", [ "CreateNewWiki", $this->taskContext->getInputDomain(), $this->taskContext->getLanguage() ] ) );
 		$errorMsg = \CreateWikiChecks::checkDomainIsCorrect(
-			$this->taskContext->getInputDomain(), $this->taskContext->getLanguage(), false, false
+			$this->taskContext->getInputDomain(), $this->taskContext->getLanguage(), false
 		);
 		if ( !empty($errorMsg) ) {
 			return TaskResult::createForError( $errorMsg );
