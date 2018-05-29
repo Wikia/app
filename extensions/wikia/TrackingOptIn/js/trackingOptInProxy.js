@@ -51,11 +51,19 @@ define('wikia.trackingOptIn', [
 	}
 
 	function geoRequiresTrackingConsent() {
-		if (win.M === 'undefined' || typeof win.M.continent === 'undefined') {
+		if (win.M === 'undefined') {
 			return true;
 		}
 
-		return win.M.continent === 'EU';
+		if (typeof win.M.geoRequiresConsent !== 'undefined') {
+			return win.M.geoRequiresConsent;
+		}
+
+		if (typeof win.M.continent !== 'undefined') {
+			return win.M.continent === 'EU';
+		}
+
+		return true;
 	}
 
 	return {
