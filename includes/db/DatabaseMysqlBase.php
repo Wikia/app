@@ -658,7 +658,7 @@ abstract class DatabaseMysqlBase extends DatabaseBase {
 
 		wfProfileIn( __METHOD__ );
 		# Commit any open transactions
-		$this->commit( __METHOD__, 'flush' );
+		$this->commit( __METHOD__ );
 
 		if ( !is_null( $this->mFakeSlaveLag ) ) {
 			$status = parent::masterPosWait( $pos, $timeout );
@@ -670,6 +670,8 @@ abstract class DatabaseMysqlBase extends DatabaseBase {
 		$encFile = $this->addQuotes( $pos->file );
 		$encPos = intval( $pos->pos );
 		$sql = "SELECT MASTER_POS_WAIT($encFile, $encPos, $timeout)";
+
+		wfDebug( sprintf( "Query %s %s %s\n", $this->getDBname(), __METHOD__, $sql ) );
 		$res = $this->doQuery( $sql );
 
 		$status = false;
