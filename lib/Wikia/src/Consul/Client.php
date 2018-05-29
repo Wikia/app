@@ -22,14 +22,16 @@ class Client {
 	use Loggable;
 
 	protected $logger;
+	protected $options;
 
 	/* @var \SensioLabs\Consul\Services\Health $api */
 	protected $api;
 
-	function __construct() {
+	function __construct(array $options = []) {
 		$this->logger = WikiaLogger::instance();
+		$this->options = $options;
 
-		$consulService = new ServiceFactory( [], $this->logger );
+		$consulService = new ServiceFactory( $options, $this->logger );
 		$this->api = $consulService->get( 'health' );
 	}
 
@@ -70,7 +72,7 @@ class Client {
 	 * @return array list of IP addresses with ports ie. 127.0.0.1:1234
 	 */
 	private function getNodesFromConsulQuery( string $query ) : array {
-		$consulClient = new ConsulClient();
+		$consulClient = new ConsulClient( $this->options );
 		$resp = $consulClient->get(
 			sprintf( '/v1/query/%s/execute?passing=', $query )
 		)->json();
