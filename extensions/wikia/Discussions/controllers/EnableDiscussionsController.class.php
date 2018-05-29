@@ -30,6 +30,8 @@ class EnableDiscussionsController extends \WikiaController {
 				( new \StaffWelcomePoster() )->postMessage( $wiki->city_id, $wiki->city_lang );
 			}
 		} catch ( WikiaBaseException $exception ) {
+			// This is normally done in WikiaDispatcher::dispatch(),
+			// but because it's an internal request, we would return 200 and only log error to ELK stack
 			$this->response->setCode( $exception->getCode() );
 			$this->response->setVal(
 				'exception',
