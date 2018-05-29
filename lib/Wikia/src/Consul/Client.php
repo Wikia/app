@@ -27,12 +27,16 @@ class Client {
 	/* @var \SensioLabs\Consul\Services\Health $api */
 	protected $api;
 
+	/* @var \SensioLabs\Consul\Services\Catalog $api */
+	protected $catalog;
+
 	function __construct(array $options = []) {
 		$this->logger = WikiaLogger::instance();
 		$this->options = $options;
 
 		$consulService = new ServiceFactory( $options, $this->logger );
 		$this->api = $consulService->get( 'health' );
+		$this->catalog = $consulService->get( 'catalog' );
 	}
 
 	/**
@@ -114,6 +118,20 @@ class Client {
 		else {
 			throw new \Exception( __METHOD__ . " - {$hostname} is neither consul query nor consul service address" );
 		}
+	}
+
+	/**
+	 * @param string $env either prod or dev
+	 * @return string[]
+	 */
+	function getDataCentersForEnv( string $env ) {
+		return array_values(array_filter(
+			// e.g. poz, sjc-dev, res
+			$this->catalog->datacenters()->json(),
+			function( $dc ) use ( $env ) {
+				return $env === 'dev' ? endsWith($dc, '-dev') : !endsWith($dc, '-dev');
+			}
+		));
 	}
 
 	/**
