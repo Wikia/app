@@ -134,6 +134,10 @@ class Client {
 		));
 	}
 
+	static function getConsulBaseUrlForDC( string $dc ) : string {
+		return sprintf( 'http://consul.service.%s.consul:8500', $dc );
+	}
+
 	/**
 	 * Example: Wikia\Consul\Client::isConsulAddress( 'slave.db-smw.service.consul' )
 	 *
