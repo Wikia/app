@@ -3,28 +3,15 @@
  * Class definition for Wikia\Search\Test\ResultSet\AbstractResultSetTest
  */
 namespace Wikia\Search\Test\ResultSet;
-use Wikia, ReflectionProperty, ReflectionMethod, ArrayIterator;
+use ArrayIterator;
+use ReflectionProperty;
+use Wikia;
+
 /**
  * Tests abstract result set class
  */
 class AbstractResultSetTest extends Wikia\Search\Test\BaseTest {
-	
-	/**
-	 * @group Slow
-	 * @slowExecutionTime 0.09747 ms
-	 * @covers Wikia\Search\ResultSet\AbstractResultSet::__construct
-	 * @group Broken
-	 */
-	public function testConstruct() {
-		$dc = new Wikia\Search\ResultSet\DependencyContainer();
-		$resultSet = $this->getMockBuilder( '\Wikia\Search\ResultSet\AbstractResultSet' )
-		                  ->setConstructorArgs( array( $dc ) )
-		                  ->getMockForAbstractClass();
-		
-		// constructor should call configure(), but we have no way of asserting this
-		// (other than everything else breaking in other tests)
-	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.09517 ms
@@ -34,7 +21,7 @@ class AbstractResultSetTest extends Wikia\Search\Test\BaseTest {
 		$resultSet = $this->getMockBuilder( '\Wikia\Search\ResultSet\AbstractResultSet' )
 		                  ->disableOriginalConstructor()
 		                  ->getMockForAbstractClass();
-		
+
 		$resultsFound = new ReflectionProperty( 'Wikia\Search\ResultSet\AbstractResultSet', 'resultsFound' );
 		$resultsFound->setAccessible( true );
 		$resultsFound->setValue( $resultSet, 20 );
@@ -43,7 +30,7 @@ class AbstractResultSetTest extends Wikia\Search\Test\BaseTest {
 				$resultSet->getResultsFound()
 		);
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.09598 ms
@@ -53,7 +40,7 @@ class AbstractResultSetTest extends Wikia\Search\Test\BaseTest {
 		$resultSet = $this->getMockBuilder( '\Wikia\Search\ResultSet\AbstractResultSet' )
 		                  ->disableOriginalConstructor()
 		                  ->getMockForAbstractClass();
-		
+
 		$this->assertFalse(
 				$resultSet->hasResults()
 		);
@@ -64,7 +51,7 @@ class AbstractResultSetTest extends Wikia\Search\Test\BaseTest {
 				$resultSet->hasResults()
 		);
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.09766 ms
@@ -74,7 +61,7 @@ class AbstractResultSetTest extends Wikia\Search\Test\BaseTest {
 		$resultSet = $this->getMockBuilder( '\Wikia\Search\ResultSet\AbstractResultSet' )
 		                  ->disableOriginalConstructor()
 		                  ->getMockForAbstractClass();
-		
+
 		$resultsFound = new ReflectionProperty( 'Wikia\Search\ResultSet\AbstractResultSet', 'results' );
 		$resultsFound->setAccessible( true );
 		$resultsFound->setValue( $resultSet, new ArrayIterator( array( 123, 456 ) ) );
@@ -83,7 +70,7 @@ class AbstractResultSetTest extends Wikia\Search\Test\BaseTest {
 				$resultSet->getResultsNum()
 		);
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.09813 ms
@@ -93,7 +80,7 @@ class AbstractResultSetTest extends Wikia\Search\Test\BaseTest {
 		$resultSet = $this->getMockBuilder( '\Wikia\Search\ResultSet\AbstractResultSet' )
 		                  ->disableOriginalConstructor()
 		                  ->getMockForAbstractClass();
-		
+
 		$this->assertEquals(
 				$resultSet,
 				$resultSet->setHeader( 'foo', 'bar' )
@@ -105,7 +92,7 @@ class AbstractResultSetTest extends Wikia\Search\Test\BaseTest {
 				$headers->getValue( $resultSet )
 		);
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.09916 ms
@@ -116,7 +103,7 @@ class AbstractResultSetTest extends Wikia\Search\Test\BaseTest {
 		                  ->disableOriginalConstructor()
 		                  ->setMethods( array( 'setHeader' ) )
 		                  ->getMockForAbstractClass();
-		
+
 		$resultSet
 		    ->expects( $this->at( 0 ) )
 		    ->method ( 'setHeader' )
@@ -132,7 +119,7 @@ class AbstractResultSetTest extends Wikia\Search\Test\BaseTest {
 				$resultSet->addHeaders( array( 'foo' => 'bar', 'baz' => 'qux' ) )
 		);
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.09601 ms
@@ -146,7 +133,7 @@ class AbstractResultSetTest extends Wikia\Search\Test\BaseTest {
 		$headersRefl = new ReflectionProperty( 'Wikia\Search\ResultSet\AbstractResultSet', 'header' );
 		$headersRefl->setAccessible( true );
 		$headersRefl->setValue( $resultSet, $headers );
-		
+
 		$this->assertEquals(
 				$headers,
 				$resultSet->getHeader()
@@ -159,7 +146,7 @@ class AbstractResultSetTest extends Wikia\Search\Test\BaseTest {
 				$resultSet->getHeader( 'baz' )
 		);
 	}
-	
+
 	/**
 	 * @covers Wikia\Search\ResultSet\AbstractResultSet::getResults
 	 */
@@ -182,7 +169,7 @@ class AbstractResultSetTest extends Wikia\Search\Test\BaseTest {
 				$resultSet
 		);
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.09642 ms
@@ -192,13 +179,13 @@ class AbstractResultSetTest extends Wikia\Search\Test\BaseTest {
 		$resultSet = $this->getMockBuilder( '\Wikia\Search\ResultSet\AbstractResultSet' )
 		                  ->disableOriginalConstructor()
 		                  ->getMockForAbstractClass();
-		
+
 		$mockConfig = $this->getMock( 'Wikia\Search\Config', array( 'getQuery' ) );
 		$mockQuery = $this->getMock( 'Wikia\Search\Query\Select', array( 'getQueryForHtml' ), array( 'foo' ) );
 		$configRefl = new ReflectionProperty( 'Wikia\Search\ResultSet\AbstractResultSet', 'searchConfig' );
 		$configRefl->setAccessible( true );
 		$configRefl->setValue( $resultSet, $mockConfig );
-		
+
 		$mockConfig
 		    ->expects( $this->once() )
 		    ->method ( 'getQuery' )
@@ -214,7 +201,7 @@ class AbstractResultSetTest extends Wikia\Search\Test\BaseTest {
 				$resultSet->getQuery()
 		);
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.0982 ms
@@ -225,9 +212,9 @@ class AbstractResultSetTest extends Wikia\Search\Test\BaseTest {
 		                  ->disableOriginalConstructor()
 		                  ->setMethods( array( 'getResults' ) )
 		                  ->getMockForAbstractClass();
-		
+
 		$mockResult = $this->getMock( 'Wikia\Search\Result', array( 'toArray' ) );
-		
+
 		$docArray = array( 'title' => 'foo', 'url' => 'wikia.com/foo' );
 		$resultSet
 		    ->expects( $this->once() )
@@ -245,7 +232,7 @@ class AbstractResultSetTest extends Wikia\Search\Test\BaseTest {
 				$resultSet->toArray()
 		);
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.09603 ms
@@ -256,7 +243,7 @@ class AbstractResultSetTest extends Wikia\Search\Test\BaseTest {
 		                  ->disableOriginalConstructor()
 		                  ->setMethods( array( 'getResults' ) )
 		                  ->getMockForAbstractClass();
-		
+
 		$whoCares = 'This result type does not matter';
 		$resultSet
 		    ->expects( $this->once() )
@@ -268,7 +255,7 @@ class AbstractResultSetTest extends Wikia\Search\Test\BaseTest {
 				$resultSet->getIterable()
 		);
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.11333 ms
@@ -304,9 +291,9 @@ class AbstractResultSetTest extends Wikia\Search\Test\BaseTest {
 				'append'       => array( 'foo' ),
 				'seek'         => array( 'foo' ),
 				);
-		$methods = array( 
-				'offsetExists', 'offsetGet', 'offsetSet', 'offsetUnset', 
-				'append', 'rewind', 'current', 'key', 'next', 'valid', 'seek' 
+		$methods = array(
+				'offsetExists', 'offsetGet', 'offsetSet', 'offsetUnset',
+				'append', 'rewind', 'current', 'key', 'next', 'valid', 'seek'
 				);
 		$mockIterator = $this->getMock( '\ArrayIterator', $methods, array( array() ) );
 		$resultSet = $this->getMockBuilder( '\Wikia\Search\ResultSet\AbstractResultSet' )
@@ -329,8 +316,8 @@ class AbstractResultSetTest extends Wikia\Search\Test\BaseTest {
 			} else {
 				$resultSet->{$method}();
 			}
-			
+
 		}
 	}
-	
+
 }

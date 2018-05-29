@@ -126,9 +126,6 @@ class SolrDocumentServiceTest extends WikiaBaseTest
 		);
 	}
 
-	/**
-	 * @group Broken
-	 */
 	public function testGetDocumentWithCachedResult() {
 		$service = $this->getMock( 'SolrDocumentService', [ 'getConfig', 'getFactory', 'getDocumentId' ] );
 		$config = $this->getMock( 'Wikia\Search\Config', [ 'setQuery' ] );

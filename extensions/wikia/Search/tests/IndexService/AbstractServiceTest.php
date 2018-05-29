@@ -314,15 +314,12 @@ class AbstractServiceTest extends BaseTest
 	}
 
 	/**
-	 * @group Slow
-	 * @group Broken
-	 * @slowExecutionTime 0.07976 ms
-	 * @covers Wikia\Search\IndexService\AbstractService::getService
+	 * @covers \Wikia\Search\IndexService\AbstractService::getService
 	 */
 	public function testGetService() {
 		$service = $this->service
 		                ->disableOriginalConstructor()
-		                ->setMethods( array( null ) )
+		                ->setMethods( [] )
 		                ->getMockForAbstractClass();
 		$this->assertAttributeEmpty(
 				'service',

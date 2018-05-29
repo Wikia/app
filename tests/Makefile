@@ -35,7 +35,7 @@ prepare:
 phpunit: prepare
 	${CMD_PHPUNIT} \
 		--log-junit=${LOGS_PATH}/phpunit-unit.xml \
-		--exclude-group Infrastructure,Integration,Broken,Stub,Monitoring,Hack,ExternalIntegration,ContractualResponsibilitiesValidation
+		--exclude-group Infrastructure,Integration,ExternalIntegration,ContractualResponsibilitiesValidation
 
 # runs integration tests only
 phpunit-integration: prepare
