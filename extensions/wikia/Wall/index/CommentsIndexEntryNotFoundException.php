@@ -1,4 +1,7 @@
 <?php
+
+use Wikia\Logger\WikiaLogger;
+
 /**
  * Copyright (C) 2017 Wikia, Inc.
  *
@@ -23,4 +26,12 @@
 
 class CommentsIndexEntryNotFoundException extends Exception {
 
+	public function __construct( int $commentId ) {
+		parent::__construct();
+
+		WikiaLogger::instance()->error( 'SUS-1680 - No comments index entry for message', [
+			'messageId' => $commentId,
+			'exception' => $this
+		] );
+	}
 }

@@ -412,22 +412,7 @@ class ListusersData {
 		$dbw = wfGetDB( DB_MASTER, array(), $this->mDBh );
 		if ( empty($oRow) ) {
 			$edits = $user->getEditCount();
-
-			$dbr = wfGetDB( DB_SLAVE );
-			$revRow = $dbr->selectRow(
-				'revision',
-				array( 'rev_id', 'rev_timestamp' ),
-				array( 'rev_user' => $user_id ),
-				__METHOD__,
-				array( 'ORDER BY' => 'rev_timestamp DESC' )
-			);
-			if ( empty($revRow) ) {
-				$editdate = '0000-00-00 00:00:00';
-				$lastrev = 0;
-			} else {
-				$editdate = wfTimestamp( TS_DB, $revRow->rev_timestamp );
-				$lastrev = $revRow->rev_id;
-			}
+			list( $editdate, $lastrev ) = self::getEditDateAndLastRevision( $user_id );
 
 			$dbw->replace(
 				self::TABLE,
@@ -437,7 +422,7 @@ class ListusersData {
 					"user_id"        => $user_id,
 					"edits"			 => $edits,
 					"editdate"		 => $editdate,
-					"last_revision"  => intval($lastrev),
+					"last_revision"  => $lastrev,
 					"cnt_groups"	 => $elements,
 					"single_group"   => $singlegroup,
 					"all_groups"	 => $allgroups
@@ -448,6 +433,8 @@ class ListusersData {
 			$dbw->update(
 				self::TABLE,
 				array(
+					// editdate will be set to a current timestamp on this update
+					// `editdate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 					"cnt_groups"	=> $elements,
 					"single_group"	=> $singlegroup,
 					"all_groups"	=> $allgroups
@@ -503,5 +490,72 @@ class ListusersData {
 			$user = \User::newFromId( $id );
 			$listUsers->updateUserGroups( $user, $user->getGroups() );
 		}
+	}
+
+	/**
+	 * Updates edits count, last edit data and last revision ID for every entry in
+	 * events_local_users table for a given wiki.
+	 *
+	 * @see SUS-4625
+	 *
+	 * @param int $cityId
+	 */
+	public static function populateEditDates( int $cityId ) {
+		global $wgSpecialsDB;
+
+		// get all users for a given wiki from The Table
+		$dbr = wfGetDB(DB_SLAVE, array(), $wgSpecialsDB);
+		$res = $dbr->select(
+			self::TABLE,
+			'user_id',
+			[ 'wiki_id' => $cityId ],
+			__METHOD__
+		);
+
+		$dbw = wfGetDB( DB_MASTER, array(), $wgSpecialsDB );
+
+		foreach($res as $row) {
+			$userId = $row->user_id;
+
+			$edits = User::newFromId($userId)->getEditCount();
+			list( $editdate, $lastrev ) = self::getEditDateAndLastRevision( $userId );
+
+			$dbw->update(
+				self::TABLE,
+				[
+					"edits"			 => $edits,
+					"editdate"		 => $editdate,
+					"last_revision"  => $lastrev,
+				],
+				[
+					'wiki_id' => $cityId,
+					'user_id' => $userId,
+				],
+				__METHOD__ . '::update'
+			);
+		}
+	}
+
+	/**
+	 * @param int $user_id
+	 * @return array
+	 */
+	private static function getEditDateAndLastRevision( int $user_id ): array {
+		$dbr = wfGetDB( DB_SLAVE );
+		$revRow = $dbr->selectRow( 'revision',
+			array( 'rev_id', 'rev_timestamp' ),
+			array( 'rev_user' => $user_id ),
+			__METHOD__,
+			array( 'ORDER BY' => 'rev_timestamp DESC' ) );
+
+		if ( empty( $revRow ) ) {
+			$editdate = '0000-00-00 00:00:00';
+			$lastrev = 0;
+		} else {
+			$editdate = wfTimestamp( TS_DB, $revRow->rev_timestamp );
+			$lastrev = (int) $revRow->rev_id;
+		}
+
+		return array( $editdate, $lastrev );
 	}
 }

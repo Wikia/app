@@ -103,29 +103,16 @@ class MercuryApiController extends WikiaController {
 	 */
 	public function getArticleComments() {
 		$title = $this->getTitleFromRequest();
-		$articleId = $title->getArticleId();
 
 		$page = $this->request->getInt( self::PARAM_PAGE, self::DEFAULT_PAGE );
 
-		$commentsResponse = $this->app->sendRequest(
-			'ArticleComments',
-			'WikiaMobileCommentsPage',
-			[
-				'articleID' => $articleId,
-				'page' => $page,
-				'format' => WikiaResponse::FORMAT_JSON
-			]
-		);
+		$articleCommentList = ArticleCommentList::newFromTitle( $title );
+		$commentsData = $articleCommentList->getCommentPages( false, $page );
 
-		if ( empty( $commentsResponse ) ) {
-			throw new BadRequestApiException();
-		}
-
-		$commentsData = $commentsResponse->getData();
 		$comments = $this->mercuryApi->processArticleComments( $commentsData );
 
 		$this->response->setVal( 'payload', $comments );
-		$this->response->setVal( 'pagesCount', $commentsData['pagesCount'] );
+		$this->response->setVal( 'pagesCount', $articleCommentList->getCountPages() );
 		$this->response->setVal( 'basePath', $this->wg->Server ); // remove?
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 	}
