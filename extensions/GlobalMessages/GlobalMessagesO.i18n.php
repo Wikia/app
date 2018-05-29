@@ -9,6 +9,7 @@ $messages['en'] = array(
 	'ok' => 'OK',
 	'oldpassword' => 'Old password:',
 	'opensearch-desc' => '{{SITENAME}} ({{CONTENTLANGUAGE}})',
+	'original-file' => 'original file',
 	'overwrite' => 'Overwriting an existing file is not allowed.',
 	'overwroteimage' => 'uploaded a new version of "[[$1]]"',
 	'othercontribs' => 'Based on work by $1.',
@@ -28,6 +29,7 @@ $messages['qqq'] = array(
 {{Identical|Otherlanguages}}',
 	'ok' => '{{Identical|OK}}',
 	'oldpassword' => "Used on the 'User profile' tab of 'my preferences'. This is the text next to an entry box for the old password in the 'change password' section.",
+	'original-file' => 'Direct url to the actual file, rather than the image description page.',
 	'overwroteimage' => 'This is the text of an entry in the [[Special:Log|upload log]] (and Recent Changes), after hour (and date, only in the Upload log) and user name. $1 is the name of the file uploaded.',
 	'othercontribs' => 'This message is shown when viewing the credits of a page (example: {{fullurl:Main Page|action=credits}}). Note that this action is disabled by default (currently enabled on translatewiki.net - to use type <nowiki>&action=credits</nowiki> at the end of any URL in the address bar).
 * $1: the list of author(s) of the revisions preceding the current revision. It appears after the message [[Mediawiki:lastmodifiedatby/{{SUBPAGENAME}}]]. If there are no previous authors this message does not appear at all. If needed the messages [[Mediawiki:siteusers/{{SUBPAGENAME}}]], [[Mediawiki:anonymous/{{SUBPAGENAME}}]] and [[Mediawiki:and/{{SUBPAGENAME}}]] are part of the list of names.
