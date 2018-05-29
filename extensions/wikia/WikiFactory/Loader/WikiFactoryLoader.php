@@ -515,12 +515,7 @@ class WikiFactoryLoader {
 				$tUnserVal = unserialize( $oRow->cv_value, [ 'allowed_classes' => false ] );
 				restore_error_handler();
 
-				if ( $oRow->cv_name === "wgServer" || $oRow->cv_name === "wgArticlePath" ) {
-					// these are not a part of WF anymore. Remove this code after thesse variables are deleted from db
-					unset( $this->mVariables[ $oRow->cv_name ] );
-				} else {
-					$this->mVariables[ $oRow->cv_name ] = $tUnserVal;
-				}
+				$this->mVariables[ $oRow->cv_name ] = $tUnserVal;
 			}
 			$dbr->freeResult( $oRes );
 
@@ -553,8 +548,8 @@ class WikiFactoryLoader {
 		}
 
 		# take some WF variables values from city_list
-		$this->mVariables["wgDBname"] = $this->mCityDB;
-		$this->mVariables["wgDBcluster"] = $this->mCityCluster;
+		$this->mVariables['wgDBname'] = $this->mCityDB;
+		$this->mVariables['wgDBcluster'] = $this->mCityCluster;
 		$this->mVariables['wgServer'] = WikiFactory::getLocalEnvURL( WikiFactory::cityUrlToDomain( $this->mCityUrl ) );
 		$this->mVariables['wgScriptPath'] = WikiFactory::cityUrlToLanguagePath( $this->mCityUrl );
 		$this->mVariables['wgScript'] = WikiFactory::cityUrlToWgScript( $this->mCityUrl );

@@ -36,3 +36,7 @@ Alternatively, **Special:RequestToBeForgottenInternal is available** for `reques
 All logs from this process are marked with `@content.right_to_be_forgotten: 1` for easy "grepping" in Kibana.
 
 Due to caching, it may take up to 24h for user pages to be removed completely.
+
+## Handling "forget me" requests in a bulk
+
+See [sus-dynks' gdpr tool](https://github.com/Wikia/sus-dynks/tree/master/gdpr).

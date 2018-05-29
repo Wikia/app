@@ -1410,8 +1410,35 @@ class Wikia {
 		return true;
 	}
 
+
+	private static function verifyImageSize( $imageInfo) {
+		global $wgMaxImageArea;
+
+		$isValid = true;
+		$error = null;
+
+		$imgWidth = $imageInfo[0];
+		$imgHeight = $imageInfo[1];
+		$imageResolution = $imgHeight * $imgWidth;
+
+		if ( $imageResolution > $wgMaxImageArea ) {
+			$isValid = false;
+			$error = [
+				'file-resolution-exceeded',
+				round( $imageResolution / 1000000, 2 ),
+				round( $wgMaxImageArea / 1000000, 2 ),
+				$imageInfo['mime'],
+			];
+		}
+
+		return [
+			'isValid' => $isValid,
+			'error' => $error,
+		];
+	}
+
 	/**
-	 * Verifies image being uploaded whether it's not corrupted
+	 * Verifies image being uploaded whether it's not corrupted and the image size is smaller than $wgMaxImageArea
 	 *
 	 * @author macbre
 	 *
@@ -1439,9 +1466,10 @@ class Wikia {
 		$imageInfo = @getimagesize($imageFile);
 
 		// MIME type should match
-		$isValid = is_array( $imageInfo ) && ( $imageInfo['mime'] === $mime );
+		$isValidMimeType = is_array( $imageInfo ) && ( $imageInfo['mime'] === $mime );
+		$isValidImageSize = true;
 
-		if (!$isValid) {
+		if (!$isValidMimeType) {
 			Wikia\Logger\WikiaLogger::instance()->warning( __METHOD__ . ' failed', [
 				'output' => json_encode($imageInfo),
 				'mime_type' => $mime,
@@ -1449,9 +1477,14 @@ class Wikia {
 
 			// pass an error to UploadBase class
 			$error = array('verification-error');
+		} else {
+			$imageSizeVerification = self::verifyImageSize( $imageInfo );
+			if ( !$imageSizeVerification['isValid'] ) {
+				$error = $imageSizeVerification['error'];
+			}
 		}
 
-		return $isValid;
+		return $isValidMimeType && $isValidImageSize;
 	}
 
 	/**
