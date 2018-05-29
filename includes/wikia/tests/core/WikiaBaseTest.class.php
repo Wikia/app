@@ -5,6 +5,10 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * WikiaBaseTest class - part of Wikia UnitTest Framework - W(U)TF
+ *
+ * @deprecated This class exists mainly to encapsulate mocking static methods and other monkey patching.
+ * If you feel you need to do this, consider writing an integration tests instead, or refactoring the offending code.
+ *
  * @author ADi
  * @author Owen
  * @author Władysław Bodzek <wladek@wikia-inc.com>
