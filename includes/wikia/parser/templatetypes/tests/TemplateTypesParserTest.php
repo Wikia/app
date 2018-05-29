@@ -1,7 +1,11 @@
 <?php
 
-class TemplateTypesParserTest extends WikiaBaseTest {
+class TemplateTypesParserTest extends \PHPUnit\Framework\TestCase {
+
 	const TEST_TEMPLATE_TEXT = 'test-template-test';
+
+	use MockGlobalVariableTrait;
+	use UopzTrait;
 
 	/**
 	 * @param $config array
@@ -11,15 +15,23 @@ class TemplateTypesParserTest extends WikiaBaseTest {
 	 * @dataProvider TemplateParsingDataProvider
 	 */
 	public function testTemplateParsing( $config, $templateText, $expectedValue ) {
-		$this->mockClassWithMethods(
-			'Title',
-			[ 'getArticleId' => $config[ 'templateId' ] ]
-		);
 
-		$this->mockClassWithMethods(
-			'TemplateClassificationService',
-			[ 'getType' => $config[ 'templateType' ] ]
-		);
+		$title = $this->getMockBuilder( Title::class )
+			->setMethods( [ 'getArticleId' ] )
+			->getMock();
+
+		$title->expects( $this->any() )
+			->method( 'getArticleId' )
+			->willReturn( $config['templateId'] );
+
+		$this->mockClass( Title::class, $title );
+
+		$tcs = $this->getMockBuilder( TemplateClassificationService::class )->getMock();
+		$tcs->expects( $this->any() )
+			->method( 'getType' )
+			->willReturn( $config[ 'templateType' ] );
+
+		$this->mockClass( TemplateClassificationService::class, $tcs );
 
 		foreach($config['globals'] as $globalVarName => $globalVarValue) {
 			$this->mockGlobalVariable( $globalVarName, $globalVarValue );

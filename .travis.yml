@@ -1,5 +1,5 @@
 language: php
-php: 7.0
+php: 7.2
 dist: trusty
 sudo: required
 addons:
@@ -17,5 +17,6 @@ addons:
 install:
   - pecl channel-update pecl.php.net
   - pecl install uopz mustache
-before_script: phpenv config-add tests/travis/php.ini
+before_script:
+  - phpenv config-add tests/travis/php.ini
 script: cd tests && ./travis.sh

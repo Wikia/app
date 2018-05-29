@@ -187,7 +187,7 @@ class Xml {
 
 	/**
 	 * Construct a language selector appropriate for use in a form or preferences
-	 * 
+	 *
 	 * @param string $selected The language code of the selected language
 	 * @param boolean $customisedOnly If true only languages which have some content are listed
 	 * @param string $language The ISO code of the language to display the select list in (optional)
@@ -212,13 +212,13 @@ class Xml {
 		} else {
 			$languages = Language::getLanguageNames( $customisedOnly );
 		}
-		
+
 		// Make sure the site language is in the list; a custom language code might not have a
 		// defined name...
 		if( !array_key_exists( $wgLanguageCode, $languages ) ) {
 			$languages[$wgLanguageCode] = $wgLanguageCode;
 		}
-		
+
 		ksort( $languages );
 
 		/**
@@ -625,8 +625,8 @@ class Xml {
 		} elseif ( is_int( $value ) || is_float( $value ) ) {
 			$s = strval($value);
 		} elseif ( is_array( $value ) && // Make sure it's not associative.
-					array_keys($value) === range( 0, count($value) - 1 ) ||
-					count($value) == 0
+				   ( array_keys($value) === range( 0, count($value) - 1 ) ||
+					count($value) == 0 )
 				) {
 			$s = '[';
 			foreach ( $value as $elt ) {

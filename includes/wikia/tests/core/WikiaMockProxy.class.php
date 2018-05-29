@@ -189,6 +189,10 @@ class WikiaMockProxy {
 				$newClass = self::$instance->execute($type,$id,array());
 
 				if ( $state ) { // enable
+					try {
+						uopz_unset_mock( $className );
+						throw new ErrorException("WTF is this mock doing here????");
+					} catch ( RuntimeException $e ) {}
 					uopz_set_mock($className, $newClass);
 				}
 				else { //disable

@@ -55,7 +55,11 @@ class WikisApiControllerTest extends WikiaBaseTest {
 		$wikisApiController->setResponse( $response );
 		$wikisApiController->getDetails();
 
-		$actualDetailsCount = count( $response->getVal( 'items' ) );
+		$items = $response->getVal( 'items' );
+
+		$this->assertInternalType( 'object', $items );
+
+		$actualDetailsCount = count( (array) $items );
 		$this->assertLessThanOrEqual( WikisApiController::MAX_WIKIS, $actualDetailsCount );
 	}
 
@@ -117,7 +121,11 @@ class WikisApiControllerTest extends WikiaBaseTest {
 		$wikisApiController->setResponse( $response );
 		$wikisApiController->getWikiData();
 
-		$actualDetailsCount = count( $response->getVal( 'items' ) );
+		$items = $response->getVal( 'items' );
+
+		$this->assertInternalType( 'array', $items );
+
+		$actualDetailsCount = count( $items );
 		$this->assertLessThanOrEqual( WikisApiController::MAX_WIKIS, $actualDetailsCount );
 	}
 

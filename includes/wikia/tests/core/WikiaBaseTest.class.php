@@ -182,7 +182,16 @@ abstract class WikiaBaseTest extends TestCase {
 	 * @return PHPUnit_Framework_MockObject_MockObject mocked object
 	 */
 	protected function mockClassWithMethods($className, Array $methods = array(), $staticConstructor = '') {
-		$mock = $this->createConfiguredMock( $className, $methods );
+		// reimplement createConfiguredMock
+		// on PHP 7.2 uopz_set_mock hangs if original constructor is disabled
+		$mock = $this->getMockBuilder( $className )
+			->enableOriginalConstructor()
+			->setMethods( array_keys( $methods ) )
+			->getMock();
+
+		foreach ( $methods as $methodName => $returnValue ) {
+			$mock->expects( $this->any() )->method( $methodName )->willReturn( $returnValue );
+		}
 
 		$this->mockClass($className, $mock, ($staticConstructor !== '') ? $staticConstructor : null);
 

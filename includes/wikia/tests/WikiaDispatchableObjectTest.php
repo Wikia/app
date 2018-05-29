@@ -77,7 +77,7 @@ class WikiaDispatchableObjectTest extends WikiaBaseTest {
 		$baseURI = "{$serverName}{$scriptPath}/wikia.php?controller={$className}&method=";
 
 		$squidMock =  $this->getMockBuilder( 'SquidUpdate' )
-			->disableOriginalConstructor()
+			->enableOriginalConstructor()
 			->getMock();
 		$squidMock->expects( $this->exactly( 5 ) )
 			->method( 'doUpdate' );

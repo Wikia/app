@@ -986,12 +986,5 @@ class AutoLoader {
 	}
 }
 
-if ( function_exists( 'spl_autoload_register' ) ) {
-	spl_autoload_register( array( 'AutoLoader', 'autoload' ) );
-} else {
-	function __autoload( $class ) {
-		AutoLoader::autoload( $class );
-	}
-
-	ini_set( 'unserialize_callback_func', '__autoload' );
-}
+// Wikia change - removed legacy __autoload
+spl_autoload_register( [ 'AutoLoader', 'autoload' ] );
