@@ -1,4 +1,4 @@
-/*global define, require*/
+/*global define*/
 /*jshint maxlen: 150*/
 define('ext.wikia.adEngine.provider.directGpt', [
 	'ext.wikia.adEngine.adContext',

@@ -1,8 +1,8 @@
-/*global define, require*/
-define('ext.wikia.adEngine.slot.service.srcProvider',  [
+/*global define*/
+define('ext.wikia.adEngine.slot.service.srcProvider', [
 	'ext.wikia.adEngine.adContext'
 ], function (
-	adContext,
+	adContext
 ) {
 	'use strict';
 

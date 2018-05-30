@@ -1,8 +1,7 @@
 /*global define, Array */
 define('ext.wikia.adEngine.provider.gpt.googleSlots', [
-	'ext.wikia.adEngine.slot.adUnitBuilder',
-	'wikia.window'
-], function (adUnitBuilder, win) {
+	'ext.wikia.adEngine.slot.adUnitBuilder'
+], function (adUnitBuilder) {
 	'use strict';
 	var slots = {};
 
