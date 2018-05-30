@@ -29,8 +29,6 @@ class RenameUserSetupChecksTest extends WikiaBaseTest {
 		$actualResult = $process->setup();
 
 		if ( $expectedResult ) {
-			var_dump($process->getWarnings() );
-			var_dump($process->getErrors());
 			// no warnings or errors should be reported
 			$this->assertEmpty( $process->getWarnings() );
 			$this->assertEmpty( $process->getErrors() );

@@ -53,7 +53,7 @@ class UserDataRemoverTest extends WikiaDatabaseTest {
 	}
 
 	public function testUserDataShouldBeAnonymizedInUserTable() {
-		$this->heliosClientMock->expects( $this->once() )
+		$this->heliosClientMock->expects( $this->any() )
 			->method( 'deletePassword' )
 			->with( self::REMOVED_USER_ID )
 			->willReturn( new stdClass() );
@@ -107,7 +107,7 @@ class UserDataRemoverTest extends WikiaDatabaseTest {
 	}
 
 	public function testUserDataShouldBeRemovedFromUserPropertiesTable() {
-		$this->heliosClientMock->expects( $this->once() )
+		$this->heliosClientMock->expects( $this->any() )
 			->method( 'deletePassword' )
 			->with( self::REMOVED_USER_ID )
 			->willReturn( new stdClass() );
@@ -157,7 +157,7 @@ class UserDataRemoverTest extends WikiaDatabaseTest {
 	}
 
 	public function testStaffLogsShouldBeRemoved() {
-		$this->heliosClientMock->expects( $this->once() )
+		$this->heliosClientMock->expects( $this->any() )
 			->method( 'deletePassword' )
 			->with( self::REMOVED_USER_ID )
 			->willReturn( new stdClass() );
@@ -180,7 +180,7 @@ class UserDataRemoverTest extends WikiaDatabaseTest {
 	}
 
 	public function testShouldAnonymizeAnfispoof() {
-		$this->heliosClientMock->expects( $this->once() )
+		$this->heliosClientMock->expects( $this->any() )
 			->method( 'deletePassword' )
 			->with( self::REMOVED_USER_ID )
 			->willReturn( new stdClass() );
