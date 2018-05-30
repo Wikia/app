@@ -244,9 +244,7 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 			$tracking = '';
 
 			if ( !empty( $wgEnableDiscussions ) ) {
-				$url = WikiFactory::cityUrlToLanguagePath(
-						WikiFactory::cityIDtoUrl( $this->productInstanceId )
-					) . '/d/f';
+				$url = WikiFactory::cityIdToLanguagePath( $this->productInstanceId ) . '/d/f';
 				$key = 'community-header-discuss';
 				$tracking = 'discuss';
 			} else if ( !empty( $wgEnableForumExt ) ) {

@@ -3410,14 +3410,14 @@ class WikiFactory {
 	}
 
 	/**
-	 * Returns local address of href
+	 * Returns language path for a given wiki.
 	 *
-	 * @param int $city_id
+	 * @param int $cityId
 	 * @param string $href
 	 * @return string
 	 */
-	static public function cityIdToLanguagePath( $city_id ) {
-		return static::cityUrlToLanguagePath( static::cityIDtoUrl( $city_id ) );
+	static public function cityIdToLanguagePath( $cityId ) {
+		return static::cityUrlToLanguagePath( static::cityIDtoUrl( $cityId ) );
 	}
 
 	/**
