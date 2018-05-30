@@ -648,11 +648,6 @@ class WikiaPhotoGallery extends ImageGallery {
 			return false;
 		}
 
-		// We don't support new features in monobook
-		if ( F::app()->checkSkin( 'monobook' ) ) {
-			return false;
-		}
-
 		// TODO: If Parsoid is the client always return "old gallery" so "alternative rendering" can work
 		// like a charm. This is meant to be deleted when "new galleries" are the only galleries.
 		if ( strpos( $_SERVER[ 'HTTP_USER_AGENT' ], 'Parsoid' ) !== false ) {
