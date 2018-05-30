@@ -528,9 +528,8 @@ EOT
 							[
 								'href' => $this->displayImg->getUrlGenerator()->forceOriginal()->url(),
 								'class' => 'internal',
-								'download' => $imgTitle->getDBkey(),
 							],
-							wfMessage( 'download' )->plain()
+							wfMessage( 'original-file' )->plain()
 						) )->escaped();
 					}
 					$wgOut->addHTML( <<<EOT
