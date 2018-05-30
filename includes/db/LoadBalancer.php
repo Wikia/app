@@ -15,7 +15,7 @@
 class LoadBalancer {
 	private $mServers, $mConns, $mLoads, $mGroupLoads;
 	private $mErrorConnection;
-	private $mReadIndex, $mAllowLagged;
+	private $mReadIndex;
 	private $mWaitForPos, $mWaitTimeout;
 	private $mLaggedSlaveMode, $mLastError = 'Unknown error';
 	private $mParentInfo;
@@ -53,7 +53,6 @@ class LoadBalancer {
 		$this->mWaitForPos = false;
 		$this->mLaggedSlaveMode = false;
 		$this->mErrorConnection = false;
-		$this->mAllowLagged = false;
 
 		if ( isset( $params['readOnlyReason'] ) && is_string( $params['readOnlyReason'] ) ) {
 			$this->readOnlyReason = $params['readOnlyReason'];
@@ -965,18 +964,6 @@ class LoadBalancer {
 		}
 
 		return false;
-	}
-
-	/**
-	 * Disables/enables lag checks
-	 * @param $mode null
-	 * @return bool
-	 */
-	function allowLagged( $mode = null ) {
-		if ( $mode === null) {
-			return $this->mAllowLagged;
-		}
-		$this->mAllowLagged = $mode;
 	}
 
 	/**
