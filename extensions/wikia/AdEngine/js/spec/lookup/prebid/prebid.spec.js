@@ -64,9 +64,6 @@ describe('ext.wikia.adEngine.lookup.prebid', function () {
 				}
 			},
 			log: noop,
-			adBlockDetection: {
-				addOnBlockingCallback: noop
-			},
 			bidResponses: {
 				TOP_LEADERBOARD: {
 					bids: [
@@ -155,7 +152,6 @@ describe('ext.wikia.adEngine.lookup.prebid', function () {
 		return modules['ext.wikia.adEngine.lookup.lookupFactory'](
 			mocks.adContext,
 			mocks.adTracker,
-			mocks.adBlockDetection,
 			mocks.lazyQueue,
 			mocks.log
 		);

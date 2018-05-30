@@ -24,8 +24,6 @@ class AdEngine2ContextService {
 			// pages with featured video on mercury have no ATF slots
 			$delayBtf = ( $skinName === 'mercury' && $hasFeaturedVideo ) ? false : $wg->AdDriverDelayBelowTheFold;
 
-			$pageFairDetectionKey = AdEngine2Resource::getKey( 'wikia.ext.adengine.pf.detection' );
-			$pageFairDetectionUrl = ResourceLoader::makeCustomURL( $wg->Out, [ $pageFairDetectionKey ], 'scripts' );
 			$prebidBidderUrl = AssetsManager::getInstance()->getURL( 'pr3b1d_prod_js', $type );
 
 			$langCode = $title->getPageLanguage()->getCode();
@@ -53,9 +51,6 @@ class AdEngine2ContextService {
 					'pageType' => $adPageTypeService->getPageType(),
 					'showAds' => $adPageTypeService->areAdsShowableOnPage(),
 					'trackSlotState' => $wg->AdDriverTrackState,
-					'pageFairDetectionUrl' => $pageFairDetectionUrl,
-					'pageFairRecovery' => ARecoveryModule::isPageFairRecoveryEnabled(),
-					'instartLogicRecovery' => ARecoveryModule::isInstartLogicRecoveryEnabled(),
 					// TODO remove after ADEN-6797 release
 					'prebidBidderUrl' => $prebidBidderUrl,
 					'isAdTestWiki' => $wg->AdDriverIsAdTestWiki,
