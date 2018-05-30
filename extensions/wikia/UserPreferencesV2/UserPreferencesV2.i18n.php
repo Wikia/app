@@ -337,6 +337,7 @@ $messages['de'] = array(
 	'prefs-wikiemail' => '{{SITENAME}}-Optionen. Sende mir eine E-Mail, wenn …',
 	'tog-enotifdiscussions-follows-v2' => '... Diskussionen, denen ich folge, neue Antworten erhalten haben',
 	'tog-enotifdiscussions-votes-v2' => '... meine Diskussionsbeiträge Antworten erhalten haben',
+	'prefs-monobookv2' => 'MonoBook',
 );
 
 $messages['diq'] = array(
@@ -451,6 +452,7 @@ $messages['es'] = array(
 	'prefs-wikiemail' => 'Opciones de {{SITENAME}}. Envíame un correo electrónico cuando...',
 	'tog-enotifdiscussions-follows-v2' => '... discusiones que estoy siguiendo tengan nuevas respuestas',
 	'tog-enotifdiscussions-votes-v2' => '... mis discusiones reciban votos',
+	'prefs-monobookv2' => 'MonoBook',
 );
 
 $messages['eu'] = array(
@@ -595,6 +597,7 @@ $messages['fr'] = array(
 	'prefs-wikiemail' => 'Options de {{SITENAME}}. M’envoyer un e-mail quand...',
 	'tog-enotifdiscussions-follows-v2' => '...des réponses sont ajoutées aux publications de Discussions que je suis',
 	'tog-enotifdiscussions-votes-v2' => '...mes publications de Discussions reçoivent des votes',
+	'prefs-monobookv2' => 'MonoBook',
 );
 
 $messages['fy'] = array(
@@ -760,6 +763,7 @@ $messages['it'] = array(
 	'tog-hidefollowedpages-v2' => 'Nascondi il mio elenco delle pagine seguite a tutti',
 	'tog-enotifdiscussions-follows-v2' => '...i post di Discussioni che sto seguendo contengono nuove risposte',
 	'tog-enotifdiscussions-votes-v2' => '...i miei post in Discussioni ricevono voti',
+	'prefs-monobookv2' => 'MonoBook',
 );
 
 $messages['ja'] = array(
@@ -814,6 +818,7 @@ $messages['ja'] = array(
 	'tog-hidefollowedpages-v2' => 'フォローしているページのリストを非公開にする',
 	'tog-enotifdiscussions-follows-v2' => '自分がフォローしているディスカッションに新しい返信があった場合',
 	'tog-enotifdiscussions-votes-v2' => '自分のディスカッションの投稿に「イイね！」された場合',
+	'prefs-monobookv2' => 'MonoBook',
 );
 
 $messages['ko'] = array(
@@ -1157,6 +1162,7 @@ $messages['pl'] = array(
 	'prefs-wikiemail' => 'Opcje dla {{GRAMMAR:D.lp|{{SITENAME}}}}. Powiadom mnie, kiedy...',
 	'tog-enotifdiscussions-follows-v2' => '...śledzone posty na Dyskusjach otrzymają nowe odpowiedzi.',
 	'tog-enotifdiscussions-votes-v2' => '...moje posty na Dyskusjach otrzymają głosy.',
+	'prefs-monobookv2' => 'Monobook',
 );
 
 $messages['ps'] = array(
@@ -1241,6 +1247,7 @@ $messages['pt'] = array(
 	'prefs-wikiemail' => 'Opções de {{SITENAME}}. Envie-me um e-mail quando...',
 	'tog-enotifdiscussions-follows-v2' => '... houver novas respostas em posts que estou seguindo em Discussões',
 	'tog-enotifdiscussions-votes-v2' => '... meus posts em Discussões recebem votos',
+	'prefs-monobookv2' => 'MonoBook',
 );
 
 $messages['ru'] = array(
@@ -1296,6 +1303,7 @@ $messages['ru'] = array(
 	'prefs-wikiemail' => 'Настройки {{SITENAME}}. Отправлять мне письма, когда…',
 	'tog-enotifdiscussions-follows-v2' => '…в обсуждениях, которые я отслеживаю, появляются новые ответы',
 	'tog-enotifdiscussions-votes-v2' => '…мои сообщения в обсуждениях получают оценки',
+	'prefs-monobookv2' => 'MonoBook',
 );
 
 $messages['sco'] = array(
@@ -1644,6 +1652,7 @@ $messages['zh-hans'] = array(
 	'prefs-wikiemail' => '{{SITENAME}}选项。发邮件给我，当...',
 	'tog-enotifdiscussions-follows-v2' => '...我关注的讨论帖有新的回复',
 	'tog-enotifdiscussions-votes-v2' => '...我的讨论帖被赞',
+	'prefs-monobookv2' => 'MonoBook',
 );
 
 $messages['zh-hant'] = array(
@@ -1698,5 +1707,6 @@ $messages['zh-hant'] = array(
 	'prefs-wikiemail' => '{{SITENAME}}的選項。寄電子郵件给我，當...',
 	'tog-enotifdiscussions-follows-v2' => '...我關注的討論文章有新的回覆',
 	'tog-enotifdiscussions-votes-v2' => '...我的討論文章有人按讚',
+	'prefs-monobookv2' => 'MonoBook',
 );
 

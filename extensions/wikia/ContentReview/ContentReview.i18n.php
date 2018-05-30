@@ -176,6 +176,7 @@ BeispielBenutzername | Praktikant, Newbie
 BeispielBenutzername2 | Guru
 ----
 ',
+	'content-review-status-link-text' => 'Stand der Überprüfung',
 );
 
 $messages['es'] = array(
@@ -240,6 +241,7 @@ Utiliza esta página para personalizar los cargos que aparecen en los perfiles d
 ----
  
 ',
+	'content-review-status-link-text' => 'Estado de la revisión',
 );
 
 $messages['fr'] = array(
@@ -303,6 +305,7 @@ Exemples :
  Nomutilisateur2 | Gourou
 ----
 ",
+	'content-review-status-link-text' => 'État de la vérification',
 );
 
 $messages['it'] = array(
@@ -366,6 +369,7 @@ Esempi:
  ExampleUsername2 | Guru
 ----
 ',
+	'content-review-status-link-text' => 'Stato della revisione',
 );
 
 $messages['ja'] = array(
@@ -429,6 +433,7 @@ MediaWikiの名前空間プレフィックスは名前に含めないでくだ�
  ユーザー名2 | Guru
 ----
 ',
+	'content-review-status-link-text' => '審査状況',
 );
 
 $messages['nl'] = array(
@@ -554,6 +559,7 @@ Przykłady:
  PrzykładowyUżytkownik2 | Guru
 ----
 ',
+	'content-review-status-link-text' => 'Status przeglądu',
 );
 
 $messages['pt'] = array(
@@ -616,6 +622,7 @@ Use esta página para personalizar as etiquetas que aparecem nos perfis de usuá
  ExampleUsername | Estagiário, Novato
  ExampleUsername2 | Guru
 ',
+	'content-review-status-link-text' => 'Status da revisão',
 );
 
 $messages['ru'] = array(
@@ -678,6 +685,7 @@ $messages['ru'] = array(
 *ПримерИмяучастника | Ученик, Новичок
 *ПримерИмяучастника | Специалист
 ',
+	'content-review-status-link-text' => 'Статус проверки',
 );
 
 $messages['zh-hans'] = array(
@@ -739,6 +747,7 @@ JavaScript页面最近提交的变更请求(版本[$2 $3]) 未通过FANDOM审核
 用户名例子 |见习，新手 
 用户名例子2 | 大师
 ----',
+	'content-review-status-link-text' => '审核状态',
 );
 
 $messages['zh-hant'] = array(
@@ -800,5 +809,6 @@ JavaScript頁最近提交的變更請求(版本[$2 $3]) 未通過FANDOM的審核
 使用者名稱例子 |見習，新手
 使用者名稱例子2 | 大師
 ----',
+	'content-review-status-link-text' => '審核狀態',
 );
 

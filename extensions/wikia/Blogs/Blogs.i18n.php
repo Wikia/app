@@ -211,7 +211,6 @@ Kies asseblief 'n ander naam.",
 );
 
 $messages['an'] = array(
-
 );
 
 $messages['ar'] = array(
@@ -459,7 +458,6 @@ Magmukna nin mga pahina kan listahan nin blog para sa mga kategoriya siring kan 
 );
 
 $messages['be'] = array(
-
 );
 
 $messages['be-tarask'] = array(
@@ -610,8 +608,6 @@ Gallout a reer krouiñ pajennadoù rollañ blogoù evit rummadoù evel "Barack O
 );
 
 $messages['bto'] = array(
-
-
 );
 
 $messages['ca'] = array(
@@ -720,7 +716,6 @@ $messages['ce'] = array(
 );
 
 $messages['ckb'] = array(
-
 );
 
 $messages['cs'] = array(
@@ -959,7 +954,6 @@ $messages['diq'] = array(
 );
 
 $messages['ee'] = array(
-
 );
 
 $messages['el'] = array(
@@ -1044,7 +1038,6 @@ $messages['en-gb'] = array(
 );
 
 $messages['eo'] = array(
-
 );
 
 $messages['es'] = array(
@@ -1157,6 +1150,25 @@ Las entradas de blog son usadas para anuncios y noticias, resúmenes y recomenda
 ',
 	'blog-listing-zero-self' => '',
 	'right-blog-articles-protect' => 'Proteger artículos del blog',
+	'blog-comment-cannot-add' => 'No puedes añadir un comentario al blog.',
+	'blog-comment-error' => 'El comentario no pudo ser guardado',
+	'blog-comment-edit' => 'editar',
+	'blog-zero-comments' => '¡Aún no hay comentarios!',
+	'blog-comments-save' => 'Guardar comentario en el blog',
+	'blog-comments-asc' => 'Más nuevos primero',
+	'blog-comments-anonymous' => 'Usuario anónimo',
+	'blog-comment-post' => 'Dejar comentario',
+	'blog-comments' => 'Comentarios',
+	'blog-comments-dsc' => 'Más nuevos primero',
+	'blog-comments-new' => 'Nuevo comentario en el blog',
+	'blog-comments-login' => '<a href="$1">Inicia sesión</a> para dejar un comentario',
+	'blog-comment-delete' => 'borrar',
+	'blog-comments-info' => 'Usa esta caja para dejar un comentario, puedes darle estilo de wikitexto',
+	'blog-comment-unhide' => 'mostrar',
+	'blog-comment-sending' => 'Enviando...',
+	'blog-rc-comments' => 'Comentarios del blog',
+	'blog-comment-hide' => 'ocultar',
+	'blog-comment-history' => 'historial',
 );
 
 $messages['et'] = array(
@@ -1391,6 +1403,25 @@ Blogs are often used for news and announcements, reviews and recommendations, or
 	'blog-listing-zero-self' => '',
 	'right-blog-articles-protect' => 'Suojaa blogiartikkeleita',
 	'blogs-recent-url' => 'Blogi:Tuoreet_artikkelit',
+	'blog-comment-cannot-add' => 'Et voi lisätä kommentteja tähän blogiin.',
+	'blog-comment-error' => 'Kommenttia ei voitu tallentaa',
+	'blog-comment-edit' => 'muokkaa',
+	'blog-zero-comments' => 'Ei kommentteja vielä!',
+	'blog-comments-save' => 'Tallenna komentti blogissa',
+	'blog-comments-asc' => 'Uusimmat viimeisenä',
+	'blog-comments-anonymous' => 'Anonyymi käyttäjä',
+	'blog-comment-post' => 'Kommentoi',
+	'blog-comments' => 'Kommentit',
+	'blog-comments-dsc' => 'Uusimmat ensin',
+	'blog-comments-new' => 'Blogin uudet kommentit',
+	'blog-comments-login' => '<a href="$1" rel="nofollow">Kirjaudu sisään</a> kommetoidaksesi',
+	'blog-comment-delete' => 'poista',
+	'blog-comments-info' => 'Tämä laatikko käyttää wikitext-tyylin syöttöä',
+	'blog-comment-unhide' => 'näytä',
+	'blog-comment-sending' => 'Lähetetään...',
+	'blog-rc-comments' => 'Blogin kommentit',
+	'blog-comment-hide' => 'piilota',
+	'blog-comment-history' => 'historiasta',
 );
 
 $messages['fo'] = array(
@@ -1694,7 +1725,6 @@ $messages['gu'] = array(
 );
 
 $messages['ha'] = array(
-
 );
 
 $messages['he'] = array(
@@ -2125,13 +2155,9 @@ Buat blog daftar halaman untuk kategori seperti "Barack Obama", "Penggemar Fiksi
 );
 
 $messages['ig'] = array(
-
-
-
 );
 
 $messages['inh'] = array(
-
 );
 
 $messages['it'] = array(
@@ -2244,6 +2270,25 @@ I blog sono spesso usati per condividere annunci, notizie, recensioni, raccomand
 	'blug-cut-sign' => '…',
 	'blog-listing-zero-self' => '',
 	'right-blog-articles-protect' => 'Protect blog articles',
+	'blog-comment-cannot-add' => 'Non è possibile aggiungere commenti al blog.',
+	'blog-comment-error' => 'Non è stato possibile salvare il commento',
+	'blog-comment-edit' => 'modifica',
+	'blog-zero-comments' => 'Ancora nessun commento!',
+	'blog-comments-save' => 'Salva commento al blog',
+	'blog-comments-asc' => 'Dal più vecchio',
+	'blog-comments-anonymous' => 'Utente anonimo',
+	'blog-comment-post' => 'Lascia un commento',
+	'blog-comments' => 'Commenti',
+	'blog-comments-dsc' => 'Dal più recente',
+	'blog-comments-new' => 'Nuovo commento al blog',
+	'blog-comments-login' => '<a href="$1" rel="nofollow">Accedi</a> per commentare',
+	'blog-comment-delete' => 'cancella',
+	'blog-comments-info' => 'Questa casella utilizza il wikitext come input',
+	'blog-comment-unhide' => 'mostra',
+	'blog-comment-sending' => 'Invio in corso...',
+	'blog-rc-comments' => 'Commenti al blog',
+	'blog-comment-hide' => 'nascondi',
+	'blog-comment-history' => 'cronologia',
 );
 
 $messages['ja'] = array(
@@ -2364,7 +2409,6 @@ $messages['ka'] = array(
 );
 
 $messages['km'] = array(
-
 );
 
 $messages['kn'] = array(
@@ -2408,11 +2452,6 @@ $messages['kn'] = array(
 	'blog-edited' => 'ಸಂಪಾದನೆ ಮಾಡಿದು',
 	'blog-page' => 'ಬ್ಲಾಗ್',
 	'blog-comments-label' => 'ಟಿಪ್ಪಣಿ ಹಾಕುದು',
-
-
-
-
-
 	'blog-avatar-preferences-title' => 'ಅವತಾರ',
 	'blog-page-rate' => 'ಈ ಲೇಖನದ ಸ್ಥಾನನಿರ್ಣಯ ಮಾಡು:',
 	'blog-create-listing-label' => 'ಬ್ಲಾಗ್ ಲಿಸ್ಟಿಂಗ್ ನಿರ್ಮಾಣ ಮಾಡಿ.',
@@ -2534,7 +2573,6 @@ Blogs are often used for news and announcements, reviews and recommendations, or
 );
 
 $messages['krc'] = array(
-
 	'blog-refresh-label' => 'Джангырт',
 );
 
@@ -2695,6 +2733,25 @@ $messages['lol'] = array(
 	'blogs-searchprofile' => 'crwdns65399:0crwdne65399:0',
 	'blogs-searchprofile-tooltip' => 'crwdns65400:0crwdne65400:0',
 	'user-blog-url-link' => 'crwdns65401:0crwdne65401:0',
+	'blog-comment-cannot-add' => 'crwdns65371:0crwdne65371:0',
+	'blog-comment-error' => 'crwdns65370:0crwdne65370:0',
+	'blog-comment-edit' => 'crwdns65369:0crwdne65369:0',
+	'blog-zero-comments' => 'crwdns65352:0crwdne65352:0',
+	'blog-comments-save' => 'crwdns65357:0crwdne65357:0',
+	'blog-comments-asc' => 'crwdns65363:0crwdne65363:0',
+	'blog-comments-anonymous' => 'crwdns65364:0crwdne65364:0',
+	'blog-comment-post' => 'crwdns65353:0crwdne65353:0',
+	'blog-comments' => 'crwdns65354:0crwdne65354:0',
+	'blog-comments-dsc' => 'crwdns65362:0crwdne65362:0',
+	'blog-comments-new' => 'crwdns65356:0crwdne65356:0',
+	'blog-comments-login' => 'crwdns65361:0crwdne65361:0',
+	'blog-comment-delete' => 'crwdns65365:0crwdne65365:0',
+	'blog-comments-info' => 'crwdns65360:0crwdne65360:0',
+	'blog-comment-unhide' => 'crwdns65367:0crwdne65367:0',
+	'blog-comment-sending' => 'crwdns65397:0crwdne65397:0',
+	'blog-rc-comments' => 'crwdns65355:0crwdne65355:0',
+	'blog-comment-hide' => 'crwdns65366:0crwdne65366:0',
+	'blog-comment-history' => 'crwdns65368:0crwdne65368:0',
 );
 
 $messages['lrc'] = array(
@@ -2783,7 +2840,6 @@ $messages['lt'] = array(
 );
 
 $messages['ltg'] = array(
-
 );
 
 $messages['lv'] = array(
@@ -3396,8 +3452,6 @@ $messages['or'] = array(
 );
 
 $messages['pdc'] = array(
-
-
 );
 
 $messages['pfl'] = array(
@@ -3514,6 +3568,7 @@ Blogi często są używane do przekazywania wiadomości, ogłoszeń, recenzji i 
 ',
 	'blug-cut-sign' => '…',
 	'blog-listing-zero-self' => '',
+	'blog-comment-sending' => 'Wysyłanie…',
 );
 
 $messages['pms'] = array(
@@ -3957,6 +4012,25 @@ $messages['ru'] = array(
 	'blog-listing-zero-self' => '',
 	'right-blog-articles-protect' => 'Protect blog articles',
 	'blogs-recent-url' => 'Blog:Recent_posts',
+	'blog-comment-cannot-add' => 'Вы не можете добавлять комментарии к блогу.',
+	'blog-comment-error' => 'Комментарий не может быть сохранён',
+	'blog-comment-edit' => 'править',
+	'blog-zero-comments' => 'Комментариев пока нет!',
+	'blog-comments-save' => 'Сохранить комментарий к блогу',
+	'blog-comments-asc' => 'Новейшие в конце',
+	'blog-comments-anonymous' => 'Анонимный участник',
+	'blog-comment-post' => 'Оставить комментарий',
+	'blog-comments' => 'Комментарии',
+	'blog-comments-dsc' => 'Новейшие в начале',
+	'blog-comments-new' => 'Новый комментарий к блогу',
+	'blog-comments-login' => '<a href="$1" rel="nofollow">Представьтесь системе</a> для комментирования',
+	'blog-comment-delete' => 'удалить',
+	'blog-comments-info' => 'Это поле поддерживает вики-текст',
+	'blog-comment-unhide' => 'показать',
+	'blog-comment-sending' => 'Отправка…',
+	'blog-rc-comments' => 'Комментарии к блогу',
+	'blog-comment-hide' => 'скрыть',
+	'blog-comment-history' => 'история',
 );
 
 $messages['sa'] = array(
@@ -4075,7 +4149,6 @@ $messages['si'] = array(
 );
 
 $messages['sl'] = array(
-
 );
 
 $messages['sr-ec'] = array(
@@ -4404,7 +4477,6 @@ $messages['te'] = array(
 );
 
 $messages['tet'] = array(
-
 );
 
 $messages['tl'] = array(
@@ -5032,5 +5104,24 @@ FANDOM允許用戶在Wiki上撰寫[[{{MediaWiki:blogs-recent-url}}|社區網誌]
 	'blogs-recent-url' => 'Blog:Recent_posts',
 	'blog-by' => '$1 by $2',
 	'user-blog-url-link' => 'User blog:$1',
+	'blog-comment-cannot-add' => '您不能在網誌增加評論。',
+	'blog-comment-error' => '評論無法儲存',
+	'blog-comment-edit' => '編輯',
+	'blog-zero-comments' => '還沒有評論 ！',
+	'blog-comments-save' => '在網誌中儲存評論',
+	'blog-comments-asc' => '最新的排最後',
+	'blog-comments-anonymous' => '匿名使用者',
+	'blog-comment-post' => '發表評論',
+	'blog-comments' => '評論',
+	'blog-comments-dsc' => '從最近的開始',
+	'blog-comments-new' => '網誌的新評論',
+	'blog-comments-login' => '<a href="$1" rel="nofollow">登入</a>來發表評論',
+	'blog-comment-delete' => '刪除',
+	'blog-comments-info' => '此框使用Wiki文本输入',
+	'blog-comment-unhide' => '取消隱藏',
+	'blog-comment-sending' => '正在發送...',
+	'blog-rc-comments' => '網誌評論',
+	'blog-comment-hide' => '隱藏',
+	'blog-comment-history' => '歷史',
 );
 
