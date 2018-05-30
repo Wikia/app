@@ -18,7 +18,7 @@ class LoadBalancer {
 	private $mReadIndex, $mAllowLagged;
 	private $mWaitForPos, $mWaitTimeout;
 	private $mLaggedSlaveMode, $mLastError = 'Unknown error';
-	private $mParentInfo, $mLagTimes;
+	private $mParentInfo;
 	private $mLoadMonitorClass, $mLoadMonitor;
 
 	/** @var string|bool Reason the LB is read-only or false if not */
@@ -140,26 +140,19 @@ class LoadBalancer {
 	}
 
 	/**
+	 * Wikia change - we use a single slave Consul address that is resolved by DNS. No need to
+	 * check lags and pick a random entry.
+	 *
 	 * @param $loads array
 	 * @param $wiki bool
 	 * @return bool|int|string
+	 * @throws WikiaException
 	 */
-	function getRandomNonLagged( $loads, $wiki = false ) {
+	private function getRandomNonLagged( $loads, $wiki = false ) {
 		// PLATFORM-1489: only check slave lags when we're not using consul (it performs its own healtchecks)
 		if ( !$this->hasConsulConfig() ) {
-			# Unset excessively lagged servers
-			$lags = $this->getLagTimes($wiki);
-			foreach ($lags as $i => $lag) {
-				if ($i != 0) {
-					if ($lag === false) {
-						wfDebugLog('replication', "Server #$i ({$this->mServers[$i]['host']}) is not replicating\n");
-						unset($loads[$i]);
-					} elseif (isset($this->mServers[$i]['max lag']) && $lag > $this->mServers[$i]['max lag']) {
-						wfDebugLog('replication', "Server #$i ({$this->mServers[$i]['host']}) is excessively lagged ($lag seconds)\n");
-						unset($loads[$i]);
-					}
-				}
-			}
+			// SUS-4805
+			throw new WikiaException( __METHOD__ . ' - we only support Consul addresses in DB config' );
 		}
 
 		# Find out if all the slaves with non-zero load are lagged
@@ -1086,30 +1079,6 @@ class LoadBalancer {
 	}
 
 	/**
-	 * Get lag time for each server
-	 * Results are cached for a short time in memcached, and indefinitely in the process cache
-	 *
-	 * @param $wiki
-	 *
-	 * @return array
-	 */
-	function getLagTimes( $wiki = false ) {
-		# Try process cache
-		if ( isset( $this->mLagTimes ) ) {
-			return $this->mLagTimes;
-		}
-		if ( $this->getServerCount() == 1 ) {
-			# No replication
-			$this->mLagTimes = array( 0 => 0 );
-		} else {
-			# Send the request to the load monitor
-			$this->mLagTimes = $this->getLoadMonitor()->getLagTimes(
-				array_keys( $this->mServers ), $wiki );
-		}
-		return $this->mLagTimes;
-	}
-
-	/**
 	 * Get the lag in seconds for a given connection, or zero if this load
 	 * balancer does not have replication enabled.
 	 *
@@ -1130,13 +1099,6 @@ class LoadBalancer {
 		} else {
 			return $conn->getLag();
 		}
-	}
-
-	/**
-	 * Clear the cache for getLagTimes
-	 */
-	function clearLagTimeCache() {
-		$this->mLagTimes = null;
 	}
 
 	/**
