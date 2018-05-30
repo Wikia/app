@@ -33,6 +33,7 @@ class WikiaUpdater {
 			array( 'addTable', 'page_wikia_props', $ext_dir . '/wikia/ImageServing/sql/table.sql', true ),
 			array( 'addTable', 'wall_history', $ext_dir . '/wikia/Wall/sql/wall_history_local.sql', true ),
 			array( 'addTable', 'wall_related_pages', $ext_dir . '/wikia/Wall/sql/wall_related_pages.sql', true ),
+			array( 'addTable', 'article_comments', $ext_dir . '/wikia/ArticleComments/sql/article_comments.sql', true ),
 			# fields
 			array( 'addField', 'watchlist', 'wl_wikia_addedtimestamp', $dir . 'patch-watchlist-improvements.sql', true ),
 			array( 'modifyField', 'recentchanges', 'rc_ip', $dir . 'patch-rc_ip-varbinary.sql', true ),
