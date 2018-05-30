@@ -168,40 +168,24 @@ class DesignSystemGlobalNavigationModelV2 extends WikiaModel {
 
 	private function getAnonUserData() {
 		return [
-			'header' => [
-				'type' => 'line-image',
-				'image-data' => [
-					'type' => 'wds-svg',
-					'name' => 'wds-icons-user',
+			'signin' => [
+				'title' => [
+					'type' => 'translatable-text',
+					'key' => 'global-navigation-anon-sign-in',
 				],
-				'tracking_label' => 'account',
+				'href' => $this->getHref( 'user-signin' ),
+				'param-name' => 'redirect',
+				'tracking_label' => 'account.sign-in',
 			],
-			'links' => [
-				[
-					'type' => 'link-authentication',
-					'title' => [
-						'type' => 'translatable-text',
-						'key' => 'global-navigation-anon-sign-in',
-					],
-					'href' => $this->getHref( 'user-signin' ),
-					'param-name' => 'redirect',
-					'tracking_label' => 'account.sign-in',
+			'register' => [
+				'title' => [
+					'type' => 'translatable-text',
+					'key' => 'global-navigation-anon-register',
 				],
-				[
-					'type' => 'link-authentication',
-					'title' => [
-						'type' => 'translatable-text',
-						'key' => 'global-navigation-anon-register',
-					],
-					'subtitle' => [
-						'type' => 'translatable-text',
-						'key' => 'global-navigation-anon-register-description',
-					],
-					'href' => $this->getHref( 'user-register' ),
-					'param-name' => 'redirect',
-					'tracking_label' => 'account.register',
-				],
-			],
+				'href' => $this->getHref( 'user-register' ),
+				'param-name' => 'redirect',
+				'tracking_label' => 'account.register',
+			]
 		];
 	}
 
