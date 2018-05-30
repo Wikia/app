@@ -192,7 +192,7 @@ class SEOTweaksHooksHelper {
 		/* @var $title Title */
 		$title = $imgPage->getTitle();
 
-		if ( !empty( $file ) && !empty( $title ) && !F::app()->checkSkin( 'monobook' ) ) {
+		if ( !empty( $file ) && !empty( $title ) ) {
 			$newTitle = self::getTitleForFilePage( $title, $file );
 
 			if ( !empty( $newTitle ) ) {

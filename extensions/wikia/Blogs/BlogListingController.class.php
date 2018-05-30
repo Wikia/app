@@ -53,7 +53,4 @@ class BlogListingController extends WikiaController {
 		return true;
 	}
 
-	public function executeIndex() {
-		//$this->posts = $data['posts'];
-	}
 }

@@ -104,7 +104,7 @@ class ChatWidget {
 
 		$html = $templateEngine->clearData()
 			->setData( self::getTemplateVars( true ) )
-			->render( self::getTemplateName() );
+			->render( 'widget.mustache' );
 
 		// remove newlines so parser does not try to wrap lines into paragraphs
 		$html = str_replace( "\n", "", $html );
@@ -114,18 +114,6 @@ class ChatWidget {
 
 		wfProfileOut( __METHOD__ );
 		return $html;
-	}
-
-	/**
-	 * Return proper template name according to current skin
-	 *
-	 * @return string template name to render
-	 */
-	public static function getTemplateName() {
-
-		return F::app()->checkSkin( 'oasis' ) ?
-			'widget.mustache' :
-			'widgetMonobook.mustache';
 	}
 
 	public static function purgeChatUsersCache() {

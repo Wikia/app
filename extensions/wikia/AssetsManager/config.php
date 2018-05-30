@@ -1057,30 +1057,6 @@ $config['articlecomments_mini_editor_scss'] = [
 	],
 ];
 
-$config['articlecomments_js_wikiamobile'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => 'wikiamobile',
-	'assets' => [
-		'//extensions/wikia/ArticleComments/js/ArticleComments.wikiamobile.js',
-	],
-];
-
-$config['articlecomments_init_js_wikiamobile'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => 'wikiamobile',
-	'assets' => [
-		'//extensions/wikia/ArticleComments/js/ArticleComments_init.wikiamobile.js',
-	],
-];
-
-$config['articlecomments_scss_wikiamobile'] = [
-	'type' => AssetsManager::TYPE_SCSS,
-	'skin' => 'wikiamobile',
-	'assets' => [
-		'//extensions/wikia/ArticleComments/css/ArticleComments.wikiamobile.scss',
-	],
-];
-
 $config['filepage_js_wikiamobile'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => 'wikiamobile',

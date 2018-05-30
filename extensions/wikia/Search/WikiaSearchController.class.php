@@ -385,8 +385,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	/**
 	 * Determine whether we should use "Go" search for exact title matches.
 	 *
-	 * This supports both the user preference and has backwards compatibility for
-	 * Monobook's "Go" button and "go" URL parameter on search.
+	 * This supports the user preference and has backwards compatibility for "go" URL parameter on search.
 	 *
 	 * @return bool
 	 */
@@ -396,7 +395,6 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		// For backwards compatibility ?fulltext=0 means use Go search
 		// and if fulltext is set and not equal to 0, it means that the
 		// user is trying to manually go to search and override their preference
-		// such as with Monobook's "Search" button
 		return $fulltext === '0' ||
 		$this->getVal( 'go' ) !== null ||
 		( $fulltext === null && $this->getUser()->getGlobalPreference( 'enableGoSearch' ) );
@@ -484,8 +482,6 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			'filters' => $this->getVal( 'filters', [] ),
 		];
 
-		$isMonobook = $this->app->checkSkin( 'monobook' );
-
 		$this->setVal( 'results', $searchConfig->getResults() );
 		$this->setVal( 'resultsFound', $searchConfig->getResultsFound() );
 		$this->setVal( 'resultsFoundTruncated', $searchConfig->getTruncatedResultsNum( true ) );
@@ -501,7 +497,6 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$this->setVal( 'namespaces', $searchConfig->getNamespaces() );
 		$this->setVal( 'hub', $searchConfig->getHub() );
 		$this->setVal( 'hasArticleMatch', $searchConfig->hasArticleMatch() );
-		$this->setVal( 'isMonobook', $isMonobook );
 		$this->setVal( 'isCorporateWiki', $this->isCorporateWiki() );
 		$this->setVal( 'wgExtensionsPath', $this->wg->ExtensionsPath );
 		$this->setVal( 'isGridLayoutEnabled', $isGridLayoutEnabled );
@@ -546,7 +541,6 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	protected function addRightRailModules( Wikia\Search\Config $searchConfig ) {
 		global $wgLang, $wgEnableFandomStoriesOnSearchResultPage;
 
-		$isMonobook = $this->response->getVal( 'isMonobook' );
 		$this->response->setValues(
 			[
 				'fandomStories' => [],
@@ -554,7 +548,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			]
 		);
 
-		if ( $searchConfig->getInterWiki() || $isMonobook ) {
+		if ( $searchConfig->getInterWiki() ) {
 			return;
 		}
 
@@ -678,10 +672,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			$this->setVal( 'corporateWikiId', $wgCityId );
 			$this->overrideTemplate( 'CrossWiki_index' );
 		}
-		$skin = $this->wg->User->getSkin();
-		if ( $skin instanceof SkinOasis ) {
-			$this->response->addAsset( 'extensions/wikia/Search/css/WikiaSearch.scss' );
-		}
+		$this->response->addAsset( 'extensions/wikia/Search/css/WikiaSearch.scss' );
 
 		return true;
 	}
