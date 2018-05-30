@@ -19,22 +19,21 @@ class PopulateArticleCommentsIndex extends Maintenance {
 			'page',
 			['page_id', 'page_title', 'page_namespace'],
 			['page_title ' . $db->buildLike( $db->anyString(), '@comment', $db->anyString() )],
-			__METHOD__ );
+			__METHOD__);
 		$totalCount = $comments->numRows();
 
 		$this->output( $dbName . ': Selected ' .  $totalCount . " comments\n" );
 
 		$count = 0;
 		foreach ( $comments as $c ) {
-			$count++;
 			$commentNs = $c->page_namespace;
-			if ( $this->isNotTalk( $commentNs ) ) {
+			if ( MWNamespace::isSubject( $commentNs ) ) {
 				// this should be a talk page
 				continue;
 			}
 
 			$titleParts = explode( '/', $c->page_title );
-			$articleId = LinkCache::singleton()->getGoodLinkID( $titleParts[0] );
+			$articleId = Title::newFromDBkey( $titleParts[0] )->getArticleID();
 			if ( empty( $articleId ) ) {
 				// if the parent article doesn't exist, we don't care about the comment
 				continue;
@@ -43,11 +42,11 @@ class PopulateArticleCommentsIndex extends Maintenance {
 			$parentCommentId = 0;
 			if ( count( $titleParts ) === 3 ) {
 				$parentTitle = $titleParts[0] . '/' . $titleParts[1];
-				$parentCommentId = LinkCache::singleton()->getGoodLinkID( $parentTitle );
+				$parentCommentId = Title::newFromDBkey( $parentTitle )->getArticleID();
 			}
 			$this->addCommentMapping( $c->page_id, $articleId, $parentCommentId);
 
-			if ( $count % 1000 === 0 ) {
+			if ( ++$count % 1000 === 0 ) {
 				$this->output( $dbName . ': ' . $count . ' out of ' . $totalCount . " processed\n" );
 				wfWaitForSlaves();
 			}
@@ -67,11 +66,6 @@ class PopulateArticleCommentsIndex extends Maintenance {
 				__METHOD__);
 		}
 	}
-
-	private function isNotTalk( $namespace ) {
-		return $namespace < 1 || ( $namespace % 2 === 0 );
-	}
-
 
 }
 
