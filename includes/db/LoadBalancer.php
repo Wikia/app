@@ -110,11 +110,17 @@ class LoadBalancer {
 	 * an element and return the appropriate key
 	 *
 	 * @param $weights array
-	 *
 	 * @return int
+	 * @throws WikiaException
 	 */
-	function pickRandom( $weights ) {
-		if ( !is_array( $weights ) || count( $weights ) == 0 ) {
+	private function pickRandom( array $weights ) {
+		// PLATFORM-1489: only check slave lags when we're not using consul (it performs its own healtchecks)
+		if ( !$this->hasConsulConfig() ) {
+			// SUS-4805
+			throw new WikiaException( __METHOD__ . ' - we only support Consul addresses in DB config' );
+		}
+
+		if ( count( $weights ) == 0 ) {
 			return false;
 		}
 
@@ -130,6 +136,7 @@ class LoadBalancer {
 		$rand = mt_rand( 0, $max ) / $max * $sum;
 
 		$sum = 0;
+		$i = 0;
 		foreach ( $weights as $i => $w ) {
 			$sum += $w;
 			if ( $sum >= $rand ) {
@@ -144,35 +151,10 @@ class LoadBalancer {
 	 * check lags and pick a random entry.
 	 *
 	 * @param $loads array
-	 * @param $wiki bool
 	 * @return bool|int|string
 	 * @throws WikiaException
 	 */
-	private function getRandomNonLagged( $loads, $wiki = false ) {
-		// PLATFORM-1489: only check slave lags when we're not using consul (it performs its own healtchecks)
-		if ( !$this->hasConsulConfig() ) {
-			// SUS-4805
-			throw new WikiaException( __METHOD__ . ' - we only support Consul addresses in DB config' );
-		}
-
-		# Find out if all the slaves with non-zero load are lagged
-		$sum = 0;
-		foreach ( $loads as $load ) {
-			$sum += $load;
-		}
-		if ( $sum == 0 ) {
-			# No appropriate DB servers except maybe the master and some slaves with zero load
-			# Do NOT use the master
-			# Instead, this function will return false, triggering read-only mode,
-			# and a lagged slave will be used instead.
-			return false;
-		}
-
-		if ( count( $loads ) == 0 ) {
-			return false;
-		}
-
-		#wfDebugLog( 'connect', var_export( $loads, true ) );
+	private function getRandomNonLagged( array $loads ) {
 
 		# Return a random representative of the remainder
 		return $this->pickRandom( $loads );
@@ -187,6 +169,7 @@ class LoadBalancer {
 	 * @param $group bool
 	 * @param $wiki bool
 	 * @return bool|int|string
+	 * @throws MWException
 	 */
 	function getReaderIndex( $group = false, $wiki = false ) {
 		global $wgReadOnly, $wgDBClusterTimeout, $wgDBAvgStatusPoll, $wgDBtype;
@@ -232,8 +215,6 @@ class LoadBalancer {
 		# Scale the configured load ratios according to the dynamic load (if the load monitor supports it)
 		$this->getLoadMonitor()->scaleLoads( $nonErrorLoads, $group, $wiki );
 
-		$laggedSlaveMode = false;
-
 		# First try quickly looking through the available servers for a server that
 		# meets our criteria
 		do {
@@ -241,38 +222,29 @@ class LoadBalancer {
 			$overloadedServers = 0;
 			$currentLoads = $nonErrorLoads;
 			while ( count( $currentLoads ) ) {
-				if ( $wgReadOnly || $this->mAllowLagged || $laggedSlaveMode ) {
-					$i = $this->pickRandom( $currentLoads );
-				} else {
-					$i = $this->getRandomNonLagged( $currentLoads, $wiki );
-					if ( $i === false && count( $currentLoads ) != 0 )  {
-						# All slaves lagged. Switch to read-only mode
-						wfDebugLog( 'replication', "All slaves lagged. Switch to read-only mode\n" );
-						$wgReadOnly = 'The database has been automatically locked ' .
-							'while the slave database servers catch up to the master';
-						$i = $this->pickRandom( $currentLoads );
-						$laggedSlaveMode = true;
-
-						// Wikia change - begin
-						global $wgDBname, $wgDBcluster;
-
-						Wikia\Logger\WikiaLogger::instance()->error( 'All slaves lagged', [
-							'exception' => new Exception(),
-							'group'     => $group,
-							'wiki'      => $wiki ?: $wgDBname, # $wiki = false means a local DB
-							'cluster'   => $wgDBcluster,
-						] );
-						// Wikia change - end
-					}
-				}
+				/**
+				 * Wikia change - we use a single slave Consul address that is resolved by DNS. No need to
+				 * check lags and pick a random entry, just use weights for balancing between
+				 * master and slave nodes.
+				 *
+				 * @see SUS-4805
+				 */
+				$i = $this->pickRandom( $currentLoads );
 
 				if ( $i === false ) {
-					# pickRandom() returned false
-					# This is permanent and means the configuration or the load monitor
-					# wants us to return false.
-					wfDebugLog( 'connect', __METHOD__.": pickRandom() returned false\n" );
-					wfProfileOut( __METHOD__ );
-					return false;
+					// Wikia change - begin
+					global $wgDBname, $wgDBcluster;
+
+					Wikia\Logger\WikiaLogger::instance()->error( 'All slaves lagged', [
+						'exception' => new Exception(),
+						'group' => $group,
+						'wiki' => $wiki ?: $wgDBname, # $wiki = false means a local DB
+						'cluster' => $wgDBcluster,
+					] );
+
+					throw new MWException( "Failed to pick an entry from LoadBalancer config for " .
+					                       $wiki ?: $wgDBname );
+					// Wikia change - end
 				}
 
 				wfDebugLog( 'connect', __METHOD__.": Using reader #$i: {$this->mServers[$i]['host']}...\n" );
