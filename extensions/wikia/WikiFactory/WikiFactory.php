@@ -3410,6 +3410,17 @@ class WikiFactory {
 	}
 
 	/**
+	 * Returns local address of href
+	 *
+	 * @param int $city_id
+	 * @param string $href
+	 * @return string
+	 */
+	static public function cityIdToLanguagePath( $city_id ) {
+		return static::cityUrlToLanguagePath( static::cityIDtoUrl( $city_id ) );
+	}
+
+	/**
 	 * Renders community's value of given variable
 	 *
 	 * @access public

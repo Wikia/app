@@ -577,7 +577,7 @@ class ArticleComment {
 
 		$parts = self::explode( $title->getDBkey() );
 
-		$buttons = []; // action links with full markup (used in Oasis)
+		$buttons = []; // action links with full markup
 		$links = []; // action links with only a URL
 		$replyButton = '';
 
@@ -1573,8 +1573,8 @@ class ArticleComment {
 	 * @return boolean
 	 */
 	static public function isMiniEditorEnabled() {
-		$app = F::app();
-		return $app->wg->EnableMiniEditorExtForArticleComments && $app->checkSkin( [ 'oasis' ] );
+		global $wgEnableMiniEditorExtForArticleComments;
+		return $wgEnableMiniEditorExtForArticleComments;
 	}
 
 	/**

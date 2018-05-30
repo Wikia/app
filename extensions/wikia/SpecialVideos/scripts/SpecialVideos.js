@@ -1,7 +1,7 @@
 /* global BannerNotification */
 
 /**
- * JS file for Special:Videos page. Runs on Monobook and Oasis.
+ * JS file for Special:Videos page.
  */
 
 $(function () {
