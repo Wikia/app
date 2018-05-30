@@ -4,8 +4,6 @@ require_once( __DIR__ . '/../../../../maintenance/Maintenance.php' );
 
 class PopulateArticleCommentsIndex extends Maintenance {
 
-	private $pageCache = [];
-
 	public function __construct() {
 		parent::__construct();
 		$this->mDescription = "Populates the article_comments table with the current article->comment mapping";
@@ -28,23 +26,28 @@ class PopulateArticleCommentsIndex extends Maintenance {
 
 		$count = 0;
 		foreach ( $comments as $c ) {
-			// this should be a talk page
+			$count++;
 			$commentNs = $c->page_namespace;
 			if ( $this->isNotTalk( $commentNs ) ) {
+				// this should be a talk page
 				continue;
 			}
-			// talk pages have namespaces next to their parent pages (talk ns = parent ns + 1)
-			$parentNs = $commentNs - 1;
+
 			$titleParts = explode( '/', $c->page_title );
-			$articleId = $this->getPageId( $titleParts[0], $parentNs );
+			$articleId = LinkCache::singleton()->getGoodLinkID( $titleParts[0] );
+			if ( empty( $articleId ) ) {
+				// if the parent article doesn't exist, we don't care about the comment
+				continue;
+			}
+
 			$parentCommentId = 0;
 			if ( count( $titleParts ) === 3 ) {
 				$parentTitle = $titleParts[0] . '/' . $titleParts[1];
-				$parentCommentId = $this->getPageId( $parentTitle, $commentNs );
+				$parentCommentId = LinkCache::singleton()->getGoodLinkID( $parentTitle );
 			}
 			$this->addCommentMapping( $c->page_id, $articleId, $parentCommentId);
 
-			if ( ++$count % 1000 === 0 ) {
+			if ( $count % 1000 === 0 ) {
 				$this->output( $dbName . ': ' . $count . ' out of ' . $totalCount . " processed\n" );
 				wfWaitForSlaves();
 			}
@@ -63,20 +66,6 @@ class PopulateArticleCommentsIndex extends Maintenance {
 				['comment_id' => $commentId, 'article_id' => $articleId, 'parent_comment_id' => $parentCommentId],
 				__METHOD__);
 		}
-	}
-
-	// $pageNamespace is needed to use the existing index for the select
-	private function getPageId( $pageTitle, $pageNamespace ) {
-		if ( empty( $this->pageCache[$pageTitle] ) ) {
-			$db = $this->getDB( DB_SLAVE );
-			$pageId = $db->selectField( 'page', 'page_id', ['page_title' => $pageTitle, 'page_namespace' => $pageNamespace], __METHOD__ );
-			if ( empty( $pageId ) ) {
-				$this->pageCache[$pageTitle] = 0;
-			} else {
-				$this->pageCache[$pageTitle] = $pageId;
-			}
-		}
-		return $this->pageCache[$pageTitle];
 	}
 
 	private function isNotTalk( $namespace ) {
