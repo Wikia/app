@@ -6,45 +6,6 @@ class ArticleCommentsController extends WikiaController {
 	private static $content = null;
 
 	public function executeIndex() {
-		$isMobile = $this->app->checkSkin( 'wikiamobile' );
-
-		// for non-JS version !!! (used also for Monobook and WikiaMobile)
-		if ($this->wg->Request->wasPosted()) {
-			$sComment = $this->wg->Request->getVal( 'wpArticleComment', false );
-			$iArticleId = $this->wg->Request->getVal( 'wpArticleId', false );
-			$sSubmit = $this->wg->Request->getVal( 'wpArticleSubmit', false );
-			$token = $this->wg->Request->getVal( 'token' );
-
-			if ( $sSubmit && $sComment && $iArticleId && $this->wg->User->matchEditToken( $token ) ) {
-				$oTitle = Title::newFromID( $iArticleId );
-
-				if ( $oTitle instanceof Title ) {
-					$response = ArticleComment::doPost( $this->wg->Request->getVal( 'wpArticleComment' ), $this->wg->User, $oTitle );
-
-					if ( !$isMobile ) {
-						$this->wg->Out->redirect( $oTitle->getLocalURL() );
-					} else {
-						$result = [ ];
-						$canComment = ArticleCommentInit::userCanComment( $result, $oTitle );
-
-						//this check should be done for all the skins and before calling ArticleComment::doPost but that requires a good bit of refactoring
-						//and some design review as the OAsis/Monobook template doesn't handle error feedback from this code
-						if ( $canComment == true ) {
-							if ( empty( $response[ 2 ][ 'error' ] ) ) {
-								//wgOut redirect doesn't work when running fully under the
-								//Nirvana stack (WikiaMobile skin), also send back to the first page of comments
-								$this->response->redirect( $oTitle->getLocalURL( [ 'page' => 1 ] ) . '#article-comments' );
-							} else {
-								$this->response->setVal( 'error', $response[ 2 ][ 'msg' ] );
-							}
-						} else {
-							$this->response->setVal( 'error', $result[ 'msg' ] );
-						}
-					}
-				}
-			}
-		}
-
 		$this->page = $this->wg->request->getVal( 'page', 1 );
 		$this->isLoadingOnDemand = ArticleComment::isLoadingOnDemand();
 		$this->isMiniEditorEnabled = ArticleComment::isMiniEditorEnabled();
@@ -54,13 +15,7 @@ class ArticleCommentsController extends WikiaController {
 
 		} else {
 			$this->getCommentsData( $this->wg->Title, $this->page );
-
-			if ( $isMobile ) {
-				$this->forward( __CLASS__, 'WikiaMobileIndex', false );
-
-			} else if ( $this->app->checkSkin( 'oasis' ) ) {
-				$this->response->addAsset( 'articlecomments' . ( $this->isMiniEditorEnabled ? '_mini_editor' : '' ) . '_scss' );
-			}
+			$this->response->addAsset( 'articlecomments' . ( $this->isMiniEditorEnabled ? '_mini_editor' : '' ) . '_scss' );
 		}
 	}
 
@@ -101,63 +56,6 @@ class ArticleCommentsController extends WikiaController {
 		if ( !empty( $this->wg->ArticleCommentsLoadOnDemand ) ) {
 			$this->response->setCachePolicy( WikiaResponse::CACHE_PRIVATE );
 			$this->response->setCacheValidity( WikiaResponse::CACHE_DISABLED );
-		}
-	}
-
-	/**
-	 * Overrides the main template for the WikiaMobile skin
-	 *
-	 * @author Federico "Lox" Lucignano <federico(at)wikia-inc.com>
-	 **/
-	public function executeWikiaMobileIndex() {
-		/** render WikiaMobile template**/
-
-		//unfortunately the only way to get the total number of comments (required in the skin) is to load them
-		//via ArticleCommentsList::getData (cached in MemCache for 1h), still to cut down page loading times
-		//we won't show them until the user doesn't request for page 1 (hence page == 0 means don't print them out)
-		//this is definitely sub optimal but it's the only way until the whole extension doesn't get refactored
-		//and the total of comments stored separately
-		$this->response->setVal( 'requestedPage', ( $this->wg->request->getVal( 'page', 0 ) ) );
-	}
-
-	/**
-	 * Overrides the template for one comment item for the WikiaMobile skin
-	 *
-	 * @author Federico "Lox" Lucignano <federico(at)wikia-inc.com>
-	 **/
-	public function executeWikiaMobileComment() {/** render WikiaMobile template**/}
-
-	/**
-	 * Renders the contents of a page of comments including post button/form and prev/next page
-	 * used in the WikiaMobile skin to deliver the first page of comments via AJAX and any page of comments for non-JS browsers
-	 *
-	 * @author Federico "Lox" Lucignano <federico(at)wikia-inc.com>
-	 **/
-	public function executeWikiaMobileCommentsPage() {
-		$articleID = $this->request->getInt( 'articleID' );
-		$title = null;
-
-		//set mobile skin as this is based on it
-		RequestContext::getMain()->setSkin(
-			Skin::newFromKey( 'wikiamobile' )
-		);
-
-		if ( !empty( $articleID ) ) {
-			$title = Title::newFromId( $articleID );
-		}
-
-		if ( !( $title instanceof Title ) ) {
-			$title = $this->wg->title;
-		}
-
-		$this->getCommentsData( $title, $this->wg->request->getInt( 'page', 1 ) );
-
-		if ( $this->page > 1 ) {
-			$this->response->setVal( 'prevPage', $this->page - 1 );
-		}
-
-		if ( $this->page <  $this->pagesCount ) {
-			$this->response->setVal( 'nextPage', $this->page + 1 );
 		}
 	}
 
@@ -216,7 +114,7 @@ class ArticleCommentsController extends WikiaController {
 			// This is the actual entry point for Article Comment generation
 			self::$content = $app->sendRequest( 'ArticleComments', 'index' );
 
-			// Load MiniEditor assets (oasis skin only)
+			// Load MiniEditor assets
 			if ( ArticleComment::isMiniEditorEnabled() ) {
 				$app->sendRequest( 'MiniEditor', 'loadAssets', [
 					'loadStyles' => !ArticleComment::isLoadingOnDemand(),

@@ -154,7 +154,7 @@ function Ach_GetHTMLAfterBody( Skin $skin, &$html ): bool {
 			$awardingService->awardCustomNotInTrackBadge( $user, BADGE_WELCOME );
 		}
 
-		if ( ( !empty( $_SESSION['achievementsNewBadges'] ) || 5 == rand( 1, 20 ) ) && $skin->getSkinName() !== 'monobook' ) {
+		if ( ( !empty( $_SESSION['achievementsNewBadges'] ) || 5 == rand( 1, 20 ) ) ) {
 			// this works only for Wikia and only in current varnish configuration
 			if (!headers_sent()) {
 				header('X-Pass-Cache-Control: no-store, private, no-cache, must-revalidate');
