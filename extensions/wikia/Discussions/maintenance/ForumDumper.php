@@ -63,7 +63,6 @@ class ForumDumper {
 		"length",
 		"parent_id",
 		"text_flags",
-		"comment",
 		"raw_content",
 		"content",
 	];
@@ -189,7 +188,6 @@ class ForumDumper {
 					"length" => $row->rev_len,
 					"parent_id" => $row->rev_parent_id,
 					"text_flags" => $row->old_flags,
-					"comment" => $row->rev_comment,
 					"raw_content" => $plainText,
 					"content" => $parsedText,
 				] );
