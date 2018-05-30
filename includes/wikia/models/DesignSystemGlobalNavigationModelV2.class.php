@@ -5,6 +5,9 @@ class DesignSystemGlobalNavigationModelV2 extends WikiaModel {
 	const PRODUCT_WIKIS = 'wikis';
 	const PRODUCT_FANDOMS = 'fandoms';
 
+	const COMMUNITY_CENTRAL_LABEL = 'global-navigation-wikis-community-central';
+	const COMMUNITY_CENTRAL_TRACKING_LABEL = 'link.community-central';
+
 	private $product;
 	private $productInstanceId;
 	private $lang;
@@ -35,49 +38,8 @@ class DesignSystemGlobalNavigationModelV2 extends WikiaModel {
 			'create_wiki' => [
 				'header' => $this->getCreateWiki( 'start-a-wiki' )
 			],
+			'main-navigation' => $this->getMainNavigation(),
 		];
-
-		if ( $this->isWikiaOrgCommunity() ) {
-			$data[ 'wikis' ] = [
-				'links' => [
-					$this->getCommunityCentralLink()
-				]
-			];
-		} else {
-			$data[ 'fandom_overview' ] = $this->getVerticalsSection();
-			$data[ 'wikis' ] = [
-				'header' => [
-					'type' => 'line-text',
-					'title' => [
-						'type' => 'translatable-text',
-						'key' => 'global-navigation-wikis-header',
-					],
-					'tracking_label' => 'link.wikis',
-				],
-				'links' => [
-					[
-						'type' => 'link-text',
-						'title' => [
-							'type' => 'translatable-text',
-							'key' => 'global-navigation-wikis-explore'
-						],
-						'href' => $this->getHref( 'explore-wikis' ),
-						'tracking_label' => 'link.explore',
-					],
-					$this->getCommunityCentralLink(),
-					[
-						'type' => 'link-text',
-						'title' => [
-							'type' => 'translatable-text',
-							'key' => 'global-navigation-wikis-fandom-university'
-						],
-						'href' => $this->getHref( 'fandom-university' ),
-						'tracking_label' => 'link.fandom-university',
-					],
-					$this->getCreateWiki( 'link.start-a-wiki' ),
-				]
-			];
-		}
 
 		if ( $wgUser->isLoggedIn() ) {
 			$data[ 'user' ] = $this->getLoggedInUserData( $wgUser );
@@ -97,9 +59,32 @@ class DesignSystemGlobalNavigationModelV2 extends WikiaModel {
 		return $data;
 	}
 
+	private function getMainNavigation() {
+		if ( $this->isWikiaOrgCommunity() ) {
+			return $this->getLink( self::COMMUNITY_CENTRAL_LABEL, $this->getHref('community-central'), self::COMMUNITY_CENTRAL_TRACKING_LABEL );
+		} else {
+			$links = $this->getFandomLinks();
+			$links[] = [
+				'type' => 'group',
+				'title' => [
+					'type' => 'translatable-text',
+					'key' => 'global-navigation-wikis-header',
+				],
+				'tracking_label' => 'link.wikis',
+				'items' => [
+					$this->getLink( 'global-navigation-wikis-explore', $this->getHref( 'explore-wikis' ), 'link.explore' ),
+					$this->getLink( self::COMMUNITY_CENTRAL_LABEL, $this->getHref('community-central'), self::COMMUNITY_CENTRAL_TRACKING_LABEL ),
+					$this->getLink( 'global-navigation-wikis-fandom-university', $this->getHref( 'fandom-university' ), 'link.fandom-university' ),
+					$this->getCreateWiki( 'link.start-a-wiki' ),
+				]
+			];
+			return $links;
+		}
+	}
+
 	private function getCreateWiki( string $trackingLabel ) {
 		return [
-			'type' => 'link-button',
+			'type' => 'button',
 			'title' => [
 				'type' => 'translatable-text',
 				'key' => 'global-navigation-create-wiki-link-start-wikia'
@@ -348,53 +333,15 @@ class DesignSystemGlobalNavigationModelV2 extends WikiaModel {
 		];
 	}
 
-	private function getVerticalsSection() {
+	private function getFandomLinks() {
 		$verticals = [
-			'links' => [
-				[
-					'type' => 'link-branded',
-					'brand' => 'games',
-					'title' => [
-						'type' => 'translatable-text',
-						'key' => 'global-navigation-fandom-overview-link-vertical-games'
-					],
-					'href' => $this->getHref( 'games' ),
-					'tracking_label' => 'link.games'
-				],
-				[
-					'type' => 'link-branded',
-					'brand' => 'movies',
-					'title' => [
-						'type' => 'translatable-text',
-						'key' => 'global-navigation-fandom-overview-link-vertical-movies'
-					],
-					'href' => $this->getHref( 'movies' ),
-					'tracking_label' => 'link.movies'
-				],
-				[
-					'type' => 'link-branded',
-					'brand' => 'tv',
-					'title' => [
-						'type' => 'translatable-text',
-						'key' => 'global-navigation-fandom-overview-link-vertical-tv'
-					],
-					'href' => $this->getHref( 'tv' ),
-					'tracking_label' => 'link.tv'
-				]
-			]
+			$this->getLink( 'global-navigation-fandom-overview-link-vertical-games', $this->getHref( 'games' ), 'link.games' ),
+			$this->getLink( 'global-navigation-fandom-overview-link-vertical-movies', $this->getHref( 'movies' ), 'link.movies' ),
+			$this->getLink( 'global-navigation-fandom-overview-link-vertical-tv', $this->getHref( 'tv' ), 'link.tv'),
 		];
 
 		if ( $this->lang === self::DEFAULT_LANG ) {
-			$verticals['links'][] = [
-				'type' => 'link-branded',
-				'brand' => 'video',
-				'title' => [
-					'type' => 'translatable-text',
-					'key' => 'global-navigation-fandom-overview-link-video'
-				],
-				'href' => $this->getHref( 'video' ),
-				'tracking_label' => 'link.video'
-			];
+			$verticals['links'][] = $this->getLink( 'global-navigation-fandom-overview-link-video', $this->getHref( 'video' ), 'link.video') ;
 		}
 
 		return $verticals;
@@ -412,18 +359,6 @@ class DesignSystemGlobalNavigationModelV2 extends WikiaModel {
 	private function getCorporatePageSearchUrl() {
 		$url = GlobalTitle::newFromText( 'Search', NS_SPECIAL, Wikia::CORPORATE_WIKI_ID )->getFullURL();
 		return wfProtocolUrlToRelative( $url );
-	}
-
-	private function getCommunityCentralLink() {
-		return [
-			'type' => 'link-text',
-			'title' => [
-				'type' => 'translatable-text',
-				'key' => 'global-navigation-wikis-community-central'
-			],
-			'href' => $this->getHref( 'community-central' ),
-			'tracking_label' => 'link.community-central',
-		];
 	}
 
 	private function getSitenameData() {
@@ -482,6 +417,18 @@ class DesignSystemGlobalNavigationModelV2 extends WikiaModel {
 				'name' => 'wds-company-logo-fandom-white',
 			],
 			'tracking_label' => 'logo',
+		];
+	}
+
+	private function getLink(string $labelKey, string $href, string $trackingLabel) {
+		return [
+			'type' => 'link',
+			'title' => [
+				'type' => 'translatable-text',
+				'key' => $labelKey
+			],
+			'href' => $href,
+			'tracking_label' => $trackingLabel,
 		];
 	}
 }
