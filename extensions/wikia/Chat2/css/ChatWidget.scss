@@ -9,11 +9,6 @@
 @import "ChatColor";
 @import "UserStatsMenu";
 
-body.skin-monobook .ChatWidget,
-body.skin-oasis .ChatMonobookWidget {
-	display: none;
-}
-
 .chat-join {
 	button .icon {
 		display: inline-block;

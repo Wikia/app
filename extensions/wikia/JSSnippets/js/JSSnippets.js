@@ -5,9 +5,6 @@
  * @author Maciej Brencz (Macbre) <macbre(at)wikia-inc.com>
  * @author Federico "Lox" Lucignano <federico(at)wikia-inc.com>
  *
- * WARNING: This code is shared between Oasis/Monobook and WikiaMobile, please don't introduce library-specific code
- * (e.g jQuery, the $ calls in this file have been checked)
- *
  * TODO: remove any $ reference when we complete the transition to the Wikia namespace
  */
 
