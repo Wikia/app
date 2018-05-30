@@ -283,18 +283,6 @@ return [
 		'group' => 'yui',
 	],
 
-	// Wikia-specific assets for monobook-based skins
-	'wikia.monobook' => [
-		'styles' => [
-			'skins/wikia/shared.css',
-			'skins/wikia/css/Monobook.css',
-			'resources/wikia/libraries/yui/container/assets/container.css',
-			'resources/wikia/libraries/yui/logger/assets/logger.css',
-			'resources/wikia/libraries/yui/tabview/assets/tabview.css',
-			'extensions/wikia/RelatedPages/RelatedPages.monobook.css',
-		],
-	],
-
 	'wikia.importScript' => [
 		'scripts' => [
 			'resources/wikia/modules/importScript.js',

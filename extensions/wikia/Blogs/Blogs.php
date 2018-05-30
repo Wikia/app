@@ -13,8 +13,6 @@ $wgExtensionCredits['other'][] = array(
 	"description" => "Blog Articles",
 	"descriptionmsg" => "blogs-desc",
 	"url" => "https://github.com/Wikia/app/tree/dev/extensions/wikia/Blogs",
-	"svn-date" => '$LastChangedDate$',
-	"svn-revision" => '$LastChangedRevision$',
 	"author" => array( '[http://www.wikia.com/wiki/User:Eloy.wikia Krzysztof Krzyżaniak (eloy)]', 'Piotr Molski', 'Adrian Wieczorek', '[http://www.wikia.com/wiki/User:Ppiotr Przemek Piotrowski (Nef)]', '[http://www.wikia.com/wiki/User:Marooned Maciej Błaszkowski (Marooned)]' )
 );
 
@@ -47,8 +45,6 @@ $wgAutoloadClasses[ "WikiaApiBlogs" ] = __DIR__ . "/api/WikiaApiBlogs.php";
 global $wgAPIModules;
 $wgAPIModules[ "blogs" ] = "WikiaApiBlogs";
 
-// $wgExtensionFunctions[] = array('BlogArticle', 'createCategory');
-
 /**
  * messages file
  */
@@ -66,23 +62,6 @@ $wgSpecialPages['CreateBlogPage'] = 'CreateBlogPage';
 $wgSpecialPages['Myblog'] = 'SpecialMyblog';
 $wgAutoloadClasses['SpecialMyblog'] = __DIR__ . '/SpecialMyblog.php';
 $wgAutoloadClasses['BlogsHelper'] = __DIR__ . '/BlogsHelper.class.php';
-
-// initialize blogs special pages (BugId:7604)
-$wgHooks['BeforeInitialize'][] = 'wfBlogsOnBeforeInitialize';
-
-function wfBlogsOnBeforeInitialize( &$title, &$article, &$output, User $user, $request, $mediaWiki ) {
-	global $wgAutoloadClasses;
-
-	// this line causes initialization of the skin
-	// title before redirect handling is passed causing BugId:7282 - it will be fixed in "AfterInitialize" hook
-	$skinName = get_class( $user->getSkin() );
-
-	if ( $skinName == 'SkinMonoBook' ) {
-		$wgAutoloadClasses['CreateBlogPage'] = __DIR__ . '/monobook/SpecialCreateBlogPage.php';
-	}
-
-	return true;
-}
 
 $wgSpecialPageGroups['CreateBlogPage'] = 'wikia';
 $wgSpecialPageGroups['CreateBlogListingPage'] = 'wikia';
@@ -119,9 +98,22 @@ $wgHooks['AfterPageHeaderButtons'][] = 'BlogsHelper::onAfterPageHeaderButtons';
 
 $wgHooks['WantedPages::getExcludedNamespaces'][] = 'BlogsHelper::onWantedPagesGetExcludedNamespaces';
 
-/**
- * load other parts
- */
-include( __DIR__ . "/BlogTemplate.php" );
-include( __DIR__ . "/BlogArticle.php" );
-include( __DIR__ . "/BlogLockdown.php" );
+// load other parts
+$wgAutoloadClasses['BlogTemplateClass'] = __DIR__ . '/BlogTemplate.php';
+$wgAutoloadClasses['BlogArticle'] = __DIR__ . '/BlogArticle.php';
+$wgAutoloadClasses['BlogLockdown'] =  __DIR__ . "/BlogLockdown.php";
+$wgAutoloadClasses['BlogListingController'] = __DIR__ . '/BlogListingController.class.php';
+
+$wgAjaxExportList[] = "BlogTemplateClass::axShowCurrentPage";
+/* register as a parser function {{BLOGTPL_TAG}} and a tag <BLOGTPL_TAG> */
+$wgHooks['ParserFirstCallInit'][] = "BlogTemplateClass::setParserHook";
+$wgHooks['userCan'][] = 'BlogLockdown::userCan';
+
+define ( "BLOGS_TIMESTAMP", "20081101000000" );
+define ( "BLOGS_XML_REGEX", "/\<(.*?)\>(.*?)\<\/(.*?)\>/si" );
+define ( "GROUP_CONCAT", "64000" );
+define ( "BLOGS_DEFAULT_LENGTH", "400" );
+define ( "BLOGS_HTML_PARSE", "/(<.+?>)?([^<>]*)/s" );
+define ( "BLOGS_ENTITIES_PARSE", "/&[0-9a-z]{2,8};|&#[0-9]{1,7};|&#x[0-9a-f]{1,6};/i" );
+define ( "BLOGS_CLOSED_TAGS", "/^<\s*\/([^\s]+?)\s*>$/s" );
+define ( "BLOGS_OPENED_TAGS", "/^<\s*([^\s>!]+).*?>$/s" );

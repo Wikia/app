@@ -37,8 +37,6 @@ class UserNameChangeController extends EmailController {
 	 * @template userNameLayout
 	 */
 	public function body() {
-		$this->setViewTemplate( 'userNameLayout' );
-
 		$this->response->setData( [
 			'salutation' => $this->getSalutation(),
 			'editorAvatarURL' => $this->getCurrentAvatarURL(),

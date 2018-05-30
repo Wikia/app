@@ -26,13 +26,17 @@ class CommentsIndexHooks {
 		if ( $title->isTalkPage() && WallHelper::isWallNamespace( $title->getNamespace() ) ) {
 			wfDebug(__METHOD__ . "\n\n");
 
-			// we have either Wall message or Forum post - mark comments_index entry
-			$wallMessage = WallMessage::newFromTitle( $title );
-			$wallMessage->setInCommentsIndex( WPP_WALL_ADMINDELETE, 1 ); // set deleted = 1
+			try {
+				// we have either Wall message or Forum post - mark comments_index entry
+				$wallMessage = WallMessage::newFromTitle( $title );
+				$wallMessage->setInCommentsIndex( WPP_WALL_ADMINDELETE, 1 ); // set deleted = 1
 
-			// invalidate message and thread cache
-			$wallMessage->getThread()->invalidateCache();
-			$wallMessage->invalidateCache();
+				// invalidate message and thread cache
+				$wallMessage->getThread()->invalidateCache();
+				$wallMessage->invalidateCache();
+			} catch ( CommentsIndexEntryNotFoundException $notFoundException ) {
+				// don't fail if comment was invalid
+			}
 		}
 
 		return true;

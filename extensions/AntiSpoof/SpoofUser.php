@@ -94,7 +94,7 @@ class SpoofUser {
 			$spoofs[] = $row->user_name;
 		}
 		foreach( $forgottenSpoofedUsers as $row ) {
-			$spoofs[] = $row->suf_hash;
+			$spoofs[] = $row->suf_normalized_hash;
 		}
 		return $spoofs;
 	}

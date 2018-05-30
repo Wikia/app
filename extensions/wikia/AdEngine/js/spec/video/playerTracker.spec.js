@@ -175,13 +175,12 @@ describe('ext.wikia.adEngine.video.player.playerTracker', function () {
 			slotName: 'TOP_LEADERBOARD',
 			bid: {
 				bidderCode: 'rubicon',
-				rubiconAdId: '56bar',
-				rubiconAdvertiserId: 'foo89',
+				creativeId: 'foo89',
 				cpm: 123
 			}
 		}, 'fooPlayer', 'barEvent');
 
-		expect(getTrackedValue('vast_id')).toEqual('foo89:56bar');
+		expect(getTrackedValue('vast_id')).toEqual('foo89');
 		expect(getTrackedValue('price')).toEqual(123);
 	});
 
@@ -191,7 +190,7 @@ describe('ext.wikia.adEngine.video.player.playerTracker', function () {
 			slotName: 'TOP_LEADERBOARD',
 			bid: {
 				bidderCode: 'beachfront',
-				creative_id: 'w1k14',
+				creativeId: 'w1k14',
 				cpm: 456
 			}
 		}, 'fooPlayer', 'barEvent');
@@ -206,7 +205,7 @@ describe('ext.wikia.adEngine.video.player.playerTracker', function () {
 			slotName: 'TOP_LEADERBOARD',
 			bid: {
 				bidderCode: 'appnexusAst',
-				creative_id: '87765',
+				creativeId: '87765',
 				cpm: 789
 			}
 		}, 'fooPlayer', 'barEvent');

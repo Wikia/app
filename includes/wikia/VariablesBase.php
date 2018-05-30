@@ -532,15 +532,6 @@ $wgAPIPropModules = [];
 $wgAPIRequestLog = false;
 
 /**
- * Do not display "Talk" or "Discussion" tab on non-Oasis skins. There is no
- * relevance to Discussions feature developed in 2016/2017.
- * @deprecated
- * @see extensions/wikia/ArticleComments
- * @var bool $wgArticleCommentsHideDiscussionTab
- */
-$wgArticleCommentsHideDiscussionTab = true;
-
-/**
  * Whether or not to purge squid proxy URLs lazy-loaded ArticleComments. This
  * is a legacy variable and its name does no longer reflect its purpose.
  * @see ArticleComment::doPurge()
@@ -3545,13 +3536,6 @@ $wgEnableSpecialDiscussions = true;
  * @var bool wgEnableSpecialPhalanxExt
  */
 $wgEnableSpecialPhalanxExt = false;
-
-/**
- * Enable Special:Sitemap extension.
- * @see /extensions/wikia/Sitemap
- * @var bool $wgEnableSpecialSitemapExt
- */
-$wgEnableSpecialSitemapExt = true;
 
 /**
  * Enable Special:Unsubscribe.
@@ -7401,50 +7385,6 @@ $wgSiteStatsAsyncFactor = 1;
  * @var Array $wgSkipCountForCategories
  */
 $wgSkipCountForCategories = [];
-
-/**
- * Specify the name of a skin that should not be presented in the list of
- * available skins.  Use for blacklisting a skin which you do not want to
- * remove from the .../skins/ directory. NOTE: a few wikis may have local
- * override for this var, you need to modify those by hand. A SELECT on
- * city_variables will get you a list.
- * @var Array $wgSkipSkins
- */
-$wgSkipSkins = [
-    'answers',
-    'armchairgm',
-    'campfire',
-    'cars',
-    'corporate',
-    'corporatebase',
-    'corporatehome',
-    'curse',
-    'efmonaco',
-    'entertainment',
-    'food',
-    'games',
-    'gwmonobook',
-    'halo',
-    'halogamespot',
-    'health',
-    'home',
-    'law',
-    'local',
-    'lostbook',
-    'memalpha',
-    'monaco_old',
-    'music',
-    'politics',
-    'psn',
-    'quartz',
-    'restaurants',
-    'search',
-    'searchwikia',
-    'smartphone',
-    'test',
-    'uncyclopedia',
-    'wikiamobile',
-];
 
 /**
  * If slave DB lag is higher than this number of seconds, show an OBVIOUS

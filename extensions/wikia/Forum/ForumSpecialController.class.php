@@ -16,15 +16,6 @@ class ForumSpecialController extends WikiaSpecialPageController {
 	public function init() {
 		$this->response->addAsset( 'extensions/wikia/Forum/css/Forum.scss' );
 		$this->response->addAsset( 'extensions/wikia/Forum/css/ForumSpecial.scss' );
-
-		if ( $this->app->checkSkin( 'monobook' ) ) {
-			$this->response->addAsset( 'extensions/wikia/WikiaStyleGuide/js/Form.js' );
-			$this->response->addAsset( 'resources/wikia/modules/querystring.js' );
-
-			// VOLDEV-36: separate monobook styling
-			$this->response->addAsset( 'extensions/wikia/Forum/css/monobook/ForumMonobook.scss' );
-			$this->response->addAsset( 'extensions/wikia/Forum/css/monobook/ForumSpecialMonobook.scss' );
-		}
 	}
 
 	public function index() {
