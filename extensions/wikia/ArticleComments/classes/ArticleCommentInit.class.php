@@ -86,53 +86,6 @@ class ArticleCommentInit {
 		return $enable;
 	}
 
-	static public function ArticleCommentEnable( &$data ) {
-		global $wgTitle;
-
-		$skin = RequestContext::getMain()->getSkin();
-
-		// use this hook only for skins other than Monaco
-		// update: it's actually only MonoBook since Oasis and WikiaMobile use their own
-		// logic and the other mobile skins do not show comments-related stuff
-		if ( $skin instanceof SkinMonoBook ) {
-			if ( self::ArticleCommentCheck() ) {
-				$page = ArticleCommentList::newFromTitle( $wgTitle );
-				$data = $page->render();
-			}
-		}
-
-		return true;
-	}
-
-	/**
-	 * @param OutputPage $out
-	 * @param Skin $skin
-	 * @return bool
-	 */
-	static public function ArticleCommentAddJS( OutputPage $out, Skin $skin ): bool {
-		global $wgExtensionsPath;
-
-		if ( self::ArticleCommentCheck() ) {
-			// FB#21244 this should run only for MonoBook, Oasis and WikiaMobile have their own SASS-based styling
-			if ( $skin->getSkinName() === 'monobook' ) {
-				$out->addExtensionStyle( "$wgExtensionsPath/wikia/ArticleComments/css/ArticleComments.css" );
-			}
-		}
-
-		return true;
-	}
-
-	// TODO: not used in oasis - remove
-	static public function ArticleCommentHideTab( $skin, &$content_actions ) {
-		global $wgArticleCommentsHideDiscussionTab;
-
-		if ( !empty( $wgArticleCommentsHideDiscussionTab ) && self::ArticleCommentCheck() ) {
-			unset( $content_actions['talk'] );
-		}
-
-		return true;
-	}
-
 	/**
 	 * Hook
 	 *
@@ -202,16 +155,6 @@ class ArticleCommentInit {
 				$prefixedText = substr_replace( $aPrefix[0] , "" , -1 );
 			}
 		}
-		return true;
-	}
-
-	// when comments are enabled on the current namespace make the WikiaMobile skin enriched assets
-	// while keeping the response size (assets minification) and the number of external requests low (aggregation)
-	static public function onWikiaMobileAssetsPackages( Array &$jsStaticPackages, Array &$jsExtensionPackages, Array &$scssPackages ) {
-		if ( self::ArticleCommentCheck() ) {
-			$jsExtensionPackages[] = 'articlecomments_init_js_wikiamobile';
-		}
-
 		return true;
 	}
 

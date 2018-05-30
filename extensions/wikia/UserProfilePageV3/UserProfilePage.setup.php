@@ -58,10 +58,8 @@ $wgAutoloadClasses['UserIdentityBoxDiscussionInfo'] = $dir . '/UserIdentityBoxDi
  */
 $wgAutoloadClasses['UserProfilePageHooks'] =  $dir . '/UserProfilePageHooks.class.php';
 
-$wgHooks['SkinTemplateOutputPageBeforeExec'][] = 'UserProfilePageHooks::onSkinTemplateOutputPageBeforeExec';
 $wgHooks['SkinSubPageSubtitleAfterTitle'][] = 'UserProfilePageHooks::onSkinSubPageSubtitleAfterTitle';
 $wgHooks['ArticleSaveComplete'][] = 'UserProfilePageHooks::onArticleSaveComplete';
-$wgHooks['WikiaMobileAssetsPackages'][] = 'UserProfilePageHooks::onWikiaMobileAssetsPackages';
 
 $wgHooks['GetRailModuleList'][] = 'UserProfilePageRailHelper::onGetRailModuleList';
 

@@ -47,12 +47,12 @@ $messages['qqq'] = array(
 
 $messages['de'] = array(
 	'downloadyourdata-email' => 'E-Mail-Adresse',
-	'downloadyourdata-desc' => 'Ermöglicht Benutzern, ihre Daten herunterzuladen',
-	'downloadyourdata-intro' => 'Klicke auf die Schaltfläche unten, um eine .CSV-Kopie deiner FANDOM-Daten herunterzuladen. Wir stellen folgende Daten für den Download zur Verfügung: Benutzername, Benutzer-ID, echter Name (falls angegeben), E-Mail-Adresse, Erstellungsdatum des Kontos und einen Link zu einer Liste deiner Beiträge.',
+	'downloadyourdata-desc' => 'Ermöglicht Benutzern das Herunterzuladen ihrer Daten',
+	'downloadyourdata-intro' => 'Klicke auf die Schaltfläche unten, um eine .CSV-Kopie deiner FANDOM-Daten herunterzuladen. Diese Daten beinhalten deinen Benutzernamen, Benutzerkennung, deinen echten Name (falls angegeben), E-Mail-Adresse, Erstellungsdatum des Kontos und einen Link zu einer Liste deiner Beiträge.',
 	'downloadyourdata-user-not-found' => "Benutzer ''$1'' wurde nicht gefunden",
 	'downloadyourdata-registration' => 'Benutzerregistrierung',
 	'downloadyourdata-userid' => 'Benutzerkennung',
-	'downloadyourdata' => 'Download deiner Daten',
+	'downloadyourdata' => 'Deine Daten herunterladen',
 	'downloadyourdata-realname' => 'Echter Name',
 	'downloadyourdata-username' => 'Benutzername',
 	'downloadyourdata-user-activity-link' => 'Link zur Benutzeraktivität',
@@ -158,8 +158,8 @@ $messages['ja'] = array(
 $messages['pl'] = array(
 	'downloadyourdata-email' => 'Adres e‐mail',
 	'downloadyourdata-desc' => 'Pozwala użytkownikom na pobieranie swoich danych',
-	'downloadyourdata-intro' => 'Kliknij przycisk poniżej, aby pobrać kopię swoich danych z FANDOMU w formacie .CSV. Dane, które dostarczamy to nazwa użytkownika, identyfikator użytkownika, prawdziwe imię i nazwisko (jeśli są dostępne), adres e-mail, data utworzenia konta i link do listy twoich edycji.',
-	'downloadyourdata-user-not-found' => 'Nie znaleziono użytkownika "$1"',
+	'downloadyourdata-intro' => 'Kliknij przycisk poniżej, aby pobrać kopię swoich danych z FANDOMU w formacie CSV. Dane, które dostarczamy to nazwa użytkownika, identyfikator użytkownika, prawdziwe imię i nazwisko (jeśli zostały podane), adres e-mail, data utworzenia konta i link do listy twoich edycji.',
+	'downloadyourdata-user-not-found' => 'Nie znaleziono użytkownika „$1”',
 	'downloadyourdata-registration' => 'Rejestracja użytkownika',
 	'downloadyourdata-userid' => 'Identyfikator użytkownika',
 	'downloadyourdata' => 'Pobierz dane o sobie',
@@ -174,7 +174,7 @@ $messages['pl'] = array(
 	'downloadyourdata-location' => 'Miejsce',
 	'downloadyourdata-birthdate' => 'Data urodzenia',
 	'downloadyourdata-profile-gender' => 'Płeć (profil)',
-	'downloadyourdata-birthday-value' => '$1 $2',
+	'downloadyourdata-birthday-value' => '$2 $1',
 );
 
 $messages['pt'] = array(

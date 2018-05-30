@@ -126,9 +126,7 @@ class Hooks {
 		$title = $skin->getTitle();
 		$user = $skin->getContext()->getUser();
 
-		if ( !in_array( $skin->getSkinName(), [ 'monobook', 'uncyclopedia' ] )
-			|| !( new Helper() )->userCanEditJsPage( $title, $user ) )
-		{
+		if ( !( new Helper() )->userCanEditJsPage( $title, $user ) ) {
 			return true;
 		}
 

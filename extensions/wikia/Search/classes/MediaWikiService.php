@@ -246,15 +246,6 @@ class MediaWikiService {
 	}
 
 	/**
-	 * Determines whether we are using a mobile skin.
-	 *
-	 * @return bool
-	 */
-	public function isSkinMobile() {
-		return $this->app->wg->User->getSkin() instanceof \SkinWikiaMobile;
-	}
-
-	/**
 	 * Provides global value as set in the Oasis wg helper.
 	 * If the value is NULL, we return the default value set in param 2
 	 *

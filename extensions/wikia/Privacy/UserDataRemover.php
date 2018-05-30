@@ -43,8 +43,6 @@ class UserDataRemover {
 
 		$this->removeUserData( $user );
 
-		$this->info( "Removed global user data" );
-
 		// remove local data on all wikis edited by the user
 		$userWikis = $this->getUserWikis( $userId );
 
@@ -103,12 +101,10 @@ class UserDataRemover {
 
 			$this->info( "Removed user's global data", ['new_user_name' => $newUserName ] );
 
-			return true;
-		}
-		catch ( Exception $error ) {
+		} catch ( Exception $error ) {
+			// just log and rethrow
 			$this->error( "Couldn't remove global user data", ['exception' => $error] );
-
-			return false;
+			throw $error;
 		}
 	}
 

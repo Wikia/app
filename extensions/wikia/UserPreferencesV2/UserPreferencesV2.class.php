@@ -215,28 +215,7 @@ class UserPreferencesV2 {
 			$defaultPreferences['disablelinksuggest']['section'] = 'editing/editing-experience';
 			$defaultPreferences = self::moveToEndOfArray( $defaultPreferences, 'disablelinksuggest' );
 		}
-		if ( $user->getGlobalPreference( 'skin' ) == 'monobook' ) {
-			if ( isset( $defaultPreferences['showtoolbar'] ) ) {
-				$defaultPreferences['showtoolbar']['section'] = 'editing/monobookv2';
-				$defaultPreferences = self::moveToEndOfArray( $defaultPreferences, 'showtoolbar' );
-			}
-			if ( isset( $defaultPreferences['previewontop'] ) ) {
-				$defaultPreferences['previewontop']['section'] = 'editing/monobookv2';
-				$defaultPreferences = self::moveToEndOfArray( $defaultPreferences, 'previewontop' );
-			}
-			if ( isset( $defaultPreferences['previewonfirst'] ) ) {
-				$defaultPreferences['previewonfirst']['section'] = 'editing/monobookv2';
-				$defaultPreferences = self::moveToEndOfArray( $defaultPreferences, 'previewonfirst' );
-			}
-			if ( isset( $defaultPreferences['cols'] ) ) {
-				$defaultPreferences['cols']['section'] = 'editing/monobookv2';
-				$defaultPreferences = self::moveToEndOfArray( $defaultPreferences, 'cols' );
-			}
-			if ( isset( $defaultPreferences['rows'] ) ) {
-				$defaultPreferences['rows']['section'] = 'editing/monobookv2';
-				$defaultPreferences = self::moveToEndOfArray( $defaultPreferences, 'rows' );
-			}
-		}
+
 		if ( isset( $defaultPreferences['editsectiononrightclick'] ) ) {
 			$defaultPreferences['editsectiononrightclick']['label-message'] = 'tog-editsectiononrightclick-v2';
 		}
@@ -342,14 +321,7 @@ class UserPreferencesV2 {
 			$defaultPreferences = self::moveToEndOfArray( $defaultPreferences, 'hidefollowedpages' );
 		}
 		if ( isset( $defaultPreferences['justify'] ) ) {
-			if ( $user->getGlobalPreference( 'skin' ) == 'monobook' ) {
-				$defaultPreferences['justify']['section'] = 'under-the-hood/advanced-displayv2';
-				$defaultPreferences['justify']['label-message'] = 'tog-justify-v2';
-				$defaultPreferences = self::moveToEndOfArray( $defaultPreferences, 'justify' );
-			}
-			else {
 				unset( $defaultPreferences['justify'] );
-			}
 		}
 		if ( ( $wgEnableWallExt ) && ( isset( $defaultPreferences['wallshowsource'] ) ) ) {
 			$defaultPreferences = self::moveToEndOfArray( $defaultPreferences, 'wallshowsource' );

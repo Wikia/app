@@ -3410,6 +3410,17 @@ class WikiFactory {
 	}
 
 	/**
+	 * Returns local address of href
+	 *
+	 * @param int $city_id
+	 * @param string $href
+	 * @return string
+	 */
+	static public function cityIdToLanguagePath( $city_id ) {
+		return static::cityUrlToLanguagePath( static::cityIDtoUrl( $city_id ) );
+	}
+
+	/**
 	 * Renders community's value of given variable
 	 *
 	 * @access public
@@ -3465,11 +3476,9 @@ class WikiFactory {
 	 * @return string
 	 */
 	static private function parseValue( $value, $type ) {
-		if ( $type == "string" || $type == "integer"  ) {
+		if ( $type == "string" || $type == "text" || $type == "integer" ) {
 			return htmlspecialchars( $value );
-		}
-
-		if ( $type == "array" || $type == "struct" || $type == "hash" ) {
+		} elseif ( $type == "array" || $type == "struct" || $type == "hash" ) {
 			return json_encode( $value, JSON_PRETTY_PRINT );
 		}
 
