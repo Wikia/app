@@ -189,14 +189,6 @@ class DesignSystemGlobalNavigationModelV2 extends WikiaModel {
 					'type' => 'wds-svg',
 					'name' => 'wds-icons-user',
 				],
-				'title' => [
-					'type' => 'translatable-text',
-					'key' => 'global-navigation-anon-my-account',
-				],
-				'subtitle' => [
-					'type' => 'translatable-text',
-					'key' => 'global-navigation-anon-my-account',
-				],
 				'tracking_label' => 'account',
 			],
 			'links' => [
