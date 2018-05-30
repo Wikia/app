@@ -12,6 +12,7 @@ class RemoveUserDataOnWikiTaskTest extends WikiaDatabaseTest {
 	const OLD_TEST_USER_DB_KEY = 'Old_test_user';
 	const OTHER_TEST_USER = 'Other test user';
 	const OTHER_TEST_USER_DB_KEY = 'Other_test_user';
+	const TEST_AUDIT_ID = 1;
 
 	/**
 	 * Returns the test dataset.
@@ -28,6 +29,7 @@ class RemoveUserDataOnWikiTaskTest extends WikiaDatabaseTest {
 			__DIR__ . '/../../../AbuseFilter/abusefilter.tables.sqlite.sql',
 			__DIR__ . '/fixtures/check_user.sql',
 			__DIR__ . '/fixtures/page.sql',
+			__DIR__ . '/fixtures/audit_log.sql'
 		];
 	}
 
@@ -38,7 +40,7 @@ class RemoveUserDataOnWikiTaskTest extends WikiaDatabaseTest {
 	}
 
 	public function testShouldRemoveUserData() {
-		(new RemoveUserDataOnWikiTask())->removeAllData( self::TEST_USER_ID, self::TEST_USER );
+		(new RemoveUserDataOnWikiTask())->removeUserDataOnCurrentWiki( self::TEST_AUDIT_ID, self::TEST_USER_ID, self::TEST_USER );
 		$logPager = new CheckUserLogPager( null, [], null, null );
 		$this->assertEquals( 1,  $logPager->getNumRows() );
 		foreach ( $logPager->getResult() as $row ) {
@@ -47,7 +49,7 @@ class RemoveUserDataOnWikiTaskTest extends WikiaDatabaseTest {
 	}
 	
 	public function testShouldRemoveIpsFromRecentChanges() {
-		(new RemoveUserDataOnWikiTask())->removeAllData( self::TEST_USER_ID, self::TEST_USER );
+		(new RemoveUserDataOnWikiTask())->removeUserDataOnCurrentWiki( self::TEST_AUDIT_ID, self::TEST_USER_ID, self::TEST_USER );
 		$dbr = wfGetDB( DB_SLAVE );
 		$changes = $dbr->select( 'recentchanges', ['rc_user', 'rc_user_text', 'rc_ip_bin'] );
 		foreach ( $changes as $change ) {
@@ -60,7 +62,7 @@ class RemoveUserDataOnWikiTaskTest extends WikiaDatabaseTest {
 	}
 
 	public function testShouldRemoveAbuseFilterData() {
-		(new RemoveUserDataOnWikiTask())->removeAllData( self::TEST_USER_ID, self::TEST_USER );
+		(new RemoveUserDataOnWikiTask())->removeUserDataOnCurrentWiki( self::TEST_AUDIT_ID, self::TEST_USER_ID, self::TEST_USER );
 		$dbr = wfGetDB( DB_SLAVE );
 		// check filter author
 		$filters = $dbr->select( 'abuse_filter', ['af_user', 'af_user_text'] );
@@ -82,7 +84,7 @@ class RemoveUserDataOnWikiTaskTest extends WikiaDatabaseTest {
 	}
 
 	public function testShouldRemoveUserPageHistoryFromRecentChanges() {
-		(new RemoveUserDataOnWikiTask())->removeAllData( self::TEST_USER_ID, self::TEST_USER );
+		(new RemoveUserDataOnWikiTask())->removeUserDataOnCurrentWiki( self::TEST_AUDIT_ID, self::TEST_USER_ID, self::TEST_USER );
 		$dbr = wfGetDB( DB_SLAVE );
 		$changes = $dbr->select( 'recentchanges', ['rc_namespace', 'rc_title'] );
 		foreach ( $changes as $change ) {
@@ -93,7 +95,7 @@ class RemoveUserDataOnWikiTaskTest extends WikiaDatabaseTest {
 	}
 
 	public function testShouldRemoveUserPages() {
-		( new RemoveUserDataOnWikiTask() )->removeAllData( self::TEST_USER_ID, self::TEST_USER,
+		( new RemoveUserDataOnWikiTask() )->removeUserDataOnCurrentWiki( self::TEST_AUDIT_ID, self::TEST_USER_ID, self::TEST_USER,
 			self::OLD_TEST_USER );
 
 		$dbr = wfGetDB( DB_SLAVE );
@@ -112,6 +114,37 @@ class RemoveUserDataOnWikiTaskTest extends WikiaDatabaseTest {
 			$dbr->estimateRowCount( 'page', '*', [ 'page_title' => self::OTHER_TEST_USER_DB_KEY ],
 				__METHOD__ ),
 			'page table doesn\'t contain data related to user who hasn\'t been removed' );
+	}
+
+	public function testShouldRemoveActionLogs() {
+		( new RemoveUserDataOnWikiTask() )->removeUserDataOnCurrentWiki( self::TEST_AUDIT_ID, self::TEST_USER_ID, self::TEST_USER );
+
+		$db = wfGetDB( DB_MASTER );
+
+		$logs = $db->select( 'logging', '*' );
+
+		$this->assertEquals( 1, $logs->numRows(), 'Incorrect number of log records' );
+		$this->assertEquals( 'Test_user1', $logs->next()->log_title, 'Incorrect log record' );
+	}
+
+	public function testShouldRemoveWatchlist() {
+		( new RemoveUserDataOnWikiTask() )->removeUserDataOnCurrentWiki( self::TEST_AUDIT_ID, self::TEST_USER_ID, self::TEST_USER );
+
+		$db = wfGetDB( DB_SLAVE );
+
+		$this->assertEquals( 0,
+			$db->estimateRowCount( 'watchlist', '*', ['wl_user' => self::TEST_USER_ID], __METHOD__ ),
+			'Watchlist is not empty');
+	}
+
+	public function testShouldHaveAuditLog() {
+		(new RemoveUserDataOnWikiTask())->removeUserDataOnCurrentWiki( self::TEST_AUDIT_ID, self::TEST_USER_ID, self::TEST_USER );
+
+		$dbr = wfGetDB( DB_SLAVE );
+
+		$this->assertEquals( 1,
+			$dbr->estimateRowCount( 'rtbf_log_details', '*', [ 'log_id' => self::TEST_AUDIT_ID, 'was_successful' => 1 ],
+				__METHOD__ ), 'No audit log found' );
 	}
 
 }

@@ -37,14 +37,11 @@
 	padding-bottom: 25px;
 }
 
-// hide blog listing rendered for Monaco
-.wikiaSkinMonaco .WikiaBlogListing,
 .skin-oasis #wk_blogs_article {
 	display: none;
 }
 
-.skin-oasis .WikiaBlogListing,
-.wikiaSkinMonaco #wk_blogs_article {
+.skin-oasis .WikiaBlogListing {
 	display: block !important; // has to !important to override inline CSS
 }
 

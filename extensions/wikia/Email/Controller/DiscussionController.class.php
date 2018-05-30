@@ -36,8 +36,10 @@ abstract class DiscussionController extends EmailController {
 		}
 	}
 
+	/**
+	 * @template avatarLayout
+	 */
 	public function body() {
-		$this->setViewTemplate( 'avatarLayout' );
 		$this->response->setData(
 			[
 				'salutation' => $this->getSalutation(),

@@ -20,6 +20,7 @@ class AdEngine2ContextService {
 			$articleId = $title->getArticleID();
 			$hasFeaturedVideo =  !empty( $wg->EnableArticleFeaturedVideo ) &&
 				ArticleVideoContext::isFeaturedVideoEmbedded( $articleId );
+			$featuredVideoData = ArticleVideoContext::getFeaturedVideoData( $articleId );
 			// pages with featured video on mercury have no ATF slots
 			$delayBtf = ( $skinName === 'mercury' && $hasFeaturedVideo ) ? false : $wg->AdDriverDelayBelowTheFold;
 
@@ -36,6 +37,13 @@ class AdEngine2ContextService {
 			$newWikiVertical = $wikiFactoryHub->getWikiVertical( $wg->CityId );
 			$newWikiVertical = !empty($newWikiVertical['short']) ? $newWikiVertical['short'] : 'error';
 
+			$featuredVideoDetails = null;
+			if ( !empty($featuredVideoData) ) {
+				$featuredVideoDetails = [
+					'mediaId' => $featuredVideoData['mediaId'] ?? null,
+					'videoTags' => explode(',', $featuredVideoData['videoTags'] ?? '')
+				];
+			}
 
 			$context = [
 				'opts' => $this->filterOutEmptyItems( [
@@ -67,13 +75,15 @@ class AdEngine2ContextService {
 					'wikiCategory' => $wikiFactoryHub->getCategoryShort( $wg->CityId ),
 					'wikiCustomKeyValues' => $wg->DartCustomKeyValues,
 					'wikiDbName' => $wg->DBname,
+					'wikiId' => $wg->CityId,
 					'wikiIsCorporate' => $wikiaPageType->isCorporatePage(),
 					'wikiIsTop1000' => $wg->AdDriverWikiIsTop1000,
 					'wikiLanguage' => $langCode,
 					'wikiVertical' => $newWikiVertical,
 					'newWikiCategories' => $this->getNewWikiCategories( $wikiFactoryHub, $wg->CityId ),
 					'hasPortableInfobox' => !empty( \Wikia::getProps( $title->getArticleID(), PortableInfoboxDataService::INFOBOXES_PROPERTY_NAME ) ),
-					'hasFeaturedVideo' => $hasFeaturedVideo
+					'hasFeaturedVideo' => $hasFeaturedVideo,
+					'featuredVideo' => $featuredVideoDetails
 				] ),
 				'providers' => $this->filterOutEmptyItems( [
 					'evolve2' => $wg->AdDriverUseEvolve2,

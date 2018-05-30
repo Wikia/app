@@ -57,9 +57,10 @@ class SpecialSendEmailController extends \WikiaSpecialPageController {
 		$this->response->addAsset( 'special_email_admin_css' );
 	}
 
+	/**
+	 * @template specialSendEmail
+	 */
 	public function index() {
-		$this->response->getView()->setTemplatePath( __DIR__ .'/templates/specialSendEmail.mustache' );
-
 		if ( $this->wg->request->wasPosted() ) {
 			if ( $this->editTokenValidates() ) {
 				$result = $this->processForm();
