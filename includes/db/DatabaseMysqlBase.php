@@ -46,7 +46,7 @@ abstract class DatabaseMysqlBase extends DatabaseBase {
 	 *                          (https://www.percona.com/doc/percona-toolkit/2.2/pt-heartbeat.html)
 	 * @param array $params
 	 */
-	function __construct( array $params ) {
+	function __construct( $params = null ) {
 		parent::__construct( $params );
 
 		// SUS-4805 | pt-heartbeat based lag support
