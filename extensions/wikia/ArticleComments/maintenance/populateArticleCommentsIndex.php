@@ -16,26 +16,37 @@ class PopulateArticleCommentsIndex extends Maintenance {
 		$db = $this->getDB( DB_SLAVE );
 		$dbName = $db->getDBname();
 		
-		// get all talk pages
-		// TODO: full list of supported namespaces
-		$comments = $db->select( 'page', ['page_id', 'page_title'], ['page_namespace' => NS_TALK], __METHOD__ );
+		// get all comments
+		$comments = $db->select(
+			'page',
+			['page_id', 'page_title', 'page_namespace'],
+			['page_title ' . $db->buildLike( $db->anyString(), '@comment', $db->anyString() )],
+			__METHOD__ );
 		$totalCount = $comments->numRows();
 
 		$this->output( $dbName . ': Selected ' .  $totalCount . " comments\n" );
 
 		$count = 0;
 		foreach ( $comments as $c ) {
+			// this should be a talk page
+			$commentNs = $c->page_namespace;
+			if ( $this->isNotTalk( $commentNs ) ) {
+				continue;
+			}
+			// talk pages have namespaces next to their parent pages (talk ns = parent ns + 1)
+			$parentNs = $commentNs - 1;
 			$titleParts = explode( '/', $c->page_title );
-			$articleId = $this->getPageId( $titleParts[0], NS_MAIN );
+			$articleId = $this->getPageId( $titleParts[0], $parentNs );
 			$parentCommentId = 0;
 			if ( count( $titleParts ) === 3 ) {
 				$parentTitle = $titleParts[0] . '/' . $titleParts[1];
-				$parentCommentId = $this->getPageId( $parentTitle, NS_TALK );
+				$parentCommentId = $this->getPageId( $parentTitle, $commentNs );
 			}
 			$this->addCommentMapping( $c->page_id, $articleId, $parentCommentId);
 
 			if ( ++$count % 1000 === 0 ) {
 				$this->output( $dbName . ': ' . $count . ' out of ' . $totalCount . " processed\n" );
+				wfWaitForSlaves();
 			}
 		}
 
@@ -66,6 +77,10 @@ class PopulateArticleCommentsIndex extends Maintenance {
 			}
 		}
 		return $this->pageCache[$pageTitle];
+	}
+
+	private function isNotTalk( $namespace ) {
+		return $namespace < 1 || ( $namespace % 2 === 0 );
 	}
 
 
