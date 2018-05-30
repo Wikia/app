@@ -63,22 +63,22 @@ class DesignSystemGlobalNavigationModelV2 extends WikiaModel {
 		if ( $this->isWikiaOrgCommunity() ) {
 			return $this->getLink( self::COMMUNITY_CENTRAL_LABEL, $this->getHref('community-central'), self::COMMUNITY_CENTRAL_TRACKING_LABEL );
 		} else {
-			$links = $this->getFandomLinks();
-			$links[] = [
-				'type' => 'group',
-				'title' => [
-					'type' => 'translatable-text',
-					'key' => 'global-navigation-wikis-header',
-				],
-				'tracking_label' => 'link.wikis',
-				'items' => [
-					$this->getLink( 'global-navigation-wikis-explore', $this->getHref( 'explore-wikis' ), 'link.explore' ),
-					$this->getLink( self::COMMUNITY_CENTRAL_LABEL, $this->getHref('community-central'), self::COMMUNITY_CENTRAL_TRACKING_LABEL ),
-					$this->getLink( 'global-navigation-wikis-fandom-university', $this->getHref( 'fandom-university' ), 'link.fandom-university' ),
-					$this->getCreateWiki( 'link.start-a-wiki' ),
-				]
-			];
-			return $links;
+			return array_merge(
+				$this->getFandomLinks(),
+				[
+					'type' => 'group',
+					'title' => [
+						'type' => 'translatable-text',
+						'key' => 'global-navigation-wikis-header',
+					],
+					'tracking_label' => 'link.wikis',
+					'items' => [
+						$this->getLink( 'global-navigation-wikis-explore', $this->getHref( 'explore-wikis' ), 'link.explore' ),
+						$this->getLink( self::COMMUNITY_CENTRAL_LABEL, $this->getHref('community-central'), self::COMMUNITY_CENTRAL_TRACKING_LABEL ),
+						$this->getLink( 'global-navigation-wikis-fandom-university', $this->getHref( 'fandom-university' ), 'link.fandom-university' ),
+						$this->getCreateWiki( 'link.start-a-wiki' ),
+					]
+				]);
 		}
 	}
 
@@ -198,19 +198,16 @@ class DesignSystemGlobalNavigationModelV2 extends WikiaModel {
 
 		$isMessageWallEnabled = $this->isMessageWallEnabled();
 		$userName = $user->getName();
+		$viewProfileLinks = [];
 
-		$viewProfileLinks[] = [
-			'type' => 'link-text',
-			'href' => $this->getPageUrl( $userName, NS_USER, '', true ),
-			'title' => [
-				'type' => 'translatable-text',
-				'key' => 'global-navigation-user-view-profile'
-			],
-			'tracking_label' => 'account.profile',
-		];
+		$viewProfileLinks[] = $this->getLink( 'global-navigation-user-view-profile', $this->getPageUrl( $userName, NS_USER, '', true ), 'account.profile');
+
+		if ( !empty( $wgEnableAuthorProfileLinks ) && $this->hasAuthorProfile( $user ) ) {
+			$viewProfileLinks[] = $this->getLink( 'global-navigation-user-view-author-profile', $this->getHref( 'user-author-profile' ) . $userName, 'account.profile-author' );
+		}
 
 		$logOutLink = [
-			'type' => 'link-authentication',
+			'type' => 'logout',
 			'href' => $this->getHref( 'user-logout' ),
 			'title' => [
 				'type' => 'translatable-text',
@@ -220,53 +217,17 @@ class DesignSystemGlobalNavigationModelV2 extends WikiaModel {
 			'tracking_label' => 'account.sign-out',
 		];
 
-		if ( !empty( $wgEnableAuthorProfileLinks ) && $this->hasAuthorProfile( $user ) ) {
-			$viewProfileLinks[] = [
-				'type' => 'link-text',
-				'href' => $this->getHref( 'user-author-profile' ) . $userName,
-				'title' => [
-					'type' => 'translatable-text',
-					'key' => 'global-navigation-user-view-author-profile'
-				],
-				'tracking_label' => 'account.profile-author',
-			];
-		}
-
 		$links = [
 			static::PRODUCT_WIKIS => array_merge(
 				$viewProfileLinks,
 				[
-					[
-						'type' => 'link-text',
-						'href' => $isMessageWallEnabled
-							? $this->getPageUrl( $userName, NS_USER_WALL, '', true )
-							: $this->getPageUrl( $userName, NS_USER_TALK, '', true ),
-						'title' => [
-							'type' => 'translatable-text',
-							'key' => $isMessageWallEnabled
-								? 'global-navigation-user-message-wall'
-								: 'global-navigation-user-my-talk'
-						],
-						'tracking_label' => $isMessageWallEnabled ? 'account.message-wall' : 'account.talk',
-					],
-					[
-						'type' => 'link-text',
-						'href' => $this->getPageUrl( 'Preferences', NS_SPECIAL, '', true ),
-						'title' => [
-							'type' => 'translatable-text',
-							'key' => 'global-navigation-user-my-preferences'
-						],
-						'tracking_label' => 'account.preferences',
-					],
-					[
-						'type' => 'link-text',
-						'href' => $this->getHref( 'help' ),
-						'title' => [
-							'type' => 'translatable-text',
-							'key' => 'global-navigation-user-help'
-						],
-						'tracking_label' => 'account.help',
-					],
+					$this->getLink(
+						$isMessageWallEnabled ? 'global-navigation-user-message-wall' : 'global-navigation-user-my-talk',
+						$isMessageWallEnabled ? $this->getPageUrl( $userName, NS_USER_WALL, '', true ) : $this->getPageUrl( $userName, NS_USER_TALK, '', true ),
+						$isMessageWallEnabled ? 'account.message-wall' : 'account.talk'
+					),
+					$this->getLink( 'global-navigation-user-my-preferences', $this->getPageUrl( 'Preferences', NS_SPECIAL, '', true ), 'account.preferences'),
+					$this->getLink( 'global-navigation-user-help', $this->getHref( 'help' ), 'account.help'),
 					$logOutLink
 				]
 			),
@@ -279,16 +240,10 @@ class DesignSystemGlobalNavigationModelV2 extends WikiaModel {
 		];
 
 		return [
-			'header' => [
-				'type' => 'avatar',
-				'username' => [
-					'type' => 'text',
-					'value' => $userName
-				],
-				'url' => AvatarService::getAvatarUrl( $userName, 50 ),
-				'tracking_label' => 'account',
-			],
-			'links' => $links[$this->product]
+			'avatar_url' => AvatarService::getAvatarUrl( $userName, 50 ),
+			'username' => $userName,
+			'tracking_label' => 'account',
+			'items' => $links[$this->product],
 		];
 	}
 
