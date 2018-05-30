@@ -508,45 +508,11 @@ class MediaWiki {
 	 */
 	public function run() {
 		try {
-			$this->checkMaxLag();
 			$this->main();
 			$this->restInPeace();
 		} catch ( Exception $e ) {
 			MWExceptionHandler::handle( $e );
 		}
-	}
-
-	/**
-	 * Checks if the request should abort due to a lagged server,
-	 * for given maxlag parameter.
-	 * @return bool
-	 */
-	private function checkMaxLag() {
-		global $wgShowHostnames;
-
-		wfProfileIn( __METHOD__ );
-		$maxLag = $this->context->getRequest()->getVal( 'maxlag' );
-		if ( !is_null( $maxLag ) ) {
-			list( $host, $lag ) = wfGetLB()->getMaxLag();
-			if ( $lag > $maxLag ) {
-				$resp = $this->context->getRequest()->response();
-				$resp->header( 'HTTP/1.1 503 Service Unavailable' );
-				$resp->header( 'Retry-After: ' . max( intval( $maxLag ), 5 ) );
-				$resp->header( 'X-Database-Lag: ' . intval( $lag ) );
-				$resp->header( 'Content-Type: text/plain' );
-				if( $wgShowHostnames ) {
-					echo "Waiting for $host: $lag seconds lagged\n";
-				} else {
-					echo "Waiting for a database server: $lag seconds lagged\n";
-				}
-
-				wfProfileOut( __METHOD__ );
-
-				exit;
-			}
-		}
-		wfProfileOut( __METHOD__ );
-		return true;
 	}
 
 	/**
