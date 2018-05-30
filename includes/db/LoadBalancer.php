@@ -234,15 +234,14 @@ class LoadBalancer {
 					// Wikia change - begin
 					global $wgDBname, $wgDBcluster;
 
-					Wikia\Logger\WikiaLogger::instance()->error( 'All slaves lagged', [
+					Wikia\Logger\WikiaLogger::instance()->error( 'Failed to pick a slave DB node from LoadBalancer config ', [
 						'exception' => new Exception(),
 						'group' => $group,
 						'wiki' => $wiki ?: $wgDBname, # $wiki = false means a local DB
 						'cluster' => $wgDBcluster,
 					] );
 
-					throw new MWException( "Failed to pick an entry from LoadBalancer config for " .
-					                       $wiki ?: $wgDBname );
+					throw new MWException( "Failed to pick a slave DB node from LoadBalancer config for " . $wiki ?: $wgDBname );
 					// Wikia change - end
 				}
 
