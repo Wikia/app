@@ -70,19 +70,19 @@ function init(
 function overrideSlotService(slotRegistry, legacyBtfBlocker) {
 	const slotsCache = {};
 
-	slotService.getBySlotName = (id) => {
-		let slot = slotRegistry.get(id);
-		if (id && slot) {
-			if (!slotsCache.hasOwnProperty(id)) {
-				slotsCache[id] = unifySlotInterface(slot);
+	slotService.get = (slotName) => {
+		let slot = slotRegistry.get(slotName);
+		if (slotName && slot) {
+			if (!slotsCache.hasOwnProperty(slotName)) {
+				slotsCache[slotName] = unifySlotInterface(slot);
 			}
 
-			return slotsCache[id];
+			return slotsCache[slotName];
 		}
 	};
 
-	slotService.clearSlot = (id) => {
-		delete slotsCache[id];
+	slotService.clearSlot = (slotName) => {
+		delete slotsCache[slotName];
 	};
 
 	slotService.legacyEnabled = slotService.enable;
@@ -122,6 +122,7 @@ function unifySlotInterface(slot) {
 		hasDefinedViewportConflicts: () => {
 			return (slotContext.viewportConflicts || []).length > 0;
 		},
+		isRepeatable: () => false,
 		setConfigProperty: (key, value) => {
 			context.set(`slots.${slot.name}.${key}`, value);
 		}
@@ -142,7 +143,7 @@ function loadCustomAd(fallback) {
 				params.slotName = params.slotName.split(',')[0];
 			}
 
-			const slot = slotService.getBySlotName(params.slotName);
+			const slot = slotService.get(params.slotName);
 			slot.container.parentNode.classList.add('gpt-ad');
 
 			context.set(`slots.${slot.getSlotName()}.targeting.src`, params.src);
@@ -179,7 +180,7 @@ function checkAdBlocking(detection) {
 }
 
 function passSlotEvent(slotName, eventName) {
-	slotService.getBySlotName(slotName).emit(eventName);
+	slotService.get(slotName).emit(eventName);
 }
 
 export {
