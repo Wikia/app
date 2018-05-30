@@ -747,7 +747,8 @@ abstract class DatabaseBase implements DatabaseType {
 				'flags' => isset( $p['flags'] ) ? $p['flags'] : 0,
 				'tablePrefix' => isset( $p['tablePrefix'] ) ? $p['tablePrefix'] : 'get from global',
 				'schema' => isset( $p['schema'] ) ? $p['schema'] : $defaultSchemas[$dbType],
-				'foreign' => isset( $p['foreign'] ) ? $p['foreign'] : false
+				'foreign' => isset( $p['foreign'] ) ? $p['foreign'] : false,
+				'lagDetectionMethod' => isset( $p['lagDetectionMethod'] ) ? $p['lagDetectionMethod'] : null // SUS-4805
 			);
 
 			return new $class( $params );
