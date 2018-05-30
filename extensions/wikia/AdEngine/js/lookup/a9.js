@@ -6,8 +6,9 @@ define('ext.wikia.adEngine.lookup.a9', [
 	'wikia.document',
 	'wikia.log',
 	'wikia.trackingOptIn',
+	'wikia.consentString',
 	'wikia.window'
-], function (adContext, slotsContext, factory, doc, log, trackingOptIn, win) {
+], function (adContext, slotsContext, factory, doc, log, trackingOptIn, consentString, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.lookup.a9',
@@ -49,12 +50,13 @@ define('ext.wikia.adEngine.lookup.a9', [
 	function call(skin, onResponse) {
 		var a9Slots;
 
-		trackingOptIn.pushToUserConsentQueue(function(optIn) {
-			if (optIn === false) {
-				log('User opt-out for A9', log.levels.info, logGroup);
+		trackingOptIn.pushToUserConsentQueue(function (optIn) {
+			log('User opt-' + (optIn ? 'in' : 'out') + ' for A9', log.levels.info, logGroup);
+
+			// TODO: force disable if opt out, remove after CMP tests
+			if (!optIn) {
 				return;
 			}
-			log('User opt-in for A9', log.levels.info, logGroup);
 
 			if (!loaded) {
 				log(['call - load', skin], 'debug', logGroup);
@@ -64,7 +66,12 @@ define('ext.wikia.adEngine.lookup.a9', [
 
 				win.apstag.init({
 					pubID: amazonId,
-					videoAdServer: 'DFP'
+					videoAdServer: 'DFP',
+					gdpr: {
+						enabled: trackingOptIn.geoRequiresTrackingConsent(),
+						consent: consentString.getConsentString(optIn),
+						cmpTimeout: 2000
+					}
 				});
 
 				loaded = true;

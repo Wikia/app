@@ -32,6 +32,7 @@ describe('Method ext.wikia.adEngine.lookup.a9', function () {
 			mocks.document,
 			mocks.log,
 			mocks.trackingOptIn,
+			mocks.consentString,
 			mocks.window
 		);
 	}
@@ -114,6 +115,14 @@ describe('Method ext.wikia.adEngine.lookup.a9', function () {
 		trackingOptIn: {
 			pushToUserConsentQueue: function (cb) {
 				cb(true);
+			},
+			geoRequiresTrackingConsent: function () {
+				return true;
+			}
+		},
+		consentString: {
+			getConsentString: function () {
+				return 'abcdef1234';
 			}
 		},
 		window: {
