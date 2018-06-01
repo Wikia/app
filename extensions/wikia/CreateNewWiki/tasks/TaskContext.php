@@ -51,6 +51,9 @@ class TaskContext {
 	/** @var  User */
 	private $founder;
 
+	/** @var bool $shouldCreateLanguageWikiWithPath */
+	private $shouldCreateLanguageWikiWithPath;
+
 	public function __construct( $params ) {
 		foreach ($params as $key => $value) {
 			if ( property_exists($this, $key) ) {
@@ -62,12 +65,15 @@ class TaskContext {
 	}
 
 	public static function newFromUserInput( $inputWikiName, $inputDomain, $language, $vertical, $categories ) {
+		global $wgCreateLanguageWikisWithPath;
+
 		return new self( [
 			'inputWikiName' => $inputWikiName,
 			'inputDomain' => $inputDomain,
 			'language' => $language,
 			'vertical' => $vertical,
-			'categories' => $categories
+			'categories' => $categories,
+			'shouldCreateLanguageWikiWithPath' => $wgCreateLanguageWikisWithPath,
 		] );
 	}
 
@@ -209,5 +215,9 @@ class TaskContext {
 
 	public function setFounder($founder) {
 		$this->founder = $founder;
+	}
+
+	public function shouldCreateLanguageWikiWithPath(): bool {
+		return $this->shouldCreateLanguageWikiWithPath;
 	}
 }

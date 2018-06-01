@@ -33,8 +33,7 @@ define('ext.wikia.adEngine.wrappers.prebid', [
 
 	function getBidByAdId(adId) {
 		// TODO: clean up after GDPR rollout
-		var bids = [],
-			responses;
+		var bids = [];
 
 		if (!win.pbjs || (typeof win.pbjs.getBidResponses !== 'function' && !win.pbjs._bidsReceived)) {
 			return null;
@@ -45,14 +44,20 @@ define('ext.wikia.adEngine.wrappers.prebid', [
 				return adId === bid.adId;
 			});
 		} else {
-			responses = win.pbjs.getBidResponses();
-			Object.keys(responses).forEach(function (adUnit) {
-				var adUnitsBids = responses[adUnit].bids.filter(function (bid) {
-					return adId === bid.adId;
-				});
-
-				bids = bids.concat(adUnitsBids);
+			bids = win.pbjs.getAllPrebidWinningBids().filter(function (bid) {
+				return adId === bid.adId;
 			});
+
+			if (!bids.length) {
+				var responses = win.pbjs.getBidResponses();
+				Object.keys(responses).forEach(function (adUnit) {
+					var adUnitsBids = responses[adUnit].bids.filter(function (bid) {
+						return adId === bid.adId;
+					});
+
+					bids = bids.concat(adUnitsBids);
+				});
+			}
 		}
 
 		return bids.length ? bids[0] : null;
