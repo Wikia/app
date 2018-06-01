@@ -975,18 +975,6 @@ $wgPhalanxServiceOptions = [
 ];
 
 /**
- * @name $wgEnableGoogleFundingChoices
- * Enables Google Funding Choices
- */
-$wgEnableGoogleFundingChoices = true;
-
-/**
- * @name $wgEnableGoogleFundingChoicesInHead
- * Enables Google Funding Choices in <head> tag
- */
-$wgEnableGoogleFundingChoicesInHead = false;
-
-/**
  * @name $wgEnableNetzAthleten
  * Enables NetzAthleten provider
  */
