@@ -1899,6 +1899,15 @@ $messages['de'] = array(
 	'wall-history-who-involved-wall-title' => 'Wer beteiligt sich an dieser Nachrichtenseite?',
 	'wall-history-rail-contribs' => 'Beiträge',
 	'wall-history-rail-block' => 'sperren',
+	'wall-action-monobook-login' => 'Bitte melde dich an, um einen Beitrag in diesem Wiki zu verfassen.',
+	'wall-confirm-monobook-remove' => 'Bitte beschreibe kurz, warum du diesen Text löschen möchtest. 
+
+Der Originalbeitrag und deine Zusammenfassung werden weiterhin in der Versionsgeschichte angezeigt.',
+	'wall-confirm-monobook-restore' => 'Bitte beschreibe kurz, warum du diesen Text wiederherstellen möchtest.',
+	'wall-confirm-monobook-admin' => 'Bitte beschreibe kurz, warum du diesen Text löschen möchtest. 
+
+Der Originalbeitrag und deine Zusammenfassung werden weiterhin in der Versionsgeschichte angezeigt.',
+	'wall-confirm-monobook-lack-of-reason' => 'Bitte gib eine Zusammenfassung an, warum du diese Diskussion/Antwort entfernen möchtest.',
 );
 
 $messages['diq'] = array(
@@ -2291,6 +2300,14 @@ $messages['es'] = array(
 	'wall-history-who-involved-wall-title' => '¿Quiénes participaron?',
 	'wall-history-rail-contribs' => 'contribuciones',
 	'wall-history-rail-block' => 'bloquear',
+	'wall-confirm-monobook-remove' => 'Por favor, dinos por qué quieres retirar esto.
+
+El mensaje original y tu resumen seguirán apareciendo en el historial del wiki.',
+	'wall-confirm-monobook-restore' => 'Por favor, dinos por qué quieres restaurar esto',
+	'wall-confirm-monobook-admin' => 'Por favor, dinos por qué quieres borrar esto.
+
+El mensaje original y tu resumen seguirán apareciendo en el historial del wiki.',
+	'wall-confirm-monobook-lack-of-reason' => 'Por favor incluye un motivo para retirar este hilo o respuesta.',
 );
 
 $messages['eu'] = array(
@@ -2875,6 +2892,14 @@ $messages['fr'] = array(
 	'wall-history-who-involved-wall-title' => 'Qui a participé ?',
 	'wall-history-rail-contribs' => 'contributions',
 	'wall-history-rail-block' => 'bloquer',
+	'wall-confirm-monobook-remove' => 'Veuillez indiquer pourquoi vous souhaitez son retrait. 
+
+Le message original et votre résumé seront toujours visibles dans l’historique du wiki.',
+	'wall-confirm-monobook-restore' => 'Veuillez indiquer pourquoi vous voulez sa restauration',
+	'wall-confirm-monobook-admin' => 'Veuillez indiquer pourquoi vous voulez sa suppression.
+
+Le message original et votre résumé seront toujours visibles dans l’historique du wiki.',
+	'wall-confirm-monobook-lack-of-reason' => 'Veuillez indiquer un résumé pour la suppression de ce fil/cette réponse.',
 );
 
 $messages['fy'] = array(
@@ -4072,6 +4097,14 @@ $messages['it'] = array(
 	'wall-history-who-involved-wall-title' => 'Chi ha partecipato?',
 	'wall-history-rail-contribs' => 'contributi',
 	'wall-history-rail-block' => 'blocca',
+	'wall-confirm-monobook-remove' => 'Per favore, dicci perché vorresti procedere alla rimozione.
+
+Il messaggio originale e la tua motivazione continueranno ad apparire nella cronologia della wiki.',
+	'wall-confirm-monobook-restore' => 'Per favore, dicci perché vorresti procedere al ripristino',
+	'wall-confirm-monobook-admin' => 'Per favore, dicci perché vorresti procedere alla cancellazione.
+
+Il messaggio originale e la tua motivazione continueranno ad apparire nella cronologia della wiki.',
+	'wall-confirm-monobook-lack-of-reason' => 'Per favore specifica il motivo della rimozione di questa discussione/risposta.',
 );
 
 $messages['ja'] = array(
@@ -4330,6 +4363,14 @@ $messages['ja'] = array(
 	'wall-history-who-involved-wall-title' => 'このウォールに投稿した利用者',
 	'wall-history-rail-contribs' => '投稿記録',
 	'wall-history-rail-block' => 'ブロック',
+	'wall-confirm-monobook-remove' => '削除の理由を入力してください。
+
+削除されたデータや入力した理由はこのコミュニティの履歴に保存されます。',
+	'wall-confirm-monobook-restore' => '復元の理由を入力してください',
+	'wall-confirm-monobook-admin' => '削除の理由を入力してください。
+
+削除されたデータや入力した理由はこのコミュニティの履歴に保存されます。',
+	'wall-confirm-monobook-lack-of-reason' => 'このスレッド・返信を削除する理由を入力してください。',
 );
 
 $messages['ka'] = array(
@@ -4954,6 +4995,11 @@ $messages['lol'] = array(
 	'wall-history-who-involved-wall-title' => 'crwdns26728:0crwdne26728:0',
 	'wall-history-rail-contribs' => 'crwdns26738:0crwdne26738:0',
 	'wall-history-rail-block' => 'crwdns26739:0crwdne26739:0',
+	'wall-action-monobook-login' => 'crwdns57567:0crwdne57567:0',
+	'wall-confirm-monobook-remove' => 'crwdns26606:0crwdne26606:0',
+	'wall-confirm-monobook-restore' => 'crwdns26608:0crwdne26608:0',
+	'wall-confirm-monobook-admin' => 'crwdns26607:0crwdne26607:0',
+	'wall-confirm-monobook-lack-of-reason' => 'crwdns26611:0crwdne26611:0',
 );
 
 $messages['lrc'] = array(
@@ -6250,6 +6296,14 @@ $messages['pl'] = array(
 	'wall-history-who-involved-wall-title' => 'Kto edytował?',
 	'wall-history-rail-contribs' => 'edycje',
 	'wall-history-rail-block' => 'zablokuj',
+	'wall-confirm-monobook-remove' => 'Podaj powód usunięcia.
+
+Oryginał wiadomości i twój komentarz wciąż pozostaną w historii wiki.',
+	'wall-confirm-monobook-restore' => 'Podaj powód przywrócenia:',
+	'wall-confirm-monobook-admin' => 'Podaj powód kasacji.
+
+Oryginał wiadomości i twój komentarz wciąż pozostaną w historii wiki.',
+	'wall-confirm-monobook-lack-of-reason' => 'Podaj powód usunięcia wątku/odpowiedzi.',
 );
 
 $messages['ps'] = array(
@@ -6564,6 +6618,14 @@ $messages['pt'] = array(
 	'wall-history-who-involved-wall-title' => 'Quem está envolvido?',
 	'wall-history-rail-contribs' => 'contribs',
 	'wall-history-rail-block' => 'bloquear',
+	'wall-confirm-monobook-remove' => 'Informe-nos por que você gostaria de remover isto.
+
+O post original e seu sumário ainda aparecerão no histórico da wikia.',
+	'wall-confirm-monobook-restore' => 'Informe-nos por que você gostaria de restaurar isto',
+	'wall-confirm-monobook-admin' => 'Informe-nos por que você gostaria de excluir isto.
+
+O post original e seu sumário ainda aparecerão no histórico da wiki.',
+	'wall-confirm-monobook-lack-of-reason' => 'Por favor, forneça uma razão para remover este(a) tópico/resposta.',
 );
 
 $messages['qu'] = array(
@@ -6865,6 +6927,14 @@ $messages['ru'] = array(
 	'wall-history-who-involved-wall-title' => 'Участники этого обсуждения',
 	'wall-history-rail-contribs' => 'вклад',
 	'wall-history-rail-block' => 'заблокировать',
+	'wall-confirm-monobook-remove' => 'Пожалуйста, напишите, почему вы хотите это удалить.
+
+Оригинал сообщения и ваш комментарий останутся в истории вики.',
+	'wall-confirm-monobook-restore' => 'Пожалуйста, укажите, почему вы хотите это восстановить',
+	'wall-confirm-monobook-admin' => 'Пожалуйста, напишите, почему вы хотите это удалить.
+
+Оригинал сообщения и ваш комментарий останутся в истории вики.',
+	'wall-confirm-monobook-lack-of-reason' => 'Пожалуйста, поясните удаление этой темы/ответа.',
 );
 
 $messages['sco'] = array(
@@ -8462,6 +8532,14 @@ $messages['zh-hans'] = array(
 	'wall-history-who-involved-wall-title' => '涉及谁？',
 	'wall-history-rail-contribs' => '贡献',
 	'wall-history-rail-block' => '封禁',
+	'wall-confirm-monobook-remove' => '请告诉我们为什么你要移除它。
+
+原帖子和你的摘要将出现在wiki的历史记录中。',
+	'wall-confirm-monobook-restore' => '请告诉我们为什么你要恢复它',
+	'wall-confirm-monobook-admin' => '请告诉我们为什么你要删除它。
+
+原信息和你的摘要将出现在wiki的历史记录中。',
+	'wall-confirm-monobook-lack-of-reason' => '请输入删除该 话题/回复 的原因。',
 );
 
 $messages['zh-hant'] = array(
@@ -8720,5 +8798,13 @@ $messages['zh-hant'] = array(
 	'wall-history-who-involved-wall-title' => '有誰參與？',
 	'wall-history-rail-contribs' => '貢獻',
 	'wall-history-rail-block' => '封禁',
+	'wall-confirm-monobook-remove' => '請告訴我們你為什麼想要移除它。
+
+原來發布的訊息及你的編輯摘要仍將出現在維基的歷史頁面。',
+	'wall-confirm-monobook-restore' => '請告訴我們你為什麼想要還原這個訊息',
+	'wall-confirm-monobook-admin' => '請告訴我們你為什麼想要刪除它。
+
+原來發布訊息和你的編輯摘要仍將出現在維基的歷史頁面。',
+	'wall-confirm-monobook-lack-of-reason' => '請提供刪除此 話題/回覆 的原因。',
 );
 
