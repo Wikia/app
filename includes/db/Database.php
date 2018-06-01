@@ -918,7 +918,7 @@ abstract class DatabaseBase implements DatabaseType {
 		}
 
 		$this->mLastQuery = $sql;
-		$is_writeable = self::isWriteQuery( $sql );
+		$is_writeable = static::isWriteQuery( $sql );
 		$isTemporaryTableOperation = $this->registerTempTableOperation( $sql );
 
 		if ( !$this->mDoneWrites && $is_writeable ) {
@@ -3884,7 +3884,7 @@ abstract class DatabaseBase implements DatabaseType {
 			$this->getWikiaLogger()->defaultLogger( 'mediawiki-sql' )->info( $sql, $context );
 		}
 
-		if ( self::isWriteQuery($sql) &&
+		if ( static::isWriteQuery($sql) &&
 			(
 				strpos( $sql, '`revision`' ) !== false
 				|| strpos( $sql, '`page`' ) !== false
