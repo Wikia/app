@@ -71,7 +71,7 @@ define('ext.wikia.adEngine.adContext', [
 
 	function updateAdContextRecoveryServices(context, noExternals) {
 		var isRecoveryServiceAlreadyEnabled = false,
-			serviceCanBeEnabled = !noExternals && context.opts.showAds !== false; // showAds is undefined by default
+			serviceCanBeEnabled = !noExternals && context.opts.showAds !== false && !areDelayServicesBlocked(); // showAds is undefined by default
 
 		// InstartLogic recovery
 		context.opts.instartLogicRecovery = serviceCanBeEnabled &&
@@ -99,12 +99,16 @@ define('ext.wikia.adEngine.adContext', [
 		context.rabbits.ctpDesktop = isProperGeo('wgAdDriverCTPDesktopRabbitCountries');
 	}
 
+	function areDelayServicesBlocked() {
+		return context.targeting.skin === 'mercury' && isProperGeo('wgAdDriverBlockDelayServicesCountries');
+	}
+
 	function updateAdContextBidders(context) {
 		var hasFeaturedVideo = context.targeting.hasFeaturedVideo;
 
-		context.bidders.prebid = isProperGeo('wgAdDriverPrebidBidderCountries');
-		context.bidders.a9 = isProperGeo('wgAdDriverA9BidderCountries');
-		context.bidders.a9Video = isProperGeo('wgAdDriverA9VideoBidderCountries');
+		context.bidders.prebid = !areDelayServicesBlocked() && isProperGeo('wgAdDriverPrebidBidderCountries');
+		context.bidders.a9 = !areDelayServicesBlocked() && isProperGeo('wgAdDriverA9BidderCountries');
+		context.bidders.a9Video = !areDelayServicesBlocked() && isProperGeo('wgAdDriverA9VideoBidderCountries');
 		context.bidders.rubiconDisplay = isProperGeo('wgAdDriverRubiconDisplayPrebidCountries');
 		context.bidders.rubicon = isProperGeo('wgAdDriverRubiconPrebidCountries');
 		context.bidders.rubiconInFV = isProperGeo('wgAdDriverRubiconVideoInFeaturedVideoCountries') && hasFeaturedVideo;
@@ -223,7 +227,7 @@ define('ext.wikia.adEngine.adContext', [
 		context.opts.megaAdUnitBuilderEnabled = context.targeting.hasFeaturedVideo &&
 			geo.isProperGeo(instantGlobals.wgAdDriverMegaAdUnitBuilderForFVCountries);
 
-		context.opts.isFVDelayEnabled = geo.isProperGeo(instantGlobals.wgAdDriverFVDelayCountries);
+		context.opts.isFVDelayEnabled = !areDelayServicesBlocked() && geo.isProperGeo(instantGlobals.wgAdDriverFVDelayCountries);
 		context.opts.isFVUapKeyValueEnabled = geo.isProperGeo(instantGlobals.wgAdDriverFVAsUapKeyValueCountries);
 		context.opts.isFVMidrollEnabled = geo.isProperGeo(instantGlobals.wgAdDriverFVMidrollCountries);
 		context.opts.isFVPostrollEnabled = geo.isProperGeo(instantGlobals.wgAdDriverFVPostrollCountries);

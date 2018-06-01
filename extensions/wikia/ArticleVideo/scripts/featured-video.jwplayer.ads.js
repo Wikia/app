@@ -42,7 +42,7 @@ define('wikia.articleVideo.featuredVideo.ads', [
 	}
 
 	function getPrebidParams() {
-		if (prebid) {
+		if (prebid && adContext.get('bidders.prebid')) {
 			return prebid.get().getAdserverTargetingForAdUnitCode(featuredVideoSlotName);
 		}
 

@@ -67,7 +67,6 @@ class ConfigureWikiFactory extends Task {
 			'wgUploadDirectory' => $imagesDir,
 			'wgLocalInterwiki' => $siteName,
 			'wgLanguageCode' => $language,
-			'wgServer' => rtrim( $url, "/" ),
 			'wgEnableSectionEdit' => true,
 			'wgOasisLoadCommonCSS' => true,
 			'wgEnablePortableInfoboxEuropaTheme' => true

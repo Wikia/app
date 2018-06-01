@@ -185,8 +185,8 @@ define('ext.wikia.adEngine.template.porvata', [
 
 		if (prebid && params.hbAdId) {
 			params.bid = prebid.getBidByAdId(params.hbAdId);
-			params.vastResponse = params.bid.vastContent || null;
-			params.vastUrl = params.bid.vastUrl;
+			params.vastResponse = params.bid && params.bid.vastContent ? params.bid.vastContent : null;
+			params.vastUrl = params.bid && params.bid.vastUrl ? params.bid.vastUrl : '';
 		}
 
 		if (!isVideoAutoplaySupported()) {
