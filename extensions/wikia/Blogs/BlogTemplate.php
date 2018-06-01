@@ -1238,7 +1238,7 @@ class BlogTemplateClass {
 				$sText = $oRevision->getText();
 				$id = Parser::extractTagsAndParams( array( BLOGTPL_TAG ), $oRevision->getText(), $matches, md5( BLOGTPL_TAG . $articleId . $namespace . $page0 ) );
 				if ( !empty( $matches ) ) {
-					list ( $sKey, $aValues ) = each ( $matches );
+					$sKey = key( $matches );
 					list ( , $input, $params, ) = $matches[$sKey];
 					$input = trim( $input );
 					if ( !empty( $input ) && ( !empty( $params ) ) ) {
