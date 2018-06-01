@@ -145,7 +145,7 @@ class SitemapXmlController extends WikiaController {
 		$out = '<?xml version="1.0" encoding="UTF-8"?>' . PHP_EOL;
 		$out .= '<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' . PHP_EOL;
 
-		$baseUrl = $this->wg->Server;
+		$baseUrl = $this->wg->Server . $this->wg->ScriptPath;
 
 		foreach ( self::SEPARATE_SITEMAPS as $ns ) {
 			$nsPages = $this->model->getPageNumber( $ns, self::URLS_PER_PAGE );

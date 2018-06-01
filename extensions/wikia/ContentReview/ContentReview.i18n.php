@@ -44,7 +44,6 @@ $messages['en'] = array(
 	'content-review-rejection-explanation-title' => 'Submitted script change $1 rejected',
 	'content-review-rejection-explanation' => '==$1==
 The recently submitted change to this JavaScript page (revision [$2 $3]) was rejected by the FANDOM review process. Please make sure you meet the [[Help:JavaScript review process|Custom JavaScript guidelines]]. --~~~~',
-	'content-review-status-link-text' => 'Review status',
 	'content-review-special-js-pages-title' => 'JavaScript pages',
 	'content-review-special-js-description' => 'This page lists the current [[Help:JavaScript review process|review status]] of MediaWiki namespace scripts on this community.',
 	'content-review-special-js-importjs-description' => 'Note: you can add and remove local and dev.wikia.com script imports without the review process via [[MediaWiki:ImportJS]].',
@@ -105,7 +104,6 @@ $messages['qqq'] = array(
 	'content-review-status-escalated' => 'The name of the status of a revision that has been escalated.',
 	'content-review-rejection-explanation-title' => 'A title of a section with a rejection explanation. Became a separate message to allow extraction to a URL anchor of a Why? link.',
 	'content-review-rejection-explanation' => 'Standard explanation response when script changes were rejected. This text is a prefill to script talk page when reviewer is redirected there to provide feedback on rejection. $1 is the title message, $2 is a URL to a view of a revision and $3 is the number of a revision that becomes a text of the link.',
-	'content-review-status-link-text' => 'Text on entrypoint link to show content review module with review status info and submit for review buttons',
 	'content-review-special-js-pages-title' => 'Title of special page which contains all JavaScript pages on given wiki',
 	'content-review-special-js-description' => 'Text with description of this special page that contains lists with all scripts in MediaWiki namespace on that community with their review statuses and linking to help page.',
 	'content-review-special-js-importjs-description' => 'Information that user can manage script imports from community or dev.wikia.com by editing  MediaWiki:ImportJS page.',
@@ -151,7 +149,6 @@ $messages['de'] = array(
 	'content-review-status-autoapproved' => 'Automatisch zugelassen',
 	'content-review-rejection-explanation' => '==$1==
 Die kürzlich eingereichte Änderung dieser JavaScript-Seite (Überprüfung [$2 $3]) wurde im FANDOM-Überprüfungsprozess abgelehnt. Stelle bitte sicher, dass du die [[w:c:de:Hilfe:JavaScript-Überprüfungsprozess|Richtlinien für angepasstes JavaScript]] erfüllst.--~~~~',
-	'content-review-status-link-text' => 'Stand der Überprüfung',
 	'content-review-rejection-explanation-title' => 'Die eingereichte Skript-Änderung $1 wurde abgelehnt',
 	'content-review-special-js-pages-title' => 'JavaScript-Seiten',
 	'content-review-module-header-pagename' => 'Seitenname',
@@ -179,6 +176,7 @@ BeispielBenutzername | Praktikant, Newbie
 BeispielBenutzername2 | Guru
 ----
 ',
+	'content-review-status-link-text' => 'Stand der Überprüfung',
 );
 
 $messages['es'] = array(
@@ -215,7 +213,6 @@ $messages['es'] = array(
 	'content-review-status-autoapproved' => 'Auto-aprobado',
 	'content-review-rejection-explanation' => '== $1== 
 El cambio recientemente presentado a esta página de JavaScript (revisión [$2 $3]) fue rechazado por el proceso de revisión de FANDOM. Por favor, asegúrate de que cumple con las [[w:c:comunidad:Ayuda:Proceso de revisión de JavaScript|directrices de personalización de JavaScript]]. --~~~~',
-	'content-review-status-link-text' => 'Estado de la revisión',
 	'content-review-rejection-explanation-title' => 'El cambio de script $1 presentado ha sido rechazado',
 	'content-review-special-js-pages-title' => 'Páginas de JavaScript',
 	'content-review-module-header-pagename' => 'Nombre de la página',
@@ -244,6 +241,7 @@ Utiliza esta página para personalizar los cargos que aparecen en los perfiles d
 ----
  
 ',
+	'content-review-status-link-text' => 'Estado de la revisión',
 );
 
 $messages['fr'] = array(
@@ -280,7 +278,6 @@ $messages['fr'] = array(
 	'content-review-status-autoapproved' => 'Approuvée automatiquement',
 	'content-review-rejection-explanation' => '==$1==
 Le processus de vérification FANDOM a rejeté la modification soumise pour cette page JavaScript (révision [$2 $3]) . Assurez-vous de respecter les [[w:c:fr:Aide:Processus_de_vérification_du_JavaScript|instructions de personnalisation du JavaScript]]. --~~~~',
-	'content-review-status-link-text' => 'État de la vérification',
 	'content-review-rejection-explanation-title' => 'Modification $1 soumise pour le script rejetée',
 	'content-review-special-js-pages-title' => 'Pages JavaScript',
 	'content-review-module-header-pagename' => 'Nom de la page',
@@ -308,6 +305,7 @@ Exemples :
  Nomutilisateur2 | Gourou
 ----
 ",
+	'content-review-status-link-text' => 'État de la vérification',
 );
 
 $messages['it'] = array(
@@ -344,7 +342,6 @@ $messages['it'] = array(
 	'content-review-status-autoapproved' => 'Auto-approvata',
 	'content-review-rejection-explanation' => '== $1 ==
 La modifica inviata di recente per questa pagina JavaScript (revisione [$2 $3]) è stata respinta dal processo di revisione di FANDOM. Assicurati di seguire le [[w:it:Aiuto:Processo di revisione del JavaScript|linee guida del JavaScript personalizzato]]. --~~~~',
-	'content-review-status-link-text' => 'Stato della revisione',
 	'content-review-rejection-explanation-title' => 'La modifica $1 inviata per lo script è stata respinta',
 	'content-review-special-js-pages-title' => 'Pagine JavaScript',
 	'content-review-module-header-pagename' => 'Nome della pagina',
@@ -372,6 +369,7 @@ Esempi:
  ExampleUsername2 | Guru
 ----
 ',
+	'content-review-status-link-text' => 'Stato della revisione',
 );
 
 $messages['ja'] = array(
@@ -408,7 +406,6 @@ $messages['ja'] = array(
 	'content-review-status-autoapproved' => '自動承認済み',
 	'content-review-rejection-explanation' => '==$1==
 最近申請されたJavaScriptページへの変更（版[$2 $3]）は、FANDOMの審査プロセスにおいて却下されました。[[ヘルプ:JavaScriptの審査プロセス|カスタムJavaScriptのガイドライン]]を満たしていることをご確認ください。--~~~~',
-	'content-review-status-link-text' => '審査状況',
 	'content-review-rejection-explanation-title' => '申請したスクリプトの変更「$1」が拒否されました',
 	'content-review-special-js-pages-title' => 'JavaScriptページ',
 	'content-review-module-header-pagename' => 'ページ名',
@@ -436,6 +433,7 @@ MediaWikiの名前空間プレフィックスは名前に含めないでくだ�
  ユーザー名2 | Guru
 ----
 ',
+	'content-review-status-link-text' => '審査状況',
 );
 
 $messages['nl'] = array(
@@ -472,7 +470,6 @@ $messages['nl'] = array(
 	'content-review-status-autoapproved' => 'Auto-approved',
 	'content-review-rejection-explanation' => '==$1==
 The recently submitted change to this JavaScript page (revision [$2 $3]) was rejected by the FANDOM review process. Please make sure you meet the [[Help:JavaScript review process|Custom JavaScript guidelines]]. --~~~~',
-	'content-review-status-link-text' => 'Review status',
 	'content-review-rejection-explanation-title' => 'Submitted script change $1 rejected',
 	'content-review-special-js-pages-title' => 'JavaScript pages',
 	'content-review-module-header-pagename' => 'Page name',
@@ -536,7 +533,6 @@ $messages['pl'] = array(
 	'content-review-status-autoapproved' => 'Zatwierdzona automatycznie',
 	'content-review-rejection-explanation' => '== $1 ==
 Niedawno przesłana edycja tej strony JavaScript (wersja [$2 $3]) została odrzucona przez FANDOM. Proszę upewnij się, że spełniasz [[w:pl:Pomoc:Proces przeglądu kodu JavaScript|kryteria własnego kodu JavaScript]]. --~~~~',
-	'content-review-status-link-text' => 'Status przeglądu',
 	'content-review-rejection-explanation-title' => 'Przesłana modyfikacja skryptu $1 została odrzucona',
 	'content-review-special-js-pages-title' => 'Strony JavaScript',
 	'content-review-module-header-pagename' => 'Nazwa strony',
@@ -563,6 +559,7 @@ Przykłady:
  PrzykładowyUżytkownik2 | Guru
 ----
 ',
+	'content-review-status-link-text' => 'Status przeglądu',
 );
 
 $messages['pt'] = array(
@@ -599,7 +596,6 @@ $messages['pt'] = array(
 	'content-review-status-autoapproved' => 'Auto-aprovada',
 	'content-review-rejection-explanation' => '==$1==
 A recente alteração enviada para esta página JavaScript (revisão [$2 $3]) foi rejeitada pelo processo de revisão do FANDOM. Por favor, certifique-se de estar seguindo [[w:c:pt.community:Ajuda:Processo_de_revisão_de_JavaScript|as diretrizes personalizadas JavaScript]]. --˜˜˜˜ ',
-	'content-review-status-link-text' => 'Status da revisão',
 	'content-review-rejection-explanation-title' => 'A alteração do script $1 enviado foi rejeitada',
 	'content-review-special-js-pages-title' => 'Páginas JavaScript',
 	'content-review-module-header-pagename' => 'Título da página',
@@ -626,6 +622,7 @@ Use esta página para personalizar as etiquetas que aparecem nos perfis de usuá
  ExampleUsername | Estagiário, Novato
  ExampleUsername2 | Guru
 ',
+	'content-review-status-link-text' => 'Status da revisão',
 );
 
 $messages['ru'] = array(
@@ -662,7 +659,6 @@ $messages['ru'] = array(
 	'content-review-status-autoapproved' => 'Одобрено автоматически',
 	'content-review-rejection-explanation' => '==$1==
 Отправленные недавно изменения этой страницы (версия [$2 $3]) были отклонены после проверки кода. Проверьте, соответствует ли ваш код [[w:c:ru.community:Справка:Проверка JavaScript|политике ФЭНДОМА в отношении пользовательского JavaScript]]. --~~~~',
-	'content-review-status-link-text' => 'Статус проверки',
 	'content-review-rejection-explanation-title' => 'Отправленная версия $1 была отклонена',
 	'content-review-special-js-pages-title' => 'Страницы JavaScript',
 	'content-review-module-header-pagename' => 'Название страницы',
@@ -689,6 +685,7 @@ $messages['ru'] = array(
 *ПримерИмяучастника | Ученик, Новичок
 *ПримерИмяучастника | Специалист
 ',
+	'content-review-status-link-text' => 'Статус проверки',
 );
 
 $messages['zh-hans'] = array(
@@ -725,7 +722,6 @@ $messages['zh-hans'] = array(
 	'content-review-status-autoapproved' => '自动批准',
 	'content-review-rejection-explanation' => '==$1==
 JavaScript页面最近提交的变更请求(版本[$2 $3]) 未通过FANDOM审核。请确保您的变更符合[[Help:JavaScript review process|JavaScript审核流程]]。--~~~~',
-	'content-review-status-link-text' => '审核状态',
 	'content-review-rejection-explanation-title' => '提交的脚本更改$1被拒绝',
 	'content-review-special-js-pages-title' => 'JavaScript页面',
 	'content-review-module-header-pagename' => '页面名称',
@@ -751,6 +747,7 @@ JavaScript页面最近提交的变更请求(版本[$2 $3]) 未通过FANDOM审核
 用户名例子 |见习，新手 
 用户名例子2 | 大师
 ----',
+	'content-review-status-link-text' => '审核状态',
 );
 
 $messages['zh-hant'] = array(
@@ -787,7 +784,6 @@ $messages['zh-hant'] = array(
 	'content-review-status-autoapproved' => '已自動批准',
 	'content-review-rejection-explanation' => '==$1==
 JavaScript頁最近提交的變更請求(版本[$2 $3]) 未通過FANDOM的審核。 請確保您的變更符合[[Help:JavaScript review process|JavaScript審核規則]]。 --~~~~',
-	'content-review-status-link-text' => '審核狀態',
 	'content-review-rejection-explanation-title' => '提交的腳本更改$1未能通過',
 	'content-review-special-js-pages-title' => 'JavaScript頁面',
 	'content-review-module-header-pagename' => '頁面名稱',
@@ -813,5 +809,6 @@ JavaScript頁最近提交的變更請求(版本[$2 $3]) 未通過FANDOM的審核
 使用者名稱例子 |見習，新手
 使用者名稱例子2 | 大師
 ----',
+	'content-review-status-link-text' => '審核狀態',
 );
 

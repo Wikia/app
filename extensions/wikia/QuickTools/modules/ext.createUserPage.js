@@ -78,22 +78,8 @@
 		},
 
 		showResult: function (result, message) {
-			if (mw.config.get('skin') === 'monobook') {
-				mw.util.$content.prepend(
-					$('<div>').addClass(result === 'error' ? 'errorbox' : 'successbox').append(
-						$('<p>').append(
-							$('<img class="sprite">')
-							.attr('src', mw.config.get('wgBlankImgUrl'))
-							.addClass(result),
-							mw.message(message).escaped()
-						)
-					),
-					'<div class="visualClear"></div>'
-				);
-			} else {
-				var resultClass = (result === 'error' ? 'error' : 'confirm');
-				new window.BannerNotification(mw.message(message).escaped(), resultClass).show();
-			}
+			var resultClass = (result === 'error' ? 'error' : 'confirm');
+			new window.BannerNotification(mw.message(message).escaped(), resultClass).show();
 		}
 	};
 

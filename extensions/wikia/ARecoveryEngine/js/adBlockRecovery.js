@@ -33,10 +33,7 @@ define('ext.wikia.aRecoveryEngine.adBlockRecovery', [
 	}
 
 	function isEnabled() {
-		var context = adContext.getContext(),
-			enabled = context.opts.pageFairRecovery ||
-				context.opts.instartLogicRecovery;
-
+		var enabled = adContext.get('opts.pageFairRecovery') || adContext.get('opts.instartLogicRecovery');
 		log(['isEnabled', enabled], log.levels.debug, logGroup);
 		return enabled;
 	}

@@ -15,7 +15,6 @@ require([
 
 		Array.prototype.slice.call(parserTags).forEach(function (each) {
 			// We check this to avoid errors in places where we don't load JW
-			// e.g. Monobook
 			if (window.wikiaJWPlayer) {
 				setupPlayer(each);
 			}

@@ -41,9 +41,7 @@ class ProtectSiteJS {
 		$allowedJsSubpages = [
 			'chat',
 			'common',
-			'monobook',
 			'wikia',
-			'uncyclopedia',
 		];
 
 		if ( $wgCityId == Wikia::COMMUNITY_WIKI_ID ) {

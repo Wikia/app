@@ -673,7 +673,6 @@ class DataMartService {
 
 	protected static function getDB() {
 		$app = F::app();
-		wfGetLB( $app->wg->DWStatsDB )->allowLagged( true );
 		$db = wfGetDB( DB_SLAVE, array(), $app->wg->DWStatsDB );
 		$db->clearFlag( DBO_TRX );
 		return $db;

@@ -209,11 +209,9 @@
 		$header = $('#globalNavigation');
 		$container = getContainer();
 
-		if (window.skin !== 'monobook') {
-			require(['wikia.onScroll'], function (onScroll) {
-				onScroll.bind(handleScrolling);
-			});
-		}
+		require(['wikia.onScroll'], function (onScroll) {
+			onScroll.bind(handleScrolling);
+		});
 
 		updatePlaceholderHeight();
 
@@ -233,9 +231,7 @@
 	}
 
 	function updatePlaceholderHeight() {
-		if (window.skin !== 'monobook') {
-			$container.height($container.find(wrapperSelector).height());
-		}
+		$container.height($container.find(wrapperSelector).height());
 	}
 
 	/**
@@ -284,8 +280,6 @@
 	function getContainer() {
 		if ($container && $container.length) {
 			return $container;
-		} else if (window.skin === 'monobook') {
-			$container = $('#content');
 		} else {
 			$container = $('.banner-notifications-placeholder');
 		}

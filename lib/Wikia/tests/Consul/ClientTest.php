@@ -10,6 +10,12 @@ use Wikia\Consul\Client;
  */
 class ConsulClientTest extends WikiaBaseTest {
 
+	function testGetConsulBaseUrlForDC() {
+		$this->assertEquals( 'http://consul.service.sjc.consul:8500', Client::getConsulBaseUrlForDC( 'sjc' ) );
+		$this->assertEquals( 'http://consul.service.sjc-dev.consul:8500', Client::getConsulBaseUrlForDC( 'sjc-dev' ) );
+		$this->assertEquals( 'http://consul.service.res.consul:8500', Client::getConsulBaseUrlForDC( 'res' ) );
+	}
+
 	function testIsConsulAddress() {
 		$this->assertTrue( Client::isConsulAddress( 'slave.db-smw.service.consul' ) );
 		$this->assertTrue( Client::isConsulAddress( 'master.db-a.service.consul' ) );

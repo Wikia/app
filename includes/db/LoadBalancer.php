@@ -15,10 +15,10 @@
 class LoadBalancer {
 	private $mServers, $mConns, $mLoads, $mGroupLoads;
 	private $mErrorConnection;
-	private $mReadIndex, $mAllowLagged;
+	private $mReadIndex;
 	private $mWaitForPos, $mWaitTimeout;
 	private $mLaggedSlaveMode, $mLastError = 'Unknown error';
-	private $mParentInfo, $mLagTimes;
+	private $mParentInfo;
 	private $mLoadMonitorClass, $mLoadMonitor;
 
 	/** @var string|bool Reason the LB is read-only or false if not */
@@ -53,7 +53,6 @@ class LoadBalancer {
 		$this->mWaitForPos = false;
 		$this->mLaggedSlaveMode = false;
 		$this->mErrorConnection = false;
-		$this->mAllowLagged = false;
 
 		if ( isset( $params['readOnlyReason'] ) && is_string( $params['readOnlyReason'] ) ) {
 			$this->readOnlyReason = $params['readOnlyReason'];
@@ -110,11 +109,17 @@ class LoadBalancer {
 	 * an element and return the appropriate key
 	 *
 	 * @param $weights array
-	 *
 	 * @return int
+	 * @throws WikiaException
 	 */
-	function pickRandom( $weights ) {
-		if ( !is_array( $weights ) || count( $weights ) == 0 ) {
+	private function pickRandom( array $weights ) {
+		// PLATFORM-1489: only check slave lags when we're not using consul (it performs its own healtchecks)
+		if ( !$this->hasConsulConfig() ) {
+			// SUS-4805
+			throw new WikiaException( __METHOD__ . ' - we only support Consul addresses in DB config' );
+		}
+
+		if ( count( $weights ) == 0 ) {
 			return false;
 		}
 
@@ -130,6 +135,7 @@ class LoadBalancer {
 		$rand = mt_rand( 0, $max ) / $max * $sum;
 
 		$sum = 0;
+		$i = 0;
 		foreach ( $weights as $i => $w ) {
 			$sum += $w;
 			if ( $sum >= $rand ) {
@@ -140,46 +146,14 @@ class LoadBalancer {
 	}
 
 	/**
+	 * Wikia change - we use a single slave Consul address that is resolved by DNS. No need to
+	 * check lags and pick a random entry.
+	 *
 	 * @param $loads array
-	 * @param $wiki bool
 	 * @return bool|int|string
+	 * @throws WikiaException
 	 */
-	function getRandomNonLagged( $loads, $wiki = false ) {
-		// PLATFORM-1489: only check slave lags when we're not using consul (it performs its own healtchecks)
-		if ( !$this->hasConsulConfig() ) {
-			# Unset excessively lagged servers
-			$lags = $this->getLagTimes($wiki);
-			foreach ($lags as $i => $lag) {
-				if ($i != 0) {
-					if ($lag === false) {
-						wfDebugLog('replication', "Server #$i ({$this->mServers[$i]['host']}) is not replicating\n");
-						unset($loads[$i]);
-					} elseif (isset($this->mServers[$i]['max lag']) && $lag > $this->mServers[$i]['max lag']) {
-						wfDebugLog('replication', "Server #$i ({$this->mServers[$i]['host']}) is excessively lagged ($lag seconds)\n");
-						unset($loads[$i]);
-					}
-				}
-			}
-		}
-
-		# Find out if all the slaves with non-zero load are lagged
-		$sum = 0;
-		foreach ( $loads as $load ) {
-			$sum += $load;
-		}
-		if ( $sum == 0 ) {
-			# No appropriate DB servers except maybe the master and some slaves with zero load
-			# Do NOT use the master
-			# Instead, this function will return false, triggering read-only mode,
-			# and a lagged slave will be used instead.
-			return false;
-		}
-
-		if ( count( $loads ) == 0 ) {
-			return false;
-		}
-
-		#wfDebugLog( 'connect', var_export( $loads, true ) );
+	private function getRandomNonLagged( array $loads ) {
 
 		# Return a random representative of the remainder
 		return $this->pickRandom( $loads );
@@ -194,6 +168,7 @@ class LoadBalancer {
 	 * @param $group bool
 	 * @param $wiki bool
 	 * @return bool|int|string
+	 * @throws MWException
 	 */
 	function getReaderIndex( $group = false, $wiki = false ) {
 		global $wgReadOnly, $wgDBClusterTimeout, $wgDBAvgStatusPoll, $wgDBtype;
@@ -239,8 +214,6 @@ class LoadBalancer {
 		# Scale the configured load ratios according to the dynamic load (if the load monitor supports it)
 		$this->getLoadMonitor()->scaleLoads( $nonErrorLoads, $group, $wiki );
 
-		$laggedSlaveMode = false;
-
 		# First try quickly looking through the available servers for a server that
 		# meets our criteria
 		do {
@@ -248,38 +221,28 @@ class LoadBalancer {
 			$overloadedServers = 0;
 			$currentLoads = $nonErrorLoads;
 			while ( count( $currentLoads ) ) {
-				if ( $wgReadOnly || $this->mAllowLagged || $laggedSlaveMode ) {
-					$i = $this->pickRandom( $currentLoads );
-				} else {
-					$i = $this->getRandomNonLagged( $currentLoads, $wiki );
-					if ( $i === false && count( $currentLoads ) != 0 )  {
-						# All slaves lagged. Switch to read-only mode
-						wfDebugLog( 'replication', "All slaves lagged. Switch to read-only mode\n" );
-						$wgReadOnly = 'The database has been automatically locked ' .
-							'while the slave database servers catch up to the master';
-						$i = $this->pickRandom( $currentLoads );
-						$laggedSlaveMode = true;
-
-						// Wikia change - begin
-						global $wgDBname, $wgDBcluster;
-
-						Wikia\Logger\WikiaLogger::instance()->error( 'All slaves lagged', [
-							'exception' => new Exception(),
-							'group'     => $group,
-							'wiki'      => $wiki ?: $wgDBname, # $wiki = false means a local DB
-							'cluster'   => $wgDBcluster,
-						] );
-						// Wikia change - end
-					}
-				}
+				/**
+				 * Wikia change - we use a single slave Consul address that is resolved by DNS. No need to
+				 * check lags and pick a random entry, just use weights for balancing between
+				 * master and slave nodes.
+				 *
+				 * @see SUS-4805
+				 */
+				$i = $this->pickRandom( $currentLoads );
 
 				if ( $i === false ) {
-					# pickRandom() returned false
-					# This is permanent and means the configuration or the load monitor
-					# wants us to return false.
-					wfDebugLog( 'connect', __METHOD__.": pickRandom() returned false\n" );
-					wfProfileOut( __METHOD__ );
-					return false;
+					// Wikia change - begin
+					global $wgDBname, $wgDBcluster;
+
+					Wikia\Logger\WikiaLogger::instance()->error( 'Failed to pick a slave DB node from LoadBalancer config ', [
+						'exception' => new Exception(),
+						'group' => $group,
+						'wiki' => $wiki ?: $wgDBname, # $wiki = false means a local DB
+						'cluster' => $wgDBcluster,
+					] );
+
+					throw new MWException( "Failed to pick a slave DB node from LoadBalancer config for " . $wiki ?: $wgDBname );
+					// Wikia change - end
 				}
 
 				wfDebugLog( 'connect', __METHOD__.": Using reader #$i: {$this->mServers[$i]['host']}...\n" );
@@ -1003,18 +966,6 @@ class LoadBalancer {
 	}
 
 	/**
-	 * Disables/enables lag checks
-	 * @param $mode null
-	 * @return bool
-	 */
-	function allowLagged( $mode = null ) {
-		if ( $mode === null) {
-			return $this->mAllowLagged;
-		}
-		$this->mAllowLagged = $mode;
-	}
-
-	/**
 	 * @return bool
 	 */
 	function pingAll() {
@@ -1049,67 +1000,6 @@ class LoadBalancer {
 	}
 
 	/**
-	 * Get the hostname and lag time of the most-lagged slave.
-	 * This is useful for maintenance scripts that need to throttle their updates.
-	 * May attempt to open connections to slaves on the default DB. If there is
-	 * no lag, the maximum lag will be reported as -1.
-	 *
-	 * @param $wiki string Wiki ID, or false for the default database
-	 *
-	 * @return array ( host, max lag, index of max lagged host )
-	 */
-	function getMaxLag( $wiki = false ) {
-		$maxLag = -1;
-		$host = '';
-		$maxIndex = 0;
-		if ( $this->getServerCount() > 1 ) { // no replication = no lag
-			foreach ( $this->mServers as $i => $conn ) {
-				$conn = false;
-				if ( $wiki === false ) {
-					$conn = $this->getAnyOpenConnection( $i );
-				}
-				if ( !$conn ) {
-					$conn = $this->openConnection( $i, $wiki );
-				}
-				if ( !$conn ) {
-					continue;
-				}
-				$lag = $conn->getLag();
-				if ( $lag > $maxLag ) {
-					$maxLag = $lag;
-					$host = $this->mServers[$i]['host'];
-					$maxIndex = $i;
-				}
-			}
-		}
-		return array( $host, $maxLag, $maxIndex );
-	}
-
-	/**
-	 * Get lag time for each server
-	 * Results are cached for a short time in memcached, and indefinitely in the process cache
-	 *
-	 * @param $wiki
-	 *
-	 * @return array
-	 */
-	function getLagTimes( $wiki = false ) {
-		# Try process cache
-		if ( isset( $this->mLagTimes ) ) {
-			return $this->mLagTimes;
-		}
-		if ( $this->getServerCount() == 1 ) {
-			# No replication
-			$this->mLagTimes = array( 0 => 0 );
-		} else {
-			# Send the request to the load monitor
-			$this->mLagTimes = $this->getLoadMonitor()->getLagTimes(
-				array_keys( $this->mServers ), $wiki );
-		}
-		return $this->mLagTimes;
-	}
-
-	/**
 	 * Get the lag in seconds for a given connection, or zero if this load
 	 * balancer does not have replication enabled.
 	 *
@@ -1130,13 +1020,6 @@ class LoadBalancer {
 		} else {
 			return $conn->getLag();
 		}
-	}
-
-	/**
-	 * Clear the cache for getLagTimes
-	 */
-	function clearLagTimeCache() {
-		$this->mLagTimes = null;
 	}
 
 	/**

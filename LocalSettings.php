@@ -280,8 +280,9 @@ try {
     $result = $oWiki->execute();
 
     if ( !$result ) {
-        // shouldn't we throw an exception here?
-        exit( 1 );
+        // wiki does not exist, is a redirect etc. — WikiFactoryLoader has already handled the case internally
+		// we can stop processing the request here
+        exit( 0 );
     }
 
     $wgCityId = $result;

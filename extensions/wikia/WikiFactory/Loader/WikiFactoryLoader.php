@@ -183,7 +183,10 @@ class WikiFactoryLoader {
 	 *
 	 * @author Krzysztof Krzyżaniak <eloy@wikia-inc.com>
 	 *
-	 * @return integer: wikia id or null if wikia is not handled by WikiFactory
+	 * @return int|bool wiki ID if wiki was found, false if wiki was not found, is a redirect etc.
+	 * If false is returned, the caller must stop processing the request and exit immediately,
+	 * as WikiFactoryLoader will have already taken the required steps to serve the request
+	 * (e.g. setting 301 redirect status code).
 	 */
 	public function execute() {
 		global $wgCityId, $wgDevelEnvironment,
