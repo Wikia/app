@@ -8,7 +8,7 @@
 
 class ForumNotificationPlugin {
 	/**
-	 * @param WallNotificationsController $nc
+	 * @param DesignSystemGlobalNavigationWallNotificationsService $nc
 	 * @param $msg
 	 * @param $isMain
 	 * @param $data

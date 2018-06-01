@@ -26,7 +26,7 @@ class WallBaseController extends WikiaService {
 		$this->response->addAsset( 'extensions/wikia/Wall/css/MessageTopic.scss' );    // need to load on thread only
 
 		// Load MiniEditor assets, if enabled
-		if ( $this->wg->EnableMiniEditorExtForWall && F::app()->checkSkin( 'oasis' ) ) {
+		if ( $this->wg->EnableMiniEditorExtForWall ) {
 			$this->sendRequest( 'MiniEditor', 'loadAssets', [
 				'additionalAssets' => [
 					'wall_mini_editor_js',
@@ -34,17 +34,11 @@ class WallBaseController extends WikiaService {
 				]
 			] );
 		}
-
-		if ( $this->app->checkSkin( 'monobook' ) ) {
-			$this->response->addAsset( 'extensions/wikia/WikiaStyleGuide/js/Form.js' );
-			$this->response->addAsset( 'resources/wikia/modules/querystring.js' );
-			$this->response->addAsset( 'extensions/wikia/Wall/css/monobook/WallMonobook.scss' );
-		}
 	}
 
 	public function thread() {
 		wfProfileIn( __METHOD__ );
-		
+
 		$context = $this->getContext();
 
 		$this->addAsset();
@@ -53,7 +47,7 @@ class WallBaseController extends WikiaService {
 
 		$wallThread = WallThread::newFromId( $id );
 		$wallThread->loadIfCached();
-		
+
 		$threadMainMsg = $wallThread->getThreadMainMsg();
 
 		$this->response->setVal( 'thread', $wallThread );
@@ -72,7 +66,7 @@ class WallBaseController extends WikiaService {
 
 		$this->response->setVal( 'renderUserTalkArchiveAnchor', false );
 		$this->response->setVal( 'greeting', '' );
-		
+
 		if ( $threadMainMsg ) {
 			$threadMainMsg->load();
 			$context->getOutput()->setPageTitle( $threadMainMsg->getMetaTitle() );
@@ -579,7 +573,7 @@ class WallBaseController extends WikiaService {
 			$this->response->setVal( 'wall_message', $wall_message );
 		}
 
-		$this->response->setVal( 'showMiniEditor', $this->wg->EnableMiniEditorExtForWall && $this->app->checkSkin( 'oasis' ) );
+		$this->response->setVal( 'showMiniEditor', $this->wg->EnableMiniEditorExtForWall );
 
 		$this->checkAndSetUserBlockedStatus( $user );
 	}

@@ -112,11 +112,6 @@ class WallHistoryController extends WallController {
 		$this->response->addAsset( 'wall_history_js' );
 		$this->response->addAsset( 'extensions/wikia/Wall/css/WallHistory.scss' );
 
-		// VOLDEV-36: separate monobook styling
-		if ( $this->app->checkSkin( 'monobook' ) ) {
-			$this->response->addAsset( 'extensions/wikia/Wall/css/monobook/WallHistoryMonobook.scss' );
-		}
-
 		$output = $this->getContext()->getOutput();
 		if ( $this->isThreadLevel ) {
 			$output->setPageTitle( wfMessage( 'wall-thread-history-title' )->text() );
