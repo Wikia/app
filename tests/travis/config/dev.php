@@ -3,7 +3,9 @@
  * Test config
  */
 
-$wgDBserver = 'localhost';
+$wgDBserver = getenv( 'MYSQL_SERVER' ) ?: 'localhost';
+$wgDBuser = getenv( 'MYSQL_USER' ) ?: $wgDBuser;
+$wgDBpassword = getenv( 'MYSQL_PASSWORD' ) ?: $wgDBpassword;
 $wgDBname = 'firefly';
 $wgDBtype = 'mysql';
 

@@ -401,7 +401,7 @@ class WikiFactoryLoader {
 		if( ( $cond1 || $cond2 ) && empty( $wgDevelEnvironment ) ) {
 			$redirectUrl = WikiFactory::getLocalEnvURL( $this->mCityUrl );
 
-			if ( $_SERVER['HTTP_FASTLY_SSL'] &&
+			if ( !empty( $_SERVER['HTTP_FASTLY_SSL'] ) &&
 				 !empty( $_SERVER['HTTP_FASTLY_FF'] ) &&
 				 wfHttpsAllowedForURL( $redirectUrl )
 			) {

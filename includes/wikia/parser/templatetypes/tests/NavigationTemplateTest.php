@@ -46,7 +46,7 @@ class NavigationTemplateTest extends WikiaBaseTest {
 			[ "", "", "Empty html should be correctly processed" ],
 			[
 				"<div data-navuniq=\"test\">\nfakjsdlkjflk <div>asdf</div>kasjdlfkjdks ksdjlafkj</div>\nNAVUNIQ aksdjlfkj alksjdldf\nlkjsdl <div data-navuniq=\"test_1\">\nd</div>\n",
-				"\nNAVUNIQ aksdjlfkj alksjdldf\nlkjsdl \nd",
+				"\nNAVUNIQ aksdjlfkj alksjdldf\nlkjsdl \nd\n",
 				"If block element in navigation template it should be removed"
 			],
 			[

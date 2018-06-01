@@ -51,4 +51,7 @@
 			<group>Stub</group>
 		</exclude>
 	</groups>
+	<php>
+		<env name="SERVER_DBNAME" value="firefly"/>
+	</php>
 </phpunit>
