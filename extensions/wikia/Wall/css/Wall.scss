@@ -54,9 +54,6 @@ html>body #Wall .new-reply .speech-bubble-avatar { *position: absolute; *left:-9
 			}
 		}
 		.SpeechBubble {
-			.buttons-monobook{
-				display: none;
-			}
 			.buttons {
 				display: none;
 				bottom: 0;
@@ -95,7 +92,6 @@ html>body #Wall .new-reply .speech-bubble-avatar { *position: absolute; *left:-9
 
 		ul.replies > li { // replies only
 			position: relative;
-			clear: both; /* without it replies on Monobook are looking baaad */
 			&:first-child:before {
 				content: '';
 				position: absolute;

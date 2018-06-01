@@ -50,6 +50,7 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverBottomLeaderBoardAdditionalSizesCountries';
 		$vars[] = 'wgAdDriverBottomLeaderBoardMegaCountries';
 		$vars[] = 'wgAdDriverBottomLeaderBoardViewportCountries';
+		$vars[] = 'wgAdDriverBlockDelayServicesCountries';
 		$vars[] = 'wgAdDriverCTPDesktopRabbitCountries';
 		$vars[] = 'wgAdDriverDelayCountries';
 		$vars[] = 'wgAdDriverDelayTimeout';

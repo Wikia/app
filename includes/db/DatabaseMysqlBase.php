@@ -32,6 +32,31 @@
 abstract class DatabaseMysqlBase extends DatabaseBase {
 	/** @var MysqlMasterPos */
 	protected $lastKnownSlavePos;
+	/** @var string Method to detect slave lag */
+	protected $lagDetectionMethod;
+
+	/** @var BagOStuff cache */
+	protected $srvCache;
+
+	/**
+	 * Additional $params include:
+	 *   - lagDetectionMethod : set to one of (Seconds_Behind_Master,pt-heartbeat).
+	 *                          pt-heartbeat assumes the table is at `mysql-pt-heartbeat`.heartbeat
+	 *                          and uses UTC timestamps in the heartbeat.ts column.
+	 *                          (https://www.percona.com/doc/percona-toolkit/2.2/pt-heartbeat.html)
+	 * @param array $params
+	 */
+	function __construct( $params = null ) {
+		parent::__construct( $params );
+
+		// SUS-4805 | pt-heartbeat based lag support
+		$this->lagDetectionMethod = isset( $params['lagDetectionMethod'] )
+			? $params['lagDetectionMethod']
+			: 'Seconds_Behind_Master';
+
+		global $wgMemc;
+		$this->srvCache = $wgMemc;
+	}
 
 	/**
 	 * @return string
@@ -554,7 +579,7 @@ abstract class DatabaseMysqlBase extends DatabaseBase {
 			return true;
 		}
 
-		$this->closeConnection();
+		$this->close();
 		$this->mOpened = false;
 		$this->mConn = false;
 		$this->open( $this->mServer, $this->mUser, $this->mPassword, $this->mDBname );
@@ -581,65 +606,61 @@ abstract class DatabaseMysqlBase extends DatabaseBase {
 			return $this->mFakeSlaveLag;
 		}
 
-		return $this->getLagFromSlaveStatus();
+		if ( $this->lagDetectionMethod === 'pt-heartbeat' ) {
+			return $this->getLagFromPtHeartbeat();
+		} else {
+			return $this->getLagFromSlaveStatus();
+		}
 	}
 
 	/**
 	 * @return bool|int
 	 */
-	function getLagFromSlaveStatus() {
+	protected function getLagFromSlaveStatus() {
 		$res = $this->query( 'SHOW SLAVE STATUS', __METHOD__ );
-		if ( !$res ) {
-			return false;
-		}
-		$row = $res->fetchObject();
-		if ( !$row ) {
-			return false;
-		}
-		if ( strval( $row->Seconds_Behind_Master ) === '' ) {
-			return false;
-		} else {
+		$row = $res ? $res->fetchObject() : false;
+		if ( $row && strval( $row->Seconds_Behind_Master ) !== '' ) {
+			wfDebug( __METHOD__ . ": lag for {$this->getServer()} is {$row->Seconds_Behind_Master} seconds\n" );
 			return intval( $row->Seconds_Behind_Master );
 		}
+
+		return false;
 	}
 
 	/**
-	 * @deprecated in 1.19, use getLagFromSlaveStatus
+	 * @see SUS-4805
 	 *
-	 * @return bool|int
+	 * @return false|float
 	 */
-	function getLagFromProcesslist() {
-		wfDeprecated( __METHOD__, '1.19' );
-		$res = $this->query( 'SHOW PROCESSLIST', __METHOD__ );
-		if ( !$res ) {
-			return false;
-		}
-		# Find slave SQL thread
-		foreach ( $res as $row ) {
-			/* This should work for most situations - when default db
-			 * for thread is not specified, it had no events executed,
-			 * and therefore it doesn't know yet how lagged it is.
-			 *
-			 * Relay log I/O thread does not select databases.
-			 */
-			if ( $row->User == 'system user' &&
-				$row->State != 'Waiting for master to send event' &&
-				$row->State != 'Connecting to master' &&
-				$row->State != 'Queueing master event to the relay log' &&
-				$row->State != 'Waiting for master update' &&
-				$row->State != 'Requesting binlog dump' &&
-				$row->State != 'Waiting to reconnect after a failed master event read' &&
-				$row->State != 'Reconnecting after a failed master event read' &&
-				$row->State != 'Registering slave on master'
-				) {
-				# This is it, return the time (except -ve)
-				if ( $row->Time > 0x7fffffff ) {
-					return false;
-				} else {
-					return $row->Time;
-				}
+	protected function getLagFromPtHeartbeat() {
+		$key = wfSharedMemcKey( 'mysql', 'master-server-id', $this->getServer() );
+		$masterId = intval( $this->srvCache->get( $key ) );
+		if ( !$masterId ) {
+			$res = $this->query( 'SHOW SLAVE STATUS', __METHOD__ );
+			$row = $res ? $res->fetchObject() : false;
+			if ( $row && strval( $row->Master_Server_Id ) !== '' ) {
+				$masterId = intval( $row->Master_Server_Id );
+				$this->srvCache->set( $key, $masterId, 30 );
 			}
 		}
+
+		if ( !$masterId ) {
+			return false;
+		}
+
+		$res = $this->query(
+			"SELECT TIMESTAMPDIFF(MICROSECOND,ts,UTC_TIMESTAMP(6)) AS Lag " .
+			"FROM `mysql-pt-heartbeat`.heartbeat WHERE server_id = $masterId",
+			__METHOD__
+		);
+		$row = $res ? $res->fetchObject() : false;
+		if ( $row ) {
+			$lag = max( floatval( $row->Lag ) / 1e6, 0.0 );
+
+			wfDebug( __METHOD__ . ": lag for {$this->getServer()} is {$lag} seconds\n" );
+			return $lag;
+		}
+
 		return false;
 	}
 

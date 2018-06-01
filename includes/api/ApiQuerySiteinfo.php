@@ -60,9 +60,6 @@ class ApiQuerySiteinfo extends ApiQueryBase {
 					$filteriw = isset( $params['filteriw'] ) ? $params['filteriw'] : false;
 					$fit = $this->appendInterwikiMap( $p, $filteriw );
 					break;
-				case 'dbrepllag':
-					$fit = $this->appendDbReplLagInfo( $p, $params['showalldb'] );
-					break;
 				case 'statistics':
 					$fit = $this->appendStatistics( $p );
 					break;
@@ -307,37 +304,6 @@ class ApiQuerySiteinfo extends ApiQueryBase {
 		return $this->getResult()->addValue( 'query', $property, $data );
 	}
 
-	protected function appendDbReplLagInfo( $property, $includeAll ) {
-		global $wgShowHostnames;
-		$data = array();
-		$lb = wfGetLB();
-		if ( $includeAll ) {
-			if ( !$wgShowHostnames ) {
-				$this->dieUsage( 'Cannot view all servers info unless $wgShowHostnames is true', 'includeAllDenied' );
-			}
-
-			$lags = $lb->getLagTimes();
-			foreach ( $lags as $i => $lag ) {
-				$data[] = array(
-					'host' => $lb->getServerName( $i ),
-					'lag' => $lag
-				);
-			}
-		} else {
-			list( $host, $lag, $index ) = $lb->getMaxLag();
-			$data[] = array(
-				'host' => $wgShowHostnames
-						? $lb->getServerName( $index )
-						: '',
-				'lag' => intval( $lag )
-			);
-		}
-
-		$result = $this->getResult();
-		$result->setIndexedTagName( $data, 'db' );
-		return $this->getResult()->addValue( 'query', $property, $data );
-	}
-
 	protected function appendStatistics( $property ) {
 		$data = array();
 		$data['pages'] = intval( SiteStats::pages() );
@@ -567,7 +533,6 @@ class ApiQuerySiteinfo extends ApiQueryBase {
 					'specialpagealiases',
 					'magicwords',
 					'interwikimap',
-					'dbrepllag',
 					'statistics',
 					'usergroups',
 					'extensions',
@@ -605,7 +570,6 @@ class ApiQuerySiteinfo extends ApiQueryBase {
 				' magicwords            - List of magic words and their aliases',
 				' statistics            - Returns site statistics',
 				" interwikimap          - Returns interwiki map (optionally filtered, (optionally localised by using {$p}inlanguagecode))",
-				' dbrepllag             - Returns database server with the highest replication lag',
 				' usergroups            - Returns user groups and the associated permissions',
 				' extensions            - Returns extensions installed on the wiki',
 				' fileextensions        - Returns list of file extensions allowed to be uploaded',
@@ -638,7 +602,6 @@ class ApiQuerySiteinfo extends ApiQueryBase {
 		return array(
 			'api.php?action=query&meta=siteinfo&siprop=general|namespaces|namespacealiases|statistics',
 			'api.php?action=query&meta=siteinfo&siprop=interwikimap&sifilteriw=local',
-			'api.php?action=query&meta=siteinfo&siprop=dbrepllag&sishowalldb=',
 		);
 	}
 
