@@ -7,18 +7,21 @@ class SpecialFinishCreate extends UnlistedSpecialPage {
 	}
 
 	public function execute( $par ) {
-		global $wgUser, $wgOut;
+		global $wgScriptPath;
 		wfProfileIn( __METHOD__ );
 
+		$out = $this->getOutput();
+
 		if ( wfReadOnly() ) {
-			$wgOut->readOnlyPage();
+			$out->readOnlyPage();
 			wfProfileOut( __METHOD__ );
 			return;
 		}
 
 		$editToken = $this->getRequest()->getText( 'editToken', '' );
+		$user = $this->getUser();
 
-		if ( !$wgUser->isAllowed( 'finishcreate' ) || !$wgUser->matchEditToken( $editToken ) ) {
+		if ( !$user->isAllowed( 'finishcreate' ) || !$user->matchEditToken( $editToken ) ) {
 			$this->displayRestrictionError();
 			wfProfileOut( __METHOD__ );
 			return;
@@ -34,8 +37,8 @@ class SpecialFinishCreate extends UnlistedSpecialPage {
 		 *
 		 * @see SUS-1167
 		 */
-		$wgOut->enableClientCache( false );
-		$wgOut->redirect( '/?wiki-welcome=1' );
+		$out->enableClientCache( false );
+		$out->redirect( "$wgScriptPath/?wiki-welcome=1" );
 
 		wfProfileOut( __METHOD__ );
 	}
