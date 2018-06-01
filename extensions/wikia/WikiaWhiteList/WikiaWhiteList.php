@@ -109,7 +109,7 @@ function wfWhiteListParse($text) {
 }
 
 function wfWhiteListRemoveNoFollowLinks(&$str) {
-	return preg_replace_callback("#(<a.*?>)#i", create_function('$matches', 'return wfWhiteListParse($matches[1]);'), $str);
+	return preg_replace_callback("#(<a.*?>)#i", function ( $matches ) { return wfWhiteListParse($matches[1]); }, $str);
 }
 
 #----

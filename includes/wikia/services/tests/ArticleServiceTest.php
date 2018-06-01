@@ -15,7 +15,7 @@ class ArticleServiceTest extends WikiaBaseTest {
 	 * @param string $expSnippetText expected output text snippet
 	 */
 	public function testGetTextSnippetAsArticleTest($snippetLength, $articleText, $expSnippetText) {
-		$randId = (int) ( rand() * microtime() );
+		$randId = (int) ( rand() * microtime( true ) );
 		$mockTitle = $this->createMock( Title::class );
 		$mockCache = $this->getMockBuilder( MemCachedClientforWiki::class )
 			->setMethods( [ 'get', 'set' ] )
