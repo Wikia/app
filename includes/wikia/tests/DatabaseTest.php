@@ -26,6 +26,8 @@ class DatabaseTest extends TestCase {
 		yield [ '  SELECT * FROM foo', false ];
 		yield [ 'SELECT /* test */ * FROM foo', false ];
 		yield [ 'USE foo', false ];
+		yield [ 'BEGIN', false ];
+		yield [ 'COMMIT', false ];
 	}
 
 }
