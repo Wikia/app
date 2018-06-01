@@ -9,6 +9,7 @@ define('ext.wikia.adEngine.wrappers.prebid', [
 	var validResponseStatusCode = 1,
 		errorResponseStatusCode = 2,
 		isNewPrebidEnabled = adContext.get('opts.isNewPrebidEnabled'),
+		isConsentStringEnabled = adContext.get('opts.isConsentStringEnabled'),
 		prebidConfig = {
 			debug: loc.href.indexOf('pbjs_debug=1') >= 0,
 			enableSendAllBids: true,
@@ -18,16 +19,19 @@ define('ext.wikia.adEngine.wrappers.prebid', [
 				iframeEnabled: true,
 				enabledBidders: [],
 				syncDelay: 6000
-			},
-			consentManagement: {
-				cmpApi: 'iab',
-				timeout: 2000,
-				allowAuctionWithoutConsent: false
 			}
 		};
 
 	win.pbjs = win.pbjs || {};
 	win.pbjs.que = win.pbjs.que || [];
+
+	if (isConsentStringEnabled) {
+		prebidConfig.consentManagement = {
+			cmpApi: 'iab',
+			timeout: 2000,
+			allowAuctionWithoutConsent: false
+		};
+	}
 
 	if (isNewPrebidEnabled) {
 		win.pbjs.que.push(function() {
