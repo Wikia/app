@@ -200,13 +200,12 @@ class CreateNewWikiController extends WikiaController {
 	 * @throws BadRequestException
 	 */
 	public function CreateWiki() {
+		global $wgUser;
+
 		wfProfileIn(__METHOD__);
 		$this->checkWriteRequest();
 
-		$wgRequest = $this->app->getGlobal('wgRequest'); /* @var $wgRequest WebRequest */
-		$wgUser = $this->app->getGlobal('wgUser'); /* @var $wgUser User */
-
-		$params = $wgRequest->getArray('data');
+		$params = $this->getRequest()->getArray('data');
 
 		if ( empty($params) ||
 			empty($params['wName']) ||
@@ -287,54 +286,6 @@ class CreateNewWikiController extends WikiaController {
 		$this->response->setCode( 201 ); // HTTP 201 Created
 		$this->response->setVal( 'task_id', $task_id );
 
-		/**
-
-		$categories = isset($params['wCategories']) ? $params['wCategories'] : array();
-
-		$createWiki = new CreateWiki($params['wName'], $params['wDomain'], $params['wLanguage'], $params['wVertical'], $categories);
-
-		try {
-			$createWiki->create();
-		}
-		catch(Exception $ex) {
-			$error_code = $ex->getCode();
-			$this->error(
-				__METHOD__ . ": backend failed to process the request: " . $ex->getMessage(),
-				[
-					'code' => $error_code,
-					'params' => $params,
-					'exception' => $ex
-				]
-			);
-			$this->response->setCode( 500 );
-			$this->response->setVal( self::STATUS_FIELD, self::STATUS_BACKEND_ERROR );
-			$this->response->setVal( self::STATUS_MSG_FIELD, wfMessage( 'cnw-error-general' )->parse() );
-			$this->response->setVal( self::STATUS_HEADER_FIELD, wfMessage( 'cnw-error-general-heading' )->escaped() );
-			$this->response->setVal( self::ERROR_CLASS_FIELD, get_class( $ex ) );
-			$this->response->setVal( self::ERROR_CODE_FIELD, $ex->getCode() );
-			$this->response->setVal( self::ERROR_MESSAGE_FIELD, $ex->getMessage() );
-			wfProfileOut( __METHOD__);
-			return;
-		}
-
-		$cityId = $createWiki->getCityId();
-
-		$this->response->setVal( self::STATUS_FIELD, self::STATUS_OK );
-		$this->response->setVal( self::SITE_NAME_FIELD, $createWiki->getSiteName() );
-		$this->response->setVal( self::CITY_ID_FIELD, $cityId );
-		$finishCreateTitle = GlobalTitle::newFromText( "FinishCreate", NS_SPECIAL, $cityId );
-
-		$fullURL = $finishCreateTitle->getFullURL( [ 'editToken' => $wgUser->getEditToken() ] );
-		$finishCreateUrl = empty( $wgDevelDomains ) ? $fullURL : str_replace( '.wikia.com', '.'.$wgDevelDomains[0], $fullURL );
-		$this->response->setVal( 'finishCreateUrl',  $finishCreateUrl );
-
-		$this->info(__METHOD__ . ': completed', [
-			'city_id' => $cityId,
-			'params' => $params,
-		]);
-		 *
-		 */
-
 		wfProfileOut(__METHOD__);
 	}
 
@@ -344,6 +295,8 @@ class CreateNewWikiController extends WikiaController {
 	 * @see SUS-4383
 	 */
 	public function CheckStatus() {
+		global $wgDevelDomains;
+
 		$task_id = (string) $this->getRequest()->getVal('task_id');
 		$task_details = CreateWikiTask::getCreationLogEntry( $task_id );
 
