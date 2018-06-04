@@ -125,7 +125,8 @@ function unifySlotInterface(slot) {
 		isRepeatable: () => false,
 		setConfigProperty: (key, value) => {
 			context.set(`slots.${slot.name}.${key}`, value);
-		}
+		},
+		getStatus: () => null
 	});
 	slot.pre('viewed', (event) => {
 		slotListener.emitImpressionViewable(event, slot);
