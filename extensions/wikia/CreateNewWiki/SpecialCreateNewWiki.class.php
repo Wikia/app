@@ -37,6 +37,7 @@ class SpecialCreateNewWiki extends UnlistedSpecialPage {
 		$out->setPageTitle( wfMessage( 'cnw-title' ) );
 
 		$out->addHtml( F::app()->renderView( 'CreateNewWiki', 'Index' ) );
+
 		Wikia::addAssetsToOutput( 'create_new_wiki_scss' );
 		Wikia::addAssetsToOutput( 'create_new_wiki_js' );
 

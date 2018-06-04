@@ -1,7 +1,7 @@
 /*global define*/
-define('ext.wikia.adEngine.ml.ctp.ctpDesktop', [
+define('ext.wikia.adEngine.ml.ctp.ctpMobile', [
 	'ext.wikia.adEngine.adContext',
-	'ext.wikia.adEngine.ml.ctp.ctpDesktopDataSource',
+	'ext.wikia.adEngine.ml.ctp.ctpMobileDataSource',
 	'ext.wikia.adEngine.ml.modelFactory',
 	'ext.wikia.adEngine.ml.model.linear'
 ], function (adContext, source, modelFactory, linearModel) {
@@ -10,11 +10,11 @@ define('ext.wikia.adEngine.ml.ctp.ctpDesktop', [
 	return modelFactory.create({
 		dataSource: source,
 		model: linearModel.create(source.coefficients, source.intercept),
-		name: 'ctpdesktop',
+		name: 'ctpmobile',
 		enabled: function () {
 			return !!adContext.get('targeting.hasFeaturedVideo') &&
-				adContext.get('rabbits.ctpDesktop') &&
-				adContext.get('targeting.skin') === 'oasis';
+				adContext.get('rabbits.ctpMobile') &&
+				adContext.get('targeting.skin') === 'mercury';
 		},
 		cachePrediction: true
 	});

@@ -544,7 +544,6 @@ $messages['diq'] = array(
 );
 
 $messages['el'] = array(
-
 	'prefs-editing-experience' => 'Εμπειρία επεξεργασιών',
 	'prefs-general' => 'Γενικά',
 	'prefs-starting-an-edit' => 'Ξεκινώντας μία επεξεργασία',
@@ -2528,6 +2527,8 @@ $messages['zh-hans'] = array(
 	'editpagelayout-preview-dropdown-item-tablet' => '平板电脑视图',
 	'editpagelayout-preview-dropdown-item-desktop' => '桌面',
 	'editpagelayout-preview-dropdown-item-desktopxl' => '超大尺寸桌面',
+	'prefs-editarea-size' => '编辑窗口的大小（仅限MonoBook布局）',
+	'prefs-monobook-layout' => '仅MonoBook布局',
 );
 
 $messages['zh-hant'] = array(
@@ -2618,5 +2619,7 @@ $messages['zh-hant'] = array(
 	'editpagelayout-preview-dropdown-item-tablet' => '平板電腦',
 	'editpagelayout-preview-dropdown-item-desktop' => '桌上電腦',
 	'editpagelayout-preview-dropdown-item-desktopxl' => '大銀幕桌上電腦',
+	'prefs-editarea-size' => '編輯視窗的大小（僅限MonoBook佈局）',
+	'prefs-monobook-layout' => '僅限MonoBook佈局',
 );
 
