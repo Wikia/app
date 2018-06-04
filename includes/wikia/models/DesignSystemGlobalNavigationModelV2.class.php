@@ -32,13 +32,9 @@ class DesignSystemGlobalNavigationModelV2 extends WikiaModel {
 
 		$data = [
 			'logo' => $this->getLogo(),
-			'search' => [
-				'module' => $this->getSearchData()
-			],
-			'create_wiki' => [
-				'header' => $this->getCreateWiki( 'start-a-wiki' )
-			],
-			'main-navigation' => $this->getMainNavigation(),
+			'search' => $this->getSearchData(),
+			'create_wiki' => $this->getCreateWiki( 'start-a-wiki' ),
+			'main_navigation' => $this->getMainNavigation(),
 		];
 
 		if ( $wgUser->isLoggedIn() ) {
@@ -66,17 +62,19 @@ class DesignSystemGlobalNavigationModelV2 extends WikiaModel {
 			return array_merge(
 				$this->getFandomLinks(),
 				[
-					'type' => 'group',
-					'title' => [
-						'type' => 'translatable-text',
-						'key' => 'global-navigation-wikis-header',
-					],
-					'tracking_label' => 'link.wikis',
-					'items' => [
-						$this->getLink( 'global-navigation-wikis-explore', $this->getHref( 'explore-wikis' ), 'link.explore' ),
-						$this->getLink( self::COMMUNITY_CENTRAL_LABEL, $this->getHref('community-central'), self::COMMUNITY_CENTRAL_TRACKING_LABEL ),
-						$this->getLink( 'global-navigation-wikis-fandom-university', $this->getHref( 'fandom-university' ), 'link.fandom-university' ),
-						$this->getCreateWiki( 'link.start-a-wiki' ),
+					[
+						'type' => 'group',
+						'title' => [
+							'type' => 'translatable-text',
+							'key' => 'global-navigation-wikis-header',
+						],
+						'tracking_label' => 'link.wikis',
+						'items' => [
+							$this->getLink( 'global-navigation-wikis-explore', $this->getHref( 'explore-wikis' ), 'link.explore' ),
+							$this->getLink( self::COMMUNITY_CENTRAL_LABEL, $this->getHref('community-central'), self::COMMUNITY_CENTRAL_TRACKING_LABEL ),
+							$this->getLink( 'global-navigation-wikis-fandom-university', $this->getHref( 'fandom-university' ), 'link.fandom-university' ),
+							$this->getCreateWiki( 'link.start-a-wiki' ),
+						]
 					]
 				]);
 		}
@@ -280,7 +278,7 @@ class DesignSystemGlobalNavigationModelV2 extends WikiaModel {
 		];
 
 		if ( $this->lang === self::DEFAULT_LANG ) {
-			$verticals['links'][] = $this->getLink( 'global-navigation-fandom-overview-link-video', $this->getHref( 'video' ), 'link.video') ;
+			$verticals[] = $this->getLink( 'global-navigation-fandom-overview-link-video', $this->getHref( 'video' ), 'link.video') ;
 		}
 
 		return $verticals;
@@ -328,10 +326,8 @@ class DesignSystemGlobalNavigationModelV2 extends WikiaModel {
 
 	private function getLogo() {
 		return [
-			'module' => [
-				'type' => 'logo',
-				'main' => $this->getLogoMain(),
-			]
+			'type' => 'logo',
+			'main' => $this->getLogoMain(),
 		];
 	}
 
