@@ -111,10 +111,12 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 		}
 
 		function queueAd() {
-			log(['queueAd', slotName, element], log.levels.debug, logGroup);
-			slot.container.appendChild(element.getNode());
+			if (slot.container) {
+				log(['queueAd', slotName, element], log.levels.debug, logGroup);
+				slot.container.appendChild(element.getNode());
 
-			googleTag.addSlot(element);
+				googleTag.addSlot(element);
+			}
 		}
 
 		function setAdditionalTargeting(slotTargetingData) {
