@@ -61,23 +61,26 @@ class DesignSystemGlobalNavigationModelV2 extends WikiaModel {
 		} else {
 			return array_merge(
 				$this->getFandomLinks(),
-				[
-					[
-						'type' => 'group',
-						'title' => [
-							'type' => 'translatable-text',
-							'key' => 'global-navigation-wikis-header',
-						],
-						'tracking_label' => 'link.wikis',
-						'items' => [
-							$this->getLink( 'global-navigation-wikis-explore', $this->getHref( 'explore-wikis' ), 'link.explore' ),
-							$this->getLink( self::COMMUNITY_CENTRAL_LABEL, $this->getHref('community-central'), self::COMMUNITY_CENTRAL_TRACKING_LABEL ),
-							$this->getLink( 'global-navigation-wikis-fandom-university', $this->getHref( 'fandom-university' ), 'link.fandom-university' ),
-							$this->getCreateWiki( 'link.start-a-wiki' ),
-						]
-					]
-				]);
+				[ $this->getWikisMenu() ]
+			);
 		}
+	}
+
+	private function getWikisMenu() {
+		return [
+			'type' => 'group',
+			'title' => [
+				'type' => 'translatable-text',
+				'key' => 'global-navigation-wikis-header',
+			],
+			'tracking_label' => 'link.wikis',
+			'items' => [
+				$this->getLink( 'global-navigation-wikis-explore', $this->getHref( 'explore-wikis' ), 'link.explore' ),
+				$this->getLink( self::COMMUNITY_CENTRAL_LABEL, $this->getHref('community-central'), self::COMMUNITY_CENTRAL_TRACKING_LABEL ),
+				$this->getLink( 'global-navigation-wikis-fandom-university', $this->getHref( 'fandom-university' ), 'link.fandom-university' ),
+				$this->getCreateWiki( 'link.start-a-wiki' ),
+			]
+		];
 	}
 
 	private function getCreateWiki( string $trackingLabel ) {
