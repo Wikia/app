@@ -18,9 +18,10 @@ class CreateWikiTask extends BaseTask {
 	 * @param string $language
 	 * @param int $vertical
 	 * @param string[] $categories
+	 * @param bool $allAges
 	 * @throw CreateWikiException an exception with status of operation set
 	 */
-	public function create( string $name, string $domain, string $language, int $vertical, array $categories ) {
+	public function create( string $name, string $domain, string $language, int $vertical, array $categories, bool $allAges ) {
 		wfProfileIn( __METHOD__ );
 
 		// work on behalf of a user who wants to create a wiki
@@ -29,7 +30,7 @@ class CreateWikiTask extends BaseTask {
 
 		$then = microtime( true );
 
-		$context = TaskContext::newFromUserInput( $name, $domain, $language, $vertical, $categories );
+		$context = TaskContext::newFromUserInput( $name, $domain, $language, $vertical, $categories, $allAges );
 
 		$taskRunner = new Wikia\CreateNewWiki\Tasks\TaskRunner( $context );
 

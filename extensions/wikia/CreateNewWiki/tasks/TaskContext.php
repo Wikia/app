@@ -48,6 +48,9 @@ class TaskContext {
 	/** @var  array */
 	private $categories;
 
+	/** @var  bool */
+	private $allAges;
+
 	/** @var  User */
 	private $founder;
 
@@ -64,7 +67,7 @@ class TaskContext {
 		}
 	}
 
-	public static function newFromUserInput( $inputWikiName, $inputDomain, $language, $vertical, $categories ) {
+	public static function newFromUserInput( $inputWikiName, $inputDomain, $language, $vertical, $categories, $allAges ) {
 		global $wgCreateLanguageWikisWithPath;
 
 		return new self( [
@@ -73,6 +76,7 @@ class TaskContext {
 			'language' => $language,
 			'vertical' => $vertical,
 			'categories' => $categories,
+			'allAges' => $allAges,
 			'shouldCreateLanguageWikiWithPath' => $wgCreateLanguageWikisWithPath,
 		] );
 	}
@@ -136,6 +140,15 @@ class TaskContext {
 
 	public function setWikiName( $wikiName ) {
 		$this->wikiName = $wikiName;
+	}
+
+	/**
+	 * Is this wiki for audience below 13 years old
+	 *
+	 * @return bool
+	 */
+	public function isAllAges() {
+		return $this->allAges;
 	}
 
 	// wikiDBW represents CreateWiki::newWiki->dbw

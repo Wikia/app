@@ -19,7 +19,6 @@ class CreateNewWikiController extends WikiaController {
 	const CITY_ID_FIELD            = 'cityId';
 	const CHECK_RESULT_FIELD       = 'res';
 	const DAILY_USER_LIMIT         = 2;
-	const WF_WDAC_REVIEW_FLAG_NAME = 'wgWikiDirectedAtChildrenByFounder';
 
 	public function index() {
 		global $wgSuppressCommunityHeader, $wgSuppressPageHeader, $wgSuppressFooter, $wgSuppressToolbar, $wgRequest, $wgUser, $wgWikiaBaseDomain;
@@ -277,8 +276,9 @@ class CreateNewWikiController extends WikiaController {
 		$task = CreateWikiTask::newLocalTask();
 
 		$categories = isset($params['wCategories']) ? $params['wCategories'] : array();
+		$allAges = isset($params['wAllAges']) && !empty( $params['wAllAges'] );
 
-		$task->call( 'create', $params['wName'], $params['wDomain'], $params['wLanguage'], $params['wVertical'], $categories );
+		$task->call( 'create', $params['wName'], $params['wDomain'], $params['wLanguage'], $params['wVertical'], $categories, $allAges );
 		$task_id = $task->setQueue( Wikia\Tasks\Queues\PriorityQueue::NAME )->queue();
 
 		// return ID of the created task ID, front-end code will poll its status
@@ -317,10 +317,6 @@ class CreateNewWikiController extends WikiaController {
 		}
 
 		$cityId = $createWiki->getCityId();
-
-		if ( isset($params['wAllAges']) && !empty( $params['wAllAges'] ) ) {
-			WikiFactory::setVarByName( self::WF_WDAC_REVIEW_FLAG_NAME, $cityId, true, __METHOD__ );
-		}
 
 		$this->response->setVal( self::STATUS_FIELD, self::STATUS_OK );
 		$this->response->setVal( self::SITE_NAME_FIELD, $createWiki->getSiteName() );
