@@ -104,7 +104,7 @@ function wfExtImagesWhiteListParse($text) {
 }
 
 function wfExtImageLinksToImage(&$str) {
-	return preg_replace_callback('#https?://(.*?).(jpg|jpeg|png|gif)#i', create_function('$matches', 'return wfExtImagesWhiteListParse($matches[0]);'), $str);
+	return preg_replace_callback('#https?://(.*?).(jpg|jpeg|png|gif)#i', function ( $matches ) { return wfExtImagesWhiteListParse($matches[0]); }, $str);
 }
 
 #----
