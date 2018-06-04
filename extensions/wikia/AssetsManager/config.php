@@ -161,6 +161,8 @@ $config['adengine2_rabbit_mobile_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [
 		'#group_adengine2_rabbit_js',
+		'//extensions/wikia/AdEngine/js/ml/ctp/ctpMobile.js',
+		'//extensions/wikia/AdEngine/js/ml/ctp/ctpMobileDataSource.js',
 		'//extensions/wikia/AdEngine/js/ml/n1/n1mInputParser.js',
 		'//extensions/wikia/AdEngine/js/ml/n1/n1mLogisticRegression.js',
 		'//extensions/wikia/AdEngine/js/ml/nivens/mobileNivensInputParser.js',
