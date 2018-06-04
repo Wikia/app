@@ -328,13 +328,6 @@ class DesignSystemGlobalNavigationModelV2 extends WikiaModel {
 	}
 
 	private function getLogo() {
-		return [
-			'type' => 'logo',
-			'main' => $this->getLogoMain(),
-		];
-	}
-
-	private function getLogoMain() {
 		if ( $this->isWikiaOrgCommunity() === true ) {
 			return [
 				'type' => 'link-image',
