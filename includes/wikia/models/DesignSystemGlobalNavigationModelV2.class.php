@@ -5,6 +5,9 @@ class DesignSystemGlobalNavigationModelV2 extends WikiaModel {
 	const PRODUCT_WIKIS = 'wikis';
 	const PRODUCT_FANDOMS = 'fandoms';
 
+	const COMMUNITY_CENTRAL_LABEL = 'global-navigation-wikis-community-central';
+	const COMMUNITY_CENTRAL_TRACKING_LABEL = 'link.community-central';
+
 	private $product;
 	private $productInstanceId;
 	private $lang;
@@ -29,55 +32,10 @@ class DesignSystemGlobalNavigationModelV2 extends WikiaModel {
 
 		$data = [
 			'logo' => $this->getLogo(),
-			'search' => [
-				'module' => $this->getSearchData()
-			],
-			'create_wiki' => [
-				'header' => $this->getCreateWiki( 'start-a-wiki' )
-			],
+			'search' => $this->getSearchData(),
+			'create_wiki' => $this->getCreateWiki( 'start-a-wiki' ),
+			'main_navigation' => $this->getMainNavigation(),
 		];
-
-		if ( $this->isWikiaOrgCommunity() ) {
-			$data[ 'wikis' ] = [
-				'links' => [
-					$this->getCommunityCentralLink()
-				]
-			];
-		} else {
-			$data[ 'fandom_overview' ] = $this->getVerticalsSection();
-			$data[ 'wikis' ] = [
-				'header' => [
-					'type' => 'line-text',
-					'title' => [
-						'type' => 'translatable-text',
-						'key' => 'global-navigation-wikis-header',
-					],
-					'tracking_label' => 'link.wikis',
-				],
-				'links' => [
-					[
-						'type' => 'link-text',
-						'title' => [
-							'type' => 'translatable-text',
-							'key' => 'global-navigation-wikis-explore'
-						],
-						'href' => $this->getHref( 'explore-wikis' ),
-						'tracking_label' => 'link.explore',
-					],
-					$this->getCommunityCentralLink(),
-					[
-						'type' => 'link-text',
-						'title' => [
-							'type' => 'translatable-text',
-							'key' => 'global-navigation-wikis-fandom-university'
-						],
-						'href' => $this->getHref( 'fandom-university' ),
-						'tracking_label' => 'link.fandom-university',
-					],
-					$this->getCreateWiki( 'link.start-a-wiki' ),
-				]
-			];
-		}
 
 		if ( $wgUser->isLoggedIn() ) {
 			$data[ 'user' ] = $this->getLoggedInUserData( $wgUser );
@@ -97,9 +55,37 @@ class DesignSystemGlobalNavigationModelV2 extends WikiaModel {
 		return $data;
 	}
 
+	private function getMainNavigation() {
+		if ( $this->isWikiaOrgCommunity() ) {
+			return $this->getLink( self::COMMUNITY_CENTRAL_LABEL, $this->getHref('community-central'), self::COMMUNITY_CENTRAL_TRACKING_LABEL );
+		} else {
+			return array_merge(
+				$this->getFandomLinks(),
+				[ $this->getWikisMenu() ]
+			);
+		}
+	}
+
+	private function getWikisMenu() {
+		return [
+			'type' => 'group',
+			'title' => [
+				'type' => 'translatable-text',
+				'key' => 'global-navigation-wikis-header',
+			],
+			'tracking_label' => 'link.wikis',
+			'items' => [
+				$this->getLink( 'global-navigation-wikis-explore', $this->getHref( 'explore-wikis' ), 'link.explore' ),
+				$this->getLink( self::COMMUNITY_CENTRAL_LABEL, $this->getHref('community-central'), self::COMMUNITY_CENTRAL_TRACKING_LABEL ),
+				$this->getLink( 'global-navigation-wikis-fandom-university', $this->getHref( 'fandom-university' ), 'link.fandom-university' ),
+				$this->getCreateWiki( 'link.start-a-wiki' ),
+			]
+		];
+	}
+
 	private function getCreateWiki( string $trackingLabel ) {
 		return [
-			'type' => 'link-button',
+			'type' => 'button',
 			'title' => [
 				'type' => 'translatable-text',
 				'key' => 'global-navigation-create-wiki-link-start-wikia'
@@ -183,40 +169,24 @@ class DesignSystemGlobalNavigationModelV2 extends WikiaModel {
 
 	private function getAnonUserData() {
 		return [
-			'header' => [
-				'type' => 'line-image',
-				'image-data' => [
-					'type' => 'wds-svg',
-					'name' => 'wds-icons-user',
+			'signin' => [
+				'title' => [
+					'type' => 'translatable-text',
+					'key' => 'global-navigation-anon-sign-in',
 				],
-				'tracking_label' => 'account',
+				'href' => $this->getHref( 'user-signin' ),
+				'param-name' => 'redirect',
+				'tracking_label' => 'account.sign-in',
 			],
-			'links' => [
-				[
-					'type' => 'link-authentication',
-					'title' => [
-						'type' => 'translatable-text',
-						'key' => 'global-navigation-anon-sign-in',
-					],
-					'href' => $this->getHref( 'user-signin' ),
-					'param-name' => 'redirect',
-					'tracking_label' => 'account.sign-in',
+			'register' => [
+				'title' => [
+					'type' => 'translatable-text',
+					'key' => 'global-navigation-anon-register',
 				],
-				[
-					'type' => 'link-authentication',
-					'title' => [
-						'type' => 'translatable-text',
-						'key' => 'global-navigation-anon-register',
-					],
-					'subtitle' => [
-						'type' => 'translatable-text',
-						'key' => 'global-navigation-anon-register-description',
-					],
-					'href' => $this->getHref( 'user-register' ),
-					'param-name' => 'redirect',
-					'tracking_label' => 'account.register',
-				],
-			],
+				'href' => $this->getHref( 'user-register' ),
+				'param-name' => 'redirect',
+				'tracking_label' => 'account.register',
+			]
 		];
 	}
 
@@ -229,19 +199,16 @@ class DesignSystemGlobalNavigationModelV2 extends WikiaModel {
 
 		$isMessageWallEnabled = $this->isMessageWallEnabled();
 		$userName = $user->getName();
+		$viewProfileLinks = [];
 
-		$viewProfileLinks[] = [
-			'type' => 'link-text',
-			'href' => $this->getPageUrl( $userName, NS_USER, '', true ),
-			'title' => [
-				'type' => 'translatable-text',
-				'key' => 'global-navigation-user-view-profile'
-			],
-			'tracking_label' => 'account.profile',
-		];
+		$viewProfileLinks[] = $this->getLink( 'global-navigation-user-view-profile', $this->getPageUrl( $userName, NS_USER, '', true ), 'account.profile');
+
+		if ( !empty( $wgEnableAuthorProfileLinks ) && $this->hasAuthorProfile( $user ) ) {
+			$viewProfileLinks[] = $this->getLink( 'global-navigation-user-view-author-profile', $this->getHref( 'user-author-profile' ) . $userName, 'account.profile-author' );
+		}
 
 		$logOutLink = [
-			'type' => 'link-authentication',
+			'type' => 'logout',
 			'href' => $this->getHref( 'user-logout' ),
 			'title' => [
 				'type' => 'translatable-text',
@@ -251,53 +218,17 @@ class DesignSystemGlobalNavigationModelV2 extends WikiaModel {
 			'tracking_label' => 'account.sign-out',
 		];
 
-		if ( !empty( $wgEnableAuthorProfileLinks ) && $this->hasAuthorProfile( $user ) ) {
-			$viewProfileLinks[] = [
-				'type' => 'link-text',
-				'href' => $this->getHref( 'user-author-profile' ) . $userName,
-				'title' => [
-					'type' => 'translatable-text',
-					'key' => 'global-navigation-user-view-author-profile'
-				],
-				'tracking_label' => 'account.profile-author',
-			];
-		}
-
 		$links = [
 			static::PRODUCT_WIKIS => array_merge(
 				$viewProfileLinks,
 				[
-					[
-						'type' => 'link-text',
-						'href' => $isMessageWallEnabled
-							? $this->getPageUrl( $userName, NS_USER_WALL, '', true )
-							: $this->getPageUrl( $userName, NS_USER_TALK, '', true ),
-						'title' => [
-							'type' => 'translatable-text',
-							'key' => $isMessageWallEnabled
-								? 'global-navigation-user-message-wall'
-								: 'global-navigation-user-my-talk'
-						],
-						'tracking_label' => $isMessageWallEnabled ? 'account.message-wall' : 'account.talk',
-					],
-					[
-						'type' => 'link-text',
-						'href' => $this->getPageUrl( 'Preferences', NS_SPECIAL, '', true ),
-						'title' => [
-							'type' => 'translatable-text',
-							'key' => 'global-navigation-user-my-preferences'
-						],
-						'tracking_label' => 'account.preferences',
-					],
-					[
-						'type' => 'link-text',
-						'href' => $this->getHref( 'help' ),
-						'title' => [
-							'type' => 'translatable-text',
-							'key' => 'global-navigation-user-help'
-						],
-						'tracking_label' => 'account.help',
-					],
+					$this->getLink(
+						$isMessageWallEnabled ? 'global-navigation-user-message-wall' : 'global-navigation-user-my-talk',
+						$isMessageWallEnabled ? $this->getPageUrl( $userName, NS_USER_WALL, '', true ) : $this->getPageUrl( $userName, NS_USER_TALK, '', true ),
+						$isMessageWallEnabled ? 'account.message-wall' : 'account.talk'
+					),
+					$this->getLink( 'global-navigation-user-my-preferences', $this->getPageUrl( 'Preferences', NS_SPECIAL, '', true ), 'account.preferences'),
+					$this->getLink( 'global-navigation-user-help', $this->getHref( 'help' ), 'account.help'),
 					$logOutLink
 				]
 			),
@@ -310,16 +241,10 @@ class DesignSystemGlobalNavigationModelV2 extends WikiaModel {
 		];
 
 		return [
-			'header' => [
-				'type' => 'avatar',
-				'username' => [
-					'type' => 'text',
-					'value' => $userName
-				],
-				'url' => AvatarService::getAvatarUrl( $userName, 50 ),
-				'tracking_label' => 'account',
-			],
-			'links' => $links[$this->product]
+			'avatar_url' => AvatarService::getAvatarUrl( $userName, 50 ),
+			'username' => $userName,
+			'tracking_label' => 'account',
+			'items' => $links[$this->product],
 		];
 	}
 
@@ -348,53 +273,15 @@ class DesignSystemGlobalNavigationModelV2 extends WikiaModel {
 		];
 	}
 
-	private function getVerticalsSection() {
+	private function getFandomLinks() {
 		$verticals = [
-			'links' => [
-				[
-					'type' => 'link-branded',
-					'brand' => 'games',
-					'title' => [
-						'type' => 'translatable-text',
-						'key' => 'global-navigation-fandom-overview-link-vertical-games'
-					],
-					'href' => $this->getHref( 'games' ),
-					'tracking_label' => 'link.games'
-				],
-				[
-					'type' => 'link-branded',
-					'brand' => 'movies',
-					'title' => [
-						'type' => 'translatable-text',
-						'key' => 'global-navigation-fandom-overview-link-vertical-movies'
-					],
-					'href' => $this->getHref( 'movies' ),
-					'tracking_label' => 'link.movies'
-				],
-				[
-					'type' => 'link-branded',
-					'brand' => 'tv',
-					'title' => [
-						'type' => 'translatable-text',
-						'key' => 'global-navigation-fandom-overview-link-vertical-tv'
-					],
-					'href' => $this->getHref( 'tv' ),
-					'tracking_label' => 'link.tv'
-				]
-			]
+			$this->getLink( 'global-navigation-fandom-overview-link-vertical-games', $this->getHref( 'games' ), 'link.games' ),
+			$this->getLink( 'global-navigation-fandom-overview-link-vertical-movies', $this->getHref( 'movies' ), 'link.movies' ),
+			$this->getLink( 'global-navigation-fandom-overview-link-vertical-tv', $this->getHref( 'tv' ), 'link.tv'),
 		];
 
 		if ( $this->lang === self::DEFAULT_LANG ) {
-			$verticals['links'][] = [
-				'type' => 'link-branded',
-				'brand' => 'video',
-				'title' => [
-					'type' => 'translatable-text',
-					'key' => 'global-navigation-fandom-overview-link-video'
-				],
-				'href' => $this->getHref( 'video' ),
-				'tracking_label' => 'link.video'
-			];
+			$verticals[] = $this->getLink( 'global-navigation-fandom-overview-link-video', $this->getHref( 'video' ), 'link.video') ;
 		}
 
 		return $verticals;
@@ -412,18 +299,6 @@ class DesignSystemGlobalNavigationModelV2 extends WikiaModel {
 	private function getCorporatePageSearchUrl() {
 		$url = GlobalTitle::newFromText( 'Search', NS_SPECIAL, Wikia::CORPORATE_WIKI_ID )->getFullURL();
 		return wfProtocolUrlToRelative( $url );
-	}
-
-	private function getCommunityCentralLink() {
-		return [
-			'type' => 'link-text',
-			'title' => [
-				'type' => 'translatable-text',
-				'key' => 'global-navigation-wikis-community-central'
-			],
-			'href' => $this->getHref( 'community-central' ),
-			'tracking_label' => 'link.community-central',
-		];
 	}
 
 	private function getSitenameData() {
@@ -454,10 +329,8 @@ class DesignSystemGlobalNavigationModelV2 extends WikiaModel {
 
 	private function getLogo() {
 		return [
-			'module' => [
-				'type' => 'logo',
-				'main' => $this->getLogoMain(),
-			]
+			'type' => 'logo',
+			'main' => $this->getLogoMain(),
 		];
 	}
 
@@ -482,6 +355,18 @@ class DesignSystemGlobalNavigationModelV2 extends WikiaModel {
 				'name' => 'wds-company-logo-fandom-white',
 			],
 			'tracking_label' => 'logo',
+		];
+	}
+
+	private function getLink(string $labelKey, string $href, string $trackingLabel) {
+		return [
+			'type' => 'link',
+			'title' => [
+				'type' => 'translatable-text',
+				'key' => $labelKey
+			],
+			'href' => $href,
+			'tracking_label' => $trackingLabel,
 		];
 	}
 }
