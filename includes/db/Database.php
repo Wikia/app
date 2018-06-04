@@ -830,8 +830,8 @@ abstract class DatabaseBase implements DatabaseType {
 	 *
 	 * @return bool
 	 */
-	function isWriteQuery( $sql ) {
-		return !preg_match( '/^(?:SELECT|BEGIN|ROLLBACK|COMMIT|SET|SHOW|EXPLAIN|\(SELECT)\b/i', ltrim( $sql ) ) && // PLATFORM-1417 (ltrim)
+	static function isWriteQuery( $sql ) {
+		return !preg_match( '/^(?:SELECT|BEGIN|ROLLBACK|COMMIT|SET|USE|SHOW|EXPLAIN|\(SELECT)\b/i', ltrim( $sql ) ) && // PLATFORM-1417 (ltrim)
 			!preg_match('/(FOR UPDATE|LOCK IN SHARE MODE)$/i', rtrim( $sql ) ); // MAIN-5810 (rtrim)
 	}
 
@@ -918,7 +918,7 @@ abstract class DatabaseBase implements DatabaseType {
 		}
 
 		$this->mLastQuery = $sql;
-		$is_writeable = $this->isWriteQuery( $sql );
+		$is_writeable = static::isWriteQuery( $sql );
 		$isTemporaryTableOperation = $this->registerTempTableOperation( $sql );
 
 		if ( !$this->mDoneWrites && $is_writeable ) {
@@ -3884,7 +3884,7 @@ abstract class DatabaseBase implements DatabaseType {
 			$this->getWikiaLogger()->defaultLogger( 'mediawiki-sql' )->info( $sql, $context );
 		}
 
-		if ( $this->isWriteQuery($sql) &&
+		if ( static::isWriteQuery($sql) &&
 			(
 				strpos( $sql, '`revision`' ) !== false
 				|| strpos( $sql, '`page`' ) !== false

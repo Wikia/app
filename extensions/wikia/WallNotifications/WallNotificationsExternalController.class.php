@@ -3,16 +3,6 @@
 class WallNotificationsExternalController extends WikiaController {
 	const WALL_WIKI_NAME_MAX_LEN = 32;
 
-	private $controllerName;
-
-	public function init() {
-		if ( ( $this->app->checkSkin( [ 'oasis' ] ) ) ) {
-			$this->controllerName = 'GlobalNavigationWallNotifications';
-		} else {
-			$this->controllerName = 'WallNotifications';
-		}
-	}
-
 	public function getUpdateCounts() {
 		global $wgUser;
 
@@ -81,7 +71,7 @@ class WallNotificationsExternalController extends WikiaController {
 
 		$wgMemc->set( $notificationKey,  $wgUser->getId() );
 
-		$this->response->setVal( 'html', $this->app->renderView( $this->controllerName, 'Update', [
+		$this->response->setVal( 'html', $this->app->renderView( DesignSystemGlobalNavigationWallNotificationsService::class, 'Update', [
 			'notificationCounts' => $all, 'count' => $sum, 'notificationKey' => $notificationKey
 		] ) );
 		$this->response->setVal( 'count', $sum );
@@ -107,20 +97,20 @@ class WallNotificationsExternalController extends WikiaController {
 		if ( $user->isLoggedIn() ) {
 			if ( !empty( $all['unread_count'] ) || !empty( $all['read_count'] ) ) {
 				foreach ( $all['unread'] as $unreadNotification ) {
-					$html .= $this->app->renderView( $this->controllerName, 'Notification', [
+					$html .= $this->app->renderView( DesignSystemGlobalNavigationWallNotificationsService::class, 'Notification', [
 						'notify' => $unreadNotification,
 						'unread' => true
 					] );
 				}
 
 				foreach ( $all['read'] as $readNotification ) {
-					$html .= $this->app->renderView( $this->controllerName, 'Notification', [
+					$html .= $this->app->renderView( DesignSystemGlobalNavigationWallNotificationsService::class, 'Notification', [
 						'notify' => $readNotification,
 						'unread' => false
 					] );
 				}
 			} else {
-				$html = $this->app->renderPartial( $this->controllerName, 'empty' );
+				$html = $this->app->renderPartial( DesignSystemGlobalNavigationWallNotificationsService::class, 'empty' );
 			}
 		}
 

@@ -25,7 +25,7 @@ class DartKeyValueImport extends Maintenance {
 		// ignore CSV headers
 		fgets( $csvFile );
 
-		while ( $entry = fgetcsv( $csvFile, 0, ';' ) ) {
+		while ( $entry = fgetcsv( $csvFile, 0, ',' ) ) {
 			list( $domain, $dbNameInput, $dartValues ) = $entry;
 			// strip leading underscore _ from DB name from CSV
 			$wikiId = WikiFactory::DBtoID( substr( $dbNameInput, 1 ) );

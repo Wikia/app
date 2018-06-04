@@ -17,14 +17,10 @@ $wgAutoloadClasses['WallNotificationAdminEntity'] =  __DIR__ . '/WallNotificatio
 $wgAutoloadClasses['WallNotificationsOwner'] =  __DIR__ . '/WallNotificationsOwner.class.php';
 $wgAutoloadClasses['WallNotificationOwnerEntity'] =  __DIR__ . '/WallNotificationOwnerEntity.class.php';
 
-$wgAutoloadClasses['WallNotificationControllerBase'] = __DIR__ . '/WallNotificationControllerBase.class.php';
 $wgAutoloadClasses['WallNotificationEntity'] =  __DIR__ . '/WallNotificationEntity.class.php';
-$wgAutoloadClasses['WallNotificationsController'] =  __DIR__ . '/WallNotificationsController.class.php';
-$wgAutoloadClasses['GlobalNavigationWallNotificationsController'] =  __DIR__ . '/GlobalNavigationWallNotificationsController.class.php';
 $wgAutoloadClasses['WallNotificationsExternalController'] =  __DIR__ . '/WallNotificationsExternalController.class.php';
 
 $wgAutoloadClasses['WallNotificationsEveryone'] =  __DIR__ . '/WallNotificationsEveryone.class.php';
-$wgAutoloadClasses['WallNotificationsHooksHelper'] =  __DIR__ . '/WallNotificationsHooksHelper.class.php';
 
 // Notifications are required on NonWall Wikis in order to show proper
 // lower-left corner notification bubbles from Wall Wikis
@@ -33,7 +29,3 @@ $wgAutoloadClasses['WallMessage'] =  __DIR__ . '/../Wall/WallMessage.class.php';
 $wgAutoloadClasses['CommentsIndex'] = __DIR__ . '/../Wall/index/CommentsIndex.class.php';
 $wgAutoloadClasses['CommentsIndexEntry'] = __DIR__ . '/../Wall/index/CommentsIndexEntry.class.php';
 
-// add script in monobook
-$wgHooks['SkinAfterBottomScripts'][] = 'WallNotificationsHooksHelper::onSkinAfterBottomScripts';
-
-$wgHooks['PersonalUrls'][] = 'WallNotificationsHooksHelper::onPersonalUrls';
