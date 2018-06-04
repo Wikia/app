@@ -51,6 +51,8 @@ define('ext.wikia.adEngine.lookup.a9', [
 		var a9Slots;
 
 		trackingOptIn.pushToUserConsentQueue(function (optIn) {
+			var isConsentStringEnabled = adContext.get('opts.isConsentStringEnabled');
+
 			log('User opt-' + (optIn ? 'in' : 'out') + ' for A9', log.levels.info, logGroup);
 
 			// TODO: force disable if opt out, remove after CMP tests
@@ -67,11 +69,12 @@ define('ext.wikia.adEngine.lookup.a9', [
 				win.apstag.init({
 					pubID: amazonId,
 					videoAdServer: 'DFP',
-					gdpr: {
+					// TODO: remove condition after CMP tests
+					gdpr: isConsentStringEnabled ? {
 						enabled: trackingOptIn.geoRequiresTrackingConsent(),
 						consent: consentString.getConsentString(optIn),
 						cmpTimeout: 2000
-					}
+					} : undefined
 				});
 
 				loaded = true;
