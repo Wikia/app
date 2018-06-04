@@ -358,7 +358,7 @@ class CreateNewWikiController extends WikiaController {
 		}
 
 		$this->response->setFormat( 'json' );
-		$this->response->setVal( 'city_id', (int) $task_details->city_id );
+		$this->response->setVal( self::CITY_ID_FIELD, (int) $task_details->city_id );
 
 		// not set creation_ended value means that we're still creating a wiki
 		if ( empty( $task_details->creation_ended ) ) {
@@ -370,8 +370,13 @@ class CreateNewWikiController extends WikiaController {
 
 			if ( $completed === 1 ) {
 				$this->response->setVal( self::STATUS_FIELD, self::STATUS_OK );
+				$finishCreateTitle = GlobalTitle::newFromText( "FinishCreate", NS_SPECIAL, $task_details->city_id );
 
-				// TODO: add a link to Special:FinishCreate
+				$fullURL = $finishCreateTitle->getFullURL( [
+					'editToken' => $this->getContext()->getUser()->getEditToken()
+				] );
+				$finishCreateUrl = empty( $wgDevelDomains ) ? $fullURL : str_replace( '.wikia.com', '.'.$wgDevelDomains[0], $fullURL );
+				$this->response->setVal( 'finishCreateUrl',  $finishCreateUrl );
 			}
 			else {
 				// oh my, an error...
