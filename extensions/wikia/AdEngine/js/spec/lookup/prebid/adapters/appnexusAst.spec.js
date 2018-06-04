@@ -10,9 +10,6 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.appnexusAst', function () {
 			}
 		},
 		context: {},
-		instartLogic: {
-			isBlocking: function () {}
-		},
 		slotsContext: {
 			filterSlotMap: function (map) {
 				return map;
@@ -27,7 +24,6 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.appnexusAst', function () {
 		return modules['ext.wikia.adEngine.lookup.prebid.adapters.appnexusAst'](
 			mocks.adContext,
 			mocks.slotsContext,
-			mocks.instartLogic,
 			mocks.loc
 		);
 	}
@@ -41,13 +37,11 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.appnexusAst', function () {
 	});
 
 	it('enables bidder if flag is on and user is not blocking ads', function () {
-		spyOn(mocks.instartLogic, 'isBlocking').and.returnValue(false);
 		spyOn(mocks.adContext, 'get').and.returnValue(true);
 		expect(getAppNexus().isEnabled()).toBeTruthy();
 	});
 
 	it('disables bidder if flag is off and user is not blocking ads', function () {
-		spyOn(mocks.instartLogic, 'isBlocking').and.returnValue(false);
 		spyOn(mocks.adContext, 'get').and.returnValue(false);
 		expect(getAppNexus().isEnabled()).toBeFalsy();
 	});

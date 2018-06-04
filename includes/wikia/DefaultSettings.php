@@ -1371,31 +1371,6 @@ $wgHighValueCountries = null;
 $wgAdDriverTurtleCountries = null;
 
 /**
- * @name wgAdDriverEnableInstartLogicRecovery
- * Enable InstartLogic Recovery per wiki
- */
-$wgAdDriverEnableInstartLogicRecovery = true;
-
-/**
- * @name $wgAdDriverPageFairDetectionCountries
- * List of countries to call PageFair detection scripts
- */
-$wgAdDriverPageFairDetectionCountries = null;
-
-/**
- * @name $wgAdDriverPageFairRecoveryCountries
- * List of countries to call ads through PageFair
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverPageFairRecoveryCountries = null;
-
-/**
- * @name $wgAdDriverEnablePageFairRecovery
- * Enable PageFair Recovery per wiki
- */
-$wgAdDriverEnablePageFairRecovery = true;
-
-/**
  * @name $wgAdDriverBabDetectionDesktopCountries
  * List of countries to call BlockAdBlock detection scripts on oasis
  */
@@ -1627,13 +1602,6 @@ $wgPreferenceServiceWrite = true;
 $wgEnableFliteTagExt = false;
 
 /**
- * @name $wgARecoveryEngineCustomLog
- * Enables Kibana logging of ad recovery interruptions
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgARecoveryEngineCustomLog = null;
-
-/**
  * Protect Piggyback logs even if the extension is disabled
  */
 $wgLogRestrictions['piggyback'] = 'piggyback';
@@ -1738,12 +1706,6 @@ $wgEnableOpenXSPC = true;
  * SUS-4734
  */
 $wgInlineStartupScript = false;
-
-/**
- * Enable recovery
- * It should be always included even if recovery is disabled as we use Recovery classes outside the module
- */
-include_once("$IP/extensions/wikia/ARecoveryEngine/ARecoveryEngine.setup.php");
 
 include_once "$IP/extensions/wikia/ImageReview/ImageReviewEvents.setup.php";
 

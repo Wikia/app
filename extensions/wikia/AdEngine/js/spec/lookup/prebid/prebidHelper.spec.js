@@ -81,11 +81,6 @@ describe('ext.wikia.adEngine.lookup.prebid.prebidHelper', function () {
 			getAdapters: function () {
 			}
 		},
-		instartLogic: {
-			isBlocking: function () {
-				return false;
-			}
-		},
 		prebidVersionCompatibility: noop,
 		win: {
 			pbjs: {
@@ -105,7 +100,6 @@ describe('ext.wikia.adEngine.lookup.prebid.prebidHelper', function () {
 			mocks.adContext,
 			mocks.adaptersRegistry,
 			mocks.prebidVersionCompatibility,
-			mocks.instartLogic,
 			mocks.win
 		);
 	}

@@ -2,10 +2,9 @@
 define('ext.wikia.adEngine.lookup.prebid.adapters.beachfront', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.context.slotsContext',
-	'ext.wikia.aRecoveryEngine.instartLogic.recovery',
 	'wikia.location',
 	'wikia.log'
-], function (adContext, slotsContext, instartLogic, loc, log) {
+], function (adContext, slotsContext, loc, log) {
 	'use strict';
 
 	var bidderName = 'beachfront',
@@ -26,7 +25,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.beachfront', [
 		};
 
 	function isEnabled() {
-		return adContext.get('bidders.beachfront') && !instartLogic.isBlocking();
+		return adContext.get('bidders.beachfront');
 	}
 
 	function prepareAdUnit(slotName, config) {

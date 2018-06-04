@@ -47,19 +47,13 @@
 	}
 
 	var blockingTracked = {
-			babDetector: false,
-			pageFair: false
+			babDetector: false
 		},
 		GASettings = {
 			babDetector: {
 				trackName: 'babDetector',
 				dimension: 6,
 				name: 'babdetector'
-			},
-			pageFair: {
-				trackName: 'pageFair',
-				dimension: 7,
-				name: 'pagefair'
 			}
 		},
 		listenerSettings = [
@@ -72,16 +66,6 @@
 				eventName: 'bab.not_blocking',
 				value: false,
 				detectorSettings: GASettings.babDetector
-			},
-			{
-				eventName: 'pf.blocking',
-				value: true,
-				detectorSettings: GASettings.pageFair
-			},
-			{
-				eventName: 'pf.not_blocking',
-				value: false,
-				detectorSettings: GASettings.pageFair
 			}
 		];
 

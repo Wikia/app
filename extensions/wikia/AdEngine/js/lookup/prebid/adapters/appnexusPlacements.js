@@ -28,14 +28,10 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.appnexusPlacements', [
 			}
 		};
 
-	function getPlacement(skin, position, isRecovering) {
+	function getPlacement(skin, position) {
 		var context = adContext.getContext(),
 			vertical = skin === 'oasis' ? 'pal' : context.targeting.mappedVerticalName,
 			skinVertical;
-
-		if (isRecovering) {
-			vertical = 'recovery';
-		}
 
 		if (placementsMap && placementsMap[skin] && placementsMap[skin][vertical]) {
 			skinVertical = placementsMap[skin][vertical];
