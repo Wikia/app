@@ -23,6 +23,10 @@ class CreateWikiTask extends BaseTask {
 	public function create( string $name, string $domain, string $language, int $vertical, array $categories ) {
 		wfProfileIn( __METHOD__ );
 
+		// work on behalf of a user who wants to create a wiki
+		global $wgUser;
+		$wgUser = $this->createdByUser();
+
 		$then = microtime( true );
 
 		$context = TaskContext::newFromUserInput( $name, $domain, $language, $vertical, $categories );
