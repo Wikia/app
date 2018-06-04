@@ -111,7 +111,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 		}
 
 		function queueAd() {
-			if (slot.container) {
+			if (slot && slot.container) {
 				log(['queueAd', slotName, element], log.levels.debug, logGroup);
 				slot.container.appendChild(element.getNode());
 
