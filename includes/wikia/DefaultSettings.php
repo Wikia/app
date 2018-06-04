@@ -1401,6 +1401,12 @@ $wgAdDriverBabRecoveryCountries = null;
 $wgAdDriverNewPrebidCountries = null;
 
 /**
+ * @name $wgAdDriverConsentStringCountries
+ * List of countries to enable Consent Management module in Prebid
+ */
+$wgAdDriverConsentStringCountries = null;
+
+/**
  * trusted proxy service registry
  */
 $wgAutoloadClasses[ 'TrustedProxyService'] =  "$IP/includes/wikia/services/TrustedProxyService.class.php" ;
