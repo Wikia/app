@@ -15,6 +15,7 @@ class CreateNewWikiController extends WikiaController {
 	const ERROR_CODE_FIELD         = 'errCode';
 	const ERROR_MESSAGE_FIELD      = 'errMessage';
 	const STATUS_OK                = 'ok';
+	const STATUS_IN_PROGRESS       = 'inProgress';
 	const SITE_NAME_FIELD          = 'siteName';
 	const CITY_ID_FIELD            = 'cityId';
 	const CHECK_RESULT_FIELD       = 'res';
@@ -335,6 +336,54 @@ class CreateNewWikiController extends WikiaController {
 		 */
 
 		wfProfileOut(__METHOD__);
+	}
+
+	/**
+	 * This AJAX entry point is used to poll for wiki creation status
+	 *
+	 * @see SUS-4383
+	 */
+	public function CheckStatus() {
+		$task_id = (string) $this->getRequest()->getVal('task_id');
+		$task_details = CreateWikiTask::getCreationLogEntry( $task_id );
+
+		// do not cache, we always want to hit the backend as the response can change anytime
+		$this->response->setCachePolicy( WikiaResponse::CACHE_PRIVATE );
+		$this->response->setCacheValidity( WikiaResponse::CACHE_DISABLED );
+
+		// given task ID not found in the creation log
+		if ( empty( $task_details ) ) {
+			$this->response->setCode( 404 );
+			return;
+		}
+
+		$this->response->setFormat( 'json' );
+		$this->response->setVal( 'city_id', (int) $task_details->city_id );
+
+		// not set creation_ended value means that we're still creating a wiki
+		if ( empty( $task_details->creation_ended ) ) {
+			$this->response->setVal( self::STATUS_FIELD, self::STATUS_IN_PROGRESS );
+		}
+		else {
+			// we're done, but did we succeed?
+			$completed = (int) $task_details->completed;
+
+			if ( $completed === 1 ) {
+				$this->response->setVal( self::STATUS_FIELD, self::STATUS_OK );
+
+				// TODO: add a link to Special:FinishCreate
+			}
+			else {
+				// oh my, an error...
+				$this->response->setCode( 500 );
+				$this->response->setVal( self::STATUS_FIELD, self::STATUS_BACKEND_ERROR );
+				$this->response->setVal( self::STATUS_MSG_FIELD, wfMessage( 'cnw-error-general' )->parse() );
+				$this->response->setVal( self::STATUS_HEADER_FIELD, wfMessage( 'cnw-error-general-heading' )->escaped() );
+				$this->response->setVal( self::ERROR_CLASS_FIELD, CreateWikiException::class );
+				$this->response->setVal( self::ERROR_CODE_FIELD, 0 );
+				$this->response->setVal( self::ERROR_MESSAGE_FIELD, $task_details->exception_message );
+			}
+		}
 	}
 
 	/**

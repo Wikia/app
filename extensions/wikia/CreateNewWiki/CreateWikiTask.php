@@ -45,7 +45,7 @@ class CreateWikiTask extends BaseTask {
 	public static function getCreationLogEntry( string $task_id ) {
 		return self::getDB( DB_SLAVE )->selectRow(
 			self::CREATION_LOG_TABLE,
-			[ 'city_id', 'finished', 'creation_completed' ],
+			[ 'city_id', 'completed', 'creation_started', 'creation_ended', 'exception_message' ],
 			[
 				'task_id' => $task_id
 			],
