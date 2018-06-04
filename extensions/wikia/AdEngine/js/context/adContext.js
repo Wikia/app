@@ -214,6 +214,7 @@ define('ext.wikia.adEngine.adContext', [
 			geo.isProperGeo(instantGlobals.wgAdDriverBottomLeaderBoardViewportCountries);
 		context.opts.additionalBLBSizes =
 			geo.isProperGeo(instantGlobals.wgAdDriverBottomLeaderBoardAdditionalSizesCountries);
+		context.opts.isBLBSingleSizeForUAPEnabled = isProperGeo('wgAdDriverSingleBLBSizeForUAPCountries');
 
 		context.opts.labradorTest = isProperGeo('wgAdDriverLABradorTestCountries');
 		context.opts.labradorTestGroup = context.opts.labradorTest ? 'B' : 'A';
