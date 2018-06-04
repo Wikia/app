@@ -204,7 +204,6 @@ class CreateNewWikiController extends WikiaController {
 		$this->checkWriteRequest();
 
 		$wgRequest = $this->app->getGlobal('wgRequest'); /* @var $wgRequest WebRequest */
-		$wgDevelDomains = $this->app->getGlobal('wgDevelDomains');
 		$wgUser = $this->app->getGlobal('wgUser'); /* @var $wgUser User */
 
 		$params = $wgRequest->getArray('data');
@@ -274,6 +273,21 @@ class CreateNewWikiController extends WikiaController {
 			return;
 		}
 
+		// SUS-4383 | use an offline Celery task to create a wiki
+		$task = CreateWikiTask::newLocalTask();
+
+		$categories = isset($params['wCategories']) ? $params['wCategories'] : array();
+
+		$task->call( 'create', $params['wName'], $params['wDomain'], $params['wLanguage'], $params['wVertical'], $categories );
+		$task_id = $task->setQueue( Wikia\Tasks\Queues\PriorityQueue::NAME )->queue();
+
+		// return ID of the created task ID, front-end code will poll its status
+		// e.g {"task_id":"mw-04CF2876-2176-4036-96E5-B6378DB1AC8E"}
+		$this->response->setCode( 201 ); // HTTP 201 Created
+		$this->response->setVal( 'task_id', $task_id );
+
+		/**
+
 		$categories = isset($params['wCategories']) ? $params['wCategories'] : array();
 
 		$createWiki = new CreateWiki($params['wName'], $params['wDomain'], $params['wLanguage'], $params['wVertical'], $categories);
@@ -321,6 +335,8 @@ class CreateNewWikiController extends WikiaController {
 			'city_id' => $cityId,
 			'params' => $params,
 		]);
+		 *
+		 */
 
 		wfProfileOut(__METHOD__);
 	}
