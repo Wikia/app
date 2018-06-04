@@ -15,18 +15,12 @@ $wgExtensionCredits[ 'specialpage' ][ ] = array(
 		'Owen Davis'
 	),
 	'descriptionmsg' => 'wikifeatures-desc',
-	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/AuthImage',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/WikiFeatures',
 );
 
 //classes
 $wgAutoloadClasses['WikiFeaturesSpecialController'] = $dir . 'WikiFeaturesSpecialController.class.php';
-$app->getDispatcher()->addRouting(
-	'WikiFeaturesSpecialController',
-	array( 'index' => array( "skin" => array( "monobook", "wikiamobile" ), "method" => "notOasis") )
-);
-
 $wgAutoloadClasses['WikiFeaturesHelper'] =  $dir . 'WikiFeaturesHelper.class.php';
-$wgAutoloadClasses['WikiaLabsSpecialController'] =  $dir . 'WikiaLabsSpecialController.class.php';
 
 // i18n mapping
 $wgExtensionMessagesFiles['WikiFeatures'] = $dir . 'WikiFeatures.i18n.php';
@@ -34,7 +28,7 @@ $wgExtensionMessagesFiles['WikiFeaturesAliases'] = $dir . 'WikiFeatures.alias.ph
 
 // special pages
 $wgSpecialPages['WikiFeatures'] = 'WikiFeaturesSpecialController';
-$wgSpecialPages['WikiaLabs'] = 'WikiaLabsSpecialController';
+$wgSpecialPages['WikiaLabs'] = 'WikiFeaturesSpecialController';
 
 $wgLogTypes[] = 'wikifeatures';
 $wgLogNames['wikifeatures'] = 'wikifeatures-log-name';

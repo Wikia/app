@@ -39,7 +39,6 @@ $messages['en'] = array(
 	'follow-categoryadd-summary' => 'Page added to category',
 	'follow-bloglisting-summary' => 'Blog posted on blog page',
 	'wikiafollowedpages-userpage-heading' => "Pages I'm following",
-
 	'enotif_body_categoryadd-HTML' => 'Hi $WATCHINGUSERNAME,
 <br /><br />
 A page has been added to a category you\'re following, <a href="$CATEGORY_URL">$CATEGORY</a>, on {{SITENAME}}.
@@ -163,7 +162,6 @@ $messages['ar'] = array(
 	'follow-categoryadd-summary' => 'تمت إضافة الصفحة للتصنيف',
 	'follow-bloglisting-summary' => 'تمت إضافة مدونة في صفحة المدونات',
 	'wikiafollowedpages-userpage-heading' => 'صفحات أتابعها',
-
 	'enotif_subject_categoryadd' => 'تمت إضافة صفحة $PAGETITLE في {{SITENAME}} لتصنيف $CATEGORYNAME من قبل $PAGEEDITOR',
 	'enotif_body_categoryadd' => 'عزيزي $WATCHINGUSERNAME,
 لقد تمت إضافة صفحة لتصنيف تتابعه أنت في {{SITENAME}}.
@@ -289,7 +287,6 @@ Ouzhpennit pajennoù d\'ar roll-mañ en ur glikañ war "{{int:watch}}" e laez ur
 	'follow-categoryadd-summary' => "Pajenn bet ouzhpennet d'ar rummad",
 	'follow-bloglisting-summary' => 'Blog postet war pajennoù ar blogoù',
 	'wikiafollowedpages-userpage-heading' => 'Pajennoù heuliet ganin',
-
 	'enotif_subject_categoryadd' => 'Ar bajenn $PAGETITLE eus al lec\'hienn {{SITENAME}} a zo bet ouzhpennet da $CATEGORYNAME gant $PAGEEDITOR',
 	'enotif_subject_blogpost' => 'Ar bajenn $PAGETITLE eus al lec\'hienn {{SITENAME}} a zo bet postet war $BLOGLISTINGNAME gant $PAGEEDITOR',
 );
@@ -373,7 +370,6 @@ Přidejte stránky do tohoto seznamu klepnutím na tlačítko "{{int:watch}}" v 
 	'follow-categoryadd-summary' => 'Stránka přidána do kategorie',
 	'follow-bloglisting-summary' => 'Blog přidán na stránku blogu',
 	'wikiafollowedpages-userpage-heading' => 'Stránky, které sleduji',
-
 	'enotif_subject_categoryadd' => '{{SITENAME}} stránka $PAGETITLE byla přidána do $CATEGORYNAME uživatelem $PAGEEDITOR',
 	'enotif_body_categoryadd' => 'Drahý(á) $WATCHINGUSERNAME,
 Do kategorie, kterou sledujete, byla přidána stránka na {{SITENAME}}.
@@ -449,7 +445,6 @@ Füge Seiten zu dieser Liste hinzu indem du auf "{{int:watch}}" klickst.',
 	'follow-categoryadd-summary' => 'Seite zu Kategorie hinzugefügt',
 	'follow-bloglisting-summary' => 'Blog auf Blogseite veröffentlicht',
 	'wikiafollowedpages-userpage-heading' => 'Seiten, die ich verfolge',
-
 	'enotif_subject_categoryadd' => '[{{SITENAME}}]: Die Seite „$PAGETITLE“ wurde von $PAGEEDITOR der Kategorie $CATEGORY hinzugefügt',
 	'enotif_body_categoryadd' => 'Hallo $WATCHINGUSERNAME,
 Eine Seite, die du auf {{SITENAME}} beobachtest, wurde einer Kategorie hinzugefügt.
@@ -514,13 +509,17 @@ Schau doch mal rein und bearbeite sie weiter...
 </p>',
 	'wikiafollowedpages-special-board' => 'Im Unterforum $1',
 	'wikiafollowedpages-special-heading-board' => 'Forum-Diskussionsstränge ($1)',
+	'wikiafollowedpages-userpage-empty' => 'Die Liste der verfolgten Seiten dieses Benutzers ist leer.
+Du kannst dieser Liste Seiten hinzufügen indem du den {{int:watch}}-Button anklickst.',
+	'wikiafollowedpages-userpage-more' => 'Mehr',
+	'wikiafollowedpages-userpage-hide' => 'verstecken',
+	'wikiafollowedpages-userpage-hide-tooltip' => 'Liste verfolgter Seiten vor öffentlicher Einsicht schützen',
 );
 
 $messages['de-formal'] = array(
 	'wikiafollowedpages-special-empty' => 'Ihre Liste verfolgter Seiten ist leer.
 Sie können durch Klicken des {{int:watch}}-Knopfes Seiten dieser Liste hinzufügen.',
 	'wikiafollowedpages-special-anon' => 'Bitte [[Special:Signup|anmelden]] um Ihre Beobachtungsliste zu erstellen oder betrachten.',
-
 	'enotif_body_categoryadd' => 'Hallo $WATCHINGUSERNAME,
 Eine Seite, die Sie auf {{SITENAME}} beobachten, wurde einer Kategorie hinzugefügt.
 
@@ -695,11 +694,13 @@ Por favor visita y edita frecuentemente...
 </p>',
 	'wikiafollowedpages-special-board' => 'en el directorio $1',
 	'wikiafollowedpages-special-heading-board' => 'Hilos del foro ($1)',
+	'wikiafollowedpages-userpage-empty' => 'La lista de páginas seguidas está vacía. Agrega páginas a esta lista haciendo click en "{{int:watch}}" en la parte superior de una página.',
+	'wikiafollowedpages-userpage-more' => 'Más',
+	'wikiafollowedpages-userpage-hide' => 'ocultar',
+	'wikiafollowedpages-userpage-hide-tooltip' => 'Ocultar tus listas de páginas seguidas de la vista del público',
 );
 
 $messages['eu'] = array(
-
-
 );
 
 $messages['fa'] = array(
@@ -766,9 +767,9 @@ Ajoutez des pages à cette liste en cliquant sur « {{int:watch}} » en bas d’
 	'follow-categoryadd-summary' => 'Page ajoutée à la catégorie',
 	'follow-bloglisting-summary' => 'Blog posté sur la page de blog',
 	'wikiafollowedpages-userpage-heading' => 'Pages que je suis',
-
 	'enotif_subject_categoryadd' => 'La page $PAGETITLE de {{SITENAME}} a été ajoutée à $CATEGORYNAME par $PAGEEDITOR',
 	'enotif_body_categoryadd' => '$WATCHINGUSERNAME,
+
 Une page a été ajoutée à une catégorie que vous suivez sur {{SITENAME}}.
 
 Consultez « $PAGETITLE_URL » pour la nouvelle page.
@@ -801,6 +802,7 @@ L’équipe Fandom</p>
 <div style="font-size: 70%;margin-top: 25px;text-align: center;">Cliquez <a href="$UNSUBSCRIBEURL">ici</a> pour vous ne plus recevoir d\'e-mails de Fandom.</div>',
 	'enotif_subject_blogpost' => 'Un nouveau billet de blog, $PAGETITLE, a été ajouté dans $BLOGLISTING sur {{SITENAME}} par $PAGEEDITOR',
 	'enotif_body_blogpost' => '$WATCHINGUSERNAME,
+
 Une modification a été apportée à l’une des pages de liste de blogs que vous suivez sur {{SITENAME}}.
 
 Consultez « $PAGETITLE_URL » pour lire ce nouveau billet.
@@ -832,6 +834,11 @@ Merci de visiter ce site et de le modifier régulièrement...
 </p>
 <div style="font-size: 70%;margin-top: 25px;text-align: center;">Cliquez <a href="$UNSUBSCRIBEURL">ici</a> pour ne plus recevoir d\'e-mails de Fandom.</div>',
 	'wikiafollowedpages-special-board' => 'sur le sous-forum $1',
+	'wikiafollowedpages-userpage-empty' => 'La liste de pages suivies de cet utilisateur est vide.
+Ajoutez des pages à cette liste en cliquant sur « {{int:watch}} » en bas d’une page.',
+	'wikiafollowedpages-userpage-more' => 'Plus',
+	'wikiafollowedpages-userpage-hide' => 'masquer',
+	'wikiafollowedpages-userpage-hide-tooltip' => 'Cacher votre liste de suivi de la vue du public',
 );
 
 $messages['gl'] = array(
@@ -871,7 +878,6 @@ Engada páxinas a esta lista premendo no botón "{{int:watch}}" que aparecerá n
 	'follow-categoryadd-summary' => 'Páxina engadida á categoría',
 	'follow-bloglisting-summary' => 'Blogue publicado na páxina do blogue',
 	'wikiafollowedpages-userpage-heading' => 'Páxinas que vixío',
-
 	'enotif_subject_categoryadd' => '$PAGEEDITOR engadiu a páxina "$PAGETITLE" de {{SITENAME}} a $CATEGORYNAME',
 	'enotif_body_categoryadd' => 'Estimado $WATCHINGUSERNAME:
 
@@ -974,7 +980,6 @@ $messages['he'] = array(
 	'follow-categoryadd-summary' => 'נוסף דף לקטגוריה',
 	'follow-bloglisting-summary' => 'פורסם בלוג בדף הבלוגים',
 	'wikiafollowedpages-userpage-heading' => 'דפים שאחריהם אני עוקב',
-
 	'enotif_subject_categoryadd' => 'הדף $PAGETITLE ב{{grammar:תחילית|{{SITENAME}}}} נוסף ל$CATEGORYNAME על־ידי $PAGEEDITOR',
 	'enotif_body_categoryadd' => 'לכבוד $WATCHINGUSERNAME,
 נוסף דף לקטגוריה שאתם עוקבים אחריה ב{{grammar:תחילית|{{SITENAME}}}}.
@@ -1113,7 +1118,6 @@ Adde paginas a iste lista con un clic super "{{int:watch}}" in alto de un pagina
 	'follow-categoryadd-summary' => 'Pagina addite a categoria',
 	'follow-bloglisting-summary' => 'Articulo publicate in pagina de blog',
 	'wikiafollowedpages-userpage-heading' => 'Paginas que io observa',
-
 	'enotif_subject_categoryadd' => 'Le pagina $PAGETITLE de {{SITENAME}} ha essite addite a $CATEGORYNAME per $PAGEEDITOR',
 	'enotif_body_categoryadd' => 'Car $WATCHINGUSERNAME,
 Un pagina ha essite addite a un categoria que tu observa in {{SITENAME}}.
@@ -1299,13 +1303,17 @@ Vai a: {{fullurl:{{ns:special}}:Preferences}}.',
 	'wikiafollowedpages-special-showmore' => 'Mostra di più',
 	'wikiafollowedpages-special-title-userbar' => 'Pagine seguite',
 	'wikiafollowedpages-special-title' => 'Pagine seguite',
-
 	'wikiafollowedpages-userpage-heading' => 'Pagine che seguo',
 	'tog-enotiffollowedpages' => "Inviami un'email quando viene modificata una pagina che sto seguendo",
 	'tog-enotiffollowedminoredits' => "Inviami un'e-mail per piccole modifiche alle pagine che sto seguendo",
 	'tog-hidefollowedpages' => 'Rendi privato il mio elenco delle pagine seguite',
 	'follow-categoryadd-summary' => 'Pagina aggiunta alla categoria',
 	'follow-bloglisting-summary' => 'Blog pubblicato sulla pagina del blog',
+	'wikiafollowedpages-userpage-empty' => 'L\'elenco delle pagine seguite di questo utente è vuoto.
+Aggiungi pagine a questo elenco facendo clic su "{{int:watch}}" in cima ad una pagina.',
+	'wikiafollowedpages-userpage-more' => 'Altro',
+	'wikiafollowedpages-userpage-hide' => 'nascondi',
+	'wikiafollowedpages-userpage-hide-tooltip' => 'Nascondi gli elenchi delle pagine seguite alla vista pubblica',
 );
 
 $messages['ja'] = array(
@@ -1392,6 +1400,10 @@ $PAGETITLE_URL
 	'wikiafollowedpages-special-heading-wall' => 'メッセージウォール（$1件）',
 	'wikiafollowedpages-special-heading-board' => 'フォーラムスレッド（$1件）',
 	'wikiafollowedpages-special-board' => '$1のボード上',
+	'wikiafollowedpages-userpage-empty' => 'フォロー中のページが存在しません。リストにページを追加するには、ページのトップにある"{{int:watch}}"リンクをクリックしてください。',
+	'wikiafollowedpages-userpage-more' => '続き',
+	'wikiafollowedpages-userpage-hide' => '非公開にする',
+	'wikiafollowedpages-userpage-hide-tooltip' => 'あなたがフォロー中のページのリストを非公開にします',
 );
 
 $messages['kn'] = array(
@@ -1512,7 +1524,6 @@ $messages['mk'] = array(
 	'follow-categoryadd-summary' => 'Страницата е додадена во категоријата',
 	'follow-bloglisting-summary' => 'Блогот е објавен на страницата за блогови',
 	'wikiafollowedpages-userpage-heading' => 'Страници што ги следам',
-
 	'enotif_subject_categoryadd' => 'Страницата $PAGETITLE на {{SITENAME}} е додадена во $CATEGORYNAME од $PAGEEDITOR',
 	'enotif_body_categoryadd' => 'Почитуван/а $WATCHINGUSERNAME,
 Во категоријата што ја следите на {{SITENAME}} е додадена страница.
@@ -1631,7 +1642,6 @@ Senaraikan laman yang ingin dipantau dengan mengklik "{{int:watch}}" di bahagian
 	'follow-categoryadd-summary' => 'Laman ditambahkan ke dalam kategori',
 	'follow-bloglisting-summary' => 'Blog dikirim pada laman blog',
 	'wikiafollowedpages-userpage-heading' => 'Laman-laman pantauan saya',
-
 	'enotif_subject_categoryadd' => 'Laman $PAGETITLE dalam $PAGETITLE telah disenaraikan dalam $CATEGORYNAME oleh $PAGEEDITOR',
 	'enotif_body_categoryadd' => '$WATCHINGUSERNAME,
 Satu laman telah ditambahkan dalam kategori yang anda ikuti di {{SITENAME}}.
@@ -1733,7 +1743,6 @@ Legg til sider i listen ved å trykke «{{int:watch}}» øverst på siden.',
 	'follow-categoryadd-summary' => 'Side lagt til kategori',
 	'follow-bloglisting-summary' => 'Blogg lagt ut på bloggsiden',
 	'wikiafollowedpages-userpage-heading' => 'Sider jeg følger',
-
 	'enotif_subject_categoryadd' => '{{SITENAME}}-siden $PAGETITLE har blitt lagt til $CATEGORY av $PAGEEDITOR',
 	'enotif_body_categoryadd' => 'Kjære $WATCHINGUSERNAME,
 En side har blitt lagt til i en kategori du følger på {{SITENAME}}.
@@ -1835,7 +1844,6 @@ Voeg pagina\'s toe aan deze lijst door te klikken op "{{int:watch}}" bovenaan pa
 	'follow-categoryadd-summary' => 'Pagina aan een categorie toegevoegd',
 	'follow-bloglisting-summary' => 'Blogbericht toegevoegd aan blogpagina',
 	'wikiafollowedpages-userpage-heading' => "Pagina's op mijn volglijst",
-
 	'enotif_subject_categoryadd' => 'Pagina $PAGETITLE is op {{SITENAME}} toegevoegd aan $CATEGORYNAME door $PAGEEDITOR',
 	'enotif_body_categoryadd' => 'Beste $WATCHINGUSERNAME,
 Er is een pagina is toegevoegd aan een categorie die u volgt op {{SITENAME}}.
@@ -1967,11 +1975,9 @@ Kom alsjeblieft vaak langs om bewerkingen te maken...
 );
 
 $messages['pdc'] = array(
-
 );
 
 $messages['pfl'] = array(
-
 );
 
 $messages['pl'] = array(
@@ -2066,6 +2072,11 @@ Przejdź na <a href="$PAGETITLE_URL">$PAGETITLE</a>, by obejrzeć nowy wpis.
 </p>',
 	'wikiafollowedpages-special-board' => 'na tablicy $1',
 	'wikiafollowedpages-special-heading-board' => 'Wątki na forum ($1)',
+	'wikiafollowedpages-userpage-empty' => 'Lista stron obserwowanych przez tego użytkownika jest pusta.
+Dodaj strony do tej listy klikając „{{int:watch}}” u góry strony.',
+	'wikiafollowedpages-userpage-more' => 'Więcej',
+	'wikiafollowedpages-userpage-hide' => 'ukryj',
+	'wikiafollowedpages-userpage-hide-tooltip' => 'Ukryj listę śledzonych stron w widoku publicznym',
 );
 
 $messages['pms'] = array(
@@ -2105,7 +2116,6 @@ Ch\'a gionta dle pàgine a costa lista an sgnacand "{{int:watch}}" an cò ëd na
 	'follow-categoryadd-summary' => 'Pàgine giontà a la categorìa',
 	'follow-bloglisting-summary' => 'Scartari scrivù an sla pàgina djë scartari',
 	'wikiafollowedpages-userpage-heading' => "Pàgine ch'im ten-o sot euj",
-
 	'enotif_subject_categoryadd' => 'La pàgina $PAGETITLE ëd {{SITENAME}} a l\'é staita giontà a $CATEGORYNAME da $PAGEEDITOR',
 	'enotif_body_categoryadd' => "Car \$WATCHINGUSERNAME,
 Na pàgina a l'é stàita giontà a na categorìa ch'a ten sot euj su {{SITENAME}}.
@@ -2228,9 +2238,9 @@ Adicione páginas à lista clicando "{{int:watch}}" no topo de uma página.',
 	'follow-categoryadd-summary' => 'Página adicionada à categoria',
 	'follow-bloglisting-summary' => 'Mensagem publicada numa página de blogue',
 	'wikiafollowedpages-userpage-heading' => 'Páginas que eu estou seguindo',
-
 	'enotif_subject_categoryadd' => 'Página $PAGETITLE do site {{SITENAME}} adicionada à categoria $CATEGORYNAME por $PAGEEDITOR',
 	'enotif_body_categoryadd' => 'Olá $WATCHINGUSERNAME,
+
 Uma nova página foi adicionada à categoria $CATEGORY, que você está seguindo na {{SITENAME}}.
 
 Confira a página: "$PAGETITLE_URL".
@@ -2257,6 +2267,7 @@ Confira a página: <a href="$PAGETITLE_URL">$PAGETITLE</a>.
 </p>',
 	'enotif_subject_blogpost' => 'A página $PAGETITLE foi adicionada ao blogue $BLOGLISTING na {{SITENAME}} por $PAGEEDITOR',
 	'enotif_body_blogpost' => 'Olá $WATCHINGUSERNAME,
+
 Um novo post de blogue foi adicionado à lista $BLOGLISTING, que você está seguindo na {{SITENAME}}.
 
 Confira o blogue em: "$PAGETITLE_URL".
@@ -2284,6 +2295,11 @@ Confira o blogue em: <a href="$PAGETITLE_URL">$PAGETITLE</a>.
 	'wikiafollowedpages-special-heading-wall' => 'Murais de Mensagens ($1)',
 	'wikiafollowedpages-special-heading-board' => 'Tópicos de fóruns ($1)',
 	'wikiafollowedpages-special-board' => 'no diretório $1',
+	'wikiafollowedpages-userpage-empty' => 'A lista de páginas seguidas por este utilizador está vazia.
+Adicione páginas à lista clicando "{{int:watch}}" no topo de uma página.',
+	'wikiafollowedpages-userpage-more' => 'Mais',
+	'wikiafollowedpages-userpage-hide' => 'esconder',
+	'wikiafollowedpages-userpage-hide-tooltip' => 'Esconder a sua lista de páginas seguidas do visionamento público',
 );
 
 $messages['ro'] = array(
@@ -2332,7 +2348,6 @@ $messages['ru'] = array(
 	'follow-categoryadd-summary' => 'Страница добавлена в категорию',
 	'follow-bloglisting-summary' => 'Блог опубликован на странице блога',
 	'wikiafollowedpages-userpage-heading' => 'Страницы, которые я отслеживаю',
-
 	'enotif_subject_categoryadd' => 'Страница проекта «{{SITENAME}}» $PAGETITLE была добавлена в категорию $CATEGORYNAME участником $PAGEEDITOR',
 	'enotif_body_categoryadd' => 'Уважаемый $WATCHINGUSERNAME,
 страница была добавлена в категорию, которую Вы отслеживаете в проекте «{{SITENAME}}».
@@ -2398,6 +2413,11 @@ ___________________________________________
 </p>',
 	'wikiafollowedpages-special-board' => 'в гл. теме $1',
 	'wikiafollowedpages-special-heading-board' => 'Темы на форуме ($1)',
+	'wikiafollowedpages-userpage-empty' => 'Список отслеживаемых этим пользователем статей пуст.
+Для добавления страниц в этот список нажмите «{{int:watch}}» наверху этой страницы.',
+	'wikiafollowedpages-userpage-more' => 'Ещё',
+	'wikiafollowedpages-userpage-hide' => 'скрыть',
+	'wikiafollowedpages-userpage-hide-tooltip' => 'Убрать ваши списки отслеживаемых страниц из общего доступа',
 );
 
 $messages['sr-ec'] = array(
@@ -2464,7 +2484,6 @@ Lägg till sidor i denna lista genom att klicka på "{{int:watch}}" överst på 
 	'follow-categoryadd-summary' => 'Sida lades till i kategori',
 	'follow-bloglisting-summary' => 'Blogg postad på bloggsidan',
 	'wikiafollowedpages-userpage-heading' => 'Sidor jag bevakar',
-
 	'enotif_subject_categoryadd' => '{{SITENAME}} sidan $PAGETITLE har lagts till på $CATEGORYNAME av $PAGEEDITOR',
 	'enotif_body_categoryadd' => 'Kära $WATCHINGUSERNAME,
 En sida har lagts till en kategori du bevakar, på {{SITENAME}}.
@@ -2578,7 +2597,6 @@ Magdagdag ng mga pahina sa talaang ito sa pamamagitan ng pagpindot sa "{{int:wat
 	'follow-categoryadd-summary' => 'Idinagdag ang pahina sa kategorya',
 	'follow-bloglisting-summary' => 'Ipinaskil ang blog sa pahina ng blog',
 	'wikiafollowedpages-userpage-heading' => 'Mga pahinang sinusundan ko',
-
 	'enotif_subject_categoryadd' => 'Ang pahinang $PAGETITLE ng {{SITENAME}} ay naidagdag na ni $PAGEEDITOR sa $CATEGORYNAME',
 	'enotif_body_categoryadd' => 'Mahal na $ WATCHINGUSERNAME,
 Isang pahina ang idinagdag sa isang kategoryang sinusundan mo sa {{SITENAME}}.
@@ -2713,7 +2731,6 @@ $messages['uk'] = array(
 	'follow-categoryadd-summary' => 'Сторінка добавлена до категорії',
 	'follow-bloglisting-summary' => 'Блог опублікований на сторінці блогу',
 	'wikiafollowedpages-userpage-heading' => 'Сторінки, за якими я спостерігаю',
-
 	'enotif_subject_categoryadd' => 'У проекті {{SITENAME}} користувач $PAGEEDITOR додав до $CATEGORYNAME сторінку $PAGETITLE',
 	'enotif_body_categoryadd' => 'Шановний $WATCHINGUSERNAME,
 У проекті {{SITENAME}} в категорії, за якою Ви слідкуєте, була створена сторінка.
@@ -2779,8 +2796,6 @@ ___________________________________________
 );
 
 $messages['vep'] = array(
-
-
 );
 
 $messages['vi'] = array(
@@ -2820,7 +2835,6 @@ Thêm nhiều trang vào danh sách này bằng cách nhấn vào "{{int:watch}}
 	'follow-categoryadd-summary' => 'Trang thêm vào thể loại',
 	'follow-bloglisting-summary' => 'Blog đăng trên trang blog',
 	'wikiafollowedpages-userpage-heading' => 'Trang tôi theo dõi',
-
 	'enotif_subject_categoryadd' => '{{SITENAME}} trang $PAGETITLE đã được thêm vào $CATEGORYNAME bởi $PAGEEDITOR',
 	'enotif_body_categoryadd' => 'Chào $WATCHINGUSERNAME,
 Một trang bạn đang theo dõi đã được thêm vào một thể loại trên {{SITENAME}}.
@@ -2911,7 +2925,6 @@ $messages['zh-hans'] = array(
 	'tog-hidefollowedpages' => '对所有人隐藏我关注的页面',
 	'follow-categoryadd-summary' => '页面添加至分类',
 	'wikiafollowedpages-userpage-heading' => '我在关注的页面',
-
 	'enotif_body_categoryadd' => '亲爱的$WATCHINGUSERNAME,
 您在{{SITENAME}}上关注的一个页面已被添加至一个分类之中。
 
@@ -2987,6 +3000,11 @@ ___________________________________________
 	'wikiafollowedpages-special-blog-by' => '由$1创建',
 	'wikiafollowedpages-special-board' => '在$1讨论版上',
 	'follow-bloglisting-summary' => '博客发布在博客页面',
+	'wikiafollowedpages-userpage-empty' => '该用户的关注页面列表为空。
+单击页面顶部的"{{int:watch}}"为此列表添加页面。',
+	'wikiafollowedpages-userpage-more' => '更多',
+	'wikiafollowedpages-userpage-hide' => '隐藏',
+	'wikiafollowedpages-userpage-hide-tooltip' => '隐藏你的关注页面列表并设置为不公开模式',
 );
 
 $messages['zh-hant'] = array(
@@ -3089,7 +3107,11 @@ ___________________________________________
 	'enotif_subject_categoryadd' => '{{SITENAME}}上的$PAGETITLE頁面已被$PAGEEDITOR添加到$CATEGORYNAME',
 	'wikiafollowedpages-special-heading-board' => '論壇討論($1)',
 	'wikiafollowedpages-special-board' => '在$1討論版上',
-
 	'enotif_subject_blogpost' => '{{SITENAME}}上的網誌 $PAGETITLE由$PAGEEDITOR發佈於$BLOGLISTINGNAME',
+	'wikiafollowedpages-userpage-empty' => '您的監視頁面列表是空的。
+按一下頁面頂部的「{{int:watch}}」可增加頁面到此列表中。',
+	'wikiafollowedpages-userpage-more' => '更多',
+	'wikiafollowedpages-userpage-hide' => '隱藏',
+	'wikiafollowedpages-userpage-hide-tooltip' => '隱藏你的監視頁面列表。',
 );
 

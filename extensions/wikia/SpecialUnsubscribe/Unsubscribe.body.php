@@ -94,7 +94,7 @@ class UnsubscribePage extends UnlistedSpecialPage {
 			$this->procUnsub( $email );
 		} else {
 			#this is 1st pass, give them a button to push
-			$this->showInfo( $email , $token);
+			$this->showInfo( $email , $token );
 		}
 
 	}
@@ -131,7 +131,7 @@ class UnsubscribePage extends UnlistedSpecialPage {
 	 * @param $email string: email whose info we're looking up
 	 * @param $token string: token from url, to verify this link
 	 */
-	function showInfo( $email, $token, $timestamp ) {
+	private function showInfo( $email, $token ) {
 		global $wgOut;
 
 
