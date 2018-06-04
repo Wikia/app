@@ -10,6 +10,49 @@ use Wikia\CreateNewWiki\Tasks\TaskContext;
 
 class CreateWikiTask extends BaseTask {
 
+	const CREATION_LOG_TABLE = 'city_creation_log';
+
+	private static function getDB( int $type = DB_SLAVE ) {
+		global $wgExternalSharedDB;
+		return wfGetDB( $type, [], $wgExternalSharedDB );
+	}
+
+	private static function addCreationLogEntry( string $task_id ) : int {
+		$dbw = self::getDB( DB_MASTER );
+
+		$dbw->insert(
+			self::CREATION_LOG_TABLE,
+			[
+				'task_id' => $task_id
+			],
+			__METHOD__
+		);
+
+		return $dbw->insertId();
+	}
+
+	public static function updateCreationLogEntry( string $task_id, array $data ) {
+		self::getDB( DB_MASTER )->update(
+			self::CREATION_LOG_TABLE,
+			$data,
+			[
+				'task_id' => $task_id
+			],
+			__METHOD__
+		);
+	}
+
+	public static function getCreationLogEntry( string $task_id ) {
+		return self::getDB( DB_SLAVE )->selectRow(
+			self::CREATION_LOG_TABLE,
+			[ 'city_id', 'finished', 'creation_completed' ],
+			[
+				'task_id' => $task_id
+			],
+			__METHOD__
+		);
+	}
+
 	/**
 	 * Create a new wiki with given parameters
 	 *
@@ -19,10 +62,14 @@ class CreateWikiTask extends BaseTask {
 	 * @param int $vertical
 	 * @param string[] $categories
 	 * @param bool $allAges
-	 * @throw CreateWikiException an exception with status of operation set
+	 * @throws CreateWikiException an exception with status of operation set
 	 */
 	public function create( string $name, string $domain, string $language, int $vertical, array $categories, bool $allAges ) {
 		wfProfileIn( __METHOD__ );
+
+		// SUS-4838 | add an entry to creation log
+		// front-end code with poll for the status using this table
+		self::addCreationLogEntry( $this->getTaskId() );
 
 		// work on behalf of a user who wants to create a wiki
 		global $wgUser;
@@ -30,19 +77,38 @@ class CreateWikiTask extends BaseTask {
 
 		$then = microtime( true );
 
-		$context = TaskContext::newFromUserInput( $name, $domain, $language, $vertical, $categories, $allAges );
+		$context = TaskContext::newFromUserInput( $name, $domain, $language, $vertical, $categories, $allAges, $this->getTaskId() );
 
 		$taskRunner = new Wikia\CreateNewWiki\Tasks\TaskRunner( $context );
 
-		$taskRunner->prepare();
+		try {
 
-		$taskRunner->check();
+			$taskRunner->prepare();
 
-		$taskRunner->run();
+			$taskRunner->check();
+
+			$taskRunner->run();
+
+		} catch ( CreateWikiException $ex ) {
+			// SUS-4383 | mark the wiki as not fully created and log the exception message
+			self::updateCreationLogEntry( $this->getTaskId(), [
+				'creation_ended' => wfTimestamp( TS_DB ),
+				'completed' => 0,
+				'exception_message' => $ex->getMessage(),
+			] );
+
+			throw $ex;
+		}
 
 		// SUS-4383 | log the CreateNewWiki process time
 		$this->info( __METHOD__, [
 			'took' => microtime( true ) - $then, // [sec]
+		] );
+
+		// SUS-4383 | mark the wiki as created
+		self::updateCreationLogEntry( $this->getTaskId(), [
+			'creation_ended' => wfTimestamp( TS_DB ),
+			'completed' => 1,
 		] );
 
 		wfProfileOut( __METHOD__ );
