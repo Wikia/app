@@ -647,20 +647,54 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 					token: preferencesToken
 				},
 				callback: function (res) {
-					throbberWrapper.stopThrobbing();
-					throbberWrapper.removeClass('creating-wiki');
-					cityId = res.cityId;
-					createStatus = res.status;
-					createStatusMessage = res.statusMsg;
-					finishCreateUrl = res.finishCreateUrl;
+					// SUS-4383 | use task ID returned by the backed to poll wiki creation status
+					var taskId = res.task_id;
 
-					// unblock "Next" button (BugId:51519)
-					// for QA with love
-					$themWikiWrapper.find('.controls input').attr('disabled', false).addClass('enabled');
+					pollWikiCreationStatus(taskId, function(res) {
+						cityId = res.cityId;
+						createStatus = res.status;
+						finishCreateUrl = res.finishCreateUrl;
+
+						throbberWrapper.stopThrobbing();
+						throbberWrapper.removeClass('creating-wiki');
+
+						// unblock "Next" button (BugId:51519)
+						// for QA with love
+						$themWikiWrapper.find('.controls input').attr('disabled', false).addClass('enabled');
+					});
 				},
 				onErrorCallback: generateAjaxErrorMsg
 			});
 		}).fail(generateAjaxErrorMsg);
+	}
+
+	/**
+	 * Continue polling for wiki creation status and fire callback when we're done
+	 * @param taskId
+	 * @param callback
+	 */
+	function pollWikiCreationStatus(taskId, callback) {
+		$.nirvana.sendRequest({
+			controller: 'CreateNewWiki',
+			method: 'CheckStatus',
+			data: {
+				task_id: taskId
+			},
+			type: 'GET',
+			callback: function(res) {
+				if (res.status === 'ok') {
+					// the wiki has been created, fire a callback
+					callback(res);
+				}
+				else {
+					// not yet, keep polling every 2 seconds
+					setTimeout(function() {
+						pollWikiCreationStatus(taskId, callback);
+					}, 2000);
+				}
+			},
+			onErrorCallback: generateAjaxErrorMsg
+		});
 	}
 
 	function generateAjaxErrorMsg(error) {

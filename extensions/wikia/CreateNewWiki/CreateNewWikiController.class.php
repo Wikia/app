@@ -15,6 +15,7 @@ class CreateNewWikiController extends WikiaController {
 	const ERROR_CODE_FIELD         = 'errCode';
 	const ERROR_MESSAGE_FIELD      = 'errMessage';
 	const STATUS_OK                = 'ok';
+	const STATUS_IN_THE_QUEUE      = 'waitingForTheQueue';
 	const STATUS_IN_PROGRESS       = 'inProgress';
 	const SITE_NAME_FIELD          = 'siteName';
 	const CITY_ID_FIELD            = 'cityId';
@@ -304,9 +305,9 @@ class CreateNewWikiController extends WikiaController {
 		$this->response->setCachePolicy( WikiaResponse::CACHE_PRIVATE );
 		$this->response->setCacheValidity( WikiaResponse::CACHE_DISABLED );
 
-		// given task ID not found in the creation log
+		// given task ID not found in the creation log (maybe not yet?)
 		if ( empty( $task_details ) ) {
-			$this->response->setCode( 404 );
+			$this->response->setVal( self::STATUS_FIELD, self::STATUS_IN_THE_QUEUE );
 			return;
 		}
 
