@@ -1,10 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "89f2b44f0c0e95d7609187ca2f01078d",
+    "content-hash": "1d81b4691e7f0161b42ba154e3473f5c",
     "packages": [
         {
             "name": "composer/installers",
@@ -5657,6 +5657,51 @@
             ],
             "description": "A simple PHP HTML DOM parser written in PHP5+, supports invalid HTML, and provides a very easy way to handle HTML elements.",
             "time": "2017-07-21T10:54:58+00:00"
+        },
+        {
+            "name": "wikimedia/scoped-callback",
+            "version": "v2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/wikimedia/ScopedCallback.git",
+                "reference": "bdbefd13d162a8cbae37dee19f863adaf10022a0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/wikimedia/ScopedCallback/zipball/bdbefd13d162a8cbae37dee19f863adaf10022a0",
+                "reference": "bdbefd13d162a8cbae37dee19f863adaf10022a0",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.5.9"
+            },
+            "require-dev": {
+                "jakub-onderka/php-console-highlighter": "0.3.2",
+                "jakub-onderka/php-parallel-lint": "1.0.0",
+                "mediawiki/mediawiki-codesniffer": "18.0.0",
+                "mediawiki/minus-x": "0.3.1",
+                "ockcyp/covers-validator": "0.5.1 || 0.6.1",
+                "phpunit/phpunit": "4.8.36 || ^6.5"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Wikimedia\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Aaron Schulz",
+                    "email": "aschulz@wikimedia.org"
+                }
+            ],
+            "description": "Class for asserting that a callback happens when a dummy object leaves scope",
+            "homepage": "https://www.mediawiki.org/wiki/ScopedCallback",
+            "time": "2018-05-09T06:30:27+00:00"
         },
         {
             "name": "zendframework/zend-diactoros",
