@@ -15,7 +15,7 @@ $dir = __DIR__ . '/';
 
 // class autoloads mappings
 $wgAutoloadClasses['CreateNewWikiObfuscate'] = $dir . 'CreateNewWikiObfuscate.class.php';
-$wgAutoloadClasses['CreateWiki'] = $dir."/CreateWiki.php";
+$wgAutoloadClasses['CreateWikiTask'] = $dir."/CreateWikiTask.php";
 $wgAutoloadClasses['CreateWikiChecks'] = $dir."/CreateWikiChecks.php";
 $wgAutoloadClasses['SpecialCreateNewWiki'] = $dir . 'SpecialCreateNewWiki.class.php';
 $wgAutoloadClasses['CreateNewWikiHooks'] = __DIR__ . '/CreateNewWikiHooks.php';

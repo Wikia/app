@@ -51,6 +51,12 @@ class TaskContext {
 	/** @var string */
 	private $fandomCreatorCommunityId;
 
+	/** @var  bool */
+	private $allAges;
+
+	/** @var  string ID of Celery task responsible for setting up a new wiki */
+	private $taskId;
+
 	/** @var  User */
 	private $founder;
 
@@ -67,7 +73,7 @@ class TaskContext {
 		}
 	}
 
-	public static function newFromUserInput( $inputWikiName, $inputDomain, $language, $vertical, $categories, $fandomCreatorCommunityId ) {
+	public static function newFromUserInput( $inputWikiName, $inputDomain, $language, $vertical, $categories, $fandomCreatorCommunityId, $allAges, $taskId ) {
 		global $wgCreateLanguageWikisWithPath;
 
 		return new self( [
@@ -76,6 +82,8 @@ class TaskContext {
 			'language' => $language,
 			'vertical' => $vertical,
 			'categories' => $categories,
+			'allAges' => $allAges,
+			'taskId' => $taskId,
 			'fandomCreatorCommunityId' => $fandomCreatorCommunityId,
 			'shouldCreateLanguageWikiWithPath' => $wgCreateLanguageWikisWithPath,
 		] );
@@ -142,6 +150,19 @@ class TaskContext {
 		$this->wikiName = $wikiName;
 	}
 
+	/**
+	 * Is this wiki for audience below 13 years old
+	 *
+	 * @return bool
+	 */
+	public function isAllAges() {
+		return $this->allAges;
+	}
+
+	public function getTaskId() {
+		return $this->taskId;
+	}
+
 	// wikiDBW represents CreateWiki::newWiki->dbw
 
 	public function getDbName() {
@@ -179,6 +200,11 @@ class TaskContext {
 
 	public function setCityId( $cityId ) {
 		$this->cityId = $cityId;
+
+		// SUS-4383 | keep the city ID of the wiki we're creating in the log
+		\CreateWikiTask::updateCreationLogEntry( $this->getTaskId(), [
+			'city_id' => $cityId
+		] );
 	}
 
 	public function getStarterDb() {
