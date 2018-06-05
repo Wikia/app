@@ -890,7 +890,6 @@ class Wikia {
 					),
 					__METHOD__
 				);
-				Wikia::log( __METHOD__, "save", "id: {$page_id}, key: {$sPropName}, value: {$sPropValue}" );
 			}
 			$dbw->commit(); #--- for ajax
 		}
