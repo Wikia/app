@@ -687,7 +687,7 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 					callback(res);
 				}
 				else {
-					// not yet, keep polling every 2 seconds
+					// not yet, keep polling every 2 seconds (+ response time)
 					setTimeout(function() {
 						pollWikiCreationStatus(taskId, callback);
 					}, 2000);
