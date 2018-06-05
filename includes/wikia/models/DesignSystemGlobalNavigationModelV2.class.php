@@ -243,7 +243,7 @@ class DesignSystemGlobalNavigationModelV2 extends WikiaModel {
 		];
 
 		return [
-			'avatar_url' => AvatarService::getAvatarUrl( $userName, 50 ),
+			'avatar_url' => AvatarService::isEmptyOrFirstDefault( $userName ) ? null : AvatarService::getAvatarUrl( $userName, 50 ),
 			'username' => $userName,
 			'tracking_label' => 'account',
 			'items' => $links[$this->product],
