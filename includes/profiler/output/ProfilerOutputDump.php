@@ -1,6 +1,6 @@
 <?php
 /**
- * Stub profiling functions.
+ * Profiler dumping output in xhprof dump file
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,27 +22,34 @@
  */
 
 /**
- * Stub profiler that does nothing
- *
+ * Profiler dumping output in xhprof dump file
  * @ingroup Profiler
+ *
+ * @since 1.25
  */
-class ProfilerStub extends Profiler {
-	public function scopedProfileIn( $section ) {
-		return null; // no-op
+class ProfilerOutputDump extends ProfilerOutput {
+
+	protected $suffix = ".xhprof";
+
+	/**
+	 * Can this output type be used?
+	 *
+	 * @return bool
+	 */
+	public function canUse() {
+		if ( empty( $this->params['outputDir'] ) ) {
+			return false;
+		}
+		return true;
 	}
 
-	public function getFunctionStats() {
-	}
-
-	public function getOutput() {
-	}
-
-	public function close() {
-	}
-
-	public function logData() {
-	}
-
-	public function logDataPageOutputOnly() {
+	public function log( array $stats ) {
+		$data = $this->collector->getRawData();
+		$filename = sprintf( "%s/%s.%s%s",
+			$this->params['outputDir'],
+			uniqid(),
+			$this->collector->getProfileID(),
+			$this->suffix );
+		file_put_contents( $filename, json_encode( $data ) );
 	}
 }

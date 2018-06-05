@@ -38,12 +38,6 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 
 use Wikia\Logger\WikiaLogger;
 
-// Avoid unstubbing $wgParser on setHook() too early on modern (1.12+) MW versions, as per r35980
-$wgHooks['ParserFirstCallInit'][] = 'wfYouTube';
-
-// Initialize magic word for the parserfunction(s).
-$wgHooks['LanguageGetMagic'][] = 'wfParserFunction_magic';
-
 $wgHooks['EditPage::importFormData'][] = 'upgradeYouTubeTag';
 
 $wgExtensionCredits['parserhook'][] = array
@@ -58,18 +52,13 @@ $wgExtensionCredits['parserhook'][] = array
 	'descriptionmsg' => 'youtube-desc',
 );
 
-// i18n
-$wgExtensionMessagesFiles['YouTube'] = __DIR__ . '/YouTube.i18n.php';
-
-// Define the tallest a video can be to qualify as audio only
-define( 'AUDIO_ONLY_HEIGHT', 30 );
-
-// Register the magic word "youtube" so that it can be used as a parser-function.
-function wfParserFunction_magic( &$magicWords, $langCode ) {
-	$magicWords['youtube'] = array( 0, 'youtube' );
-	return true;
-}
-
+/**
+ * SUS-3285 | Migrate from <youtube> tags to "properly" embed videos with file pages
+ *
+ * @param EditPage $editpage
+ * @param $request
+ * @return bool
+ */
 function upgradeYouTubeTag( EditPage $editpage, $request ): bool {
 	$app = F::app();
 
@@ -117,12 +106,6 @@ function upgradeYouTubeTag( EditPage $editpage, $request ): bool {
 			// Parse out the width and height parameters
 			$params = parseSizeParams( $paramText );
 
-			// If height is less than 30, they probably are using this as an audio file
-			// so don't bother converting it.
-			if ( $params['height'] <= AUDIO_ONLY_HEIGHT ) {
-				return $matches[0];
-			}
-
 			$url = 'https://www.youtube.com/watch?v=' . $ytid;
 
 			$videoService = new VideoService();
@@ -130,7 +113,8 @@ function upgradeYouTubeTag( EditPage $editpage, $request ): bool {
 			$videoFileUploader->setExternalUrl( $url );
 			$apiWrapper = $videoFileUploader->getApiWrapper();
 			if ( !$apiWrapper->videoExists() ) {
-				return createRawOutput( $matches[0] );
+				// ok, there's no video, don't touch the tag
+				return $matches[0];
 			}
 
 			$retval = $videoService->addVideo( $url );
@@ -186,118 +170,4 @@ function parseSizeParams ( $paramText ) {
 	}
 
 	return $params;
-}
-
-/**
- * Create raw value which would be displayed inside article and no object would be created.
- *
- * @param string $value
- * @return string
- */
-function createRawOutput( $value ) {
-	return '<nowiki>' . $value . '</nowiki>';
-}
-
-/**
- * @param Parser $parser
- * @return bool
- */
-function wfYouTube( Parser $parser ): bool {
-	$parser->setHook( 'youtube', 'embedYouTube' );
-	$parser->setFunctionHook( 'youtube', 'wfParserFunction_youTube' );
-
-	return true;
-}
-
-function embedYouTube_url2ytid( $url ) {
-	$id = $url;
-
-	if ( preg_match( '/^https?:\/\/www\.youtube\.com\/watch\?v=(.+)$/', $url, $preg ) ) {
-		$id = $preg[1];
-	} elseif ( preg_match( '/^https?:\/\/www\.youtube\.com\/v\/([^&]+)(&autoplay=[0-1])?$/', $url, $preg ) ) {
-		$id = $preg[1];
-	}
-
-	preg_match( '/([0-9A-Za-z_-]+)/', $id, $preg );
-	$id = $preg[1];
-
-	return $id;
-}
-
-/**
- * Parser-function for #youtube.  The purpose of having this in addition to the parser-tag is that
- * parser-functions can receive template-parameters as input so this parser function can be used
- * in a template.
- *
- * Example usage:
- * {{#youtube:Vd34vJohGXc|250|209}}
- */
-function wfParserFunction_youTube( $parser, $ytid = '', $width = '', $height = '' ) {
-	$width = ( $width == "" ? "":" width='$width'" );
-	$height = ( $height == "" ? "":" height='$height'" );
-	$output = "<youtube ytid='$ytid'$width$height/>";
-
-	// Note: an alternate way to do this would be to set up parameters and call embedYouTube directly (and the returned output
-	// would not need to still be made parseable).  Any benefit to that?  The current way seems more easily debuggable by the end-user if they mess up.
-
-	// Return the code in such a way that it still gets parsed (since we're just returning the parsertag).
-	return array( $output, 'noparse' => false );
-} // end wfParserFunction_youTube()
-
-function embedYouTube( $input, $argv, $parser ) {
-	// $parser->disableCache();
-
-	$ytid   = '';
-	$width_max  = 640;
-	$height_max = 385;
-	$width  = 425;
-	$height = 355;
-
-	if ( !empty( $argv['ytid'] ) ) {
-		$ytid = embedYouTube_url2ytid( $argv['ytid'] );
-	} elseif ( !empty( $input ) ) {
-		$ytid = embedYouTube_url2ytid( $input );
-	}
-	if ( !empty( $argv['width'] ) && settype( $argv['width'], 'integer' ) && ( $width_max >= $argv['width'] ) ) {
-		$width = $argv['width'];
-	}
-	if ( !empty( $argv['height'] ) && settype( $argv['height'], 'integer' ) && ( $height_max >= $argv['height'] ) ) {
-		$height = $argv['height'];
-	}
-
-	// If $wgAllVideosAdminOnly is set and is above the allowed audio only height
-	// then don't convert this.  Without this, a non-admin could add a full sized youtube
-	// tag that would not get upgraded to a file page on save, but remain a <youtube> tag.
-	// The non-admin would continue to see this, but the admin would see the
-	// youtube video player.
-	global $wgAllVideosAdminOnly;
-	if ( ( $height > AUDIO_ONLY_HEIGHT ) && $wgAllVideosAdminOnly ) {
-		return $input;
-	}
-
-	if ( !empty( $ytid ) ) {
-		WikiaLogger::instance()->info( 'Embedding youtube: ' . $ytid, [
-			'method' => __METHOD__,
-			'video_source' => 'youtube'
-		] );
-		$url = "https://www.youtube.com/v/{$ytid}&enablejsapi=1&version=2&playerapiid={$ytid}"; // it's not mistake, there should be &, not ?
-		return "<object type=\"application/x-shockwave-flash\" data=\"{$url}\" width=\"{$width}\" height=\"{$height}\" id=\"YT_{$ytid}\"><param name=\"movie\" value=\"{$url}\"/><param name=\"wmode\" value=\"transparent\"/><param name=\"allowScriptAccess\" value=\"always\"/></object>";
-	}
-}
-
-function embedYouTube_url2tgid( $input ) {
-	$tid = $gid = 0;
-
-	if ( preg_match( '/^id=([0-9]+)\|gId=([0-9]+)$/i', $input, $preg ) ) {
-		$tid = $preg[1];
-		$gid = $preg[2];
-	} elseif ( preg_match( '/^gId=([0-9]+)\|id=([0-9]+)$/i', $input, $preg ) ) {
-		$tid = $preg[2];
-		$gid = $preg[1];
-	} elseif ( preg_match( '/^([0-9]+)\|([0-9]+)$/', $input, $preg ) ) {
-		$tid = $preg[1];
-		$gid = $preg[2];
-	}
-
-	return array( $tid, $gid );
 }

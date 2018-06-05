@@ -65,12 +65,6 @@ if ( isset( $_SERVER['MW_COMPILED'] ) ) {
 	require_once( "$IP/includes/AutoLoader.php" );
 }
 
-# Stub the profiler
-require_once( MWInit::compiledPath( 'includes/profiler/Profiler.php' ) );
-// Wikia change - begin - use normal profiler
-require_once( "$IP/StartProfiler.php" );
-// Wikia change - end
-
 // Some other requires
 if ( !defined( 'MW_COMPILED' ) ) {
 	require_once( "$IP/includes/Defines.php" );
