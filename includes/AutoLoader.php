@@ -698,9 +698,9 @@ $wgAutoloadLocalClasses = array(
 	'ProfilerStub' => 'includes/profiler/ProfilerStub.php',
 	'SectionProfiler' => 'includes/profiler/SectionProfiler.php',
 	'SectionProfilerCallback' => 'includes/profiler/SectionProfiler.php',
-	'ProfilerOutput' => 'includes/profiler/ProfilerOutput.php',
-	'ProfilerOutputDump' => 'includes/profiler/ProfilerOutputDump.php',
-	'ProfilerOutputText' => 'includes/profiler/ProfilerOutputText.php',
+	'ProfilerOutput' => 'includes/profiler/output/ProfilerOutput.php',
+	'ProfilerOutputDump' => 'includes/profiler/output/ProfilerOutputDump.php',
+	'ProfilerOutputText' => 'includes/profiler/output/ProfilerOutputText.php',
 
 	# includes/resourceloader
 	'ResourceLoader' => 'includes/resourceloader/ResourceLoader.php',

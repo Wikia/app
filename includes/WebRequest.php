@@ -50,7 +50,15 @@ class WebRequest implements Wikia\Interfaces\IRequest {
 	 */
 	private $ip;
 
+	/**
+	 * The timestamp of the start of the request, with microsecond precision.
+	 * @var float
+	 */
+	protected $requestTime;
+
 	public function __construct() {
+		$this->requestTime = $_SERVER['REQUEST_TIME_FLOAT'];
+
 		/// @todo FIXME: This preemptive de-quoting can interfere with other web libraries
 		///        and increases our memory footprint. It would be cleaner to do on
 		///        demand; but currently we have no wrapper for $_SERVER etc.
@@ -1145,6 +1153,17 @@ HTML;
 
 	public function isMwAuthOk() {
 		return $this->getHeader( self::MW_AUTH_OK_HEADER ) !== false;
+	}
+
+	/**
+	 * Get the number of seconds to have elapsed since request start,
+	 * in fractional seconds, with microsecond resolution.
+	 *
+	 * @return float
+	 * @since 1.25
+	 */
+	public function getElapsedTime() {
+		return microtime( true ) - $this->requestTime;
 	}
 }
 

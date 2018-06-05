@@ -62,7 +62,7 @@ class ProfilerOutputText extends ProfilerOutput {
 			} elseif ( $contentType === 'text/html' ) {
 				$visible = $this->params['visible'] ?? false;
 				if ( $visible ) {
-					print "<pre>{$out}</pre>";
+					print "<pre style='z-index: 3;position: relative;background: white;margin-top: 20px;padding: 12px;'>{$out}</pre>";
 				} else {
 					print "<!--\n{$out}\n-->\n";
 				}

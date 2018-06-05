@@ -343,6 +343,7 @@ if ( $wgDevelEnvironment ) {
 if ( !empty( $_GET['forceprofile'] ) && Profiler::instance() instanceof ProfilerStub ) {
 	Profiler::replaceStubInstance( new ProfilerXhprof( [
 		'flags' => TIDEWAYS_FLAGS_NO_BUILTINS | TIDEWAYS_FLAGS_MEMORY | TIDEWAYS_FLAGS_CPU,
+		'threshold' => $wgProfileLimit,
 		'output' => 'text'
 	] ) );
 }

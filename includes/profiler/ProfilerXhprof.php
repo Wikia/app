@@ -74,12 +74,13 @@ class ProfilerXhprof extends Profiler {
 		parent::__construct( $params );
 
 		$flags = $params['flags'] ?? 0;
+
 		tideways_enable( $flags );
 		$this->sprofiler = new SectionProfiler();
 	}
 
 	/**
-	 * @return XhprofData
+	 * @return array
 	 */
 	public function getXhprofData() {
 		if ( !$this->xhprofData ) {
@@ -131,7 +132,7 @@ class ProfilerXhprof extends Profiler {
 		$metrics = $this->getXhprofData();
 		$profile = [];
 
-		$main = null; // units in ms
+		$main = $metrics['main()']; // units in ms
 		foreach ( $metrics as $fname => $stats ) {
 			if ( $this->shouldExclude( $fname ) ) {
 				continue;
@@ -141,13 +142,12 @@ class ProfilerXhprof extends Profiler {
 				'name' => $fname,
 				'calls' => $stats['ct'],
 				'real' => $stats['wt'] / 1000,
+				'%real' => 100 * ( $stats['wt'] / $main['wt'] ),
 				'cpu' => isset( $stats['cpu'] ) ? $stats['cpu'] / 1000 : 0,
-				'memory' => isset( $stats['mu'] ) ? $stats['mu'] : 0,
+				'%cpu' => isset( $stats['cpu'] ) ? 100 * ( $stats['cpu'] / $main['cpu'] ) : 0,
+				'memory' => isset( $stats['mu'] ) ? $stats['mu']['total'] : 0,
 			];
 			$profile[] = $entry;
-			if ( $fname === 'main()' ) {
-				$main = $entry;
-			}
 		}
 
 		// Merge in all of the custom profile sections
@@ -157,9 +157,9 @@ class ProfilerXhprof extends Profiler {
 			}
 
 			// @note: getFunctionStats() values already in ms
-			$stats['%real'] = $main['real'] ? $stats['real'] / $main['real'] * 100 : 0;
-			$stats['%cpu'] = $main['cpu'] ? $stats['cpu'] / $main['cpu'] * 100 : 0;
-			$stats['%memory'] = $main['memory'] ? $stats['memory'] / $main['memory'] * 100 : 0;
+			$stats['%real'] = $main['wt'] ? $stats['real'] / ( $main['wt'] / 1000 ) * 100 : 0;
+			$stats['%cpu'] = $main['cpu'] ? $stats['cpu'] / ( $main['cpu'] / 1000 ) * 100 : 0;
+			$stats['%memory'] = $main['mu'] ? $stats['memory'] / ( $main['mu'] / 1000 ) * 100 : 0;
 			$profile[] = $stats; // assume no section names collide with $metrics
 		}
 
