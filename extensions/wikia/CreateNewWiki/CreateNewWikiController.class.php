@@ -280,7 +280,7 @@ class CreateNewWikiController extends WikiaController {
 		$categories = isset($params['wCategories']) ? $params['wCategories'] : array();
 		$allAges = isset($params['wAllAges']) && !empty( $params['wAllAges'] );
 
-		$task->call( 'create', $params['wName'], $params['wDomain'], $params['wLanguage'], $params['wVertical'], $categories, $allAges );
+		$task->call( 'create', $params['wName'], $params['wDomain'], $params['wLanguage'], $params['wVertical'], $categories, $allAges, time() );
 		$task_id = $task->setQueue( Wikia\Tasks\Queues\PriorityQueue::NAME )->queue();
 
 		// return ID of the created task ID, front-end code will poll its status
@@ -317,7 +317,7 @@ class CreateNewWikiController extends WikiaController {
 
 		// given task ID not found in the creation log (maybe not yet?)
 		if ( empty( $task_details ) ) {
-			if ( $time_diff > 60 ) {
+			if ( $time_diff > CreateWikiTask::TASK_CREATION_DELAY_THRESHOLD ) {
 				// we waited enough for the task to start, fail after a minute
 				$this->response->setCode( 404 );
 				$this->response->setVal( self::STATUS_FIELD, self::STATUS_NOT_FOUND );

@@ -12,6 +12,9 @@ class CreateWikiTask extends BaseTask {
 
 	const CREATION_LOG_TABLE = 'city_creation_log';
 
+	// we waited enough for the task to start, fail after a minute
+	const TASK_CREATION_DELAY_THRESHOLD = 60;
+
 	private static function getDB( int $type = DB_SLAVE ) {
 		global $wgExternalSharedDB;
 		return wfGetDB( $type, [], $wgExternalSharedDB );
@@ -54,6 +57,18 @@ class CreateWikiTask extends BaseTask {
 	}
 
 	/**
+	 * @param int $timestamp
+	 * @throws CreateWikiException
+	 */
+	private function validateTimestamp( int $timestamp ) {
+		$delay = time() - $timestamp;
+		if ( $delay > self::TASK_CREATION_DELAY_THRESHOLD ) {
+			// we waited enough for the task to start, fail after a minute
+			throw new CreateWikiException( "TASK_CREATION_DELAY_THRESHOLD exceeded, delay was $delay seconds" );
+		}
+	}
+
+	/**
 	 * Create a new wiki with given parameters
 	 *
 	 * @param string $name
@@ -62,9 +77,10 @@ class CreateWikiTask extends BaseTask {
 	 * @param int $vertical
 	 * @param string[] $categories
 	 * @param bool $allAges
+	 * @param int $timestamp when was the task scheduled
 	 * @throws CreateWikiException an exception with status of operation set
 	 */
-	public function create( string $name, string $domain, string $language, int $vertical, array $categories, bool $allAges ) {
+	public function create( string $name, string $domain, string $language, int $vertical, array $categories, bool $allAges, int $timestamp ) {
 		wfProfileIn( __METHOD__ );
 
 		// SUS-4838 | add an entry to creation log
@@ -82,6 +98,8 @@ class CreateWikiTask extends BaseTask {
 		$taskRunner = new Wikia\CreateNewWiki\Tasks\TaskRunner( $context );
 
 		try {
+
+			$this->validateTimestamp( $timestamp );
 
 			$taskRunner->prepare();
 
