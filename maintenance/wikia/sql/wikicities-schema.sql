@@ -63,6 +63,23 @@ CREATE TABLE `city_cats` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
+-- Table structure for table `city_creation_log`
+--
+
+DROP TABLE IF EXISTS `city_creation_log`;
+CREATE TABLE `city_creation_log` (
+  `log_id` int(9) NOT NULL AUTO_INCREMENT,
+  `task_id` char(39) DEFAULT NULL,
+  `city_id` int(11) DEFAULT NULL,
+  `creation_started` datetime DEFAULT CURRENT_TIMESTAMP,
+  `creation_ended` datetime DEFAULT NULL,
+  `completed` tinyint(1) NOT NULL DEFAULT '0',
+  `exception_message` varchar(256) DEFAULT NULL,
+  PRIMARY KEY (`log_id`),
+  KEY `task_id_idx` (`task_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
 -- Table structure for table `city_domains`
 --
 
@@ -599,4 +616,4 @@ CREATE TABLE `wikia_tasks_log` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
--- Dump completed on 2018-05-29  8:49:15
+-- Dump completed on 2018-06-05 10:29:49
