@@ -10,7 +10,7 @@ $messages['en'] = array(
 Follow the links below to learn more about how to use FANDOM, make changes to your FANDOM or modify your account.",
 	'specialcontact-intro-main-local' => '',
 	'specialcontact-intro-main-foot' => "'''Does this page answer your question?''' If not, please feel free to [[Special:contact/general|contact us]] to discuss your issue further. Remember you can always check out our '''[[w:c:community:Help:Index|help pages]]''', [[w:c:community:Blog:Wikia_Staff_Blog|staff blog]]  or post on our '''[[w:c:community:Special:Forum|community help forums]]'''.",
-	'specialcontact-secheader-onwiki' => 'Questions about this wiki',
+	'specialcontact-secheader-onwiki' => 'Questions about this wiki $',
 	'specialcontact-seclink-content-issue' => "Issue with the wiki's content",
 	'specialcontact-seclink-user-conflict' => 'Problem with another user?',
 	'specialcontact-seclink-adoption' => 'I want admin rights here',
