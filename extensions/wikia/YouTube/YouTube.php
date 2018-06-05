@@ -113,7 +113,8 @@ function upgradeYouTubeTag( EditPage $editpage, $request ): bool {
 			$videoFileUploader->setExternalUrl( $url );
 			$apiWrapper = $videoFileUploader->getApiWrapper();
 			if ( !$apiWrapper->videoExists() ) {
-				return createRawOutput( $matches[0] );
+				// ok, there's no video, don't touch the tag
+				return $matches[0];
 			}
 
 			$retval = $videoService->addVideo( $url );
@@ -169,14 +170,4 @@ function parseSizeParams ( $paramText ) {
 	}
 
 	return $params;
-}
-
-/**
- * Create raw value which would be displayed inside article and no object would be created.
- *
- * @param string $value
- * @return string
- */
-function createRawOutput( $value ) {
-	return '<nowiki>' . $value . '</nowiki>';
 }
