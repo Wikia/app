@@ -48,6 +48,9 @@ class TaskContext {
 	/** @var  array */
 	private $categories;
 
+	/** @var string */
+	private $fcCommunityId;
+
 	/** @var  User */
 	private $founder;
 
@@ -64,7 +67,7 @@ class TaskContext {
 		}
 	}
 
-	public static function newFromUserInput( $inputWikiName, $inputDomain, $language, $vertical, $categories ) {
+	public static function newFromUserInput( $inputWikiName, $inputDomain, $language, $vertical, $categories, $fcCommunityId ) {
 		global $wgCreateLanguageWikisWithPath;
 
 		return new self( [
@@ -73,6 +76,7 @@ class TaskContext {
 			'language' => $language,
 			'vertical' => $vertical,
 			'categories' => $categories,
+			'fcCommunityId' => $fcCommunityId,
 			'shouldCreateLanguageWikiWithPath' => $wgCreateLanguageWikisWithPath,
 		] );
 	}
@@ -215,6 +219,10 @@ class TaskContext {
 
 	public function setFounder($founder) {
 		$this->founder = $founder;
+	}
+
+	public function getFcCommunityId() {
+		return $this->fcCommunityId;
 	}
 
 	public function shouldCreateLanguageWikiWithPath(): bool {

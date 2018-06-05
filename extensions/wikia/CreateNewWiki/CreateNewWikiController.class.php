@@ -208,6 +208,7 @@ class CreateNewWikiController extends WikiaController {
 		$wgUser = $this->app->getGlobal('wgUser'); /* @var $wgUser User */
 
 		$params = $wgRequest->getArray('data');
+		$fcCommunityId = $wgRequest->getVal("fcCommunityId");
 
 		if ( empty($params) ||
 			empty($params['wName']) ||
@@ -276,7 +277,7 @@ class CreateNewWikiController extends WikiaController {
 
 		$categories = isset($params['wCategories']) ? $params['wCategories'] : array();
 
-		$createWiki = new CreateWiki($params['wName'], $params['wDomain'], $params['wLanguage'], $params['wVertical'], $categories);
+		$createWiki = new CreateWiki($params['wName'], $params['wDomain'], $params['wLanguage'], $params['wVertical'], $categories, $fcCommunityId);
 
 		try {
 			$createWiki->create();
