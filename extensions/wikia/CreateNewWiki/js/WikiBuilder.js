@@ -648,9 +648,8 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 				},
 				callback: function (res) {
 					// SUS-4383 | use task ID returned by the backed to poll wiki creation status
-					var taskId = res.task_id;
-
-					pollWikiCreationStatus(taskId, function(res) {
+					// timestamp will be used to time out on task creation fail
+					pollWikiCreationStatus(res.task_id, res.timestamp, function(res) {
 						cityId = res.cityId;
 						createStatus = res.status;
 						finishCreateUrl = res.finishCreateUrl;
@@ -671,14 +670,16 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 	/**
 	 * Continue polling for wiki creation status and fire callback when we're done
 	 * @param taskId
+	 * @param timestamp
 	 * @param callback
 	 */
-	function pollWikiCreationStatus(taskId, callback) {
+	function pollWikiCreationStatus(taskId, timestamp, callback) {
 		$.nirvana.sendRequest({
 			controller: 'CreateNewWiki',
 			method: 'CheckStatus',
 			data: {
-				task_id: taskId
+				task_id: taskId,
+				timestamp: timestamp
 			},
 			type: 'GET',
 			callback: function(res) {
@@ -689,7 +690,7 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 				else {
 					// not yet, keep polling every 2 seconds (+ response time)
 					setTimeout(function() {
-						pollWikiCreationStatus(taskId, callback);
+						pollWikiCreationStatus(taskId, timestamp, callback);
 					}, 2000);
 				}
 			},

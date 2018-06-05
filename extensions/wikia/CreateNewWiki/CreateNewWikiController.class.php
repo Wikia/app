@@ -15,6 +15,7 @@ class CreateNewWikiController extends WikiaController {
 	const ERROR_CODE_FIELD         = 'errCode';
 	const ERROR_MESSAGE_FIELD      = 'errMessage';
 	const STATUS_OK                = 'ok';
+	const STATUS_NOT_FOUND         = 'taskNotFound';
 	const STATUS_IN_THE_QUEUE      = 'waitingForTheQueue';
 	const STATUS_IN_PROGRESS       = 'inProgress';
 	const SITE_NAME_FIELD          = 'siteName';
@@ -287,6 +288,10 @@ class CreateNewWikiController extends WikiaController {
 		$this->response->setCode( 201 ); // HTTP 201 Created
 		$this->response->setVal( 'task_id', $task_id );
 
+		// return timestamp, so that front-end can send it back to the backend
+		// we'll compare it with the current timestamp in CheckStatus method
+		$this->response->setVal( 'timestamp', time() );
+
 		wfProfileOut(__METHOD__);
 	}
 
@@ -304,14 +309,27 @@ class CreateNewWikiController extends WikiaController {
 		// do not cache, we always want to hit the backend as the response can change anytime
 		$this->response->setCachePolicy( WikiaResponse::CACHE_PRIVATE );
 		$this->response->setCacheValidity( WikiaResponse::CACHE_DISABLED );
+		$this->response->setFormat( 'json' );
+
+		// compare the timestamp of when the creation started with the current one
+		$timestamp = (int) $this->getRequest()->getVal('timestamp');
+		$time_diff = time() - $timestamp;
 
 		// given task ID not found in the creation log (maybe not yet?)
 		if ( empty( $task_details ) ) {
-			$this->response->setVal( self::STATUS_FIELD, self::STATUS_IN_THE_QUEUE );
+			if ( $time_diff > 60 ) {
+				// we waited enough for the task to start, fail after a minute
+				$this->response->setCode( 404 );
+				$this->response->setVal( self::STATUS_FIELD, self::STATUS_NOT_FOUND );
+				$this->response->setVal( 'time_diff', $time_diff );
+			}
+			else {
+				// the task entry in simply just not yet there
+				$this->response->setVal( self::STATUS_FIELD, self::STATUS_IN_THE_QUEUE );
+			}
 			return;
 		}
 
-		$this->response->setFormat( 'json' );
 		$this->response->setVal( self::CITY_ID_FIELD, (int) $task_details->city_id );
 
 		// not set creation_ended value means that we're still creating a wiki
