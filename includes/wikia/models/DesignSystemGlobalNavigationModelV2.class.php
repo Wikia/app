@@ -28,7 +28,7 @@ class DesignSystemGlobalNavigationModelV2 extends WikiaModel {
 	}
 
 	public function getData() {
-		global $wgUser;
+		global $wgUser, $wgServicesExternalDomain;
 
 		$data = [
 			'logo' => $this->getLogo(),
@@ -51,6 +51,8 @@ class DesignSystemGlobalNavigationModelV2 extends WikiaModel {
 		if ( !empty( $partnerSlot ) ) {
 			$data[ 'partner_slot' ] = $partnerSlot;
 		}
+		
+		$data['services_domain'] = $wgServicesExternalDomain;
 
 		return $data;
 	}
