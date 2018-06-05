@@ -56,7 +56,7 @@
  */
 class ProfilerXhprof extends Profiler {
 	/**
-	 * @var XhprofData|null $xhprofData
+	 * @var array $xhprofData
 	 */
 	protected $xhprofData;
 
@@ -74,9 +74,7 @@ class ProfilerXhprof extends Profiler {
 		parent::__construct( $params );
 
 		$flags = $params['flags'] ?? 0;
-		$options = isset( $params['exclude'] )
-			? [ 'ignored_functions' => $params['exclude'] ] : [];
-		Xhprof::enable( $flags, $options );
+		tideways_enable( $flags );
 		$this->sprofiler = new SectionProfiler();
 	}
 
@@ -85,7 +83,7 @@ class ProfilerXhprof extends Profiler {
 	 */
 	public function getXhprofData() {
 		if ( !$this->xhprofData ) {
-			$this->xhprofData = new XhprofData( Xhprof::disable(), $this->params );
+			$this->xhprofData = tideways_disable();
 		}
 		return $this->xhprofData;
 	}
@@ -130,7 +128,7 @@ class ProfilerXhprof extends Profiler {
 	}
 
 	public function getFunctionStats() {
-		$metrics = $this->getXhprofData()->getCompleteMetrics();
+		$metrics = $this->getXhprofData();
 		$profile = [];
 
 		$main = null; // units in ms
@@ -142,14 +140,9 @@ class ProfilerXhprof extends Profiler {
 			$entry = [
 				'name' => $fname,
 				'calls' => $stats['ct'],
-				'real' => $stats['wt']['total'] / 1000,
-				'%real' => $stats['wt']['percent'],
-				'cpu' => isset( $stats['cpu'] ) ? $stats['cpu']['total'] / 1000 : 0,
-				'%cpu' => isset( $stats['cpu'] ) ? $stats['cpu']['percent'] : 0,
-				'memory' => isset( $stats['mu'] ) ? $stats['mu']['total'] : 0,
-				'%memory' => isset( $stats['mu'] ) ? $stats['mu']['percent'] : 0,
-				'min_real' => $stats['wt']['min'] / 1000,
-				'max_real' => $stats['wt']['max'] / 1000
+				'real' => $stats['wt'] / 1000,
+				'cpu' => isset( $stats['cpu'] ) ? $stats['cpu'] / 1000 : 0,
+				'memory' => isset( $stats['mu'] ) ? $stats['mu'] : 0,
 			];
 			$profile[] = $entry;
 			if ( $fname === 'main()' ) {
@@ -231,6 +224,6 @@ class ProfilerXhprof extends Profiler {
 	 * @return array
 	 */
 	public function getRawData() {
-		return $this->getXhprofData()->getRawData();
+		return $this->getXhprofData();
 	}
 }

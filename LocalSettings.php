@@ -342,7 +342,7 @@ if ( $wgDevelEnvironment ) {
 // No profiler configuration has been supplied but profiling has been explicitly requested
 if ( !empty( $_GET['forceprofile'] ) && Profiler::instance() instanceof ProfilerStub ) {
 	Profiler::replaceStubInstance( new ProfilerXhprof( [
-		'flags' => XHPROF_FLAGS_CPU | XHPROF_FLAGS_MEMORY | XHPROF_FLAGS_NO_BUILTINS,
+		'flags' => TIDEWAYS_FLAGS_NO_BUILTINS | TIDEWAYS_FLAGS_MEMORY | TIDEWAYS_FLAGS_CPU,
 		'output' => 'text'
 	] ) );
 }
