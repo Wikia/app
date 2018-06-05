@@ -5,8 +5,8 @@ define('ext.wikia.adEngine.video.vastUrlBuilder', [
 	'ext.wikia.adEngine.slot.slotTargeting',
 	'wikia.location',
 	'wikia.log',
-	'wikia.trackingOptOut'
-], function (page, adUnitBuilder, slotTargeting, loc, log, trackingOptOut) {
+	'wikia.trackingOptIn'
+], function (page, adUnitBuilder, slotTargeting, loc, log, trackingOptIn) {
 	'use strict';
 	var adSizes = {
 			vertical: '320x480',
@@ -85,7 +85,7 @@ define('ext.wikia.adEngine.video.vastUrlBuilder', [
 			params.push('vid=' + options.videoId);
 		}
 
-		params.push('npa=' + (trackingOptOut.isOptedOut('gpt') ? 1 : 0));
+		params.push('npa=' + (trackingOptIn.isOptedIn() ? 0 : 1));
 
 		url = baseUrl + params.join('&');
 		log(['build', url], 'debug', logGroup);
