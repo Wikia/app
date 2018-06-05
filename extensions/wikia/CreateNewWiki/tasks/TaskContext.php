@@ -221,6 +221,10 @@ class TaskContext {
 		$this->founder = $founder;
 	}
 
+	public function isFandomCreatorCommunity() {
+		return !!$this->fandomCreatorCommunityId;
+	}
+
 	public function getFandomCreatorCommunityId() {
 		return $this->fandomCreatorCommunityId;
 	}
