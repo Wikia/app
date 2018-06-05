@@ -59,7 +59,6 @@
 
 </head>
 <body class="<?= implode(' ', $bodyClasses) ?>" <?= $itemType ?>>
-<?= $instartLogic ?>
 <?= $recoveryTopBodyBootstrapCode ?>
 <? if ( BodyController::isResponsiveLayoutEnabled() || BodyController::isOasisBreakpoints() ): ?>
 	<div class="background-image-gradient"></div>
@@ -76,7 +75,6 @@
 <?= $krux ?>
 <?= $netzathleten ?>
 <?= $dynamicYield ?>
-<?= $gfc ?>
 
 <div class="WikiaSiteWrapper">
 	<?= $body ?>

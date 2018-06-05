@@ -64,23 +64,6 @@ require([
 		playerInstance.on('captionsSelected', function (data) {
 			featuredVideoCookieService.setCaptions(data.selectedLang);
 		});
-
-		// XW-4157 PageFair causes pausing the video, as a workaround we play video again when it's paused
-		win.addEventListener('wikia.blocking', function () {
-			if (playerInstance) {
-				if (playerInstance.getState() === 'paused') {
-					playerInstance.play();
-				} else {
-					playerInstance.once('pause', function (event) {
-						// when video is paused because of PageFair pauseReason is undefined,
-						// otherwise it's set to `interaction` when paused by user or `external` when paused by pause() function
-						if (!event.pauseReason) {
-							playerInstance.play();
-						}
-					});
-				}
-			}
-		});
 	}
 
 	function setupPlayer() {
@@ -96,7 +79,7 @@ require([
 			autoplay: willAutoplay,
 			selectedCaptionsLanguage: featuredVideoCookieService.getCaptions(),
 			settings: {
-				showAutoplayToggle: !inFeaturedVideoClickToPlayABTest,
+				showAutoplayToggle: !adContext.get('rabbits.ctpDesktop') && !inFeaturedVideoClickToPlayABTest,
 				showQuality: true,
 				showCaptions: true
 			},

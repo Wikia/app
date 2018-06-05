@@ -12,16 +12,12 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	'ext.wikia.adEngine.slot.service.passbackHandler',
 	'ext.wikia.adEngine.slot.service.srcProvider',
 	'ext.wikia.adEngine.slot.slotTargeting',
-	'ext.wikia.aRecoveryEngine.adBlockDetection',
-	'ext.wikia.aRecoveryEngine.adBlockRecovery',
 	'ext.wikia.adEngine.slotTweaker',
 	'wikia.document',
 	'wikia.instantGlobals',
 	'wikia.log',
 	require.optional('ext.wikia.adEngine.ml.rabbit'),
-	require.optional('ext.wikia.adEngine.provider.gpt.sraHelper'),
-	require.optional('ext.wikia.aRecoveryEngine.instartLogic.recovery'),
-	require.optional('ext.wikia.aRecoveryEngine.pageFair.recovery')
+	require.optional('ext.wikia.adEngine.provider.gpt.sraHelper')
 ], function (
 	adContext,
 	adLogicPageParams,
@@ -34,16 +30,12 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	passbackHandler,
 	srcProvider,
 	slotTargeting,
-	adBlockDetection,
-	adBlockRecovery,
 	slotTweaker,
 	doc,
 	instantGlobals,
 	log,
 	rabbit,
-	sraHelper,
-	instartLogic,
-	pageFair
+	sraHelper
 ) {
 	'use strict';
 
@@ -54,10 +46,6 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 
 	function isHiddenOnStart(slotName) {
 		return hiddenSlots.indexOf(slotName) !== -1;
-	}
-
-	function isRecoverableByIL() {
-		return instartLogic && instartLogic.isEnabled() && instartLogic.isBlocking();
 	}
 
 	function getUapId() {
@@ -74,21 +62,11 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	 * @param {Object}  extra                  - optional parameters
 	 * @param {boolean} extra.sraEnabled       - whether to use Single Request Architecture
 	 * @param {string}  extra.forcedAdType     - ad type for callbacks info
-	 * @param {bool}    extra.isInstartLogicRecoverable - true if currently processed slot is recovered by IL
-	 * @param {bool}    extra.isPageFairRecoverable - true if currently processed slot is recovered by PF
 	 */
 	function pushAd(slot, slotPath, slotTargetingData, extra) {
 		extra = extra || {};
 		var element,
-			isBlocking = adBlockDetection.isBlocking(),
-			isRecoveryEnabled = adBlockRecovery.isEnabled(),
-			adIsRecoverable = extra.isPageFairRecoverable || extra.isInstartLogicRecoverable,
-			adShouldBeRecovered = isRecoveryEnabled && isBlocking && adIsRecoverable,
-			shouldPush = !isBlocking || adShouldBeRecovered,
 			slotName = slot.name;
-
-		log(['isRecoveryEnabled, isBlocking, adIsRecoverable',
-			slot.name, isRecoveryEnabled, isBlocking, adIsRecoverable], log.levels.debug, logGroup);
 
 		// copy value
 		slotTargetingData = JSON.parse(JSON.stringify(slotTargetingData));
@@ -104,26 +82,18 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 
 		element = new AdElement(slotName, slotPath, slotTargetingData);
 
-		if (pageFair && extra.isPageFairRecoverable) {
-			log(['Adding adonis-marker to slot', slot], log.levels.debug, logGroup);
-
-			pageFair.addMarker(element.node);
-		}
-
 		function queueAd() {
-			log(['queueAd', slotName, element], log.levels.debug, logGroup);
-			slot.container.appendChild(element.getNode());
+			if (slot && slot.container) {
+				log(['queueAd', slotName, element], log.levels.debug, logGroup);
+				slot.container.appendChild(element.getNode());
 
-			googleTag.addSlot(element);
+				googleTag.addSlot(element);
+			}
 		}
 
 		function setAdditionalTargeting(slotTargetingData) {
 			var abId,
 				rabbitResults = rabbit && rabbit.getResults(instantGlobals.wgAdDriverRabbitTargetingKeyValues);
-
-			if (isRecoverableByIL()) {
-				slotTargetingData.requestSource = 'instartLogic';
-			}
 
 			if (slotTargetingData.src) {
 				slotTargetingData.src = srcProvider.get(slotTargetingData.src, extra);
@@ -167,7 +137,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 			googleTag.setPageLevelParams(adLogicPageParams.getPageLevelParams());
 		}
 
-		if (!shouldPush || !slot.isEnabled()) {
+		if (!slot.isEnabled()) {
 			log(['Push blocked', slotName], log.levels.debug, logGroup);
 			slot.collapse();
 			return;

@@ -2434,7 +2434,8 @@ $messages['pl'] = array(
 	'old_skins' => 'Old skins',
 	'other_people' => 'Other people have been searching for...',
 	'or_learn' => 'Or to learn more, take the ',
-	'oasis-mobile-site' => 'Mobile site',
+	'oasis-mobile-site' => 'Wersja mobilna',
+	'original-file' => 'oryginalny plik',
 );
 
 $messages['pms'] = array(
