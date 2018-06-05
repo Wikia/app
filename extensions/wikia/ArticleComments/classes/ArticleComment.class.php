@@ -891,6 +891,7 @@ class ArticleComment {
 
 			$status = self::doSaveAsArticle( $text, $article, $user, $this->mMetadata, $summary );
 
+
 			if ( !empty( $title ) ) {
 				$purgeTarget = $title;
 			} else {
@@ -1054,6 +1055,7 @@ class ArticleComment {
 		$article = new Article( $commentTitle, 0 );
 
 		$retVal = self::doSaveAsArticle( $text, $article, $user, $metadata );
+		self::addCommentMapping( $article->getID(), $title->getArticleID(), $parentId ?: 0 ); // SUS-3433
 		$res = ArticleComment::doAfterPost( $retVal, $article, $parentId );
 
 		ArticleComment::doPurge( $title, $commentTitle );
@@ -1718,5 +1720,19 @@ class ArticleComment {
 		} else {
 			return ( $user->isAllowedAll( 'commentcreate', 'edit' ) && ArticleCommentInit::ArticleCommentCheckTitle( $title ) );
 		}
+	}
+
+	/**
+	 * Saves a mapping between an article an a comment
+	 *
+	 * @param $commentId int page_id of the comment
+	 * @param $articleId int page_id of the parent article
+	 * @param $parentCommentId int page_id of the parent comment, if it exists
+	 */
+	static function addCommentMapping( int $commentId, int $articleId, int $parentCommentId ) {
+		$db = wfGetDB( DB_MASTER );
+		$db->insert( 'article_comments',
+			['comment_id' => $commentId, 'article_id' => $articleId, 'parent_comment_id' => $parentCommentId],
+			__METHOD__ );
 	}
 }
