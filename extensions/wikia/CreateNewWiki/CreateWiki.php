@@ -21,8 +21,8 @@ class CreateWiki {
 
 	private $taskContext;
 
-	public function __construct( $name, $domain, $language, $vertical, $categories ) {
-		$this->taskContext = TaskContext::newFromUserInput( $name, $domain, $language, $vertical, $categories );
+	public function __construct( $name, $domain, $language, $vertical, $categories, $fandomCreatorCommunityId = null ) {
+		$this->taskContext = TaskContext::newFromUserInput( $name, $domain, $language, $vertical, $categories, $fandomCreatorCommunityId );
 	}
 
 	/**
