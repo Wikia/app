@@ -22,7 +22,7 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 	win.googletag.cmd = win.googletag.cmd || [];
 
 	function collapseIfSlotHasViewportConflicts(slotName) {
-		var slot = bridge.slotService.getBySlotName(slotName);
+		var slot = bridge.slotService.get(slotName);
 
 		if (bridge.slotService.hasViewportConflict(slot)) {
 			slot.collapse({ adType: 'viewport-conflict' });
