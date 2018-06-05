@@ -26,8 +26,8 @@ class CommunitySetupController extends WikiaApiController {
 			return;
 		}
 
-		$setup = (new CommunitySetup($params[self::PARAM_WIKI_ID], $params[self::PARAM_FC_ID]));
-		if ($setup) {
+		$setup = new CommunitySetup($params[self::PARAM_WIKI_ID], $params[self::PARAM_FC_ID]);
+		if ($setup->setup()) {
 			// i want this to be 204 but through the icache internal proxy that ends up being a 503 :|
 			$this->response->setCode(200);
 		} else {
