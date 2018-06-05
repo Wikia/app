@@ -26,11 +26,6 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.rubicon', function () {
 					lang: ['en']
 				}
 			}
-		},
-		instartLogic: {
-			isBlocking: function() {
-				return false;
-			}
 		}
 	};
 
@@ -41,7 +36,6 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.rubicon', function () {
 			mocks.adContext,
 			mocks.slotsContext,
 			mocks.adaptersHelper,
-			mocks.instartLogic,
 			mocks.log
 		);
 	}
@@ -60,13 +54,6 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.rubicon', function () {
 	it('Is disabled when context is disabled', function () {
 		spyOn(mocks.adContext, 'get').and.returnValue(false);
 		var rubicon = getBidder();
-
-		expect(rubicon.isEnabled()).toBeFalsy();
-	});
-
-	it('Is disabled when context is enabled but is blocking', function () {
-		var rubicon = getBidder();
-		spyOn(mocks.instartLogic, 'isBlocking').and.returnValue(true);
 
 		expect(rubicon.isEnabled()).toBeFalsy();
 	});

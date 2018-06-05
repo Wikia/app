@@ -208,7 +208,6 @@ $wgAutoloadClasses[ 'FakeLocalFile'                   ] = "$IP/includes/wikia/Fa
 $wgAutoloadClasses[ 'WikiaUploadStash'                ] = "$IP/includes/wikia/upload/WikiaUploadStash.class.php";
 $wgAutoloadClasses[ 'WikiaUploadStashFile'            ] = "$IP/includes/wikia/upload/WikiaUploadStashFile.class.php";
 $wgAutoloadClasses[ 'WikiaPageType'                   ] = "$IP/includes/wikia/WikiaPageType.class.php";
-$wgAutoloadClasses[ 'WikiaSkinMonoBook'               ] = "$IP/skins/wikia/WikiaMonoBook.php";
 $wgAutoloadClasses[ 'PaginationController'            ] = "$IP/includes/wikia/services/PaginationController.class.php";
 $wgAutoloadClasses[ 'MemcacheSync'                    ] = "$IP/includes/wikia/MemcacheSync.class.php";
 $wgAutoloadClasses[ 'WikiaAssets'                     ] = "$IP/includes/wikia/WikiaAssets.class.php";
@@ -367,7 +366,6 @@ $wgAutoloadClasses['FollowedPagesController'] = $IP.'/skins/oasis/modules/Follow
 $wgAutoloadClasses['UserPagesHeaderController'] = $IP.'/skins/oasis/modules/UserPagesHeaderController.class.php';
 $wgAutoloadClasses['MenuButtonController'] = $IP.'/skins/oasis/modules/MenuButtonController.class.php';
 $wgAutoloadClasses['CommentsLikesController'] = $IP.'/skins/oasis/modules/CommentsLikesController.class.php';
-$wgAutoloadClasses['BlogListingController'] = $IP.'/skins/oasis/modules/BlogListingController.class.php';
 $wgAutoloadClasses['NotificationsController'] = $IP.'/skins/oasis/modules/NotificationsController.class.php';
 $wgAutoloadClasses['LatestEarnedBadgesController'] = $IP.'/extensions/wikia/AchievementsII/modules/LatestEarnedBadgesController.class.php';
 $wgAutoloadClasses['HotSpotsController'] = $IP.'/skins/oasis/modules/HotSpotsController.class.php';
@@ -1373,31 +1371,6 @@ $wgHighValueCountries = null;
 $wgAdDriverTurtleCountries = null;
 
 /**
- * @name wgAdDriverEnableInstartLogicRecovery
- * Enable InstartLogic Recovery per wiki
- */
-$wgAdDriverEnableInstartLogicRecovery = true;
-
-/**
- * @name $wgAdDriverPageFairDetectionCountries
- * List of countries to call PageFair detection scripts
- */
-$wgAdDriverPageFairDetectionCountries = null;
-
-/**
- * @name $wgAdDriverPageFairRecoveryCountries
- * List of countries to call ads through PageFair
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverPageFairRecoveryCountries = null;
-
-/**
- * @name $wgAdDriverEnablePageFairRecovery
- * Enable PageFair Recovery per wiki
- */
-$wgAdDriverEnablePageFairRecovery = true;
-
-/**
  * @name $wgAdDriverBabDetectionDesktopCountries
  * List of countries to call BlockAdBlock detection scripts on oasis
  */
@@ -1426,6 +1399,12 @@ $wgAdDriverBabRecoveryCountries = null;
  * List of countries to enable new Prebid
  */
 $wgAdDriverNewPrebidCountries = null;
+
+/**
+ * @name $wgAdDriverConsentStringCountries
+ * List of countries to enable Consent Management module in Prebid
+ */
+$wgAdDriverConsentStringCountries = null;
 
 /**
  * trusted proxy service registry
@@ -1545,9 +1524,7 @@ $wgBuckySampling = 10;
  * List of skins where Bucky reporting should be enabled
  */
 $wgBuckyEnabledSkins = [
-	'monobook',
 	'oasis',
-	'uncyclopedia',
 	'wikiamobile',
 ];
 
@@ -1629,13 +1606,6 @@ $wgPreferenceServiceWrite = true;
  * Enables FliteTag extension which makes it possible to use <flite> tag within an article content
  */
 $wgEnableFliteTagExt = false;
-
-/**
- * @name $wgARecoveryEngineCustomLog
- * Enables Kibana logging of ad recovery interruptions
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgARecoveryEngineCustomLog = null;
 
 /**
  * Protect Piggyback logs even if the extension is disabled
@@ -1742,12 +1712,6 @@ $wgEnableOpenXSPC = true;
  * SUS-4734
  */
 $wgInlineStartupScript = false;
-
-/**
- * Enable recovery
- * It should be always included even if recovery is disabled as we use Recovery classes outside the module
- */
-include_once("$IP/extensions/wikia/ARecoveryEngine/ARecoveryEngine.setup.php");
 
 include_once "$IP/extensions/wikia/ImageReview/ImageReviewEvents.setup.php";
 

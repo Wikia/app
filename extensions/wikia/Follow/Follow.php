@@ -26,7 +26,6 @@ if ( !empty($wgEnableWikiaFollowedPages) && $wgEnableWikiaFollowedPages ) {
 	$wgHooks['ArticleSaveComplete'][] = "FollowHelper::watchBlogListing";
 	$wgHooks['PersonalUrls'][] = 'FollowHelper::addPersonalUrl';
 	$wgHooks['MakeGlobalVariablesScript'][] = 'FollowHelper::jsVars';
-	$wgHooks['AddToUserProfile'][] = 'FollowHelper::renderUserProfile';
 	$wgSpecialPages['Following'] = 'FollowedPages'; # Let MediaWiki know about your new special page.
 	$wgSpecialPageGroups['Following'] = 'changes';
 	$wgAjaxExportList[] = 'FollowHelper::showAll';

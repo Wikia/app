@@ -62,9 +62,6 @@ if (!empty($wgEnableWallEngine) || !empty($wgEnableArticleCommentsExt) || !empty
 	$wgHooks['ConfirmEdit::onConfirmEdit'][] = 'ArticleCommentList::onConfirmEdit';
 	// redirect
 	$wgHooks['ArticleFromTitle'][] = 'ArticleCommentList::ArticleFromTitle';
-	// init
-	$wgHooks['BeforePageDisplay'][] = 'ArticleCommentInit::ArticleCommentAddJS';
-	$wgHooks['SkinTemplateTabs'][] = 'ArticleCommentInit::ArticleCommentHideTab';
 	// user talk comment and notify
 	$wgHooks['UserMailer::NotifyUser'][] = 'ArticleCommentInit::ArticleCommentNotifyUser';
 	// blogs
@@ -87,6 +84,9 @@ if (!empty($wgEnableWallEngine) || !empty($wgEnableArticleCommentsExt) || !empty
 
 	$wgHooks['FilePageImageUsageSingleLink'][] = 'ArticleCommentInit::onFilePageImageUsageSingleLink';
 	$wgHooks['AfterPageHeaderButtons'][] = 'ArticleCommentsHooks::onAfterPageHeaderButtons';
+
+	// SUS-3433 article comments mapping table
+	$wgHooks['LoadExtensionSchemaUpdates'][] = 'ArticleCommentHooks::onLoadExtensionSchemaUpdates';
 }
 
 //JSMEssages setup

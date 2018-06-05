@@ -9,6 +9,7 @@ $messages['en'] = array(
 	'ok' => 'OK',
 	'oldpassword' => 'Old password:',
 	'opensearch-desc' => '{{SITENAME}} ({{CONTENTLANGUAGE}})',
+	'original-file' => 'original file',
 	'overwrite' => 'Overwriting an existing file is not allowed.',
 	'overwroteimage' => 'uploaded a new version of "[[$1]]"',
 	'othercontribs' => 'Based on work by $1.',
@@ -28,6 +29,7 @@ $messages['qqq'] = array(
 {{Identical|Otherlanguages}}',
 	'ok' => '{{Identical|OK}}',
 	'oldpassword' => "Used on the 'User profile' tab of 'my preferences'. This is the text next to an entry box for the old password in the 'change password' section.",
+	'original-file' => 'The link text for a direct link to the original file that has not been optimised by our software, so that it can be downloaded.',
 	'overwroteimage' => 'This is the text of an entry in the [[Special:Log|upload log]] (and Recent Changes), after hour (and date, only in the Upload log) and user name. $1 is the name of the file uploaded.',
 	'othercontribs' => 'This message is shown when viewing the credits of a page (example: {{fullurl:Main Page|action=credits}}). Note that this action is disabled by default (currently enabled on translatewiki.net - to use type <nowiki>&action=credits</nowiki> at the end of any URL in the address bar).
 * $1: the list of author(s) of the revisions preceding the current revision. It appears after the message [[Mediawiki:lastmodifiedatby/{{SUBPAGENAME}}]]. If there are no previous authors this message does not appear at all. If needed the messages [[Mediawiki:siteusers/{{SUBPAGENAME}}]], [[Mediawiki:anonymous/{{SUBPAGENAME}}]] and [[Mediawiki:and/{{SUBPAGENAME}}]] are part of the list of names.
@@ -2432,7 +2434,8 @@ $messages['pl'] = array(
 	'old_skins' => 'Old skins',
 	'other_people' => 'Other people have been searching for...',
 	'or_learn' => 'Or to learn more, take the ',
-	'oasis-mobile-site' => 'Mobile site',
+	'oasis-mobile-site' => 'Wersja mobilna',
+	'original-file' => 'oryginalny plik',
 );
 
 $messages['pms'] = array(

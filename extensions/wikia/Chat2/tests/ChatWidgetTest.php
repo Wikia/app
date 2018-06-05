@@ -8,30 +8,6 @@ class ChatWidgetTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * @dataProvider getTemplateNameDataProvider
-	 */
-	public function testGetTemplateName( $isOasis, $expected ) {
-		$this->mockStaticMethod( 'WikiaApp', 'checkSkin', $isOasis );
-
-		$templateName = ChatWidget::getTemplateName();
-
-		$this->assertEquals( $expected, $templateName );
-	}
-
-	public function getTemplateNameDataProvider() {
-		return [
-			[
-				'isOasis' => true,
-				'expected' => 'widget.mustache'
-			],
-			[
-				'isOasis' => false,
-				'expected' => 'widgetMonobook.mustache'
-			]
-		];
-	}
-
-	/**
 	 * @dataProvider getTemplateVarsDataProvider
 	 */
 	public function testGetTemplateVars( $fromParserTag, $wgEnableWallExt, $isLoggedIn, $chatUsersInfo, $expected ) {

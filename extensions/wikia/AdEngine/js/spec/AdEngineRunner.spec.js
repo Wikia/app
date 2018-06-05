@@ -53,7 +53,6 @@ describe('ext.wikia.adEngine.adEngineRunner', function () {
 			mocks.win,
 			bidders.a9,
 			null,
-			null,
 			fvLagger
 		);
 	}

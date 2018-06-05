@@ -532,15 +532,6 @@ $wgAPIPropModules = [];
 $wgAPIRequestLog = false;
 
 /**
- * Do not display "Talk" or "Discussion" tab on non-Oasis skins. There is no
- * relevance to Discussions feature developed in 2016/2017.
- * @deprecated
- * @see extensions/wikia/ArticleComments
- * @var bool $wgArticleCommentsHideDiscussionTab
- */
-$wgArticleCommentsHideDiscussionTab = true;
-
-/**
  * Whether or not to purge squid proxy URLs lazy-loaded ArticleComments. This
  * is a legacy variable and its name does no longer reflect its purpose.
  * @see ArticleComment::doPurge()
@@ -1254,6 +1245,12 @@ $wgCountTotalSearchHits = false;
  * @var string $wgCreateDatabaseActiveCluster
  */
 $wgCreateDatabaseActiveCluster = 'c7';
+
+/**
+ * Whether to create new non-English wikis with the language code as a component of the URL path, rather than a subdomain.
+ * @var bool $wgCreateLanguageWikisWithPath
+ */
+$wgCreateLanguageWikisWithPath = false;
 
 /**
  * Domains that should not be allowed to make AJAX requests,

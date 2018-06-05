@@ -625,8 +625,8 @@ class Xml {
 		} elseif ( is_int( $value ) || is_float( $value ) ) {
 			$s = strval($value);
 		} elseif ( is_array( $value ) && // Make sure it's not associative.
-					array_keys($value) === range( 0, count($value) - 1 ) ||
-					count($value) == 0
+				   ( array_keys($value) === range( 0, count($value) - 1 ) ||
+					count($value) == 0 )
 				) {
 			$s = '[';
 			foreach ( $value as $elt ) {

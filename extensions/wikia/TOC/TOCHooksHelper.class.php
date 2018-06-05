@@ -24,33 +24,17 @@ class TOCHooksHelper {
 		return true;
 	}
 
-	/** Add assets */
-
-	private static function addAssets( &$assetsArray ) {
+	/**
+	 * Add TOC js assets to Oasis
+	 * @param $assetsArray
+	 */
+	public static function onOasisSkinAssetGroups( &$assetsArray ) {
 
 		$title = F::app()->wg->title;
 
 		if ( !$title->isSpecialPage() ) {
 			$assetsArray[] = 'toc_js';
 		}
-		return true;
-	}
 
-	/** Add TOC js assets to Oasis */
-
-	public static function onOasisSkinAssetGroups( &$assetsArray ) {
-
-		self::addAssets( $assetsArray );
-
-		return true;
-	}
-
-	/** Add TOC js assets to Monobook */
-
-	public static function onMonobookSkinAssetGroups( &$assetsArray ) {
-
-		self::addAssets( $assetsArray );
-
-		return true;
 	}
 }

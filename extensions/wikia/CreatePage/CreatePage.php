@@ -37,45 +37,18 @@ $wgAutoloadClasses['CreatePageHelper'] = __DIR__ . '/CreatePageHelper.class.php'
 $wgSpecialPages['CreatePage'] = 'SpecialCreatePage';
 $wgSpecialPageGroups['CreatePage'] = 'pagetools';
 
+
+
 /**
- * setup functions
+ * hooks
  */
-$wgExtensionFunctions[] = 'wfCreatePageInit';
+$wgHooks['MakeGlobalVariablesScript'][] = 'wfCreatePageSetupVars';
+$wgHooks['EditPage::showEditForm:initial'][] = 'wfCreatePageLoadPreformattedContent';
+$wgHooks['GetPreferences'][] = 'wfCreatePageOnGetPreferences';
 
-// initialize create page extension
-function wfCreatePageInit() {
-	global $wgHooks, $wgAjaxExportList;
-
-	/**
-	 * hooks
-	 */
-	$wgHooks['MakeGlobalVariablesScript'][] = 'wfCreatePageSetupVars';
-	$wgHooks['EditPage::showEditForm:initial'][] = 'wfCreatePageLoadPreformattedContent';
-	$wgHooks['GetPreferences'][] = 'wfCreatePageOnGetPreferences';
-	$wgHooks['BeforeInitialize'][] = 'wfCreatePageOnBeforeInitialize';
-
-	$wgAjaxExportList[] = 'wfCreatePageAjaxGetDialog';
-	$wgAjaxExportList[] = 'wfCreatePageAjaxGetVEDialog';
-	$wgAjaxExportList[] = 'wfCreatePageAjaxCheckTitle';
-}
-
-// use different code for Special:CreatePage when using monobook (BugId:6601)
-function wfCreatePageOnBeforeInitialize(&$title, &$article, &$output, User &$user, $request, $mediaWiki) {
-	global $wgAutoloadClasses;
-
-	// this line causes initialization of the skin
-	// title before redirect handling is passed causing BugId:7282 - it will be fixed in "AfterInitialize" hook
-	$skinName = get_class($user->getSkin());
-	if ($skinName == 'SkinMonoBook') {
-		// use different class to handle Special:CreatePage
-		$dir = dirname(__FILE__) . '/monobook';
-
-		$wgAutoloadClasses['SpecialCreatePage'] = $dir . '/SpecialCreatePage.class.php';
-		$wgAutoloadClasses['SpecialEditPage'] = $dir . '/SpecialEditPage.class.php';
-	}
-
-	return true;
-}
+$wgAjaxExportList[] = 'wfCreatePageAjaxGetDialog';
+$wgAjaxExportList[] = 'wfCreatePageAjaxGetVEDialog';
+$wgAjaxExportList[] = 'wfCreatePageAjaxCheckTitle';
 
 function wfCreatePageSetupVars(Array &$vars ) {
 	global $wgWikiaEnableNewCreatepageExt,

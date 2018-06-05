@@ -81,10 +81,6 @@ require(
 							return;
 						}
 
-						if (data.count) {
-							this.$notifications.removeClass('prehide');
-						}
-
 						this.updateCountsHtml(data);
 
 						// if we already have data for some Wikis, show it

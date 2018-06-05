@@ -4,7 +4,18 @@ describe('ext.wikia.adEngine.ml.modelFactory', function () {
 
 	var mocks = {
 		adContext: {
-			addCallback: function () {}
+			addCallback: function () {},
+			get: function (key) {
+				switch (key) {
+					case 'targeting.featuredVideo':
+						return {
+							mediaId: 'abc7x7',
+							videoTags: [ 'foo' ]
+						};
+					case 'targeting.wikiId':
+						return '123';
+				}
+			}
 		},
 		pageParams: {
 			getPageLevelParams: function () {
@@ -18,19 +29,15 @@ describe('ext.wikia.adEngine.ml.modelFactory', function () {
 				return 'desktop';
 			}
 		},
-		featuredVideoData: {
-			mediaId: 'abc7x7',
-			videoTags: [ 'foo' ]
-		},
 		geo: {
 			getCountryCode: function () {
 				return 'PL';
 			}
 		},
-		win: {
-			wgCityId: '123'
-		}
+		log: function () {}
 	};
+
+	mocks.log.levels = {};
 
 	function getModule() {
 		return modules['ext.wikia.adEngine.ml.inputParser'](
@@ -38,8 +45,7 @@ describe('ext.wikia.adEngine.ml.modelFactory', function () {
 			mocks.pageParams,
 			mocks.deviceDetect,
 			mocks.geo,
-			mocks.win,
-			mocks.featuredVideoData
+			mocks.log
 		);
 	}
 
@@ -103,5 +109,13 @@ describe('ext.wikia.adEngine.ml.modelFactory', function () {
 	it('Parse wikiId', function () {
 		assertParsing('wikiId', '123', 1);
 		assertParsing('wikiId', '789', 0);
+	});
+
+	it('Throw exception when data source has missing field', function () {
+		expect(function () {
+			getModule().parse([
+				{ name: 'foo', value: 'bar' }
+			]);
+		}).toThrowError('Value for "foo" is not defined.');
 	});
 });

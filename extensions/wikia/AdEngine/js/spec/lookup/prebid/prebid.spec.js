@@ -64,9 +64,6 @@ describe('ext.wikia.adEngine.lookup.prebid', function () {
 				}
 			},
 			log: noop,
-			adBlockDetection: {
-				addOnBlockingCallback: noop
-			},
 			bidResponses: {
 				TOP_LEADERBOARD: {
 					bids: [
@@ -105,6 +102,7 @@ describe('ext.wikia.adEngine.lookup.prebid', function () {
 					cb(true);
 				}
 			},
+			consentString: {},
 			adaptersPricesTracker: {},
 			adaptersPriorities: {
 				bidder_1: 1,
@@ -155,7 +153,6 @@ describe('ext.wikia.adEngine.lookup.prebid', function () {
 		return modules['ext.wikia.adEngine.lookup.lookupFactory'](
 			mocks.adContext,
 			mocks.adTracker,
-			mocks.adBlockDetection,
 			mocks.lazyQueue,
 			mocks.log
 		);
@@ -171,6 +168,7 @@ describe('ext.wikia.adEngine.lookup.prebid', function () {
 			mocks.prebidHelper,
 			mocks.prebidSettings,
 			getFactory(),
+			mocks.consentString,
 			mocks.log,
 			mocks.trackingOptIn,
 			mocks.win

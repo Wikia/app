@@ -11,11 +11,6 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.pubmatic', function () {
 				return map;
 			}
 		},
-		instartLogic: {
-			isBlocking: function() {
-				return false;
-			}
-		},
 		log: function () {}
 	};
 
@@ -25,19 +20,16 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.pubmatic', function () {
 		return modules['ext.wikia.adEngine.lookup.prebid.adapters.pubmatic'](
 			mocks.adContext,
 			mocks.slotsContext,
-			mocks.instartLogic,
 			mocks.log
 		);
 	}
 
 	it('enables bidder if flag is on and user is not blocking ads', function () {
-		spyOn(mocks.instartLogic, 'isBlocking').and.returnValue(false);
 		spyOn(mocks.adContext, 'get').and.returnValue(true);
 		expect(getPubMatic().isEnabled()).toBeTruthy();
 	});
 
 	it('disables bidder if flag is off and user is not blocking ads', function () {
-		spyOn(mocks.instartLogic, 'isBlocking').and.returnValue(false);
 		spyOn(mocks.adContext, 'get').and.returnValue(false);
 		expect(getPubMatic().isEnabled()).toBeFalsy();
 	});
