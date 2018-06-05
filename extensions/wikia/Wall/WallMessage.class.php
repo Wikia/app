@@ -77,14 +77,18 @@ class WallMessage {
 		}
 
 		if ( $master == false ) {
-			// TODO: instead of relying on fallback to master let's implement a proper wfWaitForSlaves() use
-			WikiaLogger::instance()->warning( __METHOD__ . ' - newFromId failed for slave, trying master', [
-				'titleId' => $id
-			] );
+			// if you fail from slave try again from master
+			$masterComment = self::newFromId( $id, true );
+
+			if ( $masterComment ) {
+				// TODO: instead of relying on fallback to master let's implement a proper wfWaitForSlaves() use
+				WikiaLogger::instance()->warning( __METHOD__ . ' - newFromId failed for slave, but data found in master', [
+					'titleId' => $id
+				] );
+			}
 
 			wfProfileOut( __METHOD__ );
-			// if you fail from slave try again from master
-			return self::$wallMessageCache[$id] = self::newFromId( $id, true );
+			return self::$wallMessageCache[$id] = $masterComment;
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -129,6 +133,7 @@ class WallMessage {
 		foreach ( $retryIds as $id ) {
 			$title = Title::newFromID( $id, Title::GAID_FOR_UPDATE );
 			if ( $title instanceof Title && $title->exists() ) {
+				WikiaLogger::instance()->warning( 'Reply missing from slave but found in master', [ 'titleId' => $id ] );
 				$wallMessages[ $title->getArticleID() ] = WallMessage::newFromTitle( $title );
 			} else {
 				WikiaLogger::instance()->error( 'Failed to load reply for thread', [ 'titleId' => $id ] );
