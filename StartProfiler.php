@@ -1,32 +1,27 @@
 <?php
-// Wikia change - begin - @author Mix
-$wgProfilingDataLogged = false;
 
-register_shutdown_function( function() {
-	global $wgProfilingDataLogged;
-	if ( ! $wgProfilingDataLogged && function_exists( 'wfLogProfilingData' ) ) {
-		wfLogProfilingData();
-		$wgProfilingDataLogged = true;
-	}
-} );
-// Wikia change - end
+/**
+ * Begin profiling of a function
+ * @deprecated explicit profiler calls are no longer required
+ * @param $functionname String: name of the function we will profile
+ */
+function wfProfileIn( $functionname ) {
+	// no-op
+}
 
-# defined here since this is loaded before settings -gp
-$wgProfilerSamplePercent = 1;
-$wgXhprofSamplePercent = 1;
-$wgProfilerRequestSample = mt_rand(1, 100);
-if( !empty( $_GET['forceprofile'] ) ) {
-	require_once( dirname(__FILE__).'/includes/profiler/ProfilerSimpleText.php' );
-	$wgProfiler = new ProfilerSimpleText(array());
-	$wgProfiler->setProfileID( 'forced' );
-// Wikia change - begin - @author: wladek
-} elseif( !empty( $_GET['forcetrace'] ) && $_GET['forcetrace'] == 2 ) {
-	require_once( dirname(__FILE__).'/includes/wikia/profiler/ProfilerWikiaTrace.php' );
-	$wgProfiler = new ProfilerWikiaTrace(array());
-// Wikia change - end
-} elseif( !empty( $_GET['forcetrace'] ) ) {
-	require_once( dirname(__FILE__).'/includes/profiler/ProfilerSimpleTrace.php' );
-	$wgProfiler = new ProfilerSimpleTrace(array());
-} else {
-	require_once( dirname(__FILE__).'/includes/profiler/ProfilerStub.php' );
+/**
+ * Stop profiling of a function
+ * @deprecated explicit profiler calls are no longer required
+ * @param $functionname String: name of the function we have profiled
+ */
+function wfProfileOut( $functionname = 'missing' ) {
+	// no-op
+}
+
+// No profiler configuration has been supplied but profiling has been explicitly requested
+if ( empty( $wgProfiler ) && !empty( $_GET['forceprofile'] ) ) {
+	$wgProfiler = [
+		'class' => ProfilerXhprof::class,
+		'output' => [ 'text' ],
+	];
 }

@@ -21,7 +21,13 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 #
 
 $fname = 'Setup.php';
-wfProfileIn( $fname );
+
+# Start the profiler
+if ( file_exists( "$IP/StartProfiler.php" ) ) {
+	require( "$IP/StartProfiler.php" );
+}
+
+$setupProfileIn = Profiler::instance()->scopedProfileIn( $fname );
 
 // Check to see if we are at the file scope
 if ( !isset( $wgVersion ) ) {
@@ -380,17 +386,13 @@ if ( !defined( 'MW_COMPILED' ) ) {
 		require_once( "$IP/includes/AutoLoader.php" );
 	}
 
-	wfProfileIn( $fname . '-exception' );
 	MWExceptionHandler::installHandler();
-	wfProfileOut( $fname . '-exception' );
 
-	wfProfileIn( $fname . '-includes' );
 	require_once( "$IP/includes/normal/UtfNormalUtil.php" );
 	require_once( "$IP/includes/GlobalFunctions.php" );
 	require_once( "$IP/includes/ProxyTools.php" );
 	require_once( "$IP/includes/ImageFunctions.php" );
 	require_once( "$IP/includes/normal/UtfNormalDefines.php" );
-	wfProfileOut( $fname . '-includes' );
 }
 
 // T48998: Bail out early if $wgArticlePath is non-absolute
@@ -407,8 +409,6 @@ if ( !preg_match( '/^(https?:\/\/|\/)/', $wgArticlePath ) ) {
 if ( $wgCanonicalServer === false ) {
 	$wgCanonicalServer = wfExpandUrl( $wgServer, PROTO_HTTP );
 }
-
-wfProfileIn( $fname . '-misc1' );
 
 # Raise the memory limit if it's too low
 wfMemoryLimit();
@@ -449,9 +449,6 @@ if ( $wgCommandLineMode ) {
 
 Hooks::run('WebRequestInitialized', [ $wgRequest ] ); // Wikia change
 
-wfProfileOut( $fname . '-misc1' );
-wfProfileIn( $fname . '-memcached' );
-
 $wgMemc = wfGetMainCache();
 $messageMemc = wfGetMessageCacheStorage();
 $parserMemc = wfGetParserCacheStorage();
@@ -460,12 +457,8 @@ wfDebug( 'CACHES: ' . get_class( $wgMemc ) . '[main] ' .
 	get_class( $messageMemc ) . '[message] ' .
 	get_class( $parserMemc ) . "[parser]\n" );
 
-wfProfileOut( $fname . '-memcached' );
-
 # # Most of the config is out, some might want to run hooks here.
 Hooks::run( 'SetupAfterCache' );
-
-wfProfileIn( $fname . '-session' );
 
 # If session.auto_start is there, we can't touch session name
 if ( !wfIniGetBool( 'session.auto_start' ) ) {
@@ -482,9 +475,6 @@ if ( !defined( 'MW_NO_SESSION' ) && !$wgCommandLineMode ) {
 		$wgSessionStarted = false;
 	}
 }
-
-wfProfileOut( $fname . '-session' );
-wfProfileIn( $fname . '-globals' );
 
 $wgContLang = Language::factory( $wgLanguageCode );
 $wgContLang->initEncoding();
@@ -519,33 +509,18 @@ $wgTitle = null;
 
 $wgDeferredUpdateList = array();
 
-wfProfileOut( $fname . '-globals' );
-wfProfileIn( $fname . '-extensions' );
+$extProfileIn = Profiler::instance()->scopedProfileIn( $fname . '-extensions' );
 
 # Extension setup functions for extensions other than skins
 # Entries should be added to this variable during the inclusion
 # of the extension file. This allows the extension to perform
 # any necessary initialisation in the fully initialised environment
 foreach ( $wgExtensionFunctions as $func ) {
-	# Allow closures in PHP 5.3+
-	if ( is_object( $func ) && $func instanceof Closure ) {
-		$profName = $fname . '-extensions-closure';
-	} elseif ( is_array( $func ) ) {
-		if ( is_object( $func[0] ) )
-			$profName = $fname . '-extensions-' . get_class( $func[0] ) . '::' . $func[1];
-		else
-			$profName = $fname . '-extensions-' . implode( '::', $func );
-	} else {
-		$profName = $fname . '-extensions-' . strval( $func );
-	}
-
-	wfProfileIn( $profName );
 	call_user_func( $func );
-	wfProfileOut( $profName );
 }
 
 wfDebug( "Fully initialised\n" );
 $wgFullyInitialised = true;
 
-wfProfileOut( $fname . '-extensions' );
-wfProfileOut( $fname );
+Profiler::instance()->scopedProfileOut( $extProfileIn );
+Profiler::instance()->scopedProfileOut( $setupProfileIn );
