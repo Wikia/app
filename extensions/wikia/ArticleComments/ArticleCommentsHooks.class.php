@@ -33,4 +33,8 @@ class ArticleCommentsHooks {
 
 		return true;
 	}
+
+	public static function onLoadExtensionSchemaUpdates( DatabaseUpdater $updater ) {
+		$updater->addExtensionTable( 'article_comments', MWInit::getExtensionsDirectory() . '/wikia/ArticleComments/sql/article_comments.sql' );
+	}
 }

@@ -52,6 +52,7 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverBottomLeaderBoardViewportCountries';
 		$vars[] = 'wgAdDriverBlockDelayServicesCountries';
 		$vars[] = 'wgAdDriverCTPDesktopRabbitCountries';
+		$vars[] = 'wgAdDriverCTPMobileRabbitCountries';
 		$vars[] = 'wgAdDriverDelayCountries';
 		$vars[] = 'wgAdDriverDelayTimeout';
 		$vars[] = 'wgAdDriverDisableSraCountries';
@@ -85,7 +86,6 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverConsentStringCountries';
 		$vars[] = 'wgAdDriverOpenXPrebidBidderCountries';
 		$vars[] = 'wgAdDriverOutstreamVideoFrequencyCapping';
-		$vars[] = 'wgAdDriverPageFairDetectionCountries';
 		$vars[] = 'wgAdDriverPlayAdsOnNextFVCountries';
 		$vars[] = 'wgAdDriverPlayAdsOnNextFVFrequency';
 		$vars[] = 'wgAdDriverPorvataMoatTrackingCountries';
@@ -93,10 +93,12 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverPrebidBidderCountries';
 		$vars[] = 'wgAdDriverPubMaticBidderCountries';
 		$vars[] = 'wgAdDriverRabbitTargetingKeyValues';
+		$vars[] = 'wgAdDriverRepeatMobileIncontentCountries';
 		$vars[] = 'wgAdDriverRubiconDisplayPrebidCountries';
 		$vars[] = 'wgAdDriverRubiconPrebidCountries';
 		$vars[] = 'wgAdDriverRubiconVideoInFeaturedVideoCountries';
 		$vars[] = 'wgAdDriverScrollDepthTrackingCountries';
+		$vars[] = 'wgAdDriverSingleBLBSizeForUAPCountries';
 		$vars[] = 'wgAdDriverSrcPremiumCountries';
 		$vars[] = 'wgAdDriverTurtleCountries';
 
@@ -129,6 +131,7 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverPlayAdsOnNextVideoFrequency';
 		$vars[] = 'wgAdDriverPorvataMoatTrackingCountries';
 		$vars[] = 'wgAdDriverPorvataMoatTrackingSampling';
+		$vars[] = 'wgAdDriverSingleBLBSizeForUAPCountries';
 		$vars[] = 'wgAdDriverVideoMidrollCountries';
 		$vars[] = 'wgAdDriverVideoMoatTrackingCountries';
 		$vars[] = 'wgAdDriverVideoMoatTrackingSampling';
@@ -137,7 +140,6 @@ class AdEngine2Hooks {
 		// news&stories variables only
 		$vars[] = 'wgAdDriverF2BabDetectionCountries';
 		$vars[] = 'wgAdDriverF2DelayTimeout';
-		$vars[] = 'wgAdDriverF2InstartLogicRecoveryCountries';
 		$vars[] = 'wgAdDriverLABradorTestF2Countries';
 
 		return true;

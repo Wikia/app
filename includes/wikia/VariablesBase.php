@@ -1170,6 +1170,27 @@ $wgCompiledFiles = [];
 $wgCompressRevisions = true;
 
 /**
+ * Hardcoded list of data-centers by environment
+ *
+ * Avoid costly HTTP calls on production to Consul agents in data centers like 'poz' or 'fra'
+ *
+ * @see SUS-4805
+ *
+ * @see lib/Wikia/src/Consul/Client.php
+ * @var array $wgConsulDataCenters
+ */
+$wgConsulDataCenters = [
+	'dev' => [
+		'sjc-dev',
+		'poz-dev',
+	],
+	'prod' => [
+		'sjc',
+		'res',
+	],
+];
+
+/**
  * Slack webhook URL for JavaScript Review Tool.
  * @see extensions/wikia/ContentReview
  * @var string $wgContentReviewSlackWebhook

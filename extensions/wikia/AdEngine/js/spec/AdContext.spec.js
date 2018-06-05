@@ -92,19 +92,6 @@ describe('AdContext', function () {
 		}
 	});
 
-	function enablePageFairDetection() {
-		mocks.instantGlobals.wgAdDriverPageFairDetectionCountries = ['CURRENT_COUNTRY'];
-		spyOn(mocks.sampler, 'sample').and.returnValue(true);
-	}
-
-	function enablePageFairRecovery(context) {
-		mocks.instantGlobals = mocks.instantGlobals || {};
-		mocks.instantGlobals.wgAdDriverPageFairRecoveryCountries = ['CURRENT_COUNTRY'];
-
-		context.opts = context.opts || {};
-		context.opts.pageFairRecovery = true;
-	}
-
 	it(
 		'fills getContext() with context, targeting, providers and forcedProvider ' +
 		'even for empty (or missing) ads.context',
@@ -368,123 +355,6 @@ describe('AdContext', function () {
 		expect(adContext.getContext().targeting.enableKruxTargeting).toBeFalsy();
 	});
 
-	it('Should allow to enable PageFair recovery with detection', function () {
-		var context = {};
-
-		enablePageFairRecovery(context);
-		enablePageFairDetection();
-		getModule().setContext(context);
-
-		expect(context.opts.pageFairRecovery).toBeTruthy();
-		expect(context.opts.pageFairDetection).toBeTruthy();
-	});
-
-	it('Should disable PageFair recovery if there is no correct geo', function () {
-		var context = {
-			opt: {
-				pageFairRecovery: true
-			}
-		};
-
-		mocks.instantGlobals = {
-			wgAdDriverPageFairRecoveryCountries: ['AA', 'BB']
-		};
-
-		getModule().setContext(context);
-
-		expect(context.opts.pageFairRecovery).toBeFalsy();
-	});
-
-	it('Should enable PageFair recovery if there is proper geo', function () {
-		var context = {
-			opts: {
-				pageFairRecovery: true
-			}
-		};
-
-		mocks.instantGlobals = {
-			wgAdDriverPageFairRecoveryCountries: ['AA', 'CURRENT_COUNTRY']
-		};
-
-		getModule().setContext(context);
-
-		expect(context.opts.pageFairRecovery).toBeTruthy();
-	});
-
-	it('Should disable PageFair recovery if there is proper geo but is disabled by backend (wgVariable)', function () {
-		var context = {
-			opts: {
-				pageFairRecovery: false
-			}
-		};
-
-		mocks.instantGlobals = {
-			wgAdDriverPageFairRecoveryCountries: ['AA', 'CURRENT_COUNTRY']
-		};
-
-		getModule().setContext(context);
-
-		expect(context.opts.pageFairRecovery).toBeFalsy();
-	});
-
-	it('Should disable PageFair recovery if there is no proper geo but its enabled by backend (wgVariable)', function () {
-		var context = {
-			opts: {
-				pageFairRecovery: true
-			}
-		};
-
-		mocks.instantGlobals = {
-			wgAdDriverPageFairRecoveryCountries: ['AA', 'BB']
-		};
-
-		getModule().setContext(context);
-
-		expect(context.opts.pageFairRecovery).toBeFalsy();
-	});
-
-	it('enables detection when url param pagefairdetection is set', function () {
-		spyOn(mocks.querystring, 'getVal').and.callFake(function (param) {
-			return param === 'pagefairdetection' ?  '1' : '0';
-		});
-
-		expect(getModule().getContext().opts.pageFairDetection).toBeTruthy();
-	});
-
-	it('disable detection when noExtenals is set and pagefairdetection is set', function () {
-		spyOn(mocks.querystring, 'getVal').and.callFake(function (param) {
-			var result = ['noexternals', 'pagefairdetection'].indexOf(param) !== -1;
-			return result ? '1' : '0';
-		});
-
-		expect(getModule().getContext().opts.pageFairDetection).toBeFalsy();
-	});
-
-	it('disable PageFair detection for current country on whitelist and not allowed by sampler', function () {
-		spyOn(mocks.sampler, 'sample').and.callFake(function () {
-			return false;
-		});
-
-		mocks.instantGlobals = {wgAdDriverPageFairDetectionCountries: ['CURRENT_COUNTRY', 'ZZ']};
-		expect(getModule().getContext().opts.pageFairDetection).toBeFalsy();
-	});
-
-	it('enable PageFair detection for current country on whitelist and allowed by sampler', function () {
-		spyOn(mocks.sampler, 'sample').and.callFake(function () {
-			return true;
-		});
-		mocks.instantGlobals = {wgAdDriverPageFairDetectionCountries: ['CURRENT_COUNTRY', 'ZZ']};
-		expect(getModule().getContext().opts.pageFairDetection).toBeTruthy();
-	});
-
-	it('disable PageFair detection when current country is not on whitelist and allowed by sampler', function () {
-		spyOn(mocks.sampler, 'sample').and.callFake(function () {
-			return true;
-		});
-		mocks.instantGlobals = {wgAdDriverPageFairDetectionCountries: ['OTHER_COUNTRY', 'ZZ']};
-		expect(getModule().getContext().opts.pageFairDetection).toBeFalsy();
-	});
-
 	it('enable BlockAdBlock detection for current country on whitelist on oasis', function () {
 		spyOn(mocks.sampler, 'sample').and.callFake(function () {
 			return true;
@@ -531,42 +401,6 @@ describe('AdContext', function () {
 		});
 		mocks.instantGlobals = {wgAdDriverBabRecoveryCountries: ['OTHER_COUNTRY', 'ZZ']};
 		expect(getModule().getContext().opts.babRecovery).toBeFalsy();
-	});
-
-	it('enables PageFair detection when url param pagefairdetection is set and current country is on whitelist', function () {
-		mocks.instantGlobals = {wgAdDriverPageFairDetectionCountries: ['CURRENT_COUNTRY', 'ZZ']};
-		spyOn(mocks.querystring, 'getVal').and.callFake(function (param) {
-			var result = ['pagefairdetection'].indexOf(param) !== -1;
-			return result ? '1' : '0';
-		});
-
-		expect(getModule().getContext().opts.pageFairDetection).toBeTruthy();
-	});
-
-	it('disable PageFair recovery on Edge', function () {
-		var context = {
-			opts: {
-				pageFairRecovery: true
-			}
-		};
-
-		mocks.instantGlobals = {
-			wgAdDriverPageFairRecoveryCountries: ['AA', 'CURRENT_COUNTRY']
-		};
-		spyOn(mocks.browserDetect, 'isEdge').and.returnValue(true);
-
-		getModule().setContext(context);
-
-		expect(context.opts.pageFairRecovery).toBeFalsy();
-	});
-
-	it('Should enable PageFair Recovery', function () {
-		var context = {};
-
-		enablePageFairRecovery(context);
-		getModule().setContext(context);
-
-		expect(context.opts.pageFairRecovery).toBeTruthy();
 	});
 
 	it('showcase is enabled if the cookie is set', function () {

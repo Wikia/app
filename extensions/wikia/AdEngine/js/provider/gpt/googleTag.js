@@ -8,9 +8,9 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 	'ext.wikia.adEngine.slot.service.srcProvider',
 	'wikia.document',
 	'wikia.log',
-	'wikia.trackingOptOut',
+	'wikia.trackingOptIn',
 	'wikia.window'
-], function (bridge, googleSlots, adSlot, slotRegistry, srcProvider, doc, log, trackingOptOut, win) {
+], function (bridge, googleSlots, adSlot, slotRegistry, srcProvider, doc, log, trackingOptIn, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.gpt.googleTag',
@@ -22,7 +22,7 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 	win.googletag.cmd = win.googletag.cmd || [];
 
 	function collapseIfSlotHasViewportConflicts(slotName) {
-		var slot = bridge.slotService.getBySlotName(slotName);
+		var slot = bridge.slotService.get(slotName);
 
 		if (bridge.slotService.hasViewportConflict(slot)) {
 			slot.collapse({ adType: 'viewport-conflict' });
@@ -52,7 +52,7 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 	}
 
 	function setupNonPersonalizedAds() {
-		win.googletag.pubads().setRequestNonPersonalizedAds(trackingOptOut.isOptedOut('gpt') ? 1 : 0);
+		win.googletag.pubads().setRequestNonPersonalizedAds(trackingOptIn.isOptedIn() ? 0 : 1);
 	}
 
 	function enableServices() {

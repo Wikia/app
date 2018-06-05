@@ -1,21 +1,17 @@
-/*global define, require*/
+/*global define*/
 /*jshint maxlen: 150*/
 define('ext.wikia.adEngine.provider.directGpt', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.provider.factory.wikiaGpt',
 	'ext.wikia.adEngine.slot.service.kiloAdUnitBuilder',
 	'ext.wikia.adEngine.slot.service.megaAdUnitBuilder',
-	'ext.wikia.adEngine.slotTweaker',
-	require.optional('ext.wikia.aRecoveryEngine.instartLogic.recovery'),
-	require.optional('ext.wikia.aRecoveryEngine.pageFair.recovery')
+	'ext.wikia.adEngine.slotTweaker'
 ], function (
 	adContext,
 	factory,
 	kiloAdUnitBuilder,
 	megaAdUnitBuilder,
-	slotTweaker,
-	instartLogic,
-	pageFair
+	slotTweaker
 ) {
 	'use strict';
 
@@ -51,8 +47,6 @@ define('ext.wikia.adEngine.provider.directGpt', [
 			afterSuccess: function (slotName) {
 				slotTweaker.removeDefaultHeight(slotName);
 			},
-			isInstartLogicRecoverable: instartLogic ? instartLogic.isSlotRecoverable : false,
-			isPageFairRecoverable: pageFair ? pageFair.isSlotRecoverable : false,
 			sraEnabled: sraEnabled,
 			atfSlots: atfSlots,
 			getAdUnitBuilder: function () {
