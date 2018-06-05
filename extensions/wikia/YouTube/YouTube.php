@@ -117,12 +117,6 @@ function upgradeYouTubeTag( EditPage $editpage, $request ): bool {
 			// Parse out the width and height parameters
 			$params = parseSizeParams( $paramText );
 
-			// If height is less than 30, they probably are using this as an audio file
-			// so don't bother converting it.
-			if ( $params['height'] <= AUDIO_ONLY_HEIGHT ) {
-				return $matches[0];
-			}
-
 			$url = 'https://www.youtube.com/watch?v=' . $ytid;
 
 			$videoService = new VideoService();
