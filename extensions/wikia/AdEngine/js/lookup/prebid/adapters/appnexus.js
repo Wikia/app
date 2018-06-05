@@ -49,8 +49,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.appnexus',[
 				},
 				MOBILE_IN_CONTENT: {
 					sizes: [
-						[300, 250],
-						[320, 480]
+						[300, 250]
 					]
 				},
 				BOTTOM_LEADERBOARD: {
