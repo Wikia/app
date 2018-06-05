@@ -14,9 +14,6 @@ define( 'MEDIAWIKI', true );
 require_once "$IP/includes/Init.php";
 require_once "$IP/includes/AutoLoader.php";
 
-require_once "$IP/includes/profiler/Profiler.php";
-require_once "$IP/StartProfiler.php";
-
 require_once "$IP/includes/Defines.php";
 
 require_once "$IP/LocalSettings.php";

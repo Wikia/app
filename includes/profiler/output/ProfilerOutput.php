@@ -1,7 +1,5 @@
 <?php
 /**
- * Stub profiling functions.
- *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -22,27 +20,37 @@
  */
 
 /**
- * Stub profiler that does nothing
+ * Base class for profiling output
  *
- * @ingroup Profiler
+ * Since 1.25
  */
-class ProfilerStub extends Profiler {
-	public function scopedProfileIn( $section ) {
-		return null; // no-op
+abstract class ProfilerOutput {
+	/** @var Profiler */
+	protected $collector;
+	/** @var array Configuration of $wgProfiler */
+	protected $params = [];
+
+	/**
+	 * @param Profiler $collector The actual profiler
+	 * @param array $params Configuration array, passed down from $wgProfiler
+	 */
+	public function __construct( Profiler $collector, array $params ) {
+		$this->collector = $collector;
+		$this->params = $params;
 	}
 
-	public function getFunctionStats() {
+	/**
+	 * Can this output type be used?
+	 * @return bool
+	 */
+	public function canUse() {
+		return true;
 	}
 
-	public function getOutput() {
-	}
-
-	public function close() {
-	}
-
-	public function logData() {
-	}
-
-	public function logDataPageOutputOnly() {
-	}
+	/**
+	 * Log MediaWiki-style profiling data
+	 *
+	 * @param array $stats Result of Profiler::getFunctionStats()
+	 */
+	abstract public function log( array $stats );
 }
