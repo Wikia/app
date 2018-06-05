@@ -94,7 +94,7 @@ class CreateWikiTask extends BaseTask {
 			self::updateCreationLogEntry( $this->getTaskId(), [
 				'creation_ended' => wfTimestamp( TS_DB ),
 				'completed' => 0,
-				'exception_message' => $ex->getMessage(),
+				'exception_message' => substr( $ex->getMessage(), 0, 255 ),
 			] );
 
 			throw $ex;
