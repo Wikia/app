@@ -4106,3 +4106,13 @@ function wfRandomString( $length = 32 ) {
 	}
 	return substr( $str, 0, $length );
 }
+
+/**
+ * Check if we are running from the commandline
+ *
+ * @since 1.31
+ * @return bool
+ */
+function wfIsCLI() {
+	return PHP_SAPI === 'cli' || PHP_SAPI === 'phpdbg';
+}
