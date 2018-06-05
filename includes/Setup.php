@@ -22,11 +22,6 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 
 $fname = 'Setup.php';
 
-# Start the profiler
-if ( file_exists( "$IP/StartProfiler.php" ) ) {
-	require( "$IP/StartProfiler.php" );
-}
-
 $setupProfileIn = Profiler::instance()->scopedProfileIn( $fname );
 
 // Check to see if we are at the file scope
