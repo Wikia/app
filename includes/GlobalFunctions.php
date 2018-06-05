@@ -1187,7 +1187,7 @@ function wfLogProfilingData() {
 	$profiler = Profiler::instance();
 
 	# Profiling must actually be enabled...
-	if ( $profiler->isStub() ) {
+	if ( $profiler instanceof ProfilerStub ) {
 		return;
 	}
 
