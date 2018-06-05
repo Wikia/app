@@ -80,7 +80,7 @@ class ArticleCommentsAjax {
 		$status = $response[0];
 		$article = $response[1];
 
-		return ArticleComment::doAfterPost( $status, $article, $parentId );
+		return ArticleComment::doAfterPost( $status, $article, $wgTitle, $parentId );
 	}
 
 	/**
@@ -214,7 +214,7 @@ class ArticleCommentsAjax {
 
 		/** @var Language $wgLang */
 		$countAll = $wgLang->formatNum( $listing->getCountAllNested() );
-		$afterPostResponse = ArticleComment::doAfterPost( $editStatus, $commentArticle, $parentId );
+		$afterPostResponse = ArticleComment::doAfterPost( $editStatus, $commentArticle, $title, $parentId );
 
 		ArticleComment::doPurge( $title, $commentArticle->getTitle() );
 
