@@ -10,16 +10,12 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.audienceNetwork', function (
 			get: noop,
 			getContext: noop
 		},
-		instartLogic: {
-			isBlocking: noop
-		}
 	};
 
 	function getAudienceNetwork() {
 		return modules['ext.wikia.adEngine.lookup.prebid.adapters.audienceNetwork'](
 			mocks.adContext,
-			mocks.slotsContext,
-			mocks.instartLogic
+			mocks.slotsContext
 		);
 	}
 
@@ -78,7 +74,6 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.audienceNetwork', function (
 				audienceNetwork: true
 			}
 		});
-		spyOn(mocks.instartLogic, 'isBlocking').and.returnValue(true);
 
 		var audienceNetwork = getAudienceNetwork();
 

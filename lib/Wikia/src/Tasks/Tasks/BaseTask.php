@@ -157,7 +157,7 @@ abstract class BaseTask {
 		$taskLists = $this->convertToTaskLists();
 		$taskIds = AsyncTaskList::batch( $taskLists );
 
-		return count( $taskIds ) == 1 ? $taskIds[0] : $taskIds;
+		return is_array( $taskIds ) && count( $taskIds ) == 1 ? $taskIds[0] : $taskIds;
 	}
 
 	/**

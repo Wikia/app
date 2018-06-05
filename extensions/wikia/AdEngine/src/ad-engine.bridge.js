@@ -48,7 +48,7 @@ function init(
 
 	context.set('slots', getSlotsContext(legacyContext, skin));
 	context.push('listeners.porvata', createTracker(legacyContext, geo, pageLevelTargeting, adTracker));
-	context.set('options.trackingOptOut', !isOptedIn);
+	context.set('options.trackingOptIn', isOptedIn);
 	adProductsUtils.setupNpaContext();
 
 	overrideSlotService(slotRegistry, legacyBtfBlocker);

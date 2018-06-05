@@ -1,9 +1,8 @@
 /*global define*/
 define('ext.wikia.adEngine.lookup.prebid.adapters.aol', [
 	'ext.wikia.adEngine.adContext',
-	'ext.wikia.adEngine.context.slotsContext',
-	'ext.wikia.aRecoveryEngine.instartLogic.recovery'
-], function (adContext, slotsContext, instartLogic) {
+	'ext.wikia.adEngine.context.slotsContext'
+], function (adContext, slotsContext) {
 	'use strict';
 
 	var bidderName = 'aol',
@@ -68,7 +67,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.aol', [
 		};
 
 	function isEnabled() {
-		return adContext.get('bidders.aol') && !instartLogic.isBlocking();
+		return adContext.get('bidders.aol');
 	}
 
 	function getSlots(skin) {

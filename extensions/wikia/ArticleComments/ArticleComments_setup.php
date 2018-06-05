@@ -84,6 +84,9 @@ if (!empty($wgEnableWallEngine) || !empty($wgEnableArticleCommentsExt) || !empty
 
 	$wgHooks['FilePageImageUsageSingleLink'][] = 'ArticleCommentInit::onFilePageImageUsageSingleLink';
 	$wgHooks['AfterPageHeaderButtons'][] = 'ArticleCommentsHooks::onAfterPageHeaderButtons';
+
+	// SUS-3433 article comments mapping table
+	$wgHooks['LoadExtensionSchemaUpdates'][] = 'ArticleCommentHooks::onLoadExtensionSchemaUpdates';
 }
 
 //JSMEssages setup

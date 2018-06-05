@@ -24,21 +24,11 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 					return mocks.context;
 				}
 			},
-			adBlockDetection: {
-				isBlocking: noop
-			},
-			adBlockRecovery: {
-				isEnabled: noop
-			},
 			adDetect: {},
 			adLogicPageParams: {
 				getPageLevelParams: function () {
 					return [];
 				}
-			},
-			pageFair: {
-				isEnabled: noop,
-				addMarker: noop
 			},
 			slotTweaker: {
 				show: noop,
@@ -124,8 +114,6 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 			mocks.passbackHandler,
 			mocks.srcProvider,
 			mocks.slotTargetingHelper,
-			mocks.adBlockDetection,
-			mocks.adBlockRecovery,
 			mocks.slotTweaker,
 			mocks.doc,
 			{},
@@ -133,7 +121,6 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 			undefined,
 			mocks.sraHelper,
 			undefined,
-			mocks.pageFair
 		);
 	}
 
@@ -249,46 +236,5 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 		getModule().pushAd(createSlot('TOP_RIGHT_BOXAD'), '/foo/slot/path', {}, {});
 
 		expect(callbacks.renderEnded.length).toEqual(1);
-	});
-
-	it('Prevent push/flush when slot is not recoverable and pageview is blocked and recovery is enabled', function () {
-		mocks.adBlockDetection.isBlocking = function () {
-			return true;
-		};
-		mocks.adBlockRecovery.isEnabled = function () {
-			return true;
-		};
-
-		spyOn(mocks.googleTag, 'push');
-		spyOn(mocks.googleTag, 'flush');
-
-		getModule().pushAd(createSlot('TOP_RIGHT_BOXAD'), '/foo/slot/path', {}, {
-			sraEnabled: true,
-			isPageFairRecoverable: false
-		});
-
-		expect(mocks.googleTag.push).not.toHaveBeenCalled();
-		expect(mocks.googleTag.flush).not.toHaveBeenCalled();
-	});
-
-	it('Should push/flush when slot is recoverable, is blocking and recovery is enabled', function () {
-		mocks.adBlockDetection.isBlocking = function () {
-			return true;
-		};
-
-		mocks.adBlockRecovery.isEnabled = function () {
-			return true;
-		};
-
-		spyOn(mocks.googleTag, 'push');
-		spyOn(mocks.googleTag, 'flush');
-
-		getModule().pushAd(createSlot('TOP_RIGHT_BOXAD'), '/foo/slot/path', {}, {
-			sraEnabled: true,
-			isPageFairRecoverable: true
-		});
-
-		expect(mocks.googleTag.push).toHaveBeenCalled();
-		expect(mocks.googleTag.flush).toHaveBeenCalled();
 	});
 });
