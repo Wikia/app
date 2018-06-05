@@ -50,6 +50,6 @@ class ProfilerOutputDump extends ProfilerOutput {
 			uniqid(),
 			$this->collector->getProfileID(),
 			$this->suffix );
-		file_put_contents( $filename, serialize( $data ) );
+		file_put_contents( $filename, json_encode( $data ) );
 	}
 }
