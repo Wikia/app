@@ -108,6 +108,14 @@
 				onLoaded();
 			};
 
+			// SUS-5128 | track page views where Google Maps API is loaded
+			window.Wikia.Tracker.track({
+				action: Wikia.Tracker.ACTIONS.OPEN,
+				category: 'googlemaps',
+				label: 'apiloaded',
+				trackingMethod: 'analytics'
+			});
+
 			// load GoogleMaps main JS and provide a name of the callback to be called when API is fully initialized
 			$.loadLibrary(
 				'GoogleMaps',
