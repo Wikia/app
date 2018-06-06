@@ -11,6 +11,7 @@ class PopulateArticleCommentsIndex extends Maintenance {
 
 
 	public function execute() {
+		global $wgArticleCommentsNamespaces;
 		$db = $this->getDB( DB_SLAVE );
 		$dbName = $db->getDBname();
 		
@@ -29,6 +30,11 @@ class PopulateArticleCommentsIndex extends Maintenance {
 			$commentNs = $c->page_namespace;
 			if ( MWNamespace::isSubject( $commentNs ) ) {
 				// this should be a talk page
+				continue;
+			}
+
+			if ( !in_array( MWNamespace::getSubject( $commentNs ), $wgArticleCommentsNamespaces ) ) {
+				// this is not a comment that needs to be mapped
 				continue;
 			}
 

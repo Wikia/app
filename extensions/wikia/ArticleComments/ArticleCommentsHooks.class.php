@@ -39,11 +39,10 @@ class ArticleCommentsHooks {
 	}
 
 	public static function onCommentUndelete( Title $title, $user, $reason ) {
-		$dbKey = $title->getDBkey();
-		if ( strpos($dbKey, '@comment' ) === false ) {
-			// this is not a comment, nothing to do here
+		if ( !ArticleComment::isMappedComment( $title ) ) {
 			return;
 		}
+		$dbKey = $title->getDBkey();
 		$parts = explode( '/', $dbKey );
 		$articleId = Title::newFromDBkey( $parts[0] )->getArticleID();
 		$parentCommentId = 0;
