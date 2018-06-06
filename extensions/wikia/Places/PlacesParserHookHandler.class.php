@@ -180,10 +180,11 @@ class PlacesParserHookHandler {
 
 	/**
 	 * Get JavaScript code snippet to be loaded
+	 *
+	 * @param array $options
+	 * @return string
 	 */
 	static public function getJSSnippet(Array $options = array()) {
-		$am = AssetsManager::getInstance();
-
 		$html = JSSnippets::addToStack(
 			array( 'places_css', 'places_js' ),
 			array(),
