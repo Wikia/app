@@ -13,25 +13,16 @@ class Announcements {
 	public function getActiveUsers( int $wikiId, int $period ) {
 		global $wgSpecialsDB;
 
-		$db = wfGetDB( DB_SLAVE, [], $wgSpecialsDB );
-		$userIds = [];
+		$specialsDb = wfGetDB( DB_SLAVE, [], $wgSpecialsDB );
 
-		$query = $db->select(
+		return $specialsDb->selectFieldValues(
 			'events_local_users',
-			[
-				'user_id'
-			],
+			'user_id',
 			[
 				'wiki_id' => $wikiId,
 				'editdate > NOW() - INTERVAL ' . $period . ' DAY',
 			],
 			__METHOD__
 		);
-
-		while ( $row = $db->fetchRow( $query ) ) {
-			$userIds[] = $row['user_id'];
-		}
-
-		return $userIds;
 	}
 }

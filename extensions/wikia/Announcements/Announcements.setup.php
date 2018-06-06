@@ -22,6 +22,3 @@ $wgAutoloadClasses['AnnouncementsController'] = $dir . 'AnnouncementsController.
 
 // model classes
 $wgAutoloadClasses['Announcements'] = $dir . 'models/Announcements.class.php';
-
-// Add new controller to controllers list
-$wgWikiaApiControllers['AnnouncementsController'] = $dir . 'AnnouncementsController.class.php';
