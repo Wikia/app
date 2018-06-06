@@ -3,7 +3,7 @@
 class AnnouncementsController extends WikiaController {
 
 	const WIKI_ID = 'wikiId';
-	const PERIOD = 'period';
+	const DAYS = 'days';
 
 	private $announcements = null;
 
@@ -23,7 +23,7 @@ class AnnouncementsController extends WikiaController {
 	public function getActiveUsers() {
 
 		$wikiId = $this->request->getInt( self::WIKI_ID );
-		$period = $this->request->getInt( self::PERIOD );
+		$period = $this->request->getInt( self::DAYS );
 
 		if ( $period == 0 || $wikiId == 0 ) {
 			throw new BadRequestException( "You must define both wikiId and period" );
