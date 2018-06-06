@@ -180,7 +180,7 @@ define('ext.wikia.adEngine.adContext', [
 
 		// New Prebid and CMP
 		context.opts.isNewPrebidEnabled = geo.isProperGeo(instantGlobals.wgAdDriverNewPrebidCountries);
-		context.opts.isConsentStringEnabled = geo.isProperGeo(instantGlobals.wgAdDriverConsentStringCountries);
+		context.opts.isCMPEnabled = geo.isProperGeo(instantGlobals.wgEnableCMPCountries);
 
 		// Krux integration
 		context.targeting.enableKruxTargeting = !!(

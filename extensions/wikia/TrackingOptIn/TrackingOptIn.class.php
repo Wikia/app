@@ -12,6 +12,7 @@ class TrackingOptIn {
 
 	public static function onInstantGlobalsGetVariables( array &$vars ) {
 		$vars[] = 'wgEnableTrackingOptInModal';
+		$vars[] = 'wgEnableCMPCountries';
 
 		return true;
 	}

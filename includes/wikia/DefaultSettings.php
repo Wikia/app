@@ -1389,10 +1389,10 @@ $wgAdDriverBabRecoveryCountries = null;
 $wgAdDriverNewPrebidCountries = null;
 
 /**
- * @name $wgAdDriverConsentStringCountries
- * List of countries to enable Consent Management module in Prebid
+ * @name $wgEnableCMPCountries
+ * List of countries to enable Consent Management module
  */
-$wgAdDriverConsentStringCountries = null;
+$wgEnableCMPCountries = null;
 
 /**
  * trusted proxy service registry
