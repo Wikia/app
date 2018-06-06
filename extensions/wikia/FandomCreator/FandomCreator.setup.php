@@ -12,6 +12,8 @@ spl_autoload_register( function( $class ) {
 	}
 } );
 
+$wgAutoloadClasses['FandomCreator\Api\CommunitySetupController'] = __DIR__ . '/Api/CommunitySetupController.php';
+
 $wgHooks['NavigationApigetDataAfterExecute'][] = function( WikiaDispatchableObject $dispatchable ) {
 	global $wgMaxLevelOneNavElements, $wgFandomCreatorCommunityId, $wgMaxLevelTwoNavElements, $wgMaxLevelThreeNavElements;
 
