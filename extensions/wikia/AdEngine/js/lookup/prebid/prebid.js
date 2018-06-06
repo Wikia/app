@@ -8,7 +8,7 @@ define('ext.wikia.adEngine.lookup.prebid', [
 	'ext.wikia.adEngine.lookup.prebid.prebidHelper',
 	'ext.wikia.adEngine.lookup.prebid.prebidSettings',
 	'ext.wikia.adEngine.lookup.lookupFactory',
-	'wikia.consentString',
+	'wikia.cmp',
 	'wikia.log',
 	'wikia.trackingOptIn',
 	'wikia.window'
@@ -21,7 +21,7 @@ define('ext.wikia.adEngine.lookup.prebid', [
 	helper,
 	settings,
 	factory,
-	consentString,
+	cmp,
 	log,
 	trackingOptIn,
 	win
@@ -50,33 +50,12 @@ define('ext.wikia.adEngine.lookup.prebid', [
 			}
 		}
 
-		trackingOptIn.pushToUserConsentQueue(function(optIn) {
-			if (optIn === false) {
-				log('User opt-out for prebid', log.levels.info, logGroup);
+		trackingOptIn.pushToUserConsentQueue(function (optIn) {
+			log('User opt-' + (optIn ? 'in' : 'out') + ' for prebid', log.levels.info, logGroup);
+
+			if (!optIn) {
 				return;
 			}
-
-			win.__cmp = function(command, version, callback) {
-				var iabConsentData = consentString.getConsentString(optIn),
-					gdprApplies = trackingOptIn.geoRequiresTrackingConsent(),
-					responseCode = true;
-
-				if (command === 'getConsentData') {
-					callback({
-						consentData: iabConsentData,
-						gdprApplies: gdprApplies
-					}, responseCode);
-				} else if (command === 'getVendorConsents') {
-					callback({
-						metadata: iabConsentData,
-						gdprApplies: gdprApplies
-					}, responseCode);
-				} else {
-					callback(undefined, false);
-				}
-			};
-
-			log('User opt-' + (optIn ? 'in' : 'out') + ' for prebid', log.levels.info, logGroup);
 
 			if (!prebidLoaded) {
 				adaptersRegistry.setupCustomAdapters();
