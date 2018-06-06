@@ -18,7 +18,7 @@ class AnnouncementsController extends WikiaController {
 	 *
 	 * @return int {Array} list of user IDs
 	 *
-	 * @throws Error
+	 * @throws BadRequestException
 	 */
 	public function getActiveUsers() {
 
@@ -26,7 +26,7 @@ class AnnouncementsController extends WikiaController {
 		$period = $this->request->getInt( self::PERIOD );
 
 		if ( $period == 0 || $wikiId == 0 ) {
-			throw new Error( "You must define both wikiId and period" );
+			throw new BadRequestException( "You must define both wikiId and period" );
 		}
 
 		$userIds = $this->announcements->getActiveUsers($wikiId, $period);
