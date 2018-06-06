@@ -188,8 +188,7 @@
 	// Google Maps v3
 
 		// String. Google Maps v3 API Key
-		// SUS-5128 - use Wiki specific API key that differs between environments
-		$GLOBALS['egMapsGMaps3ApiKey'] = $wgGoogleMapsKey;
+		$GLOBALS['egMapsGMaps3ApiKey'] = '';
 
 		// String. Google Maps v3 API version number
 		$GLOBALS['egMapsGMaps3ApiVersion'] = '';
