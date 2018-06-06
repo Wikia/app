@@ -82,7 +82,15 @@
 		return mw.loader.using('wikia.handlebars').done(callback);
 	};
 
-	$.loadGoogleMaps = function (callback) {
+	$.loadGoogleMaps = function (key, callback) {
+		// SUS-5128 | the key is optional
+		if (typeof key === 'function') {
+			callback = key;
+			key = undefined;
+		}
+
+		key = key || window.wgGoogleMapsApiKey;
+
 		var dfd = new jQuery.Deferred(),
 			onLoaded = function () {
 				if (typeof callback === 'function') {
@@ -104,7 +112,7 @@
 			$.loadLibrary(
 				'GoogleMaps',
 				[{
-					url: 'https://maps.googleapis.com/maps/api/js?sensor=false&callback=onGoogleMapsLoaded',
+					url: 'https://maps.googleapis.com/maps/api/js?sensor=false&callback=onGoogleMapsLoaded&key=' + (key || ''),
 					type: 'js'
 				}],
 				typeof (window.google && window.google.maps)
