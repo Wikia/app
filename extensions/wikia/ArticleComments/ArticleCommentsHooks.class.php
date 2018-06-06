@@ -37,4 +37,19 @@ class ArticleCommentsHooks {
 	public static function onLoadExtensionSchemaUpdates( DatabaseUpdater $updater ) {
 		$updater->addExtensionTable( 'article_comments', MWInit::getExtensionsDirectory() . '/wikia/ArticleComments/sql/article_comments.sql' );
 	}
+
+	public static function onCommentUndelete( Title $title, $user, $reason ) {
+		$dbKey = $title->getDBkey();
+		if ( strpos($dbKey, '@comment' ) === false ) {
+			// this is not a comment, nothing to do here
+			return;
+		}
+		$parts = explode( '/', $dbKey );
+		$articleId = Title::newFromDBkey( $parts[0] )->getArticleID();
+		$parentCommentId = 0;
+		if ( count( $parts ) === 3 ) {
+			$parentCommentId = Title::newFromDBkey( $parts[0] . '/' . $parts[1] )->getArticleID();
+		}
+		ArticleComment::addCommentMapping( $title->getArticleID(), $articleId , $parentCommentId );
+	}
 }
