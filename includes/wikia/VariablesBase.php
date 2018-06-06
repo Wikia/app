@@ -1170,6 +1170,27 @@ $wgCompiledFiles = [];
 $wgCompressRevisions = true;
 
 /**
+ * Hardcoded list of data-centers by environment
+ *
+ * Avoid costly HTTP calls on production to Consul agents in data centers like 'poz' or 'fra'
+ *
+ * @see SUS-4805
+ *
+ * @see lib/Wikia/src/Consul/Client.php
+ * @var array $wgConsulDataCenters
+ */
+$wgConsulDataCenters = [
+	'dev' => [
+		'sjc-dev',
+		'poz-dev',
+	],
+	'prod' => [
+		'sjc',
+		'res',
+	],
+];
+
+/**
  * Slack webhook URL for JavaScript Review Tool.
  * @see extensions/wikia/ContentReview
  * @var string $wgContentReviewSlackWebhook
@@ -1245,6 +1266,12 @@ $wgCountTotalSearchHits = false;
  * @var string $wgCreateDatabaseActiveCluster
  */
 $wgCreateDatabaseActiveCluster = 'c7';
+
+/**
+ * Whether to create new non-English wikis with the language code as a component of the URL path, rather than a subdomain.
+ * @var bool $wgCreateLanguageWikisWithPath
+ */
+$wgCreateLanguageWikisWithPath = false;
 
 /**
  * Domains that should not be allowed to make AJAX requests,

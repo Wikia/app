@@ -636,28 +636,6 @@ class ApiMain extends ApiBase {
 	protected function checkMaxLag( $module, $params ) {
 		# Wikia change - SUS-3221 | Consul health checks make sure that we only have healthy slaves serving traffic
 		return true;
-		/**
-		if ( $module->shouldCheckMaxlag() && isset( $params['maxlag'] ) ) {
-			// Check for maxlag
-			global $wgShowHostnames;
-			$maxLag = $params['maxlag'];
-			list( $host, $lag ) = wfGetLB()->getMaxLag();
-			if ( $lag > $maxLag ) {
-				$response = $this->getRequest()->response();
-
-				$response->header( 'Retry-After: ' . max( intval( $maxLag ), 5 ) );
-				$response->header( 'X-Database-Lag: ' . intval( $lag ) );
-
-				if ( $wgShowHostnames ) {
-					$this->dieUsage( "Waiting for $host: $lag seconds lagged", 'maxlag' );
-				} else {
-					$this->dieUsage( "Waiting for a database server: $lag seconds lagged", 'maxlag' );
-				}
-				return false;
-			}
-		}
-		return true;
-		**/
 	}
 
 	/**

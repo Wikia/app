@@ -694,11 +694,13 @@ $wgAutoloadLocalClasses = array(
 
 	# includes/profiler
 	'Profiler' => 'includes/profiler/Profiler.php',
-	'ProfilerSimple' => 'includes/profiler/ProfilerSimple.php',
-	'ProfilerSimpleText' => 'includes/profiler/ProfilerSimpleText.php',
-	'ProfilerSimpleTrace' => 'includes/profiler/ProfilerSimpleTrace.php',
-	'ProfilerSimpleUDP' => 'includes/profiler/ProfilerSimpleUDP.php',
+	'ProfilerXhprof' => 'includes/profiler/ProfilerXhprof.php',
 	'ProfilerStub' => 'includes/profiler/ProfilerStub.php',
+	'SectionProfiler' => 'includes/profiler/SectionProfiler.php',
+	'SectionProfilerCallback' => 'includes/profiler/SectionProfiler.php',
+	'ProfilerOutput' => 'includes/profiler/output/ProfilerOutput.php',
+	'ProfilerOutputDump' => 'includes/profiler/output/ProfilerOutputDump.php',
+	'ProfilerOutputText' => 'includes/profiler/output/ProfilerOutputText.php',
 
 	# includes/resourceloader
 	'ResourceLoader' => 'includes/resourceloader/ResourceLoader.php',
@@ -986,12 +988,4 @@ class AutoLoader {
 	}
 }
 
-if ( function_exists( 'spl_autoload_register' ) ) {
-	spl_autoload_register( array( 'AutoLoader', 'autoload' ) );
-} else {
-	function __autoload( $class ) {
-		AutoLoader::autoload( $class );
-	}
-
-	ini_set( 'unserialize_callback_func', '__autoload' );
-}
+spl_autoload_register( [ 'AutoLoader', 'autoload' ] );

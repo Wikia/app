@@ -40,10 +40,15 @@ define('ext.wikia.adEngine.ml.modelFactory', [
 			},
 
 			isEnabled: function () {
-				var isGeoEnabled = !modelData.wgCountriesVariable ||
+				var isEnabled = modelData.enabled,
+					isGeoEnabled = !modelData.wgCountriesVariable ||
 					geo.isProperGeo(instantGlobals[modelData.wgCountriesVariable]);
 
-				return modelData.enabled && isGeoEnabled;
+				if (typeof modelData.enabled === 'function') {
+					isEnabled = modelData.enabled();
+				}
+
+				return isEnabled && isGeoEnabled;
 			},
 
 			predict: function () {

@@ -13,10 +13,6 @@ class WikiFeaturesSpecialController extends WikiaSpecialPageController {
 		parent::__construct('WikiFeatures', 'wikifeaturesview');
 	}
 
-	public function init() {
-
-	}
-
 	public function getFeedbackModal() {
 		if( !$this->wg->User->isLoggedIn() ) {
 			$this->setVal('errorMessage', wfMessage('wikifeatures-error-permission')->text() );
@@ -81,10 +77,6 @@ class WikiFeaturesSpecialController extends WikiaSpecialPageController {
 		if($this->getVal('simulateEmptyLabs', false)) {	// debug code
 			$this->labsFeatures = array();
 		}
-	}
-
-	public function notOasis() {
-		// empty method
 	}
 
 	/**

@@ -466,7 +466,7 @@ class Wikia {
 			$staffUser = User::newFromName( $staffMap[$langCode][$key] );
 		} else {
 			// Fallback to robot when there is no explicit welcoming user set (unsupported language)
-			$staffUser = User::newFromName( 'Fandom' );
+			$staffUser = User::newFromName( self::USER );
 		}
 
 		$staffUser->load();
@@ -890,7 +890,6 @@ class Wikia {
 					),
 					__METHOD__
 				);
-				Wikia::log( __METHOD__, "save", "id: {$page_id}, key: {$sPropName}, value: {$sPropValue}" );
 			}
 			$dbw->commit(); #--- for ajax
 		}

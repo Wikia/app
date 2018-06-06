@@ -63,16 +63,8 @@ $messages['en'] = array(
 	'wall-action-all-confirm-notify' => 'Notify an admin',
 	'wall-action-remove-reply-title' => 'Remove this reply',
 	'wall-action-remove-thread-title' => 'Remove this thread',
-	'wall-confirm-monobook-remove' => "Please tell us why you would like to remove this.
-
-The original post and your summary will still appear in the wiki's history.",
-	'wall-confirm-monobook-admin' => "Please tell us why you would like to delete this.
-
-The original post and your summary will still appear in the wiki's history.",
-	'wall-confirm-monobook-restore' => 'Please tell us why you would like to restore this',
 	'wall-delete-error-title' => 'Error',
 	'wall-delete-error-content' => 'Message was deleted previously and it no longer exists.',
-	'wall-confirm-monobook-lack-of-reason' => 'Please provide a reason for removing this thread/reply.',
 	'wall-action-remove-confirm' => 'Please tell us why you would like to remove this:',
 	'wall-action-remove-thread-confirm-info' => "This thread and your summary will still appear in the wiki's history.",
 	'wall-action-remove-reply-confirm-info' => "This reply and your summary will still appear in the wiki's history.",
@@ -101,7 +93,6 @@ The original post and your summary will still appear in the wiki's history.",
 	'wall-action-move-topics-summary' => 'Thread moved',
 	'wall-action-move-thread-ok' => 'Move thread',
 	'wall-action-move-board-label' => 'Select a board to move to',
-	'wall-action-monobook-login' => 'Please log in to post a message on this wiki',
 	'wall-posting-message-failed-title' => 'An error occurred while posting a message',
 	'wall-posting-message-failed-body' => 'Copy your work and try again later',
 	'wall-posting-message-failed-filter-title' => 'Inappropriate content detected',
@@ -364,14 +355,7 @@ See also:
 	'wall-action-all-confirm-notify' => 'Option to notify an admin on a remove or deleted reply modal box',
 	'wall-action-remove-reply-title' => 'Title of the modal box for removing a reply',
 	'wall-action-remove-thread-title' => 'Title of the modal box for removing a thread',
-	'wall-action-monobook-login' => 'Error message shown to anon users on Monobook if they try to post a wall message',
-	'wall-confirm-monobook-remove' => "Explanation of the remove modal box for Monobook users, puts extra info in because Monobook users don't see the complete modal box",
-	'wall-confirm-monobook-admin' => "Explanation of the delete modal box for Monobook users, puts extra info in because Monobook users don't see the complete modal box",
-	'wall-confirm-monobook-restore' => 'Asks for a summary for restoring a message or reply for Monoboo users',
-	'wall-delete-error-title' => 'Title of error message for Monobook.
-{{Identical|Error}}',
 	'wall-delete-error-content' => 'Error message for trying to delete a message that has already been deleted',
-	'wall-confirm-monobook-lack-of-reason' => 'Error message for Monobook users who try to remove a message without writing a summary',
 	'wall-action-remove-confirm' => 'Asks for summary in the remove modal box',
 	'wall-action-remove-thread-confirm-info' => 'Explanation in the remove modal box that the thread and summary will still appear in the history',
 	'wall-action-remove-reply-confirm-info' => 'Explanation in the remove modal box that the reply and summary will still appear in the history',
@@ -750,16 +734,8 @@ $messages['ar'] = array(
 	'wall-action-all-confirm-notify' => 'إعلام الإداريين',
 	'wall-action-remove-reply-title' => 'إزالة هذا الرد',
 	'wall-action-remove-thread-title' => 'إزالة هذا الموضوع',
-	'wall-confirm-monobook-remove' => 'من فضلك قل لنا لماذا كنت ترغب في إزالة هذا.
-
-المشاركة الأصلية وتلخيصك مازالا ظاهرين في تاريخ الويكي.',
-	'wall-confirm-monobook-admin' => 'من فضلك قل لنا لماذا كنت ترغب في حذف هذا.
-
-المشاركة الأصلية وتلخيصك مازالا ظاهرين في تاريخ الويكي.',
-	'wall-confirm-monobook-restore' => 'من فضلك قل لنا لماذا كنت ترغب في استرجاع هذا',
 	'wall-delete-error-title' => 'خطأ',
 	'wall-delete-error-content' => 'تم حذف الرسالة سابقا و لم تعد موجودة.',
-	'wall-confirm-monobook-lack-of-reason' => 'يرجى تقديم سبب لإزالة هذا النقاش/الرد.',
 	'wall-action-remove-confirm' => 'من فضلك قل لنا لماذا كنت ترغب في إزالة هذا:',
 	'wall-action-remove-thread-confirm-info' => 'سوف يبقى  هذا الموضوع، و ملخصك ظاهرين في تاريخ الويكي.',
 	'wall-action-remove-reply-confirm-info' => 'سوف يبقى هذا الرد، و ملخصك ظاهرين في تاريخ الويكي.',
@@ -1027,7 +1003,6 @@ $messages['br'] = array(
 	'wall-action-all-confirm-notify' => 'Kemenn ur merour',
 	'wall-action-remove-reply-title' => 'Lemel ar respont-mañ',
 	'wall-action-remove-thread-title' => 'Lemel an neudennad-mañ',
-	'wall-confirm-monobook-restore' => "Lavarit dimp perak e fell deoc'h assevel an dra-mañ, mar plij",
 	'wall-delete-error-title' => 'Fazi',
 	'wall-delete-error-content' => "Dilamet e oa bet ar gemennadenn a-raok ha n'eus ket anezhi ken.",
 	'wall-action-remove-confirm' => "Mar plij, displegit dimp perak e fell deoc'h lemel an dra-mañ :",
@@ -1230,16 +1205,8 @@ $messages['ca'] = array(
 	'wall-action-all-confirm-notify' => 'Notificar a un admin',
 	'wall-action-remove-reply-title' => 'Retirar aquesta resposta',
 	'wall-action-remove-thread-title' => 'Retirar aquest tema',
-	'wall-confirm-monobook-remove' => "Si us plau, diga'ns per què vols retirar això.
-
-El missatge original i el teu resum apareixeran a l'historial del wiki.",
-	'wall-confirm-monobook-admin' => "Si us plau, diga'ns per què vols esborrar això.
-
-El missatge original i el teu resum apareixeran a l'historial del wiki.",
-	'wall-confirm-monobook-restore' => "Si us plau, diga'ns per què vols restaurar això",
 	'wall-delete-error-title' => 'Error',
 	'wall-delete-error-content' => 'El missatge va ser esborrat prèviament i ja no existeix.',
-	'wall-confirm-monobook-lack-of-reason' => 'Si us plau, inclou un motiu per a retirar aquest tema o resposta.',
 	'wall-action-remove-confirm' => "Si us plau, diga'ns per què vols retirar això:",
 	'wall-action-remove-thread-confirm-info' => "El missatge original i el teu resum apareixeran a l'historial del wiki.",
 	'wall-action-remove-reply-confirm-info' => "El missatge original i el teu resum continuaran apareixent a l'historial del wiki.",
@@ -1488,14 +1455,8 @@ $messages['cs'] = array(
 	'wall-action-all-confirm-notify' => 'Upozornit správce',
 	'wall-action-remove-reply-title' => 'Odstranit tuto odpověď',
 	'wall-action-remove-thread-title' => 'Odstranit toto vlákno',
-	'wall-confirm-monobook-remove' => 'Řekněte nám prosím Váš důvod pro odstranění.
-Původní příspěvek a vaše shrnutí se budou i nadále zobrazovat v historii wiki.',
-	'wall-confirm-monobook-admin' => 'Řekněte nám prosím Váš důvod pro smazání.
-Původní příspěvek a vaše shrnutí se budou i nadále zobrazovat v historii wiki.',
-	'wall-confirm-monobook-restore' => 'Řekněte nám prosím Váš důvod pro obnovení',
 	'wall-delete-error-title' => 'Chyba',
 	'wall-delete-error-content' => 'Zpráva byla dříve odstraněna a již neexistuje.',
-	'wall-confirm-monobook-lack-of-reason' => 'Zadejte důvod pro odstranění tohoto vlákna/odpovědi.',
 	'wall-action-remove-confirm' => 'Řekněte nám prosím Váš důvod pro odstranění:',
 	'wall-action-remove-thread-confirm-info' => 'Toto vlákno a vaše shrnutí se budou i nadále zobrazovat v historii wiki.',
 	'wall-action-remove-reply-confirm-info' => 'Tato odpověď a vaše shrnutí se budou i nadále zobrazovat v historii wiki.',
@@ -1743,16 +1704,8 @@ $messages['de'] = array(
 	'wall-action-all-confirm-notify' => 'Benachrichtige einen Admin',
 	'wall-action-remove-reply-title' => 'Entferne diese Antwort',
 	'wall-action-remove-thread-title' => 'Entferne diese Diskussion',
-	'wall-confirm-monobook-remove' => 'Bitte beschreibe kurz, warum du diesen Text löschen möchtest. 
-
-Der Originalbeitrag und deine Zusammenfassung werden weiterhin in der Versionsgeschichte angezeigt.',
-	'wall-confirm-monobook-admin' => 'Bitte beschreibe kurz, warum du diesen Text löschen möchtest. 
-
-Der Originalbeitrag und deine Zusammenfassung werden weiterhin in der Versionsgeschichte angezeigt.',
-	'wall-confirm-monobook-restore' => 'Bitte beschreibe kurz, warum du diesen Text wiederherstellen möchtest.',
 	'wall-delete-error-title' => 'Fehler',
 	'wall-delete-error-content' => 'Die Nachricht wurde bereits gelöscht und existiert nicht mehr.',
-	'wall-confirm-monobook-lack-of-reason' => 'Bitte gib eine Zusammenfassung an, warum du diese Diskussion/Antwort entfernen möchtest.',
 	'wall-action-remove-confirm' => 'Bitte beschreibe kurz, warum du diesen Text entfernen möchtest:',
 	'wall-action-remove-thread-confirm-info' => 'Diese Diskussion und deine Zusammenfassung werden weiterhin in der Versionsgeschichte angezeigt.',
 	'wall-action-remove-reply-confirm-info' => 'Diese Anwort und deine Zusammenfassung werden weiterhin in der Versionsgeschichte angezeigt.',
@@ -1925,7 +1878,6 @@ Der Originalbeitrag und deine Zusammenfassung werden weiterhin in der Versionsge
 	'group-threadmoderator-member' => 'Diskussions-Moderator',
 	'grouppage-threadmoderator' => '',
 	'wall-message-limit-reached' => 'Es gibt ein Limit von $1 Beiträgen pro Diskussionsfaden.',
-	'wall-action-monobook-login' => 'Bitte melde dich an, um einen Beitrag in diesem Wiki zu verfassen.',
 	'wall-posting-message-failed-title' => 'Beim Abschicken der Nachricht ist ein Fehler aufgetreten',
 	'wall-posting-message-failed-body' => 'Kopiere deine Arbeit und versuche es später noch einmal',
 	'right-walledit' => 'Can edit wall posts',
@@ -1947,6 +1899,15 @@ Der Originalbeitrag und deine Zusammenfassung werden weiterhin in der Versionsge
 	'wall-history-who-involved-wall-title' => 'Wer beteiligt sich an dieser Nachrichtenseite?',
 	'wall-history-rail-contribs' => 'Beiträge',
 	'wall-history-rail-block' => 'sperren',
+	'wall-action-monobook-login' => 'Bitte melde dich an, um einen Beitrag in diesem Wiki zu verfassen.',
+	'wall-confirm-monobook-remove' => 'Bitte beschreibe kurz, warum du diesen Text löschen möchtest. 
+
+Der Originalbeitrag und deine Zusammenfassung werden weiterhin in der Versionsgeschichte angezeigt.',
+	'wall-confirm-monobook-restore' => 'Bitte beschreibe kurz, warum du diesen Text wiederherstellen möchtest.',
+	'wall-confirm-monobook-admin' => 'Bitte beschreibe kurz, warum du diesen Text löschen möchtest. 
+
+Der Originalbeitrag und deine Zusammenfassung werden weiterhin in der Versionsgeschichte angezeigt.',
+	'wall-confirm-monobook-lack-of-reason' => 'Bitte gib eine Zusammenfassung an, warum du diese Diskussion/Antwort entfernen möchtest.',
 );
 
 $messages['diq'] = array(
@@ -2144,16 +2105,8 @@ $messages['es'] = array(
 	'wall-action-all-confirm-notify' => 'Notificar a un admin',
 	'wall-action-remove-reply-title' => 'Retirar esta respuesta',
 	'wall-action-remove-thread-title' => 'Retirar este hilo',
-	'wall-confirm-monobook-remove' => 'Por favor, dinos por qué quieres retirar esto.
-
-El mensaje original y tu resumen seguirán apareciendo en el historial del wiki.',
-	'wall-confirm-monobook-admin' => 'Por favor, dinos por qué quieres borrar esto.
-
-El mensaje original y tu resumen seguirán apareciendo en el historial del wiki.',
-	'wall-confirm-monobook-restore' => 'Por favor, dinos por qué quieres restaurar esto',
 	'wall-delete-error-title' => 'Error',
 	'wall-delete-error-content' => 'El mensaje fue borrado previamente y ya no existe.',
-	'wall-confirm-monobook-lack-of-reason' => 'Por favor incluye un motivo para retirar este hilo o respuesta.',
 	'wall-action-remove-confirm' => 'Por favor, dinos por qué quieres retirar esto:',
 	'wall-action-remove-thread-confirm-info' => 'Este hilo y tu resumen seguirán apareciendo en el historial del wiki.',
 	'wall-action-remove-reply-confirm-info' => 'Esta respuesta y tu resumen seguirán apareciendo en el historial del wiki.',
@@ -2326,7 +2279,6 @@ El mensaje original y tu resumen seguirán apareciendo en el historial del wiki.
 	'group-threadmoderator-member' => 'Moderador de discusiones',
 	'grouppage-threadmoderator' => '',
 	'wall-message-limit-reached' => 'Hay un límite de $1 mensajes por hilo.',
-	'wall-action-monobook-login' => 'Please log in to post a message on this wiki',
 	'wall-posting-message-failed-title' => 'Ha ocurrido un error al momento de publicar un mensaje',
 	'wall-posting-message-failed-body' => 'Copia tu trabajo y vuelve a intentarlo más tarde',
 	'right-walledit' => 'Can edit wall posts',
@@ -2348,6 +2300,14 @@ El mensaje original y tu resumen seguirán apareciendo en el historial del wiki.
 	'wall-history-who-involved-wall-title' => '¿Quiénes participaron?',
 	'wall-history-rail-contribs' => 'contribuciones',
 	'wall-history-rail-block' => 'bloquear',
+	'wall-confirm-monobook-remove' => 'Por favor, dinos por qué quieres retirar esto.
+
+El mensaje original y tu resumen seguirán apareciendo en el historial del wiki.',
+	'wall-confirm-monobook-restore' => 'Por favor, dinos por qué quieres restaurar esto',
+	'wall-confirm-monobook-admin' => 'Por favor, dinos por qué quieres borrar esto.
+
+El mensaje original y tu resumen seguirán apareciendo en el historial del wiki.',
+	'wall-confirm-monobook-lack-of-reason' => 'Por favor incluye un motivo para retirar este hilo o respuesta.',
 );
 
 $messages['eu'] = array(
@@ -2474,16 +2434,8 @@ $messages['fi'] = array(
 	'wall-action-all-confirm-notify' => 'Ilmoita ylläpitäjälle',
 	'wall-action-remove-reply-title' => 'Poista tämä vastaus',
 	'wall-action-remove-thread-title' => 'Poista tämä keskustelu',
-	'wall-confirm-monobook-remove' => 'Kerro miksi haluat poistaa tämän.
-
-Alkuperäinen viesti ja yhteenvetosi ilmestyy wikin historiaan.',
-	'wall-confirm-monobook-admin' => 'Kerro miksi haluat poistaa tämän.
-
-Alkuperäinen viesti ja yhteenvetosi ilmestyy wikin historiaan.',
-	'wall-confirm-monobook-restore' => 'Kerro miksi haluat palauttaa tämän',
 	'wall-delete-error-title' => 'Virhe',
 	'wall-delete-error-content' => 'Viesti poistettiin aiemmin ja sitä ei enää ole.',
-	'wall-confirm-monobook-lack-of-reason' => 'Anna syy keskustelun/vastauksen poistamiselle.',
 	'wall-action-remove-confirm' => 'Kerro miksi haluat poistaa tämän:',
 	'wall-action-remove-thread-confirm-info' => 'Tämä keskustelu ja yhteenvetosi ilmestyy wikin historiaan.',
 	'wall-action-remove-reply-confirm-info' => 'Tämä vastaus ja yhteenvetosi ilmestyy wikin historiaan.',
@@ -2745,16 +2697,8 @@ $messages['fr'] = array(
 	'wall-action-all-confirm-notify' => 'Notifier un administrateur',
 	'wall-action-remove-reply-title' => 'Retirer cette réponse',
 	'wall-action-remove-thread-title' => 'Retirer ce fil',
-	'wall-confirm-monobook-remove' => 'Veuillez indiquer pourquoi vous souhaitez son retrait. 
-
-Le message original et votre résumé seront toujours visibles dans l’historique du wiki.',
-	'wall-confirm-monobook-admin' => 'Veuillez indiquer pourquoi vous voulez sa suppression.
-
-Le message original et votre résumé seront toujours visibles dans l’historique du wiki.',
-	'wall-confirm-monobook-restore' => 'Veuillez indiquer pourquoi vous voulez sa restauration',
 	'wall-delete-error-title' => 'Erreur',
 	'wall-delete-error-content' => 'Le message a été supprimé et n’existe plus.',
-	'wall-confirm-monobook-lack-of-reason' => 'Veuillez indiquer un résumé pour la suppression de ce fil/cette réponse.',
 	'wall-action-remove-confirm' => 'Veuillez indiquer pourquoi vous souhaitez son retrait :',
 	'wall-action-remove-thread-confirm-info' => 'Ce fil et votre résumé seront toujours visibles dans l’historique du wiki.',
 	'wall-action-remove-reply-confirm-info' => 'Cette réponse et votre résumé seront toujours visibles dans l’historique du wiki.',
@@ -2927,7 +2871,6 @@ Le message original et votre résumé seront toujours visibles dans l’historiq
 	'group-threadmoderator-member' => 'Modérateur de discussions',
 	'grouppage-threadmoderator' => '',
 	'wall-message-limit-reached' => 'Le fil ne peut contenir plus de $1 publications.',
-	'wall-action-monobook-login' => 'Please log in to post a message on this wiki',
 	'wall-posting-message-failed-title' => "Une erreur est survenue lors de la publication d'un message.",
 	'wall-posting-message-failed-body' => 'Copiez votre message puis réessayez ultérieurement.',
 	'right-walledit' => 'Can edit wall posts',
@@ -2949,6 +2892,14 @@ Le message original et votre résumé seront toujours visibles dans l’historiq
 	'wall-history-who-involved-wall-title' => 'Qui a participé ?',
 	'wall-history-rail-contribs' => 'contributions',
 	'wall-history-rail-block' => 'bloquer',
+	'wall-confirm-monobook-remove' => 'Veuillez indiquer pourquoi vous souhaitez son retrait. 
+
+Le message original et votre résumé seront toujours visibles dans l’historique du wiki.',
+	'wall-confirm-monobook-restore' => 'Veuillez indiquer pourquoi vous voulez sa restauration',
+	'wall-confirm-monobook-admin' => 'Veuillez indiquer pourquoi vous voulez sa suppression.
+
+Le message original et votre résumé seront toujours visibles dans l’historique du wiki.',
+	'wall-confirm-monobook-lack-of-reason' => 'Veuillez indiquer un résumé pour la suppression de ce fil/cette réponse.',
 );
 
 $messages['fy'] = array(
@@ -3028,16 +2979,8 @@ $messages['gl'] = array(
 	'wall-action-all-confirm-notify' => 'Avisar a un administrador',
 	'wall-action-remove-reply-title' => 'Eliminar esta resposta',
 	'wall-action-remove-thread-title' => 'Eliminar este fío',
-	'wall-confirm-monobook-remove' => 'Díganos por que quere eliminar isto.
-
-A mensaxe orixinal e o seu resumo seguirán aparecendo no historial do wiki.',
-	'wall-confirm-monobook-admin' => 'Díganos por que quere borrar isto.
-
-A mensaxe orixinal e o seu resumo seguirán aparecendo no historial do wiki.',
-	'wall-confirm-monobook-restore' => 'Díganos por que quere restaurar isto',
 	'wall-delete-error-title' => 'Erro',
 	'wall-delete-error-content' => 'A mensaxe borrouse con anterioridade e xa non existe.',
-	'wall-confirm-monobook-lack-of-reason' => 'Dea un motivo para eliminar este fío/esta resposta.',
 	'wall-action-remove-confirm' => 'Díganos por que quere eliminar isto:',
 	'wall-action-remove-thread-confirm-info' => 'Este fío e o seu resumo seguirán aparecendo no historial do wiki.',
 	'wall-action-remove-reply-confirm-info' => 'Esta resposta e o seu resumo seguirán aparecendo no historial do wiki.',
@@ -3277,16 +3220,8 @@ $messages['hu'] = array(
 	'wall-action-all-confirm-notify' => 'Adminisztrátor értesítése',
 	'wall-action-remove-reply-title' => 'Válasz eltávolítása',
 	'wall-action-remove-thread-title' => 'Beszélgetésfolyam eltávolítása',
-	'wall-confirm-monobook-remove' => 'Kérlek, indokold meg az eltávolítást.
-
-Az eredeti üzenet és az indoklásod megmarad a wiki történetében.',
-	'wall-confirm-monobook-admin' => 'Kérlek, indokold meg a törlést.
-
-Az eredeti üzenet és az indoklásod megmarad a wiki történetében.',
-	'wall-confirm-monobook-restore' => 'Kérlek, indokold meg a visszaállítást',
 	'wall-delete-error-title' => 'Hiba',
 	'wall-delete-error-content' => 'Az üzenetet korábban törölték, és már nem létezik.',
-	'wall-confirm-monobook-lack-of-reason' => 'Kérlek, indokold meg a beszélgetésfolyam/válasz eltávolítását.',
 	'wall-action-remove-confirm' => 'Kérlek, indokold meg az eltávolítást:',
 	'wall-action-remove-thread-confirm-info' => 'Ez a beszélgetésfolyam és az indoklásod megmarad a wiki történetében.',
 	'wall-action-remove-reply-confirm-info' => 'Ez a válasz és az indoklásod megmarad a wiki történetében.',
@@ -3505,16 +3440,8 @@ $messages['ia'] = array(
 	'wall-action-all-confirm-notify' => 'Notificar un administrator',
 	'wall-action-remove-reply-title' => 'Remover iste responsa',
 	'wall-action-remove-thread-title' => 'Remover iste discussion',
-	'wall-confirm-monobook-remove' => 'Per favor explica proque tu vole remover isto.
-
-Le message original e tu summario apparera totevia in le historia del wiki.',
-	'wall-confirm-monobook-admin' => 'Per favor explica proque tu vole deler isto.
-
-Le message original e tu summario apparera totevia in le historia del wiki.',
-	'wall-confirm-monobook-restore' => 'Per favor explica proque tu vole restaurar isto.',
 	'wall-delete-error-title' => 'Error',
 	'wall-delete-error-content' => 'Le message ha jam essite delite e non existe plus.',
-	'wall-confirm-monobook-lack-of-reason' => 'Per favor specifica un motivo pro remover iste discussion/responsa.',
 	'wall-action-remove-confirm' => 'Per favor explica proque tu vole remover isto:',
 	'wall-action-remove-thread-confirm-info' => 'Iste discussion e tu summario apparera totevia in le historia del wiki.',
 	'wall-action-remove-reply-confirm-info' => 'Iste responsa e tu summario apparera totevia in le historia del wiki.',
@@ -3725,16 +3652,8 @@ $messages['id'] = array(
 	'wall-action-all-confirm-notify' => 'Beritahu pengurus',
 	'wall-action-remove-reply-title' => 'Hapus balasan ini',
 	'wall-action-remove-thread-title' => 'Hapus panel ini',
-	'wall-confirm-monobook-remove' => 'Beritahukan kami mengapa anda ingin menghapus ini.
-
-Kiriman asli dan ringkasannya akan tetap muncul dalam riwayat wiki.',
-	'wall-confirm-monobook-admin' => 'Beritahukan kami mengapa anda ingin menghapus ini.
-
-Kiriman asli dan ringkasannya akan tetap muncul dalam riwayat wiki.',
-	'wall-confirm-monobook-restore' => 'Harap beritahu kami mengapa anda ingin memulihkan ini',
 	'wall-delete-error-title' => 'Kesalahan',
 	'wall-delete-error-content' => 'Pesan dihapus sebelumnya dan sudah tidak ada lagi.',
-	'wall-confirm-monobook-lack-of-reason' => 'Harap memberikan alasan untuk menghapus panel/balasan ini.',
 	'wall-action-remove-confirm' => 'Harap beritahu kami mengapa anda ingin menghapus ini:',
 	'wall-action-remove-thread-confirm-info' => 'Panel ini dan ringkasannya akan tetap muncul dalam riwayat wiki.',
 	'wall-action-remove-reply-confirm-info' => 'Balasan ini dan ringkasannya akan tetap muncul dalam riwayat wiki.',
@@ -3763,7 +3682,6 @@ Kiriman asli dan ringkasannya akan tetap muncul dalam riwayat wiki.',
 	'wall-action-move-topics-summary' => 'Panel telah dipindahkan',
 	'wall-action-move-thread-ok' => 'Pindahkan panel',
 	'wall-action-move-board-label' => 'Pilih papan untuk dipindahkan ke',
-	'wall-action-monobook-login' => 'Please log in to post a message on this wiki',
 	'wall-posting-message-failed-title' => 'Kesalahan terjadi saat mengirim pesan',
 	'wall-posting-message-failed-body' => 'Salin pekerjaan anda dan coba lagi nanti',
 	'wall-posting-message-failed-filter-title' => 'Konten yang tidak pantas terdeteksi',
@@ -3988,14 +3906,6 @@ $messages['it'] = array(
 	'wall-button-to-submit-comment-no-topic' => 'Invia senza titolo',
 	'wall-button-to-submit-comment' => 'Invia',
 	'wall-button-to-submit-reply' => 'Rispondi',
-	'wall-confirm-monobook-admin' => 'Per favore, dicci perché vorresti procedere alla cancellazione.
-
-Il messaggio originale e la tua motivazione continueranno ad apparire nella cronologia della wiki.',
-	'wall-confirm-monobook-lack-of-reason' => 'Per favore specifica il motivo della rimozione di questa discussione/risposta.',
-	'wall-confirm-monobook-remove' => 'Per favore, dicci perché vorresti procedere alla rimozione.
-
-Il messaggio originale e la tua motivazione continueranno ad apparire nella cronologia della wiki.',
-	'wall-confirm-monobook-restore' => 'Per favore, dicci perché vorresti procedere al ripristino',
 	'wall-default-title' => 'Messaggio da $1',
 	'wall-delete-error-content' => 'Il messaggio è stato precedentemente cancellato e non esiste più.',
 	'wall-delete-error-title' => 'Errore',
@@ -4165,7 +4075,6 @@ Il messaggio originale e la tua motivazione continueranno ad apparire nella cron
 	'wn-user3-reply-you-other-wall' => '$1 e altri hanno risposto al tuo messaggio nella bacheca di $3',
 	'wn-user3-reply-you-your-wall' => '$1 e altri hanno risposto al tuo messaggio nella tua bacheca',
 	'wall-message-limit-reached' => "C'è un limite di $1 post per discussione.",
-	'wall-action-monobook-login' => 'Please log in to post a message on this wiki',
 	'wall-posting-message-failed-title' => "Si è verificato un errore durante l'invio di un messaggio",
 	'wall-posting-message-failed-body' => 'Copiare il proprio lavoro e riprovare più tardi',
 	'wall-contributions-line' => '[[$1|$2]] nella [[$3|bacheca di $4]]',
@@ -4188,6 +4097,14 @@ Il messaggio originale e la tua motivazione continueranno ad apparire nella cron
 	'wall-history-who-involved-wall-title' => 'Chi ha partecipato?',
 	'wall-history-rail-contribs' => 'contributi',
 	'wall-history-rail-block' => 'blocca',
+	'wall-confirm-monobook-remove' => 'Per favore, dicci perché vorresti procedere alla rimozione.
+
+Il messaggio originale e la tua motivazione continueranno ad apparire nella cronologia della wiki.',
+	'wall-confirm-monobook-restore' => 'Per favore, dicci perché vorresti procedere al ripristino',
+	'wall-confirm-monobook-admin' => 'Per favore, dicci perché vorresti procedere alla cancellazione.
+
+Il messaggio originale e la tua motivazione continueranno ad apparire nella cronologia della wiki.',
+	'wall-confirm-monobook-lack-of-reason' => 'Per favore specifica il motivo della rimozione di questa discussione/risposta.',
 );
 
 $messages['ja'] = array(
@@ -4251,16 +4168,8 @@ $messages['ja'] = array(
 	'wall-action-all-confirm-notify' => '管理者に知らせる',
 	'wall-action-remove-reply-title' => 'この返信を削除',
 	'wall-action-remove-thread-title' => 'このスレッドを削除',
-	'wall-confirm-monobook-remove' => '削除の理由を入力してください。
-
-削除されたデータや入力した理由はこのコミュニティの履歴に保存されます。',
-	'wall-confirm-monobook-admin' => '削除の理由を入力してください。
-
-削除されたデータや入力した理由はこのコミュニティの履歴に保存されます。',
-	'wall-confirm-monobook-restore' => '復元の理由を入力してください',
 	'wall-delete-error-title' => 'エラー',
 	'wall-delete-error-content' => 'メッセージはすでに削除済みであり存在しません。',
-	'wall-confirm-monobook-lack-of-reason' => 'このスレッド・返信を削除する理由を入力してください。',
 	'wall-action-remove-confirm' => '削除の理由を入力してください:',
 	'wall-action-remove-thread-confirm-info' => 'このスレッドや入力した理由はこのコミュニティの履歴に保存されます。',
 	'wall-action-remove-reply-confirm-info' => 'この返信や入力した理由はコミュニティの履歴に保存されます。',
@@ -4432,7 +4341,6 @@ $messages['ja'] = array(
 	'group-threadmoderator-member' => 'ディスカッション・モデレーター',
 	'grouppage-threadmoderator' => '',
 	'wall-message-limit-reached' => 'スレッドあたりの投稿数の上限は$1件までです。',
-	'wall-action-monobook-login' => 'Please log in to post a message on this wiki',
 	'wall-posting-message-failed-title' => 'メッセージの投稿中にエラーが発生しました',
 	'wall-posting-message-failed-body' => 'メッセージをコピーして、後ほどもう一度お試しください',
 	'tog-enotifmywall-reminder' => '毎日のリマインダーメールも受け取る',
@@ -4455,6 +4363,14 @@ $messages['ja'] = array(
 	'wall-history-who-involved-wall-title' => 'このウォールに投稿した利用者',
 	'wall-history-rail-contribs' => '投稿記録',
 	'wall-history-rail-block' => 'ブロック',
+	'wall-confirm-monobook-remove' => '削除の理由を入力してください。
+
+削除されたデータや入力した理由はこのコミュニティの履歴に保存されます。',
+	'wall-confirm-monobook-restore' => '復元の理由を入力してください',
+	'wall-confirm-monobook-admin' => '削除の理由を入力してください。
+
+削除されたデータや入力した理由はこのコミュニティの履歴に保存されます。',
+	'wall-confirm-monobook-lack-of-reason' => 'このスレッド・返信を削除する理由を入力してください。',
 );
 
 $messages['ka'] = array(
@@ -4624,14 +4540,6 @@ $messages['ko'] = array(
 	'wall-button-to-submit-comment-no-topic' => '제목없이 게시',
 	'wall-button-to-submit-comment' => '게시',
 	'wall-button-to-submit-reply' => '답글 작성',
-	'wall-confirm-monobook-admin' => '이 글을 삭제하는 이유를 자세히 밝혀주세요.
-
-이 글과 편집 요약은 삭제해도 문서 역사에 그대로 남습니다.',
-	'wall-confirm-monobook-lack-of-reason' => '이 글을 삭제하는 이유를 밝혀주셔야 삭제가 가능합니다.',
-	'wall-confirm-monobook-remove' => '이 글을 숨기는 이유를 자세히 밝혀주세요.
-
-이 글과 편집 요약은 삭제해도 문서 역사에 그대로 남습니다.',
-	'wall-confirm-monobook-restore' => '이 글을 되살리는 이유를 자세히 밝혀주세요.',
 	'wall-default-title' => '다음 사용자가 게시한 메시지:',
 	'wall-delete-error-content' => '이 메시지는 이미 삭제되었습니다.',
 	'wall-delete-reason' => '사용자/관리자가 삭제함',
@@ -4894,12 +4802,8 @@ $messages['lol'] = array(
 	'wall-action-all-confirm-notify' => 'crwdns26603:0crwdne26603:0',
 	'wall-action-remove-reply-title' => 'crwdns26604:0crwdne26604:0',
 	'wall-action-remove-thread-title' => 'crwdns26605:0crwdne26605:0',
-	'wall-confirm-monobook-remove' => 'crwdns26606:0crwdne26606:0',
-	'wall-confirm-monobook-admin' => 'crwdns26607:0crwdne26607:0',
-	'wall-confirm-monobook-restore' => 'crwdns26608:0crwdne26608:0',
 	'wall-delete-error-title' => 'crwdns26609:0crwdne26609:0',
 	'wall-delete-error-content' => 'crwdns26610:0crwdne26610:0',
-	'wall-confirm-monobook-lack-of-reason' => 'crwdns26611:0crwdne26611:0',
 	'wall-action-remove-confirm' => 'crwdns26612:0crwdne26612:0',
 	'wall-action-remove-thread-confirm-info' => 'crwdns26613:0crwdne26613:0',
 	'wall-action-remove-reply-confirm-info' => 'crwdns26614:0crwdne26614:0',
@@ -4928,7 +4832,6 @@ $messages['lol'] = array(
 	'wall-action-move-topics-summary' => 'crwdns26637:0crwdne26637:0',
 	'wall-action-move-thread-ok' => 'crwdns26638:0crwdne26638:0',
 	'wall-action-move-board-label' => 'crwdns26639:0crwdne26639:0',
-	'wall-action-monobook-login' => 'crwdns57567:0crwdne57567:0',
 	'wall-posting-message-failed-title' => 'crwdns26640:0crwdne26640:0',
 	'wall-posting-message-failed-body' => 'crwdns26641:0crwdne26641:0',
 	'wall-posting-message-failed-filter-title' => 'crwdns58345:0crwdne58345:0',
@@ -5092,6 +4995,11 @@ $messages['lol'] = array(
 	'wall-history-who-involved-wall-title' => 'crwdns26728:0crwdne26728:0',
 	'wall-history-rail-contribs' => 'crwdns26738:0crwdne26738:0',
 	'wall-history-rail-block' => 'crwdns26739:0crwdne26739:0',
+	'wall-action-monobook-login' => 'crwdns57567:0crwdne57567:0',
+	'wall-confirm-monobook-remove' => 'crwdns26606:0crwdne26606:0',
+	'wall-confirm-monobook-restore' => 'crwdns26608:0crwdne26608:0',
+	'wall-confirm-monobook-admin' => 'crwdns26607:0crwdne26607:0',
+	'wall-confirm-monobook-lack-of-reason' => 'crwdns26611:0crwdne26611:0',
 );
 
 $messages['lrc'] = array(
@@ -5166,16 +5074,8 @@ $messages['mk'] = array(
 	'wall-action-all-confirm-notify' => 'Извести администратор',
 	'wall-action-remove-reply-title' => 'Отстрани го одговоров',
 	'wall-action-remove-thread-title' => 'Отстрани ја нишкава',
-	'wall-confirm-monobook-remove' => 'Кажете ни зошто сакате да го избришете ова.
-
-Изворната објава и вашиот опис сепак ќе фигурираат во историјата на викито.',
-	'wall-confirm-monobook-admin' => 'Кажете ни зошто сакате да го избришете ова.
-
-Изворната објава и вашиот опис сепак ќе фигурираат во историјата на викито.',
-	'wall-confirm-monobook-restore' => 'Кажете ни зошто сакате да го вратите ова',
 	'wall-delete-error-title' => 'Грешка',
 	'wall-delete-error-content' => 'Пораката е претходно избришана и затоа повеќе не постои.',
-	'wall-confirm-monobook-lack-of-reason' => 'Дајте опис (образложение) на отстранувањето на оваа нишка/одговор.',
 	'wall-action-remove-confirm' => 'Кажете ни зошто сакате да го избришете ова:',
 	'wall-action-remove-thread-confirm-info' => 'Оваа нишка и вашиот опис сепак ќе фигурираат во историјата на викито.',
 	'wall-action-remove-reply-confirm-info' => 'Оваа нишка и вашиот опис сепак ќе фигурираат во историјата на викито.',
@@ -5409,16 +5309,8 @@ $messages['ms'] = array(
 	'wall-action-all-confirm-notify' => 'Beritahu pentadbir',
 	'wall-action-remove-reply-title' => 'Buang balasan ini',
 	'wall-action-remove-thread-title' => 'Buang tred ini',
-	'wall-confirm-monobook-remove' => 'Sila terangkan sebab anda ingin membuangnya.
-
-Pos yang asal dan ringkasan anda akan kekal dalam sejarah wiki.',
-	'wall-confirm-monobook-admin' => 'Sila terangkan sebab anda ingin menghapuskannya.
-
-Pos yang asal dan ringkasan anda akan kekal dalam sejarah wiki.',
-	'wall-confirm-monobook-restore' => 'Sila terangkan sebab anda ingin memulihkannya',
 	'wall-delete-error-title' => 'Ralat',
 	'wall-delete-error-content' => 'Pesanan ini tidak wujud lagi kerana dihapuskan dahulu.',
-	'wall-confirm-monobook-lack-of-reason' => 'Sila berikan ringkasan sebab menggugurkan tred/balasan ini.',
 	'wall-action-remove-confirm' => 'Sila terangkan sebab anda ingin membuangnya:',
 	'wall-action-remove-thread-confirm-info' => 'Tred ini dan ringkasan anda akan kekal dalam sejarah wiki.',
 	'wall-action-remove-reply-confirm-info' => 'Balasan ini dan ringkasan anda akan kekal dalam sejarah wiki.',
@@ -5655,16 +5547,8 @@ $messages['nb'] = array(
 	'wall-action-all-confirm-notify' => 'Varsle en administrator',
 	'wall-action-remove-reply-title' => 'Fjern dette svaret',
 	'wall-action-remove-thread-title' => 'Fjern denne tråden',
-	'wall-confirm-monobook-remove' => 'Vennligst fortell oss hvorfor du vil fjerne dette.
-
-Originalinnlegget og sammendraget vil fremdeles vises i wikiens historikk.',
-	'wall-confirm-monobook-admin' => 'Vennligst fortell oss hvorfor du vil slette dette.
-
-Originalinnlegget og sammendraget vil fremdeles vises i wikiens historikk.',
-	'wall-confirm-monobook-restore' => 'Vennligst fortell oss hvorfor du vil gjenopprette dette',
 	'wall-delete-error-title' => 'Feil',
 	'wall-delete-error-content' => 'Beskjeden har tidligere blitt slettet og eksisterer ikke lenger.',
-	'wall-confirm-monobook-lack-of-reason' => 'Vennligst oppgi en årsak til å fjerne denne tråden/svaret.',
 	'wall-action-remove-confirm' => 'Vennligst fortell oss hvorfor du vil fjerne dette:',
 	'wall-action-remove-thread-confirm-info' => 'Denne tråden og sammendraget vil fremdeles vises i wikiens historikk.',
 	'wall-action-remove-reply-confirm-info' => 'Dette svaret og sammendraget vil fremdeles vises i wikiens historikk.',
@@ -5888,16 +5772,8 @@ $messages['nl'] = array(
 	'wall-action-all-confirm-notify' => 'Beheerder informeren',
 	'wall-action-remove-reply-title' => 'Dit antwoord verwijderen',
 	'wall-action-remove-thread-title' => 'Deze draad verwijderen',
-	'wall-confirm-monobook-remove' => 'Geef aan waarom u dit wilt verwijderen.
-
-Het oorspronkelijke bericht en uw bewerkingssamenvatting blijven nog wel in de geschiedenis van de wiki staan.',
-	'wall-confirm-monobook-admin' => 'Geef aan waarom u dit wilt verwijderen.
-
-Het oorspronkelijke bericht en uw bewerkingssamenvatting blijven nog wel in de geschiedenis van de wiki staan.',
-	'wall-confirm-monobook-restore' => 'Geef aan waarom u dit terug wilt plaatsen',
 	'wall-delete-error-title' => 'Fout',
 	'wall-delete-error-content' => 'Het bericht is verwijderd en bestaat niet langer.',
-	'wall-confirm-monobook-lack-of-reason' => 'Geef een reden op voor het verwijderen van deze draad of dit antwoord.',
 	'wall-action-remove-confirm' => 'Geef een reden op waarom u dit wilt verwijderen:',
 	'wall-action-remove-thread-confirm-info' => 'Deze draad en uw opgave van reden blijven nog wel beschikbaar in de geschiedenis van de wiki.',
 	'wall-action-remove-reply-confirm-info' => 'Dit antwoord en uw reden blijven nog wel beschikbaar in geschiedenis van de wiki.',
@@ -6069,7 +5945,6 @@ Het oorspronkelijke bericht en uw bewerkingssamenvatting blijven nog wel in de g
 	'group-threadmoderator' => 'Discussiemoderatoren',
 	'group-threadmoderator-member' => 'Discussiemoderator',
 	'wall-message-limit-reached' => 'There is a limit of $1 posts per thread.',
-	'wall-action-monobook-login' => 'Please log in to post a message on this wiki',
 	'wall-posting-message-failed-title' => 'An error occurred while posting a message',
 	'wall-posting-message-failed-body' => 'Copy your work and try again later',
 	'grouppage-threadmoderator' => '',
@@ -6226,16 +6101,8 @@ $messages['pl'] = array(
 	'wall-action-all-confirm-notify' => 'Powiadom administratora',
 	'wall-action-remove-reply-title' => 'Usuń tę odpowiedź',
 	'wall-action-remove-thread-title' => 'Usuń ten wątek',
-	'wall-confirm-monobook-remove' => 'Podaj powód usunięcia.
-
-Oryginał wiadomości i twój komentarz wciąż pozostaną w historii wiki.',
-	'wall-confirm-monobook-admin' => 'Podaj powód kasacji.
-
-Oryginał wiadomości i twój komentarz wciąż pozostaną w historii wiki.',
-	'wall-confirm-monobook-restore' => 'Podaj powód przywrócenia:',
 	'wall-delete-error-title' => 'Błąd',
 	'wall-delete-error-content' => 'Wiadomość została wcześniej skasowana i nie jest dostępna.',
-	'wall-confirm-monobook-lack-of-reason' => 'Podaj powód usunięcia wątku/odpowiedzi.',
 	'wall-action-remove-confirm' => 'Podaj powód usunięcia.',
 	'wall-action-remove-thread-confirm-info' => 'Ten wątek i powód usunięcia dalej pozostaną dostępne w historii wiki.',
 	'wall-action-remove-reply-confirm-info' => 'Ta odpowiedź i powód usunięcia dalej pozostaną dostępne w historii wiki.',
@@ -6414,7 +6281,6 @@ Oryginał wiadomości i twój komentarz wciąż pozostaną w historii wiki.',
 	'right-walldelete' => 'Trwałe usuwanie wątków na Tablicy Wiadomości',
 	'right-wallremove' => 'Usuwanie wątków z Tablicy Wiadomości',
 	'wall-message-limit-reached' => 'Maksymalna liczba postów w wątku to $1.',
-	'wall-action-monobook-login' => 'Please log in to post a message on this wiki',
 	'right-walledit' => 'Can edit wall posts',
 	'right-wallarchive' => 'Can archive wall posts',
 	'right-wallshowwikiaemblem' => 'Flags user as "Wikia Staff" on wall posts',
@@ -6430,6 +6296,14 @@ Oryginał wiadomości i twój komentarz wciąż pozostaną w historii wiki.',
 	'wall-history-who-involved-wall-title' => 'Kto edytował?',
 	'wall-history-rail-contribs' => 'edycje',
 	'wall-history-rail-block' => 'zablokuj',
+	'wall-confirm-monobook-remove' => 'Podaj powód usunięcia.
+
+Oryginał wiadomości i twój komentarz wciąż pozostaną w historii wiki.',
+	'wall-confirm-monobook-restore' => 'Podaj powód przywrócenia:',
+	'wall-confirm-monobook-admin' => 'Podaj powód kasacji.
+
+Oryginał wiadomości i twój komentarz wciąż pozostaną w historii wiki.',
+	'wall-confirm-monobook-lack-of-reason' => 'Podaj powód usunięcia wątku/odpowiedzi.',
 );
 
 $messages['ps'] = array(
@@ -6549,16 +6423,8 @@ $messages['pt'] = array(
 	'wall-action-all-confirm-notify' => 'Notificar um administrador',
 	'wall-action-remove-reply-title' => 'Remover esta resposta',
 	'wall-action-remove-thread-title' => 'Remover este tópico',
-	'wall-confirm-monobook-remove' => 'Informe-nos por que você gostaria de remover isto.
-
-O post original e seu sumário ainda aparecerão no histórico da wikia.',
-	'wall-confirm-monobook-admin' => 'Informe-nos por que você gostaria de excluir isto.
-
-O post original e seu sumário ainda aparecerão no histórico da wiki.',
-	'wall-confirm-monobook-restore' => 'Informe-nos por que você gostaria de restaurar isto',
 	'wall-delete-error-title' => 'Erro',
 	'wall-delete-error-content' => 'A mensagem foi excluída anteriormente e ela não existe mais.',
-	'wall-confirm-monobook-lack-of-reason' => 'Por favor, forneça uma razão para remover este(a) tópico/resposta.',
 	'wall-action-remove-confirm' => 'Por favor, informe-nos por que você gostaria de remover isto:',
 	'wall-action-remove-thread-confirm-info' => 'Este tópico e seu sumário ainda aparecerão no histórico da wiki.',
 	'wall-action-remove-reply-confirm-info' => 'Esta resposta e seu sumário ainda aparecerão no histórico da wiki.',
@@ -6729,7 +6595,6 @@ O post original e seu sumário ainda aparecerão no histórico da wiki.',
 	'wall-action-rev-thread-confirm' => 'Tem certeza de que deseja excluir este tópico e todo seu histórico na wiki? Isto não poderá ser desfeito.',
 	'wall-action-move-validation-select-wall' => 'Por favor, selecione uma',
 	'wall-action-move-board-label' => 'Selecione um a ser movido',
-	'wall-action-monobook-login' => 'Please log in to post a message on this wiki',
 	'wall-posting-message-failed-title' => 'Ocorreu um erro ao postar uma mensagem',
 	'wall-posting-message-failed-body' => 'Copie o seu trabalho e tente novamente mais tarde',
 	'wall-notifications-wall-disabled' => 'O Mural de Mensagens foi desativado nesta wikia. Impossível carregar notificações.',
@@ -6753,6 +6618,14 @@ O post original e seu sumário ainda aparecerão no histórico da wiki.',
 	'wall-history-who-involved-wall-title' => 'Quem está envolvido?',
 	'wall-history-rail-contribs' => 'contribs',
 	'wall-history-rail-block' => 'bloquear',
+	'wall-confirm-monobook-remove' => 'Informe-nos por que você gostaria de remover isto.
+
+O post original e seu sumário ainda aparecerão no histórico da wikia.',
+	'wall-confirm-monobook-restore' => 'Informe-nos por que você gostaria de restaurar isto',
+	'wall-confirm-monobook-admin' => 'Informe-nos por que você gostaria de excluir isto.
+
+O post original e seu sumário ainda aparecerão no histórico da wiki.',
+	'wall-confirm-monobook-lack-of-reason' => 'Por favor, forneça uma razão para remover este(a) tópico/resposta.',
 );
 
 $messages['qu'] = array(
@@ -6859,16 +6732,8 @@ $messages['ru'] = array(
 	'wall-action-all-confirm-notify' => 'Уведомить администратора',
 	'wall-action-remove-reply-title' => 'Удалить ответ',
 	'wall-action-remove-thread-title' => 'Удалить тему',
-	'wall-confirm-monobook-remove' => 'Пожалуйста, напишите, почему вы хотите это удалить.
-
-Оригинал сообщения и ваш комментарий останутся в истории вики.',
-	'wall-confirm-monobook-admin' => 'Пожалуйста, напишите, почему вы хотите это удалить.
-
-Оригинал сообщения и ваш комментарий останутся в истории вики.',
-	'wall-confirm-monobook-restore' => 'Пожалуйста, укажите, почему вы хотите это восстановить',
 	'wall-delete-error-title' => 'Ошибка',
 	'wall-delete-error-content' => 'Сообщение было удалено и больше не существует.',
-	'wall-confirm-monobook-lack-of-reason' => 'Пожалуйста, поясните удаление этой темы/ответа.',
 	'wall-action-remove-confirm' => 'Пожалуйста, поясните, почему вы хотите это удалить:',
 	'wall-action-remove-thread-confirm-info' => 'Эта тема и ваш комментарий останутся в истории вики.',
 	'wall-action-remove-reply-confirm-info' => 'Этот ответ и ваш комментарий останутся в истории вики.',
@@ -7041,7 +6906,6 @@ $messages['ru'] = array(
 	'group-threadmoderator-member' => 'модератор обсуждений',
 	'grouppage-threadmoderator' => '',
 	'wall-message-limit-reached' => 'Установлен лимит на $1 {{PLURAL:$1|сообщение|сообщения|сообщений}} в теме.',
-	'wall-action-monobook-login' => 'Please log in to post a message on this wiki',
 	'wall-posting-message-failed-title' => 'Во время отправки сообщения произошла ошибка',
 	'wall-posting-message-failed-body' => 'Скопируйте текст сообщения и попробуйте снова',
 	'right-walledit' => 'Can edit wall posts',
@@ -7063,6 +6927,14 @@ $messages['ru'] = array(
 	'wall-history-who-involved-wall-title' => 'Участники этого обсуждения',
 	'wall-history-rail-contribs' => 'вклад',
 	'wall-history-rail-block' => 'заблокировать',
+	'wall-confirm-monobook-remove' => 'Пожалуйста, напишите, почему вы хотите это удалить.
+
+Оригинал сообщения и ваш комментарий останутся в истории вики.',
+	'wall-confirm-monobook-restore' => 'Пожалуйста, укажите, почему вы хотите это восстановить',
+	'wall-confirm-monobook-admin' => 'Пожалуйста, напишите, почему вы хотите это удалить.
+
+Оригинал сообщения и ваш комментарий останутся в истории вики.',
+	'wall-confirm-monobook-lack-of-reason' => 'Пожалуйста, поясните удаление этой темы/ответа.',
 );
 
 $messages['sco'] = array(
@@ -7124,16 +6996,8 @@ $messages['sco'] = array(
 	'wall-action-all-confirm-notify' => 'Notifie aen admeen',
 	'wall-action-remove-reply-title' => 'Remuiv this replie',
 	'wall-action-remove-thread-title' => 'Remuiv this threed',
-	'wall-confirm-monobook-remove' => "Please tell us why ye'd like tae remuiv this.
-
-The oreeginal post n yer ootline will still kyth in the wiki's histerie.",
-	'wall-confirm-monobook-admin' => "Please tell us why ye'd like tae delyte this.
-
-The oreeginal post n yer ootline will still kyth in the wiki's histerie.",
-	'wall-confirm-monobook-restore' => "Please tell us why ye'd like tae restore this",
 	'wall-delete-error-title' => 'Mistak',
 	'wall-delete-error-content' => 'Message wis delytit afore n it nae langer exeests.',
-	'wall-confirm-monobook-lack-of-reason' => 'Please provide ae raison fer remuiving this threed/reply.',
 	'wall-action-remove-confirm' => "Please tell us why ye'd like tae remuiv this:",
 	'wall-action-remove-thread-confirm-info' => "This threed n yer ootline will still kyth in the wiki's histerie.",
 	'wall-action-remove-reply-confirm-info' => "This replie n yer ootline will still kyth in the wiki's histerie.",
@@ -7361,16 +7225,8 @@ $messages['sv'] = array(
 	'wall-action-all-confirm-notify' => 'Meddela en administratör',
 	'wall-action-remove-reply-title' => 'Ta bort detta svar',
 	'wall-action-remove-thread-title' => 'Ta bort denna tråd',
-	'wall-confirm-monobook-remove' => 'Berätta för oss varför du vill ta bort detta.
-
-Originalinlägget och din sammanfattning kommer fortfarande att visas i wikins historik.',
-	'wall-confirm-monobook-admin' => 'Berätta för oss varför du vill radera detta.
-
-Originalinlägget och din sammanfattning kommer fortfarande att visas i wikins historik.',
-	'wall-confirm-monobook-restore' => 'Berätta för oss varför du skulle vilja återställa detta',
 	'wall-delete-error-title' => 'Fel',
 	'wall-delete-error-content' => 'Meddelandet togs bort tidigare och det finns inte längre.',
-	'wall-confirm-monobook-lack-of-reason' => 'Skriv en sammanfattning för att ta bort denna tråd/svar.',
 	'wall-action-remove-confirm' => 'Berätta för oss varför du vill ta bort detta:',
 	'wall-action-remove-thread-confirm-info' => 'Denna tråd och din sammanfattning kommer fortfarande att visas i wikins historik.',
 	'wall-action-remove-reply-confirm-info' => 'Detta svar och din sammanfattning kommer fortfarande att visas i wikins historik.',
@@ -7620,16 +7476,8 @@ $messages['tl'] = array(
 	'wall-action-all-confirm-notify' => 'Ipabatid sa isang tagapangasiwa',
 	'wall-action-remove-reply-title' => 'Tanggalin ang katugunang ito',
 	'wall-action-remove-thread-title' => 'Tanggalin ang sinulid na ito',
-	'wall-confirm-monobook-remove' => 'Paki sabihin sa amin kung bakit nais mong tanggalin ito.
-
-Ang orihinal na pagpapaskil at ang buod mo ay lilitaw pa rin sa loob ng kasaysayan ng wiki.',
-	'wall-confirm-monobook-admin' => 'Paki sabihin sa amin kung bakit nais mong tanggalin ito.
-
-Ang orihinal na pagpapaskil at ang buod mo ay lilitaw pa rin sa loob ng kasaysayan ng wiki.',
-	'wall-confirm-monobook-restore' => 'Paki sabihin sa amin kung bakit nais mong papanumbalikin ito',
 	'wall-delete-error-title' => 'Kamalian',
 	'wall-delete-error-content' => 'Dati nang binura ang mensahe at hindi na ito umiiral.',
-	'wall-confirm-monobook-lack-of-reason' => 'Paki magbigay ng isang dahilan para sa pagtatanggal ng sinulid/katugunang ito.',
 	'wall-action-remove-confirm' => 'Paki sabihin sa amin kung bakit nais mong burahin ito:',
 	'wall-action-remove-thread-confirm-info' => 'Ang sinulid na ito at ang buod mo ay lilitaw pa rin sa loob ng kasaysayan ng wiki.',
 	'wall-action-remove-reply-confirm-info' => 'Ang katugunang ito at ang buod mo ay lilitaw pa rin sa loob ng kasaysayan ng wiki.',
@@ -7933,14 +7781,8 @@ $messages['uk'] = array(
 	'wall-action-all-confirm-notify' => 'Повідомити адміністратора',
 	'wall-action-remove-reply-title' => 'Вилучити цю відповідь',
 	'wall-action-remove-thread-title' => 'Вилучити це обговорення',
-	'wall-confirm-monobook-remove' => 'Будь ласка, напишіть, чому ви хочете видалити це.
-
-Оригінал повідомлення і ваш коментар залишаться в історії вікі.',
-	'wall-confirm-monobook-admin' => 'Будь ласка, напишіть, чому ви хочете видалити це.',
-	'wall-confirm-monobook-restore' => 'Будь ласка, повідомте нам, чому б ви хотіли відновити це:',
 	'wall-delete-error-title' => 'Помилка',
 	'wall-delete-error-content' => 'Повідомлення було видалено раніше, і воно більше не існує.',
-	'wall-confirm-monobook-lack-of-reason' => 'Будь ласка, напишіть причину для видалення цього обговорення/відповіді.',
 	'wall-action-remove-confirm' => 'Будь ласка, повідомте нам, чому ви б хотіли видалити це:',
 	'wall-action-remove-thread-confirm-info' => 'Це обговорення, і ваші комментарі залишуться в історії вікі',
 	'wall-action-remove-reply-confirm-info' => 'Ця відповідь, і ваші комментарі залишуться в історії вікі',
@@ -8178,16 +8020,8 @@ $messages['vi'] = array(
 	'wall-action-all-confirm-notify' => 'Thông báo cho một bảo quản viên',
 	'wall-action-remove-reply-title' => 'Dời bỏ hồi âm này',
 	'wall-action-remove-thread-title' => 'Dời bỏ luồng này',
-	'wall-confirm-monobook-remove' => 'Xin vui lòng cho chúng tôi biết tại sao bạn muốn dời bỏ điều này.
-
-Các bản gốc và tóm tắt của bạn vẫn sẽ xuất hiện trong lịch sử của wiki.',
-	'wall-confirm-monobook-admin' => 'Xin vui lòng cho chúng tôi biết tại sao bạn muốn xóa bỏ điều này.
-
-Các bản gốc và tóm tắt của bạn vẫn sẽ xuất hiện trong lịch sử của wiki.',
-	'wall-confirm-monobook-restore' => 'Xin vui lòng cho chúng tôi biết tại sao bạn muốn khôi phục lại tin nhắn này',
 	'wall-delete-error-title' => 'Lỗi',
 	'wall-delete-error-content' => 'Tin nhắn đã bị xóa bỏ trước đó và nó không còn tồn tại.',
-	'wall-confirm-monobook-lack-of-reason' => 'Vui lòng cung cấp một lý do cho việc dời bỏ luồng/hồi âm này.',
 	'wall-action-remove-confirm' => 'Xin vui lòng cho chúng tôi biết tại sao bạn muốn dời bỏ điều này:',
 	'wall-action-remove-thread-confirm-info' => 'Luồng này và tóm tắt của bạn sẽ vẫn xuất hiện trong lịch sử của wiki.',
 	'wall-action-remove-reply-confirm-info' => 'Hồi âm này và tóm tắt của bạn vẫn sẽ xuất hiện trong lịch sử của wiki.',
@@ -8408,16 +8242,8 @@ $messages['wa'] = array(
 	'wall-action-all-confirm-notify' => 'Advierti les manaedjeus',
 	'wall-action-remove-reply-title' => "Rissaetchî l' response",
 	'wall-action-remove-thread-title' => "Rissaetchî l' fyi",
-	'wall-confirm-monobook-remove' => "Dijhoz s' i vs plait pocwè vos l' vôrîz rsaetchî.
-
-Li messaedje d' oridjinne eyet vosse rascourti seront todi veyåves dins l' istwere do wiki.",
-	'wall-confirm-monobook-admin' => "Dijhoz s' i vs plait pocwè vos l' vôrîz disfacer.
-
-Li messaedje d' oridjinne eyet vosse rascourti seront todi veyåves dins l' istwere do wiki.",
-	'wall-confirm-monobook-restore' => "Dijhoz s' i vs plait pocwè vos l' vôrîz rapexhî.",
 	'wall-delete-error-title' => 'Aroke',
 	'wall-delete-error-content' => "Li messaedje n' egzistêye nén la k' il a ddja stî disfacé.",
-	'wall-confirm-monobook-lack-of-reason' => "Dinez s' i vs plait l' råjhon pol rissaetchaedje do fyi/del response.",
 	'wall-action-remove-confirm-ok' => 'Rissaetchî',
 	'wall-action-admin-confirm-ok' => 'Disfacer',
 	'wall-action-restore-thread-title' => "Rapexhî l' fyi",
@@ -8511,16 +8337,8 @@ $messages['zh-hans'] = array(
 	'wall-action-all-confirm-notify' => '通知一名管理员',
 	'wall-action-remove-reply-title' => '移除此回复',
 	'wall-action-remove-thread-title' => '移除此话题',
-	'wall-confirm-monobook-remove' => '请告诉我们为什么你要移除它。
-
-原帖子和你的摘要将出现在wiki的历史记录中。',
-	'wall-confirm-monobook-admin' => '请告诉我们为什么你要删除它。
-
-原信息和你的摘要将出现在wiki的历史记录中。',
-	'wall-confirm-monobook-restore' => '请告诉我们为什么你要恢复它',
 	'wall-delete-error-title' => '出错',
 	'wall-delete-error-content' => '信息已被删除而不存在。',
-	'wall-confirm-monobook-lack-of-reason' => '请输入删除该 话题/回复 的原因。',
 	'wall-action-remove-confirm' => '请告诉我们移除它的原因：',
 	'wall-action-remove-thread-confirm-info' => '此话题和你的摘要仍将出现在wiki的历史记录中。',
 	'wall-action-remove-reply-confirm-info' => '此回复和你的摘要仍将出现在wiki的历史记录中',
@@ -8693,7 +8511,6 @@ $messages['zh-hans'] = array(
 	'group-threadmoderator-member' => '话题版主',
 	'grouppage-threadmoderator' => '',
 	'wall-message-limit-reached' => '每个话题允许发布$1条信息。',
-	'wall-action-monobook-login' => 'Please log in to post a message on this wiki',
 	'wall-posting-message-failed-title' => '发布信息时出错。',
 	'wall-posting-message-failed-body' => '复制内容并请稍后再试。',
 	'right-walledit' => 'Can edit wall posts',
@@ -8715,6 +8532,14 @@ $messages['zh-hans'] = array(
 	'wall-history-who-involved-wall-title' => '涉及谁？',
 	'wall-history-rail-contribs' => '贡献',
 	'wall-history-rail-block' => '封禁',
+	'wall-confirm-monobook-remove' => '请告诉我们为什么你要移除它。
+
+原帖子和你的摘要将出现在wiki的历史记录中。',
+	'wall-confirm-monobook-restore' => '请告诉我们为什么你要恢复它',
+	'wall-confirm-monobook-admin' => '请告诉我们为什么你要删除它。
+
+原信息和你的摘要将出现在wiki的历史记录中。',
+	'wall-confirm-monobook-lack-of-reason' => '请输入删除该 话题/回复 的原因。',
 );
 
 $messages['zh-hant'] = array(
@@ -8778,16 +8603,8 @@ $messages['zh-hant'] = array(
 	'wall-action-all-confirm-notify' => '通知管理員',
 	'wall-action-remove-reply-title' => '移除此回覆',
 	'wall-action-remove-thread-title' => '移除此話題',
-	'wall-confirm-monobook-remove' => '請告訴我們你為什麼想要移除它。
-
-原來發布的訊息及你的編輯摘要仍將出現在維基的歷史頁面。',
-	'wall-confirm-monobook-admin' => '請告訴我們你為什麼想要刪除它。
-
-原來發布訊息和你的編輯摘要仍將出現在維基的歷史頁面。',
-	'wall-confirm-monobook-restore' => '請告訴我們你為什麼想要還原這個訊息',
 	'wall-delete-error-title' => '錯誤',
 	'wall-delete-error-content' => '訊息已被刪除而不存在',
-	'wall-confirm-monobook-lack-of-reason' => '請提供刪除此 話題/回覆 的原因。',
 	'wall-action-remove-confirm' => '請告訴我們你為何想移除它：',
 	'wall-action-remove-thread-confirm-info' => '這個話題和你的編輯摘要仍將出現在wiki的頁面歷史。',
 	'wall-action-remove-reply-confirm-info' => '這個回覆和你的編輯摘要仍將出現在Wiki的頁面歷史。',
@@ -8959,7 +8776,6 @@ $messages['zh-hant'] = array(
 	'grouppage-threadmoderator' => '',
 	'wall-message-limit-reached' => '每個話題允許發佈$1條訊息。',
 	'wall-action-rev-reply-confirm' => '您確定要刪除此訊息嗎？',
-	'wall-action-monobook-login' => 'Please log in to post a message on this wiki',
 	'wall-posting-message-failed-title' => '發佈訊息時出錯',
 	'wall-posting-message-failed-body' => '複製您要發佈的內容並稍後再試。',
 	'wall-whatlinkshere-wall-line' => '[[$3|$4的訊息牆]] 上的話題[[$1|$2]]',
@@ -8982,5 +8798,13 @@ $messages['zh-hant'] = array(
 	'wall-history-who-involved-wall-title' => '有誰參與？',
 	'wall-history-rail-contribs' => '貢獻',
 	'wall-history-rail-block' => '封禁',
+	'wall-confirm-monobook-remove' => '請告訴我們你為什麼想要移除它。
+
+原來發布的訊息及你的編輯摘要仍將出現在維基的歷史頁面。',
+	'wall-confirm-monobook-restore' => '請告訴我們你為什麼想要還原這個訊息',
+	'wall-confirm-monobook-admin' => '請告訴我們你為什麼想要刪除它。
+
+原來發布訊息和你的編輯摘要仍將出現在維基的歷史頁面。',
+	'wall-confirm-monobook-lack-of-reason' => '請提供刪除此 話題/回覆 的原因。',
 );
 

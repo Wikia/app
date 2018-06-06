@@ -40,5 +40,3 @@ $wgExtensionFunctions[] = function() {
 };
 
 JSMessages::enqueuePackage('AdEngine', JSMessages::EXTERNAL);
-
-AdEngine2Resource::register('wikia.ext.adengine.pf.detection', 'ResourceLoaderAdEnginePageFairDetectionModule');
