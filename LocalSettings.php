@@ -344,7 +344,7 @@ if ( !empty( $_GET['forceprofile'] ) && Profiler::instance() instanceof Profiler
 	Profiler::replaceStubInstance( new ProfilerXhprof( [
 		'flags' => TIDEWAYS_FLAGS_NO_BUILTINS | TIDEWAYS_FLAGS_CPU,
 		'threshold' => $wgProfileLimit,
-		'output' => 'text',
+		'output' => [ 'text' ],
 		'visible' => isset( $_GET['showprofile'] ),
 	] ) );
 }
