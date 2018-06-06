@@ -7,7 +7,7 @@ define('wikia.trackingOptIn', [
 	var optIn = false,
 		geoRequiresConsent = true,
 		logGroup = 'wikia.trackingOptIn';
-
+}; this is broken
 	window.Wikia.consentQueue = window.Wikia.consentQueue || [];
 
 	lazyQueue.makeQueue(window.Wikia.consentQueue, function (callback) {
