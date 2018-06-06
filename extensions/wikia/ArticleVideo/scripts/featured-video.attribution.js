@@ -9,14 +9,15 @@ define('wikia.articleVideo.featuredVideo.attribution', [
 
 		var track = tracker.buildTrackingFunction({
 				category: 'featured-video',
-				trackingMethod: 'analytics',
+				action: tracker.ACTIONS.CLICK,
+				trackingMethod: 'analytics'
 			});
 
 		return function (playerInstance) {
+			// tracking for initial video attribution
 			$('.featured-video__attribution-username, .featured-video__attribution-icon').click(function() {
 				track({
-					action: 'aaa',//playerInstance.getPlaylistItem(0).username,
-					label: 'bbb',//playerInstance.getPlaylistItem(0).userUrl
+					label: playerInstance.getPlaylistItem(0).username
 				});
 			});
 
@@ -39,11 +40,10 @@ define('wikia.articleVideo.featuredVideo.attribution', [
 						$('.featured-video').after(attributionHTML);
 					}
 
+					// tracking for attribution for videos from playlist
 					$('.featured-video__attribution-username, .featured-video__attribution-icon').click(function() {
-						console.log('aaa');
 						track({
-							action: item.username,
-							label: item.userUrl
+							label: item.username
 						});
 					});
 				} else {

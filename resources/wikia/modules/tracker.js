@@ -303,7 +303,7 @@
 			tracking[ trackingMethod ] = true;
 
 			delete data.callbacks;
-debugger;
+
 			if ( tracking.none || ( tracking.analytics &&
 				// Category and action are compulsory for analytics tracking
 				( !data.ga_category || !data.ga_action || !trackerStub.ACTIONS_REVERSE[ data.ga_action ] )
