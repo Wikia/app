@@ -16,20 +16,19 @@ class AnnouncementsController extends WikiaController {
 	/**
 	 * @desc Get list of user ids who created/edited any page on specific wiki in given amount of time
 	 *
-	 * @return int {Array} list of user IDs
-	 *
 	 * @throws BadRequestException
+	 * @throws DBUnexpectedError
 	 */
 	public function getActiveUsers() {
 
 		$wikiId = $this->request->getInt( self::WIKI_ID );
-		$period = $this->request->getInt( self::DAYS );
+		$days = $this->request->getInt( self::DAYS );
 
-		if ( $period == 0 || $wikiId == 0 ) {
-			throw new BadRequestException( "You must define both wikiId and period" );
+		if ( $days == 0 || $wikiId == 0 ) {
+			throw new BadRequestException( "You must define both wikiId and days" );
 		}
 
-		$userIds = $this->announcements->getActiveUsers($wikiId, $period);
+		$userIds = $this->announcements->getActiveUsers($wikiId, $days);
 
 		$this->response->setData($userIds ?: []);
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );

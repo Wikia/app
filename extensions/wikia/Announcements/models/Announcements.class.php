@@ -6,11 +6,12 @@ class Announcements {
 	 * @desc Get users who edited or contributed on specific wiki in specific amount of time
 	 *
 	 * @param $wikiId
-	 * @param $period
+	 * @param $days
 	 *
 	 * @return mixed
+	 * @throws DBUnexpectedError
 	 */
-	public function getActiveUsers( int $wikiId, int $period ) {
+	public function getActiveUsers( int $wikiId, int $days ) {
 		global $wgSpecialsDB;
 
 		$specialsDb = wfGetDB( DB_SLAVE, [], $wgSpecialsDB );
@@ -20,7 +21,7 @@ class Announcements {
 			'user_id',
 			[
 				'wiki_id' => $wikiId,
-				'editdate > NOW() - INTERVAL ' . $period . ' DAY',
+				'editdate > NOW() - INTERVAL ' . $days . ' DAY',
 			],
 			__METHOD__
 		);
