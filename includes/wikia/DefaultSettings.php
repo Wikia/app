@@ -1643,7 +1643,7 @@ include_once("$IP/includes/wikia/parser/templatetypes/TemplateTypes.setup.php");
  * @name $wgEnableReviveSpotlights
  * Enables Revive Spotlights
  */
-$wgEnableReviveSpotlights = true;
+$wgEnableReviveSpotlights = false;
 
 /**
  * @name $wgReviveSpotlightsCountries
@@ -1693,7 +1693,7 @@ $wgShortArticlePathWikis = [
 	1618258  // it.wikia.com
 ];
 
-$wgEnableOpenXSPC = true;
+$wgEnableOpenXSPC = false;
 
 /**
  * Whether to inline the ResourceLoader startup script (for certain error pages)
