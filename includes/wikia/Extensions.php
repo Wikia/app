@@ -437,6 +437,8 @@ if ( !empty( $wgEnableScribuntoExt ) ) {
 if ( defined( 'REBUILD_LOCALISATION_CACHE_IN_PROGRESS' ) || !empty( $wgEnableSemanticMediaWikiExt ) ) {
 	if( defined( 'REBUILD_LOCALISATION_CACHE_IN_PROGRESS' ) || !empty( $wgEnableSemanticFormsExt ) ) {
 		$sfgNamespaceIndex = 350;
+		// SUS-5128 - use a single source for Google Maps API key
+		$sfgGoogleMapsKey = $wgGoogleMapsKey;
 		include "$IP/extensions/SemanticForms/SemanticForms.php";
 	}
 
