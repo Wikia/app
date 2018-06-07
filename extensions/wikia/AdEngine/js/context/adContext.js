@@ -178,8 +178,7 @@ define('ext.wikia.adEngine.adContext', [
 		context.opts.enableAdInfoLog = geo.isProperGeo(instantGlobals.wgAdDriverKikimoraTrackingCountries);
 		context.opts.playerTracking = geo.isProperGeo(instantGlobals.wgAdDriverKikimoraPlayerTrackingCountries);
 
-		// New Prebid and CMP
-		context.opts.isNewPrebidEnabled = geo.isProperGeo(instantGlobals.wgAdDriverNewPrebidCountries);
+		// CMP module
 		context.opts.isCMPEnabled = geo.isProperGeo(instantGlobals.wgEnableCMPCountries);
 
 		// Krux integration
