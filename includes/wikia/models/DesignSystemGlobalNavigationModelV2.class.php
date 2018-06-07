@@ -59,7 +59,7 @@ class DesignSystemGlobalNavigationModelV2 extends WikiaModel {
 
 	private function getMainNavigation() {
 		if ( $this->isWikiaOrgCommunity() ) {
-			return $this->getLink( self::COMMUNITY_CENTRAL_LABEL, $this->getHref('community-central'), self::COMMUNITY_CENTRAL_TRACKING_LABEL );
+			return [$this->getLink( self::COMMUNITY_CENTRAL_LABEL, $this->getHref('community-central'), self::COMMUNITY_CENTRAL_TRACKING_LABEL )];
 		} else {
 			return array_merge(
 				$this->getFandomLinks(),
