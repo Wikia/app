@@ -215,11 +215,11 @@ class YoutubeApiWrapper extends ApiWrapper {
 
 	/**
 	 * Get url for API.
-	 * More information: https://developers.google.com/youtube/2.0/developers_guide_protocol
+	 * More information: https://developers.google.com/youtube/v3/docs/
 	 * @return string
 	 */
 	protected function getApiUrl() {
-		global $wgYoutubeConfig;
+		global $wgYoutubeApiKey;
 
 		$params = [
 			'part' => 'snippet,contentDetails',
@@ -227,7 +227,7 @@ class YoutubeApiWrapper extends ApiWrapper {
 			'maxResults' => '1',
 			'videoEmbeddable' => true,
 			'type' => 'video',
-			'key' => $wgYoutubeConfig['DeveloperKeyApiV3']
+			'key' => $wgYoutubeApiKey
 		];
 
 		return self::$API_URL . '?' . http_build_query( $params );
