@@ -69,11 +69,6 @@ describe('ext.wikia.adEngine.lookup.prebid.prebidHelper', function () {
 		adaptersRegistry: {
 			getAdapters: function () {
 			}
-		},
-		win: {
-			pbjs: {
-				version: 'v1.11'
-			}
 		}
 	};
 
@@ -81,8 +76,7 @@ describe('ext.wikia.adEngine.lookup.prebid.prebidHelper', function () {
 		spyOn(mocks.adaptersRegistry, 'getAdapters').and.returnValue(mocks.adapters);
 
 		return modules['ext.wikia.adEngine.lookup.prebid.prebidHelper'](
-			mocks.adaptersRegistry,
-			mocks.win
+			mocks.adaptersRegistry
 		);
 	}
 

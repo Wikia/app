@@ -1,10 +1,8 @@
 /*global define*/
 define('ext.wikia.adEngine.lookup.prebid.prebidHelper', [
-	'ext.wikia.adEngine.lookup.prebid.adaptersRegistry',
-	'wikia.window'
+	'ext.wikia.adEngine.lookup.prebid.adaptersRegistry'
 ], function(
-	adaptersRegistry,
-	win
+	adaptersRegistry
 ) {
 	'use strict';
 	var adUnits = [],
