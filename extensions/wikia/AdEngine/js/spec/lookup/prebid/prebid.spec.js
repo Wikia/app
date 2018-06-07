@@ -184,8 +184,6 @@ describe('ext.wikia.adEngine.lookup.prebid', function () {
 		spyOn(mocks.adTracker, 'track');
 		spyOn(mocks.win.pbjs.que, 'push');
 
-		window.loadOldPrebid = noop;
-		window.loadNewPrebid = noop;
 		mocks.log.levels = {};
 	});
 

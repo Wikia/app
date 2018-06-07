@@ -49,8 +49,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.wikia',[
 				}
 			}
 		},
-		qs = new QueryString(),
-		isNewPrebidEnabled = adContext.get('opts.isNewPrebidEnabled');
+		qs = new QueryString();
 
 	function getPrice() {
 		var price = qs.getVal('wikia_adapter', 0);
@@ -124,12 +123,8 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.wikia',[
 			bidResponse.width = bid.sizes[0][0];
 			bidResponse.height = bid.sizes[0][1];
 
-			if (isNewPrebidEnabled) {
-				addBidResponse(bid.adUnitCode, bidResponse);
-				done();
-			} else {
-				prebid.get().addBidResponse(bid.placementCode, bidResponse);
-			}
+			addBidResponse(bid.adUnitCode, bidResponse);
+			done();
 		});
 	}
 

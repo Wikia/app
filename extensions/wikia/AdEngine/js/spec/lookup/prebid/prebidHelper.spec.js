@@ -2,18 +2,7 @@
 describe('ext.wikia.adEngine.lookup.prebid.prebidHelper', function () {
 	'use strict';
 
-	function noop() {}
-
-	function mockContext(map) {
-		spyOn(mocks.adContext, 'get').and.callFake(function (name) {
-			return map[name];
-		});
-	}
-
 	var mocks = {
-		adContext: {
-			get: noop
-		},
 		adapters: [
 			{
 				prepareAdUnit: function () {
@@ -81,7 +70,6 @@ describe('ext.wikia.adEngine.lookup.prebid.prebidHelper', function () {
 			getAdapters: function () {
 			}
 		},
-		prebidVersionCompatibility: noop,
 		win: {
 			pbjs: {
 				version: 'v1.11'
@@ -92,14 +80,8 @@ describe('ext.wikia.adEngine.lookup.prebid.prebidHelper', function () {
 	function getPrebidHelper() {
 		spyOn(mocks.adaptersRegistry, 'getAdapters').and.returnValue(mocks.adapters);
 
-		mockContext({
-			'opts.isNewPrebidEnabled': true
-		});
-
 		return modules['ext.wikia.adEngine.lookup.prebid.prebidHelper'](
-			mocks.adContext,
 			mocks.adaptersRegistry,
-			mocks.prebidVersionCompatibility,
 			mocks.win
 		);
 	}
