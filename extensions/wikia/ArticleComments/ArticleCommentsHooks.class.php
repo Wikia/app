@@ -1,5 +1,6 @@
 <?php
 
+use Wikia\Logger\WikiaLogger;
 use Wikia\PageHeader\Button;
 
 class ArticleCommentsHooks {
@@ -43,12 +44,30 @@ class ArticleCommentsHooks {
 			return;
 		}
 		$dbKey = $title->getDBkey();
+		$commentId = $title->getArticleID();
 		$parts = explode( '/', $dbKey );
+
 		$articleId = Title::newFromDBkey( $parts[0] )->getArticleID();
+		if ( $articleId === 0 ) {
+			// the article should have been undeleted already
+			WikiaLogger::instance()->warning(
+				"Undelete hook triggered for comment with no article",
+				['comment_id' => $commentId] );
+			return;
+		}
+
 		$parentCommentId = 0;
 		if ( count( $parts ) === 3 ) {
 			$parentCommentId = Title::newFromDBkey( $parts[0] . '/' . $parts[1] )->getArticleID();
+			if ( $parentCommentId === 0 ) {
+				// the parent should have been undeleted already
+				WikiaLogger::instance()->warning(
+					"Undelete hook triggered for child comment with no parent comment",
+					['comment_id' => $commentId] );
+				return;
+			}
 		}
-		ArticleComment::addCommentMapping( $title->getArticleID(), $articleId , $parentCommentId );
+		
+		ArticleComment::addCommentMapping( $commentId, $articleId , $parentCommentId );
 	}
 }
