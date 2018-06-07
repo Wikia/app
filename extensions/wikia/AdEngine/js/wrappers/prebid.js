@@ -9,7 +9,7 @@ define('ext.wikia.adEngine.wrappers.prebid', [
 	var validResponseStatusCode = 1,
 		errorResponseStatusCode = 2,
 		isNewPrebidEnabled = adContext.get('opts.isNewPrebidEnabled'),
-		isConsentStringEnabled = adContext.get('opts.isConsentStringEnabled'),
+		isCMPEnabled = adContext.get('opts.isCMPEnabled'),
 		prebidConfig = {
 			debug: loc.href.indexOf('pbjs_debug=1') >= 0,
 			enableSendAllBids: true,
@@ -25,7 +25,7 @@ define('ext.wikia.adEngine.wrappers.prebid', [
 	win.pbjs = win.pbjs || {};
 	win.pbjs.que = win.pbjs.que || [];
 
-	if (isConsentStringEnabled) {
+	if (isCMPEnabled) {
 		prebidConfig.consentManagement = {
 			cmpApi: 'iab',
 			timeout: 2000,
