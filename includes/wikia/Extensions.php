@@ -1772,3 +1772,5 @@ include "$IP/extensions/wikia/DownloadYourData/DownloadYourData.setup.php";
 
 // SUS-4738 | Handles requests to be forgotten
 include "$IP/extensions/wikia/Privacy/Privacy.setup.php";
+
+include "$IP/extensions/wikia/Announcements/Announcements.setup.php";
