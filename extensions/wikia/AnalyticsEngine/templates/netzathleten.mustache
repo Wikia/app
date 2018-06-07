@@ -4,12 +4,11 @@ require([
 	'ext.wikia.adEngine.adContext',
 	'wikia.geo',
 	'wikia.instantGlobals',
-	'wikia.trackingOptOut',
-	require.optional('wikia.trackingOptIn')
-], function(adContext, geo, instantGlobals, trackingOptOut, trackingOptIn) {
+	'wikia.trackingOptIn'
+], function(adContext, geo, instantGlobals, trackingOptIn) {
 	var url = "{{ url }}";
 
-	function loadScript() {
+	function loadNetzAthletenScript() {
 		var scriptElementNetzAthleten = document.createElement("script");
 		scriptElementNetzAthleten.type = "text/javascript";
 		scriptElementNetzAthleten.src = url;
@@ -23,7 +22,7 @@ require([
 	function loadNA(optIn) {
 		if (optIn && adContext.get('opts.netzathleten')) {
 			// user opt-ins for NetzAthleten
-			loadScript();
+			loadNetzAthletenScript();
 		}
 	}
 
