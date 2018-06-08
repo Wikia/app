@@ -719,6 +719,10 @@ class ArticleCommentList {
 		$newPageId = $oTitle->getArticleId();
 		$undeletedPages[$oTitle->getDBkey()] = $newPageId;
 		if ( ArticleComment::isMappedComment( $oTitle ) ) {
+			// this seems to be the best place to restore the mapping in article_comments,
+			// since we have a proper title object for the current comment, and comments are undeleted
+			// according to their id, so parent comments go before child comments
+			// (i. e. we have their new id in $undeletedPages)
 			self::restoreCommentMapping( $oTitle, $undeletedPages );
 		}
 		$listing = ArticleCommentList::newFromTitle( $oTitle );
