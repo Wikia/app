@@ -14,11 +14,13 @@ class HTTPSSupportHooks {
 	];
 
 	public static function onMercuryWikiVariables( array &$wikiVariables ): bool {
+		global $wgDisableHTTPSDowngrade;
 		$basePath = $wikiVariables['basePath'];
 		$user = RequestContext::getMain()->getUser();
 		if ( self::httpsAllowed( $user, $basePath ) ) {
 			$wikiVariables['basePath'] = wfHttpToHttps( $basePath );
 		}
+		$wikiVariables['disableHTTPSDowngrade'] = !empty( $wgDisableHTTPSDowngrade );
 		return true;
 	}
 
