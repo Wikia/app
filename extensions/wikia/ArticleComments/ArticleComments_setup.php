@@ -87,7 +87,6 @@ if (!empty($wgEnableWallEngine) || !empty($wgEnableArticleCommentsExt) || !empty
 
 	// SUS-3433 article comments mapping table
 	$wgHooks['LoadExtensionSchemaUpdates'][] = 'ArticleCommentsHooks::onLoadExtensionSchemaUpdates';
-	$wgHooks['UndeleteComplete'][] = 'ArticleCommentsHooks::onCommentUndelete';
 }
 
 //JSMEssages setup

@@ -1055,7 +1055,7 @@ class ArticleComment {
 		$article = new Article( $commentTitle, 0 );
 
 		$retVal = self::doSaveAsArticle( $text, $article, $user, $metadata );
-		$res = self::doAfterPost( $retVal, $article, $title, $parentId );
+		$res = self::doAfterPost( $retVal, $article, $title, $parentId ?: 0 );
 
 		self::doPurge( $title, $commentTitle );
 
