@@ -48,6 +48,17 @@ class SFGoogleMapsInput extends SFOpenLayersInput {
 		$width = self::getWidth( $other_args );
 		$mapCanvas = Html::element( 'div', array( 'class' => 'sfMapCanvas', 'style' => "height: $height; width: $width;" ), 'Map goes here...' );
 
+		$tracking = Html::inlineScript(<<<JS
+			// SUS-5128 | track page views where Google Maps API is loaded
+			track({
+				action: Wikia.Tracker.ACTIONS.OPEN,
+				category: 'googlemaps',
+				label: 'maprendered',
+				trackingMethod: 'analytics'
+			});
+JS
+);
+
 		$fullInputHTML = <<<END
 <div style="padding-bottom: 10px;">
 $coordsInput
@@ -59,6 +70,7 @@ $addressLookupButton
 </div>
 $mapCanvas
 
+$tracking
 END;
 		$text = Html::rawElement( 'div', array( 'class' => 'sfGoogleMapsInput' ), $fullInputHTML );
 

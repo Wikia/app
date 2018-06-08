@@ -34,7 +34,7 @@ class CloseWiki extends Maintenance {
 		try {
 			$res = WikiFactory::setPublicStatus( WikiFactory::CLOSE_ACTION, $wikiId, $reason );
 			
-			if ( $res ) {
+			if ( $res === WikiFactory::CLOSE_ACTION ) {
 				WikiFactory::setFlags( $wikiId, WikiFactory::FLAG_FREE_WIKI_URL | WikiFactory::FLAG_CREATE_DB_DUMP | WikiFactory::FLAG_CREATE_IMAGE_ARCHIVE );
 				WikiFactory::clearCache( $wikiId );
 			}
