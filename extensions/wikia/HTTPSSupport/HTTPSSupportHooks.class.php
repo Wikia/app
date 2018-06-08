@@ -1,8 +1,8 @@
 <?php
 
-class HTTPSOptInHooks {
+class HTTPSSupportHooks {
 
-	// List of articles that shouldn't redirect to http versions even for users that don't have https enabled.
+	// List of articles that shouldn't redirect to http versions.
 	// This array contains wgDBname mapped to array of article keys.
 	static $httpsArticles = [
 		/* www.wikia.com */
@@ -23,8 +23,9 @@ class HTTPSOptInHooks {
 	}
 
 	/**
-	 * Handle redirecting users who have opted in to HTTPS, and those
-	 * who haven't back to HTTP if necessary.
+	 * Handle redirecting users to HTTPS when on wikis that support it,
+	 * as well as redirect those on wikis that don't support HTTPS back
+	 * to HTTP if necessary.
 	 *
 	 * @param  Title      $title
 	 * @param             $unused

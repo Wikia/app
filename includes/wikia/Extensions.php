@@ -1754,7 +1754,7 @@ include "$IP/extensions/wikia/JWPlayerTag/JWPlayerTag.setup.php";
 
 include_once("$IP/extensions/wikia/DataWarehouse/DataWarehouseEventProducer.setup.php");
 
-include "$IP/extensions/wikia/HTTPSOptIn/HTTPSOptIn.setup.php";
+include "$IP/extensions/wikia/HTTPSSupport/HTTPSSupport.setup.php";
 
 // Search should be enabled globally, always
 include "$IP/extensions/wikia/Search/WikiaSearch.setup.php";

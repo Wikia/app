@@ -227,13 +227,6 @@ $wgAllowExternalImages = false;
 $wgAllowExternalWhitelistImages = true;
 
 /**
- * Enable users to opt in to HTTPS on a wiki.
- * @see extensions/wikia/HTTPSOptIn
- * @var bool $wgAllowHTTPS
- */
-$wgAllowHTTPS = false;
-
-/**
  * Allows to move images and other media files.
  * @var bool $wgAllowImageMoving
  */
