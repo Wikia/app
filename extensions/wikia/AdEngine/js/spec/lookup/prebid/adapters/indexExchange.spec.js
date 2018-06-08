@@ -37,7 +37,6 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.indexExchange', function () 
 				[728, 90],
 				[970, 250]
 			],
-			id: '1',
 			siteId: 183423
 		})).toEqual({
 			code: 'TOP_LEADERBOARD',
@@ -48,17 +47,15 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.indexExchange', function () 
 			},
 			bids: [
 				{
-					bidder: 'indexExchange',
+					bidder: 'ix',
 					params: {
-						id: '1',
 						siteId: '183423',
 						size: [728, 90]
 					}
 				},
 				{
-					bidder: 'indexExchange',
+					bidder: 'ix',
 					params: {
-						id: '1',
 						siteId: '183423',
 						size: [970, 250]
 					}
