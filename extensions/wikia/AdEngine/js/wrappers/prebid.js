@@ -8,13 +8,9 @@ define('ext.wikia.adEngine.wrappers.prebid', [
 
 	var validResponseStatusCode = 1,
 		errorResponseStatusCode = 2,
-		isNewPrebidEnabled = adContext.get('opts.isNewPrebidEnabled');
-
-	win.pbjs = win.pbjs || {};
-	win.pbjs.que = win.pbjs.que || [];
-
-	if (win.pbjs && typeof win.pbjs.setConfig === 'function' && isNewPrebidEnabled) {
-		win.pbjs.setConfig({
+		isNewPrebidEnabled = adContext.get('opts.isNewPrebidEnabled'),
+		isCMPEnabled = adContext.get('opts.isCMPEnabled'),
+		prebidConfig = {
 			debug: loc.href.indexOf('pbjs_debug=1') >= 0,
 			enableSendAllBids: true,
 			bidderSequence: 'random',
@@ -24,6 +20,22 @@ define('ext.wikia.adEngine.wrappers.prebid', [
 				enabledBidders: [],
 				syncDelay: 6000
 			}
+		};
+
+	win.pbjs = win.pbjs || {};
+	win.pbjs.que = win.pbjs.que || [];
+
+	if (isCMPEnabled) {
+		prebidConfig.consentManagement = {
+			cmpApi: 'iab',
+			timeout: 2000,
+			allowAuctionWithoutConsent: false
+		};
+	}
+
+	if (isNewPrebidEnabled) {
+		win.pbjs.que.push(function() {
+			win.pbjs.setConfig(prebidConfig);
 		});
 	}
 

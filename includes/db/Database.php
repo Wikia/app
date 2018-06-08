@@ -901,7 +901,7 @@ abstract class DatabaseBase implements DatabaseType {
 	 */
 	public function query( $sql, $fname = '', $tempIgnore = false ) {
 		$isMaster = !is_null( $this->getLBInfo( 'master' ) );
-		if ( !Profiler::instance()->isStub() ) {
+		if ( !( Profiler::instance() instanceof ProfilerStub ) ) {
 			# generalizeSQL will probably cut down the query to reasonable
 			# logging size most of the time. The substr is really just a sanity check.
 
@@ -913,8 +913,8 @@ abstract class DatabaseBase implements DatabaseType {
 				$totalProf = 'DatabaseBase::query';
 			}
 
-			wfProfileIn( $totalProf );
-			wfProfileIn( $queryProf );
+			$totalProfileIn = Profiler::instance()->scopedProfileIn( $totalProf );
+			$queryProfileIn = Profiler::instance()->scopedProfileIn( $queryProf );
 		}
 
 		$this->mLastQuery = $sql;
@@ -930,9 +930,9 @@ abstract class DatabaseBase implements DatabaseType {
 		# <Wikia>
 		global $wgDBReadOnly, $wgReadOnly;
 		if ( $is_writeable && !$isTemporaryTableOperation && $wgDBReadOnly ) {
-			if ( !Profiler::instance()->isStub() ) {
-				wfProfileOut( $queryProf );
-				wfProfileOut( $totalProf );
+			if ( isset( $totalProfileIn ) ) {
+				Profiler::instance()->scopedProfileOut( $queryProfileIn );
+				Profiler::instance()->scopedProfileOut( $totalProfileIn );
 			}
 			WikiaLogger::instance()->error( 'DB readonly mode', [
 				'exception' => new WikiaException( $fname . ' called in read-only mode' ),
@@ -1048,9 +1048,9 @@ abstract class DatabaseBase implements DatabaseType {
 			$this->reportQueryError( $this->lastError(), $this->lastErrno(), $sql, $fname, $tempIgnore );
 		}
 
-		if ( !Profiler::instance()->isStub() ) {
-			wfProfileOut( $queryProf );
-			wfProfileOut( $totalProf );
+		if ( isset( $totalProfileIn ) ) {
+			Profiler::instance()->scopedProfileOut( $queryProfileIn );
+			Profiler::instance()->scopedProfileOut( $totalProfileIn );
 		}
 
 		return $this->resultObject( $ret );

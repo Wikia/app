@@ -8,6 +8,7 @@ define('ext.wikia.adEngine.lookup.prebid', [
 	'ext.wikia.adEngine.lookup.prebid.prebidHelper',
 	'ext.wikia.adEngine.lookup.prebid.prebidSettings',
 	'ext.wikia.adEngine.lookup.lookupFactory',
+	'wikia.cmp',
 	'wikia.log',
 	'wikia.trackingOptIn',
 	'wikia.window'
@@ -20,6 +21,7 @@ define('ext.wikia.adEngine.lookup.prebid', [
 	helper,
 	settings,
 	factory,
+	cmp,
 	log,
 	trackingOptIn,
 	win
@@ -48,13 +50,12 @@ define('ext.wikia.adEngine.lookup.prebid', [
 			}
 		}
 
-		trackingOptIn.pushToUserConsentQueue(function(optIn) {
-			if (optIn === false) {
-				log('User opt-out for prebid', log.levels.info, logGroup);
+		trackingOptIn.pushToUserConsentQueue(function (optIn) {
+			log('User opt-' + (optIn ? 'in' : 'out') + ' for prebid', log.levels.info, logGroup);
+
+			if (!optIn) {
 				return;
 			}
-
-			log('User opt-in for prebid', log.levels.info, logGroup);
 
 			if (!prebidLoaded) {
 				adaptersRegistry.setupCustomAdapters();

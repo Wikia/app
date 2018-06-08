@@ -79,10 +79,6 @@ class WikiaRobots {
 
 		// Fandom old URLs
 		'/fandom?p=',
-
-		// logging for ad-recovery (ADEN-3930)
-		'/wikia.php?controller=ARecoveryEngineApi',
-		'/api/v1/ARecoveryEngine'
 	];
 
 	/**

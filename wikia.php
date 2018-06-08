@@ -12,9 +12,7 @@ define( 'DONT_INTERPOLATE_TITLE', true );
 // Initialise common MW code
 require ( dirname( __FILE__ ) . '/includes/WebStart.php' );
 
-if ( $wgProfiler instanceof Profiler ) {
-	$wgProfiler->setTemplated( true );
-}
+Profiler::instance()->setTemplated( true );
 
 // Construct a tag for newrelic -- wgRequest is global in this scope
 Transaction::setEntryPoint( Transaction::ENTRY_POINT_NIRVANA );

@@ -68,19 +68,14 @@ class UserTagsStrategy extends WikiaObject {
 	 * i.e. if the user is blocked globally or locally, and isn't a staff member
 	 * @return bool Whether to display the tag
 	 */
-	protected function shouldShowBlockedTag() {
-		if ( in_array( 'staff', $this->usersGlobalGroups ) ) {
+	protected function shouldShowBlockedTag(): bool {
+		if ( $this->user->isAllowed( 'unblockable' ) ) {
 			return false;
 		}
 
-		// check if the user is blocked locally, if not, also check if they're blocked globally (via Phalanx)
-		if ( $this->user->isBlocked( true /* use slave DB */, false /* don't log in PhalanxStats */ ) ||
-			$this->user->isBlockedGlobally()
-		) {
-			return true;
-		}
+		$block = $this->user->getBlock( true /* use slave DB */, false /* don't log in PhalanxStats */ );
 
-		return false;
+		return $block && $block->getType() !== Block::TYPE_AUTO;
 	}
 
 	/**

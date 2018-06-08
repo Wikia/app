@@ -2,7 +2,7 @@
 describe('ext.wikia.adEngine.wrappers.prebid', function () {
 	'use strict';
 
-	function noop () {}
+	function noop() {}
 
 	var mocks = {
 			adContext: {
