@@ -9,6 +9,7 @@ use Monolog\Formatter\LineFormatter;
 use Monolog\Logger;
 
 class S3AuditLogger extends WikiaLogger {
+	const S3IDENT = 's3auditlog';
 
 	/** private to enforce singleton */
 	private function __construct() {
@@ -33,9 +34,9 @@ class S3AuditLogger extends WikiaLogger {
 	 * @param string $ident
 	 * @return Logger
 	 */
-	public function defaultLogger($ident = self::SYSLOG_IDENT) {
+	public function defaultLogger($ident = self::S3IDENT) {
 		$handler = self::getSyslogHandler($ident);
-		$formatter = new LineFormatter("s3auditlog %channel%.%level_name%: %message% %context% %extra%");
+		$formatter = new LineFormatter("%channel%.%level_name%: %message% %context% %extra%");
 		$handler->setFormatter($formatter);
 		return new Logger(
 			'default',

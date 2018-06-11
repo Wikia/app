@@ -1382,6 +1382,7 @@ $messages['it'] = array(
 	'or' => 'or',
 	'other_people' => 'Other people have been searching for...',
 	'or_learn' => 'Or to learn more, take the ',
+	'original-file' => 'file originale',
 );
 
 $messages['iu'] = array(
@@ -2513,11 +2514,12 @@ $messages['pt'] = array(
 	'othercontribs' => 'Baseado no trabalho de $1.',
 	'others' => 'outros',
 	'opensearch-desc' => '{{SITENAME}} ({{CONTENTLANGUAGE}})',
-	'old_skins' => 'Old skins',
+	'old_skins' => 'Skins antigas',
 	'or' => 'ou',
-	'other_people' => 'Other people have been searching for...',
-	'or_learn' => 'Or to learn more, take the ',
+	'other_people' => 'Outras pessoas têm procurado por...',
+	'or_learn' => 'Ou para obter mais informações, vá em ',
 	'oasis-mobile-site' => 'Site móvel',
+	'original-file' => 'arquivo original',
 );
 
 $messages['qu'] = array(

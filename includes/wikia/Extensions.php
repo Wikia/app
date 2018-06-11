@@ -242,11 +242,6 @@ include("{$IP}/extensions/Poem/Poem.php");
 #--- 14. AntiSpamInput - sitewide
 include("{$IP}/extensions/wikia/AntiSpamInput/AntiSpamInput.php");
 
-#--- 16. YouTube -- sitewide (with exceptions)
-if (!empty($wgWikiaEnableYouTubeExt)) {
-	include("{$IP}/extensions/wikia/YouTube/YouTube.php");
-}
-
 if ( !empty( $wgEnableCaptchaExt ) ) {
 	include( "$IP/extensions/wikia/Captcha/Captcha.setup.php" );
 }
@@ -442,6 +437,8 @@ if ( !empty( $wgEnableScribuntoExt ) ) {
 if ( defined( 'REBUILD_LOCALISATION_CACHE_IN_PROGRESS' ) || !empty( $wgEnableSemanticMediaWikiExt ) ) {
 	if( defined( 'REBUILD_LOCALISATION_CACHE_IN_PROGRESS' ) || !empty( $wgEnableSemanticFormsExt ) ) {
 		$sfgNamespaceIndex = 350;
+		// SUS-5128 - use a single source for Google Maps API key
+		$sfgGoogleMapsKey = $wgGoogleMapsKey;
 		include "$IP/extensions/SemanticForms/SemanticForms.php";
 	}
 
@@ -1185,7 +1182,6 @@ if ( !empty($wgCityId) && $wgCityId != 1252 /* starter.wikia.com */ && !$wgDevel
 	// this allows for starter images to be taken from the appropriate language starter wiki directly
 	// @note Make sure that newly added starter is protected (e.g. from being removed by automated deletion scripts)
 	//       use WikiFactory::setFlags( <city_id>, WikiFactory::FLAG_PROTECTED )
-	// @TODO move this list out of CreateWiki.php and put it in one place
 	$languageStarters = array(
 		//	"en" => "starter", # handled by the default/else case below
 			"de" => "destarter",
@@ -1744,10 +1740,6 @@ if ( !empty( $wgEnableApesterTagExt ) ) {
 
 if ( !empty( $wgEnablePlaybuzzTagExt ) ) {
 	include "$IP/extensions/wikia/PlaybuzzTag/PlaybuzzTag.setup.php";
-}
-
-if ( !empty( $wgEnableOpenXSPC ) ) {
-    include "$IP/extensions/wikia/Spotlights/Spotlights.setup.php";
 }
 
 if ( !empty( $wgEnableTrackingSettingsManager ) ) {

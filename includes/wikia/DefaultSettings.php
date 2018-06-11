@@ -1640,12 +1640,6 @@ $wgEnableHostnameInHtmlTitle = true;
 include_once("$IP/includes/wikia/parser/templatetypes/TemplateTypes.setup.php");
 
 /**
- * @name $wgEnableReviveSpotlights
- * Enables Revive Spotlights
- */
-$wgEnableReviveSpotlights = true;
-
-/**
  * @name $wgReviveSpotlightsCountries
  * Enables Revive Spotlights in these countries (given wgEnableReviveSpotlights is also true).
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
@@ -1692,8 +1686,6 @@ $wgShortArticlePathWikis = [
 	1169860, // ru.wikia.com
 	1618258  // it.wikia.com
 ];
-
-$wgEnableOpenXSPC = true;
 
 /**
  * Whether to inline the ResourceLoader startup script (for certain error pages)

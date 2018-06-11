@@ -164,11 +164,12 @@ class SpecialRecentChanges extends IncludableSpecialPage {
 
 		if ( !$this->including() ) {
 			$requestUrl = $this->getRequest()->getFullRequestURL();
-			$specialPageTitle = SpecialPage::getTitleFor('RecentChanges');
+			$specialPageTitle = SpecialPage::getTitleFor( 'RecentChanges' );
 
-			if( $requestUrl == $specialPageTitle->getInternalURL()
-				|| $requestUrl == $specialPageTitle->getInternalURL('feed=rss')
-				|| $requestUrl == $specialPageTitle->getInternalURL('feed=atom') ) {
+			if ( $requestUrl === $specialPageTitle->getFullURL()
+				|| $requestUrl === $specialPageTitle->getFullURL( 'feed=rss')
+				|| $requestUrl === $specialPageTitle->getFullURL( 'feed=atom' )
+			) {
 				$squidMaxage = $wgSquidMaxage;
 			}
 		}
@@ -198,7 +199,7 @@ class SpecialRecentChanges extends IncludableSpecialPage {
 		}
 
 		// wikia change begin
-		// bugId: 47961 Owen -- this whole query is useless IMHO as the results are not used directly 
+		// bugId: 47961 Owen -- this whole query is useless IMHO as the results are not used directly
 		// It caches links as a side effect, but the links are already cached by other wikia changes
 		/*
 		if( !$feedFormat ) {
@@ -567,7 +568,7 @@ class SpecialRecentChanges extends IncludableSpecialPage {
 			--$limit;
 		}
 		$s .= $list->endRecentChangesList();
-		
+
 		/* Wikia Change */
 		$this->getOutput()->addHTML( Xml::openElement( 'div', array( 'class' => 'rc-conntent' )) .  $s . Xml::closeElement('div') );
 		/* Wikia Change END*/
@@ -709,7 +710,7 @@ class SpecialRecentChanges extends IncludableSpecialPage {
 		$nsSelect = '';
 		/* Wikia Change */
 		Hooks::run( 'onGetNamespaceCheckbox', array(&$nsSelect, $opts['namespace'], '', 'namespace', null) );
-		
+
 		$nsLabel = Xml::label( wfMsg( 'namespace' ), 'namespace' );
 		if ( empty($nsSelect) ) {
 			$nsSelect = Html::namespaceSelector(

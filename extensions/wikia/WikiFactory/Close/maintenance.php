@@ -213,7 +213,12 @@ class CloseWikiMaintenance {
 				$server = $local->getLBInfo( 'host' );
 
 				try {
-					$dbw = new DatabaseMysqli($server, $wgDBadminuser, $wgDBadminpassword, $centralDB);
+					$dbw = new DatabaseMysqli([
+						'host' => $server,
+						'user' => $wgDBadminuser,
+						'password' => $wgDBadminpassword,
+						'dbname' => $centralDB,
+					]);
 					$dbw->begin( __METHOD__ );
 					$dbw->query("DROP DATABASE `{$row->city_dbname}`");
 					$dbw->commit( __METHOD__ );
