@@ -212,6 +212,7 @@ $config['tracking_opt_in_js'] = [
 	'assets' => [
 		'//extensions/wikia/TrackingOptIn/dist/tracking-opt-in.min.js',
 		'//extensions/wikia/TrackingOptIn/dist/consent-string.min.js',
+		'//extensions/wikia/TrackingOptIn/dist/vendor-list.min.js',
 		'//extensions/wikia/TrackingOptIn/js/trackingOptIn.js',
 		'//extensions/wikia/TrackingOptIn/js/cmp.js',
 	],
