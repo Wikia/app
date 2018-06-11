@@ -43,13 +43,21 @@ class LCStoreDB implements \LCStore {
 		$this->localisationCachePrefix = $localisationCachePrefix;
 	}
 
-	public function get( $code, $key ) {
+	private function getDB() : \DatabaseBase {
 		if ( $this->writesDone && $this->dbw ) {
 			$db = $this->dbw; // see the changes in finishWrite()
 		} else {
 			global $wgExternalSharedDB;
 			$db = wfGetDB( DB_SLAVE, [], $wgExternalSharedDB );
 		}
+
+		return $db;
+	}
+
+	public function get( $code, $key ) {
+		wfProfileIn( __METHOD__ );
+
+		$db = $this->getDB();
 
 		$value = $db->selectField(
 			'l10n_cache',
@@ -58,7 +66,27 @@ class LCStoreDB implements \LCStore {
 			__METHOD__
 		);
 
-		return ( $value !== false ) ? unserialize( $db->decodeBlob( $value ), [ 'allowed_classes' => false ] ) : null;
+		$ret =  ( $value !== false ) ? unserialize( $db->decodeBlob( $value ), [ 'allowed_classes' => false ] ) : null;
+
+		wfProfileOut( __METHOD__ );
+		return $ret;
+	}
+
+	/**
+	 * Return the list of all messages that are kept in localisation cache in the database.
+	 *
+	 * @param string $code
+	 * @return string[]
+	 */
+	public function getAllKeys( $code ) : array {
+		wfProfileIn( __METHOD__ );
+
+		return $this->getDB()->selectFieldValues(
+			'l10n_cache',
+			'lc_key',
+			[ 'lc_prefix' => $this->localisationCachePrefix, 'lc_lang' => $code ],
+			__METHOD__
+		);
 	}
 
 	public function startWrite( $code ) {
@@ -77,6 +105,16 @@ class LCStoreDB implements \LCStore {
 		$this->batch = [];
 	}
 
+	/**
+	 * @throws \DBQueryError
+	 */
+	private function writeBatch() {
+		$primaryKey = [ 'lc_prefix', 'lc_lang', 'lc_key' ];
+		$this->dbw->upsert( 'l10n_cache', $this->batch, [ $primaryKey ], [ 'lc_value = VALUES(lc_value)' ], __METHOD__ );
+
+		$this->batch = [];
+	}
+
 	public function finishWrite() {
 		if ( $this->readOnly ) {
 			return;
@@ -84,16 +122,8 @@ class LCStoreDB implements \LCStore {
 			throw new \MWException( __CLASS__ . ': must call startWrite() before finishWrite()' );
 		}
 
-		$this->dbw->begin( __METHOD__ );
 		try {
-			$this->dbw->delete(
-				'l10n_cache',
-				[ 'lc_prefix' => $this->localisationCachePrefix, 'lc_lang' => $this->currentLang ],
-				__METHOD__
-			);
-			foreach ( array_chunk( $this->batch, 500 ) as $rows ) {
-				$this->dbw->insert( 'l10n_cache', $rows, __METHOD__ );
-			}
+			$this->writeBatch();
 			$this->writesDone = true;
 		} catch ( \DBQueryError $e ) {
 			if ( $this->dbw->wasReadOnlyError() ) {
@@ -102,7 +132,6 @@ class LCStoreDB implements \LCStore {
 				throw $e;
 			}
 		}
-		$this->dbw->commit( __METHOD__ );
 
 		$this->currentLang = null;
 		$this->batch = [];
@@ -121,6 +150,12 @@ class LCStoreDB implements \LCStore {
 			'lc_key' => $key,
 			'lc_value' => $this->dbw->encodeBlob( serialize( $value ) )
 		];
+
+		// Wikia: write to database as we add new items here instead of when all processing is done
+		// avoid timeouts on database connections
+		if ( count( $this->batch ) > 100 ) {
+			$this->writeBatch();
+		}
 	}
 
 }

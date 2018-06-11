@@ -810,8 +810,8 @@ class LocalisationCache {
 interface LCStore {
 	/**
 	 * Get a value.
-	 * @param $code Language code
-	 * @param $key Cache key
+	 * @param string $code Language code
+	 * @param string $key Cache key
 	 */
 	function get( $code, $key );
 
