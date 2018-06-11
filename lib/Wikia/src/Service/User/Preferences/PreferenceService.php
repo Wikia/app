@@ -44,7 +44,7 @@ class PreferenceService {
 		$this->forceSavePrefs = $forceSavePrefs;
 		$this->preferences = [];
 
-		// 🐖: anonymous users will always have default preferences
+		// SUS-5236: anonymous users will always have default preferences
 		$this->preferences[0] = clone $defaultPrefs;
 	}
 
