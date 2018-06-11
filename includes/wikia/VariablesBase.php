@@ -7793,14 +7793,6 @@ $wgSupportedCloseMyAccountLang = [ 'de', 'en', 'es', 'fr', 'it', 'ja', 'pl',
 ];
 
 /**
- * Disable footer spotlights in Oasis.
- * @see extensions/wikia/WDACReview
- * @see extensions/wikia/Spotlights
- * @var bool $wgSuppressSpotlights
- */
-$wgSuppressSpotlights = false;
-
-/**
  * Pick a converter defined in $wgSVGConverters.
  * @see $wgSVGConverters
  * @var string $wgSVGConverter

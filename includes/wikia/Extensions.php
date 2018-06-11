@@ -1742,10 +1742,6 @@ if ( !empty( $wgEnablePlaybuzzTagExt ) ) {
 	include "$IP/extensions/wikia/PlaybuzzTag/PlaybuzzTag.setup.php";
 }
 
-if ( !empty( $wgEnableOpenXSPC ) ) {
-    include "$IP/extensions/wikia/Spotlights/Spotlights.setup.php";
-}
-
 if ( !empty( $wgEnableTrackingSettingsManager ) ) {
 	include "$IP/extensions/wikia/TrackingOptIn/TrackingSettingsManager.setup.php";
 }
