@@ -704,25 +704,7 @@ $wgObjectCaches = array(
     CACHE_DBA => array('class' => 'DBABagOStuff'),
     CACHE_ANYTHING => array('factory' => 'ObjectCache::newAnything'),
     CACHE_ACCEL => array('factory' => 'ObjectCache::newAccelerator'),
-    // SUS-4611
-    CACHE_MEMCACHED => array(
-        /**
-         * Note that MemcachedPhpBagOStuff and MemcachedPeclBagOStuff clients use
-         * incompatible serialization logic.
-         */
-        // FIXME: this is a temporary condition used to gradually deploy the new client (SUS-4611)
-        'class' => ( ( !is_null($wgDomainHash) && $wgDomainHash % 100 < 0 ) ? 'MemcachedPeclBagOStuff' : 'MemcachedPhpBagOStuff' ),
-        'use_binary_protocol' => false, // twemproxy does not support binary protocol
-        /**
-         * SUS-4749 | make MemcachedPeclBagOStuff use igbinary serializer
-         *
-         * An old client uses PHP serializer
-         *
-         * @see https://github.com/igbinary/igbinary#igbinary
-         * @see https://phpolyk.wordpress.com/2011/08/28/igbinary-the-new-php-serializer/
-         */
-         'serializer' => 'igbinary',
-    ),
+    CACHE_MEMCACHED => array('class' => 'MemcachedPhpBagOStuff'),
     'apc' => array('class' => 'APCBagOStuff'),
     'xcache' => array('class' => 'XCacheBagOStuff'),
     'wincache' => array('class' => 'WinCacheBagOStuff'),
