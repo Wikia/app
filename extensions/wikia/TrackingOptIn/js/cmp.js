@@ -22,6 +22,7 @@ define('wikia.cmp', [
 		purposesList = [1, 2, 3, 4, 5],
 		vendorsList = [
 			10, // Index Exchange, Inc.
+			11, // Quantcast International Limited
 			32, // AppNexus Inc.
 			52, // The Rubicon Project, Limited
 			69, // OpenX Software Ltd. and its affiliates
@@ -87,6 +88,24 @@ define('wikia.cmp', [
 					"featureIds": [
 						2,
 						3
+					]
+				},
+				{
+					"id": 11,
+					"name": "Quantcast International Limited",
+					"policyUrl": "https://www.quantcast.com/privacy/",
+					"purposeIds": [
+					  1
+					],
+					"legIntPurposeIds": [
+					  2,
+					  3,
+					  4,
+					  5
+					],
+					"featureIds": [
+					  1,
+					  2
 					]
 				},
 				{
@@ -236,29 +255,27 @@ define('wikia.cmp', [
 		};
 	}
 
-	win.__cmp = function __cmp(command, version, callback) {
-		log(['__cmp call', 'CMP module is not initialized'], log.levels.debug, logGroup);
-		callback({}, false);
-	};
-
-	win.addEventListener('message', function (event) {
-		try {
-			var call = event.data.__cmpCall;
-
-			if (call) {
-				win.__cmp(call.command, call.parameter, function(retValue, success) {
-					var returnMsg = {
-						__cmpReturn: {
-							returnValue: retValue, success: success, callId: call.callId
-						}
-					};
-					event.source.postMessage(returnMsg, '*');
-				});
-			}
-		} catch (e) {} // do nothing
-	});
-
 	if (isModuleEnabled) {
+		win.__cmp = function __cmp(command, version, callback) {
+			log(['__cmp call', 'CMP module is not initialized'], log.levels.debug, logGroup);
+			callback({}, false);
+		};
+		win.addEventListener('message', function (event) {
+			try {
+				var call = event.data.__cmpCall;
+
+				if (call) {
+					win.__cmp(call.command, call.parameter, function(retValue, success) {
+						var returnMsg = {
+							__cmpReturn: {
+								returnValue: retValue, success: success, callId: call.callId
+							}
+						};
+						event.source.postMessage(returnMsg, '*');
+					});
+				}
+			} catch (e) {} // do nothing
+		});
 		trackingOptIn.pushToUserConsentQueue(init);
 	}
 
