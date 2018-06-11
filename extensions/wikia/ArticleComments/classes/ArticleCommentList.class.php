@@ -698,6 +698,9 @@ class ArticleCommentList {
 	/**
 	 * Hook
 	 *
+	 * @desc Triggered on revision undeletes to restore potential comments on an article. This function is also triggered for
+	 * comment undeletes (since comments are pages).
+	 *
 	 * @param Title $oTitle -- instance of Title class
 	 * @param Revision $revision    -- new revision
 	 * @param Integer  $old_page_id  -- old page ID
@@ -710,7 +713,18 @@ class ArticleCommentList {
 	static public function undeleteComments( Title $oTitle, $revision, $old_page_id ) {
 		global $wgRC2UDPEnabled;
 
-		$new_page_id = $oTitle->getArticleId();
+		// SUS-3433 temporary cache for page title -> page id mapping
+		static $undeletedPages = [];
+
+		$newPageId = $oTitle->getArticleId();
+		$undeletedPages[$oTitle->getDBkey()] = $newPageId;
+		if ( ArticleComment::isMappedComment( $oTitle ) ) {
+			// this seems to be the best place to restore the mapping in article_comments,
+			// since we have a proper title object for the current comment, and comments are undeleted
+			// according to their id, so parent comments go before child comments
+			// (i. e. we have their new id in $undeletedPages)
+			self::restoreCommentMapping( $oTitle, $undeletedPages );
+		}
 		$listing = ArticleCommentList::newFromTitle( $oTitle );
 		$pagesToRecover = $listing->getRemovedCommentPages( $oTitle );
 		if ( !empty( $pagesToRecover ) && is_array( $pagesToRecover ) ) {
@@ -720,7 +734,7 @@ class ArticleCommentList {
 				$oCommentTitle = Title::makeTitleSafe( $page_value['nspace'], $page_value['title'] );
 				if ( $oCommentTitle instanceof Title ) {
 					$archive = new PageArchive( $oCommentTitle );
-					$ok = $archive->undelete( '', wfMessage( 'article-comments-undeleted-comment', $new_page_id )->escaped() );
+					$ok = $archive->undelete( '', wfMessage( 'article-comments-undeleted-comment', $newPageId )->escaped() );
 
 					if ( !is_array( $ok ) ) {
 						Wikia\Logger\WikiaLogger::instance()->error(
@@ -738,6 +752,30 @@ class ArticleCommentList {
 		}
 
 		return true;
+	}
+
+	private static function restoreCommentMapping( Title $title, $undeletedPages ) {
+		// restore comment mapping
+		$commentId = $title->getArticleID();
+		$parts = explode( '/', $title->getDBkey() );
+		$parentArticleId = $undeletedPages[$parts[0]];
+		if ( empty( $parentArticleId ) ) {
+			Wikia\Logger\WikiaLogger::instance()->warning(
+				"Restored comment has no parent article",
+				['comment_id' => $commentId] );
+			return;
+		}
+		$parentCommentId = 0;
+		if ( count ( $parts ) === 3 ) {
+			$parentCommentId = $undeletedPages[$parts[0] . '/' . $parts[1]];
+			if ( empty( $parentCommentId ) ) {
+				Wikia\Logger\WikiaLogger::instance()->warning(
+					"Restored comment has no parent comment",
+					['comment_id' => $commentId] );
+				return;
+			}
+		}
+		ArticleComment::addCommentMapping( $title->getArticleID(), $parentArticleId, $parentCommentId );
 	}
 
 	/**

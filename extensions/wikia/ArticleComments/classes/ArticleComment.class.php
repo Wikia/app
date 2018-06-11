@@ -891,6 +891,7 @@ class ArticleComment {
 
 			$status = self::doSaveAsArticle( $text, $article, $user, $this->mMetadata, $summary );
 
+
 			if ( !empty( $title ) ) {
 				$purgeTarget = $title;
 			} else {
@@ -1054,9 +1055,9 @@ class ArticleComment {
 		$article = new Article( $commentTitle, 0 );
 
 		$retVal = self::doSaveAsArticle( $text, $article, $user, $metadata );
-		$res = ArticleComment::doAfterPost( $retVal, $article, $parentId );
+		$res = self::doAfterPost( $retVal, $article, $title, $parentId ?: 0 );
 
-		ArticleComment::doPurge( $title, $commentTitle );
+		self::doPurge( $title, $commentTitle );
 
 		return [ $retVal, $article, $res ];
 	}
@@ -1123,18 +1124,20 @@ class ArticleComment {
 	 * @static
 	 * @param Status $status
 	 * @param Article|WikiPage $article
-	 * @param int $parentId
+	 * @param Title $parentPageTitle
+	 * @param int $parentCommentId
 	 * @return array
 	 */
-	static public function doAfterPost( Status $status, $article, $parentId = 0 ) {
+	static public function doAfterPost( Status $status, $article, Title $parentPageTitle, int $parentCommentId = 0 ) {
 		Hooks::run( 'ArticleCommentAfterPost', [ $status, &$article ] );
 		$commentId = $article->getId();
 		$error = false;
 		$id = 0;
 
 		switch( $status->value ) {
-			case EditPage::AS_SUCCESS_UPDATE:
 			case EditPage::AS_SUCCESS_NEW_ARTICLE:
+				self::addCommentMapping( $article->getID(), $parentPageTitle->getArticleID(), $parentCommentId ); // SUS-3433
+			case EditPage::AS_SUCCESS_UPDATE:
 				$comment = ArticleComment::newFromArticle( $article );
 				$app = F::app();
 
@@ -1149,7 +1152,7 @@ class ArticleComment {
 					'commentContent' => $comment->getText(),
 					'commentId' => $commentId,
 					'rowClass' => '',
-					'level' => ( $parentId ) ? 2 : 1
+					'level' => ( $parentCommentId ) ? 2 : 1
 				];
 				$text = $app->getView( 'ArticleComments', $viewName, $parameters )->render();
 
@@ -1718,5 +1721,25 @@ class ArticleComment {
 		} else {
 			return ( $user->isAllowedAll( 'commentcreate', 'edit' ) && ArticleCommentInit::ArticleCommentCheckTitle( $title ) );
 		}
+	}
+
+	/**
+	 * Saves a mapping between an article an a comment
+	 *
+	 * @param $commentId int page_id of the comment
+	 * @param $articleId int page_id of the parent article
+	 * @param $parentCommentId int page_id of the parent comment, if it exists
+	 */
+	static function addCommentMapping( int $commentId, int $articleId, int $parentCommentId ) {
+		$db = wfGetDB( DB_MASTER );
+		$db->insert( 'article_comments',
+			['comment_id' => $commentId, 'article_id' => $articleId, 'parent_comment_id' => $parentCommentId],
+			__METHOD__ );
+	}
+
+	static function isMappedComment( Title $title ) {
+		global $wgArticleCommentsNamespaces;
+		return in_array( MWNamespace::getSubject( $title->getNamespace() ), $wgArticleCommentsNamespaces ) &&
+				strpos($title->getDBkey(), '@comment' ) !== false;
 	}
 }

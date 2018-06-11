@@ -1,5 +1,6 @@
 <?php
 
+use Wikia\Logger\WikiaLogger;
 use Wikia\PageHeader\Button;
 
 class ArticleCommentsHooks {
@@ -37,4 +38,5 @@ class ArticleCommentsHooks {
 	public static function onLoadExtensionSchemaUpdates( DatabaseUpdater $updater ) {
 		$updater->addExtensionTable( 'article_comments', MWInit::getExtensionsDirectory() . '/wikia/ArticleComments/sql/article_comments.sql' );
 	}
+	
 }
