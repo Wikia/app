@@ -59,7 +59,7 @@ class DesignSystemGlobalNavigationModelV2 extends WikiaModel {
 
 	private function getMainNavigation() {
 		if ( $this->isWikiaOrgCommunity() ) {
-			return $this->getLink( self::COMMUNITY_CENTRAL_LABEL, $this->getHref('community-central'), self::COMMUNITY_CENTRAL_TRACKING_LABEL );
+			return [$this->getLink( self::COMMUNITY_CENTRAL_LABEL, $this->getHref('community-central'), self::COMMUNITY_CENTRAL_TRACKING_LABEL )];
 		} else {
 			return array_merge(
 				$this->getFandomLinks(),
@@ -70,7 +70,7 @@ class DesignSystemGlobalNavigationModelV2 extends WikiaModel {
 
 	private function getWikisMenu() {
 		return [
-			'type' => 'group',
+			'type' => 'link-group',
 			'title' => [
 				'type' => 'translatable-text',
 				'key' => 'global-navigation-wikis-header',
@@ -87,7 +87,7 @@ class DesignSystemGlobalNavigationModelV2 extends WikiaModel {
 
 	private function getCreateWiki( string $trackingLabel ) {
 		return [
-			'type' => 'button',
+			'type' => 'link-button',
 			'title' => [
 				'type' => 'translatable-text',
 				'key' => 'global-navigation-create-wiki-link-start-wikia'
@@ -172,6 +172,7 @@ class DesignSystemGlobalNavigationModelV2 extends WikiaModel {
 	private function getAnonUserData() {
 		return [
 			'signin' => [
+				'type' => 'link-authentication',
 				'title' => [
 					'type' => 'translatable-text',
 					'key' => 'global-navigation-anon-sign-in',
@@ -181,6 +182,7 @@ class DesignSystemGlobalNavigationModelV2 extends WikiaModel {
 				'tracking_label' => 'account.sign-in',
 			],
 			'register' => [
+				'type' => 'link-authentication',
 				'title' => [
 					'type' => 'translatable-text',
 					'key' => 'global-navigation-anon-register',
@@ -210,7 +212,7 @@ class DesignSystemGlobalNavigationModelV2 extends WikiaModel {
 		}
 
 		$logOutLink = [
-			'type' => 'logout',
+			'type' => 'link-logout',
 			'href' => $this->getHref( 'user-logout' ),
 			'title' => [
 				'type' => 'translatable-text',
@@ -355,7 +357,7 @@ class DesignSystemGlobalNavigationModelV2 extends WikiaModel {
 
 	private function getLink(string $labelKey, string $href, string $trackingLabel) {
 		return [
-			'type' => 'link',
+			'type' => 'link-text',
 			'title' => [
 				'type' => 'translatable-text',
 				'key' => $labelKey
