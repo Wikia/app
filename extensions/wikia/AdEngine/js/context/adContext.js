@@ -192,6 +192,7 @@ define('ext.wikia.adEngine.adContext', [
 		// New Prebid and CMP
 		context.opts.isNewPrebidEnabled = isEnabled('wgAdDriverNewPrebidCountries');
 		context.opts.isConsentStringEnabled = isEnabled('wgAdDriverConsentStringCountries');
+    context.opts.isCMPEnabled = isEnabled('wgEnableCMPCountries');
 
 		// Krux integration
 		context.targeting.enableKruxTargeting = !!(

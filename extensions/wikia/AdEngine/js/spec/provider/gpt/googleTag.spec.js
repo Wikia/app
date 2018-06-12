@@ -15,7 +15,7 @@ describe('ext.wikia.adEngine.provider.gpt.googleTag', function () {
 			bridge: {
 				slotService: {
 					clearSlot: noop,
-					getBySlotName: noop,
+					get: noop,
 					hasViewportConflict: noop
 				}
 			},

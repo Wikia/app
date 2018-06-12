@@ -60,11 +60,15 @@ class PlacesController extends WikiaController {
 	 * Map center can be specified
 	 */
 	public function renderMarkers() {
+		// SUS-5128 | add Google Maps API key
+		global $wgGoogleMapsKey;
+
 		$this->setVal('markers', $this->prepareMarkers($this->getVal('markers')));
 		$this->setVal('center', $this->getVal('center'));
 		$this->setVal('mapId', 'places-map-' . self::$mapId++);
 		$this->setVal('height', $this->getVal('height', 500));
 		$this->setVal('options', $this->getVal('options', array()));
+		$this->setVal('googleMapsApiKey', $wgGoogleMapsKey);
 	}
 
 	/**

@@ -78,6 +78,10 @@ class ConfigureWikiFactory extends Task {
 			$wikiFactoryVariables['wgMetaNamespace'] = str_replace( [ ':', ' ' ], [ '', '_' ], $siteName );
 		}
 
+		if ( $this->taskContext->isAllAges() ) {
+			$wikiFactoryVariables[ 'wgWikiDirectedAtChildrenByFounder' ] = true;
+		}
+
 		wfGetLBFactory()->sectionsByDB[$dbName] = \F::app()->wg->CreateDatabaseActiveCluster;
 
 		return $wikiFactoryVariables;
@@ -142,6 +146,8 @@ class ConfigureWikiFactory extends Task {
 				);
 			}
 		}
+
+
 
 		$sharedDBW->commit( __METHOD__ ); // commit shared DB changes
 		wfProfileOut( __METHOD__ );

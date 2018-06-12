@@ -227,13 +227,6 @@ $wgAllowExternalImages = false;
 $wgAllowExternalWhitelistImages = true;
 
 /**
- * Enable users to opt in to HTTPS on a wiki.
- * @see extensions/wikia/HTTPSOptIn
- * @var bool $wgAllowHTTPS
- */
-$wgAllowHTTPS = false;
-
-/**
  * Allows to move images and other media files.
  * @var bool $wgAllowImageMoving
  */
@@ -1168,6 +1161,27 @@ $wgCompiledFiles = [];
  * @var bool $wgCompressRevisions
  */
 $wgCompressRevisions = true;
+
+/**
+ * Hardcoded list of data-centers by environment
+ *
+ * Avoid costly HTTP calls on production to Consul agents in data centers like 'poz' or 'fra'
+ *
+ * @see SUS-4805
+ *
+ * @see lib/Wikia/src/Consul/Client.php
+ * @var array $wgConsulDataCenters
+ */
+$wgConsulDataCenters = [
+	'dev' => [
+		'sjc-dev',
+		'poz-dev',
+	],
+	'prod' => [
+		'sjc',
+		'res',
+	],
+];
 
 /**
  * Slack webhook URL for JavaScript Review Tool.
@@ -7770,14 +7784,6 @@ $wgSupportedCloseMyAccountLang = [ 'de', 'en', 'es', 'fr', 'it', 'ja', 'pl',
     'pt', 'pt-br', 'ru', 'zh', 'zh-classical', 'zh-cn', 'zh-hans', 'zh-hant',
     'zh-hk', 'zh-min-nan', 'zh-mo', 'zh-my', 'zh-sg', 'zh-tw', 'zh-yue',
 ];
-
-/**
- * Disable footer spotlights in Oasis.
- * @see extensions/wikia/WDACReview
- * @see extensions/wikia/Spotlights
- * @var bool $wgSuppressSpotlights
- */
-$wgSuppressSpotlights = false;
 
 /**
  * Pick a converter defined in $wgSVGConverters.

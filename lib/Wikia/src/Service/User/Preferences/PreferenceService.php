@@ -43,6 +43,9 @@ class PreferenceService {
 		$this->defaultPreferences = $defaultPrefs;
 		$this->forceSavePrefs = $forceSavePrefs;
 		$this->preferences = [];
+
+		// SUS-5236: anonymous users will always have default preferences
+		$this->preferences[0] = clone $defaultPrefs;
 	}
 
 	public function getPreferences( $userId ) {
@@ -218,9 +221,6 @@ class PreferenceService {
 	 * @throws \Exception
 	 */
 	private function load( $userId ) {
-		if ( $userId == 0 ) {
-			return $this->applyDefaults( new UserPreferences() );
-		}
 
 		if ( !isset( $this->preferences[$userId] ) ) {
 			try {

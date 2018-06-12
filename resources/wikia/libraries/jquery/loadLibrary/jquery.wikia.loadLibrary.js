@@ -82,7 +82,15 @@
 		return mw.loader.using('wikia.handlebars').done(callback);
 	};
 
-	$.loadGoogleMaps = function (callback) {
+	$.loadGoogleMaps = function (key, callback) {
+		// SUS-5128 | the key is optional
+		if (typeof key === 'function') {
+			callback = key;
+			key = undefined;
+		}
+
+		key = key || window.wgGoogleMapsApiKey;
+
 		var dfd = new jQuery.Deferred(),
 			onLoaded = function () {
 				if (typeof callback === 'function') {
@@ -100,11 +108,19 @@
 				onLoaded();
 			};
 
+			// SUS-5128 | track page views where Google Maps API is loaded
+			window.Wikia.Tracker.track({
+				action: Wikia.Tracker.ACTIONS.OPEN,
+				category: 'googlemaps',
+				label: 'apiloaded',
+				trackingMethod: 'analytics'
+			});
+
 			// load GoogleMaps main JS and provide a name of the callback to be called when API is fully initialized
 			$.loadLibrary(
 				'GoogleMaps',
 				[{
-					url: 'https://maps.googleapis.com/maps/api/js?sensor=false&callback=onGoogleMapsLoaded',
+					url: 'https://maps.googleapis.com/maps/api/js?sensor=false&callback=onGoogleMapsLoaded&key=' + (key || ''),
 					type: 'js'
 				}],
 				typeof (window.google && window.google.maps)

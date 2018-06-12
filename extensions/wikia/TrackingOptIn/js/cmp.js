@@ -1,14 +1,28 @@
-define('wikia.consentString', [
+define('wikia.cmp', [
+	'wikia.consentStringLibrary',
 	'wikia.cookies',
+	'wikia.geo',
+	'wikia.instantGlobals',
 	'wikia.log',
-	'wikia.consentStringLibrary'
-], function (cookies, log, consentStringLibrary) {
-	var logGroup = 'wikia.consentString',
+	'wikia.trackingOptIn',
+	'wikia.window'
+], function (
+	consentStringLibrary,
+	cookies,
+	geo,
+	instantGlobals,
+	log,
+	trackingOptIn,
+	win
+) {
+	var isModuleEnabled = geo.isProperGeo(instantGlobals.wgEnableCMPCountries),
+		logGroup = 'wikia.cmp',
 		consentStringCookie = 'consent-string',
 		cookieExpireDays = 604800000, // 7 days in milliseconds
 		purposesList = [1, 2, 3, 4, 5],
 		vendorsList = [
 			10, // Index Exchange, Inc.
+			11, // Quantcast International Limited
 			32, // AppNexus Inc.
 			52, // The Rubicon Project, Limited
 			69, // OpenX Software Ltd. and its affiliates
@@ -74,6 +88,24 @@ define('wikia.consentString', [
 					"featureIds": [
 						2,
 						3
+					]
+				},
+				{
+					"id": 11,
+					"name": "Quantcast International Limited",
+					"policyUrl": "https://www.quantcast.com/privacy/",
+					"purposeIds": [
+					  1
+					],
+					"legIntPurposeIds": [
+					  2,
+					  3,
+					  4,
+					  5
+					],
+					"featureIds": [
+					  1,
+					  2
 					]
 				},
 				{
@@ -147,7 +179,7 @@ define('wikia.consentString', [
 
 		cookie = cookie ? cookie.split('...') : cookie;
 
-		if (cookie && (cookie[0] === "1") === optIn && cookie[1] !== undefined) {
+		if (cookie && (cookie[0] === '1') === optIn && cookie[1] !== undefined) {
 			log('Serving consent string from cookie', log.levels.debug, logGroup);
 
 			return cookie[1];
@@ -173,7 +205,82 @@ define('wikia.consentString', [
 		return consentString;
 	}
 
+	function getGdprApplies() {
+		return trackingOptIn.geoRequiresTrackingConsent();
+	}
+
+	function init(optIn) {
+		log('Initializing module', log.levels.debug, logGroup);
+
+		win.__cmp = function __cmp(command, parameter, callback) {
+			var iabConsentData = getConsentString(optIn),
+				gdprApplies = getGdprApplies(),
+				success,
+				ret;
+
+			switch (true) {
+				case (command === 'getConsentData'):
+					ret = {
+						consentData: iabConsentData,
+						gdprApplies: gdprApplies
+					};
+					success = true;
+					break;
+				case (command === 'getVendorConsents'):
+					ret = {
+						metadata: iabConsentData,
+						gdprApplies: gdprApplies
+					};
+					success = true;
+					break;
+				default:
+					log('Unknown command ' + command, log.levels.debug, logGroup);
+					ret = {};
+					success = false;
+			}
+
+			log(
+				[
+					'__cmp call',
+					'command: ' + command,
+					'parameter: ' + parameter,
+					'return object: ' + JSON.stringify(ret),
+					'success: ' + success
+				],
+				log.levels.debug,
+				logGroup
+			);
+
+			callback(ret, success);
+		};
+	}
+
+	if (isModuleEnabled) {
+		win.__cmp = function __cmp(command, version, callback) {
+			log(['__cmp call', 'CMP module is not initialized'], log.levels.debug, logGroup);
+			callback({}, false);
+		};
+		win.addEventListener('message', function (event) {
+			try {
+				var call = event.data.__cmpCall;
+
+				if (call) {
+					win.__cmp(call.command, call.parameter, function(retValue, success) {
+						var returnMsg = {
+							__cmpReturn: {
+								returnValue: retValue, success: success, callId: call.callId
+							}
+						};
+						event.source.postMessage(returnMsg, '*');
+					});
+				}
+			} catch (e) {} // do nothing
+		});
+		trackingOptIn.pushToUserConsentQueue(init);
+	}
+
 	return {
-		getConsentString: getConsentString
+		getConsentString: getConsentString,
+		getGdprApplies: getGdprApplies
 	};
 });

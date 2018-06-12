@@ -690,6 +690,7 @@ $messages['de'] = array(
 	'or_learn' => 'Um mehr zu erfahren,',
 	'other_people' => 'Andere Benutzer haben dies hier gesucht...',
 	'opensearch-desc' => '{{SITENAME}} ({{CONTENTLANGUAGE}})',
+	'original-file' => 'Original-Datei',
 );
 
 $messages['de-weigsbrag'] = array(
@@ -807,7 +808,8 @@ $messages['es'] = array(
 	'or_learn' => 'O para aprender más, mira',
 	'other_people' => 'Otras personas han estado buscando por...',
 	'opensearch-desc' => '{{SITENAME}} ({{CONTENTLANGUAGE}})',
-	'oasis-mobile-site' => 'Mobile site',
+	'oasis-mobile-site' => 'Sitio móvil',
+	'original-file' => 'archivo original',
 );
 
 $messages['et'] = array(
@@ -928,9 +930,10 @@ $messages['fr'] = array(
 	'oasis-mobile-site' => 'Site mobile',
 	'old_skins' => 'Anciens habillages',
 	'opensearch-desc' => '{{SITENAME}} ({{CONTENTLANGUAGE}})',
-	'or' => 'or',
-	'other_people' => 'Other people have been searching for...',
-	'or_learn' => 'Or to learn more, take the ',
+	'or' => 'ou',
+	'other_people' => "D'autres personnes ont recherché...",
+	'or_learn' => 'Ou pour en savoir plus, prenez le',
+	'original-file' => 'fichier d’origine',
 );
 
 $messages['frc'] = array(
@@ -1379,6 +1382,7 @@ $messages['it'] = array(
 	'or' => 'or',
 	'other_people' => 'Other people have been searching for...',
 	'or_learn' => 'Or to learn more, take the ',
+	'original-file' => 'file originale',
 );
 
 $messages['iu'] = array(
@@ -1411,6 +1415,7 @@ $messages['ja'] = array(
 	'opensearch-desc' => '{{SITENAME}} ({{CONTENTLANGUAGE}})',
 	'or' => 'or',
 	'oasis-mobile-site' => 'Mobile site',
+	'original-file' => '元のファイル',
 );
 
 $messages['jam'] = array(
@@ -2509,11 +2514,12 @@ $messages['pt'] = array(
 	'othercontribs' => 'Baseado no trabalho de $1.',
 	'others' => 'outros',
 	'opensearch-desc' => '{{SITENAME}} ({{CONTENTLANGUAGE}})',
-	'old_skins' => 'Old skins',
+	'old_skins' => 'Skins antigas',
 	'or' => 'ou',
-	'other_people' => 'Other people have been searching for...',
-	'or_learn' => 'Or to learn more, take the ',
+	'other_people' => 'Outras pessoas têm procurado por...',
+	'or_learn' => 'Ou para obter mais informações, vá em ',
 	'oasis-mobile-site' => 'Site móvel',
+	'original-file' => 'arquivo original',
 );
 
 $messages['qu'] = array(
@@ -2616,11 +2622,12 @@ $messages['ru'] = array(
 	'othercontribs' => 'В создании приняли участие: $1.',
 	'others' => 'другие',
 	'opensearch-desc' => '{{SITENAME}} ({{CONTENTLANGUAGE}})',
-	'old_skins' => 'Old skins',
-	'or' => 'or',
-	'other_people' => 'Other people have been searching for...',
-	'or_learn' => 'Or to learn more, take the ',
+	'old_skins' => 'Старые скины',
+	'or' => 'или',
+	'other_people' => 'Другие люди искали...',
+	'or_learn' => 'Или чтобы узнать больше, ',
 	'oasis-mobile-site' => 'Mobile site',
+	'original-file' => 'исходный файл',
 );
 
 $messages['rue'] = array(
@@ -3500,10 +3507,11 @@ $messages['zh-hans'] = array(
 	'others' => '其他',
 	'oasis-mobile-site' => '手机版网页',
 	'opensearch-desc' => '{{SITENAME}} ({{CONTENTLANGUAGE}})',
-	'old_skins' => 'Old skins',
-	'or' => 'or',
-	'other_people' => 'Other people have been searching for...',
-	'or_learn' => 'Or to learn more, take the ',
+	'old_skins' => '旧皮肤',
+	'or' => '或',
+	'other_people' => '其他人在查找...',
+	'or_learn' => '想要了解更多，请前往',
+	'original-file' => '原始文件',
 );
 
 $messages['zh-hant'] = array(
@@ -3523,6 +3531,7 @@ $messages['zh-hant'] = array(
 	'or' => 'or',
 	'other_people' => 'Other people have been searching for...',
 	'or_learn' => 'Or to learn more, take the ',
+	'original-file' => '原始檔案',
 );
 
 $messages['zu'] = array(

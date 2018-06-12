@@ -125,13 +125,8 @@ class Client {
 	 * @return string[]
 	 */
 	function getDataCentersForEnv( string $env ) {
-		return array_values(array_filter(
-			// e.g. poz, sjc-dev, res
-			$this->catalog->datacenters()->json(),
-			function( $dc ) use ( $env ) {
-				return $env === 'dev' ? endsWith($dc, '-dev') : !endsWith($dc, '-dev');
-			}
-		));
+		global $wgConsulDataCenters;
+		return $wgConsulDataCenters[$env];
 	}
 
 	static function getConsulBaseUrlForDC( string $dc ) : string {
