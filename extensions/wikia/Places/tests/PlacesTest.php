@@ -46,19 +46,25 @@ class PlacesTest extends WikiaBaseTest {
 	}
 
 	function testPlaceFromAttributes() {
+		$this->mockGlobalVariable('wgGoogleMapsKey', 'GOOGLE_API_KEY');
+
 		$resp = $this->app->sendRequest('Places', 'placeFromAttributes', array('attributes' => $this->attribs));
 		$html = $resp->toString();
 
-		$this->assertContains('<img class="thumbimage" src="http://maps.googleapis.com/maps/api/staticmap', $html);
+		$this->assertContains('<img class="thumbimage" src="//maps.googleapis.com/maps/api/staticmap', $html);
+		$this->assertContains('key=GOOGLE_API_KEY', $html);
 		$this->assertContains('<meta itemprop="latitude" content="52.406878">', $html);
 		$this->assertContains('<meta itemprop="longitude" content="16.922124">', $html);
 	}
 
 	function testPlaceFromModel() {
+		$this->mockGlobalVariable('wgGoogleMapsKey', 'GOOGLE_API_KEY');
+
 		$resp = $this->app->sendRequest('Places', 'placeFromModel', array('model' => $this->model));
 		$html = $resp->toString();
 
-		$this->assertContains('<img class="thumbimage" src="http://maps.googleapis.com/maps/api/staticmap', $html);
+		$this->assertContains('<img class="thumbimage" src="//maps.googleapis.com/maps/api/staticmap', $html);
+		$this->assertContains('key=GOOGLE_API_KEY', $html);
 		$this->assertContains('<meta itemprop="latitude" content="52.406878">', $html);
 		$this->assertContains('<meta itemprop="longitude" content="16.922124">', $html);
 	}

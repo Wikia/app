@@ -2,10 +2,7 @@
 
 namespace Wikia\ContentReview;
 
-use Wikia\ContentReview\Models\ReviewModel;
-
 class Hooks {
-	const CONTENT_REVIEW_MONOBOOK_DROPDOWN_ACTION = 'content-review';
 
 	public static function register() {
 		$hooks = new self();
@@ -14,7 +11,6 @@ class Hooks {
 		\Hooks::register( 'BeforePageDisplay', [ $hooks, 'onBeforePageDisplay' ] );
 		\Hooks::register( 'ArticleContentOnDiff', [ $hooks, 'onArticleContentOnDiff' ] );
 		\Hooks::register( 'RawPageViewBeforeOutput', [ $hooks, 'onRawPageViewBeforeOutput' ] );
-		\Hooks::register( 'SkinTemplateNavigation', [ $hooks, 'onSkinTemplateNavigation' ] );
 		\Hooks::register( 'UserLogoutComplete', [ $hooks, 'onUserLogoutComplete' ] );
 		\Hooks::register( 'ArticleSaveComplete', [ $hooks, 'onArticleSaveComplete' ] );
 		\Hooks::register( 'ArticleDeleteComplete', [ $hooks, 'onArticleDeleteComplete' ] );
@@ -56,12 +52,6 @@ class Hooks {
 		if ( $helper->isContentReviewTestModeEnabled() || $helper->userCanEditJsPage( $title, $user ) ) {
 			\Wikia::addAssetsToOutput( 'content_review_test_mode_js' );
 			\JSMessages::enqueuePackage( 'ContentReviewTestMode', \JSMessages::EXTERNAL );
-		}
-
-		/* Add Content Review Module assets for Monobook  */
-		if ( $helper->userCanEditJsPage( $title, $user ) ) {
-			\Wikia::addAssetsToOutput('content_review_module_monobook_js');
-			\Wikia::addAssetsToOutput('content_review_module_monobook_scss');
 		}
 
 		return true;
@@ -109,41 +99,6 @@ class Hooks {
 
 		$helper = new Helper();
 		$text = $helper->replaceWithLastApproved( $title, $rawAction->getContentType(), $text );
-		return true;
-	}
-
-	/*
-	 * Adds review status item to top nav tabs in Monobook skin.
-	 * This is an entrypoint for checking review status and submitting changes for review/
-	 * This is attached to the MediaWiki 'SkinTemplateNavigation' hook.
-	 * @param SkinTemplate $skin Object of specific skin class that extends SkinTemplate
-	 * @param array $links Navigation links
-	 * @return bool true
-	 */
-	public function onSkinTemplateNavigation( \SkinTemplate $skin, &$links ) {
-		global $wgCityId;
-
-		$title = $skin->getTitle();
-		$user = $skin->getContext()->getUser();
-
-		if ( !in_array( $skin->getSkinName(), [ 'monobook', 'uncyclopedia' ] )
-			|| !( new Helper() )->userCanEditJsPage( $title, $user ) )
-		{
-			return true;
-		}
-
-		$latestRevisionId = $title->getLatestRevID();
-		$revisionModel = new ReviewModel();
-		$revisionInfo = $revisionModel->getRevisionInfo( $wgCityId, $title->getArticleID(), $latestRevisionId );
-		$latestStatusName = $revisionModel->getStatusName( $revisionInfo['status'], $latestRevisionId );
-
-		/* Add link to nav tabs customized with status class name */
-		$links['views'][self::CONTENT_REVIEW_MONOBOOK_DROPDOWN_ACTION] = [
-			'href' => '#',
-			'text' => wfMessage( 'content-review-status-link-text' )->escaped(),
-			'class' => 'content-review-status ' . 'content-review-cactions-status-' . $latestStatusName,
-		];
-
 		return true;
 	}
 

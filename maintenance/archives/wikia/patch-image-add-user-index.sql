@@ -1,1 +1,1 @@
-ALTER TABLE image ADD INDEX img_user (oi_user);
+ALTER TABLE image ADD INDEX img_user (img_user);

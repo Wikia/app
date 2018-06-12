@@ -189,12 +189,6 @@ if ( !empty( $maintClass ) && $maintClass == 'RebuildLocalisationCache' ) {
 require_once "$IP/includes/GlobalFunctions.php";
 require_once "$IP/includes/wikia/GlobalFunctions.php";
 
-/**
- * Launch the profiler.
- */
-if( !function_exists( 'wfProfileIn' ) ) {
-    require_once "$IP/StartProfiler.php";
-}
 
 /**
  * Manipulate IEUrlExtension::areServerVarsBad() to work well with our Apache
@@ -276,36 +270,19 @@ require "$IP/lib/Wikia/src/Service/User/Permissions/data/PermissionsDefinesBefor
  * Apply WikiFactory settings.
  */
 try { 
-    /**
-     * Default skin, for new users and anonymous visitors. Registered users may
-     * change this to any one of the other available skins in their preferences.
-     * This has to be completely lowercase; see the "skins" directory for the
-     * list of available skins.
-     */
-    $wgDefaultSkinBeforeWF = 'oasis';
-    $wgDefaultSkin = null;
-    
     $oWiki = new WikiFactoryLoader( $_SERVER, $_ENV, $wgWikiFactoryDomains );
     $result = $oWiki->execute();
-    
+
     if ( !$result ) {
-        // shouldn't we throw an exception here?
-        exit( 1 );
+        // wiki does not exist, is a redirect etc. — WikiFactoryLoader has already handled the case internally
+		// we can stop processing the request here
+        exit( 0 );
     }
-    
+
     $wgCityId = $result;
 
     // we do not need the loader and the result in the global scope.
     unset( $oWiki, $result );
-    
-    /**
-     * WikiFactory is supposed to assign some value to $wgDefaultSkin, a
-     * per-wiki setting. If it fails and at this point $wgDefaultSkin is still
-     * null, we use the cached value from $wgDefaultSkinBeforeWF.
-     */
-    if ( is_null( $wgDefaultSkin ) ) {
-        $wgDefaultSkin = $wgDefaultSkinBeforeWF;
-    }
 } catch ( InvalidArgumentException $invalidArgumentException ) {
 	echo $invalidArgumentException->getMessage() . PHP_EOL;
 	exit( 1 );
@@ -360,6 +337,16 @@ if ( $wgDevelEnvironment ) {
         require_once( $wgDevBoxSettings );
     }
     unset( $wgDevBoxSettings );
+}
+
+// No profiler configuration has been supplied but profiling has been explicitly requested
+if ( !empty( $_GET['forceprofile'] ) && Profiler::instance() instanceof ProfilerStub ) {
+	Profiler::replaceStubInstance( new ProfilerXhprof( [
+		'flags' => TIDEWAYS_FLAGS_NO_BUILTINS | TIDEWAYS_FLAGS_CPU,
+		'threshold' => $wgProfileLimit,
+		'output' => [ 'text' ],
+		'visible' => isset( $_GET['showprofile'] ),
+	] ) );
 }
 
 require_once "$IP/includes/wikia/Extensions.php";

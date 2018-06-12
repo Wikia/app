@@ -36,7 +36,6 @@ class ExternalStoreDB {
 
 		if ( !in_array( "DB://" . $cluster, (array)$wgDefaultExternalStore ) ) {
 			wfDebug( "read only external store" );
-			$lb->allowLagged(true);
 		} else {
 			wfDebug( "writable external store" );
 		}

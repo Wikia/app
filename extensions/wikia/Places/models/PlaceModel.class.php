@@ -188,23 +188,28 @@ class PlaceModel {
 		return implode( '|', $this->categories );
 	}
 
-	public function getStaticMapUrl(){
+	/**
+	 * @see https://developers.google.com/maps/documentation/maps-static/intro
+	 *
+	 * @return string
+	 */
+	public function getStaticMapUrl() : string {
+		global $wgGoogleMapsKey;
 		$latLon = implode( ',', $this->getLatLon() );
 
 		// use SASS button color for marker
 		$colors = SassUtil::getOasisSettings();
 		$markerColor = '0x' . ltrim($colors['color-buttons'], '#');
 
-		$aParams = array(
+		$aParams = [
 			'center' => $latLon,
 			'markers' => "color:{$markerColor}|{$latLon}",
 			'size' => $this->getWidth().'x'.$this->getHeight(),
 			'zoom' => $this->getZoom(),
-			'maptype' => 'roadmap',
-			'sensor' => 'false',
-		);
+			'key' => $wgGoogleMapsKey,
+		];
 		$sParams = http_build_query( $aParams );
-		return 'http://maps.googleapis.com/maps/api/staticmap?'.$sParams;
+		return '//maps.googleapis.com/maps/api/staticmap?'.$sParams;
 	}
 
 	/**

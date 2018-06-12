@@ -67,7 +67,6 @@ class ConfigureWikiFactory extends Task {
 			'wgUploadDirectory' => $imagesDir,
 			'wgLocalInterwiki' => $siteName,
 			'wgLanguageCode' => $language,
-			'wgServer' => rtrim( $url, "/" ),
 			'wgEnableSectionEdit' => true,
 			'wgOasisLoadCommonCSS' => true,
 			'wgEnablePortableInfoboxEuropaTheme' => true
@@ -77,6 +76,10 @@ class ConfigureWikiFactory extends Task {
 		// Set wgMetaNamespace
 		if ( mb_strpos( $siteName, ':' ) !== false ) {
 			$wikiFactoryVariables['wgMetaNamespace'] = str_replace( [ ':', ' ' ], [ '', '_' ], $siteName );
+		}
+
+		if ( $this->taskContext->isAllAges() ) {
+			$wikiFactoryVariables[ 'wgWikiDirectedAtChildrenByFounder' ] = true;
 		}
 
 		wfGetLBFactory()->sectionsByDB[$dbName] = \F::app()->wg->CreateDatabaseActiveCluster;
@@ -143,6 +146,8 @@ class ConfigureWikiFactory extends Task {
 				);
 			}
 		}
+
+
 
 		$sharedDBW->commit( __METHOD__ ); // commit shared DB changes
 		wfProfileOut( __METHOD__ );

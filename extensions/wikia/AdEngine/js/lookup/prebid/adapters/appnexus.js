@@ -49,8 +49,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.appnexus',[
 				},
 				MOBILE_IN_CONTENT: {
 					sizes: [
-						[300, 250],
-						[320, 480]
+						[300, 250]
 					]
 				},
 				BOTTOM_LEADERBOARD: {
@@ -66,8 +65,8 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.appnexus',[
 		return adContext.get('bidders.appnexus');
 	}
 
-	function prepareAdUnit(slotName, config, skin, isRecovering) {
-		var placementId = appnexusPlacements.getPlacement(skin, config.position, isRecovering);
+	function prepareAdUnit(slotName, config, skin) {
+		var placementId = appnexusPlacements.getPlacement(skin, config.position);
 
 		if (!placementId) {
 			return;

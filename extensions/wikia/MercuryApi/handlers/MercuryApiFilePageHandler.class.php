@@ -11,7 +11,10 @@ class MercuryApiFilePageHandler {
 
 		$details = WikiaFileHelper::getMediaDetail( $title );
 		$mediaObject = ArticleAsJson::createMediaObject( $details, $title->getText() );
-		if ( $mediaObject['isOgg'] === false ) {
+
+		// width is set only for images and videos so if file page is about .pdf, .odt, .ogg or other type of file
+		// we don't need to generate srcset or thumbnail url
+		if ( isset( $mediaObject['width'] ) && is_int( $mediaObject['width'] ) ) {
 			$mediaObject['srcset'] = ArticleAsJson::getSrcset( $mediaObject['url'], $mediaObject['width'] );
 			$mediaObject['thumbnailUrl'] = ArticleAsJson::getThumbnailUrlForWidth( $mediaObject['url'], 340 );
 		}

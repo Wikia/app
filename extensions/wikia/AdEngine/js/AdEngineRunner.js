@@ -8,13 +8,12 @@ define('ext.wikia.adEngine.adEngineRunner', [
 	'wikia.window',
 	require.optional('ext.wikia.adEngine.lookup.a9'),
 	require.optional('ext.wikia.adEngine.lookup.prebid'),
-	require.optional('ext.wikia.aRecoveryEngine.adBlockRecovery'),
 	require.optional('wikia.articleVideo.featuredVideo.lagger')
-], function (adContext, adEngine, adTracker, instantGlobals, log, win, a9, prebid, adBlockRecovery, fvLagger) {
+], function (adContext, adEngine, adTracker, instantGlobals, log, win, a9, prebid, fvLagger) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.adEngineRunner',
-		supportedModules = [a9, prebid, adBlockRecovery, fvLagger],
+		supportedModules = [a9, prebid, fvLagger],
 		timeout = getTimeout();
 
 	function getDisplayAdTimeout() {

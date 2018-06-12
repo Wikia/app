@@ -16,20 +16,6 @@ class MercuryApi {
 	 */
 	private $users = [];
 
-	/**
-	 * @desc Fetch Article comments count
-	 *
-	 * @param Title $title - Article title
-	 *
-	 * @return integer
-	 */
-	public function articleCommentsCount( Title $title ) {
-		$articleCommentList = new ArticleCommentList();
-		$articleCommentList->setTitle( $title );
-
-		return $articleCommentList->getCountAll();
-	}
-
 	public static function getTopContributorsKey( $articleId, $limit ) {
 		return wfMemcKey( __CLASS__, __METHOD__, $articleId, $limit );
 	}
@@ -198,26 +184,31 @@ class MercuryApi {
 	public function processArticleComments( Array $commentsData ) {
 		$this->clearUsers();
 		$comments = [];
-		foreach ( $commentsData['commentListRaw'] as $pageId => $commentData ) {
+		foreach ( $commentsData as $pageId => $commentData ) {
 			$item = null;
-			foreach ( $commentData as $level => $commentBody ) {
-				if ( $level === 'level1' ) {
-					$comment = $this->getComment( $pageId );
-					if ( $comment ) {
-						$item = $comment;
-					}
+
+			if ( isset( $commentData['level1'] ) && $this->isValidComment( $commentData['level1'] ) ) {
+				$comment = $this->getComment( $commentData['level1'] );
+				if ( $comment ) {
+					$item = $comment;
 				}
-				if ( $level === 'level2' && !empty( $item ) ) {
-					$item['comments'] = [];
-					foreach ( array_keys( $commentBody ) as $articleId ) {
-						$comment = $this->getComment( $articleId );
+			}
+
+			if ( $item && !empty( $commentData['level2'] ) ) {
+				$item['comments'] = [];
+				foreach ( $commentData['level2'] as $articleId => $articleCommentReply ) {
+					if ( $this->isValidComment( $articleCommentReply ) ) {
+						$comment = $this->getComment( $articleCommentReply );
 						if ( $comment ) {
 							$item['comments'][] = $comment;
 						}
 					}
 				}
 			}
-			$comments[] = $item;
+
+			if ( $item ) {
+				$comments[] = $item;
+			}
 		}
 
 		return [
@@ -227,49 +218,51 @@ class MercuryApi {
 	}
 
 	/**
-	 * Generate comment item object from comment article id
+	 * Generate comment item object from raw article comment
 	 *
-	 * @param integer $articleId
-	 *
+	 * @param ArticleComment $articleComment
 	 * @return null|mixed
+	 * @throws MWException
 	 */
-	private function getComment( $articleId ) {
-		$articleComment = ArticleComment::newFromId( $articleId );
-		if ( !( $articleComment instanceof ArticleComment ) ) {
-			return null;
-		}
-		$commentData = $articleComment->getData();
-		// According to `extensions/wikia/ArticleComments/classes/ArticleComment.class.php:179`
-		// no revision data means that the comment should be ignored
-		if ( $commentData === false ) {
+	private function getComment( ArticleComment $articleComment ) {
+		$success = $articleComment->load();
+
+		if ( !$success ) {
 			return null;
 		}
 
 		return [
-			'id' => $commentData['id'],
+			'id' => $articleComment->getTitle()->getArticleID(),
 			'text' => $articleComment->getText(),
-			'created' => (int) wfTimestamp( TS_UNIX, $commentData['rawmwtimestamp'] ),
-			'userName' => $this->addUser( $commentData ),
+			'created' => (int) wfTimestamp( TS_UNIX, $articleComment->mFirstRevision->getTimestamp() ),
+			'userName' => $this->addUser( $articleComment->mUser ),
 		];
+	}
+
+	/**
+	 * @param $what
+	 * @return bool
+	 */
+	private function isValidComment( $what ): bool {
+		return is_object( $what ) && $what instanceof ArticleComment;
 	}
 
 	/**
 	 * Add user to aggregated user array
 	 *
-	 * @param array $commentData - ArticleComment Data
-	 *
+	 * @param User $user
 	 * @return string userName
 	 */
-	private function addUser( Array $commentData ) {
-		$userName = trim( $commentData['author']->mName );
+	private function addUser( User $user  ) {
+		$userName = trim( $user->getName() );
 		if ( !isset( $this->users[$userName] ) ) {
 			$this->users[$userName] = [
-				'id' => (int) $commentData['author']->mId,
+				'id' => (int) $user->getId(),
 				'avatar' => AvatarService::getAvatarUrl(
-					$commentData['author']->mName,
+					$userName,
 					AvatarService::AVATAR_SIZE_MEDIUM
 				),
-				'url' => $commentData['userurl']
+				'url' => AvatarService::getUrl( $userName ),
 			];
 		}
 

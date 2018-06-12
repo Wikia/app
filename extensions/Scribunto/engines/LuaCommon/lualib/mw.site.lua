@@ -11,6 +11,7 @@ function site.setupInterface( info )
 	site.scriptPath = info.scriptPath
 	site.stylePath = info.stylePath
 	site.currentVersion = info.currentVersion
+	site.sassParams = info.sassParams
 	site.stats = {
 		pagesInCategory = php.pagesInCategory,
 		pagesInNamespace = php.pagesInNamespace,

@@ -2,7 +2,7 @@
 describe('ext.wikia.adEngine.wrappers.prebid', function () {
 	'use strict';
 
-	function noop () {}
+	function noop() {}
 
 	var mocks = {
 			adContext: {
@@ -24,6 +24,9 @@ describe('ext.wikia.adEngine.wrappers.prebid', function () {
 						push: noop
 					},
 					setConfig: noop,
+					getAllPrebidWinningBids: function () {
+						return [];
+					},
 					getBidResponses: function () {
 						return {
 							"TOP_RIGHT_BOXAD": {

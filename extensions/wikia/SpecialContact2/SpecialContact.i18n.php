@@ -552,23 +552,34 @@ Falls du denkst, dass der Inhalt gegen unsere Nutzungsbedingungen verstößt, ka
 	'specialcontact-label-bad-ad-url' => 'Wenn möglich gib bitte die URL an, auf die die Anzeige verlinkt. Wie du diesen Link finden kannst, erfährst du auf dieser [[w:c:de:Hilfe:Unerwünschte_Werbung|Hilfeseite]].',
 	'specialcontact-desc' => 'FANDOMs Kontaktformular [[Special:Contact|Spezial:Kontakt]]',
 	'specialcontact-label-bad-ad-help-page' => 'Hilfe:Unerwünschte_Werbung',
-	'specialcontact-label-forget-account-username-on-behalf' => 'Benutzername der Person, in deren Namen Du diese Anfrage stellst*',
+	'specialcontact-label-forget-account-username-on-behalf' => 'Benutzername der Person, in deren Namen du diese Anfrage stellst*',
 	'specialcontact-label-forget-account-is-on-behalf' => 'Stellst du diesen Antrag in deinem eigenen Namen?*',
 	'specialcontact-label-forget-account-confirm' => 'Konto bei Wikia, Inc. löschen',
-	'specialcontact-label-forget-account-data-deletion-info' => 'Sobald der Antrag auf Löschung bearbeitet wurde, kann die Datenentfernung nicht mehr rückgängig gemacht werden und dein Konto bei Wikia, Inc. kann nicht mehr wiederhergestellt werden.',
-	'specialcontact-label-forget-account-email-address' => 'Kontakt-E-Mail-Adresse*',
-	'specialcontact-seclink-forget-account' => 'Mein Konto bei Wikia, Inc. löschen',
-	'specialcontact-sectitle-forget-account' => 'Antrag auf Löschung',
+	'specialcontact-label-forget-account-data-deletion-info' => 'Sobald der Antrag auf Vergessenwerden bearbeitet wurde, kann die Datenlöschung nicht mehr rückgängig gemacht werden und dein Konto bei Wikia, Inc. kann nicht wiederhergestellt werden.',
+	'specialcontact-label-forget-account-email-address' => 'E-Mail-Adresse*',
+	'specialcontact-seclink-forget-account' => 'Wikia, Inc. soll meine Daten vergessen',
+	'specialcontact-sectitle-forget-account' => 'Antrag auf Vergessenwerden',
 	'specialcontact-label-forget-account-previous-request' => 'Hast du bei uns schon einmal einen Antrag auf Löschung von persönlichen Daten gestellt?',
 	'specialcontact-label-forget-account-processing-consent' => 'Ich verstehe, dass Wikia, Inc. diese Anfrage nur bearbeiten kann, wenn die angegebenen Daten korrekt sind.*',
-	'specialcontact-label-forget-account-data-processing-info' => 'Wikia, Inc. verwendet die uns in diesem Formular zur Verfügung gestellten persönlichen Daten und alle anderen damit in Verbindung stehenden persönlichen Daten, die du uns im Rahmen unseres Schriftverkehrs überlassen hast, zur Bearbeitung deiner Anfrage und zur Erfüllung unserer rechtlichen Verpflichtungen. Wir können Details deiner Anfrage an die Datenschutzbehörden weitergeben, aber nur dann, wenn wir dazu verpflichtet sind, z. B. wenn diese Details erforderlich sind, um eine von uns getroffene Entscheidung zu untersuchen. Wir behalten eine Kopie dieses Antrags, um unserer gesetzlichen Verpflichtung zur Datenverarbeitung nachzukommen.',
+	'specialcontact-label-forget-account-data-processing-info' => 'Wikia, Inc. verwendet die in diesem Formular zur Verfügung gestellten persönlichen Daten und alle anderen damit in Verbindung stehenden persönlichen Daten, die du uns im Rahmen unseres Schriftverkehrs überlassen hast, zur Bearbeitung deiner Anfrage und zur Erfüllung unserer rechtlichen Verpflichtungen. Wir können Details deiner Anfrage an die Datenschutzbehörden weitergeben, aber nur dann, wenn wir dazu verpflichtet sind, z. B. wenn diese Details erforderlich sind, um eine von uns getroffene Entscheidung zu untersuchen. Wir behalten eine Kopie dieses Antrags, um unserer gesetzlichen Verpflichtung zur Datenverarbeitung nachzukommen.',
 	'specialcontact-label-forget-account-confirm-checkbox' => 'Ich habe diese Erklärung gelesen und verstanden.*',
 	'specialcontact-label-forget-account-data-required-explanation' => '* Erforderlich',
 	'specialcontact-title-forget-account' => 'Deine Daten',
-	'specialcontact-label-forget-account-country-info' => 'Land des Wohnsitzes*',
-	'specialcontact-label-forget-account-relationship' => 'Bitte gib deine Beziehung zu der Person an, in deren Namen du diesen Antrag stellst (z. B. "Elternteil" oder "Erziehungsberechtigter"). Wir können dich um einen Nachweis bitten, dass du berechtigt bist, diesen Antrag in deren Namen zu stellen.*',
+	'specialcontact-label-forget-account-country-info' => 'Land deines Wohnsitzes*',
+	'specialcontact-label-forget-account-relationship' => 'Bitte gib deine Beziehung zu der Person an, in deren Namen du diesen Antrag stellst (z. B. "Elternteil" oder "Erziehungsberechtigter"). Wir können dich um einen Nachweis bitten, dass du berechtigt bist, diesen Antrag stellvertretend zu stellen.*',
 	'specialcontact-label-forget-account-full-name' => 'Vollständiger Name*',
-	'specialcontact-intro-forget-account' => 'Gemäß dem europäischen Datenschutzrecht hast du das Recht, die Löschung deiner persönlichen Daten durch uns zu fordern. Mit diesem Formular hilfst du uns, deine Anfrage zu verstehen und sie korrekt und zeitnah zu bearbeiten.',
+	'specialcontact-intro-forget-account' => 'Gemäß dem europäischen Datenschutzrecht hast du das Recht, die Löschung deiner persönlichen Daten durch uns zu fordern. Indem du dieses Formular ausfüllst, hilfst du uns, deine Anfrage zu verstehen und sie korrekt und zeitnah zu bearbeiten.',
+	'specialcontact-label-data-access-email' => 'Deine aktuelle E-Mail-Adresse',
+	'specialcontact-sectitle-data-access' => 'Eine Kopie meiner Daten anfordern',
+	'specialcontact-seclink-data-access' => 'Ich möchte eine Kopie meiner Daten herunterladen',
+	'specialcontact-label-data-access-username' => 'Dein Benutzername bei FANDOM',
+	'specialcontact-intro-data-access' => 'Die von uns bereitgestellten Daten sind Benutzername, Benutzerkennung, echter Name (falls angegeben), E-Mail-Adresse, Erstellungsdatum des Kontos und ein Link zu einer Liste deiner Beiträge.
+
+Um zu verhindern, dass Personen sich als andere Nutzer ausgeben und an deren Stelle eine betrügerische Datenanfrage senden, müssen wir die Identität jeder Person überprüfen, die Benutzerdaten anfordert.
+
+Um deine Daten von FANDOM herunterzuladen, müssen wir sichergehen, dass du der Kontoinhaber bist und benötigen daher weitere Informationen von dir.
+
+Sobald wir deine Anfrage erhalten haben, senden wir dir eine Bestätigungs-E-Mail. Die E-Mail fordert dich dazu auf, uns eine Kopie deines Ausweises zu schicken, damit wir deine Identität bestätigen können.',
 );
 
 $messages['es'] = array(
@@ -716,7 +727,7 @@ Si prefieres usar un correo electrónico o adjuntar archivos, puedes contactar c
 	'specialcontact-noform-footer' => "'''¿Responde esta página a tu pregunta?''' Si no lo hace, siéntete libre de [[{{#Special:contact/general}}|contactar con nosotros]] para hablar sobre el problema que tienes. Recuerda que siempre puedes revisar nuestras '''[[w:c:comunidad:Ayuda:Contenidos|páginas de ayuda]]''', '''[[w:c:comunidad:Blog:Noticias_de_Fandom|blog del staff]]''' o dejar un mensaje en nuestros '''[[w:c:comunidad:Especial:Foro|foros de ayuda]]'''.",
 	'specialcontact-username' => 'Nombre de usuario',
 	'specialcontact-wikiname' => 'Cual wiki',
-	'specialcontact-realname' => 'Nombre de usuario',
+	'specialcontact-realname' => 'Tu nombre real',
 	'specialcontact-yourmail' => 'Correo electrónico',
 	'specialcontact-problem' => 'Asunto',
 	'specialcontact-problemdesc' => 'Mensaje',
@@ -810,8 +821,8 @@ Si piensas que el contenido viola nuestros Términos de uso, puedes contactarte 
 	'specialcontact-label-forget-account-data-deletion-info' => 'Una vez que la solicitud de eliminación es procesada, la remoción de información no se puede revertir y tu cuenta de Wikia, Inc. no se podrá recuperar.',
 	'specialcontact-label-forget-account-email-address' => 'Correo electrónico de contacto',
 	'specialcontact-seclink-forget-account' => 'Olvidar mi cuenta de Wikia, Inc.',
-	'specialcontact-sectitle-forget-account' => 'Solicitud para ser Olvidado',
-	'specialcontact-label-forget-account-previous-request' => '¿Has hecho previamente una Solicitud de Eliminación de Datos Personales?',
+	'specialcontact-sectitle-forget-account' => 'Solicitud para ser olvidado',
+	'specialcontact-label-forget-account-previous-request' => '¿Has hecho previamente una solicitud de eliminación de datos personales?',
 	'specialcontact-label-forget-account-processing-consent' => 'Entiendo que Wikia, Inc. sólo será capaz de procesar esta solicitud si la información dada es correcta.*',
 	'specialcontact-label-forget-account-data-processing-info' => 'Wikia, Inc. utilizará la información personal proporcionada en este formulario y cualquier otra información personal que nos proporciones en correspondencia relacionada con la misma, con el propósito de procesar tu solicitud y cumplir con nuestras obligaciones legales. Podemos compartir los detalles de tu solicitud con las autoridades de protección de información, pero solo donde se nos exige hacerlo, por ejemplo, donde se requieren estos detalles para investigar una decisión que hemos tomado. Retendremos una copia de esta solicitud para cumplir con nuestra obligación legal de mantener registros de procesamiento de información.',
 	'specialcontact-label-forget-account-confirm-checkbox' => 'He leído y entiendo esta declaración.*',
@@ -821,6 +832,17 @@ Si piensas que el contenido viola nuestros Términos de uso, puedes contactarte 
 	'specialcontact-label-forget-account-relationship' => 'Por favor especifica tu relación con la persona en cuyo nombre estás haciendo esta petición (e.j. "padre" o "tutor"). Es posible que pidamos pruebas para verificar que estás autorizado para hacer esta petición en su nombre.*',
 	'specialcontact-label-forget-account-full-name' => 'Nombre completo*',
 	'specialcontact-intro-forget-account' => 'Bajo la Ley de protección de información europea, puedes tener el derecho a solicitar que tus datos personales sean eliminados por nosotros. Al utilizar este formulario, nos ayudarás a comprender tu solicitud y a actuar de manera adecuada y oportuna.',
+	'specialcontact-label-data-access-email' => 'Tu dirección actual de correo electrónico',
+	'specialcontact-sectitle-data-access' => 'Solicitar una copia de mis datos',
+	'specialcontact-seclink-data-access' => 'Quiero descargar una copia de mis datos',
+	'specialcontact-label-data-access-username' => 'Tu nombre de usuario FANDOM',
+	'specialcontact-intro-data-access' => 'Los datos que entregamos son nombre de usuario, ID de usuario, nombre real (si ha sido entregado), dirección de correo electrónico, fecha de creación de cuenta y un enlace a una lista de tus contribuciones. 
+
+Para evitar solicitudes de datos fraudulentas de personas haciéndose pasar por otros es necesario verificar la identidad de la persona que está solicitando los datos del usuario. 
+
+Para descargar los datos de FANDOM, necesitamos más información para confirmar la titularidad de la cuenta. 
+
+Una vez recibamos tu solicitud, te enviaremos una confirmación por correo electrónico. El correo electrónico incluirá un requisito para que respondas con una copia de tu identificación para que podamos confirmar tu identidad.',
 );
 
 $messages['fa'] = array(
@@ -1289,7 +1311,7 @@ Bonnes contributions !",
 	'specialcontact-sectitle-user-conflict' => 'Interactions avec l’utilisateur',
 	'specialcontact-intro-main-local' => '',
 	'specialcontact-username' => "Votre nom d'utilisateur",
-	'specialcontact-realname' => 'Votre nom',
+	'specialcontact-realname' => 'Votre nom réel',
 	'specialcontact-yourmail' => 'Votre e-mail',
 	'specialcontact-problem' => 'Sujet',
 	'specialcontact-problemdesc' => 'Message',
@@ -1318,6 +1340,17 @@ Bonnes contributions !",
 	'specialcontact-label-forget-account-relationship' => 'Veuillez préciser votre relation vis-à-vis de la personne pour laquelle vous effectuez cette demande (par exemple, "parent" ou "tuteur légal"). Vous devrez peut-être fournir une preuve afin de confirmer que vous êtes autorisé à effectuer la demande en son nom.*',
 	'specialcontact-label-forget-account-full-name' => 'Nom complet*',
 	'specialcontact-intro-forget-account' => "En vertu de la loi européenne sur la protection des données, vous pouvez avoir le droit de demander à ce que nous supprimions vos informations personnelles. Ce formulaire nous permettra de mieux comprendre votre demande afin d'y répondre de façon appropriée et en temps utile.",
+	'specialcontact-label-data-access-email' => 'Votre adresse e-mail de contact actuelle',
+	'specialcontact-sectitle-data-access' => "Demande d'une copie de mes données",
+	'specialcontact-seclink-data-access' => 'Je veux télécharger une copie de mes données',
+	'specialcontact-label-data-access-username' => "Votre nom d'utilisateur FANDOM",
+	'specialcontact-intro-data-access' => "Les données que nous fournissons sont le nom d'utilisateur, l'ID utilisateur, le nom réel (le cas échéant), l'adresse e-mail, la date de création du compte et un lien vers la liste de vos contributions.
+
+Pour éviter les demandes frauduleuses de personnes se faisant passer pour d'autres, nous avons besoin de vérifier l'identité de la personne demandant les données d'utilisateur.
+
+Pour que vous puissiez télécharger vos données de FANDOM, vous devez nous fournir plus d'informations vous concernant afin que nous puissions confirmer que vous êtes titulaire du compte.
+
+Une fois nous aurons reçu votre demande, nous vous enverrons une confirmation par e-mail. Ce message indiquera que vous devez répondre avec une copie de votre pièce d'identité afin que nous puissions confirmer votre identité.",
 );
 
 $messages['it'] = array(
@@ -1522,7 +1555,7 @@ Buone modifiche!",
 	'specialcontact-notyou' => 'Non sei tu?',
 	'specialcontact-problem' => 'Oggetto',
 	'specialcontact-problemdesc' => 'Messaggio',
-	'specialcontact-realname' => 'Il tuo nome',
+	'specialcontact-realname' => 'Il tuo vero nome',
 	'specialcontact-secheader-account' => "Modifiche all'account",
 	'specialcontact-seclink-account-issue' => 'Non riesco ad accedere al mio account',
 	'specialcontact-seclink-adoption' => 'Voglio i diritti di amministrazione per questa wiki',
@@ -1569,6 +1602,17 @@ Buone modifiche!",
 	'specialcontact-label-forget-account-relationship' => 'Si prega di specificare il tuo rapporto con la persona per conto della quale si effettua la richiesta (ad es., "padre" o "tutore legale"). Potremmo chiedere prova per verificare che tu sia autorizzato a fare questa richiesta per suo conto.*',
 	'specialcontact-label-forget-account-full-name' => 'Nome completo*',
 	'specialcontact-intro-forget-account' => 'Sotto la legge europea per la protezione dei dati, hai il diritto di chiedere che i tuoi dati personali vengano eliminati da noi. Utilizzando questo modulo, ci aiuterai a capire la tua richiesta e agire correttamente in sua risposta in tempi utili.',
+	'specialcontact-label-data-access-email' => 'Il tuo attuale indirizzo email di contatto',
+	'specialcontact-sectitle-data-access' => 'Richiedere una copia dei miei dati',
+	'specialcontact-seclink-data-access' => 'Voglio scaricare una copia dei miei dati',
+	'specialcontact-label-data-access-username' => 'Il tuo nome utente di FANDOM',
+	'specialcontact-intro-data-access' => "I dati che forniamo consistono nel nome utente, ID utente, nome reale (se fornito), indirizzo email, data di creazione dell'account e un link alla lista dei tuoi contributi.
+
+Al fine di prevenire richieste fraudolente da parte di chi si impersona come qualcun altro, dobbiamo verificare l'identità della persona che sta richiedendo i dati dell'utente.
+
+Per poter scaricare i tuoi dati da FANDOM, dobbiamo verificare alcune informazioni in modo da confermare che sei il proprietario dell'account.
+
+Ti invieremo l'email con la conferma una volta ricevuta la tua richiesta. Nell'email sarà richiesto di rispondere con una copia della tua identificazione in modo da poter confermare la tua identità.",
 );
 
 $messages['ja'] = array(
@@ -1710,7 +1754,7 @@ FANDOMに問題を報告する時の詳細につきましては、[[w:project:Re
 	'specialcontact-noform-footer' => "'''ご質問にお答えすることができましたでしょうか？'''ご不明な点やお気付きの点がございましたら、[[Special:contact/general|こちらから]]お気軽にお問い合わせください。'''[[w:ja:Help:索引|ヘルプページ]]'''、'''[[w:ja:Blog:ウィキアスタッフブログ|スタッフブログ]]'''、'''[[w:ja:Special:Forum|フォーラム]]''' ([[w:Special:Forum|英語版フォーラム]]) でも情報をお伝えしています。また管理に関するヘルプやアドバイスにつきましても、[[w:ja:Community Central|コミュニティセントラル]]でご案内しておりますので、どうぞご覧ください。",
 	'specialcontact-username' => 'あなたのユーザー名',
 	'specialcontact-wikiname' => 'Wikiの名前',
-	'specialcontact-realname' => '氏名',
+	'specialcontact-realname' => '本名',
 	'specialcontact-yourmail' => 'Eメールアドレス',
 	'specialcontact-problem' => '件名',
 	'specialcontact-problemdesc' => '本文',
@@ -1813,6 +1857,17 @@ FANDOMに問題を報告する時の詳細につきましては、[[w:project:Re
 	'specialcontact-label-forget-account-relationship' => 'このリクエストを代行している相手の方に対するご自身の関係をご記入ください（例：「保護者」、「法定後見人」）。このリクエストを代行する権限があることを確認させていただくために、証明をお願いする場合があります。*',
 	'specialcontact-label-forget-account-full-name' => '氏名*',
 	'specialcontact-intro-forget-account' => '欧州のデータ保護法により、あなたは個人情報の削除をWikia, Inc.にリクエストする権利を有している可能性があります。弊社でリクエストの内容を把握して適時適切に対処できるよう、こちらのフォームをご利用ください。',
+	'specialcontact-label-data-access-email' => '現在の連絡先メールアドレス',
+	'specialcontact-sectitle-data-access' => 'データのコピー作成リクエスト',
+	'specialcontact-seclink-data-access' => '自分のデータのコピーをダウンロードする',
+	'specialcontact-label-data-access-username' => 'FANDOMユーザー名',
+	'specialcontact-intro-data-access' => '弊社が提供するデータは、ユーザー名、ユーザーID、本名（提供されている場合）、メールアドレス、アカウント作成日、ご自分の投稿のリストへのリンクになります。
+
+他人になりすましたデータの不正リクエストを防ぐため、ユーザーデータをリクエストする場合は本人確認が必要になります。
+
+FANDOMからユーザーデータをダウンロードするうえで、アカウントの所有権を確認させていただくため、追加の情報提供をお願いしています。
+
+弊社でリクエストを受け取りましたら、折り返し確認メールをお送りいたします。このメールには、本人確認のためにIDのコピーを添付してご返信いただく必要がある旨が記載されています。',
 );
 
 $messages['ko'] = array(
@@ -2624,7 +2679,7 @@ Miłego edytowania!',
 	'specialcontact-notyou' => 'Nie ty?',
 	'specialcontact-problem' => 'Temat:',
 	'specialcontact-problemdesc' => 'Wiadomość:',
-	'specialcontact-realname' => 'Twoje imię:',
+	'specialcontact-realname' => 'Prawdziwe imię i nazwisko',
 	'specialcontact-secheader-account' => 'Ustawienia konta',
 	'specialcontact-seclink-account-issue' => 'Nie mogę dostać się do swojego konta',
 	'specialcontact-seclink-adoption' => 'Chcę otrzymać uprawnienia administratora tej wiki',
@@ -2669,6 +2724,17 @@ Miłego edytowania!',
 	'specialcontact-label-forget-account-relationship' => 'Proszę określić swój stosunek do osoby, w imieniu której zgłaszasz ten wniosek (np. "rodzic" lub "opiekun prawny"). Możemy poprosić o dowód, by zweryfikować, że są Państwo upoważnieni do złożenia takiego wniosku w ich imieniu.*',
 	'specialcontact-label-forget-account-full-name' => 'Imię i nazwisko*',
 	'specialcontact-intro-forget-account' => 'Zgodnie z europejskim prawem o ochronie danych osobowych masz prawo wnosić, aby twoje dane osobowe zostały przez nas usunięte. Za pomocą tego formularza, pomożesz nam zrozumieć twój wniosek i reagować na niego poprawnie i w odpowiednim czasie.',
+	'specialcontact-label-data-access-email' => 'Twój aktualny kontaktowy adres e-mail',
+	'specialcontact-sectitle-data-access' => 'Złóż wniosek o kopię swoich danych',
+	'specialcontact-seclink-data-access' => 'Chcę pobrać kopię swoich danych',
+	'specialcontact-label-data-access-username' => 'Nazwa użytkownika FANDOMU',
+	'specialcontact-intro-data-access' => 'Dane, które dostarczamy to nazwa użytkownika, identyfikator użytkownika, prawdziwe imię i nazwisko (jeśli zostały podane), adres e-mail, data utworzenia konta i link do listy twoich edycji.
+
+Aby uniknąć fałszywych wniosków o udostępnienie danych od osób podszywających się pod inne osoby, musimy weryfikować tożsamość osoby, która wnioskuje o dan użytkownika.
+
+Aby pobrać twoje dane z FANDOMU, potrzebujemy trochę więcej informacji od ciebie, by potwierdzić własność konta.
+
+Po otrzymaniu zgłoszenia wyślemy ci e-mail z potwierdzeniem. Wiadomość e-mail będzie zawierać wymóg odesłanie zwrotnie odpowiedzi wraz z kopią dowodu tożsamości, abyśmy mogli potwierdzenia twoją tożsamość.',
 );
 
 $messages['pt'] = array(
@@ -2819,7 +2885,7 @@ Se você preferir usar e-mail regular ou tem vários anexos, você pode contatar
 	'specialcontact-noform-footer' => "'''Essa página responde a sua pergunta?''' Se não, fique à vontade para [[Special:contact/general|entrar em contato]] para nos contar mais sobre o seu problema. Lembre-se de que você pode sempre checar as nossas '''[[w:c:comunidade:Ajuda:Conteúdos|páginas de ajuda]]''', [[w:c:comunidadeBlog:Notícias _do_Fandom|blog da equipe]] ou postar nos nossos '''[[w:c:comunidade:Special:Forum|fóruns de ajuda da comunidade]]'''.",
 	'specialcontact-username' => 'Seu nome de usuário',
 	'specialcontact-wikiname' => 'Qual wiki',
-	'specialcontact-realname' => 'Seu nome',
+	'specialcontact-realname' => 'Seu nome verdadeiro',
 	'specialcontact-yourmail' => 'Seu email',
 	'specialcontact-problem' => 'Assunto',
 	'specialcontact-problemdesc' => 'Mensagem',
@@ -2911,7 +2977,7 @@ Navegador/Sistema operacional: ',
 	'specialcontact-label-forget-account-confirm' => 'Excluir conta Wikia, Inc.',
 	'specialcontact-label-forget-account-data-deletion-info' => 'Uma vez que o pedido de exclusão é processado, a remoção de dados não pode ser revertida e sua conta Wikia, Inc. não pode ser recuperada.',
 	'specialcontact-label-forget-account-email-address' => 'Endereço de e-mail de contato*',
-	'specialcontact-seclink-forget-account' => 'Esqueça a minha conta Wikia, Inc.',
+	'specialcontact-seclink-forget-account' => 'Esqueci a minha conta Wikia, Inc.',
 	'specialcontact-sectitle-forget-account' => 'Pedido para ser descartado',
 	'specialcontact-label-forget-account-previous-request' => 'Você já fez um pedido de exclusão de dados pessoais para nós antes?',
 	'specialcontact-label-forget-account-processing-consent' => 'Eu entendo que a Wikia, Inc. só será capaz de processar essa solicitação se as informações prestadas estiverem corretas.*',
@@ -2923,6 +2989,17 @@ Navegador/Sistema operacional: ',
 	'specialcontact-label-forget-account-relationship' => 'Por favor especifique a sua relação com a pessoa para quem você está fazendo essa solicitação (por exemplo, "pai" ou "guardião legal"). Nós poderemos solicitar provas para verificar se você está autorizado a fazer este pedido por essa pessoa.*',
 	'specialcontact-label-forget-account-full-name' => 'Nome completo*',
 	'specialcontact-intro-forget-account' => 'Sob a lei européia de proteção de dados, você pode pedir que façamos a exclusão de sua informação pessoal. Ao usar este formulário, você estará ajudando-nos a compreender seu pedido e a agir corretamente e em tempo útil.',
+	'specialcontact-label-data-access-email' => 'Seu atual endereço de e-mail de contato',
+	'specialcontact-sectitle-data-access' => 'Solicitar uma cópia dos meus dados',
+	'specialcontact-seclink-data-access' => 'Eu quero baixar uma cópia dos meus dados',
+	'specialcontact-label-data-access-username' => 'Seu nome de usuário no FANDOM',
+	'specialcontact-intro-data-access' => 'Os dados que fornecemos são nome de usuário, ID do usuário, nome real (se fornecido), endereço de e-mail, data de criação de conta e um link para uma lista de suas contribuições.
+
+Para evitar solicitações fraudulentas de dados de pessoas passando-se passar por outras, precisamos verificar a identidade da pessoa que está solicitando os dados do usuário.
+
+Para baixar seus dados do FANDOM, precisamos de mais algumas informações para confirmar a titularidade da conta.
+
+ Assim que recebermos o seu pedido, vamos enviar a você um e-mail de confirmação. O e-mail pedirá que você responda com uma cópia da sua identificação, para que nós possamos confirmar sua identidade.',
 );
 
 $messages['ru'] = array(
@@ -3127,7 +3204,7 @@ $messages['ru'] = array(
 	'specialcontact-notyou' => 'Это не вы?',
 	'specialcontact-problem' => 'Тема сообщения',
 	'specialcontact-problemdesc' => 'Текст сообщения',
-	'specialcontact-realname' => 'Ваше имя участника',
+	'specialcontact-realname' => 'Настоящее имя',
 	'specialcontact-secheader-account' => 'Изменения в учётной записи',
 	'specialcontact-seclink-account-issue' => 'Не могу войти в свою учётную запись',
 	'specialcontact-seclink-adoption' => 'Я хочу получить права администратора здесь',
@@ -3158,12 +3235,12 @@ $messages['ru'] = array(
 	'specialcontact-label-bad-ad-help-page' => 'Справка:Плохая_реклама',
 	'specialcontact-label-forget-account-username-on-behalf' => 'Имя участника, от лица которого вы делаете этот запрос*',
 	'specialcontact-label-forget-account-is-on-behalf' => 'Вы делаете этот запрос от своего лица?*',
-	'specialcontact-label-forget-account-confirm' => 'Удалить учетную запись Wikia, Inc.',
-	'specialcontact-label-forget-account-data-deletion-info' => 'После обработки запроса процесс удаления станет необратимым, и вашу учетную запись Wikia, Inc. уже нельзя будет восстановить.',
+	'specialcontact-label-forget-account-confirm' => 'Запросить удаление',
+	'specialcontact-label-forget-account-data-deletion-info' => 'После обработки запроса процесс удаления станет необратимым, и вашу учётную запись Wikia, Inc. уже нельзя будет восстановить.',
 	'specialcontact-label-forget-account-email-address' => 'Адрес электронной почты*',
-	'specialcontact-seclink-forget-account' => 'Удалить мою учетную запись Wikia, Inc.',
+	'specialcontact-seclink-forget-account' => 'Удалить мои персональные данные с сайта',
 	'specialcontact-sectitle-forget-account' => 'Запрос на удаление',
-	'specialcontact-label-forget-account-previous-request' => 'Вы уже делали Запрос на удаление персональных данных ранее?',
+	'specialcontact-label-forget-account-previous-request' => 'Вы уж подавали запрос на удаление персональных данных ранее?',
 	'specialcontact-label-forget-account-processing-consent' => 'Я понимаю, что Wikia, Inc. сможет обработать мой запрос только при условии корректного предоставления информации.*',
 	'specialcontact-label-forget-account-data-processing-info' => 'Wikia, Inc. будет использовать персональные данные, предоставленные в данной форме, а также любые другие персональные данные, предоставленные при дальнейшей коммуникации, в целях обработки вашего запроса и исполнения своих юридических обязательств. Мы можем предоставить подробности вашего запроса уполномоченным лицам по защите данных, но только при наличии такого требования. Например, если такие подробности необходимы для расследования в отношении принятого нами решения. Мы сохраним копию запроса в рамках исполнения юридических обязательств по хранению записей об обработке данных.',
 	'specialcontact-label-forget-account-confirm-checkbox' => 'Я ознакомился(-ась) и соглашаюсь с условиями.*',
@@ -3172,7 +3249,18 @@ $messages['ru'] = array(
 	'specialcontact-label-forget-account-country-info' => 'Страна проживания*',
 	'specialcontact-label-forget-account-relationship' => 'Укажите степень родства с участником, от имени которого вы делаете этот запрос (например, "родитель" или "законный опекун"). Мы можем попросить вас предоставить доказательство того, что вы уполномочены делать подобный запрос от имени участника.*',
 	'specialcontact-label-forget-account-full-name' => 'Полное имя (ФИО)*',
-	'specialcontact-intro-forget-account' => 'Согласно законодательству ЕС по защите данных у вас есть право запросить у нас удаление ваших персональных данных. Заполнив эту форму, вы поможете нам лучше понять суть вашего запроса, чтобы мы смогли своевременно и надлежащим образом его исполнить.',
+	'specialcontact-intro-forget-account' => 'Согласно законодательству стран Европейского союза по защите данных у вас есть право запросить удаление ваших персональных данных с ФЭНДОМА. Заполнив эту форму, вы поможете нам лучше понять суть вашего запроса, чтобы мы смогли своевременно и надлежащим образом его исполнить.',
+	'specialcontact-label-data-access-email' => 'Контактный адрес эл. почты',
+	'specialcontact-sectitle-data-access' => 'Запрос на получение копии данных',
+	'specialcontact-seclink-data-access' => 'Я хочу получить копию моих данных',
+	'specialcontact-label-data-access-username' => 'Имя участника',
+	'specialcontact-intro-data-access' => 'Мы предоставляем следующие данные: имя участника, ID участника, настоящее имя (если указано), адрес электронной почты, дата создания учётной записи и ссылка на правки участника.
+
+В целях предотвращения мошенничества с запросами данных, направленного на попытки выдать себя за другого участника, нам необходимо проверить личность человека, запросившего данные участника.
+
+Чтобы скачать ваши данные, собранные ФЭНДОМОМ, предоставьте информацию, подтверждающую ваше владение учётной записью.
+
+После получения запроса мы пришлем вам подтверждение по электронной почте. В ответном письме приложите копию документа, подтверждающего вашу личность.',
 );
 
 $messages['vi'] = array(
@@ -3640,7 +3728,7 @@ FANDOM拥有大量不同主题的社区，我们希望您可以通过浏览其�
 	'specialcontact-desc' => '联系FANDOM的[[Special:Contact]]表格',
 	'specialcontact-intro-main-local' => '',
 	'specialcontact-username' => '用户名',
-	'specialcontact-realname' => '姓名',
+	'specialcontact-realname' => '您的真实姓名',
 	'specialcontact-yourmail' => 'Email',
 	'specialcontact-problem' => '主题',
 	'specialcontact-problemdesc' => '内容',
@@ -3668,6 +3756,17 @@ FANDOM拥有大量不同主题的社区，我们希望您可以通过浏览其�
 	'specialcontact-label-forget-account-relationship' => '请填写您与所代表人之间的关系（例如 「父母」或「法律监护人」)。我们可能要求您提供资料证明来您能代表该帐户所有人。*',
 	'specialcontact-label-forget-account-full-name' => '全名*',
 	'specialcontact-intro-forget-account' => '根据欧洲数据保护法，您可能有权要求我们删除您的个人信息。通过使用此表格，您将帮助我们了解您的请求，并及时恰当地给予相回应。',
+	'specialcontact-label-data-access-email' => '您当前使用的电子邮件地址',
+	'specialcontact-sectitle-data-access' => '请求获取我的资料副本',
+	'specialcontact-seclink-data-access' => '我要下载我的资料的副本',
+	'specialcontact-label-data-access-username' => '您的FANDOM用户名',
+	'specialcontact-intro-data-access' => '我们提供的资料包括用户名，用户ID，真实姓名（如果提供），电子邮件地址，帐户创建日期和您的贡献列表的链接。
+
+为了防止其他人冒充发送获取资料请求进行欺诈，我们需要验证请求用户数据的个人身份。
+
+如果需要从FANDOM上下载您的资料，我们需要您提供更多信息来确认帐户所有权。 
+
+一旦收到您的要求，我们会给您发送邮件进行确认。电子邮件将包括一项要求，即您的答复需要附上身份证件副本，以便我们可以确认您的身份。',
 );
 
 $messages['zh-hant'] = array(
@@ -3891,7 +3990,7 @@ FANDOM擁有大量不同主題的社區，我們希望您可以再看看其他�
 	'specialcontact-desc' => '聯繫FANDOM的 [[Special:Contact]]表格',
 	'specialcontact-intro-main-local' => '',
 	'specialcontact-username' => '用戶名',
-	'specialcontact-realname' => '姓名',
+	'specialcontact-realname' => '您的真實姓名',
 	'specialcontact-problem' => '主題',
 	'specialcontact-problemdesc' => '內容',
 	'specialcontact-filledin' => '此資訊已自您的帳號設置填寫',
@@ -3920,5 +4019,16 @@ FANDOM擁有大量不同主題的社區，我們希望您可以再看看其他�
 	'specialcontact-label-forget-account-relationship' => '請填寫您與所代表人之間的關係（例如 「父母」或「法律監護人」)。我們可能要求您提供資料證明來您能代表該帳號所有人。*',
 	'specialcontact-label-forget-account-full-name' => '全名*',
 	'specialcontact-intro-forget-account' => '根據歐洲資料保護法，您可能有權要求我們刪除您的用戶個人資料。您可使用此表單幫助我們瞭解您的申請，並及時合適地給予回應。',
+	'specialcontact-label-data-access-email' => '您當前使用的電子郵件地址',
+	'specialcontact-sectitle-data-access' => '請求我的資料副本',
+	'specialcontact-seclink-data-access' => '我要下載我的資料副本',
+	'specialcontact-label-data-access-username' => '您的FANDOM用戶名',
+	'specialcontact-intro-data-access' => '我們提供的資料包括用戶名，用戶ID，真實姓名（如果提供），電子郵件地址，帳號創建日期和您的貢獻列表連結。
+
+為了防止其他人冒充發送資料請求，我們需要驗證請求用戶資料的個人身份。
+
+如果需要從FANDOM上下載您的資料，我們需要您提供更多訊息來確認帳號擁有權。 
+
+一旦收到您的要求，我們會給您發送郵件進行認證。電子郵件將要求您的答覆需要附上身份證件副本，以便我們可以確認您的身份。',
 );
 

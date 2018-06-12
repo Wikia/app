@@ -431,23 +431,17 @@
 						nodes.prependTo(ArticleComments.$commentsList);
 					}
 
-					//update counter
-					// Counter update disabled for MAIN-7023.  Until we can find a way to have wikitext
-					// as part of this message AND have this JS update the counter, this should stay commented out
-					//$('#article-comments-counter-header').html($.msg('oasis-comments-header', json.counter));
 
-					if (window.skin === 'oasis') {
-						$('#WikiaUserPagesHeader').find('.commentsbubble').html(json.counter);
+					$('#WikiaUserPagesHeader').find('.commentsbubble').html(json.counter);
 
-						if (!parentId) {
-							ArticleComments.mostRecentCount = ArticleComments.mostRecentCount ?
-								ArticleComments.mostRecentCount + 1 :
-								ArticleComments.$commentsList.children('li').length;
+					if (!parentId) {
+						ArticleComments.mostRecentCount = ArticleComments.mostRecentCount ?
+							ArticleComments.mostRecentCount + 1 :
+							ArticleComments.$commentsList.children('li').length;
 
-							$('#article-comments-counter-recent').html(
-								$.msg('oasis-comments-showing-most-recent', ArticleComments.mostRecentCount)
-							);
-						}
+						$('#article-comments-counter-recent').html(
+							$.msg('oasis-comments-showing-most-recent', ArticleComments.mostRecentCount)
+						);
 					}
 
 					//re-add events

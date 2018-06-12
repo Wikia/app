@@ -79,10 +79,6 @@ class WikiaRobots {
 
 		// Fandom old URLs
 		'/fandom?p=',
-
-		// logging for ad-recovery (ADEN-3930)
-		'/wikia.php?controller=ARecoveryEngineApi',
-		'/api/v1/ARecoveryEngine'
 	];
 
 	/**
@@ -155,11 +151,11 @@ class WikiaRobots {
 	}
 
 	public function configureRobotsBuilder( RobotsTxt $robots ) {
-		global $wgEnableSpecialSitemapExt,
-		       $wgEnableSitemapXmlExt,
+		global $wgEnableSitemapXmlExt,
 		       $wgRobotsTxtBlockedWiki,
 		       $wgSitemapXmlExposeInRobots,
 		       $wgServer,
+		       $wgScriptPath,
 		       $wgRequest;
 
 		if ( !$this->accessAllowed || !empty( $wgRobotsTxtBlockedWiki ) ) {
@@ -170,9 +166,7 @@ class WikiaRobots {
 
 		// Sitemap
 		if ( !empty( $wgEnableSitemapXmlExt ) && !empty( $wgSitemapXmlExposeInRobots ) ) {
-			$robots->setSitemap( $wgServer . '/sitemap-newsitemapxml-index.xml' );
-		} elseif ( !empty( $wgEnableSpecialSitemapExt ) ) {
-			$robots->setSitemap( $wgServer . '/sitemap-index.xml' );
+			$robots->addSitemap( $wgServer . $wgScriptPath . '/sitemap-newsitemapxml-index.xml' );
 		}
 
 		// Block namespaces
@@ -219,6 +213,9 @@ class WikiaRobots {
 					}
 					if ( isset( $response['disallowed'] ) ) {
 						$robots->addDisallowedPaths( $response['disallowed'] );
+					}
+					if ( isset( $response['sitemaps'] ) ) {
+						$robots->addSitemaps( $response['sitemaps'] );
 					}
 				} else {
 					\Wikia\Logger\WikiaLogger::instance()->error( 'Cannot fetch language wiki robots rules', [

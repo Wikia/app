@@ -23,10 +23,8 @@ if (isset( $wgCityId ) && is_numeric($wgCityId) ) {
 //can access ->cat_id or ->cat_name
 $wgHub = WikiFactory::getCategory($wgCityId);
 
-# Remove any skin(s) listed in UnSkipSkins from SkipSkins
-if( !empty($wgUnSkipSkins) && is_array($wgUnSkipSkins) ) {
-	$wgSkipSkins = array_diff($wgSkipSkins, $wgUnSkipSkins);
-}
+// SUS-4796 | force Oasis skin // FIXME remove after the post-sunset cleanup
+$wgDefaultSkin = 'oasis';
 
 # Language specific settings. Currently only used for $wgExtraNamespaces.
 # Consider using /languages/messages/Wikia/ for customization.
@@ -244,11 +242,6 @@ include("{$IP}/extensions/Poem/Poem.php");
 #--- 14. AntiSpamInput - sitewide
 include("{$IP}/extensions/wikia/AntiSpamInput/AntiSpamInput.php");
 
-#--- 16. YouTube -- sitewide (with exceptions)
-if (!empty($wgWikiaEnableYouTubeExt)) {
-	include("{$IP}/extensions/wikia/YouTube/YouTube.php");
-}
-
 if ( !empty( $wgEnableCaptchaExt ) ) {
 	include( "$IP/extensions/wikia/Captcha/Captcha.setup.php" );
 }
@@ -444,6 +437,8 @@ if ( !empty( $wgEnableScribuntoExt ) ) {
 if ( defined( 'REBUILD_LOCALISATION_CACHE_IN_PROGRESS' ) || !empty( $wgEnableSemanticMediaWikiExt ) ) {
 	if( defined( 'REBUILD_LOCALISATION_CACHE_IN_PROGRESS' ) || !empty( $wgEnableSemanticFormsExt ) ) {
 		$sfgNamespaceIndex = 350;
+		// SUS-5128 - use a single source for Google Maps API key
+		$sfgGoogleMapsKey = $wgGoogleMapsKey;
 		include "$IP/extensions/SemanticForms/SemanticForms.php";
 	}
 
@@ -946,10 +941,6 @@ if ( (!empty( $wgEnableWikiaFollowedPages )) || (!empty( $wgEnableWikiaFollowedP
 	include( "$IP/extensions/wikia/Follow/Follow.php" );
 }
 
-if ( !empty( $wgEnableSpecialSitemapExt ) ) {
-	include( "$IP/extensions/wikia/Sitemap/SpecialSitemap.php" );
-}
-
 if(!empty($wgEnableSendGridPostback)){
 	F::app()->registerApiController( 'SendGridPostbackController', "{$IP}/includes/wikia/api/SendGridPostBackApiController.class.php" );
 }
@@ -1191,7 +1182,6 @@ if ( !empty($wgCityId) && $wgCityId != 1252 /* starter.wikia.com */ && !$wgDevel
 	// this allows for starter images to be taken from the appropriate language starter wiki directly
 	// @note Make sure that newly added starter is protected (e.g. from being removed by automated deletion scripts)
 	//       use WikiFactory::setFlags( <city_id>, WikiFactory::FLAG_PROTECTED )
-	// @TODO move this list out of CreateWiki.php and put it in one place
 	$languageStarters = array(
 		//	"en" => "starter", # handled by the default/else case below
 			"de" => "destarter",
@@ -1752,10 +1742,6 @@ if ( !empty( $wgEnablePlaybuzzTagExt ) ) {
 	include "$IP/extensions/wikia/PlaybuzzTag/PlaybuzzTag.setup.php";
 }
 
-if ( !empty( $wgEnableOpenXSPC ) ) {
-    include "$IP/extensions/wikia/Spotlights/Spotlights.setup.php";
-}
-
 if ( !empty( $wgEnableTrackingSettingsManager ) ) {
 	include "$IP/extensions/wikia/TrackingOptIn/TrackingSettingsManager.setup.php";
 }
@@ -1776,3 +1762,5 @@ include "$IP/extensions/wikia/DownloadYourData/DownloadYourData.setup.php";
 
 // SUS-4738 | Handles requests to be forgotten
 include "$IP/extensions/wikia/Privacy/Privacy.setup.php";
+
+include "$IP/extensions/wikia/Announcements/Announcements.setup.php";
