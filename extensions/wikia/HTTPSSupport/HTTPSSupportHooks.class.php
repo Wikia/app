@@ -1,8 +1,8 @@
 <?php
 
-class HTTPSOptInHooks {
+class HTTPSSupportHooks {
 
-	// List of articles that shouldn't redirect to http versions even for users that don't have https enabled.
+	// List of articles that shouldn't redirect to http versions.
 	// This array contains wgDBname mapped to array of article keys.
 	static $httpsArticles = [
 		/* www.wikia.com */
@@ -13,37 +13,21 @@ class HTTPSOptInHooks {
 		'wikia' => [ 'Community_Central:Licensing' ]
 	];
 
-	// wikis with ID greater than this threshold will get HTTPS on by default for
-	// logged-in users despite the opt-in preference
-	const WIKI_ID_THRESHOLD_WITH_HTTPS_ON = 100000;
-
-	public static function onGetPreferences( User $user, array &$preferences ): bool {
-		global $wgServer, $wgHTTPSForLoggedInUsers, $wgCityId;
-		if ( empty( $wgHTTPSForLoggedInUsers ) &&
-			$wgCityId <= self::WIKI_ID_THRESHOLD_WITH_HTTPS_ON &&
-			wfHttpsAllowedForURL( $wgServer )
-		) {
-			$preferences['https-opt-in'] = [
-				'type' => 'toggle',
-				'label-message' => 'https-opt-in-toggle',
-				'section' => 'under-the-hood/advanced-displayv2',
-			];
-		}
-		return true;
-	}
-
 	public static function onMercuryWikiVariables( array &$wikiVariables ): bool {
+		global $wgDisableHTTPSDowngrade;
 		$basePath = $wikiVariables['basePath'];
 		$user = RequestContext::getMain()->getUser();
 		if ( self::httpsAllowed( $user, $basePath ) ) {
 			$wikiVariables['basePath'] = wfHttpToHttps( $basePath );
 		}
+		$wikiVariables['disableHTTPSDowngrade'] = !empty( $wgDisableHTTPSDowngrade );
 		return true;
 	}
 
 	/**
-	 * Handle redirecting users who have opted in to HTTPS, and those
-	 * who haven't back to HTTP if necessary.
+	 * Handle redirecting users to HTTPS when on wikis that support it,
+	 * as well as redirect those on wikis that don't support HTTPS back
+	 * to HTTP if necessary.
 	 *
 	 * @param  Title      $title
 	 * @param             $unused
@@ -76,14 +60,7 @@ class HTTPSOptInHooks {
 	}
 
 	private static function httpsAllowed( User $user, string $url ): bool {
-		global $wgHTTPSForLoggedInUsers, $wgCityId;
-		return wfHttpsAllowedForURL( $url ) &&
-			$user->isLoggedIn() &&
-			(
-				!empty( $wgHTTPSForLoggedInUsers ) ||
-				$user->getGlobalPreference( 'https-opt-in', false ) ||
-				$wgCityId > self::WIKI_ID_THRESHOLD_WITH_HTTPS_ON
-			);
+		return wfHttpsAllowedForURL( $url ) && $user->isLoggedIn();
 	}
 
 	private static function httpsEnabledTitle( Title $title ): bool {
