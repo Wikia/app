@@ -59,21 +59,12 @@ class CreateNewWikiTask extends BaseTask {
 		$this->wikiLang = isset( $params['language'] ) ? $params['language'] : \WikiFactory::getVarValueByName( 'wgLanguageCode', $params['city_id'] );
 
 		$this->moveMainPage();
-
-		if ( !$params['fc_community_id'] ) {
-			$this->changeStarterContributions( $params );
-			$this->setWelcomeTalkPage();
-		}
-
+		$this->changeStarterContributions( $params );
+		$this->setWelcomeTalkPage();
 		$this->populateCheckUserTables();
 		$this->protectKeyPages();
 
-		$hookParams = [
-			'title' => $params['sitename'],
-			'url' => $params['url'],
-			'city_id' => $params['city_id'],
-			'fc_community_id' => $params['fc_community_id'],
-		];
+		$hookParams = [ 'title' => $params['sitename'], 'url' => $params['url'], 'city_id' => $params['city_id'] ];
 
 		\Hooks::run( 'CreateWikiLocalJob-complete', [ $hookParams ] );
 
