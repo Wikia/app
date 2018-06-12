@@ -344,7 +344,7 @@ class MultiTask extends SpecialPage {
 		switch ( $mode ) {
 			case MULTIWIKITASK_SELECTED :
 				$pre_wikis = explode( ",", $this->mWikiInbox );
-				array_walk($pre_wikis ,create_function('&$str','$str=trim($str);'));
+				array_walk( $pre_wikis, function ( &$str ) { $str = trim( $str ); } );
 				$lang = $cat = "";
 				$modeText = wfMsg('multiwikiedit_selected_wikis');
 				break;

@@ -15,11 +15,6 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.rubiconDisplay', function ()
 				return map;
 			}
 		},
-		instartLogic: {
-			isBlocking: function() {
-				return false;
-			}
-		},
 		adaptersHelper: {
 			getTargeting: function () {
 				return {
@@ -42,7 +37,6 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.rubiconDisplay', function ()
 			mocks.adContext,
 			mocks.slotsContext,
 			mocks.adaptersHelper,
-			mocks.instartLogic,
 			mocks.log
 		);
 	}
@@ -67,14 +61,6 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.rubiconDisplay', function ()
 		expect(rubicon.isEnabled()).toBeFalsy();
 	});
 
-	it('Is disabled when context is enabled but is blocking', function () {
-		mocks.adContext.get.and.returnValue(true);
-		var rubicon = getBidder();
-		spyOn(mocks.instartLogic, 'isBlocking').and.returnValue(true);
-
-		expect(rubicon.isEnabled()).toBeFalsy();
-	});
-
 	it('Is enabled when context is enabled', function () {
 		mocks.adContext.get.and.returnValue(true);
 		var rubicon = getBidder();
@@ -93,7 +79,11 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.rubiconDisplay', function ()
 			zoneId: 175094
 		}, 'oasis')).toEqual({
 			code: 'TOP_LEADERBOARD',
-			sizes: [[728, 90], [970, 250]],
+			mediaTypes: {
+				banner: {
+					sizes: [[728, 90], [970, 250]]
+				}
+			},
 			bids: [
 				{
 					bidder: 'rubicon_display',

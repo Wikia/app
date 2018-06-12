@@ -110,23 +110,11 @@ function Ach_Setup() {
 
 	//hooks for user preferences
 	$wgHooks['GetPreferences'][] = 'Ach_UserPreferences';
-	$wgHooks['MonacoSidebarGetMenu'][] = 'Ach_GetMenu';
 
 	//hook for purging Achievemets-related cache
 	$wgHooks['AchievementsInvalidateCache'][] = 'Ach_InvalidateCache';
 
 	wfProfileOut(__METHOD__);
-}
-
-function Ach_GetMenu( array &$nodes ): bool {
-	$nodes[0]['children'][] = count($nodes);
-	$nodes[] = [
-		//the message is stored in /languages/messages/wikia/MessagesEn.php to avoid loading the i18n for the extension
-		'text' => wfMsg( 'achievements-leaderboard-navigation-item' ),
-		'href' => Skin::makeSpecialUrl( "Leaderboard" ),
-	];
-
-	return true;
 }
 
 function Ach_UploadVerification($destName, $tempPath, &$error) {
@@ -166,7 +154,7 @@ function Ach_GetHTMLAfterBody( Skin $skin, &$html ): bool {
 			$awardingService->awardCustomNotInTrackBadge( $user, BADGE_WELCOME );
 		}
 
-		if ( ( !empty( $_SESSION['achievementsNewBadges'] ) || 5 == rand( 1, 20 ) ) && $skin->getSkinName() !== 'monobook' ) {
+		if ( ( !empty( $_SESSION['achievementsNewBadges'] ) || 5 == rand( 1, 20 ) ) ) {
 			// this works only for Wikia and only in current varnish configuration
 			if (!headers_sent()) {
 				header('X-Pass-Cache-Control: no-store, private, no-cache, must-revalidate');

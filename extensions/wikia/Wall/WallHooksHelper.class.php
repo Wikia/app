@@ -640,14 +640,10 @@ class WallHooksHelper {
 				&& $title->isSubpage() === true
 				&& mb_strtolower( str_replace( ' ', '_', $parts[1] ) ) !== mb_strtolower( $helper->getArchiveSubPageText() )
 		) {
-			// remove "History" and "View source" tabs in Monobook & don't show history in "My Tools" in Oasis
+			// don't show history in "My Tools" in Oasis
 			// because it leads to Message Wall (redirected) and a user could get confused
 			if ( isset( $contentActions['history']['href'] ) ) {
 				unset( $contentActions['history'] );
-			}
-
-			if ( isset( $contentActions['view-source']['href'] ) ) {
-				unset( $contentActions['view-source'] );
 			}
 		}
 
@@ -1770,14 +1766,9 @@ class WallHooksHelper {
 	/**
 	 * @param OutputPage $out
 	 * @param User $user
-	 * @return bool
 	 */
-	static public function onSpecialWikiActivityExecute( $out, $user ) {
-		$app = F::App();
-		$out->addScript( "<script type=\"{$app->wg->JsMimeType}\" src=\"{$app->wg->ExtensionsPath}/wikia/Wall/js/WallWikiActivity.js\"></script>\n" );
+	static public function onSpecialWikiActivityExecute( OutputPage $out, $user ) {
 		$out->addExtensionStyle( AssetsManager::getInstance()->getSassCommonURL( 'extensions/wikia/Wall/css/WallWikiActivity.scss' ) );
-
-		return true;
 	}
 
 	static protected function getQueryNS() {
@@ -1932,35 +1923,6 @@ class WallHooksHelper {
 				$rcObj->curlink = '<a href="' . $url . '">' . wfMessage( 'cur' )->escaped() . '</a>';
 			}
 		}
-		return true;
-	}
-
-	/**
-	 * Add user links to toolbar in Monobook for Message Wall
-	 *
-	 * @access public
-	 * @author Sactage
-	 *
-	 * @param QuickTemplate $quickTemplate
-	 * @return bool
-	 */
-	static public function onBuildMonobookToolbox( QuickTemplate $quickTemplate ): bool {
-		$skin = $quickTemplate->getSkin();
-		$title = $skin->getTitle();
-		$curUser = $skin->getUser();
-
-		if ( !$title->inNamespace( NS_USER_WALL ) ) {
-			return true;
-		}
-
-		$user = User::newFromName( $title->getText(), false );
-
-		echo '<li id="t-contributions">' . Linker::link( SpecialPage::getSafeTitleFor( 'Contributions', $user->getName() ), wfMessage( 'contributions' )->escaped() ) . '</li>';
-		if ( $curUser->isAllowed( 'block' ) ) {
-			echo '<li id="t-blockip">' . Linker::link( SpecialPage::getSafeTitleFor( 'Block', $user->getName() ), wfMessage( 'block' )->escaped() ) . '</li>';
-		}
-
-		echo '<li id="t-log">' . Linker::link( SpecialPage::getTitleFor( 'Log' ), wfMessage( 'log' )->escaped(), [ ], [ 'user' => $user->getName() ] ) . '</li>';
 		return true;
 	}
 

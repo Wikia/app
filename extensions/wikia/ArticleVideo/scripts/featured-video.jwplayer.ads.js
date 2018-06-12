@@ -42,7 +42,7 @@ define('wikia.articleVideo.featuredVideo.ads', [
 	}
 
 	function getPrebidParams() {
-		if (prebid) {
+		if (prebid && adContext.get('bidders.prebid')) {
 			return prebid.get().getAdserverTargetingForAdUnitCode(featuredVideoSlotName);
 		}
 
@@ -128,7 +128,7 @@ define('wikia.articleVideo.featuredVideo.ads', [
 
 			player.on('videoMidPoint', function () {
 				log('Midroll position reached', log.levels.info, logGroup);
-				if (articleVideoAd.shouldPlayMidroll(videoDepth)) {
+				if (videoDepth > 0 && articleVideoAd.shouldPlayMidroll(videoDepth)) {
 					trackingParams.adProduct = 'featured-video-midroll';
 					player.playAd(articleVideoAd.buildVastUrl(
 						featuredVideoSlotName,
@@ -144,7 +144,7 @@ define('wikia.articleVideo.featuredVideo.ads', [
 
 			player.on('beforeComplete', function () {
 				log('Postroll position reached', log.levels.info, logGroup);
-				if (articleVideoAd.shouldPlayPostroll(videoDepth)) {
+				if (videoDepth > 0 && articleVideoAd.shouldPlayPostroll(videoDepth)) {
 					trackingParams.adProduct = 'featured-video-postroll';
 					player.playAd(articleVideoAd.buildVastUrl(
 						featuredVideoSlotName,

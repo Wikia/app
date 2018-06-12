@@ -7,19 +7,22 @@ define('ext.wikia.adEngine.ml.modelFactory', [
 	'use strict';
 
 	var requiredData = [
-		'inputParser',
+		'dataSource',
 		'model',
 		'name',
-		'wgCountriesVariable',
 		'enabled'
 	];
 
-	function create(modelData) {
+	function validateModel(modelData) {
 		requiredData.forEach(function (key) {
 			if (typeof modelData[key] === 'undefined') {
 				throw new Error('Missing ' + key + ' in model definition.');
 			}
 		});
+	}
+
+	function create(modelData) {
+		validateModel(modelData);
 
 		var predictedValue = null;
 
@@ -37,12 +40,20 @@ define('ext.wikia.adEngine.ml.modelFactory', [
 			},
 
 			isEnabled: function () {
-				return modelData.enabled && geo.isProperGeo(instantGlobals[modelData.wgCountriesVariable]);
+				var isEnabled = modelData.enabled,
+					isGeoEnabled = !modelData.wgCountriesVariable ||
+					geo.isProperGeo(instantGlobals[modelData.wgCountriesVariable]);
+
+				if (typeof modelData.enabled === 'function') {
+					isEnabled = modelData.enabled();
+				}
+
+				return isEnabled && isGeoEnabled;
 			},
 
 			predict: function () {
 				if (predictedValue === null || !modelData.cachePrediction) {
-					var data = modelData.inputParser.getData();
+					var data = modelData.dataSource.getData();
 
 					predictedValue = modelData.model.predict(data);
 				}

@@ -218,6 +218,9 @@ $GLOBALS['wgExtensionFunctions'][] = function() {
 		SemanticMaps::newFromMediaWikiGlobals( $GLOBALS )->initExtension();
 	}
 
+	// SUS-5128 - use Wiki specific API key that differs between environments
+	$GLOBALS['egMapsGMaps3ApiKey'] = $GLOBALS['wgGoogleMapsKey'];
+
 	return true;
 };
 

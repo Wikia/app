@@ -3,9 +3,8 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.rubiconDisplay', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.context.slotsContext',
 	'ext.wikia.adEngine.lookup.prebid.adaptersHelper',
-	'ext.wikia.aRecoveryEngine.instartLogic.recovery',
 	'wikia.log'
-], function (adContext, slotsContext, adaptersHelper, instartLogic, log) {
+], function (adContext, slotsContext, adaptersHelper, log) {
 	'use strict';
 
 	var bidderName = 'rubicon_display',
@@ -20,55 +19,55 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.rubiconDisplay', [
 					sizes: [[728, 90], [970, 250]],
 					targeting: {loc: ['top']},
 					position: 'atf',
-					siteId: 148804,
-					zoneId: 704672
+					siteId: '148804',
+					zoneId: '704672'
 				},
 				TOP_RIGHT_BOXAD: {
 					sizes: [[300, 250], [300, 600]],
 					targeting: {loc: ['top']},
 					position: 'atf',
-					siteId: 148804,
-					zoneId: 704672
+					siteId: '148804',
+					zoneId: '704672'
 				},
 				INCONTENT_BOXAD_1: {
 					sizes: [[160, 600], [300, 600], [300, 250]],
 					targeting: {loc: ['hivi']},
 					position: 'btf',
-					siteId: 148804,
-					zoneId: 704676
+					siteId: '148804',
+					zoneId: '704676'
 				},
 				BOTTOM_LEADERBOARD: {
 					sizes: [[728, 90], [970, 250]],
 					targeting: {loc: ['footer']},
 					position: 'btf',
-					siteId: 148804,
-					zoneId: 704674
+					siteId: '148804',
+					zoneId: '704674'
 				}
 			},
 			mercury: {
 				MOBILE_TOP_LEADERBOARD: {
 					sizes: [[320, 50]],
 					position: 'atf',
-					siteId: 23565,
-					zoneId: 87671
+					siteId: '23565',
+					zoneId: '87671'
 				},
 				MOBILE_IN_CONTENT: {
 					sizes: [[300, 250]],
 					position: 'btf',
-					siteId: 23565,
-					zoneId: 87671
+					siteId: '23565',
+					zoneId: '87671'
 				},
 				BOTTOM_LEADERBOARD: {
 					sizes: [[300, 250], [320, 50]],
 					position: 'btf',
-					siteId: 23565,
-					zoneId: 87671
+					siteId: '23565',
+					zoneId: '87671'
 				}
 			}
 		};
 
 	function isEnabled() {
-		return adContext.get('bidders.rubiconDisplay') && !instartLogic.isBlocking();
+		return adContext.get('bidders.rubiconDisplay');
 	}
 
 	function prepareAdUnit(slotName, config, skin) {
@@ -92,7 +91,11 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.rubiconDisplay', [
 
 		adUnit = {
 			code: slotName,
-			sizes: config.sizes,
+			mediaTypes: {
+				banner: {
+					sizes: config.sizes
+				}
+			},
 			bids: [
 				{
 					bidder: bidderName,

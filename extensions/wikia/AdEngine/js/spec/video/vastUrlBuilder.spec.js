@@ -1,4 +1,4 @@
-/*global describe, it, expect, modules*/
+/*global beforeEach, describe, it, expect, modules*/
 describe('ext.wikia.adEngine.video.vastUrlBuilder', function () {
 	'use strict';
 
@@ -38,7 +38,8 @@ describe('ext.wikia.adEngine.video.vastUrlBuilder', function () {
 			slotParams: {
 				src: 'src',
 				pos: 'SLOT_NAME'
-			}
+			},
+			trackingOptIn: {}
 	};
 
 	function getModule() {
@@ -47,9 +48,14 @@ describe('ext.wikia.adEngine.video.vastUrlBuilder', function () {
 			mocks.adUnitBuilder,
 			mocks.slotTargeting,
 			mocks.loc,
-			mocks.log
+			mocks.log,
+			mocks.trackingOptIn
 		);
 	}
+
+	beforeEach(function () {
+		mocks.trackingOptIn.isOptedIn = noop;
+	});
 
 	it('Build VAST URL with DFP domain', function () {
 		var vastUrl = getModule().build('', '', 1);
@@ -112,7 +118,7 @@ describe('ext.wikia.adEngine.video.vastUrlBuilder', function () {
 	it('Build VAST URL with page level params and wsi param', function () {
 		var vastUrl = getModule().build(1, {});
 
-		expect(vastUrl).toMatch(/&cust_params=wsi%3Dxxxx%26uno%3Dfoo%26due%3D15%26tre%3Dbar%2Czero%26s0%3Dlife%26s1%3D_project43%26s2%3Darticle$/g);
+		expect(vastUrl).toMatch(/&cust_params=wsi%3Dxxxx%26uno%3Dfoo%26due%3D15%26tre%3Dbar%2Czero%26s0%3Dlife%26s1%3D_project43%26s2%3Darticle/g);
 	});
 
 	it('Build VAST URL with page level params, slot level params and wsi param', function () {
@@ -122,7 +128,7 @@ describe('ext.wikia.adEngine.video.vastUrlBuilder', function () {
 			src: 'remnant'
 		});
 
-		expect(vastUrl).toMatch(/&cust_params=wsi%3Dxxxx%26uno%3Dfoo%26due%3D15%26tre%3Dbar%2Czero%26s0%3Dlife%26s1%3D_project43%26s2%3Darticle%26passback%3Dplaywire%26pos%3DTEST_SLOT%26src%3Dremnant$/);
+		expect(vastUrl).toMatch(/&cust_params=wsi%3Dxxxx%26uno%3Dfoo%26due%3D15%26tre%3Dbar%2Czero%26s0%3Dlife%26s1%3D_project43%26s2%3Darticle%26passback%3Dplaywire%26pos%3DTEST_SLOT%26src%3Dremnant/);
 	});
 
 	it('Build VAST URL with regular ad unit', function () {
@@ -211,6 +217,26 @@ describe('ext.wikia.adEngine.video.vastUrlBuilder', function () {
 		}, {});
 
 		expect(vastUrl).toContain(encodeURIComponent('uap=6666'));
+	});
+
+	it('Build VAST URL with disabled non personalized ads when tracking opted in', function () {
+		mocks.trackingOptIn.isOptedIn = function () {
+			return true;
+		};
+
+		var vastUrl = getModule().build(1, mocks.slotParams);
+
+		expect(vastUrl).toContain('&npa=0');
+	});
+
+	it('Build VAST URL with non personalized ads when tracking opted out', function () {
+		mocks.trackingOptIn.isOptedIn = function () {
+			return false;
+		};
+
+		var vastUrl = getModule().build(1, mocks.slotParams);
+
+		expect(vastUrl).toContain('&npa=1');
 	});
 });
 

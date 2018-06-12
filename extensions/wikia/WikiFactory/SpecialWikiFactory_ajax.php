@@ -62,48 +62,6 @@ function axWFactoryValidateRequest( WebRequest $request, User $user, $method ) {
 ############################## Ajax methods ##################################
 
 /**
- * axWFactoryTagCheck
- *
- * Method for checking tag name and getting number of tagged wikis
- *
- * @author Adrian 'ADi' Wieczorek <adi(at)wikia-inc.com>
- * @access public
- *
- * @return json data
- */
-function axWFactoryTagCheck() {
-	global $wgRequest, $wgUser;
-
-	// this request needs to be a POST and has a valid token passed (PLATFORM-1476)
-	axWFactoryValidateRequest( $wgRequest, $wgUser, __METHOD__ );
-
-	if ( !$wgUser->isAllowed( 'wikifactory' ) ) {
-		return;
-	}
-
-	$tagName = $wgRequest->getVal( "tagName" );
-	if( !empty( $tagName ) ) {
-		$tagsQuery = new WikiFactoryTagsQuery( $tagName );
-		$wikiIds = $tagsQuery->doQuery();
-		$result = array(
-			'tagName' => $tagName,
-			'wikiCount' => count( $wikiIds ),
-			'divName' => 'wf-variable-parse'
-		);
-	}
-	else {
-		$result = array(
-			'errorMsg' => 'empty tag name',
-			'divName' => 'wf-variable-parse',
-			'wikiCount' => 0
-		);
-	}
-
-	return json_encode( $result );
-}
-
-
-/**
  * axWFactoryGetVariable
  *
  * Method for getting variable form via AJAX request.
@@ -564,11 +522,13 @@ function axWFactoryDomainQuery() {
 
 		while( $domain = $dbr->fetchObject( $sth ) ) {
 			$domain->city_domain = strtolower( $domain->city_domain );
-		    if( preg_match( "/^$query/", $domain->city_domain ) ) {
+			$rxp_query = preg_quote( $query, '/' );
+
+		    if( preg_match( "/^$rxp_query/", $domain->city_domain ) ) {
 				$exact[ "suggestions" ][] = $domain->city_domain;
 				$exact[ "data" ][] = $domain->city_id;
 		    }
-			elseif( preg_match( "/$query/", $domain->city_domain ) ){
+			elseif( preg_match( "/$rxp_query/", $domain->city_domain ) ){
 				$match[ "suggestions" ][] = $domain->city_domain;
 				$match[ "data" ][] = $domain->city_id;
 			}

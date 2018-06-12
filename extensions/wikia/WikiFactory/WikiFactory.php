@@ -555,6 +555,50 @@ class WikiFactory {
 	}
 
 	/**
+	 * Returns a list of language wikis hosted under the current domain. This works only for wikis
+	 * hosted at the root of the domain, for language path wikis it will return an empty list.
+	 *
+	 * If used often, put a caching layer on top of it.
+	 *
+	 * @return array list of wikis, each entry is a dict with 'city_id', 'city_url' and 'city_dbname' keys
+	 */
+	public static function getLanguageWikis() {
+		global $wgScriptPath, $wgServer, $wgCityId;
+
+		if ( $wgScriptPath !== '' ) {
+			return [];
+		}
+
+		$dbr = static::db( DB_SLAVE );
+
+		$url = parse_url( $wgServer );
+		$server = static::normalizeHost( $url['host'] );
+		$where = [
+			$dbr->makeList( [
+				'city_url ' . $dbr->buildLike( "http://{$server}/", $dbr->anyString() ),
+				'city_url ' . $dbr->buildLike( "https://{$server}/", $dbr->anyString() ),
+			], LIST_OR ),
+			"city_id != $wgCityId",
+		];
+		$dbResult = $dbr->select(
+			[ 'city_list' ],
+			[ 'city_id', 'city_url', 'city_dbname' ],
+			$where,
+			__METHOD__
+		);
+		$result = [];
+		while ( $row = $dbr->fetchObject( $dbResult ) ) {
+			$result[] = [
+				'city_id' => $row->city_id,
+				'city_url' => $row->city_url,
+				'city_dbname' => $row->city_dbname,
+			];
+		}
+		$dbr->freeResult( $dbResult );
+		return $result;
+	}
+
+	/**
 	 * Strips the language path from city_url.
 	 *
 	 * @param string $cityUrl
@@ -801,12 +845,6 @@ class WikiFactory {
 						[ "city_lang" => $value ],
 						[ "city_id" => $city_id ],
 						__METHOD__ );
-
-					#--- update language tags
-					$tags = new WikiFactoryTags( $city_id );
-					$tags->removeTagsByName( $oldValue );
-					$tags->addTagsByName( $value );
-					break;
 
 				case "wgSitename":
 					#--- city_title
@@ -1063,10 +1101,6 @@ class WikiFactory {
 		if ( $city_id == $wgCityId ) {
 			return isset($GLOBALS[$cv_name]) ? $GLOBALS[$cv_name] : null;
 		}
-		if ( $cv_name == 'wgServer' || $cv_name == 'wgArticlePath' ) {
-			// these are not a WF variable anymore. Remove this check after they are deleted from city_variables
-			return null;
-		}
 
 		wfProfileIn( __METHOD__ );
 
@@ -1201,6 +1235,26 @@ class WikiFactory {
 	}
 
 	/**
+	 * "Unlocalizes" the host replaces env-specific domains with "wikia.com", for example
+	 * 'muppet.preview.wikia.com' -> 'muppet.wikia.com'
+	 *
+	 * @param $host
+	 * @return string normalized host name
+	 */
+	protected static function normalizeHost( $host ) {
+		global $wgDevDomain, $wgWikiaBaseDomain;
+		// strip env-specific pre- and suffixes for staging environment
+		$host = preg_replace(
+			'/\.(stable|preview|verify|sandbox-[a-z0-9]+)\.' . preg_quote( $wgWikiaBaseDomain ) . '/',
+			static::WIKIA_TOP_DOMAIN,
+			$host );
+		if ( !empty( $wgDevDomain ) ) {
+			$host = str_replace( ".{$wgDevDomain}", static::WIKIA_TOP_DOMAIN, $host );
+		}
+		return $host;
+	}
+
+	/**
 	 * getLocalEnvURL
 	 *
 	 * return URL specific to current env:
@@ -1244,11 +1298,7 @@ class WikiFactory {
 			$address = '/' . $address;
 		}
 
-		// strip env-specific pre- and suffixes for staging environment
-		$server = preg_replace( '/\.(stable|preview|verify|sandbox-[a-z0-9]+)\.wikia\.com/', '.wikia.com', $server );
-		if ( !empty( $wgDevDomain ) ) {
-			$server = str_replace( ".{$wgDevDomain}", '', $server );
-		}
+		$server = static::normalizeHost( $server );
 		$server = str_replace( static::WIKIA_TOP_DOMAIN, '', $server );
 		$server = str_replace( '.' . $wgWikiaBaseDomain, '', $server ); // PLATFORM-2400: make WF redirects work on staging
 
@@ -1652,8 +1702,6 @@ class WikiFactory {
 			return false;
 		}
 
-		wfProfileIn( __METHOD__ );
-
 		if ( $wgWikicitiesReadOnly ) {
 			Wikia::log( __METHOD__, "", "wgWikicitiesReadOnly mode. Skipping update.");
 		}
@@ -1671,12 +1719,6 @@ class WikiFactory {
 		}
 
 		/**
-		 * clear tags cache
-		 */
-		$tags = new WikiFactoryTags( $city_id );
-		$tags->clearCache();
-
-		/**
 		 * clear domains cache
 		 */
 		static::clearDomainCache( $city_id );
@@ -1684,16 +1726,15 @@ class WikiFactory {
 		/**
 		 * clear variables cache
 		 */
-		$wgMemc->delete( "WikiFactory::getCategory:" . $city_id ); //ugly cat clearing (fb#9937)
+		$wgMemc->delete( "WikiFactory::getCategory:" .
+		                 $city_id ); //ugly cat clearing (fb#9937)
 		$wgMemc->delete( static::getVarsKey( $city_id ) );
 
-		$city_dbname = static::IDtoDB( $city_id ) ;
+		$city_dbname = static::IDtoDB( $city_id );
 		$wgMemc->delete( static::getWikiaCacheKey( $city_id ) );
 		if ( !empty( $city_dbname ) ) {
 			$wgMemc->delete( static::getWikiaDBCacheKey( $city_dbname ) );
 		}
-
-		wfProfileOut( __METHOD__ );
 
 		return true;
 	}
@@ -2106,44 +2147,40 @@ class WikiFactory {
 			return null;
 		}
 
-		if ( !empty( $city_id ) ) {
-			$oRow2 = WikiaDataAccess::cache(
-				static::getVarValueKey( $city_id, $oRow->cv_id ),
-				WikiaResponse::CACHE_STANDARD,
-				function() use ($dbr, $oRow, $city_id, $fname) {
-					return $dbr->selectRow(
-						[ "city_variables" ],
-						[
-							"cv_city_id",
-							"cv_variable_id",
-							"cv_value"
-						],
-						[
-							"cv_variable_id" => $oRow->cv_id,
-							"cv_city_id" => $city_id
-						],
-						$fname
-					);
+		$oVariableValue = WikiaDataAccess::cache(
+			static::getVarValueKey( $city_id, $oRow->cv_id ),
+			WikiaResponse::CACHE_STANDARD,
+			function() use ($dbr, $oRow, $city_id, $fname) {
+				$row = $dbr->selectRow(
+					[ "city_variables" ],
+					[
+						"cv_city_id",
+						"cv_variable_id",
+						"cv_value"
+					],
+					[
+						"cv_variable_id" => $oRow->cv_id,
+						"cv_city_id" => $city_id
+					],
+					$fname
+				);
+
+				// SUS-4761 | variable is NOT set in database, still cache it
+				if ( !isset( $row->cv_variable_id ) ) {
+					$row = new stdClass();
+					$row->cv_city_id = $city_id;
+					$row->cv_variable_id = $oRow->cv_id;
+					$row->cv_value = null;
 				}
-			);
 
-			if ( isset( $oRow2->cv_variable_id ) ) {
+				return $row;
+			}
+		);
 
-				$oRow->cv_city_id = $oRow2->cv_city_id;
-				$oRow->cv_variable_id = $oRow2->cv_variable_id;
-				$oRow->cv_value = $oRow2->cv_value;
-			}
-			else {
-				$oRow->cv_city_id = $city_id;
-				$oRow->cv_variable_id = $oRow->cv_id;
-				$oRow->cv_value = null;
-			}
-		}
-		else {
-			$oRow->cv_city_id = null;
-			$oRow->cv_variable_id = $oRow->cv_id;
-			$oRow->cv_value = null;
-		}
+		// merge variable value with variable's metadata
+		$oRow->cv_city_id = $oVariableValue->cv_city_id;
+		$oRow->cv_variable_id = $oVariableValue->cv_variable_id;
+		$oRow->cv_value = $oVariableValue->cv_value;
 
 		wfProfileOut( __METHOD__ );
 		return $oRow;
@@ -3349,6 +3386,17 @@ class WikiFactory {
 	}
 
 	/**
+	 * Returns language path for a given wiki.
+	 *
+	 * @param int $cityId
+	 * @param string $href
+	 * @return string
+	 */
+	static public function cityIdToLanguagePath( $cityId ) {
+		return static::cityUrlToLanguagePath( static::cityIDtoUrl( $cityId ) );
+	}
+
+	/**
 	 * Renders community's value of given variable
 	 *
 	 * @access public
@@ -3404,11 +3452,9 @@ class WikiFactory {
 	 * @return string
 	 */
 	static private function parseValue( $value, $type ) {
-		if ( $type == "string" || $type == "integer"  ) {
+		if ( $type == "string" || $type == "text" || $type == "integer" ) {
 			return htmlspecialchars( $value );
-		}
-
-		if ( $type == "array" || $type == "struct" || $type == "hash" ) {
+		} elseif ( $type == "array" || $type == "struct" || $type == "hash" ) {
 			return json_encode( $value, JSON_PRETTY_PRINT );
 		}
 

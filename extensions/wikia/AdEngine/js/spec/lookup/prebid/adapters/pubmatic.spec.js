@@ -11,11 +11,6 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.pubmatic', function () {
 				return map;
 			}
 		},
-		instartLogic: {
-			isBlocking: function() {
-				return false;
-			}
-		},
 		log: function () {}
 	};
 
@@ -25,19 +20,16 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.pubmatic', function () {
 		return modules['ext.wikia.adEngine.lookup.prebid.adapters.pubmatic'](
 			mocks.adContext,
 			mocks.slotsContext,
-			mocks.instartLogic,
 			mocks.log
 		);
 	}
 
 	it('enables bidder if flag is on and user is not blocking ads', function () {
-		spyOn(mocks.instartLogic, 'isBlocking').and.returnValue(false);
 		spyOn(mocks.adContext, 'get').and.returnValue(true);
 		expect(getPubMatic().isEnabled()).toBeTruthy();
 	});
 
 	it('disables bidder if flag is off and user is not blocking ads', function () {
-		spyOn(mocks.instartLogic, 'isBlocking').and.returnValue(false);
 		spyOn(mocks.adContext, 'get').and.returnValue(false);
 		expect(getPubMatic().isEnabled()).toBeFalsy();
 	});
@@ -55,20 +47,24 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.pubmatic', function () {
 			]
 		})).toEqual({
 			code: 'TOP_LEADERBOARD',
-			sizes: [[728, 90], [970, 250]],
+			mediaTypes: {
+				banner: {
+					sizes: [[728, 90], [970, 250]]
+				}
+			},
 			bids: [
 				{
 					bidder: 'pubmatic',
 					params: {
 						adSlot: '/5441/TOP_LEADERBOARD_728x90@728x90',
-						publisherId: 156260
+						publisherId: '156260'
 					}
 				},
 				{
 					bidder: 'pubmatic',
 					params: {
 						adSlot: '/5441/TOP_LEADERBOARD_970x250@970x250',
-						publisherId: 156260
+						publisherId: '156260'
 					}
 				}
 			]

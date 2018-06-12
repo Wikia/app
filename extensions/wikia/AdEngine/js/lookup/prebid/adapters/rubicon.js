@@ -3,49 +3,48 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.rubicon', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.context.slotsContext',
 	'ext.wikia.adEngine.lookup.prebid.adaptersHelper',
-	'ext.wikia.aRecoveryEngine.instartLogic.recovery',
 	'wikia.log'
-], function (adContext, slotsContext, adaptersHelper, instartLogic, log) {
+], function (adContext, slotsContext, adaptersHelper, log) {
 	'use strict';
 
 	var bidderName = 'rubicon', // aka rubicon vulcan
 		logGroup = 'ext.wikia.adEngine.lookup.prebid.adapters.rubicon',
-		rubiconAccountId = 7450,
+		rubiconAccountId = '7450',
 		slots = {
 			oasis: {
 				FEATURED: {
 					disabled: true,
-					siteId: 147980,
-					sizeId: 201,
-					zoneId: 699374,
+					siteId: '147980',
+					sizeId: '201',
+					zoneId: '699374',
 					position: 'btf'
 				},
 				INCONTENT_PLAYER: {
-					siteId: 55412,
-					sizeId: 203,
-					zoneId: 260296,
+					siteId: '55412',
+					sizeId: '203',
+					zoneId: '260296',
 					position: 'btf'
 				}
 			},
 			mercury: {
 				FEATURED: {
 					disabled: true,
-					siteId: 147980,
-					sizeId: 201,
-					zoneId: 699374,
+					siteId: '147980',
+					sizeId: '201',
+					zoneId: '699374',
 					position: 'btf'
 				},
 				MOBILE_IN_CONTENT: {
-					siteId: 55412,
-					sizeId: 203,
-					zoneId: 563110,
+					siteId: '55412',
+					sizeId: '203',
+					zoneId: '563110',
 					position: 'btf'
 				}
 			}
 		};
 
 	function isEnabled() {
-		return adContext.get('bidders.rubicon') && !instartLogic.isBlocking();
+		return adContext.get('bidders.rubicon');
 	}
 
 	function prepareAdUnit(slotName, config, skin) {
@@ -65,18 +64,21 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.rubicon', [
 			position: config.position,
 			inventory: targeting,
 			video: {
-				playerHeight: 480,
-				playerWidth: 640,
-				size_id: config.sizeId
+				playerHeight: '480',
+				playerWidth: '640',
+				size_id: config.sizeId,
+				language: (targeting.lang && targeting.lang[0]) || 'en'
 			}
 		};
 
 		adUnit = {
 			code: slotName,
-			sizes: [
-				[640, 480]
-			],
 			mediaType: 'video',
+			mediaTypes: {
+				video: {
+					playerSize: [640, 480]
+				}
+			},
 			bids: [
 				{
 					bidder: bidderName,

@@ -85,9 +85,7 @@ Wall.EditMessageForm = $.createClass(Wall.MessageForm, {
 
 		msg.find('.buttonswrapper').show();
 
-		if( window.skin && window.skin != "monobook" ) {
-			WikiaButtons.init(bubble);
-		}
+		WikiaButtons.init(bubble);
 
 		this.afterCancel(body, isSource, target, bubble);
 	},
@@ -158,9 +156,7 @@ Wall.EditMessageForm = $.createClass(Wall.MessageForm, {
 				$timestamp.find('.timeago').attr('title', data.isotime).timeago();
 				$timestamp.find('.timeago-fmt').html(data.fulltime);
 
-				if (window.skin && window.skin != "monobook") {
-					WikiaButtons.init(msg);
-				}
+				WikiaButtons.init(msg);
 
 				buttons.removeAttr('disabled');
 

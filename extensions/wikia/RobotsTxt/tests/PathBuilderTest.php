@@ -11,11 +11,11 @@ class PathBuilderTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * Test testBuildPaths
+	 * Test buildPathsForPage
 	 *
-	 * @covers PathBuilder::testBuildPaths
+	 * @covers PathBuilder::testBuildPathsForPage
 	 */
-	public function testBuildPaths() {
+	public function testBuildPathsForPage() {
 		$pathBuilder = new PathBuilder();
 
 		$this->assertEquals(
@@ -24,12 +24,25 @@ class PathBuilderTest extends WikiaBaseTest {
 				'/*?*title=Test123',
 				'/index.php/Test123',
 			],
-			$pathBuilder->buildPaths( 'Test123' )
+			$pathBuilder->buildPathsForPage( 'Test123' )
 		);
 
 		$this->assertEquals(
 			[ '/wiki/Test123' ],
-			$pathBuilder->buildPaths( 'Test123', true )
+			$pathBuilder->buildPathsForPage( 'Test123', true )
+		);
+	}
+
+	/**
+	 * Test buildPath method
+	 *
+	 * @covers PathBuilder::buildPath
+	 */
+	public function testBuildPath() {
+		$pathBuilder = new PathBuilder();
+		$this->assertEquals(
+			'/wiki/Test123',
+			$pathBuilder->buildPath( '/wiki/Test123' )
 		);
 	}
 
@@ -43,17 +56,17 @@ class PathBuilderTest extends WikiaBaseTest {
 
 		$this->assertEquals(
 			[ '/wiki/%C4%85%C5%9B%C4%87' ],
-			$pathBuilder->buildPaths( 'ąść', true )
+			$pathBuilder->buildPathsForPage( 'ąść', true )
 		);
 
 		$this->assertEquals(
 			[ '/wiki/%E3%82%B5%E3%82%A4%E3%83%88%E3%83%9E%E3%83%83%E3%83%97' ],
-			$pathBuilder->buildPaths( 'サイトマップ', true )
+			$pathBuilder->buildPathsForPage( 'サイトマップ', true )
 		);
 
 		$this->assertEquals(
 			[ '/wiki/*/*%5E%25$' ],
-			$pathBuilder->buildPaths( '*/*^%$', true )
+			$pathBuilder->buildPathsForPage( '*/*^%$', true )
 		);
 	}
 
@@ -135,6 +148,7 @@ class PathBuilderTest extends WikiaBaseTest {
 			],
 			$pathBuilder->buildPathsForSpecialPage( 'Randompage', true )
 		);
+
 	}
 
 	/**
@@ -188,6 +202,57 @@ class PathBuilderTest extends WikiaBaseTest {
 		$this->assertEquals( [
 			'/*?someparam=',
 			'/*?*&someparam=',
+		], $pathBuilder->buildPathsForParam( 'someparam' ) );
+
+	}
+
+	/**
+	 * Test language path wikis
+	 */
+	public function testLanguagePathWikis() {
+		$this->mockGlobalVariable( 'wgScriptPath', '/de' );
+		$this->mockGlobalVariable( 'wgArticlePath', '/de/wiki/$1' );
+		$pathBuilder = new PathBuilder();
+
+		$this->assertEquals(
+			'/de/wiki/Test123',
+			$pathBuilder->buildPath( '/wiki/Test123' )
+		);
+
+		$this->assertEquals(
+			[ '/de/wiki/Test123' ],
+			$pathBuilder->buildPathsForPage( 'Test123', true )
+		);
+
+		$this->assertEquals(
+			[
+				'/de/wiki/Test123',
+				'/de/*?*title=Test123',
+				'/de/index.php/Test123',
+			],
+			$pathBuilder->buildPathsForPage( 'Test123' )
+		);
+
+		$this->assertEquals(
+			[ '/de/wiki/File:' ],
+			$pathBuilder->buildPathsForNamespace( NS_FILE, true )
+		);
+
+		$this->assertEquals(
+			[
+				'/de/wiki/Special:Random',
+				'/de/*?*title=Special:Random',
+				'/de/index.php/Special:Random',
+				'/de/wiki/Special:RandomPage',
+				'/de/*?*title=Special:RandomPage',
+				'/de/index.php/Special:RandomPage',
+			],
+			$pathBuilder->buildPathsForSpecialPage( 'Randompage' )
+		);
+
+		$this->assertEquals( [
+			'/de/*?someparam=',
+			'/de/*?*&someparam=',
 		], $pathBuilder->buildPathsForParam( 'someparam' ) );
 	}
 }

@@ -1,8 +1,8 @@
 <?php
 /**
  * This does the initial setup for a web request.
- * It does some security checks, starts the profiler and loads the
- * configuration, and optionally loads Setup.php depending on whether
+ * It does some security checks, loads the configuration,
+ * and optionally loads Setup.php depending on whether
  * MW_NO_SETUP is defined.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -112,14 +112,6 @@ if ( isset( $_SERVER['MW_COMPILED'] ) ) {
 	require_once( "$IP/includes/Defines.php" );
 }
 
-# Start the profiler
-$wgProfiler = array();
-if ( file_exists( "$IP/StartProfiler.php" ) ) {
-	require( "$IP/StartProfiler.php" );
-}
-
-wfProfileIn( 'WebStart.php-conf' );
-
 # Load default settings
 # Wikia change - comment out the next line since we include DefaultSettings.php
 # in LocalSettings.php
@@ -154,9 +146,6 @@ if ( $wgEnableSelenium ) {
 $initialOutput = ob_get_clean();
 // Wikia change - end
 
-wfProfileOut( 'WebStart.php-conf' );
-
-wfProfileIn( 'WebStart.php-ob_start' );
 # Initialise output buffering
 # Check that there is no previous output or previously set up buffers, because
 # that would cause us to potentially mix gzip and non-gzip output, creating a
@@ -172,8 +161,6 @@ if ( !defined( 'MW_NO_OUTPUT_BUFFER' ) && ob_get_level() == 0 ) {
 // Catch all output
 echo $initialOutput;
 // Wikia change - end
-
-wfProfileOut( 'WebStart.php-ob_start' );
 
 if ( !defined( 'MW_NO_SETUP' ) ) {
 	require_once( MWInit::compiledPath( "includes/Setup.php" ) );

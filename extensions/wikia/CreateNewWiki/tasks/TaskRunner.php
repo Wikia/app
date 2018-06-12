@@ -30,7 +30,6 @@ class TaskRunner {
 		$this->tasks[] = new ConfigureUsers( $taskContext );
 		$this->tasks[] = new ConfigureCategories( $taskContext );
 		$this->tasks[] = new SetCustomSettings( $taskContext );
-		$this->tasks[] = new SetTags( $taskContext );
 		$this->tasks[] = new StartPostCreationTasks( $taskContext );
 		$this->tasks[] = new EnableDiscussionsTask( $taskContext );
 	}

@@ -1,9 +1,8 @@
 /*global define*/
 define('ext.wikia.adEngine.lookup.prebid.adapters.openx',[
 	'ext.wikia.adEngine.adContext',
-	'ext.wikia.adEngine.context.slotsContext',
-	'ext.wikia.aRecoveryEngine.instartLogic.recovery'
-], function (adContext, slotsContext, instartLogic) {
+	'ext.wikia.adEngine.context.slotsContext'
+], function (adContext, slotsContext) {
 	'use strict';
 
 	var bidderName = 'openx',
@@ -65,7 +64,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.openx',[
 		};
 
 	function isEnabled() {
-		return adContext.get('bidders.openx') && !instartLogic.isBlocking();
+		return adContext.get('bidders.openx');
 	}
 
 	function getSlots(skin) {
@@ -75,7 +74,11 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.openx',[
 	function prepareAdUnit(slotName, config) {
 		return {
 			code: slotName,
-			sizes: config.sizes,
+			mediaTypes: {
+				banner: {
+					sizes: config.sizes
+				}
+			},
 			bids: [
 				{
 					bidder: bidderName,

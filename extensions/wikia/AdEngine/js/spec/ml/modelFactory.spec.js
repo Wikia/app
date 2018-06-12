@@ -12,7 +12,7 @@ describe('ext.wikia.adEngine.ml.modelFactory', function () {
 
 	it('Create model with proper interface', function () {
 		var model = getModule().create({
-			inputParser: {},
+			dataSource: {},
 			model: {},
 			name: 'foo',
 			wgCountriesVariable: 'bar',
@@ -25,10 +25,23 @@ describe('ext.wikia.adEngine.ml.modelFactory', function () {
 		expect(typeof(model.predict)).toBe('function');
 	});
 
+	it('Enabled property can be a function', function () {
+		var model = getModule().create({
+			dataSource: {},
+			model: {},
+			name: 'foo',
+			enabled: function () {
+				return false;
+			}
+		});
+
+		expect(model.isEnabled()).toBeFalsy();
+	});
+
 	it('Throw exception when model has missing field', function () {
 		expect(function () {
 			getModule().create({
-				inputParser: {},
+				dataSource: {},
 				model: {},
 				wgCountriesVariable: 'bar',
 				enabled: true

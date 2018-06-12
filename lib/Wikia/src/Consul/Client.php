@@ -22,15 +22,21 @@ class Client {
 	use Loggable;
 
 	protected $logger;
+	protected $options;
 
 	/* @var \SensioLabs\Consul\Services\Health $api */
 	protected $api;
 
-	function __construct() {
-		$this->logger = WikiaLogger::instance();
+	/* @var \SensioLabs\Consul\Services\Catalog $api */
+	protected $catalog;
 
-		$consulService = new ServiceFactory( [], $this->logger );
+	function __construct(array $options = []) {
+		$this->logger = WikiaLogger::instance();
+		$this->options = $options;
+
+		$consulService = new ServiceFactory( $options, $this->logger );
 		$this->api = $consulService->get( 'health' );
+		$this->catalog = $consulService->get( 'catalog' );
 	}
 
 	/**
@@ -70,7 +76,7 @@ class Client {
 	 * @return array list of IP addresses with ports ie. 127.0.0.1:1234
 	 */
 	private function getNodesFromConsulQuery( string $query ) : array {
-		$consulClient = new ConsulClient();
+		$consulClient = new ConsulClient( $this->options );
 		$resp = $consulClient->get(
 			sprintf( '/v1/query/%s/execute?passing=', $query )
 		)->json();
@@ -112,6 +118,19 @@ class Client {
 		else {
 			throw new \Exception( __METHOD__ . " - {$hostname} is neither consul query nor consul service address" );
 		}
+	}
+
+	/**
+	 * @param string $env either prod or dev
+	 * @return string[]
+	 */
+	function getDataCentersForEnv( string $env ) {
+		global $wgConsulDataCenters;
+		return $wgConsulDataCenters[$env];
+	}
+
+	static function getConsulBaseUrlForDC( string $dc ) : string {
+		return sprintf( 'http://consul.service.%s.consul:8500', $dc );
 	}
 
 	/**

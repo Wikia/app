@@ -48,7 +48,7 @@ if ( isset( $options['pagelist'] ) ) {
 		die(1);
 	}
 	$pages = array_map( 'trim', $pages );
-	$dumper->pages = array_filter( $pages, create_function( '$x', 'return $x !== "";' ) );
+	$dumper->pages = array_filter( $pages, function ( $x ) { return $x !== ""; } );
 }
 
 if ( isset( $options['start'] ) ) {

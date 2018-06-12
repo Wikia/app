@@ -10,30 +10,22 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.openx', function () {
 			filterSlotMap: function (map) {
 				return map;
 			}
-		},
-		instartLogic: {
-			isBlocking: function() {
-				return false;
-			}
 		}
 	};
 
 	function getOpenx() {
 		return modules['ext.wikia.adEngine.lookup.prebid.adapters.openx'](
 			mocks.adContext,
-			mocks.slotsContext,
-			mocks.instartLogic
+			mocks.slotsContext
 		);
 	}
 
 	it('enables bidder if flag is on and user is not blocking ads', function () {
-		spyOn(mocks.instartLogic, 'isBlocking').and.returnValue(false);
 		spyOn(mocks.adContext, 'get').and.returnValue(true);
 		expect(getOpenx().isEnabled()).toBeTruthy();
 	});
 
 	it('disables bidder if flag is off and user is not blocking ads', function () {
-		spyOn(mocks.instartLogic, 'isBlocking').and.returnValue(false);
 		spyOn(mocks.adContext, 'get').and.returnValue(false);
 		expect(getOpenx().isEnabled()).toBeFalsy();
 	});
@@ -48,7 +40,11 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.openx', function () {
 			unit: 123
 		})).toEqual({
 			code: 'TOP_LEADERBOARD',
-			sizes: [[728, 90], [970, 250]],
+			mediaTypes: {
+				banner: {
+					sizes: [[728, 90], [970, 250]]
+				}
+			},
 			bids: [
 				{
 					bidder: 'openx',

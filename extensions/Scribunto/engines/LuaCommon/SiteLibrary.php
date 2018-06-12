@@ -21,6 +21,7 @@ class Scribunto_LuaSiteLibrary extends Scribunto_LuaLibraryBase {
 			'scriptPath' => $GLOBALS['wgScriptPath'],
 			'stylePath' => $GLOBALS['wgStylePath'],
 			'currentVersion' => SpecialVersion::getVersion(),
+			'sassParams' => SassUtil::getSassSettings()
 		);
 
 		if ( !self::$namespacesCache ) {

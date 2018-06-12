@@ -33,27 +33,23 @@ $wgExtensionCredits['specialpage'][] = array(
 class WhereIsExtension extends SpecialPage {
 	private $values;
 
-        // number of items per page in paged view
-        const ITEMS_PER_PAGE = 50;
+	// number of items per page in paged view
+	const ITEMS_PER_PAGE = 50;
 
 	function  __construct() {
 		parent::__construct('WhereIsExtension' /*class*/, 'WhereIsExtension' /*restriction*/);
 	}
 
 	function execute( $par ) {
-		global $wgOut, $wgUser, $wgRequest, $wgTitle;
-		$gVar = $wgRequest->getText('var');
-		$gVal = $wgRequest->getVal('val', 'true');
-		$gLikeVal = $wgRequest->getVal('likeValue', 'true');
-		$gTypeVal = $wgRequest->getVal('searchType', 'bool');
+		$this->checkPermissions();
 
-		$wgOut->SetPageTitle(wfMsg('whereisextension'));
-		$wgOut->setRobotpolicy('noindex,nofollow');
+		$gVar = $this->getRequest()->getText('var');
+		$gVal = $this->getRequest()->getVal('val', 'true');
+		$gLikeVal = $this->getRequest()->getVal('likeValue', 'true');
+		$gTypeVal = $this->getRequest()->getVal('searchType', 'bool');
 
-		if( !$wgUser->isAllowed('WhereIsExtension') ) {
-			$this->displayRestrictionError();
-			return;
-		}
+		$this->getOutput()->SetPageTitle(wfMsg('whereisextension'));
+		$this->getOutput()->setRobotpolicy('noindex,nofollow');
 
 		$this->values = array (
 			//[0] displayed name
@@ -64,13 +60,6 @@ class WhereIsExtension extends SpecialPage {
 			2 => array('not empty', '', '!=')
 		);
 
-		$tagName = $wgRequest->getVal( 'wikiSelectTagName', null);
-		$tagWikis = $wgRequest->getArray( 'wikiSelected' );
-		$tagResultInfo = '';
-		if ( $wgRequest->wasPosted() && !empty( $tagName ) && count( $tagWikis )) {
-			$tagResultInfo = $this->tagSelectedWikis( $tagName, $tagWikis );
-		}
-
 		$formData['vars'] = $this->getListOfVars($gVar == '');
 		$formData['vals'] = $this->values;
 		$formData['selectedVal'] = $gVal;
@@ -78,7 +67,7 @@ class WhereIsExtension extends SpecialPage {
 		$formData['searchType'] = $gTypeVal;
 		$formData['selectedGroup'] = $gVar == '' ? 27 : '';	//default group: extensions (or all groups when looking for variable, rt#16953)
 		$formData['groups'] = WikiFactory::getGroups();
-		$formData['actionURL'] = $wgTitle->getFullURL();
+		$formData['actionURL'] = $this->getTitle()->getLocalURL();
 
                 // by default, we don't need a paginator
                 $sPager = '';
@@ -98,13 +87,14 @@ class WhereIsExtension extends SpecialPage {
 				// if there are any, get the list and create a Paginator
 				if ( 0 < $formData['count'] ) {
 					// determine the offset (from the requested page)
-					$iPage = $wgRequest->getVal( 'page', 1 );
+					$iPage = $this->getRequest()->getVal( 'page', 1 );
 					$iOffset = ( $iPage - 1 ) * self::ITEMS_PER_PAGE;
 
 					// the list
 					$formData['wikis'] = WikiFactory::getListOfWikisWithVar( $gVar, $gTypeVal, $this->values[$gVal][2], $this->values[$gVal][1], $gLikeVal, $iOffset, self::ITEMS_PER_PAGE );
 
-					$url = sprintf( '%s?var=%s&val=%s&likeValue=%s&searchType=%s', $wgTitle->getFullURL(), $gVar, $gVal, $gLikeVal, $gTypeVal );
+					$url = sprintf( '%s?var=%s&val=%s&likeValue=%s&searchType=%s',
+						$this->getTitle()->getLocalURL(), $gVar, $gVal, $gLikeVal, $gTypeVal );
 					$oPaginator = new Paginator( $formData['count'], self::ITEMS_PER_PAGE, $url );
 					$oPaginator->setActivePage( $iPage );
 					$sPager = $oPaginator->getBarHTML();
@@ -115,11 +105,10 @@ class WhereIsExtension extends SpecialPage {
 		$oTmpl = new EasyTemplate(dirname( __FILE__ ) . '/templates/');
 		$oTmpl->set_vars( array(
 			'formData' => $formData,
-			'tagResultInfo' => $tagResultInfo,
 			// pass the pager to the template
 			'sPager' => $sPager
 		));
-		$wgOut->addHTML($oTmpl->render('list'));
+		$this->getOutput()->addHTML($oTmpl->render('list'));
 	}
 
 	//fetching variable list from 'extension' group
@@ -147,28 +136,5 @@ class WhereIsExtension extends SpecialPage {
 		}
 		$dbr->freeResult( $oRes );
 		return $aVariables;
-	}
-
-	private function tagSelectedWikis( $tagName, Array $tagWikis) {
-		global $wgCityId;
-
-		if(!class_exists('WikiFactoryTags', true)) {
-			return "WikiFactory extension must be enabled";
-		}
-
-		if (!empty($tagName) ) {
-			foreach( $tagWikis as $wikiId ) {
-				$wikiTags = new WikiFactoryTags( $wikiId );
-				$wikiTags->addTagsByName( $tagName );
-			}
-			$wikiFactoryUrl = Title::makeTitle( NS_SPECIAL, 'WikiFactory' )->getFullUrl() . '/' . $wgCityId . '/tags/' . $tagName;
-
-			$msg = count( $tagWikis ) . " wiki(s) tagged with tag: <a href=\"$wikiFactoryUrl\">$tagName</a>";
-		}
-		else {
-			$msg = "Empty tag name";
-		}
-
-		return $msg;
 	}
 }

@@ -71,7 +71,9 @@ class WikiFactoryLoader {
 			// normal HTTP request
 			$this->mServerName = strtolower( $server['SERVER_NAME'] );
 
-			$path = parse_url( $server['REQUEST_URI'], PHP_URL_PATH );
+			$fullUrl =  preg_match( "/^https?:\/\//", $server['REQUEST_URI'] ) ? $server['REQUEST_URI'] :
+				$server['REQUEST_SCHEME'] . '://' . $server['SERVER_NAME'] . $server['REQUEST_URI'];
+			$path = parse_url( $fullUrl, PHP_URL_PATH );
 
 			$slash = strpos( $path, '/', 1 ) ?: strlen( $path );
 
@@ -181,7 +183,10 @@ class WikiFactoryLoader {
 	 *
 	 * @author Krzysztof Krzyżaniak <eloy@wikia-inc.com>
 	 *
-	 * @return integer: wikia id or null if wikia is not handled by WikiFactory
+	 * @return int|bool wiki ID if wiki was found, false if wiki was not found, is a redirect etc.
+	 * If false is returned, the caller must stop processing the request and exit immediately,
+	 * as WikiFactoryLoader will have already taken the required steps to serve the request
+	 * (e.g. setting 301 redirect status code).
 	 */
 	public function execute() {
 		global $wgCityId, $wgDevelEnvironment,
@@ -394,16 +399,9 @@ class WikiFactoryLoader {
 		$cond2 = $this->mAlternativeDomainUsed && ( $url['host'] != $this->mOldServerName );
 
 		if( ( $cond1 || $cond2 ) && empty( $wgDevelEnvironment ) ) {
-			global $wgCookiePrefix;
 			$redirectUrl = WikiFactory::getLocalEnvURL( $this->mCityUrl );
-			$hasAuthCookie = !empty( $_COOKIE[\Wikia\Service\User\Auth\CookieHelper::ACCESS_TOKEN_COOKIE_NAME] ) ||
-							 !empty( $_COOKIE[session_name()] ) ||
-							 !empty( $_COOKIE["{$wgCookiePrefix}Token"] ) ||
-							 !empty( $_COOKIE["{$wgCookiePrefix}UserID"] );
 
-			if ( $hasAuthCookie &&
-				 $_SERVER['HTTP_FASTLY_SSL'] &&
-				 // Hack until we are better able to handle internal HTTPS requests
+			if ( $_SERVER['HTTP_FASTLY_SSL'] &&
 				 !empty( $_SERVER['HTTP_FASTLY_FF'] ) &&
 				 wfHttpsAllowedForURL( $redirectUrl )
 			) {
@@ -427,6 +425,12 @@ class WikiFactoryLoader {
 			header( "X-Redirected-By-WF: NotPrimary" );
 			header( 'Vary: Cookie,Accept-Encoding' );
 
+			global $wgCookiePrefix;
+			$hasAuthCookie = !empty( $_COOKIE[\Wikia\Service\User\Auth\CookieHelper::ACCESS_TOKEN_COOKIE_NAME] ) ||
+				!empty( $_COOKIE[session_name()] ) ||
+				!empty( $_COOKIE["{$wgCookiePrefix}Token"] ) ||
+				!empty( $_COOKIE["{$wgCookiePrefix}UserID"] );
+
 			if ( $hasAuthCookie ) {
 				header( 'Cache-Control: private, must-revalidate, max-age=0' );
 			} else {
@@ -444,23 +448,18 @@ class WikiFactoryLoader {
 		 */
 		if( empty( $this->mIsWikiaActive ) || $this->mIsWikiaActive == -2 /* spam */ ) {
 			if( ! $this->mCommandLine ) {
-				global $wgNotAValidWikia;
-				if( $this->mCityDB ) {
-					$database = strtolower( $this->mCityDB );
-					$redirect = sprintf(
-						"http://%s/wiki/Special:CloseWiki/information/%s",
-						($wgDevelEnvironment) ? "www.awc.wikia-inc.com" : "community.{$wgWikiaBaseDomain}",
-						$database
-					);
-				}
-				else {
+				if ( $this->mCityDB ) {
+					include __DIR__ . '/closedWikiHandler.php';
+				} else {
+					global $wgNotAValidWikia;
 					$redirect = $wgNotAValidWikia . '?from=' . rawurlencode( $this->mServerName );
+					$this->debug( "disabled and not commandline, redirected to {$redirect}, {$this->mWikiID} {$this->mIsWikiaActive}" );
+					header( "X-Redirected-By-WF: Dump" );
+					header( "Location: $redirect" );
+
+					wfProfileOut( __METHOD__ );
+					return false;
 				}
-				$this->debug( "disabled and not commandline, redirected to {$redirect}, {$this->mWikiID} {$this->mIsWikiaActive}" );
-				header( "X-Redirected-By-WF: Dump" );
-				header( "Location: $redirect" );
-				wfProfileOut( __METHOD__ );
-				return false;
 			}
 		}
 
@@ -519,36 +518,9 @@ class WikiFactoryLoader {
 				$tUnserVal = unserialize( $oRow->cv_value, [ 'allowed_classes' => false ] );
 				restore_error_handler();
 
-				if ( $oRow->cv_name === "wgServer" || $oRow->cv_name === "wgArticlePath" ) {
-					// these are not a part of WF anymore. Remove this code after thesse variables are deleted from db
-					unset( $this->mVariables[ $oRow->cv_name ] );
-				} else {
-					$this->mVariables[ $oRow->cv_name ] = $tUnserVal;
-				}
+				$this->mVariables[ $oRow->cv_name ] = $tUnserVal;
 			}
 			$dbr->freeResult( $oRes );
-
-			/**
-			 * read tags for this wiki, store in global variable as array
-			 * @name $wgWikiFactoryTags
-			 */
-			wfProfileIn( __METHOD__."-tagsdb" );
-			$this->mVariables[ "wgWikiFactoryTags" ] = array();
-			$sth = $dbr->select(
-				array( "city_tag", "city_tag_map" ),
-				array( "id", "name"	),
-				array(
-					"city_tag.id = city_tag_map.tag_id",
-					"city_id = {$this->mWikiID}"
-				),
-				__METHOD__ . '::tagsdb'
-			);
-			while( $row = $dbr->fetchObject( $sth ) ) {
-				$this->mVariables[ "wgWikiFactoryTags" ][ $row->id ] = $row->name;
-			}
-			$dbr->freeResult( $sth );
-			$this->debug( "reading tags from database, id {$this->mWikiID}, count ".count( $this->mVariables[ "wgWikiFactoryTags" ] ) );
-			wfProfileOut( __METHOD__."-tagsdb" );
 
 			if( empty($this->mAlwaysFromDB) ) {
 				/**
@@ -579,8 +551,8 @@ class WikiFactoryLoader {
 		}
 
 		# take some WF variables values from city_list
-		$this->mVariables["wgDBname"] = $this->mCityDB;
-		$this->mVariables["wgDBcluster"] = $this->mCityCluster;
+		$this->mVariables['wgDBname'] = $this->mCityDB;
+		$this->mVariables['wgDBcluster'] = $this->mCityCluster;
 		$this->mVariables['wgServer'] = WikiFactory::getLocalEnvURL( WikiFactory::cityUrlToDomain( $this->mCityUrl ) );
 		$this->mVariables['wgScriptPath'] = WikiFactory::cityUrlToLanguagePath( $this->mCityUrl );
 		$this->mVariables['wgScript'] = WikiFactory::cityUrlToWgScript( $this->mCityUrl );
@@ -653,8 +625,9 @@ class WikiFactoryLoader {
 						$tValue = 'http://'.$stagingServer;
 						$wgConf->localVHosts = array_merge( $wgConf->localVHosts, [ $stagingServer ] );
 					}
+					// TODO - what about wgServer value for requests that did not go through Fastly?
 					if ( !empty( $_SERVER['HTTP_FASTLY_SSL'] ) ) {
-						$tValue = str_replace( 'http://', 'https://', $tValue );
+						$tValue = wfHttpToHttps( $tValue );
 					}
 				}
 

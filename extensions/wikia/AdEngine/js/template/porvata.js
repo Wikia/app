@@ -1,4 +1,4 @@
-/*global define, require, setTimeout*/
+/*global define, require*/
 define('ext.wikia.adEngine.template.porvata', [
 	'ext.wikia.adEngine.domElementTweaker',
 	'ext.wikia.adEngine.slot.service.slotRegistry',
@@ -110,6 +110,7 @@ define('ext.wikia.adEngine.template.porvata', [
 			if (fallbackBid) {
 				fallbackAdRequested = true;
 				params.bid = fallbackBid;
+				params.adProduct += '_' + fallbackBid.bidderCode;
 
 				offerEvent = 'wikiaInViewportWithFallbackBid';
 				videoSettings.setMoatTracking(false);
@@ -184,8 +185,8 @@ define('ext.wikia.adEngine.template.porvata', [
 
 		if (prebid && params.hbAdId) {
 			params.bid = prebid.getBidByAdId(params.hbAdId);
-			params.vastResponse = params.bid.vastContent || null;
-			params.vastUrl = params.bid.vastUrl;
+			params.vastResponse = params.bid && params.bid.vastContent ? params.bid.vastContent : null;
+			params.vastUrl = params.bid && params.bid.vastUrl ? params.bid.vastUrl : '';
 		}
 
 		if (!isVideoAutoplaySupported()) {

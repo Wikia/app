@@ -9,8 +9,6 @@ class SpecialPageUserCommand extends UserCommand {
 	protected $disabledExtension = false;
 
 	public function buildData() {
-		global $wgUser, $wgTitle;
-
 		$page = SpecialPageFactory::getPage($this->name);
 		if (!is_object($page)) {
 			$this->buildExternalData();
@@ -18,18 +16,19 @@ class SpecialPageUserCommand extends UserCommand {
 		}
 
 		$this->available = true;
-		$this->enabled = $page->userCanExecute($wgUser);
+		$this->enabled = $page->userCanExecute( $this->getUser() );
 		$this->caption = $page->getDescription();
 		$this->description = $page->getDescription();
 
 		$this->href = $page->getTitle()->getLocalUrl();
 
 		switch ( $this->name ) {
+			case 'PrefixIndex':
 			case 'RecentChangesLinked':
-				$this->href .= '/' . $wgTitle->getPartialUrl();
+				$this->href .= '/' . $this->getTitle()->getPrefixedDBkey();
 				break;
 			case 'Contributions':
-				$this->href .= '/' . $wgUser->getTitleKey();
+				$this->href .= '/' . $this->getUser()->getTitleKey();
 				break;
 		}
 

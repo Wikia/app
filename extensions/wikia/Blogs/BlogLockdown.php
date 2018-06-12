@@ -13,7 +13,6 @@
  *
  * Based on Lockdown extension from Daniel Kinzler, brightbyte.de
  */
-$wgHooks['userCan'][] = 'BlogLockdown::userCan';
 
 class BlogLockdown {
 

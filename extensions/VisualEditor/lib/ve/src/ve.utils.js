@@ -774,6 +774,19 @@ ve.resolveUrl = function ( url, base ) {
 };
 
 /**
+ * Convert a URL to use the current protocol if needed.
+ *
+ * @param {string} url URL to convert
+ * @returns {string} Converted URL
+ */
+ve.convertToCurrentProtocol = function( url ) {
+	if ( !url.startsWith( location.protocol ) ) {
+		return url.replace( /^https?:/, location.protocol );
+	}
+	return url;
+};
+
+/**
  * Get the actual inner HTML of a DOM node.
  *
  * In most browsers, .innerHTML is broken and eats newlines in `<pre>` elements, see

@@ -21,7 +21,7 @@ define('ext.wikia.adEngine.ml.nivens.mobileNivensLogisticRegression', [
 		intercept = 0.03849616;
 
 	return modelFactory.create({
-		inputParser: inputParser,
+		dataSource: inputParser,
 		model: linearModel.create(coefficients, intercept),
 		name: 'mnivens',
 		wgCountriesVariable: 'wgAdDriverMobileNivensRabbitCountries',

@@ -747,7 +747,8 @@ abstract class DatabaseBase implements DatabaseType {
 				'flags' => isset( $p['flags'] ) ? $p['flags'] : 0,
 				'tablePrefix' => isset( $p['tablePrefix'] ) ? $p['tablePrefix'] : 'get from global',
 				'schema' => isset( $p['schema'] ) ? $p['schema'] : $defaultSchemas[$dbType],
-				'foreign' => isset( $p['foreign'] ) ? $p['foreign'] : false
+				'foreign' => isset( $p['foreign'] ) ? $p['foreign'] : false,
+				'lagDetectionMethod' => isset( $p['lagDetectionMethod'] ) ? $p['lagDetectionMethod'] : null // SUS-4805
 			);
 
 			return new $class( $params );
@@ -829,8 +830,8 @@ abstract class DatabaseBase implements DatabaseType {
 	 *
 	 * @return bool
 	 */
-	function isWriteQuery( $sql ) {
-		return !preg_match( '/^(?:SELECT|BEGIN|ROLLBACK|COMMIT|SET|SHOW|EXPLAIN|\(SELECT)\b/i', ltrim( $sql ) ) && // PLATFORM-1417 (ltrim)
+	static function isWriteQuery( $sql ) {
+		return !preg_match( '/^(?:SELECT|BEGIN|ROLLBACK|COMMIT|SET|USE|SHOW|EXPLAIN|\(SELECT)\b/i', ltrim( $sql ) ) && // PLATFORM-1417 (ltrim)
 			!preg_match('/(FOR UPDATE|LOCK IN SHARE MODE)$/i', rtrim( $sql ) ); // MAIN-5810 (rtrim)
 	}
 
@@ -900,7 +901,7 @@ abstract class DatabaseBase implements DatabaseType {
 	 */
 	public function query( $sql, $fname = '', $tempIgnore = false ) {
 		$isMaster = !is_null( $this->getLBInfo( 'master' ) );
-		if ( !Profiler::instance()->isStub() ) {
+		if ( !( Profiler::instance() instanceof ProfilerStub ) ) {
 			# generalizeSQL will probably cut down the query to reasonable
 			# logging size most of the time. The substr is really just a sanity check.
 
@@ -912,12 +913,12 @@ abstract class DatabaseBase implements DatabaseType {
 				$totalProf = 'DatabaseBase::query';
 			}
 
-			wfProfileIn( $totalProf );
-			wfProfileIn( $queryProf );
+			$totalProfileIn = Profiler::instance()->scopedProfileIn( $totalProf );
+			$queryProfileIn = Profiler::instance()->scopedProfileIn( $queryProf );
 		}
 
 		$this->mLastQuery = $sql;
-		$is_writeable = $this->isWriteQuery( $sql );
+		$is_writeable = static::isWriteQuery( $sql );
 		$isTemporaryTableOperation = $this->registerTempTableOperation( $sql );
 
 		if ( !$this->mDoneWrites && $is_writeable ) {
@@ -929,9 +930,9 @@ abstract class DatabaseBase implements DatabaseType {
 		# <Wikia>
 		global $wgDBReadOnly, $wgReadOnly;
 		if ( $is_writeable && !$isTemporaryTableOperation && $wgDBReadOnly ) {
-			if ( !Profiler::instance()->isStub() ) {
-				wfProfileOut( $queryProf );
-				wfProfileOut( $totalProf );
+			if ( isset( $totalProfileIn ) ) {
+				Profiler::instance()->scopedProfileOut( $queryProfileIn );
+				Profiler::instance()->scopedProfileOut( $totalProfileIn );
 			}
 			WikiaLogger::instance()->error( 'DB readonly mode', [
 				'exception' => new WikiaException( $fname . ' called in read-only mode' ),
@@ -1047,9 +1048,9 @@ abstract class DatabaseBase implements DatabaseType {
 			$this->reportQueryError( $this->lastError(), $this->lastErrno(), $sql, $fname, $tempIgnore );
 		}
 
-		if ( !Profiler::instance()->isStub() ) {
-			wfProfileOut( $queryProf );
-			wfProfileOut( $totalProf );
+		if ( isset( $totalProfileIn ) ) {
+			Profiler::instance()->scopedProfileOut( $queryProfileIn );
+			Profiler::instance()->scopedProfileOut( $totalProfileIn );
 		}
 
 		return $this->resultObject( $ret );
@@ -3883,7 +3884,7 @@ abstract class DatabaseBase implements DatabaseType {
 			\Wikia\Logger\LoggerFactory::getInstance()->getLogger( 'mediawiki-sql' )->info( $sql, $context );
 		}
 
-		if ( $this->isWriteQuery($sql) &&
+		if ( static::isWriteQuery($sql) &&
 			(
 				strpos( $sql, '`revision`' ) !== false
 				|| strpos( $sql, '`page`' ) !== false

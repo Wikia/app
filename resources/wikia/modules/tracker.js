@@ -57,7 +57,10 @@
 			],
 			rDoubleSlash = /\/\//g,
 			slice = [].slice,
-			spool = trackerStub.spool;
+			spool = trackerStub.spool,
+			internalTrackingQueue = [],
+			isOptedIn = false,
+			isTrackingOptInReady = false;
 
 		/**
 		 * Detects if an action made on event target was left mouse button click with ctrl key pressed (bugId:45483)
@@ -103,6 +106,26 @@
 			return result;
 		}
 
+		function internalTrack(event, data, onComplete, timeout) {
+			var trackingFunction = sendInternalTrackingEvent.bind(null, event, data, onComplete, timeout);
+
+			if (isTrackingOptInReady) {
+				trackingFunction();
+			} else {
+				internalTrackingQueue.push(trackingFunction);
+			}
+		}
+
+		function flushInternalTrackingQueue(optIn) {
+			isOptedIn = optIn;
+			isTrackingOptInReady = true;
+
+			while (internalTrackingQueue.length > 0) {
+				var fn = internalTrackingQueue.shift();
+				fn();
+			}
+		}
+
 		/**
 		 * @brief Internal Wikia tracking set up by Garth Webb
 		 *
@@ -111,13 +134,18 @@
 		 * @param function onComplete callback function when tracking is completed (or fails)
 		 * @param integer timeout How long to wait before declaring the tracking request as failed (optional)
 		 */
-		function internalTrack( event, data, onComplete, timeout ) {
+		function sendInternalTrackingEvent( event, data, onComplete, timeout ) {
 			var head = document.head || document.getElementsByTagName( 'head' )[ 0 ] || document.documentElement,
 					script = document.createElement( 'script' ),
 					requestUrl = 'https://beacon.wikia-services.com/__track/special/' + encodeURIComponent( event ),
 					requestParameters = [],
 					p,
-					params;
+					params,
+					userId = -1;
+
+			if (isOptedIn) {
+				userId = window.trackID || window.wgTrackID || 0;
+			}
 
 			timeout = timeout || 3000;
 
@@ -139,7 +167,7 @@
 				'a': window.wgArticleId,
 				'lc': window.wgContentLanguage,
 				'n': window.wgNamespaceNumber,
-				'u': window.trackID || window.wgTrackID || 0,
+				'u': userId,
 				's': window.skin,
 				'beacon': window.beacon_id || '',
 				'cb': Math.floor( Math.random() * 99999 ),
@@ -342,6 +370,16 @@
 			track.apply( null, args );
 		}
 
+		require([require.optional('wikia.trackingOptIn')], function (trackingOptIn) {
+			if (trackingOptIn) {
+				trackingOptIn.pushToUserConsentQueue(flushInternalTrackingQueue);
+			} else {
+				// SUS-4895 trackingOptIn could not be loaded
+				// prevent tracking calls from hanging infinitely—treat user as opt-out
+				flushInternalTrackingQueue(false);
+			}
+		});
+
 		/** @public **/
 		return {
 			track: track
@@ -349,6 +387,6 @@
 	}
 
 	// Extending Wikia.Tracker, which is also exported as the AMD module
-	extend( trackerStub, tracker( window ) );
+	extend(trackerStub, tracker(window));
 
 }(window, undefined));

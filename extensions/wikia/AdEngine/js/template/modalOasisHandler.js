@@ -1,4 +1,4 @@
-/*global define, require*/
+/*global define, require, setInterval, clearInterval*/
 define('ext.wikia.adEngine.template.modalOasisHandler', [
 	'jquery',
 	require.optional('wikia.ui.factory')

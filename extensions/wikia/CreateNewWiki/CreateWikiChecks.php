@@ -29,33 +29,36 @@ class CreateWikiChecks {
 	 *
 	 * @return integer - 0 or 1
 	 */
-	public static function domainExists( $name, $language = null, $type = false ) {
+	public static function domainExists( $name, $language = null ) {
 		global $wgExternalSharedDB;
 
-		$sDomain = Wikia::fixDomainName( $name, $language, $type );
-		Wikia::log( __METHOD__, "domain", "{$sDomain} name={$name}, language={$language}, type={$type}" );
+		$variants = self::getDomainVariantsToCheck( $name, $language );
 
-
-		$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
-		$oRow = $dbr->selectRow(
+		$dbr = wfGetDB( DB_SLAVE, [], $wgExternalSharedDB );
+		$cityId = $dbr->selectField(
 			"city_domains",
-			array( "city_id" ),
-			array( "city_domain" => $sDomain ),
+			'city_id',
+			[ "city_domain" => $variants ],
 			__METHOD__
 		);
 
-		if ( !isset($oRow->city_id) ) {
-			$oRow = $dbr->selectRow(
-				"city_domains",
-				array( "city_id" ),
-				array( "city_domain" => sprintf( "%s.%s", "www", $sDomain ) ),
-				__METHOD__
-			);
+		return !empty( $cityId );
+	}
+
+	private static function getDomainVariantsToCheck( string $domain, string $langCode = null ) {
+		global $wgWikiaBaseDomain;
+
+		if ( $langCode != null && $langCode !== 'en' ) {
+			return [
+				"$langCode.$domain.$wgWikiaBaseDomain",
+				"$domain.$wgWikiaBaseDomain/$langCode"
+			];
+		} else {
+			return [
+				"$domain.$wgWikiaBaseDomain",
+				"www.$domain.$wgWikiaBaseDomain",
+			];
 		}
-
-		$result = !empty($oRow->city_id) ? true : false;
-
-		return $result;
 	}
 
 	/*
@@ -79,7 +82,7 @@ class CreateWikiChecks {
 		return $sResponse;
 	}
 
-	public static function checkDomainIsCorrect( $sName, $sLang, $type = false, $useUserLang = true ) {
+	public static function checkDomainIsCorrect( $sName, $sLang, $useUserLang = true ) {
 		wfProfileIn( __METHOD__ );
 		$message = null;
 
@@ -110,7 +113,7 @@ class CreateWikiChecks {
 			#-- invalid language code, most likely due to some frontend hacking
 			$message = wfMessage( 'autocreatewiki-violate-policy' );
 		} else {
-			$iExists = static::checkDomainExists( $sName, $sLang, $type );
+			$iExists = static::domainExists( $sName, $sLang );
 			if ( !empty($iExists) ) {
 				#--- domain exists
 				$message = wfMessage( 'autocreatewiki-name-taken', (!is_null( $sLang ) && ($sLang != 'en')) ? sprintf( "%s.%s", $sLang, $sName ) : $sName );
@@ -131,10 +134,6 @@ class CreateWikiChecks {
 
 	public static function getLanguageNames() {
 		return Language::getLanguageNames();
-	}
-
-	public static function checkDomainExists( $sName, $sLang, $type ) {
-		return CreateWikiChecks::domainExists( $sName, $sLang, $type );
 	}
 
 	/**

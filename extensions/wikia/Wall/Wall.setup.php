@@ -147,9 +147,6 @@ $GLOBALS['wgHooks']['AdvancedBoxSearchableNamespaces'][] = 'WallHooksHelper::onA
 
 $GLOBALS['wgHooks']['HAWelcomeGetPrefixText'][] = 'WallHooksHelper::onHAWelcomeGetPrefixText';
 
-// Monobook toolbar links
-$GLOBALS['wgHooks']['SkinTemplateToolboxEnd'][] = 'WallHooksHelper::onBuildMonobookToolbox';
-
 // Hook for code that wants a beautified title and URL given the not very readable Wall/Forum title
 $GLOBALS['wgHooks']['FormatForumLinks'][] = 'WallHooksHelper::onFormatForumLinks';
 
@@ -196,7 +193,6 @@ JSMessages::registerPackage( 'Wall', [
 	'wall-button-done-source',
 	'wall-action-*',
 	'wall-message-source',
-	'wall-confirm-monobook-*',
 	'wall-posting-message-failed-title',
 	'wall-posting-message-failed-body',
 	'wall-posting-message-failed-filter-title',

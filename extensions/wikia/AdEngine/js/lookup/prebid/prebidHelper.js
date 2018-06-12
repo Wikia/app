@@ -1,8 +1,9 @@
 /*global define*/
 define('ext.wikia.adEngine.lookup.prebid.prebidHelper', [
-	'ext.wikia.adEngine.lookup.prebid.adaptersRegistry',
-	'ext.wikia.aRecoveryEngine.instartLogic.recovery'
-], function(adaptersRegistry, instartLogic) {
+	'ext.wikia.adEngine.lookup.prebid.adaptersRegistry'
+], function(
+	adaptersRegistry
+) {
 	'use strict';
 	var adUnits = [],
 		lazyLoad = 'off',
@@ -12,11 +13,12 @@ define('ext.wikia.adEngine.lookup.prebid.prebidHelper', [
 
 	function getAdapterAdUnits(adapter, skin) {
 		var adapterAdUnits = [],
-			isRecovering = instartLogic.isBlocking(),
-			slots = adapter.getSlots(skin, isRecovering);
+			slots = adapter.getSlots(skin);
 
 		Object.keys(slots).forEach(function(slotName) {
-			var adUnit = adapter.prepareAdUnit(slotName, slots[slotName], skin, isRecovering);
+			var prepareAdUnit = adapter.prepareAdUnit,
+				adUnit = prepareAdUnit(slotName, slots[slotName], skin);
+
 			if (adUnit) {
 				adapterAdUnits.push(adUnit);
 			}

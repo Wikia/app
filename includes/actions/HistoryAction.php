@@ -98,7 +98,7 @@ class HistoryAction extends FormlessAction {
 
 		wfProfileIn( __METHOD__ );
 
-		if ( $request->getFullRequestURL() == $this->getTitle()->getInternalURL( 'action=history' ) ) {
+		if ( $request->getFullRequestURL() === $this->getTitle()->getFullURL( 'action=history' ) ) {
 			$out->setSquidMaxage( $wgSquidMaxage );
 		}
 

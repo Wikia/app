@@ -15,10 +15,10 @@ $dir = __DIR__ . '/';
 
 // class autoloads mappings
 $wgAutoloadClasses['CreateNewWikiObfuscate'] = $dir . 'CreateNewWikiObfuscate.class.php';
-$wgAutoloadClasses['CreateWiki'] = $dir."/CreateWiki.php";
+$wgAutoloadClasses['CreateWikiTask'] = $dir."/CreateWikiTask.php";
 $wgAutoloadClasses['CreateWikiChecks'] = $dir."/CreateWikiChecks.php";
 $wgAutoloadClasses['SpecialCreateNewWiki'] = $dir . 'SpecialCreateNewWiki.class.php';
-$wgAutoloadClasses['CreateNewWikiHooks'] = __DIR__ . '/CreateNewWikiHooks.class.php';
+$wgAutoloadClasses['CreateNewWikiHooks'] = __DIR__ . '/CreateNewWikiHooks.php';
 
 // Tasks related with new wiki creation
 $wgAutoloadClasses['Wikia\\CreateNewWiki\\Tasks\\Task'] = __DIR__ . '/tasks/Task.php';
@@ -33,7 +33,6 @@ $wgAutoloadClasses['Wikia\\CreateNewWiki\\Tasks\\EnableDiscussionsTask'] = __DIR
 $wgAutoloadClasses['Wikia\\CreateNewWiki\\Tasks\\ImportStarterData'] = __DIR__ . '/tasks/ImportStarterData.php';
 $wgAutoloadClasses['Wikia\\CreateNewWiki\\Tasks\\PrepareDomain'] = __DIR__ . '/tasks/PrepareDomain.php';
 $wgAutoloadClasses['Wikia\\CreateNewWiki\\Tasks\\SetCustomSettings'] = __DIR__ . '/tasks/SetCustomSettings.php';
-$wgAutoloadClasses['Wikia\\CreateNewWiki\\Tasks\\SetTags'] = __DIR__ . '/tasks/SetTags.php';
 $wgAutoloadClasses['Wikia\\CreateNewWiki\\Tasks\\SetupWikiCities'] = __DIR__ . '/tasks/SetupWikiCities.php';
 $wgAutoloadClasses['Wikia\\CreateNewWiki\\Tasks\\StartPostCreationTasks'] = __DIR__ . '/tasks/StartPostCreationTasks.php';
 $wgAutoloadClasses['Wikia\\CreateNewWiki\\Tasks\\TaskHelper'] = __DIR__ . '/tasks/TaskHelper.php';
@@ -52,3 +51,5 @@ $wgExtensionMessagesFiles['CreateNewWikiAlias'] = $dir . 'CreateNewWiki.alias.ph
 
 // setup functions
 $wgExtensionFunctions[] = 'CreateNewWikiController::setupCreateNewWiki';
+
+$wgHooks['MakeGlobalVariablesScript'][] = '\CreateNewWikiHooks::onMakeGlobalVariablesScript';

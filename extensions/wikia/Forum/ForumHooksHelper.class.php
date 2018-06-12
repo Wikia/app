@@ -313,11 +313,7 @@ class ForumHooksHelper {
 					$thread->purgeLastMessage();
 				}
 			} catch ( CommentsIndexEntryNotFoundException $entryNotFoundException ) {
-				WikiaLogger::instance()->error( 'SUS-1680: No comments index entry for message', [
-					'messageTitle' => $title->getPrefixedText(),
-					'messageId' => $comment_id,
-					'exception' => $entryNotFoundException
-				] );
+				// don't fail if comment was invalid
 			}
 
 			// SUS-4084: Purge Forum activity module cache here - we don't need to purge it when a Wall thread changes

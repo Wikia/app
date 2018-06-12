@@ -127,10 +127,18 @@ return [
 			'wikia.window'
 		],
 	],
+	'wikia.trackingOptOut' => [
+		'scripts' => 'resources/wikia/modules/trackingOptOut.js',
+		'dependencies' => [
+			'amd',
+			'wikia.querystring'
+		],
+	],
 	'wikia.instantGlobals' => [
 		'scripts' => 'resources/wikia/modules/instantGlobals.js',
 		'dependencies' => [
 			'amd',
+			'wikia.trackingOptOut',
 			'wikia.window'
 		],
 	],
@@ -252,6 +260,10 @@ return [
 		'scripts' => 'resources/wikia/libraries/jquery/datatables/jquery.dataTables.min.js',
 	],
 
+	'jquery.timeago' => [
+		'scripts' => 'resources/wikia/libraries/jquery/timeago/jquery.timeago.js',
+	],
+
 	// moved here from AssetsManager by wladek
 	'wikia.yui' => [
 		'scripts' => [
@@ -269,18 +281,6 @@ return [
 			'resources/wikia/libraries/yui/extra/carousel-min.js',
 		],
 		'group' => 'yui',
-	],
-
-	// Wikia-specific assets for monobook-based skins
-	'wikia.monobook' => [
-		'styles' => [
-			'skins/wikia/shared.css',
-			'skins/wikia/css/Monobook.css',
-			'resources/wikia/libraries/yui/container/assets/container.css',
-			'resources/wikia/libraries/yui/logger/assets/logger.css',
-			'resources/wikia/libraries/yui/tabview/assets/tabview.css',
-			'extensions/wikia/RelatedPages/RelatedPages.monobook.css',
-		],
 	],
 
 	'wikia.importScript' => [
