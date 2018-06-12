@@ -31,7 +31,6 @@ $wgAutoloadClasses['Wikia\\CreateNewWiki\\Tasks\\CreateDatabase'] = __DIR__ . '/
 $wgAutoloadClasses['Wikia\\CreateNewWiki\\Tasks\\CreateTables'] = __DIR__ . '/tasks/CreateTables.php';
 $wgAutoloadClasses['Wikia\\CreateNewWiki\\Tasks\\EnableDiscussionsTask'] = __DIR__ . '/tasks/EnableDiscussionsTask.php';
 $wgAutoloadClasses['Wikia\\CreateNewWiki\\Tasks\\ImportStarterData'] = __DIR__ . '/tasks/ImportStarterData.php';
-$wgAutoloadClasses['Wikia\\CreateNewWiki\\Tasks\\LinkFandomCreatorCommunity'] = __DIR__ . '/tasks/LinkFandomCreatorCommunity.php';
 $wgAutoloadClasses['Wikia\\CreateNewWiki\\Tasks\\PrepareDomain'] = __DIR__ . '/tasks/PrepareDomain.php';
 $wgAutoloadClasses['Wikia\\CreateNewWiki\\Tasks\\SetCustomSettings'] = __DIR__ . '/tasks/SetCustomSettings.php';
 $wgAutoloadClasses['Wikia\\CreateNewWiki\\Tasks\\SetupWikiCities'] = __DIR__ . '/tasks/SetupWikiCities.php';
