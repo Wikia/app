@@ -8,15 +8,17 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 	'wikia.location',
 	'wikia.log',
 	'wikia.trackingOptIn',
+	'wikia.querystring',
 	'wikia.window',
 	require.optional('wikia.abTest'),
 	require.optional('wikia.krux')
-], function (adContext, zoneParams, doc, geo, loc, log, trackingOptIn, win, abTest, krux) {
+], function (adContext, zoneParams, doc, geo, loc, log, trackingOptIn, Querystring, win, abTest, krux) {
 	'use strict';
 
 	var context = {},
 		logGroup = 'ext.wikia.adEngine.adLogicPageParams',
-		runtimeParams = {};
+		runtimeParams = {},
+		qs = new Querystring();
 
 	function updateContext() {
 		context = adContext.getContext();
@@ -156,7 +158,8 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 		log('getPageLevelParams', 9, logGroup);
 
 		var params,
-			targeting = context.targeting;
+			targeting = context.targeting,
+			cid = qs.getVal('cid', '');
 
 		options = options || {};
 
@@ -196,6 +199,10 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 
 		if (targeting.wikiIsTop1000) {
 			params.top = '1k';
+		}
+
+		if (cid) {
+			params.cid = cid;
 		}
 
 		extend(params, decodeLegacyDartParams(targeting.wikiCustomKeyValues));

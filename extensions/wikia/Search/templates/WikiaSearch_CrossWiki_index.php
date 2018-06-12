@@ -21,10 +21,6 @@
 					<p><?= wfMsg('wikiasearch2-spellcheck', $query, $results->getQuery()) ?></p>
 				<? endif; ?>
 
-				<? if (!$hasArticleMatch && $isMonobook): ?>
-					<?= wfMsgExt('searchmenu-new', array('parse'), $query); ?>
-				<? endif; ?>
-
 				<ul class="Results inter-wiki">
 					<?
 					$pos = 0;
@@ -48,9 +44,6 @@
 				<?= $paginationLinks; ?>
 
 			<?php else: ?>
-				<? if (!$hasArticleMatch && $isMonobook): ?>
-					<?= wfMsgExt('searchmenu-new', array('parse'), $query); ?>
-				<? endif; ?>
 				<p class="no-result"><i><?= wfMsg('wikiasearch2-noresults') ?></i></p>
 			<?php endif; ?>
 		<?php endif; ?>

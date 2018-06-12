@@ -1,7 +1,9 @@
 <?php
 
 use Wikia\Factory\ServiceFactory;
+use Wikia\Service\Helios\HeliosClient;
 use Wikia\Service\User\Attributes\UserAttributes;
+use Wikia\Service\User\Preferences\PreferenceService;
 
 /**
  * @group Integration
@@ -29,6 +31,7 @@ class UserDataRemoverTest extends WikiaDatabaseTest {
 		return [
 			__DIR__ . '/fixtures/wikiastaff_log.sql',
 			__DIR__ . '/fixtures/spoofuser.sql',
+			__DIR__ . '/fixtures/audit_log.sql'
 		];
 	}
 
@@ -36,10 +39,13 @@ class UserDataRemoverTest extends WikiaDatabaseTest {
 		parent::setUp();
 		include __DIR__ . '/../Privacy.setup.php';
 
-		$userAttributesMock = $this->createMock( UserAttributes::class );
+		$heliosMock = $this->createMock( HeliosClient::class );
+		$heliosMock->method( 'deletePassword' )->willReturn( ['response' => 'ok'] );
 
 		$serviceFactory = ServiceFactory::instance();
-		$serviceFactory->attributesFactory()->setUserAttributes( $userAttributesMock );
+		$serviceFactory->attributesFactory()->setUserAttributes( $this->createMock( UserAttributes::class ) );
+		$serviceFactory->preferencesFactory()->setPreferenceService( $this->createMock( PreferenceService::class ) );
+		$serviceFactory->heliosFactory()->setHeliosClient( $heliosMock );
 	}
 
 	public static function tearDownAfterClass() {
@@ -47,7 +53,7 @@ class UserDataRemoverTest extends WikiaDatabaseTest {
 	}
 
 	public function testUserDataShouldBeAnonymizedInUserTable() {
-		( new UserDataRemover() )->removeGlobalData( self::REMOVED_USER_ID );
+		( new UserDataRemover() )->removeAllPersonalUserData( self::REMOVED_USER_ID );
 
 		$anonymizedUser = User::newFromId( self::REMOVED_USER_ID );
 		$otherUser = User::newFromId( self::OTHER_USER_ID );
@@ -65,7 +71,7 @@ class UserDataRemoverTest extends WikiaDatabaseTest {
 	}
 
 	public function testUserDataShouldBeRemovedFromUserEmailLogTable() {
-		( new UserDataRemover() )->removeGlobalData( self::REMOVED_USER_ID );
+		( new UserDataRemover() )->removeAllPersonalUserData( self::REMOVED_USER_ID );
 
 		$wikicitiesSlave = wfGetDB( DB_SLAVE, [], 'wikicities' );
 
@@ -91,7 +97,7 @@ class UserDataRemoverTest extends WikiaDatabaseTest {
 	}
 
 	public function testUserDataShouldBeRemovedFromUserPropertiesTable() {
-		( new UserDataRemover() )->removeGlobalData( self::REMOVED_USER_ID );
+		( new UserDataRemover() )->removeAllPersonalUserData( self::REMOVED_USER_ID );
 
 		$wikicitiesSlave = wfGetDB( DB_SLAVE, [], 'wikicities' );
 
@@ -120,9 +126,7 @@ class UserDataRemoverTest extends WikiaDatabaseTest {
 	}
 
 	public function testFakeUserDataShouldBeAnonymizedInUserTable() {
-		$fakeUserBefore = User::newFromId( self::FAKE_USER_ID );
-
-		( new UserDataRemover() )->removeGlobalData( self::RENAMED_USER_ID, $fakeUserBefore );
+		( new UserDataRemover() )->removeAllPersonalUserData( self::RENAMED_USER_ID );
 
 		$fakeUser = User::newFromId( self::FAKE_USER_ID );
 
@@ -134,7 +138,7 @@ class UserDataRemoverTest extends WikiaDatabaseTest {
 	}
 
 	public function testStaffLogsShouldBeRemoved() {
-		( new UserDataRemover() )->removeGlobalData( self::REMOVED_USER_ID );
+		( new UserDataRemover() )->removeAllPersonalUserData( self::REMOVED_USER_ID );
 
 		$db = wfGetDB( DB_SLAVE, [] );
 
@@ -152,7 +156,7 @@ class UserDataRemoverTest extends WikiaDatabaseTest {
 	}
 
 	public function testShouldAnonimizeAnfispoof() {
-		( new UserDataRemover() )->removeGlobalData( self::REMOVED_USER_ID );
+		( new UserDataRemover() )->removeAllPersonalUserData( self::REMOVED_USER_ID );
 
 		// check basic functionality
 		$spoof = new SpoofUser( self::REMOVED_USER_NAME );

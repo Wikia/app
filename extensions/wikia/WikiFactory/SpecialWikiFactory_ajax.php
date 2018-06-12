@@ -522,11 +522,13 @@ function axWFactoryDomainQuery() {
 
 		while( $domain = $dbr->fetchObject( $sth ) ) {
 			$domain->city_domain = strtolower( $domain->city_domain );
-		    if( preg_match( "/^$query/", $domain->city_domain ) ) {
+			$rxp_query = preg_quote( $query, '/' );
+
+		    if( preg_match( "/^$rxp_query/", $domain->city_domain ) ) {
 				$exact[ "suggestions" ][] = $domain->city_domain;
 				$exact[ "data" ][] = $domain->city_id;
 		    }
-			elseif( preg_match( "/$query/", $domain->city_domain ) ){
+			elseif( preg_match( "/$rxp_query/", $domain->city_domain ) ){
 				$match[ "suggestions" ][] = $domain->city_domain;
 				$match[ "data" ][] = $domain->city_id;
 			}

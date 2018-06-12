@@ -3,7 +3,8 @@ var Places = Places || (function(){
 	/** @private **/
 
 	var isWikiaMobile = (typeof WikiaMobile != 'undefined'),
-		clickEvent = (isWikiaMobile) ? WikiaMobile.getClickEvent() : 'click';
+		clickEvent = (isWikiaMobile) ? WikiaMobile.getClickEvent() : 'click',
+		track = Wikia.Tracker.track;
 
 	function showModal(event){
 		event.preventDefault();
@@ -214,6 +215,14 @@ var Places = Places || (function(){
 						aInfoWindows[current].open(map, aMarkers[current]);
 					}, options.animate * 1000);
 				}
+
+				// SUS-5128 | track page views where Google Maps API is loaded
+				track({
+					action: Wikia.Tracker.ACTIONS.OPEN,
+					category: 'googlemaps',
+					label: 'maprendered',
+					trackingMethod: 'analytics'
+				});
 			}
 		}
 	};

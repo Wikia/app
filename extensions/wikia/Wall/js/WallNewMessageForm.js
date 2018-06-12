@@ -171,9 +171,7 @@
 
 			newmsg.find('.msg-body').show();
 
-			if (window.skin && window.skin !== 'monobook') {
-				WikiaButtons.init(newmsg);
-			}
+			WikiaButtons.init(newmsg);
 
 			this.fire('afterNewMessagePost', newmsg);
 

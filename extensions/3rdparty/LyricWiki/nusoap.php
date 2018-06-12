@@ -2120,7 +2120,7 @@ class soap_transport_http extends nusoap_base {
 
  				// parse elements into array
  				$digestElements = explode(', ', $digestString);
- 				while (list($key, $val) = each($digestElements)) {
+ 				foreach ( $digestElements as $val ) {
  					$tempElement = explode('=', $val);
  					$digestRequest[$tempElement[0]] = str_replace("\"", '', $tempElement[1]);
  				}

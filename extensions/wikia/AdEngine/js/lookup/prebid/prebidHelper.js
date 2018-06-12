@@ -3,9 +3,8 @@ define('ext.wikia.adEngine.lookup.prebid.prebidHelper', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.lookup.prebid.adaptersRegistry',
 	'ext.wikia.adEngine.lookup.prebid.versionCompatibility',
-	'ext.wikia.aRecoveryEngine.instartLogic.recovery',
 	'wikia.window'
-], function(adContext, adaptersRegistry, prebidVersionCompatibility, instartLogic, win) {
+], function(adContext, adaptersRegistry, prebidVersionCompatibility, win) {
 	'use strict';
 	var adUnits = [],
 		lazyLoad = 'off',
@@ -15,15 +14,14 @@ define('ext.wikia.adEngine.lookup.prebid.prebidHelper', [
 
 	function getAdapterAdUnits(adapter, skin) {
 		var adapterAdUnits = [],
-			isRecovering = instartLogic.isBlocking(),
 			isNewPrebidEnabled = adContext.get('opts.isNewPrebidEnabled'),
-			slots = adapter.getSlots(skin, isRecovering);
+			slots = adapter.getSlots(skin);
 
 		Object.keys(slots).forEach(function(slotName) {
 			var prepareAdUnit = isNewPrebidEnabled ?
 					adapter.prepareAdUnit :
 					prebidVersionCompatibility.toVersion0.decoratePrepareAdUnit(adapter.prepareAdUnit),
-				adUnit = prepareAdUnit(slotName, slots[slotName], skin, isRecovering);
+				adUnit = prepareAdUnit(slotName, slots[slotName], skin);
 
 			if (adUnit) {
 				adapterAdUnits.push(adUnit);

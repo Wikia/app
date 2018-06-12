@@ -7,16 +7,14 @@
 class EditPageLayoutHooks {
 	static function onAlternateEditPageClass( &$editPage ) {
 		global $wgArticle;
-		$app = F::app();
-		$helper = EditPageLayoutHelper::getInstance();
-		// apply only for Oasis
-		if ( $app->checkSkin( 'oasis' ) ) {
-			$instance = $helper->setupEditPage( $wgArticle );
 
-			// $instance will be false in read-only mode (BugId:9460)
-			if ( !empty( $instance ) ) {
-				$editPage = $instance;
-			}
+		$helper = EditPageLayoutHelper::getInstance();
+
+		$instance = $helper->setupEditPage( $wgArticle );
+
+		// $instance will be false in read-only mode (BugId:9460)
+		if ( !empty( $instance ) ) {
+			$editPage = $instance;
 		}
 
 		return true;
@@ -108,15 +106,6 @@ class EditPageLayoutHooks {
 			'editwidth' => 'editing-experience',
 			'disablelinksuggest' => 'editing-experience', // handled in wfLinkSuggestGetPreferences()
 			'disablesyntaxhighlighting' => 'editing-experience',
-
-			// Monobook layout only
-			'showtoolbar' => 'monobook-layout',
-			'previewontop' => 'monobook-layout',
-			'previewonfirst' => 'monobook-layout',
-
-			// Size of editing window (Monobook layout only)
-			'cols' => 'editarea-size',
-			'rows' => 'editarea-size',
 		);
 
 		// move checkboxes / inputs to different section on "Editing" tab
@@ -171,10 +160,9 @@ class EditPageLayoutHooks {
 	 * @return boolean return true
 	 */
 	static function onBeforeDisplayingTextbox( EditPage $editPage ): bool {
-		$app = F::app();
-		if ( $app->checkSkin( 'oasis' ) ) {
-			$app->wg->Out->addHtml( '<div id="editarea" class="editpage-editarea" data-space-type="editarea">' );
-		}
+		global $wgOut;
+
+		$wgOut->addHtml( '<div id="editarea" class="editpage-editarea" data-space-type="editarea">' );
 
 		return true;
 	}
@@ -187,14 +175,13 @@ class EditPageLayoutHooks {
 	 */
 	static function onAfterDisplayingTextbox( EditPage $editPage ): bool {
 		$app = F::app();
-		if ( $app->checkSkin( 'oasis') ) {
-			$params = array(
-				'loadingText' => wfMsg('wikia-editor-loadingStates-loading', '')
-			);
-			$html = $app->getView( 'EditPageLayout', 'Loader', $params )->render();
-			$html .= '</div>';
-			$app->wg->Out->addHtml( $html );
-		}
+
+		$params = array(
+			'loadingText' => wfMsg('wikia-editor-loadingStates-loading', '')
+		);
+		$html = $app->getView( 'EditPageLayout', 'Loader', $params )->render();
+		$html .= '</div>';
+		$app->wg->Out->addHtml( $html );
 
 		return true;
 	}

@@ -208,7 +208,6 @@ $wgAutoloadClasses[ 'FakeLocalFile'                   ] = "$IP/includes/wikia/Fa
 $wgAutoloadClasses[ 'WikiaUploadStash'                ] = "$IP/includes/wikia/upload/WikiaUploadStash.class.php";
 $wgAutoloadClasses[ 'WikiaUploadStashFile'            ] = "$IP/includes/wikia/upload/WikiaUploadStashFile.class.php";
 $wgAutoloadClasses[ 'WikiaPageType'                   ] = "$IP/includes/wikia/WikiaPageType.class.php";
-$wgAutoloadClasses[ 'WikiaSkinMonoBook'               ] = "$IP/skins/wikia/WikiaMonoBook.php";
 $wgAutoloadClasses[ 'PaginationController'            ] = "$IP/includes/wikia/services/PaginationController.class.php";
 $wgAutoloadClasses[ 'MemcacheSync'                    ] = "$IP/includes/wikia/MemcacheSync.class.php";
 $wgAutoloadClasses[ 'WikiaAssets'                     ] = "$IP/includes/wikia/WikiaAssets.class.php";
@@ -368,7 +367,6 @@ $wgAutoloadClasses['FollowedPagesController'] = $IP.'/skins/oasis/modules/Follow
 $wgAutoloadClasses['UserPagesHeaderController'] = $IP.'/skins/oasis/modules/UserPagesHeaderController.class.php';
 $wgAutoloadClasses['MenuButtonController'] = $IP.'/skins/oasis/modules/MenuButtonController.class.php';
 $wgAutoloadClasses['CommentsLikesController'] = $IP.'/skins/oasis/modules/CommentsLikesController.class.php';
-$wgAutoloadClasses['BlogListingController'] = $IP.'/skins/oasis/modules/BlogListingController.class.php';
 $wgAutoloadClasses['NotificationsController'] = $IP.'/skins/oasis/modules/NotificationsController.class.php';
 $wgAutoloadClasses['LatestEarnedBadgesController'] = $IP.'/extensions/wikia/AchievementsII/modules/LatestEarnedBadgesController.class.php';
 $wgAutoloadClasses['HotSpotsController'] = $IP.'/skins/oasis/modules/HotSpotsController.class.php';
@@ -707,25 +705,7 @@ $wgObjectCaches = array(
     CACHE_DBA => array('class' => 'DBABagOStuff'),
     CACHE_ANYTHING => array('factory' => 'ObjectCache::newAnything'),
     CACHE_ACCEL => array('factory' => 'ObjectCache::newAccelerator'),
-    // SUS-4611
-    CACHE_MEMCACHED => array(
-        /**
-         * Note that MemcachedPhpBagOStuff and MemcachedPeclBagOStuff clients use
-         * incompatible serialization logic.
-         */
-        // FIXME: this is a temporary condition used to gradually deploy the new client (SUS-4611)
-        'class' => ( ( !is_null($wgDomainHash) && $wgDomainHash % 100 < 0 ) ? 'MemcachedPeclBagOStuff' : 'MemcachedPhpBagOStuff' ),
-        'use_binary_protocol' => false, // twemproxy does not support binary protocol
-        /**
-         * SUS-4749 | make MemcachedPeclBagOStuff use igbinary serializer
-         *
-         * An old client uses PHP serializer
-         *
-         * @see https://github.com/igbinary/igbinary#igbinary
-         * @see https://phpolyk.wordpress.com/2011/08/28/igbinary-the-new-php-serializer/
-         */
-         'serializer' => 'igbinary',
-    ),
+    CACHE_MEMCACHED => array('class' => 'MemcachedPhpBagOStuff'),
     'apc' => array('class' => 'APCBagOStuff'),
     'xcache' => array('class' => 'XCacheBagOStuff'),
     'wincache' => array('class' => 'WinCacheBagOStuff'),
@@ -976,18 +956,6 @@ $wgPhalanxServiceOptions = [
 	'timeout' => 1, # [sec] PLATFORM-2385 / SUS-890: prevent Phalanx slowness from affecting the site performance
 	'internalRequest' => true
 ];
-
-/**
- * @name $wgEnableGoogleFundingChoices
- * Enables Google Funding Choices
- */
-$wgEnableGoogleFundingChoices = true;
-
-/**
- * @name $wgEnableGoogleFundingChoicesInHead
- * Enables Google Funding Choices in <head> tag
- */
-$wgEnableGoogleFundingChoicesInHead = false;
 
 /**
  * @name $wgEnableNetzAthleten
@@ -1374,31 +1342,6 @@ $wgHighValueCountries = null;
 $wgAdDriverTurtleCountries = null;
 
 /**
- * @name wgAdDriverEnableInstartLogicRecovery
- * Enable InstartLogic Recovery per wiki
- */
-$wgAdDriverEnableInstartLogicRecovery = true;
-
-/**
- * @name $wgAdDriverPageFairDetectionCountries
- * List of countries to call PageFair detection scripts
- */
-$wgAdDriverPageFairDetectionCountries = null;
-
-/**
- * @name $wgAdDriverPageFairRecoveryCountries
- * List of countries to call ads through PageFair
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverPageFairRecoveryCountries = null;
-
-/**
- * @name $wgAdDriverEnablePageFairRecovery
- * Enable PageFair Recovery per wiki
- */
-$wgAdDriverEnablePageFairRecovery = true;
-
-/**
  * @name $wgAdDriverBabDetectionDesktopCountries
  * List of countries to call BlockAdBlock detection scripts on oasis
  */
@@ -1427,6 +1370,12 @@ $wgAdDriverBabRecoveryCountries = null;
  * List of countries to enable new Prebid
  */
 $wgAdDriverNewPrebidCountries = null;
+
+/**
+ * @name $wgEnableCMPCountries
+ * List of countries to enable Consent Management module
+ */
+$wgEnableCMPCountries = null;
 
 /**
  * trusted proxy service registry
@@ -1546,9 +1495,7 @@ $wgBuckySampling = 10;
  * List of skins where Bucky reporting should be enabled
  */
 $wgBuckyEnabledSkins = [
-	'monobook',
 	'oasis',
-	'uncyclopedia',
 	'wikiamobile',
 ];
 
@@ -1632,13 +1579,6 @@ $wgPreferenceServiceWrite = true;
 $wgEnableFliteTagExt = false;
 
 /**
- * @name $wgARecoveryEngineCustomLog
- * Enables Kibana logging of ad recovery interruptions
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgARecoveryEngineCustomLog = null;
-
-/**
  * Protect Piggyback logs even if the extension is disabled
  */
 $wgLogRestrictions['piggyback'] = 'piggyback';
@@ -1681,12 +1621,6 @@ $wgEnableHostnameInHtmlTitle = true;
  * Use template types from Template Classification Service in MW context
  */
 include_once("$IP/includes/wikia/parser/templatetypes/TemplateTypes.setup.php");
-
-/**
- * @name $wgEnableReviveSpotlights
- * Enables Revive Spotlights
- */
-$wgEnableReviveSpotlights = true;
 
 /**
  * @name $wgReviveSpotlightsCountries
@@ -1736,19 +1670,11 @@ $wgShortArticlePathWikis = [
 	1618258  // it.wikia.com
 ];
 
-$wgEnableOpenXSPC = true;
-
 /**
  * Whether to inline the ResourceLoader startup script (for certain error pages)
  * SUS-4734
  */
 $wgInlineStartupScript = false;
-
-/**
- * Enable recovery
- * It should be always included even if recovery is disabled as we use Recovery classes outside the module
- */
-include_once("$IP/extensions/wikia/ARecoveryEngine/ARecoveryEngine.setup.php");
 
 include_once "$IP/extensions/wikia/ImageReview/ImageReviewEvents.setup.php";
 

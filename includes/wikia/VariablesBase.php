@@ -532,15 +532,6 @@ $wgAPIPropModules = [];
 $wgAPIRequestLog = false;
 
 /**
- * Do not display "Talk" or "Discussion" tab on non-Oasis skins. There is no
- * relevance to Discussions feature developed in 2016/2017.
- * @deprecated
- * @see extensions/wikia/ArticleComments
- * @var bool $wgArticleCommentsHideDiscussionTab
- */
-$wgArticleCommentsHideDiscussionTab = true;
-
-/**
  * Whether or not to purge squid proxy URLs lazy-loaded ArticleComments. This
  * is a legacy variable and its name does no longer reflect its purpose.
  * @see ArticleComment::doPurge()
@@ -1179,6 +1170,27 @@ $wgCompiledFiles = [];
 $wgCompressRevisions = true;
 
 /**
+ * Hardcoded list of data-centers by environment
+ *
+ * Avoid costly HTTP calls on production to Consul agents in data centers like 'poz' or 'fra'
+ *
+ * @see SUS-4805
+ *
+ * @see lib/Wikia/src/Consul/Client.php
+ * @var array $wgConsulDataCenters
+ */
+$wgConsulDataCenters = [
+	'dev' => [
+		'sjc-dev',
+		'poz-dev',
+	],
+	'prod' => [
+		'sjc',
+		'res',
+	],
+];
+
+/**
  * Slack webhook URL for JavaScript Review Tool.
  * @see extensions/wikia/ContentReview
  * @var string $wgContentReviewSlackWebhook
@@ -1254,6 +1266,12 @@ $wgCountTotalSearchHits = false;
  * @var string $wgCreateDatabaseActiveCluster
  */
 $wgCreateDatabaseActiveCluster = 'c7';
+
+/**
+ * Whether to create new non-English wikis with the language code as a component of the URL path, rather than a subdomain.
+ * @var bool $wgCreateLanguageWikisWithPath
+ */
+$wgCreateLanguageWikisWithPath = false;
 
 /**
  * Domains that should not be allowed to make AJAX requests,
@@ -3545,13 +3563,6 @@ $wgEnableSpecialDiscussions = true;
  * @var bool wgEnableSpecialPhalanxExt
  */
 $wgEnableSpecialPhalanxExt = false;
-
-/**
- * Enable Special:Sitemap extension.
- * @see /extensions/wikia/Sitemap
- * @var bool $wgEnableSpecialSitemapExt
- */
-$wgEnableSpecialSitemapExt = true;
 
 /**
  * Enable Special:Unsubscribe.
@@ -7403,50 +7414,6 @@ $wgSiteStatsAsyncFactor = 1;
 $wgSkipCountForCategories = [];
 
 /**
- * Specify the name of a skin that should not be presented in the list of
- * available skins.  Use for blacklisting a skin which you do not want to
- * remove from the .../skins/ directory. NOTE: a few wikis may have local
- * override for this var, you need to modify those by hand. A SELECT on
- * city_variables will get you a list.
- * @var Array $wgSkipSkins
- */
-$wgSkipSkins = [
-    'answers',
-    'armchairgm',
-    'campfire',
-    'cars',
-    'corporate',
-    'corporatebase',
-    'corporatehome',
-    'curse',
-    'efmonaco',
-    'entertainment',
-    'food',
-    'games',
-    'gwmonobook',
-    'halo',
-    'halogamespot',
-    'health',
-    'home',
-    'law',
-    'local',
-    'lostbook',
-    'memalpha',
-    'monaco_old',
-    'music',
-    'politics',
-    'psn',
-    'quartz',
-    'restaurants',
-    'search',
-    'searchwikia',
-    'smartphone',
-    'test',
-    'uncyclopedia',
-    'wikiamobile',
-];
-
-/**
  * If slave DB lag is higher than this number of seconds, show an OBVIOUS
  * warning on some special pages.
  * @see $wgSlaveLagWarning
@@ -7824,14 +7791,6 @@ $wgSupportedCloseMyAccountLang = [ 'de', 'en', 'es', 'fr', 'it', 'ja', 'pl',
     'pt', 'pt-br', 'ru', 'zh', 'zh-classical', 'zh-cn', 'zh-hans', 'zh-hant',
     'zh-hk', 'zh-min-nan', 'zh-mo', 'zh-my', 'zh-sg', 'zh-tw', 'zh-yue',
 ];
-
-/**
- * Disable footer spotlights in Oasis.
- * @see extensions/wikia/WDACReview
- * @see extensions/wikia/Spotlights
- * @var bool $wgSuppressSpotlights
- */
-$wgSuppressSpotlights = false;
 
 /**
  * Pick a converter defined in $wgSVGConverters.

@@ -51,10 +51,18 @@ class UserTagsStrategyTest extends WikiaBaseTest {
 			->willReturn( $isChatBanned );
 		$this->mockClass( ChatUser::class, $chatUserMock );
 
-		$userMock = $this->getMock( User::class, [ 'isBlocked', 'getId' ] );
-		$userMock->expects( $this->any() )
-			->method( 'isBlocked' )
-			->willReturn( $isBlocked );
+		$userMock = $this->createMock( User::class );
+		if ( $isBlocked ) {
+			$block = $this->createMock( Block::class );
+			$userMock->expects( $this->any() )
+				->method( 'getBlock' )
+				->willReturn( $block );
+
+			$block->expects( $this->any() )
+				->method( 'getType' )
+				->willReturn( Block::TYPE_USER );
+		}
+
 		$userMock->expects( $this->any() )
 			->method( 'getId' )
 			->willReturn( 1 );
@@ -73,17 +81,8 @@ class UserTagsStrategyTest extends WikiaBaseTest {
 			'blocked user' => [ [], [], true, false, false,
 				[ wfMessage( 'user-identity-box-group-blocked' )->escaped() ]
 			],
-			'blocked user with other rights' => [ [ 'helper' ], [ 'sysop' ], true, true, true,
+			'blocked user with other rights' => [ [], [ 'sysop' ], true, true, true,
 				[ wfMessage( 'user-identity-box-group-blocked' )->escaped() ]
-			],
-			'blocked staff member' => [ [ 'staff' ], [], true, false, false,
-				[ wfMessage( 'user-identity-box-group-staff' )->escaped() ]
-			],
-			'blocked staff member with other rights' => [ [ 'staff' ], [ 'sysop' ], true, false, false,
-				[
-					wfMessage( 'user-identity-box-group-staff' )->escaped(),
-					wfMessage( 'user-identity-box-group-sysop' )->escaped()
-				]
 			],
 			'staff founder' => [ [ 'staff' ], [ 'bureaucrat', 'sysop' ], false, false, true,
 				[

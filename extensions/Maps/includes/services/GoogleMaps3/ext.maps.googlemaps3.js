@@ -17,6 +17,14 @@
 				var $this = $( this );
 				var map = $this.googlemaps( $.parseJSON( $this.find( 'div').text() ) );
 				window.maps.googlemapsList.push(map);
+
+				// SUS-5128 | track page views where Google Maps API is loaded
+				window.Wikia.Tracker.track({
+					action: Wikia.Tracker.ACTIONS.OPEN,
+					category: 'googlemaps',
+					label: 'maprendered',
+					trackingMethod: 'analytics'
+				});
 			} );
 		}
 

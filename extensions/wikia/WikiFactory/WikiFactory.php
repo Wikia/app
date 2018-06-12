@@ -1101,10 +1101,6 @@ class WikiFactory {
 		if ( $city_id == $wgCityId ) {
 			return isset($GLOBALS[$cv_name]) ? $GLOBALS[$cv_name] : null;
 		}
-		if ( $cv_name == 'wgServer' || $cv_name == 'wgArticlePath' ) {
-			// these are not a WF variable anymore. Remove this check after they are deleted from city_variables
-			return null;
-		}
 
 		wfProfileIn( __METHOD__ );
 
@@ -1706,8 +1702,6 @@ class WikiFactory {
 			return false;
 		}
 
-		wfProfileIn( __METHOD__ );
-
 		if ( $wgWikicitiesReadOnly ) {
 			Wikia::log( __METHOD__, "", "wgWikicitiesReadOnly mode. Skipping update.");
 		}
@@ -1724,45 +1718,23 @@ class WikiFactory {
 			);
 		}
 
-		// SUS-4749 | clear cache using both memcache clients as they use a different keys "namespace"
-		// FIXME: revert once the new client is fully deployed on production
-		global $wgObjectCaches;
+		/**
+		 * clear domains cache
+		 */
+		static::clearDomainCache( $city_id );
 
-		/* @var $caches MemcachedBagOStuff[] */
-		$caches = [
-			(new MemcachedPhpBagOStuff($wgObjectCaches[CACHE_MEMCACHED])),
-			(new MemcachedPeclBagOStuff($wgObjectCaches[CACHE_MEMCACHED])),
-		];
+		/**
+		 * clear variables cache
+		 */
+		$wgMemc->delete( "WikiFactory::getCategory:" .
+		                 $city_id ); //ugly cat clearing (fb#9937)
+		$wgMemc->delete( static::getVarsKey( $city_id ) );
 
-		foreach($caches as $cache) {
-			$wrapper = new \Wikia\Util\GlobalStateWrapper( [
-				'wgMemc' => $cache
-			] );
-
-			$wrapper->wrap( function () use ($city_id) {
-				global $wgMemc;
-
-				/**
-				 * clear domains cache
-				 */
-				static::clearDomainCache( $city_id );
-
-				/**
-				 * clear variables cache
-				 */
-				$wgMemc->delete( "WikiFactory::getCategory:" .
-				                 $city_id ); //ugly cat clearing (fb#9937)
-				$wgMemc->delete( static::getVarsKey( $city_id ) );
-
-				$city_dbname = static::IDtoDB( $city_id );
-				$wgMemc->delete( static::getWikiaCacheKey( $city_id ) );
-				if ( !empty( $city_dbname ) ) {
-					$wgMemc->delete( static::getWikiaDBCacheKey( $city_dbname ) );
-				}
-			} );
+		$city_dbname = static::IDtoDB( $city_id );
+		$wgMemc->delete( static::getWikiaCacheKey( $city_id ) );
+		if ( !empty( $city_dbname ) ) {
+			$wgMemc->delete( static::getWikiaDBCacheKey( $city_dbname ) );
 		}
-
-		wfProfileOut( __METHOD__ );
 
 		return true;
 	}
@@ -3414,6 +3386,17 @@ class WikiFactory {
 	}
 
 	/**
+	 * Returns language path for a given wiki.
+	 *
+	 * @param int $cityId
+	 * @param string $href
+	 * @return string
+	 */
+	static public function cityIdToLanguagePath( $cityId ) {
+		return static::cityUrlToLanguagePath( static::cityIDtoUrl( $cityId ) );
+	}
+
+	/**
 	 * Renders community's value of given variable
 	 *
 	 * @access public
@@ -3469,11 +3452,9 @@ class WikiFactory {
 	 * @return string
 	 */
 	static private function parseValue( $value, $type ) {
-		if ( $type == "string" || $type == "integer"  ) {
+		if ( $type == "string" || $type == "text" || $type == "integer" ) {
 			return htmlspecialchars( $value );
-		}
-
-		if ( $type == "array" || $type == "struct" || $type == "hash" ) {
+		} elseif ( $type == "array" || $type == "struct" || $type == "hash" ) {
 			return json_encode( $value, JSON_PRETTY_PRINT );
 		}
 

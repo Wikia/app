@@ -1187,7 +1187,7 @@ function wfLogProfilingData() {
 	$profiler = Profiler::instance();
 
 	# Profiling must actually be enabled...
-	if ( $profiler->isStub() ) {
+	if ( $profiler instanceof ProfilerStub ) {
 		return;
 	}
 
@@ -3813,12 +3813,28 @@ function wfWaitForSlaves( $wiki = false ) {
 		// Wikia change - begin
 		// PLATFORM-1489: check if we're using consul configuration for DB slave
 		if ( $lb->hasConsulConfig() ) {
-			// get the list of IP addresses of all slave nodes from consul
-			// so that we can check all of them explicitly
+			$slaveInfo = $lb->getServerInfo( 1 ); // e.g. slave.db-g.service.consul
+
+			// SUS-4805 | iterate over all data centers for the current environment
+			global $wgWikiaEnvironment;
 			$consul = new Wikia\Consul\Client();
 
-			$slaveInfo = $lb->getServerInfo( 1 ); // e.g. slave.db-g.service.consul
-			$slaves = $consul->getNodesFromHostname( $slaveInfo['hostName'] );
+			$slaves = [];
+
+			foreach( $consul->getDataCentersForEnv( $wgWikiaEnvironment ) as $dc ) {
+				wfDebug( __METHOD__ . ": getting the list of slaves in {$dc} DC...\n" );
+
+				// get the list of IP addresses of all slave nodes from consul
+				// so that we can check all of them explicitly
+				$consul = new Wikia\Consul\Client( [
+					'base_uri' => Wikia\Consul\Client::getConsulBaseUrlForDC( $dc )
+				] );
+
+				$slaves = array_merge( $slaves, $consul->getNodesFromHostname( $slaveInfo['hostName'] ) );
+			}
+
+			// we may get duplicated entries from different DCs
+			$slaves = array_unique( $slaves );
 
 			// clone the loadbalancer and add all slaves that we've got from Consul
 			$lb = clone $lb;
@@ -4089,4 +4105,50 @@ function wfRandomString( $length = 32 ) {
 		$str .= sprintf( '%07x', mt_rand() & 0xfffffff );
 	}
 	return substr( $str, 0, $length );
+}
+
+/**
+ * Check if we are running from the commandline
+ *
+ * @since 1.31
+ * @return bool
+ */
+function wfIsCLI() {
+	return PHP_SAPI === 'cli' || PHP_SAPI === 'phpdbg';
+}
+
+/**
+ * Get system resource usage of current request context.
+ * Invokes the getrusage(2) system call, requesting RUSAGE_SELF if on PHP5
+ * or RUSAGE_THREAD if on HHVM. Returns false if getrusage is not available.
+ *
+ * @since 1.24
+ * @return array|bool Resource usage data or false if no data available.
+ */
+function wfGetRusage() {
+	if ( !function_exists( 'getrusage' ) ) {
+		return false;
+	} elseif ( defined( 'HHVM_VERSION' ) && PHP_OS === 'Linux' ) {
+		return getrusage( 2 /* RUSAGE_THREAD */ );
+	} else {
+		return getrusage( 0 /* RUSAGE_SELF */ );
+	}
+}
+
+/**
+ * Begin profiling of a function
+ * @deprecated explicit profiler calls are no longer required
+ * @param $functionname String: name of the function we will profile
+ */
+function wfProfileIn( $functionname ) {
+	// no-op
+}
+
+/**
+ * Stop profiling of a function
+ * @deprecated explicit profiler calls are no longer required
+ * @param $functionname String: name of the function we have profiled
+ */
+function wfProfileOut( $functionname = 'missing' ) {
+	// no-op
 }

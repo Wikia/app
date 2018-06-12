@@ -1,32 +1,43 @@
-/*global define, require*/
+/*global define*/
 define('ext.wikia.adEngine.ml.inputParser', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adLogicPageParams',
 	'ext.wikia.adEngine.utils.device',
 	'wikia.geo',
-	'wikia.window',
-	require.optional('wikia.articleVideo.featuredVideo.data')
-], function (adContext, pageLevelParams, deviceDetect, geo, win, featuredVideoData) {
+	'wikia.log'
+], function (adContext, pageLevelParams, deviceDetect, geo, log) {
 	'use strict';
 
-	var pageValues = null;
+	var pageValues = null,
+		logGroup = 'ext.wikia.adEngine.ml.inputParser';
 
 	function calculateValues() {
-		var pageParams = pageLevelParams.getPageLevelParams();
+		var featuredVideoData = adContext.get('targeting.featuredVideo') || {},
+			pageParams = pageLevelParams.getPageLevelParams();
 
 		pageValues = {
 			country: geo.getCountryCode() || null,
 			device: deviceDetect.getDevice(pageParams),
 			esrb: pageParams.esrb || null,
+			isTopWiki: !!adContext.get('targeting.wikiIsTop1000'),
+			namespace: pageParams.s2 || null,
+			trafficSource: pageParams.ref || null,
+			verticalName: pageParams.s0v || null,
 			videoId: featuredVideoData.mediaId || null,
 			videoTag: featuredVideoData.videoTags || null,
-			wikiId: win.wgCityId
-		}
+			wikiId: adContext.get('targeting.wikiId') || null
+		};
+
+		log(['pageValues', pageValues], log.levels.debug, logGroup);
 	}
 
 	function getBinaryValue(property, value) {
 		if (pageValues === null) {
 			calculateValues();
+		}
+
+		if (typeof pageValues[property] === 'undefined') {
+			throw new Error('Value for "' + property + '" is not defined.');
 		}
 
 		if (Array.isArray(pageValues[property])) {

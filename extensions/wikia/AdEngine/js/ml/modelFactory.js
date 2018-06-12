@@ -10,7 +10,6 @@ define('ext.wikia.adEngine.ml.modelFactory', [
 		'dataSource',
 		'model',
 		'name',
-		'wgCountriesVariable',
 		'enabled'
 	];
 
@@ -41,7 +40,15 @@ define('ext.wikia.adEngine.ml.modelFactory', [
 			},
 
 			isEnabled: function () {
-				return modelData.enabled && geo.isProperGeo(instantGlobals[modelData.wgCountriesVariable]);
+				var isEnabled = modelData.enabled,
+					isGeoEnabled = !modelData.wgCountriesVariable ||
+					geo.isProperGeo(instantGlobals[modelData.wgCountriesVariable]);
+
+				if (typeof modelData.enabled === 'function') {
+					isEnabled = modelData.enabled();
+				}
+
+				return isEnabled && isGeoEnabled;
 			},
 
 			predict: function () {

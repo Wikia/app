@@ -183,7 +183,10 @@ class WikiFactoryLoader {
 	 *
 	 * @author Krzysztof Krzyżaniak <eloy@wikia-inc.com>
 	 *
-	 * @return integer: wikia id or null if wikia is not handled by WikiFactory
+	 * @return int|bool wiki ID if wiki was found, false if wiki was not found, is a redirect etc.
+	 * If false is returned, the caller must stop processing the request and exit immediately,
+	 * as WikiFactoryLoader will have already taken the required steps to serve the request
+	 * (e.g. setting 301 redirect status code).
 	 */
 	public function execute() {
 		global $wgCityId, $wgDevelEnvironment,
@@ -422,6 +425,12 @@ class WikiFactoryLoader {
 			header( "X-Redirected-By-WF: NotPrimary" );
 			header( 'Vary: Cookie,Accept-Encoding' );
 
+			global $wgCookiePrefix;
+			$hasAuthCookie = !empty( $_COOKIE[\Wikia\Service\User\Auth\CookieHelper::ACCESS_TOKEN_COOKIE_NAME] ) ||
+				!empty( $_COOKIE[session_name()] ) ||
+				!empty( $_COOKIE["{$wgCookiePrefix}Token"] ) ||
+				!empty( $_COOKIE["{$wgCookiePrefix}UserID"] );
+
 			if ( $hasAuthCookie ) {
 				header( 'Cache-Control: private, must-revalidate, max-age=0' );
 			} else {
@@ -509,12 +518,7 @@ class WikiFactoryLoader {
 				$tUnserVal = unserialize( $oRow->cv_value, [ 'allowed_classes' => false ] );
 				restore_error_handler();
 
-				if ( $oRow->cv_name === "wgServer" || $oRow->cv_name === "wgArticlePath" ) {
-					// these are not a part of WF anymore. Remove this code after thesse variables are deleted from db
-					unset( $this->mVariables[ $oRow->cv_name ] );
-				} else {
-					$this->mVariables[ $oRow->cv_name ] = $tUnserVal;
-				}
+				$this->mVariables[ $oRow->cv_name ] = $tUnserVal;
 			}
 			$dbr->freeResult( $oRes );
 
@@ -547,8 +551,8 @@ class WikiFactoryLoader {
 		}
 
 		# take some WF variables values from city_list
-		$this->mVariables["wgDBname"] = $this->mCityDB;
-		$this->mVariables["wgDBcluster"] = $this->mCityCluster;
+		$this->mVariables['wgDBname'] = $this->mCityDB;
+		$this->mVariables['wgDBcluster'] = $this->mCityCluster;
 		$this->mVariables['wgServer'] = WikiFactory::getLocalEnvURL( WikiFactory::cityUrlToDomain( $this->mCityUrl ) );
 		$this->mVariables['wgScriptPath'] = WikiFactory::cityUrlToLanguagePath( $this->mCityUrl );
 		$this->mVariables['wgScript'] = WikiFactory::cityUrlToWgScript( $this->mCityUrl );
