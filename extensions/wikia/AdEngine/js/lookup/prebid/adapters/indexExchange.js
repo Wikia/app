@@ -16,7 +16,6 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.indexExchange',[
 						[728, 90],
 						[970, 250]
 					],
-					id: '1',
 					siteId: 183423
 				},
 				TOP_RIGHT_BOXAD: {
@@ -24,7 +23,6 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.indexExchange',[
 						[300, 250],
 						[300, 600]
 					],
-					id: '2',
 					siteId: 183567
 				},
 				INCONTENT_BOXAD_1: {
@@ -33,7 +31,6 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.indexExchange',[
 						[300, 600],
 						[300, 250]
 					],
-					id: '9',
 					siteId: 185049
 				},
 				BOTTOM_LEADERBOARD: {
@@ -41,7 +38,6 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.indexExchange',[
 						[728, 90],
 						[970, 250]
 					],
-					id: '12',
 					siteId: 209250
 				}
 			},
@@ -50,7 +46,6 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.indexExchange',[
 					sizes: [
 						[320, 50]
 					],
-					id: '3',
 					siteId: 183568
 				},
 				MOBILE_IN_CONTENT: {
@@ -58,7 +53,6 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.indexExchange',[
 						[300, 250],
 						[320, 480]
 					],
-					id: '10',
 					siteId: 185055
 				},
 				BOTTOM_LEADERBOARD: {
@@ -66,7 +60,6 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.indexExchange',[
 						[300, 250],
 						[320, 50]
 					],
-					id: '11',
 					siteId: 185056
 				}
 			},
@@ -76,7 +69,6 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.indexExchange',[
 						[728, 90],
 						[970, 250]
 					],
-					id: '1',
 					siteId: 215807
 				},
 				TOP_RIGHT_BOXAD: {
@@ -84,7 +76,6 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.indexExchange',[
 						[300, 250],
 						[300, 600]
 					],
-					id: '2',
 					siteId: 215808
 				},
 				INCONTENT_BOXAD_1: {
@@ -93,7 +84,6 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.indexExchange',[
 						[300, 600],
 						[300, 250]
 					],
-					id: '9',
 					siteId: 215809
 				},
 				BOTTOM_LEADERBOARD: {
@@ -101,7 +91,6 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.indexExchange',[
 						[728, 90],
 						[970, 250]
 					],
-					id: '12',
 					siteId: 215810
 				}
 			}
@@ -127,7 +116,6 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.indexExchange',[
 				return {
 					bidder: bidderName,
 					params: {
-						id: config.id,
 						siteId: String(config.siteId),
 						size: size
 					}
