@@ -20,6 +20,7 @@ class StartPostCreationTasks extends Task {
 		$jobParams['sitename'] = $this->taskContext->getSiteName();
 		$jobParams['language'] = $this->taskContext->getLanguage();
 		$jobParams['city_id'] = $this->taskContext->getCityId();
+		$jobParams['fc_community_id'] = $this->taskContext->getFandomCreatorCommunityId();
 
 		// Used by CreateNewWikiTask:changeStarterContributions
 		$jobParams['sDbStarter'] = $this->taskContext->getStarterDb();
