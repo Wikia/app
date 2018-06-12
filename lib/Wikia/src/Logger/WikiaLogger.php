@@ -23,7 +23,10 @@ class WikiaLogger implements LoggerInterface {
 	private function __construct() {
 	}
 
-	public static function instance(): WikiaLogger {
+	/**
+	 * @return WikiaLogger
+	 */
+	public static function instance() {
 		static $instance = null;
 
 		if (!isset($instance)) {
