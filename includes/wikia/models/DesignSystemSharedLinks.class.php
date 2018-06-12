@@ -102,7 +102,6 @@ class DesignSystemSharedLinks {
 			'movies' => '//fandom.wikia.com/topics/movies',
 			'tv' => '//fandom.wikia.com/topics/tv',
 			'video' => '//fandom.wikia.com/video',
-			'fandom-university' => '//community.wikia.com/wiki/Fandom_University',
 			'user-signin' => 'https://www.wikia.com/signin',
 			'user-logout' => 'https://www.wikia.com/logout',
 			'user-register' => 'https://www.wikia.com/register',
@@ -127,6 +126,9 @@ class DesignSystemSharedLinks {
 			'google-play' => 'https://play.google.com/store/apps/developer?id=FANDOM+powered+by+Wikia&hl=de',
 			'user-signin' => 'https://www.wikia.com/signin?uselang=de',
 			'user-register' => 'https://www.wikia.com/register?uselang=de',
+			'games' => '//fandom.wikia.com/explore-de?uselang=de#Videospiele',
+			'movies' => '//fandom.wikia.com/explore-de?uselang=de#Filme',
+			'tv' => '//fandom.wikia.com/explore-de?uselang=de#TV',
 		],
 		'en' => [
 			'fan-contributor' => '//fandom.wikia.com/fan-contributor',
@@ -150,6 +152,9 @@ class DesignSystemSharedLinks {
 			'google-play' => 'https://play.google.com/store/apps/developer?id=FANDOM+powered+by+Wikia&hl=es',
 			'user-signin' => 'https://www.wikia.com/signin?uselang=es',
 			'user-register' => 'https://www.wikia.com/register?uselang=es',
+			'games' => '//fandom.wikia.com/explore-es?uselang=es#Juegos',
+			'movies' => '//fandom.wikia.com/explore-es?uselang=es#Películas',
+			'tv' => '//fandom.wikia.com/explore-es?uselang=es#TV',
 		],
 		'fr' => [
 			'explore-wikis' => '//fandom.wikia.com/explore-fr',
@@ -168,6 +173,9 @@ class DesignSystemSharedLinks {
 			'google-play' => 'https://play.google.com/store/apps/developer?id=FANDOM+powered+by+Wikia&hl=fr',
 			'user-signin' => 'https://www.wikia.com/signin?uselang=fr',
 			'user-register' => 'https://www.wikia.com/register?uselang=fr',
+			'games' => '//fandom.wikia.com/explore-fr?uselang=fr#Jeux_vidéo',
+			'movies' => '//fandom.wikia.com/explore-fr?uselang=fr#Cinéma',
+			'tv' => '//fandom.wikia.com/explore-fr?uselang=fr#Télévision',
 		],
 		'it' => [
 			'explore-wikis' => '//fandom.wikia.com/explore-it',
@@ -186,6 +194,9 @@ class DesignSystemSharedLinks {
 			'google-play' => 'https://play.google.com/store/apps/developer?id=FANDOM+powered+by+Wikia&hl=it',
 			'user-signin' => 'https://www.wikia.com/signin?uselang=it',
 			'user-register' => 'https://www.wikia.com/register?uselang=it',
+			'games' => '//fandom.wikia.com/explore-it?uselang=it#Giochi',
+			'movies' => '//fandom.wikia.com/explore-it?uselang=it#Cinema',
+			'tv' => '//fandom.wikia.com/explore-it?uselang=it#TV',
 		],
 		'ja' => [
 			'explore-wikis' => '//fandom.wikia.com/explore-ja',
@@ -205,6 +216,9 @@ class DesignSystemSharedLinks {
 			'google-play' => 'https://play.google.com/store/apps/developer?id=FANDOM+powered+by+Wikia&hl=ja',
 			'user-signin' => 'https://www.wikia.com/signin?uselang=ja',
 			'user-register' => 'https://www.wikia.com/register?uselang=ja',
+			'games' => '//fandom.wikia.com/explore-ja?uselang=ja#ゲーム',
+			'movies' => '//fandom.wikia.com/explore-ja?uselang=ja#映画',
+			'tv' => '//fandom.wikia.com/explore-ja?uselang=ja#TV',
 		],
 		'pl' => [
 			'explore-wikis' => '//fandom.wikia.com/explore-pl',
@@ -223,6 +237,9 @@ class DesignSystemSharedLinks {
 			'google-play' => 'https://play.google.com/store/apps/developer?id=FANDOM+powered+by+Wikia&hl=pl',
 			'user-signin' => 'https://www.wikia.com/signin?uselang=pl',
 			'user-register' => 'https://www.wikia.com/register?uselang=pl',
+			'games' => '//fandom.wikia.com/explore-pl?uselang=pl#Gry',
+			'movies' => '//fandom.wikia.com/explore-pl?uselang=pl#Filmy',
+			'tv' => '//fandom.wikia.com/explore-pl?uselang=pl#TV',
 		],
 		'pt-br' => [
 			'explore-wikis' => '//fandom.wikia.com/explore-pt-br',
@@ -241,6 +258,9 @@ class DesignSystemSharedLinks {
 			'google-play' => 'https://play.google.com/store/apps/developer?id=FANDOM+powered+by+Wikia&hl=pt-br',
 			'user-signin' => 'https://www.wikia.com/signin?uselang=pt-br',
 			'user-register' => 'https://www.wikia.com/register?uselang=pt-br',
+			'games' => '//fandom.wikia.com/explore-pt-br?uselang=pt-br#Jogos',
+			'movies' => '//fandom.wikia.com/explore-pt-br?uselang=pt-br#Filmes',
+			'tv' => '//fandom.wikia.com/explore-pt-br?uselang=pt-br#TV',
 		],
 		'ru' => [
 			'explore-wikis' => '//fandom.wikia.com/explore-ru',
@@ -259,6 +279,9 @@ class DesignSystemSharedLinks {
 			'google-play' => 'https://play.google.com/store/apps/developer?id=FANDOM+powered+by+Wikia&hl=ru',
 			'user-signin' => 'https://www.wikia.com/signin?uselang=ru',
 			'user-register' => 'https://www.wikia.com/register?uselang=ru',
+			'games' => '//fandom.wikia.com/explore-ru?uselang=ru#Видеоигры',
+			'movies' => '//fandom.wikia.com/explore-ru?uselang=ru#Кино',
+			'tv' => '//fandom.wikia.com/explore-ru?uselang=ru#ТВ',
 		],
 		'zh-hans' => [
 			'explore-wikis' => '//fandom.wikia.com/explore-zh',
@@ -277,6 +300,9 @@ class DesignSystemSharedLinks {
 			'google-play' => 'https://play.google.com/store/apps/developer?id=FANDOM+powered+by+Wikia&hl=zh',
 			'user-signin' => 'https://www.wikia.com/signin?uselang=zh',
 			'user-register' => 'https://www.wikia.com/register?uselang=zh',
+			'games' => '//fandom.wikia.com/explore-zh?uselang=zh#游戏',
+			'movies' => '//fandom.wikia.com/explore-zh?uselang=zh#电影',
+			'tv' => '//fandom.wikia.com/explore-zh?uselang=zh#电视',
 		],
 		'zh-hant' => [
 			'explore-wikis' => '//fandom.wikia.com/explore-zh-tw',
@@ -295,6 +321,9 @@ class DesignSystemSharedLinks {
 			'google-play' => 'https://play.google.com/store/apps/developer?id=FANDOM+powered+by+Wikia&hl=zh-tw',
 			'user-signin' => 'https://www.wikia.com/signin?uselang=zh-tw',
 			'user-register' => 'https://www.wikia.com/register?uselang=zh-tw',
+			'games' => '//fandom.wikia.com/explore-zh-tw?uselang=zh-tw#遊戲',
+			'movies' => '//fandom.wikia.com/explore-zh-tw?uselang=zh-tw#電影',
+			'tv' => '//fandom.wikia.com/explore-zh-tw?uselang=zh-tw#電視',
 		],
 		'vi' => [
 			'community-central' => 'http://congdong.wikia.com/wiki/Trang_Ch%C3%ADnh',
