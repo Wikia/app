@@ -1,4 +1,4 @@
-/*global define, loadNewPrebid, loadOldPrebid*/
+/*global define*/
 define('ext.wikia.adEngine.lookup.prebid', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.context.uapContext',
@@ -32,7 +32,6 @@ define('ext.wikia.adEngine.lookup.prebid', [
 		prebidLoaded = false,
 		isLazyLoadingEnabled = adContext.get('opts.isBLBLazyPrebidEnabled'),
 		isLazyLoaded = false,
-		isNewPrebidEnabled = adContext.get('opts.isNewPrebidEnabled'),
 		logGroup = 'ext.wikia.adEngine.lookup.prebid';
 
 	function removeAdUnits() {
@@ -42,14 +41,6 @@ define('ext.wikia.adEngine.lookup.prebid', [
 	}
 
 	function call(skin, onResponse) {
-		if (!prebidLoaded) {
-			if (isNewPrebidEnabled) {
-				loadNewPrebid();
-			} else {
-				loadOldPrebid();
-			}
-		}
-
 		trackingOptIn.pushToUserConsentQueue(function (optIn) {
 			log('User opt-' + (optIn ? 'in' : 'out') + ' for prebid', log.levels.info, logGroup);
 
@@ -64,10 +55,6 @@ define('ext.wikia.adEngine.lookup.prebid', [
 
 			biddersPerformanceMap = performanceTracker.setupPerformanceMap(skin);
 			adUnits = helper.setupAdUnits(skin, isLazyLoadingEnabled ? 'pre' : 'off');
-
-			if (win.pbjs && !isNewPrebidEnabled) {
-				win.pbjs._bidsReceived = [];
-			}
 
 			if (adUnits.length > 0) {
 				if (!prebidLoaded) {
