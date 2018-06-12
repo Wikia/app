@@ -1,27 +1,29 @@
 <?php
 namespace Wikia\Logger;
 
-use Monolog\Formatter\JsonFormatter;
-use Monolog\Handler\StreamHandler;
+use Monolog\Formatter\LogstashFormatter;
+use Monolog\Handler\SocketHandler;
 use Monolog\Logger;
 use PHPUnit\Framework\TestCase;
 
 class LoggerFactoryTest extends TestCase {
+
+	const LOG_SOCKET_ADDRESS = 'tcp://127.0.0.1:9999';
 
 	/**
 	 * @dataProvider identProvider
 	 * @param string $ident
 	 */
 	public function testGetLoggerStdoutDebug( string $ident ) {
-		$loggerFactory = new LoggerFactory( true, false );
+		$loggerFactory = new LoggerFactory( true, false, self::LOG_SOCKET_ADDRESS );
 
 		$logger = $loggerFactory->getLogger( $ident );
 
 		$this->assertCount( 1, $logger->getHandlers() );
 
 		foreach ( $logger->getHandlers() as $handler ) {
-			$this->assertInstanceOf( StreamHandler::class, $handler );
-			$this->assertInstanceOf( JsonFormatter::class, $handler->getFormatter() );
+			$this->assertInstanceOf( SocketHandler::class, $handler );
+			$this->assertInstanceOf( LogstashFormatter::class, $handler->getFormatter() );
 
 			$this->assertEquals( Logger::DEBUG, $handler->getLevel() );
 		}
@@ -34,20 +36,20 @@ class LoggerFactoryTest extends TestCase {
 	 * @param string $ident
 	 */
 	public function testGetLoggerStdoutNoDebug( string $ident ) {
-		$loggerFactory = new LoggerFactory( true, true );
+		$loggerFactory = new LoggerFactory( true, true, self::LOG_SOCKET_ADDRESS );
 
-		$logger = $loggerFactory->getLogger( $ident );
+		$logger = $loggerFactory->getLogger( __METHOD__ . $ident );
 
 		$this->assertCount( 1, $logger->getHandlers() );
 
 		foreach ( $logger->getHandlers() as $handler ) {
-			$this->assertInstanceOf( StreamHandler::class, $handler );
-			$this->assertInstanceOf( JsonFormatter::class, $handler->getFormatter() );
+			$this->assertInstanceOf( SocketHandler::class, $handler );
+			$this->assertInstanceOf( LogstashFormatter::class, $handler->getFormatter() );
 
 			$this->assertEquals( Logger::INFO, $handler->getLevel() );
 		}
 
-		$this->assertEquals( $ident, $logger->getName() );
+		$this->assertEquals( __METHOD__ . $ident, $logger->getName() );
 	}
 
 	/**
@@ -55,9 +57,9 @@ class LoggerFactoryTest extends TestCase {
 	 * @param string $ident
 	 */
 	public function testGetLoggerSyslogNoDebug( string $ident ) {
-		$loggerFactory = new LoggerFactory( false, true );
+		$loggerFactory = new LoggerFactory( false, true, self::LOG_SOCKET_ADDRESS );
 
-		$logger = $loggerFactory->getLogger( $ident );
+		$logger = $loggerFactory->getLogger( __METHOD__ . $ident );
 
 		$this->assertCount( 1, $logger->getHandlers() );
 
@@ -68,7 +70,7 @@ class LoggerFactoryTest extends TestCase {
 			$this->assertEquals( Logger::INFO, $handler->getLevel() );
 		}
 
-		$this->assertEquals( $ident, $logger->getName() );
+		$this->assertEquals( __METHOD__ . $ident, $logger->getName() );
 	}
 
 	/**
@@ -76,9 +78,9 @@ class LoggerFactoryTest extends TestCase {
 	 * @param string $ident
 	 */
 	public function testGetLoggerSyslogDebug( string $ident ) {
-		$loggerFactory = new LoggerFactory( false, false );
+		$loggerFactory = new LoggerFactory( false, false, self::LOG_SOCKET_ADDRESS );
 
-		$logger = $loggerFactory->getLogger( $ident );
+		$logger = $loggerFactory->getLogger( __METHOD__ . $ident );
 
 		$this->assertCount( 1, $logger->getHandlers() );
 
@@ -89,7 +91,7 @@ class LoggerFactoryTest extends TestCase {
 			$this->assertEquals( Logger::DEBUG, $handler->getLevel() );
 		}
 
-		$this->assertEquals( $ident, $logger->getName() );
+		$this->assertEquals( __METHOD__ . $ident, $logger->getName() );
 	}
 
 	public function identProvider() {
