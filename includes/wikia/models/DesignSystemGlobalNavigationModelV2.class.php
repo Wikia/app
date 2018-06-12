@@ -79,7 +79,6 @@ class DesignSystemGlobalNavigationModelV2 extends WikiaModel {
 			'items' => [
 				$this->getLink( 'global-navigation-wikis-explore', $this->getHref( 'explore-wikis' ), 'link.explore' ),
 				$this->getLink( self::COMMUNITY_CENTRAL_LABEL, $this->getHref('community-central'), self::COMMUNITY_CENTRAL_TRACKING_LABEL ),
-				$this->getLink( 'global-navigation-wikis-fandom-university', $this->getHref( 'fandom-university' ), 'link.fandom-university' ),
 				$this->getCreateWiki( 'link.start-a-wiki' ),
 			]
 		];
