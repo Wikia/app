@@ -81,7 +81,7 @@ class CreateWikiTask extends BaseTask {
 	 * @param string $fandomCreatorCommunityId
 	 * @throws CreateWikiException an exception with status of operation set
 	 */
-	public function create( string $name, string $domain, string $language, int $vertical, array $categories, bool $allAges, int $timestamp, string $fandomCreatorCommunityId ) {
+	public function create( string $name, string $domain, string $language, int $vertical, array $categories, bool $allAges, int $timestamp, string $fandomCreatorCommunityId = null ) {
 		wfProfileIn( __METHOD__ );
 
 		// SUS-4838 | add an entry to creation log
