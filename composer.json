@@ -37,7 +37,6 @@
     "ext-bz2": "*",
     "ext-gd": "*",
     "ext-mysqli": "*",
-    "ext-opcache": "*",
     "ext-simplexml": "*",
     "ext-tidy": "*",
     "wikia/fluent-sql-php": "1.0.*",
@@ -66,6 +65,7 @@
     "wikimedia/scoped-callback": "^2.0"
   },
   "require-dev": {
+    "ext-opcache": "*",
     "ext-xdebug": "*"
   },
   "scripts": {
