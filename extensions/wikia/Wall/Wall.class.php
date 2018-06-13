@@ -358,4 +358,9 @@ class Wall extends WikiaModel {
 	public function setSorting( $val ) {
 		$this->mSorting = $val;
 	}
+
+	public function invalidateCache() {
+		// TODO: implent it
+		return true;
+	}
 }
