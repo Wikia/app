@@ -323,46 +323,18 @@ class ForumHooksHelper {
 	}
 
 	/**
-	 * Makes sure the correct URLs for thread pages get purged.
+	 * CONN-430: Don't purge any default URLs for Forum content
+	 * @see WallMessage::invalidateCache() for where the magic happens ⭐️
 	 *
 	 * @param $title Title
 	 * @param $urls String[]
 	 * @return bool
 	 */
 	public static function onTitleGetSquidURLs( $title, &$urls ) {
-		wfProfileIn( __METHOD__ );
-
 		if ( $title->inNamespaces( NS_WIKIA_FORUM_BOARD, NS_WIKIA_FORUM_BOARD_THREAD, NS_WIKIA_FORUM_TOPIC_BOARD ) ) {
-			// CONN-430: Resign from default ArticleComment purges
 			$urls = [];
 		}
 
-		if ( $title->inNamespaces( NS_WIKIA_FORUM_BOARD_THREAD, NS_WIKIA_FORUM_TOPIC_BOARD ) ) {
-			$wallMessage = WallMessage::newFromTitle( $title );
-			$urls = array_merge( $urls, $wallMessage->getSquidURLs( NS_WIKIA_FORUM_BOARD ) );
-		}
-
-		wfProfileOut( __METHOD__ );
-		return true;
-	}
-
-	/**
-	 * @desc Makes sure we don't send unnecessary ArticleComments links to purge
-	 *
-	 * @param Title $title
-	 * @param String[] $urls
-	 *
-	 * @return bool
-	 */
-	public static function onArticleCommentGetSquidURLs( $title, &$urls ) {
-		wfProfileIn( __METHOD__ );
-
-		if ( $title->inNamespaces( NS_WIKIA_FORUM_BOARD, NS_WIKIA_FORUM_BOARD_THREAD, NS_WIKIA_FORUM_TOPIC_BOARD ) ) {
-			// CONN-430: Resign from default ArticleComment purges
-			$urls = [];
-		}
-
-		wfProfileOut( __METHOD__ );
 		return true;
 	}
 
