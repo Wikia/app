@@ -115,7 +115,7 @@ html>body #Wall .new-reply .speech-bubble-avatar { *position: absolute; *left:-9
 		}
 		.stafflogo {
 			background: none no-repeat scroll 0 0 transparent;
-			background: url("/extensions/wikia/DesignSystem/bower_components/design-system/dist/svg/wds-company-logo-fandom.svg"); /* $wgResourceBasePath */
+			background: url("/extensions/wikia/DesignSystem/node_modules/design-system/dist/svg/wds-company-logo-fandom.svg"); /* $wgResourceBasePath */
 			background-size: 100% 100%;
 			bottom: -1px;
 			display: inline-block;

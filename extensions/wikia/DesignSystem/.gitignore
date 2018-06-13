@@ -1,0 +1,5 @@
+!node_modules/
+node_modules/*
+!node_modules/design-system
+node_modules/design-system/*
+!node_modules/design-system/dist

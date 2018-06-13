@@ -41,5 +41,5 @@ function wfMakeSignatureCommon($href, $title, $iurl=null) {
 
 function wfGetSignatureUrl() {
 	global $wgExtensionsPath;
-	return $wgExtensionsPath . '/wikia/DesignSystem/bower_components/design-system/dist/svg/wds-company-logo-fandom.svg';
+	return $wgExtensionsPath . '/wikia/DesignSystem/node_modules/design-system/dist/svg/wds-company-logo-fandom.svg';
 }

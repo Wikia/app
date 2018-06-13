@@ -1,0 +1,50 @@
+@mixin wds-hide-on-breakpoint($breakpoints) {
+	// only
+	@if index($breakpoints, small) {
+		@media #{$wds-breakpoint-small-only} { display: none !important; }
+	}
+	@if index($breakpoints, medium) {
+		@media #{$wds-breakpoint-medium-only} { display: none !important; }
+	}
+	@if index($breakpoints, large) {
+		@media #{$wds-breakpoint-large-only} { display: none !important; }
+	}
+	@if index($breakpoints, xlarge) {
+		@media #{$wds-breakpoint-xlarge-only} { display: none !important; }
+	}
+	@if index($breakpoints, xxlarge) {
+		@media #{$wds-breakpoint-xxlarge-only} { display: none !important; }
+	}
+	// down
+	@if index($breakpoints, small-down) {
+		@media #{$wds-breakpoint-small-down} { display: none !important; }
+	}
+	@if index($breakpoints, medium-down) {
+		@media #{$wds-breakpoint-medium-down} { display: none !important; }
+	}
+	@if index($breakpoints, large-down) {
+		@media #{$wds-breakpoint-large-down} { display: none !important; }
+	}
+	@if index($breakpoints, xlarge-down) {
+		@media #{$wds-breakpoint-xlarge-down} { display: none !important; }
+	}
+	@if index($breakpoints, xxlarge-down) {
+		@media #{$wds-breakpoint-xxlarge-down} { display: none !important; }
+	}
+	// up
+	@if index($breakpoints, small-up) {
+		@media #{$wds-breakpoint-small-up} { display: none !important; }
+	}
+	@if index($breakpoints, medium-up) {
+		@media #{$wds-breakpoint-medium-up} { display: none !important; }
+	}
+	@if index($breakpoints, large-up) {
+		@media #{$wds-breakpoint-large-up} { display: none !important; }
+	}
+	@if index($breakpoints, xlarge-up) {
+		@media #{$wds-breakpoint-xlarge-up} { display: none !important; }
+	}
+	@if index($breakpoints, xxlarge-up) {
+		@media #{$wds-breakpoint-xxlarge-up} { display: none !important; }
+	}
+}

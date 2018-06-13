@@ -1,6 +1,6 @@
 // Importing CSS has to be done via absolute url - because SASS parser doesn't accept relative path for css files
-@import '/extensions/wikia/DesignSystem/bower_components/design-system/dist/css/styles.css';
-@import '../bower_components/design-system/dist/scss/wds-variables/index';
+@import '/extensions/wikia/DesignSystem/node_modules/design-system/dist/css/styles.css';
+@import '../node_modules/design-system/dist/scss/wds-variables/index';
 @import 'skins/oasis/css/core/breakpoints-variables';
 @import 'DesignSystemGlobalFooter';
 
@@ -89,16 +89,5 @@ $global-navigation-z-index: 5000101;
 		.wds-global-footer {
 			width: $content-width-small;
 		}
-	}
-}
-
-/* MAIN-12770: harmonize DS buttons with older ones */
-.wds-button {
-	background-image: none;
-	border-radius: 0;
-	font-family: inherit;
-
-	&:hover {
-		background-image: none;
 	}
 }
