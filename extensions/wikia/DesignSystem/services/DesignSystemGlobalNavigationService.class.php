@@ -19,7 +19,7 @@ class DesignSystemGlobalNavigationService extends WikiaService {
 			'id' => $this->wg->CityId,
 			'product' => 'wikis',
 			'lang' => $this->wg->Lang->getCode(),
-		    'version' => '2',
+			'version' => '2',
 		] )->getData();
 	}
 }
