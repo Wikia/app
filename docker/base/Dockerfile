@@ -24,6 +24,8 @@ RUN apt-get update && apt-get install -y \
     # needed by Timeline extension
     ploticus \
     wget \
+    # needed by php tidy extension
+    libtidy-dev \
     # needed by sass
     && apt-get -t jessie-backports install -y libsass-dev
 
@@ -74,11 +76,12 @@ RUN docker-php-ext-install \
     opcache \
     # simplexml: SimpleXMLElement is used by DesignSystem and PortableInfoboxBuilder extensions
     simplexml \
+    tidy \
     # needed by RabbitMQ client
     bcmath
 
 RUN pecl install memcached-3.0.4 \
-    && docker-php-ext-enable memcached
+    && docker-php-ext-enable memcached tidy
 
 # expose volumes for app and config repositories clones
 ENV WIKIA_DOCROOT=/usr/wikia/slot1/current/src
