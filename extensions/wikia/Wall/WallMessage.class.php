@@ -1513,8 +1513,8 @@ class WallMessage {
 		}
 
 		$squidUpdate = new SquidUpdate( [
-			$wallOrBoard->getFullURL(),
-			$thread->getFullURL()
+			$wallOrBoard->getInternalURL(),
+			$thread->getInternalURL()
 		] );
 
 		$squidUpdate->doUpdate();
