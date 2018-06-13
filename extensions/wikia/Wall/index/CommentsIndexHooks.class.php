@@ -32,6 +32,7 @@ class CommentsIndexHooks {
 				$wallMessage->setInCommentsIndex( WPP_WALL_ADMINDELETE, 1 ); // set deleted = 1
 
 				// invalidate message and thread cache
+				$wallMessage->getThread()->invalidateCache();
 				$wallMessage->invalidateCache();
 			} catch ( CommentsIndexEntryNotFoundException $notFoundException ) {
 				// don't fail if comment was invalid
@@ -74,6 +75,7 @@ class CommentsIndexHooks {
 			);
 
 			// invalidate message and thread cache
+			$wallMessage->getThread()->invalidateCache();
 			$wallMessage->invalidateCache();
 		}
 
