@@ -18,6 +18,8 @@ Then you can use `docker exec` to take a look inside the container:
 docker exec -it dev_php-wikia_1 bash
 ```
 
+You can visit the wiki running on your local machine by going to [http://muppet.wikia-local.com/].
+
 ## Permissions
 
 To run unit tests set up the `app/tests/build` directory to be owned by `nobody:nogroup`.
