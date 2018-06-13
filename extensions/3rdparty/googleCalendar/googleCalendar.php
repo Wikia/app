@@ -56,7 +56,7 @@ function renderGoogleCalendar( $contents, $attributes, $parser ) {
 		}
 
 
-        $output = '<iframe src="http://www.google.com/calendar/embed?src='.$contents.'&title='.$title.'&chrome=NAVIGATION&height='.$height.'&epr=4" style=" border-width:0 " width="'.$width.'" frameborder="0" height="'.$height.'"></iframe>';
+        $output = '<iframe src="https://www.google.com/calendar/embed?src='.$contents.'&title='.$title.'&chrome=NAVIGATION&height='.$height.'&epr=4" style=" border-width:0 " width="'.$width.'" frameborder="0" height="'.$height.'"></iframe>';
 
         return $output;
 }

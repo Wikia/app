@@ -2,7 +2,7 @@
 describe('ext.wikia.adEngine.wrappers.prebid', function () {
 	'use strict';
 
-	function noop () {}
+	function noop() {}
 
 	var mocks = {
 			adContext: {
@@ -67,12 +67,6 @@ describe('ext.wikia.adEngine.wrappers.prebid', function () {
 		},
 		prebid;
 
-	function mockContext(map) {
-		spyOn(mocks.adContext, 'get').and.callFake(function (name) {
-			return map[name];
-		});
-	}
-
 	function getModule() {
 		return modules['ext.wikia.adEngine.wrappers.prebid'](
 			mocks.adContext,
@@ -82,10 +76,6 @@ describe('ext.wikia.adEngine.wrappers.prebid', function () {
 	}
 
 	beforeEach(function () {
-		mockContext({
-			'opts.isNewPrebidEnabled': true
-		});
-
 		prebid = getModule();
 	});
 

@@ -211,7 +211,9 @@ $config['tracking_opt_in_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [
 		'//extensions/wikia/TrackingOptIn/dist/tracking-opt-in.min.js',
+		'//extensions/wikia/TrackingOptIn/dist/consent-string.min.js',
 		'//extensions/wikia/TrackingOptIn/js/trackingOptIn.js',
+		'//extensions/wikia/TrackingOptIn/js/cmp.js',
 	],
 ];
 
@@ -272,7 +274,6 @@ $config['adengine2_pr3b1d_js'] = [
 		'//extensions/wikia/AdEngine/js/lookup/prebid/prebidHelper.js',
 		'//extensions/wikia/AdEngine/js/lookup/prebid/prebidSettings.js',
 		'//extensions/wikia/AdEngine/js/lookup/prebid/priceGranularityHelper.js',
-		'//extensions/wikia/AdEngine/js/lookup/prebid/versionCompatibility.js',
 		'//extensions/wikia/AdEngine/js/lookup/prebid/adaptersHelper.js',
 		'//extensions/wikia/AdEngine/js/lookup/prebid/adaptersPerformanceTracker.js',
 		'//extensions/wikia/AdEngine/js/lookup/prebid/adaptersPricesTracker.js',
@@ -688,7 +689,6 @@ $config['wikiamobile_js_body_minimal'] = [
 		'//resources/wikia/modules/log.js',
 		'//resources/wikia/modules/abTest.js',
 		'//resources/wikia/modules/geo.js',
-		'//resources/wikia/modules/trackingOptOut.js',
 		'//resources/wikia/modules/instantGlobals.js',
 
 		//feature detection
@@ -902,7 +902,6 @@ $config['mercury_ads_js'] = [
 		'//resources/wikia/modules/history.js',
 		'//resources/wikia/modules/cookies.js',
 		'//resources/wikia/modules/geo.js',
-		'//resources/wikia/modules/trackingOptOut.js',
 		'//resources/wikia/modules/instantGlobals.js',
 
 		'#group_mobile_base_ads_js',
@@ -941,7 +940,9 @@ $config['mercury_ads_js'] = [
 		'//extensions/wikia/AdEngine/js/run/mercury.run.js',
 		'#group_adengine2_rabbit_mobile_js',
 		'#group_jwplayer_featured_video_ads_js',
-		'//extensions/wikia/TrackingOptIn/js/trackingOptInProxy.js'
+		'//extensions/wikia/TrackingOptIn/js/trackingOptInProxy.js',
+		'//extensions/wikia/TrackingOptIn/dist/consent-string.min.js',
+		'//extensions/wikia/TrackingOptIn/js/cmp.js'
 	],
 ];
 

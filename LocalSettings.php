@@ -189,12 +189,6 @@ if ( !empty( $maintClass ) && $maintClass == 'RebuildLocalisationCache' ) {
 require_once "$IP/includes/GlobalFunctions.php";
 require_once "$IP/includes/wikia/GlobalFunctions.php";
 
-/**
- * Launch the profiler.
- */
-if( !function_exists( 'wfProfileIn' ) ) {
-    require_once "$IP/StartProfiler.php";
-}
 
 /**
  * Manipulate IEUrlExtension::areServerVarsBad() to work well with our Apache
@@ -343,6 +337,16 @@ if ( $wgDevelEnvironment ) {
         require_once( $wgDevBoxSettings );
     }
     unset( $wgDevBoxSettings );
+}
+
+// No profiler configuration has been supplied but profiling has been explicitly requested
+if ( !empty( $_GET['forceprofile'] ) && Profiler::instance() instanceof ProfilerStub ) {
+	Profiler::replaceStubInstance( new ProfilerXhprof( [
+		'flags' => TIDEWAYS_FLAGS_NO_BUILTINS | TIDEWAYS_FLAGS_CPU,
+		'threshold' => $wgProfileLimit,
+		'output' => [ 'text' ],
+		'visible' => isset( $_GET['showprofile'] ),
+	] ) );
 }
 
 require_once "$IP/includes/wikia/Extensions.php";

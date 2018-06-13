@@ -39,6 +39,7 @@ class ComposerStaticInitb367f9b4bf4d43e0d5ea402c134db26b
         ),
         'W' => 
         array (
+            'Wikimedia\\' => 10,
             'Wikia\\Search\\' => 13,
             'Wikia\\' => 6,
             'Webmozart\\Assert\\' => 17,
@@ -154,6 +155,10 @@ class ComposerStaticInitb367f9b4bf4d43e0d5ea402c134db26b
         'Zend\\Diactoros\\' => 
         array (
             0 => __DIR__ . '/..' . '/zendframework/zend-diactoros/src',
+        ),
+        'Wikimedia\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/wikimedia/scoped-callback/src',
         ),
         'Wikia\\Search\\' => 
         array (
@@ -3029,6 +3034,7 @@ class ComposerStaticInitb367f9b4bf4d43e0d5ea402c134db26b
         'Swagger\\Client\\TemplateClassification\\Storage\\Models\\TemplateTypeProvider' => __DIR__ . '/../../..' . '/lib/Swagger/src/TemplateClassification/Storage/Models/TemplateTypeProvider.php',
         'Swagger\\Client\\User\\Attributes\\Api\\AttributesApi' => __DIR__ . '/../../..' . '/lib/Swagger/src/User/Attributes/Api/AttributesApi.php',
         'Swagger\\Client\\User\\Attributes\\Api\\UsersAttributesApi' => __DIR__ . '/../../..' . '/lib/Swagger/src/User/Attributes/Api/UsersAttributesApi.php',
+        'Swagger\\Client\\User\\Attributes\\Api\\UsersAttributesInternalApiApi' => __DIR__ . '/../../..' . '/lib/Swagger/src/User/Attributes/Api/UsersAttributesInternalApiApi.php',
         'Swagger\\Client\\User\\Attributes\\Models\\AllAttributesHalResponse' => __DIR__ . '/../../..' . '/lib/Swagger/src/User/Attributes/Models/AllAttributesHalResponse.php',
         'Swagger\\Client\\User\\Attributes\\Models\\AllUserAttributesHalResponse' => __DIR__ . '/../../..' . '/lib/Swagger/src/User/Attributes/Models/AllUserAttributesHalResponse.php',
         'Swagger\\Client\\User\\Attributes\\Models\\AttributeHalResponse' => __DIR__ . '/../../..' . '/lib/Swagger/src/User/Attributes/Models/AttributeHalResponse.php',
@@ -3396,6 +3402,7 @@ class ComposerStaticInitb367f9b4bf4d43e0d5ea402c134db26b
         'Wikia\\Logger\\Hooks' => __DIR__ . '/../../..' . '/lib/Wikia/src/Logger/Hooks.php',
         'Wikia\\Logger\\Loggable' => __DIR__ . '/../../..' . '/lib/Wikia/src/Logger/Loggable.php',
         'Wikia\\Logger\\LogstashFormatter' => __DIR__ . '/../../..' . '/lib/Wikia/src/Logger/LogstashFormatter.php',
+        'Wikia\\Logger\\S3AuditLogger' => __DIR__ . '/../../..' . '/lib/Wikia/src/Logger/S3AuditLogger.php',
         'Wikia\\Logger\\StatusProcessor' => __DIR__ . '/../../..' . '/lib/Wikia/src/Logger/StatusProcessor.php',
         'Wikia\\Logger\\SyslogHandler' => __DIR__ . '/../../..' . '/lib/Wikia/src/Logger/SyslogHandler.php',
         'Wikia\\Logger\\WebProcessor' => __DIR__ . '/../../..' . '/lib/Wikia/src/Logger/WebProcessor.php',
@@ -3535,6 +3542,7 @@ class ComposerStaticInitb367f9b4bf4d43e0d5ea402c134db26b
         'Wikia\\Vignette\\StaticAssetsUrlGenerator' => __DIR__ . '/../../..' . '/lib/Wikia/src/Vignette/StaticAssetsUrlGenerator.php',
         'Wikia\\Vignette\\UrlConfig' => __DIR__ . '/../../..' . '/lib/Wikia/src/Vignette/UrlConfig.php',
         'Wikia\\Vignette\\UrlGenerator' => __DIR__ . '/../../..' . '/lib/Wikia/src/Vignette/UrlGenerator.php',
+        'Wikimedia\\ScopedCallback' => __DIR__ . '/..' . '/wikimedia/scoped-callback/src/ScopedCallback.php',
         'Zend\\Diactoros\\AbstractSerializer' => __DIR__ . '/..' . '/zendframework/zend-diactoros/src/AbstractSerializer.php',
         'Zend\\Diactoros\\CallbackStream' => __DIR__ . '/..' . '/zendframework/zend-diactoros/src/CallbackStream.php',
         'Zend\\Diactoros\\Exception\\DeprecatedMethodException' => __DIR__ . '/..' . '/zendframework/zend-diactoros/src/Exception/DeprecatedMethodException.php',

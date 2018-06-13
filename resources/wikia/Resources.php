@@ -127,18 +127,10 @@ return [
 			'wikia.window'
 		],
 	],
-	'wikia.trackingOptOut' => [
-		'scripts' => 'resources/wikia/modules/trackingOptOut.js',
-		'dependencies' => [
-			'amd',
-			'wikia.querystring'
-		],
-	],
 	'wikia.instantGlobals' => [
 		'scripts' => 'resources/wikia/modules/instantGlobals.js',
 		'dependencies' => [
 			'amd',
-			'wikia.trackingOptOut',
 			'wikia.window'
 		],
 	],

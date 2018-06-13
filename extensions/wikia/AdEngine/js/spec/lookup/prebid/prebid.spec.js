@@ -102,6 +102,7 @@ describe('ext.wikia.adEngine.lookup.prebid', function () {
 					cb(true);
 				}
 			},
+			consentString: {},
 			adaptersPricesTracker: {},
 			adaptersPriorities: {
 				bidder_1: 1,
@@ -167,6 +168,7 @@ describe('ext.wikia.adEngine.lookup.prebid', function () {
 			mocks.prebidHelper,
 			mocks.prebidSettings,
 			getFactory(),
+			mocks.consentString,
 			mocks.log,
 			mocks.trackingOptIn,
 			mocks.win
@@ -182,8 +184,6 @@ describe('ext.wikia.adEngine.lookup.prebid', function () {
 		spyOn(mocks.adTracker, 'track');
 		spyOn(mocks.win.pbjs.que, 'push');
 
-		window.loadOldPrebid = noop;
-		window.loadNewPrebid = noop;
 		mocks.log.levels = {};
 	});
 

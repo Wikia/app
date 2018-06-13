@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "dependencies": {
-    "@wikia/tracking-opt-in": "^1.0.32"
+    "@wikia/tracking-opt-in": "^1.0.32",
+    "consent-string": "^1.2.4"
   },
   "devDependencies": {
     "babel-loader": "^7.1.2",
