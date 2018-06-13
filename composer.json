@@ -34,12 +34,12 @@
   },
   "require": {
     "ext-bcmath": "*",
-    "ext-bz2": "^1.0.6",
-    "ext-gd": "^1.2.50",
-    "ext-mysqli": "^5.0.12",
-    "ext-opcache": "^7.0.28",
+    "ext-bz2": "*",
+    "ext-gd": "*",
+    "ext-mysqli": "*",
+    "ext-opcache": "*",
     "ext-simplexml": "*",
-    "ext-tidy": "^7.0.28",
+    "ext-tidy": "*",
     "wikia/fluent-sql-php": "1.0.*",
     "monolog/monolog": "^1.23",
     "phpunit/phpunit": "^6.5",
@@ -66,7 +66,7 @@
     "wikimedia/scoped-callback": "^2.0"
   },
   "require-dev": {
-    "ext-xdebug": "^2.6.0"
+    "ext-xdebug": "*"
   },
   "scripts": {
     "lint": "phplint . --exclude lib/composer --exclude /templates/ --no-cache"
