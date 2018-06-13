@@ -5,6 +5,10 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 	protected function setUp() {
 		$this->setupFile = dirname( __FILE__ ) . '/../PortableInfobox.setup.php';
 		parent::setUp();
+
+		if ( !extension_loaded( 'mustache' ) ) {
+			$this->markTestSkipped( '"mustache" PHP extension needs to be loaded!' );
+		}
 	}
 
 	private function mockInfoboxImagesHelper( $input ) {
@@ -39,7 +43,7 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 		$tidy->parseString($html, $config);
 		$tidy->cleanRepair();
 
-		return (string) $tidy;
+		return preg_replace( '/>\s+/', '>', (string) $tidy );
 	}
 
 	/**
@@ -151,7 +155,7 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 									</hgroup>
 									<figure data-attrs="" data-file="">
 										<a href="http://image.jpg">
-										<img class="article-media-placeholder lazyload" src="data:image/svg+xml;charset=utf-8,%3Csvg xmlns%3D\'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg\' viewBox%3D\'0 0 400 200\'%2F%3E" data-src="http://image.jpg" data-srcset="http://image.jpg, http://image2x.jpg 2x" data-sizes="auto" alt="" width="400" height="200"/>
+										<img class="article-media-placeholder lazyload" src="data:image/svg+xml;charset=utf-8,%3Csvg xmlns%3D\'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg\' viewBox%3D\'0 0 400 200\'%2F%3E" data-src="http://image.jpg" data-srcset="http://image.jpg, http://image2x.jpg 2x" data-sizes="auto" alt="" width="400" height="200" />
 										<noscript>
 											<img src="http://image.jpg" alt="image alt" width="400" height="200"/>
 										</noscript>
@@ -539,7 +543,7 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 								<div class="pi-item pi-hero">
 									<figure data-attrs="" data-file="">
 										<a href="http://image.jpg">
-											<img class="article-media-placeholder lazyload" src="data:image/svg+xml;charset=utf-8,%3Csvg xmlns%3D\'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg\' viewBox%3D\'0 0 400 200\'%2F%3E" data-src="http://image.jpg" data-srcset="http://image.jpg, http://image2x.jpg 2x" data-sizes="auto" alt="" width="400" height="200"/>
+											<img class="article-media-placeholder lazyload" src="data:image/svg+xml;charset=utf-8,%3Csvg xmlns%3D\'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg\' viewBox%3D\'0 0 400 200\'%2F%3E" data-src="http://image.jpg" data-srcset="http://image.jpg, http://image2x.jpg 2x" data-sizes="auto" alt="" width="400" height="200" />
 											<noscript>
 												<img src="http://image.jpg" alt="image alt" width="400" height="200"/>
 											</noscript>
@@ -693,7 +697,7 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 									</hgroup>
 									<figure data-attrs="" data-file="">
 										<a href="http://image.jpg">
-											<img class="article-media-placeholder lazyload" src="data:image/svg+xml;charset=utf-8,%3Csvg xmlns%3D\'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg\' viewBox%3D\'0 0 400 200\'%2F%3E" data-src="thumbnail.jpg" data-srcset="thumbnail.jpg, thumbnail2x.jpg 2x" data-sizes="auto" alt="" width="400" height="200"/>
+											<img class="article-media-placeholder lazyload" src="data:image/svg+xml;charset=utf-8,%3Csvg xmlns%3D\'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg\' viewBox%3D\'0 0 400 200\'%2F%3E" data-src="thumbnail.jpg" data-srcset="thumbnail.jpg, thumbnail2x.jpg 2x" data-sizes="auto" alt="" width="400" height="200" />
 											<noscript>
 												<img src="http://image.jpg" alt="" width="400" height="200"/>
 											</noscript>
@@ -803,7 +807,7 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 									</hgroup>
 									<figure data-attrs="" data-file="">
 										<a href="http://image.jpg">
-											<img class="article-media-placeholder lazyload" src="data:image/svg+xml;charset=utf-8,%3Csvg xmlns%3D\'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg\' viewBox%3D\'0 0 400 200\'%2F%3E" data-src="thumbnail.jpg" data-srcset="thumbnail.jpg, thumbnail2x.jpg 2x" data-sizes="auto" alt="" width="400" height="200"/>
+											<img class="article-media-placeholder lazyload" src="data:image/svg+xml;charset=utf-8,%3Csvg xmlns%3D\'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg\' viewBox%3D\'0 0 400 200\'%2F%3E" data-src="thumbnail.jpg" data-srcset="thumbnail.jpg, thumbnail2x.jpg 2x" data-sizes="auto" alt="" width="400" height="200" />
 											<noscript>
 												<img src="http://image.jpg" alt="" width="400" height="200"/>
 											</noscript>

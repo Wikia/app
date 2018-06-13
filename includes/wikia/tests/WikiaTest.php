@@ -102,9 +102,13 @@ class WikiaTest extends WikiaBaseTest {
 
 	public function testOnSkinTemplateOutputPageBeforeExec_setsNoIndexNoFollowBecauseStaging() {
 
+		$request = new FauxRequest();
+
+		$request->setHeader( 'X-Staging', 1 );
+
 		$context = new RequestContext();
 		$context->setTitle( new Title() );
-		$context->setRequest( new FauxRequest() );
+		$context->setRequest( $request );
 
 		$skinTemplate = new SkinTemplate();
 		$quickTemplate = new OasisTemplate();

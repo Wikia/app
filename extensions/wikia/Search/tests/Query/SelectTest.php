@@ -22,11 +22,8 @@ class SelectTest extends BaseTest
 				$query
 		);
 	}
-	
+
 	/**
-	 * @group Slow
-	 * @group Broken
-	 * @slowExecutionTime 0.10945 ms
 	 * @covers \Wikia\Search\Query\Select::getSanitizedQuery
 	 * @dataProvider getSanitizedQueryDataProvider
 	 * @param string $rawQuery raw user input (search query)
@@ -39,7 +36,7 @@ class SelectTest extends BaseTest
 		$this->assertEquals( $expectedResult, $query->getSanitizedQuery() );
 		$this->assertAttributeEquals( $expectedResult, 'sanitizedQuery', $query );
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.10793 ms
@@ -52,7 +49,7 @@ class SelectTest extends BaseTest
 		$query = new Query( $rawQuery );
 		$this->assertEquals( $expectedSafeOutput, $query->getQueryForHtml() );
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.10823 ms
@@ -66,7 +63,7 @@ class SelectTest extends BaseTest
 
 		$this->assertEquals( $query->hasTerms(), $shouldHaveTerms );
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.09127 ms
@@ -86,7 +83,7 @@ class SelectTest extends BaseTest
 				$query
 		);
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.09147 ms
@@ -103,7 +100,7 @@ class SelectTest extends BaseTest
 		$this->assertEquals( $query->getNamespaceId(), $expectedNamespaceId );
 		$this->assertEquals( $query->getNamespacePrefix(), $expectedNamespacePrefix );
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.09139 ms
@@ -126,7 +123,7 @@ class SelectTest extends BaseTest
 				$query->getSolrQuery()
 		);
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.09074 ms

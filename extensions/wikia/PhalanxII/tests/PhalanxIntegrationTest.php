@@ -11,10 +11,6 @@ class PhalanxIntegrationTest extends WikiaDatabaseTest {
 		require_once __DIR__ . '/../PhalanxSpecial_setup.php';
 	}
 
-	protected function extraSchemaFiles() {
-		yield __DIR__ . '/fixtures/phalanx_tables.sql';
-	}
-
 	public function testPhalanxStatsAndFilterEntryRemovedWhenFilterRemoved() {
 		$this->mockGlobalVariable( 'wgUser', User::newFromId( 1 ) );
 

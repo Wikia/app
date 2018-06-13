@@ -4,7 +4,7 @@
 LOGS_PATH=build/logs
 
 # command to run PHPUnit
-CMD_PHPUNIT=php -v && php -d xdebug.coverage_enable=0 -d opcache.enable=0 run-test.php \
+CMD_PHPUNIT=php -v && php ${PHP_PARAMS} -d xdebug.coverage_enable=0 -d opcache.enable=0 run-test.php \
 	--stderr --configuration=phpunit.xml
 
 # command to run PHPUnit Code Coverage
@@ -35,13 +35,19 @@ prepare:
 phpunit: prepare
 	${CMD_PHPUNIT} \
 		--log-junit=${LOGS_PATH}/phpunit-unit.xml \
-		--exclude-group Infrastructure,Integration,Broken,Stub,Monitoring,Hack,ExternalIntegration,ContractualResponsibilitiesValidation
+		--exclude-group Infrastructure,Integration,ExternalIntegration,ContractualResponsibilitiesValidation
 
 # runs integration tests only
+phpunit-integration: prepare
+	${CMD_PHPUNIT} \
+		--log-junit=${LOGS_PATH}/phpunit-infrastructure.xml \
+		--group Integration
+
+# runs infrastructure/system tests only
 phpunit-infrastructure: prepare
 	${CMD_PHPUNIT} \
 		--log-junit=${LOGS_PATH}/phpunit-infrastructure.xml \
-		--group Infrastructure,Integration
+		--group Infrastructure
 
 # runs all (i.e. both unit and integration) tests from a given directory or a file
 phpunit-single: prepare

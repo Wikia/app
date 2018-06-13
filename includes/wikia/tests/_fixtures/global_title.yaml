@@ -1,0 +1,44 @@
+city_list:
+  - city_id: 177
+    city_url: http://community.wikia.com/
+    city_cluster: c1
+    city_dbname: wikia
+  - city_id: 113
+    city_url: http://memory-alpha.wikia.com/
+    city_cluster: c2
+    city_dbname: memoryalpha
+  - city_id: 490
+    city_url: http://wowwiki.wikia.com/
+    city_cluster: c3
+    city_dbname: wowwiki
+  - city_id: 1686
+    city_url: http://spolecznosc.wikia.com/
+    city_cluster: c4
+    city_dbname: plwikia
+  - city_id: 165
+    city_url: http://firefly.wikia.com/
+    city_cluster: c5
+    city_dbname: firefly
+  - city_id: 5931
+    city_url: http://ja.starwars.wikia.com/
+    city_cluster: c6
+    city_dbname: jastarwars
+city_variables_pool:
+  - cv_id: 1
+    cv_name: wgLanguageCode
+    cv_description: I am the language code
+    cv_variable_type: string
+  - cv_id: 2
+    cv_name: wgExtraNamespacesLocal
+    cv_description: We are the extra namespaces
+    cv_variable_type: array
+city_variables:
+  - cv_city_id: 1686
+    cv_variable_id: 1
+    cv_value: s:2:"pl";
+  - cv_city_id: 5931
+    cv_variable_id: 1
+    cv_value: s:2:"ja";
+  - cv_city_id: 490
+    cv_variable_id: 2
+    cv_value: a:1:{i:116;s:6:"Portal";}
