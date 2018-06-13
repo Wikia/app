@@ -31,7 +31,7 @@ $wgWikiaLocalSettingsPath = __FILE__;
 $wgWikiaDatacenter = getenv( 'WIKIA_DATACENTER' );
 
 if ( empty( $wgWikiaDatacenter ) ) {
-    throw new ConfigException( 'Datacenter not configured in /etc/environment.' ); 
+    throw new RuntimeException( 'Datacenter not configured in WIKIA_DATACENTER env variable.' );
 }
 
 /**
@@ -44,7 +44,7 @@ $wgWikiaEnvironment = getenv( 'WIKIA_ENVIRONMENT' );
 
 // CONFIG_REVISION: remove $wgWikiaDatacenter and $wgWikiaEnvironment from the global scope and only use it to load configuration
 if ( empty( $wgWikiaEnvironment ) ) {
-    throw new ConfigException( 'Environment not configured in /etc/environment.' ); 
+    throw new RuntimeException( 'Environment not configured in WIKIA_ENVIRONMENT env variable.' );
 }
 
 /**
