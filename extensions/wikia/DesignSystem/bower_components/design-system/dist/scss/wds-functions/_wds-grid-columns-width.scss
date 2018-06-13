@@ -1,0 +1,32 @@
+// helper function to calculate width based on single column width and number of columns
+@function wds-grid-columns-width($single-column-width, $column-count) {
+	@return round($single-column-width * $column-count + $wds-grid-gap * ($column-count - 1));
+}
+
+// width of the grid columns on breakpoint medium
+@function wds-breakpoint-medium-grid-columns-width($column-count) {
+	$single-column-breakpoint-medium: ($wds-breakpoint-medium-available-width - $wds-grid-gap-space) / $wds-grid-columns;
+
+	@return wds-grid-columns-width($single-column-breakpoint-medium, $column-count);
+}
+
+// width of the grid columns on breakpoint large
+@function wds-breakpoint-large-grid-columns-width($column-count) {
+	$single-column-breakpoint-large: ($wds-breakpoint-large-available-width - $wds-grid-gap-space) / $wds-grid-columns;
+
+	@return wds-grid-columns-width($single-column-breakpoint-large, $column-count);
+}
+
+// width of the grid columns on breakpoint xlarge
+@function wds-breakpoint-xlarge-grid-columns-width($column-count) {
+	$single-column-breakpoint-xlarge: ($wds-breakpoint-xlarge-available-width - $wds-grid-gap-space) / $wds-grid-columns;
+
+	@return wds-grid-columns-width($single-column-breakpoint-xlarge, $column-count);
+}
+
+// width of the grid columns on breakpoint xxlarge
+@function wds-breakpoint-xxlarge-grid-columns-width($column-count) {
+	$single-column-breakpoint-xxlarge: ($wds-breakpoint-xxlarge-available-width - $wds-grid-gap-space) / $wds-grid-columns;
+
+	@return wds-grid-columns-width($single-column-breakpoint-xxlarge, $column-count);
+}

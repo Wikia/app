@@ -1,0 +1,25 @@
+.wds-button {
+	$social-colors: (
+		facebook: $wds-color-social-facebook,
+		googleplus: $wds-color-social-googleplus,
+		line: $wds-color-social-line,
+		linkedin: $wds-color-social-linkedin,
+		instagram: $wds-color-social-instagram,
+		meneame: $wds-color-social-meneame,
+		nk: $wds-color-social-nk,
+		odnoklassniki: $wds-color-social-odnoklassniki,
+		reddit: $wds-color-social-reddit,
+		tumblr: $wds-color-social-tumblr,
+		twitter: $wds-color-social-twitter,
+		vkontakte: $wds-color-social-vkontakte,
+		wykop: $wds-color-social-wykop,
+		weibo: $wds-color-social-weibo,
+		youtube: $wds-color-social-youtube
+	);
+
+	@each $social-name, $social-color in $social-colors {
+		&.wds-is-#{$social-name}-color {
+			@include button-theming($social-color, $wds-color-white);
+		}
+	}
+}
