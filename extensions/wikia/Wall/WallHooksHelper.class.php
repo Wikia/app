@@ -550,47 +550,6 @@ class WallHooksHelper {
 	}
 
 	/**
-	 * @param ArticleComment $comment
-	 * @return bool
-	 */
-	static public function onArticleCommentBeforeWatchlistAdd( $comment ) {
-		$commentTitle = $comment->getTitle();
-		$app = F::app();
-		if ( $commentTitle instanceof Title &&
-			in_array( MWNamespace::getSubject( $commentTitle->getNamespace() ), $app->wg->WallNS ) ) {
-			$parentTitle = $comment->getTopParentObj();
-
-			if ( !( $comment->mUser instanceof User ) ) {
-				// force load from cache
-				$comment->load( true );
-			}
-
-			if ( !( $comment->mUser instanceof User ) ) {
-				// comment in master has no valid User
-				// log error
-				$logmessage = 'WallHooksHelper.class.php, ' . __METHOD__ . ' ';
-				$logmessage .= 'ArticleId: ' . $commentTitle->getArticleID();
-
-				Wikia::log( __METHOD__, false, $logmessage );
-
-				// parse following hooks
-				return true;
-			}
-
-			if ( !empty( $parentTitle ) ) {
-				$comment->mUser->addWatch( $parentTitle->getTitle() );
-			} else {
-				$comment->mUser->addWatch( $comment->getTitle() );
-			}
-
-			return false;
-		}
-
-		return true;
-	}
-
-
-	/**
 	 * @brief Allows to edit or not archived talk pages and its subpages
 	 *
 	 * @author Andrzej 'nAndy' Łukaszewski
@@ -1302,22 +1261,6 @@ class WallHooksHelper {
 	/**
 	 * @param User $user
 	 * @param Article $article
-	 * @return bool
-	 */
-	static public function onWatchArticle( &$user, &$article ) {
-		$app = F::app();
-		$title = $article->getTitle();
-
-		if ( !empty( $app->wg->EnableWallExt ) && static::isWallMainPage( $title ) ) {
-			static::processActionOnWatchlist( $user, $title->getText(), 'add' );
-		}
-
-		return true;
-	}
-
-	/**
-	 * @param User $user
-	 * @param Article $article
 	 *
 	 * @return bool
 	 */
@@ -1346,14 +1289,6 @@ class WallHooksHelper {
 		}
 
 		return true;
-	}
-
-	static private function isWallMainPage( Title $title ) {
-		if ( $title->getNamespace() == NS_USER_WALL && strpos( $title->getText(), '/' ) === false ) {
-			return true;
-		}
-
-		return false;
 	}
 
 	/**
@@ -1953,7 +1888,8 @@ class WallHooksHelper {
 	}
 
 	/**
-	 * Makes sure the correct URLs for thread pages and message wall page get purged.
+	 * CONN-430: Don't purge any default URLs for Wall content
+	 * @see WallMessage::invalidateCache() for where the magic happens ⭐️
 	 *
 	 * @param $title Title
 	 * @param $urls String[]
@@ -1961,19 +1897,9 @@ class WallHooksHelper {
 	 */
 	public static function onTitleGetSquidURLs( Title $title, &$urls ) {
 
-		if ( $title->inNamespace( NS_USER_WALL ) ) {
-			// CONN-430: Resign from default ArticleComment purges
+		if ( $title->inNamespaces( NS_USER_WALL, NS_USER_WALL_MESSAGE ) ) {
 			$urls = [];
-		}
-
-		if ( $title->inNamespace( NS_USER_WALL_MESSAGE ) ) {
-			// CONN-430: purge cache only for main thread page and owner's wall page
-			// while running AfterBuildNewMessageAndPost hook
-			$wallMessage = WallMessage::newFromTitle( $title );
-			$urls = $wallMessage->getSquidURLs( NS_USER_WALL );
-		}
-
-		if ( $title->inNamespace( NS_USER_WALL_MESSAGE_GREETING ) ) {
+		} elseif ( $title->inNamespace( NS_USER_WALL_MESSAGE_GREETING ) ) {
 			// SUS-2756: For Message Wall Greetings, just purge the greeting page + user wall
 			$dbKey = $title->getDBkey();
 			$wallTitle = Title::makeTitle( NS_USER_WALL, $dbKey );
@@ -1982,23 +1908,6 @@ class WallHooksHelper {
 				$title->getFullURL(),
 				$wallTitle->getFullURL(),
 			];
-		}
-
-		return true;
-	}
-
-	/**
-	 * Makes sure we don't send unnecessary ArticleComments links to purge
-	 *
-	 * @param Title $title
-	 * @param String[] $urls
-	 *
-	 * @return bool
-	 */
-	public static function onArticleCommentGetSquidURLs( $title, &$urls ) {
-		if ( $title->inNamespaces( NS_USER_WALL, NS_USER_WALL_MESSAGE, NS_USER_WALL_MESSAGE_GREETING ) ) {
-			// CONN-430: Resign from default ArticleComment purges
-			$urls = [];
 		}
 
 		return true;

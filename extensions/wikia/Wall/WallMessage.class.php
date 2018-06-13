@@ -77,14 +77,18 @@ class WallMessage {
 		}
 
 		if ( $master == false ) {
-			// TODO: instead of relying on fallback to master let's implement a proper wfWaitForSlaves() use
-			WikiaLogger::instance()->warning( __METHOD__ . ' - newFromId failed for slave, trying master', [
-				'titleId' => $id
-			] );
+			// if you fail from slave try again from master
+			$masterComment = self::newFromId( $id, true );
+
+			if ( $masterComment ) {
+				// TODO: instead of relying on fallback to master let's implement a proper wfWaitForSlaves() use
+				WikiaLogger::instance()->warning( __METHOD__ . ' - newFromId failed for slave, but data found in master', [
+					'titleId' => $id
+				] );
+			}
 
 			wfProfileOut( __METHOD__ );
-			// if you fail from slave try again from master
-			return self::$wallMessageCache[$id] = self::newFromId( $id, true );
+			return self::$wallMessageCache[$id] = $masterComment;
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -129,6 +133,7 @@ class WallMessage {
 		foreach ( $retryIds as $id ) {
 			$title = Title::newFromID( $id, Title::GAID_FOR_UPDATE );
 			if ( $title instanceof Title && $title->exists() ) {
+				WikiaLogger::instance()->warning( 'Reply missing from slave but found in master', [ 'titleId' => $id ] );
 				$wallMessages[ $title->getArticleID() ] = WallMessage::newFromTitle( $title );
 			} else {
 				WikiaLogger::instance()->error( 'Failed to load reply for thread', [ 'titleId' => $id ] );
@@ -239,7 +244,7 @@ class WallMessage {
 		wfProfileIn( __METHOD__ );
 
 		if ( $this->canEdit( $user ) || $force ) {
-			$this->getArticleComment()->doSaveComment( $body, $user, null, 0, true, $summary, $preserveMetadata );
+			$this->getArticleComment()->doSaveComment( $body, $user,  0, true, $summary, $preserveMetadata );
 		}
 		if ( !$this->isMain() ) {
 			// after changing reply invalidate thread cache
@@ -958,12 +963,10 @@ class WallMessage {
 			$this->recordAdminHistory( $user, $reason, WH_REMOVE, $notifyAdmins );
 
 			if ( $this->isMain() === true ) {
-				$this->getWall()->invalidateCache();
 				$wnoe = $this->getOwnerNotificationEntity( $user, $reason );
 				$this->addOwnerNotificationFromEntity( $wnoe );
-			} else {
-				$this->getThread()->invalidateCache();
 			}
+
 			$this->hideRelatedNotifications();
 		}
 
@@ -1056,12 +1059,10 @@ class WallMessage {
 			$wh->add( WH_DELETE, $wnae, $user );
 
 			if ( $this->isMain() === true ) {
-				$this->getWall()->invalidateCache();
 				$wnoe = $this->getOwnerNotificationEntity( $user, $reason );
 				$this->addOwnerNotificationFromEntity( $wnoe );
-			} else {
-				$this->getThread()->invalidateCache();
 			}
+
 			$this->hideRelatedNotifications();
 		}
 
@@ -1102,15 +1103,7 @@ class WallMessage {
 
 		$this->removeRelatedNotifications();
 
-		if ( $this->isMain() === true ) {
-			$obj = $this->getWall();
-		} else {
-			$obj = $this->getThread();
-		}
-
-		$retval = $this->getArticleComment()->doDeleteComment( $reason, $suppress );
-		$obj->invalidateCache();
-		return $retval;
+		return $this->getArticleComment()->doDeleteComment( $reason, $suppress );
 	}
 
 	public function removeRelatedNotifications() {
@@ -1216,15 +1209,12 @@ class WallMessage {
 		$wn = new WallNotifications;
 		if ( $this->isMain() ) {
 			$wn->unhideNotificationsForUniqueID( $this->cityId, $this->getId() );
-			$this->getWall()->invalidateCache();
 
 			$wna = new WallNotificationsAdmin;
 			$wna->removeForThread( $this->cityId, $this->getId() );
 			$wno = new WallNotificationsOwner;
 			$wno->removeForThread( $this->cityId, $this->getWallOwner()->getId(), $this->getId() );
 		} else {
-			$this->getThread()->invalidateCache();
-
 			$wna = new WallNotificationsAdmin;
 			$wna->removeForReply( $this->cityId, $this->getId() );
 			$wno = new WallNotificationsOwner;
@@ -1503,47 +1493,30 @@ class WallMessage {
 	}
 
 	/**
-	 * @desc calls purgeSquid() on $title instance and invalidateCache() on Wall's title instance
-	 * The flow then goes to TitleGetSquidURLs hook which cleans the list of URLs in Wall and Forum
+	 * Purge URLs in Varnish for the Wall/Board page and the Wall/Forum thread that corresponds to this message
+	 * If this message is a reply, it will also invalidate thread replies memcache
 	 */
 	public function invalidateCache() {
-		if ( $this->title instanceof Title ) {
-			$this->getWall()->getTitle()->invalidateCache(); // bumps page_touched
-			wfWaitForSlaves();
-			$this->title->purgeSquid();
-		}
-	}
+		$wallOrBoard = $this->getArticleTitle();
+		$wallOrBoard->invalidateCache(); // bumps page_touched
 
-	/**
-	 * @param Integer $namespace Message_Wall or Board namespace
-	 *
-	 * @return array
-	 */
-	public function getSquidURLs( $namespace ) {
-		$urls = [ ];
-		$this->load( true );
+		$commentsIndexEntry = $this->getCommentsIndexEntry();
+		$threadId = $commentsIndexEntry->getParentPageId();
 
-		// While creating a new forum board the message id === 0
-		// Therefore we're getting at this place invalid URLs to be purge
-		// To quick fix it we use $idDB variable...
-		if ( $this->getMessagePageId() > 0 ) {
-			if ( $this->isMain() ) {
-				$urls[] = $this->getMessagePageUrl( true );
-			} else {
-				/** @var WallMessage $parent */
-				$parent = $this->getTopParentObj();
-				$parent->load( true );
-				$urls[] = $parent->getMessagePageUrl( true );
-			}
-
-			// CONN-430: Purge wall page / forum board
-			$title = Title::newFromText( $this->getMainPageText(), $namespace );
-			if ( !empty( $title ) ) {
-				$urls[] = $title->getFullURL();
-			}
+		if ( $threadId ) {
+			// this is a reply on a thread, purge the thread page and also invalidate replies memcache
+			$this->getThread()->invalidateCache();
+			$thread = Title::makeTitle( NS_USER_WALL_MESSAGE, $threadId );
+		} else {
+			// this is a thread's main comment, only purge the page
+			$thread = Title::makeTitle( NS_USER_WALL_MESSAGE, $this->getId() );
 		}
 
-		return $urls;
-	}
+		$squidUpdate = new SquidUpdate( [
+			$wallOrBoard->getFullURL(),
+			$thread->getFullURL()
+		] );
 
+		$squidUpdate->doUpdate();
+	}
 }

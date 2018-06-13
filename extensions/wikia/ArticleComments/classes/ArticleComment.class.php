@@ -842,7 +842,6 @@ class ArticleComment {
 	 *
 	 * @param string $text
 	 * @param User $user
-	 * @param Title $title
 	 * @param int $commentId
 	 * @param bool $force
 	 * @param string $summary
@@ -850,7 +849,7 @@ class ArticleComment {
 	 *
 	 * @return array|bool False on failure, array on success. First element is Status instance returned by EditPage::internalAttemptSave, second is Article instance.
 	 */
-	public function doSaveComment( $text, $user, $title = null, $commentId = 0, $force = false, $summary = '', $preserveMetadata = false ) {
+	public function doSaveComment( $text, $user, $commentId = 0, $force = false, $summary = '', $preserveMetadata = false ) {
 		global $wgTitle;
 		$metadata = $this->mMetadata;
 
@@ -877,7 +876,6 @@ class ArticleComment {
 			/**
 			 * because we save different title via Ajax request
 			 */
-			$origTitle = $wgTitle;
 			$wgTitle = $commentTitle;
 
 			/**
@@ -891,13 +889,6 @@ class ArticleComment {
 
 			$status = self::doSaveAsArticle( $text, $article, $user, $this->mMetadata, $summary );
 
-			if ( !empty( $title ) ) {
-				$purgeTarget = $title;
-			} else {
-				$purgeTarget = $origTitle;
-			}
-
-			ArticleCommentList::purgeCache( $purgeTarget );
 			$res = [ $status, $article ];
 		} else {
 			$res = false;
@@ -1054,11 +1045,8 @@ class ArticleComment {
 		$article = new Article( $commentTitle, 0 );
 
 		$retVal = self::doSaveAsArticle( $text, $article, $user, $metadata );
-		$res = ArticleComment::doAfterPost( $retVal, $article, $parentId );
 
-		ArticleComment::doPurge( $title, $commentTitle );
-
-		return [ $retVal, $article, $res ];
+		return [ $retVal, $article ];
 	}
 
 	/**
@@ -1076,8 +1064,21 @@ class ArticleComment {
 
 		// Purge squid proxy URLs for ajax loaded content if we are lazy loading
 		if ( !empty( $wgArticleCommentsLoadOnDemand ) ) {
-			$urls = self::getSquidURLs( $title );
-			$squidUpdate = new SquidUpdate( $urls );
+			$articleId = $title->getArticleID();
+
+			// Only page 1 is cached in varnish when lazy loading is on
+			// Other pages load with action=ajax&rs=ArticleCommentsAjax&method=axGetComments
+			$ajaxUrl = ArticleCommentsController::getUrl(
+				'Content',
+				[
+					'format' => 'html',
+					'articleId' => $articleId,
+					'page' => 1,
+					'skin' => 'true'
+				]
+			);
+
+			$squidUpdate = new SquidUpdate( [ $ajaxUrl ] );
 			$squidUpdate->doUpdate();
 
 		// Otherwise, purge the article
@@ -1095,39 +1096,16 @@ class ArticleComment {
 	}
 
 	/**
-	 * @param Title $title
-	 * @return array
-	 */
-	public static function getSquidURLs( Title $title ) {
-		$urls = [];
-		$articleId = $title->getArticleId();
-
-		// Only page 1 is cached in varnish when lazy loading is on
-		// Other pages load with action=ajax&rs=ArticleCommentsAjax&method=axGetComments
-		$urls[] = ArticleCommentsController::getUrl(
-			'Content',
-			[
-				'format' => 'html',
-				'articleId' => $articleId,
-				'page' => 1,
-				'skin' => 'true'
-			]
-		);
-
-		Hooks::run( 'ArticleCommentGetSquidURLs', [ $title, &$urls ] );
-
-		return $urls;
-	}
-
-	/**
 	 * @static
 	 * @param Status $status
 	 * @param Article|WikiPage $article
-	 * @param int $parentId
+	 * @param Title $parentPageTitle
+	 * @param int $parentCommentId
 	 * @return array
+	 * @throws Exception
 	 */
-	static public function doAfterPost( Status $status, $article, $parentId = 0 ) {
-		Hooks::run( 'ArticleCommentAfterPost', [ $status, &$article ] );
+	static public function doAfterPost( Status $status, $article, Title $parentPageTitle, $parentCommentId = 0 ) {
+
 		$commentId = $article->getId();
 		$error = false;
 		$id = 0;
@@ -1149,7 +1127,7 @@ class ArticleComment {
 					'commentContent' => $comment->getText(),
 					'commentId' => $commentId,
 					'rowClass' => '',
-					'level' => ( $parentId ) ? 2 : 1
+					'level' => ( $parentCommentId ) ? 2 : 1
 				];
 				$text = $app->getView( 'ArticleComments', $viewName, $parameters )->render();
 
@@ -1165,6 +1143,9 @@ class ArticleComment {
 
 				// commit before purging
 				wfGetDB( DB_MASTER )->commit();
+
+				ArticleCommentList::purgeCache( $parentPageTitle );
+
 				break;
 			default:
 				$text  = false;
@@ -1200,10 +1181,6 @@ class ArticleComment {
 	 */
 	static public function addArticlePageToWatchlist( $comment ) {
 		global $wgUser, $wgEnableArticleWatchlist, $wgBlogsEnableStaffAutoFollow;
-
-		if ( !Hooks::run( 'ArticleCommentBeforeWatchlistAdd', [ $comment ] ) ) {
-			return true;
-		}
 
 		if ( empty( $wgEnableArticleWatchlist ) || $wgUser->isAnon() ) {
 			return false;
