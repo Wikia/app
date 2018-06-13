@@ -102,9 +102,7 @@
 		},
 
 		// handle "Save" button
-		onSave: function (event) {
-			event.preventDefault();
-
+		onSave: function () {
 			if (this.editor.fire('save') === false) {
 				return;
 			}
@@ -114,22 +112,6 @@
 			}
 
 			this.editor.setState(this.editor.states.SAVING);
-			if (window.veTrack) {
-				veTrack({
-					action: 'ck-save-button-click',
-					isDirty: (typeof this.editor.plugins.leaveconfirm === 'undefined' || this.editor.plugins.leaveconfirm.isDirty()) ? 'yes' : 'no'
-				});
-			}
-			this.editor.track({
-				action: Wikia.Tracker.ACTIONS.SUBMIT,
-				label: 'publish'
-			});
-
-			// prevent submitting immediately so we can track this event
-			this.editform.off('submit');
-			setTimeout(this.proxy(function () {
-				this.editform.submit();
-			}), 100);
 
 			// block "Publish" button
 			$('#wpSave').attr('disabled', true);
