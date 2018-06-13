@@ -155,10 +155,8 @@ class WallMessageBuilder extends WallBuilder {
 			$this->newMessage->setOrderId( $count );
 		}
 
-		// after successful posting invalidate Thread memcache...
-		$this->newMessage->getThread()->invalidateCache();
-
-		// ...and purge Wall/Board URLs.
+		// after successful posting invalidate Thread memcache
+		// and purge Wall/Board URLs
 		$this->newMessage->invalidateCache();
 
 		$rp = new WallRelatedPages();

@@ -72,7 +72,7 @@ class ArticleCommentsAjax {
 
 		$text = self::getConvertedContent( $wgRequest->getVal( 'wpArticleComment' ) );
 		$commentId = $wgRequest->getText( 'id', false );
-		$response = $comment->doSaveComment( $text, $wgUser, $title, $commentId );
+		$response = $comment->doSaveComment( $text, $wgUser, $commentId );
 		if ( $response === false ) {
 			return $errorResult;
 		}
@@ -80,7 +80,7 @@ class ArticleCommentsAjax {
 		$status = $response[0];
 		$article = $response[1];
 
-		return ArticleComment::doAfterPost( $status, $article, $parentId );
+		return ArticleComment::doAfterPost( $status, $article, $wgTitle, $parentId );
 	}
 
 	/**
@@ -173,7 +173,7 @@ class ArticleCommentsAjax {
 	/**
 	 * axPost -- static hook/entry for ajax request post
 	 *
-	 * @return String -- json-ized array`
+	 * @return array
 	 */
 	static public function axPost() {
 		global $wgRequest, $wgUser, $wgLang;
@@ -207,34 +207,21 @@ class ArticleCommentsAjax {
 			return $result;
 		}
 
-		if (
-			$title->getNamespace() == NS_USER_TALK &&
-			$response[0] == EditPage::AS_SUCCESS_NEW_ARTICLE &&
-			$title->getText() != $wgUser->getName()
-		) {
-			$user = User::newFromName( $title->getText() );
-
-			if ( $user ) {
-				$user->setNewtalk( true );
-			}
-		}
+		/** @var Article $commentArticle */
+		list( $editStatus, $commentArticle ) = $response;
 
 		$listing = ArticleCommentList::newFromTitle( $title );
 
 		/** @var Language $wgLang */
 		$countAll = $wgLang->formatNum( $listing->getCountAllNested() );
-		$commentsHTML = $response[2]['text'];
+		$afterPostResponse = ArticleComment::doAfterPost( $editStatus, $commentArticle, $title, $parentId );
+
+		ArticleComment::doPurge( $title, $commentArticle->getTitle() );
 
 		$result = [
-			'text' => $commentsHTML,
+			'text' => $afterPostResponse['text'],
 			'counter' => $countAll
 		];
-
-		if ( F::app()->checkskin( 'wikiamobile' ) ) {
-			$result['counterMessage'] = wfMessage( 'wikiamobile-article-comments-counter' )
-				->params( $countAll )
-				->escaped();
-		}
 
 		if ( $parentId ) {
 			$result['parentId'] = $parentId;
