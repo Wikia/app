@@ -131,10 +131,9 @@
 		 *
 		 * @param string event Name of event
 		 * @param object data Extra parameters to track
-		 * @param function onComplete callback function when tracking is completed (or fails)
 		 * @param integer timeout How long to wait before declaring the tracking request as failed (optional)
 		 */
-		function sendInternalTrackingEvent( event, data, onComplete, timeout ) {
+		function sendInternalTrackingEvent( event, data, timeout ) {
 			var head = document.head || document.getElementsByTagName( 'head' )[ 0 ] || document.documentElement,
 					script = document.createElement( 'script' ),
 					requestUrl = 'https://beacon.wikia-services.com/__track/special/' + encodeURIComponent( event ),
@@ -202,10 +201,6 @@
 
 					// Dereference the script
 					script = undefined;
-
-					if ( typeof(onComplete) === 'function' ) {
-						onComplete();
-					}
 				}
 			};
 
@@ -250,10 +245,6 @@
 		 *                (WARNING: that "analytics" includes "internal" but not "ad")
 		 *            value (optional for analytics tracking)
 		 *                The integer value for the event.
-		 *            callbacks (optional)
-		 *                object containing callback data, keys are:
-		 *                	timeout (int)
-		 *                	complete (function)
 		 *
 		 * @param {...Object} [optionsN]
 		 *        Any number of additional hashes that will be merged into the first.
@@ -280,7 +271,6 @@
 				l,
 				tracking = {},
 				trackingMethod = 'none',
-				callbacks = {},
 				value;
 
 			// Merge options
@@ -296,13 +286,10 @@
 				}
 			}
 
-			callbacks = data.callbacks || callbacks;
 			browserEvent = data.browserEvent || browserEvent;
 			eventName = data.eventName || eventName;
 			trackingMethod = data.trackingMethod || trackingMethod;
 			tracking[ trackingMethod ] = true;
-
-			delete data.callbacks;
 
 			if ( tracking.none || ( tracking.analytics &&
 				// Category and action are compulsory for analytics tracking
@@ -343,7 +330,7 @@
 				}
 
 				if ( tracking.analytics || tracking.internal ) {
-					internalTrack(eventName, data, callbacks.complete, callbacks.timeout);
+					internalTrack(eventName, data);
 				}
 			}
 
