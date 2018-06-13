@@ -16,7 +16,7 @@ Go to app's repository root directory:
 
 ```
 docker build . -f docker/dev/k8s/Dockerfile-nginx -t artifactory.wikia-inc.com/sus/mediawiki-dev-nginx:latest
-docker build . ../config ../cache -f docker/dev/k8s/Dockerfile-php -t artifactory.wikia-inc.com/sus/mediawiki-dev-php:latest
+docker build .. -f docker/dev/k8s/Dockerfile-php -t artifactory.wikia-inc.com/sus/mediawiki-dev-php:latest
 ```
 
 ```
