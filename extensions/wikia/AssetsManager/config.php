@@ -945,6 +945,7 @@ $config['mercury_ads_js'] = [
 		'#group_adengine2_rabbit_mobile_js',
 		'#group_jwplayer_featured_video_ads_js',
 		'//extensions/wikia/TrackingOptIn/js/trackingOptInProxy.js',
+		'//extensions/wikia/TrackingOptIn/dist/vendor-list.min.js',
 		'//extensions/wikia/TrackingOptIn/dist/consent-string.min.js',
 		'//extensions/wikia/TrackingOptIn/js/cmp.js'
 	],
