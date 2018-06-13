@@ -21,6 +21,7 @@ docker run -it --rm -h localhost -e 'SERVER_ID=165' -e 'WIKIA_DATACENTER=poz' -v
 docker-compose -f ./dev/docker-compose.yml up
 
 # 5. then you can use `docker exec` to take a look inside the container
+docker exec -it dev_php-wikia_1 bash
 ```
 
 ### Resolving domains
