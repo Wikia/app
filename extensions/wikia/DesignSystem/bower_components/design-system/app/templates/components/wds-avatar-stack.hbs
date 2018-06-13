@@ -1,0 +1,7 @@
+{{#each displayableAvatars as |avatar|}}
+	{{wds-avatar src=avatar.src alt=avatar.alt link=avatar.link badge=avatar.badge}}
+{{/each}}
+{{#if overflow}}
+	<div class="wds-avatar-stack__overflow">+{{overflow}}</div>
+{{/if}}
+

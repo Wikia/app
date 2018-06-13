@@ -1,0 +1,66 @@
+.component-demo__standalone {
+	height: 80vh;
+}
+
+.separator {
+	background-color: white;
+	height: 100px;
+	margin-bottom: 20px;
+	width: 100%;
+}
+
+.wds-community-header {
+	$background-color: #006CB0;
+	$local-nav-base-bg: white;
+	$local-nav-border-color: #CCC;
+	$local-nav-text-color: #3A3A3A;
+	$local-nav-hover-text-color: #006CB0;
+	@include community-header-theming($background-color, $local-nav-text-color, $local-nav-hover-text-color, $local-nav-base-bg, $local-nav-border-color);
+
+	z-index: $z-4;
+}
+
+.color-5F1023.wds-community-header {
+	$background-color: black;
+	$local-nav-base-bg: #181818;
+	$local-nav-border-color: #464646;
+	$local-nav-text-color: #D5D4D4;
+	$local-nav-hover-text-color: #5A91CF;
+	@include community-header-theming($background-color, $local-nav-text-color, $local-nav-hover-text-color, $local-nav-base-bg, $local-nav-border-color);
+
+	z-index: $z-3;
+}
+
+.separator-5F1023 {
+	background-color: #181818;
+}
+
+.color-787878.wds-community-header {
+	$background-color: #2193D7;
+	$local-nav-base-bg: #0E182B;
+	$local-nav-border-color: #3E4757;
+	$local-nav-text-color: #D5D4D4;
+	$local-nav-hover-text-color: #71D1EF;
+	@include community-header-theming($background-color, $local-nav-text-color, $local-nav-hover-text-color, $local-nav-base-bg, $local-nav-border-color);
+
+	z-index: $z-2;
+}
+
+.separator-787878 {
+	background-color: #0E182B;
+}
+
+.color-FB7383.wds-community-header {
+	$background-color: #FE7E03;
+	$local-nav-base-bg: #FEE77D;
+	$local-nav-border-color: #CBB964;
+	$local-nav-text-color: #3A3A3A;
+	$local-nav-hover-text-color: #7E0400;
+	@include community-header-theming($background-color, $local-nav-text-color, $local-nav-hover-text-color, $local-nav-base-bg, $local-nav-border-color);
+
+	z-index: $z-1;
+}
+
+.separator-FB7383 {
+	background-color: #FEE77D;
+}

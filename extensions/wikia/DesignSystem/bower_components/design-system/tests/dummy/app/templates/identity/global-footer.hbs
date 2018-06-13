@@ -1,0 +1,32 @@
+{{#if standalone}}
+	{{outlet}}
+{{else}}
+	<h1>Global Footer</h1>
+	<p>
+		The footer houses a mix of user- and company-prioritized links and is organized based on user value.
+		Because it’s not part of the user generated content across our site it should not be connected
+		to the bottom of the content; instead it should be separated by a small gap to properly communicate
+		it’s not part of the content but the overall Fandom site.
+	</p>
+
+	<section>
+		<h2 id="api">API</h2>
+		<p>Content for Global Footer is available in {{#link-to 'identity.api'}}API{{/link-to}}.</p>
+	</section>
+
+	<section>
+		<h2 id="with-hubs">With hubs</h2>
+
+		{{#component-demo name='global-footer' codeOnly=true componentName='wds-global-footer' standalone=true variantUrl='/identity/global-footer/standalone/with-hubs'}}
+			{{wds-global-footer model=model.with-hubs}}
+		{{/component-demo}}
+	</section>
+
+	<section>
+		<h2 id="without-hubs">Without hubs</h2>
+
+		{{#component-demo name='global-footer-without' codeOnly=true componentName='wds-global-footer' standalone=true variantUrl='/identity/global-footer/standalone/without-hubs'}}
+			{{wds-global-footer model=model.without-hubs}}
+		{{/component-demo}}
+	</section>
+{{/if}}

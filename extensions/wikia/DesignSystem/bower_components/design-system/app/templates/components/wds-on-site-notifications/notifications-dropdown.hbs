@@ -1,0 +1,22 @@
+{{#wds-dropdown
+	class='wds-global-navigation__notifications-dropdown'
+	mouseEnter=(action 'onOpen')
+	hasShadow=true
+as |dropdown|
+}}
+	{{#dropdown.toggle class='wds-global-navigation__dropdown-toggle' as |chevron|}}
+		{{#if unreadCount}}
+			<span class="wds-global-navigation__notifications-counter">
+				{{unreadCount}}
+			</span>
+		{{/if}}
+		{{svg 'wds-icons-bell' class='wds-icon wds-icon-small icon-bell'}}
+		{{chevron}}
+	{{/dropdown.toggle}}
+	{{#dropdown.content
+		class='wds-notifications__dropdown-content'
+		dropdownRightAligned=true
+	}}
+		{{wds-on-site-notifications/notifications}}
+	{{/dropdown.content}}
+{{/wds-dropdown}}

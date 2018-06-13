@@ -1,0 +1,38 @@
+$wds-only-screen: 'only screen';
+
+// breakpoint sizes
+$wds-breakpoint-small: 0;
+$wds-breakpoint-medium: 768px;
+$wds-breakpoint-large: 1024px;
+$wds-breakpoint-xlarge: 1280px;
+$wds-breakpoint-xxlarge: 1500px;
+
+// content well margins
+$wds-content-well-margins: 18px;
+
+// how much space is available on any breakpoint
+$wds-breakpoint-medium-available-width: $wds-breakpoint-medium - 2 * $wds-content-well-margins;
+$wds-breakpoint-large-available-width: $wds-breakpoint-large - 2 * $wds-content-well-margins;
+$wds-breakpoint-xlarge-available-width: $wds-breakpoint-xlarge - 2 * $wds-content-well-margins;
+$wds-breakpoint-xxlarge-available-width: $wds-breakpoint-xxlarge - 2 * $wds-content-well-margins;
+
+// "only" breakpoints
+$wds-breakpoint-small-only:   "#{$wds-only-screen} and (max-width: #{$wds-breakpoint-medium - 1})";
+$wds-breakpoint-medium-only:  "#{$wds-only-screen} and (min-width: #{$wds-breakpoint-medium}) and (max-width: #{$wds-breakpoint-large - 1})";
+$wds-breakpoint-large-only:   "#{$wds-only-screen} and (min-width: #{$wds-breakpoint-large}) and (max-width: #{$wds-breakpoint-xlarge - 1})";
+$wds-breakpoint-xlarge-only:  "#{$wds-only-screen} and (min-width: #{$wds-breakpoint-xlarge}) and (max-width: #{$wds-breakpoint-xxlarge - 1})";
+$wds-breakpoint-xxlarge-only: "#{$wds-only-screen} and (min-width: #{$wds-breakpoint-xxlarge})";
+
+// "up" breakpoints - note: we keep small-up and xxlarge-up for compatibility
+$wds-breakpoint-small-up:   "#{$wds-only-screen}";
+$wds-breakpoint-medium-up:  "#{$wds-only-screen} and (min-width: #{$wds-breakpoint-medium})";
+$wds-breakpoint-large-up:   "#{$wds-only-screen} and (min-width: #{$wds-breakpoint-large})";
+$wds-breakpoint-xlarge-up:  "#{$wds-only-screen} and (min-width: #{$wds-breakpoint-xlarge})";
+$wds-breakpoint-xxlarge-up: $wds-breakpoint-xxlarge-only;
+
+// "down" breakpoints - note: we keep small-down and xxlarge-down for compatibility
+$wds-breakpoint-small-down:   $wds-breakpoint-small-only;
+$wds-breakpoint-medium-down:  "#{$wds-only-screen} and (max-width: #{$wds-breakpoint-large - 1})";
+$wds-breakpoint-large-down:   "#{$wds-only-screen} and (max-width: #{$wds-breakpoint-xlarge - 1})";
+$wds-breakpoint-xlarge-down:  "#{$wds-only-screen} and (max-width: #{$wds-breakpoint-xxlarge - 1})";
+$wds-breakpoint-xxlarge-down: "#{$wds-only-screen}";

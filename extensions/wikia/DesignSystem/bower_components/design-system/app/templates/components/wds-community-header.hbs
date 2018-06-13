@@ -1,0 +1,33 @@
+{{#if model.wordmark.image.url}}
+	<div class="wds-community-header__wordmark">
+		<a accesskey="z" href="{{model.wordmark.href}}">
+			<img src="{{model.wordmark.image.url}}"
+				 width="{{model.wordmark.image.width}}"
+				 height="{{model.wordmark.image.height}}"
+				 alt="{{model.wordmark.label.value}}"
+			>
+		</a>
+	</div>
+{{/if}}
+
+<div class="wds-community-header__top-container">
+	<div class="wds-community-header__sitename">
+		<a href="{{model.sitename.href}}">{{model.sitename.label.value}}</a>
+	</div>
+	<div class="wds-community-header__counter">
+		<span class="wds-community-header__counter-value">{{numeral model.counter.value}}</span>
+		<span class="wds-community-header__counter-label">{{i18n model.counter.label.key ns='design-system'}}</span>
+	</div>
+	<div class="wds-community-header__wiki-buttons wds-button-group">
+		{{#each model.wiki-buttons as |button|}}
+			{{#wds-button secondary=true href=button.href title=(if button.title (i18n button.title.key ns='design-system') null)}}
+				{{wds-icon name=button.icon size='small'}}
+				{{#if button.label}}
+					<span>{{i18n button.label.key ns='design-system'}}</span>
+				{{/if}}
+			{{/wds-button}}
+		{{/each}}
+	</div>
+</div>
+
+{{wds-community-header/local-navigation model=model.local-navigation}}

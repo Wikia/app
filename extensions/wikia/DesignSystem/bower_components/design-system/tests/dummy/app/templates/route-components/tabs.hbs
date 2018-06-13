@@ -1,0 +1,157 @@
+<h1>Tabs</h1>
+<p>
+	Tabs are used for handling content in an ordered way and also may be used to build complex navigation solutions.
+</p>
+
+<section>
+	<h2 id="text-only">Tabs with text only</h2>
+	<p>
+		To display a set of tabs you need to place them inside <code>&lt;ul&gt;</code> tag with class <code class='format-code'>.wds-tabs</code>
+		Each <code>&lt;li&gt;</code> item (tab) needs to have <code class='format-code'>.wds-tabs__tab</code> class and some link <code>&lt;a&gt;</code> or plain text
+		<code>&lt;span&gt;</code> inside wrapped with a div with class <code class='format-code'>.wds-tabs__tab-label</code>.
+	</p>
+
+	{{#component-demo name='tabs'}}
+		{{#wds-tabs as |tabs|}}
+			{{#tabs.tab value=0}}
+				<div class='wds-tabs__tab-label'>
+					<span>Text tab</span>
+				</div>
+			{{/tabs.tab}}
+
+			{{#tabs.tab value=1}}
+				<div class='wds-tabs__tab-label'>
+					<a href='#'>A really long tab that don't break into lines and is a link</a>
+				</div>
+			{{/tabs.tab}}
+		{{/wds-tabs}}
+	{{/component-demo}}
+</section>
+
+<section>
+	<h2 id="text-and-icons">Tabs with text and icon</h2>
+	<p>
+		To display tab with icon insert an svg icon within <code class='format-code'>.wds-tabs__tab-label</code>.
+		See {{#link-to 'overview.svg-assets'}}how to embed SVG icons in your code{{/link-to}}.
+	</p>
+
+	{{#component-demo name='tabs-with-text-and-icon'}}
+		{{#wds-tabs as |tabs|}}
+			{{#tabs.tab value=0}}
+				<div class='wds-tabs__tab-label'>
+					{{wds-icon name='gear-small' class='wds-icon-tiny'}}
+					<span>Icon tab</span>
+				</div>
+			{{/tabs.tab}}
+
+			{{#tabs.tab value=1}}
+				<div class='wds-tabs__tab-label'>
+					{{wds-icon name='gear-small' class='wds-icon-tiny'}}
+					<span>Very long icon tab that don't break into lines</span>
+				</div>
+			{{/tabs.tab}}
+		{{/wds-tabs}}
+	{{/component-demo}}
+</section>
+
+<section>
+	<h2 id="active-tab">Active tab indicator</h2>
+	<p>To mark specific tab as opened (there should be only one opened tab at once) add <code class='format-code'>.wds-is-current</code> class to your tab's <code>&lt;li&gt;</code> tag.</p>
+	<p>
+		In Ember component you can have tabs marked as active automatically by passing a unique <code class='format-code'>value</code> to tabs.tab components.
+		A tab with value=0 will be marked as selected. If you want to change which tab is selected on initial render - pass <code class='format-code'>selected=value</code> to \{{wds-tabs}} component.
+		If you don't need tabs to be marked as active - don't pass value to tabs.tab components.
+	</p>
+	{{#component-demo name='tabs-active'}}
+		{{#wds-tabs selected=1 as |tabs|}}
+			{{#tabs.tab value=0}}
+				<div class='wds-tabs__tab-label'>
+					<span>Opened tab</span>
+				</div>
+			{{/tabs.tab}}
+
+			{{#tabs.tab value=1}}
+				<div class='wds-tabs__tab-label'>
+					<span>Regular tab</span>
+				</div>
+			{{/tabs.tab}}
+		{{/wds-tabs}}
+	{{/component-demo}}
+</section>
+
+<section>
+	<h2 id="disabled-tab">Disabled tab</h2>
+	<p>To disable some tab and make it completely non-interactive add <code class='format-code'>.wds-is-disabled</code> class to your tab's <code>&lt;li&gt;</code> tag.</p>
+
+	{{#component-demo name='tabs-disabled'}}
+		{{#wds-tabs as |tabs|}}
+			{{#tabs.tab value=0 disabled=true}}
+				<div class='wds-tabs__tab-label'>
+					{{wds-icon name='gear-small' class='wds-icon-tiny'}}
+					<span>Disabled tab</span>
+				</div>
+			{{/tabs.tab}}
+		{{/wds-tabs}}
+	{{/component-demo}}
+</section>
+
+<section>
+	<h2 id="tab-with-dropdown">Tab with dropdown</h2>
+	<p>
+		Tabs may have dropdown lists attached to them. To do so insert dropdown component within <code class='format-code'>.wds-tabs__tab</code>
+		and add <code class='format-code'>.wds-tabs__tab-label</code> class to the content of <code class='format-code'>.wds-dropdown__toggle</code>.
+	</p>
+
+	{{#component-demo name='tabs-with-dropdown'}}
+		{{#wds-tabs as |tabs|}}
+			{{#tabs.tab}}
+				{{#wds-dropdown as |dropdown|}}
+					{{#dropdown.toggle class='wds-tabs__tab-label' as |chevron|}}
+						<span>Tab with dropdown</span>{{chevron}}
+					{{/dropdown.toggle}}
+					{{#dropdown.content}}
+						{{#wds-list}}
+							<li>List item 1</li>
+							<li>List item 2</li>
+							<li>List item 3</li>
+						{{/wds-list}}
+					{{/dropdown.content}}
+				{{/wds-dropdown}}
+			{{/tabs.tab}}
+
+			{{#tabs.tab}}
+				{{#wds-dropdown as |dropdown|}}
+					{{#dropdown.toggle class='wds-tabs__tab-label' as |chevron|}}
+						<a href="#">Tab with link dropdown</a>{{chevron}}
+					{{/dropdown.toggle}}
+					{{#dropdown.content}}
+						{{#wds-list}}
+							<li>List item 1</li>
+							<li>List item 2</li>
+							<li>List item 3</li>
+						{{/wds-list}}
+					{{/dropdown.content}}
+				{{/wds-dropdown}}
+			{{/tabs.tab}}
+
+			{{#tabs.tab}}
+				{{#wds-dropdown as |dropdown|}}
+					{{#dropdown.toggle class='wds-tabs__tab-label' as |chevron|}}
+						<a href="#">
+							{{wds-icon name='gear-small' class='wds-icon-tiny'}}
+							<span>Tab with link dropdown with icon</span>
+						</a>
+						{{chevron}}
+					{{/dropdown.toggle}}
+					{{#dropdown.content}}
+						{{#wds-list}}
+							<li>List item 1</li>
+							<li>List item 2</li>
+							<li>List item 3</li>
+						{{/wds-list}}
+					{{/dropdown.content}}
+				{{/wds-dropdown}}
+			{{/tabs.tab}}
+		{{/wds-tabs}}
+	{{/component-demo}}
+</section>

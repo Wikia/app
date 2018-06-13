@@ -1,0 +1,56 @@
+.wds-banner-notification {
+	background-color: $wds-color-white;
+	color: $wds-color-light-gray;
+	display: flex;
+	transition: opacity 0.4s;
+
+	&.wds-is-transparent {
+		opacity: 0;
+	}
+
+	&__container {
+		box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.2);
+	}
+
+	&__icon {
+		align-items: center;
+		color: $wds-color-white;
+		display: flex;
+		justify-content: center;
+		width: 48px;
+
+		.wds-alert & {
+			background-color: $wds-color-alert;
+		}
+
+		.wds-warning & {
+			background-color: $wds-color-warning;
+		}
+
+		.wds-success & {
+			background-color: $wds-color-success;
+		}
+
+		.wds-message & {
+			background-color: $wds-color-message;
+		}
+	}
+
+	&__text {
+		color: $wds-color-medium-gray;
+		flex: 1;
+		font-size: $wds-typescale-size-minus-1;
+		line-height: 1.29;
+		padding: 13px 12px;
+	}
+
+	&__close {
+		cursor: pointer;
+		padding: 18px;
+	}
+
+	& + & &__close,
+	& + & &__text {
+		border-top: 1px solid #ccc;
+	}
+}

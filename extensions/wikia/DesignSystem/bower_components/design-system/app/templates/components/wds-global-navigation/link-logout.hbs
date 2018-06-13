@@ -1,0 +1,9 @@
+<div id="{{model.title.key}}">
+	{{! Logout is a POST, so we render a button inside a form here }}
+	<form method="POST" action="/signout">
+		{{! wds-sign-out__button will make this look like a link }}
+		<button type="submit" class="wds-sign-out__button" data-tracking-label="{{model.tracking_label}}">
+			{{i18n model.title.key ns='design-system'}}
+		</button>
+	</form>
+</div>

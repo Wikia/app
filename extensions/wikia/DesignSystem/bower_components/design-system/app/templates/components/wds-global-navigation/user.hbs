@@ -1,0 +1,19 @@
+{{#wds-dropdown class='wds-global-navigation__user-menu' hasShadow=true as |dropdown|}}
+	{{#dropdown.toggle as |chevron|}}
+		{{wds-avatar src=model.avatar_url alt=model.username}}{{chevron}}
+	{{/dropdown.toggle}}
+	{{#dropdown.content dropdownRightAligned=true}}
+		{{#wds-list linked=true}}
+			{{#each model.items as |item|}}
+				<li>
+					{{!
+    					Componenets that can be rendere here are:
+    					- link-text
+    					- link-logout
+					}}
+					{{component (concat 'wds-global-navigation/' item.type)  model=item}}
+				</li>
+			{{/each}}
+		{{/wds-list}}
+	{{/dropdown.content}}
+{{/wds-dropdown}}

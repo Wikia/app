@@ -1,0 +1,77 @@
+.main-navigation {
+	color: $wds-color-dark-blue-gray;
+	float: left;
+	height: 100vh;
+	max-width: 220px;
+	overflow-y: auto;
+	width: 25%;
+
+	.wds-list {
+		&.wds-is-linked {
+			padding-left: 0;
+			padding-right: 0;
+
+			> li > a {
+				padding-left: 18px;
+				padding-right: 18px;
+			}
+		}
+	}
+
+	.wds-icon {
+		color: $wds-color-slate-gray;
+		display: inline-block;
+		float: right;
+		transition: transform .2s;
+	}
+
+	&__toggle {
+		display: none;
+
+		+ label {
+			cursor: pointer;
+			display: block;
+		}
+
+		~ .wds-list {
+			max-height: 0;
+			overflow-y: hidden;
+			padding: 0;
+			transition: max-height .2s, padding .2s;
+		}
+
+		&:checked {
+			+ label {
+				.wds-icon {
+					transform: rotate(180deg);
+				}
+			}
+
+			~ .wds-list {
+				max-height: none;
+				padding-bottom: 7px;
+				padding-top: 7px;
+			}
+		}
+
+	}
+
+	li a {
+		color: $wds-color-slate-gray;
+		text-decoration: none;
+
+		&:hover {
+			background-color: $wds-color-off-white;
+		}
+
+		&.active {
+			background-color: $wds-color-off-white;
+			color: $wds-color-link;
+		}
+	}
+
+	&.is-fixed {
+		position: fixed;
+		top: 0;
+	}
+}

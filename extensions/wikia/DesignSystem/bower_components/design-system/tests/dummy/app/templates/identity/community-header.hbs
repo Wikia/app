@@ -1,0 +1,67 @@
+{{#if standalone}}
+	{{outlet}}
+{{else}}
+	<h1>Community Header</h1>
+	<section>
+		<p>
+			Community header is a component displayed at top of the wiki page. It contains wiki name, wordmark and wiki-local navigation
+			(including link to discussions if enabled).
+		</p>
+		<h2 id="api">API</h2>
+		<p>
+			Currently there is no API available that provides data needed by Community header component
+		</p>
+		<h2 id="theming">Theming</h2>
+		<p>
+			Theming can be applied by using
+			<code class="format-code">community-header-theming</code> mixin. For example:
+			{{#component-demo name='community-header' codeOnly=true language='scss'}}
+				.wds-community-header {
+					$header-background-color: #2193d7;
+					$color-page: #0E182B;
+					$color-page-border: #3e4757;
+					$color-text:#D5D4D4;
+					$color-links: #71d1ef;
+
+					@include community-header-theming(
+						$header-background-color,
+						$color-text,
+						$color-links,
+						$color-page,
+						$color-page-border
+					);
+				}
+			{{/component-demo}}
+		</p>
+	</section>
+	<section>
+		<h2 id="anon">Logged out with wordmark</h2>
+		{{#component-demo name='community-header-logged-out' codeOnly=true componentName='wds-community-header' standalone=true variantUrl='/identity/community-header/standalone/anon'}}
+			{{wds-community-header model=model.anon}}
+		{{/component-demo}}
+	</section>
+	<section>
+		<h2 id="anon-no-wordmark">Logged out without wordmark</h2>
+		{{#component-demo name='community-header-logged-out-no-wordmark' codeOnly=true componentName='wds-community-header' standalone=true variantUrl='/identity/community-header/standalone/anon-no-wordmark'}}
+			{{wds-community-header model=model.anon-no-wordmark}}
+		{{/component-demo}}
+	</section>
+	<section>
+		<h2 id="anon-no-background">Logged out without background image</h2>
+		{{#component-demo name='community-header-background' codeOnly=true componentName='wds-community-header' standalone=true variantUrl='/identity/community-header/standalone/anon-no-background'}}
+			{{wds-community-header model=model.anon-no-background}}
+		{{/component-demo}}
+	</section>
+	<section>
+		<h2 id="logged-in">Logged in</h2>
+		{{#component-demo name='community-header-logged-in' codeOnly=true componentName='wds-community-header' standalone=true variantUrl='/identity/community-header/standalone/logged-in'}}
+			{{wds-community-header model=model.logged-in}}
+		{{/component-demo}}
+	</section>
+	<section>
+		<h2 id="admin">Admin</h2>
+		{{#component-demo name='community-header-admin' codeOnly=true componentName='wds-community-header' standalone=true variantUrl='/identity/community-header/standalone/admin'}}
+			{{wds-community-header model=model.admin}}
+		{{/component-demo}}
+	</section>
+{{/if}}

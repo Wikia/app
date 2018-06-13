@@ -1,0 +1,17 @@
+{{#each notificationsList as |notification|}}
+	{{wds-on-site-notifications/notification-card
+		model=notification
+	}}
+{{/each}}
+{{#if isLoadingNewResults }}
+	<li>
+		{{wds-spinner
+			active=true
+			isBlock=true
+			isThemed=false
+			overlay=false
+			radius=13
+			strokeWidth=2
+		}}
+	</li>
+{{/if}}

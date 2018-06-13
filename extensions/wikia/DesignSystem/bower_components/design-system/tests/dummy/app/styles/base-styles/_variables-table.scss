@@ -1,0 +1,29 @@
+.variables-table {
+	border-collapse: collapse;
+	border-spacing: 0;
+	font-size: $wds-typescale-size-minus-1;
+
+	&:not(.is-fluid) {
+		width: 574px;
+	}
+
+	td {
+		border: 1px solid $wds-color-off-white;
+		padding: 14px 8px;
+		vertical-align: top;
+	}
+
+	.format-code {
+		font-size: $wds-typescale-size-minus-2;
+	}
+
+	&__header {
+		background-color: $wds-color-off-white;
+
+		th {
+			border: 1px solid $wds-color-off-white;
+			padding: 18px 8px;
+			text-align: left;
+		}
+	}
+}

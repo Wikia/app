@@ -1,0 +1,13 @@
+{
+	"name": "post-build-copy",
+	"engines": {
+		"node": ">=8.0.0"
+	},
+	"keywords": [
+		"ember-addon"
+	],
+	"dependencies": {
+		"fs-extra": "5.0.0",
+		"glob": "7.1.2"
+	}
+}

@@ -1,0 +1,25 @@
+.color-box {
+	color: $wds-color-dark-blue-gray;
+	font-size: $wds-typescale-size-minus-2;
+	line-height: $wds-line-height;
+	margin: 30px 6px 0;
+	text-align: center;
+	width: 120px;
+
+	&.is-bordered {
+		.color-box__box {
+			border: 1px solid $wds-color-faint-gray;
+		}
+	}
+
+	&__box {
+		@include square(60px);
+
+		box-sizing: border-box;
+		margin: 0 auto 10px;
+	}
+
+	&__name {
+		font-weight: 700;
+	}
+}

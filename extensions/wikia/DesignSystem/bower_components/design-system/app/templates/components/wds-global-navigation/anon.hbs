@@ -1,0 +1,28 @@
+{{#wds-dropdown class='wds-global-navigation__user-menu' hasShadow=true as |dropdown|}}
+	{{#dropdown.toggle as |chevron|}}
+		{{wds-avatar}}{{chevron}}
+	{{/dropdown.toggle}}
+	{{#dropdown.content class='wds-global-navigation__dropdown-content' dropdownRightAligned=true}}
+		{{#wds-list lines=true}}
+			<li>{{#wds-button class='wds-is-full-width'
+							  href=model.signin.href
+							  rel='nofollow'
+							  data-tracking-label=model.signin.tracking_label
+				}}
+					{{i18n model.signin.title.key ns='design-system'}}
+				{{/wds-button}}
+			</li>
+			<li>
+				<div class="wds-global-navigation__user-menu-dropdown-caption">{{i18n 'global-navigation-anon-register-description' ns='design-system'}}</div>
+				{{#wds-button class='wds-is-full-width'
+							  href=model.register.href
+							  rel="nofollow"
+							  secondary=true
+							  data-tracking-label=model.register.tracking_label
+				}}
+					{{i18n model.register.title.key ns='design-system'}}
+				{{/wds-button}}
+			</li>
+		{{/wds-list}}
+	{{/dropdown.content}}
+{{/wds-dropdown}}

@@ -1,0 +1,42 @@
+<h1>Toggles</h1>
+<p>
+	Toggle is a control that is used to quickly switch between two possible states.
+	All toggles require a label due to fact that styling inputs is tricky cross browser.
+	All toggle inputs should have a unique id for label to work correctly.
+</p>
+
+<section>
+	<h2 id="text-only">Simple toggle</h2>
+
+	{{#component-demo name='toggle-a'}}
+		{{wds-toggle id='toggleA'}}
+	{{/component-demo}}
+</section>
+
+<section>
+	<h2 id="text-only">Toggle with a label</h2>
+
+	{{#component-demo name='toggle-b'}}
+		{{#wds-toggle id='toggleB'}}
+			Slide me if you wish
+		{{/wds-toggle}}
+	{{/component-demo}}
+</section>
+
+<section>
+	<h2 id="text-only">Disabled toggle</h2>
+
+	{{#component-demo name='toggle-disabled'}}
+		{{#wds-toggle id='toggleDisabled' disabled=true}}
+			Yep I'm disabled
+		{{/wds-toggle}}
+	{{/component-demo}}
+
+	<h2 id="text-only">Disabled and checked toggle</h2>
+
+	{{#component-demo name='toggle-disabled-b'}}
+		{{#wds-toggle id='toggleDisabledB' disabled=true checked=true}}
+			Yep I'm disabled
+		{{/wds-toggle}}
+	{{/component-demo}}
+</section>

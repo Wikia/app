@@ -1,0 +1,248 @@
+<h1>Breakpoints</h1>
+
+<p class="warning-note">
+	<strong>NOTICE</strong>: The goal is to use those breakpoints in all our products. Please replace the old breakpoints with the new ones whenever and wherever possible.
+</p>
+
+<p>
+	Support for multiple breakpoints is vital for proper display of content across various browser sizes.
+	While historically our main audience has come through on desktop, mobile viewing of Fandom's content has surpassed
+	desktop traffic. Breakpoints allow for the proper display of content and advertising across devices.
+	Design and engineering should create with responsiveness in mind, planning for multiple breakpoints.
+</p>
+<p class="alert-info">
+	{{wds-icon name='alert' class='wds-icon-small'}}
+	If you want to see documentation on outdated breakpoints check {{#link-to 'base-styles.breakpoints'}}here{{/link-to}}.
+</p>
+
+<section>
+	<h2 id="values">Breakpoint values</h2>
+	<p>
+		Fandom Design System uses <b>Mobile-first</b> approach. Fandom's layout has 18px margin on both sides - also defined by <code class="format-code">$wds-content-well-margins</code> variable.<br/>
+		To set breakpoints pick one of variables from table below and use it in <code>@media</code> query in scss file.
+	</p>
+	<table class="variables-table">
+		<tr class="variables-table__header">
+			<th>Breakpoint</th>
+			<th>Min (in px)</th>
+			<th>Max (in px)</th>
+		</tr>
+
+		<tr>
+			<td>small</td>
+			<td>0</td>
+			<td>767</td>
+		</tr>
+		<tr>
+			<td>medium</td>
+			<td>768</td>
+			<td>1023</td>
+		</tr>
+		<tr>
+			<td>large</td>
+			<td>1024</td>
+			<td>1279</td>
+		</tr>
+		<tr>
+			<td>xlarge</td>
+			<td>1280</td>
+			<td>1499</td>
+		</tr>
+		<tr>
+			<td>xxlarge</td>
+			<td>1500</td>
+			<td>&#x221e;</td>
+		</tr>
+	</table>
+</section>
+
+<section>
+	<h2 id="variables">Variables</h2>
+	<table class="variables-table">
+		<tr class="variables-table__header">
+			<th>Breakpoint</th>
+			<th>Variable</th>
+			<th>Min</th>
+			<th>Max</th>
+		</tr>
+
+		<tr>
+			<td rowspan="3">small</td>
+			<td><code class="format-code">$wds-breakpoint-small-down</code>*</td>
+			<td>0</td>
+			<td>767</td>
+		</tr>
+		<tr>
+			<td><code class="format-code">$wds-breakpoint-small-only</code></td>
+			<td>0</td>
+			<td>767</td>
+		</tr>
+		<tr>
+			<td><code class="format-code">$wds-breakpoint-small-up</code></td>
+			<td>0</td>
+			<td>&#x221e;</td>
+		</tr>
+
+		<tr>
+			<td rowspan="3">medium</td>
+			<td><code class="format-code">$wds-breakpoint-medium-down</code></td>
+			<td>0</td>
+			<td>1023</td>
+		</tr>
+		<tr>
+			<td><code class="format-code">$wds-breakpoint-medium-only</code></td>
+			<td>768</td>
+			<td>1023</td>
+		</tr>
+		<tr>
+			<td><code class="format-code">$wds-breakpoint-medium-up</code></td>
+			<td>768</td>
+			<td>&#x221e;</td>
+		</tr>
+
+		<tr>
+			<td rowspan="3">large</td>
+			<td><code class="format-code">$wds-breakpoint-large-down</code></td>
+			<td>0</td>
+			<td>1279</td>
+		</tr>
+		<tr>
+			<td><code class="format-code">$wds-breakpoint-large-only</code></td>
+			<td>1024</td>
+			<td>1279</td>
+		</tr>
+		<tr>
+			<td><code class="format-code">$wds-breakpoint-large-up</code></td>
+			<td>1024</td>
+			<td>&#x221e;</td>
+		</tr>
+
+		<tr>
+			<td rowspan="3">xlarge</td>
+			<td><code class="format-code">$wds-breakpoint-xlarge-down</code></td>
+			<td>0</td>
+			<td>1499</td>
+		</tr>
+		<tr>
+			<td><code class="format-code">$wds-breakpoint-xlarge-only</code></td>
+			<td>1280</td>
+			<td>1499</td>
+		</tr>
+		<tr>
+			<td><code class="format-code">$wds-breakpoint-xlarge-up</code></td>
+			<td>1280</td>
+			<td>&#x221e;</td>
+		</tr>
+
+		<tr>
+			<td rowspan="3">xxlarge</td>
+			<td><code class="format-code">$wds-breakpoint-xxlarge-down</code>*</td>
+			<td>0</td>
+			<td>&#x221e;</td>
+		</tr>
+		<tr>
+			<td><code class="format-code">$wds-breakpoint-xxlarge-only</code>*</td>
+			<td>1500</td>
+			<td>&#x221e;</td>
+		</tr>
+		<tr>
+			<td><code class="format-code">$wds-breakpoint-xxlarge-up</code></td>
+			<td>1500</td>
+			<td>&#x221e;</td>
+		</tr>
+
+		<tr>
+			<td colspan="4">
+				<small>* ) Those breakpoints are added for consistency - so every breakpoint have three variables - and for future compatibility.</small>
+			</td>
+		</tr>
+	</table>
+	<h3>Example usage:</h3>
+	{{#code-sample language='scss'}}
+.example {
+	width: 300px;
+
+	@media #{$wds-breakpoint-medium-up} {
+		width: 700px;
+	}
+}
+	{{/code-sample}}
+</section>
+
+<section>
+	<h2 id="mixins">Useful mixns</h2>
+	<p>
+		It's recommended to use the following mixins to make implementation easier.
+	</p>
+	<h3>Content well mixin</h3>
+	<p>
+		In order to get proper margins automatically on any breakpoint one can use <code class="format-code">wds-content-well</code> mixin in the code.
+	</p>
+	<h3>Hide on breakpoints mixin</h3>
+	<p>
+		If there's a need to hide particular element on some of the breakpoints the <code class="format-code">wds-hide-on-breakpoint(<em>breakpoint</em>)</code> mixin should be used.<br/>
+		The breakpoint (or list of breakpoints) is passed in the param.
+	</p>
+	<h3>Examples:</h3>
+	{{#code-sample language='scss'}}
+.content {
+	@include wds-content-well;
+
+	.extra-content {
+		@include wds-hide-on-breakpoint(small)
+	}
+
+	.content-only-on-mobile {
+		@include wds-hide-on-breakpoint(medium-up);
+	}
+
+	.content-only-on-medium-and-large {
+		@include wds-hide-on-breakpoint(small xlarge-up);
+	}
+}
+	{{/code-sample}}
+</section>
+
+<section>
+	<h2 id="other-variables">Other variables</h2>
+	<p>
+		There are few other variables defined in the DS that can be usefull.
+	</p>
+	<table class="variables-table is-fluid">
+		<tr class="variables-table__header">
+			<th>Variable</th>
+			<th>Value</th>
+			<th>Description</th>
+		</tr>
+
+		<tr>
+			<td><code class="format-code">$wds-content-well-margins</code></td>
+			<td><code>18px</code></td>
+			<td>content margin for all breakpoints</td>
+		</tr>
+
+		<tr>
+			<td><code class="format-code">$wds-breakpoint-medium-available-width</code></td>
+			<td><code>732px</code></td>
+			<td>area avaible on medium breakpoint</td>
+		</tr>
+
+		<tr>
+			<td><code class="format-code">$wds-breakpoint-large-available-width</code></td>
+			<td><code>988px</code></td>
+			<td>area avaible on large breakpoint</td>
+		</tr>
+
+		<tr>
+			<td><code class="format-code">$wds-breakpoint-xlarge-available-width</code></td>
+			<td><code>1244px</code></td>
+			<td>area avaible on xlarge breakpoint</td>
+		</tr>
+
+		<tr>
+			<td><code class="format-code">$wds-breakpoint-xxlarge-available-width</code></td>
+			<td><code>1464px</code></td>
+			<td>area avaible on xxlarge breakpoint</td>
+		</tr>
+	</table>
+</section>

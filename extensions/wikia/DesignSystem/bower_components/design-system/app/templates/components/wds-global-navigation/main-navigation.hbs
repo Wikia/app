@@ -1,0 +1,14 @@
+<nav class="wds-global-navigation__links">
+	{{#each model as |item|}}
+	{{!
+		Componenets that can be rendere here are:
+		- link-text
+		- link-group
+	}}
+		{{component
+			(concat 'wds-global-navigation/' item.type)
+			model=item
+			standaloneLink=true
+		}}
+	{{/each}}
+</nav>

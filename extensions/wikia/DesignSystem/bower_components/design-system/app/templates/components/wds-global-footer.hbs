@@ -1,0 +1,22 @@
+<h2 class="wds-global-footer__header">
+	<a href="{{model.header.href}}">
+		{{svg model.header.image
+			class='wds-global-footer__header-logo'
+		}}
+	</a>
+</h2>
+<div class="wds-global-footer__main">
+	<div class="wds-global-footer__fandom-sections">
+		{{wds-global-footer/section model=model.fandom_overview name='fandom-overview' parentName='fandom'}}
+		{{wds-global-footer/section model=model.follow_us name='follow-us' parentName='fandom'}}
+	</div>
+	<div class="wds-global-footer__wikia-sections">
+		{{wds-global-footer/section model=model.company_overview name='company-overview' parentName='wikia'}}
+		{{wds-global-footer/section model=model.site_overview name='site-overview' parentName='wikia'}}
+		{{wds-global-footer/section model=model.community name='community' parentName='wikia'}}
+		{{wds-global-footer/section model=model.create_wiki name='create-wiki' parentName='wikia'}}
+		{{wds-global-footer/section model=model.community_apps name='community-apps' parentName='wikia'}}
+		{{wds-global-footer/section model=model.advertise name='advertise' parentName='wikia'}}
+	</div>
+</div>
+{{wds-global-footer/bottom-bar}}

@@ -1,0 +1,5 @@
+full: true
+plugins:
+  - cleanupAttrs
+js2svg:
+  pretty: false

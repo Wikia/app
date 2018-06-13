@@ -1,0 +1,148 @@
+<h1>Grid</h1>
+
+<p class="warning-note">
+	<strong>NOTICE</strong>: The goal is to use this grid in all our products. Please implement it whenever and wherever possible.
+</p>
+
+<p>
+	FANDOM's grid is twelve column grid, with 10px gutter between columns.
+	Grid itself is applied just to the content well and not just the body of the page.
+	It allows Design and Engineer to work fastwe, with fewer iterations and it's
+	off-loading some work - as layout can be defined in the number of columns and not pixel values.
+	Fortuneatly the CSS grid feature is well-supported by the browsers - documentation can be found
+	in the <a href="https://www.w3.org/TR/css3-grid-layout/">spec</a>.
+</p>
+
+<section>
+	<h2 id="usage">Usage</h2>
+	<p>
+		To use grid apply <code class="format-code">wds-grid</code> mixin to the element that lives inside the content well and name the areas.
+	</p>
+	<h3>Example:</h3>
+	{{#code-sample language='html'}}
+&lt;div class="layout__wrapper"&gt;
+	&lt;div class="layout"&gt;
+		&lt;div class="layout__main"&gt;
+			&lt;!-- items in main area --&gt;
+		&lt;/div&gt;
+		&lt;div class="layout__rail"&gt;
+			&lt;!-- items in rail area --&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;
+&lt;/div&gt;
+	{{/code-sample}}
+	{{#code-sample language='scss'}}
+.layout {
+	@include wds-grid-mixin;
+
+	grid-template-areas: "main main main main main main main main main right right right right";
+
+	&__wrapper {
+		@include wds-content-well;
+	}
+
+	&__main {
+		grid-area: main;
+	}
+
+	&__rail {
+		grid-area: right;
+	}
+}
+	{{/code-sample}}
+
+</section>
+<section>
+	<h2 id="usage-with-breakpoints">Usage with breakpoints</h2>
+	<p>
+		Grid can be (and should be) combined with {{#link-to 'base-styles.wds-breakpoints'}}breakpoints{{/link-to}} to create full experience.
+		Some elements may change places from one breakpoint to another, other can be completely hidden on some of them and visible on another -
+		due to limitation of the CSS grid - we need to use the same HTML twice and hide it with breakpoint mixins.<br />
+		See longer example below.
+	</p>
+	<h3>Example:</h3>
+	{{#code-sample language='html'}}
+&lt;div class="layout__wrapper"&gt;
+	&lt;div class="layout"&gt;
+		&lt;div class="layout__main"&gt;
+			&lt;div class="custom-module in-main"&gt;...&lt;/div&gt;
+			&lt;!-- items in main area --&gt;
+		&lt;/div&gt;
+		&lt;div class="layout__rail"&gt;
+			&lt;!-- items in rail area --&gt;
+			&lt;div class="custom-module in-rail"&gt;...&lt;/div&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;
+&lt;/div&gt;
+	{{/code-sample}}
+	{{#code-sample language='scss'}}
+.layout {
+	@include wds-grid-mixin;
+
+	grid-template-areas: "main main main main main main main main main main main main main";
+
+	@media #{$wds-breakpoint-medium-up} {
+		grid-template-areas: "main main main main main main main main main right right right right";
+	}
+
+	&__wrapper {
+		@include wds-content-well;
+	}
+
+	&__main {
+		grid-area: main;
+	}
+
+	&__rail{
+		// CSS will show item even if there's no grid area, so hide it on small breakpoint
+		@include wds-hide-on-breakpoint(small)
+
+		grid-area: right;
+	}
+}
+...
+.custom-module {
+	...
+
+	&.in-main {
+		@include wds-hide-on-breakpoint(medium-up)
+	}
+
+	&.in-rail {
+		@include wds-hide-on-breakpoint(small)
+	}
+}
+	{{/code-sample}}
+</section>
+
+<section>
+	<h2 id="variables">Variabes</h2>
+	<p>
+		There are few variables that can be usefull.
+	</p>
+	<table class="variables-table is-fluid">
+		<tr class="variables-table__header">
+			<th>Variable</th>
+			<th>Value</th>
+			<th>Description</th>
+		</tr>
+
+		<tr>
+			<td><code class="format-code">$wds-grid-gap</code></td>
+			<td><code>10px</code></td>
+			<td>gutter / gap between columns</td>
+		</tr>
+
+		<tr>
+			<td><code class="format-code">$wds-grid-columns</code></td>
+			<td><code>12</code></td>
+			<td>number of columns</td>
+		</tr>
+
+		<tr>
+			<td><code class="format-code">$wds-grid-gap-space</code></td>
+			<td><code>110px</code></td>
+			<td>how much width is taken by gaps</td>
+		</tr>
+	</table>
+</section>

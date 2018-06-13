@@ -1,0 +1,23 @@
+.fixed-width-140px {
+	width: 140px;
+}
+
+.button-theming .primary-only.wds-button {
+	@include button-theming($wds-color-dark-blue, $wds-color-white);
+}
+
+.button-theming .different-secondary.wds-button {
+	@include button-theming($wds-color-slate-gray, $wds-color-white, $wds-color-link);
+}
+
+/* Button group sections */
+.button-group-icons-section {
+	.component-demo__rendered {
+		background: rgb(0, 51, 128);
+		padding: 7px;
+	}
+
+	.white-theme .wds-button {
+		@include button-theming(white, blue);
+	}
+}

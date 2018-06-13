@@ -1,0 +1,84 @@
+<h1>Z-Index</h1>
+<p>
+	When elements overlap, z-order determines which one covers the other. An element with a larger z-index generally covers an element with a lower one.
+</p>
+<p>
+	Try not to implement z-index that doesn't use this scale, if you have a use-case that
+	for some reason falls out of this scale, ask for guidance before implementing one-offs.
+</p>
+
+<section>
+	<h2 id="variables">Variables</h2>
+	<table class="variables-table">
+		<tr class="variables-table__header">
+			<th>Variable</th>
+			<th>Value</th>
+		</tr>
+
+		<tr>
+			<td><code class="format-code">$z-min</code></td>
+			<td>-1</td>
+		</tr>
+		<tr>
+			<td><code class="format-code">$z-1</code></td>
+			<td>100</td>
+		</tr>
+		<tr>
+			<td><code class="format-code">$z-2</code></td>
+			<td>200</td>
+		</tr>
+		<tr>
+			<td><code class="format-code">$z-3</code></td>
+			<td>300</td>
+		</tr>
+		<tr>
+			<td><code class="format-code">$z-4</code></td>
+			<td>400</td>
+		</tr>
+		<tr>
+			<td><code class="format-code">$z-5</code></td>
+			<td>500</td>
+		</tr>
+		<tr>
+			<td><code class="format-code">$z-6</code></td>
+			<td>600</td>
+		</tr>
+		<tr>
+			<td><code class="format-code">$z-7</code></td>
+			<td>700</td>
+		</tr>
+		<tr>
+			<td><code class="format-code">$z-8</code></td>
+			<td>800</td>
+		</tr>
+		<tr>
+			<td><code class="format-code">$z-9</code></td>
+			<td>900</td>
+		</tr>
+		<tr>
+			<td><code class="format-code">$z-max</code></td>
+			<td>10000</td>
+		</tr>
+	</table>
+</section>
+
+<section>
+	<h2 id="example">Example usage</h2>
+	<h3>Define meaningful variables for your components in one place</h3>
+	{{#code-sample language='scss'}}
+$z-external-video-player: $z-1;
+$z-sticky-editor: $z-7;
+	{{/code-sample}}
+	<h3>Then use those variables throught your CSS</h3>
+{{#code-sample language='scss'}}
+.inline-editor-floating-container {
+	z-index: $z-discussion-sticky-editor;
+}
+
+.external-video-player {
+	// 3rd party script sets z-index to 10000 and it breaks our layout, needs to be overridden
+	z-index: $z-external-video-player !important;
+}
+{{/code-sample}}
+
+</section>

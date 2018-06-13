@@ -1,0 +1,37 @@
+{{#if showAvatars}}
+	{{wds-avatar-stack
+			avatars=avatars
+	}}
+{{/if}}
+<a class="wds-notification-card__outer-body" href="{{model.latestEventUri}}"
+	{{action 'onNotificationClicked' preventDefault=false}}>
+	<div class="wds-notification-card__icon-wrapper" {{action 'markAsRead' model}}>
+		{{svg iconName viewBox='0 0 18 18' class='wds-icon'}}
+	</div>
+	<div class="wds-notification-card__body">
+		<p class="wds-notification-card__text">
+			{{{text}}}
+		</p>
+		{{#if showSnippet}}
+			<p class="wds-notification-card__snippet">
+				{{{postSnippetMarkup}}}
+			</p>
+		{{/if}}
+		{{#if showLastActor}}
+			<p class="notification-entity-announcement-author">
+				{{model.latestActors.0.name}}
+			</p>
+		{{/if}}
+		<ul class="wds-notification-card__context-list">
+			<li class="wds-notification-card__context-item">
+				{{time-ago model.timestamp}}
+			</li>
+			<li>
+				<span class="wds-notification-card__context-separator">·</span>
+			</li>
+			<li class="wds-notification-card__context-item wds-notification-card__community">
+				{{model.communityName}}
+			</li>
+		</ul>
+	</div>
+</a>

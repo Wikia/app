@@ -1,0 +1,59 @@
+<h1>Typography</h1>
+<p>
+	As a timeless, highly effective font, Helvetica is at the forefront of the Fandom brand and used across our mobile
+	and desktop site and is available in various weights. Our native apps inherit the respective default fonts —
+	San Francisco on iOS and Roboto on Android — and also contain various weights.
+</p>
+<p>
+	Note: the 10px size should be displayed in all caps only to ensure proper readability.
+</p>
+<p>
+	It's recommended to use available typography variables to keep consistency across products.
+</p>
+
+<section>
+	<h2 id="font-family">Font Family</h2>
+	<p>For highest browser compatibility we decided to follow direction described in <a href="https://www.smashingmagazine.com/2015/11/using-system-ui-fonts-practical-guide/">Using System UI Fonts In Web Design: A Quick Practical Guide</a>. It provides a list of font-families for browsers to fallback. We listed font-families supported by major operating systems and finally we fall back to <code>sans-serif</code>. This way we can avoid web-font delivery process which would hit page performance.</p>
+	<code><span class="format-code">$wds-font-family</span>: 'Helvetica Neue', Helvetica, Arial, sans-serif;</code>
+
+</section>
+
+<section>
+	<h2 id='news-stories-font'>News and stories font family</h2>
+	<p> News and Stories uses Rubik as it's primary font.</p>
+	<code><span class="format-code">$wds-fandom-font-family</span>: Rubik, Helvetica, Arial, sans-serif;</code>
+</section>
+
+<section>
+	<h2 id="line-height">Line height</h2>
+	<code><span class="format-code">$wds-line-height</span>: 1.5em;</code>
+</section>
+
+<section>
+	<h2 id="typescale">Typescale</h2>
+	{{typescale-line fontSize=54 typescaleName='typescale-size-plus-7'}}
+	{{typescale-line fontSize=48 typescaleName='typescale-size-plus-6'}}
+	{{typescale-line fontSize=40 typescaleName='typescale-size-plus-5'}}
+	{{typescale-line fontSize=36 typescaleName='typescale-size-plus-4'}}
+	{{typescale-line fontSize=28 typescaleName='typescale-size-plus-3'}}
+	{{typescale-line fontSize=24 typescaleName='typescale-size-plus-2'}}
+	{{typescale-line fontSize=18 typescaleName='typescale-size-plus-1'}}
+	{{typescale-line fontSize=16 typescaleName='typescale-size-base'}}
+	{{typescale-line fontSize=14 typescaleName='typescale-size-minus-1'}}
+	{{typescale-line fontSize=12 typescaleName='typescale-size-minus-2'}}
+	{{typescale-line fontSize=10 typescaleName='typescale-size-minus-3'}}
+</section>
+
+<section>
+	<h2 id="example">Example usage</h2>
+	{{#code-sample language='scss'}}
+body {
+	font-family: $wds-font-family;
+	line-height: $wds-line-height;
+}
+
+.wds-component {
+	font-size: $wds-typescale-size-plus-1;
+}
+	{{/code-sample}}
+</section>

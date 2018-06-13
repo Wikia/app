@@ -1,0 +1,47 @@
+# Extend the default config: https://github.com/svg/svgo/blob/v0.7.1/.svgo.yml
+
+plugins:
+  - removeDoctype
+  - removeXMLProcInst
+  - removeComments: true
+  - removeMetadata
+  - removeEditorsNSData
+  - cleanupAttrs
+  - minifyStyles
+  - convertStyleToAttrs
+  - cleanupIDs:
+      minify: false
+      remove: true
+  - removeRasterImages
+  - removeUselessDefs
+  - cleanupNumericValues
+  - cleanupListOfValues
+  - convertColors
+  - removeUnknownsAndDefaults
+  - removeNonInheritableGroupAttrs
+  - removeUselessStrokeAndFill
+  - removeViewBox: false
+  - cleanupEnableBackground
+  - removeHiddenElems
+  - removeEmptyText
+  - convertShapeToPath
+  - moveElemsAttrsToGroup
+  - moveGroupAttrsToElems: true
+  - collapseGroups
+  - convertPathData: true
+  - convertTransform
+  - removeEmptyAttrs
+  - removeEmptyContainers
+  - mergePaths
+  - removeUnusedNS
+  - transformsWithOnePath
+  - sortAttrs
+  - removeTitle: true
+  - removeDesc
+  - removeDimensions: true
+  - removeAttrs
+  - addClassesToSVGElement
+  - removeStyleElement
+js2svg:
+  pretty: true
+  indent: '  '

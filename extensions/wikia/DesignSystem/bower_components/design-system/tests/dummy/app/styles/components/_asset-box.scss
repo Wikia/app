@@ -1,0 +1,44 @@
+.asset-box {
+	color: $wds-color-dark-blue;
+	font-size: $wds-typescale-size-minus-1;
+	margin: 0 0 50px;
+
+	&.is-avatar-badge {
+		width: 125px;
+
+		.asset-box__asset {
+			height: 24px;
+		}
+	}
+
+	&.is-bordered {
+		.asset-box__asset {
+			border: 1px solid $wds-color-light-c3;
+			padding: 14px;
+		}
+
+		&--wider .asset-box__asset {
+			padding: 24px;
+		}
+	}
+
+	&.is-single-in-line .asset-box__asset {
+		margin-left: 0;
+		margin-right: 0;
+	}
+
+	&.has-dark-background .asset-box__asset {
+		background-color: $wds-color-dark-blue-gray;
+	}
+
+	&__asset {
+		border-bottom: solid 1px $wds-color-light-c3;
+		margin: 0 25px 10px;
+		padding-bottom: 9px;
+
+		svg {
+			display: block;
+			margin: 0 auto;
+		}
+	}
+}

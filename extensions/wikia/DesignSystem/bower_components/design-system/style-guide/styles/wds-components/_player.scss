@@ -1,0 +1,14 @@
+$sizes: (
+	tiny: $wds-player-icon-play-tiny,
+	small: $wds-player-icon-play-small,
+	medium: $wds-player-icon-play-medium,
+	large: $wds-player-icon-play-large,
+	xl: $wds-player-icon-play-xl,
+	xxl: $wds-player-icon-play-xxl
+);
+
+@each $name, $size in $sizes {
+	.wds-player-icon-play-#{$name} {
+		@include wds-player-icon-play($size);
+	}
+}

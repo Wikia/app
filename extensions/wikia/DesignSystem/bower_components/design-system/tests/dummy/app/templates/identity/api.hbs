@@ -1,0 +1,122 @@
+<h1>API</h1>
+<p>
+	API that returns content for Global Navigation and Footer was introduced to keep consistency across different platforms.
+	It's recommended for every integration to use this API to make sure that content is the same and future changes are going to be reflected on every platform.
+</p>
+<p>To render the Global Navigation and the Global Footer you need to:</p>
+<ul>
+	<li>{{#link-to 'overview.quick-start'}}Install Design System{{/link-to}}</li>
+	<li>Install localization messages</li>
+	<li>Fetch the data from the Design System API</li>
+	<li>Render HTML based on the data</li>
+	<li>Implement interactions using JavaScript (Global Navigation only)</li>
+</ul>
+
+<section>
+	<h2 id="fetch-data">Fetch the data</h2>
+	<p>
+		To fetch the data you should send a request to the Design System API.
+		URL consists of the following parts (using
+		<a href="http://starwars.wikia.com/wikia.php?controller=DesignSystemApi&method=getAllElements&product=wikis&id=147&lang=de" target="_blank">http://starwars.wikia.com/wikia.php?controller=DesignSystemApi&method=getAllElements&product=wikis&id=147&lang=de</a>
+		as an example):
+	</p>
+	<ul>
+		<li><code class="format-code">http://starwars.wikia.com/wikia.php?controller=DesignSystemApi</code> — root path. Note that for api calls not related to any of wikis, <code class="format-code">www.wikia.com</code> domain should be used</li>
+		<li><code class="format-code">method</code> query parameter - defines what data is returned, allowed values are <code class="format-code">getFooter</code>, <code class="format-code">getNavigation</code>, <code class="format-code">getAllElements</code> which return data for global-footer, global-navigation or both elements respectively. </li>
+		<li><code class="format-code">product</code> query parameter — defines for what product data should be returned, can be either <code class="format-code">wikis</code> or <code class="format-code">fandom</code></li>
+		<li><code class="format-code">id</code> query parameter — id of the product instance, e.g. wiki id</li>
+		<li><code class="format-code">lang</code> — language of the UI (content language is derived from the product instance id)</li>
+	</ul>
+	<p>
+		Source code for the API and its data models are available here:
+		<a href="https://github.com/Wikia/app/blob/dev/includes/wikia/api/DesignSystemApiController.class.php" target="_blank">https://github.com/Wikia/app/blob/dev/includes/wikia/api/DesignSystemApiController.class.php</a>
+	</p>
+</section>
+
+<section>
+	<h2 id="schema">API output schema</h2>
+	<p>
+		We use JSON schema to describe how the API output looks like and use it to run the API tests.
+		You can see both the tests and schema at
+		<a href="https://github.com/Wikia/api-tests/tree/master/apitests/DesignSystem" target="_blank">https://github.com/Wikia/api-tests/tree/master/apitests/DesignSystem</a>
+	</p>
+</section>
+
+<section>
+	<h2 id="render-html">Render HTML based on the data</h2>
+	<p>
+		See all the variants of the final markup on {{#link-to 'identity.global-navigation'}}Global Navigation{{/link-to}}
+		and {{#link-to 'identity.global-footer'}}Global Footer{{/link-to}} pages.
+		To make the implementation easier you can look at the existing ones and use them as examples:
+	</p>
+	<ul>
+		<li><a href="https://github.com/Wikia/app/tree/dev/extensions/wikia/DesignSystem/services">Oasis (MediaWiki, PHP)</a></li>
+		<li><a href="https://github.com/Wikia/upstream/tree/dev/wp-content/themes/upstream/modules/design-system" target="_blank">Upstream (Wordpress, PHP)</a></li>
+	</ul>
+</section>
+
+<section>
+	<h2 id="authentication">Authentication</h2>
+	<p>
+		API returns different content for logged in and anon users. In order to authenticate a request to API you have to add <code class="format-code">access_token</code> cookie in request headers. Correct <code class="format-code">access_token</code> value can be obtained in <a href="https://services.wikia.com/central-swagger-ui/?url=https://services.wikia.com/auth/swagger.json#!/token/login">Auth service</a> after providing correct credentials.
+	</p>
+	<p>
+		Example in JS:
+		{{#code-sample language='html'}}
+this.headers = {
+	Cookie: `access_token=${this.request.state.access_token}`
+};
+		{{/code-sample}}
+	</p>
+</section>
+
+<section>
+	<h2 id="localization">Localization</h2>
+	<p>
+		The Design System API returns i18n keys which then need to be matched to the translated strings in particular language.
+		You should use <a href="https://github.com/Wikia/design-system-i18n" target="_blank">https://github.com/Wikia/design-system-i18n</a>
+		as the source of messages. When there is a need for parameter in a message, we use the format
+		<code class="format-code">__placeholder__</code>. It's ready for use with the i18next library but might need
+		a conversion for other libraries. See how we
+		<a href="https://github.com/Wikia/app/blob/dev/extensions/wikia/DesignSystem/i18n/build.js" target="_blank">convert them for MediaWiki</a>.
+	</p>
+	<p>
+		Text returned from the API can come in a few different formats defined by the schema.
+		Clients should check the type property and render the text accordingly.
+		You can see an example of implementation for this in
+		<a href="https://github.com/Wikia/app/blob/dev/extensions/wikia/DesignSystem/DesignSystemHelper.class.php">DesignSystemHelper::renderText()</a>.
+		The types are:
+	</p>
+	<ul>
+		<li>
+			<code class="format-code">type: text</code> — raw string, escape HTML special characters and render the result.
+		</li>
+		<li>
+			<code class="format-code">type: translatable-text</code>
+			<ul>
+				<li>
+					<code class="format-code">params</code> property is set — translate the text, render each param recursively,
+					replace placeholders with the results, escape HTML special characters and render the end result.
+					Parameters are texts and the same rules described here apply to each of them.
+				</li>
+				<li>
+					<code class="format-code">params</code> property is not set — translate the text,
+					escape HTML special characters and render the result.
+				</li>
+			</ul>
+		</li>
+		<li>
+			<code class="format-code">type: link-text</code> — create a link using <code class="format-code">href</code>
+			property and render the text using <code class="format-code">title</code> property while applying the rules above.
+		</li>
+	</ul>
+</section>
+
+<section>
+	<h2 id="interactions">Interactions</h2>
+	<p>
+		Design System doesn't provide JavaScript for handling interactions, so you need to implement them yourself.
+		There are no interactions for the Global Footer. You can find the list of interactions for the Global Navigation
+		on the {{#link-to 'identity.global-navigation'}}component's page{{/link-to}}.
+	</p>
+</section>

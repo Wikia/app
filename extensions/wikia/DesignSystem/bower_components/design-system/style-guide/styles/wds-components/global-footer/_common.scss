@@ -1,0 +1,231 @@
+@import 'variables';
+
+$footer-line-height: 1.3em;
+
+.wds-global-footer {
+	background-color: $wds-color-dark-blue-gray;
+	box-sizing: border-box;
+	color: $wds-color-white;
+	margin-top: 30px;
+	word-wrap: break-word;
+
+	// reset and set some defaults (that should be set in DS)
+	* {
+		box-sizing: inherit;
+	}
+
+	// we should have class that removes defaults from UL
+	ul {
+		list-style-type: none;
+		margin: 0;
+		padding: 0;
+	}
+
+	&__header {
+		align-items: center;
+		display: flex;
+		justify-content: center;
+		margin: 0;
+		padding: 30px 0 25px;
+	}
+
+	&__bottom-bar {
+		background: rgba($wds-color-night-sky, .5);
+		font-size: $wds-typescale-size-minus-2;
+		line-height: $footer-line-height;
+		min-height: 50px;
+		padding: 0 20px;
+		text-align: center;
+
+		/**
+		 * Note: The following rule is an exception on DS Class Naming because whole
+		 * text is user-supplied and we don't insert class names there.
+		 */
+		a,
+		a:visited {
+			color: $wds-color-link;
+			text-decoration: none;
+		}
+
+		a:hover {
+			color: $wds-color-white;
+		}
+	}
+
+	&__bottom-bar-row {
+		margin: 0 auto;
+
+		&.wds-has-border-top {
+			border-top: 1px solid $wds-color-slate-gray;
+		}
+
+		&.wds-has-padding {
+			padding: 16px 0;
+		}
+	}
+
+	// @todo To be moved to a separate component during XW-1618
+	&__button-link {
+		display: inline-block;
+		font-weight: bold;
+		letter-spacing: .3px;
+		line-height: $footer-line-height;
+		min-height: 45px;
+		padding: 14px 18px;
+		text-decoration: none;
+		text-transform: uppercase;
+	}
+
+	&__header-logo {
+		height: 35px;
+		width: 164px;
+	}
+
+	// main content
+	&__main {
+		display: flex;
+		flex: {
+			direction: column;
+			wrap: wrap;
+		}
+	}
+
+	&__fandom-sections,
+	&__wikia-sections {
+		display: flex;
+		flex-wrap: wrap;
+	}
+
+	&__fandom-section,
+	&__wikia-section {
+		border-top: $section-line-width solid $wds-color-slate-gray;
+		margin-right: 55px;
+		padding-top: $section-vertical-padding;
+	}
+
+	&__link {
+		&,
+		&:active,
+		&:visited,
+		&:focus {
+			color: $wds-color-blue-gray;
+			font-size: $wds-typescale-size-minus-1;
+			font-weight: normal;
+			line-height: $footer-line-height;
+			text-decoration: none;
+		}
+
+		&:hover {
+			color: $wds-color-white;
+		}
+	}
+
+	&__links-list-item {
+		margin-bottom: 8px;
+	}
+
+	&__fandom-section {
+		&.wds-is-fandom-overview {
+			border: 0;
+			padding: 0;
+
+			.wds-global-footer__link {
+				align-items: center;
+				border-top: $section-line-width solid $wds-color-slate-gray;
+				display: flex;
+				font: {
+					size: $wds-typescale-size-plus-1;
+					weight: bold;
+				}
+				justify-content: space-between;
+				margin: 0;
+				padding: 6px 0 28px;
+				text-decoration: none;
+
+				&.wds-is-games {
+					border-color: $wds-color-games;
+				}
+
+				&.wds-is-movies {
+					border-color: $wds-color-movies;
+				}
+
+				&.wds-is-tv {
+					border-color: $wds-color-tv;
+				}
+			}
+
+			.wds-global-footer__image {
+				transform: rotate(180deg);
+			}
+		}
+
+		&.wds-is-follow-us {
+			.wds-global-footer__links-list {
+				display: flex;
+				flex-wrap: nowrap;
+			}
+
+			.wds-global-footer__link {
+				$social-icon-size: 24px;
+
+				background: no-repeat center;
+				background-size: $social-icon-size;
+				display: inline-block;
+				height: $social-icon-size;
+				margin-right: 20px;
+				width: $social-icon-size;
+			}
+
+			.wds-global-footer__image {
+				color: $wds-color-slate-gray;
+
+				&:hover {
+					color: $wds-color-white;
+				}
+			}
+		}
+	}
+
+	&__wikia-section {
+		&.wds-is-community-apps {
+			.wds-global-footer__links-list {
+				display: flex;
+			}
+
+			.wds-global-footer__link {
+				display: block;
+				line-height: $footer-line-height;
+				margin-top: 6px;
+				width: 119px;
+			}
+
+			.wds-global-footer__image {
+				height: 35px;
+				width: 119px;
+			}
+		}
+	}
+
+	&__section-header {
+		color: $wds-color-white;
+		font: {
+			size: $wds-typescale-size-plus-1;
+			weight: bold;
+		}
+		margin: {
+			bottom: $section-header-margin-bottom;
+			top: 0;
+		}
+		min-height: $section-header-height;
+		padding: 0;
+	}
+
+	&__section-description {
+		color: $wds-color-white;
+		font-size: $wds-typescale-size-minus-1;
+		line-height: $footer-line-height;
+		margin: 0;
+		padding: 0;
+	}
+}

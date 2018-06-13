@@ -1,0 +1,162 @@
+{{#if standalone}}
+	{{outlet}}
+{{else}}
+	<h1>Global Navigation</h1>
+	<p>
+		A main driver for user engagement,
+		the global nav should be displayed on all of our pages to help tie the various products
+		together
+		and to provide a way for users to navigate the site.
+	</p>
+
+	<section>
+		<h2 id="api">API</h2>
+		<p>Content for Global Navigation is available in {{#link-to 'identity.api'}}
+			API{{/link-to}}.</p>
+	</section>
+
+	<section>
+		<h2 id="interactions">Interactions</h2>
+		<p>
+			Design System doesn't provide JavaScript for handling interactions so you need to
+			implement them yourself.
+			The list of interactions for the Global Navigation:
+		</p>
+		<ul>
+			<li>Dropdowns — described on the {{#link-to 'route-components.dropdowns'}}
+				component's page{{/link-to}}.
+			</li>
+			<li>
+				Global Navigation bar behaviour
+				<ul>
+					<li>
+						Desktop, logged in users — bar disappears when user scrolls down and
+						reappears when user
+						starts to scroll up, so far all products use
+						<a href="http://wicky.nillia.ms/headroom.js/"
+						   target="_blank">Headroom.js</a>
+						for that. When there is a dropdown or search suggestions open in the Global
+						Navigation,
+						then it should stay visible even when user is scrolling down.
+					</li>
+					<li>
+						Desktop, anons — bar stays visible all the time.
+					</li>
+					<li>
+						Mobile — bar stays visible all the time.
+					</li>
+				</ul>
+			</li>
+			<li>
+				Search
+				<ul>
+					<li>
+						When user focuses the search input:
+						<ul>
+							<li>
+								Add <code class="format-code">wds-search-is-active</code> class to
+								the
+								<code class="format-code">.wds-global-navigation</code> element.
+								It will cause the input to expand to the full width.
+							</li>
+							<li>
+								Change input placeholder from call to action to enter search into a
+								call to action that suggest start typing and what to search.
+							</li>
+						</ul>
+					</li>
+					<li>
+						When user clicks the X icon or presses the escape key:
+						<ul>
+							<li>
+								Clear the input and remove <code class="format-code">wds-search-is-active</code>
+								class.
+							</li>
+							<li>
+								Change input placeholder to initial state.
+							</li>
+						</ul>
+					</li>
+					<li>
+						When user presses the enter key, go to the search results page with the
+						current query.
+					</li>
+				</ul>
+			</li>
+			<li>
+				Search suggestions — their container acts similar to a dropdown
+				<ul>
+					<li>
+						When user provides at least 3 characters, show the list of suggestions by
+						putting them in
+						<code class="format-code">.wds-global-navigation__search-suggestions</code>
+						element as a list
+						and adding <code class="format-code">wds-is-active</code> class to the
+						<code
+							class="format-code">.wds-global-navigation__search-input-wrapper</code>
+						element.
+					</li>
+					<li>
+						When user presses up or down arrow keys, highlight the currently chosen one
+						by adding
+						<code class="format-code">wds-is-selected</code> class to the proper <code
+						class="format-code">li</code> element.
+					</li>
+					<li>
+						When user presses the enter key while a suggestion is highlighted, go
+						directly to the selected page.
+					</li>
+				</ul>
+			</li>
+			<li>
+				Anon and logged in state
+				<ul>
+					<li>
+						For logged in users on tablet devices "Start a wiki" button changes into "+"
+						icon.
+						In order to make that happen <code class="format-code">.wds-global-navigation__start-a-wiki</code>
+						container requires additional class name: <code class="format-code">wds-user-is-logged-in</code>.
+					</li>
+					<li>For anon users render <code class="format-code">.wds-global-navigation__account-menu</code>
+						div that contains user login and register buttons.
+					</li>
+					<li>For logged in users render <code class="format-code">.wds-global-navigation__user-menu</code>
+						div that contains user menu.
+					</li>
+				</ul>
+			</li>
+		</ul>
+	</section>
+
+	<section>
+		<h2 id="logged-out-with-hubs">Default logged out</h2>
+
+		{{#component-demo name='global-nav' codeOnly=true componentName='wds-global-navigation' standalone=true variantUrl='/identity/global-navigation/standalone/logged-out-default'}}
+			{{wds-global-navigation model=model.logged-out-default track=track}}
+		{{/component-demo}}
+	</section>
+
+	<section>
+		<h2 id="logged-in-with-hubs">Default logged in</h2>
+
+		{{#component-demo name='global-nav-logged-in-with-hubs' codeOnly=true componentName='wds-global-navigation' standalone=true variantUrl='/identity/global-navigation/standalone/logged-in-default'}}
+			{{wds-global-navigation model=model.logged-in-default track=track}}
+		{{/component-demo}}
+	</section>
+
+	<section>
+		<h2 id="logged-out-with-partner-slot">Logged out with partner slot</h2>
+
+		{{#component-demo name='global-nav-partner-logo' codeOnly=true componentName='wds-global-navigation' standalone=true variantUrl='/identity/global-navigation/standalone/logged-out-with-partner-slot'}}
+			{{wds-global-navigation model=model.logged-out-with-partner-slot track=track}}
+		{{/component-demo}}
+	</section>
+
+	<section>
+		<h2 id="logged-out-wikia-org">Logged out with Wikia.org logo</h2>
+
+		{{#component-demo name='global-nav-logged-out' codeOnly=true componentName='wds-global-navigation' standalone=true variantUrl='/identity/global-navigation/standalone/logged-out-wikia-org'}}
+			{{wds-global-navigation model=model.logged-out-wikia-org track=track}}
+		{{/component-demo}}
+	</section>
+{{/if}}

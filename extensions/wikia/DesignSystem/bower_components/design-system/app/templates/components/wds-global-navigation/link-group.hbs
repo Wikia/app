@@ -1,0 +1,28 @@
+{{#wds-dropdown class='wds-global-navigation__link-group' hasShadow=true as |dropdown|}}
+	{{#dropdown.toggle
+		class='wds-global-navigation__dropdown-toggle wds-global-navigation__link'
+		as |chevron|
+	}}
+		<span>{{i18n model.title.key ns='design-system'}}</span>{{chevron}}
+	{{/dropdown.toggle}}
+	{{#dropdown.content
+		class='wds-global-navigation__dropdown-content'
+	}}
+		{{#wds-list linked=true}}
+			{{#each model.items as |item|}}
+				<li>
+					{{!
+    					Componenets that can be rendere here are:
+    					- link-text
+    					- link-button
+					}}
+					{{component
+						(concat 'wds-global-navigation/' item.type)
+						model=item
+						inDropdown=true
+					}}
+				</li>
+			{{/each}}
+		{{/wds-list}}
+	{{/dropdown.content}}
+{{/wds-dropdown}}

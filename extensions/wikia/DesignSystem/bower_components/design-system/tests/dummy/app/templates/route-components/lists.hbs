@@ -1,0 +1,107 @@
+<h1>Lists</h1>
+<p>
+	A list contains a single column of related options (based on the context around it) for the user to choose from.
+	Lists can contain text, icons, or both and can expand to multiple lines if needed.
+</p>
+
+<section>
+	<h2 id="list">List</h2>
+	<p>To display a regular list, add <code class="format-code">.wds-list</code> class in your <code>&lt;ul&gt;</code> tag.</p>
+
+	{{#component-demo name='list'}}
+		{{#wds-list}}
+			<li>List element 1</li>
+			<li>List element 2</li>
+			<li>List element 3</li>
+		{{/wds-list}}
+	{{/component-demo}}
+</section>
+
+<section>
+	<h2>Parameters</h2>
+
+	<h3>HBS parameters</h3>
+	<ul>
+		<li><strong>big (boolean)</strong> - Whether or not the list contains big items</li>
+		<li><strong>bold (boolean)</strong> - Whether or not list items should be bold</li>
+		<li><strong>lines (boolean)</strong> - Whether or not show line separator betweeen items</li>
+		<li><strong>linked (boolean)</strong> - Whether or not items are links</li>
+	</ul>
+
+	<h3>CSS Classes</h3>
+	<ul>
+		<li><strong>wds-has-big-items</strong> - Whether or not the list contains big items</li>
+		<li><strong>wds-has-bolded-items</strong> - Whether or not list items should be bold</li>
+		<li><strong>wds-has-lines-between</strong> - Whether or not show line separator betweeen items</li>
+		<li><strong>wds-is-linked</strong> - Whether or not items are links</li>
+	</ul>
+</section>
+
+<section>
+	<h2 id="big-list">Big list</h2>
+	<p>
+		To display list with more space around its elements, add class
+		<code class="format-code">.wds-has-big-items</code>.
+		This modificator makes padding broader and font size bigger in each element.
+	</p>
+
+	{{#component-demo name='list-big'}}
+		{{#wds-list big=true}}
+			<li>List element 1</li>
+			<li>List element 2</li>
+			<li>List element 3</li>
+		{{/wds-list}}
+	{{/component-demo}}
+</section>
+
+<section>
+	<h2 id="bolded-list">Bolded list</h2>
+	<p>
+		To display list with bolded elements, add class
+		<code class="format-code">.wds-has-bolded-items</code>.
+		This modificator sets <code class="format-code">font-weight</code> to bold.
+	</p>
+
+	{{#component-demo name='list-bold'}}
+		{{#wds-list bold=true}}
+			<li>List element 1</li>
+			<li>List element 2</li>
+			<li>List element 3</li>
+		{{/wds-list}}
+	{{/component-demo}}
+</section>
+
+<section>
+	<h2 id="list-with-separators">List with line separator</h2>
+	<p>
+		<code class="format-code">.wds-has-lines-between</code> class
+		adds subtle separator between each element of your list.
+	</p>
+
+	{{#component-demo name='list-lines'}}
+		{{#wds-list lines=true}}
+			<li>List element 1</li>
+			<li>List element 2</li>
+			<li>List element 3</li>
+		{{/wds-list}}
+	{{/component-demo}}
+</section>
+
+<section>
+	<h2 id="list-linked">List with linked items</h2>
+	<p>
+		For lists with linked elements, like menus, use class
+		<code class="format-code">.wds-is-linked</code> — it expands <code class="format-code">&lt;a&gt;</code>
+		node inside list elements to be fully clickable, without any gaps around.
+		It is necessary to remember about adding anchor <code class="format-code">&lt;a&gt;</code>
+		wrapping each elements content.
+	</p>
+
+	{{#component-demo name='list-linked'}}
+		{{#wds-list linked=true}}
+			<li><a href="http://wikia.com">Linked element 1</a></li>
+			<li><a href="http://wikia.com">Linked element 2</a></li>
+			<li><a href="http://wikia.com">Linked element 3</a></li>
+		{{/wds-list}}
+	{{/component-demo}}
+</section>

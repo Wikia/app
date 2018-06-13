@@ -1,0 +1,14 @@
+{{#if hasUnread}}
+	<div class="wds-notifications__mark-all-as-read-button">
+		<a {{action 'markAllAsRead'}} class="wds-notifications__mark-all-as-read">
+			{{i18n 'notifications-mark-all-as-read' ns='design-system'}}
+		</a>
+	</div>
+{{/if}}
+{{#if isNotificationsListVisible}}
+	{{wds-on-site-notifications/notifications-list}}
+{{else}}
+	<p class="wds-notifications__zero-state">
+		{{i18n 'notifications-no-notifications-message' ns='design-system'}}
+	</p>
+{{/if}}

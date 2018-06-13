@@ -1,0 +1,45 @@
+<div class="wds-global-navigation__content-container">
+	<div class="wds-global-navigation__content-bar-left">
+		<a href="{{model.logo.href}}" class="wds-global-navigation__logo" data-tracking-label="{{model.logo.tracking_label}}">
+			{{! available class names: wds-is-wds-company-logo-fandom wds-is-wds-company-logo-wikia-org}}
+			{{svg
+				model.logo.image-data.name
+				class=(concat 'wds-global-navigation__logo-image wds-is-' model.logo.image-data.name)
+			}}
+		</a>
+		{{wds-global-navigation/main-navigation model=model.main_navigation}}
+	</div>
+	<div class="wds-global-navigation__content-bar-right">
+		{{wds-global-navigation/search
+			model=model.search
+			activateSearch=(action 'activateSearch')
+			deactivateSearch=(action 'deactivateSearch')
+			onSearchSuggestionChosen=(action 'onSearchSuggestionChosen')
+			goToSearchResults=(action 'goToSearchResults')
+		}}
+		{{#if model.user}}
+			{{wds-global-navigation/user model=model.user}}
+		{{else if model.anon}}
+			{{wds-global-navigation/anon model=model.anon}}
+		{{/if}}
+		{{#if model.user}}
+			{{wds-on-site-notifications/notifications-dropdown}}
+		{{/if}}
+		<div class="wds-global-navigation__start-a-wiki">
+			{{wds-global-navigation/link-button
+				model=model.create_wiki
+			}}
+		</div>
+	</div>
+	{{#if model.partner_slot}}
+		<div class="wds-global-navigation__partner-slot">
+			<a href="{{model.partner_slot.href}}" class="wds-global-navigation__partner-slot-link" data-tracking-label="{{model.partner_slot.tracking_label}}">
+				<img class="wds-global-navigation__partner-slot-image"
+					 width="55"
+					 height="20"
+					 src="{{model.partner_slot.image-data.url}}"
+					 alt="{{model.partner_slot.title.value}}">
+			</a>
+		</div>
+	{{/if}}
+</div>

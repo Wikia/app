@@ -1,0 +1,33 @@
+.wds-sign-out {
+	&__button {
+		background: transparent;
+		border: none;
+		color: inherit;
+		cursor: pointer;
+		font: inherit;
+		height: auto;
+		margin: 0;
+		padding: 0;
+		text-align: left;
+		text-transform: none;
+		width: auto;
+
+		.wds-is-linked & {
+			box-sizing: border-box;
+			display: block;
+			padding: $wds-list-item-vertical-padding $wds-dropdown-padding / 2;
+			width: 100%;
+		}
+
+		&:hover {
+			@include wds-dropdown-linked-list-item-hover;
+		}
+
+		&:focus:not(:disabled),
+		&:active,
+		&.wds-is-active {
+			background-color: transparent;
+			color: inherit;
+		}
+	}
+}

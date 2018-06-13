@@ -1,0 +1,8 @@
+{{yield (hash
+	toggle=(component 'wds-dropdown-toggle'
+		mouseLeave=(action 'mouseLeave')
+		click=(action 'click')
+		isLevel2=isLevel2
+	)
+	content=(component 'wds-dropdown-content' isLevel2=isLevel2)
+)}}
