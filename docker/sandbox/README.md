@@ -7,7 +7,15 @@ docker build . -f docker/sandbox/Dockerfile-nginx -t artifactory.wikia-inc.com/s
 docker build .. -f docker/sandbox/Dockerfile-php -t artifactory.wikia-inc.com/sus/mediawiki-sandbox-php:latest
 ```
 
+Push updated images to Artifactory:
+
 ```
 docker push artifactory.wikia-inc.com/sus/mediawiki-sandbox-nginx:latest
 docker push artifactory.wikia-inc.com/sus/mediawiki-sandbox-php:latest
+```
+
+Push to Kubernetes:
+
+```
+kubectl --context kube-sjc-prod -n prod apply -f sjc.yaml
 ```
