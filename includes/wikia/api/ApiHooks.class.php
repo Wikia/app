@@ -78,10 +78,10 @@ class ApiHooks {
 		$flags, $revision, Status &$status, $baseRevId
 	): bool {
 		ArticlesApiController::purgeCache( $wikiPage->getTitle()->getArticleID() );
-		ArticlesApiController::purgeMethods( [
+		/*ArticlesApiController::purgeMethods( [
 			[ 'getAsJson', ['id' => $wikiPage->getId()] ],
 			[ 'getAsJson', ['title' => $wikiPage->getTitle()->getPartialURL()] ]
-		] );
+		] );*/
 		return true;
 	}
 
