@@ -2,7 +2,7 @@ const path = require('path');
 const fs = require('fs');
 const colors = require('colors/safe');
 
-const gdprVendorIds = [
+const allowedVendorsIds = [
 	10, // Index Exchange, Inc.
 	11, // Quantcast International Limited
 	32, // AppNexus Inc.
@@ -62,7 +62,7 @@ module.exports = [
 			path: path.resolve(__dirname, 'dist'),
 			filename: '[name].js',
 			libraryTarget: 'amd',
-			library: 'wikia.gdprVendorList'
+			library: 'wikia.consentFrameworkVendorList'
 		},
 		module: {
 			rules: [
@@ -73,17 +73,17 @@ module.exports = [
 							loader: 'transform-json-loader',
 							options: {
 								transform: function (json) {
-									console.log(colors.green('Transforming GDPR vendor list'));
+									console.log(colors.green('Transforming Consent Framework Vendor List'));
 									console.log(colors.yellow(`Version ${json.vendorListVersion}, last updated: ${json.lastUpdated}\n\n`));
 
 									json.vendors = json.vendors.filter(vendor => {
-										const ok = gdprVendorIds.includes(vendor.id);
+										const isIncluded = allowedVendorsIds.includes(vendor.id);
 
-										if (ok) {
+										if (isIncluded) {
 											console.log(`Adding vendor: ${colors.yellow(vendor.id)} (${colors.blue(vendor.name)})`);
 										}
 
-										return ok;
+										return isIncluded;
 									});
 
 									console.log('\n---------------\n');

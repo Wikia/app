@@ -1,20 +1,21 @@
+/*global define*/
 define('wikia.cmp', [
+	'wikia.consentFrameworkVendorList',
 	'wikia.consentStringLibrary',
 	'wikia.cookies',
 	'wikia.geo',
 	'wikia.instantGlobals',
 	'wikia.log',
 	'wikia.trackingOptIn',
-	'wikia.gdprVendorList',
 	'wikia.window'
 ], function (
+	vendorList,
 	consentStringLibrary,
 	cookies,
 	geo,
 	instantGlobals,
 	log,
 	trackingOptIn,
-	vendorListGlobal,
 	win
 ) {
 	var isModuleEnabled = geo.isProperGeo(instantGlobals.wgEnableCMPCountries),
@@ -22,31 +23,32 @@ define('wikia.cmp', [
 		consentStringCookie = 'consent-string',
 		cookieExpireDays = 604800000, // 7 days in milliseconds
 		// take all purposes...
-		purposesList = vendorListGlobal.purposes.map(function (purpose) {
+		allowedPurposesList = vendorList.purposes.map(function (purpose) {
 			return purpose.id;
 		}),
 		// ...and all vendors
-		vendorList = vendorListGlobal.vendors.map(function (vendor) {
+		allowedVendorsList = vendorList.vendors.map(function (vendor) {
 			return vendor.id;
 		});
 
 	function getConsentString(optIn) {
-		var cookie = cookies.get(consentStringCookie);
+		var cookie = cookies.get(consentStringCookie),
+			consentData,
+			consentString;
 
 		cookie = cookie ? cookie.split('...') : cookie;
 
 		if (cookie && (cookie[0] === '1') === optIn && cookie[1] !== undefined) {
-			log('Serving consent string from cookie', log.levels.debug, logGroup);
+			log('Retrieving consent string from the cookie', log.levels.debug, logGroup);
 
 			return cookie[1];
 		}
 
-		var consentString,
-			consentData = new consentStringLibrary.ConsentString();
+		consentData = new consentStringLibrary.ConsentString();
 
-		consentData.setGlobalVendorList(vendorsListGlobal);
-		consentData.setPurposesAllowed(optIn ? purposesList : []);
-		consentData.setVendorsAllowed(optIn ? vendorsList : []);
+		consentData.setGlobalVendorList(vendorList);
+		consentData.setPurposesAllowed(optIn ? allowedPurposesList : []);
+		consentData.setVendorsAllowed(optIn ? allowedVendorsList : []);
 
 		consentString = consentData.getConsentString();
 
@@ -56,7 +58,7 @@ define('wikia.cmp', [
 			expires: cookieExpireDays
 		});
 
-		log('Saving consent string to cookie', log.levels.debug, logGroup);
+		log('Consent string saved to the cookie', log.levels.debug, logGroup);
 
 		return consentString;
 	}
@@ -67,6 +69,9 @@ define('wikia.cmp', [
 
 	function init(optIn) {
 		log('Initializing module', log.levels.debug, logGroup);
+		log(['Allowed vendors:', vendorList.vendors.map(function (vendor) {
+			return vendor.name;
+		})], log.levels.debug, logGroup);
 
 		win.__cmp = function __cmp(command, parameter, callback) {
 			var iabConsentData = getConsentString(optIn),
@@ -100,7 +105,7 @@ define('wikia.cmp', [
 					'__cmp call',
 					'command: ' + command,
 					'parameter: ' + parameter,
-					'return object: ' + JSON.stringify(ret),
+					'returnValue: ' + JSON.stringify(ret),
 					'success: ' + success
 				],
 				log.levels.debug,
@@ -130,9 +135,11 @@ define('wikia.cmp', [
 						event.source.postMessage(returnMsg, '*');
 					});
 				}
-			} catch (e) {} // do nothing
+			} catch (e) { void(0); } // do nothing
 		});
 		trackingOptIn.pushToUserConsentQueue(init);
+	} else {
+		log('Module is not enabled', log.levels.debug, logGroup);
 	}
 
 	return {
