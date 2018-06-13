@@ -1,7 +1,7 @@
 <?php
 class DesignSystemHooks {
 
-	const DESIGN_SYSTEM_DIR = __DIR__ . '/bower_components/design-system/dist';
+	const DESIGN_SYSTEM_DIR = __DIR__ . '/node_modules/design-system/dist';
 
 	/**
 	 * @desc Adds Design System styles to all pages

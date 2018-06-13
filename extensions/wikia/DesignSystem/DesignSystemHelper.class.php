@@ -4,7 +4,7 @@ use \Wikia\Logger\WikiaLogger;
 
 class DesignSystemHelper {
 
-	const DESIGN_SYSTEM_DIR = __DIR__ . '/bower_components/design-system';
+	const DESIGN_SYSTEM_DIR = __DIR__ . '/node_modules/design-system';
 	const SVG_DIR = self::DESIGN_SYSTEM_DIR . '/dist/svg';
 
 	// keep in sync with DesignSystem/i18n/build.js

@@ -1,8 +1,0 @@
-{
-  "name": "design-system",
-  "private": true,
-
-  "dependencies": {
-    "design-system": "Wikia/design-system#62d1fdcc9da2be521bef69cceae90bfd6021b2aa"
-  }
-}

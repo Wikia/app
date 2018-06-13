@@ -1,5 +1,0 @@
-@mixin wds-grid-mixin {
-	display: grid;
-	grid-gap: $wds-grid-gap;
-	grid-template-columns: repeat($wds-grid-columns, 1fr);
-}
