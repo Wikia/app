@@ -4,13 +4,21 @@
 describe('AdLogicPageParams', function () {
 	'use strict';
 
+	function noop() { }
+
 	var logMock = function () { return; },
 		mocks = {
 			trackingOptIn: {
 				isOptedIn: function () {
 					return true;
 				}
-			}
+			},
+			Querystring: function () {
+				return mocks.querystring;
+			},
+			querystring: {
+				getVal: noop
+			},
 		},
 		geoMock = {
 			getCountryCode: function() {
@@ -119,6 +127,7 @@ describe('AdLogicPageParams', function () {
 			windowMock.location,
 			logMock,
 			mocks.trackingOptIn,
+			mocks.Querystring,
 			windowMock,
 			abTestMock,
 			kruxMock

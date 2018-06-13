@@ -11,7 +11,6 @@ require([
 	'ext.wikia.adEngine.config.desktop',
 	'ext.wikia.adEngine.customAdsLoader',
 	'ext.wikia.adEngine.messageListener',
-	'ext.wikia.adEngine.pageFairDetection',
 	'ext.wikia.adEngine.provider.btfBlocker',
 	'ext.wikia.adEngine.slot.service.actionHandler',
 	'ext.wikia.adEngine.slot.service.slotRegistry',
@@ -19,7 +18,6 @@ require([
 	'ext.wikia.adEngine.slotTweaker',
 	'ext.wikia.adEngine.tracking.adInfoListener',
 	'ext.wikia.adEngine.tracking.scrollDepthTracker',
-	'ext.wikia.aRecoveryEngine.adBlockDetection',
 	'wikia.geo',
 	'wikia.trackingOptIn',
 	'wikia.window',
@@ -35,7 +33,6 @@ require([
 	adConfigDesktop,
 	customAdsLoader,
 	messageListener,
-	pageFairDetection,
 	btfBlocker,
 	actionHandler,
 	slotRegistry,
@@ -43,7 +40,6 @@ require([
 	slotTweaker,
 	adInfoListener,
 	scrollDepthTracker,
-	adBlockDetection,
 	geo,
 	trackingOptIn,
 	win,
@@ -102,10 +98,6 @@ require([
 			actionHandler.registerMessageListener();
 
 			scrollDepthTracker.run();
-
-			if (context.opts.pageFairDetection) {
-				pageFairDetection.initDetection(context);
-			}
 		});
 	});
 });

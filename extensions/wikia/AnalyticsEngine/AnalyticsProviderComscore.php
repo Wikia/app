@@ -16,8 +16,8 @@ class AnalyticsProviderComscore implements iAnalyticsProvider {
 					return '
 <!-- Begin comScore Tag -->
 <script type="text/javascript">
-require(["wikia.trackingOptOut", require.optional("wikia.trackingOptIn")], function (trackingOptOut, trackingOptIn) {
-	function loadScript() {
+require(["wikia.trackingOptIn"], function (trackingOptIn) {
+	function loadComscoreScript() {
 		window._comscore = window._comscore || [];
 		window._comscore.push({ c1: "2", c2: "' . static::$PARTNER_ID . '",
 			options: {
@@ -31,17 +31,11 @@ require(["wikia.trackingOptOut", require.optional("wikia.trackingOptIn")], funct
 		document.head.appendChild(s);
 	}
 
-	if (trackingOptIn) {
-		trackingOptIn.pushToUserConsentQueue(function (optIn) {
-			if (optIn) {
-				loadScript();
-			}
-		});
-	} else {
-		trackingOptOut.ifNotOptedOut(function () {
-			loadScript();
-		});
-	}
+	trackingOptIn.pushToUserConsentQueue(function (optIn) {
+		if (optIn) {
+			loadComscoreScript();
+		}
+	});
 });
 </script>
 <!-- End comScore Tag -->';

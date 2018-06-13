@@ -1,7 +1,9 @@
 <?php
 
 use Wikia\Factory\ServiceFactory;
+use Wikia\Service\Helios\HeliosClient;
 use Wikia\Service\User\Attributes\UserAttributes;
+use Wikia\Service\User\Preferences\PreferenceService;
 
 /**
  * @group Integration
@@ -39,13 +41,13 @@ class UserDataRemoverTest extends WikiaDatabaseTest {
 		parent::setUp();
 		include __DIR__ . '/../Privacy.setup.php';
 
-		$userAttributesMock = $this->createMock( UserAttributes::class );
-		$this->heliosClientMock = $this->createMock( \Wikia\Service\Helios\HeliosClient::class );
+		$heliosMock = $this->createMock( HeliosClient::class );
+		$heliosMock->method( 'deletePassword' )->willReturn( ['response' => 'ok'] );
 
 		$serviceFactory = ServiceFactory::instance();
-
-		$serviceFactory->heliosFactory()->setHeliosClient( $this->heliosClientMock );
-		$serviceFactory->attributesFactory()->setUserAttributes( $userAttributesMock );
+		$serviceFactory->attributesFactory()->setUserAttributes( $this->createMock( UserAttributes::class ) );
+		$serviceFactory->preferencesFactory()->setPreferenceService( $this->createMock( PreferenceService::class ) );
+		$serviceFactory->heliosFactory()->setHeliosClient( $heliosMock );
 	}
 
 	public static function tearDownAfterClass() {

@@ -90,6 +90,7 @@ class PhalanxUserModel extends PhalanxModel {
 
 		// SUS-351: Prevent Phalanxed user from posting on their own Wall
 		$this->user->mBlock->prevents( 'editownusertalk', true );
+		$this->user->mAllowUsertalk = false; // GetBlockedStatus runs too late for 🖕 to take effect, need to set manually
 
 		$blockExpiry = $this->block->getExpires();
 		$this->user->mBlock->mExpiry = !empty( $blockExpiry ) ? $blockExpiry : 'infinity';

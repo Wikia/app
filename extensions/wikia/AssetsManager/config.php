@@ -58,7 +58,6 @@ $config['adengine2_desktop_js'] = [
 		'//extensions/wikia/AdEngine/js/MessageListener.js',
 		'//extensions/wikia/AdEngine/js/SlotTracker.js',
 		'//extensions/wikia/AdEngine/js/SlotTweaker.js',
-		'//extensions/wikia/AdEngine/js/pageFairDetection.js',
 		'//extensions/wikia/AdEngine/js/babDetection.js',
 		'//extensions/wikia/AdEngine/js/config/desktop.js',
 		'//extensions/wikia/AdEngine/js/provider/btfBlocker.js',
@@ -110,11 +109,6 @@ $config['adengine2_desktop_js'] = [
 		'#group_adengine2_rabbit_desktop_js',
 		'#group_adengine2_video_ui_js',
 		'//extensions/wikia/AdEngine/js/video/videoSettings.js',
-		'//extensions/wikia/ARecoveryEngine/js/adBlockDetection.js',
-		'//extensions/wikia/ARecoveryEngine/js/adBlockRecovery.js',
-		'//extensions/wikia/ARecoveryEngine/js/InstartLogic/recovery.js',
-		'//extensions/wikia/ARecoveryEngine/js/tweaker.js',
-		'//extensions/wikia/ARecoveryEngine/js/PageFair/recovery.js',
 		'//resources/wikia/modules/domCalculator.js',
 		'//resources/wikia/modules/krux.js',
 		'//resources/wikia/modules/throttle.js',
@@ -161,6 +155,8 @@ $config['adengine2_rabbit_mobile_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [
 		'#group_adengine2_rabbit_js',
+		'//extensions/wikia/AdEngine/js/ml/ctp/ctpMobile.js',
+		'//extensions/wikia/AdEngine/js/ml/ctp/ctpMobileDataSource.js',
 		'//extensions/wikia/AdEngine/js/ml/n1/n1mInputParser.js',
 		'//extensions/wikia/AdEngine/js/ml/n1/n1mLogisticRegression.js',
 		'//extensions/wikia/AdEngine/js/ml/nivens/mobileNivensInputParser.js',
@@ -215,7 +211,9 @@ $config['tracking_opt_in_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [
 		'//extensions/wikia/TrackingOptIn/dist/tracking-opt-in.min.js',
+		'//extensions/wikia/TrackingOptIn/dist/consent-string.min.js',
 		'//extensions/wikia/TrackingOptIn/js/trackingOptIn.js',
+		'//extensions/wikia/TrackingOptIn/js/cmp.js',
 	],
 ];
 
@@ -252,9 +250,6 @@ $config['adengine2_top_js'] = [
 		'//extensions/wikia/AdEngine/js/video/videoFrequencyMonitor.js',
 		'//extensions/wikia/AdEngine/js/video/videoFrequencySettings.js',
 		'//extensions/wikia/AdEngine/js/video/videoFrequencyStore.js',
-		'//extensions/wikia/ARecoveryEngine/js/adBlockDetection.js',
-		'//extensions/wikia/ARecoveryEngine/js/adBlockRecovery.js',
-		'//extensions/wikia/ARecoveryEngine/js/PageFair/recovery.js',
 		'//resources/wikia/modules/browserDetect.js',
 		'//resources/wikia/modules/krux.js'
 	],
@@ -279,7 +274,6 @@ $config['adengine2_pr3b1d_js'] = [
 		'//extensions/wikia/AdEngine/js/lookup/prebid/prebidHelper.js',
 		'//extensions/wikia/AdEngine/js/lookup/prebid/prebidSettings.js',
 		'//extensions/wikia/AdEngine/js/lookup/prebid/priceGranularityHelper.js',
-		'//extensions/wikia/AdEngine/js/lookup/prebid/versionCompatibility.js',
 		'//extensions/wikia/AdEngine/js/lookup/prebid/adaptersHelper.js',
 		'//extensions/wikia/AdEngine/js/lookup/prebid/adaptersPerformanceTracker.js',
 		'//extensions/wikia/AdEngine/js/lookup/prebid/adaptersPricesTracker.js',
@@ -299,9 +293,6 @@ $config['adengine2_pr3b1d_js'] = [
 		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/rubiconDisplay.js',
 		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/wikia.js',
 		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/wikiaVideo.js',
-
-		// IL recovery
-		'//extensions/wikia/ARecoveryEngine/js/InstartLogic/recovery.js',
 
 		'//extensions/wikia/AdEngine/js/wrappers/prebid.js',
 
@@ -698,7 +689,6 @@ $config['wikiamobile_js_body_minimal'] = [
 		'//resources/wikia/modules/log.js',
 		'//resources/wikia/modules/abTest.js',
 		'//resources/wikia/modules/geo.js',
-		'//resources/wikia/modules/trackingOptOut.js',
 		'//resources/wikia/modules/instantGlobals.js',
 
 		//feature detection
@@ -892,10 +882,6 @@ $config['mobile_base_ads_js'] = [
 		'//extensions/wikia/AdEngine/js/video/vastParser.js',
 		'//extensions/wikia/AdEngine/js/video/vastUrlBuilder.js',
 
-		// Recovery
-		'//extensions/wikia/ARecoveryEngine/js/adBlockDetection.js',
-		'//extensions/wikia/ARecoveryEngine/js/adBlockRecovery.js',
-
 		//Prebid
 		'#group_adengine2_pr3b1d_js',
 	],
@@ -916,7 +902,6 @@ $config['mercury_ads_js'] = [
 		'//resources/wikia/modules/history.js',
 		'//resources/wikia/modules/cookies.js',
 		'//resources/wikia/modules/geo.js',
-		'//resources/wikia/modules/trackingOptOut.js',
 		'//resources/wikia/modules/instantGlobals.js',
 
 		'#group_mobile_base_ads_js',
@@ -955,7 +940,9 @@ $config['mercury_ads_js'] = [
 		'//extensions/wikia/AdEngine/js/run/mercury.run.js',
 		'#group_adengine2_rabbit_mobile_js',
 		'#group_jwplayer_featured_video_ads_js',
-		'//extensions/wikia/TrackingOptIn/js/trackingOptInProxy.js'
+		'//extensions/wikia/TrackingOptIn/js/trackingOptInProxy.js',
+		'//extensions/wikia/TrackingOptIn/dist/consent-string.min.js',
+		'//extensions/wikia/TrackingOptIn/js/cmp.js'
 	],
 ];
 

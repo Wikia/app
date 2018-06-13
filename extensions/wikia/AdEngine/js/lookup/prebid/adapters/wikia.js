@@ -2,10 +2,9 @@
 define('ext.wikia.adEngine.lookup.prebid.adapters.wikia',[
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.wrappers.prebid',
-	'ext.wikia.aRecoveryEngine.instartLogic.recovery',
 	'wikia.document',
 	'wikia.querystring'
-], function (adContext, prebid, instartLogic, doc, QueryString) {
+], function (adContext, prebid, doc, QueryString) {
 	'use strict';
 
 	var bidderName = 'wikia',
@@ -50,8 +49,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.wikia',[
 				}
 			}
 		},
-		qs = new QueryString(),
-		isNewPrebidEnabled = adContext.get('opts.isNewPrebidEnabled');
+		qs = new QueryString();
 
 	function getPrice() {
 		var price = qs.getVal('wikia_adapter', 0);
@@ -60,7 +58,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.wikia',[
 	}
 
 	function isEnabled() {
-		return qs.getVal('wikia_adapter', false) !== false && !instartLogic.isBlocking();
+		return qs.getVal('wikia_adapter', false) !== false;
 	}
 
 	function prepareAdUnit(slotName, config) {
@@ -125,12 +123,8 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.wikia',[
 			bidResponse.width = bid.sizes[0][0];
 			bidResponse.height = bid.sizes[0][1];
 
-			if (isNewPrebidEnabled) {
-				addBidResponse(bid.adUnitCode, bidResponse);
-				done();
-			} else {
-				prebid.get().addBidResponse(bid.placementCode, bidResponse);
-			}
+			addBidResponse(bid.adUnitCode, bidResponse);
+			done();
 		});
 	}
 

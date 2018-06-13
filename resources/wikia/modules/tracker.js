@@ -119,7 +119,7 @@
 		function flushInternalTrackingQueue(optIn) {
 			isOptedIn = optIn;
 			isTrackingOptInReady = true;
-			
+
 			while (internalTrackingQueue.length > 0) {
 				var fn = internalTrackingQueue.shift();
 				fn();
@@ -370,8 +370,14 @@
 			track.apply( null, args );
 		}
 
-		require(['wikia.trackingOptIn'], function (trackingOptIn) {
-			trackingOptIn.pushToUserConsentQueue(flushInternalTrackingQueue);
+		require([require.optional('wikia.trackingOptIn')], function (trackingOptIn) {
+			if (trackingOptIn) {
+				trackingOptIn.pushToUserConsentQueue(flushInternalTrackingQueue);
+			} else {
+				// SUS-4895 trackingOptIn could not be loaded
+				// prevent tracking calls from hanging infinitely—treat user as opt-out
+				flushInternalTrackingQueue(false);
+			}
 		});
 
 		/** @public **/

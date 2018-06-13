@@ -1702,8 +1702,6 @@ class WikiFactory {
 			return false;
 		}
 
-		wfProfileIn( __METHOD__ );
-
 		if ( $wgWikicitiesReadOnly ) {
 			Wikia::log( __METHOD__, "", "wgWikicitiesReadOnly mode. Skipping update.");
 		}
@@ -1730,8 +1728,7 @@ class WikiFactory {
 		/**
 		 * clear variables cache
 		 */
-		$wgMemc->delete( "WikiFactory::getCategory:" .
-						 $city_id ); //ugly cat clearing (fb#9937)
+		$wgMemc->delete( "WikiFactory::getCategory:" . $city_id ); //ugly cat clearing (fb#9937)
 		$wgMemc->delete( static::getVarsKey( $city_id ) );
 
 		$city_dbname = static::IDtoDB( $city_id );
@@ -1739,8 +1736,6 @@ class WikiFactory {
 		if ( !empty( $city_dbname ) ) {
 			$wgMemc->delete( static::getWikiaDBCacheKey( $city_dbname ) );
 		}
-
-		wfProfileOut( __METHOD__ );
 
 		return true;
 	}

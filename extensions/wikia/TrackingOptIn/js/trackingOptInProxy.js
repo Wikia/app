@@ -10,7 +10,7 @@ define('wikia.trackingOptIn', [
 	init();
 
 	function init() {
-		queue = doesMobileWikiQueueExist() ? initPoxyQueue() : initFakeQueue();
+		queue = doesMobileWikiQueueExist() ? initProxyQueue() : initFakeQueue();
 	}
 
 	function doesMobileWikiQueueExist() {
@@ -30,7 +30,7 @@ define('wikia.trackingOptIn', [
 		return fakeConsentQueue;
 	}
 
-	function initPoxyQueue() {
+	function initProxyQueue() {
 		log('Init proxy queue', log.levels.debug, logGroup);
 
 		win.M.trackingQueue.push(function (isOptedIn) {
@@ -41,13 +41,29 @@ define('wikia.trackingOptIn', [
 		return win.M.trackingQueue;
 	}
 
+	function isOptedIn() {
+		log(['isOptedIn - proxy', optIn], log.levels.info, logGroup);
+		return optIn;
+	}
+
 	function pushToUserConsentQueue(callback) {
 		queue.push(callback);
 	}
 
-	function isOptedIn() {
-		log(['isOptedIn - proxy', optIn], log.levels.info, logGroup);
-		return optIn;
+	function geoRequiresTrackingConsent() {
+		if (win.M === 'undefined') {
+			return true;
+		}
+
+		if (typeof win.M.geoRequiresConsent !== 'undefined') {
+			return win.M.geoRequiresConsent;
+		}
+
+		if (typeof win.M.continent !== 'undefined') {
+			return win.M.continent === 'EU';
+		}
+
+		return true;
 	}
 
 	return {
@@ -55,6 +71,7 @@ define('wikia.trackingOptIn', [
 			log(['Placeholder for init', optIn], log.levels.info, logGroup);
 		},
 		isOptedIn: isOptedIn,
-		pushToUserConsentQueue: pushToUserConsentQueue
+		pushToUserConsentQueue: pushToUserConsentQueue,
+		geoRequiresTrackingConsent: geoRequiresTrackingConsent
 	}
 });

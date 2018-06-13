@@ -1,11 +1,9 @@
 /*global define*/
 define('ext.wikia.adEngine.lookup.prebid.prebidHelper', [
-	'ext.wikia.adEngine.adContext',
-	'ext.wikia.adEngine.lookup.prebid.adaptersRegistry',
-	'ext.wikia.adEngine.lookup.prebid.versionCompatibility',
-	'ext.wikia.aRecoveryEngine.instartLogic.recovery',
-	'wikia.window'
-], function(adContext, adaptersRegistry, prebidVersionCompatibility, instartLogic, win) {
+	'ext.wikia.adEngine.lookup.prebid.adaptersRegistry'
+], function(
+	adaptersRegistry
+) {
 	'use strict';
 	var adUnits = [],
 		lazyLoad = 'off',
@@ -15,15 +13,11 @@ define('ext.wikia.adEngine.lookup.prebid.prebidHelper', [
 
 	function getAdapterAdUnits(adapter, skin) {
 		var adapterAdUnits = [],
-			isRecovering = instartLogic.isBlocking(),
-			isNewPrebidEnabled = adContext.get('opts.isNewPrebidEnabled'),
-			slots = adapter.getSlots(skin, isRecovering);
+			slots = adapter.getSlots(skin);
 
 		Object.keys(slots).forEach(function(slotName) {
-			var prepareAdUnit = isNewPrebidEnabled ?
-					adapter.prepareAdUnit :
-					prebidVersionCompatibility.toVersion0.decoratePrepareAdUnit(adapter.prepareAdUnit),
-				adUnit = prepareAdUnit(slotName, slots[slotName], skin, isRecovering);
+			var prepareAdUnit = adapter.prepareAdUnit,
+				adUnit = prepareAdUnit(slotName, slots[slotName], skin);
 
 			if (adUnit) {
 				adapterAdUnits.push(adUnit);
@@ -57,18 +51,7 @@ define('ext.wikia.adEngine.lookup.prebid.prebidHelper', [
 		return adUnits;
 	}
 
-	function isVersion1() {
-		var version = (win.pbjs && win.pbjs.version);
-
-		if (!version) {
-			throw new Error('Version of prebid not known. Check if library is loaded.');
-		}
-
-		return (version.split('.')[0] === 'v1');
-	}
-
 	return {
-		setupAdUnits: setupAdUnits,
-		isVersion1: isVersion1
+		setupAdUnits: setupAdUnits
 	};
 });

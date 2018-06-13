@@ -2,9 +2,8 @@
 define('ext.wikia.adEngine.lookup.prebid.adapters.pubmatic',[
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.context.slotsContext',
-	'ext.wikia.aRecoveryEngine.instartLogic.recovery',
 	'wikia.log'
-], function (adContext, slotsContext, instartLogic, log) {
+], function (adContext, slotsContext, log) {
 	'use strict';
 
 	var bidderName = 'pubmatic',
@@ -88,7 +87,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.pubmatic',[
 		};
 
 	function isEnabled() {
-		return adContext.get('bidders.pubmatic') && !instartLogic.isBlocking();
+		return adContext.get('bidders.pubmatic');
 	}
 
 	function getSlots(skin) {

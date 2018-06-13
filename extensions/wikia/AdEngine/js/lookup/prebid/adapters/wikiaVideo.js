@@ -3,10 +3,9 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.wikiaVideo',[
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.wrappers.prebid',
 	'ext.wikia.adEngine.video.vastUrlBuilder',
-	'ext.wikia.aRecoveryEngine.instartLogic.recovery',
 	'wikia.document',
 	'wikia.querystring'
-], function (adContext, prebid, vastUrlBuilder, instartLogic, doc, QueryString) {
+], function (adContext, prebid, vastUrlBuilder, doc, QueryString) {
 	'use strict';
 
 	var bidderName = 'wikiaVideo',
@@ -20,8 +19,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.wikiaVideo',[
 				MOBILE_IN_CONTENT: {}
 			}
 		},
-		qs = new QueryString(),
-		isNewPrebidEnabled = adContext.get('opts.isNewPrebidEnabled');
+		qs = new QueryString();
 
 	function getPrice() {
 		var price = qs.getVal('wikia_video_adapter', 0);
@@ -30,7 +28,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.wikiaVideo',[
 	}
 
 	function isEnabled() {
-		return qs.getVal('wikia_video_adapter', false) !== false && !instartLogic.isBlocking();
+		return qs.getVal('wikia_video_adapter', false) !== false;
 	}
 
 	function prepareAdUnit(slotName) {
@@ -79,12 +77,8 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.wikiaVideo',[
 				}
 			);
 
-			if (isNewPrebidEnabled) {
-				addBidResponse(bid.adUnitCode, bidResponse);
-				done();
-			} else {
-				prebid.get().addBidResponse(bid.placementCode, bidResponse);
-			}
+			addBidResponse(bid.adUnitCode, bidResponse);
+			done();
 		});
 	}
 
