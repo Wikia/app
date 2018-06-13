@@ -15,8 +15,8 @@ class AnalyticsProviderQuantServe implements iAnalyticsProvider {
 		$tag = <<<EOT
 <script type="text/javascript">
 window._qevents = window._qevents || [];
-require(["wikia.trackingOptOut", require.optional("wikia.trackingOptIn")], function (trackingOptOut, trackingOptIn) {
-	function loadScript() {
+require(["wikia.trackingOptIn"], function (trackingOptIn) {
+	function loadQuantServeScript() {
 		var elem = document.createElement('script');
 		
 		elem.src = (document.location.protocol == "https:" ? "https://secure" : "http://edge") + ".quantserve.com/quant.js";
@@ -26,17 +26,11 @@ require(["wikia.trackingOptOut", require.optional("wikia.trackingOptIn")], funct
 		document.head.appendChild(elem);
 	}
 
-	if (trackingOptIn) {
-		trackingOptIn.pushToUserConsentQueue(function (optIn) {
-			if (optIn) {
-				loadScript();
-			}
-		});
-	} else {
-		trackingOptOut.ifNotOptedOut(function () {
-			loadScript();
-		});
-	}
+	trackingOptIn.pushToUserConsentQueue(function (optIn) {
+		if (optIn) {
+			loadQuantServeScript();
+		}
+	});
 });
 </script>
 

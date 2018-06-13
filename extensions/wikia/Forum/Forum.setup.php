@@ -84,7 +84,6 @@ $GLOBALS['wgHooks']['LinkBegin'][] = 'ForumHooksHelper::onLinkBegin';
 
 // Fix URLs of thread pages when purging them.
 $GLOBALS['wgHooks']['TitleGetSquidURLs'][] = 'ForumHooksHelper::onTitleGetSquidURLs';
-$GLOBALS['wgHooks']['ArticleCommentGetSquidURLs'][] = 'ForumHooksHelper::onArticleCommentGetSquidURLs';
 
 // SUS-1196: Invalidate "Forum Activity" rail module when deleting a thread via Nuke / Quick Tools
 $GLOBALS['wgHooks']['ArticleDeleteComplete'][] = 'ForumHooksHelper::onArticleDeleteComplete';

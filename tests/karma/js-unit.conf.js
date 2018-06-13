@@ -181,11 +181,7 @@ module.exports = function (config) {
 
 			// Global Shortcuts
 			'extensions/wikia/GlobalShortcuts/scripts/PageActions.js',
-			'extensions/wikia/GlobalShortcuts/scripts/spec/PageActions.spec.js',
-
-			// Tracking opt-out
-			'resources/wikia/modules/trackingOptOut.js',
-			'resources/wikia/modules/spec/trackingOptOut.spec.js'
+			'extensions/wikia/GlobalShortcuts/scripts/spec/PageActions.spec.js'
 		]
 	});
 };
