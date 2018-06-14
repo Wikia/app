@@ -38,6 +38,7 @@
     "ext-gd": "*",
     "ext-mysqli": "*",
     "ext-simplexml": "*",
+    "ext-tideways": "*",
     "ext-tidy": "*",
     "wikia/fluent-sql-php": "1.0.*",
     "monolog/monolog": "^1.23",
