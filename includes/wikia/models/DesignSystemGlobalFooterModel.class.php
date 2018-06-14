@@ -87,15 +87,6 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 						],
 						'href' => $this->getHref( 'contact' ),
 						'tracking_label' => 'company-overview.contact',
-					],
-					[
-						'type' => 'link-text',
-						'title' => [
-							'type' => 'translatable-text',
-							'key' => 'global-footer-company-overview-link-wikia-org'
-						],
-						'href' => $this->getHref( 'wikia-org' ),
-						'tracking_label' => 'company-overview.wikia-org',
 					]
 				]
 			],
