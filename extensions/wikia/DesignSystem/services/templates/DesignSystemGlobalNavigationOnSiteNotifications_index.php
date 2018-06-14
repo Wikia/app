@@ -9,11 +9,11 @@
 	// are borrowed from Global Navigation and they're responsible for displaying the icon,
 	// dropdown and bubble with unread notifications count
 ?>
-<div class="wds-global-navigation__notifications-menu wds-dropdown notifications-container wds-notifications">
+<div class="wds-global-navigation__notifications-dropdown wds-has-shadow wds-dropdown">
 	<div id="onSiteNotificationsDropdown"
-	     class="wds-dropdown__toggle wds-global-navigation__dropdown-toggle"
+	     class="wds-global-navigation__dropdown-toggle wds-dropdown__toggle"
 	     title="<?= wfMessage( 'global-navigation-notifications-title' )->escaped() ?>">
-		<div id="onSiteNotificationsCount" class="wds-notifications__unread-mark wds-is-hidden">
+		<div id="onSiteNotificationsCount" class="wds-global-navigation__notifications-counter wds-is-hidden">
 			<? //= will be populated by jQuery ?>
 		</div>
 		<?= DesignSystemHelper::renderSvg( 'wds-icons-bell', 'wds-icon wds-icon-small',
