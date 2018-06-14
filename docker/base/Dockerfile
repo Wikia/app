@@ -24,6 +24,8 @@ RUN apt-get update && apt-get install -y \
     # needed by Timeline extension
     ploticus \
     wget \
+    # needed by php tidy extension
+    libtidy-dev \
     # needed by sass
     && apt-get -t jessie-backports install -y libsass-dev
 
@@ -82,6 +84,8 @@ RUN docker-php-ext-install \
     opcache \
     # simplexml: SimpleXMLElement is used by DesignSystem and PortableInfoboxBuilder extensions
     simplexml \
+    # required by PortableInfobox
+    tidy \
     # needed by RabbitMQ client
     bcmath
 
