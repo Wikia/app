@@ -30,3 +30,4 @@ To rebuild localisation cache you need to have `cache` directory created at the 
 ## Troubleshouting 
 
 * If you have problems with DNS host names resolution in your Docker container, you need to [disable `dnsmasq` on your machine](https://askubuntu.com/questions/320921/having-dns-issues-when-connected-to-a-vpn-in-ubuntu-13-04).
+* If localisation cache is missing, regenerate it by running `SERVER_ID=177 php maintenance/rebuildLocalisationCache.php` within the container
