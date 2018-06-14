@@ -1,0 +1,26 @@
+def kubectlImage = 'artifactory.wikia-inc.com/ops/k8s-deployer:0.0.14'
+def nginxImage = 'artifactory.wikia-inc.com/sus/mediawiki-sandbox-nginx:latest'
+def mediawikiImage = 'artifactory.wikia-inc.com/sus/mediawiki-sandbox-php:latest'
+
+
+node('docker-daemon') {
+    def namespace = params.namespace
+    def cluster = params.cluster ?: "prod"
+    def context = "kube-${params.datacenter}-${cluster}"
+    def normalizedEnv = params.environment ==~ /sandbox-/ ? "sandbox" : params.environment
+    def imageVersion = params.version
+    def imageExists = false
+    def imageName = ""
+
+    stage('Clone config repository') {
+        dir('../config') {
+            git url: 'git@github.com:Wikia/config.git'
+        }
+
+        sh('ls')
+    }
+
+    /*
+    WIP
+    */
+}
