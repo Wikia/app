@@ -198,11 +198,11 @@ require(
 				this.unreadCount = data.count;
 
 				if (data.count > 0) {
-					this.$notificationsCount.html(data.count).parent('.bubbles').addClass('show');
+					this.$notificationsCount.html(data.count).parent('.bubbles').removeClass('is-hidden');
 					this.fetchForCurrentWiki();
 					this.$wallNotifications.addClass('show');
 				} else {
-					this.$notificationsCount.empty().parent('.bubbles').removeClass('show');
+					this.$notificationsCount.empty().parent('.bubbles').addClass('is-hidden');
 				}
 
 				this.$wallNotifications.find('.notifications-wiki-header').click(this.wikiClick.bind(this));
