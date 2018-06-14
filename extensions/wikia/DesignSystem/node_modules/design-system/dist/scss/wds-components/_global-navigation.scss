@@ -56,7 +56,7 @@
 		color: $wds-fandom-color-aqua;
 		display: flex;
 		height: 100%;
-		margin-left: 24px;
+		margin-left: 30px;
 		text-decoration: none;
 
 		&:hover {
@@ -69,6 +69,10 @@
 
 		.wds-global-navigation__link-button {
 			margin: 0;
+		}
+
+		@media #{$wds-breakpoint-medium-down} {
+			margin-left: 24px;
 		}
 	}
 

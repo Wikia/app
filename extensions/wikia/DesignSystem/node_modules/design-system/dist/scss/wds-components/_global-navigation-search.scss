@@ -114,6 +114,18 @@ $toggle-active-margin-right: 17px;
 
 		&-icon {
 			margin-right: 8px;
+
+			@media #{$wds-breakpoint-medium-down} {
+				&.wds-icon-small {
+					display: none;
+				}
+			}
+
+			@media #{$wds-breakpoint-large-up} {
+				&:not(.wds-icon-small) {
+					display: none;
+				}
+			}
 		}
 
 		&-text {
