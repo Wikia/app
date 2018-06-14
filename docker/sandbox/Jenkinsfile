@@ -14,7 +14,9 @@ node('docker-daemon') {
 
     stage('Clone config repository') {
         dir('../config') {
-            git url: 'git@github.com:Wikia/config.git'
+            git url: 'git@github.com:Wikia/config.git',
+                branch: params.config_branch
+                credentialsId: 'bd3cf712-39a7-4b16-979e-ff86208ab2ea'
         }
 
         sh('ls')
