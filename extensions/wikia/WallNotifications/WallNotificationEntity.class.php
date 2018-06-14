@@ -21,14 +21,23 @@ class WallNotificationEntity {
 	 * Create a new object from an existing revision object.
 	 *
 	 * @param Revision $rev A revision object
-	 * @param bool $useMasterDB Whether to query the MASTER DB on Title lookup.
-	 *
 	 * @return WallNotificationEntity|null
 	 */
-	public static function createFromRev( Revision $rev, $useMasterDB = false ) {
+	public static function createFromRev( Revision $rev ) {
 		$wn = new WallNotificationEntity();
 
-		if ( $wn->loadDataFromRev( $rev, $useMasterDB ) ) {
+		if ( $wn->loadDataFromRev( $rev ) ) {
+			$wn->saveToCache();
+			return $wn;
+		}
+
+		return null;
+	}
+
+	public static function newFromRevisionAndMessage( Revision $revision, WallMessage $wallMessage ) {
+		$wn = new WallNotificationEntity();
+
+		if ( $wn->loadDataFromRev( $revision, $wallMessage ) ) {
 			$wn->saveToCache();
 			return $wn;
 		}
@@ -51,7 +60,7 @@ class WallNotificationEntity {
 		$wn = new WallNotificationEntity();
 
 		if ( $wikiId == F::app()->wg->CityId ) {
-			$success = $wn->loadDataFromRevId( $revId, $useMasterDB );
+			$success = $wn->loadDataFromRevId( $revId );
 		} else {
 			$success = $wn->loadDataFromRevIdOnWiki( $revId, $wikiId, $useMasterDB );
 		}
@@ -164,22 +173,23 @@ class WallNotificationEntity {
 	 *
 	 * @return bool
 	 */
-	public function loadDataFromRevId( $revId, $userMasterDB = false ) {
+	public function loadDataFromRevId( $revId ) {
 		$rev = Revision::newFromId( $revId );
 		if ( empty( $rev ) ) {
 			return false;
 		}
 
-		return $this->loadDataFromRev( $rev, $userMasterDB );
+		return $this->loadDataFromRev( $rev );
 	}
 
 	/**
 	 * @param Revision $rev
 	 * @param bool $useMasterDB
 	 *
+	 * @param WallMessage|null $wm
 	 * @return bool
 	 */
-	public function loadDataFromRev( Revision $rev, $useMasterDB = false ) {
+	public function loadDataFromRev( Revision $rev, WallMessage $wm = null ) {
 		// Reset any existing info stored in $this->data and start collecting in a new $data var
 		$this->data = null;
 
@@ -193,9 +203,9 @@ class WallNotificationEntity {
 		$data->timestamp = $rev->getTimestamp();
 
 		// Set all data related to the WallMessage
-		$wm = $this->getWallMessageFromRev( $rev );
+		$wm = $wm ?? $this->getWallMessageFromRev( $rev );
 
-		if ( !$this->setWallUserData( $data, $wm, $useMasterDB ) ) {
+		if ( !$this->setWallUserData( $data, $wm ) ) {
 			return false;
 		}
 		$this->setArticleTitleData( $data, $wm );
@@ -228,8 +238,8 @@ class WallNotificationEntity {
 		return $wm;
 	}
 
-	private function setWallUserData( stdClass $data, WallMessage $wm, $useMasterDB ) {
-		$wallUser = $wm->getWallOwner( $useMasterDB );
+	private function setWallUserData( stdClass $data, WallMessage $wm ) {
+		$wallUser = $wm->getWallOwner();
 
 		if ( empty( $wallUser ) ) {
 			WikiaLogger::instance()->error( 'Wall owner not found', [

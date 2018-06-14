@@ -66,6 +66,10 @@ To run unit tests set up the `app/tests/build` directory to be owned by `nobody:
 To rebuild localisation cache you need to have `cache` directory created at the same level as `app` and `config` git clones.
 `cache` directory should have `777` rights set up and have an empty file touched there.
 
+### Localisation cache
+
+If localisation cache is missing, regenerate it by running `SERVER_ID=177 php maintenance/rebuildLocalisationCache.php` within the container
+
 ### DNS issues
 
 If you have problems with DNS host names resolution in your Docker container, you need to [disable `dnsmasq` on your machine](https://askubuntu.com/questions/320921/having-dns-issues-when-connected-to-a-vpn-in-ubuntu-13-04).

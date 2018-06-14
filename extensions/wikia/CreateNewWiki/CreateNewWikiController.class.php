@@ -280,7 +280,9 @@ class CreateNewWikiController extends WikiaController {
 		$categories = isset($params['wCategories']) ? $params['wCategories'] : array();
 		$allAges = isset($params['wAllAges']) && !empty( $params['wAllAges'] );
 
-		$task->call( 'create', $params['wName'], $params['wDomain'], $params['wLanguage'], $params['wVertical'], $categories, $allAges, time() );
+		$task->call( 'create', $params['wName'], $params['wDomain'], $params['wLanguage'],
+			$params['wVertical'], $categories, $allAges, time(),
+			$this->getContext()->getRequest()->getIP() );
 		$task_id = $task->setQueue( Wikia\Tasks\Queues\PriorityQueue::NAME )->queue();
 
 		// return ID of the created task ID, front-end code will poll its status

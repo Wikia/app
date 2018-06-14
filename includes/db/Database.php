@@ -3881,7 +3881,7 @@ abstract class DatabaseBase implements DatabaseType {
 
 		// SUS-2974 | send SQL logs to a separate ES index 'mediawiki-sql'
 		if ( $this->getSampler()->shouldSample() ) {
-			$this->getWikiaLogger()->defaultLogger( 'mediawiki-sql' )->info( $sql, $context );
+			\Wikia\Logger\LoggerFactory::getInstance()->getLogger( 'mediawiki-sql' )->info( $sql, $context );
 		}
 
 		if ( static::isWriteQuery($sql) &&
