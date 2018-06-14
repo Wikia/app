@@ -1366,12 +1366,6 @@ $wgAdDriverF2BabDetectionCountries = null;
 $wgAdDriverBabRecoveryCountries = null;
 
 /**
- * @name $wgAdDriverNewPrebidCountries
- * List of countries to enable new Prebid
- */
-$wgAdDriverNewPrebidCountries = null;
-
-/**
  * @name $wgEnableCMPCountries
  * List of countries to enable Consent Management module
  */
