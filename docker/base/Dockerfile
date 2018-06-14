@@ -66,6 +66,14 @@ RUN wget https://github.com/Wikia/wikidiff2/archive/1.4.1.tar.gz -O wikidiff2.ta
     && docker-php-ext-install /tmp/wikidiff2 \
     && rm -r /tmp/wikidiff2
 
+# tideways extension / @see https://tideways.com/
+RUN wget https://github.com/Wikia/php-xhprof-extension/archive/v4.1.6.tar.gz -O php-xhprof-extension.tar.gz \
+    && mkdir -p /tmp/php-xhprof-extension \
+    && tar -xf php-xhprof-extension.tar.gz -C /tmp/php-xhprof-extension --strip-components=1 \
+    && docker-php-ext-configure /tmp/php-xhprof-extension \
+    && docker-php-ext-install /tmp/php-xhprof-extension \
+    && rm -r /tmp/php-xhprof-extension
+
 # install PHP extensions required by MediaWiki that are provided by Docker base PHP image helper
 RUN docker-php-ext-install \
     bz2 \
