@@ -31,10 +31,6 @@ $global-navigation-z-index: 5000101;
 		position: relative;
 	}
 
-	&.headroom--unpinned {
-		box-shadow: none;
-	}
-
 	a:hover {
 		text-decoration: none;
 	}
