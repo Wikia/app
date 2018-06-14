@@ -77,8 +77,8 @@ RUN docker-php-ext-install \
     # needed by RabbitMQ client
     bcmath
 
-RUN pecl install memcached-3.0.4 \
-    && docker-php-ext-enable memcached
+RUN pecl install igbinary-2.0.6 memcached-3.0.4 \
+    && docker-php-ext-enable igbinary memcached
 
 # expose volumes for app and config repositories clones
 ENV WIKIA_DOCROOT=/usr/wikia/slot1/current/src
