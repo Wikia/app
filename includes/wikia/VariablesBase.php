@@ -2278,6 +2278,13 @@ $wgEnableArticleWatchlist = true;
 $wgEnableAuthorProfileLinks = true;
 
 /**
+ * Enable AutoLogin extension
+ * @see extensions/wikia/AutoLogin
+ * @var bool $wgEnableAutoLogin
+ */
+$wgEnableAutoLogin = false;
+
+/**
  * If set to true, images that contain certain the exif orientation tag will
  * be rotated accordingly. If set to null, try to auto-detect whether a scaler
  * is available that can rotate.

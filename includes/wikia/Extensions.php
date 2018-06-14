@@ -1746,6 +1746,10 @@ if ( !empty( $wgEnableTrackingSettingsManager ) ) {
 	include "$IP/extensions/wikia/TrackingOptIn/TrackingSettingsManager.setup.php";
 }
 
+if ( !empty( $wgEnableAutoLogin ) ) {
+	include "$IP/extensions/wikia/AutoLogin/AutoLogin.setup.php";
+}
+
 include "$IP/extensions/wikia/JWPlayerTag/JWPlayerTag.setup.php";
 
 include_once("$IP/extensions/wikia/DataWarehouse/DataWarehouseEventProducer.setup.php");
