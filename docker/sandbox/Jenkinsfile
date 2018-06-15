@@ -11,6 +11,12 @@ node("docker-daemon") {
     stage("Clone repositories") {
         sh('pwd')
 
+        dir("app") {
+            git url: "git@github.com:Wikia/app.git",
+                branch: params.app_branch,
+                credentialsId: "bd3cf712-39a7-4b16-979e-ff86208ab2ea"
+        }
+
         dir("config") {
             git url: "git@github.com:Wikia/config.git",
                 branch: params.config_branch,
