@@ -10,7 +10,8 @@ RUN apt-get update && apt-get install -y \
     autoconf \
     automake \
     libbz2-dev \
-    libjpeg-dev \
+    libfreetype6-dev \
+    libjpeg62-turbo-dev \
     # needed by memcached
     libmemcached-dev \
     libpng-dev \
@@ -77,6 +78,8 @@ RUN wget https://github.com/Wikia/php-xhprof-extension/archive/v4.1.6.tar.gz -O 
     && rm -r /tmp/php-xhprof-extension
 
 # install PHP extensions required by MediaWiki that are provided by Docker base PHP image helper
+RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/
+
 RUN docker-php-ext-install \
     bz2 \
     gd \
