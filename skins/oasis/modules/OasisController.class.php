@@ -106,20 +106,28 @@ class OasisController extends WikiaController {
 		return $jsAtBottom;
 	}
 
-	private function preloadJs($htmlSnippet) {
+	private function preloadAssets($htmlSnippet) {
 		if ( empty ( $_SERVER['HTTP_FASTLY_SSL'] ) ) {
 			return;
 		}
 		$request = $this->getContext()->getRequest();
-		if ( !$request->getBool( 'preloadJs' ) ) {
+		if ( !$request->getBool( 'preload' ) ) {
 			return;
 		}
 
+		$parts = [];
 		if ( preg_match_all("/<script [^>]*src=\"([^\"]+)\"/", $htmlSnippet, $output_array) ) {
-			$parts = [];
 			foreach($output_array[1] as $jsUrl) {
 				$parts[] = '<'.$jsUrl.'>; rel=preload; as=script'; // x-http2-push-only?
 			}
+		}
+		if ( preg_match_all("/<link rel=\"stylesheet\" href=\"([^\"]+)\"/", $htmlSnippet, $output_array) ) {
+			foreach($output_array[1] as $jsUrl) {
+				$parts[] = '<'.$jsUrl.'>; rel=preload; as=style'; // x-http2-push-only?
+			}
+		}
+
+		if (!empty($parts)) {
 			$request->response()->header('link: ' . implode(', ', $parts));
 		}
 
@@ -261,7 +269,7 @@ class OasisController extends WikiaController {
 
 		// setup loading of JS/CSS
 		$this->loadJs();
-		$this->preloadJs($this->topScripts . $this->globalBlockingScripts);
+		$this->preloadAssets(htmlspecialchars_decode($this->topScripts . $this->globalBlockingScripts . $this->cssLinks . $this->jsFiles));
 
 		// macbre: RT #25697 - hide Comscore & QuantServe tags on edit pages
 		if ( !in_array( $request->getVal( 'action' ), [ 'edit', 'submit' ] ) ) {
