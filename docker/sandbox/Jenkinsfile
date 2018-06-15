@@ -5,8 +5,8 @@
 def sandbox = "sandbox-sus2"
 
 def kubectlImage = "artifactory.wikia-inc.com/ops/k8s-deployer:0.0.14"
-def nginxImage = "artifactory.wikia-inc.com/sus/mediawiki-sandbox-nginx:$sandbox"
-def mediawikiImage = "artifactory.wikia-inc.com/sus/mediawiki-sandbox-php:$sandbox"
+def nginxImage = "artifactory.wikia-inc.com/sus/mediawiki-sandbox-nginx:latest"
+def mediawikiImage = "artifactory.wikia-inc.com/sus/mediawiki-sandbox-php:latest"
 
 node("docker-daemon") {
     stage("Clone repositories") {
