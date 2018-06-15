@@ -1,28 +1,49 @@
-def kubectlImage = 'artifactory.wikia-inc.com/ops/k8s-deployer:0.0.14'
-def nginxImage = 'artifactory.wikia-inc.com/sus/mediawiki-sandbox-nginx:latest'
-def mediawikiImage = 'artifactory.wikia-inc.com/sus/mediawiki-sandbox-php:latest'
+// TODO
+// Sandbox name has to be moved to Jenkins Pipeline parameters
+// and we have to build proper yaml file for k8s
+def sandbox = "sandbox-sus2"
 
+def kubectlImage = "artifactory.wikia-inc.com/ops/k8s-deployer:0.0.14"
+def nginxImage = "artifactory.wikia-inc.com/sus/mediawiki-sandbox-nginx:$sandbox"
+def mediawikiImage = "artifactory.wikia-inc.com/sus/mediawiki-sandbox-php:$sandbox"
 
-node('docker-daemon') {
-    def namespace = params.namespace
-    def cluster = params.cluster ?: "prod"
-    def context = "kube-${params.datacenter}-${cluster}"
-    def normalizedEnv = params.environment ==~ /sandbox-/ ? "sandbox" : params.environment
-    def imageVersion = params.version
-    def imageExists = false
-    def imageName = ""
-
-    stage('Clone config repository') {
-        dir('../config') {
-            git url: 'git@github.com:Wikia/config.git',
-                branch: params.config_branch
-                credentialsId: 'bd3cf712-39a7-4b16-979e-ff86208ab2ea'
+node("docker-daemon") {
+    stage("Clone repositories") {
+        dir("app") {
+            git url: "git@github.com:Wikia/app.git",
+                branch: params.app_branch,
+                credentialsId: "bd3cf712-39a7-4b16-979e-ff86208ab2ea"
         }
 
-        sh('ls')
+        dir("config") {
+            git url: "git@github.com:Wikia/config.git",
+                branch: params.config_branch,
+                credentialsId: "bd3cf712-39a7-4b16-979e-ff86208ab2ea"
+        }
+
+        sh("rm -rf cache && mkdir cache")
     }
 
-    /*
-    WIP
-    */
+    stage("Bump cachebuster") {
+        dir("app") {
+            sh('echo "<?php\n\$wgStyleVersion = "$(date +%s)";" > wgStyleVersion.php')
+        }
+    }
+
+    stage("Build and push images") {
+        dir("app") {
+            sh("docker build  . -f docker/sandbox/Dockerfile-nginx -t $nginxImage")
+            sh("docker build .. -f docker/sandbox/Dockerfile-php -t $mediawikiImage")
+
+            sh("docker push $nginxImage")
+            sh("docker push $mediawikiImage")
+        }
+    }
+
+    withDockerContainer(kubectlImage) {
+        stage("Apply new k8s descriptor") {
+            sh("kubectl --context kube-sjc-prod -n prod delete -f app/docker/sandbox/sjc.yaml")
+            sh("kubectl --context kube-sjc-prod -n prod apply -f app/docker/sandbox/sjc.yaml")
+        }
+    }
 }

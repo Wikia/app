@@ -4,4 +4,6 @@ ADD app /usr/wikia/slot1/current/src
 ADD config /usr/wikia/slot1/current/config
 ADD cache /usr/wikia/slot1/current/cache/messages
 
+RUN SERVER_ID=177 php /usr/wikia/slot1/current/src/maintenance/rebuildLocalisationCache.php
+
 USER nobody
