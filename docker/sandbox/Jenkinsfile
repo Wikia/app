@@ -7,6 +7,8 @@ def sandbox = "sandbox-sus2"
 def kubectlImage = "artifactory.wikia-inc.com/ops/k8s-deployer:0.0.14"
 def nginxImage = "artifactory.wikia-inc.com/sus/mediawiki-sandbox-nginx:$sandbox"
 def mediawikiImage = "artifactory.wikia-inc.com/sus/mediawiki-sandbox-php:$sandbox"
+def appBranch = params.app_branch
+dev configBranch = params.config_branch
 
 node("docker-daemon") {
     stage("Clone repositories") {
@@ -14,22 +16,27 @@ node("docker-daemon") {
 
         dir("app") {
             git url: "git@github.com:Wikia/app.git",
-                branch: params.app_branch,
+                branch: $appBranch,
                 credentialsId: "bd3cf712-39a7-4b16-979e-ff86208ab2ea"
         }
 
         dir("config") {
             git url: "git@github.com:Wikia/config.git",
-                branch: params.config_branch,
+                branch: $configBranch,
                 credentialsId: "bd3cf712-39a7-4b16-979e-ff86208ab2ea"
         }
 
         sh("rm -rf cache && mkdir cache")
     }
 
-    stage("Bump cachebuster") {
+    stage("Bump cachebuster and version") {
         dir("app") {
             sh('echo "<?php\n\\\$wgStyleVersion = "$(date +%s)";" > wgStyleVersion.php')
+            sh('echo "$appBranch@$(git rev-parse --short HEAD)" > wikia.version.txt')
+        }
+
+        dir("config") {
+            sh('echo "$configBranch@$(git rev-parse --short HEAD)" > wikia.version.txt')
         }
     }
 
@@ -46,8 +53,8 @@ node("docker-daemon") {
     withDockerContainer(kubectlImage) {
         stage("Apply new k8s descriptor") {
             sh """#!/bin/sh
-            kubectl --context kube-sjc-prod -n prod delete -f app/docker/sandbox/$sandbox.yaml
-            kubectl --context kube-sjc-prod -n prod apply -f app/docker/sandbox/$sandbox.yaml"""
+            kubectl --context kube-sjc-prod -n prod delete -f app/docker/sandbox/${sandbox}.yaml
+            kubectl --context kube-sjc-prod -n prod apply -f app/docker/sandbox/${sandbox}.yaml"""
         }
     }
 }
