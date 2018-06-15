@@ -11,7 +11,4 @@ RUN mkdir -p /usr/wikia/slot1/current/cache/messages
 
 RUN SERVER_ID=177 php maintenance/rebuildLocalisationCache.php --primary
 
-RUN ls -la ../cache
-RUN ls -la ../cache/messages
-
 USER nobody
