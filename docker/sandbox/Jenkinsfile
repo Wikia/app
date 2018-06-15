@@ -1,6 +1,7 @@
 // TODO
-// Sandbox name has to be moved to Jenkins Pipeline parameters
-// and we have to build proper yaml file for k8s
+// 1. Sandbox name has to be moved to Jenkins Pipeline parameters
+// 2. We have to build proper yaml file for k8s
+// 3. Setup different ENV variables in Dockerfile-php?
 def sandbox = "sandbox-sus2"
 
 def kubectlImage = "artifactory.wikia-inc.com/ops/k8s-deployer:0.0.14"
