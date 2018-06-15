@@ -17,11 +17,11 @@ spec:
     spec:
       containers:
         - name: nginx
-          image: artifactory.wikia-inc.com/sus/mediawiki-sandbox-nginx:latest
+          image: artifactory.wikia-inc.com/sus/mediawiki-sandbox-nginx:sandbox-sus2
           ports:
             - containerPort: 8080
         - name: php
-          image: artifactory.wikia-inc.com/sus/mediawiki-sandbox-php:latest
+          image: artifactory.wikia-inc.com/sus/mediawiki-sandbox-php:sandbox-sus2
           env:
             - name: WIKIA_DATACENTER
               value: "sjc"
