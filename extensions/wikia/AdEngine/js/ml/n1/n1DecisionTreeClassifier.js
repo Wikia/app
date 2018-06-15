@@ -3,9 +3,8 @@ define('ext.wikia.adEngine.ml.n1.n1DecisionTreeClassifier', [
 	'ext.wikia.adEngine.ml.n1.n1DecisionTreeClassifierInputParser',
 	'ext.wikia.adEngine.ml.modelFactory',
 	'ext.wikia.adEngine.ml.model.decisionTreeClassifier',
-	'wikia.geo',
-	'wikia.instantGlobals'
-], function (inputParser, modelFactory, decisionTreeClassifier, geo, instantGlobals) {
+	'ext.wikia.adEngine.adContext'
+], function (inputParser, modelFactory, decisionTreeClassifier, adContext) {
 	'use strict';
 
 	var dtc = decisionTreeClassifier.create('n1dtc'),
@@ -18,7 +17,7 @@ define('ext.wikia.adEngine.ml.n1.n1DecisionTreeClassifier', [
 			cachePrediction: true
 		};
 
-	if (geo.isProperGeo(instantGlobals[modelData.wgCountriesVariable])) {
+	if (adContext.isEnabled(modelData.wgCountriesVariable)) {
 		dtc.loadParameters(function () {
 			modelData.enabled = true;
 		});

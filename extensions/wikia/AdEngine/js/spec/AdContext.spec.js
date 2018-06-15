@@ -7,46 +7,14 @@ describe('AdContext', function () {
 		return;
 	}
 
-	function isProperGeo(countryList) {
-		if (!countryList) {
-			return false;
-		}
-		if (countryList.indexOf('CURRENT_COUNTRY') > -1) {
-			return true;
-		}
-		if (countryList.indexOf('CURRENT_COUNTRY-CURRENT_REGION') > -1) {
-			return true;
-		}
-		if (countryList.indexOf('XX-CURRENT_CONTINENT') > -1) {
-			return true;
-		}
-		if (countryList.indexOf('XX') > -1) { //global
-			return true;
-		}
-		return false;
-	}
-
-	var geo = {
-		getCountryCode: function () {
-			return 'CURRENT_COUNTRY';
-		},
-		getRegionCode: function () {
-			return 'CURRENT_REGION';
-		},
-		getContinentCode: function () {
-			return 'CURRENT_CONTINENT';
-		},
-		isProperGeo: isProperGeo
-	};
-
 	var mocks = {
 			browserDetect: {
 				isEdge: function() {
 					return false;
 				}
 			},
-			adsGeo: geo,
-			geo: geo,
+			adsGeo: {},
+			geo: {},
 			instantGlobals: {},
 			win: {},
 			Querystring: function () {
@@ -55,9 +23,7 @@ describe('AdContext', function () {
 			querystring: {
 				getVal: noop
 			},
-			wikiaCookies: {
-				get: noop
-			},
+			wikiaCookies: {},
 			sampler: {
 				sample: function () {
 					return false;
@@ -84,12 +50,25 @@ describe('AdContext', function () {
 		);
 	}
 
+	function fakeIsProperGeo(geos) {
+		geos = geos || [];
+		return geos.indexOf('CURRENT_COUNTRY') !== -1;
+	}
+
 	beforeEach(function () {
+		var geoAPI = ['isProperGeo', 'getCountryCode', 'getRegionCode', 'getContinentCode', 'isProperGeo'];
+		mocks.geo = jasmine.createSpyObj('geo', geoAPI);
+		mocks.adsGeo = jasmine.createSpyObj('geo', geoAPI);
+		mocks.wikiaCookies = jasmine.createSpyObj('cookies', ['get']);
+
+		mocks.geo.isProperGeo.and.callFake(fakeIsProperGeo);
+		mocks.adsGeo.isProperGeo.and.callFake(fakeIsProperGeo);
 		mocks.instantGlobals = {};
-		getModule().getContext().opts = {};
+
 		if (mocks.doc && mocks.doc.hasOwnProperty('referrer')) {
 			mocks.doc.referrer = '';
 		}
+
 	});
 
 	it(
@@ -404,22 +383,13 @@ describe('AdContext', function () {
 	});
 
 	it('showcase is enabled if the cookie is set', function () {
-		mocks.wikiaCookies = {
-			get: function () {
-				return 'NlfdjR5xC0';
-			}
-		};
-
+		mocks.wikiaCookies.get.and.returnValue('NlfdjR5xC0');
 		expect(getModule().getContext().opts.showcase).toBeTruthy();
 	});
 
 	it('showcase is disabled if cookie is not set', function () {
-		mocks.wikiaCookies = {
-			get: function () {
-				return false;
-			}
-		};
-
+		mocks.win.ads.context = {};
+		mocks.wikiaCookies.get.and.returnValue(false);
 		expect(getModule().getContext().opts.showcase).toBeFalsy();
 	});
 
@@ -723,4 +693,21 @@ describe('AdContext', function () {
 		expect(getModule().get('..')).toBeUndefined();
 		expect(getModule().get('opts..showAds')).toBeUndefined();
 	});
+
+	it('uses default geo', function () {
+		mocks.instantGlobals = {
+			wgAdDriverNewGeoCountries: [],
+		};
+		getModule();
+		expect(mocks.geo.isProperGeo.calls.count()).toBeGreaterThan(1);
+	});
+
+	it('uses ads lABrador geo if is enabled', function () {
+		mocks.instantGlobals = {
+			wgAdDriverNewGeoCountries: ['CURRENT_COUNTRY'],
+		};
+
+		getModule();
+		expect(mocks.geo.isProperGeo.calls.count()).toEqual(1);
+	})
 });
