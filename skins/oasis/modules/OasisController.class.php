@@ -124,7 +124,7 @@ class OasisController extends WikiaController {
 		}
 
 		if (!empty($parts)) {
-			$request->response()->header('link: ' . implode(', ', $parts));
+			$request->response()->header('Link: ' . implode(', ', $parts));
 		}
 
 	}
