@@ -122,8 +122,10 @@ class OasisController extends WikiaController {
 			}
 		}
 		if ( preg_match_all("/<link rel=\"stylesheet\" href=\"([^\"]+)\"/", $htmlSnippet, $output_array) ) {
-			foreach($output_array[1] as $jsUrl) {
-				$parts[] = '<'.$jsUrl.'>; rel=preload; as=style'; // x-http2-push-only?
+			foreach($output_array[1] as $cssUrl) {
+				if (strpos($cssUrl, '/sasses/') === FALSE) {
+					$parts[] = '<'.$cssUrl.'>; rel=preload; as=style'; // x-http2-push-only?
+				}
 			}
 		}
 
