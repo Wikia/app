@@ -36,11 +36,13 @@
     "ext-bcmath": "*",
     "ext-bz2": "*",
     "ext-gd": "*",
+    "ext-mustache": "*",
     "ext-mysqli": "*",
     "ext-simplexml": "*",
     "ext-sockets": "*",
     "ext-tideways": "*",
     "ext-tidy": "*",
+    "ext-wikidiff2": "*",
     "wikia/fluent-sql-php": "1.0.*",
     "monolog/monolog": "^1.23",
     "phpunit/phpunit": "^6.5",
@@ -67,6 +69,7 @@
     "wikimedia/scoped-callback": "^2.0"
   },
   "require-dev": {
+    "ext-yaml": "*",
     "ext-xdebug": "*"
   },
   "scripts": {
