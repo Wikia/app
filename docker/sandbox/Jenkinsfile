@@ -30,11 +30,11 @@ node("docker-daemon") {
     stage("Bump cachebuster and version") {
         dir("app") {
             sh('echo "<?php\n$$wgStyleVersion = "$(date +%s)";" > wgStyleVersion.php')
-            // sh('echo "${params.app_branch}@$(git rev-parse --short HEAD)" > wikia.version.txt')
+            sh('echo "' + params.app_branch + '@$(git rev-parse --short HEAD)" > wikia.version.txt')
         }
 
         dir("config") {
-            // sh('echo "${params.config_branch}@$(git rev-parse --short HEAD)" > wikia.version.txt')
+            sh('echo "' + params.config_branch + '@$(git rev-parse --short HEAD)" > wikia.version.txt')
         }
     }
 
