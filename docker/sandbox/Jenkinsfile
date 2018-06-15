@@ -45,8 +45,9 @@ node("docker-daemon") {
 
     withDockerContainer(kubectlImage) {
         stage("Apply new k8s descriptor") {
-            sh("kubectl --context kube-sjc-prod -n prod delete -f app/docker/sandbox/$sandbox.yaml")
-            sh("kubectl --context kube-sjc-prod -n prod apply -f app/docker/sandbox/$sandbox.yaml")
+            sh """#!/bin/sh
+            kubectl --context kube-sjc-prod -n prod delete -f app/docker/sandbox/$sandbox.yaml
+            kubectl --context kube-sjc-prod -n prod apply -f app/docker/sandbox/$sandbox.yaml"""
         }
     }
 }
