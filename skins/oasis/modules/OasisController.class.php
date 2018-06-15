@@ -118,19 +118,17 @@ class OasisController extends WikiaController {
 		$parts = [];
 		if ( preg_match_all("/<script [^>]*src=\"([^\"]+)\"/", $htmlSnippet, $output_array) ) {
 			foreach($output_array[1] as $jsUrl) {
-				if (startsWith($jsUrl, '//')) {
-					$jsUrl = 'https:' . $jsUrl;
+				if (!startsWith($jsUrl, '//')) {
+					$parts[] = '<'.$jsUrl.'>; rel=preload; as=script'; // x-http2-push-only?
 				}
-				$parts[] = '<'.$jsUrl.'>; rel=preload; as=script'; // x-http2-push-only?
 			}
 		}
 		if ( preg_match_all("/<link rel=\"stylesheet\" href=\"([^\"]+)\"/", $htmlSnippet, $output_array) ) {
 			foreach($output_array[1] as $cssUrl) {
-				if (startsWith($cssUrl, '//')) {
-					$cssUrl = 'https:' . $cssUrl;
-				}
-				if (strpos($cssUrl, '/sasses/') === FALSE) {
-					$parts[] = '<'.$cssUrl.'>; rel=preload; as=style'; // x-http2-push-only?
+				if (!startsWith($cssUrl, '//')) {
+					if (strpos($cssUrl, '/sasses/') === FALSE) {
+						$parts[] = '<'.$cssUrl.'>; rel=preload; as=style'; // x-http2-push-only?
+					}
 				}
 			}
 		}
@@ -278,6 +276,7 @@ class OasisController extends WikiaController {
 		// setup loading of JS/CSS
 		$this->loadJs();
 		$this->preloadAssets(htmlspecialchars_decode($this->topScripts . $this->globalBlockingScripts . $this->cssLinks . $this->jsFiles));
+
 
 		// macbre: RT #25697 - hide Comscore & QuantServe tags on edit pages
 		if ( !in_array( $request->getVal( 'action' ), [ 'edit', 'submit' ] ) ) {
