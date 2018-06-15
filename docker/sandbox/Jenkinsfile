@@ -9,11 +9,7 @@ def mediawikiImage = "artifactory.wikia-inc.com/sus/mediawiki-sandbox-php:$sandb
 
 node("docker-daemon") {
     stage("Clone repositories") {
-        dir("app") {
-            git url: "git@github.com:Wikia/app.git",
-                branch: params.app_branch,
-                credentialsId: "bd3cf712-39a7-4b16-979e-ff86208ab2ea"
-        }
+        sh('pwd')
 
         dir("config") {
             git url: "git@github.com:Wikia/config.git",
