@@ -268,10 +268,10 @@ class OasisController extends WikiaController {
 
 		if ( !empty ( $_SERVER['HTTP_FASTLY_SSL'] ) && $request->getBool( 'preloadAssets' ) ) {
 
-			$this->topScripts = str_replace('https://slot1.sandbox-s4.wikia.com', '', $this->topScripts );
-			$this->globalBlockingScripts = str_replace('https://slot1.sandbox-s4.wikia.com', '', $this->globalBlockingScripts );
-			$this->cssLinks = str_replace('https://slot1.sandbox-s4.wikia.com', '', $this->cssLinks );
-			$this->jsFiles = str_replace('https://slot1.sandbox-s4.wikia.com', '', $this->jsFiles );
+			$this->topScripts = str_replace('//slot1.sandbox-s4.wikia.com', '', $this->topScripts );
+			$this->globalBlockingScripts = str_replace('//slot1.sandbox-s4.wikia.com', '', $this->globalBlockingScripts );
+			$this->cssLinks = str_replace('//slot1.sandbox-s4.wikia.com', '', $this->cssLinks );
+			$this->jsFiles = str_replace('//slot1.sandbox-s4.wikia.com', '', $this->jsFiles );
 
 			$this->preloadAssets(htmlspecialchars_decode($this->topScripts . $this->globalBlockingScripts . $this->cssLinks . $this->jsFiles));
 		}
