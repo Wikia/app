@@ -17,5 +17,5 @@ docker push artifactory.wikia-inc.com/sus/mediawiki-sandbox-php:latest
 Push to Kubernetes:
 
 ```
-kubectl --context kube-sjc-prod -n prod apply -f sjc.yaml
+kubectl --context kube-sjc-prod -n prod apply -f sandbox-sus2.yaml
 ```
