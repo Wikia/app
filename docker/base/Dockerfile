@@ -90,7 +90,9 @@ RUN docker-php-ext-install \
     # required by PortableInfobox
     tidy \
     # needed by RabbitMQ client
-    bcmath
+    bcmath \
+    # RecentChange::notifyRC2UDP uses socket_create
+    sockets
 
 # expose volumes for app and config repositories clones
 ENV WIKIA_DOCROOT=/usr/wikia/slot1/current/src
