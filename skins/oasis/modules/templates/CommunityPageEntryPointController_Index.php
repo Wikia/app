@@ -2,10 +2,12 @@
 	<div class="avatars">
 		<div class="wds-avatar-stack">
 			<? foreach( $avatars as $index => $avatar ): ?>
-				<a href="<?= $avatar['userProfileUrl'] ?>" class="wds-avatar-stack__avatar"
-				   title="<?= Sanitizer::encodeAttribute( $avatar['username'] ) ?>">
-					<img class="wds-avatar" src="<?= $avatar['avatarUrl'] ?>"/>
-				</a>
+				<div class="wds-avatar">
+					<a href="<?= $avatar['userProfileUrl'] ?>"
+					   title="<?= Sanitizer::encodeAttribute( $avatar['username'] ) ?>">
+						<img class="wds-avatar__image" src="<?= $avatar['avatarUrl'] ?>"/>
+					</a>
+				</div>
 			<? endforeach; ?>
 		</div>
 	</div>

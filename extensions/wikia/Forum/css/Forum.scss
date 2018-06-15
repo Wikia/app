@@ -3,6 +3,9 @@
 @import "skins/shared/mixins/clearfix";
 @import "skins/shared/mixins/menus";
 
+@import 'extensions/wikia/DesignSystem/node_modules/design-system/dist/scss/wds-variables/index';
+@import 'extensions/wikia/DesignSystem/node_modules/design-system/dist/scss/wds-mixins/index';
+
 // TODO: all of these should be consolidated and put into oasis
 @import "../../Wall/css/WallColors";
 @import "../../Wall/css/WallDimensions";
@@ -270,10 +273,6 @@
 }
 
 .WikiaRail .forum-activity-module {
-	.activity-avatar {
-		display: inline-block;
-	}
-
 	.activity-info {
 		display: inline-block;
 		margin-left: 5px;
@@ -281,7 +280,7 @@
 	}
 
 	.wds-avatar {
-		border-color: $color-page-border;
+		@include wds-avatar(32px, $color-page-border, $color-page-border);
 	}
 }
 

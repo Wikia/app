@@ -165,7 +165,7 @@
 	}
 
 	.wds-avatar {
-		border-color: $color-page-border;
+		@include wds-avatar(30px, $color-page-border, $color-page-border);
 	}
 }
 //It's needed to add margin to allign article header with content on corporate pages with this one.
