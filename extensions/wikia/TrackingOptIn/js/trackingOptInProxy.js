@@ -1,3 +1,4 @@
+/*global define*/
 define('wikia.trackingOptIn', [
 	'wikia.lazyqueue',
 	'wikia.log',

@@ -1,27 +1,25 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: php-nginx-test
+  name: mediawiki-dev
   namespace: dev
-  labels:
-    app: php-nginx-test
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: nginx-wikia-dev
+      app: mediawiki-dev
   template:
     metadata:
       labels:
-        app: nginx-wikia-dev
+        app: mediawiki-dev
     spec:
       containers:
         - name: nginx
-          image: artifactory.wikia-inc.com/sus/nginx-wikia-dev:latest
+          image: artifactory.wikia-inc.com/sus/mediawiki-dev-nginx:latest
           ports:
             - containerPort: 8080
         - name: php
-          image: artifactory.wikia-inc.com/sus/php-wikia-k8s:latest
+          image: artifactory.wikia-inc.com/sus/mediawiki-dev-php:latest
           env:
             - name: WIKIA_DATACENTER
               value: "poz"
@@ -29,14 +27,21 @@ spec:
               value: "dev"
             - name: WIKIA_DEV_DOMAIN
               value: "k8s.wikia-dev.pl"
+            - name: LOG_SOCKET_ONLY
+              value: "yes"
+            - name: LOG_SOCKET_ADDRESS
+              value: "tcp://localhost:9999"
+        # MW log output, see K8s_LOGGING.md
+        - name: logger
+          image: artifactory.wikia-inc.com/sus/mediawiki-logger:latest
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: nginx-wikia-dev
+  name: mediawiki-dev
 spec:
   selector:
-    app: nginx-wikia-dev
+    app: mediawiki-dev
   ports:
     - protocol: TCP
       port: 80
@@ -45,7 +50,7 @@ spec:
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: php-nginx-test-ingress
+  name: mediawiki-dev-ingress
 spec:
   rules:
     - host: "mediawiki.poz-dev.k8s.wikia.net"
@@ -53,5 +58,5 @@ spec:
         paths:
           - path: /
             backend:
-              serviceName: nginx-wikia-dev
+              serviceName: mediawiki-dev
               servicePort: 80

@@ -346,6 +346,7 @@ $wgAutoloadClasses['MySQLKeyValueModel'] = "{$IP}/includes/wikia/models/MySQLKey
 $wgAutoloadClasses['DesignSystemCommunityHeaderModel'] = "{$IP}/includes/wikia/models/DesignSystemCommunityHeaderModel.class.php";
 $wgAutoloadClasses['DesignSystemGlobalFooterModel'] = "{$IP}/includes/wikia/models/DesignSystemGlobalFooterModel.class.php";
 $wgAutoloadClasses['DesignSystemGlobalNavigationModel'] = "{$IP}/includes/wikia/models/DesignSystemGlobalNavigationModel.class.php";
+$wgAutoloadClasses['DesignSystemGlobalNavigationModelV2'] = "{$IP}/includes/wikia/models/DesignSystemGlobalNavigationModelV2.class.php";
 $wgAutoloadClasses['DesignSystemSharedLinks'] = "{$IP}/includes/wikia/models/DesignSystemSharedLinks.class.php";
 $wgAutoloadClasses['UserRegistrationInfo'] = "$IP/includes/wikia/models/UserRegistrationInfo.php";
 $wgAutoloadClasses['PromoImage'] = "{$IP}/includes/wikia/models/PromoImage.class.php";
@@ -1363,12 +1364,6 @@ $wgAdDriverF2BabDetectionCountries = null;
  * List of countries to put recovery behind BlockAdBlock detection
  */
 $wgAdDriverBabRecoveryCountries = null;
-
-/**
- * @name $wgAdDriverNewPrebidCountries
- * List of countries to enable new Prebid
- */
-$wgAdDriverNewPrebidCountries = null;
 
 /**
  * @name $wgEnableCMPCountries

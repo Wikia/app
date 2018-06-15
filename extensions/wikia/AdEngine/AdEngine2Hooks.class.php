@@ -82,7 +82,6 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverN1DecisionTreeClassifierRabbitCountries';
 		$vars[] = 'wgAdDriverN1LogisticRegressionRabbitCountries';
 		$vars[] = 'wgAdDriverNetzAthletenCountries';
-		$vars[] = 'wgAdDriverNewPrebidCountries';
 		$vars[] = 'wgAdDriverOpenXPrebidBidderCountries';
 		$vars[] = 'wgAdDriverOutstreamVideoFrequencyCapping';
 		$vars[] = 'wgAdDriverPlayAdsOnNextFVCountries';
@@ -142,22 +141,6 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverLABradorTestF2Countries';
 
 		return true;
-	}
-
-	/**
-	 * Get tracking opt-outs for Wikia modules
-	 *
-	 * @return array
-	 */
-	public static function getTrackingOptOutModules() {
-		// list of functions with tracking opted-out
-		return [
-			'a9' => true,
-			'gpt' => true,
-			'krux' => true,
-			'prebid' => true,
-			'netzathleten' => true
-		];
 	}
 
 	/**
@@ -252,7 +235,6 @@ class AdEngine2Hooks {
 		$scriptModules[] = 'wikia.log';
 		$scriptModules[] = 'wikia.querystring';
 		$scriptModules[] = 'wikia.tracker.stub';
-		$scriptModules[] = 'wikia.trackingOptOut';
 		$scriptModules[] = 'wikia.window';
 		return true;
 	}

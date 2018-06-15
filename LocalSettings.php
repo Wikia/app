@@ -31,7 +31,7 @@ $wgWikiaLocalSettingsPath = __FILE__;
 $wgWikiaDatacenter = getenv( 'WIKIA_DATACENTER' );
 
 if ( empty( $wgWikiaDatacenter ) ) {
-    throw new ConfigException( 'Datacenter not configured in /etc/environment.' ); 
+    throw new RuntimeException( 'Datacenter not configured in WIKIA_DATACENTER env variable.' );
 }
 
 /**
@@ -42,9 +42,17 @@ if ( empty( $wgWikiaDatacenter ) ) {
  */
 $wgWikiaEnvironment = getenv( 'WIKIA_ENVIRONMENT' );
 
+// CONFIG_REVISION: remove $wgWikiaDatacenter and $wgWikiaEnvironment from the global scope and only use it to load configuration
 if ( empty( $wgWikiaEnvironment ) ) {
-    throw new ConfigException( 'Environment not configured in /etc/environment.' ); 
+    throw new RuntimeException( 'Environment not configured in WIKIA_ENVIRONMENT env variable.' );
 }
+
+/**
+ * Temporary variable for Kubernetes migration
+ * If {@code true}, then logs will be sent to the configured socket address formatted as JSON, instead of using syslog.
+ */
+$wgLoggerLogToSocketOnly = $_ENV['LOG_SOCKET_ONLY'] ?? false;
+$wgLoggerSocketAddress = $_ENV['LOG_SOCKET_ADDRESS'] ?? 'tcp://127.0.0.1:9999';
 
 /**
  * Some environments share components (e.g. preview, verify, sandbox and stable

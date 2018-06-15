@@ -56,10 +56,7 @@ class InstantGlobalsModule extends ResourceLoaderModule {
 			}
 		);
 
-		$trackingOptOut = AdEngine2Hooks::getTrackingOptOutModules();
-
-		return sprintf( 'Wikia.InstantGlobals = %s; Wikia.TrackingOptOut = %s;',
-			json_encode( $variables ), json_encode( $trackingOptOut ) );
+		return sprintf( 'Wikia.InstantGlobals = %s;', json_encode( $variables ) );
 	}
 
 	/**

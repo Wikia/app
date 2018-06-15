@@ -129,6 +129,21 @@ class Client {
 		return $wgConsulDataCenters[$env];
 	}
 
+	/**
+	 * Return Consul base URL for a current environment
+	 *
+	 * @return string
+	 */
+	static function getConsulBaseUrl() : string {
+		return sprintf( 'http://consul.service.consul:8500' );
+	}
+
+	/**
+	 * Return Consul base URL for a specific data-center
+	 *
+	 * @param string $dc
+	 * @return string
+	 */
 	static function getConsulBaseUrlForDC( string $dc ) : string {
 		return sprintf( 'http://consul.service.%s.consul:8500', $dc );
 	}

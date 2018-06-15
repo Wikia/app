@@ -13,19 +13,6 @@ class InstantGlobalsApiController extends WikiaController {
 	}
 
 	/**
-	 * Get news&stories tracking opt-outs values
-	 *
-	 * @return array
-	 */
-	public function getNewsAndStoriesTrackingOptOut() {
-		$trackingOptOut = AdEngine2Hooks::getTrackingOptOutModules();
-
-		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
-		$this->response->setCacheValidity( WikiaResponse::CACHE_VERY_SHORT );
-		$this->response->setData( $trackingOptOut );
-	}
-
-	/**
 	 * Get news&stories variables values
 	 *
 	 * @return object key / value list variables
