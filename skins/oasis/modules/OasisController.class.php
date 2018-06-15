@@ -118,11 +118,17 @@ class OasisController extends WikiaController {
 		$parts = [];
 		if ( preg_match_all("/<script [^>]*src=\"([^\"]+)\"/", $htmlSnippet, $output_array) ) {
 			foreach($output_array[1] as $jsUrl) {
+				if (startsWith($jsUrl, '//')) {
+					$jsUrl = 'https:' . $jsUrl;
+				}
 				$parts[] = '<'.$jsUrl.'>; rel=preload; as=script'; // x-http2-push-only?
 			}
 		}
 		if ( preg_match_all("/<link rel=\"stylesheet\" href=\"([^\"]+)\"/", $htmlSnippet, $output_array) ) {
 			foreach($output_array[1] as $cssUrl) {
+				if (startsWith($cssUrl, '//')) {
+					$cssUrl = 'https:' . $cssUrl;
+				}
 				if (strpos($cssUrl, '/sasses/') === FALSE) {
 					$parts[] = '<'.$cssUrl.'>; rel=preload; as=style'; // x-http2-push-only?
 				}
