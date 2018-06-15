@@ -7,10 +7,11 @@ def sandbox = "sandbox-sus2"
 def kubectlImage = "artifactory.wikia-inc.com/ops/k8s-deployer:0.0.14"
 def nginxImage = "artifactory.wikia-inc.com/sus/mediawiki-sandbox-nginx:$sandbox"
 def mediawikiImage = "artifactory.wikia-inc.com/sus/mediawiki-sandbox-php:$sandbox"
-def appBranch = params.app_branch
-dev configBranch = params.config_branch
 
 node("docker-daemon") {
+    def appBranch = params.app_branch
+    dev configBranch = params.config_branch
+
     stage("Clone repositories") {
         sh('pwd')
 
