@@ -159,7 +159,7 @@ class ProfilerXhprof extends Profiler {
 			// @note: getFunctionStats() values already in ms
 			$stats['%real'] = $main['wt'] ? $stats['real'] / ( $main['wt'] / 1000 ) * 100 : 0;
 			$stats['%cpu'] = $main['cpu'] ? $stats['cpu'] / ( $main['cpu'] / 1000 ) * 100 : 0;
-			$stats['%memory'] = $main['mu'] ? $stats['memory'] / ( $main['mu'] / 1000 ) * 100 : 0;
+			$stats['%memory'] = isset( $main['mu'] ) ? $stats['memory'] / ( $main['mu'] / 1000 ) * 100 : 0;
 			$profile[] = $stats; // assume no section names collide with $metrics
 		}
 
