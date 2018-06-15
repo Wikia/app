@@ -1,0 +1,58 @@
+// TODO
+// 1. Sandbox name has to be moved to Jenkins Pipeline parameters
+// 2. We have to build proper yaml file for k8s
+// 3. Setup different ENV variables in Dockerfile-php?
+def sandbox = "sandbox-sus2"
+
+def kubectlImage = "artifactory.wikia-inc.com/ops/k8s-deployer:0.0.14"
+def nginxImage = "artifactory.wikia-inc.com/sus/mediawiki-sandbox-nginx:$sandbox"
+def mediawikiImage = "artifactory.wikia-inc.com/sus/mediawiki-sandbox-php:$sandbox"
+
+node("docker-daemon") {
+    stage("Clone repositories") {
+        sh('pwd')
+
+        dir("app") {
+            git url: "git@github.com:Wikia/app.git",
+                branch: params.app_branch,
+                credentialsId: "bd3cf712-39a7-4b16-979e-ff86208ab2ea"
+        }
+
+        dir("config") {
+            git url: "git@github.com:Wikia/config.git",
+                branch: params.config_branch,
+                credentialsId: "bd3cf712-39a7-4b16-979e-ff86208ab2ea"
+        }
+
+        sh("rm -rf cache && mkdir cache")
+    }
+
+    stage("Bump cachebuster and version") {
+        dir("app") {
+            sh('echo "<?php\n\\\$wgStyleVersion = "$(date +%s)";" > wgStyleVersion.php')
+            sh('echo "' + params.app_branch + '@$(git rev-parse --short HEAD)" > wikia.version.txt')
+        }
+
+        dir("config") {
+            sh('echo "' + params.config_branch + '@$(git rev-parse --short HEAD)" > wikia.version.txt')
+        }
+    }
+
+    stage("Build and push images") {
+        dir("app") {
+            sh("docker build  . -f docker/sandbox/Dockerfile-nginx -t $nginxImage")
+            sh("docker build .. -f docker/sandbox/Dockerfile-php -t $mediawikiImage")
+
+            sh("docker push $nginxImage")
+            sh("docker push $mediawikiImage")
+        }
+    }
+
+    withDockerContainer(kubectlImage) {
+        stage("Apply new k8s descriptor") {
+            sh """#!/bin/sh
+            kubectl --context kube-sjc-prod -n prod delete -f app/docker/sandbox/${sandbox}.yaml
+            kubectl --context kube-sjc-prod -n prod apply -f app/docker/sandbox/${sandbox}.yaml"""
+        }
+    }
+}
