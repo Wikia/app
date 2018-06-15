@@ -106,6 +106,25 @@ class OasisController extends WikiaController {
 		return $jsAtBottom;
 	}
 
+	private function preloadJs($htmlSnippet) {
+		if ( empty ( $_SERVER['HTTP_FASTLY_SSL'] ) ) {
+			return;
+		}
+		$request = $this->getContext()->getRequest();
+		if ( !$request->getBool( 'preloadJs' ) ) {
+			return;
+		}
+
+		if ( preg_match_all("/<script [^>]*src=\"([^\"]+)\"/", $htmlSnippet, $output_array) ) {
+			$parts = [];
+			foreach($output_array[1] as $jsUrl) {
+				$parts[] = '<'.$jsUrl.'>; rel=preload; as=script'; // x-http2-push-only?
+			}
+			$request->response()->header('link: ' . implode(', ', $parts));
+		}
+
+	}
+
 	public function executeIndex($params) {
 		global $wgOut, $wgUser, $wgOasisThemeSettings,
 		$wgWikiaMobileSmartBannerConfig;
@@ -232,6 +251,8 @@ class OasisController extends WikiaController {
 
 		$this->topScripts = $wgOut->topScripts;
 
+
+
 		if (is_array($jsPackages)) {
 			foreach ($jsPackages as $package) {
 				$wgOut->addScriptFile($this->wg->ExtensionsPath . '/' . $package);
@@ -240,6 +261,7 @@ class OasisController extends WikiaController {
 
 		// setup loading of JS/CSS
 		$this->loadJs();
+		$this->preloadJs($this->topScripts . $this->globalBlockingScripts);
 
 		// macbre: RT #25697 - hide Comscore & QuantServe tags on edit pages
 		if ( !in_array( $request->getVal( 'action' ), [ 'edit', 'submit' ] ) ) {
@@ -251,6 +273,7 @@ class OasisController extends WikiaController {
 			$this->krux = AnalyticsEngine::track('Krux', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->netzathleten = AnalyticsEngine::track('NetzAthleten', AnalyticsEngine::EVENT_PAGEVIEW);
 		}
+
 
 		wfProfileOut(__METHOD__);
 	}
