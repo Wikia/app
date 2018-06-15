@@ -6,8 +6,12 @@ ENV HOSTNAME_OVERRIDE="sandbox-sus2"
 
 ADD app /usr/wikia/slot1/current/src
 ADD config /usr/wikia/slot1/current/config
-ADD cache /usr/wikia/slot1/current/cache/messages
 
-RUN SERVER_ID=177 php /usr/wikia/slot1/current/src/maintenance/rebuildLocalisationCache.php --primary
+RUN mkdir -p /usr/wikia/slot1/current/cache/messages
+
+RUN SERVER_ID=177 php maintenance/rebuildLocalisationCache.php --primary
+
+RUN ls -la ../cache
+RUN ls -la ../cache/messages
 
 USER nobody
