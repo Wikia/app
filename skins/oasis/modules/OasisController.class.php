@@ -107,6 +107,7 @@ class OasisController extends WikiaController {
 	}
 
 	private function preloadAssets($htmlSnippet) {
+		$request = $this->getContext()->getRequest();
 
 		$parts = [];
 		if ( preg_match_all("/<script [^>]*src=\"([^\"]+)\"/", $htmlSnippet, $output_array) ) {
