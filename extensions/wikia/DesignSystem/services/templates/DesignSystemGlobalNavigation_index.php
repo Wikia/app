@@ -52,6 +52,13 @@
 					<?= $app->renderPartial( 'DesignSystemGlobalNavigationService', 'linkButton',
 						[ 'model' => $model['create_wiki'] ] ); ?>
 				</div>
+				<?= $app->renderView(
+					'DesignSystemGlobalNavigationService',
+					'partnerSlot',
+					[
+						'model' => $model['partner_slot'],
+					]
+				); ?>
 			</div>
 		</div>
 	</div>
