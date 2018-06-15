@@ -9,21 +9,18 @@ def nginxImage = "artifactory.wikia-inc.com/sus/mediawiki-sandbox-nginx:$sandbox
 def mediawikiImage = "artifactory.wikia-inc.com/sus/mediawiki-sandbox-php:$sandbox"
 
 node("docker-daemon") {
-    def appBranch = params.app_branch
-    dev configBranch = params.config_branch
-
     stage("Clone repositories") {
         sh('pwd')
 
         dir("app") {
             git url: "git@github.com:Wikia/app.git",
-                branch: $appBranch,
+                branch: params.app_branch,
                 credentialsId: "bd3cf712-39a7-4b16-979e-ff86208ab2ea"
         }
 
         dir("config") {
             git url: "git@github.com:Wikia/config.git",
-                branch: $configBranch,
+                branch: params.config_branch,
                 credentialsId: "bd3cf712-39a7-4b16-979e-ff86208ab2ea"
         }
 
@@ -33,11 +30,11 @@ node("docker-daemon") {
     stage("Bump cachebuster and version") {
         dir("app") {
             sh('echo "<?php\n\\\$wgStyleVersion = "$(date +%s)";" > wgStyleVersion.php')
-            sh('echo "$appBranch@$(git rev-parse --short HEAD)" > wikia.version.txt')
+            sh('echo "${params.app_branch}@$(git rev-parse --short HEAD)" > wikia.version.txt')
         }
 
         dir("config") {
-            sh('echo "$configBranch@$(git rev-parse --short HEAD)" > wikia.version.txt')
+            sh('echo "${params.config_branch}@$(git rev-parse --short HEAD)" > wikia.version.txt')
         }
     }
 
