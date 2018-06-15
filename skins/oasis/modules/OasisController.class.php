@@ -111,7 +111,7 @@ class OasisController extends WikiaController {
 			return;
 		}
 		$request = $this->getContext()->getRequest();
-		if ( !$request->getBool( 'preload' ) ) {
+		if ( !$request->getBool( 'preloadAssets' ) ) {
 			return;
 		}
 
