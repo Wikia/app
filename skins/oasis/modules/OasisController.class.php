@@ -106,19 +106,19 @@ class OasisController extends WikiaController {
 		return $jsAtBottom;
 	}
 
-	private function preloadAssets($htmlSnippet) {
+	private function pushAssets( $htmlSnippet ) {
 		$request = $this->getContext()->getRequest();
 
 		$parts = [];
-		if ( preg_match_all("/<script [^>]*src=\"([^\"]+)\"/", $htmlSnippet, $output_array) ) {
-			foreach($output_array[1] as $jsUrl) {
-				$parts[] = '<'.$jsUrl.'>; rel=preload; as=script'; // x-http2-push-only?
+		if ( preg_match_all( "/<script [^>]*src=\"([^\"]+)\"/", $htmlSnippet, $output_array ) ) {
+			foreach( $output_array[1] as $jsUrl ) {
+				$parts[] = '<'.$jsUrl.'>; rel=preload; as=script';
 			}
 		}
-		if ( preg_match_all("/<link rel=\"stylesheet\" href=\"([^\"]+)\"/", $htmlSnippet, $output_array) ) {
+		if ( preg_match_all( "/<link rel=\"stylesheet\" href=\"([^\"]+)\"/", $htmlSnippet, $output_array ) ) {
 			foreach($output_array[1] as $cssUrl) {
-				if (strpos($cssUrl, '/sasses/') === FALSE) {
-					$parts[] = '<'.$cssUrl.'>; rel=preload; as=style'; // x-http2-push-only?
+				if ( strpos( $cssUrl, '/sasses/' ) === FALSE ) {
+					$parts[] = '<'.$cssUrl.'>; rel=preload; as=style';
 				}
 			}
 		}
@@ -266,12 +266,11 @@ class OasisController extends WikiaController {
 		// setup loading of JS/CSS
 		$this->loadJs();
 
-		if ( !empty ( $_SERVER['HTTP_FASTLY_SSL'] ) && $request->getBool( 'preloadAssets' ) ) {
+		if ( !empty ( $_SERVER['HTTP_FASTLY_SSL'] ) && $request->getBool( 'pushAssets' ) ) {
 
-			$this->preloadAssets(htmlspecialchars_decode($this->topScripts . $this->globalBlockingScripts .
+			$this->pushAssets(htmlspecialchars_decode($this->topScripts . $this->globalBlockingScripts .
 				$this->cssLinks . $this->jsFiles));
 		}
-
 
 		// macbre: RT #25697 - hide Comscore & QuantServe tags on edit pages
 		if ( !in_array( $request->getVal( 'action' ), [ 'edit', 'submit' ] ) ) {
