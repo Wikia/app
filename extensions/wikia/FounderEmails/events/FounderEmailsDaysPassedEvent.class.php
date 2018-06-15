@@ -81,6 +81,11 @@ class FounderEmailsDaysPassedEvent extends FounderEmailsEvent {
 	public static function createWikiCompleted( $wikiParams ) {
 		global $wgFounderEmailsEvents, $wgCityId;
 
+		// we don't send these emails for fc-enabled communities
+		if ( $wikiParams['fc_community_id'] ) {
+			return true;
+		}
+
 		$founderEmailObj = FounderEmails::getInstance();
 
 		$wikiFounder = $founderEmailObj->getWikiFounder();

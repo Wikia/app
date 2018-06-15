@@ -208,6 +208,7 @@ class CreateNewWikiController extends WikiaController {
 		$this->checkWriteRequest();
 
 		$params = $this->getRequest()->getArray('data');
+		$fandomCreatorCommunityId = $this->getRequest()->getVal( 'fandomCreatorCommunityId' );
 
 		if ( empty($params) ||
 			empty($params['wName']) ||
@@ -282,7 +283,8 @@ class CreateNewWikiController extends WikiaController {
 
 		$task->call( 'create', $params['wName'], $params['wDomain'], $params['wLanguage'],
 			$params['wVertical'], $categories, $allAges, time(),
-			$this->getContext()->getRequest()->getIP() );
+			$this->getContext()->getRequest()->getIP(),
+			$fandomCreatorCommunityId );
 		$task_id = $task->setQueue( Wikia\Tasks\Queues\PriorityQueue::NAME )->queue();
 
 		// return ID of the created task ID, front-end code will poll its status

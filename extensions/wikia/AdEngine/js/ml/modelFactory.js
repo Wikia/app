@@ -1,9 +1,7 @@
 /*global define*/
 define('ext.wikia.adEngine.ml.modelFactory', [
-	'ext.wikia.adEngine.adContext',
-	'wikia.geo',
-	'wikia.instantGlobals'
-], function (adContext, geo, instantGlobals) {
+	'ext.wikia.adEngine.adContext'
+], function (adContext) {
 	'use strict';
 
 	var requiredData = [
@@ -41,8 +39,7 @@ define('ext.wikia.adEngine.ml.modelFactory', [
 
 			isEnabled: function () {
 				var isEnabled = modelData.enabled,
-					isGeoEnabled = !modelData.wgCountriesVariable ||
-					geo.isProperGeo(instantGlobals[modelData.wgCountriesVariable]);
+					isGeoEnabled = !modelData.wgCountriesVariable || adContext.isEnabled(modelData.wgCountriesVariable);
 
 				if (typeof modelData.enabled === 'function') {
 					isEnabled = modelData.enabled();

@@ -3,10 +3,9 @@ define('ext.wikia.adEngine.context.slotsContext', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.video.videoFrequencyMonitor',
 	'wikia.document',
-	'wikia.geo',
 	'wikia.instantGlobals',
 	'wikia.log'
-], function (adContext, videoFrequencyMonitor, doc, geo, instantGlobals, log) {
+], function (adContext, videoFrequencyMonitor, doc, instantGlobals, log) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.context.slotsContext',
@@ -38,11 +37,8 @@ define('ext.wikia.adEngine.context.slotsContext', [
 		setStatus('TOP_LEADERBOARD', true);
 		setStatus('TOP_RIGHT_BOXAD', true);
 		setStatus('BOTTOM_LEADERBOARD', context.targeting.skin === 'oasis');
-
 		setStatus('INCONTENT_BOXAD_1', !isHome);
-
-		setStatus('INVISIBLE_HIGH_IMPACT_2', !context.targeting.hasFeaturedVideo && geo.isProperGeo(instantGlobals.wgAdDriverHighImpact2SlotCountries));
-
+		setStatus('INVISIBLE_HIGH_IMPACT_2', context.slots.invisibleHighImpact2);
 		setStatus('INCONTENT_PLAYER', isIncontentEnabled);
 		setStatus('FEATURED', context.targeting.hasFeaturedVideo);
 
