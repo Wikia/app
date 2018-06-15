@@ -29,7 +29,7 @@ node("docker-daemon") {
 
     stage("Bump cachebuster") {
         dir("app") {
-            sh('echo "<?php\n\$wgStyleVersion = "$(date +%s)";" > wgStyleVersion.php')
+            sh('echo "<?php\n\\\$wgStyleVersion = "$(date +%s)";" > wgStyleVersion.php')
         }
     }
 
