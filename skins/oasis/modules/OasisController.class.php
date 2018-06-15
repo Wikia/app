@@ -107,28 +107,17 @@ class OasisController extends WikiaController {
 	}
 
 	private function preloadAssets($htmlSnippet) {
-		if ( empty ( $_SERVER['HTTP_FASTLY_SSL'] ) ) {
-			return;
-		}
-		$request = $this->getContext()->getRequest();
-		if ( !$request->getBool( 'preloadAssets' ) ) {
-			return;
-		}
 
 		$parts = [];
 		if ( preg_match_all("/<script [^>]*src=\"([^\"]+)\"/", $htmlSnippet, $output_array) ) {
 			foreach($output_array[1] as $jsUrl) {
-				if (!startsWith($jsUrl, '//')) {
-					$parts[] = '<'.$jsUrl.'>; rel=preload; as=script'; // x-http2-push-only?
-				}
+				$parts[] = '<'.$jsUrl.'>; rel=preload; as=script'; // x-http2-push-only?
 			}
 		}
 		if ( preg_match_all("/<link rel=\"stylesheet\" href=\"([^\"]+)\"/", $htmlSnippet, $output_array) ) {
 			foreach($output_array[1] as $cssUrl) {
-				if (!startsWith($cssUrl, '//')) {
-					if (strpos($cssUrl, '/sasses/') === FALSE) {
-						$parts[] = '<'.$cssUrl.'>; rel=preload; as=style'; // x-http2-push-only?
-					}
+				if (strpos($cssUrl, '/sasses/') === FALSE) {
+					$parts[] = '<'.$cssUrl.'>; rel=preload; as=style'; // x-http2-push-only?
 				}
 			}
 		}
@@ -275,7 +264,16 @@ class OasisController extends WikiaController {
 
 		// setup loading of JS/CSS
 		$this->loadJs();
-		$this->preloadAssets(htmlspecialchars_decode($this->topScripts . $this->globalBlockingScripts . $this->cssLinks . $this->jsFiles));
+
+		if ( !empty ( $_SERVER['HTTP_FASTLY_SSL'] ) && $request->getBool( 'preloadAssets' ) ) {
+
+			$this->topSctopScripts = str_replace('https://slot1.', 'https://muppet.', $this->topSctopScripts );
+			$this->globalBlockingScripts = str_replace('https://slot1.', 'https://muppet.', $this->globalBlockingScripts );
+			$this->cssLinks = str_replace('https://slot1.', 'https://muppet.', $this->cssLinks );
+			$this->jsFiles = str_replace('https://slot1.', 'https://muppet.', $this->jsFiles );
+
+			$this->preloadAssets(htmlspecialchars_decode($this->topScripts . $this->globalBlockingScripts . $this->cssLinks . $this->jsFiles));
+		}
 
 
 		// macbre: RT #25697 - hide Comscore & QuantServe tags on edit pages
