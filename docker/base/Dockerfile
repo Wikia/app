@@ -96,6 +96,7 @@ RUN docker-php-ext-install \
     # needed by multithread scripts
     pcntl
 
+# setup php.ini globally
 ADD ./php.ini /usr/local/etc/php/php.ini
 
 # expose volumes for app and config repositories clones
