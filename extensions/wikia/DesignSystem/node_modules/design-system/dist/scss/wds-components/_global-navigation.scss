@@ -21,6 +21,14 @@
 		@media #{$wds-breakpoint-xl-only} {
 			width: 1064px;
 		}
+
+		@media #{$wds-breakpoint-large-only} {
+			width: 1004px;
+		}
+
+		@media #{$wds-breakpoint-medium-only} {
+			width: 768px;
+		}
 	}
 
 	&__content-bar-left,
