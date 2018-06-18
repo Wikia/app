@@ -94,6 +94,9 @@ RUN docker-php-ext-install \
     # RecentChange::notifyRC2UDP uses socket_create
     sockets
 
+# setup php.ini globally
+ADD ./php.ini /usr/local/etc/php/php.ini
+
 # expose volumes for app and config repositories clones
 ENV WIKIA_DOCROOT=/usr/wikia/slot1/current/src
 ENV WIKIA_CONFIG_ROOT=/usr/wikia/slot1/current/config

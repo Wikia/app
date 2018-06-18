@@ -10,6 +10,9 @@ FROM artifactory.wikia-inc.com/sus/php-wikia-base:latest
 RUN pecl install uopz-5.0.2 xdebug-2.6.0 yaml-2.0.2 \
     && docker-php-ext-enable uopz xdebug yaml
 
+# overwrite production php.ini settings on dev environment
+ADD ./phpdev.ini /usr/local/etc/php/conf.d/
+
 ADD ./xdebug.ini /usr/local/etc/php/conf.d/
 
 # we no longer need root's super-power
