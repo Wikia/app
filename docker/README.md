@@ -15,7 +15,7 @@ docker build -f base/Dockerfile -t artifactory.wikia-inc.com/sus/php-wikia-base:
 docker build -f dev/Dockerfile -t php-wikia-dev ./dev
 
 # 3. you can now run eval.php (execute this from root directory of app repo clone)
-docker run -it --rm -h localhost -e 'SERVER_ID=165' -e 'WIKIA_DATACENTER=poz' -v "$PWD":/usr/wikia/slot1/current/src -v "$PWD/../config":/usr/wikia/slot1/current/config -v "$PWD/../cache":/usr/wikia/slot1/current/cache/messages artifactory.wikia-inc.com/sus/php-wikia-dev php maintenance/eval.php
+docker run -it --rm -h localhost -e 'SERVER_ID=165' -e 'WIKIA_ENVIRONMENT=dev' -e 'WIKIA_DATACENTER=poz' -v "$PWD":/usr/wikia/slot1/current/src -v "$PWD/../config":/usr/wikia/slot1/current/config -v "$PWD/../cache":/usr/wikia/slot1/current/cache/messages artifactory.wikia-inc.com/sus/php-wikia-dev php maintenance/eval.php
 
 # 4. in order to run service locally use docker-compose
 docker-compose -f ./dev/docker-compose.yml up
