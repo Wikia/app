@@ -18,18 +18,6 @@
 				</a>
 			</strong>
 		</li>
-		<li>
-			Wiki primary domain <strong>$wgServer</strong> is
-			<?php
-				$server = WikiFactory::getVarValueByName( "wgServer", $wiki->city_id );
-				echo empty( $server )
-					? "not set"
-					: "set to <strong><a href=\"{$server}\" target=\"_blank\">{$server}</a></strong>";
-			?>
-			<div>
-				Changing value of <strong>$wgServer</strong> will change domain in city_list as well!
-			</div>
-		</li>
 		<!-- s:enabling/disabling/redirecting/protecting -->
 		<li>
 			<form action="<?php echo $title->getFullUrl() ?>" method="post">

@@ -2,12 +2,14 @@
 define('ext.wikia.adEngine.lookup.prebid.adapters.appnexusAst', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.context.slotsContext',
-	'ext.wikia.aRecoveryEngine.instartLogic.recovery',
 	'wikia.location'
-], function (adContext, slotsContext, instartLogic, loc) {
+], function (adContext, slotsContext, loc) {
 	'use strict';
 
 	var bidderName = 'appnexusAst',
+		aliases = {
+			'appnexus': [bidderName]
+		},
 		debugPlacementId = '5768085',
 		slots = {
 			oasis: {
@@ -23,7 +25,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.appnexusAst', [
 		};
 
 	function isEnabled() {
-		return adContext.getContext().bidders.appnexusAst && !instartLogic.isBlocking();
+		return adContext.get('bidders.appnexusAst');
 	}
 
 	function prepareAdUnit(slotName, config) {
@@ -31,8 +33,12 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.appnexusAst', [
 
 		return {
 			code: slotName,
-			sizes: [ 640, 480 ],
-			mediaType: 'video-outstream',
+			mediaTypes: {
+				video: {
+					context: 'outstream',
+					playerSize: [640, 480]
+				}
+			},
 			bids: [
 				{
 					bidder: bidderName,
@@ -40,7 +46,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.appnexusAst', [
 						placementId: isDebugMode ? debugPlacementId : config.placementId,
 						video: {
 							skippable: false,
-							playback_method: [ 'auto_play_sound_off' ]
+							playback_method: ['auto_play_sound_off']
 						}
 					}
 				}
@@ -56,9 +62,14 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.appnexusAst', [
 		return bidderName;
 	}
 
+	function getAliases() {
+		return aliases;
+	}
+
 	return {
 		isEnabled: isEnabled,
 		getName: getName,
+		getAliases: getAliases,
 		getSlots: getSlots,
 		prepareAdUnit: prepareAdUnit
 	};

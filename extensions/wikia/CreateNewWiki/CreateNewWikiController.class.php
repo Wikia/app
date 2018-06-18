@@ -15,11 +15,13 @@ class CreateNewWikiController extends WikiaController {
 	const ERROR_CODE_FIELD         = 'errCode';
 	const ERROR_MESSAGE_FIELD      = 'errMessage';
 	const STATUS_OK                = 'ok';
+	const STATUS_NOT_FOUND         = 'taskNotFound';
+	const STATUS_IN_THE_QUEUE      = 'waitingForTheQueue';
+	const STATUS_IN_PROGRESS       = 'inProgress';
 	const SITE_NAME_FIELD          = 'siteName';
 	const CITY_ID_FIELD            = 'cityId';
 	const CHECK_RESULT_FIELD       = 'res';
 	const DAILY_USER_LIMIT         = 2;
-	const WF_WDAC_REVIEW_FLAG_NAME = 'wgWikiDirectedAtChildrenByFounder';
 
 	public function index() {
 		global $wgSuppressCommunityHeader, $wgSuppressPageHeader, $wgSuppressFooter, $wgSuppressToolbar, $wgRequest, $wgUser, $wgWikiaBaseDomain;
@@ -200,14 +202,13 @@ class CreateNewWikiController extends WikiaController {
 	 * @throws BadRequestException
 	 */
 	public function CreateWiki() {
+		global $wgUser;
+
 		wfProfileIn(__METHOD__);
 		$this->checkWriteRequest();
 
-		$wgRequest = $this->app->getGlobal('wgRequest'); /* @var $wgRequest WebRequest */
-		$wgDevelDomains = $this->app->getGlobal('wgDevelDomains');
-		$wgUser = $this->app->getGlobal('wgUser'); /* @var $wgUser User */
-
-		$params = $wgRequest->getArray('data');
+		$params = $this->getRequest()->getArray('data');
+		$fandomCreatorCommunityId = $this->getRequest()->getVal( 'fandomCreatorCommunityId' );
 
 		if ( empty($params) ||
 			empty($params['wName']) ||
@@ -274,55 +275,96 @@ class CreateNewWikiController extends WikiaController {
 			return;
 		}
 
+		// SUS-4383 | use an offline Celery task to create a wiki
+		$task = CreateWikiTask::newLocalTask();
+
 		$categories = isset($params['wCategories']) ? $params['wCategories'] : array();
+		$allAges = isset($params['wAllAges']) && !empty( $params['wAllAges'] );
 
-		$createWiki = new CreateWiki($params['wName'], $params['wDomain'], $params['wLanguage'], $params['wVertical'], $categories);
+		$task->call( 'create', $params['wName'], $params['wDomain'], $params['wLanguage'],
+			$params['wVertical'], $categories, $allAges, time(),
+			$this->getContext()->getRequest()->getIP(),
+			$fandomCreatorCommunityId );
+		$task_id = $task->setQueue( Wikia\Tasks\Queues\PriorityQueue::NAME )->queue();
 
-		try {
-			$createWiki->create();
-		}
-		catch(Exception $ex) {
-			$error_code = $ex->getCode();
-			$this->error(
-				__METHOD__ . ": backend failed to process the request: " . $ex->getMessage(),
-				[
-					'code' => $error_code,
-					'params' => $params,
-					'exception' => $ex
-				]
-			);
-			$this->response->setCode( 500 );
-			$this->response->setVal( self::STATUS_FIELD, self::STATUS_BACKEND_ERROR );
-			$this->response->setVal( self::STATUS_MSG_FIELD, wfMessage( 'cnw-error-general' )->parse() );
-			$this->response->setVal( self::STATUS_HEADER_FIELD, wfMessage( 'cnw-error-general-heading' )->escaped() );
-			$this->response->setVal( self::ERROR_CLASS_FIELD, get_class( $ex ) );
-			$this->response->setVal( self::ERROR_CODE_FIELD, $ex->getCode() );
-			$this->response->setVal( self::ERROR_MESSAGE_FIELD, $ex->getMessage() );
-			wfProfileOut( __METHOD__);
+		// return ID of the created task ID, front-end code will poll its status
+		// e.g {"task_id":"mw-04CF2876-2176-4036-96E5-B6378DB1AC8E"}
+		$this->response->setCode( 201 ); // HTTP 201 Created
+		$this->response->setVal( 'task_id', $task_id );
+
+		// return timestamp, so that front-end can send it back to the backend
+		// we'll compare it with the current timestamp in CheckStatus method
+		$this->response->setVal( 'timestamp', time() );
+
+		wfProfileOut(__METHOD__);
+	}
+
+	/**
+	 * This AJAX entry point is used to poll for wiki creation status
+	 *
+	 * @see SUS-4383
+	 */
+	public function CheckStatus() {
+		global $wgDevelDomains;
+
+		$task_id = (string) $this->getRequest()->getVal('task_id');
+		$task_details = CreateWikiTask::getCreationLogEntry( $task_id );
+
+		// do not cache, we always want to hit the backend as the response can change anytime
+		$this->response->setCachePolicy( WikiaResponse::CACHE_PRIVATE );
+		$this->response->setCacheValidity( WikiaResponse::CACHE_DISABLED );
+		$this->response->setFormat( 'json' );
+
+		// compare the timestamp of when the creation started with the current one
+		$timestamp = (int) $this->getRequest()->getVal('timestamp');
+		$time_diff = time() - $timestamp;
+
+		// given task ID not found in the creation log (maybe not yet?)
+		if ( empty( $task_details ) ) {
+			if ( $time_diff > CreateWikiTask::TASK_CREATION_DELAY_THRESHOLD ) {
+				// we waited enough for the task to start, fail after a minute
+				$this->response->setCode( 404 );
+				$this->response->setVal( self::STATUS_FIELD, self::STATUS_NOT_FOUND );
+				$this->response->setVal( 'time_diff', $time_diff );
+			}
+			else {
+				// the task entry in simply just not yet there
+				$this->response->setVal( self::STATUS_FIELD, self::STATUS_IN_THE_QUEUE );
+			}
 			return;
 		}
 
-		$cityId = $createWiki->getCityId();
+		$this->response->setVal( self::CITY_ID_FIELD, (int) $task_details->city_id );
 
-		if ( isset($params['wAllAges']) && !empty( $params['wAllAges'] ) ) {
-			WikiFactory::setVarByName( self::WF_WDAC_REVIEW_FLAG_NAME, $cityId, true, __METHOD__ );
+		// not set creation_ended value means that we're still creating a wiki
+		if ( empty( $task_details->creation_ended ) ) {
+			$this->response->setVal( self::STATUS_FIELD, self::STATUS_IN_PROGRESS );
 		}
+		else {
+			// we're done, but did we succeed?
+			$completed = (int) $task_details->completed;
 
-		$this->response->setVal( self::STATUS_FIELD, self::STATUS_OK );
-		$this->response->setVal( self::SITE_NAME_FIELD, $createWiki->getSiteName() );
-		$this->response->setVal( self::CITY_ID_FIELD, $cityId );
-		$finishCreateTitle = GlobalTitle::newFromText( "FinishCreate", NS_SPECIAL, $cityId );
+			if ( $completed === 1 ) {
+				$this->response->setVal( self::STATUS_FIELD, self::STATUS_OK );
+				$finishCreateTitle = GlobalTitle::newFromText( "FinishCreate", NS_SPECIAL, $task_details->city_id );
 
-		$fullURL = $finishCreateTitle->getFullURL( [ 'editToken' => $wgUser->getEditToken() ] );
-		$finishCreateUrl = empty( $wgDevelDomains ) ? $fullURL : str_replace( '.wikia.com', '.'.$wgDevelDomains[0], $fullURL );
-		$this->response->setVal( 'finishCreateUrl',  $finishCreateUrl );
-
-		$this->info(__METHOD__ . ': completed', [
-			'city_id' => $cityId,
-			'params' => $params,
-		]);
-
-		wfProfileOut(__METHOD__);
+				$fullURL = $finishCreateTitle->getFullURL( [
+					'editToken' => $this->getContext()->getUser()->getEditToken()
+				] );
+				$finishCreateUrl = empty( $wgDevelDomains ) ? $fullURL : str_replace( '.wikia.com', '.'.$wgDevelDomains[0], $fullURL );
+				$this->response->setVal( 'finishCreateUrl',  $finishCreateUrl );
+			}
+			else {
+				// oh my, an error...
+				$this->response->setCode( 500 );
+				$this->response->setVal( self::STATUS_FIELD, self::STATUS_BACKEND_ERROR );
+				$this->response->setVal( self::STATUS_MSG_FIELD, wfMessage( 'cnw-error-general' )->parse() );
+				$this->response->setVal( self::STATUS_HEADER_FIELD, wfMessage( 'cnw-error-general-heading' )->escaped() );
+				$this->response->setVal( self::ERROR_CLASS_FIELD, CreateWikiException::class );
+				$this->response->setVal( self::ERROR_CODE_FIELD, 0 );
+				$this->response->setVal( self::ERROR_MESSAGE_FIELD, $task_details->exception_message );
+			}
+		}
 	}
 
 	/**

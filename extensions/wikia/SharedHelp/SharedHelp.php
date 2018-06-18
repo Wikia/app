@@ -159,19 +159,10 @@ function SharedHelpHook( OutputPage $out, string &$text ): bool {
 			SHAREDHELP_CACHE_VERSION
 		);
 		$sharedArticle = $wgMemc->get($sharedArticleKey);
-		$sharedServer = WikiFactory::getVarValueByName( 'wgServer', $wgHelpWikiId );
-		$sharedScript = WikiFactory::getVarValueByName( 'wgScript', $wgHelpWikiId );
-		$sharedArticlePath = WikiFactory::getVarValueByName( 'wgArticlePath', $wgHelpWikiId );
-
-		// get defaults
-		// in case anybody's curious: no, we can't use $wgScript cause that may be overridden locally :/
-		// @TODO pull this from somewhere instead of hardcoding
-		if ( empty( $sharedArticlePath ) ) {
-			$sharedArticlePath = '/wiki/$1';
-		}
-		if ( empty( $sharedScript ) ) {
-			$sharedScript = '/index.php';
-		}
+		$cityUrl = WikiFactory::cityIDtoUrl( $wgHelpWikiId );
+		$sharedServer = WikiFactory::cityUrlToDomain( $cityUrl );
+		$sharedScript = WikiFactory::cityUrlToWgScript( $cityUrl );
+		$sharedArticlePath = WikiFactory::cityUrlToArticlePath( $cityUrl, $wgHelpWikiId );
 
 		$sharedArticlePathClean = str_replace('$1', '', $sharedArticlePath);
 		$localArticlePathClean = str_replace('$1', '', $wgArticlePath);
@@ -513,9 +504,9 @@ function SharedHelpCanonicalHook( &$url ) {
 
 	if ( $wgTitle instanceof Title && $wgTitle->getNamespace() == NS_HELP && !$wgTitle->exists() ) {
 
-		$sharedServer = WikiFactory::getVarValueByName( 'wgServer', $wgHelpWikiId );
+		$sharedServer = WikiFactory::cityIDtoDomain( $wgHelpWikiId );
 		$titleUrl = $wgTitle->getLinkURL();
-		$url = $sharedServer . $titleUrl;
+		$url = $sharedServer . $titleUrl;  // language path should be a part of $titleUrl
 	}
 
 	return true;

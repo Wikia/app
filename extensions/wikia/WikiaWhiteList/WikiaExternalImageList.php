@@ -31,6 +31,12 @@ function wfParserExternalImagesWhiteList( &$url ) {
 	$res = wfExtImageLinksToImage($url);
 	$is_allowed = (empty($res)) ? false : ($res == $url) ? true : false;
 
+	// SUS-1805 | collect usage statistics
+	\Wikia\Logger\WikiaLogger::instance()->info( __FUNCTION__, [
+		'url' => $url,
+		'is_allowed' => $is_allowed
+	] );
+
 	wfProfileOut( __METHOD__ );
 	return $is_allowed;
 }
@@ -98,7 +104,7 @@ function wfExtImagesWhiteListParse($text) {
 }
 
 function wfExtImageLinksToImage(&$str) {
-	return preg_replace_callback('#https?://(.*?).(jpg|jpeg|png|gif)#i', create_function('$matches', 'return wfExtImagesWhiteListParse($matches[0]);'), $str);
+	return preg_replace_callback('#https?://(.*?).(jpg|jpeg|png|gif)#i', function ( $matches ) { return wfExtImagesWhiteListParse($matches[0]); }, $str);
 }
 
 #----

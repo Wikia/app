@@ -5,8 +5,10 @@ define('ext.wikia.adEngine.lookup.a9', [
 	'ext.wikia.adEngine.lookup.lookupFactory',
 	'wikia.document',
 	'wikia.log',
+	'wikia.trackingOptIn',
+	'wikia.cmp',
 	'wikia.window'
-], function (adContext, slotsContext, factory, doc, log, win) {
+], function (adContext, slotsContext, factory, doc, log, trackingOptIn, cmp, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.lookup.a9',
@@ -48,43 +50,58 @@ define('ext.wikia.adEngine.lookup.a9', [
 	function call(skin, onResponse) {
 		var a9Slots;
 
-		if (!loaded) {
-			log(['call - load', skin], 'debug', logGroup);
+		trackingOptIn.pushToUserConsentQueue(function (optIn) {
+			log('User opt-' + (optIn ? 'in' : 'out') + ' for A9', log.levels.info, logGroup);
 
-			insertScript();
-			configureApstag();
+			// force disabled if opt out, remove after CMP tests
+			if (!optIn) {
+				return;
+			}
 
-			win.apstag.init({
-				pubID: amazonId,
-				videoAdServer: 'DFP'
+			if (!loaded) {
+				log(['call - load', skin], 'debug', logGroup);
+
+				insertScript();
+				configureApstag();
+
+				win.apstag.init({
+					pubID: amazonId,
+					videoAdServer: 'DFP',
+					// remove condition after CMP tests
+					gdpr: adContext.get('opts.isCMPEnabled') ? {
+						enabled: cmp.getGdprApplies(),
+						consent: cmp.getConsentString(optIn),
+						cmpTimeout: 2000
+					} : undefined
+				});
+
+				loaded = true;
+			}
+
+			bids = {};
+			priceMap = {};
+
+			slots = slotsContext.filterSlotMap(config[skin]);
+			a9Slots = Object.keys(slots).map(createSlotDefinition);
+
+			if (isVideoBidderEnabled()) {
+				a9Slots = a9Slots.concat(VIDEO_SLOTS.map(createVideoSlotDefinition));
+			}
+
+			log(['call - fetchBids', a9Slots], 'debug', logGroup);
+
+			win.apstag.fetchBids({
+				slots: a9Slots,
+				timeout: 2000
+			}, function (currentBids) {
+				log(['call - fetchBids response', currentBids], 'debug', logGroup);
+
+				currentBids.forEach(function (bid) {
+					bids[bid.slotID] = bid;
+				});
+
+				onResponse();
 			});
-
-			loaded = true;
-		}
-
-		bids = {};
-		priceMap = {};
-
-		slots = slotsContext.filterSlotMap(config[skin]);
-		a9Slots = Object.keys(slots).map(createSlotDefinition);
-
-		if (isVideoBidderEnabled()) {
-			a9Slots = a9Slots.concat(VIDEO_SLOTS.map(createVideoSlotDefinition));
-		}
-
-		log(['call - fetchBids', a9Slots], 'debug', logGroup);
-
-		win.apstag.fetchBids({
-			slots: a9Slots,
-			timeout: 2000
-		}, function (currentBids) {
-			log(['call - fetchBids response', currentBids], 'debug', logGroup);
-
-			currentBids.forEach(function (bid) {
-				bids[bid.slotID] = bid;
-			});
-
-			onResponse();
 		});
 	}
 

@@ -1,4 +1,4 @@
-/*global define, require*/
+/*global define*/
 /*jshint maxlen:125, camelcase:false, maxdepth:7*/
 define('ext.wikia.adEngine.provider.gpt.googleTag', [
 	'ext.wikia.adEngine.bridge',
@@ -8,8 +8,9 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 	'ext.wikia.adEngine.slot.service.srcProvider',
 	'wikia.document',
 	'wikia.log',
+	'wikia.trackingOptIn',
 	'wikia.window'
-], function (bridge, googleSlots, adSlot, slotRegistry, srcProvider, doc, log, win) {
+], function (bridge, googleSlots, adSlot, slotRegistry, srcProvider, doc, log, trackingOptIn, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.gpt.googleTag',
@@ -21,7 +22,7 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 	win.googletag.cmd = win.googletag.cmd || [];
 
 	function collapseIfSlotHasViewportConflicts(slotName) {
-		var slot = bridge.slotService.getBySlotName(slotName);
+		var slot = bridge.slotService.get(slotName);
 
 		if (bridge.slotService.hasViewportConflict(slot)) {
 			slot.collapse({ adType: 'viewport-conflict' });
@@ -50,6 +51,10 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 		win.googletag.cmd.push(callback);
 	}
 
+	function setupNonPersonalizedAds() {
+		win.googletag.pubads().setRequestNonPersonalizedAds(trackingOptIn.isOptedIn() ? 0 : 1);
+	}
+
 	function enableServices() {
 		log(['enableServices', 'push'], log.levels.info, logGroup);
 		push(function () {
@@ -62,6 +67,7 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 			win.googletag.pubads().addEventListener('impressionViewable', function (event) {
 				dispatchEvent(event, 'viewed');
 			});
+			setupNonPersonalizedAds();
 
 			win.googletag.enableServices();
 
@@ -150,7 +156,8 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 	}
 
 	function addSlot(adElement) {
-		var sizes = adElement.getSizes(),
+		var defaultSizes = adElement.getDefaultSizes(),
+			sizeMap = adElement.getSizes(),
 			slotId = adElement.getId(),
 			slot = googleSlots.getSlot(slotId);
 
@@ -164,9 +171,13 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 		}
 
 		if (!slot) {
-			slot = sizes ?
-				win.googletag.defineSlot(adElement.getSlotPath(), sizes, slotId) :
+			slot = (defaultSizes || !sizeMap.isEmpty()) ?
+				win.googletag.defineSlot(adElement.getSlotPath(), defaultSizes, slotId) :
 				win.googletag.defineOutOfPageSlot(adElement.getSlotPath(), slotId);
+
+			if (!sizeMap.isEmpty()) {
+				slot.defineSizeMapping(sizeMap.build());
+			}
 
 			slot.addService(win.googletag.pubads());
 			win.googletag.display(slotId);
@@ -189,7 +200,7 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 
 		onAdLoadCallback(element.getId(), gptEvent, iframe);
 	}
-	
+
 	function isGoogleTagLoaded() {
 		return typeof win.googletag.pubads === 'function';
 	}
@@ -202,7 +213,7 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 		if (!isInitialized()) {
 			return;
 		}
-		
+
 		if (!isGoogleTagLoaded()) {
 			log(['destroySlots', 'pubads not yet available', 'resetting cmd'], log.levels.info, logGroup);
 			win.googletag.cmd = [];
@@ -264,6 +275,7 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 		push: push,
 		refreshSlot: refreshSlot,
 		setPageLevelParams: setPageLevelParams,
+		setupNonPersonalizedAds: setupNonPersonalizedAds,
 		updateCorrelator: updateCorrelator
 	};
 });

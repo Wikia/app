@@ -141,12 +141,13 @@ class CloseMyAccountHelper {
 		$oldUser = $wgUser;
 		$wgUser = $user;
 
-		Track::event( 'trackingevent', [
+		// FIXME SUS-4812
+		/*Track::event( 'trackingevent', [
 			'ga_action' => 'submit',
 			'ga_category' => 'closemyaccount',
 			'ga_label' => $action,
 			'beacon' => !empty( $wgDevelEnvironment ) ? 'ThisIsFake' : wfGetBeaconId(),
-		] );
+		] );*/
 
 		$wgUser = $oldUser;
 	}

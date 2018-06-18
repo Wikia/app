@@ -34,13 +34,6 @@ class WallTabsRenderer extends ContextSource {
 
 		$contentActions['namespaces']['user_talk']['text'] = $this->msg( 'wall-message-wall' )->text();
 		$contentActions['namespaces']['user_talk']['href'] = $userWallTitle->getLocalUrl();
-
-		// BugId:23000 Remove the class="new" to prevent the link from being displayed as a redlink in monobook.
-		$tabClasses = (array) $contentActions['namespaces']['user_talk']['class'];
-		$contentActions['namespaces']['user_talk']['class'] =
-			array_filter( $tabClasses, function ( $class ) {
-				return $class !== 'new';
-			} );
 	}
 
 	public function renderWallContentActions( array &$contentActions ) {

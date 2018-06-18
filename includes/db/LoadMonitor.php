@@ -45,15 +45,6 @@ interface LoadMonitor {
 	 */
 	function postConnectionBackoff( $conn, $threshold );
 
-	/**
-	 * Return an estimate of replication lag for each server
-	 *
-	 * @param $serverIndexes
-	 * @param $wiki
-	 *
-	 * @return array
-	 */
-	function getLagTimes( $serverIndexes, $wiki );
 }
 
 class LoadMonitor_Null implements LoadMonitor {
@@ -66,14 +57,6 @@ class LoadMonitor_Null implements LoadMonitor {
 	function postConnectionBackoff( $conn, $threshold ) {
 	}
 
-	/**
-	 * @param $serverIndexes
-	 * @param $wiki
-	 * @return array
-	 */
-	function getLagTimes( $serverIndexes, $wiki ) {
-		return array_fill_keys( $serverIndexes, 0 );
-	}
 }
 
 /**
@@ -105,68 +88,7 @@ class LoadMonitor_MySQL implements LoadMonitor {
 	}
 
 	/**
-	 * @param $serverIndexes
-	 * @param $wiki
-	 * @return array
-	 */
-	function getLagTimes( $serverIndexes, $wiki ) {
-		if ( count( $serverIndexes ) == 1 && reset( $serverIndexes ) == 0 ) {
-			// Single server only, just return zero without caching
-			return array( 0 => 0 );
-		}
-
-		wfProfileIn( __METHOD__ );
-		$expiry = 5;
-		$requestRate = 10;
-
-		global $wgMemc;
-		if ( empty( $wgMemc ) )
-			$wgMemc = wfGetMainCache();
-
-		$masterName = $this->parent->getServerName( 0 );
-		$memcKey = wfSharedMemcKey( 'db', 'lag_times', $masterName ); // Wikia change - PLATFORM-983
-		$times = $wgMemc->get( $memcKey );
-		if ( $times ) {
-			# Randomly recache with probability rising over $expiry
-			$elapsed = time() - $times['timestamp'];
-			$chance = max( 0, ( $expiry - $elapsed ) * $requestRate );
-			if ( mt_rand( 0, $chance ) != 0 ) {
-				unset( $times['timestamp'] );
-				wfProfileOut( __METHOD__ );
-				return $times;
-			}
-			wfIncrStats( 'lag_cache_miss_expired' );
-		} else {
-			wfIncrStats( 'lag_cache_miss_absent' );
-		}
-
-		# Cache key missing or expired
-
-		$times = array();
-		foreach ( $serverIndexes as $i ) {
-			if ($i == 0) { # Master
-				$times[$i] = 0;
-			} elseif ( false !== ( $conn = $this->parent->getAnyOpenConnection( $i ) ) ) {
-				$times[$i] = $conn->getLag();
-			} elseif ( false !== ( $conn = $this->parent->openConnection( $i, $wiki ) ) ) {
-				$times[$i] = $conn->getLag();
-			}
-		}
-
-		# Add a timestamp key so we know when it was cached
-		$times['timestamp'] = time();
-		$wgMemc->set( $memcKey, $times, $expiry );
-
-		# But don't give the timestamp to the caller
-		unset($times['timestamp']);
-		$lagTimes = $times;
-
-		wfProfileOut( __METHOD__ );
-		return $lagTimes;
-	}
-
-	/**
-	 * @param $conn DatabaseBase
+	 * @param $conn DatabaseMysqlBase
 	 * @param $threshold
 	 * @return int
 	 */

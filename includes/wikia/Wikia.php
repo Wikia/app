@@ -130,8 +130,8 @@ class Wikia {
 		// Do NOT set $wgDbname here.  The wfGetDB method will no longer do
 		// what you think it should since it pulls from a LoadBalance cache
 		// that likely already has cached DB handles for the previous value
-		$dbName = WikiFactory::IDtoDB( $wikiId );
-		$wg->Server = trim( WikiFactory::DBtoUrl( $dbName ), '/' );
+		// TBD: do we need to set wgScript, wgScriptPath and wgArticlePath as well?
+		$wg->Server = WikiFactory::cityIDtoDomain( $wikiId );
 
 		if ( !empty( $wg->DevelEnvironment ) ) {
 			$wg->Server = WikiFactory::getLocalEnvURL( $wg->Server );
@@ -466,7 +466,7 @@ class Wikia {
 			$staffUser = User::newFromName( $staffMap[$langCode][$key] );
 		} else {
 			// Fallback to robot when there is no explicit welcoming user set (unsupported language)
-			$staffUser = User::newFromName( 'Fandom' );
+			$staffUser = User::newFromName( self::USER );
 		}
 
 		$staffUser->load();
@@ -890,7 +890,6 @@ class Wikia {
 					),
 					__METHOD__
 				);
-				Wikia::log( __METHOD__, "save", "id: {$page_id}, key: {$sPropName}, value: {$sPropValue}" );
 			}
 			$dbw->commit(); #--- for ajax
 		}
@@ -1250,12 +1249,12 @@ class Wikia {
 	 * @return bool true, it's a hook
 	 */
 	static public function outputHTTPSHeaders( WebRequest $request ) {
-		global $wgCSPLoggerUrl;
 		if ( WebRequest::detectProtocol() === 'https' ) {
+			$urlProvider = new \Wikia\Service\Gateway\KubernetesExternalUrlProvider();
 			$request->response()->header("Content-Security-Policy-Report-Only: " .
 				"default-src https: 'self' data: blob:; " .
 				"script-src https: 'self' data: 'unsafe-inline' 'unsafe-eval' blob:; " .
-				"style-src https: 'self' 'unsafe-inline' blob:; report-uri {$wgCSPLoggerUrl}" );
+				"style-src https: 'self' 'unsafe-inline' blob:; report-uri " . $urlProvider->getUrl( 'csp-logger' ) . '/csp' );
 		}
 		return true;
 	}
@@ -1410,8 +1409,35 @@ class Wikia {
 		return true;
 	}
 
+
+	private static function verifyImageSize( $imageInfo) {
+		global $wgMaxImageArea;
+
+		$isValid = true;
+		$error = null;
+
+		$imgWidth = $imageInfo[0];
+		$imgHeight = $imageInfo[1];
+		$imageResolution = $imgHeight * $imgWidth;
+
+		if ( $imageResolution > $wgMaxImageArea ) {
+			$isValid = false;
+			$error = [
+				'file-resolution-exceeded',
+				round( $imageResolution / 1000000, 2 ),
+				round( $wgMaxImageArea / 1000000, 2 ),
+				$imageInfo['mime'],
+			];
+		}
+
+		return [
+			'isValid' => $isValid,
+			'error' => $error,
+		];
+	}
+
 	/**
-	 * Verifies image being uploaded whether it's not corrupted
+	 * Verifies image being uploaded whether it's not corrupted and the image size is smaller than $wgMaxImageArea
 	 *
 	 * @author macbre
 	 *
@@ -1432,32 +1458,32 @@ class Wikia {
 			return true;
 		}
 
-		// validate an image using ImageMagick
+		// SUS-4525 | validate an image using GD library (this is NOT a security check!)
 		$imageFile = $upload->getTempPath();
 
-		$output = wfShellExec("identify -regard-warnings {$imageFile} 2>&1", $retVal);
-		wfDebug("Exit code #{$retVal}\n{$output}\n");
+		// avoid emitting "Notice: getimagesize(): Read error!"
+		$imageInfo = @getimagesize($imageFile);
 
-		/**
-		 * Let's ignore warnings reported by "identify" binary and focus on errors, examples:
-		 *
-		 * identify: Ignoring attempt to set negative chromaticity value `/tmp/Gree.png' @ warning/png.c/MagickPNGWarningHandler/1671.
-		 * identify.im6: no decode delegate for this image format `/tmp/UploadTestExwn06' @ error/constitute.c/ReadImage/544.
-		 *
-		 * @see SUS-1625
-		 */
-		$isValid = strpos( $output, ' @ error/' ) === false; /* no errors reported */
+		// MIME type should match
+		$isValidMimeType = is_array( $imageInfo ) && ( $imageInfo['mime'] === $mime );
+		$isValidImageSize = true;
 
-		if (!$isValid) {
+		if (!$isValidMimeType) {
 			Wikia\Logger\WikiaLogger::instance()->warning( __METHOD__ . ' failed', [
-				'output' => rtrim($output),
+				'output' => json_encode($imageInfo),
+				'mime_type' => $mime,
 			] );
 
 			// pass an error to UploadBase class
 			$error = array('verification-error');
+		} else {
+			$imageSizeVerification = self::verifyImageSize( $imageInfo );
+			if ( !$imageSizeVerification['isValid'] ) {
+				$error = $imageSizeVerification['error'];
+			}
 		}
 
-		return $isValid;
+		return $isValidMimeType && $isValidImageSize;
 	}
 
 	/**

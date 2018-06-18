@@ -83,6 +83,10 @@ class VideoEmbedTool {
 			$awf = ApiWrapperFactory::getInstance(); /* @var $awf ApiWrapperFactory */
 			$apiwrapper = $awf->getApiWrapper( $url );
 		} catch ( Exception $e ) {
+			\Wikia\Logger\WikiaLogger::instance()->error( __METHOD__, [
+				'exception' => $e,
+				'video_url' => $url,
+			] );
 			$nonPremiumException = $e;
 		}
 
@@ -229,6 +233,16 @@ class VideoEmbedTool {
 			$oTitle = null;
 			$status = $this->uploadVideoAsFile( $provider, $id, $nameSanitized, $oTitle );
 			if ( !$status->ok ) {
+				\Wikia\Logger\WikiaLogger::instance()->error(
+					__METHOD__ . '::thumbnail-upload-failed',
+					[
+						'name_sanitized' => $nameSanitized,
+						'video_provider' => $provider,
+						'video_id' => $id,
+						'status' => $status,
+					]
+				);
+
 				header( 'X-screen-type: error' );
 				return wfMessage( 'wva-thumbnail-upload-failed' )->plain();
 			}

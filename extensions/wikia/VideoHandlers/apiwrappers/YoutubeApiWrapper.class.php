@@ -14,9 +14,6 @@ class YoutubeApiWrapper extends ApiWrapper {
 	}
 
 	public static function newFromUrl( $url ) {
-
-		wfProfileIn( __METHOD__ );
-
 		$aData = array();
 
 		$id = '';
@@ -39,11 +36,8 @@ class YoutubeApiWrapper extends ApiWrapper {
 		}
 
 		if ( $id ) {
-			wfProfileOut( __METHOD__ );
 			return new static( $id );
 		}
-
-		wfProfileOut( __METHOD__ );
 		return null;
 	}
 
@@ -58,24 +52,21 @@ class YoutubeApiWrapper extends ApiWrapper {
 		return '';
 	}
 
-	public function getThumbnailUrl() {
-		wfProfileIn( __METHOD__ );
-
+	/**
+	 * @return string
+	 * @throws Exception
+	 */
+	public function getThumbnailUrl() : string {
 		$thumbnailData = $this->getVideoThumbnails();
 
 		if ( array_key_exists( 'high', $thumbnailData ) ) {
-			wfProfileOut( __METHOD__ );
 			return $thumbnailData['high']['url'];
 		} else if ( array_key_exists( 'medium', $thumbnailData ) ) {
-			wfProfileOut( __METHOD__ );
 			return $thumbnailData['medium']['url'];
 		} else if ( array_key_exists( 'default', $thumbnailData ) ) {
-			wfProfileOut( __METHOD__ );
 			return $thumbnailData['default']['url'];
 		}
-
-		wfProfileOut( __METHOD__ );
-		return '';
+		throw new Exception( 'Could not find a thumbnail URL' );
 	}
 
 	public function videoExists() {
@@ -85,14 +76,16 @@ class YoutubeApiWrapper extends ApiWrapper {
 	/**
 	 * returns array of thumbnail data. Thumbnails taken from different
 	 * points of video. Elements: time, height, width, url
+	 *
 	 * @return array
+	 * @throws Exception
 	 */
 	protected function getVideoThumbnails() {
 		if ( !empty( $this->interfaceObj['snippet']['thumbnails'] ) ) {
 			return $this->interfaceObj['snippet']['thumbnails'];
 		}
 
-		return array();
+		throw new Exception( 'Could not find thumbnails data' );
 	}
 
 	/**
@@ -179,17 +172,12 @@ class YoutubeApiWrapper extends ApiWrapper {
 	 * @throws VideoWrongApiCall - Youtube returns 400 response error code
 	 */
 	protected function checkForResponseErrors( $status, $content, $apiUrl ) {
-		wfProfileIn( __METHOD__ );
-
 		if ( isset( $content['error']['code'] ) && $content['error']['code'] === 400 ) {
-			wfProfileOut( __METHOD__ );
 			WikiaLogger::instance()->error( 'Youtube API call  returns 400', [
 				'content' => $content
 			] );
 			throw new VideoWrongApiCall( $status, $content, $apiUrl );
 		}
-
-		wfProfileOut( __METHOD__ );
 
 		// return default
 		parent::checkForResponseErrors( $status, $content, $apiUrl );
@@ -209,11 +197,11 @@ class YoutubeApiWrapper extends ApiWrapper {
 
 	/**
 	 * Get url for API.
-	 * More information: https://developers.google.com/youtube/2.0/developers_guide_protocol
+	 * More information: https://developers.google.com/youtube/v3/docs/
 	 * @return string
 	 */
 	protected function getApiUrl() {
-		global $wgYoutubeConfig;
+		global $wgYoutubeApiKey;
 
 		$params = [
 			'part' => 'snippet,contentDetails',
@@ -221,7 +209,7 @@ class YoutubeApiWrapper extends ApiWrapper {
 			'maxResults' => '1',
 			'videoEmbeddable' => true,
 			'type' => 'video',
-			'key' => $wgYoutubeConfig['DeveloperKeyApiV3']
+			'key' => $wgYoutubeApiKey
 		];
 
 		return self::$API_URL . '?' . http_build_query( $params );

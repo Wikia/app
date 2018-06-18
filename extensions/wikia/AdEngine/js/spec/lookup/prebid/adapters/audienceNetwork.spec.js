@@ -5,33 +5,22 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.audienceNetwork', function (
 	function noop() {}
 
 	var mocks = {
-		instantGlobals: {
-			wgAdDriverIndexExchangeBidderCountries: null
-		},
-		geo: {
-			isProperGeo: noop
-		},
 		slotsContext: {},
 		adContext: {
+			get: noop,
 			getContext: noop
 		},
-		instartLogic: {
-			isBlocking: noop
-		}
 	};
 
 	function getAudienceNetwork() {
 		return modules['ext.wikia.adEngine.lookup.prebid.adapters.audienceNetwork'](
-			mocks.slotsContext,
-			mocks.instartLogic,
-			mocks.geo,
-			mocks.instantGlobals,
-			mocks.adContext
+			mocks.adContext,
+			mocks.slotsContext
 		);
 	}
 
-	it('Is disabled when geo does not match and skin is merury', function () {
-		spyOn(mocks.geo, 'isProperGeo').and.returnValue(false);
+	it('Is disabled when flag is off and skin is mercury', function () {
+		spyOn(mocks.adContext, 'get').and.returnValue(false);
 		spyOn(mocks.adContext, 'getContext').and.returnValue({
 			targeting: {
 				skin: 'mercury'
@@ -40,13 +29,12 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.audienceNetwork', function (
 				audienceNetwork: true
 			}
 		});
-		var audienceNetwork = getAudienceNetwork();
 
-		expect(audienceNetwork.isEnabled()).toBeFalsy();
+		expect(getAudienceNetwork().isEnabled()).toBeFalsy();
 	});
 
-	it('Is disabled when geo matches and skin is oasis', function () {
-		spyOn(mocks.geo, 'isProperGeo').and.returnValue(false);
+	it('Is disabled when flag is on and skin is oasis', function () {
+		spyOn(mocks.adContext, 'get').and.returnValue(true);
 		spyOn(mocks.adContext, 'getContext').and.returnValue({
 			targeting: {
 				skin: 'oasis'
@@ -62,7 +50,7 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.audienceNetwork', function (
 	});
 
 	it('Is enabled when geo matches and skin is merury', function () {
-		spyOn(mocks.geo, 'isProperGeo').and.returnValue(true);
+		spyOn(mocks.adContext, 'get').and.returnValue(true);
 		spyOn(mocks.adContext, 'getContext').and.returnValue({
 			targeting: {
 				skin: 'mercury'
@@ -78,7 +66,6 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.audienceNetwork', function (
 	});
 
 	it('Is disabled when geo matches, skin is merury but traffic is recovered', function () {
-		spyOn(mocks.geo, 'isProperGeo').and.returnValue(true);
 		spyOn(mocks.adContext, 'getContext').and.returnValue({
 			targeting: {
 				skin: 'mercury'
@@ -87,7 +74,6 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.audienceNetwork', function (
 				audienceNetwork: true
 			}
 		});
-		spyOn(mocks.instartLogic, 'isBlocking').and.returnValue(true);
 
 		var audienceNetwork = getAudienceNetwork();
 

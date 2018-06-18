@@ -19,7 +19,11 @@ class ChatConfig {
 			return $wgChatPrivateServerOverride;
 		}
 
-		$consul = new Wikia\Consul\Client();
+		$consul = new Wikia\Consul\Client( [
+			// SUS-4742: use per-DC Consul agent instead of assuming a local one running on 127.0.0.1:8500
+			'base_uri' => Wikia\Consul\Client::getConsulBaseUrl()
+		] );
+
 		$serverNodes = $consul->getNodes( 'chat-private', $wgWikiaEnvironment );
 
 		$index = rand( 0, count( $serverNodes ) - 1 );

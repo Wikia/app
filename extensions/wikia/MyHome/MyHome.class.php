@@ -421,13 +421,11 @@ class MyHome {
 	 * @return bool
 	 */
 	public static function savingAnRc( RecentChange $rc ): bool {
-		global $wgAchievementToAddToRc, $wgWikiaForceAIAFdebug;
+		global $wgAchievementToAddToRc;
 		wfProfileIn( __METHOD__ );
 
 		// If an achievement is spooled from earlier in the pageload, stuff it into this RecentChange.
-		Wikia::log(__METHOD__, "", "RecentChange has arrived.", $wgWikiaForceAIAFdebug);
 		if(!empty($wgAchievementToAddToRc)){
-			Wikia::log(__METHOD__, "", "RecentChange arrived. Storing achievement that we've already seen.", $wgWikiaForceAIAFdebug);
 			$additionalData = array('Badge' => $wgAchievementToAddToRc);
 			MyHome::storeInRecentChanges($rc, $additionalData);
 			unset($wgAchievementToAddToRc);

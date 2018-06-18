@@ -44,7 +44,7 @@ class DiscussionsActivator {
 		return new SiteInput(
 			[
 				'id' => $this->cityId,
-				'name' => substr( $this->cityName, 0, self::SITE_NAME_MAX_LENGTH ),
+				'name' => mb_strcut( $this->cityName, 0, self::SITE_NAME_MAX_LENGTH ),
 				'language_code' => $this->cityLang
 			]
 		);
@@ -74,7 +74,7 @@ class DiscussionsActivator {
 		return $api;
 	}
 
-	private function logAndThrowError( Exception $e ) {
+	private function logAndThrowError( ApiException $e ) {
 		$this->logger->critical(
 			'DISCUSSIONS Creating site caused an error. Site ID: ' . $this->cityId,
 			[
@@ -82,6 +82,7 @@ class DiscussionsActivator {
 				'error' => $e->getMessage()
 			]
 		);
-		throw new ErrorPageError( 'unknown-error', 'discussions-activate-error' );
+
+		throw new WikiaException('discussions-activate-error', $e->getCode(), $e);
 	}
 }

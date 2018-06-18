@@ -19,14 +19,11 @@ class AdEngine2ContextService {
 			$pageType = $wikiaPageType->getPageType();
 			$articleId = $title->getArticleID();
 			$hasFeaturedVideo =  !empty( $wg->EnableArticleFeaturedVideo ) &&
-				( ArticleVideoContext::isFeaturedVideoEmbedded( $articleId )  ||
-				// XW-4713 | Hide UAPs on pages running the Recommended Video ABTest
-				ArticleVideoContext::isRecommendedVideoAvailable( $articleId ) );
+				ArticleVideoContext::isFeaturedVideoEmbedded( $articleId );
+			$featuredVideoData = ArticleVideoContext::getFeaturedVideoData( $articleId );
 			// pages with featured video on mercury have no ATF slots
 			$delayBtf = ( $skinName === 'mercury' && $hasFeaturedVideo ) ? false : $wg->AdDriverDelayBelowTheFold;
 
-			$pageFairDetectionKey = AdEngine2Resource::getKey( 'wikia.ext.adengine.pf.detection' );
-			$pageFairDetectionUrl = ResourceLoader::makeCustomURL( $wg->Out, [ $pageFairDetectionKey ], 'scripts' );
 			$prebidBidderUrl = AssetsManager::getInstance()->getURL( 'pr3b1d_prod_js', $type );
 
 			$langCode = $title->getPageLanguage()->getCode();
@@ -38,6 +35,13 @@ class AdEngine2ContextService {
 			$newWikiVertical = $wikiFactoryHub->getWikiVertical( $wg->CityId );
 			$newWikiVertical = !empty($newWikiVertical['short']) ? $newWikiVertical['short'] : 'error';
 
+			$featuredVideoDetails = null;
+			if ( !empty($featuredVideoData) ) {
+				$featuredVideoDetails = [
+					'mediaId' => $featuredVideoData['mediaId'] ?? null,
+					'videoTags' => explode(',', $featuredVideoData['videoTags'] ?? '')
+				];
+			}
 
 			$context = [
 				'opts' => $this->filterOutEmptyItems( [
@@ -47,9 +51,6 @@ class AdEngine2ContextService {
 					'pageType' => $adPageTypeService->getPageType(),
 					'showAds' => $adPageTypeService->areAdsShowableOnPage(),
 					'trackSlotState' => $wg->AdDriverTrackState,
-					'pageFairDetectionUrl' => $pageFairDetectionUrl,
-					'pageFairRecovery' => ARecoveryModule::isPageFairRecoveryEnabled(),
-					'instartLogicRecovery' => ARecoveryModule::isInstartLogicRecoveryEnabled(),
 					// TODO remove after ADEN-6797 release
 					'prebidBidderUrl' => $prebidBidderUrl,
 					'isAdTestWiki' => $wg->AdDriverIsAdTestWiki,
@@ -69,13 +70,15 @@ class AdEngine2ContextService {
 					'wikiCategory' => $wikiFactoryHub->getCategoryShort( $wg->CityId ),
 					'wikiCustomKeyValues' => $wg->DartCustomKeyValues,
 					'wikiDbName' => $wg->DBname,
+					'wikiId' => $wg->CityId,
 					'wikiIsCorporate' => $wikiaPageType->isCorporatePage(),
 					'wikiIsTop1000' => $wg->AdDriverWikiIsTop1000,
 					'wikiLanguage' => $langCode,
 					'wikiVertical' => $newWikiVertical,
 					'newWikiCategories' => $this->getNewWikiCategories( $wikiFactoryHub, $wg->CityId ),
 					'hasPortableInfobox' => !empty( \Wikia::getProps( $title->getArticleID(), PortableInfoboxDataService::INFOBOXES_PROPERTY_NAME ) ),
-					'hasFeaturedVideo' => $hasFeaturedVideo
+					'hasFeaturedVideo' => $hasFeaturedVideo,
+					'featuredVideo' => $featuredVideoDetails
 				] ),
 				'providers' => $this->filterOutEmptyItems( [
 					'evolve2' => $wg->AdDriverUseEvolve2,

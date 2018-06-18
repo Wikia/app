@@ -1579,34 +1579,6 @@ class MediaWikiServiceTest extends BaseTest
 
 	/**
 	 * @group Slow
-	 * @slowExecutionTime 0.10373 ms
-	 * @covers Wikia\Search\MediaWikiService::isSkinMobile
-	 */
-	public function testIsSkinMobile() {
-		$user = $this->getMockBuilder( 'User' )
-		             ->disableOriginalConstructor()
-		             ->setMethods( array( 'getSkin' ) )
-		             ->getMock();
-		$skin = $this->getMockBuilder( '\SkinWikiaMobile' )
-		             ->disableOriginalConstructor()
-		             ->getMock();
-		$user
-		    ->expects( $this->once() )
-		    ->method ( 'getSkin' )
-		    ->will   ( $this->returnValue( $skin ) )
-		;
-		$app = (object) array( 'wg' => (object ) array( 'User' => $user ) );
-		$service = $this->service->setMethods( null )->getMock();
-		$reflApp = new ReflectionProperty( 'Wikia\Search\MediaWikiService', 'app' );
-		$reflApp->setAccessible( true );
-		$reflApp->setValue( $service, $app );
-		$this->assertTrue(
-				$service->isSkinMobile()
-		);
-	}
-
-	/**
-	 * @group Slow
 	 * @slowExecutionTime 0.08888 ms
 	 * @covers Wikia\Search\MediaWikiService::isOnDbCluster
 	 */
@@ -3003,11 +2975,33 @@ class MediaWikiServiceTest extends BaseTest
 	 * @covers Wikia\Search\MediaWikiService::getHostName
 	 */
 	public function testGetHostName() {
-		$service = (new MediaWikiService);
-		$this->assertEquals(
-				substr( $service->getGlobal( 'Server' ), 7 ),
-				$service->getHostName()
-		);
+		$testWgServer = "http://test.wikia.com";
+		$expectedDomain = "test.wikia.com";
+		$service =
+			$this->getMockBuilder( 'Wikia\Search\MediaWikiService' )
+				->setMethods( [ 'getGlobal' ] )
+				->getMock();
+		$service->expects( $this->once() )
+			->method( 'getGlobal' )
+			->with( 'Server' )
+			->will( $this->returnValue( $testWgServer ) );
+
+		$this->assertEquals( $expectedDomain, $service->getHostName() );
+	}
+
+	public function testGetHostNameWithHttps() {
+		$testWgServer = "https://test.wikia.com";
+		$expectedDomain = "test.wikia.com";
+		$service =
+			$this->getMockBuilder( 'Wikia\Search\MediaWikiService' )
+				->setMethods( [ 'getGlobal' ] )
+				->getMock();
+		$service->expects( $this->once() )
+			->method( 'getGlobal' )
+			->with( 'Server' )
+			->will( $this->returnValue( $testWgServer ) );
+
+		$this->assertEquals( $expectedDomain, $service->getHostName() );
 	}
 
 	/**

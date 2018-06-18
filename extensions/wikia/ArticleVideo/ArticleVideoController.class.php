@@ -78,6 +78,8 @@ class ArticleVideoController extends WikiaController {
 	}
 
 	public function recommendedVideo() {
+		global $wgRecommendedVideoABTestPlaylist;
+
 		$articleId = RequestContext::getMain()->getTitle()->getArticleID();
 
 		if ( empty( ArticleVideoContext::isRecommendedVideoAvailable( $articleId ) ) ) {
@@ -85,7 +87,11 @@ class ArticleVideoController extends WikiaController {
 		} else {
 			$this->setVal(
 				'playlistId',
-				ArticleVideoContext::getRecommendedVideoPlaylistId( $articleId )
+				$wgRecommendedVideoABTestPlaylist
+			);
+			$this->setVal(
+				'relatedMediaId',
+				ArticleVideoContext::getRelatedMediaIdForRecommendedVideo()
 			);
 		}
 	}

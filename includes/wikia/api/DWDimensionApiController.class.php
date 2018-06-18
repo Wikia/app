@@ -12,6 +12,8 @@ class DWDimensionApiController extends WikiaApiController {
 
 	const DEFAULT_AFTER_ID = -1;
 
+	const DEFAULT_AFTER_IMAGE_NAME = '';
+
 	const ARTICLE_LAST_EDITED = '1970-01-01';
 
 	const DART_TAG_VARIABLE_NAME = 'wgDartCustomKeyValues';
@@ -225,13 +227,53 @@ class DWDimensionApiController extends WikiaApiController {
 	}
 
 	public function getWikiImages() {
-		$this->getDataPerWiki( array( $this, 'getWikiImagesData' ) );
+
+		$startingWikiId = $this->getSharedDbSlave()->strencode( $this->getRequest()->getVal( 'starting_wiki_id',
+			static::DEFAULT_AFTER_ID ) );
+		$afterImageName = $this->getSharedDbSlave()->strencode( $this->getRequest()->getVal(
+			'after_image_name', static::DEFAULT_AFTER_IMAGE_NAME ) );
+		$limit = min( $this->getSharedDbSlave()->strencode( $this->getRequest()->getVal(
+			'limit', static::LIMIT ) ), static::LIMIT_MAX );
+
+		$wikis = $this->getWikiDbNames( [ "city_id >= ".$startingWikiId ] );
+
+		$result = [];
+		foreach( $wikis as $wiki ) {
+			$db = $this->getWikiConnection( $wiki[ 'cluster' ], $wiki[ 'dbname' ] );
+			$sub_result = null;
+			if ( isset( $db ) ) {
+				$sub_result = $this->getWikiImagesData( $db, $afterImageName, $limit );
+			}
+			$result[] = [
+				'wiki_id' => $wiki[ 'wiki_id' ],
+				'data' => $sub_result
+			];
+			$afterImageName = '';
+			if ( $limit > 0 ) {
+				$limit = $limit - count( $sub_result );
+				if ( $limit <= 0 ) {
+					break;
+				}
+			}
+		}
+		foreach( $this->connections as $connection ) {
+			$connection->close();
+		}
+
+		$this->setResponseData(
+			$result,
+			null,
+			WikiaResponse::CACHE_DISABLED
+		);
 	}
 
-	private function getWikiImagesData( DatabaseMysqli $db ) {
+	private function getWikiImagesData( DatabaseMysqli $db, $afterImageName, $limit ) {
 		$result = [];
 		try {
-			$rows = $db->query( DWDimensionApiControllerSQL::DIMENSION_WIKI_IMAGES, __METHOD__ );
+			$query = DWDimensionApiControllerSQL::DIMENSION_WIKI_IMAGES;
+			$query = str_replace( '$limit', $limit, $query );
+			$query = str_replace( '$img_name', $afterImageName, $query );
+			$rows = $db->query( $query, __METHOD__ );
 			if ( !empty( $rows ) ) {
 				while ( $row = $db->fetchObject( $rows ) ) {
 					$result[] = [
@@ -336,18 +378,16 @@ class DWDimensionApiController extends WikiaApiController {
 		return $connection;
 	}
 
-	private function getWikiDbNames() {
+	private function getWikiDbNames( $where ) {
 		$db = $this->getSharedDbSlave();
 
 		$limit = min( $db->strencode( $this->getRequest()->getVal( 'wiki_limit', static::LIMIT ) ),
 			static::LIMIT_MAX );
-		$afterWikiId = $db->strencode( $this->getRequest()->getVal( 'after_wiki_id',
-			static::DEFAULT_AFTER_ID ) );
 
 		$rows = $db->select(
 			[ "city_list" ],
 			[ "city_id", "city_cluster", "city_dbname" ],
-			[ "city_id > ".$afterWikiId ],
+			$where,
 			__METHOD__,
 			[
 				'ORDER BY' => 'city_id',
@@ -370,7 +410,10 @@ class DWDimensionApiController extends WikiaApiController {
 
 	private function getDataPerWiki( callable $dataGatherer ) {
 
-		$wikis = $this->getWikiDbNames();
+		$afterWikiId = $this->getSharedDbSlave()->strencode( $this->getRequest()->getVal( 'after_wiki_id',
+			static::DEFAULT_AFTER_ID ) );
+
+		$wikis = $this->getWikiDbNames( [ "city_id > ".$afterWikiId ] );
 
 		$result = [];
 		foreach( $wikis as $wiki ) {

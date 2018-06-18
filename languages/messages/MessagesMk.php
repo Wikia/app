@@ -325,3 +325,6 @@ $magicWords = array(
 $linkTrail = '/^([a-zабвгдѓежзѕијклљмнњопрстќуфхцчџш]+)(.*)$/sDu';
 $separatorTransformTable = array( ',' => '.', '.' => ',' );
 
+$pluralRules = [
+	"v = 0 and i % 10 = 1 or f % 10 = 1",
+];

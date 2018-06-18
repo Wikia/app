@@ -45,9 +45,6 @@ describe('ext.wikia.adEngine.adEngine decorators', function () {
 			hide: noop
 		},
 		slotTracker: {},
-		pageFair: {
-			isSlotRecoverable: noop
-		},
 		viewabilityTracker: {
 			track: noop
 		}
@@ -67,8 +64,7 @@ describe('ext.wikia.adEngine.adEngine decorators', function () {
 			mocks.hooks,
 			mocks.doc,
 			mocks.lazyQueue,
-			mocks.log,
-			mocks.pageFair
+			mocks.log
 		);
 	}
 

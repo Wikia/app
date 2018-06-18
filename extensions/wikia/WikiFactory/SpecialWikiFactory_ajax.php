@@ -62,48 +62,6 @@ function axWFactoryValidateRequest( WebRequest $request, User $user, $method ) {
 ############################## Ajax methods ##################################
 
 /**
- * axWFactoryTagCheck
- *
- * Method for checking tag name and getting number of tagged wikis
- *
- * @author Adrian 'ADi' Wieczorek <adi(at)wikia-inc.com>
- * @access public
- *
- * @return json data
- */
-function axWFactoryTagCheck() {
-	global $wgRequest, $wgUser;
-
-	// this request needs to be a POST and has a valid token passed (PLATFORM-1476)
-	axWFactoryValidateRequest( $wgRequest, $wgUser, __METHOD__ );
-
-	if ( !$wgUser->isAllowed( 'wikifactory' ) ) {
-		return;
-	}
-
-	$tagName = $wgRequest->getVal( "tagName" );
-	if( !empty( $tagName ) ) {
-		$tagsQuery = new WikiFactoryTagsQuery( $tagName );
-		$wikiIds = $tagsQuery->doQuery();
-		$result = array(
-			'tagName' => $tagName,
-			'wikiCount' => count( $wikiIds ),
-			'divName' => 'wf-variable-parse'
-		);
-	}
-	else {
-		$result = array(
-			'errorMsg' => 'empty tag name',
-			'divName' => 'wf-variable-parse',
-			'wikiCount' => 0
-		);
-	}
-
-	return json_encode( $result );
-}
-
-
-/**
  * axWFactoryGetVariable
  *
  * Method for getting variable form via AJAX request.
@@ -379,10 +337,13 @@ function axWFactoryDomainCRUD($type="add") {
                 #--- domain is used already
                 $sInfo .= "<strong>Error: Domain <em>{$sNewDomain}</em> is already used so no change was done.</strong>";
             }
-            elseif (!preg_match("/^[\w\.\-]+$/", $sNewDomain)) {
+            elseif ( !preg_match("/^[\w\.\-]+(?:\/([^\/]+))?$/", $sNewDomain, $matches )) {
                 #--- check if domain is valid (a im sure that there is function
                 #--- somewhere for such purpose
                 $sInfo .= "<strong>Error: Domain <em>{$sNewDomain}</em> is invalid so no change was done..</strong>";
+            }
+            elseif ( isset( $matches[1] ) && !array_key_exists( $matches[1], $languages ) ) {
+                $sInfo .= "Error: Unrecognized language code in the path: '$matches[1]'";
             }
             else {
                 #--- reall change domain
@@ -450,7 +411,7 @@ function axWFactoryDomainCRUD($type="add") {
 							} else {
 								$sInfo .= "Failed: Domain <em>{$sDomain}</em> was not set as main.";
 							}
-						} catch (WikiFactoryDuplicateWgServer $error) {
+						} catch (WikiFactoryDuplicateDomain $error) {
 							$sInfo .= "Failed: " . $error->getMessage();
 						}
             break;
@@ -561,11 +522,13 @@ function axWFactoryDomainQuery() {
 
 		while( $domain = $dbr->fetchObject( $sth ) ) {
 			$domain->city_domain = strtolower( $domain->city_domain );
-		    if( preg_match( "/^$query/", $domain->city_domain ) ) {
+			$rxp_query = preg_quote( $query, '/' );
+
+		    if( preg_match( "/^$rxp_query/", $domain->city_domain ) ) {
 				$exact[ "suggestions" ][] = $domain->city_domain;
 				$exact[ "data" ][] = $domain->city_id;
 		    }
-			elseif( preg_match( "/$query/", $domain->city_domain ) ){
+			elseif( preg_match( "/$rxp_query/", $domain->city_domain ) ){
 				$match[ "suggestions" ][] = $domain->city_domain;
 				$match[ "data" ][] = $domain->city_id;
 			}

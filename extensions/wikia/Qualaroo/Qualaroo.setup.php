@@ -7,6 +7,12 @@
 
 $dir = dirname( __FILE__ ) . '/';
 
+/**
+ * @name $wgMobileQualaroo
+ * Enables Qualaroo for mobile
+ */
+$wgMobileQualaroo = false;
+
 $wgExtensionCredits['other'][] = array(
 	'name'           => 'Qualaroo',
 	'author'         => 'Damian Jóźwiak',
@@ -25,3 +31,4 @@ $wgHooks['OasisSkinAssetGroupsBlocking'][] = 'QualarooHooks::onOasisSkinAssetGro
 $wgHooks['OasisSkinAssetGroups'][] = 'QualarooHooks::onOasisSkinAssetGroups';
 $wgHooks['MakeGlobalVariablesScript'][] = 'QualarooHooks::onMakeGlobalVariablesScript';
 $wgHooks['WikiaAssetsPackages'][]  = 'QualarooHooks::onWikiaAssetsPackages';
+$wgHooks['InstantGlobalsGetVariables'][] = 'QualarooHooks::onInstantGlobalsGetVariables';

@@ -1,11 +1,10 @@
 /*global define*/
 define('ext.wikia.adEngine.lookup.prebid.adapters.appnexus',[
+	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.context.slotsContext',
 	'ext.wikia.adEngine.lookup.prebid.adapters.appnexusPlacements',
-	'wikia.geo',
-	'wikia.instantGlobals',
 	'wikia.log'
-], function (slotsContext, appnexusPlacements, geo, instantGlobals, log) {
+], function (adContext, slotsContext, appnexusPlacements, log) {
 	'use strict';
 
 	var bidderName = 'appnexus',
@@ -50,8 +49,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.appnexus',[
 				},
 				MOBILE_IN_CONTENT: {
 					sizes: [
-						[300, 250],
-						[320, 480]
+						[300, 250]
 					]
 				},
 				BOTTOM_LEADERBOARD: {
@@ -64,11 +62,11 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.appnexus',[
 		};
 
 	function isEnabled() {
-		return geo.isProperGeo(instantGlobals.wgAdDriverAppNexusBidderCountries);
+		return adContext.get('bidders.appnexus');
 	}
 
-	function prepareAdUnit(slotName, config, skin, isRecovering) {
-		var placementId = appnexusPlacements.getPlacement(skin, config.position, isRecovering);
+	function prepareAdUnit(slotName, config, skin) {
+		var placementId = appnexusPlacements.getPlacement(skin, config.position);
 
 		if (!placementId) {
 			return;
@@ -78,7 +76,11 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.appnexus',[
 
 		return {
 			code: slotName,
-			sizes: config.sizes,
+			mediaTypes: {
+				banner: {
+					sizes: config.sizes
+				}
+			},
 			bids: [
 				{
 					bidder: bidderName,

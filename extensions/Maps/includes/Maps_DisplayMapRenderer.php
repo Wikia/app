@@ -34,6 +34,13 @@ class MapsDisplayMapRenderer {
 	 * @return string
 	 */
 	public final function renderMap( array $params, Parser $parser ) {
+		// FANDOM change begin
+		global $wgArticleAsJson;
+		if ( !empty( $wgArticleAsJson ) ) {
+			return '';
+		}
+		// FANDOM change end
+
 		$this->initializeLocationParser();
 
 		$this->handleMarkerData( $params, $parser );

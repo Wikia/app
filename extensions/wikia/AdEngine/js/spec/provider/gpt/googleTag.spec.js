@@ -15,7 +15,7 @@ describe('ext.wikia.adEngine.provider.gpt.googleTag', function () {
 			bridge: {
 				slotService: {
 					clearSlot: noop,
-					getBySlotName: noop,
+					get: noop,
 					hasViewportConflict: noop
 				}
 			},
@@ -27,8 +27,14 @@ describe('ext.wikia.adEngine.provider.gpt.googleTag', function () {
 					};
 				},
 				setSizes: noop,
-				getSizes: function () {
+				getDefaultSizes: function () {
 					return mocks.elementSizes;
+				},
+				getSizes: function () {
+					return {
+						build: noop,
+						isEmpty: function () { return true; }
+					};
 				},
 				getSlotPath: noop,
 				setSlotLevelParams: noop,
@@ -45,6 +51,7 @@ describe('ext.wikia.adEngine.provider.gpt.googleTag', function () {
 				getTargeting: noop,
 				addEventListener: noop,
 				refresh: noop,
+				setRequestNonPersonalizedAds: noop,
 				setTargeting: noop,
 				getSlots: noop
 			},
@@ -66,17 +73,20 @@ describe('ext.wikia.adEngine.provider.gpt.googleTag', function () {
 					display: noop,
 					defineSlot: function () {
 						return {
-							addService: noop
+							addService: noop,
+							defineSizeMapping: noop
 						};
 					},
 					defineOutOfPageSlot: function () {
 						return {
-							addService: noop
+							addService: noop,
+							defineSizeMapping: noop
 						};
 					},
 					destroySlots: noop
 				}
 			},
+			trackingOptIn: {},
 			allSlots: [
 				{
 					getTargeting: function () {
@@ -110,8 +120,11 @@ describe('ext.wikia.adEngine.provider.gpt.googleTag', function () {
 			mocks.srcProvider,
 			document,
 			mocks.log,
+			mocks.trackingOptIn,
 			mocks.window
 		);
+
+		mocks.trackingOptIn.isOptedIn = noop;
 
 		mocks.elementSizes = [[300, 250]];
 	});
@@ -121,12 +134,14 @@ describe('ext.wikia.adEngine.provider.gpt.googleTag', function () {
 		spyOn(mocks.pubads, 'enableSingleRequest');
 		spyOn(mocks.pubads, 'disableInitialLoad');
 		spyOn(mocks.pubads, 'addEventListener');
+		spyOn(mocks.pubads, 'setRequestNonPersonalizedAds');
 		spyOn(mocks.window.googletag, 'enableServices');
 
 		googleTag.init();
 
 		expect(googleTag.isInitialized()).toBe(true);
 		expect(mocks.pubads.collapseEmptyDivs).toHaveBeenCalled();
+		expect(mocks.pubads.setRequestNonPersonalizedAds).toHaveBeenCalledWith(1);
 		expect(mocks.pubads.enableSingleRequest).toHaveBeenCalled();
 		expect(mocks.pubads.disableInitialLoad).toHaveBeenCalled();
 		expect(mocks.pubads.addEventListener).toHaveBeenCalled();
@@ -257,5 +272,18 @@ describe('ext.wikia.adEngine.provider.gpt.googleTag', function () {
 		googleTag.destroySlots(['foo']);
 
 		expect(mocks.window.googletag.destroySlots).not.toHaveBeenCalled();
+	});
+
+	it('Initialization with tracking opt out should setup non personalized ads', function () {
+		spyOn(mocks.pubads, 'setRequestNonPersonalizedAds');
+
+		mocks.trackingOptIn.isOptedIn = function () {
+			return false;
+		};
+
+		googleTag.init();
+
+		expect(googleTag.isInitialized()).toBe(true);
+		expect(mocks.pubads.setRequestNonPersonalizedAds).toHaveBeenCalledWith(1);
 	});
 });

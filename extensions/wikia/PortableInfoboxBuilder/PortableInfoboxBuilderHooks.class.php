@@ -88,7 +88,7 @@ class PortableInfoboxBuilderHooks {
 				&& !PortableInfoboxBuilderHelper::isSubmitAction( $request )
 				&& !PortableInfoboxBuilderHelper::isForcedSourceMode( $request )
 		) {
-			$url = SpecialPage::getTitleFor( 'InfoboxBuilder', $title->getText() )->getInternalURL();
+			$url = SpecialPage::getTitleFor( 'InfoboxBuilder', $title->getText() )->getFullURL();
 			F::app()->wg->out->redirect( $url );
 			return false;
 		}

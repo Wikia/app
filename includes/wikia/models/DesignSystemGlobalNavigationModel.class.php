@@ -67,15 +67,6 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 						'tracking_label' => 'link.explore',
 					],
 					$this->getCommunityCentralLink(),
-					[
-						'type' => 'link-text',
-						'title' => [
-							'type' => 'translatable-text',
-							'key' => 'global-navigation-wikis-fandom-university'
-						],
-						'href' => $this->getHref( 'fandom-university' ),
-						'tracking_label' => 'link.fandom-university',
-					]
 				]
 			];
 		} else {
@@ -162,7 +153,7 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 			$search['results']['url'] = $this->getPageUrl( 'Search', NS_SPECIAL, '', true );
 			$search['placeholder-active']['key'] = 'global-navigation-search-placeholder-in-wiki';
 
-			$suggestionsUrl = WikiFactory::getHostById( $this->productInstanceId ) . '/index.php?action=ajax&rs=getLinkSuggest&format=json';
+			$suggestionsUrl = WikiFactory::cityIDtoUrl( $this->productInstanceId ) . '/index.php?action=ajax&rs=getLinkSuggest&format=json';
 			$search['suggestions'] = [
 				'url' => wfProtocolUrlToRelative( $suggestionsUrl ),
 				'param-name' => 'query',

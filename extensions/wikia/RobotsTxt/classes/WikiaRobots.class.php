@@ -12,6 +12,7 @@ class WikiaRobots {
 
 	const CACHE_PERIOD_REGULAR = 24 * 3600;
 	const CACHE_PERIOD_EXPERIMENTAL = 3600;
+	const CACHE_PERIOD_DEGRADED = 3600;
 
 	/**
 	 * Whether robots are allowed to crawl any portion of the site
@@ -78,10 +79,6 @@ class WikiaRobots {
 
 		// Fandom old URLs
 		'/fandom?p=',
-
-		// logging for ad-recovery (ADEN-3930)
-		'/wikia.php?controller=ARecoveryEngineApi',
-		'/api/v1/ARecoveryEngine'
 	];
 
 	/**
@@ -107,6 +104,13 @@ class WikiaRobots {
 	 * @var bool
 	 */
 	private $experiment = false;
+
+	/**
+	 * Whether the current robots content is degraded because fetching rules from
+	 * language wikis failed.
+	 * @var bool
+	 */
+	private $degraded = false;
 
 	/**
 	 * The object used to construct paths
@@ -147,23 +151,22 @@ class WikiaRobots {
 	}
 
 	public function configureRobotsBuilder( RobotsTxt $robots ) {
-		global $wgEnableSpecialSitemapExt,
-		       $wgEnableSitemapXmlExt,
+		global $wgEnableSitemapXmlExt,
 		       $wgRobotsTxtBlockedWiki,
 		       $wgSitemapXmlExposeInRobots,
-		       $wgServer;
+		       $wgServer,
+		       $wgScriptPath,
+		       $wgRequest;
 
 		if ( !$this->accessAllowed || !empty( $wgRobotsTxtBlockedWiki ) ) {
 			// No crawling preview, verify, sandboxes, showcase, etc
-			$robots->addDisallowedPaths( [ '/' ] );
+			$robots->addDisallowedPaths( [ $this->pathBuilder->buildPath( '/' ) ] );
 			return $robots;
 		}
 
 		// Sitemap
 		if ( !empty( $wgEnableSitemapXmlExt ) && !empty( $wgSitemapXmlExposeInRobots ) ) {
-			$robots->setSitemap( $wgServer . '/sitemap-newsitemapxml-index.xml' );
-		} elseif ( !empty( $wgEnableSpecialSitemapExt ) ) {
-			$robots->setSitemap( $wgServer . '/sitemap-index.xml' );
+			$robots->addSitemap( $wgServer . $wgScriptPath . '/sitemap-newsitemapxml-index.xml' );
 		}
 
 		// Block namespaces
@@ -174,7 +177,7 @@ class WikiaRobots {
 		}
 
 		// Block additional paths
-		$robots->addDisallowedPaths( $this->blockedPaths );
+		$robots->addDisallowedPaths( array_map( [ $this->pathBuilder, 'buildPath' ], $this->blockedPaths ) );
 
 		// Block params
 		foreach ( $this->blockedParams as $param ) {
@@ -182,11 +185,45 @@ class WikiaRobots {
 		}
 
 		// Allow specific paths
-		$robots->addAllowedPaths( $this->allowedPaths );
+		$robots->addAllowedPaths( array_map( [ $this->pathBuilder, 'buildPath' ], $this->allowedPaths ) );
 
 		// Allow special pages
 		foreach ( array_keys( $this->allowedSpecialPages ) as $page ) {
 			$robots->addAllowedPaths( $this->pathBuilder->buildPathsForSpecialPage( $page, true ) );
+		}
+
+		// Paranoid check to make sure language wikis return only their rules without calling other
+		// wikis recursively.
+		if ( !$wgRequest->getBool( 'shallow' ) ) {
+			// fetch from foreign wikis...
+			$languageWikis = \WikiFactory::getLanguageWikis();
+			foreach ( $languageWikis as $wiki ) {
+				$params = [
+					'controller' => 'WikiaRobots',
+					'method' => 'getAllowedDisallowed',
+					'shallow' => 1
+				];
+				if ( $wgRequest->getBool( 'forcerobots' ) ) {
+					$params[ 'forcerobots' ] = '1';
+				}
+				$response = \ApiService::foreignCall( $wiki[ 'city_dbname' ], $params, \ApiService::WIKIA );
+				if ( !empty( $response ) ) {
+					if ( isset( $response['allowed'] ) ) {
+						$robots->addAllowedPaths($response['allowed']);
+					}
+					if ( isset( $response['disallowed'] ) ) {
+						$robots->addDisallowedPaths( $response['disallowed'] );
+					}
+					if ( isset( $response['sitemaps'] ) ) {
+						$robots->addSitemaps( $response['sitemaps'] );
+					}
+				} else {
+					\Wikia\Logger\WikiaLogger::instance()->error( 'Cannot fetch language wiki robots rules', [
+						'fields' => ['foreign_dbname' => $wiki[ 'city_dbname' ] ]
+					] );
+					$this->degraded = true;
+				}
+			}
 		}
 
 		return $robots;
@@ -249,6 +286,9 @@ class WikiaRobots {
 	public function getRobotsTxtCachePeriod() {
 		if ( $this->experiment ) {
 			return self::CACHE_PERIOD_EXPERIMENTAL;
+		}
+		if ( $this->degraded ) {
+			return self::CACHE_PERIOD_DEGRADED;
 		}
 		return self::CACHE_PERIOD_REGULAR;
 	}

@@ -444,71 +444,6 @@ function getMessageAsArray( $messageKey, $params = [] ) {
 	return null;
 }
 
-/**
- * @author emil@wikia.com
- * @return string default external cluster
- */
-function wfGetDefaultExternalCluster() {
-	global $wgDefaultExternalStore;
-	if ( $wgDefaultExternalStore ) {
-		if ( is_array( $wgDefaultExternalStore ) ) {
-			$store = $wgDefaultExternalStore[0];
-		} else {
-			$store = $wgDefaultExternalStore;
-		}
-		list( $proto, $cluster ) = explode( '://', $store, 2 );
-		return $cluster;
-	} else {
-		throw new MWException( __METHOD__ . '$wgDefaultExternalStore should be defined' );
-	}
-}
-
-/**
- * @author MoLi <moli@wikia.com>
- * @return DatabaseBase db's handle for external storage
- */
-function wfGetDBExt( $db = DB_MASTER, $cluster = null ) {
-	if ( !$cluster ) {
-		$cluster = wfGetDefaultExternalCluster();
-	}
-	return wfGetLBFactory()->getExternalLB( $cluster )->getConnection( $db );
-}
-
-/**
- * Sleep until the worst slave's replication lag is less than or equal to
- * $maxLag, in seconds.  Use this when updating very large numbers of rows, as
- * in maintenance scripts, to avoid causing too much lag.  Of course, this is
- * a no-op if there are no slaves.
- *
- * Every time the function has to wait for a slave, it will print a message to
- * that effect (and then sleep for a little while), so it's probably not best
- * to use this outside maintenance scripts in its present form.
- *
- * This function is copy of wfWaitForSlaves to work with external storage
- *
- * @author Maciej Błaszkowski (Marooned) <marooned at wikia.com> (changes from original)
- * @param int $maxLag
- * @return null
- */
-function wfWaitForSlavesExt( $maxLag, $cluster = null ) {
-	if ( $maxLag ) {
-		if ( !$cluster ) {
-			$cluster = wfGetDefaultExternalCluster();
-		}
-		$lb = wfGetLBFactory()->getExternalLB( $cluster );
-		list( $host, $lag ) = $lb->getMaxLag();
-		while ( $lag > $maxLag ) {
-			$name = @gethostbyaddr( $host );
-			if ( $name !== false ) {
-				$host = $name;
-			}
-			print "Waiting for $host (lagged $lag seconds)...\n";
-			sleep( $maxLag );
-			list( $host, $lag ) = $lb->getMaxLag();
-		}
-	}
-}
-
 function getMenuHelper( $name, $limit = 7 ) {
 	global $wgMemc;
 	wfProfileIn( __METHOD__ );
@@ -1385,7 +1320,7 @@ function wfFixMalformedHTML( $html ) {
 
 /**
  * Go through the backtrace and return the first method that is not in the ingored class
- * @param $ignoreClasses mixed array of ignored class names or a single class name
+ * @param $ignoreClasses string|string[] mixed array of ignored class names or a single class name
  * @return string method name
  */
 function wfGetCallerClassMethod( $ignoreClasses ) {
@@ -1582,4 +1517,24 @@ function wfHttpsAllowedForURL( $url ): bool {
 
 	// Only allow single subdomain wikis through
 	return substr_count( $server, '.' ) === 0;
+}
+
+/**
+ * Removes the protocol part of a url and returns the result, e. g. http://muppet.wikia.com -> muppet.wikia.com
+ *
+ * @param $url
+ */
+function wfStripProtocol( $url ) {
+	$pos = strpos( $url, '://' );
+	if ( $pos === FALSE ) {
+		return $url;
+	}
+	return substr( $url, $pos + 3 );
+}
+
+/**
+ * In some cases, we don't want to use the actual hostname and use a configured value.
+ */
+function wfGetEffectiveHostname() {
+	return getenv('HOSTNAME_OVERRIDE') ?: gethostname();
 }

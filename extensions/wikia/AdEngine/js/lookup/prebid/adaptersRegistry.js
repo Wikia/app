@@ -68,6 +68,7 @@ define('ext.wikia.adEngine.lookup.prebid.adaptersRegistry', [
 			if (typeof adapter.getAliases === 'function') {
 				win.pbjs.que.push(function () {
 					aliasMap = adapter.getAliases();
+
 					Object.keys(aliasMap).forEach(function (bidderName) {
 						aliasMap[bidderName].forEach(function (alias) {
 							win.pbjs.aliasBidder(bidderName, alias);

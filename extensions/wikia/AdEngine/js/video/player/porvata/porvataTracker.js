@@ -27,15 +27,25 @@ define('ext.wikia.adEngine.video.player.porvata.porvataTracker', [
 			'wikiaInViewportWithoutOffer': 'in_viewport_without_offer'
 		};
 
-	function getContentType(player) {
-		var ad;
-
+	function getAd(player) {
 		if (player) {
-			ad = player.ima.getAdsManager() && player.ima.getAdsManager().getCurrentAd();
+			return player.ima.getAdsManager() && player.ima.getAdsManager().getCurrentAd();
+		}
+	}
 
-			if (ad) {
-				return ad.getContentType();
-			}
+	function getContentType(player) {
+		var ad = getAd(player);
+		if (ad) {
+
+			return ad.getContentType();
+		}
+	}
+
+	function getAdId(player) {
+		var ad = getAd(player);
+
+		if (ad) {
+			return ad.getAdId();
 		}
 	}
 
@@ -53,6 +63,8 @@ define('ext.wikia.adEngine.video.player.porvata.porvataTracker', [
 	 */
 	function track(params, eventName, errorCode, player) {
 		var contentType = getContentType(player);
+
+		params.vastId = getAdId(player);
 
 		playerTracker.track(params, playerName, eventName, errorCode, contentType);
 	}

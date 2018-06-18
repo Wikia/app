@@ -106,9 +106,6 @@ $GLOBALS['wgHooks']['ContributionsLineEnding'][] = 'WallHooksHelper::onContribut
 $GLOBALS['wgHooks']['SpecialWhatlinkshere::renderWhatLinksHereRow'][] = 'WallHooksHelper::onRenderWhatLinksHereRow';
 $GLOBALS['wgHooks']['ContributionsToolLinks'][] = 'WallHooksHelper::onContributionsToolLinks';
 
-// watchlist
-$GLOBALS['wgHooks']['ArticleCommentBeforeWatchlistAdd'][] = 'WallHooksHelper::onArticleCommentBeforeWatchlistAdd';
-// $GLOBALS['wgHooks']['WatchArticle'][] = 'WallHooksHelper::onWatchArticle';
 $GLOBALS['wgHooks']['UnwatchArticle'][] = 'WallHooksHelper::onUnwatchArticle';
 
 // diff page adjusting
@@ -147,15 +144,11 @@ $GLOBALS['wgHooks']['AdvancedBoxSearchableNamespaces'][] = 'WallHooksHelper::onA
 
 $GLOBALS['wgHooks']['HAWelcomeGetPrefixText'][] = 'WallHooksHelper::onHAWelcomeGetPrefixText';
 
-// Monobook toolbar links
-$GLOBALS['wgHooks']['SkinTemplateToolboxEnd'][] = 'WallHooksHelper::onBuildMonobookToolbox';
-
 // Hook for code that wants a beautified title and URL given the not very readable Wall/Forum title
 $GLOBALS['wgHooks']['FormatForumLinks'][] = 'WallHooksHelper::onFormatForumLinks';
 
 // Fix URLs when purging after adding a thread/post
 $GLOBALS['wgHooks']['TitleGetSquidURLs'][] = 'WallHooksHelper::onTitleGetSquidURLs';
-$GLOBALS['wgHooks']['ArticleCommentGetSquidURLs'][] = 'WallHooksHelper::onArticleCommentGetSquidURLs';
 
 // Fix User_talk links for profile page diff on wall enabled wikis
 // VOLDEV-66
@@ -196,7 +189,6 @@ JSMessages::registerPackage( 'Wall', [
 	'wall-button-done-source',
 	'wall-action-*',
 	'wall-message-source',
-	'wall-confirm-monobook-*',
 	'wall-posting-message-failed-title',
 	'wall-posting-message-failed-body',
 	'wall-posting-message-failed-filter-title',

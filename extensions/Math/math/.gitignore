@@ -1,0 +1,10 @@
+# Compiled source
+*.mli
+*.cmi
+*.cmx
+*.o
+
+# The binaries
+texvc
+texvc_test
+texvc_tex

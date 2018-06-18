@@ -1,4 +1,4 @@
-/*global define*/
+/*global define, require*/
 define('ext.wikia.adEngine.slot.slotTargeting', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.utils.math',
@@ -86,10 +86,10 @@ define('ext.wikia.adEngine.slot.slotTargeting', [
 			getAdserverTargeting = prebid && prebid.get().getAdserverTargetingForAdUnitCode,
 			videoTargeting = getAdserverTargeting && getAdserverTargeting(videoSlots[context.targeting.skin]);
 
-			if (videoTargeting) {
-				return constructOutstreamString(videoTargeting);
-			}
-    	}
+		if (videoTargeting) {
+			return constructOutstreamString(videoTargeting);
+		}
+	}
 
 	function constructOutstreamString(videoTargeting) {
 		var bidderName = videoTargeting.hb_bidder,

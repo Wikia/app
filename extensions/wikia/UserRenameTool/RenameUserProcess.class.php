@@ -18,6 +18,7 @@ class RenameUserProcess {
 
 	private $mRequestData = null;
 	private $mActionConfirmed = false;
+	private $mNotifyUser = true;
 
 	private $mOldUsername = '';
 	private $mNewUsername = '';
@@ -54,6 +55,8 @@ class RenameUserProcess {
 		$this->mReason = $reason;
 		$this->mRequestorId = $wgUser ? $wgUser->getId() : 0;
 		$this->mRequestorName = $wgUser ? $wgUser->getName() : '';
+
+		$this->mNotifyUser = $notifyUser;
 
 		$this->addInternalLog( "construct: old={$oldUsername} new={$newUsername}" );
 	}
@@ -382,7 +385,7 @@ class RenameUserProcess {
 			$noErrors = false;
 		}
 
-		if ( $noErrors ) {
+		if ( $noErrors && $this->mNotifyUser === true ) {
 			$this->notifyUser( \User::newFromId( $this->mUserId ), $this->mOldUsername, $this->mNewUsername );
 
 			if ( $this->mRequestorId !== $this->mUserId ) {

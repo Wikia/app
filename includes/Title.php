@@ -1600,7 +1600,8 @@ class Title {
 		global $wgInternalServer, $wgServer;
 		$query = self::fixUrlQueryArgs( $query, $query2 );
 		$server = $wgInternalServer !== false ? $wgInternalServer : $wgServer;
-		$url = wfExpandUrl( $server . $this->getLocalURL( $query ), PROTO_HTTP );
+		// Ensure cache is purged over HTTP for now (PLATFORM-3528)
+		$url = wfHttpsToHttp( wfExpandUrl( $server . $this->getLocalURL( $query ), PROTO_HTTP ) );
 		Hooks::run( 'GetInternalURL', [ $this, &$url, $query ] );
 
 		return $url;

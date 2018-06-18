@@ -121,20 +121,18 @@ class BannerNotificationsController extends WikiaController {
 	public static function addPreferencesConfirmation( SpecialPreferences $prefs ): bool {
 		$request = $prefs->getRequest();
 
-		if ( $prefs->getSkin()->getSkinName() === 'oasis' ) {
-			if ( $request->getCheck( 'success' ) ) {
-				self::addConfirmation( wfMessage( 'savedprefs' )->escaped() );
-			} elseif ( $request->getCheck( 'eauth' ) ) {
-				self::addConfirmation(
-					wfMessage( 'eauthentsent' )->escaped(),
-					self::CONFIRMATION_ERROR
-				);
-			}
-
-			// clear the state, so that MW core doesn't render any message
-			$request->setVal( 'eauth', null );
-			$request->setVal( 'success', null );
+		if ( $request->getCheck( 'success' ) ) {
+			self::addConfirmation( wfMessage( 'savedprefs' )->escaped() );
+		} elseif ( $request->getCheck( 'eauth' ) ) {
+			self::addConfirmation(
+				wfMessage( 'eauthentsent' )->escaped(),
+				self::CONFIRMATION_ERROR
+			);
 		}
+
+		// clear the state, so that MW core doesn't render any message
+		$request->setVal( 'eauth', null );
+		$request->setVal( 'success', null );
 
 		return true;
 	}
@@ -150,28 +148,27 @@ class BannerNotificationsController extends WikiaController {
 	public static function addPageMovedConfirmation(
 		MovePageForm $form, Title $ot, Title $nt
 	): bool {
-		if ( $form->getSkin()->getSkinName() === 'oasis' ) {
-			$newUrl = $nt->getFullUrl();
-			$oldText = $ot->getPrefixedText();
-			$newText = $nt->getPrefixedText();
 
-			// don't render links
-			$oldLink = $oldText;
-			$newLink = $newText;
+		$newUrl = $nt->getFullUrl();
+		$oldText = $ot->getPrefixedText();
+		$newText = $nt->getPrefixedText();
 
-			self::addConfirmation(
-				$form->msg(
-					'movepage-moved',
-					$oldLink,
-					$newLink,
-					$oldText,
-					$newText
-				)->inContentLanguage()->parse()
-			);
+		// don't render links
+		$oldLink = $oldText;
+		$newLink = $newText;
 
-			// redirect to page with new title
-			$form->getOutput()->redirect( $newUrl );
-		}
+		self::addConfirmation(
+			$form->msg(
+				'movepage-moved',
+				$oldLink,
+				$newLink,
+				$oldText,
+				$newText
+			)->inContentLanguage()->parse()
+		);
+
+		// redirect to page with new title
+		$form->getOutput()->redirect( $newUrl );
 
 		return true;
 	}
@@ -190,36 +187,34 @@ class BannerNotificationsController extends WikiaController {
 	): bool {
 		global $wgOut;
 
-		if ( F::app()->checkSkin( 'oasis' ) ) {
-			$title = $article->getTitle();
+		$title = $article->getTitle();
 
-			// special handling of ArticleComments
-			if ( class_exists( 'ArticleComment' ) &&
-				MWNamespace::isTalk( $title->getNamespace() ) &&
-				ArticleComment::isTitleComment( $title ) &&
-				$title->getNamespace() != NS_USER_WALL
-			) {
-				self::addConfirmation(
-					wfMessage( 'oasis-confirmation-comment-deleted' )->escaped()
-				);
+		// special handling of ArticleComments
+		if ( class_exists( 'ArticleComment' ) &&
+			MWNamespace::isTalk( $title->getNamespace() ) &&
+			ArticleComment::isTitleComment( $title ) &&
+			$title->getNamespace() != NS_USER_WALL
+		) {
+			self::addConfirmation(
+				wfMessage( 'oasis-confirmation-comment-deleted' )->escaped()
+			);
 
-				return true;
-			}
-
-			$pageName = $title->getPrefixedText();
-
-			$message = wfMessage(
-				'oasis-confirmation-page-deleted',
-				$pageName
-			)->inContentLanguage()->parse();
-
-			Hooks::run( 'OasisAddPageDeletedConfirmationMessage', array( &$title, &$message ) );
-
-			self::addConfirmation( $message, self::CONFIRMATION_CONFIRM );
-
-			// redirect to main page
-			$wgOut->redirect( Title::newMainPage()->getFullUrl( array( 'cb' => rand( 1, 1000 ) ) ) );
+			return true;
 		}
+
+		$pageName = $title->getPrefixedText();
+
+		$message = wfMessage(
+			'oasis-confirmation-page-deleted',
+			$pageName
+		)->inContentLanguage()->parse();
+
+		Hooks::run( 'OasisAddPageDeletedConfirmationMessage', array( &$title, &$message ) );
+
+		self::addConfirmation( $message, self::CONFIRMATION_CONFIRM );
+
+		// redirect to main page
+		$wgOut->redirect( Title::newMainPage()->getFullUrl( array( 'cb' => rand( 1, 1000 ) ) ) );
 
 		return true;
 	}
@@ -250,33 +245,31 @@ class BannerNotificationsController extends WikiaController {
 	public static function addLogOutConfirmation( &$user, &$injected_html, $oldName ): bool {
 		global $wgOut, $wgRequest;
 
-		if ( F::app()->checkSkin( 'oasis' ) ) {
 
-			self::addConfirmation(
-				wfMessage( 'oasis-confirmation-user-logout' )->escaped()
+		self::addConfirmation(
+			wfMessage( 'oasis-confirmation-user-logout' )->escaped()
+		);
+
+		// redirect the page user has been on when he clicked "log out" link
+		$mReturnTo = $wgRequest->getVal( 'returnto' );
+		$mReturnToQuery = $wgRequest->getVal( 'returntoquery' );
+
+		$title = Title::newFromText( $mReturnTo );
+		if ( !empty( $title ) ) {
+			$mResolvedReturnTo = strtolower(
+				array_shift( SpecialPageFactory::resolveAlias( $title->getDBKey() ) )
 			);
-
-			// redirect the page user has been on when he clicked "log out" link
-			$mReturnTo = $wgRequest->getVal( 'returnto' );
-			$mReturnToQuery = $wgRequest->getVal( 'returntoquery' );
-
-			$title = Title::newFromText( $mReturnTo );
-			if ( !empty( $title ) ) {
-				$mResolvedReturnTo = strtolower(
-					array_shift( SpecialPageFactory::resolveAlias( $title->getDBKey() ) )
-				);
-				if ( in_array( $mResolvedReturnTo,
-					array( 'userlogout','signup','connect' ) )
-				) {
-					$title = Title::newMainPage();
-					$mReturnToQuery = '';
-				}
-
-				$redirectUrl = $title->getFullUrl( $mReturnToQuery );
-				$wgOut->redirect( $redirectUrl );
-
-				wfDebug( __METHOD__ . " - {$redirectUrl}\n" );
+			if ( in_array( $mResolvedReturnTo,
+				array( 'userlogout','signup','connect' ) )
+			) {
+				$title = Title::newMainPage();
+				$mReturnToQuery = '';
 			}
+
+			$redirectUrl = $title->getFullUrl( $mReturnToQuery );
+			$wgOut->redirect( $redirectUrl );
+
+			wfDebug( __METHOD__ . " - {$redirectUrl}\n" );
 		}
 
 		return true;
@@ -289,29 +282,8 @@ class BannerNotificationsController extends WikiaController {
 		global $wgUser;
 
 		// as for now only add it for logged-in (BugId:1317)
-		if ( F::app()->checkSkin( 'oasis' ) && $wgUser->isLoggedIn() ) {
+		if ( $wgUser->isLoggedIn() ) {
 			self::addConfirmation( wfMessage( 'oasis-edit-saved' )->escaped() );
-		}
-
-		return true;
-	}
-
-	/**
-	 * Adds assets for BannerNotifications on the bottom of the body on Monobook
-	 *
-	 * @param Skin $skin
-	 * @param string $text
-	 *
-	 * @return bool true
-	 */
-	public static function onSkinAfterBottomScripts( Skin $skin, &$text ): bool {
-
-		if ( $skin->getSkinName() === 'monobook' ) {
-			$styles = AssetsManager::getInstance()->getURL( 'banner_notifications_scss' );
-
-			foreach ( $styles as $style ) {
-				$text .= Html::linkedStyle( $style );
-			}
 		}
 
 		return true;

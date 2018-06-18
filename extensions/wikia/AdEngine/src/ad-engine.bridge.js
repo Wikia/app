@@ -2,6 +2,7 @@ import { EventEmitter } from 'events';
 import {
 	client,
 	context,
+	GptSizeMap,
 	scrollListener,
 	slotListener,
 	slotService,
@@ -11,19 +12,23 @@ import {
 import {
 	BigFancyAdAbove,
 	BigFancyAdBelow,
-	universalAdPackage
+	BigFancyAdInPlayer,
+	universalAdPackage,
+	isProperGeo,
+	getSamplingResults,
+	utils as adProductsUtils
 } from '@wikia/ad-products';
 
 import { createTracker } from './tracking/porvata-tracker-factory';
 import TemplateRegistry from './templates/templates-registry';
 import AdUnitBuilder from './ad-unit-builder';
 import config from './context';
-import slotConfig from './slots';
+import { getSlotsContext } from './slots';
 import './ad-engine.bridge.scss';
 
 context.extend(config);
 
-const supportedTemplates = [BigFancyAdAbove, BigFancyAdBelow];
+const supportedTemplates = [BigFancyAdAbove, BigFancyAdBelow, BigFancyAdInPlayer];
 
 function init(
 	adTracker,
@@ -33,16 +38,22 @@ function init(
 	pageLevelTargeting,
 	legacyContext,
 	legacyBtfBlocker,
-	skin
+	skin,
+	trackingOptIn
 ) {
+	const isOptedIn = trackingOptIn.isOptedIn();
+
 	TemplateRegistry.init(legacyContext, mercuryListener);
 	scrollListener.init();
 
-	context.extend({slots: slotConfig[skin]});
+	context.set('slots', getSlotsContext(legacyContext, skin));
 	context.push('listeners.porvata', createTracker(legacyContext, geo, pageLevelTargeting, adTracker));
+	context.set('options.trackingOptIn', isOptedIn);
+	adProductsUtils.setupNpaContext();
 
 	overrideSlotService(slotRegistry, legacyBtfBlocker);
 	updatePageLevelTargeting(legacyContext, pageLevelTargeting, skin);
+	syncSlotsStatus(slotRegistry, context.get('slots'));
 
 	const wikiIdentifier = legacyContext.get('targeting.wikiIsTop1000') ?
 		context.get('targeting.s1') : '_not_a_top1k_wiki';
@@ -50,33 +61,46 @@ function init(
 	context.set('custom.wikiIdentifier', wikiIdentifier);
 	context.set('options.contentLanguage', window.wgContentLanguage);
 
-	if (legacyContext.get('opts.isBLBViewportEnabled')) {
-		context.push('slots.BOTTOM_LEADERBOARD.viewportConflicts', 'TOP_RIGHT_BOXAD');
-	}
+	legacyContext.addCallback(() => {
+		context.set('slots', getSlotsContext(legacyContext, skin));
+		syncSlotsStatus(slotRegistry, context.get('slots'));
+	});
 }
 
 function overrideSlotService(slotRegistry, legacyBtfBlocker) {
 	const slotsCache = {};
 
-	slotService.getBySlotName = (id) => {
-		let slot = slotRegistry.get(id);
-		if (id && slot) {
-			if (!slotsCache.hasOwnProperty(id)) {
-				slotsCache[id] = unifySlotInterface(slot);
+	slotService.get = (slotName) => {
+		let slot = slotRegistry.get(slotName);
+		if (slotName && slot) {
+			if (!slotsCache.hasOwnProperty(slotName)) {
+				slotsCache[slotName] = unifySlotInterface(slot);
 			}
 
-			return slotsCache[id];
+			return slotsCache[slotName];
 		}
 	};
 
-	slotService.clearSlot = (id) => {
-		delete slotsCache[id];
+	slotService.clearSlot = (slotName) => {
+		delete slotsCache[slotName];
 	};
 
 	slotService.legacyEnabled = slotService.enable;
 	slotService.enable = (slotName) => {
 		legacyBtfBlocker.unblock(slotName);
+		slotRegistry.enable(slotName);
 	};
+	slotService.disable = (slotName) => {
+		slotRegistry.disable(slotName);
+	};
+}
+
+function syncSlotsStatus(slotRegistry, slotsInContext) {
+	for (let slot in slotsInContext) {
+		if (slotsInContext[slot].disabled) {
+			slotRegistry.disable(slot);
+		}
+	}
 }
 
 function unifySlotInterface(slot) {
@@ -95,9 +119,14 @@ function unifySlotInterface(slot) {
 		getViewportConflicts: () => {
 			return slotContext.viewportConflicts || [];
 		},
+		hasDefinedViewportConflicts: () => {
+			return (slotContext.viewportConflicts || []).length > 0;
+		},
+		isRepeatable: () => false,
 		setConfigProperty: (key, value) => {
 			context.set(`slots.${slot.name}.${key}`, value);
-		}
+		},
+		getStatus: () => null
 	});
 	slot.pre('viewed', (event) => {
 		slotListener.emitImpressionViewable(event, slot);
@@ -108,12 +137,14 @@ function unifySlotInterface(slot) {
 
 function loadCustomAd(fallback) {
 	return (params) => {
-		if (getSupportedTemplateNames().includes(params.type)) {
+		const isTemplateSupported = getSupportedTemplateNames().includes(params.type);
+
+		if (isTemplateSupported && params.slotName) {
 			if (params.slotName.indexOf(',') !== -1) {
 				params.slotName = params.slotName.split(',')[0];
 			}
 
-			const slot = slotService.getBySlotName(params.slotName);
+			const slot = slotService.get(params.slotName);
 			slot.container.parentNode.classList.add('gpt-ad');
 
 			context.set(`slots.${slot.getSlotName()}.targeting.src`, params.src);
@@ -121,6 +152,8 @@ function loadCustomAd(fallback) {
 			context.set(`slots.${slot.getSlotName()}.options.loadedProduct`, params.adProduct);
 
 			templateService.init(params.type, slot, params);
+		} else if (isTemplateSupported) {
+			templateService.init(params.type, null, params);
 		} else {
 			fallback(params);
 		}
@@ -134,8 +167,8 @@ function getSupportedTemplateNames() {
 function updatePageLevelTargeting(legacyContext, params, skin) {
 	context.set('custom.device', utils.client.getDeviceType());
 	context.set('targeting.skin', skin);
-	context.set('options.video.moatTracking.enabled', legacyContext.get('opts.porvataMoatTrackingEnabled'));
 	context.set('options.video.moatTracking.sampling', legacyContext.get('opts.porvataMoatTrackingSampling'));
+	context.set('options.video.moatTracking.enabled', legacyContext.get('opts.porvataMoatTrackingEnabled'));
 
 	Object.keys(params).forEach((key) => context.set(`targeting.${key}`, params[key]));
 }
@@ -148,15 +181,18 @@ function checkAdBlocking(detection) {
 }
 
 function passSlotEvent(slotName, eventName) {
-	slotService.getBySlotName(slotName).emit(eventName);
+	slotService.get(slotName).emit(eventName);
 }
 
 export {
 	init,
+	GptSizeMap,
 	loadCustomAd,
 	checkAdBlocking,
 	passSlotEvent,
 	context,
 	universalAdPackage,
+	isProperGeo,
+	getSamplingResults,
 	slotService
 };

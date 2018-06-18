@@ -191,31 +191,6 @@ abstract class BagOStuff {
 	}
 
 	/**
-	 * Get multiple items at once
-	 *
-	 * @author Władysław Bodzek <wladek@wikia-inc.com>
-	 * @param $keys array List of keys
-	 * @return array Data associated with given keys, no data is indicated by "false"
-	 */
-	public function getMulti( $keys ) {
-		$data = array();
-		foreach ($keys as $key) {
-			$data[$key] = $this->get($key);
-		}
-		return $data;
-	}
-
-	/**
-	 * Prefetch the following keys if local cache is enabled, otherwise don't do anything
-	 *
-	 * @author Władysław Bodzek <wladek@wikia-inc.com>
-	 * @param $keys array List of keys to prefetch
-	 */
-	public function prefetch( $keys ) {
-		// noop
-	}
-
-	/**
 	 * Remove value from local cache which is associated with a given key
 	 *
 	 * @author Władysław Bodzek <wladek@wikia-inc.com>
@@ -226,5 +201,3 @@ abstract class BagOStuff {
 	}
 
 }
-
-

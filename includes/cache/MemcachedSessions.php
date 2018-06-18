@@ -121,11 +121,10 @@ function &getMemc() {
 	global $wgSessionMemCachedServers, $wgMemc, $wgSessionMemc;
 	global $wgMemCachedPersistent, $wgMemCachedDebug;
 
-	if( !empty( $wgSessionMemCachedServers ) && is_array( $wgSessionMemCachedServers ) && class_exists( 'MemcachedClientforWiki' ) ) {
+	if( !empty( $wgSessionMemCachedServers ) && is_array( $wgSessionMemCachedServers ) ) {
 		if( !empty( $wgSessionMemc ) && is_object( $wgSessionMemc ) && $wgSessionMemc instanceof MemCachedClientforWiki ) {
 			return $wgSessionMemc;
-		}
-		else {
+		} else {
 			$wgSessionMemc = new MemCachedClientforWiki(
 				array( 'persistant' => $wgMemCachedPersistent, 'compress_threshold' => 1500 ) );
 			$wgSessionMemc->set_servers( $wgSessionMemCachedServers );
@@ -133,8 +132,7 @@ function &getMemc() {
 
 			return $wgSessionMemc;
 		}
-	}
-	else {
+	} else {
 		return $wgMemc;
 	}
 }

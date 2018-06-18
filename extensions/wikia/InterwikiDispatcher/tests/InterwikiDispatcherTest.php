@@ -5,6 +5,9 @@ class InterwikiDispatcherTest extends WikiaBaseTest {
 	public function setUp() {
 		$this->setupFile = dirname( __FILE__ ) . "/../SpecialInterwikiDispatcher.php";
 		parent::setUp();
+
+		$this->mockGlobalVariable( 'wgWikiaEnvironment', WIKIA_ENV_PROD );
+		$this->mockGlobalVariable( 'wgDevelEnvironment', false );
 	}
 	/**
 	 * @param string $interwikiPageName
@@ -21,11 +24,11 @@ class InterwikiDispatcherTest extends WikiaBaseTest {
 		return [
 			[
 				'$interwikiPageName' => 'w:c:muppet:Elmo',
-				'$expected' =>  'http://muppet.wikia.com/wiki/Elmo'
+				'$expected' =>  '//muppet.wikia.com/wiki/Elmo'
 			],
 			[
 				'$interwikiPageName' => 'w:c:muppet:NonExisting',
-				'$expected' =>  'http://muppet.wikia.com/wiki/NonExisting'
+				'$expected' =>  '//muppet.wikia.com/wiki/NonExisting'
 			],
 			[
 				'$interwikiPageName' => 'c:muppet:Elmo',

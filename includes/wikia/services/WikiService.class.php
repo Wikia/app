@@ -73,7 +73,7 @@ class WikiService extends WikiaModel {
 
 		// Get founder
 		$userIds = [];
-		if ( $includeFounder ) {
+		if ( $includeFounder && $wiki->city_founding_user ) {
 			$userIds[] = $wiki->city_founding_user;
 		}
 
@@ -607,13 +607,13 @@ class WikiService extends WikiaModel {
 	 *
 	 * @return string The domain name, without protocol
 	 */
-	private function getDomainByWikiId( $wikiId ){
-		//this has its' own cache layer
-		$domain = WikiFactory::getVarValueByName( 'wgServer', $wikiId );
+	private function getDomainByWikiId( $wikiId ) {
+		// language-path - can clients handle the language path after the domain name?
+		$cityUrl = WikiFactory::cityIDtoUrl( $wikiId );  //this has its' own cache layer
 		$ret = null;
 
-		if ( !empty( $domain ) ) {
-			$ret = preg_replace( '!^https?://!', '', $domain );
+		if ( !empty( $cityUrl ) ) {
+			$ret = preg_replace( '!^https?://!', '', $cityUrl );
 		}
 
 		return $ret;

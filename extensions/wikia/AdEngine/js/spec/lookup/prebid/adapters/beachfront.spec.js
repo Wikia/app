@@ -4,6 +4,7 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.beachfront', function () {
 
 	var mocks = {
 		adContext: {
+			get: function() {},
 			getContext: function () {
 				return mocks.context;
 			}
@@ -16,11 +17,6 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.beachfront', function () {
 		},
 		log: function () {
 		},
-		instartLogic: {
-			isBlocking: function () {
-				return false;
-			}
-		},
 		loc: {
 			href: '//bar'
 		}
@@ -32,7 +28,6 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.beachfront', function () {
 		return modules['ext.wikia.adEngine.lookup.prebid.adapters.beachfront'](
 			mocks.adContext,
 			mocks.slotsContext,
-			mocks.instartLogic,
 			mocks.loc,
 			mocks.log
 		);
@@ -47,16 +42,15 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.beachfront', function () {
 	});
 
 	it('Is disabled when context is disabled', function () {
-		mocks.context.bidders.beachfront = false;
-		var beachfront = getBeachfront();
+		spyOn(mocks.adContext, 'get').and.returnValue(false);
 
-		expect(beachfront.isEnabled()).toBeFalsy();
+		expect(getBeachfront().isEnabled()).toBeFalsy();
 	});
 
 	it('Is enabled when context is enabled', function () {
-		var beachfront = getBeachfront();
+		spyOn(mocks.adContext, 'get').and.returnValue(true);
 
-		expect(beachfront.isEnabled()).toBeTruthy();
+		expect(getBeachfront().isEnabled()).toBeTruthy();
 	});
 
 	it('prepareAdUnit returns data in correct shape', function () {
@@ -65,8 +59,11 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.beachfront', function () {
 			appId: 'ww-11-kk-11-44'
 		})).toEqual({
 			code: 'INCONTENT_PLAYER',
-			sizes: [640, 480],
-			mediaType: 'video',
+			mediaTypes: {
+				video: {
+					playerSize: [640, 480]
+				}
+			},
 			bids: [
 				{
 					bidder: 'beachfront',

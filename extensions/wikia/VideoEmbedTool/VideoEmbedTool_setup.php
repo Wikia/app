@@ -102,5 +102,6 @@ function VET() {
 	}
 	$resp = new AjaxResponse( $html );
 	$resp->setContentType( 'text/html' );
+	$resp->setCacheDuration( 0 );
 	return $resp;
 }

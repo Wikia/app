@@ -157,7 +157,7 @@ abstract class BaseTask {
 		$taskLists = $this->convertToTaskLists();
 		$taskIds = AsyncTaskList::batch( $taskLists );
 
-		return count( $taskIds ) == 1 ? $taskIds[0] : $taskIds;
+		return is_array( $taskIds ) && count( $taskIds ) == 1 ? $taskIds[0] : $taskIds;
 	}
 
 	/**
@@ -356,11 +356,21 @@ abstract class BaseTask {
 	}
 
 	/**
+	 * @deprecated
 	 * @see AsyncTaskList::setPriority
 	 * @param $queueName
 	 * @return $this
 	 */
 	public function setPriority( $queueName ) {
+		return $this->setQueue( $queueName );
+	}
+
+	/**
+	 * @see AsyncTaskList::setQueue
+	 * @param $queueName
+	 * @return $this
+	 */
+	public function setQueue( $queueName ) {
 		$this->queueName = $queueName;
 		return $this;
 	}

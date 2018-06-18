@@ -3,40 +3,31 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.openx', function () {
 	'use strict';
 
 	var mocks = {
-		instantGlobals: {
-			wgAdDriverOpenXPrebidBidderCountries: ['PL']
-		},
-		geo: {
-			isProperGeo: function() {
-			}
+		adContext: {
+			get: function () {}
 		},
 		slotsContext: {
 			filterSlotMap: function (map) {
 				return map;
-			}
-		},
-		instartLogic: {
-			isBlocking: function() {
-				return false;
 			}
 		}
 	};
 
 	function getOpenx() {
 		return modules['ext.wikia.adEngine.lookup.prebid.adapters.openx'](
-			mocks.slotsContext,
-			mocks.instartLogic,
-			mocks.geo,
-			mocks.instantGlobals
+			mocks.adContext,
+			mocks.slotsContext
 		);
 	}
 
-	it('isEnabled checks the countries instant global', function () {
-		var openx = getOpenx(),
-			isProperGeoSpy = spyOn(mocks.geo, 'isProperGeo');
+	it('enables bidder if flag is on and user is not blocking ads', function () {
+		spyOn(mocks.adContext, 'get').and.returnValue(true);
+		expect(getOpenx().isEnabled()).toBeTruthy();
+	});
 
-		openx.isEnabled();
-		expect(isProperGeoSpy).toHaveBeenCalledWith(['PL']);
+	it('disables bidder if flag is off and user is not blocking ads', function () {
+		spyOn(mocks.adContext, 'get').and.returnValue(false);
+		expect(getOpenx().isEnabled()).toBeFalsy();
 	});
 
 	it('prepareAdUnit returns data in correct shape', function () {
@@ -49,7 +40,11 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.openx', function () {
 			unit: 123
 		})).toEqual({
 			code: 'TOP_LEADERBOARD',
-			sizes: [[728, 90], [970, 250]],
+			mediaTypes: {
+				banner: {
+					sizes: [[728, 90], [970, 250]]
+				}
+			},
 			bids: [
 				{
 					bidder: 'openx',

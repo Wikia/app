@@ -32,8 +32,6 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 		$loginTitle = SpecialPage::getTitleFor( 'UserLogin' );
 		$this->formPostAction = $loginTitle->getLocalUrl();
 
-		$skin = $this->wg->User->getSkin();
-		$this->isMonobookOrUncyclo = ( $skin instanceof SkinMonoBook || $skin instanceof SkinUncyclopedia );
 		$this->userLoginHelper = new UserLoginHelper();
 	}
 

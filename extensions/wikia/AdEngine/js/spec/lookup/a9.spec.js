@@ -18,7 +18,6 @@ describe('Method ext.wikia.adEngine.lookup.a9', function () {
 		return modules['ext.wikia.adEngine.lookup.lookupFactory'](
 			mocks.adContext,
 			mocks.adTracker,
-			mocks.adBlockDetection,
 			mocks.lazyQueue,
 			mocks.log
 		);
@@ -31,6 +30,8 @@ describe('Method ext.wikia.adEngine.lookup.a9', function () {
 			getFactory(),
 			mocks.document,
 			mocks.log,
+			mocks.trackingOptIn,
+			mocks.cmp,
 			mocks.window
 		);
 	}
@@ -80,9 +81,6 @@ describe('Method ext.wikia.adEngine.lookup.a9', function () {
 			},
 			track: noop
 		},
-		adBlockDetection: {
-			addOnBlockingCallback: noop
-		},
 		document: {
 			createElement: function () {
 				return {
@@ -110,6 +108,19 @@ describe('Method ext.wikia.adEngine.lookup.a9', function () {
 			}
 		},
 		log: noop,
+		trackingOptIn: {
+			pushToUserConsentQueue: function (cb) {
+				cb(true);
+			}
+		},
+		cmp: {
+			getConsentString: function () {
+				return 'abcdef1234';
+			},
+			getGdprApplies: function () {
+				return true;
+			}
+		},
 		window: {
 			apstag: {
 				getAdsCallback: function (id, callback) {
@@ -120,6 +131,8 @@ describe('Method ext.wikia.adEngine.lookup.a9', function () {
 			}
 		}
 	};
+
+	mocks.log.levels = {};
 
 	testCases = [
 		// Empty

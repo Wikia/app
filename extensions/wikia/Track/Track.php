@@ -30,7 +30,6 @@ class Track {
 			   'lid=' . WikiFactory::LangCodeToId( $wgContLanguageCode ) . $sep .
 			   'x=' . $wgDBname . $sep .
 			   'y=' . $wgDBcluster . $sep .
-			   'u=' . $wgUser->getID() . $sep .
 			   'a=' . ( is_object( $wgArticle ) ? $wgArticle->getID() : null ) . $sep .
 			   's=' . RequestContext::getMain()->getSkin()->getSkinName() . $sep .
 			   ( $wgTitle && !is_object( $wgArticle ) ? $sep . 'pg=' . urlencode( $wgTitle->getPrefixedDBkey() ) : '' ) .
@@ -88,9 +87,7 @@ class Track {
 			'cd21' => $wgTitle->getArticleID(),
 			'cd25' => $wgTitle->getNamespace(),
 		];
-		if ( !$wgUser->isAnon() ) {
-			$params[ 'uid' ] = md5( $wgUser->getId() . $wgGAUserIdSalt );
-		}
+
 		$params = array_merge( $params, $extraParams );
 
 		return static::GA_URL . '/collect?' . http_build_query( $params );
@@ -102,8 +99,9 @@ class Track {
 		return $tids;
 	}
 
-	private static function getViewJS( $param = null ) {
+	public static function getViewJS( $param = null ) {
 		global $wgDevelEnvironment;
+		$urlProvider = new \Wikia\Service\Gateway\KubernetesExternalUrlProvider();
 
 		// Fake beacon and varnishTime values for development environment
 		if ( !empty( $wgDevelEnvironment ) ) {
@@ -111,10 +109,9 @@ class Track {
 
 		} else {
 			$url = Track::getURL( 'view', '', $param, false );
-
 			$script = ( new Wikia\Template\MustacheEngine )
 				->setPrefix( dirname( __FILE__ ) . '/templates' )
-				->setData(['url' => $url])
+				->setData(['url' => $url, 'event-logger-url' => $urlProvider->getUrl( 'event-logger' ) ] )
 				->render('track.mustache');
 		}
 
@@ -200,7 +197,6 @@ class Track {
 		$vars['wgCookieDomain'] = $wgCookieDomain;
 		$vars['wgCookiePath'] = $wgCookiePath;
 
-		$scripts .= Track::getViewJS();
 		return true;
 	}
 }
