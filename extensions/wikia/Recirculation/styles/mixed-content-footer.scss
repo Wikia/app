@@ -568,9 +568,7 @@ h1.mcf-header {
 		margin-top: 12px;
 
 		.wds-avatar {
-			height: 26px;
-			min-width: 26px;
-			width: 26px;
+			@include wds-avatar(26px, $wds-color-faint-gray, $wds-color-faint-gray);
 		}
 	}
 

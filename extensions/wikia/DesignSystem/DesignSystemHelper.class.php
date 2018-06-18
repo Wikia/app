@@ -164,4 +164,18 @@ class DesignSystemHelper {
 
 		return $message->escaped();
 	}
+
+	public static function renderAvatar( $username, $size = 30 ) {
+		$src = AvatarService::getAvatarUrl( $username, $size );
+		$img =
+			Html::rawElement( 'img', [
+					'class' => 'wds-avatar__image',
+					'src' => $src,
+					'alt' => $username,
+					'title' => $username,
+				] );
+		$container = Html::rawElement( 'div', [ 'class' => 'wds-avatar' ], $img );
+
+		return $container;
+	}
 }

@@ -5,7 +5,7 @@
 		] ); ?>
 	<? endif; ?>
 	<?php foreach ( $buttons->buttons as $button ): ?>
-		<a class="wds-button wds-is-squished <?= $button->class ?>" href="<?= $button->href ?>"
+		<a class="wds-button <?= $button->class ?>" href="<?= $button->href ?>"
 		   id="<?= $button->id ?>">
 			<? if ( !empty( $button->icon ) ): ?>
 				<?= DesignSystemHelper::renderSvg( $button->icon, 'wds-icon wds-icon-small' ); ?>
