@@ -1,6 +1,7 @@
 @import 'skins/shared/color';
 @import 'breakpoints-variables';
 @import 'skins/shared/mixins/calc';
+@import 'extensions/wikia/DesignSystem/bower_components/design-system/dist/scss/wds-functions/index';
 
 $background-height: get_command_line_param('background-image-height', 0);
 $background-width: get_command_line_param('background-image-width', 0);
@@ -181,7 +182,7 @@ body.skin-oasis {
 
 body.skin-oasis.uap-skin {
 	$uap-color: mix(white, $color-body, 15%);
-	@if (lightness($color-body) > 49) {
+	@if (brightness($color-body) > 125) {
 		$uap-color: mix(black, $color-body, 10%);
 	}
 	background: {

@@ -1,6 +1,7 @@
 @import 'skins/shared/mixins/flexbox';
 @import 'skins/shared/color';
 @import 'skins/shared/functions';
+@import 'extensions/wikia/DesignSystem/bower_components/design-system/dist/scss/wds-functions/index';
 
 @import 'avatar';
 @import 'clamp';
@@ -27,14 +28,14 @@ $discussion-deleted-actions-opacity: .5;
 $upvote-icon-activated-color: #e3bd00;
 
 $overlay-color: #fff;
-@if lightness($color-page) > 49 {
+@if brightness($color-page) > 125 {
 	$overlay-color: #000;
 }
 
 $overlay-large-value: 25%;
 $overlay-small-value: 15%;
 
-@if lightness($color-page) > 10 {
+@if brightness($color-page) > 25.5 {
 	$overlay-large-value: 6%;
 	$overlay-small-value: 3%;
 }
