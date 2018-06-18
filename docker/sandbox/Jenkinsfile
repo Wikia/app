@@ -23,8 +23,6 @@ node("docker-daemon") {
     def imageTag
 
     stage("Clone repositories") {
-        sh('pwd')
-
         dir("app") {
             git url: "git@github.com:Wikia/app.git",
                 branch: params.app_branch,
@@ -45,8 +43,6 @@ node("docker-daemon") {
             println("Wikia/config commit: $configHash")
         }
 
-        sh("rm -rf cache && mkdir cache")
-
         imageTag = "$appHash.$configHash"
 
         println("Image tag: $imageTag")
@@ -65,13 +61,27 @@ node("docker-daemon") {
 
     stage("Build and push images") {
         dir("app") {
-            sh("docker pull artifactory.wikia-inc.com/sus/php-wikia-base:latest")
+            def status = sh(script: """
+                curl -u ${env.JENKINS_ARTIFACTORY_USERNAME}:${env.JENKINS_ARTIFACTORY_PASSWORD} \
+                -w "%{http_code}" -s -I -o /dev/null \
+                -XGET "https://artifactory.wikia-inc.com/artifactory/api/storage/dockerv2-local/sus/mediawiki-sandbox-php/${imageTag}"
+            """, returnStdout: true).trim()
 
-            sh("docker build  . -f docker/sandbox/Dockerfile-nginx -t $nginxImage:$imageTag")
-            sh("docker build .. -f docker/sandbox/Dockerfile-php -t $mediawikiImage:$imageTag")
+            if (status == "200") {
+                imageExists = true
+            }
 
-            sh("docker push $nginxImage:$imageTag")
-            sh("docker push $mediawikiImage:$imageTag")
+            if (!imageExists) {
+                sh("docker pull artifactory.wikia-inc.com/sus/php-wikia-base:latest")
+
+                sh("docker build  . -f docker/sandbox/Dockerfile-nginx -t $nginxImage:$imageTag")
+                sh("docker build .. -f docker/sandbox/Dockerfile-php -t $mediawikiImage:$imageTag")
+
+                sh("docker push $nginxImage:$imageTag")
+                sh("docker push $mediawikiImage:$imageTag")
+            } else {
+                println("Image tag ($imageTag) already exists")
+            }
         }
     }
 
