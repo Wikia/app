@@ -65,9 +65,9 @@ class DWDimensionApiControllerSQL {
 			STR_TO_DATE(img_timestamp, \'%Y%m%d%H%i%S\') AS created_at
 		FROM image
 		WHERE img_name > \'$img_name\'
-        ORDER BY
-            img_name
-        LIMIT $limit';
+		ORDER BY
+			img_name
+		LIMIT $limit';
 
 	const DIMENSION_WIKI_INFO = '
 		SELECT
