@@ -15,5 +15,9 @@ ADD ./phpdev.ini /usr/local/etc/php/conf.d/
 
 ADD ./xdebug.ini /usr/local/etc/php/conf.d/
 
+VOLUME /usr/wikia/slot1/current/src
+VOLUME /usr/wikia/slot1/current/config
+VOLUME /usr/wikia/slot1/current/cache/messages
+
 # we no longer need root's super-power
 USER nobody
