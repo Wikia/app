@@ -4,11 +4,12 @@
 @import 'icons';
 @import 'player';
 @import 'typography';
+@import 'wds-breakpoints';
+@import 'wds-grid';
 @import 'z-index-scale';
 
+$wds-rounded-corner-radius: 3px;
 // Component variables
-$wds-button-border-width: 1px;
-$wds-button-padding-horizontal: 18px;
 $wds-button-transition-duration: 300ms;
 $wds-community-header-background-height: 105px;
 // Keep in sync with ThemeSettings::BACKGROUND_HEIGHT

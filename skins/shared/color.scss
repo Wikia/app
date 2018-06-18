@@ -1,3 +1,5 @@
+@import 'extensions/wikia/DesignSystem/bower_components/design-system/dist/scss/wds-functions/index';
+
 // Generic colors
 $color-black: #000;
 $color-white: #fff;
@@ -120,7 +122,7 @@ $color-page-shadow: #333;
 // Buttons
 $color-button-highlight: lighten($color-buttons, 10%);
 $color-button-text: $color-white;
-@if lightness($color-buttons) > 49 {
+@if brightness($color-buttons) > 125 {
 	$color-button-text: $color-black;
 }
 $color-secondary-button-highlight: mix($color-page, $color-white, 94%);
