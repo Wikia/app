@@ -1,5 +1,6 @@
 // TODO
 // 1. Sandbox properties have to be moved to Jenkins Pipeline parameters
+// 2. Setup different ENV variables in Dockerfile-php
 
 def sandbox = "sandbox-sus2"
 def environment = "sandbox"
@@ -93,7 +94,6 @@ EOL""")
 
         withDockerContainer(kubectlImage) {
             sh """#!/bin/sh
-            kubectl --context kube-sjc-prod -n prod delete -f app/docker/sandbox/k8s.yaml
             kubectl --context kube-sjc-prod -n prod apply -f app/docker/sandbox/k8s.yaml"""
         }
     }
