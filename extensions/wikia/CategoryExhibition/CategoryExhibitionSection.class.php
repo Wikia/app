@@ -113,7 +113,7 @@ abstract class CategoryExhibitionSection {
 			}
 		}
 
-		return CategoryDataService::getAlphabetical( $sCategoryDBKey, $ns, $exclude );
+		return CategoryDataService::getAlphabetical( $sCategoryDBKey, [ $ns ], $exclude )->getAll();
 	}
 
 	/**
@@ -156,8 +156,8 @@ abstract class CategoryExhibitionSection {
 	private function renderItems( $items ) {
 		$oTmpl = new EasyTemplate( __DIR__ . '/templates/' );
 		$out = [];
-		foreach ( $items as $item ) {
-			$articleData = $this->getTemplateVarsForItem( $item['page_id'] );
+		foreach ( $items as $itemTitle ) {
+			$articleData = $this->getTemplateVarsForItem( $itemTitle );
 			if ( is_array( $articleData ) ) {
 				$oTmpl->set( 'row', $articleData );
 				$out[] = $oTmpl->render( $this->templateName );
@@ -211,8 +211,7 @@ abstract class CategoryExhibitionSection {
 		return $imageUrl;
 	}
 
-	protected function getTemplateVarsForItem( $pageId ) {
-		$oTitle = Title::newFromID( $pageId );
+	protected function getTemplateVarsForItem( $oTitle ) {
 		if ( !( $oTitle instanceof Title ) ) {
 			return false;
 		}
@@ -220,7 +219,7 @@ abstract class CategoryExhibitionSection {
 		$oMemCache = F::App()->wg->memc;
 		$sKey = wfMemcKey(
 			'category_exhibition_category_cache_1',
-			$pageId,
+			$oTitle->getArticleID(),
 			$this->cacheHelper->getTouched( $oTitle )
 		);
 
@@ -231,7 +230,7 @@ abstract class CategoryExhibitionSection {
 		}
 
 		$snippetText = '';
-		$imageUrl = $this->getImageFromPageId( $pageId );
+		$imageUrl = $this->getImageFromPageId( $oTitle->getArticleID() );
 
 		if ( empty( $imageUrl ) ) {
 			$snippetService = new ArticleService ( $oTitle );
@@ -239,7 +238,7 @@ abstract class CategoryExhibitionSection {
 		}
 
 		$returnData = array(
-			'id' => $pageId,
+			'id' => $oTitle->getArticleID(),
 			'img' => $imageUrl,
 			'width' => $this->thumbWidth,
 			'height' => $this->thumbHeight,

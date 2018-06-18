@@ -131,7 +131,7 @@ class TitleBatch {
 	/**
 	 * Get the collection of Title objects
 	 *
-	 * @return array List of Title objects
+	 * @return Title[]
 	 */
 	public function getAll() {
 		return $this->titles;

@@ -8,7 +8,7 @@ class CategoryExhibitionSectionPages extends CategoryExhibitionSection {
 		global $wgCategoryExhibitionPagesSectionRows;
 		$this->sectionId = 'mw-pages';
 		$this->headerMessage = wfMessage( 'category-exhibition-page-header', $this->categoryTitle->getText() );
-		return $this->generateData( $this->getExcludes(), $wgCategoryExhibitionPagesSectionRows * 4, true );
+		$this->generateData( $this->getExcludes(), $wgCategoryExhibitionPagesSectionRows * 4, true );
 	}
 
 	protected function getTitleForElement( $oTitle ){

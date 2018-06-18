@@ -36,7 +36,7 @@ class WikiaMobileCategoryModel extends WikiaModel {
 			$items = $this->wg->memc->get( $cacheKey );
 
 			if ( !is_array( $items ) ) {
-				$exh = CategoryDataService::getMostVisited( $title->getDBkey(), null, self::EXHIBITION_ITEMS_LIMIT );
+				$exh = CategoryDataService::getMostVisited( $title->getDBkey(), [], self::EXHIBITION_ITEMS_LIMIT );
 				$ids = array_keys( $exh );
 				$length = count( $ids );
 				$items = [ ];
