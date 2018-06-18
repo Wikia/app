@@ -271,8 +271,8 @@ class DWDimensionApiController extends WikiaApiController {
 		$result = [];
 		try {
 			$query = DWDimensionApiControllerSQL::DIMENSION_WIKI_IMAGES;
-			$query = str_replace( '$limit', $limit, $query);
-			$query = str_replace( '$img_name', $afterImageName, $query);
+			$query = str_replace( '$limit', $limit, $query );
+			$query = str_replace( '$img_name', $afterImageName, $query );
 			$rows = $db->query( $query, __METHOD__ );
 			if ( !empty( $rows ) ) {
 				while ( $row = $db->fetchObject( $rows ) ) {
