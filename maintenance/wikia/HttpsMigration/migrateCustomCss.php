@@ -191,8 +191,15 @@ class MigrateCustomCssToHttps extends Maintenance {
 	 * For host that we know for sure that support https, upgrade the url to use it.
 	 */
 	private function upgradeThirdPartyUrl( $url ) {
-		$knownHttpsHosts = [ 'en.wikipedia.org', 'i.imgur.com', 'upload.wikimedia.org', 'fonts.googleapis.com',
-			'commons.wikimedia.org' ];
+		$knownHttpsHosts = [
+			'en.wikipedia.org',
+			'i.imgur.com',
+			'upload.wikimedia.org',
+			'fonts.googleapis.com',
+			'commons.wikimedia.org',
+			'themes.googleusercontent.com',
+			'fonts.gstatic.com',
+		];
 		$host = parse_url( $url, PHP_URL_HOST );
 		if ( in_array( $host, $knownHttpsHosts ) ) {
 			$newUrl = $this->upgradeToHttps( $url );
