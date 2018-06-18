@@ -1,4 +1,8 @@
-### Building images for Kubernetes sandbox instance
+## Deploy app and config code to Kubernetes sandbox instance
+
+Use Jenkins Pipeline. Read more on https://wikia-inc.atlassian.net/wiki/spaces/SUS/pages/378994735/Jenkins+Pipeline+-+deploy+mediawiki+to+sandbox
+
+## Building images for Kubernetes sandbox instance
 
 Go to app's repository root directory:
 
