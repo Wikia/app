@@ -12,5 +12,9 @@ RUN pecl install uopz-5.0.2 xdebug-2.6.0 yaml-2.0.2 \
 
 ADD ./xdebug.ini /usr/local/etc/php/conf.d/
 
+VOLUME /usr/wikia/slot1/current/src
+VOLUME /usr/wikia/slot1/current/config
+VOLUME /usr/wikia/slot1/current/cache/messages
+
 # we no longer need root's super-power
 USER nobody
