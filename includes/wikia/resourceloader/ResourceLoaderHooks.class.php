@@ -37,12 +37,6 @@ class ResourceLoaderHooks {
 
 		$sources = $resourceLoader->getSources();
 
-		// Do not use shared domain for shared assets for dev env
-		if ( Wikia::isDevEnv() ) {
-			$resourceLoader->addSource( 'common', $sources['local'] );
-			return;
-		}
-
 		// Use shared domain name "common" source
 		$sources['common'] = [
 			'loadScript' => "$wgCdnRootUrl/__load/-/",
