@@ -64,6 +64,8 @@ node("docker-daemon") {
 
     stage("Build and push images") {
         dir("app") {
+            sh("docker pull artifactory.wikia-inc.com/sus/php-wikia-base:latest")
+
             sh("docker build  . -f docker/sandbox/Dockerfile-nginx -t $nginxImage:$imageTag")
             sh("docker build .. -f docker/sandbox/Dockerfile-php -t $mediawikiImage:$imageTag")
 
@@ -90,11 +92,9 @@ EOL""")
         }
 
         withDockerContainer(kubectlImage) {
-            /*
             sh """#!/bin/sh
-            kubectl --context kube-sjc-prod -n prod delete -f app/docker/sandbox/${sandbox}.yaml
-            kubectl --context kube-sjc-prod -n prod apply -f app/docker/sandbox/${sandbox}.yaml"""
-            */
+            kubectl --context kube-sjc-prod -n prod delete -f app/docker/sandbox/k8s.yaml
+            kubectl --context kube-sjc-prod -n prod apply -f app/docker/sandbox/k8s.yaml"""
         }
     }
 }
