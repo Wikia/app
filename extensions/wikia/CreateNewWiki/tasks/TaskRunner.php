@@ -25,12 +25,12 @@ class TaskRunner {
 		$this->tasks[] = new CreateDatabase( $taskContext );
 		$this->tasks[] = new SetupWikiCities( $taskContext );
 		$this->tasks[] = new ConfigureWikiFactory( $taskContext );
+		$this->tasks[] = new LinkFandomCreatorCommunity( $taskContext );
 		$this->tasks[] = new CreateTables( $taskContext );
 		$this->tasks[] = new ImportStarterData( $taskContext );
 		$this->tasks[] = new ConfigureUsers( $taskContext );
 		$this->tasks[] = new ConfigureCategories( $taskContext );
 		$this->tasks[] = new SetCustomSettings( $taskContext );
-		$this->tasks[] = new SetTags( $taskContext );
 		$this->tasks[] = new StartPostCreationTasks( $taskContext );
 		$this->tasks[] = new EnableDiscussionsTask( $taskContext );
 	}

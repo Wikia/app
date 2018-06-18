@@ -90,21 +90,13 @@ abstract class Skin extends ContextSource {
 	}
 
 	/**
-	 * Fetch the list of usable skins in regards to $wgSkipSkins.
+	 * Fetch the list of usable skins.
 	 * Useful for Special:Preferences and other places where you
 	 * only want to show skins users _can_ use.
 	 * @return array of strings
 	 */
 	public static function getUsableSkins() {
-		global $wgSkipSkins;
-
-		$usableSkins = self::getSkinNames();
-
-		foreach ( $wgSkipSkins as $skip ) {
-			unset( $usableSkins[$skip] );
-		}
-
-		return $usableSkins;
+		return self::getSkinNames(); // SUS-4796
 	}
 
 	/**

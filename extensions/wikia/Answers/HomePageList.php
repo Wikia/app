@@ -94,7 +94,7 @@ class HomePageList {
 					if ( !is_null($oQuestion) && !$oQuestion->badWordsTest() && !$oQuestion->filterWordsTest() ) {
 						$text = $page["title"] . "?";
 						$timestamp = $page["timestamp"];
-						$html .= $this->createLinkListElement($page["title"], $text);
+						$html .= self::createLinkListElement($page["title"], $text);
 
 						if (empty($timestamp1)) $timestamp1 = $timestamp;
 					}
@@ -195,7 +195,7 @@ class HomePageList {
 						$oQuestion = new DefaultQuestion($url);
 						if ( !is_null($oQuestion) && !$oQuestion->badWordsTest() && !$oQuestion->filterWordsTest() ) {
 							$text = $page["title"] . "?";
-							$html .= $this->createLinkListElement($page["title"], $text);
+							$html .= self::createLinkListElement($page["title"], $text);
 						}
 					}
 				}
@@ -266,7 +266,7 @@ class HomePageList {
 					$oQuestion = new DefaultQuestion($url);
 					if ( !is_null($oQuestion) && !$oQuestion->badWordsTest() && !$oQuestion->filterWordsTest() ) {
 						$text = $page["title"] . "?";
-						$html .= $this->createLinkListElement($page["title"], $text);
+						$html .= self::createLinkListElement($page["title"], $text);
 					}
 				}
 			}
@@ -283,7 +283,7 @@ class HomePageList {
 	 * @param string $text
 	 * @return string
 	 */
-	private function createLinkListElement( $pageTitle, $text ): string {
+	private static function createLinkListElement( $pageTitle, $text ): string {
 		$title = Title::newFromText( $pageTitle );
 		if ( $title ) {
 			return "<li><a href=\"" . urlencode( $title->getLocalURL() ) . "\">" .

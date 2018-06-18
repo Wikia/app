@@ -1,8 +1,10 @@
+/*global define*/
 define('ext.wikia.adEngine.babDetection', [
 	'wikia.document',
 	'wikia.log',
+	'wikia.tracker',
 	'wikia.window'
-], function (doc, log, win) {
+], function (doc, log, tracker, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.babDetection';
@@ -27,6 +29,14 @@ define('ext.wikia.adEngine.babDetection', [
 
 		setRuntimeParams(isAdBlockDetected);
 		dispatchDetectionEvent(eventName);
+
+		tracker.track({
+			category: 'ads-babdetector-detection',
+			action: 'impression',
+			label: isAdBlockDetected ? 'Yes' : 'No',
+			value: 0,
+			trackingMethod: 'internal'
+		});
 	}
 
 	return {

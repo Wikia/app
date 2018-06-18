@@ -24,6 +24,9 @@ class PreferenceService {
 	/** @var UserPreferences */
 	private $defaultPreferences;
 
+	/** @var UserPreferences $anonUserPreferences */
+	private $anonUserPreferences;
+
 	/** @var string[] */
 	private $forceSavePrefs;
 
@@ -43,6 +46,9 @@ class PreferenceService {
 		$this->defaultPreferences = $defaultPrefs;
 		$this->forceSavePrefs = $forceSavePrefs;
 		$this->preferences = [];
+
+		// SUS-5236: anonymous users will always have default preferences
+		$this->anonUserPreferences = clone $defaultPrefs;
 	}
 
 	public function getPreferences( $userId ) {
@@ -218,8 +224,9 @@ class PreferenceService {
 	 * @throws \Exception
 	 */
 	private function load( $userId ) {
-		if ( $userId == 0 ) {
-			return $this->applyDefaults( new UserPreferences() );
+
+		if ( empty( $userId ) ) {
+			return $this->anonUserPreferences;
 		}
 
 		if ( !isset( $this->preferences[$userId] ) ) {

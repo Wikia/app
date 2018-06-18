@@ -34,7 +34,7 @@ class VimeoApiWrapper extends ApiWrapper {
 		return $text;
 	}
 	
-	public function getThumbnailUrl() {
+	public function getThumbnailUrl() : string {
 		return $this->interfaceObj['thumbnail_large'];
 	}
 

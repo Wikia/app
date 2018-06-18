@@ -22,6 +22,7 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 		wikiNameLabel,
 		wikiNameError,
 		wikiDomain,
+		wikiBaseDomain,
 		wikiDomainLabel,
 		wikiDomainError,
 		wikiDomainCountry,
@@ -46,6 +47,8 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 			category: 'create-new-wiki',
 			trackingMethod: 'analytics'
 		}),
+		wikiaBaseDomain = window.wgWikiaBaseDomain,
+		shouldCreateLanguageWikisWithPath = window.wgCreateLanguageWikisWithPath,
 		NO_SUBDOMAIN_LANGUAGE = 'en';
 
 	function init() {
@@ -86,6 +89,7 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 		wikiNameLabel = $nameWikiWrapper.find('label[for=wiki-name]');
 		wikiNameError = $nameWikiWrapper.find('.wiki-name-error');
 		wikiDomain = $nameWikiWrapper.find('input[name=wiki-domain]');
+		wikiBaseDomain = $nameWikiWrapper.find('.wiki-base-domain');
 		wikiDomainLabel = $nameWikiWrapper.find('label[for=wiki-domain]');
 		wikiDomainError = $nameWikiWrapper.find('.wiki-domain-error');
 		wikiDomainCountry = $nameWikiWrapper.find('.domain-country');
@@ -300,14 +304,22 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 		checkDomain();
 		var selected = $(this).val();
 
-		if (selected && selected !== NO_SUBDOMAIN_LANGUAGE) {
-			wikiDomainCountry.html(selected + '.');
+		if (shouldCreateLanguageWikisWithPath) {
+			if (selected && selected !== NO_SUBDOMAIN_LANGUAGE) {
+				wikiBaseDomain.text(wikiaBaseDomain + '/' + selected);
+			} else {
+				wikiBaseDomain.text(wikiaBaseDomain);
+			}
 		} else {
-			wikiDomainCountry.html('');
-		}
+			if (selected && selected !== NO_SUBDOMAIN_LANGUAGE) {
+				wikiDomainCountry.html(selected + '.');
+			} else {
+				wikiDomainCountry.html('');
+			}
 
-		if (!wikiDomainLabel.hasClass('active')) {
-			wikiDomainLabel.css('left', wikiDomain.position().left);
+			if (!wikiDomainLabel.hasClass('active')) {
+				wikiDomainLabel.css('left', wikiDomain.position().left);
+			}
 		}
 
 		track({
@@ -635,22 +647,55 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 					token: preferencesToken
 				},
 				callback: function (res) {
-					throbberWrapper.stopThrobbing();
-					throbberWrapper.removeClass('creating-wiki');
-					cityId = res.cityId;
-					createStatus = res.status;
-					createStatusMessage = res.statusMsg;
-					finishCreateUrl = (res.finishCreateUrl.indexOf('.com/wiki/') < 0 ?
-						res.finishCreateUrl.replace('.com/', '.com/wiki/') :
-						res.finishCreateUrl);
+					// SUS-4383 | use task ID returned by the backed to poll wiki creation status
+					// timestamp will be used to time out on task creation fail
+					pollWikiCreationStatus(res.task_id, res.timestamp, function(res) {
+						cityId = res.cityId;
+						createStatus = res.status;
+						finishCreateUrl = res.finishCreateUrl;
 
-					// unblock "Next" button (BugId:51519)
-					// for QA with love
-					$themWikiWrapper.find('.controls input').attr('disabled', false).addClass('enabled');
+						throbberWrapper.stopThrobbing();
+						throbberWrapper.removeClass('creating-wiki');
+
+						// unblock "Next" button (BugId:51519)
+						// for QA with love
+						$themWikiWrapper.find('.controls input').attr('disabled', false).addClass('enabled');
+					});
 				},
 				onErrorCallback: generateAjaxErrorMsg
 			});
 		}).fail(generateAjaxErrorMsg);
+	}
+
+	/**
+	 * Continue polling for wiki creation status and fire callback when we're done
+	 * @param taskId
+	 * @param timestamp
+	 * @param callback
+	 */
+	function pollWikiCreationStatus(taskId, timestamp, callback) {
+		$.nirvana.sendRequest({
+			controller: 'CreateNewWiki',
+			method: 'CheckStatus',
+			data: {
+				task_id: taskId,
+				timestamp: timestamp
+			},
+			type: 'GET',
+			callback: function(res) {
+				if (res.status === 'ok') {
+					// the wiki has been created, fire a callback
+					callback(res);
+				}
+				else {
+					// not yet, keep polling every 2 seconds (+ response time)
+					setTimeout(function() {
+						pollWikiCreationStatus(taskId, timestamp, callback);
+					}, 2000);
+				}
+			},
+			onErrorCallback: generateAjaxErrorMsg
+		});
 	}
 
 	function generateAjaxErrorMsg(error) {

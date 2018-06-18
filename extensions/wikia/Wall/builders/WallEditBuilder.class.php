@@ -45,15 +45,10 @@ class WallEditBuilder extends WallBuilder {
 			}
 		}
 
-		if ( !$this->message->isMain() ) {
-			// after changing reply invalidate thread cache on memc level
-			$this->message->getThread()->invalidateCache();
-		}
-
-		// Purge URLs for Wall/Board page etc., catch up with slaves
+		// Purge thread memcache and URLs for Wall/Board page etc.
 		$this->message->invalidateCache();
 
-		WallHelper::sendNotification( $comment->mLastRevision, RC_EDIT, $this->editor );
+		WallHelper::sendNotification( $this->message, $comment->mLastRevision, RC_EDIT, $this->editor );
 
 		$this->articleComment = $comment;
 		return $this;

@@ -73,7 +73,6 @@ $wgGroupPermissions['sysop']['blockemail']       = true;
 $wgGroupPermissions['sysop']['markbotedits']     = true;
 $wgGroupPermissions['sysop']['apihighlimits']    = true;
 $wgGroupPermissions['sysop']['browsearchive']    = true;
-$wgGroupPermissions['sysop']['noratelimit']      = true;
 $wgGroupPermissions['sysop']['movefile']         = true;
 $wgGroupPermissions['sysop']['unblockself']      = true;
 $wgGroupPermissions['sysop']['suppressredirect'] = true;
@@ -256,7 +255,6 @@ $wgGroupPermissions['content-moderator']['reupload'] = true;
 $wgGroupPermissions['content-moderator']['patrol'] = true;
 $wgGroupPermissions['content-moderator']['autopatrol'] = true;
 $wgGroupPermissions['content-moderator']['rollback'] = true;
-$wgGroupPermissions['content-moderator']['noratelimit'] = true;
 $wgGroupPermissions['content-moderator']['deletedtext'] = true;
 $wgGroupPermissions['content-moderator']['deletedhistory'] = true;
 
@@ -275,7 +273,6 @@ $wgGroupPermissions["content-volunteer"]["editinterface"] = true;
 $wgGroupPermissions["content-volunteer"]["move"] = true;
 $wgGroupPermissions["content-volunteer"]["movefile"] = true;
 $wgGroupPermissions["content-volunteer"]["move-subpages"] = true;
-$wgGroupPermissions["content-volunteer"]["noratelimit"] = true;
 $wgGroupPermissions["content-volunteer"]["notifyeveryone"] = true;
 $wgGroupPermissions["content-volunteer"]["pageviews"] = true;
 $wgGroupPermissions["content-volunteer"]["protect"] = true;
@@ -320,11 +317,9 @@ $wgGroupPermissions['helper']['edithub'] = true;
 $wgGroupPermissions['sysop']['edithub'] = false;
 
 $wgGroupPermissions['staff']['noratelimit'] = true;
-$wgGroupPermissions['bot']['noratelimit'] = true;
 $wgGroupPermissions['helper']['noratelimit'] = true;
 $wgGroupPermissions['vstf']['noratelimit'] = true;
-
-#$wgGroupPermissions['staff'   ]['createopenserv'] = true;
+$wgGroupPermissions['bot-global']['noratelimit'] = true;
 
 /**
  * Limit the edit rights of wiki nav messages to staff members
@@ -374,7 +369,3 @@ $wgGroupPermissions['staff']['clearuserprofile'] = true;
 $wgGroupPermissions['helper']['clearuserprofile'] = true;
 
 $wgGroupPermissions['global-discussions-moderator']['block'] = true;
-
-$wgGroupPermissions['util']['https-opt-in'] = true;
-$wgGroupPermissions['council']['https-opt-in'] = true;
-$wgGroupPermissions['beta']['https-opt-in'] = true;

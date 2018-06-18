@@ -75,14 +75,16 @@ class VideoFileUploader {
 			// Some providers will sometimes return error codes when attempting
 			// to fetch a thumbnail
 			try {
-				$upload = $this->uploadBestThumbnail( $apiWrapper->getThumbnailUrl() );
+				$thumbnailUrl1 = $apiWrapper->getThumbnailUrl();
+				$upload = $this->uploadBestThumbnail( $thumbnailUrl1 );
 			} catch ( Exception $e ) {
 				WikiaLogger::instance()->error('Video upload failed', [
 					'targetFile' => $this->sTargetTitle,
 					'externalURL' => $this->sExternalUrl,
 					'videoID' => $this->sVideoId,
 					'provider' => $this->sProvider,
-					'exception' => $e
+					'exception' => $e,
+					'thumbnailURL' => $thumbnailUrl,
 				]);
 				return Status::newFatal($e->getMessage());
 			}
@@ -94,6 +96,8 @@ class VideoFileUploader {
 				'provider' => $this->sProvider,
 				'apiWrapper' => get_class( $apiWrapper )
 			]);
+
+			return Status::newFatal( 'Api wrapper corrupted' );
 		}
 		$oTitle = Title::newFromText( $this->getNormalizedDestinationTitle(), NS_FILE );
 
@@ -225,6 +229,7 @@ class VideoFileUploader {
 	 * gives and falling back to the default thumb
 	 * @param string $thumbnailUrl
 	 * @param int $delayIndex See VideoHandlerHelper->resetVideoThumb for more info
+	 * @throws Exception
 	 * @return UploadFromUrl
 	 */
 	protected function uploadBestThumbnail( $thumbnailUrl, $delayIndex = 0 ) {
@@ -244,7 +249,7 @@ class VideoFileUploader {
 		// If we still don't have anything, give up.
 		if ( empty( $upload ) ) {
 			wfProfileOut( __METHOD__ );
-			return null;
+			throw new Exception( 'Thumbnail upload failed' );
 		}
 
 		$this->adjustThumbnailToVideoRatio( $upload );

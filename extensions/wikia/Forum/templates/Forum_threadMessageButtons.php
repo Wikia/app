@@ -50,32 +50,4 @@
 				</ul>
 			</div>
 		</div>
-		<?php // TODO: This is hack for now unification buttons for all skins ASAP!!! ?>
-		<div class="buttons-monobook">
-			<!-- only show this if it's user's own message -->
-			<span class="tools">
-				<? if ( $showViewSource ): ?>
-					<a href="#" class="source-message"> <?= wfMessage( 'user-action-menu-view-source' )->escaped(); ?> </a>
-				<? endif; ?>
-
-				<?php if ( $canEdit ): ?>
-					<img src="<?= $wgBlankImgUrl ?>" class="sprite edit-pencil"><a href="#" class="edit-message"><?= wfMessage( 'wall-message-edit' )->escaped(); ?></a>
-				<?php endif; ?>
-
-				<? if ( $canRemove ): ?>
-					<img src="<?= $wgBlankImgUrl ?>" class="sprite-small delete"><a href="#" class="remove-message" data-mode="remove"><?= wfMessage( 'wall-message-remove' )->escaped(); ?> </a>
-					<img src="<?= $wgBlankImgUrl ?>" class="sprite-small delete"><a href="#" class="remove-message" data-mode="removenotify"><?= wfMessage( 'wall-message-notify' )->escaped(); ?> </a>
-				<? endif; ?>
-
-				<? if ( $canAdminDelete ): ?>
-					<img src="<?= $wgBlankImgUrl ?>" class="sprite-small delete"><a href="#" class="admin-delete-message" data-mode="admin"><?= wfMessage( 'wall-message-delete' )->escaped(); ?> </a>
-					<img src="<?= $wgBlankImgUrl ?>" class="sprite-small delete"><a href="#" class="admin-delete-message" data-mode="adminnotify"><?= wfMessage( 'wall-message-notify' )->escaped(); ?> </a>
-				<?php endif; ?>
-
-				<?php if ( $canDelete ): ?>
-					<img src="<?= $wgBlankImgUrl ?>" class="sprite-small delete"><a href="#" class="delete-message"><?= wfMessage( 'wall-message-delete' )->escaped(); ?></a>
-				<?php endif; ?>
-
-			</span>
-		</div>
 <?php endif; ?>

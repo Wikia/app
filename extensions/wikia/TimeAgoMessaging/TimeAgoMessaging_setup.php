@@ -18,17 +18,40 @@ $wgExtensionCredits['other'][] = array(
 	'author' => 'Maciej Brencz',
 	'descriptionmsg' => 'timeagomessaging-desc',
 	'name' => 'TimeAgo Messaging',
-	'version' => '1.0',
+	'version' => '2.0',
 	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/TimeAgoMessaging'
 );
 
-$dir = dirname(__FILE__);
-
 // i18n
-$wgExtensionMessagesFiles['TimeAgoMessaging'] = "{$dir}/TimeAgoMessaging.i18n.php";
+$wgExtensionMessagesFiles['TimeAgoMessaging'] = __DIR__ . "/TimeAgoMessaging.i18n.php";
 
-// hooks
-$wgHooks['MakeGlobalVariablesScript'][] = 'TimeAgoMessaging::onMakeGlobalVariablesScript';
+$wgResourceModules['ext.wikia.TimeAgoMessaging'] = [
+	'scripts' => [
+		'js/timeago.init.js',
+	],
+	'localBasePath' => __DIR__,
+	'remoteExtPath' => 'wikia/TimeAgoMessaging',
+	'messages' => [
+		'timeago-year',
+		'timeago-month',
+		'timeago-day',
+		'timeago-hour',
+		'timeago-minute',
+		'timeago-second',
+		'timeago-day-from-now',
+		'timeago-hour-from-now',
+		'timeago-minute-from-now',
+		'timeago-month-from-now',
+		'timeago-second-from-now',
+	],
+	'dependencies' => [
+		'jquery.timeago',
+		// SUS-4811 - provides {{PLURAL}} magic word support
+		'mediawiki.jqueryMsg',
+	],
+];
+
+$wgHooks['BeforePageDisplay'][] = 'TimeAgoMessaging::onBeforePageDisplay';
 
 // classes
-$wgAutoloadClasses['TimeAgoMessaging'] = "{$dir}/TimeAgoMessaging.class.php";
+$wgAutoloadClasses['TimeAgoMessaging'] = __DIR__ . "/TimeAgoMessaging.class.php";

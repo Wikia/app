@@ -9,6 +9,10 @@
  * It also imports WikiFactory variables from the production database
  */
 
+// SUS-5135 | Disable devbox import script
+echo "getDatabase.php script has been disabled due to lack of GDPR compliance. Please see SUS-5135 for details.\n";
+exit(1);
+
 putenv ("SERVER_ID=177");
 
 define('S3CMD_CONFIG', '/etc/s3cmd/amazon_ro.cfg');
@@ -36,9 +40,9 @@ if ( file_exists( $dirName . "/../../../config/DB.php" ) ) {
 	require_once( $dirName . "/../../../config/DB.php" );
 }
 
-if ( isset( $wgDBbackenduser, $wgDBbackendpassword, $wgDBdevboxUser, $wgDBdevboxPass ) ) {
+if ( isset( $wgDBbackenduser, $wgDBbackendpassword ) ) {
 	$prod = new mysqlwrapper($wgDBbackenduser, $wgDBbackendpassword, 'slave.db-sharedb.service.sjc.consul');
-	$dev = new mysqlwrapper($wgDBdevboxUser, $wgDBdevboxPass, $wgDBdevboxServer);
+	$dev = new mysqlwrapper($wgDBbackenduser, $wgDBbackendpassword, $wgDBdevboxServer);
 } else {
 	print "Error loading production database configuration\n";
 	exit;

@@ -87,18 +87,14 @@
 
 		loginBeforeSubmit: function (action) {
 			if (window.wgDisableAnonymousEditing && !window.wgUserName) {
-				if (!Wall.isMonobook) {
-					window.wikiaAuthModal.load({
-						forceLogin: true,
-						origin: 'wall-and-forum',
-						onAuthSuccess: function () {
-							action(false);
-							return true;
-						}
-					});
-				} else {
-					Wall.showMonobookLoginPopup();
-				}
+				window.wikiaAuthModal.load({
+					forceLogin: true,
+					origin: 'wall-and-forum',
+					onAuthSuccess: function () {
+						action(false);
+						return true;
+					}
+				});
 			} else {
 				action(true);
 				return true;

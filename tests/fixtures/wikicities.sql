@@ -70,21 +70,6 @@ CREATE TABLE `city_variables_pool` (
 
 CREATE UNIQUE INDEX `idx_name_unique` ON `city_variables_pool` (`cv_name`);
 
-CREATE TABLE `city_tag` (
-  `id` int(8) NOT NULL PRIMARY KEY AUTOINCREMENT,
-  `name` varchar(255) DEFAULT NULL
-);
-
-CREATE UNIQUE INDEX `city_tag_name_uniq` ON `city_tag` (`name`);
-
-CREATE TABLE `city_tag_map` (
-  `city_id` int(9) NOT NULL,
-  `tag_id` int(8) NOT NULL,
-  PRIMARY KEY (`city_id`,`tag_id`)
-);
-
-CREATE INDEX `tag_id` ON `city_tag_map` (`tag_id`);
-
 CREATE TABLE `city_list_log` (
   `id` int(11) NOT NULL PRIMARY KEY AUTOINCREMENT,
   `cl_city_id` int(9) NOT NULL,
@@ -112,3 +97,15 @@ CREATE TABLE `user_email_log` (
 
 CREATE INDEX `user_id` ON `user_email_log`(`user_id`,`old_email`);
 CREATE INDEX `user_id_2` ON `user_email_log`(`user_id`,`new_email`);
+
+-- Table for storing localisation data
+CREATE TABLE l10n_cache (
+  lc_prefix varchar(16) NOT NULL,
+  -- Language code
+  lc_lang varchar(16) NOT NULL,
+  -- Cache key
+  lc_key varchar(255) NOT NULL,
+  -- Value
+  lc_value mediumblob NOT NULL,
+  PRIMARY KEY (lc_prefix, lc_lang, lc_key)
+);

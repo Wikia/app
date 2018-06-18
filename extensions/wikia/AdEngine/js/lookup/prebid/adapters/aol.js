@@ -1,10 +1,8 @@
 /*global define*/
 define('ext.wikia.adEngine.lookup.prebid.adapters.aol', [
-	'ext.wikia.adEngine.context.slotsContext',
-	'ext.wikia.aRecoveryEngine.instartLogic.recovery',
-	'wikia.geo',
-	'wikia.instantGlobals'
-], function (slotsContext, instartLogic, geo, instantGlobals) {
+	'ext.wikia.adEngine.adContext',
+	'ext.wikia.adEngine.context.slotsContext'
+], function (adContext, slotsContext) {
 	'use strict';
 
 	var bidderName = 'aol',
@@ -12,14 +10,14 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.aol', [
 		slots = {
 			oasis: {
 				TOP_LEADERBOARD: {
-					size: [728, 90],
+					sizes: [[728, 90]],
 					placement: '4431497',
 					network: network,
 					alias: '4431497',
 					sizeId: '225'
 				},
 				TOP_RIGHT_BOXAD: {
-					size: [300, 250],
+					sizes: [[300, 250], [300, 600]],
 					placement: '4431473',
 					network: network,
 					alias: '4431473',
@@ -45,21 +43,21 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.aol', [
 			},
 			mercury: {
 				MOBILE_TOP_LEADERBOARD: {
-					size: [320, 50],
+					sizes: [[320, 50]],
 					placement: '4436772',
 					network: network,
 					alias: '4436772',
 					sizeId: '3055'
 				},
 				MOBILE_IN_CONTENT: {
-					size: [300, 250],
+					sizes: [[300, 250]],
 					placement: '4431565',
 					network: network,
 					alias: '4431565',
 					sizeId: '170'
 				},
 				BOTTOM_LEADERBOARD: {
-					size: [300, 250],
+					sizes: [[300, 250]],
 					placement: '4431566',
 					network: network,
 					alias: '4431566',
@@ -69,7 +67,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.aol', [
 		};
 
 	function isEnabled() {
-		return geo.isProperGeo(instantGlobals.wgAdDriverAolBidderCountries) && !instartLogic.isBlocking();
+		return adContext.get('bidders.aol');
 	}
 
 	function getSlots(skin) {
@@ -79,7 +77,11 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.aol', [
 	function prepareAdUnit(slotName, config) {
 		return {
 			code: slotName,
-			sizes: [config.size],
+			mediaTypes: {
+				banner: {
+					sizes: config.sizes
+				}
+			},
 			bids: [
 				{
 					bidder: bidderName,

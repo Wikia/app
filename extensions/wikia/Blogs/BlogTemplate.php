@@ -1,18 +1,5 @@
 <?php
 
-$wgAjaxExportList[] = "BlogTemplateClass::axShowCurrentPage";
-/* register as a parser function {{BLOGTPL_TAG}} and a tag <BLOGTPL_TAG> */
-$wgHooks['ParserFirstCallInit'][] = "BlogTemplateClass::setParserHook";
-
-define ( "BLOGS_TIMESTAMP", "20081101000000" );
-define ( "BLOGS_XML_REGEX", "/\<(.*?)\>(.*?)\<\/(.*?)\>/si" );
-define ( "GROUP_CONCAT", "64000" );
-define ( "BLOGS_DEFAULT_LENGTH", "400" );
-define ( "BLOGS_HTML_PARSE", "/(<.+?>)?([^<>]*)/s" );
-define ( "BLOGS_ENTITIES_PARSE", "/&[0-9a-z]{2,8};|&#[0-9]{1,7};|&#x[0-9a-f]{1,6};/i" );
-define ( "BLOGS_CLOSED_TAGS", "/^<\s*\/([^\s]+?)\s*>$/s" );
-define ( "BLOGS_OPENED_TAGS", "/^<\s*([^\s>!]+).*?>$/s" );
-
 class BlogTemplateClass {
 	/*
 	 * Tag options
@@ -900,7 +887,7 @@ class BlogTemplateClass {
 		}
 
 		// macbre: change for Oasis to add avatars and comments / likes data
-		Hooks::run( 'BlogTemplateGetResults', array( &$aResult ) );
+		BlogListingController::getResults( $aResult );
 
 		self::$dbr->freeResult( $res );
     	return $aResult;
@@ -948,8 +935,7 @@ class BlogTemplateClass {
 	}
 
 	private static function __parse( $aInput, $aParams, $parser, $returnPlainData = false ) {
-		global $wgLang, $wgUser, $wgCityId, $wgParser, $wgOut;
-		global $wgExtensionsPath, $wgStylePath, $wgRequest;
+		global $wgOut, $wgRequest;
 
 		/**
 		 * Because this parser tag contains elements of interface we need to
@@ -1076,8 +1062,6 @@ class BlogTemplateClass {
 				}
 			}
 
-			Hooks::run( 'BlogListAfterParse', array( self::$oTitle, $relationArray ) );
-
 			/* */
 			if ( !empty( $showOnlyPage ) ) {
 				self::$aWhere = array( "page_id in (" . self::$dbr->makeList( $showOnlyPage ) . ")" );
@@ -1174,35 +1158,7 @@ class BlogTemplateClass {
 								$parser->mOutput->updateCacheExpiry( -1 );
 							}
 
-							if ( F::app()->checkSkin( 'oasis' ) ) {
-								Hooks::run( 'BlogsRenderBlogArticlePage', array( &$result, $aResult, self::$aOptions, $sPager ) );
-							} else {
-								/* run template */
-								$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
-								$oTmpl->set_vars( array(
-									"wgUser"		=> $wgUser,
-									"cityId"		=> $wgCityId,
-									"wgLang"		=> $wgLang,
-									"aRows"			=> $aResult,
-									"aOptions"		=> self::$aOptions,
-									"wgParser"		=> $wgParser,
-									"skin"			=> RequestContext::getMain()->getSkin(),
-									"wgExtensionsPath" 	=> $wgExtensionsPath,
-									"wgStylePath" 		=> $wgStylePath,
-									"sPager"		=> $sPager,
-									"wgTitle"		=> self::$oTitle,
-								) );
-								# ---
-								if ( self::$aOptions['type'] == 'box' ) {
-									$result = $oTmpl->render( "blog-page" );
-								} else {
-									$page = $oTmpl->render( "blog-post-page" );
-									$oTmpl->set_vars( array(
-										"page" => $page
-									) );
-									$result = $oTmpl->render( "blog-article-page" );
-								}
-							}
+							BlogListingController::renderBlogListing( $result, $aResult, self::$aOptions, $sPager );
 						} else {
 							unset( $result );
 							$result = self::__makeRssOutput( $aResult );
@@ -1282,7 +1238,7 @@ class BlogTemplateClass {
 				$sText = $oRevision->getText();
 				$id = Parser::extractTagsAndParams( array( BLOGTPL_TAG ), $oRevision->getText(), $matches, md5( BLOGTPL_TAG . $articleId . $namespace . $page0 ) );
 				if ( !empty( $matches ) ) {
-					list ( $sKey, $aValues ) = each ( $matches );
+					$sKey = key( $matches );
 					list ( , $input, $params, ) = $matches[$sKey];
 					$input = trim( $input );
 					if ( !empty( $input ) && ( !empty( $params ) ) ) {

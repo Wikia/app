@@ -80,12 +80,21 @@ class AsyncTaskList {
 	}
 
 	/**
+	 * @deprecated
+	 * @param $queue
+	 * @return AsyncTaskList
+	 */
+	public function setPriority( $queue ) {
+		return $this->setQueue( $queue );
+	}
+
+	/**
 	 * tell this task list to use a specific queue
 	 *
 	 * @param string $queue which queue to add this task list to
 	 * @return $this
 	 */
-	public function setPriority( $queue ) {
+	public function setQueue( $queue ) {
 		switch ( $queue ) {
 			case PriorityQueue::NAME:
 				$queue = new PriorityQueue();
@@ -103,7 +112,7 @@ class AsyncTaskList {
 				$queue = new PurgeQueue();
 				break;
 			default:
-				$queue = new Queue();
+				$queue = new Queue( $queue );
 				break;
 		}
 
@@ -249,7 +258,7 @@ class AsyncTaskList {
 		];
 
 		if ( $wgWikiaEnvironment != WIKIA_ENV_PROD ) {
-			$host = gethostname();
+			$host = wfGetEffectiveHostname();
 			$executionMethod = 'http';
 
 			if ( $wgWikiaEnvironment == WIKIA_ENV_DEV && preg_match( '/^dev-(.*?)$/', $host ) ) {

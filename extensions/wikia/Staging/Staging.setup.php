@@ -29,5 +29,5 @@ $wgHooks['BeforePageRedirect'][] = 'StagingHooks::onBeforePageRedirect';
  * @author macbre
  * @see PLATFORM-664
  */
-$wgCachePrefix = gethostname() . '-' . wfWikiID(); // e.g. staging-s3-muppet / sandbox-qa02-glee / ...
-$wgSharedKeyPrefix = gethostname() . '-' . $wgSharedKeyPrefix; // e.g. staging-s3-wikicities
+$wgCachePrefix = wfGetEffectiveHostname() . '-' . wfWikiID(); // e.g. staging-s3-muppet / sandbox-qa02-glee / ...
+$wgSharedKeyPrefix = wfGetEffectiveHostname() . '-' . $wgSharedKeyPrefix; // e.g. staging-s3-wikicities

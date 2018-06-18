@@ -1,25 +1,38 @@
 /*global define*/
 define('ext.wikia.adEngine.lookup.prebid', [
+	'ext.wikia.adEngine.adContext',
+	'ext.wikia.adEngine.context.uapContext',
 	'ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker',
 	'ext.wikia.adEngine.lookup.prebid.adaptersPricesTracker',
 	'ext.wikia.adEngine.lookup.prebid.adaptersRegistry',
 	'ext.wikia.adEngine.lookup.prebid.prebidHelper',
 	'ext.wikia.adEngine.lookup.prebid.prebidSettings',
 	'ext.wikia.adEngine.lookup.lookupFactory',
+	'wikia.cmp',
+	'wikia.log',
+	'wikia.trackingOptIn',
 	'wikia.window'
 ], function (
+	adContext,
+	uapContext,
 	performanceTracker,
 	pricesTracker,
 	adaptersRegistry,
 	helper,
 	settings,
 	factory,
+	cmp,
+	log,
+	trackingOptIn,
 	win
 ) {
 	'use strict';
 	var adUnits = [],
 		biddersPerformanceMap = {},
-		prebidLoaded = false;
+		prebidLoaded = false,
+		isLazyLoadingEnabled = adContext.get('opts.isBLBLazyPrebidEnabled'),
+		isLazyLoaded = false,
+		logGroup = 'ext.wikia.adEngine.lookup.prebid';
 
 	function removeAdUnits() {
 		(win.pbjs.adUnits || []).forEach(function (adUnit) {
@@ -28,36 +41,68 @@ define('ext.wikia.adEngine.lookup.prebid', [
 	}
 
 	function call(skin, onResponse) {
-		if (!prebidLoaded) {
-			adaptersRegistry.setupCustomAdapters();
-			adaptersRegistry.registerAliases();
-		}
+		trackingOptIn.pushToUserConsentQueue(function (optIn) {
+			log('User opt-' + (optIn ? 'in' : 'out') + ' for prebid', log.levels.info, logGroup);
 
-		biddersPerformanceMap = performanceTracker.setupPerformanceMap(skin);
-		adUnits = helper.setupAdUnits(skin);
-
-		if (win.pbjs) {
-			win.pbjs._bidsReceived = [];
-		}
-
-		if (adUnits.length > 0) {
-
-			if (!prebidLoaded) {
-				win.pbjs.que.push(function () {
-					win.pbjs.bidderSettings = settings.create();
-				});
+			if (!optIn) {
+				return;
 			}
 
-			win.pbjs.que.push(function () {
-				removeAdUnits();
-				win.pbjs.requestBids({
-					adUnits: adUnits,
-					bidsBackHandler: onResponse
-				});
-			});
-		}
+			if (!prebidLoaded) {
+				adaptersRegistry.setupCustomAdapters();
+				adaptersRegistry.registerAliases();
+			}
 
-		prebidLoaded = true;
+			biddersPerformanceMap = performanceTracker.setupPerformanceMap(skin);
+			adUnits = helper.setupAdUnits(skin, isLazyLoadingEnabled ? 'pre' : 'off');
+
+			if (adUnits.length > 0) {
+				if (!prebidLoaded) {
+					win.pbjs.que.push(function () {
+						win.pbjs.bidderSettings = settings.create();
+					});
+				}
+
+				requestBids(adUnits, onResponse, true);
+			}
+
+			prebidLoaded = true;
+
+			if (isLazyLoadingEnabled) {
+				win.addEventListener('adengine.lookup.prebid.lazy', function () {
+					lazyCall(skin, onResponse);
+				});
+			}
+		});
+	}
+
+	function lazyCall(skin, onResponse) {
+		if (!isLazyLoaded) {
+			isLazyLoaded = true;
+
+			if (!uapContext.isFanTakeoverLoaded()) {
+				var adUnitsLazy = helper.setupAdUnits(skin, 'post');
+
+				if (adUnitsLazy.length > 0) {
+					requestBids(adUnitsLazy, onResponse, false);
+
+					adUnits = adUnits.concat(adUnitsLazy);
+				}
+			}
+		}
+	}
+
+	function requestBids(adUnits, onResponse, withRemove) {
+		win.pbjs.que.push(function () {
+			if (withRemove) {
+				removeAdUnits();
+			}
+
+			win.pbjs.requestBids({
+				adUnits: adUnits,
+				bidsBackHandler: onResponse
+			});
+		});
 	}
 
 	function calculatePrices() {
@@ -93,14 +138,14 @@ define('ext.wikia.adEngine.lookup.prebid', [
 	function getSlotParams(slotName) {
 		var slotParams;
 
-		if (win.pbjs && typeof win.pbjs.getBidResponses === 'function') {
-			var params = win.pbjs.getBidResponses(slotName) || {};
+		if (win.pbjs && typeof win.pbjs.getBidResponsesForAdUnitCode === 'function') {
+			var bids = win.pbjs.getBidResponsesForAdUnitCode(slotName).bids || [];
 
-			if (params && params[slotName] && params[slotName].bids && params[slotName].bids.length) {
-				var bidParams,
+			if (bids.length) {
+				var bidParams = null,
 					priorities = adaptersRegistry.getPriorities();
 
-				params[slotName].bids.forEach(function (param) {
+				bids.forEach(function (param) {
 					if (!bidParams) {
 						bidParams = param;
 					} else {

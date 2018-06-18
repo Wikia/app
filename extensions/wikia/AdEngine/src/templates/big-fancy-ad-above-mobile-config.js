@@ -26,7 +26,7 @@ export const getConfig = mercuryListener => ({
 
 	onReady(iframe) {
 		const onResize = () => {
-			adjustPadding(iframe, this.params);
+			this.adjustPadding(iframe, this.params);
 		};
 		const page = document.querySelector('.application-wrapper');
 

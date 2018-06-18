@@ -43,7 +43,8 @@ describe('ext.wikia.adEngine.provider.gpt.adSizeFilter', function () {
 					targeting: {
 						hasFeaturedVideo: false,
 						skin: 'oasis'
-					}
+					},
+					opts: {}
 				}
 			}
 		}
@@ -52,6 +53,7 @@ describe('ext.wikia.adEngine.provider.gpt.adSizeFilter', function () {
 	function getModule() {
 		return modules['ext.wikia.adEngine.provider.gpt.adSizeFilter'](
 			mocks.bridge,
+			mocks.abTest,
 			mocks.getDocument(),
 			mocks.log,
 			mocks.win
@@ -101,7 +103,6 @@ describe('ext.wikia.adEngine.provider.gpt.adSizeFilter', function () {
 
 		expect(getModule().filter('TOP_LEADERBOARD', sizesIn)).toEqual(sizesOut);
 	});
-
 
 	it('Returns sizes unmodified for INVISIBLE_SKIN for screens >= 1240', function () {
 		spyOn(mocks, 'getDocumentWidth').and.returnValue(1245);
@@ -158,6 +159,26 @@ describe('ext.wikia.adEngine.provider.gpt.adSizeFilter', function () {
 
 		var sizesIn = [[300, 50], [300, 250], [2, 2]],
 			sizesOut = [[300, 50], [300, 250]];
+
+		expect(getModule().filter('BOTTOM_LEADERBOARD', sizesIn)).toEqual(sizesOut);
+	});
+
+	it('returns only 3x3 size for UAP desktop BOTTOM_LEADERBOARD in specific country', function () {
+		mocks.win.ads.context.targeting.skin = 'oasis';
+		mocks.win.ads.context.opts.isBLBSingleSizeForUAPEnabled = true;
+		spyOn(mocks.bridge.universalAdPackage, 'isFanTakeoverLoaded').and.returnValue(true);
+		var sizesIn = [[728, 90], [970, 250], [3, 3]],
+			sizesOut = [[3, 3]];
+
+		expect(getModule().filter('BOTTOM_LEADERBOARD', sizesIn)).toEqual(sizesOut);
+	});
+
+	it('returns input sizes for UAP desktop BOTTOM_LEADERBOARD', function () {
+		mocks.win.ads.context.targeting.skin = 'oasis';
+		mocks.win.ads.context.opts.isBLBSingleSizeForUAPEnabled = false;
+		spyOn(mocks.bridge.universalAdPackage, 'isFanTakeoverLoaded').and.returnValue(true);
+		var sizesIn = [[728, 90], [970, 250], [3, 3]],
+			sizesOut = [[728, 90], [3, 3]];
 
 		expect(getModule().filter('BOTTOM_LEADERBOARD', sizesIn)).toEqual(sizesOut);
 	});

@@ -12,7 +12,13 @@ class InsightsService {
 		if ( !InsightsHelper::isInsightPage( $type ) ) {
 			return [];
 		}
+
 		$model = InsightsHelper::getInsightModel( $type );
+
+		return $this->getInsightPagesForModel( $model, $size, $sortingType );
+	}
+
+	public function getInsightPagesForModel( InsightsModel $model, $size, $sortingType ): array {
 		$insightData = ( new InsightsContext( $model ) )->fetchData();
 
 		if ( empty( $insightData ) ) {
@@ -33,11 +39,12 @@ class InsightsService {
 				$insightData,
 				[ 'sort' => $sortingType ]
 			);
-		$aritclesIds = array_slice( $sortedInsightArticleIds, 0, $size );
+
+		$articleIds = array_slice( $sortedInsightArticleIds, 0, $size );
 
 		return [
 			'count' => $insightCount,
-			'pages' => $this->getArticlesData( $insightData, $aritclesIds )
+			'pages' => $this->getArticlesData( $insightData, $articleIds )
 		];
 	}
 

@@ -12,6 +12,13 @@ class MercuryApiFilePageHandler {
 		$details = WikiaFileHelper::getMediaDetail( $title );
 		$mediaObject = ArticleAsJson::createMediaObject( $details, $title->getText() );
 
+		// width is set only for images and videos so if file page is about .pdf, .odt, .ogg or other type of file
+		// we don't need to generate srcset or thumbnail url
+		if ( isset( $mediaObject['width'] ) && is_int( $mediaObject['width'] ) ) {
+			$mediaObject['srcset'] = ArticleAsJson::getSrcset( $mediaObject['url'], $mediaObject['width'] );
+			$mediaObject['thumbnailUrl'] = ArticleAsJson::getThumbnailUrlForWidth( $mediaObject['url'], 340 );
+		}
+
 		// if article contains user provided HTML which is invalid (e.g. too many </div>), snippetter treat it as a text
 		// too and it is not removed as other tags. In mobile-wiki we do not escape snippets, therefore invalid html may
 		// cause errors on front-end side
@@ -19,12 +26,14 @@ class MercuryApiFilePageHandler {
 			$tidy = new tidy();
 			$tidy->parseString( $item['snippet'] );
 			$tidy->cleanRepair();
-			$item['snippet'] = array_reduce(
-				$tidy->body()->child,
-				function ( $acc, $child ) {
-					return $acc . $child->value;
-				}
-			);
+			if ( !empty( $tidy->body()->child ) ) {
+				$item['snippet'] = array_reduce(
+					$tidy->body()->child,
+					function ( $acc, $child ) {
+						return $acc . $child->value;
+					}
+				);
+			}
 
 			return $item;
 		}, $fileUsageData['fileList']);

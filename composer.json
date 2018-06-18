@@ -11,6 +11,10 @@
     {
       "type": "git",
       "url": "https://github.com/Wikia/Maps"
+    },
+    {
+      "type": "git",
+      "url": "https://github.com/Wikia/SemanticMediaWiki"
     }
   ],
   "config": {
@@ -29,6 +33,16 @@
     }
   },
   "require": {
+    "ext-bcmath": "*",
+    "ext-bz2": "*",
+    "ext-gd": "*",
+    "ext-mustache": "*",
+    "ext-mysqli": "*",
+    "ext-simplexml": "*",
+    "ext-sockets": "*",
+    "ext-tideways": "*",
+    "ext-tidy": "*",
+    "ext-wikidiff2": "*",
     "wikia/fluent-sql-php": "1.0.*",
     "monolog/monolog": "^1.23",
     "phpunit/phpunit": "^6.5",
@@ -48,7 +62,17 @@
     "wikia/semantic-scribunto": "^1.1",
     "phpunit/dbunit": "^3.0",
     "mediawiki/validator": "2.2.2.1",
-    "mediawiki/maps": "5.2.0.2",
-    "mcustiel/phiremock": "^1.8"
+    "mediawiki/maps": "5.2.0.3",
+    "mcustiel/phiremock": "^1.8",
+    "tpyo/amazon-s3-php-class": "^0.5.1",
+    "overtrue/phplint": "^1.1",
+    "wikimedia/scoped-callback": "^2.0"
+  },
+  "require-dev": {
+    "ext-yaml": "*",
+    "ext-xdebug": "*"
+  },
+  "scripts": {
+    "lint": "phplint . --exclude lib/composer --exclude /templates/ --no-cache"
   }
 }

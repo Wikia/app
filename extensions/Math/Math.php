@@ -7,7 +7,8 @@
  * @version 1.0
  * @author Tomasz Wegrzanowski
  * @author Brion Vibber
- * @copyright © 2002-2011 various MediaWiki contributors
+ * @author Moritz Schubotz
+ * @copyright © 2002-2012 various MediaWiki contributors
  * @license GPLv2 license; info in main package.
  * @link http://www.mediawiki.org/wiki/Extension:Math Documentation
  * @see https://bugzilla.wikimedia.org/show_bug.cgi?id=14202
@@ -36,13 +37,14 @@ define( 'MW_MATH_HTML',   2 ); /// @deprecated
 define( 'MW_MATH_SOURCE', 3 );
 define( 'MW_MATH_MODERN', 4 ); /// @deprecated
 define( 'MW_MATH_MATHML', 5 ); /// @deprecated
+define( 'MW_MATH_MATHJAX', 6 ); /// new in 1.19/1.20
 /**@}*/
 
 /** For back-compat */
 $wgUseTeX = true;
 
 /** Location of the texvc binary */
-$wgTexvc = '/usr/bin/texvc'; # WIKIA CHANGE
+$wgTexvc = dirname( __FILE__ ) . '/math/texvc';
 /**
  * Texvc background color
  * use LaTeX color format as used in \special function
@@ -73,6 +75,15 @@ $wgMathCheckFiles = true;
 $wgMathPath = false;
 
 /**
+ * The name of a file backend ($wgFileBackends) to use for storing math renderings.
+ * Defaults to FSFileBackend using $wgMathDirectory as a base path.
+ *
+ * See http://www.mediawiki.org/wiki/Manual:Enable_TeX for details about how to
+ * set up mathematical formula display.
+ */
+$wgMathFileBackend = false;
+
+/**
  * The filesystem path of the math directory.
  * Defaults to "{$wgUploadDirectory}/math".
  *
@@ -88,31 +99,24 @@ $wgMathDirectory = false;
  *
  * Not guaranteed to be stable at this time.
  */
-$wgMathUseMathJax = false;
-
-/**
- * Use of MathJax's CDN is governed by terms of service
- * <http://www.mathjax.org/download/mathjax-cdn-terms-of-service/>
- *
- * If you don't like them, install your own copy to load.
- */
-$wgMathJaxUrl = 'http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML';
+$wgUseMathJax = true;
 
 ////////// end of config settings.
 
-$wgDefaultUserOptions['math'] = MW_MATH_PNG;
+$wgDefaultUserOptions['math'] = MW_MATH_MATHJAX;
 
 $wgExtensionFunctions[] = 'MathHooks::setup';
 $wgHooks['ParserFirstCallInit'][] = 'MathHooks::onParserFirstCallInit';
 $wgHooks['GetPreferences'][] = 'MathHooks::onGetPreferences';
-$wgHooks['LoadExtensionSchemaUpdates'][] = 'MathHooks::onLoadExtensionSchemaUpdates';
 $wgHooks['ParserTestTables'][] = 'MathHooks::onParserTestTables';
 $wgHooks['ParserTestParser'][] = 'MathHooks::onParserTestParser';
+$wgHooks['UnitTestsList'][] = 'MathHooks::onRegisterUnitTests';
 
 $dir = dirname( __FILE__ ) . '/';
 $wgAutoloadClasses['MathHooks'] = $dir . 'Math.hooks.php';
-$wgAutoloadClasses['MathRenderer'] = $dir . 'Math.body.php';
-
+$wgAutoloadClasses['MathRenderer'] = $dir . 'MathRenderer.php';
+$wgAutoloadClasses['MathSource'] = $dir . 'MathSource.php';
+$wgAutoloadClasses['MathMathJax'] = $dir . 'MathMathJax.php';
 $wgExtensionMessagesFiles['Math'] = $dir . 'Math.i18n.php';
 
 $wgParserTestFiles[] = $dir . 'mathParserTests.txt';
@@ -125,21 +129,12 @@ $moduleTemplate = array(
 $wgResourceModules['ext.math.mathjax'] = array(
 	'scripts' => array(
 		'MathJax/MathJax.js',
-		'MathJax/jax/input/TeX/config.js',
-		'MathJax/jax/output/HTML-CSS/config.js',
-		'MathJax/jax/element/mml/jax.js',
-		'MathJax/extensions/TeX/noErrors.js',
-		'MathJax/extensions/TeX/noUndefined.js',
-		'MathJax/jax/input/TeX/jax.js',
-		'MathJax/extensions/TeX/AMSmath.js',
-		'MathJax/extensions/TeX/AMSsymbols.js',
-		'MathJax/extensions/TeX/boldsymbol.js',
-		'MathJax/extensions/TeX/mathchoice.js',
-		'MathJax/jax/output/HTML-CSS/jax.js',
-		'MathJax/jax/output/HTML-CSS/autoload/mtable.js',
-		'MathJax-custom/extensions/wiki2jax.js',
-		'MathJax-custom/extensions/TeX/texvc.js'
+		// We'll let the other parts be loaded by MathJax's
+		// own module/config loader.
 	),
+	'styles' => [
+		'MathJax.css',
+	],
 	'group' => 'ext.math.mathjax',
 ) + $moduleTemplate;
 

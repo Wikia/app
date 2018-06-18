@@ -616,7 +616,8 @@ class DataMartService {
 						// WF data has it's own cache
 						'name' => WikiFactory::getVarValueByName( 'wgSitename', $wikiId ),
 						'language' => WikiFactory::getVarValueByName( 'wgLanguageCode', $wikiId ),
-						'domain' => WikiFactory::getVarValueByName( 'wgServer', $wikiId )
+						// // language-path - can clients handle the language path after the domain name?
+						'domain' => WikiFactory::cityIDtoUrl( $wikiId )
 					],
 					'articles' => []
 				];
@@ -672,7 +673,6 @@ class DataMartService {
 
 	protected static function getDB() {
 		$app = F::app();
-		wfGetLB( $app->wg->DWStatsDB )->allowLagged( true );
 		$db = wfGetDB( DB_SLAVE, array(), $app->wg->DWStatsDB );
 		$db->clearFlag( DBO_TRX );
 		return $db;

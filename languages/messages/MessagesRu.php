@@ -293,3 +293,7 @@ $imageFiles = array(
 );
 
 $linkTrail = '/^([a-zабвгдеёжзийклмнопрстуфхцчшщъыьэюя]+)(.*)$/sDu';
+$pluralRules = [
+	"v = 0 and i % 10 = 1 and i % 100 != 11",
+	"v = 0 and i % 10 = 0 or v = 0 and i % 10 = 5..9 or v = 0 and i % 100 = 11..14",
+];

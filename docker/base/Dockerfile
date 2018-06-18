@@ -10,8 +10,12 @@ RUN apt-get update && apt-get install -y \
     autoconf \
     automake \
     libbz2-dev \
-    libjpeg-dev \
+    libfreetype6-dev \
+    libjpeg62-turbo-dev \
+    # needed by memcached
+    libmemcached-dev \
     libpng-dev \
+    libxml2-dev \
     # needed by wikidiff2
     libthai-dev \
     libtool \
@@ -21,6 +25,8 @@ RUN apt-get update && apt-get install -y \
     # needed by Timeline extension
     ploticus \
     wget \
+    # needed by php tidy extension
+    libtidy-dev \
     # needed by sass
     && apt-get -t jessie-backports install -y libsass-dev
 
@@ -63,12 +69,30 @@ RUN wget https://github.com/Wikia/wikidiff2/archive/1.4.1.tar.gz -O wikidiff2.ta
     && docker-php-ext-install /tmp/wikidiff2 \
     && rm -r /tmp/wikidiff2
 
+# tideways extension / @see https://tideways.com/
+RUN wget https://github.com/Wikia/php-xhprof-extension/archive/v4.1.6.tar.gz -O php-xhprof-extension.tar.gz \
+    && mkdir -p /tmp/php-xhprof-extension \
+    && tar -xf php-xhprof-extension.tar.gz -C /tmp/php-xhprof-extension --strip-components=1 \
+    && docker-php-ext-configure /tmp/php-xhprof-extension \
+    && docker-php-ext-install /tmp/php-xhprof-extension \
+    && rm -r /tmp/php-xhprof-extension
+
 # install PHP extensions required by MediaWiki that are provided by Docker base PHP image helper
+RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/
+
 RUN docker-php-ext-install \
     bz2 \
     gd \
     mysqli \
-    opcache
+    opcache \
+    # simplexml: SimpleXMLElement is used by DesignSystem and PortableInfoboxBuilder extensions
+    simplexml \
+    # required by PortableInfobox
+    tidy \
+    # needed by RabbitMQ client
+    bcmath \
+    # RecentChange::notifyRC2UDP uses socket_create
+    sockets
 
 # setup php.ini globally
 ADD ./php.ini /usr/local/etc/php/php.ini

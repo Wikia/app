@@ -230,7 +230,8 @@ class CloseWikiPage extends SpecialPage {
 	}
 
 	private function prefixMainDomain( $cityId ) {
-		$mainDomain = wfStripProtocol( WikiFactory::getVarValueByName( "wgServer", $cityId ) );
+		// language-path - we won't be able to add a subdomain anymore. have to revisit this.
+		$mainDomain = wfStripProtocol( WikiFactory::cityIDtoUrl( $cityId ) );
 		if ( !empty( $mainDomain ) ) {
 			$index = null;
 			do {
@@ -391,6 +392,7 @@ class CloseWikiPage extends SpecialPage {
 
 		$wgOut->setPageTitle( wfMsg('closed-wiki') );
 		$wgOut->setRobotpolicy( 'noindex,nofollow' );
+		$wgOut->setStatusCode( 410 );
 		$wgOut->setArticleRelated( false );
 		$wgOut->addHtml($this->mTmpl->render("close-info"));
 

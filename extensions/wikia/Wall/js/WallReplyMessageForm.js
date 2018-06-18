@@ -151,9 +151,7 @@ Wall.ReplyMessageForm = $.createClass(Wall.MessageForm, {
 
 				newMessage.insertBefore(reply).hide().fadeIn('slow').find('.timeago').timeago();
 
-				if (window.skin && window.skin != 'monobook') {
-					WikiaButtons.init(newMessage);
-				}
+				WikiaButtons.init(newMessage);
 
 				thread.find(this.replyThreadCount).html(thread.find(this.replyThreadMessages).length);
 				thread.find(this.replyThreadFollow).text($.msg('wikiafollowedpages-following')).removeClass('secondary');

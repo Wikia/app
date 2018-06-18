@@ -551,7 +551,7 @@ class NavigationModel extends WikiaModel {
 	private function getBiggestCategory( $index ) {
 		$limit = max( $index, 15 );
 
-		if ( $limit > count( $this->biggestCategories ) ) {
+		if ( !is_array( $this->biggestCategories ) || $limit > count( $this->biggestCategories ) ) {
 
 			$blackList = $this->wg->BiggestCategoriesBlacklist;
 

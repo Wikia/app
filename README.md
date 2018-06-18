@@ -13,3 +13,7 @@ Copyright 2001 - 2017. A list of authors can be found [here](https://phabricator
 authors of changes made in this repository are listed in the [commit history](https://github.com/Wikia/app/commits/dev).
 
 Extensions and skins may be released under different licenses than MediaWiki itself. Most of them are usually distributed with a copy of their respective licenses and copyright notices.
+
+## Additional Notes
+Wikia uses BrowserStack to assist with our automated testing efforts.
+<a href="https://www.browserstack.com/automate/public-build/SlY1cjdFL0lvdGEzYjZCNW4wSmRwa3hmaVVNaWIyYUVRUitUUlozSVdpND0tLUc2cUVpSDBGZjZ0cEt6MjZMWGwvZHc9PQ==--1e3c85e699d3e2322f750d80ce097a9fab6ee979"><img valign="middle" src="https://www.browserstack.com/automate/badge.svg?badge_key=SlY1cjdFL0lvdGEzYjZCNW4wSmRwa3hmaVVNaWIyYUVRUitUUlozSVdpND0tLUc2cUVpSDBGZjZ0cEt6MjZMWGwvZHc9PQ==--1e3c85e699d3e2322f750d80ce097a9fab6ee979"></a>  <a href="http://www.browserstack.com"><img valign="middle" width="150" src="https://bstacksupport.zendesk.com/attachments/token/ojYZjNWZsYGIGhzwWlxeeoEPT/?name=browserstack-logo-600x315.png"></a>

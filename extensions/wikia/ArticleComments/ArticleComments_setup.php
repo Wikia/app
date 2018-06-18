@@ -37,6 +37,7 @@ $wgAutoloadClasses['ArticleCommentInit'] = __DIR__ . '/classes/ArticleCommentIni
 $wgAutoloadClasses['ArticleComment'] = __DIR__ . '/classes/ArticleComment.class.php';
 $wgAutoloadClasses['ArticleCommentList'] = __DIR__ . '/classes/ArticleCommentList.class.php';
 $wgAutoloadClasses['ArticleCommentsAjax'] = __DIR__ . '/classes/ArticleCommentsAjax.class.php';
+$wgAutoloadClasses['ArticleCommentsTitle'] = __DIR__ . '/classes/ArticleCommentsTitle.class.php';
 $wgAutoloadClasses['ArticleCommentsController'] = __DIR__ . '/modules/ArticleCommentsController.class.php';
 $wgAutoloadClasses['ArticleCommentsHooks'] = __DIR__ . '/ArticleCommentsHooks.class.php';
 
@@ -61,9 +62,6 @@ if (!empty($wgEnableWallEngine) || !empty($wgEnableArticleCommentsExt) || !empty
 	$wgHooks['ConfirmEdit::onConfirmEdit'][] = 'ArticleCommentList::onConfirmEdit';
 	// redirect
 	$wgHooks['ArticleFromTitle'][] = 'ArticleCommentList::ArticleFromTitle';
-	// init
-	$wgHooks['BeforePageDisplay'][] = 'ArticleCommentInit::ArticleCommentAddJS';
-	$wgHooks['SkinTemplateTabs'][] = 'ArticleCommentInit::ArticleCommentHideTab';
 	// user talk comment and notify
 	$wgHooks['UserMailer::NotifyUser'][] = 'ArticleCommentInit::ArticleCommentNotifyUser';
 	// blogs
@@ -86,6 +84,9 @@ if (!empty($wgEnableWallEngine) || !empty($wgEnableArticleCommentsExt) || !empty
 
 	$wgHooks['FilePageImageUsageSingleLink'][] = 'ArticleCommentInit::onFilePageImageUsageSingleLink';
 	$wgHooks['AfterPageHeaderButtons'][] = 'ArticleCommentsHooks::onAfterPageHeaderButtons';
+
+	// SUS-3433 article comments mapping table
+	$wgHooks['LoadExtensionSchemaUpdates'][] = 'ArticleCommentsHooks::onLoadExtensionSchemaUpdates';
 }
 
 //JSMEssages setup

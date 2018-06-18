@@ -34,14 +34,6 @@ class CloseWikiMaintenance {
 	}
 
 	/**
-	 * @param string $msg
-	 * @param array $context
-	 */
-	private function info( $msg, Array $context = [] ) {
-		\Wikia\Logger\WikiaLogger::instance()->info( $msg, $context );
-	}
-
-	/**
 	 * 1. go through all wikis which are marked for closing and check which one
 	 * 	want to have images packed.
 	 *
@@ -91,7 +83,7 @@ class CloseWikiMaintenance {
 		$dbr = WikiFactory::db( DB_SLAVE );
 		$sth = $dbr->select(
 			array( "city_list" ),
-			array( "city_id", "city_flags", "city_dbname", "city_cluster", "city_url", "city_public" ),
+			array( "city_id", "city_flags", "city_dbname", "city_cluster", "city_url", "city_public", "city_last_timestamp" ),
 			$where,
 			__METHOD__,
 			$opts
@@ -119,21 +111,7 @@ class CloseWikiMaintenance {
 			$cluster  = $row->city_cluster;
 			$folder   = WikiFactory::getVarValueByName( "wgUploadDirectory", $cityid );
 
-			/**
-			 * safety check, if city_dbname is not unique die with message
-			 */
-			$check = $dbr->selectRow(
-				array( "city_list" ),
-				array( "count(*) as count" ),
-				array( "city_dbname" => $dbname ),
-				__METHOD__,
-				array( "GROUP BY" => "city_dbname" )
-			);
-			if( $check->count > 1 ) {
-				echo "{$dbname} is not unique. Check city_list and rerun script";
-				die( 1 );
-			}
-			$this->log( "city_id={$row->city_id} city_cluster={$cluster} city_url={$row->city_url} city_dbname={$dbname} city_flags={$row->city_flags} city_public={$row->city_public}" );
+			$this->log( "city_id={$row->city_id} city_cluster={$cluster} city_url={$row->city_url} city_dbname={$dbname} city_flags={$row->city_flags} city_public={$row->city_public} city_last_timestamp={$row->city_last_timestamp}" );
 
 			/**
 			 * request for dump on remote server (now hardcoded for Iowa)
@@ -165,15 +143,16 @@ class CloseWikiMaintenance {
 						$source = $this->tarFiles( $dbname, $cityid );
 
 						if( is_string( $source ) ) {
-							$retval = DumpsOnDemand::putToAmazonS3( $source, !$hide,  MimeMagic::singleton()->guessMimeType( $source ) );
-							if( $retval > 0 ) {
-								$this->log( "putToAmazonS3 command failed." );
+							try {
+								DumpsOnDemand::putToAmazonS3( $source, !$hide, MimeMagic::singleton()->guessMimeType( $source ) );
+							} catch ( S3Exception $ex ) {
+								$this->log( "putToAmazonS3 command failed - " . $ex->getMessage() );
 								echo "Can't copy images to remote host. Please, fix that and rerun";
 								die( 1 );
-							} else {
-								$this->log( "{$source} copied to S3 Amazon" );
-								unlink( $source );
 							}
+
+							$this->log( "{$source} copied to S3 Amazon" );
+							unlink( $source );
 						}
 
 						$newFlags = $newFlags | WikiFactory::FLAG_CREATE_IMAGE_ARCHIVE | WikiFactory::FLAG_HIDE_DB_IMAGES;
@@ -234,7 +213,12 @@ class CloseWikiMaintenance {
 				$server = $local->getLBInfo( 'host' );
 
 				try {
-					$dbw = new DatabaseMysqli($server, $wgDBadminuser, $wgDBadminpassword, $centralDB);
+					$dbw = new DatabaseMysqli([
+						'host' => $server,
+						'user' => $wgDBadminuser,
+						'password' => $wgDBadminpassword,
+						'dbname' => $centralDB,
+					]);
 					$dbw->begin( __METHOD__ );
 					$dbw->query("DROP DATABASE `{$row->city_dbname}`");
 					$dbw->commit( __METHOD__ );
@@ -260,7 +244,15 @@ class CloseWikiMaintenance {
 				/**
 				 * let other extensions remove entries for closed wiki
 				 */
-				Hooks::run( 'WikiFactoryDoCloseWiki', [ $row ] );
+				try {
+					Hooks::run( 'WikiFactoryDoCloseWiki', [ $row ] );
+				} catch ( Exception $ex ) {
+					// SUS-4606 | catch exceptions instead of stopping the script
+					WikiaLogger::instance()->error( 'WikiFactoryDoCloseWiki hook processing returned an error', [
+						'exception' => $ex,
+						'wiki_id' => (int) $row->city_id
+					] );
+				}
 
 				/**
 				 * there is nothing to set because row in city_list doesn't
@@ -508,7 +500,18 @@ class CloseWikiMaintenance {
 	}
 
 	private function log( string $message ) {
-		WikiaLogger::instance()->info( $message );
+		$this->info( $message );
+	}
+
+	/**
+	 * @param string $msg
+	 * @param array $context
+	 */
+	private function info( string $msg, array $context = [] ) {
+		// send logs to stdout as well
+		Wikia::log( __CLASS__, false, $msg, true, true );
+
+		\Wikia\Logger\WikiaLogger::instance()->info( $msg, $context );
 	}
 
 	private function removeDiscussions( int $cityId ) {

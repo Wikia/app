@@ -306,7 +306,7 @@ class ArticleAsJson {
 		return true;
 	}
 
-	private static function getSrcset( string $url, int $originalWidth ): string {
+	public static function getSrcset( string $url, int $originalWidth ): string {
 		$widths = [ 284, 340, 732, 985 ];
 		$srcSetItems = [];
 
@@ -320,7 +320,7 @@ class ArticleAsJson {
 		return implode( ',', $srcSetItems );
 	}
 
-	private static function getThumbnailUrlForWidth( string $url, int $requestedWidth ) {
+	public static function getThumbnailUrlForWidth( string $url, int $requestedWidth ) {
 		try {
 			$url = VignetteRequest::fromUrl( $url )
 				->scaleToWidth( $requestedWidth )

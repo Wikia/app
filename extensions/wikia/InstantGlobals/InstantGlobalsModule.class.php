@@ -56,7 +56,7 @@ class InstantGlobalsModule extends ResourceLoaderModule {
 			}
 		);
 
-		return sprintf( 'Wikia.InstantGlobals = %s', json_encode( $variables ) );
+		return sprintf( 'Wikia.InstantGlobals = %s;', json_encode( $variables ) );
 	}
 
 	/**

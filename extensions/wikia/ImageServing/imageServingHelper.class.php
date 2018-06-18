@@ -124,7 +124,7 @@ class ImageServingHelper {
 			$images = array_slice($images, 0, self::IMAGES_PER_ARTICLE);
 		}
 
-		array_walk( $images, create_function( '&$n', '$n = urldecode( $n );' ) );
+		array_walk( $images, function ( &$n ) { $n = urldecode( $n ); } );
 
 		if ($dryRun) {
 			wfProfileOut(__METHOD__);

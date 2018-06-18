@@ -120,7 +120,12 @@ class WallMessageBuilder extends WallBuilder {
 		// Preload article ID - saves DB call
 		$this->newRevision = $rev;
 		$title->mArticleID = $rev->getPage();
-		$this->newMessage = WallMessage::newFromTitle( $title );
+
+		$articleComment = new ArticleComment( $title );
+		$articleComment->mFirstRevision = $articleComment->mLastRevision = $rev;
+		$articleComment->mFirstRevId = $articleComment->mLastRevId = $rev->getId();
+
+		$this->newMessage = WallMessage::newFromArticleComment( $articleComment );
 		return $this;
 	}
 
@@ -155,10 +160,8 @@ class WallMessageBuilder extends WallBuilder {
 			$this->newMessage->setOrderId( $count );
 		}
 
-		// after successful posting invalidate Thread memcache...
-		$this->newMessage->getThread()->invalidateCache();
-
-		// ...and purge Wall/Board URLs.
+		// after successful posting invalidate Thread memcache
+		// and purge Wall/Board URLs
 		$this->newMessage->invalidateCache();
 
 		$rp = new WallRelatedPages();
@@ -173,7 +176,7 @@ class WallMessageBuilder extends WallBuilder {
 	 */
 	public function notifyIfNeeded(): WallMessageBuilder {
 		if ( $this->notify ) {
-			WallHelper::sendNotification( $this->newRevision, RC_NEW, $this->messageAuthor );
+			WallHelper::sendNotification( $this->newMessage, $this->newRevision, RC_NEW, $this->messageAuthor );
 		}
 
 		return $this;

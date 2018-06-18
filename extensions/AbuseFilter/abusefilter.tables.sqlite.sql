@@ -1,10 +1,10 @@
 -- SQL tables for AbuseFilter extension
 
 CREATE TABLE /*$wgDBprefix*/abuse_filter (
-	af_id BIGINT unsigned NOT NULL AUTO_INCREMENT,
+	af_id BIGINT unsigned NOT NULL PRIMARY KEY AUTOINCREMENT,
 	af_pattern BLOB NOT NULL,
 	af_user BIGINT unsigned NOT NULL,
-	af_user_text varchar(255) binary NOT NULL,
+	af_user_text varchar(255) NOT NULL,
 	af_timestamp binary(14) NOT NULL,
 	af_enabled tinyint(1) not null default 1,
 	af_comments BLOB,
@@ -28,20 +28,20 @@ CREATE TABLE /*$wgDBprefix*/abuse_filter_action (
 CREATE INDEX afa_consequence ON /*$wgDBprefix*/abuse_filter_action (afa_consequence);
 
 CREATE TABLE /*$wgDBprefix*/abuse_filter_log (
-	afl_id BIGINT unsigned NOT NULL AUTO_INCREMENT,
-	afl_filter varchar(64) binary NOT NULL,
+	afl_id BIGINT unsigned NOT NULL PRIMARY KEY AUTOINCREMENT,
+	afl_filter varchar(64) NOT NULL,
 	afl_user BIGINT unsigned NOT NULL,
-	afl_user_text varchar(255) binary NOT NULL,
+	afl_user_text varchar(255) NOT NULL,
 	afl_ip varchar(255) not null,
 	afl_action varbinary(255) not null,
 	afl_actions varbinary(255) not null,
 	afl_var_dump BLOB NOT NULL,
 	afl_timestamp binary(14) NOT NULL,
 	afl_namespace int NOT NULL,
-	afl_title varchar(255) binary NOT NULL,
-	afl_wiki varchar(64) binary NULL,
+	afl_title varchar(255) NOT NULL,
+	afl_wiki varchar(64),
 	afl_deleted tinyint(1) NOT NULL DEFAULT 0,
-	afl_patrolled_by int unsigned NULL
+	afl_patrolled_by int
 ) /*$wgDBTableOptions*/;
 CREATE INDEX afl_filter_timestamp ON /*$wgDBprefix*/abuse_filter_log (afl_filter,afl_timestamp);
 CREATE INDEX afl_user_timestamp ON /*$wgDBprefix*/abuse_filter_log (afl_user,afl_user_text,afl_timestamp);
@@ -50,10 +50,10 @@ CREATE INDEX afl_page_timestamp ON /*$wgDBprefix*/abuse_filter_log (afl_namespac
 CREATE INDEX afl_ip_timestamp ON /*$wgDBprefix*/abuse_filter_log (afl_ip, afl_timestamp);
 
 CREATE TABLE /*$wgDBprefix*/abuse_filter_history (
-	afh_id BIGINT unsigned NOT NULL AUTO_INCREMENT,
+	afh_id BIGINT unsigned NOT NULL PRIMARY KEY AUTOINCREMENT,
 	afh_filter BIGINT unsigned NOT NULL,
 	afh_user BIGINT unsigned NOT NULL,
-	afh_user_text varchar(255) binary NOT NULL,
+	afh_user_text varchar(255) NOT NULL,
 	afh_timestamp binary(14) NOT NULL,
 	afh_pattern BLOB NOT NULL,
 	afh_comments BLOB NOT NULL,
