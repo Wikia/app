@@ -28,13 +28,15 @@
 					<?= $app->renderPartial( 'DesignSystemGlobalNavigationService', 'linkButton',
 						[ 'model' => $model['create_wiki'] ] ); ?>
 				</div>
-				<?= $app->renderView(
+				<?php if ( !empty( $model['partner_slot'] ) ): ?>
+					<?= $app->renderView(
 					'DesignSystemGlobalNavigationService',
 					'partnerSlot',
 					[
 						'model' => $model['partner_slot'],
 					]
 				); ?>
+				<?php endif; ?>
 			</div>
 		</div>
 	</div>
