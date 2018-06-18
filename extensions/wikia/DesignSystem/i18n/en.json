@@ -54,6 +54,7 @@
   "global-navigation-fandom-overview-link-vertical-games": "Games",
   "global-navigation-fandom-overview-link-vertical-movies": "Movies",
   "global-navigation-fandom-overview-link-vertical-tv": "TV",
+  "global-navigation-fandom-overview-link-video": "Video",
   "global-navigation-notifications-title": "Notifications",
   "global-navigation-messages-title": "Messages",
   "global-navigation-search-cancel": "Cancel",
@@ -110,5 +111,16 @@
   "community-header-add-new-image": "Add New Image",
   "community-header-add-new-video": "Add New Video",
   "community-header-recent-changes": "Recent Changes",
-  "community-header-all-shortcuts": "All Shortcuts"
+  "community-header-all-shortcuts": "All Shortcuts",
+  "wds-avatar-badges-admin-tooltip": "Community Admin",
+  "wds-avatar-badges-content-moderator-tooltip": "Content Moderator",
+  "wds-avatar-badges-helper-tooltip": "FANDOM Helper",
+  "wds-avatar-badges-discussion-moderator-tooltip": "Discussions Moderator",
+  "wds-avatar-badges-staff-tooltip": "FANDOM Staff",
+  "wds-avatar-badges-vstf-tooltip": "VSTF",
+  "wds-avatar-badges-global-discussions-moderator-tooltip": "Global Discussions Moderator",
+  "days-ago": "{days}d",
+  "hours-ago": "{hours}h",
+  "minutes-ago": "{minutes}m",
+  "now-label": "now"
 }

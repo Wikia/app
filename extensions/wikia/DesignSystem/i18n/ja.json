@@ -52,7 +52,7 @@
   "global-footer-follow-us-link-youtube": "YouTube",
   "global-footer-full-site-link": "PC版で表示",
   "global-footer-international-header-subtitle": "The Home of FANDOM",
-  "global-footer-licensing-and-vertical-description": "$1は$2ジャンルのFANDOMコミュニティです。",
+  "global-footer-licensing-and-vertical-description": "$1は$2ジャンルのFANDOMコミュニティです。コンテンツは$3で利用できます。",
   "global-footer-licensing-and-vertical-description-param-vertical-books": "書籍",
   "global-footer-licensing-and-vertical-description-param-vertical-comics": "コミック",
   "global-footer-licensing-and-vertical-description-param-vertical-games": "ゲーム",
@@ -73,6 +73,7 @@
   "global-navigation-fandom-overview-link-vertical-games": "ゲーム",
   "global-navigation-fandom-overview-link-vertical-movies": "映画",
   "global-navigation-fandom-overview-link-vertical-tv": "TV",
+  "global-navigation-fandom-overview-link-video": "動画",
   "global-navigation-messages-title": "メッセージ",
   "global-navigation-notifications-title": "通知",
   "global-navigation-search-cancel": "キャンセル",
@@ -110,5 +111,12 @@
   "notifications-reply-upvote-multiple-users-no-title": "{number}人のユーザーが、あなたの返信に<b>「イイね！」</b>しました",
   "notifications-reply-upvote-multiple-users-with-title": "{number}人のユーザーが、{postTitle}のあなたの返信に<b>「イイね！」</b>しました",
   "notifications-reply-upvote-single-user-no-title": "1人のユーザーが、あなたの返信に<b>「イイね！」</b>しました",
-  "notifications-reply-upvote-single-user-with-title": "1人のユーザーが、{postTitle}のあなたの返信に<b>「イイね！」</b>しました"
+  "notifications-reply-upvote-single-user-with-title": "1人のユーザーが、{postTitle}のあなたの返信に<b>「イイね！」</b>しました",
+  "wds-avatar-badges-admin-tooltip": "コミュニティ・アドミン",
+  "wds-avatar-badges-content-moderator-tooltip": "コンテンツ・モデレーター",
+  "wds-avatar-badges-discussion-moderator-tooltip": "ディスカッション・モデレーター",
+  "wds-avatar-badges-global-discussions-moderator-tooltip": "グローバル・ディスカッション・モデレーター",
+  "wds-avatar-badges-helper-tooltip": "FANDOMヘルパー",
+  "wds-avatar-badges-staff-tooltip": "FANDOMスタッフ",
+  "wds-avatar-badges-vstf-tooltip": "VSTF"
 }

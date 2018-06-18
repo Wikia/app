@@ -52,7 +52,7 @@
   "global-footer-follow-us-link-youtube": "Youtube",
   "global-footer-full-site-link": "Vai al sito completo",
   "global-footer-international-header-subtitle": "La patria dei fan",
-  "global-footer-licensing-and-vertical-description": "$1 è una comunità di FANDOM a proposito di $2.",
+  "global-footer-licensing-and-vertical-description": "$1 è una comunità di FANDOM a proposito di $2. I contenuti sono disponibili sotto $3.",
   "global-footer-licensing-and-vertical-description-param-vertical-books": "Libri",
   "global-footer-licensing-and-vertical-description-param-vertical-comics": "Fumetti",
   "global-footer-licensing-and-vertical-description-param-vertical-games": "Giochi",
@@ -73,6 +73,7 @@
   "global-navigation-fandom-overview-link-vertical-games": "Giochi",
   "global-navigation-fandom-overview-link-vertical-movies": "Cinema",
   "global-navigation-fandom-overview-link-vertical-tv": "TV",
+  "global-navigation-fandom-overview-link-video": "Video",
   "global-navigation-messages-title": "Messaggi",
   "global-navigation-notifications-title": "Notifiche",
   "global-navigation-search-cancel": "Annulla",
@@ -110,5 +111,12 @@
   "notifications-reply-upvote-multiple-users-no-title": "{number} utenti <b>hanno votato</b> la tua risposta",
   "notifications-reply-upvote-multiple-users-with-title": "{number} utenti <b>hanno votato</b> la tua risposta a {postTitle}",
   "notifications-reply-upvote-single-user-no-title": "Un utente <b>ha votato</b> la tua risposta",
-  "notifications-reply-upvote-single-user-with-title": "Un utente <b>ha votato</b> la tua risposta a {postTitle}"
+  "notifications-reply-upvote-single-user-with-title": "Un utente <b>ha votato</b> la tua risposta a {postTitle}",
+  "wds-avatar-badges-admin-tooltip": "Amministratore della wiki",
+  "wds-avatar-badges-content-moderator-tooltip": "Moderatore di contenuti",
+  "wds-avatar-badges-discussion-moderator-tooltip": "Moderatore di discussioni",
+  "wds-avatar-badges-global-discussions-moderator-tooltip": "Moderatore globale di Discussioni",
+  "wds-avatar-badges-helper-tooltip": "Helper di FANDOM",
+  "wds-avatar-badges-staff-tooltip": "Staff di FANDOM",
+  "wds-avatar-badges-vstf-tooltip": "VSTF"
 }
