@@ -67,7 +67,9 @@ class WikiFactoryLoader {
 
 		$this->mCommandLine = false;
 
-		if ( !empty( $server['SERVER_NAME'] ) ) {
+		if ( !empty( $server['HTTP_X_WIKIA_INTERNAL_REQUEST'] ) && !empty( $server['HTTP_X_WIKI_ID'] ) ) {
+			$this->mCityID = intval( $server['HTTP_X_WIKI_ID'] );
+		} elseif ( !empty( $server['SERVER_NAME'] ) ) {
 			// normal HTTP request
 			$this->mServerName = strtolower( $server['SERVER_NAME'] );
 
@@ -219,17 +221,42 @@ class WikiFactoryLoader {
 		global $wgWikiFactoryCacheType;
 		$oMemc = wfGetCache( $wgWikiFactoryCacheType );
 
-		if( empty( $this->mAlwaysFromDB ) ) {
-			/**
-			 * remember! for http requests we only known $this->mServerName
-			 * (domain), $this->mCityId is unknown (set to false in constructor)
-			 */
-			wfProfileIn( __METHOD__."-domaincache" );
-			$key = WikiFactory::getDomainKey( rtrim( $this->mServerName . '/' . $this->langCode, '/' ) );
-			$this->mDomain = $oMemc->get( $key );
-			$this->mDomain = isset( $this->mDomain["id"] ) ? $this->mDomain : array ();
-			$this->debug( "reading from cache, key {$key}" );
-			wfProfileOut( __METHOD__."-domaincache" );
+		if ( empty( $this->mAlwaysFromDB ) ) {
+
+			if ( $this->mCityID ) {
+				// we were given a wiki ID via header - use it
+				$wiki = WikiFactory::getWikiByID( $this->mCityID );
+
+				if ( isset( $wiki->city_id ) ) {
+					$this->mCityID = $wiki->city_id;
+					$this->mWikiID =  $wiki->city_id;
+					$this->mIsWikiaActive = $wiki->city_public;
+					$this->mCityUrl = rtrim( $wiki->city_url, '/' );
+					$this->mCityDB   = $wiki->city_dbname;
+					$this->mCityCluster = $wiki->city_cluster;
+					$this->mTimestamp = $wiki->city_factory_timestamp;
+
+					$this->mDomain = [
+						"id" => $wiki->city_id,
+						"url" => $wiki->city_url,
+						"active" => $wiki->city_public,
+						"time" => $wiki->city_factory_timestamp,
+						"db" => $this->mCityDB,
+						"cluster" => $wiki->city_cluster,
+					];
+				}
+			} else {
+				// remember! for http requests we only known $this->mServerName
+				// (domain), $this->mCityId is unknown (set to false in constructor)
+				wfProfileIn( __METHOD__ . "-domaincache" );
+				$key =
+					WikiFactory::getDomainKey( rtrim( $this->mServerName . '/' . $this->langCode,
+						'/' ) );
+				$this->mDomain = $oMemc->get( $key );
+				$this->mDomain = isset( $this->mDomain["id"] ) ? $this->mDomain : [];
+				$this->debug( "reading from cache, key {$key}" );
+				wfProfileOut( __METHOD__ . "-domaincache" );
+			}
 		}
 
 		if( !isset( $this->mDomain["id"] ) || $this->mAlwaysFromDB ) {
