@@ -116,12 +116,34 @@ define('wikia.cmp', [
 		};
 	}
 
+	function getQuantcastLabels() {
+		var quantcastLabels = "";
+
+		if (window.wgWikiVertical) {
+			quantcastLabels += window.wgWikiVertical;
+
+			if (window.wgDartCustomKeyValues) {
+				var keyValues = window.wgDartCustomKeyValues.split(';');
+				for (var i=0; i<keyValues.length; i++) {
+					var keyValue = keyValues[i].split('=');
+					if (keyValue.length >= 2) {
+						quantcastLabels += ',' + window.wgWikiVertical + '.' + keyValue[1];
+					}
+				}
+			}
+		}
+
+		return quantcastLabels;
+	}
+
 	function loadQuantserveImage(optIn) {
 		var img = new Image(1, 1),
 			pcode = 'p-8bG6eLqkH6Avk';
 
 		img.src = 'http://pixel.quantserve.com/pixel/' + pcode + '.gif?' +
-			'gdpr=' + (getGdprApplies()? '1&gdpr_consent=' + getConsentString(optIn) : 0);
+			'gdpr=' + (getGdprApplies()? '1&gdpr_consent=' + getConsentString(optIn) : 0) +
+			'&labels=' + getQuantcastLabels();
+
 		img.style = 'display:none;';
 
 		document.body.appendChild(img);
