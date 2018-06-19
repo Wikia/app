@@ -13,6 +13,8 @@ class HTTPSSupportHooks {
 		'wikia' => [ 'Community_Central:Licensing' ]
 	];
 
+	const VIGNETTE_IMAGES_HTTP_UPGRADABLE = '#(images|img|static|vignette)(\d+)?\.wikia\.(nocookie\.)?(net|com)#i';
+
 	public static function onMercuryWikiVariables( array &$wikiVariables ): bool {
 		global $wgDisableHTTPSDowngrade;
 		$basePath = $wikiVariables['basePath'];
@@ -68,4 +70,14 @@ class HTTPSSupportHooks {
 		return array_key_exists( $wgDBname, self::$httpsArticles ) &&
 			in_array( $title->getPrefixedDBKey(), self::$httpsArticles[ $wgDBname ] );
 	}
+
+	public static function parserUpgradeVignetteUrls ( string &$url ): bool {
+		if ( preg_match( self::VIGNETTE_IMAGES_HTTP_UPGRADABLE, $url ) && strpos( $url, "http://" ) === 0 ) {
+			$url = wfHttpToHttps( $url );
+			return true;
+		}
+
+		return false;
+	}
+
 }
