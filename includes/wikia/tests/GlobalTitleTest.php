@@ -14,7 +14,7 @@ class GlobalTitleTest extends WikiaBaseTest {
 			->willReturnMap( [
 				// basically all tests where GlobalTitle::load() is executed
 				[ 'wgServer', 177, 'http://community.wikia.com' ],
-				[ 'wgServer', 113, 'http://memory-alpha.wikia.com' ],
+				[ 'wgServer', 410, 'http://yugioh.wikia.com' ],
 				[ 'wgServer', 490, 'http://wowwiki.wikia.com' ],
 				[ 'wgServer', 1686, 'http://spolecznosc.wikia.com' ],
 				[ 'wgServer', 165, 'http://firefly.wikia.com' ],
@@ -58,8 +58,8 @@ class GlobalTitleTest extends WikiaBaseTest {
 	function testUrlsMainNS() {
 		$this->mockProdEnv();
 
-		$title = GlobalTitle::newFromText( "Timeline", NS_MAIN, 113 ); # memory-alpha
-		$expectedUrl = "http://memory-alpha.wikia.com/wiki/Timeline";
+		$title = GlobalTitle::newFromText( "Timeline", NS_MAIN, 410 ); # yugioh
+		$expectedUrl = "http://yugioh.wikia.com/wiki/Timeline";
 		$this->assertEquals( $expectedUrl, $title->getFullURL() );
 	}
 
