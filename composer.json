@@ -38,6 +38,7 @@
     "ext-gd": "*",
     "ext-mustache": "*",
     "ext-mysqli": "*",
+    "ext-pcntl": "*",
     "ext-simplexml": "*",
     "ext-sockets": "*",
     "ext-tideways": "*",

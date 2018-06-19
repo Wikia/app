@@ -92,7 +92,9 @@ RUN docker-php-ext-install \
     # needed by RabbitMQ client
     bcmath \
     # RecentChange::notifyRC2UDP uses socket_create
-    sockets
+    sockets \
+    # needed by multithread scripts
+    pcntl
 
 # setup php.ini globally
 ADD ./php.ini /usr/local/etc/php/php.ini
