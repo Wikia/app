@@ -93,6 +93,8 @@ RUN docker-php-ext-install \
     bcmath \
     # RecentChange::notifyRC2UDP uses socket_create
     sockets \
+    # used to read localisation cache data from CDB files
+    dba \
     # needed by multithread scripts
     pcntl
 
@@ -102,5 +104,7 @@ ADD ./php.ini /usr/local/etc/php/php.ini
 # expose volumes for app and config repositories clones
 ENV WIKIA_DOCROOT=/usr/wikia/slot1/current/src
 ENV WIKIA_CONFIG_ROOT=/usr/wikia/slot1/current/config
+
+ENV WIKIA_BASE_IMAGE_HASH=7b76c41
 
 WORKDIR /usr/wikia/slot1/current/src

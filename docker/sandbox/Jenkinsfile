@@ -72,7 +72,7 @@ node("docker-daemon") {
             }
 
             if (!imageExists) {
-                sh("docker pull artifactory.wikia-inc.com/sus/php-wikia-base:ac25600")
+                sh("docker pull artifactory.wikia-inc.com/sus/php-wikia-base:7b76c41")
 
                 sh("docker build  . -f docker/sandbox/Dockerfile-nginx -t $nginxImage:$imageTag")
                 sh("docker build .. -f docker/sandbox/Dockerfile-php -t $mediawikiImage:$imageTag")
