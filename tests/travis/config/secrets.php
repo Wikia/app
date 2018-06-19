@@ -23,3 +23,5 @@ $wgTheSchwartzSecretToken = 'test';
 $wgYoukuConfig = [
 	'AppKey' => ''
 ];
+
+$wgGoogleMapsKey = '';
