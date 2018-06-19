@@ -94,7 +94,9 @@ RUN docker-php-ext-install \
     # RecentChange::notifyRC2UDP uses socket_create
     sockets \
     # used to read localisation cache data from CDB files
-    dba
+    dba \
+    # needed by multithread scripts
+    pcntl
 
 # setup php.ini globally
 ADD ./php.ini /usr/local/etc/php/php.ini
