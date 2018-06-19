@@ -116,6 +116,17 @@ define('wikia.cmp', [
 		};
 	}
 
+	function loadQuantserveImage(optIn) {
+		var img = new Image(1, 1),
+			pcode = 'p-8bG6eLqkH6Avk';
+
+		img.src = 'http://pixel.quantserve.com/pixel/' + pcode + '.gif?' +
+			'gdpr=' + (getGdprApplies()? '1&gdpr_consent=' + getConsentString(optIn) : 0);
+		img.style = 'display:none;';
+
+		document.body.appendChild(img);
+	}
+
 	if (isModuleEnabled) {
 		win.__cmp = function __cmp(command, version, callback) {
 			log(['__cmp call', 'CMP module is not initialized'], log.levels.debug, logGroup);
@@ -138,6 +149,7 @@ define('wikia.cmp', [
 			} catch (e) { void(0); } // do nothing
 		});
 		trackingOptIn.pushToUserConsentQueue(init);
+		trackingOptIn.pushToUserConsentQueue(loadQuantserveImage);
 	} else {
 		log('Module is not enabled', log.levels.debug, logGroup);
 	}
