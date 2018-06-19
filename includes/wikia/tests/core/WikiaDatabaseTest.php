@@ -61,7 +61,7 @@ abstract class WikiaDatabaseTest extends TestCase {
 
 			if ( !( self::$pdo instanceof PDO ) ) {
 				global $wgDBserver, $wgDBuser, $wgDBpassword;
-				self::$pdo = new PDO( "mysql:dbname=$wgDBname;host=$wgDBserver", $wgDBuser, $wgDBpassword );
+				self::$pdo = new PDO( "mysql:dbname=$wgDBname;host=$wgDBserver;charset=latin1", $wgDBuser, $wgDBpassword );
 			}
 
 			$this->conn = $this->createDefaultDBConnection( self::$pdo, $wgDBname );

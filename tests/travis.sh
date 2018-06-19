@@ -9,7 +9,7 @@ mysqlparams() {
 echo "Creating tables..."
 mysql $(mysqlparams) -e "set global foreign_key_checks=0;set global sql_mode='STRICT_ALL_TABLES,NO_ENGINE_SUBSTITUTION';"
 
-mysql $(mysqlparams) -e "drop database if exists firefly; create database firefly;"
+mysql $(mysqlparams) -e "drop database if exists firefly; create database firefly default character set latin1 collate latin1_swedish_ci;"
 mysql $(mysqlparams) firefly < ../maintenance/tables.sql
 
 mysql $(mysqlparams) firefly < ../maintenance/wikia/sql/wikicities-schema.sql

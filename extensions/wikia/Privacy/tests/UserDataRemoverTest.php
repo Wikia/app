@@ -55,11 +55,6 @@ class UserDataRemoverTest extends WikiaDatabaseTest {
 	}
 
 	public function testUserDataShouldBeAnonymizedInUserTable() {
-		$this->heliosClientMock->expects( $this->any() )
-			->method( 'deletePassword' )
-			->with( self::REMOVED_USER_ID )
-			->willReturn( new stdClass() );
-
 		( new UserDataRemover() )->removeAllPersonalUserData( self::REMOVED_USER_ID );
 
 		$anonymizedUser = User::newFromId( self::REMOVED_USER_ID );
@@ -78,11 +73,6 @@ class UserDataRemoverTest extends WikiaDatabaseTest {
 	}
 
 	public function testUserDataShouldBeRemovedFromUserEmailLogTable() {
-		$this->heliosClientMock->expects( $this->once() )
-			->method( 'deletePassword' )
-			->with( self::REMOVED_USER_ID )
-			->willReturn( new stdClass() );
-
 		( new UserDataRemover() )->removeAllPersonalUserData( self::REMOVED_USER_ID );
 
 		$wikicitiesSlave = wfGetDB( DB_SLAVE );
@@ -109,11 +99,6 @@ class UserDataRemoverTest extends WikiaDatabaseTest {
 	}
 
 	public function testUserDataShouldBeRemovedFromUserPropertiesTable() {
-		$this->heliosClientMock->expects( $this->any() )
-			->method( 'deletePassword' )
-			->with( self::REMOVED_USER_ID )
-			->willReturn( new stdClass() );
-
 		( new UserDataRemover() )->removeAllPersonalUserData( self::REMOVED_USER_ID );
 
 		$wikicitiesSlave = wfGetDB( DB_SLAVE );
@@ -143,10 +128,6 @@ class UserDataRemoverTest extends WikiaDatabaseTest {
 	}
 
 	public function testFakeUserDataShouldBeAnonymizedInUserTable() {
-		$this->heliosClientMock->expects( $this->exactly( 2 ) )
-			->method( 'deletePassword' )
-			->willReturn( new stdClass() );
-
 		( new UserDataRemover() )->removeAllPersonalUserData( self::RENAMED_USER_ID );
 
 		$fakeUser = User::newFromId( self::FAKE_USER_ID );
@@ -159,11 +140,6 @@ class UserDataRemoverTest extends WikiaDatabaseTest {
 	}
 
 	public function testStaffLogsShouldBeRemoved() {
-		$this->heliosClientMock->expects( $this->any() )
-			->method( 'deletePassword' )
-			->with( self::REMOVED_USER_ID )
-			->willReturn( new stdClass() );
-
 		( new UserDataRemover() )->removeAllPersonalUserData( self::REMOVED_USER_ID );
 
 		$db = wfGetDB( DB_SLAVE, [] );
@@ -182,11 +158,6 @@ class UserDataRemoverTest extends WikiaDatabaseTest {
 	}
 
 	public function testShouldAnonymizeAnfispoof() {
-		$this->heliosClientMock->expects( $this->any() )
-			->method( 'deletePassword' )
-			->with( self::REMOVED_USER_ID )
-			->willReturn( new stdClass() );
-
 		( new UserDataRemover() )->removeAllPersonalUserData( self::REMOVED_USER_ID );
 
 		// check basic functionality

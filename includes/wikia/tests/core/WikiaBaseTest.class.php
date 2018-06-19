@@ -149,7 +149,7 @@ abstract class WikiaBaseTest extends TestCase {
 			}
 			if ( empty($functionName) ) { // regular constructor
 				// FIXME uopz is broken on PHP 7.2, hangs indefinitely when mocking new with PHPUnit mock object
-				if ( PHP_VERSION_ID >= 70114 ) {
+				if ( version_compare( PHP_VERSION, '7.2', '>=' ) ) {
 					$this->markTestSkipped( 'skipping test on PHP 7.2 due to uopz bug' );
 				}
 
