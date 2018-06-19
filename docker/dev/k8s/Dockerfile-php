@@ -1,4 +1,4 @@
-FROM artifactory.wikia-inc.com/sus/php-wikia-base:47aabb7
+FROM artifactory.wikia-inc.com/sus/php-wikia-base:7b76c41
 
 ADD app /usr/wikia/slot1/current/src
 ADD config /usr/wikia/slot1/current/config
