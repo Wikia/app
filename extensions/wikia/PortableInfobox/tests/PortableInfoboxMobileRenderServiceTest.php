@@ -38,7 +38,8 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 
 		$config = [
 			'indent'         => true,
-			'output-xhtml'   => false];
+			'output-xhtml'   => false
+		];
 		$tidy = new tidy();
 		$tidy->parseString($html, $config);
 		$tidy->cleanRepair();
@@ -155,8 +156,7 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 									</hgroup>
 									<figure data-attrs="" data-file="">
 										<a href="http://image.jpg">
-										<img class="article-media-placeholder lazyload" src="data:image/svg+xml;charset=utf-8,%3Csvg xmlns%3D\'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg\' viewBox%3D\'0 0 400 200\'%2F%3E" data-src="http://image.jpg" data-srcset="http://image.jpg, http://image2x.jpg 2x" data-sizes="auto" alt="" width="400" height="200" />
-										<noscript>
+										<img class="article-media-placeholder lazyload" src="data:image/svg+xml;charset=utf-8,%3Csvg xmlns%3D\'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg\' viewBox%3D\'0 0 400 200\'%2F%3E" data-src="http://image.jpg" data-srcset="http://image.jpg, http://image2x.jpg 2x" data-sizes="auto" alt="" width="400" height="200"/><noscript>
 											<img src="http://image.jpg" alt="image alt" width="400" height="200"/>
 										</noscript>
 										</a>
@@ -543,8 +543,7 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 								<div class="pi-item pi-hero">
 									<figure data-attrs="" data-file="">
 										<a href="http://image.jpg">
-											<img class="article-media-placeholder lazyload" src="data:image/svg+xml;charset=utf-8,%3Csvg xmlns%3D\'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg\' viewBox%3D\'0 0 400 200\'%2F%3E" data-src="http://image.jpg" data-srcset="http://image.jpg, http://image2x.jpg 2x" data-sizes="auto" alt="" width="400" height="200" />
-											<noscript>
+											<img class="article-media-placeholder lazyload" src="data:image/svg+xml;charset=utf-8,%3Csvg xmlns%3D\'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg\' viewBox%3D\'0 0 400 200\'%2F%3E" data-src="http://image.jpg" data-srcset="http://image.jpg, http://image2x.jpg 2x" data-sizes="auto" alt="" width="400" height="200"/><noscript>
 												<img src="http://image.jpg" alt="image alt" width="400" height="200"/>
 											</noscript>
 										</a>
@@ -602,8 +601,7 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 									</hgroup>
 									<figure data-attrs="" data-file="">
 										<a href="http://image.jpg">
-											<img class="article-media-placeholder lazyload" src="data:image/svg+xml;charset=utf-8,%3Csvg xmlns%3D\'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg\' viewBox%3D\'0 0 400 200\'%2F%3E" data-src="thumbnail.jpg" data-srcset="thumbnail.jpg, thumbnail2x.jpg 2x" data-sizes="auto" alt="" width="400" height="200"/>
-											<noscript>
+											<img class="article-media-placeholder lazyload" src="data:image/svg+xml;charset=utf-8,%3Csvg xmlns%3D\'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg\' viewBox%3D\'0 0 400 200\'%2F%3E" data-src="thumbnail.jpg" data-srcset="thumbnail.jpg, thumbnail2x.jpg 2x" data-sizes="auto" alt="" width="400" height="200"/><noscript>
 												<img src="http://image.jpg" alt="" width="400" height="200"/>
 											</noscript>
 										</a>
@@ -697,8 +695,7 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 									</hgroup>
 									<figure data-attrs="" data-file="">
 										<a href="http://image.jpg">
-											<img class="article-media-placeholder lazyload" src="data:image/svg+xml;charset=utf-8,%3Csvg xmlns%3D\'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg\' viewBox%3D\'0 0 400 200\'%2F%3E" data-src="thumbnail.jpg" data-srcset="thumbnail.jpg, thumbnail2x.jpg 2x" data-sizes="auto" alt="" width="400" height="200" />
-											<noscript>
+											<img class="article-media-placeholder lazyload" src="data:image/svg+xml;charset=utf-8,%3Csvg xmlns%3D\'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg\' viewBox%3D\'0 0 400 200\'%2F%3E" data-src="thumbnail.jpg" data-srcset="thumbnail.jpg, thumbnail2x.jpg 2x" data-sizes="auto" alt="" width="400" height="200"/><noscript>
 												<img src="http://image.jpg" alt="" width="400" height="200"/>
 											</noscript>
 										</a>
@@ -807,8 +804,7 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 									</hgroup>
 									<figure data-attrs="" data-file="">
 										<a href="http://image.jpg">
-											<img class="article-media-placeholder lazyload" src="data:image/svg+xml;charset=utf-8,%3Csvg xmlns%3D\'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg\' viewBox%3D\'0 0 400 200\'%2F%3E" data-src="thumbnail.jpg" data-srcset="thumbnail.jpg, thumbnail2x.jpg 2x" data-sizes="auto" alt="" width="400" height="200" />
-											<noscript>
+											<img class="article-media-placeholder lazyload" src="data:image/svg+xml;charset=utf-8,%3Csvg xmlns%3D\'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg\' viewBox%3D\'0 0 400 200\'%2F%3E" data-src="thumbnail.jpg" data-srcset="thumbnail.jpg, thumbnail2x.jpg 2x" data-sizes="auto" alt="" width="400" height="200"/><noscript>
 												<img src="http://image.jpg" alt="" width="400" height="200"/>
 											</noscript>
 										</a>

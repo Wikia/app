@@ -73,7 +73,7 @@ class WikiService extends WikiaModel {
 
 		// Get founder
 		$userIds = [];
-		if ( $includeFounder ) {
+		if ( $includeFounder && $wiki->city_founding_user ) {
 			$userIds[] = $wiki->city_founding_user;
 		}
 

@@ -17,9 +17,6 @@ class WikiaLogger implements LoggerInterface {
 	/** @var WebProcessor */
 	private $webProcessor;
 
-	/** @var StatusProcessor */
-	private $statusProcessor;
-
 	const SYSLOG_IDENT = 'mediawiki';
 
 	/** private to enforce singleton */
@@ -41,7 +38,7 @@ class WikiaLogger implements LoggerInterface {
 
 	public function onError($code, $message, $file, $line, $context, $force=false) {
 		// is this necessary? I thought the code is being passed in
-		if (!($code & $this->getErrorReporting()) && !$force) {
+		if ( !( $code & error_reporting() ) && !$force ) {
 			return true;
 		}
 
@@ -175,84 +172,21 @@ class WikiaLogger implements LoggerInterface {
 		$this->logger = $logger;
 	}
 
-	public function getLogger() {
-		if ($this->logger == null) {
-			$this->logger = $this->defaultLogger();
+	public function getLogger(): Logger {
+		if ( $this->logger === null ) {
+			$this->logger = LoggerFactory::getInstance()->getLogger( self::SYSLOG_IDENT );
+			$this->logger->pushProcessor( $this->getWebProcessor() );
 		}
 
 		return $this->logger;
 	}
 
-	/**
-	 * Return an instance of syslog logger handler with logstash formatter registered.
-	 *
-	 * appname field will be set to the value provided by $ident argument.
-	 *
-	 * @param string $ident
-	 * @return SyslogHandler
-	 */
-	static public function getSyslogHandler($ident) {
-		// SUS-2966 | We do not want debug logs to be reported on production (info level will be the lowest logged)
-		// $level is the minimum logging level at which this handler will be triggered
-		global $wgWikiaEnvironment;
-		$level = ( $wgWikiaEnvironment === WIKIA_ENV_PROD ) ? Logger::INFO : Logger::DEBUG;
-
-		// SUS-2974 | all logs from WikiaLogger will have 'program' and 'appname' set to provided $ident value
-		return new SyslogHandler($ident, LOG_USER /* $facility */, $level);
-	}
-
-	/**
-	 * @return WebProcessor.
-	 */
-	public function getWebProcessor() {
+	public function getWebProcessor(): WebProcessor {
 		if ($this->webProcessor == null) {
 			$this->webProcessor = new WebProcessor();
 		}
 
 		return $this->webProcessor;
-	}
-
-	/**
-	 * @return StatusProcessor.
-	 */
-	public function getStatusProcessor() {
-		if ($this->statusProcessor == null) {
-			$this->statusProcessor = new StatusProcessor();
-		}
-
-		return $this->statusProcessor;
-	}
-
-	/**
-	 * Sets the WebProcessor. Throws an exception of the logger has already been initialized.
-	 *
-	 * @param WebProcessor $processor
-	 * @throws \InvalidArgumentException
-	 */
-	public function setWebProcessor(WebProcessor $processor) {
-		if (isset($this->logger)) {
-			throw new \InvalidArgumentException("Error, \$this->logger has been initialized.");
-		}
-
-		$this->webProcessor = $processor;
-	}
-
-	/**
-	 * Creates the default logger.
-	 *
-	 * @param string $ident
-	 * @return Logger
-	 */
-	public function defaultLogger($ident = self::SYSLOG_IDENT) {
-		return new Logger(
-			'default',
-			[self::getSyslogHandler($ident)],
-			[$this->getWebProcessor(), $this->getStatusProcessor()]
-		);
-	}
-
-	public function getErrorReporting() {
-		return error_reporting();
 	}
 
 	/** @see \Wikia\Logger\WebProcessor::pushContext */

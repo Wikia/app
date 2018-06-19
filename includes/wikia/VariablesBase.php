@@ -1181,6 +1181,22 @@ $wgConsulDataCenters = [
 		'sjc',
 		'res',
 	],
+	'sandbox' => [
+		'sjc',
+		'res',
+	],
+	'preview' => [
+		'sjc',
+		'res',
+	],
+	'verify' => [
+		'sjc',
+		'res',
+	],
+	'stable' => [
+		'sjc',
+		'res',
+	],
 ];
 
 /**

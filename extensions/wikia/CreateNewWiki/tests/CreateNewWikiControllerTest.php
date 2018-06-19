@@ -66,6 +66,7 @@ class CreateNewWikiControllerTest extends WikiaBaseTest {
 
 		$createNewWikiController->setRequest( $requestMock );
 		$createNewWikiController->setResponse( $responseMock );
+		$createNewWikiController->setContext( new RequestContext() );
 
 		$createNewWikiController->CreateWiki();
 

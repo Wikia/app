@@ -33,6 +33,18 @@
     }
   },
   "require": {
+    "ext-bcmath": "*",
+    "ext-bz2": "*",
+    "ext-dba": "*",
+    "ext-gd": "*",
+    "ext-mustache": "*",
+    "ext-mysqli": "*",
+    "ext-pcntl": "*",
+    "ext-simplexml": "*",
+    "ext-sockets": "*",
+    "ext-tideways": "*",
+    "ext-tidy": "*",
+    "ext-wikidiff2": "*",
     "wikia/fluent-sql-php": "1.0.*",
     "monolog/monolog": "^1.23",
     "phpunit/phpunit": "^6.5",
@@ -57,6 +69,10 @@
     "tpyo/amazon-s3-php-class": "^0.5.1",
     "overtrue/phplint": "^1.1",
     "wikimedia/scoped-callback": "^2.0"
+  },
+  "require-dev": {
+    "ext-yaml": "*",
+    "ext-xdebug": "*"
   },
   "scripts": {
     "lint": "phplint . --exclude lib/composer --exclude /templates/ --no-cache"

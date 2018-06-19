@@ -1,3 +1,4 @@
+/*global require*/
 require(['wikia.trackingOptInModal', 'mw'], function (trackingOptInModal, mw) {
 	'use strict';
 

@@ -106,9 +106,6 @@ $GLOBALS['wgHooks']['ContributionsLineEnding'][] = 'WallHooksHelper::onContribut
 $GLOBALS['wgHooks']['SpecialWhatlinkshere::renderWhatLinksHereRow'][] = 'WallHooksHelper::onRenderWhatLinksHereRow';
 $GLOBALS['wgHooks']['ContributionsToolLinks'][] = 'WallHooksHelper::onContributionsToolLinks';
 
-// watchlist
-$GLOBALS['wgHooks']['ArticleCommentBeforeWatchlistAdd'][] = 'WallHooksHelper::onArticleCommentBeforeWatchlistAdd';
-// $GLOBALS['wgHooks']['WatchArticle'][] = 'WallHooksHelper::onWatchArticle';
 $GLOBALS['wgHooks']['UnwatchArticle'][] = 'WallHooksHelper::onUnwatchArticle';
 
 // diff page adjusting
@@ -152,7 +149,6 @@ $GLOBALS['wgHooks']['FormatForumLinks'][] = 'WallHooksHelper::onFormatForumLinks
 
 // Fix URLs when purging after adding a thread/post
 $GLOBALS['wgHooks']['TitleGetSquidURLs'][] = 'WallHooksHelper::onTitleGetSquidURLs';
-$GLOBALS['wgHooks']['ArticleCommentGetSquidURLs'][] = 'WallHooksHelper::onArticleCommentGetSquidURLs';
 
 // Fix User_talk links for profile page diff on wall enabled wikis
 // VOLDEV-66

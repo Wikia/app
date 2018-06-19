@@ -29,6 +29,13 @@ spec:
               value: "sandbox"
             - name: HOSTNAME_OVERRIDE
               value: "sandbox-sus2"
+            - name: LOG_SOCKET_ONLY
+              value: "yes"
+            - name: LOG_SOCKET_ADDRESS
+              value: "tcp://localhost:9999"
+        # MW log output, see K8s_LOGGING.md
+        - name: logger
+          image: artifactory.wikia-inc.com/sus/mediawiki-logger:latest
 ---
 apiVersion: v1
 kind: Service

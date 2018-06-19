@@ -123,7 +123,7 @@ class UserStatsService extends WikiaModel {
 				} else {
 					// make sure this value is an integer
 					$stats['editcount'] = (int) $stats['editcount'];
-					$stats['editcountThisWeek'] = (int) $stats['editcountThisWeek'];
+					$stats['editcountThisWeek'] = (int) ( $stats['editcountThisWeek'] ?? 0);
 				}
 
 				return $stats;
