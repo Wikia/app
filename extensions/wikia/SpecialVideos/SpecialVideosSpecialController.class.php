@@ -26,7 +26,6 @@ class SpecialVideosSpecialController extends WikiaSpecialPageController {
 	 */
 	public function index() {
 		$this->wg->SuppressPageSubtitle = true;
-		$isMobile = $this->app->checkSkin( 'wikiamobile' );
 
 		$this->response->addAsset( 'special_videos_js' );
 		$this->response->addAsset( 'special_videos_css' );
