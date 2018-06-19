@@ -71,7 +71,7 @@ class HTTPSSupportHooks {
 			in_array( $title->getPrefixedDBKey(), self::$httpsArticles[ $wgDBname ] );
 	}
 
-	public static function parserUpgradeVignetteUrls ( string &$url ): bool {
+	public static function parserUpgradeVignetteUrls ( string &$url ) {
 		if ( preg_match( self::VIGNETTE_IMAGES_HTTP_UPGRADABLE, $url ) && strpos( $url, "http://" ) === 0 ) {
 			$url = wfHttpToHttps( $url );
 		}
