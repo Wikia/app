@@ -74,10 +74,6 @@ class HTTPSSupportHooks {
 	public static function parserUpgradeVignetteUrls ( string &$url ): bool {
 		if ( preg_match( self::VIGNETTE_IMAGES_HTTP_UPGRADABLE, $url ) && strpos( $url, "http://" ) === 0 ) {
 			$url = wfHttpToHttps( $url );
-			return false;
 		}
-
-		return true;
 	}
-
 }
