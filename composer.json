@@ -35,6 +35,7 @@
   "require": {
     "ext-bcmath": "*",
     "ext-bz2": "*",
+    "ext-dba": "*",
     "ext-gd": "*",
     "ext-mustache": "*",
     "ext-mysqli": "*",
