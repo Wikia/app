@@ -7,6 +7,7 @@
 
 	background-color: $wds-fandom-color-navy;
 	box-sizing: border-box;
+	font-family: Rubik,"Helvetica Neue",Helvetica,Arial,sans-serif;
 	padding: 0 19px;
 	position: relative;
 
@@ -14,20 +15,16 @@
 		margin: 0 auto;
 		display: flex;
 
-		@media #{$wds-breakpoint-xxl-up} {
-			width: 1278px;
+		@media #{$wds-breakpoint-medium-up} {
+			width: 768px;
 		}
 
-		@media #{$wds-breakpoint-xl-only} {
+		@media #{$wds-breakpoint-l-up} {
 			width: 1064px;
 		}
 
-		@media #{$wds-breakpoint-large-only} {
-			width: 1004px;
-		}
-
-		@media #{$wds-breakpoint-medium-only} {
-			width: 768px;
+		@media #{$wds-breakpoint-xxl-up} {
+			width: 1278px;
 		}
 	}
 

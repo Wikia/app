@@ -1,4 +1,5 @@
 // Importing CSS has to be done via absolute url - because SASS parser doesn't accept relative path for css files
+@import 'rubik';
 @import '/extensions/wikia/DesignSystem/node_modules/design-system/dist/css/styles.css';
 @import '../node_modules/design-system/dist/scss/wds-variables/index';
 @import 'skins/oasis/css/core/breakpoints-variables';
