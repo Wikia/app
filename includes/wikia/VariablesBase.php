@@ -5144,13 +5144,6 @@ $wgInvalidRedirectTargets = [
 $wgInvalidUsernameCharacters = '@:';
 
 /**
- * Indicates Wikia.org communities.
- * @see includes/wikia/models/DesignSystemGlobalNavigationModel.class.php
- * @var bool $wgIsInWikiaOrgProgram
- */
-$wgIsInWikiaOrgProgram = false;
-
-/**
  * Configuration for javascript testing.
  * @var Array $wgJavaScriptTestConfig
  */
