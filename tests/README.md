@@ -19,6 +19,15 @@ If you'd like to run them locally, the following steps should help you get start
 4. Make sure that the parent directory of your app clone does **NOT** contain a config subdirectory
 with anything of value. The tests will write to this directory and destroy everything there!
 
+### MySQL setup
+
+You may need to set up MySQL account permissions:
+
+```sql
+GRANT ALL ON firefly.* TO 'your_username'@'localhost';
+GRANT SUPER ON *.* TO 'your_username'@'localhost';
+```
+
 ### Running tests
 Once you got your environment setup, run the tests with:
 ```
