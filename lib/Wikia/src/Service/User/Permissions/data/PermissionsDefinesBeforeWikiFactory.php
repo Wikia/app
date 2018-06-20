@@ -369,3 +369,5 @@ $wgGroupPermissions['staff']['clearuserprofile'] = true;
 $wgGroupPermissions['helper']['clearuserprofile'] = true;
 
 $wgGroupPermissions['global-discussions-moderator']['block'] = true;
+
+$wgGroupPermissions['threadmoderator']['admindashboard'] = true;
