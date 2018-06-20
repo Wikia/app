@@ -20,6 +20,10 @@
 		}
 
 		@media #{$wds-breakpoint-l-up} {
+			width: 1004px;
+		}
+
+		@media #{$wds-breakpoint-xl-up} {
 			width: 1064px;
 		}
 
