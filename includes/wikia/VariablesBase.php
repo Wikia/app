@@ -6349,8 +6349,7 @@ $wgPhalanxSupportedLanguages = [
  * on install.
  * @var string $wgPhpCli
  */
-$wgPhpCli = '/usr/bin/php';
-
+$wgPhpCli = 'php'; # SUS-5282 | binary location differ between distros, assume it's available in PATH
 /**
  * Configuration for processing pool control, for use in high-traffic wikis.
  * An implementation is provided in the PoolCounter extension.
