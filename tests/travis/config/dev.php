@@ -1,6 +1,6 @@
 <?php
 /**
- * Test config
+ * This file contains configuration overrides loaded for tests
  */
 
 $wgDBserver = getenv( 'MYSQL_SERVER' ) ?: 'localhost';

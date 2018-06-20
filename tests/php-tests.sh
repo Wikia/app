@@ -1,6 +1,6 @@
 #!/bin/bash
 
-export PHP_PARAMS="-d short_open_tag=On -d variables_order=EGPCS -d display_errors=1"
+PHP_PARAMS="-d short_open_tag=On -d variables_order=EGPCS -d display_errors=1"
 
 mysqlparams() {
 	[[ ! -z $MYSQL_USER ]] && echo "-u $MYSQL_USER -p$MYSQL_PASSWORD"
@@ -24,6 +24,7 @@ mysql $(mysqlparams) firefly < ../maintenance/wikia/wikia_user_properties.sql
 
 mysql $(mysqlparams) -e "set global foreign_key_checks=1;"
 
+# this fixture is needed to make localisation cache rebuild etc. work prior to starting the tests
 mysql $(mysqlparams) firefly < ./travis/initial-wiki.sql
 
 echo "Configuring config..."
@@ -42,9 +43,24 @@ echo "Applying patches..."
 
 SERVER_DBNAME=firefly php $PHP_PARAMS ../maintenance/update.php --quick --ext-only
 
-./php-all-tests
+export PHIREMOCK_HOST=127.0.0.1
+export PHIREMOCK_PORT=10349
+
+../lib/composer/bin/phiremock -i $PHIREMOCK_HOST -p $PHIREMOCK_PORT >/dev/null &
+PHIREMOCK_PID=$!
+
+rm -rf build && mkdir -p build && mkdir -p build/logs
+
+cat travis/php_unit_tests_banner.txt && php -v && php $PHP_PARAMS -d xdebug.coverage_enable=0 -d opcache.enable=0 run-test.php \
+	--stderr --configuration=phpunit.xml \
+	--exclude-group Infrastructure,Integration,ExternalIntegration,ContractualResponsibilitiesValidation $1 && cat travis/php_integration_tests_banner.txt && \
+	php -v && php $PHP_PARAMS -d xdebug.coverage_enable=0 -d opcache.enable=0 run-test.php \
+	--stderr --configuration=phpunit.xml \
+	--group Integration $1
+
 RESULT=$?
 
 rm -rf ../../config
+kill $PHIREMOCK_PID
 
 exit $RESULT

@@ -1,85 +1,61 @@
-Unit Tests
-==========
+## PHP unit and integration tests
+### Preparing the environment
+PHP unit and integration tests for Wikia app are automatically executed for each pull request
+by the [Travis CI continuous integration system](https://travis-ci.org/Wikia/app/builds).
+If you'd like to run them locally, the following steps should help you get started:
+1. Make sure you have PHP 7.0 installed. On macOS, this is easiest to do via [Homebrew](https://brew.sh/):
+	```
+	$ brew install php@7.0
+	$ echo 'export PATH="/usr/local/opt/php@7.0/bin:$PATH"' >> ~/.bash_profile
+	$ echo 'export PATH="/usr/local/opt/php@7.0/sbin:$PATH"' >> ~/.bash_profile
+	$ source ~/.bash_profile
+	```
+2. Install at least the [uopz](https://github.com/krakjoe/uopz) and [xdebug](https://xdebug.org/) extensions from [PECL](https://pecl.php.net/):
+	```
+	$ pecl install uopz xdebug
+	```
+3. Make sure you have a local MySQL server running.
+4. Make sure that the parent directory of your app clone does **NOT** contain a config subdirectory
+with anything of value. The tests will write to this directory and destroy everything there!
 
-Tests build jobs are defined in the Makefile. Helper shell script are provided.
-
-## Running PHP unit tests
-
-> Please note that **DevBoxSettings.php is not included** when unit tests are executed
-
-### Running a single test
-
+### Running tests
+Once you got your environment setup, run the tests with:
 ```
-make phpunit-single test=../extensions/wikia/AssetsManager/tests/AssetsManagerTest.php
+$ ./php-tests.sh
 ```
+If you have set custom credentials for your MySQL server, use the `MYSQL_USER` and `MYSQL_PASSWORD`
+environment variables to pass them to the test runner.
 
-### Running all tests for a given extension
-
+In order to run only a subset of all tests, pass a directory or file to the test runner as an argument:
 ```
-./php-extension FooExtension
-```
-
-will run all tests (except of ``@group Broken``) from ``/extensions/wikia/FooExtension``.
-
-Adding additional parameter ``-c`` will make it generate a coverage report, HTML saved in ``/coverage`` path.
-
-```
-./php-extension -c FooExtension
-```
-
-### Running all tests for a given group or groups
-
-```
-./php-group MediaFeatures
-```
-
-will run all tests marked as ``@group MediaFeatures``.  Any number of groups can be added, e.g.:
-
-```
-./php-group MediaFeatures UsingDB
+$ ./php-tests.sh ../extensions/wikia/Example # run tests for Example only
+$ ./php-tests.sh ../extensions/wikia/Example/tests/MyTest.php # run only MyTest
 ```
 
-### Running all unit tests
+### Best practices
+If you add a test which relies on PHP extensions to function (e.g. a test that involves rendering mustache templates),
+check if the extension is loaded in the test setup phase.
+```php
+use PHPUnit\Framework\TestCase;
 
+class MyTest extends TestCase {
+	protected function setUp() {
+		parent::setUp();
+
+		if ( !extension_loaded( 'mustache' ) ) {
+			$this->markTestSkipped( '"mustache" PHP extension needs to be loaded!' );
+		}
+	}
+}
 ```
-./php-all
+This way, the test will be gracefully skipped if the required extension is not available locally.
+
+## JS tests
+First fetch the dependencies from [NPM](https://www.npmjs.com/):
 ```
-
-These commands will run all tests (unit, infrastructure and integration) from ``tests`` subdirectories of:
-
-* /includes/wikia
-* /extensions/wikia
-
-excluding the following groups: ``Broken, Stub, Monitoring, Hack``.
-
-Test file needs to match ``*Test.php`` and the class in the file should extend ``WikiaBaseTest``
-
-### Running only fast test suite
-
-In ```tests``` directory type in ```./php-fast```
-
-## Running JS unit & integration tests
-
-Before running the tests install node dependencies in project root level
+$ npm install
 ```
-npm install
+Then you can run the tests with:
 ```
-
-Run all javascript tests in ```tests``` directory
-
-Single run of both unit and integration tests
+$ ./js-all
 ```
-./js-all
-```
-
-Single run of unit tests
-```
-make karma-unit
-```
-
-Single run of integration tests
-```
-make karma-integration
-```
-
-For more info see [docs on internal](https://internal.wikia-inc.com/wiki/Unit_Testing/JS)
