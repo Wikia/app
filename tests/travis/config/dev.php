@@ -42,3 +42,4 @@ $wgExternalServers['blobs'] = [[
 ]];
 
 $wgDevDomain = 'wikia.com';
+$wgMysqlConnectionCharacterSet = 'latin1';
