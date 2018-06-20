@@ -141,7 +141,7 @@ define('wikia.cmp', [
 			pcode = 'p-8bG6eLqkH6Avk';
 
 		img.src = 'http://pixel.quantserve.com/pixel/' + pcode + '.gif?' +
-			'gdpr=' + (getGdprApplies()? '1&gdpr_consent=' + getConsentString(optIn) : 0) +
+			'gdpr=' + (getGdprApplies() ? '1&gdpr_consent=' + getConsentString(optIn) : 0) +
 			'&labels=' + getQuantcastLabels();
 
 		img.style = 'display:none;';
