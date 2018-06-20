@@ -10,9 +10,10 @@ If you'd like to run them locally, the following steps should help you get start
 	$ echo 'export PATH="/usr/local/opt/php@7.0/sbin:$PATH"' >> ~/.bash_profile
 	$ source ~/.bash_profile
 	```
-2. Install at least the [uopz](https://github.com/krakjoe/uopz) and [xdebug](https://xdebug.org/) extensions from [PECL](https://pecl.php.net/):
+2. Install at least the [uopz](https://github.com/krakjoe/uopz) and [xdebug](https://xdebug.org/) extensions from [PECL](https://pecl.php.net/) and make sure your php instance have mysql extension insalled:
 	```
 	$ pecl install uopz xdebug
+	$ apt-get install php-mysql
 	```
 3. Make sure you have a local MySQL server running.
 4. Make sure that the parent directory of your app clone does **NOT** contain a config subdirectory
