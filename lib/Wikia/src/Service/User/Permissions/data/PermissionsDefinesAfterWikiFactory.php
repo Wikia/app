@@ -169,9 +169,12 @@ $wgGroupPermissions['*']['achievements-explicit'] = false;
 $wgGroupPermissions['sysop']['achievements-explicit'] = true;
 
 $wgGroupPermissions['*']['admindashboard'] = false;
+$wgGroupPermissions['global-discussions-moderator']['admindashboard'] = true;
+$wgGroupPermissions['helper']['admindashboard'] = true;
 $wgGroupPermissions['staff']['admindashboard'] = true;
 $wgGroupPermissions['sysop']['admindashboard'] = true;
-$wgGroupPermissions['helper']['admindashboard'] = true;
+$wgGroupPermissions['threadmoderator']['admindashboard'] = true;
+$wgGroupPermissions['vstf']['admindashboard'] = true;
 
 $wgGroupPermissions['sysop']['commentmove'] = true;
 $wgGroupPermissions['sysop']['commentedit'] = true;
