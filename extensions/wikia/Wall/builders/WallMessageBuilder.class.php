@@ -164,6 +164,10 @@ class WallMessageBuilder extends WallBuilder {
 		// and purge Wall/Board URLs
 		$this->newMessage->invalidateCache();
 
+		// SUS-5289 | have the user who replied watch the thread
+		$watchedItem = WatchedItem::fromUserTitle( $this->messageAuthor, $this->parentMessage->getTitle() );
+		$watchedItem->addWatch();
+
 		$rp = new WallRelatedPages();
 		$rp->setLastUpdate( $this->parentMessage->getId() );
 
