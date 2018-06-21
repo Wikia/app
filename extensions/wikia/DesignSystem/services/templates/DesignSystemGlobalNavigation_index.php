@@ -5,11 +5,11 @@
 				<a
 					href="<?= Sanitizer::encodeAttribute( $model['logo']['href'] ); ?>"
 					class="wds-global-navigation__logo"
-					data-tracking-label="<?= Sanitizer::encodeAttribute( $model['logo']['tracking_label'] ); ?>">
+					data-tracking-label="<?= Sanitizer::encodeAttribute( $model['logo']['tracking-label'] ); ?>">
 					<?= DesignSystemHelper::renderSvg( $model['logo']['image-data']['name'], 'wds-global-navigation__logo-image' ); ?>
 				</a>
 				<?= $app->renderPartial( 'DesignSystemGlobalNavigationService', 'mainNavigation',
-					[ 'model' => $model['main_navigation'] ] ); ?>
+					[ 'model' => $model['main-navigation'] ] ); ?>
 			</div>
 			<div class="wds-global-navigation__content-bar-right">
 				<?= $app->renderPartial( 'DesignSystemGlobalNavigationService', 'search',

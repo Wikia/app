@@ -9,7 +9,7 @@
 	// are borrowed from Global Navigation and they're responsible for displaying the icon,
 	// dropdown and bubble with unread notifications count
 ?>
-<div class="wds-global-navigation__notifications-dropdown wds-has-shadow wds-dropdown">
+<div class="wds-global-navigation__notifications-dropdown wds-dropdown wds-has-dark-shadow">
 	<div id="onSiteNotificationsDropdown"
 	     class="wds-global-navigation__dropdown-toggle wds-dropdown__toggle"
 	     title="<?= wfMessage( 'global-navigation-notifications-title' )->escaped() ?>">

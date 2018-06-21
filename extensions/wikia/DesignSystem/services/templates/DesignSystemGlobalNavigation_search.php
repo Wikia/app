@@ -1,5 +1,5 @@
 <form class="wds-global-navigation__search-container wds-search-is-focused" action="<?= Sanitizer::encodeAttribute( $model['results']['url'] ); ?>">
-	<div class="wds-dropdown wds-global-navigation__search">
+	<div class="wds-dropdown wds-global-navigation__search wds-has-dark-shadow">
 		<div class="wds-global-navigation__search-toggle">
 			<?= DesignSystemHelper::renderSvg(
 				'wds-icons-magnifying-glass-small',
@@ -23,7 +23,7 @@
 				<?php if ( !empty( $model['suggestions'] ) ) : ?>
 					data-suggestions-url="<?= $model['suggestions']['url'] ?>"
 					data-suggestions-param-name="<?= $model['suggestions']['param-name'] ?>"
-					data-suggestions-tracking-label="<?= Sanitizer::encodeAttribute( $model['suggestions']['tracking_label'] ); ?>"
+					data-suggestions-tracking-label="<?= Sanitizer::encodeAttribute( $model['suggestions']['tracking-label'] ); ?>"
 				<?php endif; ?>
 			>
 			<button class="wds-button wds-is-text wds-global-navigation__search-close" type="button">
@@ -33,7 +33,7 @@
 				) ?>
 			</button>
 			<button class="wds-button wds-global-navigation__search-submit"
-				data-tracking-label="<?= Sanitizer::encodeAttribute( $model['results']['tracking_label'] ); ?>">
+				data-tracking-label="<?= Sanitizer::encodeAttribute( $model['results']['tracking-label'] ); ?>">
 				<?= DesignSystemHelper::renderSvg(
 					'wds-icons-arrow',
 					'wds-icon wds-icon-small wds-global-navigation__search-submit-icon'

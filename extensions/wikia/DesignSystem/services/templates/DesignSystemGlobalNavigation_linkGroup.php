@@ -1,4 +1,4 @@
-<div class="wds-dropdown wds-global-navigation__link-group">
+<div class="wds-dropdown wds-global-navigation__link-group wds-has-dark-shadow">
 	<div class="wds-dropdown__toggle wds-global-navigation__dropdown-toggle wds-global-navigation__link">
 		<span><?= DesignSystemHelper::renderText( $model['title'] ) ?></span>
 		<?= DesignSystemHelper::renderSvg( 'wds-icons-dropdown-tiny', 'wds-icon wds-icon-tiny wds-dropdown__toggle-chevron' ); ?>

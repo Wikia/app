@@ -4,7 +4,7 @@
 		<? // wds-sign-out__button will make this look like a link ?>
 		<input type="hidden" name="redirect"
 			   value="<?= Sanitizer::encodeAttribute( ( new UserLoginHelper() )->getCurrentUrlOrMainPageIfOnUserLogout() ); ?>">
-		<button type="submit" class="wds-sign-out__button" data-tracking-label="<?= Sanitizer::encodeAttribute( $model['tracking_label'] ); ?>">
+		<button type="submit" class="wds-sign-out__button" data-tracking-label="<?= Sanitizer::encodeAttribute( $model['tracking-label'] ); ?>">
 			<?= DesignSystemHelper::renderText( $model['title'] ) ?>
 		</button>
 	</form>

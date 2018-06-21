@@ -1,4 +1,4 @@
-<div id="notificationsEntryPoint" class="wds-global-navigation__notifications-dropdown wds-has-shadow wds-dropdown">
+<div id="notificationsEntryPoint" class="wds-global-navigation__notifications-dropdown wds-has-dark-shadow wds-dropdown">
 	<div class="wds-dropdown__toggle wds-global-navigation__dropdown-toggle" title="<?=wfMessage( 'global-navigation-messages-title' )->escaped()?>">
 		<div class="bubbles">
 			<div class="wds-global-navigation__notifications-counter wds-is-hidden"></div>
