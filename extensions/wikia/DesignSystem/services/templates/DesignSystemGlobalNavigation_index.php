@@ -26,14 +26,14 @@
 				<?php endif; ?>
 				<div class="wds-global-navigation__start-a-wiki">
 					<?= $app->renderPartial( 'DesignSystemGlobalNavigationService', 'linkButton',
-						[ 'model' => $model['create_wiki'] ] ); ?>
+						[ 'model' => $model['create-wiki'] ] ); ?>
 				</div>
-				<?php if ( !empty( $model['partner_slot'] ) ): ?>
+				<?php if ( !empty( $model['partner-slot'] ) ): ?>
 					<?= $app->renderView(
 					'DesignSystemGlobalNavigationService',
 					'partnerSlot',
 					[
-						'model' => $model['partner_slot'],
+						'model' => $model['partner-slot'],
 					]
 				); ?>
 				<?php endif; ?>
