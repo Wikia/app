@@ -2233,38 +2233,37 @@ $messages['lol'] = array(
 );
 
 $messages['nl'] = array(
-	'specialcontact-seclink-security' => 'I think I found a security issue',
-	'specialcontact-seclink-dmca-request' => 'I have a copyright complaint',
-	'specialcontact-sectitle-security' => 'Security issue report',
-	'specialcontact-intro-security' => "If you have found or believe you have found a security issue in Wikia's code or on one of Wikia's communities, please let us know. We appreciate your help in keeping Wikia safe for everyone by disclosing it to us in a [[wikipedia:Responsible disclosure|responsible manner]].
+	'specialcontact-seclink-security' => 'Ik denk dat ik een beveiligingsprobleem heb gevonden',
+	'specialcontact-seclink-dmca-request' => 'Ik heb een auteursrechtklacht',
+	'specialcontact-sectitle-security' => 'Veiligheidsprobleem melden',
+	'specialcontact-intro-security' => "Als je een veiligheidsprobleem in FANDOM's code hebt gevonden of denkt te hebben gevonden, laat het ons dan weten. We waarderen jouw hulp om Wikia veilig te houden als je het op een [[wikipedia:Responsible disclosure|verantwoorde manier]] meldt.
 
-If you are looking to report a general bug or another type of issue, please use one of the [[Special:Contact|other contact forms]].
+Als je een gewone bug of andere kwestie wilt rapporteren, gebruik dan een van de [[Special:Contact|andere contactformulieren]].
 
-When performing security testing, you must:
+Als je veiligheidstesten uitvoert moet je ervoor zorgen dat je:
 
-* Not compromise the availability of the site
-* Not compromise the security or privacy of other users' data
-* Be non-destructive and non-disruptive
+* de beschikbaarheid van de website niet compromitteert
+* je de veiligheid en/of privacy van gebruikersinformatie niet compromitteert
+* niet vernietigend of verstorend te werk gaat
 
-When reporting a security issue, please provide full details of the issue including:
+Zorg als je een veiligheidsprobleem rapporteert dat je de volgende informatie bijvoegt:
 
-* Full steps to reproduce the vulnerability (including a Proof-of-Concept URL if appropriate)
-* Please indicate if you are logged in or logged out when the issue occurs
-* Your browser information including type and version
-** Particularly for XSS or vulnerabilities that require a specific browser or plugin to reproduce
-* A short description of the vulnerability's potential security impact
+* Volledige stappen om de kwetsbaarheid te reproduceren (met een basisimplementatie URL indien mogelijk)
+* Geef aan of je in- of uitgelogd bent als deze kestie opspeelt
+* Je browserinformatie inclusief type en versie
+** In het bijzonder nodig voor XSS of kwetsbaarheden die een specifieke browser of plugin nodig hebben om te reproduceren
+* Een korte omschrijving van de impact die dit veiligheidsprobleem zou kunnen hebben
 
-In response to security reports using this form, Wikia will:
-* Prioritize the reproduction and confirmation of any reported vulnerability
-* Identify a reasonable timeline to patch any confirmed vulnerability
-* Not pursue legal action against any reporter who complies with all of the guidelines for testing and reporting security issues
-",
-	'specialcontact-label-security-type' => 'Type of security issue if known',
-	'specialcontact-label-security-link' => 'Link to where the issue can be found',
-	'specialcontact-label-security-description' => 'Please describe the security issue including steps to reproduce',
-	'specialcontact-default-security-description' => 'Description:
+Als antwoord op deze rapporten zal Wikia:
+* Met de hoogste prioriteit werken om het probleem te bevestiging
+* Een redelijke planning opmaken om de kwetsbaarheid te repareren
+* Niet overgaan tot juridische stappen tegen rapporteurs mits zij de bovenstaande richtlijnen hebben aangehouden",
+	'specialcontact-label-security-type' => 'Indien bekend, het soort veiligheidsprobleem',
+	'specialcontact-label-security-link' => 'Link naar waar het probleem kan worden gevonden',
+	'specialcontact-label-security-description' => 'Beschrijf het veiligheidsprobleem met de stappen om het te reproduceren',
+	'specialcontact-default-security-description' => 'Beschrijving:
 
-Reproduction steps:
+Reproductiestappen:
   1.
   2.
   3.
@@ -2272,199 +2271,224 @@ Reproduction steps:
 Browser/OS: ',
 	'specialcontact-security-issue-type-xss' => 'Cross-Site Scripting (XSS)',
 	'specialcontact-security-issue-type-csrf' => 'Cross-Site Request Forgery (CSRF)',
-	'specialcontact-security-issue-type-sqli' => 'SQL injection',
-	'specialcontact-security-issue-type-auth' => 'Authentication/Authorization issues',
-	'specialcontact-security-issue-type-leak' => 'Information Leakage',
-	'specialcontact-security-issue-type-redirect' => 'URL Redirection Abuse',
-	'specialcontact-security-issue-type-other' => 'Other',
-	'specialcontact-ccheader' => 'Dit is een kopie van je bericht aan Wikia-gebruikersondersteuning',
+	'specialcontact-security-issue-type-sqli' => 'SQL-injectie',
+	'specialcontact-security-issue-type-auth' => 'Verificatieproblemen',
+	'specialcontact-security-issue-type-leak' => 'Informatielek',
+	'specialcontact-security-issue-type-redirect' => 'Misbruik van URL-doorverwijzing',
+	'specialcontact-security-issue-type-other' => 'Overig',
+	'specialcontact-ccheader' => 'Dit is een kopie van je bericht aan FANDOM',
 	'specialcontact-ccdisabled' => 'Uitgeschakeld: bevestig alsjeblieft je e-mailadres om deze functie te kunnen gebruiken.',
 	'specialcontact-filledin' => 'Deze gegevens zijn ingevuld vanuit je gebruikersvoorkeuren',
 	'specialcontact-notyou' => 'Ben jij dit niet?',
-	'specialcontact-realname' => 'Je naam',
-	'specialcontact-intro-account-issue' => 'Sorry to hear you are having problems accessing your account. A couple of things to check:
+	'specialcontact-realname' => 'Je echte naam',
+	'specialcontact-intro-account-issue' => 'We vinden het vervelend dat je problemen hebt met de toegang tot je account. Hier zijn een paar puntjes om te controleren:
 
-*Remember account names are case sensitive
-*Is your browser up-to-date?
-*Have you confirmed your email address?
-*Are you trying to log in via Facebook Connect? Be sure to follow the steps [[Help:Facebook_Connect|here]].
-*Not able to create an account? It may be that you are not eligible for an account at this time. See the [[homepage:Terms of Use#Membership|Terms of Use]] for more details.
-*Lost your password? You can request a new password [[Special:Signup|here]] Once there, enter your username, and click the "new password" button. You will then receive an email with a new temporary password. You can use this to sign in and update your password to one of your choice.
+*Gebruikersnamen zijn hoofdlettergevoelig
+*Is je browser up-to-date?
+*Heb je je emailadres bevestigd?
+*Probeer je in te loggen via Facebook Connect? Volg [[Help:Facebook_Connect|deze stappen]].
+*Kun je geen account aanmaken? Het kan zijn dat je op dit moment niet in aanmerking komt voor een account. Zie de [[homepage:Terms of Use#Membership|gebruikersvoorwaarden] voor meer details.
+*Wachtwoord vergeten? Je kunt [[Special:Signup|hier]] een nieuw wachtwoord aanvragen. Vul je gebruikersnaam in en klik op de "Nieuw wachtwoord" knop. Daarna ontvang je een email met een tijdelijk wachtwoord dat je daarna naar gerieven kun aanpassen.
 
-If you have done all of these and are still having an issue - please send us a detailed report below. We will get back to you as soon as possible to help fix the problem.
+Als je dit allemaal hebt geprobeerd maar de juiste oplossing staat er niet tussen, stuur dan een bericht hieronder. We nemen zo snel mogelijk contact met je op om het probleem op te lossen.
 
-Happy editing!',
-	'specialcontact-intro-wiki-name-change' => 'If you are an admin here, you can request to change your [[Help:Title for the wiki|sitename]] or [[Help:Domain name|URL]] by filling out the form below. Please double check the spelling, and be sure of your correction, as we will not honor multiple requests. If you are not an admin here, contact your local admins with your request [[Special:ListAdmins|here]].
+Veel plezier!',
+	'specialcontact-intro-wiki-name-change' => 'Als je een beheerder bent op deze wiki, kun je een verzoek indienen tot het wijzigen van de [[Help:Websitenaam|websitenaam]] of [[Help:URL|URL]] met het onderstaand formulier. Zorg er goed voor dat je het correct hebt gespeld en dat jer zeker van bent dat je het wilt wijzigen, want als je meerdere verzoeken indient zullen die niet worden beantwoord. Als je geen beheerder bent kun je contact opnemen met de [[Special:ListAdmins|lokale beheerders]].
 
-Happy editing!',
-	'specialcontact-intro-general' => 'You can contact [[w:project:Staff|FANDOM Staff]] using this form. Admins of this community can be found [[Special:ListAdmins|here]].
+Veel plezier!',
+	'specialcontact-intro-general' => 'Je kunt met dit formulier contact opnemen met [[w:project:Staff|FANDOM medewerkers]]. Beheerders van deze wiki kun je [[Special:ListAdmins|hier]] vinden.
 
-Additional information on how to report problems to FANDOM can be found [[w:project:Report_a_problem|here]], or you can post on [[w:c:community:Special:Forum|FANDOM Community Forums]] for user support.
+Aanvullende informatie over hoe je het beste contact met FANDOM op kunt nemen vindt je [[w:nl.community:Help:Contact opnemen met Fandom|hier]]. Als je vragen hebt voor andere gebruikers kun je ook op de [[w:c:nl.community:Special:Forum|FANDOM Community Forums]] terecht.
 
-If you prefer to use regular e-mail or have multiple attachments, you can contact us at [mailto:community@fandom.com community@fandom.com].',
-	'specialcontact-desc' => "Wikia's contact [[Special:Contact]] form",
-	'contact' => 'Contact FANDOM',
-	'specialcontact-wikia' => 'Contact FANDOM',
-	'specialcontact-pagetitle' => 'Contact FANDOM Support Staff',
-	'specialcontact-intro-main-head' => "<big>Need help? Don't worry, the FANDOM community is here to help you!</big><br/>
-Follow the links below to learn more about how to use FANDOM, make changes to your FANDOM or modify your account.",
+Als je de voorkeur geeft aan normaal e-mailcontact of als je meerdere bijlagen heby kun je e-mailen naar [mailto:community@fandom.com community@fandom.com] (Engels).',
+	'specialcontact-desc' => 'FANDOMs contactformulier [[Special:Contact]]',
+	'contact' => 'Maak contact met FANDOM',
+	'specialcontact-wikia' => 'Maak contact met FANDOM',
+	'specialcontact-pagetitle' => 'Maak contact met een medewerker van FANDOM',
+	'specialcontact-intro-main-head' => '<big>Hulp nodig? Geen zorgen, de FANDOM community helpt je graag!</big><br/>
+Gebruik deze links om meer te leren hoe je FANDOM kunt gebruiken en aanpassen of je je profiel kunt wijzigen.',
 	'specialcontact-intro-main-local' => '',
-	'specialcontact-intro-main-foot' => "'''Does this page answer your question?''' If not, please feel free to [[Special:contact/general|contact us]] to discuss your issue further. Remember you can always check out our '''[[w:c:community:Help:Index|help pages]]''', [[w:c:community:Blog:Wikia_Staff_Blog|staff blog]]  or post on our '''[[w:c:community:Special:Forum|community help forums]]'''.",
-	'specialcontact-secheader-onwiki' => 'Questions about this wiki',
-	'specialcontact-seclink-content-issue' => "Issue with the wiki's content",
-	'specialcontact-seclink-user-conflict' => 'Problem with another user?',
-	'specialcontact-seclink-adoption' => 'I want admin rights here',
-	'specialcontact-secheader-account' => 'Account changes',
-	'specialcontact-seclink-account-issue' => "Can't access my account",
+	'specialcontact-intro-main-foot' => "'''Biedt deze pagina een antwoord op je vraag?''' Zo niet, neem gerust [[Special:contact/general|contact]] met ons op om de kwestie verder te bespreken. Je kunt ook onze algemene '''[[w:c:nl.community:Help:Index|helppaginas]]''' en [[w:c:community:Blog:Wikia_Staff_Blog|medewerkersblog]] doorlezen, of je vraag stellen op de '''[[w:c:nl.community:Special:Forum|hulpforums van de community]]'''.",
+	'specialcontact-secheader-onwiki' => 'Vragen over deze wiki',
+	'specialcontact-seclink-content-issue' => 'Problemen met de inhoud van deze wiki',
+	'specialcontact-seclink-user-conflict' => 'Problemen met een andere gebruiker?',
+	'specialcontact-seclink-adoption' => 'Ik wil beheerdersrechten verkrijgen',
+	'specialcontact-secheader-account' => 'Veranderingen aan de account',
+	'specialcontact-seclink-account-issue' => 'Ik heb geen toegang tot mijn account',
 	'specialcontact-seclink-close-account' => 'Disable my account',
-	'specialcontact-seclink-rename-account' => 'Rename my account',
-	'specialcontact-seclink-blocked' => 'My account is blocked',
-	'specialcontact-secheader-editing' => 'Participating on FANDOM',
-	'specialcontact-seclink-using-fandom' => 'How do I use FANDOM?',
-	'specialcontact-seclink-feedback' => 'I want to offer some feedback',
-	'specialcontact-seclink-bug' => 'I think I found a bug',
-	'specialcontact-seclink-bad-ad' => 'I see a broken or inappropriate ad',
-	'specialcontact-secheader-setting' => 'Changes to this wiki',
-	'specialcontact-seclink-wiki-name-change' => 'Sitename or URL',
-	'specialcontact-seclink-design' => 'Design',
-	'specialcontact-seclink-features' => 'Add or remove Features',
-	'specialcontact-seclink-close-wiki' => 'Close this wiki',
-	'specialcontact-sectitle' => 'FANDOM Support - $1',
-	'specialcontact-sectitle-general' => 'General support',
-	'specialcontact-sectitle-content-issue' => 'Content issue',
-	'specialcontact-sectitle-user-conflict' => 'User interactions',
-	'specialcontact-sectitle-adoption' => 'Admin rights',
-	'specialcontact-sectitle-account-issue' => 'Account issue',
+	'specialcontact-seclink-rename-account' => 'Ik wil mijn account hernoemen',
+	'specialcontact-seclink-blocked' => 'Mijn account is geblokkeerd',
+	'specialcontact-secheader-editing' => 'Meedoen op FANDOM',
+	'specialcontact-seclink-using-fandom' => 'Hoe gebruik ik FANDOM?',
+	'specialcontact-seclink-feedback' => 'Ik wil feedback geven',
+	'specialcontact-seclink-bug' => 'Ik denk dat ik een bug heb gevonden',
+	'specialcontact-seclink-bad-ad' => 'Ik heb een defecte of ongepaste advertentie ontdekt',
+	'specialcontact-secheader-setting' => 'Veranderingen voor deze wiki',
+	'specialcontact-seclink-wiki-name-change' => 'Websitenaam of URL',
+	'specialcontact-seclink-design' => 'Vormgeving',
+	'specialcontact-seclink-features' => 'Functies toevoegen of verwijderen',
+	'specialcontact-seclink-close-wiki' => 'Sluit deze wiki',
+	'specialcontact-sectitle' => 'FANDOM Ondersteuning - $1',
+	'specialcontact-sectitle-general' => 'Algemene ondersteuning',
+	'specialcontact-sectitle-content-issue' => 'Inhoudskwestie',
+	'specialcontact-sectitle-user-conflict' => 'Gebruikersproblemen',
+	'specialcontact-sectitle-adoption' => 'Beheerdersrechten',
+	'specialcontact-sectitle-account-issue' => 'Accountprobleem',
 	'specialcontact-sectitle-close-account' => 'Disable my account',
-	'specialcontact-sectitle-rename-account' => 'Rename my account',
-	'specialcontact-sectitle-blocked' => 'Account blocked',
-	'specialcontact-sectitle-using-fandom' => 'Using FANDOM',
+	'specialcontact-sectitle-rename-account' => 'Hernoem mijn account',
+	'specialcontact-sectitle-blocked' => 'Account geblokkeerd',
+	'specialcontact-sectitle-using-fandom' => 'FANDOM gebruiken',
 	'specialcontact-sectitle-feedback' => 'Feedback',
-	'specialcontact-sectitle-bug' => 'Bug Report',
-	'specialcontact-sectitle-bad-ad' => 'Ad report',
-	'specialcontact-sectitle-wiki-name-change' => 'Community name change',
-	'specialcontact-sectitle-design' => 'Community design',
-	'specialcontact-sectitle-features' => 'FANDOM features',
-	'specialcontact-sectitle-close-wiki' => 'Close this wiki',
-	'specialcontact-intro-content-issue' => "The content on this wiki is created by the community here, and managed by the [[Special:ListAdmins|local admins]], not FANDOM. If you wish to discuss this content, it is best to first contact the [[Special:ListAdmins|wiki's admins here]].
+	'specialcontact-sectitle-bug' => 'Bugs melden',
+	'specialcontact-sectitle-bad-ad' => 'Advertentie melden',
+	'specialcontact-sectitle-wiki-name-change' => 'Naamsverandering voor de wiki',
+	'specialcontact-sectitle-design' => 'Community-vormgeving',
+	'specialcontact-sectitle-features' => 'FANDOM-functies',
+	'specialcontact-sectitle-close-wiki' => 'Sluit deze wiki',
+	'specialcontact-intro-content-issue' => 'De inhoud van deze wiki is geschreven door de gebruikers en geleid door de [[Special:ListAdmins|lokale beheerders]], niet door FANDOM. Als je de inhoud wilt bespreken dien je de [[Special:ListAdmins|lokale beheerders]] te vragen.
 
-If you feel the content violates our [http://www.wikia.com/Terms_of_Use Terms of Use], you can contact FANDOM staff directly [[Special:Contact/general|here]].",
-	'specialcontact-intro-content-issue-mobile' => "The content on this wiki is created by the community here and not the admins, not FANDOM. If you wish to discuss this content, it is best to first contact the wiki's admins.
+Als je denkt dat de inhoud onze [http://www.wikia.com/Terms_of_Use Algemene Voorwaarden] schendt, neem dan [[Special:Contact/general|hier]] contact op met een FANDOM-medewerker.',
+	'specialcontact-intro-content-issue-mobile' => 'De inhoud van deze wiki is geschreven door de gebruikers, niet door FANDOM. Als je de inhoud wilt bespreken dien je de [[Special: ListAdmins|lokale beheerders]] te vragen.
 
-If you feel the content violates our Terms of Use, you can contact FANDOM staff.",
-	'specialcontact-intro-user-conflict' => "Wikis are community spaces where each and every person needs to work together with others for it to be successful. Conflicts can sometimes arise while working together; the best way to solve them is to have an open and respectful conversation on your community about the issue.
+Als je denkt dat de inhoud onze [http://www. wikia. com/Terms_of_Use Algemene Voorwaarden] schendt, neem dan [[Special: Contact/general|hier]] contact op met een FANDOM-medewerker.',
+	'specialcontact-intro-user-conflict' => "Wiki's zijn gemeenschappelijke ruimtes waar iedereen samen moet werken om het te doen bloeien. Dit brengt soms conflicten met andere gebruikers met zich mee; de beste manier om die op te lossen is om een open en respectvol gesprek aan te gaan op jullie wiki.
 
-If you need help, first contact your [[Special:ListAdmins|local admins]]. Admins are the local experts on the topic and community, so best to first chat with them further. If the admins are not able to help, or you feel the user is violating Wikia Inc.'s [http://www.wikia.com/Terms_of_Use Terms of Use], you can contact FANDOM staff directly [[Special:Contact/general|here]].
+Als je hulp nodig hebt dien je eerst contact op te nemen met de [[Special:ListAdmins|lokale beheerders]]. Beheerders zijn de experts op het gebied van het onderwerk en de groep gebruikers, dus kunne ze je in eerste instantie vaak al helpen. Als de beheerders niet kunnen helpen of als je denkt dat de gebruiker Wikia Inc.'s [http://www.wikia.com/Terms_of_Use Gebruikersvoorwaarden] overtreedt kun je direct met FANDOM-medewerkers [[Special:Contact/general|contact opnemen]].
 
-Happy editing!",
-	'specialcontact-intro-adoption' => "Are you interested in becoming an admin here? If so, please first check if the [[Special:Listusers/sysop|local admins]] are active. If they are, leave them a message with your request. It is also a good idea to talk with fellow users about your request to gather their support. You may want to start by posting in your community forum.
+Veel plezier!",
+	'specialcontact-intro-adoption' => 'Ben je geïnteresseerd om beheerder te worden op deze wiki? Kijk eerst of de [[Special:Listusers/sysop|lokale beheerders]] actief zijn. Zo ja, dan kun je hen om de juiste procedure vragen. 
 
-If the local admins are not active, you can submit a request for admin status. Please visit the [[w:c:adopt|adoption Adoptions]] for more information, including the adoption criteria and the request page. Please remember to always provide a link to the community you wish to adopt.
+Als er geen lokale beheerders meer actief zijn kun je een verzoek om beheerdersrechten indienen. Lees de [[w:c:nl.community:Adoptie:Aanvragen|adoptierichtlijnen]] voor meer informatie. Zorg er voor dat je een link naar de wiki bijvoegt in je verzoek.
 
-If there's an active user community on the wiki you wish to adopt, please start a discussion on there about who would make the best admins, and why you would like to become one. Please provide a link to this discussion at the [[w:c:adopt|Adoption community]]. Best of luck and happy editing!",
+Als er actieve gebruikers zijn op de wiki, moet je een discussie starten om te kijken wie het beste beheerders zouden kunnen worden. Een link naar deze discussie moet je dan meesturen in je adoptieaanvraag. Veel plezier!',
 	'specialcontact-intro-close-account' => "We are sorry you want to disable your account. FANDOM has many wikis on all sorts of subjects and we'd love for you to stick around and find the one that's right for you. If you are having a local problem with your wiki, please don't hesitate to contact your [[Special:Listusers/sysop|local admins]] for help and advice.
 
 If you have decided you definitely want to disable your account please be aware that FANDOM does not have the ability to fully remove accounts, but we can disable them. This will ensure the account is locked and can't be used. This process is NOT reversible, and you will have to create a new account if you wish to rejoin FANDOM. However, this process will not remove your contributions from a given wiki as these contributions belong to the community as a whole.
 
 If you need any more information on what an account disable actually does, you can visit our [[Help:Close_my_account|help page on disabling your account]]. To confirm and disable your account, please fill out the form below.",
-	'specialcontact-intro-rename-account' => 'Changing your username is possible on FANDOM, but only once, so be sure you want to change it before you submit a request. This process cannot be reversed, and once we change your username, we cannot change it again. Please make sure you have fully read this help page before sending in a request: http://help.wikia.com/wiki/Help:Changing_your_username
+	'specialcontact-intro-rename-account' => 'Je kunt je gebruikersnaam op FANDOM vervangen, maar slechts eenmalig, dus zorg dat je zeker weet dat je het wilt veranderen voor je een verzoek indient. Het proces kan niet worden teruggedraaid. Lees deze pagina goed door voor je een verzoek instuurt: http://nl.community.wikia.com/wiki/Help:Gebruikersnaam_wijzigen
 
-Once you have read that help page and are positive on the spelling of your new username, please submit a request below. Once your username is changed, you will receive a confirmation email. You can then log in with your new user name using your old password.
+Als je de hulppagina hebt doorgelezen en goed gelet hebt op de spelling van je nieuwe gebruikersnaam kun je hieronder een verzoek indienen. Je krijgt een e-mail ter bevestiging zodra de naam is veranderd. Je kunt dan inloggen met je nieuwe gebruikersnaam en oude wachtwoord.
 
-Happy editing!',
-	'specialcontact-intro-blocked' => 'Account blocks are usually set by the local admins, and not by the FANDOM staff. The name of the blocking admin should be on the block notice you received.You may be able to contact the blocking admin by leaving a message on your user talk page. This is still editable for blocked users (on some wikis) and changes will usually be seen by the other contributors to the wiki. Your user talk page is found by following the "my talk" link at the top right of any page.
+Veel succes!',
+	'specialcontact-intro-blocked' => 'Blokkades worden normaliter ingesteld door lokale beheerders en niet door FANDOM-medewerkers. De naam van de beheerder is vermeld op de blokkadenotificatie. Je kunt contact maken met die gebruiker op je overlegpagina of prikbord. 
 
-However, if this talk page option is not available in your situation, then the best advice we can give you is to wait the block out or join the community at another of the many thousand FANDOM communities available.
+In sommige gevallen ben je ook geblokkeerd om je eigen overlegpagina te bewerken. Dan kun je ofwel je wenden tot het prikbord van de beheerder op de Centrale Wiki Community, ofwel je blokkade uit te zitten. Je kunt ook op zoek naar een van de andere wikis om daar mee te helpen..
 
-If you feel you still need to discuss this block further with FANDOM staff, please contact us [[Special:Contact/general|here]].',
-	'specialcontact-intro-using-fandom' => "Now that you are a part of the community, you are able to edit and contribute to almost any page across FANDOM. For some introductory help, check out our [[Help:Getting_Started|help pages here]]. They are a great place to learn the basics of editing, formatting and much more.
+Als je je blokkade toch met FANDOM-personeel wilt bespreken, gebruik dan [[Special:Contact/general|dit formulier]].',
+	'specialcontact-intro-using-fandom' => "Nu je deel uit maakt van onze community kun je bijna overal op FANDOM bijfragen. Voor een korte inleiding kun je onze [[Help:Aan_de_slag|hulppagina's]] lezen. Deze pagina's leggen van alles uit over bewerken, layout en zo veel meer.
 
-If you have questions about this specific community, start by [[Special:ListAdmins|contacting your local admins]].
-You can also ask general questions to other community members on our [[w:c:community:Special:Forum|community help forum]].
+Als je vragen hebt over deze specifieke wiki kun je je vraag richten aan [[Special:ListAdmins|de lokale beheerders]]. Met algemene vragen kun je je ook richten tot andere gebruikers op ons [[w:c:nl.community:Special:Forum|centrale hulpforum]].
 
-Remember, you can't break a community on FANDOM, so don't be afraid to get started. Happy editing!",
+Wat je ook doet, je kunt een wiki niet kapotmaken, dus wees niet bang om te beginnen met bewerken. Veel plezier!",
 	'specialcontact-intro-feedback' => 'Wil je feedback geven? Dat horen we graag! Je kunt je gedachten en ideeën hierbeneden opschrijven.
 
 Alvast bedankt, en veel plezier met bewerken!',
-	'specialcontact-intro-bug' => 'We are sorry to hear that you found a bug on FANDOM. Please provide full details of the issue you are seeing below so we can investigate further. Important details to include are:
-*Your username
-*Link to your community
-*Your browser information including type and version ([[Help:Supported_browsers|click here for our supported browser list]])
-*Screenshot
+	'specialcontact-intro-bug' => 'Wat vervelend dat he een bug hebt gevonden op FANDOM. Kun je volledige details bijvoegen voor je probleem? Dat helpt ons bij het zoeken naar een oplossing. Belangrijke details zijn onder andere:
+* Je gebruikersnaam
+* Een link naar de wiki
+* Je browserinformatie, inclusief type en versie
+* Een screenshot
 
-For more advice on what to include in your report, please see [[w:c:community:Help:How to report bugs|our help page on bug reports]].
+Voor meer uitleg kun je [[w:c:nl.community:Help:Bugs melden|onze hulppagina over bugs melden]] lezen.
 
-Thanks again for the report and for using FANDOM.
+Veel plezier!',
+	'specialcontact-intro-bad-ad' => 'We vinden het vervelend dat je een slechte advertentie tegen bent gekomen op FANDOM. Als je meer details kunt geven dan kunnen we die delen met onze advertentieafdeling, die de advertentie zal bekijken en mogelijk verwijderen uit ons systeem.
 
-Happy editing!',
-	'specialcontact-intro-bad-ad' => "We are sorry to hear you encountered a bad advertisement on FANDOM. If you could provide further details below we will share them with our advertising manager, who will review the ad and may be able to remove it from the system.
+Vertel ons op welke wiki het was, welke advertentie je zag, en waarom je het een probleem vond. Een screenshot en de URL van de advertentie helpen ons ook. Om de URL te vinden kun je de instructies hieronder volgen: http://nl.community.wikia.com/wiki/Help:Slechte_advertenties
 
-Be sure to tell us which community you're on, which ad you saw, and why it was a problem. It would also help if you could include a screenshot and the URL of the ad. Instructions for finding the URL of an ad are listed here: http://help.wikia.com/wiki/Help:Bad_advertisements
+Dankjewel en veel plezier!',
+	'specialcontact-intro-design' => 'Het ontwerp van de wiki kan worden aangepast door lokale beheerders met de [[Help:Themaontwerper|Themaontwerper]]. Als je geen beheerder bent maar toch wilt helpen met het ontwerp kun je het beste contact opnemen met [[Special:ListAdmins|locale beheerders]].
 
-Thank you and happy editing!",
-	'specialcontact-intro-design' => "A wiki's design can be updated by any local admin on your community by using the [[Help:Theme_designer|Theme designer]]. If you are not an admin and wish to help with your wiki's design, first contact your [[Special:ListAdmins|local admins]].
+Als je de wiki nog verder wilt aanpassen kun je een verzoek indienen bij het [[w:Community_Central:Content_Team/Requests|FANDOM Content team]] (Engels). Zorg dat je de regels goed doorleest voordat je een verzoek indient.
 
-If you would like help with creating a more customized design, you can submit a request to the FANDOM Content team [[w:Community_Central:Content_Team/Requests|here]]. Please read through the guidelines before submitting a request there.
+Als je een bug bent tegengekomen bij het aanpassen van de opmaak kun je ons [[Special:Contact/bug|hier]] een gedetailleerd rapport sturen.
 
-If you feel you have found a bug while updating your wiki's design, please provide us with a detailed report [[Special:Contact/bug|here]].
+Veel plezier!',
+	'specialcontact-intro-features' => 'FANDOM heeft veel functies en het meerendeel daarvan is standaard actief op alle wikis.
 
-Happy editing!",
-	'specialcontact-intro-features' => "FANDOM offers many features, the majority of which are live on all communities across the site by default.
+Als je, als beheerder, denkt dat een bepaalde functie niet voldoet voor jouw wiki dan kun je na overleg met andere gebruikers ervoor kiezen dat deze functie wordt uitgeschakeld. Als iedereen het er mee eens is kun je het aanpassen op het [[Special:AdminDashboard|Beheerdersdashboard]]. Als de functie er niet tussen staat, neem dan [[Special:Contact/general|contact met ons]] op.
 
-If you are an admin and feel that specific feature is not working well for your community, please discuss with your wiki's community if they would also like the feature turned off. If everyone agrees, you can use the [[Special:WikiFeatures|Wiki Features]] section of the [[Special:AdminDashboard|Admin Dashboard]] to disable or re-enable features. If the feature is not list there, please [[Special:Contact/general|contact us]] with your request.
+Beheerders die geinteresseerd zijn in het uittesten van nieuwe, nog in ontwikkeling zijnde functies kunnen het onderdeel "Labs" in de [[Special:WikiFeatures|Wiki Features]] bekijken.
 
-Admins interested in testing out new features that are still in development can check out the Labs section of [[Special:WikiFeatures|Wiki Features]].
+Als je op de hoogte wilt blijven van nieuws van nieuwe of aangepaste functies dan kun je de [[w:c:community:Blog:Wikia_New_Features|Medewerkersblog over functies]] volgen (Engels).',
+	'specialcontact-intro-close-wiki' => "Dankjewel dat je contact met ons opneemt. Normaliter verwijderen we geen wikis. Wikis zijn van de gebruikers, en als jij niet langer interesse heb kunnen anderen het nog altijd van je overnemen om de wiki te [[Special:Contact/adoption|adopteren]].
 
-Want to stay current on announcement of new features and improvements to current ones? Stop by and follow the [[w:c:community:Blog:Wikia_New_Features|staff blog new features list]]",
-	'specialcontact-intro-close-wiki' => "Thanks for contacting FANDOM. We don't usually delete wikis once they have been created. Wikis are community-owned projects, and a wiki you are no longer interested in can wait for someone else to come along and [[Special:Contact/adoption|adopt it]].
+Als je de naam van de wiki wilt veranderen, raadpleeg dan [[Help:Pagina's hernoemen]] of [[Help:Themaontwerper]]. Naamsveranderingen zijn makkelijk, je hoeft daar geen nieuwe wiki voor te beginnen. Ook voor het veranderen van de URL hoef te enkel [[Special:Contact/general|contact met ons op te nemen]].
 
-If you wish to rename your wiki or fix spelling or grammatical issues please first consult [[Help:Rename]] for renaming pages, and [[Help:Theme designer]] for renaming the title of your wiki. Wikis can easily have their names changed, without the hassle of starting over. If you wish to change your wiki's URL [[Special:Contact/general|please write to us]] as we'd be more than happy to do so for you as there is no need to close your FANDOM.
+Als het onderwerp van je wiki weinig anderen aanspreekt, zoals een persoonlijk project, gebruik dan het onderstaande formulier. Zorg ervoor dat je het verzoek maakt vanaf de wiki die je wilt laten sluiten.
 
-If you feel this wiki is on a topic that no other users may be interested in (such as a personal project), please submit a request using the form below. Please make the request from the wiki that needs closing.
+We hopen dat er tussen de duizenden wikis die FANDOM rijk is een zit waar je je thuis zult voelen, zodat je een fantastisch naslagwerk kunt helpen bouwen.
 
-I hope you find another wiki among the many that are part of FANDOM, and join in building a fantastic resource about everything you are passionate about.
-
-Happy editing!",
-	'specialcontact-noform-footer' => "'''Does this page answer your question?''' If not, please feel free to [[Special:contact/general|contact us]] to discuss your issue further. Remember you can always check out our '''[[w:c:community:Help:Index|help pages]]''', [[w:c:community:Blog:Wikia_Staff_Blog|staff blog]],  or post on our '''[[w:c:community:Special:Forum|community help forums]]'''.",
-	'specialcontact-username' => 'Your username',
-	'specialcontact-wikiname' => 'Which wiki',
-	'specialcontact-yourmail' => 'Your email',
-	'specialcontact-problem' => 'Subject',
-	'specialcontact-problemdesc' => 'Message',
-	'specialcontact-mail' => 'Send to FANDOM',
-	'specialcontact-ccme' => 'Send me a copy of this message',
-	'specialcontact-captchainfo' => 'Please enter the text in the image.',
-	'specialcontact-captchatitle' => 'Blurry word',
-	'specialcontact-formtitle' => 'Contact FANDOM Support Staff',
-	'specialcontact-label-screenshot' => 'Did you take a screenshot? If so, please upload here.',
-	'specialcontact-label-additionalscreenshot' => 'If you have another screenshot please upload it here.',
-	'specialcontact-label-bad-ad-description' => 'Please describe the problem with the ad',
-	'specialcontact-label-bad-ad-link' => 'Please provide the URL of the page where you saw the bad ad',
-	'specialcontact-label-bad-ad-url' => 'Please provide the URL the ad links to, if possible. See the [[{{int:specialcontact-label-bad-ad-help-page}}|help page]] for information on how to find this link.',
-	'specialcontact-label-bad-ad-help-page' => 'Help:Bad advertisements',
-	'specialcontact-label-bug-link' => 'Please provide the URL of the page where you are having the problem',
-	'specialcontact-label-bug-feature' => 'What feature is this related to?',
-	'specialcontact-label-bug-description' => 'Please describe the problem you are having',
+Veel plezier!",
+	'specialcontact-noform-footer' => "'''Beantwoordt deze pagine jouw vraag?''' Zo niet, neem dan [[Special:contact/general|contact met ons op]] om de kwestie verder te bespreken. Je kunt ook onze '''[[w:c:nlcommunity:Help:Index|hulppagina's]]''' bekijken, de [[w:c:community:Blog:Wikia_Staff_Blog|medewerkersblog]] lezen,  of een bericht achterlaten op onze '''[[w:c:nl.community:Special:Forum|hulpforums]]'''.",
+	'specialcontact-username' => 'Je gebruikersnaam',
+	'specialcontact-wikiname' => 'Welke wiki',
+	'specialcontact-yourmail' => 'Je e-mailadres',
+	'specialcontact-problem' => 'Onderwerp',
+	'specialcontact-problemdesc' => 'Bericht',
+	'specialcontact-mail' => 'Verstuur naar FANDOM',
+	'specialcontact-ccme' => 'Stuur me een kopie van dit bericht',
+	'specialcontact-captchainfo' => 'Voer de tekst in de afbeelding in.',
+	'specialcontact-captchatitle' => 'Wazig woord',
+	'specialcontact-formtitle' => 'Neem contact op met een mederwerker van FANDOM',
+	'specialcontact-label-screenshot' => 'Heb je een screenshot gemaakt? Dan kun je dat hier uploaden.',
+	'specialcontact-label-additionalscreenshot' => 'Als je nog een screenshot hebt kun je deze hier uploaden.',
+	'specialcontact-label-bad-ad-description' => 'Omschrijf het probleem met de advertentie',
+	'specialcontact-label-bad-ad-link' => 'Geef de URL van de pagina waar je de slechte advertentie heeft gezien',
+	'specialcontact-label-bad-ad-url' => 'Geef de URL waar de advertentie naar doorverwijst, indien mogelijk. Zie de [[{{int:specialcontact-label-bad-ad-help-page}}|hulppagina]] om te zien hoe je de link kunt vinden.',
+	'specialcontact-label-bad-ad-help-page' => 'Help:Slechte advertenties',
+	'specialcontact-label-bug-link' => 'Geef de URL van de pagina waar je het probleem ondervindt',
+	'specialcontact-label-bug-feature' => 'Aan welke functie is dit verwant?',
+	'specialcontact-label-bug-description' => 'Omschrijf je probleem',
 	'specialcontact-label-close-account-confirm' => 'I confirm that I want to disable my FANDOM account',
 	'specialcontact-label-close-account-read-help' => 'I have read the [[Help:Close_my_account|help page on closing your account]]',
-	'specialcontact-label-account-issue-description' => 'Please provide a detailed description of the issue you are having.',
-	'specialcontact-label-rename-newusername' => 'Please enter the new username',
-	'specialcontact-label-rename-account-confirm' => 'I confirm that the spelling and punctuation for my new name is correct',
-	'specialcontact-label-rename-account-read-help' => 'I have read the [[Help:Changing your username|help page on renaming my account]]',
-	'specialcontact-form-header' => 'Contact FANDOM',
-	'specialcontact-logged-in-as' => 'You are logged in as $1. [[Special:UserLogout|Not you?]]',
-	'specialcontact-mail-on-file' => 'Your e-mail is set to $1. [[Special:Preferences|Do you wish to change it?]]',
-	'specialcontact-nomessage' => 'Please fill in a message',
-	'specialcontact-captchafail' => 'Incorrect or missing confirmation code.',
-	'specialcontact-error-title' => 'Contact Form Error',
-	'specialcontact-error-message' => 'Something went wrong while submitting your form. Please try again later.',
-	'specialcontact-error-logintext' => 'You must be logged in to make this request. Please [[Special:SignUp|login to your account]] and try again.',
-	'specialcontact-error-alreadyrenamed' => 'You have previously been renamed so you are not eligible for another one. Please [[Special:Contact/general|contact staff]] if you require further assistance.',
-	'specialcontact-mailsub' => 'FANDOM Support',
-	'specialcontact-mailsubcc' => 'Copy of FANDOM Contact Mail',
-	'specialcontact-submitcomplete' => 'Thank you for contacting FANDOM. We receive and review all messages submitted here. We will do our best to get back to you in the next 2-3 business days, but please be patient as we work through all of the messages.
+	'specialcontact-label-account-issue-description' => 'Geef een gedetailleerde beschrijving van je probleem.',
+	'specialcontact-label-rename-newusername' => 'Voer de nieuwe gebruikersnaam in',
+	'specialcontact-label-rename-account-confirm' => 'Ik bevestig dat de spelling en interpunctie voor mijn nieuwe naam juist is',
+	'specialcontact-label-rename-account-read-help' => 'I heb de [[nl:Help:Gebruikersnaam wijzigen|hulppagina over het wijzigen van mijn account]] gelezen',
+	'specialcontact-form-header' => 'Neem contact op met FANDOM',
+	'specialcontact-logged-in-as' => 'Je bent ingelogd als $1. [[Special:UserLogout|Ben jij dit niet?]]',
+	'specialcontact-mail-on-file' => 'Je e-mail staat nu ingesteld als $1. [[Special:Preferences|Wil je dit veranderen?]]',
+	'specialcontact-nomessage' => 'Vul een bericht in',
+	'specialcontact-captchafail' => 'Onjuiste of ontbrekende bevestigingscode.',
+	'specialcontact-error-title' => 'Contactformulier-fout',
+	'specialcontact-error-message' => 'Er ging iets mis tijdens het indienen van je formulier. Probeer het later nog eens.',
+	'specialcontact-error-logintext' => 'Je moet ingelogd zijn om dit verzoek te doen. [[Special: SignUp |Log in op je account]] en probeer het opnieuw.',
+	'specialcontact-error-alreadyrenamed' => 'Je gebruikersnaam is al eens gewijzigd en dus kom je niet in aanmerking voor nog een wijziging. Neem [[Special:Contact/general|contact op met een medewerker]] als je meer hulp nodig hebt.',
+	'specialcontact-mailsub' => 'FANDOM ondersteuning',
+	'specialcontact-mailsubcc' => 'Kopie van FANDOM Contact a-mail',
+	'specialcontact-submitcomplete' => "Dankjewel voor het bericht. We ontvangen en beoordelen alle berichten die hier worden ingediend. We doen ons best om binnen 2-3 werkdagen contact met je op te nemen, dus we vragen je om geduld terwijl we al deze berichten afhandelen.
 
-Remember, you can also find help in our [[w:c:community:Special:Forum|Community Forum]] and [[w:c:community:Help:Index|Help pages]]. You can keep up to date with the latest FANDOM news on our [[w:c:community:Blog:Wikia_Staff_Blog |Staff Blog]]. Happy editing!',
+Je kunt ook hulp vinden op ons [[w:c:nl.community:Special:Forum|Forum]] en onze [[w:c:nl.community:Help:Index|Hulppagina's]]. Je kunt op de hoogte blijven van nieuws over FANDOM door de [[w:c:community:Blog:Wikia_Staff_Blog |medewerkersblog]] te lezen. Veel plezier!",
+	'specialcontact-label-forget-account-username-on-behalf' => 'Gebruikersnaam van de persoon namens wie je dit verzoek maakt.*',
+	'specialcontact-label-forget-account-is-on-behalf' => 'Maak je dit verzoek voor jezelf?*',
+	'specialcontact-label-forget-account-confirm' => 'Verwijder mijn Wikia, Inc. account',
+	'specialcontact-label-forget-account-data-deletion-info' => 'Zodra het verzoek is gemaakt kan de gegevensverwijdering niet ongedaan worden gemaakt en je Wikia, Inc. account kan niet worden teruggehaald.',
+	'specialcontact-label-forget-account-email-address' => 'E-mailadres voor verder contact*',
+	'specialcontact-seclink-forget-account' => 'Vergeet mijn Wikia, Inc. account',
+	'specialcontact-sectitle-forget-account' => 'Verzoek om te worden vergeten',
+	'specialcontact-label-data-access-email' => 'Je huidige e-mailadres',
+	'specialcontact-sectitle-data-access' => 'Verzoek een kopie van mijn gegevens',
+	'specialcontact-seclink-data-access' => 'Ik wil een kopie van mijn gegevens downloaden',
+	'specialcontact-label-data-access-username' => 'Je FANDOM gebruikersnaam',
+	'specialcontact-label-forget-account-previous-request' => 'Heb je ons eerder een verzoek om persoonlijke gegevens te verwijderen gemaakt?',
+	'specialcontact-label-forget-account-processing-consent' => 'Ik begrijp dat Wikia, Inc. dit verzoek alleen kan verwerken als alle opgegeven informatie correct is.*',
+	'specialcontact-label-forget-account-data-processing-info' => 'Wikia, Inc. zal de persoonlijke informatie in dit formulier, en enige andere persoonlijke informatie die je in verdere communicatie opgeeft, alleen gebruiken om het verzoek te verwerken en zorg te dragen dat wij aan onze wettelijke verplichtingen voldoen. De details kunnen mogelijk worden gedeeld met gegevensbeschermingsautoriteiten, maar alleen als we daartoe verplicht zijn, bijvoorbeeld als er nader onderzoek naar onze beslissing volgt. We behouden een kopie van dit verzoek om te voldoen aan onze wettelijke verplichting om verwijderingsverzoeken te registreren.',
+	'specialcontact-label-forget-account-confirm-checkbox' => 'Ik heb deze boodschap gelezen en begrepen.*',
+	'specialcontact-label-forget-account-data-required-explanation' => '*Verplicht',
+	'specialcontact-title-forget-account' => 'Je informatie',
+	'specialcontact-intro-data-access' => 'De gegevens die we nodig hebben zijn gebruikersnaam, user ID, echte naam (indien opgegeven), e-mailadres, de datum dat je de account hebt aangemaakt, en een link naar een lijst met je bijdragen.
+
+Om frauduleuze verzoeken (van mensen die zich als anderen voordoen) te voorkomen, moeten we de identiteit van de verzoeker verifiëren.
+
+Om je gegevens te kunnen downloaden, hebben we wat meer informatie nodig om te bevestigen dat jij de eigenaar van deze account bent.
+
+Zodra we je verzoek ontvangen sturen we je een bevestiging via email. Deze email bevat een verplichting om een kopie van een identiteitsbewijs mee te sturen zodat we je identiteit kunnen vaststellen.',
+	'specialcontact-label-forget-account-country-info' => 'Land van verblijf*',
+	'specialcontact-label-forget-account-relationship' => 'Geef je relatie met de persoon namens wie je het verzoek maakt aan, bijvoorbeeld "ouder" of "verzorger". We kunnen vragen om bewijs om te controleren of u bent gemachtigd dit verzoek namens hen te doen.*',
+	'specialcontact-label-forget-account-full-name' => 'Volledige naam*',
+	'specialcontact-intro-forget-account' => 'Dankzij de Europese wetgeving over gegevensbescherming heb je wellicht het recht om ons te vragen om je persoonlijke informatie volledig te verwijderen. Via dit formulier kun je ons helpen om je verzoek te begrijpen en er naar te handelen.',
 );
 
 $messages['no'] = array(

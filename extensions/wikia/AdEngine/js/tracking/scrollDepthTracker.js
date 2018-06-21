@@ -1,12 +1,11 @@
 /*global define*/
 define('ext.wikia.adEngine.tracking.scrollDepthTracker', [
-	'wikia.geo',
-	'wikia.instantGlobals',
 	'wikia.log',
 	'wikia.throttle',
 	'wikia.tracker',
-	'wikia.window'
-], function (geo, instantGlobals, log, throttle, tracker, win) {
+	'wikia.window',
+	'ext.wikia.adEngine.adContext'
+], function (log, throttle, tracker, win, adContext) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.tracking.scrollDepthTracker',
@@ -48,7 +47,7 @@ define('ext.wikia.adEngine.tracking.scrollDepthTracker', [
 	}
 
 	function isEnabled() {
-		return geo.isProperGeo(instantGlobals.wgAdDriverScrollDepthTrackingCountries);
+		return adContext.get('opts.isScrollDepthTrackingEnabled');
 	}
 
 	return {

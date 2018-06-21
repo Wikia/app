@@ -14,18 +14,18 @@ class GlobalTitleTest extends WikiaBaseTest {
 			->willReturnMap( [
 				// basically all tests where GlobalTitle::load() is executed
 				[ 'wgServer', 177, 'http://community.wikia.com' ],
-				[ 'wgServer', 113, 'http://memory-alpha.wikia.com' ],
-				[ 'wgServer', 490, 'http://wowwiki.wikia.com' ],
+				[ 'wgServer', 147, 'http://starwars.wikia.com' ],
+				[ 'wgServer', 3035, 'http://fallout.wikia.com' ],
 				[ 'wgServer', 1686, 'http://spolecznosc.wikia.com' ],
 				[ 'wgServer', 165, 'http://firefly.wikia.com' ],
 				[ 'wgLanguageCode', 177, 'en' ],
-				[ 'wgLanguageCode', 113, 'en' ],
-				[ 'wgLanguageCode', 490, 'en' ],
+				[ 'wgLanguageCode', 147, 'en' ],
+				[ 'wgLanguageCode', 3035, 'en' ],
 				[ 'wgLanguageCode', 1686, 'pl' ],
 				[ 'wgLanguageCode', 165, 'en' ],
 				[ 'wgExtraNamespacesLocal', 177, false, [], [] ],
-				[ 'wgExtraNamespacesLocal', 113, false, [], [] ],
-				[ 'wgExtraNamespacesLocal', 490, false, [], [ 116 => 'Portal' ] ],
+				[ 'wgExtraNamespacesLocal', 147, false, [], [] ],
+				[ 'wgExtraNamespacesLocal', 3035, false, [], [ 116 => 'Portal' ] ],
 				[ 'wgExtraNamespacesLocal', 1686, false, [], [] ],
 				[ 'wgExtraNamespacesLocal', 165, false, [], [] ],
 			] );
@@ -58,16 +58,16 @@ class GlobalTitleTest extends WikiaBaseTest {
 	function testUrlsMainNS() {
 		$this->mockProdEnv();
 
-		$title = GlobalTitle::newFromText( "Timeline", NS_MAIN, 113 ); # memory-alpha
-		$expectedUrl = "http://memory-alpha.wikia.com/wiki/Timeline";
+		$title = GlobalTitle::newFromText( "Timeline", NS_MAIN, 147 ); # starwars
+		$expectedUrl = "http://starwars.wikia.com/wiki/Timeline";
 		$this->assertEquals( $expectedUrl, $title->getFullURL() );
 	}
 
 	function testUrlsMainNSonWoW() {
 		$this->mockProdEnv();
 
-		$title = GlobalTitle::newFromText( "Main", 116, 490); # wowwiki
-		$expectedUrl = "http://wowwiki.wikia.com/wiki/Portal:Main";
+		$title = GlobalTitle::newFromText( "Main", 116, 3035); # fallout
+		$expectedUrl = "http://fallout.wikia.com/wiki/Portal:Main";
 		$this->assertEquals( $expectedUrl, $title->getFullURL() );
 	}
 

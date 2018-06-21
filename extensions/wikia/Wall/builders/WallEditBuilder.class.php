@@ -48,7 +48,7 @@ class WallEditBuilder extends WallBuilder {
 		// Purge thread memcache and URLs for Wall/Board page etc.
 		$this->message->invalidateCache();
 
-		WallHelper::sendNotification( $comment->mLastRevision, RC_EDIT, $this->editor );
+		WallHelper::sendNotification( $this->message, $comment->mLastRevision, RC_EDIT, $this->editor );
 
 		$this->articleComment = $comment;
 		return $this;

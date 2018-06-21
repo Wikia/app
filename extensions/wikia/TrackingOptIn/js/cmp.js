@@ -1,4 +1,6 @@
+/*global define*/
 define('wikia.cmp', [
+	'wikia.consentFrameworkVendorList',
 	'wikia.consentStringLibrary',
 	'wikia.cookies',
 	'wikia.geo',
@@ -7,6 +9,7 @@ define('wikia.cmp', [
 	'wikia.trackingOptIn',
 	'wikia.window'
 ], function (
+	vendorList,
 	consentStringLibrary,
 	cookies,
 	geo,
@@ -19,178 +22,33 @@ define('wikia.cmp', [
 		logGroup = 'wikia.cmp',
 		consentStringCookie = 'consent-string',
 		cookieExpireDays = 604800000, // 7 days in milliseconds
-		purposesList = [1, 2, 3, 4, 5],
-		vendorsList = [
-			10, // Index Exchange, Inc.
-			11, // Quantcast International Limited
-			32, // AppNexus Inc.
-			52, // The Rubicon Project, Limited
-			69, // OpenX Software Ltd. and its affiliates
-			76, // PubMatic, Inc.
-		],
-		// Downloaded from: https://vendorlist.consensu.org/vendorlist.json
-		vendorsListGlobal = {
-			"vendorListVersion": 33,
-			"lastUpdated": "2018-05-27T16:00:14Z",
-			"purposes": [
-				{
-					"id": 1,
-					"name": "Information storage and access",
-					"description": "The storage of information, or access to information that is already stored, on your device such as advertising identifiers, device identifiers, cookies, and similar technologies."
-				},
-				{
-					"id": 2,
-					"name": "Personalisation",
-					"description": "The collection and processing of information about your use of this service to subsequently personalise advertising and/or content for you in other contexts, such as on other websites or apps, over time. Typically, the content of the site or app is used to make inferences about your interests, which inform future selection of advertising and/or content."
-				},
-				{
-					"id": 3,
-					"name": "Ad selection, delivery, reporting",
-					"description": "The collection of information, and combination with previously collected information, to select and deliver advertisements for you, and to measure the delivery and effectiveness of such advertisements. This includes using previously collected information about your interests to select ads, processing data about what advertisements were shown, how often they were shown, when and where they were shown, and whether you took any action related to the advertisement, including for example clicking an ad or making a purchase. This does not include personalisation, which is the collection and processing of information about your use of this service to subsequently personalise advertising and/or content for you in other contexts, such as websites or apps, over time."
-				},
-				{
-					"id": 4,
-					"name": "Content selection, delivery, reporting",
-					"description": "The collection of information, and combination with previously collected information, to select and deliver content for you, and to measure the delivery and effectiveness of such content. This includes using previously collected information about your interests to select content, processing data about what content was shown, how often or how long it was shown, when and where it was shown, and whether the you took any action related to the content, including for example clicking on content. This does not include personalisation, which is the collection and processing of information about your use of this service to subsequently personalise content and/or advertising for you in other contexts, such as websites or apps, over time."
-				},
-				{
-					"id": 5,
-					"name": "Measurement",
-					"description": "The collection of information about your use of the content, and combination with previously collected information, used to measure, understand, and report on your usage of the service. This does not include personalisation, the collection of information about your use of this service to subsequently personalise content and/or advertising for you in other contexts, i.e. on other service, such as websites or apps, over time."
-				}
-			],
-			"features": [
-				{
-					"id": 1,
-					"name": "Matching Data to Offline Sources",
-					"description": "Combining data from offline sources that were initially collected in other contexts."
-				},
-				{
-					"id": 2,
-					"name": "Linking Devices",
-					"description": "Allow processing of a user's data to connect such user across multiple devices."
-				},
-				{
-					"id": 3,
-					"name": "Precise Geographic Location Data",
-					"description": "Allow processing of a user's precise geographic location data in support of a purpose for which that certain third party has consent."
-				}
-			],
-			"vendors": [
-				{
-					"id": 10,
-					"name": "Index Exchange, Inc. ",
-					"policyUrl": "www.indexexchange.com/privacy",
-					"purposeIds": [
-						1
-					],
-					"legIntPurposeIds": [],
-					"featureIds": [
-						2,
-						3
-					]
-				},
-				{
-					"id": 11,
-					"name": "Quantcast International Limited",
-					"policyUrl": "https://www.quantcast.com/privacy/",
-					"purposeIds": [
-					  1
-					],
-					"legIntPurposeIds": [
-					  2,
-					  3,
-					  4,
-					  5
-					],
-					"featureIds": [
-					  1,
-					  2
-					]
-				},
-				{
-					"id": 32,
-					"name": "AppNexus Inc.",
-					"policyUrl": "https://www.appnexus.com/en/company/platform-privacy-policy",
-					"purposeIds": [
-						1
-					],
-					"legIntPurposeIds": [
-						3
-					],
-					"featureIds": [
-						2,
-						3
-					]
-				},
-				{
-					"id": 52,
-					"name": "The Rubicon Project, Limited",
-					"policyUrl": "http://rubiconproject.com/rubicon-project-yield-optimization-privacy-policy/",
-					"purposeIds": [
-						1
-					],
-					"legIntPurposeIds": [
-						2,
-						3,
-						4,
-						5
-					],
-					"featureIds": [
-						3
-					]
-				},
-				{
-					"id": 69,
-					"name": "OpenX Software Ltd. and its affiliates",
-					"policyUrl": "https://www.openx.com/legal/privacy-policy/",
-					"purposeIds": [
-						1,
-						2,
-						3
-					],
-					"legIntPurposeIds": [],
-					"featureIds": [
-						1,
-						2,
-						3
-					]
-				},
-				{
-					"id": 76,
-					"name": "PubMatic, Inc.",
-					"policyUrl": "https://pubmatic.com/privacy-policy/",
-					"purposeIds": [
-						1,
-						2
-					],
-					"legIntPurposeIds": [
-						3,
-						4,
-						5
-					],
-					"featureIds": []
-				}
-			]
-		};
+		// take all purposes...
+		allowedPurposesList = vendorList.purposes.map(function (purpose) {
+			return purpose.id;
+		}),
+		// ...and all vendors
+		allowedVendorsList = vendorList.vendors.map(function (vendor) {
+			return vendor.id;
+		});
 
 	function getConsentString(optIn) {
-		var cookie = cookies.get(consentStringCookie);
+		var cookie = cookies.get(consentStringCookie),
+			consentData,
+			consentString;
 
 		cookie = cookie ? cookie.split('...') : cookie;
 
 		if (cookie && (cookie[0] === '1') === optIn && cookie[1] !== undefined) {
-			log('Serving consent string from cookie', log.levels.debug, logGroup);
+			log('Retrieving consent string from the cookie', log.levels.debug, logGroup);
 
 			return cookie[1];
 		}
 
-		var consentString,
-			consentData = new consentStringLibrary.ConsentString();
+		consentData = new consentStringLibrary.ConsentString();
 
-		consentData.setGlobalVendorList(vendorsListGlobal);
-		consentData.setPurposesAllowed(optIn ? purposesList : []);
-		consentData.setVendorsAllowed(optIn ? vendorsList : []);
+		consentData.setGlobalVendorList(vendorList);
+		consentData.setPurposesAllowed(optIn ? allowedPurposesList : []);
+		consentData.setVendorsAllowed(optIn ? allowedVendorsList : []);
 
 		consentString = consentData.getConsentString();
 
@@ -200,7 +58,7 @@ define('wikia.cmp', [
 			expires: cookieExpireDays
 		});
 
-		log('Saving consent string to cookie', log.levels.debug, logGroup);
+		log('Consent string saved to the cookie', log.levels.debug, logGroup);
 
 		return consentString;
 	}
@@ -211,6 +69,9 @@ define('wikia.cmp', [
 
 	function init(optIn) {
 		log('Initializing module', log.levels.debug, logGroup);
+		log(['Allowed vendors:', vendorList.vendors.map(function (vendor) {
+			return vendor.name;
+		})], log.levels.debug, logGroup);
 
 		win.__cmp = function __cmp(command, parameter, callback) {
 			var iabConsentData = getConsentString(optIn),
@@ -244,7 +105,7 @@ define('wikia.cmp', [
 					'__cmp call',
 					'command: ' + command,
 					'parameter: ' + parameter,
-					'return object: ' + JSON.stringify(ret),
+					'returnValue: ' + JSON.stringify(ret),
 					'success: ' + success
 				],
 				log.levels.debug,
@@ -253,6 +114,39 @@ define('wikia.cmp', [
 
 			callback(ret, success);
 		};
+	}
+
+	function getQuantcastLabels() {
+		var quantcastLabels = "";
+
+		if (window.wgWikiVertical) {
+			quantcastLabels += window.wgWikiVertical;
+
+			if (window.wgDartCustomKeyValues) {
+				var keyValues = window.wgDartCustomKeyValues.split(';');
+				for (var i=0; i<keyValues.length; i++) {
+					var keyValue = keyValues[i].split('=');
+					if (keyValue.length >= 2) {
+						quantcastLabels += ',' + window.wgWikiVertical + '.' + keyValue[1];
+					}
+				}
+			}
+		}
+
+		return quantcastLabels;
+	}
+
+	function loadQuantserveImage(optIn) {
+		var img = new Image(1, 1),
+			pcode = 'p-8bG6eLqkH6Avk';
+
+		img.src = 'http://pixel.quantserve.com/pixel/' + pcode + '.gif?' +
+			'gdpr=' + (getGdprApplies() ? '1&gdpr_consent=' + getConsentString(optIn) : 0) +
+			'&labels=' + getQuantcastLabels();
+
+		img.style = 'display:none;';
+
+		document.body.appendChild(img);
 	}
 
 	if (isModuleEnabled) {
@@ -274,9 +168,12 @@ define('wikia.cmp', [
 						event.source.postMessage(returnMsg, '*');
 					});
 				}
-			} catch (e) {} // do nothing
+			} catch (e) { void(0); } // do nothing
 		});
 		trackingOptIn.pushToUserConsentQueue(init);
+		trackingOptIn.pushToUserConsentQueue(loadQuantserveImage);
+	} else {
+		log('Module is not enabled', log.levels.debug, logGroup);
 	}
 
 	return {

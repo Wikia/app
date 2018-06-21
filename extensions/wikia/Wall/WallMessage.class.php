@@ -1501,7 +1501,7 @@ class WallMessage {
 		$wallOrBoard->invalidateCache(); // bumps page_touched
 
 		$commentsIndexEntry = $this->getCommentsIndexEntry();
-		$threadId = $commentsIndexEntry->getParentPageId();
+		$threadId = $commentsIndexEntry->getParentCommentId();
 
 		if ( $threadId ) {
 			// this is a reply on a thread, purge the thread page and also invalidate replies memcache
@@ -1513,8 +1513,8 @@ class WallMessage {
 		}
 
 		$squidUpdate = new SquidUpdate( [
-			$wallOrBoard->getFullURL(),
-			$thread->getFullURL()
+			$wallOrBoard->getInternalURL(),
+			$thread->getInternalURL()
 		] );
 
 		$squidUpdate->doUpdate();

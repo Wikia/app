@@ -48,11 +48,17 @@ class TaskContext {
 	/** @var  array */
 	private $categories;
 
+	/** @var string */
+	private $fandomCreatorCommunityId;
+
 	/** @var  bool */
 	private $allAges;
 
 	/** @var  string ID of Celery task responsible for setting up a new wiki */
 	private $taskId;
+
+	/** @var  string IP address of a user that is creating the wiki */
+	private $ip;
 
 	/** @var  User */
 	private $founder;
@@ -70,7 +76,7 @@ class TaskContext {
 		}
 	}
 
-	public static function newFromUserInput( $inputWikiName, $inputDomain, $language, $vertical, $categories, $allAges, $taskId ) {
+	public static function newFromUserInput( $inputWikiName, $inputDomain, $language, $vertical, $categories, $allAges, $taskId, $ip, $fandomCreatorCommunityId ) {
 		global $wgCreateLanguageWikisWithPath;
 
 		return new self( [
@@ -81,6 +87,8 @@ class TaskContext {
 			'categories' => $categories,
 			'allAges' => $allAges,
 			'taskId' => $taskId,
+			'ip' => $ip,
+			'fandomCreatorCommunityId' => $fandomCreatorCommunityId,
 			'shouldCreateLanguageWikiWithPath' => $wgCreateLanguageWikisWithPath,
 		] );
 	}
@@ -157,6 +165,10 @@ class TaskContext {
 
 	public function getTaskId() {
 		return $this->taskId;
+	}
+
+	public function getIP() {
+		return $this->ip;
 	}
 
 	// wikiDBW represents CreateWiki::newWiki->dbw
@@ -241,6 +253,14 @@ class TaskContext {
 
 	public function setFounder($founder) {
 		$this->founder = $founder;
+	}
+
+	public function isFandomCreatorCommunity() {
+		return !!$this->fandomCreatorCommunityId;
+	}
+
+	public function getFandomCreatorCommunityId() {
+		return $this->fandomCreatorCommunityId;
 	}
 
 	public function shouldCreateLanguageWikiWithPath(): bool {

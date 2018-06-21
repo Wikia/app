@@ -46,6 +46,13 @@ class PreferenceServiceTest extends TestCase {
 		$this->assertEquals( 'val1', $preferences->getPreferences( 0 )->getGlobalPreference( 'pref1' ) );
 	}
 
+	public function testGetInvalidUserId() {
+		$defaultPreferences = ( new UserPreferences() )
+			->setGlobalPreference( 'pref1', 'val1' );
+		$preferences = new PreferenceService( $this->persistence, $defaultPreferences, [], [] );
+		$this->assertEquals( 'val1', $preferences->getPreferences( false )->getGlobalPreference( 'pref1' ) );
+	}
+
 	public function testGet() {
 		$this->setupServiceExpects();
 		$preferences = new PreferenceService( $this->persistence, new UserPreferences(), [], [] );

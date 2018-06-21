@@ -1,0 +1,113 @@
+// TODO
+// 1. Sandbox properties have to be moved to Jenkins Pipeline parameters
+// 2. Setup different ENV variables in Dockerfile-php
+
+def sandbox = "sandbox-sus2"
+def environment = "sandbox"
+def datacenter = "sjc"
+
+def kubectlImage = "artifactory.wikia-inc.com/ops/k8s-deployer:0.0.14"
+def nginxImage = "artifactory.wikia-inc.com/sus/mediawiki-sandbox-nginx"
+def mediawikiImage = "artifactory.wikia-inc.com/sus/mediawiki-sandbox-php"
+
+def render(String template, java.util.LinkedHashMap binding) {
+    def engine = new groovy.text.SimpleTemplateEngine()
+
+    return engine.createTemplate(template).make(binding).toString()
+}
+
+node("docker-daemon") {
+    def appHash
+    def configHash
+    def imageExists = false
+    def imageTag
+
+    stage("Clone repositories") {
+        dir("app") {
+            git url: "git@github.com:Wikia/app.git",
+                branch: params.app_branch,
+                credentialsId: "bd3cf712-39a7-4b16-979e-ff86208ab2ea"
+
+            appHash = sh(script: 'git rev-parse --short HEAD', returnStdout: true).trim()
+
+            println("Wikia/app commit: $appHash")
+        }
+
+        dir("config") {
+            git url: "git@github.com:Wikia/config.git",
+                branch: params.config_branch,
+                credentialsId: "bd3cf712-39a7-4b16-979e-ff86208ab2ea"
+
+            configHash = sh(script: 'git rev-parse --short HEAD', returnStdout: true).trim()
+
+            println("Wikia/config commit: $configHash")
+        }
+
+        imageTag = "$appHash.$configHash"
+
+        println("Image tag: $imageTag")
+    }
+
+    stage("Bump cachebuster and version") {
+        dir("app") {
+            sh('echo "<?php\n\\\$wgStyleVersion = "$(date +%s)";" > wgStyleVersion.php')
+            sh('echo "' + params.app_branch + '@' + appHash + '" > wikia.version.txt')
+        }
+
+        dir("config") {
+            sh('echo "' + params.config_branch + '@' + configHash + '" > wikia.version.txt')
+        }
+    }
+
+    stage("Build and push images") {
+        dir("app") {
+            def status = sh(script: """
+                curl -u ${env.JENKINS_ARTIFACTORY_USERNAME}:${env.JENKINS_ARTIFACTORY_PASSWORD} \
+                -w "%{http_code}" -s -I -o /dev/null \
+                -XGET "https://artifactory.wikia-inc.com/artifactory/api/storage/dockerv2-local/sus/mediawiki-sandbox-php/${imageTag}"
+            """, returnStdout: true).trim()
+
+            if (status == "200") {
+                imageExists = true
+            }
+
+            if (!imageExists) {
+                sh("docker pull artifactory.wikia-inc.com/sus/php-wikia-base:7b76c41")
+
+                // SUS-5284 - make the image a bit smaller
+                sh("cp docker/sandbox/.dockerignore ..")
+
+                sh("docker build  . -f docker/sandbox/Dockerfile-nginx -t $nginxImage:$imageTag")
+                sh("docker build .. -f docker/sandbox/Dockerfile-php -t $mediawikiImage:$imageTag")
+
+                sh("docker push $nginxImage:$imageTag")
+                sh("docker push $mediawikiImage:$imageTag")
+            } else {
+                println("Image tag ($imageTag) already exists")
+            }
+        }
+    }
+
+    stage("Apply new k8s descriptor") {
+        dir("app") {
+            def template = sh(script: 'cat docker/sandbox/sandbox.template.yaml', returnStdout: true)
+            def k8s = render(template, [
+                'IMAGE_TAG': imageTag,
+                'SANDBOX_NAME': sandbox,
+                'SANDBOX_ENVIRONMENT': environment,
+                'SANDBOX_DATACENTER': datacenter
+            ])
+
+            sh("""cat > docker/sandbox/k8s.yaml <<EOL
+${k8s}
+EOL""")
+
+            sh("cat docker/sandbox/k8s.yaml")
+        }
+
+        withDockerContainer(kubectlImage) {
+            sh """#!/bin/sh
+            kubectl --context kube-sjc-prod -n prod apply -f app/docker/sandbox/k8s.yaml"""
+        }
+    }
+}

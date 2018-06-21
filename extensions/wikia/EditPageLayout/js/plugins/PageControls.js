@@ -113,28 +113,27 @@
 				this.textarea.val('');
 			}
 
-			this.editor.setState(this.editor.states.SAVING);
-			if (window.veTrack) {
-				veTrack({
-					action: 'ck-save-button-click',
-					isDirty: (typeof this.editor.plugins.leaveconfirm === 'undefined' || this.editor.plugins.leaveconfirm.isDirty()) ? 'yes' : 'no'
-				});
-			}
-
-			this.editform.off('submit');
-			this.editor.track({
-				action: Wikia.Tracker.ACTIONS.SUBMIT,
-				label: 'publish',
-				callbacks: {
-					timeout: 5000,
-					complete: this.proxy(function() {
-						this.editform.submit();
-					})
+			try {
+				if (window.veTrack) {
+					veTrack({
+						action: 'ck-save-button-click',
+						isDirty: (typeof this.editor.plugins.leaveconfirm === 'undefined' || this.editor.plugins.leaveconfirm.isDirty()) ? 'yes' : 'no'
+					});
 				}
-			});
 
-			// block "Publish" button
-			$('#wpSave').attr('disabled', true);
+				this.editor.track({
+					action: Wikia.Tracker.ACTIONS.SUBMIT,
+					label: 'publish'
+				});
+			} finally {
+				this.editor.setState(this.editor.states.SAVING);
+
+				this.editform.off('submit');
+				this.editform.submit();
+
+				// block "Publish" button
+				$('#wpSave').attr('disabled', true);
+			}
 		},
 
 		// handle keypressing in "Edit summary" field

@@ -25,5 +25,10 @@ services:
       - WIKIA_DATACENTER=poz
       - WIKIA_ENVIRONMENT=dev
       - WIKIA_DEV_DOMAIN=wikia-local.com
+      - LOG_SOCKET_ONLY=yes
+      - LOG_SOCKET_ADDRESS=tcp://logger:9999
   memcached:
     image: memcached:alpine
+  # MW log output, see K8s_LOGGING.md
+  logger:
+    image: artifactory.wikia-inc.com/sus/mediawiki-logger:latest
