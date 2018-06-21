@@ -380,12 +380,11 @@ class MWHttpRequest {
 	 * (override in subclass)
 	 */
 	public function proxySetup() {
-		global $wgHTTPProxy;
-
 		if ( $this->proxy ) {
 			return;
 		}
 
+		global $wgHTTPProxy;
 		if ( $wgHTTPProxy ) {
 			$this->proxy = $wgHTTPProxy ;
 		}
