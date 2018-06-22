@@ -74,6 +74,9 @@ node("docker-daemon") {
             if (!imageExists) {
                 sh("docker pull artifactory.wikia-inc.com/sus/php-wikia-base:7b76c41")
 
+                // SUS-5284 - make the image a bit smaller
+                sh("cp docker/sandbox/.dockerignore ..")
+
                 sh("docker build  . -f docker/sandbox/Dockerfile-nginx -t $nginxImage:$imageTag")
                 sh("docker build .. -f docker/sandbox/Dockerfile-php -t $mediawikiImage:$imageTag")
 

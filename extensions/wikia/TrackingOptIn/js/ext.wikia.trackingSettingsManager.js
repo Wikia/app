@@ -1,5 +1,5 @@
 /*global require*/
-require(['wikia.trackingOptInModal', 'mw'], function (trackingOptInModal, mw) {
+require(['wikia.cmp', 'wikia.trackingOptInModal', 'mw'], function (cmp, trackingOptInModal, mw) {
 	'use strict';
 
 	function createTrackingSettingsButton() {
@@ -10,6 +10,7 @@ require(['wikia.trackingOptInModal', 'mw'], function (trackingOptInModal, mw) {
 
 		trackingSettingsButton.textContent = mw.message('privacy-settings-button-toggle').text();
 		trackingSettingsButton.addEventListener('click', function () {
+			cmp.reset();
 			trackingOptInModal.init({ zIndex: 9999999 }).reset();
 		});
 

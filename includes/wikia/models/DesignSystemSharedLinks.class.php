@@ -81,7 +81,6 @@ class DesignSystemSharedLinks {
 			'careers' => 'https://careers.wikia.com',
 			'press' => '//fandom.wikia.com/press',
 			'contact' => '//fandom.wikia.com/about#contact',
-			'wikia-org' => 'https://www.wikia.org',
 			'terms-of-use' => '//www.wikia.com/Terms_of_use',
 			'privacy-policy' => '//www.wikia.com/Privacy_Policy',
 			'global-sitemap' => '//www.wikia.com/Sitemap',
@@ -106,7 +105,6 @@ class DesignSystemSharedLinks {
 			'user-logout' => 'https://www.wikia.com/logout',
 			'user-register' => 'https://www.wikia.com/register',
 			'user-author-profile' => '//fandom.wikia.com/u/',
-			'wikia-org-logo' => 'https://www.wikia.org',
 		],
 		'de' => [
 			'explore-wikis' => '//fandom.wikia.com/explore-de',

@@ -41,16 +41,16 @@ class GlobalTitleIntegrationTest extends WikiaDatabaseTest {
 	function testUrlsMainNS() {
 		$this->mockProdEnv();
 
-		$title = GlobalTitle::newFromText( "Timeline", NS_MAIN, 113 ); # memory-alpha
-		$expectedUrl = "http://memory-alpha.wikia.com/wiki/Timeline";
+		$title = GlobalTitle::newFromText( "Timeline", NS_MAIN, 147 ); # starwars
+		$expectedUrl = "http://starwars.wikia.com/wiki/Timeline";
 		$this->assertEquals( $expectedUrl, $title->getFullURL() );
 	}
 
 	function testUrlsMainNSonWoW() {
 		$this->mockProdEnv();
 
-		$title = GlobalTitle::newFromText( "Main", 116, 490); # wowwiki
-		$expectedUrl = "http://wowwiki.wikia.com/wiki/Portal:Main";
+		$title = GlobalTitle::newFromText( "Main", 116, 3035); # fallout
+		$expectedUrl = "http://fallout.wikia.com/wiki/Portal:Main";
 		$this->assertEquals( $expectedUrl, $title->getFullURL() );
 	}
 
