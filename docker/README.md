@@ -29,7 +29,7 @@ docker exec -it dev_php-wikia_1 bash
 In order to run service locally you need to configure hosts. Add below line to `/etc/hosts`
 
 ```
-127.0.0.1	wikia-local.com muppet.wikia-local.com
+127.0.0.1	wikia-local.com dev.wikia-local.com muppet.dev.wikia-local.com
 ```
 
 ## How to push base and dev images to Wikia's repository

@@ -24,7 +24,7 @@ services:
       - MEMCACHED_SERVER=memcached:11211
       - WIKIA_DATACENTER=poz
       - WIKIA_ENVIRONMENT=dev
-      - WIKIA_DEV_DOMAIN=wikia-local.com
+      - WIKIA_DEV_DOMAIN=dev.wikia-local.com
       - LOG_SOCKET_ONLY=yes
       - LOG_SOCKET_ADDRESS=tcp://logger:9999
   memcached:
