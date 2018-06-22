@@ -7,7 +7,6 @@ use Wikia\Search\Test\BaseTest, ReflectionMethod, Wikia\Search\QueryService\Depe
 /**
  * Tests default functionality shared by all dismax-style query services
  * @author relwell
- * @group Broken
  */
 class AbstractDismaxTest extends BaseTest
 {
@@ -19,16 +18,16 @@ class AbstractDismaxTest extends BaseTest
 	 */
 	public function testGetQuery() {
 		$mockConfig = $this->getMock( 'Wikia\Search\Config', [ 'getQuery' ] );
-		
+
 		$dc = new \Wikia\Search\QueryService\DependencyContainer( array( 'config' => $mockConfig ) );
-		
+
 		$mockSelect = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\Dismax\OnWiki' )
 		                   ->setConstructorArgs( [ $dc ] )
 		                   ->setMethods( array( 'getQueryClausesString' ) )
 		                   ->getMock();
-		
+
 		$mockQuery = $this->getMock( 'Wikia\Search\Query\Select', [ 'getSolrQuery' ], [ 'foo' ] );
-		
+
 		$mockSelect
 		    ->expects( $this->once() )
 		    ->method ( 'getQueryClausesString' )
@@ -52,7 +51,7 @@ class AbstractDismaxTest extends BaseTest
 				$method->invoke( $mockSelect )
 		);
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.09612 ms
@@ -60,16 +59,16 @@ class AbstractDismaxTest extends BaseTest
 	 */
 	public function testGetQueryMultipleQueryClauses() {
 		$mockConfig = $this->getMock( 'Wikia\Search\Config', [ 'getQuery' ] );
-		
+
 		$dc = new \Wikia\Search\QueryService\DependencyContainer( array( 'config' => $mockConfig ) );
-		
+
 		$mockSelect = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\Dismax\OnWiki' )
 		                   ->setConstructorArgs( [ $dc ] )
 		                   ->setMethods( array( 'getQueryClausesString' ) )
 		                   ->getMock();
-		
+
 		$mockQuery = $this->getMock( 'Wikia\Search\Query\Select', [ 'getSolrQuery' ], [ 'foo' ] );
-		
+
 		$mockSelect
 		    ->expects( $this->once() )
 		    ->method ( 'getQueryClausesString' )
@@ -93,7 +92,7 @@ class AbstractDismaxTest extends BaseTest
 				$method->invoke( $mockSelect )
 		);
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.0966 ms
@@ -105,7 +104,7 @@ class AbstractDismaxTest extends BaseTest
 		                   ->disableOriginalConstructor()
 		                   ->setMethods( [ 'getConfig' ] )
 		                   ->getMockForAbstractClass();
-		
+
 		$mockSelect
 		    ->expects( $this->once() )
 		    ->method ( 'getConfig' )
@@ -123,7 +122,7 @@ class AbstractDismaxTest extends BaseTest
 				$get->invoke( $mockSelect )
 		);
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.09729 ms
@@ -156,7 +155,7 @@ class AbstractDismaxTest extends BaseTest
 				$register->invoke( $mockSelect, $mockQuery )
 		);
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.11456 ms
@@ -168,9 +167,9 @@ class AbstractDismaxTest extends BaseTest
 		                  ->setMethods( array( 'getDismax' ) )
 		                  ->getMock();
 
-		$dismaxMethods = array( 
+		$dismaxMethods = array(
 				'setQueryFields', 'setQueryParser', 'setPhraseFields', 'setBoostFunctions',
-				'setBoostQuery', 'setMinimumMatch', 'setPhraseSlop', 'setTie' 
+				'setBoostQuery', 'setMinimumMatch', 'setPhraseSlop', 'setTie'
 				);
 		$mockDismax = $this->getMockBuilder( 'Solarium_Query_Select_Component_DisMax' )
 		                   ->disableOriginalConstructor()
@@ -279,7 +278,7 @@ class AbstractDismaxTest extends BaseTest
 				$funcRefl->invoke( $mockSelect, $mockQuery )
 		);
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.09646 ms
@@ -288,7 +287,7 @@ class AbstractDismaxTest extends BaseTest
 	public function testRegisterNonDismaxComponents() {
 		$mockSelect = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\Dismax\AbstractDismax' )
 		                   ->disableOriginalConstructor()
-		                   ->setMethods( [ null ] )
+		                   ->setMethods( [] )
 		                   ->getMockForAbstractClass();
 		$mockQuery = $this->getMockBuilder( 'Solarium_Query_Select' )
 		                  ->disableOriginalConstructor()
@@ -300,7 +299,7 @@ class AbstractDismaxTest extends BaseTest
 				$register->invoke( $mockSelect, $mockQuery )
 		);
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.09409 ms
@@ -309,7 +308,7 @@ class AbstractDismaxTest extends BaseTest
 	public function testGetBoostQueryString() {
 		$mockSelect = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\Dismax\AbstractDismax' )
 		                   ->disableOriginalConstructor()
-		                   ->setMethods( [ null ] )
+		                   ->setMethods( [] )
 		                   ->getMockForAbstractClass();
 		$get = new ReflectionMethod( $mockSelect, 'getBoostQueryString' );
 		$get->setAccessible( true );

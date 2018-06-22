@@ -72,9 +72,6 @@ class RebuildLocalisationCache extends Maintenance {
 			)
 		);
 
-		foreach ($wgExtensionMessagesFiles as $file) echo $file . PHP_EOL;
-//		die;
-
 		$wgCacheDirectory = $this->getOption( 'cache-dir', $wgCacheDirectory );
 		$primaryOnly = $this->hasOption( 'primary' );
 		// Wikia change end

@@ -54,19 +54,25 @@ class AvatarServiceTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * @group UsingDB
 	 * @dataProvider getAvatarUrlDataProvider
 	 */
 	public function testGetAvatarUrl( $url, $userName, $userId, $avatarSize ) {
-		$user = new User();
-		$user->setId( $userId );
-		$user->setName( $userName );
+		$userMock = $this->createMock( User::class );
+		$userMock->expects( $this->any() )
+			->method( 'getId' )
+			->willReturn( $userId );
+		$userMock->expects( $this->any() )
+			->method( 'getName' )
+			->willReturn( $userName );
 
 		if ( $userId > 0 ) {
-			$user->setGlobalAttribute( AVATAR_USER_OPTION_NAME, $userId );
+			$userMock->expects( $this->any() )
+				->method( 'getGlobalAttribute' )
+				->with( AVATAR_USER_OPTION_NAME )
+				->willReturn( $userId );
 		}
 
-		$this->assertStringEndsWith( $url, AvatarService::getAvatarUrl( $user, $avatarSize ) );
+		$this->assertStringEndsWith( $url, AvatarService::getAvatarUrl( $userMock, $avatarSize ) );
 	}
 
 	public function getAvatarUrlDataProvider() {

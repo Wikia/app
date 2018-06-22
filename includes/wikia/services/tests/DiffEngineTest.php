@@ -1,12 +1,18 @@
 <?php
 
+use PHPUnit\Framework\TestCase;
+
 /**
  * @group wikidiff
  */
-class DiffEngineTest extends WikiaBaseTest {
+class DiffEngineTest extends TestCase {
 
-	public function testExtensionsIsLoaded() {
-		$this->assertTrue( extension_loaded( 'wikidiff2' ), '"wikidiff2" PHP extension needs to be loaded!' );
+	protected function setUp() {
+		parent::setUp();
+
+		if ( !extension_loaded( 'wikidiff2' ) ) {
+			$this->markTestSkipped( 'wikidiff2 extension must be available' );
+		}
 	}
 
 	public function testGetDiff() {

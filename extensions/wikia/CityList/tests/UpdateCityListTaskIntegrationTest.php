@@ -4,7 +4,9 @@
  * @group Integration
  */
 class UpdateCityListTaskIntegrationTest extends WikiaDatabaseTest {
+
 	const WIKI_ID = 1;
+	const OTHER_WIKI_ID = 2;
 
 	/** @var UpdateCityListTask $updateCityListTask */
 	private $updateCityListTask;
@@ -21,20 +23,18 @@ class UpdateCityListTaskIntegrationTest extends WikiaDatabaseTest {
 	}
 
 	public function testTimestampIsUpdated() {
+		$ts = '20171201000000';
 		$this->updateCityListTask->wikiId( static::WIKI_ID )
-			->updateLastTimestamp( '20171201000000' );
+			->updateLastTimestamp( $ts );
 
-		$queryTable = $this->getConnection()->createQueryTable(
-			'city_list', 'SELECT city_id, city_last_timestamp FROM city_list'
-		);
+		$thisWiki = WikiFactory::getWikiByID( static::WIKI_ID );
+		$thatWiki = WikiFactory::getWikiByID( static::OTHER_WIKI_ID );
 
-		$expectedTable = $this->createYamlDataSet( __DIR__ . '/fixtures/state_updated_timestamp.yaml' )
-			->getTable( 'city_list' );
-
-		$this->assertTablesEqual( $expectedTable, $queryTable );
+		$this->assertEquals( $ts, wfTimestamp( TS_MW, $thisWiki->city_last_timestamp ) );
+		$this->assertNotEquals( $ts, wfTimestamp( TS_MW, $thatWiki->city_last_timestamp ) );
 	}
 
 	protected function getDataSet() {
-		return $this->createYamlDataSet( __DIR__ . '/fixtures/state_initial.yaml' );
+		return $this->createYamlDataSet( __DIR__ . '/fixtures/update_city_list.yaml' );
 	}
 }
