@@ -39,7 +39,7 @@ class UploadVideo extends Maintenance {
 			$this->error( "File with list of files to upload does not exists: $fileList", 1 );
 		}
 
-		$files = file( $fileList );
+		$files = file( $fileList, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES );
 
 		if ( !$files ) {
 			$this->error( "Could not read list of files to upload: $fileList", 2 );
