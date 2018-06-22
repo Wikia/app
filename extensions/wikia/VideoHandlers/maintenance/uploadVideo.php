@@ -4,7 +4,7 @@
  * This script will upload Video to a wiki.
  */
 
-require_once( __DIR__ . '/../../../../maintenance/Maintenance.php' );
+require_once __DIR__ . '/../../../../maintenance/Maintenance.php';
 
 /**
  * Maintenance script class
@@ -34,36 +34,36 @@ class UploadVideo extends Maintenance {
 	public function execute() {
 		global $wgUser, $wgDBname;
 
-		$fileList = realpath ( $this->getOption( "file-list" ) );
-		if ( !file_exists( $fileList )) {
-			$this->error( "File with list of files to upload does not exists: " . $fileList, 1 );
+		$fileList = realpath( $this->getOption( 'file-list' ) );
+		if ( !file_exists( $fileList ) ) {
+			$this->error( "File with list of files to upload does not exists: $fileList", 1 );
 		}
 
 		$files = file( $fileList );
 
 		if ( !$files ) {
-			$this->error( "Could not read list of files to upload: " . $fileList, 2 );
+			$this->error( "Could not read list of files to upload: $fileList", 2 );
 		}
 
 		// perform video uploads as FANDOMbot
 		$wgUser = User::newFromName( Wikia::BOT_USER );
 		$cnt = 0;
 
-		foreach ($files as $fileName) {
+		foreach ( $files as $fileName ) {
 			++$cnt;
 			$fileName = trim( $fileName );
 			$this->output( sprintf( "%s: uploading file: %s  ...\n", $wgDBname, $fileName ) );
 			$res = $this->uploadVideo( $fileName );
-			if ( !is_array($res) ) {
+			if ( !is_array( $res ) ) {
 				$this->error( sprintf( "%s: error uploading file: %s\n", $wgDBname, $res ) );
 			} else {
 				$this->output( sprintf( "%s: file uploaded: %s\n", $wgDBname, $fileName ) );
 			}
 		}
 
-		$this->output( sprintf("%s: videos uploaded %d\n", $wgDBname, $cnt ) );
+		$this->output( sprintf( "%s: videos uploaded %d\n", $wgDBname, $cnt ) );
 	}
 }
 
-$maintClass = UploadVideo ::class;
+$maintClass = UploadVideo::class;
 require_once( RUN_MAINTENANCE_IF_MAIN );
