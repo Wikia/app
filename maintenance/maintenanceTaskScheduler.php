@@ -9,6 +9,7 @@ class MaintenanceTaskScheduler extends Maintenance {
 		$this->mDescription = "Adds task execution to the queue";
 		$this->addArg( "script", "Script that is going to be executed", true );
 		$this->addOption( "active", "Run on wikis which are active at least <param> days" );
+		$this->addOption( "cluster", "Cluster name, possible values: c1, ..., c7" );
 		$this->addOption( "id", "Wiki IDs (separated with comma)" );
 	}
 
@@ -17,6 +18,7 @@ class MaintenanceTaskScheduler extends Maintenance {
 
 		$script = $this->getArg( 0 );
 		$active = $this->getOption( "active" );
+		$cluster = $this->getOption( "cluster" );
 
 		$idsParam = [];
 		if ( $this->getOption( "id" ) !== null ) {
@@ -28,13 +30,13 @@ class MaintenanceTaskScheduler extends Maintenance {
 		$db = wfGetDB( DB_SLAVE, [], $wgExternalSharedDB );
 
 		// TODO: Handle 300k wikis
-		$this->getWikis( $idsParam, $active )
+		$this->getWikis( $idsParam, $active, $cluster )
 			->runLoop( $db, function ( $data, $row ) use ( $script ) {
 				$this->scheduleTask( $row->city_id, $script );
 			} );
 	}
 
-	private function getWikis( array $idsParam = [], int $active = null ) {
+	private function getWikis( array $idsParam = [], int $active = null, string $cluster = null ) {
 		$sql = ( new \WikiaSQL() )
 			->SELECT( "city_id" )
 			->FROM( "city_list" );
@@ -47,6 +49,11 @@ class MaintenanceTaskScheduler extends Maintenance {
 		if ( $active !== null ) {
 			$timestampSql = "city_last_timestamp BETWEEN TIMESTAMP( DATE_SUB(CURDATE(), INTERVAL %d DAY) ) AND NOW()";
 			$sql->AND_( sprintf( $timestampSql, $active ) );
+		}
+
+		if ( $cluster !== null ) {
+			$sql->AND_( 'city_cluster' )
+				->EQUAL_TO( $cluster );
 		}
 
 		return $sql;
