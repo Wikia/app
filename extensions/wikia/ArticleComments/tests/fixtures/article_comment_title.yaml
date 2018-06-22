@@ -12,6 +12,7 @@ user:
     user_registration: '20090604060000'
     user_editcount: 2500
     user_birthdate:
+    user_options: ''
   -
     user_id: 123456
     user_name: 'Foo-Dash-123'
@@ -25,6 +26,7 @@ user:
     user_registration: '20090604060000'
     user_editcount: 2500
     user_birthdate:
+    user_options: ''
   -
     user_id: 126761
     user_name: 'Kirkburn'
@@ -38,6 +40,7 @@ user:
     user_registration: '20090604060000'
     user_editcount: 2500
     user_birthdate:
+    user_options: ''
   -
     user_id: 1234567890
     user_name: 'FooBar'
@@ -51,3 +54,4 @@ user:
     user_registration: '20090604060000'
     user_editcount: 2500
     user_birthdate:
+    user_options: ''

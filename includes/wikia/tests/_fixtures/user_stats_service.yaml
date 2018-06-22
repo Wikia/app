@@ -2,9 +2,11 @@ user:
   - user_id: 1
     user_name: 'UserStatsUser'
     user_email: 'kossuth.lajos@lajoskossuth.hu'
+    user_options: ''
   - user_id: 2
     user_name: 'UserStatsUserWithEdits'
     user_email: 'jozsef.attila@attilajozsef.hu'
+    user_options: ''
 wikia_user_properties:
   - wup_user: 2
     wup_property: editcount

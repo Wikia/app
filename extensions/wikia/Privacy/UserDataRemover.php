@@ -60,6 +60,8 @@ class UserDataRemover {
 
 	private function removeUserData( User $user ) {
 		try {
+			global $wgExternalSharedDB;
+
 			$userId = $user->getId();
 			$newUserName = uniqid( 'Anonymous ' );
 
@@ -71,7 +73,7 @@ class UserDataRemover {
 			$userIdentityBox->clearMastheadContents();
 			Wikia::invalidateUser( $user, true, false );
 
-			$dbMaster = wfGetDB( DB_MASTER, [], 'wikicities' );
+			$dbMaster = wfGetDB( DB_MASTER, [], $wgExternalSharedDB );
 
 			// commit changes performed by Wikia::invalidateUser
 			$dbMaster->commit( __METHOD__ );
@@ -109,7 +111,9 @@ class UserDataRemover {
 	}
 
 	private function removeUserDataFromStaffLog( int $userId ) {
-		$dbMaster = wfGetDB( DB_MASTER, [], 'dataware' );
+		global $wgExternalDatawareDB;
+
+		$dbMaster = wfGetDB( DB_MASTER, [], $wgExternalDatawareDB );
 
 		$dbMaster->delete( 'wikiastaff_log', [
 			'slog_user' => $userId,
@@ -124,7 +128,8 @@ class UserDataRemover {
 	 * Returns the user id created during the rename user process
 	 */
 	private function getFakeUserId( $username ) {
-		$dbr = wfGetDB( DB_SLAVE, [], 'wikicities' );
+		global $wgExternalSharedDB;
+		$dbr = wfGetDB( DB_SLAVE, [], $wgExternalSharedDB );
 
 		return $dbr->selectField( 'user_properties', 'up_user', [
 			'up_property' => 'renameData',
@@ -133,7 +138,8 @@ class UserDataRemover {
 	}
 
 	private function connectUserToRenameRecord( int $userId, int $fakeUserId ) {
-		$dbMaster = wfGetDB( DB_MASTER, [], 'wikicities' );
+		global $wgExternalSharedDB;
+		$dbMaster = wfGetDB( DB_MASTER, [], $wgExternalSharedDB );
 
 		$dbMaster->insert( 'user_properties', [
 			[

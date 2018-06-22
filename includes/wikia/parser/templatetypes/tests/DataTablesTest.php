@@ -47,10 +47,10 @@ class DataTablesTest extends WikiaBaseTest {
 	 * @see http://wikia-inc.atlassian.net/browse/MAIN-6066
 	 * @dataProvider noCDATAProvider
 	 */
-	public function testNoCDATA( $html, $expected ) {
+	public function testNoCDATA( $html ) {
 		DataTables::markDataTables( null, $html );
 
-		$this->assertEquals( $expected, $html );
+		$this->assertNotContains( "<![CDATA[", $html );
 	}
 
 	public function wikitextProvider() {
@@ -194,11 +194,6 @@ asdkjf kasjdflk [[asdfasdf]]
 				</td><td><img src=\'//:0\' class=\'article-media\' data-ref=\'1\' />
 </td></tr></table>
 <center><script type="x-wikia-widget"><iframe data-wikia-widget="pollsnack" scrolling="no" frameborder="0" allowtransparency="true" seamless="" width="300" height="500" src="http://files.quizsnack.com/iframe/embed.html?hash=qh3f6pud&amp;width=&amp;height=500&amp;bgcolor=%23000000"></iframe></script></center>',
-				'<table cellspacing="5" style="margin:auto" data-portable="true"><tr valign="middle">
-<td><img src="//:0" class="article-media" data-ref="0"></td>
-<td><img src="//:0" class="article-media" data-ref="1"></td>
-</tr></table>
-<center><script type="x-wikia-widget"><iframe data-wikia-widget="pollsnack" scrolling="no" frameborder="0" allowtransparency="true" seamless="" width="300" height="500" src="http://files.quizsnack.com/iframe/embed.html?hash=qh3f6pud&amp;width=&amp;height=500&amp;bgcolor=%23000000"></script></center>'
 ]
 		];
 	}

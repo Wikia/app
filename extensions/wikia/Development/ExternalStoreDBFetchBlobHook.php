@@ -42,7 +42,7 @@ $wgExtensionCredits['other'][] = [
  * @param string  $ret returned blob text
  */
 function ExternalStoreDBFetchBlobHook( $cluster, $id, $itemID, &$ret ) {
-	global $wgTheSchwartzSecretToken;
+	global $wgTheSchwartzSecretToken, $wgFetchBlobApiURL;
 	wfProfileIn( __METHOD__ );
 
 	// there's already blob text
@@ -55,7 +55,7 @@ function ExternalStoreDBFetchBlobHook( $cluster, $id, $itemID, &$ret ) {
 	// @see $wgDefaultExternalStore
 	global $wgDefaultExternalStore;
 
-	if ( is_array( $wgDefaultExternalStore ) ) {
+	if ( !empty( $wgDefaultExternalStore ) ) {
 		list( $proto, $devCluster ) = explode( '://', $wgDefaultExternalStore[0], 2 );
 
 		if ( $cluster === $devCluster ) {
@@ -69,7 +69,7 @@ function ExternalStoreDBFetchBlobHook( $cluster, $id, $itemID, &$ret ) {
 
 	// wikia doesn't use $itemID
 	$url = sprintf( "%s?action=fetchblob&store=%s&id=%d&token=%s&format=json",
-		F::app()->wg->FetchBlobApiURL,
+		$wgFetchBlobApiURL,
 		$cluster,
 		$id,
 		$wgTheSchwartzSecretToken

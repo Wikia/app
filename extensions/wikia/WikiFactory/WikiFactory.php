@@ -1691,7 +1691,7 @@ class WikiFactory {
 	 * @return boolean status
 	 */
 	static public function clearCache( $city_id ) {
-		global $wgMemc,$wgWikicitiesReadOnly;
+		global $wgWikicitiesReadOnly;
 
 		if ( ! static::isUsed() ) {
 			Wikia::log( __METHOD__, "", "WikiFactory is not used." );
@@ -1718,6 +1718,8 @@ class WikiFactory {
 			);
 		}
 
+		global $wgMemc;
+
 		/**
 		 * clear domains cache
 		 */
@@ -1726,8 +1728,7 @@ class WikiFactory {
 		/**
 		 * clear variables cache
 		 */
-		$wgMemc->delete( "WikiFactory::getCategory:" .
-		                 $city_id ); //ugly cat clearing (fb#9937)
+		$wgMemc->delete( "WikiFactory::getCategory:" . $city_id ); //ugly cat clearing (fb#9937)
 		$wgMemc->delete( static::getVarsKey( $city_id ) );
 
 		$city_dbname = static::IDtoDB( $city_id );
@@ -3516,4 +3517,8 @@ class WikiFactory {
                         ]
                 );
         }
+
+	public static function clearVariablesCache() {
+		static::$variablesCache = [];
+	}
 };

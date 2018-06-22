@@ -129,6 +129,7 @@ user:
     user_registration: '20090604060000'
     user_editcount: 2500
     user_birthdate:
+    user_options: ''
   -
     user_id: 2
     user_name: 'UnrelatedUser'
@@ -142,6 +143,7 @@ user:
     user_registration: '20090604060000'
     user_editcount: 2500
     user_birthdate:
+    user_options: ''
   -
     user_id: 3
     user_name: 'UserWithNoEdits'
@@ -155,6 +157,7 @@ user:
     user_registration: '20090604060000'
     user_editcount: 2500
     user_birthdate:
+    user_options: ''
   -
     user_id: 4
     user_name: 'AdminUser'
@@ -168,3 +171,4 @@ user:
     user_registration: '20090604060000'
     user_editcount: 2500
     user_birthdate:
+    user_options: ''
