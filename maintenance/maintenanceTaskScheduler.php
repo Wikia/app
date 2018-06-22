@@ -28,6 +28,8 @@ class MaintenanceTaskScheduler extends Maintenance {
 		$this->output( "Scheduling ${script}\n" );
 
 		$db = wfGetDB( DB_SLAVE, [], $wgExternalSharedDB );
+
+		// TODO: Handle 300k wikis
 		$this->getWikis( $idsParam, $active )
 			->runLoop( $db, function ( $data, $row ) use ( $script ) {
 				$this->scheduleTask( $row->city_id, $script );
