@@ -32,14 +32,14 @@ class HTTPSSupportHooks {
 	 * to HTTP if necessary.
 	 *
 	 * @param  Title      $title
-	 * @param             $unused
+	 * @param             $article
 	 * @param  OutputPage $output
 	 * @param  User       $user
 	 * @param  WebRequest $request
 	 * @param  MediaWiki  $mediawiki
 	 * @return bool
 	 */
-	public static function onBeforeInitialize( Title $title, $unused, OutputPage $output,
+	public static function onAfterInitialize( Title $title, $article, OutputPage $output,
 		User $user, WebRequest $request, MediaWiki $mediawiki
 	): bool {
 		global $wgDisableHTTPSDowngrade;
@@ -56,7 +56,44 @@ class HTTPSSupportHooks {
 				!self::httpsEnabledTitle( $title )
 			) {
 				$output->redirect( wfHttpsToHttp( $requestURL ) );
+				$output->enableClientCache( false );
 			}
+		}
+		return true;
+	}
+
+	/**
+	 * Handle downgrading anonymous requests for our sitemaps.
+	 *
+	 * @param  string     $subpage Specific sitemap being requested.
+	 * @param  WebRequest $request
+	 * @param  User       $user
+	 * @return boolean
+	 */
+	public static function onSitemapPageBeforeOutput( string $subpage, WebRequest $request, User $user ): bool {
+		global $wgScriptPath;
+		if ( WebRequest::detectProtocol() === 'https' &&
+			!self::httpsAllowed( $user, $request->getFullRequestURL() )
+		) {
+			self::downgradeRedirectForPath( "$wgScriptPath/$subpage", $request );
+			return false;
+		}
+		return true;
+	}
+
+	/**
+	 * Handle downgrading anonymous requests for robots.txt.
+	 *
+	 * @param  WebRequest $request
+	 * @param  User       $user
+	 * @return boolean
+	 */
+	public static function onWikiaRobotsBeforeOutput( WebRequest $request, User $user ): bool {
+		if ( WebRequest::detectProtocol() === 'https' &&
+			!self::httpsAllowed( $user, $request->getFullRequestURL() )
+		) {
+			self::downgradeRedirectForPath( '/robots.txt', $request );
+			return false;
 		}
 		return true;
 	}
@@ -75,5 +112,13 @@ class HTTPSSupportHooks {
 		if ( preg_match( self::VIGNETTE_IMAGES_HTTP_UPGRADABLE, $url ) && strpos( $url, "http://" ) === 0 ) {
 			$url = wfHttpToHttps( $url );
 		}
+	}
+
+	private static function downgradeRedirectForPath( string $path, WebRequest $request ) {
+		$httpURL = wfHttpsToHttp( wfExpandUrl( $path, PROTO_HTTP ) );
+		$response = $request->response();
+		$response->header( "Location: $httpURL", true, 302 );
+		$response->header( 'X-Redirected-By: HTTPS-Downgrade' );
+		$response->header( 'Cache-Control: private, must-revalidate, max-age=0' );
 	}
 }
