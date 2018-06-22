@@ -13,8 +13,6 @@ class MaintenanceTaskScheduler extends Maintenance {
 	}
 
 	public function execute() {
-		require_once( dirname( __FILE__ ) . "/MaintenanceTask.php" );
-
 		global $wgExternalSharedDB;
 
 		$script = $this->getArg( 0 );
@@ -55,7 +53,7 @@ class MaintenanceTaskScheduler extends Maintenance {
 	}
 
 	private function scheduleTask( int $wikiId, string $script ) {
-		$task = new MaintenanceTask();
+		$task = new \Wikia\Tasks\Tasks\MaintenanceTask();
 		$task->wikiId( $wikiId );
 		$task->call( "run", $script );
 
