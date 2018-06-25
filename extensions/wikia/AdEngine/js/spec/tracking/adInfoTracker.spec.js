@@ -107,7 +107,7 @@ describe('ext.wikia.adEngine.tracking.adInfoTracker', function () {
 
 		var trackedData = mocks.adTracker.trackDW.calls.mostRecent().args[0];
 
-		expect(trackedData.kv_pos).toBe('FOO');
+		expect(trackedData.kv_pos).toBe('foo');
 		expect(trackedData.kv_rv).toBe('2');
 		expect(trackedData.kv_wsi).toBe('ofa1');
 		expect(trackedData.kv_abi).toBe('50_1');
