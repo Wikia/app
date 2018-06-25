@@ -121,7 +121,7 @@ describe('ext.wikia.adEngine.tracking.adInfoTracker', function () {
 
 		var trackedData = mocks.adTracker.trackDW.calls.mostRecent().args[0];
 
-		expect(trackedData.kv_pos).toBe('FIRST');
+		expect(trackedData.kv_pos).toBe('first');
 	});
 
 	it('tracks single pos correctly ', function () {
@@ -132,7 +132,7 @@ describe('ext.wikia.adEngine.tracking.adInfoTracker', function () {
 
 		var trackedData = mocks.adTracker.trackDW.calls.mostRecent().args[0];
 
-		expect(trackedData.kv_pos).toBe('ONLY_ONE');
+		expect(trackedData.kv_pos).toBe('only_one');
 	});
 
 	it('tracks undefined pos correctly', function () {
@@ -154,7 +154,7 @@ describe('ext.wikia.adEngine.tracking.adInfoTracker', function () {
 
 		var trackedData = mocks.adTracker.trackDW.calls.mostRecent().args[0];
 
-		expect(trackedData.kv_pos).toBe('FIRST');
+		expect(trackedData.kv_pos).toBe('first');
 	});
 
 	it('handle case where input pos is not string', function () {
