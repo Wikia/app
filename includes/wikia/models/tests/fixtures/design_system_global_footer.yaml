@@ -1,0 +1,128 @@
+city_list:
+  - city_id: 1
+    city_url: http://unittest.wikia.com
+    city_sitename: wikia
+    city_vertical: 5 # Lifestyle
+    city_cluster: c1
+    city_dbname: unittest
+  - city_id: 2
+    city_url: http://memory-alpha.wikia.com
+    city_sitename: memory-alpha
+    city_vertical: 5 # Lifestyle
+    city_cluster: c2
+    city_dbname: memoryalpha
+  - city_id: 3
+    city_url: http://fandom.wikia.com
+    city_sitename: Fandom
+    city_vertical: 0
+    city_cluster: c3
+    city_dbname: fandom
+  - city_id: 4
+    city_url: http://test2.wikia.com
+    city_sitename: wikia
+    city_vertical: 5 # Lifestyle
+    city_cluster: c4
+    city_dbname: wikia
+city_variables_pool:
+  - cv_id: 1
+    cv_name: wgRightsText
+    cv_description: I am the rights text
+    cv_variable_type: string
+  - cv_id: 2
+    cv_name: wgRightsUrl
+    cv_description: I am the rights URL
+    cv_variable_type: string
+  - cv_id: 3
+    cv_name: wgRightsPage
+    cv_description: I am the rights page
+    cv_variable_type: string
+  - cv_id: 4
+    cv_name: wgSitename
+    cv_description: I am the sitename
+    cv_variable_type: string
+city_variables:
+  # Rights texts
+  - cv_city_id: 1
+    cv_variable_id: 1
+    cv_value: s:8:"CC-BY-SA";
+  - cv_city_id: 2
+    cv_variable_id: 1
+    cv_value: s:11:"CC-BY-NC-SA";
+  - cv_city_id: 3
+    cv_variable_id: 1
+    cv_value: s:3:"foo";
+  - cv_city_id: 4
+    cv_variable_id: 1
+    cv_value: s:8:"CC-BY-SA";
+  # Rights URLs
+  - cv_city_id: 1
+    cv_variable_id: 2
+    cv_value: s:31:"https://www.wikia.com/Licensing";
+  - cv_city_id: 2
+    cv_variable_id: 2
+    cv_value: s:52:"http://memory-alpha.wikia.com/wiki/Project:Licensing";
+  - cv_city_id: 3
+    cv_variable_id: 2
+    cv_value: s:0:"";
+  - cv_city_id: 4
+    cv_variable_id: 2
+    cv_value: s:0:"";
+  # Rights pages
+  - cv_city_id: 1
+    cv_variable_id: 3
+    cv_value: s:0:"";
+  - cv_city_id: 2
+    cv_variable_id: 3
+    cv_value: s:0:"";
+  - cv_city_id: 3
+    cv_variable_id: 3
+    cv_value: s:0:"";
+  - cv_city_id: 4
+    cv_variable_id: 3
+    cv_value: s:17:"w:Wikia:Licensing";
+  # Sitenames
+  - cv_city_id: 1
+    cv_variable_id: 4
+    cv_value: s:5:"wikia";
+  - cv_city_id: 2
+    cv_variable_id: 4
+    cv_value: s:12:"memory-alpha";
+  - cv_city_id: 3
+    cv_variable_id: 4
+    cv_value: s:6:"Fandom";
+  - cv_city_id: 4
+    cv_variable_id: 4
+    cv_value: s:5:"wikia";
+city_verticals:
+  - vertical_id: 0
+    vertical_name: Other
+    vertical_url: http://www.wikia.com
+    vertical_short: other
+  - vertical_id: 1
+    vertical_name: TV
+    vertical_url: http://tvhub.wikia.com
+    vertical_short: tv
+  - vertical_id: 2
+    vertical_name: Games
+    vertical_url: http://gameshub.wikia.com
+    vertical_short: games
+  - vertical_id: 3
+    vertical_name: Books
+    vertical_url: http://bookshub.wikia.com
+    vertical_short: books
+  - vertical_id: 4
+    vertical_name: Comics
+    vertical_url: http://comicshub.wikia.com
+    vertical_short: comics
+  - vertical_id: 5
+    vertical_name: Lifestyle
+    vertical_url: http://lifestylehub.wikia.com
+    vertical_short: lifestyle
+  - vertical_id: 6
+    vertical_name: Music
+    vertical_url: http://musichub.wikia.com
+    vertical_short: music
+  - vertical_id: 7
+    vertical_name: Movies
+    vertical_url: http://movieshub.wikia.com
+    vertical_short: movies

@@ -1,3 +1,20 @@
+city_list:
+ - city_id: 1
+   city_cluster: c1
+   city_url: http://unittest1.wikia.com/
+   city_dbname: unittest1
+ - city_id: 2
+   city_cluster: c1
+   city_url: http://unittest2.wikia.com/
+   city_dbname: unittest2
+ - city_id: 3
+   city_cluster: c1
+   city_url: http://unittest3.wikia.com/
+   city_dbname: unittest3
+ - city_id: 4
+   city_cluster: c1
+   city_url: http://unittest4.wikia.com/
+   city_dbname: unittest4
 city_variables_pool:
   - cv_id: 1
     cv_name: wgFooBarString
@@ -32,6 +49,7 @@ user:
     user_registration: '20090604060000'
     user_editcount: 2500
     user_birthdate:
+    user_options: ''
   - user_id: 9425
     user_name: 'NonStaffUser'
     user_real_name: ''
@@ -44,6 +62,7 @@ user:
     user_registration: '20090604060000'
     user_editcount: 2500
     user_birthdate:
+    user_options: ''
 user_groups:
   - ug_user: 3896
     ug_group: util

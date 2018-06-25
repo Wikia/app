@@ -29,7 +29,8 @@ class UserTest extends WikiaBaseTest {
 		$this->testUser = User::newFromId( self::TEST_USER_ID );
 	}
 
-	public static function tearDownAfterClass() {
+	public function tearDown() {
+		parent::tearDown();
 		ServiceFactory::clearState();
 	}
 
@@ -137,6 +138,14 @@ class UserTest extends WikiaBaseTest {
 	}
 
 	public function testSavePreferencesWithMockedUserPreferenceService() {
+		// worst of both worlds: test mocks the world but assumes the state of the database
+		// in order to avoid database access - hack is needed 👇
+		$reflLoadedItems= new ReflectionProperty( User::class, 'mLoadedItems' );
+		$reflLoadedItems->setAccessible( true );
+		$reflLoadedItems->setValue( $this->testUser, true );
+
+		$this->testUser->mName = 'test';
+
 		$this->userPreferenceServiceMock->expects( $this->once() )
 			->method( 'save' )
 			->with( $this->testUser->getId() );
@@ -145,6 +154,12 @@ class UserTest extends WikiaBaseTest {
 	}
 
 	public function testGetOptionShouldReturnPreferenceDataFromService() {
+		// worst of both worlds: test mocks the world but assumes the state of the database
+		// in order to avoid database access - hack is needed 👇
+		$reflLoadedItems= new ReflectionProperty( User::class, 'mLoadedItems' );
+		$reflLoadedItems->setAccessible( true );
+		$reflLoadedItems->setValue( $this->testUser, true );
+
 		$this->mockGlobalVariable( 'wgCityId', 1 );
 		$preferences = ( new UserPreferences() )
 			->setGlobalPreference( "language", "pl" )

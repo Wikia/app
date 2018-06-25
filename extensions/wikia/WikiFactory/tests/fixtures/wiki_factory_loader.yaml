@@ -6,10 +6,12 @@ city_list:
     city_flags: 0
     city_public: 1
     city_last_timestamp: 20110101000000
+    city_cluster: c1
   - city_id: 2
     city_dbname: detest1
     city_lang: de
     city_url: http://test1.wikia.com/de/
+    city_cluster: c2
     city_flags: 0
     city_public: 1
     city_last_timestamp: 20110101000000
@@ -17,6 +19,7 @@ city_list:
     city_dbname: zamkniete
     city_lang: en
     city_url: http://zamkniete.wikia.com/
+    city_cluster: c3
     city_flags: 0
     city_public: -1
     city_last_timestamp: 20110101000000
@@ -24,6 +27,7 @@ city_list:
     city_dbname: spamtest
     city_lang: en
     city_url: http://spamtest.wikia.com/
+    city_cluster: c4
     city_flags: 0
     city_public: -1
     city_last_timestamp: 20110101000000
@@ -31,6 +35,7 @@ city_list:
     city_dbname: rekt
     city_lang: en
     city_url: http://rekt.wikia.com/
+    city_cluster: c5
     city_flags: 0
     city_public: -2
     city_last_timestamp: 20110101000000
@@ -38,6 +43,7 @@ city_list:
     city_dbname: dead
     city_lang: en
     city_url: http://dead.wikia.com/
+    city_cluster: c6
     city_flags: 0
     city_public: -2
     city_last_timestamp: 20110101000000
@@ -45,6 +51,7 @@ city_list:
     city_dbname: redirect
     city_lang: en
     city_url: http://redirect-target.wikia.com/
+    city_cluster: c7
     city_flags: 0
     city_public: 2
     city_last_timestamp: 20110101000000
@@ -52,6 +59,7 @@ city_list:
     city_dbname: enpoznan
     city_lang: en
     city_url: http://poznan.wikia.com/en/
+    city_cluster: c1
     city_flags: 0
     city_public: 1
     city_last_timestamp: 20110101000000
@@ -59,6 +67,7 @@ city_list:
     city_dbname: poznan
     city_lang: pl
     city_url: http://poznan.wikia.com/
+    city_cluster: c2
     city_flags: 0
     city_public: 1
     city_last_timestamp: 20110101000000
@@ -66,6 +75,7 @@ city_list:
     city_dbname: zgubieni
     city_lang: pl
     city_url: http://zgubieni.wikia.com/
+    city_cluster: c3
     city_flags: 0
     city_public: 1
     city_last_timestamp: 20110101000000
@@ -73,6 +83,7 @@ city_list:
     city_dbname: community
     city_lang: en
     city_url: http://community.wikia.com/
+    city_cluster: c4
     city_flags: 0
     city_public: 1
     city_last_timestamp: 20110101000000

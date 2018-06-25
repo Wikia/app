@@ -11,6 +11,7 @@ user:
     user_registration: '20090604060000'
     user_editcount: 2500
     user_birthdate:
+    user_options: ''
   - user_id: 2
     user_name: 'HelperUser'
     user_real_name: ''
@@ -23,6 +24,7 @@ user:
     user_registration: '20090604060000'
     user_editcount: 2500
     user_birthdate:
+    user_options: ''
   - user_id: 3
     user_name: 'VstfUser'
     user_real_name: ''
@@ -35,6 +37,7 @@ user:
     user_registration: '20090604060000'
     user_editcount: 2500
     user_birthdate:
+    user_options: ''
   - user_id: 4
     user_name: 'AdminUser'
     user_real_name: ''
@@ -47,6 +50,7 @@ user:
     user_registration: '20090604060000'
     user_editcount: 2500
     user_birthdate:
+    user_options: ''
 user_groups:
   - ug_user: 1
     ug_group: staff

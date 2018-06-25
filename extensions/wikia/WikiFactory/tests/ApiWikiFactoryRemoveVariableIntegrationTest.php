@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * @group Integration
+ */
 class ApiWikiFactoryRemoveVariableIntegrationTest extends WikiaDatabaseTest {
 	use ApiIntegrationTestTrait;
 
