@@ -1,5 +1,5 @@
 /*global define*/
-define('ext.wikia.adEngine.babDetection', [
+define('ext.wikia.adEngine.wad.babDetection', [
 	'wikia.document',
 	'wikia.log',
 	'wikia.tracker',
@@ -7,7 +7,7 @@ define('ext.wikia.adEngine.babDetection', [
 ], function (doc, log, tracker, win) {
 	'use strict';
 
-	var logGroup = 'ext.wikia.adEngine.babDetection';
+	var logGroup = 'ext.wikia.adEngine.wad.babDetection';
 
 	function dispatchDetectionEvent(eventName) {
 		var event = doc.createEvent('Event');
