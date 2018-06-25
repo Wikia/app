@@ -7080,7 +7080,7 @@ $messages['de'] = array(
 
 Die Seite ist möglicherweise gelöscht oder verschoben worden.
 
-Falls dies nicht  zutrifft, hast du eventuell einen Fehler in der Software gefunden. Bitte melde dies einem [[Special:ListUsers/sysop|Administrator]] unter Nennung der URL.',
+Falls dies nicht zutrifft, hast du eventuell einen Fehler in der Software gefunden. Bitte melde dies dem [[Special:Contact|FANDOM Support-Team]] unter Nennung der URL.',
 	'missingarticle-rev' => '(Versionsnummer: $1)',
 	'missingarticle-diff' => '(Unterschied zwischen Versionen: $1, $2)',
 	'mailmypassword' => 'Neues Passwort zusenden',
