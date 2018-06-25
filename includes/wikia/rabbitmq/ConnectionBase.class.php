@@ -64,6 +64,11 @@ class ConnectionBase {
 				'exception' => $e,
 				'routing_key' => $routingKey,
 			] );
+		} catch ( \ErrorException $e ) {
+			WikiaLogger::instance()->error( __METHOD__, [
+				'exception' => $e,
+				'routing_key' => $routingKey,
+			] );
 		}
 	}
 
