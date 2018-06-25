@@ -5981,6 +5981,13 @@ $wgMsgCacheExpiry = 24 * 3600; // one day
 $wgMWSuggestTemplate = false;
 
 /**
+ * Optionally, specify an explicit connection character set override for MySQL here.
+ * If this value is set, it will overwrite any other settings, such as the implicit UTF-8 charset if $wgMysql5 is set.
+ * @var string|null $wgMysqlConnectionCharacterSet
+ */
+$wgMysqlConnectionCharacterSet = null;
+
+/**
  * Namespace aliases. These are alternate names for the primary localised
  * namespace names, which are defined by $wgExtraNamespaces and the language
  * file. If a page is requested with such a prefix, the request will be

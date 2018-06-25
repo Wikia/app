@@ -114,11 +114,14 @@ describe('Method ext.wikia.adEngine.lookup.a9', function () {
 			}
 		},
 		cmp: {
-			getConsentString: function () {
-				return 'abcdef1234';
+			callCmp: function (cmd, param, callback) {
+				callback({});
 			},
 			getGdprApplies: function () {
 				return true;
+			},
+			isEnabled: function () {
+				return false;
 			}
 		},
 		window: {

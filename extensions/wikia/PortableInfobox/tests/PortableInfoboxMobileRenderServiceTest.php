@@ -5,6 +5,10 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 	protected function setUp() {
 		$this->setupFile = dirname( __FILE__ ) . '/../PortableInfobox.setup.php';
 		parent::setUp();
+
+		if ( !extension_loaded( 'mustache' ) ) {
+			$this->markTestSkipped( '"mustache" PHP extension needs to be loaded!' );
+		}
 	}
 
 	private function mockInfoboxImagesHelper( $input ) {
@@ -40,7 +44,7 @@ class PortableInfoboxMobileRenderServiceTest extends WikiaBaseTest {
 		$tidy->parseString($html, $config);
 		$tidy->cleanRepair();
 
-		return (string) $tidy;
+		return preg_replace( '/>\s+/', '>', (string) $tidy );
 	}
 
 	/**

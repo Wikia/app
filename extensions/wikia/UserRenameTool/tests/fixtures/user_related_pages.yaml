@@ -52,7 +52,7 @@ pages: # global dataware.pages
     page_wikia_id: 177
     page_id: 8800
     page_namespace: 2
-    page_title: Old_User_Nąmę
+    page_title: 'Old_User_Nąmę'
   -
     page_wikia_id: 147
     page_id: 904
@@ -136,3 +136,4 @@ user:
     user_registration: '20090604060000'
     user_editcount: 2500
     user_birthdate:
+    user_options: ''

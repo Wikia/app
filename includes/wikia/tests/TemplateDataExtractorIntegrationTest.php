@@ -1,10 +1,9 @@
 <?php
 
-class TemplateDataExtractorTest extends WikiaBaseTest {
-
-	public function setUp() {
-		parent::setUp();
-	}
+/**
+ * @group Infrastructure
+ */
+class TemplateDataExtractorIntegrationTest extends WikiaBaseTest {
 
 	/**
 	 * @dataProvider getTemplateVariablesDataProvider

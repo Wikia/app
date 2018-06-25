@@ -221,7 +221,7 @@ require_once "$IP/wgStyleVersion.php";
 $wgConf->localVHosts = array_merge(
     $wgWikiFactoryDomains,
     [
-        $wgWikiaBaseDomain, 
+        $wgWikiaBaseDomain,
         'uncyclopedia.org',
         'memory-alpha.org',
         'wowwiki.com',
@@ -265,7 +265,7 @@ $wgFSSwiftConfig = $wgFSSwiftDC[$wgWikiaDatacenter]['config'];
 $wgStylePath = "$wgResourceBasePath/skins";
 
 /**
- * 
+ *
  */
 $wgExtensionsPath = "$wgResourceBasePath/extensions";
 
@@ -277,7 +277,7 @@ require "$IP/lib/Wikia/src/Service/User/Permissions/data/PermissionsDefinesBefor
 /**
  * Apply WikiFactory settings.
  */
-try { 
+try {
     $oWiki = new WikiFactoryLoader( $_SERVER, $_ENV, $wgWikiFactoryDomains );
     $result = $oWiki->execute();
 
@@ -321,7 +321,7 @@ require "$IP/lib/Wikia/src/Service/User/Permissions/data/PermissionsDefinesAfter
 
 // The above has originally been loaded before the statement below. Yet, the
 // old comment brings confusion:
-// 
+//
 // this has to be fired after extensions - because any extension may add some
 // new permissions (initialized with their default values)
 if ( !empty( $wgGroupPermissionsLocal ) ) {
@@ -339,7 +339,7 @@ $wgUserAttributeWhitelist = array_merge( $wgPublicUserAttributes, $wgPrivateUser
 
 require_once "$IP/includes/wikia/Emergency.php";
 
-if ( $wgDevelEnvironment ) {
+if ( $wgDevelEnvironment && empty( $wgRunningUnitTests ) ) {
     $wgDevBoxSettings = sprintf( '%s/../config/%s.php', $IP, gethostname() );
     if ( file_exists( $wgDevBoxSettings ) ) {
         require_once( $wgDevBoxSettings );

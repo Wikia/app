@@ -1,5 +1,23 @@
 language: php
-php:
-  - "7.0"
-  - "7.2"
-script: composer run lint
+php: 7.0
+dist: trusty
+sudo: required
+addons:
+  apt:
+    sources:
+      # same as mysql-5.7-trusty travis alias, but you can't mix & match different source declaration types
+      - sourceline: "deb http://repo.mysql.com/apt/ubuntu/ trusty mysql-5.7"
+        key_url: "http://keyserver.ubuntu.com/pks/lookup?op=get&search=0x8C718D3B5072E1F5"
+      - sourceline: "deb http://ppa.launchpad.net/jbboehr/mustache/ubuntu trusty main"
+        key_url: "http://keyserver.ubuntu.com/pks/lookup?op=get&search=0x7DAD64617A3EC228D368C50F9A90195D619F9E2B"
+    packages:
+      - mysql-server
+      - mysql-client
+      - libmustache-dev
+install:
+  - pecl channel-update pecl.php.net
+  - pecl install uopz mustache
+before_script: phpenv config-add tests/travis/php.ini
+script:
+  - cd tests && ./php-tests.sh
+  - cd .. && composer run lint

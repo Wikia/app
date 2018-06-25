@@ -15,6 +15,6 @@ services:
       - MEMCACHED_SERVER=memcached:11211
       - WIKIA_DATACENTER=poz
       - WIKIA_ENVIRONMENT=dev
-      - WIKIA_DEV_DOMAIN=wikia-local.com
+      - WIKIA_DEV_DOMAIN=dev.wikia-local.com
   memcached:
     image: memcached:alpine

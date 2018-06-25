@@ -12,8 +12,6 @@ class QuickToolsHelperIntegrationTest extends WikiaDatabaseTest {
 
 	const TEST_SUMMARY = 'test summary';
 
-	private $wgDefaultExternalStoreWasFalse = true;
-
 	/** @var QuickToolsHelper $quickToolsHelper */
 	private $quickToolsHelper;
 
@@ -23,15 +21,10 @@ class QuickToolsHelperIntegrationTest extends WikiaDatabaseTest {
 		$hooks = &Hooks::getHandlersArray();
 		$hooks = [];
 
-		$adminUser = $this->getMockBuilder( User::class )
-			->setMethods( [ 'incEditCount' ] )
-			->getMock();
-		$adminUser->setId( static::ADMIN_USER_ID );
-
 		$this->quickToolsHelper = new QuickToolsHelper();
 
 		$context = new DerivativeContext( $this->quickToolsHelper->getContext() );
-		$context->setUser( $adminUser );
+		$context->setUser( User::newFromId( self::ADMIN_USER_ID ) );
 
 		$this->quickToolsHelper->setContext( $context );
 	}
