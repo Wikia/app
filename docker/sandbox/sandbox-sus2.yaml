@@ -53,6 +53,8 @@ apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   name: mediawiki-sandbox-ingress
+  annotations:
+    traefik.frontend.priority: "1"
 spec:
   rules:
     - host: "mediawiki.prod.sjc.k8s.wikia.net"
@@ -62,28 +64,7 @@ spec:
             backend:
               serviceName: mediawiki-sandbox
               servicePort: 80
-    - host: "muppet.wikia.com"
-      http:
-        paths:
-          - path: /
-            backend:
-              serviceName: mediawiki-sandbox
-              servicePort: 80
-    - host: "memory-alpha.wikia.com"
-      http:
-        paths:
-          - path: /
-            backend:
-              serviceName: mediawiki-sandbox
-              servicePort: 80
-    - host: "uncyclopedia.wikia.com"
-      http:
-        paths:
-          - path: /
-            backend:
-              serviceName: mediawiki-sandbox
-              servicePort: 80
-    - host: "starwars.wikia.com"
+    - host: "*.wikia.com"
       http:
         paths:
           - path: /
