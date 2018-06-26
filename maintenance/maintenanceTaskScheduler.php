@@ -39,7 +39,8 @@ class MaintenanceTaskScheduler extends Maintenance {
 	private function getWikis( array $idsParam = [], int $active = null, string $cluster = null ) {
 		$sql = ( new \WikiaSQL() )
 			->SELECT( "city_id" )
-			->FROM( "city_list" );
+			->FROM( "city_list" )
+			->WHERE("city_public")->GREATER_THAN(WikiFactory::CLOSE_ACTION);
 
 		if ( count( $idsParam ) > 0 ) {
 			$sql->WHERE( "city_id" )
