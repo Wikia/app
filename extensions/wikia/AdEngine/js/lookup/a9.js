@@ -48,14 +48,26 @@ define('ext.wikia.adEngine.lookup.a9', [
 	}
 
 	function call(skin, onResponse) {
-		var a9Slots;
+		function init(optIn, consentData) {
+			var apsConfig = {
+					pubID: amazonId,
+					videoAdServer: 'DFP'
+				},
+				a9Slots;
 
-		trackingOptIn.pushToUserConsentQueue(function (optIn) {
 			log('User opt-' + (optIn ? 'in' : 'out') + ' for A9', log.levels.info, logGroup);
 
 			// force disabled if opt out, remove after CMP tests
 			if (!optIn) {
 				return;
+			}
+
+			if (consentData) {
+				apsConfig.gdpr = {
+					enabled: consentData.gdprApplies,
+					consent: consentData.consentData,
+					cmpTimeout: 5000
+				};
 			}
 
 			if (!loaded) {
@@ -64,16 +76,7 @@ define('ext.wikia.adEngine.lookup.a9', [
 				insertScript();
 				configureApstag();
 
-				win.apstag.init({
-					pubID: amazonId,
-					videoAdServer: 'DFP',
-					// remove condition after CMP tests
-					gdpr: adContext.get('opts.isCMPEnabled') ? {
-						enabled: cmp.getGdprApplies(),
-						consent: cmp.getConsentString(optIn),
-						cmpTimeout: 2000
-					} : undefined
-				});
+				win.apstag.init(apsConfig);
 
 				loaded = true;
 			}
@@ -102,6 +105,17 @@ define('ext.wikia.adEngine.lookup.a9', [
 
 				onResponse();
 			});
+		}
+
+		trackingOptIn.pushToUserConsentQueue(function (optIn) {
+			// remove condition after CMP tests
+			if (cmp.isEnabled()) {
+				cmp.callCmp('getConsentData', null, function (consentData) {
+					init(optIn, consentData);
+				});
+			} else {
+				init(optIn, undefined);
+			}
 		});
 	}
 

@@ -2,9 +2,11 @@ user:
   - user_id: 1
     user_name: 'TesztJózsef'
     user_email: 'kossuth.lajos@lajoskossuth.hu'
+    user_options: ''
   - user_id: 2
     user_name: 'TesztBéla'
     user_email: 'belavagyok@bela.hu'
+    user_options: ''
 page:
   - page_id: 1
     page_namespace: 0

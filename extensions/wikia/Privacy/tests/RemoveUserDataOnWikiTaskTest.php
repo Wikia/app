@@ -25,10 +25,6 @@ class RemoveUserDataOnWikiTaskTest extends WikiaDatabaseTest {
 
 	protected function extraSchemaFiles() {
 		return [
-			__DIR__ . '/fixtures/drop_test_tables.sql',
-			__DIR__ . '/../../../AbuseFilter/abusefilter.tables.sqlite.sql',
-			__DIR__ . '/fixtures/check_user.sql',
-			__DIR__ . '/fixtures/page.sql',
 			__DIR__ . '/fixtures/audit_log.sql'
 		];
 	}
@@ -36,7 +32,6 @@ class RemoveUserDataOnWikiTaskTest extends WikiaDatabaseTest {
 	protected function setUp() {
 		parent::setUp();
 		include __DIR__ . '/../Privacy.setup.php';
-		$this->mockGlobalVariable( 'wgEnableAbuseFilterExtension', true );
 	}
 
 	public function testShouldRemoveUserData() {
@@ -47,7 +42,7 @@ class RemoveUserDataOnWikiTaskTest extends WikiaDatabaseTest {
 			$this->assertNotEquals( self::TEST_USER_ID, $row->cul_target_id );
 		}
 	}
-	
+
 	public function testShouldRemoveIpsFromRecentChanges() {
 		(new RemoveUserDataOnWikiTask())->removeUserDataOnCurrentWiki( self::TEST_AUDIT_ID, self::TEST_USER_ID, self::TEST_USER );
 		$dbr = wfGetDB( DB_SLAVE );
@@ -101,17 +96,17 @@ class RemoveUserDataOnWikiTaskTest extends WikiaDatabaseTest {
 		$dbr = wfGetDB( DB_SLAVE );
 
 		$this->assertEquals( 0,
-			$dbr->estimateRowCount( 'page', '*', [ 'page_title' => self::TEST_USER_DB_KEY ],
+			$dbr->selectField( 'page', 'count(*)', [ 'page_title' => self::TEST_USER_DB_KEY ],
 				__METHOD__ ),
 			'page table contains data related to user who wants to be forgotten' );
 
 		$this->assertEquals( 0,
-			$dbr->estimateRowCount( 'page', '*', [ 'page_title' => self::OLD_TEST_USER_DB_KEY ],
+			$dbr->selectField( 'page', 'count(*)', [ 'page_title' => self::OLD_TEST_USER_DB_KEY ],
 				__METHOD__ ),
 			'page table contains data related to renamed user who wants to be forgotten' );
 
 		$this->assertEquals( 1,
-			$dbr->estimateRowCount( 'page', '*', [ 'page_title' => self::OTHER_TEST_USER_DB_KEY ],
+			$dbr->selectField( 'page', 'count(*)', [ 'page_title' => self::OTHER_TEST_USER_DB_KEY ],
 				__METHOD__ ),
 			'page table doesn\'t contain data related to user who hasn\'t been removed' );
 	}
@@ -133,7 +128,7 @@ class RemoveUserDataOnWikiTaskTest extends WikiaDatabaseTest {
 		$db = wfGetDB( DB_SLAVE );
 
 		$this->assertEquals( 0,
-			$db->estimateRowCount( 'watchlist', '*', ['wl_user' => self::TEST_USER_ID], __METHOD__ ),
+			$db->selectField( 'watchlist', 'count(*)', ['wl_user' => self::TEST_USER_ID], __METHOD__ ),
 			'Watchlist is not empty');
 	}
 
@@ -143,7 +138,7 @@ class RemoveUserDataOnWikiTaskTest extends WikiaDatabaseTest {
 		$dbr = wfGetDB( DB_SLAVE );
 
 		$this->assertEquals( 1,
-			$dbr->estimateRowCount( 'rtbf_log_details', '*', [ 'log_id' => self::TEST_AUDIT_ID, 'was_successful' => 1 ],
+			$dbr->selectField( 'rtbf_log_details', 'count(*)', [ 'log_id' => self::TEST_AUDIT_ID, 'was_successful' => 1 ],
 				__METHOD__ ), 'No audit log found' );
 	}
 

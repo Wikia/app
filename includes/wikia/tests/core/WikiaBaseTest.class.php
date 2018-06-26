@@ -5,6 +5,10 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * WikiaBaseTest class - part of Wikia UnitTest Framework - W(U)TF
+ *
+ * @deprecated This class exists mainly to encapsulate mocking static methods and other monkey patching.
+ * If you feel you need to do this, consider writing an integration tests instead, or refactoring the offending code.
+ *
  * @author ADi
  * @author Owen
  * @author Władysław Bodzek <wladek@wikia-inc.com>
@@ -144,6 +148,11 @@ abstract class WikiaBaseTest extends TestCase {
 				return;
 			}
 			if ( empty($functionName) ) { // regular constructor
+				// FIXME uopz is broken on PHP 7.2, hangs indefinitely when mocking new with PHPUnit mock object
+				if ( version_compare( PHP_VERSION, '7.2', '>=' ) ) {
+					$this->markTestSkipped( 'skipping test on PHP 7.2 due to uopz bug' );
+				}
+
 				$action = $this->getMockProxy()->getClassConstructor($className);
 			} else {
 				$action = $this->getMockProxy()->getStaticMethod($className,$functionName);

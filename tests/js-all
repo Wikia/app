@@ -1,2 +1,7 @@
 #!/bin/sh
-make karma-unit karma-integration
+rm -rf build && mkdir -p build && mkdir -p build/logs && ../node_modules/karma/bin/karma start \
+	--single-run \
+	--no-auto-watch karma/js-unit.conf.js && \
+	../node_modules/karma/bin/karma start \
+	--single-run \
+	--no-auto-watch karma/js-integration.conf.js

@@ -89,18 +89,24 @@ page:
     page_is_redirect: 0
     page_len: 1
     page_latest: 1
+    page_restrictions: ''
+    page_random: 1
   - page_id: 2
     page_namespace: 2
     page_title: 'Old_test_user'
     page_is_redirect: 1
     page_len: 1
     page_latest: 1
+    page_restrictions: ''
+    page_random: 1
   - page_id: 3
     page_namespace: 2
     page_title: 'Other_test_user'
     page_is_redirect: 0
     page_len: 1
     page_latest: 1
+    page_restrictions: ''
+    page_random: 1
 
 logging:
   - log_id: 1
@@ -130,3 +136,11 @@ watchlist:
     wl_title: 'A watched page'
   - wl_user: 2
     wl_title: 'A different page'
+
+rtbf_log:
+  - id: 1
+    user_id: 1
+    number_of_wikis: 2
+rtbf_log_details:
+  - log_id: 1
+    wiki_id: 1

@@ -2,6 +2,7 @@
 
 /**
  * @group RenameUser
+ * @group Infrastructure
  */
 class RenameUserSetupChecksTest extends WikiaBaseTest {
 
@@ -25,18 +26,21 @@ class RenameUserSetupChecksTest extends WikiaBaseTest {
 		$this->mockStaticMethod( PhalanxServiceFactory::class, 'getServiceInstance', $phalanxService );
 
 		// perform initial checks for user rename process
-		$this->assertEquals( $expectedResult, $process->setup() );
+		$actualResult = $process->setup();
 
 		if ( $expectedResult ) {
 			// no warnings or errors should be reported
 			$this->assertEmpty( $process->getWarnings() );
 			$this->assertEmpty( $process->getErrors() );
-		}
-		else {
+
+			$this->assertTrue( $actualResult );
+		} else {
 			/* @var Message $msg */
 			// AntiSpoof warning - there is already a username similar to "WikiaB0t".
 			$msg = $process->getErrors()[0];
 			$this->assertContains( 'AntiSpoof', (string) $msg );
+
+			$this->assertFalse( $actualResult );
 		}
 	}
 

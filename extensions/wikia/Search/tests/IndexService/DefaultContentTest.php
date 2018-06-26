@@ -4,25 +4,21 @@
  */
 namespace Wikia\Search\Test\IndexService;
 use Wikia\Search\Test\BaseTest, Wikia\Search\IndexService\DefaultContent, ReflectionMethod, ReflectionProperty;
+use Wikia\Search\Utilities;
+
 /**
  * Tests the Default Content service, which is pretty thorny
  * @author relwell
- *
- * @group Broken
  */
 class DefaultContentTest extends BaseTest
 {
 	/**
-	 * @group Slow
-	 * @slowExecutionTime 0.0834 ms
-	 * @covers Wikia\Search\IndexService\DefaultContent::Field
+	 * @covers \Wikia\Search\IndexService\DefaultContent::Field
 	 */
 	public function testField() {
 		$dynamicField = \Wikia\Search\Utilities::field( 'html' );
 		$mockService = $this->getMock( 'Wikia\Search\MediaWikiService', array( 'getGlobal' ) );
-		$utils = $this->getMock( 'Wikia\Search\Utilities', array( 'field' ) );
 		$this->mockClass( 'Wikia\Search\MediaWikiService', $mockService );
-		$this->mockClass( 'Wikia\Search\Utilities', $utils );
 		$dc = new DefaultContent();
 		$field = new ReflectionMethod( 'Wikia\Search\IndexService\DefaultContent', 'field' );
 		$field->setAccessible( true );
@@ -32,12 +28,12 @@ class DefaultContentTest extends BaseTest
 		    ->with   ( 'AppStripsHtml' )
 		    ->will   ( $this->returnValue( true ) )
 		;
-		$utils
-		    ->staticExpects( $this->once() )
-		    ->method       ( 'field' )
-		    ->with         ( 'html' )
-		    ->will         ( $this->returnValue( $dynamicField ) )
-		;
+		$this->getStaticMethodMock( Utilities::class, 'field' )
+			->expects( $this->once() )
+			->method( 'field' )
+			->with( 'html' )
+			->will( $this->returnValue( $dynamicField ) );
+
 		$this->assertEquals(
 				$dynamicField,
 				$field->invoke( $dc, 'html' )
@@ -53,190 +49,7 @@ class DefaultContentTest extends BaseTest
 				$field->invoke( $dc, 'html' )
 		);
 	}
-	
-	/**
-	 * @group Slow
-	 * @slowExecutionTime 0.13276 ms
-	 * @covers Wikia\Search\IndexService\DefaultContent::execute
-	 */
-	public function testExecute() {
-		$methods = [ 'getService', 'field', 'getPageContentFromParseResponse', 'getCategoriesFromParseResponse', 'getHeadingsFromParseResponse', 'getOutboundLinks', 'pushNolangTxt', 'getNolangTxt' ];
-		$service = $this->getMock( 'Wikia\Search\IndexService\DefaultContent', $methods, array() );
-		$mwMethods = [
-				'getParseResponseFrompageId', 'getTitleStringFromPageId', 'getUrlFromPageId',
-				'getNamespaceFromPageId', 'getHostName', 'getSimpleLanguageCode', 'getGlobal', 'setGlobal',
-				'isPageIdContent', 'isPageIdMainPage', 'getCanonicalPageIdFromPageId', 'getWikiId', 'registerHook'
-				];
-		$mwService = $this->getMock( 'Wikia\Search\MediaWikiService', $mwMethods );
-		$html = 'this is my html';
-		$parseResponse = [ 'parse' => [ 'text' => [ '*' => $html ], 'images' => [ 'this.jpg', 'that.gif' ] ] ];
-		$service
-		    ->expects( $this->once() )
-		    ->method ( 'getService' )
-		    ->will   ( $this->returnValue( $mwService ) )
-		;
-		$mwService
-		    ->expects( $this->once() )
-		    ->method ( 'getCanonicalPageIdFromPageId' )
-		    ->with   ( 123 )
-		    ->will   ( $this->returnValue( 123 ) )
-		;
-		$mwService
-		    ->expects( $this->once() )
-		    ->method ( 'getParseResponseFromPageId' )
-		    ->with   ( 123 )
-		    ->will   ( $this->returnValue( $parseResponse ) )
-		;
-		$mwService
-		    ->expects( $this->once() )
-		    ->method ( 'getTitleStringFromPageId' )
-		    ->with   ( 123 )
-		    ->will   ( $this->returnValue( "my title" ) )
-		;
-		$mwService
-		    ->expects( $this->once() )
-		    ->method ( 'getWikiId' )
-		    ->will   ( $this->returnValue( 321 ) )
-		;
-		$mwService
-		    ->expects( $this->once() )
-		    ->method ('getUrlFromPageId' )
-		    ->with   ( 123 )
-		    ->will   ( $this->returnValue( 'http://foo.wikia.com/wiki/Foo' ) )
-		;
-		$mwService
-		    ->expects( $this->once() )
-		    ->method ( 'getNamespaceFromPageId' )
-		    ->with   ( 123 )
-		    ->will   ( $this->returnValue( 0 ) )
-		;
-		$mwService
-		    ->expects( $this->once() )
-		    ->method ( 'getHostName' )
-		    ->will   ( $this->returnValue( 'foo.wikia.com' ) )
-		;
-		$mwService
-		    ->expects( $this->once() )
-		    ->method ( 'getSimpleLanguageCode' )
-		    ->will   ( $this->returnValue( 'en' ) )
-		;
-		$mwService
-		    ->expects( $this->once() )
-		    ->method ( 'registerHook' )
-		    ->with   ( 'LinkEnd', 'Wikia\Search\Hooks', 'onLinkEnd' )
-		;
-		$mwService
-		    ->expects( $this->at( 1 ) )
-		    ->method ( 'getGlobal' )
-		    ->with   ( 'BacklinksEnabled' )
-		    ->will   ( $this->returnValue( true ) )
-		;
-		$mwService
-		    ->expects( $this->at( 0 ) )
-		    ->method ( 'getGlobal' )
-		    ->with   ( 'Sitename' )
-		    ->will   ( $this->returnValue( "My Wiki" ) )
-		;
-		$mwService
-		    ->expects( $this->once() )
-		    ->method ( 'setGlobal' )
-		    ->with   ( 'EnableParserCache', false )
-		;
-		$mwService
-		    ->expects( $this->once() )
-		    ->method ( 'isPageIdContent' )
-		    ->with   ( 123 )
-		    ->will   ( $this->returnValue( true ) )
-		;
-		$mwService
-		    ->expects( $this->once() )
-		    ->method ( 'isPageIdMainPage' )
-		    ->with   ( 123 )
-		    ->will   ( $this->returnValue( false ) )
-		;
-		$service
-		    ->expects( $this->at( 1 ) )
-		    ->method ( 'pushNoLangTxt' )
-		    ->with   ( "my title" )
-		    ->will   ( $this->returnValue( $service ) )
-		;
-		$service
-		    ->expects( $this->at( 2 ) )
-		    ->method ( 'pushNoLangTxt' )
-		    ->with   ( "my title" )
-		    ->will   ( $this->returnValue( $service ) )
-		;
-		$service
-		    ->expects( $this->at( 3 ) )
-		    ->method ( 'field' )
-		    ->with   ( 'title' )
-		    ->will   ( $this->returnValue( 'title_en' ) )
-		;
-		$service
-		    ->expects( $this->at( 4 ) )
-		    ->method ( 'field' )
-		    ->with   ( 'wikititle' )
-		    ->will   ( $this->returnValue( 'wikititle_en' ) )
-		;
-		$service
-		    ->expects( $this->once() )
-		    ->method ( 'getPageContentFromParseResponse' )
-		    ->with   ( $parseResponse )
-		    ->will   ( $this->returnValue( [ 'html_en' => $html ] ) )
-		;
-		$service
-		    ->expects( $this->once() )
-		    ->method ( 'getCategoriesFromParseResponse' )
-		    ->with   ( $parseResponse )
-		    ->will   ( $this->returnValue( [ 'categories_mv_en' => [ 'yup' ] ] ) )
-		;
-		$service
-		    ->expects( $this->once() )
-		    ->method ( 'getHeadingsFromParseResponse' )
-		    ->with   ( $parseResponse )
-		    ->will   ( $this->returnValue( [ 'headings_mv_en' => [ 'heading' ] ] ) )
-		;
-		$service
-		    ->expects( $this->once() )
-		    ->method ( 'getOutboundLinks' )
-		    ->will   ( $this->returnValue( [ 'outbound_links_txt' => [ '123_321|hey', '123_456|ho' ] ] ) )
-		;
-		$service
-		    ->expects( $this->once() )
-		    ->method ( 'getNolangTxt' )
-		    ->will   ( $this->returnValue( [ 'nolang_txt' => [ 'foo' ] ] ) )
-		;
-		$cpid = new \ReflectionProperty( 'Wikia\Search\IndexService\AbstractService', 'currentPageId' );
-		$cpid->setAccessible( true );
-		$cpid->setValue( $service, 123 );
-		$result = $service->execute();
-		$expectedResult = [
-				'html_en' => 'this is my html',
-				'categories_mv_en' => [ 'yup' ],
-				'headings_mv_en' => [ 'heading' ],
-				'wid' => 321,
-				'pageid' => 123,
-				'title_en' => 'my title',
-				'titleStrict' => 'my title',
-				'title_em' => 'my title',
-				'url' => 'http://foo.wikia.com/wiki/Foo',
-				'ns' => 0,
-				'host' => 'foo.wikia.com',
-				'lang' => 'en',
-				'wikititle_en' => 'My Wiki',
-				'page_images' => 2,
-				'iscontent' => 'true',
-				'is_main_page' => 'false',
-				'outbound_links_txt' => [ '123_321|hey', '123_456|ho' ],
-				'nolang_txt' => [ 'foo' ],
-				'snippet_s' => 'this is my html'
-				];
-		$this->assertEquals(
-				$expectedResult,
-				$result
-		);
-	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.08447 ms
@@ -301,21 +114,21 @@ class DefaultContentTest extends BaseTest
 		    ->method ( 'getGlobal' )
 		    ->will   ( $this->returnValue( false ) )
 		;
-		
+
 		$prep = new ReflectionMethod( 'Wikia\Search\IndexService\DefaultContent', 'prepValuesFromHtml' );
 		$prep->setAccessible( true );
 
-		$expected = [ 
+		$expected = [
 			'nolang_txt' => "tam foo bar",
 			'words' => 3,
 			'html' => "tam foo bar"
     ];
-		
+
 		$this->assertEquals($expected, $prep->invoke($service, "<p>tam foo bar</p>"));
 		$this->assertEquals($expected, $prep->invoke($service, "&lt;tam foo bar"));
 		$this->assertEquals($expected, $prep->invoke($service, "&gt;tam foo bar"));
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.12441 ms
@@ -360,7 +173,7 @@ class DefaultContentTest extends BaseTest
 				$get->invoke( $mockService )
 		);
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.08268 ms
@@ -382,7 +195,7 @@ class DefaultContentTest extends BaseTest
 				$get->invoke( $service, $response )
 		);
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.08246 ms
@@ -404,7 +217,7 @@ class DefaultContentTest extends BaseTest
 				$get->invoke( $service, $response )
 		);
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.08559 ms
@@ -460,11 +273,11 @@ ENDIT;
 				$result['html_en']
 		);
 		$this->assertGreaterThanOrEqual(
-				str_word_count( $result['nolang_txt'] ), 
+				str_word_count( $result['nolang_txt'] ),
 				$result['words']
 		);
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.08387 ms
@@ -502,7 +315,7 @@ ENDIT;
 				$node->outertext
 		);
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.08582 ms
@@ -558,7 +371,7 @@ ENDIT;
 				$remove->invoke( $service, $dom )
 		);
 	}
-	
+
 
 	/**
 	 * @group Slow
@@ -597,7 +410,7 @@ ENDIT;
 				$remove->invoke( $service, $dom )
 		);
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.08371 ms
@@ -631,7 +444,7 @@ ENDIT;
 				$get->invoke( $service, $dom )
 		);
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.0881 ms
@@ -664,7 +477,7 @@ ENDIT;
 		    ->will   ( $this->returnValue( array( $node ) ) )
 		;
 		$node
-		    ->expects( $this->at( 0 ) ) 
+		    ->expects( $this->at( 0 ) )
 		    ->method ( 'outertext' )
 		    ->will   ( $this->returnValue( 'foo' ) )
 		;
@@ -752,7 +565,7 @@ ENDIT;
 		    ->will   ( $this->returnValue( array( $node ) ) )
 		;
 		$node
-		    ->expects( $this->at( 0 ) ) 
+		    ->expects( $this->at( 0 ) )
 		    ->method ( 'outertext' )
 		    ->will   ( $this->returnValue( 'foo' ) )
 		;
@@ -807,7 +620,7 @@ ENDIT;
 				$extract->invoke( $service, $dom, $result )
 		);
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.08083 ms
@@ -842,7 +655,7 @@ ENDIT;
 				$get->invoke( $service )
 		);
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.08084 ms

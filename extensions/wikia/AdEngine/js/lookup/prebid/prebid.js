@@ -8,7 +8,6 @@ define('ext.wikia.adEngine.lookup.prebid', [
 	'ext.wikia.adEngine.lookup.prebid.prebidHelper',
 	'ext.wikia.adEngine.lookup.prebid.prebidSettings',
 	'ext.wikia.adEngine.lookup.lookupFactory',
-	'wikia.cmp',
 	'wikia.log',
 	'wikia.trackingOptIn',
 	'wikia.window'
@@ -21,7 +20,6 @@ define('ext.wikia.adEngine.lookup.prebid', [
 	helper,
 	settings,
 	factory,
-	cmp,
 	log,
 	trackingOptIn,
 	win

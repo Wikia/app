@@ -1,0 +1,13 @@
+city_list:
+  - city_id: 1
+    city_dbname: test1
+    city_url: http://test1.wikicities.com/
+    city_flags: 64
+    city_last_timestamp: 20110101000000
+    city_cluster: c1
+  - city_id: 2
+    city_dbname: test2
+    city_url: http://test2.wikicities.com/
+    city_flags: 0
+    city_last_timestamp: 20110101000000
+    city_cluster: c2

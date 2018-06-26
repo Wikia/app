@@ -4,3 +4,4 @@ $wgAutoloadClasses['HTTPSSupportHooks'] =  __DIR__ . '/HTTPSSupportHooks.class.p
 
 $wgHooks['BeforeInitialize'][] = 'HTTPSSupportHooks::onBeforeInitialize';
 $wgHooks['MercuryWikiVariables'][] = 'HTTPSSupportHooks::onMercuryWikiVariables';
+$wgHooks['outputMakeExternalImage'][] = 'HTTPSSupportHooks::parserUpgradeVignetteUrls';

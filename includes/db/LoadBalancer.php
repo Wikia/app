@@ -725,7 +725,7 @@ class LoadBalancer {
 		if ( $db->getSampler()->shouldSample() ) {
 			$db->getWikiaLogger()->info( "LoadBalancer::reallyOpenConnection", [
 				'caller'  => wfGetCallerClassMethod( __CLASS__ ),
-				'host'    => $server['hostName'], // eg. db-archive-s7
+				'host'    => $server['hostName'] ?? $server['host'], // eg. db-archive-s7
 				'db_name' => $dbname,
 				'db_user' => $server['user'],
 			] );
