@@ -44,7 +44,7 @@ class WikiFactory {
 	# close Wiki
 	const HIDE_ACTION 			= -1;
 	const CLOSE_ACTION 			= 0;
-	const PUBLIC_WIKI      		= 1;
+	const PUBLIC_WIKI			= 1;
 	static public $DUMP_SERVERS = [
 		'c1' => 'db2',
 		'c2' => 'db-sb2'
