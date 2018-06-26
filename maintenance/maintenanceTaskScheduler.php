@@ -24,7 +24,7 @@ class MaintenanceTaskScheduler extends Maintenance {
 
 		$idsParam = [];
 		if ( $this->getOption( "id" ) !== null ) {
-			$idsParam = array_map( "intval", explode( ",", $this->getOption( "id" ) ) );
+			$idsParam = array_map( "intval", str_getcsv( $this->getOption( "id" ), "," ) );
 		}
 
 		$this->output( "Scheduling ${script}\n" );
@@ -71,7 +71,7 @@ class MaintenanceTaskScheduler extends Maintenance {
 
 		$task_id = $task->queue();
 
-		$this->output( "Scheduled ${task_id}\n" );
+		$this->output( "Scheduled MaintenanceTask queue\n" );
 	}
 }
 
