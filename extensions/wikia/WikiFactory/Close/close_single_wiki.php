@@ -67,7 +67,6 @@ class CloseSingleWiki extends Maintenance {
 		$dbw->delete(
 			"city_list",
 			array(
-				"city_public" => array( 0, -1 ),
 				"city_id" => $wgCityId
 			),
 			__METHOD__
