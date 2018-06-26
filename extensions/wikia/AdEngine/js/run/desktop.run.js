@@ -18,6 +18,7 @@ require([
 	'ext.wikia.adEngine.tracking.adInfoListener',
 	'ext.wikia.adEngine.tracking.scrollDepthTracker',
 	'ext.wikia.adEngine.wad.babDetection',
+	'ext.wikia.adEngine.wad.wadRecRunner',
 	'wikia.geo',
 	'wikia.trackingOptIn',
 	'wikia.window',
@@ -40,6 +41,7 @@ require([
 	adInfoListener,
 	scrollDepthTracker,
 	babDetection,
+	wadRecRunner,
 	geo,
 	trackingOptIn,
 	win,
@@ -88,6 +90,7 @@ require([
 
 		// Everything starts after content and JS
 		win.wgAfterContentAndJS.push(function () {
+			wadRecRunner.init();
 			adInfoListener.run();
 			slotStateMonitor.run();
 
