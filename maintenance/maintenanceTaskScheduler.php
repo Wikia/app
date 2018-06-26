@@ -3,6 +3,8 @@
 require_once( dirname( __FILE__ ) . "/Maintenance.php" );
 
 class MaintenanceTaskScheduler extends Maintenance {
+	private $wikiIds = [];
+
 	public function __construct() {
 		parent::__construct();
 
@@ -31,9 +33,11 @@ class MaintenanceTaskScheduler extends Maintenance {
 
 		// TODO: Handle 300k wikis
 		$this->getWikis( $idsParam, $active, $cluster )
-			->runLoop( $db, function ( $data, $row ) use ( $script ) {
-				$this->scheduleTask( $row->city_id, $script );
+			->runLoop( $db, function ( $data, $row ) {
+				$wikiIds[] = $row->city_id;
 			} );
+
+		$this->scheduleTask($this->wikiIds, $script);
 	}
 
 	private function getWikis( array $idsParam = [], int $active = null, string $cluster = null ) {
@@ -60,9 +64,9 @@ class MaintenanceTaskScheduler extends Maintenance {
 		return $sql;
 	}
 
-	private function scheduleTask( int $wikiId, string $script ) {
+	private function scheduleTask( array $wikisId, string $script ) {
 		$task = new \Wikia\Tasks\Tasks\MaintenanceTask();
-		$task->wikiId( $wikiId );
+		$task->wikiId( $wikisId );
 		$task->call( "run", $script );
 
 		$task_id = $task->queue();
