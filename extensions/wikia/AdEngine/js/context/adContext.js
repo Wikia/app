@@ -61,8 +61,11 @@ define('ext.wikia.adEngine.adContext', [
 	function updateAdContextRecoveryServices(context, noExternals) {
 		var serviceCanBeEnabled = !noExternals && context.opts.showAds !== false && !areDelayServicesBlocked(); // showAds is undefined by default
 
-		// BlockAdBlock recovery
+		// BAB proxy
 		context.opts.babRecovery = serviceCanBeEnabled && isEnabled('wgAdDriverBabRecoveryCountries');
+
+		// BT rec
+		context.opts.wadBT = serviceCanBeEnabled && isEnabled('wgAdDriverWadBTCountries');
 	}
 
 	function isEnabled(name) {

@@ -1366,6 +1366,12 @@ $wgAdDriverF2BabDetectionCountries = null;
 $wgAdDriverBabRecoveryCountries = null;
 
 /**
+ * @name $wgAdDriverWadBTCountries
+ * List of countries enable Blockthrough recovery
+ */
+$wgAdDriverWadBTCountries = null;
+
+/**
  * @name $wgEnableCMPCountries
  * List of countries to enable Consent Management module
  */
