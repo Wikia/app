@@ -2,33 +2,16 @@
 
 /**
  * @group GlobalTitle
+ * @group Integration
  */
-class GlobalTitleTest extends WikiaBaseTest {
-	protected function setUp() {
-		parent::setUp();
+class GlobalTitleIntegrationTest extends WikiaDatabaseTest {
 
-		$this->disableMemCache();
-		$this->getStaticMethodMock( 'WikiFactory', 'getVarValueByName' )
-			->expects( $this->any() )
-			->method( 'getVarValueByName' )
-			->willReturnMap( [
-				// basically all tests where GlobalTitle::load() is executed
-				[ 'wgServer', 177, 'http://community.wikia.com' ],
-				[ 'wgServer', 410, 'http://yugioh.wikia.com' ],
-				[ 'wgServer', 490, 'http://wowwiki.wikia.com' ],
-				[ 'wgServer', 1686, 'http://spolecznosc.wikia.com' ],
-				[ 'wgServer', 165, 'http://firefly.wikia.com' ],
-				[ 'wgLanguageCode', 177, 'en' ],
-				[ 'wgLanguageCode', 113, 'en' ],
-				[ 'wgLanguageCode', 490, 'en' ],
-				[ 'wgLanguageCode', 1686, 'pl' ],
-				[ 'wgLanguageCode', 165, 'en' ],
-				[ 'wgExtraNamespacesLocal', 177, false, [], [] ],
-				[ 'wgExtraNamespacesLocal', 113, false, [], [] ],
-				[ 'wgExtraNamespacesLocal', 490, false, [], [ 116 => 'Portal' ] ],
-				[ 'wgExtraNamespacesLocal', 1686, false, [], [] ],
-				[ 'wgExtraNamespacesLocal', 165, false, [], [] ],
-			] );
+	private function mockEnvironment( string $theEnv ){
+		$this->mockGlobalVariable( 'wgWikiaEnvironment', $theEnv );
+	}
+
+	private function mockProdEnv() {
+		$this->mockGlobalVariable( 'wgWikiaEnvironment', WIKIA_ENV_PROD );
 	}
 
 	function testNewFromText1() {
@@ -58,15 +41,15 @@ class GlobalTitleTest extends WikiaBaseTest {
 	function testUrlsMainNS() {
 		$this->mockProdEnv();
 
-		$title = GlobalTitle::newFromText( "Timeline", NS_MAIN, 410 ); # yugioh
-		$expectedUrl = "http://yugioh.wikia.com/wiki/Timeline";
+		$title = GlobalTitle::newFromText( "Timeline", NS_MAIN, 113 ); # memory-alpha
+		$expectedUrl = "http://memory-alpha.wikia.com/wiki/Timeline";
 		$this->assertEquals( $expectedUrl, $title->getFullURL() );
 	}
 
 	function testUrlsMainNSonWoW() {
 		$this->mockProdEnv();
 
-		$title = GlobalTitle::newFromText( "Main", 116, 490); # wowwiki
+		$title = GlobalTitle::newFromText( "Main", 116, 490 ); # wow
 		$expectedUrl = "http://wowwiki.wikia.com/wiki/Portal:Main";
 		$this->assertEquals( $expectedUrl, $title->getFullURL() );
 	}
@@ -128,32 +111,6 @@ class GlobalTitleTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * @dataProvider mainPageDataProvider
-	 */
-	function testNewMainPageUrls( $mediaWikiMainpageContent, $exists, $availableNamespaces, $expectedNamespace, $expectedText ) {
-		$this->mockProdEnv();
-
-		$globalTitleMock = $this->getMockBuilder( 'GlobalTitle' )->setMethods( [
-			'getContent',
-			'exists',
-			'loadNamespaceNames',
-			'loadAll',
-		    'getNsText'
-		] )->getMock();
-		$globalTitleMock->expects( $this->any() )->method( 'loadNamespaceNames' )->willReturn( $availableNamespaces );
-		$globalTitleMock->expects( $this->any() )->method( 'loadAll' )->willReturn( null );
-		$globalTitleMock->expects( $this->any() )->method( 'getNsText' )->willReturn( $expectedNamespace );
-		$globalTitleMock->expects( $this->any() )->method( 'exists' )->willReturn( $exists );
-		$globalTitleMock->expects( $this->any() )->method( 'getContent' )->willReturn( $mediaWikiMainpageContent );
-		$this->mockClass( GlobalTitle::class, $globalTitleMock );
-
-		$title = GlobalTitle::newMainPage( 177 ); // community.wikia.com
-
-		$this->assertEquals( $title->getNamespace(), $expectedNamespace );
-		$this->assertEquals( $title->getText(), $expectedText );
-	}
-
-	/**
 	 * @dataProvider stripArticlePathDataProvider
 	 */
 	public function testStripArticlePath( $path, $articlePath, $expResult ) {
@@ -167,19 +124,28 @@ class GlobalTitleTest extends WikiaBaseTest {
 	 */
 	public function testHTTPSUrls( $cityId, $requestProtocol, $expectedUrl ) {
 		$this->mockProdEnv();
-		$this->mockStaticMethod( 'WebRequest', 'detectProtocol', $requestProtocol );
 
-		$fullUrl = GlobalTitle::newFromText( 'Test', NS_MAIN, $cityId )->getFullURL();
-		$this->assertEquals( $expectedUrl, $fullUrl );
+		if ( isset( $_SERVER['HTTP_FASTLY_SSL'] ) ) {
+			$orig = $_SERVER['HTTP_FASTLY_SSL'];
+		}
+
+		try {
+			$_SERVER['HTTP_FASTLY_SSL'] = $requestProtocol === 'https';
+
+			$fullUrl = GlobalTitle::newFromText( 'Test', NS_MAIN, $cityId )->getFullURL();
+			$this->assertEquals( $expectedUrl, $fullUrl );
+		} finally {
+			if ( isset( $orig ) ) {
+				$_SERVER['HTTP_FASTLY_SSL'] = $orig;
+			}
+		}
 	}
 
 	public function urlsSpacesProvider() {
 		return [
-			[ WIKIA_ENV_DEV, 'Test Ze Spacjami', NS_TALK, 177, 'http://community.' . self::MOCK_DEV_NAME . '.wikia-dev.us/wiki/Talk:Test_Ze_Spacjami' ],
 			[ WIKIA_ENV_PROD, 'Test Ze Spacjami', NS_TALK, 177, 'http://community.wikia.com/wiki/Talk:Test_Ze_Spacjami' ],
 			[ WIKIA_ENV_PREVIEW, 'Test Ze Spacjami', NS_TALK, 177, 'http://community.preview.wikia.com/wiki/Talk:Test_Ze_Spacjami' ],
 			[ WIKIA_ENV_VERIFY, 'Test Ze Spacjami', NS_TALK, 177, 'http://community.verify.wikia.com/wiki/Talk:Test_Ze_Spacjami' ],
-			[ WIKIA_ENV_SANDBOX, 'Test Ze Spacjami', NS_TALK, 177, 'http://community.sandbox-s1.wikia.com/wiki/Talk:Test_Ze_Spacjami' ],
 		];
 	}
 
@@ -205,40 +171,6 @@ class GlobalTitleTest extends WikiaBaseTest {
 		];
 	}
 
-	public function mainPageDataProvider() {
-		return [
-			[
-				'Whatever',
-				true,
-				[],
-				false,
-				'Whatever',
-			],
-			[
-				'Namespace:Test',
-				true,
-				[ '1' => 'Namespace' ],
-				1,
-				'Test',
-			],
-			[
-				'Namespace with spaces:Test',
-				true,
-				[ '1' => 'Namespace_with_spaces' ],
-				1,
-				'Test',
-			],
-			[
-				'Namespaces_with_underlines:Test',
-				true,
-				[ 2 => 'Namespaces_with_underlines' ],
-				2,
-				'Test',
-			],
-			[ 'Notexists', false, [], false, 'Main Page' ],
-		];
-	}
-
 	public function httpsUrlsProvider() {
 		return [
 			[ 177, 'http', 'http://community.wikia.com/wiki/Test' ],
@@ -248,5 +180,9 @@ class GlobalTitleTest extends WikiaBaseTest {
 			[ 5931, 'http', 'http://ja.starwars.wikia.com/wiki/Test' ],
 			[ 5931, 'https', 'http://ja.starwars.wikia.com/wiki/Test' ],
 		];
+	}
+
+	protected function getDataSet() {
+		return $this->createYamlDataSet( __DIR__ . '/_fixtures/global_title.yaml' );
 	}
 }

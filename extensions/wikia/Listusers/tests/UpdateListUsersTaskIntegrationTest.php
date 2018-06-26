@@ -100,6 +100,8 @@ class UpdateListUsersTaskIntegrationTest extends WikiaDatabaseTest {
 	}
 
 	public function testGroupsUpdateUpdatesExistingDataForUser() {
+		$this->markTestSkipped( 'SUS-4625' );
+
 		$this->editCountServiceMock->expects( $this->never() )
 			->method( 'getEditCount' );
 

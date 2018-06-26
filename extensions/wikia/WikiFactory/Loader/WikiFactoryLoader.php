@@ -48,12 +48,12 @@ class WikiFactoryLoader {
 	 * @param array $wikiFactoryDomains
 	 */
 	public function  __construct( array $server, array $environment, array $wikiFactoryDomains = [] ) {
-		global $wgDevelEnvironment;
+		global $wgDevelEnvironment, $wgExternalSharedDB;
 
 		// initializations
 		$this->mOldServerName = false;
 		$this->mAlternativeDomainUsed = false;
-		$this->mDBname = WikiFactory::db;
+		$this->mDBname = $wgExternalSharedDB;
 		$this->mDomain = array();
 		$this->mVariables = array();
 		$this->mIsWikiaActive = 0;
@@ -401,7 +401,7 @@ class WikiFactoryLoader {
 		if( ( $cond1 || $cond2 ) && empty( $wgDevelEnvironment ) ) {
 			$redirectUrl = WikiFactory::getLocalEnvURL( $this->mCityUrl );
 
-			if ( $_SERVER['HTTP_FASTLY_SSL'] &&
+			if ( !empty( $_SERVER['HTTP_FASTLY_SSL'] ) &&
 				 !empty( $_SERVER['HTTP_FASTLY_FF'] ) &&
 				 wfHttpsAllowedForURL( $redirectUrl )
 			) {
@@ -617,14 +617,6 @@ class WikiFactoryLoader {
 				}
 
 				if ($key == 'wgServer') {
-					if ( !empty( $_SERVER['HTTP_X_ORIGINAL_HOST'] ) ) {
-						global $wgConf;
-
-						$stagingServer = $_SERVER['HTTP_X_ORIGINAL_HOST'];
-
-						$tValue = 'http://'.$stagingServer;
-						$wgConf->localVHosts = array_merge( $wgConf->localVHosts, [ $stagingServer ] );
-					}
 					// TODO - what about wgServer value for requests that did not go through Fastly?
 					if ( !empty( $_SERVER['HTTP_FASTLY_SSL'] ) ) {
 						$tValue = wfHttpToHttps( $tValue );

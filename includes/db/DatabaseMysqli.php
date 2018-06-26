@@ -54,7 +54,7 @@ class DatabaseMysqli extends DatabaseMysqlBase {
 	 * @throws DBConnectionError
 	 */
 	protected function mysqlConnect( $realServer ) {
-		global $wgDBmysql5;
+		global $wgDBmysql5, $wgMysqlConnectionCharacterSet;
 
 		# Fail now
 		# Otherwise we get a suppressed fatal error, which is very hard to track down
@@ -94,16 +94,15 @@ class DatabaseMysqli extends DatabaseMysqlBase {
 		}
 
 		$mysqli = mysqli_init();
-		if ( $wgDBmysql5 ) {
+		if ( $wgMysqlConnectionCharacterSet ) {
+			// Wikia change - allow to specify an explicit connection character set
+			$mysqli->options( MYSQLI_SET_CHARSET_NAME, $wgMysqlConnectionCharacterSet );
+		} elseif ( $wgDBmysql5 ) {
 			// Tell the server we're communicating with it in UTF-8.
 			// This may engage various charset conversions.
 			$mysqli->options( MYSQLI_SET_CHARSET_NAME, 'utf8' );
-		} else {
-			# <Wikia>
-			# Wikia databases use latin1 charset
-			# $mysqli->options( MYSQLI_SET_CHARSET_NAME, 'binary' );
-			# </Wikia>
 		}
+
 		$mysqli->options( MYSQLI_OPT_CONNECT_TIMEOUT, 3 );
 
 		if ( $mysqli->real_connect( $realServer, $this->mUser,

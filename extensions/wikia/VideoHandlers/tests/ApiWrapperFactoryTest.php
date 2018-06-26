@@ -13,11 +13,14 @@ class ApiWrapperFactoryTest extends WikiaBaseTest {
 	}
 
 	/**
+	 * @dataProvider getApiWrapperDataProvider
+	 * 
 	 * @param string $expectedProvider
 	 * @param string $url
-	 * @dataProvider getApiWrapperDataProvider
+	 *
+	 * @throws WikiaException
 	 */
-	function testGetApiWrapper($expectedProvider, $url) {
+	public function testGetApiWrapper( $expectedProvider, $url ) {
 		$wrapper = ApiWrapperFactory::getInstance()->getApiWrapper( $url );
 
 		if ( is_null( $expectedProvider ) ) {
@@ -28,14 +31,40 @@ class ApiWrapperFactoryTest extends WikiaBaseTest {
 		}
 	}
 
-	function getApiWrapperDataProvider() {
+	public function getApiWrapperDataProvider() {
 		yield [ DailymotionApiWrapper::class, 'https://www.dailymotion.com/video/x6bwti4?collectionXid=x55ml1' ];
 		yield [ VimeoApiWrapper::class, 'https://vimeo.com/240716505' ];
-		yield [ YoutubeApiWrapper::class, 'https://www.youtube.com/watch?v=iRvI4c9VsW8' ];
-		yield [ YoutubeApiWrapper::class, 'https://youtu.be/iRvI4c9VsW8' ]; # short URL
 		yield [ YoukuApiWrapper::class, 'http://v.youku.com/v_show/id_XMzQwNDg0NTE5Ng==.html' ];
 
 		yield [ null, 'http://example.com' ];
 		yield [ null, 'https://www.youtube.com' ];
+	}
+
+	/**
+	 * @dataProvider provideLicensedWrappers
+	 *
+	 * @param $expectedProvider
+	 * @param $url
+	 *
+	 * @throws WikiaException
+	 */
+	public function testGetLicensedApiWrappers( $expectedProvider, $url ) {
+		if ( $this->isLicensedWrapperInfoNotAvailable() ) {
+			$this->markTestSkipped( 'info not available for licensed API wrapper tests' );
+		}
+
+		$wrapper = ApiWrapperFactory::getInstance()->getApiWrapper( $url );
+		$this->assertInstanceOf( $expectedProvider, $wrapper );
+	}
+
+	public function provideLicensedWrappers() {
+		yield [ YoutubeApiWrapper::class, 'https://www.youtube.com/watch?v=iRvI4c9VsW8' ];
+		yield [ YoutubeApiWrapper::class, 'https://youtu.be/iRvI4c9VsW8' ]; # short URL
+	}
+
+	private function isLicensedWrapperInfoNotAvailable(): bool {
+		global $wgYoutubeConfig;
+
+		return empty( $wgYoutubeConfig );
 	}
 }

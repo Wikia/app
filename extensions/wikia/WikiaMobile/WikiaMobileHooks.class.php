@@ -13,15 +13,15 @@ class WikiaMobileHooks {
 
 	/**
 	 * @param $parser Parser
-	 * @param $text String
+	 * @param $text string|null
 	 * @param $strip_state
 	 * @return bool
 	 */
-	static public function onParserBeforeStrip( Parser $parser, string &$text, &$strip_state ): bool {
+	static public function onParserBeforeStrip( Parser $parser, &$text, &$strip_state ): bool {
 		global $wgWikiaMobileDisableMediaGrouping;
 		wfProfileIn( __METHOD__ );
 
-		if ( empty( $wgWikiaMobileDisableMediaGrouping ) && F::app()->checkSkin( 'wikiamobile' ) ) {
+		if ( empty( $wgWikiaMobileDisableMediaGrouping ) && $text && F::app()->checkSkin( 'wikiamobile' ) ) {
 			$matches = array();
 			$translatedNs = self::getLocalizedMediaNsString();
 

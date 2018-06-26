@@ -7,11 +7,12 @@ class AssetsManagerSassBuilderTest extends WikiaBaseTest {
 
 	const SASS_FILE = '/extensions/wikia/AssetsManager/tests/test.scss';
 
-	private $cb;
-	private $cdn;
-
 	public function setUp() {
 		parent::setUp();
+
+		if ( !extension_loaded( 'sass' ) ) {
+			$this->markTestSkipped( 'the sassphp extension is not available' );
+		}
 	}
 
 	/**

@@ -9,7 +9,7 @@ CREATE TABLE `spoofuser` (
 
 DROP TABLE IF EXISTS `spoofuser_forgotten`;
 CREATE TABLE `spoofuser_forgotten` (
-  `suf_id` int(5) NOT NULL PRIMARY KEY AUTOINCREMENT,
+  `suf_id` int(5) NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `suf_exact_hash` char(64) NOT NULL UNIQUE,
   `suf_normalized_hash` char(64) NOT NULL UNIQUE,
   `suf_created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP

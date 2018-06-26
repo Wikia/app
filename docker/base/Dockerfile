@@ -27,6 +27,8 @@ RUN apt-get update && apt-get install -y \
     wget \
     # needed by php tidy extension
     libtidy-dev \
+    # needed by php intl extension
+    libicu-dev \
     # needed by sass
     && apt-get -t jessie-backports install -y libsass-dev
 
@@ -96,7 +98,9 @@ RUN docker-php-ext-install \
     # used to read localisation cache data from CDB files
     dba \
     # needed by multithread scripts
-    pcntl
+    pcntl \
+    # needed by IcuCollation class
+    intl
 
 # setup php.ini globally
 ADD ./php.ini /usr/local/etc/php/php.ini
@@ -105,6 +109,6 @@ ADD ./php.ini /usr/local/etc/php/php.ini
 ENV WIKIA_DOCROOT=/usr/wikia/slot1/current/src
 ENV WIKIA_CONFIG_ROOT=/usr/wikia/slot1/current/config
 
-ENV WIKIA_BASE_IMAGE_HASH=7b76c41
+ENV WIKIA_BASE_IMAGE_HASH=d668751
 
 WORKDIR /usr/wikia/slot1/current/src

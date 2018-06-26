@@ -18,6 +18,9 @@ class UserDataRemoverTest extends WikiaDatabaseTest {
 	const EXACT_HASH = '9ce937b220262ce1bb62b918ea196d78c39d6326ceaae974f8d3fbf1d550b44b';
 	const NORMALIZED_HASH = 'dd6846900c173f39d39c0760dc8d23a35f5799cea4a91239fba16620ad4e59e6';
 
+	/** @var \Wikia\Service\Helios\HeliosClient|PHPUnit_Framework_MockObject_MockObject $heliosClientMock */
+	private $heliosClientMock;
+
 	/**
 	 * Returns the test dataset.
 	 *
@@ -31,7 +34,6 @@ class UserDataRemoverTest extends WikiaDatabaseTest {
 		return [
 			__DIR__ . '/fixtures/wikiastaff_log.sql',
 			__DIR__ . '/fixtures/spoofuser.sql',
-			__DIR__ . '/fixtures/audit_log.sql'
 		];
 	}
 
@@ -73,12 +75,12 @@ class UserDataRemoverTest extends WikiaDatabaseTest {
 	public function testUserDataShouldBeRemovedFromUserEmailLogTable() {
 		( new UserDataRemover() )->removeAllPersonalUserData( self::REMOVED_USER_ID );
 
-		$wikicitiesSlave = wfGetDB( DB_SLAVE, [], 'wikicities' );
+		$wikicitiesSlave = wfGetDB( DB_SLAVE );
 
 		$this->assertEquals( 0,
-			$wikicitiesSlave->estimateRowCount(
+			$wikicitiesSlave->selectField(
 				'user_email_log',
-				'*',
+				'count(*)',
 				[ 'user_id' => self::REMOVED_USER_ID ],
 				__METHOD__
 			),
@@ -86,9 +88,9 @@ class UserDataRemoverTest extends WikiaDatabaseTest {
 		);
 
 		$this->assertEquals( 1,
-			$wikicitiesSlave->estimateRowCount(
+			$wikicitiesSlave->selectField(
 				'user_email_log',
-				'*',
+				'count(*)',
 				[ 'user_id' => self::OTHER_USER_ID ],
 				__METHOD__
 			),
@@ -99,10 +101,10 @@ class UserDataRemoverTest extends WikiaDatabaseTest {
 	public function testUserDataShouldBeRemovedFromUserPropertiesTable() {
 		( new UserDataRemover() )->removeAllPersonalUserData( self::REMOVED_USER_ID );
 
-		$wikicitiesSlave = wfGetDB( DB_SLAVE, [], 'wikicities' );
+		$wikicitiesSlave = wfGetDB( DB_SLAVE );
 
 		$this->assertEquals( 1,
-			$wikicitiesSlave->estimateRowCount( 'user_properties', '*', [
+			$wikicitiesSlave->selectField( 'user_properties', 'count(*)', [
 				'up_user' => self::REMOVED_USER_ID
 			], __METHOD__ ),
 			'user_properties table contains data related to user who wants to be forgotten' );
@@ -115,9 +117,9 @@ class UserDataRemoverTest extends WikiaDatabaseTest {
 			'user_properties table doesn\'t contain disabled property for user who wants to be forgotten' );
 
 		$this->assertEquals( 2,
-			$wikicitiesSlave->estimateRowCount(
+			$wikicitiesSlave->selectField(
 				'user_properties',
-				'*',
+				'count(*)',
 				[ 'up_user' => self::OTHER_USER_ID ],
 				__METHOD__
 			),
@@ -143,19 +145,19 @@ class UserDataRemoverTest extends WikiaDatabaseTest {
 		$db = wfGetDB( DB_SLAVE, [] );
 
 		$this->assertEquals( 0,
-			$db->estimateRowCount( 'wikiastaff_log', '*', [ 'slog_user' => self::REMOVED_USER_ID ],
+			$db->selectField( 'wikiastaff_log', 'count(*)', [ 'slog_user' => self::REMOVED_USER_ID ],
 				__METHOD__ ), 'Staff logs for removed user are not removed' );
 
 		$this->assertEquals( 0,
-			$db->estimateRowCount( 'wikiastaff_log', '*', [ 'slog_userdst' => self::REMOVED_USER_ID ],
+			$db->selectField( 'wikiastaff_log', 'count(*)', [ 'slog_userdst' => self::REMOVED_USER_ID ],
 				__METHOD__ ), 'Staff logs for removed user are not removed' );
 
 		$this->assertEquals( 1,
-			$db->estimateRowCount( 'wikiastaff_log', '*', [ 'slog_user' => self::OTHER_USER_ID ],
+			$db->selectField( 'wikiastaff_log', 'count(*)', [ 'slog_user' => self::OTHER_USER_ID ],
 				__METHOD__ ), 'Staff logs were removed for wrong user' );
 	}
 
-	public function testShouldAnonimizeAnfispoof() {
+	public function testShouldAnonymizeAnfispoof() {
 		( new UserDataRemover() )->removeAllPersonalUserData( self::REMOVED_USER_ID );
 
 		// check basic functionality
@@ -165,12 +167,12 @@ class UserDataRemoverTest extends WikiaDatabaseTest {
 		// check if username is in plaintext
 		$db = $db = wfGetDB( DB_SLAVE, [] );
 		$this->assertEquals( 0,
-			$db->estimateRowCount( 'spoofuser', '*', [ 'su_name' => self::REMOVED_USER_NAME ],
+			$db->selectField( 'spoofuser', 'count(*)', [ 'su_name' => self::REMOVED_USER_NAME ],
 				__METHOD__ ), 'Username is stored in plaintext for removed user' );
 
 		// check if hash is correct
 		$this->assertEquals( 1,
-			$db->estimateRowCount( 'spoofuser_forgotten', '*',
+			$db->selectField( 'spoofuser_forgotten', 'count(*)',
 				[
 					'suf_normalized_hash' => self::NORMALIZED_HASH,
 					'suf_exact_hash' => self::EXACT_HASH,
