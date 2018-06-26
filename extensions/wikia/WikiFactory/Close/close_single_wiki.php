@@ -5,7 +5,10 @@
  * @addtopackage maintenance
  */
 
-ini_set( "include_path", dirname(__FILE__) . "/../../../../maintenance/" );
+ini_set( 'display_errors', 'stderr' );
+ini_set( 'error_reporting', E_ALL ^ E_NOTICE );
+
+require_once( dirname( __FILE__ ) . '/../../../../maintenance/Maintenance.php' );
 
 use Swagger\Client\Discussion\Api\SitesApi;
 use Wikia\Factory\ServiceFactory;
@@ -36,19 +39,20 @@ class CloseSingleWiki extends Maintenance {
 
 		if( $this->delay > 0 ) {
 			$this->output( sprintf( 'Will start deleting in %d seconds', $this->delay ) );
+			sleep( $this->delay );
 		}
 
 		$dbr = WikiFactory::db( DB_SLAVE );
 		$sth = $dbr->select(
 			[ "city_list" ],
 			[ "city_id", "city_flags", "city_dbname", "city_cluster", "city_url", "city_public", "city_last_timestamp" ],
-			[ "city_flags" => $wgCityId ],
+			[ "city_id" => $wgCityId ],
 			__METHOD__,
 			[ "LIMIT" => 1 ]
 		);
 
 		if( $sth->numRows() != 1 ) {
-			$this->output( "Could not fetch data from `city_list`" );
+			$this->output( sprintf( "Could not fetch data from `city_list`, num rows: %d", $sth->numRows() ) );
 			return 1;
 		}
 
@@ -203,7 +207,7 @@ class CloseSingleWiki extends Maintenance {
 	private function doTableCleanup( DatabaseBase $db, $table, $city_id, $wiki_id_column = 'wiki_id' ) {
 		$db->delete( $table, [ $wiki_id_column => $city_id ], __METHOD__ );
 
-		$this->log( sprintf( "#%d: removed %d rows from %s.%s table", $city_id, $db->affectedRows(), $db->getDBname(), $table ) );
+		$this->output( sprintf( "#%d: removed %d rows from %s.%s table", $city_id, $db->affectedRows(), $db->getDBname(), $table ) );
 
 		// throttle delete queries
 		if ( $db->affectedRows() > 0 ) {
@@ -238,7 +242,7 @@ class CloseSingleWiki extends Maintenance {
 	protected function output( $out, $channel = null ) {
 		global $wgCityId;
 
-		parent::output( sprintf( "%d: %s", $wgCityId, $out ), $channel );
+		parent::output( sprintf( "%d: %s\n", $wgCityId, $out ), $channel );
 	}
 }
 
