@@ -53,7 +53,7 @@ class MaintenanceTaskScheduler extends Maintenance {
 
 		if ( $active !== null ) {
 			$timestampSql = "city_last_timestamp BETWEEN TIMESTAMP( DATE_SUB(CURDATE(), INTERVAL %d DAY) ) AND NOW()";
-			$sql->AND_( sprintf( $timestampSql, $active ) );
+			$sql->AND_( sprintf( $timestampSql, intval( $active ) ) );
 		}
 
 		if ( $cluster !== null ) {
