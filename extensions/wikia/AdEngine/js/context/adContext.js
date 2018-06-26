@@ -66,6 +66,9 @@ define('ext.wikia.adEngine.adContext', [
 
 		// BT rec
 		context.opts.wadBT = serviceCanBeEnabled && isEnabled('wgAdDriverWadBTCountries');
+
+		// IL rec
+		context.opts.wadIL = serviceCanBeEnabled && isEnabled('wgAdDriverWadILCountries');
 	}
 
 	function isEnabled(name) {
