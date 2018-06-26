@@ -69,7 +69,7 @@ class MaintenanceTaskScheduler extends Maintenance {
 		$task->wikiId( $wikisId );
 		$task->call( "run", $script );
 
-		$task_id = $task->queue();
+		$task->queue();
 
 		$this->output( "Scheduled MaintenanceTask queue\n" );
 	}
