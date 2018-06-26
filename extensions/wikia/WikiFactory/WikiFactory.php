@@ -58,10 +58,11 @@ class WikiFactory {
 	const FLAG_REDIRECT              = 32;  // this wiki is a redirect - do not remove
 	const FLAG_PROTECTED             = 512; //wiki cannot be closed
 
-	const db            = "wikicities"; // @see $wgExternalSharedDB
-	const DOMAINCACHE   = "/tmp/wikifactory/domains.ser";
-	const CACHEDIR      = "/tmp/wikifactory/wikis";
-	const WIKIA_TOP_DOMAIN = '.wikia.com';
+	const db            	= "wikicities"; // @see $wgExternalSharedDB
+	const DOMAINCACHE   	= "/tmp/wikifactory/domains.ser";
+	const CACHEDIR      	= "/tmp/wikifactory/wikis";
+	const WIKIA_TOP_DOMAIN 	= '.wikia.com';
+	const PUBLIC_WIKI      	= 1;
 
 	// Community Central's city_id in wikicities.city_list.
 	const COMMUNITY_CENTRAL = 177;

@@ -40,7 +40,7 @@ class MaintenanceTaskScheduler extends Maintenance {
 		$sql = ( new \WikiaSQL() )
 			->SELECT( "city_id" )
 			->FROM( "city_list" )
-			->WHERE("city_public")->GREATER_THAN(WikiFactory::CLOSE_ACTION);
+			->WHERE("city_public")->EQUAL_TO(WikiFactory::PUBLIC_WIKI);
 
 		if ( count( $idsParam ) > 0 ) {
 			$sql->WHERE( "city_id" )
