@@ -44,6 +44,7 @@ class WikiFactory {
 	# close Wiki
 	const HIDE_ACTION 			= -1;
 	const CLOSE_ACTION 			= 0;
+	const PUBLIC_WIKI      		= 1;
 	static public $DUMP_SERVERS = [
 		'c1' => 'db2',
 		'c2' => 'db-sb2'
@@ -62,7 +63,6 @@ class WikiFactory {
 	const DOMAINCACHE   	= "/tmp/wikifactory/domains.ser";
 	const CACHEDIR      	= "/tmp/wikifactory/wikis";
 	const WIKIA_TOP_DOMAIN 	= '.wikia.com';
-	const PUBLIC_WIKI      	= 1;
 
 	// Community Central's city_id in wikicities.city_list.
 	const COMMUNITY_CENTRAL = 177;
