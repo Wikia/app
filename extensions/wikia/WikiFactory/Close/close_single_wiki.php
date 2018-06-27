@@ -75,7 +75,7 @@ class CloseSingleWiki extends Maintenance {
 			),
 			__METHOD__
 		);
-		// SUS-2374
+
 		$dbw->delete(
 			"city_variables",
 			array(
