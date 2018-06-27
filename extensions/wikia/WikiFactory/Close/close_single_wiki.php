@@ -62,7 +62,11 @@ class CloseSingleWiki extends Maintenance {
 
 		$this->output( "Cleaning the shared database" );
 
-		WikiFactory::copyToArchive( $wgCityId );
+		if( !WikiFactory::isInArchive( $wgCityId ) ) {
+			$this->output( "Moving to archive" );
+			WikiFactory::copyToArchive( $wgCityId );
+		}
+
 		$dbw = WikiFactory::db( DB_MASTER );
 		$dbw->delete(
 			"city_list",
@@ -101,11 +105,13 @@ class CloseSingleWiki extends Maintenance {
 				'user' => $wgDBadminuser,
 				'password' => $wgDBadminpassword,
 				'dbname' => $centralDB,
+				'flags' => 0,
+				'tablePrefix' => 'get from global',
 			]);
 			$dbw->begin( __METHOD__ );
 			$dbw->query( "DROP DATABASE `{$row->city_dbname}`" );
 			$dbw->commit( __METHOD__ );
-			$this->output( "{$row->city_dbname} dropped from cluster {$cluster}" );
+			$this->output( "{$row->city_dbname} dropped from cluster" );
 		}
 		catch( Exception $e ) {
 			$this->output( "{$row->city_dbname} database drop failed! {$e->getMessage()}" );
