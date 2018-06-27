@@ -25812,10 +25812,10 @@ $messages['pl'] = array(
 	'mainpage-description' => 'Strona główna',
 	'missing-article' => 'W bazie danych nie odnaleziono treści strony „$1” $2.
 
-Zazwyczaj jest to spowodowane odwołaniem do nieaktualnego linku prowadzącego do różnicy pomiędzy dwoma wersjami strony lub do wersji z historii usuniętej strony.
+Zazwyczaj jest to spowodowane nieaktualnym linkiem do różnicy pomiędzy wersjami strony lub do wersji strony, która została usunięta.
 
-Jeśli tak nie jest, możliwe, że problem został wywołany przez błąd w oprogramowaniu.
-Można zgłosić ten fakt [[Special:ListUsers/sysop|administratorowi]], podając adres URL.',
+Jeśli tak nie jest, problem mógł zostać wywołany przez błąd w oprogramowaniu.
+Prosiłmy o [[Special:Contact/bug|zgłoszenie błędu personelowi FANDOMU]], podając adres URL.',
 	'missingarticle-rev' => '(wersja $1)',
 	'missingarticle-diff' => '(różnica: $1, $2)',
 	'mailmypassword' => 'Wyślij mi nowe hasło poprzez e‐mail',
@@ -25823,11 +25823,11 @@ Można zgłosić ten fakt [[Special:ListUsers/sysop|administratorowi]], podając
 	'media_sample' => 'Przykład.ogg',
 	'media_tip' => 'Link do pliku',
 	'minoredit' => 'To jest drobna zmiana',
-	'missingsummary' => "'''Uwaga:''' Nie wprowadz{{GENDER:|iłeś|iłaś|ono}} opisu zmian.
-Jeżeli nie chcesz go wprowadzać, naciśnij przycisk „Zapisz” jeszcze raz.",
+	'missingsummary' => "'''Uwaga:''' nie wprowadz{{GENDER:|iłeś|iłaś|ono}} opisu zmian.
+Naciśnij ponownie „{{int:savearticle}}”, aby zapisać bez podawania go.",
 	'missingcommenttext' => 'Wprowadź komentarz poniżej.',
-	'missingcommentheader' => "'''Uwaga''' – treść tytułu lub nagłówka komentarza jest pusta.
-Jeśli ponownie klikniesz „{{int:savearticle}}“, zmiany zostaną zapisane bez niego.",
+	'missingcommentheader' => "'''Uwaga:''' nie wprowadz{{GENDER:|iłeś|iłaś|ono}} tytułu/nagłówka dla tego komentarza.
+Naciśnij ponownie „{{int:savearticle}}”, aby zapisać bez podawania go.",
 	'moveddeleted-notice' => 'Ta strona została usunięta.
 Rejestr usunięć i zmian nazwy tej strony jest pokazany poniżej.',
 	'mergehistory' => 'Scalanie historii stron',
@@ -26747,7 +26747,7 @@ $messages['pt'] = array(
 	'mainpage-description' => 'Página principal',
 	'missing-article' => 'O banco de dados não encontrou o texto de uma página que deveria ter encontrado, com o nome "$1" $2.
 
-Isso normalmente é causado ao acessar um link de diferença (diff) desatualizado ou para o histórico de uma página que foi apagada.
+Isso normalmente é causado ao acessar um link de diferença (diff) desatualizado ou um link histórico de uma página que foi apagada.
 
 Se não for este o caso, você pode ter encontrado um defeito (bug) no software.
 Anote o URL e reporte o ocorrido a um [[Special:ListUsers/sysop|administrador]].',
