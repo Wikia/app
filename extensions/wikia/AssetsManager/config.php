@@ -272,6 +272,8 @@ $config['adengine2_pr3b1d_js'] = [
 	'assets' => [
 		'//extensions/wikia/AdEngine/js/build/bridge.js',
 		'//extensions/wikia/AdEngine/js/context/uapContext.js',
+		'//extensions/wikia/AdEngine/js/wad/babDetection.js',
+
 		'//extensions/wikia/AdEngine/js/lookup/prebid/bidHelper.js',
 		'//extensions/wikia/AdEngine/js/lookup/prebid/prebid.js',
 		'//extensions/wikia/AdEngine/js/lookup/prebid/prebidHelper.js',

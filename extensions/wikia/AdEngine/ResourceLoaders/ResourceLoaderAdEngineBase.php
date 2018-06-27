@@ -62,18 +62,17 @@ abstract class ResourceLoaderAdEngineBase extends ResourceLoaderModule {
 	 * @return bool|string
 	 */
 	protected function generateData( $scriptItems ) {
-
 		$scriptsToMerge = [ ];
 		foreach ( $scriptItems as $scriptItem ) {
 			/* @var ResourceLoaderScript $scriptItem */
-
 			$script = false;
+
 			if ( $scriptItem->getType() == ResourceLoaderScript::TYPE_REMOTE ) {
 				try {
 					$script = $this->fetchRemoteScript( $scriptItem->getValue() );
 				} catch ( Exception $e ) {
 					return false;
-				} 
+				}
 			} elseif ( $scriptItem->getType() == ResourceLoaderScript::TYPE_LOCAL ) {
 				$script = $this->fetchLocalScript( $scriptItem->getValue() );
 			} elseif ( $scriptItem->getType() == ResourceLoaderScript::TYPE_INLINE ) {
@@ -117,7 +116,7 @@ abstract class ResourceLoaderAdEngineBase extends ResourceLoaderModule {
 
 		$memKey = $this->getMemcKey();
 		$cached = $wgMemc->get( $memKey );
-		if ( is_array( $cached ) && $cached['ttl'] > $now ) {
+		if ( is_array( $cached ) && $cached['ttl'] > $now &&false) {
 			// Cache hit!
 			static::$localCache[$this->getLocalCacheKey()] = $cached;
 			return $cached;

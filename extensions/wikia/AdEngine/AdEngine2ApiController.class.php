@@ -14,17 +14,29 @@ class AdEngine2ApiController extends WikiaController {
 
 		$params = $this->request->getParams();
 
-		switch ($params['id']) {
+		switch ( $params['id'] ) {
 			case 'n1dtc':
-				$json = file_get_contents(__DIR__ . '/resources/ml/n1dtc.json');
+				$json = file_get_contents( __DIR__ . '/resources/ml/n1dtc.json' );
 				break;
 			default:
 				$json = '{}';
 		}
 
+		$this->response->setCachePolicy( WikiaResponse::CACHE_PUBLIC );
+		$this->response->setContentType( 'application/json' );
+		$this->response->setBody( $json );
+		$this->response->setCacheValidity( WikiaResponse::CACHE_LONG );
+	}
+
+	public function getBlockthroughCode() {
 		$this->response->setCachePolicy(WikiaResponse::CACHE_PUBLIC);
-		$this->response->setContentType('application/json');
-		$this->response->setBody($json);
+		$this->response->setContentType('text/javascript');
 		$this->response->setCacheValidity(WikiaResponse::CACHE_LONG);
+
+		if (AdEngine2Service::isBlockthroughRecoveryEnabled()) {
+			$resourceLoader = new ResourceLoaderAdEngineBlockthroughCode();
+			$resourceLoaderContext = new ResourceLoaderContext( new ResourceLoader(), new FauxRequest() );
+			$this->response->setBody( $resourceLoader->getScript( $resourceLoaderContext ) );
+		}
 	}
 }

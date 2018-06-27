@@ -1,8 +1,10 @@
 /*global define*/
 define('ext.wikia.adEngine.slot.service.srcProvider', [
-	'ext.wikia.adEngine.adContext'
+	'ext.wikia.adEngine.adContext',
+	'ext.wikia.adEngine.wad.babDetection'
 ], function (
-	adContext
+	adContext,
+	babDetection
 ) {
 	'use strict';
 
@@ -16,6 +18,10 @@ define('ext.wikia.adEngine.slot.service.srcProvider', [
 	function get(originalSrc, extra) {
 		if (adContext.get('opts.premiumOnly') && !adContext.get('opts.isAdTestWiki')) {
 			originalSrc = 'premium';
+		}
+
+		if (babDetection.isBlocking()) {
+			originalSrc = getRecoverySrc();
 		}
 
 		return addTestPrefixForTestWiki(originalSrc, extra);

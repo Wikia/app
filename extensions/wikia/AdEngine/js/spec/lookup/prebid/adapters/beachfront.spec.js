@@ -15,6 +15,11 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.beachfront', function () {
 				return map;
 			}
 		},
+		babDetection: {
+			isBlocking: function () {
+				return false;
+			}
+		},
 		log: function () {
 		},
 		loc: {
@@ -28,6 +33,7 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.beachfront', function () {
 		return modules['ext.wikia.adEngine.lookup.prebid.adapters.beachfront'](
 			mocks.adContext,
 			mocks.slotsContext,
+			mocks.babDetection,
 			mocks.loc,
 			mocks.log
 		);

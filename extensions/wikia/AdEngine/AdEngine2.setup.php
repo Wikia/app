@@ -21,6 +21,9 @@ $wgAutoloadClasses['ResourceLoaderAdEngineBase'] = __DIR__ . '/ResourceLoaders/R
 $wgAutoloadClasses['ResourceLoaderScript'] = __DIR__ . '/ResourceLoaders/ResourceLoaderScript.php';
 $wgAutoloadClasses['AdEngine2ApiController'] = __DIR__ . '/AdEngine2ApiController.class.php';
 
+// Recovery
+$wgAutoloadClasses['ResourceLoaderAdEngineBlockthroughCode'] = __DIR__ . '/ResourceLoaders/ResourceLoaderAdEngineBlockthroughCode.php';
+
 // Hooks for AdEngine2
 $wgHooks['AfterInitialize'][] = 'AdEngine2Hooks::onAfterInitialize';
 $wgHooks['InstantGlobalsGetNewsAndStoriesVariables'][] = 'AdEngine2Hooks::onInstantGlobalsGetNewsAndStoriesVariables';
