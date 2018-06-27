@@ -47,7 +47,7 @@ class MaintenanceTaskScheduler extends Maintenance {
 			->WHERE("city_public")->EQUAL_TO(WikiFactory::PUBLIC_WIKI);
 
 		if ( count( $idsParam ) > 0 ) {
-			$sql->WHERE( "city_id" )
+			$sql->AND_( "city_id" )
 				->IN( $idsParam );
 		}
 
