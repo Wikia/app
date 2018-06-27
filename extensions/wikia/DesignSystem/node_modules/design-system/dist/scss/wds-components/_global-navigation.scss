@@ -10,6 +10,10 @@
 	font-family: Rubik,"Helvetica Neue",Helvetica,Arial,sans-serif;
 	position: relative;
 
+	@media #{$wds-breakpoint-small-down} {
+		padding: 0 3px 0 12px;
+	}
+
 	&__content-container {
 		margin: 0 auto;
 		display: flex;
@@ -43,11 +47,87 @@
 		justify-content: flex-end;
 	}
 
-	&__links {
+	&__dropdown-controls,
+	&__modal-controls {
+		align-items: center;
+		height: $wds-global-navigation-height;
+		justify-content: flex-end;
+		width: 100%;
+	}
+
+	&__dropdown-controls {
+		display: none;
+
+		@media #{$wds-breakpoint-medium-up} {
+			display: flex;
+		}
+	}
+
+	&__modal-controls {
+		display: none;
+
+		@media #{$wds-breakpoint-small-down} {
+			display: flex;
+		}
+	}
+
+	&__modal {
+		height: 100%;
+		left: 0;
+		position: fixed;
+		top: $wds-global-navigation-height;
+		width: 100%;
+	}
+
+	&.wds-is-modal-opened {
+		.wds-global-navigation__modal-control {
+			align-items: center;
+			display: flex;
+			justify-content: center;
+			height: 100%;
+			padding: 10px;
+
+			&-search,
+			&-user,
+			&-anon {
+				display: none;
+			}
+
+			&-close {
+				display: block;
+			}
+		}
+	}
+
+	&__modal-control {
+		align-items: center;
+		box-sizing: border-box;
 		display: flex;
+		justify-content: center;
+		height: 100%;
+		padding: 10px;
+
+		&-search,
+		&-close {
+			svg {
+				fill: $wds-fandom-color-aqua;
+			}
+		}
+
+		&-close {
+			display: none;
+		}
+	}
+
+	&__links {
+		display: none;
 		font-size: 18px;
 		font-weight: bold;
 		height: 100%;
+
+		@media #{$wds-breakpoint-medium-up} {
+			display: flex
+		}
 
 		@media #{$wds-breakpoint-large-down} {
 			font-size: 16px;
@@ -86,12 +166,13 @@
 	}
 
 	&__start-a-wiki {
+		display: none;
 		margin-left: 18px;
 		transition-duration: $wds-button-transition-duration;
 		transition-property: color;
 
-		@media #{$wds-breakpoint-medium-down} {
-			display: none;
+		@media #{$wds-breakpoint-large-up} {
+			display: flex;
 		}
 
 		.wds-button.wds-is-secondary:not(:disabled) {
@@ -170,10 +251,41 @@
 		&-image {
 			vertical-align: middle;
 		}
+
+		&-horizontal-bar {
+			display: none;
+		}
+
+		@media #{$wds-breakpoint-small-down} {
+			background: $wds-fandom-color-navy;
+			border: none;
+			height: 30px;
+			justify-content: flex-end;
+			max-width: 100vw;
+			right: 0;
+			top: 45px;
+			width: 100vw;
+
+			&-link {
+				padding: 6px
+			}
+
+			&-horizontal-bar {
+				border-bottom: 1px solid $wds-fandom-color-dark-gray;
+				display: block;
+				height: 2px;
+				margin-left: 12px;
+				width: 100%;
+			}
+		}
 	}
 
 	&.wds-has-partner-slot &__content-bar-right {
 		margin-right: $partner-slot-width;
+
+		@media #{$wds-breakpoint-small-down} {
+			margin-right: 0;
+		}
 	}
 
 	.wds-avatar {

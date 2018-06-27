@@ -5,7 +5,7 @@
     "setup-template": "npm install && grunt"
   },
   "dependencies": {
-    "design-system": "Wikia/design-system#41eb278dfb10c4e8be9610c3f1f3f26897c814ee",
+    "design-system": "Wikia/design-system#cd8253c96678e62ab7692e0de37bbc5ee1f5f0ec",
     "design-system-i18n": "Wikia/design-system-i18n#673c784b537c14f7e863e1c79b4108962fad3955",
     "grunt-mustache": "~0.1.5",
     "grunt": "~0.4.2"
