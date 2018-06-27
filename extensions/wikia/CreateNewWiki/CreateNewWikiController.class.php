@@ -210,11 +210,14 @@ class CreateNewWikiController extends WikiaController {
 		$params = $this->getRequest()->getArray('data');
 		$fandomCreatorCommunityId = $this->getRequest()->getVal( 'fandomCreatorCommunityId' );
 
+		// SUS-5393 | wVertical is expected to be a numeric value
+		$params['wVertical'] = (int) $params['wVertical'];
+
 		if ( empty($params) ||
 			empty($params['wName']) ||
 			empty($params['wDomain']) ||
 			empty($params['wLanguage']) ||
-			(!isset($params['wVertical']) || $params['wVertical'] === '-1'))
+			(empty($params['wVertical']) || $params['wVertical'] === -1))
 		{
 			// do nothing
 			$this->warning(__METHOD__ . ": no parameters provided" );
