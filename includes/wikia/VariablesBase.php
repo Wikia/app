@@ -2782,7 +2782,7 @@ $wgEnableGracenoteExt = false;
  * @see extensions/wikia/HAWelcome/
  * @var bool $wgEnableHAWelcomeExt
  */
-$wgEnableHAWelcomeExt = false;
+$wgEnableHAWelcomeExt = true;
 
 /**
  * Enable HideTags extension.
