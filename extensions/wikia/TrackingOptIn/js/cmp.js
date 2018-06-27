@@ -24,6 +24,7 @@ define('wikia.cmp', [
 ) {
 	var isModuleEnabled = geo.isProperGeo(instantGlobals.wgEnableCMPCountries),
 		logGroup = 'wikia.cmp',
+		fandomCmpId = 141,
 		vendorConsentCookieName = 'euconsent',
 		hasGlobalScope = false,
 		cookieExpireMillis = 33696000000, // this represents thirteen 30-day months
@@ -60,7 +61,7 @@ define('wikia.cmp', [
 				});
 
 				vendorConsent = new cs.ConsentString();
-				vendorConsent.setCmpId(0);
+				vendorConsent.setCmpId(fandomCmpId);
 				vendorConsent.setCmpVersion(1);
 				vendorConsent.setConsentScreen(1);
 				vendorConsent.setConsentLanguage((geo.getCountryCode() || 'en').toLowerCase());
