@@ -27,7 +27,6 @@ define('ext.wikia.adEngine.wrappers.prebid', [
 	if (isCMPEnabled) {
 		prebidConfig.consentManagement = {
 			cmpApi: 'iab',
-			timeout: 2000,
 			allowAuctionWithoutConsent: false
 		};
 	}
