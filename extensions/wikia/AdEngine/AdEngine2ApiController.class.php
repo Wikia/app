@@ -29,14 +29,12 @@ class AdEngine2ApiController extends WikiaController {
 	}
 
 	public function getBlockthroughCode() {
-		$this->response->setCachePolicy(WikiaResponse::CACHE_PUBLIC);
-		$this->response->setContentType('text/javascript');
-		$this->response->setCacheValidity(WikiaResponse::CACHE_LONG);
+		$resourceLoader = new ResourceLoaderAdEngineBlockthroughCode();
+		$resourceLoaderContext = new ResourceLoaderContext( new ResourceLoader(), new FauxRequest() );
 
-		if (AdEngine2Service::isBlockthroughRecoveryEnabled()) {
-			$resourceLoader = new ResourceLoaderAdEngineBlockthroughCode();
-			$resourceLoaderContext = new ResourceLoaderContext( new ResourceLoader(), new FauxRequest() );
-			$this->response->setBody( $resourceLoader->getScript( $resourceLoaderContext ) );
-		}
+		$this->response->setCachePolicy( WikiaResponse::CACHE_PUBLIC );
+		$this->response->setContentType( 'text/javascript' );
+		$this->response->setCacheValidity( WikiaResponse::CACHE_LONG );
+		$this->response->setBody( $resourceLoader->getScript( $resourceLoaderContext ) );
 	}
 }

@@ -45,13 +45,4 @@ class AdEngine2Service {
 
 		return $cat;
 	}
-
-	/**
-	 * Checks whether Blockthrough recovery is enabled
-	 *
-	 * @return bool
-	 */
-	public static function isBlockthroughRecoveryEnabled() {
-		return F::app()->checkSkin( [ 'oasis' ] );
-	}
 }
