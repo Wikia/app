@@ -661,6 +661,9 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 						// for QA with love
 						$themWikiWrapper.find('.controls input').attr('disabled', false).addClass('enabled');
 					});
+
+					// SUS-5393 | expose task_id to Selenium tests via "data" HTML element attribute
+					$('#CreateNewWiki').attr('data-task-id', res.task_id);
 				},
 				onErrorCallback: generateAjaxErrorMsg
 			});
