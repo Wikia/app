@@ -116,7 +116,7 @@ abstract class ResourceLoaderAdEngineBase extends ResourceLoaderModule {
 
 		$memKey = $this->getMemcKey();
 		$cached = $wgMemc->get( $memKey );
-		if ( is_array( $cached ) && $cached['ttl'] > $now &&false) {
+		if ( is_array( $cached ) && $cached['ttl'] > $now ) {
 			// Cache hit!
 			static::$localCache[$this->getLocalCacheKey()] = $cached;
 			return $cached;

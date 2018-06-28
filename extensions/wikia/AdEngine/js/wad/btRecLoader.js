@@ -12,6 +12,7 @@ define('ext.wikia.adEngine.wad.btRecLoader', [
 		wikiaApiMethod = 'getBlockthroughCode',
 		placementClass = 'bt-uid-tg',
 		placementsMap = {
+			TOP_LEADERBOARD: '5b33d3584c-188',
 			TOP_RIGHT_BOXAD: '5b2d1649b2-188'
 		};
 
