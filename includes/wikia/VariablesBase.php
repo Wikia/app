@@ -8239,7 +8239,7 @@ $wgUseInstantCommons = false;
  * This is only enabled if app itself is running on Kubernetes.
  * @var bool $wgUseKubernetesInternalIngress
  */
-$wgUseKubernetesInternalIngress = getenv( 'KUBERNETES_POD' );
+$wgUseKubernetesInternalIngress = (bool) getenv( 'KUBERNETES_POD' );
 
 /**
  * Set this to true to make a local copy of the message cache, for use in
