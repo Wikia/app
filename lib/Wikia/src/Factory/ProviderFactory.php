@@ -26,7 +26,7 @@ class ProviderFactory {
 			global $wgRealEnvironment, $wgWikiaDatacenter, $wgUseKubernetesInternalIngress;
 
 			if ( $wgUseKubernetesInternalIngress ) {
-				$this->urlProvider = new InternalIngressUrlProvider();
+				$this->urlProvider = new InternalIngressUrlProvider( $wgRealEnvironment );
 			} else {
 				$this->urlProvider = new KubernetesUrlProvider( $wgRealEnvironment, $wgWikiaDatacenter );
 				$this->urlProvider->setLogger( WikiaLogger::instance() );
