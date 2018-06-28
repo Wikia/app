@@ -140,10 +140,11 @@ if ( ! empty( $wgEnableLyricWikiExt ) ) {
 	require_once "$LW/LyricFind/LyricFind.setup.php";
 }
 /**
- * enable welcome tool on specified languages
+ * WgEnableHAWelcomeExt is enabled by default
+ * Disable welcome tool if there is no available language
  */
-if( in_array( $wgLanguageCode, $wgAvailableHAWLang ) && !isset($wgEnableHAWelcomeExt) ) {
-	$wgEnableHAWelcomeExt = true;
+if ( !in_array( $wgLanguageCode, $wgAvailableHAWLang ) ) {
+	$wgEnableHAWelcomeExt = false;
 }
 
 if ( $wgEnableInsightsExt === null && in_array( $wgLanguageCode, $wgAvailableInsightsLang ) ) {

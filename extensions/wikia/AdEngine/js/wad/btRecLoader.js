@@ -2,25 +2,31 @@
 define('ext.wikia.adEngine.wad.btRecLoader', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.domElementTweaker',
+	'ext.wikia.adEngine.utils.scriptLoader',
 	'wikia.document',
-], function (adContext, DOMElementTweaker, doc) {
+	'wikia.window'
+], function (adContext, DOMElementTweaker, scriptLoader, doc, win) {
 	'use strict';
 
-	var insertAsNew = true,
-		wikiaScriptDomain = 'wikia-inc-com',
+	var wikiaApiController = 'AdEngine2ApiController',
+		wikiaApiMethod = 'getBlockthroughCode',
 		placementClass = 'bt-uid-tg',
 		placementsMap = {
+			TOP_LEADERBOARD: '5b33d3584c-188',
 			TOP_RIGHT_BOXAD: '5b2d1649b2-188'
 		};
 
-	function markAdSlots() {
+	function markAdSlots(replace) {
 		Object
 			.keys(placementsMap)
 			.forEach(function (key) {
 				var slot = doc.getElementById(key);
 
 				if (slot) {
-					if (insertAsNew) {
+					if (replace) {
+						DOMElementTweaker.addClass(slot, placementClass);
+						DOMElementTweaker.setData(slot, 'uid', placementsMap[key]);
+					} else {
 						var node = doc.createElement('span');
 
 						DOMElementTweaker.addClass(node, placementClass);
@@ -28,32 +34,27 @@ define('ext.wikia.adEngine.wad.btRecLoader', [
 						DOMElementTweaker.hide(node, true);
 
 						slot.parentNode.insertBefore(node, slot.previousSibling);
-
-					} else {
-						DOMElementTweaker.addClass(slot, placementClass);
-						DOMElementTweaker.setData(slot, 'uid', placementsMap[key]);
 					}
 				}
 			});
 	}
 
 	function injectScript() {
-		var scr = doc.createElement('script');
+		var url = win.wgCdnApiUrl + '/wikia.php?controller=' + wikiaApiController + '&method=' + wikiaApiMethod;
 
-		scr.type = 'text/javascript';
-		scr.src = 'https://' + wikiaScriptDomain + '.videoplayerhub.com/galleryloader.js';
-
-		doc.getElementsByTagName('head')[0].appendChild(scr);
+		scriptLoader.loadScript(url, {
+			isAsync: false,
+			node: doc.head.lastChild
+		});
 	}
 
 	function init() {
 		markAdSlots();
 
 		if (adContext.get('opts.babRecovery')) {
-			// ToDo: run on event
-			injectScript();
+			doc.addEventListener('bab.blocking', injectScript);
 		} else {
-			injectScript();
+			injectScript(false);
 		}
 	}
 

@@ -59,13 +59,15 @@ define('ext.wikia.adEngine.adContext', [
 	}
 
 	function updateAdContextRecoveryServices(context, noExternals) {
-		var serviceCanBeEnabled = !noExternals && context.opts.showAds !== false && !areDelayServicesBlocked(); // showAds is undefined by default
+		// showAds is undefined by default
+		var serviceCanBeEnabled = !noExternals && context.opts.showAds !== false && !areDelayServicesBlocked();
 
 		// BAB proxy
 		context.opts.babRecovery = serviceCanBeEnabled && isEnabled('wgAdDriverBabRecoveryCountries');
 
 		// BT rec
-		context.opts.wadBT = serviceCanBeEnabled && isEnabled('wgAdDriverWadBTCountries');
+		context.opts.wadBT = serviceCanBeEnabled && context.targeting.skin === 'oasis' &&
+			isEnabled('wgAdDriverWadBTCountries');
 
 		// IL rec
 		context.opts.wadIL = serviceCanBeEnabled && isEnabled('wgAdDriverWadILCountries');

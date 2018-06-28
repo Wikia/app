@@ -3,16 +3,22 @@ describe('ext.wikia.adEngine.slot.service.srcProvider', function () {
 	'use strict';
 
 	var mocks = {
-			adContext: {
-				get: function () {
-					return false;
-				}
+		adContext: {
+			get: function () {
+				return false;
 			}
-		};
+		},
+		babDetection: {
+			isBlocking: function () {
+				return false;
+			}
+		},
+	};
 
 	function getModule() {
 		return modules['ext.wikia.adEngine.slot.service.srcProvider'](
 			mocks.adContext,
+			mocks.babDetection
 		);
 	}
 

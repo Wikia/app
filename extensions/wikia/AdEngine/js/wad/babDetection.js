@@ -39,7 +39,12 @@ define('ext.wikia.adEngine.wad.babDetection', [
 		});
 	}
 
+	function isBlocking() {
+		return win.ads && win.ads.runtime && win.ads.runtime.bab && win.ads.runtime.bab.blocking;
+	}
+
 	return {
-		initDetection: initDetection
+		initDetection: initDetection,
+		isBlocking: isBlocking
 	};
 });
