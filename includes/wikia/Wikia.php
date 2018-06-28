@@ -1932,6 +1932,19 @@ class Wikia {
 		return true;
 	}
 
+	/**
+	 *
+	 * Generates surrogate key to be used for requests served from a wiki domain.
+	 *
+	 * Can be called at any point during the request handling as it does not rely on WF variables.
+	 */
+	public static function wikiSurrogateKey( $wikiId ) {
+		if ( self::isProductionEnv() ) {
+			return 'wiki-' . $wikiId;
+		}
+		return 'wiki-' . wfGetEffectiveHostname() . '-' . $wikiId;
+	}
+
 	public static function surrogateKey( $args ) {
 		global $wgCachePrefix;
 
