@@ -1,0 +1,72 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mediawiki-apache
+  namespace: prod
+  labels:
+    app: mediawiki-apache
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mediawiki-apache
+  template:
+    metadata:
+      labels:
+        app: mediawiki-apache
+    spec:
+      containers:
+        - name: apache
+          image: artifactory.wikia-inc.com/sus/php-wikia-apache:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+          env:
+            - name: WIKIA_DATACENTER
+              value: "sjc"
+            - name: WIKIA_ENVIRONMENT
+              value: "sandbox"
+            - name: LOG_STDOUT_ONLY
+              value: "yes"
+          resources:
+            limits:
+              cpu: "1"
+              memory: "1300Mi"
+            requests:
+              cpu: "400m"
+              memory: "800Mi"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mediawiki-apache
+spec:
+  selector:
+    app: mediawiki-apache
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: mediawiki-apache-ingress
+  annotations:
+    traefik.frontend.priority: "1"
+spec:
+  rules:
+    - host: mediawiki-apache.prod.sjc.k8s.wikia.net
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: mediawiki-apache
+              servicePort: 80
+    - host: "*.wikia.com"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: mediawiki-apache
+              servicePort: 80
