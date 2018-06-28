@@ -1,4 +1,4 @@
-<div class="wds-dropdown wds-global-navigation__user-menu wds-has-dark-shadow">
+<div class="wds-dropdown wds-global-navigation__user-menu wds-has-dark-shadow wds-global-navigation__user-anon">
 	<div class="wds-dropdown__toggle">
 		<?= $app->renderPartial( 'DesignSystemGlobalNavigationService',
 			'avatar', ['src'=> '', 'alt' => ''] ); ?>
