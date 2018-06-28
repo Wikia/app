@@ -9,7 +9,7 @@ class ResourceLoaderAdEngineBlockthroughCode extends ResourceLoaderAdEngineBase 
 	const CACHE_BUSTER = 100;
 	const REQUEST_TIMEOUT = 30;
 
-	const REMOTE_FILE_URL = __DIR__ . 'https://wikia-inc-com.videoplayerhub.com/galleryloader.js';
+	const REMOTE_FILE_URL = 'https://wikia-inc-com.videoplayerhub.com/galleryloader.js';
 	const LOCAL_FILE_PATH = __DIR__ . '/../resources/recovery/blockthrough.js';
 
 	protected function getMemcKey() {

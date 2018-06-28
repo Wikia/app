@@ -32,8 +32,8 @@ class AdEngine2ApiController extends WikiaController {
 		$resourceLoader = new ResourceLoaderAdEngineBlockthroughCode();
 		$resourceLoaderContext = new ResourceLoaderContext( new ResourceLoader(), new FauxRequest() );
 
-		$this->response->setCachePolicy( WikiaResponse::CACHE_PUBLIC );
 		$this->response->setContentType( 'text/javascript' );
+		$this->response->setCachePolicy( WikiaResponse::CACHE_PUBLIC );
 		$this->response->setCacheValidity( WikiaResponse::CACHE_LONG );
 		$this->response->setBody( $resourceLoader->getScript( $resourceLoaderContext ) );
 	}
