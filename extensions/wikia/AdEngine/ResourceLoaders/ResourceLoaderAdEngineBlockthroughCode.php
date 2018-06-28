@@ -6,7 +6,7 @@ class ResourceLoaderAdEngineBlockthroughCode extends ResourceLoaderAdEngineBase 
 	// 10m: cache for old file-loaded code
 	const TTL_GRACE = 600;
 	// cache version: increase on any local file change
-	const CACHE_BUSTER = 100;
+	const CACHE_BUSTER = 50;
 	const REQUEST_TIMEOUT = 30;
 
 	const REMOTE_FILE_URL = 'https://wikia-inc-com.videoplayerhub.com/galleryloader.js';
