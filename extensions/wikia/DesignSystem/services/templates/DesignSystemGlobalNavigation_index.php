@@ -1,5 +1,5 @@
 <div class="wds-global-navigation-wrapper">
-	<div class="wds-global-navigation wds-search-is-always-visible<?= !empty($model['partner-slot']) ? ' wds-has-partner-slot' : ''?>">
+	<div id="globalNavigation" class="wds-global-navigation wds-search-is-always-visible<?= !empty($model['partner-slot']) ? ' wds-has-partner-slot' : ''?>">
 		<div class="wds-global-navigation__content-container">
 			<div class="wds-global-navigation__content-bar-left">
 				<a
