@@ -37,6 +37,7 @@
     "ext-bz2": "*",
     "ext-dba": "*",
     "ext-gd": "*",
+    "ext-intl": "*",
     "ext-mustache": "*",
     "ext-mysqli": "*",
     "ext-pcntl": "*",
