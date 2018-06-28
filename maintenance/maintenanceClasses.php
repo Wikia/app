@@ -1,2 +1,20 @@
 <?php
 $wgAutoloadClasses['MigrateUserGroup'] = __DIR__ . 'migrateUserGroup.php';
+$wgAutoloadClasses['UpdateDatawarePages'] = __DIR__ . '../maintenance/wikia/updateDatawarePages.php';
+$wgAutoloadClasses['UpdateSpecialPages'] = __DIR__ . 'updateSpecialPages.php';
+//$wgAutoloadClasses[''] = __DIR__ . '../extensions/wikia/SemanticMediaWiki/maintenance/SMW_conceptCache.php';
+//$wgAutoloadClasses[''] = __DIR__ . '../extensions/wikia/FounderEmails/maintenance.php';
+//$wgAutoloadClasses[''] = __DIR__ . 'wikia/updateCentralInterwiki.php';
+$wgAutoloadClasses['TruncateSoapFailures'] = __DIR__ . 'wikia/truncateSoapFailures.php';
+$wgAutoloadClasses['InitStats'] = __DIR__ . 'initStats.php';
+$wgAutoloadClasses['LyricsWikiCrawler'] = __DIR__ . '../extensions/3rdparty/LyricWiki/maintenance/LyricsWikiCrawler.php';
+$wgAutoloadClasses['CloseMyAccountMaintenance'] = __DIR__ . '../extensions/wikia/CloseMyAccount/maintenance/CloseMyAccountMaintenance.php';
+$wgAutoloadClasses['ResetWeeklyUserContributionsCount'] = __DIR__ . 'wikia/cronjobs/resetWeeklyUserContributionsCount.php';
+//$wgAutoloadClasses[''] = __DIR__ . 'wikia/discussion-alerts.php';
+$wgAutoloadClasses['UpdateThumbnail'] = __DIR__ . 'wikia/VideoHandlers/updateThumbnail.php';
+$wgAutoloadClasses['TaskManagerArchive'] = __DIR__ . '../extensions/wikia/TaskManager/maintenance/archive.php';
+//$wgAutoloadClasses[''] = __DIR__ . 'wikia/SiteWideMessagesMaintenance.php';
+//$wgAutoloadClasses[''] = __DIR__ . '../extensions/wikia/WallNotifications/maintenance.php';
+//$wgAutoloadClasses[''] = __DIR__ . '../extensions/TorBlock/loadExitNodes.php';
+$wgAutoloadClasses['UploadStashCleanup'] = __DIR__ . 'cleanupUploadStash.php';
+$wgAutoloadClasses['SendConfirmationReminder'] = __DIR__ . '../extensions/wikia/AuthPages/maintenance/sendConfirmationReminder.php';
