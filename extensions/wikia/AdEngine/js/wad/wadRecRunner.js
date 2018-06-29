@@ -9,7 +9,7 @@ define('ext.wikia.adEngine.wad.wadRecRunner', [
 	var logGroup = 'ext.wikia.adEngine.wad.wadRecRunner';
 
 	function init() {
-		log('WAD recovery module initialized', 'debug', logGroup);
+		log('WAD rec module initialized', 'debug', logGroup);
 
 		if (adContext.get('opts.wadBT')) {
 			btRecLoader.init();

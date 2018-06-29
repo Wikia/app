@@ -48,3 +48,10 @@ define('ext.wikia.adEngine.wad.babDetection', [
 		isBlocking: isBlocking
 	};
 });
+
+define('ext.wikia.adEngine.babDetection', [
+	'ext.wikia.adEngine.wad.babDetection'
+], function (babDetection) {
+	//ToDo: remove after release
+	return babDetection;
+});

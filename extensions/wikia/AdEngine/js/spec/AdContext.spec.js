@@ -214,7 +214,7 @@ describe('AdContext', function () {
 		expect(adContext.getContext().targeting.pageCategories).toEqual([]);
 	});
 
-	it('makes targeting.enableKruxTargeting false when disaster recovery instant global variable is set to true',
+	it('makes targeting.enableKruxTargeting false when disaster rec instant global variable is set to true',
 		function () {
 			var adContext;
 			mocks.win = {ads: {context: {targeting: {enableKruxTargeting: true}}}};
@@ -366,20 +366,20 @@ describe('AdContext', function () {
 		expect(getModule().getContext().opts.babDetectionMobile).toBeFalsy();
 	});
 
-	it('enable recovery behind BlockAdBlock detection for current country on whitelist', function () {
+	it('enable rec behind BlockAdBlock detection for current country on whitelist', function () {
 		spyOn(mocks.sampler, 'sample').and.callFake(function () {
 			return true;
 		});
-		mocks.instantGlobals = {wgAdDriverBabRecoveryCountries: ['CURRENT_COUNTRY', 'ZZ']};
-		expect(getModule().getContext().opts.babRecovery).toBeTruthy();
+		mocks.instantGlobals = {wgAdDriverBabRecCountries: ['CURRENT_COUNTRY', 'ZZ']};
+		expect(getModule().getContext().opts.babRec).toBeTruthy();
 	});
 
-	it('disable recovery behind BlockAdBlock detection when current country is not on whitelist', function () {
+	it('disable rec behind BlockAdBlock detection when current country is not on whitelist', function () {
 		spyOn(mocks.sampler, 'sample').and.callFake(function () {
 			return true;
 		});
-		mocks.instantGlobals = {wgAdDriverBabRecoveryCountries: ['OTHER_COUNTRY', 'ZZ']};
-		expect(getModule().getContext().opts.babRecovery).toBeFalsy();
+		mocks.instantGlobals = {wgAdDriverBabRecCountries: ['OTHER_COUNTRY', 'ZZ']};
+		expect(getModule().getContext().opts.babRec).toBeFalsy();
 	});
 
 	it('showcase is enabled if the cookie is set', function () {

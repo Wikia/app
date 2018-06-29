@@ -29,7 +29,7 @@ class AdEngine2ApiController extends WikiaController {
 	}
 
 	public function getBTCode() {
-		$resourceLoader = new ResourceLoaderAdEngineBlockthroughCode();
+		$resourceLoader = new ResourceLoaderAdEngineBTCode();
 		$resourceLoaderContext = new ResourceLoaderContext( new ResourceLoader(), new FauxRequest() );
 
 		$this->response->setContentType( 'text/javascript' );

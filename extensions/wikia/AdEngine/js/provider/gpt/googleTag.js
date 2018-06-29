@@ -145,16 +145,6 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 		});
 	}
 
-	function updateTargetingForBlockedTraffic() {
-		win.googletag.pubads().getSlots().forEach(function (slot) {
-			// slot.clearTargeting described in docs is not applicable in this context
-			if (slot.targeting) {
-				slot.targeting.src = [];
-			}
-			slot.setTargeting('src', srcProvider.getRecoverySrc());
-		});
-	}
-
 	function addSlot(adElement) {
 		var defaultSizes = adElement.getDefaultSizes(),
 			sizeMap = adElement.getSizes(),
@@ -267,7 +257,6 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 	return {
 		addSlot: addSlot,
 		destroySlots: destroySlots,
-		updateTargetingForBlockedTraffic: updateTargetingForBlockedTraffic,
 		flush: flush,
 		init: init,
 		isInitialized: isInitialized,
