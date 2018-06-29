@@ -43,7 +43,7 @@ function wfOutputHandler( $s ) {
 	if ( $wgCityId ) {
 		$surrogateKey = Wikia::wikiSurrogateKey( $wgCityId );
 		if ( $surrogateKey ) {
-			// add mediawiki-specific key
+			// also add mediawiki-specific key
 			$surrogateKeys = [$surrogateKey, $surrogateKey . '-mediawiki'];
 			// attach existing surrogate keys
 			$headers = headers_list();
