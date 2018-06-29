@@ -9,7 +9,7 @@ define('ext.wikia.adEngine.wad.btRecLoader', [
 	'use strict';
 
 	var wikiaApiController = 'AdEngine2ApiController',
-		wikiaApiMethod = 'getBlockthroughCode',
+		wikiaApiMethod = 'getBTCode',
 		placementClass = 'bt-uid-tg',
 		placementsMap = {
 			TOP_LEADERBOARD: '5b33d3584c-188',
@@ -49,12 +49,12 @@ define('ext.wikia.adEngine.wad.btRecLoader', [
 	}
 
 	function init() {
-		markAdSlots();
+		markAdSlots(false);
 
 		if (adContext.get('opts.babRecovery')) {
 			doc.addEventListener('bab.blocking', injectScript);
 		} else {
-			injectScript(false);
+			injectScript();
 		}
 	}
 
