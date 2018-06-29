@@ -48,9 +48,8 @@ function wfOutputHandler( $s ) {
 			// attach existing surrogate keys
 			$headers = headers_list();
 			foreach ( $headers as $header ) {
-				if ( strtolower( substr( $header, 0, 14 ) ) == 'surrogate-key:' ) {
+				if ( strtolower( substr( $header, 0, 14 ) ) === 'surrogate-key:' ) {
 					$surrogateKeys[] = trim( substr( $header, 14 ) );
-					break;
 				}
 			}
 			$surrogateKey = implode( ' ', $surrogateKeys);
