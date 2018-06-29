@@ -186,8 +186,8 @@ class UsersAttributesApi
         if (strlen($apiKey) !== 0) {
             $headerParams['X-Wikia-UserId'] = $apiKey;
         }
-		// this endpoint requires internal header
-		$headerParams['X-Wikia-Internal-Request'] = true;
+        // this endpoint requires internal header
+        $headerParams['X-Wikia-Internal-Request'] = true;
         // make the API Call
         try {
             list($response, $statusCode, $httpHeader) = $this->apiClient->callApi(
@@ -598,7 +598,7 @@ class UsersAttributesApi
             $headerParams['X-Wikia-UserId'] = $apiKey;
         }
         // this endpoint requires internal header
-		$headerParams['X-Wikia-Internal-Request'] = true;
+        $headerParams['X-Wikia-Internal-Request'] = true;
         // make the API Call
         try {
             list($response, $statusCode, $httpHeader) = $this->apiClient->callApi(
@@ -694,8 +694,8 @@ class UsersAttributesApi
         if (strlen($apiKey) !== 0) {
             $headerParams['X-Wikia-UserId'] = $apiKey;
         }
-		// this endpoint requires internal header
-		$headerParams['X-Wikia-Internal-Request'] = true;
+        // this endpoint requires internal header
+        $headerParams['X-Wikia-Internal-Request'] = true;
         // make the API Call
         try {
             list($response, $statusCode, $httpHeader) = $this->apiClient->callApi(
