@@ -13,7 +13,7 @@
  * @return string
  */
 function wfOutputHandler( $s ) {
-	global $wgDisableOutputCompression, $wgValidateAllHtml, $wgMangleFlashPolicy;
+	global $wgDisableOutputCompression, $wgValidateAllHtml, $wgMangleFlashPolicy, $wgCityId;
 	if ( $wgMangleFlashPolicy ) {
 		$s = wfMangleFlashPolicy( $s );
 	}
@@ -38,6 +38,25 @@ function wfOutputHandler( $s ) {
 			wfDoContentLength( strlen( $s ) );
 		}
 	}
+
+	// Emit wiki surrogate key header
+	if ( $wgCityId ) {
+		$surrogateKey = Wikia::wikiSurrogateKey( $wgCityId );
+		if ( $surrogateKey ) {
+			$surrogateKeys = [$surrogateKey, $surrogateKey . '-mediawiki'];
+			$headers = headers_list();
+			foreach ( $headers as $header ) {
+				if ( substr( $header, 0, 14 ) == 'Surrogate-Key:' ) {
+					$surrogateKeys[] = trim( substr( $header, 14 ) );
+					break;
+				}
+			}
+			$surrogateKey = implode( ' ', $surrogateKeys);
+			header( 'Surrogate-Key: ' . $surrogateKey );
+			header( 'X-Surrogate-Key: ' . $surrogateKey );
+		}
+	}
+
 	return $s;
 }
 
