@@ -21,8 +21,8 @@ $wgAutoloadClasses['ResourceLoaderAdEngineBase'] = __DIR__ . '/ResourceLoaders/R
 $wgAutoloadClasses['ResourceLoaderScript'] = __DIR__ . '/ResourceLoaders/ResourceLoaderScript.php';
 $wgAutoloadClasses['AdEngine2ApiController'] = __DIR__ . '/AdEngine2ApiController.class.php';
 
-// Recovery
-$wgAutoloadClasses['ResourceLoaderAdEngineBlockthroughCode'] = __DIR__ . '/ResourceLoaders/ResourceLoaderAdEngineBlockthroughCode.php';
+// Rec
+$wgAutoloadClasses['ResourceLoaderAdEngineBTCode'] = __DIR__ . '/ResourceLoaders/ResourceLoaderAdEngineBTCode.php';
 $wgAutoloadClasses['ResourceLoaderAdEngineInstartLogicCode'] = __DIR__ . '/ResourceLoaders/ResourceLoaderAdEngineInstartLogicCode.php';
 
 // Hooks for AdEngine2

@@ -119,14 +119,15 @@ describe('ext.wikia.adEngine.slot.service.srcProvider', function () {
 		expect(getModule().get('abc')).not.toBe('premium');
 	});
 
-	it('returns by default rec as src value for recovery', function () {
-		expect(getModule().getRecoverySrc()).toBe('rec');
+	it('returns by default rec as src value for rec', function () {
+		expect(getModule().getRecSrc()).toBe('rec');
 	});
 
-	it('returns by test-rec to recovery & test wikis', function () {
+	it('returns by test-rec to rec & test wikis', function () {
 		mockContext({
 			'opts.isAdTestWiki': true
 		});
-		expect(getModule().getRecoverySrc()).toBe('test-rec');
+
+		expect(getModule().getRecSrc()).toBe('test-rec');
 	});
 });

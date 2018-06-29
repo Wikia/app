@@ -63,7 +63,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.indexExchange',[
 					siteId: 185056
 				}
 			},
-			recovery: {
+			rec: {
 				TOP_LEADERBOARD: {
 					sizes: [
 						[728, 90],

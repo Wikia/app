@@ -12,6 +12,7 @@ define('ext.wikia.adEngine.slot.service.srcProvider', [
 		if (adContext.get('opts.isAdTestWiki')) {
 			originalSrc = extra && extra.testSrc ? extra.testSrc : 'test-' + originalSrc;
 		}
+
 		return originalSrc;
 	}
 
@@ -21,18 +22,18 @@ define('ext.wikia.adEngine.slot.service.srcProvider', [
 		}
 
 		if (adContext.get('targeting.skin') === 'oasis' && babDetection.isBlocking()) {
-			originalSrc = getRecoverySrc();
+			return getRecSrc();
 		}
 
 		return addTestPrefixForTestWiki(originalSrc, extra);
 	}
 
-	function getRecoverySrc() {
+	function getRecSrc() {
 		return addTestPrefixForTestWiki('rec');
 	}
 
 	return {
 		get: get,
-		getRecoverySrc: getRecoverySrc
+		getRecSrc: getRecSrc
 	};
 });

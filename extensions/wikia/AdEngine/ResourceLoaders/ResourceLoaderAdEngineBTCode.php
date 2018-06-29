@@ -1,6 +1,6 @@
 <?php
 
-class ResourceLoaderAdEngineBlockthroughCode extends ResourceLoaderAdEngineBase {
+class ResourceLoaderAdEngineBTCode extends ResourceLoaderAdEngineBase {
 	// 24h: cache for HTTP downloaded code
 	const TTL_SCRIPTS = WikiaResponse::CACHE_STANDARD;
 	// 10m: cache for old file-loaded code
@@ -10,7 +10,7 @@ class ResourceLoaderAdEngineBlockthroughCode extends ResourceLoaderAdEngineBase 
 	const REQUEST_TIMEOUT = 30;
 
 	const REMOTE_FILE_URL = 'https://wikia-inc-com.videoplayerhub.com/galleryloader.js';
-	const LOCAL_FILE_PATH = __DIR__ . '/../resources/recovery/blockthrough.js';
+	const LOCAL_FILE_PATH = __DIR__ . '/../resources/rec/bt.js';
 
 	protected function getMemcKey() {
 		return wfSharedMemcKey( 'adengine', __METHOD__, static::CACHE_BUSTER );
