@@ -81,8 +81,8 @@ class WikiaRobots {
 		'/fandom?p=',
 
 		// AdEngine recovery api
-		'/wikia.php?controller=AdEngine2ApiController&method=getBlockthroughCode',
-		'/wikia.php?controller=AdEngine2ApiController&method=getInstartLogicCode'
+		'/wikia.php?controller=AdEngine2ApiController&method=getBTCode',
+		'/wikia.php?controller=AdEngine2ApiController&method=getILCode'
 	];
 
 	/**
