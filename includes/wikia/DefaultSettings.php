@@ -1694,4 +1694,8 @@ $wgAutoloadClasses['AuditLog'] = "$IP/includes/wikia/AuditLog.class.php";
 $wgHooks['SetupAfterCache'][] = 'AuditLog::init';
 
 // PLATFORM-3543: list of prod wikis with surrogate keys experiment enabled
-$wgSurrogateKeysProdWikis = [831];
+// to be removed after we make sure it works fine
+$wgSurrogateKeysProdWikis = [
+	1721212,    // mech-internal-https-test
+	1558829     // rikitiki
+];

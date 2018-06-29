@@ -52,7 +52,7 @@ function wfOutputHandler( $s ) {
 					$surrogateKeys[] = trim( substr( $header, 14 ) );
 				}
 			}
-			$surrogateKey = implode( ' ', $surrogateKeys);
+			$surrogateKey = implode( ' ', $surrogateKeys );
 			header( 'Surrogate-Key: ' . $surrogateKey );
 			header( 'X-Surrogate-Key: ' . $surrogateKey );
 		}
