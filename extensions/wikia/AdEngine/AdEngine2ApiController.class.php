@@ -28,7 +28,7 @@ class AdEngine2ApiController extends WikiaController {
 		$this->response->setCacheValidity( WikiaResponse::CACHE_LONG );
 	}
 
-	public function getBlockthroughCode() {
+	public function getBTCode() {
 		$resourceLoader = new ResourceLoaderAdEngineBlockthroughCode();
 		$resourceLoaderContext = new ResourceLoaderContext( new ResourceLoader(), new FauxRequest() );
 

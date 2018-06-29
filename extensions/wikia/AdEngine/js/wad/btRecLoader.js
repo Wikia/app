@@ -9,7 +9,7 @@ define('ext.wikia.adEngine.wad.btRecLoader', [
 	'use strict';
 
 	var wikiaApiController = 'AdEngine2ApiController',
-		wikiaApiMethod = 'getBlockthroughCode',
+		wikiaApiMethod = 'getBTCode',
 		placementClass = 'bt-uid-tg',
 		placementsMap = {
 			TOP_LEADERBOARD: '5b33d3584c-188',
