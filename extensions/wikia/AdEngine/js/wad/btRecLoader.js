@@ -49,12 +49,12 @@ define('ext.wikia.adEngine.wad.btRecLoader', [
 	}
 
 	function init() {
-		markAdSlots();
+		markAdSlots(false);
 
 		if (adContext.get('opts.babRecovery')) {
 			doc.addEventListener('bab.blocking', injectScript);
 		} else {
-			injectScript(false);
+			injectScript();
 		}
 	}
 

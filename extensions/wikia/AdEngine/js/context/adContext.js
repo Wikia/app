@@ -70,7 +70,8 @@ define('ext.wikia.adEngine.adContext', [
 			isEnabled('wgAdDriverWadBTCountries');
 
 		// IL rec
-		context.opts.wadIL = serviceCanBeEnabled && isEnabled('wgAdDriverWadILCountries');
+		context.opts.wadIL = serviceCanBeEnabled && context.targeting.skin === 'oasis' &&
+			isEnabled('wgAdDriverWadILCountries');
 	}
 
 	function isEnabled(name) {

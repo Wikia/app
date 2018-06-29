@@ -1,25 +1,27 @@
 /*global define*/
 define('ext.wikia.adEngine.wad.ilRecLoader', [
 	'ext.wikia.adEngine.adContext',
+	'ext.wikia.adEngine.utils.scriptLoader',
 	'wikia.document',
-], function (adContext, doc) {
+	'wikia.window'
+], function (adContext, scriptLoader, doc, win) {
 	'use strict';
 
-	var wikiaScriptToken = 'e7900721291bb9c31803e60f5441ca1c075df63f';
+	var wikiaApiController = 'AdEngine2ApiController',
+		wikiaApiMethod = 'getInstartLogicCode';
 
 	function injectScript() {
-		var scr = doc.createElement('script');
+		var url = win.wgCdnApiUrl + '/wikia.php?controller=' + wikiaApiController + '&method=' + wikiaApiMethod;
 
-		scr.type = 'text/javascript';
-		scr.src = 'https://www.nanovisor.io/@p1/client/abd/instart.js?token=' + wikiaScriptToken;
-
-		doc.getElementsByTagName('head')[0].appendChild(scr);
+		scriptLoader.loadScript(url, {
+			isAsync: false,
+			node: doc.head.lastChild
+		});
 	}
 
 	function init() {
 		if (adContext.get('opts.babRecovery')) {
-			// ToDo: run on event
-			injectScript();
+			doc.addEventListener('bab.blocking', injectScript);
 		} else {
 			injectScript();
 		}

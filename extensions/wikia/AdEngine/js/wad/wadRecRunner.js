@@ -12,12 +12,18 @@ define('ext.wikia.adEngine.wad.wadRecRunner', [
 	function init() {
 		log('WAD recovery module initialized', 'debug', logGroup);
 
-		if (adContext.get('opts.wadBT')) {
-			btRecLoader.init();
+		var recEnabled = false;
+
+		if (!recEnabled && adContext.get('opts.wadIL')) {
+			recEnabled = true;
+
+			iltRecLoader.init();
 		}
 
-		if (adContext.get('opts.wadIL')) {
-			iltRecLoader.init();
+		if (!recEnabled && adContext.get('opts.wadBT')) {
+			recEnabled = true;
+
+			btRecLoader.init();
 		}
 	}
 
