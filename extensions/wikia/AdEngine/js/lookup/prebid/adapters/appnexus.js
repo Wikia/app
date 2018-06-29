@@ -3,9 +3,8 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.appnexus',[
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.context.slotsContext',
 	'ext.wikia.adEngine.lookup.prebid.adapters.appnexusPlacements',
-	'ext.wikia.adEngine.wad.babDetection',
 	'wikia.log'
-], function (adContext, slotsContext, appnexusPlacements, babDetection, log) {
+], function (adContext, slotsContext, appnexusPlacements, log) {
 	'use strict';
 
 	var bidderName = 'appnexus',
@@ -63,11 +62,11 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.appnexus',[
 		};
 
 	function isEnabled() {
-		return adContext.get('bidders.appnexus') && !babDetection.isBlocking();
+		return adContext.get('bidders.appnexus');
 	}
 
-	function prepareAdUnit(slotName, config, skin) {
-		var placementId = appnexusPlacements.getPlacement(skin, config.position);
+	function prepareAdUnit(slotName, config, skin, isRecovering) {
+		var placementId = appnexusPlacements.getPlacement(skin, config.position, isRecovering);
 
 		if (!placementId) {
 			return;

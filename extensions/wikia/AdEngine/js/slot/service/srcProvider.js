@@ -20,7 +20,7 @@ define('ext.wikia.adEngine.slot.service.srcProvider', [
 			originalSrc = 'premium';
 		}
 
-		if (babDetection.isBlocking()) {
+		if (adContext.get('targeting.skin') === 'oasis' && babDetection.isBlocking()) {
 			originalSrc = getRecoverySrc();
 		}
 

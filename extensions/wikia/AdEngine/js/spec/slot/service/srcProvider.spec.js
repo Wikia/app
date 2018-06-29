@@ -12,7 +12,7 @@ describe('ext.wikia.adEngine.slot.service.srcProvider', function () {
 			isBlocking: function () {
 				return false;
 			}
-		},
+		}
 	};
 
 	function getModule() {
@@ -65,11 +65,53 @@ describe('ext.wikia.adEngine.slot.service.srcProvider', function () {
 		expect(getModule().get('xyz')).toBe('test-xyz');
 	});
 
+	it('doesn\'t change src to rec if ad is not recoverable', function () {
+		mockContext({
+			'targeting.skin': 'oasis'
+		});
+
+		spyOn(mocks.babDetection, 'isBlocking').and.returnValue(false);
+
+		expect(getModule().get('asd')).toEqual('asd');
+	});
+
+	it('changes src to rec if ad is recoverable', function () {
+		mockContext({
+			'targeting.skin': 'oasis'
+		});
+
+		spyOn(mocks.babDetection, 'isBlocking').and.returnValue(true);
+
+		expect(getModule().get('asd')).toBe('rec');
+	});
+
 	it('sets src=premium if article is premium', function () {
 		mockContext({'opts.premiumOnly': true});
 
 		expect(getModule().get('asd', {})).toBe('premium');
 
+	});
+
+	it('change src to rec if on premium pages', function () {
+		mockContext({
+			'targeting.skin': 'oasis',
+			'opts.premiumOnly': true
+		});
+
+		spyOn(mocks.babDetection, 'isBlocking').and.returnValue(true);
+
+		expect(getModule().get('asd')).toBe('rec');
+	});
+
+	it('overrides src=rec for test wiki', function () {
+		mockContext({
+			'targeting.skin': 'oasis',
+			'opts.isAdTestWiki': true
+		});
+
+		spyOn(mocks.babDetection, 'isBlocking').and.returnValue(true);
+
+		expect(getModule().get('abc')).toBe('test-rec');
 	});
 
 	it('doesn\'t set src=premium if article isn\'t premium', function () {

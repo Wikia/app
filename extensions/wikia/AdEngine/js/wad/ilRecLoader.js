@@ -8,7 +8,7 @@ define('ext.wikia.adEngine.wad.ilRecLoader', [
 	'use strict';
 
 	var wikiaApiController = 'AdEngine2ApiController',
-		wikiaApiMethod = 'getInstartLogicCode';
+		wikiaApiMethod = 'getILCode';
 
 	function injectScript() {
 		var url = win.wgCdnApiUrl + '/wikia.php?controller=' + wikiaApiController + '&method=' + wikiaApiMethod;

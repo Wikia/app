@@ -1,9 +1,8 @@
 /*global define*/
 define('ext.wikia.adEngine.lookup.prebid.adapters.indexExchange',[
 	'ext.wikia.adEngine.adContext',
-	'ext.wikia.adEngine.context.slotsContext',
-	'ext.wikia.adEngine.wad.babDetection'
-], function (adContext, slotsContext, babDetection) {
+	'ext.wikia.adEngine.context.slotsContext'
+], function (adContext, slotsContext) {
 	'use strict';
 
 	var bidderName = 'indexExchange',
@@ -98,11 +97,13 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.indexExchange',[
 		};
 
 	function isEnabled() {
-		return adContext.get('bidders.indexExchange') && !babDetection.isBlocking();
+		return adContext.get('bidders.indexExchange')
 	}
 
 	function getSlots(skin) {
-		return slotsContext.filterSlotMap(slots[skin]);
+		var key = isRecovering ? 'recovery' : skin;
+
+		return slotsContext.filterSlotMap(slots[key]);
 	}
 
 	function prepareAdUnit(slotName, config) {
