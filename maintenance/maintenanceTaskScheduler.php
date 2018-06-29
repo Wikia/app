@@ -34,7 +34,7 @@ class MaintenanceTaskScheduler extends Maintenance {
 		// TODO: Handle 300k wikis
 		$this->getWikis( $idsParam, $active, $cluster )
 			->runLoop( $db, function ( $data, $row ) {
-				$wikiIds[] = $row->city_id;
+				$this->wikiIds[] = $row->city_id;
 			} );
 
 		$this->scheduleTask($this->wikiIds, $script);
