@@ -1,6 +1,6 @@
 <?php
 
-class ResourceLoaderAdEngineInstartLogicCode extends ResourceLoaderAdEngineBase {
+class ResourceLoaderAdEngineILCode extends ResourceLoaderAdEngineBase {
 	// 24h: cache for HTTP downloaded code
 	const TTL_SCRIPTS = WikiaResponse::CACHE_STANDARD;
 	// 10m: cache for old file-loaded code
@@ -10,7 +10,7 @@ class ResourceLoaderAdEngineInstartLogicCode extends ResourceLoaderAdEngineBase 
 	const REQUEST_TIMEOUT = 30;
 
 	const REMOTE_FILE_URL = 'https://www.nanovisor.io/@p1/client/abd/instart.js?token=e7900721291bb9c31803e60f5441ca1c075df63f';
-	const LOCAL_FILE_PATH = __DIR__ . '/../resources/recovery/instartlogic.js';
+	const LOCAL_FILE_PATH = __DIR__ . '/../resources/rec/il.js';
 
 	protected function getMemcKey() {
 		return wfSharedMemcKey( 'adengine', __METHOD__, static::CACHE_BUSTER );

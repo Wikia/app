@@ -58,7 +58,7 @@ define('ext.wikia.adEngine.adContext', [
 		context.opts.babDetectionMobile = !noExternals && isBabDetectionMobileEnabled();
 	}
 
-	function isInstartLogicSupportedBrowser() {
+	function isILSupportedBrowser() {
 		return browserDetect.isChrome() && browserDetect.getBrowserVersion() > 45;
 	}
 
@@ -71,11 +71,11 @@ define('ext.wikia.adEngine.adContext', [
 
 		// BT rec
 		context.opts.wadBT = serviceCanBeEnabled && context.targeting.skin === 'oasis' &&
-			isInstartLogicSupportedBrowser() && isEnabled('wgAdDriverWadBTCountries');
+			isEnabled('wgAdDriverWadBTCountries');
 
 		// IL rec
 		context.opts.wadIL = serviceCanBeEnabled && context.targeting.skin === 'oasis' &&
-			isEnabled('wgAdDriverWadILCountries');
+			!w.wgUserName && isILSupportedBrowser() && isEnabled('wgAdDriverWadILCountries');
 	}
 
 	function isEnabled(name) {

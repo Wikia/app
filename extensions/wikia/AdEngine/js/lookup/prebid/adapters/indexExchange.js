@@ -100,8 +100,8 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.indexExchange',[
 		return adContext.get('bidders.indexExchange')
 	}
 
-	function getSlots(skin) {
-		var key = isRecovering ? 'recovery' : skin;
+	function getSlots(skin, isRecovering) {
+		var key = isRecovering ? 'rec' : skin;
 
 		return slotsContext.filterSlotMap(slots[key]);
 	}

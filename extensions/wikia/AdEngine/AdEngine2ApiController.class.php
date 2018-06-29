@@ -46,7 +46,7 @@ class AdEngine2ApiController extends WikiaController {
 		$this->response->setCacheValidity( WikiaResponse::CACHE_LONG );
 
 		if ($wgUser->isAnon()) {
-			$resourceLoader = new ResourceLoaderAdEngineInstartLogicCode();
+			$resourceLoader = new ResourceLoaderAdEngineILCode();
 			$resourceLoaderContext = new ResourceLoaderContext( new ResourceLoader(), new FauxRequest() );
 			$this->response->setBody( $resourceLoader->getScript( $resourceLoaderContext ) );
 		} else {
