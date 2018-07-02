@@ -13,7 +13,11 @@ The list of rules that are used to mark wikis for closure can be found in `maint
 * `contentpages`: the are at most 4 content pages (i.e. non-redirects in NS_MAIN)
 * `pvlast3month`: the wikis received at most 39 page views in the last three months
 
-All rules need to be meet in order to mark a wiki for deletion. The deletion itself is handled by [`Close/maintenance.php` script](https://github.com/Wikia/app/tree/dev/extensions/wikia/WikiFactory/Close).
+All rules need to be meet in order to mark a wiki for deletion. The deletion itself is handled by [`Close/maintenance.php` script](https://github.com/Wikia/app/tree/dev/extensions/wikia/WikiFactory/Close) (after 30 days).
+
+## How is wiki marked?
+
+`city_public` entry in `wikicities.city_list` table is set to `0` for a wiki and `city_last_timestamp` is set to the current date.
 
 ## How it's run?
 
