@@ -44,6 +44,7 @@ class WikiFactory {
 	# close Wiki
 	const HIDE_ACTION 			= -1;
 	const CLOSE_ACTION 			= 0;
+	const PUBLIC_WIKI			= 1;
 	static public $DUMP_SERVERS = [
 		'c1' => 'db2',
 		'c2' => 'db-sb2'
@@ -58,10 +59,10 @@ class WikiFactory {
 	const FLAG_REDIRECT              = 32;  // this wiki is a redirect - do not remove
 	const FLAG_PROTECTED             = 512; //wiki cannot be closed
 
-	const db            = "wikicities"; // @see $wgExternalSharedDB
-	const DOMAINCACHE   = "/tmp/wikifactory/domains.ser";
-	const CACHEDIR      = "/tmp/wikifactory/wikis";
-	const WIKIA_TOP_DOMAIN = '.wikia.com';
+	const db            	= "wikicities"; // @see $wgExternalSharedDB
+	const DOMAINCACHE   	= "/tmp/wikifactory/domains.ser";
+	const CACHEDIR      	= "/tmp/wikifactory/wikis";
+	const WIKIA_TOP_DOMAIN 	= '.wikia.com';
 
 	// Community Central's city_id in wikicities.city_list.
 	const COMMUNITY_CENTRAL = 177;
