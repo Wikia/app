@@ -26,16 +26,25 @@ class CloseSingleWiki extends Maintenance {
 		parent::__construct();
 		$this->mDescription = 'Closes single wiki';
 		$this->addOption( 'delay', 'Set time before deletion starts (in seconds)', false, true, 'd' );
+		$this->addOption( 'cluster', 'Which cluster to operate on', false, true, 'c');
 	}
 
 	public function execute() {
 		global $wgUser, $wgCityId;
 
 		$this->delay = $this->getOption( 'delay', 5 );
+		$cluster   = isset( $this->mOptions[ "cluster" ] ) ? $this->mOptions[ "cluster" ] : false; // eg. c6
 
 		$wgUser = User::newFromName( Wikia::BOT_USER ); // Make changes as FANDOMbot
 
 		$this->output( 'Closing wiki with id: ' . $wgCityId );
+		$where = array(
+			"city_id" => $wgCityId,
+		);
+
+		if ($cluster !== false) {
+			$where[ "city_cluster" ] = $cluster;
+		}
 
 		if( $this->delay > 0 ) {
 			$this->output( sprintf( 'Will start deleting in %d seconds', $this->delay ) );
@@ -46,7 +55,7 @@ class CloseSingleWiki extends Maintenance {
 		$sth = $dbr->select(
 			[ "city_list" ],
 			[ "city_id", "city_flags", "city_dbname", "city_cluster", "city_url", "city_public", "city_last_timestamp" ],
-			[ "city_id" => $wgCityId ],
+			$where,
 			__METHOD__,
 			[ "LIMIT" => 1 ]
 		);
