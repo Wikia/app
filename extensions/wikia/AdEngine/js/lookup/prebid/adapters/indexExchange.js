@@ -97,7 +97,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.indexExchange',[
 		};
 
 	function isEnabled() {
-		return adContext.get('bidders.indexExchange')
+		return adContext.get('bidders.indexExchange') && (!babDetection.isBlocking() || adContext.get('opts.wadIL'));
 	}
 
 	function getSlots(skin, isRecovering) {

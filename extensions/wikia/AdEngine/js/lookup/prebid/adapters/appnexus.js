@@ -62,7 +62,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.appnexus',[
 		};
 
 	function isEnabled() {
-		return adContext.get('bidders.appnexus');
+		return adContext.get('bidders.appnexus') && (!babDetection.isBlocking() || adContext.get('opts.wadIL'));
 	}
 
 	function prepareAdUnit(slotName, config, skin, isRecovering) {
