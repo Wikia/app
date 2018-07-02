@@ -33,17 +33,17 @@ class CloseSingleWiki extends Maintenance {
 		global $wgUser, $wgCityId;
 
 		$this->delay = $this->getOption( 'delay', 5 );
-		$cluster   = isset( $this->mOptions[ "cluster" ] ) ? $this->mOptions[ "cluster" ] : false; // eg. c6
+		$cluster   = isset( $this->mOptions[ 'cluster' ] ) ? $this->mOptions[ 'cluster' ] : false; // eg. c6
 
 		$wgUser = User::newFromName( Wikia::BOT_USER ); // Make changes as FANDOMbot
 
 		$this->output( 'Closing wiki with id: ' . $wgCityId );
 		$where = array(
-			"city_id" => $wgCityId,
+			'city_id' => $wgCityId,
 		);
 
 		if ($cluster !== false) {
-			$where[ "city_cluster" ] = $cluster;
+			$where[ 'city_cluster' ] = $cluster;
 		}
 
 		if( $this->delay > 0 ) {
@@ -52,47 +52,45 @@ class CloseSingleWiki extends Maintenance {
 		}
 
 		$dbr = WikiFactory::db( DB_SLAVE );
-		$sth = $dbr->select(
-			[ "city_list" ],
-			[ "city_id", "city_flags", "city_dbname", "city_cluster", "city_url", "city_public", "city_last_timestamp" ],
+		$row = $dbr->selectRow(
+			[ 'city_list' ],
+			[ 'city_id', 'city_flags', 'city_dbname', 'city_cluster', 'city_url', 'city_public', 'city_last_timestamp' ],
 			$where,
 			__METHOD__,
-			[ "LIMIT" => 1 ]
+			[ 'LIMIT' => 1 ]
 		);
 
-		if( $sth->numRows() != 1 ) {
-			$this->output( sprintf( "Could not fetch data from `city_list`, num rows: %d", $sth->numRows() ) );
+		if( $row->numRows() != 1 ) {
+			$this->output( sprintf( 'Could not fetch data from `city_list`, num rows: %d', $row->numRows() ) );
 			return 1;
 		}
 
-		$row = $dbr->fetchObject( $sth );
-
 		$this->removeBucket( $wgCityId );
 
-		$this->output( "Cleaning the shared database" );
+		$this->output( 'Cleaning the shared database' );
 
 		if( !WikiFactory::isInArchive( $wgCityId ) ) {
-			$this->output( "Moving to archive" );
+			$this->output( 'Moving to archive' );
 			WikiFactory::copyToArchive( $wgCityId );
 		}
 
 		$dbw = WikiFactory::db( DB_MASTER );
 		$dbw->delete(
-			"city_list",
+			'city_list',
 			array(
-				"city_id" => $wgCityId
+				'city_id' => $wgCityId
 			),
 			__METHOD__
 		);
 
 		$dbw->delete(
-			"city_variables",
+			'city_variables',
 			array(
-				"cv_city_id" => $wgCityId
+				'cv_city_id' => $wgCityId
 			),
 			__METHOD__
 		);
-		$this->output( sprintf( "%d removed from WikiFactory tables", $wgCityId ) );
+		$this->output( sprintf( '%d removed from WikiFactory tables', $wgCityId ) );
 
 		$this->cleanupSharedData( intval( $wgCityId ) );
 
@@ -100,7 +98,7 @@ class CloseSingleWiki extends Maintenance {
 		 * drop database, get db handler for proper cluster
 		 */
 		global $wgDBadminuser, $wgDBadminpassword;
-		$centralDB = empty( $cluster) ? "wikicities" : "wikicities_{$cluster}";
+		$centralDB = empty( $cluster) ? 'wikicities' : "wikicities_{$cluster}";
 
 		/**
 		 * get connection but actually we only need info about host
@@ -137,7 +135,7 @@ class CloseSingleWiki extends Maintenance {
 		 */
 		$indexer = new Wikia\Search\Indexer();
 		$indexer->deleteWikiDocs( $wgCityId );
-		$this->output( "Wiki documents removed from index" );
+		$this->output( 'Wiki documents removed from index' );
 
 		/**
 		 * let other extensions remove entries for closed wiki
@@ -150,7 +148,7 @@ class CloseSingleWiki extends Maintenance {
 				'exception' => $ex,
 				'wiki_id' => (int) $wgCityId
 			] );
-			$this->output( "Error running WikiFactoryDoCloseWiki hook: " . $ex->getMessage() );
+			$this->output( 'Error running WikiFactoryDoCloseWiki hook: ' . $ex->getMessage() );
 			return 2;
 		}
 
@@ -166,7 +164,7 @@ class CloseSingleWiki extends Maintenance {
 	private function removeBucket( int $cityId ) {
 		try {
 			$swift = \Wikia\SwiftStorage::newFromWiki( $cityId );
-			$this->output( sprintf( "Removing DFS bucket /%s%s", $swift->getContainerName(), $swift->getPathPrefix() ) );
+			$this->output( sprintf( 'Removing DFS bucket /%s%s', $swift->getContainerName(), $swift->getPathPrefix() ) );
 
 			// get the list of all objects in wiki images sub-bucket
 			$path = ltrim( $swift->getPathPrefix(), '/' );
@@ -221,7 +219,7 @@ class CloseSingleWiki extends Maintenance {
 	private function doTableCleanup( DatabaseBase $db, $table, $city_id, $wiki_id_column = 'wiki_id' ) {
 		$db->delete( $table, [ $wiki_id_column => $city_id ], __METHOD__ );
 
-		$this->output( sprintf( "#%d: removed %d rows from %s.%s table", $city_id, $db->affectedRows(), $db->getDBname(), $table ) );
+		$this->output( sprintf( '#%d: removed %d rows from %s.%s table', $city_id, $db->affectedRows(), $db->getDBname(), $table ) );
 
 		// throttle delete queries
 		if ( $db->affectedRows() > 0 ) {
@@ -236,7 +234,7 @@ class CloseSingleWiki extends Maintenance {
 		catch ( \Swagger\Client\ApiException $e ) {
 			WikiaLogger::instance()
 				->error( "{$cityId} Failed to hard delete Discussion site: {$e->getMessage()} \n" );
-			$this->output( "Failed to delete Discussion: " . $e->getMessage() );
+			$this->output( 'Failed to delete Discussion: ' . $e->getMessage() );
 		}
 	}
 
@@ -260,5 +258,5 @@ class CloseSingleWiki extends Maintenance {
 	}
 }
 
-$maintClass = "CloseSingleWiki";
+$maintClass = 'CloseSingleWiki';
 require_once( RUN_MAINTENANCE_IF_MAIN );
