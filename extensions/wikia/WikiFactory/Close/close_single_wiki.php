@@ -62,7 +62,7 @@ class CloseSingleWiki extends Maintenance {
 
 		if( $row == false ) {
 			$this->output( sprintf( 'Could not fetch data from `city_list`' ) );
-			return 1;
+			return;
 		}
 
 		$this->removeBucket( $wgCityId );
@@ -149,7 +149,7 @@ class CloseSingleWiki extends Maintenance {
 				'wiki_id' => (int) $wgCityId
 			] );
 			$this->output( 'Error running WikiFactoryDoCloseWiki hook: ' . $ex->getMessage() );
-			return 2;
+			return;
 		}
 
 		$this->removeDiscussions( $wgCityId );
