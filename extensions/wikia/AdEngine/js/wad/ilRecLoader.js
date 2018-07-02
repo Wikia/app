@@ -20,11 +20,7 @@ define('ext.wikia.adEngine.wad.ilRecLoader', [
 	}
 
 	function init() {
-		if (adContext.get('opts.babRec')) {
-			doc.addEventListener('bab.blocking', injectScript);
-		} else {
-			injectScript();
-		}
+		doc.addEventListener('bab.blocking', injectScript);
 	}
 
 	return {
