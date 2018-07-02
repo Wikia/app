@@ -66,9 +66,6 @@ define('ext.wikia.adEngine.adContext', [
 		// showAds is undefined by default
 		var serviceCanBeEnabled = !noExternals && context.opts.showAds !== false && !areDelayServicesBlocked();
 
-		// BAB proxy
-		context.opts.babRec = serviceCanBeEnabled && isEnabled('wgAdDriverBabRecCountries');
-
 		// BT rec
 		context.opts.wadBT = serviceCanBeEnabled && context.targeting.skin === 'oasis' &&
 			isEnabled('wgAdDriverWadBTCountries');
