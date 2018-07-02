@@ -10,13 +10,19 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.indexExchange', function () 
 			filterSlotMap: function (map) {
 				return map;
 			}
+		},
+		babDetection: {
+			isBlocking: function () {
+				return false;
+			}
 		}
 	};
 
 	function getIndexExchange() {
 		return modules['ext.wikia.adEngine.lookup.prebid.adapters.indexExchange'](
 			mocks.adContext,
-			mocks.slotsContext
+			mocks.slotsContext,
+			mocks.babDetection
 		);
 	}
 
