@@ -19,6 +19,7 @@ describe('ext.wikia.adEngine.wrappers.prebid', function () {
 				}
 			],
 			win: {
+				loadPrebid: noop,
 				pbjs: {
 					que: {
 						push: noop
