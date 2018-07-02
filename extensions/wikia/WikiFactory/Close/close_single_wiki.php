@@ -187,9 +187,9 @@ class CloseSingleWiki extends Maintenance {
 	/**
 	 * Clean up the shared data for a given wiki ID
 	 *
-	 * @param int $city_id
+	 * @param int $cityId
 	 */
-	private function cleanupSharedData( $city_id ) {
+	private function cleanupSharedData( $cityId ) {
 		global $wgExternalDatawareDB, $wgSpecialsDB;
 		$dataware = wfGetDB( DB_MASTER, [], $wgExternalDatawareDB );
 		$specials = wfGetDB( DB_MASTER, [], $wgSpecialsDB );
@@ -197,10 +197,10 @@ class CloseSingleWiki extends Maintenance {
 		/**
 		 * remove records from stats-related tables
 		 */
-		$this->doTableCleanup( $dataware, 'pages',              $city_id, 'page_wikia_id' );
-		$this->doTableCleanup( $specials, 'events_local_users', $city_id );
+		$this->doTableCleanup( $dataware, 'pages',              $cityId, 'page_wikia_id' );
+		$this->doTableCleanup( $specials, 'events_local_users', $cityId );
 
-		Hooks::run( 'CloseWikiPurgeSharedData', [ $city_id ] );
+		Hooks::run( 'CloseWikiPurgeSharedData', [ $cityId ] );
 	}
 
 	/**
@@ -210,16 +210,16 @@ class CloseSingleWiki extends Maintenance {
 	 *
 	 * @param DatabaseBase $db database handler
 	 * @param string $table name of table to clean up
-	 * @param int $city_id ID of wiki to remove from the table
-	 * @param string $wiki_id_column table column name to use when querying for wiki ID (defaults to "wiki_id")
+	 * @param int $cityId ID of wiki to remove from the table
+	 * @param string $wikiIdColumn table column name to use when querying for wiki ID (defaults to "wiki_id")
 	 *
 	 * @throws DBUnexpectedError
 	 * @throws MWException
 	 */
-	private function doTableCleanup( DatabaseBase $db, $table, $city_id, $wiki_id_column = 'wiki_id' ) {
-		$db->delete( $table, [ $wiki_id_column => $city_id ], __METHOD__ );
+	private function doTableCleanup( DatabaseBase $db, $table, $cityId, $wikiIdColumn = 'wiki_id' ) {
+		$db->delete( $table, [$wikiIdColumn => $cityId ], __METHOD__ );
 
-		$this->output( sprintf( '#%d: removed %d rows from %s.%s table', $city_id, $db->affectedRows(), $db->getDBname(), $table ) );
+		$this->output( sprintf( '#%d: removed %d rows from %s.%s table', $cityId, $db->affectedRows(), $db->getDBname(), $table ) );
 
 		// throttle delete queries
 		if ( $db->affectedRows() > 0 ) {
