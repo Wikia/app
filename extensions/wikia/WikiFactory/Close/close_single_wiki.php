@@ -8,7 +8,7 @@
 ini_set( 'display_errors', 'stderr' );
 ini_set( 'error_reporting', E_ALL ^ E_NOTICE );
 
-require_once( dirname( __FILE__ ) . '/../../../../maintenance/Maintenance.php' );
+require_once __DIR__ . '/../../../../maintenance/Maintenance.php';
 
 use Swagger\Client\Discussion\Api\SitesApi;
 use Wikia\Factory\ServiceFactory;
@@ -38,11 +38,11 @@ class CloseSingleWiki extends Maintenance {
 		$wgUser = User::newFromName( Wikia::BOT_USER ); // Make changes as FANDOMbot
 
 		$this->output( 'Closing wiki with id: ' . $wgCityId );
-		$where = array(
+		$where = [
 			'city_id' => $wgCityId,
-		);
+		];
 
-		if ($cluster !== false) {
+		if ( $cluster !== false ) {
 			$where[ 'city_cluster' ] = $cluster;
 		}
 
@@ -77,17 +77,17 @@ class CloseSingleWiki extends Maintenance {
 		$dbw = WikiFactory::db( DB_MASTER );
 		$dbw->delete(
 			'city_list',
-			array(
+			[
 				'city_id' => $wgCityId
-			),
+			],
 			__METHOD__
 		);
 
 		$dbw->delete(
 			'city_variables',
-			array(
+			[
 				'cv_city_id' => $wgCityId
-			),
+			],
 			__METHOD__
 		);
 		$this->output( sprintf( '%d removed from WikiFactory tables', $wgCityId ) );
@@ -103,7 +103,7 @@ class CloseSingleWiki extends Maintenance {
 		/**
 		 * get connection but actually we only need info about host
 		 */
-		$local = wfGetDB( DB_MASTER, array(), $centralDB );
+		$local = wfGetDB( DB_MASTER, [], $centralDB );
 		$server = $local->getLBInfo( 'host' );
 
 		try {
@@ -259,4 +259,4 @@ class CloseSingleWiki extends Maintenance {
 }
 
 $maintClass = 'CloseSingleWiki';
-require_once( RUN_MAINTENANCE_IF_MAIN );
+require_once RUN_MAINTENANCE_IF_MAIN;
