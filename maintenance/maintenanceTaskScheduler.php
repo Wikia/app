@@ -67,7 +67,7 @@ class MaintenanceTaskScheduler extends Maintenance {
 	private function scheduleTask( array $wikiIds, string $script ) {
 		$task = new \Wikia\Tasks\Tasks\MaintenanceTask();
 		$task->wikiId( $wikiIds );
-		$task->call( "run", $script, $this->mOptions, $this->mArgs );
+		$task->call( "run", $script );
 
 		$task->queue();
 

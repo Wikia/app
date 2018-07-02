@@ -63,7 +63,6 @@ if ( isset( $_SERVER['MW_COMPILED'] ) ) {
 	# Get the MWInit class
 	require_once( "$IP/includes/Init.php" );
 	require_once( "$IP/includes/AutoLoader.php" );
-	require_once( "$IP/maintenance/maintenanceClasses.php" );
 }
 
 // Some other requires
