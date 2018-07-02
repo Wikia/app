@@ -2964,6 +2964,7 @@ return array(
     'Wikia\\Search\\Utilities' => $baseDir . '/extensions/wikia/Search/classes/Utilities.php',
     'Wikia\\Service\\Constants' => $baseDir . '/lib/Wikia/src/Service/Constants.php',
     'Wikia\\Service\\ForbiddenException' => $baseDir . '/lib/Wikia/src/Service/ForbiddenException.php',
+    'Wikia\\Service\\Gateway\\InternalIngressUrlProvider' => $baseDir . '/lib/Wikia/src/Service/Gateway/InternalIngressUrlProvider.php',
     'Wikia\\Service\\Gateway\\KubernetesExternalUrlProvider' => $baseDir . '/lib/Wikia/src/Service/Gateway/KubernetesExternalUrlProvider.php',
     'Wikia\\Service\\Gateway\\KubernetesUrlProvider' => $baseDir . '/lib/Wikia/src/Service/Gateway/KubernetesUrlProvider.php',
     'Wikia\\Service\\Gateway\\StaticUrlProvider' => $baseDir . '/lib/Wikia/src/Service/Gateway/StaticUrlProvider.php',
