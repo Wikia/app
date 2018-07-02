@@ -97,6 +97,8 @@ RUN echo 'deb http://ftp.debian.org/debian jessie-backports main' > /etc/apt/sou
     pcntl \
     # needed by IcuCollation class
     intl \
+    # required by Exif.php class to render file's metdata
+    exif \
     # remove no longer needed dependencies
     && apt-get remove -y \
         automake \
@@ -111,6 +113,6 @@ ADD ./php.ini /usr/local/etc/php/php.ini
 ENV WIKIA_DOCROOT=/usr/wikia/slot1/current/src
 ENV WIKIA_CONFIG_ROOT=/usr/wikia/slot1/current/config
 
-ENV WIKIA_BASE_IMAGE_HASH=f1ce193
+ENV WIKIA_BASE_IMAGE_HASH=27f50ce
 
 WORKDIR /usr/wikia/slot1/current/src
