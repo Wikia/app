@@ -366,22 +366,6 @@ describe('AdContext', function () {
 		expect(getModule().getContext().opts.babDetectionMobile).toBeFalsy();
 	});
 
-	it('enable rec behind BlockAdBlock detection for current country on whitelist', function () {
-		spyOn(mocks.sampler, 'sample').and.callFake(function () {
-			return true;
-		});
-		mocks.instantGlobals = {wgAdDriverBabRecCountries: ['CURRENT_COUNTRY', 'ZZ']};
-		expect(getModule().getContext().opts.babRec).toBeTruthy();
-	});
-
-	it('disable rec behind BlockAdBlock detection when current country is not on whitelist', function () {
-		spyOn(mocks.sampler, 'sample').and.callFake(function () {
-			return true;
-		});
-		mocks.instantGlobals = {wgAdDriverBabRecCountries: ['OTHER_COUNTRY', 'ZZ']};
-		expect(getModule().getContext().opts.babRec).toBeFalsy();
-	});
-
 	it('showcase is enabled if the cookie is set', function () {
 		mocks.wikiaCookies.get.and.returnValue('NlfdjR5xC0');
 		expect(getModule().getContext().opts.showcase).toBeTruthy();

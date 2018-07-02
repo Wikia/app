@@ -51,11 +51,7 @@ define('ext.wikia.adEngine.wad.btRecLoader', [
 	function init() {
 		markAdSlots(false);
 
-		if (adContext.get('opts.babRec')) {
-			doc.addEventListener('bab.blocking', injectScript);
-		} else {
-			injectScript();
-		}
+		doc.addEventListener('bab.blocking', injectScript);
 	}
 
 	return {
