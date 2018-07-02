@@ -60,8 +60,8 @@ class CloseSingleWiki extends Maintenance {
 			[ 'LIMIT' => 1 ]
 		);
 
-		if( $row->numRows() != 1 ) {
-			$this->output( sprintf( 'Could not fetch data from `city_list`, num rows: %d', $row->numRows() ) );
+		if( $row == false ) {
+			$this->output( sprintf( 'Could not fetch data from `city_list`' ) );
 			return 1;
 		}
 
