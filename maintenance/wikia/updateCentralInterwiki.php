@@ -47,7 +47,7 @@ if ($force || empty($ciw_timestamp)) {
 }
 if ($verbose) echo "ciw_timestamp: {$ciw_timestamp}\n";
 
-$key = "ciw_sql";
+$key = "ciw_sql:1";
 list($ciw_sql_timestamp, $sql) = $wgMemc->get($key);
 if ($force || empty($ciw_sql_timestamp) || empty($sql) || $ciw_sql_timestamp < $ciw_timestamp) {
 	$ciw_sql_timestamp = $ciw_timestamp;
