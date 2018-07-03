@@ -1,4 +1,5 @@
 <div class="wds-hidden-svg">
+	<?= DesignSystemHelper::renderSvg( 'wds-icons-megaphone' ) ?>
 	<?= DesignSystemHelper::renderSvg( 'wds-icons-reply-small' ) ?>
 	<?= DesignSystemHelper::renderSvg( 'wds-icons-upvote-small' ) ?>
 </div>
