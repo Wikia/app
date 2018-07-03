@@ -23,8 +23,12 @@ class Site {
 	}
 }
 
-function getRebuildInterwikiSQL() {
-	global $langlist, $languageAliases, $prefixRewrites, $wgWikiaTranscludableIWs;
+/**
+ * @return string
+ * @throws WikiaException
+ */
+function getRebuildInterwikiSQL() : string {
+	global $langlist, $wgWikiaTranscludableIWs;
 
 	$transcludable = array('w','wikia','wikicities');
 	if (!empty($wgWikiaTranscludableIWs)) {
@@ -47,7 +51,7 @@ function getRebuildInterwikiSQL() {
 	$lines = array_map( 'trim', explode( "\n", trim( $intermap ) ) );
 
 	if ( !$lines || count( $lines ) < 2 ) {
-		wfDie( "w:MediaWiki:Interwiki_map not found" );
+		throw new WikiaException( "w:MediaWiki:Interwiki_map not found" );
 	}
 
 	// new format (FCK?), Feb 2010
@@ -131,7 +135,7 @@ function getRebuildInterwikiSQL() {
 # ------------------------------------------------------------------------------------------
 
 # Returns part of an INSERT statement, corresponding to all interlanguage links to a particular site
-function makeLanguageLinks( &$site, &$first, $source ) {
+function makeLanguageLinks( Site $site, &$first, $source ) {
 	global $langlist, $languageAliases;
 
 	$sql = "";
@@ -167,5 +171,3 @@ function makeLink( $entry, &$first, $source ) {
 	$sql .= "(" . $dbr->makeList( $entry ) . ")";
 	return $sql;
 }
-
-?>
