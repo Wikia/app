@@ -5429,6 +5429,15 @@ $wgLocalisationCacheConf = [
 $wgLocalisationCacheRedisConnectionConfiguration = [];
 
 /**
+ * Which prefix to use when loading localisation cache entries from the database.
+ * This fills the same role as the keyPrefix configuration setting for the Redis store, but the two do not have to match.
+ *
+ * @see \Wikia\Localisation\FallbackCapableLCStore
+ * @var string $wgLocalisationCacheDbPrefix
+ */
+$wgLocalisationCacheDbPrefix = '';
+
+/**
  * Defines format of local cache.
  * true - Serialized object
  * false - PHP source file (Warning - security risk)

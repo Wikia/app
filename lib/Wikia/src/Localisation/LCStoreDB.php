@@ -30,12 +30,8 @@ class LCStoreDB implements \LCStore {
 	private $currentLang;
 	/** @var bool $writesDone */
 	private $writesDone = false;
-	/** @var \DatabaseBase $dbw */
-	private $dbw;
 	/** @var array $batch */
 	private $batch = [];
-	/** @var bool $readOnly */
-	private $readOnly = false;
 	/** @var string $localisationCachePrefix */
 	private $localisationCachePrefix;
 
@@ -44,11 +40,12 @@ class LCStoreDB implements \LCStore {
 	}
 
 	public function get( $code, $key ) {
-		if ( $this->writesDone && $this->dbw ) {
-			$db = $this->dbw; // see the changes in finishWrite()
+		global $wgSpecialsDB;
+
+		if ( $this->writesDone ) {
+			$db = wfGetDB( DB_MASTER, [], $wgSpecialsDB ); // see the changes in finishWrite()
 		} else {
-			global $wgExternalSharedDB;
-			$db = wfGetDB( DB_SLAVE, [], $wgExternalSharedDB );
+			$db = wfGetDB( DB_SLAVE, [], $wgSpecialsDB );
 		}
 
 		$value = $db->selectField(
@@ -58,68 +55,40 @@ class LCStoreDB implements \LCStore {
 			__METHOD__
 		);
 
-		return ( $value !== false ) ? unserialize( $db->decodeBlob( $value ), [ 'allowed_classes' => false ] ) : null;
+		return ( $value !== false ) ? unserialize( $value, [ 'allowed_classes' => false ] ) : null;
 	}
 
 	public function startWrite( $code ) {
-		if ( $this->readOnly ) {
-			return;
-		} elseif ( !$code ) {
-			throw new \MWException( __METHOD__ . ": Invalid language \"$code\"" );
-		}
-
-		global $wgExternalSharedDB;
-
-		$this->dbw = wfGetDB( DB_MASTER, [], $wgExternalSharedDB );
-		$this->readOnly = wfReadOnly();
-
 		$this->currentLang = $code;
 		$this->batch = [];
 	}
 
 	public function finishWrite() {
-		if ( $this->readOnly ) {
-			return;
-		} elseif ( is_null( $this->currentLang ) ) {
-			throw new \MWException( __CLASS__ . ': must call startWrite() before finishWrite()' );
+		global $wgSpecialsDB;
+		$dbw = wfGetDB( DB_MASTER, [], $wgSpecialsDB );
+
+		$dbw->delete(
+			'l10n_cache',
+			[ 'lc_prefix' => $this->localisationCachePrefix, 'lc_lang' => $this->currentLang ],
+			__METHOD__
+		);
+
+		foreach ( array_chunk( $this->batch, 500 ) as $rows ) {
+			$dbw->insert( 'l10n_cache', $rows, __METHOD__ );
 		}
 
-		$this->dbw->begin( __METHOD__ );
-		try {
-			$this->dbw->delete(
-				'l10n_cache',
-				[ 'lc_prefix' => $this->localisationCachePrefix, 'lc_lang' => $this->currentLang ],
-				__METHOD__
-			);
-			foreach ( array_chunk( $this->batch, 500 ) as $rows ) {
-				$this->dbw->insert( 'l10n_cache', $rows, __METHOD__ );
-			}
-			$this->writesDone = true;
-		} catch ( \DBQueryError $e ) {
-			if ( $this->dbw->wasReadOnlyError() ) {
-				$this->readOnly = true; // just avoid site down time
-			} else {
-				throw $e;
-			}
-		}
-		$this->dbw->commit( __METHOD__ );
+		$this->writesDone = true;
 
 		$this->currentLang = null;
 		$this->batch = [];
 	}
 
 	public function set( $key, $value ) {
-		if ( $this->readOnly ) {
-			return;
-		} elseif ( is_null( $this->currentLang ) ) {
-			throw new \MWException( __CLASS__ . ': must call startWrite() before set()' );
-		}
-
 		$this->batch[] = [
 			'lc_prefix' => $this->localisationCachePrefix,
 			'lc_lang' => $this->currentLang,
 			'lc_key' => $key,
-			'lc_value' => $this->dbw->encodeBlob( serialize( $value ) )
+			'lc_value' => serialize( $value )
 		];
 	}
 
