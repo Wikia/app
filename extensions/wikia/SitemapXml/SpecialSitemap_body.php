@@ -43,7 +43,7 @@ class SitemapPage extends UnlistedSpecialPage {
 
 		if ( ( $showIndex && !$forceOldSitemap ) || $forceNewSitemap ) {
 			$this->getOutput()->disable();
-			if ( !Hooks::run( 'SitemapPageBeforeOutput', [ $subpage, $this->getRequest(), $this->getUser() ] ) ) {
+			if ( !Hooks::run( 'SitemapPageBeforeOutput', [ $this->getRequest(), $this->getUser() ] ) ) {
 				return;
 			}
 			$response = F::app()->sendRequest( 'SitemapXml', 'index', [ 'path' => $subpage ] );

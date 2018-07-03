@@ -63,36 +63,17 @@ class HTTPSSupportHooks {
 	}
 
 	/**
-	 * Handle downgrading anonymous requests for our sitemaps.
-	 *
-	 * @param  string     $subpage Specific sitemap being requested.
-	 * @param  WebRequest $request
-	 * @param  User       $user
-	 * @return boolean
-	 */
-	public static function onSitemapPageBeforeOutput( string $subpage, WebRequest $request, User $user ): bool {
-		global $wgScriptPath;
-		if ( WebRequest::detectProtocol() === 'https' &&
-			!self::httpsAllowed( $user, $request->getFullRequestURL() )
-		) {
-			self::downgradeRedirectForPath( "$wgScriptPath/$subpage", $request );
-			return false;
-		}
-		return true;
-	}
-
-	/**
-	 * Handle downgrading anonymous requests for robots.txt.
+	 * Handle downgrading anonymous requests for our sitemaps and robots.txt.
 	 *
 	 * @param  WebRequest $request
 	 * @param  User       $user
 	 * @return boolean
 	 */
-	public static function onWikiaRobotsBeforeOutput( WebRequest $request, User $user ): bool {
+	public static function onSitemapRobotsPageBeforeOutput( WebRequest $request, User $user ): bool {
 		if ( WebRequest::detectProtocol() === 'https' &&
 			!self::httpsAllowed( $user, $request->getFullRequestURL() )
 		) {
-			self::downgradeRedirectForPath( '/robots.txt', $request );
+			self::downgradeRedirectForPath( $request->getFullRequestURL(), $request );
 			return false;
 		}
 		return true;
