@@ -60,6 +60,7 @@ if ($verbose) echo "ciw_sql_timestamp: {$ciw_sql_timestamp}\n";
 if ( isset( $options['o'] ) ) {
 	# Output to file specified with -o
 	file_put_contents($options['o'], $sql);
+	echo "Saved SQL to a file\n";
 } elseif ( isset( $options ['p'] ) ) {
 	# Output to stdout
 	print $sql;
