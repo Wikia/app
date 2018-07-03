@@ -266,6 +266,11 @@ class LocalisationCache {
 	 */
 	public function getSubitemList( $code, $key ) {
 		if ( in_array( $key, self::$splitKeys ) ) {
+			// Wikia change - redis can natively return this item list to us
+			if ( $this->store instanceof \Wikia\Localisation\LCStoreRedis ) {
+				return $this->store->getItemList( $code, $key );
+			}
+
 			return $this->getSubitem( $code, 'list', $key );
 		} else {
 			$item = $this->getItem( $code, $key );

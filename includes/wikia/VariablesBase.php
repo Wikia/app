@@ -5416,6 +5416,19 @@ $wgLocalisationCacheConf = [
 ];
 
 /**
+ * Redis connection configuration for the localisation cache, if it's using the Redis backend.
+ * Entries:
+ * - host: hostname of redis server to connect to
+ * - port: redis server port
+ * - timeout: connection timeout in seconds
+ * - keyPrefix: prefix to prepend to each key (OPTIONAL)
+ *
+ * @see \Wikia\Localisation\LCStoreRedis
+ * @var array $wgLocalisationCacheRedisConnectionConfiguration
+ */
+$wgLocalisationCacheRedisConnectionConfiguration = [];
+
+/**
  * Defines format of local cache.
  * true - Serialized object
  * false - PHP source file (Warning - security risk)
