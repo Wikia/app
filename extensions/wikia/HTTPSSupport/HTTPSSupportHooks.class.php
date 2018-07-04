@@ -73,7 +73,7 @@ class HTTPSSupportHooks {
 		if ( WebRequest::detectProtocol() === 'https' &&
 			!self::httpsAllowed( $user, $request->getFullRequestURL() )
 		) {
-			self::downgradeRedirectForPath( $request->getFullRequestURL(), $request );
+			self::downgradeRedirect( $request );
 			return false;
 		}
 		return true;
@@ -95,8 +95,8 @@ class HTTPSSupportHooks {
 		}
 	}
 
-	private static function downgradeRedirectForPath( string $path, WebRequest $request ) {
-		$httpURL = wfHttpsToHttp( wfExpandUrl( $path, PROTO_HTTP ) );
+	private static function downgradeRedirect( WebRequest $request ) {
+		$httpURL = wfHttpsToHttp( wfExpandUrl( $request->getFullRequestURL(), PROTO_HTTP ) );
 		$response = $request->response();
 		$response->header( "Location: $httpURL", true, 302 );
 		$response->header( 'X-Redirected-By: HTTPS-Downgrade' );
