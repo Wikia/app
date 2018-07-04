@@ -27,6 +27,11 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.rubiconDisplay', function ()
 				}
 			}
 		},
+		babDetection: {
+			isBlocking: function () {
+				return false;
+			}
+		},
 		log: function () { }
 	};
 
@@ -37,6 +42,7 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.rubiconDisplay', function ()
 			mocks.adContext,
 			mocks.slotsContext,
 			mocks.adaptersHelper,
+			mocks.babDetection,
 			mocks.log
 		);
 	}
