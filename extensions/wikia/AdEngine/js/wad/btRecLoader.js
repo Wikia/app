@@ -14,7 +14,7 @@ define('ext.wikia.adEngine.wad.btRecLoader', [
 		placementsMap = {
 			TOP_LEADERBOARD: {
 				uid: '5b33d3584c-188',
-				style: 'margin: 0 10px;'
+				style: 'margin: 10px 0;'
 			},
 			TOP_RIGHT_BOXAD: {
 				uid: '5b2d1649b2-188',
