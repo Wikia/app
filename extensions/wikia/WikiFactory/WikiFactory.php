@@ -44,6 +44,7 @@ class WikiFactory {
 	# close Wiki
 	const HIDE_ACTION 			= -1;
 	const CLOSE_ACTION 			= 0;
+	const PUBLIC_WIKI			= 1;
 	static public $DUMP_SERVERS = [
 		'c1' => 'db2',
 		'c2' => 'db-sb2'
@@ -58,10 +59,10 @@ class WikiFactory {
 	const FLAG_REDIRECT              = 32;  // this wiki is a redirect - do not remove
 	const FLAG_PROTECTED             = 512; //wiki cannot be closed
 
-	const db            = "wikicities"; // @see $wgExternalSharedDB
-	const DOMAINCACHE   = "/tmp/wikifactory/domains.ser";
-	const CACHEDIR      = "/tmp/wikifactory/wikis";
-	const WIKIA_TOP_DOMAIN = '.wikia.com';
+	const db            	= "wikicities"; // @see $wgExternalSharedDB
+	const DOMAINCACHE   	= "/tmp/wikifactory/domains.ser";
+	const CACHEDIR      	= "/tmp/wikifactory/wikis";
+	const WIKIA_TOP_DOMAIN 	= '.wikia.com';
 
 	// Community Central's city_id in wikicities.city_list.
 	const COMMUNITY_CENTRAL = 177;
@@ -2426,6 +2427,34 @@ class WikiFactory {
 
 		wfProfileOut( __METHOD__ );
 		return $res;
+	}
+
+	/**
+	 * isInArchive
+	 *
+	 * Checks if a given wiki is already in archive db
+	 *
+	 * @param integer $cityId Wiki ID
+	 *
+	 * @return bool
+	 */
+	static public function isInArchive( $city_id ) {
+		global $wgExternalArchiveDB;
+
+		$wiki = WikiFactory::getWikiByID( $city_id );
+		if ( isset( $wiki->city_id ) ) {
+			$dba = wfGetDB( DB_MASTER, [], $wgExternalArchiveDB );
+			$sth = $dba->select(
+				[ 'city_domains' ],
+				[ '1' ],
+				[ 'city_id' => $city_id ],
+				__METHOD__
+			);
+
+			return $sth->numRows() > 0;
+		}
+
+		return false;
 	}
 
 	/**
