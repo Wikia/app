@@ -61,7 +61,7 @@ kind: Ingress
 metadata:
   name: mediawiki-sandbox-ingress
   annotations:
-    traefik.frontend.priority: "1"
+    traefik.frontend.priority: "2"
 spec:
   rules:
     - host: "*.${SANDBOX_NAME}.wikia.com"
