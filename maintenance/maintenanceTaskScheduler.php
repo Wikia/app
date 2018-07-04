@@ -13,6 +13,7 @@ class MaintenanceTaskScheduler extends Maintenance {
 		$this->addOption( "active", "Run on wikis which are active at least <param> days" );
 		$this->addOption( "cluster", "Cluster name, possible values: c1, ..., c7" );
 		$this->addOption( "id", "Wiki IDs (separated with comma)" );
+		$this->addOption( "params", "Script command line optional parameters" );
 	}
 
 	public function execute() {
@@ -21,23 +22,23 @@ class MaintenanceTaskScheduler extends Maintenance {
 		$script = $this->getArg( 0 );
 		$active = $this->getOption( "active" );
 		$cluster = $this->getOption( "cluster" );
+		$params = $this->getOption( "params", '' );
 
 		$idsParam = [];
 		if ( $this->getOption( "id" ) !== null ) {
 			$idsParam = array_map( "intval", str_getcsv( $this->getOption( "id" ), "," ) );
 		}
 
-		$this->output( "Scheduling ${script}\n" );
+		$this->output( "Scheduling ${script} ${params}\n" );
 
 		$db = wfGetDB( DB_SLAVE, [], $wgExternalSharedDB );
 
-		// TODO: Handle 300k wikis
 		$this->getWikis( $idsParam, $active, $cluster )
 			->runLoop( $db, function ( $data, $row ) {
 				$this->wikiIds[] = $row->city_id;
 			} );
 
-		$this->scheduleTask($this->wikiIds, $script);
+		$this->scheduleTask($this->wikiIds, $script, $params);
 	}
 
 	private function getWikis( array $idsParam = [], int $active = null, string $cluster = null ) {
@@ -64,11 +65,11 @@ class MaintenanceTaskScheduler extends Maintenance {
 		return $sql;
 	}
 
-	private function scheduleTask( array $wikiIds, string $script ) {
+	private function scheduleTask( array $wikiIds, string $script, string $params ) {
 		$task = new \Wikia\Tasks\Tasks\MaintenanceTask();
 		$task->wikiId( $wikiIds );
 		$task->setQueue( \Wikia\Tasks\Queues\ScheduledMaintenanceQueue::NAME );
-		$task->call( "run", $script );
+		$task->call( "run", $script, $params );
 
 		$task->queue();
 
