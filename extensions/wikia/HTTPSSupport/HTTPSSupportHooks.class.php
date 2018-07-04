@@ -49,6 +49,9 @@ class HTTPSSupportHooks {
 				self::httpsAllowed( $user, $requestURL )
 			) {
 				$output->redirect( wfHttpToHttps( $requestURL ) );
+				if ( $user->isAnon() ) {
+					$output->enableClientCache( false );
+				}
 			} elseif ( WebRequest::detectProtocol() === 'https' &&
 				!self::httpsAllowed( $user, $requestURL ) &&
 				empty( $wgDisableHTTPSDowngrade ) &&
@@ -80,7 +83,9 @@ class HTTPSSupportHooks {
 	}
 
 	private static function httpsAllowed( User $user, string $url ): bool {
-		return wfHttpsAllowedForURL( $url ) && $user->isLoggedIn();
+		global $wgEnableHTTPSForAnons;
+		return wfHttpsAllowedForURL( $url ) &&
+			( !empty( $wgEnableHTTPSForAnons ) || $user->isLoggedIn() );
 	}
 
 	private static function httpsEnabledTitle( Title $title ): bool {
@@ -89,17 +94,32 @@ class HTTPSSupportHooks {
 			in_array( $title->getPrefixedDBKey(), self::$httpsArticles[ $wgDBname ] );
 	}
 
-	public static function parserUpgradeVignetteUrls ( string &$url ) {
-		if ( preg_match( self::VIGNETTE_IMAGES_HTTP_UPGRADABLE, $url ) && strpos( $url, "http://" ) === 0 ) {
+	public static function parserUpgradeVignetteUrls( string &$url ) {
+		if ( preg_match( self::VIGNETTE_IMAGES_HTTP_UPGRADABLE, $url ) && strpos( $url, 'http://' ) === 0 ) {
 			$url = wfHttpToHttps( $url );
 		}
 	}
 
-	private static function downgradeRedirect( WebRequest $request ) {
-		$httpURL = wfHttpsToHttp( wfExpandUrl( $request->getFullRequestURL(), PROTO_HTTP ) );
+	private static function downgradeRedirect( WebRequest $request, User $user ): bool {
+		$url = wfExpandUrl( $request->getFullRequestURL(), PROTO_HTTP );
+		if ( WebRequest::detectProtocol() === 'http' &&
+			self::httpsAllowed( $user, $request->getFullRequestURL() )
+		) {
+			self::redirectWithPrivateCache( wfHttpToHttps( $url ), $request );
+			return false;
+		} elseif ( WebRequest::detectProtocol() === 'https' &&
+			!self::httpsAllowed( $user, $request->getFullRequestURL() )
+		) {
+			self::redirectWithPrivateCache( wfHttpsToHttp( $url ), $request );
+			return false;
+		}
+		return true;
+	}
+
+	private static function redirectWithPrivateCache( string $url, WebRequest $request ) {
 		$response = $request->response();
-		$response->header( "Location: $httpURL", true, 302 );
-		$response->header( 'X-Redirected-By: HTTPS-Downgrade' );
+		$response->header( "Location: $url", true, 302 );
+		$response->header( 'X-Redirected-By: HTTPS-Support' );
 		$response->header( 'Cache-Control: private, must-revalidate, max-age=0' );
 	}
 }
