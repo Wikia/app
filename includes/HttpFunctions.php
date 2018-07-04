@@ -378,22 +378,15 @@ class MWHttpRequest {
 	/**
 	 * Take care of setting up the proxy
 	 * (override in subclass)
-	 *
-	 * @return String
 	 */
 	public function proxySetup() {
-		global $wgHTTPProxy;
-
 		if ( $this->proxy ) {
 			return;
 		}
 
-		if ( Http::isLocalURL( $this->url ) ) {
-			$this->proxy = 'http://localhost:80';
-		} elseif ( $wgHTTPProxy ) {
+		global $wgHTTPProxy;
+		if ( $wgHTTPProxy ) {
 			$this->proxy = $wgHTTPProxy ;
-		} elseif ( getenv( "http_proxy" ) ) {
-			$this->proxy = getenv( "http_proxy" );
 		}
 	}
 

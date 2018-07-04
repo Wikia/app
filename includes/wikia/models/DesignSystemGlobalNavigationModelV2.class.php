@@ -33,8 +33,8 @@ class DesignSystemGlobalNavigationModelV2 extends WikiaModel {
 		$data = [
 			'logo' => $this->getLogo(),
 			'search' => $this->getSearchData(),
-			'create_wiki' => $this->getCreateWiki( 'start-a-wiki' ),
-			'main_navigation' => $this->getMainNavigation(),
+			'create-wiki' => $this->getCreateWiki( 'start-a-wiki' ),
+			'main-navigation' => $this->getMainNavigation(),
 		];
 
 		if ( $wgUser->isLoggedIn() ) {
@@ -52,20 +52,16 @@ class DesignSystemGlobalNavigationModelV2 extends WikiaModel {
 			$data[ 'partner_slot' ] = $partnerSlot;
 		}
 		
-		$data['services_domain'] = $wgServicesExternalDomain;
+		$data['services-domain'] = $wgServicesExternalDomain;
 
 		return $data;
 	}
 
 	private function getMainNavigation() {
-		if ( $this->isWikiaOrgCommunity() ) {
-			return [$this->getLink( self::COMMUNITY_CENTRAL_LABEL, $this->getHref('community-central'), self::COMMUNITY_CENTRAL_TRACKING_LABEL )];
-		} else {
-			return array_merge(
-				$this->getFandomLinks(),
-				[ $this->getWikisMenu() ]
-			);
-		}
+		return array_merge(
+			$this->getFandomLinks(),
+			[ $this->getWikisMenu() ]
+		);
 	}
 
 	private function getWikisMenu() {
@@ -75,7 +71,7 @@ class DesignSystemGlobalNavigationModelV2 extends WikiaModel {
 				'type' => 'translatable-text',
 				'key' => 'global-navigation-wikis-header',
 			],
-			'tracking_label' => 'link.wikis',
+			'tracking-label' => 'link.wikis',
 			'items' => [
 				$this->getLink( 'global-navigation-wikis-explore', $this->getHref( 'explore-wikis' ), 'link.explore' ),
 				$this->getLink( self::COMMUNITY_CENTRAL_LABEL, $this->getHref('community-central'), self::COMMUNITY_CENTRAL_TRACKING_LABEL ),
@@ -92,7 +88,7 @@ class DesignSystemGlobalNavigationModelV2 extends WikiaModel {
 				'key' => 'global-navigation-create-wiki-link-start-wikia'
 			],
 			'href' => $this->getHref( 'create-new-wiki', true ),
-			'tracking_label' => $trackingLabel,
+			'tracking-label' => $trackingLabel,
 		];
 	}
 
@@ -124,7 +120,7 @@ class DesignSystemGlobalNavigationModelV2 extends WikiaModel {
 		$search = [
 			'type' => 'search',
 			'results' => [
-				'tracking_label' => 'search',
+				'tracking-label' => 'search',
 			],
 			'placeholder-inactive' => [
 				'type' => 'translatable-text',
@@ -158,7 +154,7 @@ class DesignSystemGlobalNavigationModelV2 extends WikiaModel {
 			$search['suggestions'] = [
 				'url' => wfProtocolUrlToRelative( $suggestionsUrl ),
 				'param-name' => 'query',
-				'tracking_label' => 'search-suggestion',
+				'tracking-label' => 'search-suggestion',
 			];
 			$search['placeholder-active']['params'] = [
 				'sitename' => $this->getSitenameData(),
@@ -178,7 +174,7 @@ class DesignSystemGlobalNavigationModelV2 extends WikiaModel {
 				],
 				'href' => $this->getHref( 'user-signin' ),
 				'param-name' => 'redirect',
-				'tracking_label' => 'account.sign-in',
+				'tracking-label' => 'account.sign-in',
 			],
 			'register' => [
 				'type' => 'link-authentication',
@@ -188,7 +184,7 @@ class DesignSystemGlobalNavigationModelV2 extends WikiaModel {
 				],
 				'href' => $this->getHref( 'user-register' ),
 				'param-name' => 'redirect',
-				'tracking_label' => 'account.register',
+				'tracking-label' => 'account.register',
 			]
 		];
 	}
@@ -218,7 +214,7 @@ class DesignSystemGlobalNavigationModelV2 extends WikiaModel {
 				'key' => 'global-navigation-user-sign-out'
 			],
 			'param-name' => $this->product === static::PRODUCT_FANDOMS ? 'redirect' : 'returnto',
-			'tracking_label' => 'account.sign-out',
+			'tracking-label' => 'account.sign-out',
 		];
 
 		$links = [
@@ -246,7 +242,7 @@ class DesignSystemGlobalNavigationModelV2 extends WikiaModel {
 		return [
 			'avatar_url' => AvatarService::isEmptyOrFirstDefault( $userName ) ? null : AvatarService::getAvatarUrl( $userName, 50 ),
 			'username' => $userName,
-			'tracking_label' => 'account',
+			'tracking-label' => 'account',
 			'items' => $links[$this->product],
 		];
 	}
@@ -265,7 +261,7 @@ class DesignSystemGlobalNavigationModelV2 extends WikiaModel {
 					'type' => 'translatable-text',
 					'key' => 'global-navigation-notifications-title'
 				],
-				'tracking_label' => 'notifications',
+				'tracking-label' => 'notifications',
 			],
 			'module' => [
 				'type' => 'notifications',
@@ -294,11 +290,6 @@ class DesignSystemGlobalNavigationModelV2 extends WikiaModel {
 		return WikiFactory::getVarValueByName( 'wgEnableWallExt', $this->productInstanceId );
 	}
 
-	private function isWikiaOrgCommunity() {
-		return $this->product === self::PRODUCT_WIKIS &&
-			WikiFactory::getVarValueByName( 'wgIsInWikiaOrgProgram', $this->productInstanceId );
-	}
-
 	private function getCorporatePageSearchUrl() {
 		$url = GlobalTitle::newFromText( 'Search', NS_SPECIAL, Wikia::CORPORATE_WIKI_ID )->getFullURL();
 		return wfProtocolUrlToRelative( $url );
@@ -324,25 +315,13 @@ class DesignSystemGlobalNavigationModelV2 extends WikiaModel {
 					'type' => 'text',
 					'value' => 'entertainweb'
 				],
-				'tracking_label' => 'entertainweb',
+				'tracking-label' => 'entertainweb',
 			];
 		}
 		return null;
 	}
 
 	private function getLogo() {
-		if ( $this->isWikiaOrgCommunity() === true ) {
-			return [
-				'type' => 'link-image',
-				'href' => $this->getHref( 'wikia-org-logo' ),
-				'image-data' => [
-					'type' => 'wds-svg',
-					'name' => 'wds-company-logo-wikia-org-white',
-				],
-				'tracking_label' => 'logo',
-			];
-		}
-
 		return [
 			'type' => 'link-image',
 			'href' => $this->getHref( 'fandom-logo' ),
@@ -350,7 +329,7 @@ class DesignSystemGlobalNavigationModelV2 extends WikiaModel {
 				'type' => 'wds-svg',
 				'name' => 'wds-company-logo-fandom-white',
 			],
-			'tracking_label' => 'logo',
+			'tracking-label' => 'logo',
 		];
 	}
 
@@ -362,7 +341,7 @@ class DesignSystemGlobalNavigationModelV2 extends WikiaModel {
 				'key' => $labelKey
 			],
 			'href' => $href,
-			'tracking_label' => $trackingLabel,
+			'tracking-label' => $trackingLabel,
 		];
 	}
 }

@@ -124,7 +124,7 @@ class Client {
 	 * @param string $env either prod or dev
 	 * @return string[]
 	 */
-	function getDataCentersForEnv( string $env ) {
+	function getDataCentersForEnv( string $env ) : array {
 		global $wgConsulDataCenters;
 		return $wgConsulDataCenters[$env];
 	}

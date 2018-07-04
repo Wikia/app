@@ -1,0 +1,9 @@
+video_info:
+  - video_title: I am a video
+    video_id: 1
+    provider: youtube
+    added_at: 20170101000000
+  - video_title: I am a different video
+    video_id: 2
+    provider: youku
+    added_at: 20180101000000

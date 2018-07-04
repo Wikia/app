@@ -13,6 +13,8 @@ class HTTPSSupportHooks {
 		'wikia' => [ 'Community_Central:Licensing' ]
 	];
 
+	const VIGNETTE_IMAGES_HTTP_UPGRADABLE = '#(images|img|static|vignette)(\d+)?\.wikia\.(nocookie\.)?(net|com)#i';
+
 	public static function onMercuryWikiVariables( array &$wikiVariables ): bool {
 		global $wgDisableHTTPSDowngrade;
 		$basePath = $wikiVariables['basePath'];
@@ -30,14 +32,14 @@ class HTTPSSupportHooks {
 	 * to HTTP if necessary.
 	 *
 	 * @param  Title      $title
-	 * @param             $unused
+	 * @param             $article
 	 * @param  OutputPage $output
 	 * @param  User       $user
 	 * @param  WebRequest $request
 	 * @param  MediaWiki  $mediawiki
 	 * @return bool
 	 */
-	public static function onBeforeInitialize( Title $title, $unused, OutputPage $output,
+	public static function onAfterInitialize( Title $title, $article, OutputPage $output,
 		User $user, WebRequest $request, MediaWiki $mediawiki
 	): bool {
 		global $wgDisableHTTPSDowngrade;
@@ -47,6 +49,9 @@ class HTTPSSupportHooks {
 				self::httpsAllowed( $user, $requestURL )
 			) {
 				$output->redirect( wfHttpToHttps( $requestURL ) );
+				if ( $user->isAnon() ) {
+					$output->enableClientCache( false );
+				}
 			} elseif ( WebRequest::detectProtocol() === 'https' &&
 				!self::httpsAllowed( $user, $requestURL ) &&
 				empty( $wgDisableHTTPSDowngrade ) &&
@@ -54,18 +59,74 @@ class HTTPSSupportHooks {
 				!self::httpsEnabledTitle( $title )
 			) {
 				$output->redirect( wfHttpsToHttp( $requestURL ) );
+				$output->enableClientCache( false );
 			}
 		}
 		return true;
 	}
 
+	/**
+	 * Handle downgrading anonymous requests for our sitemaps.
+	 *
+	 * @param  string     $subpage Specific sitemap being requested.
+	 * @param  WebRequest $request
+	 * @param  User       $user
+	 * @return boolean
+	 */
+	public static function onSitemapPageBeforeOutput( string $subpage, WebRequest $request, User $user ): bool {
+		global $wgScriptPath;
+		return self::handleRedirectForPath( "$wgScriptPath/$subpage", $request, $user );
+	}
+
+	/**
+	 * Handle downgrading anonymous requests for robots.txt.
+	 *
+	 * @param  WebRequest $request
+	 * @param  User       $user
+	 * @return boolean
+	 */
+	public static function onWikiaRobotsBeforeOutput( WebRequest $request, User $user ): bool {
+		return self::handleRedirectForPath( '/robots.txt', $request, $user );
+	}
+
 	private static function httpsAllowed( User $user, string $url ): bool {
-		return wfHttpsAllowedForURL( $url ) && $user->isLoggedIn();
+		global $wgEnableHTTPSForAnons;
+		return wfHttpsAllowedForURL( $url ) &&
+			( !empty( $wgEnableHTTPSForAnons ) || $user->isLoggedIn() );
 	}
 
 	private static function httpsEnabledTitle( Title $title ): bool {
 		global $wgDBname;
 		return array_key_exists( $wgDBname, self::$httpsArticles ) &&
 			in_array( $title->getPrefixedDBKey(), self::$httpsArticles[ $wgDBname ] );
+	}
+
+	public static function parserUpgradeVignetteUrls( string &$url ) {
+		if ( preg_match( self::VIGNETTE_IMAGES_HTTP_UPGRADABLE, $url ) && strpos( $url, 'http://' ) === 0 ) {
+			$url = wfHttpToHttps( $url );
+		}
+	}
+
+	private static function handleRedirectForPath( string $path, WebRequest $request, User $user ): bool {
+		$url = wfExpandUrl( $path, PROTO_HTTP );
+		if ( WebRequest::detectProtocol() === 'http' &&
+			self::httpsAllowed( $user, $request->getFullRequestURL() )
+		) {
+			self::redirectWithPrivateCache( wfHttpToHttps( $url ), $request );
+			return false;
+		} elseif ( WebRequest::detectProtocol() === 'https' &&
+			!self::httpsAllowed( $user, $request->getFullRequestURL() )
+		) {
+			self::redirectWithPrivateCache( wfHttpsToHttp( $url ), $request );
+			return false;
+		}
+		return true;
+	}
+
+	private static function redirectWithPrivateCache( string $url, WebRequest $request ) {
+		$response = $request->response();
+		$response->header( "Location: $url", true, 302 );
+		$response->header( 'X-Redirected-By: HTTPS-Support' );
+		$response->header( 'Cache-Control: private, must-revalidate, max-age=0' );
 	}
 }

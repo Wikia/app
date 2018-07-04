@@ -1,5 +1,7 @@
-import {ConsentString} from 'consent-string';
+import {ConsentString, decodeConsentString, encodeConsentString} from 'consent-string';
 
 export {
-	ConsentString
-}
+	ConsentString,
+	decodeConsentString,
+	encodeConsentString
+};

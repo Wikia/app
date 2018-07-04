@@ -11,9 +11,12 @@ class SassServiceTest extends WikiaBaseTest {
 	/**
 	 * @see https://github.com/sensational/sassphp
 	 */
-	public function testSassPHPInstalled() {
-		$this->assertTrue( extension_loaded( 'sass' ), 'sassphp PHP extension should be installed for faster SASS parsing' );
-		$this->assertTrue( class_exists( 'Sass' ), 'Sass class is available' );
+	protected function setUp() {
+		parent::setUp();
+
+		if ( !extension_loaded( 'sass' ) ) {
+			$this->markTestSkipped( 'the sassphp extension is not available' );
+		}
 	}
 
 	public function testCompileInlineCss() {

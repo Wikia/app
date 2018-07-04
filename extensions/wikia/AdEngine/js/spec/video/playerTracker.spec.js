@@ -147,7 +147,7 @@ describe('ext.wikia.adEngine.video.player.playerTracker', function () {
 			slotName: 'TOP_LEADERBOARD'
 		}, 'fooPlayer', 'barEvent');
 
-		expect(getTrackedValue('position')).toEqual('TOP_LEADERBOARD');
+		expect(getTrackedValue('position')).toEqual('top_leaderboard');
 	});
 
 	it('Track data with error code when it is passed', function () {

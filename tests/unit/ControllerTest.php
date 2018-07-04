@@ -23,17 +23,8 @@ class ControllerTest extends WikiaBaseTest {
 	}
 
 	function testRenderView() {
-		$this->markTestSkipped('Refactor this unit test');
-
 		$result = F::app()->renderView('UnitTest', 'Index');
 		$this->assertEquals('Foo', $result);
-
-		// This is a weird edge case for legacy behavior regarding naming clashes in templates
-		// Since the service class does not have a template  it falls back on the template with a matching BaseName (in this case "UnitTest_index.php")
-		// Since the service::index method does not set the proper template variable, we get a warning notice
-		error_reporting(E_NOTICE);
-		$result = F::app()->renderView('UnitTestService', 'Index');
-		$this->assertContains("Undefined variable: foo", $result);
 	}
 
 	function testWikiaSpecialPageLink() {

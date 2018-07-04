@@ -63,7 +63,11 @@ class DWDimensionApiControllerSQL {
 			img_minor_mime AS minor_mime,
 			img_media_type AS media_type,
 			STR_TO_DATE(img_timestamp, \'%Y%m%d%H%i%S\') AS created_at
-		FROM image';
+		FROM image
+		WHERE img_name > \'$img_name\'
+		ORDER BY
+			img_name
+		LIMIT $limit';
 
 	const DIMENSION_WIKI_INFO = '
 		SELECT

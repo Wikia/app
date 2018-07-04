@@ -1181,6 +1181,22 @@ $wgConsulDataCenters = [
 		'sjc',
 		'res',
 	],
+	'sandbox' => [
+		'sjc',
+		'res',
+	],
+	'preview' => [
+		'sjc',
+		'res',
+	],
+	'verify' => [
+		'sjc',
+		'res',
+	],
+	'stable' => [
+		'sjc',
+		'res',
+	],
 ];
 
 /**
@@ -2766,7 +2782,7 @@ $wgEnableGracenoteExt = false;
  * @see extensions/wikia/HAWelcome/
  * @var bool $wgEnableHAWelcomeExt
  */
-$wgEnableHAWelcomeExt = false;
+$wgEnableHAWelcomeExt = true;
 
 /**
  * Enable HideTags extension.
@@ -5128,13 +5144,6 @@ $wgInvalidRedirectTargets = [
 $wgInvalidUsernameCharacters = '@:';
 
 /**
- * Indicates Wikia.org communities.
- * @see includes/wikia/models/DesignSystemGlobalNavigationModel.class.php
- * @var bool $wgIsInWikiaOrgProgram
- */
-$wgIsInWikiaOrgProgram = false;
-
-/**
  * Configuration for javascript testing.
  * @var Array $wgJavaScriptTestConfig
  */
@@ -5972,6 +5981,13 @@ $wgMsgCacheExpiry = 24 * 3600; // one day
 $wgMWSuggestTemplate = false;
 
 /**
+ * Optionally, specify an explicit connection character set override for MySQL here.
+ * If this value is set, it will overwrite any other settings, such as the implicit UTF-8 charset if $wgMysql5 is set.
+ * @var string|null $wgMysqlConnectionCharacterSet
+ */
+$wgMysqlConnectionCharacterSet = null;
+
+/**
  * Namespace aliases. These are alternate names for the primary localised
  * namespace names, which are defined by $wgExtraNamespaces and the language
  * file. If a page is requested with such a prefix, the request will be
@@ -6333,8 +6349,7 @@ $wgPhalanxSupportedLanguages = [
  * on install.
  * @var string $wgPhpCli
  */
-$wgPhpCli = '/usr/bin/php';
-
+$wgPhpCli = 'php'; # SUS-5282 | binary location differ between distros, assume it's available in PATH
 /**
  * Configuration for processing pool control, for use in high-traffic wikis.
  * An implementation is provided in the PoolCounter extension.
@@ -8218,6 +8233,13 @@ $wgUseImageResize = true;
  * @var bool $wgUseInstantCommons
  */
 $wgUseInstantCommons = false;
+
+/**
+ * Whether to use Kubernetes internal ingress for making requests to service dependencies on Kubernetes.
+ * This is only enabled if app itself is running on Kubernetes.
+ * @var bool $wgUseKubernetesInternalIngress
+ */
+$wgUseKubernetesInternalIngress = (bool) getenv( 'KUBERNETES_POD' );
 
 /**
  * Set this to true to make a local copy of the message cache, for use in

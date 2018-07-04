@@ -35,11 +35,18 @@
   "require": {
     "ext-bcmath": "*",
     "ext-bz2": "*",
+    "ext-dba": "*",
+    "ext-exif": "*",
     "ext-gd": "*",
+    "ext-intl": "*",
+    "ext-mustache": "*",
     "ext-mysqli": "*",
+    "ext-pcntl": "*",
     "ext-simplexml": "*",
+    "ext-sockets": "*",
     "ext-tideways": "*",
     "ext-tidy": "*",
+    "ext-wikidiff2": "*",
     "wikia/fluent-sql-php": "1.0.*",
     "monolog/monolog": "^1.23",
     "phpunit/phpunit": "^6.5",
@@ -66,9 +73,10 @@
     "wikimedia/scoped-callback": "^2.0"
   },
   "require-dev": {
+    "ext-yaml": "*",
     "ext-xdebug": "*"
   },
   "scripts": {
-    "lint": "phplint . --exclude lib/composer --exclude /templates/ --no-cache"
+    "lint": "phplint . --exclude lib/composer --exclude lib/vendor --exclude lib/Swagger --exclude /templates/ --no-cache"
   }
 }

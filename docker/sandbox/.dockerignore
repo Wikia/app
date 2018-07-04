@@ -1,0 +1,18 @@
+# SUS-5284 | this file instructs Docker to do not add these files to an image when ADD / COPY command is run
+
+# ignore hidden directories and files
+# (.git for app weights over 800 MB)
+*/**/.*
+
+# documentation and Docker build files
+*/**/docs/*
+
+# test files
+*/**/tests/*
+
+# README files
+*/**/README
+*/**/README.md
+
+# node_modules in app root weights over 130 MB
+app/node_modules

@@ -6,7 +6,7 @@
  * @author macbre
  *
  * @category Wikia
- * @group Integration
+ * @group Infrastructure
  * @group Swift
  */
 class SwiftStorageTest extends WikiaBaseTest {

@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * @group Integration
+ */
 class UpdatePagesTaskIntegrationTest extends WikiaDatabaseTest {
 	/** @var UpdatePagesTask $updatePagesTask */
 	private $updatePagesTask;

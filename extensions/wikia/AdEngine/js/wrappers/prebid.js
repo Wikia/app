@@ -21,13 +21,13 @@ define('ext.wikia.adEngine.wrappers.prebid', [
 			}
 		};
 
+	win.loadPrebid(isCMPEnabled);
 	win.pbjs = win.pbjs || {};
 	win.pbjs.que = win.pbjs.que || [];
 
 	if (isCMPEnabled) {
 		prebidConfig.consentManagement = {
 			cmpApi: 'iab',
-			timeout: 2000,
 			allowAuctionWithoutConsent: false
 		};
 	}

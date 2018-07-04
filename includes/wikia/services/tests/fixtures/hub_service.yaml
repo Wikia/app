@@ -1,0 +1,44 @@
+city_verticals:
+  - vertical_id: 0
+    vertical_name: Other
+    vertical_url: http://www.wikia.com
+    vertical_short: other
+  - vertical_id: 1
+    vertical_name: TV
+    vertical_url: http://tvhub.wikia.com
+    vertical_short: tv
+  - vertical_id: 2
+    vertical_name: Games
+    vertical_url: http://gameshub.wikia.com
+    vertical_short: games
+  - vertical_id: 3
+    vertical_name: Books
+    vertical_url: http://bookshub.wikia.com
+    vertical_short: books
+  - vertical_id: 4
+    vertical_name: Comics
+    vertical_url: http://comicshub.wikia.com
+    vertical_short: comics
+  - vertical_id: 5
+    vertical_name: Lifestyle
+    vertical_url: http://lifestylehub.wikia.com
+    vertical_short: lifestyle
+  - vertical_id: 6
+    vertical_name: Music
+    vertical_url: http://musichub.wikia.com
+    vertical_short: music
+  - vertical_id: 7
+    vertical_name: Movies
+    vertical_url: http://movieshub.wikia.com
+    vertical_short: movies
+city_list:
+  - city_id: 1
+    city_vertical: 5
+    city_cluster: c1
+    city_url: http://lifestylewiki.wikia.com/
+    city_dbname: lifestylewiki
+  - city_id: 2
+    city_vertical: 0
+    city_cluster: c2
+    city_url: http://otherwiki.wikia.com/
+    city_dbname: otherwiki

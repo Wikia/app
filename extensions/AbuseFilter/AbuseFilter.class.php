@@ -1544,8 +1544,6 @@ class AbuseFilter {
 	}
 
 	public static function getMoveVarsFromRCRow( $row ) {
-		$vars = new AbuseFilterVariableHolder;
-
 		if ( $row->rc_user ) {
 			$user = User::newFromId( $row->rc_user );
 		} else {
@@ -1553,13 +1551,12 @@ class AbuseFilter {
 			$user = User::newFromName( $userIp, false );
 		}
 
-		$params = explode( "\n", trim( $row->rc_params ) );
+		$params = array_values( DatabaseLogEntry::newFromRow( $row )->getParameters() );
 
 		$oldTitle = Title::makeTitle( $row->rc_namespace, $row->rc_title );
-		$newTitle = Title::newFromText( $params[0] );
+		$newTitle = Title::makeTitle( $params[1], $params[0] );
 
 		$vars = AbuseFilterVariableHolder::merge(
-			$vars,
 			AbuseFilter::generateUserVars( $user ),
 			AbuseFilter::generateTitleVars( $oldTitle, 'MOVED_FROM' ),
 			AbuseFilter::generateTitleVars( $newTitle, 'MOVED_TO' )
