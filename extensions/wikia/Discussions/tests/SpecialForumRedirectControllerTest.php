@@ -22,7 +22,6 @@ class SpecialForumRedirectControllerTest extends WikiaDatabaseTest {
 	) {
 		$article = Article::newFromID( $articleId );
 		$redirectableForumTitle = SpecialForumRedirectController::getRedirectableForumTitle( $article );
-		var_dump($redirectableForumTitle);
 
 		$this->assertEquals( $expectedArticleId, $redirectableForumTitle->getArticleID() );
 	}
