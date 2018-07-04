@@ -9,6 +9,7 @@ define('wikia.cmp', [
 	'wikia.log',
 	'wikia.trackingOptIn',
 	require.optional('wikia.trackingOptInModal'),
+	'wikia.document',
 	'wikia.window'
 ], function (
 	staticVendorList,
@@ -20,10 +21,12 @@ define('wikia.cmp', [
 	log,
 	trackingOptIn,
 	trackingOptInModal,
+	doc,
 	win
 ) {
 	var isModuleEnabled = geo.isProperGeo(instantGlobals.wgEnableCMPCountries),
 		logGroup = 'wikia.cmp',
+		fandomCmpId = 141,
 		vendorConsentCookieName = 'euconsent',
 		hasGlobalScope = false,
 		cookieExpireMillis = 33696000000, // this represents thirteen 30-day months
@@ -60,7 +63,7 @@ define('wikia.cmp', [
 				});
 
 				vendorConsent = new cs.ConsentString();
-				vendorConsent.setCmpId(0);
+				vendorConsent.setCmpId(fandomCmpId);
 				vendorConsent.setCmpVersion(1);
 				vendorConsent.setConsentScreen(1);
 				vendorConsent.setConsentLanguage((geo.getCountryCode() || 'en').toLowerCase());
@@ -105,6 +108,24 @@ define('wikia.cmp', [
 			callback(null);
 		};
 		req.send(null);
+	}
+
+	function addLocatorFrame() {
+		var name = '__cmpLocator',
+			iframe;
+
+		if (win.frames[name]) {
+			return;
+		}
+
+		if (doc.readyState !== 'loading') {
+			iframe = doc.createElement('iframe');
+			iframe.name = name;
+			iframe.style.display = 'none';
+			doc.body.appendChild(iframe);
+		} else {
+			doc.addEventListener('DOMContentLoaded', addLocatorFrame);
+		}
 	}
 
 	function __cmpStub(commandName, parameter, callback) {
@@ -245,7 +266,7 @@ define('wikia.cmp', [
 		win.__cmp = __cmpStub;
 		win.addEventListener('message', function (event) {
 			try {
-				var call = event.data.__cmpCall;
+				var call = ((typeof event.data === 'string') ? JSON.parse(event.data) : event.data).__cmpCall;
 
 				if (call) {
 					win.__cmp(call.command, call.parameter, function (retValue, success) {
@@ -258,7 +279,8 @@ define('wikia.cmp', [
 					});
 				}
 			} catch (e) { void(0); } // do nothing
-		});
+		}, false);
+		addLocatorFrame();
 		trackingOptIn.pushToUserConsentQueue(init);
 	} else {
 		log('Module is not enabled', log.levels.debug, logGroup);

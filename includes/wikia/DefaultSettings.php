@@ -1360,10 +1360,10 @@ $wgAdDriverBabDetectionMobileCountries = null;
 $wgAdDriverF2BabDetectionCountries = null;
 
 /**
- * @name $wgAdDriverBabRecoveryCountries
- * List of countries to put recovery behind BlockAdBlock detection
+ * @name $wgAdDriverWadBTCountries
+ * List of countries enable Blockthrough recovery
  */
-$wgAdDriverBabRecoveryCountries = null;
+$wgAdDriverWadBTCountries = null;
 
 /**
  * @name $wgEnableCMPCountries

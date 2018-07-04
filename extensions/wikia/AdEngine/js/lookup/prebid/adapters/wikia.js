@@ -1,10 +1,11 @@
 /*global define*/
 define('ext.wikia.adEngine.lookup.prebid.adapters.wikia',[
 	'ext.wikia.adEngine.adContext',
+	'ext.wikia.adEngine.wad.babDetection',
 	'ext.wikia.adEngine.wrappers.prebid',
 	'wikia.document',
 	'wikia.querystring'
-], function (adContext, prebid, doc, QueryString) {
+], function (adContext, babDetection, prebid, doc, QueryString) {
 	'use strict';
 
 	var bidderName = 'wikia',
@@ -58,7 +59,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.wikia',[
 	}
 
 	function isEnabled() {
-		return qs.getVal('wikia_adapter', false) !== false;
+		return qs.getVal('wikia_adapter', false) !== false && !babDetection.isBlocking();
 	}
 
 	function prepareAdUnit(slotName, config) {

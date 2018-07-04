@@ -10,12 +10,18 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.audienceNetwork', function (
 			get: noop,
 			getContext: noop
 		},
+		babDetection: {
+			isBlocking: function () {
+				return false;
+			}
+		}
 	};
 
 	function getAudienceNetwork() {
 		return modules['ext.wikia.adEngine.lookup.prebid.adapters.audienceNetwork'](
 			mocks.adContext,
-			mocks.slotsContext
+			mocks.slotsContext,
+			mocks.babDetection
 		);
 	}
 

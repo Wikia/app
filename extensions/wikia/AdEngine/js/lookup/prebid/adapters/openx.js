@@ -1,8 +1,9 @@
 /*global define*/
 define('ext.wikia.adEngine.lookup.prebid.adapters.openx',[
 	'ext.wikia.adEngine.adContext',
-	'ext.wikia.adEngine.context.slotsContext'
-], function (adContext, slotsContext) {
+	'ext.wikia.adEngine.context.slotsContext',
+	'ext.wikia.adEngine.wad.babDetection'
+], function (adContext, slotsContext, babDetection) {
 	'use strict';
 
 	var bidderName = 'openx',
@@ -64,7 +65,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.openx',[
 		};
 
 	function isEnabled() {
-		return adContext.get('bidders.openx');
+		return adContext.get('bidders.openx') && !babDetection.isBlocking();
 	}
 
 	function getSlots(skin) {

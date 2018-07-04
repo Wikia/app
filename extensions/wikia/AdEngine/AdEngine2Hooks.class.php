@@ -44,7 +44,6 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverA9VideoBidderCountries';
 		$vars[] = 'wgAdDriverBabDetectionDesktopCountries';
 		$vars[] = 'wgAdDriverBabDetectionMobileCountries';
-		$vars[] = 'wgAdDriverBabRecoveryCountries';
 		$vars[] = 'wgAdDriverBeachfrontBidderCountries';
 		$vars[] = 'wgAdDriverBottomLeaderBoardLazyPrebidCountries';
 		$vars[] = 'wgAdDriverBottomLeaderBoardAdditionalSizesCountries';
@@ -99,6 +98,7 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverSingleBLBSizeForUAPCountries';
 		$vars[] = 'wgAdDriverSrcPremiumCountries';
 		$vars[] = 'wgAdDriverTurtleCountries';
+		$vars[] = 'wgAdDriverWadBTCountries';
 
 		/**
 		 * Disaster Recovery
