@@ -73,10 +73,16 @@ class HTTPSSupportHooks {
 	 * @return boolean
 	 */
 	public static function onSitemapRobotsPageBeforeOutput( WebRequest $request, User $user ): bool {
-		if ( WebRequest::detectProtocol() === 'https' &&
+		$url = wfExpandUrl( $request->getFullRequestURL(), PROTO_HTTP );
+		if ( WebRequest::detectProtocol() === 'http' &&
+			self::httpsAllowed( $user, $request->getFullRequestURL() )
+		) {
+			self::redirectWithPrivateCache( wfHttpToHttps( $url ), $request );
+			return false;
+		} elseif ( WebRequest::detectProtocol() === 'https' &&
 			!self::httpsAllowed( $user, $request->getFullRequestURL() )
 		) {
-			self::downgradeRedirect( $request );
+			self::redirectWithPrivateCache( wfHttpsToHttp( $url ), $request );
 			return false;
 		}
 		return true;
@@ -98,22 +104,6 @@ class HTTPSSupportHooks {
 		if ( preg_match( self::VIGNETTE_IMAGES_HTTP_UPGRADABLE, $url ) && strpos( $url, 'http://' ) === 0 ) {
 			$url = wfHttpToHttps( $url );
 		}
-	}
-
-	private static function downgradeRedirect( WebRequest $request, User $user ): bool {
-		$url = wfExpandUrl( $request->getFullRequestURL(), PROTO_HTTP );
-		if ( WebRequest::detectProtocol() === 'http' &&
-			self::httpsAllowed( $user, $request->getFullRequestURL() )
-		) {
-			self::redirectWithPrivateCache( wfHttpToHttps( $url ), $request );
-			return false;
-		} elseif ( WebRequest::detectProtocol() === 'https' &&
-			!self::httpsAllowed( $user, $request->getFullRequestURL() )
-		) {
-			self::redirectWithPrivateCache( wfHttpsToHttp( $url ), $request );
-			return false;
-		}
-		return true;
 	}
 
 	private static function redirectWithPrivateCache( string $url, WebRequest $request ) {
