@@ -12,8 +12,14 @@ define('ext.wikia.adEngine.wad.btRecLoader', [
 		wikiaApiMethod = 'getBTCode',
 		placementClass = 'bt-uid-tg',
 		placementsMap = {
-			TOP_LEADERBOARD: '5b33d3584c-188',
-			TOP_RIGHT_BOXAD: '5b2d1649b2-188'
+			TOP_LEADERBOARD: {
+				uid: '5b33d3584c-188',
+				style: 'margin: 0 10px;'
+			},
+			TOP_RIGHT_BOXAD: {
+				uid: '5b2d1649b2-188',
+				style: 'margin-bottom: 10px;'
+			}
 		};
 
 	function markAdSlots(replace) {
@@ -25,12 +31,14 @@ define('ext.wikia.adEngine.wad.btRecLoader', [
 				if (slot) {
 					if (replace) {
 						DOMElementTweaker.addClass(slot, placementClass);
-						DOMElementTweaker.setData(slot, 'uid', placementsMap[key]);
+						DOMElementTweaker.setData(slot, 'uid', placementsMap[key].uid);
+						DOMElementTweaker.setData(slot, 'style', placementsMap[key].style);
 					} else {
 						var node = doc.createElement('span');
 
 						DOMElementTweaker.addClass(node, placementClass);
-						DOMElementTweaker.setData(node, 'uid', placementsMap[key]);
+						DOMElementTweaker.setData(node, 'uid', placementsMap[key].uid);
+						DOMElementTweaker.setData(node, 'style', placementsMap[key].style);
 						DOMElementTweaker.hide(node, true);
 
 						slot.parentNode.insertBefore(node, slot.previousSibling);
