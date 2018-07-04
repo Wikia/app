@@ -35,6 +35,7 @@ $(function ($) {
 			// Escape key
 			if (event.which === 27) {
 				deactivateSearch();
+				$searchInput.blur();
 			}
 		})
 		.on('blur', function () {
