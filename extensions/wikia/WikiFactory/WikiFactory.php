@@ -2430,6 +2430,34 @@ class WikiFactory {
 	}
 
 	/**
+	 * isInArchive
+	 *
+	 * Checks if a given wiki is already in archive db
+	 *
+	 * @param integer $cityId Wiki ID
+	 *
+	 * @return bool
+	 */
+	static public function isInArchive( $city_id ) {
+		global $wgExternalArchiveDB;
+
+		$wiki = WikiFactory::getWikiByID( $city_id );
+		if ( isset( $wiki->city_id ) ) {
+			$dba = wfGetDB( DB_MASTER, [], $wgExternalArchiveDB );
+			$sth = $dba->select(
+				[ 'city_domains' ],
+				[ '1' ],
+				[ 'city_id' => $city_id ],
+				__METHOD__
+			);
+
+			return $sth->numRows() > 0;
+		}
+
+		return false;
+	}
+
+	/**
 	 * copyToArchive
 	 *
 	 * copy data from WikiFactory database to Archive database

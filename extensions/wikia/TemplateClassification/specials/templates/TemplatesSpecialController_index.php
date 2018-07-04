@@ -36,11 +36,7 @@
 				</a></h3>
 				<?php if ( isset( $template['revision'] ) ) : ?>
 					<?= wfMessage( 'template-classification-special-last-edit' )->rawParams(
-						Xml::element( 'a', [
-							'href' => $template['revision']['userpage']
-						],
-							$template['revision']['username']
-						),
+						$template['revision']['userpage'],
 						$template['revision']['timestamp']
 					)->escaped() ?>
 				<?php endif; ?>

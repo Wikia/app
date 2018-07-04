@@ -3,8 +3,9 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.rubiconDisplay', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.context.slotsContext',
 	'ext.wikia.adEngine.lookup.prebid.adaptersHelper',
+	'ext.wikia.adEngine.wad.babDetection',
 	'wikia.log'
-], function (adContext, slotsContext, adaptersHelper, log) {
+], function (adContext, slotsContext, adaptersHelper, babDetection, log) {
 	'use strict';
 
 	var bidderName = 'rubicon_display',
@@ -67,7 +68,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.rubiconDisplay', [
 		};
 
 	function isEnabled() {
-		return adContext.get('bidders.rubiconDisplay');
+		return adContext.get('bidders.rubiconDisplay') && !babDetection.isBlocking();
 	}
 
 	function prepareAdUnit(slotName, config, skin) {

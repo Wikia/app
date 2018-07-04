@@ -1,9 +1,9 @@
 /*global describe, it, expect, modules, spyOn*/
-describe('Module ext.wikia.adEngine.babDetection', function () {
+describe('Module ext.wikia.adEngine.wad.babDetection', function () {
 	'use strict';
 
 	function getModule(mocks) {
-		return modules['ext.wikia.adEngine.babDetection'](
+		return modules['ext.wikia.adEngine.wad.babDetection'](
 			mocks.document,
 			mocks.log,
 			mocks.tracker,
