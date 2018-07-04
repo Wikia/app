@@ -33,6 +33,13 @@ spec:
               value: "yes"
             - name: LOG_SOCKET_ADDRESS
               value: "tcp://localhost:9999"
+          resources:
+            limits:
+              cpu: "4"
+              memory: "1300Mi"
+            requests:
+              cpu: "400m"
+              memory: "800Mi"
         # MW log output, see K8s_LOGGING.md
         - name: logger
           image: artifactory.wikia-inc.com/sus/mediawiki-logger:latest

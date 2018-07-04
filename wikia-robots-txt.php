@@ -6,6 +6,10 @@ use Wikia\RobotsTxt\WikiaRobots;
 
 require_once( __DIR__ . '/includes/WebStart.php' );
 
+if ( !Hooks::run( 'WikiaRobotsBeforeOutput', [ $wgRequest, $wgUser ] ) ) {
+	return;
+}
+
 $wikiaRobots = new WikiaRobots( new PathBuilder() );
 $robots = $wikiaRobots->configureRobotsBuilder( new RobotsTxt() );
 
