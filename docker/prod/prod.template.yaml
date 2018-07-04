@@ -60,6 +60,7 @@ metadata:
   name: mediawiki-prod-ingress
   annotations:
     traefik.frontend.priority: "1"
+    traefik.ingress.kubernetes.io/preserve-host: "true"
 spec:
   rules:
     - host: "*.wikia.com"
