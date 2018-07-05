@@ -1,5 +1,8 @@
 <?php
 
+use Wikia\Tasks\Tasks\MaintenanceTask;
+use Wikia\Tasks\Queues\ScheduledMaintenanceQueue;
+
 require_once( dirname( __FILE__ ) . "/Maintenance.php" );
 
 class MaintenanceTaskScheduler extends Maintenance {
@@ -13,6 +16,7 @@ class MaintenanceTaskScheduler extends Maintenance {
 		$this->addOption( "active", "Run on wikis which are active at least <param> days" );
 		$this->addOption( "cluster", "Cluster name, possible values: c1, ..., c7" );
 		$this->addOption( "id", "Wiki IDs (separated with comma)" );
+		$this->addOption( "params", "Script command line optional parameters" );
 	}
 
 	public function execute() {
@@ -21,23 +25,23 @@ class MaintenanceTaskScheduler extends Maintenance {
 		$script = $this->getArg( 0 );
 		$active = $this->getOption( "active" );
 		$cluster = $this->getOption( "cluster" );
+		$params = $this->getOption( "params", '' );
 
 		$idsParam = [];
 		if ( $this->getOption( "id" ) !== null ) {
 			$idsParam = array_map( "intval", str_getcsv( $this->getOption( "id" ), "," ) );
 		}
 
-		$this->output( "Scheduling ${script}\n" );
+		$this->output( "Scheduling ${script} ${params}\n" );
 
 		$db = wfGetDB( DB_SLAVE, [], $wgExternalSharedDB );
 
-		// TODO: Handle 300k wikis
 		$this->getWikis( $idsParam, $active, $cluster )
 			->runLoop( $db, function ( $data, $row ) {
 				$this->wikiIds[] = $row->city_id;
 			} );
 
-		$this->scheduleTask($this->wikiIds, $script);
+		$this->scheduleTasks($this->wikiIds, $script, $params);
 	}
 
 	private function getWikis( array $idsParam = [], int $active = null, string $cluster = null ) {
@@ -64,13 +68,18 @@ class MaintenanceTaskScheduler extends Maintenance {
 		return $sql;
 	}
 
-	private function scheduleTask( array $wikiIds, string $script ) {
-		$task = new \Wikia\Tasks\Tasks\MaintenanceTask();
-		$task->wikiId( $wikiIds );
-		$task->setQueue( \Wikia\Tasks\Queues\ScheduledMaintenanceQueue::NAME );
-		$task->call( "run", $script );
-
-		$task->queue();
+	/**
+	 * @param int[] $wikiIds list of IDs of wikis where the script should be run
+	 * @param string $script
+	 * @param string $params
+	 */
+	private function scheduleTasks( array $wikiIds, string $script, string $params ) {
+		$task = new MaintenanceTask();
+		$task->call( 'run', $script, $params );
+		$task
+			->setQueue(ScheduledMaintenanceQueue::NAME)
+			->wikiId( $wikiIds )
+			->queue();
 
 		$this->output( "Scheduled MaintenanceTask queue\n" );
 	}

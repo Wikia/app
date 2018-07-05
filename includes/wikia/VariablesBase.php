@@ -4505,15 +4505,6 @@ $wgFixArabicUnicode = true;
 $wgFixMalayalamUnicode = true;
 
 /**
- * Celery monitoring tool URL.
- * @see extensions/wikia/Tasks/TasksSpecialController.class.php
- * @see lib/Wikia/src/Tasks/Tasks/ImageReviewTask.php
- * @see maintenance/wikia/task_runner.php
- * @var string $wgFlowerUrl
- */
-$wgFlowerUrl = 'http://prod.flower.service.sjc.consul:5555';
-
-/**
  * Abstract list of footer icons for skins in place of old copyrightico and poweredbyico code
  * You can add new icons to the built in copyright or poweredby, or you can create
  * a new block. Though note that you may need to add some custom css to get good styling
