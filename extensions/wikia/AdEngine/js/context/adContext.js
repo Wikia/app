@@ -99,6 +99,7 @@ define('ext.wikia.adEngine.adContext', [
 		context.bidders.a9Video = !areDelayServicesBlocked() && isProperGeoAds('wgAdDriverA9VideoBidderCountries');
 		context.bidders.rubiconDisplay = isProperGeoAds('wgAdDriverRubiconDisplayPrebidCountries');
 		context.bidders.rubicon = isProperGeoAds('wgAdDriverRubiconPrebidCountries');
+		context.bidders.rubiconDfp = isProperGeoAds('wgAdDriverRubiconDfpCountries');
 		context.bidders.rubiconInFV = isProperGeoAds('wgAdDriverRubiconVideoInFeaturedVideoCountries') && hasFeaturedVideo;
 		context.bidders.beachfront = isProperGeoAds('wgAdDriverBeachfrontBidderCountries') && !hasFeaturedVideo;
 		context.bidders.appnexusAst = isProperGeoAds('wgAdDriverAppNexusAstBidderCountries') && !hasFeaturedVideo;

@@ -1033,6 +1033,13 @@ $wgAdDriverRubiconFastlaneProviderSkipTier = 0;
 $wgAdDriverRubiconPrebidCountries = null;
 
 /**
+ * @name $wgAdDriverRubiconDfpCountries
+ * Enables Rubicon via DFP in these countries.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverRubiconDfpCountries = null;
+
+/**
  * @name $wgAdDriverPrebidBidderCountries
  * List of countries where prebid bidding platform is enabled.
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.

@@ -93,6 +93,7 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverRepeatMobileIncontentCountries';
 		$vars[] = 'wgAdDriverRubiconDisplayPrebidCountries';
 		$vars[] = 'wgAdDriverRubiconPrebidCountries';
+		$vars[] = 'wgAdDriverRubiconDfpCountries';
 		$vars[] = 'wgAdDriverRubiconVideoInFeaturedVideoCountries';
 		$vars[] = 'wgAdDriverScrollDepthTrackingCountries';
 		$vars[] = 'wgAdDriverSingleBLBSizeForUAPCountries';
