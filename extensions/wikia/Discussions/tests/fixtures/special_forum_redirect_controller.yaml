@@ -13,3 +13,10 @@ page:
     page_random: 0
     page_latest: 2
     page_len: 0
+  - page_id: 3
+    page_namespace: 1
+    page_title: This_is_article
+    page_restrictions: ''
+    page_random: 0
+    page_latest: 3
+    page_len: 0
