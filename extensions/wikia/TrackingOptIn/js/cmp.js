@@ -266,7 +266,7 @@ define('wikia.cmp', [
 				}, {})
 			}, true);
 		},
-		getPublisherConsent: function (purposesIds, callback) {
+		getPublisherConsents: function (purposesIds, callback) {
 			var purposesAllowed = (purposesIds || publisherConsent.getPurposesAllowed()).reduce(function (obj, id) {
 					var type = (id > 24) ? 'customPurposeConsents' : 'standardPurposeConsents';
 
