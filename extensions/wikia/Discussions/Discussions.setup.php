@@ -32,6 +32,7 @@ if ( !empty( $wgEnableDiscussions ) && empty( $wgEnableForumExt ) ) {
 	$wgAutoloadClasses['SpecialForumRedirectController'] = __DIR__ . '/controllers/SpecialForumRedirectController.class.php';
 	$wgHooks['ArticleViewHeader'][] = 'SpecialForumRedirectController::onArticleViewHeader';
 	$wgHooks['BeforePageHistory'][] = 'SpecialForumRedirectController::onBeforePageHistory';
+	$wgHooks['LinkBegin'][] = 'DiscussionsHooksHelper::onLinkBegin';
 	$wgSpecialPages['Forum'] = 'SpecialForumRedirectController';
 
 	// IRIS-5184: Exclude outgoing links in Forum content from Special:WhatLinksHere and Special:WantedPages
