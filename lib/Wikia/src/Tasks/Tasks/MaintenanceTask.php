@@ -16,6 +16,7 @@ class MaintenanceTask extends BaseTask {
 
 		$script = realpath( $IP. '/' . $script );
 
+		Assert::true( file_exists( $script ), 'Provided script does not exist' );
 		Assert::true( endsWith( $script, '.php' ), '$script must end with .php' );
 		Assert::true( startsWith( $script, $IP ), 'Script path must be relative to app\'s root' );
 
