@@ -33,7 +33,7 @@ class MaintenanceTask extends BaseTask {
 		self::validatePath( $script );
 
 		$exitStatus = 0;
-		wfShellExec(
+		$output = wfShellExec(
 			sprintf(
 				'SERVER_ID=%d php %s %s',
 				$wgCityId,
@@ -47,5 +47,10 @@ class MaintenanceTask extends BaseTask {
 			throw new \Exception(
 				sprintf( 'wfShellExec: %s failed with exit code %d', $script, $exitStatus ) );
 		}
+
+		$this->info( __METHOD__ . '::output', [
+			'output' => $output,
+			'script' => $script
+		] );
 	}
 }
