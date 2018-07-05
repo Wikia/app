@@ -67,11 +67,15 @@ class SpecialForumRedirectController extends WikiaSpecialPageController {
 	/**
 	 * Redirect requests for a thread to discussions, e.g. from:
 	 *
-	 *   http://garth.garth.wikia-dev.us/wiki/Thread:2892
+	 *   https://terrabattle.wikia.com/wiki/Thread:xxx
+	 * or
+	 *   https://terrabattle.wikia.com/wiki/Board_Thread:yyy/@comment-x.x.x.x-xxx
+	 * or
+	 *   https://terrabattle.wikia.com/wiki/Board_Thread:yyy/@comment-x.x.x.x-xxx/@comment-x.x.x.x-xxx
 	 *
 	 * to:
 	 *
-	 *   http://garth.wikia.com/d/p/2914856863801542335
+	 *   https://terrabattle.wikia.com/d/p/zzz
 	 *
 	 * @param Title $thread
 	 */
@@ -163,20 +167,48 @@ class SpecialForumRedirectController extends WikiaSpecialPageController {
 	private static function getMainTitle( Article $article ) {
 		$title = $article->getTitle();
 
-		if ( $title->getNamespace() != NS_USER_WALL_MESSAGE || $title->getText() <= 0  ) {
+		if ( $title->inNamespace( NS_WIKIA_FORUM_BOARD_THREAD ) ) {
+			// /wiki/Board_Thread:xxx/@comment-xxx
+			// and /wiki/Board_Thread:xxx/@comment-xxx/@comment-xxx
+			return self::getTitleForForumBoardThread( $title );
+		}
+
+		// /wiki/Thread:xxx
+		return self::getTitleForWallMessage( $title );
+	}
+
+	private static function getTitleForForumBoardThread( Title $title ): Title {
+		if ( self::isThreadReply( $title->getDBkey() ) ) {
+			$title = Title::makeTitle( NS_WIKIA_FORUM_BOARD_THREAD, $title->getBaseText() );
+		}
+
+		return $title;
+	}
+
+	public static function isThreadReply( string $dbkey ): bool {
+		$lookFor = explode( '/@' , $dbkey );
+
+		// Board_Thread:xxx/@comment-xxx/@comment-xxx
+		if ( count( $lookFor ) > 2 ) {
+			return true;
+		}
+		return false;
+	}
+
+	private static function getTitleForWallMessage( Title $title ) {
+		$titleText = $title->getText();
+
+		if ( $title->getNamespace() != NS_USER_WALL_MESSAGE || intval( $titleText ) <= 0 ) {
 			return null;
 		}
 
-		$mainTitle = Title::newFromId( $title->getText() );
+		$mainTitle = Title::newFromId( $titleText );
 
 		if ( empty( $mainTitle ) ) {
 			return null;
 		}
 
-		$dbKey = $mainTitle->getDBkey();
-
-		$helper = new WallHelper();
-		if ( !$helper->isDbkeyFromWall( $dbKey ) ) {
+		if ( !( new WallHelper() )->isDbkeyFromWall( $mainTitle->getDBkey() ) ) {
 			return null;
 		}
 
