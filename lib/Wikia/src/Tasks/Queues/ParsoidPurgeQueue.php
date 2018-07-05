@@ -13,7 +13,6 @@ class ParsoidPurgeQueue extends Queue {
 	const NAME = 'ParsoidPurgeQueue';
 
 	public function __construct() {
-		$this->name = 'parsoid_purge';
-		$this->routingKey = 'mediawiki.parsoid_purge';
+		parent::__construct('parsoid_purge');
 	}
 } 
