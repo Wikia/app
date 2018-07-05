@@ -7,16 +7,10 @@ define('ext.wikia.adEngine.wad.ilRecLoader', [
 ], function (adContext, scriptLoader, doc, win) {
 	'use strict';
 
-	var wikiaApiController = 'AdEngine2ApiController',
-		wikiaApiMethod = 'getILCode';
-
 	function injectScript() {
-		var url = win.wgCdnApiUrl + '/wikia.php?controller=' + wikiaApiController + '&method=' + wikiaApiMethod;
-
-		scriptLoader.loadScript(url, {
-			isAsync: false,
-			node: doc.head.lastChild
-		});
+		if (win.runILCode) {
+			win.runILCode();
+		}
 	}
 
 	function init() {
