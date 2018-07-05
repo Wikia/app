@@ -77,7 +77,7 @@ class MaintenanceTaskScheduler extends Maintenance {
 		$task = new MaintenanceTask();
 		$task->call( 'run', $script, $params );
 		$task
-			#->setQueue(ScheduledMaintenanceQueue::NAME) // TODO: define Celery queue
+			->setQueue(ScheduledMaintenanceQueue::NAME)
 			->wikiId( $wikiIds )
 			->queue();
 
