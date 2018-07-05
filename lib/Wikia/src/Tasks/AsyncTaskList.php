@@ -146,7 +146,7 @@ class AsyncTaskList {
 	 * @param int $wikiId
 	 * @return $this
 	 */
-	public function wikiId( $wikiId ) {
+	public function wikiId( int $wikiId ) {
 		$this->wikiId = $wikiId;
 
 		return $this;

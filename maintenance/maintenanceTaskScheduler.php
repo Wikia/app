@@ -1,5 +1,9 @@
 <?php
 
+use Wikia\Tasks\AsyncTaskList;
+use Wikia\Tasks\Tasks\MaintenanceTask;
+use Wikia\Tasks\Queues\ScheduledMaintenanceQueue;
+
 require_once( dirname( __FILE__ ) . "/Maintenance.php" );
 
 class MaintenanceTaskScheduler extends Maintenance {
@@ -38,7 +42,7 @@ class MaintenanceTaskScheduler extends Maintenance {
 				$this->wikiIds[] = $row->city_id;
 			} );
 
-		$this->scheduleTask($this->wikiIds, $script, $params);
+		$this->scheduleTasks($this->wikiIds, $script, $params);
 	}
 
 	private function getWikis( array $idsParam = [], int $active = null, string $cluster = null ) {
@@ -65,13 +69,23 @@ class MaintenanceTaskScheduler extends Maintenance {
 		return $sql;
 	}
 
-	private function scheduleTask( array $wikiIds, string $script, string $params ) {
-		$task = new \Wikia\Tasks\Tasks\MaintenanceTask();
-		$task->wikiId( $wikiIds );
-		$task->setQueue( \Wikia\Tasks\Queues\ScheduledMaintenanceQueue::NAME );
-		$task->call( "run", $script, $params );
+	/**
+	 * @param int[] $wikiIds list of IDs of wikis where the script should be run
+	 * @param string $script
+	 * @param string $params
+	 */
+	private function scheduleTasks( array $wikiIds, string $script, string $params ) {
+		$tasks = [];
 
-		$task->queue();
+		foreach ($wikiIds as $wikiId) {
+			$task = new MaintenanceTask();
+			$tasks[ ] = ( new AsyncTaskList() )
+				#->setQueue(ScheduledMaintenanceQueue::NAME) // TODO: define Celery queue
+				->wikiId($wikiId)
+				->add( $task->call( "run", $script, $params ) );
+		}
+
+		AsyncTaskList::batch( $tasks );
 
 		$this->output( "Scheduled MaintenanceTask queue\n" );
 	}
