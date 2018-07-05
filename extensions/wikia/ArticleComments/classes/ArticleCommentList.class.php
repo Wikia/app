@@ -855,7 +855,7 @@ class ArticleCommentList {
 		$ns = $title->getNamespace();
 		if (
 			!MWNamespace::isTalk( $ns ) ||
-			!in_array( $ns, $wgArticleCommentsNamespaces ) ||
+			!in_array( MWNamespace::getSubject( $ns ), $wgArticleCommentsNamespaces ) ||
 			!ArticleComment::isTitleComment( $title ) ) {
 			return true;
 		}
