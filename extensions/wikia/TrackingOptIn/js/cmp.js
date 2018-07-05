@@ -62,30 +62,10 @@ define('wikia.cmp', [
 		vendorConsentString = cookies.get(vendorConsentCookieName);
 		publisherConsentString = cookies.get(publisherConsentCookieName);
 
-		if (publisherConsentString) {
-			log(['Retrieving publisher consent string from the cookie', publisherConsentString], log.levels.debug, logGroup);
-			publisherConsent = new cs.ConsentString(publisherConsentString);
-		} else {
-			publisherConsent = new cs.ConsentString();
-			publisherConsent.setCmpId(cmpId);
-			publisherConsent.setCmpVersion(cmpVersion);
-			publisherConsent.setConsentScreen(consentScreen);
-			publisherConsent.setPurposesAllowed(optIn ? allowedPublisherPurposes : []);
-
-			publisherConsentString = publisherConsent.getMetadataString();
-
-			cookies.set(publisherConsentCookieName, publisherConsentString, {
-				path: '/',
-				domain: win.wgCookieDomain || '.wikia.com',
-				expires: cookieExpireMillis
-			});
-
-			log('Publisher consent string saved to the cookie', log.levels.debug, logGroup);
-		}
-
-		if (vendorConsentString) {
-			log(['Retrieving vendor consent string from the cookie', vendorConsentString], log.levels.debug, logGroup);
+		if (vendorConsentString && publisherConsentString) {
+			log(['Retrieving consent string from the cookie', vendorConsentString], log.levels.debug, logGroup);
 			vendorConsent = new cs.ConsentString(vendorConsentString);
+			publisherConsent = new cs.ConsentString(publisherConsentString);
 			win.__cmp = __cmp;
 			cmpQueue.start();
 		} else {
@@ -114,7 +94,22 @@ define('wikia.cmp', [
 					expires: cookieExpireMillis
 				});
 
-				log('Vendor consent string saved to the cookie', log.levels.debug, logGroup);
+				publisherConsent = new cs.ConsentString();
+				publisherConsent.setCmpId(cmpId);
+				publisherConsent.setCmpVersion(cmpVersion);
+				publisherConsent.setConsentScreen(consentScreen);
+				publisherConsent.setGlobalVendorList(vendorList);
+				publisherConsent.setPurposesAllowed(optIn ? allowedPublisherPurposes : []);
+
+				publisherConsentString = publisherConsent.getConsentString();
+
+				cookies.set(publisherConsentCookieName, publisherConsentString, {
+					path: '/',
+					domain: win.wgCookieDomain || '.wikia.com',
+					expires: cookieExpireMillis
+				});
+
+				log('Consent string saved to the cookie', log.levels.debug, logGroup);
 
 				win.__cmp = __cmp;
 				cmpQueue.start();
@@ -278,7 +273,7 @@ define('wikia.cmp', [
 				});
 
 			callback({
-				metadata: publisherConsentString,
+				metadata: publisherConsent.getMetadataString(),
 				gdprApplies: getGdprApplies(),
 				hasGlobalScope: hasGlobalScope,
 				standardPurposeConsents: purposesAllowed.standardPurposeConsents,
