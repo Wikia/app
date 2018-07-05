@@ -1,6 +1,5 @@
 <?php
 
-use Wikia\Tasks\AsyncTaskList;
 use Wikia\Tasks\Tasks\MaintenanceTask;
 use Wikia\Tasks\Queues\ScheduledMaintenanceQueue;
 
@@ -75,17 +74,12 @@ class MaintenanceTaskScheduler extends Maintenance {
 	 * @param string $params
 	 */
 	private function scheduleTasks( array $wikiIds, string $script, string $params ) {
-		$tasks = [];
-
-		foreach ($wikiIds as $wikiId) {
-			$task = new MaintenanceTask();
-			$tasks[ ] = ( new AsyncTaskList() )
-				#->setQueue(ScheduledMaintenanceQueue::NAME) // TODO: define Celery queue
-				->wikiId($wikiId)
-				->add( $task->call( "run", $script, $params ) );
-		}
-
-		AsyncTaskList::batch( $tasks );
+		$task = new MaintenanceTask();
+		$task->call( 'run', $script, $params );
+		$task
+			#->setQueue(ScheduledMaintenanceQueue::NAME) // TODO: define Celery queue
+			->wikiId( $wikiIds )
+			->queue();
 
 		$this->output( "Scheduled MaintenanceTask queue\n" );
 	}
