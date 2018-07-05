@@ -8784,7 +8784,7 @@ $wgWikicitiesReadOnly = false;
  * Additional domains that need to be mapped to wikia.com and redirected
  * properly.
  * @see extensions/wikia/WikiFactory/Loader/WikiFactoryLoader.php
- * @var Array $wgWikiFactoryDomains
+ * @var string[] $wgWikiFactoryDomains
  */
 $wgWikiFactoryDomains = [
     # gTLDs
