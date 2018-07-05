@@ -7,6 +7,6 @@ class ScheduledMaintenanceQueue extends Queue {
 
 	public function __construct() {
 		$this->name = 'mediawiki_maintenance';
-		$this->routingKey = 'mediawiki.maintenance';
+		$this->routingKey = 'mediawiki_maintenance';
 	}
 }
