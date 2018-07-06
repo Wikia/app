@@ -1,5 +1,5 @@
 <form class="wds-global-navigation__search-container wds-search-is-focused" action="<?= Sanitizer::encodeAttribute( $model['results']['url'] ); ?>">
-	<div class="wds-dropdown wds-global-navigation__search wds-has-dark-shadow">
+	<div class="wds-dropdown wds-global-navigation__search wds-no-chevron wds-has-dark-shadow">
 		<div class="wds-global-navigation__search-toggle">
 			<?= DesignSystemHelper::renderSvg(
 				'wds-icons-magnifying-glass-small',

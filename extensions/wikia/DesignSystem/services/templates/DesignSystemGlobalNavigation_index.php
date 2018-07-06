@@ -12,31 +12,33 @@
 					[ 'model' => $model['main-navigation'] ] ); ?>
 			</div>
 			<div class="wds-global-navigation__content-bar-right">
-				<?= $app->renderPartial( 'DesignSystemGlobalNavigationService', 'search',
-					[ 'model' => $model['search'] ] ); ?>
-				<?php if ( !empty( $model['user'] ) ): ?>
-					<?= $app->renderPartial( 'DesignSystemGlobalNavigationService', 'userMenu',
-						[ 'model' => $model['user'] ] ); ?>
-					<?= $app->renderView( 'DesignSystemGlobalNavigationOnSiteNotificationsService', 'index' ); ?>
-					<?= $app->renderPartial( 'DesignSystemGlobalNavigationWallNotificationsService', 'index' ); ?>
-				<?php endif; ?>
-				<?php if ( !empty( $model['anon'] ) ): ?>
-					<?= $app->renderPartial( 'DesignSystemGlobalNavigationService', 'anonMenu',
-						[ 'model' => $model['anon'] ] ); ?>
-				<?php endif; ?>
-				<div class="wds-global-navigation__start-a-wiki">
-					<?= $app->renderPartial( 'DesignSystemGlobalNavigationService', 'linkButton',
-						[ 'model' => $model['create-wiki'] ] ); ?>
+				<div class="wds-global-navigation__dropdown-controls">
+					<?= $app->renderPartial( 'DesignSystemGlobalNavigationService', 'search',
+						[ 'model' => $model['search'] ] ); ?>
+					<?php if ( !empty( $model['user'] ) ): ?>
+						<?= $app->renderPartial( 'DesignSystemGlobalNavigationService', 'userMenu',
+							[ 'model' => $model['user'] ] ); ?>
+						<?= $app->renderView( 'DesignSystemGlobalNavigationOnSiteNotificationsService', 'index' ); ?>
+						<?= $app->renderPartial( 'DesignSystemGlobalNavigationWallNotificationsService', 'index' ); ?>
+					<?php endif; ?>
+					<?php if ( !empty( $model['anon'] ) ): ?>
+						<?= $app->renderPartial( 'DesignSystemGlobalNavigationService', 'anonMenu',
+							[ 'model' => $model['anon'] ] ); ?>
+					<?php endif; ?>
+					<div class="wds-global-navigation__start-a-wiki">
+						<?= $app->renderPartial( 'DesignSystemGlobalNavigationService', 'linkButton',
+							[ 'model' => $model['create-wiki'] ] ); ?>
+					</div>
+					<?php if ( !empty( $model['partner-slot'] ) ): ?>
+						<?= $app->renderView(
+						'DesignSystemGlobalNavigationService',
+						'partnerSlot',
+						[
+							'model' => $model['partner-slot'],
+						]
+					); ?>
+					<?php endif; ?>
 				</div>
-				<?php if ( !empty( $model['partner-slot'] ) ): ?>
-					<?= $app->renderView(
-					'DesignSystemGlobalNavigationService',
-					'partnerSlot',
-					[
-						'model' => $model['partner-slot'],
-					]
-				); ?>
-				<?php endif; ?>
 			</div>
 		</div>
 	</div>

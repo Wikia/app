@@ -376,6 +376,12 @@
 		}
 	}
 
+	&__user-menu, &__notifications-dropdown {
+		.wds-dropdown__toggle-chevron {
+			margin-left: 3px;
+		}
+	}
+
 	&__link-button {
 		margin: 6px;
 		text-align: center;
