@@ -3515,6 +3515,7 @@ class ComposerStaticInitb367f9b4bf4d43e0d5ea402c134db26b
         'Wikia\\Tasks\\Tasks\\BatchRefreshLinksForTemplate' => __DIR__ . '/../../..' . '/lib/Wikia/src/Tasks/Tasks/BatchRefreshLinksForTemplate.php',
         'Wikia\\Tasks\\Tasks\\BlockPurgeExpiredTask' => __DIR__ . '/../../..' . '/lib/Wikia/src/Tasks/Tasks/BlockPurgeExpiredTask.php',
         'Wikia\\Tasks\\Tasks\\CreateNewWikiTask' => __DIR__ . '/../../..' . '/lib/Wikia/src/Tasks/Tasks/CreateNewWikiTask.php',
+        'Wikia\\Tasks\\Tasks\\DeferredTaskQueueUpdate' => __DIR__ . '/../../..' . '/lib/Wikia/src/Tasks/DeferredTaskQueueUpdate.php',
         'Wikia\\Tasks\\Tasks\\DismissCommunityMessageTask' => __DIR__ . '/../../..' . '/lib/Wikia/src/Tasks/Tasks/DismissCommunityMessageTask.php',
         'Wikia\\Tasks\\Tasks\\EdgeCachePurger' => __DIR__ . '/../../..' . '/lib/Wikia/src/Tasks/Tasks/EdgeCachePurger.php',
         'Wikia\\Tasks\\Tasks\\GalleryCachePurgeTask' => __DIR__ . '/../../..' . '/lib/Wikia/src/Tasks/Tasks/GalleryCachePurgeTask.php',

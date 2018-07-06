@@ -431,21 +431,7 @@ abstract class BaseTask {
 	 * Schedule this task to be published to the queue after the main response has been flushed back to the client.
 	 */
 	public function scheduleAsDeferredUpdate() {
-		$deferredUpdate = new class( $this ) implements \DeferrableUpdate {
-
-			/** @var BaseTask $task */
-			private $task;
-
-			public function __construct( BaseTask $task ) {
-				$this->task = $task;
-			}
-
-			function doUpdate() {
-				$this->task->queue();
-			}
-		};
-
-		\DeferredUpdates::addUpdate( $deferredUpdate );
+		\DeferredUpdates::addUpdate( new DeferredTaskQueueUpdate( $this ) );
 	}
 
 	public static function newLocalTask(): BaseTask {

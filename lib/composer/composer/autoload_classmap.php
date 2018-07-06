@@ -3005,6 +3005,7 @@ return array(
     'Wikia\\Tasks\\Tasks\\BatchRefreshLinksForTemplate' => $baseDir . '/lib/Wikia/src/Tasks/Tasks/BatchRefreshLinksForTemplate.php',
     'Wikia\\Tasks\\Tasks\\BlockPurgeExpiredTask' => $baseDir . '/lib/Wikia/src/Tasks/Tasks/BlockPurgeExpiredTask.php',
     'Wikia\\Tasks\\Tasks\\CreateNewWikiTask' => $baseDir . '/lib/Wikia/src/Tasks/Tasks/CreateNewWikiTask.php',
+    'Wikia\\Tasks\\Tasks\\DeferredTaskQueueUpdate' => $baseDir . '/lib/Wikia/src/Tasks/DeferredTaskQueueUpdate.php',
     'Wikia\\Tasks\\Tasks\\DismissCommunityMessageTask' => $baseDir . '/lib/Wikia/src/Tasks/Tasks/DismissCommunityMessageTask.php',
     'Wikia\\Tasks\\Tasks\\EdgeCachePurger' => $baseDir . '/lib/Wikia/src/Tasks/Tasks/EdgeCachePurger.php',
     'Wikia\\Tasks\\Tasks\\GalleryCachePurgeTask' => $baseDir . '/lib/Wikia/src/Tasks/Tasks/GalleryCachePurgeTask.php',
