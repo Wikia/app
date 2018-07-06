@@ -26,8 +26,12 @@ define('wikia.cmp', [
 ) {
 	var isModuleEnabled = geo.isProperGeo(instantGlobals.wgEnableCMPCountries),
 		logGroup = 'wikia.cmp',
-		fandomCmpId = 141,
+		cmpId = 141,
+		cmpVersion = 1,
+		consentScreen = 0,
+		consentLanguage = (geo.getCountryCode() || 'en').toLowerCase(),
 		vendorConsentCookieName = 'euconsent',
+		publisherConsentCookieName = 'eupubconsent',
 		hasGlobalScope = false,
 		cookieExpireMillis = 33696000000, // this represents thirteen 30-day months
 		cmpQueue = [],
@@ -39,6 +43,15 @@ define('wikia.cmp', [
 			69, // OpenX Software Ltd. and its affiliates
 			76, // PubMatic, Inc.
 		],
+		allowedPublisherPurposes = [
+			1, // Information storage and access
+			2, // Personalisation
+			3, // Ad selection, delivery, reporting
+			4, // Content selection, delivery, reporting
+			5, // Measurement
+		],
+		publisherConsent,
+		publisherConsentString,
 		vendorConsent,
 		vendorConsentString,
 		cmpCommands;
@@ -47,10 +60,12 @@ define('wikia.cmp', [
 		log('Initializing module', log.levels.debug, logGroup);
 
 		vendorConsentString = cookies.get(vendorConsentCookieName);
+		publisherConsentString = cookies.get(publisherConsentCookieName);
 
-		if (vendorConsentString) {
+		if (vendorConsentString && publisherConsentString) {
 			log(['Retrieving consent string from the cookie', vendorConsentString], log.levels.debug, logGroup);
 			vendorConsent = new cs.ConsentString(vendorConsentString);
+			publisherConsent = new cs.ConsentString(publisherConsentString);
 			win.__cmp = __cmp;
 			cmpQueue.start();
 		} else {
@@ -63,10 +78,10 @@ define('wikia.cmp', [
 				});
 
 				vendorConsent = new cs.ConsentString();
-				vendorConsent.setCmpId(fandomCmpId);
-				vendorConsent.setCmpVersion(1);
-				vendorConsent.setConsentScreen(1);
-				vendorConsent.setConsentLanguage((geo.getCountryCode() || 'en').toLowerCase());
+				vendorConsent.setCmpId(cmpId);
+				vendorConsent.setCmpVersion(cmpVersion);
+				vendorConsent.setConsentScreen(consentScreen);
+				vendorConsent.setConsentLanguage(consentLanguage);
 				vendorConsent.setGlobalVendorList(vendorList);
 				vendorConsent.setPurposesAllowed(optIn ? allowedPurposesList : []);
 				vendorConsent.setVendorsAllowed(optIn ? allowedVendorsList : []);
@@ -74,6 +89,21 @@ define('wikia.cmp', [
 				vendorConsentString = vendorConsent.getConsentString();
 
 				cookies.set(vendorConsentCookieName, vendorConsentString, {
+					path: '/',
+					domain: win.wgCookieDomain || '.wikia.com',
+					expires: cookieExpireMillis
+				});
+
+				publisherConsent = new cs.ConsentString();
+				publisherConsent.setCmpId(cmpId);
+				publisherConsent.setCmpVersion(cmpVersion);
+				publisherConsent.setConsentScreen(consentScreen);
+				publisherConsent.setGlobalVendorList(vendorList);
+				publisherConsent.setPurposesAllowed(optIn ? allowedPublisherPurposes : []);
+
+				publisherConsentString = publisherConsent.getConsentString();
+
+				cookies.set(publisherConsentCookieName, publisherConsentString, {
 					path: '/',
 					domain: win.wgCookieDomain || '.wikia.com',
 					expires: cookieExpireMillis
@@ -195,6 +225,10 @@ define('wikia.cmp', [
 			path: '/',
 			domain: win.wgCookieDomain || '.wikia.com'
 		});
+		cookies.set(publisherConsentCookieName, null, {
+			path: '/',
+			domain: win.wgCookieDomain || '.wikia.com'
+		});
 	}
 
 	function isEnabled() {
@@ -225,6 +259,25 @@ define('wikia.cmp', [
 					obj[id] = vendorConsent.isVendorAllowed(id);
 					return obj;
 				}, {})
+			}, true);
+		},
+		getPublisherConsents: function (purposesIds, callback) {
+			var purposesAllowed = (purposesIds || publisherConsent.getPurposesAllowed()).reduce(function (obj, id) {
+					var type = (id > 24) ? 'customPurposeConsents' : 'standardPurposeConsents';
+
+					obj[type][id] = publisherConsent.isPurposeAllowed(id);
+					return obj;
+				}, {
+					standardPurposeConsents: {},
+					customPurposeConsents: {}
+				});
+
+			callback({
+				metadata: publisherConsent.getMetadataString(),
+				gdprApplies: getGdprApplies(),
+				hasGlobalScope: hasGlobalScope,
+				standardPurposeConsents: purposesAllowed.standardPurposeConsents,
+				customPurposeCosents: purposesAllowed.customPurposeConsents
 			}, true);
 		},
 		getConsentData: function (version, callback) {
