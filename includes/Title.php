@@ -2637,7 +2637,7 @@ class Title {
 			// Wikia change SUS-5481: defer purging expired entries via background task
 			$task = \Wikia\Tasks\Tasks\PurgeExpiredRestrictionsTask::newLocalTask();
 			$task->call( 'purgeExpiredPageRestrictionsEntries', $expired );
-			$task->queue();
+			$task->scheduleAsDeferredUpdate();
 		}
 
 		if ( $getPages ) {
@@ -2789,7 +2789,7 @@ class Title {
 				// SUS-5481 - Wikia change deferred purge via background task
 				$task = \Wikia\Tasks\Tasks\PurgeExpiredRestrictionsTask::newLocalTask();
 				$task->call( 'purgeExpiredPageRestrictions', $expired );
-				$task->queue();
+				$task->scheduleAsDeferredUpdate();
 			}
 		}
 
@@ -2832,7 +2832,7 @@ class Title {
 						// Wikia change SUS-5481: defer the purge via background task
 						$task = \Wikia\Tasks\Tasks\PurgeExpiredRestrictionsTask::newLocalTask();
 						$task->call( 'purgeExpiredProtectedTitlesEntry', $this->getNamespace(), $this->getDBkey() );
-						$task->queue();
+						$task->scheduleAsDeferredUpdate();
 
 						$this->mTitleProtection = false;
 					}
