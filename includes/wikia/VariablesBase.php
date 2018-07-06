@@ -8784,7 +8784,7 @@ $wgWikicitiesReadOnly = false;
  * Additional domains that need to be mapped to wikia.com and redirected
  * properly.
  * @see extensions/wikia/WikiFactory/Loader/WikiFactoryLoader.php
- * @var Array $wgWikiFactoryDomains
+ * @var string[] $wgWikiFactoryDomains
  */
 $wgWikiFactoryDomains = [
     # gTLDs
@@ -8810,6 +8810,14 @@ $wgWikiFactoryDomains = [
     'wikicities.net',
     'wikicities.org'
 ];
+
+/**
+ * Whether WikiFactoryLoader should serve an HTTP 301 response redirecting to the primary domain of the wiki
+ * if it received a request with one of the mapped alternative domains.
+ * @see $wgWikiFactoryDomains
+ * @var bool $wgWikiFactoryRedirectForAlternateDomains
+ */
+$wgWikiFactoryRedirectForAlternateDomains = true;
 
 /**
  * Do not allow editing articles from these namespaces with Rich Text Editor.
