@@ -3016,6 +3016,7 @@ return array(
     'Wikia\\Tasks\\Tasks\\MultiLookupTask' => $baseDir . '/lib/Wikia/src/Tasks/Tasks/MultiLookupTask.php',
     'Wikia\\Tasks\\Tasks\\MultiTask' => $baseDir . '/lib/Wikia/src/Tasks/Tasks/MultiTask.php',
     'Wikia\\Tasks\\Tasks\\ParsoidCacheUpdateTask' => $baseDir . '/lib/Wikia/src/Tasks/Tasks/ParsoidCacheUpdateTask.php',
+    'Wikia\\Tasks\\Tasks\\PurgeExpiredRestrictionsTask' => $baseDir . '/lib/Wikia/src/Tasks/Tasks/PurgeExpiredRestrictionsTask.php',
     'Wikia\\Tasks\\Tasks\\RecentChangesUpdateTask' => $baseDir . '/lib/Wikia/src/Tasks/Tasks/RecentChangesUpdateTask.php',
     'Wikia\\Tasks\\Tasks\\RefreshCategoryCountsTask' => $baseDir . '/lib/Wikia/src/Tasks/Tasks/RefreshCategoryCountsTask.php',
     'Wikia\\Tasks\\Tasks\\RefreshLinksForTitleTask' => $baseDir . '/lib/Wikia/src/Tasks/Tasks/RefreshLinksForTitleTask.php',

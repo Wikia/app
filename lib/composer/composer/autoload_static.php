@@ -3526,6 +3526,7 @@ class ComposerStaticInitb367f9b4bf4d43e0d5ea402c134db26b
         'Wikia\\Tasks\\Tasks\\MultiLookupTask' => __DIR__ . '/../../..' . '/lib/Wikia/src/Tasks/Tasks/MultiLookupTask.php',
         'Wikia\\Tasks\\Tasks\\MultiTask' => __DIR__ . '/../../..' . '/lib/Wikia/src/Tasks/Tasks/MultiTask.php',
         'Wikia\\Tasks\\Tasks\\ParsoidCacheUpdateTask' => __DIR__ . '/../../..' . '/lib/Wikia/src/Tasks/Tasks/ParsoidCacheUpdateTask.php',
+        'Wikia\\Tasks\\Tasks\\PurgeExpiredRestrictionsTask' => __DIR__ . '/../../..' . '/lib/Wikia/src/Tasks/Tasks/PurgeExpiredRestrictionsTask.php',
         'Wikia\\Tasks\\Tasks\\RecentChangesUpdateTask' => __DIR__ . '/../../..' . '/lib/Wikia/src/Tasks/Tasks/RecentChangesUpdateTask.php',
         'Wikia\\Tasks\\Tasks\\RefreshCategoryCountsTask' => __DIR__ . '/../../..' . '/lib/Wikia/src/Tasks/Tasks/RefreshCategoryCountsTask.php',
         'Wikia\\Tasks\\Tasks\\RefreshLinksForTitleTask' => __DIR__ . '/../../..' . '/lib/Wikia/src/Tasks/Tasks/RefreshLinksForTitleTask.php',
