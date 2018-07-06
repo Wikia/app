@@ -28,14 +28,14 @@
 			>
 			<button class="wds-button wds-is-text wds-global-navigation__search-close" type="button">
 				<?= DesignSystemHelper::renderSvg(
-					'wds-icons-cross',
+					'wds-icons-cross-tiny',
 					'wds-icon wds-icon-tiny wds-global-navigation__search-close-icon'
 				) ?>
 			</button>
 			<button class="wds-button wds-global-navigation__search-submit"
 				data-tracking-label="<?= Sanitizer::encodeAttribute( $model['results']['tracking-label'] ); ?>">
 				<?= DesignSystemHelper::renderSvg(
-					'wds-icons-arrow',
+					'wds-icons-arrow-small',
 					'wds-icon wds-icon-small wds-global-navigation__search-submit-icon'
 				) ?>
 			</button>
