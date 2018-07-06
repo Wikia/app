@@ -61,17 +61,10 @@ kind: Ingress
 metadata:
   name: mediawiki-sandbox-ingress
   annotations:
-    traefik.frontend.priority: "1"
+    traefik.frontend.priority: "2"
 spec:
   rules:
-    - host: "mediawiki.prod.sjc.k8s.wikia.net"
-      http:
-        paths:
-          - path: /
-            backend:
-              serviceName: mediawiki-sandbox
-              servicePort: 80
-    - host: "*.wikia.com"
+    - host: "*.sandbox-sus2.wikia.com"
       http:
         paths:
           - path: /
