@@ -1,0 +1,30 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: maintenance-media-wiki
+spec:
+  schedule: "00 20 * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: logger
+            image: artifactory.wikia-inc.com/sus/mediawiki-logger:latest
+          - name: php
+            image: artifactory.wikia-inc.com/sus/mediawiki-sandbox-php:54f12b1.9306b50
+            env:
+             - name: SERVER_ID
+               value: "177"
+             - name: LOG_SOCKET_ONLY
+               value: "yes"
+             - name: LOG_SOCKET_ADDRESS
+               value: "tcp://localhost:9999"
+            args:
+            - php
+            - /usr/wikia/slot1/current/src/maintenance/maintenanceTaskScheduler.php
+            - --params="--quiet"
+            - --cluster=c5
+            - --active=2
+            - maintenance/updateSpecialPages.php
+          restartPolicy: Never

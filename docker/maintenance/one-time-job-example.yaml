@@ -1,0 +1,26 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: maintenance-media-wiki
+spec:
+  template:
+    spec:
+      containers:
+      - name: logger
+        image: artifactory.wikia-inc.com/sus/mediawiki-logger:latest
+      - name: php
+        image: artifactory.wikia-inc.com/sus/mediawiki-sandbox-php:0a5674e.c752111
+        env:
+         - name: SERVER_ID
+           value: "177"
+         - name: LOG_SOCKET_ONLY
+           value: "yes"
+         - name: LOG_SOCKET_ADDRESS
+           value: "tcp://localhost:9999"
+        args:
+        - php
+        - /usr/wikia/slot1/current/src/maintenance/maintenanceTaskScheduler.php
+        - --params="--quiet"
+        - --id=177
+        - maintenance/updateSpecialPages.php
+      restartPolicy: Never
