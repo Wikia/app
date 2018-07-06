@@ -30,9 +30,7 @@
 		z-index: $content-z-index;
 
 		&.wds-is-right-aligned {
-			left: auto;
-			right: 0;
-			transform: none;
+			@include is-right-aligned;
 		}
 
 		&.wds-is-left-aligned {
@@ -112,8 +110,10 @@
 
 	&.wds-is-active,
 	&:hover {
-		&::before, &::after {
-			display: block;
+		&:not(.wds-no-chevron) {
+			&::before, &::after {
+				display: block;
+			}
 		}
 
 		.wds-dropdown__content {

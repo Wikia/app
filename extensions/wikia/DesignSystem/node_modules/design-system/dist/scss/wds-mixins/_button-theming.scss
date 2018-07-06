@@ -15,20 +15,26 @@
 		$color-secondary-active: darken($color-secondary, 20%);
 	}
 
-	background-color: $color-primary;
-	border-color: $color-primary;
 	color: $color-primary-text;
+	background: none;
 
-	&:focus:not(:disabled),
-	&:hover:not(:disabled),
-	&:active,
-	&.wds-is-active {
-		background-color: $color-primary-active;
-		border-color: $color-primary-active;
+	&:not(.wds-is-text):not(.wds-is-secondary) {
+		background-color: $color-primary;
+
+		&:focus:not(:disabled),
+		&:hover:not(:disabled),
+		&:active,
+		&.wds-is-active {
+			background-color: $color-primary-active;
+			border-color: $color-primary-active;
+		}
+	}
+
+	&:not(.wds-is-text) {
+		border-color: $color-primary;
 	}
 
 	&.wds-is-secondary {
-		background-color: transparent;
 		border-color: $color-secondary;
 		color: $color-secondary;
 
@@ -36,21 +42,18 @@
 		&:hover:not(:disabled),
 		&:active,
 		&.wds-is-active {
-			background-color: transparent;
 			border-color: $color-secondary-active;
 			color: $color-secondary-active;
 		}
 	}
 
 	&.wds-is-text {
-		background-color: transparent;
 		color: $color-secondary;
 
 		&:focus:not(:disabled),
 		&:hover:not(:disabled),
 		&:active,
 		&.wds-is-active {
-			background-color: transparent;
 			color: $color-secondary-active;
 		}
 	}

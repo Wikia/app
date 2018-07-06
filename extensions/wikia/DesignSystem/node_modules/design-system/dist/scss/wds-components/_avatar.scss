@@ -11,6 +11,7 @@
 .wds-avatar__image {
 	@include square(100%);
 
+	display: inline-block;
 	border-radius: 50%;
 	box-sizing: border-box;
 }
