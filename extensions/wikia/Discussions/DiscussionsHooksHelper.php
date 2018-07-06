@@ -50,7 +50,7 @@ class DiscussionsHooksHelper {
 		global $wgEnableWallEngine;
 		// We need this logic only when the Wall extension is disabled
 		// This method is a direct copy from WallHooksHelper::onLinkBegin
-		if ( empty( $wgEnableWallEngine ) ) {
+		if ( !empty( $wgEnableWallEngine ) ) {
 			return true;
 		}
 
