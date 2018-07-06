@@ -66,27 +66,26 @@ class HTTPSSupportHooks {
 	}
 
 	/**
-	 * Handle downgrading anonymous requests for our sitemaps.
-	 *
-	 * @param  string     $subpage Specific sitemap being requested.
-	 * @param  WebRequest $request
-	 * @param  User       $user
-	 * @return boolean
-	 */
-	public static function onSitemapPageBeforeOutput( string $subpage, WebRequest $request, User $user ): bool {
-		global $wgScriptPath;
-		return self::handleRedirectForPath( "$wgScriptPath/$subpage", $request, $user );
-	}
-
-	/**
-	 * Handle downgrading anonymous requests for robots.txt.
+	 * Handle downgrading anonymous requests for our sitemaps and robots.txt.
 	 *
 	 * @param  WebRequest $request
 	 * @param  User       $user
 	 * @return boolean
 	 */
-	public static function onWikiaRobotsBeforeOutput( WebRequest $request, User $user ): bool {
-		return self::handleRedirectForPath( '/robots.txt', $request, $user );
+	public static function onSitemapRobotsPageBeforeOutput( WebRequest $request, User $user ): bool {
+		$url = wfExpandUrl( $request->getFullRequestURL(), PROTO_HTTP );
+		if ( WebRequest::detectProtocol() === 'http' &&
+			self::httpsAllowed( $user, $request->getFullRequestURL() )
+		) {
+			self::redirectWithPrivateCache( wfHttpToHttps( $url ), $request );
+			return false;
+		} elseif ( WebRequest::detectProtocol() === 'https' &&
+			!self::httpsAllowed( $user, $request->getFullRequestURL() )
+		) {
+			self::redirectWithPrivateCache( wfHttpsToHttp( $url ), $request );
+			return false;
+		}
+		return true;
 	}
 
 	private static function httpsAllowed( User $user, string $url ): bool {
@@ -105,22 +104,6 @@ class HTTPSSupportHooks {
 		if ( preg_match( self::VIGNETTE_IMAGES_HTTP_UPGRADABLE, $url ) && strpos( $url, 'http://' ) === 0 ) {
 			$url = wfHttpToHttps( $url );
 		}
-	}
-
-	private static function handleRedirectForPath( string $path, WebRequest $request, User $user ): bool {
-		$url = wfExpandUrl( $path, PROTO_HTTP );
-		if ( WebRequest::detectProtocol() === 'http' &&
-			self::httpsAllowed( $user, $request->getFullRequestURL() )
-		) {
-			self::redirectWithPrivateCache( wfHttpToHttps( $url ), $request );
-			return false;
-		} elseif ( WebRequest::detectProtocol() === 'https' &&
-			!self::httpsAllowed( $user, $request->getFullRequestURL() )
-		) {
-			self::redirectWithPrivateCache( wfHttpsToHttp( $url ), $request );
-			return false;
-		}
-		return true;
 	}
 
 	private static function redirectWithPrivateCache( string $url, WebRequest $request ) {

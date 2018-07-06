@@ -1,4 +1,4 @@
--- MySQL dump 10.13  Distrib 5.6.24-72.2, for debian-linux-gnu (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.18-15, for debian-linux-gnu (x86_64)
 --
 -- Host: geo-db-specials-slave.query.consul    Database: specials
 -- ------------------------------------------------------
@@ -138,4 +138,4 @@ CREATE TABLE `script_log` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
--- Dump completed on 2018-05-23 15:46:55
+-- Dump completed on 2018-07-06 12:59:34

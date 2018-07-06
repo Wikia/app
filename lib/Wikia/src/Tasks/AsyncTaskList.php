@@ -23,6 +23,7 @@ use Wikia\Tasks\Queues\PriorityQueue;
 use Wikia\Tasks\Queues\PurgeQueue;
 use Wikia\Tasks\Queues\Queue;
 use Wikia\Tasks\Queues\SMWQueue;
+use Wikia\Tasks\Queues\ScheduledMaintenanceQueue;
 use Wikia\Tasks\Tasks\BaseTask;
 use Wikia\Tracer\WikiaTracer;
 
@@ -111,6 +112,9 @@ class AsyncTaskList {
 			case PurgeQueue::NAME:
 				$queue = new PurgeQueue();
 				break;
+			case ScheduledMaintenanceQueue::NAME:
+				$queue = new ScheduledMaintenanceQueue();
+				break;
 			default:
 				$queue = new Queue( $queue );
 				break;
@@ -143,7 +147,7 @@ class AsyncTaskList {
 	/**
 	 * set this task list to run in a wiki's context
 	 *
-	 * @param int $wikiId
+	 * @param int|int[] $wikiId
 	 * @return $this
 	 */
 	public function wikiId( $wikiId ) {
