@@ -11,6 +11,7 @@ namespace Wikia\Tasks\Tasks;
 
 use Wikia\Logger\Loggable;
 use Wikia\Tasks\AsyncTaskList;
+use Wikia\Tasks\DeferredTaskQueueUpdate;
 use Wikia\Tasks\Queues\PriorityQueue;
 
 abstract class BaseTask {

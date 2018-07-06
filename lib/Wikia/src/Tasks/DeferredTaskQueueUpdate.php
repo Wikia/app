@@ -1,5 +1,7 @@
 <?php
-namespace Wikia\Tasks\Tasks;
+namespace Wikia\Tasks;
+
+use Wikia\Tasks\Tasks\BaseTask;
 
 class DeferredTaskQueueUpdate implements \DeferrableUpdate {
 
