@@ -213,7 +213,7 @@ class DesignSystemGlobalNavigationModelV2 extends WikiaModel {
 				'type' => 'translatable-text',
 				'key' => 'global-navigation-user-sign-out'
 			],
-			'param-name' => $this->product === static::PRODUCT_FANDOMS ? 'redirect' : 'returnto',
+			'param-name' => 'redirect',
 			'tracking-label' => 'account.sign-out',
 		];
 
