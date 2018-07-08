@@ -19,7 +19,10 @@ $toggle-active-margin-right: 17px;
 	&-container {
 		height: 100%;
 		flex: 1;
-		margin-right: 6px;
+
+		@media #{$wds-breakpoint-l-up} {
+			margin-right: 6px;
+		}
 	}
 
 	&-input-wrapper {
