@@ -114,6 +114,11 @@
 		height: 100%;
 		padding: 10px;
 
+		svg,
+		.wds-avatar__image {
+			transition: border-color $wds-button-transition-duration, fill $wds-button-transition-duration;
+		}
+
 		&-search,
 		&-close {
 			svg {
@@ -125,6 +130,17 @@
 			display: none;
 
 			svg {
+				fill: $wds-color-white;
+			}
+		}
+
+		&:hover {
+			svg {
+				fill: $wds-color-white;
+			}
+
+			.wds-avatar__image {
+				border-color: $wds-color-white;
 				fill: $wds-color-white;
 			}
 		}
