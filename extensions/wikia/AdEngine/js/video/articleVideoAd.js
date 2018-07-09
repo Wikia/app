@@ -50,6 +50,7 @@ define('ext.wikia.adEngine.video.articleVideoAd', [
 			});
 		}
 
+		playerState = playerState || {};
 		if (!playerState.autoplay) {
 			slotNameSuffix = '-ctp';
 		} else if (!playerState.muted) {
