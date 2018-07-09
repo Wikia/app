@@ -125,7 +125,7 @@
 			<?= $app->renderView( 'PaginationController', 'index', [ 'totalItems' => $totalItems, 'itemsPerPage' => $itemsPerPage, 'currentPage' => $currentPage, 'url' => $wallHistoryUrl ] ); ?>
 		<?php endif;?>
 	<?php endif; ?>
-<?php else: ?>
+<? else: ?>
 	<div>
 		<p><?= wfMessage( 'wall-message-not-found-in-db' )->escaped(); ?></p>
 	</div>
@@ -146,5 +146,5 @@
 			</ul>
 		</div>
 	</div>
-<?php endif; ?>
+<? endif; ?>
 </div>

@@ -4,13 +4,13 @@
 			'actionButton' => $actionButton
 		] ); ?>
 	<? endif; ?>
-	<?php foreach ( $buttons->buttons as $button ): ?>
+	<? foreach ( $buttons->buttons as $button ): ?>
 		<a class="wds-button wds-is-squished <?= $button->class ?>" href="<?= $button->href ?>"
 		   id="<?= $button->id ?>">
 			<? if ( !empty( $button->icon ) ): ?>
 				<?= DesignSystemHelper::renderSvg( $button->icon, 'wds-icon wds-icon-small' ); ?>
-			<?php endif; ?>
+			<? endif; ?>
 			<span><?= $button->label ?></span>
 		</a>
-	<?php endforeach; ?>
+	<? endforeach; ?>
 </div>

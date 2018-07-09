@@ -33,6 +33,6 @@
 		        !empty( $videoDetails['userAvatarUrl'] )
 		): ?>
 			<?= $app->renderView( 'ArticleVideo', 'attribution', [ 'videoDetails' => $videoDetails ] ) ?>
-		<?php endif; ?>
+		<? endif; ?>
 	</div>
 </div>
