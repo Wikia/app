@@ -23,6 +23,14 @@ spec:
         - name: php
           image: artifactory.wikia-inc.com/sus/mediawiki-sandbox-php:latest
           env:
+            - name: KUBERNETES_DEPLOYMENT_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: KUBERNETES_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
             - name: WIKIA_DATACENTER
               value: "sjc"
             - name: WIKIA_ENVIRONMENT

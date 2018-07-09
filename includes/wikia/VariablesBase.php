@@ -5168,6 +5168,18 @@ $wgJobTypesExcludedFromDefaultQueue = [];
 $wgJsMimeType = 'text/javascript';
 
 /**
+ * Name of the Kubernetes deployment, defined if the application is running in k8s.
+ * @var string|null $wgKubernetesDeploymentName
+ */
+$wgKubernetesDeploymentName = getenv( 'KUBERNETES_DEPLOYMENT_NAME' );
+
+/**
+ * Kubernetes namespace name, defined if the application is running in k8s.
+ * @var string|null $wgKubernetesNamespace
+ */
+$wgKubernetesNamespace = getenv( 'KUBERNETES_NAMESPACE' );
+
+/**
  * Custom variables used by CreateWiki task.
  * @see /extensions/wikia/CreateNewWiki/tasks/SetCustomSettings.php
  * @var Array $wgLangCreationVariables

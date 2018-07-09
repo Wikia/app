@@ -285,7 +285,7 @@ class MWHttpRequest {
 	 * @param $options Array: (optional) extra params to pass (see Http::request())
 	 */
 	function __construct( $url, $options = array() ) {
-		global $wgHTTPTimeout;
+		global $wgHTTPTimeout, $wgKubernetesNamespace, $wgKubernetesDeploymentName;
 
 		$this->url = wfExpandUrl( $url, PROTO_HTTP );
 		$this->parsedUrl = wfParseUrl( $this->url );
@@ -294,6 +294,16 @@ class MWHttpRequest {
 			$this->status = Status::newFatal( 'http-invalid-url' );
 		} else {
 			$this->status = Status::newGood( 100 ); // continue
+		}
+
+		// SUS-5499: Use internal host name for MW->MW requests when running on Kubernetes
+		if ( $wgKubernetesNamespace && Http::isLocalURL( $url ) ) {
+			$targetHost = $this->parsedUrl['host'];
+
+			$this->url = str_replace( $targetHost, "$wgKubernetesDeploymentName.$wgKubernetesNamespace", $this->url );
+			$this->parsedUrl['host'] = "$wgKubernetesDeploymentName.$wgKubernetesNamespace";
+
+			$this->setHeader( 'Host', $targetHost );
 		}
 
 		if ( isset( $options['timeout'] ) && $options['timeout'] != 'default' ) {
