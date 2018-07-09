@@ -10,11 +10,8 @@ def render(String template, java.util.LinkedHashMap binding) {
 }
 
 node("docker-daemon") {
-
-    def (appMajor, appMinor) = ${params.app_version}.tokenize( '.' )
-    def (configMajor, configMinor) = ${params.config_version}.tokenize( '.' )
-    def appBranch = "release_${appMajor}"
-    def configBranch = "release_${configMajor}"
+    def appBranch = "release_${version}"
+    def configBranch = "release_${version}"
     def k8sNamespace = params.environment
 
     switch(params.environment){
@@ -55,18 +52,17 @@ node("docker-daemon") {
         imageTag = "$appHash.$configHash"
 
         println("Image tag: $imageTag")
-        println("App version: $params.app_version")
-        println("Config version: $params.config_version")
+        println("Version: $params.version")
     }
 
     stage("Bump cachebuster and version") {
         dir("app") {
             sh('echo "<?php\n\\\$wgStyleVersion = ' + params.cache_buster + ';" > wgStyleVersion.php')
-            sh('echo "' + params.app_branch + '@' + appHash + '" > wikia.version.txt')
+            sh('echo "' + appBranch + '@' + appHash + '" > wikia.version.txt')
         }
 
         dir("config") {
-            sh('echo "' + params.config_branch + '@' + configHash + '" > wikia.version.txt')
+            sh('echo "' + configBranch + '@' + configHash + '" > wikia.version.txt')
         }
     }
 
@@ -108,8 +104,7 @@ node("docker-daemon") {
                 'IMAGE_TAG': imageTag,
                 'ENVIRONMENT': params.environment,
                 'DATACENTER': params.datacenter,
-                'APP_VERSION': params.app_version,
-                'CONFIG_VERSION': params.config_version
+                'APP_VERSION': params.version
             ])
 
             sh("""cat > docker/prod/k8s.yaml <<EOL
