@@ -24,6 +24,8 @@ define('ext.wikia.adEngine.video.articleVideoAd', [
 	}
 
 	function buildVastUrl(slotName, position, videoDepth, correlator, slotTargeting, playerState, bidParams) {
+		playerState = playerState || {};
+
 		var options = {
 				correlator: correlator,
 				vpos: position
@@ -50,7 +52,6 @@ define('ext.wikia.adEngine.video.articleVideoAd', [
 			});
 		}
 
-		playerState = playerState || {};
 		if (!playerState.autoplay) {
 			slotNameSuffix = '-ctp';
 		} else if (!playerState.muted) {
