@@ -2,7 +2,7 @@
 define('ext.wikia.adEngine.utils.scriptLoader', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adTracker',
-	'wikia.document',
+	'wikia.document'
 ], function (adContext, adTracker, doc) {
 	'use strict';
 

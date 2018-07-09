@@ -44,6 +44,9 @@ module.exports = function (env) {
 				'node_modules'
 			])
 		},
+		performance: {
+			maxEntrypointSize: 500000
+		},
 		plugins: [
 			new MiniCssExtractPlugin({filename: '[name].scss'}),
 			new webpack.optimize.ModuleConcatenationPlugin(),

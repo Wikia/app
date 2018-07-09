@@ -189,8 +189,8 @@ class WikiFactoryLoader {
 	 * (e.g. setting 301 redirect status code).
 	 */
 	public function execute() {
-		global $wgCityId, $wgDevelEnvironment,
-			$wgDBservers, $wgLBFactoryConf, $wgDBserver, $wgContLang, $wgWikiaBaseDomain, $wgArticlePath;
+		global $wgCityId, $wgDBservers, $wgLBFactoryConf, $wgDBserver, $wgContLang,
+			   $wgWikiFactoryRedirectForAlternateDomains, $wgArticlePath;
 
 		wfProfileIn(__METHOD__);
 
@@ -402,7 +402,7 @@ class WikiFactoryLoader {
 		 */
 		$cond2 = $this->mAlternativeDomainUsed && ( $url['host'] != $this->mOldServerName );
 
-		if( ( $cond1 || $cond2 ) && empty( $wgDevelEnvironment ) ) {
+		if( ( $cond1 || $cond2 ) && $wgWikiFactoryRedirectForAlternateDomains ) {
 			$redirectUrl = WikiFactory::getLocalEnvURL( $this->mCityUrl );
 
 			if ( !empty( $_SERVER['HTTP_FASTLY_SSL'] ) &&

@@ -58,11 +58,21 @@ define('ext.wikia.adEngine.adContext', [
 		context.opts.babDetectionMobile = !noExternals && isBabDetectionMobileEnabled();
 	}
 
-	function updateAdContextRecoveryServices(context, noExternals) {
-		var serviceCanBeEnabled = !noExternals && context.opts.showAds !== false && !areDelayServicesBlocked(); // showAds is undefined by default
+	function isILSupportedBrowser() {
+		return browserDetect.isChrome() && browserDetect.getBrowserVersion() > 45;
+	}
 
-		// BlockAdBlock recovery
-		context.opts.babRecovery = serviceCanBeEnabled && isEnabled('wgAdDriverBabRecoveryCountries');
+	function updateAdContextRecServices(context, noExternals) {
+		// showAds is undefined by default
+		var serviceCanBeEnabled = !noExternals && context.opts.showAds !== false && !areDelayServicesBlocked();
+
+		// BT rec
+		context.opts.wadBT = serviceCanBeEnabled && context.targeting.skin === 'oasis' &&
+			isEnabled('wgAdDriverWadBTCountries');
+
+		// IL rec
+		context.opts.wadIL = serviceCanBeEnabled && context.targeting.skin === 'oasis' &&
+			!w.wgUserName && isILSupportedBrowser() && isEnabled('wgAdDriverWadILCountries');
 	}
 
 	function isEnabled(name) {
@@ -152,7 +162,7 @@ define('ext.wikia.adEngine.adContext', [
 
 		context.opts.isMoatTrackingForFeaturedVideoEnabled = isMOATTrackingForFVEnabled();
 		updateDetectionServicesAdContext(context, noExternals);
-		updateAdContextRecoveryServices(context, noExternals);
+		updateAdContextRecServices(context, noExternals);
 
 		updateAdContextBidders(context);
 		updateAdContextRabbitExperiments(context);

@@ -36,6 +36,7 @@
     "ext-bcmath": "*",
     "ext-bz2": "*",
     "ext-dba": "*",
+    "ext-exif": "*",
     "ext-gd": "*",
     "ext-intl": "*",
     "ext-mustache": "*",

@@ -851,7 +851,12 @@ class ArticleCommentList {
 		}
 
 		// Only handle comments
-		if ( !MWNamespace::isTalk( $title->getNamespace() ) || !ArticleComment::isTitleComment( $title ) ) {
+		global $wgArticleCommentsNamespaces;
+		$ns = $title->getNamespace();
+		if (
+			!MWNamespace::isTalk( $ns ) ||
+			!in_array( MWNamespace::getSubject( $ns ), $wgArticleCommentsNamespaces ) ||
+			!ArticleComment::isTitleComment( $title ) ) {
 			return true;
 		}
 

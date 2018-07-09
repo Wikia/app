@@ -34,6 +34,11 @@ define('ext.wikia.adEngine.domElementTweaker', [
 		element.classList.remove(cls);
 	}
 
+	function setData(element, name, value) {
+		log(['setData ' + name + ': ' + value, element], 8, logGroup);
+		element.dataset[name] = value;
+	}
+
 	function isElement(obj) {
 		return obj instanceof win.HTMLElement;
 	}
@@ -86,6 +91,7 @@ define('ext.wikia.adEngine.domElementTweaker', [
 		isElement: isElement,
 		moveStylesToInline: moveStylesToInline,
 		removeClass: removeClass,
-		show: show
+		show: show,
+		setData: setData
 	};
 });
