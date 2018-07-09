@@ -10,8 +10,7 @@ def render(String template, java.util.LinkedHashMap binding) {
 }
 
 node("docker-daemon") {
-    def appBranch = "release_${version}"
-    def configBranch = "release_${version}"
+    def releaseBranch = "release-${version}"
     def k8sNamespace = params.environment
 
     switch(params.environment){
@@ -31,7 +30,7 @@ node("docker-daemon") {
     stage("Clone repositories") {
         dir("app") {
             git url: "git@github.com:Wikia/app.git",
-                branch: appBranch,
+                branch: releaseBranch,
                 credentialsId: "bd3cf712-39a7-4b16-979e-ff86208ab2ea"
 
             appHash = sh(script: 'git rev-parse --short HEAD', returnStdout: true).trim()
@@ -41,7 +40,7 @@ node("docker-daemon") {
 
         dir("config") {
             git url: "git@github.com:Wikia/config.git",
-                branch: configBranch,
+                branch: releaseBranch,
                 credentialsId: "bd3cf712-39a7-4b16-979e-ff86208ab2ea"
 
             configHash = sh(script: 'git rev-parse --short HEAD', returnStdout: true).trim()
@@ -58,11 +57,11 @@ node("docker-daemon") {
     stage("Bump cachebuster and version") {
         dir("app") {
             sh('echo "<?php\n\\\$wgStyleVersion = ' + params.cache_buster + ';" > wgStyleVersion.php')
-            sh('echo "' + appBranch + '@' + appHash + '" > wikia.version.txt')
+            sh('echo "' + releaseBranch + '@' + appHash + '" > wikia.version.txt')
         }
 
         dir("config") {
-            sh('echo "' + configBranch + '@' + configHash + '" > wikia.version.txt')
+            sh('echo "' + releaseBranch + '@' + configHash + '" > wikia.version.txt')
         }
     }
 
