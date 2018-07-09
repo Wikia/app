@@ -1,0 +1,121 @@
+def kubectlImage = "artifactory.wikia-inc.com/ops/k8s-deployer:0.0.14"
+def nginxImage = "artifactory.wikia-inc.com/sus/mediawiki-prod-nginx"
+def mediawikiImage = "artifactory.wikia-inc.com/sus/mediawiki-prod-php"
+def loggerImage = "artifactory.wikia-inc.com/sus/mediawiki-logger"
+
+def render(String template, java.util.LinkedHashMap binding) {
+    def engine = new groovy.text.SimpleTemplateEngine()
+
+    return engine.createTemplate(template).make(binding).toString()
+}
+
+node("docker-daemon") {
+    def releaseBranch = "release-${version}"
+    def k8sNamespace = params.environment
+
+    switch(params.environment){
+        case "sjc":
+            context = "kube-sjc-prod"
+            break
+        case "res":
+            context = "kube-res-prod"
+            break
+    }
+
+    def appHash
+    def configHash
+    def imageExists = false
+    def imageTag
+
+    stage("Clone repositories") {
+        dir("app") {
+            git url: "git@github.com:Wikia/app.git",
+                branch: releaseBranch,
+                credentialsId: "bd3cf712-39a7-4b16-979e-ff86208ab2ea"
+
+            appHash = sh(script: 'git rev-parse --short HEAD', returnStdout: true).trim()
+
+            println("Wikia/app commit: $appHash")
+        }
+
+        dir("config") {
+            git url: "git@github.com:Wikia/config.git",
+                branch: releaseBranch,
+                credentialsId: "bd3cf712-39a7-4b16-979e-ff86208ab2ea"
+
+            configHash = sh(script: 'git rev-parse --short HEAD', returnStdout: true).trim()
+
+            println("Wikia/config commit: $configHash")
+        }
+
+        imageTag = "$appHash.$configHash"
+
+        println("Image tag: $imageTag")
+        println("Version: $params.version")
+    }
+
+    stage("Bump cachebuster and version") {
+        dir("app") {
+            sh('echo "<?php\n\\\$wgStyleVersion = ' + params.cache_buster + ';" > wgStyleVersion.php')
+            sh('echo "' + releaseBranch + '@' + appHash + '" > wikia.version.txt')
+        }
+
+        dir("config") {
+            sh('echo "' + releaseBranch + '@' + configHash + '" > wikia.version.txt')
+        }
+    }
+
+    stage("Build and push images") {
+        dir("app") {
+            def status = sh(script: """
+                curl -u ${env.JENKINS_ARTIFACTORY_USERNAME}:${env.JENKINS_ARTIFACTORY_PASSWORD} \
+                -w "%{http_code}" -s -I -o /dev/null \
+                -XGET "https://artifactory.wikia-inc.com/artifactory/api/storage/dockerv2-local/sus/mediawiki-prod-php/${imageTag}"
+            """, returnStdout: true).trim()
+
+            if (status == "200") {
+                imageExists = true
+            }
+
+            if (!imageExists) {
+                sh("docker pull artifactory.wikia-inc.com/sus/php-wikia-base:27f50ce")
+
+                // SUS-5284 - make the image a bit smaller
+                sh("cp docker/.dockerignore ..")
+
+                sh("docker build  . -f docker/prod/Dockerfile-nginx -t $nginxImage:$imageTag")
+                sh("docker build .. -f docker/prod/Dockerfile-php -t $mediawikiImage:$imageTag")
+                sh("docker build .. -f docker/base/Dockerfile-logger -t $loggerImage:latest")
+
+                sh("docker push $nginxImage:$imageTag")
+                sh("docker push $mediawikiImage:$imageTag")
+                sh("docker push $loggerImage:latest")
+            } else {
+                println("Image tag ($imageTag) already exists")
+            }
+        }
+    }
+
+    stage("Apply new k8s descriptor") {
+        dir("app") {
+            def template = sh(script: 'cat docker/prod/prod.template.yaml', returnStdout: true)
+            def k8s = render(template, [
+                'IMAGE_TAG': imageTag,
+                'ENVIRONMENT': params.environment,
+                'DATACENTER': params.datacenter,
+                'APP_VERSION': params.version
+            ])
+
+            sh("""cat > docker/prod/k8s.yaml <<EOL
+${k8s}
+EOL""")
+
+            sh("cat docker/prod/k8s.yaml")
+        }
+
+        withDockerContainer(kubectlImage) {
+            sh """#!/bin/sh
+            kubectl --context {k8sContext} -n {k8sNamespace} apply -f app/docker/prod/k8s.yaml"""
+        }
+    }
+}
