@@ -77,6 +77,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.wikiaVideo',[
 					passback: 'wikiaVideo'
 				}
 			);
+			bidResponse.videoCacheKey = '123foo_wikiaVideoCacheKey';
 
 			addBidResponse(bid.adUnitCode, bidResponse);
 			done();

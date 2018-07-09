@@ -1,7 +1,8 @@
 /*global define*/
 define('ext.wikia.adEngine.lookup.prebid.prebidSettings', [
+	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.lookup.prebid.bidHelper'
-], function (bidHelper) {
+], function (adContext, bidHelper) {
 	'use strict';
 
 	function create() {
@@ -27,6 +28,11 @@ define('ext.wikia.adEngine.lookup.prebid.prebidSettings', [
 					key: 'hb_size',
 					val: function (bidResponse) {
 						return bidResponse.size;
+					}
+				}, {
+					key: 'hb_uuid',
+					val: function (bidResponse) {
+						return adContext.get('bidders.rubiconDfp') ? bidResponse.videoCacheKey : 'disabled';
 					}
 				}]
 			}
