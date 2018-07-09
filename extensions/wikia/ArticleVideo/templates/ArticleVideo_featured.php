@@ -28,11 +28,11 @@
 			</script>
 			<script><?= $jwPlayerScript ?></script>
 		</div>
-		<? if ( !empty( $videoDetails['username'] ) &&
+		<?php if ( !empty( $videoDetails['username'] ) &&
 				!empty( $videoDetails['userUrl'] ) &&
 		        !empty( $videoDetails['userAvatarUrl'] )
 		): ?>
 			<?= $app->renderView( 'ArticleVideo', 'attribution', [ 'videoDetails' => $videoDetails ] ) ?>
-		<? endif; ?>
+		<?php endif; ?>
 	</div>
 </div>
