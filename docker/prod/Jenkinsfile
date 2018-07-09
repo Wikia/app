@@ -1,6 +1,3 @@
-def environment = "prod"
-def datacenter = "sjc"
-
 def kubectlImage = "artifactory.wikia-inc.com/ops/k8s-deployer:0.0.14"
 def nginxImage = "artifactory.wikia-inc.com/sus/mediawiki-prod-nginx"
 def mediawikiImage = "artifactory.wikia-inc.com/sus/mediawiki-prod-php"
@@ -13,6 +10,22 @@ def render(String template, java.util.LinkedHashMap binding) {
 }
 
 node("docker-daemon") {
+
+    def (appMajor, appMinor) = ${params.app_version}.tokenize( '.' )
+    def (configMajor, configMinor) = ${params.config_version}.tokenize( '.' )
+    def appBranch = "release_${appMajor}"
+    def configBranch = "release_${configMajor}"
+    def k8sNamespace = params.environment
+
+    switch(params.environment){
+        case "sjc":
+            context = "kube-sjc-prod"
+            break
+        case "res":
+            context = "kube-res-prod"
+            break
+    }
+
     def appHash
     def configHash
     def imageExists = false
@@ -21,7 +34,7 @@ node("docker-daemon") {
     stage("Clone repositories") {
         dir("app") {
             git url: "git@github.com:Wikia/app.git",
-                branch: params.app_branch,
+                branch: appBranch,
                 credentialsId: "bd3cf712-39a7-4b16-979e-ff86208ab2ea"
 
             appHash = sh(script: 'git rev-parse --short HEAD', returnStdout: true).trim()
@@ -31,7 +44,7 @@ node("docker-daemon") {
 
         dir("config") {
             git url: "git@github.com:Wikia/config.git",
-                branch: params.config_branch,
+                branch: configBranch,
                 credentialsId: "bd3cf712-39a7-4b16-979e-ff86208ab2ea"
 
             configHash = sh(script: 'git rev-parse --short HEAD', returnStdout: true).trim()
@@ -42,6 +55,8 @@ node("docker-daemon") {
         imageTag = "$appHash.$configHash"
 
         println("Image tag: $imageTag")
+        println("App version: $params.app_version")
+        println("Config version: $params.config_version")
     }
 
     stage("Bump cachebuster and version") {
@@ -91,8 +106,10 @@ node("docker-daemon") {
             def template = sh(script: 'cat docker/prod/prod.template.yaml', returnStdout: true)
             def k8s = render(template, [
                 'IMAGE_TAG': imageTag,
-                'ENVIRONMENT': environment,
-                'DATACENTER': datacenter
+                'ENVIRONMENT': params.environment,
+                'DATACENTER': params.datacenter,
+                'APP_VERSION': params.app_version,
+                'CONFIG_VERSION': params.config_version
             ])
 
             sh("""cat > docker/prod/k8s.yaml <<EOL
@@ -104,7 +121,7 @@ EOL""")
 
         withDockerContainer(kubectlImage) {
             sh """#!/bin/sh
-            kubectl --context kube-sjc-prod -n prod apply -f app/docker/prod/k8s.yaml"""
+            kubectl --context {k8sContext} -n {k8sNamespace} apply -f app/docker/prod/k8s.yaml"""
         }
     }
 }

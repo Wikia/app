@@ -14,6 +14,8 @@ spec:
     metadata:
       labels:
         app: mediawiki-prod
+        app_version: "${APP_VERSION}"
+        config_version: "${CONFIG_VERSION}"
     spec:
       containers:
         - name: nginx
