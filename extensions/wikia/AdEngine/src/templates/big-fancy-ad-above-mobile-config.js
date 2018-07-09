@@ -53,7 +53,7 @@ export const getConfig = mercuryListener => ({
 		this.adSlot = adSlot;
 		this.slotParams = params;
 		this.adsModule = window.Mercury.Modules.Ads.getInstance();
-		this.navbarElement = document.querySelector('.site-head-container .site-head');
+		this.navbarElement = document.querySelector('.site-head-container .site-head, .wds-global-navigation');
 
 		const wrapper = document.querySelector('.mobile-top-leaderboard');
 

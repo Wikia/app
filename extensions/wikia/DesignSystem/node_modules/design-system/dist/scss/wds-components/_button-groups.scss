@@ -1,0 +1,70 @@
+.wds-button-group {
+	@include button-group-theming($wds-color-white);
+
+	align-items: stretch;
+	display: inline-flex;
+	justify-content: flex-start;
+
+	> .wds-button {
+		//To achieve oneness of buttons, we overlap their border
+		border-radius: 0;
+		height: auto;
+		margin-left: auto;
+		margin-right: -1px;
+		padding: 7px 12px;
+
+		&:first-child {
+			border-top-left-radius: $wds-rounded-corner-radius;
+			border-bottom-left-radius: $wds-rounded-corner-radius;
+		}
+
+		&:last-child {
+			border-top-right-radius: $wds-rounded-corner-radius;
+			border-bottom-right-radius: $wds-rounded-corner-radius;
+		}
+
+		//on hover we want to show whole border of a button
+		&:hover {
+			z-index: 1;
+		}
+
+		&:not(.wds-is-secondary) {
+			&:not(:last-child) {
+				border-right-width: 1px;
+				border-right-style: solid;
+			}
+
+			&:not(:first-child) {
+				border-left-width: 1px;
+				border-left-style: solid;
+			}
+		}
+	}
+
+	> .wds-dropdown {
+		&:first-child .wds-button {
+			border-radius: 0;
+			border-top-left-radius: $wds-rounded-corner-radius;
+			border-bottom-left-radius: $wds-rounded-corner-radius;
+		}
+
+		&:last-child .wds-button {
+			border-radius: 0;
+			border-top-right-radius: $wds-rounded-corner-radius;
+			border-bottom-right-radius: $wds-rounded-corner-radius;
+		}
+		&:not(:last-child) {
+			.wds-button {
+				border-right-width: 1px;
+				border-right-style: solid;
+			}
+		}
+
+		&:not(:first-child) {
+			.wds-button {
+				border-left-width: 1px;
+				border-left-style: solid;
+			}
+		}
+	}
+}

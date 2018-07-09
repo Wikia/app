@@ -2,7 +2,8 @@
 @import "skins/shared/mixins/box-shadow";
 @import "skins/shared/mixins/clearfix";
 @import "skins/shared/mixins/flexbox";
-@import "extensions/wikia/DesignSystem/bower_components/design-system/dist/scss/wds-variables/index";
+@import 'extensions/wikia/DesignSystem/node_modules/design-system/dist/scss/wds-variables/index';
+@import 'extensions/wikia/DesignSystem/node_modules/design-system/dist/scss/wds-mixins/index';
 
 // Note: a lot of this is borrowed from .WikiaRail .activity-module
 .mw-content-ltr .forum-activity-module {
@@ -23,10 +24,6 @@
 	ul {
 		list-style: none;
 		margin-left: 0;
-	}
-
-	.activity-avatar {
-		display: inline-block;
 	}
 
 	.activity-item {
@@ -71,7 +68,7 @@
 	}
 
 	.wds-avatar {
-		border-color: $color-page-border;
+		@include wds-avatar(32px, $color-page-border, $color-page-border);
 	}
 }
 

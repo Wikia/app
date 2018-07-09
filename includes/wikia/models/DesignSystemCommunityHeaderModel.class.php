@@ -79,14 +79,19 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 
 	public function getSiteNameData(): array {
 		if ( $this->sitenameData === null ) {
+			// SUS-2975: Site name is user input, so it comes pre-escaped.
+			// We must decode HTML entities present in the text to avoid double escaping.
+			$sitename =
+				Sanitizer::decodeCharReferences( $this->themeSettings->getSettings()['wordmark-text'] );
+
 			$this->sitenameData = [
 				'type' => 'link-text',
 				'title' => [
 					'type' => 'text',
-					'value' => $this->themeSettings->getSettings()[ 'wordmark-text' ]
+					'value' => $sitename,
 				],
 				'href' => $this->mainPageUrl,
-				'tracking_label' => 'sitename'
+				'tracking_label' => 'sitename',
 			];
 		}
 

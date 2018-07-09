@@ -1,6 +1,6 @@
 <div class="wds-button-group">
 	<a href="<?= $buttonAction['href'] ?>"
-	   class="wds-is-squished wds-button"
+	   class="wds-button"
 	   id="<?= Sanitizer::encodeAttribute( $buttonAction['id'] ) ?>"
 	   data-tracking="<?= $buttonAction['data-tracking'] ?>"
 		<?= empty( $buttonAction['accesskey'] ) ? ''
@@ -10,7 +10,7 @@
 		<span><?= htmlspecialchars( $buttonAction['text'] ) ?></span>
 	</a>
 	<div class="wds-dropdown">
-		<div class="wds-button wds-is-squished wds-dropdown__toggle">
+		<div class="wds-button wds-dropdown__toggle">
 			<?= DesignSystemHelper::renderSvg( 'wds-icons-dropdown-tiny',
 				'wds-icon wds-icon-tiny wds-dropdown__toggle-chevron' ); ?>
 		</div>

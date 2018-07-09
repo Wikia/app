@@ -1,0 +1,35 @@
+// news and stories do not use xxlarge breakpoint
+@mixin wds-content-well($use-xxlarge-breakpoint: true) {
+	box-sizing: border-box;
+
+	@media #{$wds-breakpoint-small-only} {
+		margin: 0 $wds-content-well-margins;
+	}
+
+	@media #{$wds-breakpoint-medium-up} {
+		margin: 0 auto;
+	}
+
+	@media #{$wds-breakpoint-medium-only} {
+		width: $wds-breakpoint-medium - 2 * $wds-content-well-margins;
+	}
+
+	@media #{$wds-breakpoint-large-only} {
+		width: $wds-breakpoint-large - 2 * $wds-content-well-margins;
+	}
+
+	@if ($use-xxlarge-breakpoint) {
+		@media #{$wds-breakpoint-xlarge-only} {
+			width: $wds-breakpoint-xlarge - 2 * $wds-content-well-margins;
+		}
+
+		@media #{$wds-breakpoint-xxlarge-up} {
+			width: $wds-breakpoint-xxlarge - 2 * $wds-content-well-margins;
+		}
+	}
+	@else {
+		@media #{$wds-breakpoint-xlarge-up} {
+			width: $wds-breakpoint-xlarge - 2 * $wds-content-well-margins;
+		}
+	}
+}
