@@ -368,6 +368,10 @@ class WikiFactoryLoader {
 			}
 		}
 
+		// As soon as we've determined the wiki the current request belongs to, set the cityId in globals.
+		// This for example is needed in order to generate per-wiki surrogate keys during WFL redirects.
+		$wgCityId = $this->mWikiID;
+
 		/**
 		 * save default var values for Special:WikiFactory
 		 */
@@ -634,8 +638,6 @@ class WikiFactoryLoader {
 				}
 			}
 		}
-
-		$wgCityId = $this->mWikiID;
 
 		/**
 		 * set/replace $wgDBname in $wgDBservers
