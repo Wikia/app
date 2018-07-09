@@ -2,6 +2,7 @@ def kubectlImage = "artifactory.wikia-inc.com/ops/k8s-deployer:0.0.14"
 def nginxImage = "artifactory.wikia-inc.com/sus/mediawiki-prod-nginx"
 def mediawikiImage = "artifactory.wikia-inc.com/sus/mediawiki-prod-php"
 def loggerImage = "artifactory.wikia-inc.com/sus/mediawiki-logger"
+def environment = "prod"
 
 def render(String template, java.util.LinkedHashMap binding) {
     def engine = new groovy.text.SimpleTemplateEngine()
@@ -11,16 +12,6 @@ def render(String template, java.util.LinkedHashMap binding) {
 
 node("docker-daemon") {
     def releaseBranch = "release-${version}"
-    def k8sNamespace = params.environment
-
-    switch(params.environment){
-        case "sjc":
-            context = "kube-sjc-prod"
-            break
-        case "res":
-            context = "kube-res-prod"
-            break
-    }
 
     def appHash
     def configHash
@@ -101,7 +92,7 @@ node("docker-daemon") {
             def template = sh(script: 'cat docker/prod/prod.template.yaml', returnStdout: true)
             def k8s = render(template, [
                 'IMAGE_TAG': imageTag,
-                'ENVIRONMENT': params.environment,
+                'ENVIRONMENT': environment,
                 'DATACENTER': params.datacenter,
                 'APP_VERSION': params.version
             ])
@@ -115,7 +106,9 @@ EOL""")
 
         withDockerContainer(kubectlImage) {
             sh """#!/bin/sh
-            kubectl --context {k8sContext} -n {k8sNamespace} apply -f app/docker/prod/k8s.yaml"""
+            kubectl --context kube-sjc-prod -n ${environment} apply -f app/docker/prod/k8s.yaml"""
+            sh """#!/bin/sh
+            kubectl --context kube-res-prod -n ${environment} apply -f app/docker/prod/k8s.yaml"""
         }
     }
 }
