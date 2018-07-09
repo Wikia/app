@@ -26,6 +26,6 @@ kubectl --context kube-sjc-prod -n prod create -f maintenance/one-time-job-examp
 
 To check what cronjobs are currently scheduled:
 
-````
+```
 kubectl --context kube-sjc-prod -n prod get jobs
 ```
