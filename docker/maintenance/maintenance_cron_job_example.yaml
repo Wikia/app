@@ -1,0 +1,17 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: maintenance-media-wiki
+spec:
+  schedule: "*/1 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: maintenance
+            image: artifactory.wikia-inc.com/sus/php-wikia-maintenance:1.0
+            args:
+            - perl
+            - /usr/wikia/slot1/current/backend/bin/run_maintenance
+          restartPolicy: OnFailure
