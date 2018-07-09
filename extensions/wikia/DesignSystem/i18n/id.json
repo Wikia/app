@@ -1,5 +1,5 @@
 {
-  "community-header-add": "Tmabahkan",
+  "community-header-add": "Tambahkan",
   "community-header-add-new-image": "Menambahkan Gambar Baru",
   "community-header-add-new-page": "Menambahkan gambar baru",
   "community-header-add-new-video": "Menambakan Video Baru",
@@ -52,7 +52,7 @@
   "global-footer-follow-us-link-youtube": "Youtube",
   "global-footer-full-site-link": "Tampilkan Situs Penuh",
   "global-footer-international-header-subtitle": "Beranda FANDOM",
-  "global-footer-licensing-and-vertical-description": "$1 adalah $2 FANDOM Komunitas. Konten tersedia dibawah $3 (lisensi).",
+  "global-footer-licensing-and-vertical-description": "$1 adalah $2 FANDOM Komunitas.",
   "global-footer-licensing-and-vertical-description-param-vertical-books": "Buku",
   "global-footer-licensing-and-vertical-description-param-vertical-comics": "Komik",
   "global-footer-licensing-and-vertical-description-param-vertical-games": "Permainan",
@@ -112,11 +112,11 @@
   "notifications-reply-upvote-multiple-users-with-title": "{number} pengguna <b>menyukai</b>balasan anda di {postTitle}",
   "notifications-reply-upvote-single-user-no-title": "1 pengguna <b>menyukai</b> balasan anda",
   "notifications-reply-upvote-single-user-with-title": "1 pengguna <b>menyukai</b> balasan anda di {postTitle}",
-  "wds-avatar-badges-admin-tooltip": "Community Admin",
+  "wds-avatar-badges-admin-tooltip": "Admin Komunitas",
   "wds-avatar-badges-content-moderator-tooltip": "Content Moderator",
-  "wds-avatar-badges-discussion-moderator-tooltip": "Discussions Moderator",
-  "wds-avatar-badges-global-discussions-moderator-tooltip": "Global Discussions Moderator",
-  "wds-avatar-badges-helper-tooltip": "FANDOM Helper",
-  "wds-avatar-badges-staff-tooltip": "FANDOM Staff",
+  "wds-avatar-badges-discussion-moderator-tooltip": "Moderator Diskusi",
+  "wds-avatar-badges-global-discussions-moderator-tooltip": "Moderator Diskusi Global",
+  "wds-avatar-badges-helper-tooltip": "Penunjang FANDOM",
+  "wds-avatar-badges-staff-tooltip": "Staf FANDOM",
   "wds-avatar-badges-vstf-tooltip": "VSTF"
 }
