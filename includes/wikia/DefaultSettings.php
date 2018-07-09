@@ -1361,9 +1361,15 @@ $wgAdDriverF2BabDetectionCountries = null;
 
 /**
  * @name $wgAdDriverWadBTCountries
- * List of countries enable Blockthrough recovery
+ * List of countries to enable Blockthrough recovery
  */
 $wgAdDriverWadBTCountries = null;
+
+/**
+ * @name $wgAdDriverWadILCountries
+ * List of countries to enable InstartLogic recovery
+ */
+$wgAdDriverWadILCountries = null;
 
 /**
  * @name $wgEnableCMPCountries
