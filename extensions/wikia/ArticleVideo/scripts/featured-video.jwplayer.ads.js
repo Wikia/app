@@ -55,6 +55,7 @@ define('wikia.articleVideo.featuredVideo.ads', [
 			featuredVideoContainer = featuredVideoElement && featuredVideoElement.parentNode,
 			prerollPositionReached = false,
 			bidderEnabled = true,
+			playerState = {},
 			trackingParams = {
 				adProduct: 'featured-video',
 				slotName: featuredVideoSlotName
@@ -94,6 +95,11 @@ define('wikia.articleVideo.featuredVideo.ads', [
 				var currentMedia = player.getPlaylistItem() || {},
 					prebidParams = getPrebidParams();
 
+				playerState = {
+					autoplay: player.getConfig().autostart,
+					muted: player.getMute()
+				};
+
 				slotTargeting.v1 = currentMedia.mediaid;
 
 				if (prerollPositionReached) {
@@ -119,7 +125,7 @@ define('wikia.articleVideo.featuredVideo.ads', [
 						videoDepth,
 						correlator,
 						slotTargeting,
-						player.getMute(),
+						playerState,
 						bidParams
 					));
 				}
@@ -136,7 +142,7 @@ define('wikia.articleVideo.featuredVideo.ads', [
 						videoDepth,
 						correlator,
 						slotTargeting,
-						player.getMute()
+						playerState
 					));
 				}
 
@@ -152,7 +158,7 @@ define('wikia.articleVideo.featuredVideo.ads', [
 						videoDepth,
 						correlator,
 						slotTargeting,
-						player.getMute()
+						playerState
 					));
 				}
 			});
