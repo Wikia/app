@@ -1255,7 +1255,7 @@ class Wikia {
 			$request->response()->header("Content-Security-Policy-Report-Only: " .
 				"default-src https: 'self' data: blob:; " .
 				"script-src https: 'self' data: 'unsafe-inline' 'unsafe-eval' blob:; " .
-				"style-src https: 'self' 'unsafe-inline' blob:; report-uri " . $urlProvider->getUrl( 'csp-logger' ) . '/csp'.
+				"style-src https: 'self' 'unsafe-inline' blob:; report-uri " . $urlProvider->getUrl( 'csp-logger' ) . '/csp; '.
 				"frame-ancestors https://*.$wgWikiaBaseDomain;");
 		}
 		return true;
