@@ -1,8 +1,10 @@
 /*global define*/
 define('ext.wikia.adEngine.lookup.prebid.prebidHelper', [
-	'ext.wikia.adEngine.lookup.prebid.adaptersRegistry'
+	'ext.wikia.adEngine.lookup.prebid.adaptersRegistry',
+	'ext.wikia.adEngine.wad.babDetection'
 ], function(
-	adaptersRegistry
+	adaptersRegistry,
+	babDetection
 ) {
 	'use strict';
 	var adUnits = [],
@@ -13,11 +15,12 @@ define('ext.wikia.adEngine.lookup.prebid.prebidHelper', [
 
 	function getAdapterAdUnits(adapter, skin) {
 		var adapterAdUnits = [],
-			slots = adapter.getSlots(skin);
+			isRecovering = skin === 'oasis' && babDetection.isBlocking(),
+			slots = adapter.getSlots(skin, isRecovering);
 
 		Object.keys(slots).forEach(function(slotName) {
 			var prepareAdUnit = adapter.prepareAdUnit,
-				adUnit = prepareAdUnit(slotName, slots[slotName], skin);
+				adUnit = prepareAdUnit(slotName, slots[slotName], skin, isRecovering);
 
 			if (adUnit) {
 				adapterAdUnits.push(adUnit);

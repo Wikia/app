@@ -1,0 +1,22 @@
+page:
+  - page_id: 1
+    page_namespace: 2001
+    page_title: This_is_forum_board/@comment-123-20160101000000
+    page_restrictions: ''
+    page_random: 0
+    page_latest: 1
+    page_len: 0
+  - page_id: 2
+    page_namespace: 2001
+    page_title: This_is_forum_board/@comment-123-20160101000000/@comment-321-20160101000001
+    page_restrictions: ''
+    page_random: 0
+    page_latest: 2
+    page_len: 0
+  - page_id: 3
+    page_namespace: 1
+    page_title: This_is_article
+    page_restrictions: ''
+    page_random: 0
+    page_latest: 3
+    page_len: 0

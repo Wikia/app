@@ -9,34 +9,34 @@ describe('ext.wikia.adEngine.adEngineRunner', function () {
 	}
 
 	var mocks = {
-			adContext: {
-				get: noop
-			},
-			adEngine: {
-				run: noop
-			},
-			adTracker: {
-				measureTime: function () {
-					return {
-						track: noop
-					};
-				}
-			},
-			fvLagger: {
-				addResponseListener: noop,
-				wasCalled: function () {
-					return false;
-				},
-				getName: noop
-			},
-			log: noop,
-			win: {},
-			a9: {
-				getName: function () {
-					return 'a9';
-				}
+		adContext: {
+			get: noop
+		},
+		adEngine: {
+			run: noop
+		},
+		adTracker: {
+			measureTime: function () {
+				return {
+					track: noop
+				};
 			}
-		};
+		},
+		fvLagger: {
+			addResponseListener: noop,
+			wasCalled: function () {
+				return false;
+			},
+			getName: noop
+		},
+		log: noop,
+		win: {},
+		a9: {
+			getName: function () {
+				return 'a9';
+			}
+		}
+	};
 
 	mocks.log.levels = {};
 
@@ -52,6 +52,7 @@ describe('ext.wikia.adEngine.adEngineRunner', function () {
 			mocks.log,
 			mocks.win,
 			bidders.a9,
+			null,
 			null,
 			fvLagger
 		);

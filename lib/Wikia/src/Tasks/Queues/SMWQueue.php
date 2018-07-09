@@ -14,7 +14,6 @@ class SMWQueue extends Queue {
 	const NAME = 'SMWQueue';
 
 	public function __construct() {
-		$this->name = 'mediawiki_smw';
-		$this->routingKey = 'mediawiki.smw';
+		parent::__construct('mediawiki_smw');
 	}
 }

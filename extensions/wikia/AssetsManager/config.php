@@ -103,8 +103,8 @@ $config['adengine2_desktop_js'] = [
 		'//extensions/wikia/AdEngine/js/utils/eventDispatcher.js',
 		'//extensions/wikia/AdEngine/js/utils/hooks.js',
 		'//extensions/wikia/AdEngine/js/utils/math.js',
-		'//extensions/wikia/AdEngine/js/wad/babDetection.js',
 		'//extensions/wikia/AdEngine/js/wad/btRecLoader.js',
+		'//extensions/wikia/AdEngine/js/wad/ilRecLoader.js',
 		'//extensions/wikia/AdEngine/js/wad/wadRecRunner.js',
 		'#group_adengine2_playwire_js',
 		'#group_adengine2_porvata_js',
@@ -253,6 +253,7 @@ $config['adengine2_top_js'] = [
 		'//extensions/wikia/AdEngine/js/video/videoFrequencyMonitor.js',
 		'//extensions/wikia/AdEngine/js/video/videoFrequencySettings.js',
 		'//extensions/wikia/AdEngine/js/video/videoFrequencyStore.js',
+		'//extensions/wikia/AdEngine/js/wad/babDetection.js',
 		'//resources/wikia/modules/browserDetect.js',
 		'//resources/wikia/modules/krux.js'
 	],

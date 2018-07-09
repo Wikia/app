@@ -1,4 +1,4 @@
--- MySQL dump 10.13  Distrib 5.6.24-72.2, for debian-linux-gnu (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.18-15, for debian-linux-gnu (x86_64)
 --
 -- Host: geo-db-sharedb-slave.query.consul    Database: wikicities
 -- ------------------------------------------------------
@@ -616,4 +616,4 @@ CREATE TABLE `wikia_tasks_log` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
--- Dump completed on 2018-06-05 10:29:49
+-- Dump completed on 2018-07-06 12:59:35
