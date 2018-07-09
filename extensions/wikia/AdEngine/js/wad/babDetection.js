@@ -1,13 +1,37 @@
 /*global define*/
 define('ext.wikia.adEngine.wad.babDetection', [
+	'ext.wikia.adEngine.adContext',
 	'wikia.document',
+	'wikia.lazyqueue',
 	'wikia.log',
 	'wikia.tracker',
 	'wikia.window'
-], function (doc, log, tracker, win) {
+], function (adContext, doc, lazyQueue, log, tracker, win) {
 	'use strict';
 
-	var logGroup = 'ext.wikia.adEngine.wad.babDetection';
+	var logGroup = 'ext.wikia.adEngine.wad.babDetection',
+		detectionCompleted = false,
+		onResponseCallbacks = [];
+
+	function getName() {
+		return 'babDetection';
+	}
+
+	function isEnabled() {
+		return adContext.get('opts.babDetectionDesktop') || adContext.get('opts.babDetectionMobile');
+	}
+
+	function addResponseListener(callback) {
+		onResponseCallbacks.push(callback);
+	}
+
+	function resetState() {
+		detectionCompleted = false;
+		onResponseCallbacks = [];
+		lazyQueue.makeQueue(onResponseCallbacks, function (callback) {
+			callback();
+		});
+	}
 
 	function dispatchDetectionEvent(eventName) {
 		var event = doc.createEvent('Event');
@@ -37,15 +61,25 @@ define('ext.wikia.adEngine.wad.babDetection', [
 			value: 0,
 			trackingMethod: 'internal'
 		});
+
+		if (!detectionCompleted) {
+			detectionCompleted = true;
+			onResponseCallbacks.start();
+		}
 	}
 
 	function isBlocking() {
 		return win.ads && win.ads.runtime && win.ads.runtime.bab && win.ads.runtime.bab.blocking;
 	}
 
+	resetState();
+
 	return {
+		addResponseListener: addResponseListener,
+		getName: getName,
 		initDetection: initDetection,
-		isBlocking: isBlocking
+		isBlocking: isBlocking,
+		wasCalled: isEnabled
 	};
 });
 

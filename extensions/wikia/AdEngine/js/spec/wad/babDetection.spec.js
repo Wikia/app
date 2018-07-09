@@ -4,7 +4,9 @@ describe('Module ext.wikia.adEngine.wad.babDetection', function () {
 
 	function getModule(mocks) {
 		return modules['ext.wikia.adEngine.wad.babDetection'](
+			mocks.adContext,
 			mocks.document,
+			mocks.lazyQueue,
 			mocks.log,
 			mocks.tracker,
 			mocks.window
@@ -15,6 +17,11 @@ describe('Module ext.wikia.adEngine.wad.babDetection', function () {
 
 	function getMocks() {
 		return {
+			adContext: {
+				get: function () {
+					return true;
+				}
+			},
 			document: {
 				dispatchEvents: noop,
 				dispatchEvent: noop,
@@ -23,6 +30,11 @@ describe('Module ext.wikia.adEngine.wad.babDetection', function () {
 					return {
 						initEvent: noop()
 					};
+				}
+			},
+			lazyQueue: {
+				makeQueue: function (callbacks) {
+					callbacks.start = noop;
 				}
 			},
 			log: noop,

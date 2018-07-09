@@ -11,6 +11,12 @@ describe('AdContext', function () {
 			browserDetect: {
 				isEdge: function() {
 					return false;
+				},
+				isChrome: function() {
+					return false;
+				},
+				getBrowserVersion: function() {
+					return 100;
 				}
 			},
 			adsGeo: {},

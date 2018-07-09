@@ -98,11 +98,13 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.indexExchange',[
 		};
 
 	function isEnabled() {
-		return adContext.get('bidders.indexExchange') && !babDetection.isBlocking();
+		return adContext.get('bidders.indexExchange') && (!babDetection.isBlocking() || adContext.get('opts.wadIL'));
 	}
 
-	function getSlots(skin) {
-		return slotsContext.filterSlotMap(slots[skin]);
+	function getSlots(skin, isRecovering) {
+		var key = isRecovering ? 'rec' : skin;
+
+		return slotsContext.filterSlotMap(slots[key]);
 	}
 
 	function prepareAdUnit(slotName, config) {
