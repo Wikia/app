@@ -11,8 +11,8 @@ def render(String template, java.util.LinkedHashMap binding) {
 }
 
 node("docker-daemon") {
-    def appBranch = ${params.app}.split('.')[0]
-    def configBranch = ${params.config}.split('.')[0]
+    def appBranch = $params.app.split('.')[0]
+    def configBranch = $params.config.split('.')[0]
 
     def appHash
     def configHash
