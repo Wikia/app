@@ -89,7 +89,7 @@
 							<?= wfMessage( "admindashboard-control-help-label" )->escaped(); ?>
 						</a>
 					</li>
-					<? if( $enableAnnouncements ) { ?>
+					<?php if ( $enableAnnouncements ): ?>
 						<li class="control" data-tooltip="<?= wfMessage( "admindashboard-control-announcements-tooltip" )->escaped(); ?>">
 							<a href="/announcements" class="set" data-tracking="announcements">
 							<span class="representation">
@@ -98,7 +98,7 @@
 								<?= wfMessage("admindashboard-control-announcements-label")->escaped(); ?>
 							</a>
 						</li>
-					<? } ?>
+					<?php endif; ?>
 
 				</ul>
 			</section>
