@@ -648,3 +648,7 @@ $wgGroupPermissions['util']['exportuserdata'] = true;
 // request to be forgotten
 $wgGroupPermissions['*']['requesttobeforgotten'] = false;
 $wgGroupPermissions['request-to-be-forgotten-admin']['requesttobeforgotten'] = true;
+
+// SUS-5473 | allow staff members to request a run of updateSpecialPages
+$wgGroupPermissions['*']['schedule-update-special-pages'] = false;
+$wgGroupPermissions['staff']['schedule-update-special-pages'] = true;
