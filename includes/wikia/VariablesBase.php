@@ -3181,13 +3181,6 @@ $wgEnableOpenGraphMetaExt = true;
 $wgEnableOpenSearchSuggest = true;
 
 /**
- * Enable Optimizely extension.
- * @see extensions/wikia/Optimizely
- * @var bool $wgEnableOptimizelyExt
- */
-$wgEnableOptimizelyExt = false;
-
-/**
  * Enable Paginator extension.
  * @see extensions/wikia/Paginator
  * @var bool $wgEnablePaginatorExt
@@ -6105,13 +6098,6 @@ $wgOldChangeTagsIndex = false;
  * @var $wgOpenSearchTemplate
  */
 $wgOpenSearchTemplate = false;
-
-/**
- * Load Optimizely script from FANDOM's CND rather than from upstream.
- * @see extensions/wikia/Optimizely
- * @var bool $wgEnableOptimizelyExt
- */
-$wgOptimizelyLoadFromOurCDN = true;
 
 /**
  * Override the site's default RSS/ATOM feed for recentchanges that appears on
