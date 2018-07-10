@@ -11,7 +11,8 @@ def render(String template, java.util.LinkedHashMap binding) {
 }
 
 node("docker-daemon") {
-    def releaseBranch = "release-${version}"
+    def appBranch = ${params.app}.split('.')[0]
+    def configBranch = ${params.config}.split('.')[0]
 
     def appHash
     def configHash
@@ -21,7 +22,7 @@ node("docker-daemon") {
     stage("Clone repositories") {
         dir("app") {
             git url: "git@github.com:Wikia/app.git",
-                branch: releaseBranch,
+                branch: appBranch,
                 credentialsId: "bd3cf712-39a7-4b16-979e-ff86208ab2ea"
 
             appHash = sh(script: 'git rev-parse --short HEAD', returnStdout: true).trim()
@@ -31,7 +32,7 @@ node("docker-daemon") {
 
         dir("config") {
             git url: "git@github.com:Wikia/config.git",
-                branch: releaseBranch,
+                tag: configBranch,
                 credentialsId: "bd3cf712-39a7-4b16-979e-ff86208ab2ea"
 
             configHash = sh(script: 'git rev-parse --short HEAD', returnStdout: true).trim()
@@ -42,17 +43,18 @@ node("docker-daemon") {
         imageTag = "$appHash.$configHash"
 
         println("Image tag: $imageTag")
-        println("Version: $params.version")
+        println("App Version: $params.app")
+        println("Config Version: $params.config")
     }
 
     stage("Bump cachebuster and version") {
         dir("app") {
             sh('echo "<?php\n\\\$wgStyleVersion = ' + params.cache_buster + ';" > wgStyleVersion.php')
-            sh('echo "' + releaseBranch + '@' + appHash + '" > wikia.version.txt')
+            sh('echo "' + appBranch + '@' + appHash + '" > wikia.version.txt')
         }
 
         dir("config") {
-            sh('echo "' + releaseBranch + '@' + configHash + '" > wikia.version.txt')
+            sh('echo "' + configBranch + '@' + configHash + '" > wikia.version.txt')
         }
     }
 
