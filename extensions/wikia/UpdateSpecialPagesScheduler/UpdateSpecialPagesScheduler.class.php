@@ -17,6 +17,17 @@ class UpdateSpecialPagesScheduler {
 			return;
 		}
 
+		// handle POST request, user wants to schedule a run of the script
+		$request = $context->getRequest();
+
+		if ( $request->wasPosted() &&
+		     $request->getVal('updateSpecialPagesScheduler') &&
+		     $context->getUser()->matchEditToken( $request->getVal( 'editToken' ) ) ) {
+
+			// TODO: schedule a script
+			$text = Wikia::successbox( $page->msg( 'update-special-pages-scheduler-requested' ) ) . $text;
+		}
+
 		$tpl = new EasyTemplate(__DIR__ . '/templates');
 
 		$tpl->set( 'title', $context->getTitle() );

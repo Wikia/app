@@ -5,8 +5,9 @@
  */
 ?>
 <h2><?= wfMessage('update-special-pages-scheduler-header')->escaped() ?></h2>
-<form action="<?= $title->getLocalURL() ?>/updateSpecialPagesScheduler">
+<form action="<?= $title->getLocalURL() ?>" method="post">
 	<input type="hidden" name="editToken" value="<?= $editToken ?>" />
+	<input type="hidden" name="updateSpecialPagesScheduler" value="1" />
 	<table class="mw-statistics-table">
 		<tr>
 			<td style="border-right: 0;">
