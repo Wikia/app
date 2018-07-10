@@ -7,13 +7,13 @@ namespace Wikia\Tasks\Tasks;
  */
 class PurgeExpiredRestrictionsTask extends BaseTask {
 
-	public function purgeExpiredPageRestrictionsEntries( array $pageRestrictionsIds ) {
+	public function purgeExpiredPageRestrictions( array $pageRestrictionsIds ) {
 		$dbw = wfGetDB( DB_MASTER );
 
 		$dbw->delete( 'page_restrictions', [ 'pr_id' => $pageRestrictionsIds ], __METHOD__ );
 	}
 
-	public function purgeExpiredProtectedTitlesEntry( int $namespace, string $title ) {
+	public function purgeExpiredProtectedTitles( int $namespace, string $title ) {
 		$dbw = wfGetDB( DB_MASTER );
 
 		$dbw->delete( 'protected_titles', [ 'pt_namespace' => $namespace, 'pt_title' => $title ], __METHOD__ );

@@ -24,7 +24,7 @@ class PurgeExpiredRestrictionsTaskIntegrationTest extends WikiaDatabaseTest {
 		$this->assertNotEmpty( $title->getRestrictions( 'edit' ) );
 		$this->assertNotEmpty( $title->getRestrictions( 'move' ) );
 
-		$this->purgeExpiredRestrictionsTask->purgeExpiredPageRestrictionsEntries( [ 2 ] );
+		$this->purgeExpiredRestrictionsTask->purgeExpiredPageRestrictions( [ 2 ] );
 
 		$title->flushRestrictions();
 
@@ -37,7 +37,7 @@ class PurgeExpiredRestrictionsTaskIntegrationTest extends WikiaDatabaseTest {
 
 		$this->assertNotEmpty( $title->getRestrictions( 'create' ) );
 
-		$this->purgeExpiredRestrictionsTask->purgeExpiredProtectedTitlesEntry( $title->getNamespace(), $title->getDBkey() );
+		$this->purgeExpiredRestrictionsTask->purgeExpiredProtectedTitles( $title->getNamespace(), $title->getDBkey() );
 
 		$title->flushRestrictions();
 
