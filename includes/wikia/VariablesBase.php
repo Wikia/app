@@ -2220,6 +2220,13 @@ $wgEnableAdsInContent = 1;
 $wgEnableAjaxPollExt = true;
 
 /**
+ * Enable Announcements extension + entry point in AdminDashboard.
+ * @see extensions/Announcements
+ * @var bool $wgEnableAnnouncements
+ */
+$wgEnableAnnouncements = false;
+
+/**
  * Enable AntiSpoof extension.
  * @see extensions/AntiSpoof
  * @var bool $wgEnableAntiSpoofExt

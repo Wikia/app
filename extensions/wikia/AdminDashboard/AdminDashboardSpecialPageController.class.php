@@ -59,6 +59,7 @@ class AdminDashboardSpecialPageController extends WikiaSpecialPageController {
 		// icon display logic
 		$this->displayWikiFeatures = !empty( $this->wg->EnableWikiFeatures );
 		$this->displaySpecialCss = !empty( $this->wg->EnableSpecialCssExt );
+		$this->enableAnnouncements = !empty( $this->wg->EnableAnnouncements );
 
 		// Add Upload Photos Dialog
 		Wikia::addAssetsToOutput( 'upload_photos_dialog_js' );

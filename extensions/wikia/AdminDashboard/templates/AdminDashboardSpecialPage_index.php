@@ -89,14 +89,16 @@
 							<?= wfMessage( "admindashboard-control-help-label" )->escaped(); ?>
 						</a>
 					</li>
-					<li class="control" data-tooltip="<?= wfMessage( "admindashboard-control-announcements-tooltip" )->escaped(); ?>">
-						<a href="/announcements" class="set" data-tracking="announcements">
+					<? if( $enableAnnouncements ) { ?>
+						<li class="control" data-tooltip="<?= wfMessage( "admindashboard-control-announcements-tooltip" )->escaped(); ?>">
+							<a href="/announcements" class="set" data-tracking="announcements">
 							<span class="representation">
 								<?= DesignSystemHelper::renderSvg('wds-icons-megaphone', 'wds-icon'); ?>
 							</span>
-							<?= wfMessage("admindashboard-control-announcements-label")->escaped(); ?>
-						</a>
-					</li>
+								<?= wfMessage("admindashboard-control-announcements-label")->escaped(); ?>
+							</a>
+						</li>
+					<? } ?>
 
 				</ul>
 			</section>
