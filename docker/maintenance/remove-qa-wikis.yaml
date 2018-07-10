@@ -1,7 +1,7 @@
 apiVersion: batch/v1beta1
 kind: CronJob
 metadata:
-  name: phrase-qa-wikis
+  name: remove-qa-wikis
 spec:
   schedule: "35 20 * * 0"
   jobTemplate:
