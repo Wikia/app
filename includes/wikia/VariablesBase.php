@@ -2789,7 +2789,7 @@ $wgEnableGracenoteExt = false;
  * @see extensions/wikia/HAWelcome/
  * @var bool $wgEnableHAWelcomeExt
  */
-$wgEnableHAWelcomeExt = false;
+$wgEnableHAWelcomeExt = true;
 
 /**
  * Enable HideTags extension.
@@ -4512,15 +4512,6 @@ $wgFixArabicUnicode = true;
 $wgFixMalayalamUnicode = true;
 
 /**
- * Celery monitoring tool URL.
- * @see extensions/wikia/Tasks/TasksSpecialController.class.php
- * @see lib/Wikia/src/Tasks/Tasks/ImageReviewTask.php
- * @see maintenance/wikia/task_runner.php
- * @var string $wgFlowerUrl
- */
-$wgFlowerUrl = 'http://prod.flower.service.sjc.consul:5555';
-
-/**
  * Abstract list of footer icons for skins in place of old copyrightico and poweredbyico code
  * You can add new icons to the built in copyright or poweredby, or you can create
  * a new block. Though note that you may need to add some custom css to get good styling
@@ -5986,6 +5977,13 @@ $wgMsgCacheExpiry = 24 * 3600; // one day
  * @var string|bool $wgMWSuggestTemplate
  */
 $wgMWSuggestTemplate = false;
+
+/**
+ * Optionally, specify an explicit connection character set override for MySQL here.
+ * If this value is set, it will overwrite any other settings, such as the implicit UTF-8 charset if $wgMysql5 is set.
+ * @var string|null $wgMysqlConnectionCharacterSet
+ */
+$wgMysqlConnectionCharacterSet = null;
 
 /**
  * Namespace aliases. These are alternate names for the primary localised
@@ -8235,6 +8233,13 @@ $wgUseImageResize = true;
 $wgUseInstantCommons = false;
 
 /**
+ * Whether to use Kubernetes internal ingress for making requests to service dependencies on Kubernetes.
+ * This is only enabled if app itself is running on Kubernetes.
+ * @var bool $wgUseKubernetesInternalIngress
+ */
+$wgUseKubernetesInternalIngress = (bool) getenv( 'KUBERNETES_POD' );
+
+/**
  * Set this to true to make a local copy of the message cache, for use in
  * addition to memcached. The files will be put in $wgCacheDirectory.
  * @see $wgCacheDirectory
@@ -8786,7 +8791,7 @@ $wgWikicitiesReadOnly = false;
  * Additional domains that need to be mapped to wikia.com and redirected
  * properly.
  * @see extensions/wikia/WikiFactory/Loader/WikiFactoryLoader.php
- * @var Array $wgWikiFactoryDomains
+ * @var string[] $wgWikiFactoryDomains
  */
 $wgWikiFactoryDomains = [
     # gTLDs
@@ -8812,6 +8817,14 @@ $wgWikiFactoryDomains = [
     'wikicities.net',
     'wikicities.org'
 ];
+
+/**
+ * Whether WikiFactoryLoader should serve an HTTP 301 response redirecting to the primary domain of the wiki
+ * if it received a request with one of the mapped alternative domains.
+ * @see $wgWikiFactoryDomains
+ * @var bool $wgWikiFactoryRedirectForAlternateDomains
+ */
+$wgWikiFactoryRedirectForAlternateDomains = true;
 
 /**
  * Do not allow editing articles from these namespaces with Rich Text Editor.

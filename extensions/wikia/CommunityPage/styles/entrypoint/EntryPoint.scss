@@ -1,6 +1,7 @@
 @import 'skins/shared/color';
 @import "skins/shared/mixins/flexbox";
 @import '../components/variables';
+@import 'extensions/wikia/DesignSystem/node_modules/design-system/dist/scss/wds-mixins/index';
 
 .community-page-rail-module {
 	border-top: 1px solid $color-page-border;
@@ -24,7 +25,8 @@
 	}
 
 	.wds-avatar {
-		border-color: $color-page-border;
+		@include wds-avatar(32px, $color-page-border, $color-page-border);
+
 		position: relative;
 	}
 
@@ -43,11 +45,5 @@
 		font-size: 14px;
 		line-height: 18px;
 		overflow: hidden;
-	}
-
-	html[lang^='zh'] & .wds-is-squished {
-		font-size: 12px;
-		font-weight: 400;
-		padding: 9px 12px 8px;
 	}
 }

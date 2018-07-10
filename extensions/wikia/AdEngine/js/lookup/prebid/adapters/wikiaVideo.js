@@ -1,11 +1,12 @@
 /*global define*/
 define('ext.wikia.adEngine.lookup.prebid.adapters.wikiaVideo',[
 	'ext.wikia.adEngine.adContext',
+	'ext.wikia.adEngine.wad.babDetection',
 	'ext.wikia.adEngine.wrappers.prebid',
 	'ext.wikia.adEngine.video.vastUrlBuilder',
 	'wikia.document',
 	'wikia.querystring'
-], function (adContext, prebid, vastUrlBuilder, doc, QueryString) {
+], function (adContext, babDetection, prebid, vastUrlBuilder, doc, QueryString) {
 	'use strict';
 
 	var bidderName = 'wikiaVideo',
@@ -28,7 +29,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.wikiaVideo',[
 	}
 
 	function isEnabled() {
-		return qs.getVal('wikia_video_adapter', false) !== false;
+		return qs.getVal('wikia_video_adapter', false) !== false && !babDetection.isBlocking();
 	}
 
 	function prepareAdUnit(slotName) {
@@ -76,6 +77,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.wikiaVideo',[
 					passback: 'wikiaVideo'
 				}
 			);
+			bidResponse.videoCacheKey = '123foo_wikiaVideoCacheKey';
 
 			addBidResponse(bid.adUnitCode, bidResponse);
 			done();

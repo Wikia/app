@@ -1,0 +1,74 @@
+.wds-search-modal {
+	&__form-and-links-wrapper {
+		background-color: $wds-fandom-color-navy;
+		padding: 0 12px 12px;
+
+		.wds-global-navigation__links {
+			display: flex;
+			font-size: 12px;
+			justify-content: space-between;
+			margin: 30px 6px 0;
+
+			.wds-dropdown__content {
+				@include is-right-aligned;
+			}
+		}
+
+		.wds-global-navigation__link {
+			margin-left: 0;
+		}
+
+		.wds-global-navigation__search-suggestions {
+			top: calc(100% + 12px);
+		}
+	}
+
+	&__search-icon {
+		fill: $wds-color-white;
+		margin-right: 12px;
+	}
+}
+
+.wds-search-is-active .wds-search-modal {
+	.wds-global-navigation__search-container {
+		border-top: 1px solid rgba($wds-color-white, .25);
+		height: auto;
+		margin: 0;
+		padding-top: 18px;
+	}
+
+	.wds-global-navigation__link,
+	.wds-global-navigation__link-group {
+		font-size: inherit;
+
+		.wds-dropdown__toggle-chevron {
+			display: initial;
+		}
+	}
+
+	.wds-global-navigation__search-close,
+	.wds-global-navigation__search-submit {
+		display: none;
+	}
+
+	.wds-global-navigation__search-suggestions {
+		left: -12px;
+		right: -12px;
+	}
+
+	// there is no special classname or id of the CreateNewWiki dropdown to hide it in css
+	// so we are detecting if href contains Special:CreateNewWiki
+	.wds-global-navigation__link-button[href *= "Special:CreateNewWiki"] {
+		display: none;
+	}
+
+	.wds-dropdown {
+		&__content {
+			top: calc(100% + 12px);
+		}
+
+		&:after {
+			bottom: -12px;
+		}
+	}
+}

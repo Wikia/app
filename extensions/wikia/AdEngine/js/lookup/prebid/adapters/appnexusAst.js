@@ -2,8 +2,9 @@
 define('ext.wikia.adEngine.lookup.prebid.adapters.appnexusAst', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.context.slotsContext',
+	'ext.wikia.adEngine.wad.babDetection',
 	'wikia.location'
-], function (adContext, slotsContext, loc) {
+], function (adContext, slotsContext, babDetection, loc) {
 	'use strict';
 
 	var bidderName = 'appnexusAst',
@@ -25,7 +26,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.appnexusAst', [
 		};
 
 	function isEnabled() {
-		return adContext.get('bidders.appnexusAst');
+		return adContext.get('bidders.appnexusAst') && !babDetection.isBlocking();
 	}
 
 	function prepareAdUnit(slotName, config) {

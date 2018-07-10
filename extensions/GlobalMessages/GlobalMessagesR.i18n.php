@@ -34516,7 +34516,7 @@ Ta strona przedstawia historię [[w:pl:Pomoc:Ostatnie zmiany|ostatnich zmian]] n
 | [[Special:Insights|Podpowiedzi]] <b>&middot;</b> [[Special:ListRedirects|Przekierowania]] <small>([[Special:DoubleRedirects|podwójne]], [[Special:BrokenRedirects|zerwane]])</small> <b>&middot;</b> [[Special:AllMessages|Komunikaty]] <b>&middot;</b> [[Special:Statistics|Statystyki]] <b>&middot;</b> <small>[[Special:SpecialPages|wszystkie...]]</small>
 |-
 ! style="text-align:right;white-space:nowrap;vertical-align:text-top;" | Użytkownicy :
-| [[Special:ListUsers/sysop|{{int:group-sysop}}]] <b>&middot;</b> [[Special:ListUsers/bureaucrat|{{int:group-bureaucrat}}]] <b>&middot;</b> [[Special:ListUsers/helper|{{int:group-helper}}]] <b>&middot;</b> [[Special:ListUsers/vstf|{{int:group-vstf}}]] <b>&middot;</b> [[Special:ListUsers/staff|{{int:group-staff}}]] <b>&middot;</b> <small>[[Special:ListUsers|wszyscy...]]</small>
+| [[Special:ListUsers/sysop|{{int:group-sysop}}]] <b>&middot;</b> [[Special:ListUsers/bureaucrat|{{int:group-bureaucrat}}]] <b>&middot;</b> [[Special:ListGlobalUsers/helper|{{int:group-helper}}]] <b>&middot;</b> [[Special:ListGlobalUsers/vstf|{{int:group-vstf}}]] <b>&middot;</b> [[Special:ListGlobalUsers/staff|{{int:group-staff}}]] <b>&middot;</b> <small>[[Special:ListUsers|wszyscy...]]</small>
 |-
 ! style="text-align:right;white-space:nowrap;vertical-align:text-top;" | Pomoc :
 | [[w:c:spolecznosc:Pomoc:Podstawy|Podstawy]] <b>&middot;</b> [[w:c:spolecznosc:Pomoc:Edycja|Edycja]] <b>&middot;</b> [[w:c:spolecznosc:Pomoc:Administracja|Administracja]] <b>&middot;</b> [[w:c:spolecznosc:Pomoc:Zaawansowane narzędzia|Zaawansowane narzędzia]] <b>&middot;</b> <small>[[w:c:spolecznosc:Pomoc:Zawartość|więcej...]]</small>

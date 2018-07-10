@@ -1,7 +1,7 @@
 @import 'skins/shared/mixins/flexbox';
-@import 'extensions/wikia/DesignSystem/bower_components/design-system/dist/scss/wds-variables/index';
-@import 'extensions/wikia/DesignSystem/bower_components/design-system/dist/scss/wds-functions/index';
-@import 'extensions/wikia/DesignSystem/bower_components/design-system/dist/scss/wds-mixins/index';
+@import 'extensions/wikia/DesignSystem/node_modules/design-system/dist/scss/wds-variables/index';
+@import 'extensions/wikia/DesignSystem/node_modules/design-system/dist/scss/wds-functions/index';
+@import 'extensions/wikia/DesignSystem/node_modules/design-system/dist/scss/wds-mixins/index';
 
 $mcf-padding-horizontal: 10px;
 $mcf-padding-vertical: 12px;
@@ -568,9 +568,7 @@ h1.mcf-header {
 		margin-top: 12px;
 
 		.wds-avatar {
-			height: 26px;
-			min-width: 26px;
-			width: 26px;
+			@include wds-avatar(26px, $wds-color-faint-gray, $wds-color-faint-gray);
 		}
 	}
 

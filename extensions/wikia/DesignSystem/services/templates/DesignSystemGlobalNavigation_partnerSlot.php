@@ -1,6 +1,6 @@
 <div class="wds-global-navigation__partner-slot">
 	<a href="<?= Sanitizer::encodeAttribute( $model['href'])?>"
-		data-tracking-label="<?= Sanitizer::encodeAttribute( $model['tracking_label'])?>"
+		data-tracking-label="<?= Sanitizer::encodeAttribute( $model['tracking-label'])?>"
 		class="wds-global-navigation__partner-slot-link">
 		<?= DesignSystemHelper::renderApiImage(
 			$model['image-data'],

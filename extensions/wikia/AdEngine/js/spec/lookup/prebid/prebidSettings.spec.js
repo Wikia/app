@@ -3,14 +3,20 @@ describe('ext.wikia.adEngine.lookup.prebid.prebidSettings', function () {
 	'use strict';
 
 	var mocks = {
+			adContext: {
+				get: function () {
+					return true;
+				}
+			},
 			bidderResponse: {
 				bidderCode: 'wikia',
 				adId: '1209ab9b9660621',
 				size: '728x90',
-				cpm: 10
+				cpm: 10,
+				videoCacheKey: '11aa22bb33bb44'
 			},
 			bidHelper: {
-				transformPriceFromBid: function(bid) {
+				transformPriceFromBid: function (bid) {
 					return bid.cpm;
 				}
 			}
@@ -19,6 +25,7 @@ describe('ext.wikia.adEngine.lookup.prebid.prebidSettings', function () {
 
 	function getPrebidSettings() {
 		return modules['ext.wikia.adEngine.lookup.prebid.prebidSettings'](
+			mocks.adContext,
 			mocks.bidHelper
 		);
 	}
@@ -58,6 +65,16 @@ describe('ext.wikia.adEngine.lookup.prebid.prebidSettings', function () {
 		expect(actual).toEqual('1209ab9b9660621');
 	});
 
+	it('settings hb_pb function should retrive cpm from bidder response', function () {
+		var settings = prebidSettings.create(),
+			hb_pb = getFunction(settings, 'hb_pb'),
+			actual;
+
+		actual = hb_pb(mocks.bidderResponse);
+
+		expect(actual).toEqual(10);
+	});
+
 	it('settings hb_size function should retrieve size from bidder response', function () {
 		var settings = prebidSettings.create(),
 			hb_size = getFunction(settings, 'hb_size'),
@@ -66,13 +83,13 @@ describe('ext.wikia.adEngine.lookup.prebid.prebidSettings', function () {
 		expect(actual).toEqual('728x90');
 	});
 
-	it('settings hb_pb function should retrive cpm fro bidder response', function () {
+	it('settings hb_uuid function should retrive videoCacheKey from bidder response', function () {
 		var settings = prebidSettings.create(),
-			hb_pb = getFunction(settings, 'hb_pb'),
+			hb_uuid = getFunction(settings, 'hb_uuid'),
 			actual;
 
-		actual = hb_pb(mocks.bidderResponse);
+		actual = hb_uuid(mocks.bidderResponse);
 
-		expect(actual).toEqual(10);
+		expect(actual).toEqual('11aa22bb33bb44');
 	});
 });

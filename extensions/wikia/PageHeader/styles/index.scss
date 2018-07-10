@@ -1,5 +1,5 @@
-@import 'extensions/wikia/DesignSystem/bower_components/design-system/dist/scss/wds-variables/index';
-@import 'extensions/wikia/DesignSystem/bower_components/design-system/dist/scss/wds-mixins/index';
+@import 'extensions/wikia/DesignSystem/node_modules/design-system/dist/scss/wds-variables/index';
+@import 'extensions/wikia/DesignSystem/node_modules/design-system/dist/scss/wds-mixins/index';
 @import 'skins/shared/color';
 @import 'skins/shared/mixins/flexbox';
 @import 'skins/shared/mixins/transform';
@@ -165,7 +165,7 @@
 	}
 
 	.wds-avatar {
-		border-color: $color-page-border;
+		@include wds-avatar(30px, $color-page-border, $color-page-border);
 	}
 }
 //It's needed to add margin to allign article header with content on corporate pages with this one.

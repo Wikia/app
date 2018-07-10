@@ -1,165 +1,328 @@
-/*global define*/
+/*global define,require*/
 define('wikia.cmp', [
 	'wikia.consentFrameworkVendorList',
 	'wikia.consentStringLibrary',
 	'wikia.cookies',
 	'wikia.geo',
 	'wikia.instantGlobals',
+	'wikia.lazyqueue',
 	'wikia.log',
 	'wikia.trackingOptIn',
+	require.optional('wikia.trackingOptInModal'),
+	'wikia.document',
 	'wikia.window'
 ], function (
-	vendorList,
-	consentStringLibrary,
+	staticVendorList,
+	cs,
 	cookies,
 	geo,
 	instantGlobals,
+	lazyQueue,
 	log,
 	trackingOptIn,
+	trackingOptInModal,
+	doc,
 	win
 ) {
 	var isModuleEnabled = geo.isProperGeo(instantGlobals.wgEnableCMPCountries),
 		logGroup = 'wikia.cmp',
-		consentStringCookie = 'consent-string',
-		cookieExpireDays = 604800000, // 7 days in milliseconds
-		// take all purposes...
-		allowedPurposesList = vendorList.purposes.map(function (purpose) {
-			return purpose.id;
-		}),
-		// ...and all vendors
-		allowedVendorsList = vendorList.vendors.map(function (vendor) {
-			return vendor.id;
-		});
+		cmpId = 141,
+		cmpVersion = 1,
+		consentScreen = 0,
+		consentLanguage = (geo.getCountryCode() || 'en').toLowerCase(),
+		vendorConsentCookieName = 'euconsent',
+		publisherConsentCookieName = 'eupubconsent',
+		hasGlobalScope = false,
+		cookieExpireMillis = 33696000000, // this represents thirteen 30-day months
+		cmpQueue = [],
+		allowedVendorsList = [
+			10, // Index Exchange, Inc.
+			11, // Quantcast International Limited
+			32, // AppNexus Inc.
+			52, // The Rubicon Project, Limited
+			69, // OpenX Software Ltd. and its affiliates
+			76, // PubMatic, Inc.
+		],
+		allowedPublisherPurposes = [
+			1, // Information storage and access
+			2, // Personalisation
+			3, // Ad selection, delivery, reporting
+			4, // Content selection, delivery, reporting
+			5, // Measurement
+		],
+		publisherConsent,
+		publisherConsentString,
+		vendorConsent,
+		vendorConsentString,
+		cmpCommands;
 
-	function getConsentString(optIn) {
-		var cookie = cookies.get(consentStringCookie),
-			consentData,
-			consentString;
+	function init(optIn) {
+		log('Initializing module', log.levels.debug, logGroup);
 
-		cookie = cookie ? cookie.split('...') : cookie;
+		vendorConsentString = cookies.get(vendorConsentCookieName);
+		publisherConsentString = cookies.get(publisherConsentCookieName);
 
-		if (cookie && (cookie[0] === '1') === optIn && cookie[1] !== undefined) {
-			log('Retrieving consent string from the cookie', log.levels.debug, logGroup);
+		if (vendorConsentString && publisherConsentString) {
+			log(['Retrieving consent string from the cookie', vendorConsentString], log.levels.debug, logGroup);
+			vendorConsent = new cs.ConsentString(vendorConsentString);
+			publisherConsent = new cs.ConsentString(publisherConsentString);
+			win.__cmp = __cmp;
+			cmpQueue.start();
+		} else {
+			__cmp('getVendorList', null, function (vendorList, success) {
+				var allowedPurposesList;
 
-			return cookie[1];
+				vendorList = success ? vendorList : staticVendorList;
+				allowedPurposesList = vendorList.purposes.map(function (purpose) {
+					return purpose.id;
+				});
+
+				vendorConsent = new cs.ConsentString();
+				vendorConsent.setCmpId(cmpId);
+				vendorConsent.setCmpVersion(cmpVersion);
+				vendorConsent.setConsentScreen(consentScreen);
+				vendorConsent.setConsentLanguage(consentLanguage);
+				vendorConsent.setGlobalVendorList(vendorList);
+				vendorConsent.setPurposesAllowed(optIn ? allowedPurposesList : []);
+				vendorConsent.setVendorsAllowed(optIn ? allowedVendorsList : []);
+
+				vendorConsentString = vendorConsent.getConsentString();
+
+				cookies.set(vendorConsentCookieName, vendorConsentString, {
+					path: '/',
+					domain: win.wgCookieDomain || '.wikia.com',
+					expires: cookieExpireMillis
+				});
+
+				publisherConsent = new cs.ConsentString();
+				publisherConsent.setCmpId(cmpId);
+				publisherConsent.setCmpVersion(cmpVersion);
+				publisherConsent.setConsentScreen(consentScreen);
+				publisherConsent.setGlobalVendorList(vendorList);
+				publisherConsent.setPurposesAllowed(optIn ? allowedPublisherPurposes : []);
+
+				publisherConsentString = publisherConsent.getConsentString();
+
+				cookies.set(publisherConsentCookieName, publisherConsentString, {
+					path: '/',
+					domain: win.wgCookieDomain || '.wikia.com',
+					expires: cookieExpireMillis
+				});
+
+				log('Consent string saved to the cookie', log.levels.debug, logGroup);
+
+				win.__cmp = __cmp;
+				cmpQueue.start();
+			});
+		}
+	}
+
+	function fetchVendorList(callback, version) {
+		var versionString = version ? ('v-' + version + '/') : '',
+			url = 'https://vendorlist.consensu.org/' + versionString + 'vendorlist.json',
+			req = new win.XMLHttpRequest();
+
+		req.open('GET', url, true);
+		req.onload = function () {
+			var response;
+
+			try {
+				response = JSON.parse(this.responseText);
+			} catch (e) {
+				response = null;
+			}
+
+			callback(response);
+		};
+		req.onerror = function () {
+			callback(null);
+		};
+		req.send(null);
+	}
+
+	function addLocatorFrame() {
+		var name = '__cmpLocator',
+			iframe;
+
+		if (win.frames[name]) {
+			return;
 		}
 
-		consentData = new consentStringLibrary.ConsentString();
+		if (doc.readyState !== 'loading') {
+			iframe = doc.createElement('iframe');
+			iframe.name = name;
+			iframe.style.display = 'none';
+			doc.body.appendChild(iframe);
+		} else {
+			doc.addEventListener('DOMContentLoaded', addLocatorFrame);
+		}
+	}
 
-		consentData.setGlobalVendorList(vendorList);
-		consentData.setPurposesAllowed(optIn ? allowedPurposesList : []);
-		consentData.setVendorsAllowed(optIn ? allowedVendorsList : []);
+	function __cmpStub(commandName, parameter, callback) {
+		if (commandName === 'ping') {
+			callback({
+				gdprAppliesGlobally: hasGlobalScope,
+				cmpLoaded: false
+			}, true);
+		} else {
+			log([
+				'__cmpStub call',
+				'adding command ' + commandName +' to the queue'
+			], log.levels.debug, logGroup);
+			cmpQueue.push([commandName, parameter, callback]);
+		}
+	}
 
-		consentString = consentData.getConsentString();
+	function __cmp(commandName, parameter, callback) {
+		if (hasCommand(commandName)) {
+			cmpCommands[commandName](parameter, function (value, success) {
+				log(
+					[
+						'__cmp call',
+						'command: ' + commandName,
+						'parameter: ' + parameter,
+						'returnValue: ' + JSON.stringify(value),
+						'success: ' + !!success
+					],
+					log.levels.debug,
+					logGroup
+				);
 
-		cookies.set(consentStringCookie, (optIn ? '1...' : '0...') + consentString, {
-			path: '/',
-			domain: window.wgCookieDomain || '.wikia.com',
-			expires: cookieExpireDays
-		});
-
-		log('Consent string saved to the cookie', log.levels.debug, logGroup);
-
-		return consentString;
+				callback(value, !!success);
+			});
+		} else {
+			callback(null, false);
+			log('Unknown command ' + commandName, log.levels.debug, logGroup);
+		}
 	}
 
 	function getGdprApplies() {
 		return trackingOptIn.geoRequiresTrackingConsent();
 	}
 
-	function init(optIn) {
-		log('Initializing module', log.levels.debug, logGroup);
-		log(['Allowed vendors:', vendorList.vendors.map(function (vendor) {
-			return vendor.name;
-		})], log.levels.debug, logGroup);
-
-		win.__cmp = function __cmp(command, parameter, callback) {
-			var iabConsentData = getConsentString(optIn),
-				gdprApplies = getGdprApplies(),
-				success,
-				ret;
-
-			switch (true) {
-				case (command === 'getConsentData'):
-					ret = {
-						consentData: iabConsentData,
-						gdprApplies: gdprApplies
-					};
-					success = true;
-					break;
-				case (command === 'getVendorConsents'):
-					ret = {
-						metadata: iabConsentData,
-						gdprApplies: gdprApplies
-					};
-					success = true;
-					break;
-				default:
-					log('Unknown command ' + command, log.levels.debug, logGroup);
-					ret = {};
-					success = false;
-			}
-
-			log(
-				[
-					'__cmp call',
-					'command: ' + command,
-					'parameter: ' + parameter,
-					'returnValue: ' + JSON.stringify(ret),
-					'success: ' + success
-				],
-				log.levels.debug,
-				logGroup
-			);
-
-			callback(ret, success);
-		};
-	}
-
-	function getQuantcastLabels() {
-		var quantcastLabels = "";
-
-		if (window.wgWikiVertical) {
-			quantcastLabels += window.wgWikiVertical;
-
-			if (window.wgDartCustomKeyValues) {
-				var keyValues = window.wgDartCustomKeyValues.split(';');
-				for (var i=0; i<keyValues.length; i++) {
-					var keyValue = keyValues[i].split('=');
-					if (keyValue.length >= 2) {
-						quantcastLabels += ',' + window.wgWikiVertical + '.' + keyValue[1];
-					}
-				}
-			}
+	function callCmp() {
+		if (isEnabled()) {
+			return win.__cmp.apply(null, arguments);
+		} else {
+			log(['callCmp', 'module is not enabled'], log.levels.debug, logGroup);
 		}
-
-		return quantcastLabels;
 	}
 
-	function loadQuantserveImage(optIn) {
-		var img = new Image(1, 1),
-			pcode = 'p-8bG6eLqkH6Avk';
+	function createIdArray(maxId) {
+		var array = Array.apply(null, {length: maxId + 1}).map(Number.call, Number);
 
-		img.src = 'http://pixel.quantserve.com/pixel/' + pcode + '.gif?' +
-			'gdpr=' + (getGdprApplies() ? '1&gdpr_consent=' + getConsentString(optIn) : 0) +
-			'&labels=' + getQuantcastLabels();
+		delete array[0];
 
-		img.style = 'display:none;';
-
-		document.body.appendChild(img);
+		return array;
 	}
 
-	if (isModuleEnabled) {
-		win.__cmp = function __cmp(command, version, callback) {
-			log(['__cmp call', 'CMP module is not initialized'], log.levels.debug, logGroup);
-			callback({}, false);
-		};
+	function hasCommand(commandName) {
+		return (typeof cmpCommands[commandName] === 'function');
+	}
+
+	function reset() {
+		cookies.set(vendorConsentCookieName, null, {
+			path: '/',
+			domain: win.wgCookieDomain || '.wikia.com'
+		});
+		cookies.set(publisherConsentCookieName, null, {
+			path: '/',
+			domain: win.wgCookieDomain || '.wikia.com'
+		});
+	}
+
+	function isEnabled() {
+		return isModuleEnabled;
+	}
+
+	cmpCommands = {
+		getVendorConsents: function (vendorIds, callback) {
+			var vendors = (vendorIds && vendorIds.length) ? vendorIds : (
+					vendorConsent.maxVendorId ?
+					createIdArray(vendorConsent.maxVendorId) :
+					vendorConsent.vendorList.vendors.map(function (vendor) {
+						return vendor.id;
+					})
+				),
+				maxPurposeId = Math.max.apply(null, vendorConsent.getPurposesAllowed()),
+				purposes = createIdArray(maxPurposeId);
+
+			callback({
+				metadata: vendorConsent.getMetadataString(),
+				gdprApplies: getGdprApplies(),
+				hasGlobalScope: hasGlobalScope,
+				purposeConsents: purposes.reduce(function (obj, id) {
+					obj[id] = vendorConsent.isPurposeAllowed(id);
+					return obj;
+				}, {}),
+				vendorConsents: vendors.reduce(function (obj, id) {
+					obj[id] = vendorConsent.isVendorAllowed(id);
+					return obj;
+				}, {})
+			}, true);
+		},
+		getPublisherConsents: function (purposesIds, callback) {
+			var purposesAllowed = (purposesIds || publisherConsent.getPurposesAllowed()).reduce(function (obj, id) {
+					var type = (id > 24) ? 'customPurposeConsents' : 'standardPurposeConsents';
+
+					obj[type][id] = publisherConsent.isPurposeAllowed(id);
+					return obj;
+				}, {
+					standardPurposeConsents: {},
+					customPurposeConsents: {}
+				});
+
+			callback({
+				metadata: publisherConsent.getMetadataString(),
+				gdprApplies: getGdprApplies(),
+				hasGlobalScope: hasGlobalScope,
+				standardPurposeConsents: purposesAllowed.standardPurposeConsents,
+				customPurposeCosents: purposesAllowed.customPurposeConsents
+			}, true);
+		},
+		getConsentData: function (version, callback) {
+			if (!version || Number(version) === vendorConsent.getVersion()) {
+				callback({
+					consentData: vendorConsentString,
+					gdprApplies: getGdprApplies(),
+					hasGlobalScope: hasGlobalScope
+				}, true);
+			} else {
+				callback(null, false);
+			}
+		},
+		getVendorList: function (version, callback) {
+			if (!version && vendorConsent) {
+				version = vendorConsent.getVendorListVersion();
+			}
+
+			fetchVendorList(function (vendorList) {
+				callback(vendorList, !!vendorList);
+			}, version);
+		},
+		ping: function (parameter, callback) {
+			callback({
+				gdprAppliesGlobally: hasGlobalScope,
+				cmpLoaded: true
+			}, true);
+		},
+		displayConsentUi: trackingOptInModal ? function () {
+			reset();
+			trackingOptInModal.init({ zIndex: 9999999 }).reset();
+		} : undefined
+	};
+
+	if (isEnabled()) {
+		lazyQueue.makeQueue(cmpQueue, function (args) {
+			win.__cmp.apply(null, args);
+		});
+		win.__cmp = __cmpStub;
 		win.addEventListener('message', function (event) {
 			try {
-				var call = event.data.__cmpCall;
+				var call = ((typeof event.data === 'string') ? JSON.parse(event.data) : event.data).__cmpCall;
 
 				if (call) {
-					win.__cmp(call.command, call.parameter, function(retValue, success) {
+					win.__cmp(call.command, call.parameter, function (retValue, success) {
 						var returnMsg = {
 							__cmpReturn: {
 								returnValue: retValue, success: success, callId: call.callId
@@ -169,15 +332,17 @@ define('wikia.cmp', [
 					});
 				}
 			} catch (e) { void(0); } // do nothing
-		});
+		}, false);
+		addLocatorFrame();
 		trackingOptIn.pushToUserConsentQueue(init);
-		trackingOptIn.pushToUserConsentQueue(loadQuantserveImage);
 	} else {
 		log('Module is not enabled', log.levels.debug, logGroup);
 	}
 
 	return {
-		getConsentString: getConsentString,
-		getGdprApplies: getGdprApplies
+		getGdprApplies: getGdprApplies,
+		callCmp: callCmp,
+		isEnabled: isEnabled,
+		reset: reset
 	};
 });

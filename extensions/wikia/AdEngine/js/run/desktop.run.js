@@ -6,7 +6,6 @@ require([
 	'ext.wikia.adEngine.adEngineRunner',
 	'ext.wikia.adEngine.adLogicPageParams',
 	'ext.wikia.adEngine.adTracker',
-	'ext.wikia.adEngine.babDetection',
 	'ext.wikia.adEngine.slot.service.stateMonitor',
 	'ext.wikia.adEngine.config.desktop',
 	'ext.wikia.adEngine.customAdsLoader',
@@ -18,6 +17,8 @@ require([
 	'ext.wikia.adEngine.slotTweaker',
 	'ext.wikia.adEngine.tracking.adInfoListener',
 	'ext.wikia.adEngine.tracking.scrollDepthTracker',
+	'ext.wikia.adEngine.wad.babDetection',
+	'ext.wikia.adEngine.wad.wadRecRunner',
 	'wikia.geo',
 	'wikia.trackingOptIn',
 	'wikia.window',
@@ -28,7 +29,6 @@ require([
 	adEngineRunner,
 	pageLevelParams,
 	adTracker,
-	babDetection,
 	slotStateMonitor,
 	adConfigDesktop,
 	customAdsLoader,
@@ -40,6 +40,8 @@ require([
 	slotTweaker,
 	adInfoListener,
 	scrollDepthTracker,
+	babDetection,
+	wadRecRunner,
 	geo,
 	trackingOptIn,
 	win,
@@ -88,6 +90,7 @@ require([
 
 		// Everything starts after content and JS
 		win.wgAfterContentAndJS.push(function () {
+			wadRecRunner.init();
 			adInfoListener.run();
 			slotStateMonitor.run();
 

@@ -36,7 +36,9 @@
     "ext-bcmath": "*",
     "ext-bz2": "*",
     "ext-dba": "*",
+    "ext-exif": "*",
     "ext-gd": "*",
+    "ext-intl": "*",
     "ext-mustache": "*",
     "ext-mysqli": "*",
     "ext-pcntl": "*",
@@ -75,6 +77,6 @@
     "ext-xdebug": "*"
   },
   "scripts": {
-    "lint": "phplint . --exclude lib/composer --exclude /templates/ --no-cache"
+    "lint": "phplint . --exclude lib/composer --exclude lib/vendor --exclude lib/Swagger --exclude /templates/ --no-cache"
   }
 }

@@ -5,9 +5,11 @@
 		<li class="activity-item">
 			<?php $displayName = $value['authorId'] ? htmlspecialchars( $value['authorName'], ENT_QUOTES ) : wfMessage( 'oasis-anon-user' )->escaped(); ?>
 
-			<a class="activity-avatar" href="<?= Sanitizer::encodeAttribute( $value['authorUrl'] ); ?>">
-				<img class="wds-avatar" src="<?= AvatarService::getAvatarUrl( $value['authorName'], 30 ) ?>" data-tracking="activity-avatar" title="<?= $displayName ?>" />
-			</a>
+			<div class="wds-avatar">
+				<a href="<?= Sanitizer::encodeAttribute( $value['authorUrl'] ); ?>">
+					<img class="wds-avatar__image" src="<?= AvatarService::getAvatarUrl( $value['authorName'], 30 ) ?>" data-tracking="activity-avatar" title="<?= $displayName ?>" />
+				</a>
+			</div>
 
 			<div class="activity-info">
 				<div class="page-title">

@@ -11,12 +11,12 @@ class MustacheServiceTest extends WikiaBaseTest {
 	public function setUp(){
 		parent::setUp();
 
+		if ( !extension_loaded( 'mustache' ) ) {
+			$this->markTestSkipped( '"mustache" PHP extension needs to be loaded!' );
+		}
+
 		$this->file = __DIR__ . '/../templates/test.mustache';
 		$this->service = MustacheService::getInstance();
-	}
-
-	public function testExtensionsIsLoaded() {
-		$this->assertTrue( extension_loaded( 'mustache' ), '"mustache" PHP extension needs to be loaded!' );
 	}
 
 	/**

@@ -1,0 +1,70 @@
+.wds-dialog {
+	&__curtain {
+		animation: fade-in .2s;
+		background-color: rgba(0,0,0,.5);
+		bottom: 0;
+		display: flex;
+		left: 0;
+		padding: 20px;
+		position: fixed;
+		right: 0;
+		top: 0;
+		z-index: 1;
+	}
+
+	&__wrapper {
+		align-self: center;
+		animation: move-in .2s;
+		background: white;
+		border-radius: 2px;
+		margin: 0 auto;
+		max-width: 640px;
+		min-width: 280px;
+		width: auto;
+	}
+
+	&__title {
+		font-size: $wds-typescale-size-plus-2;
+		font-weight: bold;
+		line-height: $wds-typescale-size-plus-3;
+		padding: 24px 24px 0;
+	}
+
+	&__content {
+		font-size: $wds-typescale-size-base;
+		line-height: $wds-typescale-size-plus-2;
+		padding: 24px;
+	}
+
+	&__actions {
+		border-top: 1px solid $wds-color-mist-gray;
+		display: flex;
+		height: 40px;
+		justify-content: flex-end;
+		padding: 5px 0 8px;
+
+		&-button {
+			font-size: $wds-typescale-size-base;
+			font-weight: normal;
+    		text-transform: none;
+
+			&:hover {
+				background-color: $wds-color-off-white;
+			}
+		}
+	}
+
+	@keyframes move-in {
+		from {
+			opacity: 0;
+			transform: translate(0, 30px);
+		}
+	}
+
+	@keyframes fade-in {
+		from {
+			opacity: 0;
+			pointer-events: none;
+		}
+	}
+}

@@ -9,7 +9,7 @@ We assume that you have `app` and `config` repository cloned in the same directo
 
 ```sh
 # 1. build a base image
-docker build -f base/Dockerfile -t artifactory.wikia-inc.com/sus/php-wikia-base:latest ./base
+docker build -f base/Dockerfile -t artifactory.wikia-inc.com/sus/php-wikia-base:27f50ce ./base
 
 # 2. and then dev image
 docker build -f dev/Dockerfile -t php-wikia-dev ./dev
@@ -29,7 +29,7 @@ docker exec -it dev_php-wikia_1 bash
 In order to run service locally you need to configure hosts. Add below line to `/etc/hosts`
 
 ```
-127.0.0.1	wikia-local.com muppet.wikia-local.com
+127.0.0.1	wikia-local.com dev.wikia-local.com muppet.dev.wikia-local.com
 ```
 
 ## How to push base and dev images to Wikia's repository

@@ -2,7 +2,7 @@
 /**
  * @author Krzysztof Krzyżaniak <eloy@wikia-inc.com>
  * @author macbre
- * @group Integration
+ * @group Infrastructure
  * @group MediaFeatures
  */
 class ImageServingIndexerTest extends WikiaBaseTest {

@@ -79,6 +79,10 @@ class WikiaRobots {
 
 		// Fandom old URLs
 		'/fandom?p=',
+
+		// AdEngine recovery api
+		'/wikia.php?controller=AdEngine2ApiController&method=getBTCode',
+		'/wikia.php?controller=AdEngine2ApiController&method=getILCode'
 	];
 
 	/**

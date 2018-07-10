@@ -3,44 +3,45 @@
  * Class definition for Wikia\Search\Test\QueryService\Select\Dismax\OnWiki
  */
 namespace Wikia\Search\QueryService\Select\Dismax;
-use Wikia, ReflectionProperty, ReflectionMethod;
+use ReflectionMethod;
+use Wikia;
+
 /**
  * Tests on-wiki search functionality
- * @group Broken
  */
-class OnWikiTest extends Wikia\Search\Test\BaseTest { 
-	
+class OnWikiTest extends Wikia\Search\Test\BaseTest {
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.1058 ms
 	 * @covers Wikia\Search\QueryService\Select\Dismax\OnWiki::extractMatch
 	 */
 	public function testExtractMatch() {
-		
+
 		$mockService = $this->getMockBuilder( 'Wikia\Search\MediaWikiService' )
 		                      ->disableOriginalConstructor()
 		                      ->setMethods( array( 'getArticleMatchForTermAndNamespaces', 'getWikiMatchByHost', 'getGlobal' ) )
 		                      ->getMock();
-		
+
 		$mockConfig = $this->getMockBuilder( 'Wikia\Search\Config' )
 		                   ->setMethods( array( 'getQuery', 'getNamespaces', 'setArticleMatch', 'getMatch', 'setWikiMatch' ) )
 		                   ->getMock();
-		
+
 		$mockQuery = $this->getMock( 'Wikia\Search\Query\Select', array( 'getSanitizedQuery' ), array( 'foo' ) );
-		
+
 		$mockSelect = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\Dismax\OnWiki' )
 		                   ->disableOriginalConstructor()
 		                   ->setMethods(  [ 'extractWikiMatch', 'getConfig', 'getService' ] )
 		                   ->getMock();
-		
+
 		$mockMatch = $this->getMockBuilder( 'Wikia\Search\Match\Article' )
 		                  ->disableOriginalConstructor()
 		                  ->getMock();
-		
+
 		$mockWikiMatch = $this->getMockBuilder( 'Wikia\Search\Match\Wiki' )
 		                      ->disableOriginalConstructor()
 		                      ->getMock();
-		
+
 		$mockSelect
 		    ->expects( $this->once() )
 		    ->method ( 'getConfig' )
@@ -92,7 +93,7 @@ class OnWikiTest extends Wikia\Search\Test\BaseTest {
 				$mockSelect->extractMatch()
 		);
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.09931 ms
@@ -102,13 +103,13 @@ class OnWikiTest extends Wikia\Search\Test\BaseTest {
 		$mockQuery = $this->getMockBuilder( '\Solarium_Query_Select' )
 		                  ->disableOriginalConstructor()
 		                  ->getMock();
-		
+
 		$selectMethods = array( 'registerHighlighting', 'registerFilterQueries', 'registerSpellcheck', 'registerDismax' );
 		$mockSelect = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\Dismax\OnWiki' )
 		                   ->disableOriginalConstructor()
 		                   ->setMethods( $selectMethods )
 		                   ->getMock();
-		
+
 		$mockSelect
 		    ->expects( $this->once() )
 		    ->method ( 'registerHighlighting' )
@@ -134,7 +135,7 @@ class OnWikiTest extends Wikia\Search\Test\BaseTest {
 				$register->invoke( $mockSelect, $mockQuery )
 		);
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.10161 ms
@@ -149,13 +150,13 @@ class OnWikiTest extends Wikia\Search\Test\BaseTest {
 		$mockResult = $this->getMockBuilder( 'Wikia\Search\Result' )
 		                   ->setMethods( array( 'getVar' ) )
 		                   ->getMock();
-		
+
 		$dc = new Wikia\Search\QueryService\DependencyContainer( array( 'config' => $mockConfig ) );
 		$mockSelect = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\Dismax\OnWiki' )
 		                   ->setConstructorArgs( array( $dc ) )
 		                   ->setMethods( null )
 		                   ->getMock();
-		
+
 		$mockConfig
 		    ->expects( $this->once() )
 		    ->method ( 'hasArticleMatch' )
@@ -189,7 +190,7 @@ class OnWikiTest extends Wikia\Search\Test\BaseTest {
 				$register->invoke( $mockSelect )
 		);
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.1173 ms
@@ -214,13 +215,13 @@ class OnWikiTest extends Wikia\Search\Test\BaseTest {
 		                      ->getMock();
 		$mockConfig = $this->getMock( 'Wikia\Search\Config', array( 'getQuery', 'getCityId'  ) );
 		$mockQueryWrapper = $this->getMock( 'Wikia\Search\Query\Select', array( 'getSanitizedQuery' ), array( 'foo' ) );
-		
+
 		$dc = new Wikia\Search\QueryService\DependencyContainer( array( 'service' => $mockService, 'config' => $mockConfig ) );
 		$mockSelect = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\Dismax\OnWiki' )
 		                   ->setConstructorArgs( array( $dc ) )
 		                   ->setMethods( null )
 		                   ->getMock();
-		
+
 		$mockService
 		    ->expects( $this->once() )
 		    ->method ( 'getGlobal' )
@@ -308,7 +309,7 @@ class OnWikiTest extends Wikia\Search\Test\BaseTest {
 				$register->invoke( $mockSelect, $mockQuery )
 		);
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.10199 ms
@@ -321,7 +322,7 @@ class OnWikiTest extends Wikia\Search\Test\BaseTest {
 		                   ->setConstructorArgs( array( $dc ) )
 		                   ->setMethods( array() )
 		                   ->getMock();
-		
+
 		$mockConfig
 		    ->expects( $this->once() )
 		    ->method ( 'getQueryFieldsToBoosts' )
@@ -334,7 +335,7 @@ class OnWikiTest extends Wikia\Search\Test\BaseTest {
 				$get->invoke( $mockSelect )
 		);
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.09878 ms
@@ -353,7 +354,7 @@ class OnWikiTest extends Wikia\Search\Test\BaseTest {
 		                   ->setConstructorArgs( array( $dc ) )
 		                   ->setMethods( null )
 		                   ->getMock();
-		
+
 		$mockConfig
 		    ->expects( $this->once() )
 		    ->method ( 'getCityId' )
@@ -386,7 +387,7 @@ class OnWikiTest extends Wikia\Search\Test\BaseTest {
 
 		$this->assertEquals( $expected, $method->invoke( $mockSelect ) );
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.09852 ms
@@ -394,10 +395,10 @@ class OnWikiTest extends Wikia\Search\Test\BaseTest {
 	 */
 	public function testGetFilterQueryString() {
 		$mockConfig = $this->getMock( 'Wikia\Search\Config', array( 'getCityId', 'getNamespaces', 'getMinArticleQuality' ) );
-		$dc = new \Wikia\Search\QueryService\DependencyContainer( array( 'config' => $mockConfig ) ); 
+		$dc = new \Wikia\Search\QueryService\DependencyContainer( array( 'config' => $mockConfig ) );
 		$mockSelect = $this->getMockBuilder( '\Wikia\Search\QueryService\Select\Dismax\OnWiki' )
 		                   ->setConstructorArgs( array( $dc ) )
-		                   ->setMethods( array( null ) )
+		                   ->setMethods( [] )
 		                   ->getMockForAbstractClass();
 		$mockConfig
 		    ->expects( $this->once() )

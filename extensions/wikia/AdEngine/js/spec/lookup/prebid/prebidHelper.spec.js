@@ -69,6 +69,11 @@ describe('ext.wikia.adEngine.lookup.prebid.prebidHelper', function () {
 		adaptersRegistry: {
 			getAdapters: function () {
 			}
+		},
+		babDetection: {
+			isBlocking: function () {
+				return false;
+			}
 		}
 	};
 
@@ -76,7 +81,8 @@ describe('ext.wikia.adEngine.lookup.prebid.prebidHelper', function () {
 		spyOn(mocks.adaptersRegistry, 'getAdapters').and.returnValue(mocks.adapters);
 
 		return modules['ext.wikia.adEngine.lookup.prebid.prebidHelper'](
-			mocks.adaptersRegistry
+			mocks.adaptersRegistry,
+			mocks.babDetection
 		);
 	}
 

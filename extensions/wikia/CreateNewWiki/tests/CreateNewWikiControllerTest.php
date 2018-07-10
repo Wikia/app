@@ -1,5 +1,8 @@
 <?php
 
+use Wikia\Tasks\Tasks\BaseTask;
+use Wikia\Tasks\Tasks\CreateNewWikiTask;
+
 class CreateNewWikiControllerTest extends WikiaBaseTest {
 
 	public function setUp() {
@@ -56,6 +59,21 @@ class CreateNewWikiControllerTest extends WikiaBaseTest {
 				->willThrowException( new BadRequestException() );
 		}
 
+		$taskId = 123;
+		$taskMock = $this->createMock( BaseTask::class );
+		$taskMock->expects( $this->any() )
+			->method( 'call' )
+			->willReturnSelf();
+		$taskMock->expects( $this->any() )
+			->method( 'setQueue' )
+			->with( \Wikia\Tasks\Queues\PriorityQueue::NAME )
+			->willReturnSelf();
+		$taskMock->expects( $this->any() )
+			->method( 'queue' )
+			->willReturn( $taskId );
+
+		$this->mockStaticMethod( BaseTask::class, 'newLocalTask', $taskMock );
+
 		$responseMock = new WikiaResponse( 'json', $requestMock );
 
 		if ( !empty( $testData['expectedException'] ) ) {
@@ -75,8 +93,7 @@ class CreateNewWikiControllerTest extends WikiaBaseTest {
 		if ($testData['status'] === 'ok') {
 			$this->assertEquals( 201, $response->getCode(),
 				'Method responded with HTTP 201 Created' );
-			$this->assertStringStartsWith( 'mw-', $response->getVal( 'task_id' ),
-				'Task ID is emitted in JSON response' );
+			$this->assertEquals( $taskId, $response->getVal( 'task_id' ), 'Task ID is emitted in JSON response' );
 		}
 		else {
 			$this->assertEquals( $testData['status'], $response->getVal(CreateNewWikiController::STATUS_FIELD) );

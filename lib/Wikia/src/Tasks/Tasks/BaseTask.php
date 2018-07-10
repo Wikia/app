@@ -339,7 +339,7 @@ abstract class BaseTask {
 
 	/**
 	 * @see AsyncTaskList::wikiId
-	 * @param $wikiId
+	 * @param int|int[] $wikiId
 	 * @return $this
 	 */
 	public function wikiId( $wikiId ) {

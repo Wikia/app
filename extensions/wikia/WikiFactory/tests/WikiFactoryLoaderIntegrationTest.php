@@ -5,11 +5,15 @@
  */
 class WikiFactoryLoaderIntegrationTest extends WikiaDatabaseTest {
 
+	/** @var string $dbName */
+	private $dbName;
+
 	protected function setUp() {
 		parent::setUp();
 
 		WikiFactory::isUsed( false );
 		$GLOBALS['wgExtensionFunctions'] = [];
+		$this->dbName = $GLOBALS['wgDBname'];
 	}
 
 	/**
@@ -107,7 +111,7 @@ class WikiFactoryLoaderIntegrationTest extends WikiaDatabaseTest {
 	public function testRedirectsToPrimaryDomainWhenAlternativeDomainUsed(
 		string $expectedRedirect, array $server
 	) {
-		$this->mockGlobalVariable( 'wgWikiaEnvironment', WIKIA_ENV_PROD );
+		$this->mockGlobalVariable( 'wgWikiFactoryRedirectForAlternateDomains', true );
 		$this->mockGlobalVariable( 'wgDevelEnvironment', false );
 
 		$wikiFactoryLoader = new WikiFactoryLoader( $server, [], [ 'wikicities.com' ] );
@@ -373,6 +377,8 @@ class WikiFactoryLoaderIntegrationTest extends WikiaDatabaseTest {
 		parent::tearDown();
 
 		WikiFactory::isUsed( true );
+		LBFactory::destroyInstance();
+		$GLOBALS['wgDBname'] = $this->dbName;
 	}
 
 	protected function getDataSet() {

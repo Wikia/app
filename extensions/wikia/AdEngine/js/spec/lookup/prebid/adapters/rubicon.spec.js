@@ -15,6 +15,11 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.rubicon', function () {
 			}
 		},
 		log: function () {},
+		babDetection: {
+			isBlocking: function () {
+				return false;
+			}
+		},
 		adaptersHelper: {
 			getTargeting: function () {
 				return {
@@ -36,6 +41,7 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.rubicon', function () {
 			mocks.adContext,
 			mocks.slotsContext,
 			mocks.adaptersHelper,
+			mocks.babDetection,
 			mocks.log
 		);
 	}

@@ -48,12 +48,12 @@ class WikiFactoryLoader {
 	 * @param array $wikiFactoryDomains
 	 */
 	public function  __construct( array $server, array $environment, array $wikiFactoryDomains = [] ) {
-		global $wgDevelEnvironment;
+		global $wgDevelEnvironment, $wgExternalSharedDB;
 
 		// initializations
 		$this->mOldServerName = false;
 		$this->mAlternativeDomainUsed = false;
-		$this->mDBname = WikiFactory::db;
+		$this->mDBname = $wgExternalSharedDB;
 		$this->mDomain = array();
 		$this->mVariables = array();
 		$this->mIsWikiaActive = 0;
@@ -189,8 +189,8 @@ class WikiFactoryLoader {
 	 * (e.g. setting 301 redirect status code).
 	 */
 	public function execute() {
-		global $wgCityId, $wgDevelEnvironment,
-			$wgDBservers, $wgLBFactoryConf, $wgDBserver, $wgContLang, $wgWikiaBaseDomain, $wgArticlePath;
+		global $wgCityId, $wgDBservers, $wgLBFactoryConf, $wgDBserver, $wgContLang,
+			   $wgWikiFactoryRedirectForAlternateDomains, $wgArticlePath;
 
 		wfProfileIn(__METHOD__);
 
@@ -368,6 +368,10 @@ class WikiFactoryLoader {
 			}
 		}
 
+		// As soon as we've determined the wiki the current request belongs to, set the cityId in globals.
+		// This for example is needed in order to generate per-wiki surrogate keys during WFL redirects.
+		$wgCityId = $this->mWikiID;
+
 		/**
 		 * save default var values for Special:WikiFactory
 		 */
@@ -398,10 +402,10 @@ class WikiFactoryLoader {
 		 */
 		$cond2 = $this->mAlternativeDomainUsed && ( $url['host'] != $this->mOldServerName );
 
-		if( ( $cond1 || $cond2 ) && empty( $wgDevelEnvironment ) ) {
+		if( ( $cond1 || $cond2 ) && $wgWikiFactoryRedirectForAlternateDomains ) {
 			$redirectUrl = WikiFactory::getLocalEnvURL( $this->mCityUrl );
 
-			if ( $_SERVER['HTTP_FASTLY_SSL'] &&
+			if ( !empty( $_SERVER['HTTP_FASTLY_SSL'] ) &&
 				 !empty( $_SERVER['HTTP_FASTLY_FF'] ) &&
 				 wfHttpsAllowedForURL( $redirectUrl )
 			) {
@@ -617,14 +621,6 @@ class WikiFactoryLoader {
 				}
 
 				if ($key == 'wgServer') {
-					if ( !empty( $_SERVER['HTTP_X_ORIGINAL_HOST'] ) ) {
-						global $wgConf;
-
-						$stagingServer = $_SERVER['HTTP_X_ORIGINAL_HOST'];
-
-						$tValue = 'http://'.$stagingServer;
-						$wgConf->localVHosts = array_merge( $wgConf->localVHosts, [ $stagingServer ] );
-					}
 					// TODO - what about wgServer value for requests that did not go through Fastly?
 					if ( !empty( $_SERVER['HTTP_FASTLY_SSL'] ) ) {
 						$tValue = wfHttpToHttps( $tValue );
@@ -642,8 +638,6 @@ class WikiFactoryLoader {
 				}
 			}
 		}
-
-		$wgCityId = $this->mWikiID;
 
 		/**
 		 * set/replace $wgDBname in $wgDBservers

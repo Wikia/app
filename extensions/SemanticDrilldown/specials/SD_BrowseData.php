@@ -765,9 +765,10 @@ END;
 		for ($i = 0; $i < count( $numberArray ); $i++) {
 			if ( $curSeparator < count( $propertyValues ) - 1 ) {
 				$curNumber = $numberArray[$i];
-				while ( $curNumber >= $bucketSeparators[$curSeparator + 1] ) {
+				// Wikia change  - refactored loop to avoid notice
+				do {
 					$curSeparator++;
-				}
+				} while ( isset( $bucketSeparators[$curSeparator] ) && $curNumber >= $bucketSeparators[$curSeparator] );
 			}
 			$propertyValues[$curSeparator]['numValues']++;
 		}

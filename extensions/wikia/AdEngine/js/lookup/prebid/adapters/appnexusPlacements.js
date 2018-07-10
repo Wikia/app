@@ -14,7 +14,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.appnexusPlacements', [
 				other: '9412994'
 			},
 			oasis: {
-				recovery: {
+				rec: {
 					atf: '11823778',
 					btf: '11823724',
 					hivi: '11823799'
@@ -28,10 +28,14 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.appnexusPlacements', [
 			}
 		};
 
-	function getPlacement(skin, position) {
+	function getPlacement(skin, position, isRecovering) {
 		var context = adContext.getContext(),
 			vertical = skin === 'oasis' ? 'pal' : context.targeting.mappedVerticalName,
 			skinVertical;
+
+		if (isRecovering) {
+			vertical = 'rec';
+		}
 
 		if (placementsMap && placementsMap[skin] && placementsMap[skin][vertical]) {
 			skinVertical = placementsMap[skin][vertical];

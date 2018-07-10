@@ -1,8 +1,9 @@
 $(function () {
 	'use strict';
 
-	var $searchInput = $('#searchInput'),
-		$searchInputWrapper = $('#searchInputWrapper'),
+	var $globalNav = $('.wds-global-navigation'),
+		$searchDropdown = $globalNav.find('.wds-global-navigation__search'),
+		$searchInput = $globalNav.find('.wds-global-navigation__search-input'),
 		searchSuggestionsUrl = $searchInput.data('suggestions-url');
 
 	function initSuggestions() {
@@ -13,16 +14,16 @@ $(function () {
 			$searchInput
 				.on({
 					suggestShow: function () {
-						$searchInputWrapper.addClass('wds-is-active');
+						$searchDropdown.addClass('wds-is-active');
 					},
 					suggestHide: function () {
-						$searchInputWrapper.removeClass('wds-is-active');
+						$searchDropdown.removeClass('wds-is-active');
 					}
 				})
 				.autocomplete({
 					serviceUrl: searchSuggestionsUrl,
 					queryParamName: $searchInput.data('suggestions-param-name'),
-					appendTo: '.wds-global-navigation__search-input-wrapper',
+					appendTo: '.wds-global-navigation__search',
 					deferRequestBy: 200,
 					minLength: 3,
 					maxHeight: 1000,
@@ -73,7 +74,8 @@ $(function () {
 						return '<a class="wds-global-navigation__dropdown-link">' +
 							value.replace(new RegExp(pattern, 'gi'), '<strong>$1<\/strong>') +
 							'</a>';
-					}
+					},
+					actionEvent: 'mousedown',
 				});
 		});
 	}

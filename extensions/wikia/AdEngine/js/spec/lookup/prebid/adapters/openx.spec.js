@@ -10,13 +10,19 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.openx', function () {
 			filterSlotMap: function (map) {
 				return map;
 			}
+		},
+		babDetection: {
+			isBlocking: function () {
+				return false;
+			}
 		}
 	};
 
 	function getOpenx() {
 		return modules['ext.wikia.adEngine.lookup.prebid.adapters.openx'](
 			mocks.adContext,
-			mocks.slotsContext
+			mocks.slotsContext,
+			mocks.babDetection
 		);
 	}
 

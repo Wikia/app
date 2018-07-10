@@ -1,4 +1,4 @@
--- MySQL dump 10.13  Distrib 5.6.24-72.2, for debian-linux-gnu (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.18-15, for debian-linux-gnu (x86_64)
 --
 -- Host: geo-db-archive-slave.query.consul    Database: archive
 -- ------------------------------------------------------
@@ -97,4 +97,4 @@ CREATE TABLE `wikia_tasks` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
--- Dump completed on 2018-03-15 15:22:11
+-- Dump completed on 2018-07-06 12:59:33
