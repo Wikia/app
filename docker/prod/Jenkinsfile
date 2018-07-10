@@ -96,7 +96,8 @@ node("docker-daemon") {
                 'IMAGE_TAG': imageTag,
                 'ENVIRONMENT': environment,
                 'DATACENTER': params.datacenter,
-                'APP_VERSION': params.version
+                'APP_VERSION': params.app,
+                'CONFIG_VERSION': params.config
             ])
 
             sh("""cat > docker/prod/k8s.yaml <<EOL
