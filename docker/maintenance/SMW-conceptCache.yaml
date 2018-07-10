@@ -23,7 +23,7 @@ spec:
             args:
             - php
             - /usr/wikia/slot1/current/src/maintenance/maintenanceTaskScheduler.php
-            - --params="--quiet"
+            - --params="--create"
             - --id=410,40,1318,490
-            - /usr/wikia/slot1/current/src/extensions/wikia/SemanticMediaWiki/maintenance/rebuildConceptCache.php --create
+            - /usr/wikia/slot1/current/src/extensions/wikia/SemanticMediaWiki/maintenance/rebuildConceptCache.php
           restartPolicy: Never
