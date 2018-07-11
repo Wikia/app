@@ -1788,8 +1788,7 @@ class WikiPage extends Page implements IDBAccessObject {
 			$cascade = false;
 		}
 
-		// Take this opportunity to purge out expired restrictions
-		Title::purgeExpiredRestrictions();
+		// Wikia change SUS-5481 removed redundant call to delete expired restrictions
 
 		# @todo FIXME: Same limitations as described in ProtectionForm.php (line 37);
 		# we expect a single selection, but the schema allows otherwise.
