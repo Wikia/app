@@ -47,8 +47,6 @@ if ( empty($options['old-ip']) || empty($options['new-ip']) ) {
 
 echo("Process for wiki with ID {$wgCityId} started.");
 
-$taskId = (!empty($options['taskid'])) ? (int)$options['taskid'] : null;
-
 $processData = array(
 	'old_ip' => (string)$options['old-ip'],
 	'new_ip' => (string)$options['new-ip'],
@@ -71,16 +69,6 @@ require_once("$IP/extensions/wikia/CoppaTool/CoppaTool.setup.php");
 $process = RenameIPProcess::newFromData($processData);
 $process->setLogDestination(RenameIPProcess::LOG_OUTPUT);
 
-if($taskId) {
-	$runningTask = RenameIPLocalTask::newFromID($taskId);
-
-	if(defined('ENV_DEVBOX')){
-		$process->addLogDestination(RenameIPProcess::LOG_BATCH_TASK, $runningTask);
-	}
-	else{
-		$process->setLogDestination(RenameIPProcess::LOG_BATCH_TASK, $runningTask);
-	}
-}
 $process->setRequestorUser();
 
 try {
