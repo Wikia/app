@@ -3648,13 +3648,6 @@ $wgEnableTabViewExt = true;
 $wgEnableTagsReport = true;
 
 /**
- * Enable TaskManager extension.
- * @see /extensions/wikia/TaskManager
- * @var bool $wgEnableTaskManagerExt.
- */
-$wgEnableTaskManagerExt = true;
-
-/**
  * Enable TemplateClassification extension.
  * @see extensions/wikia/InsightsV2
  * @see extensions/wikia/TemplateClassification
@@ -8711,13 +8704,6 @@ $wgWikiaSearchSupportedLanguages = [
     'fr', 'ga', 'gl', 'hi', 'hu', 'hy', 'id', 'it', 'ja', 'ko', 'lv', 'nl',
     'no', 'pl', 'pt', 'ro', 'ru', 'sv', 'sv', 'th', 'tr', 'zh'
 ];
-
-/**
- * Path to Task Manager working directory.
- * @see /extensions/wikia/TaskManager
- * @var string $wgWikiaTaskDirectory
- */
-$wgWikiaTaskDirectory = '/home/wikia/taskmanager/';
 
 /**
  * Render some links with rel=nofollow attribute.
