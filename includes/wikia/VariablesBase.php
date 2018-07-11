@@ -8745,7 +8745,6 @@ $wgWikiDirectedAtChildrenByStaff = false;
  * Indicates whether wikicities database is in read-only mode.
  * @see extensions/wikia/WikiFactory/WikiFactory.php
  * @see extensions/wikia/FounderEmails
- * @see extensions/wikia/TaskManager
  * @see extensions/wikia/WikiFactory/
  * @deprecated
  * @var bool $wgWikicitiesReadOnly
