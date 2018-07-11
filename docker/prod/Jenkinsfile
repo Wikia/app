@@ -2,7 +2,6 @@ def kubectlImage = "artifactory.wikia-inc.com/ops/k8s-deployer:0.0.14"
 def nginxImage = "artifactory.wikia-inc.com/sus/mediawiki-prod-nginx"
 def mediawikiImage = "artifactory.wikia-inc.com/sus/mediawiki-prod-php"
 def loggerImage = "artifactory.wikia-inc.com/sus/mediawiki-logger"
-def environment = "prod"
 
 def render(String template, java.util.LinkedHashMap binding) {
     def engine = new groovy.text.SimpleTemplateEngine()
@@ -11,7 +10,12 @@ def render(String template, java.util.LinkedHashMap binding) {
 }
 
 node("docker-daemon") {
-    def releaseBranch = "release-${version}"
+    def appBranch = params.app.split('\\.')[0]
+    def configBranch = params.config.split('\\.')[0]
+    def datacenter = params.datacenter
+    def environment = params.environment
+
+    def k8sContext = "kube-${datacenter}-${environment}"
 
     def appHash
     def configHash
@@ -21,7 +25,7 @@ node("docker-daemon") {
     stage("Clone repositories") {
         dir("app") {
             git url: "git@github.com:Wikia/app.git",
-                branch: releaseBranch,
+                branch: appBranch,
                 credentialsId: "bd3cf712-39a7-4b16-979e-ff86208ab2ea"
 
             appHash = sh(script: 'git rev-parse --short HEAD', returnStdout: true).trim()
@@ -31,7 +35,7 @@ node("docker-daemon") {
 
         dir("config") {
             git url: "git@github.com:Wikia/config.git",
-                branch: releaseBranch,
+                branch: configBranch,
                 credentialsId: "bd3cf712-39a7-4b16-979e-ff86208ab2ea"
 
             configHash = sh(script: 'git rev-parse --short HEAD', returnStdout: true).trim()
@@ -42,17 +46,18 @@ node("docker-daemon") {
         imageTag = "$appHash.$configHash"
 
         println("Image tag: $imageTag")
-        println("Version: $params.version")
+        println("App Version: $params.app")
+        println("Config Version: $params.config")
     }
 
     stage("Bump cachebuster and version") {
         dir("app") {
             sh('echo "<?php\n\\\$wgStyleVersion = ' + params.cache_buster + ';" > wgStyleVersion.php')
-            sh('echo "' + releaseBranch + '@' + appHash + '" > wikia.version.txt')
+            sh('echo "' + appBranch + '@' + appHash + '" > wikia.version.txt')
         }
 
         dir("config") {
-            sh('echo "' + releaseBranch + '@' + configHash + '" > wikia.version.txt')
+            sh('echo "' + configBranch + '@' + configHash + '" > wikia.version.txt')
         }
     }
 
@@ -93,8 +98,9 @@ node("docker-daemon") {
             def k8s = render(template, [
                 'IMAGE_TAG': imageTag,
                 'ENVIRONMENT': environment,
-                'DATACENTER': params.datacenter,
-                'APP_VERSION': params.version
+                'DATACENTER': datacenter,
+                'APP_VERSION': params.app,
+                'CONFIG_VERSION': params.config
             ])
 
             sh("""cat > docker/prod/k8s.yaml <<EOL
@@ -106,9 +112,7 @@ EOL""")
 
         withDockerContainer(kubectlImage) {
             sh """#!/bin/sh
-            kubectl --context kube-sjc-prod -n ${environment} apply -f app/docker/prod/k8s.yaml"""
-            sh """#!/bin/sh
-            kubectl --context kube-res-prod -n ${environment} apply -f app/docker/prod/k8s.yaml"""
+            kubectl --context ${k8sContext}-n ${environment} apply -f app/docker/prod/k8s.yaml"""
         }
     }
 }
