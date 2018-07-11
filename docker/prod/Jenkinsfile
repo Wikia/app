@@ -112,7 +112,7 @@ EOL""")
 
         withDockerContainer(kubectlImage) {
             sh """#!/bin/sh
-            kubectl --context ${k8sContext}-n ${environment} apply -f app/docker/prod/k8s.yaml"""
+            kubectl --context ${k8sContext} -n ${environment} apply -f app/docker/prod/k8s.yaml"""
         }
     }
 }
