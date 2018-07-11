@@ -190,12 +190,14 @@ $color-highlight-column: rgba($color-page, 0);
 					height: 95px;
 					line-height: 12px;
 					padding: 20px 3px 0;
-					width: 74px;
+					width: 82px;
 					.representation {
+						align-items: center;
 						border-radius: 7px;
 						@include linear-gradient(darken($color-admin-icon-highlight, 2%), top, $color-admin-icon-highlight, 40%, $color-admin-icon-shadow, 100%);
 						border: 1px solid $color-admin-icon-border;
-						display: block;
+						@include flexbox();
+						@include justify-content(center);
 						height: 50px;
 						margin: 0 auto 5px;
 						position: relative;

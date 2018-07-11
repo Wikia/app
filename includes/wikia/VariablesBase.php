@@ -2220,6 +2220,13 @@ $wgEnableAdsInContent = 1;
 $wgEnableAjaxPollExt = true;
 
 /**
+ * Enable Announcements extension + entry point in AdminDashboard.
+ * @see extensions/Announcements
+ * @var bool $wgEnableAnnouncements
+ */
+$wgEnableAnnouncements = false;
+
+/**
  * Enable AntiSpoof extension.
  * @see extensions/AntiSpoof
  * @var bool $wgEnableAntiSpoofExt
@@ -3646,13 +3653,6 @@ $wgEnableTabViewExt = true;
  * @var bool $wgEnableTagsReport
  */
 $wgEnableTagsReport = true;
-
-/**
- * Enable TaskManager extension.
- * @see /extensions/wikia/TaskManager
- * @var bool $wgEnableTaskManagerExt.
- */
-$wgEnableTaskManagerExt = true;
 
 /**
  * Enable TemplateClassification extension.
@@ -8713,13 +8713,6 @@ $wgWikiaSearchSupportedLanguages = [
 ];
 
 /**
- * Path to Task Manager working directory.
- * @see /extensions/wikia/TaskManager
- * @var string $wgWikiaTaskDirectory
- */
-$wgWikiaTaskDirectory = '/home/wikia/taskmanager/';
-
-/**
  * Render some links with rel=nofollow attribute.
  * @see Article.php
  * @see Linker.php
@@ -8759,7 +8752,6 @@ $wgWikiDirectedAtChildrenByStaff = false;
  * Indicates whether wikicities database is in read-only mode.
  * @see extensions/wikia/WikiFactory/WikiFactory.php
  * @see extensions/wikia/FounderEmails
- * @see extensions/wikia/TaskManager
  * @see extensions/wikia/WikiFactory/
  * @deprecated
  * @var bool $wgWikicitiesReadOnly

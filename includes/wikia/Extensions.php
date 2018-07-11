@@ -534,10 +534,6 @@ if( !empty( $wgEnableRandomSelectionExt ) ) {
 	include( "$IP/extensions/3rdparty/RandomSelection/RandomSelection.php" );
 }
 
-if( !empty( $wgEnableTaskManagerExt ) ) {
-	include( "$IP/extensions/wikia/TaskManager/SpecialTaskManager.php" );
-}
-
 if( !empty( $wgEnableMultiDeleteExt ) ) {
 	include( "$IP/extensions/wikia/MultiTasks/SpecialMultiDelete.php" );
 	include( "$IP/extensions/wikia/MultiTasks/SpecialMultiWikiFinder.php" );
@@ -974,7 +970,7 @@ if ( !empty( $wgEnableTitleBlacklistExt ) ) {
 }
 
 # User Rename Tool
-if (!empty($wgEnableUserRenameToolExt) && !empty($wgEnableTaskManagerExt) && !empty($wgEnablePhalanxExt)) {
+if (!empty($wgEnableUserRenameToolExt) && !empty($wgEnablePhalanxExt)) {
 	include("$IP/extensions/wikia/UserRenameTool/SpecialRenameuser.php");
 } else {
 	# Add log type for user rename even when rename extanesion is not enabled

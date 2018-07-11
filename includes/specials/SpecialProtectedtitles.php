@@ -39,10 +39,7 @@ class SpecialProtectedtitles extends SpecialPage {
 		$this->setHeaders();
 		$this->outputHeader();
 
-		// Purge expired entries on one in every 10 queries
-		if ( !mt_rand( 0, 10 ) ) {
-			Title::purgeExpiredRestrictions();
-		}
+		// Wikia change SUS-5481 removed redundant call to delete expired restrictions
 
 		$request = $this->getRequest();
 		$type = $request->getVal( $this->IdType );
