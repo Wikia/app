@@ -121,7 +121,7 @@ class RenameIPProcess {
 	 * Sets destination for all the logs
 	 *
 	 * @param $destination string/enum One of RenameUserProcess::LOG_* constant
-	 * @param $task Wikia\Tasks\Tasks\BaseTask (Optional) BatchTask to send logs to
+	 * @param $task Wikia\Tasks\Tasks\BaseTask (Optional) task to send logs to
 	 */
 	public function setLogDestination( $destination, $task = null ) {
 		$this->mLogDestinations = array();
@@ -132,7 +132,7 @@ class RenameIPProcess {
 	 * Adds another log destination
 	 *
 	 * @param $destination string/enum One of RenameUserProcess::LOG_* constant
-	 * @param $task Wikia\Tasks\Tasks\BaseTask (Optional) BatchTask to send logs to
+	 * @param $task Wikia\Tasks\Tasks\BaseTask (Optional) task to send logs to
 	 */
 	private function addLogDestination( $destination, $task = null ) {
 		$this->mLogDestinations[] = array( $destination, $task );
