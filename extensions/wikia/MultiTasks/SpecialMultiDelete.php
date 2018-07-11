@@ -25,6 +25,4 @@ $wgExtensionMessagesFiles['MultideleteAliases'] = __DIR__ . '/MultiTasks.aliases
 
 extAddSpecialPage( dirname(__FILE__) . '/SpecialMultiDelete_body.php', 'Multidelete', 'Multidelete' );
 
-require_once( $IP . "/extensions/wikia/TaskManager/BatchTask.php" );
-
 $wgSpecialPageGroups['Multidelete'] = 'pagetools';
