@@ -86,7 +86,6 @@ var ChatWidget = {
 	 * @param users array of users on chat
 	 */
 	updateUsersList: function(users, hasUsers) {
-		console.log(users);
 		var output = Mustache.render(ChatWidget.widgetUserElementTemplate, {
 				viewedUsersInfo: users,
 				hasUsers: hasUsers,
