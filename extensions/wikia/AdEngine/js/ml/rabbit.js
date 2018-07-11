@@ -2,6 +2,7 @@
 define('ext.wikia.adEngine.ml.rabbit', [
 	require.optional('ext.wikia.adEngine.ml.ctp.ctpDesktop'),
 	require.optional('ext.wikia.adEngine.ml.ctp.ctpMobile'),
+	require.optional('ext.wikia.adEngine.ml.ctp.queenDesktop'),
 	require.optional('ext.wikia.adEngine.ml.n1.n1DecisionTreeClassifier'),
 	require.optional('ext.wikia.adEngine.ml.n1.n1LogisticRegression'),
 	require.optional('ext.wikia.adEngine.ml.n1.n1mLogisticRegression'),
@@ -9,6 +10,7 @@ define('ext.wikia.adEngine.ml.rabbit', [
 ], function (
 	ctpDesktop,
 	ctpMobile,
+	queenDesktop,
 	n1dtc,
 	n1Lr,
 	n1mLr,
@@ -19,6 +21,7 @@ define('ext.wikia.adEngine.ml.rabbit', [
 	var models = [
 		ctpDesktop,
 		ctpMobile,
+		queenDesktop,
 		n1dtc,
 		n1Lr,
 		n1mLr,
@@ -33,13 +36,31 @@ define('ext.wikia.adEngine.ml.rabbit', [
 		});
 	}
 
-	function getResults(allowedModels) {
+	function getPredictions(allowedModelsNames) {
+		/*
+		Get predictions for all models which are enabled and their name
+		matches one of allowedModelsNames values.
+		 */
 		var results = [];
-		
-		allowedModels = allowedModels || [];
+
+		allowedModelsNames = allowedModelsNames || [];
 
 		models.forEach(function (model) {
-			if (model && model.isEnabled() && allowedModels.indexOf(model.getName()) !== -1) {
+			if (model && model.isEnabled() && allowedModelsNames.indexOf(model.getName()) !== -1) {
+				results.push(model.predict());
+			}
+		});
+
+		return results;
+	}
+
+	function getResults(allowedModelsNames) {
+		var results = [];
+
+		allowedModelsNames = allowedModelsNames || [];
+
+		models.forEach(function (model) {
+			if (model && model.isEnabled() && allowedModelsNames.indexOf(model.getName()) !== -1) {
 				results.push(model.getResult());
 			}
 		});
@@ -55,6 +76,7 @@ define('ext.wikia.adEngine.ml.rabbit', [
 
 	return {
 		getResults: getResults,
+		getPredictions: getPredictions,
 		getAllSerializedResults: getAllSerializedResults
 	};
 });

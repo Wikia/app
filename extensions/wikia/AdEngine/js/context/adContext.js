@@ -79,7 +79,7 @@ define('ext.wikia.adEngine.adContext', [
 		var geos = instantGlobals[name] || [];
 
 		if (useNewGeo) {
-			return isProperGeoAds(name)
+			return isProperGeoAds(name);
 		}
 
 		return geo.isProperGeo(geos);
@@ -93,6 +93,8 @@ define('ext.wikia.adEngine.adContext', [
 	function updateAdContextRabbitExperiments(context) {
 		context.rabbits.ctpDesktop = isProperGeoAds('wgAdDriverCTPDesktopRabbitCountries');
 		context.rabbits.ctpMobile = isProperGeoAds('wgAdDriverCTPMobileRabbitCountries');
+		context.rabbits.queenDesktop = isProperGeoAds('wgAdDriverCTPDesktopQueenCountries');
+		context.rabbits.isQueenDesktopForced = window.location.href.indexOf('CTPQueenForce') > -1;
 	}
 
 	function areDelayServicesBlocked() {
