@@ -1,5 +1,0 @@
-name: founder-emails
-schedule: "20 20 * * *"
-args:
-- php
-- asrtrst
