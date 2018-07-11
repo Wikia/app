@@ -16,17 +16,17 @@ for job_description_file_name in "${JOB_DESCRIPTIONS[@]}"; do
 	fi
 
 	if [ "$NAME" = 'null' ]; then
-		echo "name has to be set in $FILE_NAME"
+		echo "name has to be set in $job_description_file_name"
 		exit 1;
 	fi
 
 	if [ "$SCHEDULE" = 'null' ]; then
-		echo "schedule has to be set in $FILE_NAME"
+		echo "schedule has to be set in $job_description_file_name"
 		exit 1;
 	fi
 
 	if [ "$ARGS" = 'null' ]; then
-		echo "schedule has to be set in $FILE_NAME"
+		echo "schedule has to be set in $job_description_file_name"
 		exit 1;
 	fi
 
