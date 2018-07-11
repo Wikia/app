@@ -3,16 +3,6 @@
 #  Overwrite some variables, load extensions, etc. Former CustomSettings.php  #
 ###############################################################################
 
-###############################################################################
-# DC specific settings                                                        #
-###############################################################################
-switch ($wgWikiaDatacenter) {
-	case "res":
-		# PLATFORM-1740: disable task queue in Reston, it was calling SJC broker
-		$wgTaskBroker = false;
-		break;
-}
-
 // TODO: Clean up after CK editor as default test is finished
 if (isset( $wgCityId ) && is_numeric($wgCityId) ) {
 	if ( in_array( intval( $wgCityId ), $wgCKEdefaultEditorTestWikis ) ) {
