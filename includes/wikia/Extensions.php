@@ -131,7 +131,6 @@ if ( ! empty( $wgEnableLyricWikiExt ) ) {
 	require_once "$LW/Hook_PreventBlanking.php";
 	require_once "$LW/Special_ArtistRedirects.php";
 	require_once "$LW/lw_spiderableBadArtists.php";
-	require_once "$LW/Special_Soapfailures.php";
 	require_once "$LW/Special_MobileSearches.php";
 	require_once "$LW/lw_impliedRedirects.php";
 	# Turn off subpages on the main namespace (otherwise every AC/DC song links back to "AC"), etc.
