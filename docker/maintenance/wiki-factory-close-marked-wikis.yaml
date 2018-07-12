@@ -1,4 +1,4 @@
-schedule: "15 8 * * 3"
+schedule: "44 7 * * *"
 args:
 - php
 - >-
