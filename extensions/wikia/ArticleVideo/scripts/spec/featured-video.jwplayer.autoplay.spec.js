@@ -29,47 +29,50 @@ describe('wikia.articleVideo.featuredVideo.autoplay', function () {
 			}
 		}
 	};
-	var autoplay = modules['wikia.articleVideo.featuredVideo.autoplay'](
-		mocks.adContext, mocks.abTest, mocks.featuredVideoCookieService, mocks.rabbit
-	);
+
+	function getAutoplay() {
+		return modules['wikia.articleVideo.featuredVideo.autoplay'](
+			mocks.adContext, mocks.abTest, mocks.featuredVideoCookieService, mocks.rabbit
+		);
+	}
 
 	describe('isAutoplayDisabledByRabbits', function () {
 		it('should return true if rabbit prediction is 1 and ctpDesktop is false', function () {
 			predictions = [1];
 			context['rabbits.ctpDesktop'] = false;
 
-			expect(autoplay.isAutoplayDisabledByRabbits()).toEqual(true);
+			expect(getAutoplay().isAutoplayDisabledByRabbits()).toEqual(true);
 		});
 
 		it('should return true if rabbit prediction is 1 and ctpDesktop is true', function () {
 			predictions = [1];
 			context['rabbits.ctpDesktop'] = true;
 
-			expect(autoplay.isAutoplayDisabledByRabbits()).toEqual(true);
+			expect(getAutoplay().isAutoplayDisabledByRabbits()).toEqual(true);
 		});
 		it('should return false if rabbit prediction is 0 and ctpDesktop is true', function () {
 			predictions = [0];
 			context['rabbits.ctpDesktop'] = true;
 
-			expect(autoplay.isAutoplayDisabledByRabbits()).toEqual(false);
+			expect(getAutoplay().isAutoplayDisabledByRabbits()).toEqual(false);
 		});
 		it('should return false if rabbit prediction is 0 and ctpDesktop is false', function () {
 			predictions = [0];
 			context['rabbits.ctpDesktop'] = false;
 
-			expect(autoplay.isAutoplayDisabledByRabbits()).toEqual(false);
+			expect(getAutoplay().isAutoplayDisabledByRabbits()).toEqual(false);
 		});
 		it('should return true if rabbit prediction is [] and ctpDesktop is true', function () {
 			predictions = [];
 			context['rabbits.ctpDesktop'] = true;
 
-			expect(autoplay.isAutoplayDisabledByRabbits()).toEqual(true);
+			expect(getAutoplay().isAutoplayDisabledByRabbits()).toEqual(true);
 		});
 		it('should return false if rabbit prediction is [] and ctpDesktop is false', function () {
 			predictions = [];
 			context['rabbits.ctpDesktop'] = false;
 
-			expect(autoplay.isAutoplayDisabledByRabbits()).toEqual(false);
+			expect(getAutoplay().isAutoplayDisabledByRabbits()).toEqual(false);
 		});
 	});
 
@@ -95,6 +98,7 @@ describe('wikia.articleVideo.featuredVideo.autoplay', function () {
 				it(caseName, function () {
 					isInAbTestGroup = param[0];
 					autoplayCookie = param[1];
+					var autoplay = getAutoplay();
 					autoplay.isAutoplayDisabledByRabbits = function () {
 						return param[2];
 					};
