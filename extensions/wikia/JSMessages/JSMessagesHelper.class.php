@@ -28,8 +28,7 @@ class JSMessagesHelper {
 
 		$parts = array(
 			$wgStyleVersion,
-			static::getWikiRevisionId(),
-			static::getWikiRevisionId(self::MESSAGING),
+			static::getWikiRevisionId()
 		);
 
 		$ret = implode('.', $parts);
@@ -39,13 +38,11 @@ class JSMessagesHelper {
 	}
 
 	/**
-	 * Get latest revision ID of articles from NS_MEDIAWIKI for a given wiki
-	 *
-	 * @param integer $dbName - wiki database name (defaults to local wiki)
+	 * Get latest revision ID of articles from NS_MEDIAWIKI
 	 */
-	static private function getWikiRevisionId($dbName = null) {
+	static private function getWikiRevisionId() {
 		global $wgMemc;
-		return intval($wgMemc->get(static::getMemcacheKey($dbName)));
+		return intval($wgMemc->get(static::getMemcacheKey()));
 	}
 
 	/**
@@ -59,19 +56,10 @@ class JSMessagesHelper {
 	}
 
 	/**
-	 * Get latest revision ID of articles from NS_MEDIAWIKI for a given wiki
-	 *
-	 * @param integer $dbName - wiki database name (defaults to local wiki)
+	 * Get latest revision ID of articles from NS_MEDIAWIKI
 	 */
-	static private function getMemcacheKey($dbName = null) {
-		global $wgDBname;
-		if (is_null($dbName)) {
-			$dbName =$wgDBname;
-		}
-
-		$key = wfForeignMemcKey($dbName /* $db */, null /* $prefix */, 'JSMessages', 'MWrevID');
-
-		return $key;
+	static private function getMemcacheKey() {
+		return wfMemcKey( 'JSMessages', 'MWrevID' );
 	}
 
 	/**

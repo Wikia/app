@@ -231,7 +231,7 @@ class JSMessages {
 	 * @return string - URL to "dynamic" JS file with messages
 	 */
 	static public function getExternalPackagesUrl() {
-		$wg = F::app()->wg;
+		global $wgStyleVersion, $wgLang;
 
 		// get items to be loaded via JS file
 		$packages = self::$queue['external'];
@@ -242,7 +242,7 @@ class JSMessages {
 			sort($packages);
 
 			// /wikia.php?controller=HelloWorld&method=index&format=html
-			$url = wfAppendQuery($wg->ScriptPath . '/wikia.php', array(
+			$url = wfAppendQuery( wfScript( 'wikia' ), array(
 				'controller' => 'JSMessages',
 				'method' => 'getMessages',
 				'format' => 'html',
@@ -251,10 +251,10 @@ class JSMessages {
 				'packages' => implode(',', $packages),
 
 				// cache separately for different languages
-				'uselang' => $wg->Lang->getCode(),
+				'uselang' => $wgLang->getCode(),
 
 				// cache buster
-				'cb' => JSMessagesHelper::getMessagesCacheBuster(),
+				'cb' => $wgStyleVersion,
 			));
 		}
 		
