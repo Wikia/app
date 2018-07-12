@@ -234,6 +234,7 @@ class CloseSingleWiki extends Maintenance {
 
 	private function removeDiscussions( int $cityId ) {
 		try {
+			$this->getSitesApi()->softDeleteSite( $cityId, F::app()->wg->TheSchwartzSecretToken );
 			$this->getSitesApi()->hardDeleteSite( $cityId, F::app()->wg->TheSchwartzSecretToken );
 		}
 		catch ( \Swagger\Client\ApiException $e ) {
