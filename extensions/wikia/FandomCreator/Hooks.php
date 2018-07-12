@@ -152,15 +152,15 @@ class Hooks {
 				'type' => 'dropdown',
 				'title' => [
 					'type' => 'text',
-					'value' => $item['name'],
+					'value' => $item->name,
 				],
-				'href' => '/wiki/' . $item['id'] . '/' . self::slugify( $item['name'] ),
+				'href' => '/wiki/' . $item->id . '/' . self::slugify( $item->name ),
 				'tracking_label' => 'custom-level-' . $level,
 			];
 
-			if ( isset( $item['children'] ) ) {
+			if ( isset( $item->children ) ) {
 				$convertedItem['items'] =
-					self::convertToCommunityHeaderNavigation( $item['children'], $level + 1 );
+					self::convertToCommunityHeaderNavigation( $item->children, $level + 1 );
 			}
 
 			if ( $index === 3 && $level === 1 ) {
