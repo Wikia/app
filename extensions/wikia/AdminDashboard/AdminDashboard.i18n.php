@@ -325,6 +325,8 @@ $messages['de'] = array(
 	'admindashboard-control-special-css-label' => 'CSS',
 	'admindashboard-control-special-css-tooltip' => 'Customize your wiki with local CSS.',
 	'right-admindashboard' => 'Allows access to wiki admin tools, via Special:AdminDashboard',
+	'admindashboard-control-announcements-label' => 'Mitteilungen',
+	'admindashboard-control-announcements-tooltip' => 'Eine neue Mitteilung für deine Community erstellen',
 );
 
 $messages['diq'] = array(
@@ -412,6 +414,8 @@ $messages['es'] = array(
 	'admindashboard-desc' => 'A dashboard for administrators with easy access to their tools',
 	'admindashboard-control-special-css-label' => 'CSS',
 	'right-admindashboard' => 'Allows access to wiki admin tools, via Special:AdminDashboard',
+	'admindashboard-control-announcements-label' => 'Anuncios',
+	'admindashboard-control-announcements-tooltip' => 'Crea un anuncio para tu comunidad',
 );
 
 $messages['fa'] = array(
@@ -544,6 +548,8 @@ $messages['fr'] = array(
 	'admindashboard-control-special-css-label' => 'CSS',
 	'admindashboard-control-special-css-tooltip' => 'Customize your wiki with local CSS.',
 	'right-admindashboard' => 'Allows access to wiki admin tools, via Special:AdminDashboard',
+	'admindashboard-control-announcements-label' => 'Annonces',
+	'admindashboard-control-announcements-tooltip' => 'Créer une annonce pour votre communauté',
 );
 
 $messages['gl'] = array(
@@ -816,6 +822,8 @@ $messages['it'] = array(
 	'admindashboard-control-special-css-tooltip' => 'Personalizza la tua wiki con il CSS locale.',
 	'admindashboard-desc' => 'A dashboard for administrators with easy access to their tools',
 	'right-admindashboard' => 'Allows access to wiki admin tools, via Special:AdminDashboard',
+	'admindashboard-control-announcements-label' => 'Annunci',
+	'admindashboard-control-announcements-tooltip' => 'Crea un annuncio per la tua community',
 );
 
 $messages['ja'] = array(
@@ -868,6 +876,8 @@ $messages['ja'] = array(
 	'admindashboard-control-invite-label' => 'Invite',
 	'admindashboard-control-invite-tooltip' => 'Invite other people to use this wiki.',
 	'right-admindashboard' => 'Allows access to wiki admin tools, via Special:AdminDashboard',
+	'admindashboard-control-announcements-label' => 'お知らせ',
+	'admindashboard-control-announcements-tooltip' => 'コミュニティへのお知らせを作成',
 );
 
 $messages['ko'] = array(
@@ -1162,7 +1172,7 @@ $messages['pi'] = array(
 );
 
 $messages['pl'] = array(
-	'admindashboard-loading' => 'Trwa ładowanie...',
+	'admindashboard-loading' => 'Trwa ładowanie…',
 	'admindashboard-title' => 'Panel {{SITENAME}}',
 	'admindashboard-header' => 'Panel Administratora',
 	'admindashboard-toolbar-link' => 'Administrator',
@@ -1209,8 +1219,10 @@ $messages['pl'] = array(
 	'admindashboard-control-add-video-tooltip' => 'Dodaj nowe filmy do Twojej wiki.',
 	'admindashboard-control-special-css-tooltip' => 'Dostosuj skórkę wiki edytując lokalny kod CSS.',
 	'right-admindashboard' => 'Dostęp do Panelu Administratora',
-	'admindashboard-desc' => 'A dashboard for administrators with easy access to their tools',
+	'admindashboard-desc' => 'Panel dla administratorów z łatwym dostępem do narzędzi',
 	'admindashboard-control-special-css-label' => 'CSS',
+	'admindashboard-control-announcements-label' => 'Ogłoszenia',
+	'admindashboard-control-announcements-tooltip' => 'Utwórz ogłoszenie dla swojej społeczności',
 );
 
 $messages['ps'] = array(
@@ -1285,6 +1297,8 @@ $messages['pt'] = array(
 	'admindashboard-control-multiple-upload-tooltip' => 'Upload more than one photo at once with the multiple photo upload tool.',
 	'admindashboard-back-to-dashboard' => 'Back to Dashboard',
 	'right-admindashboard' => 'Allows access to wiki admin tools, via Special:AdminDashboard',
+	'admindashboard-control-announcements-label' => 'Anúncios',
+	'admindashboard-control-announcements-tooltip' => 'Criar um anúncio para sua comunidade',
 );
 
 $messages['roa-tara'] = array(
@@ -1344,6 +1358,8 @@ $messages['ru'] = array(
 	'admindashboard-desc' => 'Панель для администраторов с быстрым доступом к инструментам',
 	'admindashboard-control-special-css-label' => 'CSS',
 	'right-admindashboard' => 'Доступ к инструментам администратора через Special:AdminDashboard',
+	'admindashboard-control-announcements-label' => 'Объявления',
+	'admindashboard-control-announcements-tooltip' => 'Создайте объявление для вашего сообщества',
 );
 
 $messages['si'] = array(
@@ -1726,6 +1742,8 @@ $messages['zh-hans'] = array(
 	'admindashboard-desc' => 'A dashboard for administrators with easy access to their tools',
 	'admindashboard-control-special-css-label' => 'CSS',
 	'right-admindashboard' => 'Allows access to wiki admin tools, via Special:AdminDashboard',
+	'admindashboard-control-announcements-label' => '通知',
+	'admindashboard-control-announcements-tooltip' => '为您的社区创建通知',
 );
 
 $messages['zh-hant'] = array(
@@ -1778,5 +1796,7 @@ $messages['zh-hant'] = array(
 	'admindashboard-control-special-css-label' => 'CSS',
 	'admindashboard-back-to-dashboard' => 'Back to Dashboard',
 	'right-admindashboard' => 'Allows access to wiki admin tools, via Special:AdminDashboard',
+	'admindashboard-control-announcements-label' => '公告',
+	'admindashboard-control-announcements-tooltip' => '為您的社區創建公告',
 );
 
