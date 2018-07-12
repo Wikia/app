@@ -5,7 +5,10 @@
 ## e.g. ./create-cronjob-yaml.sh phrase-alerts.yaml
 ## this can be sent to kubectl apply function
 ## e.g. ./create-cronjob-yaml.sh phrase-alerts.yaml | | kubectl --context context -n environment apply -f -
+## This if a very simple script - if you need something else from it - please extend
 
+
+# using ruby here as it is already installed on devboxes
 function yaml2json() {
 	ruby -ryaml -rjson -e 'puts JSON.pretty_generate(YAML.load(ARGF))' $*
 }
@@ -21,6 +24,7 @@ TEMPLATE=`cat $SCRIPT_FOLDER/cronjob-template.yaml`
 JOB_JSON=`yaml2json $SCRIPT_FOLDER/$job_description_file_name`
 NAME=`basename "$job_description_file_name" .yaml`
 SCHEDULE=`echo "$JOB_JSON" | jq .schedule`
+# we need to add 12 spaces of padding to align yaml in template
 ARGS=`echo "$JOB_JSON" | jq .args | json2yaml | sed -e 's/^/            /g'`
 SERVER_ID=`echo "$JOB_JSON" | jq .server_id`
 
