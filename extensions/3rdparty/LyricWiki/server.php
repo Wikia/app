@@ -990,21 +990,12 @@ function getSong($artist, $song="", $doHyphens=true, $ns=NS_MAIN, $isOuterReques
 				$retVal['artist'] = $origArtist;
 				$retVal['song'] = $origSong;
 
-				// Log the looked-for-but-not-found lyrics here.  Make sure the logging keeps track of the total number of times
-				// a song was looked for so that we can find the most desired lyrics and fill them in.
-				$origArtistSql = str_replace("'", "\'", $origArtist);
-				$origSongSql = str_replace("'", "\'", $origSong);
-				$lookedForSql = str_replace("'", "\'", trim($lookedFor)); // \n-delimited list of titles looked for by the API which weren't found.
-
-				// This section doesn't appear to do anything at the moment.  The artist and title still have bad-encoding even though lookedFor is encoded properly (lookedFor is a blob - does that matter?).
-				if(!utf8_compliant("$origArtistSql")){
-					$origArtistSql = utf8_encode($origArtistSql);
-				}
-				if(!utf8_compliant("$origSongSql")){
-					$origSongSql = utf8_encode($origSongSql);
-				}
-
-				logSoapFailure($origArtistSql, $origSongSql, $lookedForSql);
+				\Wikia\Logger\WikiaLogger::instance()->info( __METHOD__ . '::logFailure', [
+					'artist' => $origArtist,
+					'song' => $origSong,
+					'lookedFor' => $lookedFor,
+					'fromMobile' => (bool) $wgRequest->getVal('fullApiAuth', '')
+				] );
 			}
 
 			// If there was no result, give it another try without the hyphen trick.
@@ -2402,60 +2393,6 @@ function utf8_compliant($str){
     // some valid sequences
     return (preg_match('/^.{1}/us',$str,$ar) == 1);
 } // end utf8_compliant(...)
-
-////
-// Given the artist, song, and titles that were looked-for, stores a record of
-// the failure so that we can know what songs (or redirects) are desired that we don't have yet.
-////
-function logSoapFailure($origArtistSql, $origSongSql, $lookedForSql){
-	wfProfileIn( __METHOD__ );
-
-	if( !wfReadOnly() ) {
-		GLOBAL $wgMemc, $wgRequest;
-		$NUM_FAILS_TO_SPOOL = 10;
-
-		// Store the soapfailures from mobile requests in a diff. table so that we know what users are
-		// searching for in that specific use-case.
-		$fullApiAuth = $wgRequest->getVal('fullApiAuth', '');
-		if(empty($fullApiAuth)){
-			$tableName = "lw_soap_failures";
-		} else {
-			$tableName = "lw_soap_failures_mobile";
-			$NUM_FAILS_TO_SPOOL = 0; // there are way less requests to mobile, so don't spool for now.
-		}
-
-		wfDebug("LWSOAP: Recording failure for \"$origArtistSql:$origSongSql\"\n");
-
-		// Spool a certain number of updates in memcache before writing to db.
-		// macbre: added str_replace (RT #59011)
-		// eloy, changed to md5
-		$memkey = wfMemcKey( 'lw_soap_failure', md5( sprintf( "%s:%s", $origArtistSql, $origSongSql ) ) );
-		$numFails = $wgMemc->get( $memkey );
-		if(empty($numFails) && ($NUM_FAILS_TO_SPOOL > 0)){
-			wfDebug("LWSOAP: Setting $memkey to 1\n");
-			$wgMemc->set($memkey, 1);
-		} else if(($numFails + 1) >= $NUM_FAILS_TO_SPOOL){
-			wfDebug("LWSOAP: Storing the failure in the database.\n");
-			$numFails += 1;
-
-			$dbw = wfGetDB( DB_MASTER );
-			$origSongSql = $dbw->strencode( $origSongSql );
-			$origArtistSql = $dbw->strencode( $origArtistSql );
-			$lookedForSql = $dbw->strencode( $lookedForSql );
-			$queryString = "INSERT INTO $tableName (request_artist,request_song, lookedFor, numRequests) VALUES ('$origArtistSql', '$origSongSql', '$lookedForSql', '$numFails') ON DUPLICATE KEY UPDATE numRequests=numRequests+$numFails";
-			if($dbw->query($queryString)){
-				$dbw->commit();
-				wfDebug("LWSOAP: Stored in the database successfully.\n");
-				$wgMemc->delete($memkey);
-			}
-		} else {
-			wfDebug("LWSOAP: Updating $memkey to " . ($numFails + 1) . "\n");
-			$wgMemc->set($memkey, $numFails + 1);
-		}
-	}
-
-	wfProfileOut( __METHOD__ );
-} // end logSoapFailure()
 
 ////
 // If request-tracking is enabled, this function will record some stats about the request and return
