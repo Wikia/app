@@ -13,7 +13,6 @@
 // NOTES FOR DEVELOPERS:
 // - When implementing a new method, make sure to check the global $SHUT_DOWN_API.
 // - Before writing anything to the database, remember to check wfReadOnly().
-// - See Special_Soapfailures.php for SQL to create the tables needed for logging inside of here.
 //
 // GENERAL WISHES FOR IMPROVEMENT IN NEXT API:
 // - Better versioning.  This may be best to do using the Accept header (look into that again). There also needs to be a graceful way to keep the code separate for the different versions and handle deprecation, etc.
