@@ -36,11 +36,11 @@ define('ext.wikia.adEngine.ml.rabbit', [
 		});
 	}
 
+	/**
+	 * Get predictions for all models which are enabled and their name
+	 * matches one of allowedModelsNames values.
+	 */
 	function getPredictions(allowedModelsNames) {
-		/*
-		Get predictions for all models which are enabled and their name
-		matches one of allowedModelsNames values.
-		 */
 		var results = [];
 
 		allowedModelsNames = allowedModelsNames || [];
