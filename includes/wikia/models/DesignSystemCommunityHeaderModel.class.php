@@ -90,6 +90,10 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 					'type' => 'text',
 					'value' => $sitename,
 				],
+				'mobile_title' => [
+					'type' => 'text',
+					'value' => F::app()->wg->Sitename,
+				],
 				'href' => $this->mainPageUrl,
 				'tracking_label' => 'sitename',
 			];
