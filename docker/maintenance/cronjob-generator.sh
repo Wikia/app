@@ -6,7 +6,7 @@ TEMPLATE=`cat $SCRIPT_FOLDER/cronjob-template.yaml`
 
 for job_description_file_name in "${JOB_DESCRIPTIONS[@]}"; do
 	JOB_JSON=`js-yaml $SCRIPT_FOLDER/$job_description_file_name`
-	NAME=`echo "$JOB_JSON" | jq .name`
+	NAME="mediawiki-`basename "$job_description_file_name" .yaml`"
 	SCHEDULE=`echo "$JOB_JSON" | jq .schedule`
 	ARGS=`echo "$JOB_JSON" | jq .args | js-yaml | sed -e 's/^/            /g'`
 	SERVER_ID=`echo "$JOB_JSON" | jq .server_id`
@@ -15,18 +15,13 @@ for job_description_file_name in "${JOB_DESCRIPTIONS[@]}"; do
 		SERVER_ID="177"
 	fi
 
-	if [ "$NAME" = 'null' ]; then
-		echo "name has to be set in $job_description_file_name"
-		exit 1;
-	fi
-
 	if [ "$SCHEDULE" = 'null' ]; then
 		echo "schedule has to be set in $job_description_file_name"
 		exit 1;
 	fi
 
 	if [ "$ARGS" = 'null' ]; then
-		echo "schedule has to be set in $job_description_file_name"
+		echo "args has to be set in $job_description_file_name"
 		exit 1;
 	fi
 

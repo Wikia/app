@@ -1,5 +1,3 @@
-
-name: founder-emails-views-digest
 schedule: "35 20 * * *"
 args:
 - php
