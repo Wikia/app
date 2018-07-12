@@ -102,7 +102,7 @@ define('ext.wikia.design-system.on-site-notifications.controller', [
 
 			updateUnreadCount: function () {
 				$.ajax({
-					url: this.getBaseUrl() + '/notifications/unread-count',
+					url: this.getBaseUrl() + '/notifications/unread-count?contentType=discussion-upvote&contentType=discussion-post&contentType=announcement-target',
 					xhrFields: {
 						withCredentials: true
 					}
@@ -151,7 +151,7 @@ define('ext.wikia.design-system.on-site-notifications.controller', [
 				}
 				this._model.loadingStarted();
 				$.ajax({
-					url: this.getBaseUrl() + '/notifications',
+					url: this.getBaseUrl() + '/notifications?contentType=discussion-upvote&contentType=discussion-post&contentType=announcement-target',
 					xhrFields: {
 						withCredentials: true
 					}
