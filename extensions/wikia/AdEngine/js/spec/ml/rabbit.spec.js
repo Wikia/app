@@ -59,21 +59,15 @@ describe('ext.wikia.adEngine.ml.modelFactory', function () {
 		expect(rabbit.getResults(['bar']).length).toBe(1);
 	});
 
-	it('returns empty predictions when there are no allowed models', function () {
-		var rabbit = getModule();
+	describe('getPrediction', function () {
+		it('returns prediction of value undefined if mode does not exist', function () {
+			var rabbit = getModule();
+			expect(rabbit.getPrediction('doesNotExist')).toBeUndefined();
+		});
+		it('returns prediction when model is enabled', function () {
+			var rabbit = getModule();
 
-		expect(rabbit.getPredictions([]).length).toBe(0);
-	});
-
-	it('returns empty predictions when allowed model is disabled', function () {
-		var rabbit = getModule();
-
-		expect(rabbit.getPredictions(['foo']).length).toBe(0);
-	});
-
-	it('returns prediction for allowed and enabled model', function () {
-		var rabbit = getModule();
-
-		expect(rabbit.getPredictions(['bar']).length).toBe(1);
+			expect(rabbit.getPrediction('bar')).not.toBeUndefined();
+		});
 	});
 });

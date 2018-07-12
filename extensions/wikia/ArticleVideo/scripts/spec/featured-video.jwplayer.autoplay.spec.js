@@ -1,11 +1,11 @@
-/* global describe, it, modules, expect */
+/* global describe, it, modules, expect, beforeEach */
 'use strict';
 
 describe('wikia.articleVideo.featuredVideo.autoplay', function () {
-	var context = {};
-	var isInAbTestGroup = false;
-	var autoplayCookie = '0';
-	var predictions = [];
+	var context;
+	var isInAbTestGroup;
+	var autoplayCookie;
+	var prediction;
 
 	var mocks = {
 		adContext: {
@@ -24,11 +24,18 @@ describe('wikia.articleVideo.featuredVideo.autoplay', function () {
 			}
 		},
 		rabbit: {
-			getPredictions: function () {
-				return predictions;
+			getPrediction: function () {
+				return prediction;
 			}
 		}
 	};
+
+	beforeEach(function () {
+		context = {};
+		isInAbTestGroup = false;
+		autoplayCookie = '0';
+		prediction = undefined;
+	});
 
 	function getAutoplay() {
 		return modules['wikia.articleVideo.featuredVideo.autoplay'](
@@ -38,38 +45,36 @@ describe('wikia.articleVideo.featuredVideo.autoplay', function () {
 
 	describe('isAutoplayDisabledByRabbits', function () {
 		it('should return true if rabbit prediction is 1 and ctpDesktop is false', function () {
-			predictions = [1];
+			prediction = 1;
 			context['rabbits.ctpDesktop'] = false;
 
 			expect(getAutoplay().isAutoplayDisabledByRabbits()).toEqual(true);
 		});
 
 		it('should return true if rabbit prediction is 1 and ctpDesktop is true', function () {
-			predictions = [1];
+			prediction = 1;
 			context['rabbits.ctpDesktop'] = true;
 
 			expect(getAutoplay().isAutoplayDisabledByRabbits()).toEqual(true);
 		});
 		it('should return false if rabbit prediction is 0 and ctpDesktop is true', function () {
-			predictions = [0];
+			prediction = 0;
 			context['rabbits.ctpDesktop'] = true;
 
 			expect(getAutoplay().isAutoplayDisabledByRabbits()).toEqual(false);
 		});
 		it('should return false if rabbit prediction is 0 and ctpDesktop is false', function () {
-			predictions = [0];
+			prediction = 0;
 			context['rabbits.ctpDesktop'] = false;
 
 			expect(getAutoplay().isAutoplayDisabledByRabbits()).toEqual(false);
 		});
-		it('should return true if rabbit prediction is [] and ctpDesktop is true', function () {
-			predictions = [];
+		it('should return true if rabbit is disabled and ctpDesktop is true', function () {
 			context['rabbits.ctpDesktop'] = true;
 
 			expect(getAutoplay().isAutoplayDisabledByRabbits()).toEqual(true);
 		});
-		it('should return false if rabbit prediction is [] and ctpDesktop is false', function () {
-			predictions = [];
+		it('should return false if rabbit is disabled and ctpDesktop is false', function () {
 			context['rabbits.ctpDesktop'] = false;
 
 			expect(getAutoplay().isAutoplayDisabledByRabbits()).toEqual(false);

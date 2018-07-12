@@ -36,22 +36,20 @@ define('ext.wikia.adEngine.ml.rabbit', [
 		});
 	}
 
+	function getEnabledModels() {
+		return models.filter(
+			function (model) { return model && model.isEnabled(); }
+		);
+	}
+
 	/**
-	 * Get predictions for all models which are enabled and their name
-	 * matches one of allowedModelsNames values.
+	 * Get prediction for model with name equal to modelName argument.
 	 */
-	function getPredictions(allowedModelsNames) {
-		var results = [];
-
-		allowedModelsNames = allowedModelsNames || [];
-
-		models.forEach(function (model) {
-			if (model && model.isEnabled() && allowedModelsNames.indexOf(model.getName()) !== -1) {
-				results.push(model.predict());
-			}
-		});
-
-		return results;
+	function getPrediction(modelName) {
+		return getEnabledModels()
+			// Oh God I miss arrow functions
+			.filter(function(model) { return model.getName() === modelName; })
+			.map(function(model) { return model.predict(); })[0];
 	}
 
 	function getResults(allowedModelsNames) {
@@ -76,7 +74,7 @@ define('ext.wikia.adEngine.ml.rabbit', [
 
 	return {
 		getResults: getResults,
-		getPredictions: getPredictions,
+		getPrediction: getPrediction,
 		getAllSerializedResults: getAllSerializedResults
 	};
 });

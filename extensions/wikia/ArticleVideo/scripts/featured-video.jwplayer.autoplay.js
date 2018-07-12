@@ -10,9 +10,9 @@ define('wikia.articleVideo.featuredVideo.autoplay', [
 
 	return {
 		isAutoplayDisabledByRabbits: function () {
-			var queenPrediction = rabbit.getPredictions(['queendesktop']);
-			if (queenPrediction.length > 0) {
-				isAutoplayDisabledByRabbit = queenPrediction.indexOf(1) > -1;
+			var queenPrediction = rabbit.getPrediction('queendesktop');
+			if (queenPrediction !== undefined) {
+				isAutoplayDisabledByRabbit = !!queenPrediction;
 			}
 			return isAutoplayDisabledByRabbit;
 		},
