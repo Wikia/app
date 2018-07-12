@@ -2,7 +2,7 @@
 apiVersion: batch/v1beta1
 kind: CronJob
 metadata:
-  name: {name}
+  name: "mediawiki-{name}"
 spec:
   schedule: {schedule}
   jobTemplate:
