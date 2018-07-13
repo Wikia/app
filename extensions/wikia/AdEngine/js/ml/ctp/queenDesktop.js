@@ -13,17 +13,12 @@ define('ext.wikia.adEngine.ml.ctp.queenDesktop', [
 		name: 'queendesktop',
 		enabled: function () {
 			/*
-			Enable only on page with FV on oasis with queen enabled
-			(queen can be forced to enabled state by query presence
-			of query param "CTPQueenForce").
+			Enable only on page with FV on oasis with queen enabled.
 			 */
 			return (
 				!!adContext.get('targeting.hasFeaturedVideo') &&
 				adContext.get('targeting.skin') === 'oasis'
-			) && (
-				!!adContext.get('rabbits.isQueenDesktopForced') ||
-				!!adContext.get('rabbits.queenDesktop')
-			);
+			) && !!adContext.get('rabbits.queenDesktop');
 		},
 		cachePrediction: true
 	});

@@ -94,7 +94,6 @@ define('ext.wikia.adEngine.adContext', [
 		context.rabbits.ctpDesktop = isProperGeoAds('wgAdDriverCTPDesktopRabbitCountries');
 		context.rabbits.ctpMobile = isProperGeoAds('wgAdDriverCTPMobileRabbitCountries');
 		context.rabbits.queenDesktop = isProperGeoAds('wgAdDriverCTPDesktopQueenCountries');
-		context.rabbits.isQueenDesktopForced = isUrlParamSet('CTPQueenForce');
 	}
 
 	function areDelayServicesBlocked() {

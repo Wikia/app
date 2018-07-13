@@ -61,26 +61,5 @@ describe('ext.wikia.adEngine.ml.ctp.queenDesktop', function () {
 		it('should return true if there is fv, queen is enabled and skin is oasis', function () {
 			expect(model.enabled()).toEqual(true);
 		});
-
-		it('should return true if queen is forced', function () {
-			context['rabbits.queenDesktop'] = false;
-			context['rabbits.isQueenDesktopForced'] = true;
-
-			expect(model.enabled()).toEqual(true);
-		});
-
-		it('should return false if queen is forced but platform is incorrect', function () {
-			context['targeting.hasFeaturedVideo'] = false;
-			context['rabbits.isQueenDesktopForced'] = true;
-
-			expect(model.enabled()).toEqual(false);
-		});
-
-		it('should return false if queen is forced but featured video is not present', function () {
-			context['targeting.skin'] = 'mercury';
-			context['rabbits.isQueenDesktopForced'] = true;
-
-			expect(model.enabled()).toEqual(false);
-		});
 	});
 });
