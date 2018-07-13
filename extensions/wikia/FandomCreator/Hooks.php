@@ -156,6 +156,7 @@ class Hooks {
 		return $convertedNavigation;
 	}
 
+	// based on https://github.com/Wikia/fandom-creator/blob/ec6a223e238c7de3f426ec322e5caedfbacf0701/react-client/src/slugify.js
 	private static function slugify( $input ) {
 		$noPunctuation =
 			preg_replace( '/[\x{2000}-\x{206F}\x{2E00}-\x{2E7F}\\\'!"#$%&()*+,.\/:;<=>?@[\]^_`{|}~]/u',
