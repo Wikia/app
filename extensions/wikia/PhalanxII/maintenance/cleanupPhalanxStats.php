@@ -29,4 +29,4 @@ do {
 
 } while ( $affectedRows > 0 );
 
-echo sprintf( "\n%s: dropped %d rows from phalanx_stats\n", date( 'r' ), $rows );
+\Wikia\Logger\WikiaLogger::instance()->info( "Count of rows dropped from phalanx stats: $rows" );
