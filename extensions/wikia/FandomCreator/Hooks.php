@@ -50,6 +50,10 @@ class Hooks {
 
 		$sitemap = self::api()->getSitemap( $communityId );
 
+		if ( $sitemap === null ) {
+			return;
+		}
+
 		$discussionsLink = array_values( array_filter( $data['navigation'], function ( $item ) {
 			if ( isset( $item['title']['key'] ) &&
 			     $item['title']['key'] === 'community-header-discuss'

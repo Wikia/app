@@ -34,7 +34,7 @@ $wgHooks['DesignSystemApigetAllElementsAfterExecute'][] = function( WikiaDispatc
 
 	if ( $product === 'wikis' ) {
 		$cityId = $params[DesignSystemApiController::PARAM_ID];
-		$fandomCreatorCommunityId = 2512; // WikiFactory::getVarValueByName( "wgFandomCreatorCommunityId", $cityId, false, "" );
+		$fandomCreatorCommunityId = WikiFactory::getVarValueByName( "wgFandomCreatorCommunityId", $cityId, false, "" );
 		FandomCreator\Hooks::onDesignSystemApiGetAllElements( $dispatchable, $fandomCreatorCommunityId );
 	}
 
