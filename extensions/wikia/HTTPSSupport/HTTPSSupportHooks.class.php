@@ -49,6 +49,9 @@ class HTTPSSupportHooks {
 				self::httpsAllowed( $user, $requestURL )
 			) {
 				$output->redirect( wfHttpToHttps( $requestURL ) );
+				if ( $user->isAnon() ) {
+					$output->enableClientCache( false );
+				}
 			} elseif ( WebRequest::detectProtocol() === 'https' &&
 				!self::httpsAllowed( $user, $requestURL ) &&
 				empty( $wgDisableHTTPSDowngrade ) &&
@@ -63,43 +66,32 @@ class HTTPSSupportHooks {
 	}
 
 	/**
-	 * Handle downgrading anonymous requests for our sitemaps.
+	 * Handle downgrading anonymous requests for our sitemaps and robots.txt.
 	 *
-	 * @param  string     $subpage Specific sitemap being requested.
 	 * @param  WebRequest $request
 	 * @param  User       $user
 	 * @return boolean
 	 */
-	public static function onSitemapPageBeforeOutput( string $subpage, WebRequest $request, User $user ): bool {
-		global $wgScriptPath;
-		if ( WebRequest::detectProtocol() === 'https' &&
-			!self::httpsAllowed( $user, $request->getFullRequestURL() )
+	public static function onSitemapRobotsPageBeforeOutput( WebRequest $request, User $user ): bool {
+		$url = wfExpandUrl( $request->getFullRequestURL(), PROTO_HTTP );
+		if ( WebRequest::detectProtocol() === 'http' &&
+			self::httpsAllowed( $user, $request->getFullRequestURL() )
 		) {
-			self::downgradeRedirectForPath( "$wgScriptPath/$subpage", $request );
+			self::redirectWithPrivateCache( wfHttpToHttps( $url ), $request );
 			return false;
-		}
-		return true;
-	}
-
-	/**
-	 * Handle downgrading anonymous requests for robots.txt.
-	 *
-	 * @param  WebRequest $request
-	 * @param  User       $user
-	 * @return boolean
-	 */
-	public static function onWikiaRobotsBeforeOutput( WebRequest $request, User $user ): bool {
-		if ( WebRequest::detectProtocol() === 'https' &&
+		} elseif ( WebRequest::detectProtocol() === 'https' &&
 			!self::httpsAllowed( $user, $request->getFullRequestURL() )
 		) {
-			self::downgradeRedirectForPath( '/robots.txt', $request );
+			self::redirectWithPrivateCache( wfHttpsToHttp( $url ), $request );
 			return false;
 		}
 		return true;
 	}
 
 	private static function httpsAllowed( User $user, string $url ): bool {
-		return wfHttpsAllowedForURL( $url ) && $user->isLoggedIn();
+		global $wgEnableHTTPSForAnons;
+		return wfHttpsAllowedForURL( $url ) &&
+			( !empty( $wgEnableHTTPSForAnons ) || $user->isLoggedIn() );
 	}
 
 	private static function httpsEnabledTitle( Title $title ): bool {
@@ -108,17 +100,16 @@ class HTTPSSupportHooks {
 			in_array( $title->getPrefixedDBKey(), self::$httpsArticles[ $wgDBname ] );
 	}
 
-	public static function parserUpgradeVignetteUrls ( string &$url ) {
-		if ( preg_match( self::VIGNETTE_IMAGES_HTTP_UPGRADABLE, $url ) && strpos( $url, "http://" ) === 0 ) {
+	public static function parserUpgradeVignetteUrls( string &$url ) {
+		if ( preg_match( self::VIGNETTE_IMAGES_HTTP_UPGRADABLE, $url ) && strpos( $url, 'http://' ) === 0 ) {
 			$url = wfHttpToHttps( $url );
 		}
 	}
 
-	private static function downgradeRedirectForPath( string $path, WebRequest $request ) {
-		$httpURL = wfHttpsToHttp( wfExpandUrl( $path, PROTO_HTTP ) );
+	private static function redirectWithPrivateCache( string $url, WebRequest $request ) {
 		$response = $request->response();
-		$response->header( "Location: $httpURL", true, 302 );
-		$response->header( 'X-Redirected-By: HTTPS-Downgrade' );
+		$response->header( "Location: $url", true, 302 );
+		$response->header( 'X-Redirected-By: HTTPS-Support' );
 		$response->header( 'Cache-Control: private, must-revalidate, max-age=0' );
 	}
 }

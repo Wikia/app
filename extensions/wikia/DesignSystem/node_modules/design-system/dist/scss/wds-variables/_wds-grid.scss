@@ -1,0 +1,5 @@
+$wds-grid-gap: 10px;
+$wds-grid-columns: 12;
+
+// how much width is taken by gaps
+$wds-grid-gap-space: $wds-grid-gap * ($wds-grid-columns - 1);

@@ -16,6 +16,11 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.appnexus', function () {
 				return map;
 			}
 		},
+		babDetection: {
+			isBlocking: function () {
+				return false;
+			}
+		},
 		log: function() {}
 	};
 
@@ -26,6 +31,7 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.appnexus', function () {
 			mocks.adContext,
 			mocks.slotsContext,
 			mocks.appNexusPlacements,
+			mocks.babDetection,
 			mocks.log
 		);
 	}

@@ -2220,6 +2220,13 @@ $wgEnableAdsInContent = 1;
 $wgEnableAjaxPollExt = true;
 
 /**
+ * Enable Announcements extension + entry point in AdminDashboard.
+ * @see extensions/Announcements
+ * @var bool $wgEnableAnnouncements
+ */
+$wgEnableAnnouncements = false;
+
+/**
  * Enable AntiSpoof extension.
  * @see extensions/AntiSpoof
  * @var bool $wgEnableAntiSpoofExt
@@ -3181,13 +3188,6 @@ $wgEnableOpenGraphMetaExt = true;
 $wgEnableOpenSearchSuggest = true;
 
 /**
- * Enable Optimizely extension.
- * @see extensions/wikia/Optimizely
- * @var bool $wgEnableOptimizelyExt
- */
-$wgEnableOptimizelyExt = false;
-
-/**
  * Enable Paginator extension.
  * @see extensions/wikia/Paginator
  * @var bool $wgEnablePaginatorExt
@@ -3653,13 +3653,6 @@ $wgEnableTabViewExt = true;
  * @var bool $wgEnableTagsReport
  */
 $wgEnableTagsReport = true;
-
-/**
- * Enable TaskManager extension.
- * @see /extensions/wikia/TaskManager
- * @var bool $wgEnableTaskManagerExt.
- */
-$wgEnableTaskManagerExt = true;
 
 /**
  * Enable TemplateClassification extension.
@@ -4505,15 +4498,6 @@ $wgFixArabicUnicode = true;
 $wgFixMalayalamUnicode = true;
 
 /**
- * Celery monitoring tool URL.
- * @see extensions/wikia/Tasks/TasksSpecialController.class.php
- * @see lib/Wikia/src/Tasks/Tasks/ImageReviewTask.php
- * @see maintenance/wikia/task_runner.php
- * @var string $wgFlowerUrl
- */
-$wgFlowerUrl = 'http://prod.flower.service.sjc.consul:5555';
-
-/**
  * Abstract list of footer icons for skins in place of old copyrightico and poweredbyico code
  * You can add new icons to the built in copyright or poweredby, or you can create
  * a new block. Though note that you may need to add some custom css to get good styling
@@ -4947,7 +4931,6 @@ $wgHtml5Version = null;
  * @see PLATFORM-1745
  * @see includes/wikia/CurlMultiClient.php
  * @see includes/HttpFunctions.php
- * @see extensions/3rdparty/LyricWiki/Special_Soapfailures.php
  * @var string $wgHTTPProxy
  */
 $wgHTTPProxy = 'prod.border.service.consul:80';
@@ -6114,13 +6097,6 @@ $wgOldChangeTagsIndex = false;
  * @var $wgOpenSearchTemplate
  */
 $wgOpenSearchTemplate = false;
-
-/**
- * Load Optimizely script from FANDOM's CND rather than from upstream.
- * @see extensions/wikia/Optimizely
- * @var bool $wgEnableOptimizelyExt
- */
-$wgOptimizelyLoadFromOurCDN = true;
 
 /**
  * Override the site's default RSS/ATOM feed for recentchanges that appears on
@@ -8736,13 +8712,6 @@ $wgWikiaSearchSupportedLanguages = [
 ];
 
 /**
- * Path to Task Manager working directory.
- * @see /extensions/wikia/TaskManager
- * @var string $wgWikiaTaskDirectory
- */
-$wgWikiaTaskDirectory = '/home/wikia/taskmanager/';
-
-/**
  * Render some links with rel=nofollow attribute.
  * @see Article.php
  * @see Linker.php
@@ -8782,7 +8751,6 @@ $wgWikiDirectedAtChildrenByStaff = false;
  * Indicates whether wikicities database is in read-only mode.
  * @see extensions/wikia/WikiFactory/WikiFactory.php
  * @see extensions/wikia/FounderEmails
- * @see extensions/wikia/TaskManager
  * @see extensions/wikia/WikiFactory/
  * @deprecated
  * @var bool $wgWikicitiesReadOnly
@@ -8793,7 +8761,7 @@ $wgWikicitiesReadOnly = false;
  * Additional domains that need to be mapped to wikia.com and redirected
  * properly.
  * @see extensions/wikia/WikiFactory/Loader/WikiFactoryLoader.php
- * @var Array $wgWikiFactoryDomains
+ * @var string[] $wgWikiFactoryDomains
  */
 $wgWikiFactoryDomains = [
     # gTLDs
@@ -8819,6 +8787,14 @@ $wgWikiFactoryDomains = [
     'wikicities.net',
     'wikicities.org'
 ];
+
+/**
+ * Whether WikiFactoryLoader should serve an HTTP 301 response redirecting to the primary domain of the wiki
+ * if it received a request with one of the mapped alternative domains.
+ * @see $wgWikiFactoryDomains
+ * @var bool $wgWikiFactoryRedirectForAlternateDomains
+ */
+$wgWikiFactoryRedirectForAlternateDomains = true;
 
 /**
  * Do not allow editing articles from these namespaces with Rich Text Editor.

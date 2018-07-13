@@ -35,7 +35,6 @@
 
 <?= $topScripts ?>
 <?= $globalBlockingScripts; /*needed for jsLoader and for the async loading of CSS files.*/ ?>
-<?= $recoveryHeadBootstrapCode ?>
 
 <!-- Make IE recognize HTML5 tags. -->
 <!--[if IE]>
@@ -59,7 +58,7 @@
 
 </head>
 <body class="<?= implode(' ', $bodyClasses) ?>" <?= $itemType ?>>
-<?= $recoveryTopBodyBootstrapCode ?>
+<?= $il ?>
 <? if ( BodyController::isResponsiveLayoutEnabled() || BodyController::isOasisBreakpoints() ): ?>
 	<div class="background-image-gradient"></div>
 <? endif ?>
@@ -102,7 +101,6 @@
 <script type="text/javascript">/*<![CDATA[*/ if (typeof AdEngine_trackPageInteractive === 'function') {wgAfterContentAndJS.push(AdEngine_trackPageInteractive);} /*]]>*/</script>
 <?= $bottomScripts ?>
 
-<?= $recoveryBottomBodyBootstrapCode ?>
 </body>
 
 <?= wfReportTime() . "\n" ?>

@@ -45,7 +45,7 @@
 									 <?= Sanitizer::escapeHtmlAllowEntities( $aLanguages[$selectedLang] ) ?>
 								</span>
 							<? endif ?>
-							<?= DesignSystemHelper::renderSvg( 'wds-icons-dropdown-tiny' ); ?>
+							<?= DesignSystemHelper::renderSvg( 'wds-icons-dropdown-tiny', 'wds-icon wds-icon-tiny wds-dropdown__toggle-chevron' ); ?>
 						</div>
 						<div class="wds-dropdown__content wiki-language-dropdown">
 							<ul class="wds-list">
@@ -100,7 +100,7 @@
 					<div class="wds-dropdown">
 						<div class="wds-dropdown__toggle">
 							<span class="default-value"><?= wfMessage( 'cnw-desc-select-one' )->escaped() ?></span>
-							<?= DesignSystemHelper::renderSvg( 'wds-icons-dropdown-tiny' ); ?>
+							<?= DesignSystemHelper::renderSvg( 'wds-icons-dropdown-tiny', 'wds-icon wds-icon-tiny wds-dropdown__toggle-chevron' ); ?>
 						</div>
 						<div class="wds-dropdown__content wiki-vertical-dropdown">
 							<ul class="wds-list">

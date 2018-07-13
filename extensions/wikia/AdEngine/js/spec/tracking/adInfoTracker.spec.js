@@ -33,6 +33,14 @@ describe('ext.wikia.adEngine.tracking.adInfoTracker', function () {
 				return 'xyz=012';
 			}
 		},
+		trackingOptIn: {
+			isOptedIn: function () {
+				return true;
+			},
+			geoRequiresTrackingConsent: function () {
+				return true;
+			}
+		},
 		window: {
 			document: {
 				body: {
@@ -58,6 +66,7 @@ describe('ext.wikia.adEngine.tracking.adInfoTracker', function () {
 			mocks.deviceDetect,
 			mocks.browserDetect,
 			mocks.log,
+			mocks.trackingOptIn,
 			mocks.window
 		);
 	}
@@ -259,5 +268,14 @@ describe('ext.wikia.adEngine.tracking.adInfoTracker', function () {
 		var trackedData = mocks.adTracker.trackDW.calls.mostRecent().args[0];
 
 		expect(trackedData.product_chosen).toBe('chosen_product');
+	});
+
+	it('include opt-in consent information', function () {
+		spyOn(mocks.adTracker, 'trackDW');
+		getModule().track('FOO');
+
+		var trackedData = mocks.adTracker.trackDW.calls.mostRecent().args[0];
+
+		expect(trackedData.opt_in).toBe('yes');
 	});
 });

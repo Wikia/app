@@ -64,7 +64,8 @@
       skipBadQueries: false,
       positionRight: null,
       setPosition: true,
-      matchFromStart: true
+      matchFromStart: true,
+      actionEvent: 'click'
     };
     if (options) {
       // since we're using an old version of this plugin with minChars instead of minLength,
@@ -329,7 +330,7 @@
         // wikia change - end
         div.mouseover((function(xi) { return function() { me.activate(xi); }; })(i));
         // wikia change - start
-        div.click((function(xi) { return function(e) { me.select(xi, e); }; })(i));
+        div.on(this.options.actionEvent, (function(xi) { return function(e) { me.select(xi, e); }; })(i));
         // wikia change - end
         this.container.append(div);
       }

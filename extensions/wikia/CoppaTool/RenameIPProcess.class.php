@@ -50,7 +50,7 @@ class RenameIPProcess {
 	);
 	/**
 	 *
-	 * @var BatchTask
+	 * @var Wikia\Tasks\Tasks\BaseTask
 	 */
 	private $mLogTask = null;
 
@@ -121,7 +121,7 @@ class RenameIPProcess {
 	 * Sets destination for all the logs
 	 *
 	 * @param $destination string/enum One of RenameUserProcess::LOG_* constant
-	 * @param $task BatchTask (Optional) BatchTask to send logs to
+	 * @param $task Wikia\Tasks\Tasks\BaseTask (Optional) task to send logs to
 	 */
 	public function setLogDestination( $destination, $task = null ) {
 		$this->mLogDestinations = array();
@@ -132,9 +132,9 @@ class RenameIPProcess {
 	 * Adds another log destination
 	 *
 	 * @param $destination string/enum One of RenameUserProcess::LOG_* constant
-	 * @param $task BatchTask (Optional) BatchTask to send logs to
+	 * @param $task Wikia\Tasks\Tasks\BaseTask (Optional) task to send logs to
 	 */
-	public function addLogDestination( $destination, $task = null ) {
+	private function addLogDestination( $destination, $task = null ) {
 		$this->mLogDestinations[] = array( $destination, $task );
 	}
 
@@ -280,7 +280,7 @@ class RenameIPProcess {
 		foreach ( $this->mLogDestinations as $destinationEntry ) {
 			$logDestination = $destinationEntry[0];
 
-			/** @var BatchTask $logTask */
+			/** @var Wikia\Tasks\Tasks\BaseTask $logTask */
 			$logTask = $destinationEntry[1];
 			switch ( $logDestination ) {
 				case self::LOG_BATCH_TASK:

@@ -1,13 +1,13 @@
 <div class="page-header__contribution-buttons">
-	<? if ( $actionButton->shouldDisplay() ): ?>
+	<?php if ( $actionButton->shouldDisplay() ): ?>
 		<?= $app->renderView( 'Wikia\PageHeader\PageHeader', 'actionButton', [
 			'actionButton' => $actionButton
 		] ); ?>
-	<? endif; ?>
+	<?php endif; ?>
 	<?php foreach ( $buttons->buttons as $button ): ?>
-		<a class="wds-button wds-is-squished <?= $button->class ?>" href="<?= $button->href ?>"
+		<a class="wds-button <?= $button->class ?>" href="<?= $button->href ?>"
 		   id="<?= $button->id ?>">
-			<? if ( !empty( $button->icon ) ): ?>
+			<?php if ( !empty( $button->icon ) ): ?>
 				<?= DesignSystemHelper::renderSvg( $button->icon, 'wds-icon wds-icon-small' ); ?>
 			<?php endif; ?>
 			<span><?= $button->label ?></span>

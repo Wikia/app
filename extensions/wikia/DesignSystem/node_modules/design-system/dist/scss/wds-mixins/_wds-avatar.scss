@@ -1,0 +1,61 @@
+@mixin wds-avatar($diameter: 30px, $color: $wds-color-black, $color-hover: $wds-color-link, $color-background: $wds-color-white) {
+	$border-width: 2px;
+	$inner-border-width: 2px;
+	@if($diameter >= 48px) {
+		$border-width: 3px;
+		$inner-border-width: 3px;
+	}
+	@if($diameter >= 120px) {
+		$border-width: 4px;
+		$inner-border-width: 6px;
+	}
+
+	@include square($diameter);
+
+	a {
+		color: $color;
+
+		&:hover {
+			color: $color-hover;
+		}
+	}
+
+	.wds-avatar__image {
+		background-color: $color-background;
+		border: solid $border-width $color;
+		fill: $color;
+
+		&:hover {
+			border-color: $color-hover;
+			fill: $color-hover;
+		}
+	}
+
+	.wds-avatar__inner-border:hover + .wds-avatar__image {
+		fill: $color-hover;
+		border-color: $color-hover;
+	}
+
+	.wds-avatar__inner-border {
+		@include square($diameter - 2*$border-width);
+
+		border: solid $inner-border-width $color-background;
+		left: $border-width;
+		top: $border-width;
+	}
+
+	$badge-size: (0.2539 * $diameter) + 8px;
+	$left: -$badge-size / 3.5;
+	$right: -$badge-size / 2.5;
+	@if ($diameter >= 48px) {
+		$left: -$badge-size / 4.5;
+		$right: -$badge-size / 3.5;
+	}
+
+	.wds-avatar__badge {
+		@include square($badge-size);
+
+		left: $left;
+		top: $right;
+	}
+}

@@ -3,16 +3,22 @@ describe('ext.wikia.adEngine.slot.service.srcProvider', function () {
 	'use strict';
 
 	var mocks = {
-			adContext: {
-				get: function () {
-					return false;
-				}
+		adContext: {
+			get: function () {
+				return false;
 			}
-		};
+		},
+		babDetection: {
+			isBlocking: function () {
+				return false;
+			}
+		}
+	};
 
 	function getModule() {
 		return modules['ext.wikia.adEngine.slot.service.srcProvider'](
 			mocks.adContext,
+			mocks.babDetection
 		);
 	}
 
@@ -59,6 +65,26 @@ describe('ext.wikia.adEngine.slot.service.srcProvider', function () {
 		expect(getModule().get('xyz')).toBe('test-xyz');
 	});
 
+	it('doesn\'t change src to rec if ad is not recoverable', function () {
+		mockContext({
+			'targeting.skin': 'oasis'
+		});
+
+		spyOn(mocks.babDetection, 'isBlocking').and.returnValue(false);
+
+		expect(getModule().get('asd')).toEqual('asd');
+	});
+
+	it('changes src to rec if ad is recoverable', function () {
+		mockContext({
+			'targeting.skin': 'oasis'
+		});
+
+		spyOn(mocks.babDetection, 'isBlocking').and.returnValue(true);
+
+		expect(getModule().get('asd')).toBe('rec');
+	});
+
 	it('sets src=premium if article is premium', function () {
 		mockContext({'opts.premiumOnly': true});
 
@@ -66,19 +92,42 @@ describe('ext.wikia.adEngine.slot.service.srcProvider', function () {
 
 	});
 
+	it('change src to rec if on premium pages', function () {
+		mockContext({
+			'targeting.skin': 'oasis',
+			'opts.premiumOnly': true
+		});
+
+		spyOn(mocks.babDetection, 'isBlocking').and.returnValue(true);
+
+		expect(getModule().get('asd')).toBe('rec');
+	});
+
+	it('overrides src=rec for test wiki', function () {
+		mockContext({
+			'targeting.skin': 'oasis',
+			'opts.isAdTestWiki': true
+		});
+
+		spyOn(mocks.babDetection, 'isBlocking').and.returnValue(true);
+
+		expect(getModule().get('abc')).toBe('test-rec');
+	});
+
 	it('doesn\'t set src=premium if article isn\'t premium', function () {
 		mockContext({'opts.premiumOnly': false});
 		expect(getModule().get('abc')).not.toBe('premium');
 	});
 
-	it('returns by default rec as src value for recovery', function () {
-		expect(getModule().getRecoverySrc()).toBe('rec');
+	it('returns by default rec as src value for rec', function () {
+		expect(getModule().getRecSrc()).toBe('rec');
 	});
 
-	it('returns by test-rec to recovery & test wikis', function () {
+	it('returns by test-rec to rec & test wikis', function () {
 		mockContext({
 			'opts.isAdTestWiki': true
 		});
-		expect(getModule().getRecoverySrc()).toBe('test-rec');
+
+		expect(getModule().getRecSrc()).toBe('test-rec');
 	});
 });

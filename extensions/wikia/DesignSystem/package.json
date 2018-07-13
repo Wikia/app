@@ -2,10 +2,11 @@
   "name": "design-system",
   "scripts": {
     "setup": "npm install && node i18n/build && SERVER_ID=177 php ../../../maintenance/rebuildLocalisationCache.php --force --thread=2 --primary",
-    "setup-template": "npm install && grunt"
+    "build-templates": "npm install && npx grunt"
   },
   "dependencies": {
-    "design-system-i18n": "Wikia/design-system-i18n#1.2.0",
+    "design-system": "Wikia/design-system#512910643fcc468db15969483eb8be0d078d38e8",
+    "design-system-i18n": "Wikia/design-system-i18n#v2.0.0",
     "grunt-mustache": "~0.1.5",
     "grunt": "~0.4.2"
   }

@@ -1,0 +1,41 @@
+.wds-floating-button {
+	align-items: center;
+	background: $wds-color-white;
+	border-radius: 50%;
+	border: 0;
+	box-shadow: 0 0 10px 0 rgba(26,26,26,.2);
+	display: flex;
+	height: 36px;
+	justify-content: center;
+	margin: 0;
+	outline: none;
+	padding: 0;
+	transition-duration: $wds-button-transition-duration;
+	transition-property: box-shadow;
+	width: 36px;
+
+	&:not([disabled]),
+	&:not(.wds-is-disabled) {
+		cursor: pointer;
+
+		&:hover {
+			box-shadow: 0 0 10px 0 rgba(26,26,26,.4);
+		}
+	}
+}
+
+.wds-floating-button-group {
+	display: inline-flex;
+
+	&.wds-is-vertical {
+		flex-flow: column;
+	}
+
+	&:not(.wds-is-vertical) > .wds-floating-button:not(:first-child) {
+		margin-left: 8px
+	}
+
+	&.wds-is-vertical > .wds-floating-button:not(:first-child) {
+		margin-top: 8px;
+	}
+}
