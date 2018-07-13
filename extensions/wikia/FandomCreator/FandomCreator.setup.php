@@ -28,19 +28,18 @@ $wgHooks['NavigationApigetDataAfterExecute'][] = function( WikiaDispatchableObje
 
 $wgHooks['DesignSystemCommunityHeaderModelGetData'][] = 'FandomCreator\Hooks::onDesignSystemCommunityHeaderModelGetData';
 
-//
-//$wgHooks['DesignSystemApigetAllElementsAfterExecute'][] = function( WikiaDispatchableObject $dispatchable ) {
-//	$params = $dispatchable->getRequest()->getParams();
-//	$product = $params[DesignSystemApiController::PARAM_PRODUCT];
-//
-//	if ( $product === 'wikis' ) {
-//		$cityId = $params[DesignSystemApiController::PARAM_ID];
-//		$fandomCreatorCommunityId = 2512; // WikiFactory::getVarValueByName( "wgFandomCreatorCommunityId", $cityId, false, "" );
-//		FandomCreator\Hooks::onDesignSystemApiGetAllElements( $dispatchable, $fandomCreatorCommunityId );
-//	}
-//
-//	return true;
-//};
+$wgHooks['DesignSystemApigetAllElementsAfterExecute'][] = function( WikiaDispatchableObject $dispatchable ) {
+	$params = $dispatchable->getRequest()->getParams();
+	$product = $params[DesignSystemApiController::PARAM_PRODUCT];
+
+	if ( $product === 'wikis' ) {
+		$cityId = $params[DesignSystemApiController::PARAM_ID];
+		$fandomCreatorCommunityId = 2512; // WikiFactory::getVarValueByName( "wgFandomCreatorCommunityId", $cityId, false, "" );
+		FandomCreator\Hooks::onDesignSystemApiGetAllElements( $dispatchable, $fandomCreatorCommunityId );
+	}
+
+	return true;
+};
 
 $wgHooks['MercuryApigetWikiVariablesAfterExecute'][] = function( WikiaDispatchableObject $dispatchable ) {
 	global $wgFandomCreatorCommunityId;
