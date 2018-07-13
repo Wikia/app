@@ -1,10 +1,10 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: mediawiki-sandbox
+  name: mediawiki-${SANDBOX_NAME}
   namespace: prod
   labels:
-    app: mediawiki-sandbox
+    app: mediawiki-${SANDBOX_NAME}
 spec:
   replicas: 5
   strategy:
@@ -15,11 +15,11 @@ spec:
   progressDeadlineSeconds: 180
   selector:
     matchLabels:
-      app: mediawiki-sandbox
+      app: mediawiki-${SANDBOX_NAME}
   template:
     metadata:
       labels:
-        app: mediawiki-sandbox
+        app: mediawiki-${SANDBOX_NAME}
     spec:
       containers:
         - name: nginx
@@ -77,10 +77,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: mediawiki-sandbox
+  name: mediawiki-${SANDBOX_NAME}
 spec:
   selector:
-    app: mediawiki-sandbox
+    app: mediawiki-${SANDBOX_NAME}
   ports:
     - protocol: TCP
       port: 80
@@ -89,7 +89,7 @@ spec:
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: mediawiki-sandbox-ingress
+  name: mediawiki-${SANDBOX_NAME}-ingress
 spec:
   rules:
     - host: "${SANDBOX_NAME}.wikia.com"
@@ -97,5 +97,5 @@ spec:
         paths:
           - path: /
             backend:
-              serviceName: mediawiki-sandbox
+              serviceName: mediawiki-${SANDBOX_NAME}
               servicePort: 80
