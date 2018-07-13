@@ -1172,7 +1172,7 @@ $messages['pi'] = array(
 );
 
 $messages['pl'] = array(
-	'admindashboard-loading' => 'Trwa ładowanie…',
+	'admindashboard-loading' => 'Trwa ładowanie...',
 	'admindashboard-title' => 'Panel {{SITENAME}}',
 	'admindashboard-header' => 'Panel Administratora',
 	'admindashboard-toolbar-link' => 'Administrator',
@@ -1219,7 +1219,7 @@ $messages['pl'] = array(
 	'admindashboard-control-add-video-tooltip' => 'Dodaj nowe filmy do Twojej wiki.',
 	'admindashboard-control-special-css-tooltip' => 'Dostosuj skórkę wiki edytując lokalny kod CSS.',
 	'right-admindashboard' => 'Dostęp do Panelu Administratora',
-	'admindashboard-desc' => 'Panel dla administratorów z łatwym dostępem do narzędzi',
+	'admindashboard-desc' => 'A dashboard for administrators with easy access to their tools',
 	'admindashboard-control-special-css-label' => 'CSS',
 	'admindashboard-control-announcements-label' => 'Ogłoszenia',
 	'admindashboard-control-announcements-tooltip' => 'Utwórz ogłoszenie dla swojej społeczności',
