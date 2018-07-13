@@ -16,7 +16,7 @@ spec:
             image: artifactory.wikia-inc.com/sus/mediawiki-sandbox-php:0a5674e.c752111
             env:
              - name: SERVER_ID
-               value: {server_id}
+               value: "{server_id}"
              - name: LOG_SOCKET_ONLY
                value: "yes"
              - name: LOG_SOCKET_ADDRESS
