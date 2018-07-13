@@ -28,14 +28,14 @@ spec:
           image: artifactory.wikia-inc.com/sus/mediawiki-prod-nginx:${IMAGE_TAG}
           livenessProbe:
             httpGet:
-              path: /health.php
+              path: /health/check
               port: 8080
             initialDelaySeconds: 60
             timeoutSeconds: 5
             periodSeconds: 20
           readinessProbe:
             httpGet:
-              path: /health.php
+              path: /health/check
               port: 8080
             initialDelaySeconds: 5
             timeoutSeconds: 5
