@@ -48,7 +48,7 @@ class HTTPSSupportHooks {
 			if ( WebRequest::detectProtocol() === 'http' &&
 				self::httpsAllowed( $user, $requestURL )
 			) {
-				$output->redirect( wfHttpToHttps( $requestURL ) );
+				$output->redirectProtocol( PROTO_HTTPS );
 				if ( $user->isAnon() ) {
 					$output->enableClientCache( false );
 				}
@@ -58,7 +58,7 @@ class HTTPSSupportHooks {
 				!$request->getHeader( 'X-Wikia-WikiaAppsID' ) &&
 				!self::httpsEnabledTitle( $title )
 			) {
-				$output->redirect( wfHttpsToHttp( $requestURL ) );
+				$output->redirectProtocol( PROTO_HTTP );
 				$output->enableClientCache( false );
 			}
 		}
