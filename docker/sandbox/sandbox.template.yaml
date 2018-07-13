@@ -60,11 +60,9 @@ apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   name: mediawiki-sandbox-ingress
-  annotations:
-    traefik.frontend.priority: "2"
 spec:
   rules:
-    - host: "*.${SANDBOX_NAME}.wikia.com"
+    - host: "${SANDBOX_NAME}.wikia.com"
       http:
         paths:
           - path: /
