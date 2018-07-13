@@ -2,7 +2,6 @@ schedule: "29 20 * * 0"
 server_id: 203236
 args:
 - php
-- >-
-  /usr/wikia/slot1/current/src/maintenance/wikia/deleteArticlesByPrefix.php
-  --namespace=500
-  --prefix=QATestsUser/blogPost
+- /usr/wikia/slot1/current/src/maintenance/wikia/deleteArticlesByPrefix.php
+- --namespace=500
+- --prefix=QATestsUser/blogPost
