@@ -1,6 +1,6 @@
 <?php
 
-require __DIR__ . '/../../../maintenance/Maintenance.php';
+require __DIR__ . '/../../../../maintenance/Maintenance.php';
 
 /**
  * Maintenance script to send email confirmation reminder to users.
