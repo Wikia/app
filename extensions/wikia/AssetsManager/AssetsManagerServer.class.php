@@ -22,6 +22,22 @@ class AssetsManagerServer {
 	}
 
 	public static function serve(WebRequest $request) {
+		global $wgStyleVersion;
+
+		$ifNoneMatch = $request->getHeader( 'If-None-Match' );
+
+		if ( $ifNoneMatch && trim( $ifNoneMatch, '"' ) === $wgStyleVersion ) {
+			global $wgResourceLoaderMaxage;
+
+			http_response_code( 304 );
+
+			header( 'Vary: Accept-Encoding' );
+			header( "Cache-Control: public, max-age={$wgResourceLoaderMaxage['versioned']['server']}" );
+			header( "X-Pass-Cache-Control: public, max-age={$wgResourceLoaderMaxage['versioned']['client']}" );
+			header( "ETag: \"$wgStyleVersion\"" );
+
+			return;
+		}
 
 		$type = $request->getText('type');
 
@@ -102,12 +118,11 @@ class AssetsManagerServer {
 			$content = !empty( $wgDevelEnvironment ) ? $msg = $e->getMessage() : '/* SASS processing failed! */';
 		}
 
-		if($cacheDuration > 0) {
+		if ( $cacheDuration > 0 ) {
 			$headers['Cache-Control'] = 'public, max-age=' . $cacheDuration['server'];
 			$headers['X-Pass-Cache-Control'] = 'public, max-age=' . $cacheDuration['client'];
+			$headers['ETag'] = "\"$wgStyleVersion\"";
 		}
-
-		$headers['Last-Modified'] = gmdate('D, d M Y H:i:s \G\M\T');
 
 		foreach($headers as $k => $v) {
 			header($k . ': ' . $v);
