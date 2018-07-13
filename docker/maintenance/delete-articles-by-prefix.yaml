@@ -1,4 +1,4 @@
-schedule: "20 27 * * 0"
+schedule: "27 20 * * 0"
 server_id: 203236
 args:
 - php
