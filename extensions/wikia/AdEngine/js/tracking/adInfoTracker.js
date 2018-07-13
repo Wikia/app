@@ -7,9 +7,10 @@ define('ext.wikia.adEngine.tracking.adInfoTracker',  [
 	'ext.wikia.adEngine.utils.device',
 	'wikia.browserDetect',
 	'wikia.log',
+	'wikia.trackingOptIn',
 	'wikia.window',
 	require.optional('ext.wikia.adEngine.ml.rabbit')
-], function (adTracker, geo, slotRegistry, pageLayout, deviceDetect, browserDetect, log, win, rabbit) {
+], function (adTracker, geo, slotRegistry, pageLayout, deviceDetect, browserDetect, log, trackingOptIn, win, rabbit) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.tracking.adInfoTracker';
@@ -92,7 +93,8 @@ define('ext.wikia.adEngine.tracking.adInfoTracker',  [
 			'rabbit': (rabbit && rabbit.getAllSerializedResults()) || '',
 			'page_width': win.document.body.scrollWidth || '',
 			'page_layout': pageLayout.getSerializedData(slotName) || '',
-			'labrador': geo.getSamplingResults().join(';')
+			'labrador': geo.getSamplingResults().join(';'),
+			'opt_in': trackingOptIn.geoRequiresTrackingConsent() ? trackingOptIn.isOptedIn() ? 'yes' : 'no' : ''
 		};
 
 		log(['prepareData', slotName, data], log.levels.debug, logGroup);

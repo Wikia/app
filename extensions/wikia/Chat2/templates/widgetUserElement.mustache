@@ -1,11 +1,9 @@
 {{#viewedUsersInfo}}
-	<div class="wds-avatar">
-		<a href="{{profileUrl}}"
-		   class="{{#hasUsers}} chatter{{/hasUsers}}"{{^hasUsers}}
-		   title="{{username}}"{{/hasUsers}}>
-			<img class="wds-avatar__image" src="{{avatarUrl}}"/>
-		</a>
-	</div>
+	<a href="{{profileUrl}}"
+	   class="wds-avatar{{#hasUsers}} chatter{{/hasUsers}}"{{^hasUsers}}
+	   title="{{username}}"{{/hasUsers}}>
+		<img class="wds-avatar__image" src="{{avatarUrl}}"/>
+	</a>
 {{/viewedUsersInfo}}
 {{#hasUsers}}
 	{{! We need to render popover content outside <a> element as it contains other anchor elements }}
