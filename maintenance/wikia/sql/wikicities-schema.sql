@@ -579,41 +579,5 @@ CREATE TABLE `user_properties` (
   KEY `user_properties_property` (`up_property`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Table structure for table `wikia_tasks`
---
 
-DROP TABLE IF EXISTS `wikia_tasks`;
-CREATE TABLE `wikia_tasks` (
-  `task_id` int(11) NOT NULL AUTO_INCREMENT,
-  `task_user_id` int(5) unsigned NOT NULL DEFAULT '0',
-  `task_type` varchar(255) NOT NULL DEFAULT '',
-  `task_priority` tinyint(4) NOT NULL DEFAULT '0',
-  `task_status` tinyint(4) NOT NULL DEFAULT '0',
-  `task_started` char(14) NOT NULL,
-  `task_finished` char(14) NOT NULL,
-  `task_arguments` text,
-  `task_log` text,
-  `task_added` char(14) NOT NULL,
-  PRIMARY KEY (`task_id`),
-  KEY `task_added_idx` (`task_added`),
-  KEY `task_status` (`task_status`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Table structure for table `wikia_tasks_log`
---
-
-DROP TABLE IF EXISTS `wikia_tasks_log`;
-CREATE TABLE `wikia_tasks_log` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `task_id` int(11) NOT NULL,
-  `log_timestamp` char(14) NOT NULL,
-  `log_line` text NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `new_fk_constraint` (`task_id`),
-  CONSTRAINT `new_fk_constraint` FOREIGN KEY (`task_id`) REFERENCES `wikia_tasks` (`task_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-
--- Dump completed on 2018-07-06 12:59:35
+-- Dump completed on 2018-07-13 10:12:53
