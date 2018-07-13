@@ -28,14 +28,13 @@ spec:
             httpGet:
               path: /health/check
               port: 8080
-            initialDelaySeconds: 60
+            initialDelaySeconds: 10
             timeoutSeconds: 5
             periodSeconds: 20
           readinessProbe:
             httpGet:
               path: /health/check
               port: 8080
-            initialDelaySeconds: 5
             timeoutSeconds: 5
             periodSeconds: 10
           ports:
@@ -45,12 +44,11 @@ spec:
           livenessProbe:
             tcpSocket:
               port: 9000
-            initialDelaySeconds: 60
+            initialDelaySeconds: 10
             timeoutSeconds: 5
           readinessProbe:
             tcpSocket:
               port: 9000
-            initialDelaySeconds: 5
             timeoutSeconds: 5
           env:
             - name: WIKIA_DATACENTER
