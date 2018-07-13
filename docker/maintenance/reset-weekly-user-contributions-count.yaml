@@ -1,0 +1,6 @@
+schedule: "0 7 * * 1"
+args:
+- php
+- /usr/wikia/slot1/current/src/maintenance/maintenanceTaskScheduler.php
+- --active=7
+- maintenance/wikia/cronjobs/resetWeeklyUserContributionsCount.php
