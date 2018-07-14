@@ -1,7 +1,8 @@
 /*global define*/
 define('ext.wikia.adEngine.ml.modelFactory', [
-	'ext.wikia.adEngine.adContext'
-], function (adContext) {
+	'ext.wikia.adEngine.adContext',
+	'wikia.querystring'
+], function (adContext, Querystring) {
 	'use strict';
 
 	var requiredData = [
@@ -48,7 +49,17 @@ define('ext.wikia.adEngine.ml.modelFactory', [
 				return isEnabled && isGeoEnabled;
 			},
 
+			buildModelForcedKey: function (modelName) {
+				return 'rabbits.' + modelName + 'Forced';
+			},
+
 			predict: function () {
+				var key = this.buildModelForcedKey(modelData.name);
+				var qs = new Querystring();
+				if (qs.getVal(key, undefined) !== undefined) {
+					return parseInt(qs.getVal(key), 10);
+				}
+
 				if (predictedValue === null || !modelData.cachePrediction) {
 					var data = modelData.dataSource.getData();
 

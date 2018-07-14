@@ -1,15 +1,9 @@
 /*global describe, expect, it, modules*/
 describe('ext.wikia.adEngine.ml.modelFactory', function () {
 	'use strict';
-	var modelsForced = { };
 
 	function getModule() {
 		return modules['ext.wikia.adEngine.ml.rabbit'](
-			function () {
-				this.getVal = function getVal (modelName) {
-					return modelsForced[modelName];
-				};
-			},
 			{
 				getName: function () {
 					return 'foo';
@@ -63,23 +57,5 @@ describe('ext.wikia.adEngine.ml.modelFactory', function () {
 		var rabbit = getModule();
 
 		expect(rabbit.getResults(['bar']).length).toBe(1);
-	});
-
-	describe('getPrediction', function () {
-		it('returns prediction of value undefined if model does not exist', function () {
-			var rabbit = getModule();
-			expect(rabbit.getPrediction('doesNotExist')).toBeUndefined();
-		});
-		it('returns prediction when model is enabled', function () {
-			var rabbit = getModule();
-
-			expect(rabbit.getPrediction('bar')).toEqual(0);
-		});
-		it('returns overriden prediction', function () {
-			modelsForced['rabbits.barForced'] = '1';
-			var rabbit = getModule();
-
-			expect(rabbit.getPrediction('bar')).toEqual(1);
-		});
 	});
 });
