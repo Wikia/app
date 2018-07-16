@@ -22,7 +22,7 @@ $wgExtensionCredits['other'][] = [
 		'Daniel Grunwell'
 	],
 	'url'               => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/ContentReview',
-	'descriptionmsg'    => 'ontent-review-importjs-desc',
+	'descriptionmsg'    => 'content-review-importjs-desc',
 ];
 
 $wgAutoloadClasses['Wikia\ContentReview\ImportJS'] = __DIR__ . '/jsmodules/ImportJS.php';
