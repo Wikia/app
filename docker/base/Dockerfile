@@ -116,6 +116,6 @@ RUN php-fpm --test
 ENV WIKIA_DOCROOT=/usr/wikia/slot1/current/src
 ENV WIKIA_CONFIG_ROOT=/usr/wikia/slot1/current/config
 
-ENV WIKIA_BASE_IMAGE_HASH=f15d53c3180aa2b614d1b4f594525da7
+ENV WIKIA_BASE_IMAGE_HASH=f15d53c3180aa2b614d1b4f594525da78
 
 WORKDIR /usr/wikia/slot1/current/src
