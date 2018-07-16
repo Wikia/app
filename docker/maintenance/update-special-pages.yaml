@@ -1,7 +1,7 @@
-schedule: "*/1 * * * *"
+schedule: "0 4 * * *"
 args:
 - php
 - /usr/wikia/slot1/current/src/maintenance/maintenanceTaskScheduler.php
 - --params="--quiet"
-- --id=177
+- --active=2
 - maintenance/updateSpecialPages.php

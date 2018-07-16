@@ -2,9 +2,11 @@
 apiVersion: batch/v1beta1
 kind: CronJob
 metadata:
-  name: "mediawiki-{name}"
+  name: "mediawiki-cronjob-${name}"
 spec:
-  schedule: {schedule}
+  schedule: ${schedule}
+  successfulJobsHistoryLimit: 0
+  failedJobsHistoryLimit: 1
   jobTemplate:
     spec:
       template:
@@ -16,12 +18,12 @@ spec:
             image: artifactory.wikia-inc.com/sus/mediawiki-sandbox-php:0a5674e.c752111
             env:
              - name: SERVER_ID
-               value: {server_id}
+               value: "${server_id}"
              - name: LOG_SOCKET_ONLY
                value: "yes"
              - name: LOG_SOCKET_ADDRESS
                value: "tcp://localhost:9999"
             args:
-{args}
+${args}
           restartPolicy: Never
 
