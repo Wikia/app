@@ -2,22 +2,6 @@
 
 class InsightsService {
 
-	/**
-	 * @param string $type type of model
-	 * @param int $size number of pages we need
-	 * @param string $sortingType define how data should be sorted (@see InsightsSorting::$sorting)
-	 * @return array
-	 */
-	public function getInsightPages( $type, $size, $sortingType ) {
-		if ( !InsightsHelper::isInsightPage( $type ) ) {
-			return [];
-		}
-
-		$model = InsightsHelper::getInsightModel( $type );
-
-		return $this->getInsightPagesForModel( $model, $size, $sortingType );
-	}
-
 	public function getInsightPagesForModel( InsightsModel $model, $size, $sortingType ): array {
 		$insightData = ( new InsightsContext( $model ) )->fetchData();
 
