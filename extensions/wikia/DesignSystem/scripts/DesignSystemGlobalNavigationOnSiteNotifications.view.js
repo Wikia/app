@@ -189,10 +189,10 @@ define('ext.wikia.design-system.on-site-notifications.view', [
 			};
 
 			this._clickNotification = function (e) {
-				this.onNotificationClick.notify(this._findId(e));
+				this.onNotificationClick.notify(this._findUriAndType(e));
 			};
 
-			this._findId = function (e) {
+			this._findUriAndType = function (e) {
 				try {
 					var $element = $(e.target).closest('.wds-notification-card');
 					return {
@@ -205,7 +205,7 @@ define('ext.wikia.design-system.on-site-notifications.view', [
 			};
 
 			this._markAsRead = function (e) {
-				this.onMarkAsReadClick.notify(this._findId(e));
+				this.onMarkAsReadClick.notify(this._findUriAndType(e));
 				return false;
 			};
 
@@ -247,8 +247,8 @@ define('ext.wikia.design-system.on-site-notifications.view', [
 				findUnreadAndClearClass(this._$container);
 			};
 
-			this.renderNotificationAsRead = function (id) {
-				var element = this._$container.find('[data-uri="' + id + '"]');
+			this.renderNotificationAsRead = function (uri) {
+				var element = this._$container.find('[data-uri="' + uri + '"]');
 				removeIsUnreadClass(element);
 			};
 
