@@ -129,6 +129,10 @@ EOL""")
             sh "kubectl --context ${k8sContext} -n ${environment} apply -f app/docker/prod/k8s.yaml"
             rolloutStatus = sh(returnStatus: true, script: "kubectl --context ${k8sContext} -n ${environment} rollout status deployment/mediawiki-'${environment}'")
         }
+
+        withDockerContainer(kubectlImage) {
+            sh "cd app/docker/maintenance && ./cronjobs-generator.sh ${imageTag} | kubectl --context ${k8sContext} -n ${environment} apply -f -"
+        }
     }
 
 	stage("Set and report job status") {
