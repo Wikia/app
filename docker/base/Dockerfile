@@ -112,6 +112,6 @@ ADD ./php.ini /usr/local/etc/php/php.ini
 ENV WIKIA_DOCROOT=/usr/wikia/slot1/current/src
 ENV WIKIA_CONFIG_ROOT=/usr/wikia/slot1/current/config
 
-ENV WIKIA_BASE_IMAGE_HASH=27f50ce
+ENV WIKIA_BASE_IMAGE_HASH=4db9245bd8b181624f2edf7401151e71
 
 WORKDIR /usr/wikia/slot1/current/src
