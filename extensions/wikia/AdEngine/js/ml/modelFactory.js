@@ -11,6 +11,7 @@ define('ext.wikia.adEngine.ml.modelFactory', [
 		'name',
 		'enabled'
 	];
+	var qs = new Querystring();
 
 	function validateModel(modelData) {
 		requiredData.forEach(function (key) {
@@ -55,7 +56,6 @@ define('ext.wikia.adEngine.ml.modelFactory', [
 
 			predict: function () {
 				var key = this.buildModelForcedKey(modelData.name);
-				var qs = new Querystring();
 				if (qs.getVal(key, undefined) !== undefined) {
 					return parseInt(qs.getVal(key), 10);
 				}

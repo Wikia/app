@@ -52,7 +52,6 @@ define('ext.wikia.adEngine.ml.rabbit', [
 	 */
 	function getPrediction(modelName) {
 		var model = getEnabledModels()
-			// Oh God I miss arrow functions
 			.filter(function(model) { return model.getName() === modelName; })[0];
 		return model ? model.predict() : undefined;
 	}

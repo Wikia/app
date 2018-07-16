@@ -17,10 +17,13 @@ define('wikia.articleVideo.featuredVideo.autoplay', [
 			return isAutoplayDisabledByRabbit;
 		},
 		isAutoplayEnabled: function () {
-			return featuredVideoCookieService.getAutoplay() !== '0' &&
+			var isEnabled =  featuredVideoCookieService.getAutoplay() !== '0' &&
 				// adContext.isEnabled('wgArticleVideoAutoplayCountries') &&
-				!this.isAutoplayDisabledByRabbits() &&
 				!inFeaturedVideoClickToPlayABTest;
+			if (rabbit) {
+				isEnabled = isEnabled && !this.isAutoplayDisabledByRabbits();
+			}
+			return isEnabled;
 		},
 		inNextVideoAutoplayEnabled: function () {
 			return true;
