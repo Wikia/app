@@ -22,9 +22,8 @@ schedule: "35 20 * * *" # required
 server_id: 3434 # optional, default: 177
 args: # required
 - php
-- >-
-  path/to/maintenance.php
-  --param=1
+- path/to/maintenance.php
+- --param=1
 
 ```
 
