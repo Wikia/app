@@ -11,7 +11,6 @@ define('ext.wikia.adEngine.ml.modelFactory', [
 		'name',
 		'enabled'
 	];
-	var qs = new Querystring();
 
 	function validateModel(modelData) {
 		requiredData.forEach(function (key) {
@@ -22,6 +21,7 @@ define('ext.wikia.adEngine.ml.modelFactory', [
 	}
 
 	function create(modelData) {
+		var qs = new Querystring();
 		validateModel(modelData);
 
 		var predictedValue = null;
