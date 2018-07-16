@@ -37,8 +37,8 @@ if [ "$ARGS" = 'null' ]; then
 	exit 1;
 fi
 
-job_k8s_descriptor="${TEMPLATE/\{name\}/${NAME}}"
-job_k8s_descriptor="${job_k8s_descriptor/\{args\}/${ARGS}}"
-job_k8s_descriptor="${job_k8s_descriptor/\{server_id\}/${SERVER_ID}}"
-job_k8s_descriptor="${job_k8s_descriptor/\{schedule\}/${SCHEDULE}}"
+job_k8s_descriptor="${TEMPLATE/\$\{name\}/${NAME}}"
+job_k8s_descriptor="${job_k8s_descriptor/\$\{args\}/${ARGS}}"
+job_k8s_descriptor="${job_k8s_descriptor/\$\{server_id\}/${SERVER_ID}}"
+job_k8s_descriptor="${job_k8s_descriptor/\$\{schedule\}/${SCHEDULE}}"
 echo "$job_k8s_descriptor"
