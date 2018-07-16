@@ -104,10 +104,17 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 	}
 
 	private function getPageUrl( $pageTitle, $namespace, $query = '', $protocolRelative = false ) {
-		$wikiId = $this->product === static::PRODUCT_WIKIS ?
-			$this->productInstanceId :
-			WikiFactory::COMMUNITY_CENTRAL;
-		$url =  GlobalTitle::newFromText( $pageTitle, $namespace, $wikiId )->getFullURL( $query );
+		global $wgCityId;
+
+		if ( $this->product === static::PRODUCT_WIKIS && $this->$this->productInstanceId == $wgCityId) {
+			$url = Title::newFromText($pageTitle, $namespace)->getFullURL();
+		} else {
+			$wikiId = $this->product === static::PRODUCT_WIKIS ?
+				$this->productInstanceId :
+				WikiFactory::COMMUNITY_CENTRAL;
+			$url =  GlobalTitle::newFromText( $pageTitle, $namespace, $wikiId )->getFullURL( $query );
+		}
+
 		if ( $protocolRelative ) {
 			$url = wfProtocolUrlToRelative( $url );
 		}

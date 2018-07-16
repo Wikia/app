@@ -22,8 +22,8 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 		$this->productInstanceId = $cityId;
 		$this->langCode = $langCode;
 		$this->themeSettings = new ThemeSettings( $cityId );
-		$this->settings = $this->themeSettings->getSettings( $cityId );
-		$this->mainPageUrl = wfProtocolUrlToRelative( GlobalTitle::newMainPage( $this->productInstanceId )->getFullURL() );
+		$this->settings = $this->themeSettings->getSettings();
+		$this->mainPageUrl = wfProtocolUrlToRelative( Title::newMainPage()->getFullURL() );
 	}
 
 	public function getData(): array {
@@ -238,7 +238,7 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 	}
 
 	private function getFullUrl( $pageTitle, $namespace, $protocolRelative = false ) {
-		$url = GlobalTitle::newFromText( $pageTitle, NS_SPECIAL, $this->productInstanceId )->getFullURL();
+		$url = Title::newFromText( $pageTitle, $namespace)->getFullURL();
 		if ( $protocolRelative ) {
 			$url = wfProtocolUrlToRelative( $url );
 		}
