@@ -54,6 +54,9 @@ if ( empty( $wgWikiaEnvironment ) ) {
 $wgLoggerLogToSocketOnly = $_ENV['LOG_SOCKET_ONLY'] ?? false;
 $wgLoggerSocketAddress = $_ENV['LOG_SOCKET_ADDRESS'] ?? 'tcp://127.0.0.1:9999';
 
+/* if {@code true}, then logs will be sent to STDOUT, overrides LOG_SOCKET_ONLY */
+$wgLoggerLogToStdOutOnly = $_ENV['LOG_STDOUT_ONLY'] ?? false;
+
 /**
  * Some environments share components (e.g. preview, verify, sandbox and stable
  * use prod databases). This variable represents that.
