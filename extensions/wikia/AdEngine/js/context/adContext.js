@@ -122,6 +122,7 @@ define('ext.wikia.adEngine.adContext', [
 		context.bidders.appnexusWebAds = isProperGeoAds('wgAdDriverAppNexusWebAdsBidderCountries');
 		context.bidders.audienceNetwork = isProperGeoAds('wgAdDriverAudienceNetworkBidderCountries');
 		context.bidders.indexExchange = isProperGeoAds('wgAdDriverIndexExchangeBidderCountries');
+		context.bidders.kargo = isProperGeoAds('wgAdDriverKargoBidderCountries');
 		context.bidders.onemobile = isProperGeoAds('wgAdDriverAolOneMobileBidderCountries');
 		context.bidders.openx = isProperGeoAds('wgAdDriverOpenXPrebidBidderCountries');
 		context.bidders.pubmatic = isProperGeoAds('wgAdDriverPubMaticBidderCountries');

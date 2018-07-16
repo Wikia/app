@@ -1157,6 +1157,13 @@ $wgAdDriverPubMaticBidderCountries = null;
 $wgAdDriverAdditionalVastSizeCountries = null;
 
 /**
+ * @name $wgAdDriverKargoBidderCountries
+ * List of countries where Kargo prebid bidding platform is enabled.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverKargoBidderCountries = null;
+
+/**
  * @name $wgAdDriverOutstreamVideoFrequencyCapping
  * Supported values 1/4pv, 2/5min
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
