@@ -1,14 +1,13 @@
 # This is a base Docker image used by Wikia's MediaWiki app. It uses base PHP image provided by Docker with additional
 # production dependencies installed.
-FROM php:7.0.28-fpm-jessie
+FROM php:7.0.30-fpm-stretch
 
 # set locale as required by MediaWiki / Perl
 ENV LANG C.UTF-8
 ENV LC_ALL C.UTF-8
 
 # add jessie-backports repo (required to install libsass-dev package)
-RUN echo 'deb http://ftp.debian.org/debian jessie-backports main' > /etc/apt/sources.list.d/backports.list \
-    && apt-get update && apt-get install -y \
+RUN apt-get update && apt-get install -y \
     autoconf \
     automake \
     libbz2-dev \
@@ -31,7 +30,7 @@ RUN echo 'deb http://ftp.debian.org/debian jessie-backports main' > /etc/apt/sou
     # needed by php intl extension
     libicu-dev \
     # needed by sass, this installs libsass-3.4.3, matches with https://github.com/absalomedia/sassphp/releases/tag/0.5.10
-    && apt-get -t jessie-backports install -y libsass-dev \
+    && apt-get install -y libsass-dev \
     # cleanup
     && rm -rf /var/lib/apt/lists/* \
     #
@@ -113,6 +112,6 @@ ADD ./php.ini /usr/local/etc/php/php.ini
 ENV WIKIA_DOCROOT=/usr/wikia/slot1/current/src
 ENV WIKIA_CONFIG_ROOT=/usr/wikia/slot1/current/config
 
-ENV WIKIA_BASE_IMAGE_HASH=27f50ce
+ENV WIKIA_BASE_IMAGE_HASH=4db9245bd8b181624f2edf7401151e71
 
 WORKDIR /usr/wikia/slot1/current/src
