@@ -75,7 +75,7 @@ class ApiParse extends ApiBase {
 		}
 
 		$popts = ParserOptions::newFromContext( $this->getContext() );
-		$popts->setTidy( true );
+		$popts->setTidy( false );
 		$popts->enableLimitReport( !$params['disablepp'] );
 
 		$redirValues = null;
