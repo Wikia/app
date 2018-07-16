@@ -7,6 +7,12 @@ metadata:
     app: mediawiki-prod
 spec:
   replicas: 5
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 2
+  progressDeadlineSeconds: 180
   selector:
     matchLabels:
       app: mediawiki-prod
@@ -20,10 +26,32 @@ spec:
       containers:
         - name: nginx
           image: artifactory.wikia-inc.com/sus/mediawiki-prod-nginx:${IMAGE_TAG}
+          livenessProbe:
+            httpGet:
+              path: /health/check
+              port: 8080
+            initialDelaySeconds: 10
+            timeoutSeconds: 5
+            periodSeconds: 20
+          readinessProbe:
+            httpGet:
+              path: /health/check
+              port: 8080
+            timeoutSeconds: 5
+            periodSeconds: 10
           ports:
             - containerPort: 8080
         - name: php
           image: artifactory.wikia-inc.com/sus/mediawiki-prod-php:${IMAGE_TAG}
+          livenessProbe:
+            tcpSocket:
+              port: 9000
+            initialDelaySeconds: 10
+            timeoutSeconds: 5
+          readinessProbe:
+            tcpSocket:
+              port: 9000
+            timeoutSeconds: 5
           env:
             - name: WIKIA_DATACENTER
               value: "${DATACENTER}"
