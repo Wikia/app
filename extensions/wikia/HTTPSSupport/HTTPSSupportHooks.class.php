@@ -48,7 +48,7 @@ class HTTPSSupportHooks {
 			if ( WebRequest::detectProtocol() === 'http' &&
 				self::httpsAllowed( $user, $requestURL )
 			) {
-				$output->redirectProtocol( PROTO_HTTPS );
+				$output->redirectProtocol( PROTO_HTTPS, '301' );
 				if ( $user->isAnon() ) {
 					$output->enableClientCache( false );
 				}
