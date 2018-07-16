@@ -40,6 +40,8 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 			$data[ 'wordmark' ] = $this->getWordmarkData();
 		}
 
+		Hooks::run( 'DesignSystemCommunityHeaderModelGetData', [ &$data, $this->productInstanceId ] );
+
 		return $data;
 	}
 
