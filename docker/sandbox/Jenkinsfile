@@ -72,7 +72,7 @@ node("docker-daemon") {
             }
 
             if (!imageExists) {
-                sh("docker pull artifactory.wikia-inc.com/sus/php-wikia-base:4db9245bd8b181624f2edf7401151e71")
+                sh("docker pull artifactory.wikia-inc.com/sus/php-wikia-base:f15d53c3180aa2b614d1b4f594525da7")
 
                 // SUS-5284 - make the image a bit smaller
                 sh("cp docker/.dockerignore ..")

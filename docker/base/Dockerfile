@@ -108,10 +108,14 @@ RUN apt-get update && apt-get install -y \
 # setup php.ini globally
 ADD ./php.ini /usr/local/etc/php/php.ini
 
+# add and validate PHP FPM configuration
+ADD ./php-fpm.conf /usr/local/etc/php-fpm.d/30-php-fpm.conf
+RUN php-fpm --test
+
 # expose volumes for app and config repositories clones
 ENV WIKIA_DOCROOT=/usr/wikia/slot1/current/src
 ENV WIKIA_CONFIG_ROOT=/usr/wikia/slot1/current/config
 
-ENV WIKIA_BASE_IMAGE_HASH=4db9245bd8b181624f2edf7401151e71
+ENV WIKIA_BASE_IMAGE_HASH=f15d53c3180aa2b614d1b4f594525da7
 
 WORKDIR /usr/wikia/slot1/current/src
