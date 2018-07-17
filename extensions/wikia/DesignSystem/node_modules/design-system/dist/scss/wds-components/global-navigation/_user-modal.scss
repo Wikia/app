@@ -35,6 +35,7 @@
 		position: fixed;
 		text-align: center;
 		width: 100%;
+		z-index: $z-1;
 
 		form {
 			width: 100%;
@@ -42,6 +43,8 @@
 		}
 
 		.wds-sign-out__button {
+			background-color: transparent;
+			border: none;
 			color: $wds-fandom-color-link;
 			font-size: 12px;
 			font-weight: bold;
