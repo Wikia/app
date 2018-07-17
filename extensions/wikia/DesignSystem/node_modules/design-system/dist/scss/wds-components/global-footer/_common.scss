@@ -21,6 +21,11 @@ $footer-line-height: 1.3em;
 		padding: 0;
 	}
 
+	&__header-wrapper {
+		display: block;
+		width: 100%;
+	}
+
 	&__header {
 		align-items: center;
 		display: flex;
