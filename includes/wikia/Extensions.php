@@ -1770,3 +1770,6 @@ include "$IP/extensions/wikia/Announcements/Announcements.setup.php";
 // SUS-5473 | Expose a button on Special:Statistics allowing Wikia Staff members to schedule
 // updateSpecialPages.php maintenance script run.
 include "$IP/extensions/wikia/UpdateSpecialPagesScheduler/UpdateSpecialPagesScheduler.setup.php";
+
+// PLATFORM-3558 |
+include "$IP/extensions/wikia/AutoLogin/AutoLogin.setup.php";
