@@ -3,7 +3,7 @@ namespace Wikia\Logger;
 
 use Monolog\Formatter\LogstashFormatter;
 use Monolog\Handler\SocketHandler;
-use Monolog\Handler\SteamHandler;
+use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use PHPUnit\Framework\TestCase;
 
