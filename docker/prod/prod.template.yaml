@@ -74,7 +74,7 @@ spec:
               memory: "1300Mi"
             requests:
               cpu: "400m"
-              memory: "800Mi"
+              memory: "400Mi"
         # MW log output, see K8s_LOGGING.md
         - name: logger
           image: artifactory.wikia-inc.com/sus/mediawiki-logger:latest
