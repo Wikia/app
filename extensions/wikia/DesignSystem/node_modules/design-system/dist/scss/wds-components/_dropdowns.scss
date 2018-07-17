@@ -75,7 +75,7 @@
 					}
 
 					&:hover, &.wds-is-selected {
-						> a {
+						> a:not(.wds-button) {
 							@include wds-dropdown-linked-list-item-hover;
 						}
 					}
