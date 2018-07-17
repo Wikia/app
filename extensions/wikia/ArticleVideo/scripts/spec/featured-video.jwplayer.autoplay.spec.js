@@ -31,7 +31,9 @@ describe('wikia.articleVideo.featuredVideo.autoplay', function () {
 	};
 
 	beforeEach(function () {
-		context = {};
+		context = {
+			'targeting.skin': 'oasis'
+		};
 		isInAbTestGroup = false;
 		autoplayCookie = '0';
 		prediction = undefined;
@@ -76,6 +78,24 @@ describe('wikia.articleVideo.featuredVideo.autoplay', function () {
 		});
 		it('should return false if rabbit is disabled and ctpDesktop is false', function () {
 			context['rabbits.ctpDesktop'] = false;
+
+			expect(getAutoplay().isAutoplayDisabledByRabbits()).toEqual(false);
+		});
+		it('should return true if skin is mercury and ctpMobile is set', function () {
+			context['rabbits.ctpMobile'] = true;
+			context['targeting.skin'] = 'mercury';
+
+			expect(getAutoplay().isAutoplayDisabledByRabbits()).toEqual(true);
+		});
+		it('should return false if skin is mercury and ctpMobile is not set', function () {
+			delete context['rabbits.ctpMobile'];
+			context['targeting.skin'] = 'mercury';
+
+			expect(getAutoplay().isAutoplayDisabledByRabbits()).toEqual(false);
+		});
+		it('should return false if skin is mercury and ctpMobile is false', function () {
+			context['rabbits.ctpMobile'] = false;
+			context['targeting.skin'] = 'mercury';
 
 			expect(getAutoplay().isAutoplayDisabledByRabbits()).toEqual(false);
 		});

@@ -5,16 +5,22 @@ define('wikia.articleVideo.featuredVideo.autoplay', [
 	require.optional('ext.wikia.adEngine.ml.rabbit')
 ], function (adContext, abTest, featuredVideoCookieService, rabbit) {
 	'use strict';
-	var isAutoplayDisabledByRabbit = adContext.get('rabbits.ctpDesktop');
+	var isDesktop = adContext.get('targeting.skin') === 'oasis';
 	var inFeaturedVideoClickToPlayABTest = abTest.inGroup('FV_CLICK_TO_PLAY', 'CLICK_TO_PLAY');
 
 	return {
 		isAutoplayDisabledByRabbits: function () {
-			var queenPrediction = rabbit.getPrediction('queendesktop');
-			if (queenPrediction !== undefined) {
-				isAutoplayDisabledByRabbit = !!queenPrediction;
+			if (isDesktop) {
+				var isDesktopAutoplayDisabledByRabbit = adContext.get('rabbits.ctpDesktop');
+
+				var queenPrediction = rabbit.getPrediction('queendesktop');
+				if (queenPrediction !== undefined) {
+					isDesktopAutoplayDisabledByRabbit = !!queenPrediction;
+				}
+				return isDesktopAutoplayDisabledByRabbit;
+			} else {
+				return !!adContext.get('rabbits.ctpMobile');
 			}
-			return isAutoplayDisabledByRabbit;
 		},
 		isAutoplayEnabled: function () {
 			var isEnabled =  featuredVideoCookieService.getAutoplay() !== '0' &&
