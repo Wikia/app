@@ -29,6 +29,8 @@ RUN apt-get update && apt-get install -y \
     libtidy-dev \
     # needed by php intl extension
     libicu-dev \
+    # needed by php luasandbox extension
+    liblua5.1-0-dev \
     # needed by sass, this installs libsass-3.4.3, matches with https://github.com/absalomedia/sassphp/releases/tag/0.5.10
     && apt-get install -y libsass-dev \
     # cleanup
@@ -75,6 +77,14 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-configure /tmp/php-xhprof-extension \
     && docker-php-ext-install /tmp/php-xhprof-extension \
     #
+    # luasandbox extension / @see https://www.mediawiki.org/wiki/LuaSandbox
+    && cd /tmp \
+    && wget https://github.com/Wikia/mediawiki-php-luasandbox/archive/3.0.1.tar.gz -O php-luasandbox-extension.tar.gz \
+    && mkdir -p /tmp/php-luasandbox-extension \
+    && tar -xf php-luasandbox-extension.tar.gz -C /tmp/php-luasandbox-extension --strip-components=1 \
+    && docker-php-ext-configure /tmp/php-luasandbox-extension \
+    && docker-php-ext-install /tmp/php-luasandbox-extension \
+    #
     # install PHP extensions required by MediaWiki that are provided by Docker base PHP image helper
     && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
     && docker-php-ext-install \
@@ -116,6 +126,6 @@ RUN php-fpm --test
 ENV WIKIA_DOCROOT=/usr/wikia/slot1/current/src
 ENV WIKIA_CONFIG_ROOT=/usr/wikia/slot1/current/config
 
-ENV WIKIA_BASE_IMAGE_HASH=f15d53c3180aa2b614d1b4f594525da7
+ENV WIKIA_BASE_IMAGE_HASH=e65afb8d20b625dd17e27a672560cfe8
 
 WORKDIR /usr/wikia/slot1/current/src

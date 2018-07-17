@@ -26,6 +26,13 @@ spec:
       containers:
         - name: nginx
           image: artifactory.wikia-inc.com/sus/mediawiki-prod-nginx:${IMAGE_TAG}
+          lifecycle:
+            preStop:
+              exec:
+                command:
+                - /bin/sh
+                - -c
+                - sleep 3
           livenessProbe:
             httpGet:
               path: /health/check
