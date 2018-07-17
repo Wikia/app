@@ -81,24 +81,6 @@ describe('wikia.articleVideo.featuredVideo.autoplay', function () {
 
 			expect(getAutoplay().isAutoplayDisabledByRabbits()).toEqual(false);
 		});
-		it('should return true if skin is mercury and ctpMobile is set', function () {
-			context['rabbits.ctpMobile'] = true;
-			context['targeting.skin'] = 'mercury';
-
-			expect(getAutoplay().isAutoplayDisabledByRabbits()).toEqual(true);
-		});
-		it('should return false if skin is mercury and ctpMobile is not set', function () {
-			delete context['rabbits.ctpMobile'];
-			context['targeting.skin'] = 'mercury';
-
-			expect(getAutoplay().isAutoplayDisabledByRabbits()).toEqual(false);
-		});
-		it('should return false if skin is mercury and ctpMobile is false', function () {
-			context['rabbits.ctpMobile'] = false;
-			context['targeting.skin'] = 'mercury';
-
-			expect(getAutoplay().isAutoplayDisabledByRabbits()).toEqual(false);
-		});
 	});
 
 	describe('isAutoplayEnabled', function () {
@@ -132,5 +114,41 @@ describe('wikia.articleVideo.featuredVideo.autoplay', function () {
 				});
 			})(i);
 		}
+	});
+
+	describe('isAutoplayToggleShown', function () {
+		beforeEach(function () {
+			isInAbTestGroup = undefined;
+		});
+
+
+		it('should return false if ctpDesktop rabbit is true', function () {
+			context['rabbits.ctpDesktop'] = true;
+
+			expect(getAutoplay().isAutoplayToggleShown()).toEqual(false);
+		});
+
+		it('should return false if queenDesktop rabbit is true', function () {
+			context['rabbits.queenDesktop'] = true;
+
+			expect(getAutoplay().isAutoplayToggleShown()).toEqual(false);
+		});
+
+		it('should return false if in inFeaturedVideoClickToPlayABTest is true', function () {
+			isInAbTestGroup = true;
+
+			expect(getAutoplay().isAutoplayToggleShown()).toEqual(false);
+		});
+
+		it('should return true if all of rabbits or AB test are undefined', function () {
+			expect(getAutoplay().isAutoplayToggleShown()).toEqual(true);
+		});
+
+		it('should return true if all of rabbits or AB test are false', function () {
+			context['rabbits.ctpDesktop'] = false;
+			context['rabbits.queenDesktop'] = false;
+			isInAbTestGroup = false;
+			expect(getAutoplay().isAutoplayToggleShown()).toEqual(true);
+		});
 	});
 });

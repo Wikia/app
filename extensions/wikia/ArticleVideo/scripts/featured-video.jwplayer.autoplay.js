@@ -5,22 +5,17 @@ define('wikia.articleVideo.featuredVideo.autoplay', [
 	require.optional('ext.wikia.adEngine.ml.rabbit')
 ], function (adContext, abTest, featuredVideoCookieService, rabbit) {
 	'use strict';
-	var isDesktop = adContext.get('targeting.skin') === 'oasis';
 	var inFeaturedVideoClickToPlayABTest = abTest.inGroup('FV_CLICK_TO_PLAY', 'CLICK_TO_PLAY');
 
 	return {
 		isAutoplayDisabledByRabbits: function () {
-			if (isDesktop) {
-				var isDesktopAutoplayDisabledByRabbit = adContext.get('rabbits.ctpDesktop');
+			var isDesktopAutoplayDisabledByRabbit = adContext.get('rabbits.ctpDesktop');
 
-				var queenPrediction = rabbit.getPrediction('queendesktop');
-				if (queenPrediction !== undefined) {
-					isDesktopAutoplayDisabledByRabbit = !!queenPrediction;
-				}
-				return isDesktopAutoplayDisabledByRabbit;
-			} else {
-				return !!adContext.get('rabbits.ctpMobile');
+			var queenPrediction = rabbit.getPrediction('queendesktop');
+			if (queenPrediction !== undefined) {
+				isDesktopAutoplayDisabledByRabbit = !!queenPrediction;
 			}
+			return isDesktopAutoplayDisabledByRabbit;
 		},
 		isAutoplayEnabled: function () {
 			var isEnabled =  featuredVideoCookieService.getAutoplay() !== '0' &&
@@ -33,6 +28,13 @@ define('wikia.articleVideo.featuredVideo.autoplay', [
 		},
 		inNextVideoAutoplayEnabled: function () {
 			return true;
+		},
+		isAutoplayToggleShown: function () {
+			return !(
+				adContext.get('rabbits.ctpDesktop') ||
+				adContext.get('rabbits.queenDesktop') ||
+				inFeaturedVideoClickToPlayABTest
+			);
 		}
 	};
 });
