@@ -44,7 +44,7 @@ class LoggerFactory {
 		return self::$instance;
 	}
 
-	public function __construct( bool $shouldLogToSocket, bool $shouldExcludeDebugLevel, string $socketAddress, bool $shouldLogToStdOut ) {
+	public function __construct( bool $shouldLogToSocket, bool $shouldExcludeDebugLevel, string $socketAddress, bool $shouldLogToStdOut = false ) {
 		$this->shouldLogToSocket = $shouldLogToSocket;
 		$this->shouldLogToStdOut = $shouldLogToStdOut;
 		$this->shouldExcludeDebugLevel = $shouldExcludeDebugLevel;
