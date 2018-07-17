@@ -11,7 +11,7 @@ class LoggerFactoryTest extends TestCase {
 
 	const LOG_SOCKET_ADDRESS = 'tcp://127.0.0.1:9999';
 
-/**
+	/**
 	 * @dataProvider identProvider
 	 * @param string $ident
 	 */
