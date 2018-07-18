@@ -71,6 +71,30 @@ spec:
         # MW log output, see K8s_LOGGING.md
         - name: logger
           image: artifactory.wikia-inc.com/sus/mediawiki-logger:latest
+        - name: fpm-prometheus-exporter
+          image: hipages/php-fpm_exporter:0.5.2
+          ports:
+            - containerPort: 9253
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: mediawiki-${SANDBOX_NAME}
+  labels:
+    app: mediawiki-${SANDBOX_NAME}
+  namespace: ${SANDBOX_ENVIRONMENT}
+spec:
+  jobLabel: app
+  selector:
+    matchLabels:
+      app: mediawiki-${SANDBOX_NAME}
+  namespaceSelector:
+    matchNames:
+    - ${SANDBOX_ENVIRONMENT}
+  endpoints:
+  - port: 9253
+    path: /metrics
+interval: 10s
 ---
 apiVersion: v1
 kind: Service
@@ -83,6 +107,9 @@ spec:
     - protocol: TCP
       port: 80
       targetPort: 8080
+    - protocol: TCP
+      port: 9253
+      targetPort: 9253
 ---
 apiVersion: extensions/v1beta1
 kind: Ingress
