@@ -100,6 +100,8 @@ apiVersion: v1
 kind: Service
 metadata:
   name: mediawiki-${SANDBOX_NAME}
+  labels:
+    app: mediawiki-${SANDBOX_NAME}
 spec:
   selector:
     app: mediawiki-${SANDBOX_NAME}
@@ -115,6 +117,8 @@ apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   name: mediawiki-${SANDBOX_NAME}-ingress
+  labels:
+    app: mediawiki-${SANDBOX_NAME}
 spec:
   rules:
     - host: "${SANDBOX_NAME}.wikia.com"
