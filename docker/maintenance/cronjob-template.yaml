@@ -13,8 +13,10 @@ spec:
         spec:
           containers:
           - name: php
-            image: artifactory.wikia-inc.com/sus/mediawiki-sandbox-php:0a5674e.c752111
+            image: artifactory.wikia-inc.com/sus/mediawiki-sandbox-php:8e7b425.5c2dd23
             env:
+             - name: SERVER_ID
+               value: "${server_id}"
              - name: LOG_STDOUT_ONLY
                value: "yes"
             args:
