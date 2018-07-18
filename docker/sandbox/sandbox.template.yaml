@@ -24,6 +24,13 @@ spec:
       containers:
         - name: nginx
           image: artifactory.wikia-inc.com/sus/mediawiki-sandbox-nginx:${IMAGE_TAG}
+          lifecycle:
+            preStop:
+              exec:
+                command:
+                - /bin/sh
+                - -c
+                - sleep 3
           livenessProbe:
             httpGet:
               path: /health/check
@@ -41,6 +48,13 @@ spec:
             - containerPort: 8080
         - name: php
           image: artifactory.wikia-inc.com/sus/mediawiki-sandbox-php:${IMAGE_TAG}
+          lifecycle:
+            preStop:
+              exec:
+                command:
+                - /bin/sh
+                - -c
+                - sleep 3
           livenessProbe:
             tcpSocket:
               port: 9000
@@ -71,23 +85,56 @@ spec:
         # MW log output, see K8s_LOGGING.md
         - name: logger
           image: artifactory.wikia-inc.com/sus/mediawiki-logger:latest
+        - name: fpm-prometheus-exporter
+          image: hipages/php-fpm_exporter:0.5.2
+          ports:
+            - containerPort: 9253
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: mediawiki-${SANDBOX_NAME}
+  labels:
+    app: mediawiki-${SANDBOX_NAME}
+  namespace: prod
+spec:
+  jobLabel: app
+  selector:
+    matchLabels:
+      app: mediawiki-${SANDBOX_NAME}
+  namespaceSelector:
+    matchNames:
+    - prod
+  endpoints:
+  - port: metrics
+    path: /metrics
+    interval: 10s
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: mediawiki-${SANDBOX_NAME}
+  labels:
+    app: mediawiki-${SANDBOX_NAME}
 spec:
   selector:
     app: mediawiki-${SANDBOX_NAME}
   ports:
     - protocol: TCP
       port: 80
+      name: main
       targetPort: 8080
+    - protocol: TCP
+      port: 9253
+      name: metrics
+      targetPort: 9253
 ---
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   name: mediawiki-${SANDBOX_NAME}-ingress
+  labels:
+    app: mediawiki-${SANDBOX_NAME}
 spec:
   rules:
     - host: "${SANDBOX_NAME}.wikia.com"
