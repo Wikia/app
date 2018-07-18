@@ -1,5 +1,5 @@
 <?php
-$wgExtensionCredits['parserhook'][] = [
+$wgExtensionCredits['other'][] = [
 	'name' => 'AutLogin Extension',
 	'author' => [
 		'Platform Team @Wikia',

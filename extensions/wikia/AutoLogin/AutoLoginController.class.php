@@ -12,11 +12,10 @@ class AutoLoginController extends WikiaController {
 	}
 
 	public function index() {
-		\Wikia\Logger\WikiaLogger::instance()->info("IFRAME", ["data" => $this->getData()]);
-		$this->setVal( 'url', $this->getData() );
+		$this->setVal( 'url', $this->getServiceUrl() );
 	}
 
-	public function getData() {
-		return $this->kubernetesExternalUrlProvider->getUrl( 'autologin' ).'/frame';
+	protected function getServiceUrl() {
+		return $this->kubernetesExternalUrlProvider->getUrl( 'autologin' ) . '/frame';
 	}
 }
