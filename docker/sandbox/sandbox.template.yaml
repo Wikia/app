@@ -82,7 +82,7 @@ metadata:
   name: mediawiki-${SANDBOX_NAME}
   labels:
     app: mediawiki-${SANDBOX_NAME}
-  namespace: ${SANDBOX_ENVIRONMENT}
+  namespace: prod
 spec:
   jobLabel: app
   selector:
@@ -90,7 +90,7 @@ spec:
       app: mediawiki-${SANDBOX_NAME}
   namespaceSelector:
     matchNames:
-    - ${SANDBOX_ENVIRONMENT}
+    - prod
   endpoints:
   - port: 9253
     path: /metrics
