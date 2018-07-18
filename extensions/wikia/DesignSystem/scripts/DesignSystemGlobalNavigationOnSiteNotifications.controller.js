@@ -86,12 +86,12 @@ define('ext.wikia.design-system.on-site-notifications.controller', [
 			registerEventHandlers: function (view) {
 				view.onLoadMore.attach(this.loadMore.bind(this));
 				view.onDropDownClick.attach(this.loadFirstPage.bind(this));
-				view.onNotificationClick.attach(function (_, uriAndType) {
-					this.markAsRead(uriAndType);
+				view.onNotificationClick.attach(function (_, notificationDetails) {
+					this.markAsReadOnPageUnload(notificationDetails);
 				}.bind(this));
 				view.onMarkAllAsReadClick.attach(this.markAllAsRead.bind(this));
-				view.onMarkAsReadClick.attach(function (_, uriAndType) {
-					this.markAsRead(uriAndType);
+				view.onMarkAsReadClick.attach(function (_, notificationDetails) {
+					this.markAsRead(notificationDetails);
 				}.bind(this));
 			},
 
@@ -114,20 +114,53 @@ define('ext.wikia.design-system.on-site-notifications.controller', [
 				}.bind(this));
 			},
 
-			markAsRead: function (uriAndType) {
+			markAsRead: function (notificationDetails) {
+				if (!notificationDetails.isUnread) {
+					return;
+				}
+
 				$.ajax({
 					type: 'POST',
-					data: JSON.stringify([uriAndType.uri]),
+					data: JSON.stringify([notificationDetails.uri]),
 					dataType: 'json',
-					contentType: "application/json; charset=UTF-8",
+					contentType: 'application/json; charset=UTF-8',
 					url: this.getBaseUrl() + '/notifications/mark-as-read/by-uri',
 					xhrFields: {
 						withCredentials: true
 					}
 				}).done(function () {
-					this._model.markAsRead(uriAndType.uri);
+					this._model.markAsRead(notificationDetails.uri);
 					this.updateUnreadCount();
 				}.bind(this));
+			},
+
+			markAsReadOnPageUnload: function (notificationDetails) {
+				if (!notificationDetails.isUnread) {
+					return;
+				}
+
+				var url = this.getBaseUrl() + '/notifications/mark-as-read/by-uri';
+				var data = JSON.stringify([notificationDetails.uri]);
+
+				if (window.navigator.sendBeacon) {
+					var blob = new Blob([data], {
+						type: 'application/json'
+					});
+
+					window.navigator.sendBeacon(url, blob);
+				} else {
+					$.ajax({
+						type: 'POST',
+						data: data,
+						dataType: 'json',
+						contentType: 'application/json; charset=UTF-8',
+						url: url,
+						xhrFields: {
+							withCredentials: true
+						},
+						async: false
+					});
+				}
 			},
 
 			markAllAsRead: function () {
@@ -140,7 +173,7 @@ define('ext.wikia.design-system.on-site-notifications.controller', [
 					type: 'POST',
 					data: JSON.stringify({since: convertToIsoString(since)}),
 					dataType: 'json',
-					contentType: "application/json; charset=UTF-8",
+					contentType: 'application/json; charset=UTF-8',
 					url: this.getBaseUrl() + '/notifications/mark-all-as-read',
 					xhrFields: {
 						withCredentials: true
