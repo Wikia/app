@@ -189,7 +189,7 @@ define('ext.wikia.design-system.on-site-notifications.view', [
 			};
 
 			this._clickNotification = function (e) {
-				this.onNotificationClick.notify(this._findNotificationDetails(e));
+				this.onNotificationClick.notify(this._findNotificationDetails(e), event);
 			};
 
 			this._findNotificationDetails = function (e) {

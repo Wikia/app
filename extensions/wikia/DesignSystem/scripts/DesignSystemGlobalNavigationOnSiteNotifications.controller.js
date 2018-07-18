@@ -86,8 +86,8 @@ define('ext.wikia.design-system.on-site-notifications.controller', [
 			registerEventHandlers: function (view) {
 				view.onLoadMore.attach(this.loadMore.bind(this));
 				view.onDropDownClick.attach(this.loadFirstPage.bind(this));
-				view.onNotificationClick.attach(function (_, notificationDetails) {
-					this.markAsReadOnPageUnload(notificationDetails);
+				view.onNotificationClick.attach(function (_, notificationDetails, event) {
+					this.markAsReadOnPageUnload(notificationDetails, event);
 				}.bind(this));
 				view.onMarkAllAsReadClick.attach(this.markAllAsRead.bind(this));
 				view.onMarkAsReadClick.attach(function (_, notificationDetails) {
@@ -134,12 +134,12 @@ define('ext.wikia.design-system.on-site-notifications.controller', [
 				}.bind(this));
 			},
 
-			markAsReadOnPageUnload: function (notificationDetails) {
+			markAsReadOnPageUnload: function (notificationDetails, event) {
 				if (!notificationDetails.isUnread) {
 					return;
 				}
 
-				var url = this.getBaseUrl() + '/notifications/mark-as-read/by-uri';
+				var markAsReadUrl = this.getBaseUrl() + '/notifications/mark-as-read/by-uri';
 				var data = JSON.stringify([notificationDetails.uri]);
 
 				if (window.navigator.sendBeacon) {
@@ -147,19 +147,24 @@ define('ext.wikia.design-system.on-site-notifications.controller', [
 						type: 'application/json'
 					});
 
-					window.navigator.sendBeacon(url, blob);
+					window.navigator.sendBeacon(markAsReadUrl, blob);
 				} else {
+					event.preventDefault();
+
 					$.ajax({
 						type: 'POST',
 						data: data,
 						dataType: 'json',
 						contentType: 'application/json; charset=UTF-8',
-						url: url,
+						// Keep it low as it's blocking user from navigating to the notification target
+						timeout: 500,
+						url: markAsReadUrl,
 						xhrFields: {
 							withCredentials: true
-						},
-						async: false
-					});
+						}
+					}).complete(function () {
+						window.location.href = notificationDetails.uri;
+					}.bind(this));
 				}
 			},
 
