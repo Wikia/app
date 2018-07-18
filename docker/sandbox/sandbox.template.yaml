@@ -24,6 +24,13 @@ spec:
       containers:
         - name: nginx
           image: artifactory.wikia-inc.com/sus/mediawiki-sandbox-nginx:${IMAGE_TAG}
+          lifecycle:
+            preStop:
+              exec:
+                command:
+                - /bin/sh
+                - -c
+                - sleep 3
           livenessProbe:
             httpGet:
               path: /health/check
@@ -41,6 +48,13 @@ spec:
             - containerPort: 8080
         - name: php
           image: artifactory.wikia-inc.com/sus/mediawiki-sandbox-php:${IMAGE_TAG}
+          lifecycle:
+            preStop:
+              exec:
+                command:
+                - /bin/sh
+                - -c
+                - sleep 3
           livenessProbe:
             tcpSocket:
               port: 9000
