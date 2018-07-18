@@ -90,7 +90,7 @@ node("docker-daemon") {
                 // SUS-5284 - make the image a bit smaller
                 sh("cp docker/.dockerignore ..")
 
-                sh("docker build  . -f docker/prod/Dockerfile-nginx -t $nginxImage:$imageTag")
+                sh("docker build .. -f docker/prod/Dockerfile-nginx -t $nginxImage:$imageTag")
                 sh("docker build .. -f docker/prod/Dockerfile-php -t $mediawikiImage:$imageTag")
                 sh("docker build .. -f docker/base/Dockerfile-logger -t $loggerImage:latest")
 
