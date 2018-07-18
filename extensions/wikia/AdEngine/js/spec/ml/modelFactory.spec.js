@@ -4,8 +4,13 @@ describe('ext.wikia.adEngine.ml.modelFactory', function () {
 
 	function getModule() {
 		return modules['ext.wikia.adEngine.ml.modelFactory'](
+			// adContext
 			{
 				addCallback: function () {}
+			},
+			// querystring
+			function () {
+				this.getVal = function () { return '1'; };
 			}
 		);
 	}
