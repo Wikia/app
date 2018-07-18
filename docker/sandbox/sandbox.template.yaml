@@ -92,9 +92,9 @@ spec:
     matchNames:
     - prod
   endpoints:
-  - port: 9253
+  - port: metrics
     path: /metrics
-interval: 10s
+    interval: 10s
 ---
 apiVersion: v1
 kind: Service
@@ -108,9 +108,11 @@ spec:
   ports:
     - protocol: TCP
       port: 80
+      name: main
       targetPort: 8080
     - protocol: TCP
       port: 9253
+      name: metrics
       targetPort: 9253
 ---
 apiVersion: extensions/v1beta1
