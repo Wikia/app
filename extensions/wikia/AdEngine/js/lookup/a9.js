@@ -108,9 +108,8 @@ define('ext.wikia.adEngine.lookup.a9', [
 		}
 
 		trackingOptIn.pushToUserConsentQueue(function (optIn) {
-			// remove condition after CMP tests
-			if (cmp.isEnabled()) {
-				cmp.callCmp('getConsentData', null, function (consentData) {
+			if (win.__cmp) {
+				win.__cmp('getConsentData', null, function (consentData) {
 					init(optIn, consentData);
 				});
 			} else {
