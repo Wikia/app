@@ -39,8 +39,8 @@ class NodeImage extends Node {
 		$divs = $sxml->xpath( '//div[@class=\'tabbertab\']' );
 		foreach ( $divs as $div ) {
 			if ( $wgArticleAsJson ) {
-				if ( preg_match( '/data-ref="([^"]+)"/', $div->asXML(), $out ) ) {
-					$data[] = array( 'label' => (string) $div['title'], 'title' => \ArticleAsJson::$media[$out[1]]['title'] );
+				if ( preg_match( '/data-file="([^"]+)"/', $div->asXML(), $out ) ) {
+					$data[] = array( 'label' => (string) $div['title'], 'title' => $out[1] );
 				}
 			} else {
 				if ( preg_match( '/data-(video|image)-key="([^"]+)"/', $div->asXML(), $out ) ) {
