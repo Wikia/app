@@ -134,6 +134,10 @@ class OutputPage extends ContextSource {
 
 	var $mRedirectCode = '';
 
+	# start wikia change
+	var $mRedirectProtocol = PROTO_CURRENT;
+	# end wikia change
+
 	var $mFeedLinksAppendQuery = null;
 
 	/**
@@ -256,6 +260,15 @@ class OutputPage extends ContextSource {
 			$this->setContext( $context );
 		}
 	}
+
+	# start wikia change
+	public function redirectProtocol( $protocol, $responsecode = '302' ) {
+		if ( $protocol === PROTO_HTTP || $protocol === PROTO_HTTPS ) {
+			$this->mRedirectProtocol = $protocol;
+			$this->mRedirectCode = $responsecode;
+		}
+	}
+	# end wikia change
 
 	/**
 	 * Redirect to $url rather than displaying the normal page
@@ -2065,9 +2078,19 @@ class OutputPage extends ContextSource {
 
 		$response = $this->getRequest()->response();
 
-		if ( $this->mRedirect != '' ) {
+		if ( $this->mRedirect != '' || $this->mRedirectProtocol != PROTO_CURRENT ) {
+			if ( $this->mRedirect == '') {
+				$this->mRedirect = $this->getRequest()->getFullRequestURL();
+			}
+
+			if ( $this->mRedirectProtocol === PROTO_HTTP ) {
+				$this->mRedirect = wfHttpsToHttp( $this->mRedirect );
+			} elseif ( $this->mRedirectProtocol === PROTO_HTTPS ) {
+				$this->mRedirect = wfHttpToHttps( $this->mRedirect );
+			}
+
 			# Standards require redirect URLs to be absolute
-			$this->mRedirect = wfExpandUrl( $this->mRedirect, PROTO_CURRENT );
+			$this->mRedirect = wfExpandUrl( $this->mRedirect, $this->mRedirectProtocol );
 
 			$redirect = $this->mRedirect;
 			$code = $this->mRedirectCode;
