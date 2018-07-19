@@ -12,13 +12,14 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.kargo', [
 				MOBILE_IN_CONTENT: {
 					sizes: [
 						[300, 250]
-					]
+					],
+					placementId: '_cGWUgEUv0T'
 				}
 			}
 		};
 
 	function isEnabled() {
-		return adContext.get('bidders.kargo') && (!babDetection.isBlocking() || adContext.get('opts.wadIL'));
+		return adContext.get('bidders.kargo') && !babDetection.isBlocking();
 	}
 
 	function getSlots(skin) {
@@ -33,7 +34,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.kargo', [
 				return {
 					bidder: bidderName,
 					params: {
-						placementId: '_cGWUgEUv0T'
+						placementId: config.placementId
 					}
 				};
 			})
