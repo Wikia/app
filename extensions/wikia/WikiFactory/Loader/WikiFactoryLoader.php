@@ -190,7 +190,7 @@ class WikiFactoryLoader {
 	 */
 	public function execute() {
 		global $wgCityId, $wgDBservers, $wgLBFactoryConf, $wgDBserver, $wgContLang,
-			   $wgWikiFactoryRedirectForAlternateDomains, $wgArticlePath;
+			   $wgWikiFactoryRedirectForAlternateDomains, $wgArticlePath, $wgEnableHTTPSForAnons;
 
 		wfProfileIn(__METHOD__);
 
@@ -217,6 +217,7 @@ class WikiFactoryLoader {
 		 * local cache, change to CACHE_ACCEL for local
 		 */
 		global $wgWikiFactoryCacheType;
+
 		$oMemc = wfGetCache( $wgWikiFactoryCacheType );
 
 		if( empty( $this->mAlwaysFromDB ) ) {
@@ -371,6 +372,8 @@ class WikiFactoryLoader {
 		// As soon as we've determined the wiki the current request belongs to, set the cityId in globals.
 		// This for example is needed in order to generate per-wiki surrogate keys during WFL redirects.
 		$wgCityId = $this->mWikiID;
+
+		$wgEnableHTTPSForAnons = WikiFactory::getVarByName('wgEnableHTTPSForAnons', $wgCityId);
 
 		/**
 		 * save default var values for Special:WikiFactory

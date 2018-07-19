@@ -275,6 +275,11 @@ $wgExtensionsPath = "$wgResourceBasePath/extensions";
 require "$IP/lib/Wikia/src/Service/User/Permissions/data/PermissionsDefinesBeforeWikiFactory.php";
 
 /**
+ * In some cases $wgMemc is still null at this point. Let's initialize it.
+ */
+$wgMemc = wfGetMainCache();
+
+/**
  * Apply WikiFactory settings.
  */
 try {
@@ -295,13 +300,6 @@ try {
 	echo $invalidArgumentException->getMessage() . PHP_EOL;
 	exit( 1 );
 }
-
-/**
- * In some cases $wgMemc is still null at this point. Let's initialize it.
- * @see SUS-2699
- * @var string $wgDBcluster
- */
-$wgMemc = wfGetMainCache();
 
 /**
  * Disabled wikis do not have $wgDBcluster set at this point. We need to skip
