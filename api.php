@@ -1,5 +1,6 @@
 <?php
-
+phpinfo();
+exit();
 /**
  * API for MediaWiki 1.8+
  *
