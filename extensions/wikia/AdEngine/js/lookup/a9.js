@@ -6,9 +6,8 @@ define('ext.wikia.adEngine.lookup.a9', [
 	'wikia.document',
 	'wikia.log',
 	'wikia.trackingOptIn',
-	'wikia.cmp',
 	'wikia.window'
-], function (adContext, slotsContext, factory, doc, log, trackingOptIn, cmp, win) {
+], function (adContext, slotsContext, factory, doc, log, trackingOptIn, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.lookup.a9',
