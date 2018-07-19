@@ -163,7 +163,7 @@ define('ext.wikia.design-system.on-site-notifications.controller', [
 							withCredentials: true
 						}
 					}).complete(function () {
-						window.location.href = notificationDetails.uri;
+						window.location.href = notificationDetails.href;
 					});
 				}
 			},
