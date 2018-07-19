@@ -143,29 +143,41 @@ define('ext.wikia.design-system.on-site-notifications.controller', [
 				var data = JSON.stringify([notificationDetails.uri]);
 
 				if (window.navigator.sendBeacon) {
-					var blob = new Blob([data], {
-						type: 'application/json'
-					});
+					try {
+						var blob = new Blob([data], {
+							type: 'application/json'
+						});
 
-					window.navigator.sendBeacon(markAsReadUrl, blob);
-				} else {
-					notificationDetails.event.preventDefault();
-
-					$.ajax({
-						type: 'POST',
-						data: data,
-						dataType: 'json',
-						contentType: 'application/json; charset=UTF-8',
-						// Keep it low as it's blocking user from navigating to the notification target
-						timeout: 500,
-						url: markAsReadUrl,
-						xhrFields: {
-							withCredentials: true
+						if (window.navigator.sendBeacon(markAsReadUrl, blob) === false) {
+							this.sendBeaconFallback(notificationDetails);
 						}
-					}).complete(function () {
-						window.location.href = notificationDetails.href;
-					});
+					} catch (exception) {
+						log(exception, log.levels.warning, common.logTag);
+						// See http://crbug.com/490015#c99
+						this.sendBeaconFallback(notificationDetails);
+					}
+				} else {
+					this.sendBeaconFallback(notificationDetails);
 				}
+			},
+
+			sendBeaconFallback: function(notificationDetails) {
+				notificationDetails.event.preventDefault();
+
+				$.ajax({
+					type: 'POST',
+					data: data,
+					dataType: 'json',
+					contentType: 'application/json; charset=UTF-8',
+					// Keep it low as it's blocking user from navigating to the notification target
+					timeout: 500,
+					url: markAsReadUrl,
+					xhrFields: {
+						withCredentials: true
+					}
+				}).complete(function () {
+					window.location.href = notificationDetails.href;
+				});
 			},
 
 			markAllAsRead: function () {
