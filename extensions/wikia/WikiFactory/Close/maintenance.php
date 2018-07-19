@@ -110,14 +110,14 @@ class CloseWikiMaintenance {
 			$cluster  = $row->city_cluster;
 			$folder   = WikiFactory::getVarValueByName( "wgUploadDirectory", $cityid );
 
-			$this->log( "city_id={$row->city_id} city_cluster={$cluster} city_url={$row->city_url} city_dbname={$dbname} city_flags={$row->city_flags} city_public={$row->city_public} city_last_timestamp={$row->city_last_timestamp}" );
+			$this->debug( "city_id={$row->city_id} city_cluster={$cluster} city_url={$row->city_url} city_dbname={$dbname} city_flags={$row->city_flags} city_public={$row->city_public} city_last_timestamp={$row->city_last_timestamp}" );
 
 			/**
 			 * request for dump on remote server (now hardcoded for Iowa)
 			 */
 			if( $row->city_flags & WikiFactory::FLAG_HIDE_DB_IMAGES)  {
 				// "Hide Database and Image Dump
-				$this->log( "Images and DB dump should be hidden" );
+				$this->info( "Images and DB dump should be hidden" );
 				$hide = true;
 			}
 			if( $row->city_flags & WikiFactory::FLAG_CREATE_DB_DUMP ) {
@@ -162,8 +162,7 @@ class CloseWikiMaintenance {
 						 * actually it's better to die than remove
 						 * images later without backup
 						 */
-						$this->error(
-							"Can't copy images to remote host. Source {$source} is not defined",
+						$this->error( "Can't copy images to remote host. Source {$source} is not defined",
 							[
 								'exception' => $e->getMessage()
 							]
