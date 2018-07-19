@@ -46,6 +46,12 @@ spec:
             periodSeconds: 10
           ports:
             - containerPort: 8080
+          resources:
+            limits:
+              memory: 200Mi
+            requests:
+              cpu: 100m
+              memory: 50Mi
         - name: php
           image: artifactory.wikia-inc.com/sus/mediawiki-sandbox-php:${IMAGE_TAG}
           lifecycle:
@@ -77,18 +83,30 @@ spec:
               value: "tcp://localhost:9999"
           resources:
             limits:
-              cpu: "4"
-              memory: "1300Mi"
+              cpu: "6"
+              memory: 1200Mi
             requests:
-              cpu: "400m"
-              memory: "400Mi"
+              cpu: "3"
+              memory: 800Mi
         # MW log output, see K8s_LOGGING.md
         - name: logger
           image: artifactory.wikia-inc.com/sus/mediawiki-logger:latest
+          resources:
+            limits:
+              memory: 200Mi
+            requests:
+              cpu: 100m
+              memory: 50Mi
         - name: fpm-prometheus-exporter
           image: hipages/php-fpm_exporter:0.5.2
           ports:
             - containerPort: 9253
+          resources:
+            limits:
+              memory: 200Mi
+            requests:
+              cpu: 50m
+              memory: 50Mi
 ---
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
@@ -135,6 +153,8 @@ metadata:
   name: mediawiki-${SANDBOX_NAME}-ingress
   labels:
     app: mediawiki-${SANDBOX_NAME}
+  annotations:
+    kubernetes.io/ingress.class: traefik
 spec:
   rules:
     - host: "${SANDBOX_NAME}.wikia.com"
