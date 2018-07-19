@@ -3,25 +3,13 @@ include __DIR__ . '/../../../../../maintenance/Maintenance.php';
 
 class DumpsOnDemandCron extends Maintenance {
 
-    const PIDFILE = '/var/run/MediaWikiDumpsOnDemandCron.pid';
+	use Wikia\Logger\Loggable;
 
     public function execute() {
 
         global $wgExternalSharedDB;
 
-        if ( file_exists( self::PIDFILE ) ) {
-                $sPid = file_get_contents( self::PIDFILE );
-                // Another process already running.
-                if ( file_exists( "/proc/{$sPid}" ) ) {
-                        $this->output( "INFO: Another process already running. Terminating.\n" );
-                        exit( 0 );
-                }
-                $this->output( "WARNING: No process in pidfile found running.\n" );
-        }
-
-        file_put_contents( self::PIDFILE, getmypid() );
-
-        $this->output( "INFO: Searching for dump requests to process.\n" );
+        $this->info( "Searching for dump requests to process." );
 
         $oDB = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
         $sWikiaId = (string) $oDB->selectField(
@@ -36,8 +24,7 @@ class DumpsOnDemandCron extends Maintenance {
         );
 
         if ( !$sWikiaId ) {
-            $this->output( "INFO: No pending dump requests. Terminating.\n" );
-            unlink( self::PIDFILE );
+            $this->info( "No pending dump requests. Terminating." );
             exit( 0 );
         }
 
@@ -51,25 +38,23 @@ class DumpsOnDemandCron extends Maintenance {
 	    $wgMaxShellTime     = 0;
 	    $wgMaxShellFileSize	= 0;
 
-	    $this->output( "INFO: Creating dumps for Wikia #{$sWikiaId}.\n" );
+	    $this->info( "Creating dumps for Wikia #{$sWikiaId}." );
 
         $sCommand = sprintf( 'SERVER_ID=%d php %s/extensions/wikia/WikiFactory/Dumps/runBackups.php --conf %s --id=%d --both --tmp --s3 2>&1', Wikia::COMMUNITY_WIKI_ID, $IP, $wgWikiaLocalSettingsPath, $sWikiaId );
-		$this->output( "INFO: Running {$sCommand} ...\n" );
+		$this->info( "Running {$sCommand}" );
 
 		$sOutput = wfShellExec( $sCommand, $iStatus );
-		$this->output( "INFO: Command finished with exit code #{$iStatus}\n{$sOutput}\n" );
+		$this->info( "Command finished with exit code #{$iStatus}\n{$sOutput}\n" );
 
         $oDB = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
 
-		$logger = Wikia\Logger\WikiaLogger::instance();
-
         if ( $iStatus > 0 ) {
-			$logger->error( __METHOD__ . ' - failed creating dumps', [
+			$this->error( __METHOD__ . ' - failed creating dumps', [
 				'exception' => new Exception( $sCommand, $iStatus ),
 				'output' => $sOutput,
 			] );
 
-            $this->output( "ERROR: Failed creating dumps. Terminating.\n" );
+            $this->error( "Failed creating dumps. Terminating." );
             $oDB->update(
                 'dumps',
                 array(
@@ -84,11 +69,10 @@ class DumpsOnDemandCron extends Maintenance {
                 ),
                 __METHOD__
             );
-            unlink( self::PIDFILE );
             exit( $iStatus );
         }
 
-        $this->output( "INFO: Dumps completed. Updating the status of the request.\n" );
+        $this->info( "Dumps completed. Updating the status of the request." );
 
         $oDB->update(
             'dumps',
@@ -106,8 +90,7 @@ class DumpsOnDemandCron extends Maintenance {
 
         DumpsOnDemand::purgeLatestDumpInfo( intval( $sWikiaId ) );
 
-        $this->output( "Done.\n" );
-        unlink( self::PIDFILE );
+        $this->info( "Done." );
         exit( 0 );
     }
 }

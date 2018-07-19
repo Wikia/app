@@ -5,6 +5,7 @@ metadata:
   name: "mediawiki-cronjob-${name}"
 spec:
   schedule: ${schedule}
+  concurrencyPolicy: ${concurrencyPolicy}
   successfulJobsHistoryLimit: 0
   failedJobsHistoryLimit: 1
   jobTemplate:
