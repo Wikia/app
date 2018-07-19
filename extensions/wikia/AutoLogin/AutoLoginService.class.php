@@ -2,7 +2,7 @@
 
 use Wikia\Service\Gateway\KubernetesExternalUrlProvider;
 
-class AutoLoginController extends WikiaService {
+class AutoLoginService extends WikiaService {
 
 	private $kubernetesExternalUrlProvider;
 

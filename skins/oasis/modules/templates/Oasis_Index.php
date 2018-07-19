@@ -96,8 +96,9 @@
 	<!-- Combined JS files and head scripts -->
 	<?= $jsFiles ?>
 <? endif ?>
-<?= F::app()->renderView( 'AutoLogin', 'Index' ) ?>
-
+<? if ( $isUserLoggedIn ): ?>
+	<?= F::app()->renderView( 'AutoLoginService', 'Index' ) ?>
+<? endif ?>
 <script type="text/javascript">/*<![CDATA[*/ Wikia.LazyQueue.makeQueue(wgAfterContentAndJS, function(fn) {fn();}); wgAfterContentAndJS.start(); /*]]>*/</script>
 <script type="text/javascript">/*<![CDATA[*/ if (typeof AdEngine_trackPageInteractive === 'function') {wgAfterContentAndJS.push(AdEngine_trackPageInteractive);} /*]]>*/</script>
 <?= $bottomScripts ?>

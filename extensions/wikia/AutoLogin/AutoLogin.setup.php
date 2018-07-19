@@ -9,4 +9,4 @@ $wgExtensionCredits['other'][] = [
 	'url' => '',
 ];
 
-$wgAutoloadClasses['AutoLoginController'] = __DIR__ . '/AutoLoginController.class.php';
+$wgAutoloadClasses['AutoLoginService'] = __DIR__ . '/AutoLoginService.class.php';
