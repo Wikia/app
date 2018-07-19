@@ -6,7 +6,6 @@ metadata:
   labels:
     app: mediawiki-prod
 spec:
-  replicas: 5
   strategy:
     type: RollingUpdate
     rollingUpdate:
