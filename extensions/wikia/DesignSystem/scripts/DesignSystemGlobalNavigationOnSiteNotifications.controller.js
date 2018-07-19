@@ -86,8 +86,8 @@ define('ext.wikia.design-system.on-site-notifications.controller', [
 			registerEventHandlers: function (view) {
 				view.onLoadMore.attach(this.loadMore.bind(this));
 				view.onDropDownClick.attach(this.loadFirstPage.bind(this));
-				view.onNotificationClick.attach(function (_, notificationDetails, event) {
-					this.markAsReadOnPageUnload(notificationDetails, event);
+				view.onNotificationClick.attach(function (_, notificationDetails) {
+					this.markAsReadOnPageUnload(notificationDetails);
 				}.bind(this));
 				view.onMarkAllAsReadClick.attach(this.markAllAsRead.bind(this));
 				view.onMarkAsReadClick.attach(function (_, notificationDetails) {
@@ -134,7 +134,7 @@ define('ext.wikia.design-system.on-site-notifications.controller', [
 				}.bind(this));
 			},
 
-			markAsReadOnPageUnload: function (notificationDetails, event) {
+			markAsReadOnPageUnload: function (notificationDetails) {
 				if (!notificationDetails.isUnread) {
 					return;
 				}
@@ -149,7 +149,7 @@ define('ext.wikia.design-system.on-site-notifications.controller', [
 
 					window.navigator.sendBeacon(markAsReadUrl, blob);
 				} else {
-					event.preventDefault();
+					notificationDetails.event.preventDefault();
 
 					$.ajax({
 						type: 'POST',
@@ -164,7 +164,7 @@ define('ext.wikia.design-system.on-site-notifications.controller', [
 						}
 					}).complete(function () {
 						window.location.href = notificationDetails.uri;
-					}.bind(this));
+					});
 				}
 			},
 

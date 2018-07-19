@@ -189,13 +189,14 @@ define('ext.wikia.design-system.on-site-notifications.view', [
 			};
 
 			this._clickNotification = function (e) {
-				this.onNotificationClick.notify(this._findNotificationDetails(e), event);
+				this.onNotificationClick.notify(this._findNotificationDetails(e));
 			};
 
 			this._findNotificationDetails = function (e) {
 				try {
 					var $element = $(e.target).closest('.wds-notification-card');
 					return {
+						event: e,
 						isUnread: $element.hasClass('wds-is-unread'),
 						uri: $element.attr('data-uri'),
 						type: $element.attr('data-type')
