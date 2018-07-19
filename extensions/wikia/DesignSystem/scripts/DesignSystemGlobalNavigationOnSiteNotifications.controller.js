@@ -148,17 +148,17 @@ define('ext.wikia.design-system.on-site-notifications.controller', [
 							type: 'application/json'
 						});
 
-						if (window.navigator.sendBeacon(markAsReadUrl, blob) === false) {
-							this.sendBeaconFallback(notificationDetails, data, markAsReadUrl);
+						if (window.navigator.sendBeacon(markAsReadUrl, blob) === true) {
+							return;
 						}
 					} catch (exception) {
 						log(exception, log.levels.warning, common.logTag);
 						// See http://crbug.com/490015#c99
 						this.sendBeaconFallback(notificationDetails, data, markAsReadUrl);
 					}
-				} else {
-					this.sendBeaconFallback(notificationDetails, data, markAsReadUrl);
 				}
+
+				this.sendBeaconFallback(notificationDetails, data, markAsReadUrl);
 			},
 
 			sendBeaconFallback: function(notificationDetails, data, markAsReadUrl) {
