@@ -152,9 +152,8 @@ define('ext.wikia.design-system.on-site-notifications.controller', [
 							return;
 						}
 					} catch (exception) {
-						log(exception, log.levels.warning, common.logTag);
 						// See http://crbug.com/490015#c99
-						this.sendBeaconFallback(notificationDetails, data, markAsReadUrl);
+						log(exception, log.levels.warning, common.logTag);
 					}
 				}
 
