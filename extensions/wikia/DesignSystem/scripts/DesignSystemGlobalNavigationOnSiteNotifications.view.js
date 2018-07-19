@@ -198,7 +198,7 @@ define('ext.wikia.design-system.on-site-notifications.view', [
 					var $anchor = $element.find('a');
 					return {
 						event: e,
-						href: $link.attr('href'),
+						href: $anchor.attr('href'),
 						isUnread: $element.hasClass('wds-is-unread'),
 						uri: $element.attr('data-uri'),
 						type: $element.attr('data-type')
