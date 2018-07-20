@@ -64,22 +64,27 @@ define('ext.wikia.adEngine.adContext', [
 
 	function updateAdContextRecServices(context, noExternals) {
 		// showAds is undefined by default
-		var serviceCanBeEnabled = !noExternals && context.opts.showAds !== false && !areDelayServicesBlocked();
+		var serviceCanBeEnabled = !noExternals &&
+			context.opts.showAds !== false &&
+			!w.wgUserName &&
+			context.targeting.skin === 'oasis' &&
+			!areDelayServicesBlocked();
 
 		// BT rec
-		context.opts.wadBT = serviceCanBeEnabled && context.targeting.skin === 'oasis' &&
+		context.opts.wadBT = serviceCanBeEnabled &&
 			isEnabled('wgAdDriverWadBTCountries');
 
 		// IL rec
-		context.opts.wadIL = serviceCanBeEnabled && context.targeting.skin === 'oasis' &&
-			!w.wgUserName && isILSupportedBrowser() && isEnabled('wgAdDriverWadILCountries');
+		context.opts.wadIL = serviceCanBeEnabled &&
+			isEnabled('wgAdDriverWadILCountries') &&
+			isILSupportedBrowser();
 	}
 
 	function isEnabled(name) {
 		var geos = instantGlobals[name] || [];
 
 		if (useNewGeo) {
-			return isProperGeoAds(name)
+			return isProperGeoAds(name);
 		}
 
 		return geo.isProperGeo(geos);
@@ -93,6 +98,7 @@ define('ext.wikia.adEngine.adContext', [
 	function updateAdContextRabbitExperiments(context) {
 		context.rabbits.ctpDesktop = isProperGeoAds('wgAdDriverCTPDesktopRabbitCountries');
 		context.rabbits.ctpMobile = isProperGeoAds('wgAdDriverCTPMobileRabbitCountries');
+		context.rabbits.queenDesktop = isProperGeoAds('wgAdDriverCTPDesktopQueenCountries');
 	}
 
 	function areDelayServicesBlocked() {

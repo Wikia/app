@@ -1,4 +1,4 @@
-FROM artifactory.wikia-inc.com/sus/php-wikia-base:27f50ce
+FROM artifactory.wikia-inc.com/sus/php-wikia-base:d41d8cd98f00b204e9800998ecf8427e
 
 ENV WIKIA_DATACENTER="sjc"
 ENV WIKIA_ENVIRONMENT="prod"

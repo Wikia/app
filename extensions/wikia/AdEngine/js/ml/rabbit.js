@@ -2,6 +2,7 @@
 define('ext.wikia.adEngine.ml.rabbit', [
 	require.optional('ext.wikia.adEngine.ml.ctp.ctpDesktop'),
 	require.optional('ext.wikia.adEngine.ml.ctp.ctpMobile'),
+	require.optional('ext.wikia.adEngine.ml.ctp.queenDesktop'),
 	require.optional('ext.wikia.adEngine.ml.n1.n1DecisionTreeClassifier'),
 	require.optional('ext.wikia.adEngine.ml.n1.n1LogisticRegression'),
 	require.optional('ext.wikia.adEngine.ml.n1.n1mLogisticRegression'),
@@ -9,6 +10,7 @@ define('ext.wikia.adEngine.ml.rabbit', [
 ], function (
 	ctpDesktop,
 	ctpMobile,
+	queenDesktop,
 	n1dtc,
 	n1Lr,
 	n1mLr,
@@ -19,6 +21,7 @@ define('ext.wikia.adEngine.ml.rabbit', [
 	var models = [
 		ctpDesktop,
 		ctpMobile,
+		queenDesktop,
 		n1dtc,
 		n1Lr,
 		n1mLr,
@@ -33,13 +36,33 @@ define('ext.wikia.adEngine.ml.rabbit', [
 		});
 	}
 
-	function getResults(allowedModels) {
+	function getEnabledModels() {
+		return models.filter(
+			function (model) { return model && model.isEnabled(); }
+		);
+	}
+
+	/**
+	 * Get prediction for model with name equal to modelName argument.
+	 *
+	 * The prediction can be overriden by setting a URL parameter
+	 * in format rabbits.{modelName}Forced=0/1.
+	 *
+	 * @return {number | undefined} Prediction value or undefined if model is not enabled
+	 */
+	function getPrediction(modelName) {
+		var model = getEnabledModels()
+			.filter(function(model) { return model.getName() === modelName; })[0];
+		return model ? model.predict() : undefined;
+	}
+
+	function getResults(allowedModelsNames) {
 		var results = [];
-		
-		allowedModels = allowedModels || [];
+
+		allowedModelsNames = allowedModelsNames || [];
 
 		models.forEach(function (model) {
-			if (model && model.isEnabled() && allowedModels.indexOf(model.getName()) !== -1) {
+			if (model && model.isEnabled() && allowedModelsNames.indexOf(model.getName()) !== -1) {
 				results.push(model.getResult());
 			}
 		});
@@ -55,6 +78,7 @@ define('ext.wikia.adEngine.ml.rabbit', [
 
 	return {
 		getResults: getResults,
+		getPrediction: getPrediction,
 		getAllSerializedResults: getAllSerializedResults
 	};
 });

@@ -419,7 +419,14 @@ if ( defined( 'REBUILD_LOCALISATION_CACHE_IN_PROGRESS' ) || !empty($wgEnableSema
 
 if ( !empty( $wgEnableScribuntoExt ) ) {
 	include "$IP/extensions/Scribunto/Scribunto.php";
-	$wgScribuntoDefaultEngine = 'luastandalone'; # PLATFORM-1885
+	
+	// SUS-5540: use the luasandbox extension as executor if it is available
+	if ( extension_loaded( 'luasandbox' ) ) {
+		$wgScribuntoDefaultEngine = 'luasandbox';
+	} else {
+		$wgScribuntoDefaultEngine = 'luastandalone'; # PLATFORM-1885
+	}
+
 	$wgScribuntoUseGeSHi = $wgEnableSyntaxHighlightGeSHiExt;
 	$wgWysiwygDisabledNamespaces[] = NS_MODULE;
 
