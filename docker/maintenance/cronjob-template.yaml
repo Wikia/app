@@ -2,7 +2,7 @@
 apiVersion: batch/v1beta1
 kind: CronJob
 metadata:
-  name: "mediawiki-cronjob-${name}"
+  name: "mw-cj-${name}"
 spec:
   schedule: ${schedule}
   successfulJobsHistoryLimit: 0
@@ -13,7 +13,7 @@ spec:
         spec:
           containers:
           - name: php
-            image: artifactory.wikia-inc.com/sus/mediawiki-sandbox-php:8e7b425.5c2dd23
+            image: artifactory.wikia-inc.com/sus/mediawiki-prod-php:a161421.5c2dd23
             env:
              - name: SERVER_ID
                value: "${server_id}"
