@@ -276,6 +276,7 @@ require "$IP/lib/Wikia/src/Service/User/Permissions/data/PermissionsDefinesBefor
 
 /**
  * In some cases $wgMemc is still null at this point. Let's initialize it.
+ * It is needed for loading WikiFactory variables, as that code relies on WikiDataAccess which uses memcache
  */
 $wgMemc = wfGetMainCache();
 
