@@ -75,8 +75,8 @@ class ApiParse extends ApiBase {
 		}
 
 		$popts = ParserOptions::newFromContext( $this->getContext() );
-		$popts->setTidy( true );
-		$popts->enableLimitReport( !$params['disablepp'] );
+		$popts->setTidy( !$params['disabletidy'] );
+		$popts->enableLimitReport( !$params['disablepp'] && !$params['disablelimitreport'] );
 
 		$redirValues = null;
 
@@ -99,11 +99,12 @@ class ApiParse extends ApiBase {
 				$titleObj = $rev->getTitle();
 
 				$wgTitle = $titleObj;
+				$pageObj = WikiPage::factory( $titleObj );
 
 				// If for some reason the "oldid" is actually the current revision, it may be cached
 				if ( $titleObj->getLatestRevID() === intval( $oldid ) )  {
 					// May get from/save to parser cache
-					$p_result = $this->getParsedSectionOrText( $titleObj, $popts, $pageid,
+					$p_result = $this->getParsedSectionOrText( $pageObj, $popts, $pageid,
 						 isset( $prop['wikitext'] ) ) ;
 				} else { // This is an old revision, so get the text differently
 					$this->text = $rev->getText( Revision::FOR_THIS_USER, $this->getUser() );
@@ -158,14 +159,21 @@ class ApiParse extends ApiBase {
 
 				$this->checkReadPermissions( $titleObj );
 				$wgTitle = $titleObj;
+				$pageObj = WikiPage::factory( $titleObj );
 
 				if ( isset( $prop['revid'] ) ) {
 					$oldid = $titleObj->getLatestRevID();
 				}
 
-				// Potentially cached
-				$p_result = $this->getParsedSectionOrText( $titleObj, $popts, $pageid,
-					 isset( $prop['wikitext'] ) ) ;
+				// Don't pollute the parser cache when setting options that aren't
+				// in ParserOptions::optionsHash()
+				$suppressCache =
+					$params['disablepp'] ||
+					$params['disablelimitreport'] ||
+					$params['disabletidy'];
+
+				$p_result = $this->getParsedSectionOrText( $pageObj, $popts, $pageid,
+					isset( $prop['wikitext'] ), $suppressCache );
 			}
 		} else { // Not $oldid, $pageid, $page. Hence based on $text
 
@@ -335,32 +343,48 @@ class ApiParse extends ApiBase {
 	}
 
 	/**
-	 * @param $titleObj Title
+	 * @param $pageObj WikiPage
 	 * @param $popts ParserOptions
 	 * @param $pageId Int
 	 * @param $getWikitext Bool
+	 * @param $suppressCache Bool
 	 * @return ParserOutput
 	 */
-	private function getParsedSectionOrText( $titleObj, $popts, $pageId = null, $getWikitext = false ) {
+	private function getParsedSectionOrText( WikiPage $pageObj, $popts, $pageId = null, $getWikitext = false, $suppressCache = false ) {
 		global $wgParser;
 
-		$page = WikiPage::factory( $titleObj );
+		$this->text = $this->getText( $pageObj, $pageId );
 
-		if ( $this->section !== false ) {
-			$this->text = $this->getSectionText( $page->getRawText(), !is_null( $pageId )
-					? 'page id ' . $pageId : $titleObj->getText() );
-
+		if ( $this->section !== false && $this->text !== false ) {
 			// Not cached (save or load)
 			return $wgParser->parse( $this->text, $titleObj, $popts );
-		} else {
-			// Try the parser cache first
-			// getParserOutput will save to Parser cache if able
-			$pout = $page->getParserOutput( $popts );
-			if ( $getWikitext ) {
-				$this->text = $page->getRawText();
-			}
-			return $pout;
 		}
+		// Try the parser cache first
+		// getParserOutput will save to Parser cache if able
+		$pout = $pageObj->getParserOutput( $popts, null, !$suppressCache );
+		if ( $getWikitext ) {
+			$this->text = $pageObj->getRawText();
+		}
+		return $pout;
+	}
+
+	/**
+	 * Get the text for the given page and the requested section.
+	 *
+	 * @param WikiPage $page
+	 * @param int $pageId
+	 * @return String|false
+	 */
+	private function getText( WikiPage $page, $pageId = null ) {
+		$text = $page->getRawText(); //XXX: really raw?
+
+		if ( $this->section !== false && $text !== false ) {
+			$text = $this->getSectionText(
+				$text,
+				!is_null( $pageId ) ? 'page id ' . $pageId : $page->getTitle()->getPrefixedText()
+			);
+		}
+		return $text;
 	}
 
 	private function getSectionText( $text, $what ) {
@@ -549,7 +573,12 @@ class ApiParse extends ApiBase {
 			'onlypst' => false,
 			'uselang' => null,
 			'section' => null,
-			'disablepp' => false,
+			'disablepp' => [
+				ApiBase::PARAM_DFLT => false,
+				ApiBase::PARAM_DEPRECATED => true,
+			],
+			'disablelimitreport' => false,
+			'disabletidy' => false,
 		);
 	}
 
@@ -592,7 +621,8 @@ class ApiParse extends ApiBase {
 			),
 			'uselang' => 'Which language to parse the request in',
 			'section' => 'Only retrieve the content of this section number',
-			'disablepp' => 'Disable the PP Report from the parser output',
+			'disablelimitreport' => 'Omit the limit report from the parser output',
+			'disabletidy' => 'Do not run HTML cleanup (e.g. tidy) on the parser output.',
 		);
 	}
 
