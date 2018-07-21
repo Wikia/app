@@ -56,6 +56,7 @@ $wgHooks['EditPageBeforeEditChecks'][] = 'ScribuntoHooks::beforeEditChecks';
 $wgHooks['EditPageBeforeEditButtons'][] = 'ScribuntoHooks::beforeEditButtons';
 $wgHooks['EditFilterMerged'][] = 'ScribuntoHooks::validateScript';
 $wgHooks['EditForm:AfterDisplayingTextbox'][] = 'ScribuntoHooks::onAfterDisplayingTextbox'; // Wikia change - For Oasis support
+$wgHooks['ArticlePreviewAfterParse'][] = 'ScribuntoHooks::articlePreviewHook'; // Wikia change - For edit preview support
 
 $wgHooks['UnitTestsList'][] = 'ScribuntoHooks::unitTestsList';
 $wgParserTestFiles[] = $dir . 'tests/engines/LuaCommon/luaParserTests.txt';

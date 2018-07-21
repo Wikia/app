@@ -373,4 +373,20 @@ WIKI;
 			Xml::encodeJsCall( 'mw.scribunto.setErrors', array( $parserOutput->scribunto_errors ) )
 			. '});' );
 	}
+
+	/**
+	 * @param $parserOutput ParserOutput
+	 * @param $title Title
+	 */
+	public static function articlePreviewHook( $parserOutput, $title ) {
+		$text = $parserOutput->getText();
+		$text .= Html::inlineScript(
+			ResourceLoader::makeLoaderConditionalScript(
+				'mw.loader.using("ext.scribunto", function() {' .
+					Xml::encodeJsCall( 'mw.scribunto.setErrors', [ $parserOutput->scribunto_errors ] ) .
+				'});'
+			)
+		);
+		$parserOutput->setText( $text );
+	}
 }

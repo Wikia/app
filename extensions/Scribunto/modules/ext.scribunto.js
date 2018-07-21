@@ -50,7 +50,7 @@
 		}
 	};
 
-	$( document ).ready( function () {
+	mw.hook( 'wikipage.content' ).add( function () {
 		mw.scribunto.init();
 	} );
 
