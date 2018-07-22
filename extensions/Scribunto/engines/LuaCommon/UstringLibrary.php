@@ -470,7 +470,11 @@ class Scribunto_LuaUstringLibrary extends Scribunto_LuaLibraryBase {
 		}
 
 		if ( $plain ) {
-			$ret = mb_strpos( $s, $pattern, 0, 'UTF-8' );
+			if ( $pattern !== '' ) {
+				$ret = mb_strpos( $s, $pattern, 0, 'UTF-8' );
+			} else {
+				$ret = 0;
+			}
 			if ( $ret === false ) {
 				return array( null );
 			} else {
@@ -495,6 +499,8 @@ class Scribunto_LuaUstringLibrary extends Scribunto_LuaLibraryBase {
 		$len = mb_strlen( $s, 'UTF-8' );
 		if ( $init < 0 ) {
 			$init = $len + $init + 1;
+		} elseif ( $init > $len + 1 ) {
+			$init = $len + 1;
 		}
 		if ( $init > 1 ) {
 			$s = mb_substr( $s, $init - 1, $len - $init + 1, 'UTF-8' );

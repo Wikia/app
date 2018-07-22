@@ -375,6 +375,7 @@ WIKI;
 	}
 
 	/**
+	 * Wikia change - Add edit preview support (MAIN-16964)
 	 * @param $parserOutput ParserOutput
 	 * @param $title Title
 	 */
