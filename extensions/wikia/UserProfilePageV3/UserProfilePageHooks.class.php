@@ -39,4 +39,13 @@ class UserProfilePageHooks {
 		}
 		return true;
 	}
+
+	public static function onMakeGlobalVariablesScript( array &$vars, OutputPage $out ) {
+		if ( BodyController::showUserPagesHeader( $out->getTitle() ) ) {
+			$urlProvider = new \Wikia\Service\Gateway\KubernetesExternalUrlProvider();
+
+			$vars['wgUserAvatarServiceUrl'] = $urlProvider->getUrl( 'user-avatar' );
+			$vars['wgUserId'] = $out->getUser()->getId();
+		}
+	}
 }
