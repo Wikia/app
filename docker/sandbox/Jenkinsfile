@@ -44,6 +44,7 @@ node("docker-daemon") {
 			userInput = input(
 				id: 'version_check',
 				message: 'Updating\napp - ' + prevAppVersion + ' -> ' + appBranch + '\nconfig - '+prevConfigVersion+' -> ' + configBranch
+			)
 		}
 	}
 
