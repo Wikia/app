@@ -5,6 +5,9 @@ def loggerImage = "artifactory.wikia-inc.com/sus/mediawiki-logger"
 
 def rolloutStatus = 1
 
+// Slack notifications
+env.MW_PUSH_CHANNEL="#mw-prod-deployment"
+
 def render(String template, java.util.LinkedHashMap binding) {
     def engine = new groovy.text.SimpleTemplateEngine()
 
