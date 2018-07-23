@@ -9,5 +9,5 @@ JOB_DESCRIPTIONS=(`ls $SCRIPT_FOLDER | grep -v 'example' | grep -v 'cronjob-temp
 LABEL=$1
 
 for job_description_file_name in "${JOB_DESCRIPTIONS[@]}"; do
-	./create-cronjob-yaml.sh $job_description_file_name $LABEL
+	bash create-cronjob-yaml.sh $job_description_file_name $LABEL
 done
