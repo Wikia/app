@@ -133,7 +133,7 @@ EOL""")
             rolloutStatus = sh(returnStatus: true, script: "kubectl --context ${k8sContext} -n ${environment} rollout status deployment/mediawiki-'${environment}'")
 
             // SUS-5531 - apply cron jobs via auto-generated YAML file
-            sh "cd app/docker/maintenance && bash cronjobs-generator.sh ${imageTag} | kubectl --context ${k8sContext} -n ${environment} apply -f -"
+            // sh "cd app/docker/maintenance && bash cronjobs-generator.sh ${imageTag} | kubectl --context ${k8sContext} -n ${environment} apply -f -"
         }
     }
 
