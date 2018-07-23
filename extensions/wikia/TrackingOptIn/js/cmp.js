@@ -232,6 +232,11 @@ define('wikia.cmp', [
 	}
 
 	function isEnabled() {
+		if (typeof win.__cmp === 'function') {
+			log('Module disabled due to existing __cmp', log.levels.debug, logGroup);
+			return false;
+		}
+
 		return isModuleEnabled;
 	}
 
