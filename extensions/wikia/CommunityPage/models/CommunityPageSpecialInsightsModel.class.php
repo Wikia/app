@@ -4,7 +4,6 @@ class CommunityPageSpecialInsightsModel {
 	const INSIGHTS_MODULE_ITEMS = 3;
 	const INSIGHTS_ICON = 'icon';
 	const INSIGHTS_TITLE = 'title';
-	const RANDOM_SORTING_TYPE = 'random';
 	const INSIGHTS_MODULES = [
 		'popularpages' => [
 			self::INSIGHTS_ICON => 'proof-read',
@@ -60,8 +59,7 @@ class CommunityPageSpecialInsightsModel {
 
 		$insightPages = $this->insightsService->getInsightPagesForModel(
 			$model,
-			static::INSIGHTS_MODULE_ITEMS,
-			static::RANDOM_SORTING_TYPE
+			static::INSIGHTS_MODULE_ITEMS
 		);
 
 		if ( empty( $insightPages[ 'pages' ] ) ) {

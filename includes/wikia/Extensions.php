@@ -121,8 +121,6 @@ if ( ! empty( $wgEnableLyricWikiExt ) ) {
 	require_once "$LW/Hook_PreventBlanking.php";
 	require_once "$LW/Special_ArtistRedirects.php";
 	require_once "$LW/lw_spiderableBadArtists.php";
-	require_once "$LW/Special_Soapfailures.php";
-	require_once "$LW/Special_MobileSearches.php";
 	require_once "$LW/lw_impliedRedirects.php";
 	# Turn off subpages on the main namespace (otherwise every AC/DC song links back to "AC"), etc.
 	$wgNamespacesWithSubpages[ NS_MAIN ] = false;
@@ -411,7 +409,14 @@ if ( defined( 'REBUILD_LOCALISATION_CACHE_IN_PROGRESS' ) || !empty($wgEnableSema
 
 if ( !empty( $wgEnableScribuntoExt ) ) {
 	include "$IP/extensions/Scribunto/Scribunto.php";
-	$wgScribuntoDefaultEngine = 'luastandalone'; # PLATFORM-1885
+	
+	// SUS-5540: use the luasandbox extension as executor if it is available
+	if ( extension_loaded( 'luasandbox' ) ) {
+		$wgScribuntoDefaultEngine = 'luasandbox';
+	} else {
+		$wgScribuntoDefaultEngine = 'luastandalone'; # PLATFORM-1885
+	}
+
 	$wgScribuntoUseGeSHi = $wgEnableSyntaxHighlightGeSHiExt;
 	$wgWysiwygDisabledNamespaces[] = NS_MODULE;
 

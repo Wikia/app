@@ -40,69 +40,11 @@ class Linkstoredirects extends SpecialPage{
 	 * @param $par String subpage string, if one was specified
 	 */
 	function execute( $par ){
-		global $wgOut;
-		global $wgRequest, $wgUser;
-
-		GLOBAL $wgMemc;
+		global $wgOut, $wgMemc;
 		$TABLE_PREFIX = "";
 		$CACHE_KEY = "LW_LINKS_TO_REDIRECTS";
 
 		$wgOut->setPageTitle(wfMsg('linkstoredirects'));
-/*
-		// This processes any requested for removal of an item from the list.
-		if(isset($_GET['artist']) && isset($_GET['song'])){
-
-	// TODO: THIS IS WHERE WE SHOULD ALLOW A SINGLE LINK TO BE REMOVED FROM THE CACHE (IF WE DECIDE TO DO THAT).
-	// This code is largely unported from Special_Soapfailures
-
-			$artist = $_GET['artist'];
-			$song = $_GET['song'];
-			$songResult = array();
-			$failedLyrics = "Not found";
-
-			// Pull in the NuSOAP code
-			require_once('nusoap.php');
-			// Create the client instance
-			$client = new soapclient('http://lyricwiki.org/server.php?wsdl', true);
-			$err = $client->getError();
-			if ($err) {
-				echo '<h2>Constructor error</h2><pre>' . $err . '</pre>';
-			} else {
-				// Create the proxy
-				$proxy = $client->getProxy();
-				GLOBAL $LW_USERNAME,$LW_PASSWORD;
-				if(($LW_USERNAME != "") || ($LW_PASSWORD != "")){
-					$headers = "<username>$LW_USERNAME</username><password>$LW_PASSWORD</password>\n";
-					$proxy->setHeaders($headers);
-				}
-				$songResult = $proxy->getSongResult($artist, $song);
-			}
-
-			if(($songResult['lyrics'] == $failedLyrics) || ($songResult['lyrics'] == "")){
-				print "<div style='background-color:#fcc'>Sorry, but $artist:$song song still failed.</div>\n";
-			} else {
-				$artist = str_replace("'", "\\'", $artist);
-				$song = str_replace("'", "\\'", $song);
-
-				$db = &wfGetDB(DB_SLAVE)->getProperty('mConn');
-
-				print "Deleting record... ";
-				if(mysqli_query("DELETE FROM lw_soap_failures WHERE request_artist='$artist' AND request_song='$song'", $db)){
-					print "Deleted.";
-				} else {
-					print "Failed. ".mysqli_error($db);
-				}
-				print "<br/>Clearing the cache... ";
-				$wgMemc->delete($CACHE_KEY); // purge the entry from memcached
-
-				print "<div style='background-color:#cfc'>The song was retrieved successfully and ";
-				print "was removed from the failed requests list.";
-				print "</div>\n";
-			}
-			print "<br/>Back to <a href='/Special:Soapfailures'>SOAP Failures</a>\n";
-			exit; // wiki system throws database-connection errors if the page is allowed to display itself.
-		} else {
-*/
 			$msg = "";
 
 			// Allow the cache to be manually cleared.
@@ -217,23 +159,6 @@ class Linkstoredirects extends SpecialPage{
 
 							print "<tr".((($index % 2)==0)?"":" class='odd'")."><td>[[$from]]</td><td>[[$to]]</td></tr>\n";
 
-							/*
-							// TODO: IMPLEMENT THIS IF WE WANT TO LET SINGLE ITEMS BE CLEARED
-							$delim = "&amp;";
-							$prefix = "";
-
-							// If the short-url is in the REQUEST_URI, make sure to add the index.php?title= prefix to it.
-							if(strpos($REQUEST_URI, "index.php?title=") === false){
-								$prefix = "/index.php?title=";
-
-								// If we're adding the index.php ourselves, but the request still started with a slash, remove it because that would break the request if it came after the "title="
-								if(substr($REQUEST_URI,0,1) == "/"){
-									$REQUEST_URI = substr($REQUEST_URI, 1);
-								}
-							}
-							print "	- (report as [{{SERVER}}$prefix$REQUEST_URI$delim"."artist=".urlencode($artist)."&amp;song=".urlencode($song)." fixed])";
-							print "</td></tr>";
-							*/
 						} else {
 							$missing .= "Could not find the page_title for id $fromId which linked to <strong>[[$to]]</strong>.  Try [[Special:WhatLinksHere/$to]] instead.<br/>\n";
 						}

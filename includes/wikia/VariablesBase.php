@@ -2220,13 +2220,6 @@ $wgEnableAdsInContent = 1;
 $wgEnableAjaxPollExt = true;
 
 /**
- * Enable Announcements extension + entry point in AdminDashboard.
- * @see extensions/Announcements
- * @var bool $wgEnableAnnouncements
- */
-$wgEnableAnnouncements = false;
-
-/**
  * Enable AntiSpoof extension.
  * @see extensions/AntiSpoof
  * @var bool $wgEnableAntiSpoofExt
@@ -4931,7 +4924,6 @@ $wgHtml5Version = null;
  * @see PLATFORM-1745
  * @see includes/wikia/CurlMultiClient.php
  * @see includes/HttpFunctions.php
- * @see extensions/3rdparty/LyricWiki/Special_Soapfailures.php
  * @var string $wgHTTPProxy
  */
 $wgHTTPProxy = 'prod.border.service.consul:80';

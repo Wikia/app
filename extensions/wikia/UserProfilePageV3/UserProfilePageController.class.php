@@ -832,8 +832,6 @@ class UserProfilePageController extends WikiaController {
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
 	private function renderAboutLightbox( $userId ) {
-		wfProfileIn( __METHOD__ );
-
 		$user = User::newFromId( $userId );
 
 		/**
@@ -857,10 +855,9 @@ class UserProfilePageController extends WikiaController {
 		] );
 
 		if ( !empty( $userData[ 'birthday' ][ 'month' ] ) ) {
-			$this->setVal( 'days', cal_days_in_month( CAL_GREGORIAN, $userData[ 'birthday' ][ 'month' ], 2000 /* leap year */ ) );
+			$daysPerMonth = [ 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 ];
+			$this->setVal( 'days', $daysPerMonth[intval( $userData['birthday']['month'] ) - 1] );
 		}
-
-		wfProfileOut( __METHOD__ );
 	}
 
 	/**

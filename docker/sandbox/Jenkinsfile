@@ -10,6 +10,8 @@ def kubectlImage = "artifactory.wikia-inc.com/ops/k8s-deployer:0.0.14"
 def nginxImage = "artifactory.wikia-inc.com/sus/mediawiki-sandbox-nginx"
 def mediawikiImage = "artifactory.wikia-inc.com/sus/mediawiki-sandbox-php"
 
+def rolloutStatus = 1
+
 def render(String template, java.util.LinkedHashMap binding) {
     def engine = new groovy.text.SimpleTemplateEngine()
 
@@ -21,8 +23,16 @@ node("docker-daemon") {
     def configHash
     def imageExists = false
     def imageTag
+    def buildUser = "Anonymous"
 
     stage("Clone repositories") {
+		wrap([$class: 'BuildUser']) {
+			try {
+				buildUser = "${BUILD_USER}"
+			} catch (MissingPropertyException ex) {
+				buildUser = "Jenkins"
+			}
+		}
         dir("app") {
             git url: "git@github.com:Wikia/app.git",
                 branch: params.app_branch,
@@ -72,7 +82,7 @@ node("docker-daemon") {
             }
 
             if (!imageExists) {
-                sh("docker pull artifactory.wikia-inc.com/sus/php-wikia-base:27f50ce")
+                sh("docker pull artifactory.wikia-inc.com/sus/php-wikia-base:d41d8cd98f00b204e9800998ecf8427e")
 
                 // SUS-5284 - make the image a bit smaller
                 sh("cp docker/.dockerignore ..")
@@ -87,6 +97,10 @@ node("docker-daemon") {
             }
         }
     }
+
+	stage('Notify Slack Channel publish') {
+		sh "curl -X POST -H 'Content-type: application/json' --data '{ \"text\": \"MediaWiki with app commit <https://github.com/Wikia/app/commit/'${appHash}'|'${appHash}'> and config commit <https://github.com/Wikia/config/commit/'${configHash}'|'${configHash}'> is published by '${buildUser}'\", \"channel\": \"'${env.MW_SANDBOX_K8S_CHANNEL}'\" }' '${env.MW_SANDBOX_K8S_WEBHOOK}'"
+	}
 
     stage("Apply new k8s descriptor") {
         dir("app") {
@@ -106,8 +120,23 @@ EOL""")
         }
 
         withDockerContainer(kubectlImage) {
-            sh """#!/bin/sh
-            kubectl --context kube-sjc-prod -n prod apply -f app/docker/sandbox/k8s.yaml"""
+            sh "kubectl --context kube-sjc-prod -n prod apply -f app/docker/sandbox/k8s.yaml"
+            rolloutStatus = sh(returnStatus: true, script: "kubectl --context kube-sjc-prod -n prod rollout status deployment/mediawiki-'${sandbox}'")
         }
+    }
+
+    stage("Set and report job status") {
+    	def emoji
+    	def color
+    	if (rolloutStatus != 0) {
+         	currentBuild.result = "UNSTABLE"
+         	emoji = ":siren:"
+         	color = "#cc142c"
+        } else {
+        	emoji = ":checkmark:"
+        	color = "#36a64f"
+        }
+
+        sh "curl -X POST -H 'Content-type: application/json' --data '{ \"mrkdwn_in\": [\"pretext\", \"text\"], \"color\": \"${color}\", \"pretext\": \"${emoji} MediaWiki rollout status\", \"channel\": \"${env.MW_SANDBOX_K8S_CHANNEL}\", \"fields\": [ {\"title\": \"sandbox\", \"value\": \"${sandbox}\", \"short\": true } ] }' ${env.MW_SANDBOX_K8S_WEBHOOK}"
     }
 }
