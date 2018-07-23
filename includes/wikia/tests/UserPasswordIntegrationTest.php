@@ -9,7 +9,11 @@
 class UserPasswordIntegrationTest extends WikiaBaseTest
 {
 	public function testCorrectPassword() {
-		$this->assertFalse( true );
+		$oUser = User::newFromName('CTest50');
+		$oResult = $oUser->checkPassword('q');
+
+		$this->assertTrue( $oResult->checkStatus(WikiaResponse::RESPONSE_CODE_OK));
+		$this->assertTrue( $oResult->success());
 	}
 //	$dataProvider = [
 //		'correct' => [ 'CTest50', 'q' ],
