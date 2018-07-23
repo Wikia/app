@@ -6,7 +6,6 @@ metadata:
   labels:
     app: mediawiki-prod
 spec:
-  replicas: 5
   strategy:
     type: RollingUpdate
     rollingUpdate:
@@ -48,8 +47,21 @@ spec:
             periodSeconds: 10
           ports:
             - containerPort: 8080
+          resources:
+            limits:
+              memory: 200Mi
+            requests:
+              cpu: 100m
+              memory: 50Mi
         - name: php
           image: artifactory.wikia-inc.com/sus/mediawiki-prod-php:${IMAGE_TAG}
+          lifecycle:
+            preStop:
+              exec:
+                command:
+                - /bin/sh
+                - -c
+                - sleep 3
           livenessProbe:
             tcpSocket:
               port: 9000
@@ -70,31 +82,98 @@ spec:
               value: "tcp://localhost:9999"
           resources:
             limits:
-              cpu: "4"
-              memory: "1300Mi"
+              cpu: "6"
+              memory: 1200Mi
             requests:
-              cpu: "400m"
-              memory: "800Mi"
+              cpu: "3"
+              memory: 800Mi
         # MW log output, see K8s_LOGGING.md
         - name: logger
           image: artifactory.wikia-inc.com/sus/mediawiki-logger:latest
+          resources:
+            limits:
+              memory: 200Mi
+            requests:
+              cpu: 100m
+              memory: 50Mi
+        - name: fpm-prometheus-exporter
+          image: hipages/php-fpm_exporter:0.5.2
+          ports:
+            - containerPort: 9253
+          resources:
+            limits:
+              memory: 200Mi
+            requests:
+              cpu: 50m
+              memory: 50Mi
+---
+apiVersion: autoscaling/v2beta1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: mediawiki-prod
+  namespace: prod
+  labels:
+    app: mediawiki-prod
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: mediawiki-prod
+  maxReplicas: 36
+  minReplicas: 2
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      targetAverageUtilization: 50
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: mediawiki-prod
+  labels:
+    app: mediawiki-prod
+  namespace: prod
+spec:
+  jobLabel: app
+  selector:
+    matchLabels:
+      app: mediawiki-prod
+  namespaceSelector:
+    matchNames:
+    - prod
+  endpoints:
+  - port: metrics
+    path: /metrics
+    interval: 10s
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: mediawiki-prod
+  labels:
+    app: mediawiki-prod
 spec:
   selector:
     app: mediawiki-prod
   ports:
     - protocol: TCP
       port: 80
+      name: main
       targetPort: 8080
+    - protocol: TCP
+      port: 9253
+      name: metrics
+      targetPort: 9253
 ---
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   name: mediawiki-prod-ingress
+  labels:
+    app: mediawiki-prod
+  annotations:
+    kubernetes.io/ingress.class: traefik
 spec:
   rules:
     - host: kubernetes.wikia.com
