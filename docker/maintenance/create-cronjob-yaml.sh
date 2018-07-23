@@ -20,23 +20,28 @@ SCRIPT_FOLDER=$(dirname $(readlink -f $0))
 TEMPLATE=`cat $SCRIPT_FOLDER/cronjob-template.yaml`
 JOB_JSON=`yaml2json $SCRIPT_FOLDER/$job_description_file_name`
 NAME=`basename "$job_description_file_name" .yaml`
-SCHEDULE=`echo "$JOB_JSON" | jq .schedule`
-# we need to add 12 spaces of padding to align yaml in template
-ARGS=`echo "$JOB_JSON" | jq .args[] | sed -e 's/^/            - /g'`
-SERVER_ID=`echo "$JOB_JSON" | jq .server_id`
 
+SERVER_ID=`echo "$JOB_JSON" | jq .server_id`
 if [ "$SERVER_ID" = 'null' ]; then
 	SERVER_ID="177"
 fi
 
+SCHEDULE=`echo "$JOB_JSON" | jq .schedule`
 if [ "$SCHEDULE" = 'null' ]; then
 	echo "schedule has to be set in $job_description_file_name"
 	exit 1;
 fi
 
+# we need to add 12 spaces of padding to align yaml in template
+ARGS=`echo "$JOB_JSON" | jq .args[] | sed -e 's/^/            - /g'`
 if [ "$ARGS" = 'null' ]; then
 	echo "args has to be set in $job_description_file_name"
 	exit 1;
+fi
+
+CONCURRENCY_POLICY=`echo "$JOB_JSON" | jq .concurrencyPolicy`
+if [ "$CONCURRENCY_POLICY" = 'null' ]; then
+	CONCURRENCY_POLICY='"Allow"'
 fi
 
 job_k8s_descriptor="${TEMPLATE/\$\{name\}/${NAME}}"
@@ -44,4 +49,5 @@ job_k8s_descriptor="${job_k8s_descriptor/\$\{args\}/${ARGS}}"
 job_k8s_descriptor="${job_k8s_descriptor/\$\{label\}/${LABEL}}"
 job_k8s_descriptor="${job_k8s_descriptor/\$\{server_id\}/${SERVER_ID}}"
 job_k8s_descriptor="${job_k8s_descriptor/\$\{schedule\}/${SCHEDULE}}"
+job_k8s_descriptor="${job_k8s_descriptor/\$\{concurrencyPolicy\}/${CONCURRENCY_POLICY}}"
 echo "$job_k8s_descriptor"
