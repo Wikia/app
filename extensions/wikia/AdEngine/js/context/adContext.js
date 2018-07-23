@@ -118,6 +118,7 @@ define('ext.wikia.adEngine.adContext', [
 		context.bidders.appnexusAst = isProperGeoAds('wgAdDriverAppNexusAstBidderCountries') && !hasFeaturedVideo;
 		context.bidders.aol = isProperGeoAds('wgAdDriverAolBidderCountries');
 		context.bidders.appnexus = isProperGeoAds('wgAdDriverAppNexusBidderCountries');
+		context.bidders.appnexusDfp = isProperGeoAds('wgAdDriverAppNexusDfpCountries');
 		context.bidders.appnexusWebAds = isProperGeoAds('wgAdDriverAppNexusWebAdsBidderCountries');
 		context.bidders.audienceNetwork = isProperGeoAds('wgAdDriverAudienceNetworkBidderCountries');
 		context.bidders.indexExchange = isProperGeoAds('wgAdDriverIndexExchangeBidderCountries');

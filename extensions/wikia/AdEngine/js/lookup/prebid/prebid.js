@@ -160,6 +160,7 @@ define('ext.wikia.adEngine.lookup.prebid', [
 				});
 
 				slotParams = bidParams.adserverTargeting;
+				slotParams.hb_uuid = slotParams.hb_uuid || bidParams.videoCacheKey || 'disabled';
 			}
 		}
 

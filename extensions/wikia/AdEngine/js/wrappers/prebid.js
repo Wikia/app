@@ -14,6 +14,9 @@ define('ext.wikia.adEngine.wrappers.prebid', [
 			enableSendAllBids: true,
 			bidderSequence: 'random',
 			bidderTimeout: 2000,
+			cache: {
+				url: 'https://prebid.adnxs.com/pbc/v1/cache'
+			},
 			userSync: {
 				iframeEnabled: true,
 				enabledBidders: [],
