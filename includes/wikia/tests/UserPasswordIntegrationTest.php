@@ -1,12 +1,9 @@
 <?php
-/**
- * Created by IntelliJ IDEA.
- * User: chessky
- * Date: 23.07.18
- * Time: 14:02
- */
 
-class UserPasswordIntegrationTest extends WikiaBaseTest
+/**
+ * @group Integration
+ */
+class UserPasswordIntegrationTest extends WikiaDatabaseTest
 {
 	public function testCorrectPassword() {
 		$oUser = User::newFromName('CTest50');
