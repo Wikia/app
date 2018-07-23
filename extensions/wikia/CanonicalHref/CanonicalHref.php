@@ -28,7 +28,8 @@ $wgHooks['BeforePageDisplay'][] = 'wfCanonicalHref';
  */
 function wfCanonicalHref( OutputPage $out, Skin $skin ): bool {
 	// No canonical on pages with pagination -- they should have the link rel="next/prev" instead
-	if ( $out->getRequest()->getVal( 'page' ) ) {
+	// SUS-5546: Don't render a canonical href for the closed wiki page
+	if ( $out->getRequest()->getVal( 'page' ) || $out->getTitle()->isSpecial( 'CloseWiki' ) ) {
 		return true;
 	}
 

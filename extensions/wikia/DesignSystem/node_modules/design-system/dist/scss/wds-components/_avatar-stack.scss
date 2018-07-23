@@ -7,15 +7,17 @@
 		border: 0;
 		font-size: $wds-typescale-size-minus-2;
 		padding-left: 6px;
-		transform: translate(-40px);
 		width: auto;
 	}
 
 	@for $i from 1 to 6 {
 		.wds-avatar:nth-child(#{$i}) {
 			position: relative;
-			transform: translate(($i - 1) * - 10px);
 			z-index: 5 - $i;
+
+			@if $i > 1 {
+				margin-left: -10px;
+			}
 		}
 	}
 }

@@ -5,14 +5,13 @@
 define('ext.wikia.adEngine.adContext', [
 	'wikia.browserDetect',
 	'wikia.cookies',
-	'wikia.document',
 	'wikia.geo',
 	'wikia.instantGlobals',
 	'ext.wikia.adEngine.geo',
 	'ext.wikia.adEngine.utils.sampler',
 	'wikia.window',
 	'wikia.querystring'
-], function (browserDetect, cookies, doc, geo, instantGlobals, adsGeo, sampler, w, Querystring) {
+], function (browserDetect, cookies, geo, instantGlobals, adsGeo, sampler, w, Querystring) {
 	'use strict';
 
 	instantGlobals = instantGlobals || {};
@@ -127,10 +126,6 @@ define('ext.wikia.adEngine.adContext', [
 		context.bidders.pubmatic = isProperGeoAds('wgAdDriverPubMaticBidderCountries');
 	}
 
-	function referrerIsSonySite() {
-		return doc && doc.referrer && doc.referrer.match(/info\.tvsideview\.sony\.net/);
-	}
-
 	function isMOATTrackingForFVEnabled() {
 		var samplingForMoatFV = instantGlobals.wgAdDriverMoatTrackingForFeaturedVideoAdSampling || 1;
 
@@ -156,11 +151,6 @@ define('ext.wikia.adEngine.adContext', [
 		context.rabbits = context.rabbits || {};
 		context.forcedProvider = qs.getVal('forcead', null) || context.forcedProvider || null;
 		context.opts.noExternals = noExternals;
-
-		// Don't show ads when Sony requests the page
-		if (referrerIsSonySite()) {
-			context.opts.showAds = false;
-		}
 
 		context.opts.delayEngine = true;
 		context.opts.overwriteDelayEngine = isProperGeoAds('wgAdDriverDelayCountries');

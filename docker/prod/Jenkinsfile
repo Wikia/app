@@ -85,7 +85,7 @@ node("docker-daemon") {
             }
 
             if (!imageExists) {
-                sh("docker pull artifactory.wikia-inc.com/sus/php-wikia-base:e65afb8d20b625dd17e27a672560cfd")
+                sh("docker pull artifactory.wikia-inc.com/sus/php-wikia-base:d41d8cd98f00b204e9800998ecf8427e")
 
                 // SUS-5284 - make the image a bit smaller
                 sh("cp docker/.dockerignore ..")
@@ -128,6 +128,9 @@ EOL""")
         withDockerContainer(kubectlImage) {
             sh "kubectl --context ${k8sContext} -n ${environment} apply -f app/docker/prod/k8s.yaml"
             rolloutStatus = sh(returnStatus: true, script: "kubectl --context ${k8sContext} -n ${environment} rollout status deployment/mediawiki-'${environment}'")
+
+            // SUS-5531 - apply cron jobs via auto-generated YAML file
+            // sh "cd app/docker/maintenance && bash cronjobs-generator.sh ${imageTag} | kubectl --context ${k8sContext} -n ${environment} apply -f -"
         }
     }
 

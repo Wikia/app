@@ -46,7 +46,6 @@ describe('AdContext', function () {
 		return modules['ext.wikia.adEngine.adContext'](
 			mocks.browserDetect,
 			mocks.wikiaCookies,
-			mocks.doc,
 			mocks.geo,
 			mocks.instantGlobals,
 			mocks.adsGeo,
@@ -70,11 +69,6 @@ describe('AdContext', function () {
 		mocks.geo.isProperGeo.and.callFake(fakeIsProperGeo);
 		mocks.adsGeo.isProperGeo.and.callFake(fakeIsProperGeo);
 		mocks.instantGlobals = {};
-
-		if (mocks.doc && mocks.doc.hasOwnProperty('referrer')) {
-			mocks.doc.referrer = '';
-		}
-
 	});
 
 	it(
@@ -120,27 +114,6 @@ describe('AdContext', function () {
 		expect(adContext.getContext().targeting.yyy).toBe(true);
 		expect(adContext.getContext().providers.someProvider).toBe(true);
 		expect(adContext.getContext().providers.someProviderProperty).toBe(7);
-	});
-
-	it('makes opts.showAds false for sony tvs', function () {
-		var adContext;
-
-		mocks.win = {
-			ads: {
-				context: {
-					opts: {
-						showAds: true
-					}
-				}
-			}
-		};
-
-		mocks.doc = {
-			referrer: 'info.tvsideview.sony.net'
-		};
-
-		adContext = getModule();
-		expect(adContext.getContext().opts.showAds).toBeFalsy();
 	});
 
 	it('makes targeting.pageCategories filled with categories properly', function () {
