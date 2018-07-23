@@ -56,6 +56,7 @@ class UserProfilePageController extends WikiaController {
 		$this->setVal( 'wgBlankImgUrl', $this->wg->BlankImgUrl );
 
 		$this->response->addAsset( 'extensions/wikia/UserProfilePageV3/css/UserProfilePage.scss' );
+		$this->response->addAsset( 'extensions/wikia/UserProfilePageV3/js/ext.wikia.userProfile.avatarManager.js' );
 		$this->response->addAsset( 'extensions/wikia/UserProfilePageV3/js/UserProfilePage.js' );
 		$this->response->addAsset( 'extensions/wikia/UserProfilePageV3/js/BioModal.js' );
 
@@ -371,6 +372,35 @@ class UserProfilePageController extends WikiaController {
 		}
 
 		wfProfileOut( __METHOD__ );
+	}
+
+	public function saveDefaultAvatar() {
+		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
+
+		try {
+			$this->checkWriteRequest();
+		} catch ( \BadRequestException $bre ) {
+			$this->setTokenMismatchError();
+			return;
+		}
+
+		$context = $this->getContext();
+		$user = $context->getUser();
+
+		$avatar = Masthead::getDefaultAvatarUrl( $context->getRequest()->getVal( 'avatar' ), '' );
+
+		// remove old avatar file
+		$masthead = Masthead::newFromUser( $user );
+		if ( !$masthead->isDefault() ) {
+			$service = new UserAvatarsService( $user->getId() );
+			$service->remove();
+		}
+
+		// store the full URL of the predefined avatar and skip an upload via service (PLATFORM-1494)
+		$user->setGlobalAttribute( AVATAR_USER_OPTION_NAME, $avatar );
+		$user->saveSettings();
+
+		$this->response->setCode( 204 );
 	}
 
 	/**
@@ -785,7 +815,7 @@ class UserProfilePageController extends WikiaController {
 		$this->setVal( 'avatarName', $user->getGlobalAttribute( AVATAR_USER_OPTION_NAME ) );
 		$this->setVal( 'userId', $userId );
 		$this->setVal( 'avatarMaxSize', self::AVATAR_MAX_SIZE );
-		$this->setVal( 'avatar', AvatarService::renderAvatar( $user->getName(), self::AVATAR_DEFAULT_SIZE ) );
+		$this->setVal( 'avatar', AvatarService::renderAvatar( $user->getName(), self::AVATAR_DEFAULT_SIZE, 'avatar avatar-preview' ) );
 
 		wfProfileOut( __METHOD__ );
 	}
@@ -816,7 +846,10 @@ class UserProfilePageController extends WikiaController {
 		if ( is_array( $images ) ) {
 			foreach ( $images as $image ) {
 				$avatarUrl = Masthead::getDefaultAvatarUrl( $image );
-				$this->defaultAvatars[] = [ 'name' => $image, 'url' => ImagesService::getThumbUrlFromFileUrl($avatarUrl, self::AVATAR_DEFAULT_SIZE) ];
+				$this->defaultAvatars[] = [
+					'url' => ImagesService::getThumbUrlFromFileUrl( $avatarUrl, self::AVATAR_DEFAULT_SIZE ),
+					'avatarUrl' => $avatarUrl,
+				];
 			}
 		}
 

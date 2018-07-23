@@ -65,6 +65,8 @@ $wgHooks['GetRailModuleList'][] = 'UserProfilePageRailHelper::onGetRailModuleLis
 
 $wgHooks['ArticleSaveComplete'][] = 'Masthead::userMastheadInvalidateCache';
 
+$wgHooks['MakeGlobalVariablesScript'][] = '\UserProfilePageHooks::onMakeGlobalVariablesScript';
+
 /**
  * messages
  */
