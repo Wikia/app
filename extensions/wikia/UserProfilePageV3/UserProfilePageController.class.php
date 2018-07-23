@@ -56,8 +56,18 @@ class UserProfilePageController extends WikiaController {
 		$this->setVal( 'wgBlankImgUrl', $this->wg->BlankImgUrl );
 
 		$this->response->addAsset( 'extensions/wikia/UserProfilePageV3/css/UserProfilePage.scss' );
+		$this->response->addAsset( 'extensions/wikia/UserProfilePageV3/js/ext.wikia.userProfile.avatarManager.js' );
 		$this->response->addAsset( 'extensions/wikia/UserProfilePageV3/js/UserProfilePage.js' );
 		$this->response->addAsset( 'extensions/wikia/UserProfilePageV3/js/BioModal.js' );
+
+		$urlProvider = new \Wikia\Service\Gateway\KubernetesExternalUrlProvider();
+
+		$context = $this->getContext();
+		$context->getOutput()->addJsConfigVars( [
+			'wgUserAvatarServiceUrl' => $urlProvider->getUrl( 'user-avatar' ),
+			'wgUserAttributeServiceUrl' => $urlProvider->getUrl( 'user-attribute' ),
+			'wgUserId' => $context->getUser()->getId()
+		] );
 
 		$sessionUser = $this->wg->User;
 
@@ -785,7 +795,7 @@ class UserProfilePageController extends WikiaController {
 		$this->setVal( 'avatarName', $user->getGlobalAttribute( AVATAR_USER_OPTION_NAME ) );
 		$this->setVal( 'userId', $userId );
 		$this->setVal( 'avatarMaxSize', self::AVATAR_MAX_SIZE );
-		$this->setVal( 'avatar', AvatarService::renderAvatar( $user->getName(), self::AVATAR_DEFAULT_SIZE ) );
+		$this->setVal( 'avatar', AvatarService::renderAvatar( $user->getName(), self::AVATAR_DEFAULT_SIZE, 'avatar-preview' ) );
 
 		wfProfileOut( __METHOD__ );
 	}
@@ -816,7 +826,10 @@ class UserProfilePageController extends WikiaController {
 		if ( is_array( $images ) ) {
 			foreach ( $images as $image ) {
 				$avatarUrl = Masthead::getDefaultAvatarUrl( $image );
-				$this->defaultAvatars[] = [ 'name' => $image, 'url' => ImagesService::getThumbUrlFromFileUrl($avatarUrl, self::AVATAR_DEFAULT_SIZE) ];
+				$this->defaultAvatars[] = [
+					'url' => ImagesService::getThumbUrlFromFileUrl( $avatarUrl, self::AVATAR_DEFAULT_SIZE ),
+					'avatarUrl' => $avatarUrl,
+				];
 			}
 		}
 
