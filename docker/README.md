@@ -81,3 +81,7 @@ If docker service fails to start run the following to diagnose the problem:
 ```sh
 sudo dockerd
 ```
+
+#### Setting up `kubectl`
+
+Follow [these instructions](https://wikia-inc.atlassian.net/wiki/spaces/OPS/pages/208011308/Kubernetes+access+for+Engineers).
