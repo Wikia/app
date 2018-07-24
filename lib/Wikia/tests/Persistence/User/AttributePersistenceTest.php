@@ -13,7 +13,7 @@ use Wikia\Service\ForbiddenException;
 use Wikia\Service\Swagger\ApiProvider;
 use Wikia\Service\UnauthorizedException;
 
-class AttributePersistenceSwaggerTest extends TestCase {
+class AttributePersistenceTest extends TestCase {
 
 	protected $userId = 1;
 
@@ -35,7 +35,7 @@ class AttributePersistenceSwaggerTest extends TestCase {
 			->disableOriginalConstructor()
 			->getMock();
 		$this->userAttributesApi = $this->getMockBuilder( UsersAttributesApi::class )
-			->setMethods( [ 'saveAttribute', 'getAllAttributes', 'deleteAttribute' ] )
+			->setMethods( [ 'saveAttributes', 'getAllAttributes', 'deleteAttribute' ] )
 			->disableOriginalConstructor()
 			->getMock();
 		$this->apiProvider->expects( $this->any() )
@@ -81,13 +81,13 @@ class AttributePersistenceSwaggerTest extends TestCase {
 	}
 
 
-	public function testSaveAttributeForUserSuccess() {
+	public function testSaveAttributesForUserSuccess() {
 		$this->userAttributesApi->expects( $this->once() )
-			->method( 'saveAttribute' )
-			->with( $this->userId, $this->attribute->getName(), $this->attribute->getValue() )
+			->method( 'saveAttributes' )
+			->with( $this->userId, [ $this->attribute->getName() => $this->attribute->getValue()  ] )
 			->willReturn( true );
 
-		$this->assertTrue( $this->persistence->saveAttribute( $this->userId, $this->attribute ) );
+		$this->assertTrue( $this->persistence->saveAttributes( $this->userId, [ $this->attribute->getName() => $this->attribute->getValue()  ] ) );
 	}
 
 	/**
@@ -95,35 +95,35 @@ class AttributePersistenceSwaggerTest extends TestCase {
 	 */
 	public function testSaveAttributeForUserUnAuthorized() {
 		$this->userAttributesApi->expects( $this->once( ))
-			->method( 'saveAttribute' )
-			->with( $this->userId, $this->attribute->getName(), $this->attribute->getValue() )
+			->method( 'saveAttributes' )
+			->with( $this->userId, [ $this->attribute->getName() => $this->attribute->getValue()  ] )
 			->willThrowException( new ApiException( "", UnauthorizedException::CODE ) );
 
-		$this->persistence->saveAttribute($this->userId,  $this->attribute );
+		$this->persistence->saveAttributes( $this->userId, [ $this->attribute->getName() => $this->attribute->getValue()  ] );
 	}
 
 	/**
 	 * @expectedException \Wikia\Service\PersistenceException
 	 */
-	public function testSaveAttributeForUserError() {
+	public function testSaveAttributesForUserError() {
 		$this->userAttributesApi->expects( $this->once( ))
-			->method( 'saveAttribute' )
-			->with( $this->userId, $this->attribute->getName(), $this->attribute->getValue() )
+			->method( 'saveAttributes' )
+			->with( $this->userId, [ $this->attribute->getName() => $this->attribute->getValue()  ] )
 			->willThrowException( new ApiException( "", 500 ) );
 
-		$this->persistence->saveAttribute( $this->userId, $this->attribute );
+		$this->persistence->saveAttributes( $this->userId, [ $this->attribute->getName() => $this->attribute->getValue()  ] );
 	}
 
 	/**
 	 * @expectedException \Wikia\Service\ForbiddenException
 	 */
 	public function testSaveAttributeForUserForbidden() {
-		$this->userAttributesApi->expects( $this->once( ))
-			->method( 'saveAttribute' )
-			->with( $this->userId, $this->attribute->getName(), $this->attribute->getValue() )
+		$this->userAttributesApi->expects( $this->once() )
+			->method( 'saveAttributes' )
+			->with( $this->userId, [ $this->attribute->getName() => $this->attribute->getValue()  ] )
 			->willThrowException( new ApiException( "", ForbiddenException::CODE ) );
 
-		$this->persistence->saveAttribute( $this->userId, $this->attribute );
+		$this->persistence->saveAttributes( $this->userId, [ $this->attribute->getName() => $this->attribute->getValue()  ] );
 	}
 
 	public function testDeleteAttributeSuccess() {
