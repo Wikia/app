@@ -45,6 +45,7 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverBabDetectionDesktopCountries';
 		$vars[] = 'wgAdDriverBabDetectionMobileCountries';
 		$vars[] = 'wgAdDriverBeachfrontBidderCountries';
+		$vars[] = 'wgAdDriverBfabStickinessCountries';
 		$vars[] = 'wgAdDriverBottomLeaderBoardLazyPrebidCountries';
 		$vars[] = 'wgAdDriverBottomLeaderBoardAdditionalSizesCountries';
 		$vars[] = 'wgAdDriverBottomLeaderBoardMegaCountries';

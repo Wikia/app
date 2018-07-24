@@ -46,6 +46,7 @@ function init(
 	TemplateRegistry.init(legacyContext, mercuryListener);
 	scrollListener.init();
 
+	context.set('options.bfabStickiness', legacyContext.get('opts.isBfabStickinessEnabled'));
 	context.set('slots', getSlotsContext(legacyContext, skin));
 	context.push('listeners.porvata', createTracker(legacyContext, geo, pageLevelTargeting, adTracker));
 	context.set('options.trackingOptIn', isOptedIn);
