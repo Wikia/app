@@ -6,8 +6,9 @@ define('ext.wikia.adEngine.lookup.a9', [
 	'wikia.document',
 	'wikia.log',
 	'wikia.trackingOptIn',
+	'wikia.cmp',
 	'wikia.window'
-], function (adContext, slotsContext, factory, doc, log, trackingOptIn, win) {
+], function (adContext, slotsContext, factory, doc, log, trackingOptIn, cmp, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.lookup.a9',
@@ -107,8 +108,9 @@ define('ext.wikia.adEngine.lookup.a9', [
 		}
 
 		trackingOptIn.pushToUserConsentQueue(function (optIn) {
-			if (win.__cmp) {
-				win.__cmp('getConsentData', null, function (consentData) {
+			// remove condition after CMP tests
+			if (cmp.isEnabled()) {
+				cmp.callCmp('getConsentData', null, function (consentData) {
 					init(optIn, consentData);
 				});
 			} else {
