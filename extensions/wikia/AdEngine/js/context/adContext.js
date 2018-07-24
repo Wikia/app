@@ -239,6 +239,8 @@ define('ext.wikia.adEngine.adContext', [
 		context.opts.mobileSectionsCollapse = isProperGeoAds('wgAdDriverMobileSectionsCollapseCountries');
 		context.opts.netzathleten = isProperGeoAds('wgAdDriverNetzAthletenCountries');
 
+		context.opts.preFooterAndBLBSwitched = isProperGeoAds('wgAdDriverPreFooterAndBLBSwitchedCountries');
+
 		// Export the context back to ads.context
 		// Only used by Lightbox.js, WikiaBar.js and AdsInContext.js
 		if (w.ads && w.ads.context) {
