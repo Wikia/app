@@ -69,6 +69,12 @@ $wgKubernetesDeploymentName = getenv( 'KUBERNETES_DEPLOYMENT_NAME' );
  */
 $wgKubernetesNamespace = getenv( 'KUBERNETES_NAMESPACE' );
 
+// Proxy to use for CURL requests.
+// SUS-5499: Use internal host name for MW->MW requests when running on Kubernetes
+if ( !empty( $wgKubernetesDeploymentName ) ) {
+	$wgHTTPProxy = "$wgKubernetesDeploymentName.$wgKubernetesNamespace:80";
+}
+
 /**
  * Whether to use Kubernetes internal ingress for making requests to service dependencies on Kubernetes.
  * This is only enabled if app itself is running on Kubernetes.
