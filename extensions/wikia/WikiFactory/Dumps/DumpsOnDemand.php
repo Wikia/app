@@ -146,6 +146,7 @@ class DumpsOnDemand {
 		);
 
 		$task = ( new \Wikia\Tasks\Tasks\DumpsOnDemandTask() )
+			->setQueue( \Wikia\Tasks\Queues\DumpsOnDemandQueue::NAME )
 			->wikiId( $iCityId )
 			->createdBy( $iUserId );
 
