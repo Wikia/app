@@ -115,7 +115,7 @@ define('ext.wikia.adEngine.adContext', [
 		context.bidders.rubiconDfp = isProperGeoAds('wgAdDriverRubiconDfpCountries');
 		context.bidders.rubiconInFV = isProperGeoAds('wgAdDriverRubiconVideoInFeaturedVideoCountries') && hasFeaturedVideo;
 		context.bidders.beachfront = isProperGeoAds('wgAdDriverBeachfrontBidderCountries') && !hasFeaturedVideo;
-		context.bidders.appnexusAst = isProperGeoAds('wgAdDriverAppNexusAstBidderCountries') && !hasFeaturedVideo;
+		context.bidders.appnexusAst = isProperGeoAds('wgAdDriverAppNexusAstBidderCountries');
 		context.bidders.aol = isProperGeoAds('wgAdDriverAolBidderCountries');
 		context.bidders.appnexus = isProperGeoAds('wgAdDriverAppNexusBidderCountries');
 		context.bidders.appnexusDfp = isProperGeoAds('wgAdDriverAppNexusDfpCountries');
