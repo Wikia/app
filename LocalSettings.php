@@ -69,10 +69,20 @@ $wgKubernetesDeploymentName = getenv( 'KUBERNETES_DEPLOYMENT_NAME' );
  */
 $wgKubernetesNamespace = getenv( 'KUBERNETES_NAMESPACE' );
 
-// Proxy to use for CURL requests.
-// SUS-5499: Use internal host name for MW->MW requests when running on Kubernetes
+/**
+ * Proxy to use for CURL requests.
+ * @see PLATFORM-1745
+ * @see includes/wikia/CurlMultiClient.php
+ * @see includes/HttpFunctions.php
+ * @var string $wgHTTPProxy
+ */
 if ( !empty( $wgKubernetesDeploymentName ) ) {
+	// SUS-5499: Use internal host name for MW->MW requests when running on Kubernetes
 	$wgHTTPProxy = "$wgKubernetesDeploymentName.$wgKubernetesNamespace:80";
+}
+else {
+	// SUS-5675 | TODO: remove when we switch fully to Kubernetes
+	$wgHTTPProxy = 'prod.border.service.consul:80';
 }
 
 /**

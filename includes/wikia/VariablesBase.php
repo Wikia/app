@@ -4920,15 +4920,6 @@ $wgHtml5 = true;
 $wgHtml5Version = null;
 
 /**
- * Proxy to use for CURL requests.
- * @see PLATFORM-1745
- * @see includes/wikia/CurlMultiClient.php
- * @see includes/HttpFunctions.php
- * @var string $wgHTTPProxy
- */
-$wgHTTPProxy = 'prod.border.service.consul:80';
-
-/**
  * If set, inline scaled images will still produce <img> tags ready for output
  * instead of showing an error message. This may be useful if errors are
  * transitory, especially if the site is configured to automatically render
