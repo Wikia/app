@@ -61,13 +61,14 @@ describe('AdContext', function () {
 	}
 
 	beforeEach(function () {
-		var geoAPI = ['isProperGeo', 'getCountryCode', 'getRegionCode', 'getContinentCode', 'isProperGeo'];
+		var geoAPI = ['isProperGeo', 'getCountryCode', 'getRegionCode', 'getContinentCode', 'isProperGeo', 'getSamplingResults'];
 		mocks.geo = jasmine.createSpyObj('geo', geoAPI);
 		mocks.adsGeo = jasmine.createSpyObj('geo', geoAPI);
 		mocks.wikiaCookies = jasmine.createSpyObj('cookies', ['get']);
 
 		mocks.geo.isProperGeo.and.callFake(fakeIsProperGeo);
 		mocks.adsGeo.isProperGeo.and.callFake(fakeIsProperGeo);
+		mocks.adsGeo.getSamplingResults.and.returnValue(['wgAdDriverRubiconDfpCountries_A_50']);
 		mocks.instantGlobals = {};
 	});
 
@@ -672,5 +673,15 @@ describe('AdContext', function () {
 
 		getModule();
 		expect(mocks.geo.isProperGeo.calls.count()).toEqual(1);
-	})
+	});
+
+	it('checks which lABrador keyvals should be sent to DFP', function () {
+		mocks.instantGlobals = {
+			wgAdDriverRubiconDfpCountries: ['XX/50'],
+			wgAdDriverLABradorDfpKeyvals: ['wgAdDriverRubiconDfpCountries_A_50:rub-dfp-test']
+		};
+
+		getModule();
+		expect(getModule().get('opts.labradorDfp')).toEqual('rub-dfp-test');
+	});
 });
