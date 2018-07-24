@@ -613,7 +613,7 @@ class CommunityPageSpecialUsersModel {
 		foreach ( self::PERMISSION_HIERARCHY as $group ) {
 			if ( in_array( $group, $userGroups ) ) {
 				return [
-					'badgeMarkup' => DesignSystemHelper::renderSvg( self::PERMISSIONS_TO_BADGES[ $group ] ),
+					'badgeMarkup' => DesignSystemHelper::renderSvg( self::PERMISSIONS_TO_BADGES[ $group ], 'wds-icon wds-icon-small' ),
 					'badgeText' => wfMessage( self::PERMISSIONS_TO_GROUP_MSG_KEY[ $group ] )->text()
 				];
 			}

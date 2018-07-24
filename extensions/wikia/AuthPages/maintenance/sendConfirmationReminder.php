@@ -1,6 +1,8 @@
 <?php
 
-require __DIR__ . '/../../../maintenance/Maintenance.php';
+use Wikia\Logger\WikiaLogger;
+
+require __DIR__ . '/../../../../maintenance/Maintenance.php';
 
 /**
  * Maintenance script to send email confirmation reminder to users.
@@ -16,13 +18,20 @@ require __DIR__ . '/../../../maintenance/Maintenance.php';
 class SendConfirmationReminder extends Maintenance {
 
 	public function execute() {
+		$total = $actual = 0;
+
 		foreach ( $this->getRecipients() as $user ) {
 			// send reminder email if it has not been sent yet
 			if ( !$user->getGlobalFlag( "cr_mailed", 0 ) ) {
 				$user->setGlobalFlag( "cr_mailed", "1" );
 				$user->sendConfirmationMail( false, 'ConfirmationReminderMail' );
+				$actual++;
 			}
+
+			$total++;
 		}
+
+		WikiaLogger::instance()->info( "Sent confirmation reminder email to $actual users out of $total total.\n" );
 	}
 
 	/**
@@ -49,10 +58,14 @@ class SendConfirmationReminder extends Maintenance {
 		);
 
 		$recipients = [];
+		$count = 0;
 
 		foreach ( $res as $row ) {
 			$recipients[] = User::newFromRow( $row );
+			$count++;
 		}
+
+		WikiaLogger::instance()->info( "Found $count users to potentially send confirmation email to.\n" );
 
 		return $recipients;
 	}

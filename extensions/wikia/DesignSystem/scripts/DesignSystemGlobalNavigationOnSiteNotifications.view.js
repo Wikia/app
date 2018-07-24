@@ -120,28 +120,43 @@ define('ext.wikia.design-system.on-site-notifications.view', [
 						if (!avatar.avatarUrl) {
 							avatar.avatarUrl = avatarPlaceholder;
 						}
-						avatar.profileUrl = '/wiki/User:' + avatar.name;
+						avatar.profileUrl = window.wgArticlePath.replace('$1', 'User:' + avatar.name);
 						return avatar;
 					});
 				}
 
+				function showAvatars(notification) {
+					return notification.totalUniqueActors > 2 &&
+						notification.type === common.notificationTypes.discussionReply;
+				}
+
+				function showLatestActor(notification) {
+					return notification.type === common.notificationTypes.announcement;
+				}
+
+				function showSnippet(notification) {
+					// Old discussions posts without title
+					return !notification.title && notification.type !== common.notificationTypes.announcement;
+				}
+
 				return notifications.map(function (notification) {
 					return {
-						icon: getIcon(notification.type),
-						type: notification.type,
-						uri: notification.uri,
-						latestEventUri: notification.latestEventUri,
-						showSnippet: !notification.title,
-						snippet: notification.snippet,
-						text: this._textFormatter.getText(notification),
-						isUnread: notification.isUnread,
-						communityName: notification.communityName,
-						showAvatars: notification.totalUniqueActors > 2
-						&& notification.type === common.notificationTypes.discussionReply,
-						showAvatarOverflow: notification.totalUniqueActors > 5,
 						avatarOverflow: notification.totalUniqueActors - 5,
 						avatars: getAvatars(notification.latestActors),
-						timeAgo: $.timeago(notification.when)
+						communityName: notification.communityName,
+						icon: getIcon(notification.type),
+						isUnread: notification.isUnread,
+						latestActor: notification.latestActors[0],
+						latestEventUri: notification.latestEventUri,
+						showAvatarOverflow: notification.totalUniqueActors > 5,
+						showAvatars: showAvatars(notification),
+						showLatestActor: showLatestActor(notification),
+						showSnippet: showSnippet(notification),
+						snippet: notification.snippet,
+						text: this._textFormatter.getText(notification),
+						timeAgo: $.timeago(notification.when),
+						type: notification.type,
+						uri: notification.uri
 					}
 				}.bind(this));
 			};
@@ -174,13 +189,17 @@ define('ext.wikia.design-system.on-site-notifications.view', [
 			};
 
 			this._clickNotification = function (e) {
-				this.onNotificationClick.notify(this._findId(e));
+				this.onNotificationClick.notify(this._findNotificationDetails(e));
 			};
 
-			this._findId = function (e) {
+			this._findNotificationDetails = function (e) {
 				try {
 					var $element = $(e.target).closest('.wds-notification-card');
+					var $anchor = $element.find('a');
 					return {
+						event: e,
+						href: $anchor.attr('href'),
+						isUnread: $element.hasClass('wds-is-unread'),
 						uri: $element.attr('data-uri'),
 						type: $element.attr('data-type')
 					};
@@ -190,7 +209,7 @@ define('ext.wikia.design-system.on-site-notifications.view', [
 			};
 
 			this._markAsRead = function (e) {
-				this.onMarkAsReadClick.notify(this._findId(e));
+				this.onMarkAsReadClick.notify(this._findNotificationDetails(e));
 				return false;
 			};
 
@@ -232,8 +251,8 @@ define('ext.wikia.design-system.on-site-notifications.view', [
 				findUnreadAndClearClass(this._$container);
 			};
 
-			this.renderNotificationAsRead = function (id) {
-				var element = this._$container.find('[data-uri="' + id + '"]');
+			this.renderNotificationAsRead = function (uri) {
+				var element = this._$container.find('[data-uri="' + uri + '"]');
 				removeIsUnreadClass(element);
 			};
 

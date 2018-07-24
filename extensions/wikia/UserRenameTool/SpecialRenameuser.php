@@ -15,7 +15,7 @@ if ( !defined( 'MEDIAWIKI' ) ) die( "This is MediaWiki extension and cannot be u
 
 /**
  * REQUIRES THE FOLLOWING EXTENSIONS TO BE ENABLED:
- * StaffLog, TaskManager, Phalanx, SpecialPhalanx
+ * StaffLog, Phalanx, SpecialPhalanx
  *
  * THIS EXTENSION IS DESIGNED TO BE ENABLED ONLY ON CLUSTER 1! BEWARE! ANY OTHER USE REQUIRES SOME CHANGES!
  **/

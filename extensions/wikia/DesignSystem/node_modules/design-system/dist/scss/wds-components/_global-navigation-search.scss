@@ -1,0 +1,220 @@
+$toggle-active-margin-right: 17px;
+
+.wds-global-navigation__search {
+
+
+	// .wds-dropdown class is to increase priority and override default .wds-dropdown styles
+	&.wds-dropdown {
+		align-items: center;
+		color: $wds-fandom-color-aqua;
+		display: flex;
+		height: 100%;
+		justify-content: flex-end;
+	}
+
+	&-close-icon {
+		transform: rotate(45deg);
+	}
+
+	&-container {
+		height: 100%;
+		flex: 1;
+
+		@media #{$wds-breakpoint-l-up} {
+			margin-right: 6px;
+		}
+	}
+
+	&-input-wrapper {
+		align-items: center;
+		display: flex;
+		flex: 0 1 auto;
+		padding-bottom: 3px;
+		transition: flex $search-transition-duration;
+	}
+
+	&-clear {
+		padding: 2px;
+		transform: rotate(45deg);
+
+		svg {
+			fill: $wds-color-white;
+		}
+
+		@media #{$wds-breakpoint-medium-up} {
+			display: none;
+		}
+	}
+
+	&-input {
+		-webkit-appearance: none;
+		background: transparent;
+		border: 0;
+		box-sizing: border-box;
+		color: $wds-color-white;
+		//display: none;
+		// Safari doesn't set default flex values if we use `flex: 1;`
+		// it requires us to put these values explicitly.
+		flex: 1 1 auto;
+		font-size: $wds-typescale-size-minus-1;
+		width: 0;
+
+
+		&::-webkit-search-decoration,
+		&::-webkit-search-cancel-button {
+			display: none;
+		}
+
+		&:focus {
+			outline: none;
+		}
+
+		&::placeholder {
+			color: $wds-color-white;
+		}
+
+		&::-ms-clear {
+			display: none;
+		}
+
+		&:placeholder-shown + .wds-global-navigation__search-clear {
+			opacity: 0.5;
+		}
+	}
+
+	&-submit {
+		@include button-theming($wds-fandom-color-aqua, $wds-color-white, $wds-color-white, 'darker');
+		border-radius: 0;
+		display: none;
+		padding: 4px 10px;
+
+		&-icon {
+			transform: rotate(180deg);
+		}
+	}
+
+	&-close {
+		display: none;
+		padding: 5px 9px;
+
+		&.wds-button.wds-is-text {
+			transition: color, $wds-button-transition-duration;
+			color: $wds-color-white;
+
+			&:hover {
+				background-color: transparent;
+				color: darken($wds-color-white, 15%);
+			}
+		}
+	}
+
+	&-suggestions.wds-dropdown__content {
+		background-color: $wds-fandom-color-light-gray;
+		border: 0;
+		border-radius: 0;
+		box-shadow: 0 8px 12px 0 rgba(0, 0, 0, .3);
+		left: $toggle-active-margin-right + 18px;
+		right: 0;
+		top: calc(100% + 1px);
+		transform: none;
+
+		&:not(.wds-is-not-scrollable) {
+			.wds-list {
+				&::after, &::before {
+					background-color: $wds-fandom-color-light-gray;
+				}
+			}
+		}
+
+		.wds-list.wds-is-linked > li:hover:not(.wds-is-selected) > a {
+			background-color: transparent;
+			color: $wds-color-dark-blue-gray;
+		}
+
+		.wds-global-navigation__search-container:not(.wds-search-is-focused) &, .wds-global-navigation:not(.wds-search-is-active) & {
+			display: none;
+		}
+	}
+
+	&-suggestion-highlight {
+		font-weight: bold;
+	}
+
+
+	&-toggle {
+		align-items: center;
+		cursor: pointer;
+		display: flex;
+		transition: color $wds-button-transition-duration;
+
+		&:hover {
+			color: $wds-color-white;
+		}
+
+		&-icon {
+			margin-right: 8px;
+
+			@media #{$wds-breakpoint-medium-down} {
+				&.wds-icon-small {
+					display: none;
+				}
+			}
+
+			@media #{$wds-breakpoint-large-up} {
+				&:not(.wds-icon-small) {
+					display: none;
+				}
+			}
+		}
+
+		&-text {
+			@include wds-hide-on-breakpoint(medium-down);
+		}
+	}
+
+	&:hover:not(.wds-is-active) {
+		.wds-dropdown__content {
+			display: none;
+		}
+	}
+}
+
+.wds-search-is-active .wds-global-navigation {
+	&__link, &__link-group {
+		font-size: 0;
+		margin-left: 0;
+	}
+
+	&__link-group {
+		.wds-dropdown__toggle-chevron {
+			display: none;
+		}
+	}
+
+	&__search {
+		&-container {
+			margin-left: 34px;
+		}
+
+		&-input-wrapper {
+			border-bottom: 2px solid $wds-fandom-color-aqua;
+			flex: 1 1 auto;
+		}
+
+		&-submit, &-close {
+			display: inline-flex;
+		}
+
+		&-toggle {
+			pointer-events: none;
+		}
+
+		&-toggle-icon {
+			margin-right: $toggle-active-margin-right;
+		}
+
+		&-toggle-text {
+			display: none;
+		}
+	}
+}

@@ -86,7 +86,7 @@ define('wikia.articleVideo.featuredVideo.ads', [
 				trackingParams.adProduct = 'featured-video';
 			});
 
-			if (adContext.get('bidders.rubiconInFV')) {
+			if (adContext.get('bidders.rubiconInFV') && !adContext.get('bidders.rubiconDfp')) {
 				allowedBidders.push('rubicon')
 			}
 

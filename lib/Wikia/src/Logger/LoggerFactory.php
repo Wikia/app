@@ -2,12 +2,16 @@
 namespace Wikia\Logger;
 
 use Monolog\Handler\SocketHandler;
+use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 
 class LoggerFactory {
 
-	/** @var bool $shouldLogToStandardOutput */
+	/** @var bool $shouldLogToSocket */
 	private $shouldLogToSocket;
+
+	/** @var bool $shouldLogToStdOut */
+	private $shouldLogToStdOut;
 
 	/** @var bool $shouldExcludeDebugLevel */
 	private $shouldExcludeDebugLevel;
@@ -29,16 +33,20 @@ class LoggerFactory {
 	 */
 	public static function getInstance(): LoggerFactory {
 		if( static::$instance === null ) {
-			global $wgWikiaEnvironment, $wgLoggerLogToSocketOnly, $wgLoggerSocketAddress;
+			global $wgWikiaEnvironment,
+				$wgLoggerLogToSocketOnly,
+				$wgLoggerSocketAddress,
+				$wgLoggerLogToStdOutOnly;
 
-			static::$instance = new self( $wgLoggerLogToSocketOnly, $wgWikiaEnvironment === WIKIA_ENV_PROD, $wgLoggerSocketAddress );
+			static::$instance = new self( $wgLoggerLogToSocketOnly, $wgWikiaEnvironment === WIKIA_ENV_PROD, $wgLoggerSocketAddress, $wgLoggerLogToStdOutOnly );
 		}
 
 		return self::$instance;
 	}
 
-	public function __construct( bool $shouldLogToSocket, bool $shouldExcludeDebugLevel, string $socketAddress ) {
+	public function __construct( bool $shouldLogToSocket, bool $shouldExcludeDebugLevel, string $socketAddress, bool $shouldLogToStdOut = false ) {
 		$this->shouldLogToSocket = $shouldLogToSocket;
+		$this->shouldLogToStdOut = $shouldLogToStdOut;
 		$this->shouldExcludeDebugLevel = $shouldExcludeDebugLevel;
 		$this->socketAddress = $socketAddress;
 	}
@@ -50,7 +58,9 @@ class LoggerFactory {
 
 		$logger = new Logger( $ident );
 
-		if( $this->shouldLogToSocket ) {
+		if( $this->shouldLogToStdOut ) {
+			$handler = new StreamHandler( STDOUT );
+		} else if( $this->shouldLogToSocket ) {
 			$handler = new SocketHandler( $this->socketAddress );
 		} else {
 			$handler = new SyslogHandler( $ident );

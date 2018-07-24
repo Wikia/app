@@ -258,7 +258,7 @@ class Subtitle {
 		$language = RequestContext::getMain()->getLanguage();
 
 		$userName = $this->title->getBaseText();
-		$avatar = AvatarService::renderAvatar( $userName, 30, 'wds-avatar' );
+		$avatar = DesignSystemHelper::renderAvatar( $userName, 30 );
 		$userPageUrl = AvatarService::getUrl( $userName );
 
 		$userBlogPageUrl = AvatarService::getUrl( $userName, NS_BLOG_ARTICLE );

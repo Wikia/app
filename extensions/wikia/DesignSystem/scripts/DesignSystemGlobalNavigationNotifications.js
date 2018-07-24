@@ -27,9 +27,9 @@ require(
 				setTimeout(this.proxy(this.updateCounts), 300);
 
 				this.$window = $(window);
-				this.$notificationsCount = $('.notifications-count');
 				this.$notifications = $('#notifications');
 				this.$notificationsEntryPoint = $('#notificationsEntryPoint');
+				this.$notificationsCount = this.$notificationsEntryPoint.find('.wds-global-navigation__notifications-counter');
 				this.$wallNotifications = $('#GlobalNavigationWallNotifications');
 				this.$notificationsContainer = $('#notificationsContainer');
 				this.$notificationsMessages = $('> ul', this.$notificationsContainer);
@@ -198,11 +198,11 @@ require(
 				this.unreadCount = data.count;
 
 				if (data.count > 0) {
-					this.$notificationsCount.html(data.count).parent('.bubbles').addClass('show');
+					this.$notificationsCount.html(data.count).removeClass('wds-is-hidden');
 					this.fetchForCurrentWiki();
 					this.$wallNotifications.addClass('show');
 				} else {
-					this.$notificationsCount.empty().parent('.bubbles').removeClass('show');
+					this.$notificationsCount.empty().addClass('wds-is-hidden');
 				}
 
 				this.$wallNotifications.find('.notifications-wiki-header').click(this.wikiClick.bind(this));

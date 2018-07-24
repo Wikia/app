@@ -169,9 +169,12 @@ $wgGroupPermissions['*']['achievements-explicit'] = false;
 $wgGroupPermissions['sysop']['achievements-explicit'] = true;
 
 $wgGroupPermissions['*']['admindashboard'] = false;
+$wgGroupPermissions['global-discussions-moderator']['admindashboard'] = true;
+$wgGroupPermissions['helper']['admindashboard'] = true;
 $wgGroupPermissions['staff']['admindashboard'] = true;
 $wgGroupPermissions['sysop']['admindashboard'] = true;
-$wgGroupPermissions['helper']['admindashboard'] = true;
+$wgGroupPermissions['threadmoderator']['admindashboard'] = true;
+$wgGroupPermissions['vstf']['admindashboard'] = true;
 
 $wgGroupPermissions['sysop']['commentmove'] = true;
 $wgGroupPermissions['sysop']['commentedit'] = true;
@@ -648,3 +651,7 @@ $wgGroupPermissions['util']['exportuserdata'] = true;
 // request to be forgotten
 $wgGroupPermissions['*']['requesttobeforgotten'] = false;
 $wgGroupPermissions['request-to-be-forgotten-admin']['requesttobeforgotten'] = true;
+
+// SUS-5473 | allow staff members to request a run of updateSpecialPages
+$wgGroupPermissions['*']['schedule-update-special-pages'] = false;
+$wgGroupPermissions['staff']['schedule-update-special-pages'] = true;

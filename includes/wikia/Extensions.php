@@ -131,8 +131,6 @@ if ( ! empty( $wgEnableLyricWikiExt ) ) {
 	require_once "$LW/Hook_PreventBlanking.php";
 	require_once "$LW/Special_ArtistRedirects.php";
 	require_once "$LW/lw_spiderableBadArtists.php";
-	require_once "$LW/Special_Soapfailures.php";
-	require_once "$LW/Special_MobileSearches.php";
 	require_once "$LW/lw_impliedRedirects.php";
 	# Turn off subpages on the main namespace (otherwise every AC/DC song links back to "AC"), etc.
 	$wgNamespacesWithSubpages[ NS_MAIN ] = false;
@@ -421,7 +419,14 @@ if ( defined( 'REBUILD_LOCALISATION_CACHE_IN_PROGRESS' ) || !empty($wgEnableSema
 
 if ( !empty( $wgEnableScribuntoExt ) ) {
 	include "$IP/extensions/Scribunto/Scribunto.php";
-	$wgScribuntoDefaultEngine = 'luastandalone'; # PLATFORM-1885
+	
+	// SUS-5540: use the luasandbox extension as executor if it is available
+	if ( extension_loaded( 'luasandbox' ) ) {
+		$wgScribuntoDefaultEngine = 'luasandbox';
+	} else {
+		$wgScribuntoDefaultEngine = 'luastandalone'; # PLATFORM-1885
+	}
+
 	$wgScribuntoUseGeSHi = $wgEnableSyntaxHighlightGeSHiExt;
 	$wgWysiwygDisabledNamespaces[] = NS_MODULE;
 
@@ -542,10 +547,6 @@ if( !empty( $wgEnableInputBoxExt ) ) {
 
 if( !empty( $wgEnableRandomSelectionExt ) ) {
 	include( "$IP/extensions/3rdparty/RandomSelection/RandomSelection.php" );
-}
-
-if( !empty( $wgEnableTaskManagerExt ) ) {
-	include( "$IP/extensions/wikia/TaskManager/SpecialTaskManager.php" );
 }
 
 if( !empty( $wgEnableMultiDeleteExt ) ) {
@@ -984,7 +985,7 @@ if ( !empty( $wgEnableTitleBlacklistExt ) ) {
 }
 
 # User Rename Tool
-if (!empty($wgEnableUserRenameToolExt) && !empty($wgEnableTaskManagerExt) && !empty($wgEnablePhalanxExt)) {
+if (!empty($wgEnableUserRenameToolExt) && !empty($wgEnablePhalanxExt)) {
 	include("$IP/extensions/wikia/UserRenameTool/SpecialRenameuser.php");
 } else {
 	# Add log type for user rename even when rename extanesion is not enabled
@@ -1765,3 +1766,7 @@ include "$IP/extensions/wikia/DownloadYourData/DownloadYourData.setup.php";
 include "$IP/extensions/wikia/Privacy/Privacy.setup.php";
 
 include "$IP/extensions/wikia/Announcements/Announcements.setup.php";
+
+// SUS-5473 | Expose a button on Special:Statistics allowing Wikia Staff members to schedule
+// updateSpecialPages.php maintenance script run.
+include "$IP/extensions/wikia/UpdateSpecialPagesScheduler/UpdateSpecialPagesScheduler.setup.php";

@@ -1,0 +1,25 @@
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: "mw-cj-${name}"
+spec:
+  schedule: ${schedule}
+  successfulJobsHistoryLimit: 0
+  failedJobsHistoryLimit: 1
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: php
+            image: artifactory.wikia-inc.com/sus/mediawiki-prod-php:${label}
+            env:
+             - name: SERVER_ID
+               value: "${server_id}"
+             - name: LOG_STDOUT_ONLY
+               value: "yes"
+            args:
+${args}
+          restartPolicy: Never
+

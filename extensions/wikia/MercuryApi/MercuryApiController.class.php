@@ -134,6 +134,7 @@ class MercuryApiController extends WikiaController {
 		$wikiVariables['vertical'] = WikiFactoryHub::getInstance()->getWikiVertical( $this->wg->CityId )['short'];
 		$wikiVariables['basePath'] = $this->wg->Server;
 		$wikiVariables['scriptPath'] = $this->wg->ScriptPath;
+		$wikiVariables['surrogateKey'] = Wikia::wikiSurrogateKey( $this->wg->CityId );
 
 		// Used to determine GA tracking
 		if ( !empty( $this->wg->IsGASpecialWiki ) ) {
@@ -316,7 +317,8 @@ class MercuryApiController extends WikiaController {
 		try {
 			$title = $this->getTitleFromRequest();
 			$data = [
-				'ns' => $title->getNamespace()
+				'ns' => $title->getNamespace(),
+				'isSpecialRandom' => false
 			];
 
 			// handle cases like starwars.wikia.com/wiki/w:c:clashroyale:Tesla (interwiki links)
@@ -434,6 +436,8 @@ class MercuryApiController extends WikiaController {
 							);
 					}
 				}
+			} elseif ( $title->getNamespace() == NS_SPECIAL ) {
+				$data['isSpecialRandom'] = $title->isSpecial('Randompage');
 			}
 
 			\Hooks::run( 'MercuryPageData', [ $title, &$data ] );

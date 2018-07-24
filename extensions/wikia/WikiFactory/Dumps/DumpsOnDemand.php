@@ -66,7 +66,10 @@ class DumpsOnDemand {
 		$tmpl->set( 'bIsAllowed', $bIsAllowed );
 		$tmpl->set( 'editToken', $user->getEditToken());
 
-		if ( $request->wasPosted() && $available && $bIsAllowed && $user->matchEditToken( $request->getVal( 'editToken' ) ) ) {
+		if ( $request->wasPosted() &&
+			 $request->getVal('dumpRequest') &&
+		     $available && $bIsAllowed &&
+		     $user->matchEditToken( $request->getVal( 'editToken' ) ) ) {
 			self::queueDump( $wgCityId );
 			wfDebug( __METHOD__, ": request for database dump was posted\n" );
 			$text = Wikia::successbox( $page->msg( 'dump-database-request-requested' )->text() ) . $text;

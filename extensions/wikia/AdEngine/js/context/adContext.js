@@ -5,14 +5,13 @@
 define('ext.wikia.adEngine.adContext', [
 	'wikia.browserDetect',
 	'wikia.cookies',
-	'wikia.document',
 	'wikia.geo',
 	'wikia.instantGlobals',
 	'ext.wikia.adEngine.geo',
 	'ext.wikia.adEngine.utils.sampler',
 	'wikia.window',
 	'wikia.querystring'
-], function (browserDetect, cookies, doc, geo, instantGlobals, adsGeo, sampler, w, Querystring) {
+], function (browserDetect, cookies, geo, instantGlobals, adsGeo, sampler, w, Querystring) {
 	'use strict';
 
 	instantGlobals = instantGlobals || {};
@@ -64,22 +63,27 @@ define('ext.wikia.adEngine.adContext', [
 
 	function updateAdContextRecServices(context, noExternals) {
 		// showAds is undefined by default
-		var serviceCanBeEnabled = !noExternals && context.opts.showAds !== false && !areDelayServicesBlocked();
+		var serviceCanBeEnabled = !noExternals &&
+			context.opts.showAds !== false &&
+			!w.wgUserName &&
+			context.targeting.skin === 'oasis' &&
+			!areDelayServicesBlocked();
 
 		// BT rec
-		context.opts.wadBT = serviceCanBeEnabled && context.targeting.skin === 'oasis' &&
+		context.opts.wadBT = serviceCanBeEnabled &&
 			isEnabled('wgAdDriverWadBTCountries');
 
 		// IL rec
-		context.opts.wadIL = serviceCanBeEnabled && context.targeting.skin === 'oasis' &&
-			!w.wgUserName && isILSupportedBrowser() && isEnabled('wgAdDriverWadILCountries');
+		context.opts.wadIL = serviceCanBeEnabled &&
+			isEnabled('wgAdDriverWadILCountries') &&
+			isILSupportedBrowser();
 	}
 
 	function isEnabled(name) {
 		var geos = instantGlobals[name] || [];
 
 		if (useNewGeo) {
-			return isProperGeoAds(name)
+			return isProperGeoAds(name);
 		}
 
 		return geo.isProperGeo(geos);
@@ -93,6 +97,7 @@ define('ext.wikia.adEngine.adContext', [
 	function updateAdContextRabbitExperiments(context) {
 		context.rabbits.ctpDesktop = isProperGeoAds('wgAdDriverCTPDesktopRabbitCountries');
 		context.rabbits.ctpMobile = isProperGeoAds('wgAdDriverCTPMobileRabbitCountries');
+		context.rabbits.queenDesktop = isProperGeoAds('wgAdDriverCTPDesktopQueenCountries');
 	}
 
 	function areDelayServicesBlocked() {
@@ -107,6 +112,7 @@ define('ext.wikia.adEngine.adContext', [
 		context.bidders.a9Video = !areDelayServicesBlocked() && isProperGeoAds('wgAdDriverA9VideoBidderCountries');
 		context.bidders.rubiconDisplay = isProperGeoAds('wgAdDriverRubiconDisplayPrebidCountries');
 		context.bidders.rubicon = isProperGeoAds('wgAdDriverRubiconPrebidCountries');
+		context.bidders.rubiconDfp = isProperGeoAds('wgAdDriverRubiconDfpCountries');
 		context.bidders.rubiconInFV = isProperGeoAds('wgAdDriverRubiconVideoInFeaturedVideoCountries') && hasFeaturedVideo;
 		context.bidders.beachfront = isProperGeoAds('wgAdDriverBeachfrontBidderCountries') && !hasFeaturedVideo;
 		context.bidders.appnexusAst = isProperGeoAds('wgAdDriverAppNexusAstBidderCountries') && !hasFeaturedVideo;
@@ -118,10 +124,6 @@ define('ext.wikia.adEngine.adContext', [
 		context.bidders.onemobile = isProperGeoAds('wgAdDriverAolOneMobileBidderCountries');
 		context.bidders.openx = isProperGeoAds('wgAdDriverOpenXPrebidBidderCountries');
 		context.bidders.pubmatic = isProperGeoAds('wgAdDriverPubMaticBidderCountries');
-	}
-
-	function referrerIsSonySite() {
-		return doc && doc.referrer && doc.referrer.match(/info\.tvsideview\.sony\.net/);
 	}
 
 	function isMOATTrackingForFVEnabled() {
@@ -149,11 +151,6 @@ define('ext.wikia.adEngine.adContext', [
 		context.rabbits = context.rabbits || {};
 		context.forcedProvider = qs.getVal('forcead', null) || context.forcedProvider || null;
 		context.opts.noExternals = noExternals;
-
-		// Don't show ads when Sony requests the page
-		if (referrerIsSonySite()) {
-			context.opts.showAds = false;
-		}
 
 		context.opts.delayEngine = true;
 		context.opts.overwriteDelayEngine = isProperGeoAds('wgAdDriverDelayCountries');

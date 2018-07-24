@@ -1,8 +1,8 @@
 {{#viewedUsersInfo}}
 	<a href="{{profileUrl}}"
-	   class="wds-avatar-stack__avatar{{#hasUsers}} chatter{{/hasUsers}}"{{^hasUsers}}
+	   class="wds-avatar{{#hasUsers}} chatter{{/hasUsers}}"{{^hasUsers}}
 	   title="{{username}}"{{/hasUsers}}>
-		<img class="wds-avatar" src="{{avatarUrl}}"/>
+		<img class="wds-avatar__image" src="{{avatarUrl}}"/>
 	</a>
 {{/viewedUsersInfo}}
 {{#hasUsers}}

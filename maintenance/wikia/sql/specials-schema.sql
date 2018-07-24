@@ -20,18 +20,6 @@ CREATE TABLE `city_used_tags` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Table structure for table `common_key_value`
---
-
-DROP TABLE IF EXISTS `common_key_value`;
-CREATE TABLE `common_key_value` (
-  `identifier` varchar(255) NOT NULL,
-  `content` mediumblob NOT NULL,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`identifier`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
 -- Table structure for table `discussion_reporting`
 --
 
@@ -126,16 +114,5 @@ CREATE TABLE `rtbf_log_details` (
   CONSTRAINT `rtbf_log_details_ibfk_1` FOREIGN KEY (`log_id`) REFERENCES `rtbf_log` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Table structure for table `script_log`
---
 
-DROP TABLE IF EXISTS `script_log`;
-CREATE TABLE `script_log` (
-  `logname` varchar(50) NOT NULL,
-  `ts` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`logname`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-
--- Dump completed on 2018-07-06 12:59:34
+-- Dump completed on 2018-07-09  9:15:15

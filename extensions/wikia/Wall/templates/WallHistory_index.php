@@ -1,5 +1,5 @@
 <div class="WallHistory">
-<? if ( empty( $wallmessageNotFound ) ): ?>
+<?php if ( empty( $wallmessageNotFound ) ): ?>
 	<div class="SortingBar">
 		<div id="pageTitle">
 			<?= $pageTitle; ?>
@@ -7,13 +7,13 @@
 		<div class="SortingMenu">
 			<span class="SortingSelected"><?= $sortingSelected; ?></span>
 			<ul class="SortingList">
-				<? foreach ( $sortingOptions as $option ): ?>
-					<li class="<? if ( !empty( $option['selected'] ) ): ?>current<? endif ?> <?= $option['id']; ?>">
+				<?php foreach ( $sortingOptions as $option ): ?>
+					<li class="<?php if ( !empty( $option['selected'] ) ): ?>current<?php endif ?> <?= $option['id']; ?>">
 						<a href="<?= $option['href'] ?>" class="sortingOption">
 							<?= $option['text'] ?>
 						</a>
 					</li>
-				<? endforeach; ?>
+				<?php endforeach; ?>
 			</ul>
 		</div>
 	</div>
@@ -136,13 +136,13 @@
 		<div class="SortingMenu">
 			<span class="SortingSelected"><?= $sortingSelected; ?></span>
 			<ul class="SortingList">
-				<? foreach ( $sortingOptions as $option ): ?>
-					<li class="<? if ( !empty( $option['selected'] ) ): ?>current<? endif ?> <?= $option['id']; ?>">
+				<?php foreach ( $sortingOptions as $option ): ?>
+					<li class="<?php if ( !empty( $option['selected'] ) ): ?>current<?php endif ?> <?= $option['id']; ?>">
 						<a href="<?= $option['href'] ?>" class="sortingOption">
 							<?= $option['text'] ?>
 						</a>
 					</li>
-				<? endforeach; ?>
+				<?php endforeach; ?>
 			</ul>
 		</div>
 	</div>

@@ -209,6 +209,7 @@ abstract class DatabaseBase implements DatabaseType {
 	const SLOW_QUERY_LOG_THRESHOLD = 15;
 
 	protected $sampler = null;
+	static protected $databaseLogger = null;
 
 # ------------------------------------------------------------------------------
 # Variables
@@ -3881,7 +3882,7 @@ abstract class DatabaseBase implements DatabaseType {
 
 		// SUS-2974 | send SQL logs to a separate ES index 'mediawiki-sql'
 		if ( $this->getSampler()->shouldSample() ) {
-			\Wikia\Logger\LoggerFactory::getInstance()->getLogger( 'mediawiki-sql' )->info( $sql, $context );
+			self::getDatabaseLogger()->info( $sql, $context );
 		}
 
 		if ( static::isWriteQuery($sql) &&
@@ -3933,6 +3934,28 @@ abstract class DatabaseBase implements DatabaseType {
 
 	public function getWikiaLogger() {
 		return WikiaLogger::instance();
+	}
+
+	/**
+	 * Return an instance of a dedicated Logger for SQL queries. Logs will be kept in
+	 * a separate elasticsearch index.
+	 *
+	 * @see SUS-2974
+	 *
+	 * @return \Monolog\Logger
+	 */
+	public static function getDatabaseLogger() : \Monolog\Logger {
+		if ( self::$databaseLogger === null ) {
+			$logger = \Wikia\Logger\LoggerFactory::getInstance()->getLogger( 'mediawiki-sql' );
+
+			// SUS-4591 | reuse the WebProcessor from WikiaLogger so that
+			// we have a full logger context here as well
+			$logger->pushProcessor( WikiaLogger::instance()->getWebProcessor() );
+
+			self::$databaseLogger = $logger;
+		}
+
+		return self::$databaseLogger;
 	}
 
 }
