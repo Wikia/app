@@ -16,9 +16,7 @@ spec:
             image: artifactory.wikia-inc.com/sus/mediawiki-prod-php:${label}
             env:
               - name: KUBERNETES_DEPLOYMENT_NAME
-                valueFrom:
-                  fieldRef:
-                    fieldPath: metadata.name
+                value: mediawiki-prod
               - name: KUBERNETES_NAMESPACE
                 valueFrom:
                   fieldRef:

@@ -74,7 +74,7 @@ spec:
             - name: KUBERNETES_DEPLOYMENT_NAME
               valueFrom:
                 fieldRef:
-                  fieldPath: metadata.name
+                  fieldPath: metadata.labels.app
             - name: KUBERNETES_NAMESPACE
               valueFrom:
                 fieldRef:
