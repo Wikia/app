@@ -58,6 +58,25 @@ $wgLoggerSocketAddress = $_ENV['LOG_SOCKET_ADDRESS'] ?? 'tcp://127.0.0.1:9999';
 $wgLoggerLogToStdOutOnly = $_ENV['LOG_STDOUT_ONLY'] ?? false;
 
 /**
+ * Name of the Kubernetes deployment, defined if the application is running in k8s.
+ * @var string|null $wgKubernetesDeploymentName
+ */
+$wgKubernetesDeploymentName = getenv( 'KUBERNETES_DEPLOYMENT_NAME' );
+
+/**
+ * Kubernetes namespace name, defined if the application is running in k8s.
+ * @var string|null $wgKubernetesNamespace
+ */
+$wgKubernetesNamespace = getenv( 'KUBERNETES_NAMESPACE' );
+
+/**
+ * Whether to use Kubernetes internal ingress for making requests to service dependencies on Kubernetes.
+ * This is only enabled if app itself is running on Kubernetes.
+ * @var bool $wgUseKubernetesInternalIngress
+ */
+$wgUseKubernetesInternalIngress = (bool) getenv( 'KUBERNETES_POD' );
+
+/**
  * Some environments share components (e.g. preview, verify, sandbox and stable
  * use prod databases). This variable represents that.
  * @var string $wgRealEnvironment

@@ -5153,18 +5153,6 @@ $wgJobTypesExcludedFromDefaultQueue = [];
 $wgJsMimeType = 'text/javascript';
 
 /**
- * Name of the Kubernetes deployment, defined if the application is running in k8s.
- * @var string|null $wgKubernetesDeploymentName
- */
-$wgKubernetesDeploymentName = getenv( 'KUBERNETES_DEPLOYMENT_NAME' );
-
-/**
- * Kubernetes namespace name, defined if the application is running in k8s.
- * @var string|null $wgKubernetesNamespace
- */
-$wgKubernetesNamespace = getenv( 'KUBERNETES_NAMESPACE' );
-
-/**
  * Custom variables used by CreateWiki task.
  * @see /extensions/wikia/CreateNewWiki/tasks/SetCustomSettings.php
  * @var Array $wgLangCreationVariables
@@ -8214,13 +8202,6 @@ $wgUseImageResize = true;
  * @var bool $wgUseInstantCommons
  */
 $wgUseInstantCommons = false;
-
-/**
- * Whether to use Kubernetes internal ingress for making requests to service dependencies on Kubernetes.
- * This is only enabled if app itself is running on Kubernetes.
- * @var bool $wgUseKubernetesInternalIngress
- */
-$wgUseKubernetesInternalIngress = (bool) getenv( 'KUBERNETES_POD' );
 
 /**
  * Set this to true to make a local copy of the message cache, for use in
