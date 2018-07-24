@@ -430,6 +430,12 @@ class MWHttpRequest {
 				);
 		}
 
+		// SUS-5499: Use internal host name for MW->MW requests when running on Kubernetes
+		global $wgKubernetesNamespace;
+		if ( !empty( $wgKubernetesNamespace ) && Http::isLocalURL( $this->url ) ) {
+			$list[] = sprintf( 'X-Original-Host: %s', $this->parsedUrl['host'] );
+		}
+
 		foreach ( $this->reqHeaders as $name => $value ) {
 			$list[] = "$name: $value";
 		}
