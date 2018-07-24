@@ -533,7 +533,7 @@ describe('AdContext', function () {
 				wgAdDriverAppNexusAstBidderCountries: ['CURRENT_COUNTRY']
 			},
 			testedBidder: 'appnexusAst',
-			expectedResult: false
+			expectedResult: true
 		},
 		{
 			hasFeaturedVideo: false,
