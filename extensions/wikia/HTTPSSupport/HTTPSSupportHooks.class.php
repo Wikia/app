@@ -46,7 +46,9 @@ class HTTPSSupportHooks {
 		if ( !empty( $_SERVER['HTTP_FASTLY_FF'] ) ) {  // don't redirect internal clients
 			$requestURL = $request->getFullRequestURL();
 			if ( WebRequest::detectProtocol() === 'http' &&
-				self::httpsAllowed( $user, $requestURL )
+				self::httpsAllowed( $user, $requestURL ) &&
+				// Don't upgrade on externaltest and showcase due to weird redirect behaviour (PLATFORM-3585)
+				!in_array( $request->getHeader( 'X-Staging' ), [ 'externaltest', 'showcase' ] )
 			) {
 				$output->redirectProtocol( PROTO_HTTPS, '301' );
 				if ( $user->isAnon() ) {
