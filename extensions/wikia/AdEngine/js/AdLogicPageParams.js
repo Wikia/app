@@ -193,8 +193,13 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 		}
 
 		if (krux && targeting.enableKruxTargeting) {
-			params.u = krux.getUser();
-			params.ksgmnt = krux.getSegments();
+			if (context.opts.kruxNewParams) {
+				params.kuid = krux.getUser();
+				params.ksg = krux.getSegments();
+			} else {
+				params.u = krux.getUser();
+				params.ksgmnt = krux.getSegments();
+			}
 		}
 
 		if (targeting.wikiIsTop1000) {
