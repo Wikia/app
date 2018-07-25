@@ -26,11 +26,9 @@ class CloseWikiMaintenance {
 	private $mOptions;
 
 	/**
-	 * constructor
-	 *
-	 * @access public
+	 * @param array $options
 	 */
-	public function __construct( $options ) {
+	public function __construct( array $options ) {
 		$this->mOptions = $options;
 	}
 
@@ -100,7 +98,6 @@ class CloseWikiMaintenance {
 			 * reasonable defaults for wikis and some presets
 			 */
 			$hide     = false;
-			$xdumpok  = true;
 			$newFlags = 0;
 			$dbname   = $row->city_dbname;
 			$cityid   = intval( $row->city_id );
@@ -125,8 +122,7 @@ class CloseWikiMaintenance {
 				$this->info( "Dumping database on remote host", [
 					'script' => $script
 				]);
-				$output = wfShellExec( $script, $retval, [ 'SERVER_ID' => Wikia::COMMUNITY_WIKI_ID ] );
-				$xdumpok = empty( $retval ) ? true : false;
+				wfShellExec( $script, $retval, [ 'SERVER_ID' => Wikia::COMMUNITY_WIKI_ID ] );
 				/**
 				 * reset flag
 				 */
@@ -344,7 +340,7 @@ class CloseWikiMaintenance {
 		}
 
 		$time = Wikia::timeDuration( wfTime() - $time );
-		$this->debug( "Rsync to {$directory} from {$container} Swift storage: status: time: {$time}", true, true );
+		$this->debug( "Rsync to {$directory} from {$container} Swift storage: status: time: {$time}" );
 
 		/**
 		 * @name dumpfile
@@ -392,20 +388,19 @@ class CloseWikiMaintenance {
 	/**
 	 * Get images list from folder, recursive, skip thumbnails directory
 	 *
+	 * @param string $dir
 	 * @return array
 	 */
 	private function getDirTree( $dir ) {
 
 		$files = array();
 
-		wfProfileIn( __METHOD__ );
-
 		if( is_dir( $dir ) ) {
 			$dirs = array_diff( scandir( $dir ), array( ".", ".." ) );
 		    foreach( $dirs as $d ) {
 				$path = $dir . "/" . $d;
 				if( is_dir( $path ) ) {
-					$files = array_merge( $files, $this->getDirTree( $path, $files ) );
+					$files = array_merge( $files, $this->getDirTree( $path ) );
 				}
 				else {
 					$include =
@@ -418,7 +413,6 @@ class CloseWikiMaintenance {
 				}
 			}
 		}
-		wfProfileOut( __METHOD__ );
 
 		return $files;
 	}
@@ -501,8 +495,10 @@ class CloseWikiMaintenance {
 	}
 
 	private function removeDiscussions( int $cityId ) {
+		global $wgTheSchwartzSecretToken;
+
 		try {
-			$this->getSitesApi()->hardDeleteSite( $cityId, F::app()->wg->TheSchwartzSecretToken );
+			$this->getSitesApi()->hardDeleteSite( $cityId, $wgTheSchwartzSecretToken );
 		}
 		catch ( \Swagger\Client\ApiException $e ) {
 			$this->error( "Failed to hard delete Discussion site", [
@@ -533,6 +529,8 @@ class CloseWikiMaintenance {
  * --first			-- run only once for first wiki in queue
  * --limit=<limit>	-- run for <limit> wikis
  */
+global $IP, $options;
+
 $wgAutoloadClasses[ "DumpsOnDemand" ] = "$IP/extensions/wikia/WikiFactory/Dumps/DumpsOnDemand.php";
 $maintenance = new CloseWikiMaintenance( $options );
 $maintenance->execute();
