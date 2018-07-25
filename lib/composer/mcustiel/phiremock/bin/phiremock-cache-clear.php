@@ -17,7 +17,7 @@
  */
 use Mcustiel\Phiremock\Server\Config\Dependencies;
 
-if (PHP_SAPI !== 'cli') {
+if (\PHP_SAPI !== 'cli') {
     throw new \Exception('This is a standalone CLI application');
 }
 

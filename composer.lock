@@ -1,10 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "1d81b4691e7f0161b42ba154e3473f5c",
+    "content-hash": "b3d28060a12d9b3bb3d9b125c888ba11",
     "packages": [
         {
             "name": "composer/installers",
@@ -1128,16 +1128,16 @@
         },
         {
             "name": "mcustiel/phiremock",
-            "version": "v1.8.0",
+            "version": "v1.9.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mcustiel/phiremock.git",
-                "reference": "a88e47fafdd6f0ece3f69e561fe50b31771dfa47"
+                "reference": "942823bc7a147484483d0bda6b83ab38b8509485"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mcustiel/phiremock/zipball/a88e47fafdd6f0ece3f69e561fe50b31771dfa47",
-                "reference": "a88e47fafdd6f0ece3f69e561fe50b31771dfa47",
+                "url": "https://api.github.com/repos/mcustiel/phiremock/zipball/942823bc7a147484483d0bda6b83ab38b8509485",
+                "reference": "942823bc7a147484483d0bda6b83ab38b8509485",
                 "shasum": ""
             },
             "require": {
@@ -1148,7 +1148,7 @@
                 "monolog/monolog": "^1.17.2",
                 "php": ">=5.6",
                 "react/http": "~0.7.0",
-                "symfony/cache": "^3.1"
+                "symfony/cache": ">=3.1 <5.0"
             },
             "require-dev": {
                 "codeception/codeception": "^2.2.10"
@@ -1167,7 +1167,7 @@
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "GPL-3.0+"
+                "GPL-3.0-or-later"
             ],
             "authors": [
                 {
@@ -1186,7 +1186,7 @@
                 "server",
                 "tests"
             ],
-            "time": "2018-01-27T10:08:00+00:00"
+            "time": "2018-06-14T09:59:31+00:00"
         },
         {
             "name": "mcustiel/php-simple-di",
@@ -5762,6 +5762,24 @@
     "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
-    "platform": [],
-    "platform-dev": []
+    "platform": {
+        "ext-bcmath": "*",
+        "ext-bz2": "*",
+        "ext-dba": "*",
+        "ext-exif": "*",
+        "ext-gd": "*",
+        "ext-intl": "*",
+        "ext-mustache": "*",
+        "ext-mysqli": "*",
+        "ext-pcntl": "*",
+        "ext-simplexml": "*",
+        "ext-sockets": "*",
+        "ext-tideways": "*",
+        "ext-tidy": "*",
+        "ext-wikidiff2": "*"
+    },
+    "platform-dev": {
+        "ext-yaml": "*",
+        "ext-xdebug": "*"
+    }
 }
