@@ -44,6 +44,11 @@ class TorBlock {
 
 			$result[] = array('torblock-blocked', $ip);
 
+			// SUS-5525 | collect Tor blocks statistics
+			\Wikia\Logger\WikiaLogger::instance()->info( __METHOD__ . '::TorBlocked', [
+				'ip' => $ip,
+			] );
+
 			return false;
 		}
 
