@@ -7,15 +7,12 @@
  * @author Krzysztof Krzyżaniak <eloy@wikia-inc.com>
  */
 
-ini_set( "include_path", dirname(__FILE__) . "/../../../../maintenance/" );
-
 use Swagger\Client\Discussion\Api\SitesApi;
 use Wikia\Factory\ServiceFactory;
 
 $optionsWithArgs = array( "limit", "sleep" );
 
-require_once( "commandLine.inc" );
-require_once( "Archive/Tar.php" );
+require_once( __DIR__ . "../../../../maintenance/commandLine.inc" );
 
 class CloseWikiMaintenance {
 
@@ -151,13 +148,10 @@ class CloseWikiMaintenance {
 						$newFlags = $newFlags | WikiFactory::FLAG_CREATE_IMAGE_ARCHIVE | WikiFactory::FLAG_HIDE_DB_IMAGES;
 					}
 					catch( Exception $e ) {
-						/**
-						 * actually it's better to die than remove
-						 * images later without backup
-						 */
-						$this->error( "Can't copy images to remote host. Source {$source} is not defined",
+						$this->error( "Can't create tar archive with images",
 							[
-								'exception' => $e->getMessage()
+								'exception' => $e->getMessage(),
+								'city_id' => $cityid,
 							]
 						);
 					}
