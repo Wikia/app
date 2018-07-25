@@ -59,6 +59,7 @@ $config['adengine2_desktop_js'] = [
 		'//extensions/wikia/AdEngine/js/SlotTracker.js',
 		'//extensions/wikia/AdEngine/js/SlotTweaker.js',
 		'//extensions/wikia/AdEngine/js/config/desktop.js',
+		'//extensions/wikia/AdEngine/js/ml/billTheLizard.js',
 		'//extensions/wikia/AdEngine/js/provider/btfBlocker.js',
 		'//extensions/wikia/AdEngine/js/provider/directGpt.js',
 		'//extensions/wikia/AdEngine/js/provider/factoryWikiaGpt.js',
@@ -119,8 +120,7 @@ $config['adengine2_desktop_js'] = [
 		'//extensions/wikia/AdEngine/js/utils/scriptLoader.js',
 		'//extensions/wikia/AdEngine/js/provider/evolve2.js',
 
-		'//extensions/wikia/AdEngine/js/run/desktop.run.js',
-		'#group_adengine2_bill_the_lizard_js'
+		'//extensions/wikia/AdEngine/js/run/desktop.run.js'
 	],
 ];
 
@@ -315,14 +315,6 @@ $config['adengine2_bridge_js'] = [
 	'assets' => [
 		'//extensions/wikia/AdEngine/js/build/bridge.js'
 	]
-];
-
-$config['adengine2_bill_the_lizard_js'] = [
-	'skin' => [ 'oasis' ],
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => [
-		'//extensions/wikia/AdEngine/js/ml/billTheLizard.js'
-	],
 ];
 
 $config['adengine2_porvata_js'] = [
