@@ -15,7 +15,7 @@ class ResetWeeklyUserContributionsCount extends Maintenance {
 
 	public function __construct() {
 		parent::__construct();
-		$this->mDescription = 'reset weekly user contribution count';
+		$this->mDescription = 'reset weekly user contributions count';
 	}
 
 	public function execute() {
