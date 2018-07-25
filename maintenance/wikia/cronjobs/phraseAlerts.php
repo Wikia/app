@@ -3,8 +3,8 @@
 /**
  * Send email with report about monitored phrases
  *
- * @author tor
- * @see SUS-2420
+ * @group cronjobs
+ * @see phrase-alerts.yaml
  *
  * This script should be run for wiki_id 177 where $wgDiscussionAlertsQueries WikiFactory variable is defined
  */
@@ -18,12 +18,13 @@ class PhraseAlerts extends Maintenance {
 	public function execute() {
 		global $wgDiscussionAlertsQueries;
 
+		$isDryRun = $this->hasOption('dry-run');
+
 		$this->info( 'Init' );
 
 		$db = 'specials';
 		$perpage = 1000;
 		$date = gmDate( "Y-m-d\TH:i:s\Z", strtotime( '-30 days' ) );
-
 
 		$actualQuery = '(title_en:"PATTERN" OR nolang_en:"PATTERN") AND touched:[' . $date . ' TO *]';
 
@@ -111,13 +112,15 @@ class PhraseAlerts extends Maintenance {
 						$found[ $query ][] = $pageData['url'];
 						$body .= $pageReport . "\n";
 
-						$dbw->insert(
-							'discussion_reporting',
-							array(
-								'dr_query' => $query,
-								'dr_title' => $pageUrl,
-							)
-						);
+						if ( !$isDryRun ) {
+							$dbw->insert(
+								'discussion_reporting',
+								array(
+									'dr_query' => $query,
+									'dr_title' => $pageUrl,
+								)
+							);
+						}
 					}
 				}
 
@@ -134,8 +137,14 @@ class PhraseAlerts extends Maintenance {
 
 		$this->info( 'Sending emails' );
 
-		$this->doMail( 'tor@wikia-inc.com', $body );
-		$this->doMail( 'community@wikia.com', $body );
+		if ( $isDryRun ) {
+			$this->info( 'Email to be sent', [
+				'body' => $body
+			] );
+		} else {
+			$this->doMail( 'tor@wikia-inc.com', $body );
+			$this->doMail( 'community@wikia.com', $body );
+		}
 
 		$this->info( 'Finished' );
 	}
