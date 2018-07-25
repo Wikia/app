@@ -44,7 +44,7 @@ define('wikia.articleVideo.featuredVideo.ads', [
 	}
 
 	function getPrebidParams() {
-		if (prebid && adContext.get('bidders.prebid')) {debugger;
+		if (prebid && adContext.get('bidders.prebid')) {
 			return prebid.getSlotParams(featuredVideoSlotName);
 		}
 
