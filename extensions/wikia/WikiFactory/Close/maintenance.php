@@ -318,7 +318,9 @@ class CloseWikiMaintenance {
 
 		// s3cmd sync --dry-run s3://dilbert ~/images/dilbert/ --exclude "/thumb/*" --exclude "/temp/*"
 		// but use SwiftStorage instead (SUS-4537)
-		$objects = $swiftStorage->getContainer()->list_objects_recursively(
+		$swiftContainerObj = $swiftStorage->getContainer();
+
+		$objects = $swiftContainerObj->list_objects_recursively(
 			ltrim( $swiftStorage->getPathPrefix(), '/' ) );
 
 		foreach( $objects as $object ) {
@@ -332,7 +334,7 @@ class CloseWikiMaintenance {
 			wfMkdirParents( dirname( $directory . $object ) );
 
 			// fetch files one by one
-			( new CF_Object( $swiftStorage->getContainer(), $object ) )
+			( new CF_Object( $swiftContainerObj, $object ) )
 				->save_to_filename( $directory . $object );
 		}
 
