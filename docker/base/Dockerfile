@@ -128,6 +128,7 @@ RUN php-fpm --test
 ENV WIKIA_DOCROOT=/usr/wikia/slot1/current/src
 ENV WIKIA_CONFIG_ROOT=/usr/wikia/slot1/current/config
 
+# run "sha1sum Dockerfile" to update this value whenn this file changes
 ENV WIKIA_BASE_IMAGE_HASH=8a16e38
 
 WORKDIR /usr/wikia/slot1/current/src
