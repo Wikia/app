@@ -161,6 +161,11 @@ class TorBlock {
 			$nodes = array_unique( array_merge( $nodes, self::loadNodesForIP( $ip ) ) );
 		}
 
+		// SUS-5476 | add logging for a cron-job
+		\Wikia\Logger\WikiaLogger::instance()->info( __METHOD__, [
+			'nodes' => count( $nodes )
+		] );
+
 		// Save to cache.
 		$wgMemc->set( 'mw-tor-exit-nodes', $nodes, 1800 ); // Store for half an hour.
 		$wgMemc->set( 'mw-tor-list-status', 'loaded', 1800 );
