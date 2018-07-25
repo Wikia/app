@@ -13,14 +13,13 @@ require_once __DIR__ . '/../../Maintenance.php';
 
 class PhraseAlerts extends Maintenance {
 
-	use Wikia\Logger\Loggable;
-
 	public function execute() {
 		global $wgDiscussionAlertsQueries;
 
+		$logger = \Wikia\Logger\WikiaLogger::instance();
 		$isDryRun = $this->hasOption('dry-run');
 
-		$this->info( 'Init' );
+		$logger->info( 'Init' );
 
 		$db = 'specials';
 		$perpage = 1000;
@@ -34,7 +33,7 @@ class PhraseAlerts extends Maintenance {
 		$found = array();
 		$body = 'This message contains pages containing phrases which are marked as to be tracked (in $wgDiscussionAlertsQueries).' . "\n\nThis listing contains pages edited no earlier than $date (30 days ago) and not previously reported.\n\nPlease ensure the end line is visible before closing this ticket. If not, request a full copy from Community Engineering.";
 
-		$this->info( 'Connecting to DB' );
+		$logger->info( 'Connecting to DB' );
 
 		$dbr = wfGetDB( DB_SLAVE, array(), $db );
 		$dbw = wfGetDB( DB_MASTER, array(), $db );
@@ -44,7 +43,7 @@ class PhraseAlerts extends Maintenance {
 		// Step 1: process queries and fetch data from Solr
 		foreach ( $queries as $query ) {
 
-			$this->info( "Processing query: $query" );
+			$logger->info( "Processing query: $query" );
 
 			// initializing variables
 			$i = 1;
@@ -59,15 +58,15 @@ class PhraseAlerts extends Maintenance {
 			$numFound = 0;
 
 			while ( $i + $perpage < $numFound || $i == 1 ) {
-				$this->info(  "Fetching result" );
+				$logger->info(  "Fetching result" );
 				$result_raw = file_get_contents( $finalUrl . $i );
 				$result = null;
 
 				if ( empty( $result_raw ) ) {
-					$this->error( "Something went horribly wrong. No response from Solr." );
+					$logger->error( "Something went horribly wrong. No response from Solr." );
 					die();
 				} else {
-					$this->info(  "Processing result" );
+					$logger->info(  "Processing result" );
 					eval( "\$result = " . $result_raw . ";" );
 				}
 
@@ -135,10 +134,10 @@ class PhraseAlerts extends Maintenance {
 
 		$body .= "\nThis is the end of the list. If you can't read this line, please tell TOR. Oh... wait...\n";
 
-		$this->info( 'Sending emails' );
+		$logger->info( 'Sending emails' );
 
 		if ( $isDryRun ) {
-			$this->info( 'Email to be sent', [
+			$logger->info( 'Email to be sent', [
 				'body' => $body
 			] );
 		} else {
@@ -146,7 +145,7 @@ class PhraseAlerts extends Maintenance {
 			$this->doMail( 'community@wikia.com', $body );
 		}
 
-		$this->info( 'Finished' );
+		$logger->info( 'Finished' );
 	}
 
 	function doMail( $address, $body ) {
@@ -164,7 +163,7 @@ class PhraseAlerts extends Maintenance {
 				throw new Exception( 'Status returned from UserMailer::send is not good' );
 			}
 		} catch ( Exception $e ) {
-			$this->error( $e->getMessage(), [
+			\Wikia\Logger\WikiaLogger::instance()->error( $e->getMessage(), [
 				'exception' => $e
 			] );
 		}
