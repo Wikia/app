@@ -9,9 +9,9 @@
  * This script should be run for wiki_id 177 where $wgDiscussionAlertsQueries WikiFactory variable is defined
  */
 
-require_once __DIR__ . '/../../commandLine.inc';
+require_once __DIR__ . '/../../Maintenance.php';
 
-class PhraseAlerts {
+class PhraseAlerts extends Maintenance {
 
 	use Wikia\Logger\Loggable;
 
@@ -162,8 +162,5 @@ class PhraseAlerts {
 	}
 }
 
-global $IP;
-
-$wgAutoloadClasses[ 'UserMailer' ] = "$IP/includes/UserMailer.php";
-$maintenance = new PhraseAlerts();
-$maintenance->execute();
+$maintClass = 'PhraseAlerts';
+require_once RUN_MAINTENANCE_IF_MAIN;
