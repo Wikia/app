@@ -379,6 +379,7 @@ class WikiFactoryLoader {
 			$this->mSaveDefaults = true;
 		}
 
+		// Emit surrogate keys now so every wiki response is covered
 		$surrogateKey = Wikia::wikiSurrogateKey( $this->mWikiID );
 		if ( $surrogateKey ) {
 			// also add mediawiki-specific key
