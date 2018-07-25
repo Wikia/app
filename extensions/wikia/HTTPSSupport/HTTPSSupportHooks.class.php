@@ -43,12 +43,13 @@ class HTTPSSupportHooks {
 		User $user, WebRequest $request, MediaWiki $mediawiki
 	): bool {
 		global $wgDisableHTTPSDowngrade;
-		if ( !empty( $_SERVER['HTTP_FASTLY_FF'] ) ) {  // don't redirect internal clients
+		if ( !empty( $_SERVER['HTTP_FASTLY_FF'] ) &&  // don't redirect internal clients
+			// Don't redirect externaltest and showcase due to weird redirect behaviour (PLATFORM-3585)
+			!in_array( $request->getHeader( 'X-Staging' ), [ 'externaltest', 'showcase' ] )
+		) {
 			$requestURL = $request->getFullRequestURL();
 			if ( WebRequest::detectProtocol() === 'http' &&
-				self::httpsAllowed( $user, $requestURL ) &&
-				// Don't upgrade on externaltest and showcase due to weird redirect behaviour (PLATFORM-3585)
-				!in_array( $request->getHeader( 'X-Staging' ), [ 'externaltest', 'showcase' ] )
+				self::httpsAllowed( $user, $requestURL )
 			) {
 				$output->redirectProtocol( PROTO_HTTPS, '301' );
 				if ( $user->isAnon() ) {
