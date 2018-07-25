@@ -14,6 +14,8 @@ function yaml2json() {
 }
 
 job_description_file_name=$1
+LABEL=$2
+
 SCRIPT_FOLDER=$(dirname $(readlink -f $0))
 TEMPLATE=`cat $SCRIPT_FOLDER/cronjob-template.yaml`
 JOB_JSON=`yaml2json $SCRIPT_FOLDER/$job_description_file_name`
@@ -39,6 +41,7 @@ fi
 
 job_k8s_descriptor="${TEMPLATE/\$\{name\}/${NAME}}"
 job_k8s_descriptor="${job_k8s_descriptor/\$\{args\}/${ARGS}}"
+job_k8s_descriptor="${job_k8s_descriptor/\$\{label\}/${LABEL}}"
 job_k8s_descriptor="${job_k8s_descriptor/\$\{server_id\}/${SERVER_ID}}"
 job_k8s_descriptor="${job_k8s_descriptor/\$\{schedule\}/${SCHEDULE}}"
 echo "$job_k8s_descriptor"
