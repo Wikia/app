@@ -12,7 +12,7 @@ use Wikia\Factory\ServiceFactory;
 
 $optionsWithArgs = array( "limit", "sleep" );
 
-require_once( __DIR__ . "../../../../maintenance/commandLine.inc" );
+require_once( __DIR__ . "/../../../../maintenance/commandLine.inc" );
 
 class CloseWikiMaintenance {
 
