@@ -279,7 +279,7 @@ class CloseWikiMaintenance {
 			sleep( $sleep );
 		}
 
-		$this->debug( 'Done' );
+		$this->info( 'Done' );
 	}
 
 	/**
