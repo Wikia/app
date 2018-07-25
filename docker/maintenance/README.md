@@ -62,5 +62,5 @@ To apply all jobs defined run
 To check what cronjobs are currently scheduled:
 
 ```sh
-kubectl --context kube-sjc-prod -n prod get jobs
+kubectl --context kube-sjc-prod -n prod get cronJobs | grep mw-cj
 ```
