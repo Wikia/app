@@ -120,7 +120,7 @@ $config['adengine2_desktop_js'] = [
 		'//extensions/wikia/AdEngine/js/provider/evolve2.js',
 
 		'//extensions/wikia/AdEngine/js/run/desktop.run.js',
-		'//extensions/wikia/AdEngine/js/build/bridge.js',
+		'#group_adengine2_bill_the_lizard_js'
 	],
 ];
 
@@ -257,7 +257,8 @@ $config['adengine2_top_js'] = [
 		'//extensions/wikia/AdEngine/js/wad/babDetection.js',
 		'//resources/wikia/modules/browserDetect.js',
 		'//resources/wikia/modules/krux.js',
-		'#group_adengine2_rabbit_desktop_js'
+		'#group_adengine2_rabbit_desktop_js',
+		'#group_adengine2_bridge_js'
 	],
 ];
 
@@ -273,7 +274,6 @@ $config['adengine2_pr3b1d_js'] = [
 	'skin' => [ 'oasis' ],
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [
-		'//extensions/wikia/AdEngine/js/build/bridge.js',
 		'//extensions/wikia/AdEngine/js/context/uapContext.js',
 		'//extensions/wikia/AdEngine/js/wad/babDetection.js',
 
@@ -306,6 +306,22 @@ $config['adengine2_pr3b1d_js'] = [
 
 		// prebid library
 		'#group_pr3b1d_prod_js'
+	],
+];
+
+$config['adengine2_bridge_js'] = [
+	'skin' => [ 'oasis' ],
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => [
+		'//extensions/wikia/AdEngine/js/build/bridge.js'
+	]
+];
+
+$config['adengine2_bill_the_lizard_js'] = [
+	'skin' => [ 'oasis' ],
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => [
+		'//extensions/wikia/AdEngine/js/ml/billTheLizard.js'
 	],
 ];
 
@@ -891,7 +907,8 @@ $config['mobile_base_ads_js'] = [
 		'//extensions/wikia/AdEngine/js/video/vastUrlBuilder.js',
 
 		//Prebid
-		'#group_adengine2_pr3b1d_js',
+		'#group_adengine2_bridge_js',
+		'#group_adengine2_pr3b1d_js'
 	],
 ];
 

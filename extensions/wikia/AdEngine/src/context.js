@@ -17,6 +17,16 @@ export default {
 		outstream: 'none',
 		uap: 'none',
 	},
+	services: {
+		billTheLizard: {
+			enabled: false,
+			host: 'services.wikia.com',
+			endpoint: 'bill-the-lizard/predict',
+			models: [],
+			parameters: {},
+			timeout: 2000
+		}
+	},
 	slotGroups: {
 		LB: ['TOP_LEADERBOARD', 'MOBILE_TOP_LEADERBOARD'],
 		MR: ['TOP_RIGHT_BOXAD'],
