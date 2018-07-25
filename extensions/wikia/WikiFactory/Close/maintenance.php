@@ -505,7 +505,10 @@ class CloseWikiMaintenance {
 			$this->getSitesApi()->hardDeleteSite( $cityId, F::app()->wg->TheSchwartzSecretToken );
 		}
 		catch ( \Swagger\Client\ApiException $e ) {
-			$this->error( "{$cityId} Failed to hard delete Discussion site: {$e->getMessage()} \n" );
+			$this->error( "Failed to hard delete Discussion site", [
+				'exception' => $e,
+				'city_id' => $cityId,
+			] );
 		}
 	}
 
