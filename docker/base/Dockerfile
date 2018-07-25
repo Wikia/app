@@ -31,6 +31,8 @@ RUN apt-get update && apt-get install -y \
     libicu-dev \
     # needed by php luasandbox extension
     liblua5.1-0-dev \
+    # SUS-5500 | provides mysqldump needed by dumpStarters.php script
+    default-mysql-client \
     # needed by sass, this installs libsass-3.4.3, matches with https://github.com/absalomedia/sassphp/releases/tag/0.5.10
     && apt-get install -y libsass-dev \
     # cleanup
