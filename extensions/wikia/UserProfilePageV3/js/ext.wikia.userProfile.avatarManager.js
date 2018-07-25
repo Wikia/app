@@ -5,6 +5,10 @@ define('ext.wikia.userProfile.userAvatar', ['jquery', 'mw', 'BannerNotification'
 	var avatarPreview, avatarUploadForm, avatarUploadInput, selectedDefaultAvatar,
 		avatarChoice = { custom : false, default : false };
 
+	function showErrorBanner(content) {
+		new BannerNotification(content, 'error').show();
+	}
+
 	function onAvatarUploadComplete($dfd) {
 		return function () {
 			if (this.readyState === XMLHttpRequest.DONE) {
@@ -57,7 +61,13 @@ define('ext.wikia.userProfile.userAvatar', ['jquery', 'mw', 'BannerNotification'
 				avatarChoice.custom = true;
 				avatarChoice.default = false;
 			} else {
-				alert(JSON.stringify(this.response));
+				if (this.response.title === 'avatar_not_an_image') {
+					showErrorBanner(mw.message('user-identity-box-avatar-error-nofile').escaped());
+				} else if (this.response.title === '') {
+					showErrorBanner(mw.message('user-identity-box-avatar-error-size', this.response.detail / 1000).escaped());
+				} else {
+					showErrorBanner(mw.message('user-identity-box-avatar-error').escaped());
+				}
 			}
 		}
 	}

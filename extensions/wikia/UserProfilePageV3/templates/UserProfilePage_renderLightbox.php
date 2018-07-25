@@ -19,7 +19,7 @@
 
 				<fieldset class="avatar-options">
 					<div class="input-group">
-						<label for="UPPLightboxAvatar">
+						<label for="avatar-upload-input">
 							<?= wfMessage( 'user-identity-box-avatar-upload-avatar' )->escaped(); ?>
 						</label>
 						<input type="file" name="file" id="avatar-upload-input" />
