@@ -1039,6 +1039,13 @@ $wgAdDriverRubiconPrebidCountries = null;
 $wgAdDriverRubiconDfpCountries = null;
 
 /**
+ * @name $wgAdDriverAppNexusDfpCountries
+ * Enables AppNexus via DFP in these countries.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverAppNexusDfpCountries = null;
+
+/**
  * @name $wgAdDriverPrebidBidderCountries
  * List of countries where prebid bidding platform is enabled.
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
