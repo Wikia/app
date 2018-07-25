@@ -54,7 +54,7 @@ $wgTorBypassPermissions = array( 'torunblocked', /*'autoconfirmed', 'proxyunbann
  * Set to false on high-load sites, and use a cron job with the included
  * maintenance script
  */
-$wgTorLoadNodes = true;
+$wgTorLoadNodes = false; // Wikia change
 
 /**
  * Actions tor users are allowed to do.
