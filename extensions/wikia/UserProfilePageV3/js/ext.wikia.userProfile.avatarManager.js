@@ -75,7 +75,7 @@ define('ext.wikia.userProfile.userAvatar', ['jquery', 'mw', 'BannerNotification'
 
 	function selectSampleAvatar(event) {
 		avatarPreview.src = event.target.src;
-		selectedDefaultAvatar = event.target.getAttribute('data-url');
+		selectedDefaultAvatar = event.target.getAttribute('data-name');
 
 		avatarChoice.custom = false;
 		avatarChoice.default = true;

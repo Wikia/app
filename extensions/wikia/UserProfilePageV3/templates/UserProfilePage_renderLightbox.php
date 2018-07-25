@@ -31,7 +31,7 @@
 							<ul class="sample-avatars">
 								<? foreach ( $defaultAvatars as $avatar ): ?>
 									<li>
-										<img width="40" height="40" src="<?= $avatar['url']; ?>" data-url="<?= Sanitizer::encodeAttribute( $avatar['avatarUrl'] ); ?>" class="default-avatar" />
+										<img width="40" height="40" src="<?= $avatar['url']; ?>" data-name="<?= Sanitizer::encodeAttribute( $avatar['name'] ); ?>" class="default-avatar" />
 									</li>
 								<? endforeach; ?>
 							</ul>

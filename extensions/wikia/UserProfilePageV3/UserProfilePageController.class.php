@@ -797,7 +797,7 @@ class UserProfilePageController extends WikiaController {
 				$avatarUrl = Masthead::getDefaultAvatarUrl( $image );
 				$this->defaultAvatars[] = [
 					'url' => ImagesService::getThumbUrlFromFileUrl( $avatarUrl, self::AVATAR_DEFAULT_SIZE ),
-					'avatarUrl' => $avatarUrl,
+					'name' => $image,
 				];
 			}
 		}
