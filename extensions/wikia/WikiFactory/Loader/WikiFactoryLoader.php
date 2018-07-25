@@ -379,6 +379,13 @@ class WikiFactoryLoader {
 			$this->mSaveDefaults = true;
 		}
 
+		$surrogateKey = Wikia::wikiSurrogateKey( $this->mWikiID );
+		if ( $surrogateKey ) {
+			// also add mediawiki-specific key
+			$surrogateKeys = [$surrogateKey, $surrogateKey . '-mediawiki'];
+			Wikia::attachSurrogateKeysToHeaders( $surrogateKeys );
+		}
+
 		/**
 		 * redirection to another url
 		 * Make sure we are not running in command line mode where redirects have no sense at all
