@@ -95,9 +95,6 @@ class CloseWikiMaintenance {
 			'query' => $dbr->lastQuery()
 		] );
 
-		$this->info( 'Will start in 5 seconds...' );
-		sleep(5);
-
 		while( $row = $dbr->fetchObject( $sth ) ) {
 			/**
 			 * reasonable defaults for wikis and some presets
