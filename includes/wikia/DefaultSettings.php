@@ -976,6 +976,13 @@ $wgAdDriverIsAdTestWiki = false;
 $wgAdDriverNetzAthletenCountries = null;
 
 /**
+ * @name $wgAdDriverLABradorDfpKeyvals
+ * Labrador sampling keyvals to be reported to DFP.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverLABradorDfpKeyvals = null;
+
+/**
  * @name wgAdDriverA9VideoBidderCountries
  * List of countries where A9 video bidding platform is enabled.
  * It won't work if A9 display bidder isn't enabled
@@ -1339,6 +1346,13 @@ $wgAdDriverFVDelayTimeoutMobileWiki = 2000;
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverKruxCountries = null;
+
+/**
+ * @name $wgAdDriverKruxNewParamsCountries
+ * List of countries where Krux will use new parameters (kuid and ksg)
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverKruxNewParamsCountries = null;
 
 /**
  * @name $wgHighValueCountries
