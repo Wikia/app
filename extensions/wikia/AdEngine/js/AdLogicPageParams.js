@@ -210,6 +210,10 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 			params.cid = cid;
 		}
 
+		if (context.opts.labradorDfp) {
+			params.labrador = context.opts.labradorDfp;
+		}
+
 		extend(params, decodeLegacyDartParams(targeting.wikiCustomKeyValues));
 		extend(params, runtimeParams);
 

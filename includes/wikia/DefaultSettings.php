@@ -976,6 +976,13 @@ $wgAdDriverIsAdTestWiki = false;
 $wgAdDriverNetzAthletenCountries = null;
 
 /**
+ * @name $wgAdDriverLABradorDfpKeyvals
+ * Labrador sampling keyvals to be reported to DFP.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverLABradorDfpKeyvals = null;
+
+/**
  * @name wgAdDriverA9VideoBidderCountries
  * List of countries where A9 video bidding platform is enabled.
  * It won't work if A9 display bidder isn't enabled
