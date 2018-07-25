@@ -11,6 +11,9 @@
  *
  * @author Macbre
  * @ingroup Maintenance
+ *
+ * @group cronjobs
+ * @see dump-starters.yaml
  */
 
 putenv( 'SERVER_ID=80433' ); // run in the context of www.wikia.com (where CreateWiki is enabled)
