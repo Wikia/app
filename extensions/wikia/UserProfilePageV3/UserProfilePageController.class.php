@@ -351,8 +351,6 @@ class UserProfilePageController extends WikiaController {
 		$user->setGlobalAttribute( AVATAR_USER_OPTION_NAME, $avatar );
 		$user->saveAttributes();
 		$user->invalidateCache();
-
-		$this->response->setCode( 204 );
 	}
 
 	/**
