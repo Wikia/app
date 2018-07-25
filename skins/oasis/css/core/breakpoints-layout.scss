@@ -20,6 +20,13 @@
 		}
 	}
 
+	@media #{$breakpoint-medium-plus-only} {
+		.WikiaPage {
+			padding: 0 $padding-width-medium;
+			width: $page-width-medium-plus;
+		}
+	}
+
 	@media #{$breakpoint-large-up} {
 		.WikiaPage {
 			padding: 0 $padding-width-large;
