@@ -13,6 +13,14 @@ define('ext.wikia.adEngine.ml.billTheLizard', [
 		return;
 	}
 
+	function isApplicable(name) {
+		if (name.indexOf('ctp_desktop') === 0) {
+			return adContext.get('targeting.hasFeaturedVideo');
+		}
+
+		return true;
+	}
+
 	function call() {
 		var config = instantGlobals.wgAdDriverBillTheLizardConfig || {},
 			featuredVideoData = adContext.get('targeting.featuredVideo') || {},
@@ -36,7 +44,7 @@ define('ext.wikia.adEngine.ml.billTheLizard', [
 		Object.keys(config.models || {}).forEach(function (name) {
 			var countriesList = config.models[name];
 
-			if (geo.isProperGeo(countriesList, name)) {
+			if (isApplicable(name) && geo.isProperGeo(countriesList, name)) {
 				bridge.context.push('services.billTheLizard.models', name);
 			}
 		});
