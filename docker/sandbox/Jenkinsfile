@@ -6,7 +6,7 @@ def sandbox = "sandbox-sus2"
 def environment = "sandbox"
 def datacenter = "sjc"
 
-def kubectlImage = "artifactory.wikia-inc.com/ops/k8s-deployer:0.0.14"
+def kubectlImage = "artifactory.wikia-inc.com/ops/k8s-deployer:0.0.15"
 def nginxImage = "artifactory.wikia-inc.com/sus/mediawiki-sandbox-nginx"
 def mediawikiImage = "artifactory.wikia-inc.com/sus/mediawiki-sandbox-php"
 
