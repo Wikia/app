@@ -4,6 +4,9 @@
  * @package MediaWiki
  * @addtopackage maintenance
  *
+ * @group cronjobs
+ * @see wiki-factory-close-marked-wikis.yaml
+ *
  * @author Krzysztof Krzyżaniak <eloy@wikia-inc.com>
  */
 
