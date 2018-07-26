@@ -228,6 +228,7 @@ $config['adengine2_top_js'] = [
 		'//extensions/wikia/AdEngine/js/AdLogicPageParams.js',
 		'//extensions/wikia/AdEngine/js/AdLogicPageViewCounter.js',
 		'//extensions/wikia/AdEngine/js/AdTracker.js',
+		'//extensions/wikia/AdEngine/js/build/bridge.js',
 		'//extensions/wikia/AdEngine/js/utils/eventDispatcher.js',
 		'//extensions/wikia/AdEngine/js/utils/device.js',
 		'//extensions/wikia/AdEngine/js/utils/sampler.js',
@@ -257,8 +258,7 @@ $config['adengine2_top_js'] = [
 		'//extensions/wikia/AdEngine/js/wad/babDetection.js',
 		'//resources/wikia/modules/browserDetect.js',
 		'//resources/wikia/modules/krux.js',
-		'#group_adengine2_rabbit_desktop_js',
-		'#group_adengine2_bridge_js'
+		'#group_adengine2_rabbit_desktop_js'
 	],
 ];
 
@@ -307,14 +307,6 @@ $config['adengine2_pr3b1d_js'] = [
 		// prebid library
 		'#group_pr3b1d_prod_js'
 	],
-];
-
-$config['adengine2_bridge_js'] = [
-	'skin' => [ 'oasis' ],
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => [
-		'//extensions/wikia/AdEngine/js/build/bridge.js'
-	]
 ];
 
 $config['adengine2_porvata_js'] = [
@@ -850,6 +842,7 @@ $config['mobile_base_ads_js'] = [
 		'//extensions/wikia/AdEngine/js/AdEngineRunner.js',
 		'//extensions/wikia/AdEngine/js/AdLogicPageParams.js',
 		'//extensions/wikia/AdEngine/js/AdTracker.js',
+		'//extensions/wikia/AdEngine/js/build/bridge.js',
 		'//extensions/wikia/AdEngine/js/utils/timeBuckets.js',
 		'//extensions/wikia/AdEngine/js/DOMElementTweaker.js',
 		'//extensions/wikia/AdEngine/js/MessageListener.js',
@@ -899,7 +892,6 @@ $config['mobile_base_ads_js'] = [
 		'//extensions/wikia/AdEngine/js/video/vastUrlBuilder.js',
 
 		//Prebid
-		'#group_adengine2_bridge_js',
 		'#group_adengine2_pr3b1d_js'
 	],
 ];
