@@ -160,7 +160,8 @@ class RebuildConceptCache extends \Maintenance {
 	 * @param string $message
 	 */
 	public function reportMessage( $message ) {
-		$this->output( $message );
+		// Wikia change
+		\Wikia\Logger\WikiaLogger::instance()->info( $message );
 	}
 
 	private function checkForRebuildState( $rebuildResult ) {
