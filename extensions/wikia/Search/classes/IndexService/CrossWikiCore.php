@@ -53,8 +53,6 @@ class CrossWikiCore extends AbstractWikiService {
 		$sitename = $service->getGlobal( 'Sitename' );
 		$response['id'] = $this->wikiId;
 		$response['sitename_txt'] = $sitename;
-		$sn = Utilities::field( 'sitename' );
-		$langSn = $sn == 'sitename' ? 'sitename_txt' : $sn;
 		$response['lang_s'] = $service->getLanguageCode();
 		$response['hub_s'] = $service->getHubForWikiId( $this->wikiId );
 		$response['created_dt'] = str_replace( ' ', 'T', $wiki->city_created ) . 'Z';
@@ -185,7 +183,6 @@ class CrossWikiCore extends AbstractWikiService {
 	protected function getCategories() {
 		$categories = [];
 		$dbr = wfGetDB( DB_SLAVE );
-		$sql = "SELECT cat_title FROM category WHERE cat_hidden = 0 ORDER BY cat_pages DESC";
 		$query = $dbr->select(
 			'category',
 			'cat_title',
