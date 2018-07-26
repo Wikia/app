@@ -36,7 +36,8 @@ class CrossWikiCore extends AbstractWikiService {
 			$this->getCategories(),
 			$this->getVisualizationInfo(),
 			$this->getTopArticles(),
-			$this->getLicenseInformation()
+			$this->getLicenseInformation(),
+			$this->getIsPromotedWiki()
 		);
 	}
 
@@ -228,6 +229,20 @@ class CrossWikiCore extends AbstractWikiService {
 		return [
 			"commercial_use_allowed_b" => $licensedWikiService->isCommercialUseAllowedById( $this->getWikiId() ) ===
 				true
+		];
+	}
+
+	/**
+	 * Get a flag that forces a wiki to show up in wiki search results despite low number of articles
+	 *
+	 * @see SUS-5681
+	 * @return array
+	 */
+	protected function getIsPromotedWiki() {
+		global $wgForceWikiIncludeInSearch;
+
+		return [
+			"promoted_wiki_b" => !empty( $wgForceWikiIncludeInSearch )
 		];
 	}
 
