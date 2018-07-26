@@ -205,6 +205,7 @@ define('ext.wikia.adEngine.adContext', [
 			context.targeting.enableKruxTargeting &&
 			isProperGeoAds('wgAdDriverKruxCountries') && !instantGlobals.wgSitewideDisableKrux
 		);
+		context.opts.kruxNewParams = isProperGeoAds('wgAdDriverKruxNewParamsCountries');
 
 		// Floating medrec
 		context.opts.floatingMedrec = !!(
@@ -239,6 +240,7 @@ define('ext.wikia.adEngine.adContext', [
 		context.opts.labradorTestGroup = context.opts.labradorTest ? 'B' : 'A';
 		context.opts.mobileSectionsCollapse = isProperGeoAds('wgAdDriverMobileSectionsCollapseCountries');
 		context.opts.netzathleten = isProperGeoAds('wgAdDriverNetzAthletenCountries');
+		context.opts.labradorDfp = getDfpLabradorKeyvals(instantGlobals.wgAdDriverLABradorDfpKeyvals);
 
 		// Export the context back to ads.context
 		// Only used by Lightbox.js, WikiaBar.js and AdsInContext.js
@@ -249,6 +251,25 @@ define('ext.wikia.adEngine.adContext', [
 		for (i = 0, len = callbacks.length; i < len; i += 1) {
 			callbacks[i](context);
 		}
+	}
+
+	function getDfpLabradorKeyvals(wfKeyvals) {
+		if (!wfKeyvals || !wfKeyvals.length) {
+			return '';
+		}
+
+		var labradorDfpKeys = [],
+			labradorVariables = adsGeo.getSamplingResults();
+
+		wfKeyvals.forEach(function (keyval) {
+			keyval = keyval.split(':');
+
+			if (labradorVariables.indexOf(keyval[0]) !== -1) {
+				labradorDfpKeys.push(keyval[1])
+			}
+		});
+
+		return labradorDfpKeys.join(',');
 	}
 
 	function addCallback(callback) {

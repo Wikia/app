@@ -44,6 +44,11 @@ class TorBlock {
 
 			$result[] = array('torblock-blocked', $ip);
 
+			// SUS-5525 | collect Tor blocks statistics
+			\Wikia\Logger\WikiaLogger::instance()->info( __METHOD__ . '::TorBlocked', [
+				'ip' => $ip,
+			] );
+
 			return false;
 		}
 
@@ -152,11 +157,6 @@ class TorBlock {
 
 		global $wgTorIPs, $wgMemc;
 
-		// we want to trace when the memcache entry expires and we generate new
-		if ( class_exists( 'Wikia\\Logger\\WikiaLogger' ) ) {
-			\Wikia\Logger\WikiaLogger::instance()->debug( 'TorBlock::loadExitNodes' );
-		}
-
 		// Set loading key, to prevent DoS of server.
 
 		$wgMemc->set( 'mw-tor-list-status', 'loading', 300 );
@@ -165,6 +165,11 @@ class TorBlock {
 		foreach( $wgTorIPs as $ip ) {
 			$nodes = array_unique( array_merge( $nodes, self::loadNodesForIP( $ip ) ) );
 		}
+
+		// SUS-5476 | add logging for a cron-job
+		\Wikia\Logger\WikiaLogger::instance()->info( __METHOD__, [
+			'nodes' => count( $nodes )
+		] );
 
 		// Save to cache.
 		$wgMemc->set( 'mw-tor-exit-nodes', $nodes, 1800 ); // Store for half an hour.
