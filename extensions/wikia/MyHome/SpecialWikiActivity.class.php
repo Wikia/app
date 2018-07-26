@@ -117,7 +117,7 @@ JS
 
 		if ( $wgUser->isAnon() ) {
 			$this->getOutput()->setSquidMaxage( 3600 ); // 1 hour
-			Wikia::attachSurrogateKeysToHeaders( MyHome::getWikiActivitySurrogateKey() );
+			Wikia::setSurrogateKeysHeaders( MyHome::getWikiActivitySurrogateKey() );
 		}
 
 		wfProfileOut( __METHOD__ );

@@ -384,7 +384,7 @@ class WikiFactoryLoader {
 		if ( $surrogateKey ) {
 			// also add mediawiki-specific key
 			$surrogateKeys = [$surrogateKey, $surrogateKey . '-mediawiki'];
-			Wikia::attachSurrogateKeysToHeaders( $surrogateKeys, true );
+			Wikia::setSurrogateKeysHeaders( $surrogateKeys, true );
 		}
 
 		/**

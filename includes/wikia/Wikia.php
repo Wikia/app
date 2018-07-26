@@ -1952,10 +1952,14 @@ class Wikia {
 
 	/**
 	 * Send surrogate key(s) headers.
+	 *
+	 * Do not set the $replace param to true unless you're know what you're doing (this will
+	 * remove wiki surrogate keys).
+	 *
 	 * @param string|array $surrogateKeys Surrogate keys (array or space-delimited string)
 	 * @param bool $replace When false, new values will be added to the existing header
 	 */
-	public static function attachSurrogateKeysToHeaders( $surrogateKeys, $replace = false ) {
+	public static function setSurrogateKeysHeaders( $surrogateKeys, $replace = false ) {
 		if ( !is_array( $surrogateKeys ) ) {
 			$surrogateKeys = [ $surrogateKeys ];
 		}
