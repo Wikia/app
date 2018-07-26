@@ -1,9 +1,12 @@
 /*global define*/
 define('ext.wikia.adEngine.wrappers.prebid', [
 	'ext.wikia.adEngine.adContext',
+	// TODO: Remove wikia.cmp dependency after ADEN-7432
+	// at this point it's a way to load cmp module (just require it)
+	'wikia.cmp',
 	'wikia.location',
 	'wikia.window'
-], function (adContext, loc, win) {
+], function (adContext, cmp, loc, win) {
 	'use strict';
 
 	var validResponseStatusCode = 1,
