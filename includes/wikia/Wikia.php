@@ -1951,18 +1951,21 @@ class Wikia {
 	}
 
 	/**
-	 * Add surrogate key(s) preserving those previously emitted.
+	 * Send surrogate key(s) headers.
 	 * @param string|array $surrogateKeys Surrogate keys (array or space-delimited string)
+	 * @param bool $replace When false, new values will be added to the existing header
 	 */
-	public static function attachSurrogateKeysToHeaders( $surrogateKeys ) {
+	public static function attachSurrogateKeysToHeaders( $surrogateKeys, $replace = false ) {
 		if ( !is_array( $surrogateKeys ) ) {
 			$surrogateKeys = [ $surrogateKeys ];
 		}
-		// get existing surrogate keys
-		$headers = headers_list();
-		foreach ( $headers as $header ) {
-			if ( strtolower( substr( $header, 0, 14 ) ) === 'surrogate-key:' ) {
-				$surrogateKeys[] = trim( substr( $header, 14 ) );
+		if ( !$replace ) {
+			// get existing surrogate keys
+			$headers = headers_list();
+			foreach ( $headers as $header ) {
+				if ( strtolower( substr( $header, 0, 14 ) ) === 'surrogate-key:' ) {
+					$surrogateKeys[] = trim( substr( $header, 14 ) );
+				}
 			}
 		}
 		$surrogateKey = implode( ' ', $surrogateKeys );
