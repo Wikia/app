@@ -1,18 +1,17 @@
 <?php
-
-use \Wikia\Logger\WikiaLogger;
-
 /**
  * On Special:Community we have weekly users rank with most contributions.
- * We need to reset it after every Sunday
+ * We need to reset it after every Sunday.
+ *
+ * @group cronjobs
+ * @see reset-weekly-user-contributions.yaml
  */
 
-require_once( __DIR__ . '/../../Maintenance.php' );
+require_once __DIR__ . '/../../Maintenance.php';
 
-/**
- * Class ResetWeeklyUserContributionsCount
- */
 class ResetWeeklyUserContributionsCount extends Maintenance {
+
+	use Wikia\Logger\Loggable;
 
 	public function __construct() {
 		parent::__construct();
@@ -31,6 +30,11 @@ class ResetWeeklyUserContributionsCount extends Maintenance {
 			__METHOD__
 		);
 
+		$this->info( 'select users', [
+			'users' => count( $userIds ),
+			'query' => $dbw->lastQuery()
+		] );
+
 		$result = $dbw->delete(
 			'wikia_user_properties',
 			[ 'wup_property' => 'editcountThisWeek' ],
@@ -38,8 +42,13 @@ class ResetWeeklyUserContributionsCount extends Maintenance {
 		);
 
 		if ( $result === false ) {
-			WikiaLogger::instance()->error( 'Reset Weekly Contributions Count' );
+			$this->error( 'error while deleting entries', [ 'query' => $dbw->lastQuery() ] );
 		} else {
+			$this->info( 'deleted entries', [
+				'users' => $dbw->affectedRows(),
+				'query' => $dbw->lastQuery()
+			] );
+
 			foreach ( $userIds as $id ) {
 				UserStatsService::purgeOptionsWikiCache( $id, $wgCityId );
 			}
@@ -47,11 +56,11 @@ class ResetWeeklyUserContributionsCount extends Maintenance {
 			if ( $wgEnableCommunityPageExt ) {
 				WikiaDataAccess::cachePurge( wfMemcKey( CommunityPageSpecialUsersModel::TOP_CONTRIB_MCACHE_KEY ) );
 			}
-
-			WikiaLogger::instance()->info( 'Reset Weekly Contributions Count' );
 		}
+
+		$this->info( 'done' );
 	}
 }
 
 $maintClass = 'ResetWeeklyUserContributionsCount';
-require_once( RUN_MAINTENANCE_IF_MAIN );
+require_once RUN_MAINTENANCE_IF_MAIN;
