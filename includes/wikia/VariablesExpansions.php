@@ -356,9 +356,6 @@ $wgLBFactoryConf = [
         'blobs20132' => [ 'dbname' => 'blobs20132' ],
         'blobs20141' => [ 'dbname' => 'blobs20141' ],
     ],
-	'readOnlyBySection' => [
-		'semanticdb' => 'SMW cluster is in read-only mode for maintenance. We apologise for the inconvenience.'
-	],
 ];
 
 /**
