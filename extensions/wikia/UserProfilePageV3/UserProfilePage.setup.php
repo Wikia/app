@@ -16,7 +16,6 @@ define ( 'AVATAR_UPLOAD_FIELD', 'wkUserAvatar' );
  */
 $wgAutoloadClasses['UserIdentityBox'] =  $dir . '/UserIdentityBox.class.php';
 $wgAutoloadClasses['UserProfilePageRailHelper'] =  $dir . '/UserProfilePageRailHelper.class.php';
-$wgAutoloadClasses['ImageOperationsHelper'] =  $dir . '/ImageOperationsHelper.class.php';
 $wgAutoloadClasses['FavoriteWikisModel'] =  $dir . '/models/FavoriteWikisModel.class.php';
 
 $wgAutoloadClasses['UserProfilePageHelper'] =  $dir . '/UserProfilePageHelper.class.php';
