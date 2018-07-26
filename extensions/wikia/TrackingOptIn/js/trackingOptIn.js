@@ -32,7 +32,7 @@ define('wikia.trackingOptIn', [
 			});
 			geoRequiresConsent = instance.geoRequiresTrackingConsent();
 
-			// TODO: Remove this flag once we fully switch to CMP from TrackingOptIn
+			// TODO: Remove this flag once we fully switch to CMP from TrackingOptIn - ADEN-7432
 			window.isConsentManagementProviderLoadedFromTrackingOptInModal = !!instance.consentManagementProvider;
 		} else {
 			optIn = true;
