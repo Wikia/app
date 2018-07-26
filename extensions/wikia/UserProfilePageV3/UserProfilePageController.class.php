@@ -325,6 +325,10 @@ class UserProfilePageController extends WikiaController {
 		wfProfileOut( __METHOD__ );
 	}
 
+	/**
+	 * Sets user's avatar to one of the available defaults provided by us
+	 * @requestParam string avatar file name of default avatar
+	 */
 	public function saveDefaultAvatar() {
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 

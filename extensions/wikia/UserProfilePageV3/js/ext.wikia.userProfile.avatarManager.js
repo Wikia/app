@@ -9,6 +9,11 @@ define('ext.wikia.userProfile.userAvatar', ['jquery', 'mw', 'BannerNotification'
 		new BannerNotification(content, 'error').show();
 	}
 
+	/**
+	 * Creates a callback to be fired after an user provided avatar has been uploaded to the service
+	 * @param $dfd
+	 * @returns {Function}
+	 */
 	function onAvatarUploadComplete($dfd) {
 		return function () {
 			if (this.readyState === XMLHttpRequest.DONE) {
@@ -21,6 +26,9 @@ define('ext.wikia.userProfile.userAvatar', ['jquery', 'mw', 'BannerNotification'
 		};
 	}
 
+	/**
+	 * Sets user's avatar to one of the provided defaults via MW API
+	 */
 	function saveDefaultAvatar() {
 		var $dfd = new $.Deferred();
 
@@ -34,6 +42,10 @@ define('ext.wikia.userProfile.userAvatar', ['jquery', 'mw', 'BannerNotification'
 		return $dfd.promise();
 	}
 
+	/**
+	 * Uploads an user provided avatar to the service
+	 * @returns {*}
+	 */
 	function uploadAvatar() {
 		var $dfd = new $.Deferred();
 		var formData = new FormData(avatarUploadForm);
@@ -48,6 +60,10 @@ define('ext.wikia.userProfile.userAvatar', ['jquery', 'mw', 'BannerNotification'
 		return $dfd.promise();
 	}
 
+	/**
+	 * Callback fired after an user provided avatar has been validated by the service
+	 * Used for frontend validation
+	 */
 	function onAvatarValidationComplete() {
 		if (this.readyState === XMLHttpRequest.DONE) {
 			if (this.status === 200) {
@@ -72,6 +88,10 @@ define('ext.wikia.userProfile.userAvatar', ['jquery', 'mw', 'BannerNotification'
 		}
 	}
 
+	/**
+	 * Submits an user provided avatar for preliminary validation to the service
+	 * Validation results will be displayed to the user
+	 */
 	function doAvatarValidation() {
 		var formData = new FormData(avatarUploadForm);
 
@@ -92,6 +112,9 @@ define('ext.wikia.userProfile.userAvatar', ['jquery', 'mw', 'BannerNotification'
 	}
 
 	return {
+		/**
+		 * Initialize handlers when modal is opened
+		 */
 		init: function () {
 			avatarPreview = document.querySelector('.avatar-preview');
 			avatarUploadForm = document.getElementById('avatar-upload-form');
@@ -107,12 +130,19 @@ define('ext.wikia.userProfile.userAvatar', ['jquery', 'mw', 'BannerNotification'
 			}
 		},
 
+		/**
+		 * Clean up any hanging DOM references after the modal is closed
+		 */
 		close: function () {
 			avatarPreview = null;
 			avatarUploadForm = null;
 			avatarUploadInput = null;
 		},
 
+		/**
+		 * Callback fired when modal is saved
+		 * Uploads user provided avatar / saves selected default avatar / does nothing, depending on user choice
+		 */
 		saveAvatar: function () {
 			if (avatarChoice.default) {
 				return saveDefaultAvatar();
