@@ -137,9 +137,6 @@ abstract class Maintenance {
 
 		$this->addDefaultParams();
 		register_shutdown_function( array( $this, 'outputChanneled' ), false );
-
-		// Wikia change
-		$this->mLogger = \Wikia\Logger\WikiaLogger::instance();
 	}
 
 	/**
@@ -325,8 +322,11 @@ abstract class Maintenance {
 	 *     function outputChanneled.
 	 */
 	protected function output( $out, $channel = null ) {
-		// Wikia change
-		$this->mLogger->info( $out );
+
+		// Wikia change: log output if possible
+		if ( $this->mLogger instanceof Wikia\Logger\WikiaLogger ) {
+			$this->mLogger->info( $out );
+		}
 
 		if ( $this->mQuiet ) {
 			return;
@@ -884,6 +884,9 @@ abstract class Maintenance {
 		}
 		# Same with these
 		$wgCommandLineMode = true;
+
+		// Wikia change
+		$this->mLogger = Wikia\Logger\WikiaLogger::instance();
 
 		/**
 		 * Wikia change - begin
