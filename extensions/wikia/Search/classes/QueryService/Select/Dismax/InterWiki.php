@@ -129,7 +129,11 @@ class InterWiki extends AbstractDismax {
 	 */
 	protected function getFilterQueryString() {
 		$wid = $this->getService()->getWikiId();
-		$filterQueries = [ 'articles_i:[' . $this->config->getXwikiArticleThreshold() . ' TO *]', "-id:{$wid}" ];
+		$filterQueries = [
+			// SUS-5681 | allow wikis with promoted_wiki_b fiels set to override articles threshold
+			'( articles_i:[' . $this->config->getXwikiArticleThreshold() . ' TO *] OR promoted_wiki_b:true )',
+			"-id:{$wid}"
+		];
 		if ( $this->getConfig()->getCommercialUse() ) {
 			$filterQueries[] = "-( commercial_use_allowed_b:false )";
 		}
