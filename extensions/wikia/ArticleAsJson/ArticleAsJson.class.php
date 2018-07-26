@@ -7,7 +7,7 @@ class ArticleAsJson {
 		'imageMaxWidth' => false
 	];
 
-	const CACHE_VERSION = 3.32;
+	const CACHE_VERSION = 3.33;
 
 	const ICON_MAX_SIZE = 48;
 	// Line height in Mercury
@@ -253,26 +253,36 @@ class ArticleAsJson {
 
 				try {
 					$height = PortableInfoboxMobileRenderService::MOBILE_THUMBNAIL_WIDTH * 5 / 4;
-					$thumbnail = VignetteRequest::fromUrl( $mediaObj['url'] )
+					$thumbnail4by5 = VignetteRequest::fromUrl( $mediaObj['url'] )
 						->zoomCrop()
 						->width( PortableInfoboxMobileRenderService::MOBILE_THUMBNAIL_WIDTH )
 						->height( $height )
 						->url();
 
-					$thumbnail2x = VignetteRequest::fromUrl( $mediaObj['url'] )
+					$thumbnail4by5x2 = VignetteRequest::fromUrl( $mediaObj['url'] )
 						->zoomCrop()
 						->width( PortableInfoboxMobileRenderService::MOBILE_THUMBNAIL_WIDTH * 2 )
 						->height( $height * 2)
 						->url();
+
+					$thumbnail1by1 = VignetteRequest::fromUrl( $mediaObj['url'] )
+						->zoomCrop()
+						->width( PortableInfoboxMobileRenderService::MOBILE_THUMBNAIL_WIDTH )
+						->height( PortableInfoboxMobileRenderService::MOBILE_THUMBNAIL_WIDTH )
+						->url();
+
 				} catch(InvalidArgumentException $e) {
-					$thumbnail = '';
-					$thumbnail2x = '';
+					$thumbnail4by5 = '';
+					$thumbnail4by5x2 = '';
+					$thumbnail1by1 = '';
 				}
 
-				self::$heroImage['thumbnail'] = $thumbnail;
-				self::$heroImage['thumbnail2x'] = $thumbnail2x;
-				self::$heroImage['thumbnailWidth'] = PortableInfoboxMobileRenderService::MOBILE_THUMBNAIL_WIDTH;
-				self::$heroImage['thumbnailHeight'] = $height;
+				self::$heroImage['thumbnail4by5'] = $thumbnail4by5;
+				self::$heroImage['thumbnail4by52x'] = $thumbnail4by5x2;
+				self::$heroImage['thumbnail4by5Width'] = PortableInfoboxMobileRenderService::MOBILE_THUMBNAIL_WIDTH;
+				self::$heroImage['thumbnail4by5Height'] = $height;
+				self::$heroImage['thumbnail1by1'] = $thumbnail1by1;
+				self::$heroImage['thumbnail1by1Size'] = PortableInfoboxMobileRenderService::MOBILE_THUMBNAIL_WIDTH;
 			}
 
 			$ref = count( self::$media ) - 1;
