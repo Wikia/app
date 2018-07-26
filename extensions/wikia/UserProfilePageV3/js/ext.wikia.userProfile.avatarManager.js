@@ -63,7 +63,7 @@ define('ext.wikia.userProfile.userAvatar', ['jquery', 'mw', 'BannerNotification'
 			} else {
 				if (this.response.title === 'avatar_not_an_image') {
 					showErrorBanner(mw.message('user-identity-box-avatar-error-nofile').escaped());
-				} else if (this.response.title === '') {
+				} else if (this.response.title === 'avatar_too_large') {
 					showErrorBanner(mw.message('user-identity-box-avatar-error-size', this.response.detail / 1000).escaped());
 				} else {
 					showErrorBanner(mw.message('user-identity-box-avatar-error').escaped());
