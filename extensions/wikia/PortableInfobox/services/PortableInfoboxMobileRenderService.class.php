@@ -125,6 +125,9 @@ class PortableInfoboxMobileRenderService extends PortableInfoboxRenderService {
 	 * @return string
 	 */
 	private function renderInfoboxHero( $data ) {
+		// TODO: clean it after premium layout released on mobile wiki and icache expired
+		$isPremiumizedInfobox = !empty(RequestContext::getMain()->getRequest()->getVal('premiumLayout', false));
+
 		$helper = $this->getImageHelper();
 		$template = '';
 
@@ -135,13 +138,21 @@ class PortableInfoboxMobileRenderService extends PortableInfoboxRenderService {
 		if ( isset( $data['image'] ) ) {
 			$image = $data['image'][0];
 			$image['context'] = self::MEDIA_CONTEXT_INFOBOX_HERO_IMAGE;
-			$image = $helper->extendImageData( $image, self::MOBILE_THUMBNAIL_WIDTH );
+			if ( $isPremiumizedInfobox ) { // TODO: clean it after premium layout released on mobile wiki and icache expired
+				$image = $helper->extendMobileHeroImageData( $image, self::MOBILE_THUMBNAIL_WIDTH, self::MOBILE_THUMBNAIL_WIDTH );
+			} else {
+				$image = $helper->extendImageData( $image, self::MOBILE_THUMBNAIL_WIDTH );
+			}
 			$data['image'] = $image;
 
 			if ( !$this->isMercury() ) {
 				return $this->renderItem( 'hero-mobile-wikiamobile', $data );
 			} elseif ( $firstInfoboxAlredyRendered ) {
-				return $this->renderItem( 'hero-mobile', $data );
+				if ( $isPremiumizedInfobox ) { // TODO: clean it after premium layout released on mobile wiki and icache expired
+					return $this->renderItem( 'hero-mobile', $data );
+				} else {
+					return $this->renderItem( 'hero-mobile-old', $data );
+				}
 			}
 		} elseif ( !$this->isMercury() || $firstInfoboxAlredyRendered ) {
 			return $this->renderItem( 'title', $data['title'] );

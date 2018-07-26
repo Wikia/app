@@ -20,6 +20,7 @@ class PortableInfoboxMustacheEngine {
 		'smart-group' => 'PortableInfoboxItemSmartGroup.mustache',
 		'horizontal-group-content' => 'PortableInfoboxHorizontalGroupContent.mustache',
 		'navigation' => 'PortableInfoboxItemNavigation.mustache',
+		'hero-mobile-old' => 'PortableInfoboxItemHeroMobileOld.mustache', // TODO: clean it after premium layout released on mobile wiki and icache expired
 		'hero-mobile' => 'PortableInfoboxItemHeroMobile.mustache',
 		'hero-mobile-wikiamobile' => 'PortableInfoboxItemHeroMobileWikiaMobile.mustache',
 		'image-collection' => 'PortableInfoboxItemImageCollection.mustache',

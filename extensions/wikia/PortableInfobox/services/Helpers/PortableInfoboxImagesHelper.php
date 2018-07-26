@@ -76,6 +76,49 @@ class PortableInfoboxImagesHelper {
 		] );
 	}
 
+	public function extendMobileHeroImageData( $data, int $width, int $height ) {
+		// title param is provided through reference in WikiaFileHelper::getFileFromTitle
+		$title = $data['name'];
+		$file = \WikiaFileHelper::getFileFromTitle( $title );
+
+		if (
+			!$file || !$file->exists() ||
+			!in_array( $file->getMediaType(), [ MEDIATYPE_BITMAP, MEDIATYPE_DRAWING, MEDIATYPE_VIDEO ] )
+		) {
+			return false;
+		}
+
+		$ref = null;
+
+		$thumbnail = $file->getUrlGenerator()
+			->zoomCrop()
+			->width($width)
+			->height($height)
+			->url();
+
+		$thumbnail2x = $file->getUrlGenerator()
+			->zoomCrop()
+			->width($width * 2)
+			->height($height * 2)
+			->url();
+
+		$dataAttrs = [];
+		\Hooks::run( 'PortableInfoboxRenderServiceHelper::extendImageData', [ $data, &$ref, &$dataAttrs ] );
+
+		return array_merge( $data, [
+			'ref' => $ref,
+			'height' => $width,
+			'width' => $height,
+			'thumbnail' => $thumbnail,
+			'thumbnail2x' => $thumbnail2x,
+			'key' => urlencode( $data['key'] ?? '' ),
+			'media-type' => isset( $data['isVideo'] ) && $data['isVideo'] ? 'video' : 'image',
+			'fileName' => $dataAttrs['fileName'] ?? '',
+			'dataAttrs' => json_encode( $dataAttrs )
+		] );
+	}
+
+
 	/**
 	 * @param array $images
 	 * @return array
