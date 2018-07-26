@@ -7,7 +7,7 @@ class ArticleAsJson {
 		'imageMaxWidth' => false
 	];
 
-	const CACHE_VERSION = 3.29;
+	const CACHE_VERSION = 3.32;
 
 	const ICON_MAX_SIZE = 48;
 	// Line height in Mercury
@@ -250,7 +250,31 @@ class ArticleAsJson {
 
 			if ( $details['context'] == 'infobox-hero-image' && empty( self::$heroImage ) ) {
 				self::$heroImage = $mediaObj;
+
+				try {
+					$height = PortableInfoboxMobileRenderService::MOBILE_THUMBNAIL_WIDTH * 5 / 4;
+					$thumbnail = VignetteRequest::fromUrl( $mediaObj['url'] )
+						->zoomCrop()
+						->width( PortableInfoboxMobileRenderService::MOBILE_THUMBNAIL_WIDTH )
+						->height( $height )
+						->url();
+
+					$thumbnail2x = VignetteRequest::fromUrl( $mediaObj['url'] )
+						->zoomCrop()
+						->width( PortableInfoboxMobileRenderService::MOBILE_THUMBNAIL_WIDTH * 2 )
+						->height( $height * 2)
+						->url();
+				} catch(InvalidArgumentException $e) {
+					$thumbnail = '';
+					$thumbnail2x = '';
+				}
+
+				self::$heroImage['thumbnail'] = $thumbnail;
+				self::$heroImage['thumbnail2x'] = $thumbnail2x;
+				self::$heroImage['thumbnailWidth'] = PortableInfoboxMobileRenderService::MOBILE_THUMBNAIL_WIDTH;
+				self::$heroImage['thumbnailHeight'] = $height;
 			}
+
 			$ref = count( self::$media ) - 1;
 		}
 
