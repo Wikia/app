@@ -127,7 +127,7 @@ class PortableInfoboxMobileRenderService extends PortableInfoboxRenderService {
 	}
 
 	protected function renderHeader( $data ) {
-		return $this->render( 'header', $data );
+        return $this->render( 'header-mobile', $data );
 	}
 
 	protected function render( $type, array $data ) {

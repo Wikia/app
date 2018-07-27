@@ -12,6 +12,7 @@ class PortableInfoboxMustacheEngine {
 		'wrapper' => 'PortableInfoboxWrapper.mustache',
 		'title' => 'PortableInfoboxItemTitle.mustache',
 		'header' => 'PortableInfoboxItemHeader.mustache',
+		'mobile-header' => 'PortableInfoboxItemHeaderMobile.mustache',
 		'image' => 'PortableInfoboxItemImage.mustache',
 		'image-mobile' => 'PortableInfoboxItemImageMobile.mustache',
 		'image-mobile-wikiamobile' => 'PortableInfoboxItemImageMobileWikiaMobile.mustache',
