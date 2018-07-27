@@ -5,7 +5,7 @@ metadata:
   name: "mw-cj-${name}"
 spec:
   schedule: ${schedule}
-  successfulJobsHistoryLimit: 0
+  successfulJobsHistoryLimit: 1
   failedJobsHistoryLimit: 1
   jobTemplate:
     spec:
