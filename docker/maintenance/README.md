@@ -175,12 +175,6 @@ Sends informative emails about views to founders of wikis.
 
 Reinitialise or update wiki's statistics tables.
 
-#### load-exit-nodes.yaml
-
-`extensions/TorBlock/loadExitNodes.php`
-
-Update the list Tor exit nodes.
-
 #### lyricwiki-crawler.yaml
 
 `extensions/3rdparty/LyricWiki/maintenance/LyricsWikiCrawler.php`
