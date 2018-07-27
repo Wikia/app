@@ -1,0 +1,29 @@
+page:
+  - page_id: 1
+    page_namespace: 0
+    page_title: I_am_the_test_page
+    page_restrictions: ''
+    page_random: 0
+    page_latest: 0
+    page_len: 0
+page_restrictions:
+  - pr_page: 1
+    pr_type: move
+    pr_level: sysop
+    pr_cascade: 0
+    pr_expiry: 21000101000000
+    pr_id: 1
+  - pr_page: 1
+    pr_type: edit
+    pr_level: autoconfirmed
+    pr_cascade: 0
+    pr_expiry: 21000101000000
+    pr_id: 2
+protected_titles:
+  - pt_namespace: 1
+    pt_title: Nonexistent_talk
+    pt_user: 0
+    pt_reason: Test
+    pt_timestamp: 20180101000000
+    pt_expiry: 21000101000000
+    pt_create_perm: sysop

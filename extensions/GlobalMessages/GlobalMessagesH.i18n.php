@@ -5344,7 +5344,7 @@ Legenda: '''({{int:cur}})''' = differenze con la versione attuale, '''({{int:las
 );
 
 $messages['ja'] = array(
-	'hidden-categories' => '{PLURAL:$1|Hidden category|Hidden categories}',
+	'hidden-categories' => '{{PLURAL:$1|Hidden category|Hidden categories}}',
 	'hidden-category-category' => '隠しカテゴリ',
 	'help' => 'ヘルプ',
 	'history' => 'ページ履歴',
@@ -5354,7 +5354,7 @@ $messages['ja'] = array(
 	'headline_sample' => '見出し文',
 	'headline_tip' => '2段目の見出し',
 	'hr_tip' => '水平線を挿入（利用は控えめに）',
-	'hiddencategories' => 'このページは：{PLURAL:$1|1 hidden category|$1 hidden categories} に属しています。',
+	'hiddencategories' => 'このページは：{{PLURAL:$1|1 hidden category|$1 hidden categories}} に属しています。',
 	'histlegend' => '<span style="white-space:nowrap;">下記のリストから、閲覧したい日付をクリックご</span><span style="white-space:nowrap;">ご不明なことは[[Help:Page history|こちら]]で確認</span><br />
 <span style="white-space:nowrap;">(cur) = 最新版との比較, (prev) = 直前の版との比較,</span> <span style="white-space:nowrap;">m = [[Help:Minor edit|minor edit]], → = 細部の編集, ← = 要約の自動編集</span>',
 	'history-fieldset-title' => '履歴の閲覧',
@@ -5383,7 +5383,7 @@ $messages['ja'] = array(
 	'http-bad-status' => 'HTTP要求中に問題が発生しました：$1$2',
 	'historywarning' => '<div style="margin-top: -10px;" class="emptymwmsg mediawiki_historywarning">',
 	'handheld.css' => '/* ここに記述したCSSは$wgHandheldStyleで設定されたスキンに基づく携帯機器に影響します */',
-	'hours' => '{PLURAL:$1|$1 hour|$1 hours}',
+	'hours' => '{{PLURAL:$1|$1 hour|$1 hours}}',
 	'hijri-calendar-m1' => 'ムハッラム',
 	'hijri-calendar-m2' => 'サファル',
 	'hijri-calendar-m3' => 'ラビーウ＝ル＝アウワル',

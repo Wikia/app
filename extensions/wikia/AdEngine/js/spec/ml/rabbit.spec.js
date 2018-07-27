@@ -13,6 +13,9 @@ describe('ext.wikia.adEngine.ml.modelFactory', function () {
 				},
 				isEnabled: function () {
 					return false;
+				},
+				predict: function () {
+					return 0;
 				}
 			},
 			{
@@ -24,6 +27,9 @@ describe('ext.wikia.adEngine.ml.modelFactory', function () {
 				},
 				isEnabled: function () {
 					return true;
+				},
+				predict: function () {
+					return 0;
 				}
 			}
 		);
@@ -35,7 +41,7 @@ describe('ext.wikia.adEngine.ml.modelFactory', function () {
 		expect(rabbit.getAllSerializedResults()).toBe('bar_1');
 	});
 
-	it('Return empty results when there is no allowed models', function () {
+	it('Return empty results when there are no allowed models', function () {
 		var rabbit = getModule();
 
 		expect(rabbit.getResults([]).length).toBe(0);

@@ -29,7 +29,7 @@ class WikiButtons {
 			new WikiButton( $this->getSpecialPageURL( 'CreatePage' ),
 				new Label( 'community-header-add-new-page', Label::TYPE_TRANSLATABLE_TEXT ),
 				new Label( 'community-header-add-new-page', Label::TYPE_TRANSLATABLE_TEXT ),
-				'wds-icons-add-new-page-small', 'add-new-page', 'createpage' );
+				'wds-icons-article-small', 'add-new-page', 'createpage' );
 
 		return [ $addNewPageButton ];
 	}
@@ -39,7 +39,7 @@ class WikiButtons {
 			new WikiButton( $this->getSpecialPageURL( 'CreatePage' ),
 				new Label( 'community-header-add', Label::TYPE_TRANSLATABLE_TEXT ),
 				new Label( 'community-header-add-new-page', Label::TYPE_TRANSLATABLE_TEXT ),
-				'wds-icons-add-new-page-small', 'add-new-page', 'createpage' );
+				'wds-icons-article-small', 'add-new-page', 'createpage' );
 
 		$wikiActivityButton =
 			new WikiButton( $this->getSpecialPageURL( 'WikiActivity' ), null,
@@ -53,7 +53,7 @@ class WikiButtons {
 		$addNewPageButton =
 			new WikiButton( $this->getSpecialPageURL( 'CreatePage' ), null,
 				new Label( 'community-header-add-new-page', Label::TYPE_TRANSLATABLE_TEXT ),
-				'wds-icons-add-new-page-small', 'add-new-page', 'createpage' );
+				'wds-icons-article-small', 'add-new-page', 'createpage' );
 
 		$wikiActivityButton =
 			new WikiButton( $this->getSpecialPageURL( 'WikiActivity' ), null,

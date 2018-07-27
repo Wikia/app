@@ -16,14 +16,16 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 	private $discussLinkData = null;
 	private $wikiLocalNavigation = null;
 
-	public function __construct( string $cityId, string $langCode ) {
+	public function __construct( string $langCode ) {
+		global $wgCityId;
+
 		parent::__construct();
 
-		$this->productInstanceId = $cityId;
+		$this->productInstanceId = $wgCityId;
 		$this->langCode = $langCode;
-		$this->themeSettings = new ThemeSettings( $cityId );
-		$this->settings = $this->themeSettings->getSettings( $cityId );
-		$this->mainPageUrl = wfProtocolUrlToRelative( GlobalTitle::newMainPage( $this->productInstanceId )->getFullURL() );
+		$this->themeSettings = new ThemeSettings( $wgCityId );
+		$this->settings = $this->themeSettings->getSettings();
+		$this->mainPageUrl = wfProtocolUrlToRelative( Title::newMainPage()->getFullURL() );
 	}
 
 	public function getData(): array {
@@ -39,6 +41,8 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 		if ( !empty( $this->getWordmarkData() ) ) {
 			$data[ 'wordmark' ] = $this->getWordmarkData();
 		}
+
+		Hooks::run( 'DesignSystemCommunityHeaderModelGetData', [ &$data, $this->productInstanceId ] );
 
 		return $data;
 	}
@@ -79,14 +83,23 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 
 	public function getSiteNameData(): array {
 		if ( $this->sitenameData === null ) {
+			// SUS-2975: Site name is user input, so it comes pre-escaped.
+			// We must decode HTML entities present in the text to avoid double escaping.
+			$sitename =
+				Sanitizer::decodeCharReferences( $this->themeSettings->getSettings()['wordmark-text'] );
+
 			$this->sitenameData = [
 				'type' => 'link-text',
 				'title' => [
 					'type' => 'text',
-					'value' => $this->themeSettings->getSettings()[ 'wordmark-text' ]
+					'value' => $sitename,
+				],
+				'mobile_title' => [
+					'type' => 'text',
+					'value' => F::app()->wg->Sitename,
 				],
 				'href' => $this->mainPageUrl,
-				'tracking_label' => 'sitename'
+				'tracking_label' => 'sitename',
 			];
 		}
 
@@ -227,7 +240,7 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 	}
 
 	private function getFullUrl( $pageTitle, $namespace, $protocolRelative = false ) {
-		$url = GlobalTitle::newFromText( $pageTitle, NS_SPECIAL, $this->productInstanceId )->getFullURL();
+		$url = Title::newFromText( $pageTitle, $namespace)->getFullURL();
 		if ( $protocolRelative ) {
 			$url = wfProtocolUrlToRelative( $url );
 		}

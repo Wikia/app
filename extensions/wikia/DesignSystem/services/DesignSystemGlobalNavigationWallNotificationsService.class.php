@@ -215,7 +215,6 @@ class DesignSystemGlobalNavigationWallNotificationsService extends WikiaService 
 		if ( User::isIP( $username ) ) {
 			return wfMessage( 'oasis-anon-user' )->text();
 		}
-		return $username;
+		return $username ?? '';
 	}
-
 }

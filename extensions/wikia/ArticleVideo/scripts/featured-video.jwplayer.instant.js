@@ -79,7 +79,7 @@ require([
 			autoplay: willAutoplay,
 			selectedCaptionsLanguage: featuredVideoCookieService.getCaptions(),
 			settings: {
-				showAutoplayToggle: !adContext.get('rabbits.ctpDesktop') && !inFeaturedVideoClickToPlayABTest,
+				showAutoplayToggle: featuredVideoAutoplay.isAutoplayToggleShown(),
 				showQuality: true,
 				showCaptions: true
 			},

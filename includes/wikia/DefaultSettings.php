@@ -342,7 +342,6 @@ $wgAutoloadClasses['Wikia\Helios\HelperController'] = "{$IP}/includes/wikia/cont
 $wgAutoloadClasses['WikisModel'] = "{$IP}/includes/wikia/models/WikisModel.class.php";
 $wgAutoloadClasses['NavigationModel'] = "{$IP}/includes/wikia/models/NavigationModel.class.php";
 $wgAutoloadClasses['WikiaCorporateModel'] = "{$IP}/includes/wikia/models/WikiaCorporateModel.class.php";
-$wgAutoloadClasses['MySQLKeyValueModel'] = "{$IP}/includes/wikia/models/MySQLKeyValueModel.class.php";
 $wgAutoloadClasses['DesignSystemCommunityHeaderModel'] = "{$IP}/includes/wikia/models/DesignSystemCommunityHeaderModel.class.php";
 $wgAutoloadClasses['DesignSystemGlobalFooterModel'] = "{$IP}/includes/wikia/models/DesignSystemGlobalFooterModel.class.php";
 $wgAutoloadClasses['DesignSystemGlobalNavigationModel'] = "{$IP}/includes/wikia/models/DesignSystemGlobalNavigationModel.class.php";
@@ -977,6 +976,13 @@ $wgAdDriverIsAdTestWiki = false;
 $wgAdDriverNetzAthletenCountries = null;
 
 /**
+ * @name $wgAdDriverLABradorDfpKeyvals
+ * Labrador sampling keyvals to be reported to DFP.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverLABradorDfpKeyvals = null;
+
+/**
  * @name wgAdDriverA9VideoBidderCountries
  * List of countries where A9 video bidding platform is enabled.
  * It won't work if A9 display bidder isn't enabled
@@ -1038,6 +1044,13 @@ $wgAdDriverRubiconPrebidCountries = null;
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverRubiconDfpCountries = null;
+
+/**
+ * @name $wgAdDriverAppNexusDfpCountries
+ * Enables AppNexus via DFP in these countries.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverAppNexusDfpCountries = null;
 
 /**
  * @name $wgAdDriverPrebidBidderCountries
@@ -1135,6 +1148,13 @@ $wgAdDriverOpenXPrebidBidderCountries = null;
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverPubMaticBidderCountries = null;
+
+/**
+ * @name $wgAdDriverAdditionalVastSizeCountries
+ * List of countries where vast requests has additional size 480x360.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverAdditionalVastSizeCountries = null;
 
 /**
  * @name $wgAdDriverOutstreamVideoFrequencyCapping
@@ -1335,6 +1355,13 @@ $wgAdDriverFVDelayTimeoutMobileWiki = 2000;
 $wgAdDriverKruxCountries = null;
 
 /**
+ * @name $wgAdDriverKruxNewParamsCountries
+ * List of countries where Krux will use new parameters (kuid and ksg)
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverKruxNewParamsCountries = null;
+
+/**
  * @name $wgHighValueCountries
  * List of countries defined as high-value for revenue purposes
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
@@ -1377,6 +1404,12 @@ $wgAdDriverWadBTCountries = null;
  * List of countries to enable InstartLogic recovery
  */
 $wgAdDriverWadILCountries = null;
+
+/**
+ * @name $wgAdDriverPreFooterAndBLBSwitchedCountries
+ * List of countries to switch BLB with PreFooter on mobile
+ */
+$wgAdDriverPreFooterAndBLBSwitchedCountries = null;
 
 /**
  * @name $wgEnableCMPCountries
@@ -1705,3 +1738,10 @@ include_once "$IP/extensions/wikia/ListGlobalUsers/ListGlobalUsers.setup.php";
 $wgAutoloadClasses['AuditLog'] = "$IP/includes/wikia/AuditLog.class.php";
 
 $wgHooks['SetupAfterCache'][] = 'AuditLog::init';
+
+// PLATFORM-3543: list of prod wikis with surrogate keys experiment enabled
+// to be removed after we make sure it works fine
+$wgSurrogateKeysProdWikis = [
+	1721212,    // mech-internal-https-test
+	1558829     // rikitiki
+];

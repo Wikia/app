@@ -3181,13 +3181,6 @@ $wgEnableOpenGraphMetaExt = true;
 $wgEnableOpenSearchSuggest = true;
 
 /**
- * Enable Optimizely extension.
- * @see extensions/wikia/Optimizely
- * @var bool $wgEnableOptimizelyExt
- */
-$wgEnableOptimizelyExt = false;
-
-/**
  * Enable Paginator extension.
  * @see extensions/wikia/Paginator
  * @var bool $wgEnablePaginatorExt
@@ -3653,13 +3646,6 @@ $wgEnableTabViewExt = true;
  * @var bool $wgEnableTagsReport
  */
 $wgEnableTagsReport = true;
-
-/**
- * Enable TaskManager extension.
- * @see /extensions/wikia/TaskManager
- * @var bool $wgEnableTaskManagerExt.
- */
-$wgEnableTaskManagerExt = true;
 
 /**
  * Enable TemplateClassification extension.
@@ -4934,16 +4920,6 @@ $wgHtml5 = true;
 $wgHtml5Version = null;
 
 /**
- * Proxy to use for CURL requests.
- * @see PLATFORM-1745
- * @see includes/wikia/CurlMultiClient.php
- * @see includes/HttpFunctions.php
- * @see extensions/3rdparty/LyricWiki/Special_Soapfailures.php
- * @var string $wgHTTPProxy
- */
-$wgHTTPProxy = 'prod.border.service.consul:80';
-
-/**
  * If set, inline scaled images will still produce <img> tags ready for output
  * instead of showing an error message. This may be useful if errors are
  * transitory, especially if the site is configured to automatically render
@@ -6105,13 +6081,6 @@ $wgOldChangeTagsIndex = false;
  * @var $wgOpenSearchTemplate
  */
 $wgOpenSearchTemplate = false;
-
-/**
- * Load Optimizely script from FANDOM's CND rather than from upstream.
- * @see extensions/wikia/Optimizely
- * @var bool $wgEnableOptimizelyExt
- */
-$wgOptimizelyLoadFromOurCDN = true;
 
 /**
  * Override the site's default RSS/ATOM feed for recentchanges that appears on
@@ -8226,13 +8195,6 @@ $wgUseImageResize = true;
 $wgUseInstantCommons = false;
 
 /**
- * Whether to use Kubernetes internal ingress for making requests to service dependencies on Kubernetes.
- * This is only enabled if app itself is running on Kubernetes.
- * @var bool $wgUseKubernetesInternalIngress
- */
-$wgUseKubernetesInternalIngress = (bool) getenv( 'KUBERNETES_POD' );
-
-/**
  * Set this to true to make a local copy of the message cache, for use in
  * addition to memcached. The files will be put in $wgCacheDirectory.
  * @see $wgCacheDirectory
@@ -8727,13 +8689,6 @@ $wgWikiaSearchSupportedLanguages = [
 ];
 
 /**
- * Path to Task Manager working directory.
- * @see /extensions/wikia/TaskManager
- * @var string $wgWikiaTaskDirectory
- */
-$wgWikiaTaskDirectory = '/home/wikia/taskmanager/';
-
-/**
  * Render some links with rel=nofollow attribute.
  * @see Article.php
  * @see Linker.php
@@ -8773,7 +8728,6 @@ $wgWikiDirectedAtChildrenByStaff = false;
  * Indicates whether wikicities database is in read-only mode.
  * @see extensions/wikia/WikiFactory/WikiFactory.php
  * @see extensions/wikia/FounderEmails
- * @see extensions/wikia/TaskManager
  * @see extensions/wikia/WikiFactory/
  * @deprecated
  * @var bool $wgWikicitiesReadOnly

@@ -82,10 +82,3 @@ define('ext.wikia.adEngine.wad.babDetection', [
 		wasCalled: isEnabled
 	};
 });
-
-define('ext.wikia.adEngine.babDetection', [
-	'ext.wikia.adEngine.wad.babDetection'
-], function (babDetection) {
-	//ToDo: remove after release
-	return babDetection;
-});

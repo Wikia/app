@@ -3,10 +3,12 @@
         {{#showAvatars}}
             <div class="wds-avatar-stack">
                 {{#avatars}}
-                    <a class="wds-avatar-stack__avatar" href="{{profileUrl}}">
-                        <img class="wds-avatar" src="{{avatarUrl}}" title="{{name}}"
-                             alt="{{name}}">
-                    </a>
+	                <div class="wds-avatar">
+		                <a href="{{profileUrl}}">
+			                <img class="wds-avatar__image" src="{{avatarUrl}}" title="{{name}}"
+			                     alt="{{name}}">
+		                </a>
+	                </div>
                 {{/avatars}}
                 {{#showAvatarOverflow}}
                     <div class="wds-avatar-stack__overflow">+{{avatarOverflow}}</div>
@@ -31,6 +33,11 @@
                         {{snippet}}
                     </p>
                 {{/showSnippet}}
+                {{#showLatestActor}}
+                    <p class="wds-notification-card__last-actor">
+                        {{latestActor.name}}
+                    </p>
+                {{/showLatestActor}}
                 <ul class="wds-notification-card__context-list">
                     <li class="wds-notification-card__context-item">
                         {{timeAgo}}

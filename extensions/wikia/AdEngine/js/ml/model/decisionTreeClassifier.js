@@ -1,8 +1,7 @@
 /*global define*/
 define('ext.wikia.adEngine.ml.model.decisionTreeClassifier', [
-	'wikia.nirvana',
 	'wikia.window'
-], function (nirvana, win) {
+], function (win) {
 	'use strict';
 
 	function findMax(nums) {
@@ -18,7 +17,7 @@ define('ext.wikia.adEngine.ml.model.decisionTreeClassifier', [
 		var lChilds, rChilds, thresholds, indices, classes;
 
 		function loadParameters(callback) {
-			nirvana.sendRequest({
+			win.$.nirvana.sendRequest({
 				controller: 'AdEngine2Api',
 				method: 'getModelData',
 				format: 'json',

@@ -16,7 +16,7 @@
  * SERVER_ID=177 php runBackups.php  --both --db=wikicities -- generate full & current
  * 	backups for city_dbname = wikicities
  *
- * This script is executed by /extensions/wikia/WikiFactory/Dumps/maintenance/DumpsOnDemandCron.php
+ * This script is executed by /lib/Wikia/src/Tasks/Tasks/DumpsOnDemandTask.php
  */
 
 require_once(__DIR__ .'/../../../../maintenance/commandLine.inc');

@@ -43,12 +43,15 @@ class HTTPSSupportHooks {
 		User $user, WebRequest $request, MediaWiki $mediawiki
 	): bool {
 		global $wgDisableHTTPSDowngrade;
-		if ( !empty( $_SERVER['HTTP_FASTLY_FF'] ) ) {  // don't redirect internal clients
+		if ( !empty( $_SERVER['HTTP_FASTLY_FF'] ) &&  // don't redirect internal clients
+			// Don't redirect externaltest and showcase due to weird redirect behaviour (PLATFORM-3585)
+			!in_array( $request->getHeader( 'X-Staging' ), [ 'externaltest', 'showcase' ] )
+		) {
 			$requestURL = $request->getFullRequestURL();
 			if ( WebRequest::detectProtocol() === 'http' &&
 				self::httpsAllowed( $user, $requestURL )
 			) {
-				$output->redirect( wfHttpToHttps( $requestURL ) );
+				$output->redirectProtocol( PROTO_HTTPS, '301' );
 				if ( $user->isAnon() ) {
 					$output->enableClientCache( false );
 				}
@@ -58,7 +61,7 @@ class HTTPSSupportHooks {
 				!$request->getHeader( 'X-Wikia-WikiaAppsID' ) &&
 				!self::httpsEnabledTitle( $title )
 			) {
-				$output->redirect( wfHttpsToHttp( $requestURL ) );
+				$output->redirectProtocol( PROTO_HTTP );
 				$output->enableClientCache( false );
 			}
 		}

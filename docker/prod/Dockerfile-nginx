@@ -15,3 +15,6 @@ ADD resources /usr/wikia/slot1/current/src/resources
 ADD extensions /usr/wikia/slot1/current/src/extensions
 
 USER nginx
+
+# validate configuration files for syntax errors
+RUN nginx -c /etc/nginx/nginx.conf -t

@@ -108,7 +108,6 @@ $config['adengine2_desktop_js'] = [
 		'//extensions/wikia/AdEngine/js/wad/wadRecRunner.js',
 		'#group_adengine2_playwire_js',
 		'#group_adengine2_porvata_js',
-		'#group_adengine2_rabbit_desktop_js',
 		'#group_adengine2_video_ui_js',
 		'//extensions/wikia/AdEngine/js/video/videoSettings.js',
 		'//resources/wikia/modules/domCalculator.js',
@@ -144,6 +143,8 @@ $config['adengine2_rabbit_desktop_js'] = [
 		'#group_adengine2_rabbit_js',
 		'//extensions/wikia/AdEngine/js/ml/ctp/ctpDesktop.js',
 		'//extensions/wikia/AdEngine/js/ml/ctp/ctpDesktopDataSource.js',
+		'//extensions/wikia/AdEngine/js/ml/ctp/queenDesktop.js',
+		'//extensions/wikia/AdEngine/js/ml/ctp/queenDesktopDataSource.js',
 		'//extensions/wikia/AdEngine/js/ml/model/decisionTreeClassifier.js',
 		'//extensions/wikia/AdEngine/js/ml/n1/n1DecisionTreeClassifier.js',
 		'//extensions/wikia/AdEngine/js/ml/n1/n1DecisionTreeClassifierInputParser.js',
@@ -255,7 +256,8 @@ $config['adengine2_top_js'] = [
 		'//extensions/wikia/AdEngine/js/video/videoFrequencyStore.js',
 		'//extensions/wikia/AdEngine/js/wad/babDetection.js',
 		'//resources/wikia/modules/browserDetect.js',
-		'//resources/wikia/modules/krux.js'
+		'//resources/wikia/modules/krux.js',
+		'#group_adengine2_rabbit_desktop_js'
 	],
 ];
 
@@ -1729,8 +1731,6 @@ $config['design_system_user_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => [ 'oasis' ],
 	'assets' => [
-		'//resources/wikia/libraries/headroom/headroom.js',
-		'//extensions/wikia/DesignSystem/scripts/DesignSystemGlobalNavigationHeadroom.js',
 		'//extensions/wikia/DesignSystem/scripts/DesignSystemGlobalNavigationNotifications.js',
 	],
 ];
@@ -2270,14 +2270,6 @@ $config['design_system_scss'] = [
 	'skin' => [ 'oasis' ],
 	'assets' => [
 		'//extensions/wikia/DesignSystem/styles/design-system.scss'
-	],
-];
-
-$config['design_system_user_scss'] = [
-	'type' => AssetsManager::TYPE_SCSS,
-	'skin' => [ 'oasis' ],
-	'assets' => [
-		'//resources/wikia/libraries/headroom/headroom.scss'
 	],
 ];
 

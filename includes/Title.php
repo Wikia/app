@@ -2590,18 +2590,19 @@ class Title {
 
 		if ( $getPages ) {
 			$cols = array( 'pr_page', 'page_namespace', 'page_title',
-						   'pr_expiry', 'pr_type', 'pr_level' );
+						   'pr_expiry', 'pr_type', 'pr_level', 'pr_id' /* Wikia change SUS-5481 */ );
 			$where_clauses[] = 'page_id=pr_page';
 			$tables[] = 'page';
 		} else {
-			$cols = array( 'pr_expiry' );
+			$cols = array( 'pr_expiry', 'pr_id' /* Wikia change SUS-5481 */ );
 		}
 
 		$res = $dbr->select( $tables, $cols, $where_clauses, __METHOD__ );
 
 		$sources = $getPages ? array() : false;
 		$now = wfTimestampNow();
-		$purgeExpired = false;
+
+		$expired = [];
 
 		foreach ( $res as $row ) {
 			$expiry = $wgContLang->formatExpiry( $row->pr_expiry, TS_MW );
@@ -2627,11 +2628,16 @@ class Title {
 				}
 			} else {
 				// Trigger lazy purge of expired restrictions from the db
-				$purgeExpired = true;
+				// Wikia change SUS-5481: defer the purge via background task
+				$expired[] = $row->pr_id;
 			}
 		}
-		if ( $purgeExpired ) {
-			Title::purgeExpiredRestrictions();
+
+		if ( !empty( $expired ) ) {
+			// Wikia change SUS-5481: defer purging expired entries via background task
+			$task = \Wikia\Tasks\Tasks\PurgeExpiredRestrictionsTask::newLocalTask();
+			$task->call( 'purgeExpiredPageRestrictions', $expired );
+			$task->scheduleAsDeferredUpdate();
 		}
 
 		if ( $getPages ) {
@@ -2752,7 +2758,8 @@ class Title {
 		if ( count( $rows ) ) {
 			# Current system - load second to make them override.
 			$now = wfTimestampNow();
-			$purgeExpired = false;
+
+			$expired = [];
 
 			# Cycle through all the restrictions.
 			foreach ( $rows as $row ) {
@@ -2773,12 +2780,16 @@ class Title {
 					$this->mCascadeRestriction |= $row->pr_cascade;
 				} else {
 					// Trigger a lazy purge of expired restrictions
-					$purgeExpired = true;
+					// SUS-5481: Wikia change - Schedule a task to delete expired restrictions by PK
+					$expired[] = $row->pr_id;
 				}
 			}
 
-			if ( $purgeExpired ) {
-				Title::purgeExpiredRestrictions();
+			if ( !empty( $expired ) ) {
+				// SUS-5481 - Wikia change deferred purge via background task
+				$task = \Wikia\Tasks\Tasks\PurgeExpiredRestrictionsTask::newLocalTask();
+				$task->call( 'purgeExpiredPageRestrictions', $expired );
+				$task->scheduleAsDeferredUpdate();
 			}
 		}
 
@@ -2817,7 +2828,12 @@ class Title {
 						$this->mRestrictionsExpiry['create'] = $expiry;
 						$this->mRestrictions['create'] = explode( ',', trim( $title_protection['pt_create_perm'] ) );
 					} else { // Get rid of the old restrictions
-						Title::purgeExpiredRestrictions();
+
+						// Wikia change SUS-5481: defer the purge via background task
+						$task = \Wikia\Tasks\Tasks\PurgeExpiredRestrictionsTask::newLocalTask();
+						$task->call( 'purgeExpiredProtectedTitles', $this->getNamespace(), $this->getDBkey() );
+						$task->scheduleAsDeferredUpdate();
+
 						$this->mTitleProtection = false;
 					}
 				} else {
@@ -2833,31 +2849,12 @@ class Title {
 	 * This is used when updating protection from WikiPage::doUpdateRestrictions().
 	 */
 	public function flushRestrictions() {
+		$this->mRestrictions = [];
 		$this->mRestrictionsLoaded = false;
 		$this->mTitleProtection = null;
 	}
 
-	/**
-	 * Purge expired restrictions from the page_restrictions table
-	 */
-	static function purgeExpiredRestrictions() {
-		if ( wfReadOnly() ) {
-			return;
-		}
-
-		$dbw = wfGetDB( DB_MASTER );
-		$dbw->delete(
-			'page_restrictions',
-			array( 'pr_expiry < ' . $dbw->addQuotes( $dbw->timestamp() ) ),
-			__METHOD__
-		);
-
-		$dbw->delete(
-			'protected_titles',
-			array( 'pt_expiry < ' . $dbw->addQuotes( $dbw->timestamp() ) ),
-			__METHOD__
-		);
-	}
+	// Wikia change SUS-5481 removed Title::purgeExpiredRestrictions method
 
 	/**
 	 * Does this have subpages?  (Warning, usually requires an extra DB query.)

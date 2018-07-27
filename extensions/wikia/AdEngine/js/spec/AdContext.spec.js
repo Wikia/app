@@ -46,7 +46,6 @@ describe('AdContext', function () {
 		return modules['ext.wikia.adEngine.adContext'](
 			mocks.browserDetect,
 			mocks.wikiaCookies,
-			mocks.doc,
 			mocks.geo,
 			mocks.instantGlobals,
 			mocks.adsGeo,
@@ -62,19 +61,15 @@ describe('AdContext', function () {
 	}
 
 	beforeEach(function () {
-		var geoAPI = ['isProperGeo', 'getCountryCode', 'getRegionCode', 'getContinentCode', 'isProperGeo'];
+		var geoAPI = ['isProperGeo', 'getCountryCode', 'getRegionCode', 'getContinentCode', 'isProperGeo', 'getSamplingResults'];
 		mocks.geo = jasmine.createSpyObj('geo', geoAPI);
 		mocks.adsGeo = jasmine.createSpyObj('geo', geoAPI);
 		mocks.wikiaCookies = jasmine.createSpyObj('cookies', ['get']);
 
 		mocks.geo.isProperGeo.and.callFake(fakeIsProperGeo);
 		mocks.adsGeo.isProperGeo.and.callFake(fakeIsProperGeo);
+		mocks.adsGeo.getSamplingResults.and.returnValue(['wgAdDriverRubiconDfpCountries_A_50']);
 		mocks.instantGlobals = {};
-
-		if (mocks.doc && mocks.doc.hasOwnProperty('referrer')) {
-			mocks.doc.referrer = '';
-		}
-
 	});
 
 	it(
@@ -120,27 +115,6 @@ describe('AdContext', function () {
 		expect(adContext.getContext().targeting.yyy).toBe(true);
 		expect(adContext.getContext().providers.someProvider).toBe(true);
 		expect(adContext.getContext().providers.someProviderProperty).toBe(7);
-	});
-
-	it('makes opts.showAds false for sony tvs', function () {
-		var adContext;
-
-		mocks.win = {
-			ads: {
-				context: {
-					opts: {
-						showAds: true
-					}
-				}
-			}
-		};
-
-		mocks.doc = {
-			referrer: 'info.tvsideview.sony.net'
-		};
-
-		adContext = getModule();
-		expect(adContext.getContext().opts.showAds).toBeFalsy();
 	});
 
 	it('makes targeting.pageCategories filled with categories properly', function () {
@@ -560,7 +534,7 @@ describe('AdContext', function () {
 				wgAdDriverAppNexusAstBidderCountries: ['CURRENT_COUNTRY']
 			},
 			testedBidder: 'appnexusAst',
-			expectedResult: false
+			expectedResult: true
 		},
 		{
 			hasFeaturedVideo: false,
@@ -699,5 +673,15 @@ describe('AdContext', function () {
 
 		getModule();
 		expect(mocks.geo.isProperGeo.calls.count()).toEqual(1);
-	})
+	});
+
+	it('checks which lABrador keyvals should be sent to DFP', function () {
+		mocks.instantGlobals = {
+			wgAdDriverRubiconDfpCountries: ['XX/50'],
+			wgAdDriverLABradorDfpKeyvals: ['wgAdDriverRubiconDfpCountries_A_50:rub-dfp-test']
+		};
+
+		getModule();
+		expect(getModule().get('opts.labradorDfp')).toEqual('rub-dfp-test');
+	});
 });

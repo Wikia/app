@@ -28,7 +28,7 @@
 			</script>
 			<script><?= $jwPlayerScript ?></script>
 		</div>
-		<? if ( !empty( $videoDetails['username'] ) &&
+		<?php if ( !empty( $videoDetails['username'] ) &&
 				!empty( $videoDetails['userUrl'] ) &&
 		        !empty( $videoDetails['userAvatarUrl'] )
 		): ?>
