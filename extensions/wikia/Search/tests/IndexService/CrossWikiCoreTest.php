@@ -14,12 +14,12 @@ class CrossWikiCoreTest extends BaseTest
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.09122 ms
-	 * @covers Wikia\Search\IndexService\CrossWikiCore::execute
+	 * @covers \Wikia\Search\IndexService\CrossWikiCore::execute
 	 */
 	public function testExecute() {
 		$service = $this->getMockBuilder( 'Wikia\Search\IndexService\CrossWikiCore' )
 		                ->disableOriginalConstructor()
-		                ->setMethods( [ 'getWikiBasics', 'getWikiStats', 'getWikiViews', 'getWam', 'getCategories', 'getVisualizationInfo', 'getTopArticles' , 'getLicenseInformation'] )
+		                ->setMethods( [ 'getWikiBasics', 'getWikiStats', 'getWikiViews', 'getWam', 'getCategories', 'getVisualizationInfo', 'getTopArticles' , 'getLicenseInformation', 'getIsPromotedWiki'] )
 		                ->getMock();
 
 
@@ -32,6 +32,7 @@ class CrossWikiCoreTest extends BaseTest
 		$viz = [ 'viz' => 'graph' ];
 		$articles = [ 'art' => 'vandelay' ];
 		$licence  = ['commercial_use_allowed_b'=>true];
+		$isPromoted  = ['promoted_wiki_b'=>false];
 
 		$service
 		    ->expects( $this->once() )
@@ -75,8 +76,14 @@ class CrossWikiCoreTest extends BaseTest
 			->will   ( $this->returnValue( $licence ) )
 		;
 
+		$service
+			->expects( $this->once() )
+			->method ( 'getIsPromotedWiki' )
+			->will   ( $this->returnValue( $isPromoted ) )
+		;
+
 		$this->assertEquals(
-				array_merge( $basics, $stats, $views, $wam, $cats, $viz, $articles, $licence),
+				array_merge( $basics, $stats, $views, $wam, $cats, $viz, $articles, $licence, $isPromoted),
 				$service->execute()
 		);
 	}

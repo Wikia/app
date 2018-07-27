@@ -107,6 +107,7 @@ class AdEngine2Hooks {
 		$vars[] = 'wgAdDriverTurtleCountries';
 		$vars[] = 'wgAdDriverWadBTCountries';
 		$vars[] = 'wgAdDriverWadILCountries';
+		$vars[] = 'wgAdDriverPreFooterAndBLBSwitchedCountries';
 
 		/**
 		 * Disaster Recovery
