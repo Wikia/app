@@ -157,10 +157,20 @@ class ApiQueryDeletedrevs extends ApiQueryBase {
 		}
 
 		if ( !is_null( $params['user'] ) ) {
-			$this->addWhereFld( 'ar_user_text', $params['user'] );
+			$uid = User::idFromName( $params['user'] );
+			if ( empty ( $uid ) ) {
+				$this->addWhereFld( 'ar_user_text', $params['user'] );
+			} else {
+				$this->addWhereFld( 'ar_user', $uid );
+			}
 		} elseif ( !is_null( $params['excludeuser'] ) ) {
-			$this->addWhere( 'ar_user_text != ' .
-				$this->getDB()->addQuotes( $params['excludeuser'] ) );
+			$uid = User::idFromName( $params['excludeuser'] );
+			if ( empty ( $uid ) ) {
+				$this->addWhere( 'ar_user_text != ' .
+					$this->getDB()->addQuotes( $params['excludeuser'] ) );
+			} else {
+				$this->addWhere( 'ar_user != ' . $uid );
+			}
 		}
 
 		if ( !is_null( $params['continue'] ) && ( $mode == 'all' || $mode == 'revs' ) ) {
