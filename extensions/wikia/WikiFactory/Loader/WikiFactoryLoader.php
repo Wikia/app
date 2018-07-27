@@ -407,7 +407,7 @@ class WikiFactoryLoader {
 		$cond2 = $this->mAlternativeDomainUsed && ( $url['host'] != $this->mOldServerName );
 
 		$redirectUrl = WikiFactory::getLocalEnvURL( $this->mCityUrl );
-		$shouldUseHttps = $wgEnableHTTPSForAnons &&
+		$shouldUseHttps = ( $wgEnableHTTPSForAnons || !empty( $_SERVER['HTTP_FASTLY_SSL'] ) ) &&
 			wfHttpsAllowedForURL( $redirectUrl ) &&
 			!empty( $_SERVER['HTTP_FASTLY_FF'] );	// don't redirect internal clients
 		$shouldUpgradeToHttps = $shouldUseHttps && empty( $_SERVER['HTTP_FASTLY_SSL'] );
