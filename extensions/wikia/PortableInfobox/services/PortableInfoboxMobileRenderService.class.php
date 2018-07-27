@@ -65,16 +65,30 @@ class PortableInfoboxMobileRenderService extends PortableInfoboxRenderService {
 	}
 
 	protected function renderImage( $data ) {
+		// TODO: clean it after premium layout released on mobile wiki and icache expired
+		$isPremiumizedInfobox = !empty(RequestContext::getMain()->getRequest()->getVal('premiumLayout', false));
+
 		$images = [ ];
 		$count = count( $data );
 		$helper = $this->getImageHelper();
 
-		for ( $i = 0; $i < $count; $i++ ) {
-			$data[$i]['context'] = self::MEDIA_CONTEXT_INFOBOX;
-			$data[$i] = $helper->extendImageData( $data[$i], self::MOBILE_THUMBNAIL_WIDTH );
+		if ( $isPremiumizedInfobox && $count > 1 ) {
+			for ( $i = 0; $i < $count; $i++ ) {
+				$data[$i]['context'] = self::MEDIA_CONTEXT_INFOBOX;
+				$data[$i] = $helper->extendMobileImageData( $data[$i], self::MOBILE_THUMBNAIL_WIDTH, self::MOBILE_THUMBNAIL_WIDTH );
 
-			if ( !!$data[$i] ) {
-				$images[] = $data[$i];
+				if ( !!$data[$i] ) {
+					$images[] = $data[$i];
+				}
+			}
+		} else { // TODO: clean it after premium layout released on mobile wiki and icache expired
+			for ( $i = 0; $i < $count; $i++ ) {
+				$data[$i]['context'] = self::MEDIA_CONTEXT_INFOBOX;
+				$data[$i] = $helper->extendImageData( $data[$i], self::MOBILE_THUMBNAIL_WIDTH );
+
+				if ( !!$data[$i] ) {
+					$images[] = $data[$i];
+				}
 			}
 		}
 
@@ -94,7 +108,12 @@ class PortableInfoboxMobileRenderService extends PortableInfoboxRenderService {
 			} else {
 				// more than one image means image collection
 				$data = $helper->extendImageCollectionData( $images );
-				$templateName = 'image-collection-mobile';
+
+				if ( $isPremiumizedInfobox ) {
+					$templateName = 'image-collection-mobile';
+				} else {
+					$templateName = 'image-collection-mobile-old';
+				}
 			}
 		}
 
@@ -139,7 +158,7 @@ class PortableInfoboxMobileRenderService extends PortableInfoboxRenderService {
 			$image = $data['image'][0];
 			$image['context'] = self::MEDIA_CONTEXT_INFOBOX_HERO_IMAGE;
 			if ( $isPremiumizedInfobox ) { // TODO: clean it after premium layout released on mobile wiki and icache expired
-				$image = $helper->extendMobileHeroImageData( $image, self::MOBILE_THUMBNAIL_WIDTH, self::MOBILE_THUMBNAIL_WIDTH );
+				$image = $helper->extendMobileImageData( $image, self::MOBILE_THUMBNAIL_WIDTH, self::MOBILE_THUMBNAIL_WIDTH );
 			} else {
 				$image = $helper->extendImageData( $image, self::MOBILE_THUMBNAIL_WIDTH );
 			}

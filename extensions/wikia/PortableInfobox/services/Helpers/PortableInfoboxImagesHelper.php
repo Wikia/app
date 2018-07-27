@@ -76,7 +76,7 @@ class PortableInfoboxImagesHelper {
 		] );
 	}
 
-	public function extendMobileHeroImageData( $data, int $width, int $height ) {
+	public function extendMobileImageData( $data, int $width, int $height ) {
 		// title param is provided through reference in WikiaFileHelper::getFileFromTitle
 		$title = $data['name'];
 		$file = \WikiaFileHelper::getFileFromTitle( $title );
@@ -147,7 +147,7 @@ class PortableInfoboxImagesHelper {
 			'images' => $images,
 			'firstImage' => $images[0],
 			'dataAttrs' => json_encode( $dataAttrs ),
-			'menuControlIcon' => \DesignSystemHelper::renderSvg('wds-icons-menu-control', 'wds-icon')
+			'menuControlIcon' => \DesignSystemHelper::renderSvg('wds-icons-menu-control', 'wds-icon') // TODO: clean it after premium layout released on mobile wiki and icache expired
 		];
 	}
 

@@ -25,6 +25,7 @@ class PortableInfoboxMustacheEngine {
 		'hero-mobile-wikiamobile' => 'PortableInfoboxItemHeroMobileWikiaMobile.mustache',
 		'image-collection' => 'PortableInfoboxItemImageCollection.mustache',
 		'image-collection-mobile' => 'PortableInfoboxItemImageCollectionMobile.mustache',
+		'image-collection-mobile-old' => 'PortableInfoboxItemImageCollectionMobileOld.mustache', // TODO: clean it after premium layout released on mobile wiki and icache expired
 		'image-collection-mobile-wikiamobile' => 'PortableInfoboxItemImageCollectionMobileWikiaMobile.mustache'
 	];
 	protected $templateEngine;
