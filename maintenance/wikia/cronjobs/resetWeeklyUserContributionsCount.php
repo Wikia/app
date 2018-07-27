@@ -11,8 +11,6 @@ require_once __DIR__ . '/../../Maintenance.php';
 
 class ResetWeeklyUserContributionsCount extends Maintenance {
 
-	use Wikia\Logger\Loggable;
-
 	public function __construct() {
 		parent::__construct();
 		$this->mDescription = 'reset weekly user contribution count';
@@ -30,10 +28,15 @@ class ResetWeeklyUserContributionsCount extends Maintenance {
 			__METHOD__
 		);
 
-		$this->info( 'select users', [
+		$this->mLogger->info( 'select users', [
 			'users' => count( $userIds ),
 			'query' => $dbw->lastQuery()
 		] );
+
+		if ( $this->hasOption( 'dry-run' ) ) {
+			$this->output( sprintf( "Dry run: %s entries will be deleted from wikia_user_properties.\n", count( $userIds ) ) );
+			return;
+		}
 
 		$result = $dbw->delete(
 			'wikia_user_properties',
@@ -42,9 +45,9 @@ class ResetWeeklyUserContributionsCount extends Maintenance {
 		);
 
 		if ( $result === false ) {
-			$this->error( 'error while deleting entries', [ 'query' => $dbw->lastQuery() ] );
+			$this->mLogger->error( 'error while deleting entries', [ 'query' => $dbw->lastQuery() ] );
 		} else {
-			$this->info( 'deleted entries', [
+			$this->mLogger->info( 'deleted entries', [
 				'users' => $dbw->affectedRows(),
 				'query' => $dbw->lastQuery()
 			] );
@@ -58,7 +61,7 @@ class ResetWeeklyUserContributionsCount extends Maintenance {
 			}
 		}
 
-		$this->info( 'done' );
+		$this->mLogger->info( 'done' );
 	}
 }
 
