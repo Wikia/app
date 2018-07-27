@@ -115,6 +115,14 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 			if (abId) {
 				slotTargetingData.abi = abId;
 			}
+
+			if (
+				slotTargetingData.pos === 'MOBILE_IN_CONTENT' &&
+				!adContext.get('targeting.hasFeaturedVideo') &&
+				getUapId() === 'none'
+			) {
+				slotTargetingData.pos = [slotTargetingData.pos, 'INCONTENT_PLAYER'];
+			}
 		}
 
 		function onAdLoadCallback(slotElementId, gptEvent, iframe) {
