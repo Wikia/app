@@ -243,6 +243,8 @@ define('ext.wikia.adEngine.adContext', [
 		context.opts.additionalVastSize = isProperGeoAds('wgAdDriverAdditionalVastSizeCountries');
 		context.opts.labradorDfp = getDfpLabradorKeyvals(instantGlobals.wgAdDriverLABradorDfpKeyvals);
 
+		context.opts.preFooterAndBLBSwitched = isProperGeoAds('wgAdDriverPreFooterAndBLBSwitchedCountries');
+
 		// Export the context back to ads.context
 		// Only used by Lightbox.js, WikiaBar.js and AdsInContext.js
 		if (w.ads && w.ads.context) {
