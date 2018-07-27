@@ -240,7 +240,10 @@ define('ext.wikia.adEngine.adContext', [
 		context.opts.labradorTestGroup = context.opts.labradorTest ? 'B' : 'A';
 		context.opts.mobileSectionsCollapse = isProperGeoAds('wgAdDriverMobileSectionsCollapseCountries');
 		context.opts.netzathleten = isProperGeoAds('wgAdDriverNetzAthletenCountries');
+		context.opts.additionalVastSize = isProperGeoAds('wgAdDriverAdditionalVastSizeCountries');
 		context.opts.labradorDfp = getDfpLabradorKeyvals(instantGlobals.wgAdDriverLABradorDfpKeyvals);
+
+		context.opts.preFooterAndBLBSwitched = isProperGeoAds('wgAdDriverPreFooterAndBLBSwitchedCountries');
 
 		// Export the context back to ads.context
 		// Only used by Lightbox.js, WikiaBar.js and AdsInContext.js
