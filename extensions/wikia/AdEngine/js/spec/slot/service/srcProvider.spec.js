@@ -53,7 +53,7 @@ describe('ext.wikia.adEngine.slot.service.srcProvider', function () {
 			'opts.premiumOnly': true
 		});
 
-		expect(getModule().get('xyz')).toBe('premium');
+		expect(getModule().get('xyz')).toContain('premium');
 	});
 
 	it('returns test even for premium pages', function () {
@@ -88,7 +88,7 @@ describe('ext.wikia.adEngine.slot.service.srcProvider', function () {
 	it('sets src=premium if article is premium', function () {
 		mockContext({'opts.premiumOnly': true});
 
-		expect(getModule().get('asd', {})).toBe('premium');
+		expect(getModule().get('asd', {})).toContain('premium');
 
 	});
 
