@@ -2063,6 +2063,9 @@ class OutputPage extends ContextSource {
 		return HttpStatus::getMessage( $code );
 	}
 
+	public function isRedirect() {
+		return $this->mRedirect != '' || $this->mRedirectProtocol != PROTO_CURRENT;
+	}
 	/**
 	 * Finally, all the text has been munged and accumulated into
 	 * the object, let's actually output it:
@@ -2078,7 +2081,7 @@ class OutputPage extends ContextSource {
 
 		$response = $this->getRequest()->response();
 
-		if ( $this->mRedirect != '' || $this->mRedirectProtocol != PROTO_CURRENT ) {
+		if ( $this->isRedirect() ) {
 			if ( $this->mRedirect == '') {
 				$this->mRedirect = $this->getRequest()->getFullRequestURL();
 			}

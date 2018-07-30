@@ -32,14 +32,14 @@ class HTTPSSupportHooks {
 	 * to HTTP if necessary.
 	 *
 	 * @param  Title      $title
-	 * @param             $article
+	 * @param             $unused
 	 * @param  OutputPage $output
 	 * @param  User       $user
 	 * @param  WebRequest $request
 	 * @param  MediaWiki  $mediawiki
 	 * @return bool
 	 */
-	public static function onAfterInitialize( Title $title, $article, OutputPage $output,
+	public static function onBeforeInitialize( Title $title, $unused, OutputPage $output,
 		User $user, WebRequest $request, MediaWiki $mediawiki
 	): bool {
 		global $wgDisableHTTPSDowngrade;
