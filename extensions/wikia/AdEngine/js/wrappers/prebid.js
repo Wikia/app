@@ -27,7 +27,6 @@ define('ext.wikia.adEngine.wrappers.prebid', [
 			}
 		};
 
-	win.loadPrebid(isCMPEnabled);
 	win.pbjs = win.pbjs || {};
 	win.pbjs.que = win.pbjs.que || [];
 
