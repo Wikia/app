@@ -190,7 +190,7 @@ class WikiFactoryLoader {
 	 */
 	public function execute() {
 		global $wgCityId, $wgDBservers, $wgLBFactoryConf, $wgDBserver, $wgContLang,
-			   $wgWikiFactoryRedirectForAlternateDomains, $wgArticlePath;
+			   $wgWikiFactoryRedirectForAlternateDomains, $wgArticlePath, $wgEnableHTTPSForAnons;
 
 		wfProfileIn(__METHOD__);
 
@@ -368,6 +368,10 @@ class WikiFactoryLoader {
 			}
 		}
 
+		// Important note: we have to call getVarValueByName before setting $wgCityId global
+		// otherwise getVarValueByName just uses locally set globals and returns empty value here
+		$wgEnableHTTPSForAnons = WikiFactory::getVarValueByName( 'wgEnableHTTPSForAnons', $this->mWikiID );
+
 		// As soon as we've determined the wiki the current request belongs to, set the cityId in globals.
 		// This for example is needed in order to generate per-wiki surrogate keys during WFL redirects.
 		$wgCityId = $this->mWikiID;
@@ -402,13 +406,14 @@ class WikiFactoryLoader {
 		 */
 		$cond2 = $this->mAlternativeDomainUsed && ( $url['host'] != $this->mOldServerName );
 
-		if( ( $cond1 || $cond2 ) && $wgWikiFactoryRedirectForAlternateDomains ) {
-			$redirectUrl = WikiFactory::getLocalEnvURL( $this->mCityUrl );
+		$redirectUrl = WikiFactory::getLocalEnvURL( $this->mCityUrl );
+		$shouldUseHttps = ( $wgEnableHTTPSForAnons || !empty( $_SERVER['HTTP_FASTLY_SSL'] ) ) &&
+			wfHttpsAllowedForURL( $redirectUrl ) &&
+			!empty( $_SERVER['HTTP_FASTLY_FF'] );	// don't redirect internal clients
+		$shouldUpgradeToHttps = $shouldUseHttps && empty( $_SERVER['HTTP_FASTLY_SSL'] );
 
-			if ( !empty( $_SERVER['HTTP_FASTLY_SSL'] ) &&
-				 !empty( $_SERVER['HTTP_FASTLY_FF'] ) &&
-				 wfHttpsAllowedForURL( $redirectUrl )
-			) {
+		if ( ( $cond1 || $cond2 || $shouldUpgradeToHttps ) &&  $wgWikiFactoryRedirectForAlternateDomains ) {
+			if ( $shouldUseHttps ) {
 				$redirectUrl = wfHttpToHttps( $redirectUrl );
 			}
 			$target = rtrim( $redirectUrl, '/' ) . '/' . $this->pathParams;

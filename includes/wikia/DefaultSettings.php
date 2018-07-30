@@ -976,6 +976,13 @@ $wgAdDriverIsAdTestWiki = false;
 $wgAdDriverNetzAthletenCountries = null;
 
 /**
+ * @name $wgAdDriverLABradorDfpKeyvals
+ * Labrador sampling keyvals to be reported to DFP.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverLABradorDfpKeyvals = null;
+
+/**
  * @name wgAdDriverA9VideoBidderCountries
  * List of countries where A9 video bidding platform is enabled.
  * It won't work if A9 display bidder isn't enabled
@@ -1037,6 +1044,13 @@ $wgAdDriverRubiconPrebidCountries = null;
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverRubiconDfpCountries = null;
+
+/**
+ * @name $wgAdDriverAppNexusDfpCountries
+ * Enables AppNexus via DFP in these countries.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverAppNexusDfpCountries = null;
 
 /**
  * @name $wgAdDriverPrebidBidderCountries
@@ -1134,6 +1148,13 @@ $wgAdDriverOpenXPrebidBidderCountries = null;
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverPubMaticBidderCountries = null;
+
+/**
+ * @name $wgAdDriverAdditionalVastSizeCountries
+ * List of countries where vast requests has additional size 480x360.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverAdditionalVastSizeCountries = null;
 
 /**
  * @name $wgAdDriverOutstreamVideoFrequencyCapping
@@ -1334,6 +1355,13 @@ $wgAdDriverFVDelayTimeoutMobileWiki = 2000;
 $wgAdDriverKruxCountries = null;
 
 /**
+ * @name $wgAdDriverKruxNewParamsCountries
+ * List of countries where Krux will use new parameters (kuid and ksg)
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverKruxNewParamsCountries = null;
+
+/**
  * @name $wgHighValueCountries
  * List of countries defined as high-value for revenue purposes
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
@@ -1376,6 +1404,12 @@ $wgAdDriverWadBTCountries = null;
  * List of countries to enable InstartLogic recovery
  */
 $wgAdDriverWadILCountries = null;
+
+/**
+ * @name $wgAdDriverPreFooterAndBLBSwitchedCountries
+ * List of countries to switch BLB with PreFooter on mobile
+ */
+$wgAdDriverPreFooterAndBLBSwitchedCountries = null;
 
 /**
  * @name $wgEnableCMPCountries

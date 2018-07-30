@@ -1,4 +1,0 @@
-schedule: "*/15 * * * *"
-args:
-- php
-- /usr/wikia/slot1/current/src/extensions/TorBlock/loadExitNodes.php

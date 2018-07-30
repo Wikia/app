@@ -232,7 +232,7 @@ define('wikia.cmp', [
 	}
 
 	function isEnabled() {
-		if (typeof win.__cmp === 'function') {
+		if (win.isConsentManagementProviderLoadedFromTrackingOptInModal) {
 			log('Module disabled due to existing __cmp', log.levels.debug, logGroup);
 			return false;
 		}
@@ -347,7 +347,6 @@ define('wikia.cmp', [
 	return {
 		getGdprApplies: getGdprApplies,
 		callCmp: callCmp,
-		isEnabled: isEnabled,
 		reset: reset
 	};
 });

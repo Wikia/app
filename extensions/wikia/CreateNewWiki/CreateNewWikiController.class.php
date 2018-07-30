@@ -252,13 +252,6 @@ class CreateNewWikiController extends WikiaController {
 			return;
 		}
 
-		// check if user is a tor node
-		if ( class_exists( 'TorBlock' ) && TorBlock::isExitNode() ) {
-			$this->setUserIsTorNodeErrorResponse();
-			wfProfileOut(__METHOD__);
-			return;
-		}
-
 		//check if description content pass phalanx blocks
 		if ( !empty( $params[ 'wDescription' ] ) ) {
 			$blockedKeyword = '';
@@ -470,14 +463,6 @@ class CreateNewWikiController extends WikiaController {
 		$this->response->setCode( 403 );
 		$this->response->setVal( self::STATUS_FIELD, self::STATUS_ERROR );
 		$this->response->setVal( self::STATUS_MSG_FIELD, wfMessage( 'cnw-error-blocked', $user->blockedBy(), $user->blockedFor(), $user->getBlockId() )->parse() );
-		$this->response->setVal( self::STATUS_HEADER_FIELD, wfMessage( 'cnw-error-blocked-header' )->text() );
-	}
-
-	private function setUserIsTorNodeErrorResponse() {
-		$this->warning("CreateWiki: user is blocked (TOR detected)" );
-		$this->response->setCode( 403 );
-		$this->response->setVal( self::STATUS_FIELD, self::STATUS_ERROR );
-		$this->response->setVal( self::STATUS_MSG_FIELD, wfMessage( 'cnw-error-torblock' )->text() );
 		$this->response->setVal( self::STATUS_HEADER_FIELD, wfMessage( 'cnw-error-blocked-header' )->text() );
 	}
 
