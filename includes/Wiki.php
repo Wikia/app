@@ -161,6 +161,10 @@ class MediaWiki {
 		$request = $this->context->getRequest();
 		$title = $this->context->getTitle();
 		$output = $this->context->getOutput();
+		global $wgWFLRedirectHint;
+		if ( !empty( $wgWFLRedirectHint ) ) {
+			$output->redirect( $wgWFLRedirectHint, 301 );
+		}
 		$user = $this->context->getUser();
 
 		if ( $request->getVal( 'printable' ) === 'yes' ) {

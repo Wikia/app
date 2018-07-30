@@ -404,7 +404,7 @@ class WikiFactoryLoader {
 		/**
 		 * check if not additional domain was used (then we redirect anyway)
 		 */
-		$cond2 = $this->mAlternativeDomainUsed && ( $url['host'] != $this->mOldServerName );
+		$cond2 = $this->mAlternativeDomainUsed && $url['host'] != $this->mOldServerName && $wgWikiFactoryRedirectForAlternateDomains;
 
 		$redirectUrl = WikiFactory::getLocalEnvURL( $this->mCityUrl );
 		$shouldUseHttps = ( $wgEnableHTTPSForAnons || !empty( $_SERVER['HTTP_FASTLY_SSL'] ) ) &&
@@ -412,7 +412,7 @@ class WikiFactoryLoader {
 			!empty( $_SERVER['HTTP_FASTLY_FF'] );	// don't redirect internal clients
 		$shouldUpgradeToHttps = $shouldUseHttps && empty( $_SERVER['HTTP_FASTLY_SSL'] );
 
-		if ( ( $cond1 || $cond2 || $shouldUpgradeToHttps ) &&  $wgWikiFactoryRedirectForAlternateDomains ) {
+		if ( ( $cond1 || $cond2 || $shouldUpgradeToHttps ) ) {
 			if ( $shouldUseHttps ) {
 				$redirectUrl = wfHttpToHttps( $redirectUrl );
 			}
@@ -430,25 +430,30 @@ class WikiFactoryLoader {
 			if ( !empty( $queryParams ) ) {
 				$target .= '?' . http_build_query( $queryParams );
 			}
+			global $wgDontRedirectInsideWFL;
+			if ( empty( $wgDontRedirectInsideWFL ) ) {
+				header( "X-Redirected-By-WF: NotPrimary" );
+				header( 'Vary: Cookie,Accept-Encoding' );
 
-			header( "X-Redirected-By-WF: NotPrimary" );
-			header( 'Vary: Cookie,Accept-Encoding' );
+				global $wgCookiePrefix;
+				$hasAuthCookie = !empty( $_COOKIE[\Wikia\Service\User\Auth\CookieHelper::ACCESS_TOKEN_COOKIE_NAME] ) ||
+					!empty( $_COOKIE[session_name()] ) ||
+					!empty( $_COOKIE["{$wgCookiePrefix}Token"] ) ||
+					!empty( $_COOKIE["{$wgCookiePrefix}UserID"] );
 
-			global $wgCookiePrefix;
-			$hasAuthCookie = !empty( $_COOKIE[\Wikia\Service\User\Auth\CookieHelper::ACCESS_TOKEN_COOKIE_NAME] ) ||
-				!empty( $_COOKIE[session_name()] ) ||
-				!empty( $_COOKIE["{$wgCookiePrefix}Token"] ) ||
-				!empty( $_COOKIE["{$wgCookiePrefix}UserID"] );
+				if ( $hasAuthCookie ) {
+					header( 'Cache-Control: private, must-revalidate, max-age=0' );
+				} else {
+					header( 'Cache-Control: s-maxage=86400, must-revalidate, max-age=0' );
+				}
 
-			if ( $hasAuthCookie ) {
-				header( 'Cache-Control: private, must-revalidate, max-age=0' );
+				header( "Location: {$target}", true, 301 );
+				wfProfileOut( __METHOD__ );
+				return false;
 			} else {
-				header( 'Cache-Control: s-maxage=86400, must-revalidate, max-age=0' );
+				global $wgWFLRedirectHint;
+				$wgWFLRedirectHint = $target;
 			}
-
-			header( "Location: {$target}", true, 301 );
-			wfProfileOut( __METHOD__ );
-			return false;
 		}
 
 		/**
