@@ -12,7 +12,10 @@ describe('ext.wikia.adEngine.slot.service.viewabilityHandler', function () {
 				refresh: noop
 			},
 			slot: {
-				isViewed: false,
+				isViewedFlag: false,
+				isViewed: function () {
+					return this.isViewedFlag;
+				},
 				post: noop
 			},
 			slotRegistry: {
@@ -48,7 +51,7 @@ describe('ext.wikia.adEngine.slot.service.viewabilityHandler', function () {
 	beforeEach(function () {
 		handler = getModule();
 		mocks.log.levels = [];
-		mocks.slot.isViewed = false;
+		mocks.slot.isViewedFlag = false;
 		mocks.win.adslots2 = [];
 	});
 
