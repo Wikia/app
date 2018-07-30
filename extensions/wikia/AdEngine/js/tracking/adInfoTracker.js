@@ -9,8 +9,21 @@ define('ext.wikia.adEngine.tracking.adInfoTracker',  [
 	'wikia.log',
 	'wikia.trackingOptIn',
 	'wikia.window',
+	require.optional('ext.wikia.adEngine.ml.billTheLizard'),
 	require.optional('ext.wikia.adEngine.ml.rabbit')
-], function (adTracker, geo, slotRegistry, pageLayout, deviceDetect, browserDetect, log, trackingOptIn, win, rabbit) {
+], function (
+	adTracker,
+	geo,
+	slotRegistry,
+	pageLayout,
+	deviceDetect,
+	browserDetect,
+	log,
+	trackingOptIn,
+	win,
+	billTheLizard,
+	rabbit
+) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.tracking.adInfoTracker';
@@ -92,6 +105,7 @@ define('ext.wikia.adEngine.tracking.adInfoTracker',  [
 			'ad_status': creative.status || 'unknown',
 			'scroll_y': slotRegistry.getScrollY(slotName) || 0,
 			'rabbit': (rabbit && rabbit.getAllSerializedResults()) || '',
+			'btl': (billTheLizard && billTheLizard.serialize()) || '',
 			'page_width': win.document.body.scrollWidth || '',
 			'page_layout': pageLayout.getSerializedData(slotName) || '',
 			'labrador': geo.getSamplingResults().join(';'),
