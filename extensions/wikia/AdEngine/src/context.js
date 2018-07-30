@@ -19,7 +19,7 @@ export default {
 	},
 	services: {
 		billTheLizard: {
-			enabled: false,
+			enabled: true,
 			host: 'https://services.wikia.com',
 			endpoint: 'bill-the-lizard/predict',
 			models: [],

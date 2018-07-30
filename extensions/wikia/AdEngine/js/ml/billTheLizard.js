@@ -5,9 +5,12 @@ define('ext.wikia.adEngine.ml.billTheLizard', [
 	'ext.wikia.adEngine.bridge',
 	'ext.wikia.adEngine.geo',
 	'ext.wikia.adEngine.utils.device',
-	'wikia.instantGlobals'
-], function (adContext, pageLevelParams, bridge, geo, deviceDetect, instantGlobals) {
+	'wikia.instantGlobals',
+	'wikia.log'
+], function (adContext, pageLevelParams, bridge, geo, deviceDetect, instantGlobals, log) {
 	'use strict';
+
+	var logGroup = 'ext.wikia.adEngine.ml.billTheLizard';
 
 	if (!bridge.billTheLizard) {
 		return;
@@ -49,12 +52,18 @@ define('ext.wikia.adEngine.ml.billTheLizard', [
 			}
 		});
 
-		bridge.billTheLizard.call();
+		bridge.billTheLizard.call()
+			.then(() => {
+				log(['respond'], log.levels.debug, logGroup);
+			}, () => {
+				log(['reject'], log.levels.debug, logGroup);
+			});
 	}
 
 	return {
 		call: call,
-		getPrediction: bridge.billTheLizard.getPrediction,
-		serialize: bridge.billTheLizard.serialize
+		serialize: function () {
+			return bridge.billTheLizard.serialize();
+		}
 	};
 });
